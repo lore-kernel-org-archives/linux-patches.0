@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 039491A2389;
-	Thu, 15 Jan 2026 17:38:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BFA9A86334;
+	Thu, 15 Jan 2026 17:39:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768498738; cv=none; b=GtU0O+oPQ35tU5tpKbGORo1exLdDLFDaRiUgHDrosnTndy5jhD5JsD5uIaxHnG8B7vQ7xdRNwkZU17R1xFXGMb1LAr64QYM1aT/940L7FKTGaBLSYlNap6K5TNYj7werv5bOkZwdp6G8DoecUrYaA//yiz5sJjgOWY+4FsGGsbE=
+	t=1768498740; cv=none; b=QfFMM9o/AYHzyolOoigrasffjT0NEmFAomnCKcVkAPgTwwUNH1WKS6c2V+HmVpqi6u5xSRObeJbim9Lz7m1IakOnoGZ2Mev8iQHQ/KYRW/0wSobz0EytAwRE2PEJt6beKQ9B8R0KpHiMTFB2e9C1pJ/EhfpehaGl96GhAZf4WSI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768498738; c=relaxed/simple;
-	bh=/TjpLGAl5t729dsEbUy8vmumNWluo67jw50Dg7Dree0=;
+	s=arc-20240116; t=1768498740; c=relaxed/simple;
+	bh=RnPMYTmW1/SCRZ/2GOX8WqSeVNAw13CZFw5FNcCbKXQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=st67/lRIsxhynY2U9NyrMFH8fj/YOBGJjqw6c4Xu0JQJ7DkkYm+l1sqLKwF3zmaGWHnHBM9L6hd/lAjLwdgyPX+r0MPb9hdlZVU05rQEuD4A/dfUgS9RJJzU0lUeKEsbcHn+XcO7LJp5YyMoAL70ElMNWz9C2dXm4yi29OXLaNc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jC8PKmy1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KZCuJnSc25O6g9NC9eVtnZkimK3Gcs24ejG2P/rAa8j0qpcv/gU3ryaF1GAUapcGv85KdoOY5QYsXInvLmr3z0SWk+KkMe8pFrbW3kksv4Ta0LnLPaXh0QOYRbjlj1p+Z9U9gsS0HRX8ZIw8VS4GJZXe4qpNjR7NxvBZx2yCZe0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jTNmuF7H; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jC8PKmy1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E259C116D0;
-	Thu, 15 Jan 2026 17:38:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jTNmuF7H"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C896C116D0;
+	Thu, 15 Jan 2026 17:38:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1768498737;
-	bh=/TjpLGAl5t729dsEbUy8vmumNWluo67jw50Dg7Dree0=;
+	s=korg; t=1768498740;
+	bh=RnPMYTmW1/SCRZ/2GOX8WqSeVNAw13CZFw5FNcCbKXQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jC8PKmy1F1cE0M7BLV1HbjZUOrgq341QaWTEEzZ56+4lEy4v3LQMDi95aOawItQDZ
-	 Li40KVnB1hs6tk1dDJ4LzBazo4xQqKswwihOVhSjyxJ0yGL1neqrMSjVuCAwadw93p
-	 IQ+GC/HGAXCaQhT1H827MeA/c0MFvMz1xOxpFX/c=
+	b=jTNmuF7H3Gsit2CXyvmtsj/a/nw5Org3o7rxnJPnvJf59SHjAGEoZszH5P5NQtrXs
+	 bWOiIXeqwRC9wnA/kn1x+aYbPBKyIJefsisQERixo6Y9aDtrd/cTttIghmTkUAgPqX
+	 O4BZoSRXJOZ2BrjBCcWnVjQzvTq6lqsWNDecrYPg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Ren=C3=A9=20Rebe?= <rene@exactco.de>,
-	Jiri Kosina <jkosina@suse.com>,
+	Xiang Mei <xmei5@asu.edu>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 537/554] HID: quirks: work around VID/PID conflict for appledisplay
-Date: Thu, 15 Jan 2026 17:50:03 +0100
-Message-ID: <20260115164305.764371046@linuxfoundation.org>
+Subject: [PATCH 5.15 538/554] net/sched: sch_qfq: Fix NULL deref when deactivating inactive aggregate in qfq_reset
+Date: Thu, 15 Jan 2026 17:50:04 +0100
+Message-ID: <20260115164305.800475693@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260115164246.225995385@linuxfoundation.org>
 References: <20260115164246.225995385@linuxfoundation.org>
@@ -45,49 +45,165 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: René Rebe <rene@exactco.de>
+From: Xiang Mei <xmei5@asu.edu>
 
-[ Upstream commit c7fabe4ad9219866c203164a214c474c95b36bf2 ]
+[ Upstream commit c1d73b1480235731e35c81df70b08f4714a7d095 ]
 
-For years I wondered why the Apple Cinema Display driver would not
-just work for me. Turns out the hidraw driver instantly takes it
-over. Fix by adding appledisplay VID/PIDs to hid_have_special_driver.
+`qfq_class->leaf_qdisc->q.qlen > 0` does not imply that the class
+itself is active.
 
-Fixes: 069e8a65cd79 ("Driver for Apple Cinema Display")
-Signed-off-by: René Rebe <rene@exactco.de>
-Signed-off-by: Jiri Kosina <jkosina@suse.com>
+Two qfq_class objects may point to the same leaf_qdisc. This happens
+when:
+
+1. one QFQ qdisc is attached to the dev as the root qdisc, and
+
+2. another QFQ qdisc is temporarily referenced (e.g., via qdisc_get()
+/ qdisc_put()) and is pending to be destroyed, as in function
+tc_new_tfilter.
+
+When packets are enqueued through the root QFQ qdisc, the shared
+leaf_qdisc->q.qlen increases. At the same time, the second QFQ
+qdisc triggers qdisc_put and qdisc_destroy: the qdisc enters
+qfq_reset() with its own q->q.qlen == 0, but its class's leaf
+qdisc->q.qlen > 0. Therefore, the qfq_reset would wrongly deactivate
+an inactive aggregate and trigger a null-deref in qfq_deactivate_agg:
+
+[    0.903172] BUG: kernel NULL pointer dereference, address: 0000000000000000
+[    0.903571] #PF: supervisor write access in kernel mode
+[    0.903860] #PF: error_code(0x0002) - not-present page
+[    0.904177] PGD 10299b067 P4D 10299b067 PUD 10299c067 PMD 0
+[    0.904502] Oops: Oops: 0002 [#1] SMP NOPTI
+[    0.904737] CPU: 0 UID: 0 PID: 135 Comm: exploit Not tainted 6.19.0-rc3+ #2 NONE
+[    0.905157] Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS rel-1.17.0-0-gb52ca86e094d-prebuilt.qemu.org 04/01/2014
+[    0.905754] RIP: 0010:qfq_deactivate_agg (include/linux/list.h:992 (discriminator 2) include/linux/list.h:1006 (discriminator 2) net/sched/sch_qfq.c:1367 (discriminator 2) net/sched/sch_qfq.c:1393 (discriminator 2))
+[    0.906046] Code: 0f 84 4d 01 00 00 48 89 70 18 8b 4b 10 48 c7 c2 ff ff ff ff 48 8b 78 08 48 d3 e2 48 21 f2 48 2b 13 48 8b 30 48 d3 ea 8b 4b 18 0
+
+Code starting with the faulting instruction
+===========================================
+   0:	0f 84 4d 01 00 00    	je     0x153
+   6:	48 89 70 18          	mov    %rsi,0x18(%rax)
+   a:	8b 4b 10             	mov    0x10(%rbx),%ecx
+   d:	48 c7 c2 ff ff ff ff 	mov    $0xffffffffffffffff,%rdx
+  14:	48 8b 78 08          	mov    0x8(%rax),%rdi
+  18:	48 d3 e2             	shl    %cl,%rdx
+  1b:	48 21 f2             	and    %rsi,%rdx
+  1e:	48 2b 13             	sub    (%rbx),%rdx
+  21:	48 8b 30             	mov    (%rax),%rsi
+  24:	48 d3 ea             	shr    %cl,%rdx
+  27:	8b 4b 18             	mov    0x18(%rbx),%ecx
+	...
+[    0.907095] RSP: 0018:ffffc900004a39a0 EFLAGS: 00010246
+[    0.907368] RAX: ffff8881043a0880 RBX: ffff888102953340 RCX: 0000000000000000
+[    0.907723] RDX: 0000000000000000 RSI: 0000000000000000 RDI: 0000000000000000
+[    0.908100] RBP: ffff888102952180 R08: 0000000000000000 R09: 0000000000000000
+[    0.908451] R10: ffff8881043a0000 R11: 0000000000000000 R12: ffff888102952000
+[    0.908804] R13: ffff888102952180 R14: ffff8881043a0ad8 R15: ffff8881043a0880
+[    0.909179] FS:  000000002a1a0380(0000) GS:ffff888196d8d000(0000) knlGS:0000000000000000
+[    0.909572] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+[    0.909857] CR2: 0000000000000000 CR3: 0000000102993002 CR4: 0000000000772ef0
+[    0.910247] PKRU: 55555554
+[    0.910391] Call Trace:
+[    0.910527]  <TASK>
+[    0.910638]  qfq_reset_qdisc (net/sched/sch_qfq.c:357 net/sched/sch_qfq.c:1485)
+[    0.910826]  qdisc_reset (include/linux/skbuff.h:2195 include/linux/skbuff.h:2501 include/linux/skbuff.h:3424 include/linux/skbuff.h:3430 net/sched/sch_generic.c:1036)
+[    0.911040]  __qdisc_destroy (net/sched/sch_generic.c:1076)
+[    0.911236]  tc_new_tfilter (net/sched/cls_api.c:2447)
+[    0.911447]  rtnetlink_rcv_msg (net/core/rtnetlink.c:6958)
+[    0.911663]  ? __pfx_rtnetlink_rcv_msg (net/core/rtnetlink.c:6861)
+[    0.911894]  netlink_rcv_skb (net/netlink/af_netlink.c:2550)
+[    0.912100]  netlink_unicast (net/netlink/af_netlink.c:1319 net/netlink/af_netlink.c:1344)
+[    0.912296]  ? __alloc_skb (net/core/skbuff.c:706)
+[    0.912484]  netlink_sendmsg (net/netlink/af_netlink.c:1894)
+[    0.912682]  sock_write_iter (net/socket.c:727 (discriminator 1) net/socket.c:742 (discriminator 1) net/socket.c:1195 (discriminator 1))
+[    0.912880]  vfs_write (fs/read_write.c:593 fs/read_write.c:686)
+[    0.913077]  ksys_write (fs/read_write.c:738)
+[    0.913252]  do_syscall_64 (arch/x86/entry/syscall_64.c:63 (discriminator 1) arch/x86/entry/syscall_64.c:94 (discriminator 1))
+[    0.913438]  entry_SYSCALL_64_after_hwframe (arch/x86/entry/entry_64.S:131)
+[    0.913687] RIP: 0033:0x424c34
+[    0.913844] Code: 89 02 48 c7 c0 ff ff ff ff eb bd 66 2e 0f 1f 84 00 00 00 00 00 90 f3 0f 1e fa 80 3d 2d 44 09 00 00 74 13 b8 01 00 00 00 0f 05 9
+
+Code starting with the faulting instruction
+===========================================
+   0:	89 02                	mov    %eax,(%rdx)
+   2:	48 c7 c0 ff ff ff ff 	mov    $0xffffffffffffffff,%rax
+   9:	eb bd                	jmp    0xffffffffffffffc8
+   b:	66 2e 0f 1f 84 00 00 	cs nopw 0x0(%rax,%rax,1)
+  12:	00 00 00
+  15:	90                   	nop
+  16:	f3 0f 1e fa          	endbr64
+  1a:	80 3d 2d 44 09 00 00 	cmpb   $0x0,0x9442d(%rip)        # 0x9444e
+  21:	74 13                	je     0x36
+  23:	b8 01 00 00 00       	mov    $0x1,%eax
+  28:	0f 05                	syscall
+  2a:	09                   	.byte 0x9
+[    0.914807] RSP: 002b:00007ffea1938b78 EFLAGS: 00000202 ORIG_RAX: 0000000000000001
+[    0.915197] RAX: ffffffffffffffda RBX: 0000000000000001 RCX: 0000000000424c34
+[    0.915556] RDX: 000000000000003c RSI: 000000002af378c0 RDI: 0000000000000003
+[    0.915912] RBP: 00007ffea1938bc0 R08: 00000000004b8820 R09: 0000000000000000
+[    0.916297] R10: 0000000000000001 R11: 0000000000000202 R12: 00007ffea1938d28
+[    0.916652] R13: 00007ffea1938d38 R14: 00000000004b3828 R15: 0000000000000001
+[    0.917039]  </TASK>
+[    0.917158] Modules linked in:
+[    0.917316] CR2: 0000000000000000
+[    0.917484] ---[ end trace 0000000000000000 ]---
+[    0.917717] RIP: 0010:qfq_deactivate_agg (include/linux/list.h:992 (discriminator 2) include/linux/list.h:1006 (discriminator 2) net/sched/sch_qfq.c:1367 (discriminator 2) net/sched/sch_qfq.c:1393 (discriminator 2))
+[    0.917978] Code: 0f 84 4d 01 00 00 48 89 70 18 8b 4b 10 48 c7 c2 ff ff ff ff 48 8b 78 08 48 d3 e2 48 21 f2 48 2b 13 48 8b 30 48 d3 ea 8b 4b 18 0
+
+Code starting with the faulting instruction
+===========================================
+   0:	0f 84 4d 01 00 00    	je     0x153
+   6:	48 89 70 18          	mov    %rsi,0x18(%rax)
+   a:	8b 4b 10             	mov    0x10(%rbx),%ecx
+   d:	48 c7 c2 ff ff ff ff 	mov    $0xffffffffffffffff,%rdx
+  14:	48 8b 78 08          	mov    0x8(%rax),%rdi
+  18:	48 d3 e2             	shl    %cl,%rdx
+  1b:	48 21 f2             	and    %rsi,%rdx
+  1e:	48 2b 13             	sub    (%rbx),%rdx
+  21:	48 8b 30             	mov    (%rax),%rsi
+  24:	48 d3 ea             	shr    %cl,%rdx
+  27:	8b 4b 18             	mov    0x18(%rbx),%ecx
+	...
+[    0.918902] RSP: 0018:ffffc900004a39a0 EFLAGS: 00010246
+[    0.919198] RAX: ffff8881043a0880 RBX: ffff888102953340 RCX: 0000000000000000
+[    0.919559] RDX: 0000000000000000 RSI: 0000000000000000 RDI: 0000000000000000
+[    0.919908] RBP: ffff888102952180 R08: 0000000000000000 R09: 0000000000000000
+[    0.920289] R10: ffff8881043a0000 R11: 0000000000000000 R12: ffff888102952000
+[    0.920648] R13: ffff888102952180 R14: ffff8881043a0ad8 R15: ffff8881043a0880
+[    0.921014] FS:  000000002a1a0380(0000) GS:ffff888196d8d000(0000) knlGS:0000000000000000
+[    0.921424] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+[    0.921710] CR2: 0000000000000000 CR3: 0000000102993002 CR4: 0000000000772ef0
+[    0.922097] PKRU: 55555554
+[    0.922240] Kernel panic - not syncing: Fatal exception
+[    0.922590] Kernel Offset: disabled
+
+Fixes: 0545a3037773 ("pkt_sched: QFQ - quick fair queue scheduler")
+Signed-off-by: Xiang Mei <xmei5@asu.edu>
+Link: https://patch.msgid.link/20260106034100.1780779-1-xmei5@asu.edu
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hid/hid-quirks.c | 9 +++++++++
- 1 file changed, 9 insertions(+)
+ net/sched/sch_qfq.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/hid/hid-quirks.c b/drivers/hid/hid-quirks.c
-index 4b645db5cd4bc..cc2f462fced27 100644
---- a/drivers/hid/hid-quirks.c
-+++ b/drivers/hid/hid-quirks.c
-@@ -220,6 +220,15 @@ static const struct hid_device_id hid_quirks[] = {
-  * used as a driver. See hid_scan_report().
-  */
- static const struct hid_device_id hid_have_special_driver[] = {
-+#if IS_ENABLED(CONFIG_APPLEDISPLAY)
-+	{ HID_USB_DEVICE(USB_VENDOR_ID_APPLE, 0x9218) },
-+	{ HID_USB_DEVICE(USB_VENDOR_ID_APPLE, 0x9219) },
-+	{ HID_USB_DEVICE(USB_VENDOR_ID_APPLE, 0x921c) },
-+	{ HID_USB_DEVICE(USB_VENDOR_ID_APPLE, 0x921d) },
-+	{ HID_USB_DEVICE(USB_VENDOR_ID_APPLE, 0x9222) },
-+	{ HID_USB_DEVICE(USB_VENDOR_ID_APPLE, 0x9226) },
-+	{ HID_USB_DEVICE(USB_VENDOR_ID_APPLE, 0x9236) },
-+#endif
- #if IS_ENABLED(CONFIG_HID_A4TECH)
- 	{ HID_USB_DEVICE(USB_VENDOR_ID_A4TECH, USB_DEVICE_ID_A4TECH_WCP32PU) },
- 	{ HID_USB_DEVICE(USB_VENDOR_ID_A4TECH, USB_DEVICE_ID_A4TECH_X5_005D) },
+diff --git a/net/sched/sch_qfq.c b/net/sched/sch_qfq.c
+index 649cf7a7dce46..aa049dd33a74e 100644
+--- a/net/sched/sch_qfq.c
++++ b/net/sched/sch_qfq.c
+@@ -1491,7 +1491,7 @@ static void qfq_reset_qdisc(struct Qdisc *sch)
+ 
+ 	for (i = 0; i < q->clhash.hashsize; i++) {
+ 		hlist_for_each_entry(cl, &q->clhash.hash[i], common.hnode) {
+-			if (cl->qdisc->q.qlen > 0)
++			if (cl_is_active(cl))
+ 				qfq_deactivate_class(q, cl);
+ 
+ 			qdisc_reset(cl->qdisc);
 -- 
 2.51.0
 
