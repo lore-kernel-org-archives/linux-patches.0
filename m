@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12D0F1A2389;
-	Thu, 15 Jan 2026 17:39:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9DBF52D7DED;
+	Thu, 15 Jan 2026 17:39:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768498784; cv=none; b=UMQc76icpeIsXG7sdXdAW3HRmx4wWbYFvJbEbPphCFrcJruomoXJpOo+7xXGzOPSVdLctlEB67E1dMUz5kQCGR6Qx4TzuCSe7yU34wVAM0g3wAQ9Eu+gCOxAspDS0dGMlJUj1Xx5ilBp+B3kcE9g3kQjSr6ejmd7ZLJVaTyEqC4=
+	t=1768498786; cv=none; b=npXBb2aNaxOMkx7+QKbiuMN0EVQ7mQ2UNzsC3fCUXUmjcu1o62IpHC9fUqM58XoUZuVs7NVsh9lGvY5nQjOe6OvOqZnv8p60mzlgNv8zXlooZDVNr6pQ17CV3VqJxBKkQYxxvB6S3jZL7Rq9eP0E6LcfdHgM+Mygm6r+FGoWsGM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768498784; c=relaxed/simple;
-	bh=Avx/NaUz4y6i5EBxgC8/CrVhAx5sQRSolcDx90vuVpA=;
+	s=arc-20240116; t=1768498786; c=relaxed/simple;
+	bh=aJLPi4KrQ3tRgKbXosSMM/Rt31GASwMDC2pcoUQ5FSo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kh4Y/XVV0a7qGVIG8KWCawlRBfdvEJXhRd3AZEBtbyEs5yhB5oHqyCRRdZRBxcnlb9KQ4aAXUMXzEa7qs2Ur7H+XaXEuUmNpDN/OEeBoYMrLwG1NRzwLkWXtDj9+tNbjF2UhsnI2pAa/8X9nrbU7hbHXj7g1JBrYEcChQ4TLzMw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jzuRVd/1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uun584ImA9v+JWGNRpo39WiDa4ycdw4deRH9IH+Yw5V2DxkKSGE2WiOlWBjS4c8qg148NgHJ2rPZsOlXx3jXJSuRTvJrVkbVnesvLrB9aaqjTzvInKjUUcw65ItZJrizgpZqmeRXPEUfU1RolWpKwqp3pTeldmJfw5ek86kFdcY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LtjbRU2O; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jzuRVd/1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 540D3C116D0;
-	Thu, 15 Jan 2026 17:39:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LtjbRU2O"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 20B86C116D0;
+	Thu, 15 Jan 2026 17:39:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1768498783;
-	bh=Avx/NaUz4y6i5EBxgC8/CrVhAx5sQRSolcDx90vuVpA=;
+	s=korg; t=1768498786;
+	bh=aJLPi4KrQ3tRgKbXosSMM/Rt31GASwMDC2pcoUQ5FSo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jzuRVd/1GxV9qKQw6XLsnVElapABkFAbWgPLjv/RV7bm62gvHGg8Jd7MZfII56qRc
-	 ztbpQkSLkehKxPaVvqrfAvjP+055AM3pQPyFYx16SfqR+rs9wCRPv2DtUY2EJc7tie
-	 6mGEWxi8IkVeTuCjm5LoW522PO1p2j+niH6czbdw=
+	b=LtjbRU2OIZ/FzAH14u9shi1uEu/sivIf/NvqFextIryL5B7nDZGvqFt9aMxJbrmwD
+	 JTiBJOLOIkYboqOo81amh6N5MPZ3zgqjQGYOudpS6D0FLdilR5TnyMXHBp4rFQKYzV
+	 UOJvGE+kuBPVHYNl3aBB8QLkfYPAkRGlUNqcuDiM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot <syzbot+881d65229ca4f9ae8c84@syzkaller.appspotmail.com>,
-	Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>,
-	Oleksij Rempel <o.rempel@pengutronix.de>,
-	Marc Kleine-Budde <mkl@pengutronix.de>,
+	Alexander Stein <alexander.stein@ew.tq-group.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 552/554] can: j1939: make j1939_session_activate() fail if device is no longer registered
-Date: Thu, 15 Jan 2026 17:50:18 +0100
-Message-ID: <20260115164306.309540401@linuxfoundation.org>
+Subject: [PATCH 5.15 553/554] ASoC: fsl_sai: Add missing registers to cache default
+Date: Thu, 15 Jan 2026 17:50:19 +0100
+Message-ID: <20260115164306.346171962@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260115164246.225995385@linuxfoundation.org>
 References: <20260115164246.225995385@linuxfoundation.org>
@@ -53,48 +51,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
+From: Alexander Stein <alexander.stein@ew.tq-group.com>
 
-[ Upstream commit 5d5602236f5db19e8b337a2cd87a90ace5ea776d ]
+[ Upstream commit 90ed688792a6b7012b3e8a2f858bc3fe7454d0eb ]
 
-syzbot is still reporting
+Drivers does cache sync during runtime resume, setting all writable
+registers. Not all writable registers are set in cache default, resulting
+in the erorr message:
+  fsl-sai 30c30000.sai: using zero-initialized flat cache, this may cause
+  unexpected behavior
 
-  unregister_netdevice: waiting for vcan0 to become free. Usage count = 2
+Fix this by adding missing writable register defaults.
 
-even after commit 93a27b5891b8 ("can: j1939: add missing calls in
-NETDEV_UNREGISTER notification handler") was added. A debug printk() patch
-found that j1939_session_activate() can succeed even after
-j1939_cancel_active_session() from j1939_netdev_notify(NETDEV_UNREGISTER)
-has completed.
-
-Since j1939_cancel_active_session() is processed with the session list lock
-held, checking ndev->reg_state in j1939_session_activate() with the session
-list lock held can reliably close the race window.
-
-Reported-by: syzbot <syzbot+881d65229ca4f9ae8c84@syzkaller.appspotmail.com>
-Closes: https://syzkaller.appspot.com/bug?extid=881d65229ca4f9ae8c84
-Signed-off-by: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
-Acked-by: Oleksij Rempel <o.rempel@pengutronix.de>
-Link: https://patch.msgid.link/b9653191-d479-4c8b-8536-1326d028db5c@I-love.SAKURA.ne.jp
-Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
+Signed-off-by: Alexander Stein <alexander.stein@ew.tq-group.com>
+Link: https://patch.msgid.link/20251216102246.676181-1-alexander.stein@ew.tq-group.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/can/j1939/transport.c | 2 ++
- 1 file changed, 2 insertions(+)
+ sound/soc/fsl/fsl_sai.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/net/can/j1939/transport.c b/net/can/j1939/transport.c
-index 76d625c668e05..0522c223570c7 100644
---- a/net/can/j1939/transport.c
-+++ b/net/can/j1939/transport.c
-@@ -1571,6 +1571,8 @@ int j1939_session_activate(struct j1939_session *session)
- 	if (active) {
- 		j1939_session_put(active);
- 		ret = -EAGAIN;
-+	} else if (priv->ndev->reg_state != NETREG_REGISTERED) {
-+		ret = -ENODEV;
- 	} else {
- 		WARN_ON_ONCE(session->state != J1939_SESSION_NEW);
- 		list_add_tail(&session->active_session_list_entry,
+diff --git a/sound/soc/fsl/fsl_sai.c b/sound/soc/fsl/fsl_sai.c
+index 45d8ef029a638..82911e5ed1796 100644
+--- a/sound/soc/fsl/fsl_sai.c
++++ b/sound/soc/fsl/fsl_sai.c
+@@ -779,6 +779,7 @@ static struct reg_default fsl_sai_reg_defaults_ofs0[] = {
+ 	{FSL_SAI_TDR6, 0},
+ 	{FSL_SAI_TDR7, 0},
+ 	{FSL_SAI_TMR, 0},
++	{FSL_SAI_TTCTL, 0},
+ 	{FSL_SAI_RCR1(0), 0},
+ 	{FSL_SAI_RCR2(0), 0},
+ 	{FSL_SAI_RCR3(0), 0},
+@@ -802,12 +803,14 @@ static struct reg_default fsl_sai_reg_defaults_ofs8[] = {
+ 	{FSL_SAI_TDR6, 0},
+ 	{FSL_SAI_TDR7, 0},
+ 	{FSL_SAI_TMR, 0},
++	{FSL_SAI_TTCTL, 0},
+ 	{FSL_SAI_RCR1(8), 0},
+ 	{FSL_SAI_RCR2(8), 0},
+ 	{FSL_SAI_RCR3(8), 0},
+ 	{FSL_SAI_RCR4(8), 0},
+ 	{FSL_SAI_RCR5(8), 0},
+ 	{FSL_SAI_RMR, 0},
++	{FSL_SAI_RTCTL, 0},
+ 	{FSL_SAI_MCTL, 0},
+ 	{FSL_SAI_MDIV, 0},
+ };
 -- 
 2.51.0
 
