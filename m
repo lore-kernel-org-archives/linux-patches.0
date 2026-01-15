@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C7073A0E98;
-	Thu, 15 Jan 2026 17:31:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6DF73A0E98;
+	Thu, 15 Jan 2026 17:31:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768498278; cv=none; b=DY8xrOr0PPIvb8kaxZFvKkHTBNSXh3xFt/ApB/Jooe7vr7WiJY0rxNQlJHD+C7gyqJPouG532RCAJSBSNRqCsRs2ZuRlMgaSl9Oe1M6NlrfpeWavxBtYXpw+0dhy4Z9tzUH1mj7AvZLb7m3TAldSjLvnMGTgTL3/jgEdLj8D1Hk=
+	t=1768498281; cv=none; b=lSxMHtX+8AsNWyOybZNfMf/zQHH9nLNcfOAL4drGnXmjXUKCliRdnG9toVunj9ONxki8LTaBB1SGuEwclpuYhoGIevTz3SzSR0sYHR/Lc7LOJzvYnzoQnB2CTR5DUip5ihCsdgOi7XUd114a+p6quYGs28RAQBnj6PL+SALWrrA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768498278; c=relaxed/simple;
-	bh=lcSPt9wL2jeRj174ajlm88brCefOOmTYJI8fBMQk/ps=;
+	s=arc-20240116; t=1768498281; c=relaxed/simple;
+	bh=9hHL4hll79qJVMpEQe8Rgg67EcCifAZKhwkOk+o83jI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PauY8suqHcw/oc2+YsjuIg76sFDkmTPAtYs9f1BbYkXQCywtqwTEc11SQ+sNN1E878TRXqse2brNtuW1+MYKmRHbQoVG45dybg+avuRzFIpBTj/D6NysU8bdxoLet3KTEJvaNnNqWyzj8B4kq2Mu0OsH1+OHVuk2p+Xqqss9xX0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ISb8xKAf; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HMXXfiqBOuo6H9RyZSFpeizKcJMwqpPTJjWLuxvRx+50TGGPiRKgwBRLVIL9sJVGGZA1we5vjWBZdQXQ4211Pi4mZHoPIBEa6UCdYcPdKUyNtUcSXvwXohmZ9rTRefsxgtJY8SCsuVI15CN4NQ7G+XBUcKx3dhlUVoe/FhlPdX4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uOrt1LFv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ISb8xKAf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E7A0C116D0;
-	Thu, 15 Jan 2026 17:31:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uOrt1LFv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7303CC116D0;
+	Thu, 15 Jan 2026 17:31:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1768498278;
-	bh=lcSPt9wL2jeRj174ajlm88brCefOOmTYJI8fBMQk/ps=;
+	s=korg; t=1768498280;
+	bh=9hHL4hll79qJVMpEQe8Rgg67EcCifAZKhwkOk+o83jI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ISb8xKAfYxjBruQekTKpRRkhYR7DP24VuUfuApdOzifPYiy116OsNJcbLvxolykRh
-	 TQR2mV6JDV5swJ635G2DgtFaupN19YGd6q6SFd1uHBptbZ9VSSwmfHLSewIrNx5jhb
-	 VT0ptQ9vp5gH20XQ7P2liQWLr4i6wQ3byXpgt02U=
+	b=uOrt1LFvfyjwXMV59OzPzkmoTLhkyUA5U+grYqSrBrrAwonKdCAEo20qmdO++iohM
+	 GkfqWvDsuUx7IN2o7hAKGRCit7nim9gCal+Gmqt6IhdjaFn7MNcVAByPmHAbN12TEQ
+	 2+dxD01tjnsmm6TLtA2UkSd5G1QjsLXOzjDmbxac=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Magnus Damm <damm+renesas@opensource.se>,
+	Honghui Zhang <honghui.zhang@mediatek.com>,
 	Robin Murphy <robin.murphy@arm.com>,
+	Yong Wu <yong.wu@mediatek.com>,
 	Johan Hovold <johan@kernel.org>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
 	Joerg Roedel <joerg.roedel@amd.com>
-Subject: [PATCH 5.15 375/554] iommu/ipmmu-vmsa: fix device leak on of_xlate()
-Date: Thu, 15 Jan 2026 17:47:21 +0100
-Message-ID: <20260115164259.806788038@linuxfoundation.org>
+Subject: [PATCH 5.15 376/554] iommu/mediatek-v1: fix device leak on probe_device()
+Date: Thu, 15 Jan 2026 17:47:22 +0100
+Message-ID: <20260115164259.843631901@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260115164246.225995385@linuxfoundation.org>
 References: <20260115164246.225995385@linuxfoundation.org>
@@ -54,32 +56,34 @@ Content-Transfer-Encoding: 8bit
 
 From: Johan Hovold <johan@kernel.org>
 
-commit 80aa518452c4aceb9459f9a8e3184db657d1b441 upstream.
+commit c77ad28bfee0df9cbc719eb5adc9864462cfb65b upstream.
 
 Make sure to drop the reference taken to the iommu platform device when
-looking up its driver data during of_xlate().
+looking up its driver data during probe_device().
 
-Fixes: 7b2d59611fef ("iommu/ipmmu-vmsa: Replace local utlb code with fwspec ids")
-Cc: stable@vger.kernel.org	# 4.14
-Cc: Magnus Damm <damm+renesas@opensource.se>
+Fixes: b17336c55d89 ("iommu/mediatek: add support for mtk iommu generation one HW")
+Cc: stable@vger.kernel.org	# 4.8
+Cc: Honghui Zhang <honghui.zhang@mediatek.com>
 Acked-by: Robin Murphy <robin.murphy@arm.com>
+Reviewed-by: Yong Wu <yong.wu@mediatek.com>
 Signed-off-by: Johan Hovold <johan@kernel.org>
+Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
 Signed-off-by: Joerg Roedel <joerg.roedel@amd.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iommu/ipmmu-vmsa.c |    2 ++
+ drivers/iommu/mtk_iommu_v1.c |    2 ++
  1 file changed, 2 insertions(+)
 
---- a/drivers/iommu/ipmmu-vmsa.c
-+++ b/drivers/iommu/ipmmu-vmsa.c
-@@ -710,6 +710,8 @@ static int ipmmu_init_platform_device(st
+--- a/drivers/iommu/mtk_iommu_v1.c
++++ b/drivers/iommu/mtk_iommu_v1.c
+@@ -393,6 +393,8 @@ static int mtk_iommu_create_mapping(stru
+ 			return -EINVAL;
  
- 	dev_iommu_priv_set(dev, platform_get_drvdata(ipmmu_pdev));
- 
-+	put_device(&ipmmu_pdev->dev);
+ 		dev_iommu_priv_set(dev, platform_get_drvdata(m4updev));
 +
- 	return 0;
- }
++		put_device(&m4updev->dev);
+ 	}
  
+ 	ret = iommu_fwspec_add_ids(dev, args->args, 1);
 
 
