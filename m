@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3A613C1FC0;
-	Thu, 15 Jan 2026 17:29:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C776A3D4114;
+	Thu, 15 Jan 2026 17:29:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768498147; cv=none; b=iPJNn/V8mo4MAJ7m2M5BC9NDuRq0jonmLWByVPKBeMK0IsBtqLzO0moZBnsQ/t5q+Ok9KSpxCTtvG11/voJXoFFNNi8lL0iIBA1peCClbGdjamMSEq98k8P/9hSDUdm0bqsxPYD5yThyu4uRXH+8O5JBUdqsrJDoo1Po2rhcig0=
+	t=1768498149; cv=none; b=ZYyouVAEh+3RD2kCtik5kfNHuUCAu/PXqZiZir3MAMB14kC/DveQ3+Eu3JDjOTTCa0nYVBfejVJksGhzf+7gbLpvRoyum66/+W4SIRjERkDjo2RWZunra365pKKtoHz/kQ81uBChqoXbx/yCCR/m6hDqBZbUvLgCDwU4i4ocDMI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768498147; c=relaxed/simple;
-	bh=esxFdlw711sLKfkavkpANskiV9t6um5j8HNo7TYlvPk=;
+	s=arc-20240116; t=1768498149; c=relaxed/simple;
+	bh=yTXcHujI396pOwhJoHXVUI2NSMluyGYYYqwl11ockYw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ut24dFlaiAhMfAzqxCUQWGyQprJKNtzYbtEdDuLG2rE9FE8CEZwnJdV6VaaNnMyNtT7jc8GWTcBPiY/q3dgrQx1f9gC3t/9qq9+ylr12neKhLzyL3lSSPBqt7swCM3e3wpReeXZSe++Ol2FVeB+HHpwphSQIvNwLePYb9b9BJiQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=P7PpLWtx; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=C7z4Dngans2WBC0XOgnl7mhnKLkn6SsRhFoIhTF75SKu37chS5GC6tvAqqJEOwcEVczMhp2EbCadp+GvTnOxx7EwaxCbNOlwUf7krea5tENR20e3eKopWcds0h4BMIJvwPc9glJ/mrKrH0rlImuALmpzMXmryIvMjeOI0JMkiJ4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fsI+JWGY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="P7PpLWtx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6DD0EC116D0;
-	Thu, 15 Jan 2026 17:29:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fsI+JWGY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 527D3C116D0;
+	Thu, 15 Jan 2026 17:29:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1768498146;
-	bh=esxFdlw711sLKfkavkpANskiV9t6um5j8HNo7TYlvPk=;
+	s=korg; t=1768498149;
+	bh=yTXcHujI396pOwhJoHXVUI2NSMluyGYYYqwl11ockYw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=P7PpLWtxczJkY4g68T+nRfbn7j3EB4G3BG9TlEqScp71Ldmf5IrQCKTX9oeyNwK5P
-	 8bspnS6cJdU1pO80vcfVZfuHVslUf8ayWfWrzC6JxBZ1DfBvLONBL58wHcOLT/QAJf
-	 R4l9Wls8yXhQhXEOuYFbiNBFTvv2Ic74MU86uVjw=
+	b=fsI+JWGYu77QU7NtXjF/7dmzsOUymhDd9/Qm9m5OYL7j8IQVW884hI2fGehRCGDEn
+	 4Sx8iXta1v8q/8uAZWgTOuZllyMKBUlaTL3W7ILZ+aJX4RJ/UVKWJsqNJ4G6FuLnKa
+	 dGcOYFVbHlBuxpotRVuZg1cMw2cnCJx93hvObrfg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stable@vger.kernel.org,
-	Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-	Bjorn Andersson <andersson@kernel.org>
-Subject: [PATCH 5.15 330/554] rpmsg: glink: fix rpmsg device leak
-Date: Thu, 15 Jan 2026 17:46:36 +0100
-Message-ID: <20260115164258.176190432@linuxfoundation.org>
+	ziming zhang <ezrakiez@gmail.com>,
+	Ilya Dryomov <idryomov@gmail.com>,
+	Xiubo Li <xiubli@redhat.com>
+Subject: [PATCH 5.15 313/554] libceph: make decode_pool() more resilient against corrupted osdmaps
+Date: Thu, 15 Jan 2026 17:46:19 +0100
+Message-ID: <20260115164257.560418302@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260115164246.225995385@linuxfoundation.org>
 References: <20260115164246.225995385@linuxfoundation.org>
@@ -52,83 +51,221 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
+From: Ilya Dryomov <idryomov@gmail.com>
 
-commit a53e356df548f6b0e82529ef3cc6070f42622189 upstream.
+commit 8c738512714e8c0aa18f8a10c072d5b01c83db39 upstream.
 
-While testing rpmsg-char interface it was noticed that duplicate sysfs
-entries are getting created and below warning is noticed.
+If the osdmap is (maliciously) corrupted such that the encoded length
+of ceph_pg_pool envelope is less than what is expected for a particular
+encoding version, out-of-bounds reads may ensue because the only bounds
+check that is there is based on that length value.
 
-Reason for this is that we are leaking rpmsg device pointer, setting it
-null without actually unregistering device.
-Any further attempts to unregister fail because rpdev is NULL,
-resulting in a leak.
+This patch adds explicit bounds checks for each field that is decoded
+or skipped.
 
-Fix this by unregistering rpmsg device before removing its reference
-from rpmsg channel.
-
-sysfs: cannot create duplicate filename '/devices/platform/soc@0/3700000.remot
-eproc/remoteproc/remoteproc1/3700000.remoteproc:glink-edge/3700000.remoteproc:
-glink-edge.adsp_apps.-1.-1'
-[  114.115347] CPU: 0 UID: 0 PID: 9 Comm: kworker/0:0 Not
- tainted 6.16.0-rc4 #7 PREEMPT
-[  114.115355] Hardware name: Qualcomm Technologies, Inc. Robotics RB3gen2 (DT)
-[  114.115358] Workqueue: events qcom_glink_work
-[  114.115371] Call trace:8
-[  114.115374]  show_stack+0x18/0x24 (C)
-[  114.115382]  dump_stack_lvl+0x60/0x80
-[  114.115388]  dump_stack+0x18/0x24
-[  114.115393]  sysfs_warn_dup+0x64/0x80
-[  114.115402]  sysfs_create_dir_ns+0xf4/0x120
-[  114.115409]  kobject_add_internal+0x98/0x260
-[  114.115416]  kobject_add+0x9c/0x108
-[  114.115421]  device_add+0xc4/0x7a0
-[  114.115429]  rpmsg_register_device+0x5c/0xb0
-[  114.115434]  qcom_glink_work+0x4bc/0x820
-[  114.115438]  process_one_work+0x148/0x284
-[  114.115446]  worker_thread+0x2c4/0x3e0
-[  114.115452]  kthread+0x12c/0x204
-[  114.115457]  ret_from_fork+0x10/0x20
-[  114.115464] kobject: kobject_add_internal failed for 3700000.remoteproc:
-glink-edge.adsp_apps.-1.-1 with -EEXIST, don't try to register things with
-the same name in the same directory.
-[  114.250045] rpmsg 3700000.remoteproc:glink-edge.adsp_apps.-1.-1:
-device_add failed: -17
-
-Fixes: 835764ddd9af ("rpmsg: glink: Move the common glink protocol implementation to glink_native.c")
-Cc: Stable@vger.kernel.org
-Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Link: https://lore.kernel.org/r/20250822100043.2604794-2-srinivas.kandagatla@oss.qualcomm.com
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Cc: stable@vger.kernel.org
+Reported-by: ziming zhang <ezrakiez@gmail.com>
+Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
+Reviewed-by: Xiubo Li <xiubli@redhat.com>
+Tested-by: ziming zhang <ezrakiez@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/rpmsg/qcom_glink_native.c |    8 ++++++++
- 1 file changed, 8 insertions(+)
+ net/ceph/osdmap.c |  118 ++++++++++++++++++++++++------------------------------
+ 1 file changed, 53 insertions(+), 65 deletions(-)
 
---- a/drivers/rpmsg/qcom_glink_native.c
-+++ b/drivers/rpmsg/qcom_glink_native.c
-@@ -1244,6 +1244,7 @@ static void qcom_glink_destroy_ept(struc
- {
- 	struct glink_channel *channel = to_glink_channel(ept);
- 	struct qcom_glink *glink = channel->glink;
-+	struct rpmsg_channel_info chinfo;
- 	unsigned long flags;
+--- a/net/ceph/osdmap.c
++++ b/net/ceph/osdmap.c
+@@ -790,51 +790,49 @@ static int decode_pool(void **p, void *e
+ 	ceph_decode_need(p, end, len, bad);
+ 	pool_end = *p + len;
  
- 	spin_lock_irqsave(&channel->recv_lock, flags);
-@@ -1251,6 +1252,13 @@ static void qcom_glink_destroy_ept(struc
- 	spin_unlock_irqrestore(&channel->recv_lock, flags);
++	ceph_decode_need(p, end, 4 + 4 + 4, bad);
+ 	pi->type = ceph_decode_8(p);
+ 	pi->size = ceph_decode_8(p);
+ 	pi->crush_ruleset = ceph_decode_8(p);
+ 	pi->object_hash = ceph_decode_8(p);
+-
+ 	pi->pg_num = ceph_decode_32(p);
+ 	pi->pgp_num = ceph_decode_32(p);
  
- 	/* Decouple the potential rpdev from the channel */
-+	if (channel->rpdev) {
-+		strscpy_pad(chinfo.name, channel->name, sizeof(chinfo.name));
-+		chinfo.src = RPMSG_ADDR_ANY;
-+		chinfo.dst = RPMSG_ADDR_ANY;
+-	*p += 4 + 4;  /* skip lpg* */
+-	*p += 4;      /* skip last_change */
+-	*p += 8 + 4;  /* skip snap_seq, snap_epoch */
++	/* lpg*, last_change, snap_seq, snap_epoch */
++	ceph_decode_skip_n(p, end, 8 + 4 + 8 + 4, bad);
+ 
+ 	/* skip snaps */
+-	num = ceph_decode_32(p);
++	ceph_decode_32_safe(p, end, num, bad);
+ 	while (num--) {
+-		*p += 8;  /* snapid key */
+-		*p += 1 + 1; /* versions */
+-		len = ceph_decode_32(p);
+-		*p += len;
++		/* snapid key, pool snap (with versions) */
++		ceph_decode_skip_n(p, end, 8 + 2, bad);
++		ceph_decode_skip_string(p, end, bad);
+ 	}
+ 
+-	/* skip removed_snaps */
+-	num = ceph_decode_32(p);
+-	*p += num * (8 + 8);
++	/* removed_snaps */
++	ceph_decode_skip_map(p, end, 64, 64, bad);
+ 
++	ceph_decode_need(p, end, 8 + 8 + 4, bad);
+ 	*p += 8;  /* skip auid */
+ 	pi->flags = ceph_decode_64(p);
+ 	*p += 4;  /* skip crash_replay_interval */
+ 
+ 	if (ev >= 7)
+-		pi->min_size = ceph_decode_8(p);
++		ceph_decode_8_safe(p, end, pi->min_size, bad);
+ 	else
+ 		pi->min_size = pi->size - pi->size / 2;
+ 
+ 	if (ev >= 8)
+-		*p += 8 + 8;  /* skip quota_max_* */
++		/* quota_max_* */
++		ceph_decode_skip_n(p, end, 8 + 8, bad);
+ 
+ 	if (ev >= 9) {
+-		/* skip tiers */
+-		num = ceph_decode_32(p);
+-		*p += num * 8;
++		/* tiers */
++		ceph_decode_skip_set(p, end, 64, bad);
+ 
++		ceph_decode_need(p, end, 8 + 1 + 8 + 8, bad);
+ 		*p += 8;  /* skip tier_of */
+ 		*p += 1;  /* skip cache_mode */
+-
+ 		pi->read_tier = ceph_decode_64(p);
+ 		pi->write_tier = ceph_decode_64(p);
+ 	} else {
+@@ -842,86 +840,76 @@ static int decode_pool(void **p, void *e
+ 		pi->write_tier = -1;
+ 	}
+ 
+-	if (ev >= 10) {
+-		/* skip properties */
+-		num = ceph_decode_32(p);
+-		while (num--) {
+-			len = ceph_decode_32(p);
+-			*p += len; /* key */
+-			len = ceph_decode_32(p);
+-			*p += len; /* val */
+-		}
+-	}
++	if (ev >= 10)
++		/* properties */
++		ceph_decode_skip_map(p, end, string, string, bad);
+ 
+ 	if (ev >= 11) {
+-		/* skip hit_set_params */
+-		*p += 1 + 1; /* versions */
+-		len = ceph_decode_32(p);
+-		*p += len;
++		/* hit_set_params (with versions) */
++		ceph_decode_skip_n(p, end, 2, bad);
++		ceph_decode_skip_string(p, end, bad);
+ 
+-		*p += 4; /* skip hit_set_period */
+-		*p += 4; /* skip hit_set_count */
++		/* hit_set_period, hit_set_count */
++		ceph_decode_skip_n(p, end, 4 + 4, bad);
+ 	}
+ 
+ 	if (ev >= 12)
+-		*p += 4; /* skip stripe_width */
++		/* stripe_width */
++		ceph_decode_skip_32(p, end, bad);
+ 
+-	if (ev >= 13) {
+-		*p += 8; /* skip target_max_bytes */
+-		*p += 8; /* skip target_max_objects */
+-		*p += 4; /* skip cache_target_dirty_ratio_micro */
+-		*p += 4; /* skip cache_target_full_ratio_micro */
+-		*p += 4; /* skip cache_min_flush_age */
+-		*p += 4; /* skip cache_min_evict_age */
+-	}
+-
+-	if (ev >=  14) {
+-		/* skip erasure_code_profile */
+-		len = ceph_decode_32(p);
+-		*p += len;
+-	}
++	if (ev >= 13)
++		/* target_max_*, cache_target_*, cache_min_* */
++		ceph_decode_skip_n(p, end, 16 + 8 + 8, bad);
 +
-+		rpmsg_unregister_device(glink->dev, &chinfo);
-+	}
- 	channel->rpdev = NULL;
++	if (ev >= 14)
++		/* erasure_code_profile */
++		ceph_decode_skip_string(p, end, bad);
  
- 	qcom_glink_send_close_req(glink, channel);
+ 	/*
+ 	 * last_force_op_resend_preluminous, will be overridden if the
+ 	 * map was encoded with RESEND_ON_SPLIT
+ 	 */
+ 	if (ev >= 15)
+-		pi->last_force_request_resend = ceph_decode_32(p);
++		ceph_decode_32_safe(p, end, pi->last_force_request_resend, bad);
+ 	else
+ 		pi->last_force_request_resend = 0;
+ 
+ 	if (ev >= 16)
+-		*p += 4; /* skip min_read_recency_for_promote */
++		/* min_read_recency_for_promote */
++		ceph_decode_skip_32(p, end, bad);
+ 
+ 	if (ev >= 17)
+-		*p += 8; /* skip expected_num_objects */
++		/* expected_num_objects */
++		ceph_decode_skip_64(p, end, bad);
+ 
+ 	if (ev >= 19)
+-		*p += 4; /* skip cache_target_dirty_high_ratio_micro */
++		/* cache_target_dirty_high_ratio_micro */
++		ceph_decode_skip_32(p, end, bad);
+ 
+ 	if (ev >= 20)
+-		*p += 4; /* skip min_write_recency_for_promote */
++		/* min_write_recency_for_promote */
++		ceph_decode_skip_32(p, end, bad);
+ 
+ 	if (ev >= 21)
+-		*p += 1; /* skip use_gmt_hitset */
++		/* use_gmt_hitset */
++		ceph_decode_skip_8(p, end, bad);
+ 
+ 	if (ev >= 22)
+-		*p += 1; /* skip fast_read */
++		/* fast_read */
++		ceph_decode_skip_8(p, end, bad);
+ 
+-	if (ev >= 23) {
+-		*p += 4; /* skip hit_set_grade_decay_rate */
+-		*p += 4; /* skip hit_set_search_last_n */
+-	}
++	if (ev >= 23)
++		/* hit_set_grade_decay_rate, hit_set_search_last_n */
++		ceph_decode_skip_n(p, end, 4 + 4, bad);
+ 
+ 	if (ev >= 24) {
+-		/* skip opts */
+-		*p += 1 + 1; /* versions */
+-		len = ceph_decode_32(p);
+-		*p += len;
++		/* opts (with versions) */
++		ceph_decode_skip_n(p, end, 2, bad);
++		ceph_decode_skip_string(p, end, bad);
+ 	}
+ 
+ 	if (ev >= 25)
+-		pi->last_force_request_resend = ceph_decode_32(p);
++		ceph_decode_32_safe(p, end, pi->last_force_request_resend, bad);
+ 
+ 	/* ignore the rest */
+ 
 
 
