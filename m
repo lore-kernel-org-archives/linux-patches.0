@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BAFE93D3016;
-	Thu, 15 Jan 2026 17:56:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 033813D6691;
+	Thu, 15 Jan 2026 17:56:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768499794; cv=none; b=O6BRuKB29c26cx5LNZDZddGZP1tztr29RWbBI+By6NEmstrGp4Q1pUqnKk2VS5yMgB6M0iDdF3b0HOwIO9c5u2/JuTuWGP6hHnGs1UuN5SEruS3X803qFRF9viPemgXYAsjjBlnK0AGOQReJA9n7wGAMc8p2notzgMsIo7of48c=
+	t=1768499798; cv=none; b=OKs9vs+m6e7dBSxMmOypi3NV6fjhy/jr0ZcoWAwV0YyErpLoD64/sevm6aEhvfedrEMac0GEfoRwEnrNuuVwGynlX19CgiZICkUdqY2M4IZDRiA/w21MKf/lXEhrgecEH1rOXKoSqKYPOz+yQJmM4BUUUOlTiR0/Ipx3esm0nXE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768499794; c=relaxed/simple;
-	bh=jwEVhWNMFXKdx4nDxcDSIUiujNbxg+O/42nw9+TF12A=;
+	s=arc-20240116; t=1768499798; c=relaxed/simple;
+	bh=eIFkHo/nYSJ1GJHb2L5pwv4t3dWrGLiy81mlYrGAlBQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KlCx5p4Y9h5VLxJr41+51jrkw0PESJ75JyQVnh8jN0SjSgg1P8oWRA8CxF3ZSY1i+6d1HBonNQ7E1vb34ybAa+2tgChHaVJHaZyAujsbIqRf8L5JF+JzEDXjt/vZ4sQ5m3SkcJCqvfeKDnETXiGXvMUo+cCbD79Tf1W2oIIfhbs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bM6mq+FX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hxAUh9ZQ4+0QZshco4ZHOO1Uuz68d3G67Y4tGhz9JrA3hVMCe+kl3fORGPfMo4ChxPMtVrXbA2c4RHwkNAxMM01gvRwI9js+nEXuXe4QKd1bHj/RW2KoApirkA90qUBfDtx1sCbj7udVeC98MoFp/ImiH/7limlCbFhPxZKw6NI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vSCNcVyX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bM6mq+FX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 37C37C116D0;
-	Thu, 15 Jan 2026 17:56:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vSCNcVyX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 804A0C116D0;
+	Thu, 15 Jan 2026 17:56:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1768499794;
-	bh=jwEVhWNMFXKdx4nDxcDSIUiujNbxg+O/42nw9+TF12A=;
+	s=korg; t=1768499797;
+	bh=eIFkHo/nYSJ1GJHb2L5pwv4t3dWrGLiy81mlYrGAlBQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bM6mq+FXcl9ZYZqf9PtoKVYPgiyMFHrovbwYNK9cKYR8WbjKBBTxfpyzvJHmxud8L
-	 s2Uo7bHLJnKUX3/CtDnel0KZFaulnJqSVlLU5rIObxXYpO+E6oucQCtLw1XiKo8wc8
-	 pLa3Exj/OcKyIscYvMjw5v+3QV6nMUYDziPsrwHQ=
+	b=vSCNcVyX8F3FzEfF2aae8nBC6hhe34FTBdcd921FkfVUwytaEkNPRi3W9VC+ff20b
+	 GUPWNdaePCDLxl9bnYUCsZ3ZwegWT6er29+0UcJ4RyQLUZARMRmaUzwXXiZHEWm2fT
+	 kytdvbfte85tsL+f7a0skCa3rKyWGuJMLiyBuHYM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kees Cook <keescook@chromium.org>,
-	Saeed Mahameed <saeedm@nvidia.com>,
-	Brennan Lamoreaux <brennan.lamoreaux@broadcom.com>
-Subject: [PATCH 5.10 353/451] net/mlx5e: Avoid field-overflowing memcpy()
-Date: Thu, 15 Jan 2026 17:49:14 +0100
-Message-ID: <20260115164243.670664354@linuxfoundation.org>
+	Yuhao Jiang <danisjiang@gmail.com>,
+	Junrui Luo <moonafterrain@outlook.com>,
+	Takashi Iwai <tiwai@suse.de>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 354/451] ALSA: wavefront: Clear substream pointers on close
+Date: Thu, 15 Jan 2026 17:49:15 +0100
+Message-ID: <20260115164243.706272321@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260115164230.864985076@linuxfoundation.org>
 References: <20260115164230.864985076@linuxfoundation.org>
@@ -51,134 +52,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kees Cook <keescook@chromium.org>
+From: Junrui Luo <moonafterrain@outlook.com>
 
-commit ad5185735f7dab342fdd0dd41044da4c9ccfef67 upstream.
+[ Upstream commit e11c5c13ce0ab2325d38fe63500be1dd88b81e38 ]
 
-In preparation for FORTIFY_SOURCE performing compile-time and run-time
-field bounds checking for memcpy(), memmove(), and memset(), avoid
-intentionally writing across neighboring fields.
+Clear substream pointers in close functions to avoid leaving dangling
+pointers, helping to improve code safety and
+prevents potential issues.
 
-Use flexible arrays instead of zero-element arrays (which look like they
-are always overflowing) and split the cross-field memcpy() into two halves
-that can be appropriately bounds-checked by the compiler.
-
-We were doing:
-
-	#define ETH_HLEN  14
-	#define VLAN_HLEN  4
-	...
-	#define MLX5E_XDP_MIN_INLINE (ETH_HLEN + VLAN_HLEN)
-	...
-        struct mlx5e_tx_wqe      *wqe  = mlx5_wq_cyc_get_wqe(wq, pi);
-	...
-        struct mlx5_wqe_eth_seg  *eseg = &wqe->eth;
-        struct mlx5_wqe_data_seg *dseg = wqe->data;
-	...
-	memcpy(eseg->inline_hdr.start, xdptxd->data, MLX5E_XDP_MIN_INLINE);
-
-target is wqe->eth.inline_hdr.start (which the compiler sees as being
-2 bytes in size), but copying 18, intending to write across start
-(really vlan_tci, 2 bytes). The remaining 16 bytes get written into
-wqe->data[0], covering byte_count (4 bytes), lkey (4 bytes), and addr
-(8 bytes).
-
-struct mlx5e_tx_wqe {
-        struct mlx5_wqe_ctrl_seg   ctrl;                 /*     0    16 */
-        struct mlx5_wqe_eth_seg    eth;                  /*    16    16 */
-        struct mlx5_wqe_data_seg   data[];               /*    32     0 */
-
-        /* size: 32, cachelines: 1, members: 3 */
-        /* last cacheline: 32 bytes */
-};
-
-struct mlx5_wqe_eth_seg {
-        u8                         swp_outer_l4_offset;  /*     0     1 */
-        u8                         swp_outer_l3_offset;  /*     1     1 */
-        u8                         swp_inner_l4_offset;  /*     2     1 */
-        u8                         swp_inner_l3_offset;  /*     3     1 */
-        u8                         cs_flags;             /*     4     1 */
-        u8                         swp_flags;            /*     5     1 */
-        __be16                     mss;                  /*     6     2 */
-        __be32                     flow_table_metadata;  /*     8     4 */
-        union {
-                struct {
-                        __be16     sz;                   /*    12     2 */
-                        u8         start[2];             /*    14     2 */
-                } inline_hdr;                            /*    12     4 */
-                struct {
-                        __be16     type;                 /*    12     2 */
-                        __be16     vlan_tci;             /*    14     2 */
-                } insert;                                /*    12     4 */
-                __be32             trailer;              /*    12     4 */
-        };                                               /*    12     4 */
-
-        /* size: 16, cachelines: 1, members: 9 */
-        /* last cacheline: 16 bytes */
-};
-
-struct mlx5_wqe_data_seg {
-        __be32                     byte_count;           /*     0     4 */
-        __be32                     lkey;                 /*     4     4 */
-        __be64                     addr;                 /*     8     8 */
-
-        /* size: 16, cachelines: 1, members: 3 */
-        /* last cacheline: 16 bytes */
-};
-
-So, split the memcpy() so the compiler can reason about the buffer
-sizes.
-
-"pahole" shows no size nor member offset changes to struct mlx5e_tx_wqe
-nor struct mlx5e_umr_wqe. "objdump -d" shows no meaningful object
-code changes (i.e. only source line number induced differences and
-optimizations).
-
-Fixes: b5503b994ed5 ("net/mlx5e: XDP TX forwarding support")
-Signed-off-by: Kees Cook <keescook@chromium.org>
-Signed-off-by: Saeed Mahameed <saeedm@nvidia.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-[ Brennan : Applied to v5.10, convert inline_mtts to flex array (not in union) ]
-Signed-off-by: Brennan Lamoreaux <brennan.lamoreaux@broadcom.com>
+Reported-by: Yuhao Jiang <danisjiang@gmail.com>
+Reported-by: Junrui Luo <moonafterrain@outlook.com>
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Cc: stable@vger.kernel.org
+Signed-off-by: Junrui Luo <moonafterrain@outlook.com>
+Link: https://patch.msgid.link/SYBPR01MB7881DF762CAB45EE42F6D812AFC2A@SYBPR01MB7881.ausprd01.prod.outlook.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+[ No guard() in older trees ]
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/mellanox/mlx5/core/en.h     |    4 ++--
- drivers/net/ethernet/mellanox/mlx5/core/en/xdp.c |    4 +++-
- 2 files changed, 5 insertions(+), 3 deletions(-)
+ sound/isa/wavefront/wavefront_midi.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/net/ethernet/mellanox/mlx5/core/en.h
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/en.h
-@@ -199,7 +199,7 @@ static inline int mlx5e_get_max_num_chan
- struct mlx5e_tx_wqe {
- 	struct mlx5_wqe_ctrl_seg ctrl;
- 	struct mlx5_wqe_eth_seg  eth;
--	struct mlx5_wqe_data_seg data[0];
-+	struct mlx5_wqe_data_seg data[];
- };
+--- a/sound/isa/wavefront/wavefront_midi.c
++++ b/sound/isa/wavefront/wavefront_midi.c
+@@ -291,6 +291,7 @@ static int snd_wavefront_midi_input_clos
+ 	        return -EIO;
  
- struct mlx5e_rx_wqe_ll {
-@@ -215,7 +215,7 @@ struct mlx5e_umr_wqe {
- 	struct mlx5_wqe_ctrl_seg       ctrl;
- 	struct mlx5_wqe_umr_ctrl_seg   uctrl;
- 	struct mlx5_mkey_seg           mkc;
--	struct mlx5_mtt                inline_mtts[0];
-+	struct mlx5_mtt                inline_mtts[];
- };
+ 	spin_lock_irqsave (&midi->open, flags);
++	midi->substream_input[mpu] = NULL;
+ 	midi->mode[mpu] &= ~MPU401_MODE_INPUT;
+ 	spin_unlock_irqrestore (&midi->open, flags);
  
- extern const char mlx5e_self_tests[][ETH_GSTRING_LEN];
---- a/drivers/net/ethernet/mellanox/mlx5/core/en/xdp.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/en/xdp.c
-@@ -341,8 +341,10 @@ mlx5e_xmit_xdp_frame(struct mlx5e_xdpsq
+@@ -314,6 +315,7 @@ static int snd_wavefront_midi_output_clo
+ 	        return -EIO;
  
- 	/* copy the inline part if required */
- 	if (sq->min_inline_mode != MLX5_INLINE_MODE_NONE) {
--		memcpy(eseg->inline_hdr.start, xdptxd->data, MLX5E_XDP_MIN_INLINE);
-+		memcpy(eseg->inline_hdr.start, xdptxd->data, sizeof(eseg->inline_hdr.start));
- 		eseg->inline_hdr.sz = cpu_to_be16(MLX5E_XDP_MIN_INLINE);
-+		memcpy(dseg, xdptxd->data + sizeof(eseg->inline_hdr.start),
-+		       MLX5E_XDP_MIN_INLINE - sizeof(eseg->inline_hdr.start));
- 		dma_len  -= MLX5E_XDP_MIN_INLINE;
- 		dma_addr += MLX5E_XDP_MIN_INLINE;
- 		dseg++;
+ 	spin_lock_irqsave (&midi->open, flags);
++	midi->substream_output[mpu] = NULL;
+ 	midi->mode[mpu] &= ~MPU401_MODE_OUTPUT;
+ 	spin_unlock_irqrestore (&midi->open, flags);
+ 	return 0;
 
 
