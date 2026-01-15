@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4936C3AA1A8;
-	Thu, 15 Jan 2026 17:34:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 607963A7F5D;
+	Thu, 15 Jan 2026 17:34:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768498465; cv=none; b=VoR/PwiQ4f26q37rZ+mh0Ynnw72krWUyIk6uzziuQGVD5MNyE6U/g4zbRPPdfEKD+oW5jLs+xCQbG1MVSj8/xNUA1Ug5Z3YmZxs8QqQbk0X7GSGITvHMZwbAtm29Gh2ISD1nXzdxfP3AStqnc4FmaAiebKbp/vbh5CMIIdH1YkE=
+	t=1768498468; cv=none; b=LuDfRghh2gHh9EbUKrFLz5zrD3uy73iF4h1MlflrsFlznckQZh2ZHs9ipGI2894xDHVMtSROT3ixyKEgsZZw3Y17+K5PUPaLJ8CQnEZ73af4nBirGGhdXWdsqJ+wWRbYrTc2UiHd9lH4+DV9qi094nBhUfFFaXqfwpu5nrJS5bg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768498465; c=relaxed/simple;
-	bh=y31KjVAwaDhT675RqBEPNAtXVNNy9YwPtd4MA8eHMTM=;
+	s=arc-20240116; t=1768498468; c=relaxed/simple;
+	bh=kec0/pxSptzfIoeJq0FDv/mJRL3Zpj2HPLwgay8ly6Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LQ+jhgU6GxMIUo9zoTPn+cY5Hk5YbcoH/23UWoVmVvvtcGS3OSwuJPT5A8zyjAKzy35pY85kFj+DWOByPhWG4/QvlosP4i0DiqcVXwfKsmc5Y+4EHTN2PEJsQ/EszzJc6Dld3BlluwW+S0xaElAb98fff00eh/429Qn9b1jsuI0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tM8VFv6t; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=BFqCJn71ljO9242C4i7YPKWWXQuwrL6AeMGJwtfNjJx6/WKBaBAC6F/cZNRLoa+xojNtKMNAxTFO0NJTs6zb8hMt5AeOrgTVb+HH15iEIPWCwLvsU1KQbgwFraXyRBQSnSQERvUP6Jmsd/ziKDZebcIPsx8wbjCSfzNQqo0I230=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fQLgfPJ9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tM8VFv6t"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C75F9C116D0;
-	Thu, 15 Jan 2026 17:34:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fQLgfPJ9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A825CC16AAE;
+	Thu, 15 Jan 2026 17:34:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1768498465;
-	bh=y31KjVAwaDhT675RqBEPNAtXVNNy9YwPtd4MA8eHMTM=;
+	s=korg; t=1768498468;
+	bh=kec0/pxSptzfIoeJq0FDv/mJRL3Zpj2HPLwgay8ly6Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tM8VFv6tMprgo5BodMKnzYiYfP56HdJQKIYZjjzGXlQ1kR9/LADyertkbbTOSj6J/
-	 bShW3gYe0TWrveBaPwdFr7D23Y3dAWMD0Q3sBCxGNg+5fVyAtL8ZqIiiwpUEFaX1fK
-	 XmfWCXT2McZXsxwxfjNB5CVhyZb1fpop3fxo5LLk=
+	b=fQLgfPJ9JIE1P/OlaooHREhA7mV/5ihDuSlx+D+TXKWUm/Ie6OA2cR8e4oqGqVEhJ
+	 PWFeQ3DR/TmpNEDQfZM4N3uNCWrKSPKhuaK3w7dCjE1jEupa066V04jqtfzMRsjn+J
+	 rJ+zBwrt7rjTHQf1QoOXfaKoSSsei9URsJjiPS6Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	stable@kernel.org,
+	Hong Yun <yhong@link.cuhk.edu.hk>,
 	Chao Yu <chao@kernel.org>,
 	Jaegeuk Kim <jaegeuk@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 441/554] f2fs: fix to detect recoverable inode during dryrun of find_fsync_dnodes()
-Date: Thu, 15 Jan 2026 17:48:27 +0100
-Message-ID: <20260115164302.228804133@linuxfoundation.org>
+Subject: [PATCH 5.15 442/554] f2fs: use global inline_xattr_slab instead of per-sb slab cache
+Date: Thu, 15 Jan 2026 17:48:28 +0100
+Message-ID: <20260115164302.265750906@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260115164246.225995385@linuxfoundation.org>
 References: <20260115164246.225995385@linuxfoundation.org>
@@ -46,6 +47,7 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
@@ -54,88 +56,232 @@ Content-Transfer-Encoding: 8bit
 
 From: Chao Yu <chao@kernel.org>
 
-[ Upstream commit 68d05693f8c031257a0822464366e1c2a239a512 ]
+[ Upstream commit 1f27ef42bb0b7c0740c5616ec577ec188b8a1d05 ]
 
-mkfs.f2fs -f /dev/vdd
-mount /dev/vdd /mnt/f2fs
-touch /mnt/f2fs/foo
-sync		# avoid CP_UMOUNT_FLAG in last f2fs_checkpoint.ckpt_flags
-touch /mnt/f2fs/bar
-f2fs_io fsync /mnt/f2fs/bar
-f2fs_io shutdown 2 /mnt/f2fs
-umount /mnt/f2fs
-blockdev --setro /dev/vdd
-mount /dev/vdd /mnt/f2fs
-mount: /mnt/f2fs: WARNING: source write-protected, mounted read-only.
+As Hong Yun reported in mailing list:
 
-For the case if we create and fsync a new inode before sudden power-cut,
-without norecovery or disable_roll_forward mount option, the following
-mount will succeed w/o recovering last fsynced inode.
+loop7: detected capacity change from 0 to 131072
+------------[ cut here ]------------
+kmem_cache of name 'f2fs_xattr_entry-7:7' already exists
+WARNING: CPU: 0 PID: 24426 at mm/slab_common.c:110 kmem_cache_sanity_check mm/slab_common.c:109 [inline]
+WARNING: CPU: 0 PID: 24426 at mm/slab_common.c:110 __kmem_cache_create_args+0xa6/0x320 mm/slab_common.c:307
+CPU: 0 UID: 0 PID: 24426 Comm: syz.7.1370 Not tainted 6.17.0-rc4 #1 PREEMPT(full)
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.13.0-1ubuntu1.1 04/01/2014
+RIP: 0010:kmem_cache_sanity_check mm/slab_common.c:109 [inline]
+RIP: 0010:__kmem_cache_create_args+0xa6/0x320 mm/slab_common.c:307
+Call Trace:
+ __kmem_cache_create include/linux/slab.h:353 [inline]
+ f2fs_kmem_cache_create fs/f2fs/f2fs.h:2943 [inline]
+ f2fs_init_xattr_caches+0xa5/0xe0 fs/f2fs/xattr.c:843
+ f2fs_fill_super+0x1645/0x2620 fs/f2fs/super.c:4918
+ get_tree_bdev_flags+0x1fb/0x260 fs/super.c:1692
+ vfs_get_tree+0x43/0x140 fs/super.c:1815
+ do_new_mount+0x201/0x550 fs/namespace.c:3808
+ do_mount fs/namespace.c:4136 [inline]
+ __do_sys_mount fs/namespace.c:4347 [inline]
+ __se_sys_mount+0x298/0x2f0 fs/namespace.c:4324
+ do_syscall_x64 arch/x86/entry/syscall_64.c:63 [inline]
+ do_syscall_64+0x8e/0x3a0 arch/x86/entry/syscall_64.c:94
+ entry_SYSCALL_64_after_hwframe+0x76/0x7e
 
-The problem here is that we only check inode_list list after
-find_fsync_dnodes() in f2fs_recover_fsync_data() to find out whether
-there is recoverable data in the iamge, but there is a missed case, if
-last fsynced inode is not existing in last checkpoint, then, we will
-fail to get its inode due to nat of inode node is not existing in last
-checkpoint, so the inode won't be linked in inode_list.
+The bug can be reproduced w/ below scripts:
+- mount /dev/vdb /mnt1
+- mount /dev/vdc /mnt2
+- umount /mnt1
+- mounnt /dev/vdb /mnt1
 
-Let's detect such case in dyrun mode to fix this issue.
+The reason is if we created two slab caches, named f2fs_xattr_entry-7:3
+and f2fs_xattr_entry-7:7, and they have the same slab size. Actually,
+slab system will only create one slab cache core structure which has
+slab name of "f2fs_xattr_entry-7:3", and two slab caches share the same
+structure and cache address.
 
-After this change, mount will fail as expected below:
-mount: /mnt/f2fs: cannot mount /dev/vdd read-only.
-       dmesg(1) may have more information after failed mount system call.
-demsg:
-F2FS-fs (vdd): Need to recover fsync data, but write access unavailable, please try mount w/ disable_roll_forward or norecovery
+So, if we destroy f2fs_xattr_entry-7:3 cache w/ cache address, it will
+decrease reference count of slab cache, rather than release slab cache
+entirely, since there is one more user has referenced the cache.
 
+Then, if we try to create slab cache w/ name "f2fs_xattr_entry-7:3" again,
+slab system will find that there is existed cache which has the same name
+and trigger the warning.
+
+Let's changes to use global inline_xattr_slab instead of per-sb slab cache
+for fixing.
+
+Fixes: a999150f4fe3 ("f2fs: use kmem_cache pool during inline xattr lookups")
 Cc: stable@kernel.org
-Fixes: 6781eabba1bd ("f2fs: give -EINVAL for norecovery and rw mount")
+Reported-by: Hong Yun <yhong@link.cuhk.edu.hk>
+Tested-by: Hong Yun <yhong@link.cuhk.edu.hk>
 Signed-off-by: Chao Yu <chao@kernel.org>
 Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
-[ folio => page ]
+[ folio => page + different module init/exit ordering ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/f2fs/recovery.c |    9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
+ fs/f2fs/f2fs.h  |    3 ---
+ fs/f2fs/super.c |   15 +++++++--------
+ fs/f2fs/xattr.c |   32 +++++++++++---------------------
+ fs/f2fs/xattr.h |   10 ++++++----
+ 4 files changed, 24 insertions(+), 36 deletions(-)
 
---- a/fs/f2fs/recovery.c
-+++ b/fs/f2fs/recovery.c
-@@ -343,7 +343,7 @@ static int recover_inode(struct inode *i
+--- a/fs/f2fs/f2fs.h
++++ b/fs/f2fs/f2fs.h
+@@ -1763,9 +1763,6 @@ struct f2fs_sb_info {
+ 
+ 	struct workqueue_struct *post_read_wq;	/* post read workqueue */
+ 
+-	struct kmem_cache *inline_xattr_slab;	/* inline xattr entry */
+-	unsigned int inline_xattr_slab_size;	/* default inline xattr slab size */
+-
+ 	/* For reclaimed segs statistics per each GC mode */
+ 	unsigned int gc_segment_mode;		/* GC state for reclaimed segments */
+ 	unsigned int gc_reclaimed_segs[MAX_GC_MODE];	/* Reclaimed segs for each mode */
+--- a/fs/f2fs/super.c
++++ b/fs/f2fs/super.c
+@@ -1655,7 +1655,6 @@ static void f2fs_put_super(struct super_
+ 
+ 	destroy_device_list(sbi);
+ 	f2fs_destroy_page_array_cache(sbi);
+-	f2fs_destroy_xattr_caches(sbi);
+ 	mempool_destroy(sbi->write_io_dummy);
+ #ifdef CONFIG_QUOTA
+ 	for (i = 0; i < MAXQUOTAS; i++)
+@@ -4166,13 +4165,9 @@ try_onemore:
+ 		}
+ 	}
+ 
+-	/* init per sbi slab cache */
+-	err = f2fs_init_xattr_caches(sbi);
+-	if (err)
+-		goto free_io_dummy;
+ 	err = f2fs_init_page_array_cache(sbi);
+ 	if (err)
+-		goto free_xattr_cache;
++		goto free_io_dummy;
+ 
+ 	/* get an inode for meta space */
+ 	sbi->meta_inode = f2fs_iget(sb, F2FS_META_INO(sbi));
+@@ -4492,8 +4487,6 @@ free_meta_inode:
+ 	sbi->meta_inode = NULL;
+ free_page_array_cache:
+ 	f2fs_destroy_page_array_cache(sbi);
+-free_xattr_cache:
+-	f2fs_destroy_xattr_caches(sbi);
+ free_io_dummy:
+ 	mempool_destroy(sbi->write_io_dummy);
+ free_percpu:
+@@ -4660,7 +4653,12 @@ static int __init init_f2fs_fs(void)
+ 	err = f2fs_create_casefold_cache();
+ 	if (err)
+ 		goto free_compress_cache;
++	err = f2fs_init_xattr_cache();
++	if (err)
++		goto free_casefold_cache;
+ 	return 0;
++free_casefold_cache:
++	f2fs_destroy_casefold_cache();
+ free_compress_cache:
+ 	f2fs_destroy_compress_cache();
+ free_compress_mempool:
+@@ -4700,6 +4698,7 @@ fail:
+ 
+ static void __exit exit_f2fs_fs(void)
+ {
++	f2fs_destroy_xattr_cache();
+ 	f2fs_destroy_casefold_cache();
+ 	f2fs_destroy_compress_cache();
+ 	f2fs_destroy_compress_mempool();
+--- a/fs/f2fs/xattr.c
++++ b/fs/f2fs/xattr.c
+@@ -23,11 +23,12 @@
+ #include "xattr.h"
+ #include "segment.h"
+ 
++static struct kmem_cache *inline_xattr_slab;
+ static void *xattr_alloc(struct f2fs_sb_info *sbi, int size, bool *is_inline)
+ {
+-	if (likely(size == sbi->inline_xattr_slab_size)) {
++	if (likely(size == DEFAULT_XATTR_SLAB_SIZE)) {
+ 		*is_inline = true;
+-		return f2fs_kmem_cache_alloc(sbi->inline_xattr_slab,
++		return f2fs_kmem_cache_alloc(inline_xattr_slab,
+ 					GFP_F2FS_ZERO, false, sbi);
+ 	}
+ 	*is_inline = false;
+@@ -38,7 +39,7 @@ static void xattr_free(struct f2fs_sb_in
+ 							bool is_inline)
+ {
+ 	if (is_inline)
+-		kmem_cache_free(sbi->inline_xattr_slab, xattr_addr);
++		kmem_cache_free(inline_xattr_slab, xattr_addr);
+ 	else
+ 		kfree(xattr_addr);
+ }
+@@ -818,25 +819,14 @@ int f2fs_setxattr(struct inode *inode, i
+ 	return err;
  }
  
- static int find_fsync_dnodes(struct f2fs_sb_info *sbi, struct list_head *head,
--				bool check_only)
-+				bool check_only, bool *new_inode)
+-int f2fs_init_xattr_caches(struct f2fs_sb_info *sbi)
++int __init f2fs_init_xattr_cache(void)
  {
- 	struct curseg_info *curseg;
- 	struct page *page = NULL;
-@@ -400,6 +400,8 @@ static int find_fsync_dnodes(struct f2fs
- 			if (IS_ERR(entry)) {
- 				err = PTR_ERR(entry);
- 				if (err == -ENOENT) {
-+					if (check_only)
-+						*new_inode = true;
- 					err = 0;
- 					goto next;
- 				}
-@@ -805,6 +807,7 @@ int f2fs_recover_fsync_data(struct f2fs_
- 	unsigned long s_flags = sbi->sb->s_flags;
- 	bool need_writecp = false;
- 	bool fix_curseg_write_pointer = false;
-+	bool new_inode = false;
- #ifdef CONFIG_QUOTA
- 	int quota_enabled;
+-	dev_t dev = sbi->sb->s_bdev->bd_dev;
+-	char slab_name[32];
+-
+-	sprintf(slab_name, "f2fs_xattr_entry-%u:%u", MAJOR(dev), MINOR(dev));
+-
+-	sbi->inline_xattr_slab_size = F2FS_OPTION(sbi).inline_xattr_size *
+-					sizeof(__le32) + XATTR_PADDING_SIZE;
+-
+-	sbi->inline_xattr_slab = f2fs_kmem_cache_create(slab_name,
+-					sbi->inline_xattr_slab_size);
+-	if (!sbi->inline_xattr_slab)
+-		return -ENOMEM;
+-
+-	return 0;
++	inline_xattr_slab = f2fs_kmem_cache_create("f2fs_xattr_entry",
++					DEFAULT_XATTR_SLAB_SIZE);
++	return inline_xattr_slab ? 0 : -ENOMEM;
+ }
+ 
+-void f2fs_destroy_xattr_caches(struct f2fs_sb_info *sbi)
++void f2fs_destroy_xattr_cache(void)
+ {
+-	kmem_cache_destroy(sbi->inline_xattr_slab);
+-}
++	kmem_cache_destroy(inline_xattr_slab);
++}
+\ No newline at end of file
+--- a/fs/f2fs/xattr.h
++++ b/fs/f2fs/xattr.h
+@@ -88,6 +88,8 @@ struct f2fs_xattr_entry {
+ 			F2FS_TOTAL_EXTRA_ATTR_SIZE / sizeof(__le32) -	\
+ 			DEF_INLINE_RESERVED_SIZE -			\
+ 			MIN_INLINE_DENTRY_SIZE / sizeof(__le32))
++#define DEFAULT_XATTR_SLAB_SIZE	(DEFAULT_INLINE_XATTR_ADDRS *		\
++				sizeof(__le32) + XATTR_PADDING_SIZE)
+ 
+ /*
+  * On-disk structure of f2fs_xattr
+@@ -131,8 +133,8 @@ extern int f2fs_setxattr(struct inode *,
+ extern int f2fs_getxattr(struct inode *, int, const char *, void *,
+ 						size_t, struct page *);
+ extern ssize_t f2fs_listxattr(struct dentry *, char *, size_t);
+-extern int f2fs_init_xattr_caches(struct f2fs_sb_info *);
+-extern void f2fs_destroy_xattr_caches(struct f2fs_sb_info *);
++int __init f2fs_init_xattr_cache(void);
++void f2fs_destroy_xattr_cache(void);
+ #else
+ 
+ #define f2fs_xattr_handlers	NULL
+@@ -149,8 +151,8 @@ static inline int f2fs_getxattr(struct i
+ {
+ 	return -EOPNOTSUPP;
+ }
+-static inline int f2fs_init_xattr_caches(struct f2fs_sb_info *sbi) { return 0; }
+-static inline void f2fs_destroy_xattr_caches(struct f2fs_sb_info *sbi) { }
++static inline int __init f2fs_init_xattr_cache(void) { return 0; }
++static inline void f2fs_destroy_xattr_cache(void) { }
  #endif
-@@ -829,8 +832,8 @@ int f2fs_recover_fsync_data(struct f2fs_
- 	down_write(&sbi->cp_global_sem);
  
- 	/* step #1: find fsynced inode numbers */
--	err = find_fsync_dnodes(sbi, &inode_list, check_only);
--	if (err || list_empty(&inode_list))
-+	err = find_fsync_dnodes(sbi, &inode_list, check_only, &new_inode);
-+	if (err < 0 || (list_empty(&inode_list) && (!check_only || !new_inode)))
- 		goto skip;
- 
- 	if (check_only) {
+ #ifdef CONFIG_F2FS_FS_SECURITY
 
 
