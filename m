@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB5083D6465;
-	Thu, 15 Jan 2026 17:49:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7EBEA3D6493;
+	Thu, 15 Jan 2026 17:49:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768499368; cv=none; b=SDuH+g8Gbm1ow+ia5CLukxQm2n25xBa6+W1TZ71vjPYTZV28bL1RLTZiesOdKOJOUInVqMiTOXXi4NWpP93IqTeUYs1ivLJ7V8gSMm+XsV+v+1FLF9vCv99rNpUaVZS0Hu9clwRzZrurAevhX0gf5EuiB/yGqCI27QGlITcmP58=
+	t=1768499371; cv=none; b=axAl4WDfRuDZJG0nTJmhLg8zS72pOF6JNL+R+59ABsah2Ys65H+KgKx9cC3ImRHdss1HAr9D0yra2qvGx6u0ovtWOFoiGaoyg5SriYEKw+EMRnvsbX4xzMfwc5ERvgsAwbDbSeF1gbI/65TSDgtfFWn//15ciBAEhmCz9yBtJ9c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768499368; c=relaxed/simple;
-	bh=H7ojO6amcCifPlF4BSQWhFlgxF1TVM8LFtVY9BroH1o=;
+	s=arc-20240116; t=1768499371; c=relaxed/simple;
+	bh=/4OLCc4VHOifrS6i6ZwcmK0xxW1jaUbX2ySBuiABqXs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MKb20qPATA5U1iw3Rnf/KGY9kynzHbM7RXagzDzFpCdDmWvYQSHcYz9JzJHjDph/wQnoy8wW873HGC/YNuxBgH5TX3b8mdN7LcZOSBaTuLsjXm8oehnDQmGjSf9W6SvO8Ke1bd7hzZcPn94hewAyBKPRKr1vRKTO8fJ8MrW+VaE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=q3NcexK4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SBtkWYERQy4urK6RDa91dGchJrwf3PObjJ2idzOtyuNonJJvMNfGxjkcOkPCuGFS1xPkbEcGmuXzjyXe8qIwSnDmx5j8mAl8fxr97JHqGvZQMNpOKuEHCNfxklLP1H2ol0yIDPQpevHYl2VhOY5LbY9VnSSSNNou2pin9+9EMYE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=u1XfJ1hR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="q3NcexK4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 37080C116D0;
-	Thu, 15 Jan 2026 17:49:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="u1XfJ1hR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 095A2C116D0;
+	Thu, 15 Jan 2026 17:49:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1768499368;
-	bh=H7ojO6amcCifPlF4BSQWhFlgxF1TVM8LFtVY9BroH1o=;
+	s=korg; t=1768499371;
+	bh=/4OLCc4VHOifrS6i6ZwcmK0xxW1jaUbX2ySBuiABqXs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=q3NcexK4uutaqhKdwkbCjBrUqqgFIKrF4sJOSawEFeQjcjMs2B8QxgfByVuzM1+Zv
-	 OvjLlyLfd0G67EuUAofVZwzQST29NJgZSQVqzTHiCwUfvvdAd9BJFm8CTe8afM6nW3
-	 UmrVGX/yaT2dsaBgpxbWJWmtbDlqA5WWwCSR4lSI=
+	b=u1XfJ1hR9kTugKimq/qyG7gQRHlqgiQhWbznbHvwE8OvAwruInWOvRk09WuCca9mY
+	 pBG43hs6qPFHaSLi4hFuwCNvTvnaIzZIfWZPj1W46DLFLMQt7m277O3hAhP0doYnup
+	 Y9rjjZ2lDuG1JtoX5P/MFx85ZdkFYd+STjI9cf8Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sakari Ailus <sakari.ailus@linux.intel.com>,
-	Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>,
-	Jonathan Cameron <jonathan.cameron@huawei.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 159/451] ACPI: property: Use ACPI functions in acpi_graph_get_next_endpoint() only
-Date: Thu, 15 Jan 2026 17:46:00 +0100
-Message-ID: <20260115164236.663419198@linuxfoundation.org>
+	Christoffer Sandberg <cs@tuxedo.de>,
+	Werner Sembach <wse@tuxedocomputers.com>,
+	Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Subject: [PATCH 5.10 196/451] Input: i8042 - add TUXEDO InfinityBook Max Gen10 AMD to i8042 quirk table
+Date: Thu, 15 Jan 2026 17:46:37 +0100
+Message-ID: <20260115164237.991764534@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260115164230.864985076@linuxfoundation.org>
 References: <20260115164230.864985076@linuxfoundation.org>
@@ -53,58 +51,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sakari Ailus <sakari.ailus@linux.intel.com>
+From: Christoffer Sandberg <cs@tuxedo.de>
 
-[ Upstream commit 5d010473cdeaabf6a2d3a9e2aed2186c1b73c213 ]
+commit aed3716db7fff74919cc5775ca3a80c8bb246489 upstream.
 
-Calling fwnode_get_next_child_node() in ACPI implementation of the fwnode
-property API is somewhat problematic as the latter is used in the
-impelementation of the former. Instead of using
-fwnode_get_next_child_node() in acpi_graph_get_next_endpoint(), call
-acpi_get_next_subnode() directly instead.
+The device occasionally wakes up from suspend with missing input on the
+internal keyboard and the following suspend attempt results in an instant
+wake-up. The quirks fix both issues for this device.
 
-Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
-Reviewed-by: Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>
-Reviewed-by: Jonathan Cameron <jonathan.cameron@huawei.com>
-Link: https://patch.msgid.link/20251001104320.1272752-3-sakari.ailus@linux.intel.com
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Christoffer Sandberg <cs@tuxedo.de>
+Signed-off-by: Werner Sembach <wse@tuxedocomputers.com>
+Cc: stable@vger.kernel.org
+Link: https://patch.msgid.link/20251124203336.64072-1-wse@tuxedocomputers.com
+Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/acpi/property.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/input/serio/i8042-acpipnpio.h |    7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/drivers/acpi/property.c b/drivers/acpi/property.c
-index 7c3d98fae457d..3a3efd15b8497 100644
---- a/drivers/acpi/property.c
-+++ b/drivers/acpi/property.c
-@@ -1188,7 +1188,7 @@ static struct fwnode_handle *acpi_graph_get_next_endpoint(
- 
- 	if (!prev) {
- 		do {
--			port = fwnode_get_next_child_node(fwnode, port);
-+			port = acpi_get_next_subnode(fwnode, port);
- 			/*
- 			 * The names of the port nodes begin with "port@"
- 			 * followed by the number of the port node and they also
-@@ -1206,13 +1206,13 @@ static struct fwnode_handle *acpi_graph_get_next_endpoint(
- 	if (!port)
- 		return NULL;
- 
--	endpoint = fwnode_get_next_child_node(port, prev);
-+	endpoint = acpi_get_next_subnode(port, prev);
- 	while (!endpoint) {
--		port = fwnode_get_next_child_node(fwnode, port);
-+		port = acpi_get_next_subnode(fwnode, port);
- 		if (!port)
- 			break;
- 		if (is_acpi_graph_node(port, "port"))
--			endpoint = fwnode_get_next_child_node(port, NULL);
-+			endpoint = acpi_get_next_subnode(port, NULL);
- 	}
- 
+--- a/drivers/input/serio/i8042-acpipnpio.h
++++ b/drivers/input/serio/i8042-acpipnpio.h
+@@ -1169,6 +1169,13 @@ static const struct dmi_system_id i8042_
+ 		.driver_data = (void *)(SERIO_QUIRK_NOMUX | SERIO_QUIRK_RESET_ALWAYS |
+ 					SERIO_QUIRK_NOLOOP | SERIO_QUIRK_NOPNP)
+ 	},
++	{
++		.matches = {
++			DMI_MATCH(DMI_BOARD_NAME, "X5KK45xS_X5SP45xS"),
++		},
++		.driver_data = (void *)(SERIO_QUIRK_NOMUX | SERIO_QUIRK_RESET_ALWAYS |
++					SERIO_QUIRK_NOLOOP | SERIO_QUIRK_NOPNP)
++	},
  	/*
--- 
-2.51.0
-
+ 	 * A lot of modern Clevo barebones have touchpad and/or keyboard issues
+ 	 * after suspend fixable with nomux + reset + noloop + nopnp. Luckily,
 
 
