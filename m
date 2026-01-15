@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB1A827A462;
-	Thu, 15 Jan 2026 17:37:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AAE7027A462;
+	Thu, 15 Jan 2026 17:37:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768498636; cv=none; b=BFaHMAJOPLsL0+PhEakNMP1+/JwegMWNh0Tmqqzqo14CizxIP/hDgFMoFTqQAhjdS7HoeEVCNLjzrQQDLmWbWhU6wxVlc1gcJpFUvSWJutwF0RTPCn+qAX933CRoj2QUFUg/buCgBZL6ZSWeKHEaNI43p8gVVbVmpKNM0UzJor4=
+	t=1768498639; cv=none; b=F3Q3lKe53xzEjC7gMOdoFJVeHogOvd0kIYgmTTwUj9cQs6xZTT2rIZZH3ZtLfVLwaAaBxPkMJOMhtj5X5AUwquump+UUWsRLn/BzMNrp4DZo89NMPfVGngRyNVq9du6bm+KSHsoYdGIqsq8iXMZaW6xWbd63tdJza7SeX3wspW0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768498636; c=relaxed/simple;
-	bh=5qDZOPGacmfKkHxIZN3IbE5GCZiZ8Nqm1zmwDf4I/5c=;
+	s=arc-20240116; t=1768498639; c=relaxed/simple;
+	bh=6B3KGPbe2loPMSMJ9WOsXwBni7KBe/ImFNIGbgHxILE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rWALctI4CT6IyXm0/t9OJBvHvY+4tFD7Gs8ZUAJ1jrjNvEFz7CXqACNKKtAuRxhtmLDvW6Tw1b61/8ZWV5k6qEWDSdBPAVeN9OGjYiURjV5LJqps2sxq7rj2yfaVTEHjvxCqJCFHl78XQ2vYR2rcaMM7sFh83n4xd/FsAQWMwzc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sE+53DrV; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qvSQ6hTOeKClpUIQjUuPTBVzTTCg9AgPqcspS9IxJNJGxBpgHUw46JAw3nrcpbQV+vQagDqZWKIzB3XA4JLIs9BoLYXx1K0hep2rPxPmWUEjO8hEvrx+14OddAHn32Ht/jCc9IIwZ3GzbsxSkOjaZ/nyAsJLdfQNF8So0u6Hmo0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=l/IF/fuu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sE+53DrV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 67B7AC116D0;
-	Thu, 15 Jan 2026 17:37:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="l/IF/fuu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 38077C116D0;
+	Thu, 15 Jan 2026 17:37:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1768498636;
-	bh=5qDZOPGacmfKkHxIZN3IbE5GCZiZ8Nqm1zmwDf4I/5c=;
+	s=korg; t=1768498639;
+	bh=6B3KGPbe2loPMSMJ9WOsXwBni7KBe/ImFNIGbgHxILE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sE+53DrVGQAEMbX7q9zGO1M83zKchrCc14MIPhLL5LXjpdavISVfgFyojU9eTkJzS
-	 WSHBEnASlV9DglZu/eKWJVT/NJl5VyZdTj01uqkniXCoXz0qbxL1uIgOqprIxYi+BG
-	 x+Nn9g9WmJgbRnDaNEtLCxofv15k5cBg915JsH2U=
+	b=l/IF/fuuW94lu1d1TitC+iXa5NtycdVybtzetW+T5mShMuJDAQ7ysZSuutD6lf4QK
+	 YTeu9PY5GBRllizrLTP9CAp/SyCAFtWuwkljGIG+zmpYNt7QEAFESw/QP86gCI+1DW
+	 F/4nZD7LKxJ63EySPTyEjzkr4DuMQbY7o5SMfBAc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thomas Fourier <fourier.thomas@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 5.15 502/554] net: 3com: 3c59x: fix possible null dereference in vortex_probe1()
-Date: Thu, 15 Jan 2026 17:49:28 +0100
-Message-ID: <20260115164304.488460644@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Tomas Winkler <tomasw@gmail.com>,
+	Alexander Usyskin <alexander.usyskin@intel.com>
+Subject: [PATCH 5.15 503/554] mei: me: add nova lake point S DID
+Date: Thu, 15 Jan 2026 17:49:29 +0100
+Message-ID: <20260115164304.524377864@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260115164246.225995385@linuxfoundation.org>
 References: <20260115164246.225995385@linuxfoundation.org>
@@ -50,33 +51,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thomas Fourier <fourier.thomas@gmail.com>
+From: Alexander Usyskin <alexander.usyskin@intel.com>
 
-commit a4e305ed60f7c41bbf9aabc16dd75267194e0de3 upstream.
+commit 420f423defcf6d0af2263d38da870ca4a20c0990 upstream.
 
-pdev can be null and free_ring: can be called in 1297 with a null
-pdev.
+Add Nova Lake S device id.
 
-Fixes: 55c82617c3e8 ("3c59x: convert to generic DMA API")
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Thomas Fourier <fourier.thomas@gmail.com>
-Link: https://patch.msgid.link/20260106094731.25819-2-fourier.thomas@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Cc: stable <stable@kernel.org>
+Co-developed-by: Tomas Winkler <tomasw@gmail.com>
+Signed-off-by: Tomas Winkler <tomasw@gmail.com>
+Signed-off-by: Alexander Usyskin <alexander.usyskin@intel.com>
+Link: https://patch.msgid.link/20251215105915.1672659-1-alexander.usyskin@intel.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/3com/3c59x.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/misc/mei/hw-me-regs.h |    2 ++
+ drivers/misc/mei/pci-me.c     |    2 ++
+ 2 files changed, 4 insertions(+)
 
---- a/drivers/net/ethernet/3com/3c59x.c
-+++ b/drivers/net/ethernet/3com/3c59x.c
-@@ -1471,7 +1471,7 @@ static int vortex_probe1(struct device *
- 		return 0;
+--- a/drivers/misc/mei/hw-me-regs.h
++++ b/drivers/misc/mei/hw-me-regs.h
+@@ -122,6 +122,8 @@
  
- free_ring:
--	dma_free_coherent(&pdev->dev,
-+	dma_free_coherent(gendev,
- 		sizeof(struct boom_rx_desc) * RX_RING_SIZE +
- 		sizeof(struct boom_tx_desc) * TX_RING_SIZE,
- 		vp->rx_ring, vp->rx_ring_dma);
+ #define MEI_DEV_ID_WCL_P      0x4D70  /* Wildcat Lake P */
+ 
++#define MEI_DEV_ID_NVL_S      0x6E68  /* Nova Lake Point S */
++
+ /*
+  * MEI HW Section
+  */
+--- a/drivers/misc/mei/pci-me.c
++++ b/drivers/misc/mei/pci-me.c
+@@ -128,6 +128,8 @@ static const struct pci_device_id mei_me
+ 
+ 	{MEI_PCI_DEVICE(MEI_DEV_ID_WCL_P, MEI_ME_PCH15_CFG)},
+ 
++	{MEI_PCI_DEVICE(MEI_DEV_ID_NVL_S, MEI_ME_PCH15_CFG)},
++
+ 	/* required last entry */
+ 	{0, }
+ };
 
 
