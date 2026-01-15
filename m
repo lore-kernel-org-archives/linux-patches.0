@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A78529ACDD;
-	Thu, 15 Jan 2026 17:00:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 782182C028F;
+	Thu, 15 Jan 2026 17:00:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768496454; cv=none; b=FCfLQiDuBIGVGwv4kYDLR5noRVz9tsyHMMCcEfQMWDizYGx0bBv0xv/Rrm02Oy2iFily2eemRUIZk8rm/svEXcSZNZsU2bFy9sEh6tyRy75vb+9Q9ByY9Q4Z5J+aVg9cuVWvzH/rgBxJvqNoJOxzagdeYwW3NSsd9ibIMM8MV4w=
+	t=1768496457; cv=none; b=t+cNBe+NdxbeAWm270pn8Rfub2kQ4owXzs8ARIdw2VlQmbMqKDnKz8pC91NIQ1t0JWWCiegB92xM/v/NDTL6iGSlPi+IYV2uuRDQ6WOI5gi5TWWQDm6gcbUFtyQVpzD4RUe3KO+R2aeC8a2lpvnlA2W4kwl70FZEslcVRxIdy6c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768496454; c=relaxed/simple;
-	bh=OJuO1XyNyxHEjTsk04N495K/L/Ih+viNw3vQ5NcP7mQ=;
+	s=arc-20240116; t=1768496457; c=relaxed/simple;
+	bh=gvAM6CMrLKa6ztUkzaMprbadM4IIy1533Nd5uLCKiIE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=q1MqBnXVFp6ZGv2xncxBJDPxzEcraNvomeqDvLCVmHypxFn5SjJqUA7wDXgCn+caLRcctiIWa+qbV9X88PAoiVJcwysYf1ERaAV2jyp+c36P6wCIhAja+iGmM84zLYU33BZmrn/5diQNVSC2Q/azJqfHeWunOI0ip2Dm5LX6oyk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=q5xHfqip; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PV3rj88E524M7gF9ZwgF2DkR0zUQKtTWOJ19qZ8hPssp/cI6IYkYXC2Mv1O7Qh1Eg2tu7KBQCr62etNGBQ0Dm4dS5NGecvKA5d4Qtau4JZQL4ta1sRjZTEXk+2V4MIMmOr6V8Ocpvef9AwENe9IMC3oSafnkZGRf0qnVdSg7zO0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WwmiDmD2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="q5xHfqip"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22944C116D0;
-	Thu, 15 Jan 2026 17:00:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WwmiDmD2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 05CD2C116D0;
+	Thu, 15 Jan 2026 17:00:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1768496454;
-	bh=OJuO1XyNyxHEjTsk04N495K/L/Ih+viNw3vQ5NcP7mQ=;
+	s=korg; t=1768496457;
+	bh=gvAM6CMrLKa6ztUkzaMprbadM4IIy1533Nd5uLCKiIE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=q5xHfqipr/kZeFiHxIHIDiDJ6mmlVyEH9MgCkzV1TI3y+4MIhEMulqksO5628So07
-	 JDvCRCw1YFen3Ui7Ho5NWj2oAvPrJINGjWVa7nHln5ADWi2DXYSen0ZOemMP96n1Co
-	 pem+lAbBiDPNDM56MH1UpY4Az2vevlB/nLDHmatY=
+	b=WwmiDmD2ngUZgPSsyF9IyN5QmOvKFrdOHO2eaIeeHANgjtGLzOEeLQSefTX3N8nN1
+	 01+Z7GRjDohwqxyJIZyk4yE2owQe3NYLvJDkVKPNmeNEUGNiM8emY9U6Xy/QvqewlD
+	 zAkdu2cTIYZbdMSf5j4oBDaIlk3rkbJvUlvLuFhU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Val Packett <val@packett.cool>,
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Linus Walleij <linusw@kernel.org>
-Subject: [PATCH 6.12 019/119] pinctrl: qcom: lpass-lpi: mark the GPIO controller as sleeping
-Date: Thu, 15 Jan 2026 17:47:14 +0100
-Message-ID: <20260115164152.655534501@linuxfoundation.org>
+	Li Lingfeng <lilingfeng3@huawei.com>,
+	NeilBrown <neil@brown.name>,
+	Jeff Layton <jlayton@kernel.org>,
+	Chuck Lever <chuck.lever@oracle.com>
+Subject: [PATCH 6.12 002/119] nfsd: provide locking for v4_end_grace
+Date: Thu, 15 Jan 2026 17:46:57 +0100
+Message-ID: <20260115164152.044757840@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260115164151.948839306@linuxfoundation.org>
 References: <20260115164151.948839306@linuxfoundation.org>
@@ -53,87 +52,182 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+From: NeilBrown <neil@brown.name>
 
-commit ebc18e9854e5a2b62a041fb57b216a903af45b85 upstream.
+commit 2857bd59feb63fcf40fe4baf55401baea6b4feb4 upstream.
 
-The gpio_chip settings in this driver say the controller can't sleep
-but it actually uses a mutex for synchronization. This triggers the
-following BUG():
+Writing to v4_end_grace can race with server shutdown and result in
+memory being accessed after it was freed - reclaim_str_hashtbl in
+particularly.
 
-[    9.233659] BUG: sleeping function called from invalid context at kernel/locking/mutex.c:281
-[    9.233665] in_atomic(): 1, irqs_disabled(): 1, non_block: 0, pid: 554, name: (udev-worker)
-[    9.233669] preempt_count: 1, expected: 0
-[    9.233673] RCU nest depth: 0, expected: 0
-[    9.233688] Tainted: [W]=WARN
-[    9.233690] Hardware name: Dell Inc. Latitude 7455/0FK7MX, BIOS 2.10.1 05/20/2025
-[    9.233694] Call trace:
-[    9.233696]  show_stack+0x24/0x38 (C)
-[    9.233709]  dump_stack_lvl+0x40/0x88
-[    9.233716]  dump_stack+0x18/0x24
-[    9.233722]  __might_resched+0x148/0x160
-[    9.233731]  __might_sleep+0x38/0x98
-[    9.233736]  mutex_lock+0x30/0xd8
-[    9.233749]  lpi_config_set+0x2e8/0x3c8 [pinctrl_lpass_lpi]
-[    9.233757]  lpi_gpio_direction_output+0x58/0x90 [pinctrl_lpass_lpi]
-[    9.233761]  gpiod_direction_output_raw_commit+0x110/0x428
-[    9.233772]  gpiod_direction_output_nonotify+0x234/0x358
-[    9.233779]  gpiod_direction_output+0x38/0xd0
-[    9.233786]  gpio_shared_proxy_direction_output+0xb8/0x2a8 [gpio_shared_proxy]
-[    9.233792]  gpiod_direction_output_raw_commit+0x110/0x428
-[    9.233799]  gpiod_direction_output_nonotify+0x234/0x358
-[    9.233806]  gpiod_configure_flags+0x2c0/0x580
-[    9.233812]  gpiod_find_and_request+0x358/0x4f8
-[    9.233819]  gpiod_get_index+0x7c/0x98
-[    9.233826]  devm_gpiod_get+0x34/0xb0
-[    9.233829]  reset_gpio_probe+0x58/0x128 [reset_gpio]
-[    9.233836]  auxiliary_bus_probe+0xb0/0xf0
-[    9.233845]  really_probe+0x14c/0x450
-[    9.233853]  __driver_probe_device+0xb0/0x188
-[    9.233858]  driver_probe_device+0x4c/0x250
-[    9.233863]  __driver_attach+0xf8/0x2a0
-[    9.233868]  bus_for_each_dev+0xf8/0x158
-[    9.233872]  driver_attach+0x30/0x48
-[    9.233876]  bus_add_driver+0x158/0x2b8
-[    9.233880]  driver_register+0x74/0x118
-[    9.233886]  __auxiliary_driver_register+0x94/0xe8
-[    9.233893]  init_module+0x34/0xfd0 [reset_gpio]
-[    9.233898]  do_one_initcall+0xec/0x300
-[    9.233903]  do_init_module+0x64/0x260
-[    9.233910]  load_module+0x16c4/0x1900
-[    9.233915]  __arm64_sys_finit_module+0x24c/0x378
-[    9.233919]  invoke_syscall+0x4c/0xe8
-[    9.233925]  el0_svc_common+0x8c/0xf0
-[    9.233929]  do_el0_svc+0x28/0x40
-[    9.233934]  el0_svc+0x38/0x100
-[    9.233938]  el0t_64_sync_handler+0x84/0x130
-[    9.233943]  el0t_64_sync+0x17c/0x180
+We cannot hold nfsd_mutex across the nfsd4_end_grace() call as that is
+held while client_tracking_op->init() is called and that can wait for
+an upcall to nfsdcltrack which can write to v4_end_grace, resulting in a
+deadlock.
 
-Mark the controller as sleeping.
+nfsd4_end_grace() is also called by the landromat work queue and this
+doesn't require locking as server shutdown will stop the work and wait
+for it before freeing anything that nfsd4_end_grace() might access.
 
-Fixes: 6e261d1090d6 ("pinctrl: qcom: Add sm8250 lpass lpi pinctrl driver")
+However, we must be sure that writing to v4_end_grace doesn't restart
+the work item after shutdown has already waited for it.  For this we
+add a new flag protected with nn->client_lock.  It is set only while it
+is safe to make client tracking calls, and v4_end_grace only schedules
+work while the flag is set with the spinlock held.
+
+So this patch adds a nfsd_net field "client_tracking_active" which is
+set as described.  Another field "grace_end_forced", is set when
+v4_end_grace is written.  After this is set, and providing
+client_tracking_active is set, the laundromat is scheduled.
+This "grace_end_forced" field bypasses other checks for whether the
+grace period has finished.
+
+This resolves a race which can result in use-after-free.
+
+Reported-by: Li Lingfeng <lilingfeng3@huawei.com>
+Closes: https://lore.kernel.org/linux-nfs/20250623030015.2353515-1-neil@brown.name/T/#t
+Fixes: 7f5ef2e900d9 ("nfsd: add a v4_end_grace file to /proc/fs/nfsd")
 Cc: stable@vger.kernel.org
-Reported-by: Val Packett <val@packett.cool>
-Closes: https://lore.kernel.org/all/98c0f185-b0e0-49ea-896c-f3972dd011ca@packett.cool/
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Reviewed-by: Bjorn Andersson <andersson@kernel.org>
-Signed-off-by: Linus Walleij <linusw@kernel.org>
+Signed-off-by: NeilBrown <neil@brown.name>
+Tested-by: Li Lingfeng <lilingfeng3@huawei.com>
+Reviewed-by: Jeff Layton <jlayton@kernel.org>
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pinctrl/qcom/pinctrl-lpass-lpi.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/nfsd/netns.h     |    2 ++
+ fs/nfsd/nfs4state.c |   42 ++++++++++++++++++++++++++++++++++++++++--
+ fs/nfsd/nfsctl.c    |    3 +--
+ fs/nfsd/state.h     |    2 +-
+ 4 files changed, 44 insertions(+), 5 deletions(-)
 
---- a/drivers/pinctrl/qcom/pinctrl-lpass-lpi.c
-+++ b/drivers/pinctrl/qcom/pinctrl-lpass-lpi.c
-@@ -484,7 +484,7 @@ int lpi_pinctrl_probe(struct platform_de
- 	pctrl->chip.base = -1;
- 	pctrl->chip.ngpio = data->npins;
- 	pctrl->chip.label = dev_name(dev);
--	pctrl->chip.can_sleep = false;
-+	pctrl->chip.can_sleep = true;
+--- a/fs/nfsd/netns.h
++++ b/fs/nfsd/netns.h
+@@ -66,6 +66,8 @@ struct nfsd_net {
  
- 	mutex_init(&pctrl->lock);
+ 	struct lock_manager nfsd4_manager;
+ 	bool grace_ended;
++	bool grace_end_forced;
++	bool client_tracking_active;
+ 	time64_t boot_time;
  
+ 	struct dentry *nfsd_client_dir;
+--- a/fs/nfsd/nfs4state.c
++++ b/fs/nfsd/nfs4state.c
+@@ -84,7 +84,7 @@ static u64 current_sessionid = 1;
+ /* forward declarations */
+ static bool check_for_locks(struct nfs4_file *fp, struct nfs4_lockowner *lowner);
+ static void nfs4_free_ol_stateid(struct nfs4_stid *stid);
+-void nfsd4_end_grace(struct nfsd_net *nn);
++static void nfsd4_end_grace(struct nfsd_net *nn);
+ static void _free_cpntf_state_locked(struct nfsd_net *nn, struct nfs4_cpntf_state *cps);
+ static void nfsd4_file_hash_remove(struct nfs4_file *fi);
+ static void deleg_reaper(struct nfsd_net *nn);
+@@ -6294,7 +6294,7 @@ nfsd4_renew(struct svc_rqst *rqstp, stru
+ 	return nfs_ok;
+ }
+ 
+-void
++static void
+ nfsd4_end_grace(struct nfsd_net *nn)
+ {
+ 	/* do nothing if grace period already ended */
+@@ -6327,6 +6327,33 @@ nfsd4_end_grace(struct nfsd_net *nn)
+ 	 */
+ }
+ 
++/**
++ * nfsd4_force_end_grace - forcibly end the NFSv4 grace period
++ * @nn: network namespace for the server instance to be updated
++ *
++ * Forces bypass of normal grace period completion, then schedules
++ * the laundromat to end the grace period immediately. Does not wait
++ * for the grace period to fully terminate before returning.
++ *
++ * Return values:
++ *   %true: Grace termination schedule
++ *   %false: No action was taken
++ */
++bool nfsd4_force_end_grace(struct nfsd_net *nn)
++{
++	if (!nn->client_tracking_ops)
++		return false;
++	spin_lock(&nn->client_lock);
++	if (nn->grace_ended || !nn->client_tracking_active) {
++		spin_unlock(&nn->client_lock);
++		return false;
++	}
++	WRITE_ONCE(nn->grace_end_forced, true);
++	mod_delayed_work(laundry_wq, &nn->laundromat_work, 0);
++	spin_unlock(&nn->client_lock);
++	return true;
++}
++
+ /*
+  * If we've waited a lease period but there are still clients trying to
+  * reclaim, wait a little longer to give them a chance to finish.
+@@ -6336,6 +6363,8 @@ static bool clients_still_reclaiming(str
+ 	time64_t double_grace_period_end = nn->boot_time +
+ 					   2 * nn->nfsd4_lease;
+ 
++	if (READ_ONCE(nn->grace_end_forced))
++		return false;
+ 	if (nn->track_reclaim_completes &&
+ 			atomic_read(&nn->nr_reclaim_complete) ==
+ 			nn->reclaim_str_hashtbl_size)
+@@ -8655,6 +8684,8 @@ static int nfs4_state_create_net(struct
+ 	nn->unconf_name_tree = RB_ROOT;
+ 	nn->boot_time = ktime_get_real_seconds();
+ 	nn->grace_ended = false;
++	nn->grace_end_forced = false;
++	nn->client_tracking_active = false;
+ 	nn->nfsd4_manager.block_opens = true;
+ 	INIT_LIST_HEAD(&nn->nfsd4_manager.list);
+ 	INIT_LIST_HEAD(&nn->client_lru);
+@@ -8735,6 +8766,10 @@ nfs4_state_start_net(struct net *net)
+ 		return ret;
+ 	locks_start_grace(net, &nn->nfsd4_manager);
+ 	nfsd4_client_tracking_init(net);
++	/* safe for laundromat to run now */
++	spin_lock(&nn->client_lock);
++	nn->client_tracking_active = true;
++	spin_unlock(&nn->client_lock);
+ 	if (nn->track_reclaim_completes && nn->reclaim_str_hashtbl_size == 0)
+ 		goto skip_grace;
+ 	printk(KERN_INFO "NFSD: starting %lld-second grace period (net %x)\n",
+@@ -8775,6 +8810,9 @@ nfs4_state_shutdown_net(struct net *net)
+ 
+ 	shrinker_free(nn->nfsd_client_shrinker);
+ 	cancel_work_sync(&nn->nfsd_shrinker_work);
++	spin_lock(&nn->client_lock);
++	nn->client_tracking_active = false;
++	spin_unlock(&nn->client_lock);
+ 	cancel_delayed_work_sync(&nn->laundromat_work);
+ 	locks_end_grace(&nn->nfsd4_manager);
+ 
+--- a/fs/nfsd/nfsctl.c
++++ b/fs/nfsd/nfsctl.c
+@@ -1123,10 +1123,9 @@ static ssize_t write_v4_end_grace(struct
+ 		case 'Y':
+ 		case 'y':
+ 		case '1':
+-			if (!nn->nfsd_serv)
++			if (!nfsd4_force_end_grace(nn))
+ 				return -EBUSY;
+ 			trace_nfsd_end_grace(netns(file));
+-			nfsd4_end_grace(nn);
+ 			break;
+ 		default:
+ 			return -EINVAL;
+--- a/fs/nfsd/state.h
++++ b/fs/nfsd/state.h
+@@ -767,7 +767,7 @@ static inline void nfsd4_revoke_states(s
+ #endif
+ 
+ /* grace period management */
+-void nfsd4_end_grace(struct nfsd_net *nn);
++bool nfsd4_force_end_grace(struct nfsd_net *nn);
+ 
+ /* nfs4recover operations */
+ extern int nfsd4_client_tracking_init(struct net *net);
 
 
