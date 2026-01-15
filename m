@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF42F2D060B;
-	Thu, 15 Jan 2026 17:36:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BDD171A2389;
+	Thu, 15 Jan 2026 17:36:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768498588; cv=none; b=gGRFlYBGHU7tRJnCgxtlaqwK32HSVdUWtKiY5b9EUhLKCbTVbGsq2eOECwmNvcxRoQUI9UuvNiZ+tG5zQHChxV/QGsXai8FpR6kER1Q52Z0mD+knhUN1oO8PWvlbDmJH8a1j8ORgb8PeEzghEtdLnX3PTk5eYtke6cjlhccuWpI=
+	t=1768498591; cv=none; b=m9tSZroJDep6HMibIwrmUGqIoepq3n2kBa2l6suvwuZmy4dELoc2CnJZ22kSv9xmBh6EFk1wP0EUWyWUqlqJpuwd1FT3gRLiKNKPrzytb8DvwtlJ7TZfCJSXijDMsXAZQb1iSRSSniIAtQdbk1aZkZ0pt/NcncBXi9JzweM4ywM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768498588; c=relaxed/simple;
-	bh=mmtDX58XG2fwXtivbUFlEEwcSIhvK34y8GvNaW8oVlw=;
+	s=arc-20240116; t=1768498591; c=relaxed/simple;
+	bh=qaq3enyYAbCuNJBzVyP/hXb6U0B6MvTPzFSmvkeiUhY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=cI6o7LUWywxYwXLEvtuJFzC+BSto8wD2BC5OFjl5kEO9hEOMvphIFzU3phca8QXJ3NvknuFLe4Qg9RhQb3n43O27E2w9FoBK0yG/DY3WEUTl0vsv2mBM+jhXANf2NMJhSP1YqJVuKNEwCWcYKYX4z4ZJfmL5x6zaGzItBunfjoc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kt10sUov; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=F3Vkhv93DCZeB9KYBThPDgph+yYqcF8BPt5rMHxX/soI7MMT7/5bHSX3bkaJ9PFur6supBrigYmLlNH6MHxhxvZrPsMPnhMYbKtjJZDSVqBQRnTF+qZZwuWfolZUjuIIKmc00+riWIp31bocwitQZW28OShHhoJHamZ61VR0D1s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1QseKIE6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kt10sUov"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 69990C116D0;
-	Thu, 15 Jan 2026 17:36:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1QseKIE6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 489FFC116D0;
+	Thu, 15 Jan 2026 17:36:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1768498588;
-	bh=mmtDX58XG2fwXtivbUFlEEwcSIhvK34y8GvNaW8oVlw=;
+	s=korg; t=1768498591;
+	bh=qaq3enyYAbCuNJBzVyP/hXb6U0B6MvTPzFSmvkeiUhY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kt10sUovHqxuVTFBTdfq0mi/1DV2IEhjsqXQyR/8mv0b6Mdii/ERktqtgoSZY670+
-	 bjNiVc/3ugB+FLSFupYwcubj6RKsydteqs7fMq+jDLW4wquJkotLbiE8dDA5DCj//v
-	 eSRB6dK7CaFw+HpZs05SSki2SUjSf+0I4j4HxVpk=
+	b=1QseKIE6Rid1egxKfenoNETYrMsxW4KIOMCq1vb8jkJwL/Uam7WKm0zLy+kc7RT/p
+	 bIyyYDdqFQ9LK4vVhG/SCD/rkXmFJA61nA9JcfZd+ZYOAmZHZJY1jtaVyJTu9Xzv+q
+	 saDbdtvVfrhlIIB2UOvoNMa0HnOdc9B++TRREvBs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jakub Kicinski <kuba@kernel.org>,
-	syzbot+204a4382fcb3311f3858@syzkaller.appspotmail.com,
-	Dong Chenchen <dongchenchen2@huawei.com>,
-	=?UTF-8?q?Toke=20H=C3=B8iland-J=C3=B8rgensen?= <toke@redhat.com>,
-	Mina Almasry <almasrymina@google.com>,
-	Ruohan Lan <ruohanlan@aliyun.com>
-Subject: [PATCH 5.15 484/554] page_pool: Fix use-after-free in page_pool_recycle_in_ring
-Date: Thu, 15 Jan 2026 17:49:10 +0100
-Message-ID: <20260115164303.831711125@linuxfoundation.org>
+	Benjamin Gaignard <benjamin.gaignard@collabora.com>,
+	Nicolas Dufresne <nicolas.dufresne@collabora.com>,
+	Hans Verkuil <hverkuil+cisco@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 458/554] media: verisilicon: Protect G2 HEVC decoder against invalid DPB index
+Date: Thu, 15 Jan 2026 17:48:44 +0100
+Message-ID: <20260115164302.857771460@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260115164246.225995385@linuxfoundation.org>
 References: <20260115164246.225995385@linuxfoundation.org>
@@ -48,133 +46,67 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Dong Chenchen <dongchenchen2@huawei.com>
+From: Nicolas Dufresne <nicolas.dufresne@collabora.com>
 
-[ Upstream commit 271683bb2cf32e5126c592b5d5e6a756fa374fd9 ]
+[ Upstream commit 47825b1646a6a9eca0f90baa3d4f98947c2add96 ]
 
-syzbot reported a uaf in page_pool_recycle_in_ring:
+Fix the Hantro G2 HEVC decoder so that we use DPB index 0 whenever a
+ninvalid index is received from user space. This protects the hardware
+from doing faulty memory access which then leads to bus errors.
 
-BUG: KASAN: slab-use-after-free in lock_release+0x151/0xa30 kernel/locking/lockdep.c:5862
-Read of size 8 at addr ffff8880286045a0 by task syz.0.284/6943
+To be noted that when a reference is missing, userspace such as GStreamer
+passes an invalid DPB index of 255. This issue was found by seeking to a
+CRA picture using GStreamer. The framework is currently missing the code
+to skip over RASL pictures placed after the CRA. This situation can also
+occur while doing live streaming over lossy transport.
 
-CPU: 0 UID: 0 PID: 6943 Comm: syz.0.284 Not tainted 6.13.0-rc3-syzkaller-gdfa94ce54f41 #0
-Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 09/13/2024
-Call Trace:
- <TASK>
- __dump_stack lib/dump_stack.c:94 [inline]
- dump_stack_lvl+0x241/0x360 lib/dump_stack.c:120
- print_address_description mm/kasan/report.c:378 [inline]
- print_report+0x169/0x550 mm/kasan/report.c:489
- kasan_report+0x143/0x180 mm/kasan/report.c:602
- lock_release+0x151/0xa30 kernel/locking/lockdep.c:5862
- __raw_spin_unlock_bh include/linux/spinlock_api_smp.h:165 [inline]
- _raw_spin_unlock_bh+0x1b/0x40 kernel/locking/spinlock.c:210
- spin_unlock_bh include/linux/spinlock.h:396 [inline]
- ptr_ring_produce_bh include/linux/ptr_ring.h:164 [inline]
- page_pool_recycle_in_ring net/core/page_pool.c:707 [inline]
- page_pool_put_unrefed_netmem+0x748/0xb00 net/core/page_pool.c:826
- page_pool_put_netmem include/net/page_pool/helpers.h:323 [inline]
- page_pool_put_full_netmem include/net/page_pool/helpers.h:353 [inline]
- napi_pp_put_page+0x149/0x2b0 net/core/skbuff.c:1036
- skb_pp_recycle net/core/skbuff.c:1047 [inline]
- skb_free_head net/core/skbuff.c:1094 [inline]
- skb_release_data+0x6c4/0x8a0 net/core/skbuff.c:1125
- skb_release_all net/core/skbuff.c:1190 [inline]
- __kfree_skb net/core/skbuff.c:1204 [inline]
- sk_skb_reason_drop+0x1c9/0x380 net/core/skbuff.c:1242
- kfree_skb_reason include/linux/skbuff.h:1263 [inline]
- __skb_queue_purge_reason include/linux/skbuff.h:3343 [inline]
-
-root cause is:
-
-page_pool_recycle_in_ring
-  ptr_ring_produce
-    spin_lock(&r->producer_lock);
-    WRITE_ONCE(r->queue[r->producer++], ptr)
-      //recycle last page to pool
-				page_pool_release
-				  page_pool_scrub
-				    page_pool_empty_ring
-				      ptr_ring_consume
-				      page_pool_return_page  //release all page
-				  __page_pool_destroy
-				     free_percpu(pool->recycle_stats);
-				     free(pool) //free
-
-     spin_unlock(&r->producer_lock); //pool->ring uaf read
-  recycle_stat_inc(pool, ring);
-
-page_pool can be free while page pool recycle the last page in ring.
-Add producer-lock barrier to page_pool_release to prevent the page
-pool from being free before all pages have been recycled.
-
-recycle_stat_inc() is empty when CONFIG_PAGE_POOL_STATS is not
-enabled, which will trigger Wempty-body build warning. Add definition
-for pool stat macro to fix warning.
-
-Suggested-by: Jakub Kicinski <kuba@kernel.org>
-Link: https://lore.kernel.org/netdev/20250513083123.3514193-1-dongchenchen2@huawei.com
-Fixes: ff7d6b27f894 ("page_pool: refurbish version of page_pool code")
-Reported-by: syzbot+204a4382fcb3311f3858@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=204a4382fcb3311f3858
-Signed-off-by: Dong Chenchen <dongchenchen2@huawei.com>
-Reviewed-by: Toke Høiland-Jørgensen <toke@redhat.com>
-Reviewed-by: Mina Almasry <almasrymina@google.com>
-Link: https://patch.msgid.link/20250527114152.3119109-1-dongchenchen2@huawei.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-[ Linux 5.15.y does not support page pool statistics
-  (CONFIG_PAGE_POOL_STATS), so remove the related source code
-  changes from the patch. ]
-Signed-off-by: Ruohan Lan <ruohanlan@aliyun.com>
+Fixes: cb5dd5a0fa518 ("media: hantro: Introduce G2/HEVC decoder")
+Cc: stable@vger.kernel.org
+Reviewed-by: Benjamin Gaignard <benjamin.gaignard@collabora.com>
+Signed-off-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
+Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/core/page_pool.c |   16 ++++++++++------
- 1 file changed, 10 insertions(+), 6 deletions(-)
+ drivers/staging/media/hantro/hantro_g2_hevc_dec.c |   15 +++++++++++++--
+ 1 file changed, 13 insertions(+), 2 deletions(-)
 
---- a/net/core/page_pool.c
-+++ b/net/core/page_pool.c
-@@ -414,14 +414,14 @@ static void page_pool_return_page(struct
- 
- static bool page_pool_recycle_in_ring(struct page_pool *pool, struct page *page)
- {
--	int ret;
-+	bool in_softirq, ret;
-+
- 	/* BH protection not needed if current is softirq */
--	if (in_softirq())
--		ret = ptr_ring_produce(&pool->ring, page);
--	else
--		ret = ptr_ring_produce_bh(&pool->ring, page);
-+	in_softirq = page_pool_producer_lock(pool);
-+	ret = !__ptr_ring_produce(&pool->ring, page);
-+	page_pool_producer_unlock(pool, in_softirq);
- 
--	return (ret == 0) ? true : false;
-+	return ret;
+--- a/drivers/staging/media/hantro/hantro_g2_hevc_dec.c
++++ b/drivers/staging/media/hantro/hantro_g2_hevc_dec.c
+@@ -264,6 +264,15 @@ static void set_params(struct hantro_ctx
+ 	hantro_reg_write(vpu, &g2_apf_threshold, 8);
  }
  
- /* Only allow direct recycling in special circumstances, into the
-@@ -684,10 +684,14 @@ static void page_pool_scrub(struct page_
- 
- static int page_pool_release(struct page_pool *pool)
++static u32 get_dpb_index(const struct v4l2_ctrl_hevc_decode_params *decode_params,
++			 const u32 index)
++{
++	if (index > decode_params->num_active_dpb_entries)
++		return 0;
++
++	return index;
++}
++
+ static void set_ref_pic_list(struct hantro_ctx *ctx)
  {
-+	bool in_softirq;
- 	int inflight;
+ 	const struct hantro_hevc_dec_ctrls *ctrls = &ctx->hevc_dec.ctrls;
+@@ -336,8 +345,10 @@ static void set_ref_pic_list(struct hant
+ 		list1[j++] = list1[i++];
  
- 	page_pool_scrub(pool);
- 	inflight = page_pool_inflight(pool);
-+	/* Acquire producer lock to make sure producers have exited. */
-+	in_softirq = page_pool_producer_lock(pool);
-+	page_pool_producer_unlock(pool, in_softirq);
- 	if (!inflight)
- 		page_pool_free(pool);
+ 	for (i = 0; i < V4L2_HEVC_DPB_ENTRIES_NUM_MAX; i++) {
+-		hantro_reg_write(vpu, &ref_pic_regs0[i], list0[i]);
+-		hantro_reg_write(vpu, &ref_pic_regs1[i], list1[i]);
++		hantro_reg_write(vpu, &ref_pic_regs0[i],
++				 get_dpb_index(decode_params, list0[i]));
++		hantro_reg_write(vpu, &ref_pic_regs1[i],
++				 get_dpb_index(decode_params, list1[i]));
+ 	}
+ }
  
 
 
