@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B5703D7D3C;
-	Thu, 15 Jan 2026 17:50:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 816BF3D2FE0;
+	Thu, 15 Jan 2026 17:50:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768499402; cv=none; b=SppILCBZBYjfEH9K1xjqL/1T2ER4CY3s00wDUIBBV73SCFci/CdCpB5v2qy8chIZaYXF2PiPEX4jXX4aeVuWMhP1zsQbbYfAHue3j8t5T+9JDoGavqW9NHLkfOpW3lfUMw2oGR+qRInmEZJzR7iLE/Mtbj/hNqPfZL2rMqtRbzE=
+	t=1768499405; cv=none; b=ouXcmFdzEROG3YEvHqlObRbCbLsZmp3tVtNr+jCUYxVJZXaYEpbsN9R8Y26cpcmmW+mlXfOV8c27Rx+LpogH/f7d8rRGtz9siAYUgWH2W2zj+kZtaua+lHcEdBYDKBkNwxfdvmnseoPO8heLxrIctXaUgZAdlmplSest2EVQ3pA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768499402; c=relaxed/simple;
-	bh=TSPG6ONsrqv447c0B/iTZ0snGS+grqm7A9kKazQzxFA=;
+	s=arc-20240116; t=1768499405; c=relaxed/simple;
+	bh=nwB7poy+0E6NqxWv9MWOYXi6yiZwJuZkYGvLb16fGPY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aLD79p4EG97MYsUQLcOxrKvssqH66heSt0yxxvT8ngJfXIgN4uQS1wUskL0BWdmrT5b/ejojX82SuBQZAq2KHTE70bA6s1JIVW2v52ZpLwBOk5qc+tatySni0xJl5aVn44L8N99+28eA1ubvlOIjNyntUaypaa2lKTYge4gklls=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=r12TsqfL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MGNpVvuMjlTenmj3UWLhqbxsQqC3ebC6S51BwmQzo7lSGvkje0ogWCSxp0wKHYzhdhuVIMu548LPhlFMv2DRznEPk97rtk4KAizlywdF803Br3mavkuVlDyDpnDbVNJIu6lyHGjGP66Pd5kmydhF3moUQ2VnSJ7PxVNjNafbHGc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ehgkccnc; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="r12TsqfL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D271C116D0;
-	Thu, 15 Jan 2026 17:50:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ehgkccnc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C32D8C116D0;
+	Thu, 15 Jan 2026 17:50:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1768499402;
-	bh=TSPG6ONsrqv447c0B/iTZ0snGS+grqm7A9kKazQzxFA=;
+	s=korg; t=1768499405;
+	bh=nwB7poy+0E6NqxWv9MWOYXi6yiZwJuZkYGvLb16fGPY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=r12TsqfLeB41lytqYMIoJ1IZ5nOu4os8fRWlO4kqtefNTRcXzWzfh7PRF+HPGgwWd
-	 Elhmh+5tBGtp3UQKUbHGCFy/donlvBG81CBGUhbrEFDLeWZfZjGRP/9dCZJF1wkHa0
-	 77pn49sfs8udgaNaj8YoIBJzOQAq8OBs2NqHjtGk=
+	b=ehgkccncdVUS1HEKWem7ym6LLYdLBwzLoupNV6TN7z5YJgC0sXMx0oER0hsmcHUeC
+	 lqbseEMAk9qNmidTeBELXlwfjcgq02AvYDKSJ79YUTm+b0NMzADSX6JQK8piBfPTMx
+	 lfa8zTN3pZGJ4+e+Vfx2xLSpZOpWgW9uKrdBPCZ0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pengjie Zhang <zhangpengjie2@huawei.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
-Subject: [PATCH 5.10 197/451] ACPI: CPPC: Fix missing PCC check for guaranteed_perf
-Date: Thu, 15 Jan 2026 17:46:38 +0100
-Message-ID: <20260115164238.027633960@linuxfoundation.org>
+	Mark Pearson <mpearson-lenovo@squebb.ca>,
+	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 215/451] usb: typec: ucsi: Handle incorrect num_connectors capability
+Date: Thu, 15 Jan 2026 17:46:56 +0100
+Message-ID: <20260115164238.676554132@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260115164230.864985076@linuxfoundation.org>
 References: <20260115164230.864985076@linuxfoundation.org>
@@ -50,40 +51,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pengjie Zhang <zhangpengjie2@huawei.com>
+From: Mark Pearson <mpearson-lenovo@squebb.ca>
 
-commit 6ea3a44cef28add2d93b1ef119d84886cb1e3c9b upstream.
+[ Upstream commit 30cd2cb1abf4c4acdb1ddb468c946f68939819fb ]
 
-The current implementation overlooks the 'guaranteed_perf'
-register in this check.
+The UCSI spec states that the num_connectors field is 7 bits, and the
+8th bit is reserved and should be set to zero.
+Some buggy FW has been known to set this bit, and it can lead to a
+system not booting.
+Flag that the FW is not behaving correctly, and auto-fix the value
+so that the system boots correctly.
 
-If the Guaranteed Performance register is located in the PCC
-subspace, the function currently attempts to read it without
-acquiring the lock and without sending the CMD_READ doorbell
-to the firmware. This can result in reading stale data.
+Found on Lenovo P1 G8 during Linux enablement program. The FW will
+be fixed, but seemed worth addressing in case it hit platforms that
+aren't officially Linux supported.
 
-Fixes: 29523f095397 ("ACPI / CPPC: Add support for guaranteed performance")
-Signed-off-by: Pengjie Zhang <zhangpengjie2@huawei.com>
-Cc: 4.20+ <stable@vger.kernel.org> # 4.20+
-[ rjw: Subject and changelog edits ]
-Link: https://patch.msgid.link/20251210132227.1988380-1-zhangpengjie2@huawei.com
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Signed-off-by: Mark Pearson <mpearson-lenovo@squebb.ca>
+Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
+Link: https://lore.kernel.org/r/20250821185319.2585023-1-mpearson-lenovo@squebb.ca
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/acpi/cppc_acpi.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/usb/typec/ucsi/ucsi.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
---- a/drivers/acpi/cppc_acpi.c
-+++ b/drivers/acpi/cppc_acpi.c
-@@ -1097,7 +1097,8 @@ int cppc_get_perf_caps(int cpunum, struc
- 	/* Are any of the regs PCC ?*/
- 	if (CPC_IN_PCC(highest_reg) || CPC_IN_PCC(lowest_reg) ||
- 		CPC_IN_PCC(lowest_non_linear_reg) || CPC_IN_PCC(nominal_reg) ||
--		CPC_IN_PCC(low_freq_reg) || CPC_IN_PCC(nom_freq_reg)) {
-+		CPC_IN_PCC(low_freq_reg) || CPC_IN_PCC(nom_freq_reg) ||
-+		CPC_IN_PCC(guaranteed_reg)) {
- 		if (pcc_ss_id < 0) {
- 			pr_debug("Invalid pcc_ss_id\n");
- 			return -ENODEV;
+diff --git a/drivers/usb/typec/ucsi/ucsi.c b/drivers/usb/typec/ucsi/ucsi.c
+index 0851d93d5909..60339c746694 100644
+--- a/drivers/usb/typec/ucsi/ucsi.c
++++ b/drivers/usb/typec/ucsi/ucsi.c
+@@ -1220,6 +1220,12 @@ static int ucsi_init(struct ucsi *ucsi)
+ 		ret = -ENODEV;
+ 		goto err_reset;
+ 	}
++	/* Check if reserved bit set. This is out of spec but happens in buggy FW */
++	if (ucsi->cap.num_connectors & 0x80) {
++		dev_warn(ucsi->dev, "UCSI: Invalid num_connectors %d. Likely buggy FW\n",
++			 ucsi->cap.num_connectors);
++		ucsi->cap.num_connectors &= 0x7f; // clear bit and carry on
++	}
+ 
+ 	/* Allocate the connectors. Released in ucsi_unregister_ppm() */
+ 	ucsi->connector = kcalloc(ucsi->cap.num_connectors + 1,
+-- 
+2.51.0
+
 
 
