@@ -1,37 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3BA7E2D73AB;
-	Thu, 15 Jan 2026 17:45:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3AB913B8D5F;
+	Thu, 15 Jan 2026 17:45:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768499107; cv=none; b=SFUEhs5AWptrMnX3QMp8AIq1SdtVqiOPmh72W+BAlAdLa1IrAzJyWcH2Uaj7nOQbIFaRtfewZ+ck+P/ipXisuh9xw0zTT/wwi5eO6hwntJGurfYTlrc+mPyZBXjVlQfB9L8AmX/mLZXBMc0fOqUtueOhItl9E5buBVOHFdedzYY=
+	t=1768499110; cv=none; b=lMxRitzvA+6K/4N70XbxNqpPhOHKxlElQ/9KlEuMhJeyKmVQHQNO2PsxP21w1A4oe8HVbS7CayQriOuuQz1+WPqPYdYmyiSLEF1VpjSUUizEAeLIJKOs7L0LgJP32KAK1Bf9YN0s5J9OjNIO6qW5/zKDi1Cc1iWfbRq5ma6Mc/g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768499107; c=relaxed/simple;
-	bh=jHFLeeaRb0huO+TlcIc/XJ8tMSZsT2770N8IwUeaADM=;
+	s=arc-20240116; t=1768499110; c=relaxed/simple;
+	bh=xysC+Wm+NL1pVEe0nEuHS0MyC373vVBxFy6y653s1+0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jz5fUniwjoWQ8HDX42tLHyM8ewKz4RJWMD88f5yqp9RkiCbsNDnUtYcE9+LNtTpHfKTZd1ff4tknXQ8oWeMdeF9x8tjIapY3KedIeU4QvfzZuY8OrQqgZab7nq4V964eLaOVTZ283TAbsoC9nwuU+jNKyJS85KdI9qWUxjIr0rw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=feXGHDp6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SRgJQpyznRS0N5dcBUWB9POmrpMKmoZ0fqDGua42c2xo8vkPu1hByuM7XvvOltKA3M576kmAg0uvQcdwrt3G7nxbvZWO8Z/KVAleSsSmMvshBYo7C+jnSnN65pbFy2feDGq9yNUNNgbI+OUCdY8PHET+h8M53/aEswYnz9OQVH8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=i+kDcpTB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="feXGHDp6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC413C116D0;
-	Thu, 15 Jan 2026 17:45:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="i+kDcpTB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E114C116D0;
+	Thu, 15 Jan 2026 17:45:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1768499107;
-	bh=jHFLeeaRb0huO+TlcIc/XJ8tMSZsT2770N8IwUeaADM=;
+	s=korg; t=1768499109;
+	bh=xysC+Wm+NL1pVEe0nEuHS0MyC373vVBxFy6y653s1+0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=feXGHDp6pWzR8QhPZJKcCk0sqErOvfP8OK81K8yka9DCzq4XtRFKrMZrnVOCdUsOS
-	 oL0Cw98L0ATabQx51Y6Wot0gXvbvnjD7cpU4B0vNRraT4e4tWhnlUFZg5JfX3A3L02
-	 CU51RlTnxcpC75loUnlBMLQNkAEQ2qwq88adGERQ=
+	b=i+kDcpTBhoOcm66uNsvZEVDy/QRQPFPSkTAGdn8usdS4pck4ImNN3tq20FtBtOebk
+	 ZpdrVG2XVkLgqZMA66hcpnDQkG7V+yxa03xXNz9iLG0HtE9nNY35CR+IwbBLBretHI
+	 cjXIVFS9e4kbPIhVOkBBjTO2uPDBJDJ9Zt7gfph8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	William Tu <u9012063@gmail.com>,
+	Greg Rose <gvrose8192@gmail.com>,
+	Florian Westphal <fw@strlen.de>,
 	Pablo Neira Ayuso <pablo@netfilter.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 110/451] netfilter: nft_connlimit: move stateful fields out of expression data
-Date: Thu, 15 Jan 2026 17:45:11 +0100
-Message-ID: <20260115164234.897738785@linuxfoundation.org>
+	Sasha Levin <sashal@kernel.org>,
+	Yifeng Sun <pkusunyifeng@gmail.com>
+Subject: [PATCH 5.10 111/451] netfilter: nf_conncount: reduce unnecessary GC
+Date: Thu, 15 Jan 2026 17:45:12 +0100
+Message-ID: <20260115164234.936545805@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260115164230.864985076@linuxfoundation.org>
 References: <20260115164230.864985076@linuxfoundation.org>
@@ -50,100 +54,114 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pablo Neira Ayuso <pablo@netfilter.org>
+From: William Tu <u9012063@gmail.com>
 
-[ Upstream commit 37f319f37d9005693dff085bb72852eeebc803ef ]
+[ Upstream commit d265929930e2ffafc744c0ae05fb70acd53be1ee ]
 
-In preparation for the rule blob representation.
+Currently nf_conncount can trigger garbage collection (GC)
+at multiple places. Each GC process takes a spin_lock_bh
+to traverse the nf_conncount_list. We found that when testing
+port scanning use two parallel nmap, because the number of
+connection increase fast, the nf_conncount_count and its
+subsequent call to __nf_conncount_add take too much time,
+causing several CPU lockup. This happens when user set the
+conntrack limit to +20,000, because the larger the limit,
+the longer the list that GC has to traverse.
 
+The patch mitigate the performance issue by avoiding unnecessary
+GC with a timestamp. Whenever nf_conncount has done a GC,
+a timestamp is updated, and beforce the next time GC is
+triggered, we make sure it's more than a jiffies.
+By doin this we can greatly reduce the CPU cycles and
+avoid the softirq lockup.
+
+To reproduce it in OVS,
+$ ovs-appctl dpctl/ct-set-limits zone=1,limit=20000
+$ ovs-appctl dpctl/ct-get-limits
+
+At another machine, runs two nmap
+$ nmap -p1- <IP>
+$ nmap -p1- <IP>
+
+Signed-off-by: William Tu <u9012063@gmail.com>
+Co-authored-by: Yifeng Sun <pkusunyifeng@gmail.com>
+Reported-by: Greg Rose <gvrose8192@gmail.com>
+Suggested-by: Florian Westphal <fw@strlen.de>
 Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Stable-dep-of: 69894e5b4c5e ("netfilter: nft_connlimit: update the count if add was skipped")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nft_connlimit.c | 26 ++++++++++++++++++--------
- 1 file changed, 18 insertions(+), 8 deletions(-)
+ include/net/netfilter/nf_conntrack_count.h |  1 +
+ net/netfilter/nf_conncount.c               | 11 +++++++++++
+ 2 files changed, 12 insertions(+)
 
-diff --git a/net/netfilter/nft_connlimit.c b/net/netfilter/nft_connlimit.c
-index 091457e5c260d..332f1b21084f8 100644
---- a/net/netfilter/nft_connlimit.c
-+++ b/net/netfilter/nft_connlimit.c
-@@ -14,7 +14,7 @@
- #include <net/netfilter/nf_conntrack_zones.h>
+diff --git a/include/net/netfilter/nf_conntrack_count.h b/include/net/netfilter/nf_conntrack_count.h
+index 9645b47fa7e41..e227d997fc716 100644
+--- a/include/net/netfilter/nf_conntrack_count.h
++++ b/include/net/netfilter/nf_conntrack_count.h
+@@ -10,6 +10,7 @@ struct nf_conncount_data;
  
- struct nft_connlimit {
--	struct nf_conncount_list	list;
-+	struct nf_conncount_list	*list;
- 	u32				limit;
- 	bool				invert;
+ struct nf_conncount_list {
+ 	spinlock_t list_lock;
++	u32 last_gc;		/* jiffies at most recent gc */
+ 	struct list_head head;	/* connections with the same filtering key */
+ 	unsigned int count;	/* length of list */
  };
-@@ -43,12 +43,12 @@ static inline void nft_connlimit_do_eval(struct nft_connlimit *priv,
- 		return;
- 	}
+diff --git a/net/netfilter/nf_conncount.c b/net/netfilter/nf_conncount.c
+index a66a27fe7f458..ee808b018e4e1 100644
+--- a/net/netfilter/nf_conncount.c
++++ b/net/netfilter/nf_conncount.c
+@@ -132,6 +132,9 @@ static int __nf_conncount_add(struct net *net,
+ 	struct nf_conn *found_ct;
+ 	unsigned int collect = 0;
  
--	if (nf_conncount_add(nft_net(pkt), &priv->list, tuple_ptr, zone)) {
-+	if (nf_conncount_add(nft_net(pkt), priv->list, tuple_ptr, zone)) {
- 		regs->verdict.code = NF_DROP;
- 		return;
- 	}
- 
--	count = priv->list.count;
-+	count = priv->list->count;
- 
- 	if ((count > priv->limit) ^ priv->invert) {
- 		regs->verdict.code = NFT_BREAK;
-@@ -76,7 +76,11 @@ static int nft_connlimit_do_init(const struct nft_ctx *ctx,
- 			invert = true;
- 	}
- 
--	nf_conncount_list_init(&priv->list);
-+	priv->list = kmalloc(sizeof(*priv->list), GFP_KERNEL);
-+	if (!priv->list)
-+		return -ENOMEM;
++	if (time_is_after_eq_jiffies((unsigned long)list->last_gc))
++		goto add_new_node;
 +
-+	nf_conncount_list_init(priv->list);
- 	priv->limit	= limit;
- 	priv->invert	= invert;
+ 	/* check the saved connections */
+ 	list_for_each_entry_safe(conn, conn_n, &list->head, node) {
+ 		if (collect > CONNCOUNT_GC_MAX_NODES)
+@@ -177,6 +180,7 @@ static int __nf_conncount_add(struct net *net,
+ 		nf_ct_put(found_ct);
+ 	}
  
-@@ -87,7 +91,8 @@ static void nft_connlimit_do_destroy(const struct nft_ctx *ctx,
- 				     struct nft_connlimit *priv)
- {
- 	nf_ct_netns_put(ctx->net, ctx->family);
--	nf_conncount_cache_free(&priv->list);
-+	nf_conncount_cache_free(priv->list);
-+	kfree(priv->list);
++add_new_node:
+ 	if (WARN_ON_ONCE(list->count > INT_MAX))
+ 		return -EOVERFLOW;
+ 
+@@ -190,6 +194,7 @@ static int __nf_conncount_add(struct net *net,
+ 	conn->jiffies32 = (u32)jiffies;
+ 	list_add_tail(&conn->node, &list->head);
+ 	list->count++;
++	list->last_gc = (u32)jiffies;
+ 	return 0;
  }
  
- static int nft_connlimit_do_dump(struct sk_buff *skb,
-@@ -200,7 +205,11 @@ static int nft_connlimit_clone(struct nft_expr *dst, const struct nft_expr *src,
- 	struct nft_connlimit *priv_dst = nft_expr_priv(dst);
- 	struct nft_connlimit *priv_src = nft_expr_priv(src);
- 
--	nf_conncount_list_init(&priv_dst->list);
-+	priv_dst->list = kmalloc(sizeof(*priv_dst->list), GFP_ATOMIC);
-+	if (priv_dst->list)
-+		return -ENOMEM;
-+
-+	nf_conncount_list_init(priv_dst->list);
- 	priv_dst->limit	 = priv_src->limit;
- 	priv_dst->invert = priv_src->invert;
- 
-@@ -212,7 +221,8 @@ static void nft_connlimit_destroy_clone(const struct nft_ctx *ctx,
- {
- 	struct nft_connlimit *priv = nft_expr_priv(expr);
- 
--	nf_conncount_cache_free(&priv->list);
-+	nf_conncount_cache_free(priv->list);
-+	kfree(priv->list);
+@@ -214,6 +219,7 @@ void nf_conncount_list_init(struct nf_conncount_list *list)
+ 	spin_lock_init(&list->list_lock);
+ 	INIT_LIST_HEAD(&list->head);
+ 	list->count = 0;
++	list->last_gc = (u32)jiffies;
  }
+ EXPORT_SYMBOL_GPL(nf_conncount_list_init);
  
- static bool nft_connlimit_gc(struct net *net, const struct nft_expr *expr)
-@@ -221,7 +231,7 @@ static bool nft_connlimit_gc(struct net *net, const struct nft_expr *expr)
- 	bool ret;
+@@ -227,6 +233,10 @@ bool nf_conncount_gc_list(struct net *net,
+ 	unsigned int collected = 0;
+ 	bool ret = false;
  
- 	local_bh_disable();
--	ret = nf_conncount_gc_list(net, &priv->list);
-+	ret = nf_conncount_gc_list(net, priv->list);
- 	local_bh_enable();
++	/* don't bother if we just did GC */
++	if (time_is_after_eq_jiffies((unsigned long)READ_ONCE(list->last_gc)))
++		return false;
++
+ 	/* don't bother if other cpu is already doing GC */
+ 	if (!spin_trylock(&list->list_lock))
+ 		return false;
+@@ -258,6 +268,7 @@ bool nf_conncount_gc_list(struct net *net,
+ 
+ 	if (!list->count)
+ 		ret = true;
++	list->last_gc = (u32)jiffies;
+ 	spin_unlock(&list->list_lock);
  
  	return ret;
 -- 
