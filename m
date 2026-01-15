@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ADBF92750ED;
-	Thu, 15 Jan 2026 17:11:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE2DF3BF2FD;
+	Thu, 15 Jan 2026 17:12:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768497117; cv=none; b=haPxN6aEUO57QZHZjZR7861rRWPwsYK6p4I+ewfh+lisF5w51t+F8AWOsGKiTR460OzW9sn+KrgXXZ+GYDRfO5GvIso4lgKFgUAzxL2pwF53jxrXy6jDb71MSnplbNVecdniq2o5J0ucVoZ1O/1wej1NCuRrSffjKY2xeQXJXE8=
+	t=1768497120; cv=none; b=ebYwg3vuv/J/K1NDBeOYQdm3NFA/Gmv41SB6JYPSiccncwVLL35TWWDXlk9fMrOagNyh2B/BGnTQH/KHKMfLVKVjJXlFX1iy09ktCS+u0RmDRKh7OJb5x09HdnAyyv65rkKYx1qWKuKU3H8YcCLo63Cqq5fFG9eYm/mCerADjKc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768497117; c=relaxed/simple;
-	bh=AEokJD5DdiEijNKj+FIpYBiqliYvSc+ONKnbrUC6Rb8=;
+	s=arc-20240116; t=1768497120; c=relaxed/simple;
+	bh=VposaqrpJo+TSPtl9DHlWRGCWeRo3r1lv1DS5n+WIFA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Rjmfi+E6eAlosyZZPegt6XZiGiqvORldRUXuvj4Gb223aRNHfAR9DKe4V1JrF7Be+0g/fpLGmMbDNhsQBVFsx2fV3BJ5qe1MPbFugJ/InQUz/+ZWCap0PoG4S5yIzKOeEaJ3SgQhzZKkr5g2AsGrS6pRsG8feXJ41NaT2q5yK/Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LCUcwQer; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VyZcTowhEhtHhkmiZUWfSnbF+T4cVt6LACh/d3HsCCat+xiS0R1nX4tYoXMTly/Org1c2iFxY94Posm2gJi6gdPxeCpCE8z2oKKcnoo8jTSD3ef1zJUYxo5LwXbIJKkFJzFjwq8gEm6o5v48urJZxd+rfJS1CoCNvuhveOtliq0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AbuEDlwl; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LCUcwQer"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3CB85C116D0;
-	Thu, 15 Jan 2026 17:11:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AbuEDlwl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32C5EC19423;
+	Thu, 15 Jan 2026 17:12:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1768497117;
-	bh=AEokJD5DdiEijNKj+FIpYBiqliYvSc+ONKnbrUC6Rb8=;
+	s=korg; t=1768497120;
+	bh=VposaqrpJo+TSPtl9DHlWRGCWeRo3r1lv1DS5n+WIFA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LCUcwQerS/pU2Gqi+L7x4PvBib+FWkc2jMaSBbK+6DvRKFuzh+HTgweRETZ36mwLP
-	 nG/Gx5Dy3mD7FnU5L9faJKN+keeAM67+YtFQsA4kqsnlJGcxAiFxMI93K1jEQHsL9w
-	 uLR7e8JgjFPHfYKnkGJv4b7CigwQ0pKPw/IOsqwE=
+	b=AbuEDlwllV5Ogoa4HFMT70eZr/caAl5yKTZDUagxTX3Xng53zRM2NUkUvZ2X7woHt
+	 2a8l4PBGchUaYloYoqwOZ9iZyTTGiYiYrFF9Fot6cNaAb5SJ0sIx9SDCjflTQQkq/0
+	 qeroAslLlBnqB2w1pwFy9nMaBLyQCuG+rnVGuF8k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gal Pressman <gal@nvidia.com>,
-	Tariq Toukan <tariqt@nvidia.com>,
-	Mark Bloch <mbloch@nvidia.com>,
+	Jianhao Xu <jianhao.xu@seu.edu.cn>,
+	Zilin Guan <zilin@seu.edu.cn>,
+	Loic Poulain <loic.poulain@oss.qualcomm.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 42/72] net/mlx5e: Dont print error message due to invalid module
-Date: Thu, 15 Jan 2026 17:48:52 +0100
-Message-ID: <20260115164145.020204163@linuxfoundation.org>
+Subject: [PATCH 6.1 43/72] net: wwan: iosm: Fix memory leak in ipc_mux_deinit()
+Date: Thu, 15 Jan 2026 17:48:53 +0100
+Message-ID: <20260115164145.056413568@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260115164143.482647486@linuxfoundation.org>
 References: <20260115164143.482647486@linuxfoundation.org>
@@ -53,48 +53,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gal Pressman <gal@nvidia.com>
+From: Zilin Guan <zilin@seu.edu.cn>
 
-[ Upstream commit 144297e2a24e3e54aee1180ec21120ea38822b97 ]
+[ Upstream commit 92e6e0a87f6860a4710f9494f8c704d498ae60f8 ]
 
-Dumping module EEPROM on newer modules is supported through the netlink
-interface only.
+Commit 1f52d7b62285 ("net: wwan: iosm: Enable M.2 7360 WWAN card support")
+allocated memory for pp_qlt in ipc_mux_init() but did not free it in
+ipc_mux_deinit(). This results in a memory leak when the driver is
+unloaded.
 
-Querying with old userspace ethtool (or other tools, such as 'lshw')
-which still uses the ioctl interface results in an error message that
-could flood dmesg (in addition to the expected error return value).
-The original message was added under the assumption that the driver
-should be able to handle all module types, but now that such flows are
-easily triggered from userspace, it doesn't serve its purpose.
+Free the allocated memory in ipc_mux_deinit() to fix the leak.
 
-Change the log level of the print in mlx5_query_module_eeprom() to
-debug.
-
-Fixes: bb64143eee8c ("net/mlx5e: Add ethtool support for dump module EEPROM")
-Signed-off-by: Gal Pressman <gal@nvidia.com>
-Reviewed-by: Tariq Toukan <tariqt@nvidia.com>
-Signed-off-by: Mark Bloch <mbloch@nvidia.com>
-Link: https://patch.msgid.link/20251225132717.358820-5-mbloch@nvidia.com
+Fixes: 1f52d7b62285 ("net: wwan: iosm: Enable M.2 7360 WWAN card support")
+Co-developed-by: Jianhao Xu <jianhao.xu@seu.edu.cn>
+Signed-off-by: Jianhao Xu <jianhao.xu@seu.edu.cn>
+Signed-off-by: Zilin Guan <zilin@seu.edu.cn>
+Reviewed-by: Loic Poulain <loic.poulain@oss.qualcomm.com>
+Link: https://patch.msgid.link/20251230071853.1062223-1-zilin@seu.edu.cn
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mellanox/mlx5/core/port.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/net/wwan/iosm/iosm_ipc_mux.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/port.c b/drivers/net/ethernet/mellanox/mlx5/core/port.c
-index a1548e6bfb35d..28ec31722ec2f 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/port.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/port.c
-@@ -432,7 +432,8 @@ int mlx5_query_module_eeprom(struct mlx5_core_dev *dev,
- 		mlx5_qsfp_eeprom_params_set(&query.i2c_address, &query.page, &offset);
- 		break;
- 	default:
--		mlx5_core_err(dev, "Module ID not recognized: 0x%x\n", module_id);
-+		mlx5_core_dbg(dev, "Module ID not recognized: 0x%x\n",
-+			      module_id);
- 		return -EINVAL;
+diff --git a/drivers/net/wwan/iosm/iosm_ipc_mux.c b/drivers/net/wwan/iosm/iosm_ipc_mux.c
+index fc928b298a984..b846889fcb099 100644
+--- a/drivers/net/wwan/iosm/iosm_ipc_mux.c
++++ b/drivers/net/wwan/iosm/iosm_ipc_mux.c
+@@ -456,6 +456,7 @@ void ipc_mux_deinit(struct iosm_mux *ipc_mux)
+ 	struct sk_buff_head *free_list;
+ 	union mux_msg mux_msg;
+ 	struct sk_buff *skb;
++	int i;
+ 
+ 	if (!ipc_mux->initialized)
+ 		return;
+@@ -479,5 +480,10 @@ void ipc_mux_deinit(struct iosm_mux *ipc_mux)
+ 		ipc_mux->channel->dl_pipe.is_open = false;
  	}
  
++	if (ipc_mux->protocol != MUX_LITE) {
++		for (i = 0; i < IPC_MEM_MUX_IP_SESSION_ENTRIES; i++)
++			kfree(ipc_mux->ul_adb.pp_qlt[i]);
++	}
++
+ 	kfree(ipc_mux);
+ }
 -- 
 2.51.0
 
