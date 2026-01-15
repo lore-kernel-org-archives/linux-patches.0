@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A04B925228D;
-	Thu, 15 Jan 2026 16:54:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83BDB3A7E0B;
+	Thu, 15 Jan 2026 16:54:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768496077; cv=none; b=i403C4WMpF+hWMtc4RqcEpyXAN/Oi8bpnCfCZKfcttpYe9CMc4YpCColbrCD5gSQW9F6KkBzSWVVRZBhnHPn+iV3NjYFdUOXU59dG4C4h3czEtxWJAS7MA4+B0lRJLsGSVAiWwpTuF9ayySAzAL/5WLwRTV3QtRg9CiuX0imOP4=
+	t=1768496080; cv=none; b=g6V8oNrfeUA3BhjL+iciSOTGcNnsO+L/F51zx99B47DYIfdbFt725gXgEGQnUGU/LNhZ+/pK4wB6sKXrWHGfOnwuoU+JhJbhNEOJDP4DKVd3famY0t2ayb+dQ5K7c057rYwFFF7GTSjSbO/yEJ6frHmBKLOaSFmbZXLE4PY70O8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768496077; c=relaxed/simple;
-	bh=/nHNGzqh6rZo32F/FYsSEtlrr5IUthFiOZf+ED946CM=;
+	s=arc-20240116; t=1768496080; c=relaxed/simple;
+	bh=1uzZUrA7ixcq/5Gmw/xa4G/EL8y3ubtQvAReWzG0lIQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JZRrE0sBqsjbfrlIYenLgTioCJWyblEnez/gDY1yyVW+yKwtizgCu0AaSkdFVbGs7NcK93myafDGBuoH2hnzLTLqIbmMMNMGDgADGOO+PuscS8qnrLpPVyTCiR4p5p0poj1vOXIMLzZnKsu4cTl+slQ7Er+fjSszzcOCXMaAu7U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QtJoIRnl; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=eHatRn2rlU3HkPyMTD0FNr5Vr3eXrFQoJp9o6iqL+BqeIe0QFFVyLZdy8xJBg6aQFsR7blV37mtGZy9f8RiBINeCJplYAPwOaTAfk5JN2SFToIbj7p/OiZlyVun/pntxhSfKgAue5fXai4oRo3x0N7SXF7Tk8TYPhgz/AuWkw00=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Dmg0bo42; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QtJoIRnl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3135BC116D0;
-	Thu, 15 Jan 2026 16:54:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Dmg0bo42"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0BA68C116D0;
+	Thu, 15 Jan 2026 16:54:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1768496077;
-	bh=/nHNGzqh6rZo32F/FYsSEtlrr5IUthFiOZf+ED946CM=;
+	s=korg; t=1768496080;
+	bh=1uzZUrA7ixcq/5Gmw/xa4G/EL8y3ubtQvAReWzG0lIQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QtJoIRnl0xR8LCVbiGVaqbqD8u+u++9slYi+IXU6WZ5Z+Ex0z660wP4nKsjGfXoPo
-	 L+eohaUTR7NYVbWPnOy2RageCRoB7UpCtdJdMKwCFmc15QD7UrQW+P7SH3vBHAVCJN
-	 ZerBg+eJtGaVUtYE8SX/O4ftw3lTl2JXXBfQohDg=
+	b=Dmg0bo42aYeczHT6sw5M5gRWHL626uqRQymjogX06/552VoPZxfe5iICavO6nH4oQ
+	 7l80sbmTGjnfnzwVN+Rmm9Jh9spfpQT8IjbIQ0ZQtddz0R7Gv2s3dqytXTnSkr881O
+	 gbkiO8d8ffU3kYWiOBpfX6OPMkIEau0t2CHN2Uis=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rob Herring <robh@kernel.org>,
-	Jianhao Xu <jianhao.xu@seu.edu.cn>,
-	Zilin Guan <zilin@seu.edu.cn>,
+	Wadim Egorov <w.egorov@phytec.de>,
+	Nishanth Menon <nm@ti.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 068/181] of: unittest: Fix memory leak in unittest_data_add()
-Date: Thu, 15 Jan 2026 17:46:45 +0100
-Message-ID: <20260115164204.780250888@linuxfoundation.org>
+Subject: [PATCH 6.18 069/181] arm64: dts: ti: k3-am642-phyboard-electra-peb-c-010: Fix icssg-prueth schema warning
+Date: Thu, 15 Jan 2026 17:46:46 +0100
+Message-ID: <20260115164204.816810921@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260115164202.305475649@linuxfoundation.org>
 References: <20260115164202.305475649@linuxfoundation.org>
@@ -52,83 +51,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zilin Guan <zilin@seu.edu.cn>
+From: Wadim Egorov <w.egorov@phytec.de>
 
-[ Upstream commit 235a1eb8d2dcc49a6cf0a5ee1aa85544a5d0054b ]
+[ Upstream commit 05bbe52d0be5637dcd3c880348e3688f7ec64eb7 ]
 
-In unittest_data_add(), if of_resolve_phandles() fails, the allocated
-unittest_data is not freed, leading to a memory leak.
+Reduce length of dma-names and dmas properties for icssg1-ethernet
+node to comply with ti,icssg-prueth schema constraints. The previous
+entries exceeded the allowed count and triggered dtschema warnings
+during validation.
 
-Fix this by using scope-based cleanup helper __free(kfree) for automatic
-resource cleanup. This ensures unittest_data is automatically freed when
-it goes out of scope in error paths.
-
-For the success path, use retain_and_null_ptr() to transfer ownership
-of the memory to the device tree and prevent double freeing.
-
-Fixes: 2eb46da2a760 ("of/selftest: Use the resolver to fixup phandles")
-Suggested-by: Rob Herring <robh@kernel.org>
-Co-developed-by: Jianhao Xu <jianhao.xu@seu.edu.cn>
-Signed-off-by: Jianhao Xu <jianhao.xu@seu.edu.cn>
-Signed-off-by: Zilin Guan <zilin@seu.edu.cn>
-Link: https://patch.msgid.link/20251231114915.234638-1-zilin@seu.edu.cn
-Signed-off-by: Rob Herring (Arm) <robh@kernel.org>
+Fixes: e53fbf955ea7 ("arm64: dts: ti: k3-am642-phyboard-electra: Add PEB-C-010 Overlay")
+Signed-off-by: Wadim Egorov <w.egorov@phytec.de>
+Link: https://patch.msgid.link/20251127122733.2523367-1-w.egorov@phytec.de
+Signed-off-by: Nishanth Menon <nm@ti.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/of/unittest.c | 8 +++-----
- 1 file changed, 3 insertions(+), 5 deletions(-)
+ .../boot/dts/ti/k3-am642-phyboard-electra-peb-c-010.dtso   | 7 ++-----
+ 1 file changed, 2 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/of/unittest.c b/drivers/of/unittest.c
-index 388e9ec2cccf8..3b773aaf9d050 100644
---- a/drivers/of/unittest.c
-+++ b/drivers/of/unittest.c
-@@ -1985,7 +1985,6 @@ static void attach_node_and_children(struct device_node *np)
-  */
- static int __init unittest_data_add(void)
- {
--	void *unittest_data;
- 	void *unittest_data_align;
- 	struct device_node *unittest_data_node = NULL, *np;
- 	/*
-@@ -2004,7 +2003,7 @@ static int __init unittest_data_add(void)
- 	}
+diff --git a/arch/arm64/boot/dts/ti/k3-am642-phyboard-electra-peb-c-010.dtso b/arch/arm64/boot/dts/ti/k3-am642-phyboard-electra-peb-c-010.dtso
+index 7fc73cfacadb8..1176a52d560b7 100644
+--- a/arch/arm64/boot/dts/ti/k3-am642-phyboard-electra-peb-c-010.dtso
++++ b/arch/arm64/boot/dts/ti/k3-am642-phyboard-electra-peb-c-010.dtso
+@@ -30,13 +30,10 @@
+ 				<&main_pktdma 0xc206 15>, /* egress slice 1 */
+ 				<&main_pktdma 0xc207 15>, /* egress slice 1 */
+ 				<&main_pktdma 0x4200 15>, /* ingress slice 0 */
+-				<&main_pktdma 0x4201 15>, /* ingress slice 1 */
+-				<&main_pktdma 0x4202 0>, /* mgmnt rsp slice 0 */
+-				<&main_pktdma 0x4203 0>; /* mgmnt rsp slice 1 */
++				<&main_pktdma 0x4201 15>; /* ingress slice 1 */
+ 		dma-names = "tx0-0", "tx0-1", "tx0-2", "tx0-3",
+ 					"tx1-0", "tx1-1", "tx1-2", "tx1-3",
+-					"rx0", "rx1",
+-					"rxmgm0", "rxmgm1";
++					"rx0", "rx1";
  
- 	/* creating copy */
--	unittest_data = kmalloc(size + FDT_ALIGN_SIZE, GFP_KERNEL);
-+	void *unittest_data __free(kfree) = kmalloc(size + FDT_ALIGN_SIZE, GFP_KERNEL);
- 	if (!unittest_data)
- 		return -ENOMEM;
- 
-@@ -2014,12 +2013,10 @@ static int __init unittest_data_add(void)
- 	ret = of_fdt_unflatten_tree(unittest_data_align, NULL, &unittest_data_node);
- 	if (!ret) {
- 		pr_warn("%s: unflatten testcases tree failed\n", __func__);
--		kfree(unittest_data);
- 		return -ENODATA;
- 	}
- 	if (!unittest_data_node) {
- 		pr_warn("%s: testcases tree is empty\n", __func__);
--		kfree(unittest_data);
- 		return -ENODATA;
- 	}
- 
-@@ -2038,7 +2035,6 @@ static int __init unittest_data_add(void)
- 	/* attach the sub-tree to live tree */
- 	if (!of_root) {
- 		pr_warn("%s: no live tree to attach sub-tree\n", __func__);
--		kfree(unittest_data);
- 		rc = -ENODEV;
- 		goto unlock;
- 	}
-@@ -2059,6 +2055,8 @@ static int __init unittest_data_add(void)
- 	EXPECT_END(KERN_INFO,
- 		   "Duplicate name in testcase-data, renamed to \"duplicate-name#1\"");
- 
-+	retain_and_null_ptr(unittest_data);
-+
- unlock:
- 	of_overlay_mutex_unlock();
- 
+ 		firmware-name = "ti-pruss/am65x-sr2-pru0-prueth-fw.elf",
+ 				"ti-pruss/am65x-sr2-rtu0-prueth-fw.elf",
 -- 
 2.51.0
 
