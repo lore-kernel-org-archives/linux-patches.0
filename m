@@ -1,42 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A81F274B43;
-	Thu, 15 Jan 2026 16:56:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68CDE25228D;
+	Thu, 15 Jan 2026 16:56:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768496193; cv=none; b=SRMxuNIcZAHiAhPuJKpLmmPV7WuG9lV44odjGcw4CANVK83lNFVUGFlEbvmxRRAoCozwJj+/0t70oz4ECn7YxRwVqE3DPSJH6YP8skbwNOz3egX4/X8ZawQHJvmy7Fp+3rIuYvo1hokkA1+abKQpbE9sigTgU78BQwSlQi+3LeY=
+	t=1768496196; cv=none; b=OGGN09HcMtq1RhDUMfxxnxXDL0lAKeykPMBhxESTZfpYRaYHQg1sTu0TDLntikiDpcyM9Asoj534zJ+Su66WhiXc+Og3qcXwVJ0Yt0YZx1qX1iJH1tb1ubWbtYcT1DA3G8tIaeji/gTqsYRLrRCnnSUmucR8hZJRH6cO7rx6/cM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768496193; c=relaxed/simple;
-	bh=ej2dK1SYcn2OzZPfozRVsiROA49RgYuwFmZrp8rFeLY=;
+	s=arc-20240116; t=1768496196; c=relaxed/simple;
+	bh=HkcZrj+MvADzAJ4u6iZSebbx3f7qv0BCpfFYg1CQuvM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=d5VpweWTK+xGkmszmKfcE/qFfwcwFll1oDkRudLJIy6JHiYae5D9Y5Uz7a10yH4/rWkNLHVUHOgg6iVvGDYNZKtcrT0upyhmenc4G/zLO2yMz9QXX+5Hxk1jHv5w5R/Bh+z2qRENuwbodeCKr1dWD0QbXtK3kI/ASZihZOakb0A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xTD0vSQG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GShHjUAltqx+gK6nv1pmqWr0cVhhNAzh99HWpNwFlbpgCqH091WVjW0vhD7TTx2PbRFXRAWHytXL5qxJ5kp/0Q+0Zn5iO2pjGaEoEF35BtbY4+xz9BUzlCnc0fk5RVxvGgt/5Dz8OkIqD7X6YxxzqmIQIJ2DwOM1odwKKB6bFKA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=h7EqTIa2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xTD0vSQG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9A4FC116D0;
-	Thu, 15 Jan 2026 16:56:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="h7EqTIa2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF153C116D0;
+	Thu, 15 Jan 2026 16:56:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1768496193;
-	bh=ej2dK1SYcn2OzZPfozRVsiROA49RgYuwFmZrp8rFeLY=;
+	s=korg; t=1768496196;
+	bh=HkcZrj+MvADzAJ4u6iZSebbx3f7qv0BCpfFYg1CQuvM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xTD0vSQGcE+Pyd9/65kfhF51EJYBx1ux3WjTCm40ejScvD/p6QjlV12qQ82BeEsMc
-	 Xx3DXBSvHncsd5dxbdeqkyCIoGwYUGuypqlWZLz1tSafhaf+Ojux/cKqvyhMvGXDmN
-	 Ti1aCdUGpeqKqPfZy1TRlMdMIgzyDTVPRGJ4V6OA=
+	b=h7EqTIa2uPeA5DGANZZCkWlI4ilyxsjv0VMbY2K2WdGixXCdvu6UnDXfIrGAtl8ld
+	 nl31aI6DqyamRj4a/Dibyy2Ox+2kENL+jCojPM51yS1k6ZIJjsgA54m4tsIptNoCBi
+	 Y//vGLSlp73xBBHXeoBEQcalLC84ZdUbOmp3ZX1o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Harshita Bhilwaria <harshita.bhilwaria@intel.com>,
-	Giovanni Cabiddu <giovanni.cabiddu@intel.com>,
-	Ahsan Atta <ahsan.atta@intel.com>,
-	Ravikumar PM <ravikumar.pm@intel.com>,
-	Srikanth Thokala <srikanth.thokala@intel.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
+	Haibo Chen <haibo.chen@nxp.com>,
+	Frank Li <Frank.Li@nxp.com>,
+	Shawn Guo <shawnguo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 078/181] crypto: qat - fix duplicate restarting msg during AER error
-Date: Thu, 15 Jan 2026 17:46:55 +0100
-Message-ID: <20260115164205.145068841@linuxfoundation.org>
+Subject: [PATCH 6.18 079/181] arm64: dts: imx8qm-mek: correct the light sensor interrupt type to low level
+Date: Thu, 15 Jan 2026 17:46:56 +0100
+Message-ID: <20260115164205.180209181@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260115164202.305475649@linuxfoundation.org>
 References: <20260115164202.305475649@linuxfoundation.org>
@@ -55,45 +52,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Harshita Bhilwaria <harshita.bhilwaria@intel.com>
+From: Haibo Chen <haibo.chen@nxp.com>
 
-[ Upstream commit 961ac9d97be72267255f1ed841aabf6694b17454 ]
+[ Upstream commit e0d8678c2f09dca22e6197321f223fa9a0ca2839 ]
 
-The restarting message from PF to VF is sent twice during AER error
-handling: once from adf_error_detected() and again from
-adf_disable_sriov().
-This causes userspace subservices to shutdown unexpectedly when they
-receive a duplicate restarting message after already being restarted.
+light sensor isl29023 share the interrupt with lsm303arg, but these
+two devices use different interrupt type. According to the datasheet
+of these two devides, both support low level trigger type, so correct
+the interrupt type here to avoid the following error log:
 
-Avoid calling adf_pf2vf_notify_restarting() and
-adf_pf2vf_wait_for_restarting_complete() from adf_error_detected() so
-that the restarting msg is sent only once from PF to VF.
+  irq: type mismatch, failed to map hwirq-11 for gpio@5d0c0000!
 
-Fixes: 9567d3dc760931 ("crypto: qat - improve aer error reset handling")
-Signed-off-by: Harshita Bhilwaria <harshita.bhilwaria@intel.com>
-Reviewed-by: Giovanni Cabiddu <giovanni.cabiddu@intel.com>
-Reviewed-by: Ahsan Atta <ahsan.atta@intel.com>
-Reviewed-by: Ravikumar PM <ravikumar.pm@intel.com>
-Reviewed-by: Srikanth Thokala <srikanth.thokala@intel.com>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Fixes: 9918092cbb0e ("arm64: dts: imx8qm-mek: add i2c0 and children devices")
+Fixes: 1d8a9f043a77 ("arm64: dts: imx8: use defines for interrupts")
+Signed-off-by: Haibo Chen <haibo.chen@nxp.com>
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Signed-off-by: Shawn Guo <shawnguo@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/crypto/intel/qat/qat_common/adf_aer.c | 2 --
- 1 file changed, 2 deletions(-)
+ arch/arm64/boot/dts/freescale/imx8qm-mek.dts | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/crypto/intel/qat/qat_common/adf_aer.c b/drivers/crypto/intel/qat/qat_common/adf_aer.c
-index 35679b21ff63b..a098689ab5b75 100644
---- a/drivers/crypto/intel/qat/qat_common/adf_aer.c
-+++ b/drivers/crypto/intel/qat/qat_common/adf_aer.c
-@@ -41,8 +41,6 @@ static pci_ers_result_t adf_error_detected(struct pci_dev *pdev,
- 	adf_error_notifier(accel_dev);
- 	adf_pf2vf_notify_fatal_error(accel_dev);
- 	adf_dev_restarting_notify(accel_dev);
--	adf_pf2vf_notify_restarting(accel_dev);
--	adf_pf2vf_wait_for_restarting_complete(accel_dev);
- 	pci_clear_master(pdev);
- 	adf_dev_down(accel_dev);
+diff --git a/arch/arm64/boot/dts/freescale/imx8qm-mek.dts b/arch/arm64/boot/dts/freescale/imx8qm-mek.dts
+index 9c0b6b8d6459d..d4b13cfd87a92 100644
+--- a/arch/arm64/boot/dts/freescale/imx8qm-mek.dts
++++ b/arch/arm64/boot/dts/freescale/imx8qm-mek.dts
+@@ -560,7 +560,7 @@ light-sensor@44 {
+ 		compatible = "isil,isl29023";
+ 		reg = <0x44>;
+ 		interrupt-parent = <&lsio_gpio4>;
+-		interrupts = <11 IRQ_TYPE_EDGE_FALLING>;
++		interrupts = <11 IRQ_TYPE_LEVEL_LOW>;
+ 	};
  
+ 	pressure-sensor@60 {
 -- 
 2.51.0
 
