@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ADDAE2874E6;
-	Thu, 15 Jan 2026 17:16:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9105E2D780A;
+	Thu, 15 Jan 2026 17:16:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768497404; cv=none; b=BrXBoorfprGJlrHaor7XHDw8IAR9aeWiQW5uxlJ1gm6P6XOA68gYhK2+oAt8VIjpClmuqYJFGEPpyysIvQ4oTPWj02W6wdhoEQAJuILZcXBmLQv7RBGSEvoPIFy5UYECfUG6xyRQFKv8JZvyNZ0+MDXW5oBKv5uzPN0MTYjgkf8=
+	t=1768497407; cv=none; b=DxCc41MLQ5bGL6ua0HFNX+G2jFZQkyF26wSukMqcabqk4GglnnVlQlCdK0POL8k6EZ3nyE55/Q4ILlzHarqG4x+WXc9fRMQ1VJwH6bnsAT5fkY73q7blbrIRtnS3yK6NcowNkspMvFora4gaNvZOIkbHmi+1eFKAEHSJ+gMa4Ec=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768497404; c=relaxed/simple;
-	bh=ebyuVoe1cT2BoKMDRme6FllSTjXTu5ZvUelyKEx2r4s=;
+	s=arc-20240116; t=1768497407; c=relaxed/simple;
+	bh=o1wvYI8nzdN1V7HJACL3w3wW5CGhMYkLwaWzfbjlHbo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bz/Db6dNOC9rD1gzPS/3kCPgGPDnrAqyP9A8J9oo4nqWNMMGeZVof0mAviHf5z554d2FHg4Svcwo5VllqM+h+u6g8l4RXhLpHXASZ3SSQ/IK5YYDuLGqgkGjkj8dzvTHS7AXfbBKiVszNJ3If1WtdrZ3LBeEDVAg/5e+Vy3abN8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tShNr9qL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=nKaZKi81o8jfIFEY9y18BpbrPs/VyCOX2sAFEo7fF3kBYSImx5Cpjn54pBsaEAt6zm2zEhk3N/YHYAj5GmjsVDw+FpzykP5qfish7eucPUh62eB7STpxSfCltD8C869iprAjX5eHsW7E/WawWjZnf7uIZz94lGhs+2O1sq59ui4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OKQvch7Z; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tShNr9qL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 364CFC16AAE;
-	Thu, 15 Jan 2026 17:16:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OKQvch7Z"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A782C116D0;
+	Thu, 15 Jan 2026 17:16:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1768497404;
-	bh=ebyuVoe1cT2BoKMDRme6FllSTjXTu5ZvUelyKEx2r4s=;
+	s=korg; t=1768497407;
+	bh=o1wvYI8nzdN1V7HJACL3w3wW5CGhMYkLwaWzfbjlHbo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tShNr9qLhlS/uBIQ0wQlIdAr0E1ZM71BsUpAOu3OI4uiqpHSZX1ebciF/BZGFwH+q
-	 n66d2bE3VcqL3F/MKUqO2A1bZBvuS7v6clcupN3/+hLds736NZa+A6cJInrMfa+JKW
-	 VOEXDreFao/JpE11/JzS5XbaEYxBoT9Ulx1IPxBc=
+	b=OKQvch7ZD7XDZDxmKoLh/FyYrjWpZ0fZqWBmYln+MqTMy3zL/ClxxJS8LHNBf6sxL
+	 M8mgrgjpl2DeK7fz7oKxVZAPNS8oNgCTSCRve7bHTsMQCIirw6yAaeel0xQXgFH8n7
+	 d1MSYc/3Wl37HuhOPYNoDxUZR8zAErbDOTn1Hrbg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bart Van Assche <bvanassche@acm.org>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Krishna Yarlagadda <kyarlagadda@nvidia.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 070/554] scsi: target: Do not write NUL characters into ASCII configfs output
-Date: Thu, 15 Jan 2026 17:42:16 +0100
-Message-ID: <20260115164248.776572340@linuxfoundation.org>
+Subject: [PATCH 5.15 071/554] spi: tegra210-quad: use device_reset method
+Date: Thu, 15 Jan 2026 17:42:17 +0100
+Message-ID: <20260115164248.812935333@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260115164246.225995385@linuxfoundation.org>
 References: <20260115164246.225995385@linuxfoundation.org>
@@ -51,34 +51,72 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bart Van Assche <bvanassche@acm.org>
+From: Krishna Yarlagadda <kyarlagadda@nvidia.com>
 
-[ Upstream commit c03b55f235e283cae49c88b9602fd11096b92eba ]
+[ Upstream commit ac982578e7d340dc4f4fd243f4a4b24787d28c3f ]
 
-NUL characters are not allowed in ASCII configfs output. Hence this
-patch.
+Use device_reset api to replace duplicate code in driver to call
+reset_control_get api with reset handle.
 
-Fixes: c66ac9db8d4a ("[SCSI] target: Add LIO target core v4.0.0-rc6")
-Signed-off-by: Bart Van Assche <bvanassche@acm.org>
-Link: https://patch.msgid.link/20251027184639.3501254-2-bvanassche@acm.org
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Signed-off-by: Krishna Yarlagadda <kyarlagadda@nvidia.com>
+Link: https://lore.kernel.org/r/20220222175611.58051-2-kyarlagadda@nvidia.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Stable-dep-of: b4e002d8a7ce ("spi: tegra210-quad: Fix timeout handling")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/target/target_core_configfs.c | 1 -
- 1 file changed, 1 deletion(-)
+ drivers/spi/spi-tegra210-quad.c | 18 ++++--------------
+ 1 file changed, 4 insertions(+), 14 deletions(-)
 
-diff --git a/drivers/target/target_core_configfs.c b/drivers/target/target_core_configfs.c
-index 73a9e7b0ecbc7..120c19e41012b 100644
---- a/drivers/target/target_core_configfs.c
-+++ b/drivers/target/target_core_configfs.c
-@@ -2677,7 +2677,6 @@ static ssize_t target_lu_gp_members_show(struct config_item *item, char *page)
- 		cur_len = snprintf(buf, LU_GROUP_NAME_BUF, "%s/%s\n",
- 			config_item_name(&hba->hba_group.cg_item),
- 			config_item_name(&dev->dev_group.cg_item));
--		cur_len++; /* Extra byte for NULL terminator */
+diff --git a/drivers/spi/spi-tegra210-quad.c b/drivers/spi/spi-tegra210-quad.c
+index 3432058b0a7bd..c3867c70c61d4 100644
+--- a/drivers/spi/spi-tegra210-quad.c
++++ b/drivers/spi/spi-tegra210-quad.c
+@@ -137,7 +137,6 @@ struct tegra_qspi {
+ 	spinlock_t				lock;
  
- 		if ((cur_len + len) > PAGE_SIZE || cur_len > LU_GROUP_NAME_BUF) {
- 			pr_warn("Ran out of lu_gp_show_attr"
+ 	struct clk				*clk;
+-	struct reset_control			*rst;
+ 	void __iomem				*base;
+ 	phys_addr_t				phys;
+ 	unsigned int				irq;
+@@ -956,9 +955,8 @@ static void tegra_qspi_handle_error(struct tegra_qspi *tqspi)
+ 	dev_err(tqspi->dev, "error in transfer, fifo status 0x%08x\n", tqspi->status_reg);
+ 	tegra_qspi_dump_regs(tqspi);
+ 	tegra_qspi_flush_fifos(tqspi, true);
+-	reset_control_assert(tqspi->rst);
+-	udelay(2);
+-	reset_control_deassert(tqspi->rst);
++	if (device_reset(tqspi->dev) < 0)
++		dev_warn_once(tqspi->dev, "device reset failed\n");
+ }
+ 
+ static void tegra_qspi_transfer_end(struct spi_device *spi)
+@@ -1260,13 +1258,6 @@ static int tegra_qspi_probe(struct platform_device *pdev)
+ 		return ret;
+ 	}
+ 
+-	tqspi->rst = devm_reset_control_get_exclusive(&pdev->dev, NULL);
+-	if (IS_ERR(tqspi->rst)) {
+-		ret = PTR_ERR(tqspi->rst);
+-		dev_err(&pdev->dev, "failed to get reset control: %d\n", ret);
+-		return ret;
+-	}
+-
+ 	tqspi->max_buf_size = QSPI_FIFO_DEPTH << 2;
+ 	tqspi->dma_buf_size = DEFAULT_QSPI_DMA_BUF_LEN;
+ 
+@@ -1288,9 +1279,8 @@ static int tegra_qspi_probe(struct platform_device *pdev)
+ 		goto exit_pm_disable;
+ 	}
+ 
+-	reset_control_assert(tqspi->rst);
+-	udelay(2);
+-	reset_control_deassert(tqspi->rst);
++	if (device_reset(tqspi->dev) < 0)
++		dev_warn_once(tqspi->dev, "device reset failed\n");
+ 
+ 	tqspi->def_command1_reg = QSPI_M_S | QSPI_CS_SW_HW |  QSPI_CS_SW_VAL;
+ 	tegra_qspi_writel(tqspi, tqspi->def_command1_reg, QSPI_COMMAND1);
 -- 
 2.51.0
 
