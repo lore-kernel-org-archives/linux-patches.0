@@ -1,37 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 889953BF306;
-	Thu, 15 Jan 2026 17:28:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6FE803C1FFF;
+	Thu, 15 Jan 2026 17:28:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768498101; cv=none; b=F2Wn96hwS64ztNqIKfPcQX5zHLHN3y1lT8zZr17IYwLEWbfhPkagRnydvyKyAaDgoaPWU5xucuOU3tZBDYCauoZtZNYILRUhoNFAgRVz+ZezPutac+rpsGOHD20UZP5gGndcnSs+JZSSgFx2QGBsrzvcOiA+By6QfajWimHVraE=
+	t=1768498104; cv=none; b=Kttp/+bXqJLs1YT964l4205XAxtD/3Z+G866xpTFaLnVbRRi4e6Z93W6xLZm81Aq3w5gfM2PGajKtQJ1/BBgZvkMkOXVH0QTBwj0BuIATIZycGgf2JBTZvNufn7AHb3NatZRo/UeZ8IcqwvYlEzqONAssSM1ask2rKCgsXb2Iak=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768498101; c=relaxed/simple;
-	bh=jknUMWgtLdspoK8VILaIJtvhG3uM6rHlhqsDDbb3xGk=;
+	s=arc-20240116; t=1768498104; c=relaxed/simple;
+	bh=kLa+EhI/THGfo95SEqsPFB6Rt/lmuG5sPSbTLdn9C3A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=lC8MbhTiJoKsdY4S6g1W9CaW7H+IAD07Cln5Ixt0I9wn8Jv61gq/ThXCEsJkMlHfIvxW7ylqgCM/agtBdpdBsNMyp5OPXpL7x3pJLeGie04iI0C3TGU3NSUDG/AHRlMoGGNlR0x+mK53gbdv4liEKorV7hsL2jyf5cyHptAn+oQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2g82ttMh; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=AM5YW+YEO9HUeidGBC6srlMb8sjRHcRwL+NVp+MM21tI7pe7VGRiRLRx0qw2wbaOWoaPsdZ1jvYVymIE5F7LWKPnPCWLE/BlsN179i77S3AZCAxph0B8Y4ZXyu4Tl8lBvCfkhDhK76rT2yGc4bmH78pJYq390dFQotUpxVpPb/M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=r6fSvSyK; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2g82ttMh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 12D8DC116D0;
-	Thu, 15 Jan 2026 17:28:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="r6fSvSyK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EEA93C116D0;
+	Thu, 15 Jan 2026 17:28:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1768498101;
-	bh=jknUMWgtLdspoK8VILaIJtvhG3uM6rHlhqsDDbb3xGk=;
+	s=korg; t=1768498104;
+	bh=kLa+EhI/THGfo95SEqsPFB6Rt/lmuG5sPSbTLdn9C3A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2g82ttMhv3MsieKMNaey/6NGx4gPJuy55RmxseBaG1NfPAZkmC44Dfcq70J2DjpO9
-	 gKB5am3TrRFUphFwmslbyUhfz9ehFVOxChGsv6gOLrs8rKg11/EqgR10q6770knQBf
-	 /OgAT3AGvO8BcaB9Z0WcQqejzUM0eaeEhoV1x7do=
+	b=r6fSvSyKPsYYxUskUsvq5MDQrL1uwzZB9iqeA+fp7Ciqs6dRho8u2tgUZmd7NiYlb
+	 WOA9kQns9Qxeb2ak7WyMm0ivNJGuczopB29cQloCXwiuYI6a24iDJRED+5yiAKep4f
+	 OMHvb5tU9yRSn2pSu7jlY5RHOzpX4FPSrcfJqUKg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Ren=C3=A9=20Rebe?= <rene@exactco.de>,
-	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 5.15 280/554] floppy: fix for PAGE_SIZE != 4KB
-Date: Thu, 15 Jan 2026 17:45:46 +0100
-Message-ID: <20260115164256.365085100@linuxfoundation.org>
+	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
+Subject: [PATCH 5.15 281/554] fs/ntfs3: fix mount failure for sparse runs in run_unpack()
+Date: Thu, 15 Jan 2026 17:45:47 +0100
+Message-ID: <20260115164256.400367184@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260115164246.225995385@linuxfoundation.org>
 References: <20260115164246.225995385@linuxfoundation.org>
@@ -44,50 +43,47 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Rene Rebe <rene@exactco.de>
+From: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
 
-commit 82d20481024cbae2ea87fe8b86d12961bfda7169 upstream.
+commit 801f614ba263cb37624982b27b4c82f3c3c597a9 upstream.
 
-For years I wondered why the floppy driver does not just work on
-sparc64, e.g:
+Some NTFS volumes failed to mount because sparse data runs were not
+handled correctly during runlist unpacking. The code performed arithmetic
+on the special SPARSE_LCN64 marker, leading to invalid LCN values and
+mount errors.
 
-root@SUNW_375_0066:# disktype /dev/fd0
-disktype: Can't open /dev/fd0: No such device or address
+Add an explicit check for the case described above, marking the run as
+sparse without applying arithmetic.
 
-[  525.341906] disktype: attempt to access beyond end of device
-fd0: rw=0, sector=0, nr_sectors = 16 limit=8
-[  525.341991] floppy: error 10 while reading block 0
-
-Turns out floppy.c __floppy_read_block_0 tries to read one page for
-the first test read to determine the disk size and thus fails if that
-is greater than 4k. Adjust minimum MAX_DISK_SIZE to PAGE_SIZE to fix
-floppy on sparc64 and likely all other PAGE_SIZE != 4KB configs.
-
+Fixes: 736fc7bf5f68 ("fs: ntfs3: Fix integer overflow in run_unpack()")
 Cc: stable@vger.kernel.org
-Signed-off-by: René Rebe <rene@exactco.de>
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/block/floppy.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/ntfs3/run.c |    6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
---- a/drivers/block/floppy.c
-+++ b/drivers/block/floppy.c
-@@ -331,7 +331,7 @@ static bool initialized;
-  * This default is used whenever the current disk size is unknown.
-  * [Now it is rather a minimum]
-  */
--#define MAX_DISK_SIZE 4		/* 3984 */
-+#define MAX_DISK_SIZE (PAGE_SIZE / 1024)
+--- a/fs/ntfs3/run.c
++++ b/fs/ntfs3/run.c
+@@ -937,8 +937,12 @@ int run_unpack(struct runs_tree *run, st
+ 			if (!dlcn)
+ 				return -EINVAL;
  
- /*
-  * globals used by 'result()'
+-			if (check_add_overflow(prev_lcn, dlcn, &lcn))
++			/* Check special combination: 0 + SPARSE_LCN64. */
++			if (!prev_lcn && dlcn == SPARSE_LCN64) {
++				lcn = SPARSE_LCN64;
++			} else if (check_add_overflow(prev_lcn, dlcn, &lcn)) {
+ 				return -EINVAL;
++			}
+ 			prev_lcn = lcn;
+ 		} else
+ 			return -EINVAL;
 
 
