@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A04215530C;
-	Thu, 15 Jan 2026 17:19:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D95692C3268;
+	Thu, 15 Jan 2026 17:19:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768497581; cv=none; b=kSc8AdQKZjEafkqCTkzjDNcWNs0OanKUkUOEo4s28PS3JJXx9TYCY5qiJA7tR3zlG7Wb27dDZLhMc99ENp3o1iWTFRVmiYIAmAL/SuVeBCQqTHfdnc++Nld+QnDT2AyLtDVFNRNx9dGARiPlUO88+bEU3SH5S0jMIqEBFVBFzPI=
+	t=1768497583; cv=none; b=W8qBUtplZIUe0C8fpFL9oCW8UJp8Df8AMSU4P1I+2A2SWnuqbYv5g5ZIKyD4Pm5u4JGW2eG0e3SzDD2BfWnc5KiOF6aQU5cCdYWNp9QM2a/XLXzyVdP/0jAqdHTt5D2EM4siRcfTnqogJ1HZUk/1CCp7NUXMDVpRC7+GEEgcyTY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768497581; c=relaxed/simple;
-	bh=05P0xrEA4RT8fyFRYwwkTYER4GYI5PWf3aigHjsyzGo=;
+	s=arc-20240116; t=1768497583; c=relaxed/simple;
+	bh=3E4dRfmuHL5i+b6n83abAoEB+CDQOpzDl4gpN1NSG7g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fI4aA8p4kufJj+FVoR9yqnE2mAowjxOu7wM5Ayz9bNo4iwJfTXHJ/+Rewh/Ado3LLiXkBBRWbHixI63vP22d3HKsC2AQvsixGwIBlD78FE+Gnz60+hs8Zcwoig7Ejl2MQa30cFvll4E/zKy9LoIov1DsU3qITMaLCzLbNKmxX5w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VWtb8Iey; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hFxu6Zb3CiHzt3NkX8Qk7kanR7hWm1zqSEeIGnzb0uzcIOtFQgSVjrTWZANdq24ecaFDadWG8KyRKMp6SvduZVNmaeAIko6Cdnly69I9xt4KexY4QZbSUGXeOZWFk1WDZ3vZYWSl0iNEBmbP6v0nFkTC6oWQ5QHMwgOZoJPN6Ho=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kS5J7fzI; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VWtb8Iey"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5EE5FC116D0;
-	Thu, 15 Jan 2026 17:19:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kS5J7fzI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 69E6FC116D0;
+	Thu, 15 Jan 2026 17:19:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1768497580;
-	bh=05P0xrEA4RT8fyFRYwwkTYER4GYI5PWf3aigHjsyzGo=;
+	s=korg; t=1768497583;
+	bh=3E4dRfmuHL5i+b6n83abAoEB+CDQOpzDl4gpN1NSG7g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VWtb8IeyJFQNyEMsV5sJ297/9q1iBLc2Vm87Qc92DccJud33JgwoZEUFNhKQik+dE
-	 dZWuMa2eqsTv3U7BmHW1lgLFBZf3cyYFCUHQoifqR1NB2AXQCUlGPrOvhuoACgJk7a
-	 NcfHPoL3VQP89MuPQ65EdSseHVIPYtKSclkMwA3w=
+	b=kS5J7fzI2MkK9u6wawleL1bODo8EuI0LqHtuQmnUH5cHkWuacUqoMQGy7R6f02tmF
+	 yoFWIWBXrSo7QFL7r93exG5uaO2i5aD1w5+ohDVVdacMbWAOsl7NMZaz6W1zi4DnP/
+	 cG1ghgZSQeVsBVmQPjWcb6UyhU2P0iYq6hV7KcCM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matt Bobrowski <mattbobrowski@google.com>,
-	Song Liu <song@kernel.org>,
-	Alexei Starovoitov <ast@kernel.org>,
+	Herve Codina <herve.codina@bootlin.com>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 130/554] selftests/bpf: skip test_perf_branches_hw() on unsupported platforms
-Date: Thu, 15 Jan 2026 17:43:16 +0100
-Message-ID: <20260115164250.952736748@linuxfoundation.org>
+Subject: [PATCH 5.15 099/554] soc: renesas: r9a06g032-sysctrl: Handle h2mode setting based on USBF presence
+Date: Thu, 15 Jan 2026 17:42:45 +0100
+Message-ID: <20260115164249.829893367@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260115164246.225995385@linuxfoundation.org>
 References: <20260115164246.225995385@linuxfoundation.org>
@@ -52,50 +51,82 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Matt Bobrowski <mattbobrowski@google.com>
+From: Herve Codina <herve.codina@bootlin.com>
 
-[ Upstream commit 27746aaf1b20172f0859546c4a3e82eca459f680 ]
+[ Upstream commit e9fee814b054e4f6f2faf3d9c1944869fe41c9dd ]
 
-Gracefully skip the test_perf_branches_hw subtest on platforms that
-do not support LBR or require specialized perf event attributes
-to enable branch sampling.
+The CFG_USB[H2MODE] allows to switch the USB configuration. The
+configuration supported are:
+  - One host and one device
+or
+  - Two hosts
 
-For example, AMD's Milan (Zen 3) supports BRS rather than traditional
-LBR. This requires specific configurations (attr.type = PERF_TYPE_RAW,
-attr.config = RETIRED_TAKEN_BRANCH_INSTRUCTIONS) that differ from the
-generic setup used within this test. Notably, it also probably doesn't
-hold much value to special case perf event configurations for selected
-micro architectures.
+Set CFG_USB[H2MODE] based on the USBF controller (USB device)
+availability.
 
-Fixes: 67306f84ca78c ("selftests/bpf: Add bpf_read_branch_records() selftest")
-Signed-off-by: Matt Bobrowski <mattbobrowski@google.com>
-Acked-by: Song Liu <song@kernel.org>
-Link: https://lore.kernel.org/r/20251120142059.2836181-1-mattbobrowski@google.com
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Signed-off-by: Herve Codina <herve.codina@bootlin.com>
+Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Link: https://lore.kernel.org/r/20230105152257.310642-3-herve.codina@bootlin.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Stable-dep-of: f8def051bbcf ("clk: renesas: r9a06g032: Fix memory leak in error path")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/bpf/prog_tests/perf_branches.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/clk/renesas/r9a06g032-clocks.c | 28 ++++++++++++++++++++++++++
+ 1 file changed, 28 insertions(+)
 
-diff --git a/tools/testing/selftests/bpf/prog_tests/perf_branches.c b/tools/testing/selftests/bpf/prog_tests/perf_branches.c
-index 12c4f45cee1a8..4a17253413a3a 100644
---- a/tools/testing/selftests/bpf/prog_tests/perf_branches.c
-+++ b/tools/testing/selftests/bpf/prog_tests/perf_branches.c
-@@ -116,11 +116,11 @@ static void test_perf_branches_hw(void)
- 	pfd = syscall(__NR_perf_event_open, &attr, -1, 0, -1, PERF_FLAG_FD_CLOEXEC);
+diff --git a/drivers/clk/renesas/r9a06g032-clocks.c b/drivers/clk/renesas/r9a06g032-clocks.c
+index 9f42d46ce6192..e46280059db79 100644
+--- a/drivers/clk/renesas/r9a06g032-clocks.c
++++ b/drivers/clk/renesas/r9a06g032-clocks.c
+@@ -24,6 +24,8 @@
+ #include <linux/spinlock.h>
+ #include <dt-bindings/clock/r9a06g032-sysctrl.h>
  
- 	/*
--	 * Some setups don't support branch records (virtual machines, !x86),
--	 * so skip test in this case.
-+	 * Some setups don't support LBR (virtual machines, !x86, AMD Milan Zen
-+	 * 3 which only supports BRS), so skip test in this case.
- 	 */
- 	if (pfd < 0) {
--		if (errno == ENOENT || errno == EOPNOTSUPP) {
-+		if (errno == ENOENT || errno == EOPNOTSUPP || errno == EINVAL) {
- 			printf("%s:SKIP:no PERF_SAMPLE_BRANCH_STACK\n",
- 			       __func__);
- 			test__skip();
++#define R9A06G032_SYSCTRL_USB    0x00
++#define R9A06G032_SYSCTRL_USB_H2MODE  (1<<1)
+ #define R9A06G032_SYSCTRL_DMAMUX 0xA0
+ 
+ struct r9a06g032_gate {
+@@ -919,6 +921,29 @@ static void r9a06g032_clocks_del_clk_provider(void *data)
+ 	of_clk_del_provider(data);
+ }
+ 
++static void __init r9a06g032_init_h2mode(struct r9a06g032_priv *clocks)
++{
++	struct device_node *usbf_np = NULL;
++	u32 usb;
++
++	while ((usbf_np = of_find_compatible_node(usbf_np, NULL,
++						  "renesas,rzn1-usbf"))) {
++		if (of_device_is_available(usbf_np))
++			break;
++	}
++
++	usb = readl(clocks->reg + R9A06G032_SYSCTRL_USB);
++	if (usbf_np) {
++		/* 1 host and 1 device mode */
++		usb &= ~R9A06G032_SYSCTRL_USB_H2MODE;
++		of_node_put(usbf_np);
++	} else {
++		/* 2 hosts mode */
++		usb |= R9A06G032_SYSCTRL_USB_H2MODE;
++	}
++	writel(usb, clocks->reg + R9A06G032_SYSCTRL_USB);
++}
++
+ static int __init r9a06g032_clocks_probe(struct platform_device *pdev)
+ {
+ 	struct device *dev = &pdev->dev;
+@@ -948,6 +973,9 @@ static int __init r9a06g032_clocks_probe(struct platform_device *pdev)
+ 	clocks->reg = of_iomap(np, 0);
+ 	if (WARN_ON(!clocks->reg))
+ 		return -ENOMEM;
++
++	r9a06g032_init_h2mode(clocks);
++
+ 	for (i = 0; i < ARRAY_SIZE(r9a06g032_clocks); ++i) {
+ 		const struct r9a06g032_clkdesc *d = &r9a06g032_clocks[i];
+ 		const char *parent_name = d->source ?
 -- 
 2.51.0
 
