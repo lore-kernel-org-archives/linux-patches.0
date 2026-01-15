@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D9EF379975;
-	Thu, 15 Jan 2026 17:00:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2CA763BBA12;
+	Thu, 15 Jan 2026 17:00:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768496408; cv=none; b=CnOQH/w089eXMyu3a8AUyOiqr+Dk6gCAWvn30AWbhk/rOTu0VLiU4PtAFL2CyuPXMqvA9sO9uThquxGdb9q+ZHhK1BuNzy4uof42m+u8BK9aJkvg3dhG8qipASx4MF6m2he9xAMtZCXSWUnA6kXs/jWXxs/aIr9WLUJdfxVAw+M=
+	t=1768496411; cv=none; b=nvmeg6OBblWU1h7PKrBdYEqkalOkOsJgKNA5leoh3cz8QKm6kDhlzjWJdLHfqCfNslHpC4vz+8VapX705l5Jp67dEj8GJzFrDpDaQCxomvbsF0N66LhI8TGKS9RbofYaWKUugkPMGJrMk++ggbHvfoMX24oYRABqOWwwvYWBcww=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768496408; c=relaxed/simple;
-	bh=28B5FrkxaveGDFngIjdkENuZy27Y1fBNLPletrmRSnc=;
+	s=arc-20240116; t=1768496411; c=relaxed/simple;
+	bh=CSNvPtDm7ml+01uzTubN8v8k27syaUaE3NE1nbpxb6A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EmFo0MdDJX0SGSKY/kRI7ap3KjwCoGpYVTNFr3zOg0ocQPFvWKH765iOpY0jPNcnlkZRPEjSoY0Poka0WXYYta3R1QAXPRIkveKd/q1frKPtbAF5t72hgM8UXdRlozzO3odt6xpHeapyjEtHAw6NDGKzJzPUfLwsPDbpUoa/3mY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XIB0tG6p; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OPcOR6m5Kr2KnqtUWcFk5QSbrif+80ISrf5YgDZpD9Dcz3b1DtKjSsCXNybSVsRSXQvsp4B7N+k/Sqev6A7d4v67CzwFFI+PXzHu0WSRqoD/n4A/wxSDUOaRsN6hQBnms1L22jsunkNeSK4MrTmIMxe4OLXFqYH48YzL1CMkE5k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iTn9i5nT; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XIB0tG6p"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD7F8C116D0;
-	Thu, 15 Jan 2026 17:00:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iTn9i5nT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9DF77C116D0;
+	Thu, 15 Jan 2026 17:00:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1768496408;
-	bh=28B5FrkxaveGDFngIjdkENuZy27Y1fBNLPletrmRSnc=;
+	s=korg; t=1768496411;
+	bh=CSNvPtDm7ml+01uzTubN8v8k27syaUaE3NE1nbpxb6A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XIB0tG6psh6t0NRGCh8EgLRFsc7sjmsB8n2XQohgGfw+IkGdNEGFISYYTus3TalIc
-	 RoFbfFtUH4meMziRWkeovyaz9L4otnVGEQ0ZDS+kSKfbT+gvf9uuVBX/pkioMkI/fA
-	 KUvazWdo+GVcwTX4gcBm95hWa1ybe+yLo6mIAgOs=
+	b=iTn9i5nTWV/fVRhyj9mvKZV8vD/03Vxjq4iJ7Sb80Zv2nA1b+FWMt7fLsgpmvxDYh
+	 0oNH97OW1hKCxQ7HeRRkk6XTs8TwsTwL4cJ8eEt2+YMwrSGcA5duWvIKPF4uIcUtXu
+	 IMoALqPz66kK5pXgKmqp5KJ+8kxGuSJjA9IkykMM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nimrod Oren <noren@nvidia.com>,
-	Gal Pressman <gal@nvidia.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	davplsm <davpal@yahoo.com>,
+	Kai Vehmanen <kai.vehmanen@linux.intel.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 141/181] selftests: drv-net: Bring back tool() to driver __init__s
-Date: Thu, 15 Jan 2026 17:47:58 +0100
-Message-ID: <20260115164207.407548802@linuxfoundation.org>
+Subject: [PATCH 6.18 178/181] ALSA: hda/realtek: enable woofer speakers on Medion NM14LNL
+Date: Thu, 15 Jan 2026 17:48:35 +0100
+Message-ID: <20260115164208.740530772@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260115164202.305475649@linuxfoundation.org>
 References: <20260115164202.305475649@linuxfoundation.org>
@@ -52,71 +52,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gal Pressman <gal@nvidia.com>
+From: Kai Vehmanen <kai.vehmanen@linux.intel.com>
 
-[ Upstream commit 353cfc0ef3f34ef7fe313ae38dac37f2454a7cf5 ]
+[ Upstream commit e64826e5e367ad45539ab245b92f009ee165025c ]
 
-The pp_alloc_fail.py test (which doesn't run in NIPA CI?) uses tool, add
-back the import.
+The ALC233 codec on these Medion NM14LNL (SPRCHRGD 14 S2) systems
+requires a quirk to enable all speakers.
 
-Resolves:
-  ImportError: cannot import name 'tool' from 'lib.py'
-
-Fixes: 68a052239fc4 ("selftests: drv-net: update remaining Python init files")
-Reviewed-by: Nimrod Oren <noren@nvidia.com>
-Signed-off-by: Gal Pressman <gal@nvidia.com>
-Link: https://patch.msgid.link/20260105163319.47619-1-gal@nvidia.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Tested-by: davplsm <davpal@yahoo.com>
+Link: https://github.com/thesofproject/linux/issues/5611
+Signed-off-by: Kai Vehmanen <kai.vehmanen@linux.intel.com>
+Link: https://patch.msgid.link/20251212174658.752641-1-kai.vehmanen@linux.intel.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/drivers/net/hw/lib/py/__init__.py | 4 ++--
- tools/testing/selftests/net/lib/py/__init__.py            | 4 ++--
- 2 files changed, 4 insertions(+), 4 deletions(-)
+ sound/hda/codecs/realtek/alc269.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/tools/testing/selftests/drivers/net/hw/lib/py/__init__.py b/tools/testing/selftests/drivers/net/hw/lib/py/__init__.py
-index fb010a48a5a19..a86f5c311fdcb 100644
---- a/tools/testing/selftests/drivers/net/hw/lib/py/__init__.py
-+++ b/tools/testing/selftests/drivers/net/hw/lib/py/__init__.py
-@@ -22,7 +22,7 @@ try:
-         NlError, RtnlFamily, DevlinkFamily, PSPFamily
-     from net.lib.py import CmdExitFailure
-     from net.lib.py import bkg, cmd, bpftool, bpftrace, defer, ethtool, \
--        fd_read_timeout, ip, rand_port, wait_port_listen, wait_file
-+        fd_read_timeout, ip, rand_port, wait_port_listen, wait_file, tool
-     from net.lib.py import KsftSkipEx, KsftFailEx, KsftXfailEx
-     from net.lib.py import ksft_disruptive, ksft_exit, ksft_pr, ksft_run, \
-         ksft_setup
-@@ -37,7 +37,7 @@ try:
-                "CmdExitFailure",
-                "bkg", "cmd", "bpftool", "bpftrace", "defer", "ethtool",
-                "fd_read_timeout", "ip", "rand_port",
--               "wait_port_listen", "wait_file",
-+               "wait_port_listen", "wait_file", "tool",
-                "KsftSkipEx", "KsftFailEx", "KsftXfailEx",
-                "ksft_disruptive", "ksft_exit", "ksft_pr", "ksft_run",
-                "ksft_setup",
-diff --git a/tools/testing/selftests/net/lib/py/__init__.py b/tools/testing/selftests/net/lib/py/__init__.py
-index 97b7cf2b20eb9..8f2da17d53510 100644
---- a/tools/testing/selftests/net/lib/py/__init__.py
-+++ b/tools/testing/selftests/net/lib/py/__init__.py
-@@ -12,7 +12,7 @@ from .ksft import KsftFailEx, KsftSkipEx, KsftXfailEx, ksft_pr, ksft_eq, \
- from .netns import NetNS, NetNSEnter
- from .nsim import NetdevSim, NetdevSimDev
- from .utils import CmdExitFailure, fd_read_timeout, cmd, bkg, defer, \
--    bpftool, ip, ethtool, bpftrace, rand_port, wait_port_listen, wait_file
-+    bpftool, ip, ethtool, bpftrace, rand_port, wait_port_listen, wait_file, tool
- from .ynl import NlError, YnlFamily, EthtoolFamily, NetdevFamily, RtnlFamily, RtnlAddrFamily
- from .ynl import NetshaperFamily, DevlinkFamily, PSPFamily
- 
-@@ -25,7 +25,7 @@ __all__ = ["KSRC",
-            "NetNS", "NetNSEnter",
-            "CmdExitFailure", "fd_read_timeout", "cmd", "bkg", "defer",
-            "bpftool", "ip", "ethtool", "bpftrace", "rand_port",
--           "wait_port_listen", "wait_file",
-+           "wait_port_listen", "wait_file", "tool",
-            "NetdevSim", "NetdevSimDev",
-            "NetshaperFamily", "DevlinkFamily", "PSPFamily", "NlError",
-            "YnlFamily", "EthtoolFamily", "NetdevFamily", "RtnlFamily",
+diff --git a/sound/hda/codecs/realtek/alc269.c b/sound/hda/codecs/realtek/alc269.c
+index eea8399e32588..eb6197d19078c 100644
+--- a/sound/hda/codecs/realtek/alc269.c
++++ b/sound/hda/codecs/realtek/alc269.c
+@@ -7211,6 +7211,7 @@ static const struct hda_quirk alc269_fixup_tbl[] = {
+ 	SND_PCI_QUIRK(0x1d72, 0x1901, "RedmiBook 14", ALC256_FIXUP_ASUS_HEADSET_MIC),
+ 	SND_PCI_QUIRK(0x1d72, 0x1945, "Redmi G", ALC256_FIXUP_ASUS_HEADSET_MIC),
+ 	SND_PCI_QUIRK(0x1d72, 0x1947, "RedmiBook Air", ALC255_FIXUP_XIAOMI_HEADSET_MIC),
++	SND_PCI_QUIRK(0x1e39, 0xca14, "MEDION NM14LNL", ALC233_FIXUP_MEDION_MTL_SPK),
+ 	SND_PCI_QUIRK(0x1ee7, 0x2078, "HONOR BRB-X M1010", ALC2XX_FIXUP_HEADSET_MIC),
+ 	SND_PCI_QUIRK(0x1f66, 0x0105, "Ayaneo Portable Game Player", ALC287_FIXUP_CS35L41_I2C_2),
+ 	SND_PCI_QUIRK(0x2014, 0x800a, "Positivo ARN50", ALC269_FIXUP_LIMIT_INT_MIC_BOOST),
 -- 
 2.51.0
 
