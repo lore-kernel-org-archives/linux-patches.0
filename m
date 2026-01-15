@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77A5729C338;
-	Thu, 15 Jan 2026 17:02:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 490A42C028F;
+	Thu, 15 Jan 2026 17:02:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768496566; cv=none; b=VUZYMk3afbmMD2deXFqo0C2tiZo/8YT2rAdJ336Wm2P5iE4oUOSn0XDIpptvJmBN1NXFpmLT/smRzUVLIR5Fn6XUS3EnfV+JXHNpr6AXJmHAW21Iht9BQYff2exZjHj+TXGm1UoVQ1bC2DOJMMN72+mPwPUBmj/itMqNhEoxWr4=
+	t=1768496569; cv=none; b=UUomTNhYBxh6NodsbTJI+J63z815PipIF1qYD5T/WSrCUHQgA3bn40XDHfAbBIZUPLCGwbaCN9O0sV2cTr95+PlrbmCUw3SnhOJA/LdOlcq1RDNY+nSbkdfPogwkY+OiasQH57URU0ECMsg4Dy+0hqoWGUCXcHQAOsAmywUi2Q4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768496566; c=relaxed/simple;
-	bh=/X2tYseuO9h4qnaAZsp8EjYRMBHNaDryGDVoxJje/74=;
+	s=arc-20240116; t=1768496569; c=relaxed/simple;
+	bh=74hBhalu1RK9MSRMGeiuxIHp+TcqW9d+yQ/ShBSSwIo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eTDWV0Z04ykLHNpgoOVakW1bx+lbYgvP0n/zpaI7TXvK9oWd84/a+nROXUIZ9kaAI7uncSzAxowtk4X/8m8BxRrowF7DCBs1PZT9ahBfXXzPjSMU6rQx1MVddsXSC342APR1LuKGMY3B5HBLU2dxLlksCM2JGe/v3AXV6WAlFBQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RFdEVEHI; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YmX3pwOhwGGSdlZXYRQ1Iie14TFufQBT9KVNYk4S5d5V5z8je6mHPCjN4sPk/qCLSyumcS30UOCXa6hdpC/h/V/JGqyztt1GmeN6GFfZVuYn0GTXIkSWku5qtxLLo2e8HDFNCmmiAUJbkD1ssr6FmcRaCrdGqTI5RqFKbwz2r5A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ACXZYgXQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RFdEVEHI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 03AAFC116D0;
-	Thu, 15 Jan 2026 17:02:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ACXZYgXQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA813C116D0;
+	Thu, 15 Jan 2026 17:02:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1768496566;
-	bh=/X2tYseuO9h4qnaAZsp8EjYRMBHNaDryGDVoxJje/74=;
+	s=korg; t=1768496569;
+	bh=74hBhalu1RK9MSRMGeiuxIHp+TcqW9d+yQ/ShBSSwIo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RFdEVEHI9RfcdB/Y79eYfBwCT1F2jepSL6eh4iZJoKpl91BFyruNRCPlLuMqb7cjk
-	 F+4uBvsZGsXMxH05skFbgZJn3e+wA6CBigoKtu8TeUlBRA93OPA4Crj6/Vefwol9sR
-	 w8IUaiy/KbMLysQn2k3Rjy9YGvmfN624RObDaBdY=
+	b=ACXZYgXQ/JyX/Zt50DoHkO0BAgMI3dwU2xSQ7n6GoG3STOx/Q17KmEKJNRCpu2m6C
+	 lsK0E6ji8PzeZHWJIXzsGSJoXp+BfZWLX5s+IqKxNUX4Jy/f9VNGeYXnW8g31ltdH6
+	 7EMRaM4IBi1HI6P1vwkzo9kfW8glKCkkiH0dd9qc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexander Stein <alexander.stein@ew.tq-group.com>,
-	Andrew Lunn <andrew@lunn.ch>,
-	Shawn Guo <shawnguo@kernel.org>,
+	Yang Li <yang.li85200@gmail.com>,
+	Guo Ren <guoren@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 057/119] arm64: dts: mba8mx: Fix Ethernet PHY IRQ support
-Date: Thu, 15 Jan 2026 17:47:52 +0100
-Message-ID: <20260115164154.016502921@linuxfoundation.org>
+Subject: [PATCH 6.12 031/119] csky: fix csky_cmpxchg_fixup not working
+Date: Thu, 15 Jan 2026 17:47:26 +0100
+Message-ID: <20260115164153.085385266@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260115164151.948839306@linuxfoundation.org>
 References: <20260115164151.948839306@linuxfoundation.org>
@@ -52,35 +51,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexander Stein <alexander.stein@ew.tq-group.com>
+From: Yang Li <yang.li85200@gmail.com>
 
-[ Upstream commit 89e87d0dc87eb3654c9ae01afc4a18c1c6d1e523 ]
+[ Upstream commit 809ef03d6d21d5fea016bbf6babeec462e37e68c ]
 
-Ethernet PHY interrupt mode is level triggered. Adjust the mode
-accordingly.
+In the csky_cmpxchg_fixup function, it is incorrect to use the global
+variable csky_cmpxchg_stw to determine the address where the exception
+occurred.The global variable csky_cmpxchg_stw stores the opcode at the
+time of the exception, while &csky_cmpxchg_stw shows the address where
+the exception occurred.
 
-Signed-off-by: Alexander Stein <alexander.stein@ew.tq-group.com>
-Reviewed-by: Andrew Lunn <andrew@lunn.ch>
-Fixes: 70cf622bb16e ("arm64: dts: mba8mx: Add Ethernet PHY IRQ support")
-Signed-off-by: Shawn Guo <shawnguo@kernel.org>
+Signed-off-by: Yang Li <yang.li85200@gmail.com>
+Signed-off-by: Guo Ren <guoren@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/freescale/mba8mx.dtsi | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/csky/mm/fault.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/freescale/mba8mx.dtsi b/arch/arm64/boot/dts/freescale/mba8mx.dtsi
-index c60c7a9e54aff..66f927198fe94 100644
---- a/arch/arm64/boot/dts/freescale/mba8mx.dtsi
-+++ b/arch/arm64/boot/dts/freescale/mba8mx.dtsi
-@@ -186,7 +186,7 @@ ethphy0: ethernet-phy@e {
- 			reset-assert-us = <500000>;
- 			reset-deassert-us = <500>;
- 			interrupt-parent = <&expander2>;
--			interrupts = <6 IRQ_TYPE_EDGE_FALLING>;
-+			interrupts = <6 IRQ_TYPE_LEVEL_LOW>;
- 		};
- 	};
- };
+diff --git a/arch/csky/mm/fault.c b/arch/csky/mm/fault.c
+index a885518ce1dd2..5226bc08c3360 100644
+--- a/arch/csky/mm/fault.c
++++ b/arch/csky/mm/fault.c
+@@ -45,8 +45,8 @@ static inline void csky_cmpxchg_fixup(struct pt_regs *regs)
+ 	if (trap_no(regs) != VEC_TLBMODIFIED)
+ 		return;
+ 
+-	if (instruction_pointer(regs) == csky_cmpxchg_stw)
+-		instruction_pointer_set(regs, csky_cmpxchg_ldw);
++	if (instruction_pointer(regs) == (unsigned long)&csky_cmpxchg_stw)
++		instruction_pointer_set(regs, (unsigned long)&csky_cmpxchg_ldw);
+ 	return;
+ }
+ #endif
 -- 
 2.51.0
 
