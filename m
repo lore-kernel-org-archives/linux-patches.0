@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84FC72C028F;
-	Thu, 15 Jan 2026 17:00:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 145173BC4D7;
+	Thu, 15 Jan 2026 17:00:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768496443; cv=none; b=PcA/L1o2cCKqM3wyGtiXBCE+qOJmx5z3b/rdiujH/HumUT6H0AVupVRgaZ0/8cPMftpqn75oPQ2PiJ7gOQnuZhpN14kN2wABiAgha75FBhU+4ecfgv2Xwkbu2nNGUKB/pHOUQOAWZk8+zawAbCO+8vkrSjz4VT/FZHBEy3ZnGSw=
+	t=1768496446; cv=none; b=u5WiSlVFP7JuSApNDJEazUc5Kbzd4GQbtfXoELa5L6N3HkakPteGlI0DB0RHtkpWxqZhjHZGTCmPScB/6fLzJxfF9//OKzyzeNAebUMnU1F1UI7jDPHUbDbgLhUcBNFPUWVtfH0Tvi3tINkCP8oLYf5MDxeKy1Ce82lfKGSK2PI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768496443; c=relaxed/simple;
-	bh=DS7dYTSjAN/bA/OoZMVAJnsnRivWRlF6wY/DMJYpQ88=;
+	s=arc-20240116; t=1768496446; c=relaxed/simple;
+	bh=iKMwoiKhIU8kLzpV4FJfOw+oyHBRbBbQKij3XlRfOOc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=reUxBRT9hDqtRndEqK6BaU/YYZWQVCX7+9oJbOjWAv2L2jqd6k5sPjD9mnRyBIUKY8aRMXtS+Ii+PQsZlt3ZsE8KHWz3CmV7sd466S6mSoKo7NoRH7PmADYQdrG9H9kd/AQYDwsJMyDL588SDBMj/4rlA3mtyxg6+WgvWx83B98=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XevD2Z/w; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=iKBP6mp+XqZOWLqMzWw9BonJGVruZdUHN0/aDPy0MzNSAtnMti6Vw06TcTeCOKcAGDvHJ53fITP5f9p1d4FtKXUiGkH9OYdIhkNgtW9XHDsbYYACv8iGOZdxdVDv0HGOt8bXJGS4jelaF0dWgMKYsD5uJDqVdyYC8x07/8J0x2M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=idsQB0zL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XevD2Z/w"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA91DC116D0;
-	Thu, 15 Jan 2026 17:00:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="idsQB0zL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 932BBC116D0;
+	Thu, 15 Jan 2026 17:00:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1768496443;
-	bh=DS7dYTSjAN/bA/OoZMVAJnsnRivWRlF6wY/DMJYpQ88=;
+	s=korg; t=1768496446;
+	bh=iKMwoiKhIU8kLzpV4FJfOw+oyHBRbBbQKij3XlRfOOc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XevD2Z/wrNFuzq/+jQ8bDLJnMXL+Z4P4NWDlb/ye6oDt86P5gD9IpHOx9DkB/qVmL
-	 g78XkZZUvSPJV6xw5hA3z+vT4EOn07jRSyFdPe4yua4/8RpeZ9W0X84ZlP6uRNDkW7
-	 w6nY3aQKL/Lva8nIfbcdOAL07ged1TZ/0Bk3O9SU=
+	b=idsQB0zLGaMpejAT6Yb7oboWinPS/1so4KYl2sQim75ifz6Fhiv3crcSxu0AsIKSa
+	 s3ZAHwRX3uYR8GxWgigPE4gcj01WYUUQMcv8kVgodI+a1atpKbxnyWuey1WqwdCU4g
+	 MnI9VcREQ+WzEEB3NgZCbzdUp7QTs0sSJK6pWn64=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lang Yu <lang.yu@amd.com>,
-	Alan Liu <haoping.liu@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.12 015/119] drm/amdgpu: Fix query for VPE block_type and ip_count
-Date: Thu, 15 Jan 2026 17:47:10 +0100
-Message-ID: <20260115164152.513120608@linuxfoundation.org>
+	Miaoqian Lin <linmq006@gmail.com>,
+	Javier Martinez Canillas <javierm@redhat.com>,
+	Linus Walleij <linusw@kernel.org>
+Subject: [PATCH 6.12 016/119] drm/pl111: Fix error handling in pl111_amba_probe
+Date: Thu, 15 Jan 2026 17:47:11 +0100
+Message-ID: <20260115164152.548889935@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260115164151.948839306@linuxfoundation.org>
 References: <20260115164151.948839306@linuxfoundation.org>
@@ -51,47 +51,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alan Liu <haoping.liu@amd.com>
+From: Miaoqian Lin <linmq006@gmail.com>
 
-commit 72d7f4573660287f1b66c30319efecd6fcde92ee upstream.
+commit 0ddd3bb4b14c9102c0267b3fd916c81fe5ab89c1 upstream.
 
-[Why]
-Query for VPE block_type and ip_count is missing.
+Jump to the existing dev_put label when devm_request_irq() fails
+so drm_dev_put() and of_reserved_mem_device_release() run
+instead of returning early and leaking resources.
 
-[How]
-Add VPE case in ip_block_type and hw_ip_count query.
+Found via static analysis and code review.
 
-Reviewed-by: Lang Yu <lang.yu@amd.com>
-Signed-off-by: Alan Liu <haoping.liu@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit a6ea0a430aca5932b9c75d8e38deeb45665dd2ae)
+Fixes: bed41005e617 ("drm/pl111: Initial drm/kms driver for pl111")
 Cc: stable@vger.kernel.org
+Signed-off-by: Miaoqian Lin <linmq006@gmail.com>
+Reviewed-by: Javier Martinez Canillas <javierm@redhat.com>
+Signed-off-by: Linus Walleij <linusw@kernel.org>
+Link: https://patch.msgid.link/20251211123345.2392065-1-linmq006@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_kms.c |    6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/gpu/drm/pl111/pl111_drv.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_kms.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_kms.c
-@@ -200,6 +200,9 @@ static enum amd_ip_block_type
- 		type = (amdgpu_device_ip_get_ip_block(adev, AMD_IP_BLOCK_TYPE_JPEG)) ?
- 				   AMD_IP_BLOCK_TYPE_JPEG : AMD_IP_BLOCK_TYPE_VCN;
- 		break;
-+	case AMDGPU_HW_IP_VPE:
-+		type = AMD_IP_BLOCK_TYPE_VPE;
-+		break;
- 	default:
- 		type = AMD_IP_BLOCK_TYPE_NUM;
- 		break;
-@@ -670,6 +673,9 @@ int amdgpu_info_ioctl(struct drm_device
- 		case AMD_IP_BLOCK_TYPE_UVD:
- 			count = adev->uvd.num_uvd_inst;
- 			break;
-+		case AMD_IP_BLOCK_TYPE_VPE:
-+			count = adev->vpe.num_instances;
-+			break;
- 		/* For all other IP block types not listed in the switch statement
- 		 * the ip status is valid here and the instance count is one.
- 		 */
+--- a/drivers/gpu/drm/pl111/pl111_drv.c
++++ b/drivers/gpu/drm/pl111/pl111_drv.c
+@@ -294,7 +294,7 @@ static int pl111_amba_probe(struct amba_
+ 			       variant->name, priv);
+ 	if (ret != 0) {
+ 		dev_err(dev, "%s failed irq %d\n", __func__, ret);
+-		return ret;
++		goto dev_put;
+ 	}
+ 
+ 	ret = pl111_modeset_init(drm);
 
 
