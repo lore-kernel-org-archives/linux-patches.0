@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C219D2D7D47;
-	Thu, 15 Jan 2026 17:03:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8F4A3BC4DA;
+	Thu, 15 Jan 2026 17:03:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768496614; cv=none; b=C+SJIw/p2c+NpK+fLDJi0sDpFIxLQY4Ainj3oP8XKRCbDHhKgJQ3Uoaz8GbGQMSjumzc6BM5CZ797hL4movFAqEpXzrIWXIgCF5qSr93KWTGA+VwDqtdhWlqpJhwQDQYwE5CFbhewdudjwJ3CEeILj6gkzTRU8tT+Sj0fgiD7Cs=
+	t=1768496617; cv=none; b=VGbYEb+gtEqZXugRWX8xS01Jcu8RoZI8xHe5xqgj3H1wECoDwptMf2/UHEw7FRzqRGHhUiV27ybqUJwSb83q6qHQlDVeWa1CsEP7D+zpfK8b51zY39yO4Ti8ZRJiS11d20ql1dnsUYbLuO4pU9f75Xwwnx9xUEMDSTHlcK9aNL8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768496614; c=relaxed/simple;
-	bh=qF6l0ghutMNseiJJxFdkkNRFhG9qDeXOxTeGegx+I+M=;
+	s=arc-20240116; t=1768496617; c=relaxed/simple;
+	bh=MguM8u2zeY9UgYN8sDflQnN2rnbyz2lw+RIOlDyuhjg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=B0ZuFdkQTr/z3ZP7vDu7eSNZc34s7Ilt8lS6eD0e+4EZkG2bwgMSs2IX5CV2clTwEc+FoCetTx+KXVjOGPIP8HrR3bh9zHBs7Pop9KdpNRL+R7JOq1Acj0IGHsYDXOVvHcu4/8w0iIWlHChtkN0jnj3Yfk+Hp7VIHTK1OLiYa5o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=F/K6QrZ7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ufBSO12TfIWD4Sor9fTepqObwZtfG3geKCq9AKQ+a09Bf65u2Rcl21G7GAYDehruaqV+OBLUrmcAcdXKzex52x2ixSzqGqtspvvYc0/SqKAW+inmu4yoM1knvrLKGAhhe+8GGr15AenaR+zdG+If5fIaR9XJeyCsAsawAs/EdMI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CuSD266L; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="F/K6QrZ7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1FB77C116D0;
-	Thu, 15 Jan 2026 17:03:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CuSD266L"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 285C8C116D0;
+	Thu, 15 Jan 2026 17:03:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1768496614;
-	bh=qF6l0ghutMNseiJJxFdkkNRFhG9qDeXOxTeGegx+I+M=;
+	s=korg; t=1768496617;
+	bh=MguM8u2zeY9UgYN8sDflQnN2rnbyz2lw+RIOlDyuhjg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=F/K6QrZ7l5sDIO1psbl3Xofj2f8AL10KZLZEult2ujAub+aWBp/dlab9+Psol8GyG
-	 5Zb/McAqy0KNEk2pKDAWKRLg9aWng+zDU0H+WMdJDnxzTwKMHyxgxmrL8WLIMZbBik
-	 uLg/UF4gwnCQjVsYkA0uHNp3dF9M7fBGpwhYYKWY=
+	b=CuSD266L0oidnfdr5wnSuZgaQDCcfUG3UArv5zCCp0JFWTB9DYrcvgS975Uh49+xQ
+	 1sGizSTxPgV/41eq/KE2/wGYVQFg3nZukZRc2ofH641Q8jkY+Jy+GjIjfBcIDctnFr
+	 nDy2/zxBYCepU/E0NE5VXBpOKg5Dy6fJFgmNuGhc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Guo Ren (Alibaba DAMO Academy)" <guoren@kernel.org>,
-	Jinjie Ruan <ruanjinjie@huawei.com>,
-	Paul Walmsley <pjw@kernel.org>,
+	Mohammad Heib <mheib@redhat.com>,
+	Willem de Bruijn <willemb@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 075/119] riscv: pgtable: Cleanup useless VA_USER_XXX definitions
-Date: Thu, 15 Jan 2026 17:48:10 +0100
-Message-ID: <20260115164154.659501708@linuxfoundation.org>
+Subject: [PATCH 6.12 076/119] net: fix memory leak in skb_segment_list for GRO packets
+Date: Thu, 15 Jan 2026 17:48:11 +0100
+Message-ID: <20260115164154.695566474@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260115164151.948839306@linuxfoundation.org>
 References: <20260115164151.948839306@linuxfoundation.org>
@@ -52,39 +52,106 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guo Ren (Alibaba DAMO Academy) <guoren@kernel.org>
+From: Mohammad Heib <mheib@redhat.com>
 
-[ Upstream commit 5e5be092ffadcab0093464ccd9e30f0c5cce16b9 ]
+[ Upstream commit 238e03d0466239410b72294b79494e43d4fabe77 ]
 
-These marcos are not used after commit b5b4287accd7 ("riscv: mm: Use
-hint address in mmap if available"). Cleanup VA_USER_XXX definitions
-in asm/pgtable.h.
+When skb_segment_list() is called during packet forwarding, it handles
+packets that were aggregated by the GRO engine.
 
-Fixes: b5b4287accd7 ("riscv: mm: Use hint address in mmap if available")
-Signed-off-by: Guo Ren (Alibaba DAMO Academy) <guoren@kernel.org>
-Reviewed-by: Jinjie Ruan <ruanjinjie@huawei.com>
-Link: https://patch.msgid.link/20251201005850.702569-1-guoren@kernel.org
-Signed-off-by: Paul Walmsley <pjw@kernel.org>
+Historically, the segmentation logic in skb_segment_list assumes that
+individual segments are split from a parent SKB and may need to carry
+their own socket memory accounting. Accordingly, the code transfers
+truesize from the parent to the newly created segments.
+
+Prior to commit ed4cccef64c1 ("gro: fix ownership transfer"), this
+truesize subtraction in skb_segment_list() was valid because fragments
+still carry a reference to the original socket.
+
+However, commit ed4cccef64c1 ("gro: fix ownership transfer") changed
+this behavior by ensuring that fraglist entries are explicitly
+orphaned (skb->sk = NULL) to prevent illegal orphaning later in the
+stack. This change meant that the entire socket memory charge remained
+with the head SKB, but the corresponding accounting logic in
+skb_segment_list() was never updated.
+
+As a result, the current code unconditionally adds each fragment's
+truesize to delta_truesize and subtracts it from the parent SKB. Since
+the fragments are no longer charged to the socket, this subtraction
+results in an effective under-count of memory when the head is freed.
+This causes sk_wmem_alloc to remain non-zero, preventing socket
+destruction and leading to a persistent memory leak.
+
+The leak can be observed via KMEMLEAK when tearing down the networking
+environment:
+
+unreferenced object 0xffff8881e6eb9100 (size 2048):
+  comm "ping", pid 6720, jiffies 4295492526
+  backtrace:
+    kmem_cache_alloc_noprof+0x5c6/0x800
+    sk_prot_alloc+0x5b/0x220
+    sk_alloc+0x35/0xa00
+    inet6_create.part.0+0x303/0x10d0
+    __sock_create+0x248/0x640
+    __sys_socket+0x11b/0x1d0
+
+Since skb_segment_list() is exclusively used for SKB_GSO_FRAGLIST
+packets constructed by GRO, the truesize adjustment is removed.
+
+The call to skb_release_head_state() must be preserved. As documented in
+commit cf673ed0e057 ("net: fix fraglist segmentation reference count
+leak"), it is still required to correctly drop references to SKB
+extensions that may be overwritten during __copy_skb_header().
+
+Fixes: ed4cccef64c1 ("gro: fix ownership transfer")
+Signed-off-by: Mohammad Heib <mheib@redhat.com>
+Reviewed-by: Willem de Bruijn <willemb@google.com>
+Link: https://patch.msgid.link/20260104213101.352887-1-mheib@redhat.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/riscv/include/asm/pgtable.h | 4 ----
- 1 file changed, 4 deletions(-)
+ net/core/skbuff.c | 8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
-diff --git a/arch/riscv/include/asm/pgtable.h b/arch/riscv/include/asm/pgtable.h
-index 87c7d94c71f13..aeba8028e9aa8 100644
---- a/arch/riscv/include/asm/pgtable.h
-+++ b/arch/riscv/include/asm/pgtable.h
-@@ -119,10 +119,6 @@
- #ifdef CONFIG_64BIT
- #include <asm/pgtable-64.h>
+diff --git a/net/core/skbuff.c b/net/core/skbuff.c
+index 6a92c03ee6f42..c3e1395d8ac5c 100644
+--- a/net/core/skbuff.c
++++ b/net/core/skbuff.c
+@@ -4585,12 +4585,14 @@ struct sk_buff *skb_segment_list(struct sk_buff *skb,
+ {
+ 	struct sk_buff *list_skb = skb_shinfo(skb)->frag_list;
+ 	unsigned int tnl_hlen = skb_tnl_header_len(skb);
+-	unsigned int delta_truesize = 0;
+ 	unsigned int delta_len = 0;
+ 	struct sk_buff *tail = NULL;
+ 	struct sk_buff *nskb, *tmp;
+ 	int len_diff, err;
  
--#define VA_USER_SV39 (UL(1) << (VA_BITS_SV39 - 1))
--#define VA_USER_SV48 (UL(1) << (VA_BITS_SV48 - 1))
--#define VA_USER_SV57 (UL(1) << (VA_BITS_SV57 - 1))
--
- #define MMAP_VA_BITS_64 ((VA_BITS >= VA_BITS_SV48) ? VA_BITS_SV48 : VA_BITS)
- #define MMAP_MIN_VA_BITS_64 (VA_BITS_SV39)
- #define MMAP_VA_BITS (is_compat_task() ? VA_BITS_SV32 : MMAP_VA_BITS_64)
++	/* Only skb_gro_receive_list generated skbs arrive here */
++	DEBUG_NET_WARN_ON_ONCE(!(skb_shinfo(skb)->gso_type & SKB_GSO_FRAGLIST));
++
+ 	skb_push(skb, -skb_network_offset(skb) + offset);
+ 
+ 	/* Ensure the head is writeable before touching the shared info */
+@@ -4604,8 +4606,9 @@ struct sk_buff *skb_segment_list(struct sk_buff *skb,
+ 		nskb = list_skb;
+ 		list_skb = list_skb->next;
+ 
++		DEBUG_NET_WARN_ON_ONCE(nskb->sk);
++
+ 		err = 0;
+-		delta_truesize += nskb->truesize;
+ 		if (skb_shared(nskb)) {
+ 			tmp = skb_clone(nskb, GFP_ATOMIC);
+ 			if (tmp) {
+@@ -4648,7 +4651,6 @@ struct sk_buff *skb_segment_list(struct sk_buff *skb,
+ 			goto err_linearize;
+ 	}
+ 
+-	skb->truesize = skb->truesize - delta_truesize;
+ 	skb->data_len = skb->data_len - delta_len;
+ 	skb->len = skb->len - delta_len;
+ 
 -- 
 2.51.0
 
