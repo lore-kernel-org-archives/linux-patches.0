@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CCE033A0E9A;
-	Thu, 15 Jan 2026 17:14:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A54663C198E;
+	Thu, 15 Jan 2026 17:15:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768497298; cv=none; b=Sjizonc9F2zZl0IS0cNCIPafVRfoScj4RW72xasjAzHyt7seatp3eN+p5OxfGULCMdGmfz8P8+V1ThXVhXBlt1Gbhub8FHpjeC4EBai4Hc8WwB8xVUGlkWJwQrt2TvPvOUZCrCi0cjKvwdWgtU7fUPDOszBdElYKBegOiPaaeG8=
+	t=1768497301; cv=none; b=uewEP+NJRQPJ627hif0bzjWiQ84Cwo6mYnyUFNhj2HDx6i2qXhLE4F+7+RGp+3JaQWAOZoi4D3EuLKirRd66v1wigK2+7jfrgkxcpLQXdaEw20kF1CKmxOza/t2Yn5RTWUcEIKjsvTDnqJJajuFKv5aNwKsB3o1D0AGvQM9w+go=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768497298; c=relaxed/simple;
-	bh=Mg9fYUZ69Uvbzl1DN2ks1DqAA0tWit1Lr227B2kRgpU=;
+	s=arc-20240116; t=1768497301; c=relaxed/simple;
+	bh=dR0zWbCe/B+NghnG8+BYc/pdTDqD6rz4bl4+2GkqHJE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JAoC0FOW6li7cm2KvTHFGQEd158jeon5zN+4limhR4TZg3lQqC2aQOrpkX3UnrxuMvZdUWArmz26YTFiYqW5E7zop6N0C6vAXe7KcL3vT+L5Gd5DsMKAiTy6r7nnF+eVkcFpRHLLm9HV3L8PEgt1m0QLE4KIJyw9gAash9PaO00=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gVAlXPlK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XDlX0UFqzAoMDfQ9bX0chg2vSUrnNRyIjLSmLwRkYeDz4EZIQ3PTtUFcs7l+wagsRkW67AG1EDJ5YDPz4TShbl8b4GqJvn7N7GSgQ2LQF/T8z+JfjrerluI3DNV+QMvUc36lDSlL6mNc0U4XM18yTQu+Eh68GS+jW6jO1yI7MQE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=y6oq9OcO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gVAlXPlK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E343C19425;
-	Thu, 15 Jan 2026 17:14:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="y6oq9OcO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E17F7C116D0;
+	Thu, 15 Jan 2026 17:15:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1768497298;
-	bh=Mg9fYUZ69Uvbzl1DN2ks1DqAA0tWit1Lr227B2kRgpU=;
+	s=korg; t=1768497301;
+	bh=dR0zWbCe/B+NghnG8+BYc/pdTDqD6rz4bl4+2GkqHJE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gVAlXPlK7Z13vgyGNFY5bgILnIAUjtnBhYLg7q/D+HexvvgwB2OUfNJgwEOShFpJX
-	 ZGz/+1EUOaXz18CXjN4+MZ+clobNK3I4lsYgorVXigGAkmfURU/B+jTc6hfQMaZ4O9
-	 eQtHpenKwvpOz+q05IMVdj+OSClVnK7iE3NmSA94=
+	b=y6oq9OcOmFlsN5dtYQjbb/Zax3aTIpsaZnWfzdvkSVh70YqzE9w1yAXr9qeCZTHBr
+	 qdxWf7Tzgzq4FkOA5LbEgKrNUhl4knxtYkeB4MqksAWN4qLsTnyZ/53sdj/UN0DxA8
+	 IJxMa91pEmWCyFmLE6AXZlhN2oAhbmperTH0KBWg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Prasad Sodagudi <prasad.sodagudi@oss.qualcomm.com>,
-	Praveen Talari <praveen.talari@oss.qualcomm.com>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Linus Walleij <linus.walleij@linaro.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 025/554] pinctrl: qcom: msm: Fix deadlock in pinmux configuration
-Date: Thu, 15 Jan 2026 17:41:31 +0100
-Message-ID: <20260115164247.151736344@linuxfoundation.org>
+	Navaneeth K <knavaneeth786@gmail.com>,
+	stable <stable@kernel.org>
+Subject: [PATCH 5.15 034/554] staging: rtl8723bs: fix out-of-bounds read in OnBeacon ESR IE parsing
+Date: Thu, 15 Jan 2026 17:41:40 +0100
+Message-ID: <20260115164247.474978495@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260115164246.225995385@linuxfoundation.org>
 References: <20260115164246.225995385@linuxfoundation.org>
@@ -53,48 +50,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Praveen Talari <praveen.talari@oss.qualcomm.com>
+From: Navaneeth K <knavaneeth786@gmail.com>
 
-[ Upstream commit 1c2e70397b4125022dba80f6111271a37fb36bae ]
+commit 502ddcc405b69fa92e0add6c1714d654504f6fd7 upstream.
 
-Replace disable_irq() with disable_irq_nosync() in msm_pinmux_set_mux()
-to prevent deadlock when wakeup IRQ is triggered on the same
-GPIO being reconfigured.
+The Extended Supported Rates (ESR) IE handling in OnBeacon accessed
+*(p + 1 + ielen) and *(p + 2 + ielen) without verifying that these
+offsets lie within the received frame buffer. A malformed beacon with
+an ESR IE positioned at the end of the buffer could cause an
+out-of-bounds read, potentially triggering a kernel panic.
 
-The issue occurs when a wakeup IRQ is triggered on a GPIO and the IRQ
-handler attempts to reconfigure the same GPIO's pinmux. In this scenario,
-msm_pinmux_set_mux() calls disable_irq() which waits for the currently
-running IRQ handler to complete, creating a circular dependency that
-results in deadlock.
+Add a boundary check to ensure that the ESR IE body and the subsequent
+bytes are within the limits of the frame before attempting to access
+them.
 
-Using disable_irq_nosync() avoids waiting for the IRQ handler to
-complete, preventing the deadlock condition while still properly
-disabling the interrupt during pinmux reconfiguration.
+This prevents OOB reads caused by malformed beacon frames.
 
-Suggested-by: Prasad Sodagudi <prasad.sodagudi@oss.qualcomm.com>
-Signed-off-by: Praveen Talari <praveen.talari@oss.qualcomm.com>
-Reviewed-by: Bjorn Andersson <andersson@kernel.org>
-Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Navaneeth K <knavaneeth786@gmail.com>
+Cc: stable <stable@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pinctrl/qcom/pinctrl-msm.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/staging/rtl8723bs/core/rtw_mlme_ext.c |    8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/pinctrl/qcom/pinctrl-msm.c b/drivers/pinctrl/qcom/pinctrl-msm.c
-index 676b16397b07c..1bb7be9ed92f2 100644
---- a/drivers/pinctrl/qcom/pinctrl-msm.c
-+++ b/drivers/pinctrl/qcom/pinctrl-msm.c
-@@ -213,7 +213,7 @@ static int msm_pinmux_set_mux(struct pinctrl_dev *pctldev,
- 	 */
- 	if (d && i != gpio_func &&
- 	    !test_and_set_bit(d->hwirq, pctrl->disabled_for_mux))
--		disable_irq(irq);
-+		disable_irq_nosync(irq);
+--- a/drivers/staging/rtl8723bs/core/rtw_mlme_ext.c
++++ b/drivers/staging/rtl8723bs/core/rtw_mlme_ext.c
+@@ -584,9 +584,11 @@ unsigned int OnBeacon(struct adapter *pa
  
- 	raw_spin_lock_irqsave(&pctrl->lock, flags);
+ 	p = rtw_get_ie(pframe + sizeof(struct ieee80211_hdr_3addr) + _BEACON_IE_OFFSET_, WLAN_EID_EXT_SUPP_RATES, &ielen, precv_frame->u.hdr.len - sizeof(struct ieee80211_hdr_3addr) - _BEACON_IE_OFFSET_);
+ 	if (p && ielen > 0) {
+-		if ((*(p + 1 + ielen) == 0x2D) && (*(p + 2 + ielen) != 0x2D))
+-			/* Invalid value 0x2D is detected in Extended Supported Rates (ESR) IE. Try to fix the IE length to avoid failed Beacon parsing. */
+-			*(p + 1) = ielen - 1;
++		if (p + 2 + ielen < pframe + len) {
++			if ((*(p + 1 + ielen) == 0x2D) && (*(p + 2 + ielen) != 0x2D))
++				/* Invalid value 0x2D is detected in Extended Supported Rates (ESR) IE. Try to fix the IE length to avoid failed Beacon parsing. */
++				*(p + 1) = ielen - 1;
++		}
+ 	}
  
--- 
-2.51.0
-
+ 	if (pmlmeext->sitesurvey_res.state == SCAN_PROCESS) {
 
 
