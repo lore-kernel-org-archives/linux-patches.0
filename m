@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E6F62D541B;
-	Thu, 15 Jan 2026 17:42:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62C2039449C;
+	Thu, 15 Jan 2026 17:42:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768498924; cv=none; b=J+PJl8M41PCIESHNxeeHJS4QSrvnCaBdYoMnjOv/r3Iguq1DrkGm2VzA0jED0kiw5sU52uptwP3VbTfqzVm3rJFH3aZSGrrHREc2hRc5b5IHGUBmMir9DauuBlACITCu+75MHSU/iJ0Cy4UYCKI81PAbq+/cUJTWvdsjxp3qY6M=
+	t=1768498927; cv=none; b=R5pmrFC0EEd5dKg0RwDz6uzyKj4BMxGJ8kKmjBUwYRzBi8AXw9RvDMm+e/SF3pZCZl0Ofewo/o+zhmJg899P6aJGnhRFdSjoCkB6ldUckZewIHlvGLqOKCVXPwJqa7zY85dY5ZtA3yM0ytQzkleA0Uq97KsSwHioqRt+FCilxlo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768498924; c=relaxed/simple;
-	bh=/Gxz6OW2s5TdpXdOfQ1rLs/Ti8XS/8/52fAZNNAn7p8=;
+	s=arc-20240116; t=1768498927; c=relaxed/simple;
+	bh=R8efUh1rz864d1UgeIbnpjBP3TSMP6toGxJ6mLuhOSU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LujG+WwyWwnIH0SL6XpMcFTkiPXZB3hsI+nmyns/EhwhrgsvGTwlXqn8Lcap6KQQs8CiGbS50q/skpBiS5OEJUxrHW/3rf5GMwioNDzLrX5ck09IKnhwbzqUKIYwYyqXEPO2cRmElfHbc9pDSXJI+C1eYDDx46Qfut81WB6m6V4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rxhahFj8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OHnEMSy8S+UaIBXsvYrWD8Nf7SDXNeRJVWZDqk2Xc0KqB3MgbG8ic2zcx1mQE23luBh928EVnMYnUxMZqlQZUs4Q+lBDiAanNpKqBGJEbw6QKP4jIxGToAUK97OwVHuo7lMzZ7vAe6lOKgiMDG+gzfL8Re5Bbchxht2ip91lcBU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QW+5jwX4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rxhahFj8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F0D4C116D0;
-	Thu, 15 Jan 2026 17:42:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QW+5jwX4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D7303C116D0;
+	Thu, 15 Jan 2026 17:42:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1768498924;
-	bh=/Gxz6OW2s5TdpXdOfQ1rLs/Ti8XS/8/52fAZNNAn7p8=;
+	s=korg; t=1768498927;
+	bh=R8efUh1rz864d1UgeIbnpjBP3TSMP6toGxJ6mLuhOSU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rxhahFj86WOg6+Ux2sTqJ/5QO/UOSqJ1UIN8mhA7yZPvdNhfdSN0lSzzLVGrBQwyp
-	 HQqEoauNH4Im95f0knbT1Lchrnjb9RVsWh9O9Fz9ZWRtPx1tSo7ouKk8sK8qRodX7c
-	 1BcyAPxya956A0iaaGQQk6t8XWNGaY9bBMAIHSS0=
+	b=QW+5jwX4gVRVAoqKfYFgweG2Epmn2UeQAprF3vJjPfj5Orw2Rycl19O4F51H17jzc
+	 YRQOf64KiBuyiw/WuVeFsPZCriQr8RxpbtSwz+Q9iv6R/efzJ/lhtJRr5p2cyNBnfH
+	 rJh2VFqkd2uwuAXRVbcJjhnzNxsNdlA1lHNFnnAA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+895c23f6917da440ed0d@syzkaller.appspotmail.com,
-	Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>,
-	Tigran Aivazian <aivazian.tigran@gmail.com>,
-	Christian Brauner <brauner@kernel.org>,
+	Tengda Wu <wutengda@huaweicloud.com>,
+	"Borislav Petkov (AMD)" <bp@alien8.de>,
+	Andrey Ryabinin <ryabinin.a.a@gmail.com>,
+	Josh Poimboeuf <jpoimboe@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 019/451] bfs: Reconstruct file type when loading from disk
-Date: Thu, 15 Jan 2026 17:43:40 +0100
-Message-ID: <20260115164231.583684712@linuxfoundation.org>
+Subject: [PATCH 5.10 046/451] x86/dumpstack: Prevent KASAN false positive warnings in __show_regs()
+Date: Thu, 15 Jan 2026 17:44:07 +0100
+Message-ID: <20260115164232.562819639@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260115164230.864985076@linuxfoundation.org>
 References: <20260115164230.864985076@linuxfoundation.org>
@@ -53,71 +53,114 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
+From: Tengda Wu <wutengda@huaweicloud.com>
 
-[ Upstream commit 34ab4c75588c07cca12884f2bf6b0347c7a13872 ]
+[ Upstream commit ced37e9ceae50e4cb6cd058963bd315ec9afa651 ]
 
-syzbot is reporting that S_IFMT bits of inode->i_mode can become bogus when
-the S_IFMT bits of the 32bits "mode" field loaded from disk are corrupted
-or when the 32bits "attributes" field loaded from disk are corrupted.
+When triggering a stack dump via sysrq (echo t > /proc/sysrq-trigger),
+KASAN may report false-positive out-of-bounds access:
 
-A documentation says that BFS uses only lower 9 bits of the "mode" field.
-But I can't find an explicit explanation that the unused upper 23 bits
-(especially, the S_IFMT bits) are initialized with 0.
+  BUG: KASAN: out-of-bounds in __show_regs+0x4b/0x340
+  Call Trace:
+    dump_stack_lvl
+    print_address_description.constprop.0
+    print_report
+    __show_regs
+    show_trace_log_lvl
+    sched_show_task
+    show_state_filter
+    sysrq_handle_showstate
+    __handle_sysrq
+    write_sysrq_trigger
+    proc_reg_write
+    vfs_write
+    ksys_write
+    do_syscall_64
+    entry_SYSCALL_64_after_hwframe
 
-Therefore, ignore the S_IFMT bits of the "mode" field loaded from disk.
-Also, verify that the value of the "attributes" field loaded from disk is
-either BFS_VREG or BFS_VDIR (because BFS supports only regular files and
-the root directory).
+The issue occurs as follows:
 
-Reported-by: syzbot+895c23f6917da440ed0d@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=895c23f6917da440ed0d
-Signed-off-by: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
-Link: https://patch.msgid.link/fabce673-d5b9-4038-8287-0fd65d80203b@I-love.SAKURA.ne.jp
-Reviewed-by: Tigran Aivazian <aivazian.tigran@gmail.com>
-Signed-off-by: Christian Brauner <brauner@kernel.org>
+  Task A (walk other tasks' stacks)           Task B (running)
+  1. echo t > /proc/sysrq-trigger
+  show_trace_log_lvl
+    regs = unwind_get_entry_regs()
+    show_regs_if_on_stack(regs)
+                                              2. The stack value pointed by
+                                                 `regs` keeps changing, and
+                                                 so are the tags in its
+                                                 KASAN shadow region.
+      __show_regs(regs)
+        regs->ax, regs->bx, ...
+          3. hit KASAN redzones, OOB
+
+When task A walks task B's stack without suspending it, the continuous changes
+in task B's stack (and corresponding KASAN shadow tags) may cause task A to
+hit KASAN redzones when accessing obsolete values on the stack, resulting in
+false positive reports.
+
+Simply stopping the task before unwinding is not a viable fix, as it would
+alter the state intended to inspect. This is especially true for diagnosing
+misbehaving tasks (e.g., in a hard lockup), where stopping might fail or hide
+the root cause by changing the call stack.
+
+Therefore, fix this by disabling KASAN checks during asynchronous stack
+unwinding, which is identified when the unwinding task does not match the
+current task (task != current).
+
+  [ bp: Align arguments on function's opening brace. ]
+
+Fixes: 3b3fa11bc700 ("x86/dumpstack: Print any pt_regs found on the stack")
+Signed-off-by: Tengda Wu <wutengda@huaweicloud.com>
+Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+Reviewed-by: Andrey Ryabinin <ryabinin.a.a@gmail.com>
+Acked-by: Josh Poimboeuf <jpoimboe@kernel.org>
+Link: https://patch.msgid.link/all/20251023090632.269121-1-wutengda@huaweicloud.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/bfs/inode.c | 19 ++++++++++++++++++-
- 1 file changed, 18 insertions(+), 1 deletion(-)
+ arch/x86/kernel/dumpstack.c | 23 +++++++++++++++++++++--
+ 1 file changed, 21 insertions(+), 2 deletions(-)
 
-diff --git a/fs/bfs/inode.c b/fs/bfs/inode.c
-index fd691e4815c56..fa4e002925852 100644
---- a/fs/bfs/inode.c
-+++ b/fs/bfs/inode.c
-@@ -60,7 +60,19 @@ struct inode *bfs_iget(struct super_block *sb, unsigned long ino)
- 	off = (ino - BFS_ROOT_INO) % BFS_INODES_PER_BLOCK;
- 	di = (struct bfs_inode *)bh->b_data + off;
- 
--	inode->i_mode = 0x0000FFFF & le32_to_cpu(di->i_mode);
-+	/*
-+	 * https://martin.hinner.info/fs/bfs/bfs-structure.html explains that
-+	 * BFS in SCO UnixWare environment used only lower 9 bits of di->i_mode
-+	 * value. This means that, although bfs_write_inode() saves whole
-+	 * inode->i_mode bits (which include S_IFMT bits and S_IS{UID,GID,VTX}
-+	 * bits), middle 7 bits of di->i_mode value can be garbage when these
-+	 * bits were not saved by bfs_write_inode().
-+	 * Since we can't tell whether middle 7 bits are garbage, use only
-+	 * lower 12 bits (i.e. tolerate S_IS{UID,GID,VTX} bits possibly being
-+	 * garbage) and reconstruct S_IFMT bits for Linux environment from
-+	 * di->i_vtype value.
-+	 */
-+	inode->i_mode = 0x00000FFF & le32_to_cpu(di->i_mode);
- 	if (le32_to_cpu(di->i_vtype) == BFS_VDIR) {
- 		inode->i_mode |= S_IFDIR;
- 		inode->i_op = &bfs_dir_inops;
-@@ -70,6 +82,11 @@ struct inode *bfs_iget(struct super_block *sb, unsigned long ino)
- 		inode->i_op = &bfs_file_inops;
- 		inode->i_fop = &bfs_file_operations;
- 		inode->i_mapping->a_ops = &bfs_aops;
-+	} else {
-+		brelse(bh);
-+		printf("Unknown vtype=%u %s:%08lx\n",
-+		       le32_to_cpu(di->i_vtype), inode->i_sb->s_id, ino);
-+		goto error;
+diff --git a/arch/x86/kernel/dumpstack.c b/arch/x86/kernel/dumpstack.c
+index df6d3d859ca1b..dc0cd8c1ac137 100644
+--- a/arch/x86/kernel/dumpstack.c
++++ b/arch/x86/kernel/dumpstack.c
+@@ -189,8 +189,8 @@ static void show_regs_if_on_stack(struct stack_info *info, struct pt_regs *regs,
+  * in false positive reports. Disable instrumentation to avoid those.
+  */
+ __no_kmsan_checks
+-static void show_trace_log_lvl(struct task_struct *task, struct pt_regs *regs,
+-			unsigned long *stack, const char *log_lvl)
++static void __show_trace_log_lvl(struct task_struct *task, struct pt_regs *regs,
++				 unsigned long *stack, const char *log_lvl)
+ {
+ 	struct unwind_state state;
+ 	struct stack_info stack_info = {0};
+@@ -311,6 +311,25 @@ static void show_trace_log_lvl(struct task_struct *task, struct pt_regs *regs,
  	}
+ }
  
- 	BFS_I(inode)->i_sblock =  le32_to_cpu(di->i_sblock);
++static void show_trace_log_lvl(struct task_struct *task, struct pt_regs *regs,
++			       unsigned long *stack, const char *log_lvl)
++{
++	/*
++	 * Disable KASAN to avoid false positives during walking another
++	 * task's stacks, as values on these stacks may change concurrently
++	 * with task execution.
++	 */
++	bool disable_kasan = task && task != current;
++
++	if (disable_kasan)
++		kasan_disable_current();
++
++	__show_trace_log_lvl(task, regs, stack, log_lvl);
++
++	if (disable_kasan)
++		kasan_enable_current();
++}
++
+ void show_stack(struct task_struct *task, unsigned long *sp,
+ 		       const char *loglvl)
+ {
 -- 
 2.51.0
 
