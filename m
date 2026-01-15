@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B4A33A0E94;
-	Thu, 15 Jan 2026 17:11:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 392A72750ED;
+	Thu, 15 Jan 2026 17:11:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768497106; cv=none; b=ON16enongW1l7W5ASB//CqfjI27FD4UoPAtqjrQL0qNAeNF+nRU4RWfbtL2q2egVJS2XXnpzg5sEUOg0km/Kf7XMcp+/PQhWYizvBRt6EqOqSCjCs8LAKZEPRaT20y4RZ3qJUqd5S0EQ+aEdc4w43+SOtBa0uP0HQYeNCBXi8b4=
+	t=1768497109; cv=none; b=KtCjUB73LmE4KREUR/QBq9R23YuZCB8mEL5DiGJcZGj8OY8eXLfH0mdtj0E4I4znGy6R6FHgbLRB/BTDT/ssAhaxnCI/cpbaowRhR3HWnjvV5SdFKUxKJ8e6kGzTTwOwN4k5vZ0LJpor6rdM8AdRuedYOVbOsCfX6JJb7FO9SB0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768497106; c=relaxed/simple;
-	bh=Sfiy6ADU3k8naNoI8tYCFUkkhPhXQMtGKe9BaAuUp9U=;
+	s=arc-20240116; t=1768497109; c=relaxed/simple;
+	bh=aEbeb3aZVUCxJSZ7yw06vBbUeqWnKhSnad7h7zPqZTo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=N7RxrDscHNe+bKq+KBNj+7gY/eu1yrz8zXdb2CgBRd3pUvTUDlPKZSvSlUON0hWhH1uDmPTX0Aj8pPLl6Gb7dTESbP1pnRbOFazgcBVO8pg8YtBYywOmjtz+LWRQpxfl2zeVGsIa1rpza+pzjMO44Ovv/xL1bxKLG5jOJWuiN20=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cQQbALhX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Z4Xn962aaFsdKE7CiIRee5EfTzcSUDuoNDQFWNSwzRdRcShZIfzReLMDlO29jrvfbHlQ6VELWyU/p54seQAQhyUyNjAl6ZwOhAqZYVfmZ4MfcUG+/T1pJSTlfENlE6oOOKMifzD5Cuu5tpo7ZnJoxP+mMtr1oXxIESt8loEUgzk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tRYc7b9O; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cQQbALhX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D19BBC116D0;
-	Thu, 15 Jan 2026 17:11:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tRYc7b9O"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B5C08C116D0;
+	Thu, 15 Jan 2026 17:11:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1768497106;
-	bh=Sfiy6ADU3k8naNoI8tYCFUkkhPhXQMtGKe9BaAuUp9U=;
+	s=korg; t=1768497109;
+	bh=aEbeb3aZVUCxJSZ7yw06vBbUeqWnKhSnad7h7zPqZTo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cQQbALhXGLl1J2dg2yufuEU743UzxSfqbbTuIeI7ffdifzxqIBsGPSmqzMuilViQh
-	 BB/PNkYq4l1ojbRCarTqME9xqRNXw4auFDLdppYVs4LcV5+eTCxvicbl9tb0erx9gN
-	 6pdG01FyrmNP8fHqI2LplWQHrEJ2ogcII4LawoVo=
+	b=tRYc7b9OUyTtGVvwub3T5ojW+R3WGWwRtKQDp8i3z8WwmXhQYcg8XdV8Ps/sPIZbm
+	 GgBpzxp4v3AHSJi7wqeEQAn0P5XTeamdJrTwfW3BJ4OoMMqyU/NHWj2lWdVP5f/MoN
+	 11N+FQ8nR0YcMywMy7d1uLoTpXa25gGyIMZTEC1A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jerry Wu <w.7erry@foxmail.com>,
-	Vladimir Oltean <vladimir.oltean@nxp.com>,
+	"yuan.gao" <yuan.gao@ucloud.cn>,
+	Ido Schimmel <idosch@nvidia.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 38/72] net: mscc: ocelot: Fix crash when adding interface under a lag
-Date: Thu, 15 Jan 2026 17:48:48 +0100
-Message-ID: <20260115164144.875810720@linuxfoundation.org>
+Subject: [PATCH 6.1 39/72] inet: ping: Fix icmp out counting
+Date: Thu, 15 Jan 2026 17:48:49 +0100
+Message-ID: <20260115164144.911527798@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260115164143.482647486@linuxfoundation.org>
 References: <20260115164143.482647486@linuxfoundation.org>
@@ -52,54 +52,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jerry Wu <w.7erry@foxmail.com>
+From: yuan.gao <yuan.gao@ucloud.cn>
 
-[ Upstream commit 34f3ff52cb9fa7dbf04f5c734fcc4cb6ed5d1a95 ]
+[ Upstream commit 4c0856c225b39b1def6c9a6bc56faca79550da13 ]
 
-Commit 15faa1f67ab4 ("lan966x: Fix crash when adding interface under a lag")
-fixed a similar issue in the lan966x driver caused by a NULL pointer dereference.
-The ocelot_set_aggr_pgids() function in the ocelot driver has similar logic
-and is susceptible to the same crash.
+When the ping program uses an IPPROTO_ICMP socket to send ICMP_ECHO
+messages, ICMP_MIB_OUTMSGS is counted twice.
 
-This issue specifically affects the ocelot_vsc7514.c frontend, which leaves
-unused ports as NULL pointers. The felix_vsc9959.c frontend is unaffected as
-it uses the DSA framework which registers all ports.
+    ping_v4_sendmsg
+      ping_v4_push_pending_frames
+        ip_push_pending_frames
+          ip_finish_skb
+            __ip_make_skb
+              icmp_out_count(net, icmp_type); // first count
+      icmp_out_count(sock_net(sk), user_icmph.type); // second count
 
-Fix this by checking if the port pointer is valid before accessing it.
+However, when the ping program uses an IPPROTO_RAW socket,
+ICMP_MIB_OUTMSGS is counted correctly only once.
 
-Fixes: 528d3f190c98 ("net: mscc: ocelot: drop the use of the "lags" array")
-Signed-off-by: Jerry Wu <w.7erry@foxmail.com>
-Reviewed-by: Vladimir Oltean <vladimir.oltean@nxp.com>
-Link: https://patch.msgid.link/tencent_75EF812B305E26B0869C673DD1160866C90A@qq.com
+Therefore, the first count should be removed.
+
+Fixes: c319b4d76b9e ("net: ipv4: add IPPROTO_ICMP socket kind")
+Signed-off-by: yuan.gao <yuan.gao@ucloud.cn>
+Reviewed-by: Ido Schimmel <idosch@nvidia.com>
+Tested-by: Ido Schimmel <idosch@nvidia.com>
+Link: https://patch.msgid.link/20251224063145.3615282-1-yuan.gao@ucloud.cn
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mscc/ocelot.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ net/ipv4/ping.c | 4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
-diff --git a/drivers/net/ethernet/mscc/ocelot.c b/drivers/net/ethernet/mscc/ocelot.c
-index 203cb4978544a..01417c2a61e23 100644
---- a/drivers/net/ethernet/mscc/ocelot.c
-+++ b/drivers/net/ethernet/mscc/ocelot.c
-@@ -2202,14 +2202,16 @@ static void ocelot_set_aggr_pgids(struct ocelot *ocelot)
+diff --git a/net/ipv4/ping.c b/net/ipv4/ping.c
+index 5178a3f3cb537..cadf743ab4f52 100644
+--- a/net/ipv4/ping.c
++++ b/net/ipv4/ping.c
+@@ -848,10 +848,8 @@ static int ping_v4_sendmsg(struct sock *sk, struct msghdr *msg, size_t len)
+ out_free:
+ 	if (free)
+ 		kfree(ipc.opt);
+-	if (!err) {
+-		icmp_out_count(sock_net(sk), user_icmph.type);
++	if (!err)
+ 		return len;
+-	}
+ 	return err;
  
- 	/* Now, set PGIDs for each active LAG */
- 	for (lag = 0; lag < ocelot->num_phys_ports; lag++) {
--		struct net_device *bond = ocelot->ports[lag]->bond;
-+		struct ocelot_port *ocelot_port = ocelot->ports[lag];
- 		int num_active_ports = 0;
-+		struct net_device *bond;
- 		unsigned long bond_mask;
- 		u8 aggr_idx[16];
- 
--		if (!bond || (visited & BIT(lag)))
-+		if (!ocelot_port || !ocelot_port->bond || (visited & BIT(lag)))
- 			continue;
- 
-+		bond = ocelot_port->bond;
- 		bond_mask = ocelot_get_bond_mask(ocelot, bond);
- 
- 		for_each_set_bit(port, &bond_mask, ocelot->num_phys_ports) {
+ do_confirm:
 -- 
 2.51.0
 
