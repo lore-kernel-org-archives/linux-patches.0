@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B37733D1CC6;
-	Thu, 15 Jan 2026 17:54:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 742D03D1CB3;
+	Thu, 15 Jan 2026 17:54:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768499661; cv=none; b=b9Cy2ZVdlvB2+pfV5RYRUrVplUhUxBiMwvlrhl7FehHyIjwBEIw9V5u+k8Yd1jYtk5ZOV3MkkDXZO6iry51WMhibUr3VIJYrTUi8JdzNMep8awG8XXw3se96Yldv9k+69OIXZSgo+zRbNUIQVeaucUjzlS1Z8tDCznbvEPk9c7k=
+	t=1768499664; cv=none; b=t1KESCB7PQ9konkKpHIG8A7ZMjL7tSkfrf85zXXAwuLUNAHL0kJg2nDMNN6DDVwVI9HKMBg/LAxP7DqkCNkEoYBGsEBkJl8Eem//g7L6rS9Cg8301MFIVuC0W4i9YLPrHba+9rDK7X6D6xqJxbaIUDUtudo4p+5Gj5qQ0EEZ2NM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768499661; c=relaxed/simple;
-	bh=xigkQMQ8pW0JCGIlB+aLhH314u6jPfM+QHNIBQKuCEM=;
+	s=arc-20240116; t=1768499664; c=relaxed/simple;
+	bh=bIqarl9aTtBWwbVo24iX+eWq03ThTkB+GjxrIAL5ALQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qS+VI9OLRJjQGN57hF4MrnDIRDJ5vnG9GQndMmY7RRFLR3UXjxVniCBV2cMM10tKduGEaYQSQpFxKp0Crung4qEQXFE5NdqHCPzYfbue8RikHQ1wTT0SC/9L5uDyty2mHT0dQ/jwYja4o5oN/ig4deCEnYLXgMyGaVUYW0zwQ2g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=y8ufTfZd; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=czsKBiZdPSsUGtRCz2Y8jZdulfUDXj2vHuVAodo1lXCK3u0v7acNdkurNPpadNPyJiYARfrLH0Sv/OsCHiO+2cF5hDp8pSKYvsy1Ez5OYz+yMmhQwDz7weTrGAUFFZHsLoXjz1XHJbmnXPv1ei77HvrKn1xMANIkJCpDxqRni+4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VFYrglgd; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="y8ufTfZd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D544C116D0;
-	Thu, 15 Jan 2026 17:54:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VFYrglgd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3DC8C116D0;
+	Thu, 15 Jan 2026 17:54:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1768499661;
-	bh=xigkQMQ8pW0JCGIlB+aLhH314u6jPfM+QHNIBQKuCEM=;
+	s=korg; t=1768499664;
+	bh=bIqarl9aTtBWwbVo24iX+eWq03ThTkB+GjxrIAL5ALQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=y8ufTfZd77AW4wyf0kP0x5+UF0VklmbeD0cNSu2A0S//V8AVaIt1DMHgQNHnYB5GZ
-	 5HmqgvnD93Cej61KI7SL7As9VClIp0X50+0JH9UiRFAiO0gO6nEM0klKIh9dWfnnLS
-	 8Xnm0orgQ5Cmnd4AfncRDcPzKI3Ar4duPJyVYgiE=
+	b=VFYrglgdh6y75x5uVaDdgHXuB0J0osJ6kn6zMK7q36GN7xZz3XWORmEU/ZvZ6mtEK
+	 eOmnNgRt/rYibaFDIZHB5vQEbmNOETHIMY5pBp5Xvxxzn6cvW0mR9wwTIb7CBSPRNd
+	 c+7Q9M1V0FfoUhU2UvtFa2PuFEK0tFqqzIQUzfTs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xiumei Mu <xmu@redhat.com>,
-	Xin Long <lucien.xin@gmail.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
+	Potin Lai <potin.lai@quantatw.com>,
+	Andrew Lunn <andrew@lunn.ch>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 273/451] crypto: seqiv - Do not use req->iv after crypto_aead_encrypt
-Date: Thu, 15 Jan 2026 17:47:54 +0100
-Message-ID: <20260115164240.761950622@linuxfoundation.org>
+Subject: [PATCH 5.10 274/451] net: mdio: aspeed: move reg accessing part into separate functions
+Date: Thu, 15 Jan 2026 17:47:55 +0100
+Message-ID: <20260115164240.797640229@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260115164230.864985076@linuxfoundation.org>
 References: <20260115164230.864985076@linuxfoundation.org>
@@ -52,59 +52,136 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Herbert Xu <herbert@gondor.apana.org.au>
+From: Potin Lai <potin.lai@quantatw.com>
 
-[ Upstream commit 50fdb78b7c0bcc550910ef69c0984e751cac72fa ]
+[ Upstream commit 737ca352569e744bf753b4522a6f91b120a734f1 ]
 
-As soon as crypto_aead_encrypt is called, the underlying request
-may be freed by an asynchronous completion.  Thus dereferencing
-req->iv after it returns is invalid.
+Add aspeed_mdio_op() and aseed_mdio_get_data() for register accessing.
 
-Instead of checking req->iv against info, create a new variable
-unaligned_info and use it for that purpose instead.
+aspeed_mdio_op() handles operations, write command to control register,
+then check and wait operations is finished (bit 31 is cleared).
 
-Fixes: 0a270321dbf9 ("[CRYPTO] seqiv: Add Sequence Number IV Generator")
-Reported-by: Xiumei Mu <xmu@redhat.com>
-Reported-by: Xin Long <lucien.xin@gmail.com>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+aseed_mdio_get_data() fetchs the result value of operation from data
+register.
+
+Signed-off-by: Potin Lai <potin.lai@quantatw.com>
+Reviewed-by: Andrew Lunn <andrew@lunn.ch>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Stable-dep-of: d1a1a4bade4b ("net: mdio: aspeed: add dummy read to avoid read-after-write issue")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- crypto/seqiv.c | 8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+ drivers/net/mdio/mdio-aspeed.c | 70 ++++++++++++++++++----------------
+ 1 file changed, 38 insertions(+), 32 deletions(-)
 
-diff --git a/crypto/seqiv.c b/crypto/seqiv.c
-index b1bcfe537daf..562ab102226a 100644
---- a/crypto/seqiv.c
-+++ b/crypto/seqiv.c
-@@ -51,6 +51,7 @@ static int seqiv_aead_encrypt(struct aead_request *req)
- 	struct aead_geniv_ctx *ctx = crypto_aead_ctx(geniv);
- 	struct aead_request *subreq = aead_request_ctx(req);
- 	crypto_completion_t compl;
-+	bool unaligned_info;
- 	void *data;
- 	u8 *info;
- 	unsigned int ivsize = 8;
-@@ -80,8 +81,9 @@ static int seqiv_aead_encrypt(struct aead_request *req)
- 			return err;
- 	}
+diff --git a/drivers/net/mdio/mdio-aspeed.c b/drivers/net/mdio/mdio-aspeed.c
+index e2273588c75b..f22be2f069e9 100644
+--- a/drivers/net/mdio/mdio-aspeed.c
++++ b/drivers/net/mdio/mdio-aspeed.c
+@@ -39,34 +39,35 @@ struct aspeed_mdio {
+ 	void __iomem *base;
+ };
  
--	if (unlikely(!IS_ALIGNED((unsigned long)info,
--				 crypto_aead_alignmask(geniv) + 1))) {
-+	unaligned_info = !IS_ALIGNED((unsigned long)info,
-+				     crypto_aead_alignmask(geniv) + 1);
-+	if (unlikely(unaligned_info)) {
- 		info = kmemdup(req->iv, ivsize, req->base.flags &
- 			       CRYPTO_TFM_REQ_MAY_SLEEP ? GFP_KERNEL :
- 			       GFP_ATOMIC);
-@@ -101,7 +103,7 @@ static int seqiv_aead_encrypt(struct aead_request *req)
- 	scatterwalk_map_and_copy(info, req->dst, req->assoclen, ivsize, 1);
+-static int aspeed_mdio_read(struct mii_bus *bus, int addr, int regnum)
++static int aspeed_mdio_op(struct mii_bus *bus, u8 st, u8 op, u8 phyad, u8 regad,
++			  u16 data)
+ {
+ 	struct aspeed_mdio *ctx = bus->priv;
+ 	u32 ctrl;
+-	u32 data;
+-	int rc;
  
- 	err = crypto_aead_encrypt(subreq);
--	if (unlikely(info != req->iv))
-+	if (unlikely(unaligned_info))
- 		seqiv_aead_encrypt_complete2(req, err);
- 	return err;
+-	dev_dbg(&bus->dev, "%s: addr: %d, regnum: %d\n", __func__, addr,
+-		regnum);
+-
+-	/* Just clause 22 for the moment */
+-	if (regnum & MII_ADDR_C45)
+-		return -EOPNOTSUPP;
++	dev_dbg(&bus->dev, "%s: st: %u op: %u, phyad: %u, regad: %u, data: %u\n",
++		__func__, st, op, phyad, regad, data);
+ 
+ 	ctrl = ASPEED_MDIO_CTRL_FIRE
+-		| FIELD_PREP(ASPEED_MDIO_CTRL_ST, ASPEED_MDIO_CTRL_ST_C22)
+-		| FIELD_PREP(ASPEED_MDIO_CTRL_OP, MDIO_C22_OP_READ)
+-		| FIELD_PREP(ASPEED_MDIO_CTRL_PHYAD, addr)
+-		| FIELD_PREP(ASPEED_MDIO_CTRL_REGAD, regnum);
++		| FIELD_PREP(ASPEED_MDIO_CTRL_ST, st)
++		| FIELD_PREP(ASPEED_MDIO_CTRL_OP, op)
++		| FIELD_PREP(ASPEED_MDIO_CTRL_PHYAD, phyad)
++		| FIELD_PREP(ASPEED_MDIO_CTRL_REGAD, regad)
++		| FIELD_PREP(ASPEED_MDIO_DATA_MIIRDATA, data);
+ 
+ 	iowrite32(ctrl, ctx->base + ASPEED_MDIO_CTRL);
+ 
+-	rc = readl_poll_timeout(ctx->base + ASPEED_MDIO_CTRL, ctrl,
++	return readl_poll_timeout(ctx->base + ASPEED_MDIO_CTRL, ctrl,
+ 				!(ctrl & ASPEED_MDIO_CTRL_FIRE),
+ 				ASPEED_MDIO_INTERVAL_US,
+ 				ASPEED_MDIO_TIMEOUT_US);
+-	if (rc < 0)
+-		return rc;
++}
++
++static int aspeed_mdio_get_data(struct mii_bus *bus)
++{
++	struct aspeed_mdio *ctx = bus->priv;
++	int rc;
++	u32 data;
+ 
+ 	rc = readl_poll_timeout(ctx->base + ASPEED_MDIO_DATA, data,
+ 				data & ASPEED_MDIO_DATA_IDLE,
+@@ -78,31 +79,36 @@ static int aspeed_mdio_read(struct mii_bus *bus, int addr, int regnum)
+ 	return FIELD_GET(ASPEED_MDIO_DATA_MIIRDATA, data);
  }
+ 
+-static int aspeed_mdio_write(struct mii_bus *bus, int addr, int regnum, u16 val)
++static int aspeed_mdio_read(struct mii_bus *bus, int addr, int regnum)
+ {
+-	struct aspeed_mdio *ctx = bus->priv;
+-	u32 ctrl;
++	int rc;
+ 
+-	dev_dbg(&bus->dev, "%s: addr: %d, regnum: %d, val: 0x%x\n",
+-		__func__, addr, regnum, val);
++	dev_dbg(&bus->dev, "%s: addr: %d, regnum: %d\n", __func__, addr,
++		regnum);
+ 
+ 	/* Just clause 22 for the moment */
+ 	if (regnum & MII_ADDR_C45)
+ 		return -EOPNOTSUPP;
+ 
+-	ctrl = ASPEED_MDIO_CTRL_FIRE
+-		| FIELD_PREP(ASPEED_MDIO_CTRL_ST, ASPEED_MDIO_CTRL_ST_C22)
+-		| FIELD_PREP(ASPEED_MDIO_CTRL_OP, MDIO_C22_OP_WRITE)
+-		| FIELD_PREP(ASPEED_MDIO_CTRL_PHYAD, addr)
+-		| FIELD_PREP(ASPEED_MDIO_CTRL_REGAD, regnum)
+-		| FIELD_PREP(ASPEED_MDIO_CTRL_MIIWDATA, val);
++	rc = aspeed_mdio_op(bus, ASPEED_MDIO_CTRL_ST_C22, MDIO_C22_OP_READ,
++			    addr, regnum, 0);
++	if (rc < 0)
++		return rc;
+ 
+-	iowrite32(ctrl, ctx->base + ASPEED_MDIO_CTRL);
++	return aspeed_mdio_get_data(bus);
++}
+ 
+-	return readl_poll_timeout(ctx->base + ASPEED_MDIO_CTRL, ctrl,
+-				  !(ctrl & ASPEED_MDIO_CTRL_FIRE),
+-				  ASPEED_MDIO_INTERVAL_US,
+-				  ASPEED_MDIO_TIMEOUT_US);
++static int aspeed_mdio_write(struct mii_bus *bus, int addr, int regnum, u16 val)
++{
++	dev_dbg(&bus->dev, "%s: addr: %d, regnum: %d, val: 0x%x\n",
++		__func__, addr, regnum, val);
++
++	/* Just clause 22 for the moment */
++	if (regnum & MII_ADDR_C45)
++		return -EOPNOTSUPP;
++
++	return aspeed_mdio_op(bus, ASPEED_MDIO_CTRL_ST_C22, MDIO_C22_OP_WRITE,
++			      addr, regnum, val);
+ }
+ 
+ static int aspeed_mdio_probe(struct platform_device *pdev)
 -- 
 2.51.0
 
