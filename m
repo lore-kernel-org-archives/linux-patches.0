@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3BD8B3BF2E4;
-	Thu, 15 Jan 2026 16:59:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 279993B9619;
+	Thu, 15 Jan 2026 16:59:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768496392; cv=none; b=ny0p20qEuXMrSW+Lk2TbKJBDxAe/SkJSoD04tqi0WO1FUDZmEhR6KzemkSAHIk9/uU/3SIKAMIfrohDf1xI0+nB7wlk+GdC89dgoIsODICvmCcLwygxp0iOH7GU4TUOrK/UnKHb7IZ14TKmLxm1xSnDft+qhyimQabZj2Jb8NUs=
+	t=1768496395; cv=none; b=Rcgg0X1rOIpj66ena5T8Xtmua7gqNIlc1USEyuUGvdGt9F5PdgeGzaXN6+nSUSe1Ba0Yh5LZafJHht1hzVzB2O6dPslQVv521AO08HC+wb8465trzJe7+wqX2smFCHRmvmToa+SmYcUN5d/bKNxYJ57PqmVHLcZ+sRmk/7H6KCg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768496392; c=relaxed/simple;
-	bh=RQK+Uo6qD78QcuXeE1WmlNCmo4Q3T3qQ0HsE9mKI+JI=;
+	s=arc-20240116; t=1768496395; c=relaxed/simple;
+	bh=IH0Nx5PfyN/veTq82G6Wul1q37Ddiy+KYZ/P2h7GUWM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=pTEa9rFZUnzhNDnLlB8mBah9PEks55ghZVIbXs8C2LqTU1uJsBtNEhGxLULJDFHsDPyNu2O8OlYpVLEkwIfX19IB10nedgWG0UE4aGIIqJGDMoWCidbmabDslVdF1AQnWZqO6K1Ogsp08L1OngJpJRP0g8lEDPZjGJMfGbTdl3U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PlwJkh97; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mTXhaxe/iH+BlSb1Wrp1J3WZlrsiLsFB8DPkOAML9C+bPbVG42WzlVmt0lESJBth0Qc6yES0G5gzVxMK7S1kBhWWwS0B826l7HO1abAAIIXx6h1Iz0JaDS9okahZA7Sv0EcZZG2dJrxQ4G/x6/3cIXgMJj0a8TQbmsRkCmPcSYI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=L20OpbzA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PlwJkh97"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF29BC19421;
-	Thu, 15 Jan 2026 16:59:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="L20OpbzA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5C9BC116D0;
+	Thu, 15 Jan 2026 16:59:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1768496392;
-	bh=RQK+Uo6qD78QcuXeE1WmlNCmo4Q3T3qQ0HsE9mKI+JI=;
+	s=korg; t=1768496395;
+	bh=IH0Nx5PfyN/veTq82G6Wul1q37Ddiy+KYZ/P2h7GUWM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PlwJkh97rb5udZh9q3z4SYQ8UfM0ayZKM1Y8DgeHiFwf+qUmV3ZqkkYIji4c7AONw
-	 TmXEG4lSZ0eN+UvdorRBO7k39aqNFoSDVaeJhtv9fvMr8lE6GCKqY6AryhNJbwFE7v
-	 tWtUQ5qjqqyQ3nZAT+FrLgZhmcRENxao+OsboFmw=
+	b=L20OpbzAyaK1tRwXME75cWjuPbXGWabQKcvAq+xgJVf10nGfOcJ79oTXUN7fQMsKm
+	 G+nPgwt6UuYoC2/J/3Rh3BkiiLWIFKEXuSO94Jaaq5l+yxqPur1JtVOvi9D0RtL2Y1
+	 jZKR1xKVkLO0uAYPuT1nGDmcprsmayfgjE/q44ow=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Ren=C3=A9=20Rebe?= <rene@exactco.de>,
-	Jiri Kosina <jkosina@suse.com>,
+	Lorenzo Bianconi <lorenzo@kernel.org>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 146/181] HID: quirks: work around VID/PID conflict for appledisplay
-Date: Thu, 15 Jan 2026 17:48:03 +0100
-Message-ID: <20260115164207.586112968@linuxfoundation.org>
+Subject: [PATCH 6.18 147/181] net: airoha: Fix schedule while atomic in airoha_ppe_deinit()
+Date: Thu, 15 Jan 2026 17:48:04 +0100
+Message-ID: <20260115164207.622358052@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260115164202.305475649@linuxfoundation.org>
 References: <20260115164202.305475649@linuxfoundation.org>
@@ -45,49 +45,55 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: René Rebe <rene@exactco.de>
+From: Lorenzo Bianconi <lorenzo@kernel.org>
 
-[ Upstream commit c7fabe4ad9219866c203164a214c474c95b36bf2 ]
+[ Upstream commit 6abcf751bc084804a9e5b3051442e8a2ce67f48a ]
 
-For years I wondered why the Apple Cinema Display driver would not
-just work for me. Turns out the hidraw driver instantly takes it
-over. Fix by adding appledisplay VID/PIDs to hid_have_special_driver.
+airoha_ppe_deinit() runs airoha_npu_ppe_deinit() in atomic context.
+airoha_npu_ppe_deinit routine allocates ppe_data buffer with GFP_KERNEL
+flag. Rely on rcu_replace_pointer in airoha_ppe_deinit routine in order
+to fix schedule while atomic issue in airoha_npu_ppe_deinit() since we
+do not need atomic context there.
 
-Fixes: 069e8a65cd79 ("Driver for Apple Cinema Display")
-Signed-off-by: René Rebe <rene@exactco.de>
-Signed-off-by: Jiri Kosina <jkosina@suse.com>
+Fixes: 00a7678310fe3 ("net: airoha: Introduce flowtable offload support")
+Signed-off-by: Lorenzo Bianconi <lorenzo@kernel.org>
+Link: https://patch.msgid.link/20260105-airoha-fw-ethtool-v2-1-3b32b158cc31@kernel.org
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hid/hid-quirks.c | 9 +++++++++
- 1 file changed, 9 insertions(+)
+ drivers/net/ethernet/airoha/airoha_ppe.c | 9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/hid/hid-quirks.c b/drivers/hid/hid-quirks.c
-index c89a015686c07..6a8a7ca3d8047 100644
---- a/drivers/hid/hid-quirks.c
-+++ b/drivers/hid/hid-quirks.c
-@@ -232,6 +232,15 @@ static const struct hid_device_id hid_quirks[] = {
-  * used as a driver. See hid_scan_report().
-  */
- static const struct hid_device_id hid_have_special_driver[] = {
-+#if IS_ENABLED(CONFIG_APPLEDISPLAY)
-+	{ HID_USB_DEVICE(USB_VENDOR_ID_APPLE, 0x9218) },
-+	{ HID_USB_DEVICE(USB_VENDOR_ID_APPLE, 0x9219) },
-+	{ HID_USB_DEVICE(USB_VENDOR_ID_APPLE, 0x921c) },
-+	{ HID_USB_DEVICE(USB_VENDOR_ID_APPLE, 0x921d) },
-+	{ HID_USB_DEVICE(USB_VENDOR_ID_APPLE, 0x9222) },
-+	{ HID_USB_DEVICE(USB_VENDOR_ID_APPLE, 0x9226) },
-+	{ HID_USB_DEVICE(USB_VENDOR_ID_APPLE, 0x9236) },
-+#endif
- #if IS_ENABLED(CONFIG_HID_A4TECH)
- 	{ HID_USB_DEVICE(USB_VENDOR_ID_A4TECH, USB_DEVICE_ID_A4TECH_WCP32PU) },
- 	{ HID_USB_DEVICE(USB_VENDOR_ID_A4TECH, USB_DEVICE_ID_A4TECH_X5_005D) },
+diff --git a/drivers/net/ethernet/airoha/airoha_ppe.c b/drivers/net/ethernet/airoha/airoha_ppe.c
+index c0e17035db18e..190d98970014f 100644
+--- a/drivers/net/ethernet/airoha/airoha_ppe.c
++++ b/drivers/net/ethernet/airoha/airoha_ppe.c
+@@ -1466,13 +1466,16 @@ void airoha_ppe_deinit(struct airoha_eth *eth)
+ {
+ 	struct airoha_npu *npu;
+ 
+-	rcu_read_lock();
+-	npu = rcu_dereference(eth->npu);
++	mutex_lock(&flow_offload_mutex);
++
++	npu = rcu_replace_pointer(eth->npu, NULL,
++				  lockdep_is_held(&flow_offload_mutex));
+ 	if (npu) {
+ 		npu->ops.ppe_deinit(npu);
+ 		airoha_npu_put(npu);
+ 	}
+-	rcu_read_unlock();
++
++	mutex_unlock(&flow_offload_mutex);
+ 
+ 	rhashtable_destroy(&eth->ppe->l2_flows);
+ 	rhashtable_destroy(&eth->flow_table);
 -- 
 2.51.0
 
