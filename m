@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C1C726E71F;
-	Thu, 15 Jan 2026 17:48:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E1533D3CF9;
+	Thu, 15 Jan 2026 17:48:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768499328; cv=none; b=uwCVvKu8CQwFmDWk4MoJWhQ2/vZfLYcZZalYsertlleZvOwo02OaYGN13n0RLKiWTtK2qql7D/n/egiJB11QBEJMFDUriXI9YnBkdMJyVosHrLWM1/dntXkvVLnZ/DufbJAEDrYIV1WgL/Oa6GjUwAMVzfwdXuGqVXqv3pbjTjY=
+	t=1768499331; cv=none; b=UvTULfsJT/+m86n0o/gQn1OjTmkrMix1VBtn7zyHm6qW6Kmt4+YDyPzJSRkrRitLsC/QSrRCVgYsYw0Uh8gUlrZtWz9DGmdkU9HAiormF++ZBYeVsgCiaiJUAHDkVrOKM1HzlhETb0JAir0e/e1FBd8Isz1hUWR7TDUBsNp7djA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768499328; c=relaxed/simple;
-	bh=9i3Ot30MvbqxOeAUR/TWjZd7Icw9xvIX4ZyxWl/3sSU=;
+	s=arc-20240116; t=1768499331; c=relaxed/simple;
+	bh=KfsnhChN/zqTeH4xqv5/oQO3tL+HwhjOxH51IlO7JGE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iq2geKMBVB5fW+kcGSPfO5Ato+QPyaILgHpD17wbxWEvvODFsjejUKoF+eEcE7LtL9ZkXNlbqt1VYCzublxSbUEZzC94sjVO0qaTm8ZNtpUI7JtFEG4FRwMHMrnkHzYHJ3GjO2amMM2Gsx9hmhJbOkGsvCZNuH70+x94S4VMIds=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iSXEiMoD; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=f1Y0ufMe/goIFOTcwuHKaXb8YNbMyZjV3cNIt75lEkh26TVwD/JrZ5bWODPBEROYvT7hgxkon322p7dQ7z5V1doPgfeho1mwJpi7ZNGhf+VIvHoMaLSe/tEk7LuUwnbNgGMcCWP+6s5uz/8c7+QiQKjkAx/rE1Xseq48GJ2UgKY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mX6PCda4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iSXEiMoD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A103C19422;
-	Thu, 15 Jan 2026 17:48:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mX6PCda4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E8C4AC116D0;
+	Thu, 15 Jan 2026 17:48:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1768499328;
-	bh=9i3Ot30MvbqxOeAUR/TWjZd7Icw9xvIX4ZyxWl/3sSU=;
+	s=korg; t=1768499331;
+	bh=KfsnhChN/zqTeH4xqv5/oQO3tL+HwhjOxH51IlO7JGE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iSXEiMoDc/6ajqx5zNEeWKuWQidvNYLntPpHIMoyd6CXWHml+IybrKG55jUv5Jayq
-	 ebfUsF+x9GvbTaP2sXOyOyHQWSXcYimT91kf8uIaU8vc6EsYGk9owf0ZItsMi0wVeQ
-	 caDJaEuJu6FdyPwuO5fZ+N1bl8516iuAzCEIYnio=
+	b=mX6PCda4pVmqSVBLLY8D+IJqZkjU2TSFaR8xhO/eHHPWk0gfvS+eDTv2tPOMF9Tla
+	 QCWlc30kcUIYE4N7WXs7Fdxq81VfoqczxlStKcY3Q7vb/nvPp3wx9C/NNzdyPZ3xRc
+	 1gZi3Csnfao8Xfj7yFzbC6IQIg09Q9AoyRiuAG6w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jian Shen <shenjian15@huawei.com>,
-	Jijie Shao <shaojijie@huawei.com>,
-	Simon Horman <horms@kernel.org>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Viacheslav Dubeyko <slava@dubeyko.com>,
+	John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>,
+	Yangtao Li <frank.li@vivo.com>,
+	linux-fsdevel@vger.kernel.org,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 188/451] net: hns3: add VLAN id validation before using
-Date: Thu, 15 Jan 2026 17:46:29 +0100
-Message-ID: <20260115164237.703621784@linuxfoundation.org>
+Subject: [PATCH 5.10 162/451] hfsplus: fix volume corruption issue for generic/070
+Date: Thu, 15 Jan 2026 17:46:03 +0100
+Message-ID: <20260115164236.770997887@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260115164230.864985076@linuxfoundation.org>
 References: <20260115164230.864985076@linuxfoundation.org>
@@ -53,44 +53,120 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jian Shen <shenjian15@huawei.com>
+From: Viacheslav Dubeyko <slava@dubeyko.com>
 
-[ Upstream commit 6ef935e65902bfed53980ad2754b06a284ea8ac1 ]
+[ Upstream commit ed490f36f439b877393c12a2113601e4145a5a56 ]
 
-Currently, the VLAN id may be used without validation when
-receive a VLAN configuration mailbox from VF. The length of
-vlan_del_fail_bmap is BITS_TO_LONGS(VLAN_N_VID). It may cause
-out-of-bounds memory access once the VLAN id is bigger than
-or equal to VLAN_N_VID.
+The xfstests' test-case generic/070 leaves HFS+ volume
+in corrupted state:
 
-Therefore, VLAN id needs to be checked to ensure it is within
-the range of VLAN_N_VID.
+sudo ./check generic/070
+FSTYP -- hfsplus
+PLATFORM -- Linux/x86_64 hfsplus-testing-0001 6.17.0-rc1+ #4 SMP PREEMPT_DYNAMIC Wed Oct 1 15:02:44 PDT 2025
+MKFS_OPTIONS -- /dev/loop51
+MOUNT_OPTIONS -- /dev/loop51 /mnt/scratch
 
-Fixes: fe4144d47eef ("net: hns3: sync VLAN filter entries when kill VLAN ID failed")
-Signed-off-by: Jian Shen <shenjian15@huawei.com>
-Signed-off-by: Jijie Shao <shaojijie@huawei.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20251211023737.2327018-4-shaojijie@huawei.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+generic/070 _check_generic_filesystem: filesystem on /dev/loop50 is inconsistent
+(see xfstests-dev/results//generic/070.full for details)
+
+Ran: generic/070
+Failures: generic/070
+Failed 1 of 1 tests
+
+sudo fsck.hfsplus -d /dev/loop50
+** /dev/loop50
+Using cacheBlockSize=32K cacheTotalBlock=1024 cacheSize=32768K.
+Executing fsck_hfs (version 540.1-Linux).
+** Checking non-journaled HFS Plus Volume.
+The volume name is test
+** Checking extents overflow file.
+Unused node is not erased (node = 1)
+** Checking catalog file.
+** Checking multi-linked files.
+** Checking catalog hierarchy.
+** Checking extended attributes file.
+** Checking volume bitmap.
+** Checking volume information.
+Verify Status: VIStat = 0x0000, ABTStat = 0x0000 EBTStat = 0x0004
+CBTStat = 0x0000 CatStat = 0x00000000
+** Repairing volume.
+** Rechecking volume.
+** Checking non-journaled HFS Plus Volume.
+The volume name is test
+** Checking extents overflow file.
+** Checking catalog file.
+** Checking multi-linked files.
+** Checking catalog hierarchy.
+** Checking extended attributes file.
+** Checking volume bitmap.
+** Checking volume information.
+** The volume test was repaired successfully.
+
+It is possible to see that fsck.hfsplus detected not
+erased and unused node for the case of extents overflow file.
+The HFS+ logic has special method that defines if the node
+should be erased:
+
+bool hfs_bnode_need_zeroout(struct hfs_btree *tree)
+{
+	struct super_block *sb = tree->inode->i_sb;
+	struct hfsplus_sb_info *sbi = HFSPLUS_SB(sb);
+	const u32 volume_attr = be32_to_cpu(sbi->s_vhdr->attributes);
+
+	return tree->cnid == HFSPLUS_CAT_CNID &&
+		volume_attr & HFSPLUS_VOL_UNUSED_NODE_FIX;
+}
+
+However, it is possible to see that this method works
+only for the case of catalog file. But debugging of the issue
+has shown that HFSPLUS_VOL_UNUSED_NODE_FIX attribute has been
+requested for the extents overflow file too:
+
+catalog file
+kernel: hfsplus: node 4, num_recs 0, flags 0x10
+kernel: hfsplus: tree->cnid 4, volume_attr 0x80000800
+
+extents overflow file
+kernel: hfsplus: node 1, num_recs 0, flags 0x10
+kernel: hfsplus: tree->cnid 3, volume_attr 0x80000800
+
+This patch modifies the hfs_bnode_need_zeroout() by checking
+only volume_attr but not the b-tree ID because node zeroing
+can be requested for all HFS+ b-tree types.
+
+sudo ./check generic/070
+FSTYP         -- hfsplus
+PLATFORM      -- Linux/x86_64 hfsplus-testing-0001 6.18.0-rc3+ #79 SMP PREEMPT_DYNAMIC Fri Oct 31 16:07:42 PDT 2025
+MKFS_OPTIONS  -- /dev/loop51
+MOUNT_OPTIONS -- /dev/loop51 /mnt/scratch
+
+generic/070 33s ...  34s
+Ran: generic/070
+Passed all 1 tests
+
+Signed-off-by: Viacheslav Dubeyko <slava@dubeyko.com>
+cc: John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>
+cc: Yangtao Li <frank.li@vivo.com>
+cc: linux-fsdevel@vger.kernel.org
+Link: https://lore.kernel.org/r/20251101001229.247432-1-slava@dubeyko.com
+Signed-off-by: Viacheslav Dubeyko <slava@dubeyko.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_main.c | 3 +++
- 1 file changed, 3 insertions(+)
+ fs/hfsplus/bnode.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_main.c b/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_main.c
-index aa987cad7cadf..99b5b956ed8f9 100644
---- a/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_main.c
-+++ b/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_main.c
-@@ -9196,6 +9196,9 @@ int hclge_set_vlan_filter(struct hnae3_handle *handle, __be16 proto,
- 	bool writen_to_tbl = false;
- 	int ret = 0;
+diff --git a/fs/hfsplus/bnode.c b/fs/hfsplus/bnode.c
+index e566cea238279..358294726ff17 100644
+--- a/fs/hfsplus/bnode.c
++++ b/fs/hfsplus/bnode.c
+@@ -717,6 +717,5 @@ bool hfs_bnode_need_zeroout(struct hfs_btree *tree)
+ 	struct hfsplus_sb_info *sbi = HFSPLUS_SB(sb);
+ 	const u32 volume_attr = be32_to_cpu(sbi->s_vhdr->attributes);
  
-+	if (vlan_id >= VLAN_N_VID)
-+		return -EINVAL;
-+
- 	/* When device is resetting or reset failed, firmware is unable to
- 	 * handle mailbox. Just record the vlan id, and remove it after
- 	 * reset finished.
+-	return tree->cnid == HFSPLUS_CAT_CNID &&
+-		volume_attr & HFSPLUS_VOL_UNUSED_NODE_FIX;
++	return volume_attr & HFSPLUS_VOL_UNUSED_NODE_FIX;
+ }
 -- 
 2.51.0
 
