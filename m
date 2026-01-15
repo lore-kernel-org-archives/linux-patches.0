@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B34122D0C79;
-	Thu, 15 Jan 2026 17:24:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD97A3BFE31;
+	Thu, 15 Jan 2026 17:24:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768497841; cv=none; b=Xl68dcWmr40RWgaTnPkmTIX0KzitQiZhX9/C/PGm8WkHUUT0f57qDx5Cdt9RPCp4Sl0qNUUH2XdRvOa6mS/hmjRwmXu8uEzg33C4GOqhc5FopBHYYEFsHQStxgAgawxuQGPYg4X6uZ2josU1Xh2rt4SpMv1t7m1uqam2xkezWNU=
+	t=1768497844; cv=none; b=cyLJ64EP9i1mJXi7sy2wqNT0/oJUs5ohR2CqrErxzjB5tv8EELpSVtQfDxyiCQbH8zb9OptIe1yT3Jju2yC97YUMT0noY30KuESKnyRytSTn1pa6zuN37sep1kXi7Cxpe0YBWLoZjcQHUILawh8jO9og62t0J1jFeRhGvPz5kdU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768497841; c=relaxed/simple;
-	bh=nXkkXYz5hyCGj9veLF7RFD8gRvDHpicHd/xRFGQMUJA=;
+	s=arc-20240116; t=1768497844; c=relaxed/simple;
+	bh=irPqPGckg/6OdK5bluDk0nvbGRwP2ZArvRGis36Ni2M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=T1qMLhcUBoLo90ozin55q2XIguDccKKApWyblc0CLuoiaDuEZL1SzT64G0qg55a1NLNLHwAiOe/wFBjqOG4Hgf8dr7I3d2Safmv3m0qTvQZJ3Ny4ijjKYI3ZWHKTcz9d7sy9HT9BzfXoWTwLChgn2GNu/UxUhdy3e+4jM/ThTCM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UiGF5BYG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VnS99oiM6eQXZUskSS47BdWqIUMTHNAYK/8Yi9wTE088Cc8LQo7p36goDoLhMcw2+K60g1SkOxDLIVJoImpYDsaYxIWTxj1YeVZVhs9yPlmTixU5vmdUNhZ0L8AV8fzUlv5NaueaEJQAkCOJ1zGGdCOWJJ/e3MK/Fc0aEBauB8I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Yp/GMFxN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UiGF5BYG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C781C116D0;
-	Thu, 15 Jan 2026 17:24:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Yp/GMFxN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D9A07C16AAE;
+	Thu, 15 Jan 2026 17:24:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1768497841;
-	bh=nXkkXYz5hyCGj9veLF7RFD8gRvDHpicHd/xRFGQMUJA=;
+	s=korg; t=1768497844;
+	bh=irPqPGckg/6OdK5bluDk0nvbGRwP2ZArvRGis36Ni2M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UiGF5BYGtg8OEeFZLnKekJXSOHPrQCIC+ELXErX6AlvE17ZCak/u46d+Dl6knDqq6
-	 gzUMPGWFexXMAwxwQTXKYvLn4FY6pWdP4kADqgwdb0G3h6QtrYRoMlJx8Gedjp/KWa
-	 YIsI90cWA0aSH7zMyrS6IiXv2DCEfQIJlMJI8E68=
+	b=Yp/GMFxNKR2hwYpkylqnvkFVkJPK7pROIrIXMB5F0hMJqq7MXR45VYOn0PSunZLLM
+	 aeAie+fLF1IhM4cjd8bW0IBhhCQfN6sKmzVKfZYcwL0De9kJXUtBWH2yg67hfpqPyZ
+	 EJAVxHiKrEd9zTj84i84tc04S1qu4HXbOHx5+LcQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Krishna Yarlagadda <kyarlagadda@nvidia.com>,
-	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 5.15 205/554] spi: tegra210-quad: Fix validate combined sequence
-Date: Thu, 15 Jan 2026 17:44:31 +0100
-Message-ID: <20260115164253.675466562@linuxfoundation.org>
+	syzbot+d7abc36bbbb6d7d40b58@syzkaller.appspotmail.com,
+	Wang Liang <wangliang74@huawei.com>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 223/554] netrom: Fix memory leak in nr_sendmsg()
+Date: Thu, 15 Jan 2026 17:44:49 +0100
+Message-ID: <20260115164254.318364372@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260115164246.225995385@linuxfoundation.org>
 References: <20260115164246.225995385@linuxfoundation.org>
@@ -50,33 +52,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Krishna Yarlagadda <kyarlagadda@nvidia.com>
+From: Wang Liang <wangliang74@huawei.com>
 
-commit 047ee71ae4f412d8819e39e4b08c588fa299cfc2 upstream.
+[ Upstream commit 613d12dd794e078be8ff3cf6b62a6b9acf7f4619 ]
 
-Check for non dma transfers that do not fit in FIFO has issue and skips
-combined sequence for Tegra234 & Tegra241 which does not have GPCDMA.
+syzbot reported a memory leak [1].
 
-Fixes: 1b8342cc4a38 ("spi: tegra210-quad: combined sequence mode")
+When function sock_alloc_send_skb() return NULL in nr_output(), the
+original skb is not freed, which was allocated in nr_sendmsg(). Fix this
+by freeing it before return.
 
-Signed-off-by: Krishna Yarlagadda <kyarlagadda@nvidia.com>
-Link: https://lore.kernel.org/r/20230224164034.56933-1-kyarlagadda@nvidia.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+[1]
+BUG: memory leak
+unreferenced object 0xffff888129f35500 (size 240):
+  comm "syz.0.17", pid 6119, jiffies 4294944652
+  hex dump (first 32 bytes):
+    00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
+    00 00 00 00 00 00 00 00 00 10 52 28 81 88 ff ff  ..........R(....
+  backtrace (crc 1456a3e4):
+    kmemleak_alloc_recursive include/linux/kmemleak.h:44 [inline]
+    slab_post_alloc_hook mm/slub.c:4983 [inline]
+    slab_alloc_node mm/slub.c:5288 [inline]
+    kmem_cache_alloc_node_noprof+0x36f/0x5e0 mm/slub.c:5340
+    __alloc_skb+0x203/0x240 net/core/skbuff.c:660
+    alloc_skb include/linux/skbuff.h:1383 [inline]
+    alloc_skb_with_frags+0x69/0x3f0 net/core/skbuff.c:6671
+    sock_alloc_send_pskb+0x379/0x3e0 net/core/sock.c:2965
+    sock_alloc_send_skb include/net/sock.h:1859 [inline]
+    nr_sendmsg+0x287/0x450 net/netrom/af_netrom.c:1105
+    sock_sendmsg_nosec net/socket.c:727 [inline]
+    __sock_sendmsg net/socket.c:742 [inline]
+    sock_write_iter+0x293/0x2a0 net/socket.c:1195
+    new_sync_write fs/read_write.c:593 [inline]
+    vfs_write+0x45d/0x710 fs/read_write.c:686
+    ksys_write+0x143/0x170 fs/read_write.c:738
+    do_syscall_x64 arch/x86/entry/syscall_64.c:63 [inline]
+    do_syscall_64+0xa4/0xfa0 arch/x86/entry/syscall_64.c:94
+    entry_SYSCALL_64_after_hwframe+0x77/0x7f
+
+Reported-by: syzbot+d7abc36bbbb6d7d40b58@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=d7abc36bbbb6d7d40b58
+Tested-by: syzbot+d7abc36bbbb6d7d40b58@syzkaller.appspotmail.com
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Signed-off-by: Wang Liang <wangliang74@huawei.com>
+Link: https://patch.msgid.link/20251129041315.1550766-1-wangliang74@huawei.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/spi/spi-tegra210-quad.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/netrom/nr_out.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/drivers/spi/spi-tegra210-quad.c
-+++ b/drivers/spi/spi-tegra210-quad.c
-@@ -1290,7 +1290,7 @@ static bool tegra_qspi_validate_cmb_seq(
- 	if (xfer->len > 4 || xfer->len < 3)
- 		return false;
- 	xfer = list_next_entry(xfer, transfer_list);
--	if (!tqspi->soc_data->has_dma || xfer->len > (QSPI_FIFO_DEPTH << 2))
-+	if (!tqspi->soc_data->has_dma && xfer->len > (QSPI_FIFO_DEPTH << 2))
- 		return false;
+diff --git a/net/netrom/nr_out.c b/net/netrom/nr_out.c
+index 5e531394a724b..2b3cbceb0b52d 100644
+--- a/net/netrom/nr_out.c
++++ b/net/netrom/nr_out.c
+@@ -43,8 +43,10 @@ void nr_output(struct sock *sk, struct sk_buff *skb)
+ 		frontlen = skb_headroom(skb);
  
- 	return true;
+ 		while (skb->len > 0) {
+-			if ((skbn = sock_alloc_send_skb(sk, frontlen + NR_MAX_PACKET_SIZE, 0, &err)) == NULL)
++			if ((skbn = sock_alloc_send_skb(sk, frontlen + NR_MAX_PACKET_SIZE, 0, &err)) == NULL) {
++				kfree_skb(skb);
+ 				return;
++			}
+ 
+ 			skb_reserve(skbn, frontlen);
+ 
+-- 
+2.51.0
+
 
 
