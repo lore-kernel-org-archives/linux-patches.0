@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D080330214B;
-	Thu, 15 Jan 2026 17:35:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B88A830214B;
+	Thu, 15 Jan 2026 17:35:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768498524; cv=none; b=oFOWjl6/RiaU5aj9+/yEmelgMinbWOw8e0RxAwpkscxRMaADAZpSk4J+iF2BpIripjBPcfW9XgNZSLO3CtdbdTzgkG3LjUWit6+0eZmIuOf8EreTaku7M8VDXfAcJWaTtETrTAmPN7YT9j/rVMtyeLn1XKpNWCJtqBBXi5XFPrI=
+	t=1768498527; cv=none; b=VSyDf+OCj99Xlv/H8NPYBtO13D91kHduAtt6ild5CXdftR6ctYHzi8We+Foe5QHbcwJdo657e3K6oS95Q0k19HWTkexXlHoLvdp9IdniuV65/EvPRDfe7jNGIz+uTLYzKKGOPbiEYLG5/eqkDIQgvX04qD0XzIoMV2304NQeFh8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768498524; c=relaxed/simple;
-	bh=N+2l2BioWCKVXkuJelmU+PH1NTF0fNJDBoAJBv8azeE=;
+	s=arc-20240116; t=1768498527; c=relaxed/simple;
+	bh=8aXiiVN62Vf2q1Qg1KwMTTQgKkMVLVHECR3Z5NmbhTQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qXCczrgsFqvteMPRBpMTbRPXTsu4lvJmVOPr7rDjyBYPaBGqxwS9jYh2PjhWlqSSq2qp9lt+604GUWmOwUpTmIrcLvemtzPZkElLeVsOnA71Kq6NU72SXZrEeObOZ/mY9h7B3zLLW7VsQgb7DSlqvW8XpuQPAL22ujaoTscMAIA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CkWwyA5y; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=EaZzwD6mh0c3J1EH6KAc7Fa54fauIev38ZoXWZmBmEEUyURKQQLo1i1v1nWkRbHbkoJ/A+9zF2Qx1P7Nr+hikMtGRjPY8FUeYxgStdGbmUyMCGnWe6HQTvhgRDpt3Hxkdei25QH4Vv7HyqyA7IsBDlskBONOdXC+8UvgAYTWl6k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IT6XCxwN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CkWwyA5y"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D936C116D0;
-	Thu, 15 Jan 2026 17:35:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IT6XCxwN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 40D8AC116D0;
+	Thu, 15 Jan 2026 17:35:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1768498524;
-	bh=N+2l2BioWCKVXkuJelmU+PH1NTF0fNJDBoAJBv8azeE=;
+	s=korg; t=1768498527;
+	bh=8aXiiVN62Vf2q1Qg1KwMTTQgKkMVLVHECR3Z5NmbhTQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CkWwyA5y6/EBdDLS5yoTBAPpFYCJTIFTrCwlF05k9ZzxIQa9y7rz/MY9UIFIAoZpW
-	 YDLtI3S2xA5dzuCqLmHRKhDYE5iScbfuvhDRQ4B5KDkKVx2NJ0Utm20gDvf//xWYBG
-	 XZqaelPFN+gkZuwQDwYy2n+W85ii1ESYv3VqGpV4=
+	b=IT6XCxwNXIeqZc+NO665NuWTbjekxg+Vjk0b7X2ZDu4iGOtMvLZpDAgNVFvQns+eF
+	 Pg3Z3VlvI8NQxZNXjD5PLZjGGI/pwKTtrRWuabYm8AGqcErMCCQ2orheZFhRs5jByh
+	 /uczAQdTPeVQVgZVk9fSqLzC6aI10bK2p5N8dnCQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	SeongJae Park <sj@kernel.org>,
-	Brendan Higgins <brendan.higgins@linux.dev>,
-	David Gow <davidgow@google.com>,
-	Kefeng Wang <wangkefeng.wang@huawei.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 5.15 419/554] mm/damon/tests/core-kunit: handle alloc failures on damon_test_merge_two()
-Date: Thu, 15 Jan 2026 17:48:05 +0100
-Message-ID: <20260115164301.410445464@linuxfoundation.org>
+	Haoxiang Li <haoxiang_li2024@163.com>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Tzung-Bi Shih <tzungbi@kernel.org>,
+	Nicolas Dufresne <nicolas.dufresne@collabora.com>,
+	Hans Verkuil <hverkuil+cisco@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 456/554] media: mediatek: vcodec: Fix a reference leak in mtk_vcodec_fw_vpu_init()
+Date: Thu, 15 Jan 2026 17:48:42 +0100
+Message-ID: <20260115164302.782733592@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260115164246.225995385@linuxfoundation.org>
 References: <20260115164246.225995385@linuxfoundation.org>
@@ -53,52 +54,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: SeongJae Park <sj@kernel.org>
+From: Haoxiang Li <haoxiang_li2024@163.com>
 
-commit 3d443dd29a1db7efa587a4bb0c06a497e13ca9e4 upstream.
+[ Upstream commit cdd0f118ef87db8a664fb5ea366fd1766d2df1cd ]
 
-damon_test_merge_two() is assuming all dynamic memory allocation in it
-will succeed.  Those are indeed likely in the real use cases since those
-allocations are too small to fail, but theoretically those could fail.  In
-the case, inappropriate memory access can happen.  Fix it by appropriately
-cleanup pre-allocated memory and skip the execution of the remaining tests
-in the failure cases.
+vpu_get_plat_device() increases the reference count of the returned
+platform device. However, when devm_kzalloc() fails, the reference
+is not released, causing a reference leak.
 
-Link: https://lkml.kernel.org/r/20251101182021.74868-7-sj@kernel.org
-Fixes: 17ccae8bb5c9 ("mm/damon: add kunit tests")
-Signed-off-by: SeongJae Park <sj@kernel.org>
-Cc: Brendan Higgins <brendan.higgins@linux.dev>
-Cc: David Gow <davidgow@google.com>
-Cc: Kefeng Wang <wangkefeng.wang@huawei.com>
-Cc: <stable@vger.kernel.org>	[5.15+]
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Fix this by calling put_device() on fw_pdev->dev before returning
+on the error path.
+
+Fixes: e25a89f743b1 ("media: mtk-vcodec: potential dereference of null pointer")
+Cc: stable@vger.kernel.org
+Signed-off-by: Haoxiang Li <haoxiang_li2024@163.com>
+Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Reviewed-by: Tzung-Bi Shih <tzungbi@kernel.org>
+Signed-off-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
+Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+[ adapted file path from common/ subdirectory and adjusted devm_kzalloc target from plat_dev->dev to dev->plat_dev->dev ]
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/damon/core-test.h |   10 ++++++++++
- 1 file changed, 10 insertions(+)
+ drivers/media/platform/mtk-vcodec/mtk_vcodec_fw_vpu.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/mm/damon/core-test.h
-+++ b/mm/damon/core-test.h
-@@ -161,10 +161,20 @@ static void damon_test_merge_two(struct
- 	int i;
+--- a/drivers/media/platform/mtk-vcodec/mtk_vcodec_fw_vpu.c
++++ b/drivers/media/platform/mtk-vcodec/mtk_vcodec_fw_vpu.c
+@@ -94,8 +94,10 @@ struct mtk_vcodec_fw *mtk_vcodec_fw_vpu_
+ 	vpu_wdt_reg_handler(fw_pdev, mtk_vcodec_vpu_reset_handler, dev, rst_id);
  
- 	t = damon_new_target(42);
-+	if (!t)
-+		kunit_skip(test, "target alloc fail");
- 	r = damon_new_region(0, 100);
-+	if (!r) {
-+		damon_free_target(t);
-+		kunit_skip(test, "region alloc fail");
+ 	fw = devm_kzalloc(&dev->plat_dev->dev, sizeof(*fw), GFP_KERNEL);
+-	if (!fw)
++	if (!fw) {
++		put_device(&fw_pdev->dev);
+ 		return ERR_PTR(-ENOMEM);
 +	}
- 	r->nr_accesses = 10;
- 	damon_add_region(r, t);
- 	r2 = damon_new_region(100, 300);
-+	if (!r2) {
-+		damon_free_target(t);
-+		kunit_skip(test, "second region alloc fail");
-+	}
- 	r2->nr_accesses = 20;
- 	damon_add_region(r2, t);
- 
+ 	fw->type = VPU;
+ 	fw->ops = &mtk_vcodec_vpu_msg;
+ 	fw->pdev = fw_pdev;
 
 
