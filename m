@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C384B29ACDD;
-	Thu, 15 Jan 2026 17:00:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A78529ACDD;
+	Thu, 15 Jan 2026 17:00:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768496451; cv=none; b=Qa6gpBN5SD35QJj1otQcBrhdbbtonEfVihZvSH39foGFQieJb1GMW0k/q8waIVa4lc4P27VcevYWh0LRBfRq8H72p5LfOFFUMekt79Antd4zr+FgnYZ7Whx6Kv0Qhwz93nQHr81/z+uGq5h8LhJu9hZr1MXJS01djHIDmc8Jzpk=
+	t=1768496454; cv=none; b=FCfLQiDuBIGVGwv4kYDLR5noRVz9tsyHMMCcEfQMWDizYGx0bBv0xv/Rrm02Oy2iFily2eemRUIZk8rm/svEXcSZNZsU2bFy9sEh6tyRy75vb+9Q9ByY9Q4Z5J+aVg9cuVWvzH/rgBxJvqNoJOxzagdeYwW3NSsd9ibIMM8MV4w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768496451; c=relaxed/simple;
-	bh=h87IpPUZQHkhPhJf4m+hskmi4naG/4Ml2ZrtCb8qqiY=;
+	s=arc-20240116; t=1768496454; c=relaxed/simple;
+	bh=OJuO1XyNyxHEjTsk04N495K/L/Ih+viNw3vQ5NcP7mQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uNIM37W2Qrs9a0FHw+wBREGBtWuAkJXYGLLIM/eiSgkA/B40YCuW20TyutXgUcJkLsaCG/Q+3/Gyq+8+Q+7RuJMeGjYBFSCjAXcAbfJM9oqHwN3FsLBUo/tga6jkt4Ko4P+X9V6LPJZ0hAHdPwS8z0aRWS0YVcRLBvaNfZY5k3I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qAFiUOlW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=q1MqBnXVFp6ZGv2xncxBJDPxzEcraNvomeqDvLCVmHypxFn5SjJqUA7wDXgCn+caLRcctiIWa+qbV9X88PAoiVJcwysYf1ERaAV2jyp+c36P6wCIhAja+iGmM84zLYU33BZmrn/5diQNVSC2Q/azJqfHeWunOI0ip2Dm5LX6oyk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=q5xHfqip; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qAFiUOlW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F9BCC116D0;
-	Thu, 15 Jan 2026 17:00:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="q5xHfqip"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22944C116D0;
+	Thu, 15 Jan 2026 17:00:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1768496451;
-	bh=h87IpPUZQHkhPhJf4m+hskmi4naG/4Ml2ZrtCb8qqiY=;
+	s=korg; t=1768496454;
+	bh=OJuO1XyNyxHEjTsk04N495K/L/Ih+viNw3vQ5NcP7mQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qAFiUOlWRYTLsPbpJvetkT9sRxxV7PNnA7za7RXhE44R1wrG2AAhwwj8StJ0WT5KS
-	 uQJr2kxtvAigWXkWUR8husn+095e75Qa0Zue04q3On+J2+ILE/3plv+jc+b+u592uI
-	 fYoafpGvFOQZa50wNYN8xqqboHeE/dIgbiAmoDKw=
+	b=q5xHfqipr/kZeFiHxIHIDiDJ6mmlVyEH9MgCkzV1TI3y+4MIhEMulqksO5628So07
+	 JDvCRCw1YFen3Ui7Ho5NWj2oAvPrJINGjWVa7nHln5ADWi2DXYSen0ZOemMP96n1Co
+	 pem+lAbBiDPNDM56MH1UpY4Az2vevlB/nLDHmatY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marek Szyprowski <m.szyprowski@samsung.com>,
-	Heiko Stuebner <heiko@sntech.de>,
-	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
-Subject: [PATCH 6.12 018/119] gpio: rockchip: mark the GPIO controller as sleeping
-Date: Thu, 15 Jan 2026 17:47:13 +0100
-Message-ID: <20260115164152.619430175@linuxfoundation.org>
+	Val Packett <val@packett.cool>,
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Linus Walleij <linusw@kernel.org>
+Subject: [PATCH 6.12 019/119] pinctrl: qcom: lpass-lpi: mark the GPIO controller as sleeping
+Date: Thu, 15 Jan 2026 17:47:14 +0100
+Message-ID: <20260115164152.655534501@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260115164151.948839306@linuxfoundation.org>
 References: <20260115164151.948839306@linuxfoundation.org>
@@ -51,98 +53,87 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 
-commit 20cf2aed89ac6d78a0122e31c875228e15247194 upstream.
+commit ebc18e9854e5a2b62a041fb57b216a903af45b85 upstream.
 
-The GPIO controller is configured as non-sleeping but it uses generic
-pinctrl helpers which use a mutex for synchronization.
+The gpio_chip settings in this driver say the controller can't sleep
+but it actually uses a mutex for synchronization. This triggers the
+following BUG():
 
-This can cause the following lockdep splat with shared GPIOs enabled on
-boards which have multiple devices using the same GPIO:
+[    9.233659] BUG: sleeping function called from invalid context at kernel/locking/mutex.c:281
+[    9.233665] in_atomic(): 1, irqs_disabled(): 1, non_block: 0, pid: 554, name: (udev-worker)
+[    9.233669] preempt_count: 1, expected: 0
+[    9.233673] RCU nest depth: 0, expected: 0
+[    9.233688] Tainted: [W]=WARN
+[    9.233690] Hardware name: Dell Inc. Latitude 7455/0FK7MX, BIOS 2.10.1 05/20/2025
+[    9.233694] Call trace:
+[    9.233696]  show_stack+0x24/0x38 (C)
+[    9.233709]  dump_stack_lvl+0x40/0x88
+[    9.233716]  dump_stack+0x18/0x24
+[    9.233722]  __might_resched+0x148/0x160
+[    9.233731]  __might_sleep+0x38/0x98
+[    9.233736]  mutex_lock+0x30/0xd8
+[    9.233749]  lpi_config_set+0x2e8/0x3c8 [pinctrl_lpass_lpi]
+[    9.233757]  lpi_gpio_direction_output+0x58/0x90 [pinctrl_lpass_lpi]
+[    9.233761]  gpiod_direction_output_raw_commit+0x110/0x428
+[    9.233772]  gpiod_direction_output_nonotify+0x234/0x358
+[    9.233779]  gpiod_direction_output+0x38/0xd0
+[    9.233786]  gpio_shared_proxy_direction_output+0xb8/0x2a8 [gpio_shared_proxy]
+[    9.233792]  gpiod_direction_output_raw_commit+0x110/0x428
+[    9.233799]  gpiod_direction_output_nonotify+0x234/0x358
+[    9.233806]  gpiod_configure_flags+0x2c0/0x580
+[    9.233812]  gpiod_find_and_request+0x358/0x4f8
+[    9.233819]  gpiod_get_index+0x7c/0x98
+[    9.233826]  devm_gpiod_get+0x34/0xb0
+[    9.233829]  reset_gpio_probe+0x58/0x128 [reset_gpio]
+[    9.233836]  auxiliary_bus_probe+0xb0/0xf0
+[    9.233845]  really_probe+0x14c/0x450
+[    9.233853]  __driver_probe_device+0xb0/0x188
+[    9.233858]  driver_probe_device+0x4c/0x250
+[    9.233863]  __driver_attach+0xf8/0x2a0
+[    9.233868]  bus_for_each_dev+0xf8/0x158
+[    9.233872]  driver_attach+0x30/0x48
+[    9.233876]  bus_add_driver+0x158/0x2b8
+[    9.233880]  driver_register+0x74/0x118
+[    9.233886]  __auxiliary_driver_register+0x94/0xe8
+[    9.233893]  init_module+0x34/0xfd0 [reset_gpio]
+[    9.233898]  do_one_initcall+0xec/0x300
+[    9.233903]  do_init_module+0x64/0x260
+[    9.233910]  load_module+0x16c4/0x1900
+[    9.233915]  __arm64_sys_finit_module+0x24c/0x378
+[    9.233919]  invoke_syscall+0x4c/0xe8
+[    9.233925]  el0_svc_common+0x8c/0xf0
+[    9.233929]  do_el0_svc+0x28/0x40
+[    9.233934]  el0_svc+0x38/0x100
+[    9.233938]  el0t_64_sync_handler+0x84/0x130
+[    9.233943]  el0t_64_sync+0x17c/0x180
 
-BUG: sleeping function called from invalid context at
-kernel/locking/mutex.c:591
-in_atomic(): 1, irqs_disabled(): 1, non_block: 0, pid: 12, name:
-kworker/u16:0
-preempt_count: 1, expected: 0
-RCU nest depth: 0, expected: 0
-6 locks held by kworker/u16:0/12:
-  #0: ffff0001f0018d48 ((wq_completion)events_unbound#2){+.+.}-{0:0},
-at: process_one_work+0x18c/0x604
-  #1: ffff8000842dbdf0 (deferred_probe_work){+.+.}-{0:0}, at:
-process_one_work+0x1b4/0x604
-  #2: ffff0001f18498f8 (&dev->mutex){....}-{4:4}, at:
-__device_attach+0x38/0x1b0
-  #3: ffff0001f75f1e90 (&gdev->srcu){.+.?}-{0:0}, at:
-gpiod_direction_output_raw_commit+0x0/0x360
-  #4: ffff0001f46e3db8 (&shared_desc->spinlock){....}-{3:3}, at:
-gpio_shared_proxy_direction_output+0xd0/0x144 [gpio_shared_proxy]
-  #5: ffff0001f180ee90 (&gdev->srcu){.+.?}-{0:0}, at:
-gpiod_direction_output_raw_commit+0x0/0x360
-irq event stamp: 81450
-hardirqs last  enabled at (81449): [<ffff8000813acba4>]
-_raw_spin_unlock_irqrestore+0x74/0x78
-hardirqs last disabled at (81450): [<ffff8000813abfb8>]
-_raw_spin_lock_irqsave+0x84/0x88
-softirqs last  enabled at (79616): [<ffff8000811455fc>]
-__alloc_skb+0x17c/0x1e8
-softirqs last disabled at (79614): [<ffff8000811455fc>]
-__alloc_skb+0x17c/0x1e8
-CPU: 2 UID: 0 PID: 12 Comm: kworker/u16:0 Not tainted
-6.19.0-rc4-next-20260105+ #11975 PREEMPT
-Hardware name: Hardkernel ODROID-M1 (DT)
-Workqueue: events_unbound deferred_probe_work_func
-Call trace:
-  show_stack+0x18/0x24 (C)
-  dump_stack_lvl+0x90/0xd0
-  dump_stack+0x18/0x24
-  __might_resched+0x144/0x248
-  __might_sleep+0x48/0x98
-  __mutex_lock+0x5c/0x894
-  mutex_lock_nested+0x24/0x30
-  pinctrl_get_device_gpio_range+0x44/0x128
-  pinctrl_gpio_direction+0x3c/0xe0
-  pinctrl_gpio_direction_output+0x14/0x20
-  rockchip_gpio_direction_output+0xb8/0x19c
-  gpiochip_direction_output+0x38/0x94
-  gpiod_direction_output_raw_commit+0x1d8/0x360
-  gpiod_direction_output_nonotify+0x7c/0x230
-  gpiod_direction_output+0x34/0xf8
-  gpio_shared_proxy_direction_output+0xec/0x144 [gpio_shared_proxy]
-  gpiochip_direction_output+0x38/0x94
-  gpiod_direction_output_raw_commit+0x1d8/0x360
-  gpiod_direction_output_nonotify+0x7c/0x230
-  gpiod_configure_flags+0xbc/0x480
-  gpiod_find_and_request+0x1a0/0x574
-  gpiod_get_index+0x58/0x84
-  devm_gpiod_get_index+0x20/0xb4
-  devm_gpiod_get_optional+0x18/0x30
-  rockchip_pcie_probe+0x98/0x380
-  platform_probe+0x5c/0xac
-  really_probe+0xbc/0x298
+Mark the controller as sleeping.
 
-Fixes: 936ee2675eee ("gpio/rockchip: add driver for rockchip gpio")
+Fixes: 6e261d1090d6 ("pinctrl: qcom: Add sm8250 lpass lpi pinctrl driver")
 Cc: stable@vger.kernel.org
-Reported-by: Marek Szyprowski <m.szyprowski@samsung.com>
-Closes: https://lore.kernel.org/all/d035fc29-3b03-4cd6-b8ec-001f93540bc6@samsung.com/
-Acked-by: Heiko Stuebner <heiko@sntech.de>
-Link: https://lore.kernel.org/r/20260106090011.21603-1-bartosz.golaszewski@oss.qualcomm.com
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+Reported-by: Val Packett <val@packett.cool>
+Closes: https://lore.kernel.org/all/98c0f185-b0e0-49ea-896c-f3972dd011ca@packett.cool/
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Reviewed-by: Bjorn Andersson <andersson@kernel.org>
+Signed-off-by: Linus Walleij <linusw@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpio/gpio-rockchip.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/pinctrl/qcom/pinctrl-lpass-lpi.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/gpio/gpio-rockchip.c
-+++ b/drivers/gpio/gpio-rockchip.c
-@@ -584,6 +584,7 @@ static int rockchip_gpiolib_register(str
- 	gc->ngpio = bank->nr_pins;
- 	gc->label = bank->name;
- 	gc->parent = bank->dev;
-+	gc->can_sleep = true;
+--- a/drivers/pinctrl/qcom/pinctrl-lpass-lpi.c
++++ b/drivers/pinctrl/qcom/pinctrl-lpass-lpi.c
+@@ -484,7 +484,7 @@ int lpi_pinctrl_probe(struct platform_de
+ 	pctrl->chip.base = -1;
+ 	pctrl->chip.ngpio = data->npins;
+ 	pctrl->chip.label = dev_name(dev);
+-	pctrl->chip.can_sleep = false;
++	pctrl->chip.can_sleep = true;
  
- 	ret = gpiochip_add_data(gc, bank);
- 	if (ret) {
+ 	mutex_init(&pctrl->lock);
+ 
 
 
