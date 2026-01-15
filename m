@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E4282C027B;
-	Thu, 15 Jan 2026 17:22:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 461082C027B;
+	Thu, 15 Jan 2026 17:22:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768497736; cv=none; b=M0XmTj5mSIURMs41a45LkcS0Wh6m+DOhUkyDAxeAV5QNHYfuClnFIfVPR8FZk33//8JX2Aun+sLnYWxSZraLW7Aq+cDwwIa/53c/ep7Bdxp+ULJlXISKX8nr7Ybx1vMXguX4YyKHjTIbiISAqxQUt+dTsWbTUVSbRfKoL2F+RKk=
+	t=1768497739; cv=none; b=IMWOwcpjhPkTUSrKzykdX0sDn2erT2/oxGjOUrYxIZPcihxZfGKT1VxzB02He4RWGIJiRak3pYjCCUG8N/606o9clUvs1TzDJrLYcQP/1oK1wATtqCymvtcvCMziCcym2ax1hZCgwywqwZzTPCktg9cJpnb1vCJG4xG98PMTri0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768497736; c=relaxed/simple;
-	bh=zUjie7ePC7h5MQDZiMe3b2dJyzv9s03lhaZg0Svr2iU=;
+	s=arc-20240116; t=1768497739; c=relaxed/simple;
+	bh=JNO6g6eT+QP+2Cq1ExekdTxpeTUFe5/yw+fV7XS6/eo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=G9yOvNJ7CIxmAhvrDD59wdxDFbwJw7AMaWBjVKrvqo7Zv0wjdDnz3eMfTFOiPl+HdAyEwhSPUPKAbS0qDGcO2CHGm88xo8d9vMt6faVHBNG9kFHOAkz7cu3gyvxX1QlXfxw09oBOdOWUP2LOaiRYfK0QbuRVShlgP+ltxuRdIwk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xf1e+IAV; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gU7Yu1y1m7pVzFQRJw8fbWGGDFU0cDzFno/vPtD8H6NGWs5QHTDuiDX8Uuo2EcuhhSLZBSVc0NOBxLhZ3H/fdH573LEnZSExISS4bRu76Z7phZPrSy6+QmRn4PuK+K/B24At4/gQ50FJZ08hX50tszJoPo7ovvCdZTOqDBMa5Bk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JHKgBi4z; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xf1e+IAV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2701C116D0;
-	Thu, 15 Jan 2026 17:22:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JHKgBi4z"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C680AC116D0;
+	Thu, 15 Jan 2026 17:22:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1768497736;
-	bh=zUjie7ePC7h5MQDZiMe3b2dJyzv9s03lhaZg0Svr2iU=;
+	s=korg; t=1768497739;
+	bh=JNO6g6eT+QP+2Cq1ExekdTxpeTUFe5/yw+fV7XS6/eo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xf1e+IAVlaYBe+KLogyuNzD8YDq96vCTzLwqpP6tyb258MMMjTouWxNeBoPd8e8c9
-	 6UgKsvUfLK7asB/nTYK6QWsGOVjbhMemQsbU9pSB57fwVq6LvNSCWYLVo2QYFQGxmb
-	 8JIoq7CzXxXMtBzs702IXJN1RFp700bRHUvBWrOY=
+	b=JHKgBi4z3bfxuF1IvUnv+1LXyRizA7rgAm+FQRzxbysjssRwYX7a3S/k/72KdFPtv
+	 tRaftH0NQQL9Bb5U5QQlOzRO/RysIGuPR8hxGY1umYpEHlq3jNeialVp9yRqr8k0Z5
+	 V//vJv3EmvXq8arvMTC8H76ROWJDcBc4lw7vn4Lo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shengjiu Wang <shengjiu.wang@nxp.com>,
-	Mark Brown <broonie@kernel.org>,
+	Trond Myklebust <trond.myklebust@hammerspace.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 186/554] ASoC: ak5558: Disable regulator when error happens
-Date: Thu, 15 Jan 2026 17:44:12 +0100
-Message-ID: <20260115164252.994402429@linuxfoundation.org>
+Subject: [PATCH 5.15 169/554] NFS: Label the dentry with a verifier in nfs_rmdir() and nfs_unlink()
+Date: Thu, 15 Jan 2026 17:43:55 +0100
+Message-ID: <20260115164252.384480774@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260115164246.225995385@linuxfoundation.org>
 References: <20260115164246.225995385@linuxfoundation.org>
@@ -51,43 +50,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shengjiu Wang <shengjiu.wang@nxp.com>
+From: Trond Myklebust <trond.myklebust@hammerspace.com>
 
-[ Upstream commit 1f8f726a2a29c28f65b30880335a1610c5e63594 ]
+[ Upstream commit 9019fb391de02cbff422090768b73afe9f6174df ]
 
-Disable regulator in runtime resume when error happens to balance
-the reference count of regulator.
+After the success of an operation such as rmdir() or unlink(), we expect
+to add the dentry back to the dcache as an ordinary negative dentry.
+However in NFS, unless it is labelled with the appropriate verifier for
+the parent directory state, then nfs_lookup_revalidate will end up
+discarding that dentry and forcing a new lookup.
 
-Fixes: 2ff6d5a108c6 ("ASoC: ak5558: Add regulator support")
-Signed-off-by: Shengjiu Wang <shengjiu.wang@nxp.com>
-Link: https://patch.msgid.link/20251203100529.3841203-3-shengjiu.wang@nxp.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+The fix is to ensure that we relabel the dentry appropriately on
+success.
+
+Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
+Stable-dep-of: bd4928ec799b ("NFS: Avoid changing nlink when file removes and attribute updates race")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/ak5558.c | 10 +++++++++-
- 1 file changed, 9 insertions(+), 1 deletion(-)
+ fs/nfs/dir.c | 18 +++++++++++++++---
+ 1 file changed, 15 insertions(+), 3 deletions(-)
 
-diff --git a/sound/soc/codecs/ak5558.c b/sound/soc/codecs/ak5558.c
-index 37d4600b6f2c2..ba32cef2bf8ad 100644
---- a/sound/soc/codecs/ak5558.c
-+++ b/sound/soc/codecs/ak5558.c
-@@ -372,7 +372,15 @@ static int __maybe_unused ak5558_runtime_resume(struct device *dev)
- 	regcache_cache_only(ak5558->regmap, false);
- 	regcache_mark_dirty(ak5558->regmap);
- 
--	return regcache_sync(ak5558->regmap);
-+	ret = regcache_sync(ak5558->regmap);
-+	if (ret)
-+		goto err;
-+
-+	return 0;
-+err:
-+	regcache_cache_only(ak5558->regmap, true);
-+	regulator_bulk_disable(ARRAY_SIZE(ak5558->supplies), ak5558->supplies);
-+	return ret;
+diff --git a/fs/nfs/dir.c b/fs/nfs/dir.c
+index 32c3d0c454b19..9dceb6cb10417 100644
+--- a/fs/nfs/dir.c
++++ b/fs/nfs/dir.c
+@@ -2212,6 +2212,18 @@ static void nfs_dentry_handle_enoent(struct dentry *dentry)
+ 		d_delete(dentry);
  }
  
- static const struct dev_pm_ops ak5558_pm = {
++static void nfs_dentry_remove_handle_error(struct inode *dir,
++					   struct dentry *dentry, int error)
++{
++	switch (error) {
++	case -ENOENT:
++		d_delete(dentry);
++		fallthrough;
++	case 0:
++		nfs_set_verifier(dentry, nfs_save_change_attribute(dir));
++	}
++}
++
+ int nfs_rmdir(struct inode *dir, struct dentry *dentry)
+ {
+ 	int error;
+@@ -2234,6 +2246,7 @@ int nfs_rmdir(struct inode *dir, struct dentry *dentry)
+ 		up_write(&NFS_I(d_inode(dentry))->rmdir_sem);
+ 	} else
+ 		error = NFS_PROTO(dir)->rmdir(dir, &dentry->d_name);
++	nfs_dentry_remove_handle_error(dir, dentry, error);
+ 	trace_nfs_rmdir_exit(dir, dentry, error);
+ 
+ 	return error;
+@@ -2303,9 +2316,8 @@ int nfs_unlink(struct inode *dir, struct dentry *dentry)
+ 	}
+ 	spin_unlock(&dentry->d_lock);
+ 	error = nfs_safe_remove(dentry);
+-	if (!error || error == -ENOENT) {
+-		nfs_set_verifier(dentry, nfs_save_change_attribute(dir));
+-	} else if (need_rehash)
++	nfs_dentry_remove_handle_error(dir, dentry, error);
++	if (need_rehash)
+ 		d_rehash(dentry);
+ out:
+ 	trace_nfs_unlink_exit(dir, dentry, error);
 -- 
 2.51.0
 
