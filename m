@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76C533BFE32;
-	Thu, 15 Jan 2026 17:13:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 478963BFE32;
+	Thu, 15 Jan 2026 17:13:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768497235; cv=none; b=oY213sMc4ii8NWXsrPgRJkIGXQ1VZML2mc7mL9OzCRqD1YtBctbvY22YhgqcPDQeYHa9c4W5dc3VU3SBe9UTb2+wwJiXO1TmGNoYVCHsxbvsQ+ooEGLmkYeHNp4pRN4rH3qS+5uwlwE74xCCDZR0tJaPvPoKnKNiRaQX4ZLzGJQ=
+	t=1768497238; cv=none; b=BH3N8zt65NLbqYom8AbxI0robCm/EeLu2mXMzqcCTosBgH785fRUoLZtasvgOWzkYjqP4erZdpR2DhyEAm5Wwkj1mWpIpYxoFn8VlqOHCxsFD/yNG66g1GRmme66URsnCEIuEVwadhQl1Tjfis75vLWJ6izoXLRaBfCzoyJ7puA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768497235; c=relaxed/simple;
-	bh=kQVc6vTfhHHbyNEa6iY5HWtO6DIgLIWeItsz/s02Za4=;
+	s=arc-20240116; t=1768497238; c=relaxed/simple;
+	bh=o2Jtrf2TypAlNF3NJX1vwW5nHrQ1HggZ8hq14g06kKs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=m3EGcpLg2m6x4LfrY3/jtah1nNJ43RrCWmnGBo+4+j3Gs1vlZADcMuQ4r33B/rYpEhE/3Sfk2Nw5azz4skcBHkGN0eQb3z5ZJxuVrUIJBZOBzMb81SknLkYUt7iRdHCjL54xyAZFa9y5Mz98kuGUMnIFK2v0UL1rDgJGEu0BX/s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rMjRuVgX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=o1ZohKqCT8Jbrg71ZEqWuD4sanrn2fNQCSuhA1hxOQzKua6TzbAMIIpf/+f7XaZcgZVuhHuzbHPvg2G78PA0tADc9yTEV8Hmcsckc1SZeP20koUbGI3DbbEDb0LkyYflCyYVhLRbvJHfd1MQXYpeTRkfgOFZT2WS0QFNccv0mYI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KmYwKsxc; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rMjRuVgX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02B68C116D0;
-	Thu, 15 Jan 2026 17:13:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KmYwKsxc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C7DF0C19422;
+	Thu, 15 Jan 2026 17:13:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1768497235;
-	bh=kQVc6vTfhHHbyNEa6iY5HWtO6DIgLIWeItsz/s02Za4=;
+	s=korg; t=1768497238;
+	bh=o2Jtrf2TypAlNF3NJX1vwW5nHrQ1HggZ8hq14g06kKs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rMjRuVgXzYe3sEQbVHNU4cYS///Vl9VVdbYzJehbWiSgi3HDxU1Q9LLeqaGmAz334
-	 T4DB3jC5KGfapFR2aaWDBCnufNwTBuPkEnFuHtXaxtYKRr0xp/ndqXCFgOGBitwzoQ
-	 2jmCV/Mbqw5zdsgajMtDECsv6kF6PJ60eML2+EGU=
+	b=KmYwKsxcZnTyzc5K7Akj5XUMe4YYvivnfd9oTaLW9Ibx2oTquieLqI2MI2MjzQUp6
+	 3BRuXnykmucg1OChw8fVPXjiO1GJKYvSJmw+oJoNeBJAzUUDtgn6uMpUeNOWgyQ0Qo
+	 /wuVWqcFe0WA0V1WRuNH5gsL07qn7iDftLd1ZqlA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+f3185be57d7e8dda32b8@syzkaller.appspotmail.com,
-	stable@kernel.org,
-	Deepanshu Kartikey <kartikey406@gmail.com>,
-	Theodore Tso <tytso@mit.edu>
-Subject: [PATCH 5.15 011/554] ext4: refresh inline data size before write operations
-Date: Thu, 15 Jan 2026 17:41:17 +0100
-Message-ID: <20260115164246.647564153@linuxfoundation.org>
+	Adrian Freihofer <adrian.freihofer@siemens.com>,
+	Alexander Sverdlin <alexander.sverdlin@siemens.com>,
+	Boqun Feng <boqun.feng@gmail.com>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	"Paul E. McKenney" <paulmck@kernel.org>,
+	Waiman Long <longman@redhat.com>
+Subject: [PATCH 5.15 012/554] locking/spinlock/debug: Fix data-race in do_raw_write_lock
+Date: Thu, 15 Jan 2026 17:41:18 +0100
+Message-ID: <20260115164246.684487494@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260115164246.225995385@linuxfoundation.org>
 References: <20260115164246.225995385@linuxfoundation.org>
@@ -52,67 +54,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Deepanshu Kartikey <kartikey406@gmail.com>
+From: Alexander Sverdlin <alexander.sverdlin@siemens.com>
 
-commit 892e1cf17555735e9d021ab036c36bc7b58b0e3b upstream.
+commit c14ecb555c3ee80eeb030a4e46d00e679537f03a upstream.
 
-The cached ei->i_inline_size can become stale between the initial size
-check and when ext4_update_inline_data()/ext4_create_inline_data() use
-it. Although ext4_get_max_inline_size() reads the correct value at the
-time of the check, concurrent xattr operations can modify i_inline_size
-before ext4_write_lock_xattr() is acquired.
+KCSAN reports:
 
-This causes ext4_update_inline_data() and ext4_create_inline_data() to
-work with stale capacity values, leading to a BUG_ON() crash in
-ext4_write_inline_data():
+BUG: KCSAN: data-race in do_raw_write_lock / do_raw_write_lock
 
-  kernel BUG at fs/ext4/inline.c:1331!
-  BUG_ON(pos + len > EXT4_I(inode)->i_inline_size);
+write (marked) to 0xffff800009cf504c of 4 bytes by task 1102 on cpu 1:
+ do_raw_write_lock+0x120/0x204
+ _raw_write_lock_irq
+ do_exit
+ call_usermodehelper_exec_async
+ ret_from_fork
 
-The race window:
-1. ext4_get_max_inline_size() reads i_inline_size = 60 (correct)
-2. Size check passes for 50-byte write
-3. [Another thread adds xattr, i_inline_size changes to 40]
-4. ext4_write_lock_xattr() acquires lock
-5. ext4_update_inline_data() uses stale i_inline_size = 60
-6. Attempts to write 50 bytes but only 40 bytes actually available
-7. BUG_ON() triggers
+read to 0xffff800009cf504c of 4 bytes by task 1103 on cpu 0:
+ do_raw_write_lock+0x88/0x204
+ _raw_write_lock_irq
+ do_exit
+ call_usermodehelper_exec_async
+ ret_from_fork
 
-Fix this by recalculating i_inline_size via ext4_find_inline_data_nolock()
-immediately after acquiring xattr_sem. This ensures ext4_update_inline_data()
-and ext4_create_inline_data() work with current values that are protected
-from concurrent modifications.
+value changed: 0xffffffff -> 0x00000001
 
-This is similar to commit a54c4613dac1 ("ext4: fix race writing to an
-inline_data file while its xattrs are changing") which fixed i_inline_off
-staleness. This patch addresses the related i_inline_size staleness issue.
+Reported by Kernel Concurrency Sanitizer on:
+CPU: 0 PID: 1103 Comm: kworker/u4:1 6.1.111
 
-Reported-by: syzbot+f3185be57d7e8dda32b8@syzkaller.appspotmail.com
-Link: https://syzkaller.appspot.com/bug?extid=f3185be57d7e8dda32b8
-Cc: stable@kernel.org
-Signed-off-by: Deepanshu Kartikey <kartikey406@gmail.com>
-Message-ID: <20251020060936.474314-1-kartikey406@gmail.com>
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Commit 1a365e822372 ("locking/spinlock/debug: Fix various data races") has
+adressed most of these races, but seems to be not consistent/not complete.
+
+>From do_raw_write_lock() only debug_write_lock_after() part has been
+converted to WRITE_ONCE(), but not debug_write_lock_before() part.
+Do it now.
+
+Fixes: 1a365e822372 ("locking/spinlock/debug: Fix various data races")
+Reported-by: Adrian Freihofer <adrian.freihofer@siemens.com>
+Signed-off-by: Alexander Sverdlin <alexander.sverdlin@siemens.com>
+Signed-off-by: Boqun Feng <boqun.feng@gmail.com>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Reviewed-by: Paul E. McKenney <paulmck@kernel.org>
+Acked-by: Waiman Long <longman@redhat.com>
+Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ext4/inline.c |    7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ kernel/locking/spinlock_debug.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/fs/ext4/inline.c
-+++ b/fs/ext4/inline.c
-@@ -413,7 +413,12 @@ static int ext4_prepare_inline_data(hand
- 		return -ENOSPC;
+--- a/kernel/locking/spinlock_debug.c
++++ b/kernel/locking/spinlock_debug.c
+@@ -183,8 +183,8 @@ void do_raw_read_unlock(rwlock_t *lock)
+ static inline void debug_write_lock_before(rwlock_t *lock)
+ {
+ 	RWLOCK_BUG_ON(lock->magic != RWLOCK_MAGIC, lock, "bad magic");
+-	RWLOCK_BUG_ON(lock->owner == current, lock, "recursion");
+-	RWLOCK_BUG_ON(lock->owner_cpu == raw_smp_processor_id(),
++	RWLOCK_BUG_ON(READ_ONCE(lock->owner) == current, lock, "recursion");
++	RWLOCK_BUG_ON(READ_ONCE(lock->owner_cpu) == raw_smp_processor_id(),
+ 							lock, "cpu recursion");
+ }
  
- 	ext4_write_lock_xattr(inode, &no_expand);
--
-+	/*
-+	 * ei->i_inline_size may have changed since the initial check
-+	 * if other xattrs were added. Recalculate to ensure
-+	 * ext4_update_inline_data() validates against current capacity.
-+	 */
-+	(void) ext4_find_inline_data_nolock(inode);
- 	if (ei->i_inline_off)
- 		ret = ext4_update_inline_data(handle, inode, len);
- 	else
 
 
