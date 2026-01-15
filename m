@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CEA973D34A7;
-	Thu, 15 Jan 2026 17:27:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B55123BF301;
+	Thu, 15 Jan 2026 17:27:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768498055; cv=none; b=M1WpI4BzC+qqN99fMiuPzO+MMDmvWHDVJ4bXpptMJPpZhRCikZQEa/dowI+WvsejLfIqDYvOZSUVN8V3Yk6/R9otkr3eVgIqA/oVP3KcHkIS3UJc1JxVlPmnPjRs1w9c9IGxTHQZ2Pr+H92UV//Q76bEec0iQGpp1DfiWmg/QXI=
+	t=1768498058; cv=none; b=W0f1suT1ynpslCe9IFIRY+5FCFfvRTtN0KF06jpPGcjLifYWdmrZvDf4beKt2V3DYYem4pt+dX3BHl6A2BAqKEkgVrTreeoa6IQ3mgj+N7xenwO10NnjzaK0e2GAeLMWWcoSOALl6K33uHjMvnNgpA7e4VBcih6ZDnEKXlz//sU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768498055; c=relaxed/simple;
-	bh=iGFKqqn7r+INX+DlU4k9dm+nmdquKnWn9lRPMG6to2Q=;
+	s=arc-20240116; t=1768498058; c=relaxed/simple;
+	bh=0j0edBThRX3vunsC9zOxb75AJvVNX/lO5mB8quiHWmI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pgjGQsEuPuTs+UPhYODdYR6m3yK0Y7hnFJ1uvLKodSpJPo11+/uqrTlXFwTWCz0c/I43+lrrVOvuBlzcreNC2HUsJLOyEIcY3uMc0pZUF2ipqvQInn3Gavuq7GEXctoOXVtjsDILS3V+I1989M4ANhv3UWgB/AiaPF1FiKkDva8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fSaZcvkr; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=m5pTbsIoLFuRTWOW5oF0q7mlVgSkwvYlbxBDQ9ZykQ9hdVO6qWrChcd+BOAC0hDT9KIFVArwWjmNY6ivVure/GFxt3lGauC9HKMmnDxjwqxxs3KGctwvD4+9J3asaah26u0oYpehK6VaSxygPkUxXntxAxv/q5CY2Oc2gBasNhw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Rwz9pe9q; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fSaZcvkr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C8CEC19425;
-	Thu, 15 Jan 2026 17:27:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Rwz9pe9q"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 28F71C4AF60;
+	Thu, 15 Jan 2026 17:27:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1768498055;
-	bh=iGFKqqn7r+INX+DlU4k9dm+nmdquKnWn9lRPMG6to2Q=;
+	s=korg; t=1768498058;
+	bh=0j0edBThRX3vunsC9zOxb75AJvVNX/lO5mB8quiHWmI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fSaZcvkrqzshpaTaTZ3EQ5Gc3dtKU7dSVSS/cUikLMzLhBY/pxZxDmQQOGUU70n8c
-	 mpJJmxQ85kU4CSpllY6Xp7/s5bP5cOq1kS21c/FO5tg2h/PTURGwDXu73VlbI1rUmT
-	 J4Vz2wgeEzk7qXQOmiwmeTnqkEzerg9+XF9OIGg0=
+	b=Rwz9pe9q+imBHMZSrprZ7NDKq9mVZuChk9vUq8enBqybp/pTD7/LqX/1ctXIbfkYA
+	 eFjjvmji5cUbw9OG+0NQfkklFninXx26BPBTeQz09oge7HFJ4O7JIXFGTc6A/vUn21
+	 RnNZBWKOKMJtCEYZRPr1sy1Y0kjmiwNqMF0JEyac=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Haoxiang Li <haoxiang_li2024@163.com>
-Subject: [PATCH 5.15 297/554] usb: renesas_usbhs: Fix a resource leak in usbhs_pipe_malloc()
-Date: Thu, 15 Jan 2026 17:46:03 +0100
-Message-ID: <20260115164256.983977668@linuxfoundation.org>
+	Tianchu Chen <flynnnchen@tencent.com>,
+	Arnd Bergmann <arnd@arndb.de>,
+	stable <stable@kernel.org>
+Subject: [PATCH 5.15 298/554] char: applicom: fix NULL pointer dereference in ac_ioctl
+Date: Thu, 15 Jan 2026 17:46:04 +0100
+Message-ID: <20260115164257.018804130@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260115164246.225995385@linuxfoundation.org>
 References: <20260115164246.225995385@linuxfoundation.org>
@@ -50,38 +51,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Haoxiang Li <haoxiang_li2024@163.com>
+From: Tianchu Chen <flynnnchen@tencent.com>
 
-commit 36cc7e09df9e43db21b46519b740145410dd9f4a upstream.
+commit 82d12088c297fa1cef670e1718b3d24f414c23f7 upstream.
 
-usbhsp_get_pipe() set pipe's flags to IS_USED. In error paths,
-usbhsp_put_pipe() is required to clear pipe's flags to prevent
-pipe exhaustion.
+Discovered by Atuin - Automated Vulnerability Discovery Engine.
 
-Fixes: f1407d5c6624 ("usb: renesas_usbhs: Add Renesas USBHS common code")
+In ac_ioctl, the validation of IndexCard and the check for a valid
+RamIO pointer are skipped when cmd is 6. However, the function
+unconditionally executes readb(apbs[IndexCard].RamIO + VERS) at the
+end.
+
+If cmd is 6, IndexCard may reference a board that does not exist
+(where RamIO is NULL), leading to a NULL pointer dereference.
+
+Fix this by skipping the readb access when cmd is 6, as this
+command is a global information query and does not target a specific
+board context.
+
+Signed-off-by: Tianchu Chen <flynnnchen@tencent.com>
+Acked-by: Arnd Bergmann <arnd@arndb.de>
 Cc: stable <stable@kernel.org>
-Signed-off-by: Haoxiang Li <haoxiang_li2024@163.com>
-Link: https://patch.msgid.link/20251204132129.109234-1-haoxiang_li2024@163.com
+Link: https://patch.msgid.link/20251128155323.a786fde92ebb926cbe96fcb1@linux.dev
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/renesas_usbhs/pipe.c |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/char/applicom.c |    5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
---- a/drivers/usb/renesas_usbhs/pipe.c
-+++ b/drivers/usb/renesas_usbhs/pipe.c
-@@ -713,11 +713,13 @@ struct usbhs_pipe *usbhs_pipe_malloc(str
- 	/* make sure pipe is not busy */
- 	ret = usbhsp_pipe_barrier(pipe);
- 	if (ret < 0) {
-+		usbhsp_put_pipe(pipe);
- 		dev_err(dev, "pipe setup failed %d\n", usbhs_pipe_number(pipe));
- 		return NULL;
+--- a/drivers/char/applicom.c
++++ b/drivers/char/applicom.c
+@@ -836,7 +836,10 @@ static long ac_ioctl(struct file *file,
+ 		ret = -ENOTTY;
+ 		break;
  	}
- 
- 	if (usbhsp_setup_pipecfg(pipe, is_host, dir_in, &pipecfg)) {
-+		usbhsp_put_pipe(pipe);
- 		dev_err(dev, "can't setup pipe\n");
- 		return NULL;
- 	}
+-	Dummy = readb(apbs[IndexCard].RamIO + VERS);
++
++	if (cmd != 6)
++		Dummy = readb(apbs[IndexCard].RamIO + VERS);
++
+ 	kfree(adgl);
+ 	mutex_unlock(&ac_mutex);
+ 	return ret;
 
 
