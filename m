@@ -1,39 +1,46 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 717903B530F;
-	Thu, 15 Jan 2026 17:36:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42F813BF2FF;
+	Thu, 15 Jan 2026 17:36:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768498597; cv=none; b=qJowN/GLHMxuHndOCUChZmEF+ffX8fYazZsZyAvsq4lFqjRokpU8HhiF1VOeYdGcBp7UAsnQtmKE7eNKwKyZD/hLtuYQinbYxdINnWAT0UpLoSmsUrttQEgQvGmueXH0CxhhOHxHhySfzf82W1SPYx5r9v6VHTfUqDC1kzinQUg=
+	t=1768498600; cv=none; b=swGCp0EYARHqNWzD8ewwcNbUZSVcr2X+4kybI1OOD3NN92wFsHSdq/Fya6j01GdXhJE2AJwhlxb2W6GKUQ5jTC3vZ4vN2eaPQVybgAuCJXbtYXd2gCP09m4UjfvLHJyOicv08qUAF1W/fxRTz+iSUAVLgY1Xpr5ytQktR8peG9k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768498597; c=relaxed/simple;
-	bh=ASv9ZcMfgvHLHUxaxKE4/0FC7gH9z26tEJ4tLu4dT2E=;
+	s=arc-20240116; t=1768498600; c=relaxed/simple;
+	bh=dKIGyu/TbXEzP6l1W3h8aq7gyFZwiz0KZftI0UXtrRo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Q+8KTCIWKb1KYV7Rw+GD9iq1WVN7BIVA5jSnGTd90H6+q3ToT6QYNn5UZl8sse/PEFolNlk8SV2e8s+2dWsHGP3R/B/oVw5AzhPCSfX/zZ37aT4EoStKEsn8ar++nybS6nCP+0Qha35eoNOgH/pVv9I0fxC8VaoGfXjs0TA58cw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KAqR+AR4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HbNR/UUcg0eYVx0SvPD9MTwt/Cep1KlB61V0jpvjtCoboaRPr5+3Ro7NOnoscJlhDb/pXItFHFQ3K+Jfa5NHXXORBRIdIx2GerhL1j4kHR/HWxMRik2dAbC55KIAz9e4vj88kyqU21Tdafy0K2BJY2l9RbQNgk15JQEobZrwsA4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uWB+8xES; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KAqR+AR4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F1910C116D0;
-	Thu, 15 Jan 2026 17:36:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uWB+8xES"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F90FC116D0;
+	Thu, 15 Jan 2026 17:36:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1768498597;
-	bh=ASv9ZcMfgvHLHUxaxKE4/0FC7gH9z26tEJ4tLu4dT2E=;
+	s=korg; t=1768498600;
+	bh=dKIGyu/TbXEzP6l1W3h8aq7gyFZwiz0KZftI0UXtrRo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KAqR+AR4wD0tilK8yNPmMHeg8DO0gP/VhBP/cp1I0UMB4+zNq8YE7fJqFrH8S5Fr3
-	 1/szZuHrzKsESE5Qhwm9r8BS1PQmmEEP7cj3PsOU/2dCVn7cecofz1T1Ul0lF2sW6E
-	 a6WpE6IDdmACd5zRnFwUAQhwEvoBcROnGRPg2Hes=
+	b=uWB+8xESFaDgMYLEIlyU65GKvo+AN9nkWkchL8dL0Qyn2JHDSVHJc64+aWhevWBzx
+	 B3UzPzDpfgG7+0BLdWggDWR7Jbe2D/pp76ItCiRhxvjerTu/w6Zl8vW8q8lAXr7RCi
+	 2xksmWEPyFxZv5xs9mSxt1oOB+ZMsl+vNrGfIfOc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alan Stern <stern@rowland.harvard.edu>,
-	syzbot+b63d677d63bcac06cf90@syzkaller.appspotmail.com,
-	Benjamin Tissoires <bentiss@kernel.org>,
-	Wenshan Lan <jetlan9@163.com>
-Subject: [PATCH 5.15 486/554] HID: core: Harden s32ton() against conversion to 0 bits
-Date: Thu, 15 Jan 2026 17:49:12 +0100
-Message-ID: <20260115164303.904225253@linuxfoundation.org>
+	Peter Xu <peterx@redhat.com>,
+	Mike Kravetz <mike.kravetz@oracle.com>,
+	James Houghton <jthoughton@google.com>,
+	Andrea Arcangeli <aarcange@redhat.com>,
+	Axel Rasmussen <axelrasmussen@google.com>,
+	David Hildenbrand <david@redhat.com>,
+	Muchun Song <songmuchun@bytedance.com>,
+	Nadav Amit <nadav.amit@gmail.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Harry Yoo <harry.yoo@oracle.com>,
+	"David Hildenbrand (Red Hat)" <david@kernel.org>
+Subject: [PATCH 5.15 487/554] mm/mprotect: use long for page accountings and retval
+Date: Thu, 15 Jan 2026 17:49:13 +0100
+Message-ID: <20260115164303.941408184@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260115164246.225995385@linuxfoundation.org>
 References: <20260115164246.225995385@linuxfoundation.org>
@@ -52,52 +59,220 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alan Stern <stern@rowland.harvard.edu>
+From: Peter Xu <peterx@redhat.com>
 
-[ Upstream commit a6b87bfc2ab5bccb7ad953693c85d9062aef3fdd ]
+commit a79390f5d6a78647fd70856bd42b22d994de0ba2 upstream.
 
-Testing by the syzbot fuzzer showed that the HID core gets a
-shift-out-of-bounds exception when it tries to convert a 32-bit
-quantity to a 0-bit quantity.  Ideally this should never occur, but
-there are buggy devices and some might have a report field with size
-set to zero; we shouldn't reject the report or the device just because
-of that.
+Switch to use type "long" for page accountings and retval across the whole
+procedure of change_protection().
 
-Instead, harden the s32ton() routine so that it returns a reasonable
-result instead of crashing when it is called with the number of bits
-set to 0 -- the same as what snto32() does.
+The change should have shrinked the possible maximum page number to be
+half comparing to previous (ULONG_MAX / 2), but it shouldn't overflow on
+any system either because the maximum possible pages touched by change
+protection should be ULONG_MAX / PAGE_SIZE.
 
-Signed-off-by: Alan Stern <stern@rowland.harvard.edu>
-Reported-by: syzbot+b63d677d63bcac06cf90@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/linux-usb/68753a08.050a0220.33d347.0008.GAE@google.com/
-Tested-by: syzbot+b63d677d63bcac06cf90@syzkaller.appspotmail.com
-Fixes: dde5845a529f ("[PATCH] Generic HID layer - code split")
-Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/613a66cd-4309-4bce-a4f7-2905f9bce0c9@rowland.harvard.edu
-Signed-off-by: Benjamin Tissoires <bentiss@kernel.org>
-[ s32ton() was moved by c653ffc28340 ("HID: stop exporting hid_snto32()").
-  Minor context change fixed. ]
-Signed-off-by: Wenshan Lan <jetlan9@163.com>
+Two reasons to switch from "unsigned long" to "long":
+
+  1. It suites better on count_vm_numa_events(), whose 2nd parameter takes
+     a long type.
+
+  2. It paves way for returning negative (error) values in the future.
+
+Currently the only caller that consumes this retval is change_prot_numa(),
+where the unsigned long was converted to an int.  Since at it, touching up
+the numa code to also take a long, so it'll avoid any possible overflow
+too during the int-size convertion.
+
+Link: https://lkml.kernel.org/r/20230104225207.1066932-3-peterx@redhat.com
+Signed-off-by: Peter Xu <peterx@redhat.com>
+Acked-by: Mike Kravetz <mike.kravetz@oracle.com>
+Acked-by: James Houghton <jthoughton@google.com>
+Cc: Andrea Arcangeli <aarcange@redhat.com>
+Cc: Axel Rasmussen <axelrasmussen@google.com>
+Cc: David Hildenbrand <david@redhat.com>
+Cc: Muchun Song <songmuchun@bytedance.com>
+Cc: Nadav Amit <nadav.amit@gmail.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+[ Adjust context ]
+Signed-off-by: Harry Yoo <harry.yoo@oracle.com>
+Acked-by: David Hildenbrand (Red Hat) <david@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hid/hid-core.c |    7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ include/linux/hugetlb.h |    4 ++--
+ include/linux/mm.h      |    2 +-
+ mm/hugetlb.c            |    4 ++--
+ mm/mempolicy.c          |    2 +-
+ mm/mprotect.c           |   26 +++++++++++++-------------
+ 5 files changed, 19 insertions(+), 19 deletions(-)
 
---- a/drivers/hid/hid-core.c
-+++ b/drivers/hid/hid-core.c
-@@ -1349,7 +1349,12 @@ EXPORT_SYMBOL_GPL(hid_snto32);
+--- a/include/linux/hugetlb.h
++++ b/include/linux/hugetlb.h
+@@ -208,7 +208,7 @@ struct page *follow_huge_pgd(struct mm_s
  
- static u32 s32ton(__s32 value, unsigned n)
+ int pmd_huge(pmd_t pmd);
+ int pud_huge(pud_t pud);
+-unsigned long hugetlb_change_protection(struct vm_area_struct *vma,
++long hugetlb_change_protection(struct vm_area_struct *vma,
+ 		unsigned long address, unsigned long end, pgprot_t newprot);
+ 
+ bool is_hugetlb_entry_migration(pte_t pte);
+@@ -379,7 +379,7 @@ static inline void move_hugetlb_state(st
  {
--	s32 a = value >> (n - 1);
-+	s32 a;
-+
-+	if (!value || !n)
-+		return 0;
-+
-+	a = value >> (n - 1);
- 	if (a && a != -1)
- 		return value < 0 ? 1 << (n - 1) : (1 << (n - 1)) - 1;
- 	return value & ((1 << n) - 1);
+ }
+ 
+-static inline unsigned long hugetlb_change_protection(
++static inline long hugetlb_change_protection(
+ 			struct vm_area_struct *vma, unsigned long address,
+ 			unsigned long end, pgprot_t newprot)
+ {
+--- a/include/linux/mm.h
++++ b/include/linux/mm.h
+@@ -1910,7 +1910,7 @@ extern unsigned long move_page_tables(st
+ #define  MM_CP_UFFD_WP_ALL                 (MM_CP_UFFD_WP | \
+ 					    MM_CP_UFFD_WP_RESOLVE)
+ 
+-extern unsigned long change_protection(struct vm_area_struct *vma, unsigned long start,
++extern long change_protection(struct vm_area_struct *vma, unsigned long start,
+ 			      unsigned long end, pgprot_t newprot,
+ 			      unsigned long cp_flags);
+ extern int mprotect_fixup(struct vm_area_struct *vma,
+--- a/mm/hugetlb.c
++++ b/mm/hugetlb.c
+@@ -5644,7 +5644,7 @@ long follow_hugetlb_page(struct mm_struc
+ 	return i ? i : err;
+ }
+ 
+-unsigned long hugetlb_change_protection(struct vm_area_struct *vma,
++long hugetlb_change_protection(struct vm_area_struct *vma,
+ 		unsigned long address, unsigned long end, pgprot_t newprot)
+ {
+ 	struct mm_struct *mm = vma->vm_mm;
+@@ -5652,7 +5652,7 @@ unsigned long hugetlb_change_protection(
+ 	pte_t *ptep;
+ 	pte_t pte;
+ 	struct hstate *h = hstate_vma(vma);
+-	unsigned long pages = 0;
++	long pages = 0;
+ 	bool shared_pmd = false;
+ 	struct mmu_notifier_range range;
+ 
+--- a/mm/mempolicy.c
++++ b/mm/mempolicy.c
+@@ -634,7 +634,7 @@ unlock:
+ unsigned long change_prot_numa(struct vm_area_struct *vma,
+ 			unsigned long addr, unsigned long end)
+ {
+-	int nr_updated;
++	long nr_updated;
+ 
+ 	nr_updated = change_protection(vma, addr, end, PAGE_NONE, MM_CP_PROT_NUMA);
+ 	if (nr_updated)
+--- a/mm/mprotect.c
++++ b/mm/mprotect.c
+@@ -35,13 +35,13 @@
+ 
+ #include "internal.h"
+ 
+-static unsigned long change_pte_range(struct vm_area_struct *vma, pmd_t *pmd,
++static long change_pte_range(struct vm_area_struct *vma, pmd_t *pmd,
+ 		unsigned long addr, unsigned long end, pgprot_t newprot,
+ 		unsigned long cp_flags)
+ {
+ 	pte_t *pte, oldpte;
+ 	spinlock_t *ptl;
+-	unsigned long pages = 0;
++	long pages = 0;
+ 	int target_node = NUMA_NO_NODE;
+ 	bool dirty_accountable = cp_flags & MM_CP_DIRTY_ACCT;
+ 	bool prot_numa = cp_flags & MM_CP_PROT_NUMA;
+@@ -219,13 +219,13 @@ static inline int pmd_none_or_clear_bad_
+ 	return 0;
+ }
+ 
+-static inline unsigned long change_pmd_range(struct vm_area_struct *vma,
++static inline long change_pmd_range(struct vm_area_struct *vma,
+ 		pud_t *pud, unsigned long addr, unsigned long end,
+ 		pgprot_t newprot, unsigned long cp_flags)
+ {
+ 	pmd_t *pmd;
+ 	unsigned long next;
+-	unsigned long pages = 0;
++	long pages = 0;
+ 	unsigned long nr_huge_updates = 0;
+ 	struct mmu_notifier_range range;
+ 
+@@ -233,7 +233,7 @@ static inline unsigned long change_pmd_r
+ 
+ 	pmd = pmd_offset(pud, addr);
+ 	do {
+-		unsigned long this_pages;
++		long this_pages;
+ 
+ 		next = pmd_addr_end(addr, end);
+ 
+@@ -291,13 +291,13 @@ next:
+ 	return pages;
+ }
+ 
+-static inline unsigned long change_pud_range(struct vm_area_struct *vma,
++static inline long change_pud_range(struct vm_area_struct *vma,
+ 		p4d_t *p4d, unsigned long addr, unsigned long end,
+ 		pgprot_t newprot, unsigned long cp_flags)
+ {
+ 	pud_t *pud;
+ 	unsigned long next;
+-	unsigned long pages = 0;
++	long pages = 0;
+ 
+ 	pud = pud_offset(p4d, addr);
+ 	do {
+@@ -311,13 +311,13 @@ static inline unsigned long change_pud_r
+ 	return pages;
+ }
+ 
+-static inline unsigned long change_p4d_range(struct vm_area_struct *vma,
++static inline long change_p4d_range(struct vm_area_struct *vma,
+ 		pgd_t *pgd, unsigned long addr, unsigned long end,
+ 		pgprot_t newprot, unsigned long cp_flags)
+ {
+ 	p4d_t *p4d;
+ 	unsigned long next;
+-	unsigned long pages = 0;
++	long pages = 0;
+ 
+ 	p4d = p4d_offset(pgd, addr);
+ 	do {
+@@ -331,7 +331,7 @@ static inline unsigned long change_p4d_r
+ 	return pages;
+ }
+ 
+-static unsigned long change_protection_range(struct vm_area_struct *vma,
++static long change_protection_range(struct vm_area_struct *vma,
+ 		unsigned long addr, unsigned long end, pgprot_t newprot,
+ 		unsigned long cp_flags)
+ {
+@@ -339,7 +339,7 @@ static unsigned long change_protection_r
+ 	pgd_t *pgd;
+ 	unsigned long next;
+ 	unsigned long start = addr;
+-	unsigned long pages = 0;
++	long pages = 0;
+ 
+ 	BUG_ON(addr >= end);
+ 	pgd = pgd_offset(mm, addr);
+@@ -361,11 +361,11 @@ static unsigned long change_protection_r
+ 	return pages;
+ }
+ 
+-unsigned long change_protection(struct vm_area_struct *vma, unsigned long start,
++long change_protection(struct vm_area_struct *vma, unsigned long start,
+ 		       unsigned long end, pgprot_t newprot,
+ 		       unsigned long cp_flags)
+ {
+-	unsigned long pages;
++	long pages;
+ 
+ 	BUG_ON((cp_flags & MM_CP_UFFD_WP_ALL) == MM_CP_UFFD_WP_ALL);
+ 
 
 
