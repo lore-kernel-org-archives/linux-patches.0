@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D65533BFE37;
-	Thu, 15 Jan 2026 17:48:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C1C726E71F;
+	Thu, 15 Jan 2026 17:48:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768499325; cv=none; b=XJ0ckXaI9nA6nn3ZC1/tHXQLFh+pCF14eKvO8b5iYfWump9AWVTGvoh4idCT5i+ux/R4OwdrvV7MxrimIcQ6kbrZTF6txaZ4Zykfe7vbTupJP/lSwwJ8xU2wnFSzh1Kd//I8QqFOdnHd6DIMHfYAST/n9Umv0oOWDg5focPEL8Q=
+	t=1768499328; cv=none; b=uwCVvKu8CQwFmDWk4MoJWhQ2/vZfLYcZZalYsertlleZvOwo02OaYGN13n0RLKiWTtK2qql7D/n/egiJB11QBEJMFDUriXI9YnBkdMJyVosHrLWM1/dntXkvVLnZ/DufbJAEDrYIV1WgL/Oa6GjUwAMVzfwdXuGqVXqv3pbjTjY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768499325; c=relaxed/simple;
-	bh=kB8iM03DzYJUdsvCilaxNzS5HVEQNw3KrB+feHbCe/s=;
+	s=arc-20240116; t=1768499328; c=relaxed/simple;
+	bh=9i3Ot30MvbqxOeAUR/TWjZd7Icw9xvIX4ZyxWl/3sSU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=V31XsDjXF386qTUbeKUSwtn3KxiFxK3yieezwFG3SQxY1p0Wv7/m1hffQlXd7JW0Swmyf46GFSsUNw6HpJXQv1CaKHFBbkl9DVGEIJdnzWcNCofKvphX907u6Un0JIH4EhfAra1rZnkXYdY86Rk4CnjvPXQ5wT3jMaLoCwcZ5Nk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PX27ufYY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=iq2geKMBVB5fW+kcGSPfO5Ato+QPyaILgHpD17wbxWEvvODFsjejUKoF+eEcE7LtL9ZkXNlbqt1VYCzublxSbUEZzC94sjVO0qaTm8ZNtpUI7JtFEG4FRwMHMrnkHzYHJ3GjO2amMM2Gsx9hmhJbOkGsvCZNuH70+x94S4VMIds=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iSXEiMoD; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PX27ufYY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 64183C19422;
-	Thu, 15 Jan 2026 17:48:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iSXEiMoD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A103C19422;
+	Thu, 15 Jan 2026 17:48:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1768499325;
-	bh=kB8iM03DzYJUdsvCilaxNzS5HVEQNw3KrB+feHbCe/s=;
+	s=korg; t=1768499328;
+	bh=9i3Ot30MvbqxOeAUR/TWjZd7Icw9xvIX4ZyxWl/3sSU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PX27ufYYsx/5B6KoftzPAU+LGplufxlCUf+eKluuFZiDr2hDsPxReRG9ojQwrbR9g
-	 TaldlPBJeo6BKxBS1Yu6XscTDuRID3fmzMBUDcM9fXxy6YN8TlK4LIpe5b530kpOw0
-	 isNfkPb7p0U28pv7scJKaCR8wOgYN5rDLz2YyDbM=
+	b=iSXEiMoDc/6ajqx5zNEeWKuWQidvNYLntPpHIMoyd6CXWHml+IybrKG55jUv5Jayq
+	 ebfUsF+x9GvbTaP2sXOyOyHQWSXcYimT91kf8uIaU8vc6EsYGk9owf0ZItsMi0wVeQ
+	 caDJaEuJu6FdyPwuO5fZ+N1bl8516iuAzCEIYnio=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -32,9 +32,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Simon Horman <horms@kernel.org>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 187/451] net: hns3: using the num_tqps in the vf driver to apply for resources
-Date: Thu, 15 Jan 2026 17:46:28 +0100
-Message-ID: <20260115164237.667721558@linuxfoundation.org>
+Subject: [PATCH 5.10 188/451] net: hns3: add VLAN id validation before using
+Date: Thu, 15 Jan 2026 17:46:29 +0100
+Message-ID: <20260115164237.703621784@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260115164230.864985076@linuxfoundation.org>
 References: <20260115164230.864985076@linuxfoundation.org>
@@ -55,48 +55,42 @@ Content-Transfer-Encoding: 8bit
 
 From: Jian Shen <shenjian15@huawei.com>
 
-[ Upstream commit c2a16269742e176fccdd0ef9c016a233491a49ad ]
+[ Upstream commit 6ef935e65902bfed53980ad2754b06a284ea8ac1 ]
 
-Currently, hdev->htqp is allocated using hdev->num_tqps, and kinfo->tqp
-is allocated using kinfo->num_tqps. However, kinfo->num_tqps is set to
-min(new_tqps, hdev->num_tqps);  Therefore, kinfo->num_tqps may be smaller
-than hdev->num_tqps, which causes some hdev->htqp[i] to remain
-uninitialized in hclgevf_knic_setup().
+Currently, the VLAN id may be used without validation when
+receive a VLAN configuration mailbox from VF. The length of
+vlan_del_fail_bmap is BITS_TO_LONGS(VLAN_N_VID). It may cause
+out-of-bounds memory access once the VLAN id is bigger than
+or equal to VLAN_N_VID.
 
-Thus, this patch allocates hdev->htqp and kinfo->tqp using hdev->num_tqps,
-ensuring that the lengths of hdev->htqp and kinfo->tqp are consistent
-and that all elements are properly initialized.
+Therefore, VLAN id needs to be checked to ensure it is within
+the range of VLAN_N_VID.
 
-Fixes: e2cb1dec9779 ("net: hns3: Add HNS3 VF HCL(Hardware Compatibility Layer) Support")
+Fixes: fe4144d47eef ("net: hns3: sync VLAN filter entries when kill VLAN ID failed")
 Signed-off-by: Jian Shen <shenjian15@huawei.com>
 Signed-off-by: Jijie Shao <shaojijie@huawei.com>
 Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20251211023737.2327018-2-shaojijie@huawei.com
+Link: https://patch.msgid.link/20251211023737.2327018-4-shaojijie@huawei.com
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/hisilicon/hns3/hns3vf/hclgevf_main.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_main.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/net/ethernet/hisilicon/hns3/hns3vf/hclgevf_main.c b/drivers/net/ethernet/hisilicon/hns3/hns3vf/hclgevf_main.c
-index 15dca78fd736c..98abb47014b75 100644
---- a/drivers/net/ethernet/hisilicon/hns3/hns3vf/hclgevf_main.c
-+++ b/drivers/net/ethernet/hisilicon/hns3/hns3vf/hclgevf_main.c
-@@ -434,12 +434,12 @@ static int hclgevf_knic_setup(struct hclgevf_dev *hdev)
- 	new_tqps = kinfo->rss_size * num_tc;
- 	kinfo->num_tqps = min(new_tqps, hdev->num_tqps);
+diff --git a/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_main.c b/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_main.c
+index aa987cad7cadf..99b5b956ed8f9 100644
+--- a/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_main.c
++++ b/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_main.c
+@@ -9196,6 +9196,9 @@ int hclge_set_vlan_filter(struct hnae3_handle *handle, __be16 proto,
+ 	bool writen_to_tbl = false;
+ 	int ret = 0;
  
--	kinfo->tqp = devm_kcalloc(&hdev->pdev->dev, kinfo->num_tqps,
-+	kinfo->tqp = devm_kcalloc(&hdev->pdev->dev, hdev->num_tqps,
- 				  sizeof(struct hnae3_queue *), GFP_KERNEL);
- 	if (!kinfo->tqp)
- 		return -ENOMEM;
- 
--	for (i = 0; i < kinfo->num_tqps; i++) {
-+	for (i = 0; i < hdev->num_tqps; i++) {
- 		hdev->htqp[i].q.handle = &hdev->nic;
- 		hdev->htqp[i].q.tqp_index = i;
- 		kinfo->tqp[i] = &hdev->htqp[i].q;
++	if (vlan_id >= VLAN_N_VID)
++		return -EINVAL;
++
+ 	/* When device is resetting or reset failed, firmware is unable to
+ 	 * handle mailbox. Just record the vlan id, and remove it after
+ 	 * reset finished.
 -- 
 2.51.0
 
