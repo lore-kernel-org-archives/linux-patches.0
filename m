@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9AE6C2820C6;
-	Thu, 15 Jan 2026 17:11:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6EF3C2FDC4D;
+	Thu, 15 Jan 2026 17:11:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768497083; cv=none; b=UDC3zBweDEijSXsyXX7MWbu2m8GIflgWAFkymk3F8NNAkTSQTkf2PRDOfoPq4IiO8wlw94HMzXMcqpl/UOl4Tr8rFuzIAX4CbLk2s8tAZx+9wFrLIisfb0yregT2lr0raUX1OA/vxfjQY7Isejf3DmtLMWil7on0Ai4n59mlbiQ=
+	t=1768497086; cv=none; b=tN5vY1vWv9Aq1d2s1sxZjpKWWg6E7aWfb4J3H1QI7caPxaJumcMs7G6yvexa4EKDvCbBiWGJbSTaKwbK8z6PMsiiEx5GrVmqGs+1ajuNm3EDO/uKEHudDHejy/ilEHP8/FHGS6PlihJnR0gxZaqw+ZjSrio7gS+NlBawFetA8v4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768497083; c=relaxed/simple;
-	bh=DyzUzWKdy9KPWHQFDThAeA/IYfxcxN/jbphzlTSyLxU=;
+	s=arc-20240116; t=1768497086; c=relaxed/simple;
+	bh=XIpV642ZCNC8CnRxGPFt9T82rkQptv90S3D5S8QChBA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kufB0pIcuu7rnrjNnAsaQjsZQ7O24YabKtqdMbnN6ilsL2dATFUTp/0ED4zDQe4LA7tMF3vqkjXCHpIOzNqeVIcyrz5qCCndIvoGphsExhd6kal1T+/1xO7NtuFi83E35qhwPHNtYVwfH9rcFhkCl0+UP9yDB6IK1CmabKLaYZk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SJ4GFv2I; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Bwvk4bPpwI1IxXVXPxSCnMiIu5s5yg6V4QFlCmxhq88JWacoSEebr4sX7cs8sCYk3DK9iDzK8v0XPdD30F/LNTQUe6D1gIld4ZvS3J0zF1uddmPYCkmMFf2++DfjUai/9npw3rM9L0bNXeyb2J9x6Z7PXq9ShRdU2Qj45pQjNCM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eaiBX4hZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SJ4GFv2I"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 20990C116D0;
-	Thu, 15 Jan 2026 17:11:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eaiBX4hZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F1105C116D0;
+	Thu, 15 Jan 2026 17:11:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1768497083;
-	bh=DyzUzWKdy9KPWHQFDThAeA/IYfxcxN/jbphzlTSyLxU=;
+	s=korg; t=1768497086;
+	bh=XIpV642ZCNC8CnRxGPFt9T82rkQptv90S3D5S8QChBA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SJ4GFv2IH9q+KEy8pacfN9JILKpKVv9AVQM49oVJ2OGNmeVvcJIrtSO0hm9gEsoyK
-	 Ml7butgI6eeeKvBdfGVRa39l56u9QyC68nNyc3K/i9VFajLDCJ3UQo4t3R7rkgNgD8
-	 48n4VZrZr8vBwo96pQ/4JSE2nE8jcR4omtraigv4=
+	b=eaiBX4hZkO2kUZfbqVZgWQMGOI0dsaq/qTOSX9MNNF7ibToDMYiOzpgFahlfzHSpw
+	 nYAU/tI5bH0wqV9oHw3BvZySyG18egKnKjCXfMauWswfT0OJUmlF30f5R70XuQo0SO
+	 JDhsMSrxMA6cmGqFxzrWiAmGSAvQcxNmgDti7aoI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ian Ray <ian.ray@gehealthcare.com>,
+	Marek Vasut <marek.vasut@mailbox.org>,
+	Christoph Niedermaier <cniedermaier@dh-electronics.com>,
 	Shawn Guo <shawnguo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 31/72] ARM: dts: imx6q-ba16: fix RTC interrupt level
-Date: Thu, 15 Jan 2026 17:48:41 +0100
-Message-ID: <20260115164144.624198924@linuxfoundation.org>
+Subject: [PATCH 6.1 32/72] arm64: dts: imx8mp: Fix LAN8740Ai PHY reference clock on DH electronics i.MX8M Plus DHCOM
+Date: Thu, 15 Jan 2026 17:48:42 +0100
+Message-ID: <20260115164144.660654478@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260115164143.482647486@linuxfoundation.org>
 References: <20260115164143.482647486@linuxfoundation.org>
@@ -51,38 +52,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ian Ray <ian.ray@gehealthcare.com>
+From: Marek Vasut <marek.vasut@mailbox.org>
 
-[ Upstream commit e6a4eedd49ce27c16a80506c66a04707e0ee0116 ]
+[ Upstream commit c63749a7ddc59ac6ec0b05abfa0a21af9f2c1d38 ]
 
-RTC interrupt level should be set to "LOW". This was revealed by the
-introduction of commit:
+Add missing 'clocks' property to LAN8740Ai PHY node, to allow the PHY driver
+to manage LAN8740Ai CLKIN reference clock supply. This fixes sporadic link
+bouncing caused by interruptions on the PHY reference clock, by letting the
+PHY driver manage the reference clock and assure there are no interruptions.
 
-  f181987ef477 ("rtc: m41t80: use IRQ flags obtained from fwnode")
+This follows the matching PHY driver recommendation described in commit
+bedd8d78aba3 ("net: phy: smsc: LAN8710/20: add phy refclk in support")
 
-which changed the way IRQ type is obtained.
-
-Fixes: 56c27310c1b4 ("ARM: dts: imx: Add Advantech BA-16 Qseven module")
-Signed-off-by: Ian Ray <ian.ray@gehealthcare.com>
+Fixes: 8d6712695bc8 ("arm64: dts: imx8mp: Add support for DH electronics i.MX8M Plus DHCOM and PDK2")
+Signed-off-by: Marek Vasut <marek.vasut@mailbox.org>
+Tested-by: Christoph Niedermaier <cniedermaier@dh-electronics.com>
 Signed-off-by: Shawn Guo <shawnguo@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/boot/dts/imx6q-ba16.dtsi | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/arm64/boot/dts/freescale/imx8mp-dhcom-som.dtsi | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/arch/arm/boot/dts/imx6q-ba16.dtsi b/arch/arm/boot/dts/imx6q-ba16.dtsi
-index f266f1b7e0cfc..0c033e69ecc04 100644
---- a/arch/arm/boot/dts/imx6q-ba16.dtsi
-+++ b/arch/arm/boot/dts/imx6q-ba16.dtsi
-@@ -335,7 +335,7 @@ rtc@32 {
- 		pinctrl-0 = <&pinctrl_rtc>;
- 		reg = <0x32>;
- 		interrupt-parent = <&gpio4>;
--		interrupts = <10 IRQ_TYPE_LEVEL_HIGH>;
-+		interrupts = <10 IRQ_TYPE_LEVEL_LOW>;
- 	};
- };
- 
+diff --git a/arch/arm64/boot/dts/freescale/imx8mp-dhcom-som.dtsi b/arch/arm64/boot/dts/freescale/imx8mp-dhcom-som.dtsi
+index 2fd50b5890afa..0b81b85887f40 100644
+--- a/arch/arm64/boot/dts/freescale/imx8mp-dhcom-som.dtsi
++++ b/arch/arm64/boot/dts/freescale/imx8mp-dhcom-som.dtsi
+@@ -97,6 +97,7 @@ mdio {
+ 		ethphy0f: ethernet-phy@1 { /* SMSC LAN8740Ai */
+ 			compatible = "ethernet-phy-id0007.c110",
+ 				     "ethernet-phy-ieee802.3-c22";
++			clocks = <&clk IMX8MP_CLK_ENET_QOS>;
+ 			interrupt-parent = <&gpio3>;
+ 			interrupts = <19 IRQ_TYPE_LEVEL_LOW>;
+ 			pinctrl-0 = <&pinctrl_ethphy0>;
 -- 
 2.51.0
 
