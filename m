@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 277E22C08AC;
-	Thu, 15 Jan 2026 17:19:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE906280327;
+	Thu, 15 Jan 2026 17:19:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768497547; cv=none; b=jVHqTcMgJmkbJuArp3hTja83swXRqPQNC4zx16irymReFG25vOqEIjaat/lFxDgraabOeR1TLbynkYVozQwxqSpxmqNnUUoBm81Zhb2IofdTYWQdFNdeKkGifqecpnxiFgqaNN+oTblDSIaiSVYche0h6L22CdkNmrhcX7PFYxw=
+	t=1768497549; cv=none; b=g/HbkaHw7VPNOeM9dm74ecI3L5qMMJbEi843c7JAFi4ADFg8oj3rBte32lm702EOvo57q65nta7zy65j0Br8Saem2hIu1JNUWjtmN3Mm+URdRgBHFd561pKo7/A2/pnArCb4cUg0W0/RnX180/edLfV7Empwq0qoPdINQUQKw88=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768497547; c=relaxed/simple;
-	bh=2V1x1GvRBUip7VH6TMUU+K1jXg1gDCgbNQG1i7heSBI=;
+	s=arc-20240116; t=1768497549; c=relaxed/simple;
+	bh=MfcfgBdtcu4SNoQCocHR0RrrXdb2l3hKB11ed7zeSV4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ybl4RP+yACBa4bzVIBnzja9OWbG2Z523K7Gu0+kPh0fw6CFzD3k3ce1Z1Si7aGpSgBrCBIScHdhWCS8YFz9mL6RwJx4676iEQUj2QmKgQ0nLnxe35sEHx+wx5ToGaVV/w5iI20Hu2XZUepLv6cQDdF5gFFutYdcvbP7PrgE1xbY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jqfcE5t7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=uq6oYcogtz7Csj7usnqjvWrvqgH2dKVHpUQlVb+fpHHFLAwb+Zdn6YOQISMcFzzhuPSPW+cM1SVjJ0pUGkCCohlh23/C7ZIN92hjDW5ce7MjXyi++4lizLY9VoP7/CfPU26xpufg6A7DKnv6Dd6Sj42AUvqCc7sfD2/f9xlT8YY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iKah0f+a; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jqfcE5t7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 74B0EC116D0;
-	Thu, 15 Jan 2026 17:19:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iKah0f+a"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4BA89C116D0;
+	Thu, 15 Jan 2026 17:19:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1768497546;
-	bh=2V1x1GvRBUip7VH6TMUU+K1jXg1gDCgbNQG1i7heSBI=;
+	s=korg; t=1768497549;
+	bh=MfcfgBdtcu4SNoQCocHR0RrrXdb2l3hKB11ed7zeSV4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jqfcE5t7v/2wfFbxNTA1xCV/LLEB2AG9FS6+fjTfLi7fQp5XiRYMRjztTrVQ2UOob
-	 VFKRRLSbQ0b3o4UaZobZhtC4jB1QHRIG40t6Mwnv0O8Fc4yoM+MLBwbevDIrZb8Ppg
-	 x3ENQy4fT7nYMQlOWpO3qqzouSVsR6ZBdcOxyG3Y=
+	b=iKah0f+aky68VUPYKzFWWqy/kX0jRGtDKOaT2+xmOtH4S91Hnz/BzPn7/3Zl+Zfpl
+	 elNGcouLSZ8dkMJlV2BtdrFr64J5AdHdTAvXc0WRDgnWdHojmWjZFcW0Bq1fayzZEX
+	 Q9GNYjuEjZ71qC5rYd4CKI5bdcRZ4hJCvxsPDmfE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-	Jay Liu <jay.liu@mediatek.com>,
-	Chun-Kuang Hu <chunkuang.hu@kernel.org>,
+	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@baylibre.com>,
+	Florian Fainelli <florian.fainelli@broadcom.com>,
+	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <ukleinek@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 119/554] drm/mediatek: Fix CCORR mtk_ctm_s31_32_to_s1_n function issue
-Date: Thu, 15 Jan 2026 17:43:05 +0100
-Message-ID: <20260115164250.558322563@linuxfoundation.org>
+Subject: [PATCH 5.15 120/554] pwm: bcm2835: Make sure the channel is enabled after pwm_request()
+Date: Thu, 15 Jan 2026 17:43:06 +0100
+Message-ID: <20260115164250.593381494@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260115164246.225995385@linuxfoundation.org>
 References: <20260115164246.225995385@linuxfoundation.org>
@@ -46,75 +46,89 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jay Liu <jay.liu@mediatek.com>
+From: Uwe Kleine-König <u.kleine-koenig@baylibre.com>
 
-[ Upstream commit 20ac36b71c53b8c36c6903b5ca87c75226700a97 ]
+[ Upstream commit cda323dbda76600bf9761970d58517648f0de67d ]
 
-if matrixbit is 11,
-The range of color matrix is from 0 to (BIT(12) - 1).
-Values from 0 to (BIT(11) - 1) represent positive numbers,
-values from BIT(11) to (BIT(12) - 1) represent negative numbers.
-For example, -1 need converted to 8191.
-so convert S31.32 to HW Q2.11 format by drm_color_ctm_s31_32_to_qm_n,
-and set int_bits to 2.
+The .free callback cleared among others the enable bit PWENx in the
+control register. When the PWM is requested later again this bit isn't
+restored but the core assumes the PWM is enabled and thus skips a
+request to configure the same state as before.
 
-Fixes: 738ed4156fba ("drm/mediatek: Add matrix_bits private data for ccorr")
-Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Signed-off-by: Jay Liu <jay.liu@mediatek.com>
-Link: https://patchwork.kernel.org/project/dri-devel/patch/20250921055416.25588-2-jay.liu@mediatek.com/
-Signed-off-by: Chun-Kuang Hu <chunkuang.hu@kernel.org>
+To fix that don't touch the hardware configuration in .free(). For
+symmetry also drop .request() and configure the mode completely in
+.apply().
+
+Fixes: e5a06dc5ac1f ("pwm: Add BCM2835 PWM driver")
+Signed-off-by: Uwe Kleine-König <u.kleine-koenig@baylibre.com>
+Reviewed-by: Florian Fainelli <florian.fainelli@broadcom.com>
+Link: https://patch.msgid.link/20251118174303.1761577-2-u.kleine-koenig@baylibre.com
+Signed-off-by: Uwe Kleine-König <ukleinek@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/mediatek/mtk_disp_ccorr.c | 23 +----------------------
- 1 file changed, 1 insertion(+), 22 deletions(-)
+ drivers/pwm/pwm-bcm2835.c | 28 +++-------------------------
+ 1 file changed, 3 insertions(+), 25 deletions(-)
 
-diff --git a/drivers/gpu/drm/mediatek/mtk_disp_ccorr.c b/drivers/gpu/drm/mediatek/mtk_disp_ccorr.c
-index 141cb36b9c07b..f1c7d16d30f63 100644
---- a/drivers/gpu/drm/mediatek/mtk_disp_ccorr.c
-+++ b/drivers/gpu/drm/mediatek/mtk_disp_ccorr.c
-@@ -85,27 +85,6 @@ void mtk_ccorr_stop(struct device *dev)
- 	writel_relaxed(0x0, ccorr->regs + DISP_CCORR_EN);
+diff --git a/drivers/pwm/pwm-bcm2835.c b/drivers/pwm/pwm-bcm2835.c
+index 50b8594be31d8..4541d63d57c40 100644
+--- a/drivers/pwm/pwm-bcm2835.c
++++ b/drivers/pwm/pwm-bcm2835.c
+@@ -35,29 +35,6 @@ static inline struct bcm2835_pwm *to_bcm2835_pwm(struct pwm_chip *chip)
+ 	return container_of(chip, struct bcm2835_pwm, chip);
  }
  
--/* Converts a DRM S31.32 value to the HW S1.n format. */
--static u16 mtk_ctm_s31_32_to_s1_n(u64 in, u32 n)
+-static int bcm2835_pwm_request(struct pwm_chip *chip, struct pwm_device *pwm)
 -{
--	u16 r;
+-	struct bcm2835_pwm *pc = to_bcm2835_pwm(chip);
+-	u32 value;
 -
--	/* Sign bit. */
--	r = in & BIT_ULL(63) ? BIT(n + 1) : 0;
+-	value = readl(pc->base + PWM_CONTROL);
+-	value &= ~(PWM_CONTROL_MASK << PWM_CONTROL_SHIFT(pwm->hwpwm));
+-	value |= (PWM_MODE << PWM_CONTROL_SHIFT(pwm->hwpwm));
+-	writel(value, pc->base + PWM_CONTROL);
 -
--	if ((in & GENMASK_ULL(62, 33)) > 0) {
--		/* identity value 0x100000000 -> 0x400(mt8183), */
--		/* identity value 0x100000000 -> 0x800(mt8192), */
--		/* if bigger this, set it to max 0x7ff. */
--		r |= GENMASK(n, 0);
--	} else {
--		/* take the n+1 most important bits. */
--		r |= (in >> (32 - n)) & GENMASK(n, 0);
--	}
--
--	return r;
+-	return 0;
 -}
 -
- void mtk_ccorr_ctm_set(struct device *dev, struct drm_crtc_state *state)
+-static void bcm2835_pwm_free(struct pwm_chip *chip, struct pwm_device *pwm)
+-{
+-	struct bcm2835_pwm *pc = to_bcm2835_pwm(chip);
+-	u32 value;
+-
+-	value = readl(pc->base + PWM_CONTROL);
+-	value &= ~(PWM_CONTROL_MASK << PWM_CONTROL_SHIFT(pwm->hwpwm));
+-	writel(value, pc->base + PWM_CONTROL);
+-}
+-
+ static int bcm2835_pwm_apply(struct pwm_chip *chip, struct pwm_device *pwm,
+ 			     const struct pwm_state *state)
  {
- 	struct mtk_disp_ccorr *ccorr = dev_get_drvdata(dev);
-@@ -124,7 +103,7 @@ void mtk_ccorr_ctm_set(struct device *dev, struct drm_crtc_state *state)
- 	input = ctm->matrix;
+@@ -109,6 +86,9 @@ static int bcm2835_pwm_apply(struct pwm_chip *chip, struct pwm_device *pwm,
+ 	/* set polarity */
+ 	val = readl(pc->base + PWM_CONTROL);
  
- 	for (i = 0; i < ARRAY_SIZE(coeffs); i++)
--		coeffs[i] = mtk_ctm_s31_32_to_s1_n(input[i], matrix_bits);
-+		coeffs[i] = drm_color_ctm_s31_32_to_qm_n(input[i], 2, matrix_bits);
++	val &= ~(PWM_CONTROL_MASK << PWM_CONTROL_SHIFT(pwm->hwpwm));
++	val |= PWM_MODE << PWM_CONTROL_SHIFT(pwm->hwpwm);
++
+ 	if (state->polarity == PWM_POLARITY_NORMAL)
+ 		val &= ~(PWM_POLARITY << PWM_CONTROL_SHIFT(pwm->hwpwm));
+ 	else
+@@ -126,8 +106,6 @@ static int bcm2835_pwm_apply(struct pwm_chip *chip, struct pwm_device *pwm,
+ }
  
- 	mtk_ddp_write(cmdq_pkt, coeffs[0] << 16 | coeffs[1],
- 		      &ccorr->cmdq_reg, ccorr->regs, DISP_CCORR_COEF_0);
+ static const struct pwm_ops bcm2835_pwm_ops = {
+-	.request = bcm2835_pwm_request,
+-	.free = bcm2835_pwm_free,
+ 	.apply = bcm2835_pwm_apply,
+ 	.owner = THIS_MODULE,
+ };
 -- 
 2.51.0
 
