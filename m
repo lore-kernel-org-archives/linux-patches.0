@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 924C43D1CB7;
-	Thu, 15 Jan 2026 17:34:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4626A274FE3;
+	Thu, 15 Jan 2026 17:34:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768498496; cv=none; b=E3YNnNcCKwYJ/HOxbh3XWFT5T3pUyQ+zRuiJyenrAiH6a82XX1rOSX/M78q5ayPlHNnpsAnvTepMvD859QWmXeSaOAkQuuQZm8V6MwNN2SZCQ77z5SI3LXew++HwBEArGTUxWUMMfH0Pa8LAERW3GE5LC5GbYWjrSfOoLxWHJsg=
+	t=1768498499; cv=none; b=kUd0I4kpNMeFTJnGj+DdzDjOunsTUXAnYcu6Gmj7yNgdMDxk/KcsTIXYrHCNaREJqbGbusZTwUiagTsgZrU+ZCBhtk9Z4azLslpnpgCk8brngRjXJJ4bhaA1rZMo9W/nUef/WWh/Z1D2cdQwXXq9G3Nx7GHQWCqVBwi69L2KiKo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768498496; c=relaxed/simple;
-	bh=ysOhnYgZchjQaDnAmcGIT+Jo6btsaJUKJqba6AMbfyk=;
+	s=arc-20240116; t=1768498499; c=relaxed/simple;
+	bh=9bQ13QMTpJ42LaaaJbElXgoBF2OTOlgbVyciwg7c3dw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=c6Sh6Bdfl0FONz9c4PeaMcKQuGI3Pkwu/vtV1u/gpE2UUyf8/KTUmlWFPN3e1mQxdM4lHyUAvrMyLCaVkgj4swK18ONXMv7MMHj9iJ1r9s+FOTDDcvN0v8ZmUjMjLb73JGUh5P3Ka8HJb38nO8DDxeD2aDjl59uWt6bKdjYCzpI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QOkGIcZ9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bBg1WhdSWsPVS1KDAxSH645kgA9kBCFRseSbIf18pV1zi2fjyi8G/+RLqlnsKlE4OCDNo3OoYSy3EHyFcwFL/ZH7t00Dfl1jifcdIddvP8DKyEq9VA1bhSHAPRbuHyxQdAVp3ouM1Im7vF/d0pzblwONd3VZsUtIrh7meQhJu8c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sLxcswGY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QOkGIcZ9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0FFDFC116D0;
-	Thu, 15 Jan 2026 17:34:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sLxcswGY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB83EC116D0;
+	Thu, 15 Jan 2026 17:34:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1768498496;
-	bh=ysOhnYgZchjQaDnAmcGIT+Jo6btsaJUKJqba6AMbfyk=;
+	s=korg; t=1768498499;
+	bh=9bQ13QMTpJ42LaaaJbElXgoBF2OTOlgbVyciwg7c3dw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QOkGIcZ9YcFotkDHNC900TqF3h7S89J8Jc8hnJfuWCeq64Yvpn6u28Bd6c2v5+VmO
-	 ZaDiY6yhp7t7qCEv3pffnI/w9vZYIsY/NNReO1lKHfO2xpMdOs1lFIkyKgXJRZ4n2s
-	 NCWLVYk0srM5kCbU8RUiP8dFJFe8/zSLC6Dbiajc=
+	b=sLxcswGYNmnL//W7oMXCdTbblP3LuLU8Ioz63bdsSjkavokByaMoiow32mDhT08HD
+	 T6yzRC1Pr4bvLC9soALoReXNW271FqE7otH+ZxYN7nDBN1rlqwaR6c+0d3Y/968Z3e
+	 G4x+DV+qWJFPF970XSkFzXHYTRlzXjHluPsUF30A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Joshua Rogers <linux@joshua.hu>,
-	Chuck Lever <chuck.lever@oracle.com>,
+	Nicolas Ferre <nicolas.ferre@microchip.com>,
+	Claudiu Beznea <claudiu.beznea@tuxon.dev>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 451/554] svcrdma: bound check rq_pages index in inline path
-Date: Thu, 15 Jan 2026 17:48:37 +0100
-Message-ID: <20260115164302.595433406@linuxfoundation.org>
+Subject: [PATCH 5.15 452/554] ARM: dts: microchip: sama5d2: fix spi flexcom fifo size to 32
+Date: Thu, 15 Jan 2026 17:48:38 +0100
+Message-ID: <20260115164302.632446078@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260115164246.225995385@linuxfoundation.org>
 References: <20260115164246.225995385@linuxfoundation.org>
@@ -51,36 +51,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Joshua Rogers <linux@joshua.hu>
+From: Nicolas Ferre <nicolas.ferre@microchip.com>
 
-[ Upstream commit d1bea0ce35b6095544ee82bb54156fc62c067e58 ]
+[ Upstream commit 7d5864dc5d5ea6a35983dd05295fb17f2f2f44ce ]
 
-svc_rdma_copy_inline_range indexed rqstp->rq_pages[rc_curpage] without
-verifying rc_curpage stays within the allocated page array. Add guards
-before the first use and after advancing to a new page.
+Unlike standalone spi peripherals, on sama5d2, the flexcom spi have fifo
+size of 32 data. Fix flexcom/spi nodes where this property is wrong.
 
-Fixes: d7cc73972661 ("svcrdma: support multiple Read chunks per RPC")
-Cc: stable@vger.kernel.org
-Signed-off-by: Joshua Rogers <linux@joshua.hu>
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
-[ adapted rc_curpage and rq_maxpages fields to ri_pageno and RPCSVC_MAXPAGES constant ]
+Fixes: 6b9a3584c7ed ("ARM: dts: at91: sama5d2: Add missing flexcom definitions")
+Cc: stable@vger.kernel.org # 5.8+
+Signed-off-by: Nicolas Ferre <nicolas.ferre@microchip.com>
+Link: https://lore.kernel.org/r/20251114140225.30372-1-nicolas.ferre@microchip.com
+Signed-off-by: Claudiu Beznea <claudiu.beznea@tuxon.dev>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/sunrpc/xprtrdma/svc_rdma_rw.c |    3 +++
- 1 file changed, 3 insertions(+)
+ arch/arm/boot/dts/sama5d2.dtsi |   10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
---- a/net/sunrpc/xprtrdma/svc_rdma_rw.c
-+++ b/net/sunrpc/xprtrdma/svc_rdma_rw.c
-@@ -789,6 +789,9 @@ static int svc_rdma_copy_inline_range(st
- 	for (page_no = 0; page_no < numpages; page_no++) {
- 		unsigned int page_len;
+--- a/arch/arm/boot/dts/sama5d2.dtsi
++++ b/arch/arm/boot/dts/sama5d2.dtsi
+@@ -555,7 +555,7 @@
+ 						 AT91_XDMAC_DT_PER_IF(1) |
+ 						 AT91_XDMAC_DT_PERID(12))>;
+ 					dma-names = "tx", "rx";
+-					atmel,fifo-size = <16>;
++					atmel,fifo-size = <32>;
+ 					status = "disabled";
+ 				};
  
-+		if (info->ri_pageno >= RPCSVC_MAXPAGES)
-+			return -EINVAL;
-+
- 		page_len = min_t(unsigned int, remaining,
- 				 PAGE_SIZE - info->ri_pageoff);
+@@ -625,7 +625,7 @@
+ 						 AT91_XDMAC_DT_PER_IF(1) |
+ 						 AT91_XDMAC_DT_PERID(14))>;
+ 					dma-names = "tx", "rx";
+-					atmel,fifo-size = <16>;
++					atmel,fifo-size = <32>;
+ 					status = "disabled";
+ 				};
+ 
+@@ -835,7 +835,7 @@
+ 						 AT91_XDMAC_DT_PER_IF(1) |
+ 						 AT91_XDMAC_DT_PERID(16))>;
+ 					dma-names = "tx", "rx";
+-					atmel,fifo-size = <16>;
++					atmel,fifo-size = <32>;
+ 					status = "disabled";
+ 				};
+ 
+@@ -925,7 +925,7 @@
+ 						 AT91_XDMAC_DT_PER_IF(1) |
+ 						 AT91_XDMAC_DT_PERID(18))>;
+ 					dma-names = "tx", "rx";
+-					atmel,fifo-size = <16>;
++					atmel,fifo-size = <32>;
+ 					status = "disabled";
+ 				};
+ 
+@@ -976,7 +976,7 @@
+ 						 AT91_XDMAC_DT_PER_IF(1) |
+ 						 AT91_XDMAC_DT_PERID(20))>;
+ 					dma-names = "tx", "rx";
+-					atmel,fifo-size = <16>;
++					atmel,fifo-size = <32>;
+ 					status = "disabled";
+ 				};
  
 
 
