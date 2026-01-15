@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 781973BC4EE;
-	Thu, 15 Jan 2026 16:55:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 551B7396B75;
+	Thu, 15 Jan 2026 16:55:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768496148; cv=none; b=kWaQBHBc8KyASZxGrhg+0hnzSeHLHVcs7/ERsOuaqdqu/U2wcxNXoWedw5oqWwbLh2P5nzGuhVgUVigQVfDO3AWKQvj11Ra67yXp08B59W8LoHr1d4zSlCYdbliUh7cdqvkM9Y/g9EbSlPkiP+KmxlMvm+Pt2GSBUkyrPRrv/Ss=
+	t=1768496151; cv=none; b=ZASFhNghUyr59GAgmRffkx1kHq4ajQfrr9oHMI0qWe/U3R2psIdytPDB7WESWLGtLVg+V9CUFWLG4L4sM9eAAGbkdsdLeeJ63UZ7fg9TaKruHZOQFLHdejv299FtJ7wYl3lnZIwtYB7AQboAUeCL2DSQYPee5I5NTSj701BTC0s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768496148; c=relaxed/simple;
-	bh=BnodaE5asFb+MpBUeLj+cqAymUPm4SsW12Iqg2DR0W0=;
+	s=arc-20240116; t=1768496151; c=relaxed/simple;
+	bh=4E/wmeTD7NDWUqpXPs6MWDatH893b/Vfw4d1lM3qlBs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=twY5hlKOhPZg3h0Q4x/qU6tHH1trFWgxPQg+KEa2n/IqZcZvmLGLS6i3ybPlKdHJWAsN62zcYyG2k51TGNEzoCwLbxzi+BbUrAdpcZcQyVYXW21C8EKhJCs+k0p1TmCToFcfXKZ1K0O5hRWVy3fkbA5meNBR4h2crbnXcfE6ndY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1uR4EmzS; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=nYMsGKCG2ycdMF8pZlkWZf98nVBjEgp/kCmAFORvDPge6R2n+J/2kq8LY3VoJvFS8v3omdlyQgHX83gGrWyosc1HhGN7vVNr14gKs177GHZ4oKc3V2t673ta2x/MsDkJSHxZsGDjfHqqHw7YX8jCswJr7kD8KMQKjDv3RABiUeQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cBCrTCn9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1uR4EmzS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 043E3C19421;
-	Thu, 15 Jan 2026 16:55:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cBCrTCn9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D4DB5C16AAE;
+	Thu, 15 Jan 2026 16:55:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1768496148;
-	bh=BnodaE5asFb+MpBUeLj+cqAymUPm4SsW12Iqg2DR0W0=;
+	s=korg; t=1768496151;
+	bh=4E/wmeTD7NDWUqpXPs6MWDatH893b/Vfw4d1lM3qlBs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1uR4EmzS8/9Ho3cUh9taNabZEWcJVH0/48znDjTgRNnCv8NiVukxfbBzMEGqlMX5D
-	 5aA3sjPWckUblHXcZSgXfnP+PRfNcYj8Xx/xM8zX9gu3+EIiCcat3Qo/JycSTNOecW
-	 hOz9Y/3Thag4l7DIWHQm6jck+TiFjnmc8ofNTJ9A=
+	b=cBCrTCn9ZlxmB4oz4KQeLkaD5SSgLqwVjyPrq0/WvlAqlp39PHStr3qmUa5WPRnEo
+	 B/3GlsG7Jf1TspoTgdKPGx94taq/bm2XwEiQzqWo5GlLolVkWpiWLF7Ogx4Yqzut2A
+	 QWGVJvZDQzKT42DkIOJzKAsajrs1o1ySxsmQmIHE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fernando Fernandez Mancera <fmancera@suse.de>,
-	Florian Westphal <fw@strlen.de>,
+	Alok Tiwari <alok.a.tiwari@oracle.com>,
+	Elad Nachman <enachman@marvell.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 094/181] netfilter: nf_conncount: update last_gc only when GC has been performed
-Date: Thu, 15 Jan 2026 17:47:11 +0100
-Message-ID: <20260115164205.715178457@linuxfoundation.org>
+Subject: [PATCH 6.18 095/181] net: marvell: prestera: fix NULL dereference on devlink_alloc() failure
+Date: Thu, 15 Jan 2026 17:47:12 +0100
+Message-ID: <20260115164205.751629650@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260115164202.305475649@linuxfoundation.org>
 References: <20260115164202.305475649@linuxfoundation.org>
@@ -51,45 +52,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fernando Fernandez Mancera <fmancera@suse.de>
+From: Alok Tiwari <alok.a.tiwari@oracle.com>
 
-[ Upstream commit 7811ba452402d58628e68faedf38745b3d485e3c ]
+[ Upstream commit a428e0da1248c353557970848994f35fd3f005e2 ]
 
-Currently last_gc is being updated everytime a new connection is
-tracked, that means that it is updated even if a GC wasn't performed.
-With a sufficiently high packet rate, it is possible to always bypass
-the GC, causing the list to grow infinitely.
+devlink_alloc() may return NULL on allocation failure, but
+prestera_devlink_alloc() unconditionally calls devlink_priv() on
+the returned pointer.
 
-Update the last_gc value only when a GC has been actually performed.
+This leads to a NULL pointer dereference if devlink allocation fails.
+Add a check for a NULL devlink pointer and return NULL early to avoid
+the crash.
 
-Fixes: d265929930e2 ("netfilter: nf_conncount: reduce unnecessary GC")
-Signed-off-by: Fernando Fernandez Mancera <fmancera@suse.de>
-Signed-off-by: Florian Westphal <fw@strlen.de>
+Fixes: 34dd1710f5a3 ("net: marvell: prestera: Add basic devlink support")
+Signed-off-by: Alok Tiwari <alok.a.tiwari@oracle.com>
+Acked-by: Elad Nachman <enachman@marvell.com>
+Link: https://patch.msgid.link/20251230052124.897012-1-alok.a.tiwari@oracle.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nf_conncount.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/ethernet/marvell/prestera/prestera_devlink.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/net/netfilter/nf_conncount.c b/net/netfilter/nf_conncount.c
-index 3c1b155f7a0ea..828d5c64c68a3 100644
---- a/net/netfilter/nf_conncount.c
-+++ b/net/netfilter/nf_conncount.c
-@@ -229,6 +229,7 @@ static int __nf_conncount_add(struct net *net,
+diff --git a/drivers/net/ethernet/marvell/prestera/prestera_devlink.c b/drivers/net/ethernet/marvell/prestera/prestera_devlink.c
+index 2a4c9df4eb797..e63d95c1842f3 100644
+--- a/drivers/net/ethernet/marvell/prestera/prestera_devlink.c
++++ b/drivers/net/ethernet/marvell/prestera/prestera_devlink.c
+@@ -387,6 +387,8 @@ struct prestera_switch *prestera_devlink_alloc(struct prestera_device *dev)
  
- 		nf_ct_put(found_ct);
- 	}
-+	list->last_gc = (u32)jiffies;
+ 	dl = devlink_alloc(&prestera_dl_ops, sizeof(struct prestera_switch),
+ 			   dev->dev);
++	if (!dl)
++		return NULL;
  
- add_new_node:
- 	if (WARN_ON_ONCE(list->count > INT_MAX)) {
-@@ -248,7 +249,6 @@ static int __nf_conncount_add(struct net *net,
- 	conn->jiffies32 = (u32)jiffies;
- 	list_add_tail(&conn->node, &list->head);
- 	list->count++;
--	list->last_gc = (u32)jiffies;
- 
- out_put:
- 	if (refcounted)
+ 	return devlink_priv(dl);
+ }
 -- 
 2.51.0
 
