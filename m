@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C7453BFE31;
-	Thu, 15 Jan 2026 17:28:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 715283C1FF1;
+	Thu, 15 Jan 2026 17:28:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768498081; cv=none; b=GRCynun+lVR5KtMC4Z138iOJTM9aLmlpKawa70Twf9D1KumhVDQvPWdPHG2qS3O4txc4YOenCzJChN/ZAod8gnznTOzYlbPXLHQfbkADXtoqKbqnDX+xTaz0TefaXQcMgW5hVZMPNZ3O3462NjmjeCUTJTRWTB13KgT4sR7TTl0=
+	t=1768498084; cv=none; b=V1oWs5GFDcMcQeM6tBV5qBELU3C1pphktryEHu5H5xcM3ZzprPxg0O+zSY5MnaxnOqfTy6T8YHQeN+36rsU6h2ciCxVSurvmjm3B0vHv4rTjmtTG1/bxa/2cLTZtHQnW1PI3Ab7gKcRJg+TlKr7IffUQ6+C+Cs3l4DSfytlht4s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768498081; c=relaxed/simple;
-	bh=QqSwRmLHAwpHNrkJCXlCDtqxfWvmie3rDfLwMtksdIE=;
+	s=arc-20240116; t=1768498084; c=relaxed/simple;
+	bh=6KtPtxOSY6c6P9g3m27uGSMM4fjDAFckT3SJlr14uD4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=nLd2sRg+STTLuWH5lZ0xMoL6mTghxycmyfXA2+eNmi1bflXY9KLjwcy46g5uHYfxZagXTt2y2bOmYFCrKLi5DfxPpCFXEg5IFKmFCyEcFen9pZU25nCmfMEn4QfVrp1fQZdI/ypy4TxYy+Qiu9051EDN/VGbC4Op5FZcw3m0p30=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=17BFZMgb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VK+mgjDjXZjoJpZqvJH9uqv0VzSWKT1SN7Eyj/G7XT0Bnbzr0dCbP5f+xlg4Z6ctovHR7X4vdVEZnBJaYelpGixaEZ+/WJ1V8yojT98dm34AG9pLyq9qsQwBmpnISHs2NI+xP24sCqaBVXFGGDi9R38SsS6atnmybdD8CTjqx7k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TouEBffh; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="17BFZMgb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 28AADC19422;
-	Thu, 15 Jan 2026 17:28:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TouEBffh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F07DBC116D0;
+	Thu, 15 Jan 2026 17:28:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1768498081;
-	bh=QqSwRmLHAwpHNrkJCXlCDtqxfWvmie3rDfLwMtksdIE=;
+	s=korg; t=1768498084;
+	bh=6KtPtxOSY6c6P9g3m27uGSMM4fjDAFckT3SJlr14uD4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=17BFZMgbZqs8fYmlV9EsNFVGBrjDQOqKYIbXtAIZvffbq2yZdXy5ONMoi7Q8cwHxz
-	 HAHqYGoJhwRKNN3WzMZ9XFk3BJBORic/+yLbLjmd3Rfga+8Wkw9jSG2avDLGZPtwlB
-	 4O3T6rg7EoR6hX3Z91GgodEwJbQlIATUP0jST498=
+	b=TouEBffhFZ7uB0N/5Pr3LTHyeMCDh0jfvjSmXcuVelrkr59oFPHonJ5rrQi9rg1MA
+	 8IQ1vvIsuyzx2ASkkzWpPEGLILyF/s00KdahZQ+yDcJ1EmcekJ1e8QS3tiyMh55cHF
+	 yd+Ac8jiNpxJGZS+0N+BhJLaQ0ML4FRHSaIhcI4k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+632cf32276a9a564188d@syzkaller.appspotmail.com,
+	stable@kernel.org,
 	Chao Yu <chao@kernel.org>,
-	Deepanshu Kartikey <kartikey406@gmail.com>,
 	Jaegeuk Kim <jaegeuk@kernel.org>
-Subject: [PATCH 5.15 305/554] f2fs: invalidate dentry cache on failed whiteout creation
-Date: Thu, 15 Jan 2026 17:46:11 +0100
-Message-ID: <20260115164257.270766972@linuxfoundation.org>
+Subject: [PATCH 5.15 306/554] f2fs: fix return value of f2fs_recover_fsync_data()
+Date: Thu, 15 Jan 2026 17:46:12 +0100
+Message-ID: <20260115164257.306424592@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260115164246.225995385@linuxfoundation.org>
 References: <20260115164246.225995385@linuxfoundation.org>
@@ -46,95 +45,86 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Deepanshu Kartikey <kartikey406@gmail.com>
+From: Chao Yu <chao@kernel.org>
 
-commit d33f89b34aa313f50f9a512d58dd288999f246b0 upstream.
+commit 01fba45deaddcce0d0b01c411435d1acf6feab7b upstream.
 
-F2FS can mount filesystems with corrupted directory depth values that
-get runtime-clamped to MAX_DIR_HASH_DEPTH. When RENAME_WHITEOUT
-operations are performed on such directories, f2fs_rename performs
-directory modifications (updating target entry and deleting source
-entry) before attempting to add the whiteout entry via f2fs_add_link.
+With below scripts, it will trigger panic in f2fs:
 
-If f2fs_add_link fails due to the corrupted directory structure, the
-function returns an error to VFS, but the partial directory
-modifications have already been committed to disk. VFS assumes the
-entire rename operation failed and does not update the dentry cache,
-leaving stale mappings.
+mkfs.f2fs -f /dev/vdd
+mount /dev/vdd /mnt/f2fs
+touch /mnt/f2fs/foo
+sync
+echo 111 >> /mnt/f2fs/foo
+f2fs_io fsync /mnt/f2fs/foo
+f2fs_io shutdown 2 /mnt/f2fs
+umount /mnt/f2fs
+mount -o ro,norecovery /dev/vdd /mnt/f2fs
+or
+mount -o ro,disable_roll_forward /dev/vdd /mnt/f2fs
 
-In the error path, VFS does not call d_move() to update the dentry
-cache. This results in new_dentry still pointing to the old inode
-(new_inode) which has already had its i_nlink decremented to zero.
-The stale cache causes subsequent operations to incorrectly reference
-the freed inode.
+F2FS-fs (vdd): f2fs_recover_fsync_data: recovery fsync data, check_only: 0
+F2FS-fs (vdd): Mounted with checkpoint version = 7f5c361f
+F2FS-fs (vdd): Stopped filesystem due to reason: 0
+F2FS-fs (vdd): f2fs_recover_fsync_data: recovery fsync data, check_only: 1
+Filesystem f2fs get_tree() didn't set fc->root, returned 1
+------------[ cut here ]------------
+kernel BUG at fs/super.c:1761!
+Oops: invalid opcode: 0000 [#1] SMP PTI
+CPU: 3 UID: 0 PID: 722 Comm: mount Not tainted 6.18.0-rc2+ #721 PREEMPT(voluntary)
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.16.3-debian-1.16.3-2 04/01/2014
+RIP: 0010:vfs_get_tree.cold+0x18/0x1a
+Call Trace:
+ <TASK>
+ fc_mount+0x13/0xa0
+ path_mount+0x34e/0xc50
+ __x64_sys_mount+0x121/0x150
+ do_syscall_64+0x84/0x800
+ entry_SYSCALL_64_after_hwframe+0x76/0x7e
+RIP: 0033:0x7fa6cc126cfe
 
-This causes subsequent operations to use cached dentry information that
-no longer matches the on-disk state. When a second rename targets the
-same entry, VFS attempts to decrement i_nlink on the stale inode, which
-may already have i_nlink=0, triggering a WARNING in drop_nlink().
+The root cause is we missed to handle error number returned from
+f2fs_recover_fsync_data() when mounting image w/ ro,norecovery or
+ro,disable_roll_forward mount option, result in returning a positive
+error number to vfs_get_tree(), fix it.
 
-Example sequence:
-1. First rename (RENAME_WHITEOUT): file2 → file1
-   - f2fs updates file1 entry on disk (points to inode 8)
-   - f2fs deletes file2 entry on disk
-   - f2fs_add_link(whiteout) fails (corrupted directory)
-   - Returns error to VFS
-   - VFS does not call d_move() due to error
-   - VFS cache still has: file1 → inode 7 (stale!)
-   - inode 7 has i_nlink=0 (already decremented)
-
-2. Second rename: file3 → file1
-   - VFS uses stale cache: file1 → inode 7
-   - Tries to drop_nlink on inode 7 (i_nlink already 0)
-   - WARNING in drop_nlink()
-
-Fix this by explicitly invalidating old_dentry and new_dentry when
-f2fs_add_link fails during whiteout creation. This forces VFS to
-refresh from disk on subsequent operations, ensuring cache consistency
-even when the rename partially succeeds.
-
-Reproducer:
-1. Mount F2FS image with corrupted i_current_depth
-2. renameat2(file2, file1, RENAME_WHITEOUT)
-3. renameat2(file3, file1, 0)
-4. System triggers WARNING in drop_nlink()
-
-Fixes: 7e01e7ad746b ("f2fs: support RENAME_WHITEOUT")
-Reported-by: syzbot+632cf32276a9a564188d@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=632cf32276a9a564188d
-Suggested-by: Chao Yu <chao@kernel.org>
-Link: https://lore.kernel.org/all/20251022233349.102728-1-kartikey406@gmail.com/ [v1]
-Cc: stable@vger.kernel.org
-Signed-off-by: Deepanshu Kartikey <kartikey406@gmail.com>
-Reviewed-by: Chao Yu <chao@kernel.org>
+Cc: stable@kernel.org
+Fixes: 6781eabba1bd ("f2fs: give -EINVAL for norecovery and rw mount")
+Signed-off-by: Chao Yu <chao@kernel.org>
 Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/f2fs/namei.c |    6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ fs/f2fs/super.c |   14 +++++++++-----
+ 1 file changed, 9 insertions(+), 5 deletions(-)
 
---- a/fs/f2fs/namei.c
-+++ b/fs/f2fs/namei.c
-@@ -1017,9 +1017,11 @@ static int f2fs_rename(struct inode *old
- 	if (whiteout) {
- 		set_inode_flag(whiteout, FI_INC_LINK);
- 		err = f2fs_add_link(old_dentry, whiteout);
--		if (err)
-+		if (err) {
-+			d_invalidate(old_dentry);
-+			d_invalidate(new_dentry);
- 			goto put_out_dir;
+--- a/fs/f2fs/super.c
++++ b/fs/f2fs/super.c
+@@ -4374,11 +4374,15 @@ try_onemore:
+ 		}
+ 	} else {
+ 		err = f2fs_recover_fsync_data(sbi, true);
 -
-+		}
- 		spin_lock(&whiteout->i_lock);
- 		whiteout->i_state &= ~I_LINKABLE;
- 		spin_unlock(&whiteout->i_lock);
+-		if (!f2fs_readonly(sb) && err > 0) {
+-			err = -EINVAL;
+-			f2fs_err(sbi, "Need to recover fsync data");
+-			goto free_meta;
++		if (err > 0) {
++			if (!f2fs_readonly(sb)) {
++				f2fs_err(sbi, "Need to recover fsync data");
++				err = -EINVAL;
++				goto free_meta;
++			} else {
++				f2fs_info(sbi, "drop all fsynced data");
++				err = 0;
++			}
+ 		}
+ 	}
+ 
 
 
