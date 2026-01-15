@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A62B03B530F;
-	Thu, 15 Jan 2026 17:45:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77CDF2C21F4;
+	Thu, 15 Jan 2026 17:45:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768499115; cv=none; b=PsDVWuQBEtMxImCjClRISdpiK0KUbnU383W6yneL9lXut4yLgS7EniQ2g4+q0m5AB4+LADrBvXoYihUQy4DMmEpcqEXAW2ChcUFXzPAYSMfzQHKv4KyUrDMyKnPOdYwKgbw4p4rb8bJJoAVNAo2RLaZFQufuVlYknQw9cdiojQg=
+	t=1768499118; cv=none; b=VPRgKPYoHZjRxVZ8KZXxzwujKhY+j7uR1zYJLEVX6FcpSL51ubFKlZGTwHjXeb60PYLdLcB3Wp1+bTfXs69B1zGfPOPAMdmd8p5EFZYpZ6QU4ljDXBxt4VzDceTATLH6oRw2iY9cFcVLAm+rlMc0gif1le9sN7THZQB6WoBXIsU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768499115; c=relaxed/simple;
-	bh=eWZJXkaOq+QplhSCuRMdx+QI9ADCWWbjXym2BYHMnDI=;
+	s=arc-20240116; t=1768499118; c=relaxed/simple;
+	bh=Sv4eDXW++bJ3W4Sm8/kr7vMfpht6woAeR3GJbcOsPe4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lX2suQ/DnLg2Ub85qgMjZpzkA1Oo595QW4/3WkDEgd0iZUK/JhVf71ojrF1f0PUZEk+cPL+5fuPKJxRXrDNDd6FGmukT1Ds7bbFU2PU1ozBuqMxB3ZiT+KCY0BgYCSqvqq1HUehYGnyn9dMa1T3NUIyXfPWmHsLjY/1YnKtWwLk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jCpoMhAU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VBWFFV81h+bt7p/WokBQzGTNWmnQwbTyS8Jirbnps++ADSgPV3E786DpWekTtWPKOPZxsFg3H4mxOw6sRWkIPrMKK0zoSfW4lcu3HrNjlcL8P4WidFA0eS7k3++B4DGYjeWHPVTCX7875kWVpyVoQu8IVdAn/08GdxZXvlAXe3k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wr3EF6SY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jCpoMhAU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 28EB9C116D0;
-	Thu, 15 Jan 2026 17:45:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wr3EF6SY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0497FC116D0;
+	Thu, 15 Jan 2026 17:45:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1768499115;
-	bh=eWZJXkaOq+QplhSCuRMdx+QI9ADCWWbjXym2BYHMnDI=;
+	s=korg; t=1768499118;
+	bh=Sv4eDXW++bJ3W4Sm8/kr7vMfpht6woAeR3GJbcOsPe4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jCpoMhAU5/BH4IA7PXmHwl6D+WjM9IvOSxeAG1bSFCJJ+BjxpL9uf3tk0nHSefVMv
-	 WXNOM/R8IdKc1k8kcV2BqFBGPBAMVmuNZ90jwlPsBUCBw66r8nWX3wuNxwWxqXemUH
-	 q8L4l6J7p1nlBsjbCskqHLV/Ae9+h+MloUem+ja4=
+	b=wr3EF6SYEMEiom5i3NoGa46PotZDU+/xG0Q392vp2Maw6KspJXZtdD08nrqO//RiM
+	 Y+YNTEZ4D17EqFxYWSjassHZLq09a4m+cDXYAGw6cG8Gru9PY/zwSn++aopN4G6aWf
+	 sSU4di2rKYPixuB8zkyMd9SWl2gwKbbVmvboJSzs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fernando Fernandez Mancera <fmancera@suse.de>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Ivan Stepchenko <sid@itb.spb.ru>,
+	Miquel Raynal <miquel.raynal@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 113/451] netfilter: nft_connlimit: update the count if add was skipped
-Date: Thu, 15 Jan 2026 17:45:14 +0100
-Message-ID: <20260115164235.009307393@linuxfoundation.org>
+Subject: [PATCH 5.10 114/451] mtd: lpddr_cmds: fix signed shifts in lpddr_cmds
+Date: Thu, 15 Jan 2026 17:45:15 +0100
+Message-ID: <20260115164235.045669696@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260115164230.864985076@linuxfoundation.org>
 References: <20260115164230.864985076@linuxfoundation.org>
@@ -51,103 +51,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fernando Fernandez Mancera <fmancera@suse.de>
+From: Ivan Stepchenko <sid@itb.spb.ru>
 
-[ Upstream commit 69894e5b4c5e28cda5f32af33d4a92b7a4b93b0e ]
+[ Upstream commit c909fec69f84b39e63876c69b9df2c178c6b76ba ]
 
-Connlimit expression can be used for all kind of packets and not only
-for packets with connection state new. See this ruleset as example:
+There are several places where a value of type 'int' is shifted by
+lpddr->chipshift. lpddr->chipshift is derived from QINFO geometry and
+might reach 31 when QINFO reports a 2 GiB size - the maximum supported by
+LPDDR(1) compliant chips. This may cause unexpected sign-extensions when
+casting the integer value to the type of 'unsigned long'.
 
-table ip filter {
-        chain input {
-                type filter hook input priority filter; policy accept;
-                tcp dport 22 ct count over 4 counter
-        }
-}
+Use '1UL << lpddr->chipshift' and cast 'j' to unsigned long before
+shifting so the computation is performed at the destination width.
 
-Currently, if the connection count goes over the limit the counter will
-count the packets. When a connection is closed, the connection count
-won't decrement as it should because it is only updated for new
-connections due to an optimization on __nf_conncount_add() that prevents
-updating the list if the connection is duplicated.
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
 
-To solve this problem, check whether the connection was skipped and if
-so, update the list. Adjust count_tree() too so the same fix is applied
-for xt_connlimit.
-
-Fixes: 976afca1ceba ("netfilter: nf_conncount: Early exit in nf_conncount_lookup() and cleanup")
-Closes: https://lore.kernel.org/netfilter/trinity-85c72a88-d762-46c3-be97-36f10e5d9796-1761173693813@3c-app-mailcom-bs12/
-Signed-off-by: Fernando Fernandez Mancera <fmancera@suse.de>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Fixes: c68264711ca6 ("[MTD] LPDDR Command set driver")
+Signed-off-by: Ivan Stepchenko <sid@itb.spb.ru>
+Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nf_conncount.c  | 12 ++++++++----
- net/netfilter/nft_connlimit.c | 13 +++++++++++--
- 2 files changed, 19 insertions(+), 6 deletions(-)
+ drivers/mtd/lpddr/lpddr_cmds.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/net/netfilter/nf_conncount.c b/net/netfilter/nf_conncount.c
-index 5fdf451f2322c..3e8828bdcd1b3 100644
---- a/net/netfilter/nf_conncount.c
-+++ b/net/netfilter/nf_conncount.c
-@@ -179,7 +179,7 @@ static int __nf_conncount_add(struct net *net,
- 	if (ct && nf_ct_is_confirmed(ct)) {
- 		if (refcounted)
- 			nf_ct_put(ct);
--		return 0;
-+		return -EEXIST;
+diff --git a/drivers/mtd/lpddr/lpddr_cmds.c b/drivers/mtd/lpddr/lpddr_cmds.c
+index ee063baed136c..5c39c9c653233 100644
+--- a/drivers/mtd/lpddr/lpddr_cmds.c
++++ b/drivers/mtd/lpddr/lpddr_cmds.c
+@@ -79,7 +79,7 @@ struct mtd_info *lpddr_cmdset(struct map_info *map)
+ 		mutex_init(&shared[i].lock);
+ 		for (j = 0; j < lpddr->qinfo->HWPartsNum; j++) {
+ 			*chip = lpddr->chips[i];
+-			chip->start += j << lpddr->chipshift;
++			chip->start += (unsigned long)j << lpddr->chipshift;
+ 			chip->oldstate = chip->state = FL_READY;
+ 			chip->priv = &shared[i];
+ 			/* those should be reset too since
+@@ -562,7 +562,7 @@ static int lpddr_point(struct mtd_info *mtd, loff_t adr, size_t len,
+ 			break;
+ 
+ 		if ((len + ofs - 1) >> lpddr->chipshift)
+-			thislen = (1<<lpddr->chipshift) - ofs;
++			thislen = (1UL << lpddr->chipshift) - ofs;
+ 		else
+ 			thislen = len;
+ 		/* get the chip */
+@@ -578,7 +578,7 @@ static int lpddr_point(struct mtd_info *mtd, loff_t adr, size_t len,
+ 		len -= thislen;
+ 
+ 		ofs = 0;
+-		last_end += 1 << lpddr->chipshift;
++		last_end += 1UL << lpddr->chipshift;
+ 		chipnum++;
+ 		chip = &lpddr->chips[chipnum];
  	}
+@@ -604,7 +604,7 @@ static int lpddr_unpoint (struct mtd_info *mtd, loff_t adr, size_t len)
+ 			break;
  
- 	if (time_is_after_eq_jiffies((unsigned long)list->last_gc))
-@@ -398,7 +398,7 @@ insert_tree(struct net *net,
- 			int ret;
+ 		if ((len + ofs - 1) >> lpddr->chipshift)
+-			thislen = (1<<lpddr->chipshift) - ofs;
++			thislen = (1UL << lpddr->chipshift) - ofs;
+ 		else
+ 			thislen = len;
  
- 			ret = nf_conncount_add_skb(net, skb, l3num, &rbconn->list);
--			if (ret)
-+			if (ret && ret != -EEXIST)
- 				count = 0; /* hotdrop */
- 			else
- 				count = rbconn->list.count;
-@@ -501,10 +501,14 @@ count_tree(struct net *net,
- 			/* same source network -> be counted! */
- 			ret = __nf_conncount_add(net, skb, l3num, &rbconn->list);
- 			spin_unlock_bh(&rbconn->list.list_lock);
--			if (ret)
-+			if (ret && ret != -EEXIST) {
- 				return 0; /* hotdrop */
--			else
-+			} else {
-+				/* -EEXIST means add was skipped, update the list */
-+				if (ret == -EEXIST)
-+					nf_conncount_gc_list(net, &rbconn->list);
- 				return rbconn->list.count;
-+			}
- 		}
- 	}
- 
-diff --git a/net/netfilter/nft_connlimit.c b/net/netfilter/nft_connlimit.c
-index 35c4698db88dd..698b77a0ba0b4 100644
---- a/net/netfilter/nft_connlimit.c
-+++ b/net/netfilter/nft_connlimit.c
-@@ -29,8 +29,17 @@ static inline void nft_connlimit_do_eval(struct nft_connlimit *priv,
- 
- 	err = nf_conncount_add_skb(nft_net(pkt), pkt->skb, nft_pf(pkt), priv->list);
- 	if (err) {
--		regs->verdict.code = NF_DROP;
--		return;
-+		if (err == -EEXIST) {
-+			/* Call gc to update the list count if any connection has
-+			 * been closed already. This is useful for softlimit
-+			 * connections like limiting bandwidth based on a number
-+			 * of open connections.
-+			 */
-+			nf_conncount_gc_list(nft_net(pkt), priv->list);
-+		} else {
-+			regs->verdict.code = NF_DROP;
-+			return;
-+		}
- 	}
- 
- 	count = priv->list->count;
 -- 
 2.51.0
 
