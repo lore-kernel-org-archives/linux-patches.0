@@ -1,39 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D603D3D34A2;
-	Thu, 15 Jan 2026 17:59:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AEAE03D349E;
+	Thu, 15 Jan 2026 17:59:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768499960; cv=none; b=ND5CmxvDuoCOUWJQXLRITgUdlV/6RMvNQg9RkCLD9TcqTxBz14UHUFHTqXSNdw0nyZLfpD/l/1QmCOJV6Idtx5veoPZFazCrU1zaQiq+Ch6gP/Ky+n3eBIHxoqDgforFTxfJgtw3zkta5IVlO6uvtFXnjGCi/FCfYLvPP4qUmN4=
+	t=1768499963; cv=none; b=Yxb7tKPh9kc4R2e9R5oILusW2WMu4XwRcEQGGm4TL2T2l7HM2VAl9wJNmMczE81Wi98IufW6hhaQYdBOoDq3RgLyOQtFmjwvLTzcuqCvch+KsZ5ybUmMKbQ3E6dyFLykOOlUgCLCuxLoV89MiCKsOeZ76VqAOVW9U1TWDxUQ0sM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768499960; c=relaxed/simple;
-	bh=MV8E4s/Ju6fKezwFctB4Z5pftQ3x3m6//SDBEEleXR8=;
+	s=arc-20240116; t=1768499963; c=relaxed/simple;
+	bh=BQVDIXIruov7ZpacDwWwfYMcZe6FPHwxvrfq9V8dY+c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=p6d3WGCdOx3beYUVnBaygTqTJ/oXosOLID5Rhb3Ku6xrVrNEac/9chWrutvGBn8qC/gzw0ZAITozxGGzd4PznoxAAtqiPjwPeZIr239lCiP276g0xTI00bE9qv/T4CqSHEIq1i/kKzaOkA7hE07c6TdK71dvbxPwaiVALa1K8qM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DMZaNGnu; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=coFCR4JCO5EtxzxTUr7JoxBi7yGa904exH3h/uoGGeH6qYmpX/I8hrgCE6KW8ND+z/x2V8J/ZiLZMOMAnOM0e6P6ejPGvQzZmo09wpSDkCCAp2xtykllRG410GsmIpvbdfR53OIumQn4z2Apm9iFDRB9eyap2JOSxTjanMBqvpY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eg3+KWrN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DMZaNGnu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 60E8EC116D0;
-	Thu, 15 Jan 2026 17:59:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eg3+KWrN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39F1BC116D0;
+	Thu, 15 Jan 2026 17:59:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1768499960;
-	bh=MV8E4s/Ju6fKezwFctB4Z5pftQ3x3m6//SDBEEleXR8=;
+	s=korg; t=1768499963;
+	bh=BQVDIXIruov7ZpacDwWwfYMcZe6FPHwxvrfq9V8dY+c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DMZaNGnuyJgTEQWOMKPd4ofwjs6StLe40tWnPE+Rc+85apHL0G97GDn5zXs8229bn
-	 3wb5uXHEUWGXIAzhUIsO1VOPmijHZbvF5gH3CGo3AwN7Qre0/bHsZaAzBFgSaDXbeC
-	 Qq0VnrRstpNN2LahjxJD6ZtyrX/rYAzbu/lJeXwc=
+	b=eg3+KWrNlLXJWvsMPk0d5oGpSOlRcmvFOiZT5YxdO91WXjNICGozGzlzRetjquFgO
+	 IXhSRCCV6iPDhwN/p/7mXURY9XJuWx9w3nC0jCXJhEwTFm2rRyHM2TaJ2IuT4egpJv
+	 lUWSzbeGGZ7+3/7oDB9XRyH+F/wodnIJRfSAuIxE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Su Hui <suhui@nfschina.com>,
-	Przemek Kitszel <przemyslaw.kitszel@intel.com>,
-	Hariprasad Kelam <hkelam@marvell.com>,
-	Paolo Abeni <pabeni@redhat.com>
-Subject: [PATCH 5.10 408/451] net: ethtool: fix the error condition in ethtool_get_phy_stats_ethtool()
-Date: Thu, 15 Jan 2026 17:50:09 +0100
-Message-ID: <20260115164245.700588159@linuxfoundation.org>
+	David Hildenbrand <david@redhat.com>,
+	"Ritesh Harjani (IBM)" <ritesh.list@gmail.com>,
+	Christophe Leroy <christophe.leroy@csgroup.eu>,
+	Madhavan Srinivasan <maddy@linux.ibm.com>,
+	Michael Ellerman <mpe@ellerman.id.au>,
+	Nicholas Piggin <npiggin@gmail.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 378/451] powerpc/pseries/cmm: call balloon_devinfo_init() also without CONFIG_BALLOON_COMPACTION
+Date: Thu, 15 Jan 2026 17:49:39 +0100
+Message-ID: <20260115164244.593524180@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260115164230.864985076@linuxfoundation.org>
 References: <20260115164230.864985076@linuxfoundation.org>
@@ -52,38 +56,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Su Hui <suhui@nfschina.com>
+From: David Hildenbrand <david@redhat.com>
 
-commit 0dcc53abf58d572d34c5313de85f607cd33fc691 upstream.
+[ Upstream commit fc6bcf9ac4de76f5e7bcd020b3c0a86faff3f2d5 ]
 
-Clang static checker (scan-build) warning:
-net/ethtool/ioctl.c:line 2233, column 2
-Called function pointer is null (null dereference).
+Patch series "powerpc/pseries/cmm: two smaller fixes".
 
-Return '-EOPNOTSUPP' when 'ops->get_ethtool_phy_stats' is NULL to fix
-this typo error.
+Two smaller fixes identified while doing a bigger rework.
 
-Fixes: 201ed315f967 ("net/ethtool/ioctl: split ethtool_get_phy_stats into multiple helpers")
-Signed-off-by: Su Hui <suhui@nfschina.com>
-Reviewed-by: Przemek Kitszel <przemyslaw.kitszel@intel.com>
-Reviewed-by: Hariprasad Kelam <hkelam@marvell.com>
-Link: https://lore.kernel.org/r/20240605034742.921751-1-suhui@nfschina.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+This patch (of 2):
+
+We always have to initialize the balloon_dev_info, even when compaction is
+not configured in: otherwise the containing list and the lock are left
+uninitialized.
+
+Likely not many such configs exist in practice, but let's CC stable to
+be sure.
+
+This was found by code inspection.
+
+Link: https://lkml.kernel.org/r/20251021100606.148294-1-david@redhat.com
+Link: https://lkml.kernel.org/r/20251021100606.148294-2-david@redhat.com
+Fixes: fe030c9b85e6 ("powerpc/pseries/cmm: Implement balloon compaction")
+Signed-off-by: David Hildenbrand <david@redhat.com>
+Reviewed-by: Ritesh Harjani (IBM) <ritesh.list@gmail.com>
+Cc: Christophe Leroy <christophe.leroy@csgroup.eu>
+Cc: Madhavan Srinivasan <maddy@linux.ibm.com>
+Cc: Michael Ellerman <mpe@ellerman.id.au>
+Cc: Nicholas Piggin <npiggin@gmail.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+[ moved balloon_devinfo_init() call from inside cmm_balloon_compaction_init() to cmm_init() ]
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ethtool/ioctl.c |    2 +-
+ arch/powerpc/platforms/pseries/cmm.c |    2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/net/ethtool/ioctl.c
-+++ b/net/ethtool/ioctl.c
-@@ -2089,7 +2089,7 @@ static int ethtool_get_phy_stats_ethtool
- 	const struct ethtool_ops *ops = dev->ethtool_ops;
- 	int n_stats, ret;
+--- a/arch/powerpc/platforms/pseries/cmm.c
++++ b/arch/powerpc/platforms/pseries/cmm.c
+@@ -570,7 +570,6 @@ static int cmm_balloon_compaction_init(v
+ {
+ 	int rc;
  
--	if (!ops || !ops->get_sset_count || ops->get_ethtool_phy_stats)
-+	if (!ops || !ops->get_sset_count || !ops->get_ethtool_phy_stats)
+-	balloon_devinfo_init(&b_dev_info);
+ 	b_dev_info.migratepage = cmm_migratepage;
+ 
+ 	balloon_mnt = kern_mount(&balloon_fs);
+@@ -624,6 +623,7 @@ static int cmm_init(void)
+ 	if (!firmware_has_feature(FW_FEATURE_CMO) && !simulate)
  		return -EOPNOTSUPP;
  
- 	n_stats = ops->get_sset_count(dev, ETH_SS_PHY_STATS);
++	balloon_devinfo_init(&b_dev_info);
+ 	rc = cmm_balloon_compaction_init();
+ 	if (rc)
+ 		return rc;
 
 
