@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66E352D73A0;
-	Thu, 15 Jan 2026 17:04:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85DD037C117;
+	Thu, 15 Jan 2026 17:04:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768496668; cv=none; b=fufrzwIwWGGIhVphYi1AxonM2uZ3a2YUnrJjEfVPqBLbI3sg9sBuBpuk1G6LbSG1fuMZR2IyUBTvrllfaSp22sqvFoSG42Uejed7f6TYx93O7CzjjNGZTHnVgv+pNbTc5m9zBHHrBMU3XcNaAffiR1JowThEN/RAvbpCa41Iw7Y=
+	t=1768496671; cv=none; b=qxssAKfLTI+WUMS+P2nb0IscK+sN6GwTIp6vcVK/mw34X1PdQ5qeyJ61PjqWJgoMOB17f23VgcTmvftgvdRaskfE1HuraK3TJt1hBuYuBmvLHrBCSnkzP0B8hxcHDHPZ97LewIbF+O0SoK6544C+aFsKkaQewYQpfVI2wc3pkT0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768496668; c=relaxed/simple;
-	bh=EmoFRs36W4T9QCTtaBHUBZqcH9kN23zcl6cb5vyuLQ0=;
+	s=arc-20240116; t=1768496671; c=relaxed/simple;
+	bh=p0+H77m1G+OOcY+PxMfPLvLL+L0XtXIISAVN9u5rx1Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iGtPWlzj1bFZfcejv5KQ39q221qI/iOOsIqCbIR6r/wYA3dnVu7w05sJ0t5bEGtCHcncINQzJTj+z9S6heNn+pg+8OxpwptzFQTsf2PKSZwxmC/qntC0ACFbN4xjC5UmbHwjLtrtsX2A6S0LBeV+hfyDewsujZvSpw4C7QT1TOk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bce+GcRk; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=T63Q/BlfSy1p7cyRuTM0uFZ1UZ+Pm2FnLSZMn4KhqO4y7AGU35rqFWD/gbWHjVVv9sVyVWCWs4fepQtFdVthrbIvXXtNJUD9FIWbwgIW+sR1QrJ1+EgAh44VflSTRrVRyJX+6LT8bxXfq96x6GTBqoSOE6MZiVrRHuOQ196aErE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tH5u1D8D; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bce+GcRk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E814BC116D0;
-	Thu, 15 Jan 2026 17:04:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tH5u1D8D"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C19ECC116D0;
+	Thu, 15 Jan 2026 17:04:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1768496668;
-	bh=EmoFRs36W4T9QCTtaBHUBZqcH9kN23zcl6cb5vyuLQ0=;
+	s=korg; t=1768496671;
+	bh=p0+H77m1G+OOcY+PxMfPLvLL+L0XtXIISAVN9u5rx1Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bce+GcRkgfnR0drh79au3ji9MX+P6U29n7f1hQYWCb42/OqaDNjRRjme2jBkaRaRS
-	 oXihfSGylC47P1XyFXjpDE7SFVwyMykpZpiYVJmXLb4uaW86TZoAg4dPBdW2eFPCyI
-	 DW93K4uGkDAE8CbQnqnrkwe9TqCHJo4t13aOwXqE=
+	b=tH5u1D8DDVI/6HclnJl2QPIyKkpA4yLKDu4nWcwMNwnHLDSr62cLzXfnKnVdbPBah
+	 Xp3Yr0Nt41ofDgBfkI5yWdFWCuXXx+MLmDzHq/G9zSsjvTWaf9xImJTUWie5xDyTEa
+	 xfvxqA+0vmE9dNOmCUmyr6TRk+oZDP9unVwSz/lQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qu Wenruo <wqu@suse.com>,
-	David Sterba <dsterba@suse.com>,
+	"yuan.gao" <yuan.gao@ucloud.cn>,
+	Ido Schimmel <idosch@nvidia.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 093/119] btrfs: remove btrfs_fs_info::sectors_per_page
-Date: Thu, 15 Jan 2026 17:48:28 +0100
-Message-ID: <20260115164155.308253073@linuxfoundation.org>
+Subject: [PATCH 6.12 067/119] inet: ping: Fix icmp out counting
+Date: Thu, 15 Jan 2026 17:48:02 +0100
+Message-ID: <20260115164154.371549209@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260115164151.948839306@linuxfoundation.org>
 References: <20260115164151.948839306@linuxfoundation.org>
@@ -51,455 +52,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Qu Wenruo <wqu@suse.com>
+From: yuan.gao <yuan.gao@ucloud.cn>
 
-[ Upstream commit 619611e87fcca1fdaa67c2bf6b030863ab90216e ]
+[ Upstream commit 4c0856c225b39b1def6c9a6bc56faca79550da13 ]
 
-For the future large folio support, our filemap can have folios with
-different sizes, thus we can no longer rely on a fixed blocks_per_page
-value.
+When the ping program uses an IPPROTO_ICMP socket to send ICMP_ECHO
+messages, ICMP_MIB_OUTMSGS is counted twice.
 
-To prepare for that future, here we do:
+    ping_v4_sendmsg
+      ping_v4_push_pending_frames
+        ip_push_pending_frames
+          ip_finish_skb
+            __ip_make_skb
+              icmp_out_count(net, icmp_type); // first count
+      icmp_out_count(sock_net(sk), user_icmph.type); // second count
 
-- Remove btrfs_fs_info::sectors_per_page
+However, when the ping program uses an IPPROTO_RAW socket,
+ICMP_MIB_OUTMSGS is counted correctly only once.
 
-- Introduce a helper, btrfs_blocks_per_folio()
-  Which uses the folio size to calculate the number of blocks for each
-  folio.
+Therefore, the first count should be removed.
 
-- Migrate the existing btrfs_fs_info::sectors_per_page to use that
-  helper
-  There are some exceptions:
-
-  * Metadata nodesize < page size support
-    In the future, even if we support large folios, we will only
-    allocate a folio that matches our nodesize.
-    Thus we won't have a folio covering multiple metadata unless
-    nodesize < page size.
-
-  * Existing subpage bitmap dump
-    We use a single unsigned long to store the bitmap.
-    That means until we change the bitmap dumping code, our upper limit
-    for folio size will only be 256K (4K block size, 64 bit unsigned
-    long).
-
-  * btrfs_is_subpage() check
-    This will be migrated into a future patch.
-
-Signed-off-by: Qu Wenruo <wqu@suse.com>
-Reviewed-by: David Sterba <dsterba@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
-Stable-dep-of: e9e3b22ddfa7 ("btrfs: fix beyond-EOF write handling")
+Fixes: c319b4d76b9e ("net: ipv4: add IPPROTO_ICMP socket kind")
+Signed-off-by: yuan.gao <yuan.gao@ucloud.cn>
+Reviewed-by: Ido Schimmel <idosch@nvidia.com>
+Tested-by: Ido Schimmel <idosch@nvidia.com>
+Link: https://patch.msgid.link/20251224063145.3615282-1-yuan.gao@ucloud.cn
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/btrfs/disk-io.c   |    1 
- fs/btrfs/extent_io.c |   26 +++++++-----
- fs/btrfs/fs.h        |    7 ++-
- fs/btrfs/subpage.c   |  104 ++++++++++++++++++++++++++++++---------------------
- 4 files changed, 84 insertions(+), 54 deletions(-)
+ net/ipv4/ping.c | 4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
---- a/fs/btrfs/disk-io.c
-+++ b/fs/btrfs/disk-io.c
-@@ -3320,7 +3320,6 @@ int __cold open_ctree(struct super_block
- 	fs_info->nodesize = nodesize;
- 	fs_info->sectorsize = sectorsize;
- 	fs_info->sectorsize_bits = ilog2(sectorsize);
--	fs_info->sectors_per_page = (PAGE_SIZE >> fs_info->sectorsize_bits);
- 	fs_info->csums_per_leaf = BTRFS_MAX_ITEM_SIZE(fs_info) / fs_info->csum_size;
- 	fs_info->stripesize = stripesize;
+diff --git a/net/ipv4/ping.c b/net/ipv4/ping.c
+index 37a3fa98d904f..f62b17f59bb4a 100644
+--- a/net/ipv4/ping.c
++++ b/net/ipv4/ping.c
+@@ -839,10 +839,8 @@ static int ping_v4_sendmsg(struct sock *sk, struct msghdr *msg, size_t len)
+ out_free:
+ 	if (free)
+ 		kfree(ipc.opt);
+-	if (!err) {
+-		icmp_out_count(sock_net(sk), user_icmph.type);
++	if (!err)
+ 		return len;
+-	}
+ 	return err;
  
---- a/fs/btrfs/extent_io.c
-+++ b/fs/btrfs/extent_io.c
-@@ -1182,7 +1182,7 @@ static bool find_next_delalloc_bitmap(st
- {
- 	struct btrfs_fs_info *fs_info = folio_to_fs_info(folio);
- 	const u64 folio_start = folio_pos(folio);
--	const unsigned int bitmap_size = fs_info->sectors_per_page;
-+	const unsigned int bitmap_size = btrfs_blocks_per_folio(fs_info, folio);
- 	unsigned int start_bit;
- 	unsigned int first_zero;
- 	unsigned int first_set;
-@@ -1224,6 +1224,7 @@ static noinline_for_stack int writepage_
- 	const bool is_subpage = btrfs_is_subpage(fs_info, folio->mapping);
- 	const u64 page_start = folio_pos(folio);
- 	const u64 page_end = page_start + folio_size(folio) - 1;
-+	const unsigned int blocks_per_folio = btrfs_blocks_per_folio(fs_info, folio);
- 	unsigned long delalloc_bitmap = 0;
- 	/*
- 	 * Save the last found delalloc end. As the delalloc end can go beyond
-@@ -1249,13 +1250,13 @@ static noinline_for_stack int writepage_
- 
- 	/* Save the dirty bitmap as our submission bitmap will be a subset of it. */
- 	if (btrfs_is_subpage(fs_info, inode->vfs_inode.i_mapping)) {
--		ASSERT(fs_info->sectors_per_page > 1);
-+		ASSERT(blocks_per_folio > 1);
- 		btrfs_get_subpage_dirty_bitmap(fs_info, folio, &bio_ctrl->submit_bitmap);
- 	} else {
- 		bio_ctrl->submit_bitmap = 1;
- 	}
- 
--	for_each_set_bit(bit, &bio_ctrl->submit_bitmap, fs_info->sectors_per_page) {
-+	for_each_set_bit(bit, &bio_ctrl->submit_bitmap, blocks_per_folio) {
- 		u64 start = page_start + (bit << fs_info->sectorsize_bits);
- 
- 		btrfs_folio_set_lock(fs_info, folio, start, fs_info->sectorsize);
-@@ -1328,7 +1329,7 @@ static noinline_for_stack int writepage_
- 					     btrfs_root_id(inode->root),
- 					     btrfs_ino(inode),
- 					     folio_pos(folio),
--					     fs_info->sectors_per_page,
-+					     blocks_per_folio,
- 					     &bio_ctrl->submit_bitmap,
- 					     found_start, found_len, ret);
- 		} else {
-@@ -1373,7 +1374,7 @@ static noinline_for_stack int writepage_
- 		unsigned int bitmap_size = min(
- 				(last_finished_delalloc_end - page_start) >>
- 				fs_info->sectorsize_bits,
--				fs_info->sectors_per_page);
-+				blocks_per_folio);
- 
- 		for_each_set_bit(bit, &bio_ctrl->submit_bitmap, bitmap_size)
- 			btrfs_mark_ordered_io_finished(inode, folio,
-@@ -1397,7 +1398,7 @@ out:
- 	 * If all ranges are submitted asynchronously, we just need to account
- 	 * for them here.
- 	 */
--	if (bitmap_empty(&bio_ctrl->submit_bitmap, fs_info->sectors_per_page)) {
-+	if (bitmap_empty(&bio_ctrl->submit_bitmap, blocks_per_folio)) {
- 		wbc->nr_to_write -= delalloc_to_write;
- 		return 1;
- 	}
-@@ -1498,6 +1499,7 @@ static noinline_for_stack int extent_wri
- 	bool submitted_io = false;
- 	int found_error = 0;
- 	const u64 folio_start = folio_pos(folio);
-+	const unsigned int blocks_per_folio = btrfs_blocks_per_folio(fs_info, folio);
- 	u64 cur;
- 	int bit;
- 	int ret = 0;
-@@ -1516,11 +1518,11 @@ static noinline_for_stack int extent_wri
- 	for (cur = start; cur < start + len; cur += fs_info->sectorsize)
- 		set_bit((cur - folio_start) >> fs_info->sectorsize_bits, &range_bitmap);
- 	bitmap_and(&bio_ctrl->submit_bitmap, &bio_ctrl->submit_bitmap, &range_bitmap,
--		   fs_info->sectors_per_page);
-+		   blocks_per_folio);
- 
- 	bio_ctrl->end_io_func = end_bbio_data_write;
- 
--	for_each_set_bit(bit, &bio_ctrl->submit_bitmap, fs_info->sectors_per_page) {
-+	for_each_set_bit(bit, &bio_ctrl->submit_bitmap, blocks_per_folio) {
- 		cur = folio_pos(folio) + (bit << fs_info->sectorsize_bits);
- 
- 		if (cur >= i_size) {
-@@ -1595,6 +1597,7 @@ static int extent_writepage(struct folio
- 	size_t pg_offset;
- 	loff_t i_size = i_size_read(&inode->vfs_inode);
- 	unsigned long end_index = i_size >> PAGE_SHIFT;
-+	const unsigned int blocks_per_folio = btrfs_blocks_per_folio(fs_info, folio);
- 
- 	trace_extent_writepage(folio, &inode->vfs_inode, bio_ctrl->wbc);
- 
-@@ -1634,7 +1637,7 @@ static int extent_writepage(struct folio
- 		btrfs_err_rl(fs_info,
- "failed to submit blocks, root=%lld inode=%llu folio=%llu submit_bitmap=%*pbl: %d",
- 			     btrfs_root_id(inode->root), btrfs_ino(inode),
--			     folio_pos(folio), fs_info->sectors_per_page,
-+			     folio_pos(folio), blocks_per_folio,
- 			     &bio_ctrl->submit_bitmap, ret);
- 
- 	bio_ctrl->wbc->nr_to_write--;
-@@ -1929,9 +1932,10 @@ static int submit_eb_subpage(struct foli
- 	u64 folio_start = folio_pos(folio);
- 	int bit_start = 0;
- 	int sectors_per_node = fs_info->nodesize >> fs_info->sectorsize_bits;
-+	const unsigned int blocks_per_folio = btrfs_blocks_per_folio(fs_info, folio);
- 
- 	/* Lock and write each dirty extent buffers in the range */
--	while (bit_start < fs_info->sectors_per_page) {
-+	while (bit_start < blocks_per_folio) {
- 		struct btrfs_subpage *subpage = folio_get_private(folio);
- 		struct extent_buffer *eb;
- 		unsigned long flags;
-@@ -1947,7 +1951,7 @@ static int submit_eb_subpage(struct foli
- 			break;
- 		}
- 		spin_lock_irqsave(&subpage->lock, flags);
--		if (!test_bit(bit_start + btrfs_bitmap_nr_dirty * fs_info->sectors_per_page,
-+		if (!test_bit(bit_start + btrfs_bitmap_nr_dirty * blocks_per_folio,
- 			      subpage->bitmaps)) {
- 			spin_unlock_irqrestore(&subpage->lock, flags);
- 			spin_unlock(&folio->mapping->i_private_lock);
---- a/fs/btrfs/fs.h
-+++ b/fs/btrfs/fs.h
-@@ -708,7 +708,6 @@ struct btrfs_fs_info {
- 	 * running.
- 	 */
- 	refcount_t scrub_workers_refcnt;
--	u32 sectors_per_page;
- 	struct workqueue_struct *scrub_workers;
- 
- 	struct btrfs_discard_ctl discard_ctl;
-@@ -976,6 +975,12 @@ static inline u32 count_max_extents(cons
- 	return div_u64(size + fs_info->max_extent_size - 1, fs_info->max_extent_size);
- }
- 
-+static inline unsigned int btrfs_blocks_per_folio(const struct btrfs_fs_info *fs_info,
-+						  const struct folio *folio)
-+{
-+	return folio_size(folio) >> fs_info->sectorsize_bits;
-+}
-+
- bool btrfs_exclop_start(struct btrfs_fs_info *fs_info,
- 			enum btrfs_exclusive_operation type);
- bool btrfs_exclop_start_try_lock(struct btrfs_fs_info *fs_info,
---- a/fs/btrfs/subpage.c
-+++ b/fs/btrfs/subpage.c
-@@ -93,6 +93,9 @@ int btrfs_attach_subpage(const struct bt
- {
- 	struct btrfs_subpage *subpage;
- 
-+	/* For metadata we don't support large folio yet. */
-+	ASSERT(!folio_test_large(folio));
-+
- 	/*
- 	 * We have cases like a dummy extent buffer page, which is not mapped
- 	 * and doesn't need to be locked.
-@@ -134,7 +137,8 @@ struct btrfs_subpage *btrfs_alloc_subpag
- 	ASSERT(fs_info->sectorsize < PAGE_SIZE);
- 
- 	real_size = struct_size(ret, bitmaps,
--			BITS_TO_LONGS(btrfs_bitmap_nr_max * fs_info->sectors_per_page));
-+			BITS_TO_LONGS(btrfs_bitmap_nr_max *
-+				      (PAGE_SIZE >> fs_info->sectorsize_bits)));
- 	ret = kzalloc(real_size, GFP_NOFS);
- 	if (!ret)
- 		return ERR_PTR(-ENOMEM);
-@@ -211,11 +215,13 @@ static void btrfs_subpage_assert(const s
- 
- #define subpage_calc_start_bit(fs_info, folio, name, start, len)	\
- ({									\
--	unsigned int __start_bit;						\
-+	unsigned int __start_bit;					\
-+	const unsigned int blocks_per_folio =				\
-+			   btrfs_blocks_per_folio(fs_info, folio);	\
- 									\
- 	btrfs_subpage_assert(fs_info, folio, start, len);		\
- 	__start_bit = offset_in_page(start) >> fs_info->sectorsize_bits; \
--	__start_bit += fs_info->sectors_per_page * btrfs_bitmap_nr_##name; \
-+	__start_bit += blocks_per_folio * btrfs_bitmap_nr_##name;	\
- 	__start_bit;							\
- })
- 
-@@ -323,7 +329,8 @@ void btrfs_folio_end_lock_bitmap(const s
- 				 struct folio *folio, unsigned long bitmap)
- {
- 	struct btrfs_subpage *subpage = folio_get_private(folio);
--	const int start_bit = fs_info->sectors_per_page * btrfs_bitmap_nr_locked;
-+	const unsigned int blocks_per_folio = btrfs_blocks_per_folio(fs_info, folio);
-+	const int start_bit = blocks_per_folio * btrfs_bitmap_nr_locked;
- 	unsigned long flags;
- 	bool last = false;
- 	int cleared = 0;
-@@ -341,7 +348,7 @@ void btrfs_folio_end_lock_bitmap(const s
- 	}
- 
- 	spin_lock_irqsave(&subpage->lock, flags);
--	for_each_set_bit(bit, &bitmap, fs_info->sectors_per_page) {
-+	for_each_set_bit(bit, &bitmap, blocks_per_folio) {
- 		if (test_and_clear_bit(bit + start_bit, subpage->bitmaps))
- 			cleared++;
- 	}
-@@ -352,15 +359,27 @@ void btrfs_folio_end_lock_bitmap(const s
- 		folio_unlock(folio);
- }
- 
--#define subpage_test_bitmap_all_set(fs_info, subpage, name)		\
-+#define subpage_test_bitmap_all_set(fs_info, folio, name)		\
-+({									\
-+	struct btrfs_subpage *subpage = folio_get_private(folio);	\
-+	const unsigned int blocks_per_folio =				\
-+				btrfs_blocks_per_folio(fs_info, folio); \
-+									\
- 	bitmap_test_range_all_set(subpage->bitmaps,			\
--			fs_info->sectors_per_page * btrfs_bitmap_nr_##name, \
--			fs_info->sectors_per_page)
-+			blocks_per_folio * btrfs_bitmap_nr_##name,	\
-+			blocks_per_folio);				\
-+})
- 
--#define subpage_test_bitmap_all_zero(fs_info, subpage, name)		\
-+#define subpage_test_bitmap_all_zero(fs_info, folio, name)		\
-+({									\
-+	struct btrfs_subpage *subpage = folio_get_private(folio);	\
-+	const unsigned int blocks_per_folio =				\
-+				btrfs_blocks_per_folio(fs_info, folio); \
-+									\
- 	bitmap_test_range_all_zero(subpage->bitmaps,			\
--			fs_info->sectors_per_page * btrfs_bitmap_nr_##name, \
--			fs_info->sectors_per_page)
-+			blocks_per_folio * btrfs_bitmap_nr_##name,	\
-+			blocks_per_folio);				\
-+})
- 
- void btrfs_subpage_set_uptodate(const struct btrfs_fs_info *fs_info,
- 				struct folio *folio, u64 start, u32 len)
-@@ -372,7 +391,7 @@ void btrfs_subpage_set_uptodate(const st
- 
- 	spin_lock_irqsave(&subpage->lock, flags);
- 	bitmap_set(subpage->bitmaps, start_bit, len >> fs_info->sectorsize_bits);
--	if (subpage_test_bitmap_all_set(fs_info, subpage, uptodate))
-+	if (subpage_test_bitmap_all_set(fs_info, folio, uptodate))
- 		folio_mark_uptodate(folio);
- 	spin_unlock_irqrestore(&subpage->lock, flags);
- }
-@@ -426,7 +445,7 @@ bool btrfs_subpage_clear_and_test_dirty(
- 
- 	spin_lock_irqsave(&subpage->lock, flags);
- 	bitmap_clear(subpage->bitmaps, start_bit, len >> fs_info->sectorsize_bits);
--	if (subpage_test_bitmap_all_zero(fs_info, subpage, dirty))
-+	if (subpage_test_bitmap_all_zero(fs_info, folio, dirty))
- 		last = true;
- 	spin_unlock_irqrestore(&subpage->lock, flags);
- 	return last;
-@@ -484,7 +503,7 @@ void btrfs_subpage_clear_writeback(const
- 
- 	spin_lock_irqsave(&subpage->lock, flags);
- 	bitmap_clear(subpage->bitmaps, start_bit, len >> fs_info->sectorsize_bits);
--	if (subpage_test_bitmap_all_zero(fs_info, subpage, writeback)) {
-+	if (subpage_test_bitmap_all_zero(fs_info, folio, writeback)) {
- 		ASSERT(folio_test_writeback(folio));
- 		folio_end_writeback(folio);
- 	}
-@@ -515,7 +534,7 @@ void btrfs_subpage_clear_ordered(const s
- 
- 	spin_lock_irqsave(&subpage->lock, flags);
- 	bitmap_clear(subpage->bitmaps, start_bit, len >> fs_info->sectorsize_bits);
--	if (subpage_test_bitmap_all_zero(fs_info, subpage, ordered))
-+	if (subpage_test_bitmap_all_zero(fs_info, folio, ordered))
- 		folio_clear_ordered(folio);
- 	spin_unlock_irqrestore(&subpage->lock, flags);
- }
-@@ -530,7 +549,7 @@ void btrfs_subpage_set_checked(const str
- 
- 	spin_lock_irqsave(&subpage->lock, flags);
- 	bitmap_set(subpage->bitmaps, start_bit, len >> fs_info->sectorsize_bits);
--	if (subpage_test_bitmap_all_set(fs_info, subpage, checked))
-+	if (subpage_test_bitmap_all_set(fs_info, folio, checked))
- 		folio_set_checked(folio);
- 	spin_unlock_irqrestore(&subpage->lock, flags);
- }
-@@ -652,26 +671,29 @@ IMPLEMENT_BTRFS_PAGE_OPS(ordered, folio_
- IMPLEMENT_BTRFS_PAGE_OPS(checked, folio_set_checked, folio_clear_checked,
- 			 folio_test_checked);
- 
--#define GET_SUBPAGE_BITMAP(subpage, fs_info, name, dst)			\
-+#define GET_SUBPAGE_BITMAP(fs_info, folio, name, dst)			\
- {									\
--	const int sectors_per_page = fs_info->sectors_per_page;		\
-+	const unsigned int blocks_per_folio =				\
-+				btrfs_blocks_per_folio(fs_info, folio);	\
-+	const struct btrfs_subpage *subpage = folio_get_private(folio);	\
- 									\
--	ASSERT(sectors_per_page < BITS_PER_LONG);			\
-+	ASSERT(blocks_per_folio < BITS_PER_LONG);			\
- 	*dst = bitmap_read(subpage->bitmaps,				\
--			   sectors_per_page * btrfs_bitmap_nr_##name,	\
--			   sectors_per_page);				\
-+			   blocks_per_folio * btrfs_bitmap_nr_##name,	\
-+			   blocks_per_folio);				\
- }
- 
- #define SUBPAGE_DUMP_BITMAP(fs_info, folio, name, start, len)		\
- {									\
--	const struct btrfs_subpage *subpage = folio_get_private(folio);	\
- 	unsigned long bitmap;						\
-+	const unsigned int blocks_per_folio =				\
-+				btrfs_blocks_per_folio(fs_info, folio);	\
- 									\
--	GET_SUBPAGE_BITMAP(subpage, fs_info, name, &bitmap);		\
-+	GET_SUBPAGE_BITMAP(fs_info, folio, name, &bitmap);		\
- 	btrfs_warn(fs_info,						\
- 	"dumpping bitmap start=%llu len=%u folio=%llu " #name "_bitmap=%*pbl", \
- 		   start, len, folio_pos(folio),			\
--		   fs_info->sectors_per_page, &bitmap);			\
-+		   blocks_per_folio, &bitmap);				\
- }
- 
- /*
-@@ -738,7 +760,7 @@ void btrfs_folio_set_lock(const struct b
- 	}
- 	bitmap_set(subpage->bitmaps, start_bit, nbits);
- 	ret = atomic_add_return(nbits, &subpage->nr_locked);
--	ASSERT(ret <= fs_info->sectors_per_page);
-+	ASSERT(ret <= btrfs_blocks_per_folio(fs_info, folio));
- 	spin_unlock_irqrestore(&subpage->lock, flags);
- }
- 
-@@ -746,7 +768,7 @@ void __cold btrfs_subpage_dump_bitmap(co
- 				      struct folio *folio, u64 start, u32 len)
- {
- 	struct btrfs_subpage *subpage;
--	const u32 sectors_per_page = fs_info->sectors_per_page;
-+	const unsigned int blocks_per_folio = btrfs_blocks_per_folio(fs_info, folio);
- 	unsigned long uptodate_bitmap;
- 	unsigned long dirty_bitmap;
- 	unsigned long writeback_bitmap;
-@@ -756,28 +778,28 @@ void __cold btrfs_subpage_dump_bitmap(co
- 	unsigned long flags;
- 
- 	ASSERT(folio_test_private(folio) && folio_get_private(folio));
--	ASSERT(sectors_per_page > 1);
-+	ASSERT(blocks_per_folio > 1);
- 	subpage = folio_get_private(folio);
- 
- 	spin_lock_irqsave(&subpage->lock, flags);
--	GET_SUBPAGE_BITMAP(subpage, fs_info, uptodate, &uptodate_bitmap);
--	GET_SUBPAGE_BITMAP(subpage, fs_info, dirty, &dirty_bitmap);
--	GET_SUBPAGE_BITMAP(subpage, fs_info, writeback, &writeback_bitmap);
--	GET_SUBPAGE_BITMAP(subpage, fs_info, ordered, &ordered_bitmap);
--	GET_SUBPAGE_BITMAP(subpage, fs_info, checked, &checked_bitmap);
--	GET_SUBPAGE_BITMAP(subpage, fs_info, locked, &locked_bitmap);
-+	GET_SUBPAGE_BITMAP(fs_info, folio, uptodate, &uptodate_bitmap);
-+	GET_SUBPAGE_BITMAP(fs_info, folio, dirty, &dirty_bitmap);
-+	GET_SUBPAGE_BITMAP(fs_info, folio, writeback, &writeback_bitmap);
-+	GET_SUBPAGE_BITMAP(fs_info, folio, ordered, &ordered_bitmap);
-+	GET_SUBPAGE_BITMAP(fs_info, folio, checked, &checked_bitmap);
-+	GET_SUBPAGE_BITMAP(fs_info, folio, locked, &locked_bitmap);
- 	spin_unlock_irqrestore(&subpage->lock, flags);
- 
- 	dump_page(folio_page(folio, 0), "btrfs subpage dump");
- 	btrfs_warn(fs_info,
- "start=%llu len=%u page=%llu, bitmaps uptodate=%*pbl dirty=%*pbl locked=%*pbl writeback=%*pbl ordered=%*pbl checked=%*pbl",
- 		    start, len, folio_pos(folio),
--		    sectors_per_page, &uptodate_bitmap,
--		    sectors_per_page, &dirty_bitmap,
--		    sectors_per_page, &locked_bitmap,
--		    sectors_per_page, &writeback_bitmap,
--		    sectors_per_page, &ordered_bitmap,
--		    sectors_per_page, &checked_bitmap);
-+		    blocks_per_folio, &uptodate_bitmap,
-+		    blocks_per_folio, &dirty_bitmap,
-+		    blocks_per_folio, &locked_bitmap,
-+		    blocks_per_folio, &writeback_bitmap,
-+		    blocks_per_folio, &ordered_bitmap,
-+		    blocks_per_folio, &checked_bitmap);
- }
- 
- void btrfs_get_subpage_dirty_bitmap(struct btrfs_fs_info *fs_info,
-@@ -788,10 +810,10 @@ void btrfs_get_subpage_dirty_bitmap(stru
- 	unsigned long flags;
- 
- 	ASSERT(folio_test_private(folio) && folio_get_private(folio));
--	ASSERT(fs_info->sectors_per_page > 1);
-+	ASSERT(btrfs_blocks_per_folio(fs_info, folio) > 1);
- 	subpage = folio_get_private(folio);
- 
- 	spin_lock_irqsave(&subpage->lock, flags);
--	GET_SUBPAGE_BITMAP(subpage, fs_info, dirty, ret_bitmap);
-+	GET_SUBPAGE_BITMAP(fs_info, folio, dirty, ret_bitmap);
- 	spin_unlock_irqrestore(&subpage->lock, flags);
- }
+ do_confirm:
+-- 
+2.51.0
+
 
 
