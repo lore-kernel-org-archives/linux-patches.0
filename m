@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39EC83D301C;
-	Thu, 15 Jan 2026 17:57:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 093193D3012;
+	Thu, 15 Jan 2026 17:57:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768499831; cv=none; b=CVvlEU2xFqH5njGfzbBYHrl3ErXCPzy9ENfdo24MuCIoO/kHC6olfclZVJQsNdDSqZX88vSGzVEmN0O4uU73OlmdRTEOyCbDh85T6nKkGNa8m2Z8ODKLoj4Io5CPB4ge2WOZQxebtJqnfdmpKT6NXZ/Wbj4o2R6lCa1LgmDtBk4=
+	t=1768499834; cv=none; b=sq1sZG1kuxpotA3fQFbmM02ZpgWaFZ0FfCSS+qHNEZmYtxQUOHC2iIrbRSvLeucT1gnAAYIN4DVRyygx7OqIhLYrYI11cHESu4Jiky8AuNnnTVwSVL4RnGWDTNu2+KC2C2F0iewNndLPuAjX7+DKcx/PVVqZ/UxlKjxy8RZ7ZoE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768499831; c=relaxed/simple;
-	bh=mIDh2jrlc3tJuVnB84L+/UoKMb6J/hMMd9Dv+CrixMw=;
+	s=arc-20240116; t=1768499834; c=relaxed/simple;
+	bh=bShhk6KSVMpZzL5Yu90B8ooQmZzpYbrWYcFuIfdBrUQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Tt33NXVZCQcziskxOF+KKExQ+AVYAejwY7PMpmgsxQ8VdcV/r4BPqRI+B55MmyfGnHSje8Xfff0Rw8BmP/9AVnPSk9rBevTiE9qAxiEp/K8APwgvJD0kouLE/rxnYHFx9S1gKCUxczlKcqAWcJWuLtQos7IYyj39hn30KLLX4IY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=03oQxGOd; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NWky8xI8MrBWqaDfaDpQgSwxsWUVUw9WF15CwrbAZ8hVVNPUKwQtX0PjP7t3pK6I0DYcdwhiZm3Ut8u39a3K0DLUh9e2+zP34CrnTaqB/R5lVd1hX0th533CEK1RdKuznh8Axxma2Ybgvi2j+ibCATVXNEn9zdbWu08H+uaPlLc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=E4mkaRVs; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="03oQxGOd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B5B22C19425;
-	Thu, 15 Jan 2026 17:57:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="E4mkaRVs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8CB35C116D0;
+	Thu, 15 Jan 2026 17:57:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1768499831;
-	bh=mIDh2jrlc3tJuVnB84L+/UoKMb6J/hMMd9Dv+CrixMw=;
+	s=korg; t=1768499833;
+	bh=bShhk6KSVMpZzL5Yu90B8ooQmZzpYbrWYcFuIfdBrUQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=03oQxGOdDhY7PE9jbPcYfu/YyQJ5ZWMi3jf9dSuWDaCbYObRnb9QVyaMkVTgDXZ1M
-	 HuvyEScxZ5vAjh3kVJ/XmPWAP5B5MkqYYakVzsM6C9GB6dHtmDsrcQMMuP2EcNOFzf
-	 f98hSOD+iJw2CB7gtfMXcE66yPSv6bUFEX1U8s1g=
+	b=E4mkaRVsm6JblFulGeGrTPdoumEy5bAL0ZAXbbONpIdeTX8Zjzf2WiB+/nfauEHn4
+	 ONNaJdmrVrK0ZnEgL0FiZ9bCF5KU+4e11Ko8SOHIMt3I7sC+6/jAUlOkdHPKNMjJSg
+	 wcK4KhlB0aqc1SwGYeIRgdhnydS53mF5pMHgnrL4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mat Martineau <martineau@kernel.org>,
-	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Zhang Zekun <zhangzekun11@huawei.com>,
+	Alan Stern <stern@rowland.harvard.edu>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 364/451] mptcp: pm: ignore unknown endpoint flags
-Date: Thu, 15 Jan 2026 17:49:25 +0100
-Message-ID: <20260115164244.074846427@linuxfoundation.org>
+Subject: [PATCH 5.10 365/451] usb: ohci-nxp: Use helper function devm_clk_get_enabled()
+Date: Thu, 15 Jan 2026 17:49:26 +0100
+Message-ID: <20260115164244.112054486@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260115164230.864985076@linuxfoundation.org>
 References: <20260115164230.864985076@linuxfoundation.org>
@@ -52,65 +51,90 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: "Matthieu Baerts (NGI0)" <matttbe@kernel.org>
+From: Zhang Zekun <zhangzekun11@huawei.com>
 
-[ Upstream commit 0ace3297a7301911e52d8195cb1006414897c859 ]
+[ Upstream commit c146ede472717f352b7283a525bd9a1a2b15e2cf ]
 
-Before this patch, the kernel was saving any flags set by the userspace,
-even unknown ones. This doesn't cause critical issues because the kernel
-is only looking at specific ones. But on the other hand, endpoints dumps
-could tell the userspace some recent flags seem to be supported on older
-kernel versions.
+devm_clk_get() and clk_prepare_enable() can be replaced by helper
+function devm_clk_get_enabled(). Let's use devm_clk_get_enabled() to
+simplify code and avoid calling clk_disable_unprepare().
 
-Instead, ignore all unknown flags when parsing them. By doing that, the
-userspace can continue to set unsupported flags, but it has a way to
-verify what is supported by the kernel.
-
-Note that it sounds better to continue accepting unsupported flags not
-to change the behaviour, but also that eases things on the userspace
-side by adding "optional" endpoint types only supported by newer kernel
-versions without having to deal with the different kernel versions.
-
-A note for the backports: there will be conflicts in mptcp.h on older
-versions not having the mentioned flags, the new line should still be
-added last, and the '5' needs to be adapted to have the same value as
-the last entry.
-
-Fixes: 01cacb00b35c ("mptcp: add netlink-based PM")
-Cc: stable@vger.kernel.org
-Reviewed-by: Mat Martineau <martineau@kernel.org>
-Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Link: https://patch.msgid.link/20251205-net-mptcp-misc-fixes-6-19-rc1-v1-1-9e4781a6c1b8@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-[ GENMASK(5, 0) => GENMASK(2, 0) and applied fix to mptcp_pm_parse_addr() ]
+Signed-off-by: Zhang Zekun <zhangzekun11@huawei.com>
+Acked-by: Alan Stern <stern@rowland.harvard.edu>
+Link: https://lore.kernel.org/r/20240902123020.29267-3-zhangzekun11@huawei.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Stable-dep-of: b4c61e542faf ("usb: ohci-nxp: fix device leak on probe failure")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/uapi/linux/mptcp.h |    1 +
- net/mptcp/pm_netlink.c     |    3 ++-
- 2 files changed, 3 insertions(+), 1 deletion(-)
+ drivers/usb/host/ohci-nxp.c |   18 ++++--------------
+ 1 file changed, 4 insertions(+), 14 deletions(-)
 
---- a/include/uapi/linux/mptcp.h
-+++ b/include/uapi/linux/mptcp.h
-@@ -72,6 +72,7 @@ enum {
- #define MPTCP_PM_ADDR_FLAG_SIGNAL			(1 << 0)
- #define MPTCP_PM_ADDR_FLAG_SUBFLOW			(1 << 1)
- #define MPTCP_PM_ADDR_FLAG_BACKUP			(1 << 2)
-+#define MPTCP_PM_ADDR_FLAGS_MASK			GENMASK(2, 0)
+--- a/drivers/usb/host/ohci-nxp.c
++++ b/drivers/usb/host/ohci-nxp.c
+@@ -51,8 +51,6 @@ static struct hc_driver __read_mostly oh
  
- enum {
- 	MPTCP_PM_CMD_UNSPEC,
---- a/net/mptcp/pm_netlink.c
-+++ b/net/mptcp/pm_netlink.c
-@@ -721,7 +721,8 @@ skip_family:
- 		entry->addr.id = nla_get_u8(tb[MPTCP_PM_ADDR_ATTR_ID]);
+ static struct i2c_client *isp1301_i2c_client;
  
- 	if (tb[MPTCP_PM_ADDR_ATTR_FLAGS])
--		entry->addr.flags = nla_get_u32(tb[MPTCP_PM_ADDR_ATTR_FLAGS]);
-+		entry->addr.flags = nla_get_u32(tb[MPTCP_PM_ADDR_ATTR_FLAGS]) &
-+				    MPTCP_PM_ADDR_FLAGS_MASK;
+-static struct clk *usb_host_clk;
+-
+ static void isp1301_configure_lpc32xx(void)
+ {
+ 	/* LPC32XX only supports DAT_SE0 USB mode */
+@@ -155,6 +153,7 @@ static int ohci_hcd_nxp_probe(struct pla
+ 	struct resource *res;
+ 	int ret = 0, irq;
+ 	struct device_node *isp1301_node;
++	struct clk *usb_host_clk;
+ 
+ 	if (pdev->dev.of_node) {
+ 		isp1301_node = of_parse_phandle(pdev->dev.of_node,
+@@ -180,26 +179,20 @@ static int ohci_hcd_nxp_probe(struct pla
+ 	}
+ 
+ 	/* Enable USB host clock */
+-	usb_host_clk = devm_clk_get(&pdev->dev, NULL);
++	usb_host_clk = devm_clk_get_enabled(&pdev->dev, NULL);
+ 	if (IS_ERR(usb_host_clk)) {
+-		dev_err(&pdev->dev, "failed to acquire USB OHCI clock\n");
++		dev_err(&pdev->dev, "failed to acquire and start USB OHCI clock\n");
+ 		ret = PTR_ERR(usb_host_clk);
+ 		goto fail_disable;
+ 	}
+ 
+-	ret = clk_prepare_enable(usb_host_clk);
+-	if (ret < 0) {
+-		dev_err(&pdev->dev, "failed to start USB OHCI clock\n");
+-		goto fail_disable;
+-	}
+-
+ 	isp1301_configure();
+ 
+ 	hcd = usb_create_hcd(driver, &pdev->dev, dev_name(&pdev->dev));
+ 	if (!hcd) {
+ 		dev_err(&pdev->dev, "Failed to allocate HC buffer\n");
+ 		ret = -ENOMEM;
+-		goto fail_hcd;
++		goto fail_disable;
+ 	}
+ 
+ 	res = platform_get_resource(pdev, IORESOURCE_MEM, 0);
+@@ -230,8 +223,6 @@ static int ohci_hcd_nxp_probe(struct pla
+ 	ohci_nxp_stop_hc();
+ fail_resource:
+ 	usb_put_hcd(hcd);
+-fail_hcd:
+-	clk_disable_unprepare(usb_host_clk);
+ fail_disable:
+ 	isp1301_i2c_client = NULL;
+ 	return ret;
+@@ -244,7 +235,6 @@ static int ohci_hcd_nxp_remove(struct pl
+ 	usb_remove_hcd(hcd);
+ 	ohci_nxp_stop_hc();
+ 	usb_put_hcd(hcd);
+-	clk_disable_unprepare(usb_host_clk);
+ 	isp1301_i2c_client = NULL;
  
  	return 0;
- }
 
 
