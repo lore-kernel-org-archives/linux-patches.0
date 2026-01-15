@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B705C3D2FEB;
-	Thu, 15 Jan 2026 17:29:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D21EF3C1FD6;
+	Thu, 15 Jan 2026 17:29:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768498172; cv=none; b=ZeR3TA7FzVnQvAM/n+5pHg/PQC3nIvXIgXgehR5ZX9msch9OQchZlu1qBgNcJv/dR0kIeNZA4a49Y5qWYqnnp00refEqYgE4uYHxjCnXUJkw5FJoCzkMK7u30rksjCq42604nID2yJCUltJq4UMW5ycLKOUM9E8PhaIVx7HC4DY=
+	t=1768498175; cv=none; b=lVDeBicdW+SdNMzuu+v9KXfOJJLym7IsxMdZUG1xVSfiU3sXrN6/05+2UDqJu90Tw/4AGEFfv50ObEVs1BDsOBSl8hHEtC33h9mcKkA79HD0286TLq+DObFeQMXYEjawLfigDw4XvAlFexhaLXnAl07RBQnfPiWj/nj/e/OZfrU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768498172; c=relaxed/simple;
-	bh=gHC3pOEu51I9x3Sfrz7oR7+MXY7JIrXF4UQUxf7wI88=;
+	s=arc-20240116; t=1768498175; c=relaxed/simple;
+	bh=HbmaoMMTGKImaU9wB9p5IbVILRfiHxydjgHb0D0crvI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aKwYxjneGEw+yQmQnS+5wFjM2OxCpUp6BqyprIKLFHEJkfEij+0pCe7Sa1EoyiUFCkxHC4xk4S+Z+C3DFp+4cBw9cGHrdBT2fP6xssG1bL06umBwIJUwWndHzh71BIodEGmEIBlrtzMAQ+9pQ9EqJjE6UXKOrbC5o6lDlHk1XTM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FLh2yuZ9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KAkuwyQDCdJtTt2bApDqRcDnVevmz506Jo1pgDLv940uwObbYOWZmdh4HARtoBYNlpcTsnha9n3vDRt3asFAkLjooiiiRX9hMWNAOHAWU+ZeNjpWdbuKrhsFyn7sN00Vvc49g6yzvjFWemLNrN6sSRJPHJy3BwikJ/CJuPNoAZI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sGs/B1n+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FLh2yuZ9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 443BBC116D0;
-	Thu, 15 Jan 2026 17:29:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sGs/B1n+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E6F3C116D0;
+	Thu, 15 Jan 2026 17:29:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1768498172;
-	bh=gHC3pOEu51I9x3Sfrz7oR7+MXY7JIrXF4UQUxf7wI88=;
+	s=korg; t=1768498175;
+	bh=HbmaoMMTGKImaU9wB9p5IbVILRfiHxydjgHb0D0crvI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FLh2yuZ9RyxB350JI6xmcJu2s0PWEFGjopXfLXsGYJqM58shKJhQApnWb5HwO/N1s
-	 VkHMlJp6nzHlI6vmrtjImoRfOhGzNgSwjHaq7iwzN8uVoPs1YD2bNss3aGzqm+JXBS
-	 JW8PCrgbjITbEEa7oAGpel4BvTItSDZjDdHRA21o=
+	b=sGs/B1n+6UH5G3DHQWkbcYF6Vq2lIkWzslXyZ1pWsCo8P42ZSBQBNFJpgpiovvF0l
+	 F6HZD8dfLv4b1uzxzH0OdSBTOQJ6gsX7Z0gqW2G5hTGWtOXCIcl8F223RPRW3qT55e
+	 MUkoRBe69V0oROzrwk7/qBMexJqfGrNt98ffZTI4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gregory Herrero <gregory.herrero@oracle.com>,
-	Rafal Romanowski <rafal.romanowski@intel.com>,
+	Kohei Enju <enjuk@amazon.com>,
 	Aleksandr Loktionov <aleksandr.loktionov@intel.com>,
+	Przemek Kitszel <przemyslaw.kitszel@intel.com>,
+	Rafal Romanowski <rafal.romanowski@intel.com>,
 	Tony Nguyen <anthony.l.nguyen@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 338/554] i40e: validate ring_len parameter against hardware-specific values
-Date: Thu, 15 Jan 2026 17:46:44 +0100
-Message-ID: <20260115164258.466750493@linuxfoundation.org>
+Subject: [PATCH 5.15 339/554] iavf: fix off-by-one issues in iavf_config_rss_reg()
+Date: Thu, 15 Jan 2026 17:46:45 +0100
+Message-ID: <20260115164258.502396923@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260115164246.225995385@linuxfoundation.org>
 References: <20260115164246.225995385@linuxfoundation.org>
@@ -53,98 +54,111 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gregory Herrero <gregory.herrero@oracle.com>
+From: Kohei Enju <enjuk@amazon.com>
 
-[ Upstream commit 69942834215323cd9131db557091b4dec43f19c5 ]
+[ Upstream commit 6daa2893f323981c7894c68440823326e93a7d61 ]
 
-The maximum number of descriptors supported by the hardware is
-hardware-dependent and can be retrieved using
-i40e_get_max_num_descriptors(). Move this function to a shared header
-and use it when checking for valid ring_len parameter rather than using
-hardcoded value.
+There are off-by-one bugs when configuring RSS hash key and lookup
+table, causing out-of-bounds reads to memory [1] and out-of-bounds
+writes to device registers.
 
-By fixing an over-acceptance issue, behavior change could be seen where
-ring_len could now be rejected while configuring rx and tx queues if its
-size is larger than the hardware-dependent maximum number of
-descriptors.
+Before commit 43a3d9ba34c9 ("i40evf: Allow PF driver to configure RSS"),
+the loop upper bounds were:
+    i <= I40E_VFQF_{HKEY,HLUT}_MAX_INDEX
+which is safe since the value is the last valid index.
 
-Fixes: 55d225670def ("i40e: add validation for ring_len param")
-Signed-off-by: Gregory Herrero <gregory.herrero@oracle.com>
-Tested-by: Rafal Romanowski <rafal.romanowski@intel.com>
+That commit changed the bounds to:
+    i <= adapter->rss_{key,lut}_size / 4
+where `rss_{key,lut}_size / 4` is the number of dwords, so the last
+valid index is `(rss_{key,lut}_size / 4) - 1`. Therefore, using `<=`
+accesses one element past the end.
+
+Fix the issues by using `<` instead of `<=`, ensuring we do not exceed
+the bounds.
+
+[1] KASAN splat about rss_key_size off-by-one
+  BUG: KASAN: slab-out-of-bounds in iavf_config_rss+0x619/0x800
+  Read of size 4 at addr ffff888102c50134 by task kworker/u8:6/63
+
+  CPU: 0 UID: 0 PID: 63 Comm: kworker/u8:6 Not tainted 6.18.0-rc2-enjuk-tnguy-00378-g3005f5b77652-dirty #156 PREEMPT(voluntary)
+  Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS 1.16.3-debian-1.16.3-2 04/01/2014
+  Workqueue: iavf iavf_watchdog_task
+  Call Trace:
+   <TASK>
+   dump_stack_lvl+0x6f/0xb0
+   print_report+0x170/0x4f3
+   kasan_report+0xe1/0x1a0
+   iavf_config_rss+0x619/0x800
+   iavf_watchdog_task+0x2be7/0x3230
+   process_one_work+0x7fd/0x1420
+   worker_thread+0x4d1/0xd40
+   kthread+0x344/0x660
+   ret_from_fork+0x249/0x320
+   ret_from_fork_asm+0x1a/0x30
+   </TASK>
+
+  Allocated by task 63:
+   kasan_save_stack+0x30/0x50
+   kasan_save_track+0x14/0x30
+   __kasan_kmalloc+0x7f/0x90
+   __kmalloc_noprof+0x246/0x6f0
+   iavf_watchdog_task+0x28fc/0x3230
+   process_one_work+0x7fd/0x1420
+   worker_thread+0x4d1/0xd40
+   kthread+0x344/0x660
+   ret_from_fork+0x249/0x320
+   ret_from_fork_asm+0x1a/0x30
+
+  The buggy address belongs to the object at ffff888102c50100
+   which belongs to the cache kmalloc-64 of size 64
+  The buggy address is located 0 bytes to the right of
+   allocated 52-byte region [ffff888102c50100, ffff888102c50134)
+
+  The buggy address belongs to the physical page:
+  page: refcount:0 mapcount:0 mapping:0000000000000000 index:0x0 pfn:0x102c50
+  flags: 0x200000000000000(node=0|zone=2)
+  page_type: f5(slab)
+  raw: 0200000000000000 ffff8881000418c0 dead000000000122 0000000000000000
+  raw: 0000000000000000 0000000080200020 00000000f5000000 0000000000000000
+  page dumped because: kasan: bad access detected
+
+  Memory state around the buggy address:
+   ffff888102c50000: 00 00 00 00 00 00 00 fc fc fc fc fc fc fc fc fc
+   ffff888102c50080: 00 00 00 00 00 00 00 fc fc fc fc fc fc fc fc fc
+  >ffff888102c50100: 00 00 00 00 00 00 04 fc fc fc fc fc fc fc fc fc
+                                       ^
+   ffff888102c50180: 00 00 00 00 00 00 00 00 fc fc fc fc fc fc fc fc
+   ffff888102c50200: fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc
+
+Fixes: 43a3d9ba34c9 ("i40evf: Allow PF driver to configure RSS")
+Signed-off-by: Kohei Enju <enjuk@amazon.com>
 Reviewed-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
+Reviewed-by: Przemek Kitszel <przemyslaw.kitszel@intel.com>
+Tested-by: Rafal Romanowski <rafal.romanowski@intel.com>
 Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/i40e/i40e.h             | 11 +++++++++++
- drivers/net/ethernet/intel/i40e/i40e_ethtool.c     | 12 ------------
- drivers/net/ethernet/intel/i40e/i40e_virtchnl_pf.c |  4 ++--
- 3 files changed, 13 insertions(+), 14 deletions(-)
+ drivers/net/ethernet/intel/iavf/iavf_main.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/ethernet/intel/i40e/i40e.h b/drivers/net/ethernet/intel/i40e/i40e.h
-index bbd95b3d7326..022bf6e86164 100644
---- a/drivers/net/ethernet/intel/i40e/i40e.h
-+++ b/drivers/net/ethernet/intel/i40e/i40e.h
-@@ -1305,4 +1305,15 @@ static inline u32 i40e_is_tc_mqprio_enabled(struct i40e_pf *pf)
- 	return pf->flags & I40E_FLAG_TC_MQPRIO;
- }
+diff --git a/drivers/net/ethernet/intel/iavf/iavf_main.c b/drivers/net/ethernet/intel/iavf/iavf_main.c
+index 6073dcc414d6..10970001db56 100644
+--- a/drivers/net/ethernet/intel/iavf/iavf_main.c
++++ b/drivers/net/ethernet/intel/iavf/iavf_main.c
+@@ -1393,11 +1393,11 @@ static int iavf_config_rss_reg(struct iavf_adapter *adapter)
+ 	u16 i;
  
-+static inline u32 i40e_get_max_num_descriptors(const struct i40e_pf *pf)
-+{
-+	const struct i40e_hw *hw = &pf->hw;
-+
-+	switch (hw->mac.type) {
-+	case I40E_MAC_XL710:
-+		return I40E_MAX_NUM_DESCRIPTORS_XL710;
-+	default:
-+		return I40E_MAX_NUM_DESCRIPTORS;
-+	}
-+}
- #endif /* _I40E_H_ */
-diff --git a/drivers/net/ethernet/intel/i40e/i40e_ethtool.c b/drivers/net/ethernet/intel/i40e/i40e_ethtool.c
-index 74a18b8df11f..04d304eef379 100644
---- a/drivers/net/ethernet/intel/i40e/i40e_ethtool.c
-+++ b/drivers/net/ethernet/intel/i40e/i40e_ethtool.c
-@@ -1918,18 +1918,6 @@ static void i40e_get_drvinfo(struct net_device *netdev,
- 		drvinfo->n_priv_flags += I40E_GL_PRIV_FLAGS_STR_LEN;
- }
+ 	dw = (u32 *)adapter->rss_key;
+-	for (i = 0; i <= adapter->rss_key_size / 4; i++)
++	for (i = 0; i < adapter->rss_key_size / 4; i++)
+ 		wr32(hw, IAVF_VFQF_HKEY(i), dw[i]);
  
--static u32 i40e_get_max_num_descriptors(struct i40e_pf *pf)
--{
--	struct i40e_hw *hw = &pf->hw;
--
--	switch (hw->mac.type) {
--	case I40E_MAC_XL710:
--		return I40E_MAX_NUM_DESCRIPTORS_XL710;
--	default:
--		return I40E_MAX_NUM_DESCRIPTORS;
--	}
--}
--
- static void i40e_get_ringparam(struct net_device *netdev,
- 			       struct ethtool_ringparam *ring)
- {
-diff --git a/drivers/net/ethernet/intel/i40e/i40e_virtchnl_pf.c b/drivers/net/ethernet/intel/i40e/i40e_virtchnl_pf.c
-index 5cd7a2bc40fd..907727604c70 100644
---- a/drivers/net/ethernet/intel/i40e/i40e_virtchnl_pf.c
-+++ b/drivers/net/ethernet/intel/i40e/i40e_virtchnl_pf.c
-@@ -656,7 +656,7 @@ static int i40e_config_vsi_tx_queue(struct i40e_vf *vf, u16 vsi_id,
+ 	dw = (u32 *)adapter->rss_lut;
+-	for (i = 0; i <= adapter->rss_lut_size / 4; i++)
++	for (i = 0; i < adapter->rss_lut_size / 4; i++)
+ 		wr32(hw, IAVF_VFQF_HLUT(i), dw[i]);
  
- 	/* ring_len has to be multiple of 8 */
- 	if (!IS_ALIGNED(info->ring_len, 8) ||
--	    info->ring_len > I40E_MAX_NUM_DESCRIPTORS_XL710) {
-+	    info->ring_len > i40e_get_max_num_descriptors(pf)) {
- 		ret = -EINVAL;
- 		goto error_context;
- 	}
-@@ -728,7 +728,7 @@ static int i40e_config_vsi_rx_queue(struct i40e_vf *vf, u16 vsi_id,
- 
- 	/* ring_len has to be multiple of 32 */
- 	if (!IS_ALIGNED(info->ring_len, 32) ||
--	    info->ring_len > I40E_MAX_NUM_DESCRIPTORS_XL710) {
-+	    info->ring_len > i40e_get_max_num_descriptors(pf)) {
- 		ret = -EINVAL;
- 		goto error_param;
- 	}
+ 	iavf_flush(hw);
 -- 
 2.51.0
 
