@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D8232C08AC;
-	Thu, 15 Jan 2026 17:19:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A04215530C;
+	Thu, 15 Jan 2026 17:19:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768497578; cv=none; b=VQJJt6yyhfUk5k5BPXizRoyLcN5IKkjk5IF3K9z4N/CLcS23jG+Bti7668ZEWQnvO1fqgXnh8teEV6QYl8OgxiVSU5DnNdlNJyblh1Fmj2qVMq/OkFDBnWmXSxH+jr1GS54k2P8ecfyrFQWfFDP/PHhuOWFLfjv8XJHEwca67WM=
+	t=1768497581; cv=none; b=kSc8AdQKZjEafkqCTkzjDNcWNs0OanKUkUOEo4s28PS3JJXx9TYCY5qiJA7tR3zlG7Wb27dDZLhMc99ENp3o1iWTFRVmiYIAmAL/SuVeBCQqTHfdnc++Nld+QnDT2AyLtDVFNRNx9dGARiPlUO88+bEU3SH5S0jMIqEBFVBFzPI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768497578; c=relaxed/simple;
-	bh=/Omww3LSWo3MnXMCTH38cmNAsrCaax38XxJicc2We+Y=;
+	s=arc-20240116; t=1768497581; c=relaxed/simple;
+	bh=05P0xrEA4RT8fyFRYwwkTYER4GYI5PWf3aigHjsyzGo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FKQ/qCywioYYKdlf+mItLAmBnBvhI8rsF0vnkxQDgCz40NPcJKZonBqofZ+Mx39VhmtyONYKjKmN2Qky6sDNzt5onSAO+BLzb+pWX0WJZMk64YoOAY0T3fXsM1zSKG/431je5/LIo1LMsEScNcX7XTwX5P8/LgC4crAZU1UkgS0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jTkuESXY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fI4aA8p4kufJj+FVoR9yqnE2mAowjxOu7wM5Ayz9bNo4iwJfTXHJ/+Rewh/Ado3LLiXkBBRWbHixI63vP22d3HKsC2AQvsixGwIBlD78FE+Gnz60+hs8Zcwoig7Ejl2MQa30cFvll4E/zKy9LoIov1DsU3qITMaLCzLbNKmxX5w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VWtb8Iey; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jTkuESXY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 85B48C116D0;
-	Thu, 15 Jan 2026 17:19:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VWtb8Iey"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5EE5FC116D0;
+	Thu, 15 Jan 2026 17:19:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1768497577;
-	bh=/Omww3LSWo3MnXMCTH38cmNAsrCaax38XxJicc2We+Y=;
+	s=korg; t=1768497580;
+	bh=05P0xrEA4RT8fyFRYwwkTYER4GYI5PWf3aigHjsyzGo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jTkuESXYwfdObe9RMwNWd1iY+elDDhfYsT8TNW21PEj/GsTGxIoq6sf7CaSni240k
-	 9WqQgKaxsLhZXvkGtDHyqfeIND0p4Z1AoTg+rXwFz76wp478g5Urfus5TtATV56+l+
-	 wy2JempKZOVLOPSlCLBb/4MNmEasA17Xg1SD8bMk=
+	b=VWtb8IeyJFQNyEMsV5sJ297/9q1iBLc2Vm87Qc92DccJud33JgwoZEUFNhKQik+dE
+	 dZWuMa2eqsTv3U7BmHW1lgLFBZf3cyYFCUHQoifqR1NB2AXQCUlGPrOvhuoACgJk7a
+	 NcfHPoL3VQP89MuPQ65EdSseHVIPYtKSclkMwA3w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+d8fd35fa6177afa8c92b@syzkaller.appspotmail.com,
-	Gopi Krishna Menon <krishnagopi487@gmail.com>,
-	Andrey Konovalov <andreyknvl@gmail.com>,
+	Matt Bobrowski <mattbobrowski@google.com>,
+	Song Liu <song@kernel.org>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 129/554] usb: raw-gadget: cap raw_io transfer length to KMALLOC_MAX_SIZE
-Date: Thu, 15 Jan 2026 17:43:15 +0100
-Message-ID: <20260115164250.916928921@linuxfoundation.org>
+Subject: [PATCH 5.15 130/554] selftests/bpf: skip test_perf_branches_hw() on unsupported platforms
+Date: Thu, 15 Jan 2026 17:43:16 +0100
+Message-ID: <20260115164250.952736748@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260115164246.225995385@linuxfoundation.org>
 References: <20260115164246.225995385@linuxfoundation.org>
@@ -52,60 +52,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gopi Krishna Menon <krishnagopi487@gmail.com>
+From: Matt Bobrowski <mattbobrowski@google.com>
 
-[ Upstream commit a5160af78be7fcf3ade6caab0a14e349560c96d7 ]
+[ Upstream commit 27746aaf1b20172f0859546c4a3e82eca459f680 ]
 
-The previous commit removed the PAGE_SIZE limit on transfer length of
-raw_io buffer in order to avoid any problems with emulating USB devices
-whose full configuration descriptor exceeds PAGE_SIZE in length. However
-this also removes the upperbound on user supplied length, allowing very
-large values to be passed to the allocator.
+Gracefully skip the test_perf_branches_hw subtest on platforms that
+do not support LBR or require specialized perf event attributes
+to enable branch sampling.
 
-syzbot on fuzzing the transfer length with very large value (1.81GB)
-results in kmalloc() to fall back to the page allocator, which triggers
-a kernel warning as the page allocator cannot handle allocations more
-than MAX_PAGE_ORDER/KMALLOC_MAX_SIZE.
+For example, AMD's Milan (Zen 3) supports BRS rather than traditional
+LBR. This requires specific configurations (attr.type = PERF_TYPE_RAW,
+attr.config = RETIRED_TAKEN_BRANCH_INSTRUCTIONS) that differ from the
+generic setup used within this test. Notably, it also probably doesn't
+hold much value to special case perf event configurations for selected
+micro architectures.
 
-Since there is no limit imposed on the size of buffer for both control
-and non control transfers, cap the raw_io transfer length to
-KMALLOC_MAX_SIZE and return -EINVAL for larger transfer length to
-prevent any warnings from the page allocator.
-
-Fixes: 37b9dd0d114a ("usb: raw-gadget: do not limit transfer length")
-Tested-by: syzbot+d8fd35fa6177afa8c92b@syzkaller.appspotmail.com
-Reported-by: syzbot+d8fd35fa6177afa8c92b@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/all/68fc07a0.a70a0220.3bf6c6.01ab.GAE@google.com/
-Signed-off-by: Gopi Krishna Menon <krishnagopi487@gmail.com>
-Reviewed-by: Andrey Konovalov <andreyknvl@gmail.com>
-Link: https://patch.msgid.link/20251028165659.50962-1-krishnagopi487@gmail.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 67306f84ca78c ("selftests/bpf: Add bpf_read_branch_records() selftest")
+Signed-off-by: Matt Bobrowski <mattbobrowski@google.com>
+Acked-by: Song Liu <song@kernel.org>
+Link: https://lore.kernel.org/r/20251120142059.2836181-1-mattbobrowski@google.com
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/gadget/legacy/raw_gadget.c | 3 +++
- 1 file changed, 3 insertions(+)
+ tools/testing/selftests/bpf/prog_tests/perf_branches.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/usb/gadget/legacy/raw_gadget.c b/drivers/usb/gadget/legacy/raw_gadget.c
-index 17e39f3e908b2..db700db32eef2 100644
---- a/drivers/usb/gadget/legacy/raw_gadget.c
-+++ b/drivers/usb/gadget/legacy/raw_gadget.c
-@@ -39,6 +39,7 @@ MODULE_LICENSE("GPL");
+diff --git a/tools/testing/selftests/bpf/prog_tests/perf_branches.c b/tools/testing/selftests/bpf/prog_tests/perf_branches.c
+index 12c4f45cee1a8..4a17253413a3a 100644
+--- a/tools/testing/selftests/bpf/prog_tests/perf_branches.c
++++ b/tools/testing/selftests/bpf/prog_tests/perf_branches.c
+@@ -116,11 +116,11 @@ static void test_perf_branches_hw(void)
+ 	pfd = syscall(__NR_perf_event_open, &attr, -1, 0, -1, PERF_FLAG_FD_CLOEXEC);
  
- static DEFINE_IDA(driver_id_numbers);
- #define DRIVER_DRIVER_NAME_LENGTH_MAX	32
-+#define USB_RAW_IO_LENGTH_MAX KMALLOC_MAX_SIZE
- 
- #define RAW_EVENT_QUEUE_SIZE	16
- 
-@@ -620,6 +621,8 @@ static void *raw_alloc_io_data(struct usb_raw_ep_io *io, void __user *ptr,
- 		return ERR_PTR(-EINVAL);
- 	if (!usb_raw_io_flags_valid(io->flags))
- 		return ERR_PTR(-EINVAL);
-+	if (io->length > USB_RAW_IO_LENGTH_MAX)
-+		return ERR_PTR(-EINVAL);
- 	if (get_from_user)
- 		data = memdup_user(ptr + sizeof(*io), io->length);
- 	else {
+ 	/*
+-	 * Some setups don't support branch records (virtual machines, !x86),
+-	 * so skip test in this case.
++	 * Some setups don't support LBR (virtual machines, !x86, AMD Milan Zen
++	 * 3 which only supports BRS), so skip test in this case.
+ 	 */
+ 	if (pfd < 0) {
+-		if (errno == ENOENT || errno == EOPNOTSUPP) {
++		if (errno == ENOENT || errno == EOPNOTSUPP || errno == EINVAL) {
+ 			printf("%s:SKIP:no PERF_SAMPLE_BRANCH_STACK\n",
+ 			       __func__);
+ 			test__skip();
 -- 
 2.51.0
 
