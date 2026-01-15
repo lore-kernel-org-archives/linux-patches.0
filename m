@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B4C4E56A;
-	Thu, 15 Jan 2026 17:22:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 428FF27B340;
+	Thu, 15 Jan 2026 17:22:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768497767; cv=none; b=IIJHRUU1HMUnyztTuzf0roQ50dVyf/metZhdYobzZlSDpHDgawUOFdVPLq+PdTAWKjyCP5I8pzkEQF46CUCwSMU1JUiTekZPefixa4RTbmot09M8hNVpAfvdAyNCxsebamnnxZtPoKlFHoHFzGZ4AgzLonxbLBrOB+CiztlpNMU=
+	t=1768497770; cv=none; b=h99GWDRy25gclB8q4pL8eaWXrqqG2zmWYHLhY34n+lrx7+LRL4HCDcmMUrtAYbiHeFFV1tedlmJoJJqrfLee6k0+dkaHpESyNXF/Fxt+EQQ483pVPpzHIDiRuPdUYHrb7G/lMhUDhdIiV2iPgXCzhfjMib0zY7I4+p9uMvg82kw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768497767; c=relaxed/simple;
-	bh=ElxKMT0muGCLpnrLX+YrGOfBl2U1hLJXguBvFshYtoQ=;
+	s=arc-20240116; t=1768497770; c=relaxed/simple;
+	bh=SFn3Tqn/k/u61skIhjiEVLO/qxo9RTzkja+sgtu5pds=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sh++FAkRptc/67NMTF0BbujafPYfUKHXiY/yfbS3xYtCKHlT2dZ/+F9m8aJOj3KFOYSDusc4Tm2sbFxNUuicbqRMzgyriEiSUcUM/Dniq3hRpOiDvVcIj92XC1wqbFR/HFOn0Z0nL2jD30lm77P1eV0IPKXIm8Ni4UZTM0GGEOI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mhQ52ood; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bPfCKXYP/x5x1Ma++WVvJGUR6HBYdiVoHaR9RAqf/bvhD/FAbyapgp/KXD36zwKHJTeduXHGuF+rphV9j70+8FgbMoOXAi3s58kg0dOo9jJtpWGcsQMH623SQbvanJjoMQmg2T542lQoa+l5QB8ZkzpoARzz8DajQzW2pMuRdRQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=y238TWHT; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mhQ52ood"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE10CC116D0;
-	Thu, 15 Jan 2026 17:22:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="y238TWHT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C05DFC116D0;
+	Thu, 15 Jan 2026 17:22:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1768497767;
-	bh=ElxKMT0muGCLpnrLX+YrGOfBl2U1hLJXguBvFshYtoQ=;
+	s=korg; t=1768497770;
+	bh=SFn3Tqn/k/u61skIhjiEVLO/qxo9RTzkja+sgtu5pds=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mhQ52oodn1mOXHRnZ5+VVB2d7bX26fH7UaB7CAPNbe5kGQv0yzV1dYyHh0HWo6rAv
-	 PrAqK5aqiWP61WzeIwDAt/6IhVKQzkcqIzUVy60ppjElsBUCHxYv1zqF1zpB/ad/wg
-	 7Z/u6EaTcZXAtBgGfoIkf8J4ph4GIgJHaqnCtlO0=
+	b=y238TWHTRawxgJFa2pJ0WUZFFsiLKzZ0Mr0y0r5uOIFuLuiSYZRH83iIMFVWOdHRW
+	 fKmoK/OWjD28BrYhGVdYn9/2kuHgFlxAZqEAOZ2E+XyMhaVwF/dDDkybrF+oa1wLit
+	 G6JNQoDH/YlOGrJi+2dGHiar3oUBbnjrkAppsEic=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
-	"Borislav Petkov (AMD)" <bp@alien8.de>,
-	Ard Biesheuvel <ardb@kernel.org>,
+	NeilBrown <neilb@suse.de>,
+	Trond Myklebust <trond.myklebust@hammerspace.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 196/554] efi/cper: align ARM CPER type with UEFI 2.9A/2.10 specs
-Date: Thu, 15 Jan 2026 17:44:22 +0100
-Message-ID: <20260115164253.353011590@linuxfoundation.org>
+Subject: [PATCH 5.15 170/554] NFS: dont unhash dentry during unlink/rename
+Date: Thu, 15 Jan 2026 17:43:56 +0100
+Message-ID: <20260115164252.420735882@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260115164246.225995385@linuxfoundation.org>
 References: <20260115164246.225995385@linuxfoundation.org>
@@ -53,228 +51,234 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+From: NeilBrown <neilb@suse.de>
 
-[ Upstream commit 96b010536ee020e716d28d9b359a4bcd18800aeb ]
+[ Upstream commit 3c59366c207e4c6c6569524af606baf017a55c61 ]
 
-Up to UEFI spec 2.9, the type byte of CPER struct for ARM processor
-was defined simply as:
+NFS unlink() (and rename over existing target) must determine if the
+file is open, and must perform a "silly rename" instead of an unlink (or
+before rename) if it is.  Otherwise the client might hold a file open
+which has been removed on the server.
 
-Type at byte offset 4:
+Consequently if it determines that the file isn't open, it must block
+any subsequent opens until the unlink/rename has been completed on the
+server.
 
-	- Cache error
-	- TLB Error
-	- Bus Error
-	- Micro-architectural Error
-	All other values are reserved
+This is currently achieved by unhashing the dentry.  This forces any
+open attempt to the slow-path for lookup which will block on i_rwsem on
+the directory until the unlink/rename completes.  A future patch will
+change the VFS to only get a shared lock on i_rwsem for unlink, so this
+will no longer work.
 
-Yet, there was no information about how this would be encoded.
+Instead we introduce an explicit interlock.  A special value is stored
+in dentry->d_fsdata while the unlink/rename is running and
+->d_revalidate blocks while that value is present.  When ->d_revalidate
+unblocks, the dentry will be invalid.  This closes the race
+without requiring exclusion on i_rwsem.
 
-Spec 2.9A errata corrected it by defining:
+d_fsdata is already used in two different ways.
+1/ an IS_ROOT directory dentry might have a "devname" stored in
+   d_fsdata.  Such a dentry doesn't have a name and so cannot be the
+   target of unlink or rename.  For safety we check if an old devname
+   is still stored, and remove it if it is.
+2/ a dentry with DCACHE_NFSFS_RENAMED set will have a 'struct
+   nfs_unlinkdata' stored in d_fsdata.  While this is set maydelete()
+   will fail, so an unlink or rename will never proceed on such
+   a dentry.
 
-	- Bit 1 - Cache Error
-	- Bit 2 - TLB Error
-	- Bit 3 - Bus Error
-	- Bit 4 - Micro-architectural Error
-	All other values are reserved
+Neither of these can be in effect when a dentry is the target of unlink
+or rename.  So we can expect d_fsdata to be NULL, and store a special
+value ((void*)1) which is given the name NFS_FSDATA_BLOCKED to indicate
+that any lookup will be blocked.
 
-That actually aligns with the values already defined on older
-versions at N.2.4.1. Generic Processor Error Section.
+The d_count() is incremented under d_lock() when a lookup finds the
+dentry, so we check d_count() is low, and set NFS_FSDATA_BLOCKED under
+the same lock to avoid any races.
 
-Spec 2.10 also preserve the same encoding as 2.9A.
-
-Adjust CPER and GHES handling code for both generic and ARM
-processors to properly handle UEFI 2.9A and 2.10 encoding.
-
-Link: https://uefi.org/specs/UEFI/2.10/Apx_N_Common_Platform_Error_Record.html#arm-processor-error-information
-Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Acked-by: Borislav Petkov (AMD) <bp@alien8.de>
-Signed-off-by: Ard Biesheuvel <ardb@kernel.org>
+Signed-off-by: NeilBrown <neilb@suse.de>
+Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
+Stable-dep-of: bd4928ec799b ("NFS: Avoid changing nlink when file removes and attribute updates race")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/acpi/apei/ghes.c        | 16 +++++++----
- drivers/firmware/efi/cper-arm.c | 50 ++++++++++++++++-----------------
- include/linux/cper.h            | 10 +++----
- 3 files changed, 39 insertions(+), 37 deletions(-)
+ fs/nfs/dir.c           | 72 +++++++++++++++++++++++++++++++-----------
+ include/linux/nfs_fs.h |  9 ++++++
+ 2 files changed, 63 insertions(+), 18 deletions(-)
 
-diff --git a/drivers/acpi/apei/ghes.c b/drivers/acpi/apei/ghes.c
-index 250ea9ec5f0c2..bdb23ca251e23 100644
---- a/drivers/acpi/apei/ghes.c
-+++ b/drivers/acpi/apei/ghes.c
-@@ -22,6 +22,7 @@
- #include <linux/moduleparam.h>
- #include <linux/init.h>
- #include <linux/acpi.h>
-+#include <linux/bitfield.h>
- #include <linux/io.h>
- #include <linux/interrupt.h>
- #include <linux/timer.h>
-@@ -500,6 +501,7 @@ static bool ghes_handle_arm_hw_error(struct acpi_hest_generic_data *gdata,
+diff --git a/fs/nfs/dir.c b/fs/nfs/dir.c
+index 9dceb6cb10417..671b427b7b97a 100644
+--- a/fs/nfs/dir.c
++++ b/fs/nfs/dir.c
+@@ -1626,6 +1626,8 @@ __nfs_lookup_revalidate(struct dentry *dentry, unsigned int flags,
+ 	int ret;
+ 
+ 	if (flags & LOOKUP_RCU) {
++		if (dentry->d_fsdata == NFS_FSDATA_BLOCKED)
++			return -ECHILD;
+ 		parent = READ_ONCE(dentry->d_parent);
+ 		dir = d_inode_rcu(parent);
+ 		if (!dir)
+@@ -1634,6 +1636,9 @@ __nfs_lookup_revalidate(struct dentry *dentry, unsigned int flags,
+ 		if (parent != READ_ONCE(dentry->d_parent))
+ 			return -ECHILD;
+ 	} else {
++		/* Wait for unlink to complete */
++		wait_var_event(&dentry->d_fsdata,
++			       dentry->d_fsdata != NFS_FSDATA_BLOCKED);
+ 		parent = dget_parent(dentry);
+ 		ret = reval(d_inode(parent), dentry, flags);
+ 		dput(parent);
+@@ -2296,7 +2301,6 @@ static int nfs_safe_remove(struct dentry *dentry)
+ int nfs_unlink(struct inode *dir, struct dentry *dentry)
  {
- 	struct cper_sec_proc_arm *err = acpi_hest_get_payload(gdata);
- 	int flags = sync ? MF_ACTION_REQUIRED : 0;
-+	char error_type[120];
- 	bool queued = false;
- 	int sec_sev, i;
- 	char *p;
-@@ -513,9 +515,8 @@ static bool ghes_handle_arm_hw_error(struct acpi_hest_generic_data *gdata,
- 	p = (char *)(err + 1);
- 	for (i = 0; i < err->err_info_num; i++) {
- 		struct cper_arm_err_info *err_info = (struct cper_arm_err_info *)p;
--		bool is_cache = (err_info->type == CPER_ARM_CACHE_ERROR);
-+		bool is_cache = err_info->type & CPER_ARM_CACHE_ERROR;
- 		bool has_pa = (err_info->validation_bits & CPER_ARM_INFO_VALID_PHYSICAL_ADDR);
--		const char *error_type = "unknown error";
+ 	int error;
+-	int need_rehash = 0;
  
- 		/*
- 		 * The field (err_info->error_info & BIT(26)) is fixed to set to
-@@ -529,12 +530,15 @@ static bool ghes_handle_arm_hw_error(struct acpi_hest_generic_data *gdata,
- 			continue;
- 		}
- 
--		if (err_info->type < ARRAY_SIZE(cper_proc_error_type_strs))
--			error_type = cper_proc_error_type_strs[err_info->type];
-+		cper_bits_to_str(error_type, sizeof(error_type),
-+				 FIELD_GET(CPER_ARM_ERR_TYPE_MASK, err_info->type),
-+				 cper_proc_error_type_strs,
-+				 ARRAY_SIZE(cper_proc_error_type_strs));
- 
- 		pr_warn_ratelimited(FW_WARN GHES_PFX
--				    "Unhandled processor error type: %s\n",
--				    error_type);
-+				    "Unhandled processor error type 0x%02x: %s%s\n",
-+				    err_info->type, error_type,
-+				    (err_info->type & ~CPER_ARM_ERR_TYPE_MASK) ? " with reserved bit(s)" : "");
- 		p += err_info->length;
+ 	dfprintk(VFS, "NFS: unlink(%s/%lu, %pd)\n", dir->i_sb->s_id,
+ 		dir->i_ino, dentry);
+@@ -2310,15 +2314,25 @@ int nfs_unlink(struct inode *dir, struct dentry *dentry)
+ 		error = nfs_sillyrename(dir, dentry);
+ 		goto out;
  	}
+-	if (!d_unhashed(dentry)) {
+-		__d_drop(dentry);
+-		need_rehash = 1;
+-	}
++	/* We must prevent any concurrent open until the unlink
++	 * completes.  ->d_revalidate will wait for ->d_fsdata
++	 * to clear.  We set it here to ensure no lookup succeeds until
++	 * the unlink is complete on the server.
++	 */
++	error = -ETXTBSY;
++	if (WARN_ON(dentry->d_flags & DCACHE_NFSFS_RENAMED) ||
++	    WARN_ON(dentry->d_fsdata == NFS_FSDATA_BLOCKED))
++		goto out;
++	if (dentry->d_fsdata)
++		/* old devname */
++		kfree(dentry->d_fsdata);
++	dentry->d_fsdata = NFS_FSDATA_BLOCKED;
++
+ 	spin_unlock(&dentry->d_lock);
+ 	error = nfs_safe_remove(dentry);
+ 	nfs_dentry_remove_handle_error(dir, dentry, error);
+-	if (need_rehash)
+-		d_rehash(dentry);
++	dentry->d_fsdata = NULL;
++	wake_up_var(&dentry->d_fsdata);
+ out:
+ 	trace_nfs_unlink_exit(dir, dentry, error);
+ 	return error;
+@@ -2422,6 +2436,15 @@ nfs_link(struct dentry *old_dentry, struct inode *dir, struct dentry *dentry)
+ }
+ EXPORT_SYMBOL_GPL(nfs_link);
  
-diff --git a/drivers/firmware/efi/cper-arm.c b/drivers/firmware/efi/cper-arm.c
-index f4b7a48327fbb..ea43589944ba5 100644
---- a/drivers/firmware/efi/cper-arm.c
-+++ b/drivers/firmware/efi/cper-arm.c
-@@ -94,15 +94,11 @@ static void cper_print_arm_err_info(const char *pfx, u32 type,
- 	bool proc_context_corrupt, corrected, precise_pc, restartable_pc;
- 	bool time_out, access_mode;
++static void
++nfs_unblock_rename(struct rpc_task *task, struct nfs_renamedata *data)
++{
++	struct dentry *new_dentry = data->new_dentry;
++
++	new_dentry->d_fsdata = NULL;
++	wake_up_var(&new_dentry->d_fsdata);
++}
++
+ /*
+  * RENAME
+  * FIXME: Some nfsds, like the Linux user space nfsd, may generate a
+@@ -2452,8 +2475,9 @@ int nfs_rename(struct user_namespace *mnt_userns, struct inode *old_dir,
+ {
+ 	struct inode *old_inode = d_inode(old_dentry);
+ 	struct inode *new_inode = d_inode(new_dentry);
+-	struct dentry *dentry = NULL, *rehash = NULL;
++	struct dentry *dentry = NULL;
+ 	struct rpc_task *task;
++	bool must_unblock = false;
+ 	int error = -EBUSY;
  
--	/* If the type is unknown, bail. */
--	if (type > CPER_ARM_MAX_TYPE)
--		return;
--
- 	/*
- 	 * Vendor type errors have error information values that are vendor
- 	 * specific.
+ 	if (flags)
+@@ -2471,18 +2495,27 @@ int nfs_rename(struct user_namespace *mnt_userns, struct inode *old_dir,
+ 	 * the new target.
  	 */
--	if (type == CPER_ARM_VENDOR_ERROR)
-+	if (type & CPER_ARM_VENDOR_ERROR)
- 		return;
- 
- 	if (error_info & CPER_ARM_ERR_VALID_TRANSACTION_TYPE) {
-@@ -117,43 +113,38 @@ static void cper_print_arm_err_info(const char *pfx, u32 type,
- 	if (error_info & CPER_ARM_ERR_VALID_OPERATION_TYPE) {
- 		op_type = ((error_info >> CPER_ARM_ERR_OPERATION_SHIFT)
- 			   & CPER_ARM_ERR_OPERATION_MASK);
--		switch (type) {
--		case CPER_ARM_CACHE_ERROR:
-+		if (type & CPER_ARM_CACHE_ERROR) {
- 			if (op_type < ARRAY_SIZE(arm_cache_err_op_strs)) {
--				printk("%soperation type: %s\n", pfx,
-+				printk("%scache error, operation type: %s\n", pfx,
- 				       arm_cache_err_op_strs[op_type]);
- 			}
--			break;
--		case CPER_ARM_TLB_ERROR:
-+		}
-+		if (type & CPER_ARM_TLB_ERROR) {
- 			if (op_type < ARRAY_SIZE(arm_tlb_err_op_strs)) {
--				printk("%soperation type: %s\n", pfx,
-+				printk("%sTLB error, operation type: %s\n", pfx,
- 				       arm_tlb_err_op_strs[op_type]);
- 			}
--			break;
--		case CPER_ARM_BUS_ERROR:
-+		}
-+		if (type & CPER_ARM_BUS_ERROR) {
- 			if (op_type < ARRAY_SIZE(arm_bus_err_op_strs)) {
--				printk("%soperation type: %s\n", pfx,
-+				printk("%sbus error, operation type: %s\n", pfx,
- 				       arm_bus_err_op_strs[op_type]);
- 			}
--			break;
- 		}
- 	}
- 
- 	if (error_info & CPER_ARM_ERR_VALID_LEVEL) {
- 		level = ((error_info >> CPER_ARM_ERR_LEVEL_SHIFT)
- 			 & CPER_ARM_ERR_LEVEL_MASK);
--		switch (type) {
--		case CPER_ARM_CACHE_ERROR:
-+		if (type & CPER_ARM_CACHE_ERROR)
- 			printk("%scache level: %d\n", pfx, level);
--			break;
--		case CPER_ARM_TLB_ERROR:
-+
-+		if (type & CPER_ARM_TLB_ERROR)
- 			printk("%sTLB level: %d\n", pfx, level);
--			break;
--		case CPER_ARM_BUS_ERROR:
-+
-+		if (type & CPER_ARM_BUS_ERROR)
- 			printk("%saffinity level at which the bus error occurred: %d\n",
- 			       pfx, level);
--			break;
--		}
- 	}
- 
- 	if (error_info & CPER_ARM_ERR_VALID_PROC_CONTEXT_CORRUPT) {
-@@ -242,6 +233,7 @@ void cper_print_proc_arm(const char *pfx,
- 	struct cper_arm_err_info *err_info;
- 	struct cper_arm_ctx_info *ctx_info;
- 	char newpfx[64], infopfx[ARRAY_SIZE(newpfx) + 1];
-+	char error_type[120];
- 
- 	printk("%sMIDR: 0x%016llx\n", pfx, proc->midr);
- 
-@@ -290,9 +282,15 @@ void cper_print_proc_arm(const char *pfx,
- 				       newpfx);
+ 	if (new_inode && !S_ISDIR(new_inode->i_mode)) {
+-		/*
+-		 * To prevent any new references to the target during the
+-		 * rename, we unhash the dentry in advance.
++		/* We must prevent any concurrent open until the unlink
++		 * completes.  ->d_revalidate will wait for ->d_fsdata
++		 * to clear.  We set it here to ensure no lookup succeeds until
++		 * the unlink is complete on the server.
+ 		 */
+-		if (!d_unhashed(new_dentry)) {
+-			d_drop(new_dentry);
+-			rehash = new_dentry;
++		error = -ETXTBSY;
++		if (WARN_ON(new_dentry->d_flags & DCACHE_NFSFS_RENAMED) ||
++		    WARN_ON(new_dentry->d_fsdata == NFS_FSDATA_BLOCKED))
++			goto out;
++		if (new_dentry->d_fsdata) {
++			/* old devname */
++			kfree(new_dentry->d_fsdata);
++			new_dentry->d_fsdata = NULL;
  		}
  
--		printk("%serror_type: %d, %s\n", newpfx, err_info->type,
--			err_info->type < ARRAY_SIZE(cper_proc_error_type_strs) ?
--			cper_proc_error_type_strs[err_info->type] : "unknown");
-+		cper_bits_to_str(error_type, sizeof(error_type),
-+				 FIELD_GET(CPER_ARM_ERR_TYPE_MASK, err_info->type),
-+				 cper_proc_error_type_strs,
-+				 ARRAY_SIZE(cper_proc_error_type_strs));
-+
-+		printk("%serror_type: 0x%02x: %s%s\n", newpfx, err_info->type,
-+		       error_type,
-+		       (err_info->type & ~CPER_ARM_ERR_TYPE_MASK) ? " with reserved bit(s)" : "");
-+
- 		if (err_info->validation_bits & CPER_ARM_INFO_VALID_ERR_INFO) {
- 			printk("%serror_info: 0x%016llx\n", newpfx,
- 			       err_info->error_info);
-diff --git a/include/linux/cper.h b/include/linux/cper.h
-index 724a5e3c122d6..a31e22cc839eb 100644
---- a/include/linux/cper.h
-+++ b/include/linux/cper.h
-@@ -270,11 +270,11 @@ enum {
- #define CPER_ARM_INFO_FLAGS_PROPAGATED		BIT(2)
- #define CPER_ARM_INFO_FLAGS_OVERFLOW		BIT(3)
++		spin_lock(&new_dentry->d_lock);
+ 		if (d_count(new_dentry) > 2) {
+ 			int err;
  
--#define CPER_ARM_CACHE_ERROR			0
--#define CPER_ARM_TLB_ERROR			1
--#define CPER_ARM_BUS_ERROR			2
--#define CPER_ARM_VENDOR_ERROR			3
--#define CPER_ARM_MAX_TYPE			CPER_ARM_VENDOR_ERROR
-+#define CPER_ARM_ERR_TYPE_MASK			GENMASK(4,1)
-+#define CPER_ARM_CACHE_ERROR			BIT(1)
-+#define CPER_ARM_TLB_ERROR			BIT(2)
-+#define CPER_ARM_BUS_ERROR			BIT(3)
-+#define CPER_ARM_VENDOR_ERROR			BIT(4)
++			spin_unlock(&new_dentry->d_lock);
++
+ 			/* copy the target dentry's name */
+ 			dentry = d_alloc(new_dentry->d_parent,
+ 					 &new_dentry->d_name);
+@@ -2495,14 +2528,19 @@ int nfs_rename(struct user_namespace *mnt_userns, struct inode *old_dir,
+ 				goto out;
  
- #define CPER_ARM_ERR_VALID_TRANSACTION_TYPE	BIT(0)
- #define CPER_ARM_ERR_VALID_OPERATION_TYPE	BIT(1)
+ 			new_dentry = dentry;
+-			rehash = NULL;
+ 			new_inode = NULL;
++		} else {
++			new_dentry->d_fsdata = NFS_FSDATA_BLOCKED;
++			must_unblock = true;
++			spin_unlock(&new_dentry->d_lock);
+ 		}
++
+ 	}
+ 
+ 	if (S_ISREG(old_inode->i_mode))
+ 		nfs_sync_inode(old_inode);
+-	task = nfs_async_rename(old_dir, new_dir, old_dentry, new_dentry, NULL);
++	task = nfs_async_rename(old_dir, new_dir, old_dentry, new_dentry,
++				must_unblock ? nfs_unblock_rename : NULL);
+ 	if (IS_ERR(task)) {
+ 		error = PTR_ERR(task);
+ 		goto out;
+@@ -2526,8 +2564,6 @@ int nfs_rename(struct user_namespace *mnt_userns, struct inode *old_dir,
+ 		spin_unlock(&old_inode->i_lock);
+ 	}
+ out:
+-	if (rehash)
+-		d_rehash(rehash);
+ 	trace_nfs_rename_exit(old_dir, old_dentry,
+ 			new_dir, new_dentry, error);
+ 	if (!error) {
+diff --git a/include/linux/nfs_fs.h b/include/linux/nfs_fs.h
+index 218e79ba263b2..d7c23708f7da4 100644
+--- a/include/linux/nfs_fs.h
++++ b/include/linux/nfs_fs.h
+@@ -673,6 +673,15 @@ static inline bool nfs_ooo_test(struct nfs_inode *nfsi)
+ 
+ #define NFS_JUKEBOX_RETRY_TIME (5 * HZ)
+ 
++/* We need to block new opens while a file is being unlinked.
++ * If it is opened *before* we decide to unlink, we will silly-rename
++ * instead. If it is opened *after*, then we need to create or will fail.
++ * If we allow the two to race, we could end up with a file that is open
++ * but deleted on the server resulting in ESTALE.
++ * So use ->d_fsdata to record when the unlink is happening
++ * and block dentry revalidation while it is set.
++ */
++#define NFS_FSDATA_BLOCKED ((void*)1)
+ 
+ # undef ifdebug
+ # ifdef NFS_DEBUG
 -- 
 2.51.0
 
