@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6C903AEF27;
-	Thu, 15 Jan 2026 17:25:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3DF130214B;
+	Thu, 15 Jan 2026 17:25:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768497944; cv=none; b=h+kGvs8V/bujyddjXFsLvFxgPAbb/sf/ks3Z6LVsN/+VuttjnpsnqsbJUXDajl12TcGORHlUdinPXGaRkeCsPGUinFFjdIruLQcpvLEfS9Ymz1UvitiaqcYq9Q4aKoz9GTW1hE2UuI2RhRnA74iDxVKmIrupz08q/G7ZzJ1S5+M=
+	t=1768497947; cv=none; b=VmNhmxTV2LgMmg8PNyr9+30RV7PCUFo5/Xr8sbwIac9u47kmahpl2vpteWbxYISPI4pJMh7aemuTWqGb/XlQppsmNGlqYMHyG7w81wQyLI/ErgFzqtBUZh5g2w4mSzHSwmuqx8Yrqd4Lk9UK9l9HhzEu9oz8rF9NRZ2tu9JGKKM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768497944; c=relaxed/simple;
-	bh=+3nInaUOSRqRBNbVBYi8m5vdWmx9GCQPUXhfIk8mao0=;
+	s=arc-20240116; t=1768497947; c=relaxed/simple;
+	bh=ONbqCqpG0nPF2wS6OFUNHHZM6xTLdKiyko9aUalB9Nc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eouZptFXwQuHghKE9JAnjHpb+BSqy+vaWWrWlMU+oZDMvtVeHaVQEdmKVNpHQjub4Z/D/r4/KzGLzNAOl8C0v+2JhtodcO7Jm9TtBQRBBBGXwv51CW6dzYSrU05QELM/4Is7F3DZ+11ouj61CgDQVfz4Mv95KzcQE0H6qmPXr2o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EQTejKcV; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MuT7FUqA5mwDgfreske/fBYtdlQelsgmT+GJSGEWJV4lhAfomJYjwyCd0pcijbq73z9l8JqzTSPx8mSxzZmSYuzaZ1yEhHdwfFT0E7YaE3i68Tw9ZE8SWCOYF5TIauRsVtJyxhSz8iqJFiR94pk5EBfhfccnruGEdcN6f12ZRPg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Hg+jUDmC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EQTejKcV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1CD38C16AAE;
-	Thu, 15 Jan 2026 17:25:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Hg+jUDmC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02626C116D0;
+	Thu, 15 Jan 2026 17:25:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1768497944;
-	bh=+3nInaUOSRqRBNbVBYi8m5vdWmx9GCQPUXhfIk8mao0=;
+	s=korg; t=1768497947;
+	bh=ONbqCqpG0nPF2wS6OFUNHHZM6xTLdKiyko9aUalB9Nc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EQTejKcVqro5et/1Ja+9l72hxFzxmO8pf3RApBj3a+IMCAsjD1jVxnt5dvWdr1eDU
-	 c4tf+4NbVHx/Mlp9vhb/y3tnHlbc4dx33U9bvc8WEWVS70ReCbZoDGUhh52URalr0z
-	 btwg+/8jgo48ySXrFWO/vTrQomm/QMbuedjLBP48=
+	b=Hg+jUDmCIH6K59qSU9ze80gdE4ktaVFv145NCSBtaCBEHHzFrB0iQ8dN3rmLbICZB
+	 gEbz+BGhQeoBOkogX5DauhqXygM49hXyjfTtww7ugdGbk7Mr4S9on5Dpdxqk5uYUKn
+	 uBUDFAjdnZ9ob9hGr+MhC4p5JlJ+vEVmMzK+tJic=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shay Drory <shayd@nvidia.com>,
-	Breno Leitao <leitao@debian.org>,
-	Moshe Shemesh <moshe@nvidia.com>,
-	Tariq Toukan <tariqt@nvidia.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Matthias Schiffer <matthias.schiffer@tq-group.com>,
+	Alexander Stein <alexander.stein@ew.tq-group.com>,
+	Kevin Hilman <khilman@baylibre.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 241/554] net/mlx5: fw_tracer, Handle escaped percent properly
-Date: Thu, 15 Jan 2026 17:45:07 +0100
-Message-ID: <20260115164254.967270394@linuxfoundation.org>
+Subject: [PATCH 5.15 259/554] ti-sysc: allow OMAP2 and OMAP4 timers to be reserved on AM33xx
+Date: Thu, 15 Jan 2026 17:45:25 +0100
+Message-ID: <20260115164255.607570291@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260115164246.225995385@linuxfoundation.org>
 References: <20260115164246.225995385@linuxfoundation.org>
@@ -54,82 +52,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shay Drory <shayd@nvidia.com>
+From: Matthias Schiffer <matthias.schiffer@tq-group.com>
 
-[ Upstream commit c0289f67f7d6a0dfba0e92cfe661a5c70c8c6e92 ]
+[ Upstream commit 3f61783920504b2cf99330b372d82914bb004d8e ]
 
-The firmware tracer's format string validation and parameter counting
-did not properly handle escaped percent signs (%%). This caused
-fw_tracer to count more parameters when trace format strings contained
-literal percent characters.
+am33xx.dtsi has the same clock setup as am35xx.dtsi, setting
+ti,no-reset-on-init and ti,no-idle on timer1_target and timer2_target,
+so AM33 needs the same workaround as AM35 to avoid ti-sysc probe
+failing on certain target modules.
 
-To fix it, allow %% to pass string validation and skip %% sequences when
-counting parameters since they represent literal percent signs rather
-than format specifiers.
-
-Fixes: 70dd6fdb8987 ("net/mlx5: FW tracer, parse traces and kernel tracing support")
-Signed-off-by: Shay Drory <shayd@nvidia.com>
-Reported-by: Breno Leitao <leitao@debian.org>
-Reviewed-by: Moshe Shemesh <moshe@nvidia.com>
-Closes: https://lore.kernel.org/netdev/hanz6rzrb2bqbplryjrakvkbmv4y5jlmtthnvi3thg5slqvelp@t3s3erottr6s/
-Signed-off-by: Tariq Toukan <tariqt@nvidia.com>
-Link: https://patch.msgid.link/1765284977-1363052-5-git-send-email-tariqt@nvidia.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Matthias Schiffer <matthias.schiffer@tq-group.com>
+Signed-off-by: Alexander Stein <alexander.stein@ew.tq-group.com>
+Link: https://lore.kernel.org/r/20250825131114.2206804-1-alexander.stein@ew.tq-group.com
+Signed-off-by: Kevin Hilman <khilman@baylibre.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../mellanox/mlx5/core/diag/fw_tracer.c       | 20 +++++++++++++------
- 1 file changed, 14 insertions(+), 6 deletions(-)
+ drivers/bus/ti-sysc.c | 11 +++++++++--
+ 1 file changed, 9 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/diag/fw_tracer.c b/drivers/net/ethernet/mellanox/mlx5/core/diag/fw_tracer.c
-index 6b49bda8bea2a..1779ff98b5892 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/diag/fw_tracer.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/diag/fw_tracer.c
-@@ -364,11 +364,11 @@ static bool mlx5_is_valid_spec(const char *str)
- 	while (isdigit(*str) || *str == '#' || *str == '.' || *str == 'l')
- 		str++;
- 
--	/* Check if it's a valid integer/hex specifier:
-+	/* Check if it's a valid integer/hex specifier or %%:
- 	 * Valid formats: %x, %d, %i, %u, etc.
+diff --git a/drivers/bus/ti-sysc.c b/drivers/bus/ti-sysc.c
+index 20e090723485..12ab9bf160c9 100644
+--- a/drivers/bus/ti-sysc.c
++++ b/drivers/bus/ti-sysc.c
+@@ -37,6 +37,7 @@ enum sysc_soc {
+ 	SOC_UNKNOWN,
+ 	SOC_2420,
+ 	SOC_2430,
++	SOC_AM33,
+ 	SOC_3430,
+ 	SOC_AM35,
+ 	SOC_3630,
+@@ -2946,6 +2947,7 @@ static void ti_sysc_idle(struct work_struct *work)
+ static const struct soc_device_attribute sysc_soc_match[] = {
+ 	SOC_FLAG("OMAP242*", SOC_2420),
+ 	SOC_FLAG("OMAP243*", SOC_2430),
++	SOC_FLAG("AM33*", SOC_AM33),
+ 	SOC_FLAG("AM35*", SOC_AM35),
+ 	SOC_FLAG("OMAP3[45]*", SOC_3430),
+ 	SOC_FLAG("OMAP3[67]*", SOC_3630),
+@@ -3153,10 +3155,15 @@ static int sysc_check_active_timer(struct sysc *ddata)
+ 	 * can be dropped if we stop supporting old beagleboard revisions
+ 	 * A to B4 at some point.
  	 */
- 	if (*str != 'x' && *str != 'X' && *str != 'd' && *str != 'i' &&
--	    *str != 'u' && *str != 'c')
-+	    *str != 'u' && *str != 'c' && *str != '%')
- 		return false;
+-	if (sysc_soc->soc == SOC_3430 || sysc_soc->soc == SOC_AM35)
++	switch (sysc_soc->soc) {
++	case SOC_AM33:
++	case SOC_3430:
++	case SOC_AM35:
+ 		error = -ENXIO;
+-	else
++		break;
++	default:
+ 		error = -EBUSY;
++	}
  
- 	return true;
-@@ -386,7 +386,11 @@ static bool mlx5_tracer_validate_params(const char *str)
- 		if (!mlx5_is_valid_spec(substr + 1))
- 			return false;
- 
--		substr = strstr(substr + 1, PARAM_CHAR);
-+		if (*(substr + 1) == '%')
-+			substr = strstr(substr + 2, PARAM_CHAR);
-+		else
-+			substr = strstr(substr + 1, PARAM_CHAR);
-+
- 	}
- 
- 	return true;
-@@ -463,11 +467,15 @@ static int mlx5_tracer_get_num_of_params(char *str)
- 		substr = strstr(pstr, VAL_PARM);
- 	}
- 
--	/* count all the % characters */
-+	/* count all the % characters, but skip %% (escaped percent) */
- 	substr = strstr(str, PARAM_CHAR);
- 	while (substr) {
--		num_of_params += 1;
--		str = substr + 1;
-+		if (*(substr + 1) != '%') {
-+			num_of_params += 1;
-+			str = substr + 1;
-+		} else {
-+			str = substr + 2;
-+		}
- 		substr = strstr(str, PARAM_CHAR);
- 	}
- 
+ 	if ((ddata->cfg.quirks & SYSC_QUIRK_NO_RESET_ON_INIT) &&
+ 	    (ddata->cfg.quirks & SYSC_QUIRK_NO_IDLE))
 -- 
 2.51.0
 
