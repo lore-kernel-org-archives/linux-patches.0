@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 347503D331F;
-	Thu, 15 Jan 2026 17:57:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E03A3C00BA;
+	Thu, 15 Jan 2026 17:57:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768499857; cv=none; b=VQ4yf25s6FIrhjSJjFJZg4fSIPThHqKc8ei5Gurcaf9jIHK2ycs9EhUQqazZ3dx32STYVSSVPGx6UTmZQImk0JbqXeA5lmrVP1HItY4bw5WU+46V3iNcyGgsmW8blcTxN+zIy4i6mpKQoCfQGzdZMB2q694/XOKqLNBX6kLw5HE=
+	t=1768499860; cv=none; b=i3E9o3wYzS7DZtkXMocWVSboAlRpCHJu8d2z5uwb+qD5KsaHGwGILhTCvXK/wt2dwDAanmVPkEJGhkqmJyqUtostlOPEIisNTW8A5f6xI//y5X28HCI6SeOOsbvsrJi7X94EOIUHbSG5ccs9WwyOuvZp2zLfITTsID0hwTw3/xs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768499857; c=relaxed/simple;
-	bh=pnzRgEqignujfM1ByiWLkI+eeyOlt0eC027i8jJhvLM=;
+	s=arc-20240116; t=1768499860; c=relaxed/simple;
+	bh=StqxXvczhjCmXlNKLLjdwwRsfEh6dEhLDjkrKoTrrRU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kFQJri9ulsewuDWYh1EbPcj9PKwYxnKPe3sU0cE+PjprDRMa9isOigJlOGR7SAJ7ul/47CzDx/h8bMZJDuy4gavZS6rqO7zY8qUDgZUxI7lAwAMVArP0poaEgZxlVJZTRTUKG784qb2FEV7cCsIZW0vlFZWz7Ub0FaTD5HZZU2k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MCSslz6A; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Gx/n9U+FSPjCyQITYGloQ9T/uk9z3xGYmvJmMEx9GML9GDoLvHk+Y2RSIVYaUgR1Knn6RhV7A31FxRvapTro1kQZlriv1al5GBYNogn3enarkDHUoldqj5hCqczy7oKy+DYhPJQy/aMxXUvvmwoKHfp9dgGTVlvzD8Ky8AiksJE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Cvg5xZqS; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MCSslz6A"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B8D98C116D0;
-	Thu, 15 Jan 2026 17:57:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Cvg5xZqS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A252C116D0;
+	Thu, 15 Jan 2026 17:57:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1768499857;
-	bh=pnzRgEqignujfM1ByiWLkI+eeyOlt0eC027i8jJhvLM=;
+	s=korg; t=1768499859;
+	bh=StqxXvczhjCmXlNKLLjdwwRsfEh6dEhLDjkrKoTrrRU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MCSslz6Aq/qBYjgz7L/LhEbah6N4MQP4cikUxhhMW/60Hi0w2lBkhiW7ZlRXkeDTa
-	 qgixjat/Vc1aWNrRUd8JMxvNoi1E0qsN67fdd2peLGGzzB+6rqRf4bPRrCN66wvKE9
-	 7izkkkeqM72aJg/PPMRWY8ji0HFSgMzWczVM3tVo=
+	b=Cvg5xZqSy3XMQbd3S0O+xUprJIKvJIlxVlOhIOSeBwMiEKYsf/Y4RFPzT6ZHFqaTw
+	 hCVtXoq5P6cGHrECljNF9h+Vcq2KvwZYZ/2OGY/eaa0Jg6C3qGJ3Svm/PwBnIjtVqA
+	 4pPepeIIDhrbPqJjir8sq0CNcA7DO/Z3Vq4tVnn0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gui-Dong Han <hanguidong02@gmail.com>,
-	Guenter Roeck <linux@roeck-us.net>,
+	Shivani Agarwal <shivani.agarwal@broadcom.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 372/451] hwmon: (max16065) Use local variable to avoid TOCTOU
-Date: Thu, 15 Jan 2026 17:49:33 +0100
-Message-ID: <20260115164244.371233832@linuxfoundation.org>
+Subject: [PATCH 5.10 373/451] crypto: af_alg - zero initialize memory allocated via sock_kmalloc
+Date: Thu, 15 Jan 2026 17:49:34 +0100
+Message-ID: <20260115164244.408249302@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260115164230.864985076@linuxfoundation.org>
 References: <20260115164230.864985076@linuxfoundation.org>
@@ -51,52 +51,99 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gui-Dong Han <hanguidong02@gmail.com>
+From: Shivani Agarwal <shivani.agarwal@broadcom.com>
 
-[ Upstream commit b8d5acdcf525f44e521ca4ef51dce4dac403dab4 ]
+[ Upstream commit 6f6e309328d53a10c0fe1f77dec2db73373179b6 ]
 
-In max16065_current_show, data->curr_sense is read twice: once for the
-error check and again for the calculation. Since
-i2c_smbus_read_byte_data returns negative error codes on failure, if the
-data changes to an error code between the check and the use, ADC_TO_CURR
-results in an incorrect calculation.
+Several crypto user API contexts and requests allocated with
+sock_kmalloc() were left uninitialized, relying on callers to
+set fields explicitly. This resulted in the use of uninitialized
+data in certain error paths or when new fields are added in the
+future.
 
-Read data->curr_sense into a local variable to ensure consistency. Note
-that data->curr_gain is constant and safe to access directly.
+The ACVP patches also contain two user-space interface files:
+algif_kpp.c and algif_akcipher.c. These too rely on proper
+initialization of their context structures.
 
-This aligns max16065_current_show with max16065_input_show, which
-already uses a local variable for the same reason.
+A particular issue has been observed with the newly added
+'inflight' variable introduced in af_alg_ctx by commit:
 
-Link: https://lore.kernel.org/all/CALbr=LYJ_ehtp53HXEVkSpYoub+XYSTU8Rg=o1xxMJ8=5z8B-g@mail.gmail.com/
-Fixes: f5bae2642e3d ("hwmon: Driver for MAX16065 System Manager and compatibles")
+  67b164a871af ("crypto: af_alg - Disallow multiple in-flight AIO requests")
+
+Because the context is not memset to zero after allocation,
+the inflight variable has contained garbage values. As a result,
+af_alg_alloc_areq() has incorrectly returned -EBUSY randomly when
+the garbage value was interpreted as true:
+
+  https://github.com/gregkh/linux/blame/master/crypto/af_alg.c#L1209
+
+The check directly tests ctx->inflight without explicitly
+comparing against true/false. Since inflight is only ever set to
+true or false later, an uninitialized value has triggered
+-EBUSY failures. Zero-initializing memory allocated with
+sock_kmalloc() ensures inflight and other fields start in a known
+state, removing random issues caused by uninitialized data.
+
+Fixes: fe869cdb89c9 ("crypto: algif_hash - User-space interface for hash operations")
+Fixes: 5afdfd22e6ba ("crypto: algif_rng - add random number generator support")
+Fixes: 2d97591ef43d ("crypto: af_alg - consolidation of duplicate code")
+Fixes: 67b164a871af ("crypto: af_alg - Disallow multiple in-flight AIO requests")
 Cc: stable@vger.kernel.org
-Signed-off-by: Gui-Dong Han <hanguidong02@gmail.com>
-Link: https://lore.kernel.org/r/20251128124709.3876-1-hanguidong02@gmail.com
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Signed-off-by: Shivani Agarwal <shivani.agarwal@broadcom.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+[ Adjust context ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hwmon/max16065.c |    7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ crypto/af_alg.c     |    5 ++---
+ crypto/algif_hash.c |    3 +--
+ crypto/algif_rng.c  |    3 +--
+ 3 files changed, 4 insertions(+), 7 deletions(-)
 
---- a/drivers/hwmon/max16065.c
-+++ b/drivers/hwmon/max16065.c
-@@ -216,12 +216,13 @@ static ssize_t max16065_current_show(str
- 				     struct device_attribute *da, char *buf)
- {
- 	struct max16065_data *data = max16065_update_device(dev);
-+	int curr_sense = data->curr_sense;
+--- a/crypto/af_alg.c
++++ b/crypto/af_alg.c
+@@ -1127,14 +1127,13 @@ struct af_alg_async_req *af_alg_alloc_ar
+ 	if (unlikely(!areq))
+ 		return ERR_PTR(-ENOMEM);
  
--	if (unlikely(data->curr_sense < 0))
--		return data->curr_sense;
-+	if (unlikely(curr_sense < 0))
-+		return curr_sense;
++	memset(areq, 0, areqlen);
++
+ 	ctx->inflight = true;
  
- 	return sysfs_emit(buf, "%d\n",
--			  ADC_TO_CURR(data->curr_sense, data->curr_gain));
-+			  ADC_TO_CURR(curr_sense, data->curr_gain));
+ 	areq->areqlen = areqlen;
+ 	areq->sk = sk;
+-	areq->last_rsgl = NULL;
+ 	INIT_LIST_HEAD(&areq->rsgl_list);
+-	areq->tsgl = NULL;
+-	areq->tsgl_entries = 0;
+ 
+ 	return areq;
  }
+--- a/crypto/algif_hash.c
++++ b/crypto/algif_hash.c
+@@ -423,9 +423,8 @@ static int hash_accept_parent_nokey(void
+ 	if (!ctx)
+ 		return -ENOMEM;
  
- static ssize_t max16065_limit_store(struct device *dev,
+-	ctx->result = NULL;
++	memset(ctx, 0, len);
+ 	ctx->len = len;
+-	ctx->more = false;
+ 	crypto_init_wait(&ctx->wait);
+ 
+ 	ask->private = ctx;
+--- a/crypto/algif_rng.c
++++ b/crypto/algif_rng.c
+@@ -250,9 +250,8 @@ static int rng_accept_parent(void *priva
+ 	if (!ctx)
+ 		return -ENOMEM;
+ 
++	memset(ctx, 0, len);
+ 	ctx->len = len;
+-	ctx->addtl = NULL;
+-	ctx->addtl_len = 0;
+ 
+ 	/*
+ 	 * No seeding done at that point -- if multiple accepts are
 
 
