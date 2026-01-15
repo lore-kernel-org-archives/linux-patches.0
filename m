@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 461082C027B;
-	Thu, 15 Jan 2026 17:22:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26FD12D6E72;
+	Thu, 15 Jan 2026 17:22:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768497739; cv=none; b=IMWOwcpjhPkTUSrKzykdX0sDn2erT2/oxGjOUrYxIZPcihxZfGKT1VxzB02He4RWGIJiRak3pYjCCUG8N/606o9clUvs1TzDJrLYcQP/1oK1wATtqCymvtcvCMziCcym2ax1hZCgwywqwZzTPCktg9cJpnb1vCJG4xG98PMTri0=
+	t=1768497742; cv=none; b=Bro9Fv+vBTY+jz7p0l2o6DWzjOgo1qtb+64Husb/UYOXFB/kxt/tnwWGnz68ipipA6ilqXunEU/KqpTSzqw3SxElrFgknxQYYDNE0AqpQf/f1TQwWgQbdMW7O4nqfFKuqj7/o1YSmn+4sxo/wF/PGLpseHRjbbf+yyqbFPq6780=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768497739; c=relaxed/simple;
-	bh=JNO6g6eT+QP+2Cq1ExekdTxpeTUFe5/yw+fV7XS6/eo=;
+	s=arc-20240116; t=1768497742; c=relaxed/simple;
+	bh=E+iaMzIhRA1n7OPlBKBJIgRHao8qVpH//qA1C6HThJw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gU7Yu1y1m7pVzFQRJw8fbWGGDFU0cDzFno/vPtD8H6NGWs5QHTDuiDX8Uuo2EcuhhSLZBSVc0NOBxLhZ3H/fdH573LEnZSExISS4bRu76Z7phZPrSy6+QmRn4PuK+K/B24At4/gQ50FJZ08hX50tszJoPo7ovvCdZTOqDBMa5Bk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JHKgBi4z; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=H5PgoIsmp2FGWpacDGtBq4GqXxFSEBAR11lNG23J7jJ5Wf9J3DeKKboCvlNFqDW7+MjznA2nPmRH85venUYRjteqRdffw8nwhq5saBpK8oAEPiazLaL/97IRgf3JZSrJQRamo1Y2Rul1VY8x6NVWs6UT3j1ZFqZz4pJ0usvbYLw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=svkBfjue; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JHKgBi4z"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C680AC116D0;
-	Thu, 15 Jan 2026 17:22:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="svkBfjue"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A4365C116D0;
+	Thu, 15 Jan 2026 17:22:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1768497739;
-	bh=JNO6g6eT+QP+2Cq1ExekdTxpeTUFe5/yw+fV7XS6/eo=;
+	s=korg; t=1768497742;
+	bh=E+iaMzIhRA1n7OPlBKBJIgRHao8qVpH//qA1C6HThJw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JHKgBi4z3bfxuF1IvUnv+1LXyRizA7rgAm+FQRzxbysjssRwYX7a3S/k/72KdFPtv
-	 tRaftH0NQQL9Bb5U5QQlOzRO/RysIGuPR8hxGY1umYpEHlq3jNeialVp9yRqr8k0Z5
-	 V//vJv3EmvXq8arvMTC8H76ROWJDcBc4lw7vn4Lo=
+	b=svkBfjueoy2ljwGEqVa7KbmWQKhI0W0J5CB/GG9uPW7ox7C7iMf0VuvI72EJC8YQ6
+	 QcPN/C+Ppdx93KEwrcOXeUj1PRsoCaVP5Uj4m/DBYjsNO7ZJ+HQex9iF1xAZFyMwFY
+	 7YQymRGelc51jeThSTdLiMJRuJwba3lXjt4Yhm2k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Trond Myklebust <trond.myklebust@hammerspace.com>,
+	Cong Zhang <cong.zhang@oss.qualcomm.com>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 169/554] NFS: Label the dentry with a verifier in nfs_rmdir() and nfs_unlink()
-Date: Thu, 15 Jan 2026 17:43:55 +0100
-Message-ID: <20260115164252.384480774@linuxfoundation.org>
+Subject: [PATCH 5.15 187/554] blk-mq: Abort suspend when wakeup events are pending
+Date: Thu, 15 Jan 2026 17:44:13 +0100
+Message-ID: <20260115164253.030054826@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260115164246.225995385@linuxfoundation.org>
 References: <20260115164246.225995385@linuxfoundation.org>
@@ -50,69 +51,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Trond Myklebust <trond.myklebust@hammerspace.com>
+From: Cong Zhang <cong.zhang@oss.qualcomm.com>
 
-[ Upstream commit 9019fb391de02cbff422090768b73afe9f6174df ]
+[ Upstream commit c196bf43d706592d8801a7513603765080e495fb ]
 
-After the success of an operation such as rmdir() or unlink(), we expect
-to add the dentry back to the dcache as an ordinary negative dentry.
-However in NFS, unless it is labelled with the appropriate verifier for
-the parent directory state, then nfs_lookup_revalidate will end up
-discarding that dentry and forcing a new lookup.
+During system suspend, wakeup capable IRQs for block device can be
+delayed, which can cause blk_mq_hctx_notify_offline() to hang
+indefinitely while waiting for pending request to complete.
+Skip the request waiting loop and abort suspend when wakeup events are
+pending to prevent the deadlock.
 
-The fix is to ensure that we relabel the dentry appropriately on
-success.
-
-Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
-Stable-dep-of: bd4928ec799b ("NFS: Avoid changing nlink when file removes and attribute updates race")
+Fixes: bf0beec0607d ("blk-mq: drain I/O when all CPUs in a hctx are offline")
+Signed-off-by: Cong Zhang <cong.zhang@oss.qualcomm.com>
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfs/dir.c | 18 +++++++++++++++---
- 1 file changed, 15 insertions(+), 3 deletions(-)
+ block/blk-mq.c | 18 ++++++++++++++++--
+ 1 file changed, 16 insertions(+), 2 deletions(-)
 
-diff --git a/fs/nfs/dir.c b/fs/nfs/dir.c
-index 32c3d0c454b19..9dceb6cb10417 100644
---- a/fs/nfs/dir.c
-+++ b/fs/nfs/dir.c
-@@ -2212,6 +2212,18 @@ static void nfs_dentry_handle_enoent(struct dentry *dentry)
- 		d_delete(dentry);
+diff --git a/block/blk-mq.c b/block/blk-mq.c
+index 46cb802cfcf05..48827708200b3 100644
+--- a/block/blk-mq.c
++++ b/block/blk-mq.c
+@@ -23,6 +23,7 @@
+ #include <linux/sched/sysctl.h>
+ #include <linux/sched/topology.h>
+ #include <linux/sched/signal.h>
++#include <linux/suspend.h>
+ #include <linux/delay.h>
+ #include <linux/crash_dump.h>
+ #include <linux/prefetch.h>
+@@ -2585,6 +2586,7 @@ static int blk_mq_hctx_notify_offline(unsigned int cpu, struct hlist_node *node)
+ {
+ 	struct blk_mq_hw_ctx *hctx = hlist_entry_safe(node,
+ 			struct blk_mq_hw_ctx, cpuhp_online);
++	int ret = 0;
+ 
+ 	if (!cpumask_test_cpu(cpu, hctx->cpumask) ||
+ 	    !blk_mq_last_cpu_in_hctx(cpu, hctx))
+@@ -2606,12 +2608,24 @@ static int blk_mq_hctx_notify_offline(unsigned int cpu, struct hlist_node *node)
+ 	 * frozen and there are no requests.
+ 	 */
+ 	if (percpu_ref_tryget(&hctx->queue->q_usage_counter)) {
+-		while (blk_mq_hctx_has_requests(hctx))
++		while (blk_mq_hctx_has_requests(hctx)) {
++			/*
++			 * The wakeup capable IRQ handler of block device is
++			 * not called during suspend. Skip the loop by checking
++			 * pm_wakeup_pending to prevent the deadlock and improve
++			 * suspend latency.
++			 */
++			if (pm_wakeup_pending()) {
++				clear_bit(BLK_MQ_S_INACTIVE, &hctx->state);
++				ret = -EBUSY;
++				break;
++			}
+ 			msleep(5);
++		}
+ 		percpu_ref_put(&hctx->queue->q_usage_counter);
+ 	}
+ 
+-	return 0;
++	return ret;
  }
  
-+static void nfs_dentry_remove_handle_error(struct inode *dir,
-+					   struct dentry *dentry, int error)
-+{
-+	switch (error) {
-+	case -ENOENT:
-+		d_delete(dentry);
-+		fallthrough;
-+	case 0:
-+		nfs_set_verifier(dentry, nfs_save_change_attribute(dir));
-+	}
-+}
-+
- int nfs_rmdir(struct inode *dir, struct dentry *dentry)
- {
- 	int error;
-@@ -2234,6 +2246,7 @@ int nfs_rmdir(struct inode *dir, struct dentry *dentry)
- 		up_write(&NFS_I(d_inode(dentry))->rmdir_sem);
- 	} else
- 		error = NFS_PROTO(dir)->rmdir(dir, &dentry->d_name);
-+	nfs_dentry_remove_handle_error(dir, dentry, error);
- 	trace_nfs_rmdir_exit(dir, dentry, error);
- 
- 	return error;
-@@ -2303,9 +2316,8 @@ int nfs_unlink(struct inode *dir, struct dentry *dentry)
- 	}
- 	spin_unlock(&dentry->d_lock);
- 	error = nfs_safe_remove(dentry);
--	if (!error || error == -ENOENT) {
--		nfs_set_verifier(dentry, nfs_save_change_attribute(dir));
--	} else if (need_rehash)
-+	nfs_dentry_remove_handle_error(dir, dentry, error);
-+	if (need_rehash)
- 		d_rehash(dentry);
- out:
- 	trace_nfs_unlink_exit(dir, dentry, error);
+ static int blk_mq_hctx_notify_online(unsigned int cpu, struct hlist_node *node)
 -- 
 2.51.0
 
