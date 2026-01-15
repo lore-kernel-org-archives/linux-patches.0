@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4AB323BFE3B;
-	Thu, 15 Jan 2026 17:50:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E0CF3E95A6;
+	Thu, 15 Jan 2026 17:50:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768499425; cv=none; b=j9CKsfX5uhwVSPsItzXjr7zGTbhBxl+LD0FvTLB40pxbMMAr6BRKXO6ArjCn5GDCTvVsXMMKUbHNmpWWbqk+7KkstasYILve8xMYMctDJKZBM0DnMTEn6InDcLXPbkN7kseiWoFGaXjqz+CnVU/ZfEJlzQ9o1p3b05ItEDATeO4=
+	t=1768499428; cv=none; b=o/dEhUunrYL+1EZdKPFTH394V24UV1IhtN5gif4DT57p/S1l39uRHluwGIdYYbvjXwyRBtGivLPTa5IMQiAT7T76qD/JQ7yZhppvAjfKlMfCM/Vwg33GZUHraMKNVu1AogdggmHFSGtA8vwzrgJ+D6yDOsmA9r15hlVm9QYi/NU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768499425; c=relaxed/simple;
-	bh=r2F+bDsgju9/+wUjZuBLrZba69vliGtSakJ4yp8BhkY=;
+	s=arc-20240116; t=1768499428; c=relaxed/simple;
+	bh=y4cL95q2u1jkNJCUNNpM2uq86TyJukbXt1LiK6AXfjE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oVZNFb1xAkHTL0fSUlUtffxX9W/IawMPDqpz8y7fAI8KXlIhF+kncSKoEO6OO9ZfdvdrqiogQcIxh7UJomGtvAVpo1MJYJ6PWK/69qbLyNKriyduCO00RkhQWcrDcFZV8JBA+AX3L/2+l/MHBLa22q/RYSIo/7FAidzL+hFvZCY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=L/nYy2hq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=Trtl/oliunQaL/d3lzsEWxG9FBkWcW23DO8ZJq9Xdt2uB8Xzsf1TE/l6uvc3Xz4Zxczt/O/TbrBK4W9lUofz0umyBpI1PpXqA0w0SdFILtDwxFsAnaTOYkNcJf1maOjSOX3zOrd1v12jagoNU8LG3MSOLZUl6oC2QzX7YvXMVa4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NYyV9HHV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="L/nYy2hq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90140C2BC9E;
-	Thu, 15 Jan 2026 17:50:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NYyV9HHV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C22FC19425;
+	Thu, 15 Jan 2026 17:50:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1768499424;
-	bh=r2F+bDsgju9/+wUjZuBLrZba69vliGtSakJ4yp8BhkY=;
+	s=korg; t=1768499427;
+	bh=y4cL95q2u1jkNJCUNNpM2uq86TyJukbXt1LiK6AXfjE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=L/nYy2hq3N3kWRVTZ7ZwJlzyOn9EKhz0hndHWYgOJYoz0FtcCiuw2jRd3weZxkCy5
-	 Yj41kL2h9t5skP98J1cMr9YeYkWAL7E3vJWN19dMQTlX3zGG+iGkwjVID/RkAuWDbu
-	 TXoZjoTMrhmCmDDZBatGr8c+bI3OFOxcOxeMEF+Y=
+	b=NYyV9HHVTGIjX+5lXN7HfofR4cAtMrZh+CTLqLTwo2WrdHI/XphdB2rV+THmtJNcp
+	 9TQWrRMyPVX2G8AcJqwmKJnkYvdo2t7j2GwrLoo8uDVfnpu36KaFQmCdwE2IUt2RGP
+	 vRrvy7sxgt89i8BSBSK0gIRA9QjKtgKrcFQUV3PQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ard Biesheuvel <ardb@kernel.org>,
-	Eric Biggers <ebiggers@kernel.org>
-Subject: [PATCH 5.10 222/451] lib/crypto: x86/blake2s: Fix 32-bit arg treated as 64-bit
-Date: Thu, 15 Jan 2026 17:47:03 +0100
-Message-ID: <20260115164238.929331513@linuxfoundation.org>
+	=?UTF-8?q?Ren=C3=A9=20Rebe?= <rene@exactco.de>,
+	Jens Axboe <axboe@kernel.dk>
+Subject: [PATCH 5.10 223/451] floppy: fix for PAGE_SIZE != 4KB
+Date: Thu, 15 Jan 2026 17:47:04 +0100
+Message-ID: <20260115164238.965068210@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260115164230.864985076@linuxfoundation.org>
 References: <20260115164230.864985076@linuxfoundation.org>
@@ -44,63 +44,50 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Eric Biggers <ebiggers@kernel.org>
+From: Rene Rebe <rene@exactco.de>
 
-commit 2f22115709fc7ebcfa40af3367a508fbbd2f71e9 upstream.
+commit 82d20481024cbae2ea87fe8b86d12961bfda7169 upstream.
 
-In the C code, the 'inc' argument to the assembly functions
-blake2s_compress_ssse3() and blake2s_compress_avx512() is declared with
-type u32, matching blake2s_compress().  The assembly code then reads it
-from the 64-bit %rcx.  However, the ABI doesn't guarantee zero-extension
-to 64 bits, nor do gcc or clang guarantee it.  Therefore, fix these
-functions to read this argument from the 32-bit %ecx.
+For years I wondered why the floppy driver does not just work on
+sparc64, e.g:
 
-In theory, this bug could have caused the wrong 'inc' value to be used,
-causing incorrect BLAKE2s hashes.  In practice, probably not: I've fixed
-essentially this same bug in many other assembly files too, but there's
-never been a real report of it having caused a problem.  In x86_64, all
-writes to 32-bit registers are zero-extended to 64 bits.  That results
-in zero-extension in nearly all situations.  I've only been able to
-demonstrate a lack of zero-extension with a somewhat contrived example
-involving truncation, e.g. when the C code has a u64 variable holding
-0x1234567800000040 and passes it as a u32 expecting it to be truncated
-to 0x40 (64).  But that's not what the real code does, of course.
+root@SUNW_375_0066:# disktype /dev/fd0
+disktype: Can't open /dev/fd0: No such device or address
 
-Fixes: ed0356eda153 ("crypto: blake2s - x86_64 SIMD implementation")
+[  525.341906] disktype: attempt to access beyond end of device
+fd0: rw=0, sector=0, nr_sectors = 16 limit=8
+[  525.341991] floppy: error 10 while reading block 0
+
+Turns out floppy.c __floppy_read_block_0 tries to read one page for
+the first test read to determine the disk size and thus fails if that
+is greater than 4k. Adjust minimum MAX_DISK_SIZE to PAGE_SIZE to fix
+floppy on sparc64 and likely all other PAGE_SIZE != 4KB configs.
+
 Cc: stable@vger.kernel.org
-Reviewed-by: Ard Biesheuvel <ardb@kernel.org>
-Link: https://lore.kernel.org/r/20251102234209.62133-2-ebiggers@kernel.org
-Signed-off-by: Eric Biggers <ebiggers@kernel.org>
+Signed-off-by: René Rebe <rene@exactco.de>
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/crypto/blake2s-core.S |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/block/floppy.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/arch/x86/crypto/blake2s-core.S
-+++ b/arch/x86/crypto/blake2s-core.S
-@@ -54,7 +54,7 @@ SYM_FUNC_START(blake2s_compress_ssse3)
- 	movdqa		ROT16(%rip),%xmm12
- 	movdqa		ROR328(%rip),%xmm13
- 	movdqu		0x20(%rdi),%xmm14
--	movq		%rcx,%xmm15
-+	movd		%ecx,%xmm15
- 	leaq		SIGMA+0xa0(%rip),%r8
- 	jmp		.Lbeginofloop
- 	.align		32
-@@ -179,7 +179,7 @@ SYM_FUNC_START(blake2s_compress_avx512)
- 	vmovdqu		(%rdi),%xmm0
- 	vmovdqu		0x10(%rdi),%xmm1
- 	vmovdqu		0x20(%rdi),%xmm4
--	vmovq		%rcx,%xmm5
-+	vmovd		%ecx,%xmm5
- 	vmovdqa		IV(%rip),%xmm14
- 	vmovdqa		IV+16(%rip),%xmm15
- 	jmp		.Lblake2s_compress_avx512_mainloop
+--- a/drivers/block/floppy.c
++++ b/drivers/block/floppy.c
+@@ -332,7 +332,7 @@ static bool initialized;
+  * This default is used whenever the current disk size is unknown.
+  * [Now it is rather a minimum]
+  */
+-#define MAX_DISK_SIZE 4		/* 3984 */
++#define MAX_DISK_SIZE (PAGE_SIZE / 1024)
+ 
+ /*
+  * globals used by 'result()'
 
 
