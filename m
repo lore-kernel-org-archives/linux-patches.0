@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC0833D1CA2;
-	Thu, 15 Jan 2026 17:53:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 794913C0094;
+	Thu, 15 Jan 2026 17:53:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768499630; cv=none; b=dN8SvQhAhZ6kHVW47XBJfVowMI2Elp3zIP/6ghhHp+W7xQrEIYUfFX3LLcj0m54TDBoPz/xlmgscjOk9zdN49zUIqxy5WaPaeagqEGR4sw9jILN6gqaSI1y3EX4cieZkLX5/NXaBF0GdqJdIJUewd0lAL8wAQIVlmgKe7JYedLs=
+	t=1768499633; cv=none; b=N5OVLkynKcS/MxCINdxEC/1zhHssncMJgD4Ktk2jO01lZCI+G2PS/wlPdW+HqdpPWcEmSxMHjVnntDYammxjCO5+5xgmGjho1mXYruRJm1E5oIsfMAvDKjvbd9EfVRYr0JigtcLWw3XFtHmatCvejgiKpuyKcWYdS8eK33Rxbv4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768499630; c=relaxed/simple;
-	bh=jWCcCyRUp3l8dFvYfu8Mdj/iiHkuARzkK55je8y+MJk=;
+	s=arc-20240116; t=1768499633; c=relaxed/simple;
+	bh=E4YHxKS4aifImUFxlxyr0VK8FK/11gp5HfupGYB+Oa0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nUAY7RBkSJ0pCs8lE4PvtIdFtxe9ngUjPPldXf1JBPDxHdoVMJZ6hNGNqt0rFV4WlV5vbgkUUTN57jqkYZ7ka8KHs/vju+rY4+yR0WJ+caobD4mUpYA6k2FQZyU1ipTQ7h1yiJ3ctXThLy8zH7N89DZ6c/WLRkvY7X5/mYpjeJI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JEPma+sG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qu1FvHCttdB1wJ9+wQGSca15zq7g3/+ZYqE9V63Xjb2uigjPAkVECUF7nQC2JC2AEq+AUbQ2JxfeuJ7+VH3r0GIRswU2YisfQDwYFB5aP+TI3zfjYI944tzT3NwYVjK3EgA0OxmpLm3UoPbaMfljtZBbP4WFIMYiyyhJB51pqs8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tYXaXlf0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JEPma+sG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3BEB5C116D0;
-	Thu, 15 Jan 2026 17:53:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tYXaXlf0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0602AC116D0;
+	Thu, 15 Jan 2026 17:53:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1768499630;
-	bh=jWCcCyRUp3l8dFvYfu8Mdj/iiHkuARzkK55je8y+MJk=;
+	s=korg; t=1768499633;
+	bh=E4YHxKS4aifImUFxlxyr0VK8FK/11gp5HfupGYB+Oa0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JEPma+sG+M/9FyyMRi0y56YGjuPqH0m6j1F15d2gu7xfQysju0fnmFMveCWR/Nh89
-	 q+c4zEQ17KwF++HGvt/egPcIMe7wDCrWAOFMOuPggf2rvdqbJ35kgmcpJ2mKj7NTSu
-	 +AQxzXfEkj2JnN8XrV7P5mJnv00oPO0SfNN1SL7k=
+	b=tYXaXlf0Z919nzvt6kO2fjnofwFUeaWk74V1WjLioFQiZv4M3zXhL4FUqqPKq8Y43
+	 OLnIWwTMZIYmegf50KDJGv2Af2A7cYW6B3QVHmaMGMY1a/bmXK7sZQRjoWVvLMlHp8
+	 VXTlKquWvUWp6Xo5xcIGSic9zCy9RkDwxFC7gLwY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alok Tiwari <alok.a.tiwari@oracle.com>,
+	Damodharam Ammepalli <damodharam.ammepalli@broadcom.com>,
 	Kalesh AP <kalesh-anakkur.purayil@broadcom.com>,
+	Selvin Xavier <selvin.xavier@broadcom.com>,
 	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 294/451] RDMA/bnxt_re: Fix IB_SEND_IP_CSUM handling in post_send
-Date: Thu, 15 Jan 2026 17:48:15 +0100
-Message-ID: <20260115164241.526207836@linuxfoundation.org>
+Subject: [PATCH 5.10 295/451] RDMA/bnxt_re: Fix to use correct page size for PDE table
+Date: Thu, 15 Jan 2026 17:48:16 +0100
+Message-ID: <20260115164241.561883973@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260115164230.864985076@linuxfoundation.org>
 References: <20260115164230.864985076@linuxfoundation.org>
@@ -52,56 +53,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alok Tiwari <alok.a.tiwari@oracle.com>
+From: Kalesh AP <kalesh-anakkur.purayil@broadcom.com>
 
-[ Upstream commit f01765a2361323e78e3d91b1cb1d5527a83c5cf7 ]
+[ Upstream commit 3d70e0fb0f289b0c778041c5bb04d099e1aa7c1c ]
 
-The bnxt_re SEND path checks wr->send_flags to enable features such as
-IP checksum offload. However, send_flags is a bitmask and may contain
-multiple flags (e.g. IB_SEND_SIGNALED | IB_SEND_IP_CSUM), while the
-existing code uses a switch() statement that only matches when
-send_flags is exactly IB_SEND_IP_CSUM.
+In bnxt_qplib_alloc_init_hwq(), while allocating memory for PDE table
+driver incorrectly is using the "pg_size" value passed to the function.
+Fixed to use the right value 4K. Also, fixed the allocation size for
+PBL table.
 
-As a result, checksum offload is not enabled when additional SEND
-flags are present.
-
-Replace the switch() with a bitmask test:
-
-    if (wr->send_flags & IB_SEND_IP_CSUM)
-
-This ensures IP checksum offload is enabled correctly when multiple
-SEND flags are used.
-
-Fixes: 1ac5a4047975 ("RDMA/bnxt_re: Add bnxt_re RoCE driver")
-Signed-off-by: Alok Tiwari <alok.a.tiwari@oracle.com>
-Link: https://patch.msgid.link/20251219093308.2415620-1-alok.a.tiwari@oracle.com
-Reviewed-by: Kalesh AP <kalesh-anakkur.purayil@broadcom.com>
+Fixes: 0c4dcd602817 ("RDMA/bnxt_re: Refactor hardware queue memory allocation")
+Signed-off-by: Damodharam Ammepalli <damodharam.ammepalli@broadcom.com>
+Signed-off-by: Kalesh AP <kalesh-anakkur.purayil@broadcom.com>
+Link: https://patch.msgid.link/20251223131855.145955-1-kalesh-anakkur.purayil@broadcom.com
+Reviewed-by: Selvin Xavier <selvin.xavier@broadcom.com>
 Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/bnxt_re/ib_verbs.c | 7 +------
- 1 file changed, 1 insertion(+), 6 deletions(-)
+ drivers/infiniband/hw/bnxt_re/qplib_res.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/infiniband/hw/bnxt_re/ib_verbs.c b/drivers/infiniband/hw/bnxt_re/ib_verbs.c
-index 089d7de829a0..5d0c1241b948 100644
---- a/drivers/infiniband/hw/bnxt_re/ib_verbs.c
-+++ b/drivers/infiniband/hw/bnxt_re/ib_verbs.c
-@@ -2647,14 +2647,9 @@ int bnxt_re_post_send(struct ib_qp *ib_qp, const struct ib_send_wr *wr,
- 				wqe.rawqp1.lflags |=
- 					SQ_SEND_RAWETH_QP1_LFLAGS_ROCE_CRC;
- 			}
--			switch (wr->send_flags) {
--			case IB_SEND_IP_CSUM:
-+			if (wr->send_flags & IB_SEND_IP_CSUM)
- 				wqe.rawqp1.lflags |=
- 					SQ_SEND_RAWETH_QP1_LFLAGS_IP_CHKSUM;
--				break;
--			default:
--				break;
--			}
- 			fallthrough;
- 		case IB_WR_SEND_WITH_INV:
- 			rc = bnxt_re_build_send_wqe(qp, wr, &wqe);
+diff --git a/drivers/infiniband/hw/bnxt_re/qplib_res.c b/drivers/infiniband/hw/bnxt_re/qplib_res.c
+index be98b23488b4..64e88104165e 100644
+--- a/drivers/infiniband/hw/bnxt_re/qplib_res.c
++++ b/drivers/infiniband/hw/bnxt_re/qplib_res.c
+@@ -242,7 +242,7 @@ int bnxt_qplib_alloc_init_hwq(struct bnxt_qplib_hwq *hwq,
+ 			if (npbl % BIT(MAX_PDL_LVL_SHIFT))
+ 				npde++;
+ 			/* Alloc PDE pages */
+-			sginfo.pgsize = npde * pg_size;
++			sginfo.pgsize = npde * ROCE_PG_SIZE_4K;
+ 			sginfo.npages = 1;
+ 			rc = __alloc_pbl(res, &hwq->pbl[PBL_LVL_0], &sginfo);
+ 			if (rc)
+@@ -250,7 +250,7 @@ int bnxt_qplib_alloc_init_hwq(struct bnxt_qplib_hwq *hwq,
+ 
+ 			/* Alloc PBL pages */
+ 			sginfo.npages = npbl;
+-			sginfo.pgsize = PAGE_SIZE;
++			sginfo.pgsize = ROCE_PG_SIZE_4K;
+ 			rc = __alloc_pbl(res, &hwq->pbl[PBL_LVL_1], &sginfo);
+ 			if (rc)
+ 				goto fail;
 -- 
 2.51.0
 
