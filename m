@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6FA3425228D;
-	Thu, 15 Jan 2026 16:55:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78B8733993;
+	Thu, 15 Jan 2026 16:55:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768496138; cv=none; b=CqfWdz89Dhn+8T/anLQf7drxhui2XKEVU7ssdVFZuQzFxmnw6TN7sGLkrr5H0EWAu7IZlgTtfX6GwcHjDWEXdR8KHjN52DD02XRq4MrXwodZsQnruTFU92LXAebY2OMLeeKLZe6QpaBlBxPyxyEWNueBlsHgsrKZaz4cUdK0yFQ=
+	t=1768496140; cv=none; b=m4ymZfky9nAG0OMGOrk9PwOEIRNZpr4KdIXMFCdb76Yji4SNTwwrdh8HTGPInFCn0keo2z4kD1o5U+rq7LvUOVCtqLd3VJuXBZC4dKG8rJvBFDmQgpS1EIYS+gJI7JCLDhaXjkK3akksJ+HchD4HEJG8u6eKRFQrK/uzM5wqcms=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768496138; c=relaxed/simple;
-	bh=ms5Jx4QXRucRjYzu/bUbGskC8QdrQW/d/SM9Z19LI1Q=;
+	s=arc-20240116; t=1768496140; c=relaxed/simple;
+	bh=h+iXgwIiCxYUiR2W7EPFK2OSQkExYjzSbq3+UOID7iU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Bg3ql1lpPtVEcdC7Yi7XgOhfEhErtQiUK4aeZp32jdGh/xNQ8EzfoUBewVqIyyksvCoUSdWyk/p01fOyWZpfLsF13X9EUr/mUCpu0NOlEIH48x46sJZCLcPToVap4v6QGcCvXBTEOnsKpoK9pg2wM4S7pR3ZhaoIvHivmtbTzrg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XyaxTaiB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=aYHZFKX0GIaCE+suDvwjIXAuuOS/MiAyZdJRuEXq/vr93MUl9TIWrqtQi/Or15vlMi9fj9CombrenknViYcK5A181TPIUTwbPv2TF0+4HFmir02WkIQaq0wRISPAuiXrYALj/ZRVGNb47yfvrqktFcnIJmL3ysU2+q67H19+CJ0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=v5RVm5/h; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XyaxTaiB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9BEC5C116D0;
-	Thu, 15 Jan 2026 16:55:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="v5RVm5/h"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C895C116D0;
+	Thu, 15 Jan 2026 16:55:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1768496137;
-	bh=ms5Jx4QXRucRjYzu/bUbGskC8QdrQW/d/SM9Z19LI1Q=;
+	s=korg; t=1768496139;
+	bh=h+iXgwIiCxYUiR2W7EPFK2OSQkExYjzSbq3+UOID7iU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XyaxTaiBH+P/AX/28+c1MMD5BrvhniDeAplWi/EOvZf2ZY5HRFQh2TNNmJbtAnImT
-	 A7uFp59vSG1CdY0H6P2knYsQNg77N3yGXZ+1suDyNAhyyAoADeJkPJOnKu3E5EVlau
-	 Bx0TcPKVZpN4vdQDMebAb/gRVrlPbVmtrTWrZ63o=
+	b=v5RVm5/hib3WgxKUZ8UxxoAXMwcowbkugXTiXvUzbajgrYwQKWdn7PgqARLLPkMtj
+	 QdxVCzberapIdFZzZVaYQyKACn1/3iv0TAMaMNNoIGWo9gfWQ+ppAEOgbC1mmAvcfm
+	 orqUxlZSRxDHKFwncNImTKUKbmZbywkYPQwAKz/U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Linus Walleij <linus.walleij@linaro.org>,
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
+	Jakub Lewalski <jakub.lewalski@nokia.com>,
+	=?UTF-8?q?Pawe=C5=82=20Narewski?= <pawel.narewski@nokia.com>,
+	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 090/181] gpiolib: rename GPIO chip printk macros
-Date: Thu, 15 Jan 2026 17:47:07 +0100
-Message-ID: <20260115164205.572895244@linuxfoundation.org>
+Subject: [PATCH 6.18 091/181] gpiolib: fix race condition for gdev->srcu
+Date: Thu, 15 Jan 2026 17:47:08 +0100
+Message-ID: <20260115164205.608551002@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260115164202.305475649@linuxfoundation.org>
 References: <20260115164202.305475649@linuxfoundation.org>
@@ -45,310 +46,159 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+From: Paweł Narewski <pawel.narewski@nokia.com>
 
-[ Upstream commit d4f335b410ddbe3e99f48f8b5ea78a25041274f1 ]
+[ Upstream commit a7ac22d53d0990152b108c3f4fe30df45fcb0181 ]
 
-The chip_$level() macros take struct gpio_chip as argument so make it
-follow the convention of using the 'gpiochip_' prefix.
+If two drivers were calling gpiochip_add_data_with_key(), one may be
+traversing the srcu-protected list in gpio_name_to_desc(), meanwhile
+other has just added its gdev in gpiodev_add_to_list_unlocked().
+This creates a non-mutexed and non-protected timeframe, when one
+instance is dereferencing and using &gdev->srcu, before the other
+has initialized it, resulting in crash:
 
-Reviewed-by: Linus Walleij <linus.walleij@linaro.org>
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Stable-dep-of: a7ac22d53d09 ("gpiolib: fix race condition for gdev->srcu")
+[    4.935481] Unable to handle kernel paging request at virtual address ffff800272bcc000
+[    4.943396] Mem abort info:
+[    4.943400]   ESR = 0x0000000096000005
+[    4.943403]   EC = 0x25: DABT (current EL), IL = 32 bits
+[    4.943407]   SET = 0, FnV = 0
+[    4.943410]   EA = 0, S1PTW = 0
+[    4.943413]   FSC = 0x05: level 1 translation fault
+[    4.943416] Data abort info:
+[    4.943418]   ISV = 0, ISS = 0x00000005, ISS2 = 0x00000000
+[    4.946220]   CM = 0, WnR = 0, TnD = 0, TagAccess = 0
+[    4.955261]   GCS = 0, Overlay = 0, DirtyBit = 0, Xs = 0
+[    4.955268] swapper pgtable: 4k pages, 48-bit VAs, pgdp=0000000038e6c000
+[    4.961449] [ffff800272bcc000] pgd=0000000000000000
+[    4.969203] , p4d=1000000039739003
+[    4.979730] , pud=0000000000000000
+[    4.980210] phandle (CPU): 0x0000005e, phandle (BE): 0x5e000000 for node "reset"
+[    4.991736] Internal error: Oops: 0000000096000005 [#1] PREEMPT SMP
+...
+[    5.121359] pc : __srcu_read_lock+0x44/0x98
+[    5.131091] lr : gpio_name_to_desc+0x60/0x1a0
+[    5.153671] sp : ffff8000833bb430
+[    5.298440]
+[    5.298443] Call trace:
+[    5.298445]  __srcu_read_lock+0x44/0x98
+[    5.309484]  gpio_name_to_desc+0x60/0x1a0
+[    5.320692]  gpiochip_add_data_with_key+0x488/0xf00
+    5.946419] ---[ end trace 0000000000000000 ]---
+
+Move initialization code for gdev fields before it is added to
+gpio_devices, with adjacent initialization code.
+Adjust goto statements  to reflect modified order of operations
+
+Fixes: 47d8b4c1d868 ("gpio: add SRCU infrastructure to struct gpio_device")
+Reviewed-by: Jakub Lewalski <jakub.lewalski@nokia.com>
+Signed-off-by: Paweł Narewski <pawel.narewski@nokia.com>
+[Bartosz: fixed a build issue, removed stray newline]
+Link: https://lore.kernel.org/r/20251224082641.10769-1-bartosz.golaszewski@oss.qualcomm.com
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpio/gpiolib-cdev.c  |  2 +-
- drivers/gpio/gpiolib-sysfs.c |  2 +-
- drivers/gpio/gpiolib.c       | 80 ++++++++++++++++++------------------
- drivers/gpio/gpiolib.h       |  8 ++--
- 4 files changed, 45 insertions(+), 47 deletions(-)
+ drivers/gpio/gpiolib.c | 40 ++++++++++++++++++++--------------------
+ 1 file changed, 20 insertions(+), 20 deletions(-)
 
-diff --git a/drivers/gpio/gpiolib-cdev.c b/drivers/gpio/gpiolib-cdev.c
-index d8d93059ac04c..d925e75d1dce1 100644
---- a/drivers/gpio/gpiolib-cdev.c
-+++ b/drivers/gpio/gpiolib-cdev.c
-@@ -2828,7 +2828,7 @@ int gpiolib_cdev_register(struct gpio_device *gdev, dev_t devt)
- 	if (!gc)
- 		return -ENODEV;
- 
--	chip_dbg(gc, "added GPIO chardev (%d:%d)\n", MAJOR(devt), gdev->id);
-+	gpiochip_dbg(gc, "added GPIO chardev (%d:%d)\n", MAJOR(devt), gdev->id);
- 
- 	return 0;
- }
-diff --git a/drivers/gpio/gpiolib-sysfs.c b/drivers/gpio/gpiolib-sysfs.c
-index 9a849245b3588..7d5fc1ea2aa54 100644
---- a/drivers/gpio/gpiolib-sysfs.c
-+++ b/drivers/gpio/gpiolib-sysfs.c
-@@ -1091,7 +1091,7 @@ static int gpiofind_sysfs_register(struct gpio_chip *gc, const void *data)
- 
- 	ret = gpiochip_sysfs_register(gdev);
- 	if (ret)
--		chip_err(gc, "failed to register the sysfs entry: %d\n", ret);
-+		gpiochip_err(gc, "failed to register the sysfs entry: %d\n", ret);
- 
- 	return 0;
- }
 diff --git a/drivers/gpio/gpiolib.c b/drivers/gpio/gpiolib.c
-index f2ed234b4135e..9a4395a29f68e 100644
+index 9a4395a29f68e..9aa6ddf6389cc 100644
 --- a/drivers/gpio/gpiolib.c
 +++ b/drivers/gpio/gpiolib.c
-@@ -921,8 +921,8 @@ static void gpiochip_machine_hog(struct gpio_chip *gc, struct gpiod_hog *hog)
+@@ -1091,6 +1091,18 @@ int gpiochip_add_data_with_key(struct gpio_chip *gc, void *data,
+ 	gdev->ngpio = gc->ngpio;
+ 	gdev->can_sleep = gc->can_sleep;
  
- 	desc = gpiochip_get_desc(gc, hog->chip_hwnum);
- 	if (IS_ERR(desc)) {
--		chip_err(gc, "%s: unable to get GPIO desc: %ld\n", __func__,
--			 PTR_ERR(desc));
-+		gpiochip_err(gc, "%s: unable to get GPIO desc: %ld\n",
-+			     __func__, PTR_ERR(desc));
- 		return;
- 	}
++	rwlock_init(&gdev->line_state_lock);
++	RAW_INIT_NOTIFIER_HEAD(&gdev->line_state_notifier);
++	BLOCKING_INIT_NOTIFIER_HEAD(&gdev->device_notifier);
++
++	ret = init_srcu_struct(&gdev->srcu);
++	if (ret)
++		goto err_free_label;
++
++	ret = init_srcu_struct(&gdev->desc_srcu);
++	if (ret)
++		goto err_cleanup_gdev_srcu;
++
+ 	scoped_guard(mutex, &gpio_devices_lock) {
+ 		/*
+ 		 * TODO: this allocates a Linux GPIO number base in the global
+@@ -1105,7 +1117,7 @@ int gpiochip_add_data_with_key(struct gpio_chip *gc, void *data,
+ 			if (base < 0) {
+ 				ret = base;
+ 				base = 0;
+-				goto err_free_label;
++				goto err_cleanup_desc_srcu;
+ 			}
  
-@@ -1124,7 +1124,7 @@ int gpiochip_add_data_with_key(struct gpio_chip *gc, void *data,
- 
+ 			/*
+@@ -1125,22 +1137,10 @@ int gpiochip_add_data_with_key(struct gpio_chip *gc, void *data,
  		ret = gpiodev_add_to_list_unlocked(gdev);
  		if (ret) {
--			chip_err(gc, "GPIO integer space overlap, cannot add chip\n");
-+			gpiochip_err(gc, "GPIO integer space overlap, cannot add chip\n");
- 			goto err_free_label;
- 		}
- 	}
-@@ -1528,8 +1528,7 @@ static void gpiochip_set_hierarchical_irqchip(struct gpio_chip *gc,
- 							  &parent_hwirq,
- 							  &parent_type);
- 			if (ret) {
--				chip_err(gc, "skip set-up on hwirq %d\n",
--					 i);
-+				gpiochip_err(gc, "skip set-up on hwirq %d\n", i);
- 				continue;
- 			}
- 
-@@ -1542,15 +1541,14 @@ static void gpiochip_set_hierarchical_irqchip(struct gpio_chip *gc,
- 			ret = irq_domain_alloc_irqs(gc->irq.domain, 1,
- 						    NUMA_NO_NODE, &fwspec);
- 			if (ret < 0) {
--				chip_err(gc,
--					 "can not allocate irq for GPIO line %d parent hwirq %d in hierarchy domain: %d\n",
--					 i, parent_hwirq,
--					 ret);
-+				gpiochip_err(gc,
-+					     "can not allocate irq for GPIO line %d parent hwirq %d in hierarchy domain: %d\n",
-+					     i, parent_hwirq, ret);
- 			}
+ 			gpiochip_err(gc, "GPIO integer space overlap, cannot add chip\n");
+-			goto err_free_label;
++			goto err_cleanup_desc_srcu;
  		}
  	}
  
--	chip_err(gc, "%s unknown fwnode type proceed anyway\n", __func__);
-+	gpiochip_err(gc, "%s unknown fwnode type proceed anyway\n", __func__);
+-	rwlock_init(&gdev->line_state_lock);
+-	RAW_INIT_NOTIFIER_HEAD(&gdev->line_state_notifier);
+-	BLOCKING_INIT_NOTIFIER_HEAD(&gdev->device_notifier);
+-
+-	ret = init_srcu_struct(&gdev->srcu);
+-	if (ret)
+-		goto err_remove_from_list;
+-
+-	ret = init_srcu_struct(&gdev->desc_srcu);
+-	if (ret)
+-		goto err_cleanup_gdev_srcu;
+-
+ #ifdef CONFIG_PINCTRL
+ 	INIT_LIST_HEAD(&gdev->pin_ranges);
+ #endif
+@@ -1150,11 +1150,11 @@ int gpiochip_add_data_with_key(struct gpio_chip *gc, void *data,
  
- 	return;
- }
-@@ -1602,15 +1600,15 @@ static int gpiochip_hierarchy_irq_domain_alloc(struct irq_domain *d,
+ 	ret = gpiochip_set_names(gc);
  	if (ret)
- 		return ret;
+-		goto err_cleanup_desc_srcu;
++		goto err_remove_from_list;
  
--	chip_dbg(gc, "allocate IRQ %d, hwirq %lu\n", irq, hwirq);
-+	gpiochip_dbg(gc, "allocate IRQ %d, hwirq %lu\n", irq, hwirq);
- 
- 	ret = girq->child_to_parent_hwirq(gc, hwirq, type,
- 					  &parent_hwirq, &parent_type);
- 	if (ret) {
--		chip_err(gc, "can't look up hwirq %lu\n", hwirq);
-+		gpiochip_err(gc, "can't look up hwirq %lu\n", hwirq);
- 		return ret;
- 	}
--	chip_dbg(gc, "found parent hwirq %u\n", parent_hwirq);
-+	gpiochip_dbg(gc, "found parent hwirq %u\n", parent_hwirq);
- 
- 	/*
- 	 * We set handle_bad_irq because the .set_type() should
-@@ -1631,8 +1629,8 @@ static int gpiochip_hierarchy_irq_domain_alloc(struct irq_domain *d,
+ 	ret = gpiochip_init_valid_mask(gc);
  	if (ret)
- 		return ret;
+-		goto err_cleanup_desc_srcu;
++		goto err_remove_from_list;
  
--	chip_dbg(gc, "alloc_irqs_parent for %d parent hwirq %d\n",
--		  irq, parent_hwirq);
-+	gpiochip_dbg(gc, "alloc_irqs_parent for %d parent hwirq %d\n",
-+		     irq, parent_hwirq);
- 	irq_set_lockdep_class(irq, gc->irq.lock_key, gc->irq.request_key);
- 	ret = irq_domain_alloc_irqs_parent(d, irq, 1, &gpio_parent_fwspec);
- 	/*
-@@ -1642,9 +1640,9 @@ static int gpiochip_hierarchy_irq_domain_alloc(struct irq_domain *d,
- 	if (irq_domain_is_msi(d->parent) && (ret == -EEXIST))
- 		ret = 0;
- 	if (ret)
--		chip_err(gc,
--			 "failed to allocate parent hwirq %d for hwirq %lu\n",
--			 parent_hwirq, hwirq);
-+		gpiochip_err(gc,
-+			     "failed to allocate parent hwirq %d for hwirq %lu\n",
-+			     parent_hwirq, hwirq);
- 
- 	return ret;
- }
-@@ -1720,7 +1718,7 @@ static struct irq_domain *gpiochip_hierarchy_create_domain(struct gpio_chip *gc)
- 
- 	if (!gc->irq.child_to_parent_hwirq ||
- 	    !gc->irq.fwnode) {
--		chip_err(gc, "missing irqdomain vital data\n");
-+		gpiochip_err(gc, "missing irqdomain vital data\n");
- 		return ERR_PTR(-EINVAL);
+ 	for (desc_index = 0; desc_index < gc->ngpio; desc_index++) {
+ 		struct gpio_desc *desc = &gdev->descs[desc_index];
+@@ -1227,10 +1227,6 @@ int gpiochip_add_data_with_key(struct gpio_chip *gc, void *data,
+ 	of_gpiochip_remove(gc);
+ err_free_valid_mask:
+ 	gpiochip_free_valid_mask(gc);
+-err_cleanup_desc_srcu:
+-	cleanup_srcu_struct(&gdev->desc_srcu);
+-err_cleanup_gdev_srcu:
+-	cleanup_srcu_struct(&gdev->srcu);
+ err_remove_from_list:
+ 	scoped_guard(mutex, &gpio_devices_lock)
+ 		list_del_rcu(&gdev->list);
+@@ -1240,6 +1236,10 @@ int gpiochip_add_data_with_key(struct gpio_chip *gc, void *data,
+ 		gpio_device_put(gdev);
+ 		goto err_print_message;
  	}
- 
-@@ -1993,7 +1991,7 @@ static void gpiochip_set_irq_hooks(struct gpio_chip *gc)
- 	if (irqchip->flags & IRQCHIP_IMMUTABLE)
- 		return;
- 
--	chip_warn(gc, "not an immutable chip, please consider fixing it!\n");
-+	gpiochip_warn(gc, "not an immutable chip, please consider fixing it!\n");
- 
- 	if (!irqchip->irq_request_resources &&
- 	    !irqchip->irq_release_resources) {
-@@ -2009,8 +2007,8 @@ static void gpiochip_set_irq_hooks(struct gpio_chip *gc)
- 		 * ...and if so, give a gentle warning that this is bad
- 		 * practice.
- 		 */
--		chip_info(gc,
--			  "detected irqchip that is shared with multiple gpiochips: please fix the driver.\n");
-+		gpiochip_info(gc,
-+			      "detected irqchip that is shared with multiple gpiochips: please fix the driver.\n");
- 		return;
- 	}
- 
-@@ -2039,7 +2037,8 @@ static int gpiochip_irqchip_add_allocated_domain(struct gpio_chip *gc,
- 		return -EINVAL;
- 
- 	if (gc->to_irq)
--		chip_warn(gc, "to_irq is redefined in %s and you shouldn't rely on it\n", __func__);
-+		gpiochip_warn(gc, "to_irq is redefined in %s and you shouldn't rely on it\n",
-+			      __func__);
- 
- 	gc->to_irq = gpiochip_to_irq;
- 	gc->irq.domain = domain;
-@@ -2080,7 +2079,7 @@ static int gpiochip_add_irqchip(struct gpio_chip *gc,
- 		return 0;
- 
- 	if (gc->irq.parent_handler && gc->can_sleep) {
--		chip_err(gc, "you cannot have chained interrupts on a chip that may sleep\n");
-+		gpiochip_err(gc, "you cannot have chained interrupts on a chip that may sleep\n");
- 		return -EINVAL;
- 	}
- 
-@@ -2336,7 +2335,7 @@ int gpiochip_add_pingroup_range(struct gpio_chip *gc,
- 
- 	pinctrl_add_gpio_range(pctldev, &pin_range->range);
- 
--	chip_dbg(gc, "created GPIO range %d->%d ==> %s PINGRP %s\n",
-+	gpiochip_dbg(gc, "created GPIO range %d->%d ==> %s PINGRP %s\n",
- 		 gpio_offset, gpio_offset + pin_range->range.npins - 1,
- 		 pinctrl_dev_get_devname(pctldev), pin_group);
- 
-@@ -2392,19 +2391,18 @@ int gpiochip_add_pin_range_with_pins(struct gpio_chip *gc,
- 			&pin_range->range);
- 	if (IS_ERR(pin_range->pctldev)) {
- 		ret = PTR_ERR(pin_range->pctldev);
--		chip_err(gc, "could not create pin range\n");
-+		gpiochip_err(gc, "could not create pin range\n");
- 		kfree(pin_range);
- 		return ret;
- 	}
- 	if (pin_range->range.pins)
--		chip_dbg(gc, "created GPIO range %d->%d ==> %s %d sparse PIN range { %d, ... }",
--			 gpio_offset, gpio_offset + npins - 1,
--			 pinctl_name, npins, pins[0]);
-+		gpiochip_dbg(gc, "created GPIO range %d->%d ==> %s %d sparse PIN range { %d, ... }",
-+			     gpio_offset, gpio_offset + npins - 1,
-+			     pinctl_name, npins, pins[0]);
- 	else
--		chip_dbg(gc, "created GPIO range %d->%d ==> %s PIN %d->%d\n",
--			 gpio_offset, gpio_offset + npins - 1,
--			 pinctl_name,
--			 pin_offset, pin_offset + npins - 1);
-+		gpiochip_dbg(gc, "created GPIO range %d->%d ==> %s PIN %d->%d\n",
-+			     gpio_offset, gpio_offset + npins - 1, pinctl_name,
-+			     pin_offset, pin_offset + npins - 1);
- 
- 	list_add_tail(&pin_range->node, &gdev->pin_ranges);
- 
-@@ -2614,7 +2612,7 @@ struct gpio_desc *gpiochip_request_own_desc(struct gpio_chip *gc,
- 	int ret;
- 
- 	if (IS_ERR(desc)) {
--		chip_err(gc, "failed to get GPIO %s descriptor\n", name);
-+		gpiochip_err(gc, "failed to get GPIO %s descriptor\n", name);
- 		return desc;
- 	}
- 
-@@ -2625,7 +2623,7 @@ struct gpio_desc *gpiochip_request_own_desc(struct gpio_chip *gc,
- 	ret = gpiod_configure_flags(desc, label, lflags, dflags);
- 	if (ret) {
- 		gpiod_free_commit(desc);
--		chip_err(gc, "setup of own GPIO %s failed\n", name);
-+		gpiochip_err(gc, "setup of own GPIO %s failed\n", name);
- 		return ERR_PTR(ret);
- 	}
- 
-@@ -4052,8 +4050,8 @@ int gpiochip_lock_as_irq(struct gpio_chip *gc, unsigned int offset)
- 		int dir = gpiod_get_direction(desc);
- 
- 		if (dir < 0) {
--			chip_err(gc, "%s: cannot get GPIO direction\n",
--				 __func__);
-+			gpiochip_err(gc, "%s: cannot get GPIO direction\n",
-+				     __func__);
- 			return dir;
- 		}
- 	}
-@@ -4061,9 +4059,9 @@ int gpiochip_lock_as_irq(struct gpio_chip *gc, unsigned int offset)
- 	/* To be valid for IRQ the line needs to be input or open drain */
- 	if (test_bit(GPIOD_FLAG_IS_OUT, &desc->flags) &&
- 	    !test_bit(GPIOD_FLAG_OPEN_DRAIN, &desc->flags)) {
--		chip_err(gc,
--			 "%s: tried to flag a GPIO set as output for IRQ\n",
--			 __func__);
-+		gpiochip_err(gc,
-+			     "%s: tried to flag a GPIO set as output for IRQ\n",
-+			     __func__);
- 		return -EIO;
- 	}
- 
-@@ -4140,7 +4138,7 @@ int gpiochip_reqres_irq(struct gpio_chip *gc, unsigned int offset)
- 
- 	ret = gpiochip_lock_as_irq(gc, offset);
- 	if (ret) {
--		chip_err(gc, "unable to lock HW IRQ %u for IRQ\n", offset);
-+		gpiochip_err(gc, "unable to lock HW IRQ %u for IRQ\n", offset);
- 		module_put(gc->gpiodev->owner);
- 		return ret;
- 	}
-diff --git a/drivers/gpio/gpiolib.h b/drivers/gpio/gpiolib.h
-index 2a003a7311e7a..6ee29d0222393 100644
---- a/drivers/gpio/gpiolib.h
-+++ b/drivers/gpio/gpiolib.h
-@@ -309,13 +309,13 @@ do { \
- 
- /* With chip prefix */
- 
--#define chip_err(gc, fmt, ...)					\
-+#define gpiochip_err(gc, fmt, ...) \
- 	dev_err(&gc->gpiodev->dev, "(%s): " fmt, gc->label, ##__VA_ARGS__)
--#define chip_warn(gc, fmt, ...)					\
-+#define gpiochip_warn(gc, fmt, ...) \
- 	dev_warn(&gc->gpiodev->dev, "(%s): " fmt, gc->label, ##__VA_ARGS__)
--#define chip_info(gc, fmt, ...)					\
-+#define gpiochip_info(gc, fmt, ...) \
- 	dev_info(&gc->gpiodev->dev, "(%s): " fmt, gc->label, ##__VA_ARGS__)
--#define chip_dbg(gc, fmt, ...)					\
-+#define gpiochip_dbg(gc, fmt, ...) \
- 	dev_dbg(&gc->gpiodev->dev, "(%s): " fmt, gc->label, ##__VA_ARGS__)
- 
- #endif /* GPIOLIB_H */
++err_cleanup_desc_srcu:
++	cleanup_srcu_struct(&gdev->desc_srcu);
++err_cleanup_gdev_srcu:
++	cleanup_srcu_struct(&gdev->srcu);
+ err_free_label:
+ 	kfree_const(gdev->label);
+ err_free_descs:
 -- 
 2.51.0
 
