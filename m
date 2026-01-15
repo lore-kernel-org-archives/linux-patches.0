@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 371512D73BE;
-	Thu, 15 Jan 2026 17:01:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 409C22D73BE;
+	Thu, 15 Jan 2026 17:01:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768496463; cv=none; b=nakxhno4vy4mZt/YmX6ENBfLQ065s2LapXWolyK9VNVyMw4WnQwI8Jm9kcZySvtpJoiwt1zIR9ImS42Yo4Nm0RfZnipT9yOpcxb5jELhErz6UfQwxDd9hHft8bdklBBSJCUV7K30pwuX85xNACK80QOrqJ6WojNnWIbsIL+pwKE=
+	t=1768496466; cv=none; b=f8AiOIJZcfDF9ba5x62a1Rq5+0HIHu20+IOKqmoRlnSE3PCx+oUPYcb9m765F/B20FFn6CBWSIdF43TwxwiO9HlfxmAhNP3t3+gbuMBKbTavxM6GPeqPuim8b4Nd1k8rt9Ihpz6LroQ1KZ9DjKE46nFlMoBIhWz8vx9OP6dmdrI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768496463; c=relaxed/simple;
-	bh=dEwORo43Ux+z3oFxKwrZOTrVdeasUwzL1H72tTPFUYo=;
+	s=arc-20240116; t=1768496466; c=relaxed/simple;
+	bh=1klvs3qLx9P7D87HHTMOMu8lmv50aAGQoEEjBxXCzNE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=W/n/3LFM9SXmHBK9HUhaplFQCE05km71jowjdKHSCQG8+umXHIY6kh9ZnRPBlt4/lUWkBeZU1qocp5MVZy4CIRnonFpUKv1yBL7F8dJYqH7x7kWCvbvekehW8SSyk+RBVZ45Gzx5fd9amf5Apo978XTxpHKxboJFg3R8eJXjMUI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uasv9aZW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=L/nGPwU5HvBOKQ/prGY3/dpcar6T+ZJtNiGPJnV8B9sxNm8RRsMbaEQtFsFAMkOvMovaW3OnHJHkBB5/JtvaE4cxFyAuBsG0l3qZLpEq4+sW9KBc4wPiKWnv/H1k2Zopyav/QqxZ02Fzmf82BZa//OLB6CC+/UFrshDIh1qUYZY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WL3hx9fE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uasv9aZW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B54DFC116D0;
-	Thu, 15 Jan 2026 17:01:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WL3hx9fE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 94A0FC116D0;
+	Thu, 15 Jan 2026 17:01:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1768496463;
-	bh=dEwORo43Ux+z3oFxKwrZOTrVdeasUwzL1H72tTPFUYo=;
+	s=korg; t=1768496466;
+	bh=1klvs3qLx9P7D87HHTMOMu8lmv50aAGQoEEjBxXCzNE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uasv9aZWxdPEYqtT8zPRgjbqqOweWnB7aBq0atVmPYo1dfMzADP4BGaSGjVjpARwO
-	 yKQouJPv2Xi0wBoe7x6MFR0PN2fYUzxiLHWezdrb824WXcs8KVFVlMphpI76HXXEEe
-	 Er2yxfy4dh/m4At2XSFpBHwuo6x8bmEfcW5OvTZQ=
+	b=WL3hx9fEUGt5ehRJoGeNt10QzldsZdB1K45T15yb8ShrgbtArMV2vHIsAWaFKBeu+
+	 ikmiEg7UgwH/GQHRWvP5GRBfRwtEgyPtWlkadkW5bg+uzECfV0Ho90JxWvjEBpyHWc
+	 FwfnnO1mwOS2QJ5sYIKuThVmzR70MJ/obE4jYUsg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johannes Berg <johannes.berg@intel.com>,
-	Oscar Alfonso Diaz <oscar.alfonso.diaz@gmail.com>
-Subject: [PATCH 6.12 021/119] wifi: mac80211: restore non-chanctx injection behaviour
-Date: Thu, 15 Jan 2026 17:47:16 +0100
-Message-ID: <20260115164152.726117811@linuxfoundation.org>
+	ziming zhang <ezrakiez@gmail.com>,
+	Ilya Dryomov <idryomov@gmail.com>
+Subject: [PATCH 6.12 022/119] libceph: prevent potential out-of-bounds reads in handle_auth_done()
+Date: Thu, 15 Jan 2026 17:47:17 +0100
+Message-ID: <20260115164152.762313676@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260115164151.948839306@linuxfoundation.org>
 References: <20260115164151.948839306@linuxfoundation.org>
@@ -50,40 +50,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johannes Berg <johannes.berg@intel.com>
+From: ziming zhang <ezrakiez@gmail.com>
 
-commit d594cc6f2c588810888df70c83a9654b6bc7942d upstream.
+commit 818156caffbf55cb4d368f9c3cac64e458fb49c9 upstream.
 
-During the transition to use channel contexts throughout, the
-ability to do injection while in monitor mode concurrent with
-another interface was lost, since the (virtual) monitor won't
-have a chanctx assigned in this scenario.
+Perform an explicit bounds check on payload_len to avoid a possible
+out-of-bounds access in the callout.
 
-It's harder to fix drivers that actually transitioned to using
-channel contexts themselves, such as mt76, but it's easy to do
-those that are (still) just using the emulation. Do that.
+[ idryomov: changelog ]
 
 Cc: stable@vger.kernel.org
-Link: https://bugzilla.kernel.org/show_bug.cgi?id=218763
-Reported-and-tested-by: Oscar Alfonso Diaz <oscar.alfonso.diaz@gmail.com>
-Fixes: 0a44dfc07074 ("wifi: mac80211: simplify non-chanctx drivers")
-Link: https://patch.msgid.link/20251216105242.18366-2-johannes@sipsolutions.net
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Signed-off-by: ziming zhang <ezrakiez@gmail.com>
+Reviewed-by: Ilya Dryomov <idryomov@gmail.com>
+Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/mac80211/tx.c |    2 ++
+ net/ceph/messenger_v2.c |    2 ++
  1 file changed, 2 insertions(+)
 
---- a/net/mac80211/tx.c
-+++ b/net/mac80211/tx.c
-@@ -2395,6 +2395,8 @@ netdev_tx_t ieee80211_monitor_start_xmit
+--- a/net/ceph/messenger_v2.c
++++ b/net/ceph/messenger_v2.c
+@@ -2405,7 +2405,9 @@ static int process_auth_done(struct ceph
  
- 	if (chanctx_conf)
- 		chandef = &chanctx_conf->def;
-+	else if (local->emulate_chanctx)
-+		chandef = &local->hw.conf.chandef;
- 	else
- 		goto fail_rcu;
+ 	ceph_decode_64_safe(&p, end, global_id, bad);
+ 	ceph_decode_32_safe(&p, end, con->v2.con_mode, bad);
++
+ 	ceph_decode_32_safe(&p, end, payload_len, bad);
++	ceph_decode_need(&p, end, payload_len, bad);
  
+ 	dout("%s con %p global_id %llu con_mode %d payload_len %d\n",
+ 	     __func__, con, global_id, con->v2.con_mode, payload_len);
 
 
