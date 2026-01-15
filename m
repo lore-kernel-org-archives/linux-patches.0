@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF9112C11CA;
-	Thu, 15 Jan 2026 17:17:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 854C486334;
+	Thu, 15 Jan 2026 17:17:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768497438; cv=none; b=UyPVsH3UPjUgWBixbntTxPNT87lffItwW9Mg/gfZ8elVjt+CjabnxI8EvBrdVg1Zcgc6k/rZl+5F0TVl9Wb0GMbhHQRRwsloL3x9dEGWejWddUNP8pcJQAaESsDHt7qPnoF/hZCPeVIcMktHlv46Li8qZwuS0JL5R5yBZnZlc3k=
+	t=1768497441; cv=none; b=aqXa0eyiZiVw2YnTBNdht2NmQHxZxZ8bankRsZUbX9xoqBoGntojQOZyAx5428RYMZ+DD2kCtQRIG+7low0fzvPgfdxztYs6JfVmYAYELmx9sY2GytYiVk/SBcpossPdpigGxjAtWdVLos6JZsDKbQfV2T1DBFI6LKGjozoBR2s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768497438; c=relaxed/simple;
-	bh=d/fmsrk38rJGWR1XcoA6qthNS38amSHHcIuoiHCHiLM=;
+	s=arc-20240116; t=1768497441; c=relaxed/simple;
+	bh=9wY0/9LDZcJg3geEIsvx6NA+ebfsrMaDEisJHM4whF8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DX6judJI8bPiUgVsMCYEGM+38tAfIki344NV11yja7vMBapMTCxGimEGe+EdtfW5kvoUZINEIJ0Fd6zjUUKBtPRdFbsa2SfEnmBU007kovbAY0qM6038i3qELv5OxkZQf7kTbfUyLlh8bDJaSJUMG+A/ZmmZ6yShkwH7bQ3X+H4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MFxY4Dz2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gmNZlo2KG8UAc4Y5XlVFHltHBJxmn4O+e++ZJE6i3nsKJoNxqABwe+H0OdyOr4VnCom1LJ6AyE06YMy7DZGaCa/HzmHg45uBuoHPq3Ors9a1hUb23ButjjKFnJ8KwlwhnGjF3lIgHh8WBDeGP5x/OjT8Lgk3uvoM1NWYKas5yok=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yIz2yB17; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MFxY4Dz2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B9E9C116D0;
-	Thu, 15 Jan 2026 17:17:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yIz2yB17"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 11C6FC116D0;
+	Thu, 15 Jan 2026 17:17:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1768497438;
-	bh=d/fmsrk38rJGWR1XcoA6qthNS38amSHHcIuoiHCHiLM=;
+	s=korg; t=1768497441;
+	bh=9wY0/9LDZcJg3geEIsvx6NA+ebfsrMaDEisJHM4whF8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MFxY4Dz2Y14k2QmyDoH3tOfK2RnjTToqZ1M+5MEHV3oAjYn4YyXblpS13t0+f//pI
-	 qa0TExjnsrrUqBJJ6sq0j7+hzT10r0IiJflPtCd/6ysWBelN9OFoFwEdgul55MLdQE
-	 WT867Hx3x4uKN4wszQXV9G5iJaGo9fOgxvKo9ifE=
+	b=yIz2yB17eUmu+8quPSqZBah5pHnKCFcIBiPY4F5sck3ZJ68Jj+lWxmXZnw9sjbl7l
+	 jOf9AgpJBDLsARDUH40WUjJrsRZ8BmeNkmlH9WmLQjzvR6y75jURuMzPCM1Q/F1TeZ
+	 A8QIshvYY2c+dpwgQKDDnlXvbla7DSeM+nxSvUYU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -32,9 +32,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Josef Bacik <josef@toxicpanda.com>,
 	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 081/554] nbd: clean up return value checking of sock_xmit()
-Date: Thu, 15 Jan 2026 17:42:27 +0100
-Message-ID: <20260115164249.171887059@linuxfoundation.org>
+Subject: [PATCH 5.15 082/554] nbd: partition nbd_read_stat() into nbd_read_reply() and nbd_handle_reply()
+Date: Thu, 15 Jan 2026 17:42:28 +0100
+Message-ID: <20260115164249.207737806@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260115164246.225995385@linuxfoundation.org>
 References: <20260115164246.225995385@linuxfoundation.org>
@@ -55,81 +55,158 @@ Content-Transfer-Encoding: 8bit
 
 From: Yu Kuai <yukuai3@huawei.com>
 
-[ Upstream commit f52c0e08237e7864a44311fc78bc9bf2e045611b ]
+[ Upstream commit 3fe1db626a56cdf259c348404f2c5429e2f065a1 ]
 
-Check if sock_xmit() return 0 is useless because it'll never return
-0, comment it and remove such checkings.
+Prepare to fix uaf in nbd_read_stat(), no functional changes.
 
 Signed-off-by: Yu Kuai <yukuai3@huawei.com>
 Reviewed-by: Ming Lei <ming.lei@redhat.com>
 Reviewed-by: Josef Bacik <josef@toxicpanda.com>
-Link: https://lore.kernel.org/r/20210916093350.1410403-6-yukuai3@huawei.com
+Link: https://lore.kernel.org/r/20210916093350.1410403-7-yukuai3@huawei.com
 Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Stable-dep-of: 9517b82d8d42 ("nbd: defer config put in recv_work")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/block/nbd.c | 13 +++++++------
- 1 file changed, 7 insertions(+), 6 deletions(-)
+ drivers/block/nbd.c | 74 +++++++++++++++++++++++++++------------------
+ 1 file changed, 44 insertions(+), 30 deletions(-)
 
 diff --git a/drivers/block/nbd.c b/drivers/block/nbd.c
-index eca713f87614f..3f5c5e122bf78 100644
+index 3f5c5e122bf78..eb37427a3c019 100644
 --- a/drivers/block/nbd.c
 +++ b/drivers/block/nbd.c
-@@ -487,7 +487,8 @@ static enum blk_eh_timer_return nbd_xmit_timeout(struct request *req,
+@@ -692,38 +692,45 @@ static int nbd_send_cmd(struct nbd_device *nbd, struct nbd_cmd *cmd, int index)
+ 	return 0;
  }
  
- /*
-- *  Send or receive packet.
-+ *  Send or receive packet. Return a positive value on success and
-+ *  negtive value on failue, and never return 0.
-  */
- static int sock_xmit(struct nbd_device *nbd, int index, int send,
- 		     struct iov_iter *iter, int msg_flags, int *sent)
-@@ -613,7 +614,7 @@ static int nbd_send_cmd(struct nbd_device *nbd, struct nbd_cmd *cmd, int index)
- 	result = sock_xmit(nbd, index, 1, &from,
- 			(type == NBD_CMD_WRITE) ? MSG_MORE : 0, &sent);
- 	trace_nbd_header_sent(req, handle);
--	if (result <= 0) {
-+	if (result < 0) {
- 		if (was_interrupted(result)) {
- 			/* If we havne't sent anything we can just return BUSY,
- 			 * however if we have sent something we need to make
-@@ -657,7 +658,7 @@ static int nbd_send_cmd(struct nbd_device *nbd, struct nbd_cmd *cmd, int index)
- 				skip = 0;
- 			}
- 			result = sock_xmit(nbd, index, 1, &from, flags, &sent);
--			if (result <= 0) {
-+			if (result < 0) {
- 				if (was_interrupted(result)) {
- 					/* We've already sent the header, we
- 					 * have no choice but to set pending and
-@@ -709,7 +710,7 @@ static struct nbd_cmd *nbd_read_stat(struct nbd_device *nbd, int index)
- 	reply.magic = 0;
- 	iov_iter_kvec(&to, READ, &iov, 1, sizeof(reply));
+-/* NULL returned = something went wrong, inform userspace */
+-static struct nbd_cmd *nbd_read_stat(struct nbd_device *nbd, int index)
++static int nbd_read_reply(struct nbd_device *nbd, int index,
++			  struct nbd_reply *reply)
+ {
+-	struct nbd_config *config = nbd->config;
+-	int result;
+-	struct nbd_reply reply;
+-	struct nbd_cmd *cmd;
+-	struct request *req = NULL;
+-	u64 handle;
+-	u16 hwq;
+-	u32 tag;
+-	struct kvec iov = {.iov_base = &reply, .iov_len = sizeof(reply)};
++	struct kvec iov = {.iov_base = reply, .iov_len = sizeof(*reply)};
+ 	struct iov_iter to;
+-	int ret = 0;
++	int result;
+ 
+-	reply.magic = 0;
+-	iov_iter_kvec(&to, READ, &iov, 1, sizeof(reply));
++	reply->magic = 0;
++	iov_iter_kvec(&to, READ, &iov, 1, sizeof(*reply));
  	result = sock_xmit(nbd, index, 0, &to, MSG_WAITALL, NULL);
--	if (result <= 0) {
-+	if (result < 0) {
- 		if (!nbd_disconnected(config))
+ 	if (result < 0) {
+-		if (!nbd_disconnected(config))
++		if (!nbd_disconnected(nbd->config))
  			dev_err(disk_to_dev(nbd->disk),
  				"Receive control failed (result %d)\n", result);
-@@ -770,7 +771,7 @@ static struct nbd_cmd *nbd_read_stat(struct nbd_device *nbd, int index)
+-		return ERR_PTR(result);
++		return result;
+ 	}
+ 
+-	if (ntohl(reply.magic) != NBD_REPLY_MAGIC) {
++	if (ntohl(reply->magic) != NBD_REPLY_MAGIC) {
+ 		dev_err(disk_to_dev(nbd->disk), "Wrong magic (0x%lx)\n",
+-				(unsigned long)ntohl(reply.magic));
+-		return ERR_PTR(-EPROTO);
++				(unsigned long)ntohl(reply->magic));
++		return -EPROTO;
+ 	}
+ 
+-	memcpy(&handle, reply.handle, sizeof(handle));
++	return 0;
++}
++
++/* NULL returned = something went wrong, inform userspace */
++static struct nbd_cmd *nbd_handle_reply(struct nbd_device *nbd, int index,
++					struct nbd_reply *reply)
++{
++	int result;
++	struct nbd_cmd *cmd;
++	struct request *req = NULL;
++	u64 handle;
++	u16 hwq;
++	u32 tag;
++	int ret = 0;
++
++	memcpy(&handle, reply->handle, sizeof(handle));
+ 	tag = nbd_handle_to_tag(handle);
+ 	hwq = blk_mq_unique_tag_to_hwq(tag);
+ 	if (hwq < nbd->tag_set.nr_hw_queues)
+@@ -756,9 +763,9 @@ static struct nbd_cmd *nbd_read_stat(struct nbd_device *nbd, int index)
+ 		ret = -ENOENT;
+ 		goto out;
+ 	}
+-	if (ntohl(reply.error)) {
++	if (ntohl(reply->error)) {
+ 		dev_err(disk_to_dev(nbd->disk), "Other side returned error (%d)\n",
+-			ntohl(reply.error));
++			ntohl(reply->error));
+ 		cmd->status = BLK_STS_IOERR;
+ 		goto out;
+ 	}
+@@ -767,6 +774,7 @@ static struct nbd_cmd *nbd_read_stat(struct nbd_device *nbd, int index)
+ 	if (rq_data_dir(req) != WRITE) {
+ 		struct req_iterator iter;
+ 		struct bio_vec bvec;
++		struct iov_iter to;
+ 
  		rq_for_each_segment(bvec, req, iter) {
  			iov_iter_bvec(&to, READ, &bvec, 1, bvec.bv_len);
- 			result = sock_xmit(nbd, index, 0, &to, MSG_WAITALL, NULL);
--			if (result <= 0) {
-+			if (result < 0) {
- 				dev_err(disk_to_dev(nbd->disk), "Receive data failed (result %d)\n",
- 					result);
- 				/*
-@@ -1216,7 +1217,7 @@ static void send_disconnects(struct nbd_device *nbd)
- 		iov_iter_kvec(&from, WRITE, &iov, 1, sizeof(request));
- 		mutex_lock(&nsock->tx_lock);
- 		ret = sock_xmit(nbd, i, 1, &from, 0, NULL);
--		if (ret <= 0)
-+		if (ret < 0)
- 			dev_err(disk_to_dev(nbd->disk),
- 				"Send disconnect failed %d\n", ret);
- 		mutex_unlock(&nsock->tx_lock);
+@@ -780,7 +788,7 @@ static struct nbd_cmd *nbd_read_stat(struct nbd_device *nbd, int index)
+ 				 * and let the timeout stuff handle resubmitting
+ 				 * this request onto another connection.
+ 				 */
+-				if (nbd_disconnected(config)) {
++				if (nbd_disconnected(nbd->config)) {
+ 					cmd->status = BLK_STS_IOERR;
+ 					goto out;
+ 				}
+@@ -804,24 +812,30 @@ static void recv_work(struct work_struct *work)
+ 						     work);
+ 	struct nbd_device *nbd = args->nbd;
+ 	struct nbd_config *config = nbd->config;
++	struct nbd_sock *nsock;
+ 	struct nbd_cmd *cmd;
+ 	struct request *rq;
+ 
+ 	while (1) {
+-		cmd = nbd_read_stat(nbd, args->index);
+-		if (IS_ERR(cmd)) {
+-			struct nbd_sock *nsock = config->socks[args->index];
++		struct nbd_reply reply;
+ 
+-			mutex_lock(&nsock->tx_lock);
+-			nbd_mark_nsock_dead(nbd, nsock, 1);
+-			mutex_unlock(&nsock->tx_lock);
++		if (nbd_read_reply(nbd, args->index, &reply))
++			break;
++
++		cmd = nbd_handle_reply(nbd, args->index, &reply);
++		if (IS_ERR(cmd))
+ 			break;
+-		}
+ 
+ 		rq = blk_mq_rq_from_pdu(cmd);
+ 		if (likely(!blk_should_fake_timeout(rq->q)))
+ 			blk_mq_complete_request(rq);
+ 	}
++
++	nsock = config->socks[args->index];
++	mutex_lock(&nsock->tx_lock);
++	nbd_mark_nsock_dead(nbd, nsock, 1);
++	mutex_unlock(&nsock->tx_lock);
++
+ 	nbd_config_put(nbd);
+ 	atomic_dec(&config->recv_threads);
+ 	wake_up(&config->recv_wq);
 -- 
 2.51.0
 
