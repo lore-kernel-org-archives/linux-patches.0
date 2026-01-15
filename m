@@ -1,39 +1,47 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32F7537C117;
-	Thu, 15 Jan 2026 17:04:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA3D42D73A0;
+	Thu, 15 Jan 2026 17:04:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768496646; cv=none; b=XgJIDX7749Qt5kQ837TcYH5gTCbmkyQITLut0NIbED9OZh2+SwFIPrMMVUkcWtzXGYJy2gu/sF56nBVofjy8QF1BAZIXV2SSJdbqQrydNcXTX2nMGSi3uTDhJHv6GcINnOMo/NVTVnQP7clwQBJjqspgHwnIfjQhOwO1U0RLvfY=
+	t=1768496649; cv=none; b=gApBc4PjV/+r8GfQsVVa66S0pE+DyOeTemHwXeU826EuXz/DSLNnbY1hU8HgFpGtV3qb9fOge2KakBJttUwgbbbOi+2YrIBv97fCDJkSmb/prLVp+pW38R8XKH4TMRpdc0NLWCfKd53RVqfMZE7I23bYhIWbx8cObTILV+CAB6g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768496646; c=relaxed/simple;
-	bh=ul6nZNbJ6E3YjNrxzqlv4h3/WqjrNap+4ej9jHcVZ7Y=;
+	s=arc-20240116; t=1768496649; c=relaxed/simple;
+	bh=tMO5CeY4+ivEOgLC33PootKWf6rVPG5mFc+iR4CQEEI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rAWXtkwerDChcwN9JVkbINxTjkhyyOlHOhjmiI3menhora2jNG2Wuyv5oeeqZDzLh3IHa3oGo9+w/AEjs8UxIU2p/pkoEKQxWYwbuuPGVjUJa3YPsT4hq+bdt3xgRiZMFdA0SkikZ0I82TQBylVbhPra0DcAwgq5KmvcL8FKHi4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ptFPPkHP; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=LVgGNxEHKEexoxSeOjmLAAY4+AGakzCvF21LI4Trg+rH5HRik9n9LmqFVFSldKyy5N2LJdERJJvPPkfE1vN+kB3ZU2+fghd/GwnBqwO3WFPf84QHEp32cKKHRYvqGS+ERUWS/q9PUkXAFnC598qti17GdtjOQGLrliChJYISpCU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LUrSMntd; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ptFPPkHP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 763B6C116D0;
-	Thu, 15 Jan 2026 17:04:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LUrSMntd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0EF4BC116D0;
+	Thu, 15 Jan 2026 17:04:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1768496645;
-	bh=ul6nZNbJ6E3YjNrxzqlv4h3/WqjrNap+4ej9jHcVZ7Y=;
+	s=korg; t=1768496648;
+	bh=tMO5CeY4+ivEOgLC33PootKWf6rVPG5mFc+iR4CQEEI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ptFPPkHPCOfYA/rGANZwF3lxYXygYHC5ubUg4Fgra3SLOQ9LEuBEZbqn9TY9JP6IW
-	 2VFFhkZsjEvBBch7E3+8A7OQLbEHPpm204iksAnsfoUOZDraVZa7OwJhcyiwWi6kLE
-	 brYJV4t4WNVwa5F2jEW39ZupzUcfbjLKSDzPXb2o=
+	b=LUrSMntd/JbyOwMYE704y3WECzTaMLlSmqlNfjzIhVQ0x1g2vYiZJw4hfm2LUmqi+
+	 u4oxY17k79SfQmWrc4oZdElvW25qd4BfmoLHiUSEEJeexs+aYWn0pBD06P+oV3FCE+
+	 F8lh8X4Mh38+JMGCMnJJulttSxxXvIDQwPln+oHo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+58b44a770a1585795351@syzkaller.appspotmail.com,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 085/119] arp: do not assume dev_hard_header() does not change skb->head
-Date: Thu, 15 Jan 2026 17:48:20 +0100
-Message-ID: <20260115164155.017612509@linuxfoundation.org>
+	=?UTF-8?q?Timoth=C3=A9e=20Ravier?= <tim@siosm.fr>,
+	=?UTF-8?q?Aleks=C3=A9i=20Naid=C3=A9nov?= <an@digitaltide.io>,
+	Amir Goldstein <amir73il@gmail.com>,
+	Alexander Larsson <alexl@redhat.com>,
+	Zhiguo Niu <zhiguo.niu@unisoc.com>,
+	Chao Yu <chao@kernel.org>,
+	Christian Brauner <brauner@kernel.org>,
+	Miklos Szeredi <mszeredi@redhat.com>,
+	Gao Xiang <hsiangkao@linux.alibaba.com>,
+	Sasha Levin <sashal@kernel.org>,
+	Dusty Mabe <dusty@dustymabe.com>,
+	Sheng Yong <shengyong1@xiaomi.com>
+Subject: [PATCH 6.12 086/119] erofs: dont bother with s_stack_depth increasing for now
+Date: Thu, 15 Jan 2026 17:48:21 +0100
+Message-ID: <20260115164155.054102193@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260115164151.948839306@linuxfoundation.org>
 References: <20260115164151.948839306@linuxfoundation.org>
@@ -46,62 +54,102 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Gao Xiang <hsiangkao@linux.alibaba.com>
 
-[ Upstream commit c92510f5e3f82ba11c95991824a41e59a9c5ed81 ]
+[ Upstream commit 072a7c7cdbea4f91df854ee2bb216256cd619f2a ]
 
-arp_create() is the only dev_hard_header() caller
-making assumption about skb->head being unchanged.
+Previously, commit d53cd891f0e4 ("erofs: limit the level of fs stacking
+for file-backed mounts") bumped `s_stack_depth` by one to avoid kernel
+stack overflow when stacking an unlimited number of EROFS on top of
+each other.
 
-A recent commit broke this assumption.
+This fix breaks composefs mounts, which need EROFS+ovl^2 sometimes
+(and such setups are already used in production for quite a long time).
 
-Initialize @arp pointer after dev_hard_header() call.
+One way to fix this regression is to bump FILESYSTEM_MAX_STACK_DEPTH
+from 2 to 3, but proving that this is safe in general is a high bar.
 
-Fixes: db5b4e39c4e6 ("ip6_gre: make ip6gre_header() robust")
-Reported-by: syzbot+58b44a770a1585795351@syzkaller.appspotmail.com
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Link: https://patch.msgid.link/20260107212250.384552-1-edumazet@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+After a long discussion on GitHub issues [1] about possible solutions,
+one conclusion is that there is no need to support nesting file-backed
+EROFS mounts on stacked filesystems, because there is always the option
+to use loopback devices as a fallback.
+
+As a quick fix for the composefs regression for this cycle, instead of
+bumping `s_stack_depth` for file backed EROFS mounts, we disallow
+nesting file-backed EROFS over EROFS and over filesystems with
+`s_stack_depth` > 0.
+
+This works for all known file-backed mount use cases (composefs,
+containerd, and Android APEX for some Android vendors), and the fix is
+self-contained.
+
+Essentially, we are allowing one extra unaccounted fs stacking level of
+EROFS below stacking filesystems, but EROFS can only be used in the read
+path (i.e. overlayfs lower layers), which typically has much lower stack
+usage than the write path.
+
+We can consider increasing FILESYSTEM_MAX_STACK_DEPTH later, after more
+stack usage analysis or using alternative approaches, such as splitting
+the `s_stack_depth` limitation according to different combinations of
+stacking.
+
+Fixes: d53cd891f0e4 ("erofs: limit the level of fs stacking for file-backed mounts")
+Reported-and-tested-by: Dusty Mabe <dusty@dustymabe.com>
+Reported-by: Timothée Ravier <tim@siosm.fr>
+Closes: https://github.com/coreos/fedora-coreos-tracker/issues/2087 [1]
+Reported-by: "Alekséi Naidénov" <an@digitaltide.io>
+Closes: https://lore.kernel.org/r/CAFHtUiYv4+=+JP_-JjARWjo6OwcvBj1wtYN=z0QXwCpec9sXtg@mail.gmail.com
+Acked-by: Amir Goldstein <amir73il@gmail.com>
+Acked-by: Alexander Larsson <alexl@redhat.com>
+Reviewed-and-tested-by: Sheng Yong <shengyong1@xiaomi.com>
+Reviewed-by: Zhiguo Niu <zhiguo.niu@unisoc.com>
+Reviewed-by: Chao Yu <chao@kernel.org>
+Cc: Christian Brauner <brauner@kernel.org>
+Cc: Miklos Szeredi <mszeredi@redhat.com>
+Signed-off-by: Gao Xiang <hsiangkao@linux.alibaba.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/arp.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ fs/erofs/super.c | 18 ++++++++++++------
+ 1 file changed, 12 insertions(+), 6 deletions(-)
 
-diff --git a/net/ipv4/arp.c b/net/ipv4/arp.c
-index 8fb48f42581ce..7822b21445148 100644
---- a/net/ipv4/arp.c
-+++ b/net/ipv4/arp.c
-@@ -564,7 +564,7 @@ struct sk_buff *arp_create(int type, int ptype, __be32 dest_ip,
- 
- 	skb_reserve(skb, hlen);
- 	skb_reset_network_header(skb);
--	arp = skb_put(skb, arp_hdr_len(dev));
-+	skb_put(skb, arp_hdr_len(dev));
- 	skb->dev = dev;
- 	skb->protocol = htons(ETH_P_ARP);
- 	if (!src_hw)
-@@ -572,12 +572,13 @@ struct sk_buff *arp_create(int type, int ptype, __be32 dest_ip,
- 	if (!dest_hw)
- 		dest_hw = dev->broadcast;
- 
--	/*
--	 *	Fill the device header for the ARP frame
-+	/* Fill the device header for the ARP frame.
-+	 * Note: skb->head can be changed.
- 	 */
- 	if (dev_hard_header(skb, dev, ptype, dest_hw, src_hw, skb->len) < 0)
- 		goto out;
- 
-+	arp = arp_hdr(skb);
- 	/*
- 	 * Fill out the arp protocol part.
- 	 *
+diff --git a/fs/erofs/super.c b/fs/erofs/super.c
+index 027fd567a4d9f..f0b83beec6b24 100644
+--- a/fs/erofs/super.c
++++ b/fs/erofs/super.c
+@@ -641,14 +641,20 @@ static int erofs_fc_fill_super(struct super_block *sb, struct fs_context *fc)
+ 		 * fs contexts (including its own) due to self-controlled RO
+ 		 * accesses/contexts and no side-effect changes that need to
+ 		 * context save & restore so it can reuse the current thread
+-		 * context.  However, it still needs to bump `s_stack_depth` to
+-		 * avoid kernel stack overflow from nested filesystems.
++		 * context.
++		 * However, we still need to prevent kernel stack overflow due
++		 * to filesystem nesting: just ensure that s_stack_depth is 0
++		 * to disallow mounting EROFS on stacked filesystems.
++		 * Note: s_stack_depth is not incremented here for now, since
++		 * EROFS is the only fs supporting file-backed mounts for now.
++		 * It MUST change if another fs plans to support them, which
++		 * may also require adjusting FILESYSTEM_MAX_STACK_DEPTH.
+ 		 */
+ 		if (erofs_is_fileio_mode(sbi)) {
+-			sb->s_stack_depth =
+-				file_inode(sbi->dif0.file)->i_sb->s_stack_depth + 1;
+-			if (sb->s_stack_depth > FILESYSTEM_MAX_STACK_DEPTH) {
+-				erofs_err(sb, "maximum fs stacking depth exceeded");
++			inode = file_inode(sbi->dif0.file);
++			if ((inode->i_sb->s_op == &erofs_sops && !sb->s_bdev) ||
++			    inode->i_sb->s_stack_depth) {
++				erofs_err(sb, "file-backed mounts cannot be applied to stacked fses");
+ 				return -ENOTBLK;
+ 			}
+ 		}
 -- 
 2.51.0
 
