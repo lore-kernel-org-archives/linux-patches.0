@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A70914C81;
-	Thu, 15 Jan 2026 17:23:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78B514C81;
+	Thu, 15 Jan 2026 17:23:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768497798; cv=none; b=UuSB+K4qHwOfPTIzd3SEXKeMFZQXcIYxxpY+orPWaKMiZGcZbYOgHSbfgDK8//yDumkwaARsO+7SPuxIWzWLsuR2q6jritaMBIMt1gNE0JM65YVwabrZ2WAky3STB0H6D3i/iMWQvIjBuN+9rKsou1myNRJ20LucJz9nAxVdlLs=
+	t=1768497801; cv=none; b=f42fzqI9GMwIHW68PJG2u8ucnS3skBJKimDOft1UQ2oxiiP9DdU2a0OtOAARH4u5xrIHxINzrl6a/gUF/LhAK3VGSBuAWW6s7vjndV85GpNTQB2UgePUm4s1/SV+5FVsp+fJ4Su8jxiUVzozYgLZsmWB+JGs1Kvl7PzhqqyRU/I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768497798; c=relaxed/simple;
-	bh=+XwIigOvCxM10Ub5tBv0ee2M4YxAfyac/U2L5UHG54s=;
+	s=arc-20240116; t=1768497801; c=relaxed/simple;
+	bh=eeiPP0uPgP30kbfHQYwFgovCOZW1yy7H1vBKal8/hDE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MW4jRGOpTTvari5vSvNOoGRE/p5Kzk3qC7uh+zmh4fXDCIaz6ESCfjRa42kbzNo7u5ZrF3SV/JZMcggaLuRxG+h91HpL4cepVP+BmSLGYLVjX9f45It5IYV5nVYTFwpJy76EkmMumJvJxnToSwwjdt3540RJPpmD4afDL8n+Ndk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=j2f10M0x; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=l3RO+69xi/LJVeTx3CA16qZ4WzdgsiSyh7IfRDu9YIFGYQnWWi0gOU9Jd70GHwxAZkhWVvoKuGs7KtUAlAqzpK0sOsdr1By7fZrtbOPZ3K8E1GWN/Nkah7/L56fgx2Rgdxz57hVc6KrU65SzTJzamskcPB8bXqLtDNrHIKKSXv0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BSWiqiWQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="j2f10M0x"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 264A3C116D0;
-	Thu, 15 Jan 2026 17:23:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BSWiqiWQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02561C116D0;
+	Thu, 15 Jan 2026 17:23:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1768497798;
-	bh=+XwIigOvCxM10Ub5tBv0ee2M4YxAfyac/U2L5UHG54s=;
+	s=korg; t=1768497801;
+	bh=eeiPP0uPgP30kbfHQYwFgovCOZW1yy7H1vBKal8/hDE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=j2f10M0xHdxEoBIsLJ/NrR6ZGNTGXm97G3PC7MJRUOuqbhiE/Zu8Vf+Guw/Ez4oWT
-	 qO6wHz0wQxCNQMCb71Wd5H9wV/sf00V1FMXNp96dMg/mjFJP8BhqZwEqeXU+9P2T+6
-	 BgIFG6udJOyn9C0Xpbp69MbHoteLTpAWpQwtlFaA=
+	b=BSWiqiWQkuaz0wHLqJIf0l7BmdxZmAh8hWvAGikCU/ffjU6SyIgqYRZGzLwhOAr0B
+	 tTaRny/4082Ru9t1POoWken6n6dNqbF0rTWiIZJet0ez7YxkAruWIbPq0un2WCU4lV
+	 KwjGwocxZg3I/94EeDp0VHjb+DE4ipCQVG/ykKOM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Michael Stoler <michael.stoler@vastdata.com>,
 	Trond Myklebust <trond.myklebust@hammerspace.com>,
-	Anna Schumaker <Anna.Schumaker@Netapp.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 174/554] NFS: Fix the verifier for case sensitive filesystem in nfs_atomic_open()
-Date: Thu, 15 Jan 2026 17:44:00 +0100
-Message-ID: <20260115164252.564681858@linuxfoundation.org>
+Subject: [PATCH 5.15 175/554] NFS: Initialise verifiers for visible dentries in nfs_atomic_open()
+Date: Thu, 15 Jan 2026 17:44:01 +0100
+Message-ID: <20260115164252.603390907@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260115164246.225995385@linuxfoundation.org>
 References: <20260115164246.225995385@linuxfoundation.org>
@@ -53,38 +53,34 @@ Content-Transfer-Encoding: 8bit
 
 From: Trond Myklebust <trond.myklebust@hammerspace.com>
 
-[ Upstream commit 68eaba4ca924a97a863c5c81c0b23a11dcb6db90 ]
+[ Upstream commit 518c32a1bc4f8df1a8442ee8cdfea3e2fcff20a0 ]
 
+Ensure that the verifiers are initialised before calling
+d_splice_alias() in nfs_atomic_open().
+
+Reported-by: Michael Stoler <michael.stoler@vastdata.com>
+Fixes: 809fd143de88 ("NFSv4: Ensure nfs_atomic_open set the dentry verifier on ENOENT")
 Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
-Signed-off-by: Anna Schumaker <Anna.Schumaker@Netapp.com>
-Stable-dep-of: 518c32a1bc4f ("NFS: Initialise verifiers for visible dentries in nfs_atomic_open()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfs/dir.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ fs/nfs/dir.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/fs/nfs/dir.c b/fs/nfs/dir.c
-index 2a325a79327bc..dc0c50b97643b 100644
+index dc0c50b97643b..6dd56841feab9 100644
 --- a/fs/nfs/dir.c
 +++ b/fs/nfs/dir.c
-@@ -1887,6 +1887,7 @@ int nfs_atomic_open(struct inode *dir, struct dentry *dentry,
- 	struct iattr attr = { .ia_valid = ATTR_OPEN };
- 	struct inode *inode;
- 	unsigned int lookup_flags = 0;
-+	unsigned long dir_verifier;
- 	bool switched = false;
- 	int created = 0;
- 	int err;
-@@ -1960,7 +1961,11 @@ int nfs_atomic_open(struct inode *dir, struct dentry *dentry,
+@@ -1960,12 +1960,12 @@ int nfs_atomic_open(struct inode *dir, struct dentry *dentry,
+ 		d_drop(dentry);
  		switch (err) {
  		case -ENOENT:
- 			d_splice_alias(NULL, dentry);
--			nfs_set_verifier(dentry, nfs_save_change_attribute(dir));
-+			if (nfs_server_capable(dir, NFS_CAP_CASE_INSENSITIVE))
-+				dir_verifier = inode_peek_iversion_raw(dir);
-+			else
-+				dir_verifier = nfs_save_change_attribute(dir);
-+			nfs_set_verifier(dentry, dir_verifier);
+-			d_splice_alias(NULL, dentry);
+ 			if (nfs_server_capable(dir, NFS_CAP_CASE_INSENSITIVE))
+ 				dir_verifier = inode_peek_iversion_raw(dir);
+ 			else
+ 				dir_verifier = nfs_save_change_attribute(dir);
+ 			nfs_set_verifier(dentry, dir_verifier);
++			d_splice_alias(NULL, dentry);
  			break;
  		case -EISDIR:
  		case -ENOTDIR:
