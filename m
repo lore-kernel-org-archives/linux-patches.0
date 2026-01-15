@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4958E39B4BF;
-	Thu, 15 Jan 2026 17:00:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57F6E2C028F;
+	Thu, 15 Jan 2026 17:00:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768496434; cv=none; b=UKo6315ctgJQP6baBPui9eywOqwHw/9tVifZ6Y1GAali3D6aGZmyjkxUDvkpvP3CEOxgctqm/LGqhOczJBO85hlIUvv/nUIcBGv/3tu4DoZBxxza3WE5ZGBkGXsOtbhNWe5J96gk9i8cK8QNGxGuGfFXWBtnm6vbupReQdF5Zlw=
+	t=1768496437; cv=none; b=XyfAJ5Lv6m85w3UaWivsgbPNaSJPSuCu1oCvJoKjGDe6FVAiAqcPAhHvNymGiwGiUeJepmbfnSh7OAh8qTP2DVBctQToYm5Gr2ArgdYzlFomblw/6QCodRXoKH9L5MFXvkYkPKB0PL7FgjKa+y/khgpymgeWIoi7cL3UYPGKg5Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768496434; c=relaxed/simple;
-	bh=5v+u0HwowQngyscIZtRmCNMhKWhdsts3kPYcG+WR2d4=;
+	s=arc-20240116; t=1768496437; c=relaxed/simple;
+	bh=XUblAbUVdLgGLw2KRxDlSYnCWMtQnS26OXdiTeqscwI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hRs3RGDV+B1Refy7s0MZ2dVH5/ZMZ/uTbi3Jk4Ax74nS2XdvArR6oOIs02nQYoq0Cg6L6338+mgLgjQNYMIK6SzdVFdsT++LMlQiRpkHnrpr1du8HhXXn81plyNed9dWbTtL0bu/MxTo05b9ip6cUo/t7GaZNn6NXhfJJgUN0qc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WtggF2Ms; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=iFA3ZBltYFBtUa1SGneTb+tL6fwYVdFsrGq+toYDviw/EQlGN3nxp3vEhqlrwc6QX63QpfuyhOHGVkQqn3jWg1oTRvJlLlaqGjpM9U4+RMdrwV6zZWJt0fqBT6q7d98Dv8wUtl7hNnEYrj4Uf2obTWnsanWb9QGWnlXjRfLQ6uE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0AyTQbjV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WtggF2Ms"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C213CC116D0;
-	Thu, 15 Jan 2026 17:00:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0AyTQbjV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D069BC116D0;
+	Thu, 15 Jan 2026 17:00:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1768496434;
-	bh=5v+u0HwowQngyscIZtRmCNMhKWhdsts3kPYcG+WR2d4=;
+	s=korg; t=1768496437;
+	bh=XUblAbUVdLgGLw2KRxDlSYnCWMtQnS26OXdiTeqscwI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WtggF2MsbdgIxqBhgaRGbQOBKm1vo9vhiUzWldDEJPOQoafoaKzBqxtt5LyTFeEZA
-	 GDkoeaawSDO3HTio5RZyAwNxbzhxxyWOTMjgFyXU8mwQw3hr4PxvQV8D7YdByGkxGS
-	 yis/Df1IJFOMzNL8wzRfDw9AK/OAKH5XX12PTlCQ=
+	b=0AyTQbjV4VJvoHFdpvmD5WGG1qmArpKh4vWAelD2uYO6wd1j+b5ZuslqAt9Lo4wx3
+	 J21Of7Qp4R/kAS6dlrhr8WQGPw09LVgaOkSO34OMPvyI7AKQGx1CIotmlzaGNrWLID
+	 3Izk17+Zwh7QBEzkELG0UIMI2ZFIZwMPwXbP/Gqw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qingfang Deng <dqfext@gmail.com>,
-	Ard Biesheuvel <ardb@kernel.org>,
-	Eric Biggers <ebiggers@kernel.org>
-Subject: [PATCH 6.12 012/119] lib/crypto: aes: Fix missing MMU protection for AES S-box
-Date: Thu, 15 Jan 2026 17:47:07 +0100
-Message-ID: <20260115164152.405364208@linuxfoundation.org>
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Haotian Zhang <vulab@iscas.ac.cn>,
+	William Breathitt Gray <wbg@kernel.org>
+Subject: [PATCH 6.12 013/119] counter: 104-quad-8: Fix incorrect return value in IRQ handler
+Date: Thu, 15 Jan 2026 17:47:08 +0100
+Message-ID: <20260115164152.441592903@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260115164151.948839306@linuxfoundation.org>
 References: <20260115164151.948839306@linuxfoundation.org>
@@ -51,46 +51,78 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Biggers <ebiggers@kernel.org>
+From: Haotian Zhang <vulab@iscas.ac.cn>
 
-commit 74d74bb78aeccc9edc10db216d6be121cf7ec176 upstream.
+commit 9517d76dd160208b7a432301ce7bec8fc1ddc305 upstream.
 
-__cacheline_aligned puts the data in the ".data..cacheline_aligned"
-section, which isn't marked read-only i.e. it doesn't receive MMU
-protection.  Replace it with ____cacheline_aligned which does the right
-thing and just aligns the data while keeping it in ".rodata".
+quad8_irq_handler() should return irqreturn_t enum values, but it
+directly returns negative errno codes from regmap operations on error.
 
-Fixes: b5e0b032b6c3 ("crypto: aes - add generic time invariant AES cipher")
+Return IRQ_NONE if the interrupt status cannot be read. If clearing the
+interrupt fails, return IRQ_HANDLED to prevent the kernel from disabling
+the IRQ line due to a spurious interrupt storm. Also, log these regmap
+failures with dev_WARN_ONCE.
+
+Fixes: 98ffe0252911 ("counter: 104-quad-8: Migrate to the regmap API")
+Suggested-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Signed-off-by: Haotian Zhang <vulab@iscas.ac.cn>
+Link: https://lore.kernel.org/r/20251215020114.1913-1-vulab@iscas.ac.cn
 Cc: stable@vger.kernel.org
-Reported-by: Qingfang Deng <dqfext@gmail.com>
-Closes: https://lore.kernel.org/r/20260105074712.498-1-dqfext@gmail.com/
-Acked-by: Ard Biesheuvel <ardb@kernel.org>
-Link: https://lore.kernel.org/r/20260107052023.174620-1-ebiggers@kernel.org
-Signed-off-by: Eric Biggers <ebiggers@kernel.org>
+Signed-off-by: William Breathitt Gray <wbg@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- lib/crypto/aes.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/counter/104-quad-8.c |   20 ++++++++++++++------
+ 1 file changed, 14 insertions(+), 6 deletions(-)
 
---- a/lib/crypto/aes.c
-+++ b/lib/crypto/aes.c
-@@ -12,7 +12,7 @@
-  * Emit the sbox as volatile const to prevent the compiler from doing
-  * constant folding on sbox references involving fixed indexes.
-  */
--static volatile const u8 __cacheline_aligned aes_sbox[] = {
-+static volatile const u8 ____cacheline_aligned aes_sbox[] = {
- 	0x63, 0x7c, 0x77, 0x7b, 0xf2, 0x6b, 0x6f, 0xc5,
- 	0x30, 0x01, 0x67, 0x2b, 0xfe, 0xd7, 0xab, 0x76,
- 	0xca, 0x82, 0xc9, 0x7d, 0xfa, 0x59, 0x47, 0xf0,
-@@ -47,7 +47,7 @@ static volatile const u8 __cacheline_ali
- 	0x41, 0x99, 0x2d, 0x0f, 0xb0, 0x54, 0xbb, 0x16,
- };
+--- a/drivers/counter/104-quad-8.c
++++ b/drivers/counter/104-quad-8.c
+@@ -1192,6 +1192,7 @@ static irqreturn_t quad8_irq_handler(int
+ {
+ 	struct counter_device *counter = private;
+ 	struct quad8 *const priv = counter_priv(counter);
++	struct device *dev = counter->parent;
+ 	unsigned int status;
+ 	unsigned long irq_status;
+ 	unsigned long channel;
+@@ -1200,8 +1201,11 @@ static irqreturn_t quad8_irq_handler(int
+ 	int ret;
  
--static volatile const u8 __cacheline_aligned aes_inv_sbox[] = {
-+static volatile const u8 ____cacheline_aligned aes_inv_sbox[] = {
- 	0x52, 0x09, 0x6a, 0xd5, 0x30, 0x36, 0xa5, 0x38,
- 	0xbf, 0x40, 0xa3, 0x9e, 0x81, 0xf3, 0xd7, 0xfb,
- 	0x7c, 0xe3, 0x39, 0x82, 0x9b, 0x2f, 0xff, 0x87,
+ 	ret = regmap_read(priv->map, QUAD8_INTERRUPT_STATUS, &status);
+-	if (ret)
+-		return ret;
++	if (ret) {
++		dev_WARN_ONCE(dev, true,
++			"Attempt to read Interrupt Status Register failed: %d\n", ret);
++		return IRQ_NONE;
++	}
+ 	if (!status)
+ 		return IRQ_NONE;
+ 
+@@ -1223,8 +1227,9 @@ static irqreturn_t quad8_irq_handler(int
+ 				break;
+ 		default:
+ 			/* should never reach this path */
+-			WARN_ONCE(true, "invalid interrupt trigger function %u configured for channel %lu\n",
+-				  flg_pins, channel);
++			dev_WARN_ONCE(dev, true,
++				"invalid interrupt trigger function %u configured for channel %lu\n",
++				flg_pins, channel);
+ 			continue;
+ 		}
+ 
+@@ -1232,8 +1237,11 @@ static irqreturn_t quad8_irq_handler(int
+ 	}
+ 
+ 	ret = regmap_write(priv->map, QUAD8_CHANNEL_OPERATION, CLEAR_PENDING_INTERRUPTS);
+-	if (ret)
+-		return ret;
++	if (ret) {
++		dev_WARN_ONCE(dev, true,
++			"Attempt to clear pending interrupts by writing to Channel Operation Register failed: %d\n", ret);
++		return IRQ_HANDLED;
++	}
+ 
+ 	return IRQ_HANDLED;
+ }
 
 
