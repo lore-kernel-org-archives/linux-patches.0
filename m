@@ -1,43 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27B6C33F390;
-	Thu, 15 Jan 2026 17:03:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC93C2C028F;
+	Thu, 15 Jan 2026 17:03:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768496626; cv=none; b=TWn+2zBSHbTYNqFn4t7ZePDGC4hV2ZYdDUUliuaTMP7ZCuPNki+r6OIU0Twmu7kGANGWQRVunhy8YC/OtMWVx9W3+C3rS1OX44AdbRtjzl6I5E+OZAK6JelhREpBzZvy0vsMkTPUhfopUyQ55Movl+Ik79M0OswpKkdg826FkR0=
+	t=1768496629; cv=none; b=OVsAhPHNssP8dvAAmoGhwXNSDSeGF+HCQM62PZ9cS7DwyNy4Eg9SrOhW21wJHWJh0rbrRc61r8BmA5m9mn3ReCsQ0kjLunSh6goVpUZtPSWB3FXzUfJhr8d6A1UOVf0P7lsxh1mkI8Eicr75EoUf/mdJTznVHy20ww9oU0JFRio=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768496626; c=relaxed/simple;
-	bh=V/4IsE3J1rWsfVBWdWCemfxmYS9CM8tdecuA3Nv9PQM=;
+	s=arc-20240116; t=1768496629; c=relaxed/simple;
+	bh=b65guiZd1QqrrlmYB7+Lw77OgaBhr8A1647e/t6Mbt8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Tqz8+gw5huyHapwF3+ysFpewGYZE1aQVSO1uhrIYJTfQ6KSh6hLgatdxzmWKJVtJKTAisx/3jZOQq7ZTI7KY3WIdYd1S9AaXxYnB9sF0En9pxSS4QCRoEYS9TRbuqf/Q8cnqV+G8IHcQrqdTQmM2Gt79Ink78M8JwaF1S/9mjLQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cUVNHYZS; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jWdLscn/gATkMt2gWrliGDv9z/3sr0ruz3v9y1uZv3fvDvxxHb5rrXHdYmhLGxTvDnqYvwBWKAeXw2z9jN1VNWletWwtGuGVsJvFoXU1BG+6r7m46apg2H6nP4aiHstM16eu6b9Q5bUifcSjhW7UAIDgykFFR6mBuCR1PxPaHYc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=G5Uy30hz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cUVNHYZS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC074C116D0;
-	Thu, 15 Jan 2026 17:03:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="G5Uy30hz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A0DAC116D0;
+	Thu, 15 Jan 2026 17:03:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1768496626;
-	bh=V/4IsE3J1rWsfVBWdWCemfxmYS9CM8tdecuA3Nv9PQM=;
+	s=korg; t=1768496628;
+	bh=b65guiZd1QqrrlmYB7+Lw77OgaBhr8A1647e/t6Mbt8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cUVNHYZSTpj6kY8+8MJQBStKeOTRE4Ly+LpiOHdSDspXyeOA/Ns6nBW7v1ddM49WO
-	 w8D4kzGBK3LAa02ZU7XCkJ6gRKLWx7ss+5XlW5ElzadgOnZruUNhS+DHImMvsxDY0A
-	 DCKVQTriFuUaXntIHvanTVrSC8oS1WYZW00ZbmKw=
+	b=G5Uy30hzWJSiQEiX5+gSV3DznyeUHUsBcKSRfzxea7OBaCwRVfZ+9arlWQ2sRBvy6
+	 vml7okYp22obkc1kVcrCNZ5dviAtEAeCOVYdHxlSXy/CzvJGlyc8IrZAXLgdr+e1aM
+	 7d7nDvLu948rM+TmbO7PKiyYfwpPDu5M2pjbnkEM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Joshua Hay <joshua.a.hay@intel.com>,
-	Alexander Lobakin <aleksander.lobakin@intel.com>,
-	Madhu Chittim <madhu.chittim@intel.com>,
-	Jacob Keller <jacob.e.keller@intel.com>,
-	Aleksandr Loktionov <aleksandr.loktionov@intel.com>,
-	David Decotigny <ddecotig@google.com>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>,
+	Yohei Kojima <yk@y-koj.net>,
+	Breno Leitao <leitao@debian.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 079/119] idpf: cap maximum Rx buffer size
-Date: Thu, 15 Jan 2026 17:48:14 +0100
-Message-ID: <20260115164154.803585362@linuxfoundation.org>
+Subject: [PATCH 6.12 080/119] net: netdevsim: fix inconsistent carrier state after link/unlink
+Date: Thu, 15 Jan 2026 17:48:15 +0100
+Message-ID: <20260115164154.839970736@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260115164151.948839306@linuxfoundation.org>
 References: <20260115164151.948839306@linuxfoundation.org>
@@ -56,73 +52,77 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Joshua Hay <joshua.a.hay@intel.com>
+From: Yohei Kojima <yk@y-koj.net>
 
-[ Upstream commit 086efe0a1ecc36cffe46640ce12649a4cd3ff171 ]
+[ Upstream commit d83dddffe1904e4a576d11a541878850a8e64cd2 ]
 
-The HW only supports a maximum Rx buffer size of 16K-128. On systems
-using large pages, the libeth logic can configure the buffer size to be
-larger than this. The upper bound is PAGE_SIZE while the lower bound is
-MTU rounded up to the nearest power of 2. For example, ARM systems with
-a 64K page size and an mtu of 9000 will set the Rx buffer size to 16K,
-which will cause the config Rx queues message to fail.
+This patch fixes the edge case behavior on ifup/ifdown and
+linking/unlinking two netdevsim interfaces:
 
-Initialize the bufq/fill queue buf_len field to the maximum supported
-size. This will trigger the libeth logic to cap the maximum Rx buffer
-size by reducing the upper bound.
+1. unlink two interfaces netdevsim1 and netdevsim2
+2. ifdown netdevsim1
+3. ifup netdevsim1
+4. link two interfaces netdevsim1 and netdevsim2
+5. (Now two interfaces are linked in terms of netdevsim peer, but
+    carrier state of the two interfaces remains DOWN.)
 
-Fixes: 74d1412ac8f37 ("idpf: use libeth Rx buffer management for payload buffer")
-Signed-off-by: Joshua Hay <joshua.a.hay@intel.com>
-Acked-by: Alexander Lobakin <aleksander.lobakin@intel.com>
-Reviewed-by: Madhu Chittim <madhu.chittim@intel.com>
-Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
-Reviewed-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
-Reviewed-by: David Decotigny <ddecotig@google.com>
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+This inconsistent behavior is caused by the current implementation,
+which only cares about the "link, then ifup" order, not "ifup, then
+link" order. This patch fixes the inconsistency by calling
+netif_carrier_on() when two netdevsim interfaces are linked.
+
+This patch fixes buggy behavior on NetworkManager-based systems which
+causes the netdevsim test to fail with the following error:
+
+  # timeout set to 600
+  # selftests: drivers/net/netdevsim: peer.sh
+  # 2025/12/25 00:54:03 socat[9115] W address is opened in read-write mode but only supports read-only
+  # 2025/12/25 00:56:17 socat[9115] W connect(7, AF=2 192.168.1.1:1234, 16): Connection timed out
+  # 2025/12/25 00:56:17 socat[9115] E TCP:192.168.1.1:1234: Connection timed out
+  # expected 3 bytes, got 0
+  # 2025/12/25 00:56:17 socat[9109] W exiting on signal 15
+  not ok 13 selftests: drivers/net/netdevsim: peer.sh # exit=1
+
+This patch also solves timeout on TCP Fast Open (TFO) test in
+NetworkManager-based systems because it also depends on netdevsim's
+carrier consistency.
+
+Fixes: 1a8fed52f7be ("netdevsim: set the carrier when the device goes up")
+Signed-off-by: Yohei Kojima <yk@y-koj.net>
+Reviewed-by: Breno Leitao <leitao@debian.org>
+Link: https://patch.msgid.link/602c9e1ba5bb2ee1997bb38b1d866c9c3b807ae9.1767624906.git.yk@y-koj.net
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/idpf/idpf_txrx.c | 8 +++++---
- drivers/net/ethernet/intel/idpf/idpf_txrx.h | 1 +
- 2 files changed, 6 insertions(+), 3 deletions(-)
+ drivers/net/netdevsim/bus.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/drivers/net/ethernet/intel/idpf/idpf_txrx.c b/drivers/net/ethernet/intel/idpf/idpf_txrx.c
-index d03fb063a1efa..3ddf7b1e85ef4 100644
---- a/drivers/net/ethernet/intel/idpf/idpf_txrx.c
-+++ b/drivers/net/ethernet/intel/idpf/idpf_txrx.c
-@@ -655,9 +655,10 @@ static int idpf_rx_buf_alloc_singleq(struct idpf_rx_queue *rxq)
- static int idpf_rx_bufs_init_singleq(struct idpf_rx_queue *rxq)
- {
- 	struct libeth_fq fq = {
--		.count	= rxq->desc_count,
--		.type	= LIBETH_FQE_MTU,
--		.nid	= idpf_q_vector_to_mem(rxq->q_vector),
-+		.count		= rxq->desc_count,
-+		.type		= LIBETH_FQE_MTU,
-+		.buf_len	= IDPF_RX_MAX_BUF_SZ,
-+		.nid		= idpf_q_vector_to_mem(rxq->q_vector),
- 	};
- 	int ret;
+diff --git a/drivers/net/netdevsim/bus.c b/drivers/net/netdevsim/bus.c
+index 64c0cdd31bf85..067cbf788da48 100644
+--- a/drivers/net/netdevsim/bus.c
++++ b/drivers/net/netdevsim/bus.c
+@@ -314,6 +314,11 @@ static ssize_t link_device_store(const struct bus_type *bus, const char *buf, si
+ 	rcu_assign_pointer(nsim_a->peer, nsim_b);
+ 	rcu_assign_pointer(nsim_b->peer, nsim_a);
  
-@@ -714,6 +715,7 @@ static int idpf_rx_bufs_init(struct idpf_buf_queue *bufq,
- 		.truesize	= bufq->truesize,
- 		.count		= bufq->desc_count,
- 		.type		= type,
-+		.buf_len	= IDPF_RX_MAX_BUF_SZ,
- 		.hsplit		= idpf_queue_has(HSPLIT_EN, bufq),
- 		.nid		= idpf_q_vector_to_mem(bufq->q_vector),
- 	};
-diff --git a/drivers/net/ethernet/intel/idpf/idpf_txrx.h b/drivers/net/ethernet/intel/idpf/idpf_txrx.h
-index 48d55b373425b..5f8a9b9f5d5d7 100644
---- a/drivers/net/ethernet/intel/idpf/idpf_txrx.h
-+++ b/drivers/net/ethernet/intel/idpf/idpf_txrx.h
-@@ -96,6 +96,7 @@ do {								\
- 		idx = 0;					\
- } while (0)
++	if (netif_running(dev_a) && netif_running(dev_b)) {
++		netif_carrier_on(dev_a);
++		netif_carrier_on(dev_b);
++	}
++
+ out_err:
+ 	put_net(ns_b);
+ 	put_net(ns_a);
+@@ -363,6 +368,9 @@ static ssize_t unlink_device_store(const struct bus_type *bus, const char *buf,
+ 	if (!peer)
+ 		goto out_put_netns;
  
-+#define IDPF_RX_MAX_BUF_SZ			(16384 - 128)
- #define IDPF_RX_BUF_STRIDE			32
- #define IDPF_RX_BUF_POST_STRIDE			16
- #define IDPF_LOW_WATERMARK			64
++	netif_carrier_off(dev);
++	netif_carrier_off(peer->netdev);
++
+ 	err = 0;
+ 	RCU_INIT_POINTER(nsim->peer, NULL);
+ 	RCU_INIT_POINTER(peer->peer, NULL);
 -- 
 2.51.0
 
