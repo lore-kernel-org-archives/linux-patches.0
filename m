@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3D0225228D;
-	Thu, 15 Jan 2026 16:58:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 878523B530C;
+	Thu, 15 Jan 2026 16:58:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768496321; cv=none; b=ges1AtC2JC8avRHH+ZHdU/sVdkzV4KqH7jdLX+CCTe7Zv8g+jvNWDsdjwykJb5wcHZw6TnTIuj+Hg0TjLvedteT0KNG3d6Anx06WSf6UWjhDXVaEpbd2N2CfzcrTgSlx0E1R9V8+Hagf2BotKGaDZeF1JerrRpFlkN61R5Bi8Jg=
+	t=1768496324; cv=none; b=abh3+oJNjBC8L7W5Ul0v42UZ1K8EokmEN3BPFYK7f6gP0d78sSdpX0w55Om6q1GRkhJAqyDyI1v6YMi5LNRBB1UuImx1QpVzE2nQ814VcmaFAK0sIyVaJ/I4Un+x/MhQlwOEIompxtC3gxhSrAGc5L191tjUbR5mg2aejGTVIeY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768496321; c=relaxed/simple;
-	bh=UHK+9G4NwtlXFXrNeMS4b9uI/B1gfDKygcJWe16ZXz0=;
+	s=arc-20240116; t=1768496324; c=relaxed/simple;
+	bh=ba+1WL+l2PyHBOrhlKr0WoAyFyVn9Rbcz9fMSqbA39A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Z1yCPGcQ9A0sQIcW80AK7aiPD8faHYdbQB28sp1nG8JNhZXBIlb7ZKXTSr6R+VnOzWhHtX1mpMfJwyUIxw+xIx9w7D6zZPT8r7HINdIpHKZ+7riMPaB6dH31cV2OUmLFuOBwxJgP1ddurqT+w/GH4X108C6NqJz2Z8VY/PZKj6A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XJyq09oh; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YV8jSE3PjA/atjJAYnBh83548UMDbDQLb63O/GyY0uKgL8xCjobYaz7fQ1iNoMLa5H0VhYqJOJ6lZbz+F0W2k0hN0kB1fVyi+3BIihp4Bypuk1JtWPWNoL+/8XrFk1Wgh0tq8kHhDOTQ5QjnlmnWQ6vZZopK8NaHInd8Nz7Zlhc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KvQjaUwu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XJyq09oh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4055BC116D0;
-	Thu, 15 Jan 2026 16:58:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KvQjaUwu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D0C5C116D0;
+	Thu, 15 Jan 2026 16:58:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1768496321;
-	bh=UHK+9G4NwtlXFXrNeMS4b9uI/B1gfDKygcJWe16ZXz0=;
+	s=korg; t=1768496324;
+	bh=ba+1WL+l2PyHBOrhlKr0WoAyFyVn9Rbcz9fMSqbA39A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XJyq09oh+c2Y18dCANYIVY78qdhOsDjkHTlmXn5XVD9RF8Ua+aUJgxEIqxKYTATZa
-	 p/M8v82J7l6hAGECeabNA/D+p6fjnw6DpgeRQH/7VojLrpXXyB/8yOD9DtkcuTfirt
-	 VijMBz6VgMqu0EvO89DhnPutLArbqBE5odaOMrIk=
+	b=KvQjaUwuIn0RjFVoRtbXaoEQ5/3k6zMoqIqQMX3D+JIxJ9EM3+nGTgS2FKMGgyMO1
+	 /rTSYuXv7RuBYT9BVROCMMs7O8Wt11P2uNjQ1xLkzRhYaqpDYz4sFhBSktIFD9/93Y
+	 ma9PaGZSCDHfMxOkADxY39gPlGirgvqFttDB0S64=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sheng Yong <shengyong1@xiaomi.com>,
-	Gao Xiang <hsiangkao@linux.alibaba.com>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
+	Qu Wenruo <wqu@suse.com>,
+	Anand Jain <asj@kernel.org>,
+	Filipe Manana <fdmanana@suse.com>,
+	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 156/181] erofs: fix file-backed mounts no longer working on EROFS partitions
-Date: Thu, 15 Jan 2026 17:48:13 +0100
-Message-ID: <20260115164207.943295922@linuxfoundation.org>
+Subject: [PATCH 6.18 157/181] btrfs: truncate ordered extent when skipping writeback past i_size
+Date: Thu, 15 Jan 2026 17:48:14 +0100
+Message-ID: <20260115164207.978354343@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260115164202.305475649@linuxfoundation.org>
 References: <20260115164202.305475649@linuxfoundation.org>
@@ -52,67 +53,245 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gao Xiang <hsiangkao@linux.alibaba.com>
+From: Filipe Manana <fdmanana@suse.com>
 
-[ Upstream commit 7893cc12251f6f19e7689a4cf3ba803bddbd8437 ]
+[ Upstream commit 18de34daa7c62c830be533aace6b7c271e8e95cf ]
 
-Sheng Yong reported [1] that Android APEX images didn't work with commit
-072a7c7cdbea ("erofs: don't bother with s_stack_depth increasing for
-now") because "EROFS-formatted APEX file images can be stored within an
-EROFS-formatted Android system partition."
+While running test case btrfs/192 from fstests with support for large
+folios (needs CONFIG_BTRFS_EXPERIMENTAL=y) I ended up getting very sporadic
+btrfs check failures reporting that csum items were missing. Looking into
+the issue it turned out that btrfs check searches for csum items of a file
+extent item with a range that spans beyond the i_size of a file and we
+don't have any, because the kernel's writeback code skips submitting bios
+for ranges beyond eof. It's not expected however to find a file extent item
+that crosses the rounded up (by the sector size) i_size value, but there is
+a short time window where we can end up with a transaction commit leaving
+this small inconsistency between the i_size and the last file extent item.
 
-In response, I sent a quick fat-fingered [PATCH v3] to address the
-report.  Unfortunately, the updated condition was incorrect:
+Example btrfs check output when this happens:
 
-         if (erofs_is_fileio_mode(sbi)) {
--            sb->s_stack_depth =
--                file_inode(sbi->dif0.file)->i_sb->s_stack_depth + 1;
--            if (sb->s_stack_depth > FILESYSTEM_MAX_STACK_DEPTH) {
--                erofs_err(sb, "maximum fs stacking depth exceeded");
-+            inode = file_inode(sbi->dif0.file);
-+            if ((inode->i_sb->s_op == &erofs_sops && !sb->s_bdev) ||
-+                inode->i_sb->s_stack_depth) {
+  $ btrfs check /dev/sdc
+  Opening filesystem to check...
+  Checking filesystem on /dev/sdc
+  UUID: 69642c61-5efb-4367-aa31-cdfd4067f713
+  [1/8] checking log skipped (none written)
+  [2/8] checking root items
+  [3/8] checking extents
+  [4/8] checking free space tree
+  [5/8] checking fs roots
+  root 5 inode 332 errors 1000, some csum missing
+  ERROR: errors found in fs roots
+  (...)
 
-The condition `!sb->s_bdev` is always true for all file-backed EROFS
-mounts, making the check effectively a no-op.
+Looking at a tree dump of the fs tree (root 5) for inode 332 we have:
 
-The real fix tested and confirmed by Sheng Yong [2] at that time was
-[PATCH v3 RESEND], which correctly ensures the following EROFS^2 setup
-works:
-    EROFS (on a block device) + EROFS (file-backed mount)
+   $ btrfs inspect-internal dump-tree -t 5 /dev/sdc
+   (...)
+        item 28 key (332 INODE_ITEM 0) itemoff 2006 itemsize 160
+                generation 17 transid 19 size 610969 nbytes 86016
+                block group 0 mode 100666 links 1 uid 0 gid 0 rdev 0
+                sequence 11 flags 0x0(none)
+                atime 1759851068.391327881 (2025-10-07 16:31:08)
+                ctime 1759851068.410098267 (2025-10-07 16:31:08)
+                mtime 1759851068.410098267 (2025-10-07 16:31:08)
+                otime 1759851068.391327881 (2025-10-07 16:31:08)
+        item 29 key (332 INODE_REF 340) itemoff 1993 itemsize 13
+                index 2 namelen 3 name: f1f
+        item 30 key (332 EXTENT_DATA 589824) itemoff 1940 itemsize 53
+                generation 19 type 1 (regular)
+                extent data disk byte 21745664 nr 65536
+                extent data offset 0 nr 65536 ram 65536
+                extent compression 0 (none)
+   (...)
 
-But sadly I screwed it up again by upstreaming the outdated [PATCH v3].
+We can see that the file extent item for file offset 589824 has a length of
+64K and its number of bytes is 64K. Looking at the inode item we see that
+its i_size is 610969 bytes which falls within the range of that file extent
+item [589824, 655360[.
 
-This patch applies the same logic as the delta between the upstream
-[PATCH v3] and the real fix [PATCH v3 RESEND].
+Looking into the csum tree:
 
-Reported-by: Sheng Yong <shengyong1@xiaomi.com>
-Closes: https://lore.kernel.org/r/3acec686-4020-4609-aee4-5dae7b9b0093@gmail.com [1]
-Fixes: 072a7c7cdbea ("erofs: don't bother with s_stack_depth increasing for now")
-Link: https://lore.kernel.org/r/243f57b8-246f-47e7-9fb1-27a771e8e9e8@gmail.com [2]
-Signed-off-by: Gao Xiang <hsiangkao@linux.alibaba.com>
-Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
+  $ btrfs inspect-internal dump-tree /dev/sdc
+  (...)
+        item 15 key (EXTENT_CSUM EXTENT_CSUM 21565440) itemoff 991 itemsize 200
+                range start 21565440 end 21770240 length 204800
+           item 16 key (EXTENT_CSUM EXTENT_CSUM 1104576512) itemoff 983 itemsize 8
+                range start 1104576512 end 1104584704 length 8192
+  (..)
+
+We see that the csum item number 15 covers the first 24K of the file extent
+item - it ends at offset 21770240 and the extent's disk_bytenr is 21745664,
+so we have:
+
+   21770240 - 21745664 = 24K
+
+We see that the next csum item (number 16) is completely outside the range,
+so the remaining 40K of the extent doesn't have csum items in the tree.
+
+If we round up the i_size to the sector size, we get:
+
+   round_up(610969, 4096) = 614400
+
+If we subtract from that the file offset for the extent item we get:
+
+   614400 - 589824 = 24K
+
+So the missing 40K corresponds to the end of the file extent item's range
+minus the rounded up i_size:
+
+   655360 - 614400 = 40K
+
+Normally we don't expect a file extent item to span over the rounded up
+i_size of an inode, since when truncating, doing hole punching and other
+operations that trim a file extent item, the number of bytes is adjusted.
+
+There is however a short time window where the kernel can end up,
+temporarily,persisting an inode with an i_size that falls in the middle of
+the last file extent item and the file extent item was not yet trimmed (its
+number of bytes reduced so that it doesn't cross i_size rounded up by the
+sector size).
+
+The steps (in the kernel) that lead to such scenario are the following:
+
+ 1) We have inode I as an empty file, no allocated extents, i_size is 0;
+
+ 2) A buffered write is done for file range [589824, 655360[ (length of
+    64K) and the i_size is updated to 655360. Note that we got a single
+    large folio for the range (64K);
+
+ 3) A truncate operation starts that reduces the inode's i_size down to
+    610969 bytes. The truncate sets the inode's new i_size at
+    btrfs_setsize() by calling truncate_setsize() and before calling
+    btrfs_truncate();
+
+ 4) At btrfs_truncate() we trigger writeback for the range starting at
+    610304 (which is the new i_size rounded down to the sector size) and
+    ending at (u64)-1;
+
+ 5) During the writeback, at extent_write_cache_pages(), we get from the
+    call to filemap_get_folios_tag(), the 64K folio that starts at file
+    offset 589824 since it contains the start offset of the writeback
+    range (610304);
+
+ 6) At writepage_delalloc() we find the whole range of the folio is dirty
+    and therefore we run delalloc for that 64K range ([589824, 655360[),
+    reserving a 64K extent, creating an ordered extent, etc;
+
+ 7) At extent_writepage_io() we submit IO only for subrange [589824, 614400[
+    because the inode's i_size is 610969 bytes (rounded up by sector size
+    is 614400). There, in the while loop we intentionally skip IO beyond
+    i_size to avoid any unnecessay work and just call
+    btrfs_mark_ordered_io_finished() for the range [614400, 655360[ (which
+    has a 40K length);
+
+ 8) Once the IO finishes we finish the ordered extent by ending up at
+    btrfs_finish_one_ordered(), join transaction N, insert a file extent
+    item in the inode's subvolume tree for file offset 589824 with a number
+    of bytes of 64K, and update the inode's delayed inode item or directly
+    the inode item with a call to btrfs_update_inode_fallback(), which
+    results in storing the new i_size of 610969 bytes;
+
+ 9) Transaction N is committed either by the transaction kthread or some
+    other task committed it (in response to a sync or fsync for example).
+
+    At this point we have inode I persisted with an i_size of 610969 bytes
+    and file extent item that starts at file offset 589824 and has a number
+    of bytes of 64K, ending at an offset of 655360 which is beyond the
+    i_size rounded up to the sector size (614400).
+
+    --> So after a crash or power failure here, the btrfs check program
+        reports that error about missing checksum items for this inode, as
+	it tries to lookup for checksums covering the whole range of the
+	extent;
+
+10) Only after transaction N is committed that at btrfs_truncate() the
+    call to btrfs_start_transaction() starts a new transaction, N + 1,
+    instead of joining transaction N. And it's with transaction N + 1 that
+    it calls btrfs_truncate_inode_items() which updates the file extent
+    item at file offset 589824 to reduce its number of bytes from 64K down
+    to 24K, so that the file extent item's range ends at the i_size
+    rounded up to the sector size (614400 bytes).
+
+Fix this by truncating the ordered extent at extent_writepage_io() when we
+skip writeback because the current offset in the folio is beyond i_size.
+This ensures we don't ever persist a file extent item with a number of
+bytes beyond the rounded up (by sector size) value of the i_size.
+
+Reviewed-by: Qu Wenruo <wqu@suse.com>
+Reviewed-by: Anand Jain <asj@kernel.org>
+Signed-off-by: Filipe Manana <fdmanana@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
+Stable-dep-of: e9e3b22ddfa7 ("btrfs: fix beyond-EOF write handling")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/erofs/super.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ fs/btrfs/extent_io.c    |   21 +++++++++++++++++++--
+ fs/btrfs/ordered-data.c |    5 +++--
+ 2 files changed, 22 insertions(+), 4 deletions(-)
 
-diff --git a/fs/erofs/super.c b/fs/erofs/super.c
-index e93264034b5db..5136cda5972a9 100644
---- a/fs/erofs/super.c
-+++ b/fs/erofs/super.c
-@@ -655,7 +655,8 @@ static int erofs_fc_fill_super(struct super_block *sb, struct fs_context *fc)
- 		 */
- 		if (erofs_is_fileio_mode(sbi)) {
- 			inode = file_inode(sbi->dif0.file);
--			if ((inode->i_sb->s_op == &erofs_sops && !sb->s_bdev) ||
-+			if ((inode->i_sb->s_op == &erofs_sops &&
-+			     !inode->i_sb->s_bdev) ||
- 			    inode->i_sb->s_stack_depth) {
- 				erofs_err(sb, "file-backed mounts cannot be applied to stacked fses");
- 				return -ENOTBLK;
--- 
-2.51.0
-
+--- a/fs/btrfs/extent_io.c
++++ b/fs/btrfs/extent_io.c
+@@ -1692,13 +1692,13 @@ static noinline_for_stack int extent_wri
+ 	bool submitted_io = false;
+ 	int found_error = 0;
+ 	const u64 folio_start = folio_pos(folio);
++	const u64 folio_end = folio_start + folio_size(folio);
+ 	const unsigned int blocks_per_folio = btrfs_blocks_per_folio(fs_info, folio);
+ 	u64 cur;
+ 	int bit;
+ 	int ret = 0;
+ 
+-	ASSERT(start >= folio_start &&
+-	       start + len <= folio_start + folio_size(folio));
++	ASSERT(start >= folio_start && start + len <= folio_end);
+ 
+ 	ret = btrfs_writepage_cow_fixup(folio);
+ 	if (ret == -EAGAIN) {
+@@ -1725,6 +1725,23 @@ static noinline_for_stack int extent_wri
+ 		cur = folio_pos(folio) + (bit << fs_info->sectorsize_bits);
+ 
+ 		if (cur >= i_size) {
++			struct btrfs_ordered_extent *ordered;
++			unsigned long flags;
++
++			ordered = btrfs_lookup_first_ordered_range(inode, cur,
++								   folio_end - cur);
++			/*
++			 * We have just run delalloc before getting here, so
++			 * there must be an ordered extent.
++			 */
++			ASSERT(ordered != NULL);
++			spin_lock_irqsave(&inode->ordered_tree_lock, flags);
++			set_bit(BTRFS_ORDERED_TRUNCATED, &ordered->flags);
++			ordered->truncated_len = min(ordered->truncated_len,
++						     cur - ordered->file_offset);
++			spin_unlock_irqrestore(&inode->ordered_tree_lock, flags);
++			btrfs_put_ordered_extent(ordered);
++
+ 			btrfs_mark_ordered_io_finished(inode, folio, cur,
+ 						       start + len - cur, true);
+ 			/*
+--- a/fs/btrfs/ordered-data.c
++++ b/fs/btrfs/ordered-data.c
+@@ -1098,8 +1098,9 @@ struct btrfs_ordered_extent *btrfs_looku
+ 	struct rb_node *prev;
+ 	struct rb_node *next;
+ 	struct btrfs_ordered_extent *entry = NULL;
++	unsigned long flags;
+ 
+-	spin_lock_irq(&inode->ordered_tree_lock);
++	spin_lock_irqsave(&inode->ordered_tree_lock, flags);
+ 	node = inode->ordered_tree.rb_node;
+ 	/*
+ 	 * Here we don't want to use tree_search() which will use tree->last
+@@ -1154,7 +1155,7 @@ out:
+ 		trace_btrfs_ordered_extent_lookup_first_range(inode, entry);
+ 	}
+ 
+-	spin_unlock_irq(&inode->ordered_tree_lock);
++	spin_unlock_irqrestore(&inode->ordered_tree_lock, flags);
+ 	return entry;
+ }
+ 
 
 
