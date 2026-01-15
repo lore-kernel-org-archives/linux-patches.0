@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD5F9396B7D;
-	Thu, 15 Jan 2026 16:53:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9918925228D;
+	Thu, 15 Jan 2026 16:53:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768495980; cv=none; b=TQL1aJPP1Pq5fW+AMmU1X1/ZO6gsRhnbmvqUTa5iwrVDqXAmonqC/VYpFDPYHiJsT4k+gzAQFE4o5tXQFFR4vaZfXp4a6c6r+VwyiPYekVdD0JpbNRqL9HGQM3M2z217pMXGwKoD3x2V/LmNSBpLN7wIXnYM3fZmHlah4G+ac3o=
+	t=1768495983; cv=none; b=dAYLFtWoY/QgQfOW0dFSWvsKXB5ML98h+uc49HAOwOTVbXaWsyzgD+a7jO51ZXA63axntBY2oHLGkbGs833nVJ7yY5rLpSOBAcoaqPrMvYiBDZsJ1yWZVfBHlpzok0FN2xxByMtWwWxQNZ7IIXhe/frQFPG6qB2Eqih9NXhYH9s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768495980; c=relaxed/simple;
-	bh=aNqBlNyLkH6UK7Dfhac4v6ZgJ10c+hm4N01qrfXabZ8=;
+	s=arc-20240116; t=1768495983; c=relaxed/simple;
+	bh=vqBGXu0M9Gcmpol9f3LLt4Qg+k5uu5A7kmp/XldQqxE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=P853Y0BZmtJPtbqdW9GU70cRfjQeYRMVSCcjsg2BiuR/S39Xc+RZ2o1na2WAFr0zzov532mrD6jUO6VLCSKKNcAucKjbNAvYpTalMuVh3gYlT/0GK2s5GyMffltksYVwDwo/zQ6IObD+N8QHoqKgYpESmBf4SmMAlFeF7u9mmn0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=U3FBetpb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=J5c67zpDYNQUs2RdR0V4jeeeyv8UWqHGp0McNht6ncSk1EDMv2+MlSViDWe7kQzRfyumyWpunFifDyTq12G+g203eFLvHK4c6kppzXQUEYaFTdHYr3zPou5bjtXTDfqu72EK8N1tNE09mnr+riJSIn7+WRMTqh3CTzppezDJzrQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PjeNdPRs; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="U3FBetpb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 38378C19421;
-	Thu, 15 Jan 2026 16:53:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PjeNdPRs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B3ADC116D0;
+	Thu, 15 Jan 2026 16:53:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1768495980;
-	bh=aNqBlNyLkH6UK7Dfhac4v6ZgJ10c+hm4N01qrfXabZ8=;
+	s=korg; t=1768495983;
+	bh=vqBGXu0M9Gcmpol9f3LLt4Qg+k5uu5A7kmp/XldQqxE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=U3FBetpb3AC6HbtKO7l7qcCPqx/fYp2ni5Sd+kBFUmTcPkDkhn6vnEiIx/m8Bt9u3
-	 Et+hTwU2T8S9hW2/gjQfNx3nl6tdF1pokEfSSvJk4xBF6tac3fFiwppq9W17HZ856T
-	 nXyofPnnHKXtACuhdNsb29D1E7t9+KhKedCAQAys=
+	b=PjeNdPRsc9zBIDSx22ozOr2FyphipZ7p1owoO/Nj5x+qlOjbYYy1iC1uHL0bGjHA1
+	 G5FGq03lCI/Qj+dBk6uiSc9l5BSD538hxy3FvGdP5QMbI8HLOqJlA6DW1Au4Qg2Lx8
+	 F284cZrumaEBLWuKcOQ+JHl5OFqSfzKUHP3TKB90=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	NeilBrown <neil@brown.name>,
-	Jeff Layton <jlayton@kernel.org>,
-	Olga Kornievskaia <okorniev@redhat.com>,
+	syzbot+6ee3b889bdeada0a6226@syzkaller.appspotmail.com,
+	Edward Adam Davis <eadavis@qq.com>,
 	Chuck Lever <chuck.lever@oracle.com>
-Subject: [PATCH 6.18 004/181] nfsd: check that server is running in unlock_filesystem
-Date: Thu, 15 Jan 2026 17:45:41 +0100
-Message-ID: <20260115164202.473129426@linuxfoundation.org>
+Subject: [PATCH 6.18 005/181] NFSD: net ref data still needs to be freed even if net hasnt startup
+Date: Thu, 15 Jan 2026 17:45:42 +0100
+Message-ID: <20260115164202.509591289@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260115164202.305475649@linuxfoundation.org>
 References: <20260115164202.305475649@linuxfoundation.org>
@@ -52,106 +51,83 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Olga Kornievskaia <okorniev@redhat.com>
+From: Edward Adam Davis <eadavis@qq.com>
 
-commit d0424066fcd294977f310964bed6f2a487fa4515 upstream.
+commit 0b88bfa42e5468baff71909c2f324a495318532b upstream.
 
-If we are trying to unlock the filesystem via an administrative
-interface and nfsd isn't running, it crashes the server. This
-happens currently because nfsd4_revoke_states() access state
-structures (eg., conf_id_hashtbl) that has been freed as a part
-of the server shutdown.
+When the NFSD instance doesn't to startup, the net ref data memory is
+not properly reclaimed, which triggers the memory leak issue reported
+by syzbot [1].
 
-[   59.465072] Call trace:
-[   59.465308]  nfsd4_revoke_states+0x1b4/0x898 [nfsd] (P)
-[   59.465830]  write_unlock_fs+0x258/0x440 [nfsd]
-[   59.466278]  nfsctl_transaction_write+0xb0/0x120 [nfsd]
-[   59.466780]  vfs_write+0x1f0/0x938
-[   59.467088]  ksys_write+0xfc/0x1f8
-[   59.467395]  __arm64_sys_write+0x74/0xb8
-[   59.467746]  invoke_syscall.constprop.0+0xdc/0x1e8
-[   59.468177]  do_el0_svc+0x154/0x1d8
-[   59.468489]  el0_svc+0x40/0xe0
-[   59.468767]  el0t_64_sync_handler+0xa0/0xe8
-[   59.469138]  el0t_64_sync+0x1ac/0x1b0
+To avoid the problem reported in [1], the net ref data memory reclamation
+action is moved outside of nfsd_net_up when the net is shutdown.
 
-Ensure this can't happen by taking the nfsd_mutex and checking that
-the server is still up, and then holding the mutex across the call to
-nfsd4_revoke_states().
+[1]
+unreferenced object 0xffff88812a39dfc0 (size 64):
+  backtrace (crc a2262fc6):
+    percpu_ref_init+0x94/0x1e0 lib/percpu-refcount.c:76
+    nfsd_create_serv+0xbe/0x260 fs/nfsd/nfssvc.c:605
+    nfsd_nl_listener_set_doit+0x62/0xb00 fs/nfsd/nfsctl.c:1882
+    genl_family_rcv_msg_doit+0x11e/0x190 net/netlink/genetlink.c:1115
+    genl_family_rcv_msg net/netlink/genetlink.c:1195 [inline]
+    genl_rcv_msg+0x2fd/0x440 net/netlink/genetlink.c:1210
 
-Reviewed-by: NeilBrown <neil@brown.name>
-Reviewed-by: Jeff Layton <jlayton@kernel.org>
-Fixes: 1ac3629bf0125 ("nfsd: prepare for supporting admin-revocation of state")
+BUG: memory leak
+
+Reported-by: syzbot+6ee3b889bdeada0a6226@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=6ee3b889bdeada0a6226
+Fixes: 39972494e318 ("nfsd: update percpu_ref to manage references on nfsd_net")
 Cc: stable@vger.kernel.org
-Signed-off-by: Olga Kornievskaia <okorniev@redhat.com>
+Signed-off-by: Edward Adam Davis <eadavis@qq.com>
 Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nfsd/nfs4state.c |    5 ++---
- fs/nfsd/nfsctl.c    |    9 ++++++++-
- fs/nfsd/state.h     |    4 ++--
- 3 files changed, 12 insertions(+), 6 deletions(-)
+ fs/nfsd/nfssvc.c |   30 +++++++++++++++---------------
+ 1 file changed, 15 insertions(+), 15 deletions(-)
 
---- a/fs/nfsd/nfs4state.c
-+++ b/fs/nfsd/nfs4state.c
-@@ -1759,7 +1759,7 @@ static struct nfs4_stid *find_one_sb_sti
- 
- /**
-  * nfsd4_revoke_states - revoke all nfsv4 states associated with given filesystem
-- * @net:  used to identify instance of nfsd (there is one per net namespace)
-+ * @nn:   used to identify instance of nfsd (there is one per net namespace)
-  * @sb:   super_block used to identify target filesystem
-  *
-  * All nfs4 states (open, lock, delegation, layout) held by the server instance
-@@ -1771,9 +1771,8 @@ static struct nfs4_stid *find_one_sb_sti
-  * The clients which own the states will subsequently being notified that the
-  * states have been "admin-revoked".
-  */
--void nfsd4_revoke_states(struct net *net, struct super_block *sb)
-+void nfsd4_revoke_states(struct nfsd_net *nn, struct super_block *sb)
+--- a/fs/nfsd/nfssvc.c
++++ b/fs/nfsd/nfssvc.c
+@@ -424,26 +424,26 @@ static void nfsd_shutdown_net(struct net
  {
--	struct nfsd_net *nn = net_generic(net, nfsd_net_id);
- 	unsigned int idhashval;
- 	unsigned int sc_types;
+ 	struct nfsd_net *nn = net_generic(net, nfsd_net_id);
  
---- a/fs/nfsd/nfsctl.c
-+++ b/fs/nfsd/nfsctl.c
-@@ -259,6 +259,7 @@ static ssize_t write_unlock_fs(struct fi
- 	struct path path;
- 	char *fo_path;
- 	int error;
-+	struct nfsd_net *nn;
+-	if (!nn->nfsd_net_up)
+-		return;
+-
+-	percpu_ref_kill_and_confirm(&nn->nfsd_net_ref, nfsd_net_done);
+-	wait_for_completion(&nn->nfsd_net_confirm_done);
+-
+-	nfsd_export_flush(net);
+-	nfs4_state_shutdown_net(net);
+-	nfsd_reply_cache_shutdown(nn);
+-	nfsd_file_cache_shutdown_net(net);
+-	if (nn->lockd_up) {
+-		lockd_down(net);
+-		nn->lockd_up = false;
++	if (nn->nfsd_net_up) {
++		percpu_ref_kill_and_confirm(&nn->nfsd_net_ref, nfsd_net_done);
++		wait_for_completion(&nn->nfsd_net_confirm_done);
++
++		nfsd_export_flush(net);
++		nfs4_state_shutdown_net(net);
++		nfsd_reply_cache_shutdown(nn);
++		nfsd_file_cache_shutdown_net(net);
++		if (nn->lockd_up) {
++			lockd_down(net);
++			nn->lockd_up = false;
++		}
++		wait_for_completion(&nn->nfsd_net_free_done);
+ 	}
  
- 	/* sanity check */
- 	if (size == 0)
-@@ -285,7 +286,13 @@ static ssize_t write_unlock_fs(struct fi
- 	 * 3.  Is that directory the root of an exported file system?
- 	 */
- 	error = nlmsvc_unlock_all_by_sb(path.dentry->d_sb);
--	nfsd4_revoke_states(netns(file), path.dentry->d_sb);
-+	mutex_lock(&nfsd_mutex);
-+	nn = net_generic(netns(file), nfsd_net_id);
-+	if (nn->nfsd_serv)
-+		nfsd4_revoke_states(nn, path.dentry->d_sb);
-+	else
-+		error = -EINVAL;
-+	mutex_unlock(&nfsd_mutex);
+-	wait_for_completion(&nn->nfsd_net_free_done);
+ 	percpu_ref_exit(&nn->nfsd_net_ref);
  
- 	path_put(&path);
- 	return error;
---- a/fs/nfsd/state.h
-+++ b/fs/nfsd/state.h
-@@ -841,9 +841,9 @@ static inline void get_nfs4_file(struct
- struct nfsd_file *find_any_file(struct nfs4_file *f);
- 
- #ifdef CONFIG_NFSD_V4
--void nfsd4_revoke_states(struct net *net, struct super_block *sb);
-+void nfsd4_revoke_states(struct nfsd_net *nn, struct super_block *sb);
- #else
--static inline void nfsd4_revoke_states(struct net *net, struct super_block *sb)
-+static inline void nfsd4_revoke_states(struct nfsd_net *nn, struct super_block *sb)
- {
++	if (nn->nfsd_net_up)
++		nfsd_shutdown_generic();
+ 	nn->nfsd_net_up = false;
+-	nfsd_shutdown_generic();
  }
- #endif
+ 
+ static DEFINE_SPINLOCK(nfsd_notifier_lock);
 
 
