@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E3D62F619D;
-	Thu, 15 Jan 2026 17:46:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 705D53C1981;
+	Thu, 15 Jan 2026 17:46:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768499178; cv=none; b=oivaKrR5rQDbQqG85DR7PbRg9FGMAcOaKbVobltYHsU+cpC2sBwWMiSgj8ksa1diGLI1WjxmrSXhjLlhXUzASaBdNN2PQFLTUCQ4jFc+u6tW1LVGNLzxD3iosfukU1ZfvYLxD1V/4bO2BdY53SKUEw512JNsHhGTPuwBlgxNy+I=
+	t=1768499181; cv=none; b=L+3beccCm0C8LWXrWBDMbG4KSEvdH0nVd5nWX6UiBfVnXNxn1Zws9qXD0qO5mlQQQH1JOFcu/cvnKDtioARZO7fhGS2BTm/Fu8HGRXgAeaqegrR+pN2wM+G+Q8qIet5SmBQgquwMNXjVu2B4Tg/wNqTUAixgoKoUXAnt7cmP/Dc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768499178; c=relaxed/simple;
-	bh=YLcAimgabLN2S6v/rS35CJmcpsl5FoKeSopVNdAcVqA=;
+	s=arc-20240116; t=1768499181; c=relaxed/simple;
+	bh=Vek8Cy9b4D0qV4ggQmrPUVrvj63FJCUsz43QWgb+FIc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TXrHQ9E1wkHUDHpk+td2pPPZWEHeC/930HjEpStXVU/apZ8dT2JwCFildfNwIfW2D39HrS1bJYLsJsxYLhqHUVVB5mbx6MXvI7M5XnyXpiGX9o95gGxbO7HOB/4sj1tGCKEqG7YzsFRKmFOfeNYoijlCa4zSVOh0BvF6kVu4uAw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KgW5o7aG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Q0XImsXwDHqGU7nmdEJUIlEs62WYRR0uBNTBe+1MTbA3Xmvs+E9B7Mj++ixHj1eu5IPOQNsaRE2y8JSCsIaLjDpB00XCNQstMsqMBdPhAgK5h8V6mEMOrqD5fkFRb1J4wLaEP8mNig8CdGU3Y94lESeL/71iQzii75fWUHuSnY4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BYBgYZKW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KgW5o7aG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC3A5C116D0;
-	Thu, 15 Jan 2026 17:46:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BYBgYZKW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 93B2DC19422;
+	Thu, 15 Jan 2026 17:46:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1768499178;
-	bh=YLcAimgabLN2S6v/rS35CJmcpsl5FoKeSopVNdAcVqA=;
+	s=korg; t=1768499181;
+	bh=Vek8Cy9b4D0qV4ggQmrPUVrvj63FJCUsz43QWgb+FIc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KgW5o7aGoDnEdlVennz2tlTiGoZgO6cCqTM/nNvoWbvzqSJthq4zreupdtxmJkgw+
-	 /eIDIqOy1FX1TLsEcqSkTkXQgLEAbXo/MUO7hxIjZAddD68UohJ9DDtpDWOX8+Do0C
-	 fekoZe+urLDyXCyos9tDKvag9QjFEM4jbw9wzI30=
+	b=BYBgYZKWmXwyzQ+jpjXl9p1HRWt5IYm0MR1THRYmD/KI+2I3+6rEFz3m4UL56sdMZ
+	 YIVLe5yuHUiK92eIIz4bkPnuaHMtwCPbXVfNgAgD/qYY1NW1or9gJ5XPrnWj+wE3eL
+	 G9W8VxqALJcRDqd3xqsfBBDtvdGDxfMN5FLfcCxQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shengjiu Wang <shengjiu.wang@nxp.com>,
-	Mark Brown <broonie@kernel.org>,
+	Cong Zhang <cong.zhang@oss.qualcomm.com>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 136/451] ASoC: ak5558: Disable regulator when error happens
-Date: Thu, 15 Jan 2026 17:45:37 +0100
-Message-ID: <20260115164235.839629233@linuxfoundation.org>
+Subject: [PATCH 5.10 137/451] blk-mq: Abort suspend when wakeup events are pending
+Date: Thu, 15 Jan 2026 17:45:38 +0100
+Message-ID: <20260115164235.875228261@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260115164230.864985076@linuxfoundation.org>
 References: <20260115164230.864985076@linuxfoundation.org>
@@ -51,43 +51,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shengjiu Wang <shengjiu.wang@nxp.com>
+From: Cong Zhang <cong.zhang@oss.qualcomm.com>
 
-[ Upstream commit 1f8f726a2a29c28f65b30880335a1610c5e63594 ]
+[ Upstream commit c196bf43d706592d8801a7513603765080e495fb ]
 
-Disable regulator in runtime resume when error happens to balance
-the reference count of regulator.
+During system suspend, wakeup capable IRQs for block device can be
+delayed, which can cause blk_mq_hctx_notify_offline() to hang
+indefinitely while waiting for pending request to complete.
+Skip the request waiting loop and abort suspend when wakeup events are
+pending to prevent the deadlock.
 
-Fixes: 2ff6d5a108c6 ("ASoC: ak5558: Add regulator support")
-Signed-off-by: Shengjiu Wang <shengjiu.wang@nxp.com>
-Link: https://patch.msgid.link/20251203100529.3841203-3-shengjiu.wang@nxp.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: bf0beec0607d ("blk-mq: drain I/O when all CPUs in a hctx are offline")
+Signed-off-by: Cong Zhang <cong.zhang@oss.qualcomm.com>
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/ak5558.c | 10 +++++++++-
- 1 file changed, 9 insertions(+), 1 deletion(-)
+ block/blk-mq.c | 18 ++++++++++++++++--
+ 1 file changed, 16 insertions(+), 2 deletions(-)
 
-diff --git a/sound/soc/codecs/ak5558.c b/sound/soc/codecs/ak5558.c
-index adbdfdbc7a38b..60ca51845d3e5 100644
---- a/sound/soc/codecs/ak5558.c
-+++ b/sound/soc/codecs/ak5558.c
-@@ -330,7 +330,15 @@ static int __maybe_unused ak5558_runtime_resume(struct device *dev)
- 	regcache_cache_only(ak5558->regmap, false);
- 	regcache_mark_dirty(ak5558->regmap);
+diff --git a/block/blk-mq.c b/block/blk-mq.c
+index 21531aa163cb4..a720097460676 100644
+--- a/block/blk-mq.c
++++ b/block/blk-mq.c
+@@ -23,6 +23,7 @@
+ #include <linux/sched/sysctl.h>
+ #include <linux/sched/topology.h>
+ #include <linux/sched/signal.h>
++#include <linux/suspend.h>
+ #include <linux/delay.h>
+ #include <linux/crash_dump.h>
+ #include <linux/prefetch.h>
+@@ -2548,6 +2549,7 @@ static int blk_mq_hctx_notify_offline(unsigned int cpu, struct hlist_node *node)
+ {
+ 	struct blk_mq_hw_ctx *hctx = hlist_entry_safe(node,
+ 			struct blk_mq_hw_ctx, cpuhp_online);
++	int ret = 0;
  
--	return regcache_sync(ak5558->regmap);
-+	ret = regcache_sync(ak5558->regmap);
-+	if (ret)
-+		goto err;
-+
-+	return 0;
-+err:
-+	regcache_cache_only(ak5558->regmap, true);
-+	regulator_bulk_disable(ARRAY_SIZE(ak5558->supplies), ak5558->supplies);
+ 	if (!cpumask_test_cpu(cpu, hctx->cpumask) ||
+ 	    !blk_mq_last_cpu_in_hctx(cpu, hctx))
+@@ -2569,12 +2571,24 @@ static int blk_mq_hctx_notify_offline(unsigned int cpu, struct hlist_node *node)
+ 	 * frozen and there are no requests.
+ 	 */
+ 	if (percpu_ref_tryget(&hctx->queue->q_usage_counter)) {
+-		while (blk_mq_hctx_has_requests(hctx))
++		while (blk_mq_hctx_has_requests(hctx)) {
++			/*
++			 * The wakeup capable IRQ handler of block device is
++			 * not called during suspend. Skip the loop by checking
++			 * pm_wakeup_pending to prevent the deadlock and improve
++			 * suspend latency.
++			 */
++			if (pm_wakeup_pending()) {
++				clear_bit(BLK_MQ_S_INACTIVE, &hctx->state);
++				ret = -EBUSY;
++				break;
++			}
+ 			msleep(5);
++		}
+ 		percpu_ref_put(&hctx->queue->q_usage_counter);
+ 	}
+ 
+-	return 0;
 +	return ret;
  }
  
- static const struct dev_pm_ops ak5558_pm = {
+ static int blk_mq_hctx_notify_online(unsigned int cpu, struct hlist_node *node)
 -- 
 2.51.0
 
