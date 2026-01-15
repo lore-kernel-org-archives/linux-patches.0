@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1F612F619D;
-	Thu, 15 Jan 2026 17:23:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CFDFB2D73B4;
+	Thu, 15 Jan 2026 17:23:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768497793; cv=none; b=GFAPs1hvIdgmXhSqggHT8RjJqw+NVAUquExi4syc5uNfqKfTXx5hVyPTcwtOur8htuQG9SJp7qtt+EHSE7aGH/y2h9Uf7Ao3puhHGMvGYRk3U7m7QrlK8/G3M5slB8R1pBjmpi1D9tnmhANOYmUbnjXyz7NgipLXs5uC6Phngps=
+	t=1768497795; cv=none; b=g3x6e4hJcDYX3jk9K0zCgOkgnX6WQHpXlF5zLMwHGbk3GVRYcJI6IE3feRR0l9NIkCt0FlibUd43a5Dn6hoWBwKPe6uQ6/rkPaToBGn2vFdjp542mfMw2AgsCyHJrdyQn0EYWw/TVWxvC/cVu35CN67CpQzNTcdCqCnSqBRU2uA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768497793; c=relaxed/simple;
-	bh=XXPpjGWLjfeZ+sXLx7i9NyaiQqrg2rOnFULz4zXNO+4=;
+	s=arc-20240116; t=1768497795; c=relaxed/simple;
+	bh=nuu/xn4mZaKWtStdrtw3nTLLpXYloQdCZ4IvmH+G2sQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=bfeSooPsLC3WKgSKCiQaSQQLpmKnHSNTAZaEGwDtjY3eVe7kzCyV+2EpwBtdixT09UOc4Q6wQ14336nNGQUcUqj0XP9NSkmwFBBPjEWH2M+guykgTDmhLF60igPO306vt9W+lPjbu2gbq6T16na10SCrIUiHFMd3knjPy+ssVHs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pXPTRuA1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KCVRCaYUUKsH3Nsmnjb627k46W2bAxQYG4XOKCK8ZXJ+7YvdZc7R27S7UNsASpWtQclxZt+BWIQJtA/Gmxe+rHCOKMKbJTgjwSNN8pXuTnz6k98QA+N35kEb0xubwrIl7UYf+Oas9RY9LaQQN6t7ULPWSnhmF8xCdWt2gdHHWQ8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jSlE51uF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pXPTRuA1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C31CC116D0;
-	Thu, 15 Jan 2026 17:23:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jSlE51uF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4FE8AC116D0;
+	Thu, 15 Jan 2026 17:23:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1768497792;
-	bh=XXPpjGWLjfeZ+sXLx7i9NyaiQqrg2rOnFULz4zXNO+4=;
+	s=korg; t=1768497795;
+	bh=nuu/xn4mZaKWtStdrtw3nTLLpXYloQdCZ4IvmH+G2sQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pXPTRuA1XMEM+K0S93jOTt1qb4TnFvfoBFaEz0X3q7OJH8NplLf10lflvZlGyc5DB
-	 7uXpSs6TvP33CmV3zPLslA+Kft4jAHM0ebYseIabGXkp19ufHx1QLmUW3YwyYqgNQN
-	 CuPqJILFyiZokA+idOADlDOQz0USWktFEuuT85qE=
+	b=jSlE51uFD2sFC7HFZvHqiqs4vkcsLvrRbaya4FNzcnGN1f9s81p9/mX//6t+/8tlG
+	 deLxqN0zZMRBjO3bQvg+u6h6zVduc5E1wT0VFDO1hnSxRA3Zg8Pi/MimKCIb1CERDc
+	 njftTJWYnFtQJzlexkplQilWzBwHn8lZLUS+bQ3k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Armin Wolf <W_Armin@gmx.de>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	Trond Myklebust <trond.myklebust@hammerspace.com>,
+	Anna Schumaker <Anna.Schumaker@Netapp.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 172/554] fs/nls: Fix utf16 to utf8 conversion
-Date: Thu, 15 Jan 2026 17:43:58 +0100
-Message-ID: <20260115164252.492272892@linuxfoundation.org>
+Subject: [PATCH 5.15 173/554] NFSv4: Add some support for case insensitive filesystems
+Date: Thu, 15 Jan 2026 17:43:59 +0100
+Message-ID: <20260115164252.529343096@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260115164246.225995385@linuxfoundation.org>
 References: <20260115164246.225995385@linuxfoundation.org>
@@ -45,83 +45,140 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Armin Wolf <W_Armin@gmx.de>
+From: Trond Myklebust <trond.myklebust@primarydata.com>
 
-[ Upstream commit 25524b6190295577e4918c689644451365e6466d ]
+[ Upstream commit 1ab5be4ac5b1c9ce39ce1037c45b68d2ce6eede0 ]
 
-Currently the function responsible for converting between utf16 and
-utf8 strings will ignore any characters that cannot be converted. This
-however also includes multi-byte characters that do not fit into the
-provided string buffer.
+Add capabilities to allow the NFS client to recognise when it is dealing
+with case insensitive and case preserving filesystems.
 
-This can cause problems if such a multi-byte character is followed by
-a single-byte character. In such a case the multi-byte character might
-be ignored when the provided string buffer is too small, but the
-single-byte character might fit and is thus still copied into the
-resulting string.
-
-Fix this by stop filling the provided string buffer once a character
-does not fit. In order to be able to do this extend utf32_to_utf8()
-to return useful errno codes instead of -1.
-
-Fixes: 74675a58507e ("NLS: update handling of Unicode")
-Signed-off-by: Armin Wolf <W_Armin@gmx.de>
-Link: https://patch.msgid.link/20251111131125.3379-2-W_Armin@gmx.de
-Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
+Signed-off-by: Anna Schumaker <Anna.Schumaker@Netapp.com>
+Stable-dep-of: 518c32a1bc4f ("NFS: Initialise verifiers for visible dentries in nfs_atomic_open()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nls/nls_base.c | 16 ++++++++++++----
- 1 file changed, 12 insertions(+), 4 deletions(-)
+ fs/nfs/nfs4proc.c         |  8 +++++++-
+ fs/nfs/nfs4xdr.c          | 40 +++++++++++++++++++++++++++++++++++++++
+ include/linux/nfs_fs_sb.h |  2 ++
+ include/linux/nfs_xdr.h   |  2 ++
+ 4 files changed, 51 insertions(+), 1 deletion(-)
 
-diff --git a/fs/nls/nls_base.c b/fs/nls/nls_base.c
-index a026dbd3593f6..7eacded3c17d1 100644
---- a/fs/nls/nls_base.c
-+++ b/fs/nls/nls_base.c
-@@ -94,7 +94,7 @@ int utf32_to_utf8(unicode_t u, u8 *s, int maxout)
+diff --git a/fs/nfs/nfs4proc.c b/fs/nfs/nfs4proc.c
+index 768433688cb2f..883e4106fbcd9 100644
+--- a/fs/nfs/nfs4proc.c
++++ b/fs/nfs/nfs4proc.c
+@@ -3887,7 +3887,9 @@ static int _nfs4_server_capabilities(struct nfs_server *server, struct nfs_fh *f
+ 		     FATTR4_WORD0_FH_EXPIRE_TYPE |
+ 		     FATTR4_WORD0_LINK_SUPPORT |
+ 		     FATTR4_WORD0_SYMLINK_SUPPORT |
+-		     FATTR4_WORD0_ACLSUPPORT;
++		     FATTR4_WORD0_ACLSUPPORT |
++		     FATTR4_WORD0_CASE_INSENSITIVE |
++		     FATTR4_WORD0_CASE_PRESERVING;
+ 	if (minorversion)
+ 		bitmask[2] = FATTR4_WORD2_SUPPATTR_EXCLCREAT;
  
- 	l = u;
- 	if (l > UNICODE_MAX || (l & SURROGATE_MASK) == SURROGATE_PAIR)
--		return -1;
-+		return -EILSEQ;
- 
- 	nc = 0;
- 	for (t = utf8_table; t->cmask && maxout; t++, maxout--) {
-@@ -110,7 +110,7 @@ int utf32_to_utf8(unicode_t u, u8 *s, int maxout)
- 			return nc;
- 		}
- 	}
--	return -1;
-+	return -EOVERFLOW;
+@@ -3917,6 +3919,10 @@ static int _nfs4_server_capabilities(struct nfs_server *server, struct nfs_fh *f
+ 			server->caps |= NFS_CAP_HARDLINKS;
+ 		if (res.has_symlinks != 0)
+ 			server->caps |= NFS_CAP_SYMLINKS;
++		if (res.case_insensitive)
++			server->caps |= NFS_CAP_CASE_INSENSITIVE;
++		if (res.case_preserving)
++			server->caps |= NFS_CAP_CASE_PRESERVING;
+ #ifdef CONFIG_NFS_V4_SECURITY_LABEL
+ 		if (res.attr_bitmask[2] & FATTR4_WORD2_SECURITY_LABEL)
+ 			server->caps |= NFS_CAP_SECURITY_LABEL;
+diff --git a/fs/nfs/nfs4xdr.c b/fs/nfs/nfs4xdr.c
+index 0ae9e06a0bba2..0b9fa58dd7cd7 100644
+--- a/fs/nfs/nfs4xdr.c
++++ b/fs/nfs/nfs4xdr.c
+@@ -3530,6 +3530,42 @@ static int decode_attr_aclsupport(struct xdr_stream *xdr, uint32_t *bitmap, uint
+ 	return 0;
  }
- EXPORT_SYMBOL(utf32_to_utf8);
  
-@@ -217,8 +217,16 @@ int utf16s_to_utf8s(const wchar_t *pwcs, int inlen, enum utf16_endian endian,
- 				inlen--;
- 			}
- 			size = utf32_to_utf8(u, op, maxout);
--			if (size == -1) {
--				/* Ignore character and move on */
-+			if (size < 0) {
-+				if (size == -EILSEQ) {
-+					/* Ignore character and move on */
-+					continue;
-+				}
-+				/*
-+				 * Stop filling the buffer with data once a character
-+				 * does not fit anymore.
-+				 */
-+				break;
- 			} else {
- 				op += size;
- 				maxout -= size;
++static int decode_attr_case_insensitive(struct xdr_stream *xdr, uint32_t *bitmap, uint32_t *res)
++{
++	__be32 *p;
++
++	*res = 0;
++	if (unlikely(bitmap[0] & (FATTR4_WORD0_CASE_INSENSITIVE - 1U)))
++		return -EIO;
++	if (likely(bitmap[0] & FATTR4_WORD0_CASE_INSENSITIVE)) {
++		p = xdr_inline_decode(xdr, 4);
++		if (unlikely(!p))
++			return -EIO;
++		*res = be32_to_cpup(p);
++		bitmap[0] &= ~FATTR4_WORD0_CASE_INSENSITIVE;
++	}
++	dprintk("%s: case_insensitive=%s\n", __func__, *res == 0 ? "false" : "true");
++	return 0;
++}
++
++static int decode_attr_case_preserving(struct xdr_stream *xdr, uint32_t *bitmap, uint32_t *res)
++{
++	__be32 *p;
++
++	*res = 0;
++	if (unlikely(bitmap[0] & (FATTR4_WORD0_CASE_PRESERVING - 1U)))
++		return -EIO;
++	if (likely(bitmap[0] & FATTR4_WORD0_CASE_PRESERVING)) {
++		p = xdr_inline_decode(xdr, 4);
++		if (unlikely(!p))
++			return -EIO;
++		*res = be32_to_cpup(p);
++		bitmap[0] &= ~FATTR4_WORD0_CASE_PRESERVING;
++	}
++	dprintk("%s: case_preserving=%s\n", __func__, *res == 0 ? "false" : "true");
++	return 0;
++}
++
+ static int decode_attr_fileid(struct xdr_stream *xdr, uint32_t *bitmap, uint64_t *fileid)
+ {
+ 	__be32 *p;
+@@ -4406,6 +4442,10 @@ static int decode_server_caps(struct xdr_stream *xdr, struct nfs4_server_caps_re
+ 		goto xdr_error;
+ 	if ((status = decode_attr_aclsupport(xdr, bitmap, &res->acl_bitmask)) != 0)
+ 		goto xdr_error;
++	if ((status = decode_attr_case_insensitive(xdr, bitmap, &res->case_insensitive)) != 0)
++		goto xdr_error;
++	if ((status = decode_attr_case_preserving(xdr, bitmap, &res->case_preserving)) != 0)
++		goto xdr_error;
+ 	if ((status = decode_attr_exclcreat_supported(xdr, bitmap,
+ 				res->exclcreat_bitmask)) != 0)
+ 		goto xdr_error;
+diff --git a/include/linux/nfs_fs_sb.h b/include/linux/nfs_fs_sb.h
+index 091fefc5e3615..6b770affcfb2f 100644
+--- a/include/linux/nfs_fs_sb.h
++++ b/include/linux/nfs_fs_sb.h
+@@ -273,6 +273,8 @@ struct nfs_server {
+ #define NFS_CAP_ACLS		(1U << 3)
+ #define NFS_CAP_ATOMIC_OPEN	(1U << 4)
+ #define NFS_CAP_LGOPEN		(1U << 5)
++#define NFS_CAP_CASE_INSENSITIVE	(1U << 6)
++#define NFS_CAP_CASE_PRESERVING	(1U << 7)
+ #define NFS_CAP_POSIX_LOCK	(1U << 14)
+ #define NFS_CAP_UIDGID_NOMAP	(1U << 15)
+ #define NFS_CAP_STATEID_NFSV41	(1U << 16)
+diff --git a/include/linux/nfs_xdr.h b/include/linux/nfs_xdr.h
+index 7fcd56c6ded65..7321a5a95087f 100644
+--- a/include/linux/nfs_xdr.h
++++ b/include/linux/nfs_xdr.h
+@@ -1202,6 +1202,8 @@ struct nfs4_server_caps_res {
+ 	u32				has_links;
+ 	u32				has_symlinks;
+ 	u32				fh_expire_type;
++	u32				case_insensitive;
++	u32				case_preserving;
+ };
+ 
+ #define NFS4_PATHNAME_MAXCOMPONENTS 512
 -- 
 2.51.0
 
