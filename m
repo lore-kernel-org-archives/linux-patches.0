@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC9F221CC5A;
-	Thu, 15 Jan 2026 17:24:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5E293BFE4C;
+	Thu, 15 Jan 2026 17:24:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768497878; cv=none; b=FtUOACA5j0TQrivaUlXMOBGaOuhhxrC28O1PPPJqob4Ig2d2iy9lnr0m7q4gtZZPP/QFVY16o8Cl9w7GWggbEg4jjedwOLd0AoIKrKUXKHGhQT2suZrWyqT6IlagSm+L8QzWlgDfWVOegR1LTmGK8ftBxvXmwM7Gk1dpnIJcZSo=
+	t=1768497882; cv=none; b=bS4VbkX/R2g5+hhx64+lDprA9Z9K9kS6ZeDsQ4x5gg1cM0paD0ldDI0r5P6zj/p/SgdOJIfukacSqeK4YUBBH3Z8a91cv2B5zPeayJs5jfXmKm7K+KIzMuppLOC2hwgdx8LSfwowETv3RE7TRj1sxA1SYEoVNvgavQ0xBEqLS/Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768497878; c=relaxed/simple;
-	bh=4Djij3PQ+srSlaVBzY6Smv+QSX22XeRqL2j1TqAMxGU=;
+	s=arc-20240116; t=1768497882; c=relaxed/simple;
+	bh=GhoOc95BrMnqJJbc6eUEczfYo1BLtF4obJDA148uHBk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LM6LhZu3dEFy84KEgkxuen4+2L9990Yfugz5c4+73xu73PCrhLZn920H9ifX83/4o7LX8eslmkY3gaOjQPupupawju2clHPcQTQ0e2/hsBZbTIAvH2L+PsPRquIMfgszk7xvYQRpBVTupxlEoNiGDFSPxFjk0YAzzvncz2Yer/o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iM1sTx7P; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=A9dIG7r+jy3V8KIk6bxo/KZaCEl0BSoTFja8bYN1Z7dtFzpitG7mz9ZBXLuIHoEbOOcoqC6ps5g9mf0V33djheT7aanCICyDrBTt3dprBf4SM1k4E3PYkOMZEUinMKIQMgufTFu2p2aR9bdrqcttwXFNeF/8M1NRI1cYJM3bnRE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=A/s3/oUS; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iM1sTx7P"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D905C116D0;
-	Thu, 15 Jan 2026 17:24:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="A/s3/oUS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 28F3FC116D0;
+	Thu, 15 Jan 2026 17:24:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1768497878;
-	bh=4Djij3PQ+srSlaVBzY6Smv+QSX22XeRqL2j1TqAMxGU=;
+	s=korg; t=1768497881;
+	bh=GhoOc95BrMnqJJbc6eUEczfYo1BLtF4obJDA148uHBk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iM1sTx7PODmIXs6dExPbgUevzPlwfDgVpXz3mg+uHLdeeFgwOzoHYqHEQ1/00ZZ+E
-	 lcxwPK7Wb2ZFNiGdcC+rAXwBzmEVdsurk2xq2wSEBajx7oAXA9peFfzqxDNcw5hDu4
-	 b4RWu4BQcRgXY1ojpvA2VotjWchjC36ei+pFOqn4=
+	b=A/s3/oUSiyhuYi+vq2Z8nMDEWNe3Z1730dEanRaoBxWk4xt0bwMLSf6giu3w5POAz
+	 qRkLgNQt73cHQe3ZC6hDOZKQX82OSCUb7+TIYL9IhWeM7B9xjW2nA1LGIQSldzBawe
+	 4nV5YpUsSM0B5wYbqvGtvTEiFfZArWJFkDiLB2HM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Tom Rix <trix@redhat.com>,
+	Andrew Lunn <andrew@lunn.ch>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 234/554] nfc: pn533: Fix error code in pn533_acr122_poweron_rdr()
-Date: Thu, 15 Jan 2026 17:45:00 +0100
-Message-ID: <20260115164254.717025009@linuxfoundation.org>
+Subject: [PATCH 5.15 235/554] ethtool: use phydev variable
+Date: Thu, 15 Jan 2026 17:45:01 +0100
+Message-ID: <20260115164254.752138345@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260115164246.225995385@linuxfoundation.org>
 References: <20260115164246.225995385@linuxfoundation.org>
@@ -51,35 +52,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dan Carpenter <dan.carpenter@linaro.org>
+From: Tom Rix <trix@redhat.com>
 
-[ Upstream commit 885bebac9909994050bbbeed0829c727e42bd1b7 ]
+[ Upstream commit ccd21ec5b8dd9b8a528a70315cee95fc1dd79d20 ]
 
-Set the error code if "transferred != sizeof(cmd)" instead of
-returning success.
+In ethtool_get_phy_stats(), the phydev varaible is set to
+dev->phydev but dev->phydev is still used.  Replace
+dev->phydev uses with phydev.
 
-Fixes: dbafc28955fa ("NFC: pn533: don't send USB data off of the stack")
-Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
-Link: https://patch.msgid.link/aTfIJ9tZPmeUF4W1@stanley.mountain
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Tom Rix <trix@redhat.com>
+Reviewed-by: Andrew Lunn <andrew@lunn.ch>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Stable-dep-of: 7b07be1ff1cb ("ethtool: Avoid overflowing userspace buffer on stats query")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nfc/pn533/usb.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/ethtool/ioctl.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/nfc/pn533/usb.c b/drivers/nfc/pn533/usb.c
-index 47d423cc26081..11d3c4045c1e1 100644
---- a/drivers/nfc/pn533/usb.c
-+++ b/drivers/nfc/pn533/usb.c
-@@ -407,7 +407,7 @@ static int pn533_acr122_poweron_rdr(struct pn533_usb_phy *phy)
- 	if (rc || (transferred != sizeof(cmd))) {
- 		nfc_err(&phy->udev->dev,
- 			"Reader power on cmd error %d\n", rc);
--		return rc;
-+		return rc ?: -EINVAL;
- 	}
+diff --git a/net/ethtool/ioctl.c b/net/ethtool/ioctl.c
+index 1e9e70a633d1c..4b736385912ef 100644
+--- a/net/ethtool/ioctl.c
++++ b/net/ethtool/ioctl.c
+@@ -2068,9 +2068,9 @@ static int ethtool_get_phy_stats(struct net_device *dev, void __user *useraddr)
+ 	if (!phydev && (!ops->get_ethtool_phy_stats || !ops->get_sset_count))
+ 		return -EOPNOTSUPP;
  
- 	rc =  usb_submit_urb(phy->in_urb, GFP_KERNEL);
+-	if (dev->phydev && !ops->get_ethtool_phy_stats &&
++	if (phydev && !ops->get_ethtool_phy_stats &&
+ 	    phy_ops && phy_ops->get_sset_count)
+-		n_stats = phy_ops->get_sset_count(dev->phydev);
++		n_stats = phy_ops->get_sset_count(phydev);
+ 	else
+ 		n_stats = ops->get_sset_count(dev, ETH_SS_PHY_STATS);
+ 	if (n_stats < 0)
+@@ -2090,9 +2090,9 @@ static int ethtool_get_phy_stats(struct net_device *dev, void __user *useraddr)
+ 		if (!data)
+ 			return -ENOMEM;
+ 
+-		if (dev->phydev && !ops->get_ethtool_phy_stats &&
++		if (phydev && !ops->get_ethtool_phy_stats &&
+ 		    phy_ops && phy_ops->get_stats) {
+-			ret = phy_ops->get_stats(dev->phydev, &stats, data);
++			ret = phy_ops->get_stats(phydev, &stats, data);
+ 			if (ret < 0)
+ 				goto out;
+ 		} else {
 -- 
 2.51.0
 
