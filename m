@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E849D2D9ECB;
-	Thu, 15 Jan 2026 17:41:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6AC12C0F83;
+	Thu, 15 Jan 2026 17:41:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768498902; cv=none; b=HI9RCeLHshCaFsqpoA+CdsX+JhKLc1HO0iy9gR21BY77vld/c+l1difSJGnTBqE3BcUKTX4P0V7OOd2SKwqConotHCgGnFCDv3LhtueiyrcrZ9SebnAeHvL5tg/0uXkUTLrelu7JiY67FKr3cE3eKjmIBR0tOXOp0zYZx2t8CZc=
+	t=1768498904; cv=none; b=vDz7RqRz2aWRwz4fNUd2qNKCx4SeIckpMyM94VRg27TVMw3q30YSeYOBbmMqr71iGU25iXdbNuaSxbv/VIrRT6xOa8O12JsG65hCv9qmdfjtftEhX14774xDsxz/ygBdB3phY5IsMaHp9nXuX/+wsWbwGlA1o/mc9SgMqx1wqQg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768498902; c=relaxed/simple;
-	bh=qOx1LIiKtvW5qb7091zDI3CdjRD9I55RX5pMUChATuY=;
+	s=arc-20240116; t=1768498904; c=relaxed/simple;
+	bh=fsYfpPAP3SteP2jjhrn/47NXIT8lEhaYGHdVhoTHx2s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CfiBoTSZf5kYb/hn1379chkpb6+pp5fG+C/daqKXCQ/MzAZ/38S/KVxJBVPuX9uOV178c3CvMmLvbVw++R+aWnMO+/lVuygQ7S026peZrEq8Gp3EtaOUSZNnMknRMObiC74iEaT5cMXPXGshtJPWdW1tuPjjoDYj8zZReXVKK5w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GHadsEk6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=RC+f9jIQHOr1430UKQFfNzFZvzpboA2AA39xhxkE3TMM7fqf2OAsj8Y7AzroHSUQsivi/tHXSkWmNkG+7gBlzQyN+Tp9VpU07bSaQUdBXH5LvTCHy7LzcFL2WgSU7eEYvnOQP+wowsm+a/fAqz8i4rlVttqNxc1HRVY+qyl6/eE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Fh61QXIK; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GHadsEk6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 76E37C116D0;
-	Thu, 15 Jan 2026 17:41:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Fh61QXIK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 51A6EC19425;
+	Thu, 15 Jan 2026 17:41:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1768498901;
-	bh=qOx1LIiKtvW5qb7091zDI3CdjRD9I55RX5pMUChATuY=;
+	s=korg; t=1768498904;
+	bh=fsYfpPAP3SteP2jjhrn/47NXIT8lEhaYGHdVhoTHx2s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GHadsEk6O1x9FOmMU7Kg9S9tMIpQB18ntbSqufe862OfKnJV4wc8NNdPUiPLotGO1
-	 7UpquIfvPbVGn/JDS3mWqoSLmr/deq4WI8BAtFcujR6/ZTk2w07pmR3ccO6w6cTFyj
-	 +LwTqK4cS7KhKtL/BVdhYub9TvvZf0Hj3Xd2kJNg=
+	b=Fh61QXIKwmM5YjASQH/t/IhFQ0XjsIq4CImL4SaceedNmsXpEfs+cZAEbiDYNXkhT
+	 5x1nbCMmewihcDdxsf/+WJhpXKmFkEU5ATKkaOIsqJkmXEqKN+kngSFQuoflZvWO8A
+	 QbwkFkw8R4mehPPuZe5x5F4MfBM1GYktcFJTpNyM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thorsten Blum <thorsten.blum@linux.dev>,
-	Lukas Wunner <lukas@wunner.de>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
+	Alexander Egorenkov <egorenar@linux.ibm.com>,
+	Mete Durlu <meted@linux.ibm.com>,
+	Heiko Carstens <hca@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 038/451] crypto: asymmetric_keys - prevent overflow in asymmetric_key_generate_id
-Date: Thu, 15 Jan 2026 17:43:59 +0100
-Message-ID: <20260115164232.269904863@linuxfoundation.org>
+Subject: [PATCH 5.10 039/451] s390/smp: Fix fallback CPU detection
+Date: Thu, 15 Jan 2026 17:44:00 +0100
+Message-ID: <20260115164232.306669384@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260115164230.864985076@linuxfoundation.org>
 References: <20260115164230.864985076@linuxfoundation.org>
@@ -52,60 +52,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thorsten Blum <thorsten.blum@linux.dev>
+From: Heiko Carstens <hca@linux.ibm.com>
 
-[ Upstream commit df0845cf447ae1556c3440b8b155de0926cbaa56 ]
+[ Upstream commit 07a75d08cfa1b883a6e1256666e5f0617ee99231 ]
 
-Use check_add_overflow() to guard against potential integer overflows
-when adding the binary blob lengths and the size of an asymmetric_key_id
-structure and return ERR_PTR(-EOVERFLOW) accordingly. This prevents a
-possible buffer overflow when copying data from potentially malicious
-X.509 certificate fields that can be arbitrarily large, such as ASN.1
-INTEGER serial numbers, issuer names, etc.
+In case SCLP CPU detection does not work a fallback mechanism using SIGP is
+in place. Since a cleanup this does not work correctly anymore: new CPUs
+are only considered if their type matches the boot CPU.
 
-Fixes: 7901c1a8effb ("KEYS: Implement binary asymmetric key ID handling")
-Signed-off-by: Thorsten Blum <thorsten.blum@linux.dev>
-Reviewed-by: Lukas Wunner <lukas@wunner.de>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Before the cleanup the information if a CPU type should be considered was
+also part of a structure generated by the fallback mechanism and indicated
+that a CPU type should not be considered when adding CPUs.
+
+Since the rework a global SCLP state is used instead. If the global SCLP
+state indicates that the CPU type should be considered and the fallback
+mechanism is used, there may be a mismatch with CPU types if CPUs are
+added. This can lead to a system with only a single CPU even tough there
+are many more CPUs.
+
+Address this by simply copying the boot cpu type into the generated data
+structure from the fallback mechanism.
+
+Reported-by: Alexander Egorenkov <egorenar@linux.ibm.com>
+Fixes: d08d94306e90 ("s390/smp: cleanup core vs. cpu in the SCLP interface")
+Reviewed-by: Mete Durlu <meted@linux.ibm.com>
+Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- crypto/asymmetric_keys/asymmetric_type.c | 14 ++++++++++----
- 1 file changed, 10 insertions(+), 4 deletions(-)
+ arch/s390/kernel/smp.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/crypto/asymmetric_keys/asymmetric_type.c b/crypto/asymmetric_keys/asymmetric_type.c
-index 33e77d846caa8..ef0e56642a078 100644
---- a/crypto/asymmetric_keys/asymmetric_type.c
-+++ b/crypto/asymmetric_keys/asymmetric_type.c
-@@ -11,6 +11,7 @@
- #include <crypto/public_key.h>
- #include <linux/seq_file.h>
- #include <linux/module.h>
-+#include <linux/overflow.h>
- #include <linux/slab.h>
- #include <linux/ctype.h>
- #include <keys/system_keyring.h>
-@@ -138,12 +139,17 @@ struct asymmetric_key_id *asymmetric_key_generate_id(const void *val_1,
- 						     size_t len_2)
- {
- 	struct asymmetric_key_id *kid;
--
--	kid = kmalloc(sizeof(struct asymmetric_key_id) + len_1 + len_2,
--		      GFP_KERNEL);
-+	size_t kid_sz;
-+	size_t len;
-+
-+	if (check_add_overflow(len_1, len_2, &len))
-+		return ERR_PTR(-EOVERFLOW);
-+	if (check_add_overflow(sizeof(struct asymmetric_key_id), len, &kid_sz))
-+		return ERR_PTR(-EOVERFLOW);
-+	kid = kmalloc(kid_sz, GFP_KERNEL);
- 	if (!kid)
- 		return ERR_PTR(-ENOMEM);
--	kid->len = len_1 + len_2;
-+	kid->len = len;
- 	memcpy(kid->data, val_1, len_1);
- 	memcpy(kid->data + len_1, val_2, len_2);
- 	return kid;
+diff --git a/arch/s390/kernel/smp.c b/arch/s390/kernel/smp.c
+index 2e0c3b0a5a58a..253774d155a1f 100644
+--- a/arch/s390/kernel/smp.c
++++ b/arch/s390/kernel/smp.c
+@@ -732,6 +732,7 @@ static void __ref smp_get_core_info(struct sclp_core_info *info, int early)
+ 				continue;
+ 			info->core[info->configured].core_id =
+ 				address >> smp_cpu_mt_shift;
++			info->core[info->configured].type = boot_core_type;
+ 			info->configured++;
+ 		}
+ 		info->combined = info->configured;
 -- 
 2.51.0
 
