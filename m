@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C01E3ACEFF;
-	Thu, 15 Jan 2026 16:52:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD5F9396B7D;
+	Thu, 15 Jan 2026 16:53:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768495978; cv=none; b=di+pTiFPRjUu84y7yYSioWMff3kFtXi/0irZWUv2bxNPU1zd7NWn8FWEv8kCHwee8Iv0URYiJh4DaAApl5BrMiFtyn7cX1wWGEp/h6BCnPJx6k8fmh5eMkxFuTp2d16AZb9VrCXxsOIBn8v03/XGEjsomVFu/fwRWaQezkZxcdg=
+	t=1768495980; cv=none; b=TQL1aJPP1Pq5fW+AMmU1X1/ZO6gsRhnbmvqUTa5iwrVDqXAmonqC/VYpFDPYHiJsT4k+gzAQFE4o5tXQFFR4vaZfXp4a6c6r+VwyiPYekVdD0JpbNRqL9HGQM3M2z217pMXGwKoD3x2V/LmNSBpLN7wIXnYM3fZmHlah4G+ac3o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768495978; c=relaxed/simple;
-	bh=lKJdHJWprXdjN5LcJ6gWscNT75n1h6oGTw/T+3dukY8=;
+	s=arc-20240116; t=1768495980; c=relaxed/simple;
+	bh=aNqBlNyLkH6UK7Dfhac4v6ZgJ10c+hm4N01qrfXabZ8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jBm/U4I2G1uX4Yxg3BWUImgadRGABSzVrI0jCSQTg2LJvvmfcF3qK6C+wLWw/ZTguM0Szr5pyCRyNcqC8i12gXh11Agce6DVdiWPlrL13XvDG+9sbPtJKu+5aR8FgxJaYp0mR1OAG4I/qWetgX+WPPnq8fn9WyDe41gbrMVhA1U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ToIaDu7x; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=P853Y0BZmtJPtbqdW9GU70cRfjQeYRMVSCcjsg2BiuR/S39Xc+RZ2o1na2WAFr0zzov532mrD6jUO6VLCSKKNcAucKjbNAvYpTalMuVh3gYlT/0GK2s5GyMffltksYVwDwo/zQ6IObD+N8QHoqKgYpESmBf4SmMAlFeF7u9mmn0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=U3FBetpb; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ToIaDu7x"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 53D67C116D0;
-	Thu, 15 Jan 2026 16:52:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="U3FBetpb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 38378C19421;
+	Thu, 15 Jan 2026 16:53:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1768495977;
-	bh=lKJdHJWprXdjN5LcJ6gWscNT75n1h6oGTw/T+3dukY8=;
+	s=korg; t=1768495980;
+	bh=aNqBlNyLkH6UK7Dfhac4v6ZgJ10c+hm4N01qrfXabZ8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ToIaDu7xNQniEGtUnx4f7NiJDX8qWF3pZ1YzZAZf5M9vifmEcqFIkmG4yIVIcuFk4
-	 YGUO/EX/+P3tAiKYWP5nICsifQZpI5lrgGIyJjjDA1vS9Bpjsx+sfsA+bqKD91PfO4
-	 WglZam8mieKscM+Ez6k8UduHYJ0oWUqD2OGOcLWY=
+	b=U3FBetpb3AC6HbtKO7l7qcCPqx/fYp2ni5Sd+kBFUmTcPkDkhn6vnEiIx/m8Bt9u3
+	 Et+hTwU2T8S9hW2/gjQfNx3nl6tdF1pokEfSSvJk4xBF6tac3fFiwppq9W17HZ856T
+	 nXyofPnnHKXtACuhdNsb29D1E7t9+KhKedCAQAys=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Linnaea Lavia <linnaea-von-lavia@live.com>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	Neil Armstrong <neil.armstrong@linaro.org>
-Subject: [PATCH 6.18 033/181] PCI: meson: Report that link is up while in ASPM L0s and L1 states
-Date: Thu, 15 Jan 2026 17:46:10 +0100
-Message-ID: <20260115164203.523540754@linuxfoundation.org>
+	NeilBrown <neil@brown.name>,
+	Jeff Layton <jlayton@kernel.org>,
+	Olga Kornievskaia <okorniev@redhat.com>,
+	Chuck Lever <chuck.lever@oracle.com>
+Subject: [PATCH 6.18 004/181] nfsd: check that server is running in unlock_filesystem
+Date: Thu, 15 Jan 2026 17:45:41 +0100
+Message-ID: <20260115164202.473129426@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260115164202.305475649@linuxfoundation.org>
 References: <20260115164202.305475649@linuxfoundation.org>
@@ -51,98 +52,106 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bjorn Helgaas <bhelgaas@google.com>
+From: Olga Kornievskaia <okorniev@redhat.com>
 
-commit df27c03b9e3ef2baa9e9c9f56a771d463a84489d upstream.
+commit d0424066fcd294977f310964bed6f2a487fa4515 upstream.
 
-Previously meson_pcie_link_up() only returned true if the link was in the
-L0 state.  This was incorrect because hardware autonomously manages
-transitions between L0, L0s, and L1 while both components on the link stay
-in D0.  Those states should all be treated as "link is active".
+If we are trying to unlock the filesystem via an administrative
+interface and nfsd isn't running, it crashes the server. This
+happens currently because nfsd4_revoke_states() access state
+structures (eg., conf_id_hashtbl) that has been freed as a part
+of the server shutdown.
 
-Returning false when the device was in L0s or L1 broke config accesses
-because dw_pcie_other_conf_map_bus() fails if the link is down, which
-caused errors like this:
+[   59.465072] Call trace:
+[   59.465308]  nfsd4_revoke_states+0x1b4/0x898 [nfsd] (P)
+[   59.465830]  write_unlock_fs+0x258/0x440 [nfsd]
+[   59.466278]  nfsctl_transaction_write+0xb0/0x120 [nfsd]
+[   59.466780]  vfs_write+0x1f0/0x938
+[   59.467088]  ksys_write+0xfc/0x1f8
+[   59.467395]  __arm64_sys_write+0x74/0xb8
+[   59.467746]  invoke_syscall.constprop.0+0xdc/0x1e8
+[   59.468177]  do_el0_svc+0x154/0x1d8
+[   59.468489]  el0_svc+0x40/0xe0
+[   59.468767]  el0t_64_sync_handler+0xa0/0xe8
+[   59.469138]  el0t_64_sync+0x1ac/0x1b0
 
-  meson-pcie fc000000.pcie: error: wait linkup timeout
-  pci 0000:01:00.0: BAR 0: error updating (0xfc700004 != 0xffffffff)
+Ensure this can't happen by taking the nfsd_mutex and checking that
+the server is still up, and then holding the mutex across the call to
+nfsd4_revoke_states().
 
-Remove the LTSSM state check, timeout, speed check, and error message from
-meson_pcie_link_up(), the dw_pcie_ops.link_up() method, so it is a simple
-boolean check of whether the link is active.  Timeouts and error messages
-are handled at a higher level, e.g., dw_pcie_wait_for_link().
-
-Fixes: 9c0ef6d34fdb ("PCI: amlogic: Add the Amlogic Meson PCIe controller driver")
-Reported-by: Linnaea Lavia <linnaea-von-lavia@live.com>
-Closes: https://lore.kernel.org/r/DM4PR05MB102707B8CDF84D776C39F22F2C7F0A@DM4PR05MB10270.namprd05.prod.outlook.com
-[bhelgaas: squash removal of unused WAIT_LINKUP_TIMEOUT by
-Martin Blumenstingl <martin.blumenstingl@googlemail.com>:
-https://patch.msgid.link/20260105125625.239497-1-martin.blumenstingl@googlemail.com]
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Tested-by: Linnaea Lavia <linnaea-von-lavia@live.com>
-Tested-by: Neil Armstrong <neil.armstrong@linaro.org> # on BananaPi M2S
-Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
+Reviewed-by: NeilBrown <neil@brown.name>
+Reviewed-by: Jeff Layton <jlayton@kernel.org>
+Fixes: 1ac3629bf0125 ("nfsd: prepare for supporting admin-revocation of state")
 Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20251103221930.1831376-1-helgaas@kernel.org
-Link: https://patch.msgid.link/20260105125625.239497-1-martin.blumenstingl@googlemail.com
+Signed-off-by: Olga Kornievskaia <okorniev@redhat.com>
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pci/controller/dwc/pci-meson.c |   37 ++-------------------------------
- 1 file changed, 3 insertions(+), 34 deletions(-)
+ fs/nfsd/nfs4state.c |    5 ++---
+ fs/nfsd/nfsctl.c    |    9 ++++++++-
+ fs/nfsd/state.h     |    4 ++--
+ 3 files changed, 12 insertions(+), 6 deletions(-)
 
---- a/drivers/pci/controller/dwc/pci-meson.c
-+++ b/drivers/pci/controller/dwc/pci-meson.c
-@@ -37,7 +37,6 @@
- #define PCIE_CFG_STATUS17		0x44
- #define PM_CURRENT_STATE(x)		(((x) >> 7) & 0x1)
+--- a/fs/nfsd/nfs4state.c
++++ b/fs/nfsd/nfs4state.c
+@@ -1759,7 +1759,7 @@ static struct nfs4_stid *find_one_sb_sti
  
--#define WAIT_LINKUP_TIMEOUT		4000
- #define PORT_CLK_RATE			100000000UL
- #define MAX_PAYLOAD_SIZE		256
- #define MAX_READ_REQ_SIZE		256
-@@ -350,40 +349,10 @@ static struct pci_ops meson_pci_ops = {
- static bool meson_pcie_link_up(struct dw_pcie *pci)
+ /**
+  * nfsd4_revoke_states - revoke all nfsv4 states associated with given filesystem
+- * @net:  used to identify instance of nfsd (there is one per net namespace)
++ * @nn:   used to identify instance of nfsd (there is one per net namespace)
+  * @sb:   super_block used to identify target filesystem
+  *
+  * All nfs4 states (open, lock, delegation, layout) held by the server instance
+@@ -1771,9 +1771,8 @@ static struct nfs4_stid *find_one_sb_sti
+  * The clients which own the states will subsequently being notified that the
+  * states have been "admin-revoked".
+  */
+-void nfsd4_revoke_states(struct net *net, struct super_block *sb)
++void nfsd4_revoke_states(struct nfsd_net *nn, struct super_block *sb)
  {
- 	struct meson_pcie *mp = to_meson_pcie(pci);
--	struct device *dev = pci->dev;
--	u32 speed_okay = 0;
--	u32 cnt = 0;
--	u32 state12, state17, smlh_up, ltssm_up, rdlh_up;
--
--	do {
--		state12 = meson_cfg_readl(mp, PCIE_CFG_STATUS12);
--		state17 = meson_cfg_readl(mp, PCIE_CFG_STATUS17);
--		smlh_up = IS_SMLH_LINK_UP(state12);
--		rdlh_up = IS_RDLH_LINK_UP(state12);
--		ltssm_up = IS_LTSSM_UP(state12);
--
--		if (PM_CURRENT_STATE(state17) < PCIE_GEN3)
--			speed_okay = 1;
--
--		if (smlh_up)
--			dev_dbg(dev, "smlh_link_up is on\n");
--		if (rdlh_up)
--			dev_dbg(dev, "rdlh_link_up is on\n");
--		if (ltssm_up)
--			dev_dbg(dev, "ltssm_up is on\n");
--		if (speed_okay)
--			dev_dbg(dev, "speed_okay\n");
--
--		if (smlh_up && rdlh_up && ltssm_up && speed_okay)
--			return true;
-+	u32 state12;
+-	struct nfsd_net *nn = net_generic(net, nfsd_net_id);
+ 	unsigned int idhashval;
+ 	unsigned int sc_types;
  
--		cnt++;
--
--		udelay(10);
--	} while (cnt < WAIT_LINKUP_TIMEOUT);
--
--	dev_err(dev, "error: wait linkup timeout\n");
--	return false;
-+	state12 = meson_cfg_readl(mp, PCIE_CFG_STATUS12);
-+	return IS_SMLH_LINK_UP(state12) && IS_RDLH_LINK_UP(state12);
+--- a/fs/nfsd/nfsctl.c
++++ b/fs/nfsd/nfsctl.c
+@@ -259,6 +259,7 @@ static ssize_t write_unlock_fs(struct fi
+ 	struct path path;
+ 	char *fo_path;
+ 	int error;
++	struct nfsd_net *nn;
+ 
+ 	/* sanity check */
+ 	if (size == 0)
+@@ -285,7 +286,13 @@ static ssize_t write_unlock_fs(struct fi
+ 	 * 3.  Is that directory the root of an exported file system?
+ 	 */
+ 	error = nlmsvc_unlock_all_by_sb(path.dentry->d_sb);
+-	nfsd4_revoke_states(netns(file), path.dentry->d_sb);
++	mutex_lock(&nfsd_mutex);
++	nn = net_generic(netns(file), nfsd_net_id);
++	if (nn->nfsd_serv)
++		nfsd4_revoke_states(nn, path.dentry->d_sb);
++	else
++		error = -EINVAL;
++	mutex_unlock(&nfsd_mutex);
+ 
+ 	path_put(&path);
+ 	return error;
+--- a/fs/nfsd/state.h
++++ b/fs/nfsd/state.h
+@@ -841,9 +841,9 @@ static inline void get_nfs4_file(struct
+ struct nfsd_file *find_any_file(struct nfs4_file *f);
+ 
+ #ifdef CONFIG_NFSD_V4
+-void nfsd4_revoke_states(struct net *net, struct super_block *sb);
++void nfsd4_revoke_states(struct nfsd_net *nn, struct super_block *sb);
+ #else
+-static inline void nfsd4_revoke_states(struct net *net, struct super_block *sb)
++static inline void nfsd4_revoke_states(struct nfsd_net *nn, struct super_block *sb)
+ {
  }
- 
- static int meson_pcie_host_init(struct dw_pcie_rp *pp)
+ #endif
 
 
