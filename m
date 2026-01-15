@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1EEE029ACDD;
-	Thu, 15 Jan 2026 17:11:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00A602750ED;
+	Thu, 15 Jan 2026 17:11:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768497112; cv=none; b=ttqgOfYumhmcwKs8/26xOKiyBAz2IZY5voXwXZFxMO0417pIehLLWmXHO92Ioer2R01qCLfE3KSKuAG5z9WCo3/74BGq687M0D339p6+EHpSYIAoS5czKJGJqXQWDlJhys5nYI1+4Dr6kQAEyG/WjumOblXpeNo/AtX56iVFM34=
+	t=1768497115; cv=none; b=Qp67R38SapnpUTCgAtNObcLoEOwtAl2nQO0RskPa5FhWBv7NH4IZAL2ZAahX9MVXJBb3uo7FnnVt4t7QIMDtXiND/DXc5s8j6aqjtuhxZ5sSTNd/lN6QAMdydrGsb98kdOOkhHDEZVVUAqh5IFDGampWimv0/RDWvIM578cGwss=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768497112; c=relaxed/simple;
-	bh=/SDZrSriFNONbrZoEXxFP/lA/G8mCqMbkBdD/riP/Jc=;
+	s=arc-20240116; t=1768497115; c=relaxed/simple;
+	bh=N2DG/pKMnKSTXvsmToKz9j/NCc9vsKkagNGh97nuceI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ePU3fNpDfSqyJ+gqfEPaiXEwMuI6ArWCd7ONKbI15zorv7lnuGJNxtjFukhhHgirgtrC0uOlLlYVEP/01M7xj5G264QCBLIj4otwzR9cHq/coJbOvpTfbjp2tv+eY7DCh97j750/KWCKIAgMk37/9BKwEwielfbP4hIs2KjVjkA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MT49FaC2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tCjZboNlwwdOYmZ2MwUPkOZfpqylwTxPE40b3lMKR7OMKpfT0w1OjluuG5DKfJLxh9pnAf6UTcjHN7DhCnaQNClQyA6lMnJDWsAFhaV/4CP+wykEV0YQa9r4fnZThh/3Ldodg89GvUUo84SFsEec0cP2yEbIP1ZQl4GYcGGQFBA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HQmndAVZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MT49FaC2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B86DC116D0;
-	Thu, 15 Jan 2026 17:11:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HQmndAVZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 78A84C116D0;
+	Thu, 15 Jan 2026 17:11:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1768497112;
-	bh=/SDZrSriFNONbrZoEXxFP/lA/G8mCqMbkBdD/riP/Jc=;
+	s=korg; t=1768497114;
+	bh=N2DG/pKMnKSTXvsmToKz9j/NCc9vsKkagNGh97nuceI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MT49FaC2+gDAVDCrbiTPFyWnDnWXMARDgAoBazxc/fgWN1mC/joU8DBsU9bCj3Qph
-	 YI4Wsgfhf8BZQ9j5IfEyOReFSrPl7AGA/+HGTAhfB7ttQIde/ltTQuk7Ili89490gj
-	 1fIvWu8WMW9rXgvMROPRaMa+2bdNNPhwh3RXY3tY=
+	b=HQmndAVZrxXlud6v6WD1EcJpb9WhpDPCzdSSrthy4xvzsucT1QwX4fXOeker2xBq+
+	 o+wGGqLkMjP/0m3aGo+VnuM1qfCalhaNftTiyT8SRtaEBjtvD+Vueg0lRKy5LS1iNq
+	 yYO6fjBiCQ3G/dSNMdxnG25/qquPYw4cSZPviizE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xiang Mei <xmei5@asu.edu>,
-	Weiming Shi <bestswngs@gmail.com>,
-	Eric Dumazet <edumazet@google.com>,
+	Di Zhu <zhud@hygon.cn>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 40/72] net: sock: fix hardened usercopy panic in sock_recv_errqueue
-Date: Thu, 15 Jan 2026 17:48:50 +0100
-Message-ID: <20260115164144.948372120@linuxfoundation.org>
+Subject: [PATCH 6.1 41/72] netdev: preserve NETIF_F_ALL_FOR_ALL across TSO updates
+Date: Thu, 15 Jan 2026 17:48:51 +0100
+Message-ID: <20260115164144.984360616@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260115164143.482647486@linuxfoundation.org>
 References: <20260115164143.482647486@linuxfoundation.org>
@@ -53,112 +51,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Weiming Shi <bestswngs@gmail.com>
+From: Di Zhu <zhud@hygon.cn>
 
-[ Upstream commit 2a71a1a8d0ed718b1c7a9ac61f07e5755c47ae20 ]
+[ Upstream commit 02d1e1a3f9239cdb3ecf2c6d365fb959d1bf39df ]
 
-skbuff_fclone_cache was created without defining a usercopy region,
-[1] unlike skbuff_head_cache which properly whitelists the cb[] field.
-[2] This causes a usercopy BUG() when CONFIG_HARDENED_USERCOPY is
-enabled and the kernel attempts to copy sk_buff.cb data to userspace
-via sock_recv_errqueue() -> put_cmsg().
+Directly increment the TSO features incurs a side effect: it will also
+directly clear the flags in NETIF_F_ALL_FOR_ALL on the master device,
+which can cause issues such as the inability to enable the nocache copy
+feature on the bonding driver.
 
-The crash occurs when: 1. TCP allocates an skb using alloc_skb_fclone()
-   (from skbuff_fclone_cache) [1]
-2. The skb is cloned via skb_clone() using the pre-allocated fclone
-[3] 3. The cloned skb is queued to sk_error_queue for timestamp
-reporting 4. Userspace reads the error queue via recvmsg(MSG_ERRQUEUE)
-5. sock_recv_errqueue() calls put_cmsg() to copy serr->ee from skb->cb
-[4] 6. __check_heap_object() fails because skbuff_fclone_cache has no
-   usercopy whitelist [5]
+The fix is to include NETIF_F_ALL_FOR_ALL in the update mask, thereby
+preventing it from being cleared.
 
-When cloned skbs allocated from skbuff_fclone_cache are used in the
-socket error queue, accessing the sock_exterr_skb structure in skb->cb
-via put_cmsg() triggers a usercopy hardening violation:
-
-[    5.379589] usercopy: Kernel memory exposure attempt detected from SLUB object 'skbuff_fclone_cache' (offset 296, size 16)!
-[    5.382796] kernel BUG at mm/usercopy.c:102!
-[    5.383923] Oops: invalid opcode: 0000 [#1] SMP KASAN NOPTI
-[    5.384903] CPU: 1 UID: 0 PID: 138 Comm: poc_put_cmsg Not tainted 6.12.57 #7
-[    5.384903] Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS rel-1.16.3-0-ga6ed6b701f0a-prebuilt.qemu.org 04/01/2014
-[    5.384903] RIP: 0010:usercopy_abort+0x6c/0x80
-[    5.384903] Code: 1a 86 51 48 c7 c2 40 15 1a 86 41 52 48 c7 c7 c0 15 1a 86 48 0f 45 d6 48 c7 c6 80 15 1a 86 48 89 c1 49 0f 45 f3 e8 84 27 88 ff <0f> 0b 490
-[    5.384903] RSP: 0018:ffffc900006f77a8 EFLAGS: 00010246
-[    5.384903] RAX: 000000000000006f RBX: ffff88800f0ad2a8 RCX: 1ffffffff0f72e74
-[    5.384903] RDX: 0000000000000000 RSI: 0000000000000004 RDI: ffffffff87b973a0
-[    5.384903] RBP: 0000000000000010 R08: 0000000000000000 R09: fffffbfff0f72e74
-[    5.384903] R10: 0000000000000003 R11: 79706f6372657375 R12: 0000000000000001
-[    5.384903] R13: ffff88800f0ad2b8 R14: ffffea00003c2b40 R15: ffffea00003c2b00
-[    5.384903] FS:  0000000011bc4380(0000) GS:ffff8880bf100000(0000) knlGS:0000000000000000
-[    5.384903] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-[    5.384903] CR2: 000056aa3b8e5fe4 CR3: 000000000ea26004 CR4: 0000000000770ef0
-[    5.384903] PKRU: 55555554
-[    5.384903] Call Trace:
-[    5.384903]  <TASK>
-[    5.384903]  __check_heap_object+0x9a/0xd0
-[    5.384903]  __check_object_size+0x46c/0x690
-[    5.384903]  put_cmsg+0x129/0x5e0
-[    5.384903]  sock_recv_errqueue+0x22f/0x380
-[    5.384903]  tls_sw_recvmsg+0x7ed/0x1960
-[    5.384903]  ? srso_alias_return_thunk+0x5/0xfbef5
-[    5.384903]  ? schedule+0x6d/0x270
-[    5.384903]  ? srso_alias_return_thunk+0x5/0xfbef5
-[    5.384903]  ? mutex_unlock+0x81/0xd0
-[    5.384903]  ? __pfx_mutex_unlock+0x10/0x10
-[    5.384903]  ? __pfx_tls_sw_recvmsg+0x10/0x10
-[    5.384903]  ? _raw_spin_lock_irqsave+0x8f/0xf0
-[    5.384903]  ? _raw_read_unlock_irqrestore+0x20/0x40
-[    5.384903]  ? srso_alias_return_thunk+0x5/0xfbef5
-
-The crash offset 296 corresponds to skb2->cb within skbuff_fclones:
-  - sizeof(struct sk_buff) = 232 - offsetof(struct sk_buff, cb) = 40 -
-  offset of skb2.cb in fclones = 232 + 40 = 272 - crash offset 296 =
-  272 + 24 (inside sock_exterr_skb.ee)
-
-This patch uses a local stack variable as a bounce buffer to avoid the hardened usercopy check failure.
-
-[1] https://elixir.bootlin.com/linux/v6.12.62/source/net/ipv4/tcp.c#L885
-[2] https://elixir.bootlin.com/linux/v6.12.62/source/net/core/skbuff.c#L5104
-[3] https://elixir.bootlin.com/linux/v6.12.62/source/net/core/skbuff.c#L5566
-[4] https://elixir.bootlin.com/linux/v6.12.62/source/net/core/skbuff.c#L5491
-[5] https://elixir.bootlin.com/linux/v6.12.62/source/mm/slub.c#L5719
-
-Fixes: 6d07d1cd300f ("usercopy: Restrict non-usercopy caches to size 0")
-Reported-by: Xiang Mei <xmei5@asu.edu>
-Signed-off-by: Weiming Shi <bestswngs@gmail.com>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Link: https://patch.msgid.link/20251223203534.1392218-2-bestswngs@gmail.com
+Fixes: b0ce3508b25e ("bonding: allow TSO being set on bonding master")
+Signed-off-by: Di Zhu <zhud@hygon.cn>
+Link: https://patch.msgid.link/20251224012224.56185-1-zhud@hygon.cn
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/sock.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ include/linux/netdevice.h | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/net/core/sock.c b/net/core/sock.c
-index 7702033680e7b..6c178b4742666 100644
---- a/net/core/sock.c
-+++ b/net/core/sock.c
-@@ -3614,7 +3614,7 @@ void sock_enable_timestamp(struct sock *sk, enum sock_flags flag)
- int sock_recv_errqueue(struct sock *sk, struct msghdr *msg, int len,
- 		       int level, int type)
+diff --git a/include/linux/netdevice.h b/include/linux/netdevice.h
+index f44701b82ea80..1c47ab59a2c7f 100644
+--- a/include/linux/netdevice.h
++++ b/include/linux/netdevice.h
+@@ -4951,7 +4951,8 @@ netdev_features_t netdev_increment_features(netdev_features_t all,
+ static inline netdev_features_t netdev_add_tso_features(netdev_features_t features,
+ 							netdev_features_t mask)
  {
--	struct sock_exterr_skb *serr;
-+	struct sock_extended_err ee;
- 	struct sk_buff *skb;
- 	int copied, err;
+-	return netdev_increment_features(features, NETIF_F_ALL_TSO, mask);
++	return netdev_increment_features(features, NETIF_F_ALL_TSO |
++					 NETIF_F_ALL_FOR_ALL, mask);
+ }
  
-@@ -3634,8 +3634,9 @@ int sock_recv_errqueue(struct sock *sk, struct msghdr *msg, int len,
- 
- 	sock_recv_timestamp(msg, sk, skb);
- 
--	serr = SKB_EXT_ERR(skb);
--	put_cmsg(msg, level, type, sizeof(serr->ee), &serr->ee);
-+	/* We must use a bounce buffer for CONFIG_HARDENED_USERCOPY=y */
-+	ee = SKB_EXT_ERR(skb)->ee;
-+	put_cmsg(msg, level, type, sizeof(ee), &ee);
- 
- 	msg->msg_flags |= MSG_ERRQUEUE;
- 	err = copied;
+ int __netdev_update_features(struct net_device *dev);
 -- 
 2.51.0
 
