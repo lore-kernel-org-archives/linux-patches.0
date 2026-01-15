@@ -1,36 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C56093C1FFB;
-	Thu, 15 Jan 2026 17:28:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A619E3BF2FF;
+	Thu, 15 Jan 2026 17:28:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768498095; cv=none; b=GTYm0ntSkKAdBq32vCoUlFf744OfUMkbTqhhP9lqLaqc4E0qdXsZKWJUoE6dJE2JnFFUZlPldhQ8kiFnJq0sSaO5QAXz+o9dsv6HmY+yCp0wCiCpqc9DwbdftoeHTrp+XGPQj73u9LR0f3sLVQ3kb87k2QZERsE9rV7H0nKo4Og=
+	t=1768498098; cv=none; b=NBL3k1I3QFao1cOn33JluQxNhYigmus/3ZAs8uVhHfe/ZF6PPk3q22lnQ+j9pfNEhLwag0HwKXSIowvJVaQFZkXc5kFQuamzL1cLSTPwd4HP5onxhr8Mf7WtLMX9M7brjEZj7h2qca9My7zRaOo2+S8h6/vImRNmb149edq6748=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768498095; c=relaxed/simple;
-	bh=41jvnbtUkZeh754hjDlMEWd+CxTyJSkITBdrY/Wv3Zo=;
+	s=arc-20240116; t=1768498098; c=relaxed/simple;
+	bh=CIgom2USfIawX/+65QpwSkay18ttvhkupV/MKscZ/So=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=N+1JWQWDyBjdZdHG+MX2l1hnGn+Vxrnlg9Md5DtDULCWaBospvBny8CSRU7EGvdOtcebFSlV8grU1yGMdmA7Hw9IkhMzlhDjRawt5mRZ0dR1y8gClA1VBbkPVN54L+am7/UyPNE0Q4R6iCz5UFcbZ/orRDcp3wOJVyidUIf21Aw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kqwmEeCP; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fZOknRweyVlV83oxLurNTPG69dQFK0UuqRHxsdU/ihD+cpmpeM/2AjDC8xnFV3+uAfwAdKvP3YySA1G7BfPEWMk/Q+8stOjjDTyU8+31lhAO25daDTJ+Z7eoNql0s5+xfCUlZMMSb57oJSHO6comN5BLjjNttpQZp+5jJ9tYlP4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tEjCFonQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kqwmEeCP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A9B1C116D0;
-	Thu, 15 Jan 2026 17:28:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tEjCFonQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2DECCC116D0;
+	Thu, 15 Jan 2026 17:28:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1768498095;
-	bh=41jvnbtUkZeh754hjDlMEWd+CxTyJSkITBdrY/Wv3Zo=;
+	s=korg; t=1768498098;
+	bh=CIgom2USfIawX/+65QpwSkay18ttvhkupV/MKscZ/So=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kqwmEeCPClgrKTz9FTRXxWwggV07rz96Dg06TnAszP/wwQK5bsxh4d3RE4VhV2Awc
-	 wgQ2OFc9/lX4eLzFw2X4RM8LuDiR0JUS1+qGpSRIXHQkA5u5UnkFAMibyO3GDm7M0M
-	 KFulh9wdaW3T+s2+qXRY6ZvE/3DKxJus7dnOaD7g=
+	b=tEjCFonQ/7UFE/cGio8nc007g2B94bcq74X4yHCq2ENcaMgBdokn/EIWJEyQZ0oKX
+	 vsWWVn2zpyz6uRbq2VOaGMM6H8Bjjf9H4os6Txb+oQVERRTY3LDiBwvuE+NqRz3HXP
+	 nji2FZjDu5OG4Vh6JFizD1Xr38r5DSLcy6yjiXVA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tzung-Bi Shih <tzungbi@kernel.org>
-Subject: [PATCH 5.15 310/554] platform/chrome: cros_ec_ishtp: Fix UAF after unbinding driver
-Date: Thu, 15 Jan 2026 17:46:16 +0100
-Message-ID: <20260115164257.452519277@linuxfoundation.org>
+	Li Chen <chenl311@chinatelecom.cn>,
+	Chaitanya Kulkarni <kch@nvidia.com>,
+	Bart Van Assche <bvanassche@acm.org>,
+	Jens Axboe <axboe@kernel.dk>
+Subject: [PATCH 5.15 279/554] block: rate-limit capacity change info log
+Date: Thu, 15 Jan 2026 17:45:45 +0100
+Message-ID: <20260115164256.329207725@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260115164246.225995385@linuxfoundation.org>
 References: <20260115164246.225995385@linuxfoundation.org>
@@ -49,34 +52,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tzung-Bi Shih <tzungbi@kernel.org>
+From: Li Chen <chenl311@chinatelecom.cn>
 
-commit 944edca81e7aea15f83cf9a13a6ab67f711e8abd upstream.
+commit 3179a5f7f86bcc3acd5d6fb2a29f891ef5615852 upstream.
 
-After unbinding the driver, another kthread `cros_ec_console_log_work`
-is still accessing the device, resulting an UAF and crash.
+loop devices under heavy stress-ng loop streessor can trigger many
+capacity change events in a short time. Each event prints an info
+message from set_capacity_and_notify(), flooding the console and
+contributing to soft lockups on slow consoles.
 
-The driver doesn't unregister the EC device in .remove() which should
-shutdown sub-devices synchronously.  Fix it.
+Switch the printk in set_capacity_and_notify() to
+pr_info_ratelimited() so frequent capacity changes do not spam
+the log while still reporting occasional changes.
 
-Fixes: 26a14267aff2 ("platform/chrome: Add ChromeOS EC ISHTP driver")
 Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20251031033900.3577394-1-tzungbi@kernel.org
-Signed-off-by: Tzung-Bi Shih <tzungbi@kernel.org>
+Signed-off-by: Li Chen <chenl311@chinatelecom.cn>
+Reviewed-by: Chaitanya Kulkarni <kch@nvidia.com>
+Reviewed-by: Bart Van Assche <bvanassche@acm.org>
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/platform/chrome/cros_ec_ishtp.c |    1 +
- 1 file changed, 1 insertion(+)
+ block/genhd.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/platform/chrome/cros_ec_ishtp.c
-+++ b/drivers/platform/chrome/cros_ec_ishtp.c
-@@ -710,6 +710,7 @@ static void cros_ec_ishtp_remove(struct
+--- a/block/genhd.c
++++ b/block/genhd.c
+@@ -83,7 +83,7 @@ bool set_capacity_and_notify(struct gend
+ 	    (disk->flags & GENHD_FL_HIDDEN))
+ 		return false;
  
- 	cancel_work_sync(&client_data->work_ishtp_reset);
- 	cancel_work_sync(&client_data->work_ec_evt);
-+	cros_ec_unregister(client_data->ec_dev);
- 	cros_ish_deinit(cros_ish_cl);
- 	ishtp_put_device(cl_device);
- }
+-	pr_info("%s: detected capacity change from %lld to %lld\n",
++	pr_info_ratelimited("%s: detected capacity change from %lld to %lld\n",
+ 		disk->disk_name, capacity, size);
+ 
+ 	/*
 
 
