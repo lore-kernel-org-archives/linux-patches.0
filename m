@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A9AA2D0C79;
-	Thu, 15 Jan 2026 17:39:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EDCC44C81;
+	Thu, 15 Jan 2026 17:39:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768498778; cv=none; b=S8S6aX33Llcj6MzTSwglj0VMk37o6XVLYU2WalXRdhPxsQJZavzI7srO25nce4EhgsG5ps53qNuc961s+xaGC0dXAwxu8DdBAp1QQMFhkjw2z/xIS35JWAiog7Dhi/t32dUtdy51MoEKemVs2Dod1b6KAZmeEJNB+fEeNsfQGGo=
+	t=1768498781; cv=none; b=n3MAHH3eWWSH6G3n6Es55jayeyU7TJB4hr8b650iPMwnV01/JauCozM1LZnnimpO67smpAyNjK9McK3A3qxCdVdaeZ+CwsRh3Vph8jlfAZ/VT/k1FkJumuxabUoUp9eblayWrQ7gBzxHVSd9IsZM31WIE4jGLqHFcRmtj5Xsync=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768498778; c=relaxed/simple;
-	bh=hACj+KIMEuuiLZ3yqRrAFhNze5xzY2J3ajahYER2Flw=;
+	s=arc-20240116; t=1768498781; c=relaxed/simple;
+	bh=/0AB8qhSFS0x3bbO6465w80vjtUlwbYeGZqI6/BGgRU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XhGYBFLabHa3cbZk6wmIegeHD/4sYtsv/4Tg4cVsdBiVSjFOfEsoXQgzATKrrL+fkYNSYoXEZ9W4Ka/vtPWbkOMD4IOTPJKXDaj1TZqdKWCxIowGLwWloDUdV5D//1JEtuKbG+FBO097K4FZLBynlufRXY+dXKrB9h84ZGqjVBo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xVET4aTx; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=L9Ws1uVUEFymEff1sglS3bVz61pfu3O9+/zsn35XbQrwVKFs8ctxVtT2zrYKgermy05M3oSUn7f2wvbjQe6YiMoQxgdHN1CZEHSsuAms5UOZN69LXtahN9FOIW+jZfhxDa8+Gb4CqK6Dmw2dlSGMEav0NFkNSczrjitba997Vj8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=t/wJhxEG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xVET4aTx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7EA63C116D0;
-	Thu, 15 Jan 2026 17:39:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="t/wJhxEG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 729C1C116D0;
+	Thu, 15 Jan 2026 17:39:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1768498777;
-	bh=hACj+KIMEuuiLZ3yqRrAFhNze5xzY2J3ajahYER2Flw=;
+	s=korg; t=1768498780;
+	bh=/0AB8qhSFS0x3bbO6465w80vjtUlwbYeGZqI6/BGgRU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xVET4aTxrUwXRrLM9is2CCDGQeB/jVosSPowUENw8Fs/DvwuoNesVvU64vPnuEYF/
-	 lVw+UasGJ+Py31mQItEIGnvvRGA24b/ySwyOhxs5SBG7gKAKWaJ35jJ4QShl8XNiVa
-	 qLf+dh468q++HaZHP6bd6cQO5FXmYJxe1dO1hJbM=
+	b=t/wJhxEGlb5217gXExabdHUWNAd+lSvRXE0x25zaqRs6B6fZTFqfGOfh8vTX9yzGE
+	 V0Zjm9z/BPuQPmtuB5U9SU6lPIWjMNyj0pHQqc3uhkkLid9ifKLMXADQA0tA5jKURZ
+	 DJLYSAyw7uEBtPfiaGFx3TmKsBZQruX+M15iMk+0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Sumeet Pawnikar <sumeet4linux@gmail.com>,
 	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 550/554] powercap: fix race condition in register_control_type()
-Date: Thu, 15 Jan 2026 17:50:16 +0100
-Message-ID: <20260115164306.238160702@linuxfoundation.org>
+Subject: [PATCH 5.15 551/554] powercap: fix sscanf() error return value handling
+Date: Thu, 15 Jan 2026 17:50:17 +0100
+Message-ID: <20260115164306.273710428@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260115164246.225995385@linuxfoundation.org>
 References: <20260115164246.225995385@linuxfoundation.org>
@@ -53,61 +53,63 @@ Content-Transfer-Encoding: 8bit
 
 From: Sumeet Pawnikar <sumeet4linux@gmail.com>
 
-[ Upstream commit 7bda1910c4bccd4b8d4726620bb3d6bbfb62286e ]
+[ Upstream commit efc4c35b741af973de90f6826bf35d3b3ac36bf1 ]
 
-The device becomes visible to userspace via device_register()
-even before it fully initialized by idr_init(). If userspace
-or another thread tries to register a zone immediately after
-device_register(), the control_type_valid() will fail because
-the control_type is not yet in the list. The IDR is not yet
-initialized, so this race condition causes zone registration
-failure.
+Fix inconsistent error handling for sscanf() return value check.
 
-Move idr_init() and list addition before device_register()
-fix the race condition.
+Implicit boolean conversion is used instead of explicit return
+value checks. The code checks if (!sscanf(...)) which is incorrect
+because:
+ 1. sscanf returns the number of successfully parsed items
+ 2. On success, it returns 1 (one item passed)
+ 3. On failure, it returns 0 or EOF
+ 4. The check 'if (!sscanf(...))' is wrong because it treats
+    success (1) as failure
+
+All occurrences of sscanf() now uses explicit return value check.
+With this behavior it returns '-EINVAL' when parsing fails (returns
+0 or EOF), and continues when parsing succeeds (returns 1).
 
 Signed-off-by: Sumeet Pawnikar <sumeet4linux@gmail.com>
-[ rjw: Subject adjustment, empty line added ]
-Link: https://patch.msgid.link/20251205190216.5032-1-sumeet4linux@gmail.com
+[ rjw: Subject and changelog edits ]
+Link: https://patch.msgid.link/20251207151549.202452-1-sumeet4linux@gmail.com
 Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/powercap/powercap_sys.c | 16 +++++++++++-----
- 1 file changed, 11 insertions(+), 5 deletions(-)
+ drivers/powercap/powercap_sys.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
 diff --git a/drivers/powercap/powercap_sys.c b/drivers/powercap/powercap_sys.c
-index fd475e463d1fa..d7dadcaa3736b 100644
+index d7dadcaa3736b..72fa1f5affcea 100644
 --- a/drivers/powercap/powercap_sys.c
 +++ b/drivers/powercap/powercap_sys.c
-@@ -624,17 +624,23 @@ struct powercap_control_type *powercap_register_control_type(
- 	INIT_LIST_HEAD(&control_type->node);
- 	control_type->dev.class = &powercap_class;
- 	dev_set_name(&control_type->dev, "%s", name);
--	result = device_register(&control_type->dev);
--	if (result) {
--		put_device(&control_type->dev);
--		return ERR_PTR(result);
--	}
- 	idr_init(&control_type->idr);
+@@ -67,7 +67,7 @@ static ssize_t show_constraint_##_attr(struct device *dev, \
+ 	int id; \
+ 	struct powercap_zone_constraint *pconst;\
+ 	\
+-	if (!sscanf(dev_attr->attr.name, "constraint_%d_", &id)) \
++	if (sscanf(dev_attr->attr.name, "constraint_%d_", &id) != 1) \
+ 		return -EINVAL; \
+ 	if (id >= power_zone->const_id_cnt)	\
+ 		return -EINVAL; \
+@@ -92,7 +92,7 @@ static ssize_t store_constraint_##_attr(struct device *dev,\
+ 	int id; \
+ 	struct powercap_zone_constraint *pconst;\
+ 	\
+-	if (!sscanf(dev_attr->attr.name, "constraint_%d_", &id)) \
++	if (sscanf(dev_attr->attr.name, "constraint_%d_", &id) != 1) \
+ 		return -EINVAL; \
+ 	if (id >= power_zone->const_id_cnt)	\
+ 		return -EINVAL; \
+@@ -161,7 +161,7 @@ static ssize_t show_constraint_name(struct device *dev,
+ 	ssize_t len = -ENODATA;
+ 	struct powercap_zone_constraint *pconst;
  
- 	mutex_lock(&powercap_cntrl_list_lock);
- 	list_add_tail(&control_type->node, &powercap_cntrl_list);
- 	mutex_unlock(&powercap_cntrl_list_lock);
- 
-+	result = device_register(&control_type->dev);
-+	if (result) {
-+		mutex_lock(&powercap_cntrl_list_lock);
-+		list_del(&control_type->node);
-+		mutex_unlock(&powercap_cntrl_list_lock);
-+
-+		idr_destroy(&control_type->idr);
-+		put_device(&control_type->dev);
-+		return ERR_PTR(result);
-+	}
-+
- 	return control_type;
- }
- EXPORT_SYMBOL_GPL(powercap_register_control_type);
+-	if (!sscanf(dev_attr->attr.name, "constraint_%d_", &id))
++	if (sscanf(dev_attr->attr.name, "constraint_%d_", &id) != 1)
+ 		return -EINVAL;
+ 	if (id >= power_zone->const_id_cnt)
+ 		return -EINVAL;
 -- 
 2.51.0
 
