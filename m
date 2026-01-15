@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2261139B48E;
-	Thu, 15 Jan 2026 17:26:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F07224C81;
+	Thu, 15 Jan 2026 17:26:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768497962; cv=none; b=H6Kgks3TTmyyBl9udboJ3aC0KR8AB/NaPWL4hqy0Qiok+kvZLDZau8W8klWjlUznAniaL8zCX8KwWd/WmvM1fkg+K8OBbkGjXK3YXhYLY6GMCnDAfQeWfs4FKZFVhjqkUOwHoCsQNOIo+TGm4P764cFJtEQhhXNDkXIieFWqmKk=
+	t=1768497965; cv=none; b=dV6kc6lScQzwHe7C6XQTQj1pOdiOVYzwI59LTF7e8QLVv2T4cW9oj2uhSOZnwMwdsiwxFVZj6d2BN1bpTYQ1GclLGyiJw/kyOYlz/Na67ZpESQMroDjFhVcQlxOxiYB71NdsUwJCkDFnkOdIFsKNkrMHtzxJRzrMCtMXxGzeBvM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768497962; c=relaxed/simple;
-	bh=JnAslVT1a4dy1vksvC3hSS0k13A33q8x5+twjV81m+A=;
+	s=arc-20240116; t=1768497965; c=relaxed/simple;
+	bh=qHcHqy1vRu1IAr3htjDwgBsEe/0lpOkvUSkam3dHzA4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CWxLbgRoYyk9iQ6igGavqReavOjYvRLXxGieHKY5yIeNT++4iF9JZ+cto9aITCYdNFNYyl6FR9EGZVc4JLzGdo45aNJHloZdeDJzqjZVlXx4hOJOR1Cyb+c8vZhSYvlgMKDl38t4OSJNYIZPO6z0cpxIehUKCfi+XV8BXp76TRA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QRaHXe0W; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=sdNAAgHrq5P66A+/+qjGr7QF7sdSp6dKJJ9ICEbPjt201Gfqn+k7d4rrsETyYm4BbaEHY5Ix4xXrJ2HCb94/dIznJDuUHtT3JJ1zJhMjq2aCiI83zWrRhuW5qiE5s0B4LLHM6y3A7coQsHjf09B4XSU1NSB9f+KpZbNrNvZNKRA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Myop0JEk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QRaHXe0W"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E573C116D0;
-	Thu, 15 Jan 2026 17:26:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Myop0JEk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 34582C116D0;
+	Thu, 15 Jan 2026 17:26:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1768497961;
-	bh=JnAslVT1a4dy1vksvC3hSS0k13A33q8x5+twjV81m+A=;
+	s=korg; t=1768497964;
+	bh=qHcHqy1vRu1IAr3htjDwgBsEe/0lpOkvUSkam3dHzA4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QRaHXe0WDP1Qbl8GTkmk3wJubI5P0398m4W+vSDLfkcI3mFuXKFw8yha7seg3Z4uo
-	 t40+vkMMtyLBzMKYcsSJyy9lG0okQ6p/ho6zGrhtEW/jlx7nh9jwCM0+clG1vk+NzF
-	 edUrJw1RsiuZcPVnio7ovHy8R9O57gGheLfg3/e0=
+	b=Myop0JEkH6fpc3oZmmzeT3uSaJlbonfj9EhuTDeB4OUASzq0yc0k5aV2yAVy8tQu/
+	 pkauRoPHXykcwfp1tFQKmglXNQg30goZQlX6pzRdP6GfacBxjf3xQw+KWEFhJEQFOn
+	 sFx1ALJy6xo/nmRxd7+ZEXoGconoXcvM4cE2zyWQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tony Battersby <tonyb@cybernetics.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Li Qiang <liqiang01@kylinos.cn>,
+	Guenter Roeck <linux@roeck-us.net>,
+	Wim Van Sebroeck <wim@linux-watchdog.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 264/554] scsi: qla2xxx: Use reinit_completion on mbx_intr_comp
-Date: Thu, 15 Jan 2026 17:45:30 +0100
-Message-ID: <20260115164255.787434018@linuxfoundation.org>
+Subject: [PATCH 5.15 265/554] via_wdt: fix critical boot hang due to unnamed resource allocation
+Date: Thu, 15 Jan 2026 17:45:31 +0100
+Message-ID: <20260115164255.822691833@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260115164246.225995385@linuxfoundation.org>
 References: <20260115164246.225995385@linuxfoundation.org>
@@ -51,43 +52,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tony Battersby <tonyb@cybernetics.com>
+From: Li Qiang <liqiang01@kylinos.cn>
 
-[ Upstream commit 957aa5974989fba4ae4f807ebcb27f12796edd4d ]
+[ Upstream commit 7aa31ee9ec92915926e74731378c009c9cc04928 ]
 
-If a mailbox command completes immediately after
-wait_for_completion_timeout() times out, ha->mbx_intr_comp could be left
-in an inconsistent state, causing the next mailbox command not to wait
-for the hardware.  Fix by reinitializing the completion before use.
+The VIA watchdog driver uses allocate_resource() to reserve a MMIO
+region for the watchdog control register. However, the allocated
+resource was not given a name, which causes the kernel resource tree
+to contain an entry marked as "<BAD>" under /proc/iomem on x86
+platforms.
 
-Signed-off-by: Tony Battersby <tonyb@cybernetics.com>
-Link: https://patch.msgid.link/11b6485e-0bfd-4784-8f99-c06a196dad94@cybernetics.com
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+During boot, this unnamed resource can lead to a critical hang because
+subsequent resource lookups and conflict checks fail to handle the
+invalid entry properly.
+
+Signed-off-by: Li Qiang <liqiang01@kylinos.cn>
+Reviewed-by: Guenter Roeck <linux@roeck-us.net>
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Signed-off-by: Wim Van Sebroeck <wim@linux-watchdog.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/qla2xxx/qla_mbx.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/watchdog/via_wdt.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/scsi/qla2xxx/qla_mbx.c b/drivers/scsi/qla2xxx/qla_mbx.c
-index 7a28582b1f73..771b323a5194 100644
---- a/drivers/scsi/qla2xxx/qla_mbx.c
-+++ b/drivers/scsi/qla2xxx/qla_mbx.c
-@@ -253,6 +253,7 @@ qla2x00_mailbox_command(scsi_qla_host_t *vha, mbx_cmd_t *mcp)
- 	/* Issue set host interrupt command to send cmd out. */
- 	ha->flags.mbox_int = 0;
- 	clear_bit(MBX_INTERRUPT, &ha->mbx_cmd_flags);
-+	reinit_completion(&ha->mbx_intr_comp);
+diff --git a/drivers/watchdog/via_wdt.c b/drivers/watchdog/via_wdt.c
+index eeb39f96e72e..c1ed3ce153cf 100644
+--- a/drivers/watchdog/via_wdt.c
++++ b/drivers/watchdog/via_wdt.c
+@@ -165,6 +165,7 @@ static int wdt_probe(struct pci_dev *pdev,
+ 		dev_err(&pdev->dev, "cannot enable PCI device\n");
+ 		return -ENODEV;
+ 	}
++	wdt_res.name = "via_wdt";
  
- 	/* Unlock mbx registers and wait for interrupt */
- 	ql_dbg(ql_dbg_mbx, vha, 0x100f,
-@@ -279,6 +280,7 @@ qla2x00_mailbox_command(scsi_qla_host_t *vha, mbx_cmd_t *mcp)
- 			    "cmd=%x Timeout.\n", command);
- 			spin_lock_irqsave(&ha->hardware_lock, flags);
- 			clear_bit(MBX_INTR_WAIT, &ha->mbx_cmd_flags);
-+			reinit_completion(&ha->mbx_intr_comp);
- 			spin_unlock_irqrestore(&ha->hardware_lock, flags);
- 
- 			if (chip_reset != ha->chip_reset) {
+ 	/*
+ 	 * Allocate a MMIO region which contains watchdog control register
 -- 
 2.51.0
 
