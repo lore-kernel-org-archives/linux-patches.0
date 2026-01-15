@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8FC039A805;
-	Thu, 15 Jan 2026 17:06:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA3CA394487;
+	Thu, 15 Jan 2026 17:07:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768496818; cv=none; b=Tq35KppIBFuP2CxGjZkKfCsIVfnyt0BkbyYu0Y18PCgBGKfmY1kJyAfr6lS96mdRpg+CJQmaeGvhBLa7Zwwdms5wlaOdsDLJjnvte7bt+MmnmvdOZkfb0Hc/wuSVoFUkrkbW/FGvRvvpNLzxMtzD5EQ8Kb2cixLKj20nrUirZrE=
+	t=1768496821; cv=none; b=i3e7oLWHZiLqA4QxjARQOIaqFaLZmASXHho4oQYT3DnmHf6wLD/pF05gr9P1ybfQVZUvlDnUbCGEEjTnCCGM6MD1rsNn4bVKeoQM+galqmXiUJAYfRXNGFZFcaZXrJERfi4mgdDQH8THe3qOajYDREiB5eg6RuxuDDVXIv3amSk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768496818; c=relaxed/simple;
-	bh=HHehmisEcZUvQyGrXDFzI0OpKnMxiAcXH/7fZsGLSgo=;
+	s=arc-20240116; t=1768496821; c=relaxed/simple;
+	bh=mdS5ntGW1jM+JJTXVEtauXW0o+yt1TEIeyqQkQSORqQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=aDcca7solOevw+D1sTllHS5ZgC6yEBKfEbSYC2JV+G0fvNJupBQHNLLW+6Aln3TUdRGH9/3/UDU7AwyUrwgnIlg+k0GUANkluy4wu0KN2ecARDlOyY4rcbhHd5Zisj38VnvrCh1iS0pW2MosBHDfaIzAFq9lIbvqmZXMwaEqTXs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yen8JWYn; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HHCdLsIYdAIQvfGR+kwJDlBKAkN9Y8ZF/F3OrFJDrzRLrBy0s2j+0ka3wTRA7ECyNkxi5scEdnHcF22b4xGtnNzsKnaeXZaa7nX8UOxiLRrUG19HG64SpMUNs3v40bXJVNC9wqJC9cKPpQnldrU0x0f2ftvgZkRVMHulr9Eiblk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1LJXZJMx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yen8JWYn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 684F3C116D0;
-	Thu, 15 Jan 2026 17:06:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1LJXZJMx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 380B9C116D0;
+	Thu, 15 Jan 2026 17:07:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1768496818;
-	bh=HHehmisEcZUvQyGrXDFzI0OpKnMxiAcXH/7fZsGLSgo=;
+	s=korg; t=1768496821;
+	bh=mdS5ntGW1jM+JJTXVEtauXW0o+yt1TEIeyqQkQSORqQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yen8JWYnlejHdIftbzNkMcIdjiGdjhHYRo4bk+L8Jj3/XDqEMSn1JXkPiHQXd4/lT
-	 fYfdwSW+Vtmsp9K/9WNrZfVUMv/a+jr8jySGtBPQr44lYUl67KTyUdrcws1saCa+SJ
-	 +NXz317omGg62T1bzayP3wV2/WZVw+AwqZ4t/Tt0=
+	b=1LJXZJMxfzcJrAJI6QTaH2gdalIBD6RqVDfaLzyhROh2GdG6fjzK6+PWkqOkmjD2q
+	 bh2cjU7bhCcp+Fbf50b/KR9g5tqyN8m3w1FpWskNQY1Q0V5HeX+nbhu2yGORxTGaXj
+	 xkwxwOp+9cZGpbJkWdQ4oiQ+hCB+fB3GS4WDRCdE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Aur=C3=A9lien=20Couderc?= <aurelien.couderc2002@gmail.com>,
-	Roland Mainz <roland.mainz@nrubsig.org>,
-	Chuck Lever <chuck.lever@oracle.com>
-Subject: [PATCH 6.6 26/88] NFSD: NFSv4 file creation neglects setting ACL
-Date: Thu, 15 Jan 2026 17:48:09 +0100
-Message-ID: <20260115164147.259770740@linuxfoundation.org>
+	Kuniyuki Iwashima <kuniyu@google.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Sabrina Dubroca <sd@queasysnail.net>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Keerthana K <keerthana.kalyanasundaram@broadcom.com>
+Subject: [PATCH 6.6 27/88] tls: Use __sk_dst_get() and dst_dev_rcu() in get_netdev_for_sock().
+Date: Thu, 15 Jan 2026 17:48:10 +0100
+Message-ID: <20260115164147.296215915@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260115164146.312481509@linuxfoundation.org>
 References: <20260115164146.312481509@linuxfoundation.org>
@@ -45,55 +47,68 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Chuck Lever <chuck.lever@oracle.com>
+From: Kuniyuki Iwashima <kuniyu@google.com>
 
-commit 913f7cf77bf14c13cfea70e89bcb6d0b22239562 upstream.
+commit c65f27b9c3be2269918e1cbad6d8884741f835c5 upstream.
 
-An NFSv4 client that sets an ACL with a named principal during file
-creation retrieves the ACL afterwards, and finds that it is only a
-default ACL (based on the mode bits) and not the ACL that was
-requested during file creation. This violates RFC 8881 section
-6.4.1.3: "the ACL attribute is set as given".
+get_netdev_for_sock() is called during setsockopt(),
+so not under RCU.
 
-The issue occurs in nfsd_create_setattr(), which calls
-nfsd_attrs_valid() to determine whether to call nfsd_setattr().
-However, nfsd_attrs_valid() checks only for iattr changes and
-security labels, but not POSIX ACLs. When only an ACL is present,
-the function returns false, nfsd_setattr() is skipped, and the
-POSIX ACL is never applied to the inode.
+Using sk_dst_get(sk)->dev could trigger UAF.
 
-Subsequently, when the client retrieves the ACL, the server finds
-no POSIX ACL on the inode and returns one generated from the file's
-mode bits rather than returning the originally-specified ACL.
+Let's use __sk_dst_get() and dst_dev_rcu().
 
-Reported-by: Aurélien Couderc <aurelien.couderc2002@gmail.com>
-Fixes: c0cbe70742f4 ("NFSD: add posix ACLs to struct nfsd_attrs")
-Cc: Roland Mainz <roland.mainz@nrubsig.org>
-Cc: stable@vger.kernel.org
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+Note that the only ->ndo_sk_get_lower_dev() user is
+bond_sk_get_lower_dev(), which uses RCU.
+
+Fixes: e8f69799810c ("net/tls: Add generic NIC offload infrastructure")
+Signed-off-by: Kuniyuki Iwashima <kuniyu@google.com>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: Sabrina Dubroca <sd@queasysnail.net>
+Link: https://patch.msgid.link/20250916214758.650211-6-kuniyu@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+[ Keerthana: Backport to v6.6.y ]
+Signed-off-by: Keerthana K <keerthana.kalyanasundaram@broadcom.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nfsd/vfs.h |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ net/tls/tls_device.c |   18 ++++++++++--------
+ 1 file changed, 10 insertions(+), 8 deletions(-)
 
---- a/fs/nfsd/vfs.h
-+++ b/fs/nfsd/vfs.h
-@@ -65,7 +65,8 @@ static inline bool nfsd_attrs_valid(stru
- 	struct iattr *iap = attrs->na_iattr;
+--- a/net/tls/tls_device.c
++++ b/net/tls/tls_device.c
+@@ -125,17 +125,19 @@ static void tls_device_queue_ctx_destruc
+ /* We assume that the socket is already connected */
+ static struct net_device *get_netdev_for_sock(struct sock *sk)
+ {
+-	struct dst_entry *dst = sk_dst_get(sk);
+-	struct net_device *netdev = NULL;
++	struct net_device *dev, *lowest_dev = NULL;
++	struct dst_entry *dst;
  
- 	return (iap->ia_valid || (attrs->na_seclabel &&
--		attrs->na_seclabel->len));
-+		attrs->na_seclabel->len) ||
-+		attrs->na_pacl || attrs->na_dpacl);
+-	if (likely(dst)) {
+-		netdev = netdev_sk_get_lowest_dev(dst->dev, sk);
+-		dev_hold(netdev);
++	rcu_read_lock();
++	dst = __sk_dst_get(sk);
++	dev = dst ? dst_dev_rcu(dst) : NULL;
++	if (likely(dev)) {
++		lowest_dev = netdev_sk_get_lowest_dev(dev, sk);
++		dev_hold(lowest_dev);
+ 	}
++	rcu_read_unlock();
+ 
+-	dst_release(dst);
+-
+-	return netdev;
++	return lowest_dev;
  }
  
- __be32		nfserrno (int errno);
+ static void destroy_record(struct tls_record_info *record)
 
 
