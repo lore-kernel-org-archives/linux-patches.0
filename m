@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B0773B52ED;
-	Thu, 15 Jan 2026 16:58:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2ECD396B75;
+	Thu, 15 Jan 2026 16:58:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768496330; cv=none; b=JAKe0VDoCLU64oHB/3KVdgEDjL2KioAUjhqVQskuQIVKXm4bSpKsN4vgY/lYyp1NLenTAj00pbu24i+UrxviQqxxDwqC9EHQOM67oHRQt4DGxUE5iSGPV4Sw2WB00Uk3SKDDQ5FFxi/hh4Sibw0wOud3xXJGrNfvFj+X5yCzE9Y=
+	t=1768496333; cv=none; b=aHnUNVP7s0g/8gWqyo4W8PxkxGl7EuT2uXZaQWRWssgMDTc27DiPY+gHTObCTDus0O3d/5agb012786sbRfEfACMiPYZHwboIrQaHDlBjvIaXx2011MTpQNfhoS1yficKA4RmzCuWneX6EOpn+ms54tamqQgoItLOau7cSU6JaI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768496330; c=relaxed/simple;
-	bh=p5wGc1aIkdlVMDWgpozc0B+QOdvJpqvAcedSGqvWs/U=;
+	s=arc-20240116; t=1768496333; c=relaxed/simple;
+	bh=lurJQrSH2qXvmIdr60oPDwvYbdivshwcfhPKZ+zcu80=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qBu1Z50et3GjjHHEf6P3H2OuoSbsL5eveMSFrjxku5c4vKyINFO5JxG/AgD3XHK2bs24t+2OY+KqC9mkf41QHh7rFq3xKe7x6hpbNGLQAvG9KVTpvARZWYVqO/znSolBAYmjmzAX1TgYcc5POaVFTt8fqwRHjNydWoqz5x/kQwc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tiq6Cprb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LRfDISL0V95lTR7lWGdIv3bcPWhv4G1iZZgFvMOSNj4WVImNX3NGtjUNNTJgP0eeyi+xxxg7g1ib9tfhUoukJXzBxBeUpgIVYjeQv8qdV0N3Ld2nGKTQ2tC4hSfsSmr21wruhcGScb3MpyAq77aVxIN4ZeoXUCTzhBcMcqCldEA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=i0+kFL+Z; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tiq6Cprb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF7D6C116D0;
-	Thu, 15 Jan 2026 16:58:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="i0+kFL+Z"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 804CAC116D0;
+	Thu, 15 Jan 2026 16:58:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1768496330;
-	bh=p5wGc1aIkdlVMDWgpozc0B+QOdvJpqvAcedSGqvWs/U=;
+	s=korg; t=1768496332;
+	bh=lurJQrSH2qXvmIdr60oPDwvYbdivshwcfhPKZ+zcu80=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tiq6CprbDHR1GePD/Kx6uX0fYziWVT65sU9mwt5gvh8iw6cXbc4G1Mf2pZkBaThnw
-	 zJq+NFzuxeLV5aakt30VXVSeWhNHgMnZOlPPwNR8C8ciGc89GaEqGDOK1jbZYr8FkZ
-	 lYE9ElulJGDZ+DWH38M9rv3VjvPR05Hy2PHL8YUg=
+	b=i0+kFL+ZciRELAEeWmcAsvovQYEWwNIpYeYLdfVlNjXKvfbpnNscWkz5FoNAvrpjN
+	 faT9w2vlmxWkmcD8rLllaGhxlJe8JBNGTD32pU+P/tujFOXJkLdnhw/DRU1IstLId5
+	 fzkD4RyL/NAP10gHbWNbwxVw0U99FfmTEDVvTKb4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Filipe Manana <fdmanana@suse.com>,
-	Qu Wenruo <wqu@suse.com>,
-	David Sterba <dsterba@suse.com>,
+	Mary Strodl <mstrodl@csh.rit.edu>,
+	Linus Walleij <linus.walleij@linaro.org>,
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 159/181] btrfs: fix beyond-EOF write handling
-Date: Thu, 15 Jan 2026 17:48:16 +0100
-Message-ID: <20260115164208.052480363@linuxfoundation.org>
+Subject: [PATCH 6.18 160/181] gpio: mpsse: ensure worker is torn down
+Date: Thu, 15 Jan 2026 17:48:17 +0100
+Message-ID: <20260115164208.088837477@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260115164202.305475649@linuxfoundation.org>
 References: <20260115164202.305475649@linuxfoundation.org>
@@ -52,152 +52,206 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Qu Wenruo <wqu@suse.com>
+From: Mary Strodl <mstrodl@csh.rit.edu>
 
-[ Upstream commit e9e3b22ddfa760762b696ac6417c8d6edd182e49 ]
+[ Upstream commit 179ef1127d7a4f09f0e741fa9f30b8a8e7886271 ]
 
-[BUG]
-For the following write sequence with 64K page size and 4K fs block size,
-it will lead to file extent items to be inserted without any data
-checksum:
+When an IRQ worker is running, unplugging the device would cause a
+crash. The sealevel hardware this driver was written for was not
+hotpluggable, so I never realized it.
 
-  mkfs.btrfs -s 4k -f $dev > /dev/null
-  mount $dev $mnt
-  xfs_io -f -c "pwrite 0 16k" -c "pwrite 32k 4k" -c pwrite "60k 64K" \
-            -c "truncate 16k" $mnt/foobar
-  umount $mnt
+This change uses a spinlock to protect a list of workers, which
+it tears down on disconnect.
 
-This will result the following 2 file extent items to be inserted (extra
-trace point added to insert_ordered_extent_file_extent()):
-
-  btrfs_finish_one_ordered: root=5 ino=257 file_off=61440 num_bytes=4096 csum_bytes=0
-  btrfs_finish_one_ordered: root=5 ino=257 file_off=0 num_bytes=16384 csum_bytes=16384
-
-Note for file offset 60K, we're inserting a file extent without any
-data checksum.
-
-Also note that range [32K, 36K) didn't reach
-insert_ordered_extent_file_extent(), which is the correct behavior as
-that OE is fully truncated, should not result any file extent.
-
-Although file extent at 60K will be later dropped by btrfs_truncate(),
-if the transaction got committed after file extent inserted but before
-the file extent dropping, we will have a small window where we have a
-file extent beyond EOF and without any data checksum.
-
-That will cause "btrfs check" to report error.
-
-[CAUSE]
-The sequence happens like this:
-
-- Buffered write dirtied the page cache and updated isize
-
-  Now the inode size is 64K, with the following page cache layout:
-
-  0             16K             32K              48K           64K
-  |/////////////|               |//|                        |//|
-
-- Truncate the inode to 16K
-  Which will trigger writeback through:
-
-  btrfs_setsize()
-  |- truncate_setsize()
-  |  Now the inode size is set to 16K
-  |
-  |- btrfs_truncate()
-     |- btrfs_wait_ordered_range() for [16K, u64(-1)]
-        |- btrfs_fdatawrite_range() for [16K, u64(-1)}
-	   |- extent_writepage() for folio 0
-	      |- writepage_delalloc()
-	      |  Generated OE for [0, 16K), [32K, 36K] and [60K, 64K)
-	      |
-	      |- extent_writepage_io()
-
-  Then inside extent_writepage_io(), the dirty fs blocks are handled
-  differently:
-
-  - Submit write for range [0, 16K)
-    As they are still inside the inode size (16K).
-
-  - Mark OE [32K, 36K) as truncated
-    Since we only call btrfs_lookup_first_ordered_range() once, which
-    returned the first OE after file offset 16K.
-
-  - Mark all OEs inside range [16K, 64K) as finished
-    Which will mark OE ranges [32K, 36K) and [60K, 64K) as finished.
-
-    For OE [32K, 36K) since it's already marked as truncated, and its
-    truncated length is 0, no file extent will be inserted.
-
-    For OE [60K, 64K) it has never been submitted thus has no data
-    checksum, and we insert the file extent as usual.
-    This is the root cause of file extent at 60K to be inserted without
-    any data checksum.
-
-  - Clear dirty flags for range [16K, 64K)
-    It is the function btrfs_folio_clear_dirty() which searches and clears
-    any dirty blocks inside that range.
-
-[FIX]
-The bug itself was introduced a long time ago, way before subpage and
-large folio support.
-
-At that time, fs block size must match page size, thus the range
-[cur, end) is just one fs block.
-
-But later with subpage and large folios, the same range [cur, end)
-can have multiple blocks and ordered extents.
-
-Later commit 18de34daa7c6 ("btrfs: truncate ordered extent when skipping
-writeback past i_size") was fixing a bug related to subpage/large
-folios, but it's still utilizing the old range [cur, end), meaning only
-the first OE will be marked as truncated.
-
-The proper fix here is to make EOF handling block-by-block, not trying
-to handle the whole range to @end.
-
-By this we always locate and truncate the OE for every dirty block.
-
-CC: stable@vger.kernel.org # 5.15+
-Reviewed-by: Filipe Manana <fdmanana@suse.com>
-Signed-off-by: Qu Wenruo <wqu@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Signed-off-by: Mary Strodl <mstrodl@csh.rit.edu>
+Reviewed-by: Linus Walleij <linus.walleij@linaro.org>
+Link: https://lore.kernel.org/r/20251014133530.3592716-3-mstrodl@csh.rit.edu
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Stable-dep-of: 1e876e5a0875 ("gpio: mpsse: fix reference leak in gpio_mpsse_probe() error paths")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/btrfs/extent_io.c |    8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/gpio/gpio-mpsse.c |  106 ++++++++++++++++++++++++++++++++++++++++++----
+ 1 file changed, 99 insertions(+), 7 deletions(-)
 
---- a/fs/btrfs/extent_io.c
-+++ b/fs/btrfs/extent_io.c
-@@ -1730,7 +1730,7 @@ static noinline_for_stack int extent_wri
- 			unsigned long flags;
+--- a/drivers/gpio/gpio-mpsse.c
++++ b/drivers/gpio/gpio-mpsse.c
+@@ -10,6 +10,7 @@
+ #include <linux/cleanup.h>
+ #include <linux/gpio/driver.h>
+ #include <linux/mutex.h>
++#include <linux/spinlock.h>
+ #include <linux/usb.h>
  
- 			ordered = btrfs_lookup_first_ordered_range(inode, cur,
--								   folio_end - cur);
-+								   fs_info->sectorsize);
- 			/*
- 			 * We have just run delalloc before getting here, so
- 			 * there must be an ordered extent.
-@@ -1744,7 +1744,7 @@ static noinline_for_stack int extent_wri
- 			btrfs_put_ordered_extent(ordered);
+ struct mpsse_priv {
+@@ -17,8 +18,10 @@ struct mpsse_priv {
+ 	struct usb_device *udev;     /* USB device encompassing all MPSSEs */
+ 	struct usb_interface *intf;  /* USB interface for this MPSSE */
+ 	u8 intf_id;                  /* USB interface number for this MPSSE */
+-	struct work_struct irq_work; /* polling work thread */
++	struct list_head workers;    /* polling work threads */
+ 	struct mutex irq_mutex;	     /* lock over irq_data */
++	struct mutex irq_race;	     /* race for polling worker teardown */
++	raw_spinlock_t irq_spin;     /* protects worker list */
+ 	atomic_t irq_type[16];	     /* pin -> edge detection type */
+ 	atomic_t irq_enabled;
+ 	int id;
+@@ -34,6 +37,14 @@ struct mpsse_priv {
+ 	struct mutex io_mutex;	    /* sync I/O with disconnect */
+ };
  
- 			btrfs_mark_ordered_io_finished(inode, folio, cur,
--						       end - cur, true);
-+						       fs_info->sectorsize, true);
- 			/*
- 			 * This range is beyond i_size, thus we don't need to
- 			 * bother writing back.
-@@ -1753,8 +1753,8 @@ static noinline_for_stack int extent_wri
- 			 * writeback the sectors with subpage dirty bits,
- 			 * causing writeback without ordered extent.
- 			 */
--			btrfs_folio_clear_dirty(fs_info, folio, cur, end - cur);
--			break;
-+			btrfs_folio_clear_dirty(fs_info, folio, cur, fs_info->sectorsize);
-+			continue;
- 		}
- 		ret = submit_one_sector(inode, folio, cur, bio_ctrl, i_size);
- 		if (unlikely(ret < 0)) {
++struct mpsse_worker {
++	struct mpsse_priv  *priv;
++	struct work_struct  work;
++	atomic_t       cancelled;
++	struct list_head    list;   /* linked list */
++	struct list_head destroy;   /* teardown linked list */
++};
++
+ struct bulk_desc {
+ 	bool tx;	            /* direction of bulk transfer */
+ 	u8 *data;                   /* input (tx) or output (rx) */
+@@ -284,18 +295,62 @@ static int gpio_mpsse_get_direction(stru
+ 	return ret;
+ }
+ 
+-static void gpio_mpsse_poll(struct work_struct *work)
++/*
++ * Stops all workers except `my_worker`.
++ * Safe to call only when `irq_race` is held.
++ */
++static void gpio_mpsse_stop_all_except(struct mpsse_priv *priv,
++				       struct mpsse_worker *my_worker)
++{
++	struct mpsse_worker *worker, *worker_tmp;
++	struct list_head destructors = LIST_HEAD_INIT(destructors);
++
++	scoped_guard(raw_spinlock_irqsave, &priv->irq_spin) {
++		list_for_each_entry_safe(worker, worker_tmp,
++					 &priv->workers, list) {
++			/* Don't stop ourselves */
++			if (worker == my_worker)
++				continue;
++
++			list_del(&worker->list);
++
++			/* Give worker a chance to terminate itself */
++			atomic_set(&worker->cancelled, 1);
++			/* Keep track of stuff to cancel */
++			INIT_LIST_HEAD(&worker->destroy);
++			list_add(&worker->destroy, &destructors);
++		}
++	}
++
++	list_for_each_entry_safe(worker, worker_tmp,
++				 &destructors, destroy) {
++		list_del(&worker->destroy);
++		cancel_work_sync(&worker->work);
++		kfree(worker);
++	}
++}
++
++static void gpio_mpsse_poll(struct work_struct *my_work)
+ {
+ 	unsigned long pin_mask, pin_states, flags;
+ 	int irq_enabled, offset, err, value, fire_irq,
+ 		irq, old_value[16], irq_type[16];
+-	struct mpsse_priv *priv = container_of(work, struct mpsse_priv,
+-					       irq_work);
++	struct mpsse_worker *my_worker = container_of(my_work, struct mpsse_worker, work);
++	struct mpsse_priv *priv = my_worker->priv;
+ 
+ 	for (offset = 0; offset < priv->gpio.ngpio; ++offset)
+ 		old_value[offset] = -1;
+ 
+-	while ((irq_enabled = atomic_read(&priv->irq_enabled))) {
++	/*
++	 * We only want one worker. Workers race to acquire irq_race and tear
++	 * down all other workers. This is a cond guard so that we don't deadlock
++	 * trying to cancel a worker.
++	 */
++	scoped_cond_guard(mutex_try, return, &priv->irq_race)
++		gpio_mpsse_stop_all_except(priv, my_worker);
++
++	while ((irq_enabled = atomic_read(&priv->irq_enabled)) &&
++	       !atomic_read(&my_worker->cancelled)) {
+ 		usleep_range(MPSSE_POLL_INTERVAL, MPSSE_POLL_INTERVAL + 1000);
+ 		/* Cleanup will trigger at the end of the loop */
+ 		guard(mutex)(&priv->irq_mutex);
+@@ -370,21 +425,45 @@ static int gpio_mpsse_set_irq_type(struc
+ 
+ static void gpio_mpsse_irq_disable(struct irq_data *irqd)
+ {
++	struct mpsse_worker *worker;
+ 	struct mpsse_priv *priv = irq_data_get_irq_chip_data(irqd);
+ 
+ 	atomic_and(~BIT(irqd->hwirq), &priv->irq_enabled);
+ 	gpiochip_disable_irq(&priv->gpio, irqd->hwirq);
++
++	/*
++	 * Can't actually do teardown in IRQ context (it blocks).
++	 * As a result, these workers will stick around until irq is reenabled
++	 * or device gets disconnected
++	 */
++	scoped_guard(raw_spinlock_irqsave, &priv->irq_spin)
++		list_for_each_entry(worker, &priv->workers, list)
++			atomic_set(&worker->cancelled, 1);
+ }
+ 
+ static void gpio_mpsse_irq_enable(struct irq_data *irqd)
+ {
++	struct mpsse_worker *worker;
+ 	struct mpsse_priv *priv = irq_data_get_irq_chip_data(irqd);
+ 
+ 	gpiochip_enable_irq(&priv->gpio, irqd->hwirq);
+ 	/* If no-one else was using the IRQ, enable it */
+ 	if (!atomic_fetch_or(BIT(irqd->hwirq), &priv->irq_enabled)) {
+-		INIT_WORK(&priv->irq_work, gpio_mpsse_poll);
+-		schedule_work(&priv->irq_work);
++		/*
++		 * Can't be devm because it uses a non-raw spinlock (illegal in
++		 * this context, where a raw spinlock is held by our caller)
++		 */
++		worker = kzalloc(sizeof(*worker), GFP_NOWAIT);
++		if (!worker)
++			return;
++
++		worker->priv = priv;
++		INIT_LIST_HEAD(&worker->list);
++		INIT_WORK(&worker->work, gpio_mpsse_poll);
++		schedule_work(&worker->work);
++
++		scoped_guard(raw_spinlock_irqsave, &priv->irq_spin)
++			list_add(&worker->list, &priv->workers);
+ 	}
+ }
+ 
+@@ -436,6 +515,12 @@ static int gpio_mpsse_probe(struct usb_i
+ 	if (err)
+ 		return err;
+ 
++	err = devm_mutex_init(dev, &priv->irq_race);
++	if (err)
++		return err;
++
++	raw_spin_lock_init(&priv->irq_spin);
++
+ 	priv->gpio.label = devm_kasprintf(dev, GFP_KERNEL,
+ 					  "gpio-mpsse.%d.%d",
+ 					  priv->id, priv->intf_id);
+@@ -506,6 +591,13 @@ static void gpio_mpsse_disconnect(struct
+ {
+ 	struct mpsse_priv *priv = usb_get_intfdata(intf);
+ 
++	/*
++	 * Lock prevents double-free of worker from here and the teardown
++	 * step at the beginning of gpio_mpsse_poll
++	 */
++	scoped_guard(mutex, &priv->irq_race)
++		gpio_mpsse_stop_all_except(priv, NULL);
++
+ 	priv->intf = NULL;
+ 	usb_set_intfdata(intf, NULL);
+ 	usb_put_dev(priv->udev);
 
 
