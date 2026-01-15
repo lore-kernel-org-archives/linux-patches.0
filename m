@@ -1,625 +1,203 @@
-Received: from mail-qt1-f169.google.com (mail-qt1-f169.google.com [209.85.160.169])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.14])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81ECF27E04C
-	for <patches@lists.linux.dev>; Thu, 15 Jan 2026 04:13:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.160.169
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 979751EA7CE;
+	Thu, 15 Jan 2026 06:17:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=198.175.65.14
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768450385; cv=pass; b=C/H8XyI5z3e3kcaqVEOCu/B9QItAvgPQBRPv8bpVv/3rA0W6UUqH68L48c3YTchkace+jVNpvid6F8HlFJs2KMJJLsEK/Md0HkNqQDaPRITTC2Y9S35ZGHjzK/3OaZ9+I16jK9UUkvrH5JUyoy8I7eTvr6pY0slfBlyzyZy1t7E=
+	t=1768457871; cv=fail; b=kP7aHL3QR9A7GWs8EoEvDweiTBiNh/ABXbqgiYy6xpqal9L1U1GTr9ExQYxJFjlgOiQXkkSzy458FT4B4Q+fpWjTLmVZB+gXEAQoYz61iVPZB0weRIKOzljKvedMA2rnl1VzzJ4MAFzTLjhC08XPlT2EoC+GK+vdq3vK1TsLWE0=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768450385; c=relaxed/simple;
-	bh=mXNjfijHygShzXEQilQn+4tWErbWK37VnOF1/8t52Tw=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=uhax3wd5CZGmTautkQ2+w8/4jZmUXK3u8tBeqOtkSXy/kn+Gyot2fCqUJiPL1/4r1Iv6XUtc4jgBDcwCHxSUDPMSV9/KmSAYMhAcpTp/VLEAmi7EDi50QzeJZysgE61gCrP456XXDWIFnnxYOIwuY73b5uXoRzUsOuL7wq0ZPC8=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=miiVLBv7; arc=pass smtp.client-ip=209.85.160.169
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
+	s=arc-20240116; t=1768457871; c=relaxed/simple;
+	bh=/yUW3jhrx63AJ8l/Pfmr9oHxUZHO3xClAlnJh7vfHR8=;
+	h=From:To:CC:Subject:Date:Message-ID:References:In-Reply-To:
+	 Content-Type:MIME-Version; b=RSHjRnDpaDkktV1Wn7H0Yk7Lwq3u154C+QExBE5LXI5piipOGkYInAIAMjl1aArrTdJyjOXMaFzNtm8zP4/LzIqFUd4KQyNwu0lah/3PWfPQSrL0W18AOqIDN5RPB/UUJ+0zlhG7ijOEkSUXbbQKo4FrM3K4fL6m1l4Oqzk+D3o=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=EYNAU46n; arc=fail smtp.client-ip=198.175.65.14
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="miiVLBv7"
-Received: by mail-qt1-f169.google.com with SMTP id d75a77b69052e-50299648ae9so102081cf.1
-        for <patches@lists.linux.dev>; Wed, 14 Jan 2026 20:13:03 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1768450382; cv=none;
-        d=google.com; s=arc-20240605;
-        b=kaF4ut8ZcpAEnX2Wfsl3JNvTr4ICaA/KFwfFkZteFKDZGArrcT7zhPupa7S7NvFY6U
-         zm42he179yOOSb66axesUki+mJ8t8k0z2pGixR8od4I0ZQgn1rbmTzNPq6oKk347T9On
-         p7Nv+/ThtMtuTJHj+ey2/dfj+u5YQiPe4g768Iuf2TNHBmsJzAEjdXM7pgjNKxKUHLJP
-         MxIvkieohZ5xD/XR6mUewQw6XfzzZMTf41hL5+5W/Xv76/h/rPl6alYfplrk591zpiv+
-         q9htyu+0Njkl/xX12YFlF2gSME6AC9mWPWhJYVf4yLGM/tohe5ED2aNoVCj/ecrkUlxK
-         0hBw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=1jI9sN+NE1q1c6SXnzvabf8IE+Avpei4VzzZZq8JMQw=;
-        fh=970YpICQsEm+jKFL77/IKl9heSCAFf1m+Yu+XGHdRQE=;
-        b=QoVPCqfdEZ3GFg5xxAV4aL/FdFyLB9A0NzPP+MF/5UCHfG5FuXo+HX6fT0UzKKYUEn
-         X1xpSHCDnA5WrZaYHkfEsIEhJwDWgaogp2UT0+imb9aO3x4As4GlRQG3JKmRRNkVrpDf
-         dHZrC2rabpxIsWVCvzml8nPQJGTfTu8hSllvOF6TSNb1cfe8DFuAgyhwy5ha+4GxXt5K
-         s24eFlWfHj8uXQAMPEhNWm4GmtdozHSJAPdDyDi+133N0zJrj3oxnlZoFOzDYXj/SGfO
-         W1wv538BvJrF1O7drJjrc70WIMaK4HONTAwXw/lsZ8pU9XMLEf4NTOW8fx0uYXqkRScm
-         T9Qw==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1768450382; x=1769055182; darn=lists.linux.dev;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=1jI9sN+NE1q1c6SXnzvabf8IE+Avpei4VzzZZq8JMQw=;
-        b=miiVLBv7eYM0289rUgrTdPxQGHxLAoNRseoFUrj0X5CMG8m+NikZ9tEcvitZg5ycd2
-         2TKEkj31ACWK2QrhEzr24779rHLs6rRLaG4AhaKZUtmLEG7c5cWuJt5Bq5b2EQBFymk/
-         rEikxySeBsTcZMnGS94q/iCvT8br9iFJrIGuXDxQ4p1W+iB44UDOfhbA65Z/zS5Vhae3
-         lfmSl3dIhDZ0Kr7c4JpNPnsr0Ld7+abGiyBJxtXKnpiAybLH+9qisqUxh51EF8cEsq81
-         WJQk86c+aBU8B8dFBbnlKrVEiYD8jIfueFtq/NuXVdFRhQ/VRZ8o/9tCWGz6MAWoJA1k
-         nPew==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1768450382; x=1769055182;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=1jI9sN+NE1q1c6SXnzvabf8IE+Avpei4VzzZZq8JMQw=;
-        b=RErLI+jntDJa0fbzGByWlJ4fWDEUr8oA/1ckHcGBLLbrc9qkAxbUDaU7+4B2GMBlvJ
-         jYS2aLW8ST/Z+pda+aE8MG98JNfa3iRp2kQFIybRV48DXJrmgUrz1stoX1D2WTd4JAY6
-         hy2M+dWO9WX/zrJpcpivGu7AydceAwLq9TvYBVEKcNqgr6IJ+AbhVshUJn3cUKCzk6T/
-         3LHDyPxw7vutqpyojR1aZnrjK7xO2GDV7tYUZjdm6FpXShT+j9XdH6NpSKxHmE3ESREk
-         aOLs5wK2s5XRUhOd7nC4UW41hhcPWgSMfohKqdFPUgZ5XO0hFucPC9BxBBsEwJGpqwSj
-         t2rg==
-X-Forwarded-Encrypted: i=1; AJvYcCWrcB/l6Bz5mbBie+NlI/s0oyhlrgohsLmiAaEw3D+ipqDFueC+zkKYErDLhWpqhCC0mwDySjrT@lists.linux.dev
-X-Gm-Message-State: AOJu0YyVJXYxsl7DOxVCd91zu+KVt1or1J4b+Mhr89q0KFRMdw733pzu
-	VsWYjzRWjD0F820Ca4ovxIFmWmU9Su245Oih4Wud3qcVamTGqVnFTZ/mgaKQoWoGoRyUHtzhyg7
-	m8VJg2ikaO8CItX0L3zvdxFbxz1MAoDf7/Ay1lyxx
-X-Gm-Gg: AY/fxX7NQq6+ZGeio3C8z8peyu+pBB21MyzGjWv56XgqTvaceqNfFGkhA0/gOu/gBnU
-	LLIxGXMUHit6v4J/ewOuwF478mH2iuDxQRHU2lgSMWtvdM8ZXLGepJ7dTSAPJFSuRSCGxmvw8Bq
-	Pdz++ouoS354RJvYMAE2C19wgiqg5o4HbAc3VLJu1tCtoDHYMnoiFc7reg+hAXGVE48zq+WA0aS
-	5mlS7zlrRbGYsof3i30jmx6uiiNAm0GrbTku9OoaqP5AqBe9AXtrUeegO+TNL5CEbif/Vkskzve
-	HxSGBFTg3/Lea8B/j2nSrj56McHGA1jxh2ED/bYS
-X-Received: by 2002:ac8:5854:0:b0:4f3:5474:3cb9 with SMTP id
- d75a77b69052e-501eab81fc6mr5453211cf.14.1768450382024; Wed, 14 Jan 2026
- 20:13:02 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="EYNAU46n"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1768457870; x=1799993870;
+  h=from:to:cc:subject:date:message-id:references:
+   in-reply-to:content-transfer-encoding:mime-version;
+  bh=/yUW3jhrx63AJ8l/Pfmr9oHxUZHO3xClAlnJh7vfHR8=;
+  b=EYNAU46nci2HGVIuCW4MBwCDrm3TWY5+7O+yzA91IRAUn1BV7SukNmug
+   1jG+RVAYXHXLQZGddP+PG3Fv4AJvlfWEUS75aXBuSaSg0LSqrRwUsg5SE
+   ZUgWILZao+ARUD6PNVwZtiFhufw1nqSPEBPcBQ/ZAleGlbzFCg4Yij7/V
+   +VuFNQGusBUeXu/ntB/3O6Zutb6uFKLEZQfBz63dEMMCrFSzEmes+dLw5
+   KJjh0KUtfnywh9UpNFwEGgQIIMLiXrXaoNXTiwv9JrJtSRDvJNh6c+ccW
+   5RWPN/3ezL0i0juJkjTwdpCvuRI39HLvo1bzwh9trPJZNel/THK1Q6TMU
+   w==;
+X-CSE-ConnectionGUID: bOMQoexETUyL9ZznafZPyw==
+X-CSE-MsgGUID: mwwTF/o1QnuTQTVmRwY9QA==
+X-IronPort-AV: E=McAfee;i="6800,10657,11671"; a="73602606"
+X-IronPort-AV: E=Sophos;i="6.21,226,1763452800"; 
+   d="scan'208";a="73602606"
+Received: from fmviesa009.fm.intel.com ([10.60.135.149])
+  by orvoesa106.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 14 Jan 2026 22:17:50 -0800
+X-CSE-ConnectionGUID: Fd51JTjjRcGw5bMIcCdyYQ==
+X-CSE-MsgGUID: xPQt/E9pSZ+4RHqhxMcHNQ==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.21,226,1763452800"; 
+   d="scan'208";a="205288553"
+Received: from orsmsx902.amr.corp.intel.com ([10.22.229.24])
+  by fmviesa009.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 14 Jan 2026 22:17:49 -0800
+Received: from ORSMSX903.amr.corp.intel.com (10.22.229.25) by
+ ORSMSX902.amr.corp.intel.com (10.22.229.24) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.29; Wed, 14 Jan 2026 22:17:48 -0800
+Received: from ORSEDG903.ED.cps.intel.com (10.7.248.13) by
+ ORSMSX903.amr.corp.intel.com (10.22.229.25) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.29 via Frontend Transport; Wed, 14 Jan 2026 22:17:48 -0800
+Received: from DM1PR04CU001.outbound.protection.outlook.com (52.101.61.37) by
+ edgegateway.intel.com (134.134.137.113) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.29; Wed, 14 Jan 2026 22:17:48 -0800
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=uFJfKnRsDmlfiFOSxKywK42tDa/LLsAQaxMMtTaPpPn89c2s7V7nsdy6AarG+SNpvvDgk72aU9+/DSUmVqsfrm6j2JH0rJN93tub6L1eypfldn774NnRy16Hbkx/2wrRLDbfggnE3xrzWQAjbw/6Q6i4y7Y8By99c3aJicGPpSTCcI8gncBjVx0WzTm4m83P+w72euGMzRVgSHQGcJ52m5yGAW9bWTMnN/x9RdE5Tt0AhtNEGUtaay5s3kkHVLOwG88uCsMnGGuP3Muirv3GkfJdHn0E9HnhRhhQPFCVonQsRRzp+/HOg7bl/ET+GA7Xg9yriEbLyxMfqLbW507epA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=/yUW3jhrx63AJ8l/Pfmr9oHxUZHO3xClAlnJh7vfHR8=;
+ b=ugB8sZtjceKClNDEa6AhE8/M+wbVc8o8IT3TtNM52nBBmpCbd5lkakxOuklBqADMmPoIIUY447+4DlVQ8tsto35CZx+Z61jxYQml3zFNBTaLZ82L8czRP6HnRs8bp3D7mok4sS8KIMoMzuuu+NO0xrq+xLpiffHXVTnRBtG+PNTq/Hna4RFsAM865TCVWC7qT0EM9ao4vJBos+4JE924FT4gOwtmIFO0WQmI91uzyTcDKB6itj1lL3JXud/hLwisAlkeFGvqgKoXZsoO14meBfL3p/Rv2swElry0updoJ6ZViC7TkfP8opKMaX4e7ivaX6WIpL1ZV+HiAL0wROEJBQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
+ dkim=pass header.d=intel.com; arc=none
+Received: from BN9PR11MB5276.namprd11.prod.outlook.com (2603:10b6:408:135::18)
+ by IA4PR11MB9229.namprd11.prod.outlook.com (2603:10b6:208:563::11) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9499.7; Thu, 15 Jan
+ 2026 06:17:46 +0000
+Received: from BN9PR11MB5276.namprd11.prod.outlook.com
+ ([fe80::f997:762f:f079:134f]) by BN9PR11MB5276.namprd11.prod.outlook.com
+ ([fe80::f997:762f:f079:134f%5]) with mapi id 15.20.9520.003; Thu, 15 Jan 2026
+ 06:17:46 +0000
+From: "Tian, Kevin" <kevin.tian@intel.com>
+To: Jason Gunthorpe <jgg@nvidia.com>, "iommu@lists.linux.dev"
+	<iommu@lists.linux.dev>, Joerg Roedel <joro@8bytes.org>, Robin Murphy
+	<robin.murphy@arm.com>, Will Deacon <will@kernel.org>
+CC: Alejandro Jimenez <alejandro.j.jimenez@oracle.com>, Joerg Roedel
+	<joerg.roedel@amd.com>, lkp <lkp@intel.com>, Pasha Tatashin
+	<pasha.tatashin@soleen.com>, "patches@lists.linux.dev"
+	<patches@lists.linux.dev>, Samiullah Khawaja <skhawaja@google.com>
+Subject: RE: [PATCH 2/3] iommupt: Directly call iommupt's unmap_range()
+Thread-Topic: [PATCH 2/3] iommupt: Directly call iommupt's unmap_range()
+Thread-Index: AQHcg9KmJ6jB22rmmkKlMwcqOUjQ8LVSxZpw
+Date: Thu, 15 Jan 2026 06:17:46 +0000
+Message-ID: <BN9PR11MB52765ECB49FEC34D3FCDCF658C8CA@BN9PR11MB5276.namprd11.prod.outlook.com>
+References: <0-v1-d7be57da596d+3f8c0-iommpt_map_direct_jgg@nvidia.com>
+ <2-v1-d7be57da596d+3f8c0-iommpt_map_direct_jgg@nvidia.com>
+In-Reply-To: <2-v1-d7be57da596d+3f8c0-iommpt_map_direct_jgg@nvidia.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach:
+X-MS-TNEF-Correlator:
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=intel.com;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: BN9PR11MB5276:EE_|IA4PR11MB9229:EE_
+x-ms-office365-filtering-correlation-id: a3485e6d-9934-40eb-561a-08de53fdcd12
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0;ARA:13230040|376014|366016|7416014|1800799024|38070700021;
+x-microsoft-antispam-message-info: =?us-ascii?Q?87VDZblxSTtszafsrxtNSbetbN3s9UyQnjRw5CfuWFE+IADEYWHywTWxLtsh?=
+ =?us-ascii?Q?8KczgXauCTbwKKpA4KW9pgQXkVWZ8ooQ0ugTIpECU5JoUAN3EaQkP5egKZC1?=
+ =?us-ascii?Q?MZquIrIs9e4YZtKdnqeqOVMdyxEneWli72BzwUwdNKDfwCXvMT8eO2brst45?=
+ =?us-ascii?Q?kblkE/cvmLYFxA92IAg6cWvrZ+5erll0fQ85TNC1J+b+PLHB3JCHrKQn4Nd9?=
+ =?us-ascii?Q?mMAdB7K3QLQSrYiRHnDiB14Av/v6kXKC5aXFaIzOGk30ocRO3eWTIRrwOKmx?=
+ =?us-ascii?Q?1VOZowd+PW9uQ6fg8CUO/ACARDDfayEaOsrXXUEhRQtQDblHsbhhpoKHAjWk?=
+ =?us-ascii?Q?1deuDZ+etbr5EP18e88AguaswUZ8Dccyl7fkPXsvxoDlI1cZSx66JlEOcbG/?=
+ =?us-ascii?Q?wgn21pM3wNLiPdoRusphE5avKgdO3UOA8hR8ZVUbv25JlbMOPSvQMf6ufP7V?=
+ =?us-ascii?Q?s8hDoYS5UbykaZEivdbma0Ni7eXYBtsO7aMYp+YeotrO5lvDcRSBvIvIEJrp?=
+ =?us-ascii?Q?itrz4Y1LAeaXdgzXFRjF+vP9FMdObTkAcu2TRMEUutjJs42XjeE0I84USaVK?=
+ =?us-ascii?Q?knrXbXuV+7hfTcmxUvDSxAby2MrkwYuG1IeYgPBmW0lAblrTS/8VqjGq0vBk?=
+ =?us-ascii?Q?2XJhQyW6/Op1NkVT5oJK4GDAAX3X5NKsxN2UHKORBhZkt9AwWAnrqunon45K?=
+ =?us-ascii?Q?5FrowOmUp6aVIGTcNv+whxvq0UNs/Fl22t5leoNMtZ6sClzktZrlNm3koD9o?=
+ =?us-ascii?Q?SeEBKQvdw53aIeI/DS5ag88MDZAsnaZ/n0DMITI+nFOgJDS9u2d82wFBRTRT?=
+ =?us-ascii?Q?lCqt7MdDl33N8A0nTUJv2ZB5dbrrIg6fW4FizMiMfoTrra2hInf/4xy105Sk?=
+ =?us-ascii?Q?lnM1NzPXKPgv6l+psVYfWWm5GUq5KdzBajH+l4/ZyqCEC84liuYZZctO1T2j?=
+ =?us-ascii?Q?e5U7BAOmALOaibHW9LqlU7m8596Yyhouk1RxThIG6ZA4ZFiCn26C99TdFKlT?=
+ =?us-ascii?Q?Zex9e1+4pGOA/FuCxTfROAAvBm0XGksYxjIi/2X5Cvaing9dq3S1hAl5u5tt?=
+ =?us-ascii?Q?1UosZC8uJSYC6FvpntGYdxDJmPi4K8VEyVtdVADj/Q51CIbh4Al+/lCthchU?=
+ =?us-ascii?Q?tHwrK4gZj677Mv7AkSt1OhIf+EprejVLvY3O5v2xjq7NyVz6oN3pFWgQ9j6L?=
+ =?us-ascii?Q?NiK7410WJ0XF6Bd3VTtr0t0cjyd4wcqdK74ZHKnbIPjDHBKEGNRsf/dQr5KW?=
+ =?us-ascii?Q?9kIoXYUor8kmsSh5s64d+YIaPqfnVteSh6PRNBz4y+dhRBVRmU+2ssLy17hR?=
+ =?us-ascii?Q?ncYIvHTLpQRtD9Oqyz7fptpeVcIFrlrKrzLn7LUE2Yo1nn5F0A74K40AMmgK?=
+ =?us-ascii?Q?Sh5d9u2UpUJgIMWyawaArDcZxVktGm18JvYJGy+RYYto32N9jmqi7COkou67?=
+ =?us-ascii?Q?9RzTVjrp/c6AU0wWEZo2qHOWaD9Q7DY3fVYJt1iwOO2Qvf+3eY9nyElscxnx?=
+ =?us-ascii?Q?XOOVcxAwcFkAp3XTJmDXVS4CIh2IBHXETpCn/Pvnqd4AQJPA/jvtVyxQjhPa?=
+ =?us-ascii?Q?iMbNjW+zDcOmW5RWUTu2ZzExgndhgZRn6ZHRR3cRzb2hgMXYcerh/9OGSVgN?=
+ =?us-ascii?Q?2syDTeUsyZRWyiIUMylNGhA=3D?=
+x-forefront-antispam-report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:BN9PR11MB5276.namprd11.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(376014)(366016)(7416014)(1800799024)(38070700021);DIR:OUT;SFP:1101;
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0: =?us-ascii?Q?VZ1Zvf/D8ezaiE4ANzgtE4B5u5LQakUuhSpu+p8hgBd/0XZLw/f+LNnJ+e+B?=
+ =?us-ascii?Q?Pak/0ANa1tLyKPQ+9ClB2I1QUMOJoeSxHrE+sv7TrP8N8eFaK3oPWVIVm/Z/?=
+ =?us-ascii?Q?D1kNUOnUjwr5chXdZF8wfOC7SQpzOhhInl25cir2VSOPBCxdWmpTi5TMC7jM?=
+ =?us-ascii?Q?xMUYlvmONicpE/+kFQYUOdfyJiuoyas+HDh3BEoM9alQ0zySEa0rdV5fIVgD?=
+ =?us-ascii?Q?yvDIVh4JrXLtd0+N7XUEojhXl0QiUK3PF2C5R+mA97SY32J0qaWVpGdOkV32?=
+ =?us-ascii?Q?aXQPzkYf7JTvNpV7waGvGD7AJ7wAA/00aqCk6j32Nn/5sZB5XCF6FWA8akOP?=
+ =?us-ascii?Q?mDugf6oGnN/W61y+INDo9+cUF/5D1jKcOG2sShKWuCBBf/cnLBmdZUnrDymM?=
+ =?us-ascii?Q?zkN6a5mOQ5C1zhFyfeJao+B88hGvXdCAy1TGNT4lAxGiOw/i9dafOCTTlWmD?=
+ =?us-ascii?Q?qwWbQqsGyKdVPImf/r4U8/Sw4CbDFy+dasg7CyTrE1r1Laq6yXNWzAdDy633?=
+ =?us-ascii?Q?OtZvjcI8vPCESxAhzoE/YIRAC2OEMN8mzHgdJ30HYZ5ncRtNECbp8HLjNbEW?=
+ =?us-ascii?Q?exY6qangnPg3IXlTzkjKtVjr0z2c+x3KBPSknKTTfVacb/xttXHA6ICA/5gz?=
+ =?us-ascii?Q?dGsBkA6/pVdi6kMYhWl3a8IrOnwJJksUp/KT9F8FpHHBINbilS07snZ9MEB3?=
+ =?us-ascii?Q?e+3ZBZvDtvHeWc2jr3O5SWuW1ptUHfK3iish/fd46J8ZNQbOVZzvudUdIhYa?=
+ =?us-ascii?Q?ND++qRag1vBhixKUb7AA3F5lcSGLsnLbnGNWqdLSR4UTBXu0V7ersMd61BXX?=
+ =?us-ascii?Q?Llb2lkxT4bkYLiN1XkXnSdcaZQps7M7D9lU3nZuD47mC6ZFVbyCeJr4HlPcu?=
+ =?us-ascii?Q?WoiRoTn4dR9TcQfnlr+yBSL2H+3t0q8P5X4pZW7lPAZ/+vhh4qMQgh6VMGxD?=
+ =?us-ascii?Q?870/h7MGm5Cs2gyCAfnV3pO2YeGvZNA2ptVt0RkSlMwMTX9cM7AkNTJado0Y?=
+ =?us-ascii?Q?OM4kuUMVcenNyfJorHeOG/lNMfD1jEF5CD8TGzLyckAcyRfkyQEPTIMUHnIg?=
+ =?us-ascii?Q?rq59Xmi9GRfyGQdDdyCXxHloIDCClOBu0qvZYjaSnDVVSNJrGNKPN4BGpiv4?=
+ =?us-ascii?Q?00jquS/A9MEzPwKxCbwgiPFgOCNY5riSCuUthVg3mWqIZZLvZbjMXa9Sje8z?=
+ =?us-ascii?Q?ZGlDl/MH7G0AQqtEe0xU97BKBQgIGdpALs+4WoL3HiQDZ6BgLcxUN41iDhsL?=
+ =?us-ascii?Q?L4PRNEIFj6AiCQzhizxJFQa0O3N8ZIHFV4DYZmpOS7YuyV9CiJTz7TwjlSy1?=
+ =?us-ascii?Q?QuVECiKJK4o4RzZMnZWXjIpDQT4ekfpWRG/8rm3S6YwHbPuTLDEe5cY4CACo?=
+ =?us-ascii?Q?Fsgzs3dge6qJaDD1pz55wtTf/PtOQrv0rkGWJ2osdoH0rZPrEjD3f3J8cpA5?=
+ =?us-ascii?Q?VJRWzbsTSCSSGzoCjoxREA0qk4m9eyrOlhnA9p0RjHWJvugzIL7JPunuWIzq?=
+ =?us-ascii?Q?EQrB06Dp92ztZHIDfC9PBm6J6iU1ONBs94lV473KQNkf7FWzbTfBiGmIYOrB?=
+ =?us-ascii?Q?1tT5lo5QAhAKm9pj4zAFs0kPs6moZGceUFeoZ8Xf8o0jqxoclPBjxrI9ObL+?=
+ =?us-ascii?Q?6Ukvec7MmE84D2gI/BlSIse3hYeLJSW6A43Q959r7lNelhOG2m7wefOyZyrZ?=
+ =?us-ascii?Q?mfAUXZbO4azV1tKHsXmGcV6uTIpqT2HcdLxmKPZRwgn1h5sjzzHKZkwat/wB?=
+ =?us-ascii?Q?AfgP0my62g=3D=3D?=
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <0-v1-d7be57da596d+3f8c0-iommpt_map_direct_jgg@nvidia.com> <3-v1-d7be57da596d+3f8c0-iommpt_map_direct_jgg@nvidia.com>
-In-Reply-To: <3-v1-d7be57da596d+3f8c0-iommpt_map_direct_jgg@nvidia.com>
-From: Samiullah Khawaja <skhawaja@google.com>
-Date: Wed, 14 Jan 2026 20:12:50 -0800
-X-Gm-Features: AZwV_QgS3dgaueISLA7Wuq2dTRH4K_N_MwpHLHWrKApIslQgTJ5_x9gZ5oMZ00w
-Message-ID: <CAAywjhR_Jh5K8VgLWFxvXwn66bV3vdmuxGN_OKh18Xoxb_NT6A@mail.gmail.com>
-Subject: Re: [PATCH 3/3] iommupt: Avoid rewalking during map
-To: Jason Gunthorpe <jgg@nvidia.com>
-Cc: iommu@lists.linux.dev, Joerg Roedel <joro@8bytes.org>, 
-	Robin Murphy <robin.murphy@arm.com>, Will Deacon <will@kernel.org>, 
-	Alejandro Jimenez <alejandro.j.jimenez@oracle.com>, Joerg Roedel <joerg.roedel@amd.com>, 
-	Kevin Tian <kevin.tian@intel.com>, kernel test robot <lkp@intel.com>, 
-	Pasha Tatashin <pasha.tatashin@soleen.com>, patches@lists.linux.dev
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: BN9PR11MB5276.namprd11.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: a3485e6d-9934-40eb-561a-08de53fdcd12
+X-MS-Exchange-CrossTenant-originalarrivaltime: 15 Jan 2026 06:17:46.4937
+ (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 46c98d88-e344-4ed4-8496-4ed7712e255d
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: rfsJesDOe3RUd1mV0nA16qTfQL4pxSl5QDOp30Mh90zsKFbBu4RB0oLceOllUCmlpYK4fjsrPNA8FQ1ekc1CnQ==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: IA4PR11MB9229
+X-OriginatorOrg: intel.com
 
-On Mon, Jan 12, 2026 at 6:49=E2=80=AFAM Jason Gunthorpe <jgg@nvidia.com> wr=
-ote:
->
-> Currently the core code provides a simplified interface to drivers where
-> it fragments a requested multi-page map into single page size steps after
-> doing all the calculations to figure out what page size is
-> appropriate. Each step rewalks the page tables from the start.
->
-> Since iommupt has a single implementation of the mapping algorithm it can
-> internally compute each step as it goes while retaining its current
-> position in the walk.
->
-> Add a new function pt_pgsz_count() which computes the same page size
-> fragement of a large mapping operations.
->
-> Compute the next fragment when all the leaf entries of the current
-> fragement have been written, then continue walking from the current
-> point.
->
+> From: Jason Gunthorpe <jgg@nvidia.com>
+> Sent: Monday, January 12, 2026 10:49 PM
+>=20
+> The common algorithm in iommupt does not require the iommu_pgsize()
+> calculations, it can directly unmap any arbitrary range. Add a new functi=
+on
+> pointer to directly call an iommupt unmap_range op and make
+> __iommu_unmap() call it directly.
+>=20
+> Gives about a 5% gain on single page unmappings.
+>=20
 > The function pointer is run through pt_iommu_ops instead of
 > iommu_domain_ops to discourage using it outside iommupt. All drivers with
-> their own page tables should continue to use the simplified map_pages()
-> style interfaces.
->
+> their own page tables should continue to use the simplified
+> map/unmap_pages() style interfaces.
+>=20
 > Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
-> ---
->  drivers/iommu/generic_pt/iommu_pt.h         | 127 ++++++++++++--------
->  drivers/iommu/generic_pt/kunit_generic_pt.h |  12 ++
->  drivers/iommu/generic_pt/pt_iter.h          |  22 ++++
->  drivers/iommu/iommu.c                       |  25 +++-
->  include/linux/generic_pt/iommu.h            |  34 +++++-
->  5 files changed, 161 insertions(+), 59 deletions(-)
->
-> diff --git a/drivers/iommu/generic_pt/iommu_pt.h b/drivers/iommu/generic_=
-pt/iommu_pt.h
-> index 5c898c01659798..14a73d3b291b42 100644
-> --- a/drivers/iommu/generic_pt/iommu_pt.h
-> +++ b/drivers/iommu/generic_pt/iommu_pt.h
-> @@ -467,6 +467,7 @@ struct pt_iommu_map_args {
->         pt_oaddr_t oa;
->         unsigned int leaf_pgsize_lg2;
->         unsigned int leaf_level;
-> +       pt_vaddr_t num_leaves;
->  };
->
->  /*
-> @@ -519,11 +520,15 @@ static int clear_contig(const struct pt_state *star=
-t_pts,
->  static int __map_range_leaf(struct pt_range *range, void *arg,
->                             unsigned int level, struct pt_table_p *table)
->  {
-> +       struct pt_iommu *iommu_table =3D iommu_from_common(range->common)=
-;
->         struct pt_state pts =3D pt_init(range, level, table);
->         struct pt_iommu_map_args *map =3D arg;
->         unsigned int leaf_pgsize_lg2 =3D map->leaf_pgsize_lg2;
->         unsigned int start_index;
->         pt_oaddr_t oa =3D map->oa;
-> +       unsigned int num_leaves;
-> +       unsigned int orig_end;
-> +       pt_vaddr_t last_va;
->         unsigned int step;
->         bool need_contig;
->         int ret =3D 0;
-> @@ -537,6 +542,15 @@ static int __map_range_leaf(struct pt_range *range, =
-void *arg,
->
->         _pt_iter_first(&pts);
->         start_index =3D pts.index;
-> +       orig_end =3D pts.end_index;
-> +       if (pts.index + map->num_leaves < pts.end_index) {
-> +               /* Need to stop in the middle of the table to change size=
-s */
-> +               pts.end_index =3D pts.index + map->num_leaves;
-> +               num_leaves =3D 0;
-> +       } else {
-> +               num_leaves =3D map->num_leaves - (pts.end_index - pts.ind=
-ex);
-> +       }
-> +
->         do {
->                 pts.type =3D pt_load_entry_raw(&pts);
->                 if (pts.type !=3D PT_ENTRY_EMPTY || need_contig) {
-> @@ -562,7 +576,40 @@ static int __map_range_leaf(struct pt_range *range, =
-void *arg,
->         flush_writes_range(&pts, start_index, pts.index);
->
->         map->oa =3D oa;
-> -       return ret;
-> +       map->num_leaves =3D num_leaves;
-> +       if (ret || num_leaves)
-> +               return ret;
-> +
-> +       /* range->va is not valid if we reached the end of the table */
-> +       pts.index -=3D step;
-> +       pt_index_to_va(&pts);
-> +       pts.index +=3D step;
-> +       last_va =3D range->va + log2_to_int(leaf_pgsize_lg2);
-> +
-> +       if (last_va - 1 =3D=3D range->last_va) {
-> +               PT_WARN_ON(pts.index !=3D orig_end);
-> +               return 0;
-> +       }
-> +
-> +       /*
-> +        * Reached a point where the page size changed, compute the new
-> +        * parameters.
-> +        */
-> +       map->leaf_pgsize_lg2 =3D pt_compute_best_pgsize(
-> +               iommu_table->domain.pgsize_bitmap, last_va, range->last_v=
-a, oa);
-> +       map->leaf_level =3D
-> +               pt_pgsz_lg2_to_level(range->common, map->leaf_pgsize_lg2)=
-;
-> +       map->num_leaves =3D pt_pgsz_count(iommu_table->domain.pgsize_bitm=
-ap,
-> +                                       last_va, range->last_va, oa,
-> +                                       map->leaf_pgsize_lg2);
 
-The overall page walk with pgsize and leaf_level switching is great.
-> +
-> +       /* Didn't finish this table level, caller will repeat it */
-> +       if (pts.index !=3D orig_end) {
-> +               if (pts.index !=3D start_index)
-> +                       pt_index_to_va(&pts);
-> +               return -EAGAIN;
-> +       }
-> +       return 0;
->  }
->
->  static int __map_range(struct pt_range *range, void *arg, unsigned int l=
-evel,
-> @@ -585,14 +632,9 @@ static int __map_range(struct pt_range *range, void =
-*arg, unsigned int level,
->                         if (pts.type !=3D PT_ENTRY_EMPTY)
->                                 return -EADDRINUSE;
->                         ret =3D pt_iommu_new_table(&pts, &map->attrs);
-> -                       if (ret) {
-> -                               /*
-> -                                * Racing with another thread installing =
-a table
-> -                                */
-> -                               if (ret =3D=3D -EAGAIN)
-> -                                       continue;
-> +                       /* EAGAIN on a race will loop again */
-> +                       if (ret)
->                                 return ret;
-> -                       }
->                 } else {
->                         pts.table_lower =3D pt_table_ptr(&pts);
->                         /*
-> @@ -616,10 +658,12 @@ static int __map_range(struct pt_range *range, void=
- *arg, unsigned int level,
->                  * The already present table can possibly be shared with =
-another
->                  * concurrent map.
->                  */
-> -               if (map->leaf_level =3D=3D level - 1)
-> -                       ret =3D pt_descend(&pts, arg, __map_range_leaf);
-> -               else
-> -                       ret =3D pt_descend(&pts, arg, __map_range);
-> +               do {
-> +                       if (map->leaf_level =3D=3D level - 1)
-> +                               ret =3D pt_descend(&pts, arg, __map_range=
-_leaf);
-> +                       else
-> +                               ret =3D pt_descend(&pts, arg, __map_range=
-);
-> +               } while (ret =3D=3D -EAGAIN);
->                 if (ret)
->                         return ret;
->
-> @@ -627,6 +671,8 @@ static int __map_range(struct pt_range *range, void *=
-arg, unsigned int level,
->                 pt_index_to_va(&pts);
->                 if (pts.index >=3D pts.end_index)
->                         break;
-> +               if (map->leaf_level =3D=3D level)
-> +                       return -EAGAIN;
-
-Could you please add a comment here. Maybe something that says that a
-level switch happened and the caller needs to retry?
->         } while (true);
->         return 0;
->  }
-> @@ -798,12 +844,13 @@ static int check_map_range(struct pt_iommu *iommu_t=
-able, struct pt_range *range,
->  static int do_map(struct pt_range *range, struct pt_common *common,
->                   bool single_page, struct pt_iommu_map_args *map)
->  {
-> +       int ret;
-> +
->         /*
->          * The __map_single_page() fast path does not support DMA_INCOHER=
-ENT
->          * flushing to keep its .text small.
->          */
->         if (single_page && !pt_feature(common, PT_FEAT_DMA_INCOHERENT)) {
-> -               int ret;
->
->                 ret =3D pt_walk_range(range, __map_single_page, map);
->                 if (ret !=3D -EAGAIN)
-> @@ -811,50 +858,25 @@ static int do_map(struct pt_range *range, struct pt=
-_common *common,
->                 /* EAGAIN falls through to the full path */
->         }
->
-> -       if (map->leaf_level =3D=3D range->top_level)
-> -               return pt_walk_range(range, __map_range_leaf, map);
-> -       return pt_walk_range(range, __map_range, map);
-> +       do {
-> +               if (map->leaf_level =3D=3D range->top_level)
-> +                       ret =3D pt_walk_range(range, __map_range_leaf, ma=
-p);
-> +               else
-> +                       ret =3D pt_walk_range(range, __map_range, map);
-> +       } while (ret =3D=3D -EAGAIN);
-> +       return ret;
->  }
->
-> -/**
-> - * map_pages() - Install translation for an IOVA range
-> - * @domain: Domain to manipulate
-> - * @iova: IO virtual address to start
-> - * @paddr: Physical/Output address to start
-> - * @pgsize: Length of each page
-> - * @pgcount: Length of the range in pgsize units starting from @iova
-> - * @prot: A bitmap of IOMMU_READ/WRITE/CACHE/NOEXEC/MMIO
-> - * @gfp: GFP flags for any memory allocations
-> - * @mapped: Total bytes successfully mapped
-> - *
-> - * The range starting at IOVA will have paddr installed into it. The cal=
-ler
-> - * must specify a valid pgsize and pgcount to segment the range into com=
-patible
-> - * blocks.
-> - *
-> - * On error the caller will probably want to invoke unmap on the range f=
-rom iova
-> - * up to the amount indicated by @mapped to return the table back to an
-> - * unchanged state.
-> - *
-> - * Context: The caller must hold a write range lock that includes the wh=
-ole
-> - * range.
-> - *
-> - * Returns: -ERRNO on failure, 0 on success. The number of bytes of VA t=
-hat were
-> - * mapped are added to @mapped, @mapped is not zerod first.
-> - */
-> -int DOMAIN_NS(map_pages)(struct iommu_domain *domain, unsigned long iova=
-,
-> -                        phys_addr_t paddr, size_t pgsize, size_t pgcount=
-,
-> -                        int prot, gfp_t gfp, size_t *mapped)
-> +static int NS(map_range)(struct pt_iommu *iommu_table, dma_addr_t iova,
-> +                        phys_addr_t paddr, dma_addr_t len, unsigned int =
-prot,
-> +                        gfp_t gfp, size_t *mapped)
->  {
-> -       struct pt_iommu *iommu_table =3D
-> -               container_of(domain, struct pt_iommu, domain);
->         pt_vaddr_t pgsize_bitmap =3D iommu_table->domain.pgsize_bitmap;
->         struct pt_common *common =3D common_from_iommu(iommu_table);
->         struct iommu_iotlb_gather iotlb_gather;
-> -       pt_vaddr_t len =3D pgsize * pgcount;
->         struct pt_iommu_map_args map =3D {
->                 .iotlb_gather =3D &iotlb_gather,
->                 .oa =3D paddr,
-> -               .leaf_pgsize_lg2 =3D vaffs(pgsize),
->         };
->         bool single_page =3D false;
->         struct pt_range range;
-> @@ -882,13 +904,13 @@ int DOMAIN_NS(map_pages)(struct iommu_domain *domai=
-n, unsigned long iova,
->                 return ret;
->
->         /* Calculate target page size and level for the leaves */
-> -       if (pt_has_system_page_size(common) && pgsize =3D=3D PAGE_SIZE &&
-> -           pgcount =3D=3D 1) {
-> +       if (pt_has_system_page_size(common) && len =3D=3D PAGE_SIZE) {
->                 PT_WARN_ON(!(pgsize_bitmap & PAGE_SIZE));
->                 if (log2_mod(iova | paddr, PAGE_SHIFT))
->                         return -ENXIO;
->                 map.leaf_pgsize_lg2 =3D PAGE_SHIFT;
->                 map.leaf_level =3D 0;
-> +               map.num_leaves =3D 1;
->                 single_page =3D true;
->         } else {
->                 map.leaf_pgsize_lg2 =3D pt_compute_best_pgsize(
-> @@ -897,6 +919,9 @@ int DOMAIN_NS(map_pages)(struct iommu_domain *domain,=
- unsigned long iova,
->                         return -ENXIO;
->                 map.leaf_level =3D
->                         pt_pgsz_lg2_to_level(common, map.leaf_pgsize_lg2)=
-;
-> +               map.num_leaves =3D pt_pgsz_count(pgsize_bitmap, range.va,
-> +                                              range.last_va, paddr,
-> +                                              map.leaf_pgsize_lg2);
->         }
->
->         ret =3D check_map_range(iommu_table, &range, &map);
-> @@ -919,7 +944,6 @@ int DOMAIN_NS(map_pages)(struct iommu_domain *domain,=
- unsigned long iova,
->         *mapped +=3D map.oa - paddr;
->         return ret;
->  }
-> -EXPORT_SYMBOL_NS_GPL(DOMAIN_NS(map_pages), "GENERIC_PT_IOMMU");
->
->  struct pt_unmap_args {
->         struct iommu_pages_list free_list;
-> @@ -1079,6 +1103,7 @@ static void NS(deinit)(struct pt_iommu *iommu_table=
-)
->  }
->
->  static const struct pt_iommu_ops NS(ops) =3D {
-> +       .map_range =3D NS(map_range),
->         .unmap_range =3D NS(unmap_range),
->  #if IS_ENABLED(CONFIG_IOMMUFD_DRIVER) && defined(pt_entry_is_write_dirty=
-) && \
->         IS_ENABLED(CONFIG_IOMMUFD_TEST) && defined(pt_entry_make_write_di=
-rty)
-> diff --git a/drivers/iommu/generic_pt/kunit_generic_pt.h b/drivers/iommu/=
-generic_pt/kunit_generic_pt.h
-> index 68278bf15cfe07..374e475f591e15 100644
-> --- a/drivers/iommu/generic_pt/kunit_generic_pt.h
-> +++ b/drivers/iommu/generic_pt/kunit_generic_pt.h
-> @@ -312,6 +312,17 @@ static void test_best_pgsize(struct kunit *test)
->         }
->  }
->
-> +static void test_pgsz_count(struct kunit *test)
-> +{
-> +       KUNIT_EXPECT_EQ(test,
-> +                       pt_pgsz_count(SZ_4K, 0, SZ_1G - 1, 0, ilog2(SZ_4K=
-)),
-> +                       SZ_1G / SZ_4K);
-> +       KUNIT_EXPECT_EQ(test,
-> +                       pt_pgsz_count(SZ_2M | SZ_4K, SZ_4K, SZ_1G - 1, SZ=
-_4K,
-> +                                     ilog2(SZ_4K)),
-> +                       (SZ_2M - SZ_4K) / SZ_4K);
-> +}
-> +
->  /*
->   * Check that pt_install_table() and pt_table_pa() match
->   */
-> @@ -770,6 +781,7 @@ static struct kunit_case generic_pt_test_cases[] =3D =
-{
->         KUNIT_CASE_FMT(test_init),
->         KUNIT_CASE_FMT(test_bitops),
->         KUNIT_CASE_FMT(test_best_pgsize),
-> +       KUNIT_CASE_FMT(test_pgsz_count),
->         KUNIT_CASE_FMT(test_table_ptr),
->         KUNIT_CASE_FMT(test_max_va),
->         KUNIT_CASE_FMT(test_table_radix),
-> diff --git a/drivers/iommu/generic_pt/pt_iter.h b/drivers/iommu/generic_p=
-t/pt_iter.h
-> index c0d8617cce2928..3e45dbde6b8327 100644
-> --- a/drivers/iommu/generic_pt/pt_iter.h
-> +++ b/drivers/iommu/generic_pt/pt_iter.h
-> @@ -569,6 +569,28 @@ static inline unsigned int pt_compute_best_pgsize(pt=
-_vaddr_t pgsz_bitmap,
->         return pgsz_lg2;
->  }
->
-> +/*
-> + * Return the number of pgsize_lg2 leaf entries that can be mapped for
-> + * va to oa. This accounts for any requirement to reduce or increase the=
- page
-> + * size across the VA range.
-> + */
-> +static inline pt_vaddr_t pt_pgsz_count(pt_vaddr_t pgsz_bitmap, pt_vaddr_=
-t va,
-> +                                      pt_vaddr_t last_va, pt_oaddr_t oa,
-> +                                      unsigned int pgsize_lg2)
-> +{
-> +       pt_vaddr_t len =3D last_va - va + 1;
-> +       pt_vaddr_t next_pgsizes =3D log2_set_mod(pgsz_bitmap, 0, pgsize_l=
-g2 + 1);
-> +
-> +       if (next_pgsizes) {
-> +               unsigned int next_pgsize_lg2 =3D vaffs(next_pgsizes);
-> +
-> +               if (log2_mod(va ^ oa, next_pgsize_lg2) =3D=3D 0)
-> +                       len =3D min(len, log2_set_mod_max(va, next_pgsize=
-_lg2) -
-> +                                              va + 1);
-> +       }
-> +       return log2_div(len, pgsize_lg2);
-> +}
-> +
->  #define _PT_MAKE_CALL_LEVEL(fn)                                         =
- \
->         static __always_inline int fn(struct pt_range *range, void *arg, =
-\
->                                       unsigned int level,                =
-\
-> diff --git a/drivers/iommu/iommu.c b/drivers/iommu/iommu.c
-> index 000dd6c374877b..4c3b8184a2c28b 100644
-> --- a/drivers/iommu/iommu.c
-> +++ b/drivers/iommu/iommu.c
-> @@ -2501,8 +2501,9 @@ static size_t iommu_pgsize(struct iommu_domain *dom=
-ain, unsigned long iova,
->         return pgsize;
->  }
->
-> -int iommu_map_nosync(struct iommu_domain *domain, unsigned long iova,
-> -               phys_addr_t paddr, size_t size, int prot, gfp_t gfp)
-> +static int __iommu_map_domain_pgtbl(struct iommu_domain *domain,
-> +                                   unsigned long iova, phys_addr_t paddr=
-,
-> +                                   size_t size, int prot, gfp_t gfp)
->  {
->         const struct iommu_domain_ops *ops =3D domain->ops;
->         unsigned long orig_iova =3D iova;
-> @@ -2580,6 +2581,26 @@ int iommu_sync_map(struct iommu_domain *domain, un=
-signed long iova, size_t size)
->         return ops->iotlb_sync_map(domain, iova, size);
->  }
->
-> +int iommu_map_nosync(struct iommu_domain *domain, unsigned long iova,
-> +               phys_addr_t paddr, size_t size, int prot, gfp_t gfp)
-> +{
-> +       struct pt_iommu *pt =3D iommupt_from_domain(domain);
-> +
-> +       if (pt) {
-> +               size_t mapped =3D 0;
-> +               int ret;
-> +
-> +               ret =3D pt->ops->map_range(pt, iova, paddr, size, prot, g=
-fp,
-> +                                        &mapped);
-> +               if (ret) {
-> +                       iommu_unmap(domain, iova, mapped);
-> +                       return ret;
-> +               }
-> +               return 0;
-> +       }
-> +       return __iommu_map_domain_pgtbl(domain, iova, paddr, size, prot, =
-gfp);
-> +}
-> +
->  int iommu_map(struct iommu_domain *domain, unsigned long iova,
->               phys_addr_t paddr, size_t size, int prot, gfp_t gfp)
->  {
-> diff --git a/include/linux/generic_pt/iommu.h b/include/linux/generic_pt/=
-iommu.h
-> index f094f8f44e4e8a..43cc98c9c55f70 100644
-> --- a/include/linux/generic_pt/iommu.h
-> +++ b/include/linux/generic_pt/iommu.h
-> @@ -87,6 +87,33 @@ struct pt_iommu_info {
->  };
->
->  struct pt_iommu_ops {
-> +       /**
-> +        * @map_range: Install translation for an IOVA range
-> +        * @iommu_table: Table to manipulate
-> +        * @iova: IO virtual address to start
-> +        * @paddr: Physical/Output address to start
-> +        * @len: Length of the range starting from @iova
-> +        * @prot: A bitmap of IOMMU_READ/WRITE/CACHE/NOEXEC/MMIO
-> +        * @gfp: GFP flags for any memory allocations
-> +        *
-> +        * The range starting at IOVA will have paddr installed into it. =
-The
-> +        * rage is automatically segmented into optimally sized table ent=
-ries,
-> +        * and can have any valid alignment.
-> +        *
-> +        * On error the caller will probably want to invoke unmap on the =
-range
-> +        * from iova up to the amount indicated by @mapped to return the =
-table
-> +        * back to an unchanged state.
-> +        *
-> +        * Context: The caller must hold a write range lock that includes
-> +        * the whole range.
-> +        *
-> +        * Returns: -ERRNO on failure, 0 on success. The number of bytes =
-of VA
-> +        * that were mapped are added to @mapped, @mapped is not zerod fi=
-rst.
-> +        */
-> +       int (*map_range)(struct pt_iommu *iommu_table, dma_addr_t iova,
-> +                        phys_addr_t paddr, dma_addr_t len, unsigned int =
-prot,
-> +                        gfp_t gfp, size_t *mapped);
-> +
->         /**
->          * @unmap_range: Make a range of IOVA empty/not present
->          * @iommu_table: Table to manipulate
-> @@ -224,10 +251,6 @@ struct pt_iommu_cfg {
->  #define IOMMU_PROTOTYPES(fmt)                                           =
-       \
->         phys_addr_t pt_iommu_##fmt##_iova_to_phys(struct iommu_domain *do=
-main, \
->                                                   dma_addr_t iova);      =
-      \
-> -       int pt_iommu_##fmt##_map_pages(struct iommu_domain *domain,      =
-      \
-> -                                      unsigned long iova, phys_addr_t pa=
-ddr,  \
-> -                                      size_t pgsize, size_t pgcount,    =
-      \
-> -                                      int prot, gfp_t gfp, size_t *mappe=
-d);   \
->         int pt_iommu_##fmt##_read_and_clear_dirty(                       =
-      \
->                 struct iommu_domain *domain, unsigned long iova, size_t s=
-ize,  \
->                 unsigned long flags, struct iommu_dirty_bitmap *dirty);  =
-      \
-> @@ -248,8 +271,7 @@ struct pt_iommu_cfg {
->   * iommu_pt
->   */
->  #define IOMMU_PT_DOMAIN_OPS(fmt)                        \
-> -       .iova_to_phys =3D &pt_iommu_##fmt##_iova_to_phys, \
-> -       .map_pages =3D &pt_iommu_##fmt##_map_pages
-> +       .iova_to_phys =3D &pt_iommu_##fmt##_iova_to_phys
->  #define IOMMU_PT_DIRTY_OPS(fmt) \
->         .read_and_clear_dirty =3D &pt_iommu_##fmt##_read_and_clear_dirty
->
-> --
-> 2.43.0
->
+Reviewed-by: Kevin Tian <kevin.tian@intel.com>
