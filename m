@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4C23399011;
-	Thu, 15 Jan 2026 17:20:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6CB62D948D;
+	Thu, 15 Jan 2026 17:20:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768497644; cv=none; b=uvCdmQPTTagEK4VNY3cqPbbAb0d0fqKyqFSw59KplD/xHvpbyNM6cV55QFMEIMIixcjSIqZyT2lJzbzKzlcEoRTtigaJrgIB5hk/GOlTlvV4xeELo5VPXnB/ASvvHQO9DP967ndU7p71hU0E+uKLaxqXHthDNjI5NRb8nNoacN8=
+	t=1768497647; cv=none; b=gFHrntl4wH0iar/UOC0It7CoiVmBw2rgMRDipyQ4PotXr/VwzkVsUUbC8qxighlfeL1HOTmNIl66h6A7lu6MZtI9+5tjpWwRqjp8XCh5Y/z/rdCMYTej4kExGpuhZ3iFusn5RJCeWNDnn+Y+BTOpjArR/iY1NkQ4jNfVZljXzu8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768497644; c=relaxed/simple;
-	bh=FqFvW4B6R6wESq5vQwukEU2fyQzyZMbn5kGU3ighNis=;
+	s=arc-20240116; t=1768497647; c=relaxed/simple;
+	bh=HzMTQMO8mMYZPQugzA6xfCSExvyg933r/vQ74MCrGM0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=u4skJoXtGFtq8hpmQTTnujS9RGZO/2EiDZrInU6ugeXGPdu/O/rs2E23al4Y5OHAe3PfHbIxqxdnLh0x1erPIcVrkMCYm6jgCjs+dJvj0ln+DlUSmqs73orbWKz8Dcs715xSF1xmffTM6o67Da3shvBZ4TwxMKrvMNHRqhwApd0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=om+fG5Ci; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ud97qBjrpMwoCCJORm4iM9Fec/7msNTArgBYEWGssQfdyHQr0wldtvDTO+yp2opyRfHWKJjimu/2W8r0uwnf4QT4gIhZ7xmox9qpt9p6uD+AxGBjCa/dDZs/MBBKfcf+lw7Y09I2m7XAe3SlorYOsvaFldP9CPJ/13Sg5vWhpmY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=K3coNKdK; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="om+fG5Ci"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4DDDEC116D0;
-	Thu, 15 Jan 2026 17:20:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="K3coNKdK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32AB8C116D0;
+	Thu, 15 Jan 2026 17:20:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1768497644;
-	bh=FqFvW4B6R6wESq5vQwukEU2fyQzyZMbn5kGU3ighNis=;
+	s=korg; t=1768497647;
+	bh=HzMTQMO8mMYZPQugzA6xfCSExvyg933r/vQ74MCrGM0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=om+fG5CiX3TR2F6KDzqGJH1QpjJkfrALf7MpxQZhnETVb0CJWVn8HnGY6f40gIrLX
-	 YW5NSh7csqWilXrSB5N6tbcuf53pxNWuKEz3Boi+QLYre2U19CYokFM4J16hTRxrpQ
-	 OPAuEESVHEtYu8wH+djvXM/RRYsHuPuGkAzb3hrw=
+	b=K3coNKdK2fPBu9b9oDyl4FdWwR9uxdCEj5G74y7zpUoUI9BPpXNd683w4XDLlzSmy
+	 6p9d4vTLB+t9eyU0fsV7izoI25f/dW6k3oDRFy0k4LZhuSVoFu152bwlYvUY8ISwv7
+	 bkL3DRlnKqh8dMyHmBILNtX6QwU4htiHIYLnHHSU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alok Tiwari <alok.a.tiwari@oracle.com>,
-	"Michael S. Tsirkin" <mst@redhat.com>,
 	Jason Wang <jasowang@redhat.com>,
+	"Michael S. Tsirkin" <mst@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 153/554] virtio_vdpa: fix misleading return in void function
-Date: Thu, 15 Jan 2026 17:43:39 +0100
-Message-ID: <20260115164251.804214828@linuxfoundation.org>
+Subject: [PATCH 5.15 154/554] virtio: fix virtqueue_set_affinity() docs
+Date: Thu, 15 Jan 2026 17:43:40 +0100
+Message-ID: <20260115164251.840437482@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260115164246.225995385@linuxfoundation.org>
 References: <20260115164246.225995385@linuxfoundation.org>
@@ -52,38 +51,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alok Tiwari <alok.a.tiwari@oracle.com>
+From: Michael S. Tsirkin <mst@redhat.com>
 
-[ Upstream commit e40b6abe0b1247d43bc61942aa7534fca7209e44 ]
+[ Upstream commit 43236d8bbafff94b423afecc4a692dd90602d426 ]
 
-virtio_vdpa_set_status() is declared as returning void, but it used
-"return vdpa_set_status()" Since vdpa_set_status() also returns
-void, the return statement is unnecessary and misleading.
-Remove it.
+Rewrite the comment for better grammar and clarity.
 
-Fixes: c043b4a8cf3b ("virtio: introduce a vDPA based transport")
-Signed-off-by: Alok Tiwari <alok.a.tiwari@oracle.com>
-Message-Id: <20251001191653.1713923-1-alok.a.tiwari@oracle.com>
-Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+Fixes: 75a0a52be3c2 ("virtio: introduce an API to set affinity for a virtqueue")
+Message-Id: <e317e91bd43b070e5eaec0ebbe60c5749d02e2dd.1763026134.git.mst@redhat.com>
 Acked-by: Jason Wang <jasowang@redhat.com>
+Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/virtio/virtio_vdpa.c | 2 +-
+ include/linux/virtio_config.h | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/virtio/virtio_vdpa.c b/drivers/virtio/virtio_vdpa.c
-index a85a10d65973f..af085b3df4562 100644
---- a/drivers/virtio/virtio_vdpa.c
-+++ b/drivers/virtio/virtio_vdpa.c
-@@ -92,7 +92,7 @@ static void virtio_vdpa_set_status(struct virtio_device *vdev, u8 status)
- {
- 	struct vdpa_device *vdpa = vd_get_vdpa(vdev);
- 
--	return vdpa_set_status(vdpa, status);
-+	vdpa_set_status(vdpa, status);
- }
- 
- static void virtio_vdpa_reset(struct virtio_device *vdev)
+diff --git a/include/linux/virtio_config.h b/include/linux/virtio_config.h
+index b341dd62aa4da..f971986fa0e9a 100644
+--- a/include/linux/virtio_config.h
++++ b/include/linux/virtio_config.h
+@@ -247,7 +247,7 @@ const char *virtio_bus_name(struct virtio_device *vdev)
+  * @vq: the virtqueue
+  * @cpu: the cpu no.
+  *
+- * Pay attention the function are best-effort: the affinity hint may not be set
++ * Note that this function is best-effort: the affinity hint may not be set
+  * due to config support, irq type and sharing.
+  *
+  */
 -- 
 2.51.0
 
