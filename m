@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0EDD73D5DAF;
-	Thu, 15 Jan 2026 17:54:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0ED33D5D8E;
+	Thu, 15 Jan 2026 17:54:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768499645; cv=none; b=QSCSFeCzdy5mFkbQYQVFqLdwDn+AFoymCrqhk4LxSfIf2sBqM04rgjiXah1dr3uzgeM57I34+mpSm/zyK2mOf3EQ7s2DA13a98ybu5NL7NcM4560BqJT5G2GfVKQmIbuGF2RZqH83qMYejYGUUa+fKNE2hS/EZjj3X50ol8PXZs=
+	t=1768499648; cv=none; b=PgXHDdSlbpZgiaBzqTTW79D3/6Asqgle0mIfK899DK2vXJMXUJGir14ekLBEw6Rk5+GbFPaKy6hRF6FU4Jq/rBUTX1W+AarHDJ/bn+qh8gwa6i4oQI/f+CK2UU4PztZlznUzAzn0yd4LWSKA/RIuBNcsClDr+NR1M3N37cWcjvg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768499645; c=relaxed/simple;
-	bh=YsSXZ4QbcjepYA5WiPEM+IiQPljt49+N0cUnozvLRJU=;
+	s=arc-20240116; t=1768499648; c=relaxed/simple;
+	bh=JQ1rN/n/gYMswNDMp5SrLyKnI0Ygx29jSQOwfKhInuM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ocVSLsjmLThidZesz24KvSy0VbzWDR9jOFQYYY8mshyzm01xhJax6AF7ftWtswwuspwdv4PTKFVe4pVFvInIz1wJiOHqd+9oFKxJ5xlIaeA8+uumPi3Hmq1tnmAfboKWSzyF1CyMLDW2OrqzDfoGsxdHTtsIrL99S653lzKYMKc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ctxaJZLT; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=nxBDipT7EsLfohJIkxcoBIa8RZFZOlHTZ+nNSsJDRLKJW7Ae9rXWXZ0+QJgKZGz82lI/rpfCFaw//uPGYhls4IWxaGer80I/kETk5wbksIQLb+M/Usekja7nX/EdditndpzMl1DwhxOmjz6Cc+O4CJAuFq4a1XCdbaD0qFc3HDY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=s4JYvRws; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ctxaJZLT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5821AC116D0;
-	Thu, 15 Jan 2026 17:54:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="s4JYvRws"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3DE49C116D0;
+	Thu, 15 Jan 2026 17:54:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1768499644;
-	bh=YsSXZ4QbcjepYA5WiPEM+IiQPljt49+N0cUnozvLRJU=;
+	s=korg; t=1768499647;
+	bh=JQ1rN/n/gYMswNDMp5SrLyKnI0Ygx29jSQOwfKhInuM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ctxaJZLTV6Pd4/uY0T5W0vXOb4oRPfriSEzdoecQm7nDPnfIFnbtXMEYEDjVhwEvU
-	 bECEUWtp0RcaGmcNb4fUpSBFPHhMSjrV+LF3DksLO99PQ8+hZa+DCfYdk7iQWyO5ae
-	 Kb9WZZYjIh6KAx9VegONl57qTpKbEW6yvytMcyXc=
+	b=s4JYvRwsWNfPfjZl0oYEb/IvPNBkkexxQOtf4aSEYz3szBbG8TtEs2vIWBrpZkJpR
+	 elSo/Vc0gdNnfOhMEkTQwC67nj+JorqoKjMyJYBlO4KfECmdmnW5iPIpQuTDaFojsP
+	 m9SUD9ymN0mV4OxRLQt0yko1LBpGzrusYXGWgp1U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	olivier moysan <olivier.moysan@st.com>,
-	Wen Yang <yellowriver2010@hotmail.com>,
-	Johan Hovold <johan@kernel.org>,
-	olivier moysan <olivier.moysan@foss.st.com>,
-	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 5.10 298/451] ASoC: stm32: sai: fix device leak on probe
-Date: Thu, 15 Jan 2026 17:48:19 +0100
-Message-ID: <20260115164241.669520761@linuxfoundation.org>
+	Stable@vger.kernel.org,
+	Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>,
+	Mark Brown <broonie@kernel.org>,
+	Alexey Klimov <alexey.klimov@linaro.org>
+Subject: [PATCH 5.10 299/451] ASoC: qcom: q6asm-dai: perform correct state check before closing
+Date: Thu, 15 Jan 2026 17:48:20 +0100
+Message-ID: <20260115164241.706947879@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260115164230.864985076@linuxfoundation.org>
 References: <20260115164230.864985076@linuxfoundation.org>
@@ -53,48 +52,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johan Hovold <johan@kernel.org>
+From: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
 
-commit e26ff429eaf10c4ef1bc3dabd9bf27eb54b7e1f4 upstream.
+commit bfbb12dfa144d45575bcfe139a71360b3ce80237 upstream.
 
-Make sure to drop the reference taken when looking up the sync provider
-device and its driver data during DAI probe on probe failures and on
-unbind.
+Do not stop a q6asm stream if its not started, this can result in
+unnecessary dsp command which will timeout anyway something like below:
 
-Note that holding a reference to a device does not prevent its driver
-data from going away so there is no point in keeping the reference.
+q6asm-dai ab00000.remoteproc:glink-edge:apr:service@7:dais: CMD 10bcd timeout
 
-Fixes: 7dd0d835582f ("ASoC: stm32: sai: simplify sync modes management")
-Fixes: 1c3816a19487 ("ASoC: stm32: sai: add missing put_device()")
-Cc: stable@vger.kernel.org	# 4.16: 1c3816a19487
-Cc: olivier moysan <olivier.moysan@st.com>
-Cc: Wen Yang <yellowriver2010@hotmail.com>
-Signed-off-by: Johan Hovold <johan@kernel.org>
-Reviewed-by: olivier moysan <olivier.moysan@foss.st.com>
-Link: https://patch.msgid.link/20251124104908.15754-2-johan@kernel.org
+Fix this by correctly checking the state.
+
+Fixes: 2a9e92d371db ("ASoC: qdsp6: q6asm: Add q6asm dai driver")
+Cc: Stable@vger.kernel.org
+Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
+Tested-by: Alexey Klimov <alexey.klimov@linaro.org> # RB5, RB3
+Link: https://patch.msgid.link/20251023102444.88158-5-srinivas.kandagatla@oss.qualcomm.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/soc/stm/stm32_sai.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ sound/soc/qcom/qdsp6/q6asm-dai.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/sound/soc/stm/stm32_sai.c
-+++ b/sound/soc/stm/stm32_sai.c
-@@ -127,6 +127,7 @@ static int stm32_sai_set_sync(struct stm
+--- a/sound/soc/qcom/qdsp6/q6asm-dai.c
++++ b/sound/soc/qcom/qdsp6/q6asm-dai.c
+@@ -237,13 +237,14 @@ static int q6asm_dai_prepare(struct snd_
+ 	prtd->pcm_count = snd_pcm_lib_period_bytes(substream);
+ 	prtd->pcm_irq_pos = 0;
+ 	/* rate and channels are sent to audio driver */
+-	if (prtd->state) {
++	if (prtd->state == Q6ASM_STREAM_RUNNING) {
+ 		/* clear the previous setup if any  */
+ 		q6asm_cmd(prtd->audio_client, prtd->stream_id, CMD_CLOSE);
+ 		q6asm_unmap_memory_regions(substream->stream,
+ 					   prtd->audio_client);
+ 		q6routing_stream_close(soc_prtd->dai_link->id,
+ 					 substream->stream);
++		prtd->state = Q6ASM_STREAM_STOPPED;
  	}
  
- 	sai_provider = platform_get_drvdata(pdev);
-+	put_device(&pdev->dev);
- 	if (!sai_provider) {
- 		dev_err(&sai_client->pdev->dev,
- 			"SAI sync provider data not found\n");
-@@ -143,7 +144,6 @@ static int stm32_sai_set_sync(struct stm
- 	ret = stm32_sai_sync_conf_provider(sai_provider, synco);
- 
- error:
--	put_device(&pdev->dev);
- 	of_node_put(np_provider);
- 	return ret;
- }
+ 	ret = q6asm_map_memory_regions(substream->stream, prtd->audio_client,
 
 
