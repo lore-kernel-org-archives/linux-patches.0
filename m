@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A4EA3AA1B2;
-	Thu, 15 Jan 2026 17:54:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 379CE3D1CBE;
+	Thu, 15 Jan 2026 17:54:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768499670; cv=none; b=XSXDWl9D8EMXLEiLS8uwqOMhQGSbahn9xPc4lIldAoB0FZtcpYwG60sFLMj8aF/kt5glPmUVlGgW9Pxd8rlE7XBZbzCxrUq3TjMF3KiySXu9BYIyERjj8wPzrjo9NW2Wx9hgvpAs9HSwT4kZNuCaB8YLtHkoSiHXWZyKlYFkoY8=
+	t=1768499673; cv=none; b=iOMVVTOZeWO4EkmWVHVXHZ0wO5wpCSYo/vsnu7HLFxunclvRZUwQGvS38spu6/VKvWj6VZ+2U+znv4D0A8731E1KxQH1PwwU54famhpKLQ++k4KcdSE2TvvXeilx06QLMkazJfMVg8TOhV19yvYP7JxNPUj4sva5oQwVlckotz4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768499670; c=relaxed/simple;
-	bh=POrHtl3x8f8nBbA63Od0Y78Xb3flaCv5tbqjuPsxE7M=;
+	s=arc-20240116; t=1768499673; c=relaxed/simple;
+	bh=HP+GISZQUoBeCIUNV6txwj530CGAw/6h372M1mLQVtM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=JEazGe5KRVP10bl39ChLxELN5U6EZrlKwp8nT8Ud7l+D3q2TqPQhxIA267OMvr/8cnH4Re18Z1ZQ6Ott0tod+btjDNH6/FJ0UTOgrLIwmmLuLG7/4BTYYDoGbsPR8Z3tEZpOtKa6VjWnSNozJeVpCKqjFLk0BWijtmrSiRkwh6g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ODCn4z7l; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ld9jV2YIfCPMzZKFA/P1crEzvimChdAJlr5muXJ4YR1XUEP0C3dupHMdRXbt6jsKwtF6iHo2PkGSdpnHywwbS/7FZ1fWrbGztZb4o2JGmxVcbiQNX1Cllrn+bRNZneDVN+LJhArK+uuKoRhO9rtEhAwYOTRuwDFk1HNS/cexcZQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QfVNItHg; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ODCn4z7l"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 97624C116D0;
-	Thu, 15 Jan 2026 17:54:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QfVNItHg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 70302C116D0;
+	Thu, 15 Jan 2026 17:54:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1768499670;
-	bh=POrHtl3x8f8nBbA63Od0Y78Xb3flaCv5tbqjuPsxE7M=;
+	s=korg; t=1768499672;
+	bh=HP+GISZQUoBeCIUNV6txwj530CGAw/6h372M1mLQVtM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ODCn4z7l0ErmVsR4wCgJu0vt9EXOUhfwj42NzhMPwpId9JRu20zVqFTf7P+nk5n5b
-	 InarvO4h5j+JSo4kaVnj3WFIHI09sESsMr1koJhCQ8K05BI9HC23nDt+83bpGRHe+l
-	 GjCj8THLXtcqZDC4Fla08ONDh3CoJsd8tV2n5JAQ=
+	b=QfVNItHgHXTfV+mT8GNgX7RrbIqHJYPJ+rZKuHEZ89TOTAKh9EhrNWfquDG2Bfqfl
+	 sccLevnUue1SsB64sKdi2cvFndsIifhhJcoRbf0rk+LcNKXWWHvmt5kTMGn8JngJQC
+	 JunDuE1iTvzhGziymWMkBNtSSr7e4/zXVbRCLdg0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Adrian Moreno <amorenoz@redhat.com>,
-	=?UTF-8?q?Toke=20H=C3=B8iland-J=C3=B8rgensen?= <toke@redhat.com>,
-	Eelco Chaudron <echaudro@redhat.com>,
-	Aaron Conole <aconole@redhat.com>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 276/451] net: openvswitch: Avoid needlessly taking the RTNL on vport destroy
-Date: Thu, 15 Jan 2026 17:47:57 +0100
-Message-ID: <20260115164240.869129821@linuxfoundation.org>
+	Stable@vger.kernel.org,
+	Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+	Bjorn Andersson <andersson@kernel.org>
+Subject: [PATCH 5.10 267/451] rpmsg: glink: fix rpmsg device leak
+Date: Thu, 15 Jan 2026 17:47:48 +0100
+Message-ID: <20260115164240.545671191@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260115164230.864985076@linuxfoundation.org>
 References: <20260115164230.864985076@linuxfoundation.org>
@@ -48,72 +46,89 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Toke Høiland-Jørgensen <toke@redhat.com>
+From: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
 
-[ Upstream commit 5498227676303e3ffa9a3a46214af96bc3e81314 ]
+commit a53e356df548f6b0e82529ef3cc6070f42622189 upstream.
 
-The openvswitch teardown code will immediately call
-ovs_netdev_detach_dev() in response to a NETDEV_UNREGISTER notification.
-It will then start the dp_notify_work workqueue, which will later end up
-calling the vport destroy() callback. This callback takes the RTNL to do
-another ovs_netdev_detach_port(), which in this case is unnecessary.
-This causes extra pressure on the RTNL, in some cases leading to
-"unregister_netdevice: waiting for XX to become free" warnings on
-teardown.
+While testing rpmsg-char interface it was noticed that duplicate sysfs
+entries are getting created and below warning is noticed.
 
-We can straight-forwardly avoid the extra RTNL lock acquisition by
-checking the device flags before taking the lock, and skip the locking
-altogether if the IFF_OVS_DATAPATH flag has already been unset.
+Reason for this is that we are leaking rpmsg device pointer, setting it
+null without actually unregistering device.
+Any further attempts to unregister fail because rpdev is NULL,
+resulting in a leak.
 
-Fixes: b07c26511e94 ("openvswitch: fix vport-netdev unregister")
-Tested-by: Adrian Moreno <amorenoz@redhat.com>
-Signed-off-by: Toke Høiland-Jørgensen <toke@redhat.com>
-Acked-by: Eelco Chaudron <echaudro@redhat.com>
-Acked-by: Aaron Conole <aconole@redhat.com>
-Link: https://patch.msgid.link/20251211115006.228876-1-toke@redhat.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fix this by unregistering rpmsg device before removing its reference
+from rpmsg channel.
+
+sysfs: cannot create duplicate filename '/devices/platform/soc@0/3700000.remot
+eproc/remoteproc/remoteproc1/3700000.remoteproc:glink-edge/3700000.remoteproc:
+glink-edge.adsp_apps.-1.-1'
+[  114.115347] CPU: 0 UID: 0 PID: 9 Comm: kworker/0:0 Not
+ tainted 6.16.0-rc4 #7 PREEMPT
+[  114.115355] Hardware name: Qualcomm Technologies, Inc. Robotics RB3gen2 (DT)
+[  114.115358] Workqueue: events qcom_glink_work
+[  114.115371] Call trace:8
+[  114.115374]  show_stack+0x18/0x24 (C)
+[  114.115382]  dump_stack_lvl+0x60/0x80
+[  114.115388]  dump_stack+0x18/0x24
+[  114.115393]  sysfs_warn_dup+0x64/0x80
+[  114.115402]  sysfs_create_dir_ns+0xf4/0x120
+[  114.115409]  kobject_add_internal+0x98/0x260
+[  114.115416]  kobject_add+0x9c/0x108
+[  114.115421]  device_add+0xc4/0x7a0
+[  114.115429]  rpmsg_register_device+0x5c/0xb0
+[  114.115434]  qcom_glink_work+0x4bc/0x820
+[  114.115438]  process_one_work+0x148/0x284
+[  114.115446]  worker_thread+0x2c4/0x3e0
+[  114.115452]  kthread+0x12c/0x204
+[  114.115457]  ret_from_fork+0x10/0x20
+[  114.115464] kobject: kobject_add_internal failed for 3700000.remoteproc:
+glink-edge.adsp_apps.-1.-1 with -EEXIST, don't try to register things with
+the same name in the same directory.
+[  114.250045] rpmsg 3700000.remoteproc:glink-edge.adsp_apps.-1.-1:
+device_add failed: -17
+
+Fixes: 835764ddd9af ("rpmsg: glink: Move the common glink protocol implementation to glink_native.c")
+Cc: Stable@vger.kernel.org
+Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Link: https://lore.kernel.org/r/20250822100043.2604794-2-srinivas.kandagatla@oss.qualcomm.com
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/openvswitch/vport-netdev.c | 17 +++++++++++++----
- 1 file changed, 13 insertions(+), 4 deletions(-)
+ drivers/rpmsg/qcom_glink_native.c |    8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/net/openvswitch/vport-netdev.c b/net/openvswitch/vport-netdev.c
-index 57d6436e6f6a..72cf13bbf3dd 100644
---- a/net/openvswitch/vport-netdev.c
-+++ b/net/openvswitch/vport-netdev.c
-@@ -155,10 +155,19 @@ void ovs_netdev_detach_dev(struct vport *vport)
- 
- static void netdev_destroy(struct vport *vport)
+--- a/drivers/rpmsg/qcom_glink_native.c
++++ b/drivers/rpmsg/qcom_glink_native.c
+@@ -1244,6 +1244,7 @@ static void qcom_glink_destroy_ept(struc
  {
--	rtnl_lock();
--	if (netif_is_ovs_port(vport->dev))
--		ovs_netdev_detach_dev(vport);
--	rtnl_unlock();
-+	/* When called from ovs_db_notify_wq() after a dp_device_event(), the
-+	 * port has already been detached, so we can avoid taking the RTNL by
-+	 * checking this first.
-+	 */
-+	if (netif_is_ovs_port(vport->dev)) {
-+		rtnl_lock();
-+		/* Check again while holding the lock to ensure we don't race
-+		 * with the netdev notifier and detach twice.
-+		 */
-+		if (netif_is_ovs_port(vport->dev))
-+			ovs_netdev_detach_dev(vport);
-+		rtnl_unlock();
-+	}
+ 	struct glink_channel *channel = to_glink_channel(ept);
+ 	struct qcom_glink *glink = channel->glink;
++	struct rpmsg_channel_info chinfo;
+ 	unsigned long flags;
  
- 	call_rcu(&vport->rcu, vport_netdev_free);
- }
--- 
-2.51.0
-
+ 	spin_lock_irqsave(&channel->recv_lock, flags);
+@@ -1251,6 +1252,13 @@ static void qcom_glink_destroy_ept(struc
+ 	spin_unlock_irqrestore(&channel->recv_lock, flags);
+ 
+ 	/* Decouple the potential rpdev from the channel */
++	if (channel->rpdev) {
++		strscpy_pad(chinfo.name, channel->name, sizeof(chinfo.name));
++		chinfo.src = RPMSG_ADDR_ANY;
++		chinfo.dst = RPMSG_ADDR_ANY;
++
++		rpmsg_unregister_device(glink->dev, &chinfo);
++	}
+ 	channel->rpdev = NULL;
+ 
+ 	qcom_glink_send_close_req(glink, channel);
 
 
