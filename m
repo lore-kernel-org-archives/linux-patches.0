@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F9743C1974;
-	Thu, 15 Jan 2026 17:29:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 077D73C0091;
+	Thu, 15 Jan 2026 17:29:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768498141; cv=none; b=el4tpqMiGdisyp0CSzf3nKGOlQb4MYhh3nBKgUZGbVtkcA6LwMQrsHioZ6NLm2KC62/uGhJHvkeXVBZxSF7sWdOHo/SM4WjYOMCPvnJ7kRwVAWbk+NsoJegBJuM6FTb/j9FJugvymduFz4xrDrwLGUCPaStE8set3+FtqRSUs2w=
+	t=1768498144; cv=none; b=toappFzd/n5VvIwvWEitS4S3++jHgplULPU2NAg2g0fOSNLmf8GrGlyua3JUh+K2zialtCTlZMummUn2hw63eMHMt+wxXhNN0YUVqueqAYJkX/3IGm65J2UhOVV7LCf8UbwqTZQWj+cLvMTToi3FDHqxKB9bLoSJcFgu2riOF48=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768498141; c=relaxed/simple;
-	bh=z6Vm7ul6JQzgJNppDz4Tkmh4RmCN9I14UHai3+eQbGQ=;
+	s=arc-20240116; t=1768498144; c=relaxed/simple;
+	bh=gnSeeAPWMDqpSLrJjIMh9x+97xWWqopvP1Myy2RlG8g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=o2d1XC2pVvSnsFzarj9OOPNEJNj8qEcDaAK+Vz+3bGQsyJiZFICqi9R+es4OCNHF6keOscCDJJHZvaHCntXV6sTQyztO0Rgqfyu89rnyyWIBkZ8cpQkL1ubGogbU8nzJM4JgRaUzQy0CBz2oPNqmNkOMeqL11scXoUyy+9dHAPk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=P+tOkSYI; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pn71RdIe1X/BD533ri+nszBGG7w111QMJ2FzaEEP1P9//gKXGbBN2uupqZ2VaoSPSgh8Hn6Pomktj8LPmPFh0ExbCMLhwU8qXXaawJOAQuQSxNVa5HhByhabrej5CiB8yHghb7+TrvcdYc6bDjNp8utMEazvzXLjaLG73D3x7vM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WTsOXR/A; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="P+tOkSYI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B5B41C116D0;
-	Thu, 15 Jan 2026 17:29:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WTsOXR/A"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 88E2EC116D0;
+	Thu, 15 Jan 2026 17:29:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1768498141;
-	bh=z6Vm7ul6JQzgJNppDz4Tkmh4RmCN9I14UHai3+eQbGQ=;
+	s=korg; t=1768498143;
+	bh=gnSeeAPWMDqpSLrJjIMh9x+97xWWqopvP1Myy2RlG8g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=P+tOkSYI/S54IQwIDPCd+PLLrMmlt7iMCjtC8rA+I8Xhg0iY9tTiUcSyAzyDsWbQ9
-	 zDQrhKIAXCAOerevKlojaifJN4R28PI2qWHYCxiL76zXYzaJrvLhjCI5lR7HV1uNXl
-	 XFBelb8wzKa/TUjAeKRFjFQHzqq78kLgYFwQcOs8=
+	b=WTsOXR/AfuarvWH7buLlargXQ5DYv4Cc6UhNv1UIA6J8KIk5an0cNz9J2R4SwLhRG
+	 2U/Wx7ar5i7aJEB7fCfC6mxL8g0Lw1mZjbLLB/rV+UzV+aoMlJY2CS78DfAuEJRg/K
+	 13rx6AMM3oj35tNi0PL4i6Ow8SgV7AMCwOH6OFd4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Brian Masney <bmasney@redhat.com>,
-	Miaoqian Lin <linmq006@gmail.com>,
+	Yu Kuai <yukuai3@huawei.com>,
 	Johan Hovold <johan@kernel.org>,
-	Bjorn Andersson <andersson@kernel.org>
-Subject: [PATCH 5.15 328/554] soc: qcom: ocmem: fix device leak on lookup
-Date: Thu, 15 Jan 2026 17:46:34 +0100
-Message-ID: <20260115164258.101910926@linuxfoundation.org>
+	Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
+	Neil Armstrong <neil.armstrong@linaro.org>
+Subject: [PATCH 5.15 329/554] soc: amlogic: canvas: fix device leak on lookup
+Date: Thu, 15 Jan 2026 17:46:35 +0100
+Message-ID: <20260115164258.138849167@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260115164246.225995385@linuxfoundation.org>
 References: <20260115164246.225995385@linuxfoundation.org>
@@ -54,43 +54,44 @@ Content-Transfer-Encoding: 8bit
 
 From: Johan Hovold <johan@kernel.org>
 
-commit b5c16ea57b030b8e9428ec726e26219dfe05c3d9 upstream.
+commit 32200f4828de9d7e6db379909898e718747f4e18 upstream.
 
-Make sure to drop the reference taken to the ocmem platform device when
+Make sure to drop the reference taken to the canvas platform device when
 looking up its driver data.
 
 Note that holding a reference to a device does not prevent its driver
 data from going away so there is no point in keeping the reference.
 
-Also note that commit 0ff027027e05 ("soc: qcom: ocmem: Fix missing
-put_device() call in of_get_ocmem") fixed the leak in a lookup error
-path, but the reference is still leaking on success.
+Also note that commit 28f851e6afa8 ("soc: amlogic: canvas: add missing
+put_device() call in meson_canvas_get()") fixed the leak in a lookup
+error path, but the reference is still leaking on success.
 
-Fixes: 88c1e9404f1d ("soc: qcom: add OCMEM driver")
-Cc: stable@vger.kernel.org	# 5.5: 0ff027027e05
-Cc: Brian Masney <bmasney@redhat.com>
-Cc: Miaoqian Lin <linmq006@gmail.com>
+Fixes: d4983983d987 ("soc: amlogic: add meson-canvas driver")
+Cc: stable@vger.kernel.org	# 4.20: 28f851e6afa8
+Cc: Yu Kuai <yukuai3@huawei.com>
 Signed-off-by: Johan Hovold <johan@kernel.org>
-Reviewed-by: Brian Masney <bmasney@redhat.com>
-Link: https://lore.kernel.org/r/20250926143511.6715-2-johan@kernel.org
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Reviewed-by: Martin Blumenstingl <martin.blumenstingl@googlemail.com>
+Link: https://patch.msgid.link/20250926142454.5929-2-johan@kernel.org
+Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/soc/qcom/ocmem.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/soc/amlogic/meson-canvas.c |    5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
---- a/drivers/soc/qcom/ocmem.c
-+++ b/drivers/soc/qcom/ocmem.c
-@@ -211,9 +211,9 @@ struct ocmem *of_get_ocmem(struct device
- 	of_node_put(devnode);
+--- a/drivers/soc/amlogic/meson-canvas.c
++++ b/drivers/soc/amlogic/meson-canvas.c
+@@ -72,10 +72,9 @@ struct meson_canvas *meson_canvas_get(st
+ 	 * current state, this driver probe cannot return -EPROBE_DEFER
+ 	 */
+ 	canvas = dev_get_drvdata(&canvas_pdev->dev);
+-	if (!canvas) {
+-		put_device(&canvas_pdev->dev);
++	put_device(&canvas_pdev->dev);
++	if (!canvas)
+ 		return ERR_PTR(-EINVAL);
+-	}
  
- 	ocmem = platform_get_drvdata(pdev);
-+	put_device(&pdev->dev);
- 	if (!ocmem) {
- 		dev_err(dev, "Cannot get ocmem\n");
--		put_device(&pdev->dev);
- 		return ERR_PTR(-ENODEV);
- 	}
- 	return ocmem;
+ 	return canvas;
+ }
 
 
