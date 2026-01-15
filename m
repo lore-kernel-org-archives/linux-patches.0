@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A15C2C028F;
-	Thu, 15 Jan 2026 17:02:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 803142D73BE;
+	Thu, 15 Jan 2026 17:02:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768496532; cv=none; b=J+ySl1uOqT4/nB4mCr3GSmz9wCxzOq579ztHpAcCCzR5oI69kEWr2fMbsRyx94q5ip/OHNvMk8b466xSznSWMGSnDqPSUH+fTDwT4tKz0ehp33CQFO2iQC5qmebQF8Lg2gxducRSdx3Fhlztq/JvpQOev96PTY/JH84iLYK+KpU=
+	t=1768496535; cv=none; b=dwOYHlAS8TNE12pZjF2HeEdIwQ1WwZL8M1eO+iwf2AU2Pc0egiKaybSn30ypaYGetfNjgg0sJa/CegNzjAn8TtoA3FcYhqHHfTyqM/cmGYSw78dgpuCXCDKhU/oR3y3L2QHxiS7HW7q2q7NOZJ9L1PtsLozBVoOxGEdHTVjaBbY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768496532; c=relaxed/simple;
-	bh=dKcqbBixiWyS6Kesxlf4sDBRrrr3AlKSwOrpYLl7/9w=;
+	s=arc-20240116; t=1768496535; c=relaxed/simple;
+	bh=N3yBfDDSaAU370tf50fSnq6LilCt96MjmQmsgZPcEB0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TwG/iQLjrTAmICvViSznu5kvGmFXsS7Sa72njZePYDMw6JHbnsOAlTOF/BPH0tLHhs0EqsKSP9wReMqDlAcIcN5Rvh728yV1FMVe8KYQeaYr8iJ9QBlNFI9UHJima31pJ3b7uqhUi73k6weQ05VTxquzTGzhW9wfXu8+uFVvPGA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=s7hUMK0Y; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SLePxkVd9WNEeyLF9IU056FFqEXFWIMPL2rzYWp4Jj5yYZ+668KeDG3b748umLsivcjEOL3Mxuq9zm+6N+eCjtOwUsMFNMguSpctaisFDoJtTBn2/wcAORoPi4iPV5i7AjlV0YK7/olUxrwmGfAryYVDIqojKNzWcPsO7ShboBE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wnoHy0U4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="s7hUMK0Y"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 27259C116D0;
-	Thu, 15 Jan 2026 17:02:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wnoHy0U4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0AE02C116D0;
+	Thu, 15 Jan 2026 17:02:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1768496532;
-	bh=dKcqbBixiWyS6Kesxlf4sDBRrrr3AlKSwOrpYLl7/9w=;
+	s=korg; t=1768496535;
+	bh=N3yBfDDSaAU370tf50fSnq6LilCt96MjmQmsgZPcEB0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=s7hUMK0YrAPq43lNFEV7vGv8FzfjyGPdVUws6XDj2gbi70du0ZUWV0uL5m6AJldLl
-	 XPtukijYqWRDLAKyooNL9iGJn9rjHSSZ6/fKEm88XD4hRkSxZ4ZztED9hWY0YWYLGz
-	 cwQwYbtecKUHN7qfqYjO0u3OYQzxaJkt5D+2dPU0=
+	b=wnoHy0U4zWTzJls1q9h3uYqMyJnLybFIjJqprKVvul2Eh9A+g9TVwhdRQScnylMsJ
+	 LgojwIkOZfPpS1me7YijD9w6G4R1JTDTvod/A+7Hmk0s3dY+EpgtCFL8piIEvMzdgq
+	 ip0FPjhMDW50ufwPUMe7B9XUlaPfCSYpl8/MHuPk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Boris Burkov <boris@bur.io>,
 	Qu Wenruo <wqu@suse.com>,
+	Filipe Manana <fdmanana@suse.com>,
 	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 046/119] btrfs: qgroup: update all parent qgroups when doing quick inherit
-Date: Thu, 15 Jan 2026 17:47:41 +0100
-Message-ID: <20260115164153.622142826@linuxfoundation.org>
+Subject: [PATCH 6.12 047/119] btrfs: tracepoints: use btrfs_root_id() to get the id of a root
+Date: Thu, 15 Jan 2026 17:47:42 +0100
+Message-ID: <20260115164153.657873323@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260115164151.948839306@linuxfoundation.org>
 References: <20260115164151.948839306@linuxfoundation.org>
@@ -52,103 +52,238 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Qu Wenruo <wqu@suse.com>
+From: Filipe Manana <fdmanana@suse.com>
 
-[ Upstream commit 68d4b3fa18d72b7f649e83012e7e08f1881f6b75 ]
+[ Upstream commit 0f987c099d22c3b8c7d94fd13f957792e46f79c9 ]
 
-[BUG]
-There is a bug that if a subvolume has multi-level parent qgroups, and
-is able to do a quick inherit, only the direct parent qgroup got
-updated:
+Instead of open coding btrfs_root_id() to get the ID of a root, use the
+helper in the trace points, which also makes the code less verbose.
 
-  mkfs.btrfs  -f -O quota $dev
-  mount $dev $mnt
-  btrfs subv create $mnt/subv1
-  btrfs qgroup create 1/100 $mnt
-  btrfs qgroup create 2/100 $mnt
-  btrfs qgroup assign 1/100 2/100 $mnt
-  btrfs qgroup assign 0/256 1/100 $mnt
-  btrfs qgroup show -p --sync $mnt
-
-  Qgroupid    Referenced    Exclusive Parent     Path
-  --------    ----------    --------- ------     ----
-  0/5           16.00KiB     16.00KiB -          <toplevel>
-  0/256         16.00KiB     16.00KiB 1/100      subv1
-  1/100         16.00KiB     16.00KiB 2/100      2/100<1 member qgroup>
-  2/100         16.00KiB     16.00KiB -          <0 member qgroups>
-
-  btrfs subv snap -i 1/100 $mnt/subv1 $mnt/snap1
-  btrfs qgroup show -p --sync $mnt
-
-  Qgroupid    Referenced    Exclusive Parent     Path
-  --------    ----------    --------- ------     ----
-  0/5           16.00KiB     16.00KiB -          <toplevel>
-  0/256         16.00KiB     16.00KiB 1/100      subv1
-  0/257         16.00KiB     16.00KiB 1/100      snap1
-  1/100         32.00KiB     32.00KiB 2/100      2/100<1 member qgroup>
-  2/100         16.00KiB     16.00KiB -          <0 member qgroups>
-  # Note that 2/100 is not updated, and qgroup numbers are inconsistent
-
-  umount $mnt
-
-[CAUSE]
-If the snapshot source subvolume belongs to a parent qgroup, and the new
-snapshot target is also added to the new same parent qgroup, we allow a
-quick update without marking qgroup inconsistent.
-
-But that quick update only update the parent qgroup, without checking if
-there is any more parent qgroups.
-
-[FIX]
-Iterate through all parent qgroups during the quick inherit.
-
-Reported-by: Boris Burkov <boris@bur.io>
-Fixes: b20fe56cd285 ("btrfs: qgroup: allow quick inherit if snapshot is created and added to the same parent")
-Reviewed-by: Boris Burkov <boris@bur.io>
-Signed-off-by: Qu Wenruo <wqu@suse.com>
+Reviewed-by: Qu Wenruo <wqu@suse.com>
+Signed-off-by: Filipe Manana <fdmanana@suse.com>
+Reviewed-by: David Sterba <dsterba@suse.com>
 Signed-off-by: David Sterba <dsterba@suse.com>
+Stable-dep-of: f157dd661339 ("btrfs: fix NULL dereference on root when tracing inode eviction")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/qgroup.c | 18 ++++++++++++++++--
- 1 file changed, 16 insertions(+), 2 deletions(-)
+ include/trace/events/btrfs.h | 50 +++++++++++++++++-------------------
+ 1 file changed, 23 insertions(+), 27 deletions(-)
 
-diff --git a/fs/btrfs/qgroup.c b/fs/btrfs/qgroup.c
-index f23b482dfad9e..029017afaf344 100644
---- a/fs/btrfs/qgroup.c
-+++ b/fs/btrfs/qgroup.c
-@@ -3295,7 +3295,10 @@ static int qgroup_snapshot_quick_inherit(struct btrfs_fs_info *fs_info,
- {
- 	struct btrfs_qgroup *src;
- 	struct btrfs_qgroup *parent;
-+	struct btrfs_qgroup *qgroup;
- 	struct btrfs_qgroup_list *list;
-+	LIST_HEAD(qgroup_list);
-+	const u32 nodesize = fs_info->nodesize;
- 	int nr_parents = 0;
+diff --git a/include/trace/events/btrfs.h b/include/trace/events/btrfs.h
+index 3b16b0cc1b7a6..cc88074914283 100644
+--- a/include/trace/events/btrfs.h
++++ b/include/trace/events/btrfs.h
+@@ -223,8 +223,7 @@ DECLARE_EVENT_CLASS(btrfs__inode,
+ 		__entry->generation = BTRFS_I(inode)->generation;
+ 		__entry->last_trans = BTRFS_I(inode)->last_trans;
+ 		__entry->logged_trans = BTRFS_I(inode)->logged_trans;
+-		__entry->root_objectid =
+-				BTRFS_I(inode)->root->root_key.objectid;
++		__entry->root_objectid = btrfs_root_id(BTRFS_I(inode)->root);
+ 	),
  
- 	if (btrfs_qgroup_mode(fs_info) != BTRFS_QGROUP_MODE_FULL)
-@@ -3335,8 +3338,19 @@ static int qgroup_snapshot_quick_inherit(struct btrfs_fs_info *fs_info,
- 	if (parent->excl != parent->rfer)
- 		return 1;
+ 	TP_printk_btrfs("root=%llu(%s) gen=%llu ino=%llu blocks=%llu "
+@@ -296,7 +295,7 @@ TRACE_EVENT_CONDITION(btrfs_get_extent,
+ 	),
  
--	parent->excl += fs_info->nodesize;
--	parent->rfer += fs_info->nodesize;
-+	qgroup_iterator_add(&qgroup_list, parent);
-+	list_for_each_entry(qgroup, &qgroup_list, iterator) {
-+		qgroup->rfer += nodesize;
-+		qgroup->rfer_cmpr += nodesize;
-+		qgroup->excl += nodesize;
-+		qgroup->excl_cmpr += nodesize;
-+		qgroup_dirty(fs_info, qgroup);
-+
-+		/* Append parent qgroups to @qgroup_list. */
-+		list_for_each_entry(list, &qgroup->groups, next_group)
-+			qgroup_iterator_add(&qgroup_list, list->group);
-+	}
-+	qgroup_iterator_clean(&qgroup_list);
- 	return 0;
- }
+ 	TP_fast_assign_btrfs(root->fs_info,
+-		__entry->root_objectid	= root->root_key.objectid;
++		__entry->root_objectid	= btrfs_root_id(root);
+ 		__entry->ino		= btrfs_ino(inode);
+ 		__entry->start		= map->start;
+ 		__entry->len		= map->len;
+@@ -375,7 +374,7 @@ DECLARE_EVENT_CLASS(btrfs__file_extent_item_regular,
+ 	),
  
+ 	TP_fast_assign_btrfs(bi->root->fs_info,
+-		__entry->root_obj	= bi->root->root_key.objectid;
++		__entry->root_obj	= btrfs_root_id(bi->root);
+ 		__entry->ino		= btrfs_ino(bi);
+ 		__entry->isize		= bi->vfs_inode.i_size;
+ 		__entry->disk_isize	= bi->disk_i_size;
+@@ -426,7 +425,7 @@ DECLARE_EVENT_CLASS(
+ 
+ 	TP_fast_assign_btrfs(
+ 		bi->root->fs_info,
+-		__entry->root_obj	= bi->root->root_key.objectid;
++		__entry->root_obj	= btrfs_root_id(bi->root);
+ 		__entry->ino		= btrfs_ino(bi);
+ 		__entry->isize		= bi->vfs_inode.i_size;
+ 		__entry->disk_isize	= bi->disk_i_size;
+@@ -526,7 +525,7 @@ DECLARE_EVENT_CLASS(btrfs__ordered_extent,
+ 		__entry->flags		= ordered->flags;
+ 		__entry->compress_type	= ordered->compress_type;
+ 		__entry->refs		= refcount_read(&ordered->refs);
+-		__entry->root_objectid	= inode->root->root_key.objectid;
++		__entry->root_objectid	= btrfs_root_id(inode->root);
+ 		__entry->truncated_len	= ordered->truncated_len;
+ 	),
+ 
+@@ -663,7 +662,7 @@ TRACE_EVENT(btrfs_finish_ordered_extent,
+ 		__entry->start	= start;
+ 		__entry->len	= len;
+ 		__entry->uptodate = uptodate;
+-		__entry->root_objectid = inode->root->root_key.objectid;
++		__entry->root_objectid = btrfs_root_id(inode->root);
+ 	),
+ 
+ 	TP_printk_btrfs("root=%llu(%s) ino=%llu start=%llu len=%llu uptodate=%d",
+@@ -704,8 +703,7 @@ DECLARE_EVENT_CLASS(btrfs__writepage,
+ 		__entry->for_reclaim	= wbc->for_reclaim;
+ 		__entry->range_cyclic	= wbc->range_cyclic;
+ 		__entry->writeback_index = inode->i_mapping->writeback_index;
+-		__entry->root_objectid	=
+-				 BTRFS_I(inode)->root->root_key.objectid;
++		__entry->root_objectid	= btrfs_root_id(BTRFS_I(inode)->root);
+ 	),
+ 
+ 	TP_printk_btrfs("root=%llu(%s) ino=%llu page_index=%lu "
+@@ -749,7 +747,7 @@ TRACE_EVENT(btrfs_writepage_end_io_hook,
+ 		__entry->start	= start;
+ 		__entry->end	= end;
+ 		__entry->uptodate = uptodate;
+-		__entry->root_objectid = inode->root->root_key.objectid;
++		__entry->root_objectid = btrfs_root_id(inode->root);
+ 	),
+ 
+ 	TP_printk_btrfs("root=%llu(%s) ino=%llu start=%llu end=%llu uptodate=%d",
+@@ -779,8 +777,7 @@ TRACE_EVENT(btrfs_sync_file,
+ 		__entry->ino		= btrfs_ino(BTRFS_I(inode));
+ 		__entry->parent		= btrfs_ino(BTRFS_I(d_inode(dentry->d_parent)));
+ 		__entry->datasync	= datasync;
+-		__entry->root_objectid	=
+-				 BTRFS_I(inode)->root->root_key.objectid;
++		__entry->root_objectid	= btrfs_root_id(BTRFS_I(inode)->root);
+ 	),
+ 
+ 	TP_printk_btrfs("root=%llu(%s) ino=%llu parent=%llu datasync=%d",
+@@ -1051,7 +1048,7 @@ DECLARE_EVENT_CLASS(btrfs__chunk,
+ 		__entry->sub_stripes	= map->sub_stripes;
+ 		__entry->offset		= offset;
+ 		__entry->size		= size;
+-		__entry->root_objectid	= fs_info->chunk_root->root_key.objectid;
++		__entry->root_objectid	= btrfs_root_id(fs_info->chunk_root);
+ 	),
+ 
+ 	TP_printk_btrfs("root=%llu(%s) offset=%llu size=%llu "
+@@ -1096,7 +1093,7 @@ TRACE_EVENT(btrfs_cow_block,
+ 	),
+ 
+ 	TP_fast_assign_btrfs(root->fs_info,
+-		__entry->root_objectid	= root->root_key.objectid;
++		__entry->root_objectid	= btrfs_root_id(root);
+ 		__entry->buf_start	= buf->start;
+ 		__entry->refs		= atomic_read(&buf->refs);
+ 		__entry->cow_start	= cow->start;
+@@ -1254,7 +1251,7 @@ TRACE_EVENT(find_free_extent,
+ 	),
+ 
+ 	TP_fast_assign_btrfs(root->fs_info,
+-		__entry->root_objectid	= root->root_key.objectid;
++		__entry->root_objectid	= btrfs_root_id(root);
+ 		__entry->num_bytes	= ffe_ctl->num_bytes;
+ 		__entry->empty_size	= ffe_ctl->empty_size;
+ 		__entry->flags		= ffe_ctl->flags;
+@@ -1283,7 +1280,7 @@ TRACE_EVENT(find_free_extent_search_loop,
+ 	),
+ 
+ 	TP_fast_assign_btrfs(root->fs_info,
+-		__entry->root_objectid	= root->root_key.objectid;
++		__entry->root_objectid	= btrfs_root_id(root);
+ 		__entry->num_bytes	= ffe_ctl->num_bytes;
+ 		__entry->empty_size	= ffe_ctl->empty_size;
+ 		__entry->flags		= ffe_ctl->flags;
+@@ -1317,7 +1314,7 @@ TRACE_EVENT(find_free_extent_have_block_group,
+ 	),
+ 
+ 	TP_fast_assign_btrfs(root->fs_info,
+-		__entry->root_objectid	= root->root_key.objectid;
++		__entry->root_objectid	= btrfs_root_id(root);
+ 		__entry->num_bytes	= ffe_ctl->num_bytes;
+ 		__entry->empty_size	= ffe_ctl->empty_size;
+ 		__entry->flags		= ffe_ctl->flags;
+@@ -1671,8 +1668,7 @@ DECLARE_EVENT_CLASS(btrfs__qgroup_rsv_data,
+ 	),
+ 
+ 	TP_fast_assign_btrfs(btrfs_sb(inode->i_sb),
+-		__entry->rootid		=
+-			BTRFS_I(inode)->root->root_key.objectid;
++		__entry->rootid		= btrfs_root_id(BTRFS_I(inode)->root);
+ 		__entry->ino		= btrfs_ino(BTRFS_I(inode));
+ 		__entry->start		= start;
+ 		__entry->len		= len;
+@@ -1862,7 +1858,7 @@ TRACE_EVENT(qgroup_meta_reserve,
+ 	),
+ 
+ 	TP_fast_assign_btrfs(root->fs_info,
+-		__entry->refroot	= root->root_key.objectid;
++		__entry->refroot	= btrfs_root_id(root);
+ 		__entry->diff		= diff;
+ 		__entry->type		= type;
+ 	),
+@@ -1884,7 +1880,7 @@ TRACE_EVENT(qgroup_meta_convert,
+ 	),
+ 
+ 	TP_fast_assign_btrfs(root->fs_info,
+-		__entry->refroot	= root->root_key.objectid;
++		__entry->refroot	= btrfs_root_id(root);
+ 		__entry->diff		= diff;
+ 	),
+ 
+@@ -1908,7 +1904,7 @@ TRACE_EVENT(qgroup_meta_free_all_pertrans,
+ 	),
+ 
+ 	TP_fast_assign_btrfs(root->fs_info,
+-		__entry->refroot	= root->root_key.objectid;
++		__entry->refroot	= btrfs_root_id(root);
+ 		spin_lock(&root->qgroup_meta_rsv_lock);
+ 		__entry->diff		= -(s64)root->qgroup_meta_rsv_pertrans;
+ 		spin_unlock(&root->qgroup_meta_rsv_lock);
+@@ -1990,7 +1986,7 @@ TRACE_EVENT(btrfs_inode_mod_outstanding_extents,
+ 	),
+ 
+ 	TP_fast_assign_btrfs(root->fs_info,
+-		__entry->root_objectid	= root->root_key.objectid;
++		__entry->root_objectid	= btrfs_root_id(root);
+ 		__entry->ino		= ino;
+ 		__entry->mod		= mod;
+ 		__entry->outstanding    = outstanding;
+@@ -2075,7 +2071,7 @@ TRACE_EVENT(btrfs_set_extent_bit,
+ 
+ 		__entry->owner		= tree->owner;
+ 		__entry->ino		= inode ? btrfs_ino(inode) : 0;
+-		__entry->rootid		= inode ? inode->root->root_key.objectid : 0;
++		__entry->rootid		= inode ? btrfs_root_id(inode->root) : 0;
+ 		__entry->start		= start;
+ 		__entry->len		= len;
+ 		__entry->set_bits	= set_bits;
+@@ -2108,7 +2104,7 @@ TRACE_EVENT(btrfs_clear_extent_bit,
+ 
+ 		__entry->owner		= tree->owner;
+ 		__entry->ino		= inode ? btrfs_ino(inode) : 0;
+-		__entry->rootid		= inode ? inode->root->root_key.objectid : 0;
++		__entry->rootid		= inode ? btrfs_root_id(inode->root) : 0;
+ 		__entry->start		= start;
+ 		__entry->len		= len;
+ 		__entry->clear_bits	= clear_bits;
+@@ -2142,7 +2138,7 @@ TRACE_EVENT(btrfs_convert_extent_bit,
+ 
+ 		__entry->owner		= tree->owner;
+ 		__entry->ino		= inode ? btrfs_ino(inode) : 0;
+-		__entry->rootid		= inode ? inode->root->root_key.objectid : 0;
++		__entry->rootid		= inode ? btrfs_root_id(inode->root) : 0;
+ 		__entry->start		= start;
+ 		__entry->len		= len;
+ 		__entry->set_bits	= set_bits;
+@@ -2619,7 +2615,7 @@ TRACE_EVENT(btrfs_extent_map_shrinker_remove_em,
+ 
+ 	TP_fast_assign_btrfs(inode->root->fs_info,
+ 		__entry->ino		= btrfs_ino(inode);
+-		__entry->root_id	= inode->root->root_key.objectid;
++		__entry->root_id	= btrfs_root_id(inode->root);
+ 		__entry->start		= em->start;
+ 		__entry->len		= em->len;
+ 		__entry->flags		= em->flags;
 -- 
 2.51.0
 
