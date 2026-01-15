@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9CB823EDAA0;
-	Thu, 15 Jan 2026 17:51:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C81AC3D34B4;
+	Thu, 15 Jan 2026 17:51:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768499470; cv=none; b=AW3kYFSabf5fW/wb2VMowLNbDCBO/9JuD2/G+XaGEOiNbu7QUEKU1rZS8I2BxbZ2OcUhJ2u3NsOKt6FmWAy7k41MG4EWku51tpjmT7RLNUKDLYpAUnKcbzowXZIsLqi7WGleMYktfqhFRsd1JyB+Tx5gLB6X7isaylOm63c4MvY=
+	t=1768499473; cv=none; b=udIJq4HzzehPfiJ35h8Ot0UTajow4YXIS6qV0OznlrkNDfGE/VzgYdwSXuNWZd3L4D/gKg2OzS59HRcKhWVORL5pzCljsQN+3nAJzrqqD873btDGcHliW45tGPFbZlolj1MfJUR724VabFEe5fxKk8HdMryUYon+ekImJmeBAkk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768499470; c=relaxed/simple;
-	bh=A00Bl6qZaKvmkANKp2ymBjBnNmx39I3nrqCP3yp7wig=;
+	s=arc-20240116; t=1768499473; c=relaxed/simple;
+	bh=XGEKz28KAEsYVCsSX6dvpu+RdtJzYD8CzWaA7kPf2hk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lfboSSOy7v+JhJHsSUKGwleKGLb5DkNc26XmsdelYE5THagebA08+tAT9Tjg6qMXWf4jlbN3C51Kd7Ylv6FiEsVCFkR2Z8CBtTHHiI1s2dYP0CalAS7CExZZmQwEZtOY1Eo/ThUQRjpOTOGFhOgzv8ytHlc2oih2l8FG4vaYXCs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wiPfB3wf; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=ejNG8Gdlr8GZ1VPW6CcOG4ePcMTd/iK6NJcaUTxn6VktojvTf2K3oeNE3sqmDDIBwvS0gYXaQiTslRyj4fzGfk2t/XA67aAUOWQ+Glhcy3niWpfv9e1L9efwwI2LibcUpdygiSnweX8kzdJsRbX0DuaD4vEj9XdNuS6+JaBD4qs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WN/WhQ+t; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wiPfB3wf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 25792C19425;
-	Thu, 15 Jan 2026 17:51:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WN/WhQ+t"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15651C19425;
+	Thu, 15 Jan 2026 17:51:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1768499470;
-	bh=A00Bl6qZaKvmkANKp2ymBjBnNmx39I3nrqCP3yp7wig=;
+	s=korg; t=1768499473;
+	bh=XGEKz28KAEsYVCsSX6dvpu+RdtJzYD8CzWaA7kPf2hk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wiPfB3wfvZ28E94KakvlATUTpi1fujuKiUfJM0NY0jGhGsTwX9QggaQIkGYS9/hvY
-	 vYULv3Kk0pHuDqNID+0uKiep93da4JqQv9CrjqlNUS40mGGODHSLOLgx+x2+kiZDKQ
-	 CaVZwPO6u6DUkjllaGzfFDawxZaHF+GIfthwMFIc=
+	b=WN/WhQ+tViy0VACDq2VFUnYwBKrCzdRDh3iMy6udjqyVQLtlyra55hkAEHwkgEX0h
+	 It2m2dlcZ9EdJvHQZFLgA6+8yUwdhwEpbzYaptv1k6TLjyb8j9zy8zS2rjW7VSMBp+
+	 ud4z+cExUV4u0PVVu1PC6QOorX9Hfn6zqBTKeV+s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Junjie Cao <junjie.cao@intel.com>,
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Subject: [PATCH 5.10 195/451] Input: ti_am335x_tsc - fix off-by-one error in wire_order validation
-Date: Thu, 15 Jan 2026 17:46:36 +0100
-Message-ID: <20260115164237.955524860@linuxfoundation.org>
+	=?UTF-8?q?=C3=81lvaro=20Fern=C3=A1ndez=20Rojas?= <noltari@gmail.com>,
+	Johan Hovold <johan@kernel.org>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
+	Vinod Koul <vkoul@kernel.org>
+Subject: [PATCH 5.10 232/451] phy: broadcom: bcm63xx-usbh: fix section mismatches
+Date: Thu, 15 Jan 2026 17:47:13 +0100
+Message-ID: <20260115164239.286953250@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260115164230.864985076@linuxfoundation.org>
 References: <20260115164230.864985076@linuxfoundation.org>
@@ -44,44 +46,61 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Junjie Cao <junjie.cao@intel.com>
+From: Johan Hovold <johan@kernel.org>
 
-commit 248d3a73a0167dce15ba100477c3e778c4787178 upstream.
+commit 356d1924b9a6bc2164ce2bf1fad147b0c37ae085 upstream.
 
-The current validation 'wire_order[i] > ARRAY_SIZE(config_pins)' allows
-wire_order[i] to equal ARRAY_SIZE(config_pins), which causes out-of-bounds
-access when used as index in 'config_pins[wire_order[i]]'.
+Platform drivers can be probed after their init sections have been
+discarded (e.g. on probe deferral or manual rebind through sysfs) so the
+probe function and match table must not live in init.
 
-Since config_pins has 4 elements (indices 0-3), the valid range for
-wire_order should be 0-3. Fix the off-by-one error by using >= instead
-of > in the validation check.
-
-Signed-off-by: Junjie Cao <junjie.cao@intel.com>
-Link: https://patch.msgid.link/20251114062817.852698-1-junjie.cao@intel.com
-Fixes: bb76dc09ddfc ("input: ti_am33x_tsc: Order of TSC wires, made configurable")
-Cc: stable@vger.kernel.org
-Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Fixes: 783f6d3dcf35 ("phy: bcm63xx-usbh: Add BCM63xx USBH driver")
+Cc: stable@vger.kernel.org	# 5.9
+Cc: Álvaro Fernández Rojas <noltari@gmail.com>
+Signed-off-by: Johan Hovold <johan@kernel.org>
+Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
+Link: https://patch.msgid.link/20251017054537.6884-1-johan@kernel.org
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/input/touchscreen/ti_am335x_tsc.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/phy/broadcom/phy-bcm63xx-usbh.c |    6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
---- a/drivers/input/touchscreen/ti_am335x_tsc.c
-+++ b/drivers/input/touchscreen/ti_am335x_tsc.c
-@@ -86,7 +86,7 @@ static int titsc_config_wires(struct tit
- 		wire_order[i] = ts_dev->config_inp[i] & 0x0F;
- 		if (WARN_ON(analog_line[i] > 7))
- 			return -EINVAL;
--		if (WARN_ON(wire_order[i] > ARRAY_SIZE(config_pins)))
-+		if (WARN_ON(wire_order[i] >= ARRAY_SIZE(config_pins)))
- 			return -EINVAL;
- 	}
+--- a/drivers/phy/broadcom/phy-bcm63xx-usbh.c
++++ b/drivers/phy/broadcom/phy-bcm63xx-usbh.c
+@@ -374,7 +374,7 @@ static struct phy *bcm63xx_usbh_phy_xlat
+ 	return of_phy_simple_xlate(dev, args);
+ }
  
+-static int __init bcm63xx_usbh_phy_probe(struct platform_device *pdev)
++static int bcm63xx_usbh_phy_probe(struct platform_device *pdev)
+ {
+ 	struct device *dev = &pdev->dev;
+ 	struct bcm63xx_usbh_phy	*usbh;
+@@ -431,7 +431,7 @@ static int __init bcm63xx_usbh_phy_probe
+ 	return 0;
+ }
+ 
+-static const struct of_device_id bcm63xx_usbh_phy_ids[] __initconst = {
++static const struct of_device_id bcm63xx_usbh_phy_ids[] = {
+ 	{ .compatible = "brcm,bcm6318-usbh-phy", .data = &usbh_bcm6318 },
+ 	{ .compatible = "brcm,bcm6328-usbh-phy", .data = &usbh_bcm6328 },
+ 	{ .compatible = "brcm,bcm6358-usbh-phy", .data = &usbh_bcm6358 },
+@@ -442,7 +442,7 @@ static const struct of_device_id bcm63xx
+ };
+ MODULE_DEVICE_TABLE(of, bcm63xx_usbh_phy_ids);
+ 
+-static struct platform_driver bcm63xx_usbh_phy_driver __refdata = {
++static struct platform_driver bcm63xx_usbh_phy_driver = {
+ 	.driver	= {
+ 		.name = "bcm63xx-usbh-phy",
+ 		.of_match_table = bcm63xx_usbh_phy_ids,
 
 
