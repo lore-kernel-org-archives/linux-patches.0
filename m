@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7BA4D3D1CA9;
-	Thu, 15 Jan 2026 17:53:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57F203D1CA9;
+	Thu, 15 Jan 2026 17:53:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768499619; cv=none; b=nOkMptb3RLbHLR57raHkeB3sEJBJhd2aCbPgau46vJHOOX2sgy0KnScK7bxRx1aut4BMZcNXPydSZw7Bg2II2EJm9oEaTZ/TbudC1zXCRrzqUF72qr9lAxsrdlNHKGvUREf9oadafeEPJqlh19MICBQIgTzmn8VHcn4CmVhCi78=
+	t=1768499622; cv=none; b=DyLuz5ciUJ1ngSMOC0//sn+tKTgOoAwNAUfvcuJrplKvYJ4cVXqURT9D6mCp+jalsQQ9GSV4/WoEGBASLx+J3BJ7cCAeb9FrCXe9IVeT9ynEWebErha7YxN5xhOKAD5VAYKJtJZIPgmSvm5Pkg/FHFLFfshK3IgM67bd9fivX/Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768499619; c=relaxed/simple;
-	bh=YCpKph1RWUxL6uHpu6tOlfiLHUKYtEm1bnATUomk2hY=;
+	s=arc-20240116; t=1768499622; c=relaxed/simple;
+	bh=FGuS+zxAcxkBDycBcjFb5jaMW5CcmSDDRP4ZFshPQ80=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KZs6SJT1hJX7rbu2jMTFtvhM7fETYQN9HLiVqwQmL4iUjhkBQqlNznC6b2OUJLwdWc/OxyxLtgCpq+s2yMQN1sku/zPWq5P06+YYkI7nTN0jT/3CigULhxHUXhHDikuwEEu8nmnXkZT2V6eqob44BH5mqnpnACwkbWM8YWTiis8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Pz6aULUO; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hPeBWD4kgfaaazwkP1vrLOounOxa7Bi1K9P8ZngVcHB23aRuU5LYZLJNQU1mvKcE9WOIpLdPlS6BS1JQyii+YbqNWeu9WPeKYBhabwdISaZa+n+60yxoqz5sqN6KqAHdellZDLfrl9pnvwwuJ70MGITHZOVDlAlxw2tWfajKatw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uNWWjL3u; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Pz6aULUO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 03BEAC116D0;
-	Thu, 15 Jan 2026 17:53:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uNWWjL3u"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2BD6C116D0;
+	Thu, 15 Jan 2026 17:53:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1768499619;
-	bh=YCpKph1RWUxL6uHpu6tOlfiLHUKYtEm1bnATUomk2hY=;
+	s=korg; t=1768499622;
+	bh=FGuS+zxAcxkBDycBcjFb5jaMW5CcmSDDRP4ZFshPQ80=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Pz6aULUO7rkZOl0qoWKq8FMvNJHwr7FNhVtzLQxoITMmku6P5XXAEn/URb38ptHC8
-	 LJUfM/IM9IASDyqwDvOrNde9gWBfJ/+r3b1yBu4nTLvwnK09eiS8FzuvIvaFDASq+o
-	 sXp8B4EpLHgNf+waHb0ZEcrb6iEk+OzI9y/1j2gk=
+	b=uNWWjL3uupAsm69kY1kCd6F4AYA7IqbsPkENeCZ5ZO1yeAmv8Rue6sp45etWyQKDC
+	 BooQG5bXf8xOLO9/6THrGqL0rlDgFAWQHu9oycITDh3yjt2kUok8GKhesPY5xj9DH2
+	 pUBJwYogEGAIFBNdQfneUNNY/b7WPNMAqS+sHlSI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fatma Alwasmi <falwasmi@purdue.edu>,
-	Pwnverse <stanksal@purdue.edu>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Tom Sela <tomsela@amazon.com>,
+	Yonatan Nachum <ynachum@amazon.com>,
+	Michael Margolin <mrgolin@amazon.com>,
+	Gal Pressman <gal.pressman@linux.dev>,
+	Jason Gunthorpe <jgg@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 290/451] net: rose: fix invalid array index in rose_kill_by_device()
-Date: Thu, 15 Jan 2026 17:48:11 +0100
-Message-ID: <20260115164241.373403764@linuxfoundation.org>
+Subject: [PATCH 5.10 291/451] RDMA/efa: Remove possible negative shift
+Date: Thu, 15 Jan 2026 17:48:12 +0100
+Message-ID: <20260115164241.408944320@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260115164230.864985076@linuxfoundation.org>
 References: <20260115164230.864985076@linuxfoundation.org>
@@ -52,46 +54,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pwnverse <stanksal@purdue.edu>
+From: Michael Margolin <mrgolin@amazon.com>
 
-[ Upstream commit 6595beb40fb0ec47223d3f6058ee40354694c8e4 ]
+[ Upstream commit 85463eb6a46caf2f1e0e1a6d0731f2f3bab17780 ]
 
-rose_kill_by_device() collects sockets into a local array[] and then
-iterates over them to disconnect sockets bound to a device being brought
-down.
+The page size used for device might in some cases be smaller than
+PAGE_SIZE what results in a negative shift when calculating the number of
+host pages in PAGE_SIZE for a debug log. Remove the debug line together
+with the calculation.
 
-The loop mistakenly indexes array[cnt] instead of array[i]. For cnt <
-ARRAY_SIZE(array), this reads an uninitialized entry; for cnt ==
-ARRAY_SIZE(array), it is an out-of-bounds read. Either case can lead to
-an invalid socket pointer dereference and also leaks references taken
-via sock_hold().
-
-Fix the index to use i.
-
-Fixes: 64b8bc7d5f143 ("net/rose: fix races in rose_kill_by_device()")
-Co-developed-by: Fatma Alwasmi <falwasmi@purdue.edu>
-Signed-off-by: Fatma Alwasmi <falwasmi@purdue.edu>
-Signed-off-by: Pwnverse <stanksal@purdue.edu>
-Link: https://patch.msgid.link/20251222212227.4116041-1-ritviktanksalkar@gmail.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: 40909f664d27 ("RDMA/efa: Add EFA verbs implementation")
+Link: https://patch.msgid.link/r/20251210173656.8180-1-mrgolin@amazon.com
+Reviewed-by: Tom Sela <tomsela@amazon.com>
+Reviewed-by: Yonatan Nachum <ynachum@amazon.com>
+Signed-off-by: Michael Margolin <mrgolin@amazon.com>
+Reviewed-by: Gal Pressman <gal.pressman@linux.dev>
+Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/rose/af_rose.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/infiniband/hw/efa/efa_verbs.c | 4 ----
+ 1 file changed, 4 deletions(-)
 
-diff --git a/net/rose/af_rose.c b/net/rose/af_rose.c
-index f8cd085c4234..04173c85d92b 100644
---- a/net/rose/af_rose.c
-+++ b/net/rose/af_rose.c
-@@ -204,7 +204,7 @@ static void rose_kill_by_device(struct net_device *dev)
- 	spin_unlock_bh(&rose_list_lock);
+diff --git a/drivers/infiniband/hw/efa/efa_verbs.c b/drivers/infiniband/hw/efa/efa_verbs.c
+index 9cf051818725..d7fccffeeb58 100644
+--- a/drivers/infiniband/hw/efa/efa_verbs.c
++++ b/drivers/infiniband/hw/efa/efa_verbs.c
+@@ -1145,13 +1145,9 @@ static int umem_to_page_list(struct efa_dev *dev,
+ 			     u32 hp_cnt,
+ 			     u8 hp_shift)
+ {
+-	u32 pages_in_hp = BIT(hp_shift - PAGE_SHIFT);
+ 	struct ib_block_iter biter;
+ 	unsigned int hp_idx = 0;
  
- 	for (i = 0; i < cnt; i++) {
--		sk = array[cnt];
-+		sk = array[i];
- 		rose = rose_sk(sk);
- 		lock_sock(sk);
- 		spin_lock_bh(&rose_list_lock);
+-	ibdev_dbg(&dev->ibdev, "hp_cnt[%u], pages_in_hp[%u]\n",
+-		  hp_cnt, pages_in_hp);
+-
+ 	rdma_umem_for_each_dma_block(umem, &biter, BIT(hp_shift))
+ 		page_list[hp_idx++] = rdma_block_iter_dma_address(&biter);
+ 
 -- 
 2.51.0
 
