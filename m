@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0BF02D6611;
-	Thu, 15 Jan 2026 17:06:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E2D13195F9;
+	Thu, 15 Jan 2026 17:06:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768496807; cv=none; b=mFt9QKY9TFjz2DOBC2MjihqjwDp5Uvf9Ne82MSOFTp58kz+IsxXfbomTNnh6pSPXQhMBBcttCP4vWArKmfQA+wcGsxe0LAwUiswh2dyPOWqZW75bZlmHoaX59U3/GZxD13QDVX2CSIW7j4b/f8RJENa8kbBd21j9A0wk0geJP14=
+	t=1768496810; cv=none; b=REAyzzwbByGsQoCqDzoY8FJMXpNh4oFihJKu+/pfhHMOtsUwnWls3uJKLZ53ULAvD4wtL4BDtOyiyWSm7ikdrBKpPyClUN25bcGYtrAGIzbYrn5D1kOgat3Etew5dCWeolRWY6dxiE96rNurRvFEgBX12hHw6jizg6LgCGJZ+kQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768496807; c=relaxed/simple;
-	bh=lu4J5x49ZASu6g/12QyMf/ABqHOeX6ZsH2bZpHmK9CM=;
+	s=arc-20240116; t=1768496810; c=relaxed/simple;
+	bh=5eIrqEN3BbD8feXTnioCR1bfDegJWYei1M64zc2btmI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UOmAriH7nIv0/XHecLNPRAzpnNoZWoNv4LePyxsT2WPfMzmQhza8wht/rKUjLhitui4fjlVIeKkJFlynMElM0Mcvxf/6F1gx5O8VWQx/Cc/ETYA/dKJA7BFP8hIbYa6LcVwRo3CuzgoPzbiNK/D9B/69RnWC7kb++pc1djQ6gPU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=f1yIalGT; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Buwiay0ee06HGs1Y4N6C+T57OXz1/XLkUgnS0DclJF3kRKi4ZkjUIHY6GnnFf0l8tYrXmGMiwbwoqFcX4RAqevbXEKUmm94Zb9JlXHjHcI6nn3IaYAy/lWVNAw31jRoA+a2Cwg4D/d16kotRL3CXJ4gwBdAGgPjMOZbESCpTDyA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yrM/YKjj; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="f1yIalGT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A739C116D0;
-	Thu, 15 Jan 2026 17:06:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yrM/YKjj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D326C116D0;
+	Thu, 15 Jan 2026 17:06:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1768496807;
-	bh=lu4J5x49ZASu6g/12QyMf/ABqHOeX6ZsH2bZpHmK9CM=;
+	s=korg; t=1768496810;
+	bh=5eIrqEN3BbD8feXTnioCR1bfDegJWYei1M64zc2btmI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=f1yIalGTvz44YDkiWnCMu2GXQMtL6y2PQ4BTkCgPrX6h0Hur9cNkoT0Cthobsahwz
-	 XAnLQYnBU8xcxKh0MVef0vhC2vgk4kHHiOjlemo7p6XZI+g7o3cY+VqBXfct4/4IyD
-	 vG7KPCihP8kIka1AIiLdWYB4hor0dsCpkJaiDN6o=
+	b=yrM/YKjjO8GWeT7Zzg5uVH8IYduUGRTbJlivbyxuBTfTUE0EQ8xIIQNIjJYdLxpEo
+	 rIpgMPvy/hVuPpjZ7g8L31qPe3xmiyy83C4sr6DTQfuCM/ye9jE3N13w6Gny6MN6Iq
+	 c3/YwPQGYV/dxtZsk6aHKjugDpgBCgsCfPcynxGI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sharath Chandra Vurukala <quic_sharathv@quicinc.com>,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Keerthana K <keerthana.kalyanasundaram@broadcom.com>
-Subject: [PATCH 6.6 22/88] net: Add locking to protect skb->dev access in ip_output
-Date: Thu, 15 Jan 2026 17:48:05 +0100
-Message-ID: <20260115164147.118024894@linuxfoundation.org>
+	Jeff Layton <jlayton@kernel.org>,
+	Christian Brauner <brauner@kernel.org>,
+	Chuck Lever <chuck.lever@oracle.com>
+Subject: [PATCH 6.6 23/88] nfsd: convert to new timestamp accessors
+Date: Thu, 15 Jan 2026 17:48:06 +0100
+Message-ID: <20260115164147.153345894@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260115164146.312481509@linuxfoundation.org>
 References: <20260115164146.312481509@linuxfoundation.org>
@@ -52,113 +51,101 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sharath Chandra Vurukala <quic_sharathv@quicinc.com>
+From: Jeff Layton <jlayton@kernel.org>
 
-commit 1dbf1d590d10a6d1978e8184f8dfe20af22d680a upstream.
+commit 11fec9b9fb04fd1b3330a3b91ab9dcfa81ad5ad3 upstream.
 
-In ip_output() skb->dev is updated from the skb_dst(skb)->dev
-this can become invalid when the interface is unregistered and freed,
+Convert to using the new inode timestamp accessor functions.
 
-Introduced new skb_dst_dev_rcu() function to be used instead of
-skb_dst_dev() within rcu_locks in ip_output.This will ensure that
-all the skb's associated with the dev being deregistered will
-be transnmitted out first, before freeing the dev.
-
-Given that ip_output() is called within an rcu_read_lock()
-critical section or from a bottom-half context, it is safe to introduce
-an RCU read-side critical section within it.
-
-Multiple panic call stacks were observed when UL traffic was run
-in concurrency with device deregistration from different functions,
-pasting one sample for reference.
-
-[496733.627565][T13385] Call trace:
-[496733.627570][T13385] bpf_prog_ce7c9180c3b128ea_cgroupskb_egres+0x24c/0x7f0
-[496733.627581][T13385] __cgroup_bpf_run_filter_skb+0x128/0x498
-[496733.627595][T13385] ip_finish_output+0xa4/0xf4
-[496733.627605][T13385] ip_output+0x100/0x1a0
-[496733.627613][T13385] ip_send_skb+0x68/0x100
-[496733.627618][T13385] udp_send_skb+0x1c4/0x384
-[496733.627625][T13385] udp_sendmsg+0x7b0/0x898
-[496733.627631][T13385] inet_sendmsg+0x5c/0x7c
-[496733.627639][T13385] __sys_sendto+0x174/0x1e4
-[496733.627647][T13385] __arm64_sys_sendto+0x28/0x3c
-[496733.627653][T13385] invoke_syscall+0x58/0x11c
-[496733.627662][T13385] el0_svc_common+0x88/0xf4
-[496733.627669][T13385] do_el0_svc+0x2c/0xb0
-[496733.627676][T13385] el0_svc+0x2c/0xa4
-[496733.627683][T13385] el0t_64_sync_handler+0x68/0xb4
-[496733.627689][T13385] el0t_64_sync+0x1a4/0x1a8
-
-Changes in v3:
-- Replaced WARN_ON() with  WARN_ON_ONCE(), as suggested by Willem de Bruijn.
-- Dropped legacy lines mistakenly pulled in from an outdated branch.
-
-Changes in v2:
-- Addressed review comments from Eric Dumazet
-- Used READ_ONCE() to prevent potential load/store tearing
-- Added skb_dst_dev_rcu() and used along with rcu_read_lock() in ip_output
-
-Signed-off-by: Sharath Chandra Vurukala <quic_sharathv@quicinc.com>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Link: https://patch.msgid.link/20250730105118.GA26100@hu-sharathv-hyd.qualcomm.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-[ Keerthana: Backported the patch to v6.6.y ]
-Signed-off-by: Keerthana K <keerthana.kalyanasundaram@broadcom.com>
+Signed-off-by: Jeff Layton <jlayton@kernel.org>
+Link: https://lore.kernel.org/r/20231004185347.80880-50-jlayton@kernel.org
+Stable-dep-of: 24d92de9186e ("nfsd: Fix NFSv3 atomicity bugs in nfsd_setattr()")
+Signed-off-by: Christian Brauner <brauner@kernel.org>
+[ cel: d68886bae76a has already been applied ]
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/net/dst.h    |   12 ++++++++++++
- net/ipv4/ip_output.c |   15 ++++++++++-----
- 2 files changed, 22 insertions(+), 5 deletions(-)
+ fs/nfsd/blocklayout.c |    3 ++-
+ fs/nfsd/nfs3proc.c    |    4 ++--
+ fs/nfsd/nfs4proc.c    |    8 ++++----
+ fs/nfsd/nfsctl.c      |    2 +-
+ fs/nfsd/vfs.c         |    2 +-
+ 5 files changed, 10 insertions(+), 9 deletions(-)
 
---- a/include/net/dst.h
-+++ b/include/net/dst.h
-@@ -569,6 +569,18 @@ static inline void skb_dst_update_pmtu_n
- 		dst->ops->update_pmtu(dst, NULL, skb, mtu, false);
- }
- 
-+static inline struct net_device *dst_dev_rcu(const struct dst_entry *dst)
-+{
-+	/* In the future, use rcu_dereference(dst->dev) */
-+	WARN_ON_ONCE(!rcu_read_lock_held());
-+	return READ_ONCE(dst->dev);
-+}
-+
-+static inline struct net_device *skb_dst_dev_rcu(const struct sk_buff *skb)
-+{
-+	return dst_dev_rcu(skb_dst(skb));
-+}
-+
- struct dst_entry *dst_blackhole_check(struct dst_entry *dst, u32 cookie);
- void dst_blackhole_update_pmtu(struct dst_entry *dst, struct sock *sk,
- 			       struct sk_buff *skb, u32 mtu, bool confirm_neigh);
---- a/net/ipv4/ip_output.c
-+++ b/net/ipv4/ip_output.c
-@@ -425,15 +425,20 @@ int ip_mc_output(struct net *net, struct
- 
- int ip_output(struct net *net, struct sock *sk, struct sk_buff *skb)
+--- a/fs/nfsd/blocklayout.c
++++ b/fs/nfsd/blocklayout.c
+@@ -119,11 +119,12 @@ static __be32
+ nfsd4_block_commit_blocks(struct inode *inode, struct nfsd4_layoutcommit *lcp,
+ 		struct iomap *iomaps, int nr_iomaps)
  {
--	struct net_device *dev = skb_dst(skb)->dev, *indev = skb->dev;
-+	struct net_device *dev, *indev = skb->dev;
-+	int ret_val;
++	struct timespec64 mtime = inode_get_mtime(inode);
+ 	struct iattr iattr = { .ia_valid = 0 };
+ 	int error;
  
-+	rcu_read_lock();
-+	dev = skb_dst_dev_rcu(skb);
- 	skb->dev = dev;
- 	skb->protocol = htons(ETH_P_IP);
+ 	if (lcp->lc_mtime.tv_nsec == UTIME_NOW ||
+-	    timespec64_compare(&lcp->lc_mtime, &inode->i_mtime) < 0)
++	    timespec64_compare(&lcp->lc_mtime, &mtime) < 0)
+ 		lcp->lc_mtime = current_time(inode);
+ 	iattr.ia_valid |= ATTR_ATIME | ATTR_CTIME | ATTR_MTIME;
+ 	iattr.ia_atime = iattr.ia_ctime = iattr.ia_mtime = lcp->lc_mtime;
+--- a/fs/nfsd/nfs3proc.c
++++ b/fs/nfsd/nfs3proc.c
+@@ -294,8 +294,8 @@ nfsd3_create_file(struct svc_rqst *rqstp
+ 			status = nfserr_exist;
+ 			break;
+ 		case NFS3_CREATE_EXCLUSIVE:
+-			if (d_inode(child)->i_mtime.tv_sec == v_mtime &&
+-			    d_inode(child)->i_atime.tv_sec == v_atime &&
++			if (inode_get_mtime_sec(d_inode(child)) == v_mtime &&
++			    inode_get_atime_sec(d_inode(child)) == v_atime &&
+ 			    d_inode(child)->i_size == 0) {
+ 				break;
+ 			}
+--- a/fs/nfsd/nfs4proc.c
++++ b/fs/nfsd/nfs4proc.c
+@@ -322,8 +322,8 @@ nfsd4_create_file(struct svc_rqst *rqstp
+ 			status = nfserr_exist;
+ 			break;
+ 		case NFS4_CREATE_EXCLUSIVE:
+-			if (d_inode(child)->i_mtime.tv_sec == v_mtime &&
+-			    d_inode(child)->i_atime.tv_sec == v_atime &&
++			if (inode_get_mtime_sec(d_inode(child)) == v_mtime &&
++			    inode_get_atime_sec(d_inode(child)) == v_atime &&
+ 			    d_inode(child)->i_size == 0) {
+ 				open->op_created = true;
+ 				break;		/* subtle */
+@@ -331,8 +331,8 @@ nfsd4_create_file(struct svc_rqst *rqstp
+ 			status = nfserr_exist;
+ 			break;
+ 		case NFS4_CREATE_EXCLUSIVE4_1:
+-			if (d_inode(child)->i_mtime.tv_sec == v_mtime &&
+-			    d_inode(child)->i_atime.tv_sec == v_atime &&
++			if (inode_get_mtime_sec(d_inode(child)) == v_mtime &&
++			    inode_get_atime_sec(d_inode(child)) == v_atime &&
+ 			    d_inode(child)->i_size == 0) {
+ 				open->op_created = true;
+ 				goto set_attr;	/* subtle */
+--- a/fs/nfsd/nfsctl.c
++++ b/fs/nfsd/nfsctl.c
+@@ -1139,7 +1139,7 @@ static struct inode *nfsd_get_inode(stru
+ 	/* Following advice from simple_fill_super documentation: */
+ 	inode->i_ino = iunique(sb, NFSD_MaxReserved);
+ 	inode->i_mode = mode;
+-	inode->i_atime = inode->i_mtime = inode_set_ctime_current(inode);
++	simple_inode_init_ts(inode);
+ 	switch (mode & S_IFMT) {
+ 	case S_IFDIR:
+ 		inode->i_fop = &simple_dir_operations;
+--- a/fs/nfsd/vfs.c
++++ b/fs/nfsd/vfs.c
+@@ -521,7 +521,7 @@ nfsd_setattr(struct svc_rqst *rqstp, str
  
--	return NF_HOOK_COND(NFPROTO_IPV4, NF_INET_POST_ROUTING,
--			    net, sk, skb, indev, dev,
--			    ip_finish_output,
--			    !(IPCB(skb)->flags & IPSKB_REROUTED));
-+	ret_val = NF_HOOK_COND(NFPROTO_IPV4, NF_INET_POST_ROUTING,
-+				net, sk, skb, indev, dev,
-+				ip_finish_output,
-+				!(IPCB(skb)->flags & IPSKB_REROUTED));
-+	rcu_read_unlock();
-+	return ret_val;
- }
- EXPORT_SYMBOL(ip_output);
+ 	nfsd_sanitize_attrs(inode, iap);
  
+-	if (check_guard && guardtime != inode_get_ctime(inode).tv_sec)
++	if (check_guard && guardtime != inode_get_ctime_sec(inode))
+ 		return nfserr_notsync;
+ 
+ 	/*
 
 
