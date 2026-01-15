@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5EB4E3A7F5D;
-	Thu, 15 Jan 2026 17:15:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50E0B3A1E86;
+	Thu, 15 Jan 2026 17:15:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768497353; cv=none; b=Cwr9Rca+BCmQ4NWPBJdJf/wfrQ5Ctm8WeeH3/fZ854yaNIXO92pbQl2MSSUHGs/n2Z8H5l85lMrH6EpOmHUuRZwxk/jCRzaDKQJWHUz8U8OZ+bVH96rWw2I6sFnszTziGZ6uhE/mN7OexpDYh2Wgw8s1n8TqbErbQO5xo/AfDZ8=
+	t=1768497356; cv=none; b=h3LtiV/C2iYYz+2Z5oNzQOnmtomFOdTmfkL43jyb27XMhQGdGrb49ITlFBWx9fkw4WYNivAFaST581o02DIdAVCmBhae6YA3PeFFt9oMKl08nys8MsCRzpgtHbgvoBACLdtdf6VPo5u1fR0RsF3iljJ+5Y+NvInHc0aLtGV3KNQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768497353; c=relaxed/simple;
-	bh=yvBuPCShDzpd1NTFLPTL4N6Bwtuea5+fUdnz4gbQsn4=;
+	s=arc-20240116; t=1768497356; c=relaxed/simple;
+	bh=0q2AknPaMMTOQLZGrCcadY88WjzcwYrsFOsOFQZdFaA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iXN+J9/jkE4sVdxmHfNJ5JTDfJAY4ajIBDVKM+32fq6damYBy35FpTAzG9cGEwrw5rePU087mbcuEozinE6rV5B3e3VLrdHcZ9+yegvb8Vd2hLH9ODqJzUMz5WqlDdO7vz/otoRK66j4wZGSmtFB9QNO0VroZmrRIP96ABA/96o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ErOplK/k; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tT1qBxAwuP3i8BLqYGWDm9IL+pqxhdj4ICFQNCq3PLwYljOSX7LksbS6e3vtJFuAN+9BlhVbBhFqz6nTCFoY1ivjk3nYgCtHmBfWuPHqyq/sLxZ48WGdfGjgW3bQJPrzix1hX5jAAX5+5gJCKnf79OgFZE4psoVRtn2cnHlr1Hg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LGYqOXVZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ErOplK/k"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF395C19423;
-	Thu, 15 Jan 2026 17:15:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LGYqOXVZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C84F4C116D0;
+	Thu, 15 Jan 2026 17:15:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1768497353;
-	bh=yvBuPCShDzpd1NTFLPTL4N6Bwtuea5+fUdnz4gbQsn4=;
+	s=korg; t=1768497356;
+	bh=0q2AknPaMMTOQLZGrCcadY88WjzcwYrsFOsOFQZdFaA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ErOplK/kSxlSc4qJ2lkdMEtEOrwGt/SZCXnAUSKO/Nwuir2ZcIKG5PZquLFDBzY3e
-	 PR/rsTRy5vaOSB39biDLumUGhZitJryiTtZPGTGuy9kHeufjoISWFUMqdXoXZBAJlM
-	 jITe97olNcXAhFHb2aJn4GARRgLUeVvNhwOhJOl4=
+	b=LGYqOXVZSoj1SyUi3Tx8y5qKrFjpWk2kq+hXznWc2PbwKOg+yO4odRzHSrXCmpg+T
+	 RgwgxktkMvyi1L8VvwmrQ2cT3k+SGV+Tx2tQwUdnc5hN7diCISQSEl5OML12Rjd/Oq
+	 fky6/uBFKrjZ7BHGzyaYdWJ1G85re0mc4Ezh7TOs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	nieweiqiang <nieweiqiang@huawei.com>,
-	Chenghai Huang <huangchenghai2@huawei.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
+	Alexander Egorenkov <egorenar@linux.ibm.com>,
+	Mete Durlu <meted@linux.ibm.com>,
+	Heiko Carstens <hca@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 051/554] crypto: hisilicon/qm - restore original qos values
-Date: Thu, 15 Jan 2026 17:41:57 +0100
-Message-ID: <20260115164248.092678102@linuxfoundation.org>
+Subject: [PATCH 5.15 052/554] s390/smp: Fix fallback CPU detection
+Date: Thu, 15 Jan 2026 17:41:58 +0100
+Message-ID: <20260115164248.128947265@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260115164246.225995385@linuxfoundation.org>
 References: <20260115164246.225995385@linuxfoundation.org>
@@ -52,65 +52,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: nieweiqiang <nieweiqiang@huawei.com>
+From: Heiko Carstens <hca@linux.ibm.com>
 
-[ Upstream commit e7066160f5b4187ad9869b712fa7a35d3d5be6b9 ]
+[ Upstream commit 07a75d08cfa1b883a6e1256666e5f0617ee99231 ]
 
-When the new qos valus setting fails, restore to
-the original qos values.
+In case SCLP CPU detection does not work a fallback mechanism using SIGP is
+in place. Since a cleanup this does not work correctly anymore: new CPUs
+are only considered if their type matches the boot CPU.
 
-Fixes: 72b010dc33b9 ("crypto: hisilicon/qm - supports writing QoS int the host")
-Signed-off-by: nieweiqiang <nieweiqiang@huawei.com>
-Signed-off-by: Chenghai Huang <huangchenghai2@huawei.com>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Before the cleanup the information if a CPU type should be considered was
+also part of a structure generated by the fallback mechanism and indicated
+that a CPU type should not be considered when adding CPUs.
+
+Since the rework a global SCLP state is used instead. If the global SCLP
+state indicates that the CPU type should be considered and the fallback
+mechanism is used, there may be a mismatch with CPU types if CPUs are
+added. This can lead to a system with only a single CPU even tough there
+are many more CPUs.
+
+Address this by simply copying the boot cpu type into the generated data
+structure from the fallback mechanism.
+
+Reported-by: Alexander Egorenkov <egorenar@linux.ibm.com>
+Fixes: d08d94306e90 ("s390/smp: cleanup core vs. cpu in the SCLP interface")
+Reviewed-by: Mete Durlu <meted@linux.ibm.com>
+Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/crypto/hisilicon/qm.c | 14 +++++++++++++-
- 1 file changed, 13 insertions(+), 1 deletion(-)
+ arch/s390/kernel/smp.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/crypto/hisilicon/qm.c b/drivers/crypto/hisilicon/qm.c
-index 58e995db37838..a48c6306a8cb2 100644
---- a/drivers/crypto/hisilicon/qm.c
-+++ b/drivers/crypto/hisilicon/qm.c
-@@ -4010,6 +4010,7 @@ static int qm_clear_vft_config(struct hisi_qm *qm)
- static int qm_func_shaper_enable(struct hisi_qm *qm, u32 fun_index, u32 qos)
- {
- 	struct device *dev = &qm->pdev->dev;
-+	struct qm_shaper_factor t_factor;
- 	u32 ir = qos * QM_QOS_RATE;
- 	int ret, total_vfs, i;
- 
-@@ -4017,6 +4018,7 @@ static int qm_func_shaper_enable(struct hisi_qm *qm, u32 fun_index, u32 qos)
- 	if (fun_index > total_vfs)
- 		return -EINVAL;
- 
-+	memcpy(&t_factor, &qm->factor[fun_index], sizeof(t_factor));
- 	qm->factor[fun_index].func_qos = qos;
- 
- 	ret = qm_get_shaper_para(ir, &qm->factor[fun_index]);
-@@ -4030,11 +4032,21 @@ static int qm_func_shaper_enable(struct hisi_qm *qm, u32 fun_index, u32 qos)
- 		ret = qm_set_vft_common(qm, SHAPER_VFT, fun_index, i, 1);
- 		if (ret) {
- 			dev_err(dev, "type: %d, failed to set shaper vft!\n", i);
--			return -EINVAL;
-+			goto back_func_qos;
+diff --git a/arch/s390/kernel/smp.c b/arch/s390/kernel/smp.c
+index 5c1fd147591cb..824941e3204d7 100644
+--- a/arch/s390/kernel/smp.c
++++ b/arch/s390/kernel/smp.c
+@@ -754,6 +754,7 @@ static void __ref smp_get_core_info(struct sclp_core_info *info, int early)
+ 				continue;
+ 			info->core[info->configured].core_id =
+ 				address >> smp_cpu_mt_shift;
++			info->core[info->configured].type = boot_core_type;
+ 			info->configured++;
  		}
- 	}
- 
- 	return 0;
-+
-+back_func_qos:
-+	memcpy(&qm->factor[fun_index], &t_factor, sizeof(t_factor));
-+	for (i--; i >= ALG_TYPE_0; i--) {
-+		ret = qm_set_vft_common(qm, SHAPER_VFT, fun_index, i, 1);
-+		if (ret)
-+			dev_err(dev, "failed to restore shaper vft during rollback!\n");
-+	}
-+
-+	return -EINVAL;
- }
- 
- static u32 qm_get_shaper_vft_qos(struct hisi_qm *qm, u32 fun_index)
+ 		info->combined = info->configured;
 -- 
 2.51.0
 
