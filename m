@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8911929C338;
-	Thu, 15 Jan 2026 17:03:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54A522D73BE;
+	Thu, 15 Jan 2026 17:03:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768496583; cv=none; b=PvxWbWRYt5iBVEQoLRLWXdNHjr/tXyMxz45xnE6x9CxND8iC25kg2XeKtyTuR/G+rDSCPIK/nCg0qO1JYKu3rQUE5roq8ONmvrIb4MhmQQMZnRR7zeN1ZHnEqcjr8LqyWQ8TZGmObDFHL97Pu4AmbM74A/F/rdCxCI45643QEl8=
+	t=1768496586; cv=none; b=uMRZWUECtYeKf3BWw4YJDbCflQxHg3JYNjOwFbVd8TtdOtsQo8REdoGS/j3Du49ioMVhOAcmlsyqYmI9HYh4PJqjJU/HkNoNsXrrNVGTj96yK9sfuSLEmAL2LO6VBCIw5fyS06t4kILpR3yFrVhLUI2jWNv1nhKeG3pAe3WWO5g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768496583; c=relaxed/simple;
-	bh=RdSI4UZCTxfYlkKZp/BEIPU7q2VugBIqCa5GvKdBeic=;
+	s=arc-20240116; t=1768496586; c=relaxed/simple;
+	bh=tFlVnIQEStf/XH5ABTmZyz0BamqSFlhOyIurXDJM2/k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jPMTXo+mvUQi0WUy+MvXQ5XZzg6bnHwqcwPjGSHfV/CYZ9v/t30lQpJ6Vn/zeru38RylhB0hbaR65dqsXgFDP5OLGPtT8FrvigFNZgcAXSoQLQMeRIVrX4bFoAmJ3sc4IGW9ci8/ujrBtxMyUIs1b1MYMfeGJ4FDRHdTZDqbjrE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Y1vlb2pG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=IXUG8Ar6hGrqAr9J8TtfspUg4e5ZxwezmUExvaI4WX75u3PuhgzVA30GL0PXdEodMK5wejAooHVdHF2OdGnFgP3vtZlbI1FkfwiozVOr5+t5rwIKG+gIAZ4VzRRvNL40dX+WZwWOrA/xm6d8WA2cBwp1LNY9Dy0SpPCwzQ1XyuA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GDkLHMzm; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Y1vlb2pG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 16790C116D0;
-	Thu, 15 Jan 2026 17:03:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GDkLHMzm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D7B4CC116D0;
+	Thu, 15 Jan 2026 17:03:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1768496583;
-	bh=RdSI4UZCTxfYlkKZp/BEIPU7q2VugBIqCa5GvKdBeic=;
+	s=korg; t=1768496586;
+	bh=tFlVnIQEStf/XH5ABTmZyz0BamqSFlhOyIurXDJM2/k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Y1vlb2pGc14Rv58HWaSNOOi4VosI9gEBbJIV4pPh6BNCzpuVU5iLXAyErM6jiAL2z
-	 rjSuzgtcVstk2vpqwMs0GQSonjzQV5VEqGR3KmzV6KsCawzH1YK4kasOj83ElpXdrP
-	 4TbpAZb/gTsAKACZmoYnsP3VYlR/zweV8Ve0xyxU=
+	b=GDkLHMzmcQ+SRKpX9AewvnrZFYRIriGR7zi4bxnOeAhGti+O0PKDV4ANK0PBa0mXc
+	 Pjs4//ohtqlrWLrlEjn5cDNSswbxv+tIGA5pMUvU3TX3U/ZNy3YLdkziH8/P453ab1
+	 awr01vwueEgdUo+3kRV19lKebr9WVzWjJ7/0QGjk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zilin Guan <zilin@seu.edu.cn>,
+	Fernando Fernandez Mancera <fmancera@suse.de>,
 	Florian Westphal <fw@strlen.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 062/119] netfilter: nf_tables: fix memory leak in nf_tables_newrule()
-Date: Thu, 15 Jan 2026 17:47:57 +0100
-Message-ID: <20260115164154.194459533@linuxfoundation.org>
+Subject: [PATCH 6.12 063/119] netfilter: nf_conncount: update last_gc only when GC has been performed
+Date: Thu, 15 Jan 2026 17:47:58 +0100
+Message-ID: <20260115164154.230450359@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260115164151.948839306@linuxfoundation.org>
 References: <20260115164151.948839306@linuxfoundation.org>
@@ -51,47 +51,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zilin Guan <zilin@seu.edu.cn>
+From: Fernando Fernandez Mancera <fmancera@suse.de>
 
-[ Upstream commit d077e8119ddbb4fca67540f1a52453631a47f221 ]
+[ Upstream commit 7811ba452402d58628e68faedf38745b3d485e3c ]
 
-In nf_tables_newrule(), if nft_use_inc() fails, the function jumps to
-the err_release_rule label without freeing the allocated flow, leading
-to a memory leak.
+Currently last_gc is being updated everytime a new connection is
+tracked, that means that it is updated even if a GC wasn't performed.
+With a sufficiently high packet rate, it is possible to always bypass
+the GC, causing the list to grow infinitely.
 
-Fix this by adding a new label err_destroy_flow and jumping to it when
-nft_use_inc() fails. This ensures that the flow is properly released
-in this error case.
+Update the last_gc value only when a GC has been actually performed.
 
-Fixes: 1689f25924ada ("netfilter: nf_tables: report use refcount overflow")
-Signed-off-by: Zilin Guan <zilin@seu.edu.cn>
+Fixes: d265929930e2 ("netfilter: nf_conncount: reduce unnecessary GC")
+Signed-off-by: Fernando Fernandez Mancera <fmancera@suse.de>
 Signed-off-by: Florian Westphal <fw@strlen.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nf_tables_api.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ net/netfilter/nf_conncount.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/netfilter/nf_tables_api.c b/net/netfilter/nf_tables_api.c
-index b4741fb337988..6a2b7ce67e7f3 100644
---- a/net/netfilter/nf_tables_api.c
-+++ b/net/netfilter/nf_tables_api.c
-@@ -4196,7 +4196,7 @@ static int nf_tables_newrule(struct sk_buff *skb, const struct nfnl_info *info,
+diff --git a/net/netfilter/nf_conncount.c b/net/netfilter/nf_conncount.c
+index 3c1b155f7a0ea..828d5c64c68a3 100644
+--- a/net/netfilter/nf_conncount.c
++++ b/net/netfilter/nf_conncount.c
+@@ -229,6 +229,7 @@ static int __nf_conncount_add(struct net *net,
  
- 	if (!nft_use_inc(&chain->use)) {
- 		err = -EMFILE;
--		goto err_release_rule;
-+		goto err_destroy_flow;
+ 		nf_ct_put(found_ct);
  	}
++	list->last_gc = (u32)jiffies;
  
- 	if (info->nlh->nlmsg_flags & NLM_F_REPLACE) {
-@@ -4246,6 +4246,7 @@ static int nf_tables_newrule(struct sk_buff *skb, const struct nfnl_info *info,
+ add_new_node:
+ 	if (WARN_ON_ONCE(list->count > INT_MAX)) {
+@@ -248,7 +249,6 @@ static int __nf_conncount_add(struct net *net,
+ 	conn->jiffies32 = (u32)jiffies;
+ 	list_add_tail(&conn->node, &list->head);
+ 	list->count++;
+-	list->last_gc = (u32)jiffies;
  
- err_destroy_flow_rule:
- 	nft_use_dec_restore(&chain->use);
-+err_destroy_flow:
- 	if (flow)
- 		nft_flow_rule_destroy(flow);
- err_release_rule:
+ out_put:
+ 	if (refcounted)
 -- 
 2.51.0
 
