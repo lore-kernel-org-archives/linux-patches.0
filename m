@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA8092C0285;
-	Thu, 15 Jan 2026 17:04:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B3572D73A0;
+	Thu, 15 Jan 2026 17:04:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768496688; cv=none; b=CEmWzXHmw8JwAfQF91uU+74N6EVd47TU9zI6QZlw8Zd2bajOBmSqjptJvqQmrBEYUAHNEv+8IfdTDBFiURkQ5icoW/bmTi0T5LUNFEso/wrFfcc9txpzXWM/+wmD3L9sQZA3Zda+ppcrnDxfW10eRxuKfiX/97UKKw6xGboBAnA=
+	t=1768496691; cv=none; b=aZRZEwi80Vw0zHTXdbNiYWzzleXs1gUBuoPR3SqDDkDFZt6YtQsTOTAUothMNk++ERZEeSY0xFcOhLp9eYDXtNi95WF/WfC/QpyorsaqnNy7p/6f13cl+TMMsXQehKpQF0uicNtwLYkG+W3SN+cT7MjtTxkaxUrrFIE+ctZ0ncI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768496688; c=relaxed/simple;
-	bh=T0K+lEraQJSHZFNKerw4xjHr3oVqgrNMppsTcJNnjLM=;
+	s=arc-20240116; t=1768496691; c=relaxed/simple;
+	bh=hWGuC9G0Hv1lJ2D2z18mvqArs8rb9ctOypaDByIP8a4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ltFTBRs7uaJz/Xa8QuBXLMnSK5+rlAsBHUFto27jMUiXDe4NQRirBSZwXTv0Ofimd5jY2YqWsOaSsE+hHoM5nwXRiM3YZVjMSLBqRkceQMSj38F2TIsDTtLCavi92qLLvIW698pG4LLJkabIbQHDtxY0Moq2nOp/O4S3QCcRlQ0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lGCF2JFS; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Q6OBNbsD2aaPrkXlCUGbPgvbG3M1IDfnY1klHcDFx+OmeiMJSW5wAxJy/Tfr2y2ZmtJ7UFHMB4Op4vV2VH1n4k6Qu2mMauwTel+BnK2sTUpcxCl/SsRwlzVx4O1e0hJuSYpHMbbnlKpyB1U0NVerrm81lJskiUg/NyoA5Ke3nn8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dmdGLJGf; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lGCF2JFS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F00EFC116D0;
-	Thu, 15 Jan 2026 17:04:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dmdGLJGf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF0A2C116D0;
+	Thu, 15 Jan 2026 17:04:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1768496688;
-	bh=T0K+lEraQJSHZFNKerw4xjHr3oVqgrNMppsTcJNnjLM=;
+	s=korg; t=1768496691;
+	bh=hWGuC9G0Hv1lJ2D2z18mvqArs8rb9ctOypaDByIP8a4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lGCF2JFSuzwIcEAgUBx91BBd2HPp3K+5dRbYf5l6IP68vr828Dd8w+SSr79I6eLXB
-	 4RhBJz7LvC8YqB50SgotC9gV4ZPof7+K4dXIELxCdzjcJaAcTSOWxohH1+3FSN76Mh
-	 g3/18S4bTpmaO5BTdPDdnWgdx/7qb1HVhjzjA1PQ=
+	b=dmdGLJGf/twLQBq+WABDsOFK4vZODkQW0eo3EvzF8Jnx8ZeEW8/05K9U8XgpJpbw6
+	 o4Sewkzj7N1rD9DgNhPX65nmKKWIoEr3SgCA3KBgXsqAx3zPbNp/iatkc8aZGe0t0+
+	 jytL5H89TZkgb+pdwWwu2vUqRttU+3EvYT3VQa00=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Amery Hung <ameryhung@gmail.com>,
-	Martin KaFai Lau <martin.lau@kernel.org>,
+	Xiang Mei <xmei5@asu.edu>,
+	Weiming Shi <bestswngs@gmail.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 099/119] bpf: Support specifying linear xdp packet data size for BPF_PROG_TEST_RUN
-Date: Thu, 15 Jan 2026 17:48:34 +0100
-Message-ID: <20260115164155.526773667@linuxfoundation.org>
+Subject: [PATCH 6.12 068/119] net: sock: fix hardened usercopy panic in sock_recv_errqueue
+Date: Thu, 15 Jan 2026 17:48:03 +0100
+Message-ID: <20260115164154.407298227@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260115164151.948839306@linuxfoundation.org>
 References: <20260115164151.948839306@linuxfoundation.org>
@@ -51,127 +53,112 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Amery Hung <ameryhung@gmail.com>
+From: Weiming Shi <bestswngs@gmail.com>
 
-[ Upstream commit fe9544ed1a2e9217b2c5285c3a4ac0dc5a38bd7b ]
+[ Upstream commit 2a71a1a8d0ed718b1c7a9ac61f07e5755c47ae20 ]
 
-To test bpf_xdp_pull_data(), an xdp packet containing fragments as well
-as free linear data area after xdp->data_end needs to be created.
-However, bpf_prog_test_run_xdp() always fills the linear area with
-data_in before creating fragments, leaving no space to pull data. This
-patch will allow users to specify the linear data size through
-ctx->data_end.
+skbuff_fclone_cache was created without defining a usercopy region,
+[1] unlike skbuff_head_cache which properly whitelists the cb[] field.
+[2] This causes a usercopy BUG() when CONFIG_HARDENED_USERCOPY is
+enabled and the kernel attempts to copy sk_buff.cb data to userspace
+via sock_recv_errqueue() -> put_cmsg().
 
-Currently, ctx_in->data_end must match data_size_in and will not be the
-final ctx->data_end seen by xdp programs. This is because ctx->data_end
-is populated according to the xdp_buff passed to test_run. The linear
-data area available in an xdp_buff, max_linear_sz, is alawys filled up
-before copying data_in into fragments.
+The crash occurs when: 1. TCP allocates an skb using alloc_skb_fclone()
+   (from skbuff_fclone_cache) [1]
+2. The skb is cloned via skb_clone() using the pre-allocated fclone
+[3] 3. The cloned skb is queued to sk_error_queue for timestamp
+reporting 4. Userspace reads the error queue via recvmsg(MSG_ERRQUEUE)
+5. sock_recv_errqueue() calls put_cmsg() to copy serr->ee from skb->cb
+[4] 6. __check_heap_object() fails because skbuff_fclone_cache has no
+   usercopy whitelist [5]
 
-This patch will allow users to specify the size of data that goes into
-the linear area. When ctx_in->data_end is different from data_size_in,
-only ctx_in->data_end bytes of data will be put into the linear area when
-creating the xdp_buff.
+When cloned skbs allocated from skbuff_fclone_cache are used in the
+socket error queue, accessing the sock_exterr_skb structure in skb->cb
+via put_cmsg() triggers a usercopy hardening violation:
 
-While ctx_in->data_end will be allowed to be different from data_size_in,
-it cannot be larger than the data_size_in as there will be no data to
-copy from user space. If it is larger than the maximum linear data area
-size, the layout suggested by the user will not be honored. Data beyond
-max_linear_sz bytes will still be copied into fragments.
+[    5.379589] usercopy: Kernel memory exposure attempt detected from SLUB object 'skbuff_fclone_cache' (offset 296, size 16)!
+[    5.382796] kernel BUG at mm/usercopy.c:102!
+[    5.383923] Oops: invalid opcode: 0000 [#1] SMP KASAN NOPTI
+[    5.384903] CPU: 1 UID: 0 PID: 138 Comm: poc_put_cmsg Not tainted 6.12.57 #7
+[    5.384903] Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS rel-1.16.3-0-ga6ed6b701f0a-prebuilt.qemu.org 04/01/2014
+[    5.384903] RIP: 0010:usercopy_abort+0x6c/0x80
+[    5.384903] Code: 1a 86 51 48 c7 c2 40 15 1a 86 41 52 48 c7 c7 c0 15 1a 86 48 0f 45 d6 48 c7 c6 80 15 1a 86 48 89 c1 49 0f 45 f3 e8 84 27 88 ff <0f> 0b 490
+[    5.384903] RSP: 0018:ffffc900006f77a8 EFLAGS: 00010246
+[    5.384903] RAX: 000000000000006f RBX: ffff88800f0ad2a8 RCX: 1ffffffff0f72e74
+[    5.384903] RDX: 0000000000000000 RSI: 0000000000000004 RDI: ffffffff87b973a0
+[    5.384903] RBP: 0000000000000010 R08: 0000000000000000 R09: fffffbfff0f72e74
+[    5.384903] R10: 0000000000000003 R11: 79706f6372657375 R12: 0000000000000001
+[    5.384903] R13: ffff88800f0ad2b8 R14: ffffea00003c2b40 R15: ffffea00003c2b00
+[    5.384903] FS:  0000000011bc4380(0000) GS:ffff8880bf100000(0000) knlGS:0000000000000000
+[    5.384903] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+[    5.384903] CR2: 000056aa3b8e5fe4 CR3: 000000000ea26004 CR4: 0000000000770ef0
+[    5.384903] PKRU: 55555554
+[    5.384903] Call Trace:
+[    5.384903]  <TASK>
+[    5.384903]  __check_heap_object+0x9a/0xd0
+[    5.384903]  __check_object_size+0x46c/0x690
+[    5.384903]  put_cmsg+0x129/0x5e0
+[    5.384903]  sock_recv_errqueue+0x22f/0x380
+[    5.384903]  tls_sw_recvmsg+0x7ed/0x1960
+[    5.384903]  ? srso_alias_return_thunk+0x5/0xfbef5
+[    5.384903]  ? schedule+0x6d/0x270
+[    5.384903]  ? srso_alias_return_thunk+0x5/0xfbef5
+[    5.384903]  ? mutex_unlock+0x81/0xd0
+[    5.384903]  ? __pfx_mutex_unlock+0x10/0x10
+[    5.384903]  ? __pfx_tls_sw_recvmsg+0x10/0x10
+[    5.384903]  ? _raw_spin_lock_irqsave+0x8f/0xf0
+[    5.384903]  ? _raw_read_unlock_irqrestore+0x20/0x40
+[    5.384903]  ? srso_alias_return_thunk+0x5/0xfbef5
 
-Finally, since it is possible for a NIC to produce a xdp_buff with empty
-linear data area, allow it when calling bpf_test_init() from
-bpf_prog_test_run_xdp() so that we can test XDP kfuncs with such
-xdp_buff. This is done by moving lower-bound check to callers as most of
-them already do except bpf_prog_test_run_skb(). The change also fixes a
-bug that allows passing an xdp_buff with data < ETH_HLEN. This can
-happen when ctx is used and metadata is at least ETH_HLEN.
+The crash offset 296 corresponds to skb2->cb within skbuff_fclones:
+  - sizeof(struct sk_buff) = 232 - offsetof(struct sk_buff, cb) = 40 -
+  offset of skb2.cb in fclones = 232 + 40 = 272 - crash offset 296 =
+  272 + 24 (inside sock_exterr_skb.ee)
 
-Signed-off-by: Amery Hung <ameryhung@gmail.com>
-Signed-off-by: Martin KaFai Lau <martin.lau@kernel.org>
-Link: https://patch.msgid.link/20250922233356.3356453-7-ameryhung@gmail.com
-Stable-dep-of: e558cca21779 ("bpf, test_run: Subtract size of xdp_frame from allowed metadata size")
+This patch uses a local stack variable as a bounce buffer to avoid the hardened usercopy check failure.
+
+[1] https://elixir.bootlin.com/linux/v6.12.62/source/net/ipv4/tcp.c#L885
+[2] https://elixir.bootlin.com/linux/v6.12.62/source/net/core/skbuff.c#L5104
+[3] https://elixir.bootlin.com/linux/v6.12.62/source/net/core/skbuff.c#L5566
+[4] https://elixir.bootlin.com/linux/v6.12.62/source/net/core/skbuff.c#L5491
+[5] https://elixir.bootlin.com/linux/v6.12.62/source/mm/slub.c#L5719
+
+Fixes: 6d07d1cd300f ("usercopy: Restrict non-usercopy caches to size 0")
+Reported-by: Xiang Mei <xmei5@asu.edu>
+Signed-off-by: Weiming Shi <bestswngs@gmail.com>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Link: https://patch.msgid.link/20251223203534.1392218-2-bestswngs@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bpf/test_run.c                                | 15 ++++++++++++---
- .../bpf/prog_tests/xdp_context_test_run.c         |  4 +---
- 2 files changed, 13 insertions(+), 6 deletions(-)
+ net/core/sock.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/net/bpf/test_run.c b/net/bpf/test_run.c
-index c8b8ac6ecbc20..318ffd55cf608 100644
---- a/net/bpf/test_run.c
-+++ b/net/bpf/test_run.c
-@@ -660,7 +660,7 @@ static void *bpf_test_init(const union bpf_attr *kattr, u32 user_size,
- 	void __user *data_in = u64_to_user_ptr(kattr->test.data_in);
- 	void *data;
- 
--	if (user_size < ETH_HLEN || user_size > PAGE_SIZE - headroom - tailroom)
-+	if (user_size > PAGE_SIZE - headroom - tailroom)
- 		return ERR_PTR(-EINVAL);
- 
- 	size = SKB_DATA_ALIGN(size);
-@@ -995,6 +995,9 @@ int bpf_prog_test_run_skb(struct bpf_prog *prog, const union bpf_attr *kattr,
- 	    kattr->test.cpu || kattr->test.batch_size)
- 		return -EINVAL;
- 
-+	if (size < ETH_HLEN)
-+		return -EINVAL;
-+
- 	data = bpf_test_init(kattr, kattr->test.data_size_in,
- 			     size, NET_SKB_PAD + NET_IP_ALIGN,
- 			     SKB_DATA_ALIGN(sizeof(struct skb_shared_info)));
-@@ -1200,7 +1203,7 @@ int bpf_prog_test_run_xdp(struct bpf_prog *prog, const union bpf_attr *kattr,
+diff --git a/net/core/sock.c b/net/core/sock.c
+index 97cc796a1d334..58f3f0d979540 100644
+--- a/net/core/sock.c
++++ b/net/core/sock.c
+@@ -3769,7 +3769,7 @@ void sock_enable_timestamp(struct sock *sk, enum sock_flags flag)
+ int sock_recv_errqueue(struct sock *sk, struct msghdr *msg, int len,
+ 		       int level, int type)
  {
- 	bool do_live = (kattr->test.flags & BPF_F_TEST_XDP_LIVE_FRAMES);
- 	u32 tailroom = SKB_DATA_ALIGN(sizeof(struct skb_shared_info));
--	u32 retval = 0, duration, max_linear_sz, size;
-+	u32 retval = 0, meta_sz = 0, duration, max_linear_sz, size;
- 	u32 linear_sz = kattr->test.data_size_in;
- 	u32 batch_size = kattr->test.batch_size;
- 	u32 headroom = XDP_PACKET_HEADROOM;
-@@ -1239,13 +1242,16 @@ int bpf_prog_test_run_xdp(struct bpf_prog *prog, const union bpf_attr *kattr,
+-	struct sock_exterr_skb *serr;
++	struct sock_extended_err ee;
+ 	struct sk_buff *skb;
+ 	int copied, err;
  
- 	if (ctx) {
- 		/* There can't be user provided data before the meta data */
--		if (ctx->data_meta || ctx->data_end != kattr->test.data_size_in ||
-+		if (ctx->data_meta || ctx->data_end > kattr->test.data_size_in ||
- 		    ctx->data > ctx->data_end ||
- 		    unlikely(xdp_metalen_invalid(ctx->data)) ||
- 		    (do_live && (kattr->test.data_out || kattr->test.ctx_out)))
- 			goto free_ctx;
- 		/* Meta data is allocated from the headroom */
- 		headroom -= ctx->data;
-+
-+		meta_sz = ctx->data;
-+		linear_sz = ctx->data_end;
- 	}
+@@ -3789,8 +3789,9 @@ int sock_recv_errqueue(struct sock *sk, struct msghdr *msg, int len,
  
- 	max_linear_sz = PAGE_SIZE - headroom - tailroom;
-@@ -1255,6 +1261,9 @@ int bpf_prog_test_run_xdp(struct bpf_prog *prog, const union bpf_attr *kattr,
- 	if (do_live && kattr->test.data_size_in > linear_sz)
- 		goto free_ctx;
+ 	sock_recv_timestamp(msg, sk, skb);
  
-+	if (kattr->test.data_size_in - meta_sz < ETH_HLEN)
-+		return -EINVAL;
-+
- 	data = bpf_test_init(kattr, linear_sz, max_linear_sz, headroom, tailroom);
- 	if (IS_ERR(data)) {
- 		ret = PTR_ERR(data);
-diff --git a/tools/testing/selftests/bpf/prog_tests/xdp_context_test_run.c b/tools/testing/selftests/bpf/prog_tests/xdp_context_test_run.c
-index e6a783c7f5db9..cd43d6616dd2d 100644
---- a/tools/testing/selftests/bpf/prog_tests/xdp_context_test_run.c
-+++ b/tools/testing/selftests/bpf/prog_tests/xdp_context_test_run.c
-@@ -80,9 +80,7 @@ void test_xdp_context_test_run(void)
- 	/* Meta data must be 255 bytes or smaller */
- 	test_xdp_context_error(prog_fd, opts, 0, 256, sizeof(data), 0, 0, 0);
+-	serr = SKB_EXT_ERR(skb);
+-	put_cmsg(msg, level, type, sizeof(serr->ee), &serr->ee);
++	/* We must use a bounce buffer for CONFIG_HARDENED_USERCOPY=y */
++	ee = SKB_EXT_ERR(skb)->ee;
++	put_cmsg(msg, level, type, sizeof(ee), &ee);
  
--	/* Total size of data must match data_end - data_meta */
--	test_xdp_context_error(prog_fd, opts, 0, sizeof(__u32),
--			       sizeof(data) - 1, 0, 0, 0);
-+	/* Total size of data must be data_end - data_meta or larger */
- 	test_xdp_context_error(prog_fd, opts, 0, sizeof(__u32),
- 			       sizeof(data) + 1, 0, 0, 0);
- 
+ 	msg->msg_flags |= MSG_ERRQUEUE;
+ 	err = copied;
 -- 
 2.51.0
 
