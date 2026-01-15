@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F1E93BF303;
-	Thu, 15 Jan 2026 17:06:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C5623BF319;
+	Thu, 15 Jan 2026 17:06:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768496796; cv=none; b=nEb/kJPjZCELULVjgWuGodaUNJ87e2qrd7iZdSGEhdel8EOERXBvfFLEoyab04zbtJf/JOuROFQ+HUN2a0uJUpX2Trnul9wdOMYyD+44o120Aq73qwOU1Sk99Q3EC/yXqYkdHfYN4tfRvhWxzjQBTqXVdqf16pDJK/+1rdyRzF8=
+	t=1768496799; cv=none; b=ddi0flAYQpR829cRrglEp67MyrFjodSJZeYr+GZLDt8FjxfQIWQgMkQ0lXXOV+f+ee5cjNQjuK18bL4YimdUganvCzWgkLqg++FcQ9g42s0YpMHc+t4EdfzZcXTYctFgQNNM7a/AKukN1pJwVO5zwYPKrWm0dsaPQYzhGI47Bbs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768496796; c=relaxed/simple;
-	bh=6JaJkqqQmLaNHVGQ+X/RftHv5aEkrHG9yY3EerSf+Yc=;
+	s=arc-20240116; t=1768496799; c=relaxed/simple;
+	bh=a/iK5FTWomllkG5nZzHmYW17FZcV+mHDU9oLIXgdaJ8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=u/tIYYJ7ig5linfm9vxNEnC/AJmojqedhCuQFH8U/qygeepSVr6Wfjv5dmd6JLW+diKYWB4pRJaxvidMJOQ03b2tP56xBna/bffU5ePUjiXof1xtDEVec3iLByhjBoBQDuXC+PgKgZhkMbofekdzRNg4hjs2fpDw86hkuFazmbY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2eWF1JrQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SGjcNY9xzx+gfPPfu3+3fZaEKkOt3RQpoSWbF4wbc+/NBS/u343qUzpBeg+2hdfIHYAfDTQWdGUxO8ybIkjhlgyPCYpwi0n9xDV3hjFBngBEEQj1vDEftBHjkJmostKycmj/3+vs5MkoxIRzqV4cGXuq1yDberLIl2rR+h9hlus=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Xs6M7aQR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2eWF1JrQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E1CBCC116D0;
-	Thu, 15 Jan 2026 17:06:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Xs6M7aQR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B936FC16AAE;
+	Thu, 15 Jan 2026 17:06:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1768496796;
-	bh=6JaJkqqQmLaNHVGQ+X/RftHv5aEkrHG9yY3EerSf+Yc=;
+	s=korg; t=1768496799;
+	bh=a/iK5FTWomllkG5nZzHmYW17FZcV+mHDU9oLIXgdaJ8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2eWF1JrQM+lQJTCArFJX9C8j2dAlJFu8Zj034TUiiHnl019EPVhFMWr0EiuOeCPFz
-	 NJZ1whC1OaCQtIA7mSnn/LtO2YbRmmYaMKM57QXVVN8ODsabTEUK4dkw1PMC0fIIB1
-	 xTVTk3cRIXk5WSOln8Bs06CBy5QyFVdbUQZquCP8=
+	b=Xs6M7aQRNB1Vsoc3gKUudK5H28AI0aSw5Vqa0w+1PAZwlQUKmnsl7pKAXlgv3pSMJ
+	 V7lHV27knCzu58Y2ODfX/ri8hM+DRn/1UeDisfO/zaVMe2enmGkZOn2pU+1ZLsdirp
+	 DUXNJuHF2TrVCWXNIFSSX2OCefnNdgkUU2dWvpMs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sam Edwards <CFSworks@gmail.com>,
-	Ilya Dryomov <idryomov@gmail.com>
-Subject: [PATCH 6.6 19/88] libceph: reset sparse-read state in osd_fault()
-Date: Thu, 15 Jan 2026 17:48:02 +0100
-Message-ID: <20260115164147.011602456@linuxfoundation.org>
+	Raphael Zimmer <raphael.zimmer@tu-ilmenau.de>,
+	Ilya Dryomov <idryomov@gmail.com>,
+	Viacheslav Dubeyko <Slava.Dubeyko@ibm.com>
+Subject: [PATCH 6.6 20/88] libceph: make calc_target() set t->paused, not just clear it
+Date: Thu, 15 Jan 2026 17:48:03 +0100
+Message-ID: <20260115164147.047044596@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260115164146.312481509@linuxfoundation.org>
 References: <20260115164146.312481509@linuxfoundation.org>
@@ -50,51 +51,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sam Edwards <cfsworks@gmail.com>
+From: Ilya Dryomov <idryomov@gmail.com>
 
-commit 11194b416ef95012c2cfe5f546d71af07b639e93 upstream.
+commit c0fe2994f9a9d0a2ec9e42441ea5ba74b6a16176 upstream.
 
-When a fault occurs, the connection is abandoned, reestablished, and any
-pending operations are retried. The OSD client tracks the progress of a
-sparse-read reply using a separate state machine, largely independent of
-the messenger's state.
+Currently calc_target() clears t->paused if the request shouldn't be
+paused anymore, but doesn't ever set t->paused even though it's able to
+determine when the request should be paused.  Setting t->paused is left
+to __submit_request() which is fine for regular requests but doesn't
+work for linger requests -- since __submit_request() doesn't operate
+on linger requests, there is nowhere for lreq->t.paused to be set.
+One consequence of this is that watches don't get reestablished on
+paused -> unpaused transitions in cases where requests have been paused
+long enough for the (paused) unwatch request to time out and for the
+subsequent (re)watch request to enter the paused state.  On top of the
+watch not getting reestablished, rbd_reregister_watch() gets stuck with
+rbd_dev->watch_mutex held:
 
-If a connection is lost mid-payload or the sparse-read state machine
-returns an error, the sparse-read state is not reset. The OSD client
-will then interpret the beginning of a new reply as the continuation of
-the old one. If this makes the sparse-read machinery enter a failure
-state, it may never recover, producing loops like:
+  rbd_register_watch
+    __rbd_register_watch
+      ceph_osdc_watch
+        linger_reg_commit_wait
 
-  libceph:  [0] got 0 extents
-  libceph: data len 142248331 != extent len 0
-  libceph: osd0 (1)...:6801 socket error on read
-  libceph: data len 142248331 != extent len 0
-  libceph: osd0 (1)...:6801 socket error on read
+It's waiting for lreq->reg_commit_wait to be completed, but for that to
+happen the respective request needs to end up on need_resend_linger list
+and be kicked when requests are unpaused.  There is no chance for that
+if the request in question is never marked paused in the first place.
 
-Therefore, reset the sparse-read state in osd_fault(), ensuring retries
-start from a clean state.
+The fact that rbd_dev->watch_mutex remains taken out forever then
+prevents the image from getting unmapped -- "rbd unmap" would inevitably
+hang in D state on an attempt to grab the mutex.
 
 Cc: stable@vger.kernel.org
-Fixes: f628d7999727 ("libceph: add sparse read support to OSD client")
-Signed-off-by: Sam Edwards <CFSworks@gmail.com>
-Reviewed-by: Ilya Dryomov <idryomov@gmail.com>
+Reported-by: Raphael Zimmer <raphael.zimmer@tu-ilmenau.de>
 Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
+Reviewed-by: Viacheslav Dubeyko <Slava.Dubeyko@ibm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ceph/osd_client.c |    3 +++
- 1 file changed, 3 insertions(+)
+ net/ceph/osd_client.c |   11 +++++++++--
+ 1 file changed, 9 insertions(+), 2 deletions(-)
 
 --- a/net/ceph/osd_client.c
 +++ b/net/ceph/osd_client.c
-@@ -4306,6 +4306,9 @@ static void osd_fault(struct ceph_connec
- 		goto out_unlock;
- 	}
+@@ -1611,6 +1611,7 @@ static enum calc_target_result calc_targ
+ 	struct ceph_pg_pool_info *pi;
+ 	struct ceph_pg pgid, last_pgid;
+ 	struct ceph_osds up, acting;
++	bool should_be_paused;
+ 	bool is_read = t->flags & CEPH_OSD_FLAG_READ;
+ 	bool is_write = t->flags & CEPH_OSD_FLAG_WRITE;
+ 	bool force_resend = false;
+@@ -1679,10 +1680,16 @@ static enum calc_target_result calc_targ
+ 				 &last_pgid))
+ 		force_resend = true;
  
-+	osd->o_sparse_op_idx = -1;
-+	ceph_init_sparse_read(&osd->o_sparse_read);
+-	if (t->paused && !target_should_be_paused(osdc, t, pi)) {
+-		t->paused = false;
++	should_be_paused = target_should_be_paused(osdc, t, pi);
++	if (t->paused && !should_be_paused) {
+ 		unpaused = true;
+ 	}
++	if (t->paused != should_be_paused) {
++		dout("%s t %p paused %d -> %d\n", __func__, t, t->paused,
++		     should_be_paused);
++		t->paused = should_be_paused;
++	}
 +
- 	if (!reopen_osd(osd))
- 		kick_osd_requests(osd);
- 	maybe_request_map(osdc);
+ 	legacy_change = ceph_pg_compare(&t->pgid, &pgid) ||
+ 			ceph_osds_changed(&t->acting, &acting,
+ 					  t->used_replica || any_change);
 
 
