@@ -1,38 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11FA53C1997;
-	Thu, 15 Jan 2026 17:52:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E6E73D4115;
+	Thu, 15 Jan 2026 17:52:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768499525; cv=none; b=oedJlKIDMwF0oTt5XRm0X4bAnO4xsoh1f5tHbbB6LAvO20vGscJo7xytLK2A+bn1Sc/TjJggxGKH3ZTk3sDSPkv8S5QpruFM7D5e2VlD8OPevUt3PHOyM0zb5yMqDbOCW61Naeui5kH8tay8XvTkTxcqetTGZXIV5nL6C7+nT1g=
+	t=1768499528; cv=none; b=rHc8OQL9WC5XIzCc+77x+3XnfBU6I6ylSNAC1YGMKPZVHbI/NbjBZq8PSpHIBvLiyVRxcYOv0sQA/etoEo0jKKHCtzw2hwRCmw5XymeMhcjY5TqYC7rxMwUDXJvS0LPTriBvrBPvBSHbT1VHza81l1/NA5kDqM3SixLvqaboeX0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768499525; c=relaxed/simple;
-	bh=JRqKV84frnULDlOTsc7ps3KtKzW/UUzPABsQI9R/zng=;
+	s=arc-20240116; t=1768499528; c=relaxed/simple;
+	bh=MsAXkm1gGHrr4ARuAs+MNlP9qxa1WNSGyXWTz7P/9Xk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=YdXc9UID25cKxa9HV8Dsc2ji/7oPp8WB5lwlLEMYZgEP5gCw6MM7KHawn68RpDXmGxf2M7PhY/H4/rxJqWGbWf55Cu/Nz1ll9y/H020YXT1VTo9ebm9xPkunThJP+avuzuwxFLtHivtOUB7evTA0BBR6wJMLBAZZAk2Ay6PNxcQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qXvjJkHN; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Z2nQIUKenuxANperi8Tw1w16O85seI8YcunvPeoovEBgl3Rd9YWk3gx52C8BsCl7c/J6OwUfVIrBECrk8aXvOwvBRSzNi1sBxyg7Fr8Mqo0HiNrgGmP6LHTCwPD5Z4fBWlEGyk+3W3rOTrvVYnzih/Nz4/O7ktPW7bmXjU2eh0g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DL1GMY9B; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qXvjJkHN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7AF5EC16AAE;
-	Thu, 15 Jan 2026 17:52:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DL1GMY9B"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 53A06C16AAE;
+	Thu, 15 Jan 2026 17:52:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1768499524;
-	bh=JRqKV84frnULDlOTsc7ps3KtKzW/UUzPABsQI9R/zng=;
+	s=korg; t=1768499527;
+	bh=MsAXkm1gGHrr4ARuAs+MNlP9qxa1WNSGyXWTz7P/9Xk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qXvjJkHN0DOreiYDC+rWYjIPwxgiM4xknJfaaL8Xh2ubE9YmCe/uJbty8WfdtSUOv
-	 8dOjZxRekKyqxaVPSPnql3ntsI9peRQ16s4Kr7bGyyxGLlf2RyrihBMOpQinhj8bxT
-	 3pSqDYJsKs1j2kD/L+313+2pG4M7jpSZSgY1Wm/U=
+	b=DL1GMY9BWWBURvJY5BNi2ULVklhAuIEE7WSYU4hz0aOLefsM1QhI2GdaP/EUO1ojn
+	 orpP2vAvREh/M5OWH/dgrW0LVoyWNCX3faWnCsl1kmEO9kib+rFASkrwoFPKNfm79h
+	 IuYx5HVpNYsVrNXOaX38ols3LM8Dv1Uef/5zDz3E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jim Mattson <jmattson@google.com>,
-	Yosry Ahmed <yosry.ahmed@linux.dev>,
-	Sean Christopherson <seanjc@google.com>
-Subject: [PATCH 5.10 257/451] KVM: nSVM: Set exit_code_hi to -1 when synthesizing SVM_EXIT_ERR (failed VMRUN)
-Date: Thu, 15 Jan 2026 17:47:38 +0100
-Message-ID: <20260115164240.185652119@linuxfoundation.org>
+	Masami Hiramatsu <mhiramat@kernel.org>,
+	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
+	Arnaldo Carvalho de Melo <acme@kernel.org>,
+	Jiri Olsa <jolsa@kernel.org>,
+	Namhyung Kim <namhyung@kernel.org>,
+	Ian Rogers <irogers@google.com>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>
+Subject: [PATCH 5.10 258/451] tracing: Do not register unsupported perf events
+Date: Thu, 15 Jan 2026 17:47:39 +0100
+Message-ID: <20260115164240.221086818@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260115164230.864985076@linuxfoundation.org>
 References: <20260115164230.864985076@linuxfoundation.org>
@@ -45,69 +49,88 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Sean Christopherson <seanjc@google.com>
+From: Steven Rostedt <rostedt@goodmis.org>
 
-commit f402ecd7a8b6446547076f4bd24bd5d4dcc94481 upstream.
+commit ef7f38df890f5dcd2ae62f8dbde191d72f3bebae upstream.
 
-Set exit_code_hi to -1u as a temporary band-aid to fix a long-standing
-(effectively since KVM's inception) bug where KVM treats the exit code as
-a 32-bit value, when in reality it's a 64-bit value.  Per the APM, offset
-0x70 is a single 64-bit value:
+Synthetic events currently do not have a function to register perf events.
+This leads to calling the tracepoint register functions with a NULL
+function pointer which triggers:
 
-  070h 63:0 EXITCODE
+ ------------[ cut here ]------------
+ WARNING: kernel/tracepoint.c:175 at tracepoint_add_func+0x357/0x370, CPU#2: perf/2272
+ Modules linked in: kvm_intel kvm irqbypass
+ CPU: 2 UID: 0 PID: 2272 Comm: perf Not tainted 6.18.0-ftest-11964-ge022764176fc-dirty #323 PREEMPTLAZY
+ Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS 1.17.0-debian-1.17.0-1 04/01/2014
+ RIP: 0010:tracepoint_add_func+0x357/0x370
+ Code: 28 9c e8 4c 0b f5 ff eb 0f 4c 89 f7 48 c7 c6 80 4d 28 9c e8 ab 89 f4 ff 31 c0 5b 41 5c 41 5d 41 5e 41 5f 5d c3 cc cc cc cc cc <0f> 0b 49 c7 c6 ea ff ff ff e9 ee fe ff ff 0f 0b e9 f9 fe ff ff 0f
+ RSP: 0018:ffffabc0c44d3c40 EFLAGS: 00010246
+ RAX: 0000000000000001 RBX: ffff9380aa9e4060 RCX: 0000000000000000
+ RDX: 000000000000000a RSI: ffffffff9e1d4a98 RDI: ffff937fcf5fd6c8
+ RBP: 0000000000000001 R08: 0000000000000007 R09: ffff937fcf5fc780
+ R10: 0000000000000003 R11: ffffffff9c193910 R12: 000000000000000a
+ R13: ffffffff9e1e5888 R14: 0000000000000000 R15: ffffabc0c44d3c78
+ FS:  00007f6202f5f340(0000) GS:ffff93819f00f000(0000) knlGS:0000000000000000
+ CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+ CR2: 000055d3162281a8 CR3: 0000000106a56003 CR4: 0000000000172ef0
+ Call Trace:
+  <TASK>
+  tracepoint_probe_register+0x5d/0x90
+  synth_event_reg+0x3c/0x60
+  perf_trace_event_init+0x204/0x340
+  perf_trace_init+0x85/0xd0
+  perf_tp_event_init+0x2e/0x50
+  perf_try_init_event+0x6f/0x230
+  ? perf_event_alloc+0x4bb/0xdc0
+  perf_event_alloc+0x65a/0xdc0
+  __se_sys_perf_event_open+0x290/0x9f0
+  do_syscall_64+0x93/0x7b0
+  ? entry_SYSCALL_64_after_hwframe+0x76/0x7e
+  ? trace_hardirqs_off+0x53/0xc0
+  entry_SYSCALL_64_after_hwframe+0x76/0x7e
 
-And a sane reading of the error values defined in "Table C-1. SVM Intercept
-Codes" is that negative values use the full 64 bits:
+Instead, have the code return -ENODEV, which doesn't warn and has perf
+error out with:
 
-  –1 VMEXIT_INVALID Invalid guest state in VMCB.
-  –2 VMEXIT_BUSYBUSY bit was set in the VMSA
-  –3 VMEXIT_IDLE_REQUIREDThe sibling thread is not in an idle state
-  -4 VMEXIT_INVALID_PMC Invalid PMC state
+ # perf record -e synthetic:futex_wait
+Error:
+The sys_perf_event_open() syscall returned with 19 (No such device) for event (synthetic:futex_wait).
+"dmesg | grep -i perf" may provide additional information.
 
-And that interpretation is confirmed by testing on Milan and Turin (by
-setting bits in CR0[63:32] to generate VMEXIT_INVALID on VMRUN).
+Ideally perf should support synthetic events, but for now just fix the
+warning. The support can come later.
 
-Furthermore, Xen has treated exitcode as a 64-bit value since HVM support
-was adding in 2006 (see Xen commit d1bd157fbc ("Big merge the HVM
-full-virtualisation abstractions.")).
-
-Cc: Jim Mattson <jmattson@google.com>
-Cc: Yosry Ahmed <yosry.ahmed@linux.dev>
 Cc: stable@vger.kernel.org
-Reviewed-by: Yosry Ahmed <yosry.ahmed@linux.dev>
-Link: https://patch.msgid.link/20251113225621.1688428-3-seanjc@google.com
-Signed-off-by: Sean Christopherson <seanjc@google.com>
+Cc: Masami Hiramatsu <mhiramat@kernel.org>
+Cc: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
+Cc: Arnaldo Carvalho de Melo <acme@kernel.org>
+Cc: Jiri Olsa <jolsa@kernel.org>
+Cc: Namhyung Kim <namhyung@kernel.org>
+Link: https://patch.msgid.link/20251216182440.147e4453@gandalf.local.home
+Fixes: 4b147936fa509 ("tracing: Add support for 'synthetic' events")
+Reported-by: Ian Rogers <irogers@google.com>
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kvm/svm/nested.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ kernel/trace/trace_events.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/arch/x86/kvm/svm/nested.c
-+++ b/arch/x86/kvm/svm/nested.c
-@@ -528,7 +528,7 @@ int nested_svm_vmrun(struct vcpu_svm *sv
- 	if (!nested_vmcb_check_save(svm, vmcb12) ||
- 	    !nested_vmcb_check_controls(&svm->nested.ctl)) {
- 		vmcb12->control.exit_code    = SVM_EXIT_ERR;
--		vmcb12->control.exit_code_hi = 0;
-+		vmcb12->control.exit_code_hi = -1u;
- 		vmcb12->control.exit_info_1  = 0;
- 		vmcb12->control.exit_info_2  = 0;
- 		goto out;
-@@ -587,7 +587,7 @@ out_exit_err:
- 	svm->nested.nested_run_pending = 0;
+--- a/kernel/trace/trace_events.c
++++ b/kernel/trace/trace_events.c
+@@ -303,6 +303,8 @@ int trace_event_reg(struct trace_event_c
  
- 	svm->vmcb->control.exit_code    = SVM_EXIT_ERR;
--	svm->vmcb->control.exit_code_hi = 0;
-+	svm->vmcb->control.exit_code_hi = -1u;
- 	svm->vmcb->control.exit_info_1  = 0;
- 	svm->vmcb->control.exit_info_2  = 0;
- 
+ #ifdef CONFIG_PERF_EVENTS
+ 	case TRACE_REG_PERF_REGISTER:
++		if (!call->class->perf_probe)
++			return -ENODEV;
+ 		return tracepoint_probe_register(call->tp,
+ 						 call->class->perf_probe,
+ 						 call);
 
 
