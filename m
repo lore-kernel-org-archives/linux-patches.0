@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 529653BF2F0;
-	Thu, 15 Jan 2026 17:09:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D59C63A1CE4;
+	Thu, 15 Jan 2026 17:09:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768496995; cv=none; b=Y6ChjSamsI6bAaPoFukO1WhKofW30gH4bCJpKoMITZZOFkHnDIdMSWeddmlZRPxGZ/UJjMNeWjZirGiDRXKIg3PF1Xg2wiPtCK1GfYDzU4sE7Xts4i1LVr3PZ6i2O4zNIhdTZpkLrW0MPQpegPpxt92CQ0XwnDRjR6geBngxsK4=
+	t=1768496997; cv=none; b=Gzdo90Phl7NerfFZaKzweTYYOabLTTbecrIy7Wm1LSunZxcDj8jMLBFZc+eZM+T8Pib+y7QwjbcWuGysKzZwDJTiiWEbEl/jSP1DzjbYKk8YlWTrRueoJ9vQs5cyx3fFVoNoJ7jxEjGda40bO73woZxBWMWLLSOIwr6HL4l9K38=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768496995; c=relaxed/simple;
-	bh=WSXGdt9WMHb3hU1r6XlYsQvRNKGsN3JK7hdThwjZwF8=;
+	s=arc-20240116; t=1768496997; c=relaxed/simple;
+	bh=EPfHaFGct54rP7DHQYr2EHpLl5YIvlSOPcuoXSSiK/Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=U4jN3wzFZCQYnF+j9w29vQBk+voZQq5OohHN3CBMvWaH7d0AnsLmDLIH9rOqfGp6rVEHtZYt585qv6SqbAB/hDKgIu94SKkUS/M9yRxMF7QxHJ2GnA/AxMW0EnIXBU7D0vToImXBH6VZWtRI4Acw6wZJ2PFRR09iQBixspP9lu4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=N6Jy0tTl; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=oekVGPFhh9IgNzL0z5oYCpYjPZ9wPdzjiTqArXEHeF9FXzSd0WQazww6wNqFV7DGIOq48ehmuN9LfbW0ayRpty/Uu4Y0IS+DwscsGR3bUSocKsG+1i1NthweUgfSYwXUCYM0vyJVQ1QjHCLQQ+2L1c7CQ2V/LzaULWR5iDssYi0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WAYd+hsm; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="N6Jy0tTl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 86AB9C116D0;
-	Thu, 15 Jan 2026 17:09:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WAYd+hsm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E866C19423;
+	Thu, 15 Jan 2026 17:09:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1768496994;
-	bh=WSXGdt9WMHb3hU1r6XlYsQvRNKGsN3JK7hdThwjZwF8=;
+	s=korg; t=1768496997;
+	bh=EPfHaFGct54rP7DHQYr2EHpLl5YIvlSOPcuoXSSiK/Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=N6Jy0tTlKDOv9SUPiZhmEQhXKaA3FH4RBFhTeH90xOZQr9tUWXDnCU/4j0GtT5B2H
-	 hV5HyljHcsbhOa2BhRMSzzFbR4fmqdf4r8Qqv/+Qf5YYhT222mz5HPOufHylE+nzuj
-	 JLKMgiVEjIOK83z7WWg7dXpNDzwKtqSQ/f9CTaJk=
+	b=WAYd+hsmuemRQZxm99hI9fPIfollbOoCmWTw4vkDVfrE3rnoB3b0t5Ulrqelr5mA+
+	 MkxShIVn6xlrAi/erAvBuOpWMgzl78P2uikewmIdr1EnnQbHEyxcM33KLhgWFROf4c
+	 ddG0y9tsyZPHZ7IYvay57451iKmgU9Aco2piuLR0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Yinhao Hu <dddddd@hust.edu.cn>,
+	Kaiyan Mei <M202472210@hust.edu.cn>,
+	=?UTF-8?q?Toke=20H=C3=B8iland-J=C3=B8rgensen?= <toke@redhat.com>,
 	Amery Hung <ameryhung@gmail.com>,
-	Martin KaFai Lau <martin.lau@kernel.org>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 75/88] bpf: Support specifying linear xdp packet data size for BPF_PROG_TEST_RUN
-Date: Thu, 15 Jan 2026 17:48:58 +0100
-Message-ID: <20260115164149.034032220@linuxfoundation.org>
+Subject: [PATCH 6.6 76/88] bpf, test_run: Subtract size of xdp_frame from allowed metadata size
+Date: Thu, 15 Jan 2026 17:48:59 +0100
+Message-ID: <20260115164149.069355729@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260115164146.312481509@linuxfoundation.org>
 References: <20260115164146.312481509@linuxfoundation.org>
@@ -45,132 +48,88 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Amery Hung <ameryhung@gmail.com>
+From: Toke Høiland-Jørgensen <toke@redhat.com>
 
-[ Upstream commit fe9544ed1a2e9217b2c5285c3a4ac0dc5a38bd7b ]
+[ Upstream commit e558cca217790286e799a8baacd1610bda31b261 ]
 
-To test bpf_xdp_pull_data(), an xdp packet containing fragments as well
-as free linear data area after xdp->data_end needs to be created.
-However, bpf_prog_test_run_xdp() always fills the linear area with
-data_in before creating fragments, leaving no space to pull data. This
-patch will allow users to specify the linear data size through
-ctx->data_end.
+The xdp_frame structure takes up part of the XDP frame headroom,
+limiting the size of the metadata. However, in bpf_test_run, we don't
+take this into account, which makes it possible for userspace to supply
+a metadata size that is too large (taking up the entire headroom).
 
-Currently, ctx_in->data_end must match data_size_in and will not be the
-final ctx->data_end seen by xdp programs. This is because ctx->data_end
-is populated according to the xdp_buff passed to test_run. The linear
-data area available in an xdp_buff, max_linear_sz, is alawys filled up
-before copying data_in into fragments.
+If userspace supplies such a large metadata size in live packet mode,
+the xdp_update_frame_from_buff() call in xdp_test_run_init_page() call
+will fail, after which packet transmission proceeds with an
+uninitialised frame structure, leading to the usual Bad Stuff.
 
-This patch will allow users to specify the size of data that goes into
-the linear area. When ctx_in->data_end is different from data_size_in,
-only ctx_in->data_end bytes of data will be put into the linear area when
-creating the xdp_buff.
+The commit in the Fixes tag fixed a related bug where the second check
+in xdp_update_frame_from_buff() could fail, but did not add any
+additional constraints on the metadata size. Complete the fix by adding
+an additional check on the metadata size. Reorder the checks slightly to
+make the logic clearer and add a comment.
 
-While ctx_in->data_end will be allowed to be different from data_size_in,
-it cannot be larger than the data_size_in as there will be no data to
-copy from user space. If it is larger than the maximum linear data area
-size, the layout suggested by the user will not be honored. Data beyond
-max_linear_sz bytes will still be copied into fragments.
-
-Finally, since it is possible for a NIC to produce a xdp_buff with empty
-linear data area, allow it when calling bpf_test_init() from
-bpf_prog_test_run_xdp() so that we can test XDP kfuncs with such
-xdp_buff. This is done by moving lower-bound check to callers as most of
-them already do except bpf_prog_test_run_skb(). The change also fixes a
-bug that allows passing an xdp_buff with data < ETH_HLEN. This can
-happen when ctx is used and metadata is at least ETH_HLEN.
-
-Signed-off-by: Amery Hung <ameryhung@gmail.com>
-Signed-off-by: Martin KaFai Lau <martin.lau@kernel.org>
-Link: https://patch.msgid.link/20250922233356.3356453-7-ameryhung@gmail.com
-Stable-dep-of: e558cca21779 ("bpf, test_run: Subtract size of xdp_frame from allowed metadata size")
+Link: https://lore.kernel.org/r/fa2be179-bad7-4ee3-8668-4903d1853461@hust.edu.cn
+Fixes: b6f1f780b393 ("bpf, test_run: Fix packet size check for live packet mode")
+Reported-by: Yinhao Hu <dddddd@hust.edu.cn>
+Reported-by: Kaiyan Mei <M202472210@hust.edu.cn>
+Signed-off-by: Toke Høiland-Jørgensen <toke@redhat.com>
+Reviewed-by: Amery Hung <ameryhung@gmail.com>
+Link: https://lore.kernel.org/r/20260105114747.1358750-1-toke@redhat.com
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bpf/test_run.c                                | 15 ++++++++++++---
- .../bpf/prog_tests/xdp_context_test_run.c         |  4 +---
- 2 files changed, 13 insertions(+), 6 deletions(-)
+ net/bpf/test_run.c | 18 +++++++++++++-----
+ 1 file changed, 13 insertions(+), 5 deletions(-)
 
 diff --git a/net/bpf/test_run.c b/net/bpf/test_run.c
-index 1e598c858a145..b4a912ed8f2ec 100644
+index b4a912ed8f2ec..1989d239939b1 100644
 --- a/net/bpf/test_run.c
 +++ b/net/bpf/test_run.c
-@@ -630,7 +630,7 @@ static void *bpf_test_init(const union bpf_attr *kattr, u32 user_size,
- 	void __user *data_in = u64_to_user_ptr(kattr->test.data_in);
- 	void *data;
- 
--	if (user_size < ETH_HLEN || user_size > PAGE_SIZE - headroom - tailroom)
-+	if (user_size > PAGE_SIZE - headroom - tailroom)
- 		return ERR_PTR(-EINVAL);
- 
- 	size = SKB_DATA_ALIGN(size);
-@@ -964,6 +964,9 @@ int bpf_prog_test_run_skb(struct bpf_prog *prog, const union bpf_attr *kattr,
- 	if (kattr->test.flags || kattr->test.cpu || kattr->test.batch_size)
+@@ -1174,8 +1174,6 @@ int bpf_prog_test_run_xdp(struct bpf_prog *prog, const union bpf_attr *kattr,
+ 			batch_size = NAPI_POLL_WEIGHT;
+ 		else if (batch_size > TEST_XDP_MAX_BATCH)
+ 			return -E2BIG;
+-
+-		headroom += sizeof(struct xdp_page_head);
+ 	} else if (batch_size) {
  		return -EINVAL;
- 
-+	if (size < ETH_HLEN)
-+		return -EINVAL;
-+
- 	data = bpf_test_init(kattr, kattr->test.data_size_in,
- 			     size, NET_SKB_PAD + NET_IP_ALIGN,
- 			     SKB_DATA_ALIGN(sizeof(struct skb_shared_info)));
-@@ -1144,7 +1147,7 @@ int bpf_prog_test_run_xdp(struct bpf_prog *prog, const union bpf_attr *kattr,
- {
- 	bool do_live = (kattr->test.flags & BPF_F_TEST_XDP_LIVE_FRAMES);
- 	u32 tailroom = SKB_DATA_ALIGN(sizeof(struct skb_shared_info));
--	u32 retval = 0, duration, max_linear_sz, size;
-+	u32 retval = 0, meta_sz = 0, duration, max_linear_sz, size;
- 	u32 linear_sz = kattr->test.data_size_in;
- 	u32 batch_size = kattr->test.batch_size;
- 	u32 headroom = XDP_PACKET_HEADROOM;
-@@ -1183,13 +1186,16 @@ int bpf_prog_test_run_xdp(struct bpf_prog *prog, const union bpf_attr *kattr,
- 
- 	if (ctx) {
+ 	}
+@@ -1188,16 +1186,26 @@ int bpf_prog_test_run_xdp(struct bpf_prog *prog, const union bpf_attr *kattr,
  		/* There can't be user provided data before the meta data */
--		if (ctx->data_meta || ctx->data_end != kattr->test.data_size_in ||
-+		if (ctx->data_meta || ctx->data_end > kattr->test.data_size_in ||
+ 		if (ctx->data_meta || ctx->data_end > kattr->test.data_size_in ||
  		    ctx->data > ctx->data_end ||
- 		    unlikely(xdp_metalen_invalid(ctx->data)) ||
+-		    unlikely(xdp_metalen_invalid(ctx->data)) ||
  		    (do_live && (kattr->test.data_out || kattr->test.ctx_out)))
  			goto free_ctx;
- 		/* Meta data is allocated from the headroom */
- 		headroom -= ctx->data;
+-		/* Meta data is allocated from the headroom */
+-		headroom -= ctx->data;
+ 
+ 		meta_sz = ctx->data;
++		if (xdp_metalen_invalid(meta_sz) || meta_sz > headroom - sizeof(struct xdp_frame))
++			goto free_ctx;
 +
-+		meta_sz = ctx->data;
-+		linear_sz = ctx->data_end;
++		/* Meta data is allocated from the headroom */
++		headroom -= meta_sz;
+ 		linear_sz = ctx->data_end;
  	}
  
- 	max_linear_sz = PAGE_SIZE - headroom - tailroom;
-@@ -1199,6 +1205,9 @@ int bpf_prog_test_run_xdp(struct bpf_prog *prog, const union bpf_attr *kattr,
- 	if (do_live && kattr->test.data_size_in > linear_sz)
- 		goto free_ctx;
- 
-+	if (kattr->test.data_size_in - meta_sz < ETH_HLEN)
-+		return -EINVAL;
++	/* The xdp_page_head structure takes up space in each page, limiting the
++         * size of the packet data; add the extra size to headroom here to make
++         * sure it's accounted in the length checks below, but not in the
++         * metadata size check above.
++         */
++        if (do_live)
++		headroom += sizeof(struct xdp_page_head);
 +
- 	data = bpf_test_init(kattr, linear_sz, max_linear_sz, headroom, tailroom);
- 	if (IS_ERR(data)) {
- 		ret = PTR_ERR(data);
-diff --git a/tools/testing/selftests/bpf/prog_tests/xdp_context_test_run.c b/tools/testing/selftests/bpf/prog_tests/xdp_context_test_run.c
-index ab4952b9fb1d4..eab8625aad3b6 100644
---- a/tools/testing/selftests/bpf/prog_tests/xdp_context_test_run.c
-+++ b/tools/testing/selftests/bpf/prog_tests/xdp_context_test_run.c
-@@ -80,9 +80,7 @@ void test_xdp_context_test_run(void)
- 	/* Meta data must be 32 bytes or smaller */
- 	test_xdp_context_error(prog_fd, opts, 0, 36, sizeof(data), 0, 0, 0);
- 
--	/* Total size of data must match data_end - data_meta */
--	test_xdp_context_error(prog_fd, opts, 0, sizeof(__u32),
--			       sizeof(data) - 1, 0, 0, 0);
-+	/* Total size of data must be data_end - data_meta or larger */
- 	test_xdp_context_error(prog_fd, opts, 0, sizeof(__u32),
- 			       sizeof(data) + 1, 0, 0, 0);
+ 	max_linear_sz = PAGE_SIZE - headroom - tailroom;
+ 	linear_sz = min_t(u32, linear_sz, max_linear_sz);
  
 -- 
 2.51.0
