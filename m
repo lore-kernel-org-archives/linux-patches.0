@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A3083D7D3D;
-	Thu, 15 Jan 2026 17:58:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16D9F3D348D;
+	Thu, 15 Jan 2026 17:58:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768499924; cv=none; b=gBS34Xx//fDTW49EP5azRp1nNvkBqcaPHXfqqyNMfOjXCQmt5u/zt9KlVSLugEFCn3aEui57ZtDwsdggB7sHjWXMzo25uDbyroT1eYk5to8X3jroBVcc2M/EM2X1wHmPfMCO35lAKQ9gL53tyQFu8jEQ1wK6dj1Tepyp5chRJa4=
+	t=1768499927; cv=none; b=fN54560siBPjx1AN9tQn9gePakWs3q9M5ZmwpcwUFk0BQ6GuxRn50iWobqskAClCirWK3Ne3qgMwHzlEoCjwtl7BojQGFHzzrPVWQX8pPqBkjLgpcfF+HFqU5+hRDSb1GUa0q9leClxoYy0WMgVv5lmp//ItJxl/gQVxy2BHJcg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768499924; c=relaxed/simple;
-	bh=u5KcNA3D5fUZL7QdjD8ONfnC2RfG4ELuOiYfwnj3fnQ=;
+	s=arc-20240116; t=1768499927; c=relaxed/simple;
+	bh=IIGAQPZxNo6JhDR/Y0x9jXaR30VFHnXcpeCBUGyWMMs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CLNrLeVpCJP2TRa0s7D8W6WlIGHDcq++cwpLAmNHbielKUyuk3CpJyikOgp/tHXvCBF9XqDLK6OXkNO+paY4ppqfiR3zRmYs0erzqzVoay84gFygxDA4CGa9Yc7fM6K9T1UtrKOH3XB/nG5nNLTCUbjzVupOHoxm0lEhou9dPcQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FIa8RyiD; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=iF8f0BJTsIs4A9TsCgZHUTXoARZc5ru73IQ5av8O/t92i54rMQzxW46G2W4Cjm4p3hYthhoSgkMsDhv+XAv1DV0QwBvVBaEGc/IQ3SIwRfDqmeKaO15NszyVlYI/l2N82ugA/Olr2ygMpuhUWOB7jHimepbjwOB82j71fR+I3lk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WkUEjvi9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FIa8RyiD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A8F56C116D0;
-	Thu, 15 Jan 2026 17:58:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WkUEjvi9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 70B53C19423;
+	Thu, 15 Jan 2026 17:58:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1768499924;
-	bh=u5KcNA3D5fUZL7QdjD8ONfnC2RfG4ELuOiYfwnj3fnQ=;
+	s=korg; t=1768499927;
+	bh=IIGAQPZxNo6JhDR/Y0x9jXaR30VFHnXcpeCBUGyWMMs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FIa8RyiDcGoFUDzJ18foypngPTEmha0uePc7QY43uxsm0Upo000BwWR6Fodg3b8Ae
-	 16udfN6ldP3mNZOyVNxo6Ls3z3cDvu8edyHHOPGCLuXhBU/SnGFOVYACS+ajRd7Alk
-	 TKCqcbWNoP7KHdB7P5vljltSv9SZRCzGAwVIKZUA=
+	b=WkUEjvi9sfXjPjsC9mnCArWHHHEf7VKPz7TbHYx4tkEE4/7vj65NiwjOlSCFJhNpQ
+	 3LO+4cbtcjgyiuukXDtDuEflLuvcD4wc8qaQhX9MTjmr+P2QuuFHeuKNZ/HxLHFT3T
+	 ZZHniDDyWwcn0OnniS3ZIg8QUd4lD87dQGWwPzck=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mike Christie <michael.christie@oracle.com>,
-	Lee Duncan <lduncan@suse.com>,
-	Ding Hui <dinghui@sangfor.com.cn>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Henry Martin <bsdhenrymartin@gmail.com>,
+	Sudeep Holla <sudeep.holla@arm.com>,
+	Viresh Kumar <viresh.kumar@linaro.org>,
+	Sasha Levin <sashal@kernel.org>,
 	Shivani Agarwal <shivani.agarwal@broadcom.com>
-Subject: [PATCH 5.10 396/451] scsi: iscsi_tcp: Fix UAF during logout when accessing the shost ipaddress
-Date: Thu, 15 Jan 2026 17:49:57 +0100
-Message-ID: <20260115164245.260173632@linuxfoundation.org>
+Subject: [PATCH 5.10 397/451] cpufreq: scmi: Fix null-ptr-deref in scmi_cpufreq_get_rate()
+Date: Thu, 15 Jan 2026 17:49:58 +0100
+Message-ID: <20260115164245.297473080@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260115164230.864985076@linuxfoundation.org>
 References: <20260115164230.864985076@linuxfoundation.org>
@@ -53,224 +53,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mike Christie <michael.christie@oracle.com>
+From: Henry Martin <bsdhenrymartin@gmail.com>
 
-[ Upstream commit 6f1d64b13097e85abda0f91b5638000afc5f9a06 ]
+[ Upstream commit 484d3f15cc6cbaa52541d6259778e715b2c83c54 ]
 
-Bug report and analysis from Ding Hui.
+cpufreq_cpu_get_raw() can return NULL when the target CPU is not present
+in the policy->cpus mask. scmi_cpufreq_get_rate() does not check for
+this case, which results in a NULL pointer dereference.
 
-During iSCSI session logout, if another task accesses the shost ipaddress
-attr, we can get a KASAN UAF report like this:
+Add NULL check after cpufreq_cpu_get_raw() to prevent this issue.
 
-[  276.942144] BUG: KASAN: use-after-free in _raw_spin_lock_bh+0x78/0xe0
-[  276.942535] Write of size 4 at addr ffff8881053b45b8 by task cat/4088
-[  276.943511] CPU: 2 PID: 4088 Comm: cat Tainted: G            E      6.1.0-rc8+ #3
-[  276.943997] Hardware name: VMware, Inc. VMware Virtual Platform/440BX Desktop Reference Platform, BIOS 6.00 11/12/2020
-[  276.944470] Call Trace:
-[  276.944943]  <TASK>
-[  276.945397]  dump_stack_lvl+0x34/0x48
-[  276.945887]  print_address_description.constprop.0+0x86/0x1e7
-[  276.946421]  print_report+0x36/0x4f
-[  276.947358]  kasan_report+0xad/0x130
-[  276.948234]  kasan_check_range+0x35/0x1c0
-[  276.948674]  _raw_spin_lock_bh+0x78/0xe0
-[  276.949989]  iscsi_sw_tcp_host_get_param+0xad/0x2e0 [iscsi_tcp]
-[  276.951765]  show_host_param_ISCSI_HOST_PARAM_IPADDRESS+0xe9/0x130 [scsi_transport_iscsi]
-[  276.952185]  dev_attr_show+0x3f/0x80
-[  276.953005]  sysfs_kf_seq_show+0x1fb/0x3e0
-[  276.953401]  seq_read_iter+0x402/0x1020
-[  276.954260]  vfs_read+0x532/0x7b0
-[  276.955113]  ksys_read+0xed/0x1c0
-[  276.955952]  do_syscall_64+0x38/0x90
-[  276.956347]  entry_SYSCALL_64_after_hwframe+0x63/0xcd
-[  276.956769] RIP: 0033:0x7f5d3a679222
-[  276.957161] Code: c0 e9 b2 fe ff ff 50 48 8d 3d 32 c0 0b 00 e8 a5 fe 01 00 0f 1f 44 00 00 f3 0f 1e fa 64 8b 04 25 18 00 00 00 85 c0 75 10 0f 05 <48> 3d 00 f0 ff ff 77 56 c3 0f 1f 44 00 00 48 83 ec 28 48 89 54 24
-[  276.958009] RSP: 002b:00007ffc864d16a8 EFLAGS: 00000246 ORIG_RAX: 0000000000000000
-[  276.958431] RAX: ffffffffffffffda RBX: 0000000000020000 RCX: 00007f5d3a679222
-[  276.958857] RDX: 0000000000020000 RSI: 00007f5d3a4fe000 RDI: 0000000000000003
-[  276.959281] RBP: 00007f5d3a4fe000 R08: 00000000ffffffff R09: 0000000000000000
-[  276.959682] R10: 0000000000000022 R11: 0000000000000246 R12: 0000000000020000
-[  276.960126] R13: 0000000000000003 R14: 0000000000000000 R15: 0000557a26dada58
-[  276.960536]  </TASK>
-[  276.961357] Allocated by task 2209:
-[  276.961756]  kasan_save_stack+0x1e/0x40
-[  276.962170]  kasan_set_track+0x21/0x30
-[  276.962557]  __kasan_kmalloc+0x7e/0x90
-[  276.962923]  __kmalloc+0x5b/0x140
-[  276.963308]  iscsi_alloc_session+0x28/0x840 [scsi_transport_iscsi]
-[  276.963712]  iscsi_session_setup+0xda/0xba0 [libiscsi]
-[  276.964078]  iscsi_sw_tcp_session_create+0x1fd/0x330 [iscsi_tcp]
-[  276.964431]  iscsi_if_create_session.isra.0+0x50/0x260 [scsi_transport_iscsi]
-[  276.964793]  iscsi_if_recv_msg+0xc5a/0x2660 [scsi_transport_iscsi]
-[  276.965153]  iscsi_if_rx+0x198/0x4b0 [scsi_transport_iscsi]
-[  276.965546]  netlink_unicast+0x4d5/0x7b0
-[  276.965905]  netlink_sendmsg+0x78d/0xc30
-[  276.966236]  sock_sendmsg+0xe5/0x120
-[  276.966576]  ____sys_sendmsg+0x5fe/0x860
-[  276.966923]  ___sys_sendmsg+0xe0/0x170
-[  276.967300]  __sys_sendmsg+0xc8/0x170
-[  276.967666]  do_syscall_64+0x38/0x90
-[  276.968028]  entry_SYSCALL_64_after_hwframe+0x63/0xcd
-[  276.968773] Freed by task 2209:
-[  276.969111]  kasan_save_stack+0x1e/0x40
-[  276.969449]  kasan_set_track+0x21/0x30
-[  276.969789]  kasan_save_free_info+0x2a/0x50
-[  276.970146]  __kasan_slab_free+0x106/0x190
-[  276.970470]  __kmem_cache_free+0x133/0x270
-[  276.970816]  device_release+0x98/0x210
-[  276.971145]  kobject_cleanup+0x101/0x360
-[  276.971462]  iscsi_session_teardown+0x3fb/0x530 [libiscsi]
-[  276.971775]  iscsi_sw_tcp_session_destroy+0xd8/0x130 [iscsi_tcp]
-[  276.972143]  iscsi_if_recv_msg+0x1bf1/0x2660 [scsi_transport_iscsi]
-[  276.972485]  iscsi_if_rx+0x198/0x4b0 [scsi_transport_iscsi]
-[  276.972808]  netlink_unicast+0x4d5/0x7b0
-[  276.973201]  netlink_sendmsg+0x78d/0xc30
-[  276.973544]  sock_sendmsg+0xe5/0x120
-[  276.973864]  ____sys_sendmsg+0x5fe/0x860
-[  276.974248]  ___sys_sendmsg+0xe0/0x170
-[  276.974583]  __sys_sendmsg+0xc8/0x170
-[  276.974891]  do_syscall_64+0x38/0x90
-[  276.975216]  entry_SYSCALL_64_after_hwframe+0x63/0xcd
-
-We can easily reproduce by two tasks:
-1. while :; do iscsiadm -m node --login; iscsiadm -m node --logout; done
-2. while :; do cat \
-/sys/devices/platform/host*/iscsi_host/host*/ipaddress; done
-
-            iscsid              |        cat
---------------------------------+---------------------------------------
-|- iscsi_sw_tcp_session_destroy |
-  |- iscsi_session_teardown     |
-    |- device_release           |
-      |- iscsi_session_release  ||- dev_attr_show
-        |- kfree                |  |- show_host_param_
-                                |             ISCSI_HOST_PARAM_IPADDRESS
-                                |    |- iscsi_sw_tcp_host_get_param
-                                |      |- r/w tcp_sw_host->session (UAF)
-  |- iscsi_host_remove          |
-  |- iscsi_host_free            |
-
-Fix the above bug by splitting the session removal into 2 parts:
-
- 1. removal from iSCSI class which includes sysfs and removal from host
-    tracking.
-
- 2. freeing of session.
-
-During iscsi_tcp host and session removal we can remove the session from
-sysfs then remove the host from sysfs. At this point we know userspace is
-not accessing the kernel via sysfs so we can free the session and host.
-
-Link: https://lore.kernel.org/r/20230117193937.21244-2-michael.christie@oracle.com
-Signed-off-by: Mike Christie <michael.christie@oracle.com>
-Reviewed-by: Lee Duncan <lduncan@suse.com>
-Acked-by: Ding Hui <dinghui@sangfor.com.cn>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
-[Shivani: The false parameter was not passed to iscsi_host_remove() because,
-          in Linux 5.10.y, the default behavior of iscsi_host_remove() already
-          assumes false.]
+Fixes: 99d6bdf33877 ("cpufreq: add support for CPU DVFS based on SCMI message protocol")
+Signed-off-by: Henry Martin <bsdhenrymartin@gmail.com>
+Acked-by: Sudeep Holla <sudeep.holla@arm.com>
+Signed-off-by: Viresh Kumar <viresh.kumar@linaro.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
+[Shivani: Modified to apply on 5.10.y]
 Signed-off-by: Shivani Agarwal <shivani.agarwal@broadcom.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/scsi/iscsi_tcp.c |   11 +++++++++--
- drivers/scsi/libiscsi.c  |   38 +++++++++++++++++++++++++++++++-------
- include/scsi/libiscsi.h  |    2 ++
- 3 files changed, 42 insertions(+), 9 deletions(-)
+ drivers/cpufreq/scmi-cpufreq.c |   10 ++++++++--
+ 1 file changed, 8 insertions(+), 2 deletions(-)
 
---- a/drivers/scsi/iscsi_tcp.c
-+++ b/drivers/scsi/iscsi_tcp.c
-@@ -933,10 +933,17 @@ static void iscsi_sw_tcp_session_destroy
- 	if (WARN_ON_ONCE(session->leadconn))
- 		return;
+--- a/drivers/cpufreq/scmi-cpufreq.c
++++ b/drivers/cpufreq/scmi-cpufreq.c
+@@ -29,12 +29,18 @@ static const struct scmi_handle *handle;
  
-+	iscsi_session_remove(cls_session);
-+	/*
-+	 * Our get_host_param needs to access the session, so remove the
-+	 * host from sysfs before freeing the session to make sure userspace
-+	 * is no longer accessing the callout.
-+	 */
-+	iscsi_host_remove(shost);
-+
- 	iscsi_tcp_r2tpool_free(cls_session->dd_data);
--	iscsi_session_teardown(cls_session);
- 
--	iscsi_host_remove(shost);
-+	iscsi_session_free(cls_session);
- 	iscsi_host_free(shost);
- }
- 
---- a/drivers/scsi/libiscsi.c
-+++ b/drivers/scsi/libiscsi.c
-@@ -2892,17 +2892,32 @@ dec_session_count:
- }
- EXPORT_SYMBOL_GPL(iscsi_session_setup);
- 
--/**
-- * iscsi_session_teardown - destroy session, host, and cls_session
-- * @cls_session: iscsi session
-+/*
-+ * issi_session_remove - Remove session from iSCSI class.
-  */
--void iscsi_session_teardown(struct iscsi_cls_session *cls_session)
-+void iscsi_session_remove(struct iscsi_cls_session *cls_session)
+ static unsigned int scmi_cpufreq_get_rate(unsigned int cpu)
  {
- 	struct iscsi_session *session = cls_session->dd_data;
--	struct module *owner = cls_session->transport->owner;
- 	struct Scsi_Host *shost = session->host;
+-	struct cpufreq_policy *policy = cpufreq_cpu_get_raw(cpu);
++	struct cpufreq_policy *policy;
++	struct scmi_data *priv;
+ 	const struct scmi_perf_ops *perf_ops = handle->perf_ops;
+-	struct scmi_data *priv = policy->driver_data;
+ 	unsigned long rate;
+ 	int ret;
  
- 	iscsi_remove_session(cls_session);
-+	/*
-+	 * host removal only has to wait for its children to be removed from
-+	 * sysfs, and iscsi_tcp needs to do iscsi_host_remove before freeing
-+	 * the session, so drop the session count here.
-+	 */
-+	iscsi_host_dec_session_cnt(shost);
-+}
-+EXPORT_SYMBOL_GPL(iscsi_session_remove);
++	policy = cpufreq_cpu_get_raw(cpu);
++	if (unlikely(!policy))
++		return 0;
 +
-+/**
-+ * iscsi_session_free - Free iscsi session and it's resources
-+ * @cls_session: iscsi session
-+ */
-+void iscsi_session_free(struct iscsi_cls_session *cls_session)
-+{
-+	struct iscsi_session *session = cls_session->dd_data;
-+	struct module *owner = cls_session->transport->owner;
- 
- 	iscsi_pool_free(&session->cmdpool);
- 	kfree(session->password);
-@@ -2920,10 +2935,19 @@ void iscsi_session_teardown(struct iscsi
- 	kfree(session->discovery_parent_type);
- 
- 	iscsi_free_session(cls_session);
--
--	iscsi_host_dec_session_cnt(shost);
- 	module_put(owner);
- }
-+EXPORT_SYMBOL_GPL(iscsi_session_free);
++	priv = policy->driver_data;
 +
-+/**
-+ * iscsi_session_teardown - destroy session and cls_session
-+ * @cls_session: iscsi session
-+ */
-+void iscsi_session_teardown(struct iscsi_cls_session *cls_session)
-+{
-+	iscsi_session_remove(cls_session);
-+	iscsi_session_free(cls_session);
-+}
- EXPORT_SYMBOL_GPL(iscsi_session_teardown);
- 
- /**
---- a/include/scsi/libiscsi.h
-+++ b/include/scsi/libiscsi.h
-@@ -401,6 +401,8 @@ extern int iscsi_target_alloc(struct scs
- extern struct iscsi_cls_session *
- iscsi_session_setup(struct iscsi_transport *, struct Scsi_Host *shost,
- 		    uint16_t, int, int, uint32_t, unsigned int);
-+void iscsi_session_remove(struct iscsi_cls_session *cls_session);
-+void iscsi_session_free(struct iscsi_cls_session *cls_session);
- extern void iscsi_session_teardown(struct iscsi_cls_session *);
- extern void iscsi_session_recovery_timedout(struct iscsi_cls_session *);
- extern int iscsi_set_param(struct iscsi_cls_conn *cls_conn,
+ 	ret = perf_ops->freq_get(handle, priv->domain_id, &rate, false);
+ 	if (ret)
+ 		return 0;
 
 
