@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 402C93BC4D8;
-	Thu, 15 Jan 2026 17:52:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBB693BC4D8;
+	Thu, 15 Jan 2026 17:52:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768499554; cv=none; b=hLKq1p4O6SInXmzVN3jVgl9+yYdTHxuL11gzFQ2dGLLWu4eKPFE5aKA3uRe2bJId1O7zNt+G1CDCaU/8Zw5ngEXIMT7BgXD5w1MEsKPOrbej3C/EzM5D5U4ilNQX1++LRSr05a2ZL/JFoykm7jivE+F94v1jV0CM9CQeo3z6zWw=
+	t=1768499556; cv=none; b=H/irwZWQP9A5v4ucHuEN8b3OwHw7mu0W/UWlSM/FfU7UN9WGv06XNmXPePhJVeeXUA56PfU3hVSVDlVU31W0VGtjuJOVV11+J+JXg0csnz78OPhd/WYHtYTvnX/hY7yrKp5pxYryxGy8gsED+nONLzC/6534e8NqnmYaCzHDiRw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768499554; c=relaxed/simple;
-	bh=VsAuiMGR0cw4hngnJ6xTq/0XsIATkRdOdMpOCVDAkbM=;
+	s=arc-20240116; t=1768499556; c=relaxed/simple;
+	bh=KzK91GU4c0TaLKduIY5jYHysScQCfseEXaKZU54idPA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=g4qxOkkFrhcaSzNW/CbXpHHnfrOlvYhVakUPI42agJmgal6ghrMPmIDRj9YxkbOx+XM9GZbJ5oIyVW8YpItS9E9hSI8Z5ykfxxMz3AdckUEhYb3i0f767XAxeBNzXmpjOCQHPxbG+OKq9sYk1pG1W14MOtFjiKhHNrzFAKdEbR0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JwX9tHWw; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LDMMsYCIMf8WsYYnA9tp2nkgdkLsVelfYlsgOaprL7AJUAWRXXTkvVT6HaQO6Ul87THTz3RNjjvuXr8XHhnjUrGlcGYjzReKO4kM/20w/cFrt4KV1VjF3WQZ0z620w4FKtnTdMDUwcovrvKZGKw7Xlrc5IVUbPwE25957QgqIiU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YnA5HJjU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JwX9tHWw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B7A5C116D0;
-	Thu, 15 Jan 2026 17:52:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YnA5HJjU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 58BC6C116D0;
+	Thu, 15 Jan 2026 17:52:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1768499553;
-	bh=VsAuiMGR0cw4hngnJ6xTq/0XsIATkRdOdMpOCVDAkbM=;
+	s=korg; t=1768499556;
+	bh=KzK91GU4c0TaLKduIY5jYHysScQCfseEXaKZU54idPA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JwX9tHWwxGaLDVwvO5f7FGPqlEyO86FKbtzJ2lM8i7uCHzoWvzf9vmGpGU5Fj5a+8
-	 8qVtdn+ACT3ctq1VNQ3myXA/caBmB3bpU24VHm3tOmsjJJQsOhxELCD20uQgvRm54K
-	 8dZq/CBQDS6zfTxHPfEmRt5Z/t6762nmWYWaFUnk=
+	b=YnA5HJjUFM4SeM2WfQADCa7aiSfVkLVdQlTMQM10SGlFeHZBfrRNDQCO3l+a0uCME
+	 8VlM9yAyZDQeL6ER4MnJMMEWY8bQxjsKT8/UnIWb8lfLblFKRu/XGnAhmf6ZEe2n8v
+	 89IzQ7Edb0vtHcwDMnBVmHdlHnBj1jWc2I5CzRHA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yu Kuai <yukuai3@huawei.com>,
-	Johan Hovold <johan@kernel.org>,
-	Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
-	Neil Armstrong <neil.armstrong@linaro.org>
-Subject: [PATCH 5.10 266/451] soc: amlogic: canvas: fix device leak on lookup
-Date: Thu, 15 Jan 2026 17:47:47 +0100
-Message-ID: <20260115164240.509032989@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Miaoqian Lin <linmq006@gmail.com>,
+	Thinh Nguyen <Thinh.Nguyen@synopsys.com>
+Subject: [PATCH 5.10 235/451] usb: dwc3: of-simple: fix clock resource leak in dwc3_of_simple_probe
+Date: Thu, 15 Jan 2026 17:47:16 +0100
+Message-ID: <20260115164239.395592412@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260115164230.864985076@linuxfoundation.org>
 References: <20260115164230.864985076@linuxfoundation.org>
@@ -52,46 +51,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johan Hovold <johan@kernel.org>
+From: Miaoqian Lin <linmq006@gmail.com>
 
-commit 32200f4828de9d7e6db379909898e718747f4e18 upstream.
+commit 3b4961313d31e200c9e974bb1536cdea217f78b5 upstream.
 
-Make sure to drop the reference taken to the canvas platform device when
-looking up its driver data.
+When clk_bulk_prepare_enable() fails, the error path jumps to
+err_resetc_assert, skipping clk_bulk_put_all() and leaking the
+clock references acquired by clk_bulk_get_all().
 
-Note that holding a reference to a device does not prevent its driver
-data from going away so there is no point in keeping the reference.
+Add err_clk_put_all label to properly release clock resources
+in all error paths.
 
-Also note that commit 28f851e6afa8 ("soc: amlogic: canvas: add missing
-put_device() call in meson_canvas_get()") fixed the leak in a lookup
-error path, but the reference is still leaking on success.
+Found via static analysis and code review.
 
-Fixes: d4983983d987 ("soc: amlogic: add meson-canvas driver")
-Cc: stable@vger.kernel.org	# 4.20: 28f851e6afa8
-Cc: Yu Kuai <yukuai3@huawei.com>
-Signed-off-by: Johan Hovold <johan@kernel.org>
-Reviewed-by: Martin Blumenstingl <martin.blumenstingl@googlemail.com>
-Link: https://patch.msgid.link/20250926142454.5929-2-johan@kernel.org
-Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+Fixes: c0c61471ef86 ("usb: dwc3: of-simple: Convert to bulk clk API")
+Cc: stable <stable@kernel.org>
+Signed-off-by: Miaoqian Lin <linmq006@gmail.com>
+Acked-by: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
+Link: https://patch.msgid.link/20251211064937.2360510-1-linmq006@gmail.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/soc/amlogic/meson-canvas.c |    5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ drivers/usb/dwc3/dwc3-of-simple.c |    7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
---- a/drivers/soc/amlogic/meson-canvas.c
-+++ b/drivers/soc/amlogic/meson-canvas.c
-@@ -72,10 +72,9 @@ struct meson_canvas *meson_canvas_get(st
- 	 * current state, this driver probe cannot return -EPROBE_DEFER
- 	 */
- 	canvas = dev_get_drvdata(&canvas_pdev->dev);
--	if (!canvas) {
--		put_device(&canvas_pdev->dev);
-+	put_device(&canvas_pdev->dev);
-+	if (!canvas)
- 		return ERR_PTR(-EINVAL);
--	}
+--- a/drivers/usb/dwc3/dwc3-of-simple.c
++++ b/drivers/usb/dwc3/dwc3-of-simple.c
+@@ -71,11 +71,11 @@ static int dwc3_of_simple_probe(struct p
+ 	simple->num_clocks = ret;
+ 	ret = clk_bulk_prepare_enable(simple->num_clocks, simple->clks);
+ 	if (ret)
+-		goto err_resetc_assert;
++		goto err_clk_put_all;
  
- 	return canvas;
- }
+ 	ret = of_platform_populate(np, NULL, NULL, dev);
+ 	if (ret)
+-		goto err_clk_put;
++		goto err_clk_disable;
+ 
+ 	pm_runtime_set_active(dev);
+ 	pm_runtime_enable(dev);
+@@ -83,8 +83,9 @@ static int dwc3_of_simple_probe(struct p
+ 
+ 	return 0;
+ 
+-err_clk_put:
++err_clk_disable:
+ 	clk_bulk_disable_unprepare(simple->num_clocks, simple->clks);
++err_clk_put_all:
+ 	clk_bulk_put_all(simple->num_clocks, simple->clks);
+ 
+ err_resetc_assert:
 
 
