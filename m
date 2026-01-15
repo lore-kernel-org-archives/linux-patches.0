@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1DFD3C198E;
-	Thu, 15 Jan 2026 17:51:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9CB823EDAA0;
+	Thu, 15 Jan 2026 17:51:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768499467; cv=none; b=MCC0QmJDwF2YBn7LVPGpUdhvswQpL9WVfV0uan1GZhGlQBju/ZiZyO/dJKSRYNm+aDoKFxkiiXrV5jRTPn9XUwMAd3m/Q6z86wIztX1vGfLAzVBPxZrYDB4VCgdHV3QRSz5NY+kCNtIbjt6d6UBgetU93WHq65PjpzOy4YBWdwM=
+	t=1768499470; cv=none; b=AW3kYFSabf5fW/wb2VMowLNbDCBO/9JuD2/G+XaGEOiNbu7QUEKU1rZS8I2BxbZ2OcUhJ2u3NsOKt6FmWAy7k41MG4EWku51tpjmT7RLNUKDLYpAUnKcbzowXZIsLqi7WGleMYktfqhFRsd1JyB+Tx5gLB6X7isaylOm63c4MvY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768499467; c=relaxed/simple;
-	bh=J2vj7rLe7NUs6jqLLFi+OvRFYTigO3qtLalYPBsyMXI=;
+	s=arc-20240116; t=1768499470; c=relaxed/simple;
+	bh=A00Bl6qZaKvmkANKp2ymBjBnNmx39I3nrqCP3yp7wig=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oIHLLRjpes4I3/8T7gN4HsWt5EFCx26+nTAPsJmWcXvr+NVWVAFc7ssw0PPRtnjnpnwiO3Ci5zYTckDrQujk5mEPXQqTYh22S+luhr55kMmFb46ghjJPhPXJGDrGkfhzrAS/5u/wqJ2zaRB4sirevpAw+KcZxqtcU1yBhv1ShBQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QL7KbFeB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lfboSSOy7v+JhJHsSUKGwleKGLb5DkNc26XmsdelYE5THagebA08+tAT9Tjg6qMXWf4jlbN3C51Kd7Ylv6FiEsVCFkR2Z8CBtTHHiI1s2dYP0CalAS7CExZZmQwEZtOY1Eo/ThUQRjpOTOGFhOgzv8ytHlc2oih2l8FG4vaYXCs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wiPfB3wf; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QL7KbFeB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E7E8C16AAE;
-	Thu, 15 Jan 2026 17:51:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wiPfB3wf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 25792C19425;
+	Thu, 15 Jan 2026 17:51:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1768499467;
-	bh=J2vj7rLe7NUs6jqLLFi+OvRFYTigO3qtLalYPBsyMXI=;
+	s=korg; t=1768499470;
+	bh=A00Bl6qZaKvmkANKp2ymBjBnNmx39I3nrqCP3yp7wig=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QL7KbFeBybBuynNn793btAR0BZtZdckAKen56CSPhaCw+oywjObXx3S4O29AZDA29
-	 DdvNnM2i6NCxx7KVSE29/HXK650YYVOewURV30atGBrJ5Sq/wmYZnHT8+AB3d58Fs/
-	 XZNgPYLXX+Br9hUtGokZX9kSarlvfssZomrezeEE=
+	b=wiPfB3wfvZ28E94KakvlATUTpi1fujuKiUfJM0NY0jGhGsTwX9QggaQIkGYS9/hvY
+	 vYULv3Kk0pHuDqNID+0uKiep93da4JqQv9CrjqlNUS40mGGODHSLOLgx+x2+kiZDKQ
+	 CaVZwPO6u6DUkjllaGzfFDawxZaHF+GIfthwMFIc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jinhui Guo <guojinhui.liam@bytedance.com>,
-	Corey Minyard <corey@minyard.net>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 204/451] ipmi: Fix __scan_channels() failing to rescan channels
-Date: Thu, 15 Jan 2026 17:46:45 +0100
-Message-ID: <20260115164238.280710702@linuxfoundation.org>
+	Junjie Cao <junjie.cao@intel.com>,
+	Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Subject: [PATCH 5.10 195/451] Input: ti_am335x_tsc - fix off-by-one error in wire_order validation
+Date: Thu, 15 Jan 2026 17:46:36 +0100
+Message-ID: <20260115164237.955524860@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260115164230.864985076@linuxfoundation.org>
 References: <20260115164230.864985076@linuxfoundation.org>
@@ -51,85 +50,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jinhui Guo <guojinhui.liam@bytedance.com>
+From: Junjie Cao <junjie.cao@intel.com>
 
-[ Upstream commit 6bd30d8fc523fb880b4be548e8501bc0fe8f42d4 ]
+commit 248d3a73a0167dce15ba100477c3e778c4787178 upstream.
 
-channel_handler() sets intf->channels_ready to true but never
-clears it, so __scan_channels() skips any rescan. When the BMC
-firmware changes a rescan is required. Allow it by clearing
-the flag before starting a new scan.
+The current validation 'wire_order[i] > ARRAY_SIZE(config_pins)' allows
+wire_order[i] to equal ARRAY_SIZE(config_pins), which causes out-of-bounds
+access when used as index in 'config_pins[wire_order[i]]'.
 
-Signed-off-by: Jinhui Guo <guojinhui.liam@bytedance.com>
-Message-ID: <20250930074239.2353-3-guojinhui.liam@bytedance.com>
-Signed-off-by: Corey Minyard <corey@minyard.net>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Since config_pins has 4 elements (indices 0-3), the valid range for
+wire_order should be 0-3. Fix the off-by-one error by using >= instead
+of > in the validation check.
+
+Signed-off-by: Junjie Cao <junjie.cao@intel.com>
+Link: https://patch.msgid.link/20251114062817.852698-1-junjie.cao@intel.com
+Fixes: bb76dc09ddfc ("input: ti_am33x_tsc: Order of TSC wires, made configurable")
+Cc: stable@vger.kernel.org
+Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/char/ipmi/ipmi_msghandler.c | 18 +++++++++++++-----
- 1 file changed, 13 insertions(+), 5 deletions(-)
+ drivers/input/touchscreen/ti_am335x_tsc.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/char/ipmi/ipmi_msghandler.c b/drivers/char/ipmi/ipmi_msghandler.c
-index 117454a5603b..a72cd57dd8a5 100644
---- a/drivers/char/ipmi/ipmi_msghandler.c
-+++ b/drivers/char/ipmi/ipmi_msghandler.c
-@@ -605,7 +605,8 @@ static void __ipmi_bmc_unregister(struct ipmi_smi *intf);
- static int __ipmi_bmc_register(struct ipmi_smi *intf,
- 			       struct ipmi_device_id *id,
- 			       bool guid_set, guid_t *guid, int intf_num);
--static int __scan_channels(struct ipmi_smi *intf, struct ipmi_device_id *id);
-+static int __scan_channels(struct ipmi_smi *intf,
-+				struct ipmi_device_id *id, bool rescan);
- 
- 
- /**
-@@ -2556,7 +2557,7 @@ static int __bmc_get_device_id(struct ipmi_smi *intf, struct bmc_device *bmc,
- 		if (__ipmi_bmc_register(intf, &id, guid_set, &guid, intf_num))
- 			need_waiter(intf); /* Retry later on an error. */
- 		else
--			__scan_channels(intf, &id);
-+			__scan_channels(intf, &id, false);
- 
- 
- 		if (!intf_set) {
-@@ -2576,7 +2577,7 @@ static int __bmc_get_device_id(struct ipmi_smi *intf, struct bmc_device *bmc,
- 		goto out_noprocessing;
- 	} else if (memcmp(&bmc->fetch_id, &bmc->id, sizeof(bmc->id)))
- 		/* Version info changes, scan the channels again. */
--		__scan_channels(intf, &bmc->fetch_id);
-+		__scan_channels(intf, &bmc->fetch_id, true);
- 
- 	bmc->dyn_id_expiry = jiffies + IPMI_DYN_DEV_ID_EXPIRY;
- 
-@@ -3326,10 +3327,17 @@ channel_handler(struct ipmi_smi *intf, struct ipmi_recv_msg *msg)
- /*
-  * Must be holding intf->bmc_reg_mutex to call this.
-  */
--static int __scan_channels(struct ipmi_smi *intf, struct ipmi_device_id *id)
-+static int __scan_channels(struct ipmi_smi *intf,
-+				struct ipmi_device_id *id,
-+				bool rescan)
- {
- 	int rv;
- 
-+	if (rescan) {
-+		/* Clear channels_ready to force channels rescan. */
-+		intf->channels_ready = false;
-+	}
-+
- 	if (ipmi_version_major(id) > 1
- 			|| (ipmi_version_major(id) == 1
- 			    && ipmi_version_minor(id) >= 5)) {
-@@ -3501,7 +3509,7 @@ int ipmi_add_smi(struct module         *owner,
+--- a/drivers/input/touchscreen/ti_am335x_tsc.c
++++ b/drivers/input/touchscreen/ti_am335x_tsc.c
+@@ -86,7 +86,7 @@ static int titsc_config_wires(struct tit
+ 		wire_order[i] = ts_dev->config_inp[i] & 0x0F;
+ 		if (WARN_ON(analog_line[i] > 7))
+ 			return -EINVAL;
+-		if (WARN_ON(wire_order[i] > ARRAY_SIZE(config_pins)))
++		if (WARN_ON(wire_order[i] >= ARRAY_SIZE(config_pins)))
+ 			return -EINVAL;
  	}
  
- 	mutex_lock(&intf->bmc_reg_mutex);
--	rv = __scan_channels(intf, &id);
-+	rv = __scan_channels(intf, &id, false);
- 	mutex_unlock(&intf->bmc_reg_mutex);
- 	if (rv)
- 		goto out_err_bmc_reg;
--- 
-2.51.0
-
 
 
