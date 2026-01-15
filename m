@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8092F3BF2E4;
-	Thu, 15 Jan 2026 16:57:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 570813B530C;
+	Thu, 15 Jan 2026 16:57:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768496276; cv=none; b=MBUQwB8V3O6AJ1q9/xku6W1F+4DSDsfUYcAOJwOHciTOREPiWrZPrbwVckRcgRgwWTIl4QDThsVgacRvc3iz36buLrrojJTE6EB+M62O0hFiZWwSBqMRt2WXoYe6YjV8OFtrZ7jr7DYge4OopRWuNqE+XOdpLqAqBiEvXpnLaw8=
+	t=1768496279; cv=none; b=c2cuB6g9vFd+rasVqR5QRVw4VhU7imDfxWjGK45PXpiMu1sKxsiq03j7mwfixabEttEWPOFiAYqAWDKvdXocpkeY0wNyOMSdLPzsQYWfceEbPUJ9bbzFGnK79U7u5UX2iZyJw5u+sCGwjoOCeS9vny0pwGRScUY4UCpGKNWg4xA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768496276; c=relaxed/simple;
-	bh=rpDZxSeZWGnHDebiYCenXH0pSRMUbsVvsclJ+qNPeyU=;
+	s=arc-20240116; t=1768496279; c=relaxed/simple;
+	bh=3hkNJClqifqTgwf2szeuL5GqqSABnGYavzeM5YK/Og4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QGjlWTmQZgMEZN3P9lvhS+ojUBWQBQtlVEiowq/2JXAikTu2oKvXKhc2dIYyTDxEmpvaFMlJqd6XdO1IFKTC6wdazOW9HPyl6q7tR0O5msNinPlgyfjGkyI/bdRvrwNwsa/aUA4OfcUJ+09dGXPCZP8eNLXNHMLgWkwjGpgwQx4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JNw1O2Of; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=klXqBCzRktWZfN/NWtD8haqZ8wqshpIH25iDnkwV5swyyeMIRvLMwZwrL4AzLnlWU0Q1mge2M7WhY04He221ShgUAepvqn2gubeJaEGXwbCn6TabP9L8zH7MhdlJuTeiDLpofI5UdxQPsC/S1LUsQkqb+yTww9hKxqsGplZ68+Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Pnqy0ye0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JNw1O2Of"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0DBCEC116D0;
-	Thu, 15 Jan 2026 16:57:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Pnqy0ye0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D6D81C116D0;
+	Thu, 15 Jan 2026 16:57:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1768496276;
-	bh=rpDZxSeZWGnHDebiYCenXH0pSRMUbsVvsclJ+qNPeyU=;
+	s=korg; t=1768496279;
+	bh=3hkNJClqifqTgwf2szeuL5GqqSABnGYavzeM5YK/Og4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JNw1O2OfwWWHi24TRz+xCVn17ILKfVAWG0RRJetsa38uF8XnBP0vsx5blP5uUFGdV
-	 X3JE6xLqwYXMq4QtyV+C2RMXMVNChv0GYFRJKxCAGL8qm1tQfd2HVn8tU3s6WSo+Mc
-	 GO7AoTd46QRtMh+iLxdOU9eP516z2pcbzzCnUWmk=
+	b=Pnqy0ye0xjaDmSuNR6xMueQTzxunif36RDIsc656Wy4kLwjQdB+7Xdx226TI4qMIM
+	 249PoH87oCV5GKZyKCNEgXKpaamuR3UNTF6pWsjfC1hIXgmKFPdjMocLRCoAIijVtC
+	 jyiHqh/Nk2KM4BiDLjunhDBPqDSAhkOMiuXmWE3A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+3e68572cf2286ce5ebe9@syzkaller.appspotmail.com,
-	Eric Dumazet <edumazet@google.com>,
+	Maxime Chevallier <maxime.chevallier@bootlin.com>,
+	Andrew Lunn <andrew@lunn.ch>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 138/181] udp: call skb_orphan() before skb_attempt_defer_free()
-Date: Thu, 15 Jan 2026 17:47:55 +0100
-Message-ID: <20260115164207.300678858@linuxfoundation.org>
+Subject: [PATCH 6.18 139/181] net: sfp: return the number of written bytes for smbus single byte access
+Date: Thu, 15 Jan 2026 17:47:56 +0100
+Message-ID: <20260115164207.336330865@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260115164202.305475649@linuxfoundation.org>
 References: <20260115164202.305475649@linuxfoundation.org>
@@ -52,44 +52,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Maxime Chevallier <maxime.chevallier@bootlin.com>
 
-[ Upstream commit e5c8eda39a9fc1547d1398d707aa06c1d080abdd ]
+[ Upstream commit 13ff3e724207f579d3c814ee05516fefcb4f32e8 ]
 
-Standard UDP receive path does not use skb->destructor.
+We expect the SFP write accessors to return the number of written bytes.
+We fail to do so for single-byte smbus accesses, which may cause errors
+when setting a module's high-power state and for some cotsworks modules.
 
-But skmsg layer does use it, since it calls skb_set_owner_sk_safe()
-from udp_read_skb().
+Let's return the amount of written bytes, as expected.
 
-This then triggers this warning in skb_attempt_defer_free():
-
-    DEBUG_NET_WARN_ON_ONCE(skb->destructor);
-
-We must call skb_orphan() to fix this issue.
-
-Fixes: 6471658dc66c ("udp: use skb_attempt_defer_free()")
-Reported-by: syzbot+3e68572cf2286ce5ebe9@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/netdev/695b83bd.050a0220.1c9965.002b.GAE@google.com/T/#u
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Link: https://patch.msgid.link/20260105093630.1976085-1-edumazet@google.com
+Fixes: 7662abf4db94 ("net: phy: sfp: Add support for SMBus module access")
+Signed-off-by: Maxime Chevallier <maxime.chevallier@bootlin.com>
+Reviewed-by: Andrew Lunn <andrew@lunn.ch>
+Link: https://patch.msgid.link/20260105151840.144552-1-maxime.chevallier@bootlin.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/udp.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/net/phy/sfp.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/ipv4/udp.c b/net/ipv4/udp.c
-index 30dfbf73729da..860bd61ff047f 100644
---- a/net/ipv4/udp.c
-+++ b/net/ipv4/udp.c
-@@ -1851,6 +1851,7 @@ void skb_consume_udp(struct sock *sk, struct sk_buff *skb, int len)
- 		sk_peek_offset_bwd(sk, len);
- 
- 	if (!skb_shared(skb)) {
-+		skb_orphan(skb);
- 		skb_attempt_defer_free(skb);
- 		return;
+diff --git a/drivers/net/phy/sfp.c b/drivers/net/phy/sfp.c
+index 0401fa6b24d25..6b4dd906b804f 100644
+--- a/drivers/net/phy/sfp.c
++++ b/drivers/net/phy/sfp.c
+@@ -763,7 +763,7 @@ static int sfp_smbus_byte_write(struct sfp *sfp, bool a2, u8 dev_addr,
+ 		dev_addr++;
  	}
+ 
+-	return 0;
++	return data - (u8 *)buf;
+ }
+ 
+ static int sfp_i2c_configure(struct sfp *sfp, struct i2c_adapter *i2c)
 -- 
 2.51.0
 
