@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ADE5F3BFE45;
-	Thu, 15 Jan 2026 17:25:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A7F63C1FD3;
+	Thu, 15 Jan 2026 17:25:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768497950; cv=none; b=AZ5d7Vv0kq5GZ4/izPYTociQkNbRi2Y28xia243dMc8n25OX0p+ARY7GhfOMkxwrxfyBFubYsDCETUr1z1Bp0dZ5F4NZGk2+N3uy9QPtg9OzxrycfXsTz6gw6qqTaVfKs5K1eb55XlCPLW7BtHgUulA/uTBQTiuO7HMdYQuKZeI=
+	t=1768497953; cv=none; b=l9xSoT8++Y3lgPHTpKCLWRYJKrfipkbKZ36AZM+w54meQBxW1/XL9ExftBqpwa4h7F2K52z2cV7byxPWDP2NdzZp0TVSTSbq7J+Tnc1/+oXnynO1EWImNzwtSrn9aG/oSPBuSDidXuLmWH6yEKQNfpdzp9U1hJEpET1FN1HFG6w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768497950; c=relaxed/simple;
-	bh=CrF0YkO7jiG9OxmcQf04w3QTUDsZLjCdyHMTGP3Xll4=;
+	s=arc-20240116; t=1768497953; c=relaxed/simple;
+	bh=UaqEhagsB+OuIWElqtfEVfyi0WKdXfvHZGNjS+fvEI8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OxCZJeNjRQAtG0OjL3obSl9Z4VjkwCHMWEo66eR9eCPPIdmwl7PIR4HNg7Mu7mL6B2xgvoVlQjDiCD36i8QFIJR+j/QFbJ/1tXhudFa0CrnRWb7KqL+uYfs9T7co8OfMXDh834K6l5rlzWrX7EHjRPjIB0BK7MC9CSHsWovrE8E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LhzcicKB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Rc8T+IEDbGVulFkOADcvI7svLhZ7oyCUJ5SDYZ5Uhs1puCXPVkv8lYyZ60ZlrccaCRzbIev86J0W8zmVUnP0ZWjdGEl0blbf1JSOo9Ka8g1LjtJ2wUKb+lRLrruhkudMzsytT0N7jO/E9Qm45q1BaDY0nwg5sH0Ai+C/KQQ1HCc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2ZwEOkNQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LhzcicKB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C07D4C16AAE;
-	Thu, 15 Jan 2026 17:25:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2ZwEOkNQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE304C16AAE;
+	Thu, 15 Jan 2026 17:25:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1768497950;
-	bh=CrF0YkO7jiG9OxmcQf04w3QTUDsZLjCdyHMTGP3Xll4=;
+	s=korg; t=1768497953;
+	bh=UaqEhagsB+OuIWElqtfEVfyi0WKdXfvHZGNjS+fvEI8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LhzcicKBCHkcGMpw/yeTRIw3AyvHtEBPehy1XSU46iIESAF99bA5NPbaDj2WZ6QMO
-	 0Z/LcVQ3Mh9+1KeB2uH8A01oywIc/FBDf1lC5sJiywsmAr8+aMvPHB+eNeFI/YkhVx
-	 8pSQWxX7nXJA+TISoT7052Pa3e+pT9IggR06UFxk=
+	b=2ZwEOkNQX/1jqwTzoApufQp7Ubb7ZjtZ+ZKUbSst+YAuEfqfo08Y4Dmp2Wzs39k/D
+	 iEgJbgnGT4Ie39bZwoE7zApEviGrpekQ8SO7mlyKuNlM14w9z539L27qik0KNv2pig
+	 d7k6rwrtQ+207cQkGsFGvNGn41aZBwjvQSGmaITE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Josua Mayer <josua@solid-run.com>,
-	Andrew Lunn <andrew@lunn.ch>,
-	Gregory CLEMENT <gregory.clement@bootlin.com>,
+	Ben Collins <bcollins@kernel.org>,
+	Christophe Leroy <christophe.leroy@csgroup.eu>,
+	Madhavan Srinivasan <maddy@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 260/554] clk: mvebu: cp110 add CLK_IGNORE_UNUSED to pcie_x10, pcie_x11 & pcie_x4
-Date: Thu, 15 Jan 2026 17:45:26 +0100
-Message-ID: <20260115164255.644953302@linuxfoundation.org>
+Subject: [PATCH 5.15 261/554] powerpc/addnote: Fix overflow on 32-bit builds
+Date: Thu, 15 Jan 2026 17:45:27 +0100
+Message-ID: <20260115164255.680635600@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260115164246.225995385@linuxfoundation.org>
 References: <20260115164246.225995385@linuxfoundation.org>
@@ -52,76 +52,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Josua Mayer <josua@solid-run.com>
+From: Ben Collins <bcollins@kernel.org>
 
-[ Upstream commit f0e6bc0c3ef4b4afb299bd6912586cafd5d864e9 ]
+[ Upstream commit 825ce89a3ef17f84cf2c0eacfa6b8dc9fd11d13f ]
 
-CP110 based platforms rely on the bootloader for pci port
-initialization.
-TF-A actively prevents non-uboot re-configuration of pci lanes, and many
-boards do not have software control over the pci card reset.
+The PUT_64[LB]E() macros need to cast the value to unsigned long long
+like the GET_64[LB]E() macros. Caused lots of warnings when compiled
+on 32-bit, and clobbered addresses (36-bit P4080).
 
-If a pci port had link at boot-time and the clock is stopped at a later
-point, the link fails and can not be recovered.
-
-PCI controller driver probe - and by extension ownership of a driver for
-the pci clocks - may be delayed especially on large modular kernels,
-causing the clock core to start disabling unused clocks.
-
-Add the CLK_IGNORE_UNUSED flag to the three pci port's clocks to ensure
-they are not stopped before the pci controller driver has taken
-ownership and tested for an existing link.
-
-This fixes failed pci link detection when controller driver probes late,
-e.g. with arm64 defconfig and CONFIG_PHY_MVEBU_CP110_COMPHY=m.
-
-Closes: https://lore.kernel.org/r/b71596c7-461b-44b6-89ab-3cfbd492639f@solid-run.com
-Signed-off-by: Josua Mayer <josua@solid-run.com>
-Reviewed-by: Andrew Lunn <andrew@lunn.ch>
-Signed-off-by: Gregory CLEMENT <gregory.clement@bootlin.com>
+Signed-off-by: Ben Collins <bcollins@kernel.org>
+Reviewed-by: Christophe Leroy <christophe.leroy@csgroup.eu>
+Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
+Link: https://patch.msgid.link/2025042122-mustard-wrasse-694572@boujee-and-buff
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/mvebu/cp110-system-controller.c | 20 ++++++++++++++++++++
- 1 file changed, 20 insertions(+)
+ arch/powerpc/boot/addnote.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/clk/mvebu/cp110-system-controller.c b/drivers/clk/mvebu/cp110-system-controller.c
-index 84c8900542e4..b477396917ad 100644
---- a/drivers/clk/mvebu/cp110-system-controller.c
-+++ b/drivers/clk/mvebu/cp110-system-controller.c
-@@ -110,6 +110,25 @@ static const char * const gate_base_names[] = {
- 	[CP110_GATE_EIP197]	= "eip197"
- };
+diff --git a/arch/powerpc/boot/addnote.c b/arch/powerpc/boot/addnote.c
+index 53b3b2621457..78704927453a 100644
+--- a/arch/powerpc/boot/addnote.c
++++ b/arch/powerpc/boot/addnote.c
+@@ -68,8 +68,8 @@ static int e_class = ELFCLASS32;
+ #define PUT_16BE(off, v)(buf[off] = ((v) >> 8) & 0xff, \
+ 			 buf[(off) + 1] = (v) & 0xff)
+ #define PUT_32BE(off, v)(PUT_16BE((off), (v) >> 16L), PUT_16BE((off) + 2, (v)))
+-#define PUT_64BE(off, v)((PUT_32BE((off), (v) >> 32L), \
+-			  PUT_32BE((off) + 4, (v))))
++#define PUT_64BE(off, v)((PUT_32BE((off), (unsigned long long)(v) >> 32L), \
++			  PUT_32BE((off) + 4, (unsigned long long)(v))))
  
-+static unsigned long gate_flags(const u8 bit_idx)
-+{
-+	switch (bit_idx) {
-+	case CP110_GATE_PCIE_X1_0:
-+	case CP110_GATE_PCIE_X1_1:
-+	case CP110_GATE_PCIE_X4:
-+		/*
-+		 * If a port had an active link at boot time, stopping
-+		 * the clock creates a failed state from which controller
-+		 * driver can not recover.
-+		 * Prevent stopping this clock till after a driver has taken
-+		 * ownership.
-+		 */
-+		return CLK_IGNORE_UNUSED;
-+	default:
-+		return 0;
-+	}
-+};
-+
- struct cp110_gate_clk {
- 	struct clk_hw hw;
- 	struct regmap *regmap;
-@@ -171,6 +190,7 @@ static struct clk_hw *cp110_register_gate(const char *name,
- 	init.ops = &cp110_gate_ops;
- 	init.parent_names = &parent_name;
- 	init.num_parents = 1;
-+	init.flags = gate_flags(bit_idx);
+ #define GET_16LE(off)	((buf[off]) + (buf[(off)+1] << 8))
+ #define GET_32LE(off)	(GET_16LE(off) + (GET_16LE((off)+2U) << 16U))
+@@ -78,7 +78,8 @@ static int e_class = ELFCLASS32;
+ #define PUT_16LE(off, v) (buf[off] = (v) & 0xff, \
+ 			  buf[(off) + 1] = ((v) >> 8) & 0xff)
+ #define PUT_32LE(off, v) (PUT_16LE((off), (v)), PUT_16LE((off) + 2, (v) >> 16L))
+-#define PUT_64LE(off, v) (PUT_32LE((off), (v)), PUT_32LE((off) + 4, (v) >> 32L))
++#define PUT_64LE(off, v) (PUT_32LE((off), (unsigned long long)(v)), \
++			  PUT_32LE((off) + 4, (unsigned long long)(v) >> 32L))
  
- 	gate->regmap = regmap;
- 	gate->bit_idx = bit_idx;
+ #define GET_16(off)	(e_data == ELFDATA2MSB ? GET_16BE(off) : GET_16LE(off))
+ #define GET_32(off)	(e_data == ELFDATA2MSB ? GET_32BE(off) : GET_32LE(off))
 -- 
 2.51.0
 
