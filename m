@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FB383D6F21;
-	Thu, 15 Jan 2026 17:56:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 173D43D6F2F;
+	Thu, 15 Jan 2026 17:56:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768499807; cv=none; b=ET8vlXWkmK6n0WPgRgHJ23gjp7xhkDy5LuHpHXyubsusgGvHr/u7PMOa8LwSqx1qLvV5Vk6p6y3dqzkEYk4AAY1Q/LLY9e3fSlQ1G0ZXWv0pi3emGf3vWGXdxFvIN2S4kIHuD3+XanNbwTEO6HbM2UwQv+4ms8uF2DvvnCnkk3Y=
+	t=1768499810; cv=none; b=Omz8tscP2dqgt+VHWslKBF7aNMGg2LWOCDZ8uInJRUMvuwJMuaeF7J1iVLqAhaLfXwGY/5g7QCOX9DtDAQzDgZAx81h/wEx+TQ6CLyL4Austa1k9ztykL4BviCAFq9squz5Iu/cNpmc0quR6f/+Mdq8Vlc+FrRk0sN2ZCarhnq4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768499807; c=relaxed/simple;
-	bh=HhDQHgIxW3qfezcdA0njxrw9wg1nE7o93V1BPwAFOaE=;
+	s=arc-20240116; t=1768499810; c=relaxed/simple;
+	bh=BMpLo05xklDGuw55JEUyUs6bQGOtm0HJ4hKBa6LQi/U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nc3MQ2jnQoyyGNCiobDhFfXNHK66SCWWo0ByOCE5+auxpVs8Z/mKK1W7lnV4f0bWO9R6ugeHAppnpR4wVQgISM6/wa/6VvhRIquWTjo80GPh4sc8WEq5TQy3uQEsCMsA0FMtqqgzeF4RS6Rk+xT/v/aKlFeE6031QfHRdz1C+/s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ogD3UNNF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YxZ1Xi6idYpNpe/5Ne6r9x47e/BtmrQflvULROg+A2cBgy4LUp1M5vPD4HFbhBosENxrOdzSezeN1P+L5Q4KdkSmFHuGHDGfg9IajiW3VxnJF7Kikoj4ysBIOh9rWLPOQjKv0K391s7gMMvacN3jA6k6tC3k1PM8eHXzb1qvbco=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eKW3NkLP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ogD3UNNF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 578A9C116D0;
-	Thu, 15 Jan 2026 17:56:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eKW3NkLP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B34DC116D0;
+	Thu, 15 Jan 2026 17:56:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1768499806;
-	bh=HhDQHgIxW3qfezcdA0njxrw9wg1nE7o93V1BPwAFOaE=;
+	s=korg; t=1768499810;
+	bh=BMpLo05xklDGuw55JEUyUs6bQGOtm0HJ4hKBa6LQi/U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ogD3UNNFis2pIg+CVbuz1AqsQcDznbche95ND8skEKpm3RcGwuOxiZEpIDXcsd3Ow
-	 eE12pyrnSMqg0IuWQlSxa/TsLzglWXpvGtdqg5DjwYL73SShzy52V6JDoSZjr/Kyfd
-	 zJJ3ioxhD+SgoaieaMq6LSmnzBT8xftR1gocgmkw=
+	b=eKW3NkLPSBiUEtihDtm8RxmBvQq+Xf8mveO7nid9e+PTdWz7b0A7eF5Uj9FQ1i0s3
+	 Kxl/+1A2mABoJKIQchEZ83wNcQSZu9/A/lWo5dtTgeSunTo/U+5uQ5feRWK9rXIlJp
+	 +fuOEyKvO6PvlLQVw7hpi5mWVcD83wP0oPn5fzos=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
-	Josef Bacik <josef@toxicpanda.com>,
-	Daniel Vacek <neelx@suse.com>,
-	David Sterba <dsterba@suse.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 357/451] btrfs: dont rewrite ret from inode_permission
-Date: Thu, 15 Jan 2026 17:49:18 +0100
-Message-ID: <20260115164243.817123112@linuxfoundation.org>
+	Peilin Ye <yepeilin.cs@gmail.com>,
+	Daniel Vetter <daniel.vetter@ffwll.ch>,
+	Ben Hutchings <ben@decadent.org.uk>
+Subject: [PATCH 5.10 340/451] console: Delete unused con_font_copy() callback implementations
+Date: Thu, 15 Jan 2026 17:49:01 +0100
+Message-ID: <20260115164243.193891114@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260115164230.864985076@linuxfoundation.org>
 References: <20260115164230.864985076@linuxfoundation.org>
@@ -53,48 +51,122 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Josef Bacik <josef@toxicpanda.com>
+From: Peilin Ye <yepeilin.cs@gmail.com>
 
-[ Upstream commit 0185c2292c600993199bc6b1f342ad47a9e8c678 ]
+commit 7a089ec7d77fe7d50f6bb7b178fa25eec9fd822b upstream.
 
-In our user safe ino resolve ioctl we'll just turn any ret into -EACCES
-from inode_permission().  This is redundant, and could potentially be
-wrong if we had an ENOMEM in the security layer or some such other
-error, so simply return the actual return value.
+Recently in commit 3c4e0dff2095 ("vt: Disable KD_FONT_OP_COPY") we
+disabled the KD_FONT_OP_COPY ioctl() option. Delete all the
+con_font_copy() callbacks, since we no longer use them.
 
-Note: The patch was taken from v5 of fscrypt patchset
-(https://lore.kernel.org/linux-btrfs/cover.1706116485.git.josef@toxicpanda.com/)
-which was handled over time by various people: Omar Sandoval, Sweet Tea
-Dorminy, Josef Bacik.
+Mark KD_FONT_OP_COPY as "obsolete" in include/uapi/linux/kd.h, just like
+what we have done for PPPIOCDETACH in commit af8d3c7c001a ("ppp: remove
+the PPPIOCDETACH ioctl").
 
-Fixes: 23d0b79dfaed ("btrfs: Add unprivileged version of ino_lookup ioctl")
-CC: stable@vger.kernel.org # 5.4+
-Reviewed-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
-Signed-off-by: Josef Bacik <josef@toxicpanda.com>
-Signed-off-by: Daniel Vacek <neelx@suse.com>
-Reviewed-by: David Sterba <dsterba@suse.com>
-[ add note ]
-Signed-off-by: David Sterba <dsterba@suse.com>
-[ Adjust context ]
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Peilin Ye <yepeilin.cs@gmail.com>
+Reviewed-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Daniel Vetter <daniel.vetter@ffwll.ch>
+Link: https://patchwork.freedesktop.org/patch/msgid/c8d28007edf50de4387e1532eb3eb736db716f73.1605169912.git.yepeilin.cs@gmail.com
+Cc: Ben Hutchings <ben@decadent.org.uk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/btrfs/ioctl.c |    4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
+ drivers/usb/misc/sisusbvga/sisusb_con.c |    6 ------
+ drivers/video/console/dummycon.c        |    6 ------
+ drivers/video/fbdev/core/fbcon.c        |   11 -----------
+ include/linux/console.h                 |    1 -
+ include/uapi/linux/kd.h                 |    2 +-
+ 5 files changed, 1 insertion(+), 25 deletions(-)
 
---- a/fs/btrfs/ioctl.c
-+++ b/fs/btrfs/ioctl.c
-@@ -2573,10 +2573,8 @@ static int btrfs_search_path_in_tree_use
- 			}
- 			ret = inode_permission(temp_inode, MAY_READ | MAY_EXEC);
- 			iput(temp_inode);
--			if (ret) {
--				ret = -EACCES;
-+			if (ret)
- 				goto out_put;
--			}
+--- a/drivers/usb/misc/sisusbvga/sisusb_con.c
++++ b/drivers/usb/misc/sisusbvga/sisusb_con.c
+@@ -1358,11 +1358,6 @@ static int sisusbdummycon_font_default(s
+ 	return 0;
+ }
  
- 			if (key.offset == upper_limit.objectid)
- 				break;
+-static int sisusbdummycon_font_copy(struct vc_data *vc, int con)
+-{
+-	return 0;
+-}
+-
+ static const struct consw sisusb_dummy_con = {
+ 	.owner =		THIS_MODULE,
+ 	.con_startup =		sisusbdummycon_startup,
+@@ -1377,7 +1372,6 @@ static const struct consw sisusb_dummy_c
+ 	.con_blank =		sisusbdummycon_blank,
+ 	.con_font_set =		sisusbdummycon_font_set,
+ 	.con_font_default =	sisusbdummycon_font_default,
+-	.con_font_copy =	sisusbdummycon_font_copy,
+ };
+ 
+ int
+--- a/drivers/video/console/dummycon.c
++++ b/drivers/video/console/dummycon.c
+@@ -136,11 +136,6 @@ static int dummycon_font_default(struct
+ 	return 0;
+ }
+ 
+-static int dummycon_font_copy(struct vc_data *vc, int con)
+-{
+-	return 0;
+-}
+-
+ /*
+  *  The console `switch' structure for the dummy console
+  *
+@@ -161,6 +156,5 @@ const struct consw dummy_con = {
+ 	.con_blank =	dummycon_blank,
+ 	.con_font_set =	dummycon_font_set,
+ 	.con_font_default =	dummycon_font_default,
+-	.con_font_copy =	dummycon_font_copy,
+ };
+ EXPORT_SYMBOL_GPL(dummy_con);
+--- a/drivers/video/fbdev/core/fbcon.c
++++ b/drivers/video/fbdev/core/fbcon.c
+@@ -2471,16 +2471,6 @@ static int fbcon_do_set_font(struct vc_d
+ 	return 0;
+ }
+ 
+-static int fbcon_copy_font(struct vc_data *vc, int con)
+-{
+-	struct fbcon_display *od = &fb_display[con];
+-	struct console_font *f = &vc->vc_font;
+-
+-	if (od->fontdata == f->data)
+-		return 0;	/* already the same font... */
+-	return fbcon_do_set_font(vc, f->width, f->height, od->fontdata, od->userfont);
+-}
+-
+ /*
+  *  User asked to set font; we are guaranteed that
+  *	a) width and height are in range 1..32
+@@ -3174,7 +3164,6 @@ static const struct consw fb_con = {
+ 	.con_font_set 		= fbcon_set_font,
+ 	.con_font_get 		= fbcon_get_font,
+ 	.con_font_default	= fbcon_set_def_font,
+-	.con_font_copy 		= fbcon_copy_font,
+ 	.con_set_palette 	= fbcon_set_palette,
+ 	.con_invert_region 	= fbcon_invert_region,
+ 	.con_screen_pos 	= fbcon_screen_pos,
+--- a/include/linux/console.h
++++ b/include/linux/console.h
+@@ -62,7 +62,6 @@ struct consw {
+ 	int	(*con_font_get)(struct vc_data *vc, struct console_font *font);
+ 	int	(*con_font_default)(struct vc_data *vc,
+ 			struct console_font *font, char *name);
+-	int	(*con_font_copy)(struct vc_data *vc, int con);
+ 	int     (*con_resize)(struct vc_data *vc, unsigned int width,
+ 			unsigned int height, unsigned int user);
+ 	void	(*con_set_palette)(struct vc_data *vc,
+--- a/include/uapi/linux/kd.h
++++ b/include/uapi/linux/kd.h
+@@ -173,7 +173,7 @@ struct console_font {
+ #define KD_FONT_OP_SET		0	/* Set font */
+ #define KD_FONT_OP_GET		1	/* Get font */
+ #define KD_FONT_OP_SET_DEFAULT	2	/* Set font to default, data points to name / NULL */
+-#define KD_FONT_OP_COPY		3	/* Copy from another console */
++#define KD_FONT_OP_COPY		3	/* Obsolete, do not use */
+ 
+ #define KD_FONT_FLAG_DONT_RECALC 	1	/* Don't recalculate hw charcell size [compat] */
+ 
 
 
