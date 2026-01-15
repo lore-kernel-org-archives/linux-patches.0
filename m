@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC51E396B7D;
-	Thu, 15 Jan 2026 17:04:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D77A2C0285;
+	Thu, 15 Jan 2026 17:04:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768496676; cv=none; b=qbnJSq26EiWnjJmGiQxMXbchJL4DBkvZKAH0OuTWMDW1bMyysG/GpTxvOlPkO/eHxoQyMNIN41x66ThIDevSngu+umJyeLcIAtsZPc0Q2nex4BphaanvMLkKxJuttQ9oafnohm+6Mc/q3N7a5sNiUIIUB+hSL2P6CyIK/kuMl2g=
+	t=1768496680; cv=none; b=afR5tAphW6ErMa27soaYQ7TIrafTiySqTPMKfZAGX6tMtGfNPKEfugkXvazmfQQxQJuhIhxOOZiN5smmmje/bS6TCaPX/AB4K+4LLZqVJRVEaUUEnag3Hs1lDFxSqxRiQkfRN2uSZLt47FtM60Q+14BqXyhq0ZhoBDUbrKW7QeY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768496676; c=relaxed/simple;
-	bh=vAo3zPkJm+u9qkzJkqFdw6y+D8JoVwYZECYZ4KwvLX4=;
+	s=arc-20240116; t=1768496680; c=relaxed/simple;
+	bh=Xywwu5uUHr2sgvLHganwXAxMTZIYNOZ3mQ+/1P6Zimw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LqPqM9vmuvW+hhUNBsrhOCUNUb2Y0r93FHuhM5ormtZUJi+kwh5c+TdPyp74VC8/TeyaHLNFaB1Bp3d4q3g2e3rpzJvPA+vOs9eI9BIOyqDmSHeHUTkLW8zRBtGMJuRW2zV4y31XxfzOPqwIytRuYtphrVHJLFRxwksymkSPE1A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=arApJdJ3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZYnkom84VEXB2MnNnJUocxZygyk9pnj1zNocHezMCZwYugzCspqFT9Az4X3p69dblfAL9SHLuRe58UI5Rgy7fS6hMe08i3jMZcBI9+o9Tdj5jX12voCoFwiJAfkiS5oMwKquSh+MxDpct9SzUw2MOQKHm5zCVPCKaQKvgmGG5FY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OJ37jkFu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="arApJdJ3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5BB59C116D0;
-	Thu, 15 Jan 2026 17:04:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OJ37jkFu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 615EEC116D0;
+	Thu, 15 Jan 2026 17:04:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1768496676;
-	bh=vAo3zPkJm+u9qkzJkqFdw6y+D8JoVwYZECYZ4KwvLX4=;
+	s=korg; t=1768496679;
+	bh=Xywwu5uUHr2sgvLHganwXAxMTZIYNOZ3mQ+/1P6Zimw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=arApJdJ3bLFDB0QiJabCibhRkurBrQuWmQcMISYLXU67hcx1M9tBfojDKuy8aJj4j
-	 NcBp7gmnVtRRUXHtjCV4EeTjS7GP1xYVDcwL7Qth3YeJLGNX51UsKLmJia4hOxtN6Q
-	 fmxKZIJD83R1WCq2DijMNyhe49TtY8wZaRYtRxd8=
+	b=OJ37jkFukvrB9VT8KvMdnpTMA2jGX1F/z1jM9VPXxWZv7i8mvNRA2WpzIdlGz0IMB
+	 TW+/EUglSTSCZGkCB4uMciZEiM1Jk/T6f70c5zSXKqVnhBPJOd4ZSrXBB1OrNg/r1j
+	 a2XSmHCq76jN6iHcqkd9W7rVzI3DrOzetVdtYK54=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qu Wenruo <wqu@suse.com>,
-	Anand Jain <asj@kernel.org>,
 	Filipe Manana <fdmanana@suse.com>,
+	Qu Wenruo <wqu@suse.com>,
 	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 095/119] btrfs: use variable for end offset in extent_writepage_io()
-Date: Thu, 15 Jan 2026 17:48:30 +0100
-Message-ID: <20260115164155.381626858@linuxfoundation.org>
+Subject: [PATCH 6.12 096/119] btrfs: fix beyond-EOF write handling
+Date: Thu, 15 Jan 2026 17:48:31 +0100
+Message-ID: <20260115164155.418555680@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260115164151.948839306@linuxfoundation.org>
 References: <20260115164151.948839306@linuxfoundation.org>
@@ -53,71 +52,152 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Filipe Manana <fdmanana@suse.com>
+From: Qu Wenruo <wqu@suse.com>
 
-[ Upstream commit 46a23908598f4b8e61483f04ea9f471b2affc58a ]
+[ Upstream commit e9e3b22ddfa760762b696ac6417c8d6edd182e49 ]
 
-Instead of repeating the expression "start + len" multiple times, store it
-in a variable and use it where needed.
+[BUG]
+For the following write sequence with 64K page size and 4K fs block size,
+it will lead to file extent items to be inserted without any data
+checksum:
 
-Reviewed-by: Qu Wenruo <wqu@suse.com>
-Reviewed-by: Anand Jain <asj@kernel.org>
-Signed-off-by: Filipe Manana <fdmanana@suse.com>
-Reviewed-by: David Sterba <dsterba@suse.com>
+  mkfs.btrfs -s 4k -f $dev > /dev/null
+  mount $dev $mnt
+  xfs_io -f -c "pwrite 0 16k" -c "pwrite 32k 4k" -c pwrite "60k 64K" \
+            -c "truncate 16k" $mnt/foobar
+  umount $mnt
+
+This will result the following 2 file extent items to be inserted (extra
+trace point added to insert_ordered_extent_file_extent()):
+
+  btrfs_finish_one_ordered: root=5 ino=257 file_off=61440 num_bytes=4096 csum_bytes=0
+  btrfs_finish_one_ordered: root=5 ino=257 file_off=0 num_bytes=16384 csum_bytes=16384
+
+Note for file offset 60K, we're inserting a file extent without any
+data checksum.
+
+Also note that range [32K, 36K) didn't reach
+insert_ordered_extent_file_extent(), which is the correct behavior as
+that OE is fully truncated, should not result any file extent.
+
+Although file extent at 60K will be later dropped by btrfs_truncate(),
+if the transaction got committed after file extent inserted but before
+the file extent dropping, we will have a small window where we have a
+file extent beyond EOF and without any data checksum.
+
+That will cause "btrfs check" to report error.
+
+[CAUSE]
+The sequence happens like this:
+
+- Buffered write dirtied the page cache and updated isize
+
+  Now the inode size is 64K, with the following page cache layout:
+
+  0             16K             32K              48K           64K
+  |/////////////|               |//|                        |//|
+
+- Truncate the inode to 16K
+  Which will trigger writeback through:
+
+  btrfs_setsize()
+  |- truncate_setsize()
+  |  Now the inode size is set to 16K
+  |
+  |- btrfs_truncate()
+     |- btrfs_wait_ordered_range() for [16K, u64(-1)]
+        |- btrfs_fdatawrite_range() for [16K, u64(-1)}
+	   |- extent_writepage() for folio 0
+	      |- writepage_delalloc()
+	      |  Generated OE for [0, 16K), [32K, 36K] and [60K, 64K)
+	      |
+	      |- extent_writepage_io()
+
+  Then inside extent_writepage_io(), the dirty fs blocks are handled
+  differently:
+
+  - Submit write for range [0, 16K)
+    As they are still inside the inode size (16K).
+
+  - Mark OE [32K, 36K) as truncated
+    Since we only call btrfs_lookup_first_ordered_range() once, which
+    returned the first OE after file offset 16K.
+
+  - Mark all OEs inside range [16K, 64K) as finished
+    Which will mark OE ranges [32K, 36K) and [60K, 64K) as finished.
+
+    For OE [32K, 36K) since it's already marked as truncated, and its
+    truncated length is 0, no file extent will be inserted.
+
+    For OE [60K, 64K) it has never been submitted thus has no data
+    checksum, and we insert the file extent as usual.
+    This is the root cause of file extent at 60K to be inserted without
+    any data checksum.
+
+  - Clear dirty flags for range [16K, 64K)
+    It is the function btrfs_folio_clear_dirty() which searches and clears
+    any dirty blocks inside that range.
+
+[FIX]
+The bug itself was introduced a long time ago, way before subpage and
+large folio support.
+
+At that time, fs block size must match page size, thus the range
+[cur, end) is just one fs block.
+
+But later with subpage and large folios, the same range [cur, end)
+can have multiple blocks and ordered extents.
+
+Later commit 18de34daa7c6 ("btrfs: truncate ordered extent when skipping
+writeback past i_size") was fixing a bug related to subpage/large
+folios, but it's still utilizing the old range [cur, end), meaning only
+the first OE will be marked as truncated.
+
+The proper fix here is to make EOF handling block-by-block, not trying
+to handle the whole range to @end.
+
+By this we always locate and truncate the OE for every dirty block.
+
+CC: stable@vger.kernel.org # 5.15+
+Reviewed-by: Filipe Manana <fdmanana@suse.com>
+Signed-off-by: Qu Wenruo <wqu@suse.com>
 Signed-off-by: David Sterba <dsterba@suse.com>
-Stable-dep-of: e9e3b22ddfa7 ("btrfs: fix beyond-EOF write handling")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/btrfs/extent_io.c |   10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ fs/btrfs/extent_io.c |    8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
 --- a/fs/btrfs/extent_io.c
 +++ b/fs/btrfs/extent_io.c
-@@ -1498,6 +1498,7 @@ static noinline_for_stack int extent_wri
- 	unsigned long range_bitmap = 0;
- 	bool submitted_io = false;
- 	int found_error = 0;
-+	const u64 end = start + len;
- 	const u64 folio_start = folio_pos(folio);
- 	const u64 folio_end = folio_start + folio_size(folio);
- 	const unsigned int blocks_per_folio = btrfs_blocks_per_folio(fs_info, folio);
-@@ -1505,7 +1506,7 @@ static noinline_for_stack int extent_wri
- 	int bit;
- 	int ret = 0;
+@@ -1531,7 +1531,7 @@ static noinline_for_stack int extent_wri
+ 			unsigned long flags;
  
--	ASSERT(start >= folio_start && start + len <= folio_end);
-+	ASSERT(start >= folio_start && end <= folio_end);
- 
- 	ret = btrfs_writepage_cow_fixup(folio);
- 	if (ret) {
-@@ -1515,7 +1516,7 @@ static noinline_for_stack int extent_wri
- 		return 1;
- 	}
- 
--	for (cur = start; cur < start + len; cur += fs_info->sectorsize)
-+	for (cur = start; cur < end; cur += fs_info->sectorsize)
- 		set_bit((cur - folio_start) >> fs_info->sectorsize_bits, &range_bitmap);
- 	bitmap_and(&bio_ctrl->submit_bitmap, &bio_ctrl->submit_bitmap, &range_bitmap,
- 		   blocks_per_folio);
-@@ -1544,7 +1545,7 @@ static noinline_for_stack int extent_wri
+ 			ordered = btrfs_lookup_first_ordered_range(inode, cur,
+-								   folio_end - cur);
++								   fs_info->sectorsize);
+ 			/*
+ 			 * We have just run delalloc before getting here, so
+ 			 * there must be an ordered extent.
+@@ -1545,7 +1545,7 @@ static noinline_for_stack int extent_wri
  			btrfs_put_ordered_extent(ordered);
  
  			btrfs_mark_ordered_io_finished(inode, folio, cur,
--						       start + len - cur, true);
-+						       end - cur, true);
+-						       end - cur, true);
++						       fs_info->sectorsize, true);
  			/*
  			 * This range is beyond i_size, thus we don't need to
  			 * bother writing back.
-@@ -1553,8 +1554,7 @@ static noinline_for_stack int extent_wri
+@@ -1554,8 +1554,8 @@ static noinline_for_stack int extent_wri
  			 * writeback the sectors with subpage dirty bits,
  			 * causing writeback without ordered extent.
  			 */
--			btrfs_folio_clear_dirty(fs_info, folio, cur,
--						start + len - cur);
-+			btrfs_folio_clear_dirty(fs_info, folio, cur, end - cur);
- 			break;
+-			btrfs_folio_clear_dirty(fs_info, folio, cur, end - cur);
+-			break;
++			btrfs_folio_clear_dirty(fs_info, folio, cur, fs_info->sectorsize);
++			continue;
  		}
  		ret = submit_one_sector(inode, folio, cur, bio_ctrl, i_size);
+ 		if (unlikely(ret < 0)) {
 
 
