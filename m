@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B6742868B0;
-	Thu, 15 Jan 2026 17:58:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3FB5E3D7D13;
+	Thu, 15 Jan 2026 17:58:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768499895; cv=none; b=l1VjiwGlT99c7tWWIiT1CmKpyEZPGKneQgLJtnoTMoSxnd4nPjCje8sLNEdM3+tOVh/aRtIpy4zBtjE9GBUTpiOyFC9d+4vDqw79w5vAVsWatuj+zFZmnsVB+gN1G7S9cE7gj2p0AClM6XZ8KTrDz6c3CC12QyBZRWwPQ5howe8=
+	t=1768499898; cv=none; b=KH+DhPr+Qlu5ljBNS6S5dHEAr5d7hdI9FUqoY70MErtSmckUhETF1CXhuBm0522+HfqAW1mFJKD3JDh5ZeqBKo5YSH2Ki6kSr1e65NrC4FMlYcLG7RxMMvyd+E6h+oMbu5YQKdyBMPykdDvaXkPnJkS4CnvfQgc3L97YFU8Izrw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768499895; c=relaxed/simple;
-	bh=z6bxf/1kPSxAhIJYvl7XmGrkzsg2HX63y2UQFJ/Z01o=;
+	s=arc-20240116; t=1768499898; c=relaxed/simple;
+	bh=mYptC2yX6gP8gaXFoDuoCxg/LC7gy6hsCTrM/bTssHs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hoGPX/uDGFgltAfu0ZiQezwReqZ0TvOOiVhN5ZqnQBQWRkM2lJvrlXXCh3HAivefqFLU22kH7Ic2TRIR+QH6aCgEWHHckpjH6wGlWg6eV6QaeBPbY2ZQntBAzHtcOrxJ0gmwNDc3wrtrYHEpSDje2Tfwq3qHxkhze2S9YT0qElM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UPbTZdAT; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=V1AYuc2XX8mlAHQO4dZdLz6OsB1lLJEUcs2cSpCHSUHKmctfnJL3rnP8hqfi0jv/jUsJdyPyz181PvyJy9CDm51I5IX26TSoIdXuftTneMYKO1ut7C/o/+tEw3JRbt815iC6GCQn8Yu3bhbV3JD7uQV5hzMB62kPLmG0ECooECA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PshyHQRx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UPbTZdAT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE3CFC116D0;
-	Thu, 15 Jan 2026 17:58:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PshyHQRx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE644C116D0;
+	Thu, 15 Jan 2026 17:58:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1768499895;
-	bh=z6bxf/1kPSxAhIJYvl7XmGrkzsg2HX63y2UQFJ/Z01o=;
+	s=korg; t=1768499898;
+	bh=mYptC2yX6gP8gaXFoDuoCxg/LC7gy6hsCTrM/bTssHs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UPbTZdATw3zc5TGxd+FKB3dQsMg8F4eENKl6TI5u4VZcNlomUm0lvvzDco3JYKdz4
-	 CfE1iZhYysbbC1tgF39ZBP0f3gMpiAs2qVWWaQxOhUA7j6GSaTr0lEQWwdLFXHObqU
-	 xc+nb2rxNGi/F2pfEe8RyJCjB9rpiZu8BVWADe5g=
+	b=PshyHQRxpdajseszcFrxqLIYC4gU50JCGRrvEFMOzR7NCr5Ik7i0UZ7c6mtZqjXA6
+	 6g+N9/ii+HzsuTje5eS6o2YHevVKfglSDKDUOtSEw8ZQwkWEB95iz0HuUmxinryOdR
+	 h13P9EeDevtrO5CmLRyJydUkRlA18V/b5RBhEgbo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Haoxiang Li <haoxiang_li2024@163.com>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-	Tzung-Bi Shih <tzungbi@kernel.org>,
-	Nicolas Dufresne <nicolas.dufresne@collabora.com>,
+	Johan Hovold <johan@kernel.org>,
 	Hans Verkuil <hverkuil+cisco@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 387/451] media: mediatek: vcodec: Fix a reference leak in mtk_vcodec_fw_vpu_init()
-Date: Thu, 15 Jan 2026 17:49:48 +0100
-Message-ID: <20260115164244.928356828@linuxfoundation.org>
+Subject: [PATCH 5.10 388/451] media: vpif_capture: fix section mismatch
+Date: Thu, 15 Jan 2026 17:49:49 +0100
+Message-ID: <20260115164244.965891485@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260115164230.864985076@linuxfoundation.org>
 References: <20260115164230.864985076@linuxfoundation.org>
@@ -54,44 +51,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Haoxiang Li <haoxiang_li2024@163.com>
+From: Johan Hovold <johan@kernel.org>
 
-[ Upstream commit cdd0f118ef87db8a664fb5ea366fd1766d2df1cd ]
+[ Upstream commit 0ef841113724166c3c484d0e9ae6db1eb5634fde ]
 
-vpu_get_plat_device() increases the reference count of the returned
-platform device. However, when devm_kzalloc() fails, the reference
-is not released, causing a reference leak.
+Platform drivers can be probed after their init sections have been
+discarded (e.g. on probe deferral or manual rebind through sysfs) so the
+probe function must not live in init.
 
-Fix this by calling put_device() on fw_pdev->dev before returning
-on the error path.
+Note that commit ffa1b391c61b ("V4L/DVB: vpif_cap/disp: Removed section
+mismatch warning") incorrectly suppressed the modpost warning.
 
-Fixes: e25a89f743b1 ("media: mtk-vcodec: potential dereference of null pointer")
-Cc: stable@vger.kernel.org
-Signed-off-by: Haoxiang Li <haoxiang_li2024@163.com>
-Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Reviewed-by: Tzung-Bi Shih <tzungbi@kernel.org>
-Signed-off-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
+Fixes: ffa1b391c61b ("V4L/DVB: vpif_cap/disp: Removed section mismatch warning")
+Fixes: 6ffefff5a9e7 ("V4L/DVB (12906c): V4L : vpif capture driver for DM6467")
+Cc: stable@vger.kernel.org	# 2.6.32
+Signed-off-by: Johan Hovold <johan@kernel.org>
 Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
-[ adapted file path from common/ subdirectory and adjusted devm_kzalloc target from plat_dev->dev to dev->plat_dev->dev ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/platform/mtk-vcodec/mtk_vcodec_fw_vpu.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/media/platform/davinci/vpif_capture.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/media/platform/mtk-vcodec/mtk_vcodec_fw_vpu.c
-+++ b/drivers/media/platform/mtk-vcodec/mtk_vcodec_fw_vpu.c
-@@ -94,8 +94,10 @@ struct mtk_vcodec_fw *mtk_vcodec_fw_vpu_
- 	vpu_wdt_reg_handler(fw_pdev, mtk_vcodec_vpu_reset_handler, dev, rst_id);
+--- a/drivers/media/platform/davinci/vpif_capture.c
++++ b/drivers/media/platform/davinci/vpif_capture.c
+@@ -1614,7 +1614,7 @@ err_cleanup:
+  * This creates device entries by register itself to the V4L2 driver and
+  * initializes fields of each channel objects
+  */
+-static __init int vpif_probe(struct platform_device *pdev)
++static int vpif_probe(struct platform_device *pdev)
+ {
+ 	struct vpif_subdev_info *subdevdata;
+ 	struct i2c_adapter *i2c_adap;
+@@ -1817,7 +1817,7 @@ static int vpif_resume(struct device *de
  
- 	fw = devm_kzalloc(&dev->plat_dev->dev, sizeof(*fw), GFP_KERNEL);
--	if (!fw)
-+	if (!fw) {
-+		put_device(&fw_pdev->dev);
- 		return ERR_PTR(-ENOMEM);
-+	}
- 	fw->type = VPU;
- 	fw->ops = &mtk_vcodec_vpu_msg;
- 	fw->pdev = fw_pdev;
+ static SIMPLE_DEV_PM_OPS(vpif_pm_ops, vpif_suspend, vpif_resume);
+ 
+-static __refdata struct platform_driver vpif_driver = {
++static struct platform_driver vpif_driver = {
+ 	.driver	= {
+ 		.name	= VPIF_DRIVER_NAME,
+ 		.pm	= &vpif_pm_ops,
 
 
