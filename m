@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C3BE25228D;
-	Thu, 15 Jan 2026 16:55:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A8DB3B8BB1;
+	Thu, 15 Jan 2026 16:55:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768496103; cv=none; b=HWxL/vp+GqUO9XKEQWIA5Rm64SBY9Zkw7Ue9owClLAQ9lP9dbY+z8xLRUuP/YKTg0sr0PyUZ+VpwwaG9l73fD1PBpNGwxyJhsbO+veUovZy9SMP2LYi7MpHCd5vDzNR92iZOlRaJ63Q3VFmL3pS55Nd01yIwB7K8zaQijRYjMe8=
+	t=1768496106; cv=none; b=JXwyG0J96A1B8iU/EKBPMGyiGfBG4tDTcdLlzDDEAsa2lxmnQlDE6qQgrKBsBnZoI2EK5Ono6p6khtfLryyVs6B0KFhakQARFIT5+2p8QDdcPxnRd3FAS+iVuZVaxcTVyOYadgUBF0sfTpgYU2p4dwOmEKVtYLg90i7Wq2olS/g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768496103; c=relaxed/simple;
-	bh=5TnVzDVn7sFvgS2cBk2nD0grTL0sM3Ti/cex0v+5AlQ=;
+	s=arc-20240116; t=1768496106; c=relaxed/simple;
+	bh=OzP31hw7LJk71aOsoKSsnO7O5fwECcTEJyNjt7TTRDE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Dm1nBDJaBoGxpN2A+2o9CbupkAO3ENfmtzaimvZlGiaCbgDPt5ez09pvlo+KBpSeUn+vvarmpE1pM5kNAWSqqGxUR2sDzuBoykI0qzgJfThRqd1ljwDs1UvQu4jerl+jEIrGDGgO66Ul0fTRnS30HeSDsZcx3F4Yntg8gr6FHig=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YjWyX/nq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=P8Ug0nZNFpJkHPJakqb3GzxXMDuZpaAX3XSOMVtoCTP08iYAIg/q1O2DetC280bBl2Og9gqJPKsXHYEjHRREUVjhqWOvsLqLorG5x90hxGBIPSLWgZcFfzs/TL3I4p9UCVRqXNTcKClyepVt05bmZl1LV19Q4j3xVkz8subJwYs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hLE7u5C3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YjWyX/nq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D5E7C16AAE;
-	Thu, 15 Jan 2026 16:55:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hLE7u5C3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D664C116D0;
+	Thu, 15 Jan 2026 16:55:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1768496102;
-	bh=5TnVzDVn7sFvgS2cBk2nD0grTL0sM3Ti/cex0v+5AlQ=;
+	s=korg; t=1768496105;
+	bh=OzP31hw7LJk71aOsoKSsnO7O5fwECcTEJyNjt7TTRDE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YjWyX/nqUdR0rYQA+sb2UUmKikpAb5PH09B2MJ+FuN9GU+ThbTpkHeZpivtaqtoZ+
-	 KzMQAcunUL51TOpI0T6NaGy66UKomHOZpIMLn6pOHcR0udJqjEUZCyvUzD+yATVrGi
-	 n5k/k3rs+zlka1Q1+MKVmH2tGW6N1dqwxFVkkKac=
+	b=hLE7u5C3n7fJcTR707ZJFOA7TZkn+aOQQYXl8truw2Bub8GshKX/Itr3nnzynmqDH
+	 maRfcYcOKU2i45EovgVzPfyPdYt/v0X26esqrUipYJgwmUpZ/ekzH581e3lPDO3WVs
+	 4Bsiv6V69yWuR9t537EjGsbJiLJXk5q3tACJ2oMI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wadim Egorov <w.egorov@phytec.de>,
-	Nishanth Menon <nm@ti.com>,
+	Frank Li <Frank.Li@nxp.com>,
+	Haibo Chen <haibo.chen@nxp.com>,
+	Shawn Guo <shawnguo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 071/181] arm64: dts: ti: k3-am62-lp-sk-nand: Rename pinctrls to fix schema warnings
-Date: Thu, 15 Jan 2026 17:46:48 +0100
-Message-ID: <20260115164204.887004762@linuxfoundation.org>
+Subject: [PATCH 6.18 080/181] arm64: dts: add off-on-delay-us for usdhc2 regulator
+Date: Thu, 15 Jan 2026 17:46:57 +0100
+Message-ID: <20260115164205.216120968@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260115164202.305475649@linuxfoundation.org>
 References: <20260115164202.305475649@linuxfoundation.org>
@@ -51,35 +52,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wadim Egorov <w.egorov@phytec.de>
+From: Haibo Chen <haibo.chen@nxp.com>
 
-[ Upstream commit cf5e8adebe77917a4cc95e43e461cdbd857591ce ]
+[ Upstream commit ca643894a37a25713029b36cfe7d1bae515cac08 ]
 
-Rename pinctrl nodes to comply with naming conventions required by
-pinctrl-single schema.
+For SD card, according to the spec requirement, for sd card power reset
+operation, it need sd card supply voltage to be lower than 0.5v and keep
+over 1ms, otherwise, next time power back the sd card supply voltage to
+3.3v, sd card can't support SD3.0 mode again.
 
-Fixes: e569152274fec ("arm64: dts: ti: am62-lp-sk: Add overlay for NAND expansion card")
-Signed-off-by: Wadim Egorov <w.egorov@phytec.de>
-Link: https://patch.msgid.link/20251127122733.2523367-3-w.egorov@phytec.de
-Signed-off-by: Nishanth Menon <nm@ti.com>
+To match such requirement on imx8qm-mek board, add 4.8ms delay between
+sd power off and power on.
+
+Fixes: 307fd14d4b14 ("arm64: dts: imx: add imx8qm mek support")
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Signed-off-by: Haibo Chen <haibo.chen@nxp.com>
+Signed-off-by: Shawn Guo <shawnguo@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/ti/k3-am62-lp-sk-nand.dtso | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/arm64/boot/dts/freescale/imx8qm-mek.dts | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/arch/arm64/boot/dts/ti/k3-am62-lp-sk-nand.dtso b/arch/arm64/boot/dts/ti/k3-am62-lp-sk-nand.dtso
-index 173ac60723b64..b4daa674eaa1e 100644
---- a/arch/arm64/boot/dts/ti/k3-am62-lp-sk-nand.dtso
-+++ b/arch/arm64/boot/dts/ti/k3-am62-lp-sk-nand.dtso
-@@ -14,7 +14,7 @@
- };
+diff --git a/arch/arm64/boot/dts/freescale/imx8qm-mek.dts b/arch/arm64/boot/dts/freescale/imx8qm-mek.dts
+index d4b13cfd87a92..df99fe88cf4ac 100644
+--- a/arch/arm64/boot/dts/freescale/imx8qm-mek.dts
++++ b/arch/arm64/boot/dts/freescale/imx8qm-mek.dts
+@@ -256,6 +256,7 @@ reg_usdhc2_vmmc: usdhc2-vmmc {
+ 		regulator-max-microvolt = <3000000>;
+ 		gpio = <&lsio_gpio4 7 GPIO_ACTIVE_HIGH>;
+ 		enable-active-high;
++		off-on-delay-us = <4800>;
+ 	};
  
- &main_pmx0 {
--	gpmc0_pins_default: gpmc0-pins-default {
-+	gpmc0_pins_default: gpmc0-default-pins {
- 		pinctrl-single,pins = <
- 			AM62X_IOPAD(0x003c, PIN_INPUT, 0) /* (K19) GPMC0_AD0 */
- 			AM62X_IOPAD(0x0040, PIN_INPUT, 0) /* (L19) GPMC0_AD1 */
+ 	reg_audio: regulator-audio {
 -- 
 2.51.0
 
