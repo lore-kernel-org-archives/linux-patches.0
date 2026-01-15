@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8940039B48E;
-	Thu, 15 Jan 2026 17:21:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5997B3A1E86;
+	Thu, 15 Jan 2026 17:21:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768497690; cv=none; b=joWrj+QhKvqY3ziRa0xz3oRb1lkD42ed0pIuekThhZIDyc/tfwSMzpkyM5y8VBqcP9GFZfNLtQiAHVIf7U/cCEa6pAaHbaSf/HRHbwhs5dDCpMTZRcXZfCW5sJrbT9mdhN06c9RtsY/V0xKCpWAQyNM3HBT0saJdO1b9xVkqpho=
+	t=1768497693; cv=none; b=D0tOzUW0KKBKy+0YVttO68hc67BadkrIk2OQyrUNkHwpLtdkxzLWEqdx2+yd30MiPGmLVLzyqVhYhtw3eaVXVAp7Rk2uxoy/oRVi1kjBhGo/Zm1sL4bFucMPZepbAcIf6YU7im9CSZgVB+/csCvYEgLnvnhogmGyj0Kmc73Bepk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768497690; c=relaxed/simple;
-	bh=H4UCD2ZlHLZvUtjRuZ9VY6rpBw9Jz26zlkyt2hFo25w=;
+	s=arc-20240116; t=1768497693; c=relaxed/simple;
+	bh=npcIGcaQniEePFgskXAIX1w8pdcBiyM/qsPGPM0LJw4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GBwBoBtEBbC/ERAIKdAQ4Jmq42TXdjyeSm/QKZjruKiXYb19+5gGVmLyfOoTAMTz01qVyCwcnN12UvE68r6R15QDmCJ5hfXrYxv0h22DUOx5D8wAEXYogpxv2dt1rmaEMy4FJtHmE0CYSjGti5hxtEk2f/Jneaj8uiEjDziYw5k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NUAOnIXm; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=l6WU0kA/C1UCibARY1Pvx1fhIdJPkOjWz3wJN3aHp+E9PXvG/ApegqNsQ4tdMufEBdmZvA4IdANHMI2NWdzeEAW9WpuCJnfo6Vsm/PirkI9WogEZgc52qLfQwDhBLmrGOR99SAwsFeLxkDj8YBpR5aa28/bWd+WT8Jsf7hIyxRg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZqU2rS4p; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NUAOnIXm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15EF6C116D0;
-	Thu, 15 Jan 2026 17:21:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZqU2rS4p"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D7EBFC19423;
+	Thu, 15 Jan 2026 17:21:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1768497690;
-	bh=H4UCD2ZlHLZvUtjRuZ9VY6rpBw9Jz26zlkyt2hFo25w=;
+	s=korg; t=1768497693;
+	bh=npcIGcaQniEePFgskXAIX1w8pdcBiyM/qsPGPM0LJw4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NUAOnIXmL6tdVnZFH6p9h/OGenqQixmwboyGVxo5Z84Ah/OW9ZNl5MfIJhSCq/32M
-	 dgbODdiw0pT0vG7WQWWgZv1mz1ACMwKsyn/GRMbbVw7cy9mMQir6woTXXSWkhyhPxS
-	 q4ykeeboxBtgmA5qY/XTTgmFxch8ddIU4yRY/8Nc=
+	b=ZqU2rS4pAz37gzRTPkV8WCbIGUEc9z9q+Pg/oX5AYLCTDFmJWh+bLWTowMmOAo7Og
+	 +5pUZhHW/01De3RaM53WX4NGBXzGLsrz4YtcVb4XjvfCXWkeYMhKydmN6gRmbYrQXf
+	 s1VYTctcD7c/D1ubdv55g4YtL6fS+OugRuP813kg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ria Thomas <ria.thomas@morsemicro.com>,
-	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
-	Johannes Berg <johannes.berg@intel.com>,
+	Mans Rullgard <mans@mansr.com>,
+	Daniel Thompson <daniel.thompson@linaro.org>,
+	Lee Jones <lee@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 136/554] wifi: ieee80211: correct FILS status codes
-Date: Thu, 15 Jan 2026 17:43:22 +0100
-Message-ID: <20260115164251.174799355@linuxfoundation.org>
+Subject: [PATCH 5.15 137/554] backlight: led_bl: Take led_access lock when required
+Date: Thu, 15 Jan 2026 17:43:23 +0100
+Message-ID: <20260115164251.210692231@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260115164246.225995385@linuxfoundation.org>
 References: <20260115164246.225995385@linuxfoundation.org>
@@ -52,39 +52,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ria Thomas <ria.thomas@morsemicro.com>
+From: Mans Rullgard <mans@mansr.com>
 
-[ Upstream commit 24d4da5c2565313c2ad3c43449937a9351a64407 ]
+[ Upstream commit a33677b9211b6c328ad359b072043af94f7c9592 ]
 
-The FILS status codes are set to 108/109, but the IEEE 802.11-2020
-spec defines them as 112/113. Update the enum so it matches the
-specification and keeps the kernel consistent with standard values.
+The led_access lock must be held when calling led_sysfs_enable() and
+led_sysfs_disable().  This fixes warnings such as this:
 
-Fixes: a3caf7440ded ("cfg80211: Add support for FILS shared key authentication offload")
-Signed-off-by: Ria Thomas <ria.thomas@morsemicro.com>
-Reviewed-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
-Link: https://patch.msgid.link/20251124125637.3936154-1-ria.thomas@morsemicro.com
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+[    2.432495] ------------[ cut here ]------------
+[    2.437316] WARNING: CPU: 0 PID: 22 at drivers/leds/led-core.c:349 led_sysfs_disable+0x54/0x58
+[    2.446105] Modules linked in:
+[    2.449218] CPU: 0 PID: 22 Comm: kworker/u2:1 Not tainted 6.3.8+ #1
+[    2.456268] Hardware name: Generic AM3517 (Flattened Device Tree)
+[    2.462402] Workqueue: events_unbound deferred_probe_work_func
+[    2.468353]  unwind_backtrace from show_stack+0x10/0x14
+[    2.473632]  show_stack from dump_stack_lvl+0x24/0x2c
+[    2.478759]  dump_stack_lvl from __warn+0x9c/0xc4
+[    2.483551]  __warn from warn_slowpath_fmt+0x64/0xc0
+[    2.488586]  warn_slowpath_fmt from led_sysfs_disable+0x54/0x58
+[    2.494567]  led_sysfs_disable from led_bl_probe+0x20c/0x3b0
+[    2.500305]  led_bl_probe from platform_probe+0x5c/0xb8
+[    2.505615]  platform_probe from really_probe+0xc8/0x2a0
+[    2.510986]  really_probe from __driver_probe_device+0x88/0x19c
+[    2.516967]  __driver_probe_device from driver_probe_device+0x30/0xcc
+[    2.523498]  driver_probe_device from __device_attach_driver+0x94/0xc4
+[    2.530090]  __device_attach_driver from bus_for_each_drv+0x80/0xcc
+[    2.536437]  bus_for_each_drv from __device_attach+0xf8/0x19c
+[    2.542236]  __device_attach from bus_probe_device+0x8c/0x90
+[    2.547973]  bus_probe_device from deferred_probe_work_func+0x80/0xb0
+[    2.554504]  deferred_probe_work_func from process_one_work+0x228/0x4c0
+[    2.561187]  process_one_work from worker_thread+0x1fc/0x4d0
+[    2.566925]  worker_thread from kthread+0xb4/0xd0
+[    2.571685]  kthread from ret_from_fork+0x14/0x2c
+[    2.576446] Exception stack(0xd0079fb0 to 0xd0079ff8)
+[    2.581573] 9fa0:                                     00000000 00000000 00000000 00000000
+[    2.589813] 9fc0: 00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000
+[    2.598052] 9fe0: 00000000 00000000 00000000 00000000 00000013 00000000
+[    2.604888] ---[ end trace 0000000000000000 ]---
+
+Signed-off-by: Mans Rullgard <mans@mansr.com>
+Reviewed-by: Daniel Thompson <daniel.thompson@linaro.org>
+Link: https://lore.kernel.org/r/20230619160249.10414-1-mans@mansr.com
+Signed-off-by: Lee Jones <lee@kernel.org>
+Stable-dep-of: 9341d6698f4c ("backlight: led-bl: Add devlink to supplier LEDs")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/ieee80211.h | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/video/backlight/led_bl.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/include/linux/ieee80211.h b/include/linux/ieee80211.h
-index 00ed7c17698d1..0c00a628cbde7 100644
---- a/include/linux/ieee80211.h
-+++ b/include/linux/ieee80211.h
-@@ -2720,8 +2720,8 @@ enum ieee80211_statuscode {
- 	WLAN_STATUS_DENIED_WITH_SUGGESTED_BAND_AND_CHANNEL = 99,
- 	WLAN_STATUS_DENIED_DUE_TO_SPECTRUM_MANAGEMENT = 103,
- 	/* 802.11ai */
--	WLAN_STATUS_FILS_AUTHENTICATION_FAILURE = 108,
--	WLAN_STATUS_UNKNOWN_AUTHENTICATION_SERVER = 109,
-+	WLAN_STATUS_FILS_AUTHENTICATION_FAILURE = 112,
-+	WLAN_STATUS_UNKNOWN_AUTHENTICATION_SERVER = 113,
- 	WLAN_STATUS_SAE_HASH_TO_ELEMENT = 126,
- 	WLAN_STATUS_SAE_PK = 127,
- };
+diff --git a/drivers/video/backlight/led_bl.c b/drivers/video/backlight/led_bl.c
+index 589dae9ebb638..d360def24747d 100644
+--- a/drivers/video/backlight/led_bl.c
++++ b/drivers/video/backlight/led_bl.c
+@@ -209,8 +209,11 @@ static int led_bl_probe(struct platform_device *pdev)
+ 		return PTR_ERR(priv->bl_dev);
+ 	}
+ 
+-	for (i = 0; i < priv->nb_leds; i++)
++	for (i = 0; i < priv->nb_leds; i++) {
++		mutex_lock(&priv->leds[i]->led_access);
+ 		led_sysfs_disable(priv->leds[i]);
++		mutex_unlock(&priv->leds[i]->led_access);
++	}
+ 
+ 	backlight_update_status(priv->bl_dev);
+ 
 -- 
 2.51.0
 
