@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E240C2D541B;
-	Thu, 15 Jan 2026 17:18:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 053A939E199;
+	Thu, 15 Jan 2026 17:18:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768497490; cv=none; b=LqT6jrhaZz71Q89t8jL+4K47PJ1iuJ+4TJAJoPyaoI+JZzzZ6SCeVKgqPH/5oTd93ftvq8mk2PTZfMx1GJnROMM/sJMBBuaidkbr+ifohm74hkamLGtrsXSnCZSGNIU4yoD5CDcj5FS5gY9xLO4q4qgeIGJ9Yw8R19Zkxa5Ui+Q=
+	t=1768497493; cv=none; b=RkP0PI2lbrSWb50uIQctQZwT6KSUH9mlBj0Z6PHrchBQxvwRzCnRvjUCPREBcWRKCduPl4qPqRjZoEp4vqd7STxL5Yrfe7jLlquyAfGov5JNVoVQID1823E7u8FcBhcUYf4isrfVQHjwPcJxecB0PSVYxcB2Dq391FRj2+WzzaU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768497490; c=relaxed/simple;
-	bh=9EpDDEfIFW7Q7wSQG2tsNFTZ6lrCq/s7XO1WJqizFYc=;
+	s=arc-20240116; t=1768497493; c=relaxed/simple;
+	bh=2POK2Aj27KOaveBtUn1bdLNpW4dBM48u+MiMH3JjvNY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ucpn6xOv0G9OIGL0dmEJGF8ZrBCqEQwgfm2f7w3eeW93ksT4cDTt+dXZwPfphsAuOTkT9ApAtO2rFR0SiLKW9zEaF1WmomJZyTeItAeAjz0GWc1qLapMUlBkI3xN+EAoeU45fEEzbWZRB4vPn7sxHRsz6Zd7dRx0S+UpJ8nsoB4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dPtgQDH4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GyjwP22EZZH4bM1wwfIqPtFVeYqciyF07FmamdjxVBLd/yqcLc8e1iXfMnxws4WAUGbeP/CZ32bNF/eQpzIt33mlWDSQmjy4+61M1YBPMOjXX90XePixtPRsj0wTN+1a3s1PDpY6tH0RkGk8W0KsszDjP2lbVFhQPnWQLZ0IlRI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nOJZnwJP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dPtgQDH4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 60CE9C19422;
-	Thu, 15 Jan 2026 17:18:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nOJZnwJP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 43F32C116D0;
+	Thu, 15 Jan 2026 17:18:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1768497489;
-	bh=9EpDDEfIFW7Q7wSQG2tsNFTZ6lrCq/s7XO1WJqizFYc=;
+	s=korg; t=1768497492;
+	bh=2POK2Aj27KOaveBtUn1bdLNpW4dBM48u+MiMH3JjvNY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dPtgQDH4mpE5GXWCHv/D05+bjZYt5YmEMSpNrFkbwTENjr0qNarWS3EQatWPg/aJ0
-	 NYdzQevVeYV3KS+nZeD9Wl2qoPJTxYBq0tuKLeJ0Tyt0L7aZ4DxRpaalQU1r0P+hg8
-	 ljFhviS56a7+mdX0lN79juW0hrSyLpWy0P5uzUB0=
+	b=nOJZnwJPG4w6qJYumj/wrJy+Ol08CGt7dXpUwi7sD1Uu0rbwjmRWRIuQClVIxHmua
+	 bY0GbNP/t5N0mucx2vYRMNSkQ88su05QWJw+4JlrSAJRhBpcQzPEoWe22mrQpU0QO1
+	 kDhscpPHFSZRFi6ATTmfJdEEzvtziniN5efoxIqs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stanley Chu <yschu@nuvoton.com>,
-	Frank Li <Frank.Li@nxp.com>,
-	Miquel Raynal <miquel.raynal@bootlin.com>,
-	Alexandre Belloni <alexandre.belloni@bootlin.com>,
+	Ivan Abramov <i.abramov@mt-integration.ru>,
+	Sebastian Reichel <sebastian.reichel@collabora.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 067/554] i3c: master: svc: Prevent incomplete IBI transaction
-Date: Thu, 15 Jan 2026 17:42:13 +0100
-Message-ID: <20260115164248.668882002@linuxfoundation.org>
+Subject: [PATCH 5.15 068/554] power: supply: wm831x: Check wm831x_set_bits() return value
+Date: Thu, 15 Jan 2026 17:42:14 +0100
+Message-ID: <20260115164248.704234161@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260115164246.225995385@linuxfoundation.org>
 References: <20260115164246.225995385@linuxfoundation.org>
@@ -53,67 +51,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Stanley Chu <yschu@nuvoton.com>
+From: Ivan Abramov <i.abramov@mt-integration.ru>
 
-[ Upstream commit 3a36273e5a07dda0ccec193800f3b78c3c0380af ]
+[ Upstream commit ea14bae6df18942bccb467fcf5ff33ca677b8253 ]
 
-If no free IBI slot is available, svc_i3c_master_handle_ibi returns
-immediately. This causes the STOP condition to be missed because the
-EmitStop request is sent when the transfer is not complete. To resolve
-this, svc_i3c_master_handle_ibi must wait for the transfer to complete
-before returning.
+Since wm831x_set_bits() may return error, log failure and exit from
+wm831x_usb_limit_change() in such case.
 
-Fixes: dd3c52846d59 ("i3c: master: svc: Add Silvaco I3C master driver")
-Signed-off-by: Stanley Chu <yschu@nuvoton.com>
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Reviewed-by: Miquel Raynal <miquel.raynal@bootlin.com>
-Link: https://patch.msgid.link/20251027034715.708243-1-yschu@nuvoton.com
-Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
+
+Fixes: 626b6cd5f52e ("power: wm831x_power: Support USB charger current limit management")
+Signed-off-by: Ivan Abramov <i.abramov@mt-integration.ru>
+Link: https://patch.msgid.link/20251009170553.566561-1-i.abramov@mt-integration.ru
+Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/i3c/master/svc-i3c-master.c | 22 ++++++++++++++--------
- 1 file changed, 14 insertions(+), 8 deletions(-)
+ drivers/power/supply/wm831x_power.c | 10 ++++++++--
+ 1 file changed, 8 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/i3c/master/svc-i3c-master.c b/drivers/i3c/master/svc-i3c-master.c
-index 27f55b5e388d9..d12b4ff2a4495 100644
---- a/drivers/i3c/master/svc-i3c-master.c
-+++ b/drivers/i3c/master/svc-i3c-master.c
-@@ -297,21 +297,27 @@ static int svc_i3c_master_handle_ibi(struct svc_i3c_master *master,
- 	int ret, val;
- 	u8 *buf;
+diff --git a/drivers/power/supply/wm831x_power.c b/drivers/power/supply/wm831x_power.c
+index 4cd2dd8700395..902e01a3fc730 100644
+--- a/drivers/power/supply/wm831x_power.c
++++ b/drivers/power/supply/wm831x_power.c
+@@ -144,6 +144,7 @@ static int wm831x_usb_limit_change(struct notifier_block *nb,
+ 							 struct wm831x_power,
+ 							 usb_notify);
+ 	unsigned int i, best;
++	int ret;
  
--	slot = i3c_generic_ibi_get_free_slot(data->ibi_pool);
--	if (!slot)
--		return -ENOSPC;
--
--	slot->len = 0;
--	buf = slot->data;
--
-+	/*
-+	 * Wait for transfer to complete before returning. Otherwise, the EmitStop
-+	 * request might be sent when the transfer is not complete.
-+	 */
- 	ret = readl_relaxed_poll_timeout(master->regs + SVC_I3C_MSTATUS, val,
- 						SVC_I3C_MSTATUS_COMPLETE(val), 0, 1000);
- 	if (ret) {
- 		dev_err(master->dev, "Timeout when polling for COMPLETE\n");
--		i3c_generic_ibi_recycle_slot(data->ibi_pool, slot);
- 		return ret;
- 	}
+ 	/* Find the highest supported limit */
+ 	best = 0;
+@@ -156,8 +157,13 @@ static int wm831x_usb_limit_change(struct notifier_block *nb,
+ 	dev_dbg(wm831x_power->wm831x->dev,
+ 		"Limiting USB current to %umA", wm831x_usb_limits[best]);
  
-+	slot = i3c_generic_ibi_get_free_slot(data->ibi_pool);
-+	if (!slot) {
-+		dev_dbg(master->dev, "No free ibi slot, drop the data\n");
-+		writel(SVC_I3C_MDATACTRL_FLUSHRB, master->regs + SVC_I3C_MDATACTRL);
-+		return -ENOSPC;
+-	wm831x_set_bits(wm831x_power->wm831x, WM831X_POWER_STATE,
+-		        WM831X_USB_ILIM_MASK, best);
++	ret = wm831x_set_bits(wm831x_power->wm831x, WM831X_POWER_STATE,
++			      WM831X_USB_ILIM_MASK, best);
++	if (ret < 0) {
++		dev_err(wm831x_power->wm831x->dev,
++			"Failed to set USB current limit: %d\n", ret);
++		return ret;
 +	}
-+
-+	slot->len = 0;
-+	buf = slot->data;
-+
- 	while (SVC_I3C_MSTATUS_RXPEND(readl(master->regs + SVC_I3C_MSTATUS))  &&
- 	       slot->len < SVC_I3C_FIFO_SIZE) {
- 		mdatactrl = readl(master->regs + SVC_I3C_MDATACTRL);
+ 
+ 	return 0;
+ }
 -- 
 2.51.0
 
