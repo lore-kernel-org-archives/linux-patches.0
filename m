@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E85354C81;
-	Thu, 15 Jan 2026 17:36:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6E052D94A7;
+	Thu, 15 Jan 2026 17:36:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768498606; cv=none; b=LrPqd7UDrKl1yE/xgV3NtWCuufhNMEk7X7cIY4V1b1M9D/EBIEZyKZo0v/Jf/feyVKnw4mdFNGZlu/t6lE23/lZXxFuK9iPxl50gldLDHhhsFgYJm4RfAnfP7snaVkNwP5cy1LTMn5XkpvdtnVfSIn17DqCUyV0Gsl/4d2C45zU=
+	t=1768498608; cv=none; b=hW3mlEFx/L6YHUF8GmnFDGp4fMEld+QhCDNoP5x0OT3KS5dw0uC1qT9/XBlCJQ8FgBn/IEmQZFJQvWKg44fw84EtS1UglY+R03tiJ6C6x4BWzE5Gh2w1H4A91t+c91gM76ZYD5Ab6PFgevTVRlu/8F198Zm7grtZ3ktbUcQhtOs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768498606; c=relaxed/simple;
-	bh=pJDAoSh6eXW+XtBHpPS4c25L+oI0rw/bw7IkkBSwU1o=;
+	s=arc-20240116; t=1768498608; c=relaxed/simple;
+	bh=9bUmgauIGTCi4FRzA989/c4lB93afrdvfB2J0SvF2wc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hxaYbnk7FIUAsN9lfDMhpch9dEep0avRDWpMt/zowsXD3gmjhceo2bwoDgA6e7qMly9QaRXFm3beMsUHJjKd+unhhcJLWg8JelD33mv5nvFzlfImUjZTdZzQHZKrkxgwco+fkNudd3gqZAE0SdYfvdAas3WI3S79JA7mypyiB0o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DoyW/l5S; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=oxbwm/ezMvBtbe+BzgmHg7GWGWTuswE6dRIK7lwJLMrCPpNf0Oh58i24xDFHwqA8ubIPOcrpVTOeSy4JRaElBvSmFeCTbJQ+JFCsH0lVgOK+/0Y0J3efV+3NSGOySTiK3I68leAMcECtWnfHLOac9gqdfdnMNgPOnicz7j3LfMU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1iotBB1U; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DoyW/l5S"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7695CC116D0;
-	Thu, 15 Jan 2026 17:36:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1iotBB1U"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35B4DC116D0;
+	Thu, 15 Jan 2026 17:36:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1768498605;
-	bh=pJDAoSh6eXW+XtBHpPS4c25L+oI0rw/bw7IkkBSwU1o=;
+	s=korg; t=1768498608;
+	bh=9bUmgauIGTCi4FRzA989/c4lB93afrdvfB2J0SvF2wc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DoyW/l5SJa2G26Kke4vwU3YP30lQXnpEMJm8Yrr/JZP0qG7TDocV8OK2E+4FQ6Ldg
-	 BupSUzh/mm0sNR8FMoyCG/h+u392WoQDjEOMDDcjq4G1n1nOeSNfM66HLOe8U/ujfa
-	 PkJND4juNVT+eAoKOXqAUhnEwf4uNFZnrC8fffC4=
+	b=1iotBB1UCvkqt93zLdoCJbZY30uFBSAIxy/FznWpzr6WFAXqNNmNUBtOJJwP6CZbt
+	 IoUSdotUEfdu1LBhl5ubpeGOFQJX09QOv8VZ6at8w9XqLJMhpDHhqx3YkOSNTKxFFm
+	 nT5dBNC6po2N3bBI8BknqdpaBP1AeDBoGR4BxkbI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shigeru Yoshida <syoshida@redhat.com>,
-	"David S. Miller" <davem@davemloft.net>,
-	Shubham Kulkarni <skulkarni@mvista.com>
-Subject: [PATCH 5.15 489/554] ipv6: Fix potential uninit-value access in __ip6_make_skb()
-Date: Thu, 15 Jan 2026 17:49:15 +0100
-Message-ID: <20260115164304.016474492@linuxfoundation.org>
+	Aurelien Couderc <aurelien.couderc2002@gmail.com>,
+	Chuck Lever <chuck.lever@oracle.com>
+Subject: [PATCH 5.15 459/554] NFSD: NFSv4 file creation neglects setting ACL
+Date: Thu, 15 Jan 2026 17:48:45 +0100
+Message-ID: <20260115164302.894178001@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260115164246.225995385@linuxfoundation.org>
 References: <20260115164246.225995385@linuxfoundation.org>
@@ -51,37 +50,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shigeru Yoshida <syoshida@redhat.com>
+From: Chuck Lever <chuck.lever@oracle.com>
 
-commit 4e13d3a9c25b7080f8a619f961e943fe08c2672c upstream.
+[ Upstream commit 913f7cf77bf14c13cfea70e89bcb6d0b22239562 ]
 
-As it was done in commit fc1092f51567 ("ipv4: Fix uninit-value access in
-__ip_make_skb()") for IPv4, check FLOWI_FLAG_KNOWN_NH on fl6->flowi6_flags
-instead of testing HDRINCL on the socket to avoid a race condition which
-causes uninit-value access.
+An NFSv4 client that sets an ACL with a named principal during file
+creation retrieves the ACL afterwards, and finds that it is only a
+default ACL (based on the mode bits) and not the ACL that was
+requested during file creation. This violates RFC 8881 section
+6.4.1.3: "the ACL attribute is set as given".
 
-Fixes: ea30388baebc ("ipv6: Fix an uninit variable access bug in __ip6_make_skb()")
-Signed-off-by: Shigeru Yoshida <syoshida@redhat.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
-[ Referred stable v6.1.y version of the patch to generate this one
- v6.1 link: https://github.com/gregkh/linux/commit/a05c1ede50e9656f0752e523c7b54f3a3489e9a8 ]
-Signed-off-by: Shubham Kulkarni <skulkarni@mvista.com>
+The issue occurs in nfsd_create_setattr(). On 6.1.y, the check to
+determine whether nfsd_setattr() should be called is simply
+"iap->ia_valid", which only accounts for iattr changes. When only
+an ACL is present (and no iattr fields are set), nfsd_setattr() is
+skipped and the POSIX ACL is never applied to the inode.
+
+Subsequently, when the client retrieves the ACL, the server finds
+no POSIX ACL on the inode and returns one generated from the file's
+mode bits rather than returning the originally-specified ACL.
+
+Reported-by: Aurelien Couderc <aurelien.couderc2002@gmail.com>
+Fixes: c0cbe70742f4 ("NFSD: add posix ACLs to struct nfsd_attrs")
+Cc: stable@vger.kernel.org
+[ cel: Adjust nfsd_create_setattr() instead of nfsd_attrs_valid() ]
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ipv6/ip6_output.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ fs/nfsd/vfs.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/net/ipv6/ip6_output.c
-+++ b/net/ipv6/ip6_output.c
-@@ -1928,7 +1928,8 @@ struct sk_buff *__ip6_make_skb(struct so
- 		struct inet6_dev *idev = ip6_dst_idev(skb_dst(skb));
- 		u8 icmp6_type;
- 
--		if (sk->sk_socket->type == SOCK_RAW && !inet_sk(sk)->hdrincl)
-+		if (sk->sk_socket->type == SOCK_RAW &&
-+		    !(fl6->flowi6_flags & FLOWI_FLAG_KNOWN_NH))
- 			icmp6_type = fl6->fl6_icmp_type;
- 		else
- 			icmp6_type = icmp6_hdr(skb)->icmp6_type;
+--- a/fs/nfsd/vfs.c
++++ b/fs/nfsd/vfs.c
+@@ -1319,7 +1319,7 @@ nfsd_create_setattr(struct svc_rqst *rqs
+ 	 * Callers expect new file metadata to be committed even
+ 	 * if the attributes have not changed.
+ 	 */
+-	if (iap->ia_valid)
++	if (iap->ia_valid || attrs->na_pacl || attrs->na_dpacl)
+ 		status = nfsd_setattr(rqstp, resfhp, attrs, 0, (time64_t)0);
+ 	else
+ 		status = nfserrno(commit_metadata(resfhp));
 
 
