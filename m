@@ -1,31 +1,31 @@
-Received: from omta36.uswest2.a.cloudfilter.net (omta36.uswest2.a.cloudfilter.net [35.89.44.35])
+Received: from omta38.uswest2.a.cloudfilter.net (omta38.uswest2.a.cloudfilter.net [35.89.44.37])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C142D31355D
-	for <patches@lists.linux.dev>; Fri, 16 Jan 2026 10:03:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=35.89.44.35
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F5B2221726
+	for <patches@lists.linux.dev>; Fri, 16 Jan 2026 10:18:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=35.89.44.37
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768557803; cv=none; b=D9JUsa5pbNXQ0Uy9Xk7o7Ehq3sYMIwsMeeaDBs6RvfYyIu2C4TZPX/e99m0rNtEHUrl0xzyCiuCuyCFr//INsmIv0F6Dtsxn8iAXYQtDOa8iBxn/9/33CtS7WYEPhmTSTqC/8ahrrbpTfyGO6DXl/2Yh6gmANK0XZj345gmm83s=
+	t=1768558686; cv=none; b=JmG84QUw9DuqwlEMg1NtPHULAfqqXpTaXNIAdtKusYmbd33P93EZiWVOJc+eqr2nLwo73VhxMHU0fogPbWdv8wTkuZzBUma1WN7tbx3BPtygCBmuT8Xz1m9WQGNJ88r+M5Pp4e9nCGWd1IK/tUc6hJjyP7W3/9FusXWgQ/6jmrA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768557803; c=relaxed/simple;
-	bh=1gHeHHn2xVWlJ+9Bx3hJjHa00v2qF1X9BvU70LWoWWo=;
+	s=arc-20240116; t=1768558686; c=relaxed/simple;
+	bh=zrBQ2TkhU3lars95tzoy/lcJlXaI2jxz4EyMKffoMB8=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=igLpFgvvODeaKHnry4fTNxDqxImTv5L0iH4GrkYiu3ktwiTzvDSLVkRQclITpl66yekxyERsfxZgoBDIcqtloPuzsI71JM4RrVb3IvgGvXImp/w+oVPtjy0yU5h7eV8WXW+9TONCedsrz1zWpUZv4SgohqaIjNCHFb3qmcdSITo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=w6rz.net; spf=pass smtp.mailfrom=w6rz.net; dkim=pass (2048-bit key) header.d=w6rz.net header.i=@w6rz.net header.b=hQdYg8u3; arc=none smtp.client-ip=35.89.44.35
+	 In-Reply-To:Content-Type; b=FZGV0QqhDiG85F30+NqUNUgPLjlkAmLAyjAPAMmU9lSZc9NIHs4F3F289t1XShHIiTssAsqS/2OHRwvl+zUXlOD6c7VDWudPLey3UFoJ9CydNMVMsRnoK3affZgqEdeouGdEOcBRBRKOglYfq+PzVdGoimMFdjeBitLuo+5ttnk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=w6rz.net; spf=pass smtp.mailfrom=w6rz.net; dkim=pass (2048-bit key) header.d=w6rz.net header.i=@w6rz.net header.b=Qsfe+dgt; arc=none smtp.client-ip=35.89.44.37
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=w6rz.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=w6rz.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=w6rz.net header.i=@w6rz.net header.b="hQdYg8u3"
-Received: from eig-obgw-6002b.ext.cloudfilter.net ([10.0.30.203])
+	dkim=pass (2048-bit key) header.d=w6rz.net header.i=@w6rz.net header.b="Qsfe+dgt"
+Received: from eig-obgw-5004b.ext.cloudfilter.net ([10.0.29.208])
 	by cmsmtp with ESMTPS
-	id geBzvUqJRVCBNggfov65eu; Fri, 16 Jan 2026 10:03:20 +0000
+	id gbwLvgtHjipkCggtyvt5PM; Fri, 16 Jan 2026 10:17:58 +0000
 Received: from box5620.bluehost.com ([162.241.219.59])
 	by cmsmtp with ESMTPS
-	id ggfnvEpOaPL32ggfovM98z; Fri, 16 Jan 2026 10:03:20 +0000
-X-Authority-Analysis: v=2.4 cv=MqhS63ae c=1 sm=1 tr=0 ts=696a0ce8
+	id ggtxvF4WFqfpWggtxvP4Ta; Fri, 16 Jan 2026 10:17:58 +0000
+X-Authority-Analysis: v=2.4 cv=A55sP7WG c=1 sm=1 tr=0 ts=696a1056
  a=30941lsx5skRcbJ0JMGu9A==:117 a=30941lsx5skRcbJ0JMGu9A==:17
  a=IkcTkHD0fZMA:10 a=vUbySO9Y5rIA:10 a=7vwVE5O1G3EA:10 a=VwQbUJbxAAAA:8
- a=HaFmDPmJAAAA:8 a=yLgqrl2s3EH9fNXCsX4A:9 a=QEXdDO2ut3YA:10
+ a=HaFmDPmJAAAA:8 a=GSBZQEkW3wUDgFpcFaIA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
  a=nmWuMzfKamIsx3l42hEX:22 a=L5EjiQpGQaFGZdqT14z7:22
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=w6rz.net;
 	s=default; h=Content-Transfer-Encoding:Content-Type:In-Reply-To:From:
@@ -33,20 +33,20 @@ DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=w6rz.net;
 	Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
 	Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:
 	List-Subscribe:List-Post:List-Owner:List-Archive;
-	bh=kES9iazB2idCZZIKfv/owPdu06B62E/Pp4ZEPH4rl3Q=; b=hQdYg8u30U0lcYqVQyKLqhDJpC
-	WayY3utOJmdy8GgUIOXVKAou6Ez0hLBBaliVJ04vMrlh415zW9TqBaaPLIVWbtpxi17vnIC6PJmMW
-	O6Y40Re4WpUPMj7CBtp0OBHfNSmtFvovltL0ithllTKoIjyxnwXBviDccqyMv16pPhipbby0okFtT
-	e72s+cjkuQNMcELL7vbtLDCrXVnJlde6yJKqcK3WSnbNFC22tkFJkNLbBn3o/uMoFUgSFlgDyCn9E
-	IwmwbZKnoLvn8nW3fXe8ptFfPtte9l3RcJNTGioY1GNGbA8H8unHU/Yayas+tHJR3FRBWehxUPS81
-	zmj2I9iA==;
-Received: from c-73-92-56-26.hsd1.ca.comcast.net ([73.92.56.26]:54876 helo=[10.0.1.180])
+	bh=euwxeN6XqGyK8p4+hEAUM7Hlq/LYVRDH8yofqA3Yr5o=; b=Qsfe+dgthrQNdi2qhq0U7clbYB
+	LUK6HgV83A6OBiGsTfdNDyzgBzIpRszQn/VxjYCU+wMgtfK1Kk5evgXKLpdHiQFaGIhdfb9InU9Ap
+	i/yA1HFkaMzeX2PxZsAJSmphUjAq2yG2c4h0WPTQ3vHocrd/vU7pvExLnPhb/qeulnMoCNwMwKKSV
+	NLtawGZOdQL2Cxe68v8jNTzchXLApxWW9UssEhChZ6XnE6n3NhPteu9+lBYOC3Js309v9ZjMz66Yu
+	511lPi5oOJmxPeV4MdPdP1SRLkd5wfnM3NpsuCrnXm3eW3rpLNwmvMkWxaF41sDhr2NLprz/xG957
+	sas80ENw==;
+Received: from c-73-92-56-26.hsd1.ca.comcast.net ([73.92.56.26]:53508 helo=[10.0.1.180])
 	by box5620.bluehost.com with esmtpsa  (TLS1.3) tls TLS_AES_128_GCM_SHA256
 	(Exim 4.98.2)
 	(envelope-from <re@w6rz.net>)
-	id 1vggfn-00000000DvW-1yW2;
-	Fri, 16 Jan 2026 03:03:19 -0700
-Message-ID: <cfd276b5-9e65-46f9-9513-e7ea2feba187@w6rz.net>
-Date: Fri, 16 Jan 2026 02:03:17 -0800
+	id 1vggtx-00000000JDq-0cHO;
+	Fri, 16 Jan 2026 03:17:57 -0700
+Message-ID: <ee407adc-5458-4bc9-9a26-f6026488fcca@w6rz.net>
+Date: Fri, 16 Jan 2026 02:17:49 -0800
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -54,7 +54,7 @@ List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 6.12 000/119] 6.12.66-rc1 review
+Subject: Re: [PATCH 6.6 00/88] 6.6.121-rc1 review
 To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
 Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
  torvalds@linux-foundation.org, akpm@linux-foundation.org,
@@ -63,12 +63,12 @@ Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
  f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, rwarsow@gmx.de,
  conor@kernel.org, hargar@microsoft.com, broonie@kernel.org,
  achill@achill.org, sr@sladewatkins.com
-References: <20260115164151.948839306@linuxfoundation.org>
+References: <20260115164146.312481509@linuxfoundation.org>
 Content-Language: en-US
 From: Ron Economos <re@w6rz.net>
-In-Reply-To: <20260115164151.948839306@linuxfoundation.org>
+In-Reply-To: <20260115164146.312481509@linuxfoundation.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
 X-AntiAbuse: Primary Hostname - box5620.bluehost.com
 X-AntiAbuse: Original Domain - lists.linux.dev
@@ -77,22 +77,22 @@ X-AntiAbuse: Sender Address Domain - w6rz.net
 X-BWhitelist: no
 X-Source-IP: 73.92.56.26
 X-Source-L: No
-X-Exim-ID: 1vggfn-00000000DvW-1yW2
+X-Exim-ID: 1vggtx-00000000JDq-0cHO
 X-Source: 
 X-Source-Args: 
 X-Source-Dir: 
-X-Source-Sender: c-73-92-56-26.hsd1.ca.comcast.net ([10.0.1.180]) [73.92.56.26]:54876
+X-Source-Sender: c-73-92-56-26.hsd1.ca.comcast.net ([10.0.1.180]) [73.92.56.26]:53508
 X-Source-Auth: re@w6rz.net
-X-Email-Count: 18
+X-Email-Count: 38
 X-Org: HG=bhshared;ORG=bluehost;
 X-Source-Cap: d3NpeHJ6bmU7d3NpeHJ6bmU7Ym94NTYyMC5ibHVlaG9zdC5jb20=
 X-Local-Domain: yes
-X-CMAE-Envelope: MS4xfGqs5kxG/X92bUA/C8LAhACaR4/MGw29iFKPLOCtDaZQe+pzgiyt+iJOWhOA6Ow5JYmtZzghoFe3Frr3f050BoGhKInYPPTual8LFC04qz/eUWTbrgFo
- ZQqpyuXeAhlf/bpfEK0qssLOPdYg4gQtsExbFV2cWvz8s2VTHdiFgwINetWCCJXGxpeSTaD5C5wABA==
+X-CMAE-Envelope: MS4xfM7wfkdhIERY07pPPrkH6qtm7ArYKXlY4oW3XnO6sPhpeDSGgvQwbXMhUCgxCLLsCsuvxDVP0i2mCAlc0ZQk7kIftkRWueZF1UMcxLu0K7QVkFFXzxQC
+ 86/ik/xeU2wG3P/adwHa8gaacRvRZ9wSUYgAxCtmsIslekEWcb/NRLkDXtNcJBeqz/tDh8BsGx222w==
 
-On 1/15/26 08:46, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 6.12.66 release.
-> There are 119 patches in this series, all will be posted as a response
+On 1/15/26 08:47, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 6.6.121 release.
+> There are 88 patches in this series, all will be posted as a response
 > to this one.  If anyone has any issues with these being applied, please
 > let me know.
 >
@@ -100,9 +100,9 @@ On 1/15/26 08:46, Greg Kroah-Hartman wrote:
 > Anything received after that time might be too late.
 >
 > The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.12.66-rc1.gz
+> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.6.121-rc1.gz
 > or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.12.y
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.6.y
 > and the diffstat can be found below.
 >
 > thanks,
@@ -110,6 +110,16 @@ On 1/15/26 08:46, Greg Kroah-Hartman wrote:
 > greg k-h
 
 Built and booted successfully on RISC-V RV64 (HiFive Unmatched).
+
+There is a new warning caused by commit "riscv: uprobes: Add missing fence.i after building the XOL buffer"
+
+arch/riscv/kernel/probes/uprobes.c: In function 'arch_uprobe_copy_ixol':
+arch/riscv/kernel/probes/uprobes.c:170:23: warning: unused variable 'start' [-Wunused-variable]
+   170 |         unsigned long start = (unsigned long)dst;
+       |                       ^~~~~
+
+This can be fixed by adding the upstream companion commit "riscv: Replace function-like macro by static inline function", commit id 
+121f34341d396b666d8a90b24768b40e08ca0d61
 
 Tested-by: Ron Economos <re@w6rz.net>
 
