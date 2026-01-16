@@ -1,112 +1,96 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8159C366DB5;
-	Fri, 16 Jan 2026 11:07:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2DBD9274FE3;
+	Fri, 16 Jan 2026 11:08:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768561659; cv=none; b=YJ1JeQTKkNPqggEROneQCx9pqGxz0jKc80mgXY0+NkyYoQuN7C4vW7gVIGdbsKNxoY9/6P+Sme8J0DJ4kkm7op/dJxCQbrpoZE0jT+xZQs33Ylo/cVG8rPMNbopRCGImONBB458sna498yQyzB2o4XmMi3yN/UvJsIMZ93JNzF4=
+	t=1768561730; cv=none; b=uCPJqFHqpZVoQQfhLvqRpPzc3fnkBpuVd18J+hvqD27KqkZHMNAqfyQqd3gou7m4TbUkeKesm/KO8uLTTbTo9gbNJPGKtaq7sbXC6J3+Q0ngqtfTgJ3GftfR/nIMMSlbs/EZUfmY1wx3xeh6A8Yj4yS/adZVHyCDpG/rDxDiiD8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768561659; c=relaxed/simple;
-	bh=Qx/fqFqAFpHDudV7S6oyoApPtcnS8CberJhxPURFgqI=;
+	s=arc-20240116; t=1768561730; c=relaxed/simple;
+	bh=8sJpBDOr/csL9A2Qo90+s/brtpPK4jqFu9kWPTq2H8o=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=GR2V4xOFgNzhtc+Dmu8t0mxHr43/QTAuZSTgarIHzrBVyXKXTzWYe4rkWzxwVNslRLENpRyKY5vRdsFmPc+fhjOuLglbE5P3xcatX5MaDajf0ylNFRQbmFQw4H6BrknB7LxuPfwKWdbVHI9ZRoof0cVZLl9a4E9YMr1uGSX/vTY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=l3e3dlK1; arc=none smtp.client-ip=10.30.226.201
+	 Content-Type:Content-Disposition:In-Reply-To; b=O9h25O7DRSl14m+FQeOaXxB19HY7bt+LkYXh9n2MgslSspzge50GZqFc2lExeza7b7RiEp6ndwQxI5PI2ndzhblqABFKmwTlRuiv2w65GHHa57u+8ZDPDZiuuHzZg9dDUO87sLUCXFsAUrh+3VGFXuXITTx+ErYk/rPcCL+9jec=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qfFp4YKl; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="l3e3dlK1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E6BD5C16AAE;
-	Fri, 16 Jan 2026 11:07:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qfFp4YKl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A27DC116C6;
+	Fri, 16 Jan 2026 11:08:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1768561655;
-	bh=Qx/fqFqAFpHDudV7S6oyoApPtcnS8CberJhxPURFgqI=;
+	s=korg; t=1768561728;
+	bh=8sJpBDOr/csL9A2Qo90+s/brtpPK4jqFu9kWPTq2H8o=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=l3e3dlK1ceCxUfvk7KMciIJiUkba1U9BAHsvlAdc6cXepQO/iI1FFMcoqHaKmixrt
-	 QmdkDjKVJ59NAxoB7Va5Oq36kQD06sKibsjJPY1ag85ry3SAYE/VBsmhHovHlHEnu+
-	 ekuaZL2ItmC2nB+pH79opR/+tyxFeDJJ6s6FdzPA=
-Date: Fri, 16 Jan 2026 12:07:32 +0100
+	b=qfFp4YKlFm1HFNFeKo+xEHEIfGnMM3BPtrSOjkbeVbjWmgaFtw9z1XcCi4ieiVsR2
+	 JhcgXCTL5+tYmZdveSdCMhYk4VRoV8g4966Z3wZw2b2J5gCWS6J8wUef1oalWdW/cV
+	 r/YZOljE2YFKYAYlc4pREJdtE3hPiH8B4cnjkhTc=
+Date: Fri, 16 Jan 2026 12:08:46 +0100
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= <u.kleine-koenig@baylibre.com>
+To: Jon Hunter <jonathanh@nvidia.com>
 Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	Takashi Iwai <tiwai@suse.de>,
-	Nicolas Ferre <nicolas.ferre@microchip.com>,
-	Mark Brown <broonie@kernel.org>, Sasha Levin <sashal@kernel.org>
-Subject: Re: [PATCH 5.15 477/554] ASoC: stm: stm32_sai_sub: Convert to
- platform remove callback returning void
-Message-ID: <2026011624-mushiness-violate-e860@gregkh>
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
+	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
+	f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, rwarsow@gmx.de,
+	conor@kernel.org, hargar@microsoft.com, broonie@kernel.org,
+	achill@achill.org, sr@sladewatkins.com,
+	"linux-tegra@vger.kernel.org" <linux-tegra@vger.kernel.org>
+Subject: Re: [PATCH 5.15 000/554] 5.15.198-rc1 review
+Message-ID: <2026011633-straw-wow-a35d@gregkh>
 References: <20260115164246.225995385@linuxfoundation.org>
- <20260115164303.569810160@linuxfoundation.org>
- <3tzxbwj2j7jph4virzzizrd66qikkjofz34koc5s5hmrynhaek@dyx2xciugqep>
+ <18a459de-dd95-47cf-bf53-d7e743810e54@nvidia.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <3tzxbwj2j7jph4virzzizrd66qikkjofz34koc5s5hmrynhaek@dyx2xciugqep>
+In-Reply-To: <18a459de-dd95-47cf-bf53-d7e743810e54@nvidia.com>
 
-On Fri, Jan 16, 2026 at 10:00:16AM +0100, Uwe Kleine-König wrote:
-> Hello,
+On Fri, Jan 16, 2026 at 09:45:18AM +0000, Jon Hunter wrote:
+> Hi Greg,
 > 
-> On Thu, Jan 15, 2026 at 05:49:03PM +0100, Greg Kroah-Hartman wrote:
-> > 5.15-stable review patch.  If anyone has any objections, please let me know.
+> On 15/01/2026 16:41, Greg Kroah-Hartman wrote:
+> > This is the start of the stable review cycle for the 5.15.198 release.
+> > There are 554 patches in this series, all will be posted as a response
+> > to this one.  If anyone has any issues with these being applied, please
+> > let me know.
 > > 
-> > ------------------
+> > Responses should be made by Sat, 17 Jan 2026 16:41:26 +0000.
+> > Anything received after that time might be too late.
 > > 
-> > From: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+> > The whole patch series can be found in one patch at:
+> > 	https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.15.198-rc1.gz
+> > or in the git tree and branch at:
+> > 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.15.y
+> > and the diffstat can be found below.
 > > 
-> > [ Upstream commit a3bd37e2e2bce4fb1757a940fa985d556662ba80 ]
+> > thanks,
 > > 
-> > The .remove() callback for a platform driver returns an int which makes
-> > many driver authors wrongly assume it's possible to do error handling by
-> > returning an error code. However the value returned is (mostly) ignored
-> > and this typically results in resource leaks. To improve here there is a
-> > quest to make the remove callback return void. In the first step of this
-> > quest all drivers are converted to .remove_new() which already returns
-> > void.
+> > greg k-h
 > > 
-> > Trivially convert this driver from always returning zero in the remove
-> > callback to the void returning variant.
-> > 
-> > Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
-> > Acked-by: Takashi Iwai <tiwai@suse.de>
-> > Acked-by: Nicolas Ferre <nicolas.ferre@microchip.com>
-> > Link: https://lore.kernel.org/r/20230315150745.67084-139-u.kleine-koenig@pengutronix.de
-> > Signed-off-by: Mark Brown <broonie@kernel.org>
-> > Stable-dep-of: 23261f0de094 ("ASoC: stm32: sai: fix OF node leak on probe")
-> > Signed-off-by: Sasha Levin <sashal@kernel.org>
-> > Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+> > -------------
+> > Pseudo-Shortlog of commits:
 > 
-> While this patch is trivial and there are many patches like that in both
-> mainline and already backported to stable without any known problems, it
-> is also not very hard to backport 23261f0de094 to 5.15.y without this
-> patch. The merge resolution relevant is just:
+> ...
 > 
-> diff --cc sound/soc/stm/stm32_sai_sub.c
-> index 2a2fc2f0ebbd,c7930d8f9ded..000000000000
-> --- a/sound/soc/stm/stm32_sai_sub.c
-> +++ b/sound/soc/stm/stm32_sai_sub.c
-> @@@ -1579,8 -1587,7 +1587,9 @@@ static int stm32_sai_sub_remove(struct 
->   	snd_dmaengine_pcm_unregister(&pdev->dev);
->   	snd_soc_unregister_component(&pdev->dev);
->   	pm_runtime_disable(&pdev->dev);
-> + 	of_node_put(sai->np_sync_provider);
->  +
->  +	return 0;
->   }
->   
->   #ifdef CONFIG_PM_SLEEP
+> > 
+> > Wentao Liang <vulab@iscas.ac.cn>
+> >      pmdomain: imx: Fix reference count leak in imx_gpc_probe()
 > 
-> I don't feel very strong here, but IMHO this is trivial enough to skip
-> backporting the conversion to .remove_new() and it would be the right
-> thing from a pedantic POV. OTOH I also don't want to reply to each such
-> backport, don't object getting patches into stable, don't know how
-> the stable maintainers feel here and don't want to impose additional
-> work on anyone if just picking up the conversion is considered ok and
-> easier with the established workflow.
+> 
+> I am seeing a build failure for ARM with multi_v7_defconfig ...
+> 
+> 
+>  drivers/soc/imx/gpc.c: In function â€˜imx_gpc_probeâ€™:
+>  drivers/soc/imx/gpc.c:409:17: error: cleanup argument not a function
+>    409 |                 = of_get_child_by_name(pdev->dev.of_node, "pgc");
+>        |                 ^
+> 
+> Reverting the above commit resolves the issue.
 
-Good idea, now done, thanks.
+Now fixed up, thanks.  I'll push out a new -rc soon.
 
 greg k-h
