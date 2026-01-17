@@ -1,86 +1,80 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92A7920ED;
-	Sat, 17 Jan 2026 15:00:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C000136349;
+	Sat, 17 Jan 2026 15:07:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768662030; cv=none; b=VFcUphJaduIco7pAYQor5b8jC3xawvojS4A/odxo6ON7FYTZeUQlUmXMqIRcodL/gMz13v5KXYH8awXHqUhCQsZjdcywe0b1ei233E7rZ7Bx2Y5TCZKwRUVeJu9+ZVnr5WXbGdYHnefNkxGB+QF0JfDA3W9QOAhNnG6JfUTmixk=
+	t=1768662433; cv=none; b=PIHI8oFrJ2+RfawzSuKXfX1oxEu2/QoJXxL24dRTkOSi/6Ln9XU10KKZZUZvakmvG5Dhi4Fl7isc+FA7y2jtFcjQKl+WplaF6b2e0QYyWEUmS3FcG92X9tp9joWCBWiwoydalpKaqZUWk5f+aTOusTtlN2NaJBJvHvy4HprPYa8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768662030; c=relaxed/simple;
-	bh=Q+kPkjPwwqafWwEPRcVEYeQON8thNU801cp2imcEeWw=;
+	s=arc-20240116; t=1768662433; c=relaxed/simple;
+	bh=XpebRY9L+5uRxtK/7uy7K2nZ4kO0m7agnaLPUSgPwmY=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=C/AinN4acrYHuHPn/eoNF2UPtvVcfCq5M7eI4KIVdurjH7OZqAX2Hgoj1je3Vq8atsfccWtW0ZrAAwXkKBHo/Uh/ygXG/vwV4noMWLrX4Hyoc/9wi6geKREUsI24uXI6um999D8+FTGacy2vQDliOVjzKksDpSsLM5px5bM+Of8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aqqx5Inp; arc=none smtp.client-ip=10.30.226.201
+	 Content-Type:Content-Disposition:In-Reply-To; b=IHmS1LQXaQfS1XROt5tHN50Rg3Sz2yFkc3l4Krwd2qDaCA6btUju6Tq3AxpKBhEZ7lIOtTmYdYgyGtsOMGCrkDDX4Sp0/4iNOpO9ElhbzksWq07q0/BSbyW7Zqt2vQx+OsZ3w+jYy+slkquHG1HtQfTTntIwtDwx83GYFbKEPi0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=thYoDNxN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aqqx5Inp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 94F67C4CEF7;
-	Sat, 17 Jan 2026 15:00:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="thYoDNxN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 61165C4CEF7;
+	Sat, 17 Jan 2026 15:07:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1768662030;
-	bh=Q+kPkjPwwqafWwEPRcVEYeQON8thNU801cp2imcEeWw=;
+	s=korg; t=1768662432;
+	bh=XpebRY9L+5uRxtK/7uy7K2nZ4kO0m7agnaLPUSgPwmY=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=aqqx5InplTMZR1lz5vI3vCdIATQTDCNd8hwpxDzwJm6ndrkX9EsQPmpJ0KAhGgv0V
-	 RoA8Bz7bLp7a9t3kkM0Gh3QUO2IhKb+wT/F7Dap+Fzb6a/IN4dv/4JcbsH7VgE3+JP
-	 qhUD/H1j2sdaPxMDipfZ4lmlqNkvx2qb4zvk0EuA=
-Date: Sat, 17 Jan 2026 16:00:25 +0100
+	b=thYoDNxNwElXK2XUFNWon6IHuObraOigCZwtxMpuDk7uFnpzuegEVEKczkpWwXuac
+	 nC62Zl7th1Ru8ZDoPRVOTUtFW21k0JliWsja4S3AevMhrzOCDK8V/qAwnFq46TRXgJ
+	 oi/Q7vv6priwFDVuH7SNN6u0Gqfbp40Rl+j97ukQ=
+Date: Sat, 17 Jan 2026 16:07:09 +0100
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: Ron Economos <re@w6rz.net>
+To: Ben Hutchings <ben@decadent.org.uk>
 Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
-	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
-	jonathanh@nvidia.com, f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com, rwarsow@gmx.de, conor@kernel.org,
-	hargar@microsoft.com, broonie@kernel.org, achill@achill.org,
-	sr@sladewatkins.com
-Subject: Re: [PATCH 5.15 000/551] 5.15.198-rc2 review
-Message-ID: <2026011710-grinch-busboy-dda1@gregkh>
-References: <20260116111040.672107150@linuxfoundation.org>
- <2aaa124e-4322-43cc-b155-2011b94b449c@w6rz.net>
+	Alexandre Belloni <alexandre.belloni@bootlin.com>,
+	Jamie Iles <quic_jiles@quicinc.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: Re: [PATCH 5.10 048/451] i3c: remove i2c board info from i2c_dev_desc
+Message-ID: <2026011724-florist-brook-5f1f@gregkh>
+References: <20260115164230.864985076@linuxfoundation.org>
+ <20260115164232.636822339@linuxfoundation.org>
+ <fd91b4ae9640cfaf47fa96b97c58f410245c5358.camel@decadent.org.uk>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <2aaa124e-4322-43cc-b155-2011b94b449c@w6rz.net>
+In-Reply-To: <fd91b4ae9640cfaf47fa96b97c58f410245c5358.camel@decadent.org.uk>
 
-On Fri, Jan 16, 2026 at 10:36:37PM -0800, Ron Economos wrote:
-> On 1/16/26 03:13, Greg Kroah-Hartman wrote:
-> > This is the start of the stable review cycle for the 5.15.198 release.
-> > There are 551 patches in this series, all will be posted as a response
-> > to this one.  If anyone has any issues with these being applied, please
-> > let me know.
+On Sat, Jan 17, 2026 at 01:28:31PM +0100, Ben Hutchings wrote:
+> On Thu, 2026-01-15 at 17:44 +0100, Greg Kroah-Hartman wrote:
+> > 5.10-stable review patch.  If anyone has any objections, please let me know.
 > > 
-> > Responses should be made by Sun, 18 Jan 2026 11:09:20 +0000.
-> > Anything received after that time might be too late.
+> > ------------------
 > > 
-> > The whole patch series can be found in one patch at:
-> > 	https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.15.198-rc2.gz
-> > or in the git tree and branch at:
-> > 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.15.y
-> > and the diffstat can be found below.
+> > From: Jamie Iles <quic_jiles@quicinc.com>
 > > 
-> > thanks,
+> > [ Upstream commit 31b9887c7258ca47d9c665a80f19f006c86756b1 ]
 > > 
-> > greg k-h
+> > I2C board info is only required during adapter setup so there is no
+> > requirement to keeping a pointer to it once running.  To support dynamic
+> > device addition we can't rely on board info - user-space creation
+> > through sysfs won't have a boardinfo.
+> > 
+> > Cc: Alexandre Belloni <alexandre.belloni@bootlin.com>
+> > Signed-off-by: Jamie Iles <quic_jiles@quicinc.com>
+> > Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
+> > Link: https://lore.kernel.org/r/20220117174816.1963463-2-quic_jiles@quicinc.com
+> > Stable-dep-of: 9d4f219807d5 ("i3c: fix refcount inconsistency in i3c_master_register")
+> [...]
 > 
-> My HiFive Unmatched target (which has a Cadence Ethernet controller) fails to start the network interface with the following messages:
-> 
-> [  121.778662] macb 10090000.ethernet end0: inconsistent Rx descriptor chain
-> [  122.373760] macb 10090000.ethernet end0: inconsistent Rx descriptor chain
-> [  122.383421] macb 10090000.ethernet end0: inconsistent Rx descriptor chain
-> [  122.389481] macb 10090000.ethernet end0: inconsistent Rx descriptor chain
-> [  122.610641] macb 10090000.ethernet end0: inconsistent Rx descriptor chain
-> 
-> Reverting commit "net: macb: Relocate mog_init_rings() callback from
-> macb_mac_link_up() to macb_open()" f934e5d7caad6ae0a081352e91cbd7f0284ad9b3
-> solves the issue.
+> Commit 9d4f219807d5 is a legitimate fix, but it does *not* depend on any
+> of these other i3c changes.
 
-Thanks for the info, I'll go drop this from 5.15.y and 5.10.y as well.
+From a "does this patch apply cleanly" point of view, yes, it did need
+those other changes.  But from a "does this patch do the same thing"
+point of view, you are correct, it didn't.  I'll go drop the others and
+fix the real one up by hand here.
+
+thanks,
 
 greg k-h
