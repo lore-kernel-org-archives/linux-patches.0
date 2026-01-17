@@ -1,16 +1,16 @@
 Received: from maynard.decadent.org.uk (maynard.decadent.org.uk [65.21.191.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B33220CCE4;
-	Sat, 17 Jan 2026 15:48:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B954C50094B;
+	Sat, 17 Jan 2026 15:50:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=65.21.191.19
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768664936; cv=none; b=LiOHEtFANUfjIfhpcUb2EGSj/lYMHptZ6R4qAvOI6YbBzMeB1KIO1rNnOaYjxYcWcfs66vIjEFFSY2YZHQVBa5W5ajVDCWRu/lhGzGzDHgKB4zseqX2hSo40apUrjrntbZ3m0lY4tWGgyj6cnzfpahv9Yj/bGn6Ig1mqOy2UBkE=
+	t=1768665038; cv=none; b=T2q9hoqdGhRju3f3IxlxvDwbSYSZL4M1xLeryTs8i1Vn/gbik8tBbLOYIye0tIkGxC/5ernwSzmyU0ZKGVByL8fGBvKSrP0fWkfzzDUOG/DUMFszNbOIACKou8T8Dev2wwHl8Rj0exf4Kyhp17OjYNwPg0A0qwAJoBs82rpGMlM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768664936; c=relaxed/simple;
-	bh=iga0S41NWhtqJbIm0S40MDluSzxpYWjcEg0D3BtJw4Y=;
+	s=arc-20240116; t=1768665038; c=relaxed/simple;
+	bh=oC9ycDmb3QPZUpTtMYcPUXbGuVu9cIQhGee7FCFopNM=;
 	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
-	 Content-Type:MIME-Version; b=dnllaGFUW9/3hvVguguESooCc4BATZ6RhzgZ3h1+goWtOD//G95Mnm3FWUvboVOkUfn5RfgKJsulKtnUFqR14M2aJ9XSFck7VBNdy7WCYpe2Gt5BsUqoP+8ynqKVdzNZvkiq50V0zxW+rYsemnRieXV5IQxilSkTwagQeRmvRtU=
+	 Content-Type:MIME-Version; b=VYC/bnXUuev3jLp9NO0yz43o5Shl9V2DSrOiBuer4CXN5I24Msu0rnffAWrKPLkPWP+VM5dc3a3o6ATsUR44pnyKndzcS6rZc/5NpN1o4kI0wKIZJoZlUbuCzmikvjFGFZgMYg8mLT4aokASF3ntWkYWEhPxd6iWF5EmNq4/OpE=
 ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=decadent.org.uk; spf=pass smtp.mailfrom=decadent.org.uk; arc=none smtp.client-ip=65.21.191.19
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=decadent.org.uk
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=decadent.org.uk
@@ -18,25 +18,25 @@ Received: from [2a02:578:851f:1502:391e:c5f5:10e2:b9a3] (helo=deadeye)
 	by maynard with esmtps  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
 	(Exim 4.96)
 	(envelope-from <ben@decadent.org.uk>)
-	id 1vh8Xm-00101K-1G;
-	Sat, 17 Jan 2026 15:48:53 +0000
+	id 1vh8ZP-00102A-2P;
+	Sat, 17 Jan 2026 15:50:34 +0000
 Received: from ben by deadeye with local (Exim 4.99.1)
 	(envelope-from <ben@decadent.org.uk>)
-	id 1vh8Xk-00000000gs9-1P8E;
-	Sat, 17 Jan 2026 16:48:52 +0100
-Message-ID: <d33f96006e6641fe7a1adbd617dc6ed8a2adcf93.camel@decadent.org.uk>
-Subject: Re: [PATCH 5.10 122/451] NFS: Label the dentry with a verifier in
- nfs_rmdir() and nfs_unlink()
+	id 1vh8ZN-00000000gwd-0hr0;
+	Sat, 17 Jan 2026 16:50:33 +0100
+Message-ID: <99bc0d89d837b64727ccfce7e93fe3bd89f29cb5.camel@decadent.org.uk>
+Subject: Re: [PATCH 5.10 123/451] NFS: dont unhash dentry during
+ unlink/rename
 From: Ben Hutchings <ben@decadent.org.uk>
 To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, Trond Myklebust
- <trond.myklebust@hammerspace.com>,  Sasha Levin <sashal@kernel.org>
-Date: Sat, 17 Jan 2026 16:48:47 +0100
-In-Reply-To: <20260115164235.336895912@linuxfoundation.org>
+Cc: patches@lists.linux.dev, NeilBrown <neilb@suse.de>, Trond Myklebust
+	 <trond.myklebust@hammerspace.com>, Sasha Levin <sashal@kernel.org>
+Date: Sat, 17 Jan 2026 16:50:32 +0100
+In-Reply-To: <20260115164235.372390370@linuxfoundation.org>
 References: <20260115164230.864985076@linuxfoundation.org>
-	 <20260115164235.336895912@linuxfoundation.org>
+	 <20260115164235.372390370@linuxfoundation.org>
 Content-Type: multipart/signed; micalg="pgp-sha512";
-	protocol="application/pgp-signature"; boundary="=-GoZhduSJoyUC1t8Fiklb"
+	protocol="application/pgp-signature"; boundary="=-Ykux3M16hE3ms+jjEOsi"
 User-Agent: Evolution 3.56.2-8 
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -49,7 +49,7 @@ X-SA-Exim-Mail-From: ben@decadent.org.uk
 X-SA-Exim-Scanned: No (on maynard); SAEximRunCond expanded to false
 
 
---=-GoZhduSJoyUC1t8Fiklb
+--=-Ykux3M16hE3ms+jjEOsi
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
@@ -59,27 +59,23 @@ ow.
 >=20
 > ------------------
 >=20
-> From: Trond Myklebust <trond.myklebust@hammerspace.com>
+> From: NeilBrown <neilb@suse.de>
 >=20
-> [ Upstream commit 9019fb391de02cbff422090768b73afe9f6174df ]
+> [ Upstream commit 3c59366c207e4c6c6569524af606baf017a55c61 ]
 >=20
-> After the success of an operation such as rmdir() or unlink(), we expect
-> to add the dentry back to the dcache as an ordinary negative dentry.
-> However in NFS, unless it is labelled with the appropriate verifier for
-> the parent directory state, then nfs_lookup_revalidate will end up
-> discarding that dentry and forcing a new lookup.
->=20
-> The fix is to ensure that we relabel the dentry appropriately on
-> success.
+> NFS unlink() (and rename over existing target) must determine if the
+> file is open, and must perform a "silly rename" instead of an unlink (or
+> before rename) if it is.  Otherwise the client might hold a file open
+> which has been removed on the server.
 [...]
 
-It looks like we would need a further fix on top of this:
+It looks like we need yet another fix after this:
 
-commit f16857e62bac60786104c020ad7c86e2163b2c5b
+commit 99bc9f2eb3f79a2b4296d9bf43153e1d10ca50d3
 Author: NeilBrown <neil@brown.name>
-Date:   Fri Aug 19 09:55:59 2022 +1000
-=20
-    NFS: unlink/rmdir shouldn't call d_delete() twice on ENOENT
+Date:   Tue May 28 13:27:17 2024 +1000
+
+    NFS: add barriers when testing for NFS_FSDATA_BLOCKED
 
 Ben.
 
@@ -89,25 +85,25 @@ The obvious mathematical breakthrough [to break modern encryption]
 would be development of an easy way to factor large prime numbers.
                                                            - Bill Gates
 
---=-GoZhduSJoyUC1t8Fiklb
+--=-Ykux3M16hE3ms+jjEOsi
 Content-Type: application/pgp-signature; name="signature.asc"
 Content-Description: This is a digitally signed message part
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEErCspvTSmr92z9o8157/I7JWGEQkFAmlrr18ACgkQ57/I7JWG
-EQnaMA//UDh/MQaMNIpXACsJyV4sEPELofZLiR3LqxRMgG2j5/VL9DldI5EVQVCZ
-jGc0d+fDMi61Wej4R+EJCSzfaWZbPHhyX3rg4jFIsQRHGuofpolTN0s2KcFvI2jL
-UM3mJW8tBB3GvlF1RKXsElr7NWXKLvUx3awv6S6/1NlDV+wkV89GKFdAO1GVH5KO
-vWQzV167Z+BQt2TQQynzyzXJ4LrV9qZkgqWlIFNx6F5umes/mJGrBaVf1JXnEDMZ
-2yXSin2GDc/I/B2Ad5o5qloLv+xNwy3I7w+D7kOtCLivbn/BnkWyrZvB6d/gJie6
-powkcfzKIVO+bIfk8BMGAFAz8Rng5xd2uXYPNMlchpMjuMBoyYyAHyyDEduJIz1V
-YH9K8SvJa/vErcB9aKmu0liacBZjZirSVJvkT5UX13aKndjL6gL2ny3ugeqvb463
-+WD+kGw6uhW+ULywYii7EYXOOEq3lzhNwWcupL3qR0PWH9u/W504aSuRaZj47F5H
-Hcuz4TeAgCPXbk8p5hY2/G6XpQxu++jZ1hu4ph/o+EppQLU8/hv44xPy2JYXdR1r
-SdpozD64BJMRzlN5sMlayD/xWbfPpVRThO1L3AVQUMdKLnLAUbZNgjOIAfufqyKu
-QRDbKP2K0FyIK99OFokvvjkBCyo+ycnYn/MqK5Uh9V1aog39A3A=
-=Mn8E
+iQIzBAABCgAdFiEErCspvTSmr92z9o8157/I7JWGEQkFAmlrr8gACgkQ57/I7JWG
+EQn8PQ/9GrN9/2fIag75Ur7vBHpy7LWdZDpVZNpuL7xSgESdXnaFo2RCVy3/mZ/o
+/tQ3m/wlpo4FNZ9zxHzmNSYZHL91KdAaxuiehLFq1WkhfI+v4ePUrt8TS4k/wDJQ
+U/HVTjn0OsBYeivL2KKXvqRj1SSpHdOXklnrQYkentKuwRfmLzsLT/rri0R5LgxF
+8jGo3Q7qjZlZevcTK55OjBJA1hGia6BrJi9MxXUlcYyRjQbsz3OXISoxPAAikdhU
+suJhOLg2VoMQhumsTX6z6OfziupZrmOxB3eNS3HWEz85TiwnMsAd9XkMJ9lctlCS
+Y6Xz6aQAu0DC6I595KewVROiDRZ6DHAcQy2fgJQIJPdPQYqishbTrt6PjB7ifTtg
+CKc/ojWxBvMIrPpsOAaQkh+fW7zRsJgkUGtcNQ+eWlrtdmFdLQp181sWatFWWYYL
+9RBSzVImMIVibqEkJIU8qoMYzDVisa9GhtzRyrihahcx/n2EsxtybmKW1ts5sWIt
+rluSmpNEDid+w+upaqqq9EwnTR479AIc0BbDE7AZ93se+9zTPYsHPgsnue7dX50a
+Hxips10lOeqpK6GgH6X5KmtBq0nvyQME+T9Ydf60+C2+LpMmTarzo+tZ5BgYIzCI
+LAA870R4c2HScCjFONKHGg7wm6knhKV5RdSj4RIaXiZc2MttqUI=
+=Q34I
 -----END PGP SIGNATURE-----
 
---=-GoZhduSJoyUC1t8Fiklb--
+--=-Ykux3M16hE3ms+jjEOsi--
