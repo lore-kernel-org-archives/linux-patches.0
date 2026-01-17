@@ -1,82 +1,86 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE7A8B67E;
-	Sat, 17 Jan 2026 14:49:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92A7920ED;
+	Sat, 17 Jan 2026 15:00:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768661358; cv=none; b=BdP7rb+otYKCTJ8I9orzcSqVo7Kf4/Dv+6t+00rzTeugtE48aXcyRq54DXMNrcomnbGYF0cMc6KjrLiPTw5WRcGC63QK3GaOa95LkdATbtmyKJLsY2TG0LSrPyuwov2/NB/Zc2QDkzOxEmLCMavNzUzi0h2JmncWGo5PhclnuHg=
+	t=1768662030; cv=none; b=VFcUphJaduIco7pAYQor5b8jC3xawvojS4A/odxo6ON7FYTZeUQlUmXMqIRcodL/gMz13v5KXYH8awXHqUhCQsZjdcywe0b1ei233E7rZ7Bx2Y5TCZKwRUVeJu9+ZVnr5WXbGdYHnefNkxGB+QF0JfDA3W9QOAhNnG6JfUTmixk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768661358; c=relaxed/simple;
-	bh=Lal338Pej9X4atoPK+K0bBQ5fnFDyXLDNYcMv+VDQro=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=h7hYidRkLY9ZwYLVGbF8z0ANRr1JP6L0aFU6Y2zsrONJLbnJla21sW+2y4xDEGAhtecyESCeuJQmOOy6zjvQR+IbHqChq3v7iEC3xX6pYgfhnoLZimJPTw5J/+59coCeenDLv1aXUcKiDSZJGUznOPCjjzLl3MEPg8DDu2lckrA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=jSUi+Cuj; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1768662030; c=relaxed/simple;
+	bh=Q+kPkjPwwqafWwEPRcVEYeQON8thNU801cp2imcEeWw=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=C/AinN4acrYHuHPn/eoNF2UPtvVcfCq5M7eI4KIVdurjH7OZqAX2Hgoj1je3Vq8atsfccWtW0ZrAAwXkKBHo/Uh/ygXG/vwV4noMWLrX4Hyoc/9wi6geKREUsI24uXI6um999D8+FTGacy2vQDliOVjzKksDpSsLM5px5bM+Of8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aqqx5Inp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="jSUi+Cuj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ECE97C4CEF7;
-	Sat, 17 Jan 2026 14:49:13 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1768661358;
-	bh=Lal338Pej9X4atoPK+K0bBQ5fnFDyXLDNYcMv+VDQro=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jSUi+Cuj+NpGTQSgleYgTbS9YbsnFgAXw+AuZG2BliVL5BjEEXH4yi/D0XS2He6VL
-	 RcXRp45QNVJ93O9ljbTgDgTND5kaoXmir4lpNrfFBnofOuq8dfj+pHNgCZ4f7Olg/p
-	 b+m6SjWbzZI+4ZnsdEnR5/YJsE3M5lJIIZ2Dw+Oxxg2/a5j39VrO2g9GeN2cDIe9jA
-	 7andBVxBPTCWKta7TXdnOHhjP67wcWsECEpmsWsNKphh4FBbTF4LR3rISpSOTcRIte
-	 eWNwTqXrqkIo/g9MGslsmf5fhs8BFxXInRQt0qOtSmb7hBXM7DHr61m5a+ZXZR+IGD
-	 PfZnN9xvssfMg==
-From: Miguel Ojeda <ojeda@kernel.org>
-To: gregkh@linuxfoundation.org
-Cc: achill@achill.org,
-	akpm@linux-foundation.org,
-	broonie@kernel.org,
-	conor@kernel.org,
-	f.fainelli@gmail.com,
-	hargar@microsoft.com,
-	jonathanh@nvidia.com,
-	linux-kernel@vger.kernel.org,
-	linux@roeck-us.net,
-	lkft-triage@lists.linaro.org,
-	patches@kernelci.org,
-	patches@lists.linux.dev,
-	pavel@denx.de,
-	rwarsow@gmx.de,
-	shuah@kernel.org,
-	sr@sladewatkins.com,
-	stable@vger.kernel.org,
-	sudipm.mukherjee@gmail.com,
-	torvalds@linux-foundation.org,
-	Miguel Ojeda <ojeda@kernel.org>
-Subject: Re: [PATCH 6.18 000/181] 6.18.6-rc1 review
-Date: Sat, 17 Jan 2026 15:49:09 +0100
-Message-ID: <20260117144909.172235-1-ojeda@kernel.org>
-In-Reply-To: <20260115164202.305475649@linuxfoundation.org>
-References: <20260115164202.305475649@linuxfoundation.org>
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aqqx5Inp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 94F67C4CEF7;
+	Sat, 17 Jan 2026 15:00:29 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1768662030;
+	bh=Q+kPkjPwwqafWwEPRcVEYeQON8thNU801cp2imcEeWw=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=aqqx5InplTMZR1lz5vI3vCdIATQTDCNd8hwpxDzwJm6ndrkX9EsQPmpJ0KAhGgv0V
+	 RoA8Bz7bLp7a9t3kkM0Gh3QUO2IhKb+wT/F7Dap+Fzb6a/IN4dv/4JcbsH7VgE3+JP
+	 qhUD/H1j2sdaPxMDipfZ4lmlqNkvx2qb4zvk0EuA=
+Date: Sat, 17 Jan 2026 16:00:25 +0100
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: Ron Economos <re@w6rz.net>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev,
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
+	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
+	jonathanh@nvidia.com, f.fainelli@gmail.com,
+	sudipm.mukherjee@gmail.com, rwarsow@gmx.de, conor@kernel.org,
+	hargar@microsoft.com, broonie@kernel.org, achill@achill.org,
+	sr@sladewatkins.com
+Subject: Re: [PATCH 5.15 000/551] 5.15.198-rc2 review
+Message-ID: <2026011710-grinch-busboy-dda1@gregkh>
+References: <20260116111040.672107150@linuxfoundation.org>
+ <2aaa124e-4322-43cc-b155-2011b94b449c@w6rz.net>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
+In-Reply-To: <2aaa124e-4322-43cc-b155-2011b94b449c@w6rz.net>
 
-On Thu, 15 Jan 2026 17:45:37 +0100 Greg Kroah-Hartman <gregkh@linuxfoundation.org> wrote:
->
-> This is the start of the stable review cycle for the 6.18.6 release.
-> There are 181 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
+On Fri, Jan 16, 2026 at 10:36:37PM -0800, Ron Economos wrote:
+> On 1/16/26 03:13, Greg Kroah-Hartman wrote:
+> > This is the start of the stable review cycle for the 5.15.198 release.
+> > There are 551 patches in this series, all will be posted as a response
+> > to this one.  If anyone has any issues with these being applied, please
+> > let me know.
+> > 
+> > Responses should be made by Sun, 18 Jan 2026 11:09:20 +0000.
+> > Anything received after that time might be too late.
+> > 
+> > The whole patch series can be found in one patch at:
+> > 	https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.15.198-rc2.gz
+> > or in the git tree and branch at:
+> > 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.15.y
+> > and the diffstat can be found below.
+> > 
+> > thanks,
+> > 
+> > greg k-h
 > 
-> Responses should be made by Sat, 17 Jan 2026 16:41:26 +0000.
-> Anything received after that time might be too late.
+> My HiFive Unmatched target (which has a Cadence Ethernet controller) fails to start the network interface with the following messages:
+> 
+> [  121.778662] macb 10090000.ethernet end0: inconsistent Rx descriptor chain
+> [  122.373760] macb 10090000.ethernet end0: inconsistent Rx descriptor chain
+> [  122.383421] macb 10090000.ethernet end0: inconsistent Rx descriptor chain
+> [  122.389481] macb 10090000.ethernet end0: inconsistent Rx descriptor chain
+> [  122.610641] macb 10090000.ethernet end0: inconsistent Rx descriptor chain
+> 
+> Reverting commit "net: macb: Relocate mog_init_rings() callback from
+> macb_mac_link_up() to macb_open()" f934e5d7caad6ae0a081352e91cbd7f0284ad9b3
+> solves the issue.
 
-Boot-tested under QEMU for Rust x86_64, arm64 and riscv64; built-tested
-for loongarch64:
+Thanks for the info, I'll go drop this from 5.15.y and 5.10.y as well.
 
-Tested-by: Miguel Ojeda <ojeda@kernel.org>
-
-Thanks!
-
-Cheers,
-Miguel
+greg k-h
