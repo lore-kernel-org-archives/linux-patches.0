@@ -1,140 +1,113 @@
-Received: from fout-b3-smtp.messagingengine.com (fout-b3-smtp.messagingengine.com [202.12.124.146])
+Received: from maynard.decadent.org.uk (maynard.decadent.org.uk [65.21.191.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52314229B18
-	for <patches@lists.linux.dev>; Sat, 17 Jan 2026 09:43:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.146
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8EF0A18E1F;
+	Sat, 17 Jan 2026 12:28:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=65.21.191.19
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768643033; cv=none; b=nkmnAWrYCKXEWXQqquT3IyCQeMkrLJy3ztQRC4XUyzhoDhK44WjMnZJImlGuy8I08ztdBGaT2s6Qdbew7DPpj61HE30ibXE68M2904aTl0D78j0IwmMr4PXPFrrSH63pxq0/RSz8vn9AIEXyTNVdBuxR6G/77Dw2Ip4k3MXXzFE=
+	t=1768652922; cv=none; b=uoGaBSYdEQfcHdMZ5aKFhGB2dcbzcSS+L9piSBL341TFaKbTlyo4Cvx4fh4RncYJqrdLZRmdoQaoWrb4fiN4pa9/3BjuejmIwAn097Wc/PjkH0usJnIdY0rGDsdvnR1IqPA4rb7DWpwFlWQiO5G9Ty2AtbyYDDLQOHzRR/EPyw8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768643033; c=relaxed/simple;
-	bh=SUnlxxwwlQCfug9SMMV+tp7b1YgQvtN2bQLZ+AqXgpg=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=UrR9t1sNTEQGW679Oek/CJUIqUJnUogSQyW0Q79WsRkYLROWaGPhK+drzU5Pz7m5JSXroyLCNDaQ7opEOlmyZqCIGtycqLWdzv/BZwXJ3yV179tJ/pyBv2SuB+GwevzQrE3vL/nm3gSb5NXwn3WajmZEzmQscMLDCXNC5AP1Mq4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=jPS4ytmo; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=WJ33KxMb; arc=none smtp.client-ip=202.12.124.146
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="jPS4ytmo";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="WJ33KxMb"
-Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
-	by mailfout.stl.internal (Postfix) with ESMTP id 11EAF1D00479;
-	Sat, 17 Jan 2026 04:43:50 -0500 (EST)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-03.internal (MEProxy); Sat, 17 Jan 2026 04:43:50 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1768643029;
-	 x=1768729429; bh=AB75+ehpmJVu2X5wj/D0uqTDaB7fq+rVUrPzQx/5eW8=; b=
-	jPS4ytmoT+jX2jWvjKLBSdIUaskyk/uHRb2JUYOR7B7F+Ytk9jOiHHUdTw7jGQmx
-	0AW15jv++bs//Im2hjWZE5HZTVYiqHXV3GaV/AS2Ym1ZK5t6NKPkXR6YNAm5X8LC
-	KyHuFA6RnWHosqQJqfiY2pUfa3LUBFDrGgSTw82FVJ5QT7N7kyHvgmMv6kbGVaWX
-	Q0FQtNPG5X2VeQSPBiMVHpJRdkLHlZWQeAT9DCnloYF0D4L0HHqC1ibnoTo61RYN
-	uXKFEJsMWaVecObDt1E6RXmbBVie6SwcCtXqSMUfA8NbPZxbjx+AxY5Q8feXuJBM
-	Y0/Avy8YH5yX5loR6XC3Kw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1768643029; x=
-	1768729429; bh=AB75+ehpmJVu2X5wj/D0uqTDaB7fq+rVUrPzQx/5eW8=; b=W
-	J33KxMbkmgmYyqRQIm150MytAd6f2jpAXfDENudg5Dgmoq3aO1nyMvvchSXhnIC2
-	KkNUGiufqhLAnxtprLJutrJMFOK9342EUSsyLMweI+BrzM+c7//V42t9IeHw4Tb8
-	hoKUdEC94uJanVPSPtZCH+AvbpvJhJcile4B8S4txEMhl3wezfEhNYRL1T1Q8jmm
-	Tqmdn3Y5ze6E7NjpvSroDnNw6tCj/jKyRXsu9ElTUCsQUYoxo6RIvS6XabSM77+B
-	StSlzcXkkTrTfZuCIXb/LCdY8hiur044OpHPHBbHcv5ziSwaUoW+oEIwbOthJhHu
-	OBxFXm/EiLeWgtdpBFFEA==
-X-ME-Sender: <xms:1FlrabRvLH6jYjLQrfVbK5FZQgh84uIoWGx34IdN6Q8ZBgR1t3IaaQ>
-    <xme:1FlrabIxqgpFubWa5P41Ck1pXZbhfjGmWAUAvoHW_89yWKpYGYx20I5JR8JC-nXHR
-    AQXMbhfUNnivdMy2ZwkzPjIfk0f7qL15zsgjukQCYIJT2axu3sssw>
-X-ME-Received: <xmr:1Flrac3NoBqyTkeQ2yx2WVlf-bqxchGNB3gDHH3X9Z09vDkkEUxYmDnHtKNxtRRR2u6nFht2sMY3t-OqeSYr4IWh9i4zHQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddufedugeekucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhepkfffgggfuffvvehfhfgjtgfgsehtjeertddtvdejnecuhfhrohhmpedfuegrrhhr
-    hicumfdrucfprghthhgrnhdfuceosggrrhhrhihnsehpohgsohigrdgtohhmqeenucggtf
-    frrghtthgvrhhnpeefleehkeehleekjeelffefhfdvleejteehledtieduffevteffleet
-    gefgfefhjeenucffohhmrghinhepkhgvrhhnvghlrdhorhhgnecuvehluhhsthgvrhfuih
-    iivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepsggrrhhrhihnsehpohgsohigrdgt
-    ohhmpdhnsggprhgtphhtthhopedvtddpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtoh
-    epghhrvghgkhhhsehlihhnuhigfhhouhhnuggrthhiohhnrdhorhhgpdhrtghpthhtohep
-    shhtrggslhgvsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepphgrthgthh
-    gvsheslhhishhtshdrlhhinhhugidruggvvhdprhgtphhtthhopehlihhnuhigqdhkvghr
-    nhgvlhesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehtohhrvhgrlhgush
-    eslhhinhhugidqfhhouhhnuggrthhiohhnrdhorhhgpdhrtghpthhtoheprghkphhmsehl
-    ihhnuhigqdhfohhunhgurghtihhonhdrohhrghdprhgtphhtthhopehlihhnuhigsehroh
-    gvtghkqdhushdrnhgvthdprhgtphhtthhopehshhhurghhsehkvghrnhgvlhdrohhrghdp
-    rhgtphhtthhopehprghttghhvghssehkvghrnhgvlhgtihdrohhrgh
-X-ME-Proxy: <xmx:1FlraeJktQ7-borY8IvFDY1aFADoLBrY0An6SYUYa12ERVR8lgUpNQ>
-    <xmx:1FlrackhAUJ-yeFUVCE5lP_QEj6gXj8XcO2EjXJ7CnxpQNXc33YalA>
-    <xmx:1FlracOsMFx24UoxfGkf_2h3zGdZWJgfZ_pKx5PBOmOPS7_cLxPsDw>
-    <xmx:1FlrabzObtjkaKRGBjk_6qsRvapwJLqiI36Co0j5cAHN08wZJHfaVw>
-    <xmx:1VlraUPPNvPXOWxf1MsA_TUy5PCeD-q4HUMjTJvAxUYi05ikBTvM0L0A>
-Feedback-ID: i6289494f:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sat,
- 17 Jan 2026 04:43:46 -0500 (EST)
-Message-ID: <c283a0c0-abb7-49c2-aaac-5b24c44361b6@pobox.com>
-Date: Sat, 17 Jan 2026 01:43:45 -0800
+	s=arc-20240116; t=1768652922; c=relaxed/simple;
+	bh=PCh1UWNiFTG4DnKb//t91d869ClclbU05mKBDJnL+zU=;
+	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
+	 Content-Type:MIME-Version; b=oOYvX65VL4j2Hi3lrX9EUg+fi2sRC79gbaQPvG8+4EsNtPN9XgS9TDwbkj9ZVp8Z+0Ju/Al6TnydSnGoj7M2gDkz2fqP53gl6upVPdUzCf3Uii5aM9T8mDGd3rPgXYFFinTv0tmcDqrqpWjFJHd5NBCAxwTx9o6Ulefg9rLxF2A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=decadent.org.uk; spf=pass smtp.mailfrom=decadent.org.uk; arc=none smtp.client-ip=65.21.191.19
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=decadent.org.uk
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=decadent.org.uk
+Received: from [2a02:578:851f:1502:391e:c5f5:10e2:b9a3] (helo=deadeye)
+	by maynard with esmtps  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+	(Exim 4.96)
+	(envelope-from <ben@decadent.org.uk>)
+	id 1vh5Pz-000yUc-0O;
+	Sat, 17 Jan 2026 12:28:37 +0000
+Received: from ben by deadeye with local (Exim 4.99.1)
+	(envelope-from <ben@decadent.org.uk>)
+	id 1vh5Pw-00000000epg-2Kdi;
+	Sat, 17 Jan 2026 13:28:36 +0100
+Message-ID: <fd91b4ae9640cfaf47fa96b97c58f410245c5358.camel@decadent.org.uk>
+Subject: Re: [PATCH 5.10 048/451] i3c: remove i2c board info from
+ i2c_dev_desc
+From: Ben Hutchings <ben@decadent.org.uk>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, Alexandre Belloni
+ <alexandre.belloni@bootlin.com>,  Jamie Iles <quic_jiles@quicinc.com>,
+ Sasha Levin <sashal@kernel.org>
+Date: Sat, 17 Jan 2026 13:28:31 +0100
+In-Reply-To: <20260115164232.636822339@linuxfoundation.org>
+References: <20260115164230.864985076@linuxfoundation.org>
+	 <20260115164232.636822339@linuxfoundation.org>
+Content-Type: multipart/signed; micalg="pgp-sha512";
+	protocol="application/pgp-signature"; boundary="=-iV6NcxMaKwMo+LBsEPgx"
+User-Agent: Evolution 3.56.2-8 
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 5.10 000/451] 5.10.248-rc1 review
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
- torvalds@linux-foundation.org, akpm@linux-foundation.org,
- linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
- lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
- f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, rwarsow@gmx.de,
- conor@kernel.org, hargar@microsoft.com, broonie@kernel.org,
- achill@achill.org, sr@sladewatkins.com
-References: <20260115164230.864985076@linuxfoundation.org>
-Content-Language: en-US
-From: "Barry K. Nathan" <barryn@pobox.com>
-In-Reply-To: <20260115164230.864985076@linuxfoundation.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-
-On 1/15/26 08:43, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 5.10.248 release.
-> There are 451 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
-> 
-> Responses should be made by Sat, 17 Jan 2026 16:41:26 +0000.
-> Anything received after that time might be too late.
-> 
-> The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.10.248-rc1.gz
-> or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.10.y
-> and the diffstat can be found below.
-> 
-> thanks,
-> 
-> greg k-h
-
-5.10.248-rc1 has been running fine on a physical amd64 system for 
-roughly a day now, doing several tasks including running some KVM guests 
-(also running 5.10.248-rc1 successfully) and compiling other stable 
-kernel rc's. I can confirm it fixes the virtual console regression from 
-5.10.247, and I have not seen any new regressions.
-
-Tested-by: Barry K. Nathan <barryn@pobox.com>
+X-SA-Exim-Connect-IP: 2a02:578:851f:1502:391e:c5f5:10e2:b9a3
+X-SA-Exim-Mail-From: ben@decadent.org.uk
+X-SA-Exim-Scanned: No (on maynard); SAEximRunCond expanded to false
 
 
-(As I described in a previous email, linked below, the 5.10.248-rc1 
-fbdev patches allow two additional patches -- previously applied to 
-5.15.y -- to apply cleanly to 5.10.y. It seems to me these are not 
-important/urgent enough to delay 5.10.248 and they could go into the 
-queue for 5.10.249.)
+--=-iV6NcxMaKwMo+LBsEPgx
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-https://lore.kernel.org/stable/64874115-dcc0-4f3d-9a82-2ad2abf86fbb@pobox.com/
+On Thu, 2026-01-15 at 17:44 +0100, Greg Kroah-Hartman wrote:
+> 5.10-stable review patch.  If anyone has any objections, please let me kn=
+ow.
+>=20
+> ------------------
+>=20
+> From: Jamie Iles <quic_jiles@quicinc.com>
+>=20
+> [ Upstream commit 31b9887c7258ca47d9c665a80f19f006c86756b1 ]
+>=20
+> I2C board info is only required during adapter setup so there is no
+> requirement to keeping a pointer to it once running.  To support dynamic
+> device addition we can't rely on board info - user-space creation
+> through sysfs won't have a boardinfo.
+>=20
+> Cc: Alexandre Belloni <alexandre.belloni@bootlin.com>
+> Signed-off-by: Jamie Iles <quic_jiles@quicinc.com>
+> Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
+> Link: https://lore.kernel.org/r/20220117174816.1963463-2-quic_jiles@quici=
+nc.com
+> Stable-dep-of: 9d4f219807d5 ("i3c: fix refcount inconsistency in i3c_mast=
+er_register")
+[...]
 
--- 
--Barry K. Nathan  <barryn@pobox.com>
+Commit 9d4f219807d5 is a legitimate fix, but it does *not* depend on any
+of these other i3c changes.
+
+Ben.
+
+--=20
+Ben Hutchings
+The obvious mathematical breakthrough [to break modern encryption]
+would be development of an easy way to factor large prime numbers.
+                                                           - Bill Gates
+
+--=-iV6NcxMaKwMo+LBsEPgx
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: This is a digitally signed message part
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCgAdFiEErCspvTSmr92z9o8157/I7JWGEQkFAmlrgG8ACgkQ57/I7JWG
+EQnKXg//WCkVPhU7h6G97XdLUUXSaZrnZyd0cqOKFAfa2o7KXP2Re9RggwvJyL9z
+Tl8eSib23GyBT8xhz0ORf8N6S+LomNvN6D2MwN7BqeXmubWIs22O/zX5QI8SaCLg
+KYH2cD1ftcbEp8tXdidbouYoolSzy30rgKqPih9NOlN8QTZXr+dIBurtLY7ernzG
+LeLC/Cw7phNY2SM3jlbmmv55CxOjMnhjjuUgTeiMATwiWqApYBcQRVsxq8jwxJv2
+9AwfPSxXcVQSGb9fISpl6E133ni2yjKJA9LfPhIIJ7DXvbO4YjfLFADROsDzM8uV
+LDmK6JnTiqAXO1ODngueCaKc73EnwBTC7V5w63HrGmhKErpb5IRJpWWoF1aRgxp/
+keB7y4m1LxpA2x2ateP/Z4FiTUzcex2yG0DuuqkwAm8ZWqswhSwZ/JfdVy4hxt8K
+QcckH/f3lS6486abfd8VvhZXuYwIPqnXJdmGIHvcaNUedehDeRfH+DLxWAsj1g4n
+Y8+MDEWLbrI/hLhczJRVIJU4zq6uDHL/0WmWmwx8of7PM+bLywstbwO5gX39lCCo
+68xci8DsYD2CVHB95YyUDoM3l+0xCSEiZdD9/Lb1dLfLLDTZWa/vbmrGQTU12C2h
+9uKhiIIpGcaDIFFvFPIhtei3mujvtzjaZ1zh5aNB8YuSYQgfLBY=
+=GUVi
+-----END PGP SIGNATURE-----
+
+--=-iV6NcxMaKwMo+LBsEPgx--
