@@ -1,40 +1,46 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8EDD622068A;
-	Sun, 18 Jan 2026 08:42:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+Received: from mail.8bytes.org (mail.8bytes.org [85.214.250.239])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7358A280325;
+	Sun, 18 Jan 2026 09:47:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=85.214.250.239
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768725755; cv=none; b=lAsiut2oGwX/GNaa70fnDnGHNr8qpRvUNddgSOIpK9VC9BfwYhQBoLFOVxnELscD2VDrWIha2LCpOPoCIA+dZR4oJ2lYDV91907aVEKnPWlES+wo+fe9tfW//bNxrHhtF6UkYc/ykhnkSJGAkzqn/yHthsnNX4z3Q82l8WjJ5eI=
+	t=1768729635; cv=none; b=HHSPo+DpdJ8VwYHsyyVlVF1rIBDLQhotynln5Oh2ELmJtRd+evJv/0lAkoK+6bEXOmUOtAHnDxmUEaX+KvyIatTx9k2F0kJAkMIsKlgJn8wLm1jATSVDr8Dkx2maHF9XZ0/Aq0jYnYIlFZIucV8VBcawwb7lP6chdWRuvNyi1jY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768725755; c=relaxed/simple;
-	bh=Io6759htdVc4y4QDvsm1vDXwhTKWZsue/LxhQAhkfDA=;
+	s=arc-20240116; t=1768729635; c=relaxed/simple;
+	bh=8iKWHE439+Kv8ItzaeIxmsbO/iGWOBbKxZWzeiViago=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=pFjduId1Jwxc+3N63C40mF4n2vOtLz4fOUDyoTS/TKO9ASICf3bnXlFQ4xADNq8up9elx3d20WfW1CQaxqff4o7qJ/dfNKAAHFpD9QT8ZdhZ/wSzqAtBL9h4ETwsjzt5ncvTOI41xEQZ1EXVd+mvnkgGUHULFnAb3t9ubP79/No=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ajs6A1eA; arc=none smtp.client-ip=10.30.226.201
+	 Content-Type:Content-Disposition:In-Reply-To; b=CzZfMwPu/QcCwrsFMu+LJGXt+pxgeyWqT2qEyv4wwx3uFNgTQTxTkdzSA+hxBpyR5pgNd3yyODmf13e5ShhFCpgGti4uBOX1GLtea/9Ol8dZWb8fHvk1yYinIRmu9e0MrRDn1+EDsPHAW4G6ucxlIZVHYu3LAG+CuP+jN/9grCE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=8bytes.org; spf=pass smtp.mailfrom=8bytes.org; dkim=pass (2048-bit key) header.d=8bytes.org header.i=@8bytes.org header.b=LUImN+rp; arc=none smtp.client-ip=85.214.250.239
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=8bytes.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=8bytes.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ajs6A1eA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E61EC116D0;
-	Sun, 18 Jan 2026 08:42:34 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1768725755;
-	bh=Io6759htdVc4y4QDvsm1vDXwhTKWZsue/LxhQAhkfDA=;
+	dkim=pass (2048-bit key) header.d=8bytes.org header.i=@8bytes.org header.b="LUImN+rp"
+Received: from 8bytes.org (p200300f6af1d960047d77347aeef488f.dip0.t-ipconnect.de [IPv6:2003:f6:af1d:9600:47d7:7347:aeef:488f])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	(No client certificate requested)
+	by mail.8bytes.org (Postfix) with ESMTPSA id 6909D5C16D;
+	Sun, 18 Jan 2026 10:47:12 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=8bytes.org;
+	s=default; t=1768729632;
+	bh=8iKWHE439+Kv8ItzaeIxmsbO/iGWOBbKxZWzeiViago=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=Ajs6A1eA25VWwZ7ESHFYizCcnAPevKX+un5xoapysTCabfGLOGe4rbTZoRc+HbeKG
-	 Snz9oPqS4UioyRa2BSWYfrTBDDDe4HGbFagdMExboyaY+5an7KgWoX/W9UsWGxum7u
-	 jw46BDvReVLlmt3ZiePWwH4hiL5DUD0zBUdSnH48=
-Date: Sun, 18 Jan 2026 09:42:31 +0100
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: Ben Hutchings <ben@decadent.org.uk>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	Frank Li <Frank.Li@nxp.com>, Peng Fan <peng.fan@nxp.com>,
-	Shawn Guo <shawnguo@kernel.org>, Sasha Levin <sashal@kernel.org>
-Subject: Re: [PATCH 5.10 205/451] firmware: imx: scu-irq: Init workqueue
- before request mbox channel
-Message-ID: <2026011806-uncapped-marvelous-d81b@gregkh>
-References: <20260115164230.864985076@linuxfoundation.org>
- <20260115164238.316830827@linuxfoundation.org>
- <b510c4fd58410b0d1125aedcae95a38f28990142.camel@decadent.org.uk>
+	b=LUImN+rpN377qF9Tp7yCbJW2MDSjy4wP1EuzBDf/5tZ2XstUYeuIYLX4J3VJPUPme
+	 kSVf5PPG11XJxvL4Y27xpY+IuB/l9v+KGdY6gL/GpX745zFngJv7ffSk6EfC+I6PdR
+	 KzxREW4X6YSCa40aF1AY0tICNDXpNoxbZdsLQbqfk2PP3urn8Ryno2xaAkBXd2Q1yf
+	 ADR9M3iMMakbf/Nu6GmooKz+tgZGFgjZXkimdAS1ReOuXliLYWCJkE0P2mQzB88EUP
+	 IQQdV+YLQkymr1BQh/tFvuBzNb12SDEhgRkCz8OWTGIvGMLtZUoBZPIL6T9fuXIKue
+	 bTrc1ZM/HaYcA==
+Date: Sun, 18 Jan 2026 10:47:11 +0100
+From: Joerg Roedel <joro@8bytes.org>
+To: Jason Gunthorpe <jgg@nvidia.com>
+Cc: iommu@lists.linux.dev, Robin Murphy <robin.murphy@arm.com>, 
+	Will Deacon <will@kernel.org>, Alejandro Jimenez <alejandro.j.jimenez@oracle.com>, 
+	Joerg Roedel <joerg.roedel@amd.com>, Kevin Tian <kevin.tian@intel.com>, 
+	kernel test robot <lkp@intel.com>, Pasha Tatashin <pasha.tatashin@soleen.com>, 
+	patches@lists.linux.dev, Samiullah Khawaja <skhawaja@google.com>
+Subject: Re: [PATCH 0/3] Let iommupt manage changes in page size internally
+Message-ID: <wpqmukpcurzufu4nrbnjox3scdfgjqwfrjqk3ijmd7oo5gtrmf@vx4tw4usghkg>
+References: <0-v1-d7be57da596d+3f8c0-iommpt_map_direct_jgg@nvidia.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -43,34 +49,17 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <b510c4fd58410b0d1125aedcae95a38f28990142.camel@decadent.org.uk>
+In-Reply-To: <0-v1-d7be57da596d+3f8c0-iommpt_map_direct_jgg@nvidia.com>
 
-On Sat, Jan 17, 2026 at 09:08:35PM +0100, Ben Hutchings wrote:
-> On Thu, 2026-01-15 at 17:46 +0100, Greg Kroah-Hartman wrote:
-> > 5.10-stable review patch.  If anyone has any objections, please let me know.
-> > 
-> > ------------------
-> > 
-> > From: Peng Fan <peng.fan@nxp.com>
-> > 
-> > [ Upstream commit 81fb53feb66a3aefbf6fcab73bb8d06f5b0c54ad ]
-> > 
-> > With mailbox channel requested, there is possibility that interrupts may
-> > come in, so need to make sure the workqueue is initialized before
-> > the queue is scheduled by mailbox rx callback.
-> [...]
-> 
-> This is an incomplete fix; you also need to pick:
-> 
-> commit ff3f9913bc0749364fbfd86ea62ba2d31c6136c8
-> Author: Peng Fan <peng.fan@nxp.com>
-> Date:   Fri Oct 17 09:56:27 2025 +0800
->  
->     firmware: imx: scu-irq: Set mu_resource_id before get handle
+Jason,
 
-How did you determine this?  There's no "Fixes:" tag to give us a clue
-as to if it's needed anywhere or not.
+On Mon, Jan 12, 2026 at 10:49:01AM -0400, Jason Gunthorpe wrote:
+> Jason Gunthorpe (3):
+>   iommupt: Make pt_feature() always_inline
+>   iommupt: Directly call iommupt's unmap_range()
+>   iommupt: Avoid rewalking during map
 
-thanks,
+Please re-spin patch 3 based on the comments and resend it together with patch
+2.
 
-greg k-h
+-Joerg
