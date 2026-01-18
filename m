@@ -1,108 +1,106 @@
-Received: from maynard.decadent.org.uk (maynard.decadent.org.uk [65.21.191.19])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f46.google.com (mail-ej1-f46.google.com [209.85.218.46])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0F8B1A316E;
-	Sun, 18 Jan 2026 18:59:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=65.21.191.19
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768762754; cv=none; b=liv+fIluztW9wT+FkKvv2StQD4Uafhvee9s3E1DG3A34uTFs0742RJAL5xSUXfJzTK15sm4wbaQluFzdyShaSzQppRSU3GJ+Fa5mzwOPFMXDUkpz6WSs5CRzX5rdxqhwrNC+Bx/Oa8uquFiPS24zGuOOGEN9K/TML/ee/dLiCQc=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768762754; c=relaxed/simple;
-	bh=ex/2O6cmEjo2woUmKsAcQcDXJ8an36PUKEsLQ+euTtE=;
-	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
-	 Content-Type:MIME-Version; b=c4oZyvtMIYtf7xaLB4HuKaFUENWpFz+8PJo81084sSzALuEZ41nswgpXrA1irDBPiQoyOd1FlKUZoGQDsLjHfQeQ891dF3OoCqLy4RHjbAbyj6iV1AKAX+YxwupfRaIhBRFSCXuBcdFNEfArdHI36zvfoU18FZBhgcddInXTGUc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=decadent.org.uk; spf=pass smtp.mailfrom=decadent.org.uk; arc=none smtp.client-ip=65.21.191.19
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=decadent.org.uk
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=decadent.org.uk
-Received: from [2a02:578:851f:1502:391e:c5f5:10e2:b9a3] (helo=deadeye)
-	by maynard with esmtps  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-	(Exim 4.96)
-	(envelope-from <ben@decadent.org.uk>)
-	id 1vhXzT-00196F-1s;
-	Sun, 18 Jan 2026 18:59:10 +0000
-Received: from ben by deadeye with local (Exim 4.99.1)
-	(envelope-from <ben@decadent.org.uk>)
-	id 1vhXzR-00000000rI7-1INo;
-	Sun, 18 Jan 2026 19:59:09 +0100
-Message-ID: <ca5a59b665e1e91b723e66b30e4692cfa13a3a31.camel@decadent.org.uk>
-Subject: Re: [PATCH 5.10 394/451] mm/mprotect: use long for page accountings
- and retval
-From: Ben Hutchings <ben@decadent.org.uk>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, Peter Xu <peterx@redhat.com>, Mike Kravetz	
- <mike.kravetz@oracle.com>, James Houghton <jthoughton@google.com>, Andrea
- Arcangeli <aarcange@redhat.com>, Axel Rasmussen <axelrasmussen@google.com>,
- David Hildenbrand	 <david@redhat.com>, Muchun Song
- <songmuchun@bytedance.com>, Nadav Amit	 <nadav.amit@gmail.com>, Andrew
- Morton <akpm@linux-foundation.org>, Harry Yoo	 <harry.yoo@oracle.com>,
- "David Hildenbrand (Red Hat)" <david@kernel.org>
-Date: Sun, 18 Jan 2026 19:59:03 +0100
-In-Reply-To: <20260115164245.186677511@linuxfoundation.org>
-References: <20260115164230.864985076@linuxfoundation.org>
-	 <20260115164245.186677511@linuxfoundation.org>
-Content-Type: multipart/signed; micalg="pgp-sha512";
-	protocol="application/pgp-signature"; boundary="=-hJdlc3SGN0eHhDMV7FtW"
-User-Agent: Evolution 3.56.2-8 
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8FFB5B1EB
+	for <patches@lists.linux.dev>; Sun, 18 Jan 2026 21:33:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.218.46
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1768772039; cv=pass; b=XMbgxd2kFryM3yl2hqhLlo3LfV2HmFIH+9GSHvg61cwn2hhXjgv0hNYK4r9BlbaD6ZB1ekB+9tCVsNv7pgnFqMT+9LIE/+P5PZfnCyiEwCjqo9qKP68axcxlTlxqKQPrcY4n2s6OOJDVkzBnO1zbNo+LSEc8HWs+x0PJRAyyndI=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1768772039; c=relaxed/simple;
+	bh=dR5FMFlo246DjiayIr8NlGLupK4szceHEikbN1Luc1Q=;
+	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=ZyC7oUjnoYNJid2dHBt+9qcHctFshUFIrL0zbSAY+mUubwfXBfQB785c1o0oSlV35Y8w3N6TJzkoDF167Hx0XWcFE4IBJz6G5NHyuTHzlKK42wl1j9uCloKvmPY8DG2w8fhPmC1465Qm2bbxhbWDHWEd6g8wMspkkyJ8c9wBOB0=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=PAlQ+tcg; arc=pass smtp.client-ip=209.85.218.46
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="PAlQ+tcg"
+Received: by mail-ej1-f46.google.com with SMTP id a640c23a62f3a-b7cf4a975d2so639961466b.2
+        for <patches@lists.linux.dev>; Sun, 18 Jan 2026 13:33:57 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1768772036; cv=none;
+        d=google.com; s=arc-20240605;
+        b=PLmhRqfB6G4lUU+CGotOn/A8Qn6sUOZDrBIaiw3+/sho5fSzAYfroqKqlI3lcX2LyF
+         wGoiX/pcdAXhnp9ivqzEm3uD9/wkYdd2h5ivDv6E3IaaFG7hR+WqFeukxP9wXwd9oj1x
+         bI0ZoQIq74AdZzH0ZcXdjy+l5xoIMBbnoU+/wqDWKKiimMMVbUEwCXP1oh478EbuO+/d
+         g1b43iMPgIbY9K2lgERk+2etego8ZJZfjFyaGk9z/BCtfVDbr4gnVo9H1UZQwYlqVXN7
+         iM/XktFN1G36I1bdc78FhrPWOQvZFca1lFTrwRPS+gT7QaZuDEFboKcIfld5EZaCbaN8
+         R1UQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=to:subject:message-id:date:from:mime-version:dkim-signature;
+        bh=dR5FMFlo246DjiayIr8NlGLupK4szceHEikbN1Luc1Q=;
+        fh=dnschhrV2yTByyr3GI/U0Rws3zNCy5hKhRlh+Nrxzjo=;
+        b=cKWb35FG1KmHpTQWCcESs7O4/OvVk+2TFcycFRdXEaGj1c4zAPz8U03VtWcDmErFPL
+         9DIHQ2pQNACYlEGw1fUEL1bxUxkofsQzS0vsElMeZDrYWsIyfg4yOqhE/HACzr99rMua
+         DivsBMu9ZxPqfQWH8SukpR8sAwfGk3p+W9lJFa0Thp/78uMHuBjfNe52E5fnSlQru26q
+         DqtNOmO+Veha3xX4mF5wQ1hgFcPg8Dc7EKW59oeYHWYQHEzCangbhfLnEppclMX2xrj0
+         99WDwdOWetA+atGgJiKGKz5euq9iGReiUYGWSRe/FD+OvE7pMLHg8sbUZNxclVmI2/85
+         YH0Q==;
+        darn=lists.linux.dev
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1768772036; x=1769376836; darn=lists.linux.dev;
+        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=dR5FMFlo246DjiayIr8NlGLupK4szceHEikbN1Luc1Q=;
+        b=PAlQ+tcgvtByy1bQ1NlRfU+R/5xCWDAfB7NQPUNjlQP5tF7AIkkJG4pUZQdyicg/BE
+         Tm16H8pZlxzdGH27i9mXDAjv5vRUZgMZCfDuzqimRXzVbCUruEyT0sVvSG5omWevG39q
+         HTotVGVxQd4WC9XBgv4TXSXtlSDhivMeybzagj8eCQvstDwT41wU1XZjRAzO57fDFoaO
+         wUG/iI2lcfqZZJ5+ic0S8gh/KFclW4EYcBvJ0Rx1aJKsJeP1fcrIGVwWUMQTq8WHoBH3
+         Qf4Um5/aIXvI3K1oD6I3k9X0wQgGJpnjdQvJ1D2xqjWpETkV99y0otvR/yiwebjSgwyR
+         Toxw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1768772036; x=1769376836;
+        h=to:subject:message-id:date:from:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=dR5FMFlo246DjiayIr8NlGLupK4szceHEikbN1Luc1Q=;
+        b=v+L+yRqck5ZmJEhlhcOLNeRj1rxelCLCHaYC2vgT3JNUcxcpf5w8czBbpKgJo44pdG
+         8V5ICT3QifnLq9vF+WKumj3Tz5t7rB9g+xTsZAcJ6tJeSkxReaZ1TEmT5xm+OopiBWK+
+         kVj1TJMrPeSjN1WZRSKxfW8yxxGJQ3nUsNjD6nYEEPxYpuKjfw9LKGPfNcdXYAfSPdj4
+         yBslnMQ4UjJ4YRO3fGyydKAA13IQcR4BQT2JwvS46R4+9dDhdNGfyjla01DL7R2jS+PS
+         +/L+0F0REWlRaEHBikNL8T/QoNwYN9txO5xx023yyw/IZfYg2mBwLkPiQnuOyZwtc46X
+         sIeQ==
+X-Forwarded-Encrypted: i=1; AJvYcCWHzishPzdoXPwz609L+JWa3uKiYNaB5qQLo2qWOohrUbkQcTNZDsykDkRHUOw/VufH74s2LiZr@lists.linux.dev
+X-Gm-Message-State: AOJu0Yx2lIwO+zqdbGsqf2g3PVkv/5e38VEWqmKlSZgBpJ7IpqUR0gRX
+	/QJkUO5lfkRiJ0w1JUdFK3qvZ1/KT9qFwALBPL32RGwahZ7aaQOZhziP4XHIf6Hpwvv+Y8rredK
+	jTp504LsTXsZ+Kcoer86ofbm7+xACwGw=
+X-Gm-Gg: AY/fxX4Dk6Esymgj5mhroXnQNSsyqQOcqQXSIIwC5eVXGxlFAV6aCjJ+Gb5Nl2mV/7i
+	nHPuTjvs0FKjcCDaBOT0UpPwr2yZZaYf4rqWlZc1kBPsZfH2Lx7QWE4bVRi9IwhY3zsth9OgWjo
+	eUkE2QDzO/KWw4/DPz9fCIfGr5uyFw6XOnmHNDvZdvbNRIZDI/GNi/EUDuT1DnYOkLeocK/V3dR
+	hZttotlOzHdRC+REIILxLWu1zd2fyOWCeqzn8qUANwu6B3+lEtI3RrY72C8xRLQ4l5DqB95wUkS
+	G1icdFvK4AafEtITE09UxYq04xkJv5XC
+X-Received: by 2002:a17:907:930a:b0:b87:2d79:61c with SMTP id
+ a640c23a62f3a-b8792d36328mr832751066b.8.1768772036000; Sun, 18 Jan 2026
+ 13:33:56 -0800 (PST)
+Received: from 860443694158 named unknown by gmailapi.google.com with
+ HTTPREST; Sun, 18 Jan 2026 13:33:55 -0800
+Received: from 860443694158 named unknown by gmailapi.google.com with
+ HTTPREST; Sun, 18 Jan 2026 13:33:55 -0800
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-SA-Exim-Connect-IP: 2a02:578:851f:1502:391e:c5f5:10e2:b9a3
-X-SA-Exim-Mail-From: ben@decadent.org.uk
-X-SA-Exim-Scanned: No (on maynard); SAEximRunCond expanded to false
-
-
---=-hJdlc3SGN0eHhDMV7FtW
+From: zynai.founder@gmail.com
+Date: Sun, 18 Jan 2026 13:33:55 -0800
+X-Gm-Features: AZwV_QitwGRIZkGn1QroCS8h4qw7XwJi6e3jAKQi37ba990QzWONC4TZTkg9-wY
+Message-ID: <CAEnpc1b7fMJvpaub42Oge4B+h3wZo+HOAi=ombo27AwLhWwvkA@mail.gmail.com>
+Subject: Is Your Dentist Office Losing Time to Manual Workflows?
+To: gregkh@linuxfoundation.org, stable@vger.kernel.org, 
+	patches@lists.linux.dev, info@morenofamilydentistry.com
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 
-On Thu, 2026-01-15 at 17:49 +0100, Greg Kroah-Hartman wrote:
-> 5.10-stable review patch.  If anyone has any objections, please let me kn=
-ow.
->=20
-> ------------------
->=20
-> From: Peter Xu <peterx@redhat.com>
->=20
-> commit a79390f5d6a78647fd70856bd42b22d994de0ba2 upstream.
->=20
-> Switch to use type "long" for page accountings and retval across the whol=
-e
-> procedure of change_protection().
-[...]
+Hi Miralda Moreno Team,
 
-This was a dependency for a backport of commit 670ddd8cdcbd
-"mm/mprotect: delete pmd_none_or_clear_bad_unless_trans_huge()", but
-that's not in the queue.  It seems pointless to apply this by itself.
+As a dentist office, you likely struggle with repetitive
+administrative tasks and manual lead handling. This can add up to
+hours of wasted time each week. Our AI-powered automation at ZynAI can
+help streamline these processes, freeing up more time for what
+matters.
 
-Ben.
+With our solutions, your team could save 5-10 hours per week on admin
+work and focus on providing top-notch care. Would it be worth a quick
+conversation to explore how?
 
-
---=20
-Ben Hutchings
-Larkinson's Law: All laws are basically false.
-
---=-hJdlc3SGN0eHhDMV7FtW
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: This is a digitally signed message part
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCgAdFiEErCspvTSmr92z9o8157/I7JWGEQkFAmltLXcACgkQ57/I7JWG
-EQk/ihAAr8ZzwpyDdJakJhjCtb1d8EW1364VNnaHGJeCCSx2ZrGl50sF5w4D4AbL
-qhiAu12Qx7f+/WV6U30dSz0ozefqTMXG+xcO+iZLDilBcOYtfqK3R9+Yx6LpPZ6h
-5i+I1RhcoLwgFa5LkZhGeAhZTtzDKeNvCfKdfXOsBHHNLtXrtM+kJCBWSusftFES
-UFHyW0qWs1y4LKIeU9s3CRdnbv+X8eWZ8dgpr0SJxY3csgp2naM/9PLejqwtgi2q
-GrrYznmaadq/O++xOek5GtugcnKNi1VLHxu+MW1sfPeTt83iJQyjWXbUNnAyv15m
-U0SXIZqV+0rL4YSeyziv2c0RvyQBOtCTOmLZMBpLgajTv20q2PNl6RD2/TXiYJTG
-NKspCwKXJHz0MxKFcl67BxGE09yybfUzAO6lT53vXZq/pR8okzfizt1cxnKzgy7c
-shHopnScCwIDg/fDiLVTUpJO+Pmqwy65+F/7E2g8orD3ZtbHBrX2of27G5NB8vWI
-E6dHemrC010FLDO8LPfOUFCfILnIf9aiLMZnh4Oku95PFS1bnIjFJ26AkJJfn1p3
-oeqk5tA084oggtX1hxb/RvLbxhtYUWXanbD4+e4UcOM7jACGBroPC9pxvGWR+nsn
-Ao9Hvx4JaWFtbQn4STnGXODzJJqc+5wZOTwk5NXqOc1ksbS6HeA=
-=/ZqA
------END PGP SIGNATURE-----
-
---=-hJdlc3SGN0eHhDMV7FtW--
+Best,
+The ZynAI Team
