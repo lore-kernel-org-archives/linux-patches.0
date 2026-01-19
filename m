@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D3FA35293E;
-	Mon, 19 Jan 2026 11:14:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BAB8D35970B;
+	Mon, 19 Jan 2026 11:14:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768821267; cv=none; b=j2NKiZCyIwuI67kV/EL0c3APGuTMh9mpQEnIJ6P8sECr35qUQf/mUs+VpiQRjWa9EpR6M225oZ//4oz/6KewS6mQlV5tL1XFqFg+ABaeAluPUy/YeElxQ/fWmNXyD7kzXljHvXV0wLkMxJWHMuOEMYM+DloggZGq8PTFH+/htfU=
+	t=1768821279; cv=none; b=kI9GkoajKTdwFoljbUy5Vc8AjiR4IsKa64zCgYqhtms5WiKziwJxB7kVJpm25OAg53p+rS8bdwYgr1odkF/jXI7blxfOdlcbpcVHAE5PdWYyhb7FrAMaIUiBDSB8y4I5azJKonuphFHSpPstLh2IuxX5NdeUmSvBOV7ZHQgxC2A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768821267; c=relaxed/simple;
-	bh=IDHGwUYov3TFysdOj69gbf74V050BVsTKwN0yWC8CgY=;
+	s=arc-20240116; t=1768821279; c=relaxed/simple;
+	bh=YlhgHKTmn7sRyggLHo6OBttvfzAAIvbkFGZZXPO86Ds=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=QCXWj8pSV4UXUcDKiM/UW4cdegrUOufhq2PasRyuI0b33d2bE8qeEcrwZmGi+zzQfjpgwhDc0YxnltlhAxQ+NGkrBMNxX4p39EPtm37HTq6VKQ+kGrSFx1HMD6G1PSwikmTAPdXXS27N7IWLfVv1Hy17wE4Cebk8uAQSYb+olhk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ycC5QECu; arc=none smtp.client-ip=10.30.226.201
+	 Content-Type:Content-Disposition:In-Reply-To; b=XAjU2juWDiS9i6pesmcBh1fn+r5JBMYiYJmqggKxMvosPUws/UKVs5ZkTkhdCMfAk4Uqj/lGM5+k92yEkDxG0z6fUgGs472uUj2FZavY+3nfK7hpfOt6uAFIUJ5ECq1zaByzL5F80IYkAkZMDvzpUkG9msfLSKrjWhcPGc7CJ5I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vVd0YX+D; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ycC5QECu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D861EC116C6;
-	Mon, 19 Jan 2026 11:14:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vVd0YX+D"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3CFEC116C6;
+	Mon, 19 Jan 2026 11:14:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1768821267;
-	bh=IDHGwUYov3TFysdOj69gbf74V050BVsTKwN0yWC8CgY=;
+	s=korg; t=1768821279;
+	bh=YlhgHKTmn7sRyggLHo6OBttvfzAAIvbkFGZZXPO86Ds=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=ycC5QECugumsh8Aes0gzRbpbr0BlL8uiHgO7W82IKi83BSiYtBOTjSr7iQ7PtnGa0
-	 aNiZgyvLRKVi2yS1hOkvv0FhPragIqDBLkwyCNgreOt4GM56b/jt3PQOwV1IyWqR/N
-	 VRDTkCbcLa21XuvOBrdkLeeekGXtTzYNop+jK8Yg=
-Date: Mon, 19 Jan 2026 12:14:24 +0100
+	b=vVd0YX+DZMKKFhYvMoGNV6eMOPNy/tIXvRfE5dm0AxRfTyWEfMUW/vrsu1PLLOXn6
+	 8hc6394f7ua57hdd0k2JavS/AljE7to2F5gT/5gisgLPopsvKqAicPuu68jZWig5Av
+	 Oadiza1wq0vELyrIA7Hos2j0H+/DNPgoJjSj/vCU=
+Date: Mon, 19 Jan 2026 12:14:36 +0100
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: Ben Hutchings <ben@decadent.org.uk>
 Cc: stable@vger.kernel.org, patches@lists.linux.dev,
 	Duoming Zhou <duoming@zju.edu.cn>,
 	Hans Verkuil <hverkuil+cisco@kernel.org>
-Subject: Re: [PATCH 5.10 324/451] media: TDA1997x: Remove redundant
+Subject: Re: [PATCH 5.10 326/451] media: i2c: adv7842: Remove redundant
  cancel_delayed_work in probe
-Message-ID: <2026011905-progeny-muppet-d537@gregkh>
+Message-ID: <2026011927-jubilance-banana-2cc4@gregkh>
 References: <20260115164230.864985076@linuxfoundation.org>
- <20260115164242.620539205@linuxfoundation.org>
- <df0940555d70eb912f2962a70b59270d0f579b9b.camel@decadent.org.uk>
+ <20260115164242.691121734@linuxfoundation.org>
+ <7c9592007c32c55935af212fcf6658fbab2baffe.camel@decadent.org.uk>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -43,9 +43,9 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <df0940555d70eb912f2962a70b59270d0f579b9b.camel@decadent.org.uk>
+In-Reply-To: <7c9592007c32c55935af212fcf6658fbab2baffe.camel@decadent.org.uk>
 
-On Sun, Jan 18, 2026 at 03:05:36PM +0100, Ben Hutchings wrote:
+On Sun, Jan 18, 2026 at 03:22:03PM +0100, Ben Hutchings wrote:
 > On Thu, 2026-01-15 at 17:48 +0100, Greg Kroah-Hartman wrote:
 > > 5.10-stable review patch.  If anyone has any objections, please let me know.
 > > 
@@ -53,30 +53,24 @@ On Sun, Jan 18, 2026 at 03:05:36PM +0100, Ben Hutchings wrote:
 > > 
 > > From: Duoming Zhou <duoming@zju.edu.cn>
 > > 
-> > commit 29de195ca39fc2ac0af6fd45522994df9f431f80 upstream.
+> > commit e66a5cc606c58e72f18f9cdd868a3672e918f9f8 upstream.
 > > 
-> > The delayed_work delayed_work_enable_hpd is initialized with
-> > INIT_DELAYED_WORK(), but it is never scheduled in tda1997x_probe().
+> > The delayed_work delayed_work_enable_hotplug is initialized with
+> > INIT_DELAYED_WORK() in adv7842_probe(), but it is never scheduled
+> > anywhere in the probe function.
 > > 
-> 
-> It seems like it can be scheduled as soon as the probe function calls
-> v4l2_async_register_subdev().
-> 
 > > Calling cancel_delayed_work() on a work that has never been
 > > scheduled is redundant and unnecessary, as there is no pending
 > > work to cancel.
 > > 
 > > Remove the redundant cancel_delayed_work() from error handling
-> > path in tda1997x_probe() to avoid potential confusion.
+> > path and adjust the goto label accordingly to simplify the code
+> > and avoid potential confusion.
 > 
-> I don't believe this is redundant at all.
-> 
-> In any case, this doesn't seem to be a candidate for stable since a
-> redundant cancel_delayed_work() is harmless.
+> I think this may have the same problem as #324, though I can't see
+> exactly at what point the subdev is registered.
 
-Let's leave this as that's what is in Linus's tree, and the other stable
-releases.
 
-thanks,
+Again, I'll leave this for now, thanks.
 
 greg k-h
