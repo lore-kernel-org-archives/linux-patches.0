@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BAB8D35970B;
-	Mon, 19 Jan 2026 11:14:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7095280A52;
+	Mon, 19 Jan 2026 11:15:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768821279; cv=none; b=kI9GkoajKTdwFoljbUy5Vc8AjiR4IsKa64zCgYqhtms5WiKziwJxB7kVJpm25OAg53p+rS8bdwYgr1odkF/jXI7blxfOdlcbpcVHAE5PdWYyhb7FrAMaIUiBDSB8y4I5azJKonuphFHSpPstLh2IuxX5NdeUmSvBOV7ZHQgxC2A=
+	t=1768821331; cv=none; b=m2f+5K0Dy3S3YMc4ZYljR1UD1sh0AWafEUswQb7PvhdxwPOHKK6jUeDqNEfar14NlwzCbIaN8SEkW3TWa7sWaGl+VEQsGrFQ7JglQRYt9qH8bjXSFApondEIhHrdl5K1xJcyOQyZBMklue+DXOd5jPPwJGSQDpv5Ws89qRowIR0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768821279; c=relaxed/simple;
-	bh=YlhgHKTmn7sRyggLHo6OBttvfzAAIvbkFGZZXPO86Ds=;
+	s=arc-20240116; t=1768821331; c=relaxed/simple;
+	bh=Q5L9VM9ErkjApesPY/jY+hDGgTywtx+xieULrd4/H44=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=XAjU2juWDiS9i6pesmcBh1fn+r5JBMYiYJmqggKxMvosPUws/UKVs5ZkTkhdCMfAk4Uqj/lGM5+k92yEkDxG0z6fUgGs472uUj2FZavY+3nfK7hpfOt6uAFIUJ5ECq1zaByzL5F80IYkAkZMDvzpUkG9msfLSKrjWhcPGc7CJ5I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vVd0YX+D; arc=none smtp.client-ip=10.30.226.201
+	 Content-Type:Content-Disposition:In-Reply-To; b=rxT5PtZokTGilidLwueYLcsES334zK1nC0UxrMdTcOiKufvRhv0yIM8UnsPRfQh6xXNZVkBPrVhLMc6ONPo4hG/UnV89y+0a9Qd/F7pQhIylUqb/waroXcVTzcLIYF78PXGHREBvyjzCVFAZV7TtBCcJqQ8SvFtm7Xoyl2keHbM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fcAyiuJM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vVd0YX+D"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3CFEC116C6;
-	Mon, 19 Jan 2026 11:14:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fcAyiuJM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 03BD2C19423;
+	Mon, 19 Jan 2026 11:15:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1768821279;
-	bh=YlhgHKTmn7sRyggLHo6OBttvfzAAIvbkFGZZXPO86Ds=;
+	s=korg; t=1768821331;
+	bh=Q5L9VM9ErkjApesPY/jY+hDGgTywtx+xieULrd4/H44=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=vVd0YX+DZMKKFhYvMoGNV6eMOPNy/tIXvRfE5dm0AxRfTyWEfMUW/vrsu1PLLOXn6
-	 8hc6394f7ua57hdd0k2JavS/AljE7to2F5gT/5gisgLPopsvKqAicPuu68jZWig5Av
-	 Oadiza1wq0vELyrIA7Hos2j0H+/DNPgoJjSj/vCU=
-Date: Mon, 19 Jan 2026 12:14:36 +0100
+	b=fcAyiuJMsuL4LhNMlPkMbQCZ+Wc6tL454zFyk6ZJqVOyH0KkH5UZfa9ZxWlfCJbm9
+	 dTm6d2KcsnsBAtC1IvueX9hYzAlr6WiJn0bOMgEYE1UJ4O+lTRIVIC9U4zWVzx5IWA
+	 gxezrI+UWHd7lZ/Dy0MiSAmuLvhcP9yiIBdTH6ho=
+Date: Mon, 19 Jan 2026 12:15:28 +0100
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: Ben Hutchings <ben@decadent.org.uk>
 Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	Duoming Zhou <duoming@zju.edu.cn>,
-	Hans Verkuil <hverkuil+cisco@kernel.org>
-Subject: Re: [PATCH 5.10 326/451] media: i2c: adv7842: Remove redundant
- cancel_delayed_work in probe
-Message-ID: <2026011927-jubilance-banana-2cc4@gregkh>
+	Kevin Hao <kexin.hao@windriver.com>,
+	Xiaolei Wang <xiaolei.wang@windriver.com>,
+	Paolo Abeni <pabeni@redhat.com>
+Subject: Re: [PATCH 5.10 335/451] net: macb: Relocate mog_init_rings()
+ callback from macb_mac_link_up() to macb_open()
+Message-ID: <2026011921-nugget-brunt-a836@gregkh>
 References: <20260115164230.864985076@linuxfoundation.org>
- <20260115164242.691121734@linuxfoundation.org>
- <7c9592007c32c55935af212fcf6658fbab2baffe.camel@decadent.org.uk>
+ <20260115164243.014159406@linuxfoundation.org>
+ <ddc7d38473d222cd9c2e332a387989d3af50d6e4.camel@decadent.org.uk>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -43,34 +44,40 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <7c9592007c32c55935af212fcf6658fbab2baffe.camel@decadent.org.uk>
+In-Reply-To: <ddc7d38473d222cd9c2e332a387989d3af50d6e4.camel@decadent.org.uk>
 
-On Sun, Jan 18, 2026 at 03:22:03PM +0100, Ben Hutchings wrote:
+On Sun, Jan 18, 2026 at 03:49:39PM +0100, Ben Hutchings wrote:
 > On Thu, 2026-01-15 at 17:48 +0100, Greg Kroah-Hartman wrote:
 > > 5.10-stable review patch.  If anyone has any objections, please let me know.
 > > 
 > > ------------------
 > > 
-> > From: Duoming Zhou <duoming@zju.edu.cn>
+> > From: Xiaolei Wang <xiaolei.wang@windriver.com>
 > > 
-> > commit e66a5cc606c58e72f18f9cdd868a3672e918f9f8 upstream.
-> > 
-> > The delayed_work delayed_work_enable_hotplug is initialized with
-> > INIT_DELAYED_WORK() in adv7842_probe(), but it is never scheduled
-> > anywhere in the probe function.
-> > 
-> > Calling cancel_delayed_work() on a work that has never been
-> > scheduled is redundant and unnecessary, as there is no pending
-> > work to cancel.
-> > 
-> > Remove the redundant cancel_delayed_work() from error handling
-> > path and adjust the goto label accordingly to simplify the code
-> > and avoid potential confusion.
+> > commit 99537d5c476cada9cf75aef9fa75579a31faadb9 upstream.
+> [...]
+> > --- a/drivers/net/ethernet/cadence/macb_main.c
+> > +++ b/drivers/net/ethernet/cadence/macb_main.c
+> > @@ -654,7 +654,6 @@ static void macb_mac_link_up(struct phyl
+> >  		/* Initialize rings & buffers as clearing MACB_BIT(TE) in link down
+> >  		 * cleared the pipeline and control registers.
+> >  		 */
+> > -		bp->macbgem_ops.mog_init_rings(bp);
+> >  		macb_init_buffers(bp);
+> >  
+> >  		for (q = 0, queue = bp->queues; q < bp->num_queues; ++q, ++queue)
+> > @@ -2287,6 +2286,8 @@ static void gem_init_rings(struct macb *
+> >  	unsigned int q;
+> >  	int i;
+> >  
+> > +	bp->macbgem_ops.mog_init_rings(bp);
+> > +
 > 
-> I think this may have the same problem as #324, though I can't see
-> exactly at what point the subdev is registered.
+> This is in the wrong function; it needs to be inserted in macb_open() as
+> in the upstream version.
 
+Now dropped.
 
-Again, I'll leave this for now, thanks.
+thanks,
 
 greg k-h
