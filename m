@@ -1,285 +1,341 @@
-Received: from SA9PR02CU001.outbound.protection.outlook.com (mail-southcentralusazon11013026.outbound.protection.outlook.com [40.93.196.26])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f226.google.com (mail-pl1-f226.google.com [209.85.214.226])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4FA71282EB;
-	Mon, 19 Jan 2026 01:01:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.93.196.26
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A03091CAA6C
+	for <patches@lists.linux.dev>; Mon, 19 Jan 2026 05:01:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.214.226
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768784472; cv=fail; b=GT8MixnnsLS9q2S3qQ3GenIQebi8OhcELGjfQUZNk2FWaflButW46ESBgD4YDnOohk51126MQSSvnR3xh0q/WcQlfZsPaLOor3w+0TfLk/4hzgZRWCu59Uy0XJ/Tv60DIutoDM55CFmAaVoerjjindqJuL1Re7XRlCw9cQ0GqeY=
+	t=1768798891; cv=pass; b=Sl/i4uksJIXSL8GH0OG25rNRB/MGh5cnNsyG0VonYwuhpKZX1IFcv1yrqYgrE5HCX8CbRj3x135wVZbJMOMLyEEXL7aRUARRft798dcpQJO/m+cR1ezTj3RCWBBWkwi88lXGhbgr/evWqnDkwdqlKYUbP4VJu4003GDzZb47TJM=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768784472; c=relaxed/simple;
-	bh=WcNLW3QC/K5mLMCzgp4WhY1QDu5vn/bZIcLkDTeuQgw=;
-	h=Message-ID:Date:Subject:To:Cc:References:From:In-Reply-To:
-	 Content-Type:MIME-Version; b=KT9lDFp6u/JV58+6B2tcgoH73tjOowHlf/prSvo8I3pbXoSSrQdKqb4xM2afs+UxB0VEG5HtjDMpBVByQQJ5XmpqwD7H/xxKMbsdClmAQg9ykQy9in8mS3vj3LFHa+hDC0VWfBRsUAAaLkUcaEvR0KJTVha3PafpPT6QI+o3l9A=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com; spf=fail smtp.mailfrom=amd.com; dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b=rEVQRj8B; arc=fail smtp.client-ip=40.93.196.26
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=amd.com
+	s=arc-20240116; t=1768798891; c=relaxed/simple;
+	bh=TZNNhqKNqBYDbfZl4+nRs4X3rsiXhOhwLeux9A0MzNY=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=L1hb1PL2+dLHhaU15LR+m/SLxQn5560+2WmS7WUvFbVrFY2/u0Tvk+YgTdc3VUpkabdxC20ZjsxCXs6gzJ6FCtzUrLXvU5Iu2ItyhXh1b+rHucRx6z/LyR9wsCZptBMPMuHA7rOW3XwuccIoG5c/27edqgWctHFBt9xS9vtLARI=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=broadcom.com; spf=fail smtp.mailfrom=broadcom.com; dkim=pass (1024-bit key) header.d=broadcom.com header.i=@broadcom.com header.b=g8BCgqaZ; arc=pass smtp.client-ip=209.85.214.226
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=broadcom.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=broadcom.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b="rEVQRj8B"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=neHH5C0fycOyapWj05vq9jO/Uwe1pGyWGKgNxUso556fJnf2mE/Sgq4JYPRV/fri4VF/fRfh08YFbqTZWkPTzTJkdcyIEwmGOKuPNWUD+fXHC/4V6Rb736izUzToiPic/717VzYD0PFjTCYnzkleEHmJn9Z5yQvjEoIwcmDSiXPsPMgz/eaa5zc+OosAfjAdggQR759bmHCmpr458ScgBDDTZGGXmkxpmY1GWuXJI+0+9lNJJmtt3P6JbNw0aFpMG3ILk3d+Rlic9XoaLGr+BptUTmac4/HLGN3VbrgLBkhFoqvYfiEzlmf2nhEFWK5obRsDGs7Y0XOr3fgYVoWP1A==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=RsOVGdEeRIfKvwx5Fbs7466tMEZxcXUJWyGaAB9BlIM=;
- b=DLt2StKp7NnZuypFelLgYP9zVTH1L32ne8tjWouSonJqgk85/HGaMordZUOLeS/HPzB7vJfdY3jiZR4U7twCmBy9ypmVZKUGi6wm360b5eNIMSkTAp22JsLLTIbvL/rm0015OzvKMpq7W5a+RNx4C64pdfjLC+aoREx7Tdol5ZjH/mQRHFLdOgdEbG8CRlFd/7hq7AwOdSIKvk4m7csY7iGaYjm7QuVKvCPgVfW6NsEvc3SRldTlNwsExnI9vlwGCQqbd+iqvTAU2wnBESUBAcvY+GH5dZmEbDvMOpK0AtdB0B6PKJ+7P57EBqGq8Vn0Bb/JdUBTwM3u0Lm48a53Dw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=amd.com; dmarc=pass action=none header.from=amd.com; dkim=pass
- header.d=amd.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=RsOVGdEeRIfKvwx5Fbs7466tMEZxcXUJWyGaAB9BlIM=;
- b=rEVQRj8BwdizYvb9YzcfSd+xGWqozCHDo4QGqrvKBbeagiPrZowDwb/cderJThhHFtdwmPgtEg8BN5okfUcuzivPNGugGknFs8cmMcEn18BYb7oePV671PZx+RaD2b/I5cMc60BVfpEgE++acgVCV+J4tSZTHxcPzgO43+8IJtU=
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=amd.com;
-Received: from CH3PR12MB9194.namprd12.prod.outlook.com (2603:10b6:610:19f::7)
- by BL1PR12MB5897.namprd12.prod.outlook.com (2603:10b6:208:395::14) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9520.12; Mon, 19 Jan
- 2026 01:01:02 +0000
-Received: from CH3PR12MB9194.namprd12.prod.outlook.com
- ([fe80::1e6b:ca8b:7715:6fee]) by CH3PR12MB9194.namprd12.prod.outlook.com
- ([fe80::1e6b:ca8b:7715:6fee%4]) with mapi id 15.20.9520.009; Mon, 19 Jan 2026
- 01:01:01 +0000
-Message-ID: <e0514ec6-b428-4367-9e0d-cfb53cc64379@amd.com>
-Date: Mon, 19 Jan 2026 12:00:47 +1100
-User-Agent: Mozilla Thunderbird Beta
-Subject: Re: [PATCH v8 07/15] iommupt: Add map_pages op
-To: Jason Gunthorpe <jgg@nvidia.com>
-Cc: Alexandre Ghiti <alex@ghiti.fr>, Anup Patel <anup@brainfault.org>,
- Albert Ou <aou@eecs.berkeley.edu>, Jonathan Corbet <corbet@lwn.net>,
- iommu@lists.linux.dev, Joerg Roedel <joro@8bytes.org>,
- Justin Stitt <justinstitt@google.com>, linux-doc@vger.kernel.org,
- linux-kselftest@vger.kernel.org, linux-riscv@lists.infradead.org,
- llvm@lists.linux.dev, Bill Wendling <morbo@google.com>,
- Nathan Chancellor <nathan@kernel.org>,
- Nick Desaulniers <nick.desaulniers+lkml@gmail.com>,
- Miguel Ojeda <ojeda@kernel.org>, Palmer Dabbelt <palmer@dabbelt.com>,
- Paul Walmsley <pjw@kernel.org>, Robin Murphy <robin.murphy@arm.com>,
- Shuah Khan <shuah@kernel.org>,
- Suravee Suthikulpanit <suravee.suthikulpanit@amd.com>,
- Will Deacon <will@kernel.org>,
- Alejandro Jimenez <alejandro.j.jimenez@oracle.com>,
- James Gowans <jgowans@amazon.com>, Kevin Tian <kevin.tian@intel.com>,
- Michael Roth <michael.roth@amd.com>,
- Pasha Tatashin <pasha.tatashin@soleen.com>, patches@lists.linux.dev,
- Samiullah Khawaja <skhawaja@google.com>, Vasant Hegde <vasant.hegde@amd.com>
-References: <7-v8-d50aeee4481d+55efb-iommu_pt_jgg@nvidia.com>
- <fc4f0354-4e6d-452d-abfb-fe24e53253a2@amd.com>
- <20260117154347.GF1134360@nvidia.com>
-From: Alexey Kardashevskiy <aik@amd.com>
-Content-Language: en-US
-In-Reply-To: <20260117154347.GF1134360@nvidia.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: SY6PR01CA0155.ausprd01.prod.outlook.com
- (2603:10c6:10:1ba::9) To CH3PR12MB9194.namprd12.prod.outlook.com
- (2603:10b6:610:19f::7)
+	dkim=pass (1024-bit key) header.d=broadcom.com header.i=@broadcom.com header.b="g8BCgqaZ"
+Received: by mail-pl1-f226.google.com with SMTP id d9443c01a7336-29f2d829667so10022115ad.0
+        for <patches@lists.linux.dev>; Sun, 18 Jan 2026 21:01:29 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1768798889; x=1769403689;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:dkim-signature:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=+KZ74f/sqoiGU5ok8nbRbU/Gngw20nEvTkzOJvQQC/g=;
+        b=IF+v9vxgRst5JIf8g3jTDi9C2GamZzC9eZGUB5nVtvr3ytjdr8HEU9QLMwjmI3CRbG
+         h/+J/wlq08HEG7AWJOQlN2XXAzwR1tEHav93unMBrdBtoZfcmEq8KhlHnrWazO0KwA0R
+         /Ig0QhmQvSBDtAxaLB+iIGv34YpPxe7y8N2r+YTZ2e+Gqsdp2LFlFDZqyI2HBGZa1+eR
+         AVyL+WcCScGVRtiByrh2D26R131GD/sJSHF+pdtmBnyDvEY0jPXZIAtbYwqsVkQl0FRP
+         okat4C52O1vYf32xPGRqlM+/E+hRXr3dKvlLAxz/Zi+QeE5Ve2PMkFoKew3cFpTGPODC
+         RcCA==
+X-Gm-Message-State: AOJu0Yzfjvh+O1LUZUtEIzZWlAxfJcxYleezedA2+Vj6lTAlXE+gLCBC
+	tOIXQJFwtwLoFCfWkYt6fs7r6vSzgsR2MX8k27wxeJKhrbomC+rf+OHk+tc5pMDsJHdjYo+yS8+
+	8jvZ/W+ud4u1HA+pKh0YP42Ehp9BqwGf5rsEmeICO1SAMxTT4h4cogxfZntHRdCodPjknuu3LTW
+	9iJh9ZFs0teqqBbg7LLUUNs7EzsMk4lcyWV2D0v4dsV0+WRxq/zxs9xhjyyK90finpWrb3vNgAG
+	0N6+k13zynfSsI8SJbSjt/W3Ins+A==
+X-Gm-Gg: AZuq6aLziAoRRWGIpHSXGYQcwVhXfvmiX39VTiFU2EQ+TROvwJkWm6YMK5IoW74d9KZ
+	H4Ui5/wjfgfpX468uvGx9IW0JBNh7dEXfv2i7561s3p2yN3Vo+HSUAx/g4ZvGNAyXayT1L+lluZ
+	2PJlWxEgmkeLw5R6TbQF6hVqU2qLiMiDHLTuY/vWoHJCSM8SZlBQ4n2l2f/BqR9vBwu4lNVSkFc
+	6L8SbtUXk3eNofeqWhE2qEnWIECHWAk1Bh7AWVL6C48Sc4MZriYFS1khsoFbYQAuNHN2YIqFF/8
+	oNwATnFkghwaWh8hYQxFrxiA8ZY0pgDBIyVHPqg8Bvlizql3/TGajPBzC6Ee3Fl6x4U+95NIo7e
+	e+whYLTQRINGfzsnPl/2oqywWwi/iGM/M+eSPIkfE53Ib1pEhfRaAY3F1fHIvjnU9RjU3gyOdU2
+	V4d22oiKsBEw3IGymPEfIWz/yocGuRXnk3X9meVAiY/aQOcNeQ9x6v/JR+WcE=
+X-Received: by 2002:a17:903:32ca:b0:2a0:990e:effd with SMTP id d9443c01a7336-2a7175c65bbmr74124715ad.7.1768798888681;
+        Sun, 18 Jan 2026 21:01:28 -0800 (PST)
+Received: from smtp-us-east1-p01-i01-si01.dlp.protect.broadcom.com (address-144-49-247-2.dlp.protect.broadcom.com. [144.49.247.2])
+        by smtp-relay.gmail.com with ESMTPS id d9443c01a7336-2a71939c0aesm13809965ad.53.2026.01.18.21.01.28
+        for <patches@lists.linux.dev>
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Sun, 18 Jan 2026 21:01:28 -0800 (PST)
+X-Relaying-Domain: broadcom.com
+X-CFilter-Loop: Reflected
+Received: by mail-ed1-f72.google.com with SMTP id 4fb4d7f45d1cf-64b8f91e4ecso261603a12.2
+        for <patches@lists.linux.dev>; Sun, 18 Jan 2026 21:01:27 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1768798886; cv=none;
+        d=google.com; s=arc-20240605;
+        b=LDvjkHthHBMkyoJfd/UfNznvrWcps6ECpROMBZREYUIlrw3aoYKxouR5brNXpMLgOy
+         UymRQIhMpbJEYsKScHskPJucoQtVGNbd06x1ayBKEh1rXH5QoTNPkwFmNYweRSS7Mwtg
+         VyPXEnScBAYhfeeFglvt26thH8fifICLPgBkm3QRshYkKHPP8yetaYl195vU1xEIyU9Z
+         B6XezE4jPMkKEdZKYIVNArKn3++mtrMeoCt8rmVK4i94nKQzMbKp6JwaYVqnjW4OH1TM
+         IplmM7BMLNMxeqN6AwOgWsw0hKpafYFn4w4pRo/25E6Tc2KCVIMBzJWmMh+raoHlfzuJ
+         0wvA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:dkim-signature;
+        bh=+KZ74f/sqoiGU5ok8nbRbU/Gngw20nEvTkzOJvQQC/g=;
+        fh=DuQHeVnKYiMAk4SuKiHlR8/FlskJWKc5a3I0TJdq8Ow=;
+        b=U/JAd8cUciluSioxpF2nT0s+STZDtg9awPlWQOqQcyUMCOaDLoXW4QfO+Q4+Xt6Jla
+         TndRUY7mK+AltCmomL12OOrcz2oIO6m+gTSPojg5Ii8nDCAIYPA+nA3kHcIxxR2n2kzt
+         n0z953TrSZnrHxASKzYxT8U6lz/vQgZ3bUzyu4tas7ThvABpTvmKOn4VAa7dARKO9SHk
+         aydAAyK1MCbhF4KrwMC0sQJO224+eUPILW/88QADH7g0PrlO7oXwwFfE/UVxSXZl4avL
+         SLtB+cm/b2Zh5mtIS57tjDG8yoTPiVDj5YdzZsg6gODASdRmkoZxEndWlqbXMDcr/oSu
+         ZYQg==;
+        darn=lists.linux.dev
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=broadcom.com; s=google; t=1768798886; x=1769403686; darn=lists.linux.dev;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=+KZ74f/sqoiGU5ok8nbRbU/Gngw20nEvTkzOJvQQC/g=;
+        b=g8BCgqaZaL3HIo3rAi901U27HCFk687zLLpth2HBNpnGgL+Jcd2H6kYsv4+vXCqP83
+         McmRlVTd8sScXutdYC7XUrP16DjsM/xF8z9ciTPgyD2PS76Axn+NqtNFF79dSUcgk+EV
+         tLB7qE1NGfq49KMliBZwa1xMTa0YMFc0ESg/M=
+X-Received: by 2002:a05:6402:518e:b0:649:9aff:9f42 with SMTP id 4fb4d7f45d1cf-654517f1219mr4344233a12.0.1768798886572;
+        Sun, 18 Jan 2026 21:01:26 -0800 (PST)
+X-Received: by 2002:a05:6402:518e:b0:649:9aff:9f42 with SMTP id
+ 4fb4d7f45d1cf-654517f1219mr4344221a12.0.1768798886158; Sun, 18 Jan 2026
+ 21:01:26 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: CH3PR12MB9194:EE_|BL1PR12MB5897:EE_
-X-MS-Office365-Filtering-Correlation-Id: 383f7190-c7c3-4707-5887-08de56f636ce
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;ARA:13230040|1800799024|7416014|366016|376014;
-X-Microsoft-Antispam-Message-Info:
-	=?utf-8?B?L3lwWDZwVWo1dlhvcDdsQS9RME5SdWFiSm9tZE9GTW5ZT3ZreDBTK0dQUjdD?=
- =?utf-8?B?R3B2c0dJRjVidkZxWVM5TXI4K2hXb0ttR2dXU0hmTEtxOU83Rk0xSzZyS1dR?=
- =?utf-8?B?a3pJVWFIU2tPU2ZCL0FDSjgzKzR4NmhWV0FUbDk5QkVXRm9RcmM1RXNlUzlO?=
- =?utf-8?B?NVJwaGhhcDdEMGN2MmxDa0tTV0NOanFra1JwV2hkZmUzd0NmVzYvUXBQa2E1?=
- =?utf-8?B?QURHNnFoRzlZRmhsMVN6WVVBck1NeGR4RnFIYVN6cVk1T05sR1EwQ3F4bVQ4?=
- =?utf-8?B?UGRRZndOcFRoVHZuSnJFMGUrS3AyWVFkdFZsc3lqOGlidVVsUEV6SENHY0Nu?=
- =?utf-8?B?ZjZBWkNxbXFLczJpY2dnbDhzWW1jelh1MkdDUy96Z3p1VnJuN3lteFdoSXB0?=
- =?utf-8?B?WVA4UFJHVEg2WDJSSDlEVS85NnV1WjVibEJGa0FaR0h1M1ZtUEN6WmptQStX?=
- =?utf-8?B?cEltWThuT05KdzB2dFJMRTBsV3NjZ2ZhczRDVWdrUmM4VHJ4cSs1UWVkT3Vh?=
- =?utf-8?B?dFVHWlZvK1BIY2MzYnBnOUxOL3d3dDRnQ3hCQm1GY0IxNFVha0hhN0R0RVEr?=
- =?utf-8?B?K1VpbitwSEsyeDI5c2tMKzVNQy9pUWR6NXpWUi9IYmluOHU2bTFsdGhJQVJi?=
- =?utf-8?B?cy9PYkZBWjBvcVg1bWN0K3dxaUQ2ZmZNTjR6NGFzVnl0eDRBWUIyak81VUdY?=
- =?utf-8?B?WEpEMExLd1A1NEVhWWdFemhObitRbDNRa1RhTkJKVUI1Z0o3MUl3dDBBNzRm?=
- =?utf-8?B?eG9LQnMxY1lYVGgyVklkTmNLL3hEamRueWRuS2VwN2VxNXhIcGV2OGRQLzBO?=
- =?utf-8?B?YnNPMWZXb1hKT25zb0p0VVFHSkJHajN0Skpvc2Q4dUV1WHRvQmx5RmExcTNR?=
- =?utf-8?B?aVNlZGExeUZkazhJdjRUNS8wNi9VRVAvSk9YaXBsZVlEeTlUbG91NE1VQWp2?=
- =?utf-8?B?RzEycWRRbEM3dU9ibjA1N3loaTRoalBlTE5rTkwyNkxiVVE1TzJ1Q2Y2V09l?=
- =?utf-8?B?ZlFEZDFxNS9NRXVzMVlNSlNrYVRjcmtaTUNTdGR4UXpycEE0Mmlrd0kxdnZi?=
- =?utf-8?B?L3pjZ1lzd3ZxbkxQSkY3Zm5TYS91UUZxWWtja1RpSkJ4TW1YRlBHdmhmTUcv?=
- =?utf-8?B?TnRGaHZZOTkzeVF2OEh5UlNtSkZORko1UUZ5Y1U1RklpNEdhT1FTSzZYM1VO?=
- =?utf-8?B?TXZldDROV2lqY2Z6dHphZXNpSjJUUnJ2SG96YWVWeklPUm03anNNY1k0YkRO?=
- =?utf-8?B?SlBvSGxqREFpaEVXcVJuV2VqWmhMTGxqUkZQZ2lmNHhlTHpjWVhLeDUvOXNZ?=
- =?utf-8?B?d09lWHFKOXRqMVB3ZnB3dnB1SWZMWU5lYjJqeG1hMXJ5bkNIVkdkaTRsODE0?=
- =?utf-8?B?Y1ZOVlh5Wi83RUZqUyt0SVFFT085YStPQllpYno5SFBoR0pZQWF4SFdXa1FW?=
- =?utf-8?B?WDMwbUloSlpyRTFkQjdNUlBUSUMxZVdiV1RSdzNwL05jeDRZWDZ3Y09HK1V2?=
- =?utf-8?B?TVA4Rm42cHAzeFFaTVk5NnZFZzdDaXpmdEtxSEJvQVd6TXhHc0dlZUlxNDdt?=
- =?utf-8?B?a1BYclNad2xBLytiQnFFQmhxeXVRajhHSEhZQm1tUXdhRFA0R0pGZ21aeHor?=
- =?utf-8?B?VXZuUXV3YTFEeU1tRUF6UzV1ZXRzc2V4MHRrM0lQd0NRaVp4R1psbWNhclZW?=
- =?utf-8?B?NXRWQllMZ1FGc2RuS0lYUGwzT01Hc1pKeHVVOC81dGQxTTdLSFB0RTgzYXBC?=
- =?utf-8?B?TUQ1MlBDTWtZNjBHTEZuakE2ZEdvdDFBUWt6cGQwa0NERllkTzl1aXlkaFBy?=
- =?utf-8?B?WTVUbGsybk9qd1hvRjZFcSsvdE96aVBpZmdpUmYyOVJEa0dMb1VtM3Rxb2xv?=
- =?utf-8?B?bVcwazkwWGlwdVI2TDVscGwyaHdHSm1maFFUVFpOZElqaC9aNEtCSmJpdzg0?=
- =?utf-8?B?c3U5M2tsT05aVnlZQlpFVkdTZHJHQW9VL0MwNWp6b2RXNXRrOW1aZlh1a0sz?=
- =?utf-8?B?WmVyQ010OUw0V2Iydm9XZnBySXgvN0o2MUJ2L1BLWURkNkR5czdqc2JVbU4v?=
- =?utf-8?B?L0pqcXNYVGFlV3RlWkxPLzNsb29nZm1sUzIyOTdMZldIOXpBLzhsVSt5UHlL?=
- =?utf-8?Q?Drqw=3D?=
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:CH3PR12MB9194.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(7416014)(366016)(376014);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?utf-8?B?TjE3cHY3UXczV2JMemlLWTJCNlhiWUhXR2dZMkxTdUlMUXlYbGY2QW1KbjR5?=
- =?utf-8?B?Z1VxYm1GRXo2OC8xWWtRRWMvYTNRUE03YU4wanhpRVRHZzYzTEJwdW9hR1pp?=
- =?utf-8?B?VUNQV1crTDhMOU5PcHRwcmhSZHpHSUlTcjd2V25BWElkaGN6N1J3Vko5Q3Mw?=
- =?utf-8?B?SXhTSXNnZHJNaWZTVm9rYmcrbmVRUzhyTmVoUlgrM1JjSGR1Ry9HZU9ndXFI?=
- =?utf-8?B?dElpc2p3c0FZd3ZvTTBmVUN6cndQZzNwS2JKRkdEMHNUSk9UbU5LeTJxaWh4?=
- =?utf-8?B?VHJjVVlpZXBCN1hMMkVwVExhSmVQcFRQOVRyeDdwK0svZWJoNWZSOUF5YjBW?=
- =?utf-8?B?R0pxdVFNdW9mZkU0YlpwOFc3Ukpta21xMlA5eDJsR082S21LVnRtbFI3OVpL?=
- =?utf-8?B?MDNqWlkwU3R3akhiRVpFMXNveVV6REZuVW1BNWdkTkpZR1QzV0R4d1c5N0g5?=
- =?utf-8?B?R3hjR3F2WWdyaW9KaFBLbHlZOXlReFIveklrRFF1MzFRYUt3VnlJSDZRanJW?=
- =?utf-8?B?dWFEQ0FTcFV4VDlPTENaZmxxcmtHUnlGQ2hqRUxzOW5lN28wL3VCWS9MWlR2?=
- =?utf-8?B?WDJqWjIrMjZmaHE1eGU5VndDRWpOMTlSNWxHcnZCS2IrOWhHSllyLzk3TVhi?=
- =?utf-8?B?UnhscFhKNFl4N3N1TTVnSGd0QUlBd0w0dXhtWmx3RmtheUFOTkpwbU4zc1li?=
- =?utf-8?B?dWxocERsWWt0VEFrUWtCU3VPTXNLNE16RXFPRDdSSGg2TGtFL05HQ00vQ0NO?=
- =?utf-8?B?UUJ3UThCRDdmdXloRW1IL2hMYml2bTkvS3JZVnFSZUxLSEZrUVRIalFxNFZs?=
- =?utf-8?B?MHBBVXRVbTE1QmtCMVNHT0tIN3JyeC9mV3o2cUVzUEpubDgrZk1qVnBWTSth?=
- =?utf-8?B?d1NlNXdSRXpvaUsvaVdzTTdPSFFFQnJZbHhPNFc5SWg0Yi9JTjAyNGs2ZHlx?=
- =?utf-8?B?aDhFaGtmM1AxR0phZnBNMVNlVXp3ZmxYeXNreC83ang4dE5JeDRlZlJYQWNH?=
- =?utf-8?B?aTQ4YXdmamNSQUFGUVhUM3EzQ0JWVys1V00rNmgyZktKeVhoSzRYdmZOSEZq?=
- =?utf-8?B?OUdHTzhndklVQWdSNU8zUFZlV1FwLzJhU0lrUmRtYWY3a1gxcmhMZkdwUFRK?=
- =?utf-8?B?REJtcVpYcU9nSGlZVHNJY0Y3dHAvcW9leE1pUjh0SkYvSUg4OC9DSUJQU01w?=
- =?utf-8?B?MmJtYUwwUWFyV0s4Q1VOM29SU2dtaUpBVGRFUUN1R0lnWGw2cTkzRWtmc2dB?=
- =?utf-8?B?NEJYQW9JYm05R3l1QmxSUFRKQWhqUC9SSXZJaVhGYmtPL2VKM1NPbmUyWkZz?=
- =?utf-8?B?V3dBSlZyZ2FKRGVlU3dYd2tuaDRlMHAycEdlaWtNVVI2MGpuSW1SOTNnOHJS?=
- =?utf-8?B?OXE1bUFKblVSYU41VndKZlBYRzBZd1dZdVpYdDMrbDdRSExSWmNlNmNjbkV2?=
- =?utf-8?B?Z0N1MnhzV0lGK0VhTUJNSDVQeGsrb0E3clhZVzVFUTZTd2tNNllLdUhnT0li?=
- =?utf-8?B?MWZISVA4eXY1ZUpRZHpFK1lPS3h3M2dKa1J3aXFRbHIzazRVMXdHRWJtZFk0?=
- =?utf-8?B?R3EvR0gzaUtMMEN4c1pkQnM3UGFnY1JYK2NNaEc4MkhtMXNaR1Q0RUwzck5v?=
- =?utf-8?B?dzZoYk9RaVNYcytMZVNpclhhZmRPZEhzdHdkaDdaaGlncWxvSkVvZGxtbWJn?=
- =?utf-8?B?YUtqK1NQeXY1a3RUU1pwa3VyU0dEL1MzWk5UR0trZkxzbFhLUnN1WkRPbnVT?=
- =?utf-8?B?MjhvN0ZjdUsrMGZHVEtRWWN3RUtoWGZUaXJzTkFIYktBdzh5VDhFZFZqdzRn?=
- =?utf-8?B?WWNHQW5xY3hKSzlZQWlyRmw1QjRYeC8vTk5tdGI1dHp4bEhCcXV0TjZMcUtO?=
- =?utf-8?B?eFNFVmVzMGJKV05ndGlBSnh5b2s5SWhDQURiUjJ6aTlPeVVHME1INnhTSDds?=
- =?utf-8?B?c3NCRThmTDdZanBxaEZRMGRXOHdnUzZGZTJTUkMwbXMxWHFXNXVJY1BmZ01p?=
- =?utf-8?B?YzU1Nk5rM2NnTXR3VEVNc2cvb3BwWG05M3VJOVZRa1dGRXJiWFJScTl5T09Q?=
- =?utf-8?B?bXQ1Q2xRWjd1SWZ5SEZnbExaZ3FBL1dOLzQybWo4NU9KN3FkNjBRVFkxRWxh?=
- =?utf-8?B?OWZnSndyRDlFOWF2L2UrR1pLTmpGOVVDY25mRFBxUXJvQ3k4LzhqZEdnUTBr?=
- =?utf-8?B?QjJEUlBZbHhrMDR6d2tlcU05RHNONFZKRWpMRTk5MHluR1FKdG5Ha1hMTTFQ?=
- =?utf-8?B?bzZYdndSRW8wT1drUDJieVYzdFV4SHNIS21qNGdMTHZhWkdENkxSamFNWnFz?=
- =?utf-8?Q?Q5qUrg/dDcbJFknFYY?=
-X-OriginatorOrg: amd.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 383f7190-c7c3-4707-5887-08de56f636ce
-X-MS-Exchange-CrossTenant-AuthSource: CH3PR12MB9194.namprd12.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 19 Jan 2026 01:01:01.7714
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: nmGIGIozDeXhGtKvR9SmLE06VgELqt2HkXyYgPyxro5h21rd+RVBrhzl4gLlN3GIk3CUbcmYMzPWAhWG2hj1jQ==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: BL1PR12MB5897
+References: <20260115164230.864985076@linuxfoundation.org> <20260115164246.242565555@linuxfoundation.org>
+ <4ca8d0770343eae44e19854cf197c76017a7c1ad.camel@decadent.org.uk>
+In-Reply-To: <4ca8d0770343eae44e19854cf197c76017a7c1ad.camel@decadent.org.uk>
+From: Keerthana Kalyanasundaram <keerthana.kalyanasundaram@broadcom.com>
+Date: Mon, 19 Jan 2026 10:31:13 +0530
+X-Gm-Features: AZwV_QiApkccmQyjOoV_3uoxeF5xaTy1NNkIlgGxsoFZVM8_b-lHMLc52omJ_ds
+Message-ID: <CAM8uoQ-F++6iScZBzntmF=KhHRK3=rQvc-oug3KAXPddJPqR-Q@mail.gmail.com>
+Subject: Re: [PATCH 5.10 423/451] tls: Use __sk_dst_get() and dst_dev_rcu() in get_netdev_for_sock().
+To: Ben Hutchings <ben@decadent.org.uk>
+Cc: patches@lists.linux.dev, Kuniyuki Iwashima <kuniyu@google.com>, 
+	Eric Dumazet <edumazet@google.com>, Sabrina Dubroca <sd@queasysnail.net>, 
+	Jakub Kicinski <kuba@kernel.org>, Sasha Levin <sashal@kernel.org>, 
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable <stable@vger.kernel.org>
+X-DetectorID-Processed: b00c1d49-9d2e-4205-b15f-d015386d3d5e
+Content-Type: multipart/signed; protocol="application/pkcs7-signature"; micalg=sha-256;
+	boundary="00000000000054e5f70648b69518"
 
+--00000000000054e5f70648b69518
+Content-Type: multipart/alternative; boundary="0000000000004a51940648b69503"
 
+--0000000000004a51940648b69503
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On 18/1/26 02:43, Jason Gunthorpe wrote:
-> On Sat, Jan 17, 2026 at 03:54:52PM +1100, Alexey Kardashevskiy wrote:
-> 
->> I am trying this with TEE-IO on AMD SEV and hitting problems.
-> 
-> My understanding is that if you want to use SEV today you also have to
-> use the kernel command line parameter to force 4k IOMMU pages?
+On Mon, Jan 19, 2026 at 5:03=E2=80=AFAM Ben Hutchings <ben@decadent.org.uk>=
+ wrote:
 
-No, not only 4K. I do not enforce any page size by default so it is "everything but 512G", only when the device is "accepted" - I unmap everything in  QEMU, "accept" the device, then map everything again but this time IOMMU uses the (4K|2M) pagemask and takes RMP entry sizes into account.
+> On Thu, 2026-01-15 at 17:50 +0100, Greg Kroah-Hartman wrote:
+> > 5.10-stable review patch.  If anyone has any objections, please let me
+> know.
+> >
+> > ------------------
+> >
+> > From: Kuniyuki Iwashima <kuniyu@google.com>
+> >
+> > [ Upstream commit c65f27b9c3be2269918e1cbad6d8884741f835c5 ]
+> >
+> > get_netdev_for_sock() is called during setsockopt(),
+> > so not under RCU.
+> >
+> > Using sk_dst_get(sk)->dev could trigger UAF.
+> >
+> > Let's use __sk_dst_get() and dst_dev_rcu().
+> >
+> > Note that the only ->ndo_sk_get_lower_dev() user is
+> > bond_sk_get_lower_dev(), which uses RCU.
+> [...]
+>
+> So should 5.10 also have a backport of commit 007feb87fb15
+> ("net/bonding: Implement ndo_sk_get_lower_dev")?  Or is the use of
+> netdev_sk_get_lowest_dev() here not actually that important?
+>
+> It seems kind of wrong to add the netdev operation and a caller for it,
+> but no implementation.
+>
+>
+Hi Ben,
+Thank you for catching this issue.
+I agree that we should also add commit 007feb87fb15 ("net/bonding:
+Implement ndo_sk_get_lower_dev") to the 5.10.y tree to ensure the
+implementation is complete. I will send an updated patch soon.
+- Keerthana
 
-> So, I think your questions are about trying to enhance this to get
-> larger pages in the IOMMU when possible?
+Ben.
+>
+>
+> --
+> Ben Hutchings
+> Power corrupts.  Absolute power is kind of neat. - John Lehman
+>
 
-I did test my 6 month old stuff with 2MB pages + runtime smashing, works fine, although ugly as it uses that page size recalculating hack I mentioned before.
+--0000000000004a51940648b69503
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
->> Now, from time to time the guest will share 4K pages which makes the
->> host OS smash NPT's 2MB PDEs to 4K PTEs, and 2M RMP entries to 4K
->> RMP entries, and since the IOMMU performs RMP checks - IOMMU PDEs
->> have to use the same granularity as NPT and RMP.
-> 
-> IMHO this is a bad hardware choice, it is going to make some very
-> troublesome software, so sigh.
+<div dir=3D"ltr"><div dir=3D"ltr"><div><br></div></div><div class=3D"gmail_=
+quote gmail_quote_container"><div dir=3D"ltr" class=3D"gmail_attr">On Mon, =
+Jan 19, 2026 at 5:03=E2=80=AFAM Ben Hutchings &lt;<a href=3D"mailto:ben@dec=
+adent.org.uk">ben@decadent.org.uk</a>&gt; wrote:<br></div><blockquote class=
+=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rg=
+b(204,204,204);padding-left:1ex">On Thu, 2026-01-15 at 17:50 +0100, Greg Kr=
+oah-Hartman wrote:<br>
+&gt; 5.10-stable review patch.=C2=A0 If anyone has any objections, please l=
+et me know.<br>
+&gt; <br>
+&gt; ------------------<br>
+&gt; <br>
+&gt; From: Kuniyuki Iwashima &lt;<a href=3D"mailto:kuniyu@google.com" targe=
+t=3D"_blank">kuniyu@google.com</a>&gt;<br>
+&gt; <br>
+&gt; [ Upstream commit c65f27b9c3be2269918e1cbad6d8884741f835c5 ]<br>
+&gt; <br>
+&gt; get_netdev_for_sock() is called during setsockopt(),<br>
+&gt; so not under RCU.<br>
+&gt; <br>
+&gt; Using sk_dst_get(sk)-&gt;dev could trigger UAF.<br>
+&gt; <br>
+&gt; Let&#39;s use __sk_dst_get() and dst_dev_rcu().<br>
+&gt; <br>
+&gt; Note that the only -&gt;ndo_sk_get_lower_dev() user is<br>
+&gt; bond_sk_get_lower_dev(), which uses RCU.<br>
+[...]<br>
+<br>
+So should 5.10 also have a backport of commit 007feb87fb15<br>
+(&quot;net/bonding: Implement ndo_sk_get_lower_dev&quot;)?=C2=A0 Or is the =
+use of<br>
+netdev_sk_get_lowest_dev() here not actually that important?<br>
+<br>
+It seems kind of wrong to add the netdev operation and a caller for it,<br>
+but no implementation.<br>
+<br></blockquote><div><span class=3D"gmail_default" style=3D"font-family:ve=
+rdana,sans-serif"><br></span></div><div><span class=3D"gmail_default" style=
+=3D"font-family:verdana,sans-serif">Hi Ben,</span></div><div style=3D"color=
+:rgb(31,31,31);font-family:Roboto,Helvetica,Arial,sans-serif;font-size:14px=
+;letter-spacing:0.2px">Thank you for catching this issue.</div><div style=
+=3D"color:rgb(31,31,31);font-family:Roboto,Helvetica,Arial,sans-serif;font-=
+size:14px;letter-spacing:0.2px"><span style=3D"letter-spacing:0.2px">I agre=
+e that we should also add commit 007feb87fb15 (&quot;net/bonding: Implement=
+ ndo_sk_get_lower_dev&quot;) to the 5.10.y tree to ensure the implementatio=
+n is complete.</span><span style=3D"font-family:Arial,Helvetica,sans-serif;=
+font-size:small;letter-spacing:normal;color:rgb(34,34,34)">=C2=A0<span clas=
+s=3D"gmail_default" style=3D"font-family:verdana,sans-serif">I will send an=
+ updated patch soon.</span></span></div><div style=3D"color:rgb(31,31,31);f=
+ont-family:Roboto,Helvetica,Arial,sans-serif;font-size:14px;letter-spacing:=
+0.2px"><span style=3D"font-family:Arial,Helvetica,sans-serif;font-size:smal=
+l;letter-spacing:normal;color:rgb(34,34,34)">-<span class=3D"gmail_default"=
+ style=3D"font-family:verdana,sans-serif"> Keerthana</span></span></div><di=
+v style=3D"color:rgb(31,31,31);font-family:Roboto,Helvetica,Arial,sans-seri=
+f;font-size:14px;letter-spacing:0.2px"><span style=3D"font-family:Arial,Hel=
+vetica,sans-serif;font-size:small;letter-spacing:normal;color:rgb(34,34,34)=
+"><span class=3D"gmail_default" style=3D"font-family:verdana,sans-serif"><b=
+r></span></span></div><blockquote class=3D"gmail_quote" style=3D"margin:0px=
+ 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex">
+Ben.<br>
+<br>
+<br>
+-- <br>
+Ben Hutchings<br>
+Power corrupts.=C2=A0 Absolute power is kind of neat. - John Lehman<br>
+</blockquote></div></div>
 
-afaik the Other OS is still not using 2MB pages (or does but not much?) and runs on the same hw :)
+--0000000000004a51940648b69503--
 
-Sure we can force some rules in Linux to make the sw simpler though.
+--00000000000054e5f70648b69518
+Content-Type: application/pkcs7-signature; name="smime.p7s"
+Content-Transfer-Encoding: base64
+Content-Disposition: attachment; filename="smime.p7s"
+Content-Description: S/MIME Cryptographic Signature
 
->> So I end up in a situation when QEMU asks to map, for example, 2GB
->> of guest RAM and I want most of it to be 2MB mappings, and only
->> handful of 2MB pages to be split into 4K pages. But it appears so
->> that the above enforces the same page size for entire range.
-> 
->> In the old IOMMU code, I handled it like this:
->>
->> https://github.com/AMDESE/linux-kvm/commit/0a40130987b7b65c367390d23821cc4ecaeb94bd#diff-f22bea128ddb136c3adc56bc09de9822a53ba1ca60c8be662a48c3143c511963L341
->>
->> tl;dr: I constantly re-calculate the page size while mapping.
-> 
-> Doing it at mapping time doesn't seem right to me, AFAICT the RMP can
-> change dynamically whenever the guest decides to change the
-> private/shared status of memory?
-
-The guest requests page state conversion which makes KVM change RMPs and potentially smash huge pages, the guest only (in)validates the RMP entry but does not change ASID+GPA+otherbits, the host does. But yeah a race is possible here.
-
-
-> My expectation for AMD was that the VMM would be monitoring the RMP
-> granularity and use cut or "increase/decrease page size" through
-> iommupt to adjust the S2 mapping so it works with these RMP
-> limitations.
-> 
-> Those don't fully exist yet, but they are in the plans.
-
-I remember the talks about hitless smashing but in case of RMPs atomic xchg is not enough (we have a HW engine for that).
-
-> It assumes that the VMM is continually aware of what all the RMP PTEs
-> look like and when they are changing so it can make the required
-> adjustments.
-> 
-> The flow would be some thing like..
->   1) Create an IOAS
->   2) Create a HWPT. If there is some known upper bound on RMP/etc page
->      size then limit the HWPT page size to the upper bound
->   3) Map stuff into the ioas
->   4) Build the RMP/etc and map ranges of page granularity
->   5) Call iommufd to adjust the page size within ranges
-
-Say, I hotplug a device into a VM with a mix of 4K and 2M RMPs. QEMU will ask iommufd to map everything (and that would be 2M/1G), should then QEMU ask KVM to walk through ranges and call iommufd directly to make IO PDEs/PTEs match RMPs?
-
-I mean, I have to do the KVM->iommufd part anyway when 2M->4K smashing happens in runtime but the initial mapping could be simpler if iommufd could check RMP.
-
-
->   6) Guest changes encrypted state so RMP changes
->   7) VMM adjusts the ranges of page granularity and calls iommufd with
->      the updates
->   8) iommput code increases/decreases page size as required.
-> 
-> Does this seem reasonable?
-
-It does.
-
-For the time being I do bypass IOMMU and make KVM call another FW+HW DMA engine to smash IOPDEs.
-
-
->> I know, ideally we would only share memory in 2MB chunks but we are
->> not there yet as I do not know the early boot stage on x86 enough to
-> 
-> Even 2M is too small, I'd expect realy scenarios to want to get up to
-> 1GB ??
-
-Except SWIOTLB, afaict there is really no good reason to share more than half a MB of memory ever, 1GB is just way too much waste imho. The biggest RMP entry size is 2M, the 1G RMP optimization is done quite differently. Thanks,
-
-
-ps. I am still curious about:
-
-> btw just realized - does the code check that the folio_size matches IO pagesize? Or batch_to_domain() is expected to start a new batch if the next page size is not the same as previous? With THP, we can have a mix of page sizes"
-
-
-> Jason
-
--- 
-Alexey
-
+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
+tJVewHuOmXgWQxNWV7Oiszu1d9xAcqyj65s1PrEIIaHnxEM3eTK+teecLEy8QymZjjDTrCHg4x36
+2AczdlQAIiq5TSAucGja5VP8g1zTnfL/RAxEZvLS471GABptArolXY2hMVHdVEYcTduZlu8aHARc
+phXveOB5/l3bPqpMVf2aFalv4ab733Aw6cPuQkbtwpMFifp9Y3s/0HGBfADomK4OeDTDJfuvCp8g
+a907E48SjOJBGkh6c6B3ace2XH+CyB7+WBsoK6hsrV5twAXSe7frgP4lN/4Cm2isQl3D7vXM3PBQ
+ddI2aZzmewTfbgZptt4KCUhZh+t7FGB6ZKppQ++Rx0zsGN1s71MtjJnhXvJyPs9UyL1n7KQPTEX/
+07kwIwdMjxC/hpbZmVq0mVccpMy7FYlTuiwFD+TEnhmxGDTVTJ267fcfrySVBHioA7vugeXaX3yL
+SqGQdCWnsz5LyCxWvcfI7zjiXJLwefechLp0LWEBIH5+0fJPB1lfiy1DUutGDJTh9WZHeXfVVFsf
+rSQ3y0VaTqBESMjYsJnFFYQJ9tZJScBluOYacW6gqPGC6EU+bNYC1wpngwVayaQQMIIGhTCCBG2g
+AwIBAgIMD+aKIot+px9krlZuMA0GCSqGSIb3DQEBCwUAMFIxCzAJBgNVBAYTAkJFMRkwFwYDVQQK
+ExBHbG9iYWxTaWduIG52LXNhMSgwJgYDVQQDEx9HbG9iYWxTaWduIEdDQyBSNiBTTUlNRSBDQSAy
+MDIzMB4XDTI0MTEyODA2NDkyM1oXDTI2MTEyOTA2NDkyM1owgcMxCzAJBgNVBAYTAlVTMRMwEQYD
+VQQIEwpDYWxpZm9ybmlhMREwDwYDVQQHEwhTYW4gSm9zZTEZMBcGA1UEYRMQTlRSVVMrREUtNjYx
+MDExNzEWMBQGA1UEChMNQlJPQURDT00gSU5DLjEiMCAGA1UEAxMZS2VlcnRoYW5hIEthbHlhbmFz
+dW5kYXJhbTE1MDMGCSqGSIb3DQEJARYma2VlcnRoYW5hLmthbHlhbmFzdW5kYXJhbUBicm9hZGNv
+bS5jb20wggEiMA0GCSqGSIb3DQEBAQUAA4IBDwAwggEKAoIBAQCzJUx8cxWWLKOtWyrWjmxtNemY
+IAZzJtBCZUu44YcV0VWRTEyy7ETgVKv+gsS31DMOAW6riOQk4Kq1NwaqGpWcNeN4lDbjYNgdsVd+
+o9k4EYujmMl0cgM7K7hzNddW+Ay96MU9XKfPz2sgaaEg+yf7Lc4qEJAHoeB0ZjdbljIIRWD7Y/NA
+zvboOGCqVTtK/MDNUbO3DM22mnISOsFdyh2D45TWDZTwu4xaGvcSWxLWmvKT/F8eOAs9WQstDJfq
+Tmu6blTu87+GvJDl7ve1uoTZ2v8iJJgVmw4FHt60UKs2YygdJ0VyVdlGaqP2t1tRmfUlu7CGVl1p
+CsZtHLW+HDLdAgMBAAGjggHnMIIB4zAOBgNVHQ8BAf8EBAMCBaAwgZMGCCsGAQUFBwEBBIGGMIGD
+MEYGCCsGAQUFBzAChjpodHRwOi8vc2VjdXJlLmdsb2JhbHNpZ24uY29tL2NhY2VydC9nc2djY3I2
+c21pbWVjYTIwMjMuY3J0MDkGCCsGAQUFBzABhi1odHRwOi8vb2NzcC5nbG9iYWxzaWduLmNvbS9n
+c2djY3I2c21pbWVjYTIwMjMwZQYDVR0gBF4wXDAJBgdngQwBBQMBMAsGCSsGAQQBoDIBKDBCBgor
+BgEEAaAyCgMCMDQwMgYIKwYBBQUHAgEWJmh0dHBzOi8vd3d3Lmdsb2JhbHNpZ24uY29tL3JlcG9z
+aXRvcnkvMAkGA1UdEwQCMAAwQQYDVR0fBDowODA2oDSgMoYwaHR0cDovL2NybC5nbG9iYWxzaWdu
+LmNvbS9nc2djY3I2c21pbWVjYTIwMjMuY3JsMDEGA1UdEQQqMCiBJmtlZXJ0aGFuYS5rYWx5YW5h
+c3VuZGFyYW1AYnJvYWRjb20uY29tMBMGA1UdJQQMMAoGCCsGAQUFBwMEMB8GA1UdIwQYMBaAFAAp
+Np5ceroPry1QLdugI4UYsKCSMB0GA1UdDgQWBBQHh8+7satHOJPcYL7AeQdvH3LpMDANBgkqhkiG
+9w0BAQsFAAOCAgEAYWBk58l2FyT07DXkrrA2hlcTBcEZihWQx8/9g29moMSrBsNjKgfWEAXXBONl
+VItnKxTO0LLFBDk0aORtQ77l8a5shNEChWVYr6HaQ4+yEzwgzGmYro7sX9H0WNhPYqGxkaOhvirw
+pVpXqJuPEzKRu/cGLsd/0yta4ifC8tbv2NS+/0xF92mVwwFk/drV6gzbXet3UR0Oc4E8X6cuqker
+//F6sqQvY8JqD4mfN+FYlRsJMJbaotK+vEh80P3H+DiIl5yMKVsV+IDp7lNqqEr8vp6x1Sd5+kqm
+iw/P5dRLJ1fqzim8rqtJ/7qy6A7f9XW26mrfXgopzpH+PpyOWTNn+1WHE3Qsf56FygZkoyRkyNeg
+LDRtQlfPVV4VzF2T4Isd4+38Ec+rpHUjh92yzjrf7FL1NWhk9Q7IEFNhX6Ss1VY+qawoyAwq3PCX
+N38TFnsqQc+ulwWwKrr/UAidp1h/nDizvfesRK5Iy/qJ+ey9WDm2cuRgn9EKPN4hqc1KVeLWhMS5
+2Q76mvXu00vebvmkm8gEOUWX/f/7sJ9OiTxEUFA914opWhBW681OZe8N3qTdG0WpE+Dwuz0tXpzB
+QjeGoKexgsMfSRTmaxQT/YnlZiJPM3qfsvSl3wUoJ+GrMGtrszD3Ehg1jbcHkUM/n2fmYA4m1ObI
+fGQEpn8e5I0CKl4xggJXMIICUwIBATBiMFIxCzAJBgNVBAYTAkJFMRkwFwYDVQQKExBHbG9iYWxT
+aWduIG52LXNhMSgwJgYDVQQDEx9HbG9iYWxTaWduIEdDQyBSNiBTTUlNRSBDQSAyMDIzAgwP5ooi
+i36nH2SuVm4wDQYJYIZIAWUDBAIBBQCggccwLwYJKoZIhvcNAQkEMSIEIGGRwwi6vX0SssTMKfig
+pp9/IMf1H4d5Wp2MG01hOzzWMBgGCSqGSIb3DQEJAzELBgkqhkiG9w0BBwEwHAYJKoZIhvcNAQkF
+MQ8XDTI2MDExOTA1MDEyNlowXAYJKoZIhvcNAQkPMU8wTTALBglghkgBZQMEASowCwYJYIZIAWUD
+BAEWMAsGCWCGSAFlAwQBAjAKBggqhkiG9w0DBzALBgkqhkiG9w0BAQcwCwYJYIZIAWUDBAIBMA0G
+CSqGSIb3DQEBAQUABIIBACXsudB63qPNwvU6GZ/l9nhMDEkYfbP9AcHwhqNEL2wCdlrwt7HB7d2M
+sOg3KelanINuq6et59SYCMA8jTcqet6YUatZiTXPDGDB6VVrM0aEiMmmJWxAXBDrKTFBqlIfgEzu
+sjj7WYMi9R8R3iWtcVEC2NE32xDM73MHv6tbx6TY9wZx8NxX3sY5XGqeAyKe4nrVCB4d+6NcIDNo
+k2lB1OA3oglNLMcZA1qmvba/AJadxpOWON7AUpEHJf7y89gpKJQI4XDGimtoZmiwdC+/8eNVb+3C
+SU9y73WB+WPsVqK+QDvJS8zE3K0hduahmGdwHMgtVab+iq2Q3c1/uJ8ALRs=
+--00000000000054e5f70648b69518--
