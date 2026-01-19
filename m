@@ -1,91 +1,99 @@
-Received: from mail-ed1-f42.google.com (mail-ed1-f42.google.com [209.85.208.42])
+Received: from mail-ed1-f53.google.com (mail-ed1-f53.google.com [209.85.208.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 287DE32F766
-	for <patches@lists.linux.dev>; Mon, 19 Jan 2026 08:04:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6CF98268690
+	for <patches@lists.linux.dev>; Mon, 19 Jan 2026 09:02:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768809879; cv=none; b=B2w4R1w5uwFsbv/69Bw0+nL4nfVlFPq5XNzlYOfX77PF4RCN+tqgV14MTwN4adNuIYVe+t+cCEC441Nnh24MOOL0k6xjXNA1SeJDiw1ZMKyqXRLbHieKyZopiTKFHRKvuXq2YH8Ct3bnDELXWzndCe4y6/tZxsO4lQYcpWseIPk=
+	t=1768813358; cv=none; b=tAY37zlAb1CBvSNA6dWkfAeymvAaRd/VeqTZ3M67zLBHbzTnUC5y/l6SNRyYjAL1h4U81FoGLQ5TXch0WBJet+AL6DY4ZA+eZhzBHDdvL3ghgqOor9XH7XWUsBe0PGS600MjOcbxwdU3dn0eVhEsKEE9/WXFLzHRDzOVCku9MVw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768809879; c=relaxed/simple;
-	bh=fSk12Kv8vzWHPNwrVW04X+ndtNeLwKcienPDea2JogA=;
-	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=tuYHKZ0arJOd4tUxFw9Qn4gw66Z6eeRn5FJAIeOeoa43U+P+rr1s81rJYAK6318VWEuszdNBEYI4ka+X9zy0g44aCR/pvIVGswjhmV8/gLmWSWFIxjmxniQ0xDwQOZK2dJXHBuZt3AwJw9brAYkSj05tELJayOcuaujldw0FusE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=RHZjTbWh; arc=none smtp.client-ip=209.85.208.42
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1768813358; c=relaxed/simple;
+	bh=D/qymOUiKrDRNHdcVSuc2YdoB3yDp9DNMPd5KyFHae4=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=qQfefkEmbTG2oEBCUHpeuHr2pg4OZpm59UHm4sE9aTU5JUtJMHD80pU6lI6abMqNkETWsVr94/4Q2pb1BdpoiY3yCkVjJr+Vw1DfRt1o0mNCpxOq7+KrjfgFUSsk0RT+F2We+bSZHJEB5+iKJ0SnpxFZeAk519kGhRdMNU8wH7c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=rajagiritech.edu.in; spf=none smtp.mailfrom=rajagiritech.edu.in; dkim=pass (2048-bit key) header.d=rajagiritech-edu-in.20230601.gappssmtp.com header.i=@rajagiritech-edu-in.20230601.gappssmtp.com header.b=KZTPYh7n; arc=none smtp.client-ip=209.85.208.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=rajagiritech.edu.in
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=rajagiritech.edu.in
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="RHZjTbWh"
-Received: by mail-ed1-f42.google.com with SMTP id 4fb4d7f45d1cf-653781de668so5802153a12.2
-        for <patches@lists.linux.dev>; Mon, 19 Jan 2026 00:04:38 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=rajagiritech-edu-in.20230601.gappssmtp.com header.i=@rajagiritech-edu-in.20230601.gappssmtp.com header.b="KZTPYh7n"
+Received: by mail-ed1-f53.google.com with SMTP id 4fb4d7f45d1cf-64b608ffca7so6176481a12.3
+        for <patches@lists.linux.dev>; Mon, 19 Jan 2026 01:02:37 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1768809876; x=1769414676; darn=lists.linux.dev;
-        h=content-transfer-encoding:to:subject:message-id:date:from
+        d=rajagiritech-edu-in.20230601.gappssmtp.com; s=20230601; t=1768813356; x=1769418156; darn=lists.linux.dev;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=fSk12Kv8vzWHPNwrVW04X+ndtNeLwKcienPDea2JogA=;
-        b=RHZjTbWhWo2gZvxhkXMAreyIwsg8agW1c57CHs5K+l8hZVIpniGsrUQsFxj4qMlgdk
-         WhdsPcDkVDJArknIilFpe9Z1t1Am8Axfubeqtnyj2yIeiLL6w6hyQYnJF9fhA4JQMKzG
-         fKHvEGs+JzkmfZtoLfRRxl9htiWqw3YBENd3NLZiWM6c33w4UEAcBXkHCrqSoevTE/oY
-         KByhpq2DCn96kRUFaiYOt4IHOLNWNV/9SjX9RLZvvujZnklI9MWQhQIJiagvUnd8jeza
-         nz1NbLK3bvV0ouKqjg0PN8uyqwnmuGjqr1txDkdmbudrVCjzHALy+o2GjkQy71lhmMSU
-         bK2A==
+        bh=7wetYJgFN/oe6JyYcEwXdk9ol2wsti2uzuGgOiTbKZU=;
+        b=KZTPYh7nQYsp3YWrtsYOqz25ZYkzyd11YY2x5BqdG0m89Z/LLST+Ge6djkDMExyJKD
+         TqDBnV6KcZawiTddPLKmnclRwmKZLEhQ5BFt2tRR4UHwh50S28EemHnifqWoTS1qVDml
+         dgXEUQMFtY/FU2FEvwPF3FH+E9qt93g0a4+1GrgjFZtTNb7tk+m60+iilWCCrGNQTRO/
+         GaLtXVCVG6ZBIr1RLANakfozFyATCF8GEsgF7wRoRCxyoRHIkiBxDbWuEUNey9KILMnr
+         ySkr/pJVn0TwZPcPmZkH1loWCsHZ5wGEcSUeuAi1aWIzgjvTI3+kqcpk/tXUGAAEgGT0
+         KPOg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1768809876; x=1769414676;
-        h=content-transfer-encoding:to:subject:message-id:date:from
+        d=1e100.net; s=20230601; t=1768813356; x=1769418156;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=fSk12Kv8vzWHPNwrVW04X+ndtNeLwKcienPDea2JogA=;
-        b=I09HxeKPGlzQu3P8BlkVTyVUoV/mzk+U3k2D/EsNu5leSG1dsFeIMZAQZUKyNzJP5H
-         7r5B5Gbv4MkZsiwp3/SlVH7nexT/ZapqHQeBcV5Us0ju+vzEz2Ai+/O+CpdISFyVixwF
-         BbsDvhPyuuVQY/oxALJ//QVq8egIRtjnDbVWdJ/Upy1CXwbzEnmigL+2PC79eEH8g1YS
-         7syGkdUzKtEVNlpPs78tQoh3WeEhO2fjbd9knjsI00SEWqxk8aDzB3yvmxaeFGZCFn9o
-         r2YVMhU9iIRi5zTNYfUarBpCjLLtkzyrX7q7GfrL1A2/mlZwemJmYoN39wLPe8dipWZK
-         PfvQ==
-X-Forwarded-Encrypted: i=1; AJvYcCUjzlc4UGKVK2dd/5vsfGTcHagbTwXaYkrj0u8W1EkXP6I8wz+wQK2Cq0/kMUpioFjEpQFf84Dx@lists.linux.dev
-X-Gm-Message-State: AOJu0Yz5tsNwo7D4j/3eZCMedSN8fLNttjXZbOAMy+rUgrXg7cqw1hHh
-	VFFuZ7vXQA7Zwu2YtMozJvgI3aVmkSeiLH95PwqA6123+E28ypDt76AH6nlc3jjxMF4kdK/I9J4
-	KcFgfwBR8NJlzLG9RFTu7UtkEYpV5Sv0=
-X-Gm-Gg: AY/fxX5yVZDJ8Ic1iiRVDbunH0NCJ2NcYNd1Q6sadzvxHzMZXHw3mpr8XCQKzrhPwcN
-	R1rYLcKXW3axsGVDTLHu1PiaaTa/sXrx5xwOkYcDBcxiX6hE0+BGvQvjUym7yy9SjHqxqh6U5RG
-	pgUl4qHeRQUbHCJBO9liNNrEDD+2F69n7JajYIedemlnqw45CvrTINC4hPDhSy8J+w9Z8ETERV+
-	lJ/lSuxEWVu/eFvG05Hi9/QlJW0uJ1TZlxuVYcIHsxkRy0NMpo/sbHTQAPfe5z+U3EBJZQdbEkn
-	qjIfQQuCI/JwDa0L8kY6tMKXqL0wPIvFKHHYmQ==
-X-Received: by 2002:a17:907:6d08:b0:b87:1a92:b621 with SMTP id
- a640c23a62f3a-b879324e841mr878599966b.64.1768809876386; Mon, 19 Jan 2026
- 00:04:36 -0800 (PST)
-Received: from 860443694158 named unknown by gmailapi.google.com with
- HTTPREST; Mon, 19 Jan 2026 03:04:35 -0500
-Received: from 860443694158 named unknown by gmailapi.google.com with
- HTTPREST; Mon, 19 Jan 2026 03:04:35 -0500
+        bh=7wetYJgFN/oe6JyYcEwXdk9ol2wsti2uzuGgOiTbKZU=;
+        b=ooqMLbZEyKp4AffiPEoGkSsJlHckMEfqmSaZWenbWmyUNkVTg/8gZlnJfaGabGQiaN
+         ktPyE3cgfjfdSlxkCObBxM7PSfdiM64WzvjXueGgLyrttOIr7vbhUmyqtPN9tjinM9wm
+         G/KKZNCH6rGD2KqLLLe1qVN1ZEjlfTeuINcDtVv1vHU7j/TcE26rBM9/S16yhw9sp69z
+         3KbrmUvrwsDQQdqGJ9Eb5qiDYiQEZ49jwJdsBLEC3ybCYGRrqOFqiNY1Sf9HKt9XXjwg
+         xFPCSF2ZUD1zyGJmsl6DJx6dRNhIasZ+vyte4AcqImo2t/InqXuSav00rIpI89rTS1IA
+         ESRg==
+X-Forwarded-Encrypted: i=1; AJvYcCV03awttOePFpqmbXhJQGdztehjRRCJubn645gG/NbF6JGusMpUtpediM5VE23sFEUeRgK8FAyj@lists.linux.dev
+X-Gm-Message-State: AOJu0YzVnO9XURo3D9UOwJUXikK7WhMDtUL2j5628jM5yMPFbrOEL/p/
+	zguncUG2CeYigPArykr/1nr228NPjxYFIJAd4SwFo9snYrkmJ3RPpOJjrQY2sKEPox3jufXaH9b
+	MxY9VOC1RIgKL4V4zbVG74IVYU1kGQgEUOLhzweQXTA==
+X-Gm-Gg: AY/fxX6UNBuIFJda8dN55Q6dHTmakPUt9osJhMONwOLrCKPxTE9+qCWstPYRMlS/4sS
+	j9gg8mRqbt0II/r05uUJpEXGriMuFc8Ci3rZtWUHTNIxlNOCz/aBIXu/mFQg9iFFq29dJPwwCJb
+	OZosdhGdrnY5PxsR/HAPQSboLMgwwZjGGomGK3PsH24XZ8cpIuZJ5OuohPV2LBwoPzfYCHqTmMm
+	Vt2drZc34rWciaR86WlpdnrAgJnru4K/yESHtnoE2RsrXMJ/hqXF3Wr5PvYW2Gke724o5xLTw==
+X-Received: by 2002:a17:907:3d16:b0:b87:2675:9e97 with SMTP id
+ a640c23a62f3a-b8796afd684mr820214066b.35.1768813355548; Mon, 19 Jan 2026
+ 01:02:35 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-From: zynai.founder@gmail.com
-Date: Mon, 19 Jan 2026 03:04:35 -0500
-X-Gm-Features: AZwV_QjOh7H8oNxE7nJj4oXOSyEyHo-o-wDGfblLl6I25ugW0u8RNniD7otOyKE
-Message-ID: <CAEnpc1ZU=HtgrpTYFFE-PXgFy58C3eLQ4m7akAz=QJq6xfj6rw@mail.gmail.com>
-Subject: Dentist Time Savers: Is AI Your Secret Weapon?
-To: gregkh@linuxfoundation.org, stable@vger.kernel.org, 
-	patches@lists.linux.dev, info@morenofamilydentistry.com
+References: <20260115164202.305475649@linuxfoundation.org>
+In-Reply-To: <20260115164202.305475649@linuxfoundation.org>
+From: Jeffrin Thalakkottoor <jeffrin@rajagiritech.edu.in>
+Date: Mon, 19 Jan 2026 14:31:59 +0530
+X-Gm-Features: AZwV_QicdP5-7gzgqt8EDbBW67zD4lwsJGeTHQGwZRUxy96WyDyOfzMqSVVGPqk
+Message-ID: <CAG=yYwkFhDZaFibqHJ1MMnKSbJ8124ZuHUB9FXjVFVyeTJeR=w@mail.gmail.com>
+Subject: Re: [PATCH 6.18 000/181] 6.18.6-rc1 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, 
+	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de, 
+	jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, 
+	rwarsow@gmx.de, conor@kernel.org, hargar@microsoft.com, broonie@kernel.org, 
+	achill@achill.org, sr@sladewatkins.com
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 
-Hi Moreno Family Dentistry Team,
+hello
 
-As a dentist's office, you're likely no stranger to juggling
-appointment scheduling, patient communication, and administrative
-tasks. But let's face it =E2=80=93 with so much on your plate, how can you
-free up more time for what matters most: patient care?
+Compiled and booted  6.18.6-rc1+
 
-ZynAI helps businesses like yours save 5-10 hours per week by
-automating repetitive workflows. With our AI-powered solutions, you'll
-never have to worry about manual lead handling or tedious reporting
-again.
+No  typical new regressions   from dmesg.
 
-Would it be worth a quick conversation to explore how ZynAI can
-streamline your operations and boost productivity? I'm here to help
-you discover the possibilities.
+As per dmidecode command.
+Version: AMD Ryzen 3 3250U with Radeon Graphics
 
--ZynAI
+Processor Information
+        Socket Designation: FP5
+        Type: Central Processor
+        Family: Zen
+        Manufacturer: Advanced Micro Devices, Inc.
+        ID: 81 0F 81 00 FF FB 8B 17
+        Signature: Family 23, Model 24, Stepping 1
+
+Tested-by: Jeffrin Jose T <jeffrin@rajagiritech.edu.in>
+
+--
+software engineer
+rajagiri school of engineering and technology
