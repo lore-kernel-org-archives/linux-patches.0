@@ -1,89 +1,97 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f51.google.com (mail-ej1-f51.google.com [209.85.218.51])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15BF63148B1;
-	Mon, 19 Jan 2026 11:39:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F0C131690D
+	for <patches@lists.linux.dev>; Mon, 19 Jan 2026 11:46:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768822795; cv=none; b=dQSf5C3N6LOHQwZWIHIDoNa8cz6MwBxbgqUuHsRlc8Jl16+d3nmDx5I8numTFgIiWFyAVP2eIic9ibsOvqK0KLDFbWvBdUGpsckX6AFrYKkkFkd43T+3CW3AmbIEvjWo2tLbom36eZ/s2cXEqnkB2CbRHx4c7oMQc1HMDlHb2Ck=
+	t=1768823203; cv=none; b=RcIIiq9mPcyFxvi3OVxk8tsqwOriMn5O+5PD+pWiRjpdDbiYPtNXjRy5Yv3A12PFUaQpw/a+7G1Z3yYrQKGqa6QWpHdnjtC/2xQeq+EpCV8zkW8Bopbjyg3t7b9epHLqYYX62vUnuadj02yb0MvcKZTH2azHz32HeW5jFPzBqW0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768822795; c=relaxed/simple;
-	bh=AGjpBY9PRzOJwXFxtqhktNL8+kYSWCpGTglVyO7L64Q=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=SWBRqeu8P7/Q00zzMstMnGyHfGZ3tdvqRbnXYSXwuep6P+xnqJkF7DGHipan5Z+LoX8Cs3HrZdqnlXqZAAuBUp2IzOulyufPmIcRR9aiYciz9SdUCMEhhAwv6imbs9ChgbFpaEvS/ljHMjsNj7wr5C5TGy4ZleOsduV3DLRmApQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JIvz5gqL; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1768823203; c=relaxed/simple;
+	bh=W9tl5EGVQQ07JDbhxz9J9n5G9/s3ivfYD8n0emvwRYM=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=KLehELvxwscTaONJvBqdbOet/kM3Jtea+Bn6YonM1GrfQ3lW0k6tnniCJWaoFsyjH0++RE+73/QDQN06vJl1LBg1VIQQ5Chna1VAfJxIrtQzvZzC7F4bhWc1mA+qH2k0nyWg6Aca03uQ0G+1E1mTwYQH9bo6nEtk31KpzCzaWXM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=jakstys.lt; spf=pass smtp.mailfrom=jakstys.lt; dkim=pass (2048-bit key) header.d=jakstys.lt header.i=@jakstys.lt header.b=fIXkQpvS; arc=none smtp.client-ip=209.85.218.51
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=jakstys.lt
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=jakstys.lt
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JIvz5gqL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 57BE8C116C6;
-	Mon, 19 Jan 2026 11:39:54 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1768822794;
-	bh=AGjpBY9PRzOJwXFxtqhktNL8+kYSWCpGTglVyO7L64Q=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=JIvz5gqLIqjyWC1/h5tKV6dCljNMKjYphm97dzcn/VptQ8w6UY4wI/PoVMNizRprY
-	 4SU5fLHTiEXUvFDv4CUdFm0pmejFSnx2dQHSXwaZkshRPQNYuDduoLz/TEgBJQn3uI
-	 b7thoDrdWEhviXRaA7xiH3rf4GmHDQvbyoQaMTcE=
-Date: Mon, 19 Jan 2026 12:39:52 +0100
-From: Greg KH <gregkh@linuxfoundation.org>
-To: Keerthana Kalyanasundaram <keerthana.kalyanasundaram@broadcom.com>
-Cc: patches@lists.linux.dev, Kuniyuki Iwashima <kuniyu@google.com>,
-	Eric Dumazet <edumazet@google.com>,
-	Sabrina Dubroca <sd@queasysnail.net>,
-	Jakub Kicinski <kuba@kernel.org>, Sasha Levin <sashal@kernel.org>,
-	stable <stable@vger.kernel.org>,
-	Ben Hutchings <ben@decadent.org.uk>
-Subject: Re: [PATCH 5.10 423/451] tls: Use __sk_dst_get() and dst_dev_rcu()
- in get_netdev_for_sock().
-Message-ID: <2026011923-coat-strict-6cc4@gregkh>
-References: <20260115164230.864985076@linuxfoundation.org>
- <20260115164246.242565555@linuxfoundation.org>
- <4ca8d0770343eae44e19854cf197c76017a7c1ad.camel@decadent.org.uk>
- <CAM8uoQ-F++6iScZBzntmF=KhHRK3=rQvc-oug3KAXPddJPqR-Q@mail.gmail.com>
- <CAM8uoQ_7HD0AtJLqXsRvO=F2knq=BtrdTM2Fv0Dd4h-4oYebNw@mail.gmail.com>
- <2026011944-wielder-ignition-dee8@gregkh>
- <CAM8uoQ-NyJQatRYXty2XdiTjsuO6hRmEam_YaNrBbgEUuK6KQA@mail.gmail.com>
+	dkim=pass (2048-bit key) header.d=jakstys.lt header.i=@jakstys.lt header.b="fIXkQpvS"
+Received: by mail-ej1-f51.google.com with SMTP id a640c23a62f3a-b87003e998bso886774366b.1
+        for <patches@lists.linux.dev>; Mon, 19 Jan 2026 03:46:40 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=jakstys.lt; s=google; t=1768823199; x=1769427999; darn=lists.linux.dev;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=W9tl5EGVQQ07JDbhxz9J9n5G9/s3ivfYD8n0emvwRYM=;
+        b=fIXkQpvSDdbMjMoqXGWsw64T6PafQnCCPzbenXuezKeFdCEPbrbCH8UBJBxsa3Khn+
+         zJ1fgzot935lw9PRzxg/5M+8X8IanIfNejWSkaZlWlXuRf6sDsKRNcnlJ/AUN0gfLqEj
+         xQDm9r5gDQ+hAJ8EjjtQIHS5p9nQ7rZ4Qaah1MW0cCGEd5CLWSm4a6S8fcmLtAecLlHx
+         mhDVwkxcs8Iq3aimIOi9C5PtXrZ8RD0r2EMqzx08CxyAlrZx3MtSDobNotZOTzr6GTCT
+         99Iy5QQegslrvVzKgENtUY0JTzJT9GY3J+9Uflm09nnoIt55E/D5jCi3D8dstBO6v6l3
+         rDRw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1768823199; x=1769427999;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=W9tl5EGVQQ07JDbhxz9J9n5G9/s3ivfYD8n0emvwRYM=;
+        b=G5swPHhP3yBoCa1OlaXs6MIwqSf8kY9tKat+0QmvLGOYD4ag9Ulq7XvZYWRoa2D3tx
+         XaNfNy0llnqVJRzunC6KgaanHjL8K1hXuV98I4pHRJfTetoGvgOe+Ris0bXXzvbJqKPf
+         XhW0kpxWO1ROfDkf7xWESqKvqBjpEfxJTscSwxyRWdfkOuevDBMcSGl/MAxPdHRtQ/xx
+         AYEXTa6V2gdvP9UL54lMqVCBDLcaYJhQRhzgFDKAKYmRrW7iAH2wX7d7H23Uex5OxxkS
+         qtc9394AYNMLvZKGH12FeOrB7yuKvBBHUOLGr6ia9ljcGDmDGa87miFVZfL9YFJ5DjnU
+         9lSg==
+X-Forwarded-Encrypted: i=1; AJvYcCWt6ANWiYvvzbHeZk5JtDwLCaJj3Gl6jKShc9yxKuVHcA4p69HND4hyU9eU5fswkfpLODGx3Jbr@lists.linux.dev
+X-Gm-Message-State: AOJu0YzGaCRdup2vl44mKLmYwZ+f5wf7SzXWT7DwDAmHL5EZCVWz3Tr9
+	MjJZMOZ7vsr/RKXxhQG5ivsvwD9xnV7OxCWF9guMiVBWsIt31KWfRnJcFrhg6CxeJA==
+X-Gm-Gg: AY/fxX49KVs6/12MxodNmwyzfgSBgCXq2z5h/Gvp0iTvlEh6n7w1fn+suCyFnv9gqU3
+	fiXlWOElJIim9SZlSBM5xiAyDP99dv0LEUAejTsOEFZ9cPbB7LNRo3bOn7Cid5rZDg4vpMGSozP
+	h9LdEg00ch+zXRqU/Qh6ZgAjxNhOKAJ8tCWF/SfwcGqNpGfpuk3C4bQm0AqnuqUXLv/eKwb0rrc
+	O0gWOcw3/z8Hs7tIekw49/64pjgN0ncraHc7HrdaBmf/ffdjZCsTeqe6p+ZhHijR0323VMo/lPt
+	VXX0aaYtVg1NWS5Y/PW9w94vf0ENEZk1xZo4KAinsUz4IlH4tHnN7rQW6h83DS/ATLrpJZq9Khv
+	wpmADfDdaVyGVUgIEt2x5tmKH9C2bGJ6eaCSgpF9PDoyyY/b5AyAAsCPNkEnTeVnCN2NL/bUT5h
+	929nIbVOfA8xCGeIumSIGvPgdXVaqMGK4vi7ScAvzCgjAMFWPIrIBvCP6S3laO4T8ehbXTc5vOD
+	VOoSJQW59N8KTsJ5Yg9CcaMdiHFSsw=
+X-Received: by 2002:a17:907:9694:b0:b87:191f:4fab with SMTP id a640c23a62f3a-b8793a23490mr1008761666b.26.1768823198863;
+        Mon, 19 Jan 2026 03:46:38 -0800 (PST)
+Received: from localhost ([185.104.176.238])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-b879e2c1be7sm999058266b.67.2026.01.19.03.46.38
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 19 Jan 2026 03:46:38 -0800 (PST)
+From: =?UTF-8?q?Motiejus=20Jak=C5=A1tys?= <motiejus@jakstys.lt>
+To: sashal@kernel.org
+Cc: clm@fb.com,
+	dsterba@suse.com,
+	fdmanana@suse.com,
+	linux-btrfs@vger.kernel.org,
+	patches@lists.linux.dev,
+	robbieko@synology.com,
+	stable@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.18-5.10] btrfs: fix deadlock in wait_current_trans() due to ignored transaction type
+Date: Mon, 19 Jan 2026 13:46:26 +0200
+Message-ID: <20260119114626.1877729-1-motiejus@jakstys.lt>
+X-Mailer: git-send-email 2.51.2
+In-Reply-To: <20260112145840.724774-5-sashal@kernel.org>
+References: <20260112145840.724774-5-sashal@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAM8uoQ-NyJQatRYXty2XdiTjsuO6hRmEam_YaNrBbgEUuK6KQA@mail.gmail.com>
 
-On Mon, Jan 19, 2026 at 04:38:41PM +0530, Keerthana Kalyanasundaram wrote:
-> On Mon, Jan 19, 2026 at 3:36 PM Greg KH <gregkh@linuxfoundation.org> wrote:
-> 
-> > On Mon, Jan 19, 2026 at 03:09:32PM +0530, Keerthana Kalyanasundaram wrote:
-> > > Hi Greg,
-> > >
-> > > I have backported the two additional patches required for the 5.10.y tree
-> > > and submitted a v2 series. You can find the updated patches here:
-> > >
-> > https://lore.kernel.org/stable/20260119092602.1414468-1-keerthana.kalyanasundaram@broadcom.com/T/#t
-> > >
-> > >
-> > > Could you please consume these in the next version, or alternatively, add
-> > > the two missed patches (commit IDs 5b998545 and 719a402cf) to the current
-> > > queue?
-> >
-> > I've dropped them all from the 5.10.y tree now, and from the 5.15.y
-> > tree. Can you also resend that series?
-> >
-> 
-> Hi Greg,
-> 
-> The other two commits are already part of the stable 5.15.y tree, so
-> changes are only needed for the 5.10.y tree.
-> 
-> Please check my latest v2 patchset : (
-> https://lore.kernel.org/stable/20260119092602.1414468-1-keerthana.kalyanasundaram@broadcom.com/T/#t
-> )
+Dear stable maintainers,
 
-I see the series, sorry, they are now dropped.  Can you resend them for 5.15?
+I was about to submit to stable@, but found this earlier email autosel.
+However, I don't see it in the queue. What's the right process to get it
+included to stable?
 
-thanks,
+This specific patch fixes a production issue: we saw this happening at
+least 3 times (across a few thousand servers over the past 4 months
+we've moved to btrfs); the last time I was able to capture a kernel
+stack trace, which was identical to the one in the patch.
 
-greg k-h
+Thanks,
+Motiejus
