@@ -1,80 +1,61 @@
-Received: from mail-ed1-f45.google.com (mail-ed1-f45.google.com [209.85.208.45])
+Received: from mail-ed1-f42.google.com (mail-ed1-f42.google.com [209.85.208.42])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 489502561A7
-	for <patches@lists.linux.dev>; Mon, 19 Jan 2026 06:26:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.208.45
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768803991; cv=pass; b=oFLQjljJES//fEK/uknWQBRqZaBmubU1NHGYqRHvaHbdXoV9tNxBEi0mTfb81UrrGQxbmND9Wh6ylJGtr9sto2SiOwUG/yeO96bFOwhlWZ5gmstsF9WxF50o2vteqVXy8reeQabKSXuvI//B3SauL9WU6RXS5/JW/bX9vmvMLt8=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768803991; c=relaxed/simple;
-	bh=OIjzeBWD6G/+7P95/hT4dCh+pMCak/NsTNO3fpWO1Yw=;
-	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=GOqpGEFdotv+qVrrIDUhKgwsFYxqjT4LjRQqbSfk8S0QKO0PqkpLlWcMDWPPdq1ivV7y6omdKBm9Oe4zBG141H6dsPYpW0iNImkWu1GlwLrlBRjRUhFLurQt4O21v/fTpRMeAG3j8FNW2TzOvNK3C4oLLrm6NqVfhLEBLqrHwAY=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=EjlZnDq5; arc=pass smtp.client-ip=209.85.208.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 287DE32F766
+	for <patches@lists.linux.dev>; Mon, 19 Jan 2026 08:04:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.42
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1768809879; cv=none; b=B2w4R1w5uwFsbv/69Bw0+nL4nfVlFPq5XNzlYOfX77PF4RCN+tqgV14MTwN4adNuIYVe+t+cCEC441Nnh24MOOL0k6xjXNA1SeJDiw1ZMKyqXRLbHieKyZopiTKFHRKvuXq2YH8Ct3bnDELXWzndCe4y6/tZxsO4lQYcpWseIPk=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1768809879; c=relaxed/simple;
+	bh=fSk12Kv8vzWHPNwrVW04X+ndtNeLwKcienPDea2JogA=;
+	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=tuYHKZ0arJOd4tUxFw9Qn4gw66Z6eeRn5FJAIeOeoa43U+P+rr1s81rJYAK6318VWEuszdNBEYI4ka+X9zy0g44aCR/pvIVGswjhmV8/gLmWSWFIxjmxniQ0xDwQOZK2dJXHBuZt3AwJw9brAYkSj05tELJayOcuaujldw0FusE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=RHZjTbWh; arc=none smtp.client-ip=209.85.208.42
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="EjlZnDq5"
-Received: by mail-ed1-f45.google.com with SMTP id 4fb4d7f45d1cf-6536e4d25e1so5800704a12.1
-        for <patches@lists.linux.dev>; Sun, 18 Jan 2026 22:26:30 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1768803989; cv=none;
-        d=google.com; s=arc-20240605;
-        b=UZkySwjz+ObkO9KUdzU+MEc3UpyMrDH7/Sjwe+BxNeh9B1u5/MfoGN3Octra4Yjcg5
-         L+pG65JeJONhkd8oH2ugCCdoix6+HWWKiajM7DB5qBErqGaou8y2VERdiVcUWNMzBGlg
-         Ip2Ur3Iy+0tQcPbY1cXAfD1b2R3pF13SoGnwKkePXj+IIA48RfkXlM/n8AFx/5ni8gww
-         F0yTzx8deuPAaohdLtvD6gwKKwPQJf0AH4kd2YgvdGJgMdPqwApgNFPdUjmBhqsnEFJv
-         UaTq8/Rhl4Td02AkSvf65ENaysivd0CRTULDDhachjIAGjqHdKBsLz8fA6Nf//K9i66+
-         n4Ag==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=to:subject:message-id:date:from:mime-version:dkim-signature;
-        bh=OIjzeBWD6G/+7P95/hT4dCh+pMCak/NsTNO3fpWO1Yw=;
-        fh=mTHFkeURcIMwFpVhm+wDyeb7p60Cuh7C/zs60vddpHc=;
-        b=gJXiej4rHQTo4UlSamtMFi1lVUYW66NcV1tb8BEGgbaPJj7fYDoH2rpxs4yBuTDSfx
-         4p8RVdP+rWlFp4CdyHD+HT4zrYCgkYpfWqJ6OuSY1xYS/UBM0N9tDPgfGRaQKPtEVRGA
-         kz6NRXiWzehOskFsWQrQwvDtYNzG6XQkw1y/fe431ZKlhiOlBt9lae6T8H9lc1fW3zOm
-         PYr1NaTkBuoX3EHq56E/WA+vArulhT3yFUBr6gPbKaqnutBBBYXg0n93n70Adg3RHnNE
-         G7elZy8MzeYqmYN8XV0OW/GSJ/yd3U/xXRjOcEzT2S3rjUFeelsSwRGIOMQ0dQwbDNAd
-         v27w==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="RHZjTbWh"
+Received: by mail-ed1-f42.google.com with SMTP id 4fb4d7f45d1cf-653781de668so5802153a12.2
+        for <patches@lists.linux.dev>; Mon, 19 Jan 2026 00:04:38 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1768803989; x=1769408789; darn=lists.linux.dev;
-        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=OIjzeBWD6G/+7P95/hT4dCh+pMCak/NsTNO3fpWO1Yw=;
-        b=EjlZnDq57e5Equ+tosKo8pxFWf/OH4lF6pNnhXtDWo+MEI0L1keVVU7KUef61OOHxn
-         U6yX428WlbtiXg0iX53ZtMketeynTJ8a5BrTRnqgDWyt8peM3TPqgyy8yPOw6vvM7blq
-         b7gs3Im+zEzEDWnJ2pC5DcUuYryHuZRqJzHZHm0JZ8nIrKy1Is/NIvjeDkpCvQ0P+9fZ
-         dKxLerASTipvwXaj9lXaCnirX/PmvlIXhT5nAwjubSz7WTi7CBGeZAB3vwJE4xYYrBbO
-         ZmV1GvHfQhgZy0EEhi9PY/+YejI6+lMsq7xaHiaZq/DKBeAsDB/a8aoY0uG9UlkMaHpf
-         j38A==
+        d=gmail.com; s=20230601; t=1768809876; x=1769414676; darn=lists.linux.dev;
+        h=content-transfer-encoding:to:subject:message-id:date:from
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=fSk12Kv8vzWHPNwrVW04X+ndtNeLwKcienPDea2JogA=;
+        b=RHZjTbWhWo2gZvxhkXMAreyIwsg8agW1c57CHs5K+l8hZVIpniGsrUQsFxj4qMlgdk
+         WhdsPcDkVDJArknIilFpe9Z1t1Am8Axfubeqtnyj2yIeiLL6w6hyQYnJF9fhA4JQMKzG
+         fKHvEGs+JzkmfZtoLfRRxl9htiWqw3YBENd3NLZiWM6c33w4UEAcBXkHCrqSoevTE/oY
+         KByhpq2DCn96kRUFaiYOt4IHOLNWNV/9SjX9RLZvvujZnklI9MWQhQIJiagvUnd8jeza
+         nz1NbLK3bvV0ouKqjg0PN8uyqwnmuGjqr1txDkdmbudrVCjzHALy+o2GjkQy71lhmMSU
+         bK2A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1768803989; x=1769408789;
-        h=to:subject:message-id:date:from:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=OIjzeBWD6G/+7P95/hT4dCh+pMCak/NsTNO3fpWO1Yw=;
-        b=hmoRqcWLQ1bq5iqui3zwtz0gqJQaVlCI5kuE6t192Ba3jtDePeCKE44imkkrooIwRx
-         TcMMICVLS3NN5XEZkR3CcrUwuyGPoDyP6nLT8RMdqQ4zEZZDDzQ4Ri1ZtfuA/ezsAo3W
-         JhkKrlnHj00inb0ZFFbdcCltkS83jct/sKif+1LLnXtLgub1sGYnNo/EMWYyc/vgfpKe
-         qQRnvMXsWnW060scMvkWe7l9PbL/E2aYSzm/ZG45JhL1Jl1MlExz6TSy5WF5q423k4i9
-         hZClLCHwtiMbGuKEBYDc8+HhvnzmU+MDahOw5lRV+yvnFldmcSeQn0svLaUdRIdK/Wqi
-         8IlQ==
-X-Forwarded-Encrypted: i=1; AJvYcCUf2PcYIdls2KnNPyQjySTZv917Bd80cYFEpC5lV9SzeobY+iCXkYr58SX33AqS+lcJIrnEWNVW@lists.linux.dev
-X-Gm-Message-State: AOJu0YyQYmMQayl3sg3ob7ZpK5EXKnMvnQHccTZmLDufy6TMVcAmq31W
-	Y4M3i0hoWBWLxy8Ctfs9ctW7saJubT/s1XZceqdKpTHiI+bfIoQbXY6Cnhfm78CPEyfDkn5j4hh
-	UFVdwA1kuNnfWWMqmCMO53uoHjMEz3gE=
-X-Gm-Gg: AY/fxX4Cvgv1Sgtm/T9yeV3iP4vnVTH8Xh/ue709fa+sbAxl0dlUbuTpaEsGbVXkJrp
-	7pLbmhGxyyjb2ulCAF/kwOPm/WPnjrfoeeULlEAYLZ6iXMXX8ZHxaXnRgO+H4w5FLzNHDfEYvj3
-	O4rVkOtJZo6Ik3tC7IgxQEFOfKlthsQxMWwmda3Rg7/sinF9bm3HA1XYTdeCwXyNGZbMn8DP12/
-	5wEsDfh/PyL+Gv9kL3FJ+aCa4dvouh/Pw1t+mQSd1JEOYg7P1rIxIsFW/IrMU6ja/D9Vu/Wvabw
-	gcAYQ6YUYw6b7q33kGwR5ID6WqOVlNt25mNTpw==
-X-Received: by 2002:a17:907:26c7:b0:b87:124c:5f65 with SMTP id
- a640c23a62f3a-b87930408e9mr948920766b.51.1768803988646; Sun, 18 Jan 2026
- 22:26:28 -0800 (PST)
+        d=1e100.net; s=20230601; t=1768809876; x=1769414676;
+        h=content-transfer-encoding:to:subject:message-id:date:from
+         :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=fSk12Kv8vzWHPNwrVW04X+ndtNeLwKcienPDea2JogA=;
+        b=I09HxeKPGlzQu3P8BlkVTyVUoV/mzk+U3k2D/EsNu5leSG1dsFeIMZAQZUKyNzJP5H
+         7r5B5Gbv4MkZsiwp3/SlVH7nexT/ZapqHQeBcV5Us0ju+vzEz2Ai+/O+CpdISFyVixwF
+         BbsDvhPyuuVQY/oxALJ//QVq8egIRtjnDbVWdJ/Upy1CXwbzEnmigL+2PC79eEH8g1YS
+         7syGkdUzKtEVNlpPs78tQoh3WeEhO2fjbd9knjsI00SEWqxk8aDzB3yvmxaeFGZCFn9o
+         r2YVMhU9iIRi5zTNYfUarBpCjLLtkzyrX7q7GfrL1A2/mlZwemJmYoN39wLPe8dipWZK
+         PfvQ==
+X-Forwarded-Encrypted: i=1; AJvYcCUjzlc4UGKVK2dd/5vsfGTcHagbTwXaYkrj0u8W1EkXP6I8wz+wQK2Cq0/kMUpioFjEpQFf84Dx@lists.linux.dev
+X-Gm-Message-State: AOJu0Yz5tsNwo7D4j/3eZCMedSN8fLNttjXZbOAMy+rUgrXg7cqw1hHh
+	VFFuZ7vXQA7Zwu2YtMozJvgI3aVmkSeiLH95PwqA6123+E28ypDt76AH6nlc3jjxMF4kdK/I9J4
+	KcFgfwBR8NJlzLG9RFTu7UtkEYpV5Sv0=
+X-Gm-Gg: AY/fxX5yVZDJ8Ic1iiRVDbunH0NCJ2NcYNd1Q6sadzvxHzMZXHw3mpr8XCQKzrhPwcN
+	R1rYLcKXW3axsGVDTLHu1PiaaTa/sXrx5xwOkYcDBcxiX6hE0+BGvQvjUym7yy9SjHqxqh6U5RG
+	pgUl4qHeRQUbHCJBO9liNNrEDD+2F69n7JajYIedemlnqw45CvrTINC4hPDhSy8J+w9Z8ETERV+
+	lJ/lSuxEWVu/eFvG05Hi9/QlJW0uJ1TZlxuVYcIHsxkRy0NMpo/sbHTQAPfe5z+U3EBJZQdbEkn
+	qjIfQQuCI/JwDa0L8kY6tMKXqL0wPIvFKHHYmQ==
+X-Received: by 2002:a17:907:6d08:b0:b87:1a92:b621 with SMTP id
+ a640c23a62f3a-b879324e841mr878599966b.64.1768809876386; Mon, 19 Jan 2026
+ 00:04:36 -0800 (PST)
 Received: from 860443694158 named unknown by gmailapi.google.com with
- HTTPREST; Mon, 19 Jan 2026 01:26:26 -0500
+ HTTPREST; Mon, 19 Jan 2026 03:04:35 -0500
 Received: from 860443694158 named unknown by gmailapi.google.com with
- HTTPREST; Mon, 19 Jan 2026 01:26:26 -0500
+ HTTPREST; Mon, 19 Jan 2026 03:04:35 -0500
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -82,24 +63,29 @@ List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 From: zynai.founder@gmail.com
-Date: Mon, 19 Jan 2026 01:26:26 -0500
-X-Gm-Features: AZwV_Qi6XDSFA_U2na8XtIpwcJHOlx1Ktn1gzOVWFkswqGUefYYzi7MxmnFGNFs
-Message-ID: <CAEnpc1YcccwVsPBqCSDuoJppJwVqSs8owWVorgCTKYT9ab=ftw@mail.gmail.com>
-Subject: Can AI Help Your Dental Team Save Time?
+Date: Mon, 19 Jan 2026 03:04:35 -0500
+X-Gm-Features: AZwV_QjOh7H8oNxE7nJj4oXOSyEyHo-o-wDGfblLl6I25ugW0u8RNniD7otOyKE
+Message-ID: <CAEnpc1ZU=HtgrpTYFFE-PXgFy58C3eLQ4m7akAz=QJq6xfj6rw@mail.gmail.com>
+Subject: Dentist Time Savers: Is AI Your Secret Weapon?
 To: gregkh@linuxfoundation.org, stable@vger.kernel.org, 
 	patches@lists.linux.dev, info@morenofamilydentistry.com
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Hi Moreno Family Dentistry team,
+Hi Moreno Family Dentistry Team,
 
-As a dentist, I'm sure you're no stranger to tedious admin tasks and
-manual patient follow-ups. With so many patients to care for, it's
-easy to get bogged down in paperwork and scheduling.
+As a dentist's office, you're likely no stranger to juggling
+appointment scheduling, patient communication, and administrative
+tasks. But let's face it =E2=80=93 with so much on your plate, how can you
+free up more time for what matters most: patient care?
 
-At ZynAI, we've seen dental practices like yours struggle with
-repetitive tasks that take up 5-10 hours per week. That's time taken
-away from what matters most - providing top-notch patient care.
+ZynAI helps businesses like yours save 5-10 hours per week by
+automating repetitive workflows. With our AI-powered solutions, you'll
+never have to worry about manual lead handling or tedious reporting
+again.
 
-Our AI-powered automations can help streamline these processes,
-freeing you to focus on what you do best. Let me know if it's worth a
-quick conversation to explore how we can help?
+Would it be worth a quick conversation to explore how ZynAI can
+streamline your operations and boost productivity? I'm here to help
+you discover the possibilities.
+
+-ZynAI
