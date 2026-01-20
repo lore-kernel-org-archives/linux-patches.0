@@ -1,46 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA8B347AF6E;
-	Tue, 20 Jan 2026 19:35:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D38E47B435;
+	Tue, 20 Jan 2026 19:35:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768937704; cv=none; b=eofWHY+6UwHUcr/YQeWhQD/lsXJjtla82Iuxq3kIL27TNdSVM3PiXxLAn8/uEf4GBYKxQM7rMLIcd1qsnXMJwgJquYGYRlxwB6LrzlkJeXGIMXEa5/fUg9pi33bhk8HkMZplF1MYW/DThn/BmdF3it6KxIEDQJzseiAhnSyT4nA=
+	t=1768937707; cv=none; b=J/4NSzrjI2SBCzNTFKZawgeBFFyCFmW+yLg8sO4/cCW0o4CRpQR4bOk8El4mF7gEtGbsFqQUeZslg4t60ww92+dEffrgQ22Fgm3RcObUXCCRKQDH+PK3v4lrnWQl0751Qai/coyuNprfeJBnrPy4mXQ1JnaMapKsm7vsUzuXPUo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768937704; c=relaxed/simple;
-	bh=lcFx5eDRBp1+97JFLWXeahJ9cdFANIDo7AWztxdtCw0=;
+	s=arc-20240116; t=1768937707; c=relaxed/simple;
+	bh=1hxHwzroqjTxAQ7XR3r6k7CvanenCdiWBe8WbgrL4Bs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=mKVnpMDJ/2Y7D6aHKn7PpkC1QhifVi+pC4IAF14kaEX0CE/A+oTYQFYCgnv1eNnK7rrU4uVGX8eO167gvg96t7YyE/0KDiEsrr450AJW1TiKY5bL48B3tBzTSiPQXbQ2kihKDkqHF3cUiEGoWyscjYvotIipLFCenGLOg40b6Pk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=g31Z6uLH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=S2Y32DqzkhcMhcpVAc31arAhiRWXGoSPVslHsHlNeF2ZuhiFljq5p31lGoConpyMDbjIcEp5lER3KoBX+1R3jPcwHb58RtWWfqLMoJ9vCwZxpoD2r9v7UkhwzPz0pCk/+MMtO/VGvLXgP1oHYVOf5N+d8j2flLdENLykOanr60g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=iiZKVuQf; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="g31Z6uLH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 62D90C19422;
-	Tue, 20 Jan 2026 19:35:03 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="iiZKVuQf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A9B6C16AAE;
+	Tue, 20 Jan 2026 19:35:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1768937704;
-	bh=lcFx5eDRBp1+97JFLWXeahJ9cdFANIDo7AWztxdtCw0=;
+	s=k20201202; t=1768937707;
+	bh=1hxHwzroqjTxAQ7XR3r6k7CvanenCdiWBe8WbgrL4Bs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=g31Z6uLHoe74I5OwDGTXT44jK+/bsbhYaVHgLWxmgMjiLCFEuUPOB9YfVmp/emhVB
-	 qVs5yci54sodlqT5gIJeMhuNhkUkWUmi6dN71k35ZxkhXhWzrwVkcx17g59aE4LXpl
-	 HhLUy6gWFdtCrFktaTspYpaXguHzwCqE/dYMrZ769hSuGf1xR9LEtEODKl+Bgdwl+m
-	 CJtft4AAxxQM4vi82IuDhz5H6hH9jgCn1jwK9DNuD7+UtrimG75teZWRVIrE5U4yWb
-	 sSkwZzqz/KXgd4dT5ePgnUBNccF7FWshJZBE3I5zkMKv6szNIypLy/GRCsO4/JRr4t
-	 hoqZo5RS+QkHw==
+	b=iiZKVuQfjOWz6vqosPLWGwVZZNPz26GbAYz9QINQTjTN+MXnOquFNStbokkpDAA0T
+	 qYj0PCwxhq8Ny5uNFiDrDmczK5SnodWTq/TPI309deFJPNl1e+WhcjLHl91owvvHCP
+	 ODBYUnco6mi4DfKHnkgBnPcqfafjN/gm21lG65jNt2RbiH/eb+WDYr5hW7/otg0d9G
+	 9tEyRdZM5bL/E4zfj2bVMlOXtmWoade3c+ObhBQjQZjrcAE2NN/b4ybzPdajBObS65
+	 yAe/FA8sTT/RZJodkGIQ9+FeG3TvAnBHfpObhlJ+4s9p7U16nCc1Zxeg/o1QYYKRmT
+	 8CAtAKDT1JjaQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Chaitanya Kulkarni <ckulkarnilinux@gmail.com>,
-	Yi Zhang <yi.zhang@redhat.com>,
-	Justin Tee <justin.tee@broadcom.com>,
-	Keith Busch <kbusch@kernel.org>,
+Cc: Kery Qi <qikeyu2017@gmail.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	nareshgottumukkala83@gmail.com,
-	paul.ely@broadcom.com,
-	sagi@grimberg.me,
-	linux-nvme@lists.infradead.org
-Subject: [PATCH AUTOSEL 6.18-6.1] nvme-fc: release admin tagset if init fails
-Date: Tue, 20 Jan 2026 14:34:47 -0500
-Message-ID: <20260120193456.865383-4-sashal@kernel.org>
+	peter.ujfalusi@gmail.com,
+	linux-sound@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.18-5.10] ASoC: davinci-evm: Fix reference leak in davinci_evm_probe
+Date: Tue, 20 Jan 2026 14:34:49 -0500
+Message-ID: <20260120193456.865383-6-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260120193456.865383-1-sashal@kernel.org>
 References: <20260120193456.865383-1-sashal@kernel.org>
@@ -56,161 +52,200 @@ X-stable-base: Linux 6.18.6
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Chaitanya Kulkarni <ckulkarnilinux@gmail.com>
+From: Kery Qi <qikeyu2017@gmail.com>
 
-[ Upstream commit d1877cc7270302081a315a81a0ee8331f19f95c8 ]
+[ Upstream commit 5b577d214fcc109707bcb77b4ae72a31cfd86798 ]
 
-nvme_fabrics creates an NVMe/FC controller in following path:
+The davinci_evm_probe() function calls of_parse_phandle() to acquire
+device nodes for "ti,audio-codec" and "ti,mcasp-controller". These
+functions return device nodes with incremented reference counts.
 
-    nvmf_dev_write()
-      -> nvmf_create_ctrl()
-        -> nvme_fc_create_ctrl()
-          -> nvme_fc_init_ctrl()
+However, in several error paths (e.g., when the second of_parse_phandle(),
+snd_soc_of_parse_card_name(), or devm_snd_soc_register_card() fails),
+the function returns directly without releasing the acquired nodes,
+leading to reference leaks.
 
-nvme_fc_init_ctrl() allocates the admin blk-mq resources right after
-nvme_add_ctrl() succeeds.  If any of the subsequent steps fail (changing
-the controller state, scheduling connect work, etc.), we jump to the
-fail_ctrl path, which tears down the controller references but never
-frees the admin queue/tag set.  The leaked blk-mq allocations match the
-kmemleak report seen during blktests nvme/fc.
+This patch adds an error handling path 'err_put' to properly release
+the device nodes using of_node_put() and clean up the pointers when
+an error occurs.
 
-Check ctrl->ctrl.admin_tagset in the fail_ctrl path and call
-nvme_remove_admin_tag_set() when it is set so that all admin queue
-allocations are reclaimed whenever controller setup aborts.
-
-Reported-by: Yi Zhang <yi.zhang@redhat.com>
-Reviewed-by: Justin Tee <justin.tee@broadcom.com>
-Signed-off-by: Chaitanya Kulkarni <ckulkarnilinux@gmail.com>
-Signed-off-by: Keith Busch <kbusch@kernel.org>
+Signed-off-by: Kery Qi <qikeyu2017@gmail.com>
+Link: https://patch.msgid.link/20260107154836.1521-2-qikeyu2017@gmail.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-This confirms the bug scenario in v6.6:
-1. `nvme_alloc_admin_tag_set()` succeeds → admin tagset is allocated
-2. `nvme_change_ctrl_state()` OR `queue_delayed_work()` fails
-3. Code goes to `fail_ctrl` label
-4. But `fail_ctrl` does NOT free the admin tagset → **MEMORY LEAK**
+So the `device_get_match_data()` change landed in v6.10. For stable
+trees 6.9 and earlier, the code would use the older `of_match_device()`
+pattern, which might require a slightly different patch.
 
-Now let me compile my analysis:
+Let me analyze the full technical aspects of this fix:
 
-## ANALYSIS SUMMARY
+## Technical Analysis
 
-### 1. COMMIT MESSAGE ANALYSIS
-- **Subject:** "nvme-fc: release admin tagset if init fails"
-- **Clear bug description:** The commit message clearly describes a
-  memory leak scenario where admin blk-mq resources are not freed when
-  controller initialization fails
-- **Reported-by tag:** Yi Zhang from Red Hat reported this via kmemleak
-  during blktests nvme/fc
-- **Reviewed-by:** Justin Tee from Broadcom reviewed this
-- **Testing evidence:** Discovered during blktests, so reproducible
+### The Bug
+The `davinci_evm_probe()` function calls `of_parse_phandle()` twice:
+1. `dai->codecs->of_node = of_parse_phandle(np, "ti,audio-codec", 0);`
+2. `dai->cpus->of_node = of_parse_phandle(np, "ti,mcasp-controller",
+   0);`
 
-### 2. CODE CHANGE ANALYSIS
-The fix is a 2-line addition:
-```c
-if (ctrl->ctrl.admin_tagset)
-    nvme_remove_admin_tag_set(&ctrl->ctrl);
-```
+`of_parse_phandle()` returns a device node with an incremented reference
+count. The kernel's device tree code uses reference counting to track
+how many pointers refer to each node. If references are not released
+with `of_node_put()`, the nodes can never be freed, causing a memory
+leak.
 
-**Bug mechanism:**
-1. `nvme_fc_init_ctrl()` allocates admin tagset after `nvme_init_ctrl()`
-   succeeds
-2. If subsequent operations (state change, work scheduling) fail, code
-   jumps to `fail_ctrl`
-3. The `fail_ctrl` path tears down controller references but never frees
-   the admin tagset
-4. Result: Memory leak of blk-mq admin queue allocations
+### Error Paths with the Leak
+In the original code, if any of these fail after acquiring one or both
+nodes:
+- Second `of_parse_phandle()` call fails → codecs->of_node leaked
+- `snd_soc_of_parse_card_name()` fails → both nodes leaked
+- `devm_clk_get()` returns `-EPROBE_DEFER` → both nodes leaked
+- `devm_kzalloc()` fails → both nodes leaked
+- `of_property_read_u32()` fails without mclk → both nodes leaked
+- `devm_snd_soc_register_card()` fails → both nodes leaked
 
-**Why the fix is correct:**
-- The conditional check `if (ctrl->ctrl.admin_tagset)` ensures the
-  cleanup only runs if the allocation occurred
-- `nvme_remove_admin_tag_set()` properly cleans up all admin queue
-  resources
-- Placement is correct - before `nvme_uninit_ctrl()` which does the
-  reference counting teardown
+### The Fix
+The fix:
+1. Converts all early returns to `goto err_put`
+2. Adds proper cleanup label that calls `of_node_put()` on both nodes
+3. Nullifies the pointers after release (defensive programming)
 
-### 3. CLASSIFICATION
-- **Type:** Bug fix (memory leak)
-- **Category:** Resource leak in error path
-- **Not a feature:** Does not add functionality, only fixes cleanup in
-  error path
+### Impact Assessment
+- **Severity**: Low to Medium. This is a memory leak, not a crash or
+  data corruption. The leak only occurs on error paths during probe.
+- **Scope**: The TI DAVINCI EVM audio driver. This is an older driver
+  for TI DaVinci SoC platforms, a relatively niche embedded hardware.
+- **Trigger**: The leak happens when probe fails - i.e., when there's
+  something wrong with the device tree or when resources are
+  unavailable.
+- **User Impact**: Repeated probe failures (e.g., due to
+  misconfiguration or module load/unload cycles) could accumulate leaked
+  memory over time.
 
-### 4. SCOPE AND RISK ASSESSMENT
-- **Lines changed:** 2 lines added
-- **Files changed:** 1 file (drivers/nvme/host/fc.c)
-- **Complexity:** Very low - simple conditional cleanup
-- **Risk:** Very low - only affects error path, adds proper cleanup that
-  was missing
-- **Subsystem:** NVMe FC driver, mature subsystem
+### Risk Assessment
+- **Low risk**: The change is surgical - it only adds error handling
+  paths
+- **Well-understood pattern**: of_node_put() cleanup is a very common
+  kernel pattern
+- **Doesn't change success path behavior**: The normal successful probe
+  path is unchanged except for adding `return ret;` instead of falling
+  through
 
-### 5. USER IMPACT
-- **Who is affected:** Users of NVMe over Fibre Channel
-- **Severity:** Memory leak that can exhaust kernel memory over time
-  with repeated connection failures
-- **Reproducibility:** Reproducible via blktests nvme/fc
-- **Discovery:** Found via kmemleak, indicating real-world impact
+### Backport Considerations
+- For stable kernels >= 6.10: The patch should apply cleanly (uses
+  `device_get_match_data()`)
+- For stable kernels < 6.10: The patch would need adjustment since those
+  use `of_match_device()` pattern instead
 
-### 6. STABILITY INDICATORS
-- **Reviewed-by:** Yes (Justin Tee from Broadcom)
-- **Reported-by:** Yes (Yi Zhang from Red Hat)
-- **Tested:** Implicitly through blktests discovery
-- **Signed-off-by:** Keith Busch (NVMe maintainer)
+**Conclusion:**
 
-### 7. DEPENDENCY CHECK
-- **Function dependency:** Requires `nvme_remove_admin_tag_set()` which
-  exists in kernels v6.1+
-- **For v5.10/v5.15/v6.0:** Would need adaptation (manual cleanup
-  instead of helper function)
-- **Structural dependency:** The code structure (admin tagset allocation
-  → fail_ctrl path) needs to exist
+This is a legitimate bug fix that addresses a memory leak in error
+paths. The fix is:
+1. Small and contained
+2. Uses a well-understood kernel pattern
+3. Fixes a real resource leak bug
+4. Low risk (only affects error paths)
+5. Properly tested (merged by maintainer Mark Brown)
 
-### BACKPORTABILITY
+However, the bug is relatively minor:
+- Only affects niche TI DAVINCI EVM hardware
+- Only leaks memory on probe failure (error paths)
+- The leak is small (device tree node references)
 
-**For kernels 6.1.y and later (v6.1+):**
-- The commit applies cleanly
-- The `nvme_remove_admin_tag_set()` helper exists
-- Low risk, high value fix
-
-**For kernels 5.10.y, 5.15.y, 6.0.y:**
-- Would require modification - the helper function doesn't exist
-- The fix would need to manually call the cleanup functions instead
-- The code structure is different (admin tagset allocation may happen in
-  different location)
-
-### CONCLUSION
-
-This is a classic stable kernel material:
-- ✅ Fixes a real bug (memory leak in error path)
-- ✅ Small, surgical fix (2 lines)
-- ✅ Obviously correct (adds missing cleanup)
-- ✅ Low risk (only affects error path)
-- ✅ Has been reviewed and tested
-- ✅ Discovered via automated testing (blktests/kmemleak)
-
-The fix is appropriate for backporting to stable kernels that have the
-required infrastructure (v6.1+). For older kernels (v5.10, v5.15, v6.0),
-a modified version would need to be crafted.
+This type of reference leak fix is commonly backported to stable trees.
+The pattern is well-established and the fix is straightforward. The main
+concern is whether it will apply cleanly to older stable trees that
+don't have the `device_get_match_data()` change, but that's a backport
+logistics issue, not a reason to reject it.
 
 **YES**
 
- drivers/nvme/host/fc.c | 2 ++
- 1 file changed, 2 insertions(+)
+ sound/soc/ti/davinci-evm.c | 39 ++++++++++++++++++++++++++++++--------
+ 1 file changed, 31 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/nvme/host/fc.c b/drivers/nvme/host/fc.c
-index 8324230c53719..bf78faf1a4ffa 100644
---- a/drivers/nvme/host/fc.c
-+++ b/drivers/nvme/host/fc.c
-@@ -3584,6 +3584,8 @@ nvme_fc_init_ctrl(struct device *dev, struct nvmf_ctrl_options *opts,
+diff --git a/sound/soc/ti/davinci-evm.c b/sound/soc/ti/davinci-evm.c
+index 2a2f5bc95576e..a55a369ce71c2 100644
+--- a/sound/soc/ti/davinci-evm.c
++++ b/sound/soc/ti/davinci-evm.c
+@@ -193,27 +193,32 @@ static int davinci_evm_probe(struct platform_device *pdev)
+ 		return -EINVAL;
  
- 	ctrl->ctrl.opts = NULL;
+ 	dai->cpus->of_node = of_parse_phandle(np, "ti,mcasp-controller", 0);
+-	if (!dai->cpus->of_node)
+-		return -EINVAL;
++	if (!dai->cpus->of_node) {
++		ret = -EINVAL;
++		goto err_put;
++	}
  
-+	if (ctrl->ctrl.admin_tagset)
-+		nvme_remove_admin_tag_set(&ctrl->ctrl);
- 	/* initiate nvme ctrl ref counting teardown */
- 	nvme_uninit_ctrl(&ctrl->ctrl);
+ 	dai->platforms->of_node = dai->cpus->of_node;
  
+ 	evm_soc_card.dev = &pdev->dev;
+ 	ret = snd_soc_of_parse_card_name(&evm_soc_card, "ti,model");
+ 	if (ret)
+-		return ret;
++		goto err_put;
+ 
+ 	mclk = devm_clk_get(&pdev->dev, "mclk");
+ 	if (PTR_ERR(mclk) == -EPROBE_DEFER) {
+-		return -EPROBE_DEFER;
++		ret = -EPROBE_DEFER;
++		goto err_put;
+ 	} else if (IS_ERR(mclk)) {
+ 		dev_dbg(&pdev->dev, "mclk not found.\n");
+ 		mclk = NULL;
+ 	}
+ 
+ 	drvdata = devm_kzalloc(&pdev->dev, sizeof(*drvdata), GFP_KERNEL);
+-	if (!drvdata)
+-		return -ENOMEM;
++	if (!drvdata) {
++		ret = -ENOMEM;
++		goto err_put;
++	}
+ 
+ 	drvdata->mclk = mclk;
+ 
+@@ -223,7 +228,8 @@ static int davinci_evm_probe(struct platform_device *pdev)
+ 		if (!drvdata->mclk) {
+ 			dev_err(&pdev->dev,
+ 				"No clock or clock rate defined.\n");
+-			return -EINVAL;
++			ret = -EINVAL;
++			goto err_put;
+ 		}
+ 		drvdata->sysclk = clk_get_rate(drvdata->mclk);
+ 	} else if (drvdata->mclk) {
+@@ -239,8 +245,25 @@ static int davinci_evm_probe(struct platform_device *pdev)
+ 	snd_soc_card_set_drvdata(&evm_soc_card, drvdata);
+ 	ret = devm_snd_soc_register_card(&pdev->dev, &evm_soc_card);
+ 
+-	if (ret)
++	if (ret) {
+ 		dev_err(&pdev->dev, "snd_soc_register_card failed (%d)\n", ret);
++		goto err_put;
++	}
++
++	return ret;
++
++err_put:
++	dai->platforms->of_node = NULL;
++
++	if (dai->cpus->of_node) {
++		of_node_put(dai->cpus->of_node);
++		dai->cpus->of_node = NULL;
++	}
++
++	if (dai->codecs->of_node) {
++		of_node_put(dai->codecs->of_node);
++		dai->codecs->of_node = NULL;
++	}
+ 
+ 	return ret;
+ }
 -- 
 2.51.0
 
