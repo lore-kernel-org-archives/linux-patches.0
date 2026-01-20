@@ -1,42 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D38E47B435;
-	Tue, 20 Jan 2026 19:35:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73B7847B42D;
+	Tue, 20 Jan 2026 19:35:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768937707; cv=none; b=J/4NSzrjI2SBCzNTFKZawgeBFFyCFmW+yLg8sO4/cCW0o4CRpQR4bOk8El4mF7gEtGbsFqQUeZslg4t60ww92+dEffrgQ22Fgm3RcObUXCCRKQDH+PK3v4lrnWQl0751Qai/coyuNprfeJBnrPy4mXQ1JnaMapKsm7vsUzuXPUo=
+	t=1768937708; cv=none; b=k3gdI+Uo93deioI+zO7pNrG1uCpL2KfGtBtwn35IkwxjimwtwWjIZT8Pkrl9iXuHxs65Lw2RdhbEt/ob2QqVou7jAia339I+gDdlRmqwhOni1AccFJsxjZKcsEz27Vdynn/OQujbkcbNRZpuwBw+/TAgNuwqq5jwse7PCDMgH/k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768937707; c=relaxed/simple;
-	bh=1hxHwzroqjTxAQ7XR3r6k7CvanenCdiWBe8WbgrL4Bs=;
+	s=arc-20240116; t=1768937708; c=relaxed/simple;
+	bh=LhUtgzXOVPV8SD3R2VJ6zeG5rQgZrdms4OAVI/3ji5s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=S2Y32DqzkhcMhcpVAc31arAhiRWXGoSPVslHsHlNeF2ZuhiFljq5p31lGoConpyMDbjIcEp5lER3KoBX+1R3jPcwHb58RtWWfqLMoJ9vCwZxpoD2r9v7UkhwzPz0pCk/+MMtO/VGvLXgP1oHYVOf5N+d8j2flLdENLykOanr60g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=iiZKVuQf; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bhJ9meRNt0cCha9lH21urnk6yaGT3z9GNrDR/ieUbVUukJ4D2RfLXK6BKFHxNe8SPTykfNvPGXVikML6qkOcx1oEV8FxnoO8d7wno10UkpRz+hr9oJKwNTUqv+6pDfM6j06IuZmT/fvby4OZcY+NZCiUvvSESvuu/BoCMhEqG6Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=BEVy/UHo; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="iiZKVuQf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A9B6C16AAE;
-	Tue, 20 Jan 2026 19:35:06 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="BEVy/UHo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB2E1C19421;
+	Tue, 20 Jan 2026 19:35:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1768937707;
-	bh=1hxHwzroqjTxAQ7XR3r6k7CvanenCdiWBe8WbgrL4Bs=;
+	s=k20201202; t=1768937705;
+	bh=LhUtgzXOVPV8SD3R2VJ6zeG5rQgZrdms4OAVI/3ji5s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iiZKVuQfjOWz6vqosPLWGwVZZNPz26GbAYz9QINQTjTN+MXnOquFNStbokkpDAA0T
-	 qYj0PCwxhq8Ny5uNFiDrDmczK5SnodWTq/TPI309deFJPNl1e+WhcjLHl91owvvHCP
-	 ODBYUnco6mi4DfKHnkgBnPcqfafjN/gm21lG65jNt2RbiH/eb+WDYr5hW7/otg0d9G
-	 9tEyRdZM5bL/E4zfj2bVMlOXtmWoade3c+ObhBQjQZjrcAE2NN/b4ybzPdajBObS65
-	 yAe/FA8sTT/RZJodkGIQ9+FeG3TvAnBHfpObhlJ+4s9p7U16nCc1Zxeg/o1QYYKRmT
-	 8CAtAKDT1JjaQ==
+	b=BEVy/UHoYyT1NPcSaM7OZOWOmpSp4fz9Om0Cj6qr09uIAdFFQCGFWFoJwEBZjZelF
+	 0s5s3uDl6t/EemYHuhJQYi02UXEaIoi+Evq+YYb29zaLur/hnFOBVC+nD9Yt2iJm9i
+	 lk1eIjzyP0wY3B+x8ZZgjXNp6oyxHmqijIoj3gzwx2ATIP5dfPPpTPHB4gMi1iT5aX
+	 6lPTff7/GyXtZswom8WOVMkaJPTGwPTEBLbiSDdprgJetN3HboA+fs0PqAhDoN7XMU
+	 9mLUGTqe3iNigiDAl894Y1WZoUaLiXdGmQUjfl7/XOISnI5+8BQvJSTg4GmXksmwXY
+	 GFUjZem7TrGQg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Kery Qi <qikeyu2017@gmail.com>,
-	Mark Brown <broonie@kernel.org>,
+Cc: Guodong Xu <guodong@riscstar.com>,
+	Juan Li <lijuan@linux.spacemit.com>,
+	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	peter.ujfalusi@gmail.com,
-	linux-sound@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18-5.10] ASoC: davinci-evm: Fix reference leak in davinci_evm_probe
-Date: Tue, 20 Jan 2026 14:34:49 -0500
-Message-ID: <20260120193456.865383-6-sashal@kernel.org>
+	dlan@gentoo.org,
+	dmaengine@vger.kernel.org,
+	linux-riscv@lists.infradead.org,
+	spacemit@lists.linux.dev
+Subject: [PATCH AUTOSEL 6.18] dmaengine: mmp_pdma: Fix race condition in mmp_pdma_residue()
+Date: Tue, 20 Jan 2026 14:34:48 -0500
+Message-ID: <20260120193456.865383-5-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260120193456.865383-1-sashal@kernel.org>
 References: <20260120193456.865383-1-sashal@kernel.org>
@@ -49,202 +52,202 @@ MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.18.6
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Kery Qi <qikeyu2017@gmail.com>
+From: Guodong Xu <guodong@riscstar.com>
 
-[ Upstream commit 5b577d214fcc109707bcb77b4ae72a31cfd86798 ]
+[ Upstream commit a143545855bc2c6e1330f6f57ae375ac44af00a7 ]
 
-The davinci_evm_probe() function calls of_parse_phandle() to acquire
-device nodes for "ti,audio-codec" and "ti,mcasp-controller". These
-functions return device nodes with incremented reference counts.
+Add proper locking in mmp_pdma_residue() to prevent use-after-free when
+accessing descriptor list and descriptor contents.
 
-However, in several error paths (e.g., when the second of_parse_phandle(),
-snd_soc_of_parse_card_name(), or devm_snd_soc_register_card() fails),
-the function returns directly without releasing the acquired nodes,
-leading to reference leaks.
+The race occurs when multiple threads call tx_status() while the tasklet
+on another CPU is freeing completed descriptors:
 
-This patch adds an error handling path 'err_put' to properly release
-the device nodes using of_node_put() and clean up the pointers when
-an error occurs.
+CPU 0                              CPU 1
+-----                              -----
+mmp_pdma_tx_status()
+mmp_pdma_residue()
+  -> NO LOCK held
+     list_for_each_entry(sw, ..)
+                                   DMA interrupt
+                                   dma_do_tasklet()
+                                     -> spin_lock(&desc_lock)
+                                        list_move(sw->node, ...)
+                                        spin_unlock(&desc_lock)
+  |                                     dma_pool_free(sw) <- FREED!
+  -> access sw->desc <- UAF!
 
-Signed-off-by: Kery Qi <qikeyu2017@gmail.com>
-Link: https://patch.msgid.link/20260107154836.1521-2-qikeyu2017@gmail.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+This issue can be reproduced when running dmatest on the same channel with
+multiple threads (threads_per_chan > 1).
+
+Fix by protecting the chain_running list iteration and descriptor access
+with the chan->desc_lock spinlock.
+
+Signed-off-by: Juan Li <lijuan@linux.spacemit.com>
+Signed-off-by: Guodong Xu <guodong@riscstar.com>
+Link: https://patch.msgid.link/20251216-mmp-pdma-race-v1-1-976a224bb622@riscstar.com
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-So the `device_get_match_data()` change landed in v6.10. For stable
-trees 6.9 and earlier, the code would use the older `of_match_device()`
-pattern, which might require a slightly different patch.
+This confirms the `mmp_pdma_residue()` function was added in 2014. The
+race condition has existed since then.
 
-Let me analyze the full technical aspects of this fix:
+## Analysis Summary
 
-## Technical Analysis
+### 1. COMMIT MESSAGE ANALYSIS
 
-### The Bug
-The `davinci_evm_probe()` function calls `of_parse_phandle()` twice:
-1. `dai->codecs->of_node = of_parse_phandle(np, "ti,audio-codec", 0);`
-2. `dai->cpus->of_node = of_parse_phandle(np, "ti,mcasp-controller",
-   0);`
+The commit message clearly describes:
+- A **use-after-free (UAF) race condition** in `mmp_pdma_residue()`
+- The race occurs between `tx_status()` (calling `mmp_pdma_residue()`)
+  and the DMA tasklet (`dma_do_tasklet()`)
+- **Clear reproduction steps**: running dmatest with `threads_per_chan >
+  1`
+- The CPU timeline diagram explicitly shows the race window between
+  unlocked list iteration and descriptor free
 
-`of_parse_phandle()` returns a device node with an incremented reference
-count. The kernel's device tree code uses reference counting to track
-how many pointers refer to each node. If references are not released
-with `of_node_put()`, the nodes can never be freed, causing a memory
-leak.
+Keywords: "Fix race condition", "use-after-free", "UAF"
 
-### Error Paths with the Leak
-In the original code, if any of these fail after acquiring one or both
-nodes:
-- Second `of_parse_phandle()` call fails → codecs->of_node leaked
-- `snd_soc_of_parse_card_name()` fails → both nodes leaked
-- `devm_clk_get()` returns `-EPROBE_DEFER` → both nodes leaked
-- `devm_kzalloc()` fails → both nodes leaked
-- `of_property_read_u32()` fails without mclk → both nodes leaked
-- `devm_snd_soc_register_card()` fails → both nodes leaked
+### 2. CODE CHANGE ANALYSIS
 
-### The Fix
+**The bug:** `mmp_pdma_residue()` iterates over `chan->chain_running`
+list and accesses descriptor contents (`sw->desc`) without holding the
+`desc_lock` spinlock. Meanwhile, `dma_do_tasklet()` can:
+1. Hold `desc_lock`
+2. Move descriptors from `chain_running` to `chain_cleanup` via
+   `list_move()`
+3. Release `desc_lock`
+4. Free the descriptor via `dma_pool_free()`
+
+If `mmp_pdma_residue()` is iterating over the list when this happens, it
+can access freed memory (UAF).
+
+**The fix:** Adds `spin_lock_irqsave(&chan->desc_lock, flags)` before
+the `list_for_each_entry()` loop and `spin_unlock_irqrestore()` at all
+exit points from the function. This is:
+- Small (+6 lines, -0 lines of actual logic)
+- Surgical - uses the existing `desc_lock` that already protects this
+  list elsewhere
+- Follows existing driver patterns (other list operations use this lock)
+
+### 3. CLASSIFICATION
+
+This is a **bug fix** for a **use-after-free vulnerability**. This is a
+serious memory safety issue:
+- Can cause kernel crashes/panics
+- Can lead to data corruption
+- Potential security implications (UAF bugs are commonly exploitable)
+
+### 4. SCOPE AND RISK ASSESSMENT
+
+- **Lines changed**: ~10 lines (just adding lock/unlock around existing
+  code)
+- **Files touched**: 1 file
+- **Complexity**: Very low - straightforward spinlock acquisition
+- **Risk of regression**: Minimal - uses existing lock that is designed
+  for this purpose
+- **Potential issues**: Slightly increased lock contention when calling
+  `tx_status()`, but this is necessary for correctness
+
+### 5. USER IMPACT
+
+- **Who is affected**: Users of MMP PDMA DMA controller (Marvell PXA/MMP
+  platforms, SpacemiT K1)
+- **Trigger conditions**: Multi-threaded DMA operations on same channel
+  (common in dmatest, may occur in real workloads)
+- **Severity**: High - UAF can cause kernel crashes or undefined
+  behavior
+- **Reproducibility**: Can be reproduced with dmatest (`threads_per_chan
+  > 1`)
+
+### 6. STABILITY INDICATORS
+
+- Has proper sign-offs: `Signed-off-by` from author, forwarder, and DMA
+  maintainer (Vinod Koul)
+- Link to mailing list discussion included
+- The existing lock (`desc_lock`) has been in the driver since the
+  beginning
+- The locking pattern matches other functions in the driver
+
+### 7. DEPENDENCY CHECK
+
+- No dependencies on other commits
+- The affected code (`mmp_pdma_residue()`) has existed since 2014
+- The `desc_lock` spinlock exists in all stable trees
+- Should apply cleanly to any kernel from 3.15+ (when residue reporting
+  was added)
+
+**Note**: Recent mainline commits added SpacemiT K1 support with 64-bit
+operations (`pdev->ops->get_desc_dst_addr`, etc.), but the core logic
+and the race condition existed with the original 32-bit implementation
+too. For older stable trees (pre-6.x), minor context adjustments might
+be needed due to the `pdev->ops->` refactoring, but the fix concept
+remains the same.
+
+### Conclusion
+
+This commit fixes a clear **use-after-free race condition** in the MMP
+PDMA driver. The bug:
+- Can cause kernel crashes/panics
+- Has existed since 2014 (when residue reporting was added)
+- Is reproducible with standard kernel testing tools (dmatest)
+
 The fix:
-1. Converts all early returns to `goto err_put`
-2. Adds proper cleanup label that calls `of_node_put()` on both nodes
-3. Nullifies the pointers after release (defensive programming)
+- Is small and surgical (~10 lines of spinlock additions)
+- Uses existing infrastructure (the `desc_lock` already exists for this
+  purpose)
+- Follows existing driver patterns
+- Has minimal regression risk
 
-### Impact Assessment
-- **Severity**: Low to Medium. This is a memory leak, not a crash or
-  data corruption. The leak only occurs on error paths during probe.
-- **Scope**: The TI DAVINCI EVM audio driver. This is an older driver
-  for TI DaVinci SoC platforms, a relatively niche embedded hardware.
-- **Trigger**: The leak happens when probe fails - i.e., when there's
-  something wrong with the device tree or when resources are
-  unavailable.
-- **User Impact**: Repeated probe failures (e.g., due to
-  misconfiguration or module load/unload cycles) could accumulate leaked
-  memory over time.
-
-### Risk Assessment
-- **Low risk**: The change is surgical - it only adds error handling
-  paths
-- **Well-understood pattern**: of_node_put() cleanup is a very common
-  kernel pattern
-- **Doesn't change success path behavior**: The normal successful probe
-  path is unchanged except for adding `return ret;` instead of falling
-  through
-
-### Backport Considerations
-- For stable kernels >= 6.10: The patch should apply cleanly (uses
-  `device_get_match_data()`)
-- For stable kernels < 6.10: The patch would need adjustment since those
-  use `of_match_device()` pattern instead
-
-**Conclusion:**
-
-This is a legitimate bug fix that addresses a memory leak in error
-paths. The fix is:
-1. Small and contained
-2. Uses a well-understood kernel pattern
-3. Fixes a real resource leak bug
-4. Low risk (only affects error paths)
-5. Properly tested (merged by maintainer Mark Brown)
-
-However, the bug is relatively minor:
-- Only affects niche TI DAVINCI EVM hardware
-- Only leaks memory on probe failure (error paths)
-- The leak is small (device tree node references)
-
-This type of reference leak fix is commonly backported to stable trees.
-The pattern is well-established and the fix is straightforward. The main
-concern is whether it will apply cleanly to older stable trees that
-don't have the `device_get_match_data()` change, but that's a backport
-logistics issue, not a reason to reject it.
+This is exactly the type of fix stable trees need: a clearly correct fix
+for a real bug that users can hit, with minimal risk of introducing new
+problems.
 
 **YES**
 
- sound/soc/ti/davinci-evm.c | 39 ++++++++++++++++++++++++++++++--------
- 1 file changed, 31 insertions(+), 8 deletions(-)
+ drivers/dma/mmp_pdma.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/sound/soc/ti/davinci-evm.c b/sound/soc/ti/davinci-evm.c
-index 2a2f5bc95576e..a55a369ce71c2 100644
---- a/sound/soc/ti/davinci-evm.c
-+++ b/sound/soc/ti/davinci-evm.c
-@@ -193,27 +193,32 @@ static int davinci_evm_probe(struct platform_device *pdev)
- 		return -EINVAL;
+diff --git a/drivers/dma/mmp_pdma.c b/drivers/dma/mmp_pdma.c
+index d07229a748868..481b58c414e47 100644
+--- a/drivers/dma/mmp_pdma.c
++++ b/drivers/dma/mmp_pdma.c
+@@ -928,6 +928,7 @@ static unsigned int mmp_pdma_residue(struct mmp_pdma_chan *chan,
+ {
+ 	struct mmp_pdma_desc_sw *sw;
+ 	struct mmp_pdma_device *pdev = to_mmp_pdma_dev(chan->chan.device);
++	unsigned long flags;
+ 	u64 curr;
+ 	u32 residue = 0;
+ 	bool passed = false;
+@@ -945,6 +946,8 @@ static unsigned int mmp_pdma_residue(struct mmp_pdma_chan *chan,
+ 	else
+ 		curr = pdev->ops->read_src_addr(chan->phy);
  
- 	dai->cpus->of_node = of_parse_phandle(np, "ti,mcasp-controller", 0);
--	if (!dai->cpus->of_node)
--		return -EINVAL;
-+	if (!dai->cpus->of_node) {
-+		ret = -EINVAL;
-+		goto err_put;
-+	}
++	spin_lock_irqsave(&chan->desc_lock, flags);
++
+ 	list_for_each_entry(sw, &chan->chain_running, node) {
+ 		u64 start, end;
+ 		u32 len;
+@@ -989,6 +992,7 @@ static unsigned int mmp_pdma_residue(struct mmp_pdma_chan *chan,
+ 			continue;
  
- 	dai->platforms->of_node = dai->cpus->of_node;
- 
- 	evm_soc_card.dev = &pdev->dev;
- 	ret = snd_soc_of_parse_card_name(&evm_soc_card, "ti,model");
- 	if (ret)
--		return ret;
-+		goto err_put;
- 
- 	mclk = devm_clk_get(&pdev->dev, "mclk");
- 	if (PTR_ERR(mclk) == -EPROBE_DEFER) {
--		return -EPROBE_DEFER;
-+		ret = -EPROBE_DEFER;
-+		goto err_put;
- 	} else if (IS_ERR(mclk)) {
- 		dev_dbg(&pdev->dev, "mclk not found.\n");
- 		mclk = NULL;
+ 		if (sw->async_tx.cookie == cookie) {
++			spin_unlock_irqrestore(&chan->desc_lock, flags);
+ 			return residue;
+ 		} else {
+ 			residue = 0;
+@@ -996,6 +1000,8 @@ static unsigned int mmp_pdma_residue(struct mmp_pdma_chan *chan,
+ 		}
  	}
  
- 	drvdata = devm_kzalloc(&pdev->dev, sizeof(*drvdata), GFP_KERNEL);
--	if (!drvdata)
--		return -ENOMEM;
-+	if (!drvdata) {
-+		ret = -ENOMEM;
-+		goto err_put;
-+	}
- 
- 	drvdata->mclk = mclk;
- 
-@@ -223,7 +228,8 @@ static int davinci_evm_probe(struct platform_device *pdev)
- 		if (!drvdata->mclk) {
- 			dev_err(&pdev->dev,
- 				"No clock or clock rate defined.\n");
--			return -EINVAL;
-+			ret = -EINVAL;
-+			goto err_put;
- 		}
- 		drvdata->sysclk = clk_get_rate(drvdata->mclk);
- 	} else if (drvdata->mclk) {
-@@ -239,8 +245,25 @@ static int davinci_evm_probe(struct platform_device *pdev)
- 	snd_soc_card_set_drvdata(&evm_soc_card, drvdata);
- 	ret = devm_snd_soc_register_card(&pdev->dev, &evm_soc_card);
- 
--	if (ret)
-+	if (ret) {
- 		dev_err(&pdev->dev, "snd_soc_register_card failed (%d)\n", ret);
-+		goto err_put;
-+	}
++	spin_unlock_irqrestore(&chan->desc_lock, flags);
 +
-+	return ret;
-+
-+err_put:
-+	dai->platforms->of_node = NULL;
-+
-+	if (dai->cpus->of_node) {
-+		of_node_put(dai->cpus->of_node);
-+		dai->cpus->of_node = NULL;
-+	}
-+
-+	if (dai->codecs->of_node) {
-+		of_node_put(dai->codecs->of_node);
-+		dai->codecs->of_node = NULL;
-+	}
- 
- 	return ret;
+ 	/* We should only get here in case of cyclic transactions */
+ 	return residue;
  }
 -- 
 2.51.0
