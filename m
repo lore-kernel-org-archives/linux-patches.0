@@ -1,45 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73B7847B42D;
-	Tue, 20 Jan 2026 19:35:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2BB847CC85;
+	Tue, 20 Jan 2026 19:35:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768937708; cv=none; b=k3gdI+Uo93deioI+zO7pNrG1uCpL2KfGtBtwn35IkwxjimwtwWjIZT8Pkrl9iXuHxs65Lw2RdhbEt/ob2QqVou7jAia339I+gDdlRmqwhOni1AccFJsxjZKcsEz27Vdynn/OQujbkcbNRZpuwBw+/TAgNuwqq5jwse7PCDMgH/k=
+	t=1768937710; cv=none; b=W3iOMSEQnStomlNgaRrEkkDzlNFhVYULLORApfPc74LYJBceQdd84tzQlR+Wd4wnpNBhlLJhFAKtbZ7ti/z9t9VFDTLA4A/fMTRHo7rw0pBCQZK13bZaFpikgE1Ekpv0bO0UmiZYRxj12gKFJDHEjCv2hv5/J2x0wC+nc0URYeA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768937708; c=relaxed/simple;
-	bh=LhUtgzXOVPV8SD3R2VJ6zeG5rQgZrdms4OAVI/3ji5s=;
+	s=arc-20240116; t=1768937710; c=relaxed/simple;
+	bh=FdvzVeldSGdLuYK3JnxXfDDD8Cc+1OUefdPqDkOGSY0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bhJ9meRNt0cCha9lH21urnk6yaGT3z9GNrDR/ieUbVUukJ4D2RfLXK6BKFHxNe8SPTykfNvPGXVikML6qkOcx1oEV8FxnoO8d7wno10UkpRz+hr9oJKwNTUqv+6pDfM6j06IuZmT/fvby4OZcY+NZCiUvvSESvuu/BoCMhEqG6Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=BEVy/UHo; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QUvP1NMAe/hMym7vyT6645B8/HwK2SNF4+PV8teA7ogdM/Xsq9ECIdo+0Z4HGex0jfr7l4hCZc5hQUHklh4L1C7EdAOdzfL+jnuEVsvwm37P0eRvZmIYNyRhasBmDpRKNMJ1yVSWZVi56xknbC32gaUQTSTcgNE/wsK6eDwDDAo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ZDKAYP8Q; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="BEVy/UHo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB2E1C19421;
-	Tue, 20 Jan 2026 19:35:04 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ZDKAYP8Q"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6EEA4C16AAE;
+	Tue, 20 Jan 2026 19:35:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1768937705;
-	bh=LhUtgzXOVPV8SD3R2VJ6zeG5rQgZrdms4OAVI/3ji5s=;
+	s=k20201202; t=1768937708;
+	bh=FdvzVeldSGdLuYK3JnxXfDDD8Cc+1OUefdPqDkOGSY0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BEVy/UHoYyT1NPcSaM7OZOWOmpSp4fz9Om0Cj6qr09uIAdFFQCGFWFoJwEBZjZelF
-	 0s5s3uDl6t/EemYHuhJQYi02UXEaIoi+Evq+YYb29zaLur/hnFOBVC+nD9Yt2iJm9i
-	 lk1eIjzyP0wY3B+x8ZZgjXNp6oyxHmqijIoj3gzwx2ATIP5dfPPpTPHB4gMi1iT5aX
-	 6lPTff7/GyXtZswom8WOVMkaJPTGwPTEBLbiSDdprgJetN3HboA+fs0PqAhDoN7XMU
-	 9mLUGTqe3iNigiDAl894Y1WZoUaLiXdGmQUjfl7/XOISnI5+8BQvJSTg4GmXksmwXY
-	 GFUjZem7TrGQg==
+	b=ZDKAYP8Qr52CFN9n4n1NuYYNiafs1qxWoZWrTPmt9j2hlmj2noXdZU9JqqfbVOXpj
+	 oTJq/ifYep30l3FqFe09NW/uT749R463DnOUbvQGgPDX7w6qk33/Bm8A8Uy0QRGg2A
+	 yzVgR/uyzzFVe4peU1Gn1nrQ/JKUNl3JbAORgB2M7ApwbrDNMJUT1FA3NStqTkf/0v
+	 2E1pit4thKOqM4IIcTFMBA8OTOrB06aUcuPOBROwjt/wU0TflBpfMZFFp7+CevclOj
+	 jMGn6euvAYDqWXBdOVh86wwBw5GB9q3uSD1TgpP11M92avgjlqr37edKZ1t97OjmG4
+	 jP8X1mClorqHQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Guodong Xu <guodong@riscstar.com>,
-	Juan Li <lijuan@linux.spacemit.com>,
-	Vinod Koul <vkoul@kernel.org>,
+Cc: Hannes Reinecke <hare@kernel.org>,
+	Yi Zhang <yi.zhang@redhat.com>,
+	Sagi Grimberg <sagi@grimberg.me>,
+	Keith Busch <kbusch@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	dlan@gentoo.org,
-	dmaengine@vger.kernel.org,
-	linux-riscv@lists.infradead.org,
-	spacemit@lists.linux.dev
-Subject: [PATCH AUTOSEL 6.18] dmaengine: mmp_pdma: Fix race condition in mmp_pdma_residue()
-Date: Tue, 20 Jan 2026 14:34:48 -0500
-Message-ID: <20260120193456.865383-5-sashal@kernel.org>
+	kch@nvidia.com,
+	linux-nvme@lists.infradead.org
+Subject: [PATCH AUTOSEL 6.18-6.6] nvmet-tcp: fixup hang in nvmet_tcp_listen_data_ready()
+Date: Tue, 20 Jan 2026 14:34:50 -0500
+Message-ID: <20260120193456.865383-7-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260120193456.865383-1-sashal@kernel.org>
 References: <20260120193456.865383-1-sashal@kernel.org>
@@ -54,201 +53,120 @@ X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.18.6
 Content-Transfer-Encoding: 8bit
 
-From: Guodong Xu <guodong@riscstar.com>
+From: Hannes Reinecke <hare@kernel.org>
 
-[ Upstream commit a143545855bc2c6e1330f6f57ae375ac44af00a7 ]
+[ Upstream commit 2fa8961d3a6a1c2395d8d560ffed2c782681bade ]
 
-Add proper locking in mmp_pdma_residue() to prevent use-after-free when
-accessing descriptor list and descriptor contents.
+When the socket is closed while in TCP_LISTEN a callback is run to
+flush all outstanding packets, which in turns calls
+nvmet_tcp_listen_data_ready() with the sk_callback_lock held.
+So we need to check if we are in TCP_LISTEN before attempting
+to get the sk_callback_lock() to avoid a deadlock.
 
-The race occurs when multiple threads call tx_status() while the tasklet
-on another CPU is freeing completed descriptors:
-
-CPU 0                              CPU 1
------                              -----
-mmp_pdma_tx_status()
-mmp_pdma_residue()
-  -> NO LOCK held
-     list_for_each_entry(sw, ..)
-                                   DMA interrupt
-                                   dma_do_tasklet()
-                                     -> spin_lock(&desc_lock)
-                                        list_move(sw->node, ...)
-                                        spin_unlock(&desc_lock)
-  |                                     dma_pool_free(sw) <- FREED!
-  -> access sw->desc <- UAF!
-
-This issue can be reproduced when running dmatest on the same channel with
-multiple threads (threads_per_chan > 1).
-
-Fix by protecting the chain_running list iteration and descriptor access
-with the chan->desc_lock spinlock.
-
-Signed-off-by: Juan Li <lijuan@linux.spacemit.com>
-Signed-off-by: Guodong Xu <guodong@riscstar.com>
-Link: https://patch.msgid.link/20251216-mmp-pdma-race-v1-1-976a224bb622@riscstar.com
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Link: https://lore.kernel.org/linux-nvme/CAHj4cs-zu7eVB78yUpFjVe2UqMWFkLk8p+DaS3qj+uiGCXBAoA@mail.gmail.com/
+Tested-by:  Yi Zhang <yi.zhang@redhat.com>
+Reviewed-by: Sagi Grimberg <sagi@grimberg.me>
+Signed-off-by: Hannes Reinecke <hare@kernel.org>
+Signed-off-by: Keith Busch <kbusch@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-This confirms the `mmp_pdma_residue()` function was added in 2014. The
-race condition has existed since then.
+Let me understand the context of the commit better - it might be that
+the commit requires a minor adjustment for backport since it uses
+`nvmet_wq` but in the current tree (and stable trees), the workqueue is
+called `nvmet_tcp_wq`. Looking at the diff more carefully:
 
-## Analysis Summary
+The diff shows:
+```c
++       if (port)
+                queue_work(nvmet_wq, &port->accept_work);
+```
 
-### 1. COMMIT MESSAGE ANALYSIS
+Wait, the space before `queue_work` in the diff context shows this is
+the EXISTING code (no + sign). But wait, looking at the current code:
+```c
+schedule_work(&port->accept_work);
+```
 
-The commit message clearly describes:
-- A **use-after-free (UAF) race condition** in `mmp_pdma_residue()`
-- The race occurs between `tx_status()` (calling `mmp_pdma_residue()`)
-  and the DMA tasklet (`dma_do_tasklet()`)
-- **Clear reproduction steps**: running dmatest with `threads_per_chan >
-  1`
-- The CPU timeline diagram explicitly shows the race window between
-  unlocked list iteration and descriptor free
+So there's a discrepancy. The commit I'm analyzing might be from a tree
+where `schedule_work` was changed to `queue_work(nvmet_wq, ...)` in
+another commit.
 
-Keywords: "Fix race condition", "use-after-free", "UAF"
+For the purpose of backporting analysis, the KEY FIX is:
+1. **Check `sk->sk_state != TCP_LISTEN` BEFORE acquiring the lock** -
+   this is the essential fix for the deadlock
+2. The change from `schedule_work` to `queue_work(nvmet_wq, ...)` is
+   secondary
 
-### 2. CODE CHANGE ANALYSIS
+For stable backports, minor adjustments may be needed (using
+`schedule_work` instead of `queue_work(nvmet_wq, ...)`), but the core
+fix (early state check before lock acquisition) is applicable.
 
-**The bug:** `mmp_pdma_residue()` iterates over `chan->chain_running`
-list and accesses descriptor contents (`sw->desc`) without holding the
-`desc_lock` spinlock. Meanwhile, `dma_do_tasklet()` can:
-1. Hold `desc_lock`
-2. Move descriptors from `chain_running` to `chain_cleanup` via
-   `list_move()`
-3. Release `desc_lock`
-4. Free the descriptor via `dma_pool_free()`
+## SUMMARY
 
-If `mmp_pdma_residue()` is iterating over the list when this happens, it
-can access freed memory (UAF).
+**What the commit fixes**: A deadlock that occurs when
+`nvmet_tcp_listen_data_ready()` is called during socket cleanup with
+`sk_callback_lock` already held. The fix checks the socket state before
+acquiring the lock.
 
-**The fix:** Adds `spin_lock_irqsave(&chan->desc_lock, flags)` before
-the `list_for_each_entry()` loop and `spin_unlock_irqrestore()` at all
-exit points from the function. This is:
-- Small (+6 lines, -0 lines of actual logic)
-- Surgical - uses the existing `desc_lock` that already protects this
-  list elsewhere
-- Follows existing driver patterns (other list operations use this lock)
+**Why it matters for stable users**: This is a deadlock/hang that can
+occur during NVMe-over-TCP disconnect scenarios. Systems using NVMe-
+over-TCP will hang, requiring a hard reset.
 
-### 3. CLASSIFICATION
+**Meets stable kernel rules**:
+- Obviously correct: Yes - simple early return check before lock
+  acquisition
+- Fixes a real bug: Yes - deadlock reported and reproduced via blktests
+- Small scope: Yes - 10 lines changed in one function
+- No new features: Correct - pure bug fix
+- Tested: Yes - "Tested-by" tag from Red Hat QE
 
-This is a **bug fix** for a **use-after-free vulnerability**. This is a
-serious memory safety issue:
-- Can cause kernel crashes/panics
-- Can lead to data corruption
-- Potential security implications (UAF bugs are commonly exploitable)
+**Risk assessment**: Very low. The fix simplifies the logic and cannot
+cause regression.
 
-### 4. SCOPE AND RISK ASSESSMENT
+**Dependencies/Backport notes**: The commit uses `queue_work(nvmet_wq,
+...)` but older stable trees use `schedule_work(&port->accept_work)`. A
+minor adjustment may be needed for clean backport, but the essential fix
+(early state check) applies cleanly.
 
-- **Lines changed**: ~10 lines (just adding lock/unlock around existing
-  code)
-- **Files touched**: 1 file
-- **Complexity**: Very low - straightforward spinlock acquisition
-- **Risk of regression**: Minimal - uses existing lock that is designed
-  for this purpose
-- **Potential issues**: Slightly increased lock contention when calling
-  `tx_status()`, but this is necessary for correctness
-
-### 5. USER IMPACT
-
-- **Who is affected**: Users of MMP PDMA DMA controller (Marvell PXA/MMP
-  platforms, SpacemiT K1)
-- **Trigger conditions**: Multi-threaded DMA operations on same channel
-  (common in dmatest, may occur in real workloads)
-- **Severity**: High - UAF can cause kernel crashes or undefined
-  behavior
-- **Reproducibility**: Can be reproduced with dmatest (`threads_per_chan
-  > 1`)
-
-### 6. STABILITY INDICATORS
-
-- Has proper sign-offs: `Signed-off-by` from author, forwarder, and DMA
-  maintainer (Vinod Koul)
-- Link to mailing list discussion included
-- The existing lock (`desc_lock`) has been in the driver since the
-  beginning
-- The locking pattern matches other functions in the driver
-
-### 7. DEPENDENCY CHECK
-
-- No dependencies on other commits
-- The affected code (`mmp_pdma_residue()`) has existed since 2014
-- The `desc_lock` spinlock exists in all stable trees
-- Should apply cleanly to any kernel from 3.15+ (when residue reporting
-  was added)
-
-**Note**: Recent mainline commits added SpacemiT K1 support with 64-bit
-operations (`pdev->ops->get_desc_dst_addr`, etc.), but the core logic
-and the race condition existed with the original 32-bit implementation
-too. For older stable trees (pre-6.x), minor context adjustments might
-be needed due to the `pdev->ops->` refactoring, but the fix concept
-remains the same.
-
-### Conclusion
-
-This commit fixes a clear **use-after-free race condition** in the MMP
-PDMA driver. The bug:
-- Can cause kernel crashes/panics
-- Has existed since 2014 (when residue reporting was added)
-- Is reproducible with standard kernel testing tools (dmatest)
-
-The fix:
-- Is small and surgical (~10 lines of spinlock additions)
-- Uses existing infrastructure (the `desc_lock` already exists for this
-  purpose)
-- Follows existing driver patterns
-- Has minimal regression risk
-
-This is exactly the type of fix stable trees need: a clearly correct fix
-for a real bug that users can hit, with minimal risk of introducing new
-problems.
+**YES** - This is a clear deadlock fix that should be backported to
+stable kernels. The commit:
+1. Fixes a real, reproducible deadlock
+2. Is minimal and obviously correct
+3. Has been tested and reviewed
+4. Affects users of NVMe-over-TCP (a production storage protocol)
+5. Has very low regression risk
 
 **YES**
 
- drivers/dma/mmp_pdma.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/nvme/target/tcp.c | 9 ++++-----
+ 1 file changed, 4 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/dma/mmp_pdma.c b/drivers/dma/mmp_pdma.c
-index d07229a748868..481b58c414e47 100644
---- a/drivers/dma/mmp_pdma.c
-+++ b/drivers/dma/mmp_pdma.c
-@@ -928,6 +928,7 @@ static unsigned int mmp_pdma_residue(struct mmp_pdma_chan *chan,
- {
- 	struct mmp_pdma_desc_sw *sw;
- 	struct mmp_pdma_device *pdev = to_mmp_pdma_dev(chan->chan.device);
-+	unsigned long flags;
- 	u64 curr;
- 	u32 residue = 0;
- 	bool passed = false;
-@@ -945,6 +946,8 @@ static unsigned int mmp_pdma_residue(struct mmp_pdma_chan *chan,
- 	else
- 		curr = pdev->ops->read_src_addr(chan->phy);
+diff --git a/drivers/nvme/target/tcp.c b/drivers/nvme/target/tcp.c
+index 470bf37e5a637..2e9a3e698b700 100644
+--- a/drivers/nvme/target/tcp.c
++++ b/drivers/nvme/target/tcp.c
+@@ -1992,14 +1992,13 @@ static void nvmet_tcp_listen_data_ready(struct sock *sk)
  
-+	spin_lock_irqsave(&chan->desc_lock, flags);
+ 	trace_sk_data_ready(sk);
+ 
++	if (sk->sk_state != TCP_LISTEN)
++		return;
 +
- 	list_for_each_entry(sw, &chan->chain_running, node) {
- 		u64 start, end;
- 		u32 len;
-@@ -989,6 +992,7 @@ static unsigned int mmp_pdma_residue(struct mmp_pdma_chan *chan,
- 			continue;
- 
- 		if (sw->async_tx.cookie == cookie) {
-+			spin_unlock_irqrestore(&chan->desc_lock, flags);
- 			return residue;
- 		} else {
- 			residue = 0;
-@@ -996,6 +1000,8 @@ static unsigned int mmp_pdma_residue(struct mmp_pdma_chan *chan,
- 		}
- 	}
- 
-+	spin_unlock_irqrestore(&chan->desc_lock, flags);
-+
- 	/* We should only get here in case of cyclic transactions */
- 	return residue;
+ 	read_lock_bh(&sk->sk_callback_lock);
+ 	port = sk->sk_user_data;
+-	if (!port)
+-		goto out;
+-
+-	if (sk->sk_state == TCP_LISTEN)
++	if (port)
+ 		queue_work(nvmet_wq, &port->accept_work);
+-out:
+ 	read_unlock_bh(&sk->sk_callback_lock);
  }
+ 
 -- 
 2.51.0
 
