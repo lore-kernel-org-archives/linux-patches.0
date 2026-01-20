@@ -1,52 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00C8A449EA0;
-	Tue, 20 Jan 2026 19:35:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6EFDF27FD59;
+	Tue, 20 Jan 2026 19:35:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768937702; cv=none; b=GgsU609ypalv6xxpkuzr57KBaWcqUtJWq2725Nh4IpMOvMWV7+1dfZ3oYZe3NO4uRcte7lPMciKP4L+0LEW/OmSXnAnX9HIBwZ0H+RnejaJfCxykLjgXFdeszN3UV4qDaKGmhfAYZcjxqhS+2h/ijACa+2RE9nSvTff9Xd0c5Oc=
+	t=1768937703; cv=none; b=m67xNEDKRLQ2RsCeZaqK227eu+S49SSBqqKDSEjRLc1Njju1z2mpPjyCcw1wwVzLqMpLmVlrqyW4z0TXo0osXFUL6py82yd8rTiD2HaIOrlk6m2pjTLM8NVgFxXJIDZygzSEXnVZVSk81mppcXVwtQq1BdsJhROXvtkFpjP/2GE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768937702; c=relaxed/simple;
-	bh=sl0c0tXxSGUlMJVxClFDtN6MdMpzp4gx5cCUIHJzHX0=;
+	s=arc-20240116; t=1768937703; c=relaxed/simple;
+	bh=RBwba5PH5VB3vWbCNV2r9x5/crOibO5WxEaYcKLXAmg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XwK1SCOSCafcwMZ7MOfxAyG7xoKewrK8VRv2JmLuziTPihRQNpBXd+JrgC973ESlSGAo5m7CMPorCmTkQCGYNY+ZPy7iNGyWsujf7rOl/rJNQYx6UlaLx5JFsxf18r0kL8FixSUL8Ribl+okyIFB7ZyvpKpJKcl676SJz5/6oac=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=HIZzplqa; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=P7amhc/q2sDHBxI7fwvHmNBFU5D34wcYbeetWL+TH3s7/TMhEZHDtcYHwpQk237pzdEvZqTgYMtvoYU0szGzPGiq8P/Hs0wfNNNIdKWS2T0gkEvN8oiq1gyJubAoCWwQxAXGqRtUU2uyK9Zj1Mf2FxnrSBJG1HIUTsVLHa7ftCg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=HoN+0wTD; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="HIZzplqa"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F0F51C16AAE;
-	Tue, 20 Jan 2026 19:34:59 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="HoN+0wTD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0085AC2BC86;
+	Tue, 20 Jan 2026 19:35:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1768937701;
-	bh=sl0c0tXxSGUlMJVxClFDtN6MdMpzp4gx5cCUIHJzHX0=;
+	s=k20201202; t=1768937703;
+	bh=RBwba5PH5VB3vWbCNV2r9x5/crOibO5WxEaYcKLXAmg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HIZzplqa9uDVBdrS9mbVmcm7D1e+m91XWVDijXUBWSH1vs9kJwmphYlP7jLZhQiPZ
-	 dWVauUUbTYEVONAn342xw0bgNuKxKpzA834zEPAc1EbSCYWf2MMv8N7yhfViunTET5
-	 DY6MCpcJlOz3l85/++K4sL0D/fYTc3ixChKKLXys7LmQcaO4VGGMjPWhdElFeOyrVo
-	 DugbWT4l6SqZbtxIYbVtRc+KoGjGfYxe6DGRwnxorjrOJeY+GdgrrKD+zAqKG3GSXx
-	 Zit0OeBSYRbhrz3NQ1eCcBqxMjOzBkiyDHa8j/o5t9LoYSMRlsn0pZvJQG0tITZhr1
-	 +Gfl7duD38uKw==
+	b=HoN+0wTDlp5v/wc4AqTd48xaLZ7sOpDiD6dzlkmCzk2QwfoBb6KHvVNws7YaE06dD
+	 Nmd668aEjANA3JRnlFd8XUetahYvWcSV+ztHbdXVUdA7e2kgf3fB2wM1tjf0/1WkKO
+	 h8NsOIvJYykuGzp4gzUVBXUl7W4G1FSrujLRNIcZ79O5zFdzlIA84+Eoc5rJDlzmoj
+	 VmhngsBG73ooy8kxW1E6bqbNcHVkdzwm9b7Vn666NA5kWwWt6I+1do8AuK28oE/w90
+	 Qh1Ho988NqAZXZ78ZyJLqkORSTAPKaKBwmuPKWfGhATfe4OlSnhu2E54T1WpqZsG+p
+	 i3GEz9ixlPUgA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Radhi Bajahaw <bajahawradhi@gmail.com>,
+Cc: Dimitrios Katsaros <patcherwork@gmail.com>,
+	Sascha Hauer <s.hauer@pengutronix.de>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	mario.limonciello@amd.com,
-	ravenblack@gmail.com,
-	thomasmizra@gmail.com,
-	meowmeowbeanz@gmx.com,
-	yuzuru_10@proton.me,
-	oliver.schramm97@gmail.com,
-	queler@gmail.com,
-	laodenbach@gmail.com,
-	talhah.peerbhai@gmail.com,
-	santesegabriel@gmail.com,
-	alex.andries.aa@gmail.com,
-	syed.sabakareem@amd.com
-Subject: [PATCH AUTOSEL 6.18-6.6] ASoC: amd: yc: Fix microphone on ASUS M6500RE
-Date: Tue, 20 Jan 2026 14:34:45 -0500
-Message-ID: <20260120193456.865383-2-sashal@kernel.org>
+	shenghao-ding@ti.com,
+	kevin-lu@ti.com,
+	baojun.xu@ti.com,
+	linux-sound@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.18-5.10] ASoC: tlv320adcx140: Propagate error codes during probe
+Date: Tue, 20 Jan 2026 14:34:46 -0500
+Message-ID: <20260120193456.865383-3-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260120193456.865383-1-sashal@kernel.org>
 References: <20260120193456.865383-1-sashal@kernel.org>
@@ -61,156 +54,130 @@ X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.18.6
 Content-Transfer-Encoding: 8bit
 
-From: Radhi Bajahaw <bajahawradhi@gmail.com>
+From: Dimitrios Katsaros <patcherwork@gmail.com>
 
-[ Upstream commit 8e29db1b08808f709231e6fd4c79dcdee5b17a17 ]
+[ Upstream commit d89aad92cfd15edbd704746f44c98fe687f9366f ]
 
-Add DMI match for ASUSTeK COMPUTER INC. M6500RE to enable the
-internal microphone.
+When scanning for the reset pin, we could get an -EPROBE_DEFER.
+The driver would assume that no reset pin had been defined,
+which would mean that the chip would never be powered.
 
-Signed-off-by: Radhi Bajahaw <bajahawradhi@gmail.com>
-Link: https://patch.msgid.link/20260112203814.155-1-bajahawradhi@gmail.com
+Now we both respect any error we get from devm_gpiod_get_optional.
+We also now properly report the missing GPIO definition when
+'gpio_reset' is NULL.
+
+Signed-off-by: Dimitrios Katsaros <patcherwork@gmail.com>
+Signed-off-by: Sascha Hauer <s.hauer@pengutronix.de>
+Link: https://patch.msgid.link/20260113-sound-soc-codecs-tvl320adcx140-v4-3-8f7ecec525c8@pengutronix.de
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-## Comprehensive Analysis
+This confirms my analysis. In `adcx140_reset()`, the code checks `if
+(adcx140->gpio_reset)`. An error pointer like `-EPROBE_DEFER` evaluates
+to TRUE (non-zero), so if the original code allowed an error pointer to
+be stored, this function would try to use an invalid descriptor -
+leading to a crash or undefined behavior.
+
+## Analysis Summary
 
 ### 1. COMMIT MESSAGE ANALYSIS
-
-The commit message is clear and straightforward:
-- **Subject**: "ASoC: amd: yc: Fix microphone on ASUS M6500RE"
-- **Description**: Adds a DMI match for a specific ASUS laptop model to
-  enable the internal microphone
-- **Keywords**: "Fix" indicates this is addressing a bug (non-working
-  microphone)
-- **Tags**: Has proper Signed-off-by and Link tags, reviewed by Mark
-  Brown (ASoC maintainer)
-
-The commit addresses a real user-facing issue: the internal microphone
-doesn't work on this specific laptop without this DMI quirk entry.
+- The commit message clearly explains the bug: `-EPROBE_DEFER` was being
+  swallowed when getting the reset GPIO
+- The consequence is that "the chip would never be powered" - this is a
+  real functionality bug
+- The fix properly propagates errors and only logs "missing GPIO" when
+  the GPIO is actually NULL
 
 ### 2. CODE CHANGE ANALYSIS
+**The Bug:**
+- `devm_gpiod_get_optional()` can return error pointers (e.g.,
+  `-EPROBE_DEFER`)
+- The original code only logged a message when `IS_ERR()` was true, but
+  continued execution
+- If `-EPROBE_DEFER` was returned, the driver would fail silently - the
+  device would not work properly
+- Worse, an error pointer would pass the `if (adcx140->gpio_reset)`
+  check in `adcx140_reset()`, potentially causing crashes
 
-The diff shows:
-- **Single file changed**: `sound/soc/amd/yc/acp6x-mach.c`
-- **Change type**: Addition of a new DMI match entry to the
-  `yc_acp_quirk_table[]` array
-- **Lines added**: 7 lines (a new table entry)
-- **Lines removed**: 0
-
-The actual change is:
-```c
-{
-    .driver_data = &acp6x_card,
-    .matches = {
-        DMI_MATCH(DMI_BOARD_VENDOR, "ASUSTeK COMPUTER INC."),
-        DMI_MATCH(DMI_PRODUCT_NAME, "M6500RE"),
-    }
-},
-```
-
-This is identical in structure to the existing entries for other ASUS
-models (M6400RC, M3402RA, M6500RC, M6501RM, E1404FA, E1504FA, etc.). The
-pattern is well-established.
+**The Fix:**
+- Properly returns errors from `devm_gpiod_get_optional()` using
+  `dev_err_probe()`
+- `dev_err_probe()` is the modern idiom that handles `-EPROBE_DEFER`
+  cleanly (doesn't spam logs)
+- The informational message is now correctly tied to
+  `!adcx140->gpio_reset` (GPIO truly not defined)
 
 ### 3. CLASSIFICATION
-
-This falls squarely into the **QUIRKS and WORKAROUNDS** exception
-category:
-- It's a DMI-based hardware quirk for a specific laptop model
-- The driver already exists and is functional
-- This just adds hardware identification to enable proper audio
-  configuration
-- It's analogous to adding a new PCI/USB device ID to an existing driver
-
-This is **NOT** adding a new feature - it's enabling existing
-functionality on hardware that needs explicit enumeration.
+- **Bug fix**: Yes - fixes improper error handling that causes device
+  malfunction
+- **Security**: No
+- **New feature**: No - this is correcting existing broken behavior
+- **Exception category**: Not a device ID/quirk/DT fix, but a standard
+  bug fix
 
 ### 4. SCOPE AND RISK ASSESSMENT
-
-**Risk: VERY LOW**
-- **Scope**: Extremely minimal - 7 lines added to a quirk table
-- **Isolation**: The change only affects ASUS M6500RE laptops - no other
-  systems are impacted
-- **Pattern**: Follows exact same pattern as dozens of other entries in
-  the same table
-- **No logic changes**: No behavioral changes to the driver code itself
-- **No dependencies**: Self-contained change
-
-Looking at the file, there are already many ASUS laptop entries in this
-table (M3402RA, M6400RC, M6500RC, M6501RM, etc.). The M6500RE is just
-another variant in the same product family.
+- **Lines changed**: Only ~4 lines modified
+- **Files touched**: 1 file (single audio codec driver)
+- **Complexity**: Very low - straightforward error handling fix
+- **Risk**: Very low - the change is localized and makes the code behave
+  correctly
+- **Subsystem**: ASoC codec driver (specific hardware, not core
+  infrastructure)
 
 ### 5. USER IMPACT
-
-**Impact: HIGH for affected users, ZERO risk for others**
-- Users with ASUS M6500RE laptops currently have non-working internal
-  microphones
-- This is a significant functional issue (broken audio input)
-- The fix enables basic hardware functionality that users expect
-- No impact whatsoever on other systems (DMI match is very specific)
+- **Who is affected**: Users of TLV320ADCx140 family audio codecs (TI
+  ADCs)
+- **Severity**: Without this fix, the device may fail to initialize
+  properly when GPIO provider isn't ready yet
+- **Real-world impact**: The `-EPROBE_DEFER` case is common during early
+  boot when GPIO controllers aren't yet initialized
 
 ### 6. STABILITY INDICATORS
-
-- **Maintainer review**: Signed off by Mark Brown, the ASoC subsystem
-  maintainer
-- **Well-tested pattern**: This exact quirk table pattern has been used
-  hundreds of times
-- **Low complexity**: The change is purely data (no code logic)
+- Has `Signed-off-by` from the patch author and subsystem maintainer
+  (Mark Brown)
+- Standard error handling pattern used in many other drivers
 
 ### 7. DEPENDENCY CHECK
+- No dependencies on other commits
+- The driver has existed since kernel 5.7 (added Feb 2020)
+- This fix should apply cleanly to all stable kernels that have this
+  driver
 
-- **No dependencies**: This is a standalone quirk entry
-- **Code exists in stable**: The `yc_acp_quirk_table` and `acp6x_card`
-  have been in the kernel since the Yellow Carp (AMD Rembrandt) audio
-  support was added
-- **Clean backport**: Will apply cleanly to any stable tree that has
-  this driver
+### Conclusion
 
-### Summary
-
-This commit is a textbook example of what SHOULD be backported to
-stable:
-
-1. **Fixes a real bug**: Non-working microphone on a specific laptop
-2. **Obviously correct**: Follows established pattern exactly
-3. **Small and contained**: 7 lines, single file, data-only change
-4. **No new features**: Enables existing driver for additional hardware
-5. **Zero risk of regression**: Only affects the specific ASUS M6500RE
-   model
-6. **Tested**: Presumably by the author who owns this hardware
-7. **Maintainer approved**: Reviewed and merged by Mark Brown
-
-This matches the "hardware quirks/workarounds" exception to the stable
-rules. These DMI/PCI/USB ID additions are routinely backported because
-they fix real hardware issues with essentially zero risk.
+This is an **excellent candidate for stable backport** because:
+1. It fixes a real bug where `-EPROBE_DEFER` is swallowed, causing
+   device initialization failure
+2. The fix is small, surgical, and obviously correct
+3. It uses the modern `dev_err_probe()` pattern that's standard across
+   the kernel
+4. Risk of regression is minimal - it only changes error handling to do
+   the right thing
+5. The bug has existed since the driver was introduced, affecting all
+   users of this codec
 
 **YES**
 
- sound/soc/amd/yc/acp6x-mach.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ sound/soc/codecs/tlv320adcx140.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/sound/soc/amd/yc/acp6x-mach.c b/sound/soc/amd/yc/acp6x-mach.c
-index bf4d9d3365617..0294177acc663 100644
---- a/sound/soc/amd/yc/acp6x-mach.c
-+++ b/sound/soc/amd/yc/acp6x-mach.c
-@@ -416,6 +416,13 @@ static const struct dmi_system_id yc_acp_quirk_table[] = {
- 			DMI_MATCH(DMI_PRODUCT_NAME, "M6500RC"),
- 		}
- 	},
-+	{
-+		.driver_data = &acp6x_card,
-+		.matches = {
-+			DMI_MATCH(DMI_BOARD_VENDOR, "ASUSTeK COMPUTER INC."),
-+			DMI_MATCH(DMI_PRODUCT_NAME, "M6500RE"),
-+		}
-+	},
- 	{
- 		.driver_data = &acp6x_card,
- 		.matches = {
+diff --git a/sound/soc/codecs/tlv320adcx140.c b/sound/soc/codecs/tlv320adcx140.c
+index d594bf166c0e7..bcbc240248342 100644
+--- a/sound/soc/codecs/tlv320adcx140.c
++++ b/sound/soc/codecs/tlv320adcx140.c
+@@ -1158,6 +1158,9 @@ static int adcx140_i2c_probe(struct i2c_client *i2c)
+ 	adcx140->gpio_reset = devm_gpiod_get_optional(adcx140->dev,
+ 						      "reset", GPIOD_OUT_LOW);
+ 	if (IS_ERR(adcx140->gpio_reset))
++		return dev_err_probe(&i2c->dev, PTR_ERR(adcx140->gpio_reset),
++				     "Failed to get Reset GPIO\n");
++	if (!adcx140->gpio_reset)
+ 		dev_info(&i2c->dev, "Reset GPIO not defined\n");
+ 
+ 	adcx140->supply_areg = devm_regulator_get_optional(adcx140->dev,
 -- 
 2.51.0
 
