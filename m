@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9ABF93793BC;
-	Wed, 21 Jan 2026 18:17:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3B11378D72;
+	Wed, 21 Jan 2026 18:17:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769019466; cv=none; b=XLONCUOsIuLflsY10LivroQArLc2Yu6njY+OQBGT6OtI1+kz4PKNccWhakWBCifrBMwY6KnEFzbRADe3iCyJjs3HRl2t0YtHPj/RWPWUpezluVvhhyt892KF2aVlBPIOJBLjr4EANlSZUcYeuVmIy8axhDY1gtzQgN/t1WTNF20=
+	t=1769019471; cv=none; b=j4Qbq9ipKeLabI4HTPb0gIovJbtd459UMcRyVULj5iqgLlKvccLPLAQ+ZFjXoiC/ia8HiPMduUL61kqEtHngghf8dmKsgR63cjF5VbEaOjitoftr6oozO33uwrZgK7VabsDoP35F+cbvNobujlAfzx36JIwGoJaPxNzVO0wwN78=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769019466; c=relaxed/simple;
-	bh=J4GZiVHSMoTTip/iTJxdjQAks4VQmXCPg8cEmLZmb14=;
+	s=arc-20240116; t=1769019471; c=relaxed/simple;
+	bh=ND/fZtDTW+y60to4TnjgX4sLO3pVxdMbOiYaI4qCMC8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=UFNb96sqzsRmzLeB/sshkSoxjWMwmye69cn2rz1JIOPH7oiIM8Y135+Ev0EBik9IuMbXOtQQKUQpVHktxOKBt1Uis5PNDg0kpDgFR/I5g6Z7KR85qXPa6OLVwdQr8+YB9Sus37uUoG+3Z93ZKEJv0J7cLK61QBFVbgGYmVtPsss=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Xfanc0G9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TQHShSChbxXcpO3QeLbEk3U109WwwUhRwynhFUzj3CgzBRIlTVHik8ksWixXuscUFtjN/t6vYrTE4oJtoj4BfX9iNYyw8q0S9JUjfMfgYJy0/URDyM20RJbC2zg14qWvRKu+Zp1+eCK/aExBX+cQOIhn/Uaco30I/xZyW+Yz1pg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VikBM/JJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Xfanc0G9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0274BC4CEF1;
-	Wed, 21 Jan 2026 18:17:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VikBM/JJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F23D0C4CEF1;
+	Wed, 21 Jan 2026 18:17:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1769019466;
-	bh=J4GZiVHSMoTTip/iTJxdjQAks4VQmXCPg8cEmLZmb14=;
+	s=korg; t=1769019470;
+	bh=ND/fZtDTW+y60to4TnjgX4sLO3pVxdMbOiYaI4qCMC8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Xfanc0G9/eGBblCUyyEQLkLkzRkmFtN3inQ7NtOTnDETF4mU4gcOddULNM05TLpiB
-	 bldRmRTsSIpnPxmq4HNONG1KgeGAAEw1w/pWFYqn3hsfj1jZoZpv/HRO9zUf7WOBPl
-	 4aQWTHcSjQSU12GWQ+njiSk4+klF3Sss80xKoSEM=
+	b=VikBM/JJc0v9q2MGwqi/jjfRMmWaHwtvkKm8zSoSZmysk7zX4NBeae+Xq9gaKYL9V
+	 ACx+0gcV33CExm2ifGtguzWVO8GNK5tcdHjzHNSca6d6OZxgd8YBU3+ttZu0mqISW6
+	 NsDpbUnEGF3gSatwDiGVcL/fquc3E3zxh5+BTeN4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sagi Grimberg <sagi@grimberg.me>,
-	Shivam Kumar <kumar.shivam43666@gmail.com>,
-	Keith Busch <kbusch@kernel.org>,
+	Filipe Manana <fdmanana@suse.com>,
+	Qu Wenruo <wqu@suse.com>,
+	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 015/139] nvme-tcp: fix NULL pointer dereferences in nvmet_tcp_build_pdu_iovec
-Date: Wed, 21 Jan 2026 19:14:23 +0100
-Message-ID: <20260121181412.006809025@linuxfoundation.org>
+Subject: [PATCH 6.12 016/139] btrfs: send: check for inline extents in range_is_hole_in_parent()
+Date: Wed, 21 Jan 2026 19:14:24 +0100
+Message-ID: <20260121181412.042767641@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260121181411.452263583@linuxfoundation.org>
 References: <20260121181411.452263583@linuxfoundation.org>
@@ -46,71 +46,48 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Shivam Kumar <kumar.shivam43666@gmail.com>
+From: Qu Wenruo <wqu@suse.com>
 
-[ Upstream commit 32b63acd78f577b332d976aa06b56e70d054cbba ]
+[ Upstream commit 08b096c1372cd69627f4f559fb47c9fb67a52b39 ]
 
-Commit efa56305908b ("nvmet-tcp: Fix a kernel panic when host sends an invalid H2C PDU length")
-added ttag bounds checking and data_offset
-validation in nvmet_tcp_handle_h2c_data_pdu(), but it did not validate
-whether the command's data structures (cmd->req.sg and cmd->iov) have
-been properly initialized before processing H2C_DATA PDUs.
+Before accessing the disk_bytenr field of a file extent item we need
+to check if we are dealing with an inline extent.
+This is because for inline extents their data starts at the offset of
+the disk_bytenr field. So accessing the disk_bytenr
+means we are accessing inline data or in case the inline data is less
+than 8 bytes we can actually cause an invalid
+memory access if this inline extent item is the first item in the leaf
+or access metadata from other items.
 
-The nvmet_tcp_build_pdu_iovec() function dereferences these pointers
-without NULL checks. This can be triggered by sending H2C_DATA PDU
-immediately after the ICREQ/ICRESP handshake, before
-sending a CONNECT command or NVMe write command.
-
-Attack vectors that trigger NULL pointer dereferences:
-1. H2C_DATA PDU sent before CONNECT → both pointers NULL
-2. H2C_DATA PDU for READ command → cmd->req.sg allocated, cmd->iov NULL
-3. H2C_DATA PDU for uninitialized command slot → both pointers NULL
-
-The fix validates both cmd->req.sg and cmd->iov before calling
-nvmet_tcp_build_pdu_iovec(). Both checks are required because:
-- Uninitialized commands: both NULL
-- READ commands: cmd->req.sg allocated, cmd->iov NULL
-- WRITE commands: both allocated
-
-Fixes: efa56305908b ("nvmet-tcp: Fix a kernel panic when host sends an invalid H2C PDU length")
-Reviewed-by: Sagi Grimberg <sagi@grimberg.me>
-Signed-off-by: Shivam Kumar <kumar.shivam43666@gmail.com>
-Signed-off-by: Keith Busch <kbusch@kernel.org>
+Fixes: 82bfb2e7b645 ("Btrfs: incremental send, fix unnecessary hole writes for sparse files")
+Reviewed-by: Filipe Manana <fdmanana@suse.com>
+Signed-off-by: Qu Wenruo <wqu@suse.com>
+Reviewed-by: David Sterba <dsterba@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/target/tcp.c | 12 ++++++++++++
- 1 file changed, 12 insertions(+)
+ fs/btrfs/send.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/nvme/target/tcp.c b/drivers/nvme/target/tcp.c
-index 6268b18d24569..94fab721f8cd7 100644
---- a/drivers/nvme/target/tcp.c
-+++ b/drivers/nvme/target/tcp.c
-@@ -1021,6 +1021,18 @@ static int nvmet_tcp_handle_h2c_data_pdu(struct nvmet_tcp_queue *queue)
- 		pr_err("H2CData PDU len %u is invalid\n", cmd->pdu_len);
- 		goto err_proto;
- 	}
-+       /*
-+	* Ensure command data structures are initialized. We must check both
-+	* cmd->req.sg and cmd->iov because they can have different NULL states:
-+	* - Uninitialized commands: both NULL
-+	* - READ commands: cmd->req.sg allocated, cmd->iov NULL
-+	* - WRITE commands: both allocated
-+	*/
-+	if (unlikely(!cmd->req.sg || !cmd->iov)) {
-+		pr_err("queue %d: H2CData PDU received for invalid command state (ttag %u)\n",
-+			queue->idx, data->ttag);
-+		goto err_proto;
-+	}
- 	cmd->pdu_recv = 0;
- 	nvmet_tcp_build_pdu_iovec(cmd);
- 	queue->cmd = cmd;
+diff --git a/fs/btrfs/send.c b/fs/btrfs/send.c
+index 41b7cbd070254..2fa577d4a232d 100644
+--- a/fs/btrfs/send.c
++++ b/fs/btrfs/send.c
+@@ -6550,6 +6550,8 @@ static int range_is_hole_in_parent(struct send_ctx *sctx,
+ 		extent_end = btrfs_file_extent_end(path);
+ 		if (extent_end <= start)
+ 			goto next;
++		if (btrfs_file_extent_type(leaf, fi) == BTRFS_FILE_EXTENT_INLINE)
++			return 0;
+ 		if (btrfs_file_extent_disk_bytenr(leaf, fi) == 0) {
+ 			search_start = extent_end;
+ 			goto next;
 -- 
 2.51.0
 
