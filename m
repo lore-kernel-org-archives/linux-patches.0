@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7454D190664;
-	Wed, 21 Jan 2026 18:19:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC27F387587;
+	Wed, 21 Jan 2026 18:19:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769019588; cv=none; b=H9xotEYydsLV1KF1H6Pnc9pQ6f3xzhSH2gwy3okYwHoRV8zthhLQZi/byRG6A1B5Sgwe8uhgb2FgMH0JR84mnD4oISaRhDKgg980He1uld1wus5hp8S3/VrpcoXcQgX7+eQtvA6JbuFzIbNUwaD6iuDapglkAEF9766527tVCdY=
+	t=1769019592; cv=none; b=WYukgb3qXPzhmPkTqdAq7rDOYJBLuAYB4CdbHUmHNHRLPrPQ+wXAXlr2xuNA1TXkzR/HgfM1MBXzNTCrWsyLmGKB1IKT9sepEhMs2SKdiqp3/e+A9uc+OeoPKqXIOAk/At9YVV93KMqLhQ6GpisPC8zLaw+unSw1CW+ODEkj10E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769019588; c=relaxed/simple;
-	bh=QLzBiliieaZG3rMf+RYdtbM3Ljlz4le89WnY9k7Ssig=;
+	s=arc-20240116; t=1769019592; c=relaxed/simple;
+	bh=mDpyam6EayievjzmUg0wlhUL/+TssZvcjr3Gus3NM5A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=G3PtsHsppA8ttAjJ4DTacczYxbEBANKwvCsNu2eEdzR+dTI5+6ANEK2MvCrm1LsboY4y+YZS2lIP2gzz7bXdm7NoZcPvTEphP3tILsufxcNaGAhRH0KEQDL1HUZ4+5CL/MPZQtNge8LWEngoMX0HJQtcjTUyPmcWBdbdoOseEc4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NuaTcZb2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=DpjGbIM4U69v5mznZ1fHhufeC5Jk2bn1LPU6XK+tDz40E/SGh0BAG4wJif3AGBFv/TD2FIn6Mo7uKI9q4SShFBzPy/2tKZJd/hj5vSK21gysfNzgKET5w+YDLt5p6PPeVRuAYaSGZkueiI8gJ4zrqKWm+FpC/SPxikn3PZ1Azdw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0+FsU4Ej; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NuaTcZb2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 242B2C4CEF1;
-	Wed, 21 Jan 2026 18:19:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0+FsU4Ej"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5209BC4CEF1;
+	Wed, 21 Jan 2026 18:19:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1769019587;
-	bh=QLzBiliieaZG3rMf+RYdtbM3Ljlz4le89WnY9k7Ssig=;
+	s=korg; t=1769019590;
+	bh=mDpyam6EayievjzmUg0wlhUL/+TssZvcjr3Gus3NM5A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NuaTcZb2YFrn1+2FuLRho0fCWaxqLOFd2P6cmS+4Mwl/tJlCqzE6ObrDN7Sy780Cb
-	 eDXJLXs3mGAK15M9ckhGWwCzOy1HYkGoReOSpomuMuksZkaDGVmpJwVVA4Pop5rYWX
-	 AxZrmCjlNgb6xzc5FMErdthCwh08OJ43e1KPfP6U=
+	b=0+FsU4EjAh95TNxchFX1uS5QvKIiyCeVS8LwSca6ms0E+SGomhonDqAWUwqf4Jsvc
+	 iECF4cYTuqYd33IArs+3O1go7kcTYrFc727o7+uWHObndwWK0A3gt5xsRu4RMCh8eN
+	 87o+g62BfBgn1p9Yoy008o0gIjZxScVovRi99CmM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johan Hovold <johan+linaro@kernel.org>,
-	Vinod Koul <vkoul@kernel.org>,
+	Saeed Mahameed <saeedm@nvidia.com>,
+	Tariq Toukan <tariqt@nvidia.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 049/139] phy: drop probe registration printks
-Date: Wed, 21 Jan 2026 19:14:57 +0100
-Message-ID: <20260121181413.219627860@linuxfoundation.org>
+Subject: [PATCH 6.12 023/139] net/mlx5e: Fix crash on profile change rollback failure
+Date: Wed, 21 Jan 2026 19:14:31 +0100
+Message-ID: <20260121181412.291623340@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260121181411.452263583@linuxfoundation.org>
 References: <20260121181411.452263583@linuxfoundation.org>
@@ -51,203 +52,230 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johan Hovold <johan+linaro@kernel.org>
+From: Saeed Mahameed <saeedm@nvidia.com>
 
-[ Upstream commit 95463cbb4fe6489921fb8c72890113dca54ce83f ]
+[ Upstream commit 4dadc4077e3f77d6d31e199a925fc7a705e7adeb ]
 
-Drivers should generally be quiet on successful probe, but this is not
-followed by some PHY drivers, for example:
+mlx5e_netdev_change_profile can fail to attach a new profile and can
+fail to rollback to old profile, in such case, we could end up with a
+dangling netdev with a fully reset netdev_priv. A retry to change
+profile, e.g. another attempt to call mlx5e_netdev_change_profile via
+switchdev mode change, will crash trying to access the now NULL
+priv->mdev.
 
-	snps-eusb2-hsphy 88e1000.phy: Registered Snps-eUSB2 phy
-	qcom-eusb2-repeater c432000.spmi:pmic@7:phy@fd00: Registered Qcom-eUSB2 repeater
-	qcom-eusb2-repeater c432000.spmi:pmic@a:phy@fd00: Registered Qcom-eUSB2 repeater
-	qcom-eusb2-repeater c432000.spmi:pmic@b:phy@fd00: Registered Qcom-eUSB2 repeater
-	snps-eusb2-hsphy fd3000.phy: Registered Snps-eUSB2 phy
-	snps-eusb2-hsphy fd9000.phy: Registered Snps-eUSB2 phy
-	snps-eusb2-hsphy fde000.phy: Registered Snps-eUSB2 phy
-	snps-eusb2-hsphy 88e0000.phy: Registered Snps-eUSB2 phy
-	snps-eusb2-hsphy 88e2000.phy: Registered Snps-eUSB2 phy
+This fix allows mlx5e_netdev_change_profile() to handle previous
+failures and an empty priv, by not assuming priv is valid.
 
-Drop (or demote to debug level) unnecessary registration info messages
-to make boot logs a little less noisy.
+Pass netdev and mdev to all flows requiring
+mlx5e_netdev_change_profile() and avoid passing priv.
+In mlx5e_netdev_change_profile() check if current priv is valid, and if
+not, just attach the new profile without trying to access the old one.
 
-Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
-Link: https://lore.kernel.org/r/20250523085112.11287-1-johan+linaro@kernel.org
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
-Stable-dep-of: 1ca52c0983c3 ("phy: qcom-qusb2: Fix NULL pointer dereference on early suspend")
+This fixes the following oops, when enabling switchdev mode for the 2nd
+time after first time failure:
+
+ ## Enabling switchdev mode first time:
+
+mlx5_core 0012:03:00.1: E-Switch: Supported tc chains and prios offload
+workqueue: Failed to create a rescuer kthread for wq "mlx5e": -EINTR
+mlx5_core 0012:03:00.1: mlx5e_netdev_init_profile:6214:(pid 37199): mlx5e_priv_init failed, err=-12
+mlx5_core 0012:03:00.1 gpu3rdma1: mlx5e_netdev_change_profile: new profile init failed, -12
+workqueue: Failed to create a rescuer kthread for wq "mlx5e": -EINTR
+mlx5_core 0012:03:00.1: mlx5e_netdev_init_profile:6214:(pid 37199): mlx5e_priv_init failed, err=-12
+mlx5_core 0012:03:00.1 gpu3rdma1: mlx5e_netdev_change_profile: failed to rollback to orig profile, -12
+                                                                         ^^^^^^^^
+mlx5_core 0000:00:03.0: E-Switch: Disable: mode(LEGACY), nvfs(0), necvfs(0), active vports(0)
+
+ ## retry: Enabling switchdev mode 2nd time:
+
+mlx5_core 0000:00:03.0: E-Switch: Supported tc chains and prios offload
+BUG: kernel NULL pointer dereference, address: 0000000000000038
+ #PF: supervisor read access in kernel mode
+ #PF: error_code(0x0000) - not-present page
+PGD 0 P4D 0
+Oops: Oops: 0000 [#1] SMP NOPTI
+CPU: 13 UID: 0 PID: 520 Comm: devlink Not tainted 6.18.0-rc4+ #91 PREEMPT(voluntary)
+Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS 1.16.3-2.fc40 04/01/2014
+RIP: 0010:mlx5e_detach_netdev+0x3c/0x90
+Code: 50 00 00 f0 80 4f 78 02 48 8b bf e8 07 00 00 48 85 ff 74 16 48 8b 73 78 48 d1 ee 83 e6 01 83 f6 01 40 0f b6 f6 e8 c4 42 00 00 <48> 8b 45 38 48 85 c0 74 08 48 89 df e8 cc 47 40 1e 48 8b bb f0 07
+RSP: 0018:ffffc90000673890 EFLAGS: 00010246
+RAX: 0000000000000000 RBX: ffff8881036a89c0 RCX: 0000000000000000
+RDX: ffff888113f63800 RSI: ffffffff822fe720 RDI: 0000000000000000
+RBP: 0000000000000000 R08: 0000000000002dcd R09: 0000000000000000
+R10: ffffc900006738e8 R11: 00000000ffffffff R12: 0000000000000000
+R13: 0000000000000000 R14: ffff8881036a89c0 R15: 0000000000000000
+FS:  00007fdfb8384740(0000) GS:ffff88856a9d6000(0000) knlGS:0000000000000000
+CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+CR2: 0000000000000038 CR3: 0000000112ae0005 CR4: 0000000000370ef0
+Call Trace:
+ <TASK>
+ mlx5e_netdev_change_profile+0x45/0xb0
+ mlx5e_vport_rep_load+0x27b/0x2d0
+ mlx5_esw_offloads_rep_load+0x72/0xf0
+ esw_offloads_enable+0x5d0/0x970
+ mlx5_eswitch_enable_locked+0x349/0x430
+ ? is_mp_supported+0x57/0xb0
+ mlx5_devlink_eswitch_mode_set+0x26b/0x430
+ devlink_nl_eswitch_set_doit+0x6f/0xf0
+ genl_family_rcv_msg_doit+0xe8/0x140
+ genl_rcv_msg+0x18b/0x290
+ ? __pfx_devlink_nl_pre_doit+0x10/0x10
+ ? __pfx_devlink_nl_eswitch_set_doit+0x10/0x10
+ ? __pfx_devlink_nl_post_doit+0x10/0x10
+ ? __pfx_genl_rcv_msg+0x10/0x10
+ netlink_rcv_skb+0x52/0x100
+ genl_rcv+0x28/0x40
+ netlink_unicast+0x282/0x3e0
+ ? __alloc_skb+0xd6/0x190
+ netlink_sendmsg+0x1f7/0x430
+ __sys_sendto+0x213/0x220
+ ? __sys_recvmsg+0x6a/0xd0
+ __x64_sys_sendto+0x24/0x30
+ do_syscall_64+0x50/0x1f0
+ entry_SYSCALL_64_after_hwframe+0x76/0x7e
+RIP: 0033:0x7fdfb8495047
+
+Fixes: c4d7eb57687f ("net/mxl5e: Add change profile method")
+Signed-off-by: Saeed Mahameed <saeedm@nvidia.com>
+Reviewed-by: Tariq Toukan <tariqt@nvidia.com>
+Link: https://patch.msgid.link/20260108212657.25090-2-saeed@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/phy/broadcom/phy-bcm-ns2-pcie.c        | 2 --
- drivers/phy/broadcom/phy-bcm-ns2-usbdrd.c      | 1 -
- drivers/phy/broadcom/phy-bcm-sr-pcie.c         | 2 --
- drivers/phy/broadcom/phy-brcm-sata.c           | 2 +-
- drivers/phy/marvell/phy-pxa-usb.c              | 1 -
- drivers/phy/qualcomm/phy-qcom-eusb2-repeater.c | 2 --
- drivers/phy/qualcomm/phy-qcom-m31.c            | 2 --
- drivers/phy/qualcomm/phy-qcom-qusb2.c          | 4 +---
- drivers/phy/qualcomm/phy-qcom-snps-eusb2.c     | 2 --
- drivers/phy/st/phy-stih407-usb.c               | 2 --
- drivers/phy/st/phy-stm32-usbphyc.c             | 4 ++--
- drivers/phy/ti/phy-twl4030-usb.c               | 1 -
- 12 files changed, 4 insertions(+), 21 deletions(-)
+ drivers/net/ethernet/mellanox/mlx5/core/en.h  |  9 ++--
+ .../net/ethernet/mellanox/mlx5/core/en_main.c | 48 +++++++++++++------
+ .../net/ethernet/mellanox/mlx5/core/en_rep.c  | 11 ++---
+ 3 files changed, 44 insertions(+), 24 deletions(-)
 
-diff --git a/drivers/phy/broadcom/phy-bcm-ns2-pcie.c b/drivers/phy/broadcom/phy-bcm-ns2-pcie.c
-index 2eaa41f8fc70c..67a6ae5ecba02 100644
---- a/drivers/phy/broadcom/phy-bcm-ns2-pcie.c
-+++ b/drivers/phy/broadcom/phy-bcm-ns2-pcie.c
-@@ -61,8 +61,6 @@ static int ns2_pci_phy_probe(struct mdio_device *mdiodev)
- 		return PTR_ERR(provider);
- 	}
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en.h b/drivers/net/ethernet/mellanox/mlx5/core/en.h
+index f2952a6b0db73..7c0420deb270c 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/en.h
++++ b/drivers/net/ethernet/mellanox/mlx5/core/en.h
+@@ -1221,9 +1221,12 @@ mlx5e_create_netdev(struct mlx5_core_dev *mdev, const struct mlx5e_profile *prof
+ int mlx5e_attach_netdev(struct mlx5e_priv *priv);
+ void mlx5e_detach_netdev(struct mlx5e_priv *priv);
+ void mlx5e_destroy_netdev(struct mlx5e_priv *priv);
+-int mlx5e_netdev_change_profile(struct mlx5e_priv *priv,
+-				const struct mlx5e_profile *new_profile, void *new_ppriv);
+-void mlx5e_netdev_attach_nic_profile(struct mlx5e_priv *priv);
++int mlx5e_netdev_change_profile(struct net_device *netdev,
++				struct mlx5_core_dev *mdev,
++				const struct mlx5e_profile *new_profile,
++				void *new_ppriv);
++void mlx5e_netdev_attach_nic_profile(struct net_device *netdev,
++				     struct mlx5_core_dev *mdev);
+ void mlx5e_set_netdev_mtu_boundaries(struct mlx5e_priv *priv);
+ void mlx5e_build_nic_params(struct mlx5e_priv *priv, struct mlx5e_xsk *xsk, u16 mtu);
  
--	dev_info(dev, "%s PHY registered\n", dev_name(dev));
--
- 	return 0;
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en_main.c b/drivers/net/ethernet/mellanox/mlx5/core/en_main.c
+index 7e04a17fa3b82..af70025b129b7 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/en_main.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/en_main.c
+@@ -6252,19 +6252,28 @@ mlx5e_netdev_attach_profile(struct net_device *netdev, struct mlx5_core_dev *mde
+ 	return err;
  }
  
-diff --git a/drivers/phy/broadcom/phy-bcm-ns2-usbdrd.c b/drivers/phy/broadcom/phy-bcm-ns2-usbdrd.c
-index 36ad02c33ac55..8473fa5745296 100644
---- a/drivers/phy/broadcom/phy-bcm-ns2-usbdrd.c
-+++ b/drivers/phy/broadcom/phy-bcm-ns2-usbdrd.c
-@@ -395,7 +395,6 @@ static int ns2_drd_phy_probe(struct platform_device *pdev)
+-int mlx5e_netdev_change_profile(struct mlx5e_priv *priv,
+-				const struct mlx5e_profile *new_profile, void *new_ppriv)
++int mlx5e_netdev_change_profile(struct net_device *netdev,
++				struct mlx5_core_dev *mdev,
++				const struct mlx5e_profile *new_profile,
++				void *new_ppriv)
+ {
+-	const struct mlx5e_profile *orig_profile = priv->profile;
+-	struct net_device *netdev = priv->netdev;
+-	struct mlx5_core_dev *mdev = priv->mdev;
+-	void *orig_ppriv = priv->ppriv;
++	struct mlx5e_priv *priv = netdev_priv(netdev);
++	const struct mlx5e_profile *orig_profile;
+ 	int err, rollback_err;
++	void *orig_ppriv;
  
- 	platform_set_drvdata(pdev, driver);
+-	/* cleanup old profile */
+-	mlx5e_detach_netdev(priv);
+-	priv->profile->cleanup(priv);
+-	mlx5e_priv_cleanup(priv);
++	orig_profile = priv->profile;
++	orig_ppriv = priv->ppriv;
++
++	/* NULL could happen if previous change_profile failed to rollback */
++	if (priv->profile) {
++		WARN_ON_ONCE(priv->mdev != mdev);
++		/* cleanup old profile */
++		mlx5e_detach_netdev(priv);
++		priv->profile->cleanup(priv);
++		mlx5e_priv_cleanup(priv);
++	}
++	/* priv members are not valid from this point ... */
  
--	dev_info(dev, "Registered NS2 DRD Phy device\n");
- 	queue_delayed_work(system_power_efficient_wq, &driver->wq_extcon,
- 			   driver->debounce_jiffies);
- 
-diff --git a/drivers/phy/broadcom/phy-bcm-sr-pcie.c b/drivers/phy/broadcom/phy-bcm-sr-pcie.c
-index ff9b3862bf7af..706e1d83b4cee 100644
---- a/drivers/phy/broadcom/phy-bcm-sr-pcie.c
-+++ b/drivers/phy/broadcom/phy-bcm-sr-pcie.c
-@@ -277,8 +277,6 @@ static int sr_pcie_phy_probe(struct platform_device *pdev)
- 		return PTR_ERR(provider);
- 	}
- 
--	dev_info(dev, "Stingray PCIe PHY driver initialized\n");
--
- 	return 0;
- }
- 
-diff --git a/drivers/phy/broadcom/phy-brcm-sata.c b/drivers/phy/broadcom/phy-brcm-sata.c
-index 228100357054d..d52dd065e8622 100644
---- a/drivers/phy/broadcom/phy-brcm-sata.c
-+++ b/drivers/phy/broadcom/phy-brcm-sata.c
-@@ -832,7 +832,7 @@ static int brcm_sata_phy_probe(struct platform_device *pdev)
- 		return PTR_ERR(provider);
- 	}
- 
--	dev_info(dev, "registered %d port(s)\n", count);
-+	dev_dbg(dev, "registered %d port(s)\n", count);
- 
- 	return 0;
- }
-diff --git a/drivers/phy/marvell/phy-pxa-usb.c b/drivers/phy/marvell/phy-pxa-usb.c
-index 6c98eb9608e9c..c0bb71f80c042 100644
---- a/drivers/phy/marvell/phy-pxa-usb.c
-+++ b/drivers/phy/marvell/phy-pxa-usb.c
-@@ -325,7 +325,6 @@ static int pxa_usb_phy_probe(struct platform_device *pdev)
- 		phy_create_lookup(pxa_usb_phy->phy, "usb", "mv-otg");
- 	}
- 
--	dev_info(dev, "Marvell PXA USB PHY");
- 	return 0;
- }
- 
-diff --git a/drivers/phy/qualcomm/phy-qcom-eusb2-repeater.c b/drivers/phy/qualcomm/phy-qcom-eusb2-repeater.c
-index c173c6244d9e5..3b68d20142e01 100644
---- a/drivers/phy/qualcomm/phy-qcom-eusb2-repeater.c
-+++ b/drivers/phy/qualcomm/phy-qcom-eusb2-repeater.c
-@@ -241,8 +241,6 @@ static int eusb2_repeater_probe(struct platform_device *pdev)
- 	if (IS_ERR(phy_provider))
- 		return PTR_ERR(phy_provider);
- 
--	dev_info(dev, "Registered Qcom-eUSB2 repeater\n");
--
- 	return 0;
- }
- 
-diff --git a/drivers/phy/qualcomm/phy-qcom-m31.c b/drivers/phy/qualcomm/phy-qcom-m31.c
-index 8b0f8a3a059c2..168ea980fda03 100644
---- a/drivers/phy/qualcomm/phy-qcom-m31.c
-+++ b/drivers/phy/qualcomm/phy-qcom-m31.c
-@@ -311,8 +311,6 @@ static int m31usb_phy_probe(struct platform_device *pdev)
- 	phy_set_drvdata(qphy->phy, qphy);
- 
- 	phy_provider = devm_of_phy_provider_register(dev, of_phy_simple_xlate);
--	if (!IS_ERR(phy_provider))
--		dev_info(dev, "Registered M31 USB phy\n");
- 
- 	return PTR_ERR_OR_ZERO(phy_provider);
- }
-diff --git a/drivers/phy/qualcomm/phy-qcom-qusb2.c b/drivers/phy/qualcomm/phy-qcom-qusb2.c
-index c52655a383cef..531c3860c3160 100644
---- a/drivers/phy/qualcomm/phy-qcom-qusb2.c
-+++ b/drivers/phy/qualcomm/phy-qcom-qusb2.c
-@@ -1084,9 +1084,7 @@ static int qusb2_phy_probe(struct platform_device *pdev)
- 	phy_set_drvdata(generic_phy, qphy);
- 
- 	phy_provider = devm_of_phy_provider_register(dev, of_phy_simple_xlate);
--	if (!IS_ERR(phy_provider))
--		dev_info(dev, "Registered Qcom-QUSB2 phy\n");
--	else
-+	if (IS_ERR(phy_provider))
- 		pm_runtime_disable(dev);
- 
- 	return PTR_ERR_OR_ZERO(phy_provider);
-diff --git a/drivers/phy/qualcomm/phy-qcom-snps-eusb2.c b/drivers/phy/qualcomm/phy-qcom-snps-eusb2.c
-index e1b175f481b4e..4a1dfef5ff8ff 100644
---- a/drivers/phy/qualcomm/phy-qcom-snps-eusb2.c
-+++ b/drivers/phy/qualcomm/phy-qcom-snps-eusb2.c
-@@ -418,8 +418,6 @@ static int snps_eusb2_hsphy_probe(struct platform_device *pdev)
- 	if (IS_ERR(phy_provider))
- 		return PTR_ERR(phy_provider);
- 
--	dev_info(dev, "Registered Snps-eUSB2 phy\n");
--
- 	return 0;
- }
- 
-diff --git a/drivers/phy/st/phy-stih407-usb.c b/drivers/phy/st/phy-stih407-usb.c
-index a4ae2cca7f637..02e6117709dca 100644
---- a/drivers/phy/st/phy-stih407-usb.c
-+++ b/drivers/phy/st/phy-stih407-usb.c
-@@ -149,8 +149,6 @@ static int stih407_usb2_picophy_probe(struct platform_device *pdev)
- 	if (IS_ERR(phy_provider))
- 		return PTR_ERR(phy_provider);
- 
--	dev_info(dev, "STiH407 USB Generic picoPHY driver probed!");
--
- 	return 0;
- }
- 
-diff --git a/drivers/phy/st/phy-stm32-usbphyc.c b/drivers/phy/st/phy-stm32-usbphyc.c
-index 9dbe60dcf3190..dbf23ae38255a 100644
---- a/drivers/phy/st/phy-stm32-usbphyc.c
-+++ b/drivers/phy/st/phy-stm32-usbphyc.c
-@@ -757,8 +757,8 @@ static int stm32_usbphyc_probe(struct platform_device *pdev)
- 	}
- 
- 	version = readl_relaxed(usbphyc->base + STM32_USBPHYC_VERSION);
--	dev_info(dev, "registered rev:%lu.%lu\n",
--		 FIELD_GET(MAJREV, version), FIELD_GET(MINREV, version));
-+	dev_dbg(dev, "registered rev: %lu.%lu\n",
-+		FIELD_GET(MAJREV, version), FIELD_GET(MINREV, version));
- 
+ 	if (mdev->state == MLX5_DEVICE_STATE_INTERNAL_ERROR) {
+ 		mlx5e_netdev_init_profile(netdev, mdev, new_profile, new_ppriv);
+@@ -6281,16 +6290,25 @@ int mlx5e_netdev_change_profile(struct mlx5e_priv *priv,
  	return 0;
  
-diff --git a/drivers/phy/ti/phy-twl4030-usb.c b/drivers/phy/ti/phy-twl4030-usb.c
-index 6b265992d988f..e5918d3b486cc 100644
---- a/drivers/phy/ti/phy-twl4030-usb.c
-+++ b/drivers/phy/ti/phy-twl4030-usb.c
-@@ -784,7 +784,6 @@ static int twl4030_usb_probe(struct platform_device *pdev)
- 	pm_runtime_mark_last_busy(&pdev->dev);
- 	pm_runtime_put_autosuspend(twl->dev);
- 
--	dev_info(&pdev->dev, "Initialized TWL4030 USB module\n");
- 	return 0;
+ rollback:
++	if (!orig_profile) {
++		netdev_warn(netdev, "no original profile to rollback to\n");
++		priv->profile = NULL;
++		return err;
++	}
++
+ 	rollback_err = mlx5e_netdev_attach_profile(netdev, mdev, orig_profile, orig_ppriv);
+-	if (rollback_err)
+-		netdev_err(netdev, "%s: failed to rollback to orig profile, %d\n",
+-			   __func__, rollback_err);
++	if (rollback_err) {
++		netdev_err(netdev, "failed to rollback to orig profile, %d\n",
++			   rollback_err);
++		priv->profile = NULL;
++	}
+ 	return err;
  }
  
+-void mlx5e_netdev_attach_nic_profile(struct mlx5e_priv *priv)
++void mlx5e_netdev_attach_nic_profile(struct net_device *netdev,
++				     struct mlx5_core_dev *mdev)
+ {
+-	mlx5e_netdev_change_profile(priv, &mlx5e_nic_profile, NULL);
++	mlx5e_netdev_change_profile(netdev, mdev, &mlx5e_nic_profile, NULL);
+ }
+ 
+ void mlx5e_destroy_netdev(struct mlx5e_priv *priv)
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en_rep.c b/drivers/net/ethernet/mellanox/mlx5/core/en_rep.c
+index b561358474c4f..b461954b974c6 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/en_rep.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/en_rep.c
+@@ -1499,17 +1499,16 @@ mlx5e_vport_uplink_rep_load(struct mlx5_core_dev *dev, struct mlx5_eswitch_rep *
+ {
+ 	struct mlx5e_rep_priv *rpriv = mlx5e_rep_to_rep_priv(rep);
+ 	struct net_device *netdev;
+-	struct mlx5e_priv *priv;
+ 	int err;
+ 
+ 	netdev = mlx5_uplink_netdev_get(dev);
+ 	if (!netdev)
+ 		return 0;
+ 
+-	priv = netdev_priv(netdev);
+-	rpriv->netdev = priv->netdev;
+-	err = mlx5e_netdev_change_profile(priv, &mlx5e_uplink_rep_profile,
+-					  rpriv);
++	/* must not use netdev_priv(netdev), it might not be initialized yet */
++	rpriv->netdev = netdev;
++	err = mlx5e_netdev_change_profile(netdev, dev,
++					  &mlx5e_uplink_rep_profile, rpriv);
+ 	mlx5_uplink_netdev_put(dev, netdev);
+ 	return err;
+ }
+@@ -1537,7 +1536,7 @@ mlx5e_vport_uplink_rep_unload(struct mlx5e_rep_priv *rpriv)
+ 	if (!(priv->mdev->priv.flags & MLX5_PRIV_FLAGS_SWITCH_LEGACY))
+ 		unregister_netdev(netdev);
+ 
+-	mlx5e_netdev_attach_nic_profile(priv);
++	mlx5e_netdev_attach_nic_profile(netdev, priv->mdev);
+ }
+ 
+ static int
 -- 
 2.51.0
 
