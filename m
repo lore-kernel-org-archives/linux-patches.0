@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A0842EBDCD;
-	Wed, 21 Jan 2026 18:29:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B64671A9FB0;
+	Wed, 21 Jan 2026 18:29:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769020152; cv=none; b=jn10XWnPpNvDdizuSZT0NGDiH8FL8SIXO6S9VLdHSBQc1y/UecUQpG5Qdia/fSNy7wuWwbFiM+iCaqZyoA8DrIyUljeWYdHnJaa5lQBmctvnpCAnFS+rYG4mPi1sJtfI2RyLPhTqz4M0hanzqTmEOWCr0tRH+TMXr0gGjwXK1uI=
+	t=1769020155; cv=none; b=Y7/bPTeYha0fAmCNkWtLkw0Vd/+iQqX8Urm09s6KjGp7XXV0zpyX79gycoc3PQH1UOVQ8F5bExSOGk81V6u/JyTdZBRPvutHSjiPmSSGZTLMp9/jN8WMy4hYsvbtuQKTg4Ts+9ZYxkLUpA457xWLCQUHX9mGUs/1dlyvlGvOJBg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769020152; c=relaxed/simple;
-	bh=4tvK9EDi5LijkdjS7Lbu2wEPxCApP75pCLdI27vSp3Q=;
+	s=arc-20240116; t=1769020155; c=relaxed/simple;
+	bh=sTv2lI7i+MPPd3Ot7W2jjGUSJ2bA0PL6vwqkYG7TPKQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rFJZW8op7fexZEBke/MOh8xl8M31n1Cv4nPLnZFFMSwbZcV/u604X1yI5m30n7spTi1jRnlpwLJ9XIAVBRxHsA0Uwq/ablQjaFuvJiV9D8IYdsOaRvBV7pnmEaZZiO6gfL0MS53SdKLvfPnizH9vC1vd9l6eDI6xEPnT4tp22Ys=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OHl+ccSh; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=t6Hx/N1EokEZRTwqmH9xZ43SEbdrCEJIrXNE4c33OMudKJRfSGTUZnsfUyJrnVF9256K5LkVQUnEGogtflAssiPsFc544e3ch+KOr6iEIaikAZfSheS/mVPoaxOQ5dqglrFb4c+QPmDQsLxbnfrDNAXXmZts6uVyAX2jy8aBnWk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RrD9zUUt; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OHl+ccSh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E760C4CEF1;
-	Wed, 21 Jan 2026 18:29:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RrD9zUUt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2814DC4CEF1;
+	Wed, 21 Jan 2026 18:29:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1769020152;
-	bh=4tvK9EDi5LijkdjS7Lbu2wEPxCApP75pCLdI27vSp3Q=;
+	s=korg; t=1769020155;
+	bh=sTv2lI7i+MPPd3Ot7W2jjGUSJ2bA0PL6vwqkYG7TPKQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OHl+ccShG91QSEqs0Mo0UdbkPRiZvkamOouluucWH/NIAffbgvJqi/0/7dtOBjBoF
-	 utqUvr175Iw2x7+9yoUuwEbT9kyKpgJ47goPfWVCAKT5ROyG0Ic2E8uEHyuEatsmjG
-	 rn+bqVtglslCC6A3K6cKbvZAaqNa3vcunWlfprPQ=
+	b=RrD9zUUtRZnX420hCQuEs8L8auFxCEI5cAQ70Xj9+Kw/JM6AFfB4P/uH/CxokllGj
+	 FHGDs8kpv0wT55I3X1IDRAT4ZRfxnigxVvn9Ie6dAxQt5IrwSRt415meIPqiGkPCm7
+	 le3TbpRiriUA3z5pt/7KI/J/1GGDBlnXEV7DOK9E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Amelie Delaunay <amelie.delaunay@foss.st.com>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
+	Haotian Zhang <vulab@iscas.ac.cn>,
 	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 075/198] phy: stm32-usphyc: Fix off by one in probe()
-Date: Wed, 21 Jan 2026 19:15:03 +0100
-Message-ID: <20260121181421.256738953@linuxfoundation.org>
+Subject: [PATCH 6.18 076/198] phy: ti: da8xx-usb: Handle devm_pm_runtime_enable() errors
+Date: Wed, 21 Jan 2026 19:15:04 +0100
+Message-ID: <20260121181421.297003107@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260121181418.537774329@linuxfoundation.org>
 References: <20260121181418.537774329@linuxfoundation.org>
@@ -52,39 +52,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dan Carpenter <dan.carpenter@linaro.org>
+From: Haotian Zhang <vulab@iscas.ac.cn>
 
-[ Upstream commit cabd25b57216ddc132efbcc31f972baa03aad15a ]
+[ Upstream commit 08aa19de72110df8ac10c9e67349dd884eeed41d ]
 
-The "index" variable is used as an index into the usbphyc->phys[] array
-which has usbphyc->nphys elements.  So if it is equal to usbphyc->nphys
-then it is one element out of bounds.  The "index" comes from the
-device tree so it's data that we trust and it's unlikely to be wrong,
-however it's obviously still worth fixing the bug.  Change the > to >=.
+devm_pm_runtime_enable() can fail due to memory allocation. The current
+code ignores its return value after calling pm_runtime_set_active(),
+leaving the device in an inconsistent state if runtime PM initialization
+fails.
 
-Fixes: 94c358da3a05 ("phy: stm32: add support for STM32 USB PHY Controller (USBPHYC)")
-Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
-Reviewed-by: Amelie Delaunay <amelie.delaunay@foss.st.com>
-Link: https://patch.msgid.link/aTfHcMJK1wFVnvEe@stanley.mountain
+Check the return value of devm_pm_runtime_enable() and return on
+failure. Also move the declaration of 'ret' to the function scope
+to support this check.
+
+Fixes: ee8e41b5044f ("phy: ti: phy-da8xx-usb: Add runtime PM support")
+Suggested-by: Neil Armstrong <neil.armstrong@linaro.org>
+Signed-off-by: Haotian Zhang <vulab@iscas.ac.cn>
+Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
+Link: https://patch.msgid.link/20251124105734.1027-1-vulab@iscas.ac.cn
 Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/phy/st/phy-stm32-usbphyc.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/phy/ti/phy-da8xx-usb.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/phy/st/phy-stm32-usbphyc.c b/drivers/phy/st/phy-stm32-usbphyc.c
-index 27fe92f73f331..b44afbff8616b 100644
---- a/drivers/phy/st/phy-stm32-usbphyc.c
-+++ b/drivers/phy/st/phy-stm32-usbphyc.c
-@@ -712,7 +712,7 @@ static int stm32_usbphyc_probe(struct platform_device *pdev)
- 		}
+diff --git a/drivers/phy/ti/phy-da8xx-usb.c b/drivers/phy/ti/phy-da8xx-usb.c
+index 1d81a1e6ec6b6..62fa6f89c0e61 100644
+--- a/drivers/phy/ti/phy-da8xx-usb.c
++++ b/drivers/phy/ti/phy-da8xx-usb.c
+@@ -180,6 +180,7 @@ static int da8xx_usb_phy_probe(struct platform_device *pdev)
+ 	struct da8xx_usb_phy_platform_data *pdata = dev->platform_data;
+ 	struct device_node	*node = dev->of_node;
+ 	struct da8xx_usb_phy	*d_phy;
++	int ret;
  
- 		ret = of_property_read_u32(child, "reg", &index);
--		if (ret || index > usbphyc->nphys) {
-+		if (ret || index >= usbphyc->nphys) {
- 			dev_err(&phy->dev, "invalid reg property: %d\n", ret);
- 			if (!ret)
- 				ret = -EINVAL;
+ 	d_phy = devm_kzalloc(dev, sizeof(*d_phy), GFP_KERNEL);
+ 	if (!d_phy)
+@@ -233,8 +234,6 @@ static int da8xx_usb_phy_probe(struct platform_device *pdev)
+ 			return PTR_ERR(d_phy->phy_provider);
+ 		}
+ 	} else {
+-		int ret;
+-
+ 		ret = phy_create_lookup(d_phy->usb11_phy, "usb-phy",
+ 					"ohci-da8xx");
+ 		if (ret)
+@@ -249,7 +248,9 @@ static int da8xx_usb_phy_probe(struct platform_device *pdev)
+ 			  PHY_INIT_BITS, PHY_INIT_BITS);
+ 
+ 	pm_runtime_set_active(dev);
+-	devm_pm_runtime_enable(dev);
++	ret = devm_pm_runtime_enable(dev);
++	if (ret)
++		return ret;
+ 	/*
+ 	 * Prevent runtime pm from being ON by default. Users can enable
+ 	 * it using power/control in sysfs.
 -- 
 2.51.0
 
