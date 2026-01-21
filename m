@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09916393403;
-	Wed, 21 Jan 2026 18:22:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 482B33A4F40;
+	Wed, 21 Jan 2026 18:22:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769019738; cv=none; b=dgGkIXXm5WbveDPftNbJSBSBEvdSFMoDx2eZQfNLyGIqTQ8BkUkhBggyiapAwcydSmVI/2UrrPvs/R1+oHXS1gCVxhBQwbcp6NVtKRY9W4+EwUw/T+w3uvW1FrajHAXsmqnG8UxWk/az5j9QVrt/FMOCfdS6v31WFiovcVvSuTQ=
+	t=1769019741; cv=none; b=fowkWaK/mXpsESSrNpSDlvqDCIUiEttGCSTPTyWWE8pvPq8DLFAPDfEn724Xufoa/SZLy/H71cOs6p5MxwBF6vz2e+8nemenelLgL2rT4QWC1B3Lvgumt269BrXijLMym+ZfDsqmrnTMdZNNnvY1ZGmfVmXqdW2SN5ZfPE0bL3c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769019738; c=relaxed/simple;
-	bh=2b+fIkA71p72XTJxq4JNhEg95BpTImmL78DKAploYps=;
+	s=arc-20240116; t=1769019741; c=relaxed/simple;
+	bh=Dsh0VlZV+0P1kTnfF8h4TKltT9wQ10Wv4N98KzWUu8s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iB6lbjhCZHXuDFxyF85BMtSM9xTnwNuhUQlZWfkT7OB4+/Znemlp8EOqcbZgY07rgGE1ZbMYA+hk6H/iv/DKKIe5EDRE8qg7cSCtT8TcHzJOJ5eKP3dGL90+040w0D4ouMJKGqXoLZJ1n63bYRQIcR7mFeUllkQZYVpBsz2VCao=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BsdwA8jb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OTAyziM49RIoWjpCRXz+A4dbvAHNELGCgYfl6qujQ2IpziW2jPDTGAKOiJsN1BiSLSDObISqfXNo2OXgl6aNCWCaojrfewVEmfA+IELuGIA4elzGsz86RrDxuWwWiTBb5jxGvx8l+LVyrdczsqMBw5YdjIvqucDXeaq8xbMRUJY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wwgfXWsX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BsdwA8jb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A32BC4CEF1;
-	Wed, 21 Jan 2026 18:22:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wwgfXWsX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9CAD9C4CEF1;
+	Wed, 21 Jan 2026 18:22:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1769019737;
-	bh=2b+fIkA71p72XTJxq4JNhEg95BpTImmL78DKAploYps=;
+	s=korg; t=1769019741;
+	bh=Dsh0VlZV+0P1kTnfF8h4TKltT9wQ10Wv4N98KzWUu8s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BsdwA8jbH4FKsLtT8d+8om7IIBjYTpcaSqLuUW9A/NHbeKDdiqy53fC/LApEfslbY
-	 rzYiiYJ7okteGNV7bx3cygPoU7zjSMg8ZKkCFoMYd77IaHSgL/GUUiv65ABG0dzIeT
-	 XVQp0Fx1J7c+MjXChxREXy3Bhhz50P73WAbBgtzA=
+	b=wwgfXWsXs1m3tU33DD4mY/UX0r8K36VRsIWtnpBCpH+/hBDGSklIzU1wJb149/UM2
+	 naWDk1QMZVXzS6VklaZagqRwrSy1OyOpU2ipGCapIb02CwNIv2zIQSMk6/TZOg1zOg
+	 MictnSW97lXN0hcb1gA4agp7bawxKpURUpOdHAjQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+7bfa4b72c6a5da128d32@syzkaller.appspotmail.com,
-	Ido Schimmel <idosch@nvidia.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Lee Jones <lee@kernel.org>
-Subject: [PATCH 6.12 060/139] bridge: mcast: Fix use-after-free during router port configuration
-Date: Wed, 21 Jan 2026 19:15:08 +0100
-Message-ID: <20260121181413.613362197@linuxfoundation.org>
+	Srinivas Kandagatla <srini@kernel.org>,
+	Johan Hovold <johan@kernel.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>,
+	Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>,
+	Mark Brown <broonie@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.12 061/139] ASoC: codecs: wsa883x: fix unnecessary initialisation
+Date: Wed, 21 Jan 2026 19:15:09 +0100
+Message-ID: <20260121181413.649245475@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260121181411.452263583@linuxfoundation.org>
 References: <20260121181411.452263583@linuxfoundation.org>
@@ -52,179 +54,77 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ido Schimmel <idosch@nvidia.com>
+From: Johan Hovold <johan@kernel.org>
 
-commit 7544f3f5b0b58c396f374d060898b5939da31709 upstream.
+commit 49aadf830eb048134d33ad7329d92ecff45d8dbb upstream.
 
-The bridge maintains a global list of ports behind which a multicast
-router resides. The list is consulted during forwarding to ensure
-multicast packets are forwarded to these ports even if the ports are not
-member in the matching MDB entry.
+The soundwire update_status() callback may be called multiple times with
+the same ATTACHED status but initialisation should only be done when
+transitioning from UNATTACHED to ATTACHED.
 
-When per-VLAN multicast snooping is enabled, the per-port multicast
-context is disabled on each port and the port is removed from the global
-router port list:
+This avoids repeated initialisation of the codecs during boot of
+machines like the Lenovo ThinkPad X13s:
 
- # ip link add name br1 up type bridge vlan_filtering 1 mcast_snooping 1
- # ip link add name dummy1 up master br1 type dummy
- # ip link set dev dummy1 type bridge_slave mcast_router 2
- $ bridge -d mdb show | grep router
- router ports on br1: dummy1
- # ip link set dev br1 type bridge mcast_vlan_snooping 1
- $ bridge -d mdb show | grep router
+[   11.614523] wsa883x-codec sdw:1:0:0217:0202:00:1: WSA883X Version 1_1, Variant: WSA8835_V2
+[   11.618022] wsa883x-codec sdw:1:0:0217:0202:00:1: WSA883X Version 1_1, Variant: WSA8835_V2
+[   11.621377] wsa883x-codec sdw:1:0:0217:0202:00:1: WSA883X Version 1_1, Variant: WSA8835_V2
+[   11.624065] wsa883x-codec sdw:1:0:0217:0202:00:1: WSA883X Version 1_1, Variant: WSA8835_V2
+[   11.631382] wsa883x-codec sdw:1:0:0217:0202:00:2: WSA883X Version 1_1, Variant: WSA8835_V2
+[   11.634424] wsa883x-codec sdw:1:0:0217:0202:00:2: WSA883X Version 1_1, Variant: WSA8835_V2
 
-However, the port can be re-added to the global list even when per-VLAN
-multicast snooping is enabled:
-
- # ip link set dev dummy1 type bridge_slave mcast_router 0
- # ip link set dev dummy1 type bridge_slave mcast_router 2
- $ bridge -d mdb show | grep router
- router ports on br1: dummy1
-
-Since commit 4b30ae9adb04 ("net: bridge: mcast: re-implement
-br_multicast_{enable, disable}_port functions"), when per-VLAN multicast
-snooping is enabled, multicast disablement on a port will disable the
-per-{port, VLAN} multicast contexts and not the per-port one. As a
-result, a port will remain in the global router port list even after it
-is deleted. This will lead to a use-after-free [1] when the list is
-traversed (when adding a new port to the list, for example):
-
- # ip link del dev dummy1
- # ip link add name dummy2 up master br1 type dummy
- # ip link set dev dummy2 type bridge_slave mcast_router 2
-
-Similarly, stale entries can also be found in the per-VLAN router port
-list. When per-VLAN multicast snooping is disabled, the per-{port, VLAN}
-contexts are disabled on each port and the port is removed from the
-per-VLAN router port list:
-
- # ip link add name br1 up type bridge vlan_filtering 1 mcast_snooping 1 mcast_vlan_snooping 1
- # ip link add name dummy1 up master br1 type dummy
- # bridge vlan add vid 2 dev dummy1
- # bridge vlan global set vid 2 dev br1 mcast_snooping 1
- # bridge vlan set vid 2 dev dummy1 mcast_router 2
- $ bridge vlan global show dev br1 vid 2 | grep router
-       router ports: dummy1
- # ip link set dev br1 type bridge mcast_vlan_snooping 0
- $ bridge vlan global show dev br1 vid 2 | grep router
-
-However, the port can be re-added to the per-VLAN list even when
-per-VLAN multicast snooping is disabled:
-
- # bridge vlan set vid 2 dev dummy1 mcast_router 0
- # bridge vlan set vid 2 dev dummy1 mcast_router 2
- $ bridge vlan global show dev br1 vid 2 | grep router
-       router ports: dummy1
-
-When the VLAN is deleted from the port, the per-{port, VLAN} multicast
-context will not be disabled since multicast snooping is not enabled
-on the VLAN. As a result, the port will remain in the per-VLAN router
-port list even after it is no longer member in the VLAN. This will lead
-to a use-after-free [2] when the list is traversed (when adding a new
-port to the list, for example):
-
- # ip link add name dummy2 up master br1 type dummy
- # bridge vlan add vid 2 dev dummy2
- # bridge vlan del vid 2 dev dummy1
- # bridge vlan set vid 2 dev dummy2 mcast_router 2
-
-Fix these issues by removing the port from the relevant (global or
-per-VLAN) router port list in br_multicast_port_ctx_deinit(). The
-function is invoked during port deletion with the per-port multicast
-context and during VLAN deletion with the per-{port, VLAN} multicast
-context.
-
-Note that deleting the multicast router timer is not enough as it only
-takes care of the temporary multicast router states (1 or 3) and not the
-permanent one (2).
-
-[1]
-BUG: KASAN: slab-out-of-bounds in br_multicast_add_router.part.0+0x3f1/0x560
-Write of size 8 at addr ffff888004a67328 by task ip/384
-[...]
-Call Trace:
- <TASK>
- dump_stack_lvl+0x6f/0xa0
- print_address_description.constprop.0+0x6f/0x350
- print_report+0x108/0x205
- kasan_report+0xdf/0x110
- br_multicast_add_router.part.0+0x3f1/0x560
- br_multicast_set_port_router+0x74e/0xac0
- br_setport+0xa55/0x1870
- br_port_slave_changelink+0x95/0x120
- __rtnl_newlink+0x5e8/0xa40
- rtnl_newlink+0x627/0xb00
- rtnetlink_rcv_msg+0x6fb/0xb70
- netlink_rcv_skb+0x11f/0x350
- netlink_unicast+0x426/0x710
- netlink_sendmsg+0x75a/0xc20
- __sock_sendmsg+0xc1/0x150
- ____sys_sendmsg+0x5aa/0x7b0
- ___sys_sendmsg+0xfc/0x180
- __sys_sendmsg+0x124/0x1c0
- do_syscall_64+0xbb/0x360
- entry_SYSCALL_64_after_hwframe+0x4b/0x53
-
-[2]
-BUG: KASAN: slab-use-after-free in br_multicast_add_router.part.0+0x378/0x560
-Read of size 8 at addr ffff888009f00840 by task bridge/391
-[...]
-Call Trace:
- <TASK>
- dump_stack_lvl+0x6f/0xa0
- print_address_description.constprop.0+0x6f/0x350
- print_report+0x108/0x205
- kasan_report+0xdf/0x110
- br_multicast_add_router.part.0+0x378/0x560
- br_multicast_set_port_router+0x6f9/0xac0
- br_vlan_process_options+0x8b6/0x1430
- br_vlan_rtm_process_one+0x605/0xa30
- br_vlan_rtm_process+0x396/0x4c0
- rtnetlink_rcv_msg+0x2f7/0xb70
- netlink_rcv_skb+0x11f/0x350
- netlink_unicast+0x426/0x710
- netlink_sendmsg+0x75a/0xc20
- __sock_sendmsg+0xc1/0x150
- ____sys_sendmsg+0x5aa/0x7b0
- ___sys_sendmsg+0xfc/0x180
- __sys_sendmsg+0x124/0x1c0
- do_syscall_64+0xbb/0x360
- entry_SYSCALL_64_after_hwframe+0x4b/0x53
-
-Fixes: 2796d846d74a ("net: bridge: vlan: convert mcast router global option to per-vlan entry")
-Fixes: 4b30ae9adb04 ("net: bridge: mcast: re-implement br_multicast_{enable, disable}_port functions")
-Reported-by: syzbot+7bfa4b72c6a5da128d32@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/all/684c18bd.a00a0220.279073.000b.GAE@google.com/T/
-Signed-off-by: Ido Schimmel <idosch@nvidia.com>
-Link: https://patch.msgid.link/20250619182228.1656906-1-idosch@nvidia.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Lee Jones <lee@kernel.org>
+Fixes: 43b8c7dc85a1 ("ASoC: codecs: add wsa883x amplifier support")
+Cc: stable@vger.kernel.org	# 6.0
+Cc: Srinivas Kandagatla <srini@kernel.org>
+Signed-off-by: Johan Hovold <johan@kernel.org>
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
+Reviewed-by: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260102111413.9605-2-johan@kernel.org
+Signed-off-by: Mark Brown <broonie@kernel.org>
+[ Adjust context ]
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/bridge/br_multicast.c |    9 +++++++++
+ sound/soc/codecs/wsa883x.c |    9 +++++++++
  1 file changed, 9 insertions(+)
 
---- a/net/bridge/br_multicast.c
-+++ b/net/bridge/br_multicast.c
-@@ -2014,10 +2014,19 @@ void br_multicast_port_ctx_init(struct n
+--- a/sound/soc/codecs/wsa883x.c
++++ b/sound/soc/codecs/wsa883x.c
+@@ -441,6 +441,7 @@ struct wsa883x_priv {
+ 	int active_ports;
+ 	int dev_mode;
+ 	int comp_offset;
++	bool hw_init;
+ };
  
- void br_multicast_port_ctx_deinit(struct net_bridge_mcast_port *pmctx)
- {
-+	struct net_bridge *br = pmctx->port->br;
-+	bool del = false;
+ enum {
+@@ -1002,6 +1003,9 @@ static int wsa883x_init(struct wsa883x_p
+ 	struct regmap *regmap = wsa883x->regmap;
+ 	int variant, version, ret;
+ 
++	if (wsa883x->hw_init)
++		return 0;
 +
- #if IS_ENABLED(CONFIG_IPV6)
- 	del_timer_sync(&pmctx->ip6_mc_router_timer);
- #endif
- 	del_timer_sync(&pmctx->ip4_mc_router_timer);
+ 	ret = regmap_read(regmap, WSA883X_OTP_REG_0, &variant);
+ 	if (ret)
+ 		return ret;
+@@ -1044,6 +1048,8 @@ static int wsa883x_init(struct wsa883x_p
+ 				   wsa883x->comp_offset);
+ 	}
+ 
++	wsa883x->hw_init = true;
 +
-+	spin_lock_bh(&br->multicast_lock);
-+	del |= br_ip6_multicast_rport_del(pmctx);
-+	del |= br_ip4_multicast_rport_del(pmctx);
-+	br_multicast_rport_del_notify(pmctx, del);
-+	spin_unlock_bh(&br->multicast_lock);
+ 	return 0;
  }
  
- int br_multicast_add_port(struct net_bridge_port *port)
+@@ -1052,6 +1058,9 @@ static int wsa883x_update_status(struct
+ {
+ 	struct wsa883x_priv *wsa883x = dev_get_drvdata(&slave->dev);
+ 
++	if (status == SDW_SLAVE_UNATTACHED)
++		wsa883x->hw_init = false;
++
+ 	if (status == SDW_SLAVE_ATTACHED && slave->dev_num > 0)
+ 		return wsa883x_init(wsa883x);
+ 
 
 
