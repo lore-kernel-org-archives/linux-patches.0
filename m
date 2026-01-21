@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4FE132BF21;
-	Wed, 21 Jan 2026 18:31:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52F6B36403D;
+	Wed, 21 Jan 2026 18:31:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769020282; cv=none; b=Pg7LibbTnQW9GldJ+MOVbas2rI4i4mI3aNDEQyM3usyucKKZdyh0rV03/lR46FxcvgHmK/qjzvAC5mgyHMKgVUgpjExLNckUazTIOzw4hZ4eZTE5AIF8E6T/Q8w3UKVkhimdZVlphlmCbbGMmwcivvkuBMCRyxTo8XO0icwuPUA=
+	t=1769020286; cv=none; b=AsVfjnuI9WTXvfpYLOCrKgTrMCbidhTVYtpjhqbzyk1eL8CIcyTlgbMOJOLC64QyP8ITh/r8K449PJ29LbdpQZxiEY8gVD+01OwC8m2C0t9jPKdOGkC0aA60WjZFDtNTw7kpdDd/npi9TvHD+YR8+FuTHOzS6bgVXHEbSNOadZs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769020282; c=relaxed/simple;
-	bh=vZ8pHZ2AmwIXruhJqvqNrQh8sXzIsW6xEkUPsO2CxiE=;
+	s=arc-20240116; t=1769020286; c=relaxed/simple;
+	bh=3KW1Lxa/+nhB5vPB1gx672jhlkxe/gzdW440NQiTMTU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OvrKupd9AVVeJKGqX+dLfrC8sJHrmmy9mr2AuTuPBeZ0NzTSPsbMXZrqgVVTUBf68s6rQHTdUzplnFpmm2Bhh1ra+84ew7GGqbddPblBwiW1WJ+Of6nbOF1E1tIJzY03HQ8CyXhnAxqVIogD1uqveFqbUy0lZxhHdywXTXXTa+U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FLY0SCeE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=F6Jw1GKAT+9Gu+/P0Bp9kj5mUxruwSV85BIY66GNZZF2at/prn2EhHA4rRxUgUlCftQ+L+/QYJaFWsuVs38idH5W49jLiqCgdTbg4gQzi1WzCRI11ea8QiJaFDYRib/MT0WqTI+HIMotPVdvmn9HfdkyBqR3XiyVOnyhGqjOKrg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LRgdKiu5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FLY0SCeE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 27460C4CEF1;
-	Wed, 21 Jan 2026 18:31:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LRgdKiu5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 83390C4CEF1;
+	Wed, 21 Jan 2026 18:31:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1769020282;
-	bh=vZ8pHZ2AmwIXruhJqvqNrQh8sXzIsW6xEkUPsO2CxiE=;
+	s=korg; t=1769020286;
+	bh=3KW1Lxa/+nhB5vPB1gx672jhlkxe/gzdW440NQiTMTU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FLY0SCeEI7/0PdCxHHZzu/B9pnhEthRpcBm10k5PVuCipNyAY5ZAvDRGFn7gKMyI9
-	 baVf5qScpQUGMtHxUiQeml/YoO1grRAEv4iVEjETYEmJHr8DNeURge4uzfsqua+d9q
-	 HMR3O34wvd+nhapEOXnLo8pKqgLPB0xUfRxrPA9s=
+	b=LRgdKiu589O7xgQ/3rGmyLqSwv7tgOMEDaDtSHGmtXUzd37K2BtrRC7wRyaweqycJ
+	 /YCtvMmBd48Th8N+5A3jpN1f3uq+TufxdnpinuHLuwFkRsrIr0g61Bl4kqJfXio5S9
+	 aGfxIb5i+AkexMr91rjsawt07I9Fc5rKBToJkpJM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rafael Beims <rafael.beims@toradex.com>,
+	Louis Chauvet <louis.chauvet@bootlin.com>,
+	Luca Ceresoli <luca.ceresoli@bootlin.com>,
+	=?UTF-8?q?Th=C3=A9o=20Lebrun?= <theo.lebrun@bootlin.com>,
 	Vinod Koul <vkoul@kernel.org>
-Subject: [PATCH 6.18 113/198] phy: freescale: imx8m-pcie: assert phy reset during power on
-Date: Wed, 21 Jan 2026 19:15:41 +0100
-Message-ID: <20260121181422.622005417@linuxfoundation.org>
+Subject: [PATCH 6.18 114/198] phy: rockchip: inno-usb2: fix disconnection in gadget mode
+Date: Wed, 21 Jan 2026 19:15:42 +0100
+Message-ID: <20260121181422.657677096@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260121181418.537774329@linuxfoundation.org>
 References: <20260121181418.537774329@linuxfoundation.org>
@@ -44,52 +46,92 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Rafael Beims <rafael.beims@toradex.com>
+From: Louis Chauvet <louis.chauvet@bootlin.com>
 
-commit f2ec4723defbc66a50e0abafa830ae9f8bceb0d7 upstream.
+commit 028e8ca7b20fb7324f3e5db34ba8bd366d9d3acc upstream.
 
-After U-Boot initializes PCIe with "pcie enum", Linux fails to detect
-an NVMe disk on some boot cycles with:
+When the OTG USB port is used to power the SoC, configured as peripheral
+and used in gadget mode, there is a disconnection about 6 seconds after the
+gadget is configured and enumerated.
 
-  phy phy-32f00000.pcie-phy.0: phy poweron failed --> -110
+The problem was observed on a Radxa Rock Pi S board, which can only be
+powered by the only USB-C connector. That connector is the only one usable
+in gadget mode. This implies the USB cable is connected from before boot
+and never disconnects while the kernel runs.
 
-Discussion with NXP identified that the iMX8MP PCIe PHY PLL may fail to
-lock when re-initialized without a reset cycle [1].
+The problem happens because of the PHY driver code flow, summarized as:
 
-The issue reproduces on 7% of tested hardware platforms, with a 30-40%
-failure rate per affected device across boot cycles.
+ * UDC start code (triggered via configfs at any time after boot)
+   -> phy_init
+       -> rockchip_usb2phy_init
+           -> schedule_delayed_work(otg_sm_work [A], 6 sec)
+   -> phy_power_on
+       -> rockchip_usb2phy_power_on
+           -> enable clock
+           -> rockchip_usb2phy_reset
 
-Insert a reset cycle in the power-on routine to ensure the PHY is
-initialized from a known state.
+ * Now the gadget interface is up and running.
 
-[1] https://community.nxp.com/t5/i-MX-Processors/iMX8MP-PCIe-initialization-in-U-Boot/m-p/2248437#M242401
+ * 6 seconds later otg_sm_work starts [A]
+   -> rockchip_usb2phy_otg_sm_work():
+       if (B_IDLE state && VBUS present && ...):
+           schedule_delayed_work(&rport->chg_work [B], 0);
 
-Signed-off-by: Rafael Beims <rafael.beims@toradex.com>
+ * immediately the chg_detect_work starts [B]
+   -> rockchip_chg_detect_work():
+       if chg_state is UNDEFINED:
+           if (!rport->suspended):
+               rockchip_usb2phy_power_off() <--- [X]
+
+At [X], the PHY is powered off, causing a disconnection. This quickly
+triggers a new connection and following re-enumeration, but any connection
+that had been established during the 6 seconds is broken.
+
+The code already checks for !rport->suspended (which, somewhat
+counter-intuitively, means the PHY is powered on), so add a guard for VBUS
+as well to avoid a disconnection when a cable is connected.
+
+Fixes: 98898f3bc83c ("phy: rockchip-inno-usb2: support otg-port for rk3399")
 Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20251223150254.1075221-1-rafael@beims.me
+Closes: https://lore.kernel.org/lkml/20250414185458.7767aabc@booty/
+Signed-off-by: Louis Chauvet <louis.chauvet@bootlin.com>
+Co-developed-by: Luca Ceresoli <luca.ceresoli@bootlin.com>
+Signed-off-by: Luca Ceresoli <luca.ceresoli@bootlin.com>
+Reviewed-by: Théo Lebrun <theo.lebrun@bootlin.com>
+Link: https://patch.msgid.link/20251127-rk3308-fix-usb-gadget-phy-disconnect-v2-1-dac8a02cd2ca@bootlin.com
 Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/phy/freescale/phy-fsl-imx8m-pcie.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/phy/rockchip/phy-rockchip-inno-usb2.c |    6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
---- a/drivers/phy/freescale/phy-fsl-imx8m-pcie.c
-+++ b/drivers/phy/freescale/phy-fsl-imx8m-pcie.c
-@@ -89,7 +89,8 @@ static int imx8_pcie_phy_power_on(struct
- 			writel(imx8_phy->tx_deemph_gen2,
- 			       imx8_phy->base + PCIE_PHY_TRSV_REG6);
- 		break;
--	case IMX8MP: /* Do nothing. */
-+	case IMX8MP:
-+		reset_control_assert(imx8_phy->reset);
- 		break;
- 	}
+--- a/drivers/phy/rockchip/phy-rockchip-inno-usb2.c
++++ b/drivers/phy/rockchip/phy-rockchip-inno-usb2.c
+@@ -821,14 +821,16 @@ static void rockchip_chg_detect_work(str
+ 		container_of(work, struct rockchip_usb2phy_port, chg_work.work);
+ 	struct rockchip_usb2phy *rphy = dev_get_drvdata(rport->phy->dev.parent);
+ 	struct regmap *base = get_reg_base(rphy);
+-	bool is_dcd, tmout, vout;
++	bool is_dcd, tmout, vout, vbus_attach;
+ 	unsigned long delay;
  
++	vbus_attach = property_enabled(rphy->grf, &rport->port_cfg->utmi_bvalid);
++
+ 	dev_dbg(&rport->phy->dev, "chg detection work state = %d\n",
+ 		rphy->chg_state);
+ 	switch (rphy->chg_state) {
+ 	case USB_CHG_STATE_UNDEFINED:
+-		if (!rport->suspended)
++		if (!rport->suspended && !vbus_attach)
+ 			rockchip_usb2phy_power_off(rport->phy);
+ 		/* put the controller in non-driving mode */
+ 		if (!vbus_attach)
 
 
