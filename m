@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B40723A4AD4;
-	Wed, 21 Jan 2026 18:24:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5EAFB1A9FB0;
+	Wed, 21 Jan 2026 18:24:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769019878; cv=none; b=rOzwDLpsF9HlxZRISmFPIlXj1iOrceTbJCtVTlZB/m/u+Xt3Jfp04K40kT8AM980060P14U1R9Qxtw9NOy7oLJCR3C69BBOoZMVQnOsBUbD3JuYE/6jSrUTsoXtPawtHVKWHL3gHB89JFOLqCKjKaQOgtA/DsJM3nUREtjQTZnM=
+	t=1769019882; cv=none; b=ocAoncpEPKp7MHVCCUl+zawG4BbtK1hUuuyHSmB0mIWfTNYvk4f4FW4MT45PNWZb5IjS1eMygVt9lv70AYavnoVKBDBatXIXQp7JS0nNv2/z0eHyp6QviWteWn6eqt0AtSWqMItOgKeSR/ynm3XN0C7dfqQG0Hfq6OrcJKnmfgM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769019878; c=relaxed/simple;
-	bh=R+Cjx9IbAkUD1pPQst4PMns1IJPcNeRR6e37u1KW85U=;
+	s=arc-20240116; t=1769019882; c=relaxed/simple;
+	bh=9z9itUdbjo+0nledQlq4BdW/YsFkLAbEsF8ATrBoW1M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dBfQVyPELeXZzvYkKX3HbPVSAXX1VhKUT5lSUph4bek+TiwjV8nGv/YC9jnYJEJMpbuOWhqFmjSJDSkP4tY5Lpxp45/lZHbGyl0oL4LX0iDCgBpvBIbRmbEB6qAJ8ia3csEMEQHmMQBpSSik13pKLzNiWQWMSyYHEmmOwyoDVug=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nwMvYxAz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LQBwCFXD1BYbwkx0nsNcbhuN01xZz3sCO37csSX/1lBg3hs6DP9AWZt8iBnRfHQ3QqqDCM9ABN/qq7FGz5KdcyFU/Z2ZeYkH59Q8iK/Tx+yzIPnIuvbxBLtSag7Q1scqAKM+tfJbraDUzzltpxXCOP3LNqzefAe01z292DRTeik=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lX3hhzPk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nwMvYxAz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D4C9FC19422;
-	Wed, 21 Jan 2026 18:24:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lX3hhzPk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 52053C4CEF1;
+	Wed, 21 Jan 2026 18:24:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1769019878;
-	bh=R+Cjx9IbAkUD1pPQst4PMns1IJPcNeRR6e37u1KW85U=;
+	s=korg; t=1769019882;
+	bh=9z9itUdbjo+0nledQlq4BdW/YsFkLAbEsF8ATrBoW1M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nwMvYxAz8MLTtXs43eqdTSxPq/a6woM3jUuzSgU5Az+P+n2zyIL/r16BNJgMWDC0w
-	 Qaj1NaEIA1wbQ6Th7ST6peT2fDzDre17FfSbal1Ibe65yBE8GosEFRo7DEnfBm1JoM
-	 8TVSliXNZUEkKSDy4Y+57o9R5ehpvLsQuzsG1JGY=
+	b=lX3hhzPkRXiSKnbnm/B+yZQFpac0Cdo3jw6DgPN8OESHxhIyNl6y/0ESxkhoisDSu
+	 aicT4g8NseWWr1FVmgstl235Eyjp7cGq8/X6Dkofxl5lYDxGFIpaNYBIR7ZtPZu6d0
+	 tYfRa6FCL3PEwrDg6sX0WyvETYPJzHn9qGtm0p1E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xiaochen Shen <shenxiaochen@open-hieco.net>,
-	"Borislav Petkov (AMD)" <bp@alien8.de>,
-	Tony Luck <tony.luck@intel.com>,
-	Reinette Chatre <reinette.chatre@intel.com>
-Subject: [PATCH 6.12 092/139] x86/resctrl: Fix memory bandwidth counter width for Hygon
-Date: Wed, 21 Jan 2026 19:15:40 +0100
-Message-ID: <20260121181414.765451588@linuxfoundation.org>
+	syzbot+0ef84a7bdf5301d4cbec@syzkaller.appspotmail.com,
+	Paul Chaignon <paul.chaignon@gmail.com>,
+	Martin KaFai Lau <martin.lau@kernel.org>,
+	Eduard Zingerman <eddyz87@gmail.com>,
+	Shung-Hsi Yu <shung-hsi.yu@suse.com>
+Subject: [PATCH 6.12 128/139] bpf: Reject narrower access to pointer ctx fields
+Date: Wed, 21 Jan 2026 19:16:16 +0100
+Message-ID: <20260121181416.059774080@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260121181411.452263583@linuxfoundation.org>
 References: <20260121181411.452263583@linuxfoundation.org>
@@ -52,74 +53,164 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xiaochen Shen <shenxiaochen@open-hieco.net>
+From: Paul Chaignon <paul.chaignon@gmail.com>
 
-commit 7517e899e1b87b4c22a92c7e40d8733c48e4ec3c upstream.
+commit e09299225d5ba3916c91ef70565f7d2187e4cca0 upstream.
 
-The memory bandwidth calculation relies on reading the hardware counter
-and measuring the delta between samples. To ensure accurate measurement,
-the software reads the counter frequently enough to prevent it from
-rolling over twice between reads.
+The following BPF program, simplified from a syzkaller repro, causes a
+kernel warning:
 
-The default Memory Bandwidth Monitoring (MBM) counter width is 24 bits.
-Hygon CPUs provide a 32-bit width counter, but they do not support the
-MBM capability CPUID leaf (0xF.[ECX=1]:EAX) to report the width offset
-(from 24 bits).
+    r0 = *(u8 *)(r1 + 169);
+    exit;
 
-Consequently, the kernel falls back to the 24-bit default counter width,
-which causes incorrect overflow handling on Hygon CPUs.
+With pointer field sk being at offset 168 in __sk_buff. This access is
+detected as a narrower read in bpf_skb_is_valid_access because it
+doesn't match offsetof(struct __sk_buff, sk). It is therefore allowed
+and later proceeds to bpf_convert_ctx_access. Note that for the
+"is_narrower_load" case in the convert_ctx_accesses(), the insn->off
+is aligned, so the cnt may not be 0 because it matches the
+offsetof(struct __sk_buff, sk) in the bpf_convert_ctx_access. However,
+the target_size stays 0 and the verifier errors with a kernel warning:
 
-Fix this by explicitly setting the counter width offset to 8 bits (resulting
-in a 32-bit total counter width) for Hygon CPUs.
+    verifier bug: error during ctx access conversion(1)
 
-Fixes: d8df126349da ("x86/cpu/hygon: Add missing resctrl_cpu_detect() in bsp_init helper")
-Signed-off-by: Xiaochen Shen <shenxiaochen@open-hieco.net>
-Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Reviewed-by: Tony Luck <tony.luck@intel.com>
-Reviewed-by: Reinette Chatre <reinette.chatre@intel.com>
-Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20251209062650.1536952-3-shenxiaochen@open-hieco.net
+This patch fixes that to return a proper "invalid bpf_context access
+off=X size=Y" error on the load instruction.
+
+The same issue affects multiple other fields in context structures that
+allow narrow access. Some other non-affected fields (for sk_msg,
+sk_lookup, and sockopt) were also changed to use bpf_ctx_range_ptr for
+consistency.
+
+Note this syzkaller crash was reported in the "Closes" link below, which
+used to be about a different bug, fixed in
+commit fce7bd8e385a ("bpf/verifier: Handle BPF_LOAD_ACQ instructions
+in insn_def_regno()"). Because syzbot somehow confused the two bugs,
+the new crash and repro didn't get reported to the mailing list.
+
+Fixes: f96da09473b52 ("bpf: simplify narrower ctx access")
+Fixes: 0df1a55afa832 ("bpf: Warn on internal verifier errors")
+Reported-by: syzbot+0ef84a7bdf5301d4cbec@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=0ef84a7bdf5301d4cbec
+Signed-off-by: Paul Chaignon <paul.chaignon@gmail.com>
+Signed-off-by: Martin KaFai Lau <martin.lau@kernel.org>
+Acked-by: Eduard Zingerman <eddyz87@gmail.com>
+Link: https://patch.msgid.link/3b8dcee67ff4296903351a974ddd9c4dca768b64.1753194596.git.paul.chaignon@gmail.com
+Signed-off-by: Shung-Hsi Yu <shung-hsi.yu@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kernel/cpu/resctrl/core.c     |   15 +++++++++++++--
- arch/x86/kernel/cpu/resctrl/internal.h |    3 +++
- 2 files changed, 16 insertions(+), 2 deletions(-)
+ kernel/bpf/cgroup.c |    8 ++++----
+ net/core/filter.c   |   20 ++++++++++----------
+ 2 files changed, 14 insertions(+), 14 deletions(-)
 
---- a/arch/x86/kernel/cpu/resctrl/core.c
-+++ b/arch/x86/kernel/cpu/resctrl/core.c
-@@ -1076,8 +1076,19 @@ void resctrl_cpu_detect(struct cpuinfo_x
- 		c->x86_cache_occ_scale = ebx;
- 		c->x86_cache_mbm_width_offset = eax & 0xff;
- 
--		if (c->x86_vendor == X86_VENDOR_AMD && !c->x86_cache_mbm_width_offset)
--			c->x86_cache_mbm_width_offset = MBM_CNTR_WIDTH_OFFSET_AMD;
-+		if (!c->x86_cache_mbm_width_offset) {
-+			switch (c->x86_vendor) {
-+			case X86_VENDOR_AMD:
-+				c->x86_cache_mbm_width_offset = MBM_CNTR_WIDTH_OFFSET_AMD;
-+				break;
-+			case X86_VENDOR_HYGON:
-+				c->x86_cache_mbm_width_offset = MBM_CNTR_WIDTH_OFFSET_HYGON;
-+				break;
-+			default:
-+				/* Leave c->x86_cache_mbm_width_offset as 0 */
-+				break;
-+			}
-+		}
+--- a/kernel/bpf/cgroup.c
++++ b/kernel/bpf/cgroup.c
+@@ -2418,22 +2418,22 @@ static bool cg_sockopt_is_valid_access(i
  	}
- }
  
---- a/arch/x86/kernel/cpu/resctrl/internal.h
-+++ b/arch/x86/kernel/cpu/resctrl/internal.h
-@@ -23,6 +23,9 @@
- #define MBA_IS_LINEAR			0x4
- #define MBM_CNTR_WIDTH_OFFSET_AMD	20
+ 	switch (off) {
+-	case offsetof(struct bpf_sockopt, sk):
++	case bpf_ctx_range_ptr(struct bpf_sockopt, sk):
+ 		if (size != sizeof(__u64))
+ 			return false;
+ 		info->reg_type = PTR_TO_SOCKET;
+ 		break;
+-	case offsetof(struct bpf_sockopt, optval):
++	case bpf_ctx_range_ptr(struct bpf_sockopt, optval):
+ 		if (size != sizeof(__u64))
+ 			return false;
+ 		info->reg_type = PTR_TO_PACKET;
+ 		break;
+-	case offsetof(struct bpf_sockopt, optval_end):
++	case bpf_ctx_range_ptr(struct bpf_sockopt, optval_end):
+ 		if (size != sizeof(__u64))
+ 			return false;
+ 		info->reg_type = PTR_TO_PACKET_END;
+ 		break;
+-	case offsetof(struct bpf_sockopt, retval):
++	case bpf_ctx_range(struct bpf_sockopt, retval):
+ 		if (size != size_default)
+ 			return false;
+ 		return prog->expected_attach_type == BPF_CGROUP_GETSOCKOPT;
+--- a/net/core/filter.c
++++ b/net/core/filter.c
+@@ -8655,7 +8655,7 @@ static bool bpf_skb_is_valid_access(int
+ 		if (size != sizeof(__u64))
+ 			return false;
+ 		break;
+-	case offsetof(struct __sk_buff, sk):
++	case bpf_ctx_range_ptr(struct __sk_buff, sk):
+ 		if (type == BPF_WRITE || size != sizeof(__u64))
+ 			return false;
+ 		info->reg_type = PTR_TO_SOCK_COMMON_OR_NULL;
+@@ -9232,7 +9232,7 @@ static bool sock_addr_is_valid_access(in
+ 				return false;
+ 		}
+ 		break;
+-	case offsetof(struct bpf_sock_addr, sk):
++	case bpf_ctx_range_ptr(struct bpf_sock_addr, sk):
+ 		if (type != BPF_READ)
+ 			return false;
+ 		if (size != sizeof(__u64))
+@@ -9286,17 +9286,17 @@ static bool sock_ops_is_valid_access(int
+ 			if (size != sizeof(__u64))
+ 				return false;
+ 			break;
+-		case offsetof(struct bpf_sock_ops, sk):
++		case bpf_ctx_range_ptr(struct bpf_sock_ops, sk):
+ 			if (size != sizeof(__u64))
+ 				return false;
+ 			info->reg_type = PTR_TO_SOCKET_OR_NULL;
+ 			break;
+-		case offsetof(struct bpf_sock_ops, skb_data):
++		case bpf_ctx_range_ptr(struct bpf_sock_ops, skb_data):
+ 			if (size != sizeof(__u64))
+ 				return false;
+ 			info->reg_type = PTR_TO_PACKET;
+ 			break;
+-		case offsetof(struct bpf_sock_ops, skb_data_end):
++		case bpf_ctx_range_ptr(struct bpf_sock_ops, skb_data_end):
+ 			if (size != sizeof(__u64))
+ 				return false;
+ 			info->reg_type = PTR_TO_PACKET_END;
+@@ -9305,7 +9305,7 @@ static bool sock_ops_is_valid_access(int
+ 			bpf_ctx_record_field_size(info, size_default);
+ 			return bpf_ctx_narrow_access_ok(off, size,
+ 							size_default);
+-		case offsetof(struct bpf_sock_ops, skb_hwtstamp):
++		case bpf_ctx_range(struct bpf_sock_ops, skb_hwtstamp):
+ 			if (size != sizeof(__u64))
+ 				return false;
+ 			break;
+@@ -9375,17 +9375,17 @@ static bool sk_msg_is_valid_access(int o
+ 		return false;
  
-+/* Hygon MBM counter width as an offset from MBM_CNTR_WIDTH_BASE */
-+#define MBM_CNTR_WIDTH_OFFSET_HYGON	8
-+
- #define RMID_VAL_ERROR			BIT_ULL(63)
- #define RMID_VAL_UNAVAIL		BIT_ULL(62)
- /*
+ 	switch (off) {
+-	case offsetof(struct sk_msg_md, data):
++	case bpf_ctx_range_ptr(struct sk_msg_md, data):
+ 		info->reg_type = PTR_TO_PACKET;
+ 		if (size != sizeof(__u64))
+ 			return false;
+ 		break;
+-	case offsetof(struct sk_msg_md, data_end):
++	case bpf_ctx_range_ptr(struct sk_msg_md, data_end):
+ 		info->reg_type = PTR_TO_PACKET_END;
+ 		if (size != sizeof(__u64))
+ 			return false;
+ 		break;
+-	case offsetof(struct sk_msg_md, sk):
++	case bpf_ctx_range_ptr(struct sk_msg_md, sk):
+ 		if (size != sizeof(__u64))
+ 			return false;
+ 		info->reg_type = PTR_TO_SOCKET;
+@@ -11598,7 +11598,7 @@ static bool sk_lookup_is_valid_access(in
+ 		return false;
+ 
+ 	switch (off) {
+-	case offsetof(struct bpf_sk_lookup, sk):
++	case bpf_ctx_range_ptr(struct bpf_sk_lookup, sk):
+ 		info->reg_type = PTR_TO_SOCKET_OR_NULL;
+ 		return size == sizeof(__u64);
+ 
 
 
