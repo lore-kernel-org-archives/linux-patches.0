@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3346236656E;
-	Wed, 21 Jan 2026 18:26:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9FCFA33A9F4;
+	Wed, 21 Jan 2026 18:26:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769020005; cv=none; b=O/fCyUgUiXEcmzFeMRV2VBr0nA0y9QxT5/MWVEWorPFSn4z+TgYCWJwdLJVZdudHCIWgTaUJ2cPuLXfbmU9qQ8FifAoNtp7Fx65mbWKyKY4Gkc3uuGLyNoaAp8d97bZrCy7bQ8k+0EuU/r/v04XE5BHR+Y5xUt961FhEvCJJqb4=
+	t=1769020008; cv=none; b=Q0Dw8Lq/igvhaNl5XY6I6ryJVv0CoHLAT1A7zecHeOAEgVfR+umhQ22Ic/LU4X9ag9vsdlRrb3goDZPTSHjro16azvmOaIxjUIZ0khJP65XMzhHRDsmxZyN86lmbvnhXiK0AjZoflbat8x8OjnLaGJgUJizGkziERdC1eM6h0D0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769020005; c=relaxed/simple;
-	bh=GB0zZ17NaaVvEJej7HKUqoq2WtsQmd7BKBHX8n8uk58=;
+	s=arc-20240116; t=1769020008; c=relaxed/simple;
+	bh=x7JiNmZdDA8IOvkhFAw9ytsubegl7Yf9bASzVwDY82s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ja0UmD5eOq6IYBytq//t1voOX2YiDGOdxyUM3Yl9qkDF8NNheg//gMohbrN51c5KWzip8IXK6SW5WzN7FW3Ee2OcShMIpLiyftsGZCXa9QdEk2OXFVs77rfZbi31EMYXvOly1aul5RT3cQ3Wtjyy2Avk43NV5TQQKa3fPcpnEew=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QBvUaTJh; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=E+i/kSzYoyHJOOccCIp/eSrCY4XIMVRzGDbd5/2gdD4aDdyEGrpvle/SnwPiL4B8s/7oSy/Ttn6AZNPka8Ls+K9Rn/BFMLTwk7PskcYf9wzTl57oOcD7F2QRiN31FVeM/ug2S7VA7lEHPScsWHPdHsVfVHz5RhPtqcqvEqsfudw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=b74WfVYX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QBvUaTJh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3726BC4CEF1;
-	Wed, 21 Jan 2026 18:26:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="b74WfVYX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF577C4CEF1;
+	Wed, 21 Jan 2026 18:26:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1769020004;
-	bh=GB0zZ17NaaVvEJej7HKUqoq2WtsQmd7BKBHX8n8uk58=;
+	s=korg; t=1769020008;
+	bh=x7JiNmZdDA8IOvkhFAw9ytsubegl7Yf9bASzVwDY82s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QBvUaTJhFz3ByAH1BHboBhS0YEVv+mlpfumMrAUTbjivnzOSnpGsuZCbyiuB5El5o
-	 dLqsJ+X4Cy7XMyvoQW9rMd9WYE4q0B+7G5FcToiuN7A4pQD6aQk5urdpWDZp2p6IY2
-	 67Ik8DLsQnBhWYU0cRINxxbZskmvhPIv2zmcVrNg=
+	b=b74WfVYXMz3gumlHy69ZaELUfIWQyD4tTncDHSFFSBZxpNdOJAKenAbnwyErWvKGp
+	 ZZYGrLd+RRMSAqDabyLPdjSZJitVt1/rapdnYlHYNk0iDlOlclDM3YM3R2BN3CGgzo
+	 GJRYlbTwX9LAI5Z0saQZyoi/0hcJynm1U9kydO58=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andreas Hindborg <a.hindborg@kernel.org>,
-	Dirk Behme <dirk.behme@de.bosch.com>,
-	Alice Ryhl <aliceryhl@google.com>,
-	"Yury Norov (NVIDIA)" <yury.norov@gmail.com>
-Subject: [PATCH 6.18 006/198] rust: bitops: fix missing _find_* functions on 32-bit ARM
-Date: Wed, 21 Jan 2026 19:13:54 +0100
-Message-ID: <20260121181418.772952941@linuxfoundation.org>
+	Krzysztof Kozlowski <krzk@kernel.org>,
+	Johan Hovold <johan@kernel.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>,
+	Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>,
+	Mark Brown <broonie@kernel.org>
+Subject: [PATCH 6.18 007/198] ASoC: codecs: wsa884x: fix codec initialisation
+Date: Wed, 21 Jan 2026 19:13:55 +0100
+Message-ID: <20260121181418.808891976@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260121181418.537774329@linuxfoundation.org>
 References: <20260121181418.537774329@linuxfoundation.org>
@@ -52,126 +53,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alice Ryhl <aliceryhl@google.com>
+From: Johan Hovold <johan@kernel.org>
 
-commit 6a069876eb1402478900ee0eb7d7fe276bb1f4e3 upstream.
+commit 120f3e6ff76209ee2f62a64e5e7e9d70274df42b upstream.
 
-On 32-bit ARM, you may encounter linker errors such as this one:
+The soundwire update_status() callback may be called multiple times with
+the same ATTACHED status but initialisation should only be done when
+transitioning from UNATTACHED to ATTACHED.
 
-	ld.lld: error: undefined symbol: _find_next_zero_bit
-	>>> referenced by rust_binder_main.43196037ba7bcee1-cgu.0
-	>>>               drivers/android/binder/rust_binder_main.o:(<rust_binder_main::process::Process>::insert_or_update_handle) in archive vmlinux.a
-	>>> referenced by rust_binder_main.43196037ba7bcee1-cgu.0
-	>>>               drivers/android/binder/rust_binder_main.o:(<rust_binder_main::process::Process>::insert_or_update_handle) in archive vmlinux.a
+Fix the inverted hw_init flag which was set to false instead of true
+after initialisation which defeats its purpose and may result in
+repeated unnecessary initialisation.
 
-This error occurs because even though the functions are declared by
-include/linux/find.h, the definition is #ifdef'd out on 32-bit ARM. This
-is because arch/arm/include/asm/bitops.h contains:
+Similarly, the initial state of the flag was also inverted so that the
+codec would only be initialised and brought out of regmap cache only
+mode if its status first transitions to UNATTACHED.
 
-	#define find_first_zero_bit(p,sz)	_find_first_zero_bit_le(p,sz)
-	#define find_next_zero_bit(p,sz,off)	_find_next_zero_bit_le(p,sz,off)
-	#define find_first_bit(p,sz)		_find_first_bit_le(p,sz)
-	#define find_next_bit(p,sz,off)		_find_next_bit_le(p,sz,off)
-
-And the underscore-prefixed function is conditional on #ifndef of the
-non-underscore-prefixed name, but the declaration in find.h is *not*
-conditional on that #ifndef.
-
-To fix the linker error, we ensure that the symbols in question exist
-when compiling Rust code. We do this by defining them in rust/helpers/
-whenever the normal definition is #ifndef'd out.
-
-Note that these helpers are somewhat unusual in that they do not have
-the rust_helper_ prefix that most helpers have. Adding the rust_helper_
-prefix does not compile, as 'bindings::_find_next_zero_bit()' will
-result in a call to a symbol called _find_next_zero_bit as defined by
-include/linux/find.h rather than a symbol with the rust_helper_ prefix.
-This is because when a symbol is present in both include/ and
-rust/helpers/, the one from include/ wins under the assumption that the
-current configuration is one where that helper is unnecessary. This
-heuristic fails for _find_next_zero_bit() because the header file always
-declares it even if the symbol does not exist.
-
-The functions still use the __rust_helper annotation. This lets the
-wrapper function be inlined into Rust code even if full kernel LTO is
-not used once the patch series for that feature lands.
-
-Yury: arches are free to implement they own find_bit() functions. Most
-rely on generic implementation, but arm32 and m86k - not; so they require
-custom handling. Alice confirmed it fixes the build for both.
-
-Cc: stable@vger.kernel.org
-Fixes: 6cf93a9ed39e ("rust: add bindings for bitops.h")
-Reported-by: Andreas Hindborg <a.hindborg@kernel.org>
-Closes: https://rust-for-linux.zulipchat.com/#narrow/channel/x/topic/x/near/561677301
-Tested-by: Andreas Hindborg <a.hindborg@kernel.org>
-Reviewed-by: Dirk Behme <dirk.behme@de.bosch.com>
-Signed-off-by: Alice Ryhl <aliceryhl@google.com>
-Signed-off-by: Yury Norov (NVIDIA) <yury.norov@gmail.com>
+Fixes: aa21a7d4f68a ("ASoC: codecs: wsa884x: Add WSA884x family of speakers")
+Cc: stable@vger.kernel.org	# 6.5
+Cc: Krzysztof Kozlowski <krzk@kernel.org>
+Signed-off-by: Johan Hovold <johan@kernel.org>
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
+Tested-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
+Reviewed-by: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260102111413.9605-4-johan@kernel.org
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- rust/helpers/bitops.c | 42 ++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 42 insertions(+)
+ sound/soc/codecs/wsa884x.c |    3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/rust/helpers/bitops.c b/rust/helpers/bitops.c
-index 5d0861d29d3f..e79ef9e6d98f 100644
---- a/rust/helpers/bitops.c
-+++ b/rust/helpers/bitops.c
-@@ -1,6 +1,7 @@
- // SPDX-License-Identifier: GPL-2.0
+--- a/sound/soc/codecs/wsa884x.c
++++ b/sound/soc/codecs/wsa884x.c
+@@ -1534,7 +1534,7 @@ static void wsa884x_init(struct wsa884x_
  
- #include <linux/bitops.h>
-+#include <linux/find.h>
+ 	wsa884x_set_gain_parameters(wsa884x);
  
- void rust_helper___set_bit(unsigned long nr, unsigned long *addr)
- {
-@@ -21,3 +22,44 @@ void rust_helper_clear_bit(unsigned long nr, volatile unsigned long *addr)
- {
- 	clear_bit(nr, addr);
+-	wsa884x->hw_init = false;
++	wsa884x->hw_init = true;
  }
-+
-+/*
-+ * The rust_helper_ prefix is intentionally omitted below so that the
-+ * declarations in include/linux/find.h are compatible with these helpers.
-+ *
-+ * Note that the below #ifdefs mean that the helper is only created if C does
-+ * not provide a definition.
-+ */
-+#ifdef find_first_zero_bit
-+__rust_helper
-+unsigned long _find_first_zero_bit(const unsigned long *p, unsigned long size)
-+{
-+	return find_first_zero_bit(p, size);
-+}
-+#endif /* find_first_zero_bit */
-+
-+#ifdef find_next_zero_bit
-+__rust_helper
-+unsigned long _find_next_zero_bit(const unsigned long *addr,
-+				  unsigned long size, unsigned long offset)
-+{
-+	return find_next_zero_bit(addr, size, offset);
-+}
-+#endif /* find_next_zero_bit */
-+
-+#ifdef find_first_bit
-+__rust_helper
-+unsigned long _find_first_bit(const unsigned long *addr, unsigned long size)
-+{
-+	return find_first_bit(addr, size);
-+}
-+#endif /* find_first_bit */
-+
-+#ifdef find_next_bit
-+__rust_helper
-+unsigned long _find_next_bit(const unsigned long *addr, unsigned long size,
-+			     unsigned long offset)
-+{
-+	return find_next_bit(addr, size, offset);
-+}
-+#endif /* find_next_bit */
--- 
-2.52.0
-
+ 
+ static int wsa884x_update_status(struct sdw_slave *slave,
+@@ -2109,7 +2109,6 @@ static int wsa884x_probe(struct sdw_slav
+ 
+ 	/* Start in cache-only until device is enumerated */
+ 	regcache_cache_only(wsa884x->regmap, true);
+-	wsa884x->hw_init = true;
+ 
+ 	if (IS_REACHABLE(CONFIG_HWMON)) {
+ 		struct device *hwmon;
 
 
