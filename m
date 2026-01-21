@@ -1,36 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68BB733EAE0;
-	Wed, 21 Jan 2026 18:30:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5BFF5345741;
+	Wed, 21 Jan 2026 18:30:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769020217; cv=none; b=JQMY7PFYyJhd4qsq+9lrSLRkSKSyWv5mZx8mzup50I53+4Ja3hQourdkYVLu08Hpp0/bgw/q206NwcM20qcv2nJQg8O6YbleKjqh5dnTgjwz7LgyNqwXEIUs9OSVK9MDi5MBGP5wv4/HXKH5vpNLsu00bdurxcYOQWTPVBYvs4M=
+	t=1769020221; cv=none; b=kwDOKEmF0pihN/icRWdyMQMp0Hv7SDXYPVGc3xBZIr71AF2bZsE99QV88MYRdnqUyqIh301PRbsf7bN5YYYbPNYuMzk6hn/8N4F5FuEK+mJWq/UlbKArfLjdYdxJReNm+ylXZg40Ea3j8MQQIxskEdffBRklzkV0iWeGDRM76Xc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769020217; c=relaxed/simple;
-	bh=pdisrH1GII42wJkvaRMbFaAxoeGnLM2XAEmsAhx28tc=;
+	s=arc-20240116; t=1769020221; c=relaxed/simple;
+	bh=gnyNya7Po5j4leaEKDhTZMNJSn6T/ihS9yDt2QyJKOE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KoJMuN9dsjsdqe9MIGy1PPLAF8NEN23EfUAOgB9C/w0sCF1u7Jx9AwfT41fjIG18G7mbo8nlK+OXHR+0sVCc8NpvNHcA+UioRywNIk/gkgMaP1GH7m46TPQF5zt8MToqcchMm7lgnJ4h/ilBQmFRqrvsIjLvGgHbYbuBE//YXT8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tvZtv44L; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Te1PulrMmGC/+1xJJV08CuIcExeMa7xki1+CFVw8NUxCTfdya37oJ1cUCEqKy4asFAfqWCriwfvW4EhW3hmEspVUPnxZsAWBCkXq4DgJyaliyXt+HWj1YUWENmvQOGV92/7+1s5wgqePkxnFfmDGUtMIyVaggfC1EDLlzuX4G/g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UEzfcMcD; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tvZtv44L"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C8DB3C4CEF1;
-	Wed, 21 Jan 2026 18:30:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UEzfcMcD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 64006C4CEF1;
+	Wed, 21 Jan 2026 18:30:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1769020217;
-	bh=pdisrH1GII42wJkvaRMbFaAxoeGnLM2XAEmsAhx28tc=;
+	s=korg; t=1769020220;
+	bh=gnyNya7Po5j4leaEKDhTZMNJSn6T/ihS9yDt2QyJKOE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tvZtv44LwQmBq1EYjjZ+97/j55feY/6B9aRrntympHVr0AbtE1fQKUIYeHcR2Y/Km
-	 c8HDbyGvKyni4tXy5uut5VZBhDEeIFNCKcTdTPqaehr5BNCTR49HKz0Mjn9NEKHmTF
-	 +ieVzgeCW2UBHlK3zn3Jdzex3z3I22WGZKyErRus=
+	b=UEzfcMcDoxDUU3hSXLsL1YTv2dmYZPtgxFvTxVjLrh+mO2O7ARBuldPbu4jEu2HIv
+	 r66yf+R+ezItZLhWMPF75F4XBWxvayO2KVAKwq8z3H3azktGUsWeoYsudvTHjCbcU3
+	 KSaIVv7rIgaiw9Mqasl6CnNNkHmN40velcy34l6M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Paolo Bonzini <pbonzini@redhat.com>
-Subject: [PATCH 6.18 093/198] selftests: kvm: try getting XFD and XSAVE state out of sync
-Date: Wed, 21 Jan 2026 19:15:21 +0100
-Message-ID: <20260121181421.901388626@linuxfoundation.org>
+	John Groves <john@groves.net>,
+	Dan Williams <dan.j.williams@intel.com>,
+	Joao Martins <joao.m.martins@oracle.com>,
+	Vishal Verma <vishal.l.verma@intel.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.18 067/198] drivers/dax: add some missing kerneldoc comment fields for struct dev_dax
+Date: Wed, 21 Jan 2026 19:14:55 +0100
+Message-ID: <20260121181420.971619622@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260121181418.537774329@linuxfoundation.org>
 References: <20260121181418.537774329@linuxfoundation.org>
@@ -49,103 +54,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Paolo Bonzini <pbonzini@redhat.com>
+From: John Groves <John@Groves.net>
 
-commit 0383a8edef396cf0a6884b0be81d62bde60737b0 upstream.
+[ Upstream commit 3e8e590fd65d0572584ab7bba89a35e6d19931f1 ]
 
-The host is allowed to set FPU state that includes a disabled
-xstate component.  Check that this does not cause bad effects.
+Add the missing @align and @memmap_on_memory fields to kerneldoc comment
+header for struct dev_dax.
 
-Cc: stable@vger.kernel.org
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Also, some other fields were followed by '-' and others by ':'. Fix all
+to be ':' for actual kerneldoc compliance.
+
+Link: https://lkml.kernel.org/r/20260110191804.5739-1-john@groves.net
+Fixes: 33cf94d71766 ("device-dax: make align a per-device property")
+Fixes: 4eca0ef49af9 ("dax/kmem: allow kmem to add memory with memmap_on_memory")
+Signed-off-by: John Groves <john@groves.net>
+Cc: Dan Williams <dan.j.williams@intel.com>
+Cc: Joao Martins <joao.m.martins@oracle.com>
+Cc: Vishal Verma <vishal.l.verma@intel.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/kvm/x86/amx_test.c |   38 ++++++++++++++++++++++-------
- 1 file changed, 30 insertions(+), 8 deletions(-)
+ drivers/dax/dax-private.h | 10 ++++++----
+ 1 file changed, 6 insertions(+), 4 deletions(-)
 
---- a/tools/testing/selftests/kvm/x86/amx_test.c
-+++ b/tools/testing/selftests/kvm/x86/amx_test.c
-@@ -125,11 +125,17 @@ static void set_tilecfg(struct tile_conf
- }
- 
- enum {
-+	/* Retrieve TMM0 from guest, stash it for TEST_RESTORE_TILEDATA */
-+	TEST_SAVE_TILEDATA = 1,
-+
- 	/* Check TMM0 against tiledata */
--	TEST_COMPARE_TILEDATA = 1,
-+	TEST_COMPARE_TILEDATA = 2,
-+
-+	/* Restore TMM0 from earlier save */
-+	TEST_RESTORE_TILEDATA = 4,
- 
- 	/* Full VM save/restore */
--	TEST_SAVE_RESTORE = 2,
-+	TEST_SAVE_RESTORE = 8,
- };
- 
- static void __attribute__((__flatten__)) guest_code(struct tile_config *amx_cfg,
-@@ -150,7 +156,16 @@ static void __attribute__((__flatten__))
- 	GUEST_SYNC(TEST_SAVE_RESTORE);
- 	/* Check save/restore when trap to userspace */
- 	__tileloadd(tiledata);
--	GUEST_SYNC(TEST_COMPARE_TILEDATA | TEST_SAVE_RESTORE);
-+	GUEST_SYNC(TEST_SAVE_TILEDATA | TEST_COMPARE_TILEDATA | TEST_SAVE_RESTORE);
-+
-+	/* xfd=0x40000, disable amx tiledata */
-+	wrmsr(MSR_IA32_XFD, XFEATURE_MASK_XTILE_DATA);
-+
-+	/* host tries setting tiledata while guest XFD is set */
-+	GUEST_SYNC(TEST_RESTORE_TILEDATA);
-+	GUEST_SYNC(TEST_SAVE_RESTORE);
-+
-+	wrmsr(MSR_IA32_XFD, 0);
- 	__tilerelease();
- 	GUEST_SYNC(TEST_SAVE_RESTORE);
- 	/*
-@@ -210,10 +225,10 @@ int main(int argc, char *argv[])
- 	struct kvm_vcpu *vcpu;
- 	struct kvm_vm *vm;
- 	struct kvm_x86_state *state;
-+	struct kvm_x86_state *tile_state = NULL;
- 	int xsave_restore_size;
- 	vm_vaddr_t amx_cfg, tiledata, xstate;
- 	struct ucall uc;
--	u32 amx_offset;
- 	int ret;
- 
- 	/*
-@@ -265,20 +280,27 @@ int main(int argc, char *argv[])
- 			/* NOT REACHED */
- 		case UCALL_SYNC:
- 			++iter;
-+			if (uc.args[1] & TEST_SAVE_TILEDATA) {
-+				fprintf(stderr, "GUEST_SYNC #%d, save tiledata\n", iter);
-+				tile_state = vcpu_save_state(vcpu);
-+			}
- 			if (uc.args[1] & TEST_COMPARE_TILEDATA) {
- 				fprintf(stderr, "GUEST_SYNC #%d, check TMM0 contents\n", iter);
- 
- 				/* Compacted mode, get amx offset by xsave area
- 				 * size subtract 8K amx size.
- 				 */
--				amx_offset = xsave_restore_size - NUM_TILES*TILE_SIZE;
--				state = vcpu_save_state(vcpu);
--				void *amx_start = (void *)state->xsave + amx_offset;
-+				u32 amx_offset = xsave_restore_size - NUM_TILES*TILE_SIZE;
-+				void *amx_start = (void *)tile_state->xsave + amx_offset;
- 				void *tiles_data = (void *)addr_gva2hva(vm, tiledata);
- 				/* Only check TMM0 register, 1 tile */
- 				ret = memcmp(amx_start, tiles_data, TILE_SIZE);
- 				TEST_ASSERT(ret == 0, "memcmp failed, ret=%d", ret);
--				kvm_x86_state_cleanup(state);
-+			}
-+			if (uc.args[1] & TEST_RESTORE_TILEDATA) {
-+				fprintf(stderr, "GUEST_SYNC #%d, before KVM_SET_XSAVE\n", iter);
-+				vcpu_xsave_set(vcpu, tile_state->xsave);
-+				fprintf(stderr, "GUEST_SYNC #%d, after KVM_SET_XSAVE\n", iter);
- 			}
- 			if (uc.args[1] & TEST_SAVE_RESTORE) {
- 				fprintf(stderr, "GUEST_SYNC #%d, save/restore VM state\n", iter);
+diff --git a/drivers/dax/dax-private.h b/drivers/dax/dax-private.h
+index 0867115aeef2e..c6ae27c982f43 100644
+--- a/drivers/dax/dax-private.h
++++ b/drivers/dax/dax-private.h
+@@ -67,14 +67,16 @@ struct dev_dax_range {
+ /**
+  * struct dev_dax - instance data for a subdivision of a dax region, and
+  * data while the device is activated in the driver.
+- * @region - parent region
+- * @dax_dev - core dax functionality
++ * @region: parent region
++ * @dax_dev: core dax functionality
++ * @align: alignment of this instance
+  * @target_node: effective numa node if dev_dax memory range is onlined
+  * @dyn_id: is this a dynamic or statically created instance
+  * @id: ida allocated id when the dax_region is not static
+  * @ida: mapping id allocator
+- * @dev - device core
+- * @pgmap - pgmap for memmap setup / lifetime (driver owned)
++ * @dev: device core
++ * @pgmap: pgmap for memmap setup / lifetime (driver owned)
++ * @memmap_on_memory: allow kmem to put the memmap in the memory
+  * @nr_range: size of @ranges
+  * @ranges: range tuples of memory used
+  */
+-- 
+2.51.0
+
 
 
