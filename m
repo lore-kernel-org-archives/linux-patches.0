@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE768330657;
-	Wed, 21 Jan 2026 18:23:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5B4A3A89B8;
+	Wed, 21 Jan 2026 18:23:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769019815; cv=none; b=tpjPZxpoZMdYESF9aAchUF19UtK0Xo+JU8qEoa//nkyxhlVZJdhBQuhP4zzj/Z/UuxaMZ7qoO9j0wnyZnLZ5J7I8q60Ujb9MnD/29MegUt+uIkTBOLa6dzjEaLSef7jtq8DhK2UDmofZwxPe5Z/tXwsSkqAlcMFI9Un3JjKYnTY=
+	t=1769019817; cv=none; b=TlN0z6rD+CIeBFFRf3DcYHBfrEv/Mcwhd3hm4/k9i0fyovVYlLN6iGyCf1vfw7LqDvO5Ax6aojbIfSORuTRYuiXzzftnCsKE4P6zr1UNmF3xwCz9ZmkTuo72e8/oFcwetuP9b04s9Q6sUphvaBkykiBkwsGFCKKiKFtuf0DaMQw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769019815; c=relaxed/simple;
-	bh=hgsvrMsZFgDQ04WbiBEGlogcWZyDBPCH6vG5fJkkLvY=;
+	s=arc-20240116; t=1769019817; c=relaxed/simple;
+	bh=/3U7i/Bg4wSaMKiqvbVpMgefKBozg8L6Cdffn17Qqow=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HSgoTHirl+iS5tlacdOmrdofs8AyJFXPz5xWt4GXMlDjitcWgB+C4DqITzIv/pKyXbuWYP39fc7N6scQ8HjDNChUyE7yj/WKXpPTQ/482/OJsFEsQJsfJZUNdbWE+tqHbP7QYNj7ZlME+eDOCBgZmYTaZLtH+mCtO8tnG7lueqk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wgAx83Xx; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=iFjSX4i8uLeoACNMfOR6za+RJqXb/7DKrBZ9ebL0Q5X7+6wvBphhrijrWXQL+yfi2KRVdkV8PY1amH8am8V55mGjkJNLki6tEWBzaHdcro2DzdcM32JlQB8er4evZeh1lp9WRgDBqIFenqMCElAwuUa4uyH6b95FI+aY3IG+Eng=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=r71tWxjt; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wgAx83Xx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36A32C4CEF1;
-	Wed, 21 Jan 2026 18:23:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="r71tWxjt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2041CC19424;
+	Wed, 21 Jan 2026 18:23:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1769019814;
-	bh=hgsvrMsZFgDQ04WbiBEGlogcWZyDBPCH6vG5fJkkLvY=;
+	s=korg; t=1769019817;
+	bh=/3U7i/Bg4wSaMKiqvbVpMgefKBozg8L6Cdffn17Qqow=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wgAx83XxRkiAqEHMrrVQY8lXIylXjsrcxPscq/4tsFQQpI2DZU5l9tLUlWh8X4OcI
-	 WF/fPlSyRQkqv55IPmGwAwJWBVQJ4l+0Mx5oR5RKOfgZM5RFJq/8HLxAAGPcA0o1eA
-	 N1JmXj5a898Wzy4+RVyPNLVpWcfe7AAtq0BK1Hns=
+	b=r71tWxjt2S/1Kznr1Cxmt9cMhTLBfJCRNtGBpMtyjxi3JKczpiH9NAZ59JFzxSmC2
+	 adQZVkqL1qi7RmcDbNxiO6aWrUly8FRZg4+Ww6D0AIrsl8jYFQF4AOeTvlrs0Jz2pg
+	 woSm6S9AAx5rMqZEETUOgUf6mrv4kdsFExXG9AWA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Miaoqian Lin <linmq006@gmail.com>,
-	Bjorn Andersson <andersson@kernel.org>,
+	stable@kernel.org,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Biju Das <biju.das.jz@bp.renesas.com>,
+	Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>,
 	Vinod Koul <vkoul@kernel.org>
-Subject: [PATCH 6.12 115/139] dmaengine: qcom: gpi: Fix memory leak in gpi_peripheral_config()
-Date: Wed, 21 Jan 2026 19:16:03 +0100
-Message-ID: <20260121181415.590695129@linuxfoundation.org>
+Subject: [PATCH 6.12 116/139] dmaengine: sh: rz-dmac: Fix rz_dmac_terminate_all()
+Date: Wed, 21 Jan 2026 19:16:04 +0100
+Message-ID: <20260121181415.625849719@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260121181411.452263583@linuxfoundation.org>
 References: <20260121181411.452263583@linuxfoundation.org>
@@ -51,56 +53,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Miaoqian Lin <linmq006@gmail.com>
+From: Biju Das <biju.das.jz@bp.renesas.com>
 
-commit 3f747004bbd641131d9396d87b5d2d3d1e182728 upstream.
+commit 747213b08a1ab6a76e3e3b3e7a209cc1d402b5d0 upstream.
 
-Fix a memory leak in gpi_peripheral_config() where the original memory
-pointed to by gchan->config could be lost if krealloc() fails.
+After audio full duplex testing, playing the recorded file contains a few
+playback frames from the previous time. The rz_dmac_terminate_all() does
+not reset all the hardware descriptors queued previously, leading to the
+wrong descriptor being picked up during the next DMA transfer. Fix the
+above issue by resetting all the descriptor headers for a channel in
+rz_dmac_terminate_all() as rz_dmac_lmdesc_recycle() points to the proper
+descriptor header filled by the rz_dmac_prepare_descs_for_slave_sg().
 
-The issue occurs when:
-1. gchan->config points to previously allocated memory
-2. krealloc() fails and returns NULL
-3. The function directly assigns NULL to gchan->config, losing the
-   reference to the original memory
-4. The original memory becomes unreachable and cannot be freed
-
-Fix this by using a temporary variable to hold the krealloc() result
-and only updating gchan->config when the allocation succeeds.
-
-Found via static analysis and code review.
-
-Fixes: 5d0c3533a19f ("dmaengine: qcom: Add GPI dma driver")
-Cc: stable@vger.kernel.org
-Signed-off-by: Miaoqian Lin <linmq006@gmail.com>
-Reviewed-by: Bjorn Andersson <andersson@kernel.org>
-Link: https://patch.msgid.link/20251029123421.91973-1-linmq006@gmail.com
+Cc: stable@kernel.org
+Fixes: 5000d37042a6 ("dmaengine: sh: Add DMAC driver for RZ/G2L SoC")
+Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Signed-off-by: Biju Das <biju.das.jz@bp.renesas.com>
+Reviewed-by: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
+Tested-by: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
+Link: https://patch.msgid.link/20251113195052.564338-1-biju.das.jz@bp.renesas.com
 Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/dma/qcom/gpi.c |    6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/dma/sh/rz-dmac.c |    5 +++++
+ 1 file changed, 5 insertions(+)
 
---- a/drivers/dma/qcom/gpi.c
-+++ b/drivers/dma/qcom/gpi.c
-@@ -1614,14 +1614,16 @@ static int
- gpi_peripheral_config(struct dma_chan *chan, struct dma_slave_config *config)
+--- a/drivers/dma/sh/rz-dmac.c
++++ b/drivers/dma/sh/rz-dmac.c
+@@ -533,11 +533,16 @@ rz_dmac_prep_slave_sg(struct dma_chan *c
+ static int rz_dmac_terminate_all(struct dma_chan *chan)
  {
- 	struct gchan *gchan = to_gchan(chan);
-+	void *new_config;
+ 	struct rz_dmac_chan *channel = to_rz_dmac_chan(chan);
++	struct rz_lmdesc *lmdesc = channel->lmdesc.base;
+ 	unsigned long flags;
++	unsigned int i;
+ 	LIST_HEAD(head);
  
- 	if (!config->peripheral_config)
- 		return -EINVAL;
- 
--	gchan->config = krealloc(gchan->config, config->peripheral_size, GFP_NOWAIT);
--	if (!gchan->config)
-+	new_config = krealloc(gchan->config, config->peripheral_size, GFP_NOWAIT);
-+	if (!new_config)
- 		return -ENOMEM;
- 
-+	gchan->config = new_config;
- 	memcpy(gchan->config, config->peripheral_config, config->peripheral_size);
- 
- 	return 0;
+ 	rz_dmac_disable_hw(channel);
+ 	spin_lock_irqsave(&channel->vc.lock, flags);
++	for (i = 0; i < DMAC_NR_LMDESC; i++)
++		lmdesc[i].header = 0;
++
+ 	list_splice_tail_init(&channel->ld_active, &channel->ld_free);
+ 	list_splice_tail_init(&channel->ld_queue, &channel->ld_free);
+ 	vchan_get_all_descriptors(&channel->vc, &head);
 
 
