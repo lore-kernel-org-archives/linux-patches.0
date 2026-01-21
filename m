@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16979376BDD;
-	Wed, 21 Jan 2026 18:27:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B8DE3559ED;
+	Wed, 21 Jan 2026 18:27:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769020022; cv=none; b=lsxCZbWacEwIbGn+sK7xomYn+uW5q12X3Bm8eT+8MWvRgoVuj+Md4ZhSfxD4pAzrEnu5eIVA6LCgbZGQcNqNsNuNy5EcWorYgUxiy96sU+ICXNzoTeygWRcutKlnlg2dW1GYVtw5JaD1elvsRRjhdMcrUrn0PrAmzYCsV1XZVWY=
+	t=1769020025; cv=none; b=ivJ4Dq36sL2wLAvsAhWBDIItnXKcpPfP4Hzyn6C5DBigDm+nIwv/N141XxZPiLkmv4wKpWukiDBTdDgp8pIP7vOfkXolPefHArFx3mCtg6660SVC8OBaCVL6OFAMQuULBCUhbBW1RYvvV45Z9pV5LJCE2ryJrNomh+0HmtyjVOs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769020022; c=relaxed/simple;
-	bh=aeHXJdVLhonIriVLOrbj1Pzieq6dMl6oaVrc8p5aKBc=;
+	s=arc-20240116; t=1769020025; c=relaxed/simple;
+	bh=twP5nqGJD00tZZexHsw5EhtjLsuMSMIMRcRlOdGRjSY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QHYrMMoMy5yXPu2TliTkdpyeh5OjcUAc8DmUp7K4RjmnkymxnVvihihzHMO2JDjAqSN4bkNC/7fFsM4UDD4z9RCkiNufFh1Sk0o0BXP83NN6ZkJ0zjqeMTAVO5yf2VEsdoPwMKFsKLOfCmkissFuORXahHf531helYf3kOY7RoU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kCbZSiBo; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ni35oRYVKTc8IPBANcX4OjkBEwYuK1tHxYzRUAfFJBw3GfFPU9QlDNvTLt/oYWDYKCcp7CJ/uCMq0OHU7CsRcmN1uCGQnyhoP/HoGooPEcyNa4X6qoM6PwXcZOaDPki6y8oJnpTMLe3EG+Y2IPIzQFLpPydEbS9FgJVkYnFyvc0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sqTrAYPK; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kCbZSiBo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 68B51C16AAE;
-	Wed, 21 Jan 2026 18:27:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sqTrAYPK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6734C4CEF1;
+	Wed, 21 Jan 2026 18:27:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1769020021;
-	bh=aeHXJdVLhonIriVLOrbj1Pzieq6dMl6oaVrc8p5aKBc=;
+	s=korg; t=1769020025;
+	bh=twP5nqGJD00tZZexHsw5EhtjLsuMSMIMRcRlOdGRjSY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kCbZSiBohsg59DwmVGotdIdkymnAYkUyTNm7AvGJ5OXZrihTI/s78TVQvMBwwZM/d
-	 vsdErioxs3Rt05D1o/XbuprQUN0vKulbPYObUVToy7csQDb5kfVKfp1fdV6TKI1ypj
-	 ohL5oSECN7ODkpizqGU6vx7USSTcPFjXWwstA/rA=
+	b=sqTrAYPKuZM9pf0CqTdtiVfQBwFU4Zsfsiw2krDiuDZPALeNObx1+uG7+YO4gAeup
+	 hSEczVuESDe03TYq9xhNpFIM/5bbOIsqO4EDhSHOI32P/OaB2f/K3V59ZqdpkWElQW
+	 vwE2lRzS493VzZjwc/3Rkqq/ZmZYVw/8t5Kljbqk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+c1c6edb02bea1da754d8@syzkaller.appspotmail.com,
-	Boris Burkov <boris@bur.io>,
-	Filipe Manana <fdmanana@suse.com>,
-	David Sterba <dsterba@suse.com>,
+	Luigi Leonardi <leonardi@redhat.com>,
+	Stefano Garzarella <sgarzare@redhat.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 029/198] btrfs: release path before iget_failed() in btrfs_read_locked_inode()
-Date: Wed, 21 Jan 2026 19:14:17 +0100
-Message-ID: <20260121181419.602461147@linuxfoundation.org>
+Subject: [PATCH 6.18 038/198] vsock/test: add a final full barrier after run all tests
+Date: Wed, 21 Jan 2026 19:14:26 +0100
+Message-ID: <20260121181419.920958790@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260121181418.537774329@linuxfoundation.org>
 References: <20260121181418.537774329@linuxfoundation.org>
@@ -53,164 +52,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Filipe Manana <fdmanana@suse.com>
+From: Stefano Garzarella <sgarzare@redhat.com>
 
-[ Upstream commit 1e1f2055ad5a7a5d548789b334a4473a7665c418 ]
+[ Upstream commit c39a6a277e0e67ffff6a8efcbbf7e7e23ce9e38c ]
 
-In btrfs_read_locked_inode() if we fail to lookup the inode, we jump to
-the 'out' label with a path that has a read locked leaf and then we call
-iget_failed(). This can result in a ABBA deadlock, since iget_failed()
-triggers inode eviction and that causes the release of the delayed inode,
-which must lock the delayed inode's mutex, and a task updating a delayed
-inode starts by taking the node's mutex and then modifying the inode's
-subvolume btree.
+If the last test fails, the other side still completes correctly,
+which could lead to false positives.
 
-Syzbot reported the following lockdep splat for this:
+Let's add a final barrier that ensures that the last test has finished
+correctly on both sides, but also that the two sides agree on the
+number of tests to be performed.
 
-   ======================================================
-   WARNING: possible circular locking dependency detected
-   syzkaller #0 Not tainted
-   ------------------------------------------------------
-   btrfs-cleaner/8725 is trying to acquire lock:
-   ffff0000d6826a48 (&delayed_node->mutex){+.+.}-{4:4}, at: __btrfs_release_delayed_node+0xa0/0x9b0 fs/btrfs/delayed-inode.c:290
-
-   but task is already holding lock:
-   ffff0000dbeba878 (btrfs-tree-00){++++}-{4:4}, at: btrfs_tree_read_lock_nested+0x44/0x2ec fs/btrfs/locking.c:145
-
-   which lock already depends on the new lock.
-
-   the existing dependency chain (in reverse order) is:
-
-   -> #1 (btrfs-tree-00){++++}-{4:4}:
-          __lock_release kernel/locking/lockdep.c:5574 [inline]
-          lock_release+0x198/0x39c kernel/locking/lockdep.c:5889
-          up_read+0x24/0x3c kernel/locking/rwsem.c:1632
-          btrfs_tree_read_unlock+0xdc/0x298 fs/btrfs/locking.c:169
-          btrfs_tree_unlock_rw fs/btrfs/locking.h:218 [inline]
-          btrfs_search_slot+0xa6c/0x223c fs/btrfs/ctree.c:2133
-          btrfs_lookup_inode+0xd8/0x38c fs/btrfs/inode-item.c:395
-          __btrfs_update_delayed_inode+0x124/0xed0 fs/btrfs/delayed-inode.c:1032
-          btrfs_update_delayed_inode fs/btrfs/delayed-inode.c:1118 [inline]
-          __btrfs_commit_inode_delayed_items+0x15f8/0x1748 fs/btrfs/delayed-inode.c:1141
-          __btrfs_run_delayed_items+0x1ac/0x514 fs/btrfs/delayed-inode.c:1176
-          btrfs_run_delayed_items_nr+0x28/0x38 fs/btrfs/delayed-inode.c:1219
-          flush_space+0x26c/0xb68 fs/btrfs/space-info.c:828
-          do_async_reclaim_metadata_space+0x110/0x364 fs/btrfs/space-info.c:1158
-          btrfs_async_reclaim_metadata_space+0x90/0xd8 fs/btrfs/space-info.c:1226
-          process_one_work+0x7e8/0x155c kernel/workqueue.c:3263
-          process_scheduled_works kernel/workqueue.c:3346 [inline]
-          worker_thread+0x958/0xed8 kernel/workqueue.c:3427
-          kthread+0x5fc/0x75c kernel/kthread.c:463
-          ret_from_fork+0x10/0x20 arch/arm64/kernel/entry.S:844
-
-   -> #0 (&delayed_node->mutex){+.+.}-{4:4}:
-          check_prev_add kernel/locking/lockdep.c:3165 [inline]
-          check_prevs_add kernel/locking/lockdep.c:3284 [inline]
-          validate_chain kernel/locking/lockdep.c:3908 [inline]
-          __lock_acquire+0x1774/0x30a4 kernel/locking/lockdep.c:5237
-          lock_acquire+0x14c/0x2e0 kernel/locking/lockdep.c:5868
-          __mutex_lock_common+0x1d0/0x2678 kernel/locking/mutex.c:598
-          __mutex_lock kernel/locking/mutex.c:760 [inline]
-          mutex_lock_nested+0x2c/0x38 kernel/locking/mutex.c:812
-          __btrfs_release_delayed_node+0xa0/0x9b0 fs/btrfs/delayed-inode.c:290
-          btrfs_release_delayed_node fs/btrfs/delayed-inode.c:315 [inline]
-          btrfs_remove_delayed_node+0x68/0x84 fs/btrfs/delayed-inode.c:1326
-          btrfs_evict_inode+0x578/0xe28 fs/btrfs/inode.c:5587
-          evict+0x414/0x928 fs/inode.c:810
-          iput_final fs/inode.c:1914 [inline]
-          iput+0x95c/0xad4 fs/inode.c:1966
-          iget_failed+0xec/0x134 fs/bad_inode.c:248
-          btrfs_read_locked_inode+0xe1c/0x1234 fs/btrfs/inode.c:4101
-          btrfs_iget+0x1b0/0x264 fs/btrfs/inode.c:5837
-          btrfs_run_defrag_inode fs/btrfs/defrag.c:237 [inline]
-          btrfs_run_defrag_inodes+0x520/0xdc4 fs/btrfs/defrag.c:309
-          cleaner_kthread+0x21c/0x418 fs/btrfs/disk-io.c:1516
-          kthread+0x5fc/0x75c kernel/kthread.c:463
-          ret_from_fork+0x10/0x20 arch/arm64/kernel/entry.S:844
-
-   other info that might help us debug this:
-
-    Possible unsafe locking scenario:
-
-          CPU0                    CPU1
-          ----                    ----
-     rlock(btrfs-tree-00);
-                                  lock(&delayed_node->mutex);
-                                  lock(btrfs-tree-00);
-     lock(&delayed_node->mutex);
-
-    *** DEADLOCK ***
-
-   1 lock held by btrfs-cleaner/8725:
-    #0: ffff0000dbeba878 (btrfs-tree-00){++++}-{4:4}, at: btrfs_tree_read_lock_nested+0x44/0x2ec fs/btrfs/locking.c:145
-
-   stack backtrace:
-   CPU: 0 UID: 0 PID: 8725 Comm: btrfs-cleaner Not tainted syzkaller #0 PREEMPT
-   Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 10/03/2025
-   Call trace:
-    show_stack+0x2c/0x3c arch/arm64/kernel/stacktrace.c:499 (C)
-    __dump_stack+0x30/0x40 lib/dump_stack.c:94
-    dump_stack_lvl+0xd8/0x12c lib/dump_stack.c:120
-    dump_stack+0x1c/0x28 lib/dump_stack.c:129
-    print_circular_bug+0x324/0x32c kernel/locking/lockdep.c:2043
-    check_noncircular+0x154/0x174 kernel/locking/lockdep.c:2175
-    check_prev_add kernel/locking/lockdep.c:3165 [inline]
-    check_prevs_add kernel/locking/lockdep.c:3284 [inline]
-    validate_chain kernel/locking/lockdep.c:3908 [inline]
-    __lock_acquire+0x1774/0x30a4 kernel/locking/lockdep.c:5237
-    lock_acquire+0x14c/0x2e0 kernel/locking/lockdep.c:5868
-    __mutex_lock_common+0x1d0/0x2678 kernel/locking/mutex.c:598
-    __mutex_lock kernel/locking/mutex.c:760 [inline]
-    mutex_lock_nested+0x2c/0x38 kernel/locking/mutex.c:812
-    __btrfs_release_delayed_node+0xa0/0x9b0 fs/btrfs/delayed-inode.c:290
-    btrfs_release_delayed_node fs/btrfs/delayed-inode.c:315 [inline]
-    btrfs_remove_delayed_node+0x68/0x84 fs/btrfs/delayed-inode.c:1326
-    btrfs_evict_inode+0x578/0xe28 fs/btrfs/inode.c:5587
-    evict+0x414/0x928 fs/inode.c:810
-    iput_final fs/inode.c:1914 [inline]
-    iput+0x95c/0xad4 fs/inode.c:1966
-    iget_failed+0xec/0x134 fs/bad_inode.c:248
-    btrfs_read_locked_inode+0xe1c/0x1234 fs/btrfs/inode.c:4101
-    btrfs_iget+0x1b0/0x264 fs/btrfs/inode.c:5837
-    btrfs_run_defrag_inode fs/btrfs/defrag.c:237 [inline]
-    btrfs_run_defrag_inodes+0x520/0xdc4 fs/btrfs/defrag.c:309
-    cleaner_kthread+0x21c/0x418 fs/btrfs/disk-io.c:1516
-    kthread+0x5fc/0x75c kernel/kthread.c:463
-    ret_from_fork+0x10/0x20 arch/arm64/kernel/entry.S:844
-
-Fix this by releasing the path before calling iget_failed().
-
-Reported-by: syzbot+c1c6edb02bea1da754d8@syzkaller.appspotmail.com
-Link: https://lore.kernel.org/linux-btrfs/694530c2.a70a0220.207337.010d.GAE@google.com/
-Fixes: 69673992b1ae ("btrfs: push cleanup into btrfs_read_locked_inode()")
-Reviewed-by: Boris Burkov <boris@bur.io>
-Signed-off-by: Filipe Manana <fdmanana@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Fixes: 2f65b44e199c ("VSOCK: add full barrier between test cases")
+Reviewed-by: Luigi Leonardi <leonardi@redhat.com>
+Signed-off-by: Stefano Garzarella <sgarzare@redhat.com>
+Link: https://patch.msgid.link/20260108114419.52747-1-sgarzare@redhat.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/inode.c | 9 +++++++++
- 1 file changed, 9 insertions(+)
+ tools/testing/vsock/util.c | 12 ++++++++++++
+ 1 file changed, 12 insertions(+)
 
-diff --git a/fs/btrfs/inode.c b/fs/btrfs/inode.c
-index 27a562bad6e87..1af9b05328ce8 100644
---- a/fs/btrfs/inode.c
-+++ b/fs/btrfs/inode.c
-@@ -4108,6 +4108,15 @@ static int btrfs_read_locked_inode(struct btrfs_inode *inode, struct btrfs_path
+diff --git a/tools/testing/vsock/util.c b/tools/testing/vsock/util.c
+index d843643ced6b7..9430ef5b8bc3e 100644
+--- a/tools/testing/vsock/util.c
++++ b/tools/testing/vsock/util.c
+@@ -511,6 +511,18 @@ void run_tests(const struct test_case *test_cases,
  
- 	return 0;
- out:
+ 		printf("ok\n");
+ 	}
++
++	printf("All tests have been executed. Waiting other peer...");
++	fflush(stdout);
++
 +	/*
-+	 * We may have a read locked leaf and iget_failed() triggers inode
-+	 * eviction which needs to release the delayed inode and that needs
-+	 * to lock the delayed inode's mutex. This can cause a ABBA deadlock
-+	 * with a task running delayed items, as that require first locking
-+	 * the delayed inode's mutex and then modifying its subvolume btree.
-+	 * So release the path before iget_failed().
++	 * Final full barrier, to ensure that all tests have been run and
++	 * that even the last one has been successful on both sides.
 +	 */
-+	btrfs_release_path(path);
- 	iget_failed(vfs_inode);
- 	return ret;
++	control_writeln("COMPLETED");
++	control_expectln("COMPLETED");
++
++	printf("ok\n");
  }
+ 
+ void list_tests(const struct test_case *test_cases)
 -- 
 2.51.0
 
