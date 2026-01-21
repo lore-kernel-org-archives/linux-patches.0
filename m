@@ -1,38 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 157433A9604;
-	Wed, 21 Jan 2026 18:29:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8965D285060;
+	Wed, 21 Jan 2026 18:29:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769020179; cv=none; b=tO2PQ0+i4H9nLHKT9TroZONuXKFcf1gigkC+4WRcvk/KP/2oFXtOHNPj+u14S4HJmQ0ngZAvFc3kY6/q2tCmpy3qdt+gusMTlJoT+0CS45kTHPu0OWnytuBL92n+IomLPHwApnfKULPYaQBHgQ12nBnbLYerpG89c8f09tK31wU=
+	t=1769020182; cv=none; b=ZCE5AN4tiZusCw8Rd/D7xe6c7GhRJf6yW/PXnAddOmV6YlqYGGA3IRpV19DVQ72heeLYuTojqIBPJNYiMM/qXAF85YcKhEPtN7GBLWri2c2t2cGDMlulqjxRTjKjXl1zoBncbu7fZ1PjOUjhC4RinhDJozGfcVi+BAoE5MfKIUs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769020179; c=relaxed/simple;
-	bh=uY5zp9u8837RwquWSY1qbb4aX6UeprahneYWYkDv/Z4=;
+	s=arc-20240116; t=1769020182; c=relaxed/simple;
+	bh=3PXF09dbt+BQ0v3l3iaKlUUJ9JxIxHrqzYa/9NpXGU4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EexCWtRbeyCEhR0+znfbAEp2IK9rmBjRM/inAB9K/DT+kGPbf7D7t/dCyWxrgyJiQf4tkylXmpJDlN8TDkCY3t2fdUxXFIVcs7+pO5EDgzbhbbdXszawTQbXblQ/Cbo9iZpXS/JWymjISofroZgO5lG1VxJtWX+SNRJZhH1BkLc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aSTJLU4T; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=DRHBe4hGjEhXvAt4CwLPn28uJDY66NwwsmSgLJpuFYg9cAR+pQt2/EYTkauaQof+WrlVVzOOtYgapAw/vStZ67NSwoFCd8491ooMKozZZsrwt3k3tJL1CRu+B0DTGOoaRYtbHqN0RaOPLuqZDBrKvdE8D0FfWHkBWLERZxaHfG0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZVr89ryr; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aSTJLU4T"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4FE34C4CEF1;
-	Wed, 21 Jan 2026 18:29:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZVr89ryr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8381AC16AAE;
+	Wed, 21 Jan 2026 18:29:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1769020178;
-	bh=uY5zp9u8837RwquWSY1qbb4aX6UeprahneYWYkDv/Z4=;
+	s=korg; t=1769020182;
+	bh=3PXF09dbt+BQ0v3l3iaKlUUJ9JxIxHrqzYa/9NpXGU4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aSTJLU4TC9r4GFAQJxdx+5w1L5gVibJvvsrPJWgQBt2FbksTtTs47YYu9Ik+3cHwd
-	 x8Ioo7bW9GelRvKKfbRfvDoJoMrv3GipJ0uXSeUZeI1MsxupoD9bbdg+m/Rzf4uBSe
-	 6CDXEA0LbxXE3G2pJ4juk7NKNfW71OmL/JNG8sng=
+	b=ZVr89ryr01yKOHqBoXFPwSckiVVwfo1AQyKw++xoMnqq6i6cuwHUBrg2NsLUr1kSS
+	 MJFIZBmO4hASOdQTebiE5rNbFhQwOrOHwE5ygt6E5GWFn0jWVUoC7ACF5anErD1AyH
+	 XzeKnJh7VCQXez6Eoah8FpZh4DyjRKDYB5D8t0q8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Haotian Zhang <vulab@iscas.ac.cn>,
-	Vinod Koul <vkoul@kernel.org>,
+	"Mike Rapoport (Microsoft)" <rppt@kernel.org>,
+	Markus Stockhausen <markus.stockhausen@gmx.de>,
+	Chris Packham <chris.packham@alliedtelesis.co.nz>,
+	Hauke Mehrtens <hauke@hauke-m.de>,
+	Jonas Jelonek <jelonek.jonas@gmail.com>,
+	Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
+	Thomas Gleinxer <tglx@linutronix.de>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 083/198] dmaengine: omap-dma: fix dma_pool resource leak in error paths
-Date: Wed, 21 Jan 2026 19:15:11 +0100
-Message-ID: <20260121181421.546358852@linuxfoundation.org>
+Subject: [PATCH 6.18 066/198] mips: fix HIGHMEM initialization
+Date: Wed, 21 Jan 2026 19:14:54 +0100
+Message-ID: <20260121181420.935080219@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260121181418.537774329@linuxfoundation.org>
 References: <20260121181418.537774329@linuxfoundation.org>
@@ -51,48 +57,73 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Haotian Zhang <vulab@iscas.ac.cn>
+From: Mike Rapoport (Microsoft) <rppt@kernel.org>
 
-[ Upstream commit 2e1136acf8a8887c29f52e35a77b537309af321f ]
+[ Upstream commit f171b55f1441294344b86edfeaa575ea9673fd23 ]
 
-The dma_pool created by dma_pool_create() is not destroyed when
-dma_async_device_register() or of_dma_controller_register() fails,
-causing a resource leak in the probe error paths.
+Commit 6faea3422e3b ("arch, mm: streamline HIGHMEM freeing") overzealously
+removed mem_init_free_highmem() function that beside freeing high memory
+pages checked for CPU support for high memory as a prerequisite.
 
-Add dma_pool_destroy() in both error paths to properly release the
-allocated dma_pool resource.
+Partially restore mem_init_free_highmem() with a new highmem_init() name
+and make it discard high memory in case there is no CPU support for it.
 
-Fixes: 7bedaa553760 ("dmaengine: add OMAP DMA engine driver")
-Signed-off-by: Haotian Zhang <vulab@iscas.ac.cn>
-Link: https://patch.msgid.link/20251103073018.643-1-vulab@iscas.ac.cn
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Link: https://lkml.kernel.org/r/20251231105701.519711-1-rppt@kernel.org
+Fixes: 6faea3422e3b ("arch, mm: streamline HIGHMEM freeing")
+Signed-off-by: Mike Rapoport (Microsoft) <rppt@kernel.org>
+Reported-by: Markus Stockhausen <markus.stockhausen@gmx.de>
+Cc: Chris Packham <chris.packham@alliedtelesis.co.nz>
+Cc: Hauke Mehrtens <hauke@hauke-m.de>
+Cc: Jonas Jelonek <jelonek.jonas@gmail.com>
+Cc: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
+Cc: Thomas Gleinxer <tglx@linutronix.de>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dma/ti/omap-dma.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ arch/mips/mm/init.c | 23 +++++++++++++++++++++++
+ 1 file changed, 23 insertions(+)
 
-diff --git a/drivers/dma/ti/omap-dma.c b/drivers/dma/ti/omap-dma.c
-index 8c023c6e623a5..73ed4b7946304 100644
---- a/drivers/dma/ti/omap-dma.c
-+++ b/drivers/dma/ti/omap-dma.c
-@@ -1808,6 +1808,8 @@ static int omap_dma_probe(struct platform_device *pdev)
- 	if (rc) {
- 		pr_warn("OMAP-DMA: failed to register slave DMA engine device: %d\n",
- 			rc);
-+		if (od->ll123_supported)
-+			dma_pool_destroy(od->desc_pool);
- 		omap_dma_free(od);
- 		return rc;
- 	}
-@@ -1823,6 +1825,8 @@ static int omap_dma_probe(struct platform_device *pdev)
- 		if (rc) {
- 			pr_warn("OMAP-DMA: failed to register DMA controller\n");
- 			dma_async_device_unregister(&od->ddev);
-+			if (od->ll123_supported)
-+				dma_pool_destroy(od->desc_pool);
- 			omap_dma_free(od);
- 		}
- 	}
+diff --git a/arch/mips/mm/init.c b/arch/mips/mm/init.c
+index a673d3d68254b..8986048f9b110 100644
+--- a/arch/mips/mm/init.c
++++ b/arch/mips/mm/init.c
+@@ -425,6 +425,28 @@ void __init paging_init(void)
+ static struct kcore_list kcore_kseg0;
+ #endif
+ 
++static inline void __init highmem_init(void)
++{
++#ifdef CONFIG_HIGHMEM
++	unsigned long tmp;
++
++	/*
++	 * If CPU cannot support HIGHMEM discard the memory above highstart_pfn
++	 */
++	if (cpu_has_dc_aliases) {
++		memblock_remove(PFN_PHYS(highstart_pfn), -1);
++		return;
++	}
++
++	for (tmp = highstart_pfn; tmp < highend_pfn; tmp++) {
++		struct page *page = pfn_to_page(tmp);
++
++		if (!memblock_is_memory(PFN_PHYS(tmp)))
++			SetPageReserved(page);
++	}
++#endif
++}
++
+ void __init arch_mm_preinit(void)
+ {
+ 	/*
+@@ -435,6 +457,7 @@ void __init arch_mm_preinit(void)
+ 
+ 	maar_init();
+ 	setup_zero_pages();	/* Setup zeroed pages.  */
++	highmem_init();
+ 
+ #ifdef CONFIG_64BIT
+ 	if ((unsigned long) &_text > (unsigned long) CKSEG0)
 -- 
 2.51.0
 
