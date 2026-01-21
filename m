@@ -1,46 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 960FF38BDC7;
-	Wed, 21 Jan 2026 18:33:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 133C139341F;
+	Wed, 21 Jan 2026 18:33:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769020383; cv=none; b=mPU5+jKALiAPmpRY5okj7WAbKnOE/LKfv9YUGa1l6/+2Gf5kLxhjMbqUoDc6hRQuzTnU69wL0l0ShLpFUXkpqyX3Rdsq7buX+3GQIX46JLksYnaxtFR5mDZaxTI01snOIndxJBwAmoV7v7wxZreTPhd7UwNQR3rrd5YzCrdAMhA=
+	t=1769020387; cv=none; b=KOzfXUJP3xyQmzpvoH21ENMiJfLSotzQpjPdLY39hJBO38gaIBJTVUQcy+J+sF38i4+yDTxYTCj2m4megREC8mNnJrvO4kzFARW9dXWEGtZaOkqRXu1EJm6AGlg7LD2Y19+ehJiOjcKN+6tUj9X3yv28SsY5DgkQO0zVRlLngJE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769020383; c=relaxed/simple;
-	bh=lQm7VrYH9Qf8hIN36eSj05LVNjP50iLcjW944dKXq0Y=;
+	s=arc-20240116; t=1769020387; c=relaxed/simple;
+	bh=HWnuXf3Gpigl89E5XLwcYxiGNdnA81uEGtAmgXJTs5s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BHePpAPLz0xwQrREWsklC+Wlx+EcreIiZLpxwbmmCpl8tquVk9PZq4LarpVAUOtwGfdS+Pz6sMhPU427Ns4x7vua5OMtMsoTmOlf1p5cGOuTwIuYbc8QFud9vXE7YWFl6bpzvuOD/xFn20oMgkTWRmLtSW3aVVHMG8ssj/rBlW4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=i6vdsBDC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=inIhgybYvyyV23Wl94+VhUypZYVnr5sUSjBHQC8h93Vi9aa3N3Kme3VcJWBnjNB73e81RsCFL+SWGedi1+e+BzNMlEXvUfeb77yhcCz/aG1RkDUzgM7mQwUKhUToUBjsi4QP7sQYh8ph5DAZyNptgxiRnAKg1Fqs1UqPPNIosmE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Fv6bWGK7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="i6vdsBDC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DEE71C4CEF1;
-	Wed, 21 Jan 2026 18:33:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Fv6bWGK7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5DE92C4CEF1;
+	Wed, 21 Jan 2026 18:33:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1769020383;
-	bh=lQm7VrYH9Qf8hIN36eSj05LVNjP50iLcjW944dKXq0Y=;
+	s=korg; t=1769020386;
+	bh=HWnuXf3Gpigl89E5XLwcYxiGNdnA81uEGtAmgXJTs5s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=i6vdsBDCyt+GCMZ+dQ9d6UiDSxA0haLCcRQworbDuDmzC8jzlicegBAMdSMGVaF2C
-	 kk1W0C0TA4Qz+qWwNVHLP5dk20pu8NR/b45rrxu76ITN9GFR700j0BrCDqC/tV+I0i
-	 QfQjsXDh3yQaj7mwxhHeagu33y7+7NTWMahe4esk=
+	b=Fv6bWGK7OtD7NMzBebRoGcjmkPGrWQ5guSSASbyKWbRSfJUtlK5qENPTHYYMrE6mH
+	 7mAKlALQde7vIia7H8Sur+YV5CtWsNSp86XXhwCui325aJRDRxUWuiYajPKVeP33/X
+	 uVA+0D41k8fO1kE+7AqDik5RisUiEQm0eijAfQWQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+09b7d050e4806540153d@syzkaller.appspotmail.com,
-	Shakeel Butt <shakeel.butt@linux.dev>,
-	Christoph Hellwig <hch@lst.de>,
-	Jinchao Wang <wangjinchao600@gmail.com>,
-	Christian Brauner <brauner@kernel.org>,
-	Alexei Starovoitov <ast@kernel.org>,
-	Andrii Nakryiko <andrii@kernel.org>,
-	Daniel Borkman <daniel@iogearbox.net>,
-	"Darrick J. Wong" <djwong@kernel.org>,
-	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.18 108/198] lib/buildid: use __kernel_read() for sleepable context
-Date: Wed, 21 Jan 2026 19:15:36 +0100
-Message-ID: <20260121181422.439581852@linuxfoundation.org>
+	Ondrej Ille <ondrej.ille@gmail.com>,
+	Pavel Pisa <pisa@fel.cvut.cz>,
+	Marc Kleine-Budde <mkl@pengutronix.de>
+Subject: [PATCH 6.18 099/198] can: ctucanfd: fix SSP_SRC in cases when bit-rate is higher than 1 MBit.
+Date: Wed, 21 Jan 2026 19:15:27 +0100
+Message-ID: <20260121181422.117158041@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260121181418.537774329@linuxfoundation.org>
 References: <20260121181418.537774329@linuxfoundation.org>
@@ -59,108 +51,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shakeel Butt <shakeel.butt@linux.dev>
+From: Ondrej Ille <ondrej.ille@gmail.com>
 
-commit 777a8560fd29738350c5094d4166fe5499452409 upstream.
+commit e707c591a139d1bfa4ddc83036fc820ca006a140 upstream.
 
-Prevent a "BUG: unable to handle kernel NULL pointer dereference in
-filemap_read_folio".
+The Secondary Sample Point Source field has been
+set to an incorrect value by some mistake in the
+past
 
-For the sleepable context, convert freader to use __kernel_read() instead
-of direct page cache access via read_cache_folio().  This simplifies the
-faultable code path by using the standard kernel file reading interface
-which handles all the complexity of reading file data.
+  0b01 - SSP_SRC_NO_SSP - SSP is not used.
 
-At the moment we are not changing the code for non-sleepable context which
-uses filemap_get_folio() and only succeeds if the target folios are
-already in memory and up-to-date.  The reason is to keep the patch simple
-and easier to backport to stable kernels.
+for data bitrates above 1 MBit/s. The correct/default
+value already used for lower bitrates is
 
-Syzbot repro does not crash the kernel anymore and the selftests run
-successfully.
+  0b00 - SSP_SRC_MEAS_N_OFFSET - SSP position = TRV_DELAY
+         (Measured Transmitter delay) + SSP_OFFSET.
 
-In the follow up we will make __kernel_read() with IOCB_NOWAIT work for
-non-sleepable contexts.  In addition, I would like to replace the
-secretmem check with a more generic approach and will add fstest for the
-buildid code.
+The related configuration register structure is described
+in section 3.1.46 SSP_CFG of the CTU CAN FD
+IP CORE Datasheet.
 
-Link: https://lkml.kernel.org/r/20251222205859.3968077-1-shakeel.butt@linux.dev
-Fixes: ad41251c290d ("lib/buildid: implement sleepable build_id_parse() API")
-Reported-by: syzbot+09b7d050e4806540153d@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=09b7d050e4806540153d
-Signed-off-by: Shakeel Butt <shakeel.butt@linux.dev>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Tested-by: Jinchao Wang <wangjinchao600@gmail.com>
-  Link: https://lkml.kernel.org/r/aUteBPWPYzVWIZFH@ndev
-Reviewed-by: Christian Brauner <brauner@kernel.org>
-Cc: Alexei Starovoitov <ast@kernel.org>
-Cc: Andrii Nakryiko <andrii@kernel.org>
-Cc: Daniel Borkman <daniel@iogearbox.net>
-Cc: "Darrick J. Wong" <djwong@kernel.org>
-Cc: Matthew Wilcox (Oracle) <willy@infradead.org>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+The analysis leading to the proper configuration
+is described in section 2.8.3 Secondary sampling point
+of the datasheet.
+
+The change has been tested on AMD/Xilinx Zynq
+with the next CTU CN FD IP core versions:
+
+ - 2.6 aka master in the "integration with Zynq-7000 system" test
+   6.12.43-rt12+ #1 SMP PREEMPT_RT kernel with CTU CAN FD git
+   driver (change already included in the driver repo)
+ - older 2.5 snapshot with mainline kernels with this patch
+   applied locally in the multiple CAN latency tester nightly runs
+   6.18.0-rc4-rt3-dut #1 SMP PREEMPT_RT
+   6.19.0-rc3-dut
+
+The logs, the datasheet and sources are available at
+
+ https://canbus.pages.fel.cvut.cz/
+
+Signed-off-by: Ondrej Ille <ondrej.ille@gmail.com>
+Signed-off-by: Pavel Pisa <pisa@fel.cvut.cz>
+Link: https://patch.msgid.link/20260105111620.16580-1-pisa@fel.cvut.cz
+Fixes: 2dcb8e8782d8 ("can: ctucanfd: add support for CTU CAN FD open-source IP core - bus independent part.")
+Cc: stable@vger.kernel.org
+Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- lib/buildid.c |   32 ++++++++++++++++++++------------
- 1 file changed, 20 insertions(+), 12 deletions(-)
+ drivers/net/can/ctucanfd/ctucanfd_base.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/lib/buildid.c
-+++ b/lib/buildid.c
-@@ -5,6 +5,7 @@
- #include <linux/elf.h>
- #include <linux/kernel.h>
- #include <linux/pagemap.h>
-+#include <linux/fs.h>
- #include <linux/secretmem.h>
+--- a/drivers/net/can/ctucanfd/ctucanfd_base.c
++++ b/drivers/net/can/ctucanfd/ctucanfd_base.c
+@@ -310,7 +310,7 @@ static int ctucan_set_secondary_sample_p
+ 		}
  
- #define BUILD_ID 3
-@@ -65,20 +66,9 @@ static int freader_get_folio(struct frea
- 
- 	freader_put_folio(r);
- 
--	/* reject secretmem folios created with memfd_secret() */
--	if (secretmem_mapping(r->file->f_mapping))
--		return -EFAULT;
--
-+	/* only use page cache lookup - fail if not already cached */
- 	r->folio = filemap_get_folio(r->file->f_mapping, file_off >> PAGE_SHIFT);
- 
--	/* if sleeping is allowed, wait for the page, if necessary */
--	if (r->may_fault && (IS_ERR(r->folio) || !folio_test_uptodate(r->folio))) {
--		filemap_invalidate_lock_shared(r->file->f_mapping);
--		r->folio = read_cache_folio(r->file->f_mapping, file_off >> PAGE_SHIFT,
--					    NULL, r->file);
--		filemap_invalidate_unlock_shared(r->file->f_mapping);
--	}
--
- 	if (IS_ERR(r->folio) || !folio_test_uptodate(r->folio)) {
- 		if (!IS_ERR(r->folio))
- 			folio_put(r->folio);
-@@ -116,6 +106,24 @@ static const void *freader_fetch(struct
- 		return r->data + file_off;
+ 		ssp_cfg = FIELD_PREP(REG_TRV_DELAY_SSP_OFFSET, ssp_offset);
+-		ssp_cfg |= FIELD_PREP(REG_TRV_DELAY_SSP_SRC, 0x1);
++		ssp_cfg |= FIELD_PREP(REG_TRV_DELAY_SSP_SRC, 0x0);
  	}
  
-+	/* reject secretmem folios created with memfd_secret() */
-+	if (secretmem_mapping(r->file->f_mapping)) {
-+		r->err = -EFAULT;
-+		return NULL;
-+	}
-+
-+	/* use __kernel_read() for sleepable context */
-+	if (r->may_fault) {
-+		ssize_t ret;
-+
-+		ret = __kernel_read(r->file, r->buf, sz, &file_off);
-+		if (ret != sz) {
-+			r->err = (ret < 0) ? ret : -EIO;
-+			return NULL;
-+		}
-+		return r->buf;
-+	}
-+
- 	/* fetch or reuse folio for given file offset */
- 	r->err = freader_get_folio(r, file_off);
- 	if (r->err)
+ 	ctucan_write32(priv, CTUCANFD_TRV_DELAY, ssp_cfg);
 
 
