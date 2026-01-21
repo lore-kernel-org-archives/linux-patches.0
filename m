@@ -1,37 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E65753A6414;
-	Wed, 21 Jan 2026 18:36:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B02F37BE9C;
+	Wed, 21 Jan 2026 18:36:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769020571; cv=none; b=jGiJU05rYeMsX73McayavXa5GmQa5/6V60U8GQW5ZdG7lkaNcUe7hASiaXUXNjSa4/QBMobpna/A8wuW+dH6CgP5gwri6fJXZsHOVPhJZfk2TUBg2KyJQXiNRq7DoZI1BsCKIpiSYMRHhKoTuTGV2bdvjxyANMdlZYm8r5uYIWs=
+	t=1769020574; cv=none; b=AxJqAGjmPp2Z/qI0nJOE/4xpyQ/wmH+3pFW88vq8ZPwlT0Mb71ez2t5yqL34Gn/jbyFzOcrDvQKz8nn+S/NBQUrUNf53udyK3Tt+3+aqjwa2lPITBL+TKNYQVwFMnnfXPiQrwj+RiybGEROsrdSob/hDcRrAC1YORLrnbHHdR6A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769020571; c=relaxed/simple;
-	bh=QlXLj/psdQHrWsxuK4diY88GruKdvJvTg/6y1HmkskA=;
+	s=arc-20240116; t=1769020574; c=relaxed/simple;
+	bh=toqRmke59ka0v6HISf7AI/RBY0U5rtmuK6C1hNgltqk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=G5D47/KXBNRzmGgrZh8B/yXrRnGA4iQ/odv0Wg3G3Y/wP/FU5nhfP1TbEQ5k4WzhlcIZAmYSqPoC+Om259juPUHJhdmGHp9Qzpxjfcfo1gdWh11jGFUWOW94Ndni+pk9ubOk2v4FP7jepksYjZIj4fSCteYC/5PCahK9FzMAp1I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CDkXt6jZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=EEZh1+Pa6v14kjXpBntp5DHv7uqnDET76CK2//aMEyI7Al4D4f32/hUZTYdIAMer4dIxnSvyIc0MvgNCFi9iUdoAq7LkOgTsPhchiX3nB6jOMSZeyoc5lZ0EZS/9bv4j8kgaaWWMvrasDv/l3vwthaG05MzrbXHy8ru2uPHI5Uk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rA9vEWT6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CDkXt6jZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 307E3C4CEF1;
-	Wed, 21 Jan 2026 18:36:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rA9vEWT6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B4E7C2BC9E;
+	Wed, 21 Jan 2026 18:36:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1769020570;
-	bh=QlXLj/psdQHrWsxuK4diY88GruKdvJvTg/6y1HmkskA=;
+	s=korg; t=1769020574;
+	bh=toqRmke59ka0v6HISf7AI/RBY0U5rtmuK6C1hNgltqk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CDkXt6jZvQvmfyS7/yg3CAvZbCn7v0J7rvYGBexbZ1ZoFFNjX6aJ5MyRctsH0X9p2
-	 hFNGx/16D9+/5fqQr7LSRmK3bKe3sevb6z1APiBDFgEHz1C9a/E+Dr1CfGmpB0+5oW
-	 CvYPspPbYnHTLGKkErKjnpYO39+mlnLGdX4aadoM=
+	b=rA9vEWT67bt1KG5K9aVt61w7Kra/8V6J/ctgK5pzCHSX9xT9tPvtkSBhLzbvfmTuN
+	 Ohro9x6N8NJWSgsbwjHe+UDpm6+GvQH1hRi/MOh+Q50wd0Az1CYpDbuD7br+b21jB2
+	 t+ZvL84RYxGgW5zDfbD/XQisZRxiFEFfpL27c03E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Al Viro <viro@zeniv.linux.org.uk>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 197/198] Revert "functionfs: fix the open/removal races"
-Date: Wed, 21 Jan 2026 19:17:05 +0100
-Message-ID: <20260121181425.648793094@linuxfoundation.org>
+	Carlos Llamas <cmllamas@google.com>,
+	Baolu Lu <baolu.lu@linux.intel.com>,
+	Jason Gunthorpe <jgg@ziepe.ca>,
+	Joerg Roedel <joro@8bytes.org>,
+	Kevin Tian <kevin.tian@intel.com>,
+	Robin Murphy <robin.murphy@arm.com>,
+	Vasant Hegde <vasant.hegde@amd.com>,
+	Will Deacon <will@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.18 198/198] iommu/sva: include mmu_notifier.h header
+Date: Wed, 21 Jan 2026 19:17:06 +0100
+Message-ID: <20260121181425.684082633@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260121181418.537774329@linuxfoundation.org>
 References: <20260121181418.537774329@linuxfoundation.org>
@@ -50,119 +57,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+From: Carlos Llamas <cmllamas@google.com>
 
-This reverts commit b49c766856fb5901490de577e046149ebf15e39d which is
-commit e5bf5ee266633cb18fff6f98f0b7d59a62819eee upstream.
+commit 4b5c493ff762bb0433529ca6870b284f0a2a5ca8 upstream.
 
-It has been reported to cause test problems in Android devices.  As the
-other functionfs changes were not also backported at the same time,
-something is out of sync.  So just revert this one for now and it can
-come back in the future as a patch series if it is tested.
+A call to mmu_notifier_arch_invalidate_secondary_tlbs() was introduced in
+commit e37d5a2d60a3 ("iommu/sva: invalidate stale IOTLB entries for kernel
+address space") but without explicitly adding its corresponding header
+file <linux/mmu_notifier.h>.  This was evidenced while trying to enable
+compile testing support for IOMMU_SVA:
 
-Cc: Al Viro <viro@zeniv.linux.org.uk>
-Cc: Sasha Levin <sashal@kernel.org>
+   config IOMMU_SVA
+          select IOMMU_MM_DATA
+  -       bool
+  +       bool "Shared Virtual Addressing" if COMPILE_TEST
+
+The thing is for certain architectures this header file is indirectly
+included via <asm/tlbflush.h>.  However, for others such as 32-bit arm the
+header is missing and it results in a build failure:
+
+  $ make ARCH=arm allmodconfig
+  [...]
+  drivers/iommu/iommu-sva.c:340:3: error: call to undeclared function 'mmu_notifier_arch_invalidate_secondary_tlbs' [...]
+    340 |  mmu_notifier_arch_invalidate_secondary_tlbs(iommu_mm->mm, start, end);
+        |  ^
+
+Fix this by including the appropriate header file.
+
+Link: https://lkml.kernel.org/r/20260105190747.625082-1-cmllamas@google.com
+Fixes: e37d5a2d60a3 ("iommu/sva: invalidate stale IOTLB entries for kernel address space")
+Signed-off-by: Carlos Llamas <cmllamas@google.com>
+Cc: Baolu Lu <baolu.lu@linux.intel.com>
+Cc: Jason Gunthorpe <jgg@ziepe.ca>
+Cc: Joerg Roedel <joro@8bytes.org>
+Cc: Kevin Tian <kevin.tian@intel.com>
+Cc: Robin Murphy <robin.murphy@arm.com>
+Cc: Vasant Hegde <vasant.hegde@amd.com>
+Cc: Will Deacon <will@kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/gadget/function/f_fs.c |   53 ++++++-------------------------------
- 1 file changed, 10 insertions(+), 43 deletions(-)
+ drivers/iommu/iommu-sva.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/usb/gadget/function/f_fs.c
-+++ b/drivers/usb/gadget/function/f_fs.c
-@@ -640,22 +640,13 @@ done_mutex:
- 
- static int ffs_ep0_open(struct inode *inode, struct file *file)
- {
--	struct ffs_data *ffs = inode->i_sb->s_fs_info;
--	int ret;
--
--	/* Acquire mutex */
--	ret = ffs_mutex_lock(&ffs->mutex, file->f_flags & O_NONBLOCK);
--	if (ret < 0)
--		return ret;
-+	struct ffs_data *ffs = inode->i_private;
- 
--	ffs_data_opened(ffs);
--	if (ffs->state == FFS_CLOSING) {
--		ffs_data_closed(ffs);
--		mutex_unlock(&ffs->mutex);
-+	if (ffs->state == FFS_CLOSING)
- 		return -EBUSY;
--	}
--	mutex_unlock(&ffs->mutex);
-+
- 	file->private_data = ffs;
-+	ffs_data_opened(ffs);
- 
- 	return stream_open(inode, file);
- }
-@@ -1202,33 +1193,14 @@ error:
- static int
- ffs_epfile_open(struct inode *inode, struct file *file)
- {
--	struct ffs_data *ffs = inode->i_sb->s_fs_info;
--	struct ffs_epfile *epfile;
--	int ret;
--
--	/* Acquire mutex */
--	ret = ffs_mutex_lock(&ffs->mutex, file->f_flags & O_NONBLOCK);
--	if (ret < 0)
--		return ret;
-+	struct ffs_epfile *epfile = inode->i_private;
- 
--	if (!atomic_inc_not_zero(&ffs->opened)) {
--		mutex_unlock(&ffs->mutex);
--		return -ENODEV;
--	}
--	/*
--	 * we want the state to be FFS_ACTIVE; FFS_ACTIVE alone is
--	 * not enough, though - we might have been through FFS_CLOSING
--	 * and back to FFS_ACTIVE, with our file already removed.
--	 */
--	epfile = smp_load_acquire(&inode->i_private);
--	if (unlikely(ffs->state != FFS_ACTIVE || !epfile)) {
--		mutex_unlock(&ffs->mutex);
--		ffs_data_closed(ffs);
-+	if (WARN_ON(epfile->ffs->state != FFS_ACTIVE))
- 		return -ENODEV;
--	}
--	mutex_unlock(&ffs->mutex);
- 
- 	file->private_data = epfile;
-+	ffs_data_opened(epfile->ffs);
-+
- 	return stream_open(inode, file);
- }
- 
-@@ -1360,7 +1332,7 @@ static void ffs_dmabuf_put(struct dma_bu
- static int
- ffs_epfile_release(struct inode *inode, struct file *file)
- {
--	struct ffs_epfile *epfile = file->private_data;
-+	struct ffs_epfile *epfile = inode->i_private;
- 	struct ffs_dmabuf_priv *priv, *tmp;
- 	struct ffs_data *ffs = epfile->ffs;
- 
-@@ -2380,11 +2352,6 @@ static int ffs_epfiles_create(struct ffs
- 	return 0;
- }
- 
--static void clear_one(struct dentry *dentry)
--{
--	smp_store_release(&dentry->d_inode->i_private, NULL);
--}
--
- static void ffs_epfiles_destroy(struct ffs_epfile *epfiles, unsigned count)
- {
- 	struct ffs_epfile *epfile = epfiles;
-@@ -2392,7 +2359,7 @@ static void ffs_epfiles_destroy(struct f
- 	for (; count; --count, ++epfile) {
- 		BUG_ON(mutex_is_locked(&epfile->mutex));
- 		if (epfile->dentry) {
--			simple_recursive_removal(epfile->dentry, clear_one);
-+			simple_recursive_removal(epfile->dentry, NULL);
- 			epfile->dentry = NULL;
- 		}
- 	}
+--- a/drivers/iommu/iommu-sva.c
++++ b/drivers/iommu/iommu-sva.c
+@@ -3,6 +3,7 @@
+  * Helpers for IOMMU drivers implementing SVA
+  */
+ #include <linux/mmu_context.h>
++#include <linux/mmu_notifier.h>
+ #include <linux/mutex.h>
+ #include <linux/sched/mm.h>
+ #include <linux/iommu.h>
 
 
