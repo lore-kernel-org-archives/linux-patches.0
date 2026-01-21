@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07D8C337B87;
-	Wed, 21 Jan 2026 18:29:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA1F53A7E12;
+	Wed, 21 Jan 2026 18:29:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769020196; cv=none; b=H+sdg5oUDUFYkxQ1B4kQKIzrxApy/uIBN+wREXVH6cg01RW6n9DiBJv/NDfpDfRzvjlZAE5Ffq59a7ikegNdkrH+kcCT6Bn6ey1zhxAj6x+AYvNgZYrwRNLqvEpXGCWVX83xu2FfsuGIzAfouhoK1r1xKbiG5P86Mp/Tq78LJNo=
+	t=1769020199; cv=none; b=YoNlSRnrt6f83xb1ajfFjfm6sMdZcO4BCpNuepnr0Dc2M9aLyfyqNDx+NBq37fWbvmbTraL6jJNfT5ULsXjY9DtTqDJLZGSAzzWea8fiGe78LeXmbayfJahIYtTknfgnrR0urmrPkqDBSuLMGTrhgRlwvmRtWo789qlgzH/nWKg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769020196; c=relaxed/simple;
-	bh=ajhqsTjaJQjLRqPkMCeHFlgU2o4tx8oQB/myQb0mIwc=;
+	s=arc-20240116; t=1769020199; c=relaxed/simple;
+	bh=0zwP8Y4yP9zZvxjfuG9/arxkqB3IMRx9wK3tRvqOB3g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VXmx0fjXGlHgoCrUBGDIp3TLk7iXiD4zQNXBfl0NqwP1tvCIhhW4zX1EYa+l1vuGA2jXWQOOZnFpS00alKtENsrBlqh01JZbfbG5sYy/oqBAttqkylFj/wzCSfHfw9O2lI4CzceXjpIZcxbtrT+yCBwY2ypNPHSd3USvJT2KKdQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=S1Rpdksn; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=EL2gJTi1pAz7qfLO1F+X8nQS2o1elS9zVcLOtbyLvq2zUh0FKkQNrnpV/9YXHQdOSpR4teBIjn+Br6M64v/RtwFdM4kXPkQLGYcoZgRcA4Sx9fCCZvKIYm/5sYiOpPFZf/lPLO7q8EyoMw6iF/FjM+zrtqUEJpEU29W+Py0dvI8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NOxUrOWo; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="S1Rpdksn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 20670C4CEF1;
-	Wed, 21 Jan 2026 18:29:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NOxUrOWo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD211C4CEF1;
+	Wed, 21 Jan 2026 18:29:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1769020195;
-	bh=ajhqsTjaJQjLRqPkMCeHFlgU2o4tx8oQB/myQb0mIwc=;
+	s=korg; t=1769020199;
+	bh=0zwP8Y4yP9zZvxjfuG9/arxkqB3IMRx9wK3tRvqOB3g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=S1RpdksnQVl642NPbyOFTw0DqxZ30gpNJkCgeTeOc8DL2ZQxs5y/jnQ4B6OmPRczW
-	 odzTLy2IWPDKozL1cuqGc62BxGGpYYa6SU0jEv2AZklb2cQe2dx7K0VcfqGscH/3Fv
-	 7bst0xq5diCL/CyOU4N+mto+PCPgueDBBGSbIB7U=
+	b=NOxUrOWoLCcL4lz0Umj8bsOpVTsgZo/LWfU50rG6gbrXMe34WEO9mNVjv/QPzLHbA
+	 U/g4gWtkv3ZVrsHx8EKTp0XvIz4lBmdlxVVxfg4vvaRZxm8askXvbzX/0KkJa7lpAC
+	 UMx7hXFaLfnUWoAQ38IJMfGwFqKkmhgWJIBzMJOE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pierre Gondois <pierre.gondois@arm.com>,
 	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Pierre Gondois <pierre.gondois@arm.com>,
+	Juri Lelli <juri.lelli@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 087/198] sched/deadline: Avoid double update_rq_clock()
-Date: Wed, 21 Jan 2026 19:15:15 +0100
-Message-ID: <20260121181421.689499629@linuxfoundation.org>
+Subject: [PATCH 6.18 088/198] sched: Deadline has dynamic priority
+Date: Wed, 21 Jan 2026 19:15:16 +0100
+Message-ID: <20260121181421.725093197@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260121181418.537774329@linuxfoundation.org>
 References: <20260121181418.537774329@linuxfoundation.org>
@@ -53,45 +54,51 @@ Content-Transfer-Encoding: 8bit
 
 From: Peter Zijlstra <peterz@infradead.org>
 
-[ Upstream commit 4de9ff76067b40c3660df73efaea57389e62ea7a ]
+[ Upstream commit e008ec6c7904ed99d3b2cb634b6545b008a99288 ]
 
-When setup_new_dl_entity() is called from enqueue_task_dl() ->
-enqueue_dl_entity(), the rq-clock should already be updated, and
-calling update_rq_clock() again is not right.
+While FIFO/RR have static priority, DEADLINE is a dynamic priority
+scheme. Notably it has static priority -1. Do not assume the priority
+doesn't change for deadline tasks just because the static priority
+doesn't change.
 
-Move the update_rq_clock() to the one other caller of
-setup_new_dl_entity(): sched_init_dl_server().
+This ensures DL always sees {DE,EN}QUEUE_MOVE where appropriate.
 
-Fixes: 9f239df55546 ("sched/deadline: Initialize dl_servers after SMP")
-Reported-by: Pierre Gondois <pierre.gondois@arm.com>
+Fixes: ff77e4685359 ("sched/rt: Fix PI handling vs. sched_setscheduler()")
 Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
 Tested-by: Pierre Gondois <pierre.gondois@arm.com>
-Link: https://patch.msgid.link/20260113115622.GA831285@noisy.programming.kicks-ass.net
+Tested-by: Juri Lelli <juri.lelli@redhat.com>
+Link: https://patch.msgid.link/20260114130528.GB831285@noisy.programming.kicks-ass.net
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/sched/deadline.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ kernel/sched/core.c     | 2 +-
+ kernel/sched/syscalls.c | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/kernel/sched/deadline.c b/kernel/sched/deadline.c
-index d3be71d5a9ccc..465592fa530ef 100644
---- a/kernel/sched/deadline.c
-+++ b/kernel/sched/deadline.c
-@@ -761,8 +761,6 @@ static inline void setup_new_dl_entity(struct sched_dl_entity *dl_se)
- 	struct dl_rq *dl_rq = dl_rq_of_se(dl_se);
- 	struct rq *rq = rq_of_dl_rq(dl_rq);
+diff --git a/kernel/sched/core.c b/kernel/sched/core.c
+index eb47d294e2c5a..e460c22de8ad4 100644
+--- a/kernel/sched/core.c
++++ b/kernel/sched/core.c
+@@ -7383,7 +7383,7 @@ void rt_mutex_setprio(struct task_struct *p, struct task_struct *pi_task)
+ 	trace_sched_pi_setprio(p, pi_task);
+ 	oldprio = p->prio;
  
--	update_rq_clock(rq);
--
- 	WARN_ON(is_dl_boosted(dl_se));
- 	WARN_ON(dl_time_before(rq_clock(rq), dl_se->deadline));
+-	if (oldprio == prio)
++	if (oldprio == prio && !dl_prio(prio))
+ 		queue_flag &= ~DEQUEUE_MOVE;
  
-@@ -1623,6 +1621,7 @@ void sched_init_dl_servers(void)
- 		rq = cpu_rq(cpu);
- 
- 		guard(rq_lock_irq)(rq);
-+		update_rq_clock(rq);
- 
- 		dl_se = &rq->fair_server;
+ 	prev_class = p->sched_class;
+diff --git a/kernel/sched/syscalls.c b/kernel/sched/syscalls.c
+index bf360a6fbb800..6805a63d47af7 100644
+--- a/kernel/sched/syscalls.c
++++ b/kernel/sched/syscalls.c
+@@ -688,7 +688,7 @@ int __sched_setscheduler(struct task_struct *p,
+ 		 * itself.
+ 		 */
+ 		newprio = rt_effective_prio(p, newprio);
+-		if (newprio == oldprio)
++		if (newprio == oldprio && !dl_prio(newprio))
+ 			queue_flags &= ~DEQUEUE_MOVE;
+ 	}
  
 -- 
 2.51.0
