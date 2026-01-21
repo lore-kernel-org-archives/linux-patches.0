@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 554D13A9D92;
-	Wed, 21 Jan 2026 18:33:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 322923A9D92;
+	Wed, 21 Jan 2026 18:33:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769020407; cv=none; b=bhQRADziagTxjjRjJuhhBohuqpgxalqVqTJgZaeP0MxTW68zO1zDqLR8IrklL/d0qRWHvCoMXR16ImC+iRUwbodzxkHbhx+RQ+3D0HbUBa4Q+KdSE+mSB+xU25uSGqprR1r0ID6LeVHxDuIEHY5akbJtwDaxevPEcyLqNTLsn6Y=
+	t=1769020410; cv=none; b=MMXdUnE9GJZ7dUJObPZMH6HRePuZa5juXR7SMMEhyezpvG7tBYj7LG5WaUOWEswZUXba4w5I/f4RuxbFI/pFSA/o8gnFh6PagFGkmD9it1yDSioflF7An6ZiN/TcjUlkJh7xXYFAH6axVWj9PKrB9pVOFTOf+ySsWv4b1Lza+2Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769020407; c=relaxed/simple;
-	bh=yE5Y6x539HNA7rxUBQ1NK8UG4QJfp6FlfF2S8PV7X60=;
+	s=arc-20240116; t=1769020410; c=relaxed/simple;
+	bh=e/k1kMfRKP9+TZGmllYCbWX61r+oL5XnwIGFDu3/3pQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UROOOZQMkgw0MoGgtDjfRz0PwqD7YPt6GOnmq310DBuwnmlcqkMJIsLeqLiQF9SpGiAC76Z3Eo/RPYUGVpMwR8q8K8aMi7c5B/JwJrpL8bP6m+v/BlWH4GN0fyARFGgSWjkN1FqjCUAh7/k3OOnfT4q7rB8X3rguxyUSYVcOzQg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iaTQLAOP; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=aXfXDrdD5xm86uSlSNc8mfFJarEq6oYYzCFg18VgmydA/x9y/yJy2XuCsFYGTlg0F31QBnuUn3NHxjXEYdHN4GFOV3lf5rdPr5LPrxQgYVYElr6OXoeWdQy0sr/ZDBPRv5jrNBzGRgVQzAG6RsYvzN73N29FnJQi4xWBPt3ebb4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=g3lk9FaO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iaTQLAOP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 57BCAC4CEF1;
-	Wed, 21 Jan 2026 18:33:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="g3lk9FaO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 80515C4CEF1;
+	Wed, 21 Jan 2026 18:33:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1769020406;
-	bh=yE5Y6x539HNA7rxUBQ1NK8UG4QJfp6FlfF2S8PV7X60=;
+	s=korg; t=1769020409;
+	bh=e/k1kMfRKP9+TZGmllYCbWX61r+oL5XnwIGFDu3/3pQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iaTQLAOP2Fhisd9e3z/0tOHrqDcEt2w8f+1t/IyOFZ4T1n5v28scSTEMglfDwO6KR
-	 hoQM9rkbTsCBhm9AzQj0MqA4B7nLG8PckAaHV8KmwxsN7HY2VPtJ4O6Px/3Zcfiwut
-	 GUbxfGThAXxuWX+vCmEss2Rw6LvBbpvJfz3JxXAc=
+	b=g3lk9FaOWyU3nnMQmsvLZztz36XYZnkh4CKIpD1eLaf0p6NJVL7+HNa9TuKICI+0W
+	 Vmbix5IVUzjYjBmMvrdTVXefbgwD5yPayDVxR7Iz0D45LEXqMnhat6PoMdXxN6Ul7x
+	 eceY4fKNDqWLknW5cc7z0IRO7F780bfop3Zymcok=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dianne Skoll <dianne@skoll.ca>,
-	Chris Park <chris.park@amd.com>,
-	Mario Limonciello <mario.limonciello@amd.com>,
-	Matthew Stewart <matthew.stewart2@amd.com>,
-	Dan Wheeler <daniel.wheeler@amd.com>,
+	Vivek Das Mohapatra <vivek@collabora.com>,
+	"Mario Limonciello (AMD)" <superm1@kernel.org>,
 	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.18 149/198] drm/amd/display: Bump the HDMI clock to 340MHz
-Date: Wed, 21 Jan 2026 19:16:17 +0100
-Message-ID: <20260121181423.920257992@linuxfoundation.org>
+Subject: [PATCH 6.18 150/198] drm/amd/display: Initialise backlight level values from hw
+Date: Wed, 21 Jan 2026 19:16:18 +0100
+Message-ID: <20260121181423.955325773@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260121181418.537774329@linuxfoundation.org>
 References: <20260121181418.537774329@linuxfoundation.org>
@@ -54,65 +51,80 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mario Limonciello <mario.limonciello@amd.com>
+From: Vivek Das Mohapatra <vivek@collabora.com>
 
-commit fee50077656d8a58011f13bca48f743d1b6d6015 upstream.
+commit 52d3d115e9cc975b90b1fc49abf6d36ad5e8847a upstream.
 
-[Why]
-DP-HDMI dongles can execeed bandwidth requirements on high resolution
-monitors. This can lead to pruning the high resolution modes.
+Internal backlight levels are initialised from ACPI but the values
+are sometimes out of sync with the levels in effect until there has
+been a read from hardware (eg triggered by reading from sysfs).
 
-HDMI 1.3 bumped the clock to 340MHz, but display code never matched it.
+This means that the first drm_commit can cause the levels to be set
+to a different value than the actual starting one, which results in
+a sudden change in brightness.
 
-[How]
-Set default to (DVI) 165MHz.  Once HDMI display is identified update
-to 340MHz.
+This path shows the problem (when the values are out of sync):
 
-Reported-by: Dianne Skoll <dianne@skoll.ca>
-Closes: https://gitlab.freedesktop.org/drm/amd/-/issues/4780
-Reviewed-by: Chris Park <chris.park@amd.com>
-Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
-Signed-off-by: Matthew Stewart <matthew.stewart2@amd.com>
-Tested-by: Dan Wheeler <daniel.wheeler@amd.com>
+   amdgpu_dm_atomic_commit_tail()
+   -> amdgpu_dm_commit_streams()
+   -> amdgpu_dm_backlight_set_level(..., dm->brightness[n])
+
+This patch calls the backlight ops get_brightness explicitly
+at the end of backlight registration to make sure dm->brightness[n]
+is in sync with the actual hardware levels.
+
+Fixes: 2fe87f54abdc ("drm/amd/display: Set default brightness according to ACPI")
+Signed-off-by: Vivek Das Mohapatra <vivek@collabora.com>
+Reviewed-by: Mario Limonciello (AMD) <superm1@kernel.org>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit ac1e65d8ade46c09fb184579b81acadf36dcb91e)
+(cherry picked from commit 318b1c36d82a0cd2b06a4bb43272fa6f1bc8adc1)
 Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/display/dc/dc_hdmi_types.h       |    2 +-
- drivers/gpu/drm/amd/display/dc/link/link_detection.c |    4 +++-
- 2 files changed, 4 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c |   18 +++++++++++++++++-
+ 1 file changed, 17 insertions(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/amd/display/dc/dc_hdmi_types.h
-+++ b/drivers/gpu/drm/amd/display/dc/dc_hdmi_types.h
-@@ -41,7 +41,7 @@
- /* kHZ*/
- #define DP_ADAPTOR_DVI_MAX_TMDS_CLK 165000
- /* kHZ*/
--#define DP_ADAPTOR_HDMI_SAFE_MAX_TMDS_CLK 165000
-+#define DP_ADAPTOR_HDMI_SAFE_MAX_TMDS_CLK 340000
+--- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
++++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
+@@ -5193,6 +5193,8 @@ amdgpu_dm_register_backlight_device(stru
+ 	struct amdgpu_dm_backlight_caps *caps;
+ 	char bl_name[16];
+ 	int min, max;
++	int real_brightness;
++	int init_brightness;
  
- struct dp_hdmi_dongle_signature_data {
- 	int8_t id[15];/* "DP-HDMI ADAPTOR"*/
---- a/drivers/gpu/drm/amd/display/dc/link/link_detection.c
-+++ b/drivers/gpu/drm/amd/display/dc/link/link_detection.c
-@@ -332,7 +332,7 @@ static void query_dp_dual_mode_adaptor(
+ 	if (aconnector->bl_idx == -1)
+ 		return;
+@@ -5217,6 +5219,8 @@ amdgpu_dm_register_backlight_device(stru
+ 	} else
+ 		props.brightness = props.max_brightness = MAX_BACKLIGHT_LEVEL;
  
- 	/* Assume we have no valid DP passive dongle connected */
- 	*dongle = DISPLAY_DONGLE_NONE;
--	sink_cap->max_hdmi_pixel_clock = DP_ADAPTOR_HDMI_SAFE_MAX_TMDS_CLK;
-+	sink_cap->max_hdmi_pixel_clock = DP_ADAPTOR_DVI_MAX_TMDS_CLK;
++	init_brightness = props.brightness;
++
+ 	if (caps->data_points && !(amdgpu_dc_debug_mask & DC_DISABLE_CUSTOM_BRIGHTNESS_CURVE)) {
+ 		drm_info(drm, "Using custom brightness curve\n");
+ 		props.scale = BACKLIGHT_SCALE_NON_LINEAR;
+@@ -5235,8 +5239,20 @@ amdgpu_dm_register_backlight_device(stru
+ 	if (IS_ERR(dm->backlight_dev[aconnector->bl_idx])) {
+ 		drm_err(drm, "DM: Backlight registration failed!\n");
+ 		dm->backlight_dev[aconnector->bl_idx] = NULL;
+-	} else
++	} else {
++		/*
++		 * dm->brightness[x] can be inconsistent just after startup until
++		 * ops.get_brightness is called.
++		 */
++		real_brightness =
++			amdgpu_dm_backlight_ops.get_brightness(dm->backlight_dev[aconnector->bl_idx]);
++
++		if (real_brightness != init_brightness) {
++			dm->actual_brightness[aconnector->bl_idx] = real_brightness;
++			dm->brightness[aconnector->bl_idx] = real_brightness;
++		}
+ 		drm_dbg_driver(drm, "DM: Registered Backlight device: %s\n", bl_name);
++	}
+ }
  
- 	/* Read DP-HDMI dongle I2c (no response interpreted as DP-DVI dongle)*/
- 	if (!i2c_read(
-@@ -388,6 +388,8 @@ static void query_dp_dual_mode_adaptor(
- 
- 		}
- 	}
-+	if (is_valid_hdmi_signature)
-+		sink_cap->max_hdmi_pixel_clock = DP_ADAPTOR_HDMI_SAFE_MAX_TMDS_CLK;
- 
- 	if (is_type2_dongle) {
- 		uint32_t max_tmds_clk =
+ static int initialize_plane(struct amdgpu_display_manager *dm,
 
 
