@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0FC134C83D;
-	Wed, 21 Jan 2026 18:35:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B80703ECBE3;
+	Wed, 21 Jan 2026 18:35:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769020501; cv=none; b=ssM2LhEdXXimAryZFSB9EtZlTE36xlbyrYfEJiJ/+sjCP0zB3ao81ofysPNqyLO9t3u2vgGZ42DsyBvB93fzexFfGkj8Czgxlwv+2Jaskx4e0Hkvn/5lKoxeQamQWbfdPhEdbVWEagGfOdo4/LdnUPz9pqhXBUN0nw8FYcOsPHU=
+	t=1769020505; cv=none; b=cAAO4VczMpT9yOKYdgBun2R/X7M60u4qB9Uh7fwO69PaZNhB8HmgmM+c3WvcalpJ1WMjGdpbjAII9YIkQ41aLI3SD46AQr0a6IdijXVFoZEQ/ikgxwYqYdcp6WEhX35y/pwvCq7OJIwMPTnd8Ek4e9kCBNvLB4V+x5YSKB0hMNw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769020501; c=relaxed/simple;
-	bh=+hMzlMvFTzU+CMOID0nLCNJ05fI50evnFugd58dtrOE=;
+	s=arc-20240116; t=1769020505; c=relaxed/simple;
+	bh=W7EvjXe7RW6r3dbu3h8N+accCqtIXfXmimRTJmYsIKE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BYyzfSE4xltwHeasK5CQ8bY1lI7d4UVehVYVSAxYd/wjh8hmCB8Dz8R3DpoG57O1MB6YBwc8tIxSjKBxpn8dHxH8+dxcMswjr/J54gm3W2jKpPXvK+uwI5pm1enXXOUdGN+b7mOB82xPNiv5XbleRKw0M7aMBJDSkIAvfKILKwY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lxhi+jbw; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=prJwRAiznhQL/YcOiPRgYb8e/mqO95aFW0+OMYkFbaNByTp/2vqtRQV89raUZ6R+R/i8wUlGH6KmpiHoE94gQ1lZ2HT+eCL4ElUeT2y8+uIsUc70AnY/ZaIXmRoRCftYgodgDcIL3n/5kAgc2ALD1h8ws6lMAk91xiX30xB5+lk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qwlmdQFQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lxhi+jbw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E6CCC19422;
-	Wed, 21 Jan 2026 18:35:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qwlmdQFQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C40DC4CEF1;
+	Wed, 21 Jan 2026 18:35:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1769020501;
-	bh=+hMzlMvFTzU+CMOID0nLCNJ05fI50evnFugd58dtrOE=;
+	s=korg; t=1769020505;
+	bh=W7EvjXe7RW6r3dbu3h8N+accCqtIXfXmimRTJmYsIKE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lxhi+jbwYMWtGAQrONhf70EVoGnscL4M6tXcJs4vjQnlII8SUpmsQb/eOXbGtEy+A
-	 j1/EeWliMbGazA77RDic+gmGkB3xv/C/p9YQomvZdMte6i8SvVMNWNpRkwQqktdBO1
-	 k215UnVXxNj0qfVTvXGbQpCAs6VILAEQ86f148Ok=
+	b=qwlmdQFQt3teD3gEkeHt8IHdT+h3YpuF/FvJgwAAfnHAFK7Os8gvIhwgseEJhZkNA
+	 C6aeF/pEuCgD35cQt+hd458DGemd0Bu7dSSl7q/GYo7nH7TXvYWppZPmNZScd2Jmwe
+	 dECcZAdTcz7GsSnNvl09zdyEbWGkxDpcZZBAUy8M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	SeongJae Park <sj@kernel.org>,
-	chongjiapeng <jiapeng.chong@linux.alibaba.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.18 144/198] mm/damon/sysfs-scheme: cleanup access_pattern subdirs on scheme dir setup failure
-Date: Wed, 21 Jan 2026 19:16:12 +0100
-Message-ID: <20260121181423.740711982@linuxfoundation.org>
+	Xiaochen Shen <shenxiaochen@open-hieco.net>,
+	"Borislav Petkov (AMD)" <bp@alien8.de>,
+	Reinette Chatre <reinette.chatre@intel.com>
+Subject: [PATCH 6.18 135/198] x86/resctrl: Add missing resctrl initialization for Hygon
+Date: Wed, 21 Jan 2026 19:16:03 +0100
+Message-ID: <20260121181423.406243306@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260121181418.537774329@linuxfoundation.org>
 References: <20260121181418.537774329@linuxfoundation.org>
@@ -51,48 +51,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: SeongJae Park <sj@kernel.org>
+From: Xiaochen Shen <shenxiaochen@open-hieco.net>
 
-commit 392b3d9d595f34877dd745b470c711e8ebcd225c upstream.
+commit 6ee98aabdc700b5705e4f1833e2edc82a826b53b upstream.
 
-When a DAMOS-scheme DAMON sysfs directory setup fails after setup of
-access_pattern/ directory, subdirectories of access_pattern/ directory are
-not cleaned up.  As a result, DAMON sysfs interface is nearly broken until
-the system reboots, and the memory for the unremoved directory is leaked.
+Hygon CPUs supporting Platform QoS features currently undergo partial resctrl
+initialization through resctrl_cpu_detect() in the Hygon BSP init helper and
+AMD/Hygon common initialization code. However, several critical data
+structures remain uninitialized for Hygon CPUs in the following paths:
 
-Cleanup the directories under such failures.
+ - get_mem_config()-> __rdt_get_mem_config_amd():
+     rdt_resource::membw,alloc_capable
+     hw_res::num_closid
 
-Link: https://lkml.kernel.org/r/20251225023043.18579-5-sj@kernel.org
-Fixes: 9bbb820a5bd5 ("mm/damon/sysfs: support DAMOS quotas")
-Signed-off-by: SeongJae Park <sj@kernel.org>
-Cc: chongjiapeng <jiapeng.chong@linux.alibaba.com>
-Cc: <stable@vger.kernel.org> # 5.18.x
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+ - rdt_init_res_defs()->rdt_init_res_defs_amd():
+     rdt_resource::cache
+     hw_res::msr_base,msr_update
+
+Add the missing AMD/Hygon common initialization to ensure proper Platform QoS
+functionality on Hygon CPUs.
+
+Fixes: d8df126349da ("x86/cpu/hygon: Add missing resctrl_cpu_detect() in bsp_init helper")
+Signed-off-by: Xiaochen Shen <shenxiaochen@open-hieco.net>
+Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+Reviewed-by: Reinette Chatre <reinette.chatre@intel.com>
+Cc: stable@vger.kernel.org
+Link: https://patch.msgid.link/20251209062650.1536952-2-shenxiaochen@open-hieco.net
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/damon/sysfs-schemes.c |    5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ arch/x86/kernel/cpu/resctrl/core.c |    6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
---- a/mm/damon/sysfs-schemes.c
-+++ b/mm/damon/sysfs-schemes.c
-@@ -2111,7 +2111,7 @@ static int damon_sysfs_scheme_add_dirs(s
- 		return err;
- 	err = damos_sysfs_set_dests(scheme);
- 	if (err)
--		goto put_access_pattern_out;
-+		goto rmdir_put_access_pattern_out;
- 	err = damon_sysfs_scheme_set_quotas(scheme);
- 	if (err)
- 		goto put_dests_out;
-@@ -2149,7 +2149,8 @@ rmdir_put_quotas_access_pattern_out:
- put_dests_out:
- 	kobject_put(&scheme->dests->kobj);
- 	scheme->dests = NULL;
--put_access_pattern_out:
-+rmdir_put_access_pattern_out:
-+	damon_sysfs_access_pattern_rm_dirs(scheme->access_pattern);
- 	kobject_put(&scheme->access_pattern->kobj);
- 	scheme->access_pattern = NULL;
- 	return err;
+--- a/arch/x86/kernel/cpu/resctrl/core.c
++++ b/arch/x86/kernel/cpu/resctrl/core.c
+@@ -818,7 +818,8 @@ static __init bool get_mem_config(void)
+ 
+ 	if (boot_cpu_data.x86_vendor == X86_VENDOR_INTEL)
+ 		return __get_mem_config_intel(&hw_res->r_resctrl);
+-	else if (boot_cpu_data.x86_vendor == X86_VENDOR_AMD)
++	else if (boot_cpu_data.x86_vendor == X86_VENDOR_AMD ||
++		 boot_cpu_data.x86_vendor == X86_VENDOR_HYGON)
+ 		return __rdt_get_mem_config_amd(&hw_res->r_resctrl);
+ 
+ 	return false;
+@@ -978,7 +979,8 @@ static __init void rdt_init_res_defs(voi
+ {
+ 	if (boot_cpu_data.x86_vendor == X86_VENDOR_INTEL)
+ 		rdt_init_res_defs_intel();
+-	else if (boot_cpu_data.x86_vendor == X86_VENDOR_AMD)
++	else if (boot_cpu_data.x86_vendor == X86_VENDOR_AMD ||
++		 boot_cpu_data.x86_vendor == X86_VENDOR_HYGON)
+ 		rdt_init_res_defs_amd();
+ }
+ 
 
 
