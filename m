@@ -1,38 +1,49 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 101B53D1CB3;
-	Wed, 21 Jan 2026 18:32:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6BE263D3482;
+	Wed, 21 Jan 2026 18:32:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769020363; cv=none; b=jC5lGw2GSMy8Ndx2yyadv/kyjpNZa3Jqmsi+9A0SQ7HiwVtF8Dp7r6sA0N8L7UbLytE0lyCRstbH+wK+cWcrZ7gZLgB2kDSiIQe9RmFVKdWWaMqJygEr+J1RJ+XpYWALGse4skWnog4CZFQPTmJjs0iAIsYCH3TkSvTOZqI/qV8=
+	t=1769020366; cv=none; b=bdwpuLrEVQO86kSTDRImQSFJBo2S169tFdGlcl/reUUsdVZT7nSqSqTkI4OOlS0N7XqNjCAqL3f8rXAdog8XqicxscD+QOWXUjpTtiItZ0W56mxvcXuCZvCDDmLrIWqc8Ufm/aBRWLVTU+Hvs0Gwr1Y/xO+CvL2Acin550IuuXg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769020363; c=relaxed/simple;
-	bh=FoD7L0/bYn1u/2F/oPo4z/utNulKroARndBQoZbxcso=;
+	s=arc-20240116; t=1769020366; c=relaxed/simple;
+	bh=grYRSzM9s/IXke0tj3yCVMRUArVlzf+KxxPt8kR/pwI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=akmseOXGVCEwUbuqyp26HDtU6psfPV+eCRwhdcHhBPouosc3VTVaBtWdTWWJ9K5lHRtqNyAP1Smt7Sgm+xZO8BErwjpGdn/YANmaB0vB+cLi9JWwnAADKZU2UGjkKRcpHaI7KR8YjQI6wYeI7HmtsIGL5lwtyX1Ls/CxUL+NU58=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YAxkjCTi; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=FJIZoelXq/fyjFDzd1v0TbAzwjQrD3P4BRgXJhOJF3AuwwViYHNkJmMPXZNMP++/pwJBPSkBaWRAe6Q8aS47ICJ6LEPVie8TANnVA6MqDl+zs+sRmUIaYNqcai5r4jf6hbOg/F4Y0bQl1yakWM/OL2g+CUdKfjRHK6wpoTdS4QA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dWeVX+2j; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YAxkjCTi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 693F2C16AAE;
-	Wed, 21 Jan 2026 18:32:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dWeVX+2j"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF89BC4CEF1;
+	Wed, 21 Jan 2026 18:32:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1769020362;
-	bh=FoD7L0/bYn1u/2F/oPo4z/utNulKroARndBQoZbxcso=;
+	s=korg; t=1769020366;
+	bh=grYRSzM9s/IXke0tj3yCVMRUArVlzf+KxxPt8kR/pwI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YAxkjCTieo+uQI0PnPzdckNxxw99NeJ/arQFN5RtEKVgwXZEIcT5BGfWNWITrrJrF
-	 sW0Vtl/30+Sf6AuOiMR93KmGQsukvAxCrRMfU0X5OT/zee984rAVrAQJ8NlcgAriKN
-	 e/eidv/NveaW2EgHBkmt0dLyWYwj1CawJh8F+9CA=
+	b=dWeVX+2jzmSU0KoxOc2M8Siljy8/7o9x77SKgYKNLFN5KtLrRpMLr+kobvThPAw8x
+	 yU8xa21fCsUuOU7jpy7hvm1jbEujLs05gjmCOi6Z/ineuJhUxiDH5TeUTsrGWyjMVv
+	 PoIi2Bv/wdLZO8OiFen2MvNII3xSARl9rzERRku4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tommaso Merciai <tommaso.merciai.xr@bp.renesas.com>,
-	Biju Das <biju.das.jz@bp.renesas.com>,
-	Wolfram Sang <wsa+renesas@sang-engineering.com>
-Subject: [PATCH 6.18 134/198] i2c: riic: Move suspend handling to NOIRQ phase
-Date: Wed, 21 Jan 2026 19:16:02 +0100
-Message-ID: <20260121181423.370891937@linuxfoundation.org>
+	Lorenzo Stoakes <lorenzo.stoakes@oracle.com>,
+	"David Hildenbrand (Red Hat)" <david@kernel.org>,
+	Jason Gunthorpe <jgg@ziepe.ca>,
+	John Hubbard <jhubbard@nvidia.com>,
+	Liam Howlett <liam.howlett@oracle.com>,
+	"Liam R. Howlett" <Liam.Howlett@oracle.com>,
+	Mark Brown <broonie@kernel.org>,
+	Michal Hocko <mhocko@suse.com>,
+	Mike Rapoport <rppt@kernel.org>,
+	Peter Xu <peterx@redhat.com>,
+	Shuah Khan <shuah@kernel.org>,
+	Suren Baghdasaryan <surenb@google.com>,
+	Vlastimil Babka <vbabka@suse.cz>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.18 103/198] tools/testing/selftests: fix gup_longterm for unknown fs
+Date: Wed, 21 Jan 2026 19:15:31 +0100
+Message-ID: <20260121181422.260314939@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260121181418.537774329@linuxfoundation.org>
 References: <20260121181418.537774329@linuxfoundation.org>
@@ -51,152 +62,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tommaso Merciai <tommaso.merciai.xr@bp.renesas.com>
+From: Lorenzo Stoakes <lorenzo.stoakes@oracle.com>
 
-commit e383f0961422f983451ac4dd6aed1a3d3311f2be upstream.
+commit 21c68ad1d9771d331198cc73cbf6e908d7915f35 upstream.
 
-Commit 53326135d0e0 ("i2c: riic: Add suspend/resume support") added
-suspend support for the Renesas I2C driver and following this change
-on RZ/G3E the following WARNING is seen on entering suspend ...
+Commit 66bce7afbaca ("selftests/mm: fix test result reporting in
+gup_longterm") introduced a small bug causing unknown filesystems to
+always result in a test failure.
 
-[  134.275704] Freezing remaining freezable tasks completed (elapsed 0.001 seconds)
-[  134.285536] ------------[ cut here ]------------
-[  134.290298] i2c i2c-2: Transfer while suspended
-[  134.295174] WARNING: drivers/i2c/i2c-core.h:56 at __i2c_smbus_xfer+0x1e4/0x214, CPU#0: systemd-sleep/388
-[  134.365507] Tainted: [W]=WARN
-[  134.368485] Hardware name: Renesas SMARC EVK version 2 based on r9a09g047e57 (DT)
-[  134.375961] pstate: 60400005 (nZCv daif +PAN -UAO -TCO -DIT -SSBS BTYPE=--)
-[  134.382935] pc : __i2c_smbus_xfer+0x1e4/0x214
-[  134.387329] lr : __i2c_smbus_xfer+0x1e4/0x214
-[  134.391717] sp : ffff800083f23860
-[  134.395040] x29: ffff800083f23860 x28: 0000000000000000 x27: ffff800082ed5d60
-[  134.402226] x26: 0000001f4395fd74 x25: 0000000000000007 x24: 0000000000000001
-[  134.409408] x23: 0000000000000000 x22: 000000000000006f x21: ffff800083f23936
-[  134.416589] x20: ffff0000c090e140 x19: ffff0000c090e0d0 x18: 0000000000000006
-[  134.423771] x17: 6f63657320313030 x16: 2e30206465737061 x15: ffff800083f23280
-[  134.430953] x14: 0000000000000000 x13: ffff800082b16ce8 x12: 0000000000000f09
-[  134.438134] x11: 0000000000000503 x10: ffff800082b6ece8 x9 : ffff800082b16ce8
-[  134.445315] x8 : 00000000ffffefff x7 : ffff800082b6ece8 x6 : 80000000fffff000
-[  134.452495] x5 : 0000000000000504 x4 : 0000000000000000 x3 : 0000000000000000
-[  134.459672] x2 : 0000000000000000 x1 : 0000000000000000 x0 : ffff0000c9ee9e80
-[  134.466851] Call trace:
-[  134.469311]  __i2c_smbus_xfer+0x1e4/0x214 (P)
-[  134.473715]  i2c_smbus_xfer+0xbc/0x120
-[  134.477507]  i2c_smbus_read_byte_data+0x4c/0x84
-[  134.482077]  isl1208_i2c_read_time+0x44/0x178 [rtc_isl1208]
-[  134.487703]  isl1208_rtc_read_time+0x14/0x20 [rtc_isl1208]
-[  134.493226]  __rtc_read_time+0x44/0x88
-[  134.497012]  rtc_read_time+0x3c/0x68
-[  134.500622]  rtc_suspend+0x9c/0x170
+This is because do_test() was updated to use a common reporting path, but
+this case appears to have been missed.
 
-The warning is triggered because I2C transfers can still be attempted
-while the controller is already suspended, due to inappropriate ordering
-of the system sleep callbacks.
+This is problematic for e.g.  virtme-ng which uses an overlayfs file
+system, causing gup_longterm to appear to fail each time due to a test
+count mismatch:
 
-If the controller is autosuspended, there is no way to wake it up once
-runtime PM disabled (in suspend_late()). During system resume, the I2C
-controller will be available only after runtime PM is re-enabled
-(in resume_early()). However, this may be too late for some devices.
+	# Planned tests != run tests (50 != 46)
+	# Totals: pass:24 fail:0 xfail:0 xpass:0 skip:22 error:0
 
-Wake up the controller in the suspend() callback while runtime PM is
-still enabled. The I2C controller will remain available until the
-suspend_noirq() callback (pm_runtime_force_suspend()) is called. During
-resume, the I2C controller can be restored by the resume_noirq() callback
-(pm_runtime_force_resume()). Finally, the resume() callback re-enables
-autosuspend. As a result, the I2C controller can remain available until
-the system enters suspend_noirq() and from resume_noirq().
+The fix is to simply change the return into a break.
 
-Cc: stable@vger.kernel.org
-Fixes: 53326135d0e0 ("i2c: riic: Add suspend/resume support")
-Signed-off-by: Tommaso Merciai <tommaso.merciai.xr@bp.renesas.com>
-Reviewed-by: Biju Das <biju.das.jz@bp.renesas.com>
-Tested-by: Biju Das <biju.das.jz@bp.renesas.com>
-Signed-off-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
+Link: https://lkml.kernel.org/r/20260106154547.214907-1-lorenzo.stoakes@oracle.com
+Fixes: 66bce7afbaca ("selftests/mm: fix test result reporting in gup_longterm")
+Signed-off-by: Lorenzo Stoakes <lorenzo.stoakes@oracle.com>
+Reviewed-by: David Hildenbrand (Red Hat) <david@kernel.org>
+Cc: Jason Gunthorpe <jgg@ziepe.ca>
+Cc: John Hubbard <jhubbard@nvidia.com>
+Cc: Liam Howlett <liam.howlett@oracle.com>
+Cc: "Liam R. Howlett" <Liam.Howlett@oracle.com>
+Cc: Mark Brown <broonie@kernel.org>
+Cc: Michal Hocko <mhocko@suse.com>
+Cc: Mike Rapoport <rppt@kernel.org>
+Cc: Peter Xu <peterx@redhat.com>
+Cc: Shuah Khan <shuah@kernel.org>
+Cc: Suren Baghdasaryan <surenb@google.com>
+Cc: Vlastimil Babka <vbabka@suse.cz>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/i2c/busses/i2c-riic.c |   46 +++++++++++++++++++++++++++++++++++-------
- 1 file changed, 39 insertions(+), 7 deletions(-)
+ tools/testing/selftests/mm/gup_longterm.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/i2c/busses/i2c-riic.c
-+++ b/drivers/i2c/busses/i2c-riic.c
-@@ -670,12 +670,39 @@ static const struct riic_of_data riic_rz
- 
- static int riic_i2c_suspend(struct device *dev)
- {
--	struct riic_dev *riic = dev_get_drvdata(dev);
--	int ret;
-+	/*
-+	 * Some I2C devices may need the I2C controller to remain active
-+	 * during resume_noirq() or suspend_noirq(). If the controller is
-+	 * autosuspended, there is no way to wake it up once runtime PM is
-+	 * disabled (in suspend_late()).
-+	 *
-+	 * During system resume, the I2C controller will be available only
-+	 * after runtime PM is re-enabled (in resume_early()). However, this
-+	 * may be too late for some devices.
-+	 *
-+	 * Wake up the controller in the suspend() callback while runtime PM
-+	 * is still enabled. The I2C controller will remain available until
-+	 * the suspend_noirq() callback (pm_runtime_force_suspend()) is
-+	 * called. During resume, the I2C controller can be restored by the
-+	 * resume_noirq() callback (pm_runtime_force_resume()).
-+	 *
-+	 * Finally, the resume() callback re-enables autosuspend, ensuring
-+	 * the I2C controller remains available until the system enters
-+	 * suspend_noirq() and from resume_noirq().
-+	 */
-+	return pm_runtime_resume_and_get(dev);
-+}
- 
--	ret = pm_runtime_resume_and_get(dev);
--	if (ret)
--		return ret;
-+static int riic_i2c_resume(struct device *dev)
-+{
-+	pm_runtime_put_autosuspend(dev);
-+
-+	return 0;
-+}
-+
-+static int riic_i2c_suspend_noirq(struct device *dev)
-+{
-+	struct riic_dev *riic = dev_get_drvdata(dev);
- 
- 	i2c_mark_adapter_suspended(&riic->adapter);
- 
-@@ -683,12 +710,12 @@ static int riic_i2c_suspend(struct devic
- 	riic_clear_set_bit(riic, ICCR1_ICE, 0, RIIC_ICCR1);
- 
- 	pm_runtime_mark_last_busy(dev);
--	pm_runtime_put_sync(dev);
-+	pm_runtime_force_suspend(dev);
- 
- 	return reset_control_assert(riic->rstc);
- }
- 
--static int riic_i2c_resume(struct device *dev)
-+static int riic_i2c_resume_noirq(struct device *dev)
- {
- 	struct riic_dev *riic = dev_get_drvdata(dev);
- 	int ret;
-@@ -697,6 +724,10 @@ static int riic_i2c_resume(struct device
- 	if (ret)
- 		return ret;
- 
-+	ret = pm_runtime_force_resume(dev);
-+	if (ret)
-+		return ret;
-+
- 	ret = riic_init_hw(riic);
- 	if (ret) {
+diff --git a/tools/testing/selftests/mm/gup_longterm.c b/tools/testing/selftests/mm/gup_longterm.c
+index 6279893a0adc..f61150d28eb2 100644
+--- a/tools/testing/selftests/mm/gup_longterm.c
++++ b/tools/testing/selftests/mm/gup_longterm.c
+@@ -179,7 +179,7 @@ static void do_test(int fd, size_t size, enum test_type type, bool shared)
+ 		if (rw && shared && fs_is_unknown(fs_type)) {
+ 			ksft_print_msg("Unknown filesystem\n");
+ 			result = KSFT_SKIP;
+-			return;
++			break;
+ 		}
  		/*
-@@ -714,6 +745,7 @@ static int riic_i2c_resume(struct device
- }
- 
- static const struct dev_pm_ops riic_i2c_pm_ops = {
-+	NOIRQ_SYSTEM_SLEEP_PM_OPS(riic_i2c_suspend_noirq, riic_i2c_resume_noirq)
- 	SYSTEM_SLEEP_PM_OPS(riic_i2c_suspend, riic_i2c_resume)
- };
- 
+ 		 * R/O pinning or pinning in a private mapping is always
+-- 
+2.52.0
+
 
 
