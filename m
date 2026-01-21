@@ -1,46 +1,54 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4F7734C83D;
-	Wed, 21 Jan 2026 18:21:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30C2A315D48;
+	Wed, 21 Jan 2026 18:21:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769019660; cv=none; b=lUzYRKp2yH/nd4GZQexkB2I859PTQidj4/iJ9mDUIc7D+moE8+VyieTeHojdFW8oFn3a7qTOMU6ZZEshGdGUlQ7HEHlA8jFTnjSrczpAJmARPZB2YJlvdqUQxv5Sgu8flenBqVtmj2XnhgdULFzTHQJjTgmQ6YXS8E6LvwtVhsQ=
+	t=1769019664; cv=none; b=UPRNqoLbsFcRN4PJsVrJ43dk/EmwBlqRRaI+zgG9iSMvNho9h405m7O0o/2d315gsyksAKGs2kJfaXk54e2aVYESFt6OWT0k5iSaA9D3wCgdAAVnFO4X7NReamU8HDmUCuMU9CxvefoWURmk6L5JQ1d9Xvr9quCRuYY1wETMgV0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769019660; c=relaxed/simple;
-	bh=UkIAgxgeldAc1zRfHX7RJZcBDh3fvhVj35fUtn41j4g=;
+	s=arc-20240116; t=1769019664; c=relaxed/simple;
+	bh=Op3eR9+EmrUc8UFTdKlzOFF7nvshA8YpmBQ9LGWZfSE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MS0ix2kAaLH2T6sOBdBckns8Jr1Wm/oHCm84TCViMeLQ+xhIWtexYwfpwOs64cbOSfkFvnkIO7gVBKTFP/7Z9Su/9zd67HYzMMvYlEBd7jkfKy+rNgFJ4UqaJQDy3xjfyUR5JIKN2OLDq4HnJ2kcKWNmn/mmXe9XoJJ+kQsftVc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0SHUVdld; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bdtSoqAT09z14dnp5UiclRnilbYpC+O8QTIiNITP1ZzkUta2jZ3SNiLkFFbqxQp+D7+RfwfXbyvXsaD14QVJMIEkoFrXcUeEYAR/k05jxok4yW5OHB0t/dS2UY5yt7FErCca9hXfv6Oz2yfQG9VRAmQPYba1SjQY5m90Q2aoVf4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uQfQLJPo; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0SHUVdld"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF0E4C4CEF1;
-	Wed, 21 Jan 2026 18:20:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uQfQLJPo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C5F3C4CEF1;
+	Wed, 21 Jan 2026 18:21:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1769019660;
-	bh=UkIAgxgeldAc1zRfHX7RJZcBDh3fvhVj35fUtn41j4g=;
+	s=korg; t=1769019663;
+	bh=Op3eR9+EmrUc8UFTdKlzOFF7nvshA8YpmBQ9LGWZfSE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0SHUVdldfD25ysi61ZTwe3zo6Coq8wtSgoluK77MMC1QHSiD7amtFfsB6k0bsgdpJ
-	 8Nv8zj/MMDLKD/zINvueSl7ub/COejeW0Wq9P0oDNu2GIMEZ+sNtNXPY01fZGFjNKF
-	 0ER3Ztom3+x0pkLUctOeRagIOB47Rk0Bzn7GFXcI=
+	b=uQfQLJPoRVeTuIZBAHJ88MatL1NB6nGS5M/3cyImg37TGETtVVk3IS/haFXZfCktD
+	 /02JBJENc6fBL2Eq/P1rCtT4vq5AdoSGv0Rqi8tSoNtCoPIijOvUwptr969im6KYQ7
+	 wDCYjcUUkYcIc05X7kT3GF0D4alCgub2hS/BI2+I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+09b7d050e4806540153d@syzkaller.appspotmail.com,
-	Shakeel Butt <shakeel.butt@linux.dev>,
-	Christoph Hellwig <hch@lst.de>,
-	Jinchao Wang <wangjinchao600@gmail.com>,
-	Christian Brauner <brauner@kernel.org>,
-	Alexei Starovoitov <ast@kernel.org>,
-	Andrii Nakryiko <andrii@kernel.org>,
-	Daniel Borkman <daniel@iogearbox.net>,
-	"Darrick J. Wong" <djwong@kernel.org>,
-	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.12 071/139] lib/buildid: use __kernel_read() for sleepable context
-Date: Wed, 21 Jan 2026 19:15:19 +0100
-Message-ID: <20260121181414.010479567@linuxfoundation.org>
+	Ingo Molnar <mingo@kernel.org>,
+	Kees Cook <kees@kernel.org>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Peter Zijlstra <peterz@infradead.org>,
+	Andy Lutomirski <luto@kernel.org>,
+	Logan Gunthorpe <logang@deltatee.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	David Hildenbrand <david@redhat.com>,
+	Lorenzo Stoakes <lorenzo.stoakes@oracle.com>,
+	"Liam R. Howlett" <Liam.Howlett@oracle.com>,
+	Vlastimil Babka <vbabka@suse.cz>,
+	Mike Rapoport <rppt@kernel.org>,
+	Suren Baghdasaryan <surenb@google.com>,
+	Michal Hocko <mhocko@suse.com>,
+	Dan Williams <dan.j.williams@intel.com>,
+	Balbir Singh <balbirs@nvidia.com>,
+	Yasunori Goto <y-goto@fujitsu.com>,
+	Dave Hansen <dave.hansen@linux.intel.com>,
+	Dave Jiang <dave.jiang@intel.com>
+Subject: [PATCH 6.12 072/139] x86/kaslr: Recognize all ZONE_DEVICE users as physaddr consumers
+Date: Wed, 21 Jan 2026 19:15:20 +0100
+Message-ID: <20260121181414.046614172@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260121181411.452263583@linuxfoundation.org>
 References: <20260121181411.452263583@linuxfoundation.org>
@@ -59,108 +67,111 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shakeel Butt <shakeel.butt@linux.dev>
+From: Dan Williams <dan.j.williams@intel.com>
 
-commit 777a8560fd29738350c5094d4166fe5499452409 upstream.
+commit 269031b15c1433ff39e30fa7ea3ab8f0be9d6ae2 upstream.
 
-Prevent a "BUG: unable to handle kernel NULL pointer dereference in
-filemap_read_folio".
+Commit 7ffb791423c7 ("x86/kaslr: Reduce KASLR entropy on most x86 systems")
+is too narrow. The effect being mitigated in that commit is caused by
+ZONE_DEVICE which PCI_P2PDMA has a dependency. ZONE_DEVICE, in general,
+lets any physical address be added to the direct-map. I.e. not only ACPI
+hotplug ranges, CXL Memory Windows, or EFI Specific Purpose Memory, but
+also any PCI MMIO range for the DEVICE_PRIVATE and PCI_P2PDMA cases. Update
+the mitigation, limit KASLR entropy, to apply in all ZONE_DEVICE=y cases.
 
-For the sleepable context, convert freader to use __kernel_read() instead
-of direct page cache access via read_cache_folio().  This simplifies the
-faultable code path by using the standard kernel file reading interface
-which handles all the complexity of reading file data.
+Distro kernels typically have PCI_P2PDMA=y, so the practical exposure of
+this problem is limited to the PCI_P2PDMA=n case.
 
-At the moment we are not changing the code for non-sleepable context which
-uses filemap_get_folio() and only succeeds if the target folios are
-already in memory and up-to-date.  The reason is to keep the patch simple
-and easier to backport to stable kernels.
+A potential path to recover entropy would be to walk ACPI and determine the
+limits for hotplug and PCI MMIO before kernel_randomize_memory(). On
+smaller systems that could yield some KASLR address bits. This needs
+additional investigation to determine if some limited ACPI table scanning
+can happen this early without an open coded solution like
+arch/x86/boot/compressed/acpi.c needs to deploy.
 
-Syzbot repro does not crash the kernel anymore and the selftests run
-successfully.
-
-In the follow up we will make __kernel_read() with IOCB_NOWAIT work for
-non-sleepable contexts.  In addition, I would like to replace the
-secretmem check with a more generic approach and will add fstest for the
-buildid code.
-
-Link: https://lkml.kernel.org/r/20251222205859.3968077-1-shakeel.butt@linux.dev
-Fixes: ad41251c290d ("lib/buildid: implement sleepable build_id_parse() API")
-Reported-by: syzbot+09b7d050e4806540153d@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=09b7d050e4806540153d
-Signed-off-by: Shakeel Butt <shakeel.butt@linux.dev>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Tested-by: Jinchao Wang <wangjinchao600@gmail.com>
-  Link: https://lkml.kernel.org/r/aUteBPWPYzVWIZFH@ndev
-Reviewed-by: Christian Brauner <brauner@kernel.org>
-Cc: Alexei Starovoitov <ast@kernel.org>
-Cc: Andrii Nakryiko <andrii@kernel.org>
-Cc: Daniel Borkman <daniel@iogearbox.net>
-Cc: "Darrick J. Wong" <djwong@kernel.org>
-Cc: Matthew Wilcox (Oracle) <willy@infradead.org>
+Cc: Ingo Molnar <mingo@kernel.org>
+Cc: Kees Cook <kees@kernel.org>
+Cc: Bjorn Helgaas <bhelgaas@google.com>
+Cc: Peter Zijlstra <peterz@infradead.org>
+Cc: Andy Lutomirski <luto@kernel.org>
+Cc: Logan Gunthorpe <logang@deltatee.com>
+Cc: Andrew Morton <akpm@linux-foundation.org>
+Cc: David Hildenbrand <david@redhat.com>
+Cc: Lorenzo Stoakes <lorenzo.stoakes@oracle.com>
+Cc: "Liam R. Howlett" <Liam.Howlett@oracle.com>
+Cc: Vlastimil Babka <vbabka@suse.cz>
+Cc: Mike Rapoport <rppt@kernel.org>
+Cc: Suren Baghdasaryan <surenb@google.com>
+Cc: Michal Hocko <mhocko@suse.com>
+Fixes: 7ffb791423c7 ("x86/kaslr: Reduce KASLR entropy on most x86 systems")
 Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Dan Williams <dan.j.williams@intel.com>
+Reviewed-by: Balbir Singh <balbirs@nvidia.com>
+Tested-by: Yasunori Goto <y-goto@fujitsu.com>
+Acked-by: Dave Hansen <dave.hansen@linux.intel.com>
+Link: http://patch.msgid.link/692e08b2516d4_261c1100a3@dwillia2-mobl4.notmuch
+Signed-off-by: Dave Jiang <dave.jiang@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- lib/buildid.c |   32 ++++++++++++++++++++------------
- 1 file changed, 20 insertions(+), 12 deletions(-)
+ arch/x86/mm/kaslr.c |   10 +++++-----
+ drivers/pci/Kconfig |    6 ------
+ mm/Kconfig          |   10 +++++++---
+ 3 files changed, 12 insertions(+), 14 deletions(-)
 
---- a/lib/buildid.c
-+++ b/lib/buildid.c
-@@ -5,6 +5,7 @@
- #include <linux/elf.h>
- #include <linux/kernel.h>
- #include <linux/pagemap.h>
-+#include <linux/fs.h>
- #include <linux/secretmem.h>
+--- a/arch/x86/mm/kaslr.c
++++ b/arch/x86/mm/kaslr.c
+@@ -111,12 +111,12 @@ void __init kernel_randomize_memory(void
  
- #define BUILD_ID 3
-@@ -65,20 +66,9 @@ static int freader_get_folio(struct frea
+ 	/*
+ 	 * Adapt physical memory region size based on available memory,
+-	 * except when CONFIG_PCI_P2PDMA is enabled. P2PDMA exposes the
+-	 * device BAR space assuming the direct map space is large enough
+-	 * for creating a ZONE_DEVICE mapping in the direct map corresponding
+-	 * to the physical BAR address.
++	 * except when CONFIG_ZONE_DEVICE is enabled. ZONE_DEVICE wants to map
++	 * any physical address into the direct-map. KASLR wants to reliably
++	 * steal some physical address bits. Those design choices are in direct
++	 * conflict.
+ 	 */
+-	if (!IS_ENABLED(CONFIG_PCI_P2PDMA) && (memory_tb < kaslr_regions[0].size_tb))
++	if (!IS_ENABLED(CONFIG_ZONE_DEVICE) && (memory_tb < kaslr_regions[0].size_tb))
+ 		kaslr_regions[0].size_tb = memory_tb;
  
- 	freader_put_folio(r);
+ 	/*
+--- a/drivers/pci/Kconfig
++++ b/drivers/pci/Kconfig
+@@ -194,12 +194,6 @@ config PCI_P2PDMA
+ 	  P2P DMA transactions must be between devices behind the same root
+ 	  port.
  
--	/* reject secretmem folios created with memfd_secret() */
--	if (secretmem_mapping(r->file->f_mapping))
--		return -EFAULT;
+-	  Enabling this option will reduce the entropy of x86 KASLR memory
+-	  regions. For example - on a 46 bit system, the entropy goes down
+-	  from 16 bits to 15 bits. The actual reduction in entropy depends
+-	  on the physical address bits, on processor features, kernel config
+-	  (5 level page table) and physical memory present on the system.
 -
-+	/* only use page cache lookup - fail if not already cached */
- 	r->folio = filemap_get_folio(r->file->f_mapping, file_off >> PAGE_SHIFT);
+ 	  If unsure, say N.
  
--	/* if sleeping is allowed, wait for the page, if necessary */
--	if (r->may_fault && (IS_ERR(r->folio) || !folio_test_uptodate(r->folio))) {
--		filemap_invalidate_lock_shared(r->file->f_mapping);
--		r->folio = read_cache_folio(r->file->f_mapping, file_off >> PAGE_SHIFT,
--					    NULL, r->file);
--		filemap_invalidate_unlock_shared(r->file->f_mapping);
--	}
--
- 	if (IS_ERR(r->folio) || !folio_test_uptodate(r->folio)) {
- 		if (!IS_ERR(r->folio))
- 			folio_put(r->folio);
-@@ -116,6 +106,24 @@ static const void *freader_fetch(struct
- 		return r->data + file_off;
- 	}
+ config PCI_LABEL
+--- a/mm/Kconfig
++++ b/mm/Kconfig
+@@ -1071,10 +1071,14 @@ config ZONE_DEVICE
+ 	  Device memory hotplug support allows for establishing pmem,
+ 	  or other device driver discovered memory regions, in the
+ 	  memmap. This allows pfn_to_page() lookups of otherwise
+-	  "device-physical" addresses which is needed for using a DAX
+-	  mapping in an O_DIRECT operation, among other things.
++	  "device-physical" addresses which is needed for DAX, PCI_P2PDMA, and
++	  DEVICE_PRIVATE features among others.
  
-+	/* reject secretmem folios created with memfd_secret() */
-+	if (secretmem_mapping(r->file->f_mapping)) {
-+		r->err = -EFAULT;
-+		return NULL;
-+	}
-+
-+	/* use __kernel_read() for sleepable context */
-+	if (r->may_fault) {
-+		ssize_t ret;
-+
-+		ret = __kernel_read(r->file, r->buf, sz, &file_off);
-+		if (ret != sz) {
-+			r->err = (ret < 0) ? ret : -EIO;
-+			return NULL;
-+		}
-+		return r->buf;
-+	}
-+
- 	/* fetch or reuse folio for given file offset */
- 	r->err = freader_get_folio(r, file_off);
- 	if (r->err)
+-	  If FS_DAX is enabled, then say Y.
++	  Enabling this option will reduce the entropy of x86 KASLR memory
++	  regions. For example - on a 46 bit system, the entropy goes down
++	  from 16 bits to 15 bits. The actual reduction in entropy depends
++	  on the physical address bits, on processor features, kernel config
++	  (5 level page table) and physical memory present on the system.
+ 
+ #
+ # Helpers to mirror range of the CPU page tables of a process into device page
 
 
