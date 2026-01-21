@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7FAB361DAB;
-	Wed, 21 Jan 2026 18:24:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C54536B05B;
+	Wed, 21 Jan 2026 18:24:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769019865; cv=none; b=Qwr30uJGJMq+Qd1N9v7D7gCmG5p8HN0AZN4ZS+7W+6pH9uXYXefDK+slIkTzzTSdx8PiC3xsUU4CmSR0mp01SPpU3SYbA1xZSuhfyJbA+BS/dugN0KATB4SKEYdl1nbmiyAnju/NgS+20x6xbklrBH0YVowrCBAT5AdOMZQoLOA=
+	t=1769019868; cv=none; b=JGdr1A/zFoE1zLM//BohdmbGLsVw2L+Q2yilooujryAHHFdxxFjyhZqmdC4BAhou3G6GqDC0DIcBCNHbqfDcNYNglEe24UQ7MkunZadVFxo/d3WU01en+tbrX9+3CZVLvppjXknws31Mdu39hwjUdNzEIsgWjwk4abFqJ0R1v/Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769019865; c=relaxed/simple;
-	bh=dcYxDB7dhZWgvUtdyksk+cWCajRj3aukeUeJ5py0Lho=;
+	s=arc-20240116; t=1769019868; c=relaxed/simple;
+	bh=SpV4z/pDUY5dOoaLwXpvI55XQ1cfKhEzZ38sWzxJ15c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=H9IadQGc74fOAz69At/Dw2sh0iOfGiYUDJrfQF7PNqPvdWISx48yC+q3+3vd3j5XfOlcrpXbPUimJjwGz1/tLhOXnXUw8Boy17uY1ccNOTLQwuhOARfy/o4TJ697/cQuN4r41I9+Irfc3M6gW4GMecRwFReeKGaiZ/mUNTTK5WM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LzjoZwnP; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=UkEJtDUSqv2u9FRI5MMtRpViLtaUzLYIi2U03sjRbRfGyFQG6fMtazw+UK7NdFnCf+dRTs8C0AWvD6x1jxf6xPk/oTHHO4wv+Ct5CaTVUaZyY79KBh3yzKZIhvoLAuJYkgL8O8y9Sj99Q3QPxuLMLnxGGvccwFkLS+3TqsQ/Zms=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nQjQM+rb; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LzjoZwnP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC7B3C4CEF1;
-	Wed, 21 Jan 2026 18:24:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nQjQM+rb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F35A4C4CEF1;
+	Wed, 21 Jan 2026 18:24:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1769019865;
-	bh=dcYxDB7dhZWgvUtdyksk+cWCajRj3aukeUeJ5py0Lho=;
+	s=korg; t=1769019868;
+	bh=SpV4z/pDUY5dOoaLwXpvI55XQ1cfKhEzZ38sWzxJ15c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LzjoZwnPj1CPz0eBPoKTws0Jef0JHLwBU1LQmn+/nOTcki4gJKNV4TuMwJXcxql1c
-	 KPXVhNDkzHwit5GoT8Rprzx95X6HAgQ7tX57uCK+UPquSiNXESfgEQeOwB/AISZ+gs
-	 6PZ2jYxamFRs1B7f3Mhb4mjPipnObKFczR2yTvCY=
+	b=nQjQM+rbz87LIT9ERCKVIc+LeOzHnCAbTG/0+eKqbtH8iyP4uOZtNMRLYQ2OEugNR
+	 q+OxMw7Vm51Ckb/rVXLC1aNRkgdL1zERp/4Ybg+nFQ4m9O4oVMGShd3K9vlLa/Ww1r
+	 JbLdyxhMhvYoCJhFfg1XSEOA24ec9qEhdSkKwgCM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dianne Skoll <dianne@skoll.ca>,
-	Chris Park <chris.park@amd.com>,
-	Mario Limonciello <mario.limonciello@amd.com>,
-	Matthew Stewart <matthew.stewart2@amd.com>,
-	Dan Wheeler <daniel.wheeler@amd.com>,
+	kent.russell@amd.com,
+	"Mario Limonciello (AMD)" <superm1@kernel.org>,
 	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.12 098/139] drm/amd/display: Bump the HDMI clock to 340MHz
-Date: Wed, 21 Jan 2026 19:15:46 +0100
-Message-ID: <20260121181414.979413474@linuxfoundation.org>
+Subject: [PATCH 6.12 099/139] drm/amd: Clean up kfd node on surprise disconnect
+Date: Wed, 21 Jan 2026 19:15:47 +0100
+Message-ID: <20260121181415.014971302@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260121181411.452263583@linuxfoundation.org>
 References: <20260121181411.452263583@linuxfoundation.org>
@@ -54,65 +51,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mario Limonciello <mario.limonciello@amd.com>
+From: Mario Limonciello (AMD) <superm1@kernel.org>
 
-commit fee50077656d8a58011f13bca48f743d1b6d6015 upstream.
+commit 28695ca09d326461f8078332aa01db516983e8a2 upstream.
 
-[Why]
-DP-HDMI dongles can execeed bandwidth requirements on high resolution
-monitors. This can lead to pruning the high resolution modes.
+When an eGPU is unplugged the KFD topology should also be destroyed
+for that GPU. This never happens because the fini_sw callbacks never
+get to run. Run them manually before calling amdgpu_device_ip_fini_early()
+when a device has already been disconnected.
 
-HDMI 1.3 bumped the clock to 340MHz, but display code never matched it.
+This location is intentionally chosen to make sure that the kfd locking
+refcount doesn't get incremented unintentionally.
 
-[How]
-Set default to (DVI) 165MHz.  Once HDMI display is identified update
-to 340MHz.
-
-Reported-by: Dianne Skoll <dianne@skoll.ca>
-Closes: https://gitlab.freedesktop.org/drm/amd/-/issues/4780
-Reviewed-by: Chris Park <chris.park@amd.com>
-Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
-Signed-off-by: Matthew Stewart <matthew.stewart2@amd.com>
-Tested-by: Dan Wheeler <daniel.wheeler@amd.com>
+Cc: kent.russell@amd.com
+Closes: https://community.frame.work/t/amd-egpu-on-linux/8691/33
+Signed-off-by: Mario Limonciello (AMD) <superm1@kernel.org>
+Reviewed-by: Kent Russell <kent.russell@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit ac1e65d8ade46c09fb184579b81acadf36dcb91e)
+(cherry picked from commit 6a23e7b4332c10f8b56c33a9c5431b52ecff9aab)
 Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/display/dc/dc_hdmi_types.h       |    2 +-
- drivers/gpu/drm/amd/display/dc/link/link_detection.c |    4 +++-
- 2 files changed, 4 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_device.c |    8 ++++++++
+ 1 file changed, 8 insertions(+)
 
---- a/drivers/gpu/drm/amd/display/dc/dc_hdmi_types.h
-+++ b/drivers/gpu/drm/amd/display/dc/dc_hdmi_types.h
-@@ -41,7 +41,7 @@
- /* kHZ*/
- #define DP_ADAPTOR_DVI_MAX_TMDS_CLK 165000
- /* kHZ*/
--#define DP_ADAPTOR_HDMI_SAFE_MAX_TMDS_CLK 165000
-+#define DP_ADAPTOR_HDMI_SAFE_MAX_TMDS_CLK 340000
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
+@@ -4642,6 +4642,14 @@ void amdgpu_device_fini_hw(struct amdgpu
  
- struct dp_hdmi_dongle_signature_data {
- 	int8_t id[15];/* "DP-HDMI ADAPTOR"*/
---- a/drivers/gpu/drm/amd/display/dc/link/link_detection.c
-+++ b/drivers/gpu/drm/amd/display/dc/link/link_detection.c
-@@ -329,7 +329,7 @@ static void query_dp_dual_mode_adaptor(
+ 	amdgpu_ttm_set_buffer_funcs_status(adev, false);
  
- 	/* Assume we have no valid DP passive dongle connected */
- 	*dongle = DISPLAY_DONGLE_NONE;
--	sink_cap->max_hdmi_pixel_clock = DP_ADAPTOR_HDMI_SAFE_MAX_TMDS_CLK;
-+	sink_cap->max_hdmi_pixel_clock = DP_ADAPTOR_DVI_MAX_TMDS_CLK;
++	/*
++	 * device went through surprise hotplug; we need to destroy topology
++	 * before ip_fini_early to prevent kfd locking refcount issues by calling
++	 * amdgpu_amdkfd_suspend()
++	 */
++	if (drm_dev_is_unplugged(adev_to_drm(adev)))
++		amdgpu_amdkfd_device_fini_sw(adev);
++
+ 	amdgpu_device_ip_fini_early(adev);
  
- 	/* Read DP-HDMI dongle I2c (no response interpreted as DP-DVI dongle)*/
- 	if (!i2c_read(
-@@ -385,6 +385,8 @@ static void query_dp_dual_mode_adaptor(
- 
- 		}
- 	}
-+	if (is_valid_hdmi_signature)
-+		sink_cap->max_hdmi_pixel_clock = DP_ADAPTOR_HDMI_SAFE_MAX_TMDS_CLK;
- 
- 	if (is_type2_dongle) {
- 		uint32_t max_tmds_clk =
+ 	amdgpu_irq_fini_hw(adev);
 
 
