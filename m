@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CFC861DE4E0;
-	Wed, 21 Jan 2026 18:25:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF07837E305;
+	Wed, 21 Jan 2026 18:25:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769019906; cv=none; b=GoQMgWTf3NyIefFdcr5yy9EQ6X21IPhpKqRTdwORncatfz0Sinuuc4b5ae6c8iZHQQki2uwRF8KgRre46MvRT07Eg4hLpC+gpZmrg9bViVMSmjyquLOMkoD/Q3UusxvVzhr2EbHOIbfq227XwpyorM1u4hIsHXCTtOWV27QbOVc=
+	t=1769019910; cv=none; b=SSYU2relqMYgR5PoUucRN1OKhfc3IRnJMVlL52dZJPhNw7b9ocQ/fCJezhzLEC57qHWeMoYf9dpTgyhWJYyCEuGriQQ5t19hO7dYSRKvgU6kcBiS2rK5GV5falITAESH6ng8dkGGNnh+HkeZoQbcj2uscFtNaa95vm9h1BHKQhI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769019906; c=relaxed/simple;
-	bh=v8dX2dK/TPSVPU4kORhZ0cV4q7YozsttAbQ/xpXJQqk=;
+	s=arc-20240116; t=1769019910; c=relaxed/simple;
+	bh=4ABc7aZgPotgionSDb3t+Pb8gpGVr1yTKyWIMaEgolc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=natQMQ0Y2mTzToKoh7xFU8g0eCtszBYH06J0xP3pH93SosR+uxvKjKzUgLQsAj0Wc9xc8cmGArriV47QjRXCfNVQ4TqvFKvMV33qe9igKM9ZK7ZWNHzOdtBGcj7Yy+pzWu6d/2p+MrsRXJZ4Gfuq5Y+WVJLcjZyEqzmASU32F7E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=g+mfFvpL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=StFqWRAEbkM7DCTTGw4VhxFUgKL3E+WJkz7y3M2S033+r0V2O/ehmW6nq/UWVmBIzQIC2bkHI7I173/zVWDq5JcRBvOXa5pxBpXm/H6WPRc6K7DNrnh87+WOx5+Z4EBYZNLU1CcXvNneQsZA2i0lKUBgFOKeH7cUmpyi46GRUQk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UoE+DB8p; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="g+mfFvpL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DFBB6C4CEF1;
-	Wed, 21 Jan 2026 18:25:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UoE+DB8p"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 38514C16AAE;
+	Wed, 21 Jan 2026 18:25:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1769019906;
-	bh=v8dX2dK/TPSVPU4kORhZ0cV4q7YozsttAbQ/xpXJQqk=;
+	s=korg; t=1769019909;
+	bh=4ABc7aZgPotgionSDb3t+Pb8gpGVr1yTKyWIMaEgolc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=g+mfFvpLJ97nPNEuEgEXIbQe1Lcn/KSRsXhN3dEIBu7CHfBwpaWbWVxzfB17MO2/b
-	 sOmI/1GQGGxWhIkROgixcmOt5lq8JfVEQeoHIBPypUdh1m4Lgi1Fm5u/VtIvj8rCw/
-	 sGvXBsH2H2DwiJaOQa45gBs0v03GBXkTSNXh/900=
+	b=UoE+DB8pdNfmA+oCEW2BqQIARJoaoU9JBoQdSLjDhuVmv6zFC3NY/b5tXqAmc/Nnj
+	 z3kcwPgETXlMqd9gBXLYypM4y4gQzOOMiUFdxZg/A5aK2NQJa/oenGGBYTs9ngHzm1
+	 MCgN5gqVGwKhp66d3sDrrzuX9OCMlol/YnFkDcM8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ben Dooks <ben.dooks@codethink.co.uk>,
-	"Mike Rapoport (Microsoft)" <rppt@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>,
+	Dragan Simic <dsimic@manjaro.org>,
+	Heiko Stuebner <heiko@sntech.de>,
+	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 132/139] mm: numa,memblock: include <asm/numa.h> for numa_nodes_parsed
-Date: Wed, 21 Jan 2026 19:16:20 +0100
-Message-ID: <20260121181416.203905014@linuxfoundation.org>
+Subject: [PATCH 6.12 133/139] phy: phy-rockchip-inno-usb2: Use dev_err_probe() in the probe path
+Date: Wed, 21 Jan 2026 19:16:21 +0100
+Message-ID: <20260121181416.241346242@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260121181411.452263583@linuxfoundation.org>
 References: <20260121181411.452263583@linuxfoundation.org>
@@ -52,39 +52,87 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ben Dooks <ben.dooks@codethink.co.uk>
+From: Dragan Simic <dsimic@manjaro.org>
 
-[ Upstream commit f46c26f1bcd9164d7f3377f15ca75488a3e44362 ]
+[ Upstream commit 40452520850683f6771094ca218ff206d1fcb022 ]
 
-The 'numa_nodes_parsed' is defined in <asm/numa.h> but this file
-is not included in mm/numa_memblks.c (build x86_64) so add this
-to the incldues to fix the following sparse warning:
+Improve error handling in the probe path by using function dev_err_probe()
+instead of function dev_err(), where appropriate.
 
-mm/numa_memblks.c:13:12: warning: symbol 'numa_nodes_parsed' was not declared. Should it be static?
-
-Link: https://lkml.kernel.org/r/20260108101539.229192-1-ben.dooks@codethink.co.uk
-Fixes: 87482708210f ("mm: introduce numa_memblks")
-Signed-off-by: Ben Dooks <ben.dooks@codethink.co.uk>
-Reviewed-by: Mike Rapoport (Microsoft) <rppt@kernel.org>
-Cc: Ben Dooks <ben.dooks@codethink.co.uk>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Dragan Simic <dsimic@manjaro.org>
+Reviewed-by: Heiko Stuebner <heiko@sntech.de>
+Link: https://lore.kernel.org/r/d4ccd9fc278fb46ea868406bf77811ee507f0e4e.1725524803.git.dsimic@manjaro.org
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Stable-dep-of: e07dea3de508 ("phy: rockchip: inno-usb2: Fix a double free bug in rockchip_usb2phy_probe()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/numa_memblks.c |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/phy/rockchip/phy-rockchip-inno-usb2.c |   27 +++++++++-----------------
+ 1 file changed, 10 insertions(+), 17 deletions(-)
 
---- a/mm/numa_memblks.c
-+++ b/mm/numa_memblks.c
-@@ -7,6 +7,8 @@
- #include <linux/numa.h>
- #include <linux/numa_memblks.h>
+--- a/drivers/phy/rockchip/phy-rockchip-inno-usb2.c
++++ b/drivers/phy/rockchip/phy-rockchip-inno-usb2.c
+@@ -424,11 +424,9 @@ static int rockchip_usb2phy_extcon_regis
  
-+#include <asm/numa.h>
-+
- int numa_distance_cnt;
- static u8 *numa_distance;
+ 	if (of_property_read_bool(node, "extcon")) {
+ 		edev = extcon_get_edev_by_phandle(rphy->dev, 0);
+-		if (IS_ERR(edev)) {
+-			if (PTR_ERR(edev) != -EPROBE_DEFER)
+-				dev_err(rphy->dev, "Invalid or missing extcon\n");
+-			return PTR_ERR(edev);
+-		}
++		if (IS_ERR(edev))
++			return dev_err_probe(rphy->dev, PTR_ERR(edev),
++					     "invalid or missing extcon\n");
+ 	} else {
+ 		/* Initialize extcon device */
+ 		edev = devm_extcon_dev_allocate(rphy->dev,
+@@ -438,10 +436,9 @@ static int rockchip_usb2phy_extcon_regis
+ 			return -ENOMEM;
  
+ 		ret = devm_extcon_dev_register(rphy->dev, edev);
+-		if (ret) {
+-			dev_err(rphy->dev, "failed to register extcon device\n");
+-			return ret;
+-		}
++		if (ret)
++			return dev_err_probe(rphy->dev, ret,
++					     "failed to register extcon device\n");
+ 	}
+ 
+ 	rphy->edev = edev;
+@@ -1417,10 +1414,8 @@ static int rockchip_usb2phy_probe(struct
+ 	}
+ 
+ 	ret = rockchip_usb2phy_clk480m_register(rphy);
+-	if (ret) {
+-		dev_err(dev, "failed to register 480m output clock\n");
+-		return ret;
+-	}
++	if (ret)
++		return dev_err_probe(dev, ret, "failed to register 480m output clock\n");
+ 
+ 	if (rphy->phy_cfg->phy_tuning) {
+ 		ret = rphy->phy_cfg->phy_tuning(rphy);
+@@ -1440,8 +1435,7 @@ static int rockchip_usb2phy_probe(struct
+ 
+ 		phy = devm_phy_create(dev, child_np, &rockchip_usb2phy_ops);
+ 		if (IS_ERR(phy)) {
+-			dev_err_probe(dev, PTR_ERR(phy), "failed to create phy\n");
+-			ret = PTR_ERR(phy);
++			ret = dev_err_probe(dev, PTR_ERR(phy), "failed to create phy\n");
+ 			goto put_child;
+ 		}
+ 
+@@ -1478,8 +1472,7 @@ next_child:
+ 						"rockchip_usb2phy",
+ 						rphy);
+ 		if (ret) {
+-			dev_err(rphy->dev,
+-				"failed to request usb2phy irq handle\n");
++			dev_err_probe(rphy->dev, ret, "failed to request usb2phy irq handle\n");
+ 			goto put_child;
+ 		}
+ 	}
 
 
