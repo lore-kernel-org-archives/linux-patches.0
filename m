@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9C8D33A9F4;
-	Wed, 21 Jan 2026 18:27:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF4DC366DD8;
+	Wed, 21 Jan 2026 18:27:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769020046; cv=none; b=XTUA2CKicct8rPnyEMpO+g07Jz8jALRucf4+81mpxVmmSUfXWte3dfCMhquqde+7sAFT9wlPSKsIqiiHBypA3sSGRXDKzh/s9Ags2XbN/ee04hDnjHH2sWyCjbiABtHNccRWyHlaemwQq5FknwzeUmGjhBMZh/FeNHxsAmeAFPc=
+	t=1769020049; cv=none; b=ScaR0HVgTVLtpWYOxvGacle67d5NQ8UEx7XfyrAqmKIkgkUYVju4rhQ5XLsHOj5YS9kEayB/VWjJb7XUw/WX37klYi0nrfNG073KTI/sQjsugNP5XwJYgex8G0H+2bOaQnXmEJ+jzPe8wGoVDycjJw7IcYSnLHgL3Zva4YGukq8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769020046; c=relaxed/simple;
-	bh=HoqZ1t/Ad83K4/qNPjUfNYzWWbEIpGzu+pwIsubXvT8=;
+	s=arc-20240116; t=1769020049; c=relaxed/simple;
+	bh=dbHDXAwvMSdfVtUeojMEMzdq9A2x9jSdMRszva18rnU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YiyNKK1v9DCYrs86UYzHKVc4wAuZuZkV8HP6qjpGbarPqbmcq7Wu/IOKCjbxfajp6cBaupv4tpaxZj30pwSzjTV0XuDDznJbtVCvfjbq7g4sHrj3jkvjy/PPtDjbsodxan8AItPvun/YnwZjYmYOp9YI8hiQoCKVRS8mBh/pOw0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MNqU0/y+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=K6vPMnao6AiAIhs51nVF96OvrhkVhLwwpax1kf1LeYaF/NlFYbFuk0JOBUCcZxKBOeMnFC+wVRbMG0z+Cyk2B2sx7541kj7QLWTfz2v9d6afYDt+cwg4pVI+SQJQCP3vTGIKYcyxw5QpoJ6Kp1jslAhkcAhMdtgICwH8LcM2y2g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zbqEY4Ar; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MNqU0/y+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0BC8BC4CEF1;
-	Wed, 21 Jan 2026 18:27:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zbqEY4Ar"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A996C4CEF1;
+	Wed, 21 Jan 2026 18:27:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1769020045;
-	bh=HoqZ1t/Ad83K4/qNPjUfNYzWWbEIpGzu+pwIsubXvT8=;
+	s=korg; t=1769020048;
+	bh=dbHDXAwvMSdfVtUeojMEMzdq9A2x9jSdMRszva18rnU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MNqU0/y+dTJ/3r6j6ZiN+CiiCkFcwEWyN5IsBTQv+QTVwbjKRGba32w1Xx2I7brJn
-	 2boJBesnbzPP7bavdgUVBqjSNRRGAkkWI/mcFzUlTDbtpCt49D8A3nuT89dAPpQyPt
-	 eF08T7YCuyec+Hu8bx5ZNVXQLjzy+gE8zAbpuLq8=
+	b=zbqEY4ArpNVCoe7inV+prtmOjnPSm7W/5NgyGBS//NFJkd7TxIzSm6x2gyYNmG4kF
+	 iTljRjPLe0qus0ZZnFuKxrpjZrVF08/0221I54g4/pNQaNwhEIvq3NwQVPWQZRrx+3
+	 0EERbIMgIUXAdqp8IhJ4UwvFq1Q0KBBYGtWQC2KE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Li Ming <ming.li@zohomail.com>,
-	Ira Weiny <ira.weiny@intel.com>,
-	Dave Jiang <dave.jiang@intel.com>,
+	Kery Qi <qikeyu2017@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 044/198] cxl/hdm: Fix potential infinite loop in __cxl_dpa_reserve()
-Date: Wed, 21 Jan 2026 19:14:32 +0100
-Message-ID: <20260121181420.135776460@linuxfoundation.org>
+Subject: [PATCH 6.18 045/198] net: octeon_ep_vf: fix free_irq dev_id mismatch in IRQ rollback
+Date: Wed, 21 Jan 2026 19:14:33 +0100
+Message-ID: <20260121181420.172703702@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260121181418.537774329@linuxfoundation.org>
 References: <20260121181418.537774329@linuxfoundation.org>
@@ -52,42 +51,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Li Ming <ming.li@zohomail.com>
+From: Kery Qi <qikeyu2017@gmail.com>
 
-[ Upstream commit d4026a44626490dc4eca4dd2c4d0816338fa179b ]
+[ Upstream commit f93fc5d12d69012788f82151bee55fce937e1432 ]
 
-In __cxl_dpa_reserve(), it will check if the new resource range is
-included in one of paritions of the cxl memory device.
-cxlds->nr_paritions is used to represent how many partitions information
-the cxl memory device has. In the loop, if driver cannot find a
-partition including the new resource range, it will be an infinite loop.
+octep_vf_request_irqs() requests MSI-X queue IRQs with dev_id set to
+ioq_vector. If request_irq() fails part-way, the rollback loop calls
+free_irq() with dev_id set to 'oct', which does not match the original
+dev_id and may leave the irqaction registered.
 
-[ dj: Removed incorrect fixes tag ]
+This can keep IRQ handlers alive while ioq_vector is later freed during
+unwind/teardown, leading to a use-after-free or crash when an interrupt
+fires.
 
-Fixes: 991d98f17d31 ("cxl: Make cxl_dpa_alloc() DPA partition number agnostic")
-Signed-off-by: Li Ming <ming.li@zohomail.com>
-Reviewed-by: Ira Weiny <ira.weiny@intel.com>
-Reviewed-by: Dave Jiang <dave.jiang@intel.com>
-Link: https://patch.msgid.link/20260112120526.530232-1-ming.li@zohomail.com
-Signed-off-by: Dave Jiang <dave.jiang@intel.com>
+Fix the error path to free IRQs with the same ioq_vector dev_id used
+during request_irq().
+
+Fixes: 1cd3b407977c ("octeon_ep_vf: add Tx/Rx processing and interrupt support")
+Signed-off-by: Kery Qi <qikeyu2017@gmail.com>
+Link: https://patch.msgid.link/20260108164256.1749-2-qikeyu2017@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/cxl/core/hdm.c | 2 +-
+ drivers/net/ethernet/marvell/octeon_ep_vf/octep_vf_main.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/cxl/core/hdm.c b/drivers/cxl/core/hdm.c
-index d3a094ca01ad9..20dd638108062 100644
---- a/drivers/cxl/core/hdm.c
-+++ b/drivers/cxl/core/hdm.c
-@@ -403,7 +403,7 @@ static int __cxl_dpa_reserve(struct cxl_endpoint_decoder *cxled,
- 	 * is not set.
- 	 */
- 	if (cxled->part < 0)
--		for (int i = 0; cxlds->nr_partitions; i++)
-+		for (int i = 0; i < cxlds->nr_partitions; i++)
- 			if (resource_contains(&cxlds->part[i].res, res)) {
- 				cxled->part = i;
- 				break;
+diff --git a/drivers/net/ethernet/marvell/octeon_ep_vf/octep_vf_main.c b/drivers/net/ethernet/marvell/octeon_ep_vf/octep_vf_main.c
+index 420c3f4cf7417..1d9760b4b8f47 100644
+--- a/drivers/net/ethernet/marvell/octeon_ep_vf/octep_vf_main.c
++++ b/drivers/net/ethernet/marvell/octeon_ep_vf/octep_vf_main.c
+@@ -218,7 +218,7 @@ static int octep_vf_request_irqs(struct octep_vf_device *oct)
+ ioq_irq_err:
+ 	while (i) {
+ 		--i;
+-		free_irq(oct->msix_entries[i].vector, oct);
++		free_irq(oct->msix_entries[i].vector, oct->ioq_vector[i]);
+ 	}
+ 	return -1;
+ }
 -- 
 2.51.0
 
