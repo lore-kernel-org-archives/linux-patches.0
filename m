@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4FC6434A783;
-	Wed, 21 Jan 2026 18:25:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 361C634A783;
+	Wed, 21 Jan 2026 18:26:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769019958; cv=none; b=a4LC06C1AWQsdpUkuJpQ9KliM98CfzNcS0y91URAJPLlZ7q1QoyM94atuDqZcPZJxtDcwHSH1eJVteZ/Ro3k9MHuVv/QizC4jxABLui+INfTZpJ87owTge4BG6D16Lw46a2yQJP0jkLIKEB2eBeq+WyVpt+KWZyZAH22OsDQORM=
+	t=1769019961; cv=none; b=FhDefz4jvBetQWxmNPOlgXz/RiY/IGz6JUCKAb7hocXXTBhm0ehrDOjLLdlU+7cSQdvi1gW/sc35f1dvwwt85P1YOEfTutZ/YieugO5JirLE2AA6YaeAKlcNzXGiWHSosquZEMKFX3yeFlBbnoJF6UFYZsbCfKmyW/DjCDRfGmM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769019958; c=relaxed/simple;
-	bh=C0a6jm9I+qsG2L38hOUeh4YNya09P5kHcsjV6ml3IEE=;
+	s=arc-20240116; t=1769019961; c=relaxed/simple;
+	bh=HZe7uo34VVqp1p5S0ryb7w1Od/uoK9w8/nniKxHWtqM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Qx63NcSguQHfaf6O5HWnzNU9nbLXMUoqrnOQThkvPIH3X6jYN4UHc9nURPUDQh7wSouC8JjAymZO7jxTCmgesg0K3plwNhDlwZ6B9jwRKl6pl6GJPKsT6Blvrq1f9OoATLwtY67Lfkr1FYRzo0sqb0RdLLjk+4VX/OSxVTALvzw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pzft5SSz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GSsdKYThxuKujfZ0pNJy9e4jzRgom9Og8F7ENcFbwbqrqBW5+gJMPMDeifnMS7LPERzX4bVvfyGLqJ1X+KMT+aJrilXh9q1HmWPtaDN/MUCrdGz++GvTopNWvvRqugUKeuDTMYOLYxFGBTzMoPUEKeoR8JLwuNFnhCFaHfp+5PM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BTLrv+ja; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pzft5SSz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 80B2BC4CEF1;
-	Wed, 21 Jan 2026 18:25:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BTLrv+ja"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB620C4CEF1;
+	Wed, 21 Jan 2026 18:26:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1769019958;
-	bh=C0a6jm9I+qsG2L38hOUeh4YNya09P5kHcsjV6ml3IEE=;
+	s=korg; t=1769019961;
+	bh=HZe7uo34VVqp1p5S0ryb7w1Od/uoK9w8/nniKxHWtqM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pzft5SSzw53epNEL1sLVfMa5LjxNFOeliMEBXOKp5gChOH0HJDWLlghWoSvlPoqy0
-	 UsXOrqhtuf6JPDP0c0IQUVUtDEEByE5lQst1DpsE5vTPDtiwyIphSTCCJVF3x7GbCl
-	 W+ylhSu9kmrGXrcgm6mQ1crEXFRIfgCVOcob6MAw=
+	b=BTLrv+jaRgkyiRIkqW8tIBxObgFrAr/Pi6OhBGJHBv7mPMi8IiXFjm/RsD8zxUwgb
+	 UUwP6EK6n57USHZRa21y1WblNgCZU5WZYRN4HbMh9ce+6rBa9hhFC0Nt1BnTVOJ9sU
+	 mEzsspPtfgq35hfIkJ5EO26GAbfeobljKUODJgvM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sebastian Reichel <sebastian.reichel@collabora.com>,
-	Cristian Ciocaltea <cristian.ciocaltea@collabora.com>,
-	Heiko Stuebner <heiko@sntech.de>,
+	Ian Forbes <ian.forbes@broadcom.com>,
+	Zack Rusin <zack.rusin@broadcom.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 018/198] drm/bridge: dw-hdmi-qp: Fix spurious IRQ on resume
-Date: Wed, 21 Jan 2026 19:14:06 +0100
-Message-ID: <20260121181419.208187333@linuxfoundation.org>
+Subject: [PATCH 6.18 019/198] drm/vmwgfx: Fix KMS with 3D on HW version 10
+Date: Wed, 21 Jan 2026 19:14:07 +0100
+Message-ID: <20260121181419.244204750@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260121181418.537774329@linuxfoundation.org>
 References: <20260121181418.537774329@linuxfoundation.org>
@@ -52,118 +51,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sebastian Reichel <sebastian.reichel@collabora.com>
+From: Ian Forbes <ian.forbes@broadcom.com>
 
-[ Upstream commit 14adddc65340f2034751c95616861c0e888e2bb1 ]
+[ Upstream commit d9186faeae6efb7d0841a5e8eb213ff4c7966614 ]
 
-After resume from suspend to RAM, the following splash is generated if
-the HDMI driver is probed (independent of a connected cable):
+HW version 10 does not have GB Surfaces so there is no backing buffer for
+surface backed FBs. This would result in a nullptr dereference and crash
+the driver causing a black screen.
 
-[ 1194.484052] irq 80: nobody cared (try booting with the "irqpoll" option)
-[ 1194.484074] CPU: 0 UID: 0 PID: 627 Comm: rtcwake Not tainted 6.17.0-rc7-g96f1a11414b3 #1 PREEMPT
-[ 1194.484082] Hardware name: Rockchip RK3576 EVB V10 Board (DT)
-[ 1194.484085] Call trace:
-[ 1194.484087]  ... (stripped)
-[ 1194.484283] handlers:
-[ 1194.484285] [<00000000bc363dcb>] dw_hdmi_qp_main_hardirq [dw_hdmi_qp]
-[ 1194.484302] Disabling IRQ #80
-
-Apparently the HDMI IP is losing part of its state while the system
-is suspended and generates spurious interrupts during resume. The
-bug has not yet been noticed, as system suspend does not yet work
-properly on upstream kernel with either the Rockchip RK3588 or RK3576
-platform.
-
-Fixes: 128a9bf8ace2 ("drm/rockchip: Add basic RK3588 HDMI output support")
-Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
-Reviewed-by: Cristian Ciocaltea <cristian.ciocaltea@collabora.com>
-Signed-off-by: Heiko Stuebner <heiko@sntech.de>
-Link: https://patch.msgid.link/20251014-rockchip-hdmi-suspend-fix-v1-1-983fcbf44839@collabora.com
+Fixes: 965544150d1c ("drm/vmwgfx: Refactor cursor handling")
+Signed-off-by: Ian Forbes <ian.forbes@broadcom.com>
+Reviewed-by: Zack Rusin <zack.rusin@broadcom.com>
+Signed-off-by: Zack Rusin <zack.rusin@broadcom.com>
+Link: https://patch.msgid.link/20251114203703.1946616-1-ian.forbes@broadcom.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/bridge/synopsys/dw-hdmi-qp.c   |  9 +++++++++
- drivers/gpu/drm/rockchip/dw_hdmi_qp-rockchip.c | 12 +++++++++++-
- include/drm/bridge/dw_hdmi_qp.h                |  1 +
- 3 files changed, 21 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/vmwgfx/vmwgfx_kms.c | 14 ++++++++------
+ 1 file changed, 8 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/gpu/drm/bridge/synopsys/dw-hdmi-qp.c b/drivers/gpu/drm/bridge/synopsys/dw-hdmi-qp.c
-index 39332c57f2c54..c85eb340e5a35 100644
---- a/drivers/gpu/drm/bridge/synopsys/dw-hdmi-qp.c
-+++ b/drivers/gpu/drm/bridge/synopsys/dw-hdmi-qp.c
-@@ -143,6 +143,7 @@ struct dw_hdmi_qp {
- 	} phy;
+diff --git a/drivers/gpu/drm/vmwgfx/vmwgfx_kms.c b/drivers/gpu/drm/vmwgfx/vmwgfx_kms.c
+index 54ea1b513950a..535d844191e7a 100644
+--- a/drivers/gpu/drm/vmwgfx/vmwgfx_kms.c
++++ b/drivers/gpu/drm/vmwgfx/vmwgfx_kms.c
+@@ -763,13 +763,15 @@ static struct drm_framebuffer *vmw_kms_fb_create(struct drm_device *dev,
+ 		return ERR_PTR(ret);
+ 	}
  
- 	struct regmap *regm;
-+	int main_irq;
+-	ttm_bo_reserve(&bo->tbo, false, false, NULL);
+-	ret = vmw_bo_dirty_add(bo);
+-	if (!ret && surface && surface->res.func->dirty_alloc) {
+-		surface->res.coherent = true;
+-		ret = surface->res.func->dirty_alloc(&surface->res);
++	if (bo) {
++		ttm_bo_reserve(&bo->tbo, false, false, NULL);
++		ret = vmw_bo_dirty_add(bo);
++		if (!ret && surface && surface->res.func->dirty_alloc) {
++			surface->res.coherent = true;
++			ret = surface->res.func->dirty_alloc(&surface->res);
++		}
++		ttm_bo_unreserve(&bo->tbo);
+ 	}
+-	ttm_bo_unreserve(&bo->tbo);
  
- 	unsigned long tmds_char_rate;
- };
-@@ -1068,6 +1069,7 @@ struct dw_hdmi_qp *dw_hdmi_qp_bind(struct platform_device *pdev,
- 
- 	dw_hdmi_qp_init_hw(hdmi);
- 
-+	hdmi->main_irq = plat_data->main_irq;
- 	ret = devm_request_threaded_irq(dev, plat_data->main_irq,
- 					dw_hdmi_qp_main_hardirq, NULL,
- 					IRQF_SHARED, dev_name(dev), hdmi);
-@@ -1106,9 +1108,16 @@ struct dw_hdmi_qp *dw_hdmi_qp_bind(struct platform_device *pdev,
+ 	return &vfb->base;
  }
- EXPORT_SYMBOL_GPL(dw_hdmi_qp_bind);
- 
-+void dw_hdmi_qp_suspend(struct device *dev, struct dw_hdmi_qp *hdmi)
-+{
-+	disable_irq(hdmi->main_irq);
-+}
-+EXPORT_SYMBOL_GPL(dw_hdmi_qp_suspend);
-+
- void dw_hdmi_qp_resume(struct device *dev, struct dw_hdmi_qp *hdmi)
- {
- 	dw_hdmi_qp_init_hw(hdmi);
-+	enable_irq(hdmi->main_irq);
- }
- EXPORT_SYMBOL_GPL(dw_hdmi_qp_resume);
- 
-diff --git a/drivers/gpu/drm/rockchip/dw_hdmi_qp-rockchip.c b/drivers/gpu/drm/rockchip/dw_hdmi_qp-rockchip.c
-index ed6e8f036f4b3..9ac45e7bc987a 100644
---- a/drivers/gpu/drm/rockchip/dw_hdmi_qp-rockchip.c
-+++ b/drivers/gpu/drm/rockchip/dw_hdmi_qp-rockchip.c
-@@ -597,6 +597,15 @@ static void dw_hdmi_qp_rockchip_remove(struct platform_device *pdev)
- 	component_del(&pdev->dev, &dw_hdmi_qp_rockchip_ops);
- }
- 
-+static int __maybe_unused dw_hdmi_qp_rockchip_suspend(struct device *dev)
-+{
-+	struct rockchip_hdmi_qp *hdmi = dev_get_drvdata(dev);
-+
-+	dw_hdmi_qp_suspend(dev, hdmi->hdmi);
-+
-+	return 0;
-+}
-+
- static int __maybe_unused dw_hdmi_qp_rockchip_resume(struct device *dev)
- {
- 	struct rockchip_hdmi_qp *hdmi = dev_get_drvdata(dev);
-@@ -612,7 +621,8 @@ static int __maybe_unused dw_hdmi_qp_rockchip_resume(struct device *dev)
- }
- 
- static const struct dev_pm_ops dw_hdmi_qp_rockchip_pm = {
--	SET_SYSTEM_SLEEP_PM_OPS(NULL, dw_hdmi_qp_rockchip_resume)
-+	SET_SYSTEM_SLEEP_PM_OPS(dw_hdmi_qp_rockchip_suspend,
-+				dw_hdmi_qp_rockchip_resume)
- };
- 
- struct platform_driver dw_hdmi_qp_rockchip_pltfm_driver = {
-diff --git a/include/drm/bridge/dw_hdmi_qp.h b/include/drm/bridge/dw_hdmi_qp.h
-index e9be6d507ad9c..8955450663e53 100644
---- a/include/drm/bridge/dw_hdmi_qp.h
-+++ b/include/drm/bridge/dw_hdmi_qp.h
-@@ -28,5 +28,6 @@ struct dw_hdmi_qp_plat_data {
- struct dw_hdmi_qp *dw_hdmi_qp_bind(struct platform_device *pdev,
- 				   struct drm_encoder *encoder,
- 				   const struct dw_hdmi_qp_plat_data *plat_data);
-+void dw_hdmi_qp_suspend(struct device *dev, struct dw_hdmi_qp *hdmi);
- void dw_hdmi_qp_resume(struct device *dev, struct dw_hdmi_qp *hdmi);
- #endif /* __DW_HDMI_QP__ */
 -- 
 2.51.0
 
