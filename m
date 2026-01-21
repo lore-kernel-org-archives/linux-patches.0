@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12C3E3002D8;
-	Wed, 21 Jan 2026 18:25:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30A833A4AAE;
+	Wed, 21 Jan 2026 18:25:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769019951; cv=none; b=ha+nwvTxJXu4Z3TcslZsrEf8b3dGTZbDXpWjjbW15vro/JoPzUwFwlU8JL2Q+pUj8wgc5qk5Dlpo9a29gMT/ezz8+6bjw3W4nVLKcSilPWXKhDxj4dT/vZjIdozjLQhPFb6iBrzjho4xlUl9zmj3sw4PDpC7jQFNlTarPPRYtnw=
+	t=1769019955; cv=none; b=fmv66zXqm3HdwnX9+kECGTzHOloMch15m5HT+mYlS7oH9XEvtNMJDnO+PwL50/7PY0noPopeKd6bc9lMZ5xk0XijJk9c/dYYEyKPTxrQW/A1JzARYSKBXy1oJIYgaf93YZVA3NtzRGShf0dmYkPszHDbELixlgJr9TAgty1qXIg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769019951; c=relaxed/simple;
-	bh=IpZelcD8yKzBqbmFPYhiEFeHi8l2ewgYNHNzYZ/O3Zg=;
+	s=arc-20240116; t=1769019955; c=relaxed/simple;
+	bh=qkCyT6zitwUKBAEVeyJ4zbODQBeIc8habor22+Jt3tg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=X8pR5FkLhhRf5sFPnRBd04Xqm9L3S/G2w07SIv/tGfEGHuPGQeyjU9HHEsb1j09uK8sGITZ43h0GRXL5TZtgmSCn9O51I/N2aDJoUNXeyCSRqhQGzOWZMPH1Yj4tnSJ4vbfOTGf4CRH/rEDcOCMQ93M7s9HN1n63wbcu9KQ+cq0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WsS0PX45; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QaTtnOtQIL1KdoWFMsPvk5dU781AbWPz5iG89dVgTlmlIJR6DV+21OFTtWGjn9TPHECJ99kxIuY9J7Wi362D2AsNdAuikG1C1rIuUcZ+9xEHfAaomcXmxm6e9NQxd3v/A6Vm7dSxZVwreI3iC2l19xHtOAoyvwCDqOrebryBuRI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jmn0eoHl; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WsS0PX45"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 71552C4CEF1;
-	Wed, 21 Jan 2026 18:25:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jmn0eoHl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0FC06C4CEF1;
+	Wed, 21 Jan 2026 18:25:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1769019950;
-	bh=IpZelcD8yKzBqbmFPYhiEFeHi8l2ewgYNHNzYZ/O3Zg=;
+	s=korg; t=1769019954;
+	bh=qkCyT6zitwUKBAEVeyJ4zbODQBeIc8habor22+Jt3tg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WsS0PX45q+ZKDPMZY+spYhlvAAHItbrUchn9HJn91we6oIjFe2k3poQi6lI43Wz6m
-	 /u6BM0NWhB6IVJnnXBumeR8RMDA/Q+o+uUlsHCZr/rB1MAxph8iOIp/LczO/y8hCAM
-	 mFU2Bldhs9+C72geQztZ4RcUJJwTUINBPdlWht60=
+	b=jmn0eoHl/iqH8oF2gnHAbLoF33mYhMx1zpeZR1x2916TKVICRQKepDQBAnayNe2XA
+	 W9yO4aib1LaUljz7dEsW7bmD616zxEtq62DLSkG+ID+iN21DWACmFgGyGkVAcow69D
+	 Ed2/BtEr9P9tcO+S/2a7k39RJ0V1I8XCJ3QGD73s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Zilin Guan <zilin@seu.edu.cn>,
 	Trond Myklebust <trond.myklebust@hammerspace.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 016/198] pnfs/flexfiles: Fix memory leak in nfs4_ff_alloc_deviceid_node()
-Date: Wed, 21 Jan 2026 19:14:04 +0100
-Message-ID: <20260121181419.131362607@linuxfoundation.org>
+Subject: [PATCH 6.18 017/198] pnfs/blocklayout: Fix memory leak in bl_parse_scsi()
+Date: Wed, 21 Jan 2026 19:14:05 +0100
+Message-ID: <20260121181419.173520571@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260121181418.537774329@linuxfoundation.org>
 References: <20260121181418.537774329@linuxfoundation.org>
@@ -53,36 +53,40 @@ Content-Transfer-Encoding: 8bit
 
 From: Zilin Guan <zilin@seu.edu.cn>
 
-[ Upstream commit 0c728083654f0066f5e10a1d2b0bd0907af19a58 ]
+[ Upstream commit 5a74af51c3a6f4cd22c128b0c1c019f68fa90011 ]
 
-In nfs4_ff_alloc_deviceid_node(), if the allocation for ds_versions fails,
-the function jumps to the out_scratch label without freeing the already
-allocated dsaddrs list, leading to a memory leak.
+In bl_parse_scsi(), if the block device length is zero, the function
+returns immediately without releasing the file reference obtained via
+bl_open_path(), leading to a memory leak.
 
-Fix this by jumping to the out_err_drain_dsaddrs label, which properly
-frees the dsaddrs list before cleaning up other resources.
+Fix this by jumping to the out_blkdev_put label to ensure the file
+reference is properly released.
 
-Fixes: d67ae825a59d6 ("pnfs/flexfiles: Add the FlexFile Layout Driver")
+Fixes: d76c769c8db4c ("pnfs/blocklayout: Don't add zero-length pnfs_block_dev")
 Signed-off-by: Zilin Guan <zilin@seu.edu.cn>
 Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfs/flexfilelayout/flexfilelayoutdev.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/nfs/blocklayout/dev.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/fs/nfs/flexfilelayout/flexfilelayoutdev.c b/fs/nfs/flexfilelayout/flexfilelayoutdev.c
-index c55ea8fa3bfa5..c2d8a13a9dbdd 100644
---- a/fs/nfs/flexfilelayout/flexfilelayoutdev.c
-+++ b/fs/nfs/flexfilelayout/flexfilelayoutdev.c
-@@ -103,7 +103,7 @@ nfs4_ff_alloc_deviceid_node(struct nfs_server *server, struct pnfs_device *pdev,
- 			      sizeof(struct nfs4_ff_ds_version),
- 			      gfp_flags);
- 	if (!ds_versions)
--		goto out_scratch;
-+		goto out_err_drain_dsaddrs;
+diff --git a/fs/nfs/blocklayout/dev.c b/fs/nfs/blocklayout/dev.c
+index ab76120705e20..134d7f760a33a 100644
+--- a/fs/nfs/blocklayout/dev.c
++++ b/fs/nfs/blocklayout/dev.c
+@@ -417,8 +417,10 @@ bl_parse_scsi(struct nfs_server *server, struct pnfs_block_dev *d,
+ 	d->map = bl_map_simple;
+ 	d->pr_key = v->scsi.pr_key;
  
- 	for (i = 0; i < version_count; i++) {
- 		/* 20 = version(4) + minor_version(4) + rsize(4) + wsize(4) +
+-	if (d->len == 0)
+-		return -ENODEV;
++	if (d->len == 0) {
++		error = -ENODEV;
++		goto out_blkdev_put;
++	}
+ 
+ 	ops = bdev->bd_disk->fops->pr_ops;
+ 	if (!ops) {
 -- 
 2.51.0
 
