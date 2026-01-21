@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D60FC3659F2;
-	Wed, 21 Jan 2026 18:30:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3338634252D;
+	Wed, 21 Jan 2026 18:30:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769020227; cv=none; b=nOSO40mEf63BO1rEF7rm++sdBUmgah46IwsdEAMiGIIPY+/be1zHQHBlIjfJLDmmC6AqY3ZiI7tXD0kJb/jDpq8E2l+pY74GVXmzwrg38EIQ/VIsKdPyZYnpHvX3t4kZJhNTfOaufhlc6cL3P2wYwUog9wIoWiQeKuXYLJQyZoU=
+	t=1769020231; cv=none; b=ru2P/E2JmMaC3jIkB4QfjjhfE/0i16excgPOZVyW844Ou7WemL/o3AaUJV6UPz/MzIGfhToPlVltNeo7+r8O83Q74puHQghwHxF5052t+1JdCM8EQkqJH5tHl4ZVPiGHjLizrck7dYzqod+Y1pUh7baz19mJkP+L6a16OpkKb7o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769020227; c=relaxed/simple;
-	bh=G8PN1NmVSgEJsC2MMEBiscAebHpCPXVajUg7EpXBXaQ=;
+	s=arc-20240116; t=1769020231; c=relaxed/simple;
+	bh=dJUGRJsi4DrH4MOPSRZ+DRuoXi1oGGX7ZDBSHorI+Oo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AbunvLe1ZpA9ucctXsWyLgXkUm53c4ttVL5jEPIrgs9X9tyEBFJ8GoB5zNYqKqB24I+sgs+xd6KVRRH/ySDFg3k/bs16mWKtRwuSjM8U6UG2zGgqnkdpjF039OEoGdn2yIBpKA10acqni2/Ph+4tNfNUFQkZ2hkWthydvXFTH0w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jjTctD/w; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KtYlb+mSXAyG7S66ad+LIu+xCIdd5fkAG9Bu43DGBxlvI3Fd+dntjI5nEwnBaKp893tKHHX3buzqw4GjBglNIfNH5OeG12RJevpDvDglfUaqPK+dTJBm0mDUZz6maTBdzINKCtTgjrpHTwhepAg/HJKHpIKVXahQXoTc8XqZdeQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MAOZuvan; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jjTctD/w"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3CEC0C4CEF1;
-	Wed, 21 Jan 2026 18:30:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MAOZuvan"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A8CDC4CEF1;
+	Wed, 21 Jan 2026 18:30:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1769020227;
-	bh=G8PN1NmVSgEJsC2MMEBiscAebHpCPXVajUg7EpXBXaQ=;
+	s=korg; t=1769020231;
+	bh=dJUGRJsi4DrH4MOPSRZ+DRuoXi1oGGX7ZDBSHorI+Oo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jjTctD/wQ7pPEH5YmdsEMYY7NiIHfB58/TxnLGAtut0CVZ/HmvtwvTnQRp3xn+k65
-	 44PirM29Vo7CeD2vwbjfTU9k37RHmNhLtqIlNUtQjLuopjqoyoHc5Qup1hA9iPltz3
-	 Wq86d1TFsU0TpgsSSjlP6SC4G3o4NiiiHt1qMeNM=
+	b=MAOZuvanRq5QhinP8PYWVeYXu+QlDDV6j8XFq9ZcL32EH4e+XwWBuA9fB+1oke2fJ
+	 E0GKgd9z96ZuhNbrTESI24Z+a8U9Kcq0fkTea8Co3JSZ4RuoOZkz9Lbvl/z7LCqaVV
+	 xbqadVo/8skWSSRjFNK5ZSUgmmQpue1VuSz5WVPw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Baojun Xu <baojun.xu@ti.com>,
-	Matthew Schwartz <matthew.schwartz@linux.dev>,
-	Antheas Kapenekakis <lkml@antheas.dev>,
+	Zhang Heng <zhangheng@kylinos.cn>,
 	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 6.18 095/198] ALSA: hda/tas2781: Skip UEFI calibration on ASUS ROG Xbox Ally X
-Date: Wed, 21 Jan 2026 19:15:23 +0100
-Message-ID: <20260121181421.973813485@linuxfoundation.org>
+Subject: [PATCH 6.18 096/198] ALSA: hda/realtek: Add quirk for HP Pavilion x360 to enable mute LED
+Date: Wed, 21 Jan 2026 19:15:24 +0100
+Message-ID: <20260121181422.010619427@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260121181418.537774329@linuxfoundation.org>
 References: <20260121181418.537774329@linuxfoundation.org>
@@ -52,72 +50,32 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Matthew Schwartz <matthew.schwartz@linux.dev>
+From: Zhang Heng <zhangheng@kylinos.cn>
 
-commit b7e26c8bdae70832d7c4b31ec2995b1812a60169 upstream.
+commit ab2be3af8c4ea57f779474cd2a2fe8dd4ad537a6 upstream.
 
-There is currently an issue with UEFI calibration data parsing for some
-TAS devices, like the ASUS ROG Xbox Ally X (RC73XA), that causes audio
-quality issues such as gaps in playback. Until the issue is root caused
-and fixed, add a quirk to skip using the UEFI calibration data and fall
-back to using the calibration data provided by the DSP firmware, which
-restores full speaker functionality on affected devices.
+This quirk enables mute LED on HP Pavilion x360 2-in-1 Laptop 14-ek0xxx,
+which use ALC245 codec.
 
-Cc: stable@vger.kernel.org # 6.18
-Link: https://lore.kernel.org/all/160aef32646c4d5498cbfd624fd683cc@ti.com/
-Closes: https://lore.kernel.org/all/0ba100d0-9b6f-4a3b-bffa-61abe1b46cd5@linux.dev/
-Suggested-by: Baojun Xu <baojun.xu@ti.com>
-Signed-off-by: Matthew Schwartz <matthew.schwartz@linux.dev>
-Reviewed-by: Antheas Kapenekakis <lkml@antheas.dev>
-Link: https://patch.msgid.link/20260108093650.1142176-1-matthew.schwartz@linux.dev
+Link: https://bugzilla.kernel.org/show_bug.cgi?id=220220
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Zhang Heng <zhangheng@kylinos.cn>
+Link: https://patch.msgid.link/20260115015844.3129890-1-zhangheng@kylinos.cn
 Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/hda/codecs/side-codecs/tas2781_hda_i2c.c |   13 ++++++++++++-
- 1 file changed, 12 insertions(+), 1 deletion(-)
+ sound/hda/codecs/realtek/alc269.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/sound/hda/codecs/side-codecs/tas2781_hda_i2c.c
-+++ b/sound/hda/codecs/side-codecs/tas2781_hda_i2c.c
-@@ -60,6 +60,7 @@ struct tas2781_hda_i2c_priv {
- 	int (*save_calibration)(struct tas2781_hda *h);
- 
- 	int hda_chip_id;
-+	bool skip_calibration;
- };
- 
- static int tas2781_get_i2c_res(struct acpi_resource *ares, void *data)
-@@ -491,7 +492,8 @@ static void tasdevice_dspfw_init(void *c
- 	/* If calibrated data occurs error, dsp will still works with default
- 	 * calibrated data inside algo.
- 	 */
--	hda_priv->save_calibration(tas_hda);
-+	if (!hda_priv->skip_calibration)
-+		hda_priv->save_calibration(tas_hda);
- }
- 
- static void tasdev_fw_ready(const struct firmware *fmw, void *context)
-@@ -548,6 +550,7 @@ static int tas2781_hda_bind(struct devic
- 	void *master_data)
- {
- 	struct tas2781_hda *tas_hda = dev_get_drvdata(dev);
-+	struct tas2781_hda_i2c_priv *hda_priv = tas_hda->hda_priv;
- 	struct hda_component_parent *parent = master_data;
- 	struct hda_component *comp;
- 	struct hda_codec *codec;
-@@ -573,6 +576,14 @@ static int tas2781_hda_bind(struct devic
- 		break;
- 	}
- 
-+	/*
-+	 * Using ASUS ROG Xbox Ally X (RC73XA) UEFI calibration data
-+	 * causes audio dropouts during playback, use fallback data
-+	 * from DSP firmware as a workaround.
-+	 */
-+	if (codec->core.subsystem_id == 0x10431384)
-+		hda_priv->skip_calibration = true;
-+
- 	pm_runtime_get_sync(dev);
- 
- 	comp->dev = dev;
+--- a/sound/hda/codecs/realtek/alc269.c
++++ b/sound/hda/codecs/realtek/alc269.c
+@@ -6529,6 +6529,7 @@ static const struct hda_quirk alc269_fix
+ 	SND_PCI_QUIRK(0x103c, 0x8a2e, "HP Envy 16", ALC287_FIXUP_CS35L41_I2C_2),
+ 	SND_PCI_QUIRK(0x103c, 0x8a30, "HP Envy 17", ALC287_FIXUP_CS35L41_I2C_2),
+ 	SND_PCI_QUIRK(0x103c, 0x8a31, "HP Envy 15", ALC287_FIXUP_CS35L41_I2C_2),
++	SND_PCI_QUIRK(0x103c, 0x8a34, "HP Pavilion x360 2-in-1 Laptop 14-ek0xxx", ALC245_FIXUP_HP_MUTE_LED_COEFBIT),
+ 	SND_PCI_QUIRK(0x103c, 0x8a4f, "HP Victus 15-fa0xxx (MB 8A4F)", ALC245_FIXUP_HP_MUTE_LED_COEFBIT),
+ 	SND_PCI_QUIRK(0x103c, 0x8a6e, "HP EDNA 360", ALC287_FIXUP_CS35L41_I2C_4),
+ 	SND_PCI_QUIRK(0x103c, 0x8a74, "HP ProBook 440 G8 Notebook PC", ALC236_FIXUP_HP_GPIO_LED),
 
 
