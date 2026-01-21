@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D0AD33C19A;
-	Wed, 21 Jan 2026 18:20:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC4BA38B7BD;
+	Wed, 21 Jan 2026 18:20:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769019624; cv=none; b=Kd/Qw2chw0x6RNrGJNGkTPW4xSTWdwbiP8XtHD3aMRRk4ap7YDB/F3n4M/gkrtUHtftZFrP5Vv/EUbgdp1bR8o8eSLrCTScwmTMlYwWfvabSbL/KmT80zrY98JTOFPu6e/lyy+fXVcD7dqPwBH7Tftrjgxk6gGnCWDj6SsH+Ecc=
+	t=1769019627; cv=none; b=lKJXjlownCBrOR5mClPnVXPVJdxJyB7mOyGUMLZF4lAi6SPLCEfLf7T256i3EURaIJiTVJSYInsAVeVYtaQa+35yt/ind7DWx+DzpTBUVIKjuvS2EIxhYN0bJwlAWAKQA7w0OQl37BXOd1j2WPitGLUWj9sLww7Pj4F5bukPgu0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769019624; c=relaxed/simple;
-	bh=atVmVFHlJRqAhZS1t4s8knIpB454boOmquWqDkpwNTo=;
+	s=arc-20240116; t=1769019627; c=relaxed/simple;
+	bh=QELLNZJD5hpxzdUVTERT7kcd5IMxuJ0QM42tvzFLWmE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fe5YYH2+EEEn6D3nQT4g//nIlBc0XeOPMOJ2GXR2e1nD+Tl09ITJiesuSxsVY5PotgsD1rq4X69Q8ICWer9z41AbWrA3XXCJ262iipQi13BwUNeXeQW+Icd6pMvooDA8B7NP55vbLJ0d69ipCd9VkkrnikY0zrrZoE+dO0PxPwE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=m26gxv1v; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=AaDo6KOPqbME+zGB25ArcQ6sDig43mf0TH7rl1IJR6JK+wrT1FvwUjIeFgtwL+kKjy6Iuuvke7mRQlKkAHTMaeMvI+trq2FOYQ3yKVJSDbYMt1XF7X/iLD5zFAYVmbxWXsBDw8uYguh+//T3PKKTPE9qxiJ14M6JFnxlayt6na4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Tu/tYJgb; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="m26gxv1v"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 60E8EC4CEF1;
-	Wed, 21 Jan 2026 18:20:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Tu/tYJgb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BCE1EC4CEF1;
+	Wed, 21 Jan 2026 18:20:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1769019623;
-	bh=atVmVFHlJRqAhZS1t4s8knIpB454boOmquWqDkpwNTo=;
+	s=korg; t=1769019627;
+	bh=QELLNZJD5hpxzdUVTERT7kcd5IMxuJ0QM42tvzFLWmE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=m26gxv1vHvyYfSk7f3Q5rMYkcYqHWIVBO2IdICtRe1IwaDiawknG9DgQ0iqfOoyHX
-	 vjuY+s3m2HCA/srs6Jbkh/Uh8O0ssrM52Usbafzs6SElUfE6uPmPUvJofYpTsItNRr
-	 ixGdMx7izWW2F2Op6FY7jhHEx1gq8Lpv4FHAXntg=
+	b=Tu/tYJgbI8ZGB+YvvvCqnxdWFROqmJL1VaKkPWaofqQuZJUtk5moOooal6azLxB/n
+	 3uYlkBXX5pUHq+skUjHvMWheeuyQnil1nocyE4t8CRjOclLb7BJ2P+dkSRmCT/BfAL
+	 tcVKXOhPJEvENXFZvEa8NBOgxFSRraGTtR9MvieY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Saeed Mahameed <saeedm@nvidia.com>,
-	Tariq Toukan <tariqt@nvidia.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
+	Naohiro Aota <naohiro.aota@wdc.com>,
+	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 026/139] net/mlx5e: Restore destroying state bit after profile cleanup
-Date: Wed, 21 Jan 2026 19:14:34 +0100
-Message-ID: <20260121181412.397721059@linuxfoundation.org>
+Subject: [PATCH 6.12 027/139] btrfs: factor out init_space_info() from create_space_info()
+Date: Wed, 21 Jan 2026 19:14:35 +0100
+Message-ID: <20260121181412.433064978@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260121181411.452263583@linuxfoundation.org>
 References: <20260121181411.452263583@linuxfoundation.org>
@@ -52,67 +52,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Saeed Mahameed <saeedm@nvidia.com>
+From: Naohiro Aota <naohiro.aota@wdc.com>
 
-[ Upstream commit 5629f8859dca7ef74d7314b60de6a957f23166c0 ]
+[ Upstream commit ac5578fef380e68e539a2238ba63dd978a450ef2 ]
 
-Profile rollback can fail in mlx5e_netdev_change_profile() and we will
-end up with invalid mlx5e_priv memset to 0, we must maintain the
-'destroying' bit in order to gracefully shutdown even if the
-profile/priv are not valid.
+Factor out initialization of the space_info struct, which is used in a
+later patch. There is no functional change.
 
-This patch maintains the previous state of the 'destroying' state of
-mlx5e_priv after priv cleanup, to allow the remove flow to cleanup
-common resources from mlx5_core to avoid FW fatal errors as seen below:
-
-$ devlink dev eswitch set pci/0000:00:03.0 mode switchdev
-    Error: mlx5_core: Failed setting eswitch to offloads.
-dmesg: mlx5_core 0000:00:03.0 enp0s3np0: failed to rollback to orig profile, ...
-
-$ devlink dev reload pci/0000:00:03.0
-
-mlx5_core 0000:00:03.0: E-Switch: Disable: mode(LEGACY), nvfs(0), necvfs(0), active vports(0)
-mlx5_core 0000:00:03.0: poll_health:803:(pid 519): Fatal error 3 detected
-mlx5_core 0000:00:03.0: firmware version: 28.41.1000
-mlx5_core 0000:00:03.0: 0.000 Gb/s available PCIe bandwidth (Unknown x255 link)
-mlx5_core 0000:00:03.0: mlx5_function_enable:1200:(pid 519): enable hca failed
-mlx5_core 0000:00:03.0: mlx5_function_enable:1200:(pid 519): enable hca failed
-mlx5_core 0000:00:03.0: mlx5_health_try_recover:340:(pid 141): handling bad device here
-mlx5_core 0000:00:03.0: mlx5_handle_bad_state:285:(pid 141): Expected to see disabled NIC but it is full driver
-mlx5_core 0000:00:03.0: mlx5_error_sw_reset:236:(pid 141): start
-mlx5_core 0000:00:03.0: NIC IFC still 0 after 4000ms.
-
-Fixes: c4d7eb57687f ("net/mxl5e: Add change profile method")
-Signed-off-by: Saeed Mahameed <saeedm@nvidia.com>
-Reviewed-by: Tariq Toukan <tariqt@nvidia.com>
-Link: https://patch.msgid.link/20260108212657.25090-5-saeed@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Reviewed-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
+Signed-off-by: Naohiro Aota <naohiro.aota@wdc.com>
+Reviewed-by: David Sterba <dsterba@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
+Stable-dep-of: a11224a016d6 ("btrfs: fix memory leaks in create_space_info() error paths")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mellanox/mlx5/core/en_main.c | 3 +++
- 1 file changed, 3 insertions(+)
+ fs/btrfs/space-info.c | 27 ++++++++++++++++-----------
+ 1 file changed, 16 insertions(+), 11 deletions(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en_main.c b/drivers/net/ethernet/mellanox/mlx5/core/en_main.c
-index 5085bc8965dff..5736ed61e6eba 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/en_main.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/en_main.c
-@@ -6000,6 +6000,7 @@ int mlx5e_priv_init(struct mlx5e_priv *priv,
- 
- void mlx5e_priv_cleanup(struct mlx5e_priv *priv)
- {
-+	bool destroying = test_bit(MLX5E_STATE_DESTROYING, &priv->state);
- 	int i;
- 
- 	/* bail if change profile failed and also rollback failed */
-@@ -6026,6 +6027,8 @@ void mlx5e_priv_cleanup(struct mlx5e_priv *priv)
- 	}
- 
- 	memset(priv, 0, sizeof(*priv));
-+	if (destroying) /* restore destroying bit, to allow unload */
-+		set_bit(MLX5E_STATE_DESTROYING, &priv->state);
+diff --git a/fs/btrfs/space-info.c b/fs/btrfs/space-info.c
+index d5a9cd8a4fd8d..6497398fb4e2e 100644
+--- a/fs/btrfs/space-info.c
++++ b/fs/btrfs/space-info.c
+@@ -225,19 +225,11 @@ void btrfs_update_space_info_chunk_size(struct btrfs_space_info *space_info,
+ 	WRITE_ONCE(space_info->chunk_size, chunk_size);
  }
  
- static unsigned int mlx5e_get_max_num_txqs(struct mlx5_core_dev *mdev,
+-static int create_space_info(struct btrfs_fs_info *info, u64 flags)
++static void init_space_info(struct btrfs_fs_info *info,
++			    struct btrfs_space_info *space_info, u64 flags)
+ {
+-
+-	struct btrfs_space_info *space_info;
+-	int i;
+-	int ret;
+-
+-	space_info = kzalloc(sizeof(*space_info), GFP_NOFS);
+-	if (!space_info)
+-		return -ENOMEM;
+-
+ 	space_info->fs_info = info;
+-	for (i = 0; i < BTRFS_NR_RAID_TYPES; i++)
++	for (int i = 0; i < BTRFS_NR_RAID_TYPES; i++)
+ 		INIT_LIST_HEAD(&space_info->block_groups[i]);
+ 	init_rwsem(&space_info->groups_sem);
+ 	spin_lock_init(&space_info->lock);
+@@ -251,6 +243,19 @@ static int create_space_info(struct btrfs_fs_info *info, u64 flags)
+ 
+ 	if (btrfs_is_zoned(info))
+ 		space_info->bg_reclaim_threshold = BTRFS_DEFAULT_ZONED_RECLAIM_THRESH;
++}
++
++static int create_space_info(struct btrfs_fs_info *info, u64 flags)
++{
++
++	struct btrfs_space_info *space_info;
++	int ret;
++
++	space_info = kzalloc(sizeof(*space_info), GFP_NOFS);
++	if (!space_info)
++		return -ENOMEM;
++
++	init_space_info(info, space_info, flags);
+ 
+ 	ret = btrfs_sysfs_add_space_info_type(info, space_info);
+ 	if (ret)
 -- 
 2.51.0
 
