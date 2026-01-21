@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 801E53587B0;
-	Wed, 21 Jan 2026 18:19:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1A8634E779;
+	Wed, 21 Jan 2026 18:19:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769019571; cv=none; b=jkHssB1g4YscmUaYtWrUOQBPV+v8owTXlEqd3uPXRBhlVPZpDNPKn3IeBWMZzcXOnaMYdLmrMe47MqkSAf8apP0n1cRw58qjFGZ2ma+t/08jJ96E7r7gwK0UsAi7ed+xN5JuIb2A1Zt9wLkFyJxsTU8y2q+og+JugUw/Ga67sBQ=
+	t=1769019574; cv=none; b=fBIHeb1m40om2cbqXdAGVxKXt8txzJT0txumAYojpUHWH1zhVZkcyzCqsrykm4fNkDSP5Ga0mldCOH18d15nBl5vfyEHt4i78o4uP1lNUg8w74AUn9fBswLDGisu4xucw3qP2Z494rL4GhEghdRogtLZUoL+Qf+J4eYbcp9Kmrg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769019571; c=relaxed/simple;
-	bh=rJKIOXlpZ1A32rd85yBOlmogNhPDU3TZi/cMS48ZbN4=;
+	s=arc-20240116; t=1769019574; c=relaxed/simple;
+	bh=8oK0KgYrWOYlGpJW4JZaO5k7n8GxELi3ZWR0Fh91iKU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=boBpPEh6plc5WjPiJthUJfCM/11y8ANuWPHdrvpeM3BIzKk0R2q9fV2N5HO9TtzXQCMpSbp9Md/crX8zudvAxXU++zHsobuRhxt1JG6WPytT8Kxr7CcNxQfjr7Iw8TXVTFtmnQPryI3w/X61h8+/Rh9+fx8dl4Aa+MLFruqFKq4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OEopUStb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uu5wZB6x+FI7qfhDr4whgjFQFWLOujoh/OgsJP/FBY0uKBYaFekdAs9Ce/Eaz6yM1imp9trpwZrGFuDE65dt7Cijaml9zXL5yic/Y2ZE6eTiXstAG2G1qR73ku8DRjt3K7F8t4+a+hRf5nr44FFfhq+o2dMMW6SrwuGbalDHqHA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0K8LKnq4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OEopUStb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2461BC4CEF1;
-	Wed, 21 Jan 2026 18:19:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0K8LKnq4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 821F3C4CEF1;
+	Wed, 21 Jan 2026 18:19:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1769019570;
-	bh=rJKIOXlpZ1A32rd85yBOlmogNhPDU3TZi/cMS48ZbN4=;
+	s=korg; t=1769019574;
+	bh=8oK0KgYrWOYlGpJW4JZaO5k7n8GxELi3ZWR0Fh91iKU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OEopUStbHEnH/h+Iv/0aw/jloqbHHzU/oGctmquwCZ47p0hDUzF8ADg9aEMTThFT/
-	 fK704JPXu93wejrUHtMG+bYBjbwTj6GoZSnwA+ZnChrIc7uDA/uJLftqu2ykVfRkfQ
-	 BgS8HF0ncMLSHf5BHDpeklX+rZQl5Ln1C4nub4tY=
+	b=0K8LKnq4VoanU6XSjWMLkD19v3QR54663DA0BblXC+Or1CUNsVikS2gn04UwIALEb
+	 wyVzWwK8X2YBYlgFyhEiju92w1Bmzu4fZayJ6diAACjJgiRDV22J7eOhVR1H/hpD6k
+	 RO6MCa7v1RfEK+Wks6+/QnkPy3e8EVR9DXL8hgxo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lizhi Hou <lizhi.hou@amd.com>,
-	Radhey Shyam Pandey <radhey.shyam.pandey@amd.com>,
-	Alexander Stein <alexander.stein@ew.tq-group.com>,
-	Anthony Brandon <anthony@amarulasolutions.com>,
+	Sheetal <sheetal@nvidia.com>,
+	Thierry Reding <treding@nvidia.com>,
 	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 044/139] dmaengine: xilinx: xdma: Fix regmap max_register
-Date: Wed, 21 Jan 2026 19:14:52 +0100
-Message-ID: <20260121181413.041251171@linuxfoundation.org>
+Subject: [PATCH 6.12 045/139] dmaengine: tegra-adma: Fix use-after-free
+Date: Wed, 21 Jan 2026 19:14:53 +0100
+Message-ID: <20260121181413.076748840@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260121181411.452263583@linuxfoundation.org>
 References: <20260121181411.452263583@linuxfoundation.org>
@@ -54,83 +52,108 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Anthony Brandon <anthony@amarulasolutions.com>
+From: Sheetal <sheetal@nvidia.com>
 
-[ Upstream commit c7d436a6c1a274c1ac28d5fb3b8eb8f03b6d0e10 ]
+[ Upstream commit 2efd07a7c36949e6fa36a69183df24d368bf9e96 ]
 
-The max_register field is assigned the size of the register memory
-region instead of the offset of the last register.
-The result is that reading from the regmap via debugfs can cause
-a segmentation fault:
+A use-after-free bug exists in the Tegra ADMA driver when audio streams
+are terminated, particularly during XRUN conditions. The issue occurs
+when the DMA buffer is freed by tegra_adma_terminate_all() before the
+vchan completion tasklet finishes accessing it.
 
-tail /sys/kernel/debug/regmap/xdma.1.auto/registers
-Unable to handle kernel paging request at virtual address ffff800082f70000
-Mem abort info:
-  ESR = 0x0000000096000007
-  EC = 0x25: DABT (current EL), IL = 32 bits
-  SET = 0, FnV = 0
-  EA = 0, S1PTW = 0
-  FSC = 0x07: level 3 translation fault
-[...]
-Call trace:
- regmap_mmio_read32le+0x10/0x30
- _regmap_bus_reg_read+0x74/0xc0
- _regmap_read+0x68/0x198
- regmap_read+0x54/0x88
- regmap_read_debugfs+0x140/0x380
- regmap_map_read_file+0x30/0x48
- full_proxy_read+0x68/0xc8
- vfs_read+0xcc/0x310
- ksys_read+0x7c/0x120
- __arm64_sys_read+0x24/0x40
- invoke_syscall.constprop.0+0x64/0x108
- do_el0_svc+0xb0/0xd8
- el0_svc+0x38/0x130
- el0t_64_sync_handler+0x120/0x138
- el0t_64_sync+0x194/0x198
-Code: aa1e03e9 d503201f f9400000 8b214000 (b9400000)
----[ end trace 0000000000000000 ]---
-note: tail[1217] exited with irqs disabled
-note: tail[1217] exited with preempt_count 1
-Segmentation fault
+The race condition follows this sequence:
 
-Fixes: 17ce252266c7 ("dmaengine: xilinx: xdma: Add xilinx xdma driver")
-Reviewed-by: Lizhi Hou <lizhi.hou@amd.com>
-Reviewed-by: Radhey Shyam Pandey <radhey.shyam.pandey@amd.com>
-Reviewed-by: Alexander Stein <alexander.stein@ew.tq-group.com>
-Signed-off-by: Anthony Brandon <anthony@amarulasolutions.com>
+  1. DMA transfer completes, triggering an interrupt that schedules the
+     completion tasklet (tasklet has not executed yet)
+  2. Audio playback stops, calling tegra_adma_terminate_all() which
+     frees the DMA buffer memory via kfree()
+  3. The scheduled tasklet finally executes, calling vchan_complete()
+     which attempts to access the already-freed memory
+
+Since tasklets can execute at any time after being scheduled, there is
+no guarantee that the buffer will remain valid when vchan_complete()
+runs.
+
+Fix this by properly synchronizing the virtual channel completion:
+ - Calling vchan_terminate_vdesc() in tegra_adma_stop() to mark the
+   descriptors as terminated instead of freeing the descriptor.
+ - Add the callback tegra_adma_synchronize() that calls
+   vchan_synchronize() which kills any pending tasklets and frees any
+   terminated descriptors.
+
+Crash logs:
+[  337.427523] BUG: KASAN: use-after-free in vchan_complete+0x124/0x3b0
+[  337.427544] Read of size 8 at addr ffff000132055428 by task swapper/0/0
+
+[  337.427562] Call trace:
+[  337.427564]  dump_backtrace+0x0/0x320
+[  337.427571]  show_stack+0x20/0x30
+[  337.427575]  dump_stack_lvl+0x68/0x84
+[  337.427584]  print_address_description.constprop.0+0x74/0x2b8
+[  337.427590]  kasan_report+0x1f4/0x210
+[  337.427598]  __asan_load8+0xa0/0xd0
+[  337.427603]  vchan_complete+0x124/0x3b0
+[  337.427609]  tasklet_action_common.constprop.0+0x190/0x1d0
+[  337.427617]  tasklet_action+0x30/0x40
+[  337.427623]  __do_softirq+0x1a0/0x5c4
+[  337.427628]  irq_exit+0x110/0x140
+[  337.427633]  handle_domain_irq+0xa4/0xe0
+[  337.427640]  gic_handle_irq+0x64/0x160
+[  337.427644]  call_on_irq_stack+0x20/0x4c
+[  337.427649]  do_interrupt_handler+0x7c/0x90
+[  337.427654]  el1_interrupt+0x30/0x80
+[  337.427659]  el1h_64_irq_handler+0x18/0x30
+[  337.427663]  el1h_64_irq+0x7c/0x80
+[  337.427667]  cpuidle_enter_state+0xe4/0x540
+[  337.427674]  cpuidle_enter+0x54/0x80
+[  337.427679]  do_idle+0x2e0/0x380
+[  337.427685]  cpu_startup_entry+0x2c/0x70
+[  337.427690]  rest_init+0x114/0x130
+[  337.427695]  arch_call_rest_init+0x18/0x24
+[  337.427702]  start_kernel+0x380/0x3b4
+[  337.427706]  __primary_switched+0xc0/0xc8
+
+Fixes: f46b195799b5 ("dmaengine: tegra-adma: Add support for Tegra210 ADMA")
+Signed-off-by: Sheetal <sheetal@nvidia.com>
+Acked-by: Thierry Reding <treding@nvidia.com>
+Link: https://patch.msgid.link/20251110142445.3842036-1-sheetal@nvidia.com
 Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dma/xilinx/xdma-regs.h | 1 +
- drivers/dma/xilinx/xdma.c      | 2 +-
- 2 files changed, 2 insertions(+), 1 deletion(-)
+ drivers/dma/tegra210-adma.c | 10 +++++++++-
+ 1 file changed, 9 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/dma/xilinx/xdma-regs.h b/drivers/dma/xilinx/xdma-regs.h
-index 6ad08878e9386..70bca92621aa4 100644
---- a/drivers/dma/xilinx/xdma-regs.h
-+++ b/drivers/dma/xilinx/xdma-regs.h
-@@ -9,6 +9,7 @@
+diff --git a/drivers/dma/tegra210-adma.c b/drivers/dma/tegra210-adma.c
+index 24ad7077c53ba..55e9dcca55390 100644
+--- a/drivers/dma/tegra210-adma.c
++++ b/drivers/dma/tegra210-adma.c
+@@ -343,10 +343,17 @@ static void tegra_adma_stop(struct tegra_adma_chan *tdc)
+ 		return;
+ 	}
  
- /* The length of register space exposed to host */
- #define XDMA_REG_SPACE_LEN	65536
-+#define XDMA_MAX_REG_OFFSET	(XDMA_REG_SPACE_LEN - 4)
+-	kfree(tdc->desc);
++	vchan_terminate_vdesc(&tdc->desc->vd);
+ 	tdc->desc = NULL;
+ }
  
- /*
-  * maximum number of DMA channels for each direction:
-diff --git a/drivers/dma/xilinx/xdma.c b/drivers/dma/xilinx/xdma.c
-index 718842fdaf98e..2726c7154fcef 100644
---- a/drivers/dma/xilinx/xdma.c
-+++ b/drivers/dma/xilinx/xdma.c
-@@ -38,7 +38,7 @@ static const struct regmap_config xdma_regmap_config = {
- 	.reg_bits = 32,
- 	.val_bits = 32,
- 	.reg_stride = 4,
--	.max_register = XDMA_REG_SPACE_LEN,
-+	.max_register = XDMA_MAX_REG_OFFSET,
- };
- 
- /**
++static void tegra_adma_synchronize(struct dma_chan *dc)
++{
++	struct tegra_adma_chan *tdc = to_tegra_adma_chan(dc);
++
++	vchan_synchronize(&tdc->vc);
++}
++
+ static void tegra_adma_start(struct tegra_adma_chan *tdc)
+ {
+ 	struct virt_dma_desc *vd = vchan_next_desc(&tdc->vc);
+@@ -938,6 +945,7 @@ static int tegra_adma_probe(struct platform_device *pdev)
+ 	tdma->dma_dev.device_config = tegra_adma_slave_config;
+ 	tdma->dma_dev.device_tx_status = tegra_adma_tx_status;
+ 	tdma->dma_dev.device_terminate_all = tegra_adma_terminate_all;
++	tdma->dma_dev.device_synchronize = tegra_adma_synchronize;
+ 	tdma->dma_dev.src_addr_widths = BIT(DMA_SLAVE_BUSWIDTH_4_BYTES);
+ 	tdma->dma_dev.dst_addr_widths = BIT(DMA_SLAVE_BUSWIDTH_4_BYTES);
+ 	tdma->dma_dev.directions = BIT(DMA_DEV_TO_MEM) | BIT(DMA_MEM_TO_DEV);
 -- 
 2.51.0
 
