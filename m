@@ -1,37 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6979933FE09;
-	Wed, 21 Jan 2026 18:18:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5B0B378D72;
+	Wed, 21 Jan 2026 18:18:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769019485; cv=none; b=kE5Z/tluaoakx8qM38+9etKA/7EF/d9frbpDaCNSmYdFMV4uUOylAtCZoSnWzIM8EMlHLN+dDfEVlSLaKSDHvapd41ctSSQlPXhXECn+nS9luh12GWtGRA4HOn/HHwYTmuNQY3XsJvVxUFrYnJ0f8TMio3GP/iFzvCRPTgtrOw8=
+	t=1769019488; cv=none; b=W2wkbqaqXoz8iDLzE6RQc9tGk8P2ibglYcHhlXyktfJ5DeUfFPSzqyaG+awlER865xoCWoj9UOxf/Y5PPkj9JFVRrTRB9jwg8n/T1FI/96MzgpgNuESvJ6yHDzeCLUbl0jgJPWrFzdGirIScOulv2yJvaDYmSPe4WgjHf06TGAU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769019485; c=relaxed/simple;
-	bh=DJQdbZWJKwFZQnx9KyYvMGaaO+w/ERxAAhzUKewt0x0=;
+	s=arc-20240116; t=1769019488; c=relaxed/simple;
+	bh=1rjkJtahBBxGsy12X5CQJYTCM/AAo//2uMdhvMex4yY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=skI10WFeuvvWO7QuDpdkuSNBPuv1gfrsG8QNe3ZNhlG8Oz8z9upCJYmBE1lYfuqCAUWab5dSZ1f01ZOjzmWLrL5VdQngHVXNQTotmYVZremfgQP8ekkRNQOTPxpx6zNH03stIqLSw7FTbqrYmjpkZwUbJE4rknIbmkPpSayBJSk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XpiMLGQ1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=B2a0sWQwuAbX86uk57pFyjMzmCLOxObQIeVCbEM0VqsUn1SX++q9ZSebLk8akkdIxf2xJUwNqoSAVLo/GgL1SIkg6Vcs6i+GujlzXJMnNSD0b3WZcl2K11dGjp2RkRhzBq+4rgeWlXCSeZMrTqe6pHenUgbwokBfbTekiLnGk8A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=p5l+lIpx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XpiMLGQ1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6847FC4CEF1;
-	Wed, 21 Jan 2026 18:18:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="p5l+lIpx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E066DC4CEF1;
+	Wed, 21 Jan 2026 18:18:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1769019484;
-	bh=DJQdbZWJKwFZQnx9KyYvMGaaO+w/ERxAAhzUKewt0x0=;
+	s=korg; t=1769019488;
+	bh=1rjkJtahBBxGsy12X5CQJYTCM/AAo//2uMdhvMex4yY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XpiMLGQ1QpkMzkKiH85SjoCJJ7suLc0Qh6zMWQ9x58jsIEWjiLlVIHMKZxkHtXvCa
-	 4GczKXqhoilzve9gVLDoVUXwmkNGDpnUKmf56IPp5mD5Z/0PhyqiAhkzLf2Yl5T3Zq
-	 5Bd0aXDsTLLYM5mHpYFDWe0uCGtHl5+ac5Eo+yRI=
+	b=p5l+lIpxAdrDdrDaGV3kCt0XQpbjpNEogyEr3hVBOVRdk1cxRhYgfTUvPTRH2q4IL
+	 ysmOvbM1UJbR4A7NqC2J9Onz9uKBDXUomZm26cPVeX0fZ04FIkxAIGk/ql+Uz1kejf
+	 0hOtncWROtKDjKQqATV48fIdWJ2kTfCczFNaYJy0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Morduan Zang <zhangdandan@uniontech.com>,
-	Ard Biesheuvel <ardb@kernel.org>
-Subject: [PATCH 6.12 002/139] efi/cper: Fix cper_bits_to_str buffer handling and return value
-Date: Wed, 21 Jan 2026 19:14:10 +0100
-Message-ID: <20260121181411.544361197@linuxfoundation.org>
+	Andreas Gruenbacher <agruenba@redhat.com>
+Subject: [PATCH 6.12 003/139] Revert "gfs2: Fix use of bio_chain"
+Date: Wed, 21 Jan 2026 19:14:11 +0100
+Message-ID: <20260121181411.579333348@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260121181411.452263583@linuxfoundation.org>
 References: <20260121181411.452263583@linuxfoundation.org>
@@ -50,35 +49,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Morduan Zang <zhangdandan@uniontech.com>
+From: Andreas Gruenbacher <agruenba@redhat.com>
 
-commit d7f1b4bdc7108be1b178e1617b5f45c8918e88d7 upstream.
+commit 469d71512d135907bf5ea0972dfab8c420f57848 upstream.
 
-The return value calculation was incorrect: `return len - buf_size;`
-Initially `len = buf_size`, then `len` decreases with each operation.
-This results in a negative return value on success.
+This reverts commit 8a157e0a0aa5143b5d94201508c0ca1bb8cfb941.
 
-Fix by returning `buf_size - len` which correctly calculates the actual
-number of bytes written.
+That commit incorrectly assumed that the bio_chain() arguments were
+swapped in gfs2.  However, gfs2 intentionally constructs bio chains so
+that the first bio's bi_end_io callback is invoked when all bios in the
+chain have completed, unlike bio chains where the last bio's callback is
+invoked.
 
-Fixes: a976d790f494 ("efi/cper: Add a new helper function to print bitmasks")
-Signed-off-by: Morduan Zang <zhangdandan@uniontech.com>
-Signed-off-by: Ard Biesheuvel <ardb@kernel.org>
+Fixes: 8a157e0a0aa5 ("gfs2: Fix use of bio_chain")
+Cc: stable@vger.kernel.org
+Signed-off-by: Andreas Gruenbacher <agruenba@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/firmware/efi/cper.c |    2 +-
+ fs/gfs2/lops.c |    2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/firmware/efi/cper.c
-+++ b/drivers/firmware/efi/cper.c
-@@ -162,7 +162,7 @@ int cper_bits_to_str(char *buf, int buf_
- 		len -= size;
- 		str += size;
- 	}
--	return len - buf_size;
-+	return buf_size - len;
+--- a/fs/gfs2/lops.c
++++ b/fs/gfs2/lops.c
+@@ -485,7 +485,7 @@ static struct bio *gfs2_chain_bio(struct
+ 	new = bio_alloc(prev->bi_bdev, nr_iovecs, prev->bi_opf, GFP_NOIO);
+ 	bio_clone_blkg_association(new, prev);
+ 	new->bi_iter.bi_sector = bio_end_sector(prev);
+-	bio_chain(prev, new);
++	bio_chain(new, prev);
+ 	submit_bio(prev);
+ 	return new;
  }
- EXPORT_SYMBOL_GPL(cper_bits_to_str);
- 
 
 
