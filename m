@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0AA6F356A3A;
-	Wed, 21 Jan 2026 18:19:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A45643587B0;
+	Wed, 21 Jan 2026 18:19:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769019550; cv=none; b=b6TAm8UtWr+jIpZ2VgyE2j5BCa/2pZk8Bf8RU/jilkAVHmh/PW9Qxt4IJcfjEVAnyofMDMIsmPVA101RtOZEtyDX0SPw3HEfCN3GW/wgFcKktcdzDGvNQo7CTB0xjCiIXD5SEyxWaEIGbX9UDCFfqYLiYc4trnXShQJzPT9GnxM=
+	t=1769019553; cv=none; b=esS3Pfd14zl6tQDR4lle1ofF6Cv2h0g9FWXYqdUcvCFe2p3C6FtQrZu3ym/G35umSxTdDlnkGGw3E3D8A/R3W0Ve+6DUpoaxAKqrl2kcZ3G/bLEPf6EJHENfH5JjV0E/poXcJsbs+MbZzujRPzlH8G7Qdx46S9CXUriHItJaa6Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769019550; c=relaxed/simple;
-	bh=7dpDafrdBFm0nkKHZAtenBxq/f6mJ2L/4c3mh02/alI=;
+	s=arc-20240116; t=1769019553; c=relaxed/simple;
+	bh=q/9ldyoUNExr7zfArlmoZsA9PvlOmg3ixm3tBgJMn2Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XY1l8gDQ1/+gNrvpZgG+fQqd63uJAoOEJWPmsUE8C7M3mza9uRq9UIs4uF6g96oEuFhGi0jdonVAQaX+dAuAX1IGv8SpEe9Ed3fvL2xBj/WkR7w1yx/F1fffyVXclrVi62ILAtF8FN5TxmFPqZvmIPRtJIuOz/2rYUUT8Nhx5KY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WobvXq4F; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mPmflIOcgMMHhof6sFFMuNrOKUxXRxiKjsm5tQAfBKZwf10QbYmPE8g1CAptd/vswGOI58i7ZM5OC5+9LdsAwjHB2Iqj9FEX7LEbfuNb8k3mHCH/UrGs9UVSyYZ8LEEyfnhMjFy94oypPaja0UU8DP1TzYqh22P6S9fDPN+YHlM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MNdLpwhy; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WobvXq4F"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 57D62C4CEF1;
-	Wed, 21 Jan 2026 18:19:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MNdLpwhy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3E35C4CEF1;
+	Wed, 21 Jan 2026 18:19:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1769019549;
-	bh=7dpDafrdBFm0nkKHZAtenBxq/f6mJ2L/4c3mh02/alI=;
+	s=korg; t=1769019553;
+	bh=q/9ldyoUNExr7zfArlmoZsA9PvlOmg3ixm3tBgJMn2Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WobvXq4FHiftuBuK+Zr0aLlZJqHGkMGNCyvvFv9AQ4gnSvEIPV1gVcP9Z39ZNgk29
-	 KaY/VBTWdVAJ7D+gp54y8uZ9S8kbx7/q7e2sZecMKswiwQrTqgRDh6d935EY260IHP
-	 fk6rrhkD2Sjj9MS34eDBwmAn+qKxFc7XUmYMff5A=
+	b=MNdLpwhyXSeXN4HqUSihX5i4Hb5nVeQwgpV8mHBDDqMP5Br02Hnkbv7eEG9wvki3M
+	 GN25FkmHXkVZkgaMkzCGlx0s/WZQygdKI/XFNTzcwqZKhew0juEePtKxXE2Wb8nGzg
+	 rn9uu1zpm0IQuSCuoXzYa5q6wq+qFbGYH7yOBX9Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Emil Svendsen <emas@bang-olufsen.dk>,
-	Sascha Hauer <s.hauer@pengutronix.de>,
-	Mark Brown <broonie@kernel.org>,
+	Luigi Leonardi <leonardi@redhat.com>,
+	Stefano Garzarella <sgarzare@redhat.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 039/139] ASoC: tlv320adcx140: fix word length
-Date: Wed, 21 Jan 2026 19:14:47 +0100
-Message-ID: <20260121181412.861705698@linuxfoundation.org>
+Subject: [PATCH 6.12 022/139] vsock/test: add a final full barrier after run all tests
+Date: Wed, 21 Jan 2026 19:14:30 +0100
+Message-ID: <20260121181412.256494790@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260121181411.452263583@linuxfoundation.org>
 References: <20260121181411.452263583@linuxfoundation.org>
@@ -52,48 +52,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Emil Svendsen <emas@bang-olufsen.dk>
+From: Stefano Garzarella <sgarzare@redhat.com>
 
-[ Upstream commit 46378ab9fcb796dca46b51e10646f636e2c661f9 ]
+[ Upstream commit c39a6a277e0e67ffff6a8efcbbf7e7e23ce9e38c ]
 
-The word length is the physical width of the channel slots. So the
-hw_params would misconfigure when format width and physical width
-doesn't match. Like S24_LE which has data width of 24 bits but physical
-width of 32 bits. So if using asymmetric formats you will get a lot of
-noise.
+If the last test fails, the other side still completes correctly,
+which could lead to false positives.
 
-Fixes: 689c7655b50c5 ("ASoC: tlv320adcx140: Add the tlv320adcx140 codec driver family")
-Signed-off-by: Emil Svendsen <emas@bang-olufsen.dk>
-Signed-off-by: Sascha Hauer <s.hauer@pengutronix.de>
-Link: https://patch.msgid.link/20260113-sound-soc-codecs-tvl320adcx140-v4-4-8f7ecec525c8@pengutronix.de
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Let's add a final barrier that ensures that the last test has finished
+correctly on both sides, but also that the two sides agree on the
+number of tests to be performed.
+
+Fixes: 2f65b44e199c ("VSOCK: add full barrier between test cases")
+Reviewed-by: Luigi Leonardi <leonardi@redhat.com>
+Signed-off-by: Stefano Garzarella <sgarzare@redhat.com>
+Link: https://patch.msgid.link/20260108114419.52747-1-sgarzare@redhat.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/tlv320adcx140.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ tools/testing/vsock/util.c | 12 ++++++++++++
+ 1 file changed, 12 insertions(+)
 
-diff --git a/sound/soc/codecs/tlv320adcx140.c b/sound/soc/codecs/tlv320adcx140.c
-index ccfec4c0c159a..62d936c2838c9 100644
---- a/sound/soc/codecs/tlv320adcx140.c
-+++ b/sound/soc/codecs/tlv320adcx140.c
-@@ -727,7 +727,7 @@ static int adcx140_hw_params(struct snd_pcm_substream *substream,
- 	struct adcx140_priv *adcx140 = snd_soc_component_get_drvdata(component);
- 	u8 data = 0;
+diff --git a/tools/testing/vsock/util.c b/tools/testing/vsock/util.c
+index a3d448a075e3a..8a899a9fc9a98 100644
+--- a/tools/testing/vsock/util.c
++++ b/tools/testing/vsock/util.c
+@@ -472,6 +472,18 @@ void run_tests(const struct test_case *test_cases,
  
--	switch (params_width(params)) {
-+	switch (params_physical_width(params)) {
- 	case 16:
- 		data = ADCX140_16_BIT_WORD;
- 		break;
-@@ -742,7 +742,7 @@ static int adcx140_hw_params(struct snd_pcm_substream *substream,
- 		break;
- 	default:
- 		dev_err(component->dev, "%s: Unsupported width %d\n",
--			__func__, params_width(params));
-+			__func__, params_physical_width(params));
- 		return -EINVAL;
+ 		printf("ok\n");
  	}
++
++	printf("All tests have been executed. Waiting other peer...");
++	fflush(stdout);
++
++	/*
++	 * Final full barrier, to ensure that all tests have been run and
++	 * that even the last one has been successful on both sides.
++	 */
++	control_writeln("COMPLETED");
++	control_expectln("COMPLETED");
++
++	printf("ok\n");
+ }
  
+ void list_tests(const struct test_case *test_cases)
 -- 
 2.51.0
 
