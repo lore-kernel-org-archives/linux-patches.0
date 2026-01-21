@@ -1,45 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C472A3806C0;
-	Wed, 21 Jan 2026 18:35:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40F273D4111;
+	Wed, 21 Jan 2026 18:35:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769020532; cv=none; b=uosDO+RJF9mEuKkzbV1mNX4LQpbHNuRJD6ItdB16MVv7WI9kpXJUA+cz/SDuK9HvX5lWRYbxwChWkKUTMsSjcoK1j/lDN4J9aXOh0R5Qj0cK15wQlZdLP10YFIstGs3ZOFhcEMTpqepXKyVvlQPC+j4VOUr0s1QCi/R7bTjcHvQ=
+	t=1769020536; cv=none; b=pP97tcFHwvZzIrKm/8ExGUHt3ZRsQxY25c4FTsonD1J5KabfuGTBVl/7m84cS+wTIZ2QM/eC5Ua1mfsvN0DqEsP+Cjpdw5SnrE70x42kUjj4ADS5zKqtWKzcFsWJnZ/ODgTF0RE/ln/gTbTG50I6j5DBVUuQc+rtbvIrIbyo3VU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769020532; c=relaxed/simple;
-	bh=34FqmRSFueoqGNWVgoYKep0LIYTYvyv8CHWpoLrpsgU=;
+	s=arc-20240116; t=1769020536; c=relaxed/simple;
+	bh=qhdoHBjkx6DVtOFeN2BPuKgZ3mRDQMDGfB4/NV3IhwA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UGD9wvJWdVVdjx7fRj33+Xm6V7eti6EndY6Qo+yaaYB4zJp1+H2gpqL3UhcEHUPvcxXi61piMHaohLb2RAJcft1oBgCixTwPSnE9kh+A7QEGD/acVDVu+e00YhGKFYntIxWZVzTuyGCGjhbl5bbusldyJLET/VPMZ/dSaX0UeRY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rmEnTQrD; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=eBVF39gH2DdeBmTvlf9mwsfPvdPjwjArdUgXTANc72Kh3B/Fcge5oFTN4kJPQcrV1AhgBkqTZ/SloxbxR37lQErDv8hTaxeQcUVUEDmoMANR+vhiAxabIpF22R3t35vlURbDFmkuH75Z/mXNJdlMV8MB/mR6rVaOaq9CqobT9wc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KZ3vp+fm; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rmEnTQrD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C3356C4CEF1;
-	Wed, 21 Jan 2026 18:35:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KZ3vp+fm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77B3FC4CEF1;
+	Wed, 21 Jan 2026 18:35:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1769020532;
-	bh=34FqmRSFueoqGNWVgoYKep0LIYTYvyv8CHWpoLrpsgU=;
+	s=korg; t=1769020536;
+	bh=qhdoHBjkx6DVtOFeN2BPuKgZ3mRDQMDGfB4/NV3IhwA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rmEnTQrDcmOW3V+JoG9ySzkoeHd1EGlXzFiye7owhC4grt+oeNVAmLTM85ec/NPrV
-	 VfkwggzbPzHPofLEIuRSsoMMiWBOLlFxfdPDzfU8+58jGWSybhfqGFT3HOfYiGw4Ij
-	 7zbL67El+KbKW9C1HIYN3rzXcX/fnGDZIeshljQY=
+	b=KZ3vp+fmorxKldOskhs50FHV1v/2HPYJ5eYUYdk0ct1SQPN4rUjAb60HQEYNDKhaY
+	 bEiZz+r9osmIR894yUSr1JUTs8eVczgkx94XLvcK6i4XS0F5md8aUp31htHX2FHEs3
+	 MyHj3Jn63GOk5k5g/Xv3hbjxw0UhBtt7LmdWZtLY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dave Hansen <dave.hansen@linux.intel.com>,
 	Lu Baolu <baolu.lu@linux.intel.com>,
 	Jason Gunthorpe <jgg@nvidia.com>,
-	Kevin Tian <kevin.tian@intel.com>,
 	David Hildenbrand <david@redhat.com>,
 	"Mike Rapoport (Microsoft)" <rppt@kernel.org>,
 	Alistair Popple <apopple@nvidia.com>,
 	Andy Lutomirski <luto@kernel.org>,
 	Borislav Betkov <bp@alien8.de>,
+	Dave Hansen <dave.hansen@intel.com>,
 	Ingo Molnar <mingo@redhat.com>,
 	Jann Horn <jannh@google.com>,
 	Jean-Philippe Brucker <jean-philippe@linaro.org>,
 	Joerg Roedel <joro@8bytes.org>,
+	Kevin Tian <kevin.tian@intel.com>,
 	Liam Howlett <liam.howlett@oracle.com>,
 	Lorenzo Stoakes <lorenzo.stoakes@oracle.com>,
 	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
@@ -54,9 +54,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Will Deacon <will@kernel.org>,
 	Yi Lai <yi1.lai@intel.com>,
 	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.18 187/198] mm: introduce pure page table freeing function
-Date: Wed, 21 Jan 2026 19:16:55 +0100
-Message-ID: <20260121181425.283279156@linuxfoundation.org>
+Subject: [PATCH 6.18 188/198] x86/mm: use pagetable_free()
+Date: Wed, 21 Jan 2026 19:16:56 +0100
+Message-ID: <20260121181425.323370020@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260121181418.537774329@linuxfoundation.org>
 References: <20260121181418.537774329@linuxfoundation.org>
@@ -75,29 +75,30 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dave Hansen <dave.hansen@linux.intel.com>
+From: Lu Baolu <baolu.lu@linux.intel.com>
 
-commit 01894295672335ff304beed4359f30d14d5765f2 upstream.
+commit bf9e4e30f3538391745a99bc2268ec4f5e4a401e upstream.
 
-The pages used for ptdescs are currently freed back to the allocator in a
-single location.  They will shortly be freed from a second location.
+The kernel's memory management subsystem provides a dedicated interface,
+pagetable_free(), for freeing page table pages.  Updates two call sites to
+use pagetable_free() instead of the lower-level __free_page() or
+free_pages().  This improves code consistency and clarity, and ensures the
+correct freeing mechanism is used.
 
-Create a simple helper that just frees them back to the allocator.
-
-Link: https://lkml.kernel.org/r/20251022082635.2462433-6-baolu.lu@linux.intel.com
-Signed-off-by: Dave Hansen <dave.hansen@linux.intel.com>
+Link: https://lkml.kernel.org/r/20251022082635.2462433-7-baolu.lu@linux.intel.com
 Signed-off-by: Lu Baolu <baolu.lu@linux.intel.com>
 Reviewed-by: Jason Gunthorpe <jgg@nvidia.com>
-Reviewed-by: Kevin Tian <kevin.tian@intel.com>
 Acked-by: David Hildenbrand <david@redhat.com>
 Acked-by: Mike Rapoport (Microsoft) <rppt@kernel.org>
 Cc: Alistair Popple <apopple@nvidia.com>
 Cc: Andy Lutomirski <luto@kernel.org>
 Cc: Borislav Betkov <bp@alien8.de>
+Cc: Dave Hansen <dave.hansen@intel.com>
 Cc: Ingo Molnar <mingo@redhat.com>
 Cc: Jann Horn <jannh@google.com>
 Cc: Jean-Philippe Brucker <jean-philippe@linaro.org>
 Cc: Joerg Roedel <joro@8bytes.org>
+Cc: Kevin Tian <kevin.tian@intel.com>
 Cc: Liam Howlett <liam.howlett@oracle.com>
 Cc: Lorenzo Stoakes <lorenzo.stoakes@oracle.com>
 Cc: Matthew Wilcox (Oracle) <willy@infradead.org>
@@ -114,38 +115,31 @@ Cc: Yi Lai <yi1.lai@intel.com>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/mm.h |   11 ++++++++---
- 1 file changed, 8 insertions(+), 3 deletions(-)
+ arch/x86/mm/init_64.c        |    2 +-
+ arch/x86/mm/pat/set_memory.c |    2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
---- a/include/linux/mm.h
-+++ b/include/linux/mm.h
-@@ -3031,6 +3031,13 @@ static inline struct ptdesc *pagetable_a
- }
- #define pagetable_alloc(...)	alloc_hooks(pagetable_alloc_noprof(__VA_ARGS__))
- 
-+static inline void __pagetable_free(struct ptdesc *pt)
-+{
-+	struct page *page = ptdesc_page(pt);
-+
-+	__free_pages(page, compound_order(page));
-+}
-+
- /**
-  * pagetable_free - Free pagetables
-  * @pt:	The page table descriptor
-@@ -3040,12 +3047,10 @@ static inline struct ptdesc *pagetable_a
-  */
- static inline void pagetable_free(struct ptdesc *pt)
- {
--	struct page *page = ptdesc_page(pt);
--
- 	if (ptdesc_test_kernel(pt))
- 		ptdesc_clear_kernel(pt);
- 
--	__free_pages(page, compound_order(page));
-+	__pagetable_free(pt);
+--- a/arch/x86/mm/init_64.c
++++ b/arch/x86/mm/init_64.c
+@@ -1031,7 +1031,7 @@ static void __meminit free_pagetable(str
+ 		free_reserved_pages(page, nr_pages);
+ #endif
+ 	} else {
+-		__free_pages(page, order);
++		pagetable_free(page_ptdesc(page));
+ 	}
  }
  
- #if defined(CONFIG_SPLIT_PTE_PTLOCKS)
+--- a/arch/x86/mm/pat/set_memory.c
++++ b/arch/x86/mm/pat/set_memory.c
+@@ -429,7 +429,7 @@ static void cpa_collapse_large_pages(str
+ 
+ 	list_for_each_entry_safe(ptdesc, tmp, &pgtables, pt_list) {
+ 		list_del(&ptdesc->pt_list);
+-		__free_page(ptdesc_page(ptdesc));
++		pagetable_free(ptdesc);
+ 	}
+ }
+ 
 
 
