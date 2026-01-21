@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F4235285060;
-	Wed, 21 Jan 2026 18:29:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4EB7433506D;
+	Wed, 21 Jan 2026 18:29:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769020189; cv=none; b=oyzIGfiRPjmeXMkBfMA7m37SOz8gCwZvg/PDXCeb+yRcN3nuRc4Jao6ZWQ4VgeV/Nw+w3PNxuW5qyDH6RKgA8YjkRyk2bpJ2WMYaCFZTFKPgh8SZmaY6IN2pEeQoU9fb8bS/Ap3O3/IIGpleCVw3M//jB86wh3dbhUn/FgbB7QU=
+	t=1769020192; cv=none; b=Z7PxcgIyLRlUqoktECpQMz+FTa/Q5dc2vK7gMzCB3pt6OwnH1EUZzaago7p2BauXJ90/4sMTNAHELUTUv8QHikZGN0p3J4dubiNCAmstv1NEOjZypujg1CX5zdihEGYsxyWuU6cm1STatdL7r6XF97/ZBgn6ZyEvMkct6g2+Svs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769020189; c=relaxed/simple;
-	bh=uZTPyOX2mtfkIL8lDZu/DwCR27u8KGJBpUyx3gC1zNw=;
+	s=arc-20240116; t=1769020192; c=relaxed/simple;
+	bh=mSK0ZgtNKjRRF41swcUndrHf/KjBVB3O/kkn0XYcni0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fT6+XrFOhfL/cqMZ1E5G7NC4Q7kXG+BRNBF0EaE4pv3Wqi9HigC1Xz1a5c5U/zEQvAUhYcjbHUXcLyeUZvzQft+PfkAny2JZMJPHBEmSXonx68fhDhRRZZCQrRQug7X0U/0/AGyfUXH4Jy9K6YEDXzfqgtR68lwHBCWfEFNKIyw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=H3+l7wFR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=B1y0dB/la1SZal9923MKuaWL1oKy3Tmc7Yzx6HCoKYfS/dslUIAagCM+L6Hg0ip9FzzXUdBOjIqOKfgKVs4aRnhq7pZ8RyRr8FEzMNUzdKvU5sJEivVMpGHIk8wQHcaqA0aYn2nBTvrF0ivlJ/kWAVjHoBu/V2UDPMVZ5z7WhRQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MXldmCne; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="H3+l7wFR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 54DBEC4CEF1;
-	Wed, 21 Jan 2026 18:29:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MXldmCne"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1BB3C4CEF1;
+	Wed, 21 Jan 2026 18:29:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1769020188;
-	bh=uZTPyOX2mtfkIL8lDZu/DwCR27u8KGJBpUyx3gC1zNw=;
+	s=korg; t=1769020192;
+	bh=mSK0ZgtNKjRRF41swcUndrHf/KjBVB3O/kkn0XYcni0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=H3+l7wFRfZ1yqPNnYH/ovQBMOHR3shv1kcHtTWHXKZJrtsCAProrC/XYehM52k+Xc
-	 wDAnj65J0ePaH/sSbdPvXkDVEdOImh9Mr2H9mP0O1hQp6Wk/MWPxQ7ztW4sF9oiZ3M
-	 qufs9uaGHwngXu9uzgddhbEcIg7QckL2a+867mRY=
+	b=MXldmCne0QTgjSeJBUMBl5PvHBlhnzYq8gLL5l1BvkfbflJ3KtMfimZbt+OmBeMQs
+	 b23BWNuHDePnY8sny51TuN4Xt6XHlDDs+eMPHL7ygBbXlNzQU1ew5vtkjwntcgnlPb
+	 U12FsM0xxIaXEVi1EnVOuwLazbfU8TSQA03MZ3fM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Neil Armstrong <neil.armstrong@linaro.org>,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Carlos Song <carlos.song@nxp.com>,
+	Frank Li <Frank.Li@nxp.com>,
 	Wolfram Sang <wsa+renesas@sang-engineering.com>,
-	Sasha Levin <sashal@kernel.org>,
-	Mukesh Kumar Savaliya <mukesh.savaliya@oss.qualcomm.com>
-Subject: [PATCH 6.18 085/198] i2c: qcom-geni: make sure I2C hub controllers cant use SE DMA
-Date: Wed, 21 Jan 2026 19:15:13 +0100
-Message-ID: <20260121181421.617935445@linuxfoundation.org>
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.18 086/198] i2c: imx-lpi2c: change to PIO mode in system-wide suspend/resume progress
+Date: Wed, 21 Jan 2026 19:15:14 +0100
+Message-ID: <20260121181421.654612078@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260121181418.537774329@linuxfoundation.org>
 References: <20260121181418.537774329@linuxfoundation.org>
@@ -53,69 +52,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Neil Armstrong <neil.armstrong@linaro.org>
+From: Carlos Song <carlos.song@nxp.com>
 
-[ Upstream commit c0c50e3743e467ec4752c638e10e97f89c8644e2 ]
+[ Upstream commit f2a3f51365bf672dab4b58d1e8954926a9196b44 ]
 
-The I2C Hub controller is a simpler GENI I2C variant that doesn't
-support DMA at all, add a no_dma flag to make sure it nevers selects
-the SE DMA mode with mappable 32bytes long transfers.
+EDMA resumes early and suspends late in the system power transition
+sequence, while LPI2C enters the NOIRQ stage for both suspend and resume.
+This means LPI2C resources become available before EDMA is fully resumed.
+Once IRQs are enabled, a slave device may immediately trigger an LPI2C
+transfer. If the transfer length meets DMA requirements, the driver will
+attempt to use EDMA even though EDMA may still be unavailable.
 
-Fixes: cacd9643eca7 ("i2c: qcom-geni: add support for I2C Master Hub variant")
-Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Reviewed-by: Mukesh Kumar Savaliya <mukesh.savaliya@oss.qualcomm.com>>
+This timing gap can lead to transfer failures. To prevent this, force
+LPI2C to use PIO mode during system-wide suspend and resume transitions.
+This reduces dependency on EDMA and avoids using an unready DMA resource.
+
+Fixes: a09c8b3f9047 ("i2c: imx-lpi2c: add eDMA mode support for LPI2C")
+Signed-off-by: Carlos Song <carlos.song@nxp.com>
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
 Signed-off-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/i2c/busses/i2c-qcom-geni.c | 11 +++++++----
- 1 file changed, 7 insertions(+), 4 deletions(-)
+ drivers/i2c/busses/i2c-imx-lpi2c.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/drivers/i2c/busses/i2c-qcom-geni.c b/drivers/i2c/busses/i2c-qcom-geni.c
-index 43fdd89b8bebc..bfb352b04902c 100644
---- a/drivers/i2c/busses/i2c-qcom-geni.c
-+++ b/drivers/i2c/busses/i2c-qcom-geni.c
-@@ -97,6 +97,7 @@ struct geni_i2c_dev {
- 	dma_addr_t dma_addr;
- 	struct dma_chan *tx_c;
- 	struct dma_chan *rx_c;
-+	bool no_dma;
- 	bool gpi_mode;
- 	bool abort_done;
- };
-@@ -425,7 +426,7 @@ static int geni_i2c_rx_one_msg(struct geni_i2c_dev *gi2c, struct i2c_msg *msg,
- 	size_t len = msg->len;
- 	struct i2c_msg *cur;
+diff --git a/drivers/i2c/busses/i2c-imx-lpi2c.c b/drivers/i2c/busses/i2c-imx-lpi2c.c
+index 2a0962a0b4417..d882126c1778c 100644
+--- a/drivers/i2c/busses/i2c-imx-lpi2c.c
++++ b/drivers/i2c/busses/i2c-imx-lpi2c.c
+@@ -592,6 +592,13 @@ static bool is_use_dma(struct lpi2c_imx_struct *lpi2c_imx, struct i2c_msg *msg)
+ 	if (!lpi2c_imx->can_use_dma)
+ 		return false;
  
--	dma_buf = i2c_get_dma_safe_msg_buf(msg, 32);
-+	dma_buf = gi2c->no_dma ? NULL : i2c_get_dma_safe_msg_buf(msg, 32);
- 	if (dma_buf)
- 		geni_se_select_mode(se, GENI_SE_DMA);
- 	else
-@@ -464,7 +465,7 @@ static int geni_i2c_tx_one_msg(struct geni_i2c_dev *gi2c, struct i2c_msg *msg,
- 	size_t len = msg->len;
- 	struct i2c_msg *cur;
- 
--	dma_buf = i2c_get_dma_safe_msg_buf(msg, 32);
-+	dma_buf = gi2c->no_dma ? NULL : i2c_get_dma_safe_msg_buf(msg, 32);
- 	if (dma_buf)
- 		geni_se_select_mode(se, GENI_SE_DMA);
- 	else
-@@ -880,10 +881,12 @@ static int geni_i2c_probe(struct platform_device *pdev)
- 		goto err_resources;
- 	}
- 
--	if (desc && desc->no_dma_support)
-+	if (desc && desc->no_dma_support) {
- 		fifo_disable = false;
--	else
-+		gi2c->no_dma = true;
-+	} else {
- 		fifo_disable = readl_relaxed(gi2c->se.base + GENI_IF_DISABLE_RO) & FIFO_IF_DISABLE;
-+	}
- 
- 	if (fifo_disable) {
- 		/* FIFO is disabled, so we can only use GPI DMA */
++	/*
++	 * A system-wide suspend or resume transition is in progress. LPI2C should use PIO to
++	 * transfer data to avoid issue caused by no ready DMA HW resource.
++	 */
++	if (pm_suspend_in_progress())
++		return false;
++
+ 	/*
+ 	 * When the length of data is less than I2C_DMA_THRESHOLD,
+ 	 * cpu mode is used directly to avoid low performance.
 -- 
 2.51.0
 
