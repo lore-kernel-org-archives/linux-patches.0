@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35EB334A3D6;
-	Wed, 21 Jan 2026 18:27:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 817F535E535;
+	Wed, 21 Jan 2026 18:27:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769020059; cv=none; b=FQ4qATCmu2MI0LzNrIGr4hhsB620s5QWYcWEKZyzSmzi5OcVZaimr/N/GTBjBGFEzhcInomQOcTCesLmCr8QNr2rCWoiGV2GJn5iyUoQi5fjyvtYqGcMFSKt4jVkkhmj0Y8tFKZqDqr1XUsW5FP5pfdbnQZp0J8PFE0htATEA1w=
+	t=1769020062; cv=none; b=USa91TyaOm5IpYMWT0wQOv+dlAAh9WPKmhlEsmpv3lvWXlODoaR70bW5F956GaeGs/cDwk1rAobSOE5dl3utTSsYVkEGJGioQGh7DjtA6BO3oVpwTHcYMHgVKGHO7vEE8v4MSXEoz9sJmUk70/npSWptJnktHPPOrGbz7eK820c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769020059; c=relaxed/simple;
-	bh=KmhDBQMfrP2FWOtNSLo4VM/GO4s9IzB9EqYeDg6wQhU=;
+	s=arc-20240116; t=1769020062; c=relaxed/simple;
+	bh=VWQ6hCldWCHc3pnSqR2ol/CEyxwmuCBNQLwnjmB1aaI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Oo/eL6g2Km7Caj1utM2aOINQV5sumL6wblc9T4Av3pn9ondaYvrv0aDtE+sBL5K/YysrloBOltcKj9i3h0GrkjsuecdaGLI7iokueVsRY+rAVoJTtjJWxh2pX/MpoBuyBS3/Y8KGu6tT2gvyxRnyT9a1kyma0/s7ys3CCiHlH3U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=E6WVQ3LY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BIvwi9l97Rh54icMdJ1u3iCsgBDH5SAyycGCFDgT8l1JnfrsRNCZRFHxpr7gcGlXa+avQITyD61rpaEObDHzTrFu7Ypxt3mZt8kTBMT9qSnCLHVWb4AFnpUcrj5KzzuwuVg4P3CKCc8svPD24ryn9f4Cl4RFOFYNTJsFWWB+/bk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=b+3GK2Jx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="E6WVQ3LY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 92951C4CEF1;
-	Wed, 21 Jan 2026 18:27:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="b+3GK2Jx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA4C9C4CEF1;
+	Wed, 21 Jan 2026 18:27:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1769020059;
-	bh=KmhDBQMfrP2FWOtNSLo4VM/GO4s9IzB9EqYeDg6wQhU=;
+	s=korg; t=1769020062;
+	bh=VWQ6hCldWCHc3pnSqR2ol/CEyxwmuCBNQLwnjmB1aaI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=E6WVQ3LYi23/P/rrdyehw/ROKIKfr9tDxinlQ5SLPt/WI2MLjxtXRe3vip0xa0WlH
-	 C3uegqp4Z9DDuDs51ODtgWcP3mkdd1shUb9cGoE/5WNFhsJXnUAzSWFD867aKw92t+
-	 QO4u4M66lujZortp9gHWLXGr10l6fo/X8NI6HhYw=
+	b=b+3GK2JxgV0QrpXj7SFt8GS1kXu8kiklEhajPXe+R9i1chV6PIBHBEh9Kta/a35v6
+	 5Gme54TXPSjq7oJZtciX/kSXD6cekk9SCu5k9K5w/SYz2Am+SOFAJIq6XekhqSVGpV
+	 vRhv3JjceeRfnYwyrKlVEFZKkwn24oQTxF5Z+PV0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Filipe Manana <fdmanana@suse.com>,
-	Qu Wenruo <wqu@suse.com>,
-	David Sterba <dsterba@suse.com>,
+	Richard Fitzgerald <rf@opensource.cirrus.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 030/198] btrfs: send: check for inline extents in range_is_hole_in_parent()
-Date: Wed, 21 Jan 2026 19:14:18 +0100
-Message-ID: <20260121181419.637451498@linuxfoundation.org>
+Subject: [PATCH 6.18 048/198] ALSA: hda/cirrus_scodec_test: Fix incorrect setup of gpiochip
+Date: Wed, 21 Jan 2026 19:14:36 +0100
+Message-ID: <20260121181420.284319119@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260121181418.537774329@linuxfoundation.org>
 References: <20260121181418.537774329@linuxfoundation.org>
@@ -52,42 +51,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Qu Wenruo <wqu@suse.com>
+From: Richard Fitzgerald <rf@opensource.cirrus.com>
 
-[ Upstream commit 08b096c1372cd69627f4f559fb47c9fb67a52b39 ]
+[ Upstream commit c5e96e54eca3876d4ce8857e2e22adbe9f44f4a2 ]
 
-Before accessing the disk_bytenr field of a file extent item we need
-to check if we are dealing with an inline extent.
-This is because for inline extents their data starts at the offset of
-the disk_bytenr field. So accessing the disk_bytenr
-means we are accessing inline data or in case the inline data is less
-than 8 bytes we can actually cause an invalid
-memory access if this inline extent item is the first item in the leaf
-or access metadata from other items.
+Set gpiochip parent to the struct device of the dummy GPIO driver
+so that the software node will be associated with the GPIO chip.
 
-Fixes: 82bfb2e7b645 ("Btrfs: incremental send, fix unnecessary hole writes for sparse files")
-Reviewed-by: Filipe Manana <fdmanana@suse.com>
-Signed-off-by: Qu Wenruo <wqu@suse.com>
-Reviewed-by: David Sterba <dsterba@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+The recent commit e5d527be7e698 ("gpio: swnode: don't use the
+swnode's name as the key for GPIO lookup") broke cirrus_scodec_test,
+because the software node no longer gets associated with the GPIO
+driver by name.
+
+Instead, setting struct gpio_chip.parent to the owning struct device
+will find the node using a normal fwnode lookup.
+
+Signed-off-by: Richard Fitzgerald <rf@opensource.cirrus.com>
+Fixes: 2144833e7b414 ("ALSA: hda: cirrus_scodec: Add KUnit test")
+Link: https://patch.msgid.link/20260113130954.574670-1-rf@opensource.cirrus.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/send.c | 2 ++
- 1 file changed, 2 insertions(+)
+ sound/hda/codecs/side-codecs/cirrus_scodec_test.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/fs/btrfs/send.c b/fs/btrfs/send.c
-index 96a030d28e091..9012ce7a742f4 100644
---- a/fs/btrfs/send.c
-+++ b/fs/btrfs/send.c
-@@ -6399,6 +6399,8 @@ static int range_is_hole_in_parent(struct send_ctx *sctx,
- 		extent_end = btrfs_file_extent_end(path);
- 		if (extent_end <= start)
- 			goto next;
-+		if (btrfs_file_extent_type(leaf, fi) == BTRFS_FILE_EXTENT_INLINE)
-+			return 0;
- 		if (btrfs_file_extent_disk_bytenr(leaf, fi) == 0) {
- 			search_start = extent_end;
- 			goto next;
+diff --git a/sound/hda/codecs/side-codecs/cirrus_scodec_test.c b/sound/hda/codecs/side-codecs/cirrus_scodec_test.c
+index 3cca750857b68..159ac80a93144 100644
+--- a/sound/hda/codecs/side-codecs/cirrus_scodec_test.c
++++ b/sound/hda/codecs/side-codecs/cirrus_scodec_test.c
+@@ -103,6 +103,7 @@ static int cirrus_scodec_test_gpio_probe(struct platform_device *pdev)
+ 
+ 	/* GPIO core modifies our struct gpio_chip so use a copy */
+ 	gpio_priv->chip = cirrus_scodec_test_gpio_chip;
++	gpio_priv->chip.parent = &pdev->dev;
+ 	ret = devm_gpiochip_add_data(&pdev->dev, &gpio_priv->chip, gpio_priv);
+ 	if (ret)
+ 		return dev_err_probe(&pdev->dev, ret, "Failed to add gpiochip\n");
 -- 
 2.51.0
 
