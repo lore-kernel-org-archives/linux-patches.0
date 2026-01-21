@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5CF1837E2FD;
-	Wed, 21 Jan 2026 18:22:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09916393403;
+	Wed, 21 Jan 2026 18:22:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769019734; cv=none; b=pn9tUzqnKd1/RTPdK2ajY53F3r7np9OHIB9WB9lwfS2g6Ds76lC+mhbhTFCrviTqBPYO0lt5PklAvIw4uR+V8P87bypRgizXeokS+/Azg+ToXnMVk2+UZ6J1A5sGzTIwiXT8ojQA+uIxTGf+0NFThrkpuOAzKhzV/n8GJyccGtk=
+	t=1769019738; cv=none; b=dgGkIXXm5WbveDPftNbJSBSBEvdSFMoDx2eZQfNLyGIqTQ8BkUkhBggyiapAwcydSmVI/2UrrPvs/R1+oHXS1gCVxhBQwbcp6NVtKRY9W4+EwUw/T+w3uvW1FrajHAXsmqnG8UxWk/az5j9QVrt/FMOCfdS6v31WFiovcVvSuTQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769019734; c=relaxed/simple;
-	bh=AW+CDJBDRnEj34f6UTWmZqkEQLhNxrJDNzaas6YaMxQ=;
+	s=arc-20240116; t=1769019738; c=relaxed/simple;
+	bh=2b+fIkA71p72XTJxq4JNhEg95BpTImmL78DKAploYps=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ILaO1pu3SUh2wLa5AIk+2FnPn9cA6WgH2YWXkWQCtCY9F3V9e17PPpg3XQWSTm4R2xXqsFwiC1ZI35/BflbYkHLSKoG+e9+50gVRLy57wnr4j5Ul2y/JYCeiTaxtHjF+QM4Ofs+aV9xEYsVzwzqjdfmWHiTfk2kpqq9LHd+DsCk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dnKyeUaT; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=iB6lbjhCZHXuDFxyF85BMtSM9xTnwNuhUQlZWfkT7OB4+/Znemlp8EOqcbZgY07rgGE1ZbMYA+hk6H/iv/DKKIe5EDRE8qg7cSCtT8TcHzJOJ5eKP3dGL90+040w0D4ouMJKGqXoLZJ1n63bYRQIcR7mFeUllkQZYVpBsz2VCao=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BsdwA8jb; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dnKyeUaT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C2D29C4CEF1;
-	Wed, 21 Jan 2026 18:22:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BsdwA8jb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A32BC4CEF1;
+	Wed, 21 Jan 2026 18:22:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1769019734;
-	bh=AW+CDJBDRnEj34f6UTWmZqkEQLhNxrJDNzaas6YaMxQ=;
+	s=korg; t=1769019737;
+	bh=2b+fIkA71p72XTJxq4JNhEg95BpTImmL78DKAploYps=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dnKyeUaTU/Nz4RWK6uE9dpkTc6YBLkAcTRmDw86yrdEvmq3VMpKcuZBxb4+RYr68r
-	 gqBBN5Uucg1po8dcteF0Atd2hcsT4ZU6QHnOmR8scKkT1CDhvD6hJ35FG+aPiqtlxc
-	 8uKCeXjVVpOWbFv7opR1iWfC0f1vcOGRcvhKVKmo=
+	b=BsdwA8jbH4FKsLtT8d+8om7IIBjYTpcaSqLuUW9A/NHbeKDdiqy53fC/LApEfslbY
+	 rzYiiYJ7okteGNV7bx3cygPoU7zjSMg8ZKkCFoMYd77IaHSgL/GUUiv65ABG0dzIeT
+	 XVQp0Fx1J7c+MjXChxREXy3Bhhz50P73WAbBgtzA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xiaochen Shen <shenxiaochen@open-hieco.net>,
-	"Borislav Petkov (AMD)" <bp@alien8.de>,
-	Reinette Chatre <reinette.chatre@intel.com>
-Subject: [PATCH 6.12 091/139] x86/resctrl: Add missing resctrl initialization for Hygon
-Date: Wed, 21 Jan 2026 19:15:39 +0100
-Message-ID: <20260121181414.730630925@linuxfoundation.org>
+	syzbot+7bfa4b72c6a5da128d32@syzkaller.appspotmail.com,
+	Ido Schimmel <idosch@nvidia.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Lee Jones <lee@kernel.org>
+Subject: [PATCH 6.12 060/139] bridge: mcast: Fix use-after-free during router port configuration
+Date: Wed, 21 Jan 2026 19:15:08 +0100
+Message-ID: <20260121181413.613362197@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260121181411.452263583@linuxfoundation.org>
 References: <20260121181411.452263583@linuxfoundation.org>
@@ -51,58 +52,179 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xiaochen Shen <shenxiaochen@open-hieco.net>
+From: Ido Schimmel <idosch@nvidia.com>
 
-commit 6ee98aabdc700b5705e4f1833e2edc82a826b53b upstream.
+commit 7544f3f5b0b58c396f374d060898b5939da31709 upstream.
 
-Hygon CPUs supporting Platform QoS features currently undergo partial resctrl
-initialization through resctrl_cpu_detect() in the Hygon BSP init helper and
-AMD/Hygon common initialization code. However, several critical data
-structures remain uninitialized for Hygon CPUs in the following paths:
+The bridge maintains a global list of ports behind which a multicast
+router resides. The list is consulted during forwarding to ensure
+multicast packets are forwarded to these ports even if the ports are not
+member in the matching MDB entry.
 
- - get_mem_config()-> __rdt_get_mem_config_amd():
-     rdt_resource::membw,alloc_capable
-     hw_res::num_closid
+When per-VLAN multicast snooping is enabled, the per-port multicast
+context is disabled on each port and the port is removed from the global
+router port list:
 
- - rdt_init_res_defs()->rdt_init_res_defs_amd():
-     rdt_resource::cache
-     hw_res::msr_base,msr_update
+ # ip link add name br1 up type bridge vlan_filtering 1 mcast_snooping 1
+ # ip link add name dummy1 up master br1 type dummy
+ # ip link set dev dummy1 type bridge_slave mcast_router 2
+ $ bridge -d mdb show | grep router
+ router ports on br1: dummy1
+ # ip link set dev br1 type bridge mcast_vlan_snooping 1
+ $ bridge -d mdb show | grep router
 
-Add the missing AMD/Hygon common initialization to ensure proper Platform QoS
-functionality on Hygon CPUs.
+However, the port can be re-added to the global list even when per-VLAN
+multicast snooping is enabled:
 
-Fixes: d8df126349da ("x86/cpu/hygon: Add missing resctrl_cpu_detect() in bsp_init helper")
-Signed-off-by: Xiaochen Shen <shenxiaochen@open-hieco.net>
-Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Reviewed-by: Reinette Chatre <reinette.chatre@intel.com>
-Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20251209062650.1536952-2-shenxiaochen@open-hieco.net
+ # ip link set dev dummy1 type bridge_slave mcast_router 0
+ # ip link set dev dummy1 type bridge_slave mcast_router 2
+ $ bridge -d mdb show | grep router
+ router ports on br1: dummy1
+
+Since commit 4b30ae9adb04 ("net: bridge: mcast: re-implement
+br_multicast_{enable, disable}_port functions"), when per-VLAN multicast
+snooping is enabled, multicast disablement on a port will disable the
+per-{port, VLAN} multicast contexts and not the per-port one. As a
+result, a port will remain in the global router port list even after it
+is deleted. This will lead to a use-after-free [1] when the list is
+traversed (when adding a new port to the list, for example):
+
+ # ip link del dev dummy1
+ # ip link add name dummy2 up master br1 type dummy
+ # ip link set dev dummy2 type bridge_slave mcast_router 2
+
+Similarly, stale entries can also be found in the per-VLAN router port
+list. When per-VLAN multicast snooping is disabled, the per-{port, VLAN}
+contexts are disabled on each port and the port is removed from the
+per-VLAN router port list:
+
+ # ip link add name br1 up type bridge vlan_filtering 1 mcast_snooping 1 mcast_vlan_snooping 1
+ # ip link add name dummy1 up master br1 type dummy
+ # bridge vlan add vid 2 dev dummy1
+ # bridge vlan global set vid 2 dev br1 mcast_snooping 1
+ # bridge vlan set vid 2 dev dummy1 mcast_router 2
+ $ bridge vlan global show dev br1 vid 2 | grep router
+       router ports: dummy1
+ # ip link set dev br1 type bridge mcast_vlan_snooping 0
+ $ bridge vlan global show dev br1 vid 2 | grep router
+
+However, the port can be re-added to the per-VLAN list even when
+per-VLAN multicast snooping is disabled:
+
+ # bridge vlan set vid 2 dev dummy1 mcast_router 0
+ # bridge vlan set vid 2 dev dummy1 mcast_router 2
+ $ bridge vlan global show dev br1 vid 2 | grep router
+       router ports: dummy1
+
+When the VLAN is deleted from the port, the per-{port, VLAN} multicast
+context will not be disabled since multicast snooping is not enabled
+on the VLAN. As a result, the port will remain in the per-VLAN router
+port list even after it is no longer member in the VLAN. This will lead
+to a use-after-free [2] when the list is traversed (when adding a new
+port to the list, for example):
+
+ # ip link add name dummy2 up master br1 type dummy
+ # bridge vlan add vid 2 dev dummy2
+ # bridge vlan del vid 2 dev dummy1
+ # bridge vlan set vid 2 dev dummy2 mcast_router 2
+
+Fix these issues by removing the port from the relevant (global or
+per-VLAN) router port list in br_multicast_port_ctx_deinit(). The
+function is invoked during port deletion with the per-port multicast
+context and during VLAN deletion with the per-{port, VLAN} multicast
+context.
+
+Note that deleting the multicast router timer is not enough as it only
+takes care of the temporary multicast router states (1 or 3) and not the
+permanent one (2).
+
+[1]
+BUG: KASAN: slab-out-of-bounds in br_multicast_add_router.part.0+0x3f1/0x560
+Write of size 8 at addr ffff888004a67328 by task ip/384
+[...]
+Call Trace:
+ <TASK>
+ dump_stack_lvl+0x6f/0xa0
+ print_address_description.constprop.0+0x6f/0x350
+ print_report+0x108/0x205
+ kasan_report+0xdf/0x110
+ br_multicast_add_router.part.0+0x3f1/0x560
+ br_multicast_set_port_router+0x74e/0xac0
+ br_setport+0xa55/0x1870
+ br_port_slave_changelink+0x95/0x120
+ __rtnl_newlink+0x5e8/0xa40
+ rtnl_newlink+0x627/0xb00
+ rtnetlink_rcv_msg+0x6fb/0xb70
+ netlink_rcv_skb+0x11f/0x350
+ netlink_unicast+0x426/0x710
+ netlink_sendmsg+0x75a/0xc20
+ __sock_sendmsg+0xc1/0x150
+ ____sys_sendmsg+0x5aa/0x7b0
+ ___sys_sendmsg+0xfc/0x180
+ __sys_sendmsg+0x124/0x1c0
+ do_syscall_64+0xbb/0x360
+ entry_SYSCALL_64_after_hwframe+0x4b/0x53
+
+[2]
+BUG: KASAN: slab-use-after-free in br_multicast_add_router.part.0+0x378/0x560
+Read of size 8 at addr ffff888009f00840 by task bridge/391
+[...]
+Call Trace:
+ <TASK>
+ dump_stack_lvl+0x6f/0xa0
+ print_address_description.constprop.0+0x6f/0x350
+ print_report+0x108/0x205
+ kasan_report+0xdf/0x110
+ br_multicast_add_router.part.0+0x378/0x560
+ br_multicast_set_port_router+0x6f9/0xac0
+ br_vlan_process_options+0x8b6/0x1430
+ br_vlan_rtm_process_one+0x605/0xa30
+ br_vlan_rtm_process+0x396/0x4c0
+ rtnetlink_rcv_msg+0x2f7/0xb70
+ netlink_rcv_skb+0x11f/0x350
+ netlink_unicast+0x426/0x710
+ netlink_sendmsg+0x75a/0xc20
+ __sock_sendmsg+0xc1/0x150
+ ____sys_sendmsg+0x5aa/0x7b0
+ ___sys_sendmsg+0xfc/0x180
+ __sys_sendmsg+0x124/0x1c0
+ do_syscall_64+0xbb/0x360
+ entry_SYSCALL_64_after_hwframe+0x4b/0x53
+
+Fixes: 2796d846d74a ("net: bridge: vlan: convert mcast router global option to per-vlan entry")
+Fixes: 4b30ae9adb04 ("net: bridge: mcast: re-implement br_multicast_{enable, disable}_port functions")
+Reported-by: syzbot+7bfa4b72c6a5da128d32@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/all/684c18bd.a00a0220.279073.000b.GAE@google.com/T/
+Signed-off-by: Ido Schimmel <idosch@nvidia.com>
+Link: https://patch.msgid.link/20250619182228.1656906-1-idosch@nvidia.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Lee Jones <lee@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kernel/cpu/resctrl/core.c |    6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ net/bridge/br_multicast.c |    9 +++++++++
+ 1 file changed, 9 insertions(+)
 
---- a/arch/x86/kernel/cpu/resctrl/core.c
-+++ b/arch/x86/kernel/cpu/resctrl/core.c
-@@ -892,7 +892,8 @@ static __init bool get_mem_config(void)
+--- a/net/bridge/br_multicast.c
++++ b/net/bridge/br_multicast.c
+@@ -2014,10 +2014,19 @@ void br_multicast_port_ctx_init(struct n
  
- 	if (boot_cpu_data.x86_vendor == X86_VENDOR_INTEL)
- 		return __get_mem_config_intel(&hw_res->r_resctrl);
--	else if (boot_cpu_data.x86_vendor == X86_VENDOR_AMD)
-+	else if (boot_cpu_data.x86_vendor == X86_VENDOR_AMD ||
-+		 boot_cpu_data.x86_vendor == X86_VENDOR_HYGON)
- 		return __rdt_get_mem_config_amd(&hw_res->r_resctrl);
- 
- 	return false;
-@@ -1043,7 +1044,8 @@ static __init void rdt_init_res_defs(voi
+ void br_multicast_port_ctx_deinit(struct net_bridge_mcast_port *pmctx)
  {
- 	if (boot_cpu_data.x86_vendor == X86_VENDOR_INTEL)
- 		rdt_init_res_defs_intel();
--	else if (boot_cpu_data.x86_vendor == X86_VENDOR_AMD)
-+	else if (boot_cpu_data.x86_vendor == X86_VENDOR_AMD ||
-+		 boot_cpu_data.x86_vendor == X86_VENDOR_HYGON)
- 		rdt_init_res_defs_amd();
++	struct net_bridge *br = pmctx->port->br;
++	bool del = false;
++
+ #if IS_ENABLED(CONFIG_IPV6)
+ 	del_timer_sync(&pmctx->ip6_mc_router_timer);
+ #endif
+ 	del_timer_sync(&pmctx->ip4_mc_router_timer);
++
++	spin_lock_bh(&br->multicast_lock);
++	del |= br_ip6_multicast_rport_del(pmctx);
++	del |= br_ip4_multicast_rport_del(pmctx);
++	br_multicast_rport_del_notify(pmctx, del);
++	spin_unlock_bh(&br->multicast_lock);
  }
  
+ int br_multicast_add_port(struct net_bridge_port *port)
 
 
