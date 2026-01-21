@@ -1,48 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 506073D524D;
-	Wed, 21 Jan 2026 18:36:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E65753A6414;
+	Wed, 21 Jan 2026 18:36:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769020567; cv=none; b=MjSR8r8ovpX2hulK+ioxo/wxFsbxvdjBKTOaAEdyr2edqslJKjOGlMMF9HIyIogupDDMXyw5/WBTlkNPjv4uv+LbdsAaiue3XCW/61+HnLamtDryQaL6ihqQwAUE+iiWjSmWRpSEK90hqx2K7xnO+bW/fzOg8PgPy/2HmmX2PVs=
+	t=1769020571; cv=none; b=jGiJU05rYeMsX73McayavXa5GmQa5/6V60U8GQW5ZdG7lkaNcUe7hASiaXUXNjSa4/QBMobpna/A8wuW+dH6CgP5gwri6fJXZsHOVPhJZfk2TUBg2KyJQXiNRq7DoZI1BsCKIpiSYMRHhKoTuTGV2bdvjxyANMdlZYm8r5uYIWs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769020567; c=relaxed/simple;
-	bh=HFZmG4+KiQ3uQylwo7WuuBRpoUZdLGpfliVYZ9XxZMo=;
+	s=arc-20240116; t=1769020571; c=relaxed/simple;
+	bh=QlXLj/psdQHrWsxuK4diY88GruKdvJvTg/6y1HmkskA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GRIrdGInYgFYEKMu40qf78d5P0WJpKSl36w4o/HA3/s3AjyJYYxEvluDvL2q2fuFBR8tXn796Q6Yj6kKL+ZU/6Rww+pHmcoxfjHR9QknXzs2bPtxgqKYmPLwargL98YXJQfSy0br/r5aiFRtgJ8atJm6fbsyA9UtMgEwrxjb7l8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Pch96cDj; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=G5D47/KXBNRzmGgrZh8B/yXrRnGA4iQ/odv0Wg3G3Y/wP/FU5nhfP1TbEQ5k4WzhlcIZAmYSqPoC+Om259juPUHJhdmGHp9Qzpxjfcfo1gdWh11jGFUWOW94Ndni+pk9ubOk2v4FP7jepksYjZIj4fSCteYC/5PCahK9FzMAp1I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CDkXt6jZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Pch96cDj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 70A33C4CEF1;
-	Wed, 21 Jan 2026 18:36:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CDkXt6jZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 307E3C4CEF1;
+	Wed, 21 Jan 2026 18:36:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1769020567;
-	bh=HFZmG4+KiQ3uQylwo7WuuBRpoUZdLGpfliVYZ9XxZMo=;
+	s=korg; t=1769020570;
+	bh=QlXLj/psdQHrWsxuK4diY88GruKdvJvTg/6y1HmkskA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Pch96cDjutAu84i0r9unEe6O0deohwDVsyrKWkwHWM6zhjikbgQNCdj/kjcYsucbw
-	 MvNW45yRY4A0kw+vf/itgEk8n8D7V7O/yPiy45RXB+wuZoTTfBpT/8tlQzQlIzZoqn
-	 c1KAel4PTzIH5dteP/v2QBuiukE+7Lu96g35liO0=
+	b=CDkXt6jZvQvmfyS7/yg3CAvZbCn7v0J7rvYGBexbZ1ZoFFNjX6aJ5MyRctsH0X9p2
+	 hFNGx/16D9+/5fqQr7LSRmK3bKe3sevb6z1APiBDFgEHz1C9a/E+Dr1CfGmpB0+5oW
+	 CvYPspPbYnHTLGKkErKjnpYO39+mlnLGdX4aadoM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vlastimil Babka <vbabka@suse.cz>,
-	kernel test robot <oliver.sang@intel.com>,
-	Mel Gorman <mgorman@techsingularity.net>,
-	Brendan Jackman <jackmanb@google.com>,
-	Johannes Weiner <hannes@cmpxchg.org>,
-	Michal Hocko <mhocko@suse.com>,
-	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
-	Steven Rostedt <rostedt@goodmis.org>,
-	Suren Baghdasaryan <surenb@google.com>,
-	Zi Yan <ziy@nvidia.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Sasha Levin <sashal@kernel.org>,
-	Matthew Wilcox <willy@infradead.org>
-Subject: [PATCH 6.18 196/198] mm/page_alloc: prevent pcp corruption with SMP=n
-Date: Wed, 21 Jan 2026 19:17:04 +0100
-Message-ID: <20260121181425.613134816@linuxfoundation.org>
+	Al Viro <viro@zeniv.linux.org.uk>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.18 197/198] Revert "functionfs: fix the open/removal races"
+Date: Wed, 21 Jan 2026 19:17:05 +0100
+Message-ID: <20260121181425.648793094@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260121181418.537774329@linuxfoundation.org>
 References: <20260121181418.537774329@linuxfoundation.org>
@@ -61,210 +50,119 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vlastimil Babka <vbabka@suse.cz>
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 
-commit 038a102535eb49e10e93eafac54352fcc5d78847 upstream.
+This reverts commit b49c766856fb5901490de577e046149ebf15e39d which is
+commit e5bf5ee266633cb18fff6f98f0b7d59a62819eee upstream.
 
-The kernel test robot has reported:
+It has been reported to cause test problems in Android devices.  As the
+other functionfs changes were not also backported at the same time,
+something is out of sync.  So just revert this one for now and it can
+come back in the future as a patch series if it is tested.
 
- BUG: spinlock trylock failure on UP on CPU#0, kcompactd0/28
-  lock: 0xffff888807e35ef0, .magic: dead4ead, .owner: kcompactd0/28, .owner_cpu: 0
- CPU: 0 UID: 0 PID: 28 Comm: kcompactd0 Not tainted 6.18.0-rc5-00127-ga06157804399 #1 PREEMPT  8cc09ef94dcec767faa911515ce9e609c45db470
- Call Trace:
-  <IRQ>
-  __dump_stack (lib/dump_stack.c:95)
-  dump_stack_lvl (lib/dump_stack.c:123)
-  dump_stack (lib/dump_stack.c:130)
-  spin_dump (kernel/locking/spinlock_debug.c:71)
-  do_raw_spin_trylock (kernel/locking/spinlock_debug.c:?)
-  _raw_spin_trylock (include/linux/spinlock_api_smp.h:89 kernel/locking/spinlock.c:138)
-  __free_frozen_pages (mm/page_alloc.c:2973)
-  ___free_pages (mm/page_alloc.c:5295)
-  __free_pages (mm/page_alloc.c:5334)
-  tlb_remove_table_rcu (include/linux/mm.h:? include/linux/mm.h:3122 include/asm-generic/tlb.h:220 mm/mmu_gather.c:227 mm/mmu_gather.c:290)
-  ? __cfi_tlb_remove_table_rcu (mm/mmu_gather.c:289)
-  ? rcu_core (kernel/rcu/tree.c:?)
-  rcu_core (include/linux/rcupdate.h:341 kernel/rcu/tree.c:2607 kernel/rcu/tree.c:2861)
-  rcu_core_si (kernel/rcu/tree.c:2879)
-  handle_softirqs (arch/x86/include/asm/jump_label.h:36 include/trace/events/irq.h:142 kernel/softirq.c:623)
-  __irq_exit_rcu (arch/x86/include/asm/jump_label.h:36 kernel/softirq.c:725)
-  irq_exit_rcu (kernel/softirq.c:741)
-  sysvec_apic_timer_interrupt (arch/x86/kernel/apic/apic.c:1052)
-  </IRQ>
-  <TASK>
- RIP: 0010:_raw_spin_unlock_irqrestore (arch/x86/include/asm/preempt.h:95 include/linux/spinlock_api_smp.h:152 kernel/locking/spinlock.c:194)
-  free_pcppages_bulk (mm/page_alloc.c:1494)
-  drain_pages_zone (include/linux/spinlock.h:391 mm/page_alloc.c:2632)
-  __drain_all_pages (mm/page_alloc.c:2731)
-  drain_all_pages (mm/page_alloc.c:2747)
-  kcompactd (mm/compaction.c:3115)
-  kthread (kernel/kthread.c:465)
-  ? __cfi_kcompactd (mm/compaction.c:3166)
-  ? __cfi_kthread (kernel/kthread.c:412)
-  ret_from_fork (arch/x86/kernel/process.c:164)
-  ? __cfi_kthread (kernel/kthread.c:412)
-  ret_from_fork_asm (arch/x86/entry/entry_64.S:255)
-  </TASK>
-
-Matthew has analyzed the report and identified that in drain_page_zone()
-we are in a section protected by spin_lock(&pcp->lock) and then get an
-interrupt that attempts spin_trylock() on the same lock.  The code is
-designed to work this way without disabling IRQs and occasionally fail the
-trylock with a fallback.  However, the SMP=n spinlock implementation
-assumes spin_trylock() will always succeed, and thus it's normally a
-no-op.  Here the enabled lock debugging catches the problem, but otherwise
-it could cause a corruption of the pcp structure.
-
-The problem has been introduced by commit 574907741599 ("mm/page_alloc:
-leave IRQs enabled for per-cpu page allocations").  The pcp locking scheme
-recognizes the need for disabling IRQs to prevent nesting spin_trylock()
-sections on SMP=n, but the need to prevent the nesting in spin_lock() has
-not been recognized.  Fix it by introducing local wrappers that change the
-spin_lock() to spin_lock_iqsave() with SMP=n and use them in all places
-that do spin_lock(&pcp->lock).
-
-[vbabka@suse.cz: add pcp_ prefix to the spin_lock_irqsave wrappers, per Steven]
-Link: https://lkml.kernel.org/r/20260105-fix-pcp-up-v1-1-5579662d2071@suse.cz
-Fixes: 574907741599 ("mm/page_alloc: leave IRQs enabled for per-cpu page allocations")
-Signed-off-by: Vlastimil Babka <vbabka@suse.cz>
-Reported-by: kernel test robot <oliver.sang@intel.com>
-Closes: https://lore.kernel.org/oe-lkp/202512101320.e2f2dd6f-lkp@intel.com
-Analyzed-by: Matthew Wilcox <willy@infradead.org>
-Link: https://lore.kernel.org/all/aUW05pyc9nZkvY-1@casper.infradead.org/
-Acked-by: Mel Gorman <mgorman@techsingularity.net>
-Cc: Brendan Jackman <jackmanb@google.com>
-Cc: Johannes Weiner <hannes@cmpxchg.org>
-Cc: Michal Hocko <mhocko@suse.com>
-Cc: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
-Cc: Steven Rostedt <rostedt@goodmis.org>
-Cc: Suren Baghdasaryan <surenb@google.com>
-Cc: Zi Yan <ziy@nvidia.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Cc: Al Viro <viro@zeniv.linux.org.uk>
+Cc: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/page_alloc.c |   47 +++++++++++++++++++++++++++++++++++++++--------
- 1 file changed, 39 insertions(+), 8 deletions(-)
+ drivers/usb/gadget/function/f_fs.c |   53 ++++++-------------------------------
+ 1 file changed, 10 insertions(+), 43 deletions(-)
 
---- a/mm/page_alloc.c
-+++ b/mm/page_alloc.c
-@@ -166,6 +166,33 @@ static DEFINE_MUTEX(pcp_batch_high_lock)
- #define pcp_spin_unlock(ptr)						\
- 	pcpu_spin_unlock(lock, ptr)
+--- a/drivers/usb/gadget/function/f_fs.c
++++ b/drivers/usb/gadget/function/f_fs.c
+@@ -640,22 +640,13 @@ done_mutex:
  
-+/*
-+ * With the UP spinlock implementation, when we spin_lock(&pcp->lock) (for i.e.
-+ * a potentially remote cpu drain) and get interrupted by an operation that
-+ * attempts pcp_spin_trylock(), we can't rely on the trylock failure due to UP
-+ * spinlock assumptions making the trylock a no-op. So we have to turn that
-+ * spin_lock() to a spin_lock_irqsave(). This works because on UP there are no
-+ * remote cpu's so we can only be locking the only existing local one.
-+ */
-+#if defined(CONFIG_SMP) || defined(CONFIG_PREEMPT_RT)
-+static inline void __flags_noop(unsigned long *flags) { }
-+#define pcp_spin_lock_maybe_irqsave(ptr, flags)		\
-+({							\
-+	 __flags_noop(&(flags));			\
-+	 spin_lock(&(ptr)->lock);			\
-+})
-+#define pcp_spin_unlock_maybe_irqrestore(ptr, flags)	\
-+({							\
-+	 spin_unlock(&(ptr)->lock);			\
-+	 __flags_noop(&(flags));			\
-+})
-+#else
-+#define pcp_spin_lock_maybe_irqsave(ptr, flags)		\
-+		spin_lock_irqsave(&(ptr)->lock, flags)
-+#define pcp_spin_unlock_maybe_irqrestore(ptr, flags)	\
-+		spin_unlock_irqrestore(&(ptr)->lock, flags)
-+#endif
+ static int ffs_ep0_open(struct inode *inode, struct file *file)
+ {
+-	struct ffs_data *ffs = inode->i_sb->s_fs_info;
+-	int ret;
+-
+-	/* Acquire mutex */
+-	ret = ffs_mutex_lock(&ffs->mutex, file->f_flags & O_NONBLOCK);
+-	if (ret < 0)
+-		return ret;
++	struct ffs_data *ffs = inode->i_private;
+ 
+-	ffs_data_opened(ffs);
+-	if (ffs->state == FFS_CLOSING) {
+-		ffs_data_closed(ffs);
+-		mutex_unlock(&ffs->mutex);
++	if (ffs->state == FFS_CLOSING)
+ 		return -EBUSY;
+-	}
+-	mutex_unlock(&ffs->mutex);
 +
- #ifdef CONFIG_USE_PERCPU_NUMA_NODE_ID
- DEFINE_PER_CPU(int, numa_node);
- EXPORT_PER_CPU_SYMBOL(numa_node);
-@@ -2555,6 +2582,7 @@ static int rmqueue_bulk(struct zone *zon
- bool decay_pcp_high(struct zone *zone, struct per_cpu_pages *pcp)
- {
- 	int high_min, to_drain, to_drain_batched, batch;
-+	unsigned long UP_flags;
- 	bool todo = false;
+ 	file->private_data = ffs;
++	ffs_data_opened(ffs);
  
- 	high_min = READ_ONCE(pcp->high_min);
-@@ -2574,9 +2602,9 @@ bool decay_pcp_high(struct zone *zone, s
- 	to_drain = pcp->count - pcp->high;
- 	while (to_drain > 0) {
- 		to_drain_batched = min(to_drain, batch);
--		spin_lock(&pcp->lock);
-+		pcp_spin_lock_maybe_irqsave(pcp, UP_flags);
- 		free_pcppages_bulk(zone, to_drain_batched, pcp, 0);
--		spin_unlock(&pcp->lock);
-+		pcp_spin_unlock_maybe_irqrestore(pcp, UP_flags);
- 		todo = true;
- 
- 		to_drain -= to_drain_batched;
-@@ -2593,14 +2621,15 @@ bool decay_pcp_high(struct zone *zone, s
-  */
- void drain_zone_pages(struct zone *zone, struct per_cpu_pages *pcp)
- {
-+	unsigned long UP_flags;
- 	int to_drain, batch;
- 
- 	batch = READ_ONCE(pcp->batch);
- 	to_drain = min(pcp->count, batch);
- 	if (to_drain > 0) {
--		spin_lock(&pcp->lock);
-+		pcp_spin_lock_maybe_irqsave(pcp, UP_flags);
- 		free_pcppages_bulk(zone, to_drain, pcp, 0);
--		spin_unlock(&pcp->lock);
-+		pcp_spin_unlock_maybe_irqrestore(pcp, UP_flags);
- 	}
+ 	return stream_open(inode, file);
  }
- #endif
-@@ -2611,10 +2640,11 @@ void drain_zone_pages(struct zone *zone,
- static void drain_pages_zone(unsigned int cpu, struct zone *zone)
+@@ -1202,33 +1193,14 @@ error:
+ static int
+ ffs_epfile_open(struct inode *inode, struct file *file)
  {
- 	struct per_cpu_pages *pcp = per_cpu_ptr(zone->per_cpu_pageset, cpu);
-+	unsigned long UP_flags;
- 	int count;
+-	struct ffs_data *ffs = inode->i_sb->s_fs_info;
+-	struct ffs_epfile *epfile;
+-	int ret;
+-
+-	/* Acquire mutex */
+-	ret = ffs_mutex_lock(&ffs->mutex, file->f_flags & O_NONBLOCK);
+-	if (ret < 0)
+-		return ret;
++	struct ffs_epfile *epfile = inode->i_private;
  
- 	do {
--		spin_lock(&pcp->lock);
-+		pcp_spin_lock_maybe_irqsave(pcp, UP_flags);
- 		count = pcp->count;
- 		if (count) {
- 			int to_drain = min(count,
-@@ -2623,7 +2653,7 @@ static void drain_pages_zone(unsigned in
- 			free_pcppages_bulk(zone, to_drain, pcp, 0);
- 			count -= to_drain;
+-	if (!atomic_inc_not_zero(&ffs->opened)) {
+-		mutex_unlock(&ffs->mutex);
+-		return -ENODEV;
+-	}
+-	/*
+-	 * we want the state to be FFS_ACTIVE; FFS_ACTIVE alone is
+-	 * not enough, though - we might have been through FFS_CLOSING
+-	 * and back to FFS_ACTIVE, with our file already removed.
+-	 */
+-	epfile = smp_load_acquire(&inode->i_private);
+-	if (unlikely(ffs->state != FFS_ACTIVE || !epfile)) {
+-		mutex_unlock(&ffs->mutex);
+-		ffs_data_closed(ffs);
++	if (WARN_ON(epfile->ffs->state != FFS_ACTIVE))
+ 		return -ENODEV;
+-	}
+-	mutex_unlock(&ffs->mutex);
+ 
+ 	file->private_data = epfile;
++	ffs_data_opened(epfile->ffs);
++
+ 	return stream_open(inode, file);
+ }
+ 
+@@ -1360,7 +1332,7 @@ static void ffs_dmabuf_put(struct dma_bu
+ static int
+ ffs_epfile_release(struct inode *inode, struct file *file)
+ {
+-	struct ffs_epfile *epfile = file->private_data;
++	struct ffs_epfile *epfile = inode->i_private;
+ 	struct ffs_dmabuf_priv *priv, *tmp;
+ 	struct ffs_data *ffs = epfile->ffs;
+ 
+@@ -2380,11 +2352,6 @@ static int ffs_epfiles_create(struct ffs
+ 	return 0;
+ }
+ 
+-static void clear_one(struct dentry *dentry)
+-{
+-	smp_store_release(&dentry->d_inode->i_private, NULL);
+-}
+-
+ static void ffs_epfiles_destroy(struct ffs_epfile *epfiles, unsigned count)
+ {
+ 	struct ffs_epfile *epfile = epfiles;
+@@ -2392,7 +2359,7 @@ static void ffs_epfiles_destroy(struct f
+ 	for (; count; --count, ++epfile) {
+ 		BUG_ON(mutex_is_locked(&epfile->mutex));
+ 		if (epfile->dentry) {
+-			simple_recursive_removal(epfile->dentry, clear_one);
++			simple_recursive_removal(epfile->dentry, NULL);
+ 			epfile->dentry = NULL;
  		}
--		spin_unlock(&pcp->lock);
-+		pcp_spin_unlock_maybe_irqrestore(pcp, UP_flags);
- 	} while (count);
- }
- 
-@@ -6081,6 +6111,7 @@ static void zone_pcp_update_cacheinfo(st
- {
- 	struct per_cpu_pages *pcp;
- 	struct cpu_cacheinfo *cci;
-+	unsigned long UP_flags;
- 
- 	pcp = per_cpu_ptr(zone->per_cpu_pageset, cpu);
- 	cci = get_cpu_cacheinfo(cpu);
-@@ -6091,12 +6122,12 @@ static void zone_pcp_update_cacheinfo(st
- 	 * This can reduce zone lock contention without hurting
- 	 * cache-hot pages sharing.
- 	 */
--	spin_lock(&pcp->lock);
-+	pcp_spin_lock_maybe_irqsave(pcp, UP_flags);
- 	if ((cci->per_cpu_data_slice_size >> PAGE_SHIFT) > 3 * pcp->batch)
- 		pcp->flags |= PCPF_FREE_HIGH_BATCH;
- 	else
- 		pcp->flags &= ~PCPF_FREE_HIGH_BATCH;
--	spin_unlock(&pcp->lock);
-+	pcp_spin_unlock_maybe_irqrestore(pcp, UP_flags);
- }
- 
- void setup_pcp_cacheinfo(unsigned int cpu)
+ 	}
 
 
