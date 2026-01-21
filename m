@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7870E33EAFF;
-	Wed, 21 Jan 2026 18:23:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EAD743A4AD4;
+	Wed, 21 Jan 2026 18:23:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769019789; cv=none; b=VjhTjfaoYlYKu47YHNJ/HgwjoYi8iLTENdqzMQOuWKSbU1Z7LbMAYHlJSh11qWWDkcYm5xdPXTJZngQdm1SjakQXCaRHa8GHLLPetwcXn+cGQm8+6q8FcQcGNL/EHtmzjLMz6sePUZQ60tB9rYtjmoVhnf3d2rnKPqT6g/6TNgs=
+	t=1769019793; cv=none; b=lOCCIoP2yByze7h4hS/JJjIJ1125uhoNhV0JeQgA3a5ricoS8iE3KLa44v2itXOYqIG7trYdAt4pPYwDo3hOs7ZRROOGHtLx2i2k/+sgRyf2QetCjyhI3cJhj4Eg35Yh5x2jWg29yXt3mtn/yNfPQZMDEWrwPy6QfwiUuM5Kclc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769019789; c=relaxed/simple;
-	bh=GMq5AcbIuN5J7C76OojRtynT1HcqWT8EfeHKJ64i1Ds=;
+	s=arc-20240116; t=1769019793; c=relaxed/simple;
+	bh=5DGjm0B6Q3M7UqmlB+pNxDsFWUKxHEUgrngDOOhqMHc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Vn+HEbPpuGOJDVq7XV9kT03YSlEYLa4A3y/lS0K7dYu47siEFcguC8ZQ9isGEsA1t4vMnFnDj3f+25fqEBUSf+NQZscFKQeekhbUFQvV8Dg8fQmBgxLQq9JZlq81QHa8wGeWvUXyM5iscTc74dXLR9x2TWxD5ijU+5jzewfuaIs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2LyPl1bR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kCWVFHBBZL5aeSqZxDcA5cjLPVqsRXmBn841TCtR5h8oy6P4Xn93cu/8Q3tCrx8thKqmZWEyktjP/tp56ag3AqJMBA7zztQpqiEFw3NM/QOBiCNdapnS0E5X3XSBGlH/e5PHvQOPYHWDhIKn0YgbuAMnWpxTEX97/RpTGXK+NtQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=M+P20u1v; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2LyPl1bR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8988DC16AAE;
-	Wed, 21 Jan 2026 18:23:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="M+P20u1v"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E52A9C4CEF1;
+	Wed, 21 Jan 2026 18:23:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1769019789;
-	bh=GMq5AcbIuN5J7C76OojRtynT1HcqWT8EfeHKJ64i1Ds=;
+	s=korg; t=1769019792;
+	bh=5DGjm0B6Q3M7UqmlB+pNxDsFWUKxHEUgrngDOOhqMHc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2LyPl1bR/nZkA6N5Niw+bwrBVOEGSKBflSY1khJmxteIxgVM+3SAjpya7g4li7vda
-	 SiYEZRKc8grChrSbzpe04JYtZR20YceGZY7/cAkJYLWZpRPsJm02Dyftmhc1pGeJ/d
-	 vo4r2uhQE3pLGg7s+TogZAvLxE8r/PfyQb2DYt9M=
+	b=M+P20u1vWHRYf95avQ9TW3uhoHG+BqmxUbf7RHguYyrEGKstSRSvRaWIS7e4jrxrU
+	 shbC3j8/mAOCynN3R6C9czO9UWoO+coF1afsppVSoC1J0O8RcnDvQAVBdWJ50QdwvX
+	 1+/nPZNPI3ioFyzd8hegPRUFGyYN2dO5LpOPb4KY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yu Kuai <yukuai3@huawei.com>,
 	Johan Hovold <johan@kernel.org>,
 	Vinod Koul <vkoul@kernel.org>
-Subject: [PATCH 6.12 109/139] dmaengine: at_hdmac: fix device leak on of_dma_xlate()
-Date: Wed, 21 Jan 2026 19:15:57 +0100
-Message-ID: <20260121181415.370176688@linuxfoundation.org>
+Subject: [PATCH 6.12 110/139] dmaengine: bcm-sba-raid: fix device leak on probe
+Date: Wed, 21 Jan 2026 19:15:58 +0100
+Message-ID: <20260121181415.406562802@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260121181411.452263583@linuxfoundation.org>
 References: <20260121181411.452263583@linuxfoundation.org>
@@ -53,51 +52,49 @@ Content-Transfer-Encoding: 8bit
 
 From: Johan Hovold <johan@kernel.org>
 
-commit b9074b2d7a230b6e28caa23165e9d8bc0677d333 upstream.
+commit 7c3a46ebf15a9796b763a54272407fdbf945bed8 upstream.
 
-Make sure to drop the reference taken when looking up the DMA platform
-device during of_dma_xlate() when releasing channel resources.
+Make sure to drop the reference taken when looking up the mailbox device
+during probe on probe failures and on driver unbind.
 
-Note that commit 3832b78b3ec2 ("dmaengine: at_hdmac: add missing
-put_device() call in at_dma_xlate()") fixed the leak in a couple of
-error paths but the reference is still leaking on successful allocation.
-
-Fixes: bbe89c8e3d59 ("at_hdmac: move to generic DMA binding")
-Fixes: 3832b78b3ec2 ("dmaengine: at_hdmac: add missing put_device() call in at_dma_xlate()")
-Cc: stable@vger.kernel.org	# 3.10: 3832b78b3ec2
-Cc: Yu Kuai <yukuai3@huawei.com>
+Fixes: 743e1c8ffe4e ("dmaengine: Add Broadcom SBA RAID driver")
+Cc: stable@vger.kernel.org	# 4.13
 Signed-off-by: Johan Hovold <johan@kernel.org>
-Link: https://patch.msgid.link/20251117161258.10679-2-johan@kernel.org
+Link: https://patch.msgid.link/20251117161258.10679-4-johan@kernel.org
 Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/dma/at_hdmac.c |    9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
+ drivers/dma/bcm-sba-raid.c |    6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
---- a/drivers/dma/at_hdmac.c
-+++ b/drivers/dma/at_hdmac.c
-@@ -1765,6 +1765,7 @@ static int atc_alloc_chan_resources(stru
- static void atc_free_chan_resources(struct dma_chan *chan)
- {
- 	struct at_dma_chan	*atchan = to_at_dma_chan(chan);
-+	struct at_dma_slave	*atslave;
+--- a/drivers/dma/bcm-sba-raid.c
++++ b/drivers/dma/bcm-sba-raid.c
+@@ -1699,7 +1699,7 @@ static int sba_probe(struct platform_dev
+ 	/* Prealloc channel resource */
+ 	ret = sba_prealloc_channel_resources(sba);
+ 	if (ret)
+-		goto fail_free_mchan;
++		goto fail_put_mbox;
  
- 	BUG_ON(atc_chan_is_enabled(atchan));
+ 	/* Check availability of debugfs */
+ 	if (!debugfs_initialized())
+@@ -1729,6 +1729,8 @@ skip_debugfs:
+ fail_free_resources:
+ 	debugfs_remove_recursive(sba->root);
+ 	sba_freeup_channel_resources(sba);
++fail_put_mbox:
++	put_device(sba->mbox_dev);
+ fail_free_mchan:
+ 	mbox_free_channel(sba->mchan);
+ 	return ret;
+@@ -1744,6 +1746,8 @@ static void sba_remove(struct platform_d
  
-@@ -1774,8 +1775,12 @@ static void atc_free_chan_resources(stru
- 	/*
- 	 * Free atslave allocated in at_dma_xlate()
- 	 */
--	kfree(chan->private);
--	chan->private = NULL;
-+	atslave = chan->private;
-+	if (atslave) {
-+		put_device(atslave->dma_dev);
-+		kfree(atslave);
-+		chan->private = NULL;
-+	}
+ 	sba_freeup_channel_resources(sba);
  
- 	dev_vdbg(chan2dev(chan), "free_chan_resources: done\n");
++	put_device(sba->mbox_dev);
++
+ 	mbox_free_channel(sba->mchan);
  }
+ 
 
 
