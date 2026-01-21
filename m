@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F98A3A7F4C;
-	Wed, 21 Jan 2026 18:21:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D27A5387359;
+	Wed, 21 Jan 2026 18:21:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769019707; cv=none; b=Ue/FuJriQD37YHC5xJof9YBITjr7WoTr/jYYBj5vR++SMCmI6mpt5JvCj5SSzkUqCJjVh58BxMUOWCfveGm9H9DnCpveobjY/eWovBPqYRgFlvWm5cKZFbJ1jUK/0DIso1LbUJwIPiXUVYDPjI3y7owjB/PnrLZzzPM4WeJ0zy0=
+	t=1769019710; cv=none; b=cxtA9D20PnZvK+ixNtObchdCsbueN0YrBTIGlzYji7n8j0IwjIfM1+oVHa7iJMhh0L5xAo2P80Hum4txtbLURDnh6x5PgB8La0ClKeWtw8The0Nli+wPDSWQwJYX2in6dDrtSKF2aGsxqueg24A06/f6NDaqXIczjtz7sJyuBuA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769019707; c=relaxed/simple;
-	bh=yL6Op1R3TAxcasKRNj2TWbmW34b+8gdW8SRTtVIGMbQ=;
+	s=arc-20240116; t=1769019710; c=relaxed/simple;
+	bh=czsyv4a9OQEBX085PrqqwU1NbJwoLoSiC9pY6XOzl64=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SfHYo/KaeTNXdRBMcGtxKN5p2xLCCoNI56DSChxogoSKwa1UqndWxu+MWarXllTvGXIfmDRbsCob7PIqJAW33CZQru+/MSXIwDaOXAaDwbj9dTK8ssYeMwilUTqESV5xvdOgK9aA7MKwHfjSnJSg+alWjyBcuXlAraZgO/QJX9o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=viNB5aQZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Npw5/rvsVd9IrnyUHrbDTSgglmcCot2a8MFXL8iSDI9yNSgZUT5IfoEI4+6tT1gyKruIyx/70f3dQgtTmDfiFMF507xpa7IHNZN+w4fqH+9TAghlsELW6TLbBTYBhlbrmr5aBb4YyX9sQk+7gnCp7QYvdylvLK9qTQI1mz0s1Ck=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=r7jAliR3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="viNB5aQZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 880EAC16AAE;
-	Wed, 21 Jan 2026 18:21:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="r7jAliR3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 06870C4CEF1;
+	Wed, 21 Jan 2026 18:21:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1769019707;
-	bh=yL6Op1R3TAxcasKRNj2TWbmW34b+8gdW8SRTtVIGMbQ=;
+	s=korg; t=1769019710;
+	bh=czsyv4a9OQEBX085PrqqwU1NbJwoLoSiC9pY6XOzl64=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=viNB5aQZQsvpYsSsCCKld1SgN38McaB1RqJvNgNT5PkhXDOHOLkVGh+ZB5618T2iA
-	 qLd2OyIvmbr7mBFRgReA9hcpZrzXJxpZ2YyBDzqYzGZJpi2zDh/cLcNjoRmniYqkAE
-	 EUgeH9EbBrmz7W+fDQjjFeesQqSqYRTxGNrY5enI=
+	b=r7jAliR3Thc2du0EkaProHonxKq7OhOqBOOoUXuewYBazVe7sXGIW2ONJUhdF79Yd
+	 okrxfLFRV12J1KSoRR02hrPRmTi612vHHvqXJuDMiC39OzXGyVIiHrAhjtgV/GNANK
+	 GvSMuYcmzmDF4v06Osje5QWQtQHSsJQeB680DgkY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Srinivas Kandagatla <srini@kernel.org>,
-	Johan Hovold <johan@kernel.org>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>,
-	Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>,
-	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 6.12 084/139] ASoC: codecs: wsa881x: fix unnecessary initialisation
-Date: Wed, 21 Jan 2026 19:15:32 +0100
-Message-ID: <20260121181414.478990312@linuxfoundation.org>
+	Yang Erkun <yangerkun@huawei.com>,
+	Baokun Li <libaokun1@huawei.com>,
+	Zhang Yi <yi.zhang@huawei.com>,
+	Theodore Tso <tytso@mit.edu>,
+	stable@kernel.org
+Subject: [PATCH 6.12 085/139] ext4: fix iloc.bh leak in ext4_xattr_inode_update_ref
+Date: Wed, 21 Jan 2026 19:15:33 +0100
+Message-ID: <20260121181414.517944302@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260121181411.452263583@linuxfoundation.org>
 References: <20260121181411.452263583@linuxfoundation.org>
@@ -53,65 +53,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johan Hovold <johan@kernel.org>
+From: Yang Erkun <yangerkun@huawei.com>
 
-commit 29d71b8a5a40708b3eed9ba4953bfc2312c9c776 upstream.
+commit d250bdf531d9cd4096fedbb9f172bb2ca660c868 upstream.
 
-The soundwire update_status() callback may be called multiple times with
-the same ATTACHED status but initialisation should only be done when
-transitioning from UNATTACHED to ATTACHED.
+The error branch for ext4_xattr_inode_update_ref forget to release the
+refcount for iloc.bh. Find this when review code.
 
-Fixes: a0aab9e1404a ("ASoC: codecs: add wsa881x amplifier support")
-Cc: stable@vger.kernel.org	# 5.6
-Cc: Srinivas Kandagatla <srini@kernel.org>
-Signed-off-by: Johan Hovold <johan@kernel.org>
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
-Reviewed-by: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260102111413.9605-3-johan@kernel.org
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: 57295e835408 ("ext4: guard against EA inode refcount underflow in xattr update")
+Signed-off-by: Yang Erkun <yangerkun@huawei.com>
+Reviewed-by: Baokun Li <libaokun1@huawei.com>
+Reviewed-by: Zhang Yi <yi.zhang@huawei.com>
+Link: https://patch.msgid.link/20251213055706.3417529-1-yangerkun@huawei.com
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Cc: stable@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/soc/codecs/wsa881x.c |    9 +++++++++
- 1 file changed, 9 insertions(+)
+ fs/ext4/xattr.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/sound/soc/codecs/wsa881x.c
-+++ b/sound/soc/codecs/wsa881x.c
-@@ -683,6 +683,7 @@ struct wsa881x_priv {
- 	 */
- 	unsigned int sd_n_val;
- 	int active_ports;
-+	bool hw_init;
- 	bool port_prepared[WSA881X_MAX_SWR_PORTS];
- 	bool port_enable[WSA881X_MAX_SWR_PORTS];
- };
-@@ -692,6 +693,9 @@ static void wsa881x_init(struct wsa881x_
- 	struct regmap *rm = wsa881x->regmap;
- 	unsigned int val = 0;
- 
-+	if (wsa881x->hw_init)
-+		return;
-+
- 	regmap_register_patch(wsa881x->regmap, wsa881x_rev_2_0,
- 			      ARRAY_SIZE(wsa881x_rev_2_0));
- 
-@@ -729,6 +733,8 @@ static void wsa881x_init(struct wsa881x_
- 	regmap_update_bits(rm, WSA881X_OTP_REG_28, 0x3F, 0x3A);
- 	regmap_update_bits(rm, WSA881X_BONGO_RESRV_REG1, 0xFF, 0xB2);
- 	regmap_update_bits(rm, WSA881X_BONGO_RESRV_REG2, 0xFF, 0x05);
-+
-+	wsa881x->hw_init = true;
- }
- 
- static int wsa881x_component_probe(struct snd_soc_component *comp)
-@@ -1073,6 +1079,9 @@ static int wsa881x_update_status(struct
- {
- 	struct wsa881x_priv *wsa881x = dev_get_drvdata(&slave->dev);
- 
-+	if (status == SDW_SLAVE_UNATTACHED)
-+		wsa881x->hw_init = false;
-+
- 	if (status == SDW_SLAVE_ATTACHED && slave->dev_num > 0)
- 		wsa881x_init(wsa881x);
- 
+--- a/fs/ext4/xattr.c
++++ b/fs/ext4/xattr.c
+@@ -1037,6 +1037,7 @@ static int ext4_xattr_inode_update_ref(h
+ 		ext4_error_inode(ea_inode, __func__, __LINE__, 0,
+ 			"EA inode %lu ref wraparound: ref_count=%lld ref_change=%d",
+ 			ea_inode->i_ino, ref_count, ref_change);
++		brelse(iloc.bh);
+ 		ret = -EFSCORRUPTED;
+ 		goto out;
+ 	}
 
 
