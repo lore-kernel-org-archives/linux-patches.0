@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47E553904DB;
-	Wed, 21 Jan 2026 18:21:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E7243624DB;
+	Wed, 21 Jan 2026 18:21:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769019671; cv=none; b=FIUPOipBu72qF3kHOI212Hy+k5FKv9eDoI+OHgotan+oNRk4I2/RnOSogHpmTYbqcxXW47vbUTxO8Zc+Wjo1N3VzEHk2KeDyH0YOAH7FTJmRfgZBlq+JTn3yDDm2w2iDuxRgoOTWd4rLJ1un5w24UTEaMCT2a5XIk8hjeJuWi7c=
+	t=1769019673; cv=none; b=uwG1MfRwoP9THXBYq6+eftS2W+/1KMsqoE7bdwe2eP29Ke0Ku8AtMz+XRawn3Rr5ZQoyF6JwuUPYGTH/ddsFyNed+vCckgRqmwuCl79rqT7cX8aWMWG8jKJfF9HystK+pgBZ7Bg1/FDVSBHxv9oFgS9K7DiM68aLPRJbvfrFmx4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769019671; c=relaxed/simple;
-	bh=2do7hs97H7PX/7F8CNVQLeMGdl3pcUo5XMvQR7hrAzA=;
+	s=arc-20240116; t=1769019673; c=relaxed/simple;
+	bh=l4aCG+AYp05DBQGWUiimrRKah4ilpKsBhe5TyYqsSNQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nDpLtQj8+9bqscTHG67SlztGzlYxYHft6w2rcv48j8buNbm7d00Rw+QUWRUETpUUIkNWpx10WQgKHWkkKWFtNw9WswynaIYIpU/s7pedLrsDmUgZrPRfcU1FGdXPcm16MUr91ymooVoRcFa+pFECSETRo4CePeVLH1HkTqOsRQg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VG7azSB2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YDcrTno+zIiqYEwDW9ow/HCVfoLuMTHo3+XgwTzj2sr0SN6ybgLBoBcLMUFmiRfJNlPVjKytiJcGD/r/BAw/N8+yRbYNBaTTLpMDOlHAzFNxOtyOZBAASHNcstYIMYWPluj7IeHCUcsNC0cM2VeBMQkyri24yZEPS9qqfGPkQzo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=V9aOqB/d; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VG7azSB2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5877AC4CEF1;
-	Wed, 21 Jan 2026 18:21:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="V9aOqB/d"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D11C5C19422;
+	Wed, 21 Jan 2026 18:21:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1769019669;
-	bh=2do7hs97H7PX/7F8CNVQLeMGdl3pcUo5XMvQR7hrAzA=;
+	s=korg; t=1769019673;
+	bh=l4aCG+AYp05DBQGWUiimrRKah4ilpKsBhe5TyYqsSNQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VG7azSB20/Bsfa30MNFpISlOcsMQoqvSTzeJLDqLKh9YFxl87SRR+BFv7XoV1SA5C
-	 gjqN8jwXnjepp3uKZgZlDE8TowynC2uqFyzetrGeyLl4n5hXHAhfy+wozmBhekp/Yc
-	 jnS3gZCDe1VtO06apySgePGmmNqsooW4D8yjOQNc=
+	b=V9aOqB/dY+i29pVenVW8xyMLOpa+WmgR2xYCxWdopQ2qn63yVfznHGGx1pBfKpAyV
+	 NxsNTR1KAhuBJbVPj5sIw4f6UG4mAX/1WeKhC5ywvxjBGwWrO/7CkuTWnnl79BDogZ
+	 JMOTWddxLStUOYQy0gmTkaMTwB66l8ocieKkBEU4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrew Davis <afd@ti.com>,
-	Johan Hovold <johan@kernel.org>,
+	Rafael Beims <rafael.beims@toradex.com>,
 	Vinod Koul <vkoul@kernel.org>
-Subject: [PATCH 6.12 074/139] phy: ti: gmii-sel: fix regmap leak on probe failure
-Date: Wed, 21 Jan 2026 19:15:22 +0100
-Message-ID: <20260121181414.118303826@linuxfoundation.org>
+Subject: [PATCH 6.12 075/139] phy: freescale: imx8m-pcie: assert phy reset during power on
+Date: Wed, 21 Jan 2026 19:15:23 +0100
+Message-ID: <20260121181414.154881159@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260121181411.452263583@linuxfoundation.org>
 References: <20260121181411.452263583@linuxfoundation.org>
@@ -51,37 +50,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johan Hovold <johan@kernel.org>
+From: Rafael Beims <rafael.beims@toradex.com>
 
-commit 4914d67da947031d6f645c81c74f7879e0844d5d upstream.
+commit f2ec4723defbc66a50e0abafa830ae9f8bceb0d7 upstream.
 
-The mmio regmap that may be allocated during probe is never freed.
+After U-Boot initializes PCIe with "pcie enum", Linux fails to detect
+an NVMe disk on some boot cycles with:
 
-Switch to using the device managed allocator so that the regmap is
-released on probe failures (e.g. probe deferral) and on driver unbind.
+  phy phy-32f00000.pcie-phy.0: phy poweron failed --> -110
 
-Fixes: 5ab90f40121a ("phy: ti: gmii-sel: Do not use syscon helper to build regmap")
-Cc: stable@vger.kernel.org	# 6.14
-Cc: Andrew Davis <afd@ti.com>
-Signed-off-by: Johan Hovold <johan@kernel.org>
-Acked-by: Andrew Davis <afd@ti.com>
-Link: https://patch.msgid.link/20251127134834.2030-1-johan@kernel.org
+Discussion with NXP identified that the iMX8MP PCIe PHY PLL may fail to
+lock when re-initialized without a reset cycle [1].
+
+The issue reproduces on 7% of tested hardware platforms, with a 30-40%
+failure rate per affected device across boot cycles.
+
+Insert a reset cycle in the power-on routine to ensure the PHY is
+initialized from a known state.
+
+[1] https://community.nxp.com/t5/i-MX-Processors/iMX8MP-PCIe-initialization-in-U-Boot/m-p/2248437#M242401
+
+Signed-off-by: Rafael Beims <rafael.beims@toradex.com>
+Cc: stable@vger.kernel.org
+Link: https://patch.msgid.link/20251223150254.1075221-1-rafael@beims.me
 Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/phy/ti/phy-gmii-sel.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/phy/freescale/phy-fsl-imx8m-pcie.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/drivers/phy/ti/phy-gmii-sel.c
-+++ b/drivers/phy/ti/phy-gmii-sel.c
-@@ -480,7 +480,7 @@ static int phy_gmii_sel_probe(struct pla
- 			return dev_err_probe(dev, PTR_ERR(base),
- 					     "failed to get base memory resource\n");
+--- a/drivers/phy/freescale/phy-fsl-imx8m-pcie.c
++++ b/drivers/phy/freescale/phy-fsl-imx8m-pcie.c
+@@ -89,7 +89,8 @@ static int imx8_pcie_phy_power_on(struct
+ 			writel(imx8_phy->tx_deemph_gen2,
+ 			       imx8_phy->base + PCIE_PHY_TRSV_REG6);
+ 		break;
+-	case IMX8MP: /* Do nothing. */
++	case IMX8MP:
++		reset_control_assert(imx8_phy->reset);
+ 		break;
+ 	}
  
--		priv->regmap = regmap_init_mmio(dev, base, &phy_gmii_sel_regmap_cfg);
-+		priv->regmap = devm_regmap_init_mmio(dev, base, &phy_gmii_sel_regmap_cfg);
- 		if (IS_ERR(priv->regmap))
- 			return dev_err_probe(dev, PTR_ERR(priv->regmap),
- 					     "Failed to get syscon\n");
 
 
