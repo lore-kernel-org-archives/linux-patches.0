@@ -1,44 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC4713ACF1B;
-	Wed, 21 Jan 2026 18:30:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A7223A9600;
+	Wed, 21 Jan 2026 18:31:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769020258; cv=none; b=P09k1Ib5MPxAUYbqBpDiSxory1SiDToj7+cL6rwK+aaFEQk3lbjGyaSvzj7CwnCvUg6f+GzCVVwJM5FSiAoVq/d+d3btGlWA8LvcHyCM6fsozYhkwnEfkhWUaLA+yw5vuzyQayfW59p1eO1UBp+m0P4aGbL1BsgdyDM+gue2WdM=
+	t=1769020262; cv=none; b=TaFb3Ik5YVfri0DJLcEmCu7wLSVdwDsya4zx7Hm4t99MeH4p/UIELTyLErRBJlKuRtJmClenGzyjKTB820SFdTPm8mH5ReyEEMSpp7/YTSCYiNIjpa3uyC8r4F1aeBoCPJgdz/JhCa8ghAwHM5PwCTsLPobJx5ugl0woAgutAo4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769020258; c=relaxed/simple;
-	bh=YjIERI61gcjiu2QTcJPiqhbgbVgVauyGt595Q97D2GE=;
+	s=arc-20240116; t=1769020262; c=relaxed/simple;
+	bh=efQU8uSlOMfJSLQjkz6JgC1zb6SnxN0NNHFjYfS+tzE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=K/a6/yAIb/KFp2t3tVkkJa4H30xWtmI6IDYjtU8BLsz8GYS/IfmuF9ZyhZuUfoFOvj4qKbYCxq65r0eHifRoohQD8rabCsFj9Mm4UrF1Hc/iPD34MI3apQpuHaguoDIgoUj1SCoMAHJuNhRAsMy83wroqj5MW7LsZEeb9oAXlp4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TROAX7Xh; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=c2xMaFtfXluzW1/oV5lmYZdpSylWT4JgVitb6wfyuA76JJjKnLyiyilOSNt7wb++VsOXW7UHQOHKMqKVNMtv/9m8ih6G3iu5we03WIeLow446HUs+OsrcoFCm5CxwyKyXVU2r8mxjCFwwvnrcJqxrQ1PUJ4bNJiMxzgUJ5fTbXw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eRKFqcwx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TROAX7Xh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42FE0C4CEF1;
-	Wed, 21 Jan 2026 18:30:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eRKFqcwx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E920C19425;
+	Wed, 21 Jan 2026 18:31:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1769020258;
-	bh=YjIERI61gcjiu2QTcJPiqhbgbVgVauyGt595Q97D2GE=;
+	s=korg; t=1769020262;
+	bh=efQU8uSlOMfJSLQjkz6JgC1zb6SnxN0NNHFjYfS+tzE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TROAX7Xhiu/jbprW9HLUlYYEjO+1Mpuaw60zoxQCuXysJy38C0qcT4TN+sIEx3iJ8
-	 iezXhQqTJVUQGDpruU2XCBYcdl/UeYg1OyqZ9FK9678gqNkkwzr5ywbCpsSNuqNcf8
-	 dkms2b1LClJFYri0cY9sxYZ3z8mOFGSZJhmjfBn4=
+	b=eRKFqcwxH63664dT2Gnr4YUpQZRqj6+YOQtM7/sVmGjCdpA1f8uxHSGPidsg2X+2s
+	 a40ZsE1zj4fhDTa7VlM0ymiTAK93RnClE9dTdJfG4UxSOzEJivtccR9mnObWP8AmF+
+	 va1wrNDoeLPNVwq4lIvHLNo3iojjDlEU3IOkVFAs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Leonid Segal <leonids@variscite.com>,
-	Pierluigi Passaro <pierluigi.p@variscite.com>,
-	Stefano Radaelli <stefano.r@variscite.com>,
-	Xu Yang <xu.yang_2@nxp.com>,
-	Frank Li <Frank.Li@nxp.com>,
-	Fabio Estevam <festevam@gmail.com>,
-	Ahmad Fatoum <a.fatoum@pengutronix.de>,
-	Vinod Koul <vkoul@kernel.org>,
+	Bagas Sanjaya <bagasdotme@gmail.com>,
+	Thomas Graf <tgraf@suug.ch>,
+	"David S. Miller" <davem@davemloft.net>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 073/198] phy: fsl-imx8mq-usb: Clear the PCS_TX_SWING_FULL field before using it
-Date: Wed, 21 Jan 2026 19:15:01 +0100
-Message-ID: <20260121181421.186415353@linuxfoundation.org>
+Subject: [PATCH 6.18 064/198] textsearch: describe @list member in ts_ops search
+Date: Wed, 21 Jan 2026 19:14:52 +0100
+Message-ID: <20260121181420.861314827@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260121181418.537774329@linuxfoundation.org>
 References: <20260121181418.537774329@linuxfoundation.org>
@@ -57,42 +53,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Stefano Radaelli <stefano.radaelli21@gmail.com>
+From: Bagas Sanjaya <bagasdotme@gmail.com>
 
-[ Upstream commit 8becf9179a4b45104a1701010ed666b55bf4b3a6 ]
+[ Upstream commit f26528478bb102c28e7ac0cbfc8ec8185afdafc7 ]
 
-Clear the PCS_TX_SWING_FULL field mask before setting the new value
-in PHY_CTRL5 register. Without clearing the mask first, the OR operation
-could leave previously set bits, resulting in incorrect register
-configuration.
+Sphinx reports kernel-doc warning:
 
-Fixes: 63c85ad0cd81 ("phy: fsl-imx8mp-usb: add support for phy tuning")
-Suggested-by: Leonid Segal <leonids@variscite.com>
-Acked-by: Pierluigi Passaro <pierluigi.p@variscite.com>
-Signed-off-by: Stefano Radaelli <stefano.r@variscite.com>
-Reviewed-by: Xu Yang <xu.yang_2@nxp.com>
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Reviewed-by: Fabio Estevam <festevam@gmail.com>
-Reviewed-by: Ahmad Fatoum <a.fatoum@pengutronix.de>
-Link: https://patch.msgid.link/20251219160912.561431-1-stefano.r@variscite.com
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+WARNING: ./include/linux/textsearch.h:49 struct member 'list' not described in 'ts_ops'
+
+Describe @list member to fix it.
+
+Link: https://lkml.kernel.org/r/20251219014006.16328-4-bagasdotme@gmail.com
+Fixes: 2de4ff7bd658 ("[LIB]: Textsearch infrastructure.")
+Signed-off-by: Bagas Sanjaya <bagasdotme@gmail.com>
+Cc: Thomas Graf <tgraf@suug.ch>
+Cc: "David S. Miller" <davem@davemloft.net>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/phy/freescale/phy-fsl-imx8mq-usb.c | 1 +
+ include/linux/textsearch.h | 1 +
  1 file changed, 1 insertion(+)
 
-diff --git a/drivers/phy/freescale/phy-fsl-imx8mq-usb.c b/drivers/phy/freescale/phy-fsl-imx8mq-usb.c
-index b94f242420fc7..0c84f5f7a82cb 100644
---- a/drivers/phy/freescale/phy-fsl-imx8mq-usb.c
-+++ b/drivers/phy/freescale/phy-fsl-imx8mq-usb.c
-@@ -502,6 +502,7 @@ static void imx8m_phy_tune(struct imx8mq_usb_phy *imx_phy)
- 
- 	if (imx_phy->pcs_tx_swing_full != PHY_TUNE_DEFAULT) {
- 		value = readl(imx_phy->base + PHY_CTRL5);
-+		value &= ~PHY_CTRL5_PCS_TX_SWING_FULL_MASK;
- 		value |= FIELD_PREP(PHY_CTRL5_PCS_TX_SWING_FULL_MASK,
- 				   imx_phy->pcs_tx_swing_full);
- 		writel(value, imx_phy->base + PHY_CTRL5);
+diff --git a/include/linux/textsearch.h b/include/linux/textsearch.h
+index 6673e4d4ac2e1..4933777404d61 100644
+--- a/include/linux/textsearch.h
++++ b/include/linux/textsearch.h
+@@ -35,6 +35,7 @@ struct ts_state
+  * @get_pattern: return head of pattern
+  * @get_pattern_len: return length of pattern
+  * @owner: module reference to algorithm
++ * @list: list to search
+  */
+ struct ts_ops
+ {
 -- 
 2.51.0
 
