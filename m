@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B86B7352FA8;
-	Wed, 21 Jan 2026 18:29:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B07333ACA71;
+	Wed, 21 Jan 2026 18:29:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769020172; cv=none; b=n2+ya0iCNGZmxcpPEigvdYun7NebkEwlOi1UE4n/2H0Ld0OoRwTn+l6Lb8qRHU7hssQUxjtpuIDMstSS5urv6dOgyX+B0vTfiv6CBIkLfvY7UcIfgS8kJn76GiuG3VCht7mU607vJG6zSJrcqXW2AWCPLLuqb/sexQduDtdDGg4=
+	t=1769020175; cv=none; b=re07iKLtE5v4+aBSedbSTswXK0pSqaRYPMVNteSP3mKn0YqDUxPRgVu4ZGuEIp65NI4/ScDYqONPazXAch4bLeQcciFyXi1X5fR25vCEuIM7ZI6DgDg2Sr4S5LYwRLxnVyuyclTZy6RPF7ZRBdOVGUPYzLcNruz2tx6xEcc1gyk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769020172; c=relaxed/simple;
-	bh=msCbn1r/2Q6A08qTQBojfFhRA90AD0fcFg/xwtFTZx0=;
+	s=arc-20240116; t=1769020175; c=relaxed/simple;
+	bh=fkR6oJglZERAp/ALhhPs2n/yJKGjX91odtCuBLG1z+0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QiZO3muJU/HLjnaCuBt8LV4bLsotmRaOVN9TsChdwZDHTAkU5tfhier6wVaCx1TwWbycXpkAbrsd2k4KmGxNcr3C5N8BngbRVE7ZgVC6TwJWA0nIt+6cDZe6VmhK6CQc+lD6o1ZswUpvgh7an9cFKe69s/0jVb8d6xMsUltTFeY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kG1A/XbT; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=E9Yr7QPK5YA2UpKm7ZLNqmiIyYufAVZ8Is7DkeLR/dc6PzNL+Mwr10CrlatfvzNnLrLMw+JDXaPvpFyGWENsHZ4AldDWJKR+6+iBZLox9u141NmSxJJMn+efP5U8RLc0dJ0eS43VAq4W3+wun67tzaMYRM9CzAyUWCTOwWEHFeg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=od4RW+u4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kG1A/XbT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B6BC7C19424;
-	Wed, 21 Jan 2026 18:29:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="od4RW+u4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F270AC4CEF1;
+	Wed, 21 Jan 2026 18:29:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1769020172;
-	bh=msCbn1r/2Q6A08qTQBojfFhRA90AD0fcFg/xwtFTZx0=;
+	s=korg; t=1769020175;
+	bh=fkR6oJglZERAp/ALhhPs2n/yJKGjX91odtCuBLG1z+0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kG1A/XbT7bU99TLczyM9aW19bAupC3kVvvvF9I5W5TaVn8ijJB4wb+cPtd2nbQlXQ
-	 C+ttEwJyGCHJ4j9OYekAFpxfaPHV658oW63fzZk+BmwePOX7+E2agemCx8669Y+vvS
-	 SZwVmESfebEEZgtNUxFdwqiST+B+h5eHihClSt7E=
+	b=od4RW+u4pbNdtLfv1LGaRRML6TWNxV+PczAoraXS7pMc+rKbKDpmlf8+yoEJES/up
+	 y3hKzL0t4k/c2iaNzpE7DJhx0YaZGzioq8J4OVMMNTsZnx0aYDybCK9QJNNMo4Al/O
+	 SZMbhnZVRuRGqiin8XGSxAl0VLQFuFSEC9lo+N9w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>,
-	Vinod Koul <vkoul@kernel.org>,
+	=?UTF-8?q?G=C3=BCnther=20Noack?= <gnoack3000@gmail.com>,
+	=?UTF-8?q?Micka=C3=ABl=20Sala=C3=BCn?= <mic@digikod.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 081/198] phy: broadcom: ns-usb3: Fix Wvoid-pointer-to-enum-cast warning (again)
-Date: Wed, 21 Jan 2026 19:15:09 +0100
-Message-ID: <20260121181421.476291509@linuxfoundation.org>
+Subject: [PATCH 6.18 082/198] selftests/landlock: Properly close a file descriptor
+Date: Wed, 21 Jan 2026 19:15:10 +0100
+Message-ID: <20260121181421.511114762@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260121181418.537774329@linuxfoundation.org>
 References: <20260121181418.537774329@linuxfoundation.org>
@@ -45,50 +45,44 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
+From: Günther Noack <gnoack3000@gmail.com>
 
-[ Upstream commit fb21116099bbea1fc59efa9207e63c4be390ab72 ]
+[ Upstream commit 15e8d739fda1084d81f7d3813e9600eba6e0f134 ]
 
-"family" is an enum, thus cast of pointer on 64-bit compile test with
-clang W=1 causes:
+Add a missing close(srv_fd) call, and use EXPECT_EQ() to check the
+result.
 
-  phy-bcm-ns-usb3.c:206:17: error: cast to smaller integer type 'enum bcm_ns_family' from 'const void *' [-Werror,-Wvoid-pointer-to-enum-cast]
-
-This was already fixed in commit bd6e74a2f0a0 ("phy: broadcom: ns-usb3:
-fix Wvoid-pointer-to-enum-cast warning") but then got bad in commit
-21bf6fc47a1e ("phy: Use device_get_match_data()").
-
-Note that after various discussions the preferred cast is via "unsigned
-long", not "uintptr_t".
-
-Fixes: 21bf6fc47a1e ("phy: Use device_get_match_data()")
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
-Link: https://patch.msgid.link/20251224115533.154162-2-krzysztof.kozlowski@oss.qualcomm.com
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Signed-off-by: Günther Noack <gnoack3000@gmail.com>
+Fixes: f83d51a5bdfe ("selftests/landlock: Check IOCTL restrictions for named UNIX domain sockets")
+Link: https://lore.kernel.org/r/20260101134102.25938-2-gnoack3000@gmail.com
+[mic: Use EXPECT_EQ() and update commit message]
+Signed-off-by: Mickaël Salaün <mic@digikod.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/phy/broadcom/phy-bcm-ns-usb3.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ tools/testing/selftests/landlock/fs_test.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/phy/broadcom/phy-bcm-ns-usb3.c b/drivers/phy/broadcom/phy-bcm-ns-usb3.c
-index 9f995e156f755..6e56498d0644b 100644
---- a/drivers/phy/broadcom/phy-bcm-ns-usb3.c
-+++ b/drivers/phy/broadcom/phy-bcm-ns-usb3.c
-@@ -203,7 +203,7 @@ static int bcm_ns_usb3_mdio_probe(struct mdio_device *mdiodev)
- 	usb3->dev = dev;
- 	usb3->mdiodev = mdiodev;
+diff --git a/tools/testing/selftests/landlock/fs_test.c b/tools/testing/selftests/landlock/fs_test.c
+index a6eb9681791a5..29cdbb8367358 100644
+--- a/tools/testing/selftests/landlock/fs_test.c
++++ b/tools/testing/selftests/landlock/fs_test.c
+@@ -4385,7 +4385,8 @@ TEST_F_FORK(layout1, named_unix_domain_socket_ioctl)
+ 	/* FIONREAD and other IOCTLs should not be forbidden. */
+ 	EXPECT_EQ(0, test_fionread_ioctl(cli_fd));
  
--	usb3->family = (enum bcm_ns_family)device_get_match_data(dev);
-+	usb3->family = (unsigned long)device_get_match_data(dev);
+-	ASSERT_EQ(0, close(cli_fd));
++	EXPECT_EQ(0, close(cli_fd));
++	EXPECT_EQ(0, close(srv_fd));
+ }
  
- 	syscon_np = of_parse_phandle(dev->of_node, "usb3-dmp-syscon", 0);
- 	err = of_address_to_resource(syscon_np, 0, &res);
+ /* clang-format off */
 -- 
 2.51.0
 
