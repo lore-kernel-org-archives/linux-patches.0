@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 966AE3806BB;
-	Wed, 21 Jan 2026 18:18:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34DDE3806BB;
+	Wed, 21 Jan 2026 18:18:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769019515; cv=none; b=i41TYg28D2jtkdh43+Wl9m5rtrb0Uyy46tRTUE161+yskjhVkbh2pPAWJxiL1ZH6RYMviAiipPnTiyR+O0SCXUzWbqL9zhT8H0UF0HRSMMEnWGrmj9j9kDG4kI1WSZ5tgTFl0B/bui8K7lQR4TCpks1nNYa9snAW0Cjj9tK5opo=
+	t=1769019519; cv=none; b=CyO6Zie5hi+H3Ev48DYurdRAg/BP1mvROI1kRM0Fvqbret52b7xI0Uitk89E2zvLNiylprrkIyGDvgmrXQADnYpsDl9JMzXnrQi0etmuegZHBf7X3D7vxRlwaCxUWLeiDA/DzEIyonCEMATSjZHwd6R8jJ0a1zjF0GXn9jAD01E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769019515; c=relaxed/simple;
-	bh=gyagFd1UQE3t8kwu40SnpGcnBkxs4oG/ZujonSc+0gs=;
+	s=arc-20240116; t=1769019519; c=relaxed/simple;
+	bh=U55KYdoPTS7QShalBkCTSAC9ODs2l0PguIRfsM32DiM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=STsh9K2SeJJt+BBlTGXaPRj928EoTG36RO6qqHnCJymBSyjYMqJoPrNQxOif8DS4CpKB0qd6f1VkYqZYspsOJBXPUnZM7enQPCOH572nQoxp8OCigN6L65uAjQJqbdRywPLYLkMWz4+qs8qCDrf5kMsy+tGzi6Wki85fuRKlZ88=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NYM7c+cA; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ruvHgjFJw9IQa2P98UqgPO3UojgDI3tsB/r3mxaTfh1yW2ZnvlHsh0+OwqNsZtdGdaLIzCALi/X9QjViFqbRp7w1bMGVJDlUTsjJgQt8ASByyIpWg20EJYdDgfjEyG61eHjKZSanAAPSH97SZrTPfJbyOv9SdltbuWnf6V/xcLs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IMKjUnsc; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NYM7c+cA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0DF02C4CEF1;
-	Wed, 21 Jan 2026 18:18:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IMKjUnsc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 385A6C16AAE;
+	Wed, 21 Jan 2026 18:18:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1769019515;
-	bh=gyagFd1UQE3t8kwu40SnpGcnBkxs4oG/ZujonSc+0gs=;
+	s=korg; t=1769019518;
+	bh=U55KYdoPTS7QShalBkCTSAC9ODs2l0PguIRfsM32DiM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NYM7c+cA84KkRNAWu8OBO2vfQqgzNTbyeEXKnfje8jWztgbx5Gs38w1082XkfZblp
-	 fACafdUE8EK42bRVtSlnn9u2qPnuYjd+ObfD2/Af6IremmB/jX73A682w/g/jgLUwc
-	 ujKrG7yYxQpclDTa2BRU2q0jzB9Ke+G5/prymmWs=
+	b=IMKjUnscz/dpkDSUtKP3kFl50LiWTbGk7wr0sfY8FLSbuKiReiPHwh9A8sPpPeK3Z
+	 mti69P72EqZCQytqCaM90cAq0gE/hRqIb9cFvF7uc/vZxUzLj5ajC3S/OhvuWWleHB
+	 DADDQBIRii/0gmZj4WEiAgt77S5uFGcOefY/P1Fc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+7c134e1c3aa3283790b9@syzkaller.appspotmail.com,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Qu Wenruo <wqu@suse.com>,
+	Jiasheng Jiang <jiashengjiangcool@gmail.com>,
+	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 021/139] ipv4: ip_gre: make ipgre_header() robust
-Date: Wed, 21 Jan 2026 19:14:29 +0100
-Message-ID: <20260121181412.220951032@linuxfoundation.org>
+Subject: [PATCH 6.12 030/139] btrfs: fix memory leaks in create_space_info() error paths
+Date: Wed, 21 Jan 2026 19:14:38 +0100
+Message-ID: <20260121181412.540759807@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260121181411.452263583@linuxfoundation.org>
 References: <20260121181411.452263583@linuxfoundation.org>
@@ -52,85 +52,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Jiasheng Jiang <jiashengjiangcool@gmail.com>
 
-[ Upstream commit e67c577d89894811ce4dcd1a9ed29d8b63476667 ]
+[ Upstream commit a11224a016d6d1d46a4d9b6573244448a80d4d7f ]
 
-Analog to commit db5b4e39c4e6 ("ip6_gre: make ip6gre_header() robust")
+In create_space_info(), the 'space_info' object is allocated at the
+beginning of the function. However, there are two error paths where the
+function returns an error code without freeing the allocated memory:
 
-Over the years, syzbot found many ways to crash the kernel
-in ipgre_header() [1].
+1. When create_space_info_sub_group() fails in zoned mode.
+2. When btrfs_sysfs_add_space_info_type() fails.
 
-This involves team or bonding drivers ability to dynamically
-change their dev->needed_headroom and/or dev->hard_header_len
+In both cases, 'space_info' has not yet been added to the
+fs_info->space_info list, resulting in a memory leak. Fix this by
+adding an error handling label to kfree(space_info) before returning.
 
-In this particular crash mld_newpack() allocated an skb
-with a too small reserve/headroom, and by the time mld_sendpack()
-was called, syzbot managed to attach an ipgre device.
-
-[1]
-skbuff: skb_under_panic: text:ffffffff89ea3cb7 len:2030915468 put:2030915372 head:ffff888058b43000 data:ffff887fdfa6e194 tail:0x120 end:0x6c0 dev:team0
- kernel BUG at net/core/skbuff.c:213 !
-Oops: invalid opcode: 0000 [#1] SMP KASAN PTI
-CPU: 1 UID: 0 PID: 1322 Comm: kworker/1:9 Not tainted syzkaller #0 PREEMPT(full)
-Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 10/25/2025
-Workqueue: mld mld_ifc_work
- RIP: 0010:skb_panic+0x157/0x160 net/core/skbuff.c:213
-Call Trace:
- <TASK>
-  skb_under_panic net/core/skbuff.c:223 [inline]
-  skb_push+0xc3/0xe0 net/core/skbuff.c:2641
-  ipgre_header+0x67/0x290 net/ipv4/ip_gre.c:897
-  dev_hard_header include/linux/netdevice.h:3436 [inline]
-  neigh_connected_output+0x286/0x460 net/core/neighbour.c:1618
-  NF_HOOK_COND include/linux/netfilter.h:307 [inline]
-  ip6_output+0x340/0x550 net/ipv6/ip6_output.c:247
-  NF_HOOK+0x9e/0x380 include/linux/netfilter.h:318
-  mld_sendpack+0x8d4/0xe60 net/ipv6/mcast.c:1855
-  mld_send_cr net/ipv6/mcast.c:2154 [inline]
-  mld_ifc_work+0x83e/0xd60 net/ipv6/mcast.c:2693
-  process_one_work kernel/workqueue.c:3257 [inline]
-  process_scheduled_works+0xad1/0x1770 kernel/workqueue.c:3340
-  worker_thread+0x8a0/0xda0 kernel/workqueue.c:3421
-  kthread+0x711/0x8a0 kernel/kthread.c:463
-  ret_from_fork+0x510/0xa50 arch/x86/kernel/process.c:158
-  ret_from_fork_asm+0x1a/0x30 arch/x86/entry/entry_64.S:246
-
-Fixes: c54419321455 ("GRE: Refactor GRE tunneling code.")
-Reported-by: syzbot+7c134e1c3aa3283790b9@syzkaller.appspotmail.com
-Closes: https://www.spinics.net/lists/netdev/msg1147302.html
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Link: https://patch.msgid.link/20260108190214.1667040-1-edumazet@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 2be12ef79fe9 ("btrfs: Separate space_info create/update")
+Reviewed-by: Qu Wenruo <wqu@suse.com>
+Signed-off-by: Jiasheng Jiang <jiashengjiangcool@gmail.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/ip_gre.c | 11 +++++++++--
- 1 file changed, 9 insertions(+), 2 deletions(-)
+ fs/btrfs/space-info.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/net/ipv4/ip_gre.c b/net/ipv4/ip_gre.c
-index 9667f27740258..be85dbe74ac8c 100644
---- a/net/ipv4/ip_gre.c
-+++ b/net/ipv4/ip_gre.c
-@@ -889,10 +889,17 @@ static int ipgre_header(struct sk_buff *skb, struct net_device *dev,
- 			const void *daddr, const void *saddr, unsigned int len)
- {
- 	struct ip_tunnel *t = netdev_priv(dev);
--	struct iphdr *iph;
- 	struct gre_base_hdr *greh;
-+	struct iphdr *iph;
-+	int needed;
-+
-+	needed = t->hlen + sizeof(*iph);
-+	if (skb_headroom(skb) < needed &&
-+	    pskb_expand_head(skb, HH_DATA_ALIGN(needed - skb_headroom(skb)),
-+			     0, GFP_ATOMIC))
-+		return -needed;
+diff --git a/fs/btrfs/space-info.c b/fs/btrfs/space-info.c
+index 9d47678875b76..b2c90696b86b2 100644
+--- a/fs/btrfs/space-info.c
++++ b/fs/btrfs/space-info.c
+@@ -291,18 +291,22 @@ static int create_space_info(struct btrfs_fs_info *info, u64 flags)
+ 							  BTRFS_SUB_GROUP_DATA_RELOC,
+ 							  0);
+ 		if (ret)
+-			return ret;
++			goto out_free;
+ 	}
  
--	iph = skb_push(skb, t->hlen + sizeof(*iph));
-+	iph = skb_push(skb, needed);
- 	greh = (struct gre_base_hdr *)(iph+1);
- 	greh->flags = gre_tnl_flags_to_gre_flags(t->parms.o_flags);
- 	greh->protocol = htons(type);
+ 	ret = btrfs_sysfs_add_space_info_type(info, space_info);
+ 	if (ret)
+-		return ret;
++		goto out_free;
+ 
+ 	list_add(&space_info->list, &info->space_info);
+ 	if (flags & BTRFS_BLOCK_GROUP_DATA)
+ 		info->data_sinfo = space_info;
+ 
+ 	return ret;
++
++out_free:
++	kfree(space_info);
++	return ret;
+ }
+ 
+ int btrfs_init_space_info(struct btrfs_fs_info *fs_info)
 -- 
 2.51.0
 
