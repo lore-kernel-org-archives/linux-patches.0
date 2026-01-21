@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 103C53A1D10;
-	Wed, 21 Jan 2026 18:22:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65B903A9DBC;
+	Wed, 21 Jan 2026 18:22:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769019724; cv=none; b=sz3pazIarcb63FFC+pfyBtuuBaOqG3mI10iTOTi8BC6aJlKznk6yEcScf0SILvC4/E4yYfAqEfOmORmzQdk0Bh3Ka+1X66GLhwy+34EFJTOzYAIT18491Sq2gjIF70fzcA0D9hALo/aK9NpDs2WmN6056/8lmvaA3BSZxP3sc0E=
+	t=1769019727; cv=none; b=kWtj6cNDOQWkEF5iaRnt/4AJlkn3/9Rh306eUktKT9tS7kwq+DSBA7ihSnDWZCH2cgqWPTZKe6n83NF2u2Eu/S40rpeTJgFTekPUz0MVktWBgtBPUO94HIxKTlki+jybes/pyeLcMvVzUwY3DT5Hqb+uIkJxkgzd6LqJ6suuwF4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769019724; c=relaxed/simple;
-	bh=hbJW6k+8ae4bNPIBh9Z7qX9pjzz7xRuBCuLgnI2Udus=;
+	s=arc-20240116; t=1769019727; c=relaxed/simple;
+	bh=gI9pNNhmZwnSdkg4yJVC3ckl87SM2IcJblwg/nhJI80=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=C/7TA6clvvwce11ozN+D75eBjn3anImVxMq63YbOj3P40poVGxrqIqOyGWEKEt9hERrKCAs4rSgDQyfLq/uxM5eRvBztPXIslAFX0rLvdOxuZSwrSM2KNreZcVhPHcE3r+18dyjQtRWG9bsrVVED6tS33gR842MUsEd+neRkzhc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JLK+FQnb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HGWN8d7SN9HVzlOwcoMePGmhBDdTf9IgU1bbMiaGqVJTn/2hASDWdilADw4xY1s+XYmiYaDagbPmV3A8Vhp56i5mMKLo/4/jZOi6Z8oE1y4K1hdgB9ShcYCclwl1FU8uCdyGnauI/zYrQ2iNK3gtkvkP5/sgOdQNo2hqtq0brkQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OxJz00I5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JLK+FQnb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6BB01C16AAE;
-	Wed, 21 Jan 2026 18:22:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OxJz00I5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C99E6C4CEF1;
+	Wed, 21 Jan 2026 18:22:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1769019723;
-	bh=hbJW6k+8ae4bNPIBh9Z7qX9pjzz7xRuBCuLgnI2Udus=;
+	s=korg; t=1769019727;
+	bh=gI9pNNhmZwnSdkg4yJVC3ckl87SM2IcJblwg/nhJI80=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JLK+FQnbOWOmBrWkejPkm+yGycU0r2INAw9LAOIY/QnZgptDaTcOvf/ZxqLWCH19d
-	 EISHMDX/+rebGLSEHM7UwXcLVaIq1haj3JjUuMYK7BJuXslliTS7HYQrRItbDBhk4z
-	 H5zmXV3H1j0GW8cYeHkC9ITFzcH8k+g124Yr1MBA=
+	b=OxJz00I59O0SjZXbMQI9JhtI7ppzB2rboJ6/UNR0mi8btPe0a3KT+uDoK72pFbgs3
+	 UGKDInCcItSRqrwtpB0yi19yfENHmXAaxPs1pcLnceCzbTq0j09wEROHIZ04C8i/Ca
+	 ELM3NFvo7+Ox0jaLdbQwJDLy85nIhqDFSZL9R97c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Haoxiang Li <lihaoxiang@isrc.iscas.ac.cn>,
-	"Borislav Petkov (AMD)" <bp@alien8.de>
-Subject: [PATCH 6.12 088/139] EDAC/i3200: Fix a resource leak in i3200_probe1()
-Date: Wed, 21 Jan 2026 19:15:36 +0100
-Message-ID: <20260121181414.623554342@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
+	Dragan Simic <dsimic@manjaro.org>,
+	Arnaud Ferraris <arnaud.ferraris@collabora.com>
+Subject: [PATCH 6.12 089/139] tcpm: allow looking for role_sw device in the main node
+Date: Wed, 21 Jan 2026 19:15:37 +0100
+Message-ID: <20260121181414.659310870@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260121181411.452263583@linuxfoundation.org>
 References: <20260121181411.452263583@linuxfoundation.org>
@@ -50,52 +52,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Haoxiang Li <lihaoxiang@isrc.iscas.ac.cn>
+From: Arnaud Ferraris <arnaud.ferraris@collabora.com>
 
-commit d42d5715dcb559342ff356327b241c53a67584d9 upstream.
+commit 1366cd228b0c67b60a2c0c26ef37fe9f7cfedb7f upstream.
 
-If edac_mc_alloc() fails, also unmap the window.
+If ports are defined in the tcpc main node, fwnode_usb_role_switch_get()
+returns an error, meaning usb_role_switch_get() (which would succeed)
+never gets a chance to run as port->role_sw isn't NULL, causing a
+regression on devices where this is the case.
 
-  [ bp: Use separate labels, turning it into the classic unwind pattern. ]
+Fix this by turning the NULL check into IS_ERR_OR_NULL(), so
+usb_role_switch_get() can actually run and the device get properly probed.
 
-Fixes: dd8ef1db87a4 ("edac: i3200 memory controller driver")
-Signed-off-by: Haoxiang Li <lihaoxiang@isrc.iscas.ac.cn>
-Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20251223123202.1492038-1-lihaoxiang@isrc.iscas.ac.cn
+Fixes: 2d8713f807a4 ("tcpm: switch check for role_sw device with fw_node")
+Cc: stable <stable@kernel.org>
+Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
+Reviewed-by: Dragan Simic <dsimic@manjaro.org>
+Signed-off-by: Arnaud Ferraris <arnaud.ferraris@collabora.com>
+Link: https://patch.msgid.link/20260105-fix-ppp-power-v2-1-6924f5a41224@collabora.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/edac/i3200_edac.c |   11 ++++++-----
- 1 file changed, 6 insertions(+), 5 deletions(-)
+ drivers/usb/typec/tcpm/tcpm.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/edac/i3200_edac.c
-+++ b/drivers/edac/i3200_edac.c
-@@ -358,10 +358,11 @@ static int i3200_probe1(struct pci_dev *
- 	layers[1].type = EDAC_MC_LAYER_CHANNEL;
- 	layers[1].size = nr_channels;
- 	layers[1].is_virt_csrow = false;
--	mci = edac_mc_alloc(0, ARRAY_SIZE(layers), layers,
--			    sizeof(struct i3200_priv));
-+
-+	rc = -ENOMEM;
-+	mci = edac_mc_alloc(0, ARRAY_SIZE(layers), layers, sizeof(struct i3200_priv));
- 	if (!mci)
--		return -ENOMEM;
-+		goto unmap;
+--- a/drivers/usb/typec/tcpm/tcpm.c
++++ b/drivers/usb/typec/tcpm/tcpm.c
+@@ -7697,7 +7697,7 @@ struct tcpm_port *tcpm_register_port(str
+ 	port->partner_desc.identity = &port->partner_ident;
  
- 	edac_dbg(3, "MC: init mci\n");
- 
-@@ -421,9 +422,9 @@ static int i3200_probe1(struct pci_dev *
- 	return 0;
- 
- fail:
-+	edac_mc_free(mci);
-+unmap:
- 	iounmap(window);
--	if (mci)
--		edac_mc_free(mci);
- 
- 	return rc;
- }
+ 	port->role_sw = fwnode_usb_role_switch_get(tcpc->fwnode);
+-	if (!port->role_sw)
++	if (IS_ERR_OR_NULL(port->role_sw))
+ 		port->role_sw = usb_role_switch_get(port->dev);
+ 	if (IS_ERR(port->role_sw)) {
+ 		err = PTR_ERR(port->role_sw);
 
 
