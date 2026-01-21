@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F4E03A0B24;
-	Wed, 21 Jan 2026 18:22:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34089352C46;
+	Wed, 21 Jan 2026 18:22:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769019762; cv=none; b=sAH65aTXstLNuL4iwx3IcLcUJsKmETXyMwCJwtTfdPNLcyoXhS8hPNYf5f+x5XTzayFmKUDG02zbSKuBy45K8DcvaJ10gPe5YzF/NvtKbJPbQjr98ud3F5R3Z605PUWsKbLtm+MthUvfWKeMvjx0pcu2vBZOef8Ipla1oJj+x4A=
+	t=1769019765; cv=none; b=JLJu94kKp2ldxctdjZ6wxqcbUn709hsfbktkvtq6RRzD3zCCLOwJ/Zk+9CuVwkJhQ/FhJbARx+XXAc4XLObIkUqcWUYk+iDjyYnrpdEBHIOEyM1IgMb3p2AGS1OXNH0MTke4WHOAMfP6wPYUmL36rhYDkSviHejcvOnn91Bdurk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769019762; c=relaxed/simple;
-	bh=TY2WHzilEgG847VTQOI8nS5YuYHRZG6UxAZNynW4F/4=;
+	s=arc-20240116; t=1769019765; c=relaxed/simple;
+	bh=rDoMhFJqVxjIQlhIWsyOD9abqvHZUKuuGqwAdlEV9Bc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=bOeQAzW3fodPeFiDzJ4KXfE1ogPt4Kew5ulCx0BLSyzecj7z2x8c9EeSA+Ln/MgmWip7MiYlpyoU8uRf557hcnLLxsof/95FoVpln2esDF8nw7Q6kNuK/679EJdwCjk7ClNUdLif5aILn47aHEs0RXwiRp+9C5eR0gCc2A6uIqY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Q0ZZW4yU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=msxzWy9r08vIkJR6hymL6Eb/pwo9fNWgnB4+966edwlNDWcGrQgg1QzEcSqUy2kfnvzSgvFJRgAj3hMWYWSy2HPSoj91frYrcPTPnrmUZfzq0sG2Ix8cLpsXqZj7YBi3XGWglETBjHohMVlc3/7OvAdSJySi9ZCMe5AZxFk4A28=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Jvcee6ZI; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Q0ZZW4yU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 350C2C4CEF1;
-	Wed, 21 Jan 2026 18:22:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Jvcee6ZI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9444EC4CEF1;
+	Wed, 21 Jan 2026 18:22:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1769019761;
-	bh=TY2WHzilEgG847VTQOI8nS5YuYHRZG6UxAZNynW4F/4=;
+	s=korg; t=1769019765;
+	bh=rDoMhFJqVxjIQlhIWsyOD9abqvHZUKuuGqwAdlEV9Bc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Q0ZZW4yUy4auh85o5Ss0G9jN+j75mr/ad2wILglATtTmDfeU+8uZ9akF5XBuWnzE/
-	 tgoDd1j+GtsVyt3Mt1ggA3qnlcGcvPz0GGRTOb9Y0AP16u0BMYKehpcFXeIr1ihZDP
-	 feTJRQXqNasAPaA2PkoLXTwECnaJVk3leL60Zf5k=
+	b=Jvcee6ZIIIQVRm7gss+fRImgW+E4Mv/weenJBxBFUW4lWGUCRy0b9B81XkOUZk+8y
+	 wea8jmTjBVg50BT4YqA/cn4oY6VAe11FDS62aXeLunSSmfm/K4fV9vXwAfV2BN1bYN
+	 r99NG/SKXqEAz7B3TTwa8XjA16SeZyHuwvCiliRM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daniel Wagner <dwagner@suse.de>,
-	Nilay Shroff <nilay@linux.ibm.com>,
-	Keith Busch <kbusch@kernel.org>
-Subject: [PATCH 6.12 093/139] nvme: fix PCIe subsystem reset controller state transition
-Date: Wed, 21 Jan 2026 19:15:41 +0100
-Message-ID: <20260121181414.800924816@linuxfoundation.org>
+	Marek Vasut <marex@nabladev.com>,
+	Neil Armstrong <neil.armstrong@linaro.org>
+Subject: [PATCH 6.12 102/139] drm/panel-simple: fix connector type for DataImage SCF0700C48GGU18 panel
+Date: Wed, 21 Jan 2026 19:15:50 +0100
+Message-ID: <20260121181415.121411940@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260121181411.452263583@linuxfoundation.org>
 References: <20260121181411.452263583@linuxfoundation.org>
@@ -45,61 +44,48 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Nilay Shroff <nilay@linux.ibm.com>
+From: Marek Vasut <marex@nabladev.com>
 
-commit 0edb475ac0a7d153318a24d4dca175a270a5cc4f upstream.
+commit 6ab3d4353bf75005eaa375677c9fed31148154d6 upstream.
 
-The commit d2fe192348f9 (“nvme: only allow entering LIVE from CONNECTING
-state”) disallows controller state transitions directly from RESETTING
-to LIVE. However, the NVMe PCIe subsystem reset path relies on this
-transition to recover the controller on PowerPC (PPC) systems.
-
-On PPC systems, issuing a subsystem reset causes a temporary loss of
-communication with the NVMe adapter. A subsequent PCIe MMIO read then
-triggers EEH recovery, which restores the PCIe link and brings the
-controller back online. For EEH recovery to proceed correctly, the
-controller must transition back to the LIVE state.
-
-Due to the changes introduced by commit d2fe192348f9 (“nvme: only allow
-entering LIVE from CONNECTING state”), the controller can no longer
-transition directly from RESETTING to LIVE. As a result, EEH recovery
-exits prematurely, leaving the controller stuck in the RESETTING state.
-
-Fix this by explicitly transitioning the controller state from RESETTING
-to CONNECTING and then to LIVE. This satisfies the updated state
-transition rules and allows the controller to be successfully recovered
-on PPC systems following a PCIe subsystem reset.
+The connector type for the DataImage SCF0700C48GGU18 panel is missing and
+devm_drm_panel_bridge_add() requires connector type to be set. This leads
+to a warning and a backtrace in the kernel log and panel does not work:
+"
+WARNING: CPU: 3 PID: 38 at drivers/gpu/drm/bridge/panel.c:379 devm_drm_of_get_bridge+0xac/0xb8
+"
+The warning is triggered by a check for valid connector type in
+devm_drm_panel_bridge_add(). If there is no valid connector type
+set for a panel, the warning is printed and panel is not added.
+Fill in the missing connector type to fix the warning and make
+the panel operational once again.
 
 Cc: stable@vger.kernel.org
-Fixes: d2fe192348f9 ("nvme: only allow entering LIVE from CONNECTING state")
-Reviewed-by: Daniel Wagner <dwagner@suse.de>
-Signed-off-by: Nilay Shroff <nilay@linux.ibm.com>
-Signed-off-by: Keith Busch <kbusch@kernel.org>
+Fixes: 97ceb1fb08b6 ("drm/panel: simple: Add support for DataImage SCF0700C48GGU18")
+Signed-off-by: Marek Vasut <marex@nabladev.com>
+Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
+Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+Link: https://patch.msgid.link/20260110152750.73848-1-marex@nabladev.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/nvme/host/pci.c |    5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/panel/panel-simple.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/nvme/host/pci.c
-+++ b/drivers/nvme/host/pci.c
-@@ -1264,7 +1264,10 @@ static int nvme_pci_subsystem_reset(stru
- 	}
+--- a/drivers/gpu/drm/panel/panel-simple.c
++++ b/drivers/gpu/drm/panel/panel-simple.c
+@@ -1782,6 +1782,7 @@ static const struct panel_desc dataimage
+ 	},
+ 	.bus_format = MEDIA_BUS_FMT_RGB888_1X24,
+ 	.bus_flags = DRM_BUS_FLAG_DE_HIGH | DRM_BUS_FLAG_PIXDATA_DRIVE_POSEDGE,
++	.connector_type = DRM_MODE_CONNECTOR_DPI,
+ };
  
- 	writel(NVME_SUBSYS_RESET, dev->bar + NVME_REG_NSSR);
--	nvme_change_ctrl_state(ctrl, NVME_CTRL_LIVE);
-+
-+	if (!nvme_change_ctrl_state(ctrl, NVME_CTRL_CONNECTING) ||
-+	    !nvme_change_ctrl_state(ctrl, NVME_CTRL_LIVE))
-+		goto unlock;
- 
- 	/*
- 	 * Read controller status to flush the previous write and trigger a
+ static const struct display_timing dlc_dlc0700yzg_1_timing = {
 
 
