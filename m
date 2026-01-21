@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4987F37BE9C;
-	Wed, 21 Jan 2026 18:18:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9EB6E34DB57;
+	Wed, 21 Jan 2026 18:18:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769019526; cv=none; b=LsKlki+fvzpxytRN2EecxA+kdqSBgaZGeroqAE5bf4OwkJ1jOpuwuJD62+Me8H4+DVkxCcLoWaDFzfudnfQaBFAETCmhpoH/q2C0rpPSJZ4bCI/vgIsH3nf0/CTMqv6QaTrz7eObWsOxOWl1RaN1Ii9HgGz7m9JH/5VDfxXJ9v8=
+	t=1769019529; cv=none; b=fyyIkZGu3WoNlhLY/xKxpBVqjTz/WZI13i9EOM9STRcYmRajXUTRaVxltcQiAu5hu4E+lP1WDZVMIe8LClnex65l/gHo5aOMKA5sFnW6G9JypQn3Yas2kmB3nJ1dXOKxMkGCYNNMPc7z1X8Y+MhtTomPql004u7AhD6Jw6yVcZM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769019526; c=relaxed/simple;
-	bh=N26JsVb7RjvSHB+rOXE1rq7lvHnJVX6YL/QdFAY6W/A=;
+	s=arc-20240116; t=1769019529; c=relaxed/simple;
+	bh=c64AKbljWelSDcKv04e10x+paNiz8scm/DZFMKx3CqA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dI9OMG0GTp8PsebTmXNruOKmICnHMhn8l2+T3UnnJVVTjXW5YbO8aaYixPLokkH+vF/kc9LfK9F3Qkd7exrUJRoeeVQhpPZR2+0fE3Md5+gs57sNyy4I/q8RMmKCBscxA5KudGt5Z1pd7kLDzPz+9fdbEj/6/QpiBU4B2h8oc5A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qNFugZEM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WKw/lbSu4xLVAsweH+ZK/skc0DWt5Whe6hwU/v5PYArS7Kty3idnWuSCKGQN9ndvhpsJFaFVe9n1sQbkK97Lojt3of8YekYfPXhQYugYyHLBQjEKlBiT3m8shtkPcwNnxYBJr73FnWf3vr3+PZrnSntoSh+OMgtDxrqKbeqtze0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=i7CWU7Ud; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qNFugZEM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 652B0C4CEF1;
-	Wed, 21 Jan 2026 18:18:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="i7CWU7Ud"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D7BD5C4CEF1;
+	Wed, 21 Jan 2026 18:18:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1769019525;
-	bh=N26JsVb7RjvSHB+rOXE1rq7lvHnJVX6YL/QdFAY6W/A=;
+	s=korg; t=1769019529;
+	bh=c64AKbljWelSDcKv04e10x+paNiz8scm/DZFMKx3CqA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qNFugZEMzCZlnwizDmYfV8vYPb45Y6rd7LTZdnNWDy5s55Z5qXmfu92alS3itkiPm
-	 HI3Apxh5ZMpAwNliQRkCaeIUS7LCc5yrsmZGPoHBJ9LhqJzqZvecRz0ypIpfAhG379
-	 ezpL3l8eMEVXog9z5s8NYOScWmd6EDc3ul0EMSbE=
+	b=i7CWU7UdWrEEmbVaIaAGk8jYVtCtPvR54ViyAkkJc+IcDrqn2I82L2qSikODTCDZW
+	 M0inBPJW/Gdw5FLVpoqBihEAzhClUmEPutvrX3/5iKzpBLltr5F+R8Vi9Ku5bZ0ZKI
+	 qTkvozYucXZDQYBECs1XVLLkQI5Yu96OQgMBjl58=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Richard Fitzgerald <rf@opensource.cirrus.com>,
-	Takashi Iwai <tiwai@suse.de>,
+	Aditya Garg <gargaditya@linux.microsoft.com>,
+	Dipayaan Roy <dipayanroy@linux.microsoft.com>,
+	Haiyang Zhang <haiyangz@microsoft.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 032/139] ALSA: hda/cirrus_scodec_test: Fix incorrect setup of gpiochip
-Date: Wed, 21 Jan 2026 19:14:40 +0100
-Message-ID: <20260121181412.610842520@linuxfoundation.org>
+Subject: [PATCH 6.12 033/139] net: hv_netvsc: reject RSS hash key programming without RX indirection table
+Date: Wed, 21 Jan 2026 19:14:41 +0100
+Message-ID: <20260121181412.647132485@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260121181411.452263583@linuxfoundation.org>
 References: <20260121181411.452263583@linuxfoundation.org>
@@ -51,42 +53,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Richard Fitzgerald <rf@opensource.cirrus.com>
+From: Aditya Garg <gargaditya@linux.microsoft.com>
 
-[ Upstream commit c5e96e54eca3876d4ce8857e2e22adbe9f44f4a2 ]
+[ Upstream commit d23564955811da493f34412d7de60fa268c8cb50 ]
 
-Set gpiochip parent to the struct device of the dummy GPIO driver
-so that the software node will be associated with the GPIO chip.
+RSS configuration requires a valid RX indirection table. When the device
+reports a single receive queue, rndis_filter_device_add() does not
+allocate an indirection table, accepting RSS hash key updates in this
+state leads to a hang.
 
-The recent commit e5d527be7e698 ("gpio: swnode: don't use the
-swnode's name as the key for GPIO lookup") broke cirrus_scodec_test,
-because the software node no longer gets associated with the GPIO
-driver by name.
+Fix this by gating netvsc_set_rxfh() on ndc->rx_table_sz and return
+-EOPNOTSUPP when the table is absent. This aligns set_rxfh with the device
+capabilities and prevents incorrect behavior.
 
-Instead, setting struct gpio_chip.parent to the owning struct device
-will find the node using a normal fwnode lookup.
-
-Signed-off-by: Richard Fitzgerald <rf@opensource.cirrus.com>
-Fixes: 2144833e7b414 ("ALSA: hda: cirrus_scodec: Add KUnit test")
-Link: https://patch.msgid.link/20260113130954.574670-1-rf@opensource.cirrus.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Fixes: 962f3fee83a4 ("netvsc: add ethtool ops to get/set RSS key")
+Signed-off-by: Aditya Garg <gargaditya@linux.microsoft.com>
+Reviewed-by: Dipayaan Roy <dipayanroy@linux.microsoft.com>
+Reviewed-by: Haiyang Zhang <haiyangz@microsoft.com>
+Link: https://patch.msgid.link/1768212093-1594-1-git-send-email-gargaditya@linux.microsoft.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/pci/hda/cirrus_scodec_test.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/net/hyperv/netvsc_drv.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/sound/pci/hda/cirrus_scodec_test.c b/sound/pci/hda/cirrus_scodec_test.c
-index e925ebe21ccba..140b2a6be8dca 100644
---- a/sound/pci/hda/cirrus_scodec_test.c
-+++ b/sound/pci/hda/cirrus_scodec_test.c
-@@ -92,6 +92,7 @@ static int cirrus_scodec_test_gpio_probe(struct platform_device *pdev)
+diff --git a/drivers/net/hyperv/netvsc_drv.c b/drivers/net/hyperv/netvsc_drv.c
+index d6fe8b5184a99..5f612528aa53a 100644
+--- a/drivers/net/hyperv/netvsc_drv.c
++++ b/drivers/net/hyperv/netvsc_drv.c
+@@ -1765,6 +1765,9 @@ static int netvsc_set_rxfh(struct net_device *dev,
+ 	    rxfh->hfunc != ETH_RSS_HASH_TOP)
+ 		return -EOPNOTSUPP;
  
- 	/* GPIO core modifies our struct gpio_chip so use a copy */
- 	gpio_priv->chip = cirrus_scodec_test_gpio_chip;
-+	gpio_priv->chip.parent = &pdev->dev;
- 	ret = devm_gpiochip_add_data(&pdev->dev, &gpio_priv->chip, gpio_priv);
- 	if (ret)
- 		return dev_err_probe(&pdev->dev, ret, "Failed to add gpiochip\n");
++	if (!ndc->rx_table_sz)
++		return -EOPNOTSUPP;
++
+ 	rndis_dev = ndev->extension;
+ 	if (rxfh->indir) {
+ 		for (i = 0; i < ndc->rx_table_sz; i++)
 -- 
 2.51.0
 
