@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7260B392C44;
-	Wed, 21 Jan 2026 18:28:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF5E739B4BB;
+	Wed, 21 Jan 2026 18:29:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769020138; cv=none; b=T1/NWp22ZQN10nG7EMwypde19RUMTWsvN3tz0qdLsLAAxLma1TXJkmbW/vrs49FcjBPmWpr1jXnDwUtOaTp/1hRd5rfqUKGHhDGzig3MmvJha7vDDY9seg4u6GzT0uyT71tWDNFo4+mhzv4fiz1iPp2RtlsKMOsvDCeYa+j0Onw=
+	t=1769020141; cv=none; b=eqM4oojmkwuLga/UD58T+F/JctOPMZPT0RcilY/GeZYS2Am0NvanLTxFTMS+oYJ/WAkQ1RTeYXJx7sg9L/WeqQe9vdBTa/+EFJeoR1TpY4cJ/OGYZk6ckKJI8+j2qQ9Oz0cI1B6cUy07bLsY896Xg0DoEcrsCu0DID7q23DT1yc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769020138; c=relaxed/simple;
-	bh=AygbOAci50Id99JbOsksVb36vvMhvX6guIL44RI2Xhk=;
+	s=arc-20240116; t=1769020141; c=relaxed/simple;
+	bh=lNVqk79LCSlNksbc82TSUTtHpB8rMWTXqPA20fTN2Eg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OrQYfA/Tp9h9Cz6wwpKf/3HkwA7zc2nL6XrYFeWz65XG6p3pL/FzRl9592vTLQUqnCwett9lXBeB/N64/bSsLhr2dgQLdqEwOiLNRM8jTBUa2BltqZKj0Fl6YDIqIxgYC0dIhA55C6MDJC834Izt9xc1fVZ8X8oDS/pGRhpnJWA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=F5MweGVd; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Xx2DjbNay+faZWZv8uXdHgBj52VPdH8DFusA/ahcqle8LKk0alkHA5uKDeYo9oE89s6Dvap9fX+TV/+R7eBbyVpNlBw2Id08UtNapkQWX3JoethZCxPT8blSvmiVJE0o3s4/gJzCrxbsCQVYPcqEW9/bdvUChmc9c2yVRFRuXVU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2fTTmyqx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="F5MweGVd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD158C16AAE;
-	Wed, 21 Jan 2026 18:28:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2fTTmyqx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 538B6C16AAE;
+	Wed, 21 Jan 2026 18:29:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1769020138;
-	bh=AygbOAci50Id99JbOsksVb36vvMhvX6guIL44RI2Xhk=;
+	s=korg; t=1769020141;
+	bh=lNVqk79LCSlNksbc82TSUTtHpB8rMWTXqPA20fTN2Eg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=F5MweGVd+Xnp+WeH3aWbquumVv/ZDAP2k2fasnNdweGxO4dxLaBWFQqBNf1Kxj6F6
-	 lgaEr99+tzCEaOebah1cN0Lavqh1Ek911sJRwflLenszeV9Pt44TMN484LUD4/tgae
-	 zQ8nNuoxbe3H471aHKIdS0S036Yjd87gFHMKzOb0=
+	b=2fTTmyqxCNPGNH/TZcpfACwdKcY9unJXEdCNWPhbtP0sAaPICxbjLgmy9kSgdoI5B
+	 0WPacIWBLQm91esZ8aexyGptafYA0WNzIU5XfEctWOQVaKc1gkPWmJ2hKUVqQDtbW1
+	 VqUnGUrfnVHHyW8RL2g1O1ELtZXJQcY1SsXn2syc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+7c134e1c3aa3283790b9@syzkaller.appspotmail.com,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Dave Jiang <dave.jiang@intel.com>,
+	Alison Schofield <alison.schofield@intel.com>,
+	Jonathan Cameron <jonathan.cameron@huawei.com>,
+	Robert Richter <rrichter@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 037/198] ipv4: ip_gre: make ipgre_header() robust
-Date: Wed, 21 Jan 2026 19:14:25 +0100
-Message-ID: <20260121181419.885699729@linuxfoundation.org>
+Subject: [PATCH 6.18 028/198] cxl/port: Fix target list setup for multiple decoders sharing the same dport
+Date: Wed, 21 Jan 2026 19:14:16 +0100
+Message-ID: <20260121181419.567513976@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260121181418.537774329@linuxfoundation.org>
 References: <20260121181418.537774329@linuxfoundation.org>
@@ -52,85 +53,108 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Robert Richter <rrichter@amd.com>
 
-[ Upstream commit e67c577d89894811ce4dcd1a9ed29d8b63476667 ]
+[ Upstream commit 3e8aaacdad4f66641f87ab441fe644b45f8ebdff ]
 
-Analog to commit db5b4e39c4e6 ("ip6_gre: make ip6gre_header() robust")
+If a switch port has more than one decoder that is using the same
+downstream port, the enumeration of the target lists may fail with:
 
-Over the years, syzbot found many ways to crash the kernel
-in ipgre_header() [1].
+ # dmesg | grep target.list
+ update_decoder_targets: cxl decoder1.0: dport3 found in target list, index 3
+ update_decoder_targets: cxl decoder1.0: dport2 found in target list, index 2
+ update_decoder_targets: cxl decoder1.0: dport0 found in target list, index 0
+ update_decoder_targets: cxl decoder2.0: dport3 found in target list, index 1
+ update_decoder_targets: cxl decoder4.0: dport3 found in target list, index 1
+ cxl_mem mem6: failed to find endpoint12:0000:00:01.4 in target list of decoder2.1
+ cxl_mem mem8: failed to find endpoint13:0000:20:01.4 in target list of decoder4.1
 
-This involves team or bonding drivers ability to dynamically
-change their dev->needed_headroom and/or dev->hard_header_len
+The case, that the same downstream port can be used in multiple target
+lists, is allowed and possible.
 
-In this particular crash mld_newpack() allocated an skb
-with a too small reserve/headroom, and by the time mld_sendpack()
-was called, syzbot managed to attach an ipgre device.
+Fix the update of the target list. Enumerate all children of the
+switch port and do not stop the iteration after the first matching
+target was found.
 
-[1]
-skbuff: skb_under_panic: text:ffffffff89ea3cb7 len:2030915468 put:2030915372 head:ffff888058b43000 data:ffff887fdfa6e194 tail:0x120 end:0x6c0 dev:team0
- kernel BUG at net/core/skbuff.c:213 !
-Oops: invalid opcode: 0000 [#1] SMP KASAN PTI
-CPU: 1 UID: 0 PID: 1322 Comm: kworker/1:9 Not tainted syzkaller #0 PREEMPT(full)
-Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 10/25/2025
-Workqueue: mld mld_ifc_work
- RIP: 0010:skb_panic+0x157/0x160 net/core/skbuff.c:213
-Call Trace:
- <TASK>
-  skb_under_panic net/core/skbuff.c:223 [inline]
-  skb_push+0xc3/0xe0 net/core/skbuff.c:2641
-  ipgre_header+0x67/0x290 net/ipv4/ip_gre.c:897
-  dev_hard_header include/linux/netdevice.h:3436 [inline]
-  neigh_connected_output+0x286/0x460 net/core/neighbour.c:1618
-  NF_HOOK_COND include/linux/netfilter.h:307 [inline]
-  ip6_output+0x340/0x550 net/ipv6/ip6_output.c:247
-  NF_HOOK+0x9e/0x380 include/linux/netfilter.h:318
-  mld_sendpack+0x8d4/0xe60 net/ipv6/mcast.c:1855
-  mld_send_cr net/ipv6/mcast.c:2154 [inline]
-  mld_ifc_work+0x83e/0xd60 net/ipv6/mcast.c:2693
-  process_one_work kernel/workqueue.c:3257 [inline]
-  process_scheduled_works+0xad1/0x1770 kernel/workqueue.c:3340
-  worker_thread+0x8a0/0xda0 kernel/workqueue.c:3421
-  kthread+0x711/0x8a0 kernel/kthread.c:463
-  ret_from_fork+0x510/0xa50 arch/x86/kernel/process.c:158
-  ret_from_fork_asm+0x1a/0x30 arch/x86/entry/entry_64.S:246
+With the fix applied:
 
-Fixes: c54419321455 ("GRE: Refactor GRE tunneling code.")
-Reported-by: syzbot+7c134e1c3aa3283790b9@syzkaller.appspotmail.com
-Closes: https://www.spinics.net/lists/netdev/msg1147302.html
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Link: https://patch.msgid.link/20260108190214.1667040-1-edumazet@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+ # dmesg | grep target.list
+ update_decoder_targets: cxl decoder1.0: dport2 found in target list, index 2
+ update_decoder_targets: cxl decoder1.0: dport0 found in target list, index 0
+ update_decoder_targets: cxl decoder1.0: dport3 found in target list, index 3
+ update_decoder_targets: cxl decoder2.0: dport3 found in target list, index 1
+ update_decoder_targets: cxl decoder2.1: dport3 found in target list, index 1
+ update_decoder_targets: cxl decoder4.0: dport3 found in target list, index 1
+ update_decoder_targets: cxl decoder4.1: dport3 found in target list, index 1
+
+Analyzing the conditions when this happens:
+
+1) A dport is shared by multiple decoders.
+
+2) The decoders have interleaving configured (ways > 1).
+
+The configuration above has the following hierarchy details (fixed
+version):
+
+ root0
+ |_
+ | |
+ | decoder0.1
+ | ways: 2
+ | target_list: 0,1
+ |_______________________________________
+ |                                       |
+ | dport0                                | dport1
+ |                                       |
+ port2                                   port4
+ |                                       |
+ |___________________                    |_____________________
+ | |                 |                   | |                   |
+ | decoder2.0        decoder2.1          | decoder4.0          decoder4.1
+ | ways: 2           ways: 2             | ways: 2             ways: 2
+ | target_list: 2,3  target_list: 2,3    | target_list: 2,3    target_list: 2,3
+ |___________________                    |___________________
+ |                   |                   |                   |
+ | dport2            | dport3            | dport2            | dport3
+ |                   |                   |                   |
+ endpoint7           endpoint12          endpoint9           endpoint13
+ |_                  |_                  |_                  |_
+ | |                 | |                 | |                 | |
+ | decoder7.0        | decoder12.0       | decoder9.0        | decoder13.0
+ | decoder7.2        | decoder12.2       | decoder9.2        | decoder13.2
+ |                   |                   |                   |
+ mem3                mem5                mem6                mem8
+
+Note: Device numbers vary for every boot.
+
+Current kernel fails to enumerate endpoint12 and endpoint13 as the
+target list is not updated for the second decoder.
+
+Fixes: 4f06d81e7c6a ("cxl: Defer dport allocation for switch ports")
+Reviewed-by: Dave Jiang <dave.jiang@intel.com>
+Reviewed-by: Alison Schofield <alison.schofield@intel.com>
+Reviewed-by: Jonathan Cameron <jonathan.cameron@huawei.com>
+Signed-off-by: Robert Richter <rrichter@amd.com>
+Link: https://patch.msgid.link/20260108101324.509667-1-rrichter@amd.com
+Signed-off-by: Dave Jiang <dave.jiang@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/ip_gre.c | 11 +++++++++--
- 1 file changed, 9 insertions(+), 2 deletions(-)
+ drivers/cxl/core/port.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/ipv4/ip_gre.c b/net/ipv4/ip_gre.c
-index 8178c44a3cdd4..e13244729ad8d 100644
---- a/net/ipv4/ip_gre.c
-+++ b/net/ipv4/ip_gre.c
-@@ -891,10 +891,17 @@ static int ipgre_header(struct sk_buff *skb, struct net_device *dev,
- 			const void *daddr, const void *saddr, unsigned int len)
- {
- 	struct ip_tunnel *t = netdev_priv(dev);
--	struct iphdr *iph;
- 	struct gre_base_hdr *greh;
-+	struct iphdr *iph;
-+	int needed;
-+
-+	needed = t->hlen + sizeof(*iph);
-+	if (skb_headroom(skb) < needed &&
-+	    pskb_expand_head(skb, HH_DATA_ALIGN(needed - skb_headroom(skb)),
-+			     0, GFP_ATOMIC))
-+		return -needed;
+diff --git a/drivers/cxl/core/port.c b/drivers/cxl/core/port.c
+index 8128fd2b5b317..804e4a48540f6 100644
+--- a/drivers/cxl/core/port.c
++++ b/drivers/cxl/core/port.c
+@@ -1591,7 +1591,7 @@ static int update_decoder_targets(struct device *dev, void *data)
+ 			cxlsd->target[i] = dport;
+ 			dev_dbg(dev, "dport%d found in target list, index %d\n",
+ 				dport->port_id, i);
+-			return 1;
++			return 0;
+ 		}
+ 	}
  
--	iph = skb_push(skb, t->hlen + sizeof(*iph));
-+	iph = skb_push(skb, needed);
- 	greh = (struct gre_base_hdr *)(iph+1);
- 	greh->flags = gre_tnl_flags_to_gre_flags(t->parms.o_flags);
- 	greh->protocol = htons(type);
 -- 
 2.51.0
 
