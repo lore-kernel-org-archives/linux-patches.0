@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26FAD3358AF;
-	Wed, 21 Jan 2026 18:23:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7870E33EAFF;
+	Wed, 21 Jan 2026 18:23:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769019786; cv=none; b=Sj2oMkNvL9RL6y+5uW1EnlSZCN4eiKlpHJKtTLZnRVFSaDnuZUSUCtDxmx5s1gK+D/+3gS+iY5nc+9Lio0MHIspbZrwI8kHG17JmxusZDunBT+QGLRZg8NzmFXeldrHMjbrn/Yq5yYd+i9WASE9POAbqocHiMUi9jqJmsyydVNs=
+	t=1769019789; cv=none; b=VjhTjfaoYlYKu47YHNJ/HgwjoYi8iLTENdqzMQOuWKSbU1Z7LbMAYHlJSh11qWWDkcYm5xdPXTJZngQdm1SjakQXCaRHa8GHLLPetwcXn+cGQm8+6q8FcQcGNL/EHtmzjLMz6sePUZQ60tB9rYtjmoVhnf3d2rnKPqT6g/6TNgs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769019786; c=relaxed/simple;
-	bh=UBb+QfW7fmVhm5Spra9x16fBWTAqNcbSrAgqHGk2t5M=;
+	s=arc-20240116; t=1769019789; c=relaxed/simple;
+	bh=GMq5AcbIuN5J7C76OojRtynT1HcqWT8EfeHKJ64i1Ds=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tCRDLGHlsCdp7HduZPG9zx0D2hVBN+gHRD2krs6pkOms9T2Cyd6HqvemTCOekB284JuEUwoEGb+nLNhN5zLOyh6fuI5JgsUy6zdavc5Qmu+PaUMBTE1D3xGLI5XWUa4VKQemafmSCybmEki6PIplerbgROmeY8bl8Q46i23YhUU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zlIftMi/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Vn+HEbPpuGOJDVq7XV9kT03YSlEYLa4A3y/lS0K7dYu47siEFcguC8ZQ9isGEsA1t4vMnFnDj3f+25fqEBUSf+NQZscFKQeekhbUFQvV8Dg8fQmBgxLQq9JZlq81QHa8wGeWvUXyM5iscTc74dXLR9x2TWxD5ijU+5jzewfuaIs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2LyPl1bR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zlIftMi/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3DFE3C4CEF1;
-	Wed, 21 Jan 2026 18:23:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2LyPl1bR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8988DC16AAE;
+	Wed, 21 Jan 2026 18:23:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1769019785;
-	bh=UBb+QfW7fmVhm5Spra9x16fBWTAqNcbSrAgqHGk2t5M=;
+	s=korg; t=1769019789;
+	bh=GMq5AcbIuN5J7C76OojRtynT1HcqWT8EfeHKJ64i1Ds=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zlIftMi/ElWKhH24KM3tOdLbrHKSwQCZvUJ3qRh7qT2IAm32EjjN+MHeRpSrtjmWZ
-	 29OBZB+f5GXl9DvKUXgiWNx4E0VIZgYMXXrev+4o8bo0AUTVgZCPh3njWWS91cZTpK
-	 mik0xz1rqFyLWUnBeeltE6JF0T61P4PXUuGQN/9w=
+	b=2LyPl1bR/nZkA6N5Niw+bwrBVOEGSKBflSY1khJmxteIxgVM+3SAjpya7g4li7vda
+	 SiYEZRKc8grChrSbzpe04JYtZR20YceGZY7/cAkJYLWZpRPsJm02Dyftmhc1pGeJ/d
+	 vo4r2uhQE3pLGg7s+TogZAvLxE8r/PfyQb2DYt9M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Neal Gompa <neal@gompa.dev>,
-	Janne Grunau <j@jannau.net>,
+	Yu Kuai <yukuai3@huawei.com>,
+	Johan Hovold <johan@kernel.org>,
 	Vinod Koul <vkoul@kernel.org>
-Subject: [PATCH 6.12 108/139] dmaengine: apple-admac: Add "apple,t8103-admac" compatible
-Date: Wed, 21 Jan 2026 19:15:56 +0100
-Message-ID: <20260121181415.334396691@linuxfoundation.org>
+Subject: [PATCH 6.12 109/139] dmaengine: at_hdmac: fix device leak on of_dma_xlate()
+Date: Wed, 21 Jan 2026 19:15:57 +0100
+Message-ID: <20260121181415.370176688@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260121181411.452263583@linuxfoundation.org>
 References: <20260121181411.452263583@linuxfoundation.org>
@@ -51,37 +51,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Janne Grunau <j@jannau.net>
+From: Johan Hovold <johan@kernel.org>
 
-commit 76cba1e60b69c9cd53b9127d017a7dc5945455b1 upstream.
+commit b9074b2d7a230b6e28caa23165e9d8bc0677d333 upstream.
 
-After discussion with the devicetree maintainers we agreed to not extend
-lists with the generic compatible "apple,admac" anymore [1]. Use
-"apple,t8103-admac" as base compatible as it is the SoC the driver and
-bindings were written for.
+Make sure to drop the reference taken when looking up the DMA platform
+device during of_dma_xlate() when releasing channel resources.
 
-[1]: https://lore.kernel.org/asahi/12ab93b7-1fc2-4ce0-926e-c8141cfe81bf@kernel.org/
+Note that commit 3832b78b3ec2 ("dmaengine: at_hdmac: add missing
+put_device() call in at_dma_xlate()") fixed the leak in a couple of
+error paths but the reference is still leaking on successful allocation.
 
-Fixes: b127315d9a78 ("dmaengine: apple-admac: Add Apple ADMAC driver")
-Cc: stable@vger.kernel.org
-Reviewed-by: Neal Gompa <neal@gompa.dev>
-Signed-off-by: Janne Grunau <j@jannau.net>
-Link: https://patch.msgid.link/20251231-apple-admac-t8103-base-compat-v1-1-ec24a3708f76@jannau.net
+Fixes: bbe89c8e3d59 ("at_hdmac: move to generic DMA binding")
+Fixes: 3832b78b3ec2 ("dmaengine: at_hdmac: add missing put_device() call in at_dma_xlate()")
+Cc: stable@vger.kernel.org	# 3.10: 3832b78b3ec2
+Cc: Yu Kuai <yukuai3@huawei.com>
+Signed-off-by: Johan Hovold <johan@kernel.org>
+Link: https://patch.msgid.link/20251117161258.10679-2-johan@kernel.org
 Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/dma/apple-admac.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/dma/at_hdmac.c |    9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
---- a/drivers/dma/apple-admac.c
-+++ b/drivers/dma/apple-admac.c
-@@ -936,6 +936,7 @@ static void admac_remove(struct platform
- }
+--- a/drivers/dma/at_hdmac.c
++++ b/drivers/dma/at_hdmac.c
+@@ -1765,6 +1765,7 @@ static int atc_alloc_chan_resources(stru
+ static void atc_free_chan_resources(struct dma_chan *chan)
+ {
+ 	struct at_dma_chan	*atchan = to_at_dma_chan(chan);
++	struct at_dma_slave	*atslave;
  
- static const struct of_device_id admac_of_match[] = {
-+	{ .compatible = "apple,t8103-admac", },
- 	{ .compatible = "apple,admac", },
- 	{ }
- };
+ 	BUG_ON(atc_chan_is_enabled(atchan));
+ 
+@@ -1774,8 +1775,12 @@ static void atc_free_chan_resources(stru
+ 	/*
+ 	 * Free atslave allocated in at_dma_xlate()
+ 	 */
+-	kfree(chan->private);
+-	chan->private = NULL;
++	atslave = chan->private;
++	if (atslave) {
++		put_device(atslave->dma_dev);
++		kfree(atslave);
++		chan->private = NULL;
++	}
+ 
+ 	dev_vdbg(chan2dev(chan), "free_chan_resources: done\n");
+ }
 
 
