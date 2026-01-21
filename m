@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F43A245005;
-	Wed, 21 Jan 2026 18:28:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4BDD25F78F;
+	Wed, 21 Jan 2026 18:28:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769020090; cv=none; b=uwuGoLlRb/Jp5nzlWPhhsASLy9wPGuWinUJI7p6eIQW/UJgyCPQfBs/S2rwJB9ejPIUNiSdjl+pRM/xzUxdR9ry+Yno3d2q/n8lKxAmcH5XoicThi1o5F23C8DE/KZlNahNtoumc2jepNLeWlRen/b/9OBkorXN6m1lrnFQR2LI=
+	t=1769020093; cv=none; b=WeVG+Rd1kCwTLSD+o3XOgUdhkWuHaS/qTCgmNzAfuoSNo5nB0228H25o0Wh/Q4S/DWV4SEeroDr/BUpt5Lk8RRM91mztl7BpFG5989sUrY+I9qTtWzgysIrxTRV+E3b0sUK6W2nQMtiSX4enjA+nMH5C0GFSfbhH/o2x/R5Y1V4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769020090; c=relaxed/simple;
-	bh=E/TR36WmYyBr2QBb2yAK1IE6F+Tjoda92SIJ0TbqJM4=;
+	s=arc-20240116; t=1769020093; c=relaxed/simple;
+	bh=vKNsHGve3zIfR0MmnTDA7CMB4Wofo9XQS6P4XZIHAdw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FnqjmM98XtiruqIj4GnDgWKmaJSC2FMg/xU9cxIRpz3LaivPbRIhDZIWD6lROo+20+Om8FMiPERt63l1nPfM59mlpWeEbZ3+N15VhqsnIy0I9hcoJTtD7Jp3YfzdtTYxGmiBMJlfOsO/vgUwW4al5sKUIOvTcqkzxw/XPqHXb9w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ToFKzcrx; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=c6i7MLBOXGfD9rznaV8d7AA9+ztrGcPcGV1sSh6Ah2KeadwywPQnoj27zXs7CbL2/2nGjihU92TiYSVbyjreCUZLqfS4n6cF7pH3i4L1stE6K6KGsQ9jAuQ6LrhXTz8WNdn1F/b+EBxK3gQ2l2/TmVKYwh5GvQOG8tpczCB87yo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zcrOa+FE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ToFKzcrx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2E36C4CEF1;
-	Wed, 21 Jan 2026 18:28:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zcrOa+FE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 364E9C4CEF1;
+	Wed, 21 Jan 2026 18:28:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1769020090;
-	bh=E/TR36WmYyBr2QBb2yAK1IE6F+Tjoda92SIJ0TbqJM4=;
+	s=korg; t=1769020093;
+	bh=vKNsHGve3zIfR0MmnTDA7CMB4Wofo9XQS6P4XZIHAdw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ToFKzcrxSIkLmM4UyqYiJncA4pbgwPDFQdSiC+QSh+krKQH86WbnvNOTnmNWTfADc
-	 n3AYdGVqhg1o3LjMBZVAlIEDq7/w8m9gnxrsYumpcgLQoD8GXSsfEdWqVQG4z16wER
-	 23C+pziIGZ8pAlFvFq3e6+EyTtW26lGqQDGhG2lM=
+	b=zcrOa+FEZmCi5cS6hDnKPP8t14jd8QaqbtZK9cHuldnCXNVRz7EidSlFwswgXckXJ
+	 AB2hR/sXK3czmMufWobh1ZS+owtWLnl9nVD07iRQizxLVyOzE/bgaRvtoTkvtelD5x
+	 D0fc071pLJq3saLtlUqVJ84DteEaC/7oPd2LE/5k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Sascha Hauer <s.hauer@pengutronix.de>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 056/198] ASoC: tlv320adcx140: fix null pointer
-Date: Wed, 21 Jan 2026 19:14:44 +0100
-Message-ID: <20260121181420.570787643@linuxfoundation.org>
+Subject: [PATCH 6.18 057/198] ASoC: tlv320adcx140: fix word length
+Date: Wed, 21 Jan 2026 19:14:45 +0100
+Message-ID: <20260121181420.607114338@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260121181418.537774329@linuxfoundation.org>
 References: <20260121181418.537774329@linuxfoundation.org>
@@ -54,49 +54,44 @@ Content-Transfer-Encoding: 8bit
 
 From: Emil Svendsen <emas@bang-olufsen.dk>
 
-[ Upstream commit be7664c81d3129fc313ef62ff275fd3d33cfecd4 ]
+[ Upstream commit 46378ab9fcb796dca46b51e10646f636e2c661f9 ]
 
-The "snd_soc_component" in "adcx140_priv" was only used once but never
-set. It was only used for reaching "dev" which is already present in
-"adcx140_priv".
+The word length is the physical width of the channel slots. So the
+hw_params would misconfigure when format width and physical width
+doesn't match. Like S24_LE which has data width of 24 bits but physical
+width of 32 bits. So if using asymmetric formats you will get a lot of
+noise.
 
-Fixes: 4e82971f7b55 ("ASoC: tlv320adcx140: Add a new kcontrol")
+Fixes: 689c7655b50c5 ("ASoC: tlv320adcx140: Add the tlv320adcx140 codec driver family")
 Signed-off-by: Emil Svendsen <emas@bang-olufsen.dk>
 Signed-off-by: Sascha Hauer <s.hauer@pengutronix.de>
-Link: https://patch.msgid.link/20260113-sound-soc-codecs-tvl320adcx140-v4-2-8f7ecec525c8@pengutronix.de
+Link: https://patch.msgid.link/20260113-sound-soc-codecs-tvl320adcx140-v4-4-8f7ecec525c8@pengutronix.de
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/tlv320adcx140.c | 4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
+ sound/soc/codecs/tlv320adcx140.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/sound/soc/codecs/tlv320adcx140.c b/sound/soc/codecs/tlv320adcx140.c
-index d594bf166c0e7..ccfec4c0c159a 100644
+index ccfec4c0c159a..62d936c2838c9 100644
 --- a/sound/soc/codecs/tlv320adcx140.c
 +++ b/sound/soc/codecs/tlv320adcx140.c
-@@ -23,7 +23,6 @@
- #include "tlv320adcx140.h"
+@@ -727,7 +727,7 @@ static int adcx140_hw_params(struct snd_pcm_substream *substream,
+ 	struct adcx140_priv *adcx140 = snd_soc_component_get_drvdata(component);
+ 	u8 data = 0;
  
- struct adcx140_priv {
--	struct snd_soc_component *component;
- 	struct regulator *supply_areg;
- 	struct gpio_desc *gpio_reset;
- 	struct regmap *regmap;
-@@ -701,7 +700,6 @@ static void adcx140_pwr_ctrl(struct adcx140_priv *adcx140, bool power_state)
- {
- 	int pwr_ctrl = 0;
- 	int ret = 0;
--	struct snd_soc_component *component = adcx140->component;
- 
- 	if (power_state)
- 		pwr_ctrl = ADCX140_PWR_CFG_ADC_PDZ | ADCX140_PWR_CFG_PLL_PDZ;
-@@ -713,7 +711,7 @@ static void adcx140_pwr_ctrl(struct adcx140_priv *adcx140, bool power_state)
- 		ret = regmap_write(adcx140->regmap, ADCX140_PHASE_CALIB,
- 			adcx140->phase_calib_on ? 0x00 : 0x40);
- 		if (ret)
--			dev_err(component->dev, "%s: register write error %d\n",
-+			dev_err(adcx140->dev, "%s: register write error %d\n",
- 				__func__, ret);
+-	switch (params_width(params)) {
++	switch (params_physical_width(params)) {
+ 	case 16:
+ 		data = ADCX140_16_BIT_WORD;
+ 		break;
+@@ -742,7 +742,7 @@ static int adcx140_hw_params(struct snd_pcm_substream *substream,
+ 		break;
+ 	default:
+ 		dev_err(component->dev, "%s: Unsupported width %d\n",
+-			__func__, params_width(params));
++			__func__, params_physical_width(params));
+ 		return -EINVAL;
  	}
  
 -- 
