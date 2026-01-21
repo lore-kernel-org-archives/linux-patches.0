@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83B8A366DD8;
-	Wed, 21 Jan 2026 18:26:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3346236656E;
+	Wed, 21 Jan 2026 18:26:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769020001; cv=none; b=EWm3JqW0E3Up0s0CRk5dlg4dRY3vLd9v5wxmu5dCa3llVlg/s2KI8T0pje1/km8bE7W4wn1hxP/nt7Z+jEfMr6Z+J00qwi3aZPIThSYbm9FJQnRtNZ7mmOUwpxFHQJYv1UQNFci3JpfRDwnhDlDpMjutU/3oP+oGByY5RjKT2M8=
+	t=1769020005; cv=none; b=O/fCyUgUiXEcmzFeMRV2VBr0nA0y9QxT5/MWVEWorPFSn4z+TgYCWJwdLJVZdudHCIWgTaUJ2cPuLXfbmU9qQ8FifAoNtp7Fx65mbWKyKY4Gkc3uuGLyNoaAp8d97bZrCy7bQ8k+0EuU/r/v04XE5BHR+Y5xUt961FhEvCJJqb4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769020001; c=relaxed/simple;
-	bh=LhJiqcyWth3CSDM6Ac324ecU7/m+Hesivg7YDRrgkCs=;
+	s=arc-20240116; t=1769020005; c=relaxed/simple;
+	bh=GB0zZ17NaaVvEJej7HKUqoq2WtsQmd7BKBHX8n8uk58=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Haw21yWcTJn+8pdBAFJAujtWX5hoTEq3V8Ri8sQ0Doe1aj7HLRPT5SGAuT859vql/3gPm5tp0saMyGpvnfYaE018uf05vqpbw3LQAYHIwtVwoNz/0zarHQFxdz4rk6AI+jO5YgFXBjLFlyNm31kKC6O4qjs142OOCIpvtGBgVJg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KYt49BLr; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Ja0UmD5eOq6IYBytq//t1voOX2YiDGOdxyUM3Yl9qkDF8NNheg//gMohbrN51c5KWzip8IXK6SW5WzN7FW3Ee2OcShMIpLiyftsGZCXa9QdEk2OXFVs77rfZbi31EMYXvOly1aul5RT3cQ3Wtjyy2Avk43NV5TQQKa3fPcpnEew=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QBvUaTJh; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KYt49BLr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E82EBC4CEF1;
-	Wed, 21 Jan 2026 18:26:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QBvUaTJh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3726BC4CEF1;
+	Wed, 21 Jan 2026 18:26:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1769020001;
-	bh=LhJiqcyWth3CSDM6Ac324ecU7/m+Hesivg7YDRrgkCs=;
+	s=korg; t=1769020004;
+	bh=GB0zZ17NaaVvEJej7HKUqoq2WtsQmd7BKBHX8n8uk58=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KYt49BLrxKyEM+jOlhLoti+CyQ1QY2NuXvIvUwa0HlMYIGp03X+JpjcarFHQqdoSC
-	 u6C/uDoyEILL1u9MGF0vbzVPHf8vLOz9mMvHzua1PNUe6mMQZ23wCj74fUOlEyJ3Ys
-	 o+beWbQ01rlU2tocVv8NE+WG8l6uwvGN0fe8Lwd4=
+	b=QBvUaTJhFz3ByAH1BHboBhS0YEVv+mlpfumMrAUTbjivnzOSnpGsuZCbyiuB5El5o
+	 dLqsJ+X4Cy7XMyvoQW9rMd9WYE4q0B+7G5FcToiuN7A4pQD6aQk5urdpWDZp2p6IY2
+	 67Ik8DLsQnBhWYU0cRINxxbZskmvhPIv2zmcVrNg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Paolo Bonzini <pbonzini@redhat.com>,
-	Sean Christopherson <seanjc@google.com>,
-	Binbin Wu <binbin.wu@linux.intel.com>
-Subject: [PATCH 6.18 005/198] x86/fpu: Clear XSTATE_BV[i] in guest XSAVE state whenever XFD[i]=1
-Date: Wed, 21 Jan 2026 19:13:53 +0100
-Message-ID: <20260121181418.736623007@linuxfoundation.org>
+	Andreas Hindborg <a.hindborg@kernel.org>,
+	Dirk Behme <dirk.behme@de.bosch.com>,
+	Alice Ryhl <aliceryhl@google.com>,
+	"Yury Norov (NVIDIA)" <yury.norov@gmail.com>
+Subject: [PATCH 6.18 006/198] rust: bitops: fix missing _find_* functions on 32-bit ARM
+Date: Wed, 21 Jan 2026 19:13:54 +0100
+Message-ID: <20260121181418.772952941@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260121181418.537774329@linuxfoundation.org>
 References: <20260121181418.537774329@linuxfoundation.org>
@@ -51,173 +52,126 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sean Christopherson <seanjc@google.com>
+From: Alice Ryhl <aliceryhl@google.com>
 
-commit b45f721775947a84996deb5c661602254ce25ce6 upstream.
+commit 6a069876eb1402478900ee0eb7d7fe276bb1f4e3 upstream.
 
-When loading guest XSAVE state via KVM_SET_XSAVE, and when updating XFD in
-response to a guest WRMSR, clear XFD-disabled features in the saved (or to
-be restored) XSTATE_BV to ensure KVM doesn't attempt to load state for
-features that are disabled via the guest's XFD.  Because the kernel
-executes XRSTOR with the guest's XFD, saving XSTATE_BV[i]=1 with XFD[i]=1
-will cause XRSTOR to #NM and panic the kernel.
+On 32-bit ARM, you may encounter linker errors such as this one:
 
-E.g. if fpu_update_guest_xfd() sets XFD without clearing XSTATE_BV:
+	ld.lld: error: undefined symbol: _find_next_zero_bit
+	>>> referenced by rust_binder_main.43196037ba7bcee1-cgu.0
+	>>>               drivers/android/binder/rust_binder_main.o:(<rust_binder_main::process::Process>::insert_or_update_handle) in archive vmlinux.a
+	>>> referenced by rust_binder_main.43196037ba7bcee1-cgu.0
+	>>>               drivers/android/binder/rust_binder_main.o:(<rust_binder_main::process::Process>::insert_or_update_handle) in archive vmlinux.a
 
-  ------------[ cut here ]------------
-  WARNING: arch/x86/kernel/traps.c:1524 at exc_device_not_available+0x101/0x110, CPU#29: amx_test/848
-  Modules linked in: kvm_intel kvm irqbypass
-  CPU: 29 UID: 1000 PID: 848 Comm: amx_test Not tainted 6.19.0-rc2-ffa07f7fd437-x86_amx_nm_xfd_non_init-vm #171 NONE
-  Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS 0.0.0 02/06/2015
-  RIP: 0010:exc_device_not_available+0x101/0x110
-  Call Trace:
-   <TASK>
-   asm_exc_device_not_available+0x1a/0x20
-  RIP: 0010:restore_fpregs_from_fpstate+0x36/0x90
-   switch_fpu_return+0x4a/0xb0
-   kvm_arch_vcpu_ioctl_run+0x1245/0x1e40 [kvm]
-   kvm_vcpu_ioctl+0x2c3/0x8f0 [kvm]
-   __x64_sys_ioctl+0x8f/0xd0
-   do_syscall_64+0x62/0x940
-   entry_SYSCALL_64_after_hwframe+0x4b/0x53
-   </TASK>
-  ---[ end trace 0000000000000000 ]---
+This error occurs because even though the functions are declared by
+include/linux/find.h, the definition is #ifdef'd out on 32-bit ARM. This
+is because arch/arm/include/asm/bitops.h contains:
 
-This can happen if the guest executes WRMSR(MSR_IA32_XFD) to set XFD[18] = 1,
-and a host IRQ triggers kernel_fpu_begin() prior to the vmexit handler's
-call to fpu_update_guest_xfd().
+	#define find_first_zero_bit(p,sz)	_find_first_zero_bit_le(p,sz)
+	#define find_next_zero_bit(p,sz,off)	_find_next_zero_bit_le(p,sz,off)
+	#define find_first_bit(p,sz)		_find_first_bit_le(p,sz)
+	#define find_next_bit(p,sz,off)		_find_next_bit_le(p,sz,off)
 
-and if userspace stuffs XSTATE_BV[i]=1 via KVM_SET_XSAVE:
+And the underscore-prefixed function is conditional on #ifndef of the
+non-underscore-prefixed name, but the declaration in find.h is *not*
+conditional on that #ifndef.
 
-  ------------[ cut here ]------------
-  WARNING: arch/x86/kernel/traps.c:1524 at exc_device_not_available+0x101/0x110, CPU#14: amx_test/867
-  Modules linked in: kvm_intel kvm irqbypass
-  CPU: 14 UID: 1000 PID: 867 Comm: amx_test Not tainted 6.19.0-rc2-2dace9faccd6-x86_amx_nm_xfd_non_init-vm #168 NONE
-  Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS 0.0.0 02/06/2015
-  RIP: 0010:exc_device_not_available+0x101/0x110
-  Call Trace:
-   <TASK>
-   asm_exc_device_not_available+0x1a/0x20
-  RIP: 0010:restore_fpregs_from_fpstate+0x36/0x90
-   fpu_swap_kvm_fpstate+0x6b/0x120
-   kvm_load_guest_fpu+0x30/0x80 [kvm]
-   kvm_arch_vcpu_ioctl_run+0x85/0x1e40 [kvm]
-   kvm_vcpu_ioctl+0x2c3/0x8f0 [kvm]
-   __x64_sys_ioctl+0x8f/0xd0
-   do_syscall_64+0x62/0x940
-   entry_SYSCALL_64_after_hwframe+0x4b/0x53
-   </TASK>
-  ---[ end trace 0000000000000000 ]---
+To fix the linker error, we ensure that the symbols in question exist
+when compiling Rust code. We do this by defining them in rust/helpers/
+whenever the normal definition is #ifndef'd out.
 
-The new behavior is consistent with the AMX architecture.  Per Intel's SDM,
-XSAVE saves XSTATE_BV as '0' for components that are disabled via XFD
-(and non-compacted XSAVE saves the initial configuration of the state
-component):
+Note that these helpers are somewhat unusual in that they do not have
+the rust_helper_ prefix that most helpers have. Adding the rust_helper_
+prefix does not compile, as 'bindings::_find_next_zero_bit()' will
+result in a call to a symbol called _find_next_zero_bit as defined by
+include/linux/find.h rather than a symbol with the rust_helper_ prefix.
+This is because when a symbol is present in both include/ and
+rust/helpers/, the one from include/ wins under the assumption that the
+current configuration is one where that helper is unnecessary. This
+heuristic fails for _find_next_zero_bit() because the header file always
+declares it even if the symbol does not exist.
 
-  If XSAVE, XSAVEC, XSAVEOPT, or XSAVES is saving the state component i,
-  the instruction does not generate #NM when XCR0[i] = IA32_XFD[i] = 1;
-  instead, it operates as if XINUSE[i] = 0 (and the state component was
-  in its initial state): it saves bit i of XSTATE_BV field of the XSAVE
-  header as 0; in addition, XSAVE saves the initial configuration of the
-  state component (the other instructions do not save state component i).
+The functions still use the __rust_helper annotation. This lets the
+wrapper function be inlined into Rust code even if full kernel LTO is
+not used once the patch series for that feature lands.
 
-Alternatively, KVM could always do XRSTOR with XFD=0, e.g. by using
-a constant XFD based on the set of enabled features when XSAVEing for
-a struct fpu_guest.  However, having XSTATE_BV[i]=1 for XFD-disabled
-features can only happen in the above interrupt case, or in similar
-scenarios involving preemption on preemptible kernels, because
-fpu_swap_kvm_fpstate()'s call to save_fpregs_to_fpstate() saves the
-outgoing FPU state with the current XFD; and that is (on all but the
-first WRMSR to XFD) the guest XFD.
+Yury: arches are free to implement they own find_bit() functions. Most
+rely on generic implementation, but arm32 and m86k - not; so they require
+custom handling. Alice confirmed it fixes the build for both.
 
-Therefore, XFD can only go out of sync with XSTATE_BV in the above
-interrupt case, or in similar scenarios involving preemption on
-preemptible kernels, and it we can consider it (de facto) part of KVM
-ABI that KVM_GET_XSAVE returns XSTATE_BV[i]=0 for XFD-disabled features.
-
-Reported-by: Paolo Bonzini <pbonzini@redhat.com>
 Cc: stable@vger.kernel.org
-Fixes: 820a6ee944e7 ("kvm: x86: Add emulation for IA32_XFD", 2022-01-14)
-Signed-off-by: Sean Christopherson <seanjc@google.com>
-[Move clearing of XSTATE_BV from fpu_copy_uabi_to_guest_fpstate
- to kvm_vcpu_ioctl_x86_set_xsave. - Paolo]
-Reviewed-by: Binbin Wu <binbin.wu@linux.intel.com>
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+Fixes: 6cf93a9ed39e ("rust: add bindings for bitops.h")
+Reported-by: Andreas Hindborg <a.hindborg@kernel.org>
+Closes: https://rust-for-linux.zulipchat.com/#narrow/channel/x/topic/x/near/561677301
+Tested-by: Andreas Hindborg <a.hindborg@kernel.org>
+Reviewed-by: Dirk Behme <dirk.behme@de.bosch.com>
+Signed-off-by: Alice Ryhl <aliceryhl@google.com>
+Signed-off-by: Yury Norov (NVIDIA) <yury.norov@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kernel/fpu/core.c |   32 +++++++++++++++++++++++++++++---
- arch/x86/kvm/x86.c         |    9 +++++++++
- 2 files changed, 38 insertions(+), 3 deletions(-)
+ rust/helpers/bitops.c | 42 ++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 42 insertions(+)
 
---- a/arch/x86/kernel/fpu/core.c
-+++ b/arch/x86/kernel/fpu/core.c
-@@ -318,10 +318,29 @@ EXPORT_SYMBOL_GPL(fpu_enable_guest_xfd_f
- #ifdef CONFIG_X86_64
- void fpu_update_guest_xfd(struct fpu_guest *guest_fpu, u64 xfd)
+diff --git a/rust/helpers/bitops.c b/rust/helpers/bitops.c
+index 5d0861d29d3f..e79ef9e6d98f 100644
+--- a/rust/helpers/bitops.c
++++ b/rust/helpers/bitops.c
+@@ -1,6 +1,7 @@
+ // SPDX-License-Identifier: GPL-2.0
+ 
+ #include <linux/bitops.h>
++#include <linux/find.h>
+ 
+ void rust_helper___set_bit(unsigned long nr, unsigned long *addr)
  {
-+	struct fpstate *fpstate = guest_fpu->fpstate;
-+
- 	fpregs_lock();
--	guest_fpu->fpstate->xfd = xfd;
--	if (guest_fpu->fpstate->in_use)
--		xfd_update_state(guest_fpu->fpstate);
-+
-+	/*
-+	 * KVM's guest ABI is that setting XFD[i]=1 *can* immediately revert the
-+	 * save state to its initial configuration.  Likewise, KVM_GET_XSAVE does
-+	 * the same as XSAVE and returns XSTATE_BV[i]=0 whenever XFD[i]=1.
-+	 *
-+	 * If the guest's FPU state is in hardware, just update XFD: the XSAVE
-+	 * in fpu_swap_kvm_fpstate will clear XSTATE_BV[i] whenever XFD[i]=1.
-+	 *
-+	 * If however the guest's FPU state is NOT resident in hardware, clear
-+	 * disabled components in XSTATE_BV now, or a subsequent XRSTOR will
-+	 * attempt to load disabled components and generate #NM _in the host_.
-+	 */
-+	if (xfd && test_thread_flag(TIF_NEED_FPU_LOAD))
-+		fpstate->regs.xsave.header.xfeatures &= ~xfd;
-+
-+	fpstate->xfd = xfd;
-+	if (fpstate->in_use)
-+		xfd_update_state(fpstate);
-+
- 	fpregs_unlock();
+@@ -21,3 +22,44 @@ void rust_helper_clear_bit(unsigned long nr, volatile unsigned long *addr)
+ {
+ 	clear_bit(nr, addr);
  }
- EXPORT_SYMBOL_GPL(fpu_update_guest_xfd);
-@@ -430,6 +449,13 @@ int fpu_copy_uabi_to_guest_fpstate(struc
- 		return -EINVAL;
- 
- 	/*
-+	 * Disabled features must be in their initial state, otherwise XRSTOR
-+	 * causes an exception.
-+	 */
-+	if (WARN_ON_ONCE(ustate->xsave.header.xfeatures & kstate->xfd))
-+		return -EINVAL;
 +
-+	/*
- 	 * Nullify @vpkru to preserve its current value if PKRU's bit isn't set
- 	 * in the header.  KVM's odd ABI is to leave PKRU untouched in this
- 	 * case (all other components are eventually re-initialized).
---- a/arch/x86/kvm/x86.c
-+++ b/arch/x86/kvm/x86.c
-@@ -5842,9 +5842,18 @@ static int kvm_vcpu_ioctl_x86_get_xsave(
- static int kvm_vcpu_ioctl_x86_set_xsave(struct kvm_vcpu *vcpu,
- 					struct kvm_xsave *guest_xsave)
- {
-+	union fpregs_state *xstate = (union fpregs_state *)guest_xsave->region;
++/*
++ * The rust_helper_ prefix is intentionally omitted below so that the
++ * declarations in include/linux/find.h are compatible with these helpers.
++ *
++ * Note that the below #ifdefs mean that the helper is only created if C does
++ * not provide a definition.
++ */
++#ifdef find_first_zero_bit
++__rust_helper
++unsigned long _find_first_zero_bit(const unsigned long *p, unsigned long size)
++{
++	return find_first_zero_bit(p, size);
++}
++#endif /* find_first_zero_bit */
 +
- 	if (fpstate_is_confidential(&vcpu->arch.guest_fpu))
- 		return vcpu->kvm->arch.has_protected_state ? -EINVAL : 0;
- 
-+	/*
-+	 * For backwards compatibility, do not expect disabled features to be in
-+	 * their initial state.  XSTATE_BV[i] must still be cleared whenever
-+	 * XFD[i]=1, or XRSTOR would cause a #NM.
-+	 */
-+	xstate->xsave.header.xfeatures &= ~vcpu->arch.guest_fpu.fpstate->xfd;
++#ifdef find_next_zero_bit
++__rust_helper
++unsigned long _find_next_zero_bit(const unsigned long *addr,
++				  unsigned long size, unsigned long offset)
++{
++	return find_next_zero_bit(addr, size, offset);
++}
++#endif /* find_next_zero_bit */
 +
- 	return fpu_copy_uabi_to_guest_fpstate(&vcpu->arch.guest_fpu,
- 					      guest_xsave->region,
- 					      kvm_caps.supported_xcr0,
++#ifdef find_first_bit
++__rust_helper
++unsigned long _find_first_bit(const unsigned long *addr, unsigned long size)
++{
++	return find_first_bit(addr, size);
++}
++#endif /* find_first_bit */
++
++#ifdef find_next_bit
++__rust_helper
++unsigned long _find_next_bit(const unsigned long *addr, unsigned long size,
++			     unsigned long offset)
++{
++	return find_next_bit(addr, size, offset);
++}
++#endif /* find_next_bit */
+-- 
+2.52.0
+
 
 
