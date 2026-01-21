@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97FC43242D6;
-	Wed, 21 Jan 2026 18:22:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D60A1318138;
+	Wed, 21 Jan 2026 18:22:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769019768; cv=none; b=crmzSaIZzcbz+7dBiY3Z+YtaaxA1UThz7zuV7nWCX6eXhOY7gtM2s31JLEUunCR3WzGQ/cGUZ6eZpGK6u4T3peqzTw8Jr3N7zotUdtjYC+hsTST9GOlPo3OSMGYuNPfG3VaKQ/+zzv4MvWdxfOoAU87fbALcHg++yPBdJ4dj2z8=
+	t=1769019771; cv=none; b=ZG+agpV1MQQ8ybB1rHPzTqvXg9EgvrCp4rc3Upuy6Bw/7JhKNWxDKEyXSiww4tXOT5Z+9Rva2DBOAzBrnstoDRRk9O+jABmmZnMOM4XXhUw2Vb3ZKLJLUDv6xxw7AAT/KC+TnrjzN04bD8Vdt3dQp+B8xQdN4tzdZbnsQYK6Ito=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769019768; c=relaxed/simple;
-	bh=6j3PStNgt5UPESoHmc6xfIb0Lg3dip3ISwBO0C7ubcM=;
+	s=arc-20240116; t=1769019771; c=relaxed/simple;
+	bh=cXEX0kGovp0eaWsOZwn0ZbhyZqyX93rZO4HvxGqG2rg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fxPgLsQIxLw2c9gxA/vFoYMRQ8FuOhSsNZaxS0V+tA4rmLKVgtGMePpMM472ao8212uF1tv5o/dyX3GVDL9IssDmN6LPpm/+9NEbpF58suwejjcJKk6jQg6QxGBXg/5dwNchnrjNgoQPL0kEzZ0zeF+TDV8aW3hXMFcuPKUT+yY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uC1YYu/8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=eyvrBeQtk0bAidkahwDVt6pVNjfNLugqlFfDSqFHZGqN+APCZzcPTG0jqgx3pVmvQ0bDrc3WXR6V81MCkz4sfZD2muThuQct+PJbiWTV1K6bOKCtGRv/buWtwsyzGZNBxIfi8wwJz0FCU/bqKIZ14BHybBtMMUetuC5S/PQgvzY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=n2P7wAam; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uC1YYu/8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF7C8C4CEF1;
-	Wed, 21 Jan 2026 18:22:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="n2P7wAam"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 580F8C4CEF1;
+	Wed, 21 Jan 2026 18:22:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1769019768;
-	bh=6j3PStNgt5UPESoHmc6xfIb0Lg3dip3ISwBO0C7ubcM=;
+	s=korg; t=1769019771;
+	bh=cXEX0kGovp0eaWsOZwn0ZbhyZqyX93rZO4HvxGqG2rg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uC1YYu/86CTvXu//4wvG8gae9RPdbdJdzpckcn1my50Btb0WM3BZPww0+8LJvI7Yk
-	 +ya4LgU8Bz9xjBZ7X1AYHPLVwPCop2aGd+YjTnJUEr8Ks18+SHW9VVrCkRzllvNxWe
-	 5iX8wJYyw9laEw0IYMXNAr2lFUwieCs6oASXLakE=
+	b=n2P7wAamqfglVDDHqSE+oLi6zr09wDufQmv68SCFw9/Gh4ECOLVJrVhVMc027VRR4
+	 7JTw03KBAtipealwDMcdoZjTUQD73xHf7yoJBnNFXfsclUbwRd5jnNjoMfE09TBFyR
+	 365IhBMgW/WdurvvsL9Ef25hesec6akQNLySHXcU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Haoxiang Li <lihaoxiang@isrc.iscas.ac.cn>,
-	Zack Rusin <zack.rusin@broadcom.com>
-Subject: [PATCH 6.12 103/139] drm/vmwgfx: Fix an error return check in vmw_compat_shader_add()
-Date: Wed, 21 Jan 2026 19:15:51 +0100
-Message-ID: <20260121181415.156971197@linuxfoundation.org>
+	Binbin Zhou <zhoubinbin@loongson.cn>,
+	Huacai Chen <chenhuacai@loongson.cn>
+Subject: [PATCH 6.12 104/139] LoongArch: dts: loongson-2k0500: Add default interrupt controller address cells
+Date: Wed, 21 Jan 2026 19:15:52 +0100
+Message-ID: <20260121181415.192110997@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260121181411.452263583@linuxfoundation.org>
 References: <20260121181411.452263583@linuxfoundation.org>
@@ -50,38 +50,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Haoxiang Li <lihaoxiang@isrc.iscas.ac.cn>
+From: Binbin Zhou <zhoubinbin@loongson.cn>
 
-commit bf72b4b7bb7dbb643d204fa41e7463894a95999f upstream.
+commit c4461754e6fe7e12a3ff198cce4707e3e20e43d4 upstream.
 
-In vmw_compat_shader_add(), the return value check of vmw_shader_alloc()
-is not proper. Modify the check for the return pointer 'res'.
+Add missing address-cells 0 to the Local I/O and Extend I/O interrupt
+controller node to silence W=1 warning:
 
-Found by code review and compiled on ubuntu 20.04.
+  loongson-2k0500.dtsi:513.5-51: Warning (interrupt_map): /bus@10000000/pcie@1a000000/pcie@0,0:interrupt-map:
+    Missing property '#address-cells' in node /bus@10000000/interrupt-controller@1fe11600, using 0 as fallback
 
-Fixes: 18e4a4669c50 ("drm/vmwgfx: Fix compat shader namespace")
+Value '0' is correct because:
+1. The Local I/O & Extend I/O interrupt controller do not have children,
+2. interrupt-map property (in PCI node) consists of five components and
+   the fourth component "parent unit address", which size is defined by
+   '#address-cells' of the node pointed to by the interrupt-parent
+   component, is not used (=0)
+
 Cc: stable@vger.kernel.org
-Signed-off-by: Haoxiang Li <lihaoxiang@isrc.iscas.ac.cn>
-Signed-off-by: Zack Rusin <zack.rusin@broadcom.com>
-Link: https://patch.msgid.link/20251224091105.1569464-1-lihaoxiang@isrc.iscas.ac.cn
+Signed-off-by: Binbin Zhou <zhoubinbin@loongson.cn>
+Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/vmwgfx/vmwgfx_shader.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ arch/loongarch/boot/dts/loongson-2k0500.dtsi |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/drivers/gpu/drm/vmwgfx/vmwgfx_shader.c
-+++ b/drivers/gpu/drm/vmwgfx/vmwgfx_shader.c
-@@ -923,8 +923,10 @@ int vmw_compat_shader_add(struct vmw_pri
- 	ttm_bo_unreserve(&buf->tbo);
+--- a/arch/loongarch/boot/dts/loongson-2k0500.dtsi
++++ b/arch/loongarch/boot/dts/loongson-2k0500.dtsi
+@@ -131,6 +131,7 @@
+ 			reg-names = "main", "isr0";
  
- 	res = vmw_shader_alloc(dev_priv, buf, size, 0, shader_type);
--	if (unlikely(ret != 0))
-+	if (IS_ERR(res)) {
-+		ret = PTR_ERR(res);
- 		goto no_reserve;
-+	}
+ 			interrupt-controller;
++			#address-cells = <0>;
+ 			#interrupt-cells = <2>;
+ 			interrupt-parent = <&cpuintc>;
+ 			interrupts = <2>;
+@@ -149,6 +150,7 @@
+ 			reg-names = "main", "isr0";
  
- 	ret = vmw_cmdbuf_res_add(man, vmw_cmdbuf_res_shader,
- 				 vmw_shader_key(user_key, shader_type),
+ 			interrupt-controller;
++			#address-cells = <0>;
+ 			#interrupt-cells = <2>;
+ 			interrupt-parent = <&cpuintc>;
+ 			interrupts = <4>;
+@@ -164,6 +166,7 @@
+ 			compatible = "loongson,ls2k0500-eiointc";
+ 			reg = <0x0 0x1fe11600 0x0 0xea00>;
+ 			interrupt-controller;
++			#address-cells = <0>;
+ 			#interrupt-cells = <1>;
+ 			interrupt-parent = <&cpuintc>;
+ 			interrupts = <3>;
 
 
