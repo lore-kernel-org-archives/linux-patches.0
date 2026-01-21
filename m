@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1A8634E779;
-	Wed, 21 Jan 2026 18:19:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6345E322740;
+	Wed, 21 Jan 2026 18:19:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769019574; cv=none; b=fBIHeb1m40om2cbqXdAGVxKXt8txzJT0txumAYojpUHWH1zhVZkcyzCqsrykm4fNkDSP5Ga0mldCOH18d15nBl5vfyEHt4i78o4uP1lNUg8w74AUn9fBswLDGisu4xucw3qP2Z494rL4GhEghdRogtLZUoL+Qf+J4eYbcp9Kmrg=
+	t=1769019578; cv=none; b=E3M3X3qRHbbMxI5WWcglKwflkDvOwxFq3HImycJw8E7tN6KiG5bns7vnIb51LSXAYqiE89Q0J3ap6J3KUvu+9W7okIjF4xRarMxr2pClhC3alooETlvq/jTSESxfRVXeX5e0vEr6SkVZF6LTKQvINty9+AMtpwCrf/JdCKfUjpI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769019574; c=relaxed/simple;
-	bh=8oK0KgYrWOYlGpJW4JZaO5k7n8GxELi3ZWR0Fh91iKU=;
+	s=arc-20240116; t=1769019578; c=relaxed/simple;
+	bh=UPNnDTwAIV3v1RaFjEHmqDm46xBGeP3XJLGX5sC4ng8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uu5wZB6x+FI7qfhDr4whgjFQFWLOujoh/OgsJP/FBY0uKBYaFekdAs9Ce/Eaz6yM1imp9trpwZrGFuDE65dt7Cijaml9zXL5yic/Y2ZE6eTiXstAG2G1qR73ku8DRjt3K7F8t4+a+hRf5nr44FFfhq+o2dMMW6SrwuGbalDHqHA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0K8LKnq4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LcOLWv//yEat6wbezdk3A1SrH+J/uyT52pamNFjT8gecgMMzdG4AnF/Qf54/T4Ac80ApjHwHlObVUiKTODLbLfFVf+WhA2RvaojSbAwvOK8JPBy9jjMA+Y3OlxecP+94+tpF/OEr2sYvuW8fh7bVq4d7GhCbMacl0kC/wEV8fYI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GWcMZFtp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0K8LKnq4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 821F3C4CEF1;
-	Wed, 21 Jan 2026 18:19:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GWcMZFtp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02530C4CEF1;
+	Wed, 21 Jan 2026 18:19:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1769019574;
-	bh=8oK0KgYrWOYlGpJW4JZaO5k7n8GxELi3ZWR0Fh91iKU=;
+	s=korg; t=1769019577;
+	bh=UPNnDTwAIV3v1RaFjEHmqDm46xBGeP3XJLGX5sC4ng8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0K8LKnq4VoanU6XSjWMLkD19v3QR54663DA0BblXC+Or1CUNsVikS2gn04UwIALEb
-	 wyVzWwK8X2YBYlgFyhEiju92w1Bmzu4fZayJ6diAACjJgiRDV22J7eOhVR1H/hpD6k
-	 RO6MCa7v1RfEK+Wks6+/QnkPy3e8EVR9DXL8hgxo=
+	b=GWcMZFtpMpVmXAblHXWST4YF2wO9cekrVNm+FjXO1O/d/0hdT0FR/GGkzqO7Nnl+i
+	 Oz4qBV4MCeUCIms+qBAGZWUYMWquEMve8QFgM226a/g1mf5SzIfDa/cDjNEbKJ7kX/
+	 KRMoobBalxMY40o+yKos7cDYW7qiZ6w3A7qiR4ao=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sheetal <sheetal@nvidia.com>,
-	Thierry Reding <treding@nvidia.com>,
+	Suraj Gupta <suraj.gupta2@amd.com>,
+	Radhey Shyam Pandey <radhey.shyam.pandey@amd.com>,
+	Folker Schwesinger <dev@folker-schwesinger.de>,
 	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 045/139] dmaengine: tegra-adma: Fix use-after-free
-Date: Wed, 21 Jan 2026 19:14:53 +0100
-Message-ID: <20260121181413.076748840@linuxfoundation.org>
+Subject: [PATCH 6.12 046/139] dmaengine: xilinx_dma: Fix uninitialized addr_width when "xlnx,addrwidth" property is missing
+Date: Wed, 21 Jan 2026 19:14:54 +0100
+Message-ID: <20260121181413.111686821@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260121181411.452263583@linuxfoundation.org>
 References: <20260121181411.452263583@linuxfoundation.org>
@@ -52,108 +53,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sheetal <sheetal@nvidia.com>
+From: Suraj Gupta <suraj.gupta2@amd.com>
 
-[ Upstream commit 2efd07a7c36949e6fa36a69183df24d368bf9e96 ]
+[ Upstream commit c0732fe78728718c853ef8e7af5bbb05262acbd1 ]
 
-A use-after-free bug exists in the Tegra ADMA driver when audio streams
-are terminated, particularly during XRUN conditions. The issue occurs
-when the DMA buffer is freed by tegra_adma_terminate_all() before the
-vchan completion tasklet finishes accessing it.
+When device tree lacks optional "xlnx,addrwidth" property, the addr_width
+variable remained uninitialized with garbage values, causing incorrect
+DMA mask configuration and subsequent probe failure. The fix ensures a
+fallback to the default 32-bit address width when this property is missing.
 
-The race condition follows this sequence:
-
-  1. DMA transfer completes, triggering an interrupt that schedules the
-     completion tasklet (tasklet has not executed yet)
-  2. Audio playback stops, calling tegra_adma_terminate_all() which
-     frees the DMA buffer memory via kfree()
-  3. The scheduled tasklet finally executes, calling vchan_complete()
-     which attempts to access the already-freed memory
-
-Since tasklets can execute at any time after being scheduled, there is
-no guarantee that the buffer will remain valid when vchan_complete()
-runs.
-
-Fix this by properly synchronizing the virtual channel completion:
- - Calling vchan_terminate_vdesc() in tegra_adma_stop() to mark the
-   descriptors as terminated instead of freeing the descriptor.
- - Add the callback tegra_adma_synchronize() that calls
-   vchan_synchronize() which kills any pending tasklets and frees any
-   terminated descriptors.
-
-Crash logs:
-[  337.427523] BUG: KASAN: use-after-free in vchan_complete+0x124/0x3b0
-[  337.427544] Read of size 8 at addr ffff000132055428 by task swapper/0/0
-
-[  337.427562] Call trace:
-[  337.427564]  dump_backtrace+0x0/0x320
-[  337.427571]  show_stack+0x20/0x30
-[  337.427575]  dump_stack_lvl+0x68/0x84
-[  337.427584]  print_address_description.constprop.0+0x74/0x2b8
-[  337.427590]  kasan_report+0x1f4/0x210
-[  337.427598]  __asan_load8+0xa0/0xd0
-[  337.427603]  vchan_complete+0x124/0x3b0
-[  337.427609]  tasklet_action_common.constprop.0+0x190/0x1d0
-[  337.427617]  tasklet_action+0x30/0x40
-[  337.427623]  __do_softirq+0x1a0/0x5c4
-[  337.427628]  irq_exit+0x110/0x140
-[  337.427633]  handle_domain_irq+0xa4/0xe0
-[  337.427640]  gic_handle_irq+0x64/0x160
-[  337.427644]  call_on_irq_stack+0x20/0x4c
-[  337.427649]  do_interrupt_handler+0x7c/0x90
-[  337.427654]  el1_interrupt+0x30/0x80
-[  337.427659]  el1h_64_irq_handler+0x18/0x30
-[  337.427663]  el1h_64_irq+0x7c/0x80
-[  337.427667]  cpuidle_enter_state+0xe4/0x540
-[  337.427674]  cpuidle_enter+0x54/0x80
-[  337.427679]  do_idle+0x2e0/0x380
-[  337.427685]  cpu_startup_entry+0x2c/0x70
-[  337.427690]  rest_init+0x114/0x130
-[  337.427695]  arch_call_rest_init+0x18/0x24
-[  337.427702]  start_kernel+0x380/0x3b4
-[  337.427706]  __primary_switched+0xc0/0xc8
-
-Fixes: f46b195799b5 ("dmaengine: tegra-adma: Add support for Tegra210 ADMA")
-Signed-off-by: Sheetal <sheetal@nvidia.com>
-Acked-by: Thierry Reding <treding@nvidia.com>
-Link: https://patch.msgid.link/20251110142445.3842036-1-sheetal@nvidia.com
+Signed-off-by: Suraj Gupta <suraj.gupta2@amd.com>
+Fixes: b72db4005fe4 ("dmaengine: vdma: Add 64 bit addressing support to the driver")
+Reviewed-by: Radhey Shyam Pandey <radhey.shyam.pandey@amd.com>
+Reviewed-by: Folker Schwesinger <dev@folker-schwesinger.de>
+Link: https://patch.msgid.link/20251021183006.3434495-1-suraj.gupta2@amd.com
 Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dma/tegra210-adma.c | 10 +++++++++-
- 1 file changed, 9 insertions(+), 1 deletion(-)
+ drivers/dma/xilinx/xilinx_dma.c | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/dma/tegra210-adma.c b/drivers/dma/tegra210-adma.c
-index 24ad7077c53ba..55e9dcca55390 100644
---- a/drivers/dma/tegra210-adma.c
-+++ b/drivers/dma/tegra210-adma.c
-@@ -343,10 +343,17 @@ static void tegra_adma_stop(struct tegra_adma_chan *tdc)
- 		return;
- 	}
+diff --git a/drivers/dma/xilinx/xilinx_dma.c b/drivers/dma/xilinx/xilinx_dma.c
+index aa59b62cd83fb..3ad37e9b924a7 100644
+--- a/drivers/dma/xilinx/xilinx_dma.c
++++ b/drivers/dma/xilinx/xilinx_dma.c
+@@ -130,6 +130,7 @@
+ #define XILINX_MCDMA_MAX_CHANS_PER_DEVICE	0x20
+ #define XILINX_DMA_MAX_CHANS_PER_DEVICE		0x2
+ #define XILINX_CDMA_MAX_CHANS_PER_DEVICE	0x1
++#define XILINX_DMA_DFAULT_ADDRWIDTH		0x20
  
--	kfree(tdc->desc);
-+	vchan_terminate_vdesc(&tdc->desc->vd);
- 	tdc->desc = NULL;
- }
+ #define XILINX_DMA_DMAXR_ALL_IRQ_MASK	\
+ 		(XILINX_DMA_DMASR_FRM_CNT_IRQ | \
+@@ -3063,7 +3064,7 @@ static int xilinx_dma_probe(struct platform_device *pdev)
+ 	struct device_node *node = pdev->dev.of_node;
+ 	struct xilinx_dma_device *xdev;
+ 	struct device_node *child, *np = pdev->dev.of_node;
+-	u32 num_frames, addr_width, len_width;
++	u32 num_frames, addr_width = XILINX_DMA_DFAULT_ADDRWIDTH, len_width;
+ 	int i, err;
  
-+static void tegra_adma_synchronize(struct dma_chan *dc)
-+{
-+	struct tegra_adma_chan *tdc = to_tegra_adma_chan(dc);
-+
-+	vchan_synchronize(&tdc->vc);
-+}
-+
- static void tegra_adma_start(struct tegra_adma_chan *tdc)
- {
- 	struct virt_dma_desc *vd = vchan_next_desc(&tdc->vc);
-@@ -938,6 +945,7 @@ static int tegra_adma_probe(struct platform_device *pdev)
- 	tdma->dma_dev.device_config = tegra_adma_slave_config;
- 	tdma->dma_dev.device_tx_status = tegra_adma_tx_status;
- 	tdma->dma_dev.device_terminate_all = tegra_adma_terminate_all;
-+	tdma->dma_dev.device_synchronize = tegra_adma_synchronize;
- 	tdma->dma_dev.src_addr_widths = BIT(DMA_SLAVE_BUSWIDTH_4_BYTES);
- 	tdma->dma_dev.dst_addr_widths = BIT(DMA_SLAVE_BUSWIDTH_4_BYTES);
- 	tdma->dma_dev.directions = BIT(DMA_DEV_TO_MEM) | BIT(DMA_MEM_TO_DEV);
+ 	/* Allocate and initialize the DMA engine structure */
+@@ -3137,7 +3138,9 @@ static int xilinx_dma_probe(struct platform_device *pdev)
+ 
+ 	err = of_property_read_u32(node, "xlnx,addrwidth", &addr_width);
+ 	if (err < 0)
+-		dev_warn(xdev->dev, "missing xlnx,addrwidth property\n");
++		dev_warn(xdev->dev,
++			 "missing xlnx,addrwidth property, using default value %d\n",
++			 XILINX_DMA_DFAULT_ADDRWIDTH);
+ 
+ 	if (addr_width > 32)
+ 		xdev->ext_addr = true;
 -- 
 2.51.0
 
