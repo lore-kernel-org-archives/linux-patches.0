@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B49D239C659;
-	Wed, 21 Jan 2026 18:21:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8869B3101A9;
+	Wed, 21 Jan 2026 18:21:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769019676; cv=none; b=UTUkte//8RHXcH3g8+C6LfbasOKpoF58H73zXvE7SEhgHkGJgmoVwQchs7ILOgN4LVjoW3axwfywJntNtnlt9sr8OPj+hqOhQrryqy06r1he1qhFPmCa4qS8aJ9PiKxxMzu4tUDoNndzQXI3q1u7uNCE+1TgflvP3QsBSP63XkE=
+	t=1769019680; cv=none; b=TqnsfLkqoHKzDgKAu40zEI+AZEM7wvW6+viJoyEr5+kSlKPcXmOSGI+4WnN5smHjj8b8HJMAlFk9VPJsWCRZE+qzuRGKlvnoBnvPzW3N1WGXIwKEDGN7db4LPoYI6lla2qszENiXtEjfg2Nuj2XCAtEoa9yowZjOncEE+sDvA4k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769019676; c=relaxed/simple;
-	bh=3t5XBxUQfE+ZbvvJAWE/P+J0qCX8aJC11SzI2HBbFs4=;
+	s=arc-20240116; t=1769019680; c=relaxed/simple;
+	bh=Gz26K7cc6B/mO4XcfiZ8AYtZfICtRPJbkkdlMSExQXQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DAEKsGzkCm1z3DVtmvulivr/Dzbzpg1rYCWcOqego3Gvq7BGHL4JpudcisGSSMgzIUGwqbAO/dD5Tds045MWtfSQ1QTMABOR56uHye9ReRZ0ksilT1AW6bcOwZ8ye+cJ2XCcEUHO3SEKe4hH+EKG4JTBDYSHIrmDtEvdu7kaEd8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=r3lfpNud; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=jxYNPU+Gh1Wxfx/T2HjQPbUTGItYl+jzYyH6aN4c0zNoYpnRuC/JA2Mf/7+xQv5UesIT7bYDOOQM32Jv9y0VArmchLmZSHc96Qnt9nzS/b4hrcguqehDbGFEmsRkoLkZ9v1CVjBNYzP7mDshp6TSX/SR6+UZ80Cn8tCRSKhIsWI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IOlnGKOX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="r3lfpNud"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E344C16AAE;
-	Wed, 21 Jan 2026 18:21:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IOlnGKOX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C853C4CEF1;
+	Wed, 21 Jan 2026 18:21:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1769019676;
-	bh=3t5XBxUQfE+ZbvvJAWE/P+J0qCX8aJC11SzI2HBbFs4=;
+	s=korg; t=1769019680;
+	bh=Gz26K7cc6B/mO4XcfiZ8AYtZfICtRPJbkkdlMSExQXQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=r3lfpNudTK1AT69dmM5Oy5F36V7Ep/MRvgmCUCW426OgfW+DaORhaB7fQlNDJ2KuG
-	 xt7mafMVgjrgVlerCL6Zx3Z4cJturnpIqRD/GyF5A5qGEN6OEb2Zs2ii31OCiPbKz+
-	 BQRbsSse+QH+6ddrwBY4cQtseo73EgZkFE+BNvEg=
+	b=IOlnGKOXFEQ5Z578+HeT8uQ2S/GCCon0U7m1fcYsHIXVzG/XQtdllVImwvnc3r7f2
+	 QHbwTTTzLI7WtmQJOow5PSSPGGKQ10PKuVMPQeK4tbDbx6zh9XQUFEbhgWjuFVvszo
+	 Q309L2SrjSGYvTvZlrCT452iREXRN5Zvzr3JpKDE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Neil Armstrong <neil.armstrong@linaro.org>,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	Wolfram Sang <wsa+renesas@sang-engineering.com>,
-	Sasha Levin <sashal@kernel.org>,
-	Mukesh Kumar Savaliya <mukesh.savaliya@oss.qualcomm.com>
-Subject: [PATCH 6.12 058/139] i2c: qcom-geni: make sure I2C hub controllers cant use SE DMA
-Date: Wed, 21 Jan 2026 19:15:06 +0100
-Message-ID: <20260121181413.541232936@linuxfoundation.org>
+	Louis Chauvet <louis.chauvet@bootlin.com>,
+	Luca Ceresoli <luca.ceresoli@bootlin.com>,
+	=?UTF-8?q?Th=C3=A9o=20Lebrun?= <theo.lebrun@bootlin.com>,
+	Vinod Koul <vkoul@kernel.org>
+Subject: [PATCH 6.12 076/139] phy: rockchip: inno-usb2: fix disconnection in gadget mode
+Date: Wed, 21 Jan 2026 19:15:24 +0100
+Message-ID: <20260121181414.190011209@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260121181411.452263583@linuxfoundation.org>
 References: <20260121181411.452263583@linuxfoundation.org>
@@ -47,77 +46,92 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Neil Armstrong <neil.armstrong@linaro.org>
+From: Louis Chauvet <louis.chauvet@bootlin.com>
 
-[ Upstream commit c0c50e3743e467ec4752c638e10e97f89c8644e2 ]
+commit 028e8ca7b20fb7324f3e5db34ba8bd366d9d3acc upstream.
 
-The I2C Hub controller is a simpler GENI I2C variant that doesn't
-support DMA at all, add a no_dma flag to make sure it nevers selects
-the SE DMA mode with mappable 32bytes long transfers.
+When the OTG USB port is used to power the SoC, configured as peripheral
+and used in gadget mode, there is a disconnection about 6 seconds after the
+gadget is configured and enumerated.
 
-Fixes: cacd9643eca7 ("i2c: qcom-geni: add support for I2C Master Hub variant")
-Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Reviewed-by: Mukesh Kumar Savaliya <mukesh.savaliya@oss.qualcomm.com>>
-Signed-off-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+The problem was observed on a Radxa Rock Pi S board, which can only be
+powered by the only USB-C connector. That connector is the only one usable
+in gadget mode. This implies the USB cable is connected from before boot
+and never disconnects while the kernel runs.
+
+The problem happens because of the PHY driver code flow, summarized as:
+
+ * UDC start code (triggered via configfs at any time after boot)
+   -> phy_init
+       -> rockchip_usb2phy_init
+           -> schedule_delayed_work(otg_sm_work [A], 6 sec)
+   -> phy_power_on
+       -> rockchip_usb2phy_power_on
+           -> enable clock
+           -> rockchip_usb2phy_reset
+
+ * Now the gadget interface is up and running.
+
+ * 6 seconds later otg_sm_work starts [A]
+   -> rockchip_usb2phy_otg_sm_work():
+       if (B_IDLE state && VBUS present && ...):
+           schedule_delayed_work(&rport->chg_work [B], 0);
+
+ * immediately the chg_detect_work starts [B]
+   -> rockchip_chg_detect_work():
+       if chg_state is UNDEFINED:
+           if (!rport->suspended):
+               rockchip_usb2phy_power_off() <--- [X]
+
+At [X], the PHY is powered off, causing a disconnection. This quickly
+triggers a new connection and following re-enumeration, but any connection
+that had been established during the 6 seconds is broken.
+
+The code already checks for !rport->suspended (which, somewhat
+counter-intuitively, means the PHY is powered on), so add a guard for VBUS
+as well to avoid a disconnection when a cable is connected.
+
+Fixes: 98898f3bc83c ("phy: rockchip-inno-usb2: support otg-port for rk3399")
+Cc: stable@vger.kernel.org
+Closes: https://lore.kernel.org/lkml/20250414185458.7767aabc@booty/
+Signed-off-by: Louis Chauvet <louis.chauvet@bootlin.com>
+Co-developed-by: Luca Ceresoli <luca.ceresoli@bootlin.com>
+Signed-off-by: Luca Ceresoli <luca.ceresoli@bootlin.com>
+Reviewed-by: Théo Lebrun <theo.lebrun@bootlin.com>
+Link: https://patch.msgid.link/20251127-rk3308-fix-usb-gadget-phy-disconnect-v2-1-dac8a02cd2ca@bootlin.com
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/i2c/busses/i2c-qcom-geni.c | 11 +++++++----
- 1 file changed, 7 insertions(+), 4 deletions(-)
+ drivers/phy/rockchip/phy-rockchip-inno-usb2.c |    6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/i2c/busses/i2c-qcom-geni.c b/drivers/i2c/busses/i2c-qcom-geni.c
-index 212336f724a69..96b024dc3f20f 100644
---- a/drivers/i2c/busses/i2c-qcom-geni.c
-+++ b/drivers/i2c/busses/i2c-qcom-geni.c
-@@ -97,6 +97,7 @@ struct geni_i2c_dev {
- 	dma_addr_t dma_addr;
- 	struct dma_chan *tx_c;
- 	struct dma_chan *rx_c;
-+	bool no_dma;
- 	bool gpi_mode;
- 	bool abort_done;
- };
-@@ -411,7 +412,7 @@ static int geni_i2c_rx_one_msg(struct geni_i2c_dev *gi2c, struct i2c_msg *msg,
- 	size_t len = msg->len;
- 	struct i2c_msg *cur;
+--- a/drivers/phy/rockchip/phy-rockchip-inno-usb2.c
++++ b/drivers/phy/rockchip/phy-rockchip-inno-usb2.c
+@@ -805,14 +805,16 @@ static void rockchip_chg_detect_work(str
+ 		container_of(work, struct rockchip_usb2phy_port, chg_work.work);
+ 	struct rockchip_usb2phy *rphy = dev_get_drvdata(rport->phy->dev.parent);
+ 	struct regmap *base = get_reg_base(rphy);
+-	bool is_dcd, tmout, vout;
++	bool is_dcd, tmout, vout, vbus_attach;
+ 	unsigned long delay;
  
--	dma_buf = i2c_get_dma_safe_msg_buf(msg, 32);
-+	dma_buf = gi2c->no_dma ? NULL : i2c_get_dma_safe_msg_buf(msg, 32);
- 	if (dma_buf)
- 		geni_se_select_mode(se, GENI_SE_DMA);
- 	else
-@@ -450,7 +451,7 @@ static int geni_i2c_tx_one_msg(struct geni_i2c_dev *gi2c, struct i2c_msg *msg,
- 	size_t len = msg->len;
- 	struct i2c_msg *cur;
- 
--	dma_buf = i2c_get_dma_safe_msg_buf(msg, 32);
-+	dma_buf = gi2c->no_dma ? NULL : i2c_get_dma_safe_msg_buf(msg, 32);
- 	if (dma_buf)
- 		geni_se_select_mode(se, GENI_SE_DMA);
- 	else
-@@ -865,10 +866,12 @@ static int geni_i2c_probe(struct platform_device *pdev)
- 		return -ENXIO;
- 	}
- 
--	if (desc && desc->no_dma_support)
-+	if (desc && desc->no_dma_support) {
- 		fifo_disable = false;
--	else
-+		gi2c->no_dma = true;
-+	} else {
- 		fifo_disable = readl_relaxed(gi2c->se.base + GENI_IF_DISABLE_RO) & FIFO_IF_DISABLE;
-+	}
- 
- 	if (fifo_disable) {
- 		/* FIFO is disabled, so we can only use GPI DMA */
--- 
-2.51.0
-
++	vbus_attach = property_enabled(rphy->grf, &rport->port_cfg->utmi_bvalid);
++
+ 	dev_dbg(&rport->phy->dev, "chg detection work state = %d\n",
+ 		rphy->chg_state);
+ 	switch (rphy->chg_state) {
+ 	case USB_CHG_STATE_UNDEFINED:
+-		if (!rport->suspended)
++		if (!rport->suspended && !vbus_attach)
+ 			rockchip_usb2phy_power_off(rport->phy);
+ 		/* put the controller in non-driving mode */
+ 		if (!vbus_attach)
 
 
