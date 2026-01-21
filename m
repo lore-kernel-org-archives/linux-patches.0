@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF5E739B4BB;
-	Wed, 21 Jan 2026 18:29:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 868C7358D13;
+	Wed, 21 Jan 2026 18:29:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769020141; cv=none; b=eqM4oojmkwuLga/UD58T+F/JctOPMZPT0RcilY/GeZYS2Am0NvanLTxFTMS+oYJ/WAkQ1RTeYXJx7sg9L/WeqQe9vdBTa/+EFJeoR1TpY4cJ/OGYZk6ckKJI8+j2qQ9Oz0cI1B6cUy07bLsY896Xg0DoEcrsCu0DID7q23DT1yc=
+	t=1769020145; cv=none; b=KXit6EKixBah6tnD3FU+zil9QqF2PCWD9vMJwIX6nq6WybSfUJ+1bAMkcomZ/COFMnVYXsKk/1FIPmNpuRVZG+SuftpoOOAnfzJ/sTPxUZ+LS5FrQnJicdj4bWeI/rwUITcUnBbZv1Frfrnd+FbefTxu1n/FGfRhNmsEDJZZV98=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769020141; c=relaxed/simple;
-	bh=lNVqk79LCSlNksbc82TSUTtHpB8rMWTXqPA20fTN2Eg=;
+	s=arc-20240116; t=1769020145; c=relaxed/simple;
+	bh=J6/NXBhDeawxihXyrO7u3CofjzoQUJXyvusS1m9Cu2s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Xx2DjbNay+faZWZv8uXdHgBj52VPdH8DFusA/ahcqle8LKk0alkHA5uKDeYo9oE89s6Dvap9fX+TV/+R7eBbyVpNlBw2Id08UtNapkQWX3JoethZCxPT8blSvmiVJE0o3s4/gJzCrxbsCQVYPcqEW9/bdvUChmc9c2yVRFRuXVU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2fTTmyqx; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ii9nZAkXsLRn5QvDXwgAiZwj+rgGXqFss5Yz8ZGv1/Pt2M9S6j834gHnZtsLFNB69k0ODXN1AKkI+AdyVa6g3/y+BnE1VvzjAiRZYMvBXC3PuWjrHWAcJc8KiHm0HuBQ2ruZtrJt4DC/n05JZJf5IderlWYbK4AldT63l5kSlFc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gdsdYGaX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2fTTmyqx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 538B6C16AAE;
-	Wed, 21 Jan 2026 18:29:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gdsdYGaX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 977BCC4CEF1;
+	Wed, 21 Jan 2026 18:29:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1769020141;
-	bh=lNVqk79LCSlNksbc82TSUTtHpB8rMWTXqPA20fTN2Eg=;
+	s=korg; t=1769020145;
+	bh=J6/NXBhDeawxihXyrO7u3CofjzoQUJXyvusS1m9Cu2s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2fTTmyqxCNPGNH/TZcpfACwdKcY9unJXEdCNWPhbtP0sAaPICxbjLgmy9kSgdoI5B
-	 0WPacIWBLQm91esZ8aexyGptafYA0WNzIU5XfEctWOQVaKc1gkPWmJ2hKUVqQDtbW1
-	 VqUnGUrfnVHHyW8RL2g1O1ELtZXJQcY1SsXn2syc=
+	b=gdsdYGaX0o20dCClJvOK8VcRkyzQS7KJkClRxqzdfykMbR8L1KIS/bA9IY77JyvB+
+	 0i1XvkmIl9uWa7usvTRsGd99jT80AMScsNuR+O9TvA7VZdL3E3k4MFQPpw83+oxHOj
+	 ZwgjyC4rw8gLVMQyfn+/7H/Yx6Wnx9cR0efR4JCI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dave Jiang <dave.jiang@intel.com>,
-	Alison Schofield <alison.schofield@intel.com>,
-	Jonathan Cameron <jonathan.cameron@huawei.com>,
-	Robert Richter <rrichter@amd.com>,
+	Bagas Sanjaya <bagasdotme@gmail.com>,
+	Marco Elver <elver@google.com>,
+	"David Hildenbrand (Red Hat)" <david@kernel.org>,
+	Harry Yoo <harry.yoo@oracle.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 028/198] cxl/port: Fix target list setup for multiple decoders sharing the same dport
-Date: Wed, 21 Jan 2026 19:14:16 +0100
-Message-ID: <20260121181419.567513976@linuxfoundation.org>
+Subject: [PATCH 6.18 065/198] mm, kfence: describe @slab parameter in __kfence_obj_info()
+Date: Wed, 21 Jan 2026 19:14:53 +0100
+Message-ID: <20260121181420.899514230@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260121181418.537774329@linuxfoundation.org>
 References: <20260121181418.537774329@linuxfoundation.org>
@@ -53,108 +54,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Robert Richter <rrichter@amd.com>
+From: Bagas Sanjaya <bagasdotme@gmail.com>
 
-[ Upstream commit 3e8aaacdad4f66641f87ab441fe644b45f8ebdff ]
+[ Upstream commit 6cfab50e1440fde19af7c614aacd85e11aa4dcea ]
 
-If a switch port has more than one decoder that is using the same
-downstream port, the enumeration of the target lists may fail with:
+Sphinx reports kernel-doc warning:
 
- # dmesg | grep target.list
- update_decoder_targets: cxl decoder1.0: dport3 found in target list, index 3
- update_decoder_targets: cxl decoder1.0: dport2 found in target list, index 2
- update_decoder_targets: cxl decoder1.0: dport0 found in target list, index 0
- update_decoder_targets: cxl decoder2.0: dport3 found in target list, index 1
- update_decoder_targets: cxl decoder4.0: dport3 found in target list, index 1
- cxl_mem mem6: failed to find endpoint12:0000:00:01.4 in target list of decoder2.1
- cxl_mem mem8: failed to find endpoint13:0000:20:01.4 in target list of decoder4.1
+WARNING: ./include/linux/kfence.h:220 function parameter 'slab' not described in '__kfence_obj_info'
 
-The case, that the same downstream port can be used in multiple target
-lists, is allowed and possible.
+Fix it by describing @slab parameter.
 
-Fix the update of the target list. Enumerate all children of the
-switch port and do not stop the iteration after the first matching
-target was found.
-
-With the fix applied:
-
- # dmesg | grep target.list
- update_decoder_targets: cxl decoder1.0: dport2 found in target list, index 2
- update_decoder_targets: cxl decoder1.0: dport0 found in target list, index 0
- update_decoder_targets: cxl decoder1.0: dport3 found in target list, index 3
- update_decoder_targets: cxl decoder2.0: dport3 found in target list, index 1
- update_decoder_targets: cxl decoder2.1: dport3 found in target list, index 1
- update_decoder_targets: cxl decoder4.0: dport3 found in target list, index 1
- update_decoder_targets: cxl decoder4.1: dport3 found in target list, index 1
-
-Analyzing the conditions when this happens:
-
-1) A dport is shared by multiple decoders.
-
-2) The decoders have interleaving configured (ways > 1).
-
-The configuration above has the following hierarchy details (fixed
-version):
-
- root0
- |_
- | |
- | decoder0.1
- | ways: 2
- | target_list: 0,1
- |_______________________________________
- |                                       |
- | dport0                                | dport1
- |                                       |
- port2                                   port4
- |                                       |
- |___________________                    |_____________________
- | |                 |                   | |                   |
- | decoder2.0        decoder2.1          | decoder4.0          decoder4.1
- | ways: 2           ways: 2             | ways: 2             ways: 2
- | target_list: 2,3  target_list: 2,3    | target_list: 2,3    target_list: 2,3
- |___________________                    |___________________
- |                   |                   |                   |
- | dport2            | dport3            | dport2            | dport3
- |                   |                   |                   |
- endpoint7           endpoint12          endpoint9           endpoint13
- |_                  |_                  |_                  |_
- | |                 | |                 | |                 | |
- | decoder7.0        | decoder12.0       | decoder9.0        | decoder13.0
- | decoder7.2        | decoder12.2       | decoder9.2        | decoder13.2
- |                   |                   |                   |
- mem3                mem5                mem6                mem8
-
-Note: Device numbers vary for every boot.
-
-Current kernel fails to enumerate endpoint12 and endpoint13 as the
-target list is not updated for the second decoder.
-
-Fixes: 4f06d81e7c6a ("cxl: Defer dport allocation for switch ports")
-Reviewed-by: Dave Jiang <dave.jiang@intel.com>
-Reviewed-by: Alison Schofield <alison.schofield@intel.com>
-Reviewed-by: Jonathan Cameron <jonathan.cameron@huawei.com>
-Signed-off-by: Robert Richter <rrichter@amd.com>
-Link: https://patch.msgid.link/20260108101324.509667-1-rrichter@amd.com
-Signed-off-by: Dave Jiang <dave.jiang@intel.com>
+Link: https://lkml.kernel.org/r/20251219014006.16328-6-bagasdotme@gmail.com
+Fixes: 2dfe63e61cc3 ("mm, kfence: support kmem_dump_obj() for KFENCE objects")
+Signed-off-by: Bagas Sanjaya <bagasdotme@gmail.com>
+Acked-by: Marco Elver <elver@google.com>
+Acked-by: David Hildenbrand (Red Hat) <david@kernel.org>
+Acked-by: Harry Yoo <harry.yoo@oracle.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/cxl/core/port.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ include/linux/kfence.h | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/cxl/core/port.c b/drivers/cxl/core/port.c
-index 8128fd2b5b317..804e4a48540f6 100644
---- a/drivers/cxl/core/port.c
-+++ b/drivers/cxl/core/port.c
-@@ -1591,7 +1591,7 @@ static int update_decoder_targets(struct device *dev, void *data)
- 			cxlsd->target[i] = dport;
- 			dev_dbg(dev, "dport%d found in target list, index %d\n",
- 				dport->port_id, i);
--			return 1;
-+			return 0;
- 		}
- 	}
- 
+diff --git a/include/linux/kfence.h b/include/linux/kfence.h
+index 0ad1ddbb8b996..e5822f6e7f279 100644
+--- a/include/linux/kfence.h
++++ b/include/linux/kfence.h
+@@ -211,6 +211,7 @@ struct kmem_obj_info;
+  * __kfence_obj_info() - fill kmem_obj_info struct
+  * @kpp: kmem_obj_info to be filled
+  * @object: the object
++ * @slab: the slab
+  *
+  * Return:
+  * * false - not a KFENCE object
 -- 
 2.51.0
 
