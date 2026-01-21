@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8869B3101A9;
-	Wed, 21 Jan 2026 18:21:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78BBF315D48;
+	Wed, 21 Jan 2026 18:21:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769019680; cv=none; b=TqnsfLkqoHKzDgKAu40zEI+AZEM7wvW6+viJoyEr5+kSlKPcXmOSGI+4WnN5smHjj8b8HJMAlFk9VPJsWCRZE+qzuRGKlvnoBnvPzW3N1WGXIwKEDGN7db4LPoYI6lla2qszENiXtEjfg2Nuj2XCAtEoa9yowZjOncEE+sDvA4k=
+	t=1769019683; cv=none; b=Xzt4p7Eh2mIlfq1tvQWE2O1gyyEncZcTETvzJXDLIliHdk9K7U6JVYwcOay6VwCZwDw5wveKL87fDV0ZQrOnfWvl5qUEwI4mA7KP1XZYUtWoxNUdwk6H6rES424+Rzj0+vnyFf5O6RYBApqqRS2wgsRx3FQKEtXOtIQ6SfEAzDA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769019680; c=relaxed/simple;
-	bh=Gz26K7cc6B/mO4XcfiZ8AYtZfICtRPJbkkdlMSExQXQ=;
+	s=arc-20240116; t=1769019683; c=relaxed/simple;
+	bh=goQQ6UVPoeeJVBR+wUzjnhAPsk93VcVMxgY5FRq18nk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=jxYNPU+Gh1Wxfx/T2HjQPbUTGItYl+jzYyH6aN4c0zNoYpnRuC/JA2Mf/7+xQv5UesIT7bYDOOQM32Jv9y0VArmchLmZSHc96Qnt9nzS/b4hrcguqehDbGFEmsRkoLkZ9v1CVjBNYzP7mDshp6TSX/SR6+UZ80Cn8tCRSKhIsWI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IOlnGKOX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ASr3sq6hh0YTE7MckEb9RywpfoQQc9XphzzNE+mLOm69fJqOx9DpHcORa3MC0+tp2kIa7iKzeqgqS4DLqk0aXMaICUmSOnOPmRRR9+WnQm3/yhyFBeyBiHlrVlZ5qQey+hki7nCPHHq6ARcUdmeLZO4xs+1f6eFklcm/bnArtoU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iKASgxVE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IOlnGKOX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C853C4CEF1;
-	Wed, 21 Jan 2026 18:21:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iKASgxVE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F31CEC4CEF1;
+	Wed, 21 Jan 2026 18:21:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1769019680;
-	bh=Gz26K7cc6B/mO4XcfiZ8AYtZfICtRPJbkkdlMSExQXQ=;
+	s=korg; t=1769019683;
+	bh=goQQ6UVPoeeJVBR+wUzjnhAPsk93VcVMxgY5FRq18nk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IOlnGKOXFEQ5Z578+HeT8uQ2S/GCCon0U7m1fcYsHIXVzG/XQtdllVImwvnc3r7f2
-	 QHbwTTTzLI7WtmQJOow5PSSPGGKQ10PKuVMPQeK4tbDbx6zh9XQUFEbhgWjuFVvszo
-	 Q309L2SrjSGYvTvZlrCT452iREXRN5Zvzr3JpKDE=
+	b=iKASgxVET5GF1In0z3WyA3DF+c6qHpVnC4VVsiOkYZt5RlR4nEfPtC8XG9OLtBRXZ
+	 Az7SXba6jP1ZaWRnARuPEwjlC6/IPtoHOXaUndNjnxhVKcZckbBVs6dIA5MxhOraxh
+	 o86JXDaq7ljTEd2v3l6KcQg83YY2k9KuAR+6qj3g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Louis Chauvet <louis.chauvet@bootlin.com>,
-	Luca Ceresoli <luca.ceresoli@bootlin.com>,
-	=?UTF-8?q?Th=C3=A9o=20Lebrun?= <theo.lebrun@bootlin.com>,
+	Wayne Chang <waynec@nvidia.com>,
 	Vinod Koul <vkoul@kernel.org>
-Subject: [PATCH 6.12 076/139] phy: rockchip: inno-usb2: fix disconnection in gadget mode
-Date: Wed, 21 Jan 2026 19:15:24 +0100
-Message-ID: <20260121181414.190011209@linuxfoundation.org>
+Subject: [PATCH 6.12 077/139] phy: tegra: xusb: Explicitly configure HS_DISCON_LEVEL to 0x7
+Date: Wed, 21 Jan 2026 19:15:25 +0100
+Message-ID: <20260121181414.225194649@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260121181411.452263583@linuxfoundation.org>
 References: <20260121181411.452263583@linuxfoundation.org>
@@ -46,92 +44,51 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Louis Chauvet <louis.chauvet@bootlin.com>
+From: Wayne Chang <waynec@nvidia.com>
 
-commit 028e8ca7b20fb7324f3e5db34ba8bd366d9d3acc upstream.
+commit b246caa68037aa495390a60d080acaeb84f45fff upstream.
 
-When the OTG USB port is used to power the SoC, configured as peripheral
-and used in gadget mode, there is a disconnection about 6 seconds after the
-gadget is configured and enumerated.
+The USB2 Bias Pad Control register manages analog parameters for signal
+detection. Previously, the HS_DISCON_LEVEL relied on hardware reset
+values, which may lead to the detection failure.
 
-The problem was observed on a Radxa Rock Pi S board, which can only be
-powered by the only USB-C connector. That connector is the only one usable
-in gadget mode. This implies the USB cable is connected from before boot
-and never disconnects while the kernel runs.
+Explicitly configure HS_DISCON_LEVEL to 0x7. This ensures the disconnect
+threshold is sufficient to guarantee reliable detection.
 
-The problem happens because of the PHY driver code flow, summarized as:
-
- * UDC start code (triggered via configfs at any time after boot)
-   -> phy_init
-       -> rockchip_usb2phy_init
-           -> schedule_delayed_work(otg_sm_work [A], 6 sec)
-   -> phy_power_on
-       -> rockchip_usb2phy_power_on
-           -> enable clock
-           -> rockchip_usb2phy_reset
-
- * Now the gadget interface is up and running.
-
- * 6 seconds later otg_sm_work starts [A]
-   -> rockchip_usb2phy_otg_sm_work():
-       if (B_IDLE state && VBUS present && ...):
-           schedule_delayed_work(&rport->chg_work [B], 0);
-
- * immediately the chg_detect_work starts [B]
-   -> rockchip_chg_detect_work():
-       if chg_state is UNDEFINED:
-           if (!rport->suspended):
-               rockchip_usb2phy_power_off() <--- [X]
-
-At [X], the PHY is powered off, causing a disconnection. This quickly
-triggers a new connection and following re-enumeration, but any connection
-that had been established during the 6 seconds is broken.
-
-The code already checks for !rport->suspended (which, somewhat
-counter-intuitively, means the PHY is powered on), so add a guard for VBUS
-as well to avoid a disconnection when a cable is connected.
-
-Fixes: 98898f3bc83c ("phy: rockchip-inno-usb2: support otg-port for rk3399")
+Fixes: bbf711682cd5 ("phy: tegra: xusb: Add Tegra186 support")
 Cc: stable@vger.kernel.org
-Closes: https://lore.kernel.org/lkml/20250414185458.7767aabc@booty/
-Signed-off-by: Louis Chauvet <louis.chauvet@bootlin.com>
-Co-developed-by: Luca Ceresoli <luca.ceresoli@bootlin.com>
-Signed-off-by: Luca Ceresoli <luca.ceresoli@bootlin.com>
-Reviewed-by: Théo Lebrun <theo.lebrun@bootlin.com>
-Link: https://patch.msgid.link/20251127-rk3308-fix-usb-gadget-phy-disconnect-v2-1-dac8a02cd2ca@bootlin.com
+Signed-off-by: Wayne Chang <waynec@nvidia.com>
+Link: https://patch.msgid.link/20251212032116.768307-1-waynec@nvidia.com
 Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/phy/rockchip/phy-rockchip-inno-usb2.c |    6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/phy/tegra/xusb-tegra186.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/drivers/phy/rockchip/phy-rockchip-inno-usb2.c
-+++ b/drivers/phy/rockchip/phy-rockchip-inno-usb2.c
-@@ -805,14 +805,16 @@ static void rockchip_chg_detect_work(str
- 		container_of(work, struct rockchip_usb2phy_port, chg_work.work);
- 	struct rockchip_usb2phy *rphy = dev_get_drvdata(rport->phy->dev.parent);
- 	struct regmap *base = get_reg_base(rphy);
--	bool is_dcd, tmout, vout;
-+	bool is_dcd, tmout, vout, vbus_attach;
- 	unsigned long delay;
+--- a/drivers/phy/tegra/xusb-tegra186.c
++++ b/drivers/phy/tegra/xusb-tegra186.c
+@@ -84,6 +84,7 @@
+ #define XUSB_PADCTL_USB2_BIAS_PAD_CTL0		0x284
+ #define  BIAS_PAD_PD				BIT(11)
+ #define  HS_SQUELCH_LEVEL(x)			(((x) & 0x7) << 0)
++#define  HS_DISCON_LEVEL(x)			(((x) & 0x7) << 3)
  
-+	vbus_attach = property_enabled(rphy->grf, &rport->port_cfg->utmi_bvalid);
-+
- 	dev_dbg(&rport->phy->dev, "chg detection work state = %d\n",
- 		rphy->chg_state);
- 	switch (rphy->chg_state) {
- 	case USB_CHG_STATE_UNDEFINED:
--		if (!rport->suspended)
-+		if (!rport->suspended && !vbus_attach)
- 			rockchip_usb2phy_power_off(rport->phy);
- 		/* put the controller in non-driving mode */
- 		if (!vbus_attach)
+ #define XUSB_PADCTL_USB2_BIAS_PAD_CTL1		0x288
+ #define  USB2_TRK_START_TIMER(x)		(((x) & 0x7f) << 12)
+@@ -623,6 +624,8 @@ static void tegra186_utmi_bias_pad_power
+ 	value &= ~BIAS_PAD_PD;
+ 	value &= ~HS_SQUELCH_LEVEL(~0);
+ 	value |= HS_SQUELCH_LEVEL(priv->calib.hs_squelch);
++	value &= ~HS_DISCON_LEVEL(~0);
++	value |= HS_DISCON_LEVEL(0x7);
+ 	padctl_writel(padctl, value, XUSB_PADCTL_USB2_BIAS_PAD_CTL0);
+ 
+ 	udelay(1);
 
 
