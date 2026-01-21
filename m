@@ -1,44 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5050534165B;
-	Wed, 21 Jan 2026 18:24:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77251396D35;
+	Wed, 21 Jan 2026 18:24:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769019892; cv=none; b=LXTyL3Rgw5WLeBtDEHX0VeD2A13h5qHoQ2kIOHlvAunVAHbPD8mCP4M60ZG/PfpfpmSf3gNDkMCoS6PgO4B/0IWWAWHpPUKeq4tZRSC0lI0M/UBlgLz7Y++BxUFxqfQUZDh2Zfo8zrNxTIqXmC19vssQOc1e6a1MlRWqEdu3zmA=
+	t=1769019896; cv=none; b=p4J2daq9wguB7kmi1bCOvo0jY4cU8rDKU03+soVfJr8ESxwpO02DMyYyFC5YEPt4fKAzxchQik8FbHPO+QPKW4I6kR4KE6SsQlhdYtCLunLqOIHLzcw8J6zktS1N9GyrsKugZkZ2k8vDx1zQ66kjfr/0hMBnUqY/0yCYwn/Usrs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769019892; c=relaxed/simple;
-	bh=ODgy8vD2m1QY9Tm5QxQ+pwVNztO82QVAD1CLe21owNs=;
+	s=arc-20240116; t=1769019896; c=relaxed/simple;
+	bh=pwJDo1qMxRQpgmcvchlKMTP9nEWFLkBvJqpP/ETonH8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=FlxGWLLUMMcpcc3CvZgxOsw0EZiqgWSarfvpAfyQjqySc0W+FwsEe0qQ5hNhdfZgokbEvQsfR9y4pHbtjZ7RAwq8v9Gn52e0zwdcIDI8w5FW2lQcLN1dpqVKIbUppCQRMLVq8V5pKgVAcB1Kxte+lGD12bFaZTLKkiawhJ3Tt0Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=If/3UyhB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kJVRFxB0Sdhdl0Ma3u/yrZUc38lra48tYkMLzoIhFfsj+c8my9gQQ6Dam40DOGGAnfwZzwc0WJMWsknn9YjbFE3+J86BEPO9SVLMHoThBECDTIrAbCS7QS80fIV8fmQZQ/nwO2faVfLlAcERz8Rttzzi8mpJxKuZH4zgZyxVix8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=A6Pcg6s8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="If/3UyhB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5FFCAC4CEF1;
-	Wed, 21 Jan 2026 18:24:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="A6Pcg6s8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9AB7C4CEF1;
+	Wed, 21 Jan 2026 18:24:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1769019891;
-	bh=ODgy8vD2m1QY9Tm5QxQ+pwVNztO82QVAD1CLe21owNs=;
+	s=korg; t=1769019896;
+	bh=pwJDo1qMxRQpgmcvchlKMTP9nEWFLkBvJqpP/ETonH8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=If/3UyhBUlsQobHe+I3fqXhQ7Is26MFHpBp6tr1v7myT+Ec4Zm6U08gHUrxyfy5QV
-	 UfjAcReBdCPi63EWVRIEeENez0XYA6+rfI+ij8nw0+MwFAF3ijpbw/9RBrOXIsKmMt
-	 J/SGHdHvfhWrtLEfCQqwUo0eplto/G4psjue1Prc=
+	b=A6Pcg6s8ZyE/uCvfyOKv6L12uAc5FMs+QM1dsmCPOXKD+/DQjuveM0WvLbzwFM2Px
+	 53R3c95dfmtYbtLgXQ+vnNVfc6mSPtaXqsEcJ7XEMC35SZQwXLUBD4ROMBE+xIshR1
+	 dZefAwvR5Yq7avIpdL+rW62rnYJ22VCwj68dXO3k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bruno Faccini <bfaccini@nvidia.com>,
-	David Hildenbrand <david@redhat.com>,
-	Hyeonggon Yoo <hyeonggon.yoo@sk.com>,
-	John Hubbard <jhubbard@nvidia.com>,
-	Len Brown <lenb@kernel.org>,
-	"Mike Rapoport (IBM)" <rppt@kernel.org>,
-	"Rafael J. Wysocki" <rafael@kernel.org>,
-	Zi Yan <ziy@nvidia.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.12 139/139] mm/fake-numa: handle cases with no SRAT info
-Date: Wed, 21 Jan 2026 19:16:27 +0100
-Message-ID: <20260121181416.462434999@linuxfoundation.org>
+	Eduard Zingerman <eddyz87@gmail.com>,
+	Paul Chaignon <paul.chaignon@gmail.com>,
+	Martin KaFai Lau <martin.lau@kernel.org>,
+	Shung-Hsi Yu <shung-hsi.yu@suse.com>
+Subject: [PATCH 6.12 129/139] selftests/bpf: Test invalid narrower ctx load
+Date: Wed, 21 Jan 2026 19:16:17 +0100
+Message-ID: <20260121181416.095033810@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260121181411.452263583@linuxfoundation.org>
 References: <20260121181411.452263583@linuxfoundation.org>
@@ -51,65 +46,66 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Bruno Faccini <bfaccini@nvidia.com>
+From: Paul Chaignon <paul.chaignon@gmail.com>
 
-commit 4c80187001d3e2876dfe7e011b9eac3b6270156f upstream.
+commit ba578b87fe2beef95b37264f8a98c0b505b93de9 upstream.
 
-Handle more gracefully cases where no SRAT information is available, like
-in VMs with no Numa support, and allow fake-numa configuration to complete
-successfully in these cases
+This patch adds selftests to cover invalid narrower loads on the
+context. These used to cause kernel warnings before the previous patch.
+To trigger the warning, the load had to be aligned, to read an affected
+context field (ex., skb->sk), and not starting at the beginning of the
+field.
 
-Link: https://lkml.kernel.org/r/20250127171623.1523171-1-bfaccini@nvidia.com
-Fixes: 63db8170bf34 (“mm/fake-numa: allow later numa node hotplug”)
-Signed-off-by: Bruno Faccini <bfaccini@nvidia.com>
-Cc: David Hildenbrand <david@redhat.com>
-Cc: Hyeonggon Yoo <hyeonggon.yoo@sk.com>
-Cc: John Hubbard <jhubbard@nvidia.com>
-Cc: Len Brown <lenb@kernel.org>
-Cc: "Mike Rapoport (IBM)" <rppt@kernel.org>
-Cc: "Rafael J. Wysocki" <rafael@kernel.org>
-Cc: Zi Yan <ziy@nvidia.com>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+The nine new cases all fail without the previous patch.
+
+Suggested-by: Eduard Zingerman <eddyz87@gmail.com>
+Signed-off-by: Paul Chaignon <paul.chaignon@gmail.com>
+Signed-off-by: Martin KaFai Lau <martin.lau@kernel.org>
+Acked-by: Eduard Zingerman <eddyz87@gmail.com>
+Link: https://patch.msgid.link/44cd83ea9c6868079943f0a436c6efa850528cc1.1753194596.git.paul.chaignon@gmail.com
+Signed-off-by: Shung-Hsi Yu <shung-hsi.yu@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/acpi/numa/srat.c |   11 ++++++++++-
- 1 file changed, 10 insertions(+), 1 deletion(-)
+ tools/testing/selftests/bpf/progs/verifier_ctx.c |   25 +++++++++++++++++++++++
+ 1 file changed, 25 insertions(+)
 
---- a/drivers/acpi/numa/srat.c
-+++ b/drivers/acpi/numa/srat.c
-@@ -95,9 +95,13 @@ int __init fix_pxm_node_maps(int max_nid
- 	int i, j, index = -1, count = 0;
- 	nodemask_t nodes_to_enable;
+--- a/tools/testing/selftests/bpf/progs/verifier_ctx.c
++++ b/tools/testing/selftests/bpf/progs/verifier_ctx.c
+@@ -218,4 +218,29 @@ __naked void null_check_8_null_bind(void
+ 	: __clobber_all);
+ }
  
--	if (numa_off || srat_disabled())
-+	if (numa_off)
- 		return -1;
- 
-+	/* no or incomplete node/PXM mapping set, nothing to do */
-+	if (srat_disabled())
-+		return 0;
-+
- 	/* find fake nodes PXM mapping */
- 	for (i = 0; i < MAX_NUMNODES; i++) {
- 		if (node_to_pxm_map[i] != PXM_INVAL) {
-@@ -117,6 +121,11 @@ int __init fix_pxm_node_maps(int max_nid
- 			}
- 		}
- 	}
-+	if (index == -1) {
-+		pr_debug("No node/PXM mapping has been set\n");
-+		/* nothing more to be done */
-+		return 0;
++#define narrow_load(type, ctx, field)					\
++	SEC(type)							\
++	__description("narrow load on field " #field " of " #ctx)	\
++	__failure __msg("invalid bpf_context access")			\
++	__naked void invalid_narrow_load##ctx##field(void)		\
++	{								\
++		asm volatile ("						\
++		r1 = *(u32 *)(r1 + %[off]);				\
++		r0 = 0;							\
++		exit;"							\
++		:							\
++		: __imm_const(off, offsetof(struct ctx, field) + 4)	\
++		: __clobber_all);					\
 +	}
- 	if (WARN(index != max_nid, "%d max nid  when expected %d\n",
- 		      index, max_nid))
- 		return -1;
++
++narrow_load("cgroup/getsockopt", bpf_sockopt, sk);
++narrow_load("cgroup/getsockopt", bpf_sockopt, optval);
++narrow_load("cgroup/getsockopt", bpf_sockopt, optval_end);
++narrow_load("tc", __sk_buff, sk);
++narrow_load("cgroup/bind4", bpf_sock_addr, sk);
++narrow_load("sockops", bpf_sock_ops, sk);
++narrow_load("sockops", bpf_sock_ops, skb_data);
++narrow_load("sockops", bpf_sock_ops, skb_data_end);
++narrow_load("sockops", bpf_sock_ops, skb_hwtstamp);
++
+ char _license[] SEC("license") = "GPL";
 
 
