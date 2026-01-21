@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 432AC3A9DBC;
-	Wed, 21 Jan 2026 18:33:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0F0D35295D;
+	Wed, 21 Jan 2026 18:33:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769020426; cv=none; b=Nw/SMdu9Y7c8Qhp7zTtasjcjwQ9DjG3wb7Ded/U3pwghvRxnLxnfCDKKV4+Rr3X6hOw/V6ATw4y3hqp3LGFd6GEVFHAhi+3YK89NA1GpsF4fcpbUBfTa46HfKqUGIg8pGbjsCWSd/swVNjnb7j+C6LWbIuayW4EpEL3+eSlVtDU=
+	t=1769020429; cv=none; b=kQNoVAnN/Zn2EH2fDvdR0R4s/eDo8SFOZiZeOmyX1FPoR7BPYZOGDoSANIK2Hl4TcqlPqWL68OfEJSJSfiCbrmkdhA+rRekljqR/4RzA2bgf+FZPr6Q0+KOnUmYyVdDl9LFwSStiiIvm14pqlLfZcWZCqc0YYQiQzNVp+kfpNL8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769020426; c=relaxed/simple;
-	bh=hLSZqKRt1brkrCrdzpg+YpR1XwHNY/0+vOasxEjPq04=;
+	s=arc-20240116; t=1769020429; c=relaxed/simple;
+	bh=WXMOColiOK75isy0KxJzSJJqpuZHbFW+wPfG8WCAr3k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=ocObTh+ubi0Q5zw5DPnp9jDQLXWmKLoX0hxgkWbwA1YnoF6B/ueJjaRIdmxzq6y3XLuRPkDA1ZuS9FWs3/sATkvMi/Nfr1+oXDRDOq22ScpZveu4g3KhDAMtMhJHb4+j6/41KU5vOG4mu+Cc9w/BTEKTuL9Ssu6g+aiQnukNQOY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=b3o0zbCp; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PQMe3tnipVbIXQgi5nnDa+dhQgYtzxeg8UkCILRjlfFQf9MPe6mRDrh+Vl8hLN9saJjxdPcnds8ZV1sdgtL1B7JB/g+VdCrBEX/rdDGmklFtnTyfoZYqVMr9T1t7QSKfJAJN8VSvz05/RY10sqrj+O/IXTNsojPp1hFdS/aNJrE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kP+Mxk0t; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="b3o0zbCp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB1EEC4CEF1;
-	Wed, 21 Jan 2026 18:33:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kP+Mxk0t"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D64CEC4CEF1;
+	Wed, 21 Jan 2026 18:33:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1769020426;
-	bh=hLSZqKRt1brkrCrdzpg+YpR1XwHNY/0+vOasxEjPq04=;
+	s=korg; t=1769020429;
+	bh=WXMOColiOK75isy0KxJzSJJqpuZHbFW+wPfG8WCAr3k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=b3o0zbCp30wj+yEgh+SGursXIDNj4V5YJsdcxArUSy8XrpyUrw2Neiyq67L00BZ9s
-	 CsRJJwKQemA5QCiCumVF4BrDoNmmswIX0VxHSCsi8kOJWK1OIgGRoUD0qktEdahET6
-	 Q+77/jl92BAw7aNPR4mUAQh6x+u15Hf7m9udB46s=
+	b=kP+Mxk0ttp5QTw0qEVJc+HFvTJcEmudC/1wUjQP7o72dTkE5JsnRIxpEvoDo7yhsn
+	 yeq0V+V4kP7U2/1/AG6f+XlJcfxcc2aK/KgISx8Zu/ad5hM8aMzH+KSMQBLNq0kYIY
+	 uO1maNqU7ShK0zz6f2TmtnvXWgk1rAxF/IjoyrsI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daniel Wagner <dwagner@suse.de>,
-	Nilay Shroff <nilay@linux.ibm.com>,
-	Keith Busch <kbusch@kernel.org>
-Subject: [PATCH 6.18 137/198] nvme: fix PCIe subsystem reset controller state transition
-Date: Wed, 21 Jan 2026 19:16:05 +0100
-Message-ID: <20260121181423.476939995@linuxfoundation.org>
+	Dave Airlie <airlied@redhat.com>,
+	Lyude Paul <lyude@redhat.com>
+Subject: [PATCH 6.18 155/198] drm/nouveau/disp/nv50-: Set lock_core in curs507a_prepare
+Date: Wed, 21 Jan 2026 19:16:23 +0100
+Message-ID: <20260121181424.131129204@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260121181418.537774329@linuxfoundation.org>
 References: <20260121181418.537774329@linuxfoundation.org>
@@ -45,61 +44,62 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Nilay Shroff <nilay@linux.ibm.com>
+From: Lyude Paul <lyude@redhat.com>
 
-commit 0edb475ac0a7d153318a24d4dca175a270a5cc4f upstream.
+commit 9e9bc6be0fa0b6b6b73f4f831f3b77716d0a8d9e upstream.
 
-The commit d2fe192348f9 (“nvme: only allow entering LIVE from CONNECTING
-state”) disallows controller state transitions directly from RESETTING
-to LIVE. However, the NVMe PCIe subsystem reset path relies on this
-transition to recover the controller on PowerPC (PPC) systems.
+For a while, I've been seeing a strange issue where some (usually not all)
+of the display DMA channels will suddenly hang, particularly when there is
+a visible cursor on the screen that is being frequently updated, and
+especially when said cursor happens to go between two screens. While this
+brings back lovely memories of fixing Intel Skylake bugs, I would quite
+like to fix it :).
 
-On PPC systems, issuing a subsystem reset causes a temporary loss of
-communication with the NVMe adapter. A subsequent PCIe MMIO read then
-triggers EEH recovery, which restores the PCIe link and brings the
-controller back online. For EEH recovery to proceed correctly, the
-controller must transition back to the LIVE state.
+It turns out the problem that's happening here is that we're managing to
+reach nv50_head_flush_set() in our atomic commit path without actually
+holding nv50_disp->mutex. This means that cursor updates happening in
+parallel (along with any other atomic updates that need to use the core
+channel) will race with eachother, which eventually causes us to corrupt
+the pushbuffer - leading to a plethora of various GSP errors, usually:
 
-Due to the changes introduced by commit d2fe192348f9 (“nvme: only allow
-entering LIVE from CONNECTING state”), the controller can no longer
-transition directly from RESETTING to LIVE. As a result, EEH recovery
-exits prematurely, leaving the controller stuck in the RESETTING state.
+  nouveau 0000:c1:00.0: gsp: Xid:56 CMDre 00000000 00000218 00102680 00000004 00800003
+  nouveau 0000:c1:00.0: gsp: Xid:56 CMDre 00000000 0000021c 00040509 00000004 00000001
+  nouveau 0000:c1:00.0: gsp: Xid:56 CMDre 00000000 00000000 00000000 00000001 00000001
 
-Fix this by explicitly transitioning the controller state from RESETTING
-to CONNECTING and then to LIVE. This satisfies the updated state
-transition rules and allows the controller to be successfully recovered
-on PPC systems following a PCIe subsystem reset.
+The reason this is happening is because generally we check whether we need
+to set nv50_atom->lock_core at the end of nv50_head_atomic_check().
+However, curs507a_prepare is called from the fb_prepare callback, which
+happens after the atomic check phase. As a result, this can lead to commits
+that both touch the core channel but also don't grab nv50_disp->mutex.
 
-Cc: stable@vger.kernel.org
-Fixes: d2fe192348f9 ("nvme: only allow entering LIVE from CONNECTING state")
-Reviewed-by: Daniel Wagner <dwagner@suse.de>
-Signed-off-by: Nilay Shroff <nilay@linux.ibm.com>
-Signed-off-by: Keith Busch <kbusch@kernel.org>
+So, fix this by making sure that we set nv50_atom->lock_core in
+cus507a_prepare().
+
+Reviewed-by: Dave Airlie <airlied@redhat.com>
+Signed-off-by: Lyude Paul <lyude@redhat.com>
+Fixes: 1590700d94ac ("drm/nouveau/kms/nv50-: split each resource type into their own source files")
+Cc: <stable@vger.kernel.org> # v4.18+
+Link: https://patch.msgid.link/20251219215344.170852-2-lyude@redhat.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/nvme/host/pci.c |    5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/nouveau/dispnv50/curs507a.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/nvme/host/pci.c
-+++ b/drivers/nvme/host/pci.c
-@@ -1461,7 +1461,10 @@ static int nvme_pci_subsystem_reset(stru
+--- a/drivers/gpu/drm/nouveau/dispnv50/curs507a.c
++++ b/drivers/gpu/drm/nouveau/dispnv50/curs507a.c
+@@ -84,6 +84,7 @@ curs507a_prepare(struct nv50_wndw *wndw,
+ 		asyh->curs.handle = handle;
+ 		asyh->curs.offset = offset;
+ 		asyh->set.curs = asyh->curs.visible;
++		nv50_atom(asyh->state.state)->lock_core = true;
  	}
+ }
  
- 	writel(NVME_SUBSYS_RESET, dev->bar + NVME_REG_NSSR);
--	nvme_change_ctrl_state(ctrl, NVME_CTRL_LIVE);
-+
-+	if (!nvme_change_ctrl_state(ctrl, NVME_CTRL_CONNECTING) ||
-+	    !nvme_change_ctrl_state(ctrl, NVME_CTRL_LIVE))
-+		goto unlock;
- 
- 	/*
- 	 * Read controller status to flush the previous write and trigger a
 
 
