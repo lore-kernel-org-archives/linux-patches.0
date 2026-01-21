@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D40D5347BD1;
-	Wed, 21 Jan 2026 18:28:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7260B392C44;
+	Wed, 21 Jan 2026 18:28:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769020134; cv=none; b=mnnZTLjacLywRMdKc0HHHRLOaFt5M2OzBBDrs/XTfMPBACmRPREfr1CzgKsdOD2cOzwjg+1CVJz1YbZH+VfbdrymrP3LC4HqyKefhNec2qSoFGAxyBudXOeQO74+KtXH2ewEHhtzgT3uv2j4FtJ9grHW5NcfJ+IrX0iAc1z359w=
+	t=1769020138; cv=none; b=T1/NWp22ZQN10nG7EMwypde19RUMTWsvN3tz0qdLsLAAxLma1TXJkmbW/vrs49FcjBPmWpr1jXnDwUtOaTp/1hRd5rfqUKGHhDGzig3MmvJha7vDDY9seg4u6GzT0uyT71tWDNFo4+mhzv4fiz1iPp2RtlsKMOsvDCeYa+j0Onw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769020134; c=relaxed/simple;
-	bh=5fmsp6KdDL3o761PfePujnPB9eUCKcqo86iPvgvLLSw=;
+	s=arc-20240116; t=1769020138; c=relaxed/simple;
+	bh=AygbOAci50Id99JbOsksVb36vvMhvX6guIL44RI2Xhk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=agkdVTTo177VwUAPg59qa5Q0r+Wbsl8lhDAMiMcMC1dGiaIrUfLom2O37+5ihknRp0/HBRRtvcNamX/1a4t9oiruiRfuIEZEhFDpC449LbT1nC8fws+EXxACa4UhEosmw/uGUO2vo1PaP1RpiFJsJpQmHgQUBuI7DyEN4VjXeQ0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hXTme+/V; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OrQYfA/Tp9h9Cz6wwpKf/3HkwA7zc2nL6XrYFeWz65XG6p3pL/FzRl9592vTLQUqnCwett9lXBeB/N64/bSsLhr2dgQLdqEwOiLNRM8jTBUa2BltqZKj0Fl6YDIqIxgYC0dIhA55C6MDJC834Izt9xc1fVZ8X8oDS/pGRhpnJWA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=F5MweGVd; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hXTme+/V"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4070DC16AAE;
-	Wed, 21 Jan 2026 18:28:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="F5MweGVd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD158C16AAE;
+	Wed, 21 Jan 2026 18:28:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1769020134;
-	bh=5fmsp6KdDL3o761PfePujnPB9eUCKcqo86iPvgvLLSw=;
+	s=korg; t=1769020138;
+	bh=AygbOAci50Id99JbOsksVb36vvMhvX6guIL44RI2Xhk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hXTme+/VIhQ53CU56pvnuwcZOJbVcftEm2A6UbEzi5kKOTFh+2aFGuXAWMQWlMpe0
-	 a3p7X6z8p7Cklm3vQu2pNDSXCWvb4IDBvnJt3cbocNXTgmRQnI8N8qy2DAgmPFf032
-	 eWHAittV6c4G/suXya9XPjPlo1jWRcXTXLao+WvI=
+	b=F5MweGVd+Xnp+WeH3aWbquumVv/ZDAP2k2fasnNdweGxO4dxLaBWFQqBNf1Kxj6F6
+	 lgaEr99+tzCEaOebah1cN0Lavqh1Ek911sJRwflLenszeV9Pt44TMN484LUD4/tgae
+	 zQ8nNuoxbe3H471aHKIdS0S036Yjd87gFHMKzOb0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Caleb Sander Mateos <csander@purestorage.com>,
-	Anuj Gupta <anuj20.g@samsung.com>,
-	Christoph Hellwig <hch@lst.de>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
-	Jens Axboe <axboe@kernel.dk>,
+	syzbot+7c134e1c3aa3283790b9@syzkaller.appspotmail.com,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 036/198] block: zero non-PI portion of auto integrity buffer
-Date: Wed, 21 Jan 2026 19:14:24 +0100
-Message-ID: <20260121181419.850222431@linuxfoundation.org>
+Subject: [PATCH 6.18 037/198] ipv4: ip_gre: make ipgre_header() robust
+Date: Wed, 21 Jan 2026 19:14:25 +0100
+Message-ID: <20260121181419.885699729@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260121181418.537774329@linuxfoundation.org>
 References: <20260121181418.537774329@linuxfoundation.org>
@@ -54,47 +52,85 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Caleb Sander Mateos <csander@purestorage.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit ca22c566b89164f6e670af56ecc45f47ef3df819 ]
+[ Upstream commit e67c577d89894811ce4dcd1a9ed29d8b63476667 ]
 
-The auto-generated integrity buffer for writes needs to be fully
-initialized before being passed to the underlying block device,
-otherwise the uninitialized memory can be read back by userspace or
-anyone with physical access to the storage device. If protection
-information is generated, that portion of the integrity buffer is
-already initialized. The integrity data is also zeroed if PI generation
-is disabled via sysfs or the PI tuple size is 0. However, this misses
-the case where PI is generated and the PI tuple size is nonzero, but the
-metadata size is larger than the PI tuple. In this case, the remainder
-("opaque") of the metadata is left uninitialized.
-Generalize the BLK_INTEGRITY_CSUM_NONE check to cover any case when the
-metadata is larger than just the PI tuple.
+Analog to commit db5b4e39c4e6 ("ip6_gre: make ip6gre_header() robust")
 
-Signed-off-by: Caleb Sander Mateos <csander@purestorage.com>
-Fixes: c546d6f43833 ("block: only zero non-PI metadata tuples in bio_integrity_prep")
-Reviewed-by: Anuj Gupta <anuj20.g@samsung.com>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Reviewed-by: Martin K. Petersen <martin.petersen@oracle.com>
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Over the years, syzbot found many ways to crash the kernel
+in ipgre_header() [1].
+
+This involves team or bonding drivers ability to dynamically
+change their dev->needed_headroom and/or dev->hard_header_len
+
+In this particular crash mld_newpack() allocated an skb
+with a too small reserve/headroom, and by the time mld_sendpack()
+was called, syzbot managed to attach an ipgre device.
+
+[1]
+skbuff: skb_under_panic: text:ffffffff89ea3cb7 len:2030915468 put:2030915372 head:ffff888058b43000 data:ffff887fdfa6e194 tail:0x120 end:0x6c0 dev:team0
+ kernel BUG at net/core/skbuff.c:213 !
+Oops: invalid opcode: 0000 [#1] SMP KASAN PTI
+CPU: 1 UID: 0 PID: 1322 Comm: kworker/1:9 Not tainted syzkaller #0 PREEMPT(full)
+Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 10/25/2025
+Workqueue: mld mld_ifc_work
+ RIP: 0010:skb_panic+0x157/0x160 net/core/skbuff.c:213
+Call Trace:
+ <TASK>
+  skb_under_panic net/core/skbuff.c:223 [inline]
+  skb_push+0xc3/0xe0 net/core/skbuff.c:2641
+  ipgre_header+0x67/0x290 net/ipv4/ip_gre.c:897
+  dev_hard_header include/linux/netdevice.h:3436 [inline]
+  neigh_connected_output+0x286/0x460 net/core/neighbour.c:1618
+  NF_HOOK_COND include/linux/netfilter.h:307 [inline]
+  ip6_output+0x340/0x550 net/ipv6/ip6_output.c:247
+  NF_HOOK+0x9e/0x380 include/linux/netfilter.h:318
+  mld_sendpack+0x8d4/0xe60 net/ipv6/mcast.c:1855
+  mld_send_cr net/ipv6/mcast.c:2154 [inline]
+  mld_ifc_work+0x83e/0xd60 net/ipv6/mcast.c:2693
+  process_one_work kernel/workqueue.c:3257 [inline]
+  process_scheduled_works+0xad1/0x1770 kernel/workqueue.c:3340
+  worker_thread+0x8a0/0xda0 kernel/workqueue.c:3421
+  kthread+0x711/0x8a0 kernel/kthread.c:463
+  ret_from_fork+0x510/0xa50 arch/x86/kernel/process.c:158
+  ret_from_fork_asm+0x1a/0x30 arch/x86/entry/entry_64.S:246
+
+Fixes: c54419321455 ("GRE: Refactor GRE tunneling code.")
+Reported-by: syzbot+7c134e1c3aa3283790b9@syzkaller.appspotmail.com
+Closes: https://www.spinics.net/lists/netdev/msg1147302.html
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Link: https://patch.msgid.link/20260108190214.1667040-1-edumazet@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- block/bio-integrity-auto.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/ipv4/ip_gre.c | 11 +++++++++--
+ 1 file changed, 9 insertions(+), 2 deletions(-)
 
-diff --git a/block/bio-integrity-auto.c b/block/bio-integrity-auto.c
-index 687952f63bbbf..b8b7587be9679 100644
---- a/block/bio-integrity-auto.c
-+++ b/block/bio-integrity-auto.c
-@@ -142,7 +142,7 @@ bool bio_integrity_prep(struct bio *bio)
- 				return true;
- 			set_flags = false;
- 			gfp |= __GFP_ZERO;
--		} else if (bi->csum_type == BLK_INTEGRITY_CSUM_NONE)
-+		} else if (bi->metadata_size > bi->pi_tuple_size)
- 			gfp |= __GFP_ZERO;
- 		break;
- 	default:
+diff --git a/net/ipv4/ip_gre.c b/net/ipv4/ip_gre.c
+index 8178c44a3cdd4..e13244729ad8d 100644
+--- a/net/ipv4/ip_gre.c
++++ b/net/ipv4/ip_gre.c
+@@ -891,10 +891,17 @@ static int ipgre_header(struct sk_buff *skb, struct net_device *dev,
+ 			const void *daddr, const void *saddr, unsigned int len)
+ {
+ 	struct ip_tunnel *t = netdev_priv(dev);
+-	struct iphdr *iph;
+ 	struct gre_base_hdr *greh;
++	struct iphdr *iph;
++	int needed;
++
++	needed = t->hlen + sizeof(*iph);
++	if (skb_headroom(skb) < needed &&
++	    pskb_expand_head(skb, HH_DATA_ALIGN(needed - skb_headroom(skb)),
++			     0, GFP_ATOMIC))
++		return -needed;
+ 
+-	iph = skb_push(skb, t->hlen + sizeof(*iph));
++	iph = skb_push(skb, needed);
+ 	greh = (struct gre_base_hdr *)(iph+1);
+ 	greh->flags = gre_tnl_flags_to_gre_flags(t->parms.o_flags);
+ 	greh->protocol = htons(type);
 -- 
 2.51.0
 
