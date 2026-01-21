@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1DC1136672;
-	Wed, 21 Jan 2026 18:18:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4987F37BE9C;
+	Wed, 21 Jan 2026 18:18:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769019523; cv=none; b=hArwBuo68kI+y8VleMxWAOK3TWP7u34zUMtwP40e5Kyhpxe7lNWic5n0zLfoewiv506Meu8FF2s5/mp9xuovB6FBDrjnyj1BAEOI9rooStBYfK4DNkmf1iOhop9Toz3FvLX/nVohWwDBm3wnnaFiYMMDX+kpQaCd98VfpQ6dYyY=
+	t=1769019526; cv=none; b=LsKlki+fvzpxytRN2EecxA+kdqSBgaZGeroqAE5bf4OwkJ1jOpuwuJD62+Me8H4+DVkxCcLoWaDFzfudnfQaBFAETCmhpoH/q2C0rpPSJZ4bCI/vgIsH3nf0/CTMqv6QaTrz7eObWsOxOWl1RaN1Ii9HgGz7m9JH/5VDfxXJ9v8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769019523; c=relaxed/simple;
-	bh=4X+vrZxj40NMiNIJoXPrlhim2GTgKvGmE0TPlBWth64=;
+	s=arc-20240116; t=1769019526; c=relaxed/simple;
+	bh=N26JsVb7RjvSHB+rOXE1rq7lvHnJVX6YL/QdFAY6W/A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MtDFdBqU+v1gd5Ajfz7adIchKLYEFG6oAChzO2leQ6+jwsr4bxcMeU9/1vqpeLN/kB2UIgDwmR1JN5PrCbbGwvvQVHESTWBXflQglmT5UCQI2MZG2/Rn2hPTcT7ULm1dojD4bX82GgswxNUA37AySebM9ITLSqsSCsCszq0k2D8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=v4I9M01k; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dI9OMG0GTp8PsebTmXNruOKmICnHMhn8l2+T3UnnJVVTjXW5YbO8aaYixPLokkH+vF/kc9LfK9F3Qkd7exrUJRoeeVQhpPZR2+0fE3Md5+gs57sNyy4I/q8RMmKCBscxA5KudGt5Z1pd7kLDzPz+9fdbEj/6/QpiBU4B2h8oc5A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qNFugZEM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="v4I9M01k"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF9A3C4CEF1;
-	Wed, 21 Jan 2026 18:18:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qNFugZEM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 652B0C4CEF1;
+	Wed, 21 Jan 2026 18:18:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1769019522;
-	bh=4X+vrZxj40NMiNIJoXPrlhim2GTgKvGmE0TPlBWth64=;
+	s=korg; t=1769019525;
+	bh=N26JsVb7RjvSHB+rOXE1rq7lvHnJVX6YL/QdFAY6W/A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=v4I9M01kNli02uvXxNeVqE4y4YtoA5ePpv6Pz2W91ta3cNJFTUD3dPM4MMK8aj6gM
-	 QAZtGFqScXzbWyWBFtBsXDWRXoPE6aZ9i7MBmoJFCdKu7e7a9LxKu5auUlnUHnb4R5
-	 Amztqq5F+g7IzUW/N69xwtegGUzGacZseGc9sr78=
+	b=qNFugZEMzCZlnwizDmYfV8vYPb45Y6rd7LTZdnNWDy5s55Z5qXmfu92alS3itkiPm
+	 HI3Apxh5ZMpAwNliQRkCaeIUS7LCc5yrsmZGPoHBJ9LhqJzqZvecRz0ypIpfAhG379
+	 ezpL3l8eMEVXog9z5s8NYOScWmd6EDc3ul0EMSbE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kery Qi <qikeyu2017@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Richard Fitzgerald <rf@opensource.cirrus.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 031/139] net: octeon_ep_vf: fix free_irq dev_id mismatch in IRQ rollback
-Date: Wed, 21 Jan 2026 19:14:39 +0100
-Message-ID: <20260121181412.575977988@linuxfoundation.org>
+Subject: [PATCH 6.12 032/139] ALSA: hda/cirrus_scodec_test: Fix incorrect setup of gpiochip
+Date: Wed, 21 Jan 2026 19:14:40 +0100
+Message-ID: <20260121181412.610842520@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260121181411.452263583@linuxfoundation.org>
 References: <20260121181411.452263583@linuxfoundation.org>
@@ -51,44 +51,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kery Qi <qikeyu2017@gmail.com>
+From: Richard Fitzgerald <rf@opensource.cirrus.com>
 
-[ Upstream commit f93fc5d12d69012788f82151bee55fce937e1432 ]
+[ Upstream commit c5e96e54eca3876d4ce8857e2e22adbe9f44f4a2 ]
 
-octep_vf_request_irqs() requests MSI-X queue IRQs with dev_id set to
-ioq_vector. If request_irq() fails part-way, the rollback loop calls
-free_irq() with dev_id set to 'oct', which does not match the original
-dev_id and may leave the irqaction registered.
+Set gpiochip parent to the struct device of the dummy GPIO driver
+so that the software node will be associated with the GPIO chip.
 
-This can keep IRQ handlers alive while ioq_vector is later freed during
-unwind/teardown, leading to a use-after-free or crash when an interrupt
-fires.
+The recent commit e5d527be7e698 ("gpio: swnode: don't use the
+swnode's name as the key for GPIO lookup") broke cirrus_scodec_test,
+because the software node no longer gets associated with the GPIO
+driver by name.
 
-Fix the error path to free IRQs with the same ioq_vector dev_id used
-during request_irq().
+Instead, setting struct gpio_chip.parent to the owning struct device
+will find the node using a normal fwnode lookup.
 
-Fixes: 1cd3b407977c ("octeon_ep_vf: add Tx/Rx processing and interrupt support")
-Signed-off-by: Kery Qi <qikeyu2017@gmail.com>
-Link: https://patch.msgid.link/20260108164256.1749-2-qikeyu2017@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Richard Fitzgerald <rf@opensource.cirrus.com>
+Fixes: 2144833e7b414 ("ALSA: hda: cirrus_scodec: Add KUnit test")
+Link: https://patch.msgid.link/20260113130954.574670-1-rf@opensource.cirrus.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/marvell/octeon_ep_vf/octep_vf_main.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ sound/pci/hda/cirrus_scodec_test.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/net/ethernet/marvell/octeon_ep_vf/octep_vf_main.c b/drivers/net/ethernet/marvell/octeon_ep_vf/octep_vf_main.c
-index ccb69bc5c9529..b9430c4a33a32 100644
---- a/drivers/net/ethernet/marvell/octeon_ep_vf/octep_vf_main.c
-+++ b/drivers/net/ethernet/marvell/octeon_ep_vf/octep_vf_main.c
-@@ -220,7 +220,7 @@ static int octep_vf_request_irqs(struct octep_vf_device *oct)
- ioq_irq_err:
- 	while (i) {
- 		--i;
--		free_irq(oct->msix_entries[i].vector, oct);
-+		free_irq(oct->msix_entries[i].vector, oct->ioq_vector[i]);
- 	}
- 	return -1;
- }
+diff --git a/sound/pci/hda/cirrus_scodec_test.c b/sound/pci/hda/cirrus_scodec_test.c
+index e925ebe21ccba..140b2a6be8dca 100644
+--- a/sound/pci/hda/cirrus_scodec_test.c
++++ b/sound/pci/hda/cirrus_scodec_test.c
+@@ -92,6 +92,7 @@ static int cirrus_scodec_test_gpio_probe(struct platform_device *pdev)
+ 
+ 	/* GPIO core modifies our struct gpio_chip so use a copy */
+ 	gpio_priv->chip = cirrus_scodec_test_gpio_chip;
++	gpio_priv->chip.parent = &pdev->dev;
+ 	ret = devm_gpiochip_add_data(&pdev->dev, &gpio_priv->chip, gpio_priv);
+ 	if (ret)
+ 		return dev_err_probe(&pdev->dev, ret, "Failed to add gpiochip\n");
 -- 
 2.51.0
 
