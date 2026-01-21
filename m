@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E7243624DB;
-	Wed, 21 Jan 2026 18:21:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B49D239C659;
+	Wed, 21 Jan 2026 18:21:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769019673; cv=none; b=uwG1MfRwoP9THXBYq6+eftS2W+/1KMsqoE7bdwe2eP29Ke0Ku8AtMz+XRawn3Rr5ZQoyF6JwuUPYGTH/ddsFyNed+vCckgRqmwuCl79rqT7cX8aWMWG8jKJfF9HystK+pgBZ7Bg1/FDVSBHxv9oFgS9K7DiM68aLPRJbvfrFmx4=
+	t=1769019676; cv=none; b=UTUkte//8RHXcH3g8+C6LfbasOKpoF58H73zXvE7SEhgHkGJgmoVwQchs7ILOgN4LVjoW3axwfywJntNtnlt9sr8OPj+hqOhQrryqy06r1he1qhFPmCa4qS8aJ9PiKxxMzu4tUDoNndzQXI3q1u7uNCE+1TgflvP3QsBSP63XkE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769019673; c=relaxed/simple;
-	bh=l4aCG+AYp05DBQGWUiimrRKah4ilpKsBhe5TyYqsSNQ=;
+	s=arc-20240116; t=1769019676; c=relaxed/simple;
+	bh=3t5XBxUQfE+ZbvvJAWE/P+J0qCX8aJC11SzI2HBbFs4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YDcrTno+zIiqYEwDW9ow/HCVfoLuMTHo3+XgwTzj2sr0SN6ybgLBoBcLMUFmiRfJNlPVjKytiJcGD/r/BAw/N8+yRbYNBaTTLpMDOlHAzFNxOtyOZBAASHNcstYIMYWPluj7IeHCUcsNC0cM2VeBMQkyri24yZEPS9qqfGPkQzo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=V9aOqB/d; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=DAEKsGzkCm1z3DVtmvulivr/Dzbzpg1rYCWcOqego3Gvq7BGHL4JpudcisGSSMgzIUGwqbAO/dD5Tds045MWtfSQ1QTMABOR56uHye9ReRZ0ksilT1AW6bcOwZ8ye+cJ2XCcEUHO3SEKe4hH+EKG4JTBDYSHIrmDtEvdu7kaEd8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=r3lfpNud; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="V9aOqB/d"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D11C5C19422;
-	Wed, 21 Jan 2026 18:21:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="r3lfpNud"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E344C16AAE;
+	Wed, 21 Jan 2026 18:21:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1769019673;
-	bh=l4aCG+AYp05DBQGWUiimrRKah4ilpKsBhe5TyYqsSNQ=;
+	s=korg; t=1769019676;
+	bh=3t5XBxUQfE+ZbvvJAWE/P+J0qCX8aJC11SzI2HBbFs4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=V9aOqB/dY+i29pVenVW8xyMLOpa+WmgR2xYCxWdopQ2qn63yVfznHGGx1pBfKpAyV
-	 NxsNTR1KAhuBJbVPj5sIw4f6UG4mAX/1WeKhC5ywvxjBGwWrO/7CkuTWnnl79BDogZ
-	 JMOTWddxLStUOYQy0gmTkaMTwB66l8ocieKkBEU4=
+	b=r3lfpNudTK1AT69dmM5Oy5F36V7Ep/MRvgmCUCW426OgfW+DaORhaB7fQlNDJ2KuG
+	 xt7mafMVgjrgVlerCL6Zx3Z4cJturnpIqRD/GyF5A5qGEN6OEb2Zs2ii31OCiPbKz+
+	 BQRbsSse+QH+6ddrwBY4cQtseo73EgZkFE+BNvEg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rafael Beims <rafael.beims@toradex.com>,
-	Vinod Koul <vkoul@kernel.org>
-Subject: [PATCH 6.12 075/139] phy: freescale: imx8m-pcie: assert phy reset during power on
-Date: Wed, 21 Jan 2026 19:15:23 +0100
-Message-ID: <20260121181414.154881159@linuxfoundation.org>
+	Neil Armstrong <neil.armstrong@linaro.org>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Wolfram Sang <wsa+renesas@sang-engineering.com>,
+	Sasha Levin <sashal@kernel.org>,
+	Mukesh Kumar Savaliya <mukesh.savaliya@oss.qualcomm.com>
+Subject: [PATCH 6.12 058/139] i2c: qcom-geni: make sure I2C hub controllers cant use SE DMA
+Date: Wed, 21 Jan 2026 19:15:06 +0100
+Message-ID: <20260121181413.541232936@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260121181411.452263583@linuxfoundation.org>
 References: <20260121181411.452263583@linuxfoundation.org>
@@ -50,46 +53,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rafael Beims <rafael.beims@toradex.com>
+From: Neil Armstrong <neil.armstrong@linaro.org>
 
-commit f2ec4723defbc66a50e0abafa830ae9f8bceb0d7 upstream.
+[ Upstream commit c0c50e3743e467ec4752c638e10e97f89c8644e2 ]
 
-After U-Boot initializes PCIe with "pcie enum", Linux fails to detect
-an NVMe disk on some boot cycles with:
+The I2C Hub controller is a simpler GENI I2C variant that doesn't
+support DMA at all, add a no_dma flag to make sure it nevers selects
+the SE DMA mode with mappable 32bytes long transfers.
 
-  phy phy-32f00000.pcie-phy.0: phy poweron failed --> -110
-
-Discussion with NXP identified that the iMX8MP PCIe PHY PLL may fail to
-lock when re-initialized without a reset cycle [1].
-
-The issue reproduces on 7% of tested hardware platforms, with a 30-40%
-failure rate per affected device across boot cycles.
-
-Insert a reset cycle in the power-on routine to ensure the PHY is
-initialized from a known state.
-
-[1] https://community.nxp.com/t5/i-MX-Processors/iMX8MP-PCIe-initialization-in-U-Boot/m-p/2248437#M242401
-
-Signed-off-by: Rafael Beims <rafael.beims@toradex.com>
-Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20251223150254.1075221-1-rafael@beims.me
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: cacd9643eca7 ("i2c: qcom-geni: add support for I2C Master Hub variant")
+Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Reviewed-by: Mukesh Kumar Savaliya <mukesh.savaliya@oss.qualcomm.com>>
+Signed-off-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/phy/freescale/phy-fsl-imx8m-pcie.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/i2c/busses/i2c-qcom-geni.c | 11 +++++++----
+ 1 file changed, 7 insertions(+), 4 deletions(-)
 
---- a/drivers/phy/freescale/phy-fsl-imx8m-pcie.c
-+++ b/drivers/phy/freescale/phy-fsl-imx8m-pcie.c
-@@ -89,7 +89,8 @@ static int imx8_pcie_phy_power_on(struct
- 			writel(imx8_phy->tx_deemph_gen2,
- 			       imx8_phy->base + PCIE_PHY_TRSV_REG6);
- 		break;
--	case IMX8MP: /* Do nothing. */
-+	case IMX8MP:
-+		reset_control_assert(imx8_phy->reset);
- 		break;
+diff --git a/drivers/i2c/busses/i2c-qcom-geni.c b/drivers/i2c/busses/i2c-qcom-geni.c
+index 212336f724a69..96b024dc3f20f 100644
+--- a/drivers/i2c/busses/i2c-qcom-geni.c
++++ b/drivers/i2c/busses/i2c-qcom-geni.c
+@@ -97,6 +97,7 @@ struct geni_i2c_dev {
+ 	dma_addr_t dma_addr;
+ 	struct dma_chan *tx_c;
+ 	struct dma_chan *rx_c;
++	bool no_dma;
+ 	bool gpi_mode;
+ 	bool abort_done;
+ };
+@@ -411,7 +412,7 @@ static int geni_i2c_rx_one_msg(struct geni_i2c_dev *gi2c, struct i2c_msg *msg,
+ 	size_t len = msg->len;
+ 	struct i2c_msg *cur;
+ 
+-	dma_buf = i2c_get_dma_safe_msg_buf(msg, 32);
++	dma_buf = gi2c->no_dma ? NULL : i2c_get_dma_safe_msg_buf(msg, 32);
+ 	if (dma_buf)
+ 		geni_se_select_mode(se, GENI_SE_DMA);
+ 	else
+@@ -450,7 +451,7 @@ static int geni_i2c_tx_one_msg(struct geni_i2c_dev *gi2c, struct i2c_msg *msg,
+ 	size_t len = msg->len;
+ 	struct i2c_msg *cur;
+ 
+-	dma_buf = i2c_get_dma_safe_msg_buf(msg, 32);
++	dma_buf = gi2c->no_dma ? NULL : i2c_get_dma_safe_msg_buf(msg, 32);
+ 	if (dma_buf)
+ 		geni_se_select_mode(se, GENI_SE_DMA);
+ 	else
+@@ -865,10 +866,12 @@ static int geni_i2c_probe(struct platform_device *pdev)
+ 		return -ENXIO;
  	}
  
+-	if (desc && desc->no_dma_support)
++	if (desc && desc->no_dma_support) {
+ 		fifo_disable = false;
+-	else
++		gi2c->no_dma = true;
++	} else {
+ 		fifo_disable = readl_relaxed(gi2c->se.base + GENI_IF_DISABLE_RO) & FIFO_IF_DISABLE;
++	}
+ 
+ 	if (fifo_disable) {
+ 		/* FIFO is disabled, so we can only use GPI DMA */
+-- 
+2.51.0
+
 
 
