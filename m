@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46CB82F25F4;
-	Wed, 21 Jan 2026 18:34:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 688843BBA04;
+	Wed, 21 Jan 2026 18:34:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769020468; cv=none; b=K0FJ/wWQn7ZfhVz9TVF28Dl1yS72AmrA7KSTiR4RvCitGoRxDaLyWVIVaHK3ray8UfnRNV6rG8VOcyRImH9u4LWSxgWN4kPrgWWNeB5nrH62idNBheGro6IdMT3uSF/8jIDlz7EUy5t8xhfuQNnQeT3pq8kpc5uEdXwlUdSe8hw=
+	t=1769020471; cv=none; b=nNCINN2mbL/mtgHQrWmfJmzMzTBtJAqEa1b7YoR+5uEz2D3m21aQgThsIRRaIXo5OPHn9eSUbRxGatuEkTiIUbIaH9RteoYTF6dwN+X9SUBWeExnx0Hq8pSSFM/oia6ht1YDZyJ2A/LO1JSsQ13+n5C3rr1NLNwnX0L/E2nd7F4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769020468; c=relaxed/simple;
-	bh=IcurVtLvMj4myKpSiNb1B3UzJjYvL+yG47+Za60o0rk=;
+	s=arc-20240116; t=1769020471; c=relaxed/simple;
+	bh=tX7bKJ32q7Jqj6c+TaZ6IOsk3jJIGDeZpOyqeLsLei4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=leiE+u1VPyi/geuR5PbhIFqclI2KcIS9ppElC9YZhZxKrhKg2rBLFgG3gOGaeXUSZYgt+OSJKtSGIib2yAXAU2euQDeIadoWpJWDomy+yrgHB7chXMwY11ER9J6hnRtgqam2NHcakJJddahyBwYLyjwg5JlaSFT05Qwv4BTOJ/0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NvFEPx5s; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=UkJU37OqVDXtXvsx6EitMuexKp8SJg/wnx4rFCxPG6ahdPYBxEaMMeHXpC7yARVEswEnz8ZGlzjcRMYEBazR9BZ8N5ZdK8qvAAxnqfnf+VqEHw3LRlwrL0fXCXf8tS+iokZIB5kNf6VTIxxWbDHpnYdtB/r4V/K0W4MX4Wb72ls=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=m2jlfF7t; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NvFEPx5s"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 845C5C4CEF1;
-	Wed, 21 Jan 2026 18:34:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="m2jlfF7t"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A06BCC19424;
+	Wed, 21 Jan 2026 18:34:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1769020467;
-	bh=IcurVtLvMj4myKpSiNb1B3UzJjYvL+yG47+Za60o0rk=;
+	s=korg; t=1769020471;
+	bh=tX7bKJ32q7Jqj6c+TaZ6IOsk3jJIGDeZpOyqeLsLei4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NvFEPx5sOmVe6UqXYx9sCrUXywGuzF/0k41mZ8NTBx7tl3naFC4FsL6iojYno3wIm
-	 RDemWNevkOCIttXRXtmXGZeuDTpzeuLT6hXMX6GN/I/KkIoMd9oxvtOrVaWNQryUBw
-	 DYN4ickyytoYZBnyiJKMfgzMyuKMWmgml1anFBnI=
+	b=m2jlfF7tZR1/pzbJWobi27l2284isx68nwB/azQUogZgaypXizO2QrJ8z7KKR4Tid
+	 CoGq5buf4eut6olCcSJrJHC0Mz2enLg/lp4xKhxyl3xieSKLHhN8CtmQELKW+vQEFw
+	 4PZkyVfvsYQ1v0ezA8O/zgLwJDa9Yv8Hb2+Y7VHU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bibo Mao <maobibo@loongson.cn>,
-	Qiang Ma <maqianga@uniontech.com>,
-	Huacai Chen <chenhuacai@loongson.cn>
-Subject: [PATCH 6.18 166/198] LoongArch: KVM: Fix kvm_device leak in kvm_pch_pic_destroy()
-Date: Wed, 21 Jan 2026 19:16:34 +0100
-Message-ID: <20260121181424.521402468@linuxfoundation.org>
+	Neal Gompa <neal@gompa.dev>,
+	Janne Grunau <j@jannau.net>,
+	Vinod Koul <vkoul@kernel.org>
+Subject: [PATCH 6.18 167/198] dmaengine: apple-admac: Add "apple,t8103-admac" compatible
+Date: Wed, 21 Jan 2026 19:16:35 +0100
+Message-ID: <20260121181424.556437659@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260121181418.537774329@linuxfoundation.org>
 References: <20260121181418.537774329@linuxfoundation.org>
@@ -51,35 +51,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Qiang Ma <maqianga@uniontech.com>
+From: Janne Grunau <j@jannau.net>
 
-commit 1cf342a7c3adc5877837b53bbceb5cc9eff60bbf upstream.
+commit 76cba1e60b69c9cd53b9127d017a7dc5945455b1 upstream.
 
-In kvm_ioctl_create_device(), kvm_device has allocated memory,
-kvm_device->destroy() seems to be supposed to free its kvm_device
-struct, but kvm_pch_pic_destroy() is not currently doing this, that
-would lead to a memory leak.
+After discussion with the devicetree maintainers we agreed to not extend
+lists with the generic compatible "apple,admac" anymore [1]. Use
+"apple,t8103-admac" as base compatible as it is the SoC the driver and
+bindings were written for.
 
-So, fix it.
+[1]: https://lore.kernel.org/asahi/12ab93b7-1fc2-4ce0-926e-c8141cfe81bf@kernel.org/
 
+Fixes: b127315d9a78 ("dmaengine: apple-admac: Add Apple ADMAC driver")
 Cc: stable@vger.kernel.org
-Reviewed-by: Bibo Mao <maobibo@loongson.cn>
-Signed-off-by: Qiang Ma <maqianga@uniontech.com>
-Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
+Reviewed-by: Neal Gompa <neal@gompa.dev>
+Signed-off-by: Janne Grunau <j@jannau.net>
+Link: https://patch.msgid.link/20251231-apple-admac-t8103-base-compat-v1-1-ec24a3708f76@jannau.net
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/loongarch/kvm/intc/pch_pic.c |    1 +
+ drivers/dma/apple-admac.c |    1 +
  1 file changed, 1 insertion(+)
 
---- a/arch/loongarch/kvm/intc/pch_pic.c
-+++ b/arch/loongarch/kvm/intc/pch_pic.c
-@@ -475,6 +475,7 @@ static void kvm_pch_pic_destroy(struct k
- 	/* unregister pch pic device and free it's memory */
- 	kvm_io_bus_unregister_dev(kvm, KVM_MMIO_BUS, &s->device);
- 	kfree(s);
-+	kfree(dev);
+--- a/drivers/dma/apple-admac.c
++++ b/drivers/dma/apple-admac.c
+@@ -936,6 +936,7 @@ static void admac_remove(struct platform
  }
  
- static struct kvm_device_ops kvm_pch_pic_dev_ops = {
+ static const struct of_device_id admac_of_match[] = {
++	{ .compatible = "apple,t8103-admac", },
+ 	{ .compatible = "apple,admac", },
+ 	{ }
+ };
 
 
