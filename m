@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA1F53A7E12;
-	Wed, 21 Jan 2026 18:29:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B85A13B52E6;
+	Wed, 21 Jan 2026 18:30:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769020199; cv=none; b=YoNlSRnrt6f83xb1ajfFjfm6sMdZcO4BCpNuepnr0Dc2M9aLyfyqNDx+NBq37fWbvmbTraL6jJNfT5ULsXjY9DtTqDJLZGSAzzWea8fiGe78LeXmbayfJahIYtTknfgnrR0urmrPkqDBSuLMGTrhgRlwvmRtWo789qlgzH/nWKg=
+	t=1769020203; cv=none; b=J1KnWF8Lt0Y02bHJ7lTznhi5TUcdPMhKs7UqLyHSvoJgW31cHAGON7KkyYQfRolKvMNOT3q+PUv0ujCJOotR1O5qM7GIr9sMqiNacuOghkjrnZYWeUFNOD0dK2GQUKKfqjRKrTQyslc1SL3Tzf3XrCosxj8MtAiYL+Y0pRg1PVQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769020199; c=relaxed/simple;
-	bh=0zwP8Y4yP9zZvxjfuG9/arxkqB3IMRx9wK3tRvqOB3g=;
+	s=arc-20240116; t=1769020203; c=relaxed/simple;
+	bh=LEiHsF4qqy8I/qM4aNX4U1PcuetKUIFHfhbIeHOzkLU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EL2gJTi1pAz7qfLO1F+X8nQS2o1elS9zVcLOtbyLvq2zUh0FKkQNrnpV/9YXHQdOSpR4teBIjn+Br6M64v/RtwFdM4kXPkQLGYcoZgRcA4Sx9fCCZvKIYm/5sYiOpPFZf/lPLO7q8EyoMw6iF/FjM+zrtqUEJpEU29W+Py0dvI8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NOxUrOWo; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=plpdLvjkdD4m2jQnrl0BOknYoK3pdW5fKfMpW5CEXIVtBXaU05XqnQzSWyYNk76nZp8jUILgg52CMO0i7jWN22GEG0Opc8dkOJ/Wuq0LNNuMwUrefAOhHXsMLtm+Sw54w2d4iSdDLxSHbeGFWuMEy1N8r2+G019WLXjhVFaKSDI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fFprevvX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NOxUrOWo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD211C4CEF1;
-	Wed, 21 Jan 2026 18:29:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fFprevvX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 160AAC16AAE;
+	Wed, 21 Jan 2026 18:30:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1769020199;
-	bh=0zwP8Y4yP9zZvxjfuG9/arxkqB3IMRx9wK3tRvqOB3g=;
+	s=korg; t=1769020203;
+	bh=LEiHsF4qqy8I/qM4aNX4U1PcuetKUIFHfhbIeHOzkLU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NOxUrOWoLCcL4lz0Umj8bsOpVTsgZo/LWfU50rG6gbrXMe34WEO9mNVjv/QPzLHbA
-	 U/g4gWtkv3ZVrsHx8EKTp0XvIz4lBmdlxVVxfg4vvaRZxm8askXvbzX/0KkJa7lpAC
-	 UMx7hXFaLfnUWoAQ38IJMfGwFqKkmhgWJIBzMJOE=
+	b=fFprevvXnlqGUa1pfiEhLCbBWB1REowcu1134+QcsZ/rq0Rd/0n5v9WdOyqG0FB5v
+	 P4qfEXmRFZoe3z2aJTdUvBIp3A5KIc6WipSXk+W2UZn6LfLNnr5biMPAzuU6NJWwTS
+	 f3Evrd1H5DQ9I3FHVBAc1YW8vHWkm8goy2JfzDLg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
-	Pierre Gondois <pierre.gondois@arm.com>,
-	Juri Lelli <juri.lelli@redhat.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 088/198] sched: Deadline has dynamic priority
-Date: Wed, 21 Jan 2026 19:15:16 +0100
-Message-ID: <20260121181421.725093197@linuxfoundation.org>
+	Benjamin Tissoires <bentiss@kernel.org>,
+	Salvatore Bonaccorso <carnil@debian.org>
+Subject: [PATCH 6.18 089/198] HID: usbhid: paper over wrong bNumDescriptor field
+Date: Wed, 21 Jan 2026 19:15:17 +0100
+Message-ID: <20260121181421.760270907@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260121181418.537774329@linuxfoundation.org>
 References: <20260121181418.537774329@linuxfoundation.org>
@@ -52,56 +50,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Peter Zijlstra <peterz@infradead.org>
+From: Benjamin Tissoires <bentiss@kernel.org>
 
-[ Upstream commit e008ec6c7904ed99d3b2cb634b6545b008a99288 ]
+commit f28beb69c51517aec7067dfb2074e7c751542384 upstream.
 
-While FIFO/RR have static priority, DEADLINE is a dynamic priority
-scheme. Notably it has static priority -1. Do not assume the priority
-doesn't change for deadline tasks just because the static priority
-doesn't change.
+Some faulty devices (ZWO EFWmini) have a wrong optional HID class
+descriptor count compared to the provided length.
 
-This ensures DL always sees {DE,EN}QUEUE_MOVE where appropriate.
+Given that we plainly ignore those optional descriptor, we can attempt
+to fix the provided number so we do not lock out those devices.
 
-Fixes: ff77e4685359 ("sched/rt: Fix PI handling vs. sched_setscheduler()")
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Tested-by: Pierre Gondois <pierre.gondois@arm.com>
-Tested-by: Juri Lelli <juri.lelli@redhat.com>
-Link: https://patch.msgid.link/20260114130528.GB831285@noisy.programming.kicks-ass.net
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Benjamin Tissoires <bentiss@kernel.org>
+Cc: Salvatore Bonaccorso <carnil@debian.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/sched/core.c     | 2 +-
- kernel/sched/syscalls.c | 2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+ drivers/hid/usbhid/hid-core.c |   17 ++++++++++++++++-
+ 1 file changed, 16 insertions(+), 1 deletion(-)
 
-diff --git a/kernel/sched/core.c b/kernel/sched/core.c
-index eb47d294e2c5a..e460c22de8ad4 100644
---- a/kernel/sched/core.c
-+++ b/kernel/sched/core.c
-@@ -7383,7 +7383,7 @@ void rt_mutex_setprio(struct task_struct *p, struct task_struct *pi_task)
- 	trace_sched_pi_setprio(p, pi_task);
- 	oldprio = p->prio;
- 
--	if (oldprio == prio)
-+	if (oldprio == prio && !dl_prio(prio))
- 		queue_flag &= ~DEQUEUE_MOVE;
- 
- 	prev_class = p->sched_class;
-diff --git a/kernel/sched/syscalls.c b/kernel/sched/syscalls.c
-index bf360a6fbb800..6805a63d47af7 100644
---- a/kernel/sched/syscalls.c
-+++ b/kernel/sched/syscalls.c
-@@ -688,7 +688,7 @@ int __sched_setscheduler(struct task_struct *p,
- 		 * itself.
- 		 */
- 		newprio = rt_effective_prio(p, newprio);
--		if (newprio == oldprio)
-+		if (newprio == oldprio && !dl_prio(newprio))
- 			queue_flags &= ~DEQUEUE_MOVE;
+--- a/drivers/hid/usbhid/hid-core.c
++++ b/drivers/hid/usbhid/hid-core.c
+@@ -985,6 +985,7 @@ static int usbhid_parse(struct hid_devic
+ 	struct usb_device *dev = interface_to_usbdev (intf);
+ 	struct hid_descriptor *hdesc;
+ 	struct hid_class_descriptor *hcdesc;
++	__u8 fixed_opt_descriptors_size;
+ 	u32 quirks = 0;
+ 	unsigned int rsize = 0;
+ 	char *rdesc;
+@@ -1015,7 +1016,21 @@ static int usbhid_parse(struct hid_devic
+ 			      (hdesc->bNumDescriptors - 1) * sizeof(*hcdesc)) {
+ 		dbg_hid("hid descriptor invalid, bLen=%hhu bNum=%hhu\n",
+ 			hdesc->bLength, hdesc->bNumDescriptors);
+-		return -EINVAL;
++
++		/*
++		 * Some devices may expose a wrong number of descriptors compared
++		 * to the provided length.
++		 * However, we ignore the optional hid class descriptors entirely
++		 * so we can safely recompute the proper field.
++		 */
++		if (hdesc->bLength >= sizeof(*hdesc)) {
++			fixed_opt_descriptors_size = hdesc->bLength - sizeof(*hdesc);
++
++			hid_warn(intf, "fixing wrong optional hid class descriptors count\n");
++			hdesc->bNumDescriptors = fixed_opt_descriptors_size / sizeof(*hcdesc) + 1;
++		} else {
++			return -EINVAL;
++		}
  	}
  
--- 
-2.51.0
-
+ 	hid->version = le16_to_cpu(hdesc->bcdHID);
 
 
