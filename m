@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5953E36A020;
-	Wed, 21 Jan 2026 18:30:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A84A344055;
+	Wed, 21 Jan 2026 18:30:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769020245; cv=none; b=YpYzGI9f4HR0OWdGtWvpiFeEeOz66o4qZccbD3n1D7Mqdy/ezRiWXQoQXP5cdwOv6ezcZyZfnwaZVk6W5bkNEOugz/Otqp5sDFDrLpQGmCQQA3NUnH2fl9ETSfHE+2qUQQ13n3bkoGzDRzFKxNLidXHbk103ugry5Wap9RDX9Tc=
+	t=1769020248; cv=none; b=WLJgO4I4cfhYwnE2xy3Z88JkOZPbi7bX6N0eFYX3o8EOJYh1oiuz8cpvU3ZHz9lx0Eoa2cUBoCj/hrxyMkruyGmES9GRbdn4kiPCEngQVYr5MlFDSqDZ7qleTNhCWm365U6ZFdv9k2QvadliXnsTAmo6o+hzT04qHxPn9+733O4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769020245; c=relaxed/simple;
-	bh=LCeDyh2gzMOPLfLBxep+i+MQICqkYjvX3ZPr7OM8CL4=;
+	s=arc-20240116; t=1769020248; c=relaxed/simple;
+	bh=TnmXr41vRtavySyGwf3+u4CVyIsSVavVuRGFK8UtH0E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RqyItBPAtYkXNPVaUdVljW3litVniwwpw/N7Cm9r/GRkVsPl6SdutBdPz3AvtCEkBYetQNIn+y0QUSDz1hSDoBBjuz7Cvs+H6plNSMLG3Sif7zjyL43K9khv7NzoEZWdFnHom+emg/17QG+SArhvJaVd4bU/u/d1yvHSPsx17wo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RkMe6AtD; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=FlufEF/J1T7+p/yIAMkHy8XZBqnGOugw2UA2VRnyl4JPoqf23YrldguG1HSIfZp/iRpb4t3UJH/i2fNVP92SYKLmQUAGLiZ5DTkENseixGh2FuRkcIdx/kOR61vArLyYW4tvyPxDWGx9tb2BFoskw2ODCz3DJifmzTgP15/LV0w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VMMqUAt/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RkMe6AtD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A2594C4CEF1;
-	Wed, 21 Jan 2026 18:30:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VMMqUAt/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E455AC4CEF1;
+	Wed, 21 Jan 2026 18:30:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1769020245;
-	bh=LCeDyh2gzMOPLfLBxep+i+MQICqkYjvX3ZPr7OM8CL4=;
+	s=korg; t=1769020248;
+	bh=TnmXr41vRtavySyGwf3+u4CVyIsSVavVuRGFK8UtH0E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RkMe6AtDd1V55LuLN6dyQzJX+/s9I7sROUMBHlnz+372wkVbom7W0Lo4+kXVtMkhW
-	 5z5llfCRIiXj3PAzIZ0YhNRU1MfCg7l+oSfhluUT8u/6E5TmAWax5J09bJ+NRypjqV
-	 Dy07i/wcpgG/57H7DDMg6bSEwuvXrbR8kKOyZjyI=
+	b=VMMqUAt/MbUtSaS3O7CXlaxRWvwBPhQwSiaHnX5d/RID0Cq5Y4X8tLCg/8IRd9jkL
+	 2FHG90ibh6SAPe6LTHI71br+ut0iI4D9G1ZNMxLfyuShY9/8c1WCyaJ69NQnwAXcnt
+	 YyJlwzWvrdKaOfkOdmDWVB9noSSWq+WUsx7aWfDQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Naresh Kamboju <naresh.kamboju@linaro.org>,
-	Arnd Bergmann <arnd@arndb.de>,
-	Guodong Xu <guodong@riscstar.com>,
+	Lizhi Hou <lizhi.hou@amd.com>,
+	Radhey Shyam Pandey <radhey.shyam.pandey@amd.com>,
+	Alexander Stein <alexander.stein@ew.tq-group.com>,
+	Anthony Brandon <anthony@amarulasolutions.com>,
 	Vinod Koul <vkoul@kernel.org>,
-	Sasha Levin <sashal@kernel.org>,
-	Nathan Chancellor <nathan@kernel.org>
-Subject: [PATCH 6.18 069/198] dmaengine: mmp_pdma: fix DMA mask handling
-Date: Wed, 21 Jan 2026 19:14:57 +0100
-Message-ID: <20260121181421.041889903@linuxfoundation.org>
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.18 070/198] dmaengine: xilinx: xdma: Fix regmap max_register
+Date: Wed, 21 Jan 2026 19:14:58 +0100
+Message-ID: <20260121181421.078635985@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260121181418.537774329@linuxfoundation.org>
 References: <20260121181418.537774329@linuxfoundation.org>
@@ -54,107 +54,83 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guodong Xu <guodong@riscstar.com>
+From: Anthony Brandon <anthony@amarulasolutions.com>
 
-[ Upstream commit 49400b701eca849c1b53717b1f5d779a8d066ec0 ]
+[ Upstream commit c7d436a6c1a274c1ac28d5fb3b8eb8f03b6d0e10 ]
 
-The driver's existing logic for setting the DMA mask for "marvell,pdma-1.0"
-was flawed. It incorrectly relied on pdev->dev->coherent_dma_mask instead
-of declaring the hardware's fixed addressing capability. A cleaner and
-more correct approach is to define the mask directly based on the hardware
-limitations.
+The max_register field is assigned the size of the register memory
+region instead of the offset of the last register.
+The result is that reading from the regmap via debugfs can cause
+a segmentation fault:
 
-The MMP/PXA PDMA controller is a 32-bit DMA engine. This is supported by
-datasheets and various dtsi files for PXA25x, PXA27x, PXA3xx, and MMP2,
-all of which are 32-bit systems.
+tail /sys/kernel/debug/regmap/xdma.1.auto/registers
+Unable to handle kernel paging request at virtual address ffff800082f70000
+Mem abort info:
+  ESR = 0x0000000096000007
+  EC = 0x25: DABT (current EL), IL = 32 bits
+  SET = 0, FnV = 0
+  EA = 0, S1PTW = 0
+  FSC = 0x07: level 3 translation fault
+[...]
+Call trace:
+ regmap_mmio_read32le+0x10/0x30
+ _regmap_bus_reg_read+0x74/0xc0
+ _regmap_read+0x68/0x198
+ regmap_read+0x54/0x88
+ regmap_read_debugfs+0x140/0x380
+ regmap_map_read_file+0x30/0x48
+ full_proxy_read+0x68/0xc8
+ vfs_read+0xcc/0x310
+ ksys_read+0x7c/0x120
+ __arm64_sys_read+0x24/0x40
+ invoke_syscall.constprop.0+0x64/0x108
+ do_el0_svc+0xb0/0xd8
+ el0_svc+0x38/0x130
+ el0t_64_sync_handler+0x120/0x138
+ el0t_64_sync+0x194/0x198
+Code: aa1e03e9 d503201f f9400000 8b214000 (b9400000)
+---[ end trace 0000000000000000 ]---
+note: tail[1217] exited with irqs disabled
+note: tail[1217] exited with preempt_count 1
+Segmentation fault
 
-This patch simplifies the driver's logic by replacing the 'u64 dma_mask'
-field with a simpler 'u32 dma_width' to store the addressing capability
-in bits. The complex if/else block in probe() is then replaced with a
-single, clear call to dma_set_mask_and_coherent(). This sets a fixed
-32-bit DMA mask for "marvell,pdma-1.0" and a 64-bit mask for
-"spacemit,k1-pdma," matching each device's hardware capabilities.
-
-Finally, this change also works around a specific build error encountered
-with clang-20 on x86_64 allyesconfig. The shift-count-overflow error is
-caused by a known clang compiler issue where the DMA_BIT_MASK(n) macro's
-ternary operator is not correctly evaluated in static initializers. By
-moving the macro's evaluation into the probe() function, the driver avoids
-this compiler bug.
-
-Fixes: 5cfe585d8624 ("dmaengine: mmp_pdma: Add SpacemiT K1 PDMA support with 64-bit addressing")
-Reported-by: Naresh Kamboju <naresh.kamboju@linaro.org>
-Closes: https://lore.kernel.org/lkml/CA+G9fYsPcMfW-e_0_TRqu4cnwqOqYF3aJOeKUYk6Z4qRStdFvg@mail.gmail.com
-Suggested-by: Arnd Bergmann <arnd@arndb.de>
-Signed-off-by: Guodong Xu <guodong@riscstar.com>
-Reviewed-by: Arnd Bergmann <arnd@arndb.de>
-Tested-by: Nathan Chancellor <nathan@kernel.org> # build
-Tested-by: Naresh Kamboju <naresh.kamboju@linaro.org>
+Fixes: 17ce252266c7 ("dmaengine: xilinx: xdma: Add xilinx xdma driver")
+Reviewed-by: Lizhi Hou <lizhi.hou@amd.com>
+Reviewed-by: Radhey Shyam Pandey <radhey.shyam.pandey@amd.com>
+Reviewed-by: Alexander Stein <alexander.stein@ew.tq-group.com>
+Signed-off-by: Anthony Brandon <anthony@amarulasolutions.com>
 Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dma/mmp_pdma.c | 20 ++++++++------------
- 1 file changed, 8 insertions(+), 12 deletions(-)
+ drivers/dma/xilinx/xdma-regs.h | 1 +
+ drivers/dma/xilinx/xdma.c      | 2 +-
+ 2 files changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/dma/mmp_pdma.c b/drivers/dma/mmp_pdma.c
-index d07229a748868..86661eb3cde1f 100644
---- a/drivers/dma/mmp_pdma.c
-+++ b/drivers/dma/mmp_pdma.c
-@@ -152,8 +152,8 @@ struct mmp_pdma_phy {
-  *
-  * Controller Configuration:
-  * @run_bits:   Control bits in DCSR register for channel start/stop
-- * @dma_mask:   DMA addressing capability of controller. 0 to use OF/platform
-- *              settings, or explicit mask like DMA_BIT_MASK(32/64)
-+ * @dma_width:  DMA addressing width in bits (32 or 64). Determines the
-+ *              DMA mask capability of the controller hardware.
-  */
- struct mmp_pdma_ops {
- 	/* Hardware Register Operations */
-@@ -173,7 +173,7 @@ struct mmp_pdma_ops {
+diff --git a/drivers/dma/xilinx/xdma-regs.h b/drivers/dma/xilinx/xdma-regs.h
+index 6ad08878e9386..70bca92621aa4 100644
+--- a/drivers/dma/xilinx/xdma-regs.h
++++ b/drivers/dma/xilinx/xdma-regs.h
+@@ -9,6 +9,7 @@
  
- 	/* Controller Configuration */
- 	u32 run_bits;
--	u64 dma_mask;
-+	u32 dma_width;
+ /* The length of register space exposed to host */
+ #define XDMA_REG_SPACE_LEN	65536
++#define XDMA_MAX_REG_OFFSET	(XDMA_REG_SPACE_LEN - 4)
+ 
+ /*
+  * maximum number of DMA channels for each direction:
+diff --git a/drivers/dma/xilinx/xdma.c b/drivers/dma/xilinx/xdma.c
+index 0d88b1a670e14..5ecf8223c112e 100644
+--- a/drivers/dma/xilinx/xdma.c
++++ b/drivers/dma/xilinx/xdma.c
+@@ -38,7 +38,7 @@ static const struct regmap_config xdma_regmap_config = {
+ 	.reg_bits = 32,
+ 	.val_bits = 32,
+ 	.reg_stride = 4,
+-	.max_register = XDMA_REG_SPACE_LEN,
++	.max_register = XDMA_MAX_REG_OFFSET,
  };
  
- struct mmp_pdma_device {
-@@ -1172,7 +1172,7 @@ static const struct mmp_pdma_ops marvell_pdma_v1_ops = {
- 	.get_desc_src_addr = get_desc_src_addr_32,
- 	.get_desc_dst_addr = get_desc_dst_addr_32,
- 	.run_bits = (DCSR_RUN),
--	.dma_mask = 0,			/* let OF/platform set DMA mask */
-+	.dma_width = 32,
- };
- 
- static const struct mmp_pdma_ops spacemit_k1_pdma_ops = {
-@@ -1185,7 +1185,7 @@ static const struct mmp_pdma_ops spacemit_k1_pdma_ops = {
- 	.get_desc_src_addr = get_desc_src_addr_64,
- 	.get_desc_dst_addr = get_desc_dst_addr_64,
- 	.run_bits = (DCSR_RUN | DCSR_LPAEEN),
--	.dma_mask = DMA_BIT_MASK(64),	/* force 64-bit DMA addr capability */
-+	.dma_width = 64,
- };
- 
- static const struct of_device_id mmp_pdma_dt_ids[] = {
-@@ -1314,13 +1314,9 @@ static int mmp_pdma_probe(struct platform_device *op)
- 	pdev->device.directions = BIT(DMA_MEM_TO_DEV) | BIT(DMA_DEV_TO_MEM);
- 	pdev->device.residue_granularity = DMA_RESIDUE_GRANULARITY_DESCRIPTOR;
- 
--	/* Set DMA mask based on ops->dma_mask, or OF/platform */
--	if (pdev->ops->dma_mask)
--		dma_set_mask(pdev->dev, pdev->ops->dma_mask);
--	else if (pdev->dev->coherent_dma_mask)
--		dma_set_mask(pdev->dev, pdev->dev->coherent_dma_mask);
--	else
--		dma_set_mask(pdev->dev, DMA_BIT_MASK(64));
-+	/* Set DMA mask based on controller hardware capabilities */
-+	dma_set_mask_and_coherent(pdev->dev,
-+				  DMA_BIT_MASK(pdev->ops->dma_width));
- 
- 	ret = dma_async_device_register(&pdev->device);
- 	if (ret) {
+ /**
 -- 
 2.51.0
 
