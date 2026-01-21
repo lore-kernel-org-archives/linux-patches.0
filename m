@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C349C35FF77;
-	Wed, 21 Jan 2026 18:33:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 554D13A9D92;
+	Wed, 21 Jan 2026 18:33:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769020403; cv=none; b=lskvzElJ6Q4anyUNPJr+qJtrhIDGkMcxMCHXEyqEHckg7TvefVAFv3Fjm9Snp3uREVgnIrBFGcVwUHydRg5X0tgVLVBRem8+jMAyKcGkW5/wqGVdcZ6roOlSBW8BfVw91eLEdp4yqDlPDfq+7NcgEhphm15y7k0YecEaLrfPBBg=
+	t=1769020407; cv=none; b=bhQRADziagTxjjRjJuhhBohuqpgxalqVqTJgZaeP0MxTW68zO1zDqLR8IrklL/d0qRWHvCoMXR16ImC+iRUwbodzxkHbhx+RQ+3D0HbUBa4Q+KdSE+mSB+xU25uSGqprR1r0ID6LeVHxDuIEHY5akbJtwDaxevPEcyLqNTLsn6Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769020403; c=relaxed/simple;
-	bh=XTM4uL9WJvmmWsCK5h+pap8g9c6o6nUodo9wkMVIA9g=;
+	s=arc-20240116; t=1769020407; c=relaxed/simple;
+	bh=yE5Y6x539HNA7rxUBQ1NK8UG4QJfp6FlfF2S8PV7X60=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gWpw1IUWOjlLN1YRIhHtxqntmnKO5ESK8+X39BzcR3Cs37nNRzUkiLmrrxr1xx8GYixOcnRhVgvFr1WZyKGUp0T5Q1JJOFLwTOCaACBtrvPLxOnhElO9DsTAL2bzP0c1vObufIgEsfZtSO+69nBhpy041zUXCfinDSJm0d9K/sY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zjJlxAgl; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=UROOOZQMkgw0MoGgtDjfRz0PwqD7YPt6GOnmq310DBuwnmlcqkMJIsLeqLiQF9SpGiAC76Z3Eo/RPYUGVpMwR8q8K8aMi7c5B/JwJrpL8bP6m+v/BlWH4GN0fyARFGgSWjkN1FqjCUAh7/k3OOnfT4q7rB8X3rguxyUSYVcOzQg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iaTQLAOP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zjJlxAgl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4484DC4CEF1;
-	Wed, 21 Jan 2026 18:33:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iaTQLAOP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 57BCAC4CEF1;
+	Wed, 21 Jan 2026 18:33:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1769020403;
-	bh=XTM4uL9WJvmmWsCK5h+pap8g9c6o6nUodo9wkMVIA9g=;
+	s=korg; t=1769020406;
+	bh=yE5Y6x539HNA7rxUBQ1NK8UG4QJfp6FlfF2S8PV7X60=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zjJlxAglBYHaAbk9fa3kLNjG8syQXxyW4TAaYaAGYRkmBhAuNO9g0klqejWocaFhe
-	 B95OYPqCEG/4WGbSPvUVmiscPWaG88OYtCBftvnJgrUbhsQ+Kr/v0P91l7c39A14qs
-	 MydGfKuZs6B2dgK4G1cptW4KjB0NrakTstKX9BFQ=
+	b=iaTQLAOP2Fhisd9e3z/0tOHrqDcEt2w8f+1t/IyOFZ4T1n5v28scSTEMglfDwO6KR
+	 hoQM9rkbTsCBhm9AzQj0MqA4B7nLG8PckAaHV8KmwxsN7HY2VPtJ4O6Px/3Zcfiwut
+	 GUbxfGThAXxuWX+vCmEss2Rw6LvBbpvJfz3JxXAc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yao Zi <me@ziyao.cc>,
-	Binbin Zhou <zhoubinbin@loongson.cn>,
-	Huacai Chen <chenhuacai@loongson.cn>
-Subject: [PATCH 6.18 148/198] LoongArch: dts: Describe PCI sideband IRQ through interrupt-extended
-Date: Wed, 21 Jan 2026 19:16:16 +0100
-Message-ID: <20260121181423.885244512@linuxfoundation.org>
+	Dianne Skoll <dianne@skoll.ca>,
+	Chris Park <chris.park@amd.com>,
+	Mario Limonciello <mario.limonciello@amd.com>,
+	Matthew Stewart <matthew.stewart2@amd.com>,
+	Dan Wheeler <daniel.wheeler@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 6.18 149/198] drm/amd/display: Bump the HDMI clock to 340MHz
+Date: Wed, 21 Jan 2026 19:16:17 +0100
+Message-ID: <20260121181423.920257992@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260121181418.537774329@linuxfoundation.org>
 References: <20260121181418.537774329@linuxfoundation.org>
@@ -51,177 +54,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yao Zi <me@ziyao.cc>
+From: Mario Limonciello <mario.limonciello@amd.com>
 
-commit 762cf75bec2ad9d17899087899a34336b1757238 upstream.
+commit fee50077656d8a58011f13bca48f743d1b6d6015 upstream.
 
-SoC integrated peripherals on LS2K1000 and LS2K2000 could be discovered
-as PCI devices, but require sideband interrupts to function, which are
-previously described by interrupts and interrupt-parent properties.
+[Why]
+DP-HDMI dongles can execeed bandwidth requirements on high resolution
+monitors. This can lead to pruning the high resolution modes.
 
-However, pci/pci-device.yaml allows interrupts property to only specify
-PCI INTx interrupts, not sideband ones. Convert these devices to use
-interrupt-extended property, which describes sideband interrupts used by
-PCI devices since dt-schema commit e6ea659d2baa ("schemas: pci-device:
-Allow interrupts-extended for sideband interrupts"), eliminating
-dtbs_check warnings.
+HDMI 1.3 bumped the clock to 340MHz, but display code never matched it.
 
+[How]
+Set default to (DVI) 165MHz.  Once HDMI display is identified update
+to 340MHz.
+
+Reported-by: Dianne Skoll <dianne@skoll.ca>
+Closes: https://gitlab.freedesktop.org/drm/amd/-/issues/4780
+Reviewed-by: Chris Park <chris.park@amd.com>
+Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
+Signed-off-by: Matthew Stewart <matthew.stewart2@amd.com>
+Tested-by: Dan Wheeler <daniel.wheeler@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit ac1e65d8ade46c09fb184579b81acadf36dcb91e)
 Cc: stable@vger.kernel.org
-Fixes: 30a5532a3206 ("LoongArch: dts: DeviceTree for Loongson-2K1000")
-Signed-off-by: Yao Zi <me@ziyao.cc>
-Signed-off-by: Binbin Zhou <zhoubinbin@loongson.cn>
-Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/loongarch/boot/dts/loongson-2k1000.dtsi |   25 +++++++--------------
- arch/loongarch/boot/dts/loongson-2k2000.dtsi |   32 ++++++++++-----------------
- 2 files changed, 21 insertions(+), 36 deletions(-)
+ drivers/gpu/drm/amd/display/dc/dc_hdmi_types.h       |    2 +-
+ drivers/gpu/drm/amd/display/dc/link/link_detection.c |    4 +++-
+ 2 files changed, 4 insertions(+), 2 deletions(-)
 
---- a/arch/loongarch/boot/dts/loongson-2k1000.dtsi
-+++ b/arch/loongarch/boot/dts/loongson-2k1000.dtsi
-@@ -437,54 +437,47 @@
+--- a/drivers/gpu/drm/amd/display/dc/dc_hdmi_types.h
++++ b/drivers/gpu/drm/amd/display/dc/dc_hdmi_types.h
+@@ -41,7 +41,7 @@
+ /* kHZ*/
+ #define DP_ADAPTOR_DVI_MAX_TMDS_CLK 165000
+ /* kHZ*/
+-#define DP_ADAPTOR_HDMI_SAFE_MAX_TMDS_CLK 165000
++#define DP_ADAPTOR_HDMI_SAFE_MAX_TMDS_CLK 340000
  
- 			gmac0: ethernet@3,0 {
- 				reg = <0x1800 0x0 0x0 0x0 0x0>;
--				interrupt-parent = <&liointc0>;
--				interrupts = <12 IRQ_TYPE_LEVEL_HIGH>,
--					     <13 IRQ_TYPE_LEVEL_HIGH>;
-+				interrupts-extended = <&liointc0 12 IRQ_TYPE_LEVEL_HIGH>,
-+						      <&liointc0 13 IRQ_TYPE_LEVEL_HIGH>;
- 				interrupt-names = "macirq", "eth_lpi";
- 				status = "disabled";
- 			};
+ struct dp_hdmi_dongle_signature_data {
+ 	int8_t id[15];/* "DP-HDMI ADAPTOR"*/
+--- a/drivers/gpu/drm/amd/display/dc/link/link_detection.c
++++ b/drivers/gpu/drm/amd/display/dc/link/link_detection.c
+@@ -332,7 +332,7 @@ static void query_dp_dual_mode_adaptor(
  
- 			gmac1: ethernet@3,1 {
- 				reg = <0x1900 0x0 0x0 0x0 0x0>;
--				interrupt-parent = <&liointc0>;
--				interrupts = <14 IRQ_TYPE_LEVEL_HIGH>,
--					     <15 IRQ_TYPE_LEVEL_HIGH>;
-+				interrupts-extended = <&liointc0 14 IRQ_TYPE_LEVEL_HIGH>,
-+						      <&liointc0 15 IRQ_TYPE_LEVEL_HIGH>;
- 				interrupt-names = "macirq", "eth_lpi";
- 				status = "disabled";
- 			};
+ 	/* Assume we have no valid DP passive dongle connected */
+ 	*dongle = DISPLAY_DONGLE_NONE;
+-	sink_cap->max_hdmi_pixel_clock = DP_ADAPTOR_HDMI_SAFE_MAX_TMDS_CLK;
++	sink_cap->max_hdmi_pixel_clock = DP_ADAPTOR_DVI_MAX_TMDS_CLK;
  
- 			ehci0: usb@4,1 {
- 				reg = <0x2100 0x0 0x0 0x0 0x0>;
--				interrupt-parent = <&liointc1>;
--				interrupts = <18 IRQ_TYPE_LEVEL_HIGH>;
-+				interrupts-extended = <&liointc1 18 IRQ_TYPE_LEVEL_HIGH>;
- 				status = "disabled";
- 			};
+ 	/* Read DP-HDMI dongle I2c (no response interpreted as DP-DVI dongle)*/
+ 	if (!i2c_read(
+@@ -388,6 +388,8 @@ static void query_dp_dual_mode_adaptor(
  
- 			ohci0: usb@4,2 {
- 				reg = <0x2200 0x0 0x0 0x0 0x0>;
--				interrupt-parent = <&liointc1>;
--				interrupts = <19 IRQ_TYPE_LEVEL_HIGH>;
-+				interrupts-extended = <&liointc1 19 IRQ_TYPE_LEVEL_HIGH>;
- 				status = "disabled";
- 			};
+ 		}
+ 	}
++	if (is_valid_hdmi_signature)
++		sink_cap->max_hdmi_pixel_clock = DP_ADAPTOR_HDMI_SAFE_MAX_TMDS_CLK;
  
- 			display@6,0 {
- 				reg = <0x3000 0x0 0x0 0x0 0x0>;
--				interrupt-parent = <&liointc0>;
--				interrupts = <28 IRQ_TYPE_LEVEL_HIGH>;
-+				interrupts-extended = <&liointc0 28 IRQ_TYPE_LEVEL_HIGH>;
- 				status = "disabled";
- 			};
- 
- 			hda@7,0 {
- 				reg = <0x3800 0x0 0x0 0x0 0x0>;
--				interrupt-parent = <&liointc0>;
--				interrupts = <4 IRQ_TYPE_LEVEL_HIGH>;
-+				interrupts-extended = <&liointc0 4 IRQ_TYPE_LEVEL_HIGH>;
- 				status = "disabled";
- 			};
- 
- 			sata: sata@8,0 {
- 				reg = <0x4000 0x0 0x0 0x0 0x0>;
--				interrupt-parent = <&liointc0>;
--				interrupts = <19 IRQ_TYPE_LEVEL_HIGH>;
-+				interrupts-extended = <&liointc0 19 IRQ_TYPE_LEVEL_HIGH>;
- 				status = "disabled";
- 			};
- 
---- a/arch/loongarch/boot/dts/loongson-2k2000.dtsi
-+++ b/arch/loongarch/boot/dts/loongson-2k2000.dtsi
-@@ -291,65 +291,57 @@
- 
- 			gmac0: ethernet@3,0 {
- 				reg = <0x1800 0x0 0x0 0x0 0x0>;
--				interrupts = <12 IRQ_TYPE_LEVEL_HIGH>,
--					     <13 IRQ_TYPE_LEVEL_HIGH>;
-+				interrupts-extended = <&pic 12 IRQ_TYPE_LEVEL_HIGH>,
-+						      <&pic 13 IRQ_TYPE_LEVEL_HIGH>;
- 				interrupt-names = "macirq", "eth_lpi";
--				interrupt-parent = <&pic>;
- 				status = "disabled";
- 			};
- 
- 			gmac1: ethernet@3,1 {
- 				reg = <0x1900 0x0 0x0 0x0 0x0>;
--				interrupts = <14 IRQ_TYPE_LEVEL_HIGH>,
--					     <15 IRQ_TYPE_LEVEL_HIGH>;
-+				interrupts-extended = <&pic 14 IRQ_TYPE_LEVEL_HIGH>,
-+						      <&pic 15 IRQ_TYPE_LEVEL_HIGH>;
- 				interrupt-names = "macirq", "eth_lpi";
--				interrupt-parent = <&pic>;
- 				status = "disabled";
- 			};
- 
- 			gmac2: ethernet@3,2 {
- 				reg = <0x1a00 0x0 0x0 0x0 0x0>;
--				interrupts = <17 IRQ_TYPE_LEVEL_HIGH>,
--					     <18 IRQ_TYPE_LEVEL_HIGH>;
-+				interrupts-extended = <&pic 17 IRQ_TYPE_LEVEL_HIGH>,
-+						      <&pic 18 IRQ_TYPE_LEVEL_HIGH>;
- 				interrupt-names = "macirq", "eth_lpi";
--				interrupt-parent = <&pic>;
- 				status = "disabled";
- 			};
- 
- 			xhci0: usb@4,0 {
- 				reg = <0x2000 0x0 0x0 0x0 0x0>;
--				interrupts = <48 IRQ_TYPE_LEVEL_HIGH>;
--				interrupt-parent = <&pic>;
-+				interrupts-extended = <&pic 48 IRQ_TYPE_LEVEL_HIGH>;
- 				status = "disabled";
- 			};
- 
- 			xhci1: usb@19,0 {
- 				reg = <0xc800 0x0 0x0 0x0 0x0>;
--				interrupts = <22 IRQ_TYPE_LEVEL_HIGH>;
--				interrupt-parent = <&pic>;
-+				interrupts-extended = <&pic 22 IRQ_TYPE_LEVEL_HIGH>;
- 				status = "disabled";
- 			};
- 
- 			display@6,1 {
- 				reg = <0x3100 0x0 0x0 0x0 0x0>;
--				interrupts = <28 IRQ_TYPE_LEVEL_HIGH>;
--				interrupt-parent = <&pic>;
-+				interrupts-extended = <&pic 28 IRQ_TYPE_LEVEL_HIGH>;
- 				status = "disabled";
- 			};
- 
- 			i2s@7,0 {
- 				reg = <0x3800 0x0 0x0 0x0 0x0>;
--				interrupts = <78 IRQ_TYPE_LEVEL_HIGH>,
--					     <79 IRQ_TYPE_LEVEL_HIGH>;
-+				interrupts-extended = <&pic 78 IRQ_TYPE_LEVEL_HIGH>,
-+						      <&pic 79 IRQ_TYPE_LEVEL_HIGH>;
- 				interrupt-names = "tx", "rx";
--				interrupt-parent = <&pic>;
- 				status = "disabled";
- 			};
- 
- 			sata: sata@8,0 {
- 				reg = <0x4000 0x0 0x0 0x0 0x0>;
--				interrupts = <16 IRQ_TYPE_LEVEL_HIGH>;
--				interrupt-parent = <&pic>;
-+				interrupts-extended = <&pic 16 IRQ_TYPE_LEVEL_HIGH>;
- 				status = "disabled";
- 			};
- 
+ 	if (is_type2_dongle) {
+ 		uint32_t max_tmds_clk =
 
 
