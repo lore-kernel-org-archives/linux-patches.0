@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0BE2338581;
-	Wed, 21 Jan 2026 18:34:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE6EE28506C;
+	Wed, 21 Jan 2026 18:34:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769020461; cv=none; b=HiUMHEeUqrygGV21qCOIokTpQ0uRQrTWElo1pm++PkZiHK6TDArFbP8DtmpO2HLvMzdcKadiFWLDl4RubLbcuSqYeKPJhUFAvCm/YI9MUIsVpaoPxc6W4yjMUB+w6ka5L/UCLq55Wuy2+NQoBw5QK5z7JuPXhyF6jIPJW0IcrKE=
+	t=1769020464; cv=none; b=L3wU3sNvEW2MPadgBIwY1NQ3/85v1ZiBINJbHvRhbgrwdVTkvGtUXwdNy+p0U14ZarPFH/AWomdqxFwnLCQxoq3MQ8mChvzafvXymAvaISjNYCk7kThbmpTSw8XoVviwJjzPdAGFl/+hsMt+UOISXiR9GtlFxA+bv3i1ver6O1E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769020461; c=relaxed/simple;
-	bh=kNjGVjQ8wu9B8mmUe+OuiDtPMNh+JUYJ1JOpLVgh9YE=;
+	s=arc-20240116; t=1769020464; c=relaxed/simple;
+	bh=LOWCw9MzjKKPrio+54NOeuFbJ1MLJNEXm5HI6wNXhio=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mg/p23Io/+RQu7EwZbLp4592bG/NNcQPeJZxSoYiHtnuoY6YUnNcwAsBVUgijXitE4F4trr3m83sP4Qo+AK4ViME61keY0vAQilwrjAmQtwTBU2PPm1kj+b2Ik56mfFkuZFnQ1+V2rrYRXIED71g166Bl/vPfR2oqjPUup8S4xs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0k+m9ul+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=r1n5jpqSbQmPZ0RNhhEZAp719qLPGU3tARgwfLPSFtsidDigDv1TZMvtMLY22KoKY3vwFdqHG+2AH5lmFZDGJt1yoFKJAvc06Wnvd5i2nqWgnNRav8co337Klfs0g0GRw3/Dmtk5ZcKY2DcuNDt8tMA7mmLS1GL6ObIDdMpV6Bk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AVOlAx7J; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0k+m9ul+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A04DC4CEF1;
-	Wed, 21 Jan 2026 18:34:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AVOlAx7J"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F1C1C4CEF1;
+	Wed, 21 Jan 2026 18:34:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1769020461;
-	bh=kNjGVjQ8wu9B8mmUe+OuiDtPMNh+JUYJ1JOpLVgh9YE=;
+	s=korg; t=1769020464;
+	bh=LOWCw9MzjKKPrio+54NOeuFbJ1MLJNEXm5HI6wNXhio=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0k+m9ul+q/+P1TSf8rw94SFRPVEn/ebabAhOzR6NndveySizU/YViYJYaixHyaKXC
-	 Xkfp8xLmUJKX14EyGipm2c9WKMEHuy/mNGYLY04Vq4waY6+YJjkqbwpRkg48Rmioxc
-	 bo1VP/TuOeDXuZzcYhozdcQo/6Lg/MYr89xMz6j8=
+	b=AVOlAx7JCgoe/TirRBxS6Z9p5Pw9FnliOlyjDUx5ABJrME+jaqXQO8P0rhXfQOpK1
+	 nSPUwYjT8dO5SvLFG0/egaYurKf3IjXZ/av+tbNY8Zwd62nfSDN4gHVMSeDUdWcTG0
+	 yauOx5EIxhzNVbszowclr1toFoxnHAguKTczrzuI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ryan Roberts <ryan.roberts@arm.com>,
-	Alexander Potapenko <glider@google.com>,
-	Dmitriy Vyukov <dvyukov@google.com>,
-	Marco Elver <elver@google.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.18 138/198] mm: kmsan: fix poisoning of high-order non-compound pages
-Date: Wed, 21 Jan 2026 19:16:06 +0100
-Message-ID: <20260121181423.512553673@linuxfoundation.org>
+	Bibo Mao <maobibo@loongson.cn>,
+	Qiang Ma <maqianga@uniontech.com>,
+	Huacai Chen <chenhuacai@loongson.cn>
+Subject: [PATCH 6.18 165/198] LoongArch: KVM: Fix kvm_device leak in kvm_ipi_destroy()
+Date: Wed, 21 Jan 2026 19:16:33 +0100
+Message-ID: <20260121181424.485176894@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260121181418.537774329@linuxfoundation.org>
 References: <20260121181418.537774329@linuxfoundation.org>
@@ -53,50 +51,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ryan Roberts <ryan.roberts@arm.com>
+From: Qiang Ma <maqianga@uniontech.com>
 
-commit 4795d205d78690a46b60164f44b8bb7b3e800865 upstream.
+commit 0bf58cb7288a4d3de6d8ecbb3a65928a9362bf21 upstream.
 
-kmsan_free_page() is called by the page allocator's free_pages_prepare()
-during page freeing.  Its job is to poison all the memory covered by the
-page.  It can be called with an order-0 page, a compound high-order page
-or a non-compound high-order page.  But page_size() only works for order-0
-and compound pages.  For a non-compound high-order page it will
-incorrectly return PAGE_SIZE.
+In kvm_ioctl_create_device(), kvm_device has allocated memory,
+kvm_device->destroy() seems to be supposed to free its kvm_device
+struct, but kvm_ipi_destroy() is not currently doing this, that
+would lead to a memory leak.
 
-The implication is that the tail pages of a high-order non-compound page
-do not get poisoned at free, so any invalid access while they are free
-could go unnoticed.  It looks like the pages will be poisoned again at
-allocation time, so that would bookend the window.
+So, fix it.
 
-Fix this by using the order parameter to calculate the size.
-
-Link: https://lkml.kernel.org/r/20260104134348.3544298-1-ryan.roberts@arm.com
-Fixes: b073d7f8aee4 ("mm: kmsan: maintain KMSAN metadata for page operations")
-Signed-off-by: Ryan Roberts <ryan.roberts@arm.com>
-Reviewed-by: Alexander Potapenko <glider@google.com>
-Tested-by: Alexander Potapenko <glider@google.com>
-Cc: Dmitriy Vyukov <dvyukov@google.com>
-Cc: Dmitry Vyukov <dvyukov@google.com>
-Cc: Marco Elver <elver@google.com>
-Cc: Ryan Roberts <ryan.roberts@arm.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Cc: stable@vger.kernel.org
+Reviewed-by: Bibo Mao <maobibo@loongson.cn>
+Signed-off-by: Qiang Ma <maqianga@uniontech.com>
+Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/kmsan/shadow.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/loongarch/kvm/intc/ipi.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/mm/kmsan/shadow.c
-+++ b/mm/kmsan/shadow.c
-@@ -207,7 +207,7 @@ void kmsan_free_page(struct page *page,
- 	if (!kmsan_enabled || kmsan_in_runtime())
- 		return;
- 	kmsan_enter_runtime();
--	kmsan_internal_poison_memory(page_address(page), page_size(page),
-+	kmsan_internal_poison_memory(page_address(page), PAGE_SIZE << order,
- 				     GFP_KERNEL & ~(__GFP_RECLAIM),
- 				     KMSAN_POISON_CHECK | KMSAN_POISON_FREE);
- 	kmsan_leave_runtime();
+--- a/arch/loongarch/kvm/intc/ipi.c
++++ b/arch/loongarch/kvm/intc/ipi.c
+@@ -459,6 +459,7 @@ static void kvm_ipi_destroy(struct kvm_d
+ 	ipi = kvm->arch.ipi;
+ 	kvm_io_bus_unregister_dev(kvm, KVM_IOCSR_BUS, &ipi->device);
+ 	kfree(ipi);
++	kfree(dev);
+ }
+ 
+ static struct kvm_device_ops kvm_ipi_dev_ops = {
 
 
