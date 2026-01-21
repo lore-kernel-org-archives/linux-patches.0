@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D2B833C19A;
-	Wed, 21 Jan 2026 18:20:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E054133A9E5;
+	Wed, 21 Jan 2026 18:20:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769019637; cv=none; b=FYbqjQC0gnAP5PgCgMz6BxYJ/brMsjpZdlsI/fx0izbk9cmjIibV20QuRhpvL//nhuMjhu8B7EzMSZxinrp81jGqu4mND3A4h2ZDss2tl+v70qST4KS11QRsZyTkb9WrFcXqpYOGTS7/JVP5TMzz4jUdxwO6e3pPx1YgYWt9Sbs=
+	t=1769019641; cv=none; b=clFxpuxjGifL+NqDH/9rqXdFFpSn1B6FeQTxTdKt4yg9SlpGGnqg7hZSLde2OzF/E+NOiAiON7lKfFcmr8D7t58A9NIUIuN1Bm1wlvlCrJvyriP6i8iJerM6An0UPJlAK1JvxtydvFlP5JTxHSsj+5wSQpWq0nECNLggJRhh0/w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769019637; c=relaxed/simple;
-	bh=Lp4Jc0Tajp6cqXFBgiKY4rrFqSBzTcjoSFNYL/p8cmE=;
+	s=arc-20240116; t=1769019641; c=relaxed/simple;
+	bh=GHZFzdeFxI/OfH96HTTgCmCxvp34mnCr0Ar3DWa2SDw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZuiKdxn6v2T7rW5t5Vht5ftNzhimzV58mX6PwRs0hJCDHWFaBsoNO4Vv31ZrOgVrF4UTYhotQ3zeThFdKkZN8gtiVyx9R+rS84hJlzPppJ0oaLPVOXgvtTECQgPaXz75o6Bj7IOPrvzzU+vnpIxT82MPsgEEvBD26vDPY3zKlU4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0Y/PO4RB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HGr11mfx3P1GO/FaZdbVp/B9R+HycStlwpQTwUeyki4tCW4kdkMDiF3n7ohXft5Cvtd19+m7mugA2gueGFk/FOyGtVl8wmdIAB7CyyMPYowbm/6dBYXdWK4bufownT5F71UdoZVZOHepdEPr/7DErAsaNLWepX8v2O2drGAlFec=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1iRKZN9D; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0Y/PO4RB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B055CC4CEF1;
-	Wed, 21 Jan 2026 18:20:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1iRKZN9D"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF4C3C4CEF1;
+	Wed, 21 Jan 2026 18:20:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1769019637;
-	bh=Lp4Jc0Tajp6cqXFBgiKY4rrFqSBzTcjoSFNYL/p8cmE=;
+	s=korg; t=1769019640;
+	bh=GHZFzdeFxI/OfH96HTTgCmCxvp34mnCr0Ar3DWa2SDw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0Y/PO4RByl5yKv14HqVUyDqlZ6YXsm1ZkVZA7RWAIfpCr3kZu0i1/DVa+/G/YToMq
-	 gjxOryXLfdBkPTmyGV+eUVQB4s1boFWKwpm2+NhjWbMUoQwWyeNKtz3eLnllBcp5pB
-	 0fhSDfB0uaE0HJGtuI7IGeZPF9I8yTJDCW5pKTVo=
+	b=1iRKZN9DfPjHBjQ4vmR0ojlwMgH238J4wIxPl4W+Vkv5NlBZcbnkbKKbz58mk4LRS
+	 SPVxLtmRC2sxW7vNHdnrBP3fnM8KZFkzi1MWuI8BmY54aITLBxeOUoqvGYi28WfIHw
+	 Ftb/V3POaLrlEkHf9uEoIQVQvFQX5wMGVO3wXyVk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+7182fbe91e58602ec1fe@syzkaller.appspotmail.com,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Haotian Zhang <vulab@iscas.ac.cn>,
+	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 020/139] macvlan: fix possible UAF in macvlan_forward_source()
-Date: Wed, 21 Jan 2026 19:14:28 +0100
-Message-ID: <20260121181412.185294173@linuxfoundation.org>
+Subject: [PATCH 6.12 057/139] dmaengine: omap-dma: fix dma_pool resource leak in error paths
+Date: Wed, 21 Jan 2026 19:15:05 +0100
+Message-ID: <20260121181413.505954496@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260121181411.452263583@linuxfoundation.org>
 References: <20260121181411.452263583@linuxfoundation.org>
@@ -52,106 +51,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Haotian Zhang <vulab@iscas.ac.cn>
 
-[ Upstream commit 7470a7a63dc162f07c26dbf960e41ee1e248d80e ]
+[ Upstream commit 2e1136acf8a8887c29f52e35a77b537309af321f ]
 
-Add RCU protection on (struct macvlan_source_entry)->vlan.
+The dma_pool created by dma_pool_create() is not destroyed when
+dma_async_device_register() or of_dma_controller_register() fails,
+causing a resource leak in the probe error paths.
 
-Whenever macvlan_hash_del_source() is called, we must clear
-entry->vlan pointer before RCU grace period starts.
+Add dma_pool_destroy() in both error paths to properly release the
+allocated dma_pool resource.
 
-This allows macvlan_forward_source() to skip over
-entries queued for freeing.
-
-Note that macvlan_dev are already RCU protected, as they
-are embedded in a standard netdev (netdev_priv(ndev)).
-
-Fixes: 79cf79abce71 ("macvlan: add source mode")
-Reported-by: syzbot+7182fbe91e58602ec1fe@syzkaller.appspotmail.com
-https: //lore.kernel.org/netdev/695fb1e8.050a0220.1c677c.039f.GAE@google.com/T/#u
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Link: https://patch.msgid.link/20260108133651.1130486-1-edumazet@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 7bedaa553760 ("dmaengine: add OMAP DMA engine driver")
+Signed-off-by: Haotian Zhang <vulab@iscas.ac.cn>
+Link: https://patch.msgid.link/20251103073018.643-1-vulab@iscas.ac.cn
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/macvlan.c | 20 +++++++++++++-------
- 1 file changed, 13 insertions(+), 7 deletions(-)
+ drivers/dma/ti/omap-dma.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/net/macvlan.c b/drivers/net/macvlan.c
-index cf18e66de142c..ee59b57dfb53a 100644
---- a/drivers/net/macvlan.c
-+++ b/drivers/net/macvlan.c
-@@ -58,7 +58,7 @@ struct macvlan_port {
- 
- struct macvlan_source_entry {
- 	struct hlist_node	hlist;
--	struct macvlan_dev	*vlan;
-+	struct macvlan_dev __rcu *vlan;
- 	unsigned char		addr[6+2] __aligned(sizeof(u16));
- 	struct rcu_head		rcu;
- };
-@@ -145,7 +145,7 @@ static struct macvlan_source_entry *macvlan_hash_lookup_source(
- 
- 	hlist_for_each_entry_rcu(entry, h, hlist, lockdep_rtnl_is_held()) {
- 		if (ether_addr_equal_64bits(entry->addr, addr) &&
--		    entry->vlan == vlan)
-+		    rcu_access_pointer(entry->vlan) == vlan)
- 			return entry;
+diff --git a/drivers/dma/ti/omap-dma.c b/drivers/dma/ti/omap-dma.c
+index 6ab9bfbdc4809..d0c2fd5c62074 100644
+--- a/drivers/dma/ti/omap-dma.c
++++ b/drivers/dma/ti/omap-dma.c
+@@ -1808,6 +1808,8 @@ static int omap_dma_probe(struct platform_device *pdev)
+ 	if (rc) {
+ 		pr_warn("OMAP-DMA: failed to register slave DMA engine device: %d\n",
+ 			rc);
++		if (od->ll123_supported)
++			dma_pool_destroy(od->desc_pool);
+ 		omap_dma_free(od);
+ 		return rc;
  	}
- 	return NULL;
-@@ -167,7 +167,7 @@ static int macvlan_hash_add_source(struct macvlan_dev *vlan,
- 		return -ENOMEM;
- 
- 	ether_addr_copy(entry->addr, addr);
--	entry->vlan = vlan;
-+	RCU_INIT_POINTER(entry->vlan, vlan);
- 	h = &port->vlan_source_hash[macvlan_eth_hash(addr)];
- 	hlist_add_head_rcu(&entry->hlist, h);
- 	vlan->macaddr_count++;
-@@ -186,6 +186,7 @@ static void macvlan_hash_add(struct macvlan_dev *vlan)
- 
- static void macvlan_hash_del_source(struct macvlan_source_entry *entry)
- {
-+	RCU_INIT_POINTER(entry->vlan, NULL);
- 	hlist_del_rcu(&entry->hlist);
- 	kfree_rcu(entry, rcu);
- }
-@@ -389,7 +390,7 @@ static void macvlan_flush_sources(struct macvlan_port *port,
- 	int i;
- 
- 	hash_for_each_safe(port->vlan_source_hash, i, next, entry, hlist)
--		if (entry->vlan == vlan)
-+		if (rcu_access_pointer(entry->vlan) == vlan)
- 			macvlan_hash_del_source(entry);
- 
- 	vlan->macaddr_count = 0;
-@@ -432,9 +433,14 @@ static bool macvlan_forward_source(struct sk_buff *skb,
- 
- 	hlist_for_each_entry_rcu(entry, h, hlist) {
- 		if (ether_addr_equal_64bits(entry->addr, addr)) {
--			if (entry->vlan->flags & MACVLAN_FLAG_NODST)
-+			struct macvlan_dev *vlan = rcu_dereference(entry->vlan);
-+
-+			if (!vlan)
-+				continue;
-+
-+			if (vlan->flags & MACVLAN_FLAG_NODST)
- 				consume = true;
--			macvlan_forward_source_one(skb, entry->vlan);
-+			macvlan_forward_source_one(skb, vlan);
+@@ -1823,6 +1825,8 @@ static int omap_dma_probe(struct platform_device *pdev)
+ 		if (rc) {
+ 			pr_warn("OMAP-DMA: failed to register DMA controller\n");
+ 			dma_async_device_unregister(&od->ddev);
++			if (od->ll123_supported)
++				dma_pool_destroy(od->desc_pool);
+ 			omap_dma_free(od);
  		}
  	}
- 
-@@ -1676,7 +1682,7 @@ static int macvlan_fill_info_macaddr(struct sk_buff *skb,
- 	struct macvlan_source_entry *entry;
- 
- 	hlist_for_each_entry_rcu(entry, h, hlist, lockdep_rtnl_is_held()) {
--		if (entry->vlan != vlan)
-+		if (rcu_access_pointer(entry->vlan) != vlan)
- 			continue;
- 		if (nla_put(skb, IFLA_MACVLAN_MACADDR, ETH_ALEN, entry->addr))
- 			return 1;
 -- 
 2.51.0
 
