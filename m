@@ -1,37 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DFED534A3D6;
-	Wed, 21 Jan 2026 18:30:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5953E36A020;
+	Wed, 21 Jan 2026 18:30:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769020242; cv=none; b=CiU5/9VJBP3+Tpw3/wSe9SCHvt+ivj7GRefJWQgZjPN+ioooH7koRj3l0UPpBeCzkbW40ABnyBvCEXIB/B0sfWG+GReB/TaNJJiEXoqLV+ZoqFccOQi/UUWQfwmRUgow+AdDsLDikDztt4tRwMRkHRPlDt+8sByralN1ZTZtD64=
+	t=1769020245; cv=none; b=YpYzGI9f4HR0OWdGtWvpiFeEeOz66o4qZccbD3n1D7Mqdy/ezRiWXQoQXP5cdwOv6ezcZyZfnwaZVk6W5bkNEOugz/Otqp5sDFDrLpQGmCQQA3NUnH2fl9ETSfHE+2qUQQ13n3bkoGzDRzFKxNLidXHbk103ugry5Wap9RDX9Tc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769020242; c=relaxed/simple;
-	bh=my5o5ilu0S9IEiQjgUpa91pZiq2q26L+G5vVRwJzhHY=;
+	s=arc-20240116; t=1769020245; c=relaxed/simple;
+	bh=LCeDyh2gzMOPLfLBxep+i+MQICqkYjvX3ZPr7OM8CL4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=I32yz/JsxZPlE6luLqQKrZ9ZxrU3ID4avY636IocMwINdnyNk93ymk+B0/c0WjosurquLUqsRT92R5FKsZ2fsmCeYWiB7sNkk6Lzq1nQkg0Id7+EnWaBqnv/Ikzc5Uw/k6P2QQijkYYCL1utdVHu0Wx/LAxeuEJeA6eq/4Xdbgs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=l8Zw9r1s; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=RqyItBPAtYkXNPVaUdVljW3litVniwwpw/N7Cm9r/GRkVsPl6SdutBdPz3AvtCEkBYetQNIn+y0QUSDz1hSDoBBjuz7Cvs+H6plNSMLG3Sif7zjyL43K9khv7NzoEZWdFnHom+emg/17QG+SArhvJaVd4bU/u/d1yvHSPsx17wo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RkMe6AtD; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="l8Zw9r1s"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 13DA9C4CEF1;
-	Wed, 21 Jan 2026 18:30:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RkMe6AtD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A2594C4CEF1;
+	Wed, 21 Jan 2026 18:30:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1769020241;
-	bh=my5o5ilu0S9IEiQjgUpa91pZiq2q26L+G5vVRwJzhHY=;
+	s=korg; t=1769020245;
+	bh=LCeDyh2gzMOPLfLBxep+i+MQICqkYjvX3ZPr7OM8CL4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=l8Zw9r1sWiTh4cr2pdBVlMRBW1P5JemvQG2uyJnzi4L15/smlz6S+A8kKGsOQNdjt
-	 p0l6CDzmWWuznU+lwluZife5QW/DzzMKNn/zNuvarrhYO9FrQrjgTAz7m5QgYeKNWs
-	 N55X/zrs6PAX/XjnBZYb+0kKFURWuc+vfJfW4lSo=
+	b=RkMe6AtDd1V55LuLN6dyQzJX+/s9I7sROUMBHlnz+372wkVbom7W0Lo4+kXVtMkhW
+	 5z5llfCRIiXj3PAzIZ0YhNRU1MfCg7l+oSfhluUT8u/6E5TmAWax5J09bJ+NRypjqV
+	 Dy07i/wcpgG/57H7DDMg6bSEwuvXrbR8kKOyZjyI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Trond Myklebust <trond.myklebust@hammerspace.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 068/198] NFS: Fix size read races in truncate, fallocate and copy offload
-Date: Wed, 21 Jan 2026 19:14:56 +0100
-Message-ID: <20260121181421.007191209@linuxfoundation.org>
+	Naresh Kamboju <naresh.kamboju@linaro.org>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Guodong Xu <guodong@riscstar.com>,
+	Vinod Koul <vkoul@kernel.org>,
+	Sasha Levin <sashal@kernel.org>,
+	Nathan Chancellor <nathan@kernel.org>
+Subject: [PATCH 6.18 069/198] dmaengine: mmp_pdma: fix DMA mask handling
+Date: Wed, 21 Jan 2026 19:14:57 +0100
+Message-ID: <20260121181421.041889903@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260121181418.537774329@linuxfoundation.org>
 References: <20260121181418.537774329@linuxfoundation.org>
@@ -50,186 +54,107 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Trond Myklebust <trond.myklebust@hammerspace.com>
+From: Guodong Xu <guodong@riscstar.com>
 
-[ Upstream commit d5811e6297f3fd9020ac31f51fc317dfdb260cb0 ]
+[ Upstream commit 49400b701eca849c1b53717b1f5d779a8d066ec0 ]
 
-If the pre-operation file size is read before locking the inode and
-quiescing O_DIRECT writes, then nfs_truncate_last_folio() might end up
-overwriting valid file data.
+The driver's existing logic for setting the DMA mask for "marvell,pdma-1.0"
+was flawed. It incorrectly relied on pdev->dev->coherent_dma_mask instead
+of declaring the hardware's fixed addressing capability. A cleaner and
+more correct approach is to define the mask directly based on the hardware
+limitations.
 
-Fixes: b1817b18ff20 ("NFS: Protect against 'eof page pollution'")
-Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
+The MMP/PXA PDMA controller is a 32-bit DMA engine. This is supported by
+datasheets and various dtsi files for PXA25x, PXA27x, PXA3xx, and MMP2,
+all of which are 32-bit systems.
+
+This patch simplifies the driver's logic by replacing the 'u64 dma_mask'
+field with a simpler 'u32 dma_width' to store the addressing capability
+in bits. The complex if/else block in probe() is then replaced with a
+single, clear call to dma_set_mask_and_coherent(). This sets a fixed
+32-bit DMA mask for "marvell,pdma-1.0" and a 64-bit mask for
+"spacemit,k1-pdma," matching each device's hardware capabilities.
+
+Finally, this change also works around a specific build error encountered
+with clang-20 on x86_64 allyesconfig. The shift-count-overflow error is
+caused by a known clang compiler issue where the DMA_BIT_MASK(n) macro's
+ternary operator is not correctly evaluated in static initializers. By
+moving the macro's evaluation into the probe() function, the driver avoids
+this compiler bug.
+
+Fixes: 5cfe585d8624 ("dmaengine: mmp_pdma: Add SpacemiT K1 PDMA support with 64-bit addressing")
+Reported-by: Naresh Kamboju <naresh.kamboju@linaro.org>
+Closes: https://lore.kernel.org/lkml/CA+G9fYsPcMfW-e_0_TRqu4cnwqOqYF3aJOeKUYk6Z4qRStdFvg@mail.gmail.com
+Suggested-by: Arnd Bergmann <arnd@arndb.de>
+Signed-off-by: Guodong Xu <guodong@riscstar.com>
+Reviewed-by: Arnd Bergmann <arnd@arndb.de>
+Tested-by: Nathan Chancellor <nathan@kernel.org> # build
+Tested-by: Naresh Kamboju <naresh.kamboju@linaro.org>
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfs/inode.c     | 10 ++++++----
- fs/nfs/io.c        |  2 ++
- fs/nfs/nfs42proc.c | 29 +++++++++++++++++++----------
- 3 files changed, 27 insertions(+), 14 deletions(-)
+ drivers/dma/mmp_pdma.c | 20 ++++++++------------
+ 1 file changed, 8 insertions(+), 12 deletions(-)
 
-diff --git a/fs/nfs/inode.c b/fs/nfs/inode.c
-index 13ad70fc00d84..8c2bfcc323e02 100644
---- a/fs/nfs/inode.c
-+++ b/fs/nfs/inode.c
-@@ -716,7 +716,7 @@ nfs_setattr(struct mnt_idmap *idmap, struct dentry *dentry,
- {
- 	struct inode *inode = d_inode(dentry);
- 	struct nfs_fattr *fattr;
--	loff_t oldsize = i_size_read(inode);
-+	loff_t oldsize;
- 	int error = 0;
- 	kuid_t task_uid = current_fsuid();
- 	kuid_t owner_uid = inode->i_uid;
-@@ -727,6 +727,10 @@ nfs_setattr(struct mnt_idmap *idmap, struct dentry *dentry,
- 	if (attr->ia_valid & (ATTR_KILL_SUID | ATTR_KILL_SGID))
- 		attr->ia_valid &= ~ATTR_MODE;
+diff --git a/drivers/dma/mmp_pdma.c b/drivers/dma/mmp_pdma.c
+index d07229a748868..86661eb3cde1f 100644
+--- a/drivers/dma/mmp_pdma.c
++++ b/drivers/dma/mmp_pdma.c
+@@ -152,8 +152,8 @@ struct mmp_pdma_phy {
+  *
+  * Controller Configuration:
+  * @run_bits:   Control bits in DCSR register for channel start/stop
+- * @dma_mask:   DMA addressing capability of controller. 0 to use OF/platform
+- *              settings, or explicit mask like DMA_BIT_MASK(32/64)
++ * @dma_width:  DMA addressing width in bits (32 or 64). Determines the
++ *              DMA mask capability of the controller hardware.
+  */
+ struct mmp_pdma_ops {
+ 	/* Hardware Register Operations */
+@@ -173,7 +173,7 @@ struct mmp_pdma_ops {
  
-+	if (S_ISREG(inode->i_mode))
-+		nfs_file_block_o_direct(NFS_I(inode));
-+
-+	oldsize = i_size_read(inode);
- 	if (attr->ia_valid & ATTR_SIZE) {
- 		BUG_ON(!S_ISREG(inode->i_mode));
+ 	/* Controller Configuration */
+ 	u32 run_bits;
+-	u64 dma_mask;
++	u32 dma_width;
+ };
  
-@@ -774,10 +778,8 @@ nfs_setattr(struct mnt_idmap *idmap, struct dentry *dentry,
- 	trace_nfs_setattr_enter(inode);
+ struct mmp_pdma_device {
+@@ -1172,7 +1172,7 @@ static const struct mmp_pdma_ops marvell_pdma_v1_ops = {
+ 	.get_desc_src_addr = get_desc_src_addr_32,
+ 	.get_desc_dst_addr = get_desc_dst_addr_32,
+ 	.run_bits = (DCSR_RUN),
+-	.dma_mask = 0,			/* let OF/platform set DMA mask */
++	.dma_width = 32,
+ };
  
- 	/* Write all dirty data */
--	if (S_ISREG(inode->i_mode)) {
--		nfs_file_block_o_direct(NFS_I(inode));
-+	if (S_ISREG(inode->i_mode))
- 		nfs_sync_inode(inode);
--	}
+ static const struct mmp_pdma_ops spacemit_k1_pdma_ops = {
+@@ -1185,7 +1185,7 @@ static const struct mmp_pdma_ops spacemit_k1_pdma_ops = {
+ 	.get_desc_src_addr = get_desc_src_addr_64,
+ 	.get_desc_dst_addr = get_desc_dst_addr_64,
+ 	.run_bits = (DCSR_RUN | DCSR_LPAEEN),
+-	.dma_mask = DMA_BIT_MASK(64),	/* force 64-bit DMA addr capability */
++	.dma_width = 64,
+ };
  
- 	fattr = nfs_alloc_fattr_with_label(NFS_SERVER(inode));
- 	if (fattr == NULL) {
-diff --git a/fs/nfs/io.c b/fs/nfs/io.c
-index d275b0a250bf3..8337f0ae852d4 100644
---- a/fs/nfs/io.c
-+++ b/fs/nfs/io.c
-@@ -84,6 +84,7 @@ nfs_start_io_write(struct inode *inode)
- 		nfs_file_block_o_direct(NFS_I(inode));
- 	return err;
- }
-+EXPORT_SYMBOL_GPL(nfs_start_io_write);
+ static const struct of_device_id mmp_pdma_dt_ids[] = {
+@@ -1314,13 +1314,9 @@ static int mmp_pdma_probe(struct platform_device *op)
+ 	pdev->device.directions = BIT(DMA_MEM_TO_DEV) | BIT(DMA_DEV_TO_MEM);
+ 	pdev->device.residue_granularity = DMA_RESIDUE_GRANULARITY_DESCRIPTOR;
  
- /**
-  * nfs_end_io_write - declare that the buffered write operation is done
-@@ -97,6 +98,7 @@ nfs_end_io_write(struct inode *inode)
- {
- 	up_write(&inode->i_rwsem);
- }
-+EXPORT_SYMBOL_GPL(nfs_end_io_write);
+-	/* Set DMA mask based on ops->dma_mask, or OF/platform */
+-	if (pdev->ops->dma_mask)
+-		dma_set_mask(pdev->dev, pdev->ops->dma_mask);
+-	else if (pdev->dev->coherent_dma_mask)
+-		dma_set_mask(pdev->dev, pdev->dev->coherent_dma_mask);
+-	else
+-		dma_set_mask(pdev->dev, DMA_BIT_MASK(64));
++	/* Set DMA mask based on controller hardware capabilities */
++	dma_set_mask_and_coherent(pdev->dev,
++				  DMA_BIT_MASK(pdev->ops->dma_width));
  
- /* Call with exclusively locked inode->i_rwsem */
- static void nfs_block_buffered(struct nfs_inode *nfsi, struct inode *inode)
-diff --git a/fs/nfs/nfs42proc.c b/fs/nfs/nfs42proc.c
-index d537fb0c230e8..c08520828708b 100644
---- a/fs/nfs/nfs42proc.c
-+++ b/fs/nfs/nfs42proc.c
-@@ -114,7 +114,6 @@ static int nfs42_proc_fallocate(struct rpc_message *msg, struct file *filep,
- 	exception.inode = inode;
- 	exception.state = lock->open_context->state;
- 
--	nfs_file_block_o_direct(NFS_I(inode));
- 	err = nfs_sync_inode(inode);
- 	if (err)
- 		goto out;
-@@ -138,13 +137,17 @@ int nfs42_proc_allocate(struct file *filep, loff_t offset, loff_t len)
- 		.rpc_proc = &nfs4_procedures[NFSPROC4_CLNT_ALLOCATE],
- 	};
- 	struct inode *inode = file_inode(filep);
--	loff_t oldsize = i_size_read(inode);
-+	loff_t oldsize;
- 	int err;
- 
- 	if (!nfs_server_capable(inode, NFS_CAP_ALLOCATE))
- 		return -EOPNOTSUPP;
- 
--	inode_lock(inode);
-+	err = nfs_start_io_write(inode);
-+	if (err)
-+		return err;
-+
-+	oldsize = i_size_read(inode);
- 
- 	err = nfs42_proc_fallocate(&msg, filep, offset, len);
- 
-@@ -155,7 +158,7 @@ int nfs42_proc_allocate(struct file *filep, loff_t offset, loff_t len)
- 		NFS_SERVER(inode)->caps &= ~(NFS_CAP_ALLOCATE |
- 					     NFS_CAP_ZERO_RANGE);
- 
--	inode_unlock(inode);
-+	nfs_end_io_write(inode);
- 	return err;
- }
- 
-@@ -170,7 +173,9 @@ int nfs42_proc_deallocate(struct file *filep, loff_t offset, loff_t len)
- 	if (!nfs_server_capable(inode, NFS_CAP_DEALLOCATE))
- 		return -EOPNOTSUPP;
- 
--	inode_lock(inode);
-+	err = nfs_start_io_write(inode);
-+	if (err)
-+		return err;
- 
- 	err = nfs42_proc_fallocate(&msg, filep, offset, len);
- 	if (err == 0)
-@@ -179,7 +184,7 @@ int nfs42_proc_deallocate(struct file *filep, loff_t offset, loff_t len)
- 		NFS_SERVER(inode)->caps &= ~(NFS_CAP_DEALLOCATE |
- 					     NFS_CAP_ZERO_RANGE);
- 
--	inode_unlock(inode);
-+	nfs_end_io_write(inode);
- 	return err;
- }
- 
-@@ -189,14 +194,17 @@ int nfs42_proc_zero_range(struct file *filep, loff_t offset, loff_t len)
- 		.rpc_proc = &nfs4_procedures[NFSPROC4_CLNT_ZERO_RANGE],
- 	};
- 	struct inode *inode = file_inode(filep);
--	loff_t oldsize = i_size_read(inode);
-+	loff_t oldsize;
- 	int err;
- 
- 	if (!nfs_server_capable(inode, NFS_CAP_ZERO_RANGE))
- 		return -EOPNOTSUPP;
- 
--	inode_lock(inode);
-+	err = nfs_start_io_write(inode);
-+	if (err)
-+		return err;
- 
-+	oldsize = i_size_read(inode);
- 	err = nfs42_proc_fallocate(&msg, filep, offset, len);
- 	if (err == 0) {
- 		nfs_truncate_last_folio(inode->i_mapping, oldsize,
-@@ -205,7 +213,7 @@ int nfs42_proc_zero_range(struct file *filep, loff_t offset, loff_t len)
- 	} else if (err == -EOPNOTSUPP)
- 		NFS_SERVER(inode)->caps &= ~NFS_CAP_ZERO_RANGE;
- 
--	inode_unlock(inode);
-+	nfs_end_io_write(inode);
- 	return err;
- }
- 
-@@ -416,7 +424,7 @@ static ssize_t _nfs42_proc_copy(struct file *src,
- 	struct nfs_server *src_server = NFS_SERVER(src_inode);
- 	loff_t pos_src = args->src_pos;
- 	loff_t pos_dst = args->dst_pos;
--	loff_t oldsize_dst = i_size_read(dst_inode);
-+	loff_t oldsize_dst;
- 	size_t count = args->count;
- 	ssize_t status;
- 
-@@ -461,6 +469,7 @@ static ssize_t _nfs42_proc_copy(struct file *src,
- 		&src_lock->open_context->state->flags);
- 	set_bit(NFS_CLNT_DST_SSC_COPY_STATE,
- 		&dst_lock->open_context->state->flags);
-+	oldsize_dst = i_size_read(dst_inode);
- 
- 	status = nfs4_call_sync(dst_server->client, dst_server, &msg,
- 				&args->seq_args, &res->seq_res, 0);
+ 	ret = dma_async_device_register(&pdev->device);
+ 	if (ret) {
 -- 
 2.51.0
 
