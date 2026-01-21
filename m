@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52F6B36403D;
-	Wed, 21 Jan 2026 18:31:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5DC2316193;
+	Wed, 21 Jan 2026 18:31:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769020286; cv=none; b=AsVfjnuI9WTXvfpYLOCrKgTrMCbidhTVYtpjhqbzyk1eL8CIcyTlgbMOJOLC64QyP8ITh/r8K449PJ29LbdpQZxiEY8gVD+01OwC8m2C0t9jPKdOGkC0aA60WjZFDtNTw7kpdDd/npi9TvHD+YR8+FuTHOzS6bgVXHEbSNOadZs=
+	t=1769020290; cv=none; b=mYPAP78LKoB0bCscT/6UcJMlvJFqoflYMP+xdyT7IMuKkc/+98+3Pm7mKE2lWZN5mVQgm0iaW7hYEsP8odOa8sdVrnyJ+CfpqOhNnYlI4I2shjsPm4JE0YApv1MiT87VQdsF/gSoKEwKXsjM7oABmMpMuJEYSUF+3Xbr7u6fkIw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769020286; c=relaxed/simple;
-	bh=3KW1Lxa/+nhB5vPB1gx672jhlkxe/gzdW440NQiTMTU=;
+	s=arc-20240116; t=1769020290; c=relaxed/simple;
+	bh=wwWMJW1mnc+4SnVwSAOA7GQzVXn27OS2mXoFOy2awlM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=F6Jw1GKAT+9Gu+/P0Bp9kj5mUxruwSV85BIY66GNZZF2at/prn2EhHA4rRxUgUlCftQ+L+/QYJaFWsuVs38idH5W49jLiqCgdTbg4gQzi1WzCRI11ea8QiJaFDYRib/MT0WqTI+HIMotPVdvmn9HfdkyBqR3XiyVOnyhGqjOKrg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LRgdKiu5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LvrsG74Ozf5sUiUj6v7XqNnteVUMWi7NbIM1C6wIvRfPxC++ZZP3Pmz+CPlnyf+Je9Te0wX2FkOyvbYYYS9g2pdEofffJUWBFt6vrhKof2yB9/jyBhoGtqeOXccLgZcBILkvcCUUSQFOMrhb6B9OVIKxVoihfGXPexSt9WfXD78=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2svtZlM6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LRgdKiu5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 83390C4CEF1;
-	Wed, 21 Jan 2026 18:31:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2svtZlM6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0058AC4CEF1;
+	Wed, 21 Jan 2026 18:31:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1769020286;
-	bh=3KW1Lxa/+nhB5vPB1gx672jhlkxe/gzdW440NQiTMTU=;
+	s=korg; t=1769020289;
+	bh=wwWMJW1mnc+4SnVwSAOA7GQzVXn27OS2mXoFOy2awlM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LRgdKiu589O7xgQ/3rGmyLqSwv7tgOMEDaDtSHGmtXUzd37K2BtrRC7wRyaweqycJ
-	 /YCtvMmBd48Th8N+5A3jpN1f3uq+TufxdnpinuHLuwFkRsrIr0g61Bl4kqJfXio5S9
-	 aGfxIb5i+AkexMr91rjsawt07I9Fc5rKBToJkpJM=
+	b=2svtZlM65ZJ9jMyTvVW6D8MSP/k0xdv44mcvXxP5CSq4WBfpJYNv/7m1T58pSJICc
+	 wp1Vx8RBHph9+W9PQh/tKc6senCNvfmu9sMC0YqUXAYPAH3s1UYVKYKoTpWiTHhLkw
+	 NsSHKYdz1NxijJqD/dPmUzfhrA6WV7OlZ17tzPUg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Louis Chauvet <louis.chauvet@bootlin.com>,
-	Luca Ceresoli <luca.ceresoli@bootlin.com>,
-	=?UTF-8?q?Th=C3=A9o=20Lebrun?= <theo.lebrun@bootlin.com>,
+	Xu Yang <xu.yang_2@nxp.com>,
+	Franz Schnyder <franz.schnyder@toradex.com>,
+	Frank Li <Frank.Li@nxp.com>,
 	Vinod Koul <vkoul@kernel.org>
-Subject: [PATCH 6.18 114/198] phy: rockchip: inno-usb2: fix disconnection in gadget mode
-Date: Wed, 21 Jan 2026 19:15:42 +0100
-Message-ID: <20260121181422.657677096@linuxfoundation.org>
+Subject: [PATCH 6.18 115/198] phy: fsl-imx8mq-usb: fix typec orientation switch when built as module
+Date: Wed, 21 Jan 2026 19:15:43 +0100
+Message-ID: <20260121181422.692989535@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260121181418.537774329@linuxfoundation.org>
 References: <20260121181418.537774329@linuxfoundation.org>
@@ -46,92 +46,68 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Louis Chauvet <louis.chauvet@bootlin.com>
+From: Franz Schnyder <franz.schnyder@toradex.com>
 
-commit 028e8ca7b20fb7324f3e5db34ba8bd366d9d3acc upstream.
+commit 49ccab4bedd4779899246107dc19fb01c5b6fea3 upstream.
 
-When the OTG USB port is used to power the SoC, configured as peripheral
-and used in gadget mode, there is a disconnection about 6 seconds after the
-gadget is configured and enumerated.
+Currently, the PHY only registers the typec orientation switch when it
+is built in. If the typec driver is built as a module, the switch
+registration is skipped due to the preprocessor condition, causing
+orientation detection to fail.
 
-The problem was observed on a Radxa Rock Pi S board, which can only be
-powered by the only USB-C connector. That connector is the only one usable
-in gadget mode. This implies the USB cable is connected from before boot
-and never disconnects while the kernel runs.
+With commit
+45fe729be9a6 ("usb: typec: Stub out typec_switch APIs when CONFIG_TYPEC=n")
+the preprocessor condition is not needed anymore and the orientation
+switch is correctly registered for both built-in and module builds.
 
-The problem happens because of the PHY driver code flow, summarized as:
-
- * UDC start code (triggered via configfs at any time after boot)
-   -> phy_init
-       -> rockchip_usb2phy_init
-           -> schedule_delayed_work(otg_sm_work [A], 6 sec)
-   -> phy_power_on
-       -> rockchip_usb2phy_power_on
-           -> enable clock
-           -> rockchip_usb2phy_reset
-
- * Now the gadget interface is up and running.
-
- * 6 seconds later otg_sm_work starts [A]
-   -> rockchip_usb2phy_otg_sm_work():
-       if (B_IDLE state && VBUS present && ...):
-           schedule_delayed_work(&rport->chg_work [B], 0);
-
- * immediately the chg_detect_work starts [B]
-   -> rockchip_chg_detect_work():
-       if chg_state is UNDEFINED:
-           if (!rport->suspended):
-               rockchip_usb2phy_power_off() <--- [X]
-
-At [X], the PHY is powered off, causing a disconnection. This quickly
-triggers a new connection and following re-enumeration, but any connection
-that had been established during the 6 seconds is broken.
-
-The code already checks for !rport->suspended (which, somewhat
-counter-intuitively, means the PHY is powered on), so add a guard for VBUS
-as well to avoid a disconnection when a cable is connected.
-
-Fixes: 98898f3bc83c ("phy: rockchip-inno-usb2: support otg-port for rk3399")
+Fixes: b58f0f86fd61 ("phy: fsl-imx8mq-usb: add tca function driver for imx95")
 Cc: stable@vger.kernel.org
-Closes: https://lore.kernel.org/lkml/20250414185458.7767aabc@booty/
-Signed-off-by: Louis Chauvet <louis.chauvet@bootlin.com>
-Co-developed-by: Luca Ceresoli <luca.ceresoli@bootlin.com>
-Signed-off-by: Luca Ceresoli <luca.ceresoli@bootlin.com>
-Reviewed-by: Théo Lebrun <theo.lebrun@bootlin.com>
-Link: https://patch.msgid.link/20251127-rk3308-fix-usb-gadget-phy-disconnect-v2-1-dac8a02cd2ca@bootlin.com
+Suggested-by: Xu Yang <xu.yang_2@nxp.com>
+Signed-off-by: Franz Schnyder <franz.schnyder@toradex.com>
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Reviewed-by: Xu Yang <xu.yang_2@nxp.com>
+Link: https://patch.msgid.link/20251126140136.1202241-1-fra.schnyder@gmail.com
 Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/phy/rockchip/phy-rockchip-inno-usb2.c |    6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/phy/freescale/phy-fsl-imx8mq-usb.c |   14 --------------
+ 1 file changed, 14 deletions(-)
 
---- a/drivers/phy/rockchip/phy-rockchip-inno-usb2.c
-+++ b/drivers/phy/rockchip/phy-rockchip-inno-usb2.c
-@@ -821,14 +821,16 @@ static void rockchip_chg_detect_work(str
- 		container_of(work, struct rockchip_usb2phy_port, chg_work.work);
- 	struct rockchip_usb2phy *rphy = dev_get_drvdata(rport->phy->dev.parent);
- 	struct regmap *base = get_reg_base(rphy);
--	bool is_dcd, tmout, vout;
-+	bool is_dcd, tmout, vout, vbus_attach;
- 	unsigned long delay;
+--- a/drivers/phy/freescale/phy-fsl-imx8mq-usb.c
++++ b/drivers/phy/freescale/phy-fsl-imx8mq-usb.c
+@@ -124,8 +124,6 @@ struct imx8mq_usb_phy {
+ static void tca_blk_orientation_set(struct tca_blk *tca,
+ 				enum typec_orientation orientation);
  
-+	vbus_attach = property_enabled(rphy->grf, &rport->port_cfg->utmi_bvalid);
-+
- 	dev_dbg(&rport->phy->dev, "chg detection work state = %d\n",
- 		rphy->chg_state);
- 	switch (rphy->chg_state) {
- 	case USB_CHG_STATE_UNDEFINED:
--		if (!rport->suspended)
-+		if (!rport->suspended && !vbus_attach)
- 			rockchip_usb2phy_power_off(rport->phy);
- 		/* put the controller in non-driving mode */
- 		if (!vbus_attach)
+-#ifdef CONFIG_TYPEC
+-
+ static int tca_blk_typec_switch_set(struct typec_switch_dev *sw,
+ 				enum typec_orientation orientation)
+ {
+@@ -173,18 +171,6 @@ static void tca_blk_put_typec_switch(str
+ 	typec_switch_unregister(sw);
+ }
+ 
+-#else
+-
+-static struct typec_switch_dev *tca_blk_get_typec_switch(struct platform_device *pdev,
+-			struct imx8mq_usb_phy *imx_phy)
+-{
+-	return NULL;
+-}
+-
+-static void tca_blk_put_typec_switch(struct typec_switch_dev *sw) {}
+-
+-#endif /* CONFIG_TYPEC */
+-
+ static void tca_blk_orientation_set(struct tca_blk *tca,
+ 				enum typec_orientation orientation)
+ {
 
 
