@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D475329C69;
-	Wed, 21 Jan 2026 18:30:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A40D73AE711;
+	Wed, 21 Jan 2026 18:30:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769020207; cv=none; b=aDtuR21LK1Mvm8Qx56+Qhsi0AlVzh+u7H6kytgoskxbxLnSCPYjoXLJetGFN+L+RMpJ3hIxMPrwsqpSNPrpqJ4r/QaDUP89U0uJn6j1uVDyTxYd+IRXLEoB6GOGF1j3UPN+c2j5SjsZfzYYVspHcY19nMwKBhGVDeFyA5j5Baho=
+	t=1769020210; cv=none; b=YwWCFjExOySMPvdyVJ1Y6XuT2791rsrWhLpngJbcomi+g/djcM7AYQRMTM3MsrvZkDHHMvaq/MA7qaLLmHBgUxV3E6hQ7F/DlqPRMppNiu7bfsD7g36sAq+f4UoTOJdkB5ZyMZzScjKN1pxLPnHeluUQzAX5/aK9wl4dDzpy6r8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769020207; c=relaxed/simple;
-	bh=pidOfu3l1w/d7xXb15Hj8i3dl9cU1OHupG5xr+SLb0g=;
+	s=arc-20240116; t=1769020210; c=relaxed/simple;
+	bh=MvW+/oZvMca+mxZ4T2+HIFD3pCtYbLtz7ah0uvoE0zk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=p/635R2nnfSw7DXY7LXK5Iz6HH8nGxqUBOtzbk7l36ROHHmvp7PWkuddAL9Qk/RqBiOzPqi5kknfD8emlWF6AJWbe1rLiGg7An7klU79qGy0AadsMsx+ACNT2x5IQ+hlFrHFlZN9PQHhTXI5gWpxNYsxyeqIirfkLQb2/FovaVg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nJKQgOYE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=u8kuLs9av5rDE2DwglpFWt4dwsIKnqnYy9+OUISCbCfXOpsQqKAzqkdvUkvsp68dPlnb4YgI2B1mk/WFKEoIA67OthY2MfopzqI5bRd/B6bBBHRNacz6VH1gfO4U4WaQQa9Tej8D+IxuBPrI6elo0ud0B6/vW4a07rP4wn6Du2I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pViYTDR1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nJKQgOYE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 726B3C19422;
-	Wed, 21 Jan 2026 18:30:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pViYTDR1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9AF4C16AAE;
+	Wed, 21 Jan 2026 18:30:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1769020206;
-	bh=pidOfu3l1w/d7xXb15Hj8i3dl9cU1OHupG5xr+SLb0g=;
+	s=korg; t=1769020210;
+	bh=MvW+/oZvMca+mxZ4T2+HIFD3pCtYbLtz7ah0uvoE0zk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nJKQgOYEFYoXdG8P51YemUABQOKxtiTStsmMTz/cUW4EGu6x3A4NeqnaAhxhHFI0n
-	 Wg9hbPi9h88V/I+wVh8GOVwW4rnMw3asxUx8cEHc1F+Yx0VQ8Z27TddnFVxMfsWZM7
-	 B9lfDoQCLjtYYY5Qc321PTr0spAGs55LuDx8VOtg=
+	b=pViYTDR1lnZyMNTDW7C68oQPDJldI4wVOC9+XhB3ePjn/KaB03kEzTGSdRyS+WJkK
+	 sbjjvk5Xa/Y1pq+PIkAXd4FUu5Y/wVzZmWdrIFsw/iKHntq6fw7fRwSILubtZUqtuK
+	 T//vDKyrK3CaC+dsi8ptvaemRAAGBCIngD/ec9FE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yonghong Song <yonghong.song@linux.dev>,
-	Alexei Starovoitov <ast@kernel.org>,
-	Shung-Hsi Yu <shung-hsi.yu@suse.com>
-Subject: [PATCH 6.18 090/198] selftests/bpf: Fix selftest verif_scale_strobemeta failure with llvm22
-Date: Wed, 21 Jan 2026 19:15:18 +0100
-Message-ID: <20260121181421.795878025@linuxfoundation.org>
+	Brian Kao <powenkao@google.com>,
+	Bart Van Assche <bvanassche@acm.org>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>
+Subject: [PATCH 6.18 091/198] scsi: core: Fix error handler encryption support
+Date: Wed, 21 Jan 2026 19:15:19 +0100
+Message-ID: <20260121181421.831443673@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260121181418.537774329@linuxfoundation.org>
 References: <20260121181418.537774329@linuxfoundation.org>
@@ -51,175 +51,105 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yonghong Song <yonghong.song@linux.dev>
+From: Brian Kao <powenkao@google.com>
 
-commit 4f8543b5f20f851cedbb23f8eade159871d84e2a upstream.
+commit 9a49157deeb23581fc5c8189b486340d7343264a upstream.
 
-With latest llvm22, I hit the verif_scale_strobemeta selftest failure
-below:
-  $ ./test_progs -n 618
-  libbpf: prog 'on_event': BPF program load failed: -E2BIG
-  libbpf: prog 'on_event': -- BEGIN PROG LOAD LOG --
-  BPF program is too large. Processed 1000001 insn
-  verification time 7019091 usec
-  stack depth 488
-  processed 1000001 insns (limit 1000000) max_states_per_insn 28 total_states 33927 peak_states 12813 mark_read 0
-  -- END PROG LOAD LOG --
-  libbpf: prog 'on_event': failed to load: -E2BIG
-  libbpf: failed to load object 'strobemeta.bpf.o'
-  scale_test:FAIL:expect_success unexpected error: -7 (errno 7)
-  #618     verif_scale_strobemeta:FAIL
+Some low-level drivers (LLD) access block layer crypto fields, such as
+rq->crypt_keyslot and rq->crypt_ctx within `struct request`, to
+configure hardware for inline encryption.  However, SCSI Error Handling
+(EH) commands (e.g., TEST UNIT READY, START STOP UNIT) should not
+involve any encryption setup.
 
-But if I increase the verificaiton insn limit from 1M to 10M, the above
-test_progs run actually will succeed. The below is the result from veristat:
-  $ ./veristat strobemeta.bpf.o
-  Processing 'strobemeta.bpf.o'...
-  File              Program   Verdict  Duration (us)    Insns  States  Program size  Jited size
-  ----------------  --------  -------  -------------  -------  ------  ------------  ----------
-  strobemeta.bpf.o  on_event  success       90250893  9777685  358230         15954       80794
-  ----------------  --------  -------  -------------  -------  ------  ------------  ----------
-  Done. Processed 1 files, 0 programs. Skipped 1 files, 0 programs.
+To prevent drivers from erroneously applying crypto settings during EH,
+this patch saves the original values of rq->crypt_keyslot and
+rq->crypt_ctx before an EH command is prepared via scsi_eh_prep_cmnd().
+These fields in the 'struct request' are then set to NULL.  The original
+values are restored in scsi_eh_restore_cmnd() after the EH command
+completes.
 
-Further debugging shows the llvm commit [1] is responsible for the verificaiton
-failure as it tries to convert certain switch statement to if-condition. Such
-change may cause different transformation compared to original switch statement.
+This ensures that the block layer crypto context does not leak into EH
+command execution.
 
-In bpf program strobemeta.c case, the initial llvm ir for read_int_var() function is
-  define internal void @read_int_var(ptr noundef %0, i64 noundef %1, ptr noundef %2,
-      ptr noundef %3, ptr noundef %4) #2 !dbg !535 {
-    %6 = alloca ptr, align 8
-    %7 = alloca i64, align 8
-    %8 = alloca ptr, align 8
-    %9 = alloca ptr, align 8
-    %10 = alloca ptr, align 8
-    %11 = alloca ptr, align 8
-    %12 = alloca i32, align 4
-    ...
-    %20 = icmp ne ptr %19, null, !dbg !561
-    br i1 %20, label %22, label %21, !dbg !562
-
-  21:                                               ; preds = %5
-    store i32 1, ptr %12, align 4
-    br label %48, !dbg !563
-
-  22:
-    %23 = load ptr, ptr %9, align 8, !dbg !564
-    ...
-
-  47:                                               ; preds = %38, %22
-    store i32 0, ptr %12, align 4, !dbg !588
-    br label %48, !dbg !588
-
-  48:                                               ; preds = %47, %21
-    call void @llvm.lifetime.end.p0(ptr %11) #4, !dbg !588
-    %49 = load i32, ptr %12, align 4
-    switch i32 %49, label %51 [
-      i32 0, label %50
-      i32 1, label %50
-    ]
-
-  50:                                               ; preds = %48, %48
-    ret void, !dbg !589
-
-  51:                                               ; preds = %48
-    unreachable
-  }
-
-Note that the above 'switch' statement is added by clang frontend.
-Without [1], the switch statement will survive until SelectionDag,
-so the switch statement acts like a 'barrier' and prevents some
-transformation involved with both 'before' and 'after' the switch statement.
-
-But with [1], the switch statement will be removed during middle end
-optimization and later middle end passes (esp. after inlining) have more
-freedom to reorder the code.
-
-The following is the related source code:
-
-  static void *calc_location(struct strobe_value_loc *loc, void *tls_base):
-        bpf_probe_read_user(&tls_ptr, sizeof(void *), dtv);
-        /* if pointer has (void *)-1 value, then TLS wasn't initialized yet */
-        return tls_ptr && tls_ptr != (void *)-1
-                ? tls_ptr + tls_index.offset
-                : NULL;
-
-  In read_int_var() func, we have:
-        void *location = calc_location(&cfg->int_locs[idx], tls_base);
-        if (!location)
-                return;
-
-        bpf_probe_read_user(value, sizeof(struct strobe_value_generic), location);
-        ...
-
-The static func calc_location() is called inside read_int_var(). The asm code
-without [1]:
-     77: .123....89 (85) call bpf_probe_read_user#112
-     78: ........89 (79) r1 = *(u64 *)(r10 -368)
-     79: .1......89 (79) r2 = *(u64 *)(r10 -8)
-     80: .12.....89 (bf) r3 = r2
-     81: .123....89 (0f) r3 += r1
-     82: ..23....89 (07) r2 += 1
-     83: ..23....89 (79) r4 = *(u64 *)(r10 -464)
-     84: ..234...89 (a5) if r2 < 0x2 goto pc+13
-     85: ...34...89 (15) if r3 == 0x0 goto pc+12
-     86: ...3....89 (bf) r1 = r10
-     87: .1.3....89 (07) r1 += -400
-     88: .1.3....89 (b4) w2 = 16
-In this case, 'r2 < 0x2' and 'r3 == 0x0' go to null 'locaiton' place,
-so the verifier actually prefers to do verification first at 'r1 = r10' etc.
-
-The asm code with [1]:
-    119: .123....89 (85) call bpf_probe_read_user#112
-    120: ........89 (79) r1 = *(u64 *)(r10 -368)
-    121: .1......89 (79) r2 = *(u64 *)(r10 -8)
-    122: .12.....89 (bf) r3 = r2
-    123: .123....89 (0f) r3 += r1
-    124: ..23....89 (07) r2 += -1
-    125: ..23....89 (a5) if r2 < 0xfffffffe goto pc+6
-    126: ........89 (05) goto pc+17
-    ...
-    144: ........89 (b4) w1 = 0
-    145: .1......89 (6b) *(u16 *)(r8 +80) = r1
-In this case, if 'r2 < 0xfffffffe' is true, the control will go to
-non-null 'location' branch, so 'goto pc+17' will actually go to
-null 'location' branch. This seems causing tremendous amount of
-verificaiton state.
-
-To fix the issue, rewrite the following code
-  return tls_ptr && tls_ptr != (void *)-1
-                ? tls_ptr + tls_index.offset
-                : NULL;
-to if/then statement and hopefully these explicit if/then statements
-are sticky during middle-end optimizations.
-
-Test with llvm20 and llvm21 as well and all strobemeta related selftests
-are passed.
-
-  [1] https://github.com/llvm/llvm-project/pull/161000
-
-Signed-off-by: Yonghong Song <yonghong.song@linux.dev>
-Link: https://lore.kernel.org/r/20251014051639.1996331-1-yonghong.song@linux.dev
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
-Signed-off-by: Shung-Hsi Yu <shung-hsi.yu@suse.com>
+Signed-off-by: Brian Kao <powenkao@google.com>
+Link: https://patch.msgid.link/20251218031726.2642834-1-powenkao@google.com
+Cc: stable@vger.kernel.org
+Reviewed-by: Bart Van Assche <bvanassche@acm.org>
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/testing/selftests/bpf/progs/strobemeta.h |    6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/scsi/scsi_error.c |   24 ++++++++++++++++++++++++
+ include/scsi/scsi_eh.h    |    6 ++++++
+ 2 files changed, 30 insertions(+)
 
---- a/tools/testing/selftests/bpf/progs/strobemeta.h
-+++ b/tools/testing/selftests/bpf/progs/strobemeta.h
-@@ -330,9 +330,9 @@ static void *calc_location(struct strobe
- 	}
- 	bpf_probe_read_user(&tls_ptr, sizeof(void *), dtv);
- 	/* if pointer has (void *)-1 value, then TLS wasn't initialized yet */
--	return tls_ptr && tls_ptr != (void *)-1
--		? tls_ptr + tls_index.offset
--		: NULL;
-+	if (!tls_ptr || tls_ptr == (void *)-1)
-+		return NULL;
-+	return tls_ptr + tls_index.offset;
- }
+--- a/drivers/scsi/scsi_error.c
++++ b/drivers/scsi/scsi_error.c
+@@ -1060,6 +1060,9 @@ void scsi_eh_prep_cmnd(struct scsi_cmnd
+ 			unsigned char *cmnd, int cmnd_size, unsigned sense_bytes)
+ {
+ 	struct scsi_device *sdev = scmd->device;
++#ifdef CONFIG_BLK_INLINE_ENCRYPTION
++	struct request *rq = scsi_cmd_to_rq(scmd);
++#endif
  
- #ifdef SUBPROGS
+ 	/*
+ 	 * We need saved copies of a number of fields - this is because
+@@ -1112,6 +1115,18 @@ void scsi_eh_prep_cmnd(struct scsi_cmnd
+ 			(sdev->lun << 5 & 0xe0);
+ 
+ 	/*
++	 * Encryption must be disabled for the commands submitted by the error handler.
++	 * Hence, clear the encryption context information.
++	 */
++#ifdef CONFIG_BLK_INLINE_ENCRYPTION
++	ses->rq_crypt_keyslot = rq->crypt_keyslot;
++	ses->rq_crypt_ctx = rq->crypt_ctx;
++
++	rq->crypt_keyslot = NULL;
++	rq->crypt_ctx = NULL;
++#endif
++
++	/*
+ 	 * Zero the sense buffer.  The scsi spec mandates that any
+ 	 * untransferred sense data should be interpreted as being zero.
+ 	 */
+@@ -1128,6 +1143,10 @@ EXPORT_SYMBOL(scsi_eh_prep_cmnd);
+  */
+ void scsi_eh_restore_cmnd(struct scsi_cmnd* scmd, struct scsi_eh_save *ses)
+ {
++#ifdef CONFIG_BLK_INLINE_ENCRYPTION
++	struct request *rq = scsi_cmd_to_rq(scmd);
++#endif
++
+ 	/*
+ 	 * Restore original data
+ 	 */
+@@ -1140,6 +1159,11 @@ void scsi_eh_restore_cmnd(struct scsi_cm
+ 	scmd->underflow = ses->underflow;
+ 	scmd->prot_op = ses->prot_op;
+ 	scmd->eh_eflags = ses->eh_eflags;
++
++#ifdef CONFIG_BLK_INLINE_ENCRYPTION
++	rq->crypt_keyslot = ses->rq_crypt_keyslot;
++	rq->crypt_ctx = ses->rq_crypt_ctx;
++#endif
+ }
+ EXPORT_SYMBOL(scsi_eh_restore_cmnd);
+ 
+--- a/include/scsi/scsi_eh.h
++++ b/include/scsi/scsi_eh.h
+@@ -41,6 +41,12 @@ struct scsi_eh_save {
+ 	unsigned char cmnd[32];
+ 	struct scsi_data_buffer sdb;
+ 	struct scatterlist sense_sgl;
++
++	/* struct request fields */
++#ifdef CONFIG_BLK_INLINE_ENCRYPTION
++	struct bio_crypt_ctx *rq_crypt_ctx;
++	struct blk_crypto_keyslot *rq_crypt_keyslot;
++#endif
+ };
+ 
+ extern void scsi_eh_prep_cmnd(struct scsi_cmnd *scmd,
 
 
