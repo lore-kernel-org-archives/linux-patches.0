@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D7B5325711;
-	Wed, 21 Jan 2026 18:25:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8800236BCF1;
+	Wed, 21 Jan 2026 18:25:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769019934; cv=none; b=ifhIe2MGeDYLEPTB0E++MZ5HWusMl/cOS8thfiOwtKEI7edzuuv1NG3JgVIIP9DeW6DlWz8OcbDFM5NMvZmSsu80ookh1+b+7/3oTZ8JrXD0U6j6WOL651oZo3QXZXpiX9Q5UHRiA4Ki+nyrn4gSZ07/+M4QmM+tiIx/SPCs2/o=
+	t=1769019937; cv=none; b=q/l5t2xiP2sIXkD+l05wBhHuwJuLtq1uvESHvbgeFQLrl0ai7tAhPitUj8hqtAzkoYii7EWswVNbVHXqU7dwJiaXMrGhdE+zLkn6FxFEK6dytmpGJO6XC0dYEfJBYqcRHf/OyydA2EZVeYI5vRUvUbQrwO8C7CYB9FzVmUhZHDk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769019934; c=relaxed/simple;
-	bh=X3Xz67H9qbRaPC60Fl/TnDhLGvE/ctZCUuaqOGGEllI=;
+	s=arc-20240116; t=1769019937; c=relaxed/simple;
+	bh=f/qm0POUd/ZS7l/CtRWE2V2myasX9Js9jeyamrSq7T0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BZ4KXkQG5vOquSWQkSEg4jdRei1C36ufgnJHqf5Z/bWnvCcpZBUw2eMw0zqgirlugumNN697/thhdAnDcCzP2Pc8bKJawteJM/obHHmlm/otsx7RldtUI7oQ0eelpNDQZ5TQ4/rMEVGGNSKRaGpMjUanFXNxnJjdbKE/GkRUfcQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Q1wSDGfu; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ggG3ZKwURt4tWgxGsbDGNNZSgpm01YsVzjbTC3yt+1nlkBfnd7a0ydD5GqrEpI23f/rItsUnuYOFwWZLCtk6HBDfXlMVshkpsftM7rwznQWKuWfme2fnR/5NcQrFIvjku3PwFTyhmP00Nm+FTGPQI6CB9XOvc2uejSAsz6man20=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RYdXubCy; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Q1wSDGfu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B0E7C4CEF1;
-	Wed, 21 Jan 2026 18:25:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RYdXubCy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0FB5C4CEF1;
+	Wed, 21 Jan 2026 18:25:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1769019934;
-	bh=X3Xz67H9qbRaPC60Fl/TnDhLGvE/ctZCUuaqOGGEllI=;
+	s=korg; t=1769019937;
+	bh=f/qm0POUd/ZS7l/CtRWE2V2myasX9Js9jeyamrSq7T0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Q1wSDGfuNuy+UNXd8iv2niNj7Y7N4fzlcCn74wP5lAp17pwemFf2M9RTrLFodcIfw
-	 lTF82BmMFotoAtEDaZR9N468Anzs3AP+vM2xIIGn4z/BlNP8TpFqfhCcLW/R07CN3+
-	 6+LeAFKU7GhJiADQocMSRem0cO1NyzsLUVHgZb30=
+	b=RYdXubCyU2atxpX62405TXMo0Q6IYSPj41fX91jtnrp38SkRNRtD9CSoyyzAvLVNN
+	 dZcCCG1PiPuVx9Jhr44B+RndIJpfjT2rBfZzSsXu5k/OA98n80BDXPVvXa8jOHuLCR
+	 0QMU91CnWJunQCVrPO00kQpGwU+J1kyaf+LO4l6E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ming Lei <ming.lei@redhat.com>,
-	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 6.18 011/198] io_uring: move local task_work in exit cancel loop
-Date: Wed, 21 Jan 2026 19:13:59 +0100
-Message-ID: <20260121181418.953751946@linuxfoundation.org>
+	Jianbo Liu <jianbol@nvidia.com>,
+	Sabrina Dubroca <sd@queasysnail.net>,
+	Steffen Klassert <steffen.klassert@secunet.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.18 012/198] xfrm: Fix inner mode lookup in tunnel mode GSO segmentation
+Date: Wed, 21 Jan 2026 19:14:00 +0100
+Message-ID: <20260121181418.989691672@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260121181418.537774329@linuxfoundation.org>
 References: <20260121181418.537774329@linuxfoundation.org>
@@ -50,63 +52,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ming Lei <ming.lei@redhat.com>
+From: Jianbo Liu <jianbol@nvidia.com>
 
-commit da579f05ef0faada3559e7faddf761c75cdf85e1 upstream.
+[ Upstream commit 3d5221af9c7711b7aec8da1298c8fc393ef6183d ]
 
-With IORING_SETUP_DEFER_TASKRUN, task work is queued to ctx->work_llist
-(local work) rather than the fallback list. During io_ring_exit_work(),
-io_move_task_work_from_local() was called once before the cancel loop,
-moving work from work_llist to fallback_llist.
+Commit 61fafbee6cfe ("xfrm: Determine inner GSO type from packet inner
+protocol") attempted to fix GSO segmentation by reading the inner
+protocol from XFRM_MODE_SKB_CB(skb)->protocol. This was incorrect
+because the field holds the inner L4 protocol (TCP/UDP) instead of the
+required tunnel protocol. Also, the memory location (shared by
+XFRM_SKB_CB(skb) which could be overwritten by xfrm_replay_overflow())
+is prone to corruption. This combination caused the kernel to select
+the wrong inner mode and get the wrong address family.
 
-However, task work can be added to work_llist during the cancel loop
-itself. There are two cases:
+The correct value is in xfrm_offload(skb)->proto, which is set from
+the outer tunnel header's protocol field by esp[4|6]_gso_encap(). It
+is initialized by xfrm[4|6]_tunnel_encap_add() to either IPPROTO_IPIP
+or IPPROTO_IPV6, using xfrm_af2proto() and correctly reflects the
+inner packet's address family.
 
-1) io_kill_timeouts() is called from io_uring_try_cancel_requests() to
-cancel pending timeouts, and it adds task work via io_req_queue_tw_complete()
-for each cancelled timeout:
-
-2) URING_CMD requests like ublk can be completed via
-io_uring_cmd_complete_in_task() from ublk_queue_rq() during canceling,
-given ublk request queue is only quiesced when canceling the 1st uring_cmd.
-
-Since io_allowed_defer_tw_run() returns false in io_ring_exit_work()
-(kworker != submitter_task), io_run_local_work() is never invoked,
-and the work_llist entries are never processed. This causes
-io_uring_try_cancel_requests() to loop indefinitely, resulting in
-100% CPU usage in kworker threads.
-
-Fix this by moving io_move_task_work_from_local() inside the cancel
-loop, ensuring any work on work_llist is moved to fallback before
-each cancel attempt.
-
-Cc: stable@vger.kernel.org
-Fixes: c0e0d6ba25f1 ("io_uring: add IORING_SETUP_DEFER_TASKRUN")
-Signed-off-by: Ming Lei <ming.lei@redhat.com>
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 61fafbee6cfe ("xfrm: Determine inner GSO type from packet inner protocol")
+Signed-off-by: Jianbo Liu <jianbol@nvidia.com>
+Reviewed-by: Sabrina Dubroca <sd@queasysnail.net>
+Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- io_uring/io_uring.c |    8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ net/ipv4/esp4_offload.c | 4 ++--
+ net/ipv6/esp6_offload.c | 4 ++--
+ 2 files changed, 4 insertions(+), 4 deletions(-)
 
---- a/io_uring/io_uring.c
-+++ b/io_uring/io_uring.c
-@@ -3017,12 +3017,12 @@ static __cold void io_ring_exit_work(str
- 			mutex_unlock(&ctx->uring_lock);
- 		}
+diff --git a/net/ipv4/esp4_offload.c b/net/ipv4/esp4_offload.c
+index 05828d4cb6cdb..abd77162f5e75 100644
+--- a/net/ipv4/esp4_offload.c
++++ b/net/ipv4/esp4_offload.c
+@@ -122,8 +122,8 @@ static struct sk_buff *xfrm4_tunnel_gso_segment(struct xfrm_state *x,
+ 						struct sk_buff *skb,
+ 						netdev_features_t features)
+ {
+-	const struct xfrm_mode *inner_mode = xfrm_ip2inner_mode(x,
+-					XFRM_MODE_SKB_CB(skb)->protocol);
++	struct xfrm_offload *xo = xfrm_offload(skb);
++	const struct xfrm_mode *inner_mode = xfrm_ip2inner_mode(x, xo->proto);
+ 	__be16 type = inner_mode->family == AF_INET6 ? htons(ETH_P_IPV6)
+ 						     : htons(ETH_P_IP);
  
--		if (ctx->flags & IORING_SETUP_DEFER_TASKRUN)
--			io_move_task_work_from_local(ctx);
--
- 		/* The SQPOLL thread never reaches this path */
--		while (io_uring_try_cancel_requests(ctx, NULL, true, false))
-+		do {
-+			if (ctx->flags & IORING_SETUP_DEFER_TASKRUN)
-+				io_move_task_work_from_local(ctx);
- 			cond_resched();
-+		} while (io_uring_try_cancel_requests(ctx, NULL, true, false));
+diff --git a/net/ipv6/esp6_offload.c b/net/ipv6/esp6_offload.c
+index 22410243ebe88..22895521a57d0 100644
+--- a/net/ipv6/esp6_offload.c
++++ b/net/ipv6/esp6_offload.c
+@@ -158,8 +158,8 @@ static struct sk_buff *xfrm6_tunnel_gso_segment(struct xfrm_state *x,
+ 						struct sk_buff *skb,
+ 						netdev_features_t features)
+ {
+-	const struct xfrm_mode *inner_mode = xfrm_ip2inner_mode(x,
+-					XFRM_MODE_SKB_CB(skb)->protocol);
++	struct xfrm_offload *xo = xfrm_offload(skb);
++	const struct xfrm_mode *inner_mode = xfrm_ip2inner_mode(x, xo->proto);
+ 	__be16 type = inner_mode->family == AF_INET ? htons(ETH_P_IP)
+ 						    : htons(ETH_P_IPV6);
  
- 		if (ctx->sq_data) {
- 			struct io_sq_data *sqd = ctx->sq_data;
+-- 
+2.51.0
+
 
 
