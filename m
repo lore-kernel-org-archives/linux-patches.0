@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9FF4392C44;
-	Wed, 21 Jan 2026 18:27:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54126352FAD;
+	Wed, 21 Jan 2026 18:27:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769020065; cv=none; b=d0R3r77S7Fn0GM9I4jQHeNgo9eYwWqDnByhhv+lwVp4t/l6mRh7eioOa/gOjdlwiyywUx+lKaiibaS/yId99eZ0N5h+DGsBvx/u1zwnKeb+R/rBr56FQaU6DCOeml4FdQ4OYa4/vYhkiBnIYH9KUeurCYwcewQqMWHiYtYCm4/k=
+	t=1769020069; cv=none; b=OSXeLb1lMk18tzA0Nbv85oaxfPMumCySVMo3Z13RtFgdZ4LjNe42FQ7PjSEcaAVk0YBW85j2PbdBcQzORbRB8sG2sJFv/tnAVCKaBOg/OVCLpeCuMQY0gmDWdyFaEyZnYoO1vg0F4gzwYggNxzeLLTlfgFlhlns1WdCJId+dptc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769020065; c=relaxed/simple;
-	bh=jWbZ5vESx9gWG6Nybg94T2fLMWBBTNNq5xsPl5fUu08=;
+	s=arc-20240116; t=1769020069; c=relaxed/simple;
+	bh=qrkoROh7imY3QO6wM3YRtcx6BCKEZioqUxSlqiqKs5M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oxdco028pQegjRT1fN8yw3Xxnpg4ncT4uajAjZvRkXH3RKX8E01dJTcMEL2Oa4d18aCcQzPxL0JJ0G20aw+70yHqFy2+8quOcmrlX4SqCrJ9fiZxOtwzsAtP5LWiw0lPQqcRhmRu2adrrncwitRjetb6eSEZ6WLA8lRElT0j7l0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=d/OwdS8T; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VP22XgLZCvn2bEmsFFbVZbRSiOGgqdhcFx2Y6yEYRZ7bTIB/GRESN343Up2BRyOntXzwashg01yYoS7ahME2LeLIC4Ss31aV+KaS1lSp+lfQ2o9n6akWojtVyuOyokJ4STIt1pQAa1B9ZvgNBPm7GQq9+vk9aydHu6c+MFoXwTA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0V+S/mgw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="d/OwdS8T"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 422CCC4CEF1;
-	Wed, 21 Jan 2026 18:27:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0V+S/mgw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4ADBC4CEF1;
+	Wed, 21 Jan 2026 18:27:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1769020065;
-	bh=jWbZ5vESx9gWG6Nybg94T2fLMWBBTNNq5xsPl5fUu08=;
+	s=korg; t=1769020069;
+	bh=qrkoROh7imY3QO6wM3YRtcx6BCKEZioqUxSlqiqKs5M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=d/OwdS8TRn+EPdLYj7N6bvXgPM2CrDXZC8J4FUPwmHZh4495tsBQ3Ybm33X1ScJa7
-	 D3EiGEMwL/Tm41G4SwjU17O1ymaLoRy1eir1rmMu4G2Q+vBIVFnRZ3wU62fQtzG9FJ
-	 Z3q0MNutCrp8Yd84mIIwAJWBuuEL/ahFkWUEwwCk=
+	b=0V+S/mgwpKTxdGcBjRFT97TQljo5B8RVI443O2pH0gnXQa6quCueZtPNvF4JRE+Ju
+	 25Ilc+EhYvzRquFZMg+TeaqUL3G32Zt1Y5QLQmL4Y8ymPBRB4ttVTkp/RHh+9+97qo
+	 HI0CTU4sP9r6rUqTlni7hQxUZF+zC/KsbX3aCdSg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Richard Fitzgerald <rf@opensource.cirrus.com>,
-	Takashi Iwai <tiwai@suse.de>,
+	Aditya Garg <gargaditya@linux.microsoft.com>,
+	Dipayaan Roy <dipayanroy@linux.microsoft.com>,
+	Haiyang Zhang <haiyangz@microsoft.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 049/198] ALSA: hda/cirrus_scodec_test: Fix test suite name
-Date: Wed, 21 Jan 2026 19:14:37 +0100
-Message-ID: <20260121181420.319607099@linuxfoundation.org>
+Subject: [PATCH 6.18 050/198] net: hv_netvsc: reject RSS hash key programming without RX indirection table
+Date: Wed, 21 Jan 2026 19:14:38 +0100
+Message-ID: <20260121181420.356182782@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260121181418.537774329@linuxfoundation.org>
 References: <20260121181418.537774329@linuxfoundation.org>
@@ -51,37 +53,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Richard Fitzgerald <rf@opensource.cirrus.com>
+From: Aditya Garg <gargaditya@linux.microsoft.com>
 
-[ Upstream commit 6a0243c4020636482797acfd48d7d9b0ea2f2a20 ]
+[ Upstream commit d23564955811da493f34412d7de60fa268c8cb50 ]
 
-Change the test suite name string to "snd-hda-cirrus-scodec-test".
+RSS configuration requires a valid RX indirection table. When the device
+reports a single receive queue, rndis_filter_device_add() does not
+allocate an indirection table, accepting RSS hash key updates in this
+state leads to a hang.
 
-It was incorrectly named "snd-hda-scodec-cs35l56-test", a leftover
-from when the code under test was actually in the cs35l56 driver.
+Fix this by gating netvsc_set_rxfh() on ndc->rx_table_sz and return
+-EOPNOTSUPP when the table is absent. This aligns set_rxfh with the device
+capabilities and prevents incorrect behavior.
 
-Signed-off-by: Richard Fitzgerald <rf@opensource.cirrus.com>
-Fixes: 2144833e7b414 ("ALSA: hda: cirrus_scodec: Add KUnit test")
-Link: https://patch.msgid.link/20260113134056.619051-1-rf@opensource.cirrus.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Fixes: 962f3fee83a4 ("netvsc: add ethtool ops to get/set RSS key")
+Signed-off-by: Aditya Garg <gargaditya@linux.microsoft.com>
+Reviewed-by: Dipayaan Roy <dipayanroy@linux.microsoft.com>
+Reviewed-by: Haiyang Zhang <haiyangz@microsoft.com>
+Link: https://patch.msgid.link/1768212093-1594-1-git-send-email-gargaditya@linux.microsoft.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/hda/codecs/side-codecs/cirrus_scodec_test.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/hyperv/netvsc_drv.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/sound/hda/codecs/side-codecs/cirrus_scodec_test.c b/sound/hda/codecs/side-codecs/cirrus_scodec_test.c
-index 159ac80a93144..dc35932b6b22f 100644
---- a/sound/hda/codecs/side-codecs/cirrus_scodec_test.c
-+++ b/sound/hda/codecs/side-codecs/cirrus_scodec_test.c
-@@ -320,7 +320,7 @@ static struct kunit_case cirrus_scodec_test_cases[] = {
- };
+diff --git a/drivers/net/hyperv/netvsc_drv.c b/drivers/net/hyperv/netvsc_drv.c
+index 39c892e46cb01..25a358524a096 100644
+--- a/drivers/net/hyperv/netvsc_drv.c
++++ b/drivers/net/hyperv/netvsc_drv.c
+@@ -1757,6 +1757,9 @@ static int netvsc_set_rxfh(struct net_device *dev,
+ 	    rxfh->hfunc != ETH_RSS_HASH_TOP)
+ 		return -EOPNOTSUPP;
  
- static struct kunit_suite cirrus_scodec_test_suite = {
--	.name = "snd-hda-scodec-cs35l56-test",
-+	.name = "snd-hda-cirrus-scodec-test",
- 	.init = cirrus_scodec_test_case_init,
- 	.test_cases = cirrus_scodec_test_cases,
- };
++	if (!ndc->rx_table_sz)
++		return -EOPNOTSUPP;
++
+ 	rndis_dev = ndev->extension;
+ 	if (rxfh->indir) {
+ 		for (i = 0; i < ndc->rx_table_sz; i++)
 -- 
 2.51.0
 
