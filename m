@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 665C63376B8;
-	Wed, 21 Jan 2026 18:23:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E827123AB98;
+	Wed, 21 Jan 2026 18:23:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769019826; cv=none; b=dmQZJsdTYJitGH8tj7mm0S87jAsMzgAKVD/iFJd5RlWRHOw/+PwithDKtxP5VYiapyWhGvKabNDTAgAJi4LHY1uS29O9cNNZXMInIknz06Ye5MHtbylPKBgZeY3Aw9t44H8MybYpKXV13cPa9XCYH4eQV2sWjNitqg5ZIEXVIa4=
+	t=1769019830; cv=none; b=lDl6dDt/1bMYhKKU6YqYOg5Y9xaq6HFKr3W4w7jHyOdZIqiLOd9qeLZLAngsVGp2xi6PEGBfbOo8y9ykB9Kp5GdPcO95DTKbVJG34Lh0iCSFUbct8sSXx6w08Tpk9Yv2/ShaITImAplXhp/WPkZelqUZ90CsxjC90hGtzWFRf6Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769019826; c=relaxed/simple;
-	bh=afAR2lIdsHvhN0tGaB75gvAB6fSI5JJpT4+x9Ofrp8Y=;
+	s=arc-20240116; t=1769019830; c=relaxed/simple;
+	bh=Jnwrns+idDmj0xMB70oOgi1ER1Q1LHt1O3qCnErZ6Io=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Xy+QQDXzW+SaQ5EJCfRVLsXu51tsDfjAL4daPWELucwCu28+gihUvRFkEHqPDHCjZqjn9H30cIHdhNE4e+UqSJWd9SOWP0KBGrG+KUoYxMhyUDBVXv5AwER1/677BTlK+RDm/pO3dPnvcAiD1DqqxsvxbOKTvJsN/rxGoxVvuBA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SbSpasut; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=sTKCOHIyR11pMt0e7bsIoTmreERw0eh40CBmoBkAld587N80mHAR4n8U+e1RBHFuLGm3j0a9RZ5s8cFc4xmzluKD0aW/bC+lprF/ZWicvTCibHMskJx6YKz1RmnYQBOLXdfZEDH+05V51jRsr5dZ5ouvHtiagxyKphDGgq4tn/U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NQaYGOel; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SbSpasut"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B72A5C4CEF1;
-	Wed, 21 Jan 2026 18:23:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NQaYGOel"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 07C64C4CEF1;
+	Wed, 21 Jan 2026 18:23:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1769019826;
-	bh=afAR2lIdsHvhN0tGaB75gvAB6fSI5JJpT4+x9Ofrp8Y=;
+	s=korg; t=1769019829;
+	bh=Jnwrns+idDmj0xMB70oOgi1ER1Q1LHt1O3qCnErZ6Io=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SbSpasuttjunGJfzfgY7XAdAX5xLxqLpqkGPOmjd4S9EDDTYVMuFqBZMviAJCwKXI
-	 lZTTFUSyt0io1Ch1s69cMeH/IFZ/Em2RFP4r3CYdY2+hRd2sF/jZGBqgli9F23QZiV
-	 RwJVYkAJILCvLQHKxsO0Ri1Z3MHZTDV7r801M1dM=
+	b=NQaYGOelJFbkttFHPRwQFRpWi8y8EyPEgg5WcL1zPBMCFdsPhgRf3yP6tECEjsu3T
+	 WdkEs4tu8aDUJhKriMePp4roOGTCsAJXd8g1WkJo8Tv6CLR+62Z5JsCUTQ7d9yju9A
+	 WjioDkKfSm4jpaHMFVJMbBxSbssbPd3NFfAnZqRo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pierre-Yves MORDRET <pierre-yves.mordret@foss.st.com>,
+	Peter Ujfalusi <peter.ujfalusi@ti.com>,
+	Miaoqian Lin <linmq006@gmail.com>,
 	Johan Hovold <johan@kernel.org>,
-	Amelie Delaunay <amelie.delaunay@foss.st.com>,
 	Vinod Koul <vkoul@kernel.org>
-Subject: [PATCH 6.12 118/139] dmaengine: stm32: dmamux: fix OF node leak on route allocation failure
-Date: Wed, 21 Jan 2026 19:16:06 +0100
-Message-ID: <20260121181415.698224230@linuxfoundation.org>
+Subject: [PATCH 6.12 119/139] dmaengine: ti: dma-crossbar: fix device leak on dra7x route allocation
+Date: Wed, 21 Jan 2026 19:16:07 +0100
+Message-ID: <20260121181415.734927251@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260121181411.452263583@linuxfoundation.org>
 References: <20260121181411.452263583@linuxfoundation.org>
@@ -54,42 +54,38 @@ Content-Transfer-Encoding: 8bit
 
 From: Johan Hovold <johan@kernel.org>
 
-commit b1b590a590af13ded598e70f0b72bc1e515787a1 upstream.
+commit dc7e44db01fc2498644e3106db3e62a9883a93d5 upstream.
 
-Make sure to drop the reference taken to the DMA master OF node also on
-late route allocation failures.
+Make sure to drop the reference taken when looking up the crossbar
+platform device during dra7x route allocation.
 
-Fixes: df7e762db5f6 ("dmaengine: Add STM32 DMAMUX driver")
-Cc: stable@vger.kernel.org      # 4.15
-Cc: Pierre-Yves MORDRET <pierre-yves.mordret@foss.st.com>
+Note that commit 615a4bfc426e ("dmaengine: ti: Add missing put_device in
+ti_dra7_xbar_route_allocate") fixed the leak in the error paths but the
+reference is still leaking on successful allocation.
+
+Fixes: a074ae38f859 ("dmaengine: Add driver for TI DMA crossbar on DRA7x")
+Fixes: 615a4bfc426e ("dmaengine: ti: Add missing put_device in ti_dra7_xbar_route_allocate")
+Cc: stable@vger.kernel.org	# 4.2: 615a4bfc426e
+Cc: Peter Ujfalusi <peter.ujfalusi@ti.com>
+Cc: Miaoqian Lin <linmq006@gmail.com>
 Signed-off-by: Johan Hovold <johan@kernel.org>
-Reviewed-by: Amelie Delaunay <amelie.delaunay@foss.st.com>
-Link: https://patch.msgid.link/20251117161258.10679-12-johan@kernel.org
+Link: https://patch.msgid.link/20251117161258.10679-14-johan@kernel.org
 Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/dma/stm32/stm32-dmamux.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/dma/ti/dma-crossbar.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/dma/stm32/stm32-dmamux.c
-+++ b/drivers/dma/stm32/stm32-dmamux.c
-@@ -143,7 +143,7 @@ static void *stm32_dmamux_route_allocate
- 	ret = pm_runtime_resume_and_get(&pdev->dev);
- 	if (ret < 0) {
- 		spin_unlock_irqrestore(&dmamux->lock, flags);
--		goto error;
-+		goto err_put_dma_spec_np;
- 	}
- 	spin_unlock_irqrestore(&dmamux->lock, flags);
+--- a/drivers/dma/ti/dma-crossbar.c
++++ b/drivers/dma/ti/dma-crossbar.c
+@@ -288,6 +288,8 @@ static void *ti_dra7_xbar_route_allocate
  
-@@ -165,6 +165,8 @@ static void *stm32_dmamux_route_allocate
+ 	ti_dra7_xbar_write(xbar->iomem, map->xbar_out, map->xbar_in);
  
- 	return mux;
- 
-+err_put_dma_spec_np:
-+	of_node_put(dma_spec->np);
- error:
- 	clear_bit(mux->chan_id, dmamux->dma_inuse);
++	put_device(&pdev->dev);
++
+ 	return map;
+ }
  
 
 
