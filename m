@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A7843A7836;
-	Wed, 21 Jan 2026 18:29:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7684338BDC7;
+	Wed, 21 Jan 2026 18:29:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769020159; cv=none; b=tixoB36Mogu0yNLUxny+bC4EQPXOycX8XAE5xkdOvvqif1yIEZjhyEkgWkvyIXospQyTFtNSAvfJ5TiHsdGB+8xMv/xoWh7Tj2EA7LemjgX5rzuCZVKANlseQuNcU8Pj8VMQApkzEmnpQnLl0K224BhS4s2LcChTOuX0cKbK64M=
+	t=1769020162; cv=none; b=Nx4QfgsqWWEoqGi0g9NOCu3mbm9/HLC/HlLb1cvbAoQO9urfM4UoKbqUEBl7L5EpdwdE+TfOjP/wmqcYR6NeaTP0TFS7Nt9+jlPv5Lz3yRpFGxPcXGTc5X3irokiOtSZpgtjA6KEGEjCjezVNVdLqJi+jBXcnOLV0+MCTyPdGGw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769020159; c=relaxed/simple;
-	bh=AJ/EspyCfJJDf7pXNXpdCM0CtDryGwKkStbY2hWX050=;
+	s=arc-20240116; t=1769020162; c=relaxed/simple;
+	bh=7FbIQme6q6ScOtzodtsgcMDHw6aI/lg/oM9zd+ZPT9Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=cP/RLAPk06I9eW59ziFOMwbUYhNWRAbvrkVV0UyNNgwE0ExDorRz68D0I24STRe/dbVoHhDyt2WBfdbOiF7j0mUMhKa8hcWNKCt00j9fQnP3j1BWB2vnKYjwKAfzTQhDo/0PZ+KdXcfXdKqaAltnNFzGNrQLYkEMktATDQ7PnEY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gCbIwW5E; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=E3rXTyBX8CX+CzuYmSlXSl/JNNr9edR8CCtPxAoz8/pWFF30MoOzLM2EJXteC0fTXBvjchJNacyX8bHR7gfwgj/P22oFzA3khouathosjycwNUrorDnt3K0AwYbW1ui0WQr2jVAQYRmwIEStW5pUOYqm/Nfmo4ylYipFLifHVxM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Z7LnGto1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gCbIwW5E"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B01DC4CEF1;
-	Wed, 21 Jan 2026 18:29:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Z7LnGto1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C679CC4CEF1;
+	Wed, 21 Jan 2026 18:29:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1769020158;
-	bh=AJ/EspyCfJJDf7pXNXpdCM0CtDryGwKkStbY2hWX050=;
+	s=korg; t=1769020162;
+	bh=7FbIQme6q6ScOtzodtsgcMDHw6aI/lg/oM9zd+ZPT9Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gCbIwW5E0f/1sX/dJjlNQJy6Dei2SitV+gPefzn2fFXbooTdvvQ8lG3WBgFFoqw4k
-	 5GnqzFYreL8gxmL0Mv0kU4vSqkzr0ilziXlCHR1wa3qMdFjAPTwRPiyZN2xi+DVZkW
-	 gvpZTNy9kt4wRjKnezy+SB/GyTgBNcl5HFiG7ttI=
+	b=Z7LnGto10EUy6HbePhxeHFnVJW5Si5cngIOCpYQFhY0q8NYGWZkEf2+X8jQxou0Be
+	 Bm0+IhcUasGyllEVNwyWOC7G9uTm1Ol+FLXTJi+fPHpNhUeum/f7xLH+5i1GTzyoEL
+	 gWxns7NL4UH9fKHjxuJFMD1hIAAEyYYl3oJ6Qnnw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Matthieu Buffet <matthieu@buffet.re>,
 	=?UTF-8?q?Micka=C3=ABl=20Sala=C3=BCn?= <mic@digikod.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 077/198] landlock: Fix TCP handling of short AF_UNSPEC addresses
-Date: Wed, 21 Jan 2026 19:15:05 +0100
-Message-ID: <20260121181421.332562395@linuxfoundation.org>
+Subject: [PATCH 6.18 078/198] selftests/landlock: Fix TCP bind(AF_UNSPEC) test case
+Date: Wed, 21 Jan 2026 19:15:06 +0100
+Message-ID: <20260121181421.368283851@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260121181418.537774329@linuxfoundation.org>
 References: <20260121181418.537774329@linuxfoundation.org>
@@ -54,166 +54,100 @@ Content-Transfer-Encoding: 8bit
 
 From: Matthieu Buffet <matthieu@buffet.re>
 
-[ Upstream commit e4d82cbce2258f454634307fdabf33aa46b61ab0 ]
+[ Upstream commit bd09d9a05cf04028f639e209b416bacaeffd4909 ]
 
-current_check_access_socket() treats AF_UNSPEC addresses as
-AF_INET ones, and only later adds special case handling to
-allow connect(AF_UNSPEC), and on IPv4 sockets
-bind(AF_UNSPEC+INADDR_ANY).
-This would be fine except AF_UNSPEC addresses can be as
-short as a bare AF_UNSPEC sa_family_t field, and nothing
-more. The AF_INET code path incorrectly enforces a length of
-sizeof(struct sockaddr_in) instead.
+The nominal error code for bind(AF_UNSPEC) on an IPv6 socket
+is -EAFNOSUPPORT, not -EINVAL. -EINVAL is only returned when
+the supplied address struct is too short, which happens to be
+the case in current selftests because they treat AF_UNSPEC
+like IPv4 sockets do: as an alias for AF_INET (which is a
+16-byte struct instead of the 24 bytes required by IPv6
+sockets).
 
-Move AF_UNSPEC edge case handling up inside the switch-case,
-before the address is (potentially incorrectly) treated as
-AF_INET.
+Make the union large enough for any address (by adding struct
+sockaddr_storage to the union), and make AF_UNSPEC addresses
+large enough for any family.
 
-Fixes: fff69fb03dde ("landlock: Support network rules with TCP bind and connect")
+Test for -EAFNOSUPPORT instead, and add a dedicated test case
+for truncated inputs with -EINVAL.
+
+Fixes: a549d055a22e ("selftests/landlock: Add network tests")
 Signed-off-by: Matthieu Buffet <matthieu@buffet.re>
-Link: https://lore.kernel.org/r/20251027190726.626244-4-matthieu@buffet.re
+Link: https://lore.kernel.org/r/20251027190726.626244-2-matthieu@buffet.re
 Signed-off-by: Mickaël Salaün <mic@digikod.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- security/landlock/net.c | 118 +++++++++++++++++++++++-----------------
- 1 file changed, 67 insertions(+), 51 deletions(-)
+ tools/testing/selftests/landlock/common.h   |  1 +
+ tools/testing/selftests/landlock/net_test.c | 16 +++++++++++++++-
+ 2 files changed, 16 insertions(+), 1 deletion(-)
 
-diff --git a/security/landlock/net.c b/security/landlock/net.c
-index 1f3915a90a808..e6367e30e5b0e 100644
---- a/security/landlock/net.c
-+++ b/security/landlock/net.c
-@@ -71,6 +71,61 @@ static int current_check_access_socket(struct socket *const sock,
+diff --git a/tools/testing/selftests/landlock/common.h b/tools/testing/selftests/landlock/common.h
+index 9acecae36f51b..98c2362954e21 100644
+--- a/tools/testing/selftests/landlock/common.h
++++ b/tools/testing/selftests/landlock/common.h
+@@ -237,6 +237,7 @@ struct service_fixture {
+ 			struct sockaddr_un unix_addr;
+ 			socklen_t unix_addr_len;
+ 		};
++		struct sockaddr_storage _largest;
+ 	};
+ };
  
- 	switch (address->sa_family) {
+diff --git a/tools/testing/selftests/landlock/net_test.c b/tools/testing/selftests/landlock/net_test.c
+index 2a45208551e61..3bbc0508420b1 100644
+--- a/tools/testing/selftests/landlock/net_test.c
++++ b/tools/testing/selftests/landlock/net_test.c
+@@ -121,6 +121,10 @@ static socklen_t get_addrlen(const struct service_fixture *const srv,
+ {
+ 	switch (srv->protocol.domain) {
  	case AF_UNSPEC:
-+		if (access_request == LANDLOCK_ACCESS_NET_CONNECT_TCP) {
-+			/*
-+			 * Connecting to an address with AF_UNSPEC dissolves
-+			 * the TCP association, which have the same effect as
-+			 * closing the connection while retaining the socket
-+			 * object (i.e., the file descriptor).  As for dropping
-+			 * privileges, closing connections is always allowed.
-+			 *
-+			 * For a TCP access control system, this request is
-+			 * legitimate. Let the network stack handle potential
-+			 * inconsistencies and return -EINVAL if needed.
-+			 */
-+			return 0;
-+		} else if (access_request == LANDLOCK_ACCESS_NET_BIND_TCP) {
-+			/*
-+			 * Binding to an AF_UNSPEC address is treated
-+			 * differently by IPv4 and IPv6 sockets. The socket's
-+			 * family may change under our feet due to
-+			 * setsockopt(IPV6_ADDRFORM), but that's ok: we either
-+			 * reject entirely or require
-+			 * %LANDLOCK_ACCESS_NET_BIND_TCP for the given port, so
-+			 * it cannot be used to bypass the policy.
-+			 *
-+			 * IPv4 sockets map AF_UNSPEC to AF_INET for
-+			 * retrocompatibility for bind accesses, only if the
-+			 * address is INADDR_ANY (cf. __inet_bind). IPv6
-+			 * sockets always reject it.
-+			 *
-+			 * Checking the address is required to not wrongfully
-+			 * return -EACCES instead of -EAFNOSUPPORT or -EINVAL.
-+			 * We could return 0 and let the network stack handle
-+			 * these checks, but it is safer to return a proper
-+			 * error and test consistency thanks to kselftest.
-+			 */
-+			if (sock->sk->__sk_common.skc_family == AF_INET) {
-+				const struct sockaddr_in *const sockaddr =
-+					(struct sockaddr_in *)address;
++		if (minimal)
++			return sizeof(sa_family_t);
++		return sizeof(struct sockaddr_storage);
 +
-+				if (addrlen < sizeof(struct sockaddr_in))
-+					return -EINVAL;
-+
-+				if (sockaddr->sin_addr.s_addr !=
-+				    htonl(INADDR_ANY))
-+					return -EAFNOSUPPORT;
-+			} else {
-+				if (addrlen < SIN6_LEN_RFC2133)
-+					return -EINVAL;
-+				else
-+					return -EAFNOSUPPORT;
-+			}
-+		} else {
-+			WARN_ON_ONCE(1);
-+		}
-+		/* Only for bind(AF_UNSPEC+INADDR_ANY) on IPv4 socket. */
-+		fallthrough;
- 	case AF_INET: {
- 		const struct sockaddr_in *addr4;
+ 	case AF_INET:
+ 		return sizeof(srv->ipv4_addr);
  
-@@ -119,57 +174,18 @@ static int current_check_access_socket(struct socket *const sock,
- 		return 0;
+@@ -758,6 +762,11 @@ TEST_F(protocol, bind_unspec)
+ 	bind_fd = socket_variant(&self->srv0);
+ 	ASSERT_LE(0, bind_fd);
+ 
++	/* Tries to bind with too small addrlen. */
++	EXPECT_EQ(-EINVAL, bind_variant_addrlen(
++				   bind_fd, &self->unspec_any0,
++				   get_addrlen(&self->unspec_any0, true) - 1));
++
+ 	/* Allowed bind on AF_UNSPEC/INADDR_ANY. */
+ 	ret = bind_variant(bind_fd, &self->unspec_any0);
+ 	if (variant->prot.domain == AF_INET) {
+@@ -766,6 +775,8 @@ TEST_F(protocol, bind_unspec)
+ 			TH_LOG("Failed to bind to unspec/any socket: %s",
+ 			       strerror(errno));
+ 		}
++	} else if (variant->prot.domain == AF_INET6) {
++		EXPECT_EQ(-EAFNOSUPPORT, ret);
+ 	} else {
+ 		EXPECT_EQ(-EINVAL, ret);
  	}
- 
--	/* Specific AF_UNSPEC handling. */
--	if (address->sa_family == AF_UNSPEC) {
--		/*
--		 * Connecting to an address with AF_UNSPEC dissolves the TCP
--		 * association, which have the same effect as closing the
--		 * connection while retaining the socket object (i.e., the file
--		 * descriptor).  As for dropping privileges, closing
--		 * connections is always allowed.
--		 *
--		 * For a TCP access control system, this request is legitimate.
--		 * Let the network stack handle potential inconsistencies and
--		 * return -EINVAL if needed.
--		 */
--		if (access_request == LANDLOCK_ACCESS_NET_CONNECT_TCP)
--			return 0;
--
--		/*
--		 * For compatibility reason, accept AF_UNSPEC for bind
--		 * accesses (mapped to AF_INET) only if the address is
--		 * INADDR_ANY (cf. __inet_bind).  Checking the address is
--		 * required to not wrongfully return -EACCES instead of
--		 * -EAFNOSUPPORT.
--		 *
--		 * We could return 0 and let the network stack handle these
--		 * checks, but it is safer to return a proper error and test
--		 * consistency thanks to kselftest.
--		 */
--		if (access_request == LANDLOCK_ACCESS_NET_BIND_TCP) {
--			/* addrlen has already been checked for AF_UNSPEC. */
--			const struct sockaddr_in *const sockaddr =
--				(struct sockaddr_in *)address;
--
--			if (sock->sk->__sk_common.skc_family != AF_INET)
--				return -EINVAL;
--
--			if (sockaddr->sin_addr.s_addr != htonl(INADDR_ANY))
--				return -EAFNOSUPPORT;
--		}
--	} else {
--		/*
--		 * Checks sa_family consistency to not wrongfully return
--		 * -EACCES instead of -EINVAL.  Valid sa_family changes are
--		 * only (from AF_INET or AF_INET6) to AF_UNSPEC.
--		 *
--		 * We could return 0 and let the network stack handle this
--		 * check, but it is safer to return a proper error and test
--		 * consistency thanks to kselftest.
--		 */
--		if (address->sa_family != sock->sk->__sk_common.skc_family)
--			return -EINVAL;
--	}
-+	/*
-+	 * Checks sa_family consistency to not wrongfully return
-+	 * -EACCES instead of -EINVAL.  Valid sa_family changes are
-+	 * only (from AF_INET or AF_INET6) to AF_UNSPEC.
-+	 *
-+	 * We could return 0 and let the network stack handle this
-+	 * check, but it is safer to return a proper error and test
-+	 * consistency thanks to kselftest.
-+	 */
-+	if (address->sa_family != sock->sk->__sk_common.skc_family &&
-+	    address->sa_family != AF_UNSPEC)
-+		return -EINVAL;
- 
- 	id.key.data = (__force uintptr_t)port;
- 	BUILD_BUG_ON(sizeof(port) > sizeof(id.key.data));
+@@ -792,6 +803,8 @@ TEST_F(protocol, bind_unspec)
+ 		} else {
+ 			EXPECT_EQ(0, ret);
+ 		}
++	} else if (variant->prot.domain == AF_INET6) {
++		EXPECT_EQ(-EAFNOSUPPORT, ret);
+ 	} else {
+ 		EXPECT_EQ(-EINVAL, ret);
+ 	}
+@@ -801,7 +814,8 @@ TEST_F(protocol, bind_unspec)
+ 	bind_fd = socket_variant(&self->srv0);
+ 	ASSERT_LE(0, bind_fd);
+ 	ret = bind_variant(bind_fd, &self->unspec_srv0);
+-	if (variant->prot.domain == AF_INET) {
++	if (variant->prot.domain == AF_INET ||
++	    variant->prot.domain == AF_INET6) {
+ 		EXPECT_EQ(-EAFNOSUPPORT, ret);
+ 	} else {
+ 		EXPECT_EQ(-EINVAL, ret)
 -- 
 2.51.0
 
