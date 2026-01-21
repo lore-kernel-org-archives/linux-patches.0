@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6661833C518;
-	Wed, 21 Jan 2026 18:17:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F6C825F78F;
+	Wed, 21 Jan 2026 18:17:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769019456; cv=none; b=PAb3DqoRroifSSzckzwBwJcLpAKSd++Ih1wPmLHS1/Bm01i04cvSYapdo64c7H2CviyZ3GjU1EB+1Pp0ja5LIcobCy1o2q2YGLGAYmQsTWV1q//AvG5z/4wmHYdngyvdnm/bE7eGOKuREkkkLdT4pUfjzIk6NcAgNdNNp2hgwyQ=
+	t=1769019460; cv=none; b=J69oXmfkq4tW3KCK2HQeZc5q7fTRww5ayu8tw0e1ygPtRf/kRxK2PPwNDCbn5MSG6d9CCZA3eC6ATxTFy1Y4rMShZF+s355/2GAnICua137D9qYYSQ14Nc0FicAB/DS8+/pbvPiU5XaYgmtPHJvznF5wKGuJlp0G77mZrUA6Yro=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769019456; c=relaxed/simple;
-	bh=xSDmehKzPbBAdBGqPwURNVcJiBweGS0udPhnhmBRtB8=;
+	s=arc-20240116; t=1769019460; c=relaxed/simple;
+	bh=s2hxXL8ik58DdCGCxmJJiOFoehN8t35oG1Jx4oR/ZZw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cjEoZK9kf81ArT0nr0wwC/lUrrnxKlxt+1/YrvcqXZLyJJV7+xPrs8Xm8JFZBDypdsv9tsDt33i2a434Sza7dfwuT91MPHd/op+AkbeTBvWpMY48hYrle+UnKLED/HsJcAHdgfw9Kk6jjZYvEDusD+VFvNw8m6bX4+c9/1NmJdc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=J+u0AQ+c; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=blZ8gv378qjLNPmXHZKebD2FdyvJ8UompLzg1FFxDBQVmqrrCArmarI6l0TOXVLXeRHAjQwmIVNrGhRvwkMWAAkCQx215bX2qo+8vzaXwheKvIBRx3AswFdzZwMF+TaqFJcXzHusYNZcHbHhGlUhxJhXrzTfsYG82P1yPD732+Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HpToMITf; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="J+u0AQ+c"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 71B03C4CEF1;
-	Wed, 21 Jan 2026 18:17:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HpToMITf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3BD91C4CEF1;
+	Wed, 21 Jan 2026 18:17:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1769019456;
-	bh=xSDmehKzPbBAdBGqPwURNVcJiBweGS0udPhnhmBRtB8=;
+	s=korg; t=1769019459;
+	bh=s2hxXL8ik58DdCGCxmJJiOFoehN8t35oG1Jx4oR/ZZw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=J+u0AQ+cWfWHuP289m1+FfnkF4Ql+hIHI4LkEQctNwmyUVV6PNmZHSDsl0J6sjVfk
-	 x494sIuGfW5RWng53gQnmwJqbiUNq2Mi7N1EnSzXKLcz//INWis9ZELQJ/ipLsLnhD
-	 OGtM/0GMlv7Bu8DvQCAgdfV/orvDwSHoFzqs2aa0=
+	b=HpToMITfeL6sl0NBLvC/DW3cEE/+L5AbRr6Kk/1fCKj9fS+VRi7WsPuymk/MUOZO2
+	 2VhNyvddzRZL4WJAeoEiZjSxJ8WtYOlYwcMexS8zmNxEE89yzV8mFspSoInSy+Hxad
+	 mPGIQfh8U5enuYs4TI//NRsEDJX+HCmx8gm3oqpI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ian Forbes <ian.forbes@broadcom.com>,
-	Zack Rusin <zack.rusin@broadcom.com>,
+	Yaxiong Tian <tianyaxiong@kylinos.cn>,
+	Lukasz Luba <lukasz.luba@arm.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 012/139] drm/vmwgfx: Merge vmw_bo_release and vmw_bo_free functions
-Date: Wed, 21 Jan 2026 19:14:20 +0100
-Message-ID: <20260121181411.901442923@linuxfoundation.org>
+Subject: [PATCH 6.12 013/139] PM: EM: Fix incorrect description of the cost field in struct em_perf_state
+Date: Wed, 21 Jan 2026 19:14:21 +0100
+Message-ID: <20260121181411.936448044@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260121181411.452263583@linuxfoundation.org>
 References: <20260121181411.452263583@linuxfoundation.org>
@@ -51,66 +52,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ian Forbes <ian.forbes@broadcom.com>
+From: Yaxiong Tian <tianyaxiong@kylinos.cn>
 
-[ Upstream commit 37a0cff4551c14aca4cfa6ef3f2f0e0f61d66825 ]
+[ Upstream commit 54b603f2db6b95495bc33a8f2bde80f044baff9a ]
 
-Some of the warnings need to be reordered between these two functions
-in order to be correct. This has happened multiple times.
-Merging them solves this problem once and for all.
+Due to commit 1b600da51073 ("PM: EM: Optimize em_cpu_energy() and remove
+division"), the logic for energy consumption calculation has been modified.
+The actual calculation of cost is 10 * power * max_frequency / frequency
+instead of power * max_frequency / frequency.
 
-Fixes: d6667f0ddf46 ("drm/vmwgfx: Fix handling of dumb buffers")
-Signed-off-by: Ian Forbes <ian.forbes@broadcom.com>
-Signed-off-by: Zack Rusin <zack.rusin@broadcom.com>
-Link: https://patch.msgid.link/20260107152059.3048329-1-ian.forbes@broadcom.com
+Therefore, the comment for cost has been updated to reflect the correct
+content.
+
+Fixes: 1b600da51073 ("PM: EM: Optimize em_cpu_energy() and remove division")
+Signed-off-by: Yaxiong Tian <tianyaxiong@kylinos.cn>
+Reviewed-by: Lukasz Luba <lukasz.luba@arm.com>
+[ rjw: Added Fixes: tag ]
+Link: https://patch.msgid.link/20251230061534.816894-1-tianyaxiong@kylinos.cn
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/vmwgfx/vmwgfx_bo.c | 22 ++++++++--------------
- 1 file changed, 8 insertions(+), 14 deletions(-)
+ include/linux/energy_model.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/vmwgfx/vmwgfx_bo.c b/drivers/gpu/drm/vmwgfx/vmwgfx_bo.c
-index e8e49f13cfa2c..86834005de713 100644
---- a/drivers/gpu/drm/vmwgfx/vmwgfx_bo.c
-+++ b/drivers/gpu/drm/vmwgfx/vmwgfx_bo.c
-@@ -32,9 +32,15 @@
- 
- #include <drm/ttm/ttm_placement.h>
- 
--static void vmw_bo_release(struct vmw_bo *vbo)
-+/**
-+ * vmw_bo_free - vmw_bo destructor
-+ *
-+ * @bo: Pointer to the embedded struct ttm_buffer_object
-+ */
-+static void vmw_bo_free(struct ttm_buffer_object *bo)
- {
- 	struct vmw_resource *res;
-+	struct vmw_bo *vbo = to_vmw_bo(&bo->base);
- 
- 	WARN_ON(vbo->tbo.base.funcs &&
- 		kref_read(&vbo->tbo.base.refcount) != 0);
-@@ -63,20 +69,8 @@ static void vmw_bo_release(struct vmw_bo *vbo)
- 		}
- 		vmw_surface_unreference(&vbo->dumb_surface);
- 	}
--	drm_gem_object_release(&vbo->tbo.base);
--}
--
--/**
-- * vmw_bo_free - vmw_bo destructor
-- *
-- * @bo: Pointer to the embedded struct ttm_buffer_object
-- */
--static void vmw_bo_free(struct ttm_buffer_object *bo)
--{
--	struct vmw_bo *vbo = to_vmw_bo(&bo->base);
--
- 	WARN_ON(!RB_EMPTY_ROOT(&vbo->res_tree));
--	vmw_bo_release(vbo);
-+	drm_gem_object_release(&vbo->tbo.base);
- 	WARN_ON(vbo->dirty);
- 	kfree(vbo);
- }
+diff --git a/include/linux/energy_model.h b/include/linux/energy_model.h
+index 34498652f7802..09ce3dc4eab5c 100644
+--- a/include/linux/energy_model.h
++++ b/include/linux/energy_model.h
+@@ -18,7 +18,7 @@
+  * @power:	The power consumed at this level (by 1 CPU or by a registered
+  *		device). It can be a total power: static and dynamic.
+  * @cost:	The cost coefficient associated with this level, used during
+- *		energy calculation. Equal to: power * max_frequency / frequency
++ *		energy calculation. Equal to: 10 * power * max_frequency / frequency
+  * @flags:	see "em_perf_state flags" description below.
+  */
+ struct em_perf_state {
 -- 
 2.51.0
 
