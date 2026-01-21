@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0018D315D28;
-	Wed, 21 Jan 2026 18:24:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0FC571A9FB0;
+	Wed, 21 Jan 2026 18:24:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769019859; cv=none; b=b62ZFjTmIOhI5iNHEJgrCtoGED7nlBoNP6L1gI0d58IozhrPl4OIfOY/NqZuDSFDXBMVHlaBBm2i8lJhrrJ6TYyup6TwIkxYv+GIirBTsD7f0jRLTL0Z9IQ5PJBYN+yR2SDO0veuAIN/MxpuF2f6dRHezi9j2WEjIUAy35cYURA=
+	t=1769019862; cv=none; b=nO5aLAi3eQiglNJxdS1h0lL6MOj9nCz4dHInjKuhI4KGCXi03Qkj7QUU9XWmRZcZWGv96fKTao1+g3EXer7hHUROkECIoiOjNy2KjwjeIHlN9B0B2L1X/4qrE3WDsHBwkGet50P1oTdoEGzTWsOllDE6TypxR572n38AJsbRmyI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769019859; c=relaxed/simple;
-	bh=FEmnwnZkrz1c4TgTWrW/4pGpaQ31od6TnO3UWrXNkMQ=;
+	s=arc-20240116; t=1769019862; c=relaxed/simple;
+	bh=lJFDkSASDa+1r+JZm8Ckrj3sUWos+25yYpixpxDIkaY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lB/7BVMuMDb1n5pjFJ7uYOIBgyhlvIDi9HvWAUtE7Z/zFfcIJ01BSoyqn8E0CS490aF4b2RRoJoKLx4V9KxfUp1yS2jPsX4fuw8Cux2eKTdVHeS8nzXkcSui+lmKgB8dbjNDXQSuBGbuBRDUc9DRg0Z8btiXD46RxzCWrdnSdrA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ozf6rut3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=IO+qQEDgOMYEbMC8W5sszlxIJI1D20ZcVkKDie9xRoTnLsK4Mdvq1DyusqKudVHDUS8akHwY93FMycLRE6RjRhB8efRGn6+wRyoXfQudLdqBv4ZQArBxtxBzknn14ODY4YN8B9z+yDvg+jQuGcQBIAoKiw9TQifB51ZUBAorfh0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rxJ1keJw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ozf6rut3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 645AFC4CEF1;
-	Wed, 21 Jan 2026 18:24:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rxJ1keJw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 900E0C4CEF1;
+	Wed, 21 Jan 2026 18:24:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1769019858;
-	bh=FEmnwnZkrz1c4TgTWrW/4pGpaQ31od6TnO3UWrXNkMQ=;
+	s=korg; t=1769019861;
+	bh=lJFDkSASDa+1r+JZm8Ckrj3sUWos+25yYpixpxDIkaY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ozf6rut3QPnmN4nn3e5zp0SSMYP/011J1HY1k/63L5MgHCigpYkYDqttGXTfE1DYq
-	 6RXYSrBZJ2IIOoc6djooBBLiQk8pD0xMwPjT5/sdeOWfV6LXFi5tSHho+qnakVGdv9
-	 SJe5ElePpvHflVT/XiEXPuHvaVKe60H/xWK3KkUY=
+	b=rxJ1keJwGKB591AXIvig/Hcm/H3M99717w7A6suSfu+0MadIANENPgYPkmTsjWDJY
+	 DnA8GTkQGtrVjHWDsVMXYGvzJi5B25qRczeL030LXd7sN+gg7N4HK6lhsUJXLMt8xv
+	 XTnYaEn9GWW9s6nVU+C74Tt16IxCtIxrPyJNUNrY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	SeongJae Park <sj@kernel.org>,
-	chongjiapeng <jiapeng.chong@linux.alibaba.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.12 096/139] mm/damon/sysfs: cleanup attrs subdirs on context dir setup failure
-Date: Wed, 21 Jan 2026 19:15:44 +0100
-Message-ID: <20260121181414.907455162@linuxfoundation.org>
+	Lisa Robinson <lisa@bytefly.space>,
+	Huacai Chen <chenhuacai@loongson.cn>
+Subject: [PATCH 6.12 097/139] LoongArch: Fix PMU counter allocation for mixed-type event groups
+Date: Wed, 21 Jan 2026 19:15:45 +0100
+Message-ID: <20260121181414.944510573@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260121181411.452263583@linuxfoundation.org>
 References: <20260121181411.452263583@linuxfoundation.org>
@@ -51,48 +50,124 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: SeongJae Park <sj@kernel.org>
+From: Lisa Robinson <lisa@bytefly.space>
 
-commit 9814cc832b88bd040fc2a1817c2b5469d0f7e862 upstream.
+commit a91f86e27087f250a5d9c89bb4a427b9c30fd815 upstream.
 
-When a context DAMON sysfs directory setup is failed after setup of attrs/
-directory, subdirectories of attrs/ directory are not cleaned up.  As a
-result, DAMON sysfs interface is nearly broken until the system reboots,
-and the memory for the unremoved directory is leaked.
+When validating a perf event group, validate_group() unconditionally
+attempts to allocate hardware PMU counters for the leader, sibling
+events and the new event being added.
 
-Cleanup the directories under such failures.
+This is incorrect for mixed-type groups. If a PERF_TYPE_SOFTWARE event
+is part of the group, the current code still tries to allocate a hardware
+PMU counter for it, which can wrongly consume hardware PMU resources and
+cause spurious allocation failures.
 
-Link: https://lkml.kernel.org/r/20251225023043.18579-3-sj@kernel.org
-Fixes: c951cd3b8901 ("mm/damon: implement a minimal stub for sysfs-based DAMON interface")
-Signed-off-by: SeongJae Park <sj@kernel.org>
-Cc: chongjiapeng <jiapeng.chong@linux.alibaba.com>
-Cc: <stable@vger.kernel.org> # 5.18.x
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Fix this by only allocating PMU counters for hardware events during group
+validation, and skipping software events.
+
+A trimmed down reproducer is as simple as this:
+
+  #include <stdio.h>
+  #include <assert.h>
+  #include <unistd.h>
+  #include <string.h>
+  #include <sys/syscall.h>
+  #include <linux/perf_event.h>
+
+  int main (int argc, char *argv[])
+  {
+  	struct perf_event_attr attr = { 0 };
+  	int fds[5];
+
+  	attr.disabled = 1;
+  	attr.exclude_kernel = 1;
+  	attr.exclude_hv = 1;
+  	attr.read_format = PERF_FORMAT_TOTAL_TIME_ENABLED |
+  		PERF_FORMAT_TOTAL_TIME_RUNNING | PERF_FORMAT_ID | PERF_FORMAT_GROUP;
+  	attr.size = sizeof (attr);
+
+  	attr.type = PERF_TYPE_SOFTWARE;
+  	attr.config = PERF_COUNT_SW_DUMMY;
+  	fds[0] = syscall (SYS_perf_event_open, &attr, 0, -1, -1, 0);
+  	assert (fds[0] >= 0);
+
+  	attr.type = PERF_TYPE_HARDWARE;
+  	attr.config = PERF_COUNT_HW_CPU_CYCLES;
+  	fds[1] = syscall (SYS_perf_event_open, &attr, 0, -1, fds[0], 0);
+  	assert (fds[1] >= 0);
+
+  	attr.type = PERF_TYPE_HARDWARE;
+  	attr.config = PERF_COUNT_HW_INSTRUCTIONS;
+  	fds[2] = syscall (SYS_perf_event_open, &attr, 0, -1, fds[0], 0);
+  	assert (fds[2] >= 0);
+
+  	attr.type = PERF_TYPE_HARDWARE;
+  	attr.config = PERF_COUNT_HW_BRANCH_MISSES;
+  	fds[3] = syscall (SYS_perf_event_open, &attr, 0, -1, fds[0], 0);
+  	assert (fds[3] >= 0);
+
+  	attr.type = PERF_TYPE_HARDWARE;
+  	attr.config = PERF_COUNT_HW_CACHE_REFERENCES;
+  	fds[4] = syscall (SYS_perf_event_open, &attr, 0, -1, fds[0], 0);
+  	assert (fds[4] >= 0);
+
+  	printf ("PASSED\n");
+
+  	return 0;
+  }
+
+Cc: stable@vger.kernel.org
+Fixes: b37042b2bb7c ("LoongArch: Add perf events support")
+Signed-off-by: Lisa Robinson <lisa@bytefly.space>
+Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/damon/sysfs.c |    5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ arch/loongarch/kernel/perf_event.c |   21 ++++++++++++++++++---
+ 1 file changed, 18 insertions(+), 3 deletions(-)
 
---- a/mm/damon/sysfs.c
-+++ b/mm/damon/sysfs.c
-@@ -716,7 +716,7 @@ static int damon_sysfs_context_add_dirs(
+--- a/arch/loongarch/kernel/perf_event.c
++++ b/arch/loongarch/kernel/perf_event.c
+@@ -627,6 +627,18 @@ static const struct loongarch_perf_event
+ 	return pev;
+ }
  
- 	err = damon_sysfs_context_set_targets(context);
- 	if (err)
--		goto put_attrs_out;
-+		goto rmdir_put_attrs_out;
++static inline bool loongarch_pmu_event_requires_counter(const struct perf_event *event)
++{
++	switch (event->attr.type) {
++	case PERF_TYPE_HARDWARE:
++	case PERF_TYPE_HW_CACHE:
++	case PERF_TYPE_RAW:
++		return true;
++	default:
++		return false;
++	}
++}
++
+ static int validate_group(struct perf_event *event)
+ {
+ 	struct cpu_hw_events fake_cpuc;
+@@ -634,15 +646,18 @@ static int validate_group(struct perf_ev
  
- 	err = damon_sysfs_context_set_schemes(context);
- 	if (err)
-@@ -726,7 +726,8 @@ static int damon_sysfs_context_add_dirs(
- put_targets_attrs_out:
- 	kobject_put(&context->targets->kobj);
- 	context->targets = NULL;
--put_attrs_out:
-+rmdir_put_attrs_out:
-+	damon_sysfs_attrs_rm_dirs(context->attrs);
- 	kobject_put(&context->attrs->kobj);
- 	context->attrs = NULL;
- 	return err;
+ 	memset(&fake_cpuc, 0, sizeof(fake_cpuc));
+ 
+-	if (loongarch_pmu_alloc_counter(&fake_cpuc, &leader->hw) < 0)
++	if (loongarch_pmu_event_requires_counter(leader) &&
++	    loongarch_pmu_alloc_counter(&fake_cpuc, &leader->hw) < 0)
+ 		return -EINVAL;
+ 
+ 	for_each_sibling_event(sibling, leader) {
+-		if (loongarch_pmu_alloc_counter(&fake_cpuc, &sibling->hw) < 0)
++		if (loongarch_pmu_event_requires_counter(sibling) &&
++		    loongarch_pmu_alloc_counter(&fake_cpuc, &sibling->hw) < 0)
+ 			return -EINVAL;
+ 	}
+ 
+-	if (loongarch_pmu_alloc_counter(&fake_cpuc, &event->hw) < 0)
++	if (loongarch_pmu_event_requires_counter(event) &&
++	    loongarch_pmu_alloc_counter(&fake_cpuc, &event->hw) < 0)
+ 		return -EINVAL;
+ 
+ 	return 0;
 
 
