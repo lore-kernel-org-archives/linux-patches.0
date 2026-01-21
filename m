@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA6E938BDC7;
-	Wed, 21 Jan 2026 18:27:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73193352FAD;
+	Wed, 21 Jan 2026 18:27:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769020072; cv=none; b=BHo0DIXtLwt3AWSky/1TdeGXMmbXlFFvFzNB6DSTx3viQGhfVd3evXLQSibZkjkdayWWktg75jpbmQW904T2JOrb4TIWDoPMQtcPusD9EHRGn/qBsL8ib+oubHRsI3eXfpq2OCZcpsLh8irB+dM05FlRhK06mi40Iy1SwpAGR5E=
+	t=1769020076; cv=none; b=uf5NkH2jD1GvLPL88f80ZCeSLikcXbdtwlWgCvfXf5z58CKITJSvWuCxBWTMJySsBXKuTU42ADrjwRLtXj0SeTxgKq0IFj320wr8kt1FZJ/7SBC/8CwfnZj/f3PuREcCH93lNddG9lV8cg0OHDs9/hmrdg3sONBZ6JuV4y6Bir0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769020072; c=relaxed/simple;
-	bh=vcJEAd2EwqoobEswpTVLSQP5wME7Z6ArzsTF5u+KqpI=;
+	s=arc-20240116; t=1769020076; c=relaxed/simple;
+	bh=907WV84aY9Ekyialn1MFnEqwir2if1vquz3olIyK7IM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cNivWqivMrUWpwVcVtuci/w9qsd4ScrAGQ44OZ5LPSdEa5p2+c/7UwCgXhwaY52hCpAcgrsR7ZwBosLl3dDwbWVP/pHf8rr+cUuxMovayDjTgMdGARb2NG27q1odiS0MNxEnPmUhIP+Bv/pFy2jFEudeUrARzQazbsrrkNTnvz8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aU0S2A1I; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tf4dxV+v1YMMDR02SLKzdMIAQkpWgf+JGJRwo85B7qTLCKdiY764nflQTl+zTc3YnxswS53cNw2VGxewwxV6nBNApfgLm7K2O55258SrXFBGl1NMcYcpo/zhPlT6WsuFEzwlSW2W2qUt57+VZGssut2oHaeXB7tmOTfzVCSeMwU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MhYtm8zb; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aU0S2A1I"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B6FAC4CEF1;
-	Wed, 21 Jan 2026 18:27:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MhYtm8zb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE1C3C4CEF1;
+	Wed, 21 Jan 2026 18:27:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1769020072;
-	bh=vcJEAd2EwqoobEswpTVLSQP5wME7Z6ArzsTF5u+KqpI=;
+	s=korg; t=1769020076;
+	bh=907WV84aY9Ekyialn1MFnEqwir2if1vquz3olIyK7IM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aU0S2A1IutJcJfHQWt8sUgaMUF+qCZDiYZh8ZSQZg5hkMy6IZKf83VHlb8aw47Zkf
-	 BzjvS7d7Ryd3JJ5PouL2NCdUQzmnYXqJI5V1ENu9r133d9KliBaZ9wuxuU2PtjA9sf
-	 F1Y1DzWHfUagPdIs/0GFwDKUQTnlFxLY2WpxnCcs=
+	b=MhYtm8zb9l0cfROazS9u6egBUwonJqbOmtaHOfsLW6ACjg1nrFryR4S0ZlnD/B8sv
+	 H4IIvS7bRET3iORQ74nD9t1WMhEGnlCCyT8HmuKnxlQ1fnfn3V96wQbJdBtrDwPzDl
+	 c/Kogzd8CLmikCkV2VQJwJPKAsOVQBDb0g7Kk6Qk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+179fc225724092b8b2b2@syzkaller.appspotmail.com,
+	syzbot+72e610f4f1a930ca9d8a@syzkaller.appspotmail.com,
+	Kuniyuki Iwashima <kuniyu@google.com>,
+	Hangbin Liu <liuhangbin@gmail.com>,
 	Eric Dumazet <edumazet@google.com>,
-	Martin KaFai Lau <martin.lau@kernel.org>,
-	David Ahern <dsahern@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 051/198] dst: fix races in rt6_uncached_list_del() and rt_del_uncached_list()
-Date: Wed, 21 Jan 2026 19:14:39 +0100
-Message-ID: <20260121181420.393363921@linuxfoundation.org>
+Subject: [PATCH 6.18 052/198] ipv6: Fix use-after-free in inet6_addr_del().
+Date: Wed, 21 Jan 2026 19:14:40 +0100
+Message-ID: <20260121181420.428253933@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260121181418.537774329@linuxfoundation.org>
 References: <20260121181418.537774329@linuxfoundation.org>
@@ -54,266 +54,130 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Kuniyuki Iwashima <kuniyu@google.com>
 
-[ Upstream commit 9a6f0c4d5796ab89b5a28a890ce542344d58bd69 ]
+[ Upstream commit ddf96c393a33aef4887e2e406c76c2f8cda1419c ]
 
-syzbot was able to crash the kernel in rt6_uncached_list_flush_dev()
-in an interesting way [1]
+syzbot reported use-after-free of inet6_ifaddr in
+inet6_addr_del(). [0]
 
-Crash happens in list_del_init()/INIT_LIST_HEAD() while writing
-list->prev, while the prior write on list->next went well.
+The cited commit accidentally moved ipv6_del_addr() for
+mngtmpaddr before reading its ifp->flags for temporary
+addresses in inet6_addr_del().
 
-static inline void INIT_LIST_HEAD(struct list_head *list)
-{
-	WRITE_ONCE(list->next, list); // This went well
-	WRITE_ONCE(list->prev, list); // Crash, @list has been freed.
-}
+Let's move ipv6_del_addr() down to fix the UAF.
 
-Issue here is that rt6_uncached_list_del() did not attempt to lock
-ul->lock, as list_empty(&rt->dst.rt_uncached) returned
-true because the WRITE_ONCE(list->next, list) happened on the other CPU.
+[0]:
+BUG: KASAN: slab-use-after-free in inet6_addr_del.constprop.0+0x67a/0x6b0 net/ipv6/addrconf.c:3117
+Read of size 4 at addr ffff88807b89c86c by task syz.3.1618/9593
 
-We might use list_del_init_careful() and list_empty_careful(),
-or make sure rt6_uncached_list_del() always grabs the spinlock
-whenever rt->dst.rt_uncached_list has been set.
-
-A similar fix is neeed for IPv4.
-
-[1]
-
- BUG: KASAN: slab-use-after-free in INIT_LIST_HEAD include/linux/list.h:46 [inline]
- BUG: KASAN: slab-use-after-free in list_del_init include/linux/list.h:296 [inline]
- BUG: KASAN: slab-use-after-free in rt6_uncached_list_flush_dev net/ipv6/route.c:191 [inline]
- BUG: KASAN: slab-use-after-free in rt6_disable_ip+0x633/0x730 net/ipv6/route.c:5020
-Write of size 8 at addr ffff8880294cfa78 by task kworker/u8:14/3450
-
-CPU: 0 UID: 0 PID: 3450 Comm: kworker/u8:14 Tainted: G             L      syzkaller #0 PREEMPT_{RT,(full)}
-Tainted: [L]=SOFTLOCKUP
+CPU: 0 UID: 0 PID: 9593 Comm: syz.3.1618 Not tainted syzkaller #0 PREEMPT(full)
 Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 10/25/2025
-Workqueue: netns cleanup_net
 Call Trace:
  <TASK>
-  dump_stack_lvl+0xe8/0x150 lib/dump_stack.c:120
-  print_address_description mm/kasan/report.c:378 [inline]
-  print_report+0xca/0x240 mm/kasan/report.c:482
-  kasan_report+0x118/0x150 mm/kasan/report.c:595
-  INIT_LIST_HEAD include/linux/list.h:46 [inline]
-  list_del_init include/linux/list.h:296 [inline]
-  rt6_uncached_list_flush_dev net/ipv6/route.c:191 [inline]
-  rt6_disable_ip+0x633/0x730 net/ipv6/route.c:5020
-  addrconf_ifdown+0x143/0x18a0 net/ipv6/addrconf.c:3853
- addrconf_notify+0x1bc/0x1050 net/ipv6/addrconf.c:-1
-  notifier_call_chain+0x19d/0x3a0 kernel/notifier.c:85
-  call_netdevice_notifiers_extack net/core/dev.c:2268 [inline]
-  call_netdevice_notifiers net/core/dev.c:2282 [inline]
-  netif_close_many+0x29c/0x410 net/core/dev.c:1785
-  unregister_netdevice_many_notify+0xb50/0x2330 net/core/dev.c:12353
-  ops_exit_rtnl_list net/core/net_namespace.c:187 [inline]
-  ops_undo_list+0x3dc/0x990 net/core/net_namespace.c:248
-  cleanup_net+0x4de/0x7b0 net/core/net_namespace.c:696
-  process_one_work kernel/workqueue.c:3257 [inline]
-  process_scheduled_works+0xad1/0x1770 kernel/workqueue.c:3340
-  worker_thread+0x8a0/0xda0 kernel/workqueue.c:3421
-  kthread+0x711/0x8a0 kernel/kthread.c:463
-  ret_from_fork+0x510/0xa50 arch/x86/kernel/process.c:158
-  ret_from_fork_asm+0x1a/0x30 arch/x86/entry/entry_64.S:246
+ __dump_stack lib/dump_stack.c:94 [inline]
+ dump_stack_lvl+0x116/0x1f0 lib/dump_stack.c:120
+ print_address_description mm/kasan/report.c:378 [inline]
+ print_report+0xcd/0x630 mm/kasan/report.c:482
+ kasan_report+0xe0/0x110 mm/kasan/report.c:595
+ inet6_addr_del.constprop.0+0x67a/0x6b0 net/ipv6/addrconf.c:3117
+ addrconf_del_ifaddr+0x11e/0x190 net/ipv6/addrconf.c:3181
+ inet6_ioctl+0x1e5/0x2b0 net/ipv6/af_inet6.c:582
+ sock_do_ioctl+0x118/0x280 net/socket.c:1254
+ sock_ioctl+0x227/0x6b0 net/socket.c:1375
+ vfs_ioctl fs/ioctl.c:51 [inline]
+ __do_sys_ioctl fs/ioctl.c:597 [inline]
+ __se_sys_ioctl fs/ioctl.c:583 [inline]
+ __x64_sys_ioctl+0x18e/0x210 fs/ioctl.c:583
+ do_syscall_x64 arch/x86/entry/syscall_64.c:63 [inline]
+ do_syscall_64+0xcd/0xf80 arch/x86/entry/syscall_64.c:94
+ entry_SYSCALL_64_after_hwframe+0x77/0x7f
+RIP: 0033:0x7f164cf8f749
+Code: ff ff c3 66 2e 0f 1f 84 00 00 00 00 00 0f 1f 40 00 48 89 f8 48 89 f7 48 89 d6 48 89 ca 4d 89 c2 4d 89 c8 4c 8b 4c 24 08 0f 05 <48> 3d 01 f0 ff ff 73 01 c3 48 c7 c1 a8 ff ff ff f7 d8 64 89 01 48
+RSP: 002b:00007f164de64038 EFLAGS: 00000246 ORIG_RAX: 0000000000000010
+RAX: ffffffffffffffda RBX: 00007f164d1e5fa0 RCX: 00007f164cf8f749
+RDX: 0000200000000000 RSI: 0000000000008936 RDI: 0000000000000003
+RBP: 00007f164d013f91 R08: 0000000000000000 R09: 0000000000000000
+R10: 0000000000000000 R11: 0000000000000246 R12: 0000000000000000
+R13: 00007f164d1e6038 R14: 00007f164d1e5fa0 R15: 00007ffde15c8288
  </TASK>
 
-Allocated by task 803:
-  kasan_save_stack mm/kasan/common.c:57 [inline]
-  kasan_save_track+0x3e/0x80 mm/kasan/common.c:78
-  unpoison_slab_object mm/kasan/common.c:340 [inline]
-  __kasan_slab_alloc+0x6c/0x80 mm/kasan/common.c:366
-  kasan_slab_alloc include/linux/kasan.h:253 [inline]
-  slab_post_alloc_hook mm/slub.c:4953 [inline]
-  slab_alloc_node mm/slub.c:5263 [inline]
-  kmem_cache_alloc_noprof+0x18d/0x6c0 mm/slub.c:5270
-  dst_alloc+0x105/0x170 net/core/dst.c:89
-  ip6_dst_alloc net/ipv6/route.c:342 [inline]
-  icmp6_dst_alloc+0x75/0x460 net/ipv6/route.c:3333
-  mld_sendpack+0x683/0xe60 net/ipv6/mcast.c:1844
-  mld_send_cr net/ipv6/mcast.c:2154 [inline]
-  mld_ifc_work+0x83e/0xd60 net/ipv6/mcast.c:2693
-  process_one_work kernel/workqueue.c:3257 [inline]
-  process_scheduled_works+0xad1/0x1770 kernel/workqueue.c:3340
-  worker_thread+0x8a0/0xda0 kernel/workqueue.c:3421
-  kthread+0x711/0x8a0 kernel/kthread.c:463
-  ret_from_fork+0x510/0xa50 arch/x86/kernel/process.c:158
-  ret_from_fork_asm+0x1a/0x30 arch/x86/entry/entry_64.S:246
+Allocated by task 9593:
+ kasan_save_stack+0x33/0x60 mm/kasan/common.c:56
+ kasan_save_track+0x14/0x30 mm/kasan/common.c:77
+ poison_kmalloc_redzone mm/kasan/common.c:397 [inline]
+ __kasan_kmalloc+0xaa/0xb0 mm/kasan/common.c:414
+ kmalloc_noprof include/linux/slab.h:957 [inline]
+ kzalloc_noprof include/linux/slab.h:1094 [inline]
+ ipv6_add_addr+0x4e3/0x2010 net/ipv6/addrconf.c:1120
+ inet6_addr_add+0x256/0x9b0 net/ipv6/addrconf.c:3050
+ addrconf_add_ifaddr+0x1fc/0x450 net/ipv6/addrconf.c:3160
+ inet6_ioctl+0x103/0x2b0 net/ipv6/af_inet6.c:580
+ sock_do_ioctl+0x118/0x280 net/socket.c:1254
+ sock_ioctl+0x227/0x6b0 net/socket.c:1375
+ vfs_ioctl fs/ioctl.c:51 [inline]
+ __do_sys_ioctl fs/ioctl.c:597 [inline]
+ __se_sys_ioctl fs/ioctl.c:583 [inline]
+ __x64_sys_ioctl+0x18e/0x210 fs/ioctl.c:583
+ do_syscall_x64 arch/x86/entry/syscall_64.c:63 [inline]
+ do_syscall_64+0xcd/0xf80 arch/x86/entry/syscall_64.c:94
+ entry_SYSCALL_64_after_hwframe+0x77/0x7f
 
-Freed by task 20:
-  kasan_save_stack mm/kasan/common.c:57 [inline]
-  kasan_save_track+0x3e/0x80 mm/kasan/common.c:78
-  kasan_save_free_info+0x46/0x50 mm/kasan/generic.c:584
-  poison_slab_object mm/kasan/common.c:253 [inline]
-  __kasan_slab_free+0x5c/0x80 mm/kasan/common.c:285
-  kasan_slab_free include/linux/kasan.h:235 [inline]
-  slab_free_hook mm/slub.c:2540 [inline]
-  slab_free mm/slub.c:6670 [inline]
-  kmem_cache_free+0x18f/0x8d0 mm/slub.c:6781
-  dst_destroy+0x235/0x350 net/core/dst.c:121
-  rcu_do_batch kernel/rcu/tree.c:2605 [inline]
-  rcu_core kernel/rcu/tree.c:2857 [inline]
-  rcu_cpu_kthread+0xba5/0x1af0 kernel/rcu/tree.c:2945
-  smpboot_thread_fn+0x542/0xa60 kernel/smpboot.c:160
-  kthread+0x711/0x8a0 kernel/kthread.c:463
-  ret_from_fork+0x510/0xa50 arch/x86/kernel/process.c:158
-  ret_from_fork_asm+0x1a/0x30 arch/x86/entry/entry_64.S:246
+Freed by task 6099:
+ kasan_save_stack+0x33/0x60 mm/kasan/common.c:56
+ kasan_save_track+0x14/0x30 mm/kasan/common.c:77
+ kasan_save_free_info+0x3b/0x60 mm/kasan/generic.c:584
+ poison_slab_object mm/kasan/common.c:252 [inline]
+ __kasan_slab_free+0x5f/0x80 mm/kasan/common.c:284
+ kasan_slab_free include/linux/kasan.h:234 [inline]
+ slab_free_hook mm/slub.c:2540 [inline]
+ slab_free_freelist_hook mm/slub.c:2569 [inline]
+ slab_free_bulk mm/slub.c:6696 [inline]
+ kmem_cache_free_bulk mm/slub.c:7383 [inline]
+ kmem_cache_free_bulk+0x2bf/0x680 mm/slub.c:7362
+ kfree_bulk include/linux/slab.h:830 [inline]
+ kvfree_rcu_bulk+0x1b7/0x1e0 mm/slab_common.c:1523
+ kvfree_rcu_drain_ready mm/slab_common.c:1728 [inline]
+ kfree_rcu_monitor+0x1d0/0x2f0 mm/slab_common.c:1801
+ process_one_work+0x9ba/0x1b20 kernel/workqueue.c:3257
+ process_scheduled_works kernel/workqueue.c:3340 [inline]
+ worker_thread+0x6c8/0xf10 kernel/workqueue.c:3421
+ kthread+0x3c5/0x780 kernel/kthread.c:463
+ ret_from_fork+0x983/0xb10 arch/x86/kernel/process.c:158
+ ret_from_fork_asm+0x1a/0x30 arch/x86/entry/entry_64.S:246
 
-Last potentially related work creation:
-  kasan_save_stack+0x3e/0x60 mm/kasan/common.c:57
-  kasan_record_aux_stack+0xbd/0xd0 mm/kasan/generic.c:556
-  __call_rcu_common kernel/rcu/tree.c:3119 [inline]
-  call_rcu+0xee/0x890 kernel/rcu/tree.c:3239
-  refdst_drop include/net/dst.h:266 [inline]
-  skb_dst_drop include/net/dst.h:278 [inline]
-  skb_release_head_state+0x71/0x360 net/core/skbuff.c:1156
-  skb_release_all net/core/skbuff.c:1180 [inline]
-  __kfree_skb net/core/skbuff.c:1196 [inline]
-  sk_skb_reason_drop+0xe9/0x170 net/core/skbuff.c:1234
-  kfree_skb_reason include/linux/skbuff.h:1322 [inline]
-  tcf_kfree_skb_list include/net/sch_generic.h:1127 [inline]
-  __dev_xmit_skb net/core/dev.c:4260 [inline]
-  __dev_queue_xmit+0x26aa/0x3210 net/core/dev.c:4785
-  NF_HOOK_COND include/linux/netfilter.h:307 [inline]
-  ip6_output+0x340/0x550 net/ipv6/ip6_output.c:247
-  NF_HOOK+0x9e/0x380 include/linux/netfilter.h:318
-  mld_sendpack+0x8d4/0xe60 net/ipv6/mcast.c:1855
-  mld_send_cr net/ipv6/mcast.c:2154 [inline]
-  mld_ifc_work+0x83e/0xd60 net/ipv6/mcast.c:2693
-  process_one_work kernel/workqueue.c:3257 [inline]
-  process_scheduled_works+0xad1/0x1770 kernel/workqueue.c:3340
-  worker_thread+0x8a0/0xda0 kernel/workqueue.c:3421
-  kthread+0x711/0x8a0 kernel/kthread.c:463
-  ret_from_fork+0x510/0xa50 arch/x86/kernel/process.c:158
-  ret_from_fork_asm+0x1a/0x30 arch/x86/entry/entry_64.S:246
-
-The buggy address belongs to the object at ffff8880294cfa00
- which belongs to the cache ip6_dst_cache of size 232
-The buggy address is located 120 bytes inside of
- freed 232-byte region [ffff8880294cfa00, ffff8880294cfae8)
-
-The buggy address belongs to the physical page:
-page: refcount:0 mapcount:0 mapping:0000000000000000 index:0x0 pfn:0x294cf
-memcg:ffff88803536b781
-flags: 0x80000000000000(node=0|zone=1)
-page_type: f5(slab)
-raw: 0080000000000000 ffff88802ff1c8c0 ffffea0000bf2bc0 dead000000000006
-raw: 0000000000000000 00000000800c000c 00000000f5000000 ffff88803536b781
-page dumped because: kasan: bad access detected
-page_owner tracks the page as allocated
-page last allocated via order 0, migratetype Unmovable, gfp_mask 0x52820(GFP_ATOMIC|__GFP_NOWARN|__GFP_NORETRY|__GFP_COMP), pid 9, tgid 9 (kworker/0:0), ts 91119585830, free_ts 91088628818
-  set_page_owner include/linux/page_owner.h:32 [inline]
-  post_alloc_hook+0x234/0x290 mm/page_alloc.c:1857
-  prep_new_page mm/page_alloc.c:1865 [inline]
-  get_page_from_freelist+0x28c0/0x2960 mm/page_alloc.c:3915
-  __alloc_frozen_pages_noprof+0x181/0x370 mm/page_alloc.c:5210
-  alloc_pages_mpol+0xd1/0x380 mm/mempolicy.c:2486
-  alloc_slab_page mm/slub.c:3075 [inline]
-  allocate_slab+0x86/0x3b0 mm/slub.c:3248
-  new_slab mm/slub.c:3302 [inline]
-  ___slab_alloc+0xb10/0x13e0 mm/slub.c:4656
-  __slab_alloc+0xc6/0x1f0 mm/slub.c:4779
-  __slab_alloc_node mm/slub.c:4855 [inline]
-  slab_alloc_node mm/slub.c:5251 [inline]
-  kmem_cache_alloc_noprof+0x101/0x6c0 mm/slub.c:5270
-  dst_alloc+0x105/0x170 net/core/dst.c:89
-  ip6_dst_alloc net/ipv6/route.c:342 [inline]
-  icmp6_dst_alloc+0x75/0x460 net/ipv6/route.c:3333
-  mld_sendpack+0x683/0xe60 net/ipv6/mcast.c:1844
-  mld_send_cr net/ipv6/mcast.c:2154 [inline]
-  mld_ifc_work+0x83e/0xd60 net/ipv6/mcast.c:2693
-  process_one_work kernel/workqueue.c:3257 [inline]
-  process_scheduled_works+0xad1/0x1770 kernel/workqueue.c:3340
-  worker_thread+0x8a0/0xda0 kernel/workqueue.c:3421
-  kthread+0x711/0x8a0 kernel/kthread.c:463
-  ret_from_fork+0x510/0xa50 arch/x86/kernel/process.c:158
-page last free pid 5859 tgid 5859 stack trace:
-  reset_page_owner include/linux/page_owner.h:25 [inline]
-  free_pages_prepare mm/page_alloc.c:1406 [inline]
-  __free_frozen_pages+0xfe1/0x1170 mm/page_alloc.c:2943
-  discard_slab mm/slub.c:3346 [inline]
-  __put_partials+0x149/0x170 mm/slub.c:3886
-  __slab_free+0x2af/0x330 mm/slub.c:5952
-  qlink_free mm/kasan/quarantine.c:163 [inline]
-  qlist_free_all+0x97/0x100 mm/kasan/quarantine.c:179
-  kasan_quarantine_reduce+0x148/0x160 mm/kasan/quarantine.c:286
-  __kasan_slab_alloc+0x22/0x80 mm/kasan/common.c:350
-  kasan_slab_alloc include/linux/kasan.h:253 [inline]
-  slab_post_alloc_hook mm/slub.c:4953 [inline]
-  slab_alloc_node mm/slub.c:5263 [inline]
-  kmem_cache_alloc_noprof+0x18d/0x6c0 mm/slub.c:5270
-  getname_flags+0xb8/0x540 fs/namei.c:146
-  getname include/linux/fs.h:2498 [inline]
-  do_sys_openat2+0xbc/0x200 fs/open.c:1426
-  do_sys_open fs/open.c:1436 [inline]
-  __do_sys_openat fs/open.c:1452 [inline]
-  __se_sys_openat fs/open.c:1447 [inline]
-  __x64_sys_openat+0x138/0x170 fs/open.c:1447
-  do_syscall_x64 arch/x86/entry/syscall_64.c:63 [inline]
-  do_syscall_64+0xec/0xf80 arch/x86/entry/syscall_64.c:94
-
-Fixes: 8d0b94afdca8 ("ipv6: Keep track of DST_NOCACHE routes in case of iface down/unregister")
-Fixes: 78df76a065ae ("ipv4: take rt_uncached_lock only if needed")
-Reported-by: syzbot+179fc225724092b8b2b2@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/netdev/6964cdf2.050a0220.eaf7.009d.GAE@google.com/T/#u
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Cc: Martin KaFai Lau <martin.lau@kernel.org>
-Reviewed-by: David Ahern <dsahern@kernel.org>
-Link: https://patch.msgid.link/20260112103825.3810713-1-edumazet@google.com
+Fixes: 00b5b7aab9e42 ("net/ipv6: delete temporary address if mngtmpaddr is removed or unmanaged")
+Reported-by: syzbot+72e610f4f1a930ca9d8a@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/netdev/696598e9.050a0220.3be5c5.0009.GAE@google.com/
+Signed-off-by: Kuniyuki Iwashima <kuniyu@google.com>
+Reviewed-by: Hangbin Liu <liuhangbin@gmail.com>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Link: https://patch.msgid.link/20260113010538.2019411-1-kuniyu@google.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/dst.c   | 1 +
- net/ipv4/route.c | 4 ++--
- net/ipv6/route.c | 4 ++--
- 3 files changed, 5 insertions(+), 4 deletions(-)
+ net/ipv6/addrconf.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/net/core/dst.c b/net/core/dst.c
-index e9d35f49c9e78..1dae26c51ebec 100644
---- a/net/core/dst.c
-+++ b/net/core/dst.c
-@@ -68,6 +68,7 @@ void dst_init(struct dst_entry *dst, struct dst_ops *ops,
- 	dst->lwtstate = NULL;
- 	rcuref_init(&dst->__rcuref, 1);
- 	INIT_LIST_HEAD(&dst->rt_uncached);
-+	dst->rt_uncached_list = NULL;
- 	dst->__use = 0;
- 	dst->lastuse = jiffies;
- 	dst->flags = flags;
-diff --git a/net/ipv4/route.c b/net/ipv4/route.c
-index b549d6a573073..11d990703d31a 100644
---- a/net/ipv4/route.c
-+++ b/net/ipv4/route.c
-@@ -1537,9 +1537,9 @@ void rt_add_uncached_list(struct rtable *rt)
+diff --git a/net/ipv6/addrconf.c b/net/ipv6/addrconf.c
+index 40e9c336f6c55..cad5e4ab8c3db 100644
+--- a/net/ipv6/addrconf.c
++++ b/net/ipv6/addrconf.c
+@@ -3112,12 +3112,12 @@ static int inet6_addr_del(struct net *net, int ifindex, u32 ifa_flags,
+ 			in6_ifa_hold(ifp);
+ 			read_unlock_bh(&idev->lock);
  
- void rt_del_uncached_list(struct rtable *rt)
- {
--	if (!list_empty(&rt->dst.rt_uncached)) {
--		struct uncached_list *ul = rt->dst.rt_uncached_list;
-+	struct uncached_list *ul = rt->dst.rt_uncached_list;
+-			ipv6_del_addr(ifp);
+-
+ 			if (!(ifp->flags & IFA_F_TEMPORARY) &&
+ 			    (ifp->flags & IFA_F_MANAGETEMPADDR))
+ 				delete_tempaddrs(idev, ifp);
  
-+	if (ul) {
- 		spin_lock_bh(&ul->lock);
- 		list_del_init(&rt->dst.rt_uncached);
- 		spin_unlock_bh(&ul->lock);
-diff --git a/net/ipv6/route.c b/net/ipv6/route.c
-index a3e051dc66ee0..e3a260a5564ba 100644
---- a/net/ipv6/route.c
-+++ b/net/ipv6/route.c
-@@ -148,9 +148,9 @@ void rt6_uncached_list_add(struct rt6_info *rt)
- 
- void rt6_uncached_list_del(struct rt6_info *rt)
- {
--	if (!list_empty(&rt->dst.rt_uncached)) {
--		struct uncached_list *ul = rt->dst.rt_uncached_list;
-+	struct uncached_list *ul = rt->dst.rt_uncached_list;
- 
-+	if (ul) {
- 		spin_lock_bh(&ul->lock);
- 		list_del_init(&rt->dst.rt_uncached);
- 		spin_unlock_bh(&ul->lock);
++			ipv6_del_addr(ifp);
++
+ 			addrconf_verify_rtnl(net);
+ 			if (ipv6_addr_is_multicast(pfx)) {
+ 				ipv6_mc_config(net->ipv6.mc_autojoin_sk,
 -- 
 2.51.0
 
