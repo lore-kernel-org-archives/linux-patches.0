@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E37534A78C;
-	Wed, 21 Jan 2026 18:31:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3C00316193;
+	Wed, 21 Jan 2026 18:31:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769020306; cv=none; b=fDaeJh+nm17n0mFOLrm1aGFvT3gUqaQQkcy+IQDi2p0GoJsl5bql28vUxUBDdRA8DeuVU3IDpfPl62Xhj3da56EhvxxDlA8lnr0BOUM4UFsAgaLf+/XLWoU24/iahEE3QBV1R89XkJSdJrbgMjx0sEYmwcmRRzXES+aVj5ECUqE=
+	t=1769020309; cv=none; b=EM1eGmvB4Nfr494ar+Fh5gtUkPvYKTYooasvUVCC2CNnvTnxhWQfgBbuQxJsoU/SwK10wpolEUEFyc3rKmFKC82tdGuKs6yg7O5f7uBt2tpdkTrDq7ZI03ye7d0ZO2FLZ83+YTmsIM/4FLIen622Lmmq/ZwK0I0G0valWIgis3k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769020306; c=relaxed/simple;
-	bh=SFoHzmInKxet0o4A5mZz7cDXZL6TTfJELmcTvjw6IEM=;
+	s=arc-20240116; t=1769020309; c=relaxed/simple;
+	bh=FIzAMxQsVrSGdSftzMdY5BuXrxN+8K5GBzDI538nYzg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kw4RC/z2BOiVHU3RGY5tI9rkObZZevQlYR07VVzmDZ9FFWXs2LbHnI8tA8HSqSGcikX5AiIUdXM/J6aMoUcuWkxoJqYm7NzJ9AGeb8TUbk0WaGemioO8r2tgAC24JyMJwfwSaZIuneou2+Yi0gkwKF7UGo7dNo1of6t2CNXbIYw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fTE/HgPi; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=RBSLmB0n68kW9KPl/SVFpgomFNAbomxi9dROxU7e9vfxQQuv1zw6STgtQSGi5jpYaYBgKQbTmcJXNIc4A2FIFMj1OaxAA6n3yv6G4rED2MMnZkpwm+6TqWl+eHBGrAO6zva4hb4R+pIAhox7j23gjuSQazCO8VvZHLjKZ40DIYs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=izG1SZnX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fTE/HgPi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A8601C4CEF1;
-	Wed, 21 Jan 2026 18:31:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="izG1SZnX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D03DC4CEF1;
+	Wed, 21 Jan 2026 18:31:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1769020306;
-	bh=SFoHzmInKxet0o4A5mZz7cDXZL6TTfJELmcTvjw6IEM=;
+	s=korg; t=1769020309;
+	bh=FIzAMxQsVrSGdSftzMdY5BuXrxN+8K5GBzDI538nYzg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fTE/HgPiQQ1WbE3GyHs9SMKXw1LvdgKxXi42pjbhMSmCese81HqJRhHz3LAPiPsd+
-	 GC204Cywhie53Pc5FXqdDHXosq3uOajIU3VCFwwSZpR8ryuHE9QjcbBF2BhNnpXfuy
-	 TPcbQIyE+IVhab/EB1u2QCPcVq6lzgj9nTAJKgcc=
+	b=izG1SZnXR12yAoqo2DLNBjiO1mTMvyv8WDfIjpSqYss674y6YZNdHDuVCU0vHcbW0
+	 FglVl9yEEf5SRanx9o8Ks8+z/oio6apXIgRu1Ig7owOZchNjyY3DYbO5vcTVndFHSQ
+	 sodxhoWu/jW+gM03itX9+Aoh/1JboBoyCrnJJemE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Frank Li <Frank.Li@nxp.com>,
 	Xu Yang <xu.yang_2@nxp.com>
-Subject: [PATCH 6.18 119/198] usb: gadget: uvc: fix interval_duration calculation
-Date: Wed, 21 Jan 2026 19:15:47 +0100
-Message-ID: <20260121181422.834452972@linuxfoundation.org>
+Subject: [PATCH 6.18 120/198] usb: gadget: uvc: fix req_payload_size calculation
+Date: Wed, 21 Jan 2026 19:15:48 +0100
+Message-ID: <20260121181422.869524262@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260121181418.537774329@linuxfoundation.org>
 References: <20260121181418.537774329@linuxfoundation.org>
@@ -52,64 +52,105 @@ Content-Transfer-Encoding: 8bit
 
 From: Xu Yang <xu.yang_2@nxp.com>
 
-commit 010dc57cb5163e5f4a32430dd5091cc29efd0471 upstream.
+commit 2edc1acb1a2512843425aa19d0c6060a0a924605 upstream.
 
-According to USB specification:
+Current req_payload_size calculation has 2 issue:
 
-  For full-/high-speed isochronous endpoints, the bInterval value is
-  used as the exponent for a 2^(bInterval-1) value.
+(1) When the first time calculate req_payload_size for all the buffers,
+    reqs_per_frame = 0 will be the divisor of DIV_ROUND_UP(). So
+    the result is undefined.
+    This happens because VIDIOC_STREAMON is always executed after
+    VIDIOC_QBUF. So video->reqs_per_frame will be 0 until VIDIOC_STREAMON
+    is run.
 
-To correctly convert bInterval as interval_duration:
-  interval_duration = 2^(bInterval-1) * frame_interval
+(2) The buf->req_payload_size may be bigger than max_req_size.
 
-Because the unit of video->interval is 100ns, add a comment info to
-make it clear.
+    Take YUYV pixel format as example:
+    If bInterval = 1, video->interval = 666666, high-speed:
+    video->reqs_per_frame = 666666 / 1250 = 534
+     720p: buf->req_payload_size = 1843200 / 534 = 3452
+    1080p: buf->req_payload_size = 4147200 / 534 = 7766
 
-Fixes: 48dbe731171e ("usb: gadget: uvc: set req_size and n_requests based on the frame interval")
+    Based on such req_payload_size, the controller can't run normally.
+
+To fix above issue, assign max_req_size to buf->req_payload_size when
+video->reqs_per_frame = 0. And limit buf->req_payload_size to
+video->req_size if it's large than video->req_size. Since max_req_size
+is used at many place, add it to struct uvc_video and set the value once
+endpoint is enabled.
+
+Fixes: 98ad03291560 ("usb: gadget: uvc: set req_length based on payload by nreqs instead of req_size")
 Cc: stable@vger.kernel.org
 Reviewed-by: Frank Li <Frank.Li@nxp.com>
 Signed-off-by: Xu Yang <xu.yang_2@nxp.com>
-Link: https://patch.msgid.link/20260113-uvc-gadget-fix-patch-v2-2-62950ef5bcb5@nxp.com
+Link: https://patch.msgid.link/20260113-uvc-gadget-fix-patch-v2-1-62950ef5bcb5@nxp.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/gadget/function/uvc.h       |    2 +-
- drivers/usb/gadget/function/uvc_video.c |    7 +++++--
- 2 files changed, 6 insertions(+), 3 deletions(-)
+ drivers/usb/gadget/function/f_uvc.c     |    4 ++++
+ drivers/usb/gadget/function/uvc.h       |    1 +
+ drivers/usb/gadget/function/uvc_queue.c |   15 +++++++++++----
+ drivers/usb/gadget/function/uvc_video.c |    4 +---
+ 4 files changed, 17 insertions(+), 7 deletions(-)
 
+--- a/drivers/usb/gadget/function/f_uvc.c
++++ b/drivers/usb/gadget/function/f_uvc.c
+@@ -362,6 +362,10 @@ uvc_function_set_alt(struct usb_function
+ 			return ret;
+ 		usb_ep_enable(uvc->video.ep);
+ 
++		uvc->video.max_req_size = uvc->video.ep->maxpacket
++			* max_t(unsigned int, uvc->video.ep->maxburst, 1)
++			* (uvc->video.ep->mult);
++
+ 		memset(&v4l2_event, 0, sizeof(v4l2_event));
+ 		v4l2_event.type = UVC_EVENT_STREAMON;
+ 		v4l2_event_queue(&uvc->vdev, &v4l2_event);
 --- a/drivers/usb/gadget/function/uvc.h
 +++ b/drivers/usb/gadget/function/uvc.h
-@@ -107,7 +107,7 @@ struct uvc_video {
- 	unsigned int width;
- 	unsigned int height;
- 	unsigned int imagesize;
--	unsigned int interval;
-+	unsigned int interval;	/* in 100ns units */
- 	struct mutex mutex;	/* protects frame parameters */
+@@ -117,6 +117,7 @@ struct uvc_video {
+ 	/* Requests */
+ 	bool is_enabled; /* tracks whether video stream is enabled */
+ 	unsigned int req_size;
++	unsigned int max_req_size;
+ 	struct list_head ureqs; /* all uvc_requests allocated by uvc_video */
  
- 	unsigned int uvc_num_requests;
+ 	/* USB requests that the video pump thread can encode into */
+--- a/drivers/usb/gadget/function/uvc_queue.c
++++ b/drivers/usb/gadget/function/uvc_queue.c
+@@ -86,10 +86,17 @@ static int uvc_buffer_prepare(struct vb2
+ 		buf->bytesused = 0;
+ 	} else {
+ 		buf->bytesused = vb2_get_plane_payload(vb, 0);
+-		buf->req_payload_size =
+-			  DIV_ROUND_UP(buf->bytesused +
+-				       (video->reqs_per_frame * UVCG_REQUEST_HEADER_LEN),
+-				       video->reqs_per_frame);
++
++		if (video->reqs_per_frame != 0)	{
++			buf->req_payload_size =
++				DIV_ROUND_UP(buf->bytesused +
++					(video->reqs_per_frame * UVCG_REQUEST_HEADER_LEN),
++					video->reqs_per_frame);
++			if (buf->req_payload_size > video->req_size)
++				buf->req_payload_size = video->req_size;
++		} else {
++			buf->req_payload_size = video->max_req_size;
++		}
+ 	}
+ 
+ 	return 0;
 --- a/drivers/usb/gadget/function/uvc_video.c
 +++ b/drivers/usb/gadget/function/uvc_video.c
-@@ -499,7 +499,7 @@ uvc_video_prep_requests(struct uvc_video
- {
- 	struct uvc_device *uvc = container_of(video, struct uvc_device, video);
- 	struct usb_composite_dev *cdev = uvc->func.config->cdev;
--	unsigned int interval_duration = video->ep->desc->bInterval * 1250;
-+	unsigned int interval_duration;
+@@ -503,9 +503,7 @@ uvc_video_prep_requests(struct uvc_video
  	unsigned int max_req_size, req_size, header_size;
  	unsigned int nreq;
  
-@@ -515,8 +515,11 @@ uvc_video_prep_requests(struct uvc_video
- 		return;
- 	}
+-	max_req_size = video->ep->maxpacket
+-		 * max_t(unsigned int, video->ep->maxburst, 1)
+-		 * (video->ep->mult);
++	max_req_size = video->max_req_size;
  
-+	interval_duration = 2 << (video->ep->desc->bInterval - 1);
- 	if (cdev->gadget->speed < USB_SPEED_HIGH)
--		interval_duration = video->ep->desc->bInterval * 10000;
-+		interval_duration *= 10000;
-+	else
-+		interval_duration *= 1250;
- 
- 	nreq = DIV_ROUND_UP(video->interval, interval_duration);
- 
+ 	if (!usb_endpoint_xfer_isoc(video->ep->desc)) {
+ 		video->req_size = max_req_size;
 
 
