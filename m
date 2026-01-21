@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF4DC366DD8;
-	Wed, 21 Jan 2026 18:27:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5299D34A3D6;
+	Wed, 21 Jan 2026 18:27:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769020049; cv=none; b=ScaR0HVgTVLtpWYOxvGacle67d5NQ8UEx7XfyrAqmKIkgkUYVju4rhQ5XLsHOj5YS9kEayB/VWjJb7XUw/WX37klYi0nrfNG073KTI/sQjsugNP5XwJYgex8G0H+2bOaQnXmEJ+jzPe8wGoVDycjJw7IcYSnLHgL3Zva4YGukq8=
+	t=1769020052; cv=none; b=cjrhOio0hZddvHQWI6PUKgAT3pa8QUeTASXiZC59aZrlxeJIvsEJLzIRc1yg2ONVooLQOLnwqQ69HOB+dvO0WywD+zVgNTxUmz3eM7DeecyVfRCZ+8IFAwbgOdjTifoIzgLFZk290fbH3IeTRDoCcihxlOqUZpdOHXByYKtAkYc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769020049; c=relaxed/simple;
-	bh=dbHDXAwvMSdfVtUeojMEMzdq9A2x9jSdMRszva18rnU=;
+	s=arc-20240116; t=1769020052; c=relaxed/simple;
+	bh=9V7uOuhrrmollvcgTJ+F+03exQzN//Spu2pSAfydFPE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=K6vPMnao6AiAIhs51nVF96OvrhkVhLwwpax1kf1LeYaF/NlFYbFuk0JOBUCcZxKBOeMnFC+wVRbMG0z+Cyk2B2sx7541kj7QLWTfz2v9d6afYDt+cwg4pVI+SQJQCP3vTGIKYcyxw5QpoJ6Kp1jslAhkcAhMdtgICwH8LcM2y2g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zbqEY4Ar; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=nIfkPnRmslfcjjJuQR8U+tV4Rh/7Oc+5VP2ZsyD1/ZROux7LvXhZh/82f/xEGkuXBxyT7/rsb+xlzggAjqC8zqtqDvxORWErcJB3fQ5WXLWe2qq8gkRt9O5Rvg/0a/AoV6ffnVTC/8KBVjH27LE/uLXjieXFjlFOV39UnfI/RnY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ihn7Douq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zbqEY4Ar"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A996C4CEF1;
-	Wed, 21 Jan 2026 18:27:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ihn7Douq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B88BDC4CEF1;
+	Wed, 21 Jan 2026 18:27:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1769020048;
-	bh=dbHDXAwvMSdfVtUeojMEMzdq9A2x9jSdMRszva18rnU=;
+	s=korg; t=1769020052;
+	bh=9V7uOuhrrmollvcgTJ+F+03exQzN//Spu2pSAfydFPE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zbqEY4ArpNVCoe7inV+prtmOjnPSm7W/5NgyGBS//NFJkd7TxIzSm6x2gyYNmG4kF
-	 iTljRjPLe0qus0ZZnFuKxrpjZrVF08/0221I54g4/pNQaNwhEIvq3NwQVPWQZRrx+3
-	 0EERbIMgIUXAdqp8IhJ4UwvFq1Q0KBBYGtWQC2KE=
+	b=Ihn7DouqQoXjuHoaLhf2a+dLKokEqNBRj3Y/ToOJ+9LwqMH5BARTvVIC1VKYxpT7i
+	 VKGS2eFWUcC/9JMjzgoR8qjJPiWLoN486H3JBdHKfFnai6xcH0IqXOmC/AAvED1LjF
+	 3Wjij5IKh/AjAVw51lsSdnvhbKiAzMnFloGusKbA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kery Qi <qikeyu2017@gmail.com>,
+	Jijie Shao <shaojijie@huawei.com>,
+	Andrew Lunn <andrew@lunn.ch>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 045/198] net: octeon_ep_vf: fix free_irq dev_id mismatch in IRQ rollback
-Date: Wed, 21 Jan 2026 19:14:33 +0100
-Message-ID: <20260121181420.172703702@linuxfoundation.org>
+Subject: [PATCH 6.18 046/198] net: phy: motorcomm: fix duplex setting error for phy leds
+Date: Wed, 21 Jan 2026 19:14:34 +0100
+Message-ID: <20260121181420.208496888@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260121181418.537774329@linuxfoundation.org>
 References: <20260121181418.537774329@linuxfoundation.org>
@@ -51,44 +52,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kery Qi <qikeyu2017@gmail.com>
+From: Jijie Shao <shaojijie@huawei.com>
 
-[ Upstream commit f93fc5d12d69012788f82151bee55fce937e1432 ]
+[ Upstream commit e02f2a0f1f9b6d4f0c620de2ce037d4436b58f70 ]
 
-octep_vf_request_irqs() requests MSI-X queue IRQs with dev_id set to
-ioq_vector. If request_irq() fails part-way, the rollback loop calls
-free_irq() with dev_id set to 'oct', which does not match the original
-dev_id and may leave the irqaction registered.
+fix duplex setting error for phy leds
 
-This can keep IRQ handlers alive while ioq_vector is later freed during
-unwind/teardown, leading to a use-after-free or crash when an interrupt
-fires.
-
-Fix the error path to free IRQs with the same ioq_vector dev_id used
-during request_irq().
-
-Fixes: 1cd3b407977c ("octeon_ep_vf: add Tx/Rx processing and interrupt support")
-Signed-off-by: Kery Qi <qikeyu2017@gmail.com>
-Link: https://patch.msgid.link/20260108164256.1749-2-qikeyu2017@gmail.com
+Fixes: 355b82c54c12 ("net: phy: motorcomm: Add support for PHY LEDs on YT8521")
+Signed-off-by: Jijie Shao <shaojijie@huawei.com>
+Reviewed-by: Andrew Lunn <andrew@lunn.ch>
+Link: https://patch.msgid.link/20260108071409.2750607-1-shaojijie@huawei.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/marvell/octeon_ep_vf/octep_vf_main.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/phy/motorcomm.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/ethernet/marvell/octeon_ep_vf/octep_vf_main.c b/drivers/net/ethernet/marvell/octeon_ep_vf/octep_vf_main.c
-index 420c3f4cf7417..1d9760b4b8f47 100644
---- a/drivers/net/ethernet/marvell/octeon_ep_vf/octep_vf_main.c
-+++ b/drivers/net/ethernet/marvell/octeon_ep_vf/octep_vf_main.c
-@@ -218,7 +218,7 @@ static int octep_vf_request_irqs(struct octep_vf_device *oct)
- ioq_irq_err:
- 	while (i) {
- 		--i;
--		free_irq(oct->msix_entries[i].vector, oct);
-+		free_irq(oct->msix_entries[i].vector, oct->ioq_vector[i]);
- 	}
- 	return -1;
- }
+diff --git a/drivers/net/phy/motorcomm.c b/drivers/net/phy/motorcomm.c
+index a3593e6630594..b49897500a592 100644
+--- a/drivers/net/phy/motorcomm.c
++++ b/drivers/net/phy/motorcomm.c
+@@ -1741,10 +1741,10 @@ static int yt8521_led_hw_control_set(struct phy_device *phydev, u8 index,
+ 		val |= YT8521_LED_1000_ON_EN;
+ 
+ 	if (test_bit(TRIGGER_NETDEV_FULL_DUPLEX, &rules))
+-		val |= YT8521_LED_HDX_ON_EN;
++		val |= YT8521_LED_FDX_ON_EN;
+ 
+ 	if (test_bit(TRIGGER_NETDEV_HALF_DUPLEX, &rules))
+-		val |= YT8521_LED_FDX_ON_EN;
++		val |= YT8521_LED_HDX_ON_EN;
+ 
+ 	if (test_bit(TRIGGER_NETDEV_TX, &rules) ||
+ 	    test_bit(TRIGGER_NETDEV_RX, &rules))
 -- 
 2.51.0
 
