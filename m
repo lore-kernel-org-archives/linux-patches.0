@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B792622A80D;
-	Wed, 21 Jan 2026 18:28:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA2F23148B4;
+	Wed, 21 Jan 2026 18:28:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769020100; cv=none; b=i0u1FIjU5uJTJOaCdAbqOHlajnfjWku7V4RK3l7h24tELNQDuLSxO/HB5dHPC04c0oiP3hr/d44qkXuOV+8Rp1VEg5fC4PhdBGXaGnTHkg1S2Y5F0xEP3XCdlGwrM0yYUE2Ip/ZQEFUIhTYp4pes/W5T/tUw7eBVBYR2Z8a+a2I=
+	t=1769020103; cv=none; b=na2uXdjW/LHmfxQpfna2Q8rcXHJT8qC7kfxOMMKwSGgVf6I2OcIoVLPOXd7r4SZIT+pfnJ/B405GU+JbCIY1G/f6JDIEkaSYh2zHF23RDp7zBjmbwUWKCdaS0SHjwgZl9nt8iAHW29DDW0+YPPnvpESplGvaDCPyaxxWKpnR77k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769020100; c=relaxed/simple;
-	bh=9pkNINbbE5wYYHaYEuYHSzj3qixwifadPctJ4/q9Kds=;
+	s=arc-20240116; t=1769020103; c=relaxed/simple;
+	bh=Q5vdc1jIZwKZ57+/aNSChjsH5KLOiCkfcmvCj7VcqHo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fi5O71K5DLMSZXc+fwJJRG3dQxb6OlqgKFvE0hQgHRWcUD51qcGLR7LoevhUk+IlF80aT7t68s/eT6mBlsPoVcLAQs3RmSmTZGw/I49RWpZmECFK1MG6qTgShpEgp3TdNrHoDDO9IZ9vFIrWf4n3FbYoC4FyT/w9yc7VjLHRzds=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UJz9egsT; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YUJcdMp5sPbs/5Hr9FOb1hP/NEPLcqUVprxRsX8IgCt769DW+hLxQpdJ4rTmXb6gucxtBhMpA+tYGJ7qDQE+SRNS7ptKybSUHJ0imGQDQHhOP2zelZBDJGTAJzraHGtEkIyehVE9enF5dXCB+6UJ7nPV/C/LIZQHgw5CdoBKYNI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jFt/QTA6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UJz9egsT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB1FBC16AAE;
-	Wed, 21 Jan 2026 18:28:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jFt/QTA6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2144CC4CEF1;
+	Wed, 21 Jan 2026 18:28:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1769020100;
-	bh=9pkNINbbE5wYYHaYEuYHSzj3qixwifadPctJ4/q9Kds=;
+	s=korg; t=1769020103;
+	bh=Q5vdc1jIZwKZ57+/aNSChjsH5KLOiCkfcmvCj7VcqHo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UJz9egsTJW84F4SrmdW52tu176eDZPoCpiVrU/HU34xosaUDw8ZuccoMCWkgl5/8d
-	 Nly6q+ZEFlc0+xznducwAGBxrulAD6LxYZ0yHWLWubKKdHfsm4jSBCKHHf2jDvjUYV
-	 PlP0tuNlj7AZTqf0hmLQmw4oWbtLHCygR9OWIQeA=
+	b=jFt/QTA6GjOYIMb3ac2MIBujhvam5QIC2F6u8TsTx3jX6uOQGzd2yp7BduiyPYGf8
+	 cNMUVBHWSCTmOQ99f92JmVsVcN3jcg6nAKzjGNEDO59HXeazGhaMi6A6mWC5ZX/HDZ
+	 ZSkzTlLcANLNHpgxCGHSKqPuLTobW+esFnwyIrBs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lu Yao <yaolu@kylinos.cn>,
+	Alex Hung <alex.hung@amd.com>,
+	"Mario Limonciello (AMD)" <superm1@kernel.org>,
+	Matthew Stewart <matthew.stewart2@amd.com>,
+	Dan Wheeler <daniel.wheeler@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 058/198] drm/amdgpu: fix drm panic null pointer when driver not support atomic
-Date: Wed, 21 Jan 2026 19:14:46 +0100
-Message-ID: <20260121181420.642326438@linuxfoundation.org>
+Subject: [PATCH 6.18 059/198] drm/amd/display: Show link name in PSR status message
+Date: Wed, 21 Jan 2026 19:14:47 +0100
+Message-ID: <20260121181420.678737291@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260121181418.537774329@linuxfoundation.org>
 References: <20260121181418.537774329@linuxfoundation.org>
@@ -51,40 +54,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lu Yao <yaolu@kylinos.cn>
+From: Mario Limonciello (AMD) <superm1@kernel.org>
 
-[ Upstream commit 9cb6278b44c38899961b36d303d7b18b38be2a6e ]
+[ Upstream commit 0a1253ba5096f531eaaef40caa4c069da6ad48ae ]
 
-When driver not support atomic, fb using plane->fb rather than
-plane->state->fb.
+[Why]
+The PSR message was moved in commit 4321742c394e ("drm/amd/display:
+Move PSR support message into amdgpu_dm"). This message however shows
+for every single link without showing which link is which.  This can
+send a confusing message to the user.
 
-Fixes: fe151ed7af54 ("drm/amdgpu: add generic display panic helper code")
-Signed-off-by: Lu Yao <yaolu@kylinos.cn>
+[How]
+Add link name into the message.
+
+Fixes: 4321742c394e ("drm/amd/display: Move PSR support message into amdgpu_dm")
+Reviewed-by: Alex Hung <alex.hung@amd.com>
+Signed-off-by: Mario Limonciello (AMD) <superm1@kernel.org>
+Signed-off-by: Matthew Stewart <matthew.stewart2@amd.com>
+Tested-by: Dan Wheeler <daniel.wheeler@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 2f2a72de673513247cd6fae14e53f6c40c5841ef)
+(cherry picked from commit 99f77f6229c0766b980ae05affcf9f742d97de6a)
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_display.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_display.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_display.c
-index 51bab32fd8c6f..2f416d12e2e7e 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_display.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_display.c
-@@ -1824,7 +1824,12 @@ int amdgpu_display_get_scanout_buffer(struct drm_plane *plane,
- 				      struct drm_scanout_buffer *sb)
- {
- 	struct amdgpu_bo *abo;
--	struct drm_framebuffer *fb = plane->state->fb;
-+	struct drm_framebuffer *fb;
-+
-+	if (drm_drv_uses_atomic_modeset(plane->dev))
-+		fb = plane->state->fb;
-+	else
-+		fb = plane->fb;
+diff --git a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
+index 7fe40bbba2658..f4381d44864f1 100644
+--- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
++++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
+@@ -5545,7 +5545,8 @@ static int amdgpu_dm_initialize_drm_device(struct amdgpu_device *adev)
  
- 	if (!fb)
- 		return -EINVAL;
+ 				if (psr_feature_enabled) {
+ 					amdgpu_dm_set_psr_caps(link);
+-					drm_info(adev_to_drm(adev), "PSR support %d, DC PSR ver %d, sink PSR ver %d DPCD caps 0x%x su_y_granularity %d\n",
++					drm_info(adev_to_drm(adev), "%s: PSR support %d, DC PSR ver %d, sink PSR ver %d DPCD caps 0x%x su_y_granularity %d\n",
++						 aconnector->base.name,
+ 						 link->psr_settings.psr_feature_enabled,
+ 						 link->psr_settings.psr_version,
+ 						 link->dpcd_caps.psr_info.psr_version,
 -- 
 2.51.0
 
