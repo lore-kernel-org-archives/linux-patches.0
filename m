@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B80703ECBE3;
-	Wed, 21 Jan 2026 18:35:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9E8D3806BB;
+	Wed, 21 Jan 2026 18:35:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769020505; cv=none; b=cAAO4VczMpT9yOKYdgBun2R/X7M60u4qB9Uh7fwO69PaZNhB8HmgmM+c3WvcalpJ1WMjGdpbjAII9YIkQ41aLI3SD46AQr0a6IdijXVFoZEQ/ikgxwYqYdcp6WEhX35y/pwvCq7OJIwMPTnd8Ek4e9kCBNvLB4V+x5YSKB0hMNw=
+	t=1769020509; cv=none; b=WU5kqR333BmHSGATHxZ2U96kyuYNezvIxs1/2GYScvGZ8LcfCDnS+toYTsqstUSFL8rYYUZ3d66XplaZOL55cI7Ii6wQyLa2ZD6l/hlSc768vkcaDUivZgyxhpvspRJ4K4titMZnfAv3wGulIXpN5TH216vS3mG0SWqiIDZvvbI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769020505; c=relaxed/simple;
-	bh=W7EvjXe7RW6r3dbu3h8N+accCqtIXfXmimRTJmYsIKE=;
+	s=arc-20240116; t=1769020509; c=relaxed/simple;
+	bh=Q3yz+6fA5VMBV8R65dvFUGWmR94KAnZ78PvGHbmhPMs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=prJwRAiznhQL/YcOiPRgYb8e/mqO95aFW0+OMYkFbaNByTp/2vqtRQV89raUZ6R+R/i8wUlGH6KmpiHoE94gQ1lZ2HT+eCL4ElUeT2y8+uIsUc70AnY/ZaIXmRoRCftYgodgDcIL3n/5kAgc2ALD1h8ws6lMAk91xiX30xB5+lk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qwlmdQFQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=h/jVtluz63DpbvaXjz1KsxFreglUknIa9UgZhzI9R7bCU/XuXPE4zHk1fKraJNwjw8lt4lllzCSSJrN3zkfbDhC4zEt0NUKvfWWS6jVXOn0iTNNuR1sFYvIzIFx0Yz3sRQHXCjfUK6oUzhGjRj48/oVC+VoHlvg6OeJJ/+qHw2I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Z0wGpWjP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qwlmdQFQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C40DC4CEF1;
-	Wed, 21 Jan 2026 18:35:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Z0wGpWjP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0934DC19424;
+	Wed, 21 Jan 2026 18:35:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1769020505;
-	bh=W7EvjXe7RW6r3dbu3h8N+accCqtIXfXmimRTJmYsIKE=;
+	s=korg; t=1769020508;
+	bh=Q3yz+6fA5VMBV8R65dvFUGWmR94KAnZ78PvGHbmhPMs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qwlmdQFQt3teD3gEkeHt8IHdT+h3YpuF/FvJgwAAfnHAFK7Os8gvIhwgseEJhZkNA
-	 C6aeF/pEuCgD35cQt+hd458DGemd0Bu7dSSl7q/GYo7nH7TXvYWppZPmNZScd2Jmwe
-	 dECcZAdTcz7GsSnNvl09zdyEbWGkxDpcZZBAUy8M=
+	b=Z0wGpWjPMTHmNiy8PL7zRu134PL4NulZNjLF4GpVvax9uTSHVPCWzMmKwQo8tq3bX
+	 MlsO/ownMRukW3nf8flUTdL57J58il/RwTd4Wx4ihexqEUOCeTHUF1IIntWjk6F/S7
+	 2znar5jSqT5uU2DaD/LcvQ8Vs0IDe32J3G/p+xg4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xiaochen Shen <shenxiaochen@open-hieco.net>,
-	"Borislav Petkov (AMD)" <bp@alien8.de>,
-	Reinette Chatre <reinette.chatre@intel.com>
-Subject: [PATCH 6.18 135/198] x86/resctrl: Add missing resctrl initialization for Hygon
-Date: Wed, 21 Jan 2026 19:16:03 +0100
-Message-ID: <20260121181423.406243306@linuxfoundation.org>
+	Frank Li <Frank.Li@nxp.com>,
+	Zhen Ni <zhen.ni@easystack.cn>,
+	Vinod Koul <vkoul@kernel.org>
+Subject: [PATCH 6.18 172/198] dmaengine: fsl-edma: Fix clk leak on alloc_chan_resources failure
+Date: Wed, 21 Jan 2026 19:16:40 +0100
+Message-ID: <20260121181424.737559982@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260121181418.537774329@linuxfoundation.org>
 References: <20260121181418.537774329@linuxfoundation.org>
@@ -51,58 +51,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xiaochen Shen <shenxiaochen@open-hieco.net>
+From: Zhen Ni <zhen.ni@easystack.cn>
 
-commit 6ee98aabdc700b5705e4f1833e2edc82a826b53b upstream.
+commit b18cd8b210417f90537d914ffb96e390c85a7379 upstream.
 
-Hygon CPUs supporting Platform QoS features currently undergo partial resctrl
-initialization through resctrl_cpu_detect() in the Hygon BSP init helper and
-AMD/Hygon common initialization code. However, several critical data
-structures remain uninitialized for Hygon CPUs in the following paths:
+When fsl_edma_alloc_chan_resources() fails after clk_prepare_enable(),
+the error paths only free IRQs and destroy the TCD pool, but forget to
+call clk_disable_unprepare(). This causes the channel clock to remain
+enabled, leaking power and resources.
 
- - get_mem_config()-> __rdt_get_mem_config_amd():
-     rdt_resource::membw,alloc_capable
-     hw_res::num_closid
+Fix it by disabling the channel clock in the error unwind path.
 
- - rdt_init_res_defs()->rdt_init_res_defs_amd():
-     rdt_resource::cache
-     hw_res::msr_base,msr_update
-
-Add the missing AMD/Hygon common initialization to ensure proper Platform QoS
-functionality on Hygon CPUs.
-
-Fixes: d8df126349da ("x86/cpu/hygon: Add missing resctrl_cpu_detect() in bsp_init helper")
-Signed-off-by: Xiaochen Shen <shenxiaochen@open-hieco.net>
-Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Reviewed-by: Reinette Chatre <reinette.chatre@intel.com>
+Fixes: d8d4355861d8 ("dmaengine: fsl-edma: add i.MX8ULP edma support")
 Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20251209062650.1536952-2-shenxiaochen@open-hieco.net
+Suggested-by: Frank Li <Frank.Li@nxp.com>
+Signed-off-by: Zhen Ni <zhen.ni@easystack.cn>
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Link: https://patch.msgid.link/20251014090522.827726-1-zhen.ni@easystack.cn
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kernel/cpu/resctrl/core.c |    6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/dma/fsl-edma-common.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/arch/x86/kernel/cpu/resctrl/core.c
-+++ b/arch/x86/kernel/cpu/resctrl/core.c
-@@ -818,7 +818,8 @@ static __init bool get_mem_config(void)
+--- a/drivers/dma/fsl-edma-common.c
++++ b/drivers/dma/fsl-edma-common.c
+@@ -852,6 +852,7 @@ err_errirq:
+ 		free_irq(fsl_chan->txirq, fsl_chan);
+ err_txirq:
+ 	dma_pool_destroy(fsl_chan->tcd_pool);
++	clk_disable_unprepare(fsl_chan->clk);
  
- 	if (boot_cpu_data.x86_vendor == X86_VENDOR_INTEL)
- 		return __get_mem_config_intel(&hw_res->r_resctrl);
--	else if (boot_cpu_data.x86_vendor == X86_VENDOR_AMD)
-+	else if (boot_cpu_data.x86_vendor == X86_VENDOR_AMD ||
-+		 boot_cpu_data.x86_vendor == X86_VENDOR_HYGON)
- 		return __rdt_get_mem_config_amd(&hw_res->r_resctrl);
- 
- 	return false;
-@@ -978,7 +979,8 @@ static __init void rdt_init_res_defs(voi
- {
- 	if (boot_cpu_data.x86_vendor == X86_VENDOR_INTEL)
- 		rdt_init_res_defs_intel();
--	else if (boot_cpu_data.x86_vendor == X86_VENDOR_AMD)
-+	else if (boot_cpu_data.x86_vendor == X86_VENDOR_AMD ||
-+		 boot_cpu_data.x86_vendor == X86_VENDOR_HYGON)
- 		rdt_init_res_defs_amd();
+ 	return ret;
  }
- 
 
 
