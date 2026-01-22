@@ -1,108 +1,275 @@
-Received: from mail-wm1-f42.google.com (mail-wm1-f42.google.com [209.85.128.42])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.14])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FA4F4DC531
-	for <patches@lists.linux.dev>; Thu, 22 Jan 2026 15:51:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4B522EA47C
+	for <patches@lists.linux.dev>; Thu, 22 Jan 2026 17:05:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.14
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769097098; cv=none; b=bMCr0rxLwtu5QsrPTU1amiLe97QESmSktNuTd/mt3P+noHX+5xZb45xIS9BGWho6NIOyHlICkMAN8Mjkq1pSqxjuKHLCazvgV64xvnzkmv4F5EuJ361Ex9NmMkmTkGbD/L8iC1mUjNaQQHJ9aPhjpnSvG5tV1krxLl1tsiD1oXE=
+	t=1769101537; cv=none; b=bp1b0qzbfTJvMGybNVCzFunpWOHTUmwkqY1cQlmZ0sOZ3aA7wLEGZ03Hz87ODJRJAng/w5Qg1wGC4wAUAHMgwabXexe2bKadp1X7KbBfRhyNllwCA5xrp5dCSbG5wSO/rGbNVdtYZKjhAdyrZXEsEUvo1SWAGPyfJ3ndcyOWbQk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769097098; c=relaxed/simple;
-	bh=rmvs0wUA6Vknh3KvKwpYhY7VCf5Gt2lC67JAUIj8J/c=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=ittAamywtRqQrzif2Yrg7q+dpTm+rMrrqLJ6UaxAOBCYkbdoF8h8FB7NUOoYEg7nrSyHrUAyyJAfCK2kOnX2hpyj3bqEqLBXGsxlWnZmfBGS2Q/q4JFjgs8fMcdpAC8G6gek3UilyxiT686PZghaQbnHrUHetZStmyd0xfk+aOg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=googlemail.com; spf=pass smtp.mailfrom=googlemail.com; dkim=pass (2048-bit key) header.d=googlemail.com header.i=@googlemail.com header.b=Gn7xk8jc; arc=none smtp.client-ip=209.85.128.42
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=googlemail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=googlemail.com
+	s=arc-20240116; t=1769101537; c=relaxed/simple;
+	bh=yWEpMLU+9y62wL3iM8bocvJtxB/L4JUD/PYK4dc85hs=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=BlLP/1cyFOFCksJic0UKrzzawjsWDJYgCaW7EC5ylTOnAUxT3b1w0Wa8/lN4mc3OOTGnxKqblKMAEDMKuyGzQbzfVQp+e11qJGRYbxokPrN3tNfrzap9GT11/yIElDlNy5YKLGkJV7clJcAydUZBpblUeFuMWOW90etJQKDSxoo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=BCCSpyuB; arc=none smtp.client-ip=192.198.163.14
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=googlemail.com header.i=@googlemail.com header.b="Gn7xk8jc"
-Received: by mail-wm1-f42.google.com with SMTP id 5b1f17b1804b1-4801d24d91bso12339245e9.2
-        for <patches@lists.linux.dev>; Thu, 22 Jan 2026 07:51:34 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=20230601; t=1769097092; x=1769701892; darn=lists.linux.dev;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=c19nhZZPPkZH3viVYUA+n7Wk9ieUTEkhR5Y9vgtGhyU=;
-        b=Gn7xk8jc79oPLYR0hzdm2WbJua0w/HU7k65usq0pAsd7tHFFjIwroFA24NwILGW9tR
-         vMchlVXqmDwRDnubtxT77wgQZAG/uYXOSVGoNKZwnlDVFWPl4oJZrFsl8o1hZGisUvDd
-         L72h63CBBIuRxMPZxBJicpoadtaa2ICeYcsZG/h4b0nZPnTtjKiG8SvRUmVgkfUo50xO
-         WgTeQEocGoqphqYHoQXOxvcxw5Z3P37EHOaJhx+nk2U4xVT6KVYkjxqcjp/ES7sEMRWu
-         JomcvA4KzUA22HwJmry3j3VdIOmjIuJAn9NFDsu2BQvoaVr6ZRdlxcFDkmpXODVPfqBW
-         mZWA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1769097092; x=1769701892;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=c19nhZZPPkZH3viVYUA+n7Wk9ieUTEkhR5Y9vgtGhyU=;
-        b=jD9IF8RoXyiin2CFB63CgoGbWpPBZR/cgtCg2zMdsSTHkIC2JD5r0mDsEpE2Ee7o6Z
-         URnypumm1AfcE1j9Xl/CUVJfaeISTRks3Hv3I79CkOjn47uZo5yH+HBeG6wkRkxvBE8b
-         LNR8KsbEkBaLr5NatVsbRvYuKaB/Oap2K7mYzvrQ6VpWiBeqD4ze/qjvToKVKaosXC3z
-         Rok9+QTUg94VM0M8IhbvkUc1zAnXarZPBItlL1Q2SgP+6tvuFgNjSSepEvp9rt12UVm4
-         XxJoifxq3HIpUpTs/jbCou/w4FuJ9wT7k2HYbF3z+U5iXd3PY+t5qhrXLB3ufWdbC9gK
-         XuVw==
-X-Gm-Message-State: AOJu0YzoFRJ7bPf2miokeqwm9e8rGTJenhGY42/W/fjbu7qsUnMf7Te3
-	Rtku56O+S5yaVy7YcD5zD5GHOwPB1Nrf2vS64kwHCsALUSA/W8pQ/Xs=
-X-Gm-Gg: AZuq6aJuvcdIlEdN/SiuwxnwGvVfSSKtxhDlUttRvPYz+fVrglZTlXcsOR9zmxpNfli
-	nebQan5jb/Xc90C8Mf7RVk+KoH/f97tvZ9kW7AHKwGu6JTXHOiYoUcLrg6gpA4MmukAK6A6p/Vh
-	RtlY65gsKzuTNx7mrMV9WwZvkKR3HNqBzp5tN+0c2Jty+zqsGRb2TcbS3/QfzU56+GTdVbJ+4nr
-	K1e+uNP38CevPCzWyCRJZ/cVowDd6sn+VUU8RrSkZzAykMWIvrhaAvEMeXVv/KRgoihc4avy9m1
-	BAWVre7yT5wkrfIZQHYeJxdDgPd0DfcfLks8n/pyeDm4YWR9kzV//3o8oySeRqIQs8QYPFUsNeZ
-	Za8AHAgWIe4Nk7DraV6iDf6pG/SG37kz28JTS9ciiskDtf2iWIXdki39hzF2Sk4nQJCvO25xcGn
-	dtCtEk1Pwdh5VKP4MjtUAyFHPvIPG15gTMXy5rgSQULSnefR3iAGpjcMtEkbYVXb4=
-X-Received: by 2002:a05:600c:3e10:b0:477:9814:6882 with SMTP id 5b1f17b1804b1-4804c947a33mr1434825e9.5.1769097092144;
-        Thu, 22 Jan 2026 07:51:32 -0800 (PST)
-Received: from [192.168.1.3] (p5b2b44b4.dip0.t-ipconnect.de. [91.43.68.180])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4804704b4e6sm77029785e9.7.2026.01.22.07.51.30
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 22 Jan 2026 07:51:31 -0800 (PST)
-Message-ID: <a45313d2-2033-4783-92a4-b0ec2786cd29@googlemail.com>
-Date: Thu, 22 Jan 2026 16:51:30 +0100
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="BCCSpyuB"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1769101528; x=1800637528;
+  h=from:to:cc:subject:date:message-id:mime-version:
+   content-transfer-encoding;
+  bh=yWEpMLU+9y62wL3iM8bocvJtxB/L4JUD/PYK4dc85hs=;
+  b=BCCSpyuBG2PDiBDug1kLTzpoNopEOufGXw+WatKjVaFYCssRP6Ryrd+2
+   D9/vb7BBehUHJSXfRh3aSkUqmnQ8uV0PBuRe9cJwTlGHWh2eLWt1YHehw
+   RP6BHtd6Vc0hwh0B+xwTSGG8PFSSWct/XLpuboSFjCgCjxVIeXSMS6vzy
+   J5AYXv/GQmUM5SmPhuUqJClgD8CMeHaoaOv6FEmATP3LzXoTkQ0FxcGud
+   gfb5/1/s/0RDBnFa/3DUUq2jfQa+InDnGb4xbXs7AMrWMHL+NPCONV5tg
+   w6SAGu0686M53i/90CCkk+ytPKTh5iuP+1sY3guNXGOt1MgTPJVJ2lKKc
+   Q==;
+X-CSE-ConnectionGUID: 6Uco0WmvS5aH1kLLvm1plg==
+X-CSE-MsgGUID: 7FIcve4bTtS8ih+AwHsEPQ==
+X-IronPort-AV: E=McAfee;i="6800,10657,11679"; a="70408996"
+X-IronPort-AV: E=Sophos;i="6.21,246,1763452800"; 
+   d="scan'208";a="70408996"
+Received: from fmviesa001.fm.intel.com ([10.60.135.141])
+  by fmvoesa108.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 22 Jan 2026 09:05:24 -0800
+X-CSE-ConnectionGUID: AXTq/WAbSEy2JySN0Ai47g==
+X-CSE-MsgGUID: U8wK6lLgSUmtaxcG0Iq1kg==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.21,246,1763452800"; 
+   d="scan'208";a="238044923"
+Received: from rchatre-desk1.jf.intel.com ([10.165.154.99])
+  by smtpauth.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 22 Jan 2026 09:05:23 -0800
+From: Reinette Chatre <reinette.chatre@intel.com>
+To: shuah@kernel.org,
+	Dave.Martin@arm.com,
+	james.morse@arm.com,
+	tony.luck@intel.com,
+	peternewman@google.com,
+	babu.moger@amd.com,
+	ilpo.jarvinen@linux.intel.com
+Cc: fenghuay@nvidia.com,
+	reinette.chatre@intel.com,
+	linux-kselftest@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	patches@lists.linux.dev
+Subject: [PATCH] selftests/resctrl: Improve accuracy of cache occupancy test
+Date: Thu, 22 Jan 2026 09:19:51 -0800
+Message-ID: <084e82b5c29d75f16f24af8768d50d39ba0118a5.1769101788.git.reinette.chatre@intel.com>
+X-Mailer: git-send-email 2.50.1
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Betterbird (Windows)
-Subject: Re: [PATCH 6.18 000/198] 6.18.7-rc1 review
-Content-Language: de-DE
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
- torvalds@linux-foundation.org, akpm@linux-foundation.org,
- linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
- lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
- f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, rwarsow@gmx.de,
- conor@kernel.org, hargar@microsoft.com, broonie@kernel.org,
- achill@achill.org, sr@sladewatkins.com
-References: <20260121181418.537774329@linuxfoundation.org>
-From: Peter Schneider <pschneider1968@googlemail.com>
-In-Reply-To: <20260121181418.537774329@linuxfoundation.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 
-Am 21.01.2026 um 19:13 schrieb Greg Kroah-Hartman:
-> This is the start of the stable review cycle for the 6.18.7 release.
-> There are 198 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
+Dave Martin reported inconsistent CMT test failures. In one experiment
+the first run of the CMT test failed because of too large (24%) difference
+between measured and achievable cache occupancy while the second run passed
+with an acceptable 4% difference.
 
-Builds, boots and works on my 2-socket Ivy Bridge Xeon E5-2697 v2 server. No dmesg oddities or regressions found.
+The CMT test is susceptible to interference from the rest of the system.
+This can be demonstrated with a utility like stress-ng by running the CMT
+test while introducing cache misses using:
 
-Tested-by: Peter Schneider <pschneider1968@googlemail.com>
+   stress-ng --matrix-3d 0 --matrix-3d-zyx
 
+Below shows an example of the CMT test failing because of a significant
+difference between measured and achievable cache occupancy when run with
+interference:
+    # Starting CMT test ...
+    # Mounting resctrl to "/sys/fs/resctrl"
+    # Cache size :56623104
+    # Writing benchmark parameters to resctrl FS
+    # Benchmark PID: 3275
+    # Checking for pass/fail
+    # Fail: Check cache miss rate within 15%
+    # Percent diff=97
+    # Number of bits: 5
+    # Average LLC val: 501350
+    # Cache span (bytes): 23592960
+    not ok 1 CMT: test
 
-Beste Grüße,
-Peter Schneider
+The CMT test creates a new control group that is also capable of monitoring
+and assigns the workload to it. The workload allocates a buffer that by
+default fills a portion of the L3 and keeps reading from the buffer,
+measuring the L3 occupancy at intervals. The test passes if the workload's
+L3 occupancy is within 15% of the buffer size.
 
+By not adjusting any capacity bitmasks the workload shares the cache with
+the rest of the system. Any other task that may be running could evict
+the workload's data from the cache causing it to have low cache occupancy.
+
+Reduce interference from the rest of the system by ensuring that the
+workload's control group uses the capacity bitmask found in the user
+parameters for L3 and that the rest of the system can only allocate into
+the inverse of the workload's L3 cache portion. Other tasks can thus no
+longer evict the workload's data from L3.
+
+Take the L2 cache into account to further improve test accuracy.
+By default the buffer size is the same as the L3 portion that the workload
+can allocate into. This buffer size does not take into account that some
+of the workload's data may land in L2/L1. Address this in two ways:
+ - Reduce the amount of L2 cache the workload can allocate into to the
+   minimum on systems that support L2 cache allocation.
+ - Increase the buffer size to accommodate data that may be allocated into
+   the L2 cache. Use a buffer size double the L3 portion to keep using the
+   L3 portion size as goal for L3 occupancy while taking into account that
+   some of the data my be in L2.
+
+With the above adjustments the CMT test is more consistent. Repeating the
+CMT test while generating interference with stress-ng on a sample
+system after applying the fixes show significant improvement in test
+accuracy:
+
+    # Starting CMT test ...
+    # Mounting resctrl to "/sys/fs/resctrl"
+    # Cache size :56623104
+    # Writing benchmark parameters to resctrl FS
+    # Write schema "L3:0=fe0" to resctrl FS
+    # Write schema "L3:0=1f" to resctrl FS
+    # Benchmark PID: 3223
+    # Checking for pass/fail
+    # Pass: Check cache miss rate within 15%
+    # Percent diff=3
+    # Number of bits: 5
+    # Average LLC val: 22811443
+    # Cache span (bytes): 23592960
+    ok 1 CMT: test
+
+Reported-by: Dave Martin <Dave.Martin@arm.com>
+Closes: https://lore.kernel.org/lkml/aO+7MeSMV29VdbQs@e133380.arm.com/
+Signed-off-by: Reinette Chatre <reinette.chatre@intel.com>
+---
+ tools/testing/selftests/resctrl/cmt_test.c    | 35 ++++++++++++++++---
+ tools/testing/selftests/resctrl/mba_test.c    |  4 ++-
+ tools/testing/selftests/resctrl/mbm_test.c    |  4 ++-
+ tools/testing/selftests/resctrl/resctrl.h     |  4 ++-
+ tools/testing/selftests/resctrl/resctrl_val.c |  2 +-
+ 5 files changed, 41 insertions(+), 8 deletions(-)
+
+diff --git a/tools/testing/selftests/resctrl/cmt_test.c b/tools/testing/selftests/resctrl/cmt_test.c
+index d09e693dc739..44e9938dfafd 100644
+--- a/tools/testing/selftests/resctrl/cmt_test.c
++++ b/tools/testing/selftests/resctrl/cmt_test.c
+@@ -19,12 +19,39 @@
+ #define CON_MON_LCC_OCCUP_PATH		\
+ 	"%s/%s/mon_data/mon_L3_%02d/llc_occupancy"
+ 
+-static int cmt_init(const struct resctrl_val_param *param, int domain_id)
++/*
++ * Initialize capacity bitmasks (CBMs) for control group being tested,
++ * default resource group to prevent its tasks from interfering with test,
++ * and L2 resource of control group to minimize allocations into L2 if
++ * possible to better predict L3 occupancy.
++ */
++static int cmt_init(const struct resctrl_test *test,
++		    const struct user_params *uparams,
++		    const struct resctrl_val_param *param, int domain_id)
+ {
++	unsigned long long_mask;
++	char schemata[64];
++	int ret;
++
+ 	sprintf(llc_occup_path, CON_MON_LCC_OCCUP_PATH, RESCTRL_PATH,
+ 		param->ctrlgrp, domain_id);
+ 
+-	return 0;
++	ret = get_full_cbm(test->resource, &long_mask);
++	if (ret)
++		return ret;
++
++	snprintf(schemata, sizeof(schemata), "%lx", ~param->mask & long_mask);
++	ret = write_schemata("", schemata, uparams->cpu, test->resource);
++	if (ret)
++		return ret;
++
++	snprintf(schemata, sizeof(schemata), "%lx", param->mask);
++	ret = write_schemata(param->ctrlgrp, schemata, uparams->cpu, test->resource);
++
++	if (!ret && !strcmp(test->resource, "L3") && resctrl_resource_exists("L2"))
++		ret = write_schemata(param->ctrlgrp, "0x1", uparams->cpu, "L2");
++
++	return ret;
+ }
+ 
+ static int cmt_setup(const struct resctrl_test *test,
+@@ -153,11 +180,11 @@ static int cmt_run_test(const struct resctrl_test *test, const struct user_param
+ 	span = cache_portion_size(cache_total_size, param.mask, long_mask);
+ 
+ 	if (uparams->fill_buf) {
+-		fill_buf.buf_size = span;
++		fill_buf.buf_size = span * 2;
+ 		fill_buf.memflush = uparams->fill_buf->memflush;
+ 		param.fill_buf = &fill_buf;
+ 	} else if (!uparams->benchmark_cmd[0]) {
+-		fill_buf.buf_size = span;
++		fill_buf.buf_size = span * 2;
+ 		fill_buf.memflush = true;
+ 		param.fill_buf = &fill_buf;
+ 	}
+diff --git a/tools/testing/selftests/resctrl/mba_test.c b/tools/testing/selftests/resctrl/mba_test.c
+index c7e9adc0368f..cd4c715b7ffd 100644
+--- a/tools/testing/selftests/resctrl/mba_test.c
++++ b/tools/testing/selftests/resctrl/mba_test.c
+@@ -17,7 +17,9 @@
+ #define ALLOCATION_MIN		10
+ #define ALLOCATION_STEP		10
+ 
+-static int mba_init(const struct resctrl_val_param *param, int domain_id)
++static int mba_init(const struct resctrl_test *test,
++		    const struct user_params *uparams,
++		    const struct resctrl_val_param *param, int domain_id)
+ {
+ 	int ret;
+ 
+diff --git a/tools/testing/selftests/resctrl/mbm_test.c b/tools/testing/selftests/resctrl/mbm_test.c
+index 84d8bc250539..58201f844740 100644
+--- a/tools/testing/selftests/resctrl/mbm_test.c
++++ b/tools/testing/selftests/resctrl/mbm_test.c
+@@ -83,7 +83,9 @@ static int check_results(size_t span)
+ 	return ret;
+ }
+ 
+-static int mbm_init(const struct resctrl_val_param *param, int domain_id)
++static int mbm_init(const struct resctrl_test *test,
++		    const struct user_params *uparams,
++		    const struct resctrl_val_param *param, int domain_id)
+ {
+ 	int ret;
+ 
+diff --git a/tools/testing/selftests/resctrl/resctrl.h b/tools/testing/selftests/resctrl/resctrl.h
+index 3c51bdac2dfa..72f3338cacca 100644
+--- a/tools/testing/selftests/resctrl/resctrl.h
++++ b/tools/testing/selftests/resctrl/resctrl.h
+@@ -133,7 +133,9 @@ struct resctrl_val_param {
+ 	char			filename[64];
+ 	unsigned long		mask;
+ 	int			num_of_runs;
+-	int			(*init)(const struct resctrl_val_param *param,
++	int			(*init)(const struct resctrl_test *test,
++					const struct user_params *uparams,
++					const struct resctrl_val_param *param,
+ 					int domain_id);
+ 	int			(*setup)(const struct resctrl_test *test,
+ 					 const struct user_params *uparams,
+diff --git a/tools/testing/selftests/resctrl/resctrl_val.c b/tools/testing/selftests/resctrl/resctrl_val.c
+index 7c08e936572d..a5a8badb83d4 100644
+--- a/tools/testing/selftests/resctrl/resctrl_val.c
++++ b/tools/testing/selftests/resctrl/resctrl_val.c
+@@ -569,7 +569,7 @@ int resctrl_val(const struct resctrl_test *test,
+ 		goto reset_affinity;
+ 
+ 	if (param->init) {
+-		ret = param->init(param, domain_id);
++		ret = param->init(test, uparams, param, domain_id);
+ 		if (ret)
+ 			goto reset_affinity;
+ 	}
 -- 
-Climb the mountain not to plant your flag, but to embrace the challenge,
-enjoy the air and behold the view. Climb it so you can see the world,
-not so the world can see you.                    -- David McCullough Jr.
+2.50.1
 
-OpenPGP:  0xA3828BD796CCE11A8CADE8866E3A92C92C3FF244
-Download: https://www.peters-netzplatz.de/download/pschneider1968_pub.asc
-https://keys.mailvelope.com/pks/lookup?op=get&search=pschneider1968@googlemail.com
-https://keys.mailvelope.com/pks/lookup?op=get&search=pschneider1968@gmail.com
