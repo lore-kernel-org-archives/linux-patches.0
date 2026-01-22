@@ -1,156 +1,143 @@
-Received: from n169-111.mail.139.com (n169-111.mail.139.com [120.232.169.111])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0C7D240FD82
-	for <patches@lists.linux.dev>; Thu, 22 Jan 2026 03:46:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=120.232.169.111
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769053597; cv=none; b=hUtqv2KrQfn/ZJvZ8GHhNBBnQnNUzdQM6A3D6O8ILAmvD1Br0oYy69Wfxq0KwWUKS1U86AhsLoklqDyNdRN1yNIm7tlfOLgcFodp8ZrmGJMjMTdxiX2pu9WGM0e5aBHV+j17XbAvO3YD8mxvzGZZ0F6Obw/vOdcAkOb0V6Oaijw=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769053597; c=relaxed/simple;
-	bh=g744lz6iU9xFRdnsnHyyhaVQs6SpUU91JT0OadSyyg0=;
-	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=deWqN0HTjDvzdWuF8Z3vJwlrcbG+5Cec8uozfL4mDXgLddUMXMNjSVpUWffQbrw0KuVqdFF20BWily7r60xIKxebkgKoVN0acBskO//LXyW2wktTdJSu16dXcW3JKHVSNLi/bRGcroo+IoJ3jBpLe2jxdjtXK5k5HOc+lHY4TOk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=139.com; spf=pass smtp.mailfrom=139.com; dkim=pass (1024-bit key) header.d=139.com header.i=@139.com header.b=Iy5h1HxG; arc=none smtp.client-ip=120.232.169.111
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=139.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=139.com
+Received: from mail-dl1-f48.google.com (mail-dl1-f48.google.com [74.125.82.48])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0EF3A38B7D6
+	for <patches@lists.linux.dev>; Thu, 22 Jan 2026 04:07:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.82.48
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1769054877; cv=pass; b=fAt66koGuxlys6PQHLVgdLMhztZBWsIo4Bu+EJh1LuDukFy62CfiNE98O82W0Fsaxlhk6IGIgSW2CW0diiZlrCtDd7sKTgTpIM8Sct45Iq+i2HnmlYkY3u1rs1+pdZTHKUvsBwdzJYQ4ShEJNBKDXl/JO24esIwslPUlCM4vgOU=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1769054877; c=relaxed/simple;
+	bh=zOEKbmOpIJoYf0QX2Nc01sHC/57YLEFU0c56dT9X9Dc=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=PCKd3+h/ZW1nuhLCKMKVe4v8lj0ElwGIe0bqjz5TFjmjj9f0j8YxnRZnp3W3HtC0UUXOfXUf5AuaqOBPddvZD9AkQU/N83wy2XdLxYZ7uLWSEZTe/pPi0GTdN6l3HQwrK9TVoYyC2xECfn0MLh9NeqfbPuh//hpszLmmhzBRFSM=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=futuring-girl.com; spf=pass smtp.mailfrom=futuring-girl.com; dkim=pass (2048-bit key) header.d=futuring-girl.com header.i=@futuring-girl.com header.b=YZGlqi0O; arc=pass smtp.client-ip=74.125.82.48
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=futuring-girl.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=futuring-girl.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=139.com header.i=@139.com header.b="Iy5h1HxG"
+	dkim=pass (2048-bit key) header.d=futuring-girl.com header.i=@futuring-girl.com header.b="YZGlqi0O"
+Received: by mail-dl1-f48.google.com with SMTP id a92af1059eb24-12332910300so1453219c88.0
+        for <patches@lists.linux.dev>; Wed, 21 Jan 2026 20:07:55 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1769054875; cv=none;
+        d=google.com; s=arc-20240605;
+        b=gG2OECv1vFc4FHaOVVp/Zf+7yfDQrHIchKDZiiMuFIYpPT/SX/Pk0xOWCJGGB/3GWg
+         E5E4j/joBHB7tsV+Sq+iZao0cU5ZsBuy33SD3H52geXXONunQANsEi4gcmki91fg+TVE
+         hN4DPD0bbyY7jnm6G5wrkOC1LBh41T9KYn+vTLPK85P994e5JNyrAvoIsVARL4nnMf58
+         ht95Y+KsxW9cQ8+LeEjIrWuEdWN3LHyeg4JiqboW+PJOJXvAHQL+89J4YpofWKLDhDie
+         39vykbHF4IqD+r8c7lsw9+/irbvgrtzFXxWids394D5/GCZtFvqPuqXAuYXTNz8bjG33
+         fxDA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=9pCTvGEnBVVPW1tjjQf5zQXP0S6Qi4+0eKihAsvxNO4=;
+        fh=Jwh9ruxgcI1RMH9R2D2I1SfYgvGM60tBpMWkEbtBbQM=;
+        b=Xiq9fTEP/ADzFeSdaR9PLiPFYEleTxNvk+tebRofVu7i0Ha3hmmz6yc4Ou7HQm34NK
+         wMrpNSZ0Dh/9D1bv0VgY5zAwqPZpo0Z4eFGWyLGM/Aj6h+ZDkdel/U5D5ip7+Rsfcy5T
+         uewgsgWgsYOYD553qyoadVf9m7SlVDiuJgDTegCSegiLSeY2zP0P5lj6I3oudRXGyy4Z
+         R3Jx+hvzDlLG+fElSbpFKBSf2G00/feyhiieXViP1PLgBwkvDGk0+YMpgE3JBaNURKRr
+         LHfipPWGkCzISE0e3hr/VULm1eYkQwGBoQSUOdOI44iI//tsneMDom4qmyCI+3JIpeRZ
+         h1OA==;
+        darn=lists.linux.dev
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-	d=139.com; s=dkim; l=0;
-	h=from:subject:message-id:to:cc:mime-version;
-	bh=47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU=;
-	b=Iy5h1HxGWG96b8PvFjSXUudZazlxfy+k67BEtqx1SLvLNMIwNSLE27Mu5FU7NFR39rK78mLfFQMQU
-	 M240QSrWo0WKBdlNq4Z06D4BtH9iAnKrROWn4bcOEebTj8myglpK6tehOaw1fX5wEfIKpjMIVXElcl
-	 fQWW2TO4PmxwCLug=
-X-RM-TagInfo: emlType=0                                       
-X-RM-SPAM:                                                                                        
-X-RM-SPAM-FLAG:00000000
-Received:from NTT-kernel-dev (unknown[60.247.85.88])
-	by rmsmtp-lg-appmail-17-12016 (RichMail) with SMTP id 2ef069719c9511d-0a1eb;
-	Thu, 22 Jan 2026 11:42:14 +0800 (CST)
-X-RM-TRANSID:2ef069719c9511d-0a1eb
-From: Rajani Kantha <681739313@139.com>
-To: gregkh@linuxfoundation.org,
-	stable@vger.kernel.org,
-	linkinjeon@kernel.org
-Cc: patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org,
-	senozhatsky@chromium.org,
-	sfrench@samba.org,
-	hyc.lee@gmail.com,
-	linux-cifs@vger.kernel.org,
-	pioooooooooip@gmail.com,
-	liuzhitong1993@gmail.com,
-	stfrench@microsoft.com
-Subject: [PATCH 5.15.y] ksmbd: fix use-after-free in ksmbd_tree_connect_put under concurrency
-Date: Thu, 22 Jan 2026 11:42:12 +0800
-Message-Id: <20260122034212.3111671-1-681739313@139.com>
-X-Mailer: git-send-email 2.34.1
+        d=futuring-girl.com; s=google; t=1769054875; x=1769659675; darn=lists.linux.dev;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=9pCTvGEnBVVPW1tjjQf5zQXP0S6Qi4+0eKihAsvxNO4=;
+        b=YZGlqi0OWAzrrrjn2ng1SCOrOIZgBligH8VEAAoWP2ciOITQVehNQQbj67LxefKO+l
+         HdgXWu2roUune9fdHhNwkvoNerJ414YfK8aaJRl5tQJKDyL9XjL0nnE+DfmCiOPc/EhZ
+         muKkVS/tuaM2ylijao/wwmGPT3oYymVRHgM410fYGIV5qRwyA2f4ed82Q27qX0Ep3tQ+
+         aMimrWHO4aeir0dRzGrwhdkKJCm94iW8i4LYnG/cbOEyh3NTyIaEHPtNLi8AVSYYqfdl
+         cT/c1VOoXUg+xCgcNsweP2oIj91wlpAP3zyJQlwR89DLvG7wmA2GOXw0nyTEBIRkJXPS
+         2QuQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1769054875; x=1769659675;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=9pCTvGEnBVVPW1tjjQf5zQXP0S6Qi4+0eKihAsvxNO4=;
+        b=IHWPQEfcpNVdM0If0n5tgnKlRNze4R8W6lMEM03qEkufYVT/MjDvadXtbqBUY91Nkg
+         mBQptjFX3UdmNRRGvw7ZwybzCXCKz2/B5rGyb6IaNMGnC7afu9cqTKAI0brHT0OVtHnu
+         jBR+EzkP0/0P1MQ9Miw0u/q5bWGWUg8ceJdqRn3xb4me8Y54eWGnaS10KCd+XlFjK5Ky
+         LphE3mABafW+IJtYEWo1NuUxdt7v6uX1DB9YMwrBcM+YthCfWS7pSIGEhRKhykA5LpWL
+         9zGZyus2fWwhBgncpa5mRlAh76FFUgb57Hnmn+m3T8GJ1JdLi5UYpKRhL1BgWjEkoHNZ
+         Uyew==
+X-Forwarded-Encrypted: i=1; AJvYcCXL2SD+W1hx0iWIGVcrFqcxB1sYMd6fdcWuBRnIqKOu/G2GrQLeZ8kXNj/Ufi9gSbvz1xEhzQQm@lists.linux.dev
+X-Gm-Message-State: AOJu0YwenaNC/TcBu2OrmvOMP57z+IVl9bBbOR/TYP0uEYM2kQZCrg+y
+	iZinPnB8GAwjxRNsIieMZiVrLS11ZiJGkgWC07/nv8afkneFNdfKB83QnrDsRhur1S8Pn4OgYs6
+	2ZsotvgS/4nsI33vTAkG0ugSMxfwfJkT5JHEMhwdoUA==
+X-Gm-Gg: AZuq6aLx2vTg8AbX1tanEDi1+g5HDSCoyTx5p9dWuiNTCZxMqOswgHX/C2Mn+1nAYfe
+	vAzJ6LwuVoJ7YQRusfw1Ghili/JyayC0mpBd9S2AlkWMXd1TdB/iRbpV9FjDn4IsFXqwenv9ipX
+	DN0Tumvs8anyRLw2IW/pgSH3kr/gfgDViKmj1CnLFcY4UwOi2EAUS9JVVq333o2D88eE9Azo7rb
+	hq/Tvo9Jrg8ByNXLauJTb2UpKBNr5/gzxV8oQhB8IifeeuRB3UzlNyEp6vdQyZCMDCjwd3q
+X-Received: by 2002:a05:7022:225:b0:11b:9386:a3cf with SMTP id
+ a92af1059eb24-1244a782252mr15839946c88.48.1769054874920; Wed, 21 Jan 2026
+ 20:07:54 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <20260121181418.537774329@linuxfoundation.org>
+In-Reply-To: <20260121181418.537774329@linuxfoundation.org>
+From: Takeshi Ogasawara <takeshi.ogasawara@futuring-girl.com>
+Date: Thu, 22 Jan 2026 13:07:39 +0900
+X-Gm-Features: AZwV_QjtMtKm1PVMKEeE5bHzzO7zM89c8bLtGqGiKQEvR53QgYUn7BkMdlg5ymI
+Message-ID: <CAKL4bV4S-jaGVJ+TkyabzWWraUyJ+-5b1pAwZfB4s1UxRuBh1g@mail.gmail.com>
+Subject: Re: [PATCH 6.18 000/198] 6.18.7-rc1 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, 
+	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de, 
+	jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, 
+	rwarsow@gmx.de, conor@kernel.org, hargar@microsoft.com, broonie@kernel.org, 
+	achill@achill.org, sr@sladewatkins.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-From: Namjae Jeon <linkinjeon@kernel.org>
+Hi Greg
 
-[ Upstream commit b39a1833cc4a2755b02603eec3a71a85e9dff926 ]
+On Thu, Jan 22, 2026 at 4:38=E2=80=AFAM Greg Kroah-Hartman
+<gregkh@linuxfoundation.org> wrote:
+>
+> This is the start of the stable review cycle for the 6.18.7 release.
+> There are 198 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+>
+> Responses should be made by Fri, 23 Jan 2026 18:13:40 +0000.
+> Anything received after that time might be too late.
+>
+> The whole patch series can be found in one patch at:
+>         https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-=
+6.18.7-rc1.gz
+> or in the git tree and branch at:
+>         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable=
+-rc.git linux-6.18.y
+> and the diffstat can be found below.
+>
+> thanks,
+>
+> greg k-h
+>
 
-Under high concurrency, A tree-connection object (tcon) is freed on
-a disconnect path while another path still holds a reference and later
-executes *_put()/write on it.
+6.18.7-rc1 tested.
 
-Reported-by: Qianchang Zhao <pioooooooooip@gmail.com>
-Reported-by: Zhitong Liu <liuzhitong1993@gmail.com>
-Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Steve French <stfrench@microsoft.com>
-Signed-off-by: Rajani Kantha <681739313@139.com>
----
- fs/ksmbd/mgmt/tree_connect.c | 18 ++++--------------
- fs/ksmbd/mgmt/tree_connect.h |  1 -
- fs/ksmbd/smb2pdu.c           |  3 ---
- 3 files changed, 4 insertions(+), 18 deletions(-)
+Build successfully completed.
+Boot successfully completed.
+No dmesg regressions.
+Video output normal.
+Sound output normal.
 
-diff --git a/fs/ksmbd/mgmt/tree_connect.c b/fs/ksmbd/mgmt/tree_connect.c
-index d2c81a8a11dd..0b6847f04fcc 100644
---- a/fs/ksmbd/mgmt/tree_connect.c
-+++ b/fs/ksmbd/mgmt/tree_connect.c
-@@ -76,7 +76,6 @@ ksmbd_tree_conn_connect(struct ksmbd_conn *conn, struct ksmbd_session *sess,
- 	tree_conn->t_state = TREE_NEW;
- 	status.tree_conn = tree_conn;
- 	atomic_set(&tree_conn->refcount, 1);
--	init_waitqueue_head(&tree_conn->refcount_q);
- 
- 	ret = xa_err(xa_store(&sess->tree_conns, tree_conn->id, tree_conn,
- 			      GFP_KERNEL));
-@@ -98,14 +97,8 @@ ksmbd_tree_conn_connect(struct ksmbd_conn *conn, struct ksmbd_session *sess,
- 
- void ksmbd_tree_connect_put(struct ksmbd_tree_connect *tcon)
- {
--	/*
--	 * Checking waitqueue to releasing tree connect on
--	 * tree disconnect. waitqueue_active is safe because it
--	 * uses atomic operation for condition.
--	 */
--	if (!atomic_dec_return(&tcon->refcount) &&
--	    waitqueue_active(&tcon->refcount_q))
--		wake_up(&tcon->refcount_q);
-+	if (atomic_dec_and_test(&tcon->refcount))
-+		kfree(tcon);
- }
- 
- int ksmbd_tree_conn_disconnect(struct ksmbd_session *sess,
-@@ -117,14 +110,11 @@ int ksmbd_tree_conn_disconnect(struct ksmbd_session *sess,
- 	xa_erase(&sess->tree_conns, tree_conn->id);
- 	write_unlock(&sess->tree_conns_lock);
- 
--	if (!atomic_dec_and_test(&tree_conn->refcount))
--		wait_event(tree_conn->refcount_q,
--			   atomic_read(&tree_conn->refcount) == 0);
--
- 	ret = ksmbd_ipc_tree_disconnect_request(sess->id, tree_conn->id);
- 	ksmbd_release_tree_conn_id(sess, tree_conn->id);
- 	ksmbd_share_config_put(tree_conn->share_conf);
--	kfree(tree_conn);
-+	if (atomic_dec_and_test(&tree_conn->refcount))
-+		kfree(tree_conn);
- 	return ret;
- }
- 
-diff --git a/fs/ksmbd/mgmt/tree_connect.h b/fs/ksmbd/mgmt/tree_connect.h
-index 6377a70b811c..bf47c3f65f03 100644
---- a/fs/ksmbd/mgmt/tree_connect.h
-+++ b/fs/ksmbd/mgmt/tree_connect.h
-@@ -32,7 +32,6 @@ struct ksmbd_tree_connect {
- 	int				maximal_access;
- 	bool				posix_extensions;
- 	atomic_t			refcount;
--	wait_queue_head_t		refcount_q;
- 	unsigned int			t_state;
- };
- 
-diff --git a/fs/ksmbd/smb2pdu.c b/fs/ksmbd/smb2pdu.c
-index c0b5985701bf..b4a1aa1bc960 100644
---- a/fs/ksmbd/smb2pdu.c
-+++ b/fs/ksmbd/smb2pdu.c
-@@ -2169,7 +2169,6 @@ int smb2_tree_disconnect(struct ksmbd_work *work)
- 		goto err_out;
- 	}
- 
--	WARN_ON_ONCE(atomic_dec_and_test(&tcon->refcount));
- 	tcon->t_state = TREE_DISCONNECTED;
- 	write_unlock(&sess->tree_conns_lock);
- 
-@@ -2179,8 +2178,6 @@ int smb2_tree_disconnect(struct ksmbd_work *work)
- 		goto err_out;
- 	}
- 
--	work->tcon = NULL;
--
- 	rsp->StructureSize = cpu_to_le16(4);
- 	err = ksmbd_iov_pin_rsp(work, rsp,
- 				sizeof(struct smb2_tree_disconnect_rsp));
--- 
-2.34.1
+Lenovo ThinkPad X1 Carbon Gen10(Intel i7-1260P(x86_64) arch linux)
 
+[    0.000000] Linux version 6.18.7-rc1rv-g28a73c31d7f5
+(takeshi@ThinkPadX1Gen10J0764) (gcc (GCC) 15.2.1 20260103, GNU ld (GNU
+Binutils) 2.45.1) #1 SMP PREEMPT_DYNAMIC Thu Jan 22 11:47:11 JST 2026
 
+Thanks
+
+Tested-by: Takeshi Ogasawara <takeshi.ogasawara@futuring-girl.com>
