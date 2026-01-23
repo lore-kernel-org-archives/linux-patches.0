@@ -1,144 +1,88 @@
-Received: from mail-lf1-f42.google.com (mail-lf1-f42.google.com [209.85.167.42])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 882FB2D46A1
-	for <patches@lists.linux.dev>; Fri, 23 Jan 2026 17:09:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.167.42
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769188153; cv=pass; b=OgFUxAKbsWVnHvP04DvNWOrOof20eoxAyF+x6GDTYoZcSNIVl/4EIi5eCwbnlE4hGlf1QCULGFVc7nZFL+154Q9uUjYnZZ8rJxWAr7QoGAolsJSuYxIM2C5KZqQvQuqmbByHmdctS2lCVWQxJ65jqVwCdgtexIaF3Ou7JX8zvjA=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769188153; c=relaxed/simple;
-	bh=baSVTO5P4JEdejZ7McLW1ShJqiWIQIoZuEP/cZI3+9o=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=imAZkx7o0VnvL9F7gK1mslc2DXVCOFLwKwexWC/tqT35XsMjkXvm7h1asj2l+NYYnFMn9omA81xyG3/Z5OSHKf4vG/mM6V5pHMen3msMRqhMUgQLIqx0HxZMdWw3LrDcmKuWDas00e1H9d+iWDDFmErOlAdnt3/SuyNwm8r8qiA=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=dkNYxtKU; arc=pass smtp.client-ip=209.85.167.42
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E0ED42048;
+	Fri, 23 Jan 2026 18:20:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1769192441; cv=none; b=i8exq49+QK6RfGs3qZBqGOGagQfdsfv7ki1zMIsz7SB//G1dY5um23l6w+fFnBpqP2SklqB55mXLk6kXvHZqH8wrrQA8qVOLNW8TOXMO5tpMM48BAE3ZwvcccdPBdHLHJBHZKRe2ZvCHuRW2gCraehm0wrAsdCnDKYFXk+Ri6DA=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1769192441; c=relaxed/simple;
+	bh=soXCYqTDRDABq0Y8UXoiniC7tbF6j/Q2IdBLpYLWa4g=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=Pc6nIbDoS3ROCbbES0a3xmia4qfYFa+WKy10tvuj0bBJz6Z7fF+OhldrgnR5bFRBmk1SEOnmA7tYqk5VX5pl3hidr0QbhAkB15S5qmz/V61Kii4E5NlXwAdh0nKgszzC6QzJaMWUI/t0Zz979+/8zxnKWhNugmg3JUYlH2cwBcM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=YzNwB7bb; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="dkNYxtKU"
-Received: by mail-lf1-f42.google.com with SMTP id 2adb3069b0e04-59dd7bfeb8aso3146113e87.0
-        for <patches@lists.linux.dev>; Fri, 23 Jan 2026 09:09:11 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1769188150; cv=none;
-        d=google.com; s=arc-20240605;
-        b=Q554NJJjAhlxags7LW7tr3d3DTjjOii1xnq3HEEirFOcRrrgUzb7DuhAUI8fiddR1y
-         noOou43/m+dTtvkRrJcVg7rqEt4rnsrYcQbk7CJO1b7PJ/d/WkaYg2xg0AfWIeGzFFe9
-         hOdLOWCOksobDYSyGfYOwEhCH1d+ouppRyhJJ/eXmVJFmyEGSo63w1VoLlUngxQiYQN+
-         vb9LQfj5w9HjA89z2gjVmegUQQ1+7qhlMB1ecdYX4UoB18SZ5D+lcUmYMBwN68Nt6Sir
-         ZuEj6/pMTInr8cREnNrMCFHch34TkH1LOWSnDt/mf0wJr7i6k4h2DTRKNKJs9rbaOmSc
-         nfpg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=KDi1jMTaR6KPNr8Xb3B/fDVI4Wv8VBtbYg00h50ejLw=;
-        fh=IkEt9Y9XAMGoyb2fGDANrLxfmVyGWIUbJTd64ThtNDs=;
-        b=AUI/qUhtDNUR6PTo3ypEP6ulq4aqqSdVdR5Dt23apgacYBQUUJQc4snjBJJKRgw3Oz
-         0Qi5mM4dbK+WT2MURs33/6FNRFT3E+Tgp97tB0aLDMQKiJgrtYD0IbL7diP0Mep/he4s
-         2UFVbvvbf77gWsiW1yiBGGWCDQ0jf4N0qI3TyhzL6rYahp+R6wOWRtfsEn0YUoPaQCet
-         AWiKl7MJwJlOFRBcUFpQ+wwc4d/MEcrs0aW83vs5WSMtrE9ocyrauNL6tIi6Hf7h15b/
-         9fzY6Fh4thInlv2hQIyDOI6jbGAF9B/001dkqbycyztfBl/5PfgqO/nKIGRXNivynIer
-         rzmg==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1769188150; x=1769792950; darn=lists.linux.dev;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=KDi1jMTaR6KPNr8Xb3B/fDVI4Wv8VBtbYg00h50ejLw=;
-        b=dkNYxtKU3bBwL3rX1oYOVQQm0AoTYGpLXUrANM5k+I2ow0pRN6Zp6jSsGmHTURjSsq
-         YXMAAnrEOCd3L/Sat+9XVFVOOJeSqyxEX5lljxvlPTXzU6qHp2Cmp9tgwUKJe0NFGWl6
-         bT3jryYHw3gTybariirT7jAQXl58XbyJwwg9NWL6fk/m5Gw7hP3A8g+D6g4TcjREo6cF
-         WwRJcQOWvUPmjQWtRJt2SYZZfrErANJ5YXZjBfyRI6BPj749RvG3zIg3goSg1rvkeDAS
-         zPGMJooJPrbjEFcx1Fs2qpaAOgk5S5KdWO6lWm/TtTrLAxbUY1aOL2kLsdHTvYHB9ekA
-         eELg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1769188150; x=1769792950;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=KDi1jMTaR6KPNr8Xb3B/fDVI4Wv8VBtbYg00h50ejLw=;
-        b=Jlmb/Y2M0q6yUg0dEDUmA6IFCvKNeQp1RA+dXWlIIiY4cH2PkviSPRyB+ig0/Ui0gT
-         WYGSU20QofJ2V2gEToqMCRurUfL/rgYr9lOI4MrTOQhgHyxHJqxudYz02wkiZTyrhVhh
-         ARKXzlpLeewO+bQLMwBAWQXUFfR9XnYaQ5eJBKD6WwuymMlRZmW/7zHxph/u9/iXpHfA
-         JUHGEq2z2Qm4tjbfXpUxbDJMm+bp6AcaAh7m/o7xBpi67E+Io+0HvF6DeNfdJuFAu454
-         Ru04b4iC3oFiyWqw5ryPm4FsBoYWJHzF+wpjxaQINB8Gy25eAvyKihI2xFYWF/oYdkKa
-         JJ5Q==
-X-Forwarded-Encrypted: i=1; AJvYcCWq/ko0ZMGD+4MBkNV48oDGz7PTs0TuO1vTH9VKCrlU9GDE84HvVe4jAkFAmHEOIQXm1PF2ktL+@lists.linux.dev
-X-Gm-Message-State: AOJu0YxaMCp37mL3mCvI/B1JdOx/A6QS+tX/c29I4jskCbbakI+TGHvS
-	rmAyHT7sUO/ju8NWGZ+28y60U2uXafbidN2UBPrX1DfG9PKHxPqsi9M0UrmdL9Hx3Y0ciY9++Hk
-	DlSNedlDkjqoZKbYFxr4LZSc/oFERMR8=
-X-Gm-Gg: AZuq6aJuEhBLKFqszcU1FiTOYRSDOC/z9vkV7PbhmSC4QoEdHTfT/oQUsUoi8OJZvjc
-	Ju+3JiokXHwKMaRI6IDw3LQYj/1I99EQg0OiX7z7Cf4Iy47+wmAMVoAyUApj62kY80/l0cQoiNn
-	Gxwqx4fyLpg57Qb8b+vE2uiqivujr9t2cyzWBYmFirSkj8EN8z8YJzLcKTFWTDx5Gbgj1Sxb+gU
-	5nxvreCL1lH2/S9IauAadrMfoNnVZDWtAIGAJTAtCe9SOXPxI8m+QMzl7NZDJDsm/aD31h0jf1s
-	Qanju3RUtfc2CYNL9jGxs/Hs8CZ6
-X-Received: by 2002:a05:6512:ba7:b0:598:f283:e12f with SMTP id
- 2adb3069b0e04-59de48f3b4dmr1160430e87.11.1769188149316; Fri, 23 Jan 2026
- 09:09:09 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="YzNwB7bb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB2DAC4CEF1;
+	Fri, 23 Jan 2026 18:20:40 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1769192440;
+	bh=soXCYqTDRDABq0Y8UXoiniC7tbF6j/Q2IdBLpYLWa4g=;
+	h=From:To:Cc:Subject:Date:From;
+	b=YzNwB7bb5rHrweI6gYgm+uQR2XBa3bqInGQuOKcx7l+HruyHagOO+suyGJ/LKAFmW
+	 hF4gM1CDVOEmaJboTlO1VHdnHYGN/dRHm87RdS6ubm1vctt5iAldwFKDXiPTfYWhD7
+	 34myfDyTHWWiGKiDcvqO04ErFO87rmbrCoLiTKlo4z8nJtkHG/xMu62pISC43bbW/X
+	 UJoxx2l1/gJS8KDE/LZpOi0y5DsXLhUCJIJvWYefWsgNaU9mqg04Aee8/TmNPU+76/
+	 h6YF6qAKc3kn3iP9xjfCAZlKjYIzc8y1YfDhmqFUNFJQI6WV8dcIuyF6QCMDD/WLiU
+	 YIuodFS9qXWkw==
+From: Stephen Boyd <sboyd@kernel.org>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: linux-kernel@vger.kernel.org,
+	patches@lists.linux.dev
+Subject: [PATCH 00/10] spmi: Patches for the merge window 
+Date: Fri, 23 Jan 2026 10:20:28 -0800
+Message-ID: <20260123182039.224314-1-sboyd@kernel.org>
+X-Mailer: git-send-email 2.51.1
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20260121181418.537774329@linuxfoundation.org>
-In-Reply-To: <20260121181418.537774329@linuxfoundation.org>
-From: Dileep malepu <dileep.debian@gmail.com>
-Date: Fri, 23 Jan 2026 22:38:57 +0530
-X-Gm-Features: AZwV_QjTA2OROAQCVcF7Fgzm2P5YXYzI-sYXuCwZDz88Bj-LHvwUJ9n19S-RNn8
-Message-ID: <CAC-m1rqcA9e2-3NYKagEahZFxYuNBs8yzpVUEeU=WwZix78f7A@mail.gmail.com>
-Subject: Re: [PATCH 6.18 000/198] 6.18.7-rc1 review
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, 
-	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de, 
-	jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, 
-	rwarsow@gmx.de, conor@kernel.org, hargar@microsoft.com, broonie@kernel.org, 
-	achill@achill.org, sr@sladewatkins.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-On Thu, Jan 22, 2026 at 2:12=E2=80=AFAM Greg Kroah-Hartman
-<gregkh@linuxfoundation.org> wrote:
->
-> This is the start of the stable review cycle for the 6.18.7 release.
-> There are 198 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
->
-> Responses should be made by Fri, 23 Jan 2026 18:13:40 +0000.
-> Anything received after that time might be too late.
->
-> The whole patch series can be found in one patch at:
->         https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-=
-6.18.7-rc1.gz
-> or in the git tree and branch at:
->         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable=
--rc.git linux-6.18.y
-> and the diffstat can be found below.
->
-> thanks,
->
-> greg k-h
->
-> -------------
+This is the collection of SPMI related patches for the next merge
+window. Highlights include support for a new version of the PMIC SPMI
+arbiter found on Qualcomm SoCs and the SPMI controller on Mediatek
+MT8196 SoCs. Otherwise there are minor DT binding updates on top of the
+new binding files for the previously mentioned new hardware support.
 
-build and boot report for Linux 6.18.7-rc1.
+AngeloGioacchino Del Regno (5):
+  dt-bindings: spmi: Add MediaTek MT8196 SPMI 2 Arbiter/Controllers
+  spmi: mtk-pmif: Add multi-bus support for SPMI 2.0
+  spmi: mtk-pmif: Keep spinlock until read is fully done
+  spmi: mtk-pmif: Implement Request Capable Slave (RCS) interrupt
+  spmi: mtk-pmif: Add support for MT8196 SPMI Controller
 
-The kernel was built and booted successfull on both arm64 and x86_64
-architectures using the defconfig. Testing was performed in virtual
-environments,
-and the system ran as expected.
+David Collins (1):
+  spmi: spmi-pmic-arb: add support for PMIC arbiter v8
 
-No dmesg regressions were found during testing.
+Janne Grunau (1):
+  spmi: apple: Add "apple,t8103-spmi" compatible
 
-Build details:
-Architectures: arm64, x86_64
-Kernel version: 6.18.7
-Configuration: defconfig
-Source: https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable=
--rc.git
-Commit: 28a73c31d7f5d9d2276c92e1d4891c18a5631e6e
+Jishnu Prakash (2):
+  dt-bindings: spmi: split out common QCOM SPMI PMIC arbiter properties
+  dt-bindings: spmi: add support for glymur-spmi-pmic-arb (arbiter v8)
 
-Tested-by: Dileep Malepu <dileep.debian@gmail.com>
+Louis-Alexis Eyraud (1):
+  dt-bindings: spmi: spmi-mtk-pmif: Add compatible for MT8189 SoC
+
+ .../bindings/spmi/mediatek,mt8196-spmi.yaml   | 138 +++++
+ .../bindings/spmi/mtk,spmi-mtk-pmif.yaml      |   1 +
+ .../spmi/qcom,glymur-spmi-pmic-arb.yaml       | 150 ++++++
+ .../spmi/qcom,spmi-pmic-arb-common.yaml       |  35 ++
+ .../bindings/spmi/qcom,spmi-pmic-arb.yaml     |  17 +-
+ .../spmi/qcom,x1e80100-spmi-pmic-arb.yaml     |  21 +-
+ drivers/spmi/spmi-apple-controller.c          |   1 +
+ drivers/spmi/spmi-mtk-pmif.c                  | 472 +++++++++++++++---
+ drivers/spmi/spmi-pmic-arb.c                  | 304 +++++++++--
+ 9 files changed, 977 insertions(+), 162 deletions(-)
+ create mode 100644 Documentation/devicetree/bindings/spmi/mediatek,mt8196-spmi.yaml
+ create mode 100644 Documentation/devicetree/bindings/spmi/qcom,glymur-spmi-pmic-arb.yaml
+ create mode 100644 Documentation/devicetree/bindings/spmi/qcom,spmi-pmic-arb-common.yaml
+
+-- 
+https://git.kernel.org/pub/scm/linux/kernel/git/clk/linux.git
+https://git.kernel.org/pub/scm/linux/kernel/git/sboyd/spmi.git
+
