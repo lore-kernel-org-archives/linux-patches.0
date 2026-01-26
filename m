@@ -1,222 +1,217 @@
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.11])
+Received: from BL2PR02CU003.outbound.protection.outlook.com (mail-eastusazon11011028.outbound.protection.outlook.com [52.101.52.28])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07450212566;
-	Mon, 26 Jan 2026 07:33:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=192.198.163.11
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6788F33C518;
+	Mon, 26 Jan 2026 14:14:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.52.28
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769412811; cv=fail; b=coGXvUpEH1mCTR/WkDe3+O99G2kblRSyMfK1yqvW6UUHD9MdQ3ybfVcO9QOE5HFYEaFW5p1xCh6RVCIv0Jtu2P053Y1+yjxmEwfycWah1mn7/utQROnBaNrOBHe8Ye7dumn2ybTaOoExqU8jqvpcWXlERIVTQvsQUTXahOP+0OI=
+	t=1769436857; cv=fail; b=h0UmFez4bWQvJqDe+yBXwO7xyCj7DIplNl0VjIVyI/GSAHxys36Szsug6w/wJsAbfrqLoDxaueXiKf5LY2NUoADzB+KDOxacipSPpXjzsUQEcP+dBbYZPbRGij6HcpYdhz46R8WvhlhM43vcYBnb9qQb3MGBspvuQr0h9PnKNAo=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769412811; c=relaxed/simple;
-	bh=JhRcj0WBPnQToy0eqSTg2ZYrgp4fHhoU2Q4DTOGcy7w=;
-	h=From:To:CC:Subject:Date:Message-ID:References:In-Reply-To:
-	 Content-Type:MIME-Version; b=na2+ziywhBdcqmUWtJI6iyaQghUcFjuCMnsB31tVXwyFdTDqcL7xHUq4g84jY68m4NVytuWYJFcQ6ujVyw5rf8MchfZPg/nFKKzax0Xjfp808qutQsVOZ8kORwdajw9jt9ZM0DIK4y/jj1MliEWT35la9o1P/JNQhofYZUemS+0=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=VJREHf2y; arc=fail smtp.client-ip=192.198.163.11
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+	s=arc-20240116; t=1769436857; c=relaxed/simple;
+	bh=EfesN/rBo+ih2JQ4dWpP9ENWezfBSPl5F31RY52TDas=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
+	 Content-Disposition:In-Reply-To:MIME-Version; b=Xcx1ok3VGqf9PvXH/Qw4v0tb0wEMAWBDa/UaUq4ivTY+0+IdpDBmHgwPtiTNy4WypAgj498M1UXD8L4egb6usMKzOgJE2QpKtLMuXBxQWzM3VtjyWDIU8v+8s+6HViYX5Sa2ny0cu2ctRvyesA0jiMC3ZHyO8ql5a0MgGjGjKCg=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=jldx5Fcb; arc=fail smtp.client-ip=52.101.52.28
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="VJREHf2y"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1769412810; x=1800948810;
-  h=from:to:cc:subject:date:message-id:references:
-   in-reply-to:content-transfer-encoding:mime-version;
-  bh=JhRcj0WBPnQToy0eqSTg2ZYrgp4fHhoU2Q4DTOGcy7w=;
-  b=VJREHf2yCsb9eiBMxCG/EaWkziyIojcpYMpS0miMl4YP3Uf3SQ6FuJ6m
-   Q0rgWcvBEWJ+49MbcFJ/WgPK/R4YfGsHbxYOFVKtxR8OgX1JF0s62sIzV
-   av+Da/Z5sCdzDV2uLw6GvgKFeRk6CVqoq/2NRfWkuZVDDPI/FRYfKC8L5
-   V4ER4ywcf+TfIrE1E0h0vJ0Q5LvLMuURuWHxZvvl1AwAnn1OQy9Ro2CPM
-   Y6z52iUKKiAhK2T9ti93XLGNOtAxcCyievwnOPbZ8W+o/Ngepc24SVgHW
-   xjZPnqGReI8uaVYn5w/eof7jw19J6Eoy0bRl+jhMWh9BpwjO1ghZu8HAH
-   g==;
-X-CSE-ConnectionGUID: RldqrDA8SGCJBsJxPavU2Q==
-X-CSE-MsgGUID: 6e4Fj6+rSa+X7/ScKWfSmg==
-X-IronPort-AV: E=McAfee;i="6800,10657,11682"; a="81219089"
-X-IronPort-AV: E=Sophos;i="6.21,254,1763452800"; 
-   d="scan'208";a="81219089"
-Received: from fmviesa001.fm.intel.com ([10.60.135.141])
-  by fmvoesa105.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 25 Jan 2026 23:33:29 -0800
-X-CSE-ConnectionGUID: BSkwXLAYQJa3/jztBZaNhg==
-X-CSE-MsgGUID: M5if7/BLTViI019YtHMKjA==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.21,254,1763452800"; 
-   d="scan'208";a="238865166"
-Received: from fmsmsx901.amr.corp.intel.com ([10.18.126.90])
-  by fmviesa001.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 25 Jan 2026 23:33:29 -0800
-Received: from FMSMSX901.amr.corp.intel.com (10.18.126.90) by
- fmsmsx901.amr.corp.intel.com (10.18.126.90) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.35; Sun, 25 Jan 2026 23:33:28 -0800
-Received: from fmsedg903.ED.cps.intel.com (10.1.192.145) by
- FMSMSX901.amr.corp.intel.com (10.18.126.90) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.35 via Frontend Transport; Sun, 25 Jan 2026 23:33:28 -0800
-Received: from SN4PR2101CU001.outbound.protection.outlook.com (40.93.195.4) by
- edgegateway.intel.com (192.55.55.83) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.35; Sun, 25 Jan 2026 23:33:28 -0800
+	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="jldx5Fcb"
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=HbPUGratE6L9NFuuAzlshgXwNbx4TP5hZqaeAY+CDGqm7h1LFBKnrev99MFILzBIIxdSJHzvzkfWR4UBhrht6kFTEb9ncgBtsioX4x88KI4hheZWWMnOlEW2ONqFIyaLJ8GIQZJDdCojHsAPRe96lmcPIdrPTI03XzO6K7b9WZjSS8fNrQsiT+VYbuPEGlvq4bczRywSVa7e3qA2VUdUOtcJ08WmmDPUlYTArP7URwF4iPafiaGv7ul7DVGYQ/VQSzKoCIxCxx7ynYKXZVBRRsDV5gIdqbrq6sPhkuFP0jAatgKSqzaXOhgAC4EQsXIt84r5ufPwIM2mIqdg0AhcsA==
+ b=WqNQ7IqS4v/8mjTZF+Kg90R8AgeWHT9J7rYs/az1CgCuCD3x4tXBTki0YWCyKL3pYZC11rpnV9UhhYkaC03/UrG/SYHjAUSwzb0v0A0qQMTLDZWT0wO4tz8cXcND0c7rVAIFeUk0kevWxgg5W7Q7V0QbBFMSyEDUy94xvPMbS8DGZCDQlTm4XbAbMvU7o9FhgoSmB5Z0qyAZI4aFQEofPORHDta2LVtp++wI2VLzrV8zAvQmRXKfqkIY0tc1W2wU8t/M78askl5FtLkju1mxwAtAo+ahzgxJCeQmNn2WkL4tjvXa07UI4JajZ4BX2pvw4g7Z4mtifbuGdlvg8oB2Qw==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=2fa0GWONy/b0WmZFcQHZWl4Dw3QnDeT2BJps5yZqiCg=;
- b=yXWkqoZJozluV7a2PPkDNAcOilGIjzVm5lgkQFY8jJ6mvSx0W2Dmb1kgSmOoJhJuKweCfQsxbJ/0kjolCUsgRnxt+E2EwYyC4DCfjwceJO11yP9PK7Ktng3Pj+j8NzvQGQzEWxs9tYCEUT+yKAcEFWGra3X1Im4UWLieE8Oy9TDlkFw76yIseMk8MASBp7GWo7F8Gpdc8Yu+7b+Ct+NkLADu1pPsQwd6MzF2/srzScBCB7kjVId9D0uiLwPsJ3dGHDZXxmrNUtXbYH+PV0PTnDN1i4mPYzczAiJyiBgUUD4V4SmQhFuKg7OajFjMihJTh2X/ZZoTZN/Q3cH8aVRnIQ==
+ bh=6LM/MqqmEXro0fa6B6RRGQTor24gQMMThBLGRvlkfWg=;
+ b=aT7nG+WTf3swJDaECDe3MMGOWn3/ec2gaeN+Wx6C3Lt2Pvs4M5AmJqrRjmtS/guJigJVc51kBmN+bOJsLxFw/iIbDNXacwIx8KDNAe88xog0tVXpwPR4jdrL8j/WEykc0y1SZpfWjFCk4gFVB6P49MdYEw/CvU2BvXnkLyAzLfmbtT9pvVpj93HCgBQHgqMWAhoh4XU22z9Au5aPqWiMOjflOxE/EVH+Myi1kv05LyBPJVPH5l0taWpH0VgvM53evq1kyuepoicDyD5NLZ7oNMukpA0BNM4IEcre6STU81QCyVWmV2rQgYRNXEpALa8yFokCRDyiDAV2xVR1cdP2yg==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
- dkim=pass header.d=intel.com; arc=none
-Received: from BN9PR11MB5276.namprd11.prod.outlook.com (2603:10b6:408:135::18)
- by DS7PR11MB7951.namprd11.prod.outlook.com (2603:10b6:8:eb::13) with
+ smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
+ dkim=pass header.d=nvidia.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=6LM/MqqmEXro0fa6B6RRGQTor24gQMMThBLGRvlkfWg=;
+ b=jldx5Fcbd3vnlMpG0AelvLl5SS9TZ7HChEdVCyWpduUW1I2GxVUV4t8Lfg1HD6S8m6vfDzt/dzpDgCKJPeCL21CW/Dcl74DeCYIKytz0koErMziFqb6K02RAkdQO1NPBu6eZ2qjAm14hnQuBmHhHmlIx8LLTVo3DA5hy7b/PsqkuteErI4Q+vN72pD0/cRUqXMTH/oaEH2Rwwl7l623t+XVXBRI9+nzi4IyVKN9Dpe+ffHeby09siCuCWLTdDIgX3C1UruGenwArJbziIJqOVJqITNP4Qgkhwwk53PY2CjIM/ECWonCFUCrXLdswfvKsGnrCr0UNdzRTHmRu8cFIig==
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=nvidia.com;
+Received: from LV8PR12MB9620.namprd12.prod.outlook.com (2603:10b6:408:2a1::19)
+ by DM6PR12MB4371.namprd12.prod.outlook.com (2603:10b6:5:2a3::23) with
  Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9542.11; Mon, 26 Jan
- 2026 07:33:21 +0000
-Received: from BN9PR11MB5276.namprd11.prod.outlook.com
- ([fe80::f997:762f:f079:134f]) by BN9PR11MB5276.namprd11.prod.outlook.com
- ([fe80::f997:762f:f079:134f%5]) with mapi id 15.20.9542.010; Mon, 26 Jan 2026
- 07:33:21 +0000
-From: "Tian, Kevin" <kevin.tian@intel.com>
-To: Jason Gunthorpe <jgg@nvidia.com>, "iommu@lists.linux.dev"
-	<iommu@lists.linux.dev>, Joerg Roedel <joro@8bytes.org>, "Brost, Matthew"
-	<matthew.brost@intel.com>, Robin Murphy <robin.murphy@arm.com>, Will Deacon
-	<will@kernel.org>
-CC: "Dugast, Francois" <francois.dugast@intel.com>, Joerg Roedel
-	<joerg.roedel@amd.com>, "patches@lists.linux.dev" <patches@lists.linux.dev>
-Subject: RE: [PATCH rc] iommupt: Only cache flush memory changed by unmap
-Thread-Topic: [PATCH rc] iommupt: Only cache flush memory changed by unmap
-Thread-Index: AQHcjXSSUrfgiyXzp0aDYIe7CuoQ4LVkD5fA
-Date: Mon, 26 Jan 2026 07:33:21 +0000
-Message-ID: <BN9PR11MB527689AC9554360C2339E7598C93A@BN9PR11MB5276.namprd11.prod.outlook.com>
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9542.15; Mon, 26 Jan
+ 2026 14:14:12 +0000
+Received: from LV8PR12MB9620.namprd12.prod.outlook.com
+ ([fe80::1b59:c8a2:4c00:8a2c]) by LV8PR12MB9620.namprd12.prod.outlook.com
+ ([fe80::1b59:c8a2:4c00:8a2c%3]) with mapi id 15.20.9542.015; Mon, 26 Jan 2026
+ 14:14:12 +0000
+Date: Mon, 26 Jan 2026 10:14:11 -0400
+From: Jason Gunthorpe <jgg@nvidia.com>
+To: "Tian, Kevin" <kevin.tian@intel.com>
+Cc: "iommu@lists.linux.dev" <iommu@lists.linux.dev>,
+	Joerg Roedel <joro@8bytes.org>,
+	"Brost, Matthew" <matthew.brost@intel.com>,
+	Robin Murphy <robin.murphy@arm.com>, Will Deacon <will@kernel.org>,
+	"Dugast, Francois" <francois.dugast@intel.com>,
+	Joerg Roedel <joerg.roedel@amd.com>,
+	"patches@lists.linux.dev" <patches@lists.linux.dev>
+Subject: Re: [PATCH rc] iommupt: Only cache flush memory changed by unmap
+Message-ID: <20260126141411.GJ1134360@nvidia.com>
 References: <0-v1-21ee371752fc+4c-iommupt_unmap_cflush_jgg@nvidia.com>
-In-Reply-To: <0-v1-21ee371752fc+4c-iommupt_unmap_cflush_jgg@nvidia.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach:
-X-MS-TNEF-Correlator:
-authentication-results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=intel.com;
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: BN9PR11MB5276:EE_|DS7PR11MB7951:EE_
-x-ms-office365-filtering-correlation-id: e50973f1-097b-4c85-5224-08de5cad2e88
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0;ARA:13230040|1800799024|376014|366016|38070700021;
-x-microsoft-antispam-message-info: =?us-ascii?Q?DyS48o1Mj2TuLYf4ubJyhtxJufXYWtpR9sc2VIEo8puq5gIidVrtLyoxUVfF?=
- =?us-ascii?Q?HDpyFhbRRlhKKC5BIULOvX2ge2g4YuxbxDvidZDYTBEjlp0BDkvQA9GKD1dG?=
- =?us-ascii?Q?AUShWlmKjIo3phShIhI/l3uGODQwgpOzhfAFSyZ7a2YF2faqRXXastPd9Dlw?=
- =?us-ascii?Q?yq/TZlelMibxZTIR+/tCVt0r4AdC5XzVTvENiU12cZu1hs2yX46FS0WdYza6?=
- =?us-ascii?Q?C542urMwrsINkKzqzJdU0i8bsl4XUctU+DrckNG8CvAevWoHNoMPxjUZ5W8D?=
- =?us-ascii?Q?fteYeHkm2d6BlKMMrN8kBujA89ygPF9WWV8xi1gYeRdi4EJCsFpqp3XWmvmh?=
- =?us-ascii?Q?fF3Q3P90vc+e2T+deemRKjiWOnj2M4+VVKNjX/oosisf6IALpWgW23r8Axg+?=
- =?us-ascii?Q?x918xCPhmFBlUJpseWIo73m3On1dpwpZB/yjiAF1+Ph0cZQ1urn46IIkGxHi?=
- =?us-ascii?Q?J7yggxA/jEJUCt+XXbAFUW2I/3C2yZhXI09C0psK0bICTKvsd0m8NAmEpIud?=
- =?us-ascii?Q?T8gPb4I3W+bo3B/x/DKG7QRBaYuD7QknX9HM2ELCpKZDgK/vTaZKt1z1/4Rm?=
- =?us-ascii?Q?uUdpelycoFUZjTKCDi1zZghHgCQpEEayfX8TXwx87e1UsKlcQekDxf2Z2bp7?=
- =?us-ascii?Q?EJeJ3SqlA9hpqPbseU5D62OHJReQgrr0XIphNeE6Ff+75/3kOU1AFBQ7ZIrG?=
- =?us-ascii?Q?Q49Ujj1zHy2VXOV7HA3ShR2D9+DgpUwbJCh6rAEavoETmPmp+GO8dJQXgn79?=
- =?us-ascii?Q?QRqYijHqbt9Wco06z7/37EYKGdOuMbvokIV5dIf4VDb5WCOuZhX0uwHHkZFU?=
- =?us-ascii?Q?wE8FuZbvCb1VYgZ+CHXU8H6DSYknncF0Ig2g/g2/AC4IjICpE6bUu1N4M5U0?=
- =?us-ascii?Q?u/o0AYU3iGtwtGRTrjrpVYQdBrDoxiJ9AVs+IoobgjZa1BscaIEbBmAB0Jjz?=
- =?us-ascii?Q?600pZZbQbdfezJi7xbOPWgA0rZUEJzBURa0/+jdGsF57yxr4rFuCZ4mZ/cQl?=
- =?us-ascii?Q?C1TZwiAa4Qk15cA+iQYp7B63EIKtiJp95KY6gpG1fbgcOXyrBytcYA1Ed/NZ?=
- =?us-ascii?Q?fTyOjL1wnbfW22/L/AnL0tMsArOVgYZ3f33LWoBA2X83jLSCU/Fvui3Zzih0?=
- =?us-ascii?Q?AIiGZbl2NJi3U7GhPB30MqIwdy7FIkL01Ru7Ksj0OvLJxdWV2VsWMviCQBpm?=
- =?us-ascii?Q?9NWmE2Gc7kqoh8CcYgjqOSOAnA6jOSvDoaobVIVRGeLvR8ZfbH9tINixUnZO?=
- =?us-ascii?Q?nicX3WrwPXZ4sTJzgwxPFEGdAP1GBORmTFC5VlP7zjPET2RbZIwpwaXJrErw?=
- =?us-ascii?Q?oZ0AvB6M6TSgTBqCyKE68cifzDhE6AmFiipU3GpARBrx0yCJvVqkaEHZTuPK?=
- =?us-ascii?Q?nGh/QKFBTsknm4jMkPcHdRIWTxfbsh8/FbzhBgIYxeTKto1vSUHLZsGBSCOq?=
- =?us-ascii?Q?ni6YEBfzKgrzw4TI6gvVfCyZoNUOvDUIKRwxXxsTDbZAwZEQU3lAHFIfocZS?=
- =?us-ascii?Q?gFpaoDTkRfw5/dSlFHQN4Csj+1OC/WzQcXD2Kxuh8AbIocArntTrMTAHnQ6s?=
- =?us-ascii?Q?RyMaYExWcrQ3kHPmPmFE28YHdwP2EEYuf/9c6BnmfJJC9N4ZqL5sYu7RCQcF?=
- =?us-ascii?Q?8+BeDe7qjtRkN++x9KC2A6w=3D?=
-x-forefront-antispam-report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:BN9PR11MB5276.namprd11.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(376014)(366016)(38070700021);DIR:OUT;SFP:1101;
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?us-ascii?Q?s2gKH0Jx/IqQjN3oeZtqb3bXC6muTPudamxH17wUUTaKctIn+Y6f2WqPLXuh?=
- =?us-ascii?Q?0S3QsydOnnwcw+6f7XnC9kruTrkqqe6LD6AP67Vve+ddWOBJGx+/JGKSXysQ?=
- =?us-ascii?Q?OeNwDvn8NAjHifF2hPWNriyhD6hTwvp/dy2Zo23IMbvA6IFOxRT12Jlv33Qt?=
- =?us-ascii?Q?QjzMlh8ez1q9skw7GNYnkXLu3Sm/CLv8LKvlW9xhsYkxzFG3M4fKCAkZOFd5?=
- =?us-ascii?Q?7W7hUa3Cdk2MBj7+os+2SzpzRl/S41/VbomAHxx0g4fsNBQh4NnOpBSmvYBk?=
- =?us-ascii?Q?kkheNbSfcv82q0x1A6pLcdYE72EIKLWRXWhOxN+yFOUbMPC1hB8cKLP4FTIH?=
- =?us-ascii?Q?z3ahKhJDj1I4qBz2eUJoN1X8q1xxnhnzNwBnKrAkIJ9QMZA2w+gIICuYswIB?=
- =?us-ascii?Q?Z5nRLAmDXjuMMbfaifcPQ9nSiTJK4ZUohqah7oRqzhnfBtwCebsocnnvj2Nf?=
- =?us-ascii?Q?xtQ5Yyj2Y7ou4OcvZYuiMfb6rlrr2z2pnU2l5oLIyjFpngDUhSt7WAbuiR7r?=
- =?us-ascii?Q?pL0ExTKsEb5SQp5amPtlzS104irGfWVukI6zM+6n4LVsDlweoIwXFQbGptOE?=
- =?us-ascii?Q?gSdYpzr2X1HdKAXKEVf79K7ANlnFb2RMaBUTDB2XDBWDtzSE8yeNJn9XczyN?=
- =?us-ascii?Q?Q35HGCwVPo4WZMf5US8ILGx8Wl/W1jJFmVOdpQrGD68RdXDlCs/kje6fzhoK?=
- =?us-ascii?Q?arLKIK1pEgTwy2uDeTf7fkRNAb3Gv4Q7EZYbsQNMQ4UbR2kLz6/Lt+tSxaWW?=
- =?us-ascii?Q?Eas8WM+U7gChQWx2/DcMJJplsQKSEgYbsdimvBgR8HpZmK4ckvF9CEO8i58p?=
- =?us-ascii?Q?XwJAMyJsFCQu2g4VGvZ3afqOR03y0WZ8rAFH57a1me2W3X/1dky6bQJB4y4U?=
- =?us-ascii?Q?mrdAPRH62ZmYBbza01ziBB2mzLP44sEIYk8IJO+b3tqgRgS6W2pSPRyjcsRm?=
- =?us-ascii?Q?omOeIW2wikgkthQy1/KoVDJ7dcc9U2AeUF3N2+a0JyZuGe+QAtNMT4zcZn4H?=
- =?us-ascii?Q?IAAnx3VOHH526zXDQ9xsyCYecWmwSnBemj72YItrtugtRZbJg4C9jlq3Baeu?=
- =?us-ascii?Q?JYhW3th4H0WD5Lgm8MaeNS5T42uuX4c7Al1JG8Shf7aaq57b8mdnI9BBpsIH?=
- =?us-ascii?Q?ohNxN8AIZ+BP7D+spDjvHt1u5OPs07SCMgZmpHl6bZ2tykiOYpMFx/8H/ElA?=
- =?us-ascii?Q?QE8LDvSX5Z4xuGM2WwlzFVlqlI4UqWWiWMDit3i3/oUpPP4GAPfxQ48TIYqN?=
- =?us-ascii?Q?C6VF9EmQxm6QqTBRVqhCPqtGWK1pxyEFUNwL3C5QTVmv/CbhUYPNn1ogW9ln?=
- =?us-ascii?Q?tv2YcoohdnNjPMx4dSkBwC6sBWPCnwXbYOlaJqBbySnvD9pQFrmeiz2SZG3H?=
- =?us-ascii?Q?eVr0zZySGx98UAKAjazGBf4/+4/WHn9va8AZZePNdvZKXaNtW//YE+rEtd1f?=
- =?us-ascii?Q?b6indFvL0+FsbYg4V7bPm5bzFY/LYl1USGeTE9FdUgS7i8WYlyRdbqWUy4pg?=
- =?us-ascii?Q?Ps/TrwqB/v6Kwt9XXc9rHvNirkvpp7qNWIc0Kqik5trQE5BorUIwGx2WG7/f?=
- =?us-ascii?Q?wN5bxBTlh2+UpnUfpV1eVLb2GXKEGP+AnRp4Q56pF4RgXubHfLUFmCgDnyu4?=
- =?us-ascii?Q?FSUq4nB/TjTyqOUsA3x1RzdYwpc2slXfAc/ohhlzKh9HCHtKqjroAmqpkAvm?=
- =?us-ascii?Q?Ayj1O7eL/n5teqkJjcPoh/jPHI/bGRm9jA0cHG0MaBNSuUH2hhk+dtY/dpyq?=
- =?us-ascii?Q?cYaX/YP3pw=3D=3D?=
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: quoted-printable
+ <BN9PR11MB527689AC9554360C2339E7598C93A@BN9PR11MB5276.namprd11.prod.outlook.com>
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <BN9PR11MB527689AC9554360C2339E7598C93A@BN9PR11MB5276.namprd11.prod.outlook.com>
+X-ClientProxiedBy: MN2PR18CA0027.namprd18.prod.outlook.com
+ (2603:10b6:208:23c::32) To LV8PR12MB9620.namprd12.prod.outlook.com
+ (2603:10b6:408:2a1::19)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: LV8PR12MB9620:EE_|DM6PR12MB4371:EE_
+X-MS-Office365-Filtering-Correlation-Id: b32f38af-139f-472a-a676-08de5ce52dfb
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;ARA:13230040|376014|366016|1800799024;
+X-Microsoft-Antispam-Message-Info:
+	=?us-ascii?Q?EnDdl9fpE39C2NobqVDFf+VAG0V8tV2q/nhQWTiDO/r5AHIRzGQCHYIcrFDB?=
+ =?us-ascii?Q?rJtRlM7Uf78MfbmYBH31OFlqoEw41O4zPW5a6/EC2ygDRvIAcTv5hYxS3BsD?=
+ =?us-ascii?Q?wmQSlPJjJK4yA/tLgUT3CUbLRMvGK25NuJNqHqW19/8Ls0qRc9BtzIoxwzlO?=
+ =?us-ascii?Q?enR5E8ZTrfTFKkb4xZE+Dayfal7JdoiuN//2FlxONNt9Yw94xQXDZckiykx4?=
+ =?us-ascii?Q?9ZlV7nY9VN6eaHNyU4iUgA3v38kVRBlo3y4vcTUgWxwrFMhVm5X5IFXuQsfb?=
+ =?us-ascii?Q?E3lw7z3gXzSZnTe/iyQGFe/U9E0goJiYE20d8NaPLpPVPcBzUdj1MWsy78gc?=
+ =?us-ascii?Q?Im93FIVus5aa5uZvbP6dAy8nq6UdaFrX0WfKmJlYIf8Mj0SIbsZgsUyYoGZ3?=
+ =?us-ascii?Q?GhEdd83E5+zajTf1GlbrfGesGYhjLrFw+3Qyj1r0a0aBYCM0SIOtkc9cdAdv?=
+ =?us-ascii?Q?hnPnl+ZnCX0JExgGpLXg9BVwexlWaz3qO03qhr2F6lq6NWw9JnGiFVUT519N?=
+ =?us-ascii?Q?gDSTCH2dqt4rf89Bw7APh9TUMeJAq4ouTmHRRou59ElfAboYhe2gHm6ga6xd?=
+ =?us-ascii?Q?5hrTAg2ZDhqMTRN2q0GakDUQXPI01L4KkZuLqvj0X5W9nsYrlouKcN3bw5eu?=
+ =?us-ascii?Q?cw1m0B/HLNLFfsvqF1HIbRduhXzYwGmA0uUfSuQgJd08GNm4x0uxV+smCzra?=
+ =?us-ascii?Q?9GFaAajg3DIEy4cfTxtwgab7e52utZho4NvSi5Dglu0D+Qex1GXyhqCRzD9L?=
+ =?us-ascii?Q?CXy0toI0IPZrzTPQBommrpcwZkH9Jqq97Swn3ryo1qBeFFhildisdhgKhmVl?=
+ =?us-ascii?Q?1c9TgmhqsGg8nme27bUhfYm+DkRUlNor6STbr86CtU1M4l2Y0lG38qpWvnHk?=
+ =?us-ascii?Q?bW+pzE4JMuu803DDq6q5PfcAXo+Gl2iz6At1uCEnsVBfrLH5tjgFCSGISoWN?=
+ =?us-ascii?Q?queitxES6sYSevPCH74kPPWn4+MxSTKSXg9oqb7cpwhlEW4IlFEuEA2lITZM?=
+ =?us-ascii?Q?5jPUndwprr0VwHWBmt0/2bueP8/2aarGtEKylM+nLzYPXrh26zdvQDfgeiQS?=
+ =?us-ascii?Q?DPeOULVP7s1lg9S9DL4cT4i5qelwuwNek8ZDK9fDHxG9csW01HhMqgvuDxMJ?=
+ =?us-ascii?Q?Qb4oV26N17ikgclv0QTEui0fEroAMD2Pol7TZiBj4Al2YEBkwep24AlgSdtZ?=
+ =?us-ascii?Q?nT3o0NmapDbYAM0piiS+y1tkeRCJuQH9CSQzbAoD/3i7krhr6zCwiiNVLl0c?=
+ =?us-ascii?Q?QbQ/AGkF6ksaP4xevAPE0cqrxx845BoKcpAXEtxzzBd4l9i2qXrOCg6l4bxH?=
+ =?us-ascii?Q?JpzkcudoIkFbPdDDybxydD7n0SUGiKaoIo70dTN26owBc/+X8NCG7LCwI3L4?=
+ =?us-ascii?Q?znodxGMbNzArWg64n2+5V4jQJzTb01OBCYhwoY0RN0sqBjjjI+TcfI5xODqw?=
+ =?us-ascii?Q?x1M0qX6GQAD42Bu/JPi0QW+kM0aHXt1pvuAzK7Lbm8YGfqwOp8mTGlfrd9Wj?=
+ =?us-ascii?Q?ZvEnQ729KcJHupqNSkquiUu57fFddu11bk9EDJ3VvaVcUE9oieK7F/fR4MeI?=
+ =?us-ascii?Q?4chWkqyOfnL+c2owvwo=3D?=
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:LV8PR12MB9620.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(376014)(366016)(1800799024);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?us-ascii?Q?CTrEvg004HNRaQ5hgPO3imCdgH/XJ9vV3b4DG/TppQbOVWTzUJ5tnQIQ3r3O?=
+ =?us-ascii?Q?S2qz71HzSeRULCEoe70tzejFWYMVXKbSPLgkPEv/TfCzwCvjYkpeZv4wuBB+?=
+ =?us-ascii?Q?DmBIrLkBN4OY0gIr5lwt9oVbQk7kHyAL5h76QQs6OoCzamcgNxIqDHL81MOc?=
+ =?us-ascii?Q?lWrQAFy1kJeDDGGwZqiwfdTQjqAMO7jMAA9uGHiTZ8guU1C6GUZJXTjaDC5Q?=
+ =?us-ascii?Q?tW7wRGD2sHFps8R14SglnzToaG4Mfqeaxzoi50akqAI4fHMnTMNpJr27tpEC?=
+ =?us-ascii?Q?PS0vABYG5YlHaI1S0KpBg8rNL1pCqvUOL8DxmbJddqU8myFU2agxVRJdIwd1?=
+ =?us-ascii?Q?FPFUh9HCIX3+VCHh4B0+Xgb/NY9sV4yiprffz+dHoBmEpsnozat1+MVALFti?=
+ =?us-ascii?Q?RmHWMJu2rXyeEeduyZuIQxff6Yyw4tF146jwLMqYwDGmoAmTOjJVryqQVG1w?=
+ =?us-ascii?Q?aAG9PTBQj13LplmALZZ81AzatUY4lLj7lXRPkraDKUqueDtLP67toHJBxSiy?=
+ =?us-ascii?Q?WP51mL3Vt+kEJ0i9NoBjsmOlEWjzAsgq1I5krf7YP2vBl2pNWB54z7ESrBhO?=
+ =?us-ascii?Q?Gwp/jPjPMIBwYNJkgI27t9KNlY86AkonTocV4Vkum+Ufo9m+PwUIqy1TbU8X?=
+ =?us-ascii?Q?TGQ0HfjOTgj/DHKSbNWuJ3ZSk3sd0n2tXkvqxc/nmzq6LR50/WAR5qtmo7GN?=
+ =?us-ascii?Q?B6StlNTEeenuYrlnmPAwG79I3Pu580KT23HP3tC3asVDFTWax7m08jx0QpQw?=
+ =?us-ascii?Q?oC49dkf+J0Q2e2zQ2TSDfbYsUdq96ZRyej9JZ0zsl8kTa4UbTPO4L7HPfJwm?=
+ =?us-ascii?Q?IepLV2PNOS/N4D36SfFJiWxQyPX31Ha7OQ/nQInDclRp2sSJxt/X3ogAXJnR?=
+ =?us-ascii?Q?3SfsVqaCOc6MPT2D3dUFJXE/wOS4/0iwBW0zp6RYwLXZEHaLelF8U3w1z5vC?=
+ =?us-ascii?Q?9u1seYoAfjZKka8wrHm8soW8CYNveELMA/lqF6kfwpepFBsbmymzja4sizUc?=
+ =?us-ascii?Q?2rkldZF1ai/zNK/29RFfg+7G7QEklSymrcVeA9UkfHRnl2rvNKv/2pbCJyEv?=
+ =?us-ascii?Q?OBsC2st09hLE13eD5flddhNXkwOGYe1KHTwNB480Utp/+SjCLiiDZuAeGDCo?=
+ =?us-ascii?Q?flyWs7Pl9AEh/Pi4QFSnsN6U0ezG5EcyNs4cgmvYMiWekAm5b6W6IFNjT+UT?=
+ =?us-ascii?Q?czfX1GbMzfEfEhHxR8JVJOxmcv91vKFxZq6zOCb18bVbGiqoZY+ob+H9E6le?=
+ =?us-ascii?Q?ov9hh286GOrinIAFPqSbkkubJMktqnGGXmvvucxpKtExrmy8QGyUshdvoEsE?=
+ =?us-ascii?Q?gd+EmBj0+GIGUNGV7x4GZ+93PaqZuqrCAJUN/gd/bkTVoTQp6ljOYxVF3NBv?=
+ =?us-ascii?Q?W84/vFtvk1HRd+lWRLkd4PBokQnlLVgZyd9DEsFTf5BxuU0cMoaiWLqQy+2U?=
+ =?us-ascii?Q?S217kb8111JbGfRAOOfow4RwoOiwdW3NEXuuAtFnkCc6zgTGFnRZQ2gav+us?=
+ =?us-ascii?Q?bmBGOKLCtSK2DhKCV2YMsrUG9y0h5a2ERuBfdOakkT8g2B/bT//RG9gRmLs1?=
+ =?us-ascii?Q?sIU9F7neCOKKNKg9wCnqYB5lYbHZWJDhldmRTRudcEIpKtWInT0q0rm3mNIL?=
+ =?us-ascii?Q?czuRH+fFOVql3li8zmmCb+DV5qYolhbgjICu05wWvoGjr9qwi4b5vX77i+iq?=
+ =?us-ascii?Q?FS8KdTO49rCO+iDJkv6uyr0yM+wta9Xfw12HZ7qWtlNnCCQy?=
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: b32f38af-139f-472a-a676-08de5ce52dfb
+X-MS-Exchange-CrossTenant-AuthSource: LV8PR12MB9620.namprd12.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: BN9PR11MB5276.namprd11.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: e50973f1-097b-4c85-5224-08de5cad2e88
-X-MS-Exchange-CrossTenant-originalarrivaltime: 26 Jan 2026 07:33:21.2784
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 26 Jan 2026 14:14:12.4290
  (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 46c98d88-e344-4ed4-8496-4ed7712e255d
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: dhW01P7rRRky/TAULcQ6xVrPkBoZvHMdQH5kyAWhnWZ46axKgEoxqJFGT4SC7mBsbS+1YGS/klDRSDpA/2PsHg==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DS7PR11MB7951
-X-OriginatorOrg: intel.com
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: yIOfkEi67U0zwGkn9qP4Z98GhHLgvNR9CHqBedkv/JuTNrUM/5SZJXOkewFMUFOD
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM6PR12MB4371
 
-> From: Jason Gunthorpe <jgg@nvidia.com>
-> Sent: Sunday, January 25, 2026 5:00 AM
->=20
-> The cache flush was happening on every level across the whole range of
-> iteration, even if no leafs or tables were cleared. Instead flush only th=
-e
-> sub range that was actually written.
->=20
-> Overflushing isn't a correctness problem but it does impact the
-> performance of unmap.
->=20
-> After this series the performance compared to the original VT-d
-> implementation with cache flushing turned on is:
->=20
-> map_pages
->    pgsz  ,avg new,old ns, min new,old ns  , min % (+ve is better)
->      2^12,    253,266   ,     213,227     ,   6.06
->      2^21,    246,244   ,     221,219     ,   0.00
->      2^30,    231,240   ,     209,217     ,   3.03
->  256*2^12,   2604,2668  ,    2415,2540    ,   4.04
->  256*2^21,   2495,2824  ,    2390,2734    ,  12.12
->  256*2^30,   2542,2845  ,    2380,2718    ,  12.12
->=20
-> unmap_pages
->    pgsz  ,avg new,old ns, min new,old ns  , min % (+ve is better)
->      2^12,    259,292   ,     222,251     ,  11.11
->      2^21,    255,259   ,     227,236     ,   3.03
->      2^30,    238,254   ,     217,230     ,   5.05
->  256*2^12,   2751,2620  ,    2417,2437    ,   0.00
->  256*2^21,   2461,2526  ,    2377,2423    ,   1.01
->  256*2^30,   2498,2543  ,    2370,2404    ,   1.01
->=20
+On Mon, Jan 26, 2026 at 07:33:21AM +0000, Tian, Kevin wrote:
+> > From: Jason Gunthorpe <jgg@nvidia.com>
+> > Sent: Sunday, January 25, 2026 5:00 AM
+> > 
+> > The cache flush was happening on every level across the whole range of
+> > iteration, even if no leafs or tables were cleared. Instead flush only the
+> > sub range that was actually written.
+> > 
+> > Overflushing isn't a correctness problem but it does impact the
+> > performance of unmap.
+> > 
+> > After this series the performance compared to the original VT-d
+> > implementation with cache flushing turned on is:
+> > 
+> > map_pages
+> >    pgsz  ,avg new,old ns, min new,old ns  , min % (+ve is better)
+> >      2^12,    253,266   ,     213,227     ,   6.06
+> >      2^21,    246,244   ,     221,219     ,   0.00
+> >      2^30,    231,240   ,     209,217     ,   3.03
+> >  256*2^12,   2604,2668  ,    2415,2540    ,   4.04
+> >  256*2^21,   2495,2824  ,    2390,2734    ,  12.12
+> >  256*2^30,   2542,2845  ,    2380,2718    ,  12.12
+> > 
+> > unmap_pages
+> >    pgsz  ,avg new,old ns, min new,old ns  , min % (+ve is better)
+> >      2^12,    259,292   ,     222,251     ,  11.11
+> >      2^21,    255,259   ,     227,236     ,   3.03
+> >      2^30,    238,254   ,     217,230     ,   5.05
+> >  256*2^12,   2751,2620  ,    2417,2437    ,   0.00
+> >  256*2^21,   2461,2526  ,    2377,2423    ,   1.01
+> >  256*2^30,   2498,2543  ,    2370,2404    ,   1.01
+> > 
+> 
+> that is great!
+> 
+> Out of curiosity - why would an optimization in the unmap path also
+> lead to better efficiency in the map path (in some cases map improves
+> even more than unmap, e.g. with 256 pages)?
 
-that is great!
+I cannot explain this, but it is how the test behaves on my system -
+before this patch:
 
-Out of curiosity - why would an optimization in the unmap path also
-lead to better efficiency in the map path (in some cases map improves
-even more than unmap, e.g. with 256 pages)?
+map_pages
+   pgsz  ,avg new,old ns, min new,old ns  , min % (+ve is better)
+     2^12,    530,237   ,     450,207     , -117.17
+     2^21,    417,231   ,     375,208     , -80.80
+     2^30,    325,233   ,     275,217     , -26.26
+ 256*2^12,   3020,2658  ,    2599,2492    ,  -4.04
+ 256*2^21,   2892,2839  ,    2585,2721    ,   4.04
+ 256*2^30,   2794,2836  ,    2548,2712    ,   6.06
 
-At a glance I didn't see how __unmap_range is relevant to map...
+unmap_pages
+   pgsz  ,avg new,old ns, min new,old ns  , min % (+ve is better)
+     2^12,    444,257   ,     410,230     , -78.78
+     2^21,    378,244   ,     353,225     , -56.56
+     2^30,    300,245   ,     281,229     , -22.22
+ 256*2^12,   2975,2604  ,    2536,2403    ,  -5.05
+ 256*2^21,   2887,2523  ,    2489,2417    ,  -2.02
+ 256*2^30,   2799,2525  ,    2471,2397    ,  -3.03
+
+Perhaps it is an artifact of how the test is constructed and
+subsequent maps are suffering because the cache for the already
+populated levels is in a poor state due to the extra flush?
+
+Mapping requires an atomic on the cache line so maybe that interacts
+poorly with a clflush somehow?
+
+Jason
