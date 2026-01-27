@@ -1,113 +1,187 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from DM5PR21CU001.outbound.protection.outlook.com (mail-centralusazon11011034.outbound.protection.outlook.com [52.101.62.34])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 669E5357A26
-	for <patches@lists.linux.dev>; Tue, 27 Jan 2026 14:38:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769524690; cv=none; b=hiY3WpJTVetS8o71B+DWh4zJsIgrxPafe5aTUtwC3qHK/X7HRvnI20TC5i1QKifa2ClKT1RuoBejVY/YsZ7STmMIElz+wtqIleLhKvP+eAwGcpDEfwxcK/7zyvro1A1Ibw2ASM7fEbzkzzl2YuXLwMDqyhQfcetY26K4Qxs2grA=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769524690; c=relaxed/simple;
-	bh=/Huc7ebUuuPY+O5QSMjOHnPihdsygPxTbc17OjaPudI=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=GyM9l4ft0n/Ave4iy2Re7IytXgOBJFGe/u2IykYFv9P30dGxt5sKxbPWToCMukyj31h12bm7UBQ2NPZLobVCSudHFkM3K7TvLkf+PfjsdwMkHFM04L5Vqa4HCXjUP2NCqKITpOB7x4YOUQ+w5WbCTh0v16gN6t+VxwYqTwHXWDQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=EJWCr1Oi; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A1DC35D603;
+	Tue, 27 Jan 2026 15:08:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.62.34
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1769526534; cv=fail; b=ncLRDwCFHrYD1AbKsTSD7QKdx33l7MqO5se/jgm1otIL+U6iy/e0TLHHCqgJqlHEXewdHfqzlNM4WUqFFB1+eh6Qgik0OkziLmeaPD+iw2enx8Q4LxBlSn2kWZinIAspHrJm0U0AcgD5gBfUH7Gr5Lhtf+chBk2uAp/GtUC1adA=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1769526534; c=relaxed/simple;
+	bh=SwnWduOXt09xzKf7PWdo1m2GkkSr7s9Ubb3V+2ujdyQ=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
+	 Content-Disposition:In-Reply-To:MIME-Version; b=kACLDC3oj1o737dVa9oUGPOtF1RoPxJfJRU36OBW4AanOwZpOiyfK5tt7yzp6nV7hZeXMvWXrEOYfRpPjYxZtmow16mNXGrYmDxRsJNxJHWcnPwFsBN2Okx5nqzKMNqNEOif8L/FIYdkhoAIpTtaCVhcIuF9ghLntW/eu6mtc1c=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=bRVAUYIF; arc=fail smtp.client-ip=52.101.62.34
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="EJWCr1Oi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 255C8C4AF0B
-	for <patches@lists.linux.dev>; Tue, 27 Jan 2026 14:38:10 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1769524690;
-	bh=/Huc7ebUuuPY+O5QSMjOHnPihdsygPxTbc17OjaPudI=;
-	h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
-	b=EJWCr1Oi0pP9WIJ2i39LOol9ap/lfZKZ2fiyandM+XQCp9p1QgRI/Xh+4STUbKfro
-	 GDMx9n4jMcZ14NG7vtSjZ1Tm/INjsDuQL/tN5wZhXMTn5wfD+XAf5ffhRk0UJAjWqW
-	 mrglv6DMryLFEAneSPp8M2P9fAEwUeof2iOqrlMj/qLxlX7jx8/dHXV5DDpWxpQwbb
-	 4Rk0tXQ4ItJr4ibcq8QJK5Ny3GglM/BYwL90lQYEzOEYUrOisBjATHr6dGOc0s0Hyq
-	 uqFKjGbz8BRbS9QOlI4dGHiWluxeLL+Z6RKAF9AFn1UBz/1RaMcMNgEMEg0N0kozvt
-	 +dVF7NN+viRdg==
-Received: by mail-oi1-f178.google.com with SMTP id 5614622812f47-45c838069e5so3561095b6e.0
-        for <patches@lists.linux.dev>; Tue, 27 Jan 2026 06:38:10 -0800 (PST)
-X-Forwarded-Encrypted: i=1; AJvYcCVl6UHbwyukEklhyHFz5ljvu6pQr2rHN6uXKxozH8pXxnt2biI+T73ba9Z+Y9D15IlwUqFm2Zw/@lists.linux.dev
-X-Gm-Message-State: AOJu0YxUIrqQ2+JyZfN6hgB50tOJVnjokynwjXF7fblBnHtTFlCGmfmh
-	+7h4ROg61UdRPnVd1gypeZKPu9SbqkL1rsT95aTJt9Fvv63kesyjTh5wN15xAa5pe5BrVYLaJUs
-	l8Xp9xwuOff2v/Kt50/UGhw7033/lhis=
-X-Received: by 2002:a05:6808:1310:b0:45c:874b:3d4a with SMTP id
- 5614622812f47-45efc50276emr1119220b6e.1.1769524689166; Tue, 27 Jan 2026
- 06:38:09 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="bRVAUYIF"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=yDSdALs5MNrR+bm4hNY+fhoXzLwF/caKUYdcxpUkcvcKQy50zldwIWPCflJKNGJFqqQPB8xC9IDEEx3poa/Fx/xll0grcuq4e9GpAtcCPd7eYFfY2jnJgpC8zppC89uHdgCHhYUDyOxO7m9cQOhr4oxOQD8ohPGYIRohctzijPDP5bVgJ8GbnnNNMXVrMFJyYJinQp168ACm9ZGq3T94F88KZxDlVcy+06UlwvUJm3rOxuDjVI9zpaZQ274NaclBg7CmTHtpCJRQdRMhEAgoZ0zO/ib20t342lHVdnxpBiRWE/NByo0nigzGyZEk3fnDV+96D2i3ote6S/0TkZIG8g==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=d2babtF7ooebO14DpKN8o4x/SKFLxlPlN7o39up2dbM=;
+ b=MuKG5/Z9PiCTrTuKLfjfhVWFtkIHvotLnFaWM0CNYlXQKxCtI363nJ2ZFO5vYbrtYkZu+MmfMro9JnImwIuFrL/SD0CoN2KAQaaYOlNIW9mDXepuPevff9xiEDFPfUuESN5FjKQPkrUZxIKks09rr3YJUcSYvI9I+TSYHoaNBRuLOjx1dwHQl52BkTPKjd44mgMN23oZcha9/nFs8wMX+lqVVwrrG/h6cmWuZcV+nE0n2uvpKDGU6ZnjiBIzoOb3j+MxHL2txCPU9eDXJuhQGW8Jh4SynPfTgWWH9vwUdeytxoRNURhuKl513INSa5p0wKn92UygXkWWCgqKMcHjrQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
+ dkim=pass header.d=nvidia.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=d2babtF7ooebO14DpKN8o4x/SKFLxlPlN7o39up2dbM=;
+ b=bRVAUYIFiHpGJEyxo9/CvL3ULro/aLAJv/7ekDfEWU8ZN+RjLozZOY5FxICHR9xWQBK0/3hYs76PNrDww0CVgC/q1Pf+eFa7pqAPw/A5tjc0K1MIzGmzN10XSu0TQm/LkJ3/NeOXL32wN1LNtxdKr3g0zyd/nAteZRTr8synRa6JUVs+punNExJCwgiA2k9sJbdTaPgqbuT53n6yOQFqaiEQTuhMv3DJNLR4SrnKrrKwPpVl2cz3HwdniVLMEQfKolpuBM4fd3XpAWtpxgxsisvzpe/jh0UK307abi8+ELeVHe5KNKUBq8CYt+nYMoKGP3l79DjeG1WqLz2gsMHn3A==
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=nvidia.com;
+Received: from LV8PR12MB9620.namprd12.prod.outlook.com (2603:10b6:408:2a1::19)
+ by SJ0PR12MB6688.namprd12.prod.outlook.com (2603:10b6:a03:47d::19) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9542.16; Tue, 27 Jan
+ 2026 15:08:49 +0000
+Received: from LV8PR12MB9620.namprd12.prod.outlook.com
+ ([fe80::1b59:c8a2:4c00:8a2c]) by LV8PR12MB9620.namprd12.prod.outlook.com
+ ([fe80::1b59:c8a2:4c00:8a2c%3]) with mapi id 15.20.9542.015; Tue, 27 Jan 2026
+ 15:08:49 +0000
+Date: Tue, 27 Jan 2026 11:08:48 -0400
+From: Jason Gunthorpe <jgg@nvidia.com>
+To: Nicolin Chen <nicolinc@nvidia.com>
+Cc: will@kernel.org, robin.murphy@arm.com, joro@8bytes.org, jpb@kernel.org,
+	praan@google.com, miko.lenczewski@arm.com,
+	linux-arm-kernel@lists.infradead.org, iommu@lists.linux.dev,
+	linux-kernel@vger.kernel.org, patches@lists.linux.dev
+Subject: Re: [PATCH v2 01/10] iommu/arm-smmu-v3: Store IOTLB cache tags in
+ struct arm_smmu_attach_state
+Message-ID: <20260127150848.GG1134360@nvidia.com>
+References: <cover.1769044718.git.nicolinc@nvidia.com>
+ <40ecdf7e0766004c5d3a4bd086cb22cf08254237.1769044718.git.nicolinc@nvidia.com>
+ <20260126204443.GX1134360@nvidia.com>
+ <aXgvzoPJDej7HEAm@Asurada-Nvidia>
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <aXgvzoPJDej7HEAm@Asurada-Nvidia>
+X-ClientProxiedBy: MN2PR20CA0058.namprd20.prod.outlook.com
+ (2603:10b6:208:235::27) To LV8PR12MB9620.namprd12.prod.outlook.com
+ (2603:10b6:408:2a1::19)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20260114-ghes-avoid-wflt-clang-older-than-18-v1-1-9c8248bfe4f4@kernel.org>
-In-Reply-To: <20260114-ghes-avoid-wflt-clang-older-than-18-v1-1-9c8248bfe4f4@kernel.org>
-From: "Rafael J. Wysocki" <rafael@kernel.org>
-Date: Tue, 27 Jan 2026 15:37:58 +0100
-X-Gmail-Original-Message-ID: <CAJZ5v0ju+7U10_nuQMijadeFrVxUWQFYJfUyRvga9qEPdK50_Q@mail.gmail.com>
-X-Gm-Features: AZwV_QhVWfAkrO7qybSqqJnJ1Tg8QS5LU98rU2z8KN1v2bcm1AhpEv1pdt_c7rE
-Message-ID: <CAJZ5v0ju+7U10_nuQMijadeFrVxUWQFYJfUyRvga9qEPdK50_Q@mail.gmail.com>
-Subject: Re: [PATCH] ACPI: APEI: GHES: Disable KASAN instrumentation when
- compile testing with clang < 18
-To: Nathan Chancellor <nathan@kernel.org>, Tony Luck <tony.luck@intel.com>, 
-	Borislav Petkov <bp@alien8.de>
-Cc: Hanjun Guo <guohanjun@huawei.com>, Mauro Carvalho Chehab <mchehab@kernel.org>, 
-	Shuai Xue <xueshuai@linux.alibaba.com>, Len Brown <lenb@kernel.org>, 
-	Nick Desaulniers <nick.desaulniers+lkml@gmail.com>, Bill Wendling <morbo@google.com>, 
-	Justin Stitt <justinstitt@google.com>, linux-acpi@vger.kernel.org, llvm@lists.linux.dev, 
-	patches@lists.linux.dev
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: LV8PR12MB9620:EE_|SJ0PR12MB6688:EE_
+X-MS-Office365-Filtering-Correlation-Id: 2ca0508a-236d-4319-1645-08de5db5f96b
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;ARA:13230040|7416014|376014|366016|1800799024;
+X-Microsoft-Antispam-Message-Info:
+	=?us-ascii?Q?dKIbAJ9Tqm0B/eItRFvU1MO4A6SVV+lEBb5GYnDwuXUrBm0Q/rtWnaqi+tdX?=
+ =?us-ascii?Q?YeEM9bMGMhnQItZpg7VCd/pzA/LmvD4AqHWcFQ74GAEoCmQiRMcPHyU7exCu?=
+ =?us-ascii?Q?Ia/RznMIiqMJ60JscodHhwg75Ri+I0dpbyXzYUxnSXS0uDEwjXQuGOiHstnc?=
+ =?us-ascii?Q?zOz/SxQqpVyL4vzCNZxLCfgXstk7uMscgx+Ifn6WJ35ycGuOMVd7lz4pG2d7?=
+ =?us-ascii?Q?XW7vhid1WvKWJr+VHZTFG6chHQUP0jZT+luJONgrvhU7TErIOtBrwHJZjZ2g?=
+ =?us-ascii?Q?4eoKuaBZCr2SpRRUNORzQ+c7WlOv89kpLF9vxc90GKxCuT7QTHwIvyRSQzw/?=
+ =?us-ascii?Q?FF/5/aMGRsxzwlBQZySMLu9t/N5ZaVlbBHm6+RsxlNPtFWGnLtEzF5yClNnr?=
+ =?us-ascii?Q?B9XeFGHuJHQD6Bi56UwmiZdKo86VR1a+ITP42if+UeOkgqQeeNMAxxG2yui1?=
+ =?us-ascii?Q?eDi7YSTYx8oC7LvXdX/S9c4MvHyrowizfMMaPrZD+39jpaynSgvi0YOUnhua?=
+ =?us-ascii?Q?7tw7nioZ6brnwDKWIWuG/rasC6Ffdr0tbrd1471zgj3XE5BKRGK4DRWqBRNr?=
+ =?us-ascii?Q?upgf1FznAsOVe6YR01L8YF1uQCIGFBswbWVsf8szdpvtmDv/M6JRINV1BIqU?=
+ =?us-ascii?Q?kHRxaaKUaBZEm8D5fNC8rbHDiytd8VjGMSfu6UedWEXiE7ZVBWKmwRzuET4B?=
+ =?us-ascii?Q?KyWw/Psjyy5uq9ibJtstXwdKe8DVb3p/Qea0wKTTuj0X8eLXy7qmqasqVuEv?=
+ =?us-ascii?Q?5/jxvXr2s2T418FPTVn7RhJYfPGxJSACRmeAqbLH3xHHJaiC9BVEuwzh4kuM?=
+ =?us-ascii?Q?GBKQs/3mJpFxExRPtIArGMVZo3rsmm1qVNc7MPA77GxVfsJ5TBR0hs+/tCyW?=
+ =?us-ascii?Q?ILkjV1XFo7zho4vyQfh/M35ei7g4m+Pm+E0SOj+Z/Dar2j6JgYLwKUgR6MyR?=
+ =?us-ascii?Q?b86dxFPu2dHEgsPLme1Ig30E8jZaeqDnZKUjTTkoqhvKRZCrFc3lQtMUYFWh?=
+ =?us-ascii?Q?vtVXV5CrOgm7w/jtY9lU1LB+opvV1QV3RsIg1INQ+p0X+oPDabDRGDUSBZrt?=
+ =?us-ascii?Q?Mhj5evioKNhNvODLD3SgA7HiTOEyJs/nWbDqZso+6Npg8U5yshtMzEfTSP7H?=
+ =?us-ascii?Q?xBC5bMByEcN1GObDyScel/kNYSvU6eLwlSLzGwB4w7TsBRg/E+or+HeBvNIi?=
+ =?us-ascii?Q?svtLDOwOuK87Nw1hUjW0v59ZYyfmUPfnyYwSqGLJVnFQBfC3P6LwRRIBeSUw?=
+ =?us-ascii?Q?v0v08Rm4MdKqumIiMQIMXKBsX6ycE3evsXYQgyd6CeFXgkvlXbk2jDT40fDW?=
+ =?us-ascii?Q?U3tzoIBJZ4rCAztcpzjgsufK95augyT1zpz3AZnu+OBwCLUrwT4g6hyxTdcu?=
+ =?us-ascii?Q?840/fo0VtSoi+cRJtU07K106cgtCHxgspbkMobhZrPwH3mcvVWvKsbhPNMK6?=
+ =?us-ascii?Q?CLMeJWa+3JUYAqlnxjD/KjbWgedW02Q5dz5+HvnKIhaExdoMAMwNOlhBEals?=
+ =?us-ascii?Q?7yopkZJYG8fVEKxt1hiLhFellc6YbmJZi8q+x09KB9+UprJE9IEs4KmRYVsU?=
+ =?us-ascii?Q?4EeJHKKYfnnhmMK8xE4=3D?=
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:LV8PR12MB9620.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(7416014)(376014)(366016)(1800799024);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?us-ascii?Q?3k3wH4xRizlMlj+7o/pfB13snwy95qXOR3Yt+36vrEx6FZGpyKESyDA3quIm?=
+ =?us-ascii?Q?YY0pif4yxo2ufooefQnNPZRmFZF/TzVLWhBtjxH9Gg2hkiphVS1fgBOD3GHo?=
+ =?us-ascii?Q?NZZ/T84yzZWt+kX5DWtnSd1FImICWtofgBXVYWf7b12Iqy64mzmejDRqC2vH?=
+ =?us-ascii?Q?QhJdLAaM8t7/WFZtC2FbRJRLGtDlWBcrRDzn0mxmFgls4A6EniBvUYf95egU?=
+ =?us-ascii?Q?uYpGqTEyxBsl/Vsqc75qVviKIgxRDltB6hlId8ii6+oKg4/FDaaPtgaL/usR?=
+ =?us-ascii?Q?aMyCN5Lq5VdA6jO//llVkZnlkoFQMarRQ6MAjrgm8nHUi2lqDhnzyYPtqcVk?=
+ =?us-ascii?Q?W2vyqbiNPsdPFuppn0SexbtAtTsA+Ew4mh2ftVYRnFSncskpKQnpfxYTE5Ec?=
+ =?us-ascii?Q?rwwOUo+VLB9vzLgxvMLw/DC509gQ0uvUPB4Kjh18yniU0xox1Lav1PpMlQQT?=
+ =?us-ascii?Q?APz4Nbb6bi6UAHausSCwp/irv3+KJcc053wjG6HQLzfBevzSTHd8Oh7Ry8kq?=
+ =?us-ascii?Q?i+zSugiF73fi0DzP/uxB12lMiLPFOqW6/mCNE0IvNJ3WVoAsCXK9J0bmSi5T?=
+ =?us-ascii?Q?jku10bn9uOMe+/N0wGzsYWNVYc/Egukc18XxuEpmcve0gyMrbY5MR7j0x1yJ?=
+ =?us-ascii?Q?fOcFi/Bz2tyTstPt23hB2auFrgxNO4pjApni6aJnxxVTiMb6+mSFqjk8RVIo?=
+ =?us-ascii?Q?iZ2ZL3imouscU7zNpAURby/M2gdhHjBhWkFC3NnO+72+HNJwzUxuIwsrPkI1?=
+ =?us-ascii?Q?qqv39GE2B8PmIHjuNNn4zximamBI7TWUZpj/HkWi+nusLwy9g7MQBpVk05Gz?=
+ =?us-ascii?Q?rERTBfkgRRrsYfF3wzcEc84cD8FtwgLjBoJWwqtYQS/yjVNgMTCTdl39mYkK?=
+ =?us-ascii?Q?Tm5C1Rw8mXyFkK9vTbbTHViYejyQTPyMsmAe7ly2V7Lgr9rrz+wBHlQj8BCo?=
+ =?us-ascii?Q?ciep938ch0rpgml8RY0RVVmoDFBLDD7gpjentbnBLcBXCc4Yt6VM/DQou9Qg?=
+ =?us-ascii?Q?L8zO7VSCn/zxjj/ShQQmd3chPsx0iiylxmbsYclGKW/Q6bwGbgdpRP8hN0YH?=
+ =?us-ascii?Q?pruteXzZLQHuqrx+AOw5pP0SrO2UUQj9suCfdZJBcqLp/i7iS9k0igQNSaa+?=
+ =?us-ascii?Q?/w2FfeYu7f1resiJfSEPdftQ4j9d1H3D7PvdBFsbqfSFb6kiw9w8I/yUFwC3?=
+ =?us-ascii?Q?rFZ2PdZ9jNKa+SSQMgYGn+lNmP62UcbJAEHyh5slAYix7eBftWbp6rJKk9IA?=
+ =?us-ascii?Q?40fra0qp7mFaI/+TNm4RJIaf452uFfZxoehY7BM3yaN+ll6KG12zD9JNpllo?=
+ =?us-ascii?Q?c3mPb7YBI1VRYADi26xGWC7rBeZX6b2QVnfxpsYV56u5fqqej1nn/fLED2K5?=
+ =?us-ascii?Q?kzzGWGtU2jBz8oAMR3m8zWyt7Afw0z5qgEHcfMnwy0VQekPcxcUkmZw6l1XJ?=
+ =?us-ascii?Q?GAR0I2ZbfjFDtn70MRZGGwkFC3Rco5J55Ca0nKfDhtyq7Z56GkGfnjsST0gL?=
+ =?us-ascii?Q?WaojkuOcgl4j/AQZRgkS4UTpIqETWFh+1RpZcQLJlI59ukkGSEqWWw3oBPYr?=
+ =?us-ascii?Q?APsrmZrlsw7OdW/jXuAniMzk3ULfve/mWWEx1THgHdA9j9HY8lsM4njlAsp1?=
+ =?us-ascii?Q?N6fArvTxgdQ9lTvWAwon3gvG44gbVlKMtMRShGcLmA/YZ/ecxCmdmX90N8i0?=
+ =?us-ascii?Q?y2jFFsuIHiu/8EFvgCcxZQKvX0t9Z8oyp2hhhuBnKQ3zGnCx/CszbkWRQxJa?=
+ =?us-ascii?Q?35AECejAkg=3D=3D?=
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 2ca0508a-236d-4319-1645-08de5db5f96b
+X-MS-Exchange-CrossTenant-AuthSource: LV8PR12MB9620.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 27 Jan 2026 15:08:48.9967
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: MV4sDnOlfiHkQmwguxtNconuHm5amEIIYlXvJ8bu9b+2CT6QpUe7oWaxmS5iguJc
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SJ0PR12MB6688
 
-On Thu, Jan 15, 2026 at 12:27=E2=80=AFAM Nathan Chancellor <nathan@kernel.o=
-rg> wrote:
->
-> After a recent innocuous change to drivers/acpi/apei/ghes.c, building
-> ARCH=3Darm64 allmodconfig with clang-17 or older (which has both
-> CONFIG_KASAN=3Dy and CONFIG_WERROR=3Dy) fails with:
->
->   drivers/acpi/apei/ghes.c:902:13: error: stack frame size (2768) exceeds=
- limit (2048) in 'ghes_do_proc' [-Werror,-Wframe-larger-than]
->     902 | static void ghes_do_proc(struct ghes *ghes,
->         |             ^
->
-> A KASAN pass that removes unneeded stack instrumentation, enabled by
-> default in clang-18 [1], drastically improves stack usage in this case.
->
-> To avoid the warning in the common allmodconfig case when it can break
-> the build, disable KASAN for ghes.o when compile testing with clang-17
-> and older. Disabling KASAN outright may hide legitimate runtime issues,
-> so live with the warning in that case; the user can either increase the
-> frame warning limit or disable -Werror, which they should probably do
-> when debugging with KASAN anyways.
->
-> Closes: https://github.com/ClangBuiltLinux/linux/issues/2148
-> Link: https://github.com/llvm/llvm-project/commit/51fbab134560ece663517bf=
-1e8c2a30300d08f1a [1]
-> Signed-off-by: Nathan Chancellor <nathan@kernel.org>
-> ---
->  drivers/acpi/apei/Makefile | 4 ++++
->  1 file changed, 4 insertions(+)
->
-> diff --git a/drivers/acpi/apei/Makefile b/drivers/acpi/apei/Makefile
-> index 2c474e6477e1..346cdf0a0ef9 100644
-> --- a/drivers/acpi/apei/Makefile
-> +++ b/drivers/acpi/apei/Makefile
-> @@ -1,6 +1,10 @@
->  # SPDX-License-Identifier: GPL-2.0
->  obj-$(CONFIG_ACPI_APEI)                +=3D apei.o
->  obj-$(CONFIG_ACPI_APEI_GHES)   +=3D ghes.o
-> +# clang versions prior to 18 may blow out the stack with KASAN
-> +ifeq ($(CONFIG_COMPILE_TEST)_$(CONFIG_CC_IS_CLANG)_$(call clang-min-vers=
-ion, 180000),y_y_)
-> +KASAN_SANITIZE_ghes.o :=3D n
-> +endif
->  obj-$(CONFIG_ACPI_APEI_EINJ)   +=3D einj.o
->  einj-y                         :=3D einj-core.o
->  einj-$(CONFIG_ACPI_APEI_EINJ_CXL) +=3D einj-cxl.o
->
-> ---
+On Mon, Jan 26, 2026 at 07:23:58PM -0800, Nicolin Chen wrote:
+> On Mon, Jan 26, 2026 at 04:44:43PM -0400, Jason Gunthorpe wrote:
+> > On Wed, Jan 21, 2026 at 05:24:19PM -0800, Nicolin Chen wrote:
+> > > +int arm_smmu_domain_get_iotlb_tag(struct arm_smmu_domain *smmu_domain,
+> > > +				  struct arm_smmu_device *smmu,
+> > > +				  struct arm_smmu_inv *tag)
+> > > +{
+> > > +	/* Decide the type of the iotlb cache tag */
+> > > +	switch (smmu_domain->stage) {
+> > > +	case ARM_SMMU_DOMAIN_SVA:
+> > > +	case ARM_SMMU_DOMAIN_S1:
+> > > +		tag->type = INV_TYPE_S1_ASID;
+> > > +		break;
+> > > +	case ARM_SMMU_DOMAIN_S2:
+> > > +		tag->type = INV_TYPE_S2_VMID;
+> > > +		break;
+> > > +	default:
+> > > +		return -EINVAL;
+> > > +	}
+> > > +
+> > > +	tag->smmu = smmu;
+> > > +
+> > > +	if (tag->type == INV_TYPE_S1_ASID)
+> > > +		tag->id = smmu_domain->cd.asid;
+> > > +	else
+> > > +		tag->id = smmu_domain->s2_cfg.vmid;
+> > 
+> > Would be tidier to move these up into the case
+> 
+> This will act as a fake allocation path in PATCh-3 and eventually
+> get replaced with a real allocation piece in PATCH-4. So, I wrote
+> like this in a transitory manner.
 
-I'm inclined to apply this for 6.20/7.0 unless someone has any
-particular heartburn related to it.
+I'd still write it in the nice way, you can remove the lines later
+when you add the allocation logic.
+
+Jason
