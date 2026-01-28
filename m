@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D4982C237E;
-	Wed, 28 Jan 2026 15:35:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E462D2D5940;
+	Wed, 28 Jan 2026 15:35:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769614518; cv=none; b=OY2b6NccD2q3U7l+Mf6sjk/WL7joKseVMOwYPeZvgIbpNk9Px/YK6vTOQL6K0WzdkL/8L2cH49HEdRtliJ6sGA0iErvNmyTus+ixLaAI7Dx2Mex46fbMvlB7zKhmkP7NxbeAkc3MjPiYtVdBLSwtSXG5R6ViXz4lF8a+2pfnXm8=
+	t=1769614522; cv=none; b=S4ecKBrm3cD3GBNhhMHDrB/XkHpEYLn0QfiycmubrHO9P0D8RlTPjsk5LIjmaipJTiKnB00GIn7RIuXNGZilY+UtBhWIwvGfaRx8tpetai9TAiq+9DbymBq9HHxa3eQCYGefDTcVkNx1Hwwsg06gdt5PgF4QnG256DARjiGDdiA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769614518; c=relaxed/simple;
-	bh=BUF4jHEYV0108bEFMUwOC7RPnYt5ou0gd53lKs/iAD8=;
+	s=arc-20240116; t=1769614522; c=relaxed/simple;
+	bh=onOsSlSzCYqKxpdjenGCjHwyhwk3xeMjVCTkp15QW2Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JzXsZdHZYI3c1WcPmzQpjOGl2+wMShytJ73SszTwBjYErydiwTk4f4mNyrK/r++dyeRXTnz21sNYIXeGMAFpr9jDP8y0NooUrdrFtaLJ/EuqZ3X2Hgd8YZWPYYgTmqjdqHQtHLNh3QVRDnTdxsBTQBZJZQpe5mCfUWf+dZco/uI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aMyYjlCx; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Qczp77H3IhT2eK7zTiEgocKZLhdAbyxW7V0dS5u8wQBHTIocdIPTjzUEDD8tBX0YaWVLJ5GFa/EwkwoSVrCLjTwQpkcD5byZ0WByxqGn2Qyxcd1AiVm1BNuJtiZh1l8f2lnvITtsBBj6JTzT8RmkK5sEnJRvIwJaMukQkh/kwjU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NhXpK5dh; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aMyYjlCx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B2B6C4CEF1;
-	Wed, 28 Jan 2026 15:35:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NhXpK5dh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 54E28C4CEF1;
+	Wed, 28 Jan 2026 15:35:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1769614518;
-	bh=BUF4jHEYV0108bEFMUwOC7RPnYt5ou0gd53lKs/iAD8=;
+	s=korg; t=1769614521;
+	bh=onOsSlSzCYqKxpdjenGCjHwyhwk3xeMjVCTkp15QW2Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aMyYjlCx0lISTnsA0YbYCHEuFy/y9V/7bNQUSR7Uc7LYRMsast5pijgDQseCaw80a
-	 3zFPK+g0nFgwqfLdqAfVR2cTYWVTP0aZ4G3RyTXcI9Z9KMVRVjZJvyL1fXFkGq0MKE
-	 QRX/TGaoVMy26BT7hFwITRgwRjlntKRcooSu65jk=
+	b=NhXpK5dhVmNACo95pbHNpkUUFebBNIFFde1gsFoed2+IGXyRqTgrv8k7P0WvX7EpP
+	 qBDWmrcKhdHK5L/C/PR8V9yWGtlHSv74aRONGkIYkI/CLhN00gdmz2LI2CEmjNM/2L
+	 2QL1os+vIjjgUKomX1Pf3bl0OUVT8mX0/5apy05Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiasheng Jiang <jiashengjiangcool@gmail.com>,
-	Himanshu Madhani <hmadhani2024@gmail.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Jaroslav Kysela <perex@perex.cz>,
+	Takashi Iwai <tiwai@suse.com>,
+	linux-sound@vger.kernel.org,
+	Arun Raghavan <arunr@valvesoftware.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 161/254] scsi: qla2xxx: Sanitize payload size to prevent member overflow
-Date: Wed, 28 Jan 2026 16:22:17 +0100
-Message-ID: <20260128145350.603840664@linuxfoundation.org>
+Subject: [PATCH 6.6 162/254] ALSA: usb: Increase volume range that triggers a warning
+Date: Wed, 28 Jan 2026 16:22:18 +0100
+Message-ID: <20260128145350.639653226@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260128145344.698118637@linuxfoundation.org>
 References: <20260128145344.698118637@linuxfoundation.org>
@@ -52,59 +54,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiasheng Jiang <jiashengjiangcool@gmail.com>
+From: Arun Raghavan <arunr@valvesoftware.com>
 
-[ Upstream commit 19bc5f2a6962dfaa0e32d0e0bc2271993d85d414 ]
+[ Upstream commit 6b971191fcfc9e3c2c0143eea22534f1f48dbb62 ]
 
-In qla27xx_copy_fpin_pkt() and qla27xx_copy_multiple_pkt(), the frame_size
-reported by firmware is used to calculate the copy length into
-item->iocb. However, the iocb member is defined as a fixed-size 64-byte
-array within struct purex_item.
+On at least the HyperX Cloud III, the range is 18944 (-18944 -> 0 in
+steps of 1), so the original check for 255 steps is definitely obsolete.
+Let's give ourselves a little more headroom before we emit a warning.
 
-If the reported frame_size exceeds 64 bytes, subsequent memcpy calls will
-overflow the iocb member boundary. While extra memory might be allocated,
-this cross-member write is unsafe and triggers warnings under
-CONFIG_FORTIFY_SOURCE.
-
-Fix this by capping total_bytes to the size of the iocb member (64 bytes)
-before allocation and copying. This ensures all copies remain within the
-bounds of the destination structure member.
-
-Fixes: 875386b98857 ("scsi: qla2xxx: Add Unsolicited LS Request and Response Support for NVMe")
-Signed-off-by: Jiasheng Jiang <jiashengjiangcool@gmail.com>
-Reviewed-by: Himanshu Madhani <hmadhani2024@gmail.com>
-Link: https://patch.msgid.link/20260106205344.18031-1-jiashengjiangcool@gmail.com
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Fixes: 80acefff3bc7 ("ALSA: usb-audio - Add volume range check and warn if it too big")
+Cc: Jaroslav Kysela <perex@perex.cz>
+Cc: Takashi Iwai <tiwai@suse.com>
+Cc: linux-sound@vger.kernel.org
+Signed-off-by: Arun Raghavan <arunr@valvesoftware.com>
+Link: https://patch.msgid.link/20260116225804.3845935-1-arunr@valvesoftware.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/qla2xxx/qla_isr.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ sound/usb/mixer.c | 7 +++----
+ 1 file changed, 3 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/scsi/qla2xxx/qla_isr.c b/drivers/scsi/qla2xxx/qla_isr.c
-index a85d3a40ee490..ae2bea27a18a6 100644
---- a/drivers/scsi/qla2xxx/qla_isr.c
-+++ b/drivers/scsi/qla2xxx/qla_isr.c
-@@ -878,6 +878,9 @@ qla27xx_copy_multiple_pkt(struct scsi_qla_host *vha, void **pkt,
- 		payload_size = sizeof(purex->els_frame_payload);
- 	}
+diff --git a/sound/usb/mixer.c b/sound/usb/mixer.c
+index e19d962fab870..76aac42c3c805 100644
+--- a/sound/usb/mixer.c
++++ b/sound/usb/mixer.c
+@@ -1807,11 +1807,10 @@ static void __build_feature_ctl(struct usb_mixer_interface *mixer,
  
-+	if (total_bytes > sizeof(item->iocb.iocb))
-+		total_bytes = sizeof(item->iocb.iocb);
-+
- 	pending_bytes = total_bytes;
- 	no_bytes = (pending_bytes > payload_size) ? payload_size :
- 		   pending_bytes;
-@@ -1163,6 +1166,10 @@ qla27xx_copy_fpin_pkt(struct scsi_qla_host *vha, void **pkt,
- 
- 	total_bytes = (le16_to_cpu(purex->frame_size) & 0x0FFF)
- 	    - PURX_ELS_HEADER_SIZE;
-+
-+	if (total_bytes > sizeof(item->iocb.iocb))
-+		total_bytes = sizeof(item->iocb.iocb);
-+
- 	pending_bytes = total_bytes;
- 	entry_count = entry_count_remaining = purex->entry_count;
- 	no_bytes = (pending_bytes > sizeof(purex->els_frame_payload))  ?
+ 	range = (cval->max - cval->min) / cval->res;
+ 	/*
+-	 * Are there devices with volume range more than 255? I use a bit more
+-	 * to be sure. 384 is a resolution magic number found on Logitech
+-	 * devices. It will definitively catch all buggy Logitech devices.
++	 * There are definitely devices with a range of ~20,000, so let's be
++	 * conservative and allow for a bit more.
+ 	 */
+-	if (range > 384) {
++	if (range > 65535) {
+ 		usb_audio_warn(mixer->chip,
+ 			       "Warning! Unlikely big volume range (=%u), cval->res is probably wrong.",
+ 			       range);
 -- 
 2.51.0
 
