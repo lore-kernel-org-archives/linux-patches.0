@@ -1,53 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A4B62D9796;
-	Wed, 28 Jan 2026 15:38:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D5312D6E63;
+	Wed, 28 Jan 2026 15:38:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769614714; cv=none; b=qNegE0gEgKB8pXP9Cmj1sV9eIwVXqcCeBvZULENStN2Bb5SaN4+BjcrhGbOJ87VZTMpSvYnCic4IwfK8iXrFotEegMi407e+DXfglwSeY6Z4xbG0ynxDTrvJV7226wXcKsdz9J7oVWfQ6xr+TvChnAkOnmWKxi2qQGS0AUa1YBo=
+	t=1769614717; cv=none; b=Ve3jhKX94R39sUubsku867M+b+NS91PmcGmhAWckVF9xl5a22Invq01J76262GXJbEH/GKfJsCKk+HoKdiXUljcH2McfAROwYIqqtf3lnbNMXE+lhiZxzfIa1nk4SZNZUlwlKWZc7c1vS0L+UFPbp7SstW+6BwJ6V2GXOQdsTFY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769614714; c=relaxed/simple;
-	bh=BLh/1Waz4wKNekqIFJyRAF8Jp0ekL9vjx71Nex08/RA=;
+	s=arc-20240116; t=1769614717; c=relaxed/simple;
+	bh=TN73Z+vUolQIibn6Oa4B2+sTFD2adKZaMty5aMxI0IQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qxPfbKmj5jgthGKhD6Rz2/Gc1EtJhcQvGS6wihmP6TkEccPl/KbQ87Vr4tZo4W2wVth1Zh+dtPeBXGrREHc/Lx5HEvEC4gwSc/yqtgjwcuAp2RQYDk7MAOfoxEE8Xc+duBJRc39M9ShONwG7+N2mRISActPu1uYpWFOYQOP17oI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HtO/anf1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Hw9gj6y4p3UVVfLxWgF78h4zUvh2socP9P/NYOEEm28WyBaGLy6ck6uAgEtB7raqToHFwokuQZuXVIh7PYCedjx4Am6fQqtdkBg7YZBlpBlcBLmBtONs/t0aIC3+RvlB88qb6zh3SLybnPjPzqGZxTOHjdI6dHmjh8Omak9Slv8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ry1hHE5i; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HtO/anf1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 918F1C4CEF1;
-	Wed, 28 Jan 2026 15:38:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ry1hHE5i"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F95BC4AF09;
+	Wed, 28 Jan 2026 15:38:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1769614713;
-	bh=BLh/1Waz4wKNekqIFJyRAF8Jp0ekL9vjx71Nex08/RA=;
+	s=korg; t=1769614716;
+	bh=TN73Z+vUolQIibn6Oa4B2+sTFD2adKZaMty5aMxI0IQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HtO/anf1cJKtke8IRWPnqg/Nuqj3z4t/R6UTC1dXOgWmM55lObLxSwaP0pxJfYFzH
-	 A60w1KtLY9FE2Pl+jqDokHROSFu47Qely+0ZWy5gyC3Zh6UXII8FPMFZgszE2E+K+4
-	 /dv8olXtn+ayGlBLALlYC1hNHxJh+CFQNT2a57zE=
+	b=Ry1hHE5i+vsx3rRzjObgyodwcIFzgvB+pwJyoX/24nr0VYcMts81XEGrEp4rTLnpC
+	 iyrX0s4BlvLUIkwE86oTqcNj83UpZFNe/BsUxCft/3+CTExZU7kAH4gsyXFLiMa5r7
+	 63UkCxs8WK+jL5vuLK0twGYUBaGg04sH74i9z2x8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
-	syzbot+2d9c96466c978346b55f@syzkaller.appspotmail.com,
-	"David Hildenbrand (Red Hat)" <david@kernel.org>,
-	Zi Yan <ziy@nvidia.com>,
-	Alistair Popple <apopple@nvidia.com>,
-	Byungchul Park <byungchul@sk.com>,
-	Gregory Price <gourry@gourry.net>,
-	Jann Horn <jannh@google.com>,
-	Joshua Hahn <joshua.hahnjy@gmail.com>,
-	Liam Howlett <liam.howlett@oracle.com>,
-	Lorenzo Stoakes <lorenzo.stoakes@oracle.com>,
-	Matthew Brost <matthew.brost@intel.com>,
-	Rakie Kim <rakie.kim@sk.com>,
-	Rik van Riel <riel@surriel.com>,
-	Vlastimil Babka <vbabka@suse.cz>,
-	Ying Huang <ying.huang@linux.alibaba.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Lance Yang <lance.yang@linux.dev>
-Subject: [PATCH 6.6 220/254] migrate: correct lock ordering for hugetlb file folios
-Date: Wed, 28 Jan 2026 16:23:16 +0100
-Message-ID: <20260128145352.703397864@linuxfoundation.org>
+	Ihor Solodrai <ihor.solodrai@pm.me>,
+	Andrii Nakryiko <andrii@kernel.org>,
+	Shung-Hsi Yu <shung-hsi.yu@suse.com>
+Subject: [PATCH 6.6 221/254] selftests/bpf: Check for timeout in perf_link test
+Date: Wed, 28 Jan 2026 16:23:17 +0100
+Message-ID: <20260128145352.739990201@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260128145344.698118637@linuxfoundation.org>
 References: <20260128145344.698118637@linuxfoundation.org>
@@ -66,106 +51,72 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Matthew Wilcox (Oracle) <willy@infradead.org>
+From: Ihor Solodrai <ihor.solodrai@pm.me>
 
-commit b7880cb166ab62c2409046b2347261abf701530e upstream.
+commit e6c209da7e0e9aaf955a7b59e91ed78c2b6c96fb upstream.
 
-Syzbot has found a deadlock (analyzed by Lance Yang):
+Recently perf_link test started unreliably failing on libbpf CI:
+  * https://github.com/libbpf/libbpf/actions/runs/11260672407/job/31312405473
+  * https://github.com/libbpf/libbpf/actions/runs/11260992334/job/31315514626
+  * https://github.com/libbpf/libbpf/actions/runs/11263162459/job/31320458251
 
-1) Task (5749): Holds folio_lock, then tries to acquire i_mmap_rwsem(read lock).
-2) Task (5754): Holds i_mmap_rwsem(write lock), then tries to acquire
-folio_lock.
+Part of the test is running a dummy loop for a while and then checking
+for a counter incremented by the test program.
 
-migrate_pages()
-  -> migrate_hugetlbs()
-    -> unmap_and_move_huge_page()     <- Takes folio_lock!
-      -> remove_migration_ptes()
-        -> __rmap_walk_file()
-          -> i_mmap_lock_read()       <- Waits for i_mmap_rwsem(read lock)!
+Instead of waiting for an arbitrary number of loop iterations once,
+check for the test counter in a loop and use get_time_ns() helper to
+enforce a 100ms timeout.
 
-hugetlbfs_fallocate()
-  -> hugetlbfs_punch_hole()           <- Takes i_mmap_rwsem(write lock)!
-    -> hugetlbfs_zero_partial_page()
-     -> filemap_lock_hugetlb_folio()
-      -> filemap_lock_folio()
-        -> __filemap_get_folio        <- Waits for folio_lock!
+v1: https://lore.kernel.org/bpf/zuRd072x9tumn2iN4wDNs5av0nu5nekMNV4PkR-YwCT10eFFTrUtZBRkLWFbrcCe7guvLStGQlhibo8qWojCO7i2-NGajes5GYIyynexD-w=@pm.me/
 
-The migration path is the one taking locks in the wrong order according to
-the documentation at the top of mm/rmap.c.  So expand the scope of the
-existing i_mmap_lock to cover the calls to remove_migration_ptes() too.
-
-This is (mostly) how it used to be after commit c0d0381ade79.  That was
-removed by 336bf30eb765 for both file & anon hugetlb pages when it should
-only have been removed for anon hugetlb pages.
-
-Link: https://lkml.kernel.org/r/20260109041345.3863089-2-willy@infradead.org
-Signed-off-by: Matthew Wilcox (Oracle) <willy@infradead.org>
-Fixes: 336bf30eb765 ("hugetlbfs: fix anon huge page migration race")
-Reported-by: syzbot+2d9c96466c978346b55f@syzkaller.appspotmail.com
-Link: https://lore.kernel.org/all/68e9715a.050a0220.1186a4.000d.GAE@google.com
-Debugged-by: Lance Yang <lance.yang@linux.dev>
-Acked-by: David Hildenbrand (Red Hat) <david@kernel.org>
-Acked-by: Zi Yan <ziy@nvidia.com>
-Cc: Alistair Popple <apopple@nvidia.com>
-Cc: Byungchul Park <byungchul@sk.com>
-Cc: Gregory Price <gourry@gourry.net>
-Cc: Jann Horn <jannh@google.com>
-Cc: Joshua Hahn <joshua.hahnjy@gmail.com>
-Cc: Liam Howlett <liam.howlett@oracle.com>
-Cc: Lorenzo Stoakes <lorenzo.stoakes@oracle.com>
-Cc: Matthew Brost <matthew.brost@intel.com>
-Cc: Rakie Kim <rakie.kim@sk.com>
-Cc: Rik van Riel <riel@surriel.com>
-Cc: Vlastimil Babka <vbabka@suse.cz>
-Cc: Ying Huang <ying.huang@linux.alibaba.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Ihor Solodrai <ihor.solodrai@pm.me>
+Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
+Link: https://lore.kernel.org/bpf/20241011153104.249800-1-ihor.solodrai@pm.me
+Signed-off-by: Shung-Hsi Yu <shung-hsi.yu@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/migrate.c |   12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ tools/testing/selftests/bpf/prog_tests/perf_link.c |   15 +++++++++++++--
+ 1 file changed, 13 insertions(+), 2 deletions(-)
 
---- a/mm/migrate.c
-+++ b/mm/migrate.c
-@@ -1369,6 +1369,7 @@ static int unmap_and_move_huge_page(new_
- 	int page_was_mapped = 0;
- 	struct anon_vma *anon_vma = NULL;
- 	struct address_space *mapping = NULL;
-+	enum ttu_flags ttu = 0;
+--- a/tools/testing/selftests/bpf/prog_tests/perf_link.c
++++ b/tools/testing/selftests/bpf/prog_tests/perf_link.c
+@@ -4,8 +4,12 @@
+ #include <pthread.h>
+ #include <sched.h>
+ #include <test_progs.h>
++#include "testing_helpers.h"
+ #include "test_perf_link.skel.h"
  
- 	if (folio_ref_count(src) == 1) {
- 		/* page was freed from under us. So we are done. */
-@@ -1410,8 +1411,6 @@ static int unmap_and_move_huge_page(new_
- 		goto put_anon;
- 
- 	if (folio_mapped(src)) {
--		enum ttu_flags ttu = 0;
--
- 		if (!folio_test_anon(src)) {
- 			/*
- 			 * In shared mappings, try_to_unmap could potentially
-@@ -1428,9 +1427,6 @@ static int unmap_and_move_huge_page(new_
- 
- 		try_to_migrate(src, ttu);
- 		page_was_mapped = 1;
--
--		if (ttu & TTU_RMAP_LOCKED)
--			i_mmap_unlock_write(mapping);
- 	}
- 
- 	if (!folio_mapped(src))
-@@ -1438,7 +1434,11 @@ static int unmap_and_move_huge_page(new_
- 
- 	if (page_was_mapped)
- 		remove_migration_ptes(src,
--			rc == MIGRATEPAGE_SUCCESS ? dst : src, false);
-+			rc == MIGRATEPAGE_SUCCESS ? dst : src,
-+				ttu ? true : false);
++#define BURN_TIMEOUT_MS 100
++#define BURN_TIMEOUT_NS BURN_TIMEOUT_MS * 1000000
 +
-+	if (ttu & TTU_RMAP_LOCKED)
-+		i_mmap_unlock_write(mapping);
+ static void burn_cpu(void)
+ {
+ 	volatile int j = 0;
+@@ -32,6 +36,7 @@ void serial_test_perf_link(void)
+ 	int run_cnt_before, run_cnt_after;
+ 	struct bpf_link_info info;
+ 	__u32 info_len = sizeof(info);
++	__u64 timeout_time_ns;
  
- unlock_put_anon:
- 	folio_unlock(dst);
+ 	/* create perf event */
+ 	memset(&attr, 0, sizeof(attr));
+@@ -63,8 +68,14 @@ void serial_test_perf_link(void)
+ 	ASSERT_GT(info.prog_id, 0, "link_prog_id");
+ 
+ 	/* ensure we get at least one perf_event prog execution */
+-	burn_cpu();
+-	ASSERT_GT(skel->bss->run_cnt, 0, "run_cnt");
++	timeout_time_ns = get_time_ns() + BURN_TIMEOUT_NS;
++	while (true) {
++		burn_cpu();
++		if (skel->bss->run_cnt > 0)
++			break;
++	        if (!ASSERT_LT(get_time_ns(), timeout_time_ns, "run_cnt_timeout"))
++			break;
++	}
+ 
+ 	/* perf_event is still active, but we close link and BPF program
+ 	 * shouldn't be executed anymore
 
 
