@@ -1,53 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53597302163;
-	Wed, 28 Jan 2026 15:54:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 624AE2F261C;
+	Wed, 28 Jan 2026 15:54:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769615647; cv=none; b=uQmeE+nTODfSLmjyT3FsyV3562R4MLWEogXPNtQFF/PzX61S5uZLy15PwnvhrkF5E+AkxML/lnTVzku9HI1GY17IEhZsC1L8/Qcb27UD8V6hxsJw6ffc6GKKDKEtfI1iw7z8h1eqULASRTCut+7yXjThaFWm6gSNHehS07VguCg=
+	t=1769615650; cv=none; b=ZhaqWQ5E/NyqvmEI9YV7VsM6CuV/nixMnD+QpuTAKtHAxB1j1yH8OmW+99oyhKKKljmgnOyor78YgrLY4GMIkuJbv/VJF1ZcyVCwzqf5PIp4ZpoOpjc51dhZZGTZrMCUvLf/QH6oywfTEt30TZXnZCI1KZIn4Q1kj3oPlEw+xho=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769615647; c=relaxed/simple;
-	bh=0ZaQCZ/lMyc45zbeCxW29TdNfzjKGWObhbrTdSFwVQw=;
+	s=arc-20240116; t=1769615650; c=relaxed/simple;
+	bh=1pe81fLvU9qKpDSCb4Dl4EyA1UsvI1qVEPQ7U3/y3lY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=IpVp7MN9nwwnUKUEkXcmh+uCdwpecLIykmAH0QPrGkTaf5beq/i0+OzSe4sZeEvixf0NqHSpO7iwEZubLUoeGCMveSQQ0GW2ufFjENoqUH1SV9FEIaCupJqkgC4QoL4RIMDwvvZBCuv7gM/lIWi7CY5M0KOWXaHZn5T/piqwjN4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vfkDsbkL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=oIR7baVdTCVFgQWOKE9lFptj5amSTlrb60+FN6fa3PTTWlq8khk+dd566vIsfQvqmyfXIf1w+UU79GfWegRaD3XB7N90h8dvk9CyNq4K3dsDut+nhVH99eSVySsAk6uPGyfhNKMeHXH6SicxqYPk4gfuRptGYO1riyA/Rmu4J48=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XpfRv2kS; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vfkDsbkL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C1BEC4CEF1;
-	Wed, 28 Jan 2026 15:54:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XpfRv2kS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C602EC4CEF1;
+	Wed, 28 Jan 2026 15:54:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1769615647;
-	bh=0ZaQCZ/lMyc45zbeCxW29TdNfzjKGWObhbrTdSFwVQw=;
+	s=korg; t=1769615650;
+	bh=1pe81fLvU9qKpDSCb4Dl4EyA1UsvI1qVEPQ7U3/y3lY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vfkDsbkLCUjV3Dk/M3xWAj3ayKGse/+F/1qaC9s21bd5HzKDtpD+Vy0lkVqVktLBL
-	 06IiXncCEH48ebzsU07frNpoQgTzG38Llo6yrmSHC0A0tODwsYRi804+/Lk8wf0jAc
-	 yozfoGLk1ULZSER0pncu8l9itXAoeJp4XYOyoNdA=
+	b=XpfRv2kS+m0ynsv4LAZOeS+Gjq+z4b0gkd4l/AkM3XZKQ4O2iIycgthuTgr/xR9Oz
+	 iEWtKxj5m57fPgUFZUZl0ZVUX4iKoOmpmCVzWU2AQ0D0+9fNLrZcMUsw1NI6euf+Xl
+	 A6Q4B/tL/hmcg9+/2ZGstDRjkD+RCZABnBTSnnVM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Joanne Koong <joannelkoong@gmail.com>,
-	Athul Krishna <athul.krishna.kr@protonmail.com>,
-	"=?UTF-8?q?J . =20Neusch=C3=A4fer?=" <j.neuschaefer@gmx.net>,
-	Bernd Schubert <bschubert@ddn.com>,
-	Alexander Viro <viro@zeniv.linux.org.uk>,
-	Bonaccorso Salvatore <carnil@debian.org>,
-	Christian Brauner <brauner@kernel.org>,
-	David Hildenbrand <david@kernel.org>,
-	Jan Kara <jack@suse.cz>,
-	"Liam R. Howlett" <Liam.Howlett@oracle.com>,
-	Lorenzo Stoakes <lorenzo.stoakes@oracle.com>,
-	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
-	Michal Hocko <mhocko@suse.com>,
-	Mike Rapoport <rppt@kernel.org>,
-	Miklos Szeredi <miklos@szeredi.hu>,
-	Suren Baghdasaryan <surenb@google.com>,
-	Vlastimil Babka <vbabka@suse.cz>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.18 072/227] fs/writeback: skip AS_NO_DATA_INTEGRITY mappings in wait_sb_inodes()
-Date: Wed, 28 Jan 2026 16:21:57 +0100
-Message-ID: <20260128145346.933707599@linuxfoundation.org>
+	Matthew Auld <matthew.auld@intel.com>,
+	Himal Prasad Ghimiray <himal.prasad.ghimiray@intel.com>,
+	=?UTF-8?q?Thomas=20Hellstr=C3=B6m?= <thomas.hellstrom@linux.intel.com>,
+	Matthew Brost <matthew.brost@intel.com>,
+	Rodrigo Vivi <rodrigo.vivi@intel.com>,
+	dri-devel@lists.freedesktop.org,
+	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>
+Subject: [PATCH 6.18 073/227] drm, drm/xe: Fix xe userptr in the absence of CONFIG_DEVICE_PRIVATE
+Date: Wed, 28 Jan 2026 16:21:58 +0100
+Message-ID: <20260128145346.969913989@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260128145344.331957407@linuxfoundation.org>
 References: <20260128145344.331957407@linuxfoundation.org>
@@ -67,107 +56,130 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Joanne Koong <joannelkoong@gmail.com>
+From: Thomas Hellström <thomas.hellstrom@linux.intel.com>
 
-commit f9a49aa302a05e91ca01f69031cb79a0ea33031f upstream.
+commit bdcdf968be314b6fc8835b99fb4519e7619671e6 upstream.
 
-Above the while() loop in wait_sb_inodes(), we document that we must wait
-for all pages under writeback for data integrity.  Consequently, if a
-mapping, like fuse, traditionally does not have data integrity semantics,
-there is no need to wait at all; we can simply skip these inodes.
+CONFIG_DEVICE_PRIVATE is not selected by default by some distros,
+for example Fedora, and that leads to a regression in the xe driver
+since userptr support gets compiled out.
 
-This restores fuse back to prior behavior where syncs are no-ops.  This
-fixes a user regression where if a system is running a faulty fuse server
-that does not reply to issued write requests, this causes wait_sb_inodes()
-to wait forever.
+It turns out that DRM_GPUSVM, which is needed for xe userptr support
+compiles also without CONFIG_DEVICE_PRIVATE, but doesn't compile
+without CONFIG_ZONE_DEVICE.
+Exclude the drm_pagemap files from compilation with !CONFIG_ZONE_DEVICE,
+and remove the CONFIG_DEVICE_PRIVATE dependency from CONFIG_DRM_GPUSVM and
+the xe driver's selection of it, re-enabling xe userptr for those configs.
 
-Link: https://lkml.kernel.org/r/20260105211737.4105620-2-joannelkoong@gmail.com
-Fixes: 0c58a97f919c ("fuse: remove tmp folio for writebacks and internal rb tree")
-Signed-off-by: Joanne Koong <joannelkoong@gmail.com>
-Reported-by: Athul Krishna <athul.krishna.kr@protonmail.com>
-Reported-by: J. Neuschäfer <j.neuschaefer@gmx.net>
-Reviewed-by: Bernd Schubert <bschubert@ddn.com>
-Tested-by: J. Neuschäfer <j.neuschaefer@gmx.net>
-Cc: Alexander Viro <viro@zeniv.linux.org.uk>
-Cc: Bernd Schubert <bschubert@ddn.com>
-Cc: Bonaccorso Salvatore <carnil@debian.org>
-Cc: Christian Brauner <brauner@kernel.org>
-Cc: David Hildenbrand <david@kernel.org>
-Cc: Jan Kara <jack@suse.cz>
-Cc: "Liam R. Howlett" <Liam.Howlett@oracle.com>
-Cc: Lorenzo Stoakes <lorenzo.stoakes@oracle.com>
-Cc: "Matthew Wilcox (Oracle)" <willy@infradead.org>
-Cc: Michal Hocko <mhocko@suse.com>
-Cc: Mike Rapoport <rppt@kernel.org>
-Cc: Miklos Szeredi <miklos@szeredi.hu>
-Cc: Suren Baghdasaryan <surenb@google.com>
-Cc: Vlastimil Babka <vbabka@suse.cz>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+v2:
+- Don't compile the drm_pagemap files unless CONFIG_ZONE_DEVICE is set.
+- Adjust the drm_pagemap.h header accordingly.
+
+Fixes: 9e9787414882 ("drm/xe/userptr: replace xe_hmm with gpusvm")
+Cc: Matthew Auld <matthew.auld@intel.com>
+Cc: Himal Prasad Ghimiray <himal.prasad.ghimiray@intel.com>
+Cc: Thomas Hellström <thomas.hellstrom@linux.intel.com>
+Cc: Matthew Brost <matthew.brost@intel.com>
+Cc: "Thomas Hellström" <thomas.hellstrom@linux.intel.com>
+Cc: Rodrigo Vivi <rodrigo.vivi@intel.com>
+Cc: dri-devel@lists.freedesktop.org
+Cc: <stable@vger.kernel.org> # v6.18+
+Signed-off-by: Thomas Hellström <thomas.hellstrom@linux.intel.com>
+Reviewed-by: Matthew Auld <matthew.auld@intel.com>
+Acked-by: Maarten Lankhorst <maarten.lankhorst@linux.intel.com>
+Link: https://patch.msgid.link/20260121091048.41371-2-thomas.hellstrom@linux.intel.com
+(cherry picked from commit 1e372b246199ca7a35f930177fea91b557dac16e)
+Signed-off-by: Thomas Hellström <thomas.hellstrom@linux.intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/fs-writeback.c       |    7 ++++++-
- fs/fuse/file.c          |    4 +++-
- include/linux/pagemap.h |   11 +++++++++++
- 3 files changed, 20 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/Kconfig    |    2 +-
+ drivers/gpu/drm/Makefile   |    4 +++-
+ drivers/gpu/drm/xe/Kconfig |    2 +-
+ include/drm/drm_pagemap.h  |   19 +++++++++++++++++--
+ 4 files changed, 22 insertions(+), 5 deletions(-)
 
---- a/fs/fs-writeback.c
-+++ b/fs/fs-writeback.c
-@@ -2729,8 +2729,13 @@ static void wait_sb_inodes(struct super_
- 		 * The mapping can appear untagged while still on-list since we
- 		 * do not have the mapping lock. Skip it here, wb completion
- 		 * will remove it.
-+		 *
-+		 * If the mapping does not have data integrity semantics,
-+		 * there's no need to wait for the writeout to complete, as the
-+		 * mapping cannot guarantee that data is persistently stored.
- 		 */
--		if (!mapping_tagged(mapping, PAGECACHE_TAG_WRITEBACK))
-+		if (!mapping_tagged(mapping, PAGECACHE_TAG_WRITEBACK) ||
-+		    mapping_no_data_integrity(mapping))
- 			continue;
+--- a/drivers/gpu/drm/Kconfig
++++ b/drivers/gpu/drm/Kconfig
+@@ -210,7 +210,7 @@ config DRM_GPUVM
  
- 		spin_unlock_irq(&sb->s_inode_wblist_lock);
---- a/fs/fuse/file.c
-+++ b/fs/fuse/file.c
-@@ -3146,8 +3146,10 @@ void fuse_init_file_inode(struct inode *
+ config DRM_GPUSVM
+ 	tristate
+-	depends on DRM && DEVICE_PRIVATE
++	depends on DRM
+ 	select HMM_MIRROR
+ 	select MMU_NOTIFIER
+ 	help
+--- a/drivers/gpu/drm/Makefile
++++ b/drivers/gpu/drm/Makefile
+@@ -106,8 +106,10 @@ obj-$(CONFIG_DRM_EXEC) += drm_exec.o
+ obj-$(CONFIG_DRM_GPUVM) += drm_gpuvm.o
  
- 	inode->i_fop = &fuse_file_operations;
- 	inode->i_data.a_ops = &fuse_file_aops;
--	if (fc->writeback_cache)
-+	if (fc->writeback_cache) {
- 		mapping_set_writeback_may_deadlock_on_reclaim(&inode->i_data);
-+		mapping_set_no_data_integrity(&inode->i_data);
-+	}
+ drm_gpusvm_helper-y := \
+-	drm_gpusvm.o\
++	drm_gpusvm.o
++drm_gpusvm_helper-$(CONFIG_ZONE_DEVICE) += \
+ 	drm_pagemap.o
++
+ obj-$(CONFIG_DRM_GPUSVM) += drm_gpusvm_helper.o
  
- 	INIT_LIST_HEAD(&fi->write_files);
- 	INIT_LIST_HEAD(&fi->queued_writes);
---- a/include/linux/pagemap.h
-+++ b/include/linux/pagemap.h
-@@ -213,6 +213,7 @@ enum mapping_flags {
- 	AS_WRITEBACK_MAY_DEADLOCK_ON_RECLAIM = 9,
- 	AS_KERNEL_FILE = 10,	/* mapping for a fake kernel file that shouldn't
- 				   account usage to user cgroups */
-+	AS_NO_DATA_INTEGRITY = 11, /* no data integrity guarantees */
- 	/* Bits 16-25 are used for FOLIO_ORDER */
- 	AS_FOLIO_ORDER_BITS = 5,
- 	AS_FOLIO_ORDER_MIN = 16,
-@@ -348,6 +349,16 @@ static inline bool mapping_writeback_may
- 	return test_bit(AS_WRITEBACK_MAY_DEADLOCK_ON_RECLAIM, &mapping->flags);
- }
+ obj-$(CONFIG_DRM_BUDDY) += drm_buddy.o
+--- a/drivers/gpu/drm/xe/Kconfig
++++ b/drivers/gpu/drm/xe/Kconfig
+@@ -39,7 +39,7 @@ config DRM_XE
+ 	select DRM_TTM
+ 	select DRM_TTM_HELPER
+ 	select DRM_EXEC
+-	select DRM_GPUSVM if !UML && DEVICE_PRIVATE
++	select DRM_GPUSVM if !UML
+ 	select DRM_GPUVM
+ 	select DRM_SCHED
+ 	select MMU_NOTIFIER
+--- a/include/drm/drm_pagemap.h
++++ b/include/drm/drm_pagemap.h
+@@ -209,6 +209,19 @@ struct drm_pagemap_devmem_ops {
+ 			   struct dma_fence *pre_migrate_fence);
+ };
  
-+static inline void mapping_set_no_data_integrity(struct address_space *mapping)
++#if IS_ENABLED(CONFIG_ZONE_DEVICE)
++
++struct drm_pagemap *drm_pagemap_page_to_dpagemap(struct page *page);
++
++#else
++
++static inline struct drm_pagemap *drm_pagemap_page_to_dpagemap(struct page *page)
 +{
-+	set_bit(AS_NO_DATA_INTEGRITY, &mapping->flags);
++	return NULL;
 +}
 +
-+static inline bool mapping_no_data_integrity(const struct address_space *mapping)
-+{
-+	return test_bit(AS_NO_DATA_INTEGRITY, &mapping->flags);
-+}
++#endif /* IS_ENABLED(CONFIG_ZONE_DEVICE) */
 +
- static inline gfp_t mapping_gfp_mask(const struct address_space *mapping)
- {
- 	return mapping->gfp_mask;
+ /**
+  * struct drm_pagemap_devmem - Structure representing a GPU SVM device memory allocation
+  *
+@@ -233,6 +246,8 @@ struct drm_pagemap_devmem {
+ 	struct dma_fence *pre_migrate_fence;
+ };
+ 
++#if IS_ENABLED(CONFIG_ZONE_DEVICE)
++
+ int drm_pagemap_migrate_to_devmem(struct drm_pagemap_devmem *devmem_allocation,
+ 				  struct mm_struct *mm,
+ 				  unsigned long start, unsigned long end,
+@@ -243,8 +258,6 @@ int drm_pagemap_evict_to_ram(struct drm_
+ 
+ const struct dev_pagemap_ops *drm_pagemap_pagemap_ops_get(void);
+ 
+-struct drm_pagemap *drm_pagemap_page_to_dpagemap(struct page *page);
+-
+ void drm_pagemap_devmem_init(struct drm_pagemap_devmem *devmem_allocation,
+ 			     struct device *dev, struct mm_struct *mm,
+ 			     const struct drm_pagemap_devmem_ops *ops,
+@@ -256,4 +269,6 @@ int drm_pagemap_populate_mm(struct drm_p
+ 			    struct mm_struct *mm,
+ 			    unsigned long timeslice_ms);
+ 
++#endif /* IS_ENABLED(CONFIG_ZONE_DEVICE) */
++
+ #endif
 
 
