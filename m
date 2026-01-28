@@ -1,47 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A09C21D6AA;
-	Wed, 28 Jan 2026 15:56:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D51E02F25EF;
+	Wed, 28 Jan 2026 15:56:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769615762; cv=none; b=axdeokV24DvZ/uoR40+nTGzgPvEuqHomdOvqHyDCjC8rNyQoKHlkczSFgL1JJ7BbH2dqJm+U577z3oDyZy+jAvO+aac77Q4JFmB5Z0g35JauAgsuOGYxHnRkVM66hzXamrAVNtVXvJqcJSusxer4KHza32Sd+oB5Ed2jXk3Dy9k=
+	t=1769615765; cv=none; b=q2KVU4d9RSZL2uXPtmbq4HiGCSm9BYWirSXnp2nu4QijklsNNaVxsReSMJmR5YZBNlRlDsQp0eOF5fG9lcGryEWVNjJH9HGNLZoJY9rydG7uRN+z4FJzefMlJi1DeEv+FgiBocumA2wn6vZvPUDUE23M+F6OFN76+xh1sAoCTjU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769615762; c=relaxed/simple;
-	bh=ilH5ktigD/fqM5H6RQuAD0zhPjo9H9ZHtzSh1cKzKho=;
+	s=arc-20240116; t=1769615765; c=relaxed/simple;
+	bh=adJxAiNQQmtDH4ADAERrcAQAuYD2hGP++GFXgPQB3Mo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ioj7YW1ihqGbke5AtKEBpjprVuu8MOeleqBTNy4LlsihMTUJ9OgRGfu+xdoy1TWHhoMwVHeBNDsekeZ+G5i5LL0CBDJ9Ug9blRgu14VDN3fAprw0uPVCf8hQ/qdkEjO7HUweVdbN/j0QWw302bJWn30+8KQBx52W+h3SzhvLJqA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0GIDuZh2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Oe3yzYj2ecno3sHwy0JHd6Fk1KYjP5CYAFGmYmThWibqoGyQ9MV9DSWTofV93XzfkRvDrAOwkk+wPv8OLj1gNWUJq6BcVjrxm5Pden7CV1Xp3zaRVYLkB1GGU0ZuVuYZHNj6gg8zDYxhnaTUoHM4TpLpajX8Z4a1m8/vyOMVioI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QEqYUhTl; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0GIDuZh2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DDEABC116C6;
-	Wed, 28 Jan 2026 15:56:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QEqYUhTl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E4CEC4CEF1;
+	Wed, 28 Jan 2026 15:56:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1769615762;
-	bh=ilH5ktigD/fqM5H6RQuAD0zhPjo9H9ZHtzSh1cKzKho=;
+	s=korg; t=1769615765;
+	bh=adJxAiNQQmtDH4ADAERrcAQAuYD2hGP++GFXgPQB3Mo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0GIDuZh2Nzu1oDRm0yGrXWVndAV1ZMQDlm5y8BHYTTNgprn3M9CmKvSTy4zvKyYZI
-	 oBf8oiPQZLheovsXxjwuaDehGsrFZe0j19ZCB6HBzzen+UHzEK3/T3ikGVKM3GaWVT
-	 WOkU4xcOKBjSjq7UGNFT/tBlCKscZlHEx00Kg5vQ=
+	b=QEqYUhTl8W+CrOt+BD9npDk0WvaJ6woxHphliPmcXuCvri2mIjQAZxA+67E7Bau3B
+	 4zJHNHqx5rri0pUr02RMUBTV2Jmwe9LASfKNvJwfICC6mDXWEpGFzgxlahFtfkgS5C
+	 He9qs2ImFtYcyWJ3TeJKKqC7oEDGd3/rzdWu45DY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	lrizzo@google.com,
-	namangulati@google.com,
-	willemb@google.com,
-	intel-wired-lan@lists.osuosl.org,
-	milena.olech@intel.com,
-	jacob.e.keller@intel.com,
-	Shachar Raindel <shacharr@google.com>,
-	Mina Almasry <almasrymina@google.com>,
-	Aleksandr Loktionov <aleksandr.loktionov@intel.com>,
-	Samuel Salin <Samuel.salin@intel.com>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>,
+	Daniel Golle <daniel@makrotopia.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 107/227] idpf: read lower clock bits inside the time sandwich
-Date: Wed, 28 Jan 2026 16:22:32 +0100
-Message-ID: <20260128145348.320547320@linuxfoundation.org>
+Subject: [PATCH 6.18 108/227] net: phy: intel-xway: fix OF node refcount leakage
+Date: Wed, 28 Jan 2026 16:22:33 +0100
+Message-ID: <20260128145348.356401162@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260128145344.331957407@linuxfoundation.org>
 References: <20260128145344.331957407@linuxfoundation.org>
@@ -60,52 +51,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mina Almasry <almasrymina@google.com>
+From: Daniel Golle <daniel@makrotopia.org>
 
-[ Upstream commit bdfc7b55adcd04834ccc1b6b13e55e3fd7eaa789 ]
+[ Upstream commit 79912b256e14054e6ba177d7e7e631485ce23dbe ]
 
-PCIe reads need to be done inside the time sandwich because PCIe
-writes may get buffered in the PCIe fabric and posted to the device
-after the _postts completes. Doing the PCIe read inside the time
-sandwich guarantees that the write gets flushed before the _postts
-timestamp is taken.
+Automated review spotted am OF node reference count leakage when
+checking if the 'leds' child node exists.
 
-Cc: lrizzo@google.com
-Cc: namangulati@google.com
-Cc: willemb@google.com
-Cc: intel-wired-lan@lists.osuosl.org
-Cc: milena.olech@intel.com
-Cc: jacob.e.keller@intel.com
+Call of_put_node() to correctly maintain the refcount.
 
-Fixes: 5cb8805d2366 ("idpf: negotiate PTP capabilities and get PTP clock")
-Suggested-by: Shachar Raindel <shacharr@google.com>
-Signed-off-by: Mina Almasry <almasrymina@google.com>
-Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
-Reviewed-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
-Tested-by: Samuel Salin <Samuel.salin@intel.com>
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+Link: https://netdev-ai.bots.linux.dev/ai-review.html?id=20f173ba-0c64-422b-a663-fea4b4ad01d0
+Fixes: 1758af47b98c1 ("net: phy: intel-xway: add support for PHY LEDs")
+Signed-off-by: Daniel Golle <daniel@makrotopia.org>
+Link: https://patch.msgid.link/e3275e1c1cdca7e6426bb9c11f33bd84b8d900c8.1768783208.git.daniel@makrotopia.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/idpf/idpf_ptp.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/phy/intel-xway.c | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/ethernet/intel/idpf/idpf_ptp.c b/drivers/net/ethernet/intel/idpf/idpf_ptp.c
-index 3e1052d070cfd..0a8b50350b860 100644
---- a/drivers/net/ethernet/intel/idpf/idpf_ptp.c
-+++ b/drivers/net/ethernet/intel/idpf/idpf_ptp.c
-@@ -108,11 +108,11 @@ static u64 idpf_ptp_read_src_clk_reg_direct(struct idpf_adapter *adapter,
- 	ptp_read_system_prets(sts);
+diff --git a/drivers/net/phy/intel-xway.c b/drivers/net/phy/intel-xway.c
+index 9766dd99afaa0..12ff4c1f285d2 100644
+--- a/drivers/net/phy/intel-xway.c
++++ b/drivers/net/phy/intel-xway.c
+@@ -277,7 +277,7 @@ static int xway_gphy_init_leds(struct phy_device *phydev)
  
- 	idpf_ptp_enable_shtime(adapter);
-+	lo = readl(ptp->dev_clk_regs.dev_clk_ns_l);
+ static int xway_gphy_config_init(struct phy_device *phydev)
+ {
+-	struct device_node *np = phydev->mdio.dev.of_node;
++	struct device_node *np;
+ 	int err;
  
- 	/* Read the system timestamp post PHC read */
- 	ptp_read_system_postts(sts);
+ 	/* Mask all interrupts */
+@@ -286,7 +286,10 @@ static int xway_gphy_config_init(struct phy_device *phydev)
+ 		return err;
  
--	lo = readl(ptp->dev_clk_regs.dev_clk_ns_l);
- 	hi = readl(ptp->dev_clk_regs.dev_clk_ns_h);
+ 	/* Use default LED configuration if 'leds' node isn't defined */
+-	if (!of_get_child_by_name(np, "leds"))
++	np = of_get_child_by_name(phydev->mdio.dev.of_node, "leds");
++	if (np)
++		of_node_put(np);
++	else
+ 		xway_gphy_init_leds(phydev);
  
- 	spin_unlock(&ptp->read_dev_clk_lock);
+ 	/* Clear all pending interrupts */
 -- 
 2.51.0
 
