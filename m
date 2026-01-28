@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 328C62EA172;
-	Wed, 28 Jan 2026 15:47:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 717E71E1DFC;
+	Wed, 28 Jan 2026 15:47:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769615245; cv=none; b=sDE6EMhd4dTc9qUuJcels9skGw02uFsdwC2esWy2s9VGiL+f+1tKFOdCMHpx+wfeOR+z9cFZzLJp1cCalIgObgnCy67WQDZbqf2d1J3krToDPVnerEKgtyGSPTbD2JXXNl8GwfP1vjGweQC0r96XiEXJRKPvjJwaNXBUXS629cA=
+	t=1769615248; cv=none; b=WCRYnfCmfpVqsK+v4hHGbRgopW0lzY7vrAmZEVvNeNRVuZBgZ5JGbdzZjdH4Y093otS3MVan1M4KfcEHbhliBDAx2BDSCmZqxIY8KH1z03TEvudPMkMrOkn/JDG6Xfbx3Wn1gJfkeggvutyud2UhGCeepki7VTLeal4cSZPRFGE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769615245; c=relaxed/simple;
-	bh=zNbL+W2fDm569IkeMRZq2dPgWTPFz5DHp7ehtEuFI1E=;
+	s=arc-20240116; t=1769615248; c=relaxed/simple;
+	bh=RqL5IlyZqgV8cmmE8bcqTspQK3ytk4OIreGjW4Wji6I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Fo4/Dz+QXKCjrSLRkfiT61lM2cWHvZxLqGTeMa5ZBFhqfpp/Es74aWRKQQkrgeYCSiZf8mUGSNwrzKmimxHG+hcwckmqav40avY1W9jI3ws2OW83hxAoE9DI/s1kvdolLfbsJyWgvfNZCB6ECsUK7tbcBPmZbs7VaEkQq90iHC4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dTUo26fg; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gesSHPcbUH5CeAFFxr9EEGnn3XcvYuXNo1/ugfGynihM6EfUvSwj9KDMGOxSjwKceW8RTLw6qy1dLCTdJxBmOdhjf2GiAWxD55GjbiJE15YJd0ESATgyGIX78L2FIdCOPNujsuXq4em1BdBCclOryp8BHAg+H5jDtRoMnOLu85w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=k2RoCSDy; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dTUo26fg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 96BF0C4CEF7;
-	Wed, 28 Jan 2026 15:47:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="k2RoCSDy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F006EC4CEF1;
+	Wed, 28 Jan 2026 15:47:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1769615245;
-	bh=zNbL+W2fDm569IkeMRZq2dPgWTPFz5DHp7ehtEuFI1E=;
+	s=korg; t=1769615248;
+	bh=RqL5IlyZqgV8cmmE8bcqTspQK3ytk4OIreGjW4Wji6I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dTUo26fgK7Tc18OFY4bp5S6FkPbW3kxDddSTi2lOqhiEDdt5CwjzT6iURXa3c96Rk
-	 N+AWy1feotVOtzh+jYu/l4lek1RIEHeN3GkEmhKOx85RlZ11LO5mXlAjpiYtC2aGZP
-	 DNnYOA6By7jOuS8S4q7A1BMr8/+ypdYRxuUH0qos=
+	b=k2RoCSDyJ2bTt9gejI9mDRDlV+0WhhQNk658HVVHkf7Pbw6eHsgGMtcadbuIzW8UG
+	 QoDM25hcvk7y9ueXC+3wB1M1yihOkujZFO7ztiE9YyfEppMky7ni0Gl7bnack3E0gL
+	 kLTWjyzw5sdUov2QDkzp5v6OH0z8rk4tf/6QS9lY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot <syzkaller@googlegroups.com>,
-	Eric Dumazet <edumazet@google.com>,
-	Rocco Yue <rocco.yue@mediatek.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 079/169] ipv6: annotate data-race in ndisc_router_discovery()
-Date: Wed, 28 Jan 2026 16:22:42 +0100
-Message-ID: <20260128145336.849640508@linuxfoundation.org>
+	Sebastian Reichel <sebastian.reichel@collabora.com>,
+	Yifeng Zhao <yifeng.zhao@rock-chips.com>,
+	Shawn Lin <shawn.lin@rock-chips.com>,
+	Ulf Hansson <ulf.hansson@linaro.org>
+Subject: [PATCH 6.12 115/169] mmc: sdhci-of-dwcmshc: Prevent illegal clock reduction in HS200/HS400 mode
+Date: Wed, 28 Jan 2026 16:23:18 +0100
+Message-ID: <20260128145338.142909660@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260128145334.006287341@linuxfoundation.org>
 References: <20260128145334.006287341@linuxfoundation.org>
@@ -53,79 +52,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Shawn Lin <shawn.lin@rock-chips.com>
 
-[ Upstream commit 9a063f96d87efc3a6cc667f8de096a3d38d74bb5 ]
+commit 3009738a855cf938bbfc9078bec725031ae623a4 upstream.
 
-syzbot found that ndisc_router_discovery() could read and write
-in6_dev->ra_mtu without holding a lock [1]
+When operating in HS200 or HS400 timing modes, reducing the clock frequency
+below 52MHz will lead to link broken as the Rockchip DWC MSHC controller
+requires maintaining a minimum clock of 52MHz in these modes.
 
-This looks fine, IFLA_INET6_RA_MTU is best effort.
+Add a check to prevent illegal clock reduction through debugfs:
 
-Add READ_ONCE()/WRITE_ONCE() to document the race.
-
-Note that we might also reject illegal MTU values
-(mtu < IPV6_MIN_MTU || mtu > skb->dev->mtu) in a future patch.
-
-[1]
-BUG: KCSAN: data-race in ndisc_router_discovery / ndisc_router_discovery
-
-read to 0xffff888119809c20 of 4 bytes by task 25817 on cpu 1:
-  ndisc_router_discovery+0x151d/0x1c90 net/ipv6/ndisc.c:1558
-  ndisc_rcv+0x2ad/0x3d0 net/ipv6/ndisc.c:1841
-  icmpv6_rcv+0xe5a/0x12f0 net/ipv6/icmp.c:989
-  ip6_protocol_deliver_rcu+0xb2a/0x10d0 net/ipv6/ip6_input.c:438
-  ip6_input_finish+0xf0/0x1d0 net/ipv6/ip6_input.c:489
-  NF_HOOK include/linux/netfilter.h:318 [inline]
-  ip6_input+0x5e/0x140 net/ipv6/ip6_input.c:500
-  ip6_mc_input+0x27c/0x470 net/ipv6/ip6_input.c:590
-  dst_input include/net/dst.h:474 [inline]
-  ip6_rcv_finish+0x336/0x340 net/ipv6/ip6_input.c:79
+root@debian:/# echo 50000000 > /sys/kernel/debug/mmc0/clock
+root@debian:/# [   30.090146] mmc0: running CQE recovery
+mmc0: cqhci: Failed to halt
+mmc0: cqhci: spurious TCN for tag 0
+WARNING: drivers/mmc/host/cqhci-core.c:797 at cqhci_irq+0x254/0x818, CPU#1: kworker/1:0H/24
+Modules linked in:
+CPU: 1 UID: 0 PID: 24 Comm: kworker/1:0H Not tainted 6.19.0-rc1-00001-g09db0998649d-dirty #204 PREEMPT
+Hardware name: Rockchip RK3588 EVB1 V10 Board (DT)
+Workqueue: kblockd blk_mq_run_work_fn
+pstate: 604000c9 (nZCv daIF +PAN -UAO -TCO -DIT -SSBS BTYPE=--)
+pc : cqhci_irq+0x254/0x818
+lr : cqhci_irq+0x254/0x818
 ...
 
-write to 0xffff888119809c20 of 4 bytes by task 25816 on cpu 0:
-  ndisc_router_discovery+0x155a/0x1c90 net/ipv6/ndisc.c:1559
-  ndisc_rcv+0x2ad/0x3d0 net/ipv6/ndisc.c:1841
-  icmpv6_rcv+0xe5a/0x12f0 net/ipv6/icmp.c:989
-  ip6_protocol_deliver_rcu+0xb2a/0x10d0 net/ipv6/ip6_input.c:438
-  ip6_input_finish+0xf0/0x1d0 net/ipv6/ip6_input.c:489
-  NF_HOOK include/linux/netfilter.h:318 [inline]
-  ip6_input+0x5e/0x140 net/ipv6/ip6_input.c:500
-  ip6_mc_input+0x27c/0x470 net/ipv6/ip6_input.c:590
-  dst_input include/net/dst.h:474 [inline]
-  ip6_rcv_finish+0x336/0x340 net/ipv6/ip6_input.c:79
-...
-
-value changed: 0x00000000 -> 0xe5400659
-
-Fixes: 49b99da2c9ce ("ipv6: add IFLA_INET6_RA_MTU to expose mtu value")
-Reported-by: syzbot <syzkaller@googlegroups.com>
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Cc: Rocco Yue <rocco.yue@mediatek.com>
-Link: https://patch.msgid.link/20260118152941.2563857-1-edumazet@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: c6f361cba51c ("mmc: sdhci-of-dwcmshc: add support for rk3588")
+Cc: Sebastian Reichel <sebastian.reichel@collabora.com>
+Cc: Yifeng Zhao <yifeng.zhao@rock-chips.com>
+Signed-off-by: Shawn Lin <shawn.lin@rock-chips.com>
+Cc: stable@vger.kernel.org
+Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ipv6/ndisc.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/mmc/host/sdhci-of-dwcmshc.c |    7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/net/ipv6/ndisc.c b/net/ipv6/ndisc.c
-index d961e6c2d09d7..480c906cb374c 100644
---- a/net/ipv6/ndisc.c
-+++ b/net/ipv6/ndisc.c
-@@ -1582,8 +1582,8 @@ static enum skb_drop_reason ndisc_router_discovery(struct sk_buff *skb)
- 		memcpy(&n, ((u8 *)(ndopts.nd_opts_mtu+1))+2, sizeof(mtu));
- 		mtu = ntohl(n);
+--- a/drivers/mmc/host/sdhci-of-dwcmshc.c
++++ b/drivers/mmc/host/sdhci-of-dwcmshc.c
+@@ -650,6 +650,13 @@ static void dwcmshc_rk3568_set_clock(str
+ 	sdhci_writel(host, extra, reg);
  
--		if (in6_dev->ra_mtu != mtu) {
--			in6_dev->ra_mtu = mtu;
-+		if (READ_ONCE(in6_dev->ra_mtu) != mtu) {
-+			WRITE_ONCE(in6_dev->ra_mtu, mtu);
- 			send_ifinfo_notify = true;
- 		}
- 
--- 
-2.51.0
-
+ 	if (clock <= 52000000) {
++		if (host->mmc->ios.timing == MMC_TIMING_MMC_HS200 ||
++		    host->mmc->ios.timing == MMC_TIMING_MMC_HS400) {
++			dev_err(mmc_dev(host->mmc),
++				"Can't reduce the clock below 52MHz in HS200/HS400 mode");
++			return;
++		}
++
+ 		/*
+ 		 * Disable DLL and reset both of sample and drive clock.
+ 		 * The bypass bit and start bit need to be set if DLL is not locked.
 
 
