@@ -1,39 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17D863043B2;
-	Wed, 28 Jan 2026 15:51:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 945CB3064B3;
+	Wed, 28 Jan 2026 15:51:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769615472; cv=none; b=bPTv5Hy972afnOf92uUmt9/Yf7B75E+zECoOfFDq+VlfE2MbY+M6Y/FwBamN8uVZzob8Tt19uniE75cmmzkzYQm/Jku9qXu+dykio49KDiDWlrl9cQ5qWn1PxFZVKb98ewHm+A8ygCJWFqQTX3gD5kbowY+ULYADKeN0jcMzirc=
+	t=1769615475; cv=none; b=jddrkKsnVBo55tWhAx+hHOM+KukEQfHCn6ddetisLcK7wZjMB2UivkGMNiv89cnczdkdgdgOiNN+NjCqYHkdCaCwG1Pb2MOES+eo0hjwKB7/xxviyrTHAQyEdYr709CZhVbZi+c/eAMVXCjZbr4BcN1p4MVlshTtVlaYdBdjgos=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769615472; c=relaxed/simple;
-	bh=KfDapkdmXOemZPdIkN057Tl/bKsDqTELtIaF3U9Dwfg=;
+	s=arc-20240116; t=1769615475; c=relaxed/simple;
+	bh=P9cT+ob1BKJYN7qrEVW9vUVBN/C7HG47qynnVheZugc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=R5Xpt45xy4trlsW+2X1au6l5tHYz488Hp5kCN5KPRJEhrp6oRwiDiO/B3tOUKy2dPz7tIVL2qdmpJ4gWEoonCufO5UW+vlyW84w36ZXWX1yJh1H2o4YmTLYR5oji9X/8LmCw+NSORiJuzMjjSmj5kIZrmLMelJooY4ipd2OTGdU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=U4/XFkD4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=AGTdMug+/R8McDEHpoAeUGQ5Q4BmzjZT1VJQtpfwHSmLbeNvD9CCCyiVEHZ+UVwCyqlAIJ4dc2s1Z0H80P3uf7cZJkg7XZSiDFBuIZF4oL3pymiTNNZ3CtVCDd1qQvLjxTr6sOFU6y4+D1ifkfbmCrwl6fSYC6x45XIdI04NsSE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UNhUGAeT; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="U4/XFkD4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 04088C2BC86;
-	Wed, 28 Jan 2026 15:51:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UNhUGAeT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 083A2C4CEF1;
+	Wed, 28 Jan 2026 15:51:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1769615472;
-	bh=KfDapkdmXOemZPdIkN057Tl/bKsDqTELtIaF3U9Dwfg=;
+	s=korg; t=1769615475;
+	bh=P9cT+ob1BKJYN7qrEVW9vUVBN/C7HG47qynnVheZugc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=U4/XFkD4v6F9FFhu6pp7mANNT1ipG0WBPxB2QH1CmExrRpYjWtK6MglsLU3hXPMDz
-	 /2oDs2mCUvlCj2y1Y5ifiFgMssRdsd9+mxHgqDxihxVNBPqpetKF9UPjb70IxH/sQo
-	 AfceqzfdbxTSykZ3FjQVgGZgA/IaARJlvK6k1Y0s=
+	b=UNhUGAeT2CAbShMwQ4oRMFXyZURiHbuHV90oFpOeWqMbr2r1qi4BdkyoBG7u5SZvy
+	 jQXBHV7vSWZySsMU+yLi+P/KYdSLPcwz6mAI9fr12Dx0XiKHWKIvKL73eNrRpE++sc
+	 ETETikVJn1rvl9se9neNyXzvw3rG5aVkMusnSKAc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Krishna Kurapati <krishna.kurapati@oss.qualcomm.com>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Yingying Tang <yingying.tang@oss.qualcomm.com>,
+	Baochen Qiang <baochen.qiang@oss.qualcomm.com>,
+	Vasanthakumar Thiagarajan <vasanthakumar.thiagarajan@oss.qualcomm.com>,
+	linux-next@vger.kernel.org,
+	netdev@vger.kernel.org,
+	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 002/227] arm64: dts: qcom: sm8550: Fix compile warnings in USB controller node
-Date: Wed, 28 Jan 2026 16:20:47 +0100
-Message-ID: <20260128145344.424953610@linuxfoundation.org>
+Subject: [PATCH 6.18 020/227] wifi: ath12k: Fix wrong P2P device link id issue
+Date: Wed, 28 Jan 2026 16:21:05 +0100
+Message-ID: <20260128145345.069879352@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260128145344.331957407@linuxfoundation.org>
 References: <20260128145344.331957407@linuxfoundation.org>
@@ -52,40 +55,76 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Krishna Kurapati <krishna.kurapati@oss.qualcomm.com>
+From: Yingying Tang <yingying.tang@oss.qualcomm.com>
 
-[ Upstream commit 9dbc9bed01837717b8ab755cf5067a6f8d35b00f ]
+[ Upstream commit 31707572108da55a005e7fed32cc3869c16b7c16 ]
 
-With W=1, the following error comes up:
+Wrong P2P device link id value of 0 was introduced in ath12k_mac_op_tx() by [1].
 
-Warning (avoid_unnecessary_addr_size): /soc@0/usb@a600000: unnecessary #address-cells/#size-cells without "ranges", "dma-ranges" or child "reg" or "ranges" property
+During the P2P negotiation process, there is only one scan vdev with link ID 15.
+Currently, the device link ID is incorrectly set to 0 in ath12k_mac_op_tx()
+during the P2P negotiation process, which leads to TX failures.
 
-This is because the child node being removed during flattening and moving
-to latest bindings.
+Set the correct P2P device link ID to 15 to fix the TX failure issue.
 
-Fixes: 33450878adfc ("arm64: dts: qcom: sm8550: Flatten the USB nodes")
-Signed-off-by: Krishna Kurapati <krishna.kurapati@oss.qualcomm.com>
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
-Link: https://lore.kernel.org/r/20251203144856.2711440-2-krishna.kurapati@oss.qualcomm.com
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Tested-on: WCN7850 hw2.0 PCI WLAN.HMT.1.1.c5-00302-QCAHMTSWPL_V1.0_V2.0_SILICONZ-1.115823.3
+
+Fixes: 648a121bafa3 ("wifi: ath12k: ath12k_mac_op_tx(): MLO support") # [1]
+Signed-off-by: Yingying Tang <yingying.tang@oss.qualcomm.com>
+Reviewed-by: Baochen Qiang <baochen.qiang@oss.qualcomm.com>
+Reviewed-by: Vasanthakumar Thiagarajan <vasanthakumar.thiagarajan@oss.qualcomm.com>
+Cc: linux-next@vger.kernel.org
+Cc: netdev@vger.kernel.org
+Link: https://patch.msgid.link/20260113054636.2620035-1-yingying.tang@oss.qualcomm.com
+Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
+
+---
+
+Note to linux-next and netdev maintainers:
+
+This patch going through the "current" tree conflicts with
+the following going through the "next" tree:
+commit 631ee338f04d ("Merge branch 'ath12k-ng' into ath-next")
+
+The conflict resolution is to leave the following file unmodified:
+drivers/net/wireless/ath/ath12k/mac.
+
+And to apply the following patch to ath12k_wifi7_mac_op_tx()
+in the file drivers/net/wireless/ath/ath12k/wifi7/hw.c -705,7 +705,10
+
+ 			return;
+ 		}
+ 	} else {
+-		link_id = 0;
++		if (vif->type == NL80211_IFTYPE_P2P_DEVICE)
++			link_id = ATH12K_FIRST_SCAN_LINK;
++		else
++			link_id = 0;
+ 	}
+
+ 	arvif = rcu_dereference(ahvif->link[link_id]);
+
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/sm8550.dtsi | 2 --
- 1 file changed, 2 deletions(-)
+ drivers/net/wireless/ath/ath12k/mac.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/sm8550.dtsi b/arch/arm64/boot/dts/qcom/sm8550.dtsi
-index 7724dba75db79..e294dc9c68c9a 100644
---- a/arch/arm64/boot/dts/qcom/sm8550.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm8550.dtsi
-@@ -4097,8 +4097,6 @@ usb_dp_qmpphy_dp_in: endpoint {
- 		usb_1: usb@a600000 {
- 			compatible = "qcom,sm8550-dwc3", "qcom,snps-dwc3";
- 			reg = <0x0 0x0a600000 0x0 0xfc100>;
--			#address-cells = <1>;
--			#size-cells = <0>;
+diff --git a/drivers/net/wireless/ath/ath12k/mac.c b/drivers/net/wireless/ath/ath12k/mac.c
+index d6a44c19e2245..256ffae4d7f7d 100644
+--- a/drivers/net/wireless/ath/ath12k/mac.c
++++ b/drivers/net/wireless/ath/ath12k/mac.c
+@@ -8840,7 +8840,10 @@ static void ath12k_mac_op_tx(struct ieee80211_hw *hw,
+ 			return;
+ 		}
+ 	} else {
+-		link_id = 0;
++		if (vif->type == NL80211_IFTYPE_P2P_DEVICE)
++			link_id = ATH12K_FIRST_SCAN_LINK;
++		else
++			link_id = 0;
+ 	}
  
- 			clocks = <&gcc GCC_CFG_NOC_USB3_PRIM_AXI_CLK>,
- 				 <&gcc GCC_USB30_PRIM_MASTER_CLK>,
+ 	arvif = rcu_dereference(ahvif->link[link_id]);
 -- 
 2.51.0
 
