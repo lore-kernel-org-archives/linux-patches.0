@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 699E72D6E63;
-	Wed, 28 Jan 2026 15:37:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 771AE2D7DF2;
+	Wed, 28 Jan 2026 15:37:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769614632; cv=none; b=ErP3luq7PguEjNAHzFUOK1YPT5dCms9V/loYDZkklvc/he9gm60ZYos2x1p7N7UBPpztmHe3HzQU0jvlDnUO7v1UpTLZ/PSiG0TTfYOOnxd0GVUSHDHnIeC2xW8ELVjUTz7G7Ic1/RRzSLUpVo6pCjU5sV/TCoHvCfdkbiiVHko=
+	t=1769614635; cv=none; b=LZ9OM6OdkEt2Ca0YYgV108WJZkrgilq0ajEwAtZNb9VnR0u1lmf/ZI5fgBOGAP3sDMln+7bv2yDM+OHL/9gnherNfjxUtFcmhPVMlKn5Jq/8KokSgt6F62SLVTsuIrAYWUNUDMhJ39981gHHr0Y5XWc7PflSv7CWWfSpeuNBito=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769614632; c=relaxed/simple;
-	bh=9hz7TB5XRHtIdJsDPosMmTwjJeimxfLq6j2YqRu0HKc=;
+	s=arc-20240116; t=1769614635; c=relaxed/simple;
+	bh=pvQciVEDThAOUljrPVrCAIbPf0CtxBhBXEC8DtXNPKc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QHkyYTH7J/J1MhUMm+oA4UKjAixFXBaEQAIv8QFWw/LME+XSv5pySCNwlO81Gal+LRNdinAhf7SJyS9wYwLdikiuhdWKKDFEOK6wXYEg77nLYcOAUAQXbz6mYwpTnZ/dks+R+xXSf+dIhEPNHUdl7eh7H75mp9gAA6h53BBFYgU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cnAycEBR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=UEBeMTq7F0qtJX/EwfDuv0m2F3BIt0sObO9/Cp/eDQC1WC+lHnacg4tNKsngB+sGrAd2mTaIHEhA16UnFd7uC+XOYJJCdUPQDrvgascJP2TWxlDjsJ4SuyhGNMZYBgWGV+7DvCgZMevO/Xv5NHzPsfsPOfRaxGHkxm+v7eB6Bnk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EjwGQQei; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cnAycEBR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A9CFC4CEF1;
-	Wed, 28 Jan 2026 15:37:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EjwGQQei"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E1249C4CEF1;
+	Wed, 28 Jan 2026 15:37:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1769614632;
-	bh=9hz7TB5XRHtIdJsDPosMmTwjJeimxfLq6j2YqRu0HKc=;
+	s=korg; t=1769614635;
+	bh=pvQciVEDThAOUljrPVrCAIbPf0CtxBhBXEC8DtXNPKc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cnAycEBRsaV/unoyeOAKkD4Kuyn/KO0f4f2xRc0jjC4yc0ZEETm7HNJD7v14F6TrA
-	 T3VfZyGvAvl9mv6rXNIzYHxr7MyjUZ8W53jmuEAh5SHaEQqnC+Gz3+4/4+xQP87wdm
-	 s59x9ZA8o9n7URbZC24rkx8BLOfk/VGuQR6dA/gg=
+	b=EjwGQQeiW3HNAs8YIYggiQVxxyaQVsoFxHdhLkTodOKxgQmBm5WgS53Vy+f1S82qz
+	 hxXKYnEoJaxez98abUxASBRUTcco/im8LXWj2Na5pLpuzbbbEmpTI9b8kOpKqcVLGP
+	 /7i7UCFvNNhxhwMA0BjU9r3JS5BERtur1yl9zTaU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sebastian Reichel <sebastian.reichel@collabora.com>,
-	Yifeng Zhao <yifeng.zhao@rock-chips.com>,
-	Shawn Lin <shawn.lin@rock-chips.com>,
-	Ulf Hansson <ulf.hansson@linaro.org>
-Subject: [PATCH 6.6 195/254] mmc: sdhci-of-dwcmshc: Prevent illegal clock reduction in HS200/HS400 mode
-Date: Wed, 28 Jan 2026 16:22:51 +0100
-Message-ID: <20260128145351.815107250@linuxfoundation.org>
+	Thomas Fourier <fourier.thomas@gmail.com>,
+	Baochen Qiang <baochen.qiang@oss.qualcomm.com>,
+	Jeff Johnson <jeff.johnson@oss.qualcomm.com>
+Subject: [PATCH 6.6 196/254] wifi: ath10k: fix dma_free_coherent() pointer
+Date: Wed, 28 Jan 2026 16:22:52 +0100
+Message-ID: <20260128145351.850562154@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260128145344.698118637@linuxfoundation.org>
 References: <20260128145344.698118637@linuxfoundation.org>
@@ -52,56 +51,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shawn Lin <shawn.lin@rock-chips.com>
+From: Thomas Fourier <fourier.thomas@gmail.com>
 
-commit 3009738a855cf938bbfc9078bec725031ae623a4 upstream.
+commit 9282a1e171ad8d2205067e8ec3bbe4e3cef4f29f upstream.
 
-When operating in HS200 or HS400 timing modes, reducing the clock frequency
-below 52MHz will lead to link broken as the Rockchip DWC MSHC controller
-requires maintaining a minimum clock of 52MHz in these modes.
+dma_alloc_coherent() allocates a DMA mapped buffer and stores the
+addresses in XXX_unaligned fields.  Those should be reused when freeing
+the buffer rather than the aligned addresses.
 
-Add a check to prevent illegal clock reduction through debugfs:
-
-root@debian:/# echo 50000000 > /sys/kernel/debug/mmc0/clock
-root@debian:/# [   30.090146] mmc0: running CQE recovery
-mmc0: cqhci: Failed to halt
-mmc0: cqhci: spurious TCN for tag 0
-WARNING: drivers/mmc/host/cqhci-core.c:797 at cqhci_irq+0x254/0x818, CPU#1: kworker/1:0H/24
-Modules linked in:
-CPU: 1 UID: 0 PID: 24 Comm: kworker/1:0H Not tainted 6.19.0-rc1-00001-g09db0998649d-dirty #204 PREEMPT
-Hardware name: Rockchip RK3588 EVB1 V10 Board (DT)
-Workqueue: kblockd blk_mq_run_work_fn
-pstate: 604000c9 (nZCv daIF +PAN -UAO -TCO -DIT -SSBS BTYPE=--)
-pc : cqhci_irq+0x254/0x818
-lr : cqhci_irq+0x254/0x818
-...
-
-Fixes: c6f361cba51c ("mmc: sdhci-of-dwcmshc: add support for rk3588")
-Cc: Sebastian Reichel <sebastian.reichel@collabora.com>
-Cc: Yifeng Zhao <yifeng.zhao@rock-chips.com>
-Signed-off-by: Shawn Lin <shawn.lin@rock-chips.com>
+Fixes: 2a1e1ad3fd37 ("ath10k: Add support for 64 bit ce descriptor")
 Cc: stable@vger.kernel.org
-Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+Signed-off-by: Thomas Fourier <fourier.thomas@gmail.com>
+Reviewed-by: Baochen Qiang <baochen.qiang@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260105210439.20131-2-fourier.thomas@gmail.com
+Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mmc/host/sdhci-of-dwcmshc.c |    7 +++++++
- 1 file changed, 7 insertions(+)
+ drivers/net/wireless/ath/ath10k/ce.c |   16 ++++++++--------
+ 1 file changed, 8 insertions(+), 8 deletions(-)
 
---- a/drivers/mmc/host/sdhci-of-dwcmshc.c
-+++ b/drivers/mmc/host/sdhci-of-dwcmshc.c
-@@ -244,6 +244,13 @@ static void dwcmshc_rk3568_set_clock(str
- 	sdhci_writel(host, extra, reg);
+--- a/drivers/net/wireless/ath/ath10k/ce.c
++++ b/drivers/net/wireless/ath/ath10k/ce.c
+@@ -1725,8 +1725,8 @@ static void _ath10k_ce_free_pipe(struct
+ 				  (ce_state->src_ring->nentries *
+ 				   sizeof(struct ce_desc) +
+ 				   CE_DESC_RING_ALIGN),
+-				  ce_state->src_ring->base_addr_owner_space,
+-				  ce_state->src_ring->base_addr_ce_space);
++				  ce_state->src_ring->base_addr_owner_space_unaligned,
++				  ce_state->src_ring->base_addr_ce_space_unaligned);
+ 		kfree(ce_state->src_ring);
+ 	}
  
- 	if (clock <= 52000000) {
-+		if (host->mmc->ios.timing == MMC_TIMING_MMC_HS200 ||
-+		    host->mmc->ios.timing == MMC_TIMING_MMC_HS400) {
-+			dev_err(mmc_dev(host->mmc),
-+				"Can't reduce the clock below 52MHz in HS200/HS400 mode");
-+			return;
-+		}
-+
- 		/*
- 		 * Disable DLL and reset both of sample and drive clock.
- 		 * The bypass bit and start bit need to be set if DLL is not locked.
+@@ -1735,8 +1735,8 @@ static void _ath10k_ce_free_pipe(struct
+ 				  (ce_state->dest_ring->nentries *
+ 				   sizeof(struct ce_desc) +
+ 				   CE_DESC_RING_ALIGN),
+-				  ce_state->dest_ring->base_addr_owner_space,
+-				  ce_state->dest_ring->base_addr_ce_space);
++				  ce_state->dest_ring->base_addr_owner_space_unaligned,
++				  ce_state->dest_ring->base_addr_ce_space_unaligned);
+ 		kfree(ce_state->dest_ring);
+ 	}
+ 
+@@ -1756,8 +1756,8 @@ static void _ath10k_ce_free_pipe_64(stru
+ 				  (ce_state->src_ring->nentries *
+ 				   sizeof(struct ce_desc_64) +
+ 				   CE_DESC_RING_ALIGN),
+-				  ce_state->src_ring->base_addr_owner_space,
+-				  ce_state->src_ring->base_addr_ce_space);
++				  ce_state->src_ring->base_addr_owner_space_unaligned,
++				  ce_state->src_ring->base_addr_ce_space_unaligned);
+ 		kfree(ce_state->src_ring);
+ 	}
+ 
+@@ -1766,8 +1766,8 @@ static void _ath10k_ce_free_pipe_64(stru
+ 				  (ce_state->dest_ring->nentries *
+ 				   sizeof(struct ce_desc_64) +
+ 				   CE_DESC_RING_ALIGN),
+-				  ce_state->dest_ring->base_addr_owner_space,
+-				  ce_state->dest_ring->base_addr_ce_space);
++				  ce_state->dest_ring->base_addr_owner_space_unaligned,
++				  ce_state->dest_ring->base_addr_ce_space_unaligned);
+ 		kfree(ce_state->dest_ring);
+ 	}
+ 
 
 
