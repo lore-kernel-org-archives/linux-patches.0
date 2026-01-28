@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 899242DB791;
-	Wed, 28 Jan 2026 16:00:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC6B13033C4;
+	Wed, 28 Jan 2026 16:00:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769616001; cv=none; b=GcKe/avhfYLeM3BwZDjZC9OHDJq+3k71BHLpko2V3L3+TbaIG3j9PSIiQWEYJyBTzlHHTB4is80UJKmcy+Pe7aPSIjOdLodb0fK5M+4sIajiug+Bw28FYm3OoX8fQ/KBnMr/DJIhvWLxvVG8zk5NKN81nYvTT18EhIUavKQ0nHg=
+	t=1769616004; cv=none; b=XelZiZnl+BwXTkxCt5imBQgDTIU6Kj72qPx5Gb+afOu7EF8zO6cGdMfbXBS/ryDm9Y7+Abbqjht/w84UsN8/xvxpLwrmsjTuBLcyNesCP7bMAybuxOZpaCwY9i4u2VUG26uMWfqmqukI5sD460F64IlA27Vij0c0ZTTqqpBjtOE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769616001; c=relaxed/simple;
-	bh=jOp06s2wiamrqCsGL4FiFi1ETvn1lwWTwjJh61PhAyA=;
+	s=arc-20240116; t=1769616004; c=relaxed/simple;
+	bh=Ld/e5sfamjc+W1cRUXRIdKPnwI08JEneE5knxsop7x8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=u3m0Ybjy96ay5D0YHp8DjcWCes20vkw8VC2QZCsLQ6P1YtRI5fNAOXZVowzA4MPZLM+knQCjPP/eYOFNKdkGETMPXyaitrLZxNrDUKqE+dUrWzXYpKWKOS+4Wn3Uo7gCVRKy9ooP7nh4I115c5EycPnViz4x1/RGgF5ShuqezaY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hFCmjx2j; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=l7n7HyzvM+0Itayv7HEywIX3tgblVL2fRTj+nBDnxZBvG/CKIFFtUuK1s7nlwXbo52GH2Ex8x9JalUYHYCIObwEsmSKUTn7TlsYo73d9gK5zum9pUs4OMuVFKmTp4oSCX5JsQSQ2Hzwrjf8iWCxAZ6iAxFVexOAD7QtSEqWRhGs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UG+M7LP6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hFCmjx2j"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 23077C4CEF7;
-	Wed, 28 Jan 2026 15:59:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UG+M7LP6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C3DCC4CEF1;
+	Wed, 28 Jan 2026 16:00:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1769616001;
-	bh=jOp06s2wiamrqCsGL4FiFi1ETvn1lwWTwjJh61PhAyA=;
+	s=korg; t=1769616004;
+	bh=Ld/e5sfamjc+W1cRUXRIdKPnwI08JEneE5knxsop7x8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hFCmjx2jB0ZtPuSz0WCFNRHMtmhbadKjWfEAjn1+fIVVEnxg7YssRz/Q7l7GnVT/X
-	 o3GJ54LHz+gZ96cV5XfbcumnpTwTt62CIOuP8Vo/VveN7xRbvJWTfwPILKP0yvgrRU
-	 FkAzDmjgY/QaCGoCv1UJr5zY2BqujXwQjBtrL2qg=
+	b=UG+M7LP6YiVBweBkK1N25nkgFZMBzy1tZRZrDxYBoaHa7c1nd2ne0bTnEMpLF5Yuz
+	 26DLepx7YvswvBWAsjrTeXOJwCbxJWd9tU4W6pgF/t+A47cj7x+VvFJ97dhMfd5Xjo
+	 3Lpjnr4Pqp/mKdLav40EYgxeko+/0KM0LLCJ0z7U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+d4ab35af21e99d07ce67@syzkaller.appspotmail.com,
 	Mark Rutland <mark.rutland@arm.com>,
 	Mark Brown <broonie@kernel.org>,
 	Will Deacon <will@kernel.org>,
 	Catalin Marinas <catalin.marinas@arm.com>
-Subject: [PATCH 6.18 178/227] arm64/fpsimd: ptrace: Fix SVE writes on !SME systems
-Date: Wed, 28 Jan 2026 16:23:43 +0100
-Message-ID: <20260128145350.853666281@linuxfoundation.org>
+Subject: [PATCH 6.18 179/227] arm64/fpsimd: signal: Allocate SSVE storage when restoring ZA
+Date: Wed, 28 Jan 2026 16:23:44 +0100
+Message-ID: <20260128145350.889800901@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260128145344.331957407@linuxfoundation.org>
 References: <20260128145344.331957407@linuxfoundation.org>
@@ -55,46 +54,73 @@ Content-Transfer-Encoding: 8bit
 
 From: Mark Rutland <mark.rutland@arm.com>
 
-commit 128a7494a9f15aad60cc6b7e3546bf481ac54a13 upstream.
+commit ea8ccfddbce0bee6310da4f3fc560ad520f5e6b4 upstream.
 
-When SVE is supported but SME is not supported, a ptrace write to the
-NT_ARM_SVE regset can place the tracee into an invalid state where
-(non-streaming) SVE register data is stored in FP_STATE_SVE format but
-TIF_SVE is clear. This can result in a later warning from
-fpsimd_restore_current_state(), e.g.
+The code to restore a ZA context doesn't attempt to allocate the task's
+sve_state before setting TIF_SME. Consequently, restoring a ZA context
+can place a task into an invalid state where TIF_SME is set but the
+task's sve_state is NULL.
 
-  WARNING: CPU: 0 PID: 7214 at arch/arm64/kernel/fpsimd.c:383 fpsimd_restore_current_state+0x50c/0x748
+In legitimate but uncommon cases where the ZA signal context was NOT
+created by the kernel in the context of the same task (e.g. if the task
+is saved/restored with something like CRIU), we have no guarantee that
+sve_state had been allocated previously. In these cases, userspace can
+enter streaming mode without trapping while sve_state is NULL, causing a
+later NULL pointer dereference when the kernel attempts to store the
+register state:
 
-When this happens, fpsimd_restore_current_state() will set TIF_SVE,
-placing the task into the correct state. This occurs before any other
-check of TIF_SVE can possibly occur, as other checks of TIF_SVE only
-happen while the FPSIMD/SVE/SME state is live. Thus, aside from the
-warning, there is no functional issue.
+| # ./sigreturn-za
+| Unable to handle kernel NULL pointer dereference at virtual address 0000000000000000
+| Mem abort info:
+|   ESR = 0x0000000096000046
+|   EC = 0x25: DABT (current EL), IL = 32 bits
+|   SET = 0, FnV = 0
+|   EA = 0, S1PTW = 0
+|   FSC = 0x06: level 2 translation fault
+| Data abort info:
+|   ISV = 0, ISS = 0x00000046, ISS2 = 0x00000000
+|   CM = 0, WnR = 1, TnD = 0, TagAccess = 0
+|   GCS = 0, Overlay = 0, DirtyBit = 0, Xs = 0
+| user pgtable: 4k pages, 52-bit VAs, pgdp=0000000101f47c00
+| [0000000000000000] pgd=08000001021d8403, p4d=0800000102274403, pud=0800000102275403, pmd=0000000000000000
+| Internal error: Oops: 0000000096000046 [#1]  SMP
+| Modules linked in:
+| CPU: 0 UID: 0 PID: 153 Comm: sigreturn-za Not tainted 6.19.0-rc1 #1 PREEMPT
+| Hardware name: linux,dummy-virt (DT)
+| pstate: 214000c9 (nzCv daIF +PAN -UAO -TCO +DIT -SSBS BTYPE=--)
+| pc : sve_save_state+0x4/0xf0
+| lr : fpsimd_save_user_state+0xb0/0x1c0
+| sp : ffff80008070bcc0
+| x29: ffff80008070bcc0 x28: fff00000c1ca4c40 x27: 63cfa172fb5cf658
+| x26: fff00000c1ca5228 x25: 0000000000000000 x24: 0000000000000000
+| x23: 0000000000000000 x22: fff00000c1ca4c40 x21: fff00000c1ca4c40
+| x20: 0000000000000020 x19: fff00000ff6900f0 x18: 0000000000000000
+| x17: fff05e8e0311f000 x16: 0000000000000000 x15: 028fca8f3bdaf21c
+| x14: 0000000000000212 x13: fff00000c0209f10 x12: 0000000000000020
+| x11: 0000000000200b20 x10: 0000000000000000 x9 : fff00000ff69dcc0
+| x8 : 00000000000003f2 x7 : 0000000000000001 x6 : fff00000c1ca5b48
+| x5 : fff05e8e0311f000 x4 : 0000000008000000 x3 : 0000000000000000
+| x2 : 0000000000000001 x1 : fff00000c1ca5970 x0 : 0000000000000440
+| Call trace:
+|  sve_save_state+0x4/0xf0 (P)
+|  fpsimd_thread_switch+0x48/0x198
+|  __switch_to+0x20/0x1c0
+|  __schedule+0x36c/0xce0
+|  schedule+0x34/0x11c
+|  exit_to_user_mode_loop+0x124/0x188
+|  el0_interrupt+0xc8/0xd8
+|  __el0_irq_handler_common+0x18/0x24
+|  el0t_64_irq_handler+0x10/0x1c
+|  el0t_64_irq+0x198/0x19c
+| Code: 54000040 d51b4408 d65f03c0 d503245f (e5bb5800)
+| ---[ end trace 0000000000000000 ]---
 
-This bug was introduced during rework to error handling in commit:
+Fix this by having restore_za_context() ensure that the task's sve_state
+is allocated, matching what we do when taking an SME trap. Any live
+SVE/SSVE state (which is restored earlier from a separate signal
+context) must be preserved, and hence this is not zeroed.
 
-  9f8bf718f2923 ("arm64/fpsimd: ptrace: Gracefully handle errors")
-
-... where the setting of TIF_SVE was moved into a block which is only
-executed when system_supports_sme() is true.
-
-Fix this by removing the system_supports_sme() check. This ensures that
-TIF_SVE is set for (SVE-formatted) writes to NT_ARM_SVE, at the cost of
-unconditionally manipulating the tracee's saved svcr value. The
-manipulation of svcr is benign and inexpensive, and we already do
-similar elsewhere (e.g. during signal handling), so I don't think it's
-worth guarding this with system_supports_sme() checks.
-
-Aside from the above, there is no functional change. The 'type' argument
-to sve_set_common() is only set to ARM64_VEC_SME (in ssve_set())) when
-system_supports_sme(), so the ARM64_VEC_SME case in the switch statement
-is still unreachable when !system_supports_sme(). When
-CONFIG_ARM64_SME=n, the only caller of sve_set_common() is sve_set(),
-and the compiler can constant-fold for the case where type is
-ARM64_VEC_SVE, removing the logic for other cases.
-
-Reported-by: syzbot+d4ab35af21e99d07ce67@syzkaller.appspotmail.com
-Fixes: 9f8bf718f292 ("arm64/fpsimd: ptrace: Gracefully handle errors")
+Fixes: 39782210eb7e ("arm64/sme: Implement ZA signal handling")
 Signed-off-by: Mark Rutland <mark.rutland@arm.com>
 Cc: <stable@vger.kernel.org>
 Cc: Mark Brown <broonie@kernel.org>
@@ -103,43 +129,21 @@ Reviewed-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Catalin Marinas <catalin.marinas@arm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/kernel/ptrace.c |   26 ++++++++++++--------------
- 1 file changed, 12 insertions(+), 14 deletions(-)
+ arch/arm64/kernel/signal.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/arch/arm64/kernel/ptrace.c
-+++ b/arch/arm64/kernel/ptrace.c
-@@ -942,20 +942,18 @@ static int sve_set_common(struct task_st
- 	vq = sve_vq_from_vl(task_get_vl(target, type));
+--- a/arch/arm64/kernel/signal.c
++++ b/arch/arm64/kernel/signal.c
+@@ -576,6 +576,10 @@ static int restore_za_context(struct use
+ 	if (user->za_size < ZA_SIG_CONTEXT_SIZE(vq))
+ 		return -EINVAL;
  
- 	/* Enter/exit streaming mode */
--	if (system_supports_sme()) {
--		switch (type) {
--		case ARM64_VEC_SVE:
--			target->thread.svcr &= ~SVCR_SM_MASK;
--			set_tsk_thread_flag(target, TIF_SVE);
--			break;
--		case ARM64_VEC_SME:
--			target->thread.svcr |= SVCR_SM_MASK;
--			set_tsk_thread_flag(target, TIF_SME);
--			break;
--		default:
--			WARN_ON_ONCE(1);
--			return -EINVAL;
--		}
-+	switch (type) {
-+	case ARM64_VEC_SVE:
-+		target->thread.svcr &= ~SVCR_SM_MASK;
-+		set_tsk_thread_flag(target, TIF_SVE);
-+		break;
-+	case ARM64_VEC_SME:
-+		target->thread.svcr |= SVCR_SM_MASK;
-+		set_tsk_thread_flag(target, TIF_SME);
-+		break;
-+	default:
-+		WARN_ON_ONCE(1);
-+		return -EINVAL;
- 	}
- 
- 	/* Always zero V regs, FPSR, and FPCR */
++	sve_alloc(current, false);
++	if (!current->thread.sve_state)
++		return -ENOMEM;
++
+ 	sme_alloc(current, true);
+ 	if (!current->thread.sme_state) {
+ 		current->thread.svcr &= ~SVCR_ZA_MASK;
 
 
