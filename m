@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89AF32E2DF4;
-	Wed, 28 Jan 2026 15:44:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F5772DE1E4;
+	Wed, 28 Jan 2026 15:44:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769615056; cv=none; b=VQoezr+ti534fkw45kdCesXLtb9GMg6BWDbfqYTR5DuE0wzwRyEWd43w5OJAlhag36STPmuwgu4JJjxJf0ru3C+otBTel1zEIcM6z08Wcqin/D/sfR3+FITzA5+OvQNWKbOKEfQJEmhTh0LJicPJ8t9hocZql+UAa3V06TZ+GGg=
+	t=1769615060; cv=none; b=TjVccvOKpfPMRF8o3lmWS1K0Vxzmkfufg5nS3k1xv4ZdkEqMiNKt/a5uOJAAXxOV5ikYRaVhcaoxNdovvv+sWkhh1pu08JF5eXYpMQO71yiCyfHnQlyralXIbRhuIBjGo8PizGhGAY1BYeH31pO8kiv8pC3YsQCMZUBVBV0fwSk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769615056; c=relaxed/simple;
-	bh=OJttEeTfSmak6YzR1jRn1qIsjDnoBlBVdcGB2JactXg=;
+	s=arc-20240116; t=1769615060; c=relaxed/simple;
+	bh=gsbo0QS0njhCoJ46Z5ytLm6PGMQzeufSV4mA0kQn4t0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=I+8gfZLhKsipawRTctbv6Ls3QVlw4NrE1+yUT+vZ+GNqdf6vSO8ENwEZ2FOfuxthUsQAnH9nrouOB7TjCEOqoSeXuqoEnG7STBKcsXgSLrPCG09id1KfC4zr1ZPPEwOGScsPS78oDJ0pfeM1+Fc6lZcW2hXx5gSY9vpxAsNMQbk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=a3JpP7ZL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kFBsmslzH/d5TeTs5N/BhkDBnxyz7Ur3Td1yis9nI+YDbbdGGKY4iw1/hJnKMJi/msW5TjBUh6PMJvV8sWw2CF8Yqa2KgOsUnz5c60IwYRphmjGHt7hOruyTmlYu1rMSTT4hH0x0AYk9PKndxMfWphsURGm1CeK2SsBYW2/DQTg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ohjrlq3Q; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="a3JpP7ZL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F02B9C4CEF1;
-	Wed, 28 Jan 2026 15:44:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ohjrlq3Q"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 76E8EC4CEF1;
+	Wed, 28 Jan 2026 15:44:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1769615056;
-	bh=OJttEeTfSmak6YzR1jRn1qIsjDnoBlBVdcGB2JactXg=;
+	s=korg; t=1769615059;
+	bh=gsbo0QS0njhCoJ46Z5ytLm6PGMQzeufSV4mA0kQn4t0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=a3JpP7ZL0OZ8W5DPIreUNHDKxfS89/XNFtLUs3PP/uQpRJOB9LzF+dtw2nBeY/62A
-	 5/1r/mqEb3onAZt1hijBcwwYr3KvCWhszZfee3pKlkq7ZY8rDwUk4QckSf9fDKBwnT
-	 sObdctLRicVQi9CBR9nT2cYrRa4y0/2ZZzcTEADE=
+	b=Ohjrlq3QwMtIaA7pEEcj3d5vdG3oJz2OqkZvneyXmNDSN3M5u3bfN3ll30eul7B1Y
+	 AWHeUJ5cj4aerPiC4YLawWwKD4TTnjJtginQfpnCwBwQfidymq8t/g/uV+hOLlSw8K
+	 AcvPXV5WtDxLXPWa9q9mOjMBuyfcG4yUL4sJCFQQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arusekk <floss@arusekk.pl>,
-	Nicolas Schier <nsc@kernel.org>,
+	Naohiko Shimizu <naohiko.shimizu@gmail.com>,
+	Anup Patel <anup@brainfault.org>,
+	Paul Walmsley <pjw@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 065/169] kconfig: fix static linking of nconf
-Date: Wed, 28 Jan 2026 16:22:28 +0100
-Message-ID: <20260128145336.349773859@linuxfoundation.org>
+Subject: [PATCH 6.12 066/169] riscv: clocksource: Fix stimecmp update hazard on RV32
+Date: Wed, 28 Jan 2026 16:22:29 +0100
+Message-ID: <20260128145336.384847485@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260128145334.006287341@linuxfoundation.org>
 References: <20260128145334.006287341@linuxfoundation.org>
@@ -51,68 +52,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Arkadiusz Kozdra <floss@arusekk.pl>
+From: Naohiko Shimizu <naohiko.shimizu@gmail.com>
 
-[ Upstream commit baaecfcac559bcac73206df447eb5c385fa22f2a ]
+[ Upstream commit eaa9bb1d39d59e7c17b06cec12622b7c586ab629 ]
 
-When running make nconfig with a static linking host toolchain,
-the libraries are linked in an incorrect order,
-resulting in errors similar to the following:
+On RV32, updating the 64-bit stimecmp (or vstimecmp) CSR requires two
+separate 32-bit writes. A race condition exists if the timer triggers
+during these two writes.
 
-$ MAKEFLAGS='HOSTCC=cc\ -static' make nconfig
-/usr/bin/ld: /usr/lib64/gcc/x86_64-unknown-linux-gnu/14.2.1/../../../../lib64/libpanel.a(p_new.o): in function `new_panel':
-(.text+0x13): undefined reference to `_nc_panelhook_sp'
-/usr/bin/ld: (.text+0x6c): undefined reference to `_nc_panelhook_sp'
+The RISC-V Privileged Specification (e.g., Section 3.2.1 for mtimecmp)
+recommends a specific 3-step sequence to avoid spurious interrupts
+when updating 64-bit comparison registers on 32-bit systems:
 
-Fixes: 1c5af5cf9308 ("kconfig: refactor ncurses package checks for building mconf and nconf")
-Signed-off-by: Arusekk <floss@arusekk.pl>
-Link: https://patch.msgid.link/20260110114808.22595-1-floss@arusekk.pl
-[nsc: Added comment about library order]
-Signed-off-by: Nicolas Schier <nsc@kernel.org>
+1. Set the low-order bits (stimecmp) to all ones (ULONG_MAX).
+2. Set the high-order bits (stimecmph) to the desired value.
+3. Set the low-order bits (stimecmp) to the desired value.
+
+Current implementation writes the LSB first without ensuring a future
+value, which may lead to a transient state where the 64-bit comparison
+is incorrectly evaluated as "expired" by the hardware. This results in
+spurious timer interrupts.
+
+This patch adopts the spec-recommended 3-step sequence to ensure the
+intermediate 64-bit state is never smaller than the current time.
+
+Fixes: 9f7a8ff6391f ("RISC-V: Prefer sstc extension if available")
+Signed-off-by: Naohiko Shimizu <naohiko.shimizu@gmail.com>
+Reviewed-by: Anup Patel <anup@brainfault.org>
+Link: https://patch.msgid.link/20260104135938.524-2-naohiko.shimizu@gmail.com
+Signed-off-by: Paul Walmsley <pjw@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- scripts/kconfig/nconf-cfg.sh | 11 ++++++-----
- 1 file changed, 6 insertions(+), 5 deletions(-)
+ drivers/clocksource/timer-riscv.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/scripts/kconfig/nconf-cfg.sh b/scripts/kconfig/nconf-cfg.sh
-index a20290b1a37d8..4d08453f9bdb7 100755
---- a/scripts/kconfig/nconf-cfg.sh
-+++ b/scripts/kconfig/nconf-cfg.sh
-@@ -6,8 +6,9 @@ set -eu
- cflags=$1
- libs=$2
+diff --git a/drivers/clocksource/timer-riscv.c b/drivers/clocksource/timer-riscv.c
+index 4d7cf338824a3..cfc4d83c42c03 100644
+--- a/drivers/clocksource/timer-riscv.c
++++ b/drivers/clocksource/timer-riscv.c
+@@ -50,8 +50,9 @@ static int riscv_clock_next_event(unsigned long delta,
  
--PKG="ncursesw menuw panelw"
--PKG2="ncurses menu panel"
-+# Keep library order for static linking (HOSTCC='cc -static')
-+PKG="menuw panelw ncursesw"
-+PKG2="menu panel ncurses"
- 
- if [ -n "$(command -v ${HOSTPKG_CONFIG})" ]; then
- 	if ${HOSTPKG_CONFIG} --exists $PKG; then
-@@ -28,19 +29,19 @@ fi
- # find ncurses by pkg-config.)
- if [ -f /usr/include/ncursesw/ncurses.h ]; then
- 	echo -D_GNU_SOURCE -I/usr/include/ncursesw > ${cflags}
--	echo -lncursesw -lmenuw -lpanelw > ${libs}
-+	echo -lmenuw -lpanelw -lncursesw > ${libs}
- 	exit 0
- fi
- 
- if [ -f /usr/include/ncurses/ncurses.h ]; then
- 	echo -D_GNU_SOURCE -I/usr/include/ncurses > ${cflags}
--	echo -lncurses -lmenu -lpanel > ${libs}
-+	echo -lmenu -lpanel -lncurses > ${libs}
- 	exit 0
- fi
- 
- if [ -f /usr/include/ncurses.h ]; then
- 	echo -D_GNU_SOURCE > ${cflags}
--	echo -lncurses -lmenu -lpanel > ${libs}
-+	echo -lmenu -lpanel -lncurses > ${libs}
- 	exit 0
- fi
- 
+ 	if (static_branch_likely(&riscv_sstc_available)) {
+ #if defined(CONFIG_32BIT)
+-		csr_write(CSR_STIMECMP, next_tval & 0xFFFFFFFF);
++		csr_write(CSR_STIMECMP, ULONG_MAX);
+ 		csr_write(CSR_STIMECMPH, next_tval >> 32);
++		csr_write(CSR_STIMECMP, next_tval & 0xFFFFFFFF);
+ #else
+ 		csr_write(CSR_STIMECMP, next_tval);
+ #endif
 -- 
 2.51.0
 
