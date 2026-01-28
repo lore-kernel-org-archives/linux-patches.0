@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BBBD181AA8;
-	Wed, 28 Jan 2026 16:01:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0AFC681AA8;
+	Wed, 28 Jan 2026 16:01:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769616062; cv=none; b=L7IkQYAvASgQUrarzg9JUFz1/XsgkJ9f7DJrFbFhHN0VxwrOFUalyIjlkLxq+YEgx5yOGmKuE8ogMTBY4pVWB/6anxqterFb/kr88yXX/+Oe6TSOBECaqs1x0bmEOI9n4OM74nU1cC049n0HuKxAvwvDTkswwY33kxCepaQ/wNQ=
+	t=1769616066; cv=none; b=IEY2TJyTBibsNUZOprHqPYLuvD8p0zuAquetkpu5snXtMydLRKWEc7oqjU/G1PdAUNdbyidRGnmi0M6Fl+gRPpKd+4rIQXsrf2KnZysfTkgOL4kjhft1/tnHENFisqdr6s/G+GbBq6fX3JhE/7JQFwkcqIlMHMg9p0IPg2OEjME=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769616062; c=relaxed/simple;
-	bh=XaCYyChh4cgjiGIbMoKM7JV+bYZYXeeOWt5r4IR8ewo=;
+	s=arc-20240116; t=1769616066; c=relaxed/simple;
+	bh=pkfYbo+8F4YdO+Z8QTLCJsmmo1psVobCwHtzcR21qD8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Bqp37EKT06veiLCd82uWukvhl9/OqdI5uHq/69UShUlahpo+pakIERaFjjKnb8Tun1vrtZM+dViltT5Fn3K/QL71GkSC4ENZ8KUorfCzlPpLMoyaONo/M2MJR38rxVLb4SKJ/WFan77sXq6ueCZYbEGjmy2P3AlMFF8Qbi304JE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jBmqXitm; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=XGhqth0eUBkk38aQaEKOUWn+sCa1WzvxXQ4A2h79USjwkNRlq/aYubXv0sDdleX2c8EekXgHVKUNHxCPHvux0ALp1QqDxtLZinV6++oS4gbtO9SnO7ka0hBzRvHGmykhxlYZ2Kac3gJiYumIw/45zJ20kCxHnTa6ZV5+HS/oAdw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sOCsA3YE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jBmqXitm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C535C4CEF7;
-	Wed, 28 Jan 2026 16:01:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sOCsA3YE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6EB67C4CEF1;
+	Wed, 28 Jan 2026 16:01:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1769616062;
-	bh=XaCYyChh4cgjiGIbMoKM7JV+bYZYXeeOWt5r4IR8ewo=;
+	s=korg; t=1769616065;
+	bh=pkfYbo+8F4YdO+Z8QTLCJsmmo1psVobCwHtzcR21qD8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jBmqXitmt6ljir6CxASfmsTBcoboGPsL3k4svP3oKSWs0l011MYkEl0zKLUe852Y8
-	 9Z68aDTa4DCzi8eYKBUqrtQLMOdTYU2dZDHBFVdVkvOm9i3L4WhHwDgex0uhCziy2P
-	 woRO+rcEvk738Pfa6hPGR5v/BNuOPhbzl5psUci8=
+	b=sOCsA3YEcoyurERxX30PDJKcLiGcaJpz4iNGqJbV15ymR7CBrxKqIB2OAvJ9gYzRZ
+	 +lwJWqngtFScG65PF9VwcBsO/+MCdlCQw2JLGD3B2PSEP7jZZEP0Eb0ndvHQXZ2v+0
+	 qhibL3VKUaD7yYlTrFX5PW8n5PBAv5aQx9CnfLVE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+999115c3bf275797dc27@syzkaller.appspotmail.com,
-	Jeongjun Park <aha310510@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.18 195/227] netrom: fix double-free in nr_route_frame()
-Date: Wed, 28 Jan 2026 16:24:00 +0100
-Message-ID: <20260128145351.462313081@linuxfoundation.org>
+	Mario Limonciello <mario.limonciello@amd.com>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>
+Subject: [PATCH 6.18 196/227] platform/x86: hp-bioscfg: Fix automatic module loading
+Date: Wed, 28 Jan 2026 16:24:01 +0100
+Message-ID: <20260128145351.497409547@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260128145344.331957407@linuxfoundation.org>
 References: <20260128145344.331957407@linuxfoundation.org>
@@ -45,75 +44,55 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jeongjun Park <aha310510@gmail.com>
+From: Mario Limonciello <mario.limonciello@amd.com>
 
-commit ba1096c315283ee3292765f6aea4cca15816c4f7 upstream.
+commit 467d4afc6caa64b84a6db1634f8091e931f4a7cb upstream.
 
-In nr_route_frame(), old_skb is immediately freed without checking if
-nr_neigh->ax25 pointer is NULL. Therefore, if nr_neigh->ax25 is NULL,
-the caller function will free old_skb again, causing a double-free bug.
+hp-bioscfg has a MODULE_DEVICE_TABLE with a GUID in it that looks
+plausible, but the module doesn't automatically load on applicable
+systems.
 
-Therefore, to prevent this, we need to modify it to check whether
-nr_neigh->ax25 is NULL before freeing old_skb.
+This is because the GUID has some lower case characters and so it
+doesn't match the modalias during boot. Update the GUIDs to be all
+uppercase.
 
-Cc: <stable@vger.kernel.org>
-Reported-by: syzbot+999115c3bf275797dc27@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/all/69694d6f.050a0220.58bed.0029.GAE@google.com/
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Signed-off-by: Jeongjun Park <aha310510@gmail.com>
-Link: https://patch.msgid.link/20260119063359.10604-1-aha310510@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Cc: stable@vger.kernel.org
+Fixes: 5f94f181ca25 ("platform/x86: hp-bioscfg: bioscfg-h")
+Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
+Link: https://patch.msgid.link/20260115203725.828434-4-mario.limonciello@amd.com
+Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/netrom/nr_route.c |   13 +++++++++----
- 1 file changed, 9 insertions(+), 4 deletions(-)
+ drivers/platform/x86/hp/hp-bioscfg/bioscfg.h |    6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
---- a/net/netrom/nr_route.c
-+++ b/net/netrom/nr_route.c
-@@ -752,7 +752,7 @@ int nr_route_frame(struct sk_buff *skb,
- 	unsigned char *dptr;
- 	ax25_cb *ax25s;
- 	int ret;
--	struct sk_buff *skbn;
-+	struct sk_buff *nskb, *oskb;
+--- a/drivers/platform/x86/hp/hp-bioscfg/bioscfg.h
++++ b/drivers/platform/x86/hp/hp-bioscfg/bioscfg.h
+@@ -57,14 +57,14 @@ enum mechanism_values {
  
- 	/*
- 	 * Reject malformed packets early. Check that it contains at least 2
-@@ -811,14 +811,16 @@ int nr_route_frame(struct sk_buff *skb,
- 	/* We are going to change the netrom headers so we should get our
- 	   own skb, we also did not know until now how much header space
- 	   we had to reserve... - RXQ */
--	if ((skbn=skb_copy_expand(skb, dev->hard_header_len, 0, GFP_ATOMIC)) == NULL) {
-+	nskb = skb_copy_expand(skb, dev->hard_header_len, 0, GFP_ATOMIC);
-+
-+	if (!nskb) {
- 		nr_node_unlock(nr_node);
- 		nr_node_put(nr_node);
- 		dev_put(dev);
- 		return 0;
- 	}
--	kfree_skb(skb);
--	skb=skbn;
-+	oskb = skb;
-+	skb = nskb;
- 	skb->data[14]--;
+ #define PASSWD_MECHANISM_TYPES "password"
  
- 	dptr  = skb_push(skb, 1);
-@@ -837,6 +839,9 @@ int nr_route_frame(struct sk_buff *skb,
- 	nr_node_unlock(nr_node);
- 	nr_node_put(nr_node);
+-#define HP_WMI_BIOS_GUID		"5FB7F034-2C63-45e9-BE91-3D44E2C707E4"
++#define HP_WMI_BIOS_GUID		"5FB7F034-2C63-45E9-BE91-3D44E2C707E4"
  
-+	if (ret)
-+		kfree_skb(oskb);
-+
- 	return ret;
- }
+-#define HP_WMI_BIOS_STRING_GUID		"988D08E3-68F4-4c35-AF3E-6A1B8106F83C"
++#define HP_WMI_BIOS_STRING_GUID		"988D08E3-68F4-4C35-AF3E-6A1B8106F83C"
+ #define HP_WMI_BIOS_INTEGER_GUID	"8232DE3D-663D-4327-A8F4-E293ADB9BF05"
+ #define HP_WMI_BIOS_ENUMERATION_GUID	"2D114B49-2DFB-4130-B8FE-4A3C09E75133"
+ #define HP_WMI_BIOS_ORDERED_LIST_GUID	"14EA9746-CE1F-4098-A0E0-7045CB4DA745"
+ #define HP_WMI_BIOS_PASSWORD_GUID	"322F2028-0F84-4901-988E-015176049E2D"
+-#define HP_WMI_SET_BIOS_SETTING_GUID	"1F4C91EB-DC5C-460b-951D-C7CB9B4B8D5E"
++#define HP_WMI_SET_BIOS_SETTING_GUID	"1F4C91EB-DC5C-460B-951D-C7CB9B4B8D5E"
  
+ enum hp_wmi_spm_commandtype {
+ 	HPWMI_SECUREPLATFORM_GET_STATE  = 0x10,
 
 
