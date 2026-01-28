@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89A69309DD2;
-	Wed, 28 Jan 2026 15:44:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5BF1302779;
+	Wed, 28 Jan 2026 15:44:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769615079; cv=none; b=nI+lpyT7/d/YEZLpuqM21dIDHaAnrCfmbsjKcl/apTsECPY2u4O13VVzyUFXXTHfQZCwdGwLVFtxGiN1rzjte0GyDpm7bsYICVB4o53uxzN1cz1LvQUaI8tXIq3c5tljJ8uCC6NT5zldBMcGRfPzxuynTi7736gBON2ZcoUWWws=
+	t=1769615082; cv=none; b=Ttp34FzaM1Gxs38I0JDBKMbzcbyKJ92f1iWCNLJb3/jMi0f0c0v/7CPnKGb6u96f5Po0gwMaa6WczNNB8VxphL45rh96/wziBsrd+o3DE7UgRcOvIgkU/7XgBTKcrw51Aw8w6ESY79nhF7BW4C3zbepJcz4vPMJP2BrC5tvqbEU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769615079; c=relaxed/simple;
-	bh=tuXt/5RWZjT3BelV1XYZS/mr4yqmoDtrswOGIMXzyP4=;
+	s=arc-20240116; t=1769615082; c=relaxed/simple;
+	bh=DEok7o50vj7Vtfe6DYvNJK8QmoiWYmqD5Zj9Tp14iCs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=K9rmsA63M4sBuHGE759agUZY6yYSCCdm1jRlb5yR49vaUpCnpohnVSKA/ToKsxPUrPB53rLALcCvgwDXd5dXUl9hiTML5ny9JXaQYBVmzZfUfK+Ah8hnBq2V8G70HY3VyDYEdcoxPnNCHZPDzvIXfSWjHV/uymOXsSqP6h1JT64=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=E4WDYdis; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=U8+K8rlqmOABULQwxwQrZWZtV92D8YBbtnbokDVBDE9aGTiGdyybAKEv+peLPPaPizLmuMpFFwBUQ3t9YKujhWmBE0bD9ahSPlMXnJmmWq3MYCZMQ1p61h1r7nX8FhjTB4+QNJ1YHwr5Swij7vmw0Mv4cdvi6Dt4o0gtA1KJN18=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GLqyHquc; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="E4WDYdis"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3F9CC4CEF1;
-	Wed, 28 Jan 2026 15:44:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GLqyHquc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 253E6C4CEF1;
+	Wed, 28 Jan 2026 15:44:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1769615079;
-	bh=tuXt/5RWZjT3BelV1XYZS/mr4yqmoDtrswOGIMXzyP4=;
+	s=korg; t=1769615082;
+	bh=DEok7o50vj7Vtfe6DYvNJK8QmoiWYmqD5Zj9Tp14iCs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=E4WDYdisEXmE05MYlNuYe/gdJQJrtyaYhCI6eqEA73RicfQWAj+emszdTPsZOKS80
-	 htCGk8i9bOWTOFtV2/o2t9+g/+bp57HQZT5GcnlC2WlYdSOGM+BOVxnTyWfbTxM0hc
-	 LCyBpPiy11yVGjh9LdAgc3UIBvowgMJUweaAViBg=
+	b=GLqyHqucF20HR3qSLvBPv7y6wyrxYCx1Caq4uQMgzhVofG/2gOkj9VupWdm/IMN/X
+	 QTwvF/uUw58iv/J3yKyUSxaO6hgdlWll0OsW0Qv397k97sK9X0s9/gXMC7VPvQAdFe
+	 VUnnH1BvfnmOTLASPFRI/8W8KyxBGT/yhhBgaZp8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yinhao Hu <dddddd@hust.edu.cn>,
-	Kaiyan Mei <M202472210@hust.edu.cn>,
-	Yun Lu <luyun@kylinos.cn>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 072/169] netdevsim: fix a race issue related to the operation on bpf_bound_progs list
-Date: Wed, 28 Jan 2026 16:22:35 +0100
-Message-ID: <20260128145336.598663605@linuxfoundation.org>
+	Cody Haas <chaas@riotgames.com>,
+	Aleksandr Loktionov <aleksandr.loktionov@intel.com>,
+	Przemek Kitszel <przemyslaw.kitszel@intel.com>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>,
+	Sasha Levin <sashal@kernel.org>,
+	Rinitha S <sx.rinitha@intel.com>
+Subject: [PATCH 6.12 073/169] ice: Fix persistent failure in ice_get_rxfh
+Date: Wed, 28 Jan 2026 16:22:36 +0100
+Message-ID: <20260128145336.634682225@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260128145334.006287341@linuxfoundation.org>
 References: <20260128145334.006287341@linuxfoundation.org>
@@ -53,128 +54,102 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yun Lu <luyun@kylinos.cn>
+From: Cody Haas <chaas@riotgames.com>
 
-[ Upstream commit b97d5eedf4976cc94321243be83b39efe81a0e15 ]
+[ Upstream commit f406220eb8e227ca344eef1a6d30aff53706b196 ]
 
-The netdevsim driver lacks a protection mechanism for operations on the
-bpf_bound_progs list. When the nsim_bpf_create_prog() performs
-list_add_tail, it is possible that nsim_bpf_destroy_prog() is
-simultaneously performs list_del. Concurrent operations on the list may
-lead to list corruption and trigger a kernel crash as follows:
+Several ioctl functions have the ability to call ice_get_rxfh, however
+all of these ioctl functions do not provide all of the expected
+information in ethtool_rxfh_param. For example, ethtool_get_rxfh_indir does
+not provide an rss_key. This previously caused ethtool_get_rxfh_indir to
+always fail with -EINVAL.
 
-[  417.290971] kernel BUG at lib/list_debug.c:62!
-[  417.290983] invalid opcode: 0000 [#1] PREEMPT SMP NOPTI
-[  417.290992] CPU: 10 PID: 168 Comm: kworker/10:1 Kdump: loaded Not tainted 6.19.0-rc5 #1
-[  417.291003] Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS 1.16.3-debian-1.16.3-2 04/01/2014
-[  417.291007] Workqueue: events bpf_prog_free_deferred
-[  417.291021] RIP: 0010:__list_del_entry_valid_or_report+0xa7/0xc0
-[  417.291034] Code: a8 ff 0f 0b 48 89 fe 48 89 ca 48 c7 c7 48 a1 eb ae e8 ed fb a8 ff 0f 0b 48 89 fe 48 89 c2 48 c7 c7 80 a1 eb ae e8 d9 fb a8 ff <0f> 0b 48 89 d1 48 c7 c7 d0 a1 eb ae 48 89 f2 48 89 c6 e8 c2 fb a8
-[  417.291040] RSP: 0018:ffffb16a40807df8 EFLAGS: 00010246
-[  417.291046] RAX: 000000000000006d RBX: ffff8e589866f500 RCX: 0000000000000000
-[  417.291051] RDX: 0000000000000000 RSI: ffff8e59f7b23180 RDI: ffff8e59f7b23180
-[  417.291055] RBP: ffffb16a412c9000 R08: 0000000000000000 R09: 0000000000000003
-[  417.291059] R10: ffffb16a40807c80 R11: ffffffffaf9edce8 R12: ffff8e594427ac20
-[  417.291063] R13: ffff8e59f7b44780 R14: ffff8e58800b7a05 R15: 0000000000000000
-[  417.291074] FS:  0000000000000000(0000) GS:ffff8e59f7b00000(0000) knlGS:0000000000000000
-[  417.291079] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-[  417.291083] CR2: 00007fc4083efe08 CR3: 00000001c3626006 CR4: 0000000000770ee0
-[  417.291088] PKRU: 55555554
-[  417.291091] Call Trace:
-[  417.291096]  <TASK>
-[  417.291103]  nsim_bpf_destroy_prog+0x31/0x80 [netdevsim]
-[  417.291154]  __bpf_prog_offload_destroy+0x2a/0x80
-[  417.291163]  bpf_prog_dev_bound_destroy+0x6f/0xb0
-[  417.291171]  bpf_prog_free_deferred+0x18e/0x1a0
-[  417.291178]  process_one_work+0x18a/0x3a0
-[  417.291188]  worker_thread+0x27b/0x3a0
-[  417.291197]  ? __pfx_worker_thread+0x10/0x10
-[  417.291207]  kthread+0xe5/0x120
-[  417.291214]  ? __pfx_kthread+0x10/0x10
-[  417.291221]  ret_from_fork+0x31/0x50
-[  417.291230]  ? __pfx_kthread+0x10/0x10
-[  417.291236]  ret_from_fork_asm+0x1a/0x30
-[  417.291246]  </TASK>
+This change draws inspiration from i40e_get_rss to handle this
+situation, by only calling the appropriate rss helpers when the
+necessary information has been provided via ethtool_rxfh_param.
 
-Add a mutex lock, to prevent simultaneous addition and deletion operations
-on the list.
-
-Fixes: 31d3ad832948 ("netdevsim: add bpf offload support")
-Reported-by: Yinhao Hu <dddddd@hust.edu.cn>
-Reported-by: Kaiyan Mei <M202472210@hust.edu.cn>
-Signed-off-by: Yun Lu <luyun@kylinos.cn>
-Link: https://patch.msgid.link/20260116095308.11441-1-luyun_611@163.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: b66a972abb6b ("ice: Refactor ice_set/get_rss into LUT and key specific functions")
+Signed-off-by: Cody Haas <chaas@riotgames.com>
+Closes: https://lore.kernel.org/intel-wired-lan/CAH7f-UKkJV8MLY7zCdgCrGE55whRhbGAXvgkDnwgiZ9gUZT7_w@mail.gmail.com/
+Reviewed-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
+Reviewed-by: Przemek Kitszel <przemyslaw.kitszel@intel.com>
+Tested-by: Rinitha S <sx.rinitha@intel.com> (A Contingent worker at Intel)
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/netdevsim/bpf.c       | 6 ++++++
- drivers/net/netdevsim/dev.c       | 2 ++
- drivers/net/netdevsim/netdevsim.h | 1 +
- 3 files changed, 9 insertions(+)
+ drivers/net/ethernet/intel/ice/ice.h         |  1 +
+ drivers/net/ethernet/intel/ice/ice_ethtool.c |  6 +----
+ drivers/net/ethernet/intel/ice/ice_main.c    | 28 ++++++++++++++++++++
+ 3 files changed, 30 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/net/netdevsim/bpf.c b/drivers/net/netdevsim/bpf.c
-index 608953d4f98da..ca64136372fca 100644
---- a/drivers/net/netdevsim/bpf.c
-+++ b/drivers/net/netdevsim/bpf.c
-@@ -244,7 +244,9 @@ static int nsim_bpf_create_prog(struct nsim_dev *nsim_dev,
- 			    &state->state, &nsim_bpf_string_fops);
- 	debugfs_create_bool("loaded", 0400, state->ddir, &state->is_loaded);
+diff --git a/drivers/net/ethernet/intel/ice/ice.h b/drivers/net/ethernet/intel/ice/ice.h
+index 0e699a0432c5b..bffdf537dafa8 100644
+--- a/drivers/net/ethernet/intel/ice/ice.h
++++ b/drivers/net/ethernet/intel/ice/ice.h
+@@ -952,6 +952,7 @@ void ice_map_xdp_rings(struct ice_vsi *vsi);
+ int
+ ice_xdp_xmit(struct net_device *dev, int n, struct xdp_frame **frames,
+ 	     u32 flags);
++int ice_get_rss(struct ice_vsi *vsi, u8 *seed, u8 *lut, u16 lut_size);
+ int ice_set_rss_lut(struct ice_vsi *vsi, u8 *lut, u16 lut_size);
+ int ice_get_rss_lut(struct ice_vsi *vsi, u8 *lut, u16 lut_size);
+ int ice_set_rss_key(struct ice_vsi *vsi, u8 *seed);
+diff --git a/drivers/net/ethernet/intel/ice/ice_ethtool.c b/drivers/net/ethernet/intel/ice/ice_ethtool.c
+index 2a2acbeb57221..5379fbe06b073 100644
+--- a/drivers/net/ethernet/intel/ice/ice_ethtool.c
++++ b/drivers/net/ethernet/intel/ice/ice_ethtool.c
+@@ -3649,11 +3649,7 @@ ice_get_rxfh(struct net_device *netdev, struct ethtool_rxfh_param *rxfh)
+ 	if (!lut)
+ 		return -ENOMEM;
  
-+	mutex_lock(&nsim_dev->progs_list_lock);
- 	list_add_tail(&state->l, &nsim_dev->bpf_bound_progs);
-+	mutex_unlock(&nsim_dev->progs_list_lock);
+-	err = ice_get_rss_key(vsi, rxfh->key);
+-	if (err)
+-		goto out;
+-
+-	err = ice_get_rss_lut(vsi, lut, vsi->rss_table_size);
++	err = ice_get_rss(vsi, rxfh->key, lut, vsi->rss_table_size);
+ 	if (err)
+ 		goto out;
  
- 	prog->aux->offload->dev_priv = state;
- 
-@@ -273,12 +275,16 @@ static int nsim_bpf_translate(struct bpf_prog *prog)
- static void nsim_bpf_destroy_prog(struct bpf_prog *prog)
- {
- 	struct nsim_bpf_bound_prog *state;
-+	struct nsim_dev *nsim_dev;
- 
- 	state = prog->aux->offload->dev_priv;
-+	nsim_dev = state->nsim_dev;
- 	WARN(state->is_loaded,
- 	     "offload state destroyed while program still bound");
- 	debugfs_remove_recursive(state->ddir);
-+	mutex_lock(&nsim_dev->progs_list_lock);
- 	list_del(&state->l);
-+	mutex_unlock(&nsim_dev->progs_list_lock);
- 	kfree(state);
+diff --git a/drivers/net/ethernet/intel/ice/ice_main.c b/drivers/net/ethernet/intel/ice/ice_main.c
+index 4f4678607e55f..d024e71722de3 100644
+--- a/drivers/net/ethernet/intel/ice/ice_main.c
++++ b/drivers/net/ethernet/intel/ice/ice_main.c
+@@ -8042,6 +8042,34 @@ int ice_get_rss_key(struct ice_vsi *vsi, u8 *seed)
+ 	return status;
  }
  
-diff --git a/drivers/net/netdevsim/dev.c b/drivers/net/netdevsim/dev.c
-index 3e0b61202f0c9..2614d6509954c 100644
---- a/drivers/net/netdevsim/dev.c
-+++ b/drivers/net/netdevsim/dev.c
-@@ -1545,6 +1545,7 @@ int nsim_drv_probe(struct nsim_bus_dev *nsim_bus_dev)
- 	nsim_dev->max_macs = NSIM_DEV_MAX_MACS_DEFAULT;
- 	nsim_dev->test1 = NSIM_DEV_TEST1_DEFAULT;
- 	spin_lock_init(&nsim_dev->fa_cookie_lock);
-+	mutex_init(&nsim_dev->progs_list_lock);
- 
- 	dev_set_drvdata(&nsim_bus_dev->dev, nsim_dev);
- 
-@@ -1683,6 +1684,7 @@ void nsim_drv_remove(struct nsim_bus_dev *nsim_bus_dev)
- 	devl_unregister(devlink);
- 	kfree(nsim_dev->vfconfigs);
- 	kfree(nsim_dev->fa_cookie);
-+	mutex_destroy(&nsim_dev->progs_list_lock);
- 	devl_unlock(devlink);
- 	devlink_free(devlink);
- 	dev_set_drvdata(&nsim_bus_dev->dev, NULL);
-diff --git a/drivers/net/netdevsim/netdevsim.h b/drivers/net/netdevsim/netdevsim.h
-index 84181dcb98831..736d0dde679ec 100644
---- a/drivers/net/netdevsim/netdevsim.h
-+++ b/drivers/net/netdevsim/netdevsim.h
-@@ -308,6 +308,7 @@ struct nsim_dev {
- 	u32 prog_id_gen;
- 	struct list_head bpf_bound_progs;
- 	struct list_head bpf_bound_maps;
-+	struct mutex progs_list_lock;
- 	struct netdev_phys_item_id switch_id;
- 	struct list_head port_list;
- 	bool fw_update_status;
++/**
++ * ice_get_rss - Get RSS LUT and/or key
++ * @vsi: Pointer to VSI structure
++ * @seed: Buffer to store the key in
++ * @lut: Buffer to store the lookup table entries
++ * @lut_size: Size of buffer to store the lookup table entries
++ *
++ * Return: 0 on success, negative on failure
++ */
++int ice_get_rss(struct ice_vsi *vsi, u8 *seed, u8 *lut, u16 lut_size)
++{
++	int err;
++
++	if (seed) {
++		err = ice_get_rss_key(vsi, seed);
++		if (err)
++			return err;
++	}
++
++	if (lut) {
++		err = ice_get_rss_lut(vsi, lut, lut_size);
++		if (err)
++			return err;
++	}
++
++	return 0;
++}
++
+ /**
+  * ice_set_rss_hfunc - Set RSS HASH function
+  * @vsi: Pointer to VSI structure
 -- 
 2.51.0
 
