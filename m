@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5CCCE302163;
-	Wed, 28 Jan 2026 15:53:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54A13302163;
+	Wed, 28 Jan 2026 15:53:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769615614; cv=none; b=CBQkm5vkFQAXpYsuORMj8cr9Knpe4mOKZ2bLjfx7Ox3WWx50iu7aFSoXgyTdJs/ISfD1xumbXQ7H0lVdFt+2ZKJjSk7cljam/MR8kwoPzQ+8mwlycUpQYkioPM9Svp7/oiwKSesR7rJQXzq5c4rrfrBsQHAzsqKiDJGsWjc5h98=
+	t=1769615618; cv=none; b=Emicr9nuEI0kbvesYV2txRFO/PICAbLHnQZKDvysJvsQyPA8OYoqyPh8bLBXwtAoJ6z61UxNURoAlhCbIDev5eMd37mhKV1w/nOGUcOAjAwpA3r0qamHE8dwrBaac2NaiLqYCh0n7ECURqStoCRLPVTOMSxLhLosdWC4x7H6vrM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769615614; c=relaxed/simple;
-	bh=Qq0RMLMns4WYyURVM/i8DXDEmI6LKpASt9q8akZyQLc=;
+	s=arc-20240116; t=1769615618; c=relaxed/simple;
+	bh=rg4cJ0T50QnJrWyS1odKGehib9RIziJHO5Db0zFCAJE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=u57uMsX/jhJCrk14WkOi1plvU4qvy9srkv3CwmtpoKxjvP3nEz8RCy45rNxjxPgNXeqiY4M5R39R4vInjSobuDSm8fn1Z8juwXlF81+3EQPbrl4vLfaegug4YQq+x6t/pHkk7kuzm5g6i3BM95DGxmRvxMBSst9Yc2guh/Vqy+Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=x40bO31H; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=g35+Mpn35Sw1un5hE3Sas8NzgvdgdFwcnUo5FcVYIwYdNv5C3Io2JjD7aRDUYTNZ/q88rv324kmcgRyAo0Ou9rCDw5l/WX/6zkz4Aks3tl7AqrEBWbi0iX75K+pOitxpL507hUkyVIn0QvvtOpFkLJuz4C9yaOmAug8DQUJJwhE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Yod+IxFb; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="x40bO31H"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A690CC4CEF1;
-	Wed, 28 Jan 2026 15:53:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Yod+IxFb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5C07C4CEF1;
+	Wed, 28 Jan 2026 15:53:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1769615614;
-	bh=Qq0RMLMns4WYyURVM/i8DXDEmI6LKpASt9q8akZyQLc=;
+	s=korg; t=1769615618;
+	bh=rg4cJ0T50QnJrWyS1odKGehib9RIziJHO5Db0zFCAJE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=x40bO31Hw9l9u2zjQJQDt/DJ5qmEZAH6bt01ni9NQYdgKuje8xuQBG/si4J5yqJzJ
-	 fx8Kzws6eHcQpKEadeFW8BKh7h7oD2052v67phHHqCAyK1PVnAAopSPfkSPqt+z00O
-	 YOgZFDcMy2cbbDd9s9jsRzi9IKCaLoNUx0FGYmB8=
+	b=Yod+IxFbn30ZsP+C1pgYgTGW5UkgihuKg4d79Q3zLc54fbR6u5sOC//Gjg8gIJXas
+	 LERfmMMhmqra0RjCbSytCNAN2eEb/Wnn0K3/ScUmB2V9ZlvOWldHRKaJ4MrPyWbvXK
+	 9JjSC/Su3miI/WgZo/aPW0RyEKB+s6dVuDyP+X/o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hari Prasath Gujulan Elango <hari.prasathge@microchip.com>,
 	Nicolas Ferre <nicolas.ferre@microchip.com>,
 	Claudiu Beznea <claudiu.beznea@tuxon.dev>
-Subject: [PATCH 6.18 060/227] ARM: dts: microchip: sama7d65: fix the ranges property for flx9
-Date: Wed, 28 Jan 2026 16:21:45 +0100
-Message-ID: <20260128145346.500556569@linuxfoundation.org>
+Subject: [PATCH 6.18 061/227] ARM: dts: microchip: sama7d65: fix size-cells property for i2c3
+Date: Wed, 28 Jan 2026 16:21:46 +0100
+Message-ID: <20260128145346.537316585@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260128145344.331957407@linuxfoundation.org>
 References: <20260128145344.331957407@linuxfoundation.org>
@@ -51,18 +50,18 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hari Prasath Gujulan Elango <hari.prasathge@microchip.com>
+From: Nicolas Ferre <nicolas.ferre@microchip.com>
 
-commit aabc977aa472ccf756372ae594d890022c19c9c8 upstream.
+commit 94ad504e67cd3be94fa1b2fed0cb87da0d8f9396 upstream.
 
-Update the ranges property for the flexcom9 as per the datasheet and
-align with the reg property.
+Fix the #size-cells property for i2c3 node and remove the dtbs_check
+error telling that "#size-cells: 0 was expected" from schema
+atmel,at91sam-i2c.yaml and i2c-controller.yaml.
 
 Fixes: b51e4aea3ecf ("ARM: dts: microchip: sama7d65: Add FLEXCOMs to sama7d65 SoC")
 Cc: stable@vger.kernel.org # 6.16+
-Signed-off-by: Hari Prasath Gujulan Elango <hari.prasathge@microchip.com>
 Signed-off-by: Nicolas Ferre <nicolas.ferre@microchip.com>
-Link: https://lore.kernel.org/r/20260102170135.70717-2-nicolas.ferre@microchip.com
+Link: https://lore.kernel.org/r/20260102170135.70717-3-nicolas.ferre@microchip.com
 Signed-off-by: Claudiu Beznea <claudiu.beznea@tuxon.dev>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
@@ -70,18 +69,18 @@ Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/arch/arm/boot/dts/microchip/sama7d65.dtsi b/arch/arm/boot/dts/microchip/sama7d65.dtsi
-index cd2cf9a6f40b..5f3a7b178aa7 100644
+index 5f3a7b178aa7..868045c650a7 100644
 --- a/arch/arm/boot/dts/microchip/sama7d65.dtsi
 +++ b/arch/arm/boot/dts/microchip/sama7d65.dtsi
-@@ -676,7 +676,7 @@ i2c8: i2c@600 {
- 		flx9: flexcom@e2820000 {
- 			compatible = "microchip,sama7d65-flexcom", "atmel,sama5d2-flexcom";
- 			reg = <0xe2820000 0x200>;
--			ranges = <0x0 0xe281c000 0x800>;
-+			ranges = <0x0 0xe2820000 0x800>;
- 			clocks = <&pmc PMC_TYPE_PERIPHERAL 43>;
- 			#address-cells = <1>;
- 			#size-cells = <1>;
+@@ -527,7 +527,7 @@ i2c3: i2c@600 {
+ 				interrupts = <GIC_SPI 37 IRQ_TYPE_LEVEL_HIGH>;
+ 				clocks = <&pmc PMC_TYPE_PERIPHERAL 37>;
+ 				#address-cells = <1>;
+-				#size-cells = <1>;
++				#size-cells = <0>;
+ 				dmas = <&dma0 AT91_XDMAC_DT_PERID(12)>,
+ 				       <&dma0 AT91_XDMAC_DT_PERID(11)>;
+ 				dma-names = "tx", "rx";
 -- 
 2.52.0
 
