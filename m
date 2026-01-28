@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C470C36D506;
-	Wed, 28 Jan 2026 15:28:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2B3936B07E;
+	Wed, 28 Jan 2026 15:28:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769614095; cv=none; b=Z+JqbxhfJAIRPwlCpYL0m/jFOLRn4Nyx0DKROgeUDrqomRcM9eV4OZQDCvCvfgDd0QwOR4zgh2eAaPdffnBpL8KgpkHyNqZL47497cZRLqrQv4W+vPayTR2rDrLaQhy0T8sLsjs/KAlVdQXxWCWuQzFJipj4++18G/0MNfI3MF8=
+	t=1769614099; cv=none; b=UMY8EWNxsXXpqjEy5Sos7gecGZHzEg5ChpKj54w0lnZAHGsDBUFwK3AjYyulyepe5hGppjYciyJoLtXEnlvgNxvb+VS5oRrhOfDJTm3jLdq3SCADnqe8SzG9i9uBxIPNDamE6ZZyGTigwzUFcgaQD0q9gTUIrdDMjkeqZP9crAY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769614095; c=relaxed/simple;
-	bh=XtZ9/3sqSdv/wvTMhbDHrust9SccAmj5ODJlzW9DlUY=;
+	s=arc-20240116; t=1769614099; c=relaxed/simple;
+	bh=CvdzRGdff/5bJV1hKiR9eSebu6KPnaEgJBdRfzPKiic=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=V9XDouyCfy105UdT+eM/nQTvWeFqYXAxbqQKSnwNol+N3OZA1kx+OHwWEayOVuun4oX8jiQFiWYKcaJ/YBH/ej4b810NoiN2SHoOXOeWaME2ETX6UplxN6DkUN1s3jKiADtak6/dvaaQh2XO1vbVMUA9hLkvGnEU2J7DNzrWoQI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KmeS2QYd; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rlrogcncgE+Q1tRaGjtrVkQ3y6QDQ7OECnN3cK88lFfZTwsmGzwxb8XuzvoKYjNrESgSKnLtl74dk6EXdRssGWZzXTlmprRAKIG6bDaEgqPksOmjHNe3Uqnm1CZKIchuZrn7FOWzf5ud8paWhaE2h9xadtZlOHJTNY8JCqvqELU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QM5zEFvp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KmeS2QYd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2985C4CEF1;
-	Wed, 28 Jan 2026 15:28:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QM5zEFvp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3DBCAC16AAE;
+	Wed, 28 Jan 2026 15:28:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1769614095;
-	bh=XtZ9/3sqSdv/wvTMhbDHrust9SccAmj5ODJlzW9DlUY=;
+	s=korg; t=1769614098;
+	bh=CvdzRGdff/5bJV1hKiR9eSebu6KPnaEgJBdRfzPKiic=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KmeS2QYd09xiFCevUaxNWTxJjityW593g5SIjOfAcXOSsLuzYKOulv6LYjmu7HvWb
-	 Aj5rRBSTba4FRFrTaOZC3ktZ31Z2La66R+6zoO0x54oS/5tDQVi5SPR1khBFmrqnDX
-	 TNJnxibQu9TDPaOoAVIoZd7sFw5Evh1BhyvF3MCg=
+	b=QM5zEFvp2xtuCU1t+a6R2GuU9+yyTlCD0enPbslOJ1mCURorB8ZoTTKVgolKcgth7
+	 +eDfEBNTc6mq6bpESGR3EAnXnCc6tev2C2g0lI5vnwZsWew6HY46510wSqelaSnw3W
+	 rNq33s9ZraGr/yYSphmCBSex+RM32qS+aGR05k9I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sheetal <sheetal@nvidia.com>,
-	Thierry Reding <treding@nvidia.com>,
-	Vinod Koul <vkoul@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 033/254] dmaengine: tegra-adma: Fix use-after-free
-Date: Wed, 28 Jan 2026 16:20:09 +0100
-Message-ID: <20260128145345.893658335@linuxfoundation.org>
+	Krzysztof Kozlowski <krzk@kernel.org>,
+	Johan Hovold <johan@kernel.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>,
+	Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>,
+	Mark Brown <broonie@kernel.org>
+Subject: [PATCH 6.6 004/254] ASoC: codecs: wsa884x: fix codec initialisation
+Date: Wed, 28 Jan 2026 16:19:40 +0100
+Message-ID: <20260128145344.862117668@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260128145344.698118637@linuxfoundation.org>
 References: <20260128145344.698118637@linuxfoundation.org>
@@ -52,110 +53,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sheetal <sheetal@nvidia.com>
+From: Johan Hovold <johan@kernel.org>
 
-[ Upstream commit 2efd07a7c36949e6fa36a69183df24d368bf9e96 ]
+commit 120f3e6ff76209ee2f62a64e5e7e9d70274df42b upstream.
 
-A use-after-free bug exists in the Tegra ADMA driver when audio streams
-are terminated, particularly during XRUN conditions. The issue occurs
-when the DMA buffer is freed by tegra_adma_terminate_all() before the
-vchan completion tasklet finishes accessing it.
+The soundwire update_status() callback may be called multiple times with
+the same ATTACHED status but initialisation should only be done when
+transitioning from UNATTACHED to ATTACHED.
 
-The race condition follows this sequence:
+Fix the inverted hw_init flag which was set to false instead of true
+after initialisation which defeats its purpose and may result in
+repeated unnecessary initialisation.
 
-  1. DMA transfer completes, triggering an interrupt that schedules the
-     completion tasklet (tasklet has not executed yet)
-  2. Audio playback stops, calling tegra_adma_terminate_all() which
-     frees the DMA buffer memory via kfree()
-  3. The scheduled tasklet finally executes, calling vchan_complete()
-     which attempts to access the already-freed memory
+Similarly, the initial state of the flag was also inverted so that the
+codec would only be initialised and brought out of regmap cache only
+mode if its status first transitions to UNATTACHED.
 
-Since tasklets can execute at any time after being scheduled, there is
-no guarantee that the buffer will remain valid when vchan_complete()
-runs.
-
-Fix this by properly synchronizing the virtual channel completion:
- - Calling vchan_terminate_vdesc() in tegra_adma_stop() to mark the
-   descriptors as terminated instead of freeing the descriptor.
- - Add the callback tegra_adma_synchronize() that calls
-   vchan_synchronize() which kills any pending tasklets and frees any
-   terminated descriptors.
-
-Crash logs:
-[  337.427523] BUG: KASAN: use-after-free in vchan_complete+0x124/0x3b0
-[  337.427544] Read of size 8 at addr ffff000132055428 by task swapper/0/0
-
-[  337.427562] Call trace:
-[  337.427564]  dump_backtrace+0x0/0x320
-[  337.427571]  show_stack+0x20/0x30
-[  337.427575]  dump_stack_lvl+0x68/0x84
-[  337.427584]  print_address_description.constprop.0+0x74/0x2b8
-[  337.427590]  kasan_report+0x1f4/0x210
-[  337.427598]  __asan_load8+0xa0/0xd0
-[  337.427603]  vchan_complete+0x124/0x3b0
-[  337.427609]  tasklet_action_common.constprop.0+0x190/0x1d0
-[  337.427617]  tasklet_action+0x30/0x40
-[  337.427623]  __do_softirq+0x1a0/0x5c4
-[  337.427628]  irq_exit+0x110/0x140
-[  337.427633]  handle_domain_irq+0xa4/0xe0
-[  337.427640]  gic_handle_irq+0x64/0x160
-[  337.427644]  call_on_irq_stack+0x20/0x4c
-[  337.427649]  do_interrupt_handler+0x7c/0x90
-[  337.427654]  el1_interrupt+0x30/0x80
-[  337.427659]  el1h_64_irq_handler+0x18/0x30
-[  337.427663]  el1h_64_irq+0x7c/0x80
-[  337.427667]  cpuidle_enter_state+0xe4/0x540
-[  337.427674]  cpuidle_enter+0x54/0x80
-[  337.427679]  do_idle+0x2e0/0x380
-[  337.427685]  cpu_startup_entry+0x2c/0x70
-[  337.427690]  rest_init+0x114/0x130
-[  337.427695]  arch_call_rest_init+0x18/0x24
-[  337.427702]  start_kernel+0x380/0x3b4
-[  337.427706]  __primary_switched+0xc0/0xc8
-
-Fixes: f46b195799b5 ("dmaengine: tegra-adma: Add support for Tegra210 ADMA")
-Signed-off-by: Sheetal <sheetal@nvidia.com>
-Acked-by: Thierry Reding <treding@nvidia.com>
-Link: https://patch.msgid.link/20251110142445.3842036-1-sheetal@nvidia.com
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: aa21a7d4f68a ("ASoC: codecs: wsa884x: Add WSA884x family of speakers")
+Cc: stable@vger.kernel.org	# 6.5
+Cc: Krzysztof Kozlowski <krzk@kernel.org>
+Signed-off-by: Johan Hovold <johan@kernel.org>
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
+Tested-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
+Reviewed-by: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260102111413.9605-4-johan@kernel.org
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/dma/tegra210-adma.c | 10 +++++++++-
- 1 file changed, 9 insertions(+), 1 deletion(-)
+ sound/soc/codecs/wsa884x.c |    3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/drivers/dma/tegra210-adma.c b/drivers/dma/tegra210-adma.c
-index e557bada15107..37848d558ae49 100644
---- a/drivers/dma/tegra210-adma.c
-+++ b/drivers/dma/tegra210-adma.c
-@@ -342,10 +342,17 @@ static void tegra_adma_stop(struct tegra_adma_chan *tdc)
- 		return;
- 	}
+--- a/sound/soc/codecs/wsa884x.c
++++ b/sound/soc/codecs/wsa884x.c
+@@ -1482,7 +1482,7 @@ static void wsa884x_init(struct wsa884x_
  
--	kfree(tdc->desc);
-+	vchan_terminate_vdesc(&tdc->desc->vd);
- 	tdc->desc = NULL;
+ 	wsa884x_set_gain_parameters(wsa884x);
+ 
+-	wsa884x->hw_init = false;
++	wsa884x->hw_init = true;
  }
  
-+static void tegra_adma_synchronize(struct dma_chan *dc)
-+{
-+	struct tegra_adma_chan *tdc = to_tegra_adma_chan(dc);
-+
-+	vchan_synchronize(&tdc->vc);
-+}
-+
- static void tegra_adma_start(struct tegra_adma_chan *tdc)
- {
- 	struct virt_dma_desc *vd = vchan_next_desc(&tdc->vc);
-@@ -909,6 +916,7 @@ static int tegra_adma_probe(struct platform_device *pdev)
- 	tdma->dma_dev.device_config = tegra_adma_slave_config;
- 	tdma->dma_dev.device_tx_status = tegra_adma_tx_status;
- 	tdma->dma_dev.device_terminate_all = tegra_adma_terminate_all;
-+	tdma->dma_dev.device_synchronize = tegra_adma_synchronize;
- 	tdma->dma_dev.src_addr_widths = BIT(DMA_SLAVE_BUSWIDTH_4_BYTES);
- 	tdma->dma_dev.dst_addr_widths = BIT(DMA_SLAVE_BUSWIDTH_4_BYTES);
- 	tdma->dma_dev.directions = BIT(DMA_DEV_TO_MEM) | BIT(DMA_MEM_TO_DEV);
--- 
-2.51.0
-
+ static int wsa884x_update_status(struct sdw_slave *slave,
+@@ -1884,7 +1884,6 @@ static int wsa884x_probe(struct sdw_slav
+ 
+ 	/* Start in cache-only until device is enumerated */
+ 	regcache_cache_only(wsa884x->regmap, true);
+-	wsa884x->hw_init = true;
+ 
+ 	pm_runtime_set_autosuspend_delay(dev, 3000);
+ 	pm_runtime_use_autosuspend(dev);
 
 
