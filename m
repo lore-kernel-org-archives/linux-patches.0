@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 735D81D6AA;
-	Wed, 28 Jan 2026 15:59:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03C712FF178;
+	Wed, 28 Jan 2026 15:59:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769615977; cv=none; b=aJVfL3oQJB0lc4TT5L1O1VDIcdJ+o7WsK95snDmb7uHv1T7IwPHPBbg4X95f3hog2pc/3RYDFDBQ0xH4VCNxlu0qLMuMJ41Vs+ys7Wr5mTSgNdFef7d+MPTUhH/rg0fuKjDMM/7STHMzTNAxS4lt2oOoJvF7Smk7/aGpNQFUllk=
+	t=1769615981; cv=none; b=jvJJ3vgHBHUwuUQ6MbQPFd1ejm2nx1RGuKr9hIpSD6h0x7RzH5v6rosjhRsKd0HwsDSMqqYzXylGjyFF3ptxcSpN/dJJ1N9BUftSnK7J7jI/4U+RBDJLGZRBw6D4rSQJRzDFhoTizrGPClYDvrloleWo4QAO+T+3KvIDWmbn/7I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769615977; c=relaxed/simple;
-	bh=OrO/oi9moCvGKULwd0ZNt8emGAT+kkFpeMUS4rrm+4E=;
+	s=arc-20240116; t=1769615981; c=relaxed/simple;
+	bh=n7opsP60JZMctz6oZAlAbuOYyp3BcPLUttV0d7Rez2A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bbmic6deJuaVSrRd6k/DKayCQMHdo/wA6zm0GHwK7Sgv2YLanfnnv5ljJ8DMwOfJOoJOspYDMoFHhJjtWQy2byD96ZG60vWfvJqvPlGeTMIm9iw+/eiGVD/YEfqO/ZObJ0WEccZ0EwIwCOouFzvOIsxuNyffuxHHWZY+MAOvtJ4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AGya4acY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dE1cGD5AUqJHfTnYTJjRZEr8c2GuqqztIkT7+OeYAdCPC871z92d3D1xH57CA2MDgHqoLm2+njgYfBFn2ywiKYsy0yYPbybRtPBC8HJ4RFRqKaGrqXTjain7L+lxVp6Snb0akxoD3K4FpgueS8nqrtHUo3Bh4Ekni7avSkq/Yzo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wxiYOLfa; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AGya4acY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C0DD2C4CEF1;
-	Wed, 28 Jan 2026 15:59:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wxiYOLfa"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39E2BC4CEF1;
+	Wed, 28 Jan 2026 15:59:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1769615977;
-	bh=OrO/oi9moCvGKULwd0ZNt8emGAT+kkFpeMUS4rrm+4E=;
+	s=korg; t=1769615980;
+	bh=n7opsP60JZMctz6oZAlAbuOYyp3BcPLUttV0d7Rez2A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AGya4acY1yxWFiumMB0pmBHl2SaZVTDJnWj0z5kHeyx3joA8S5cfpO3dat2g55+MD
-	 x785TmAaZXbrIdcGvfeX8AH4qN1zQmMtJQweE2z2Zq13KVABjdQO3VS9YT5FR+SvhM
-	 QgfXlnogj6cp/N/lf/qSD8E9bU4FjYbyNUZtbPTw=
+	b=wxiYOLfaVrWz5TessUVgdEWzqdrBo7Z12edsrD+/R9V9GjYo5VUwCh/bxQS31Hiaq
+	 gHQ/mv+uMHCHhLXlW8eNCm/2Dcjxw7bPkanYvjjTOEcNODDh1GTRutW6C/W3LfNZah
+	 ewEuZGCYgDdAoz/xz9Mv/TpI54Jgpr+9VpVwunTE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Justin Chen <justin.chen@broadcom.com>,
-	Florian Fainelli <florian.fainelli@broadcom.com>,
+	Vladimir Oltean <vladimir.oltean@nxp.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 138/227] net: bcmasp: Fix network filter wake for asp-3.0
-Date: Wed, 28 Jan 2026 16:23:03 +0100
-Message-ID: <20260128145349.426167182@linuxfoundation.org>
+Subject: [PATCH 6.18 139/227] net: dsa: fix off-by-one in maximum bridge ID determination
+Date: Wed, 28 Jan 2026 16:23:04 +0100
+Message-ID: <20260128145349.461565587@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260128145344.331957407@linuxfoundation.org>
 References: <20260128145344.331957407@linuxfoundation.org>
@@ -52,66 +51,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Justin Chen <justin.chen@broadcom.com>
+From: Vladimir Oltean <vladimir.oltean@nxp.com>
 
-[ Upstream commit bbb11b8d758d17a4ce34b8ed0b49de150568265b ]
+[ Upstream commit dfca045cd4d0ea07ff4198ba392be3e718acaddc ]
 
-We need to apply the tx_chan_offset to the netfilter cfg channel or the
-output channel will be incorrect for asp-3.0 and newer.
+Prior to the blamed commit, the bridge_num range was from
+0 to ds->max_num_bridges - 1. After the commit, it is from
+1 to ds->max_num_bridges.
 
-Fixes: e9f31435ee7d ("net: bcmasp: Add support for asp-v3.0")
-Signed-off-by: Justin Chen <justin.chen@broadcom.com>
-Reviewed-by: Florian Fainelli <florian.fainelli@broadcom.com>
-Link: https://patch.msgid.link/20260120192339.2031648-1-justin.chen@broadcom.com
+So this check:
+	if (bridge_num >= max)
+		return 0;
+must be updated to:
+	if (bridge_num > max)
+		return 0;
+
+in order to allow the last bridge_num value (==max) to be used.
+
+This is easiest visible when a driver sets ds->max_num_bridges=1.
+The observed behaviour is that even the first created bridge triggers
+the netlink extack "Range of offloadable bridges exceeded" warning, and
+is handled in software rather than being offloaded.
+
+Fixes: 3f9bb0301d50 ("net: dsa: make dp->bridge_num one-based")
+Signed-off-by: Vladimir Oltean <vladimir.oltean@nxp.com>
+Link: https://patch.msgid.link/20260120211039.3228999-1-vladimir.oltean@nxp.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/broadcom/asp2/bcmasp.c | 5 +++--
- drivers/net/ethernet/broadcom/asp2/bcmasp.h | 1 +
- 2 files changed, 4 insertions(+), 2 deletions(-)
+ net/dsa/dsa.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/broadcom/asp2/bcmasp.c b/drivers/net/ethernet/broadcom/asp2/bcmasp.c
-index fd35f4b4dc50b..014340f33345a 100644
---- a/drivers/net/ethernet/broadcom/asp2/bcmasp.c
-+++ b/drivers/net/ethernet/broadcom/asp2/bcmasp.c
-@@ -156,7 +156,7 @@ static void bcmasp_netfilt_hw_en_wake(struct bcmasp_priv *priv,
- 			  ASP_RX_FILTER_NET_OFFSET_L4(32),
- 			  ASP_RX_FILTER_NET_OFFSET(nfilt->hw_index + 1));
+diff --git a/net/dsa/dsa.c b/net/dsa/dsa.c
+index ded9a291e6204..0505e90033f23 100644
+--- a/net/dsa/dsa.c
++++ b/net/dsa/dsa.c
+@@ -157,7 +157,7 @@ unsigned int dsa_bridge_num_get(const struct net_device *bridge_dev, int max)
+ 		bridge_num = find_next_zero_bit(&dsa_fwd_offloading_bridges,
+ 						DSA_MAX_NUM_OFFLOADING_BRIDGES,
+ 						1);
+-		if (bridge_num >= max)
++		if (bridge_num > max)
+ 			return 0;
  
--	rx_filter_core_wl(priv, ASP_RX_FILTER_NET_CFG_CH(nfilt->port + 8) |
-+	rx_filter_core_wl(priv, ASP_RX_FILTER_NET_CFG_CH(nfilt->ch) |
- 			  ASP_RX_FILTER_NET_CFG_EN |
- 			  ASP_RX_FILTER_NET_CFG_L2_EN |
- 			  ASP_RX_FILTER_NET_CFG_L3_EN |
-@@ -166,7 +166,7 @@ static void bcmasp_netfilt_hw_en_wake(struct bcmasp_priv *priv,
- 			  ASP_RX_FILTER_NET_CFG_UMC(nfilt->port),
- 			  ASP_RX_FILTER_NET_CFG(nfilt->hw_index));
- 
--	rx_filter_core_wl(priv, ASP_RX_FILTER_NET_CFG_CH(nfilt->port + 8) |
-+	rx_filter_core_wl(priv, ASP_RX_FILTER_NET_CFG_CH(nfilt->ch) |
- 			  ASP_RX_FILTER_NET_CFG_EN |
- 			  ASP_RX_FILTER_NET_CFG_L2_EN |
- 			  ASP_RX_FILTER_NET_CFG_L3_EN |
-@@ -714,6 +714,7 @@ struct bcmasp_net_filter *bcmasp_netfilt_get_init(struct bcmasp_intf *intf,
- 		nfilter = &priv->net_filters[open_index];
- 		nfilter->claimed = true;
- 		nfilter->port = intf->port;
-+		nfilter->ch = intf->channel + priv->tx_chan_offset;
- 		nfilter->hw_index = open_index;
- 	}
- 
-diff --git a/drivers/net/ethernet/broadcom/asp2/bcmasp.h b/drivers/net/ethernet/broadcom/asp2/bcmasp.h
-index 74adfdb50e11d..e238507be40af 100644
---- a/drivers/net/ethernet/broadcom/asp2/bcmasp.h
-+++ b/drivers/net/ethernet/broadcom/asp2/bcmasp.h
-@@ -348,6 +348,7 @@ struct bcmasp_net_filter {
- 	bool				wake_filter;
- 
- 	int				port;
-+	int				ch;
- 	unsigned int			hw_index;
- };
- 
+ 		set_bit(bridge_num, &dsa_fwd_offloading_bridges);
 -- 
 2.51.0
 
