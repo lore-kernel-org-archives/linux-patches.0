@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B7BD2F747F;
-	Wed, 28 Jan 2026 15:46:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 379982F747F;
+	Wed, 28 Jan 2026 15:46:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769615184; cv=none; b=j4DwKAKGAMsTWQbmao98JVImvT/A3sqonbKyu/i2WlUtC9ky/hIreDGQQMfNB5yuByZDj56jiIuzb2veoTjgiRN4VNxwjUyZ77wH3ZQfqMe8Vp5WgRSh4uN1UPzwVw2IgwVQ3YHKy3Df3rk5b4SqtaWZwUzKzp4Hig8i7IzVOHU=
+	t=1769615187; cv=none; b=ANPI94Vs/N3Rr6fC3mwNW9BrB7Arpz4OuX5d1LlNDAWMkIX/+5nNIjEfAZkGX8IB5BfiqY+07/rdR8VfpgjoW+ZYn/2l2Vfca0RXokp/RB0YA3NeYW92ZVigbsM1ZZo0e28uQuCCAi8aMmxlpbAGt3I79+zj2YnDaqVU/2Pa4uA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769615184; c=relaxed/simple;
-	bh=eT8fBgRyLUyMUO/7om/7IxIWZd20S33e6E3plbpu49Y=;
+	s=arc-20240116; t=1769615187; c=relaxed/simple;
+	bh=yoUjvplyljhIlbyAdd8MeopQyuQ6+j9VqJfuQbp6YVU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=k1dQJdteg8NRP5Df/iX3xP9K3xSybfw0Y/xfA4CADPRSiAqT8abD+yd/uFnqdNruW1Ouho9XDMIfqOFsLCI0pkPehymbzLusU7QTZXG9YGs3pZhwNJ6CHvkdq5AL0KSDCFj3Rai36sknc/LPV1/Hrj8hJ5oozZWoAGFnF5D0Xes=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vnaoX1TI; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=shqTZoF22ZYPdByzfBFb/JYDTOtxTgCatXj2Tp1TKBKuVcOS1/TnAQarHHYQG0AwJ4uKUlcj9QC6pM1cnU/iK5v23QeCLsJ2mufDQFcPQzCv9beaBxCh3wJV5t1WBV9kG6XxciEgJC8JMkZJg5XwI3rcMRN4FPf/ozmNn+tLeDM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ON2p9T13; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vnaoX1TI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 48FD5C4CEF1;
-	Wed, 28 Jan 2026 15:46:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ON2p9T13"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A035FC4CEF1;
+	Wed, 28 Jan 2026 15:46:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1769615183;
-	bh=eT8fBgRyLUyMUO/7om/7IxIWZd20S33e6E3plbpu49Y=;
+	s=korg; t=1769615187;
+	bh=yoUjvplyljhIlbyAdd8MeopQyuQ6+j9VqJfuQbp6YVU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vnaoX1TIVTXcShmw36ZZTQSrJZnBdmy8BkwP75lJTODaCOI+wHeo5NYAKz5MmV1xG
-	 MsUh1t2JmNdPlWN2piO053/qcO8agsrbjUuVLCf0aKSclUFvbdjVEvPQsCIpuGdjhY
-	 oA0SXINQDn8XZ6BEj33qzBiFSaQjuiNd+xs/GQNo=
+	b=ON2p9T13W99GdC6gh5lg6UaLDVYrkTH0A8MFdnuZlpKbln9LaFABYyUPWueDDxV74
+	 gxp03dYvkxaSsPqIYjuUffwlHf1iS91NZJs/27B2fabpK/p1eMnojB2inQZQOs27qY
+	 gLZHeUSLwzGSbC7udpUv/BDgaySf1ZCaRshzHS9Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sudeep Holla <sudeep.holla@arm.com>,
-	"Rob Herring (Arm)" <robh@kernel.org>
-Subject: [PATCH 6.12 103/169] of: platform: Use default match table for /firmware
-Date: Wed, 28 Jan 2026 16:23:06 +0100
-Message-ID: <20260128145337.715126622@linuxfoundation.org>
+	Francesco Lavra <flavra@baylibre.com>,
+	Andy Shevchenko <andy@kernel.org>,
+	=?UTF-8?q?Nuno=20S=C3=A1?= <nuno.sa@analog.com>,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Subject: [PATCH 6.12 104/169] iio: accel: adxl380: fix handling of unavailable "INT1" interrupt
+Date: Wed, 28 Jan 2026 16:23:07 +0100
+Message-ID: <20260128145337.751181774@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260128145334.006287341@linuxfoundation.org>
 References: <20260128145334.006287341@linuxfoundation.org>
@@ -44,46 +46,47 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Rob Herring (Arm) <robh@kernel.org>
+From: Francesco Lavra <flavra@baylibre.com>
 
-commit 48e6a9c4a20870e09f85ff1a3628275d6bce31c0 upstream.
+commit 4ff39d6de4bf359ec6d5cd2be34b36d077dd0a07 upstream.
 
-Calling of_platform_populate() without a match table will only populate
-the immediate child nodes under /firmware. This is usually fine, but in
-the case of something like a "simple-mfd" node such as
-"raspberrypi,bcm2835-firmware", those child nodes will not be populated.
-And subsequent calls won't work either because the /firmware node is
-marked as processed already.
+fwnode_irq_get_byname() returns a negative value on failure; if a negative
+value is returned, use it as `err` argument for dev_err_probe().
+While at it, add a missing trailing newline to the dev_err_probe() error
+message.
 
-Switch the call to of_platform_default_populate() to solve this problem.
-It should be a nop for existing cases.
-
-Fixes: 3aa0582fdb82 ("of: platform: populate /firmware/ node from of_platform_default_populate_init()")
+Fixes: df36de13677a ("iio: accel: add ADXL380 driver")
+Signed-off-by: Francesco Lavra <flavra@baylibre.com>
+Reviewed-by: Andy Shevchenko <andy@kernel.org>
+Reviewed-by: Nuno Sá <nuno.sa@analog.com>
 Cc: stable@vger.kernel.org
-Reviewed-by: Sudeep Holla <sudeep.holla@arm.com>
-Link: https://patch.msgid.link/20260114015158.692170-2-robh@kernel.org
-Signed-off-by: Rob Herring (Arm) <robh@kernel.org>
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/of/platform.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/iio/accel/adxl380.c |    6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
---- a/drivers/of/platform.c
-+++ b/drivers/of/platform.c
-@@ -570,7 +570,7 @@ static int __init of_platform_default_po
- 
- 		node = of_find_node_by_path("/firmware");
- 		if (node) {
--			of_platform_populate(node, NULL, NULL, NULL);
-+			of_platform_default_populate(node, NULL, NULL);
- 			of_node_put(node);
- 		}
- 
+--- a/drivers/iio/accel/adxl380.c
++++ b/drivers/iio/accel/adxl380.c
+@@ -1730,9 +1730,9 @@ static int adxl380_config_irq(struct iio
+ 		st->int_map[1] = ADXL380_INT0_MAP1_REG;
+ 	} else {
+ 		st->irq = fwnode_irq_get_byname(dev_fwnode(st->dev), "INT1");
+-		if (st->irq > 0)
+-			return dev_err_probe(st->dev, -ENODEV,
+-					     "no interrupt name specified");
++		if (st->irq < 0)
++			return dev_err_probe(st->dev, st->irq,
++					     "no interrupt name specified\n");
+ 		st->int_map[0] = ADXL380_INT1_MAP0_REG;
+ 		st->int_map[1] = ADXL380_INT1_MAP1_REG;
+ 	}
 
 
