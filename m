@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D15C724DFF9;
-	Wed, 28 Jan 2026 15:30:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E58F82475E3;
+	Wed, 28 Jan 2026 15:30:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769614215; cv=none; b=Jv9/ke39O/ilxsuavVsDiQv1UdCVho1LPxcDAxUt/j8ojs5W8Kb9kEubctyUgHsxZEgL0VG+ImJBmnmNiv3A4U3qd0ctv/+ljaIzJL1C7CfchU46ZneGhZ4AosOYsa6bSonaHfUmPUHB+nZ/eyE9tnlm/UULZ35DHzfHJbtErOc=
+	t=1769614219; cv=none; b=F4nUwaVBYIJqrWs/q6eDiN1BTsV/ZHs7BqaUr67OOu/Y2kIlnWhBcLPBKlRvooqaI8gLK2ZbmiZ/Fb6TJs1grpaK2amgbvv0gvRghyg4+jGcseQ69+bUyei/iW/xtZjhfv1Qmz202NEV6gC8WzHENcXd8kNtmFjsI1UrWaPgTWE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769614215; c=relaxed/simple;
-	bh=75JTW3wYnLN9M3nHjtalZBH0WtVcUQmYgNb3seo3rhg=;
+	s=arc-20240116; t=1769614219; c=relaxed/simple;
+	bh=6OISrTO6/WeMj6SsF00Ylvpr5sdKJW5J8Z9hDcbYcOI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mbY1hCQCcMMDnn/2MfgLEW0v2LLJL1ZucJlN43kk8mNnxwsMvJScAetnjYwi3xnQUAEXANTI6994GRO1wkPv2KwqFMXiXfrAwEjlgWS88R9yC15bvOG4Ra+ze+r99uN3tqoK2+iEHAw9TIEzG2yPCXShAHrzrXZoOobieN6u12o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=L5Ei5lKO; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TYhvHWWP9cQyWzLNC5vWh6eUQ6fWgO9QB6r0nxPl/uoGRPLIg1y9N2z7CnD9ZOX866NLWtRZsNjiKJbSRm+xANbA86hiiEvD2J7fIUxgZ8iLtravHG03ZRf9PUaEjSgfFrcZqdS29rbuRfQeYFnmFA5J2utQfgF4Toa0yGQaFyA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hdobODZi; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="L5Ei5lKO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 05B97C4CEF1;
-	Wed, 28 Jan 2026 15:30:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hdobODZi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 58438C4CEF1;
+	Wed, 28 Jan 2026 15:30:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1769614215;
-	bh=75JTW3wYnLN9M3nHjtalZBH0WtVcUQmYgNb3seo3rhg=;
+	s=korg; t=1769614218;
+	bh=6OISrTO6/WeMj6SsF00Ylvpr5sdKJW5J8Z9hDcbYcOI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=L5Ei5lKOjqek7O1h9zs4benJKYTSl0iWGFxHaTUB1TtQmIkcP+n6pi9yqtZv0c1Du
-	 kAA7yd5FliQvcJeybof3NrOPOYhr8fVA8oVEgfdSX1dlYUOzihDDzeP02YENdha0mq
-	 6JXFTtGIkPMrrtyTJtTgF9QCiAnM+TNvgwwunOMs=
+	b=hdobODZiQPOcDfw+aMRzDhdeC8qXqUAFMBWULpOPoaDyPrbqhNRXluyl/8gtSdz0S
+	 SPlTtSbNzlzErFmrEERIIs6VXFP/CWleA5s8r2qKhRLCrE48dp2B2FdfA6DxfD5qgf
+	 8O2EB7rcVoZWD4qwHLhQEX4Cv2X8w4vJczSjw2Qw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Loic Poulain <loic.poulain@oss.qualcomm.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-	Abel Vesa <abel.vesa@oss.qualcomm.com>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Amelie Delaunay <amelie.delaunay@foss.st.com>,
 	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 038/254] phy: qcom-qusb2: Fix NULL pointer dereference on early suspend
-Date: Wed, 28 Jan 2026 16:20:14 +0100
-Message-ID: <20260128145346.072981063@linuxfoundation.org>
+Subject: [PATCH 6.6 039/254] phy: stm32-usphyc: Fix off by one in probe()
+Date: Wed, 28 Jan 2026 16:20:15 +0100
+Message-ID: <20260128145346.108760815@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260128145344.698118637@linuxfoundation.org>
 References: <20260128145344.698118637@linuxfoundation.org>
@@ -53,89 +52,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Loic Poulain <loic.poulain@oss.qualcomm.com>
+From: Dan Carpenter <dan.carpenter@linaro.org>
 
-[ Upstream commit 1ca52c0983c34fca506921791202ed5bdafd5306 ]
+[ Upstream commit cabd25b57216ddc132efbcc31f972baa03aad15a ]
 
-Enabling runtime PM before attaching the QPHY instance as driver data
-can lead to a NULL pointer dereference in runtime PM callbacks that
-expect valid driver data. There is a small window where the suspend
-callback may run after PM runtime enabling and before runtime forbid.
-This causes a sporadic crash during boot:
+The "index" variable is used as an index into the usbphyc->phys[] array
+which has usbphyc->nphys elements.  So if it is equal to usbphyc->nphys
+then it is one element out of bounds.  The "index" comes from the
+device tree so it's data that we trust and it's unlikely to be wrong,
+however it's obviously still worth fixing the bug.  Change the > to >=.
 
-```
-Unable to handle kernel NULL pointer dereference at virtual address 00000000000000a1
-[...]
-CPU: 0 UID: 0 PID: 11 Comm: kworker/0:1 Not tainted 6.16.7+ #116 PREEMPT
-Workqueue: pm pm_runtime_work
-pstate: 20000005 (nzCv daif -PAN -UAO -TCO -DIT -SSBS BTYPE=--)
-pc : qusb2_phy_runtime_suspend+0x14/0x1e0 [phy_qcom_qusb2]
-lr : pm_generic_runtime_suspend+0x2c/0x44
-[...]
-```
-
-Attach the QPHY instance as driver data before enabling runtime PM to
-prevent NULL pointer dereference in runtime PM callbacks.
-
-Reorder pm_runtime_enable() and pm_runtime_forbid() to prevent a
-short window where an unnecessary runtime suspend can occur.
-
-Use the devres-managed version to ensure PM runtime is symmetrically
-disabled during driver removal for proper cleanup.
-
-Fixes: 891a96f65ac3 ("phy: qcom-qusb2: Add support for runtime PM")
-Signed-off-by: Loic Poulain <loic.poulain@oss.qualcomm.com>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Reviewed-by: Abel Vesa <abel.vesa@oss.qualcomm.com>
-Link: https://patch.msgid.link/20251219085640.114473-1-loic.poulain@oss.qualcomm.com
+Fixes: 94c358da3a05 ("phy: stm32: add support for STM32 USB PHY Controller (USBPHYC)")
+Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
+Reviewed-by: Amelie Delaunay <amelie.delaunay@foss.st.com>
+Link: https://patch.msgid.link/aTfHcMJK1wFVnvEe@stanley.mountain
 Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/phy/qualcomm/phy-qcom-qusb2.c | 16 ++++++++--------
- 1 file changed, 8 insertions(+), 8 deletions(-)
+ drivers/phy/st/phy-stm32-usbphyc.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/phy/qualcomm/phy-qcom-qusb2.c b/drivers/phy/qualcomm/phy-qcom-qusb2.c
-index 531c3860c3160..d3c26a39873f7 100644
---- a/drivers/phy/qualcomm/phy-qcom-qusb2.c
-+++ b/drivers/phy/qualcomm/phy-qcom-qusb2.c
-@@ -1063,29 +1063,29 @@ static int qusb2_phy_probe(struct platform_device *pdev)
- 		or->hsdisc_trim.override = true;
- 	}
+diff --git a/drivers/phy/st/phy-stm32-usbphyc.c b/drivers/phy/st/phy-stm32-usbphyc.c
+index f8374a7f3a655..4a8f2ab65571a 100644
+--- a/drivers/phy/st/phy-stm32-usbphyc.c
++++ b/drivers/phy/st/phy-stm32-usbphyc.c
+@@ -712,7 +712,7 @@ static int stm32_usbphyc_probe(struct platform_device *pdev)
+ 		}
  
--	pm_runtime_set_active(dev);
--	pm_runtime_enable(dev);
-+	dev_set_drvdata(dev, qphy);
-+
- 	/*
--	 * Prevent runtime pm from being ON by default. Users can enable
--	 * it using power/control in sysfs.
-+	 * Enable runtime PM support, but forbid it by default.
-+	 * Users can allow it again via the power/control attribute in sysfs.
- 	 */
-+	pm_runtime_set_active(dev);
- 	pm_runtime_forbid(dev);
-+	ret = devm_pm_runtime_enable(dev);
-+	if (ret)
-+		return ret;
- 
- 	generic_phy = devm_phy_create(dev, NULL, &qusb2_phy_gen_ops);
- 	if (IS_ERR(generic_phy)) {
- 		ret = PTR_ERR(generic_phy);
- 		dev_err(dev, "failed to create phy, %d\n", ret);
--		pm_runtime_disable(dev);
- 		return ret;
- 	}
- 	qphy->phy = generic_phy;
- 
--	dev_set_drvdata(dev, qphy);
- 	phy_set_drvdata(generic_phy, qphy);
- 
- 	phy_provider = devm_of_phy_provider_register(dev, of_phy_simple_xlate);
--	if (IS_ERR(phy_provider))
--		pm_runtime_disable(dev);
- 
- 	return PTR_ERR_OR_ZERO(phy_provider);
- }
+ 		ret = of_property_read_u32(child, "reg", &index);
+-		if (ret || index > usbphyc->nphys) {
++		if (ret || index >= usbphyc->nphys) {
+ 			dev_err(&phy->dev, "invalid reg property: %d\n", ret);
+ 			if (!ret)
+ 				ret = -EINVAL;
 -- 
 2.51.0
 
