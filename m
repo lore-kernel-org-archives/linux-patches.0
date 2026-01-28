@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A60C29B8C7;
-	Wed, 28 Jan 2026 15:34:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F6282BE04C;
+	Wed, 28 Jan 2026 15:34:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769614487; cv=none; b=c4S3Y+Yp53pJ73EXmWf4qYJNw1LMwrtdwuHmDpkSGvNHaWU7L56hCXejO1NsmzL+MYcfmLBcvomYCbokB08yWR0YOm0puFdENqyE3kJz0LPR43S/ILWxpJ4JCfOO4WBvqXh7jTGD1hT+qFnkFOqhMtG80btgdw/3a+sjC8kpQ60=
+	t=1769614490; cv=none; b=dvmZ9dT32kaSLu/FSc35Vf2H9JcrIJzUgQyPJigZoQxZg+dJWIpN+xfGPBXYsI7o2WSBb7kfPhw9oAocTbcEbhcwDI3jbjcFTlCL3sdSsdrUf7JLQ7NZ+7b9f6dsA1nSfV/rrhzFL7ImihndFbe5dFXU6th4KJwB9Gth9V+bngc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769614487; c=relaxed/simple;
-	bh=2xu2eNUsEE5dBIfysc6PoApvdjjyRVfn5VmAcUBTTXw=;
+	s=arc-20240116; t=1769614490; c=relaxed/simple;
+	bh=9XfhUg/dW/MC04Q5np7zNZh7qgI/UzUiwv+XbopQJd8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MlQobHV0qncM0ODsUSvoCbo12/2qvil3o0fY6nHe9McFsiyVWIAqyUc+xsc4tgNKdmEq+ZJTyfSL0w/oqZOU/F3/rfZLf+08Ujh9QOUAHwNHJxwiITgE7a8ZKP3YV3mcwIc+BbWktHkKC6Hc+hFXA0xeNOvIqa8pfkpIhtf2x8k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cTlVLANK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Hxx5Undr3gUzTw2E3SrVbXP0j3rpZTFf73D1kzQtOG+jvUcyuRVVTNFaTjCggllyTqtXBHS4Oqub9FVyukZi09HP0w7QO9y4gPUZ+IAPp6f47PPUgY0PgqtoH9jXks4dLPxBe0uYmRu85BPLI3tNoB1X4EvKkkPzPx5MNUaTa9s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ofc6PEUK; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cTlVLANK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 53DC9C4CEF1;
-	Wed, 28 Jan 2026 15:34:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ofc6PEUK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3DE6CC4CEF7;
+	Wed, 28 Jan 2026 15:34:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1769614486;
-	bh=2xu2eNUsEE5dBIfysc6PoApvdjjyRVfn5VmAcUBTTXw=;
+	s=korg; t=1769614489;
+	bh=9XfhUg/dW/MC04Q5np7zNZh7qgI/UzUiwv+XbopQJd8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cTlVLANKTupSvJa04qhcGLe2smI8lZDHIt+5PxKs1UeUrP1LikFipV81yHAXvTly1
-	 VHufJt99kd88WDZBxM5QDhjnglL/CSj23IijAFDRCRIpt/6B0MdU8j4cYO+NFhDV7K
-	 6S/OeJDdyhdTz81ZLYNBxhJCAgsWhN4itQhzQD/4=
+	b=Ofc6PEUKC16U743bpawNk6PHg35YsVS9ItsMkyhGQoVBg6E9tMGk7c/j5QpWy7Y6/
+	 JrviFqCwyo+IArNg/+jeQ6zvbsREhbEAMN+lNOw/DO4i2cke1JfHvkJAyrLUMI+grI
+	 yI3nZ37QCUGrUllRc1ZPVXWZA34nApJ2aq0cvVSo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pavel Zhigulin <Pavel.Zhigulin@kaspersky.com>,
-	Marcelo Schmitt <marcelo.schmitt@analog.com>,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+	Georgi Djakov <djakov@kernel.org>,
+	Kuan-Wei Chiu <visitorckw@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 152/254] iio: adc: ad7280a: handle spi_setup() errors in probe()
-Date: Wed, 28 Jan 2026 16:22:08 +0100
-Message-ID: <20260128145350.280811243@linuxfoundation.org>
+Subject: [PATCH 6.6 153/254] interconnect: debugfs: initialize src_node and dst_node to empty strings
+Date: Wed, 28 Jan 2026 16:22:09 +0100
+Message-ID: <20260128145350.317019193@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260128145344.698118637@linuxfoundation.org>
 References: <20260128145344.698118637@linuxfoundation.org>
@@ -52,43 +51,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pavel Zhigulin <Pavel.Zhigulin@kaspersky.com>
+From: Georgi Djakov <djakov@kernel.org>
 
-[ Upstream commit 6b39824ac4c15783787e6434449772bfb2e31214 ]
+[ Upstream commit 8cc27f5c6dd17dd090f3a696683f04336c162ff5 ]
 
-The probe() function ignored the return value of spi_setup(), leaving SPI
-configuration failures undetected. If spi_setup() fails, the driver should
-stop initialization and propagate the error to the caller.
+The debugfs_create_str() API assumes that the string pointer is either NULL
+or points to valid kmalloc() memory. Leaving the pointer uninitialized can
+cause problems.
 
-Add proper error handling: check the return value of spi_setup() and return
-it on failure.
+Initialize src_node and dst_node to empty strings before creating the
+debugfs entries to guarantee that reads and writes are safe.
 
-Found by Linux Verification Center (linuxtesting.org) with SVACE.
-
-Fixes: 2051f25d2a26 ("iio: adc: New driver for AD7280A Lithium Ion Battery Monitoring System")
-Signed-off-by: Pavel Zhigulin <Pavel.Zhigulin@kaspersky.com>
-Reviewed-by: Marcelo Schmitt <marcelo.schmitt@analog.com>
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Fixes: 770c69f037c1 ("interconnect: Add debugfs test client")
+Signed-off-by: Georgi Djakov <djakov@kernel.org>
+Reviewed-by: Kuan-Wei Chiu <visitorckw@gmail.com>
+Tested-by: Kuan-Wei Chiu <visitorckw@gmail.com>
+Link: https://lore.kernel.org/r/20260109122523.125843-1-djakov@kernel.org
+Signed-off-by: Georgi Djakov <djakov@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iio/adc/ad7280a.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/interconnect/debugfs-client.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/drivers/iio/adc/ad7280a.c b/drivers/iio/adc/ad7280a.c
-index 9080c795dcb7e..10cc623bf62a3 100644
---- a/drivers/iio/adc/ad7280a.c
-+++ b/drivers/iio/adc/ad7280a.c
-@@ -1028,7 +1028,9 @@ static int ad7280_probe(struct spi_device *spi)
+diff --git a/drivers/interconnect/debugfs-client.c b/drivers/interconnect/debugfs-client.c
+index 778deeb4a7e8a..24d7b5a577945 100644
+--- a/drivers/interconnect/debugfs-client.c
++++ b/drivers/interconnect/debugfs-client.c
+@@ -150,6 +150,11 @@ int icc_debugfs_client_init(struct dentry *icc_dir)
+ 		return ret;
+ 	}
  
- 	st->spi->max_speed_hz = AD7280A_MAX_SPI_CLK_HZ;
- 	st->spi->mode = SPI_MODE_1;
--	spi_setup(st->spi);
-+	ret = spi_setup(st->spi);
-+	if (ret < 0)
-+		return ret;
++	src_node = devm_kstrdup(&pdev->dev, "", GFP_KERNEL);
++	dst_node = devm_kstrdup(&pdev->dev, "", GFP_KERNEL);
++	if (!src_node || !dst_node)
++		return -ENOMEM;
++
+ 	client_dir = debugfs_create_dir("test_client", icc_dir);
  
- 	st->ctrl_lb = FIELD_PREP(AD7280A_CTRL_LB_ACQ_TIME_MSK, st->acquisition_time) |
- 		FIELD_PREP(AD7280A_CTRL_LB_THERMISTOR_MSK, st->thermistor_term_en);
+ 	debugfs_create_str("src_node", 0600, client_dir, &src_node);
 -- 
 2.51.0
 
