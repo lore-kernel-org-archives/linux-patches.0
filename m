@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9529D25783A;
-	Wed, 28 Jan 2026 16:00:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E59E81AA8;
+	Wed, 28 Jan 2026 16:00:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769616028; cv=none; b=Zogtx3EW1ztMa9BfgS03sgSMs46OTpvcX+/UMnEv2XVJDhNxoZLGE9lAKmvIA7b4yBNhx8lLvnBOVSzqVUJ0qpQawN4bM2kVf9nswOcL2Uks0Py17I5i8V2RgldOSETJ5SBKC1vgzcsrDE+h258+rXqYYXhn+bR+FZ/fZDupxuo=
+	t=1769616032; cv=none; b=sjp1DplyepKE4NyP+6OIdmb/+EhtImq2DnxjekDCgpLxZ+1PykRSorgixpAFgw0dCpRM2V+V27HqYiKMdGB0tp9ZR05MzbPlZZqctjC7YfERNsr4Q5yrsXsfNLecyZ/yuq01Ou3L/QMwi3ekQXFx7tQxagdtpRAJTn0O7mzgBsk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769616028; c=relaxed/simple;
-	bh=YFhGMiObi8/STldQv1JzmvguqZo9QRjSWLO/ym9lZvA=;
+	s=arc-20240116; t=1769616032; c=relaxed/simple;
+	bh=n5T5sj9akrOY3vUqhs5kWrQVF9cNlGotAUwcaFlmWbE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=is/M66aB5pxAG6TkPhBkMZ6Ax2YDc/zGx+9S8rVn7mc6+kIEp5ifDHLtoXIXzTweUz/sT8W8AZmJVsqhOOtESZSzjqKGb5ctGfM2xfp/pKvARWgr/Ubatm4d9CRX3O+PTUhpOWUMGU/KGKnntAcuhxMWStP3bsEcKS5HQ2cz8h8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gDzDkgqz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MKVyl0Yl7rV3WXX9Lb8MhobcgxIh/6inZzCFnvWpqjbRmEHqd/JzZo0ahuYdlqQeMSzLKUwInNjy17emeyUgjdzqj2zKJnr9K2ZQi2b3b9wSs40pyLMRuHUT7Q/wHpkMvV2PSeBiBDRaAbp0Hwjx3Qf3oLagEX6wn8mY1/vR27I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CxmPIb5m; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gDzDkgqz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EEC37C4CEF1;
-	Wed, 28 Jan 2026 16:00:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CxmPIb5m"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A4FF5C4CEF1;
+	Wed, 28 Jan 2026 16:00:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1769616028;
-	bh=YFhGMiObi8/STldQv1JzmvguqZo9QRjSWLO/ym9lZvA=;
+	s=korg; t=1769616032;
+	bh=n5T5sj9akrOY3vUqhs5kWrQVF9cNlGotAUwcaFlmWbE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gDzDkgqzPoJDRVOGou7l5faHM70lDnBw1IAZhCjlyRmV9xCJy51212KnxzN1LxFCU
-	 X08+t+7Q3jtCG65/VL/QKZ3oqug8GbEP31CQMZclbRqwrpJvup96RgRjzrF25F7MXG
-	 Z9A6Zo25p4rZXUB4s9Xemq0jvy9Lqdf4RkdZyzX4=
+	b=CxmPIb5mHqKMJZaEkO/DLMFDIXFNg0cxmRpZ4D1oHwNiSBl9IsKbUxrnJifZpBtDn
+	 xGj+2lGGJ0HOg3KuP4DoAkU89p9KhUFcj/Hbk5lYFASzJo3l934jaDT+DeLEhrkCgY
+	 b8GRFYgn1AHuhqyl25T1/EynpoAJyGD8NZrEOJdI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Masami Hiramatsu <mhiramat@kernel.org>,
-	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
-	Tom Zanussi <zanussi@kernel.org>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>
-Subject: [PATCH 6.18 186/227] tracing: Fix crash on synthetic stacktrace field usage
-Date: Wed, 28 Jan 2026 16:23:51 +0100
-Message-ID: <20260128145351.139403079@linuxfoundation.org>
+	Andrey Konovalov <andreyknvl@gmail.com>,
+	Berk Cem Goksel <berkcgoksel@gmail.com>,
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 6.18 169/227] ALSA: usb-audio: Fix use-after-free in snd_usb_mixer_free()
+Date: Wed, 28 Jan 2026 16:23:34 +0100
+Message-ID: <20260128145350.532794387@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260128145344.331957407@linuxfoundation.org>
 References: <20260128145344.331957407@linuxfoundation.org>
@@ -52,160 +51,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Steven Rostedt <rostedt@goodmis.org>
+From: Berk Cem Goksel <berkcgoksel@gmail.com>
 
-commit 90f9f5d64cae4e72defd96a2a22760173cb3c9ec upstream.
+commit 930e69757b74c3ae083b0c3c7419bfe7f0edc7b2 upstream.
 
-When creating a synthetic event based on an existing synthetic event that
-had a stacktrace field and the new synthetic event used that field a
-kernel crash occurred:
+When snd_usb_create_mixer() fails, snd_usb_mixer_free() frees
+mixer->id_elems but the controls already added to the card still
+reference the freed memory. Later when snd_card_register() runs,
+the OSS mixer layer calls their callbacks and hits a use-after-free read.
 
- ~# cd /sys/kernel/tracing
- ~# echo 's:stack unsigned long stack[];' > dynamic_events
- ~# echo 'hist:keys=prev_pid:s0=common_stacktrace if prev_state & 3' >> events/sched/sched_switch/trigger
- ~# echo 'hist:keys=next_pid:s1=$s0:onmatch(sched.sched_switch).trace(stack,$s1)' >> events/sched/sched_switch/trigger
+Call trace:
+  get_ctl_value+0x63f/0x820 sound/usb/mixer.c:411
+  get_min_max_with_quirks.isra.0+0x240/0x1f40 sound/usb/mixer.c:1241
+  mixer_ctl_feature_info+0x26b/0x490 sound/usb/mixer.c:1381
+  snd_mixer_oss_build_test+0x174/0x3a0 sound/core/oss/mixer_oss.c:887
+  ...
+  snd_card_register+0x4ed/0x6d0 sound/core/init.c:923
+  usb_audio_probe+0x5ef/0x2a90 sound/usb/card.c:1025
 
-The above creates a synthetic event that takes a stacktrace when a task
-schedules out in a non-running state and passes that stacktrace to the
-sched_switch event when that task schedules back in. It triggers the
-"stack" synthetic event that has a stacktrace as its field (called "stack").
+Fix by calling snd_ctl_remove() for all mixer controls before freeing
+id_elems. We save the next pointer first because snd_ctl_remove()
+frees the current element.
 
- ~# echo 's:syscall_stack s64 id; unsigned long stack[];' >> dynamic_events
- ~# echo 'hist:keys=common_pid:s2=stack' >> events/synthetic/stack/trigger
- ~# echo 'hist:keys=common_pid:s3=$s2,i0=id:onmatch(synthetic.stack).trace(syscall_stack,$i0,$s3)' >> events/raw_syscalls/sys_exit/trigger
-
-The above makes another synthetic event called "syscall_stack" that
-attaches the first synthetic event (stack) to the sys_exit trace event and
-records the stacktrace from the stack event with the id of the system call
-that is exiting.
-
-When enabling this event (or using it in a historgram):
-
- ~# echo 1 > events/synthetic/syscall_stack/enable
-
-Produces a kernel crash!
-
- BUG: unable to handle page fault for address: 0000000000400010
- #PF: supervisor read access in kernel mode
- #PF: error_code(0x0000) - not-present page
- PGD 0 P4D 0
- Oops: Oops: 0000 [#1] SMP PTI
- CPU: 6 UID: 0 PID: 1257 Comm: bash Not tainted 6.16.3+deb14-amd64 #1 PREEMPT(lazy)  Debian 6.16.3-1
- Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS 1.17.0-debian-1.17.0-1 04/01/2014
- RIP: 0010:trace_event_raw_event_synth+0x90/0x380
- Code: c5 00 00 00 00 85 d2 0f 84 e1 00 00 00 31 db eb 34 0f 1f 00 66 66 2e 0f 1f 84 00 00 00 00 00 66 66 2e 0f 1f 84 00 00 00 00 00 <49> 8b 04 24 48 83 c3 01 8d 0c c5 08 00 00 00 01 cd 41 3b 5d 40 0f
- RSP: 0018:ffffd2670388f958 EFLAGS: 00010202
- RAX: ffff8ba1065cc100 RBX: 0000000000000000 RCX: 0000000000000000
- RDX: 0000000000000001 RSI: fffff266ffda7b90 RDI: ffffd2670388f9b0
- RBP: 0000000000000010 R08: ffff8ba104e76000 R09: ffffd2670388fa50
- R10: ffff8ba102dd42e0 R11: ffffffff9a908970 R12: 0000000000400010
- R13: ffff8ba10a246400 R14: ffff8ba10a710220 R15: fffff266ffda7b90
- FS:  00007fa3bc63f740(0000) GS:ffff8ba2e0f48000(0000) knlGS:0000000000000000
- CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
- CR2: 0000000000400010 CR3: 0000000107f9e003 CR4: 0000000000172ef0
- Call Trace:
-  <TASK>
-  ? __tracing_map_insert+0x208/0x3a0
-  action_trace+0x67/0x70
-  event_hist_trigger+0x633/0x6d0
-  event_triggers_call+0x82/0x130
-  trace_event_buffer_commit+0x19d/0x250
-  trace_event_raw_event_sys_exit+0x62/0xb0
-  syscall_exit_work+0x9d/0x140
-  do_syscall_64+0x20a/0x2f0
-  ? trace_event_raw_event_sched_switch+0x12b/0x170
-  ? save_fpregs_to_fpstate+0x3e/0x90
-  ? _raw_spin_unlock+0xe/0x30
-  ? finish_task_switch.isra.0+0x97/0x2c0
-  ? __rseq_handle_notify_resume+0xad/0x4c0
-  ? __schedule+0x4b8/0xd00
-  ? restore_fpregs_from_fpstate+0x3c/0x90
-  ? switch_fpu_return+0x5b/0xe0
-  ? do_syscall_64+0x1ef/0x2f0
-  ? do_fault+0x2e9/0x540
-  ? __handle_mm_fault+0x7d1/0xf70
-  ? count_memcg_events+0x167/0x1d0
-  ? handle_mm_fault+0x1d7/0x2e0
-  ? do_user_addr_fault+0x2c3/0x7f0
-  entry_SYSCALL_64_after_hwframe+0x76/0x7e
-
-The reason is that the stacktrace field is not labeled as such, and is
-treated as a normal field and not as a dynamic event that it is.
-
-In trace_event_raw_event_synth() the event is field is still treated as a
-dynamic array, but the retrieval of the data is considered a normal field,
-and the reference is just the meta data:
-
-// Meta data is retrieved instead of a dynamic array
-  str_val = (char *)(long)var_ref_vals[val_idx];
-
-// Then when it tries to process it:
-  len = *((unsigned long *)str_val) + 1;
-
-It triggers a kernel page fault.
-
-To fix this, first when defining the fields of the first synthetic event,
-set the filter type to FILTER_STACKTRACE. This is used later by the second
-synthetic event to know that this field is a stacktrace. When creating
-the field of the new synthetic event, have it use this FILTER_STACKTRACE
-to know to create a stacktrace field to copy the stacktrace into.
-
+Fixes: 6639b6c2367f ("[ALSA] usb-audio - add mixer control notifications")
 Cc: stable@vger.kernel.org
-Cc: Masami Hiramatsu <mhiramat@kernel.org>
-Cc: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
-Cc: Tom Zanussi <zanussi@kernel.org>
-Link: https://patch.msgid.link/20260122194824.6905a38e@gandalf.local.home
-Fixes: 00cf3d672a9d ("tracing: Allow synthetic events to pass around stacktraces")
-Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Cc: Andrey Konovalov <andreyknvl@gmail.com>
+Signed-off-by: Berk Cem Goksel <berkcgoksel@gmail.com>
+Link: https://patch.msgid.link/20260120102855.7300-1-berkcgoksel@gmail.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/trace/trace_events_hist.c  |    9 +++++++++
- kernel/trace/trace_events_synth.c |    8 +++++++-
- 2 files changed, 16 insertions(+), 1 deletion(-)
+ sound/usb/mixer.c |   15 ++++++++++++++-
+ 1 file changed, 14 insertions(+), 1 deletion(-)
 
---- a/kernel/trace/trace_events_hist.c
-+++ b/kernel/trace/trace_events_hist.c
-@@ -2057,6 +2057,15 @@ static struct hist_field *create_hist_fi
- 			hist_field->fn_num = HIST_FIELD_FN_RELDYNSTRING;
- 		else
- 			hist_field->fn_num = HIST_FIELD_FN_PSTRING;
-+	} else if (field->filter_type == FILTER_STACKTRACE) {
-+		flags |= HIST_FIELD_FL_STACKTRACE;
-+
-+		hist_field->size = MAX_FILTER_STR_VAL;
-+		hist_field->type = kstrdup_const(field->type, GFP_KERNEL);
-+		if (!hist_field->type)
-+			goto free;
-+
-+		hist_field->fn_num = HIST_FIELD_FN_STACK;
- 	} else {
- 		hist_field->size = field->size;
- 		hist_field->is_signed = field->is_signed;
---- a/kernel/trace/trace_events_synth.c
-+++ b/kernel/trace/trace_events_synth.c
-@@ -130,7 +130,9 @@ static int synth_event_define_fields(str
- 	struct synth_event *event = call->data;
- 	unsigned int i, size, n_u64;
- 	char *name, *type;
-+	int filter_type;
- 	bool is_signed;
-+	bool is_stack;
- 	int ret = 0;
+--- a/sound/usb/mixer.c
++++ b/sound/usb/mixer.c
+@@ -2945,10 +2945,23 @@ static int parse_audio_unit(struct mixer
  
- 	for (i = 0, n_u64 = 0; i < event->n_fields; i++) {
-@@ -138,8 +140,12 @@ static int synth_event_define_fields(str
- 		is_signed = event->fields[i]->is_signed;
- 		type = event->fields[i]->type;
- 		name = event->fields[i]->name;
-+		is_stack = event->fields[i]->is_stack;
+ static void snd_usb_mixer_free(struct usb_mixer_interface *mixer)
+ {
++	struct usb_mixer_elem_list *list, *next;
++	int id;
 +
-+		filter_type = is_stack ? FILTER_STACKTRACE : FILTER_OTHER;
-+
- 		ret = trace_define_field(call, type, name, offset, size,
--					 is_signed, FILTER_OTHER);
-+					 is_signed, filter_type);
- 		if (ret)
- 			break;
+ 	/* kill pending URBs */
+ 	snd_usb_mixer_disconnect(mixer);
  
+-	kfree(mixer->id_elems);
++	/* Unregister controls first, snd_ctl_remove() frees the element */
++	if (mixer->id_elems) {
++		for (id = 0; id < MAX_ID_ELEMS; id++) {
++			for (list = mixer->id_elems[id]; list; list = next) {
++				next = list->next_id_elem;
++				if (list->kctl)
++					snd_ctl_remove(mixer->chip->card, list->kctl);
++			}
++		}
++		kfree(mixer->id_elems);
++	}
+ 	if (mixer->urb) {
+ 		kfree(mixer->urb->transfer_buffer);
+ 		usb_free_urb(mixer->urb);
 
 
