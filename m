@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 656E82C2346;
-	Wed, 28 Jan 2026 15:48:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 242D52C2346;
+	Wed, 28 Jan 2026 15:48:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769615292; cv=none; b=EnGnZUMxCViwTsuow1yjg7zHQFp0gWezUKaWEEsjJ9bjCF07Ry6KdsnqPOGpbUprgHJwSHuiclWCk1XDzVJn1yue0kNPZNGKUYjwCl82VMOVcb+xt9/UU3bFji2/WIpQhfjBA7EXMsXjdrXwdM9tnxCukqebk8eIUlBj2oGR214=
+	t=1769615296; cv=none; b=pLxxNzWcD0Kbs6AYE6Edvpit7OXl74IAbLoxGTylQKpM4VvpfnVH2p+mcrbKRzpMyFb4m6V/MTBbTIAXMjUAjLwGuCIvJwlZqfBODJxeiRFwHa4YeNGj+bEzwzdBo+r0jxJj3Q45Mes+SqfT4bOvPcGkeDvGA+sqy2JpvBIuYa0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769615292; c=relaxed/simple;
-	bh=11jQvHeKf1jhLonLBi9BAnL0tQ7hMb/WrPRcKfIueGo=;
+	s=arc-20240116; t=1769615296; c=relaxed/simple;
+	bh=Vr0qH1lHiJz+HwXptejmDoaxyIA+KgCnx3vYIrcAKZU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=pRA/h5qjfAQrUHGvRXFz8nntoMZjz9KjBAE2IUQwBTgZhn79ektwg/tBiTRzIjBU+jiWorcqI3ZyBvhXD7W579Lz9k0ImQ+rzqr797sIxcTNvq5WqPBpc1rVAwjci+lSA4WlDcH6X2plWBlsFzXjhJCrs6Xfrjdq1lTbxPVM/m4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MVzeaz6m; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=s3puUgtUmqKDajxGp9KPEfk/jpsop+sSr66MUjol3vPfHPbeW5p06yzsUTPB4hGiuqeRM9EcR6zs9GrmZKwuk5udIJJ2S+lVLUZrFEMoZi4yfTSRVIRM9oqER6WDimixrNZbmhwtLO7pUI0c9BbSOvjyb/cirEytRHRcQmu0EH8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PKPLIueg; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MVzeaz6m"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C682FC4CEF1;
-	Wed, 28 Jan 2026 15:48:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PKPLIueg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 68349C4AF0B;
+	Wed, 28 Jan 2026 15:48:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1769615292;
-	bh=11jQvHeKf1jhLonLBi9BAnL0tQ7hMb/WrPRcKfIueGo=;
+	s=korg; t=1769615296;
+	bh=Vr0qH1lHiJz+HwXptejmDoaxyIA+KgCnx3vYIrcAKZU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MVzeaz6mC8RlAArc9vlMTUXmK1M7jrKhksbTVPaovL3XrOl4ePE2Us8g0yyVBBZQI
-	 ATcYta5nWeBgGVSHxP3mivb0AlGaPqr26gNjn7Nc37OT5Z7YJlMH4ka19XoKEec6T1
-	 43RxYMwVCIDo/I/Es/JeQPeEJMfB3+N3eubjONOo=
+	b=PKPLIueg8p0gklq6HsSpDpJYTQBEvqcJdBI/ujgvg+vFQKnkIIql6eKGZTQWvW5Lc
+	 2bQPPpNX3eazYdpjXmY2AQjDv2M0aTF/8+AwbP/GQ7GXT7EpTLqTWtnC1DquWSQUfP
+	 wNqUcS4cZ1h38ZQr3q0I0pxqHg/5RT/Naa77lx3U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mario Limonciello <mario.limonciello@amd.com>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>
-Subject: [PATCH 6.12 135/169] platform/x86: hp-bioscfg: Fix automatic module loading
-Date: Wed, 28 Jan 2026 16:23:38 +0100
-Message-ID: <20260128145338.865936181@linuxfoundation.org>
+	Ming Qian <ming.qian@oss.nxp.com>,
+	Benjamin Gaignard <benjamin.gaignard@collabora.com>,
+	Peng Fan <peng.fan@nxp.com>,
+	Frank Li <Frank.Li@nxp.com>,
+	Ulf Hansson <ulf.hansson@linaro.org>
+Subject: [PATCH 6.12 136/169] pmdomain: imx8m-blk-ctrl: Remove separate rst and clk mask for 8mq vpu
+Date: Wed, 28 Jan 2026 16:23:39 +0100
+Message-ID: <20260128145338.902027321@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260128145334.006287341@linuxfoundation.org>
 References: <20260128145334.006287341@linuxfoundation.org>
@@ -44,55 +47,65 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Mario Limonciello <mario.limonciello@amd.com>
+From: Ming Qian <ming.qian@oss.nxp.com>
 
-commit 467d4afc6caa64b84a6db1634f8091e931f4a7cb upstream.
+commit 3de49966499634454fd59e0e6fecd50baab7febd upstream.
 
-hp-bioscfg has a MODULE_DEVICE_TABLE with a GUID in it that looks
-plausible, but the module doesn't automatically load on applicable
-systems.
+For i.MX8MQ platform, the ADB in the VPUMIX domain has no separate reset
+and clock enable bits, but is ungated and reset together with the VPUs.
+So we can't reset G1 or G2 separately, it may led to the system hang.
+Remove rst_mask and clk_mask of imx8mq_vpu_blk_ctl_domain_data.
+Let imx8mq_vpu_power_notifier() do really vpu reset.
 
-This is because the GUID has some lower case characters and so it
-doesn't match the modalias during boot. Update the GUIDs to be all
-uppercase.
-
+Fixes: 608d7c325e85 ("soc: imx: imx8m-blk-ctrl: add i.MX8MQ VPU blk-ctrl")
+Signed-off-by: Ming Qian <ming.qian@oss.nxp.com>
+Reviewed-by: Benjamin Gaignard <benjamin.gaignard@collabora.com>
+Reviewed-by: Peng Fan <peng.fan@nxp.com>
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
 Cc: stable@vger.kernel.org
-Fixes: 5f94f181ca25 ("platform/x86: hp-bioscfg: bioscfg-h")
-Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
-Link: https://patch.msgid.link/20260115203725.828434-4-mario.limonciello@amd.com
-Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/platform/x86/hp/hp-bioscfg/bioscfg.h |    6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/pmdomain/imx/imx8m-blk-ctrl.c |   11 +++++++----
+ 1 file changed, 7 insertions(+), 4 deletions(-)
 
---- a/drivers/platform/x86/hp/hp-bioscfg/bioscfg.h
-+++ b/drivers/platform/x86/hp/hp-bioscfg/bioscfg.h
-@@ -57,14 +57,14 @@ enum mechanism_values {
+--- a/drivers/pmdomain/imx/imx8m-blk-ctrl.c
++++ b/drivers/pmdomain/imx/imx8m-blk-ctrl.c
+@@ -846,22 +846,25 @@ static int imx8mq_vpu_power_notifier(str
+ 	return NOTIFY_OK;
+ }
  
- #define PASSWD_MECHANISM_TYPES "password"
++/*
++ * For i.MX8MQ, the ADB in the VPUMIX domain has no separate reset and clock
++ * enable bits, but is ungated and reset together with the VPUs.
++ * Resetting G1 or G2 separately may led to system hang.
++ * Remove the rst_mask and clk_mask from the domain data of G1 and G2,
++ * Let imx8mq_vpu_power_notifier() do really vpu reset.
++ */
+ static const struct imx8m_blk_ctrl_domain_data imx8mq_vpu_blk_ctl_domain_data[] = {
+ 	[IMX8MQ_VPUBLK_PD_G1] = {
+ 		.name = "vpublk-g1",
+ 		.clk_names = (const char *[]){ "g1", },
+ 		.num_clks = 1,
+ 		.gpc_name = "g1",
+-		.rst_mask = BIT(1),
+-		.clk_mask = BIT(1),
+ 	},
+ 	[IMX8MQ_VPUBLK_PD_G2] = {
+ 		.name = "vpublk-g2",
+ 		.clk_names = (const char *[]){ "g2", },
+ 		.num_clks = 1,
+ 		.gpc_name = "g2",
+-		.rst_mask = BIT(0),
+-		.clk_mask = BIT(0),
+ 	},
+ };
  
--#define HP_WMI_BIOS_GUID		"5FB7F034-2C63-45e9-BE91-3D44E2C707E4"
-+#define HP_WMI_BIOS_GUID		"5FB7F034-2C63-45E9-BE91-3D44E2C707E4"
- 
--#define HP_WMI_BIOS_STRING_GUID		"988D08E3-68F4-4c35-AF3E-6A1B8106F83C"
-+#define HP_WMI_BIOS_STRING_GUID		"988D08E3-68F4-4C35-AF3E-6A1B8106F83C"
- #define HP_WMI_BIOS_INTEGER_GUID	"8232DE3D-663D-4327-A8F4-E293ADB9BF05"
- #define HP_WMI_BIOS_ENUMERATION_GUID	"2D114B49-2DFB-4130-B8FE-4A3C09E75133"
- #define HP_WMI_BIOS_ORDERED_LIST_GUID	"14EA9746-CE1F-4098-A0E0-7045CB4DA745"
- #define HP_WMI_BIOS_PASSWORD_GUID	"322F2028-0F84-4901-988E-015176049E2D"
--#define HP_WMI_SET_BIOS_SETTING_GUID	"1F4C91EB-DC5C-460b-951D-C7CB9B4B8D5E"
-+#define HP_WMI_SET_BIOS_SETTING_GUID	"1F4C91EB-DC5C-460B-951D-C7CB9B4B8D5E"
- 
- enum hp_wmi_spm_commandtype {
- 	HPWMI_SECUREPLATFORM_GET_STATE  = 0x10,
 
 
