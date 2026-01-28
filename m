@@ -1,37 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6869F302779;
-	Wed, 28 Jan 2026 16:00:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70F0D308F05;
+	Wed, 28 Jan 2026 16:00:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769616018; cv=none; b=Cf93cJjD7f5InO9791TPUUHlPfHKnpzW0uY6XIARE16es3XoUdkcS4L+cTikTioAGezE/0zP4Uo3Hdtd7Ck8AO2gxe0qRT0cFl8X4LpODq8pT90gm8TsCmz70clZHdBCL3hcqUZvSMBKpD68IqWFVLBMeWJt4xaDz0dBxaYg/pU=
+	t=1769616022; cv=none; b=U6Y4Z2NYKKU1I/E4Ed3ALQCOApelmaAoPFv3gUe6ltpX5lX5WORr5xD3MkbTrAX/I2/DVcfHn9gipDMr2nePo/iEs4OJ7Ytve1GgkY70n8BUUL++j+S/GmG+ExFcPNFsfR0OO2wrjH+GuNeGtz/pmOYwkF7k5T0Kdr7Ep1XGIyo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769616018; c=relaxed/simple;
-	bh=9+v2YWqaQZ2zZ8XhwyFVcMoE+q+HHKtQX8v++ZXhiBY=;
+	s=arc-20240116; t=1769616022; c=relaxed/simple;
+	bh=+cyi7o2aQ2NDt45hRnvA9NcZQ/TSfaeEMi0ZH6rItoo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=l30M//e0+Ai9JRXOKXRthPGcCsH7DqBCJPgAkMo7RgJk+0owieR+yyGYSyhdbDCb4oAQBiV7srWRTaPLVw+vMw5eTJsVxjrCPWZvlS6SVwEFacCMC/PTMwuDiDAo6tTyM9Ipg+//Hh6YEWw3NHcRMUMNFoA7bOHeQMxM9A+B7wM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CcoxZjuD; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=R+C/+5YqMhFSDg1baf0nK205w9Uu3z8f5QxKPbRlp/l8bmoQA9n8SUoJPlJwMNSQpIUM6DGEodg/YvtVXhyvwK9J68Gk8AW7XhUeuq6XKgvy/xjKqvIy/EySqX2fBqivzvZrRfCo+QbsyLOV2YdxdJidxSGnz3RUiciayDsthZk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sjBjqWlO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CcoxZjuD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD423C4CEF1;
-	Wed, 28 Jan 2026 16:00:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sjBjqWlO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E002C4CEF1;
+	Wed, 28 Jan 2026 16:00:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1769616018;
-	bh=9+v2YWqaQZ2zZ8XhwyFVcMoE+q+HHKtQX8v++ZXhiBY=;
+	s=korg; t=1769616021;
+	bh=+cyi7o2aQ2NDt45hRnvA9NcZQ/TSfaeEMi0ZH6rItoo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CcoxZjuDuqDNgAbzJVFy1aqn4mq+9yu1IS1EzsxfarzVB3o4N5SUx7eIESgEy/x2e
-	 2ZgZdkggekokqrCo7jUu+BEQBP8WhwHDoyyPuJgBgRjCmlWjBKPI6sKdDG7qFadt5f
-	 4krBOxztZtR5FVjWEMkKR0BpKB5rUiWbTHEvquzU=
+	b=sjBjqWlOrsiSLVrf5tS1eR2Hw0l58oiS2sKMqkmjEqUQTrHKg2PboA/5uEfxAIfH2
+	 DoLAKfL9CB8HQHq4QYsEFUspTE6tASAlsPkcUZ5OUNE2A0kOfM4WZWQ8/tFxw8yDqE
+	 bVhZdMTVhJddgrQDRMSMr/O9qe1nrAUlZP+wfbio=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thomas Fourier <fourier.thomas@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.18 183/227] octeontx2: Fix otx2_dma_map_page() error return code
-Date: Wed, 28 Jan 2026 16:23:48 +0100
-Message-ID: <20260128145351.030836362@linuxfoundation.org>
+	Johan Hovold <johan@kernel.org>
+Subject: [PATCH 6.18 184/227] slimbus: core: fix runtime PM imbalance on report present
+Date: Wed, 28 Jan 2026 16:23:49 +0100
+Message-ID: <20260128145351.066463014@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260128145344.331957407@linuxfoundation.org>
 References: <20260128145344.331957407@linuxfoundation.org>
@@ -50,46 +49,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thomas Fourier <fourier.thomas@gmail.com>
+From: Johan Hovold <johan@kernel.org>
 
-commit d998b0e5afffa90d0f03770bad31083767079858 upstream.
+commit 0eb4ff6596114aabba1070a66afa2c2f5593739f upstream.
 
-0 is a valid DMA address [1] so using it as the error value can lead to
-errors.  The error value of dma_map_XXX() functions is DMA_MAPPING_ERROR
-which is ~0.  The callers of otx2_dma_map_page() use dma_mapping_error()
-to test the return value of otx2_dma_map_page(). This means that they
-would not detect an error in otx2_dma_map_page().
+Make sure to balance the runtime PM usage count in case slimbus device
+or address allocation fails on report present, which would otherwise
+prevent the controller from suspending.
 
-Make otx2_dma_map_page() return the raw value of dma_map_page_attrs().
-
-[1] https://lore.kernel.org/all/f977f68b-cec5-4ab7-b4bd-2cf6aca46267@intel.com
-
-Fixes: caa2da34fd25 ("octeontx2-pf: Initialize and config queues")
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Thomas Fourier <fourier.thomas@gmail.com>
-Link: https://patch.msgid.link/20260114123107.42387-2-fourier.thomas@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 4b14e62ad3c9 ("slimbus: Add support for 'clock-pause' feature")
+Cc: stable@vger.kernel.org	# 4.16
+Signed-off-by: Johan Hovold <johan@kernel.org>
+Link: https://patch.msgid.link/20251126145329.5022-3-johan@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/marvell/octeontx2/nic/otx2_common.h |    7 +------
- 1 file changed, 1 insertion(+), 6 deletions(-)
+ drivers/slimbus/core.c |   16 +++++++++-------
+ 1 file changed, 9 insertions(+), 7 deletions(-)
 
---- a/drivers/net/ethernet/marvell/octeontx2/nic/otx2_common.h
-+++ b/drivers/net/ethernet/marvell/octeontx2/nic/otx2_common.h
-@@ -934,13 +934,8 @@ static inline dma_addr_t otx2_dma_map_pa
- 					   size_t offset, size_t size,
- 					   enum dma_data_direction dir)
- {
--	dma_addr_t iova;
--
--	iova = dma_map_page_attrs(pfvf->dev, page,
-+	return dma_map_page_attrs(pfvf->dev, page,
- 				  offset, size, dir, DMA_ATTR_SKIP_CPU_SYNC);
--	if (unlikely(dma_mapping_error(pfvf->dev, iova)))
--		return (dma_addr_t)NULL;
--	return iova;
- }
+--- a/drivers/slimbus/core.c
++++ b/drivers/slimbus/core.c
+@@ -489,21 +489,23 @@ int slim_device_report_present(struct sl
+ 	if (ctrl->sched.clk_state != SLIM_CLK_ACTIVE) {
+ 		dev_err(ctrl->dev, "slim ctrl not active,state:%d, ret:%d\n",
+ 				    ctrl->sched.clk_state, ret);
+-		goto slimbus_not_active;
++		goto out_put_rpm;
+ 	}
  
- static inline void otx2_dma_unmap_page(struct otx2_nic *pfvf,
+ 	sbdev = slim_get_device(ctrl, e_addr);
+-	if (IS_ERR(sbdev))
+-		return -ENODEV;
++	if (IS_ERR(sbdev)) {
++		ret = -ENODEV;
++		goto out_put_rpm;
++	}
+ 
+ 	if (sbdev->is_laddr_valid) {
+ 		*laddr = sbdev->laddr;
+-		return 0;
++		ret = 0;
++	} else {
++		ret = slim_device_alloc_laddr(sbdev, true);
+ 	}
+ 
+-	ret = slim_device_alloc_laddr(sbdev, true);
+-
+-slimbus_not_active:
++out_put_rpm:
+ 	pm_runtime_mark_last_busy(ctrl->dev);
+ 	pm_runtime_put_autosuspend(ctrl->dev);
+ 	return ret;
 
 
