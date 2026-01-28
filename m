@@ -1,38 +1,49 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 340E326ED40;
-	Wed, 28 Jan 2026 16:02:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7326D28D8DB;
+	Wed, 28 Jan 2026 16:02:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769616166; cv=none; b=U9+oC2NyHcTnv32K8qGomjQ5g2W5X1j+WTXbmbubKzs8pTK8qV/RTiSL/p3PM+GK8EG8mp9BsmamE0nxoQnhepGhndtxOR0C33qr0WQ8/fkHbHqzS4AkKKfMtsWIMf91Lq3GQALamxUn1TIoKgjUzYjI+u3/ss6b04fTQPiDhAM=
+	t=1769616169; cv=none; b=PAwE9fKDQpgVL2rIO3H0vhZz3ycwZT2vsHYsbkCA7kxZXE1hU/ovAEd4v5rGHRvJHSyLYHqmHLfBy4B4z1pphvRy4Kx+EZClqUK3KP7YLOVa+ssuBDBuQsFf7n1qG0Dg2/agJVM3V8RMclY6m7rt7Xgwt7YGpA/0jejaYc+NFZE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769616166; c=relaxed/simple;
-	bh=dVE0jbvSaPhoAcGimLnjxGF/Ef8TITqVjRVrfq9W7gk=;
+	s=arc-20240116; t=1769616169; c=relaxed/simple;
+	bh=N0kAdeCT0aYvv5sZ9TbhhM9agwehyrhgA1LCEn7WMnw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Fs94O9k4sxZvpK+07ypJE8QJGOYjLowRbL9kCj0ZchHUz0i9n2SM4OKAzqvusHQ2gYJEJbYKnQY5vuVOG8jjMXWu/GjuudOeKeeOZTIgzYs8/z/3+W2iAWFKtRDQM1UkcGngsr2KOLxkMeV9QHtBh7HNbCni3OdJS47GPi3v6EQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FEyV3ipN; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VveEgOCKdxaqcljJohmgztDBP0VNKx/uqeye0mozU0Mue/7Gz0uwTRIOarJ/TSWdm9d37DMA29QuvchP7l5JGKZnywwLK/gA8by1wnSed0rWdFX7x0BUohJSXe19z0p60HpWVae72iTIPriEDJBWFJyxigQQxDuks5eYmQoliEw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HxiNg8ae; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FEyV3ipN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8220EC4CEF1;
-	Wed, 28 Jan 2026 16:02:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HxiNg8ae"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF363C4CEF1;
+	Wed, 28 Jan 2026 16:02:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1769616166;
-	bh=dVE0jbvSaPhoAcGimLnjxGF/Ef8TITqVjRVrfq9W7gk=;
+	s=korg; t=1769616169;
+	bh=N0kAdeCT0aYvv5sZ9TbhhM9agwehyrhgA1LCEn7WMnw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FEyV3ipNdKRBm2kORSC8svOMiqz//j5P3/3kmKW2EmulIZpuaqHgKLdo9WuZxMGbh
-	 LIdSDw7/3QVZwQtKirs5EdNMCIy25MPCEyCt93a9vyO7BPtnrS7viStjnlRo8da9yX
-	 vB6FTvWamVQbyM1thmDjE3FHwqZiuyq5RAKx2z38=
+	b=HxiNg8aeGU9u4f2HCZfPVOcCw/xB1am2ujXO5hPSaP1oNo2i2uKQyTwmOyXzsE4Oj
+	 3lf11M+f1vpVUENJFGQTV9+U2+AqucDipg4eMGgq43T7bafr3zi2aA1e8oUXurbWAU
+	 yqPtGmdrkQltdblsN6yeUY58boxqLGw4uVV/dXQ4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Biju Das <biju.das.jz@bp.renesas.com>,
-	Thomas Gleixner <tglx@kernel.org>,
-	Tommaso Merciai <tommaso.merciai.xr@bp.renesas.com>
-Subject: [PATCH 6.18 225/227] irqchip/renesas-rzv2h: Prevent TINT spurious interrupt during resume
-Date: Wed, 28 Jan 2026 16:24:30 +0100
-Message-ID: <20260128145352.533155962@linuxfoundation.org>
+	Lorenzo Stoakes <lorenzo.stoakes@oracle.com>,
+	syzbot+b165fc2e11771c66d8ba@syzkaller.appspotmail.com,
+	syzbot+5272541ccbbb14e2ec30@syzkaller.appspotmail.com,
+	Harry Yoo <harry.yoo@oracle.com>,
+	Jeongjun Park <aha310510@gmail.com>,
+	Vlastimil Babka <vbabka@suse.cz>,
+	"David Hildenbrand (Red Hat)" <david@kernel.org>,
+	Jann Horn <jannh@google.com>,
+	Yeoreum Yun <yeoreum.yun@arm.com>,
+	Liam Howlett <liam.howlett@oracle.com>,
+	"Liam R. Howlett" <Liam.Howlett@oracle.com>,
+	Pedro Falcato <pfalcato@suse.de>,
+	Rik van Riel <riel@surriel.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.18 226/227] mm/vma: fix anon_vma UAF on mremap() faulted, unfaulted merge
+Date: Wed, 28 Jan 2026 16:24:31 +0100
+Message-ID: <20260128145352.569947198@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260128145344.331957407@linuxfoundation.org>
 References: <20260128145344.331957407@linuxfoundation.org>
@@ -51,72 +62,360 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Biju Das <biju.das.jz@bp.renesas.com>
+From: Lorenzo Stoakes <lorenzo.stoakes@oracle.com>
 
-[ Upstream commit cd4a3ced4d1cdb14ffe905657b98a91e9d239dfb ]
+[ upstream commit 61f67c230a5e7c741c352349ea80147fbe65bfae ]
 
-A glitch in the edge detection circuit can cause a spurious interrupt. The
-hardware manual recommends clearing the status flag after setting the
-ICU_TSSRk register as a countermeasure.
+Patch series "mm/vma: fix anon_vma UAF on mremap() faulted, unfaulted
+merge", v2.
 
-Currently, a spurious interrupt is generated on the resume path of s2idle
-for the PMIC RTC TINT interrupt due to a glitch related to unnecessary
-enabling/disabling of the TINT enable bit.
+Commit 879bca0a2c4f ("mm/vma: fix incorrectly disallowed anonymous VMA
+merges") introduced the ability to merge previously unavailable VMA merge
+scenarios.
 
-Fix this issue by not setting TSSR(TINT Source) and TITSR(TINT Detection
-Method Selection) registers if the values are the same as those set
-in these registers.
+However, it is handling merges incorrectly when it comes to mremap() of a
+faulted VMA adjacent to an unfaulted VMA.  The issues arise in three
+cases:
 
-Fixes: 0d7605e75ac2 ("irqchip: Add RZ/V2H(P) Interrupt Control Unit (ICU) driver")
-Signed-off-by: Biju Das <biju.das.jz@bp.renesas.com>
-Signed-off-by: Thomas Gleixner <tglx@kernel.org>
+1. Previous VMA unfaulted:
+
+              copied -----|
+                          v
+	|-----------|.............|
+	| unfaulted |(faulted VMA)|
+	|-----------|.............|
+	     prev
+
+2. Next VMA unfaulted:
+
+              copied -----|
+                          v
+	            |.............|-----------|
+	            |(faulted VMA)| unfaulted |
+                    |.............|-----------|
+		                      next
+
+3. Both adjacent VMAs unfaulted:
+
+              copied -----|
+                          v
+	|-----------|.............|-----------|
+	| unfaulted |(faulted VMA)| unfaulted |
+	|-----------|.............|-----------|
+	     prev                      next
+
+This series fixes each of these cases, and introduces self tests to assert
+that the issues are corrected.
+
+I also test a further case which was already handled, to assert that my
+changes continues to correctly handle it:
+
+4. prev unfaulted, next faulted:
+
+              copied -----|
+                          v
+	|-----------|.............|-----------|
+	| unfaulted |(faulted VMA)|  faulted  |
+	|-----------|.............|-----------|
+	     prev                      next
+
+This bug was discovered via a syzbot report, linked to in the first patch
+in the series, I confirmed that this series fixes the bug.
+
+I also discovered that we are failing to check that the faulted VMA was
+not forked when merging a copied VMA in cases 1-3 above, an issue this
+series also addresses.
+
+I also added self tests to assert that this is resolved (and confirmed
+that the tests failed prior to this).
+
+I also cleaned up vma_expand() as part of this work, renamed
+vma_had_uncowed_parents() to vma_is_fork_child() as the previous name was
+unduly confusing, and simplified the comments around this function.
+
+This patch (of 4):
+
+Commit 879bca0a2c4f ("mm/vma: fix incorrectly disallowed anonymous VMA
+merges") introduced the ability to merge previously unavailable VMA merge
+scenarios.
+
+The key piece of logic introduced was the ability to merge a faulted VMA
+immediately next to an unfaulted VMA, which relies upon dup_anon_vma() to
+correctly handle anon_vma state.
+
+In the case of the merge of an existing VMA (that is changing properties
+of a VMA and then merging if those properties are shared by adjacent
+VMAs), dup_anon_vma() is invoked correctly.
+
+However in the case of the merge of a new VMA, a corner case peculiar to
+mremap() was missed.
+
+The issue is that vma_expand() only performs dup_anon_vma() if the target
+(the VMA that will ultimately become the merged VMA): is not the next VMA,
+i.e.  the one that appears after the range in which the new VMA is to be
+established.
+
+A key insight here is that in all other cases other than mremap(), a new
+VMA merge either expands an existing VMA, meaning that the target VMA will
+be that VMA, or would have anon_vma be NULL.
+
+Specifically:
+
+* __mmap_region() - no anon_vma in place, initial mapping.
+* do_brk_flags() - expanding an existing VMA.
+* vma_merge_extend() - expanding an existing VMA.
+* relocate_vma_down() - no anon_vma in place, initial mapping.
+
+In addition, we are in the unique situation of needing to duplicate
+anon_vma state from a VMA that is neither the previous or next VMA being
+merged with.
+
+dup_anon_vma() deals exclusively with the target=unfaulted, src=faulted
+case.  This leaves four possibilities, in each case where the copied VMA
+is faulted:
+
+1. Previous VMA unfaulted:
+
+              copied -----|
+                          v
+	|-----------|.............|
+	| unfaulted |(faulted VMA)|
+	|-----------|.............|
+	     prev
+
+target = prev, expand prev to cover.
+
+2. Next VMA unfaulted:
+
+              copied -----|
+                          v
+	            |.............|-----------|
+	            |(faulted VMA)| unfaulted |
+                    |.............|-----------|
+		                      next
+
+target = next, expand next to cover.
+
+3. Both adjacent VMAs unfaulted:
+
+              copied -----|
+                          v
+	|-----------|.............|-----------|
+	| unfaulted |(faulted VMA)| unfaulted |
+	|-----------|.............|-----------|
+	     prev                      next
+
+target = prev, expand prev to cover.
+
+4. prev unfaulted, next faulted:
+
+              copied -----|
+                          v
+	|-----------|.............|-----------|
+	| unfaulted |(faulted VMA)|  faulted  |
+	|-----------|.............|-----------|
+	     prev                      next
+
+target = prev, expand prev to cover.  Essentially equivalent to 3, but
+with additional requirement that next's anon_vma is the same as the copied
+VMA's.  This is covered by the existing logic.
+
+To account for this very explicitly, we introduce
+vma_merge_copied_range(), which sets a newly introduced vmg->copied_from
+field, then invokes vma_merge_new_range() which handles the rest of the
+logic.
+
+We then update the key vma_expand() function to clean up the logic and
+make what's going on clearer, making the 'remove next' case less special,
+before invoking dup_anon_vma() unconditionally should we be copying from a
+VMA.
+
+Note that in case 3, the if (remove_next) ...  branch will be a no-op, as
+next=src in this instance and src is unfaulted.
+
+In case 4, it won't be, but since in this instance next=src and it is
+faulted, this will have required tgt=faulted, src=faulted to be
+compatible, meaning that next->anon_vma == vmg->copied_from->anon_vma, and
+thus a single dup_anon_vma() of next suffices to copy anon_vma state for
+the copied-from VMA also.
+
+If we are copying from a VMA in a successful merge we must _always_
+propagate anon_vma state.
+
+This issue can be observed most directly by invoked mremap() to move
+around a VMA and cause this kind of merge with the MREMAP_DONTUNMAP flag
+specified.
+
+This will result in unlink_anon_vmas() being called after failing to
+duplicate anon_vma state to the target VMA, which results in the anon_vma
+itself being freed with folios still possessing dangling pointers to the
+anon_vma and thus a use-after-free bug.
+
+This bug was discovered via a syzbot report, which this patch resolves.
+
+We further make a change to update the mergeable anon_vma check to assert
+the copied-from anon_vma did not have CoW parents, as otherwise
+dup_anon_vma() might incorrectly propagate CoW ancestors from the next VMA
+in case 4 despite the anon_vma's being identical for both VMAs.
+
+Link: https://lkml.kernel.org/r/cover.1767638272.git.lorenzo.stoakes@oracle.com
+Link: https://lkml.kernel.org/r/b7930ad2b1503a657e29fe928eb33061d7eadf5b.1767638272.git.lorenzo.stoakes@oracle.com
+Signed-off-by: Lorenzo Stoakes <lorenzo.stoakes@oracle.com>
+Fixes: 879bca0a2c4f ("mm/vma: fix incorrectly disallowed anonymous VMA merges")
+Reported-by: syzbot+b165fc2e11771c66d8ba@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/all/694a2745.050a0220.19928e.0017.GAE@google.com/
+Reported-by: syzbot+5272541ccbbb14e2ec30@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/all/694e3dc6.050a0220.35954c.0066.GAE@google.com/
+Reviewed-by: Harry Yoo <harry.yoo@oracle.com>
+Reviewed-by: Jeongjun Park <aha310510@gmail.com>
+Acked-by: Vlastimil Babka <vbabka@suse.cz>
+Cc: David Hildenbrand (Red Hat) <david@kernel.org>
+Cc: Jann Horn <jannh@google.com>
+Cc: Yeoreum Yun <yeoreum.yun@arm.com>
+Cc: Liam Howlett <liam.howlett@oracle.com>
+Cc: Liam R. Howlett <Liam.Howlett@oracle.com>
+Cc: Pedro Falcato <pfalcato@suse.de>
+Cc: Rik van Riel <riel@surriel.com>
 Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20260113125315.359967-2-biju.das.jz@bp.renesas.com
-[tm: Added field_get() to avoid build error]
-Signed-off-by: Tommaso Merciai <tommaso.merciai.xr@bp.renesas.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+[ updated to account for lack of sticky VMA flags + built, tested confirmed working ]
+Signed-off-by: Lorenzo Stoakes <lorenzo.stoakes@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/irqchip/irq-renesas-rzv2h.c |   11 ++++++++++-
- 1 file changed, 10 insertions(+), 1 deletion(-)
+ mm/vma.c |   71 +++++++++++++++++++++++++++++++++++++++++++++++----------------
+ mm/vma.h |    3 ++
+ 2 files changed, 56 insertions(+), 18 deletions(-)
 
---- a/drivers/irqchip/irq-renesas-rzv2h.c
-+++ b/drivers/irqchip/irq-renesas-rzv2h.c
-@@ -89,6 +89,8 @@
- #define ICU_RZG3E_TSSEL_MAX_VAL			0x8c
- #define ICU_RZV2H_TSSEL_MAX_VAL			0x55
+--- a/mm/vma.c
++++ b/mm/vma.c
+@@ -835,6 +835,8 @@ static __must_check struct vm_area_struc
+ 	VM_WARN_ON_VMG(middle &&
+ 		       !(vma_iter_addr(vmg->vmi) >= middle->vm_start &&
+ 			 vma_iter_addr(vmg->vmi) < middle->vm_end), vmg);
++	/* An existing merge can never be used by the mremap() logic. */
++	VM_WARN_ON_VMG(vmg->copied_from, vmg);
  
-+#define field_get(_mask, _reg) (((_reg) & (_mask)) >> (ffs(_mask) - 1))
+ 	vmg->state = VMA_MERGE_NOMERGE;
+ 
+@@ -1102,6 +1104,33 @@ struct vm_area_struct *vma_merge_new_ran
+ }
+ 
+ /*
++ * vma_merge_copied_range - Attempt to merge a VMA that is being copied by
++ * mremap()
++ *
++ * @vmg: Describes the VMA we are adding, in the copied-to range @vmg->start to
++ *       @vmg->end (exclusive), which we try to merge with any adjacent VMAs if
++ *       possible.
++ *
++ * vmg->prev, next, start, end, pgoff should all be relative to the COPIED TO
++ * range, i.e. the target range for the VMA.
++ *
++ * Returns: In instances where no merge was possible, NULL. Otherwise, a pointer
++ *          to the VMA we expanded.
++ *
++ * ASSUMPTIONS: Same as vma_merge_new_range(), except vmg->middle must contain
++ *              the copied-from VMA.
++ */
++static struct vm_area_struct *vma_merge_copied_range(struct vma_merge_struct *vmg)
++{
++	/* We must have a copied-from VMA. */
++	VM_WARN_ON_VMG(!vmg->middle, vmg);
 +
- /**
-  * struct rzv2h_hw_info - Interrupt Control Unit controller hardware info structure.
-  * @tssel_lut:		TINT lookup table
-@@ -328,6 +330,7 @@ static int rzv2h_tint_set_type(struct ir
- 	u32 titsr, titsr_k, titsel_n, tien;
- 	struct rzv2h_icu_priv *priv;
- 	u32 tssr, tssr_k, tssel_n;
-+	u32 titsr_cur, tssr_cur;
- 	unsigned int hwirq;
- 	u32 tint, sense;
- 	int tint_nr;
-@@ -376,12 +379,18 @@ static int rzv2h_tint_set_type(struct ir
- 	guard(raw_spinlock)(&priv->lock);
- 
- 	tssr = readl_relaxed(priv->base + priv->info->t_offs + ICU_TSSR(tssr_k));
-+	titsr = readl_relaxed(priv->base + priv->info->t_offs + ICU_TITSR(titsr_k));
++	vmg->copied_from = vmg->middle;
++	vmg->middle = NULL;
++	return vma_merge_new_range(vmg);
++}
 +
-+	tssr_cur = field_get(ICU_TSSR_TSSEL_MASK(tssel_n, priv->info->field_width), tssr);
-+	titsr_cur = field_get(ICU_TITSR_TITSEL_MASK(titsel_n), titsr);
-+	if (tssr_cur == tint && titsr_cur == sense)
-+		return 0;
++/*
+  * vma_expand - Expand an existing VMA
+  *
+  * @vmg: Describes a VMA expansion operation.
+@@ -1123,38 +1152,45 @@ int vma_expand(struct vma_merge_struct *
+ 	bool remove_next = false;
+ 	struct vm_area_struct *target = vmg->target;
+ 	struct vm_area_struct *next = vmg->next;
++	int ret = 0;
+ 
+ 	VM_WARN_ON_VMG(!target, vmg);
+ 
+ 	mmap_assert_write_locked(vmg->mm);
+-
+ 	vma_start_write(target);
+-	if (next && (target != next) && (vmg->end == next->vm_end)) {
+-		int ret;
+ 
++	if (next && target != next && vmg->end == next->vm_end)
+ 		remove_next = true;
+-		/* This should already have been checked by this point. */
+-		VM_WARN_ON_VMG(!can_merge_remove_vma(next), vmg);
+-		vma_start_write(next);
+-		/*
+-		 * In this case we don't report OOM, so vmg->give_up_on_mm is
+-		 * safe.
+-		 */
+-		ret = dup_anon_vma(target, next, &anon_dup);
+-		if (ret)
+-			return ret;
+-	}
+ 
++	/* We must have a target. */
++	VM_WARN_ON_VMG(!target, vmg);
++	/* This should have already been checked by this point. */
++	VM_WARN_ON_VMG(remove_next && !can_merge_remove_vma(next), vmg);
+ 	/* Not merging but overwriting any part of next is not handled. */
+ 	VM_WARN_ON_VMG(next && !remove_next &&
+ 		       next != target && vmg->end > next->vm_start, vmg);
+-	/* Only handles expanding */
++	/* Only handles expanding. */
+ 	VM_WARN_ON_VMG(target->vm_start < vmg->start ||
+ 		       target->vm_end > vmg->end, vmg);
+ 
++	/*
++	 * If we are removing the next VMA or copying from a VMA
++	 * (e.g. mremap()'ing), we must propagate anon_vma state.
++	 *
++	 * Note that, by convention, callers ignore OOM for this case, so
++	 * we don't need to account for vmg->give_up_on_mm here.
++	 */
+ 	if (remove_next)
+-		vmg->__remove_next = true;
++		ret = dup_anon_vma(target, next, &anon_dup);
++	if (!ret && vmg->copied_from)
++		ret = dup_anon_vma(target, vmg->copied_from, &anon_dup);
++	if (ret)
++		return ret;
+ 
++	if (remove_next) {
++		vma_start_write(next);
++		vmg->__remove_next = true;
++	}
+ 	if (commit_merge(vmg))
+ 		goto nomem;
+ 
+@@ -1837,10 +1873,9 @@ struct vm_area_struct *copy_vma(struct v
+ 	if (new_vma && new_vma->vm_start < addr + len)
+ 		return NULL;	/* should never get here */
+ 
+-	vmg.middle = NULL; /* New VMA range. */
+ 	vmg.pgoff = pgoff;
+ 	vmg.next = vma_iter_next_rewind(&vmi, NULL);
+-	new_vma = vma_merge_new_range(&vmg);
++	new_vma = vma_merge_copied_range(&vmg);
+ 
+ 	if (new_vma) {
+ 		/*
+--- a/mm/vma.h
++++ b/mm/vma.h
+@@ -106,6 +106,9 @@ struct vma_merge_struct {
+ 	struct anon_vma_name *anon_name;
+ 	enum vma_merge_state state;
+ 
++	/* If copied from (i.e. mremap()'d) the VMA from which we are copying. */
++	struct vm_area_struct *copied_from;
 +
- 	tssr &= ~(ICU_TSSR_TSSEL_MASK(tssel_n, priv->info->field_width) | tien);
- 	tssr |= ICU_TSSR_TSSEL_PREP(tint, tssel_n, priv->info->field_width);
+ 	/* Flags which callers can use to modify merge behaviour: */
  
- 	writel_relaxed(tssr, priv->base + priv->info->t_offs + ICU_TSSR(tssr_k));
- 
--	titsr = readl_relaxed(priv->base + priv->info->t_offs + ICU_TITSR(titsr_k));
- 	titsr &= ~ICU_TITSR_TITSEL_MASK(titsel_n);
- 	titsr |= ICU_TITSR_TITSEL_PREP(sense, titsel_n);
- 
+ 	/*
 
 
