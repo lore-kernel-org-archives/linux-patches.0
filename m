@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D7E22D0C99;
-	Wed, 28 Jan 2026 15:34:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4871D2D131D;
+	Wed, 28 Jan 2026 15:34:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769614496; cv=none; b=DuPNRPFOwt0sweZyjny9bd1JJ+sSn/+NNj2E0y7GVCEW6y8pT2GqcNQhOu3cuyRdhfWDRID0bAu4OEGiJVh73bHXBtG9YwXaysq1M+mk1F3bLeS/ZjLIficLUuBYsp5tGfNZ0Sf/OJZW3A0wiIz3PVBGQMjDlEbDNF8ipahI0CY=
+	t=1769614499; cv=none; b=dHsHMRKQPbk2JrCBvrc4w/0SMJYw5Pb4dGF1BWTwT/qookZvYQLymUcP6LZPoUhGpo/Ripg3QEIs2zWm+u+TBpSVxiOTpT9Bd1bYDpL4TgSxcqTBVa/FsYo5QB07qtt9NbZhYYJdF5xUaU4cQFCRnT3YG3QV0Vg2EDUYKaD/6E8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769614496; c=relaxed/simple;
-	bh=YjwjOiqyiSu8XbLdAmnfBai8l+7AOZPZcPgLX69Bbt8=;
+	s=arc-20240116; t=1769614499; c=relaxed/simple;
+	bh=bYQ9VN6mWGGbVnFVK8P+uDiuMnMEbDf2xbYEIxCsuPU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KNoTSsAEufeEI7DZy+UFy4mEoqf4vDc1xB0JAw9IYBJZapxHBd7y+D1pEsL1BnS9Aq/U7Zc8Cm0U9Iq6IK+7YRi/Npuy16gCh39MKv4P6RXyeSY99cQ5V1I123owQi2FM65LPpUesQ1haG0ZZx8mFMLn5NSrTyrDJUFIER5WPWs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BlYcjlEP; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=oEIp4UqM8vtJsUnYJBEBqP9Z6gqSxjesWcPJuvG79WIc2oNFqCVaEKCwP+ckV8ESNRr+4vuJ6M0XEV8t7n0UEd4y0wRFkfL5LJH1qr8K/B7HbRrREAJ4iz/25RhGvrNRXvId7Jn5RRq6dNWuiGPkwjwqZpeUXpDNtSt6ZSJX2vc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Axf1Ez4f; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BlYcjlEP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D43DC4CEF1;
-	Wed, 28 Jan 2026 15:34:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Axf1Ez4f"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 62F77C4CEF1;
+	Wed, 28 Jan 2026 15:34:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1769614495;
-	bh=YjwjOiqyiSu8XbLdAmnfBai8l+7AOZPZcPgLX69Bbt8=;
+	s=korg; t=1769614498;
+	bh=bYQ9VN6mWGGbVnFVK8P+uDiuMnMEbDf2xbYEIxCsuPU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BlYcjlEPGBlMByWSLiQR9YrudtvIV3a8t3u+l+pdWI+8Im0kAR28FrEqNorBZPw1J
-	 oyVOSoRLxf2aZD6bGKKjJbW+VuMqKiSiDC+uwuNP/2U4dpnRVV46Pt4k/Ur0dENx1S
-	 jvmPwyvDOGnIUc4XW3UfWTKTmVHzsGQByHNn8g/k=
+	b=Axf1Ez4ftGXJESmRM+VrezKcJYIytQPsksJpBZHbliqnnecE5DVsDDllHluZqRC8l
+	 X1otXWAW9ixNfgXQPEMVC5McyPTalZerSDSluhnsaOmJB9OqhFiSsRao79gjpAXs6P
+	 bG025S/Ooqe3cCkyExb3OlU64HWy8VrwuQOS7vtI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yang Yingliang <yangyingliang@huawei.com>,
+	Felix Gu <gu_0233@qq.com>,
+	Baolin Wang <baolin.wang@linux.alibaba.com>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 155/254] spi: sprd-adi: switch to use spi_alloc_host()
-Date: Wed, 28 Jan 2026 16:22:11 +0100
-Message-ID: <20260128145350.389382141@linuxfoundation.org>
+Subject: [PATCH 6.6 156/254] spi: spi-sprd-adi: Fix double free in probe error path
+Date: Wed, 28 Jan 2026 16:22:12 +0100
+Message-ID: <20260128145350.425259103@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260128145344.698118637@linuxfoundation.org>
 References: <20260128145344.698118637@linuxfoundation.org>
@@ -51,36 +52,111 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yang Yingliang <yangyingliang@huawei.com>
+From: Felix Gu <gu_0233@qq.com>
 
-[ Upstream commit 0a3d087d09a8f52c02d0014bad63be99c53c4812 ]
+[ Upstream commit 383d4f5cffcc8df930d95b06518a9d25a6d74aac ]
 
-Switch to use modern name function spi_alloc_host().
+The driver currently uses spi_alloc_host() to allocate the controller
+but registers it using devm_spi_register_controller().
 
-No functional changed.
+If devm_register_restart_handler() fails, the code jumps to the
+put_ctlr label and calls spi_controller_put(). However, since the
+controller was registered via a devm function, the device core will
+automatically call spi_controller_put() again when the probe fails.
+This results in a double-free of the spi_controller structure.
 
-Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
-Link: https://msgid.link/r/20231128093031.3707034-2-yangyingliang@huawei.com
+Fix this by switching to devm_spi_alloc_host() and removing the
+manual spi_controller_put() call.
+
+Fixes: ac17750 ("spi: sprd: Add the support of restarting the system")
+Signed-off-by: Felix Gu <gu_0233@qq.com>
+Reviewed-by: Baolin Wang <baolin.wang@linux.alibaba.com>
+Link: https://patch.msgid.link/tencent_AC7D389CE7E24318445E226F7CDCCC2F0D07@qq.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
-Stable-dep-of: 383d4f5cffcc ("spi: spi-sprd-adi: Fix double free in probe error path")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/spi/spi-sprd-adi.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/spi/spi-sprd-adi.c | 33 ++++++++++-----------------------
+ 1 file changed, 10 insertions(+), 23 deletions(-)
 
 diff --git a/drivers/spi/spi-sprd-adi.c b/drivers/spi/spi-sprd-adi.c
-index 58c3badd9c79a..262c11d977ea3 100644
+index 262c11d977ea3..f25b34a91756f 100644
 --- a/drivers/spi/spi-sprd-adi.c
 +++ b/drivers/spi/spi-sprd-adi.c
 @@ -528,7 +528,7 @@ static int sprd_adi_probe(struct platform_device *pdev)
  	pdev->id = of_alias_get_id(np, "spi");
  	num_chipselect = of_get_child_count(np);
  
--	ctlr = spi_alloc_master(&pdev->dev, sizeof(struct sprd_adi));
-+	ctlr = spi_alloc_host(&pdev->dev, sizeof(struct sprd_adi));
+-	ctlr = spi_alloc_host(&pdev->dev, sizeof(struct sprd_adi));
++	ctlr = devm_spi_alloc_host(&pdev->dev, sizeof(struct sprd_adi));
  	if (!ctlr)
  		return -ENOMEM;
  
+@@ -536,10 +536,8 @@ static int sprd_adi_probe(struct platform_device *pdev)
+ 	sadi = spi_controller_get_devdata(ctlr);
+ 
+ 	sadi->base = devm_platform_get_and_ioremap_resource(pdev, 0, &res);
+-	if (IS_ERR(sadi->base)) {
+-		ret = PTR_ERR(sadi->base);
+-		goto put_ctlr;
+-	}
++	if (IS_ERR(sadi->base))
++		return PTR_ERR(sadi->base);
+ 
+ 	sadi->slave_vbase = (unsigned long)sadi->base +
+ 			    data->slave_offset;
+@@ -551,18 +549,15 @@ static int sprd_adi_probe(struct platform_device *pdev)
+ 	if (ret > 0 || (IS_ENABLED(CONFIG_HWSPINLOCK) && ret == 0)) {
+ 		sadi->hwlock =
+ 			devm_hwspin_lock_request_specific(&pdev->dev, ret);
+-		if (!sadi->hwlock) {
+-			ret = -ENXIO;
+-			goto put_ctlr;
+-		}
++		if (!sadi->hwlock)
++			return -ENXIO;
+ 	} else {
+ 		switch (ret) {
+ 		case -ENOENT:
+ 			dev_info(&pdev->dev, "no hardware spinlock supplied\n");
+ 			break;
+ 		default:
+-			dev_err_probe(&pdev->dev, ret, "failed to find hwlock id\n");
+-			goto put_ctlr;
++			return dev_err_probe(&pdev->dev, ret, "failed to find hwlock id\n");
+ 		}
+ 	}
+ 
+@@ -579,26 +574,18 @@ static int sprd_adi_probe(struct platform_device *pdev)
+ 	ctlr->transfer_one = sprd_adi_transfer_one;
+ 
+ 	ret = devm_spi_register_controller(&pdev->dev, ctlr);
+-	if (ret) {
+-		dev_err(&pdev->dev, "failed to register SPI controller\n");
+-		goto put_ctlr;
+-	}
++	if (ret)
++		return dev_err_probe(&pdev->dev, ret, "failed to register SPI controller\n");
+ 
+ 	if (sadi->data->restart) {
+ 		ret = devm_register_restart_handler(&pdev->dev,
+ 						    sadi->data->restart,
+ 						    sadi);
+-		if (ret) {
+-			dev_err(&pdev->dev, "can not register restart handler\n");
+-			goto put_ctlr;
+-		}
++		if (ret)
++			return dev_err_probe(&pdev->dev, ret, "can not register restart handler\n");
+ 	}
+ 
+ 	return 0;
+-
+-put_ctlr:
+-	spi_controller_put(ctlr);
+-	return ret;
+ }
+ 
+ static struct sprd_adi_data sc9860_data = {
 -- 
 2.51.0
 
