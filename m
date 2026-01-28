@@ -1,35 +1,35 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4513C279794;
-	Wed, 28 Jan 2026 14:26:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EBA9E27FB2B;
+	Wed, 28 Jan 2026 14:27:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769610411; cv=none; b=Q8W85FhCPNd7SoNQjIfUjxvAy9nRHEe+PaYXN+I4T5QIt0wCWm0qR6PdRQe1vr6qWPRDwfgeiSio9K5QMuDpOhMbWvT0cE/+Ketv1IsyCwD/xJAsd/TZLGK6q85BzxILX7IHXBR+kDMSLpOjkfftuicDiNjtcJS+zg+AtG+mwlg=
+	t=1769610425; cv=none; b=sgz1kiJEVkZte+FOECjR6BzhCvEdZFatrWm36wkn3r2kqL9uXm59zdQM29IAPWi+6K5npD5bz72JVrikcTbaF1S0HeAAs07OGURYNWW+zf2SQwUaeuX+t6vJSGS/fHWknHRk04mESAKkBIDH04W6lZhbsJm5OdNh2XsnLzrlK3M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769610411; c=relaxed/simple;
-	bh=vxVtddPUUeVlSjhjy//2jICkO4QVc+Y88qCQSynG68o=;
+	s=arc-20240116; t=1769610425; c=relaxed/simple;
+	bh=QncIyzcuS9hlmDGq0+O3nDSGEllt9myeHiPmqnuj5oU=;
 	h=Subject:To:Cc:From:Date:In-Reply-To:Message-ID:MIME-Version:
-	 Content-Type; b=fEN1UxSB+Wq0O6RKDpAC9n3Z1DmUPWdoyKQWB1TpYXZ9hEA4OxX8Iho3209bTPUwl+e6HhkD1Ay44w78sP3xlmvIvkCVCbCobn+N8z1EU+wS5u8mV5LoPWq4XjaqEPT4PLNCoi/cuaceZDTtzjYvvEHs1bzclOjVE8bM1YJo94Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=urvfRGzJ; arc=none smtp.client-ip=10.30.226.201
+	 Content-Type; b=L0f/GwKu2gqj/JojiOAWLb6wgmV8Fiea+t/0CYIEeuU7nV22xwG9L98lmI+JzQDQgiIZ747LV90lmtRfHMMUmIOtg4AHsW5MSO/H5iRTzXasc+IRXv8JPD9l5cDaiiPkXXvdEjfpn8iJ+DoNaGMmrIy2c2+iwq+5rmtPNqfGyBU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jdeyTA/o; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="urvfRGzJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A356C4CEF1;
-	Wed, 28 Jan 2026 14:26:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jdeyTA/o"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2AB33C4CEF1;
+	Wed, 28 Jan 2026 14:27:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1769610410;
-	bh=vxVtddPUUeVlSjhjy//2jICkO4QVc+Y88qCQSynG68o=;
+	s=korg; t=1769610424;
+	bh=QncIyzcuS9hlmDGq0+O3nDSGEllt9myeHiPmqnuj5oU=;
 	h=Subject:To:Cc:From:Date:In-Reply-To:From;
-	b=urvfRGzJ+kTIilb6HfjmxMm9OX4yQTnCQfJE+52Jtrntgc2MyQISTcxkEYbALR6jH
-	 GcxpkM5b4T+r79pesQ6SEWoZ+vUj8q+4/JMlaAeUDOCBbGUkvStsdBKuohlXjOVl5N
-	 yNRqTH38ojpi3/8Gp/e6zMna8k9z1/jWOy/BEtCY=
-Subject: Patch "fs/ntfs3: Initialize allocated memory before use" has been added to the 6.6-stable tree
-To: 1468888505@139.com,almaz.alexandrovich@paragon-software.com,gregkh@linuxfoundation.org,khalid@kernel.org,kubik.bartlomiej@gmail.com,ntfs3@lists.linux.dev,patches@lists.linux.dev,syzbot+0399100e525dd9696764@syzkaller.appspotmail.com,syzbot+332bd4e9d148f11a87dc@syzkaller.appspotmail.com
+	b=jdeyTA/okZcsYHTc0MbLCQQyf2OSOOTtvhAwyvOJFnCl0b39qPmui4YTPA44/QUgP
+	 OjBXmUb27UX6o0qUA5eANSCGAhETMZDMOH76RZ9jDo+Qx8tlvULY50EgC75OwY/1iD
+	 cQrdb7uZB2I6cgm02E/3cXCrIA5l76100+oRHgIE=
+Subject: Patch "ksmbd: fix use-after-free in ksmbd_session_rpc_open" has been added to the 6.6-stable tree
+To: 1468888505@139.com,gregkh@linuxfoundation.org,linkinjeon@kernel.org,norbert@doyensec.com,patches@lists.linux.dev,sashal@kernel.org,senozhatsky@chromium.org,sfrench@samba.org,stfrench@microsoft.com,sujana.subramaniam@sap.com,tom@talpey.com
 Cc: <stable-commits@vger.kernel.org>
 From: <gregkh@linuxfoundation.org>
-Date: Wed, 28 Jan 2026 15:24:54 +0100
-In-Reply-To: <20260123065753.4067735-1-1468888505@139.com>
-Message-ID: <2026012854-backtrack-sled-263a@gregkh>
+Date: Wed, 28 Jan 2026 15:24:55 +0100
+In-Reply-To: <20260127083149.3344689-1-1468888505@139.com>
+Message-ID: <2026012855-goldmine-likeness-94ce@gregkh>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -44,94 +44,138 @@ X-Patchwork-Hint: ignore
 
 This is a note to let you know that I've just added the patch titled
 
-    fs/ntfs3: Initialize allocated memory before use
+    ksmbd: fix use-after-free in ksmbd_session_rpc_open
 
 to the 6.6-stable tree which can be found at:
     http://www.kernel.org/git/?p=linux/kernel/git/stable/stable-queue.git;a=summary
 
 The filename of the patch is:
-     fs-ntfs3-initialize-allocated-memory-before-use.patch
+     ksmbd-fix-use-after-free-in-ksmbd_session_rpc_open.patch
 and it can be found in the queue-6.6 subdirectory.
 
 If you, or anyone else, feels it should not be added to the stable tree,
 please let <stable@vger.kernel.org> know about it.
 
 
-From stable+bounces-211342-greg=kroah.com@vger.kernel.org Fri Jan 23 08:03:23 2026
+From stable+bounces-211734-greg=kroah.com@vger.kernel.org Tue Jan 27 09:32:16 2026
 From: Li hongliang <1468888505@139.com>
-Date: Fri, 23 Jan 2026 14:57:53 +0800
-Subject: fs/ntfs3: Initialize allocated memory before use
-To: gregkh@linuxfoundation.org, stable@vger.kernel.org, kubik.bartlomiej@gmail.com
-Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org, khalid@kernel.org, almaz.alexandrovich@paragon-software.com, ntfs3@lists.linux.dev
-Message-ID: <20260123065753.4067735-1-1468888505@139.com>
+Date: Tue, 27 Jan 2026 16:31:49 +0800
+Subject: ksmbd: fix use-after-free in ksmbd_session_rpc_open
+To: gregkh@linuxfoundation.org, stable@vger.kernel.org, linkinjeon@kernel.org
+Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org, sfrench@samba.org, senozhatsky@chromium.org, tom@talpey.com, sujana.subramaniam@sap.com, sashal@kernel.org, linux-cifs@vger.kernel.org, norbert@doyensec.com, stfrench@microsoft.com
+Message-ID: <20260127083149.3344689-1-1468888505@139.com>
 
-From: Bartlomiej Kubik <kubik.bartlomiej@gmail.com>
+From: Namjae Jeon <linkinjeon@kernel.org>
 
-[ Upstream commit a8a3ca23bbd9d849308a7921a049330dc6c91398 ]
+[ Upstream commit a1f46c99d9ea411f9bf30025b912d881d36fc709 ]
 
-KMSAN reports: Multiple uninitialized values detected:
+A UAF issue can occur due to a race condition between
+ksmbd_session_rpc_open() and __session_rpc_close().
+Add rpc_lock to the session to protect it.
 
-- KMSAN: uninit-value in ntfs_read_hdr (3)
-- KMSAN: uninit-value in bcmp (3)
-
-Memory is allocated by __getname(), which is a wrapper for
-kmem_cache_alloc(). This memory is used before being properly
-cleared. Change kmem_cache_alloc() to kmem_cache_zalloc() to
-properly allocate and clear memory before use.
-
-Fixes: 82cae269cfa9 ("fs/ntfs3: Add initialization of super block")
-Fixes: 78ab59fee07f ("fs/ntfs3: Rework file operations")
-Tested-by: syzbot+332bd4e9d148f11a87dc@syzkaller.appspotmail.com
-Reported-by: syzbot+332bd4e9d148f11a87dc@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=332bd4e9d148f11a87dc
-
-Fixes: 82cae269cfa9 ("fs/ntfs3: Add initialization of super block")
-Fixes: 78ab59fee07f ("fs/ntfs3: Rework file operations")
-Tested-by: syzbot+0399100e525dd9696764@syzkaller.appspotmail.com
-Reported-by: syzbot+0399100e525dd9696764@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=0399100e525dd9696764
-
-Reviewed-by: Khalid Aziz <khalid@kernel.org>
-Signed-off-by: Bartlomiej Kubik <kubik.bartlomiej@gmail.com>
-Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
+Cc: stable@vger.kernel.org
+Reported-by: Norbert Szetei <norbert@doyensec.com>
+Tested-by: Norbert Szetei <norbert@doyensec.com>
+Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Steve French <stfrench@microsoft.com>
+[ KSMBD_DEFAULT_GFP is introduced by commit 0066f623bce8 ("ksmbd: use __GFP_RETRY_MAYFAIL")
+ after linux-6.13. Here we still use GFP_KERNEL. ]
 Signed-off-by: Li hongliang <1468888505@139.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ntfs3/inode.c |    7 +++----
- 1 file changed, 3 insertions(+), 4 deletions(-)
+ fs/smb/server/mgmt/user_session.c |   20 ++++++++++++++------
+ fs/smb/server/mgmt/user_session.h |    1 +
+ 2 files changed, 15 insertions(+), 6 deletions(-)
 
---- a/fs/ntfs3/inode.c
-+++ b/fs/ntfs3/inode.c
-@@ -1327,7 +1327,7 @@ struct inode *ntfs_create_inode(struct m
- 		fa |= FILE_ATTRIBUTE_READONLY;
+--- a/fs/smb/server/mgmt/user_session.c
++++ b/fs/smb/server/mgmt/user_session.c
+@@ -59,10 +59,12 @@ static void ksmbd_session_rpc_clear_list
+ 	struct ksmbd_session_rpc *entry;
+ 	long index;
  
- 	/* Allocate PATH_MAX bytes. */
--	new_de = __getname();
-+	new_de = kmem_cache_zalloc(names_cachep, GFP_KERNEL);
- 	if (!new_de) {
- 		err = -ENOMEM;
- 		goto out1;
-@@ -1756,10 +1756,9 @@ int ntfs_link_inode(struct inode *inode,
- 	struct NTFS_DE *de;
++	down_write(&sess->rpc_lock);
+ 	xa_for_each(&sess->rpc_handle_list, index, entry) {
+ 		xa_erase(&sess->rpc_handle_list, index);
+ 		__session_rpc_close(sess, entry);
+ 	}
++	up_write(&sess->rpc_lock);
  
- 	/* Allocate PATH_MAX bytes. */
--	de = __getname();
-+	de = kmem_cache_zalloc(names_cachep, GFP_KERNEL);
- 	if (!de)
- 		return -ENOMEM;
--	memset(de, 0, PATH_MAX);
+ 	xa_destroy(&sess->rpc_handle_list);
+ }
+@@ -92,7 +94,7 @@ int ksmbd_session_rpc_open(struct ksmbd_
+ {
+ 	struct ksmbd_session_rpc *entry, *old;
+ 	struct ksmbd_rpc_command *resp;
+-	int method;
++	int method, id;
  
- 	/* Mark rw ntfs as dirty. It will be cleared at umount. */
- 	ntfs_set_state(sbi, NTFS_DIRTY_DIRTY);
-@@ -1795,7 +1794,7 @@ int ntfs_unlink_inode(struct inode *dir,
- 		return -EINVAL;
- 
- 	/* Allocate PATH_MAX bytes. */
--	de = __getname();
-+	de = kmem_cache_zalloc(names_cachep, GFP_KERNEL);
- 	if (!de)
+ 	method = __rpc_method(rpc_name);
+ 	if (!method)
+@@ -102,26 +104,29 @@ int ksmbd_session_rpc_open(struct ksmbd_
+ 	if (!entry)
  		return -ENOMEM;
  
++	down_read(&sess->rpc_lock);
+ 	entry->method = method;
+-	entry->id = ksmbd_ipc_id_alloc();
+-	if (entry->id < 0)
++	entry->id = id = ksmbd_ipc_id_alloc();
++	if (id < 0)
+ 		goto free_entry;
+-	old = xa_store(&sess->rpc_handle_list, entry->id, entry, GFP_KERNEL);
++	old = xa_store(&sess->rpc_handle_list, id, entry, GFP_KERNEL);
+ 	if (xa_is_err(old))
+ 		goto free_id;
+ 
+-	resp = ksmbd_rpc_open(sess, entry->id);
++	resp = ksmbd_rpc_open(sess, id);
+ 	if (!resp)
+ 		goto erase_xa;
+ 
++	up_read(&sess->rpc_lock);
+ 	kvfree(resp);
+-	return entry->id;
++	return id;
+ erase_xa:
+ 	xa_erase(&sess->rpc_handle_list, entry->id);
+ free_id:
+ 	ksmbd_rpc_id_free(entry->id);
+ free_entry:
+ 	kfree(entry);
++	up_read(&sess->rpc_lock);
+ 	return -EINVAL;
+ }
+ 
+@@ -129,9 +134,11 @@ void ksmbd_session_rpc_close(struct ksmb
+ {
+ 	struct ksmbd_session_rpc *entry;
+ 
++	down_write(&sess->rpc_lock);
+ 	entry = xa_erase(&sess->rpc_handle_list, id);
+ 	if (entry)
+ 		__session_rpc_close(sess, entry);
++	up_write(&sess->rpc_lock);
+ }
+ 
+ int ksmbd_session_rpc_method(struct ksmbd_session *sess, int id)
+@@ -438,6 +445,7 @@ static struct ksmbd_session *__session_c
+ 	sess->sequence_number = 1;
+ 	rwlock_init(&sess->tree_conns_lock);
+ 	atomic_set(&sess->refcnt, 2);
++	init_rwsem(&sess->rpc_lock);
+ 
+ 	ret = __init_smb2_session(sess);
+ 	if (ret)
+--- a/fs/smb/server/mgmt/user_session.h
++++ b/fs/smb/server/mgmt/user_session.h
+@@ -63,6 +63,7 @@ struct ksmbd_session {
+ 	rwlock_t			tree_conns_lock;
+ 
+ 	atomic_t			refcnt;
++	struct rw_semaphore		rpc_lock;
+ };
+ 
+ static inline int test_session_flag(struct ksmbd_session *sess, int bit)
 
 
 Patches currently in stable-queue which might be from 1468888505@139.com are
