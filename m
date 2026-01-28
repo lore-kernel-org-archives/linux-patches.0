@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11D2B288C22;
-	Wed, 28 Jan 2026 15:49:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 990602DF155;
+	Wed, 28 Jan 2026 15:49:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769615368; cv=none; b=tTxDXo+0DdgNsTkL63PFnN4bfBLu6CispfRR+UvDd+XAqJEzm057DBM4fyIy5wbQkvcYctlzVMyOX9sUJZk1RU9xpap7O/8l7i07DWTyaepWXKf2HnqlkW3JpUFKjpn6nVDEXceIVn7+FeZ3zcQGGJOm06YNBAodo5VILEIF/Rc=
+	t=1769615371; cv=none; b=V+EmxWlxm3ZX6teT/Oc0FBI37Q9APaqFR5sk+KaqFuduX7wmWdikk5LlSKsVGu0BLynAa61cvNJEoTUjqWUUVe5IGjqgdhDH8DtRiobPDmqIgCv71jKHLy9HZe2IfM62bYo17ZKC0arkIwTAp+jYsRTaqUODJqTKnPUJqS3jArY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769615368; c=relaxed/simple;
-	bh=HhpcPdl9Ey0qY70Ppn0aqqD4uVGHclelhEjb2QmaHZo=;
+	s=arc-20240116; t=1769615371; c=relaxed/simple;
+	bh=wlWkBYlL4xdKepa5ecBFOljTJdiGYOws76fxgNVn1BU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FqHGgnaGlD3k8PF5Zd5aI0zxpmMD7b+bYTlfDOnUJR3L4o+OXcWhnK33b3+tq2W0KD32kPxHDXSihexlfKoK1o2Q30hXe2ZpvNIWQmWn+is2oNTT6yoA4MI6L4+uAWaHSkBmVqKKjVUMnfM3AqF1fzd+l8R8jVNo1CAXXKO7zIw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2cvEf4Xz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YA8LhuNLNcHCSdfz2LieZMcKKeHoeJ4k07ATtySj8ozNEh0bhFFYvc4JlZQ3InbdecrlehYuI5KQbBR8VlCwO549kYD1PB284wQkytKC3yKr/2ty0ShgenN8yiw96RkBDtsWD0K6Cpb8SB8ej5pvU3fLnzs/ppLAVQAidCUOqTI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tNlBnWB6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2cvEf4Xz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 86673C4CEF1;
-	Wed, 28 Jan 2026 15:49:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tNlBnWB6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE6A2C4CEF1;
+	Wed, 28 Jan 2026 15:49:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1769615367;
-	bh=HhpcPdl9Ey0qY70Ppn0aqqD4uVGHclelhEjb2QmaHZo=;
+	s=korg; t=1769615371;
+	bh=wlWkBYlL4xdKepa5ecBFOljTJdiGYOws76fxgNVn1BU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2cvEf4XzvrpMaDMgYt03Bd7v0xwyrCXDGh98jbx8A7Fw6RAsVcvfqnF8h1RGpjbcT
-	 tkkw5o1UFSc8/fuzYgiYbJ2mvnQ6NijtWi/jjwX09Tokg8KR7lcvMrqdhC8Y1btw9u
-	 6vMaD4cuBIDR3mN2CflR1uqSfQD9mg0dctNKcCbw=
+	b=tNlBnWB6wnTjNIRlViFBYpT5cT8KgZEbwAOyoLVuH4KQszJcfdVl30C4ZcTQKa4US
+	 8bcLYeb2sjyu5mPMDpf2xHPMTBsMjw40+q/Q3cEwGgWni3yUFKrZp9SLlUMPK0j1jy
+	 v2kZ9J9/WZ3K35tAzdXHIopYkAT07o0x92EoLo5k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tomasz Rusinowicz <tomasz.rusinowicz@intel.com>,
-	Jeff Hugo <jeff.hugo@oss.qualcomm.com>,
-	Karol Wachowski <karol.wachowski@linux.intel.com>,
+	Qu Wenruo <wqu@suse.com>,
+	Boris Burkov <boris@bur.io>,
+	David Sterba <dsterba@suse.com>,
 	Rahul Sharma <black.hawk@163.com>
-Subject: [PATCH 6.12 159/169] accel/ivpu: Fix race condition when unbinding BOs
-Date: Wed, 28 Jan 2026 16:24:02 +0100
-Message-ID: <20260128145339.738143653@linuxfoundation.org>
+Subject: [PATCH 6.12 160/169] btrfs: fix racy bitfield write in btrfs_clear_space_info_full()
+Date: Wed, 28 Jan 2026 16:24:03 +0100
+Message-ID: <20260128145339.775348257@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260128145334.006287341@linuxfoundation.org>
 References: <20260128145334.006287341@linuxfoundation.org>
@@ -52,52 +52,250 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tomasz Rusinowicz <tomasz.rusinowicz@intel.com>
+From: Boris Burkov <boris@bur.io>
 
-[ Upstream commit 00812636df370bedf4e44a0c81b86ea96bca8628 ]
+[ Upstream commit 38e818718c5e04961eea0fa8feff3f100ce40408 ]
 
-Fix 'Memory manager not clean during takedown' warning that occurs
-when ivpu_gem_bo_free() removes the BO from the BOs list before it
-gets unmapped. Then file_priv_unbind() triggers a warning in
-drm_mm_takedown() during context teardown.
+>From the memory-barriers.txt document regarding memory barrier ordering
+guarantees:
 
-Protect the unmapping sequence with bo_list_lock to ensure the BO is
-always fully unmapped when removed from the list. This ensures the BO
-is either fully unmapped at context teardown time or present on the
-list and unmapped by file_priv_unbind().
+ (*) These guarantees do not apply to bitfields, because compilers often
+     generate code to modify these using non-atomic read-modify-write
+     sequences.  Do not attempt to use bitfields to synchronize parallel
+     algorithms.
 
-Fixes: 48aea7f2a2ef ("accel/ivpu: Fix locking in ivpu_bo_remove_all_bos_from_context()")
-Signed-off-by: Tomasz Rusinowicz <tomasz.rusinowicz@intel.com>
-Reviewed-by: Jeff Hugo <jeff.hugo@oss.qualcomm.com>
-Signed-off-by: Karol Wachowski <karol.wachowski@linux.intel.com>
-Link: https://patch.msgid.link/20251029071451.184243-1-karol.wachowski@linux.intel.com
-[ The context change is due to the commit e0c0891cd63b
-("accel/ivpu: Rework bind/unbind of imported buffers")
-and the proper adoption is done. ]
+ (*) Even in cases where bitfields are protected by locks, all fields
+     in a given bitfield must be protected by one lock.  If two fields
+     in a given bitfield are protected by different locks, the compiler's
+     non-atomic read-modify-write sequences can cause an update to one
+     field to corrupt the value of an adjacent field.
+
+btrfs_space_info has a bitfield sharing an underlying word consisting of
+the fields full, chunk_alloc, and flush:
+
+struct btrfs_space_info {
+        struct btrfs_fs_info *     fs_info;              /*     0     8 */
+        struct btrfs_space_info *  parent;               /*     8     8 */
+        ...
+        int                        clamp;                /*   172     4 */
+        unsigned int               full:1;               /*   176: 0  4 */
+        unsigned int               chunk_alloc:1;        /*   176: 1  4 */
+        unsigned int               flush:1;              /*   176: 2  4 */
+        ...
+
+Therefore, to be safe from parallel read-modify-writes losing a write to
+one of the bitfield members protected by a lock, all writes to all the
+bitfields must use the lock. They almost universally do, except for
+btrfs_clear_space_info_full() which iterates over the space_infos and
+writes out found->full = 0 without a lock.
+
+Imagine that we have one thread completing a transaction in which we
+finished deleting a block_group and are thus calling
+btrfs_clear_space_info_full() while simultaneously the data reclaim
+ticket infrastructure is running do_async_reclaim_data_space():
+
+          T1                                             T2
+btrfs_commit_transaction
+  btrfs_clear_space_info_full
+  data_sinfo->full = 0
+  READ: full:0, chunk_alloc:0, flush:1
+                                              do_async_reclaim_data_space(data_sinfo)
+                                              spin_lock(&space_info->lock);
+                                              if(list_empty(tickets))
+                                                space_info->flush = 0;
+                                                READ: full: 0, chunk_alloc:0, flush:1
+                                                MOD/WRITE: full: 0, chunk_alloc:0, flush:0
+                                                spin_unlock(&space_info->lock);
+                                                return;
+  MOD/WRITE: full:0, chunk_alloc:0, flush:1
+
+and now data_sinfo->flush is 1 but the reclaim worker has exited. This
+breaks the invariant that flush is 0 iff there is no work queued or
+running. Once this invariant is violated, future allocations that go
+into __reserve_bytes() will add tickets to space_info->tickets but will
+see space_info->flush is set to 1 and not queue the work. After this,
+they will block forever on the resulting ticket, as it is now impossible
+to kick the worker again.
+
+I also confirmed by looking at the assembly of the affected kernel that
+it is doing RMW operations. For example, to set the flush (3rd) bit to 0,
+the assembly is:
+  andb    $0xfb,0x60(%rbx)
+and similarly for setting the full (1st) bit to 0:
+  andb    $0xfe,-0x20(%rax)
+
+So I think this is really a bug on practical systems.  I have observed
+a number of systems in this exact state, but am currently unable to
+reproduce it.
+
+Rather than leaving this footgun lying around for the future, take
+advantage of the fact that there is room in the struct anyway, and that
+it is already quite large and simply change the three bitfield members to
+bools. This avoids writes to space_info->full having any effect on
+writes to space_info->flush, regardless of locking.
+
+Fixes: 957780eb2788 ("Btrfs: introduce ticketed enospc infrastructure")
+Reviewed-by: Qu Wenruo <wqu@suse.com>
+Signed-off-by: Boris Burkov <boris@bur.io>
+Reviewed-by: David Sterba <dsterba@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
+[ The context change is due to the commit cc0517fe779f
+("btrfs: tweak extent/chunk allocation for space_info sub-space")
+in v6.16 which is irrelevant to the logic of this patch. ]
 Signed-off-by: Rahul Sharma <black.hawk@163.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/accel/ivpu/ivpu_gem.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ fs/btrfs/block-group.c |    6 +++---
+ fs/btrfs/space-info.c  |   22 +++++++++++-----------
+ fs/btrfs/space-info.h  |    6 +++---
+ 3 files changed, 17 insertions(+), 17 deletions(-)
 
---- a/drivers/accel/ivpu/ivpu_gem.c
-+++ b/drivers/accel/ivpu/ivpu_gem.c
-@@ -240,7 +240,6 @@ static void ivpu_gem_bo_free(struct drm_
+--- a/fs/btrfs/block-group.c
++++ b/fs/btrfs/block-group.c
+@@ -4195,7 +4195,7 @@ int btrfs_chunk_alloc(struct btrfs_trans
+ 			mutex_unlock(&fs_info->chunk_mutex);
+ 		} else {
+ 			/* Proceed with allocation */
+-			space_info->chunk_alloc = 1;
++			space_info->chunk_alloc = true;
+ 			wait_for_alloc = false;
+ 			spin_unlock(&space_info->lock);
+ 		}
+@@ -4244,7 +4244,7 @@ int btrfs_chunk_alloc(struct btrfs_trans
+ 	spin_lock(&space_info->lock);
+ 	if (ret < 0) {
+ 		if (ret == -ENOSPC)
+-			space_info->full = 1;
++			space_info->full = true;
+ 		else
+ 			goto out;
+ 	} else {
+@@ -4254,7 +4254,7 @@ int btrfs_chunk_alloc(struct btrfs_trans
  
- 	mutex_lock(&vdev->bo_list_lock);
- 	list_del(&bo->bo_list_node);
--	mutex_unlock(&vdev->bo_list_lock);
+ 	space_info->force_alloc = CHUNK_ALLOC_NO_FORCE;
+ out:
+-	space_info->chunk_alloc = 0;
++	space_info->chunk_alloc = false;
+ 	spin_unlock(&space_info->lock);
+ 	mutex_unlock(&fs_info->chunk_mutex);
  
- 	drm_WARN_ON(&vdev->drm, !drm_gem_is_imported(&bo->base.base) &&
- 		    !dma_resv_test_signaled(obj->resv, DMA_RESV_USAGE_READ));
-@@ -248,6 +247,8 @@ static void ivpu_gem_bo_free(struct drm_
- 	drm_WARN_ON(&vdev->drm, bo->base.vaddr);
+--- a/fs/btrfs/space-info.c
++++ b/fs/btrfs/space-info.c
+@@ -183,7 +183,7 @@ void btrfs_clear_space_info_full(struct
+ 	struct btrfs_space_info *found;
  
- 	ivpu_bo_unbind_locked(bo);
-+	mutex_unlock(&vdev->bo_list_lock);
-+
- 	drm_WARN_ON(&vdev->drm, bo->mmu_mapped);
- 	drm_WARN_ON(&vdev->drm, bo->ctx);
+ 	list_for_each_entry(found, head, list)
+-		found->full = 0;
++		found->full = false;
+ }
  
+ /*
+@@ -364,7 +364,7 @@ void btrfs_add_bg_to_space_info(struct b
+ 	found->bytes_readonly += block_group->bytes_super;
+ 	btrfs_space_info_update_bytes_zone_unusable(info, found, block_group->zone_unusable);
+ 	if (block_group->length > 0)
+-		found->full = 0;
++		found->full = false;
+ 	btrfs_try_granting_tickets(info, found);
+ 	spin_unlock(&found->lock);
+ 
+@@ -1140,7 +1140,7 @@ static void btrfs_async_reclaim_metadata
+ 	spin_lock(&space_info->lock);
+ 	to_reclaim = btrfs_calc_reclaim_metadata_size(fs_info, space_info);
+ 	if (!to_reclaim) {
+-		space_info->flush = 0;
++		space_info->flush = false;
+ 		spin_unlock(&space_info->lock);
+ 		return;
+ 	}
+@@ -1152,7 +1152,7 @@ static void btrfs_async_reclaim_metadata
+ 		flush_space(fs_info, space_info, to_reclaim, flush_state, false);
+ 		spin_lock(&space_info->lock);
+ 		if (list_empty(&space_info->tickets)) {
+-			space_info->flush = 0;
++			space_info->flush = false;
+ 			spin_unlock(&space_info->lock);
+ 			return;
+ 		}
+@@ -1195,7 +1195,7 @@ static void btrfs_async_reclaim_metadata
+ 					flush_state = FLUSH_DELAYED_ITEMS_NR;
+ 					commit_cycles--;
+ 				} else {
+-					space_info->flush = 0;
++					space_info->flush = false;
+ 				}
+ 			} else {
+ 				flush_state = FLUSH_DELAYED_ITEMS_NR;
+@@ -1357,7 +1357,7 @@ static void btrfs_async_reclaim_data_spa
+ 
+ 	spin_lock(&space_info->lock);
+ 	if (list_empty(&space_info->tickets)) {
+-		space_info->flush = 0;
++		space_info->flush = false;
+ 		spin_unlock(&space_info->lock);
+ 		return;
+ 	}
+@@ -1368,7 +1368,7 @@ static void btrfs_async_reclaim_data_spa
+ 		flush_space(fs_info, space_info, U64_MAX, ALLOC_CHUNK_FORCE, false);
+ 		spin_lock(&space_info->lock);
+ 		if (list_empty(&space_info->tickets)) {
+-			space_info->flush = 0;
++			space_info->flush = false;
+ 			spin_unlock(&space_info->lock);
+ 			return;
+ 		}
+@@ -1385,7 +1385,7 @@ static void btrfs_async_reclaim_data_spa
+ 			    data_flush_states[flush_state], false);
+ 		spin_lock(&space_info->lock);
+ 		if (list_empty(&space_info->tickets)) {
+-			space_info->flush = 0;
++			space_info->flush = false;
+ 			spin_unlock(&space_info->lock);
+ 			return;
+ 		}
+@@ -1402,7 +1402,7 @@ static void btrfs_async_reclaim_data_spa
+ 				if (maybe_fail_all_tickets(fs_info, space_info))
+ 					flush_state = 0;
+ 				else
+-					space_info->flush = 0;
++					space_info->flush = false;
+ 			} else {
+ 				flush_state = 0;
+ 			}
+@@ -1418,7 +1418,7 @@ static void btrfs_async_reclaim_data_spa
+ 
+ aborted_fs:
+ 	maybe_fail_all_tickets(fs_info, space_info);
+-	space_info->flush = 0;
++	space_info->flush = false;
+ 	spin_unlock(&space_info->lock);
+ }
+ 
+@@ -1787,7 +1787,7 @@ static int __reserve_bytes(struct btrfs_
+ 				 */
+ 				maybe_clamp_preempt(fs_info, space_info);
+ 
+-				space_info->flush = 1;
++				space_info->flush = true;
+ 				trace_btrfs_trigger_flush(fs_info,
+ 							  space_info->flags,
+ 							  orig_bytes, flush,
+--- a/fs/btrfs/space-info.h
++++ b/fs/btrfs/space-info.h
+@@ -136,11 +136,11 @@ struct btrfs_space_info {
+ 				   flushing. The value is >> clamp, so turns
+ 				   out to be a 2^clamp divisor. */
+ 
+-	unsigned int full:1;	/* indicates that we cannot allocate any more
++	bool full;		/* indicates that we cannot allocate any more
+ 				   chunks for this space */
+-	unsigned int chunk_alloc:1;	/* set if we are allocating a chunk */
++	bool chunk_alloc;	/* set if we are allocating a chunk */
+ 
+-	unsigned int flush:1;		/* set if we are trying to make space */
++	bool flush;		/* set if we are trying to make space */
+ 
+ 	unsigned int force_alloc;	/* set if we need to force a chunk
+ 					   alloc for this space */
 
 
