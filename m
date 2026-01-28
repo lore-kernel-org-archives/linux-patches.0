@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB92E302779;
-	Wed, 28 Jan 2026 15:53:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF3012F25EF;
+	Wed, 28 Jan 2026 15:53:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769615624; cv=none; b=VKwtN1KoQ8gfM5xaPLLYnUgw+qHwpB5GI8MPCRzoBn6CslT6k17JBsUgKdEFMyEl4PzD+xmE9svxHVNSSdaha4i1fzyHa8U9CC+li9qqEQjejgBYOGnPqLP9bYTk7EH5nUvZoBARTXVPa152jaj27fo0+x4XY82uMYoH+2dlm3g=
+	t=1769615628; cv=none; b=PSoHQIrMGYRJVebjsAE4FNE4Bu0jLHeB8si2imjLy0Svoyix2YE4AlPR++pLuPhl3KzeUXCrWO7Iv/wOS9wkwZ53Sj7hE2JB4iqNodqHlThwsolVkgT/tkr9LUVrLckRqyRNdSeQUKDsmcxEI8l2x5KNeluRwb/oiX9ZZT3WaRo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769615624; c=relaxed/simple;
-	bh=VqBIQMzAj7O5GuUWa9ygPWz9usQ8+ZncKNHxM3ZVLro=;
+	s=arc-20240116; t=1769615628; c=relaxed/simple;
+	bh=9KYV42BCiGA9uYUvd9Pz+SbDyk2NCwlr+7VpJe+nIJY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YQrA3upWQtNzNCwNn4UEaXnRWS4E3RBL1Pqorp+ZekVnkwOMAVq9BOdp3LTg1WEwjJcY3fn3ygXpGMYS2jaJR2wNvqY5VtMm9YJTfhvl/4oJ1plq9jh7yKx9ln0LrIV1IGlVbd3fP0sCCcIh+Y9pb4u550JtPtE0CUVeb+xZc+4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cuHd3yz5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=haKUW2QKwiS7Y+aW5RPK1sG8ZXDVuiRFArLuFbZ9VQQAQTU5kD9T/r8W4FrLHKSlyZsrmBasEjDjQjf/zxai4ZzBO4/tCwTlzTTRNdmOP3Ur3LHpOl3n29EJIHh0N0lLqxIudse1IHEYOyAoBxLcrOTLcRbDQmtIpW3lanMtfHM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uEoZIIsZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cuHd3yz5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 40BB1C4CEF7;
-	Wed, 28 Jan 2026 15:53:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uEoZIIsZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7494DC4CEF1;
+	Wed, 28 Jan 2026 15:53:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1769615624;
-	bh=VqBIQMzAj7O5GuUWa9ygPWz9usQ8+ZncKNHxM3ZVLro=;
+	s=korg; t=1769615627;
+	bh=9KYV42BCiGA9uYUvd9Pz+SbDyk2NCwlr+7VpJe+nIJY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cuHd3yz5qh1r9mI3YEbgpcdTirpSbxqH4WDcT6VARTLPWsYfdjiG7X/nt+ByEX1Os
-	 LK5TmpzAyL+1k6px5BxT28tovuaRXcon1ggZ4nxTNxeciEyes9Hzr2FE9S8rqRosVx
-	 rMhZJzO6mO+pOvU9+0h5Wn08/eCREADm6jb3Wjwo=
+	b=uEoZIIsZNrUzjycl4Gc0NHvEYP/5gg9BfWvDegflnMQaRIDkvSRmsHeLsgRptjdCf
+	 PnArHjpOJgGK7MpVyBiXdhffZv8+KBr0aqNh32z9A7QEEAX4ONOEa9Ak39VWYWSu6+
+	 9FaQVOH0vvx07hK3J56G7yLkDMuWDfSGPUXLj7p4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Maxime Chevallier <maxime.chevallier@bootlin.com>,
 	Jakub Kicinski <kuba@kernel.org>,
+	Marc Kleine-Budde <mkl@pengutronix.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 032/227] net: freescale: ucc_geth: Return early when TBI PHY cant be found
-Date: Wed, 28 Jan 2026 16:21:17 +0100
-Message-ID: <20260128145345.500272301@linuxfoundation.org>
+Subject: [PATCH 6.18 033/227] can: gs_usb: gs_usb_receive_bulk_callback(): unanchor URL on usb_submit_urb() error
+Date: Wed, 28 Jan 2026 16:21:18 +0100
+Message-ID: <20260128145345.536281652@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260128145344.331957407@linuxfoundation.org>
 References: <20260128145344.331957407@linuxfoundation.org>
@@ -53,45 +51,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Maxime Chevallier <maxime.chevallier@bootlin.com>
+From: Marc Kleine-Budde <mkl@pengutronix.de>
 
-[ Upstream commit a74c7a58ca2ca1cbb93f4c01421cf24b8642b962 ]
+[ Upstream commit 79a6d1bfe1148bc921b8d7f3371a7fbce44e30f7 ]
 
-In ucc_geth's .mac_config(), we configure the TBI Serdes block represented by a
-struct phy_device that we get from firmware.
+In commit 7352e1d5932a ("can: gs_usb: gs_usb_receive_bulk_callback(): fix
+URB memory leak"), the URB was re-anchored before usb_submit_urb() in
+gs_usb_receive_bulk_callback() to prevent a leak of this URB during
+cleanup.
 
-While porting to phylink, a check was missed to make sure we don't try
-to access the TBI PHY if we can't get it. Let's add it and return early
-in case of error
+However, this patch did not take into account that usb_submit_urb() could
+fail. The URB remains anchored and
+usb_kill_anchored_urbs(&parent->rx_submitted) in gs_can_close() loops
+infinitely since the anchor list never becomes empty.
 
-Reported-by: kernel test robot <lkp@intel.com>
-Reported-by: Dan Carpenter <dan.carpenter@linaro.org>
-Closes: https://lore.kernel.org/r/202601130843.rFGNXA5a-lkp@intel.com/
-Fixes: 53036aa8d031 ("net: freescale: ucc_geth: phylink conversion")
-Signed-off-by: Maxime Chevallier <maxime.chevallier@bootlin.com>
-Link: https://patch.msgid.link/20260114080247.366252-1-maxime.chevallier@bootlin.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+To fix the bug, unanchor the URB when an usb_submit_urb() error occurs,
+also print an info message.
+
+Fixes: 7352e1d5932a ("can: gs_usb: gs_usb_receive_bulk_callback(): fix URB memory leak")
+Reported-by: Jakub Kicinski <kuba@kernel.org>
+Closes: https://lore.kernel.org/all/20260110223836.3890248-1-kuba@kernel.org/
+Link: https://patch.msgid.link/20260116-can_usb-fix-reanchor-v1-1-9d74e7289225@pengutronix.de
+Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/freescale/ucc_geth.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/net/can/usb/gs_usb.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/drivers/net/ethernet/freescale/ucc_geth.c b/drivers/net/ethernet/freescale/ucc_geth.c
-index affd5a6c44e7b..131d1210dc4a8 100644
---- a/drivers/net/ethernet/freescale/ucc_geth.c
-+++ b/drivers/net/ethernet/freescale/ucc_geth.c
-@@ -1602,8 +1602,10 @@ static void ugeth_mac_config(struct phylink_config *config, unsigned int mode,
- 			pr_warn("TBI mode requires that the device tree specify a tbi-handle\n");
+diff --git a/drivers/net/can/usb/gs_usb.c b/drivers/net/can/usb/gs_usb.c
+index b14b132ad8e6a..fd7fb21b10989 100644
+--- a/drivers/net/can/usb/gs_usb.c
++++ b/drivers/net/can/usb/gs_usb.c
+@@ -754,6 +754,10 @@ static void gs_usb_receive_bulk_callback(struct urb *urb)
+ 	usb_anchor_urb(urb, &parent->rx_submitted);
  
- 		tbiphy = of_phy_find_device(ug_info->tbi_node);
--		if (!tbiphy)
-+		if (!tbiphy) {
- 			pr_warn("Could not get TBI device\n");
-+			return;
-+		}
+ 	rc = usb_submit_urb(urb, GFP_ATOMIC);
++	if (!rc)
++		return;
++
++	usb_unanchor_urb(urb);
  
- 		value = phy_read(tbiphy, ENET_TBI_MII_CR);
- 		value &= ~0x1000;	/* Turn off autonegotiation */
+ 	/* USB failure take down all interfaces */
+ 	if (rc == -ENODEV) {
+@@ -762,6 +766,9 @@ static void gs_usb_receive_bulk_callback(struct urb *urb)
+ 			if (parent->canch[rc])
+ 				netif_device_detach(parent->canch[rc]->netdev);
+ 		}
++	} else if (rc != -ESHUTDOWN && net_ratelimit()) {
++		netdev_info(netdev, "failed to re-submit IN URB: %pe\n",
++			    ERR_PTR(urb->status));
+ 	}
+ }
+ 
 -- 
 2.51.0
 
