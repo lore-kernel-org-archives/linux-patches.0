@@ -1,37 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA827285C8D;
-	Wed, 28 Jan 2026 16:02:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B70A28D8DB;
+	Wed, 28 Jan 2026 16:03:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769616179; cv=none; b=YneRVGpu7KLVB5qtWvCKIs4m1bRxDu3Z29EDcgKAJTuDcGaurvS0fCvTJfD7q5+zVTXCtyzMxnNFC5hYW3hS5MLCjjRNyCSYcqGv8k8+B1KV8wDE21YmWgHvDLlgesnYGF2ZLxsbdmzL/tI641l6wPZPiYhaZe/cQzjlew+qd2Q=
+	t=1769616183; cv=none; b=eWOUKoYyB5W8o76aJn27ZuQjLmMiwFa59gSV/oruMLoQVDjFnEtv8sV+D4q7Dh0tlRJNOZV8OUiuEJ3acPj/DuSZ2A682j/jhKHyMLtU+V0v5L5izSkagFZlcSFkTR5Ru07DPIOVh9VXRqtoa2S2Utx9CCWId4Xjer7BenA32w0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769616179; c=relaxed/simple;
-	bh=RDYQobSGdgJdqY+Yi5dmeV8c9D7VA8KPV1HBmyG5ad0=;
+	s=arc-20240116; t=1769616183; c=relaxed/simple;
+	bh=SsUZZ0zDHDTW2fmBDNSh4HBwyi326TekLnkD0+oKmBk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=asJXnerisj5LtFftG8gkGOGeX4dDLbYR0+BA+i7hW3YMsagmI5sybOfIKVExrLL1hv3WDvqsO2nNcy5KnSP04YoaVixoWveIocGe0czzhQY1F343nCgUPwNSHQlzeOzXsjZrJ9Vruj0GHRteCGfVMdNuZ7aCt9Gkd9INpqKnFxs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=h5aI7BG7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hL2DTFjk8jDx9j/YCeZb8vKy9xxNe5y1V9jb1igOzMATCrnUOuZCYlWNAaiA59htP/mTK3dCU3QRsdLaAjcFZZEkDhErHOrTRX+MWvoimTDO7uWh+nvupbyPVSbOo8VtWTdungX+GmGDtm3XCG07HbQ/VE/fsbRj8H4Ki8a0oeE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LwobSF5h; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="h5aI7BG7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36ED5C4CEF1;
-	Wed, 28 Jan 2026 16:02:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LwobSF5h"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7CFFFC4CEF1;
+	Wed, 28 Jan 2026 16:03:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1769616179;
-	bh=RDYQobSGdgJdqY+Yi5dmeV8c9D7VA8KPV1HBmyG5ad0=;
+	s=korg; t=1769616183;
+	bh=SsUZZ0zDHDTW2fmBDNSh4HBwyi326TekLnkD0+oKmBk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=h5aI7BG7i+Xt5l3pEdCjRFgCXS4WjlzbLqo3fmJEZQXLR9nU3+g+lXAJeshr26Uqx
-	 FJWYCNtxGjZvWq4ANRlHkwRDgoKJ4XBnIrANfxckAMyPtvdxpR4MdZyOh8Kz9kftHW
-	 oabjSm3Q+M7CNu3zwYfWtVdn1Vm+1ruR27e4UZZM=
+	b=LwobSF5h6cIKZg/j5aB0cc1tztgEUx3P42wPJoU0BWgZ+pCBUUGX9Lyjrz65T/SsY
+	 kuidxT2kA3OtYeivTJIV82R/EvCDygWcpJpsFaFHPJexbTgndaOL6PkCic1Bh9ewf9
+	 ZMgnaMLCpWI4gOfJCUrQjaVaqM6EKZtrr5HkopYI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiawen Wu <jiawenwu@trustnetic.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.18 206/227] net: txgbe: remove the redundant data return in SW-FW mailbox
-Date: Wed, 28 Jan 2026 16:24:11 +0100
-Message-ID: <20260128145351.851168751@linuxfoundation.org>
+	Marc Kleine-Budde <mkl@pengutronix.de>
+Subject: [PATCH 6.18 207/227] can: ems_usb: ems_usb_read_bulk_callback(): fix URB memory leak
+Date: Wed, 28 Jan 2026 16:24:12 +0100
+Message-ID: <20260128145351.886110838@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260128145344.331957407@linuxfoundation.org>
 References: <20260128145344.331957407@linuxfoundation.org>
@@ -50,49 +49,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiawen Wu <jiawenwu@trustnetic.com>
+From: Marc Kleine-Budde <mkl@pengutronix.de>
 
-commit 3d778e65b4f44c6af4901d83020bb8a0a010f39e upstream.
+commit 0ce73a0eb5a27070957b67fd74059b6da89cc516 upstream.
 
-For these two firmware mailbox commands, in txgbe_test_hostif() and
-txgbe_set_phy_link_hostif(), there is no need to read data from the
-buffer.
+Fix similar memory leak as in commit 7352e1d5932a ("can: gs_usb:
+gs_usb_receive_bulk_callback(): fix URB memory leak").
 
-Under the current setting, OEM firmware will cause the driver to fail to
-probe. Because OEM firmware returns more link information, with a larger
-OEM structure txgbe_hic_ephy_getlink. However, the current driver does
-not support the OEM function. So just fix it in the way that does not
-involve reading the returned data.
+In ems_usb_open(), the URBs for USB-in transfers are allocated, added to
+the dev->rx_submitted anchor and submitted. In the complete callback
+ems_usb_read_bulk_callback(), the URBs are processed and resubmitted. In
+ems_usb_close() the URBs are freed by calling
+usb_kill_anchored_urbs(&dev->rx_submitted).
 
-Fixes: d84a3ff9aae8 ("net: txgbe: Restrict the use of mismatched FW versions")
+However, this does not take into account that the USB framework unanchors
+the URB before the complete function is called. This means that once an
+in-URB has been completed, it is no longer anchored and is ultimately not
+released in ems_usb_close().
+
+Fix the memory leak by anchoring the URB in the
+ems_usb_read_bulk_callback() to the dev->rx_submitted anchor.
+
+Fixes: 702171adeed3 ("ems_usb: Added support for EMS CPC-USB/ARM7 CAN/USB interface")
 Cc: stable@vger.kernel.org
-Signed-off-by: Jiawen Wu <jiawenwu@trustnetic.com>
-Link: https://patch.msgid.link/2914AB0BC6158DDA+20260119065935.6015-1-jiawenwu@trustnetic.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Link: https://patch.msgid.link/20260116-can_usb-fix-memory-leak-v2-1-4b8cb2915571@pengutronix.de
+Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/wangxun/txgbe/txgbe_aml.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/net/can/usb/ems_usb.c |    8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
---- a/drivers/net/ethernet/wangxun/txgbe/txgbe_aml.c
-+++ b/drivers/net/ethernet/wangxun/txgbe/txgbe_aml.c
-@@ -65,7 +65,7 @@ int txgbe_test_hostif(struct wx *wx)
- 	buffer.hdr.cmd_or_resp.cmd_resv = FW_CEM_CMD_RESERVED;
+--- a/drivers/net/can/usb/ems_usb.c
++++ b/drivers/net/can/usb/ems_usb.c
+@@ -486,11 +486,17 @@ resubmit_urb:
+ 			  urb->transfer_buffer, RX_BUFFER_SIZE,
+ 			  ems_usb_read_bulk_callback, dev);
  
- 	return wx_host_interface_command(wx, (u32 *)&buffer, sizeof(buffer),
--					WX_HI_COMMAND_TIMEOUT, true);
-+					 WX_HI_COMMAND_TIMEOUT, false);
++	usb_anchor_urb(urb, &dev->rx_submitted);
++
+ 	retval = usb_submit_urb(urb, GFP_ATOMIC);
++	if (!retval)
++		return;
++
++	usb_unanchor_urb(urb);
+ 
+ 	if (retval == -ENODEV)
+ 		netif_device_detach(netdev);
+-	else if (retval)
++	else
+ 		netdev_err(netdev,
+ 			   "failed resubmitting read bulk urb: %d\n", retval);
  }
- 
- static int txgbe_identify_sfp_hostif(struct wx *wx, struct txgbe_hic_i2c_read *buffer)
-@@ -103,7 +103,7 @@ static int txgbe_set_phy_link_hostif(str
- 	buffer.duplex = duplex;
- 
- 	return wx_host_interface_command(wx, (u32 *)&buffer, sizeof(buffer),
--					 WX_HI_COMMAND_TIMEOUT, true);
-+					 WX_HI_COMMAND_TIMEOUT, false);
- }
- 
- static void txgbe_get_link_capabilities(struct wx *wx)
 
 
