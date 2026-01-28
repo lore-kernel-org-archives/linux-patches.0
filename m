@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1352A2DC77F;
-	Wed, 28 Jan 2026 15:39:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CECFC2DE1E4;
+	Wed, 28 Jan 2026 15:39:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769614754; cv=none; b=uF+z6x9XQTTUJSxx5vabYiSm2f1nOtrZ+h/Sl17Tr4TpyFzE0px+uGhgl5cwQQLo1sv2HyFLNl3tbUrMFBfdhxqLeJSmiWDhTmTAdr8xdSqGCXojJI87uhkqXMDLJHMZ7E23rmJZAl1jo9gIx47JBLRu9+cTZDkUJPNDnIneIEo=
+	t=1769614757; cv=none; b=V89ZDKCwU4EbgBCoqMAheuc8oasN3yovMmbDEXwgDC/C2mvE++w4v5b7iXEm3DBojV4lsKeYHt/qPQYbA5T7bLApyG7B0TdMIrb0kU/vwOVlwwHrhzoITnTM0ak9+M2SrOTcUe8PnR+M9T7WmrSrlUBW9AwPQ4ZOygmfTJxcmG8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769614754; c=relaxed/simple;
-	bh=tjA+2dE87MOGAkz0mADc4XXfNH1VV3/VYH1+HaocH9k=;
+	s=arc-20240116; t=1769614757; c=relaxed/simple;
+	bh=7StxKRwwJgDmfX3uNum2BW9KF1IDAG1zSn5euXBKmO0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fn1Gp09QzuydETGPvVamaeuE6jFVhAnpGLCuK/vq6kjFvn8/hh8ivP6zQmn88V0yiu0PkrcPExQew0Jwsw7TWj9NIf1lBgWaPk+pJXopvNejFmDhBiXdFf2/C1FY+/39LsiM5oGPvPGiMlXof14iW///SDTYSntg08HB4G1YGvQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=x1lunQ5f; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bRca0VssHYZWEc2ID89jVatkAMJvqNr5vVPyVo64/sIjDwoCIXbGCpftbYNlh2F5Yk4atrarEjvhE2Ft5ECqZoIAZPvziTTHTFYXJhAe9wc0Hpe5ZTdxJMKS2rW9Vm7nH+X5MGHDGjmrPZD2HwsNt1pPgXo3lUlrrjLH/Xzc/xA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GqsVJO+a; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="x1lunQ5f"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 330B0C4CEF1;
-	Wed, 28 Jan 2026 15:39:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GqsVJO+a"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C3CD4C4CEF1;
+	Wed, 28 Jan 2026 15:39:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1769614753;
-	bh=tjA+2dE87MOGAkz0mADc4XXfNH1VV3/VYH1+HaocH9k=;
+	s=korg; t=1769614757;
+	bh=7StxKRwwJgDmfX3uNum2BW9KF1IDAG1zSn5euXBKmO0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=x1lunQ5fVVdw+++svyQoBug5YQNELiDVZKzYqgurmiyqjUznB3L4PQkoi68+PBeMa
-	 /BQSr7h8CDSfVvNSSND4giQGQXXxeQKqgBFsb9DyvyoXAK0fyEXYqbwVVo/BK1KAHp
-	 TJtJRflVsGPR6I7eA6++NE3r4QeTMNjXyfAsf42I=
+	b=GqsVJO+aGxBI+K95tZgm0ULcIhGAz8mdHOyPyBOOwG3SprneV50AmtvZiHr2nXC+I
+	 PhesJRJFYxICO+06zURCPSMSbpIaJEyY92rHL4lXxivIiAxwCyzmsC2YcnqWZWd80m
+	 b4U7Fw7QWnK9DDDq42Ux2S8CSO/UzVWAUuyR13eo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Samasth Norway Ananda <samasth.norway.ananda@oracle.com>,
-	Takashi Iwai <tiwai@suse.de>,
+	Johan Hovold <johan@kernel.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 231/254] ALSA: scarlett2: Fix buffer overflow in config retrieval
-Date: Wed, 28 Jan 2026 16:23:27 +0100
-Message-ID: <20260128145353.101247089@linuxfoundation.org>
+Subject: [PATCH 6.6 232/254] iio: adc: exynos_adc: fix OF populate on driver rebind
+Date: Wed, 28 Jan 2026 16:23:28 +0100
+Message-ID: <20260128145353.137607277@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260128145344.698118637@linuxfoundation.org>
 References: <20260128145344.698118637@linuxfoundation.org>
@@ -51,54 +52,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Samasth Norway Ananda <samasth.norway.ananda@oracle.com>
+From: Johan Hovold <johan@kernel.org>
 
-[ Upstream commit 6f5c69f72e50d51be3a8c028ae7eda42c82902cb ]
+[ Upstream commit ea6b4feba85e996e840e0b661bc42793df6eb701 ]
 
-The scarlett2_usb_get_config() function has a logic error in the
-endianness conversion code that can cause buffer overflows when
-count > 1.
+Since commit c6e126de43e7 ("of: Keep track of populated platform
+devices") child devices will not be created by of_platform_populate()
+if the devices had previously been deregistered individually so that the
+OF_POPULATED flag is still set in the corresponding OF nodes.
 
-The code checks `if (size == 2)` where `size` is the total buffer size in
-bytes, then loops `count` times treating each element as u16 (2 bytes).
-This causes the loop to access `count * 2` bytes when the buffer only
-has `size` bytes allocated.
+Switch to using of_platform_depopulate() instead of open coding so that
+the child devices are created if the driver is rebound.
 
-Fix by checking the element size (config_item->size) instead of the
-total buffer size. This ensures the endianness conversion matches the
-actual element type.
-
-Fixes: ac34df733d2d ("ALSA: usb-audio: scarlett2: Update get_config to do endian conversion")
-Cc: stable@vger.kernel.org
-Signed-off-by: Samasth Norway Ananda <samasth.norway.ananda@oracle.com>
-Link: https://patch.msgid.link/20260117012706.1715574-1-samasth.norway.ananda@oracle.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
-[ add 32-bit handling block ]
+Fixes: c6e126de43e7 ("of: Keep track of populated platform devices")
+Cc: stable@vger.kernel.org	# 3.16
+Signed-off-by: Johan Hovold <johan@kernel.org>
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+[ Adjust context ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/usb/mixer_scarlett2.c |    7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ drivers/iio/adc/exynos_adc.c |   13 ++-----------
+ 1 file changed, 2 insertions(+), 11 deletions(-)
 
---- a/sound/usb/mixer_scarlett2.c
-+++ b/sound/usb/mixer_scarlett2.c
-@@ -1408,11 +1408,16 @@ static int scarlett2_usb_get_config(
- 		err = scarlett2_usb_get(mixer, config_item->offset, buf, size);
- 		if (err < 0)
- 			return err;
--		if (size == 2) {
-+		if (config_item->size == 16) {
- 			u16 *buf_16 = buf;
+--- a/drivers/iio/adc/exynos_adc.c
++++ b/drivers/iio/adc/exynos_adc.c
+@@ -721,14 +721,7 @@ static const struct iio_chan_spec exynos
+ 	ADC_CHANNEL(9, "adc9"),
+ };
  
- 			for (i = 0; i < count; i++, buf_16++)
- 				*buf_16 = le16_to_cpu(*(__le16 *)buf_16);
-+		} else if (config_item->size == 32) {
-+			u32 *buf_32 = (u32 *)buf;
-+
-+			for (i = 0; i < count; i++, buf_32++)
-+				*buf_32 = le32_to_cpu(*(__le32 *)buf_32);
- 		}
- 		return 0;
+-static int exynos_adc_remove_devices(struct device *dev, void *c)
+-{
+-	struct platform_device *pdev = to_platform_device(dev);
+-
+-	platform_device_unregister(pdev);
+ 
+-	return 0;
+-}
+ 
+ static int exynos_adc_ts_open(struct input_dev *dev)
+ {
+@@ -929,8 +922,7 @@ static int exynos_adc_probe(struct platf
+ 	return 0;
+ 
+ err_of_populate:
+-	device_for_each_child(&indio_dev->dev, NULL,
+-				exynos_adc_remove_devices);
++	of_platform_depopulate(&indio_dev->dev);
+ 	if (has_ts) {
+ 		input_unregister_device(info->input);
+ 		free_irq(info->tsirq, info);
+@@ -959,8 +951,7 @@ static int exynos_adc_remove(struct plat
+ 		free_irq(info->tsirq, info);
+ 		input_unregister_device(info->input);
  	}
+-	device_for_each_child(&indio_dev->dev, NULL,
+-				exynos_adc_remove_devices);
++	of_platform_depopulate(&indio_dev->dev);
+ 	iio_device_unregister(indio_dev);
+ 	free_irq(info->irq, info);
+ 	if (info->data->exit_hw)
 
 
