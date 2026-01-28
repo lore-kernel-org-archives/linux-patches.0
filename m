@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68ECF3043B2;
-	Wed, 28 Jan 2026 15:49:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7498305E2E;
+	Wed, 28 Jan 2026 15:49:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769615349; cv=none; b=OyXcMBwQnVNckw9xP6sg7AMcYLDJwBl84fbbAPt4p3/pv35d6C43HGNpPyc81PaHqh0Gbc1/vFEX8L9Rg/6aUw2T90SA1ew0bzF0uX1wik+rEpzLvOYKWSjEqMWdDkl03+G7GFbetR66/792BY4bbZpkz9NF4LdKdGIYYd6/XHQ=
+	t=1769615352; cv=none; b=J2Q5PDnuMpp5+LSDIWq1k6P/VB0A6wsKfz7lOEQbjj3o2A6Ab5s1c8LJ+++RA49Q47YSNmEB1xK4xe7A0jWT5AvowIJ+MePWFBoZ8nbakrF5IvRHSne55WK2KF4T5bh1qx4lGf6BTq+VQdVsfkFkjMrVk7ugVnjmLGLdpoKNni4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769615349; c=relaxed/simple;
-	bh=KjwKhvZgTXP0Jfq8uS8qjtmzxVpdh1JYzCkQSxNkKcI=;
+	s=arc-20240116; t=1769615352; c=relaxed/simple;
+	bh=DlN8H6yIoB020aLcmo2BiKG64hdfeHEI/imUA3IWj7M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UB6QV11Qo8ZYULHFpAyB7xYiVV8twabHqJ6qt/ab3zNel+duXnhQ2sWZma4dpd0d/PdKUSKVw4wD0adWGPmhYmyVSY/6p7Rhm9LiI8ec3rj5DbmhZYEaHz7JC9qYgkEJgtVWHF+aeR89vFwRkWEzrr28YKobVqstuP7wn0UC0+c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rOsnetFd; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Ph0thcURmnHioI/92h2cE8+pnPDf4Uv8LGzzvzeQj1oTS2kOZOPn9FA3+A4mWqKQwaKPUxq6BatOwRv6HSgeyUc2Fu/p/kxt/kJABEfK8GoSQawBvCP/f3SY6zswdGTI6j82BqV8KjkOROPO2flAdAH91hdglk0pMjTTSyXg89A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eOqRoGx5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rOsnetFd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2F93C4CEF1;
-	Wed, 28 Jan 2026 15:49:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eOqRoGx5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F898C4CEF1;
+	Wed, 28 Jan 2026 15:49:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1769615349;
-	bh=KjwKhvZgTXP0Jfq8uS8qjtmzxVpdh1JYzCkQSxNkKcI=;
+	s=korg; t=1769615352;
+	bh=DlN8H6yIoB020aLcmo2BiKG64hdfeHEI/imUA3IWj7M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rOsnetFdx0ZeDxP4WaXsQc+yeDSMoE/5WjQinbhQV/hE0DPwGxiKuRwQJi88Psett
-	 SqI0WF/VJOv8ZVZpljQgaZ167QVNtF472R1KQGMOpe6ImBOgyvjzL/Nqmkp+rlDpFV
-	 ya2N7mAFnicfu+5GAmtF7CynGNZ5uuHWJDI4QG5g=
+	b=eOqRoGx5ABfH0qrw5MCYzYxrSLHtKcXDZvrDQSzMB7Zn7UK8E47124vHGO8Qxo1Ld
+	 CWPoJn9CBiXwQ7YtCaOySfSE6RIcZ2HKY8CN+toOxiviWqbKavry6GgjvDGk3FOprD
+	 ze5hHObqCjhpbkQnErPKHJ9PlJYovPci6S6gRahU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marek Vasut <marex@nabladev.com>,
-	Johannes Berg <johannes.berg@intel.com>
-Subject: [PATCH 6.12 120/169] wifi: rsi: Fix memory corruption due to not set vif driver data size
-Date: Wed, 28 Jan 2026 16:23:23 +0100
-Message-ID: <20260128145338.322849355@linuxfoundation.org>
+	Mark Rutland <mark.rutland@arm.com>,
+	Mark Brown <broonie@kernel.org>,
+	Will Deacon <will@kernel.org>,
+	Catalin Marinas <catalin.marinas@arm.com>
+Subject: [PATCH 6.12 121/169] arm64/fpsimd: signal: Allocate SSVE storage when restoring ZA
+Date: Wed, 28 Jan 2026 16:23:24 +0100
+Message-ID: <20260128145338.358231520@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260128145334.006287341@linuxfoundation.org>
 References: <20260128145334.006287341@linuxfoundation.org>
@@ -50,57 +52,98 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Marek Vasut <marex@nabladev.com>
+From: Mark Rutland <mark.rutland@arm.com>
 
-commit 4f431d88ea8093afc7ba55edf4652978c5a68f33 upstream.
+commit ea8ccfddbce0bee6310da4f3fc560ad520f5e6b4 upstream.
 
-The struct ieee80211_vif contains trailing space for vif driver data,
-when struct ieee80211_vif is allocated, the total memory size that is
-allocated is sizeof(struct ieee80211_vif) + size of vif driver data.
-The size of vif driver data is set by each WiFi driver as needed.
+The code to restore a ZA context doesn't attempt to allocate the task's
+sve_state before setting TIF_SME. Consequently, restoring a ZA context
+can place a task into an invalid state where TIF_SME is set but the
+task's sve_state is NULL.
 
-The RSI911x driver does not set vif driver data size, no trailing space
-for vif driver data is therefore allocated past struct ieee80211_vif .
-The RSI911x driver does however use the vif driver data to store its
-vif driver data structure "struct vif_priv". An access to vif->drv_priv
-leads to access out of struct ieee80211_vif bounds and corruption of
-some memory.
+In legitimate but uncommon cases where the ZA signal context was NOT
+created by the kernel in the context of the same task (e.g. if the task
+is saved/restored with something like CRIU), we have no guarantee that
+sve_state had been allocated previously. In these cases, userspace can
+enter streaming mode without trapping while sve_state is NULL, causing a
+later NULL pointer dereference when the kernel attempts to store the
+register state:
 
-In case of the failure observed locally, rsi_mac80211_add_interface()
-would write struct vif_priv *vif_info = (struct vif_priv *)vif->drv_priv;
-vif_info->vap_id = vap_idx. This write corrupts struct fq_tin member
-struct list_head new_flows . The flow = list_first_entry(head, struct
-fq_flow, flowchain); in fq_tin_reset() then reports non-NULL bogus
-address, which when accessed causes a crash.
+| # ./sigreturn-za
+| Unable to handle kernel NULL pointer dereference at virtual address 0000000000000000
+| Mem abort info:
+|   ESR = 0x0000000096000046
+|   EC = 0x25: DABT (current EL), IL = 32 bits
+|   SET = 0, FnV = 0
+|   EA = 0, S1PTW = 0
+|   FSC = 0x06: level 2 translation fault
+| Data abort info:
+|   ISV = 0, ISS = 0x00000046, ISS2 = 0x00000000
+|   CM = 0, WnR = 1, TnD = 0, TagAccess = 0
+|   GCS = 0, Overlay = 0, DirtyBit = 0, Xs = 0
+| user pgtable: 4k pages, 52-bit VAs, pgdp=0000000101f47c00
+| [0000000000000000] pgd=08000001021d8403, p4d=0800000102274403, pud=0800000102275403, pmd=0000000000000000
+| Internal error: Oops: 0000000096000046 [#1]  SMP
+| Modules linked in:
+| CPU: 0 UID: 0 PID: 153 Comm: sigreturn-za Not tainted 6.19.0-rc1 #1 PREEMPT
+| Hardware name: linux,dummy-virt (DT)
+| pstate: 214000c9 (nzCv daIF +PAN -UAO -TCO +DIT -SSBS BTYPE=--)
+| pc : sve_save_state+0x4/0xf0
+| lr : fpsimd_save_user_state+0xb0/0x1c0
+| sp : ffff80008070bcc0
+| x29: ffff80008070bcc0 x28: fff00000c1ca4c40 x27: 63cfa172fb5cf658
+| x26: fff00000c1ca5228 x25: 0000000000000000 x24: 0000000000000000
+| x23: 0000000000000000 x22: fff00000c1ca4c40 x21: fff00000c1ca4c40
+| x20: 0000000000000020 x19: fff00000ff6900f0 x18: 0000000000000000
+| x17: fff05e8e0311f000 x16: 0000000000000000 x15: 028fca8f3bdaf21c
+| x14: 0000000000000212 x13: fff00000c0209f10 x12: 0000000000000020
+| x11: 0000000000200b20 x10: 0000000000000000 x9 : fff00000ff69dcc0
+| x8 : 00000000000003f2 x7 : 0000000000000001 x6 : fff00000c1ca5b48
+| x5 : fff05e8e0311f000 x4 : 0000000008000000 x3 : 0000000000000000
+| x2 : 0000000000000001 x1 : fff00000c1ca5970 x0 : 0000000000000440
+| Call trace:
+|  sve_save_state+0x4/0xf0 (P)
+|  fpsimd_thread_switch+0x48/0x198
+|  __switch_to+0x20/0x1c0
+|  __schedule+0x36c/0xce0
+|  schedule+0x34/0x11c
+|  exit_to_user_mode_loop+0x124/0x188
+|  el0_interrupt+0xc8/0xd8
+|  __el0_irq_handler_common+0x18/0x24
+|  el0t_64_irq_handler+0x10/0x1c
+|  el0t_64_irq+0x198/0x19c
+| Code: 54000040 d51b4408 d65f03c0 d503245f (e5bb5800)
+| ---[ end trace 0000000000000000 ]---
 
-The trigger is very simple, boot the machine with init=/bin/sh , mount
-devtmpfs, sysfs, procfs, and then do "ip link set wlan0 up", "sleep 1",
-"ip link set wlan0 down" and the crash occurs.
+Fix this by having restore_za_context() ensure that the task's sve_state
+is allocated, matching what we do when taking an SME trap. Any live
+SVE/SSVE state (which is restored earlier from a separate signal
+context) must be preserved, and hence this is not zeroed.
 
-Fix this by setting the correct size of vif driver data, which is the
-size of "struct vif_priv", so that memory is allocated and the driver
-can store its driver data in it, instead of corrupting memory around
-it.
-
-Cc: stable@vger.kernel.org
-Fixes: dad0d04fa7ba ("rsi: Add RS9113 wireless driver")
-Signed-off-by: Marek Vasut <marex@nabladev.com>
-Link: https://patch.msgid.link/20260109235817.150330-1-marex@nabladev.com
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Fixes: 39782210eb7e ("arm64/sme: Implement ZA signal handling")
+Signed-off-by: Mark Rutland <mark.rutland@arm.com>
+Cc: <stable@vger.kernel.org>
+Cc: Mark Brown <broonie@kernel.org>
+Cc: Will Deacon <will@kernel.org>
+Reviewed-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Catalin Marinas <catalin.marinas@arm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wireless/rsi/rsi_91x_mac80211.c |    1 +
- 1 file changed, 1 insertion(+)
+ arch/arm64/kernel/signal.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/drivers/net/wireless/rsi/rsi_91x_mac80211.c
-+++ b/drivers/net/wireless/rsi/rsi_91x_mac80211.c
-@@ -2028,6 +2028,7 @@ int rsi_mac80211_attach(struct rsi_commo
+--- a/arch/arm64/kernel/signal.c
++++ b/arch/arm64/kernel/signal.c
+@@ -590,6 +590,10 @@ static int restore_za_context(struct use
+ 	fpsimd_flush_task_state(current);
+ 	/* From now, fpsimd_thread_switch() won't touch thread.sve_state */
  
- 	hw->queues = MAX_HW_QUEUES;
- 	hw->extra_tx_headroom = RSI_NEEDED_HEADROOM;
-+	hw->vif_data_size = sizeof(struct vif_priv);
- 
- 	hw->max_rates = 1;
- 	hw->max_rate_tries = MAX_RETRIES;
++	sve_alloc(current, false);
++	if (!current->thread.sve_state)
++		return -ENOMEM;
++
+ 	sme_alloc(current, true);
+ 	if (!current->thread.sme_state) {
+ 		current->thread.svcr &= ~SVCR_ZA_MASK;
 
 
