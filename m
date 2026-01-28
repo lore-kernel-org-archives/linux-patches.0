@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3012A2E36F8;
-	Wed, 28 Jan 2026 15:42:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A421A1E1DFC;
+	Wed, 28 Jan 2026 15:42:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769614925; cv=none; b=mS72qLmtNjyaPll73Rwz/iOYeNG0AJjURgDxUv3ChzR8k95UZWqhrZ8KZ28HLCtl597xk8zR/jfiuVjE7L95jGmv8v+SUhnc8q69FIzFYsWhJ0s32TzGqbICSPZNcplJSK0DsJlPqaLHM1OY0gSejygf0+rlT0ggAjLDCO44tYQ=
+	t=1769614928; cv=none; b=tJ0jozxW6bA+uuzeA94PVS7s925S4oZjFQe2+lxSLKOSaywW7z/yWSJAk277p3ALMn7c4Yn96PMo7yF0t12WDRQFS9OnUnLY7OY/fEWiuVvBOT42EzhEgwaPV+IU7r9faRPeozm7r8xqwtmcXsz0sN4Mg5lL66xoXQRsFG6kjG8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769614925; c=relaxed/simple;
-	bh=fqpvWlRHG4HqdChZOfyBvrzG2N25A7IqWYz+wY5+1qk=;
+	s=arc-20240116; t=1769614928; c=relaxed/simple;
+	bh=iigL5eXVL4/0ZjOSYpoqnmAbxz0YZs4IFehEzOe3tT8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Bj8gvJyK/CwV6LmYGug19fj3ONT7sjGZmWE2aK9GtCi4El3uI3JKNg9aGq7HCi+qSC0ov1TQaCh8H2IEdaBdrxl/B7z56n5Mr/R117IGoOXxwR/vqBAZnuf/inwJjK1DsQ1OdoTvE++SFZWk8nUpZzt6kdMVYWhfTSGrt1JVYGM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Cn7+dxja; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fkTQC8Y7AqiW9BOOEr51nO1ZaZ5mfzfgG6s0kHw7FVjSnwuRUDSvRKM9Gy9R4X1YYwtvMN3Q6kW/sxj5r8bdXclrjLSo1W4loG7OVHvJ4iv7f7A+1ipZpAR1wsbcPmX2uDlAjNADX5yBA/6+N+ZGXxGHvnDMd6ZDyPHMJgUB9XM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RqXRUYlj; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Cn7+dxja"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 986D0C4CEF1;
-	Wed, 28 Jan 2026 15:42:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RqXRUYlj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 14B86C4CEF1;
+	Wed, 28 Jan 2026 15:42:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1769614925;
-	bh=fqpvWlRHG4HqdChZOfyBvrzG2N25A7IqWYz+wY5+1qk=;
+	s=korg; t=1769614928;
+	bh=iigL5eXVL4/0ZjOSYpoqnmAbxz0YZs4IFehEzOe3tT8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Cn7+dxja2X226B0vd1pkk0Gt/jHLeGeN5L/dxyAUuSefcU363S1k1YHEFh3tI/K/r
-	 iryTdLrY/BABDD5vTy0RlrdH+UxOn/0JtCHCFllptclHEuGO7PvV/rcyYXyuzljttV
-	 eKpQaG54ffopHG+VFi6igkFzJDE8akMSZCj5ELh0=
+	b=RqXRUYljsqeqbk11wVVqFymuMgBfcFv9/mOH332WZ9b1tu1dse02xBdVgw8Et07EN
+	 /emM66fVSvBcrhHZ4JPVeFVkhmbxHEfaWfZTaSgJ+mJlbSVZDjO+Y9i5uTa297Muip
+	 EvdkMGt8bBTg5IDZSuvMDypJPfrGdvymEbeBWVjU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fernando Fernandez Mancera <fmancera@suse.de>,
-	"=?UTF-8?q?Ricardo=20B . =20Marli=C3=A8re?=" <rbm@suse.com>,
-	Ido Schimmel <idosch@nvidia.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	kernel test robot <lkp@intel.com>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Michael Kelley <mhklinux@outlook.com>,
+	Roman Kisel <vdso@mailbox.org>,
+	Wei Liu <wei.liu@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 028/169] selftests: net: fib-onlink-tests: Convert to use namespaces by default
-Date: Wed, 28 Jan 2026 16:21:51 +0100
-Message-ID: <20260128145335.035426842@linuxfoundation.org>
+Subject: [PATCH 6.12 011/169] Drivers: hv: Always do Hyper-V panic notification in hv_kmsg_dump()
+Date: Wed, 28 Jan 2026 16:21:34 +0100
+Message-ID: <20260128145334.422274791@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260128145334.006287341@linuxfoundation.org>
 References: <20260128145334.006287341@linuxfoundation.org>
@@ -47,186 +48,74 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ricardo B. Marlière <rbm@suse.com>
+From: Michael Kelley <mhklinux@outlook.com>
 
-[ Upstream commit 4f5f148dd7c0459229d2ab9a769b2e820f9ee6a2 ]
+[ Upstream commit 49f49d47af67f8a7b221db1d758fc634242dc91a ]
 
-Currently, the test breaks if the SUT already has a default route
-configured for IPv6. Fix by avoiding the use of the default namespace.
+hv_kmsg_dump() currently skips the panic notification entirely if it
+doesn't get any message bytes to pass to Hyper-V due to an error from
+kmsg_dump_get_buffer(). Skipping the notification is undesirable because
+it leaves the Hyper-V host uncertain about the state of a panic'ed guest.
 
-Fixes: 4ed591c8ab44 ("net/ipv6: Allow onlink routes to have a device mismatch if it is the default route")
-Suggested-by: Fernando Fernandez Mancera <fmancera@suse.de>
-Signed-off-by: Ricardo B. Marlière <rbm@suse.com>
-Reviewed-by: Ido Schimmel <idosch@nvidia.com>
-Reviewed-by: Fernando Fernandez Mancera <fmancera@suse.de>
-Link: https://patch.msgid.link/20260113-selftests-net-fib-onlink-v2-1-89de2b931389@suse.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fix this by always doing the panic notification, even if bytes_written
+is zero. Also ensure that bytes_written is initialized, which fixes a
+kernel test robot warning. The warning is actually bogus because
+kmsg_dump_get_buffer() happens to set bytes_written even if it fails, and
+in the kernel test robot's CONFIG_PRINTK not set case, hv_kmsg_dump() is
+never called. But do the initialization for robustness and to quiet the
+static checker.
+
+Fixes: 9c318a1d9b50 ("Drivers: hv: move panic report code from vmbus to hv early init code")
+Reported-by: kernel test robot <lkp@intel.com>
+Reported-by: Dan Carpenter <dan.carpenter@linaro.org>
+Closes: https://lore.kernel.org/all/202512172103.OcUspn1Z-lkp@intel.com/
+Signed-off-by: Michael Kelley <mhklinux@outlook.com>
+Reviewed-by: Roman Kisel <vdso@mailbox.org>
+Signed-off-by: Wei Liu <wei.liu@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../testing/selftests/net/fib-onlink-tests.sh | 71 ++++++++-----------
- 1 file changed, 30 insertions(+), 41 deletions(-)
+ drivers/hv/hv_common.c | 12 +++++++-----
+ 1 file changed, 7 insertions(+), 5 deletions(-)
 
-diff --git a/tools/testing/selftests/net/fib-onlink-tests.sh b/tools/testing/selftests/net/fib-onlink-tests.sh
-index ec2d6ceb1f08d..c01be076b210d 100755
---- a/tools/testing/selftests/net/fib-onlink-tests.sh
-+++ b/tools/testing/selftests/net/fib-onlink-tests.sh
-@@ -120,7 +120,7 @@ log_subsection()
+diff --git a/drivers/hv/hv_common.c b/drivers/hv/hv_common.c
+index 7a35c82976e0f..f69dd08475114 100644
+--- a/drivers/hv/hv_common.c
++++ b/drivers/hv/hv_common.c
+@@ -218,13 +218,15 @@ static void hv_kmsg_dump(struct kmsg_dumper *dumper,
  
- run_cmd()
- {
--	local cmd="$*"
-+	local cmd="$1"
- 	local out
- 	local rc
+ 	/*
+ 	 * Write dump contents to the page. No need to synchronize; panic should
+-	 * be single-threaded.
++	 * be single-threaded. Ignore failures from kmsg_dump_get_buffer() since
++	 * panic notification should be done even if there is no message data.
++	 * Don't assume bytes_written is set in case of failure, so initialize it.
+ 	 */
+ 	kmsg_dump_rewind(&iter);
+-	kmsg_dump_get_buffer(&iter, false, hv_panic_page, HV_HYP_PAGE_SIZE,
++	bytes_written = 0;
++	(void)kmsg_dump_get_buffer(&iter, false, hv_panic_page, HV_HYP_PAGE_SIZE,
+ 			     &bytes_written);
+-	if (!bytes_written)
+-		return;
++
+ 	/*
+ 	 * P3 to contain the physical address of the panic page & P4 to
+ 	 * contain the size of the panic data in that page. Rest of the
+@@ -233,7 +235,7 @@ static void hv_kmsg_dump(struct kmsg_dumper *dumper,
+ 	hv_set_msr(HV_MSR_CRASH_P0, 0);
+ 	hv_set_msr(HV_MSR_CRASH_P1, 0);
+ 	hv_set_msr(HV_MSR_CRASH_P2, 0);
+-	hv_set_msr(HV_MSR_CRASH_P3, virt_to_phys(hv_panic_page));
++	hv_set_msr(HV_MSR_CRASH_P3, bytes_written ? virt_to_phys(hv_panic_page) : 0);
+ 	hv_set_msr(HV_MSR_CRASH_P4, bytes_written);
  
-@@ -145,7 +145,7 @@ get_linklocal()
- 	local pfx
- 	local addr
- 
--	addr=$(${pfx} ip -6 -br addr show dev ${dev} | \
-+	addr=$(${pfx} ${IP} -6 -br addr show dev ${dev} | \
- 	awk '{
- 		for (i = 3; i <= NF; ++i) {
- 			if ($i ~ /^fe80/)
-@@ -173,58 +173,48 @@ setup()
- 
- 	set -e
- 
--	# create namespace
--	setup_ns PEER_NS
-+	# create namespaces
-+	setup_ns ns1
-+	IP="ip -netns $ns1"
-+	setup_ns ns2
- 
- 	# add vrf table
--	ip li add ${VRF} type vrf table ${VRF_TABLE}
--	ip li set ${VRF} up
--	ip ro add table ${VRF_TABLE} unreachable default metric 8192
--	ip -6 ro add table ${VRF_TABLE} unreachable default metric 8192
-+	${IP} li add ${VRF} type vrf table ${VRF_TABLE}
-+	${IP} li set ${VRF} up
-+	${IP} ro add table ${VRF_TABLE} unreachable default metric 8192
-+	${IP} -6 ro add table ${VRF_TABLE} unreachable default metric 8192
- 
- 	# create test interfaces
--	ip li add ${NETIFS[p1]} type veth peer name ${NETIFS[p2]}
--	ip li add ${NETIFS[p3]} type veth peer name ${NETIFS[p4]}
--	ip li add ${NETIFS[p5]} type veth peer name ${NETIFS[p6]}
--	ip li add ${NETIFS[p7]} type veth peer name ${NETIFS[p8]}
-+	${IP} li add ${NETIFS[p1]} type veth peer name ${NETIFS[p2]}
-+	${IP} li add ${NETIFS[p3]} type veth peer name ${NETIFS[p4]}
-+	${IP} li add ${NETIFS[p5]} type veth peer name ${NETIFS[p6]}
-+	${IP} li add ${NETIFS[p7]} type veth peer name ${NETIFS[p8]}
- 
- 	# enslave vrf interfaces
- 	for n in 5 7; do
--		ip li set ${NETIFS[p${n}]} vrf ${VRF}
-+		${IP} li set ${NETIFS[p${n}]} vrf ${VRF}
- 	done
- 
- 	# add addresses
- 	for n in 1 3 5 7; do
--		ip li set ${NETIFS[p${n}]} up
--		ip addr add ${V4ADDRS[p${n}]}/24 dev ${NETIFS[p${n}]}
--		ip addr add ${V6ADDRS[p${n}]}/64 dev ${NETIFS[p${n}]} nodad
-+		${IP} li set ${NETIFS[p${n}]} up
-+		${IP} addr add ${V4ADDRS[p${n}]}/24 dev ${NETIFS[p${n}]}
-+		${IP} addr add ${V6ADDRS[p${n}]}/64 dev ${NETIFS[p${n}]} nodad
- 	done
- 
- 	# move peer interfaces to namespace and add addresses
- 	for n in 2 4 6 8; do
--		ip li set ${NETIFS[p${n}]} netns ${PEER_NS} up
--		ip -netns ${PEER_NS} addr add ${V4ADDRS[p${n}]}/24 dev ${NETIFS[p${n}]}
--		ip -netns ${PEER_NS} addr add ${V6ADDRS[p${n}]}/64 dev ${NETIFS[p${n}]} nodad
-+		${IP} li set ${NETIFS[p${n}]} netns ${ns2} up
-+		ip -netns $ns2 addr add ${V4ADDRS[p${n}]}/24 dev ${NETIFS[p${n}]}
-+		ip -netns $ns2 addr add ${V6ADDRS[p${n}]}/64 dev ${NETIFS[p${n}]} nodad
- 	done
- 
--	ip -6 ro add default via ${V6ADDRS[p3]/::[0-9]/::64}
--	ip -6 ro add table ${VRF_TABLE} default via ${V6ADDRS[p7]/::[0-9]/::64}
-+	${IP} -6 ro add default via ${V6ADDRS[p3]/::[0-9]/::64}
-+	${IP} -6 ro add table ${VRF_TABLE} default via ${V6ADDRS[p7]/::[0-9]/::64}
- 
- 	set +e
- }
- 
--cleanup()
--{
--	# make sure we start from a clean slate
--	cleanup_ns ${PEER_NS} 2>/dev/null
--	for n in 1 3 5 7; do
--		ip link del ${NETIFS[p${n}]} 2>/dev/null
--	done
--	ip link del ${VRF} 2>/dev/null
--	ip ro flush table ${VRF_TABLE}
--	ip -6 ro flush table ${VRF_TABLE}
--}
--
- ################################################################################
- # IPv4 tests
- #
-@@ -241,7 +231,7 @@ run_ip()
- 	# dev arg may be empty
- 	[ -n "${dev}" ] && dev="dev ${dev}"
- 
--	run_cmd ip ro add table "${table}" "${prefix}"/32 via "${gw}" "${dev}" onlink
-+	run_cmd "${IP} ro add table ${table} ${prefix}/32 via ${gw} ${dev} onlink"
- 	log_test $? ${exp_rc} "${desc}"
- }
- 
-@@ -257,8 +247,8 @@ run_ip_mpath()
- 	# dev arg may be empty
- 	[ -n "${dev}" ] && dev="dev ${dev}"
- 
--	run_cmd ip ro add table "${table}" "${prefix}"/32 \
--		nexthop via ${nh1} nexthop via ${nh2}
-+	run_cmd "${IP} ro add table ${table} ${prefix}/32 \
-+		nexthop via ${nh1} nexthop via ${nh2}"
- 	log_test $? ${exp_rc} "${desc}"
- }
- 
-@@ -339,7 +329,7 @@ run_ip6()
- 	# dev arg may be empty
- 	[ -n "${dev}" ] && dev="dev ${dev}"
- 
--	run_cmd ip -6 ro add table "${table}" "${prefix}"/128 via "${gw}" "${dev}" onlink
-+	run_cmd "${IP} -6 ro add table ${table} ${prefix}/128 via ${gw} ${dev} onlink"
- 	log_test $? ${exp_rc} "${desc}"
- }
- 
-@@ -353,8 +343,8 @@ run_ip6_mpath()
- 	local exp_rc="$6"
- 	local desc="$7"
- 
--	run_cmd ip -6 ro add table "${table}" "${prefix}"/128 "${opts}" \
--		nexthop via ${nh1} nexthop via ${nh2}
-+	run_cmd "${IP} -6 ro add table ${table} ${prefix}/128 ${opts} \
-+		nexthop via ${nh1} nexthop via ${nh2}"
- 	log_test $? ${exp_rc} "${desc}"
- }
- 
-@@ -491,10 +481,9 @@ do
- 	esac
- done
- 
--cleanup
- setup
- run_onlink_tests
--cleanup
-+cleanup_ns ${ns1} ${ns2}
- 
- if [ "$TESTS" != "none" ]; then
- 	printf "\nTests passed: %3d\n" ${nsuccess}
+ 	/*
 -- 
 2.51.0
 
