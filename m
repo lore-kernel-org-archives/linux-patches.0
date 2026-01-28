@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90292238159;
-	Wed, 28 Jan 2026 15:46:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0290E2FB085;
+	Wed, 28 Jan 2026 15:46:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769615214; cv=none; b=QUnQoJlT9jnQSMva27lhrMMmX3Y2NfAakPDODPPMwICssxgA93JwmV2CiVLM/fD83efi9gq5CDSLjGUa+C6OVIDf+EPATgxZqhLx6crcjRQIlAGq5VpJAKVthP09VATGBKLaOreP8GyVOJdiMZ8QqjNI1MrMA0Eyy2aqh5p+7MU=
+	t=1769615218; cv=none; b=kXx5IrCLcJj3yINvvrsTdAPbybmKVaKc2u6wv7C6ZEPIuLtm7JpoCSlBjjbM4Ks29EJmfLm/z2E7SZaiFNyVkpeD1lN3gDxKD/YGORd9us1xC0LCoXYP6D/BqkeLFMgETKJBvunMYZURhp1J0lDAQKcJlCrePSVPF9yJU3jKSJQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769615214; c=relaxed/simple;
-	bh=dBEqMXN7NMttSbWCF7s9Sxd60awTLr5XVcbSducqdx8=;
+	s=arc-20240116; t=1769615218; c=relaxed/simple;
+	bh=bIEnHj8p9HOeERQpzYVY8TG7ZQfakaRdQzc3Y9eIvf4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=o+wSjwmINl4mMTHHZ5T+FUiFBre2MdvuSqJwbU+A6YEspA0XxRwP+PYRcFYQzeHI5bdZLuEv6/QJ9M/1NiVf6rrxIFC1LT35jNMpbBCDU8U+gST3jRsEhrrVgIFuuOFC7Em+vU6gF0M1Ow/EUtyuIbHa81bhtNdwbyIz2ctszgw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=z8IeRPUq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SA6mQh1pDjyXbL7zZ94ieTOtD4nAXzazy80Xvdc163zlNrWfa3Ov0ouL/IJFeCJ0b/kyc+MTOitpF5CkUtttZHRLCc0WfBIA6h5Vf+f1AjpBMTdK2fjJptrbs+iUNY7giLOceDmJu/DjCQX5gE02rhG4y7gC8gXMRTskkGL3UAM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yunJA3LE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="z8IeRPUq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 05A0DC4CEF1;
-	Wed, 28 Jan 2026 15:46:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yunJA3LE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B559C4CEF1;
+	Wed, 28 Jan 2026 15:46:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1769615214;
-	bh=dBEqMXN7NMttSbWCF7s9Sxd60awTLr5XVcbSducqdx8=;
+	s=korg; t=1769615217;
+	bh=bIEnHj8p9HOeERQpzYVY8TG7ZQfakaRdQzc3Y9eIvf4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=z8IeRPUqn0KwhfPBMBuszCYJcFID8V/Fea5so7UPpkwEJArLo2C8xLo32WKp8YUEs
-	 Q+vSxITk2yIp77cZU3MUpHFo2TkQ3Lnpc2NyIMA2aZ3rgBzUg6Q9rJJvFx9RBq+PSo
-	 Ixa37Zb1CHhMIWcNX4nELgNoTl7T60QS5xnzIL9g=
+	b=yunJA3LEfkNlO6BQjvdxy0LfulaUA5FJXSbq9cY6FKn8pIV1XsUvyjUwP0FItWZ4F
+	 bY6jsu95KbyJDPgigkYQAo7vOQEz+WwNjZhOzHwQhp70nNFzGXJdrTExKq07haGcjc
+	 OslddVO1p51NY6IhTiVSGp3iOsI+PWtNIUWbwpvg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Salvatore Bonaccorso <carnil@debian.org>,
-	Karsten Hohmeier <linux@hohmatik.de>,
+	Samasth Norway Ananda <samasth.norway.ananda@oracle.com>,
 	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 6.12 111/169] ALSA: ctxfi: Fix potential OOB access in audio mixer handling
-Date: Wed, 28 Jan 2026 16:23:14 +0100
-Message-ID: <20260128145338.000857364@linuxfoundation.org>
+Subject: [PATCH 6.12 112/169] ALSA: scarlett2: Fix buffer overflow in config retrieval
+Date: Wed, 28 Jan 2026 16:23:15 +0100
+Message-ID: <20260128145338.036200800@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260128145334.006287341@linuxfoundation.org>
 References: <20260128145334.006287341@linuxfoundation.org>
@@ -51,54 +50,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Takashi Iwai <tiwai@suse.de>
+From: Samasth Norway Ananda <samasth.norway.ananda@oracle.com>
 
-commit 61006c540cbdedea83b05577dc7fb7fa18fe1276 upstream.
+commit 6f5c69f72e50d51be3a8c028ae7eda42c82902cb upstream.
 
-In the audio mixer handling code of ctxfi driver, the conf field is
-used as a kind of loop index, and it's referred in the index callbacks
-(amixer_index() and sum_index()).
+The scarlett2_usb_get_config() function has a logic error in the
+endianness conversion code that can cause buffer overflows when
+count > 1.
 
-As spotted recently by fuzzers, the current code causes OOB access at
-those functions.
-| UBSAN: array-index-out-of-bounds in /build/reproducible-path/linux-6.17.8/sound/pci/ctxfi/ctamixer.c:347:48
-| index 8 is out of range for type 'unsigned char [8]'
+The code checks `if (size == 2)` where `size` is the total buffer size in
+bytes, then loops `count` times treating each element as u16 (2 bytes).
+This causes the loop to access `count * 2` bytes when the buffer only
+has `size` bytes allocated.
 
-After the analysis, the cause was found to be the lack of the proper
-(re-)initialization of conj field.
+Fix by checking the element size (config_item->size) instead of the
+total buffer size. This ensures the endianness conversion matches the
+actual element type.
 
-This patch addresses those OOB accesses by adding the proper
-initializations of the loop indices.
-
-Reported-by: Salvatore Bonaccorso <carnil@debian.org>
-Tested-by: Karsten Hohmeier <linux@hohmatik.de>
-Closes: https://bugs.debian.org/1121535
-Cc: <stable@vger.kernel.org>
-Link: https://lore.kernel.org/all/aSk8KJI35H7gFru6@eldamar.lan/
-Link: https://patch.msgid.link/20260119133212.189129-1-tiwai@suse.de
+Fixes: ac34df733d2d ("ALSA: usb-audio: scarlett2: Update get_config to do endian conversion")
+Cc: stable@vger.kernel.org
+Signed-off-by: Samasth Norway Ananda <samasth.norway.ananda@oracle.com>
+Link: https://patch.msgid.link/20260117012706.1715574-1-samasth.norway.ananda@oracle.com
 Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/pci/ctxfi/ctamixer.c |    2 ++
- 1 file changed, 2 insertions(+)
+ sound/usb/mixer_scarlett2.c |    6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
---- a/sound/pci/ctxfi/ctamixer.c
-+++ b/sound/pci/ctxfi/ctamixer.c
-@@ -205,6 +205,7 @@ static int amixer_rsc_init(struct amixer
+--- a/sound/usb/mixer_scarlett2.c
++++ b/sound/usb/mixer_scarlett2.c
+@@ -2496,13 +2496,13 @@ static int scarlett2_usb_get_config(
+ 		err = scarlett2_usb_get(mixer, config_item->offset, buf, size);
+ 		if (err < 0)
+ 			return err;
+-		if (size == 2) {
++		if (config_item->size == 16) {
+ 			u16 *buf_16 = buf;
  
- 	/* Set amixer specific operations */
- 	amixer->rsc.ops = &amixer_basic_rsc_ops;
-+	amixer->rsc.conj = 0;
- 	amixer->ops = &amixer_ops;
- 	amixer->input = NULL;
- 	amixer->sum = NULL;
-@@ -370,6 +371,7 @@ static int sum_rsc_init(struct sum *sum,
- 		return err;
+ 			for (i = 0; i < count; i++, buf_16++)
+ 				*buf_16 = le16_to_cpu(*(__le16 *)buf_16);
+-		} else if (size == 4) {
+-			u32 *buf_32 = buf;
++		} else if (config_item->size == 32) {
++			u32 *buf_32 = (u32 *)buf;
  
- 	sum->rsc.ops = &sum_basic_rsc_ops;
-+	sum->rsc.conj = 0;
- 
- 	return 0;
- }
+ 			for (i = 0; i < count; i++, buf_32++)
+ 				*buf_32 = le32_to_cpu(*(__le32 *)buf_32);
 
 
