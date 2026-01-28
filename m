@@ -1,35 +1,35 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E29C32ED24;
-	Wed, 28 Jan 2026 11:13:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47E4D2DAFBA;
+	Wed, 28 Jan 2026 11:13:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769598817; cv=none; b=SPTVNfUJrv1aqTUhbR+rpTZzJvek472Wi43mEVwUbT2uj5VWvElfm5apNUIQsPw3LnhTWE8D80A8JLdxPBK/M2gWF5GtBUvPUUDC2cFB7TDjvNscMZmplVcclS0Mj586XjO7VwGZdFh8sju+8SphfTsUjFiup+TwK5M76TuoX5o=
+	t=1769598838; cv=none; b=sN3aypm5PDqRG8IgxyzPFr9DSe5VgXzbxFwH1EhzK+mmD2eJp/BrJk2OEwStf8DF+gYRmA65vhih6S5IHzj6rUew9iEC9Yn5tMVLd291UwaWy660V6g/QZgvIIufgunN96nKZgFz7VeyRe9OV2zjnxmmfGNNg8kCw1wknWasT0g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769598817; c=relaxed/simple;
-	bh=BgiXB7In8eS5F8lyvMzc04UwaVWYHBruSDxoHbq0m4M=;
+	s=arc-20240116; t=1769598838; c=relaxed/simple;
+	bh=kidMzPn869avulF3jUa7Mpx56aILkBVsRjJQb3fbczk=;
 	h=Subject:To:Cc:From:Date:In-Reply-To:Message-ID:MIME-Version:
-	 Content-Type; b=VP7LWBO3UQpBX/Bzg9J9UXCMCMNSSfFIZEdAgi97kg9GQeiorfO73gSGV28Z5sYHChvQD7OB1vyuBmbD+3moafdglizPV6fi3KrEaGzJTRtTJxXCUD6gnzHNH2YTquwlDFJ8eupSiWR7Pr+BotrFKKnxEYX0HcDsEXbDen9fD+0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0hxy9K/9; arc=none smtp.client-ip=10.30.226.201
+	 Content-Type; b=RDwT8XbBeVAoC9I2jpR8mzRE0j2lSjefXNJ19ZplllbV90D5jHohP193wKtXddnm4FyRo7pHhyihussOWgkMLn/baV4r9SzgXrC8VuIb1w8SJUZswzF6UOV7bH9G/L4d9noy1r6FStjgvOI5u1vpBeVuS6QDWjsbBWELnMBhfMk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Hs9W/jXL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0hxy9K/9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB727C4CEF1;
-	Wed, 28 Jan 2026 11:13:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Hs9W/jXL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7CC09C4CEF1;
+	Wed, 28 Jan 2026 11:13:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1769598817;
-	bh=BgiXB7In8eS5F8lyvMzc04UwaVWYHBruSDxoHbq0m4M=;
+	s=korg; t=1769598837;
+	bh=kidMzPn869avulF3jUa7Mpx56aILkBVsRjJQb3fbczk=;
 	h=Subject:To:Cc:From:Date:In-Reply-To:From;
-	b=0hxy9K/9yIHbdG31QKkhgQHAOkBD7SYhcGth+sJHkJZ7J2c/eEIxndWoO2VoGlIy6
-	 SbkPGWX2JkSVaJn22+ajwyjVs2nBWio6Q7U3h8Mg1CwAgng/hkSA/omNbsqoMMUmc4
-	 mbzFD8itzGwDfJ2CTAEb7/C2IA206EAxHZW2jwbY=
-Subject: Patch "fs/ntfs3: Initialize allocated memory before use" has been added to the 6.12-stable tree
-To: 1468888505@139.com,almaz.alexandrovich@paragon-software.com,gregkh@linuxfoundation.org,khalid@kernel.org,kubik.bartlomiej@gmail.com,ntfs3@lists.linux.dev,patches@lists.linux.dev,syzbot+0399100e525dd9696764@syzkaller.appspotmail.com,syzbot+332bd4e9d148f11a87dc@syzkaller.appspotmail.com
+	b=Hs9W/jXLs5LE/QAk4LtBhp5gt68fVggnzWjSnY+7iSy8yIHJU7mwQrhqhZC3QnCPO
+	 8Rw31RFWZ494ixVXo/4qjFZel4x0gwdhwOxCYHytwz68xoq2V3iI3RiDPpqutN4qo0
+	 /2+iuAJ4alTJUuSWIUW3OEUhrSyA0PDBKnTtFI6E=
+Subject: Patch "exfat: fix refcount leak in exfat_find" has been added to the 6.12-stable tree
+To: 1468888505@139.com,Yuezhang.Mo@sony.com,gregkh@linuxfoundation.org,jimmyxyz010315@gmail.com,kkamagui@gmail.com,linkinjeon@kernel.org,p22gone@gmail.com,patches@lists.linux.dev,sfual@cse.ust.hk,sj1557.seo@samsung.com
 Cc: <stable-commits@vger.kernel.org>
 From: <gregkh@linuxfoundation.org>
 Date: Wed, 28 Jan 2026 12:13:10 +0100
-In-Reply-To: <20260123034231.3793689-1-1468888505@139.com>
-Message-ID: <2026012810-germless-tipoff-33a4@gregkh>
+In-Reply-To: <20260123023721.3779125-1-1468888505@139.com>
+Message-ID: <2026012810-shrink-handful-397f@gregkh>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -44,94 +44,85 @@ X-Patchwork-Hint: ignore
 
 This is a note to let you know that I've just added the patch titled
 
-    fs/ntfs3: Initialize allocated memory before use
+    exfat: fix refcount leak in exfat_find
 
 to the 6.12-stable tree which can be found at:
     http://www.kernel.org/git/?p=linux/kernel/git/stable/stable-queue.git;a=summary
 
 The filename of the patch is:
-     fs-ntfs3-initialize-allocated-memory-before-use.patch
+     exfat-fix-refcount-leak-in-exfat_find.patch
 and it can be found in the queue-6.12 subdirectory.
 
 If you, or anyone else, feels it should not be added to the stable tree,
 please let <stable@vger.kernel.org> know about it.
 
 
-From stable+bounces-211330-greg=kroah.com@vger.kernel.org Fri Jan 23 04:43:03 2026
+From 1468888505@139.com Fri Jan 23 03:37:25 2026
 From: Li hongliang <1468888505@139.com>
-Date: Fri, 23 Jan 2026 11:42:31 +0800
-Subject: fs/ntfs3: Initialize allocated memory before use
-To: gregkh@linuxfoundation.org, stable@vger.kernel.org, kubik.bartlomiej@gmail.com
-Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org, khalid@kernel.org, almaz.alexandrovich@paragon-software.com, ntfs3@lists.linux.dev
-Message-ID: <20260123034231.3793689-1-1468888505@139.com>
+Date: Fri, 23 Jan 2026 10:37:21 +0800
+Subject: exfat: fix refcount leak in exfat_find
+To: gregkh@linuxfoundation.org, stable@vger.kernel.org, sfual@cse.ust.hk
+Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org, Yuezhang.Mo@sony.com, linkinjeon@kernel.org, sj1557.seo@samsung.com, p22gone@gmail.com, kkamagui@gmail.com, jimmyxyz010315@gmail.com, linux-fsdevel@vger.kernel.org
+Message-ID: <20260123023721.3779125-1-1468888505@139.com>
 
-From: Bartlomiej Kubik <kubik.bartlomiej@gmail.com>
+From: Shuhao Fu <sfual@cse.ust.hk>
 
-[ Upstream commit a8a3ca23bbd9d849308a7921a049330dc6c91398 ]
+[ Upstream commit 9aee8de970f18c2aaaa348e3de86c38e2d956c1d ]
 
-KMSAN reports: Multiple uninitialized values detected:
+Fix refcount leaks in `exfat_find` related to `exfat_get_dentry_set`.
 
-- KMSAN: uninit-value in ntfs_read_hdr (3)
-- KMSAN: uninit-value in bcmp (3)
+Function `exfat_get_dentry_set` would increase the reference counter of
+`es->bh` on success. Therefore, `exfat_put_dentry_set` must be called
+after `exfat_get_dentry_set` to ensure refcount consistency. This patch
+relocate two checks to avoid possible leaks.
 
-Memory is allocated by __getname(), which is a wrapper for
-kmem_cache_alloc(). This memory is used before being properly
-cleared. Change kmem_cache_alloc() to kmem_cache_zalloc() to
-properly allocate and clear memory before use.
-
-Fixes: 82cae269cfa9 ("fs/ntfs3: Add initialization of super block")
-Fixes: 78ab59fee07f ("fs/ntfs3: Rework file operations")
-Tested-by: syzbot+332bd4e9d148f11a87dc@syzkaller.appspotmail.com
-Reported-by: syzbot+332bd4e9d148f11a87dc@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=332bd4e9d148f11a87dc
-
-Fixes: 82cae269cfa9 ("fs/ntfs3: Add initialization of super block")
-Fixes: 78ab59fee07f ("fs/ntfs3: Rework file operations")
-Tested-by: syzbot+0399100e525dd9696764@syzkaller.appspotmail.com
-Reported-by: syzbot+0399100e525dd9696764@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=0399100e525dd9696764
-
-Reviewed-by: Khalid Aziz <khalid@kernel.org>
-Signed-off-by: Bartlomiej Kubik <kubik.bartlomiej@gmail.com>
-Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
+Fixes: 82ebecdc74ff ("exfat: fix improper check of dentry.stream.valid_size")
+Fixes: 13940cef9549 ("exfat: add a check for invalid data size")
+Signed-off-by: Shuhao Fu <sfual@cse.ust.hk>
+Reviewed-by: Yuezhang Mo <Yuezhang.Mo@sony.com>
+Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
 Signed-off-by: Li hongliang <1468888505@139.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ntfs3/inode.c |    7 +++----
- 1 file changed, 3 insertions(+), 4 deletions(-)
+ fs/exfat/namei.c |   20 ++++++++++----------
+ 1 file changed, 10 insertions(+), 10 deletions(-)
 
---- a/fs/ntfs3/inode.c
-+++ b/fs/ntfs3/inode.c
-@@ -1301,7 +1301,7 @@ int ntfs_create_inode(struct mnt_idmap *
- 		fa |= FILE_ATTRIBUTE_READONLY;
+--- a/fs/exfat/namei.c
++++ b/fs/exfat/namei.c
+@@ -638,16 +638,6 @@ static int exfat_find(struct inode *dir,
+ 	info->valid_size = le64_to_cpu(ep2->dentry.stream.valid_size);
+ 	info->size = le64_to_cpu(ep2->dentry.stream.size);
  
- 	/* Allocate PATH_MAX bytes. */
--	new_de = __getname();
-+	new_de = kmem_cache_zalloc(names_cachep, GFP_KERNEL);
- 	if (!new_de) {
- 		err = -ENOMEM;
- 		goto out1;
-@@ -1734,10 +1734,9 @@ int ntfs_link_inode(struct inode *inode,
- 	struct NTFS_DE *de;
+-	if (info->valid_size < 0) {
+-		exfat_fs_error(sb, "data valid size is invalid(%lld)", info->valid_size);
+-		return -EIO;
+-	}
+-
+-	if (unlikely(EXFAT_B_TO_CLU_ROUND_UP(info->size, sbi) > sbi->used_clusters)) {
+-		exfat_fs_error(sb, "data size is invalid(%lld)", info->size);
+-		return -EIO;
+-	}
+-
+ 	info->start_clu = le32_to_cpu(ep2->dentry.stream.start_clu);
+ 	if (!is_valid_cluster(sbi, info->start_clu) && info->size) {
+ 		exfat_warn(sb, "start_clu is invalid cluster(0x%x)",
+@@ -685,6 +675,16 @@ static int exfat_find(struct inode *dir,
+ 			     0);
+ 	exfat_put_dentry_set(&es, false);
  
- 	/* Allocate PATH_MAX bytes. */
--	de = __getname();
-+	de = kmem_cache_zalloc(names_cachep, GFP_KERNEL);
- 	if (!de)
- 		return -ENOMEM;
--	memset(de, 0, PATH_MAX);
- 
- 	/* Mark rw ntfs as dirty. It will be cleared at umount. */
- 	ntfs_set_state(sbi, NTFS_DIRTY_DIRTY);
-@@ -1773,7 +1772,7 @@ int ntfs_unlink_inode(struct inode *dir,
- 		return -EINVAL;
- 
- 	/* Allocate PATH_MAX bytes. */
--	de = __getname();
-+	de = kmem_cache_zalloc(names_cachep, GFP_KERNEL);
- 	if (!de)
- 		return -ENOMEM;
- 
++	if (info->valid_size < 0) {
++		exfat_fs_error(sb, "data valid size is invalid(%lld)", info->valid_size);
++		return -EIO;
++	}
++
++	if (unlikely(EXFAT_B_TO_CLU_ROUND_UP(info->size, sbi) > sbi->used_clusters)) {
++		exfat_fs_error(sb, "data size is invalid(%lld)", info->size);
++		return -EIO;
++	}
++
+ 	if (ei->start_clu == EXFAT_FREE_CLUSTER) {
+ 		exfat_fs_error(sb,
+ 			       "non-zero size file starts with zero cluster (size : %llu, p_dir : %u, entry : 0x%08x)",
 
 
 Patches currently in stable-queue which might be from 1468888505@139.com are
