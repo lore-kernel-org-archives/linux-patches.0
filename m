@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 141DE3033E0;
-	Wed, 28 Jan 2026 16:01:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 559A081AA8;
+	Wed, 28 Jan 2026 16:01:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769616097; cv=none; b=Yv0jxxL9gdHxVO/gB8wJjv0TOlwU0XjufMeW5vYM81HibYBZNCbrjN93wHm4l02j0xz0LRiqJj+vbaHVtd2/Fr8Jjwhzz05PdRGYUoa3DvtvyRwhL6ZLyMBvg/HZHNloGbDy0XIypZiV3DCp5MmnfzNgU3HVcUcV2nzO9hvA8+A=
+	t=1769616100; cv=none; b=ToSYwmMFzXP8b+qEXv0ZwcLZFO2c9frdJjIm6T7rE0tXM6H27o4FBXFOhqJQAi5B9DOZmt1bPt/9EO0Md4s95ve8vOf9NHmUYinzmyAqYGP02mSUaJ/CE5lG6rqmYAwYPAWT40c9ncKHDitaSlm3nrlLEMPUeU+OXy0FkOdiq54=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769616097; c=relaxed/simple;
-	bh=PF0/V373qVoTYf67I/rZDaOA+DwtR7XN+ieORdBDVos=;
+	s=arc-20240116; t=1769616100; c=relaxed/simple;
+	bh=LXFa4VoPxVHpekAajJHCjORDjPF9c8WQCjK/CELfaLI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NgDnSBA0m2YLVGHEIeTXbrWi9q2ajZkqjeRICB4VduxG6UFl5dOCecgsIuOtarsPfydk5zTsgAzxYiB7MZ1ldhQod2HErXW5pv9ecQVSPCrXssjQret6+UWl1mFTYU+kJxlXVuocbZlwFx+kcWVDlsQl2p+fsEDmSl8GOkH9Kdg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=p/A4VOnq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=q3p4IlNRLawmoah6628IpzGjOHZIAXrtoCffiOOG2kqsDi0vRxt6HHcbvPpEACbWdUMHKT9/oxfTWysQ5JNJcmo9cVuBSFG3RC6bBWbExPv9bNODeKGgwHA/OYkNXwR9lTYfOvtlVydEt8Q1a84j4yleDTDtn8wILxw50TIXPNY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eJhm7LNZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="p/A4VOnq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 75A6EC4CEF1;
-	Wed, 28 Jan 2026 16:01:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eJhm7LNZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C2DFBC4CEF1;
+	Wed, 28 Jan 2026 16:01:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1769616097;
-	bh=PF0/V373qVoTYf67I/rZDaOA+DwtR7XN+ieORdBDVos=;
+	s=korg; t=1769616100;
+	bh=LXFa4VoPxVHpekAajJHCjORDjPF9c8WQCjK/CELfaLI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=p/A4VOnqdj9pJyfklejPGh9N8FcxD32/u6e3QUxfzJM1Z6ZAC5x/ZNIkZug3Sj/Il
-	 JGLqyA+nvE5BosmFT39HBNqMqHbaVaB9GhBAi3HsXv01JbCsoK/kLd6AqIXzCjzLdn
-	 MClKRZ0dZNdyUOfIgyzn9EAez0M7eNfs1f8drK4E=
+	b=eJhm7LNZZ6bgaLEO3TbLy4Qqpu9YzhXwqmyRhoXIQReX233PV4C/8sjUG8Nyqa+VC
+	 03XOwaUgUiS5mDIkN28PWGc6jsT5wL5NuwtTuquok6X6WH2XgjZQGhXx+Ks/8zxZ98
+	 Vg/xF1Yi6gx+rVpuD576SodLyCPDiLnAIjBu/MMw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lyude Paul <lyude@redhat.com>,
-	Dave Airlie <airlied@redhat.com>
-Subject: [PATCH 6.18 173/227] drm/nouveau/disp: Set drm_mode_config_funcs.atomic_(check|commit)
-Date: Wed, 28 Jan 2026 16:23:38 +0100
-Message-ID: <20260128145350.675725256@linuxfoundation.org>
+	Thomas Fourier <fourier.thomas@gmail.com>,
+	Baochen Qiang <baochen.qiang@oss.qualcomm.com>,
+	Jeff Johnson <jeff.johnson@oss.qualcomm.com>
+Subject: [PATCH 6.18 174/227] wifi: ath10k: fix dma_free_coherent() pointer
+Date: Wed, 28 Jan 2026 16:23:39 +0100
+Message-ID: <20260128145350.711621517@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260128145344.331957407@linuxfoundation.org>
 References: <20260128145344.331957407@linuxfoundation.org>
@@ -50,35 +51,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lyude Paul <lyude@redhat.com>
+From: Thomas Fourier <fourier.thomas@gmail.com>
 
-commit 604826acb3f53c6648a7ee99a3914ead680ab7fb upstream.
+commit 9282a1e171ad8d2205067e8ec3bbe4e3cef4f29f upstream.
 
-Apparently we never actually filled these in, despite the fact that we do
-in fact technically support atomic modesetting.
+dma_alloc_coherent() allocates a DMA mapped buffer and stores the
+addresses in XXX_unaligned fields.  Those should be reused when freeing
+the buffer rather than the aligned addresses.
 
-Since not having these filled in causes us to potentially forget to disable
-fbdev and friends during suspend/resume, let's fix it.
-
-Signed-off-by: Lyude Paul <lyude@redhat.com>
+Fixes: 2a1e1ad3fd37 ("ath10k: Add support for 64 bit ce descriptor")
 Cc: stable@vger.kernel.org
-Reviewed-by: Dave Airlie <airlied@redhat.com>
-Link: https://patch.msgid.link/20260121191320.210342-1-lyude@redhat.com
+Signed-off-by: Thomas Fourier <fourier.thomas@gmail.com>
+Reviewed-by: Baochen Qiang <baochen.qiang@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260105210439.20131-2-fourier.thomas@gmail.com
+Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/nouveau/nouveau_display.c |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/net/wireless/ath/ath10k/ce.c |   16 ++++++++--------
+ 1 file changed, 8 insertions(+), 8 deletions(-)
 
---- a/drivers/gpu/drm/nouveau/nouveau_display.c
-+++ b/drivers/gpu/drm/nouveau/nouveau_display.c
-@@ -351,6 +351,8 @@ nouveau_user_framebuffer_create(struct d
+--- a/drivers/net/wireless/ath/ath10k/ce.c
++++ b/drivers/net/wireless/ath/ath10k/ce.c
+@@ -1727,8 +1727,8 @@ static void _ath10k_ce_free_pipe(struct
+ 				  (ce_state->src_ring->nentries *
+ 				   sizeof(struct ce_desc) +
+ 				   CE_DESC_RING_ALIGN),
+-				  ce_state->src_ring->base_addr_owner_space,
+-				  ce_state->src_ring->base_addr_ce_space);
++				  ce_state->src_ring->base_addr_owner_space_unaligned,
++				  ce_state->src_ring->base_addr_ce_space_unaligned);
+ 		kfree(ce_state->src_ring);
+ 	}
  
- static const struct drm_mode_config_funcs nouveau_mode_config_funcs = {
- 	.fb_create = nouveau_user_framebuffer_create,
-+	.atomic_commit = drm_atomic_helper_commit,
-+	.atomic_check = drm_atomic_helper_check,
- };
+@@ -1737,8 +1737,8 @@ static void _ath10k_ce_free_pipe(struct
+ 				  (ce_state->dest_ring->nentries *
+ 				   sizeof(struct ce_desc) +
+ 				   CE_DESC_RING_ALIGN),
+-				  ce_state->dest_ring->base_addr_owner_space,
+-				  ce_state->dest_ring->base_addr_ce_space);
++				  ce_state->dest_ring->base_addr_owner_space_unaligned,
++				  ce_state->dest_ring->base_addr_ce_space_unaligned);
+ 		kfree(ce_state->dest_ring);
+ 	}
  
+@@ -1758,8 +1758,8 @@ static void _ath10k_ce_free_pipe_64(stru
+ 				  (ce_state->src_ring->nentries *
+ 				   sizeof(struct ce_desc_64) +
+ 				   CE_DESC_RING_ALIGN),
+-				  ce_state->src_ring->base_addr_owner_space,
+-				  ce_state->src_ring->base_addr_ce_space);
++				  ce_state->src_ring->base_addr_owner_space_unaligned,
++				  ce_state->src_ring->base_addr_ce_space_unaligned);
+ 		kfree(ce_state->src_ring);
+ 	}
+ 
+@@ -1768,8 +1768,8 @@ static void _ath10k_ce_free_pipe_64(stru
+ 				  (ce_state->dest_ring->nentries *
+ 				   sizeof(struct ce_desc_64) +
+ 				   CE_DESC_RING_ALIGN),
+-				  ce_state->dest_ring->base_addr_owner_space,
+-				  ce_state->dest_ring->base_addr_ce_space);
++				  ce_state->dest_ring->base_addr_owner_space_unaligned,
++				  ce_state->dest_ring->base_addr_ce_space_unaligned);
+ 		kfree(ce_state->dest_ring);
+ 	}
  
 
 
