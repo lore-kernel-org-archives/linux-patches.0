@@ -1,44 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9AF6340A6F;
-	Wed, 28 Jan 2026 22:33:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D502E29ACD1;
+	Wed, 28 Jan 2026 22:33:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769639622; cv=none; b=uYei7PhZAg7svPXojlSGWURpDffXoh1alqY9jzO/Av0VE7Qw0Nz4sYkiYoz5CfH1brwsEj8OGxGXa+2cEi+29hr7PPqS4jD0Qz+NGBRlvXUTZQMwNkk6c4694CWnBR8Wsd7z/r9Yi/tFh+veY2PegEZI6ceQSku4R9IU+TccoOk=
+	t=1769639623; cv=none; b=rBYdIEf0l51HdY/ajDLToa+d2LrSswVJOIjrFBZEfmKx+KyIhE43vhHhdkQ2XTvJGMR4UTeakTuBouwLk8jXNbuiiw1FoRLy3g1+f3Q+4Phv7mz1T1C1YHob6fo7ON3WKpixoZ2pBIFvyS1QnLqC2PhYJ5Z5uD5QbCPtcQgKHM0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769639622; c=relaxed/simple;
-	bh=FL7myEeyGHFrOKugpv3PS/Na7Tf919couL7+Cr2mTpE=;
+	s=arc-20240116; t=1769639623; c=relaxed/simple;
+	bh=yMmc+gE/TeEIykfimutfHJ9UuR39OimXvChOlxkMweM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uBz1ffbfdXc3zGQuHJEGS6VlTt2JlAlaeppK4tbMMtlppwMbePVVsMhvhXUqHOJawgEexo/cpOWFnDnSSa6rl/1O1AFKwa1YL+hHVWJio+qFUG19sulEb2qUTiutPgxAObmyEWcRJAVnoG/0s5HNnqEdwjOr5dNrdgXceLMuPr0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=IxV6XZw2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=BWRCUoaHOxPZn7LO+m7qzmxNixguk6Bvdkes5IFFjfCt63pamDmU34Xfq27cgMvKiHJHyyNem9oplUITsfSVy+w94459txvrBZqic4dBwDITMF6ua0ouLaL/Ys3RZbP/45a7C9LBvTikFK3uT8a6o3hWwKy1z9QfCw/7nDZdUDk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=HWLiv/KX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="IxV6XZw2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8AF74C4CEF1;
-	Wed, 28 Jan 2026 22:33:41 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="HWLiv/KX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2191C4CEF7;
+	Wed, 28 Jan 2026 22:33:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1769639622;
-	bh=FL7myEeyGHFrOKugpv3PS/Na7Tf919couL7+Cr2mTpE=;
+	s=k20201202; t=1769639623;
+	bh=yMmc+gE/TeEIykfimutfHJ9UuR39OimXvChOlxkMweM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IxV6XZw2e12yRgNdFpM5D+7d8FMDk1JWXzWQLmE19dZQ2SXhRJIERrmMSICbz21zY
-	 daA17YNvXmr1ZvuHzqaVEiWjpdeXNWWs6tCsENqfEYOyEUaDfZ3MPiqv5jHPndSO6e
-	 tuzode3/25iqkUZ5n6deQV/XtFQsEWaCYyAv0A9gR/CPWEq3lOkbExfen89oJJrWKz
-	 lfBkxBwoI2CbV9jLk22mMoRfrjnQFRpiEsP2BCrzPK/WXik4s0btCdektyTA3jbGIB
-	 Mus86Vfd1xghxEYTmA7hRMomUWRhN1JaxaWZeTIOMXXGHqGVWaecWZXjqLOGnmrahp
-	 VvQ7fTTAjo7lw==
+	b=HWLiv/KX7v5VKCBvilUEHxi9QEEqrOU0BNu2Hb15mO10uOVyLrClFvTFO30vm5ztR
+	 bhnn8WkIiTwfmBnnH/b2HmrssCMgBWi0Kujs3pFxZh2s0X4459p/+/83LyQTA53aZ/
+	 YMizzNkwNB2BbNvsv+6sDVBzqAiD4PDZR+Gc873jGDusytcaf/PP65zQf09U+U84PM
+	 SeH1hYBMqjnWaDFw1sq1+nlKzsZe7Ogpt/dw9dWqRNP9u35eBPrrRUrIPfbkwo2tpv
+	 7T8srvC3bVjn3e+9PdxVnccNBbmN1gzDBPiCmWdUe1H4qXsASY1OgkHEePI08vjh+r
+	 Cwy7BWcv42mAw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Lianqin Hu <hulianqin@vivo.com>,
-	Cryolitia PukNgae <cryolitia@uniontech.com>,
-	Takashi Iwai <tiwai@suse.de>,
+Cc: Devyn Liu <liudingyuan@h-partners.com>,
+	Yang Shen <shenyang39@huawei.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	pav@iki.fi,
-	jussi@sonarnerd.net,
-	roy.vegard.ovesen@gmail.com
-Subject: [PATCH AUTOSEL 6.18] ALSA: usb-audio: Add delay quirk for MOONDROP Moonriver2 Ti
-Date: Wed, 28 Jan 2026 17:33:02 -0500
-Message-ID: <20260128223332.2806589-4-sashal@kernel.org>
+	linux-spi@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.18-6.6] spi: hisi-kunpeng: Fixed the wrong debugfs node name in hisi_spi debugfs initialization
+Date: Wed, 28 Jan 2026 17:33:03 -0500
+Message-ID: <20260128223332.2806589-5-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260128223332.2806589-1-sashal@kernel.org>
 References: <20260128223332.2806589-1-sashal@kernel.org>
@@ -51,171 +49,145 @@ MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.18.7
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Lianqin Hu <hulianqin@vivo.com>
+From: Devyn Liu <liudingyuan@h-partners.com>
 
-[ Upstream commit 49985bc466b51af88d534485631c8cd8c9c65f43 ]
+[ Upstream commit b062a899c997df7b9ce29c62164888baa7a85833 ]
 
-Audio control requests that sets sampling frequency sometimes fail on
-this card. Adding delay between control messages eliminates that problem.
+In hisi_spi_debugfs_init, spi controller pointer is calculated
+by container_of macro, and the member is hs->dev. But the host
+cannot be calculated offset directly by this. (hs->dev) points
+to (pdev->dev), and it is the (host->dev.parent) rather than
+(host->dev) points to the (pdev->dev), which is set in
+__spi_alloc_controller.
 
-usb 1-1: New USB device found, idVendor=2fc6, idProduct=f06b
-usb 1-1: New USB device strings: Mfr=1, Product=2, SerialNumber=3
-usb 1-1: Product: MOONDROP Moonriver2 Ti
-usb 1-1: Manufacturer: MOONDROP
-usb 1-1: SerialNumber: MOONDROP Moonriver2 Ti
+In this patch, this issues is fixed by getting the spi_controller
+data from pdev->dev by dev_get_drvdata() directly. (dev->driver_data)
+points to the spi controller data in the probe stage.
 
-Signed-off-by: Lianqin Hu <hulianqin@vivo.com>
-Reviewed-by: Cryolitia PukNgae <cryolitia@uniontech.com>
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Link: https://patch.msgid.link/TYUPR06MB6217911EFC7E9224935FA507D28DA@TYUPR06MB6217.apcprd06.prod.outlook.com
+Signed-off-by: Devyn Liu <liudingyuan@h-partners.com>
+Reviewed-by: Yang Shen <shenyang39@huawei.com>
+Link: https://patch.msgid.link/20260108075323.3831574-1-liudingyuan@h-partners.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-## Comprehensive Analysis
+In `struct spi_controller`, `dev` is at offset 0. So when `container_of`
+is used with an incorrect pointer, it will calculate the "base" of the
+spi_controller by subtracting 0 from the address - meaning it will use
+`hs->dev` (pdev->dev) directly as if it were an spi_controller!
+
+This would cause the access to `host->bus_num` (used in the snprintf for
+creating debugfs directory name) to read from the wrong memory location.
+Looking at struct spi_controller, `bus_num` is at around offset 72-80
+bytes (after `dev` and `list`), so it would be reading random data from
+the platform_device structure.
+
+Let me analyze the severity:
+
+1. **Best case**: Random garbage `bus_num` value → debugfs directory
+   created with garbage name like "hisi_spi-1234567" or some nonsense
+2. **Worst case**: Could potentially read out of bounds if pdev->dev is
+   at the end of an allocation
+
+The fix is simple, correct, and uses the proper method to retrieve the
+spi_controller pointer.
+
+## Summary Analysis
 
 ### 1. COMMIT MESSAGE ANALYSIS
-
-**Subject:** "ALSA: usb-audio: Add delay quirk for MOONDROP Moonriver2
-Ti"
-
-**Key indicators:**
-- The commit describes a real hardware issue: "Audio control requests
-  that sets sampling frequency sometimes fail on this card"
-- The fix is adding a workaround: "Adding delay between control messages
-  eliminates that problem"
-- The commit has proper sign-offs and review tags (Reviewed-by, Signed-
-  off-by from maintainer Takashi Iwai)
-- Device identification is clearly provided (idVendor=2fc6,
-  idProduct=f06b)
-
-**Missing tags:** As expected for commits needing manual review, there's
-no `Cc: stable@vger.kernel.org` or `Fixes:` tag. This is NOT a negative
-signal - it's why this commit needs review.
+The commit message clearly explains:
+- The bug: `container_of` is incorrectly used - `hs->dev` points to
+  `pdev->dev`, not `host->dev`
+- The fix: Use `dev_get_drvdata()` to correctly get the spi_controller
+  pointer
 
 ### 2. CODE CHANGE ANALYSIS
+**The Bug:**
+- `hs->dev = dev` where `dev = &pdev->dev` (platform device's device)
+- `host = container_of(hs->dev, struct spi_controller, dev)` computes
+  wrong offset
+- Since `dev` is at offset 0 in spi_controller, this treats `pdev->dev`
+  as if it were the spi_controller
+- Accessing `host->bus_num` reads garbage from wrong memory location
 
-The diff shows a simple two-line addition to `sound/usb/quirks.c`:
+**The Fix:**
+- Uses `dev_get_drvdata(hs->dev)` to correctly retrieve the
+  spi_controller pointer
+- This works because `platform_set_drvdata(pdev, host)` was called in
+  probe
 
-```c
-DEVICE_FLG(0x2fc6, 0xf06b, /* MOONDROP Moonriver2 Ti */
-           QUIRK_FLAG_CTL_MSG_DELAY),
-```
-
-This adds a USB device ID (vendor 0x2fc6, product 0xf06b) to a quirk
-flags table with the `QUIRK_FLAG_CTL_MSG_DELAY` flag.
-
-**Technical mechanism:**
-- The USB audio device (MOONDROP Moonriver2 Ti DAC/amp) has buggy
-  firmware that cannot handle rapid control messages
-- Without the delay, sampling frequency setting fails intermittently
-- The `QUIRK_FLAG_CTL_MSG_DELAY` flag tells the USB audio driver to add
-  delays between control messages for this specific device
-- This is a well-established workaround pattern - other devices in the
-  same file use the same quirk (e.g., Luxman D-10X, iBasso DC07 Pro)
+**The fix is obviously correct:** It mirrors how other parts of the
+driver (e.g., interrupt handler) retrieve the spi_controller.
 
 ### 3. CLASSIFICATION
-
-**This is a HARDWARE QUIRK addition** - one of the explicitly allowed
-exception categories for stable backports.
-
-- **NOT a new feature:** The quirk mechanism already exists; this just
-  adds a device to the list
-- **Fixes a real bug:** Audio device fails to work properly without the
-  quirk
-- **Zero code logic changes:** Just a table entry addition
+- **Bug fix**: Yes, this fixes a real bug where incorrect memory is
+  accessed
+- **Category**: Bug fix for incorrect pointer calculation
 
 ### 4. SCOPE AND RISK ASSESSMENT
-
-**Scope:**
-- 2 lines added
-- 1 file changed (quirks.c)
-- No logic changes, no new code paths
-
-**Risk:** **EXTREMELY LOW**
-- The change only affects the specific USB device (0x2fc6:0xf06b)
-- Users without this device are completely unaffected
-- The quirk mechanism is mature and well-tested
-- Similar quirk entries exist for many other devices (visible in the
-  context)
-- If the quirk were somehow wrong, it would only affect this one device
-  model
+- **Lines changed**: Net -4 lines, very small change
+- **Files touched**: 1 driver file
+- **Risk**: Very low - changes a local variable initialization in a
+  debugfs init function
+- **Could break something else?**: No, this is a purely local fix
 
 ### 5. USER IMPACT
-
-**Who is affected:**
-- Users of the MOONDROP Moonriver2 Ti USB DAC/amp
-- This is a commercially available audio device that users connect to
-  Linux systems
-
-**Severity without fix:**
-- Audio control requests fail intermittently
-- Device may not work properly at certain sample rates
-- This is a functional bug preventing normal use of hardware
-
-**Impact of fix:**
-- Device works correctly
-- No negative impact on any other hardware
+- **Who is affected**: Users of HiSilicon Kunpeng SoC SPI controllers
+  with debugfs enabled
+- **Severity**: The bug causes incorrect debugfs directory naming and
+  potentially reads garbage memory
+- **Hardware support**: This driver is for specific Kunpeng server SoCs
 
 ### 6. STABILITY INDICATORS
-
-- **Reviewed-by:** Cryolitia PukNgae from Uniontech (likely a testing/QA
-  role)
-- **Signed-off-by:** Takashi Iwai (ALSA maintainer at SUSE) - trusted
-  maintainer acceptance
-- The pattern follows identical entries in the same file
-- The quirk flag used (`QUIRK_FLAG_CTL_MSG_DELAY`) is well-established
+- Has "Reviewed-by:" tag from another Huawei engineer
+- The fix is straightforward and mirrors existing patterns in the driver
 
 ### 7. DEPENDENCY CHECK
+- The driver exists since v5.13, so this is relevant for 5.15.y, 6.1.y,
+  6.6.y, etc.
+- No dependencies on other commits - standalone fix
 
-**Dependencies:** None
-- The `QUIRK_FLAG_CTL_MSG_DELAY` flag already exists in stable kernels
-- The `DEVICE_FLG` macro already exists
-- The quirk handling code already exists
-- This is a pure data addition to an existing table
+## Conclusion
 
-**Applies cleanly:** The change is a simple table entry insertion that
-should apply cleanly to any stable tree that has the USB audio quirks
-infrastructure.
+This commit fixes a real bug in pointer calculation that causes
+incorrect memory access. The fix is:
+- Small and surgical (changes one variable initialization)
+- Obviously correct (uses the same pattern as other code in the driver)
+- Fixes a real bug (incorrect container_of usage)
+- Low risk (only affects debugfs, but still fixes incorrect memory
+  access)
 
-### Summary
-
-This commit is a **textbook example** of what SHOULD be backported to
-stable:
-
-1. **Obviously correct:** Simple device ID + existing quirk flag
-2. **Fixes a real bug:** Hardware doesn't work properly without it
-3. **Small and contained:** 2 lines, no logic changes
-4. **No new features:** Uses existing infrastructure
-5. **No new APIs:** Just a table entry
-6. **Falls under explicit exception:** Hardware quirk addition
-
-The fix enables a commercial USB audio device to work correctly on
-Linux. The risk is essentially zero since the change only affects this
-specific device model, and the benefit is direct hardware enablement for
-users who own this device.
+The bug could cause reading garbage values or potentially undefined
+behavior. While debugfs is primarily a debugging interface, the
+incorrect memory access is still a real bug that should be fixed in
+stable trees.
 
 **YES**
 
- sound/usb/quirks.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/spi/spi-hisi-kunpeng.c | 4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
-diff --git a/sound/usb/quirks.c b/sound/usb/quirks.c
-index 94a8fdc9c6d3c..8a646891ebb44 100644
---- a/sound/usb/quirks.c
-+++ b/sound/usb/quirks.c
-@@ -2390,6 +2390,8 @@ static const struct usb_audio_quirk_flags_table quirk_flags_table[] = {
- 		   QUIRK_FLAG_CTL_MSG_DELAY_1M),
- 	DEVICE_FLG(0x2d99, 0x0026, /* HECATE G2 GAMING HEADSET */
- 		   QUIRK_FLAG_MIXER_PLAYBACK_MIN_MUTE),
-+	DEVICE_FLG(0x2fc6, 0xf06b, /* MOONDROP Moonriver2 Ti */
-+		   QUIRK_FLAG_CTL_MSG_DELAY),
- 	DEVICE_FLG(0x2fc6, 0xf0b7, /* iBasso DC07 Pro */
- 		   QUIRK_FLAG_CTL_MSG_DELAY_1M),
- 	DEVICE_FLG(0x30be, 0x0101, /* Schiit Hel */
+diff --git a/drivers/spi/spi-hisi-kunpeng.c b/drivers/spi/spi-hisi-kunpeng.c
+index dadf558dd9c0c..80a1a15de0bc3 100644
+--- a/drivers/spi/spi-hisi-kunpeng.c
++++ b/drivers/spi/spi-hisi-kunpeng.c
+@@ -161,10 +161,8 @@ static const struct debugfs_reg32 hisi_spi_regs[] = {
+ static int hisi_spi_debugfs_init(struct hisi_spi *hs)
+ {
+ 	char name[32];
++	struct spi_controller *host = dev_get_drvdata(hs->dev);
+ 
+-	struct spi_controller *host;
+-
+-	host = container_of(hs->dev, struct spi_controller, dev);
+ 	snprintf(name, 32, "hisi_spi%d", host->bus_num);
+ 	hs->debugfs = debugfs_create_dir(name, NULL);
+ 	if (IS_ERR(hs->debugfs))
 -- 
 2.51.0
 
