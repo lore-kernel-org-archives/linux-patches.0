@@ -1,36 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3ED0726ED40;
-	Wed, 28 Jan 2026 16:03:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D41B726ED40;
+	Wed, 28 Jan 2026 16:03:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769616197; cv=none; b=kazHE44SbT4r8IacOGI4uZbapl5T/FiVAQFJ3tBfvuVrjqbvAsuKvnHN46ykmiYP4xmP4oLFRv7kme2WR2eNJiU5UJ11d1QlAAwPVEwUIAvYyp4UI35KCSjTd7y5Hxh3ZJeqbGFqaR9vExRZrPo2DRnnr/dplBu+3ayZc/qCjcw=
+	t=1769616200; cv=none; b=lD7kVwgsdnDLjxU7Y/FtAGp9wSpPxuRVCuQRlKXcAtVhEQ07mRL+6MJHs7KKtB1cLIBWp8w02T3paBouAwaYbnIgfh421eUj4YpXcYg4uP+ST+3qnHvU8QhdgfS6BVypQFbQmujbcqWrr2ifNdJt5J5/5FmYvw5WZtrRTk2Aex0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769616197; c=relaxed/simple;
-	bh=+QxcD4HKeK/R+eXUR/K7hRIkEMRwlDy8DXGBRh0LBdc=;
+	s=arc-20240116; t=1769616200; c=relaxed/simple;
+	bh=h9N2ABVMtYg2gPgDJbk0TmEmuNXo/Mo01E3Ejh37tCU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kAi+u1MAZwwOZEOxMru0I5AtauVGv9mKXvCwSJ/XKzk8TSLgdERhpab1C/Lfvusha9/7uKl5JPKStFcKlblY0E9y6q/T6MiUDOgXjaGS4GgrMgdllqRRa7/n4ajDa+f96OSahe7ysk0NMA2gweMo4PqrAO+9DzILZEqUKaJU4kQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bhjBwY+K; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=npElpQi2xSBsGISmC1uTCvd93iOCwbRCiYFLCFmQdKdlMQe8PxQGdGNXVqbdjGO8tiXDyQtFM1nIBIHGXBqdOvzAIJjFoN2kkXNj7H/lLM9xY/RcNRSsdQ4NzkwADx9R35dKjiuzOvQK1ArVEwwQdWhPvIK8ef3Y1kTlaTT10L4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FNqLJ819; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bhjBwY+K"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B35CC4CEF1;
-	Wed, 28 Jan 2026 16:03:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FNqLJ819"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0395CC4CEF1;
+	Wed, 28 Jan 2026 16:03:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1769616197;
-	bh=+QxcD4HKeK/R+eXUR/K7hRIkEMRwlDy8DXGBRh0LBdc=;
+	s=korg; t=1769616200;
+	bh=h9N2ABVMtYg2gPgDJbk0TmEmuNXo/Mo01E3Ejh37tCU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bhjBwY+Ke01whd3BPn/a3PBVm2oBf1wrkXmU/y6srDD/OL03Da923RzmTG0lsjcHv
-	 F+fNoBCuJDm+964WDWyu0A/LpLYFcZD6Wf+/gi45SKonb7rn4hQIdT7fGj64zY1LCi
-	 dRfU5v6H06ziLZdBAB/c2ORuezWt4resglG06WRc=
+	b=FNqLJ819OOyJWmVk6JD105hB2fU8cdoufJQ3Glj66u2CxdXxQNQkaxMeMHbLIz2+2
+	 BpX9JwIzTPzltPc1mfE71dCA1qH7DDFMMsjT/9be5LbP/3wVHywP9MQX4RV+bXmLQL
+	 45zsfVSz8/YBb8JDe1W9dDpHZ0kh4vRnZMnkX2Os=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marc Kleine-Budde <mkl@pengutronix.de>
-Subject: [PATCH 6.18 211/227] can: usb_8dev: usb_8dev_read_bulk_callback(): fix URB memory leak
-Date: Wed, 28 Jan 2026 16:24:16 +0100
-Message-ID: <20260128145352.028207671@linuxfoundation.org>
+	"=?UTF-8?q?Jan=20H . =20Sch=C3=B6nherr?=" <jschoenh@amazon.de>,
+	Peter Zijlstra <peterz@infradead.org>,
+	Fernand Sieber <sieberf@amazon.com>
+Subject: [PATCH 6.18 202/227] perf/x86/intel: Do not enable BTS for guests
+Date: Wed, 28 Jan 2026 16:24:07 +0100
+Message-ID: <20260128145351.709203836@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260128145344.331957407@linuxfoundation.org>
 References: <20260128145344.331957407@linuxfoundation.org>
@@ -43,62 +45,63 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Marc Kleine-Budde <mkl@pengutronix.de>
+From: Fernand Sieber <sieberf@amazon.com>
 
-commit f7a980b3b8f80fe367f679da376cf76e800f9480 upstream.
+commit 91dcfae0ff2b9b9ab03c1ec95babaceefbffb9f4 upstream.
 
-Fix similar memory leak as in commit 7352e1d5932a ("can: gs_usb:
-gs_usb_receive_bulk_callback(): fix URB memory leak").
+By default when users program perf to sample branch instructions
+(PERF_COUNT_HW_BRANCH_INSTRUCTIONS) with a sample period of 1, perf
+interprets this as a special case and enables BTS (Branch Trace Store)
+as an optimization to avoid taking an interrupt on every branch.
 
-In usb_8dev_open() -> usb_8dev_start(), the URBs for USB-in transfers are
-allocated, added to the priv->rx_submitted anchor and submitted. In the
-complete callback usb_8dev_read_bulk_callback(), the URBs are processed and
-resubmitted. In usb_8dev_close() -> unlink_all_urbs() the URBs are freed by
-calling usb_kill_anchored_urbs(&priv->rx_submitted).
+Since BTS doesn't virtualize, this optimization doesn't make sense when
+the request originates from a guest. Add an additional check that
+prevents this optimization for virtualized events (exclude_host).
 
-However, this does not take into account that the USB framework unanchors
-the URB before the complete function is called. This means that once an
-in-URB has been completed, it is no longer anchored and is ultimately not
-released in usb_kill_anchored_urbs().
-
-Fix the memory leak by anchoring the URB in the
-usb_8dev_read_bulk_callback() to the priv->rx_submitted anchor.
-
-Fixes: 0024d8ad1639 ("can: usb_8dev: Add support for USB2CAN interface from 8 devices")
-Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20260116-can_usb-fix-memory-leak-v2-5-4b8cb2915571@pengutronix.de
-Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
+Reported-by: Jan H. Schönherr <jschoenh@amazon.de>
+Suggested-by: Peter Zijlstra <peterz@infradead.org>
+Signed-off-by: Fernand Sieber <sieberf@amazon.com>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Cc: <stable@vger.kernel.org>
+Link: https://patch.msgid.link/20251211183604.868641-1-sieberf@amazon.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/can/usb/usb_8dev.c |    8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ arch/x86/events/perf_event.h |   13 +++++++++++--
+ 1 file changed, 11 insertions(+), 2 deletions(-)
 
---- a/drivers/net/can/usb/usb_8dev.c
-+++ b/drivers/net/can/usb/usb_8dev.c
-@@ -541,11 +541,17 @@ resubmit_urb:
- 			  urb->transfer_buffer, RX_BUFFER_SIZE,
- 			  usb_8dev_read_bulk_callback, priv);
+--- a/arch/x86/events/perf_event.h
++++ b/arch/x86/events/perf_event.h
+@@ -1558,13 +1558,22 @@ static inline bool intel_pmu_has_bts_per
+ 	struct hw_perf_event *hwc = &event->hw;
+ 	unsigned int hw_event, bts_event;
  
-+	usb_anchor_urb(urb, &priv->rx_submitted);
+-	if (event->attr.freq)
++	/*
++	 * Only use BTS for fixed rate period==1 events.
++	 */
++	if (event->attr.freq || period != 1)
++		return false;
 +
- 	retval = usb_submit_urb(urb, GFP_ATOMIC);
-+	if (!retval)
-+		return;
-+
-+	usb_unanchor_urb(urb);
++	/*
++	 * BTS doesn't virtualize.
++	 */
++	if (event->attr.exclude_host)
+ 		return false;
  
- 	if (retval == -ENODEV)
- 		netif_device_detach(netdev);
--	else if (retval)
-+	else
- 		netdev_err(netdev,
- 			"failed resubmitting read bulk urb: %d\n", retval);
+ 	hw_event = hwc->config & INTEL_ARCH_EVENT_MASK;
+ 	bts_event = x86_pmu.event_map(PERF_COUNT_HW_BRANCH_INSTRUCTIONS);
+ 
+-	return hw_event == bts_event && period == 1;
++	return hw_event == bts_event;
  }
+ 
+ static inline bool intel_pmu_has_bts(struct perf_event *event)
 
 
