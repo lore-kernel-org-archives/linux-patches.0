@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7498305E2E;
-	Wed, 28 Jan 2026 15:49:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D123930BB82;
+	Wed, 28 Jan 2026 15:49:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769615352; cv=none; b=J2Q5PDnuMpp5+LSDIWq1k6P/VB0A6wsKfz7lOEQbjj3o2A6Ab5s1c8LJ+++RA49Q47YSNmEB1xK4xe7A0jWT5AvowIJ+MePWFBoZ8nbakrF5IvRHSne55WK2KF4T5bh1qx4lGf6BTq+VQdVsfkFkjMrVk7ugVnjmLGLdpoKNni4=
+	t=1769615355; cv=none; b=IYd1Spid1VdJZsmIgkOQhdRFr2gPJtti8Db8VSsXGHW4jzIVdRFvGcasljy8XBWrLLUPiyAkqwRhPxap3UTv6WVppGfphLh3rSJx9bw13IV7KUpCP9D9w8LKsVZcVX+e1Qrv9BNmNiGV4miorsFoz3jnwItAwa6yVR/+0t6mVAQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769615352; c=relaxed/simple;
-	bh=DlN8H6yIoB020aLcmo2BiKG64hdfeHEI/imUA3IWj7M=;
+	s=arc-20240116; t=1769615355; c=relaxed/simple;
+	bh=wbYvWU1sa1kyzwo7B6U6XLmhWnujUOG6v4EZ218rprc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ph0thcURmnHioI/92h2cE8+pnPDf4Uv8LGzzvzeQj1oTS2kOZOPn9FA3+A4mWqKQwaKPUxq6BatOwRv6HSgeyUc2Fu/p/kxt/kJABEfK8GoSQawBvCP/f3SY6zswdGTI6j82BqV8KjkOROPO2flAdAH91hdglk0pMjTTSyXg89A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eOqRoGx5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QvbvCofaNXQGbfcr+IwkkiuATGiBQDUK3kYlWiWsVOx2JYL55tUKDU0NMPMnMugUrykFVhkOLFx9LbHMXIXHKfl93sgIBTjkkRu5bCJ7YXXB62JF29Os2PkShiwlf++XUvQnolQhWiZcE1phJaCr1Q3QB82JD4zwT/SNKcwLoWo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=10U73TKy; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eOqRoGx5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F898C4CEF1;
-	Wed, 28 Jan 2026 15:49:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="10U73TKy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 05447C16AAE;
+	Wed, 28 Jan 2026 15:49:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1769615352;
-	bh=DlN8H6yIoB020aLcmo2BiKG64hdfeHEI/imUA3IWj7M=;
+	s=korg; t=1769615355;
+	bh=wbYvWU1sa1kyzwo7B6U6XLmhWnujUOG6v4EZ218rprc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eOqRoGx5ABfH0qrw5MCYzYxrSLHtKcXDZvrDQSzMB7Zn7UK8E47124vHGO8Qxo1Ld
-	 CWPoJn9CBiXwQ7YtCaOySfSE6RIcZ2HKY8CN+toOxiviWqbKavry6GgjvDGk3FOprD
-	 ze5hHObqCjhpbkQnErPKHJ9PlJYovPci6S6gRahU=
+	b=10U73TKyOkEDiSeDKbQrPUoiID2yhsRYVp8ejFkdbrfFauKyGZAEK/6O5khhxuC06
+	 X7EaqVshc0y+jCK+mf8pouY16Bn7ULN8+KgO1JIcJ6v+gbqIrrTf/uwrAqqGZq8tEi
+	 f+sp6QLSi+nMunhgMyNu5hBNl950oRpkibLpdvsQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mark Rutland <mark.rutland@arm.com>,
-	Mark Brown <broonie@kernel.org>,
+	Jeson Gao <jeson.gao@unisoc.com>,
+	Zhaoyang Huang <zhaoyang.huang@unisoc.com>,
 	Will Deacon <will@kernel.org>,
+	Mark Rutland <mark.rutland@arm.com>,
 	Catalin Marinas <catalin.marinas@arm.com>
-Subject: [PATCH 6.12 121/169] arm64/fpsimd: signal: Allocate SSVE storage when restoring ZA
-Date: Wed, 28 Jan 2026 16:23:24 +0100
-Message-ID: <20260128145338.358231520@linuxfoundation.org>
+Subject: [PATCH 6.12 122/169] arm64: Set __nocfi on swsusp_arch_resume()
+Date: Wed, 28 Jan 2026 16:23:25 +0100
+Message-ID: <20260128145338.398614404@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260128145334.006287341@linuxfoundation.org>
 References: <20260128145334.006287341@linuxfoundation.org>
@@ -52,98 +53,94 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mark Rutland <mark.rutland@arm.com>
+From: Zhaoyang Huang <zhaoyang.huang@unisoc.com>
 
-commit ea8ccfddbce0bee6310da4f3fc560ad520f5e6b4 upstream.
+commit e2f8216ca2d8e61a23cb6ec355616339667e0ba6 upstream.
 
-The code to restore a ZA context doesn't attempt to allocate the task's
-sve_state before setting TIF_SME. Consequently, restoring a ZA context
-can place a task into an invalid state where TIF_SME is set but the
-task's sve_state is NULL.
+A DABT is reported[1] on an android based system when resume from hiberate.
+This happens because swsusp_arch_suspend_exit() is marked with SYM_CODE_*()
+and does not have a CFI hash, but swsusp_arch_resume() will attempt to
+verify the CFI hash when calling a copy of swsusp_arch_suspend_exit().
 
-In legitimate but uncommon cases where the ZA signal context was NOT
-created by the kernel in the context of the same task (e.g. if the task
-is saved/restored with something like CRIU), we have no guarantee that
-sve_state had been allocated previously. In these cases, userspace can
-enter streaming mode without trapping while sve_state is NULL, causing a
-later NULL pointer dereference when the kernel attempts to store the
-register state:
+Given that there's an existing requirement that the entrypoint to
+swsusp_arch_suspend_exit() is the first byte of the .hibernate_exit.text
+section, we cannot fix this by marking swsusp_arch_suspend_exit() with
+SYM_FUNC_*(). The simplest fix for now is to disable the CFI check in
+swsusp_arch_resume().
 
-| # ./sigreturn-za
-| Unable to handle kernel NULL pointer dereference at virtual address 0000000000000000
-| Mem abort info:
-|   ESR = 0x0000000096000046
-|   EC = 0x25: DABT (current EL), IL = 32 bits
-|   SET = 0, FnV = 0
-|   EA = 0, S1PTW = 0
-|   FSC = 0x06: level 2 translation fault
-| Data abort info:
-|   ISV = 0, ISS = 0x00000046, ISS2 = 0x00000000
-|   CM = 0, WnR = 1, TnD = 0, TagAccess = 0
-|   GCS = 0, Overlay = 0, DirtyBit = 0, Xs = 0
-| user pgtable: 4k pages, 52-bit VAs, pgdp=0000000101f47c00
-| [0000000000000000] pgd=08000001021d8403, p4d=0800000102274403, pud=0800000102275403, pmd=0000000000000000
-| Internal error: Oops: 0000000096000046 [#1]  SMP
-| Modules linked in:
-| CPU: 0 UID: 0 PID: 153 Comm: sigreturn-za Not tainted 6.19.0-rc1 #1 PREEMPT
-| Hardware name: linux,dummy-virt (DT)
-| pstate: 214000c9 (nzCv daIF +PAN -UAO -TCO +DIT -SSBS BTYPE=--)
-| pc : sve_save_state+0x4/0xf0
-| lr : fpsimd_save_user_state+0xb0/0x1c0
-| sp : ffff80008070bcc0
-| x29: ffff80008070bcc0 x28: fff00000c1ca4c40 x27: 63cfa172fb5cf658
-| x26: fff00000c1ca5228 x25: 0000000000000000 x24: 0000000000000000
-| x23: 0000000000000000 x22: fff00000c1ca4c40 x21: fff00000c1ca4c40
-| x20: 0000000000000020 x19: fff00000ff6900f0 x18: 0000000000000000
-| x17: fff05e8e0311f000 x16: 0000000000000000 x15: 028fca8f3bdaf21c
-| x14: 0000000000000212 x13: fff00000c0209f10 x12: 0000000000000020
-| x11: 0000000000200b20 x10: 0000000000000000 x9 : fff00000ff69dcc0
-| x8 : 00000000000003f2 x7 : 0000000000000001 x6 : fff00000c1ca5b48
-| x5 : fff05e8e0311f000 x4 : 0000000008000000 x3 : 0000000000000000
-| x2 : 0000000000000001 x1 : fff00000c1ca5970 x0 : 0000000000000440
-| Call trace:
-|  sve_save_state+0x4/0xf0 (P)
-|  fpsimd_thread_switch+0x48/0x198
-|  __switch_to+0x20/0x1c0
-|  __schedule+0x36c/0xce0
-|  schedule+0x34/0x11c
-|  exit_to_user_mode_loop+0x124/0x188
-|  el0_interrupt+0xc8/0xd8
-|  __el0_irq_handler_common+0x18/0x24
-|  el0t_64_irq_handler+0x10/0x1c
-|  el0t_64_irq+0x198/0x19c
-| Code: 54000040 d51b4408 d65f03c0 d503245f (e5bb5800)
-| ---[ end trace 0000000000000000 ]---
+Mark swsusp_arch_resume() as __nocfi to disable the CFI check.
 
-Fix this by having restore_za_context() ensure that the task's sve_state
-is allocated, matching what we do when taking an SME trap. Any live
-SVE/SSVE state (which is restored earlier from a separate signal
-context) must be preserved, and hence this is not zeroed.
+[1]
+[   22.991934][    T1] Unable to handle kernel paging request at virtual address 0000000109170ffc
+[   22.991934][    T1] Mem abort info:
+[   22.991934][    T1]   ESR = 0x0000000096000007
+[   22.991934][    T1]   EC = 0x25: DABT (current EL), IL = 32 bits
+[   22.991934][    T1]   SET = 0, FnV = 0
+[   22.991934][    T1]   EA = 0, S1PTW = 0
+[   22.991934][    T1]   FSC = 0x07: level 3 translation fault
+[   22.991934][    T1] Data abort info:
+[   22.991934][    T1]   ISV = 0, ISS = 0x00000007, ISS2 = 0x00000000
+[   22.991934][    T1]   CM = 0, WnR = 0, TnD = 0, TagAccess = 0
+[   22.991934][    T1]   GCS = 0, Overlay = 0, DirtyBit = 0, Xs = 0
+[   22.991934][    T1] [0000000109170ffc] user address but active_mm is swapper
+[   22.991934][    T1] Internal error: Oops: 0000000096000007 [#1] PREEMPT SMP
+[   22.991934][    T1] Dumping ftrace buffer:
+[   22.991934][    T1]    (ftrace buffer empty)
+[   22.991934][    T1] Modules linked in:
+[   22.991934][    T1] CPU: 0 PID: 1 Comm: swapper/0 Not tainted 6.6.98-android15-8-g0b1d2aee7fc3-dirty-4k #1 688c7060a825a3ac418fe53881730b355915a419
+[   22.991934][    T1] Hardware name: Unisoc UMS9360-base Board (DT)
+[   22.991934][    T1] pstate: 804000c5 (Nzcv daIF +PAN -UAO -TCO -DIT -SSBS BTYPE=--)
+[   22.991934][    T1] pc : swsusp_arch_resume+0x2ac/0x344
+[   22.991934][    T1] lr : swsusp_arch_resume+0x294/0x344
+[   22.991934][    T1] sp : ffffffc08006b960
+[   22.991934][    T1] x29: ffffffc08006b9c0 x28: 0000000000000000 x27: 0000000000000000
+[   22.991934][    T1] x26: 0000000000000000 x25: 0000000000000000 x24: 0000000000000820
+[   22.991934][    T1] x23: ffffffd0817e3000 x22: ffffffd0817e3000 x21: 0000000000000000
+[   22.991934][    T1] x20: ffffff8089171000 x19: ffffffd08252c8c8 x18: ffffffc080061058
+[   22.991934][    T1] x17: 00000000529c6ef0 x16: 00000000529c6ef0 x15: 0000000000000004
+[   22.991934][    T1] x14: ffffff8178c88000 x13: 0000000000000006 x12: 0000000000000000
+[   22.991934][    T1] x11: 0000000000000015 x10: 0000000000000001 x9 : ffffffd082533000
+[   22.991934][    T1] x8 : 0000000109171000 x7 : 205b5d3433393139 x6 : 392e32322020205b
+[   22.991934][    T1] x5 : 000000010916f000 x4 : 000000008164b000 x3 : ffffff808a4e0530
+[   22.991934][    T1] x2 : ffffffd08058e784 x1 : 0000000082326000 x0 : 000000010a283000
+[   22.991934][    T1] Call trace:
+[   22.991934][    T1]  swsusp_arch_resume+0x2ac/0x344
+[   22.991934][    T1]  hibernation_restore+0x158/0x18c
+[   22.991934][    T1]  load_image_and_restore+0xb0/0xec
+[   22.991934][    T1]  software_resume+0xf4/0x19c
+[   22.991934][    T1]  software_resume_initcall+0x34/0x78
+[   22.991934][    T1]  do_one_initcall+0xe8/0x370
+[   22.991934][    T1]  do_initcall_level+0xc8/0x19c
+[   22.991934][    T1]  do_initcalls+0x70/0xc0
+[   22.991934][    T1]  do_basic_setup+0x1c/0x28
+[   22.991934][    T1]  kernel_init_freeable+0xe0/0x148
+[   22.991934][    T1]  kernel_init+0x20/0x1a8
+[   22.991934][    T1]  ret_from_fork+0x10/0x20
+[   22.991934][    T1] Code: a9400a61 f94013e0 f9438923 f9400a64 (b85fc110)
 
-Fixes: 39782210eb7e ("arm64/sme: Implement ZA signal handling")
-Signed-off-by: Mark Rutland <mark.rutland@arm.com>
+Co-developed-by: Jeson Gao <jeson.gao@unisoc.com>
+Signed-off-by: Jeson Gao <jeson.gao@unisoc.com>
+Signed-off-by: Zhaoyang Huang <zhaoyang.huang@unisoc.com>
+Acked-by: Will Deacon <will@kernel.org>
+Acked-by: Mark Rutland <mark.rutland@arm.com>
 Cc: <stable@vger.kernel.org>
-Cc: Mark Brown <broonie@kernel.org>
-Cc: Will Deacon <will@kernel.org>
-Reviewed-by: Mark Brown <broonie@kernel.org>
+[catalin.marinas@arm.com: commit log updated by Mark Rutland]
 Signed-off-by: Catalin Marinas <catalin.marinas@arm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/kernel/signal.c |    4 ++++
- 1 file changed, 4 insertions(+)
+ arch/arm64/kernel/hibernate.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/arch/arm64/kernel/signal.c
-+++ b/arch/arm64/kernel/signal.c
-@@ -590,6 +590,10 @@ static int restore_za_context(struct use
- 	fpsimd_flush_task_state(current);
- 	/* From now, fpsimd_thread_switch() won't touch thread.sve_state */
- 
-+	sve_alloc(current, false);
-+	if (!current->thread.sve_state)
-+		return -ENOMEM;
-+
- 	sme_alloc(current, true);
- 	if (!current->thread.sme_state) {
- 		current->thread.svcr &= ~SVCR_ZA_MASK;
+--- a/arch/arm64/kernel/hibernate.c
++++ b/arch/arm64/kernel/hibernate.c
+@@ -396,7 +396,7 @@ int swsusp_arch_suspend(void)
+  * Memory allocated by get_safe_page() will be dealt with by the hibernate code,
+  * we don't need to free it here.
+  */
+-int swsusp_arch_resume(void)
++int __nocfi swsusp_arch_resume(void)
+ {
+ 	int rc;
+ 	void *zero_page;
 
 
