@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29A912874FE;
-	Wed, 28 Jan 2026 15:59:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59D03242D7F;
+	Wed, 28 Jan 2026 15:59:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769615961; cv=none; b=YtF9wS5fMXHaSrtB7kGaEgW7lkPo0rAG+D4WNbtM+SRiZObJoEUR7fThEADfDbo22sQEP1pjOnBS+igdAXDpdo+yNIy/aNEY9s1XYgtq6SG/ot69xvFVvqo6slz6lqQieQ5ZgmpP8t3jX4cByNbfMKdj+8FrhMiEnRHolGwtM6o=
+	t=1769615964; cv=none; b=RSuCfTZflIsOhObH+fDuDYP7lu0nMnV5D76fhXzz0xAq1tWhH+lHjMsS2r2y6tkHOdVyWUHbp3SpwKMjo2MEpsqsd/kOs4OgTqbbxPgKRU9bwXzdZSYQ2UCirnc+gCISnuAlin9qTyiQsQ3DI3kKDhoijEOXy7yFjL8YXJsLhUA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769615961; c=relaxed/simple;
-	bh=iLcGVKO7uu/D/ezrEk89swetY3RRo1RJwFwY1UZAZdI=;
+	s=arc-20240116; t=1769615964; c=relaxed/simple;
+	bh=b6JcWIl61CFND0AK9R17ARV/HUz2LnG/x/W1z3q+rIw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=LSgKnruYTSMo4+KWM5wW0pqSR+aMcaSIlKkduwU07RzrRatxO2uA2VaIY+ZVja18Zypb/Ci1Qq2Mfn4yFiY3zZR7RPliZKoDYbNsM2Q+aDTI22yN19zqRHYE3xo5gwsG6IYK7Kejk/zTMblH/RvOmS7fxYeqITjr3qwjB/fh4jU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QMZ9B0So; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=K9wabBU75yjiIATzdBfeTKraZnSYOFKv7hgxW4ivywGjP68ZnJ4+mc0BAFbBD34WDSAG3DjPKl4zPJOAvMO3KbS9pMYsZ1luGQkWSWszz+FDsZw9/AGxOtvmm0D8lxySPoc3GO6LkJBIc8gNF4Xa4OxlsEegofSwM1pQFJHbHm8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=F1bt/VYr; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QMZ9B0So"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ABACEC4CEF1;
-	Wed, 28 Jan 2026 15:59:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="F1bt/VYr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5263C4CEF1;
+	Wed, 28 Jan 2026 15:59:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1769615961;
-	bh=iLcGVKO7uu/D/ezrEk89swetY3RRo1RJwFwY1UZAZdI=;
+	s=korg; t=1769615964;
+	bh=b6JcWIl61CFND0AK9R17ARV/HUz2LnG/x/W1z3q+rIw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QMZ9B0SoGjdM98aRGNUJFP3OsflOjqjwhxPCLti/PE3BHy0345CvDMmOYyxha8ACV
-	 x1zxGGcBFUTrejy7ctTeCgCBXFIKM3ZhSGFelVWRiBG46cz84YZoqZ1+wU+Qg3B5YI
-	 AyXyFh1iptmPvaW22o/bFXtL70yd7noD3LoDuvlk=
+	b=F1bt/VYrDgr9vz/D5jR9KHNTOUHa6g2CT3mLGqk050EyKHfYkOeBbl0otEmZwG5w9
+	 km5A76xppGRjwJPKDT1nharO847XuwkTKS9p/dJhwMcsQyXgz3baFMBMTroECSk/nN
+	 aC6XhnQIH1Pz+jeTz7bMGxbBtw6xjge4aBUghUlg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Miaoqian Lin <linmq006@gmail.com>,
-	=?UTF-8?q?Nuno=20S=C3=A1?= <nuno.sa@analog.com>,
-	Andy Shevchenko <andriy.shevchenko@intel.com>,
-	David Lechner <dlechner@baylibre.com>,
+	=?UTF-8?q?Andreas=20K=C3=BCbrich?= <andreas.kuebrich@spektra-dresden.de>,
 	Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Subject: [PATCH 6.18 164/227] iio: dac: ad3552r-hs: fix out-of-bound write in ad3552r_hs_write_data_source
-Date: Wed, 28 Jan 2026 16:23:29 +0100
-Message-ID: <20260128145350.353655590@linuxfoundation.org>
+Subject: [PATCH 6.18 165/227] iio: dac: ad5686: add AD5695R to ad5686_chip_info_tbl
+Date: Wed, 28 Jan 2026 16:23:30 +0100
+Message-ID: <20260128145350.389741309@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260128145344.331957407@linuxfoundation.org>
 References: <20260128145344.331957407@linuxfoundation.org>
@@ -54,62 +51,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Miaoqian Lin <linmq006@gmail.com>
+From: Kübrich, Andreas <andreas.kuebrich@spektra-dresden.de>
 
-commit 978d28136c53df38f8f0b747191930e2f95e9084 upstream.
+commit 441ac29923c9172bc5e4b2c4f52ae756192f5715 upstream.
 
-When simple_write_to_buffer() succeeds, it returns the number of bytes
-actually copied to the buffer. The code incorrectly uses 'count'
-as the index for null termination instead of the actual bytes copied.
-If count exceeds the buffer size, this leads to out-of-bounds write.
-Add a check for the count and use the return value as the index.
+The chip info for this variant (I2C, four channels, 14 bit, internal
+reference) seems to have been left out due to oversight, so
+ad5686_chip_info_tbl[ID_AD5695R] is all zeroes. Initialisation of an
+AD5695R still succeeds, but the resulting IIO device has no channels and no
+/dev/iio:device* node.
 
-The bug was validated using a demo module that mirrors the original
-code and was tested under QEMU.
+Add the missing chip info to the table.
 
-Pattern of the bug:
-- A fixed 64-byte stack buffer is filled using count.
-- If count > 64, the code still does buf[count] = '\0', causing an
-- out-of-bounds write on the stack.
-
-Steps for reproduce:
-- Opens the device node.
-- Writes 128 bytes of A to it.
-- This overflows the 64-byte stack buffer and KASAN reports the OOB.
-
-Found via static analysis. This is similar to the
-commit da9374819eb3 ("iio: backend: fix out-of-bound write")
-
-Fixes: b1c5d68ea66e ("iio: dac: ad3552r-hs: add support for internal ramp")
+Fixes: 4177381b4401 ("iio:dac:ad5686: Add AD5671R/75R/94/94R/95R/96/96R support")
+Signed-off-by: Andreas Kübrich <andreas.kuebrich@spektra-dresden.de>
 Cc: stable@vger.kernel.org
-Signed-off-by: Miaoqian Lin <linmq006@gmail.com>
-Reviewed-by: Nuno Sá <nuno.sa@analog.com>
-Reviewed-by: Andy Shevchenko <andriy.shevchenko@intel.com>
-Reviewed-by: David Lechner <dlechner@baylibre.com>
 Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/dac/ad3552r-hs.c |    5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/iio/dac/ad5686.c |    6 ++++++
+ 1 file changed, 6 insertions(+)
 
---- a/drivers/iio/dac/ad3552r-hs.c
-+++ b/drivers/iio/dac/ad3552r-hs.c
-@@ -549,12 +549,15 @@ static ssize_t ad3552r_hs_write_data_sou
- 
- 	guard(mutex)(&st->lock);
- 
-+	if (count >= sizeof(buf))
-+		return -ENOSPC;
-+
- 	ret = simple_write_to_buffer(buf, sizeof(buf) - 1, ppos, userbuf,
- 				     count);
- 	if (ret < 0)
- 		return ret;
- 
--	buf[count] = '\0';
-+	buf[ret] = '\0';
- 
- 	ret = match_string(dbgfs_attr_source, ARRAY_SIZE(dbgfs_attr_source),
- 			   buf);
+--- a/drivers/iio/dac/ad5686.c
++++ b/drivers/iio/dac/ad5686.c
+@@ -434,6 +434,12 @@ static const struct ad5686_chip_info ad5
+ 		.num_channels = 4,
+ 		.regmap_type = AD5686_REGMAP,
+ 	},
++	[ID_AD5695R] = {
++		.channels = ad5685r_channels,
++		.int_vref_mv = 2500,
++		.num_channels = 4,
++		.regmap_type = AD5686_REGMAP,
++	},
+ 	[ID_AD5696] = {
+ 		.channels = ad5686_channels,
+ 		.num_channels = 4,
 
 
