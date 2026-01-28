@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 466582D0C95;
-	Wed, 28 Jan 2026 15:35:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 514BB2D59FA;
+	Wed, 28 Jan 2026 15:35:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769614512; cv=none; b=I7D8EajXciFEh/mJwPk+IOYLBD1F0RAjqSbDsZamOmqpG0JStqseEFEqZ/Y1m/VXGa2yqHfAFVmtobzw4cuxEp25B2+RwfTnccIFn0BBlBy5Ujja3BRuuh7WkPiXYnP4/N4Lpt2Gl9Bnx57KumqNkHRKf4aK9e+7LOFFgGGRWRA=
+	t=1769614515; cv=none; b=lP/Ac/m2V/BK/Z0LyrFvF5dJ2yg7dXs2kLh/6q6lD093Ir6sFlFzi17LUwA7yLsFuWQlkxb1sBdGInhO+e7XJvzh1Qs4ZM65odYsWm0GuyamTUuhyu0eQ/vFH5PoGyBUUzpwZ83+Pleg+GaupLnB74gm+HylRXOCcilq4DmAXd8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769614512; c=relaxed/simple;
-	bh=k2vfBgITx85jUOHqMxRJLB2JG+7Lih7xrzdu+q/1dT4=;
+	s=arc-20240116; t=1769614515; c=relaxed/simple;
+	bh=SyAVyjpcgYnfGAfPfP2qdd4ZFu0IefZHgikI+xwnza4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iSwbcx5P0UgIBQeErOBdJ32xEhxR+kKendGXeFXBdUFPiHAo7U+GVxcyqkK0Re3939k5ajvdxMvmqYWx0n2TLFb8NIc42c9IgkJophyCoQDFk7HWyZtHU92B5B8tdsGxMZBdpgoLbBt+3Qk1xqcbZWLwnM3tK+tE5dYXfKd4Gj4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BDWufUXo; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OHBG/Q/lcZ+V2HYuAkwwWt3w3NYQ+sxkPoH/Agssw6O8JULk+ZyVhnhAEHOoXyYoQ89EKL8ySCWwZLiNiWpMILPezqwB8sqLWHvSyO+4DyIyxDdw8t6isJgFFYZGUdNm3G63H8yeK2bOkt14d8PgM++MXLcfEmFL4UC4gsOHM9c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yfwVzux5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BDWufUXo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E64BC4CEF1;
-	Wed, 28 Jan 2026 15:35:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yfwVzux5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC186C4CEF1;
+	Wed, 28 Jan 2026 15:35:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1769614511;
-	bh=k2vfBgITx85jUOHqMxRJLB2JG+7Lih7xrzdu+q/1dT4=;
+	s=korg; t=1769614515;
+	bh=SyAVyjpcgYnfGAfPfP2qdd4ZFu0IefZHgikI+xwnza4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BDWufUXohy8xw4kn8kaKM99jJNCf/v81j9FIUCwBMJfceVqCchb/czkzDZ0knABNA
-	 6BTdNqiLeTtOA7XQfSK8luvK5fcoVRZ05VjtKgfrDiMjJiXTRwwf1FW0ryy0RvkWdl
-	 S2qz5hfG0y6ARXU9UUCiSdgheBWUfzZBA0IQTomU=
+	b=yfwVzux5ovjZv9na9C1u/qt9pGm2EclVcBFNmioSAJ5jm/qLthJrXKPqaC96+oscQ
+	 Bs56C1dlZKP1+BEU1wpi0Jpt05CLOvf5pr9MNnr9hgzlx25tdFPEeSH0ghz2Yunx1R
+	 lXPai8BI8ek+0C0f0+72Rak+Cfs5dOnkVDoxS1nU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Naohiko Shimizu <naohiko.shimizu@gmail.com>,
-	Anup Patel <anup@brainfault.org>,
-	Paul Walmsley <pjw@kernel.org>,
+	David Jeffery <djeffery@redhat.com>,
+	Bart Van Assche <bvanassche@acm.org>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 159/254] riscv: clocksource: Fix stimecmp update hazard on RV32
-Date: Wed, 28 Jan 2026 16:22:15 +0100
-Message-ID: <20260128145350.532888947@linuxfoundation.org>
+Subject: [PATCH 6.6 160/254] scsi: core: Wake up the error handler when final completions race against each other
+Date: Wed, 28 Jan 2026 16:22:16 +0100
+Message-ID: <20260128145350.568316491@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260128145344.698118637@linuxfoundation.org>
 References: <20260128145344.698118637@linuxfoundation.org>
@@ -52,55 +52,93 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Naohiko Shimizu <naohiko.shimizu@gmail.com>
+From: David Jeffery <djeffery@redhat.com>
 
-[ Upstream commit eaa9bb1d39d59e7c17b06cec12622b7c586ab629 ]
+[ Upstream commit fe2f8ad6f0999db3b318359a01ee0108c703a8c3 ]
 
-On RV32, updating the 64-bit stimecmp (or vstimecmp) CSR requires two
-separate 32-bit writes. A race condition exists if the timer triggers
-during these two writes.
+The fragile ordering between marking commands completed or failed so
+that the error handler only wakes when the last running command
+completes or times out has race conditions. These race conditions can
+cause the SCSI layer to fail to wake the error handler, leaving I/O
+through the SCSI host stuck as the error state cannot advance.
 
-The RISC-V Privileged Specification (e.g., Section 3.2.1 for mtimecmp)
-recommends a specific 3-step sequence to avoid spurious interrupts
-when updating 64-bit comparison registers on 32-bit systems:
+First, there is an memory ordering issue within scsi_dec_host_busy().
+The write which clears SCMD_STATE_INFLIGHT may be reordered with reads
+counting in scsi_host_busy(). While the local CPU will see its own
+write, reordering can allow other CPUs in scsi_dec_host_busy() or
+scsi_eh_inc_host_failed() to see a raised busy count, causing no CPU to
+see a host busy equal to the host_failed count.
 
-1. Set the low-order bits (stimecmp) to all ones (ULONG_MAX).
-2. Set the high-order bits (stimecmph) to the desired value.
-3. Set the low-order bits (stimecmp) to the desired value.
+This race condition can be prevented with a memory barrier on the error
+path to force the write to be visible before counting host busy
+commands.
 
-Current implementation writes the LSB first without ensuring a future
-value, which may lead to a transient state where the 64-bit comparison
-is incorrectly evaluated as "expired" by the hardware. This results in
-spurious timer interrupts.
+Second, there is a general ordering issue with scsi_eh_inc_host_failed(). By
+counting busy commands before incrementing host_failed, it can race with a
+final command in scsi_dec_host_busy(), such that scsi_dec_host_busy() does
+not see host_failed incremented but scsi_eh_inc_host_failed() counts busy
+commands before SCMD_STATE_INFLIGHT is cleared by scsi_dec_host_busy(),
+resulting in neither waking the error handler task.
 
-This patch adopts the spec-recommended 3-step sequence to ensure the
-intermediate 64-bit state is never smaller than the current time.
+This needs the call to scsi_host_busy() to be moved after host_failed is
+incremented to close the race condition.
 
-Fixes: 9f7a8ff6391f ("RISC-V: Prefer sstc extension if available")
-Signed-off-by: Naohiko Shimizu <naohiko.shimizu@gmail.com>
-Reviewed-by: Anup Patel <anup@brainfault.org>
-Link: https://patch.msgid.link/20260104135938.524-2-naohiko.shimizu@gmail.com
-Signed-off-by: Paul Walmsley <pjw@kernel.org>
+Fixes: 6eb045e092ef ("scsi: core: avoid host-wide host_busy counter for scsi_mq")
+Signed-off-by: David Jeffery <djeffery@redhat.com>
+Reviewed-by: Bart Van Assche <bvanassche@acm.org>
+Link: https://patch.msgid.link/20260113161036.6730-1-djeffery@redhat.com
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clocksource/timer-riscv.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/scsi/scsi_error.c | 11 ++++++++++-
+ drivers/scsi/scsi_lib.c   |  8 ++++++++
+ 2 files changed, 18 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/clocksource/timer-riscv.c b/drivers/clocksource/timer-riscv.c
-index da3071b387eb5..3d542d0f76034 100644
---- a/drivers/clocksource/timer-riscv.c
-+++ b/drivers/clocksource/timer-riscv.c
-@@ -39,8 +39,9 @@ static int riscv_clock_next_event(unsigned long delta,
- 	csr_set(CSR_IE, IE_TIE);
- 	if (static_branch_likely(&riscv_sstc_available)) {
- #if defined(CONFIG_32BIT)
--		csr_write(CSR_STIMECMP, next_tval & 0xFFFFFFFF);
-+		csr_write(CSR_STIMECMP, ULONG_MAX);
- 		csr_write(CSR_STIMECMPH, next_tval >> 32);
-+		csr_write(CSR_STIMECMP, next_tval & 0xFFFFFFFF);
- #else
- 		csr_write(CSR_STIMECMP, next_tval);
- #endif
+diff --git a/drivers/scsi/scsi_error.c b/drivers/scsi/scsi_error.c
+index 5882b5f80c049..c4c05cf38aa55 100644
+--- a/drivers/scsi/scsi_error.c
++++ b/drivers/scsi/scsi_error.c
+@@ -282,11 +282,20 @@ static void scsi_eh_inc_host_failed(struct rcu_head *head)
+ {
+ 	struct scsi_cmnd *scmd = container_of(head, typeof(*scmd), rcu);
+ 	struct Scsi_Host *shost = scmd->device->host;
+-	unsigned int busy = scsi_host_busy(shost);
++	unsigned int busy;
+ 	unsigned long flags;
+ 
+ 	spin_lock_irqsave(shost->host_lock, flags);
+ 	shost->host_failed++;
++	spin_unlock_irqrestore(shost->host_lock, flags);
++	/*
++	 * The counting of busy requests needs to occur after adding to
++	 * host_failed or after the lock acquire for adding to host_failed
++	 * to prevent a race with host unbusy and missing an eh wakeup.
++	 */
++	busy = scsi_host_busy(shost);
++
++	spin_lock_irqsave(shost->host_lock, flags);
+ 	scsi_eh_wakeup(shost, busy);
+ 	spin_unlock_irqrestore(shost->host_lock, flags);
+ }
+diff --git a/drivers/scsi/scsi_lib.c b/drivers/scsi/scsi_lib.c
+index bd75e3ebc14da..efd1f1d6e4e9b 100644
+--- a/drivers/scsi/scsi_lib.c
++++ b/drivers/scsi/scsi_lib.c
+@@ -278,6 +278,14 @@ static void scsi_dec_host_busy(struct Scsi_Host *shost, struct scsi_cmnd *cmd)
+ 	rcu_read_lock();
+ 	__clear_bit(SCMD_STATE_INFLIGHT, &cmd->state);
+ 	if (unlikely(scsi_host_in_recovery(shost))) {
++		/*
++		 * Ensure the clear of SCMD_STATE_INFLIGHT is visible to
++		 * other CPUs before counting busy requests. Otherwise,
++		 * reordering can cause CPUs to race and miss an eh wakeup
++		 * when no CPU sees all busy requests as done or timed out.
++		 */
++		smp_mb();
++
+ 		unsigned int busy = scsi_host_busy(shost);
+ 
+ 		spin_lock_irqsave(shost->host_lock, flags);
 -- 
 2.51.0
 
