@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE4002874FE;
-	Wed, 28 Jan 2026 15:58:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ECA193033C3;
+	Wed, 28 Jan 2026 15:58:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769615911; cv=none; b=HcbOo6gB2Q5vxEPWm45Ybk6qtNVpjaKYJ2iyAE2yN6LijZRl2E7Z4RnPhcR9keJYzzR6QYezxbaiaWogTLtJnKC4ml5s7rttQsLPEdHAofd8Mrtt5xpoCpXgsUirtHk7PxlIMyd2EEXyaaxu7xcQY/0Q3fs+6ByQXeB4gZTPOGo=
+	t=1769615915; cv=none; b=fYw3eMvXvmq5pCNlF/BqNKmfxsWQAy5HIivPweSK9Gssp6RqruRJah6dQY00aK+jVW41gyB5nebqqvT09CzN8HeTLmlgk37Lk3X+uvVDrqoRuDzLAfi5L5FT9sc7MslJKj1N0/3hPu9zAmjZ6t3s99Lmoe7J23YWzfaXUax7Fb0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769615911; c=relaxed/simple;
-	bh=CyD1s/6VZT5hvLcIyrFZ+XuvitoUCXjc3eTeJ9EEDl4=;
+	s=arc-20240116; t=1769615915; c=relaxed/simple;
+	bh=WopVaTac0m6wCBbfY2x32fkaq9imWNX9himrNexId6Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JKni1FnhMndb69wH/d+xwU9lqf3ekno8IWHKE+asbmg6YeKkt9YOUzvRwTBXc+G9l6KftEy78/yhRWt+rtRPwVxGguo9RY1kdWtQcZoQLGx2eNrzxB6GuNZEKJ3N1ULfZ4oBTAhxsB93vu/Kof/4BrXMAIayShlw6g/pejykul0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=elDEHUeE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=HWsB42HDfMB9py7ZHrCmEVgInZ9cW9sNW59J5ENsXDYogF45H+/tH4AbogLIhZqGbdyiBp40Tt2lzRyUbxcEAsoVDoRycu1aVmAIbS18Nubq0BQJtsbBXYTiNjJHQ30vyBvfRcIltcVlUiyQkz6ZDQ8Y9fF5jC7LBbTDol8ddjc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AICyDn5T; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="elDEHUeE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2474CC4CEF1;
-	Wed, 28 Jan 2026 15:58:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AICyDn5T"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B9E9C4CEF1;
+	Wed, 28 Jan 2026 15:58:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1769615911;
-	bh=CyD1s/6VZT5hvLcIyrFZ+XuvitoUCXjc3eTeJ9EEDl4=;
+	s=korg; t=1769615914;
+	bh=WopVaTac0m6wCBbfY2x32fkaq9imWNX9himrNexId6Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=elDEHUeEwOZsQtCEQhkDq92ZW6DGVBgige0k117WeYhuWb4F7gVt2q3r+88OmdBbQ
-	 fWc35uFfhfg3Y9yBqhCLW1OyGrCuHsYW05Fc/JTkcji5CkiS7jLUOoNjebxXf6rHGT
-	 ijXkVlnarDS7M82+Z5iGgs6fxibwl8XI2uKFUBwE=
+	b=AICyDn5TUq4yuGvATobW1IN7dfgfB2QBzK+xijF9OFTzxmn4BSrb9ndN+sgo+NbT4
+	 5rM/5UJiFvUiaABo25EC4iZe4LqSZLYCBrxxOC5HYaH0HeOQuLQ7L2aobxJiwH3Iqk
+	 S6GGSYycFcz4YcRzTxVLns6gwfwPei916fTaw3NY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Srish Srinivasan <ssrish@linux.ibm.com>,
-	Stefan Berger <stefanb@linux.ibm.com>,
-	Jarkko Sakkinen <jarkko@kernel.org>,
+	=?UTF-8?q?Alex=20Ram=C3=ADrez?= <lxrmrz732@rocketmail.com>,
+	Lyude Paul <lyude@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 151/227] keys/trusted_keys: fix handle passed to tpm_buf_append_name during unseal
-Date: Wed, 28 Jan 2026 16:23:16 +0100
-Message-ID: <20260128145349.889116181@linuxfoundation.org>
+Subject: [PATCH 6.18 134/227] drm/nouveau: implement missing DCB connector types; gracefully handle unknown connectors
+Date: Wed, 28 Jan 2026 16:22:59 +0100
+Message-ID: <20260128145349.280493880@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260128145344.331957407@linuxfoundation.org>
 References: <20260128145344.331957407@linuxfoundation.org>
@@ -46,60 +45,123 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Srish Srinivasan <ssrish@linux.ibm.com>
+From: Alex Ramírez <lxrmrz732@rocketmail.com>
 
-[ Upstream commit 6342969dafbc63597cfc221aa13c3b123c2800c5 ]
+[ Upstream commit d0bd10792d6cc3725ddee43f03fd6ee234f24844 ]
 
-TPM2_Unseal[1] expects the handle of a loaded data object, and not the
-handle of the parent key. But the tpm2_unseal_cmd provides the parent
-keyhandle instead of blob_handle for the session HMAC calculation. This
-causes unseal to fail.
+* Implement missing DCB connectors in uconn.c previously defined in conn.h.
+* Replace kernel WARN_ON macro with printk message to more gracefully signify
+  an unknown connector was encountered.
 
-Fix this by passing blob_handle to tpm_buf_append_name().
+With this patch, unknown connectors are explicitly marked with value 0
+(DCB_CONNECTOR_VGA) to match the tested current behavior. Although 0xff
+(DCB_CONNECTOR_NONE) may be more suitable, I don't want to introduce a
+breaking change.
 
-References:
-
-[1] trustedcomputinggroup.org/wp-content/uploads/
-    Trusted-Platform-Module-2.0-Library-Part-3-Version-184_pub.pdf
-
-Fixes: 6e9722e9a7bf ("tpm2-sessions: Fix out of range indexing in name_size")
-Signed-off-by: Srish Srinivasan <ssrish@linux.ibm.com>
-Reviewed-by: Stefan Berger <stefanb@linux.ibm.com>
-Reviewed-by: Jarkko Sakkinen <jarkko@kernel.org>
-Signed-off-by: Jarkko Sakkinen <jarkko@kernel.org>
+Fixes: 8b7d92cad953 ("drm/nouveau/kms/nv50-: create connectors based on nvkm info")
+Link: https://download.nvidia.com/open-gpu-doc/DCB/1/DCB-4.0-Specification.html#_connector_table_entry
+Signed-off-by: Alex Ramírez <lxrmrz732@rocketmail.com>
+Reviewed-by: Lyude Paul <lyude@redhat.com>
+[Lyude: Remove unneeded parenthesis around nvkm_warn()]
+Signed-off-by: Lyude Paul <lyude@redhat.com>
+Link: https://patch.msgid.link/20251213005327.9495-3-lxrmrz732@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- security/keys/trusted-keys/trusted_tpm2.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ .../gpu/drm/nouveau/nvkm/engine/disp/uconn.c  | 73 ++++++++++++++-----
+ 1 file changed, 53 insertions(+), 20 deletions(-)
 
-diff --git a/security/keys/trusted-keys/trusted_tpm2.c b/security/keys/trusted-keys/trusted_tpm2.c
-index 7187768716b78..74cea80ed9be5 100644
---- a/security/keys/trusted-keys/trusted_tpm2.c
-+++ b/security/keys/trusted-keys/trusted_tpm2.c
-@@ -489,7 +489,7 @@ static int tpm2_load_cmd(struct tpm_chip *chip,
- }
- 
- /**
-- * tpm2_unseal_cmd() - execute a TPM2_Unload command
-+ * tpm2_unseal_cmd() - execute a TPM2_Unseal command
-  *
-  * @chip: TPM chip to use
-  * @payload: the key data in clear and encrypted form
-@@ -520,7 +520,7 @@ static int tpm2_unseal_cmd(struct tpm_chip *chip,
- 		return rc;
- 	}
- 
--	rc = tpm_buf_append_name(chip, &buf, options->keyhandle, NULL);
-+	rc = tpm_buf_append_name(chip, &buf, blob_handle, NULL);
- 	if (rc)
- 		goto out;
- 
+diff --git a/drivers/gpu/drm/nouveau/nvkm/engine/disp/uconn.c b/drivers/gpu/drm/nouveau/nvkm/engine/disp/uconn.c
+index 2dab6612c4fc8..23d1e5c27bb1e 100644
+--- a/drivers/gpu/drm/nouveau/nvkm/engine/disp/uconn.c
++++ b/drivers/gpu/drm/nouveau/nvkm/engine/disp/uconn.c
+@@ -191,27 +191,60 @@ nvkm_uconn_new(const struct nvkm_oclass *oclass, void *argv, u32 argc, struct nv
+ 	spin_lock(&disp->client.lock);
+ 	if (!conn->object.func) {
+ 		switch (conn->info.type) {
+-		case DCB_CONNECTOR_VGA      : args->v0.type = NVIF_CONN_V0_VGA; break;
+-		case DCB_CONNECTOR_TV_0     :
+-		case DCB_CONNECTOR_TV_1     :
+-		case DCB_CONNECTOR_TV_3     : args->v0.type = NVIF_CONN_V0_TV; break;
+-		case DCB_CONNECTOR_DMS59_0  :
+-		case DCB_CONNECTOR_DMS59_1  :
+-		case DCB_CONNECTOR_DVI_I    : args->v0.type = NVIF_CONN_V0_DVI_I; break;
+-		case DCB_CONNECTOR_DVI_D    : args->v0.type = NVIF_CONN_V0_DVI_D; break;
+-		case DCB_CONNECTOR_LVDS     : args->v0.type = NVIF_CONN_V0_LVDS; break;
+-		case DCB_CONNECTOR_LVDS_SPWG: args->v0.type = NVIF_CONN_V0_LVDS_SPWG; break;
+-		case DCB_CONNECTOR_DMS59_DP0:
+-		case DCB_CONNECTOR_DMS59_DP1:
+-		case DCB_CONNECTOR_DP       :
+-		case DCB_CONNECTOR_mDP      :
+-		case DCB_CONNECTOR_USB_C    : args->v0.type = NVIF_CONN_V0_DP; break;
+-		case DCB_CONNECTOR_eDP      : args->v0.type = NVIF_CONN_V0_EDP; break;
+-		case DCB_CONNECTOR_HDMI_0   :
+-		case DCB_CONNECTOR_HDMI_1   :
+-		case DCB_CONNECTOR_HDMI_C   : args->v0.type = NVIF_CONN_V0_HDMI; break;
++		/* VGA */
++		case DCB_CONNECTOR_DVI_A	:
++		case DCB_CONNECTOR_POD_VGA	:
++		case DCB_CONNECTOR_VGA		: args->v0.type = NVIF_CONN_V0_VGA; break;
++
++		/* TV */
++		case DCB_CONNECTOR_TV_0		:
++		case DCB_CONNECTOR_TV_1		:
++		case DCB_CONNECTOR_TV_2		:
++		case DCB_CONNECTOR_TV_SCART	:
++		case DCB_CONNECTOR_TV_SCART_D	:
++		case DCB_CONNECTOR_TV_DTERM	:
++		case DCB_CONNECTOR_POD_TV_3	:
++		case DCB_CONNECTOR_POD_TV_1	:
++		case DCB_CONNECTOR_POD_TV_0	:
++		case DCB_CONNECTOR_TV_3		: args->v0.type = NVIF_CONN_V0_TV; break;
++
++		/* DVI */
++		case DCB_CONNECTOR_DVI_I_TV_1	:
++		case DCB_CONNECTOR_DVI_I_TV_0	:
++		case DCB_CONNECTOR_DVI_I_TV_2	:
++		case DCB_CONNECTOR_DVI_ADC	:
++		case DCB_CONNECTOR_DMS59_0	:
++		case DCB_CONNECTOR_DMS59_1	:
++		case DCB_CONNECTOR_DVI_I	: args->v0.type = NVIF_CONN_V0_DVI_I; break;
++		case DCB_CONNECTOR_TMDS		:
++		case DCB_CONNECTOR_DVI_D	: args->v0.type = NVIF_CONN_V0_DVI_D; break;
++
++		/* LVDS */
++		case DCB_CONNECTOR_LVDS		: args->v0.type = NVIF_CONN_V0_LVDS; break;
++		case DCB_CONNECTOR_LVDS_SPWG	: args->v0.type = NVIF_CONN_V0_LVDS_SPWG; break;
++
++		/* DP */
++		case DCB_CONNECTOR_DMS59_DP0	:
++		case DCB_CONNECTOR_DMS59_DP1	:
++		case DCB_CONNECTOR_DP		:
++		case DCB_CONNECTOR_mDP		:
++		case DCB_CONNECTOR_USB_C	: args->v0.type = NVIF_CONN_V0_DP; break;
++		case DCB_CONNECTOR_eDP		: args->v0.type = NVIF_CONN_V0_EDP; break;
++
++		/* HDMI */
++		case DCB_CONNECTOR_HDMI_0	:
++		case DCB_CONNECTOR_HDMI_1	:
++		case DCB_CONNECTOR_HDMI_C	: args->v0.type = NVIF_CONN_V0_HDMI; break;
++
++		/*
++		 * Dock & unused outputs.
++		 * BNC, SPDIF, WFD, and detached LVDS go here.
++		 */
+ 		default:
+-			WARN_ON(1);
++			nvkm_warn(&disp->engine.subdev,
++				  "unimplemented connector type 0x%02x\n",
++				  conn->info.type);
++			args->v0.type = NVIF_CONN_V0_VGA;
+ 			ret = -EINVAL;
+ 			break;
+ 		}
 -- 
 2.51.0
 
