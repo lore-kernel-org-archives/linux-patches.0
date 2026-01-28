@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 311D72F260C;
-	Wed, 28 Jan 2026 15:40:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A5862F28EB;
+	Wed, 28 Jan 2026 15:40:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769614844; cv=none; b=pxlNJqNzNItp6t2Sp8Y4T63uFNVpGdirGSR+FM5gsl1QPM81rbgwFBB3PhzJfrFgKYNsA3B//b03z/n0vSf16i7ZYa1QsDtW04yMDfgXleswToCVTZ0R0Crj0nRUdVJcyXT19oGPumwM5EE2wFfl0YEE0HyK2hB5ITHdv+iKKOg=
+	t=1769614847; cv=none; b=ugL8M5JQQh1QzlXshaPXIx5wNM3hs1BGZ4ETtuleriYyz7Yq/zr6oGn8a/+NCj8dRTCx+R5nStVWvz/vE3EXCHPhIw6TnC/Y3kMcbRQklHLjoOuYANJEtlsSYVB51qjEpU+0muHyL4PkZHRn1e0LgroqCLq+gAG4okPwUWRqG3E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769614844; c=relaxed/simple;
-	bh=jdieLHJ88Vsoed3qLOBRvxmH/hkpbxELnZPmMOdEZ70=;
+	s=arc-20240116; t=1769614847; c=relaxed/simple;
+	bh=elVjgy5utIzdeDb3iLKAyAu6xHMnxZRlOjWYbvl+7s0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=OtL1E0kyi/+dIKtopM1yzx81MwwwMSDUi2c9n0XG4QPMpBBVNfTTW6Ks1s5Yg6n4hIE2BsweDROqLP/c6ZslK7fzOPf6bkKJOs2dIXmduC51thRdeU7o8/82BS8CAPn/N5A00hNiomUAIGc8yVQ11cC72IzEQ5X4Sz+CIBnGTUc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Cc6dtUvB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=s4gejApoHabxSP5rARFo+jd/AkK9yNCaoI84P9EznVCXRprcLOugou9dS3wQEzK0S0FezTO9EuZ7NIopYeaQRzZ3GUFvf2oLwe8MMxha84lI5dAd//MG4lYbacJc2s7MWR2oOV0a8OZwfhEVBbFvwRXagcXnh0K4J8IwMszZWe4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ukTLUZOX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Cc6dtUvB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A155C4CEF1;
-	Wed, 28 Jan 2026 15:40:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ukTLUZOX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4344FC2BC86;
+	Wed, 28 Jan 2026 15:40:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1769614843;
-	bh=jdieLHJ88Vsoed3qLOBRvxmH/hkpbxELnZPmMOdEZ70=;
+	s=korg; t=1769614846;
+	bh=elVjgy5utIzdeDb3iLKAyAu6xHMnxZRlOjWYbvl+7s0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Cc6dtUvBVFU1e9HvwfEczJtiIC+xA0YfezRJXNvne+g4mzSX5tqUgiHTimDrD/zNg
-	 42cMln1nOqRarwGfngkM87PTyiou6RMkVwyFS3SbJLtti80xAMWhWygWOBR8MBkcfB
-	 raLgaz9K26c09rgfNdSuxcmlnjXIaZGn46dOLtw0=
+	b=ukTLUZOXuN8+ypnTXvUTiB+C58PHTOLv3k08KuSfQi9hK9sa0suzFsHSli3m0kBlf
+	 Ue/Z2gMVswjef7Ala7x6NsYgzrTIzqTtw0ucSPvKXUIrZ7jc4gsFwDkEnfUKG5wYMN
+	 cTh5ww338etQ5zcdLb17l1I08BSTQXTNQ+bfnjqs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Philip Yang <Philip.Yang@amd.com>,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	P Praneesh <quic_ppranees@quicinc.com>,
+	Kang Yang <quic_kangyang@quicinc.com>,
+	Kalle Valo <kvalo@kernel.org>,
+	Jeff Johnson <quic_jjohnson@quicinc.com>,
+	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
 	Li hongliang <1468888505@139.com>
-Subject: [PATCH 6.6 249/254] drm/amdgpu: csa unmap use uninterruptible lock
-Date: Wed, 28 Jan 2026 16:23:45 +0100
-Message-ID: <20260128145353.759186047@linuxfoundation.org>
+Subject: [PATCH 6.6 250/254] wifi: ath11k: fix RCU stall while reaping monitor destination ring
+Date: Wed, 28 Jan 2026 16:23:46 +0100
+Message-ID: <20260128145353.794992508@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260128145344.698118637@linuxfoundation.org>
 References: <20260128145344.698118637@linuxfoundation.org>
@@ -46,68 +48,67 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Philip Yang <Philip.Yang@amd.com>
+From: P Praneesh <quic_ppranees@quicinc.com>
 
-[ Upstream commit a0fa7873f2f869087b1e7793f7fac3713a1e3afe ]
+[ Upstream commit 16c6c35c03ea73054a1f6d3302a4ce4a331b427d ]
 
-After process exit to unmap csa and free GPU vm, if signal is accepted
-and then waiting to take vm lock is interrupted and return, it causes
-memory leaking and below warning backtrace.
+While processing the monitor destination ring, MSDUs are reaped from the
+link descriptor based on the corresponding buf_id.
 
-Change to use uninterruptible wait lock fix the issue.
+However, sometimes the driver cannot obtain a valid buffer corresponding
+to the buf_id received from the hardware. This causes an infinite loop
+in the destination processing, resulting in a kernel crash.
 
-WARNING: CPU: 69 PID: 167800 at amd/amdgpu/amdgpu_kms.c:1525
- amdgpu_driver_postclose_kms+0x294/0x2a0 [amdgpu]
- Call Trace:
-  <TASK>
-  drm_file_free.part.0+0x1da/0x230 [drm]
-  drm_close_helper.isra.0+0x65/0x70 [drm]
-  drm_release+0x6a/0x120 [drm]
-  amdgpu_drm_release+0x51/0x60 [amdgpu]
-  __fput+0x9f/0x280
-  ____fput+0xe/0x20
-  task_work_run+0x67/0xa0
-  do_exit+0x217/0x3c0
-  do_group_exit+0x3b/0xb0
-  get_signal+0x14a/0x8d0
-  arch_do_signal_or_restart+0xde/0x100
-  exit_to_user_mode_loop+0xc1/0x1a0
-  exit_to_user_mode_prepare+0xf4/0x100
-  syscall_exit_to_user_mode+0x17/0x40
-  do_syscall_64+0x69/0xc0
+kernel log:
+ath11k_pci 0000:58:00.0: data msdu_pop: invalid buf_id 309
+ath11k_pci 0000:58:00.0: data dp_rx_monitor_link_desc_return failed
+ath11k_pci 0000:58:00.0: data msdu_pop: invalid buf_id 309
+ath11k_pci 0000:58:00.0: data dp_rx_monitor_link_desc_return failed
 
-Signed-off-by: Philip Yang <Philip.Yang@amd.com>
-Reviewed-by: Christian König <christian.koenig@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 7dbbfb3c171a6f63b01165958629c9c26abf38ab)
-Cc: stable@vger.kernel.org
-[The third parameter of drm_exec_init() was introduced by commit
- 05d249352f1a ("drm/exec: Pass in initial # of objects") after Linux 6.8.
- This code targets linux 6.6, so the current implementation is used
- and the third parameter is not needed.]
+Fix this by skipping the problematic buf_id and reaping the next entry,
+replacing the break with the next MSDU processing.
+
+Tested-on: WCN6855 hw2.0 PCI WLAN.HSP.1.1-03125-QCAHSPSWPL_V1_V2_SILICONZ_LITE-3.6510.30
+Tested-on: QCN9074 hw1.0 PCI WLAN.HK.2.7.0.1-01744-QCAHKSWPL_SILICONZ-1
+
+Fixes: d5c65159f289 ("ath11k: driver for Qualcomm IEEE 802.11ax devices")
+Signed-off-by: P Praneesh <quic_ppranees@quicinc.com>
+Signed-off-by: Kang Yang <quic_kangyang@quicinc.com>
+Acked-by: Kalle Valo <kvalo@kernel.org>
+Acked-by: Jeff Johnson <quic_jjohnson@quicinc.com>
+Link: https://patch.msgid.link/20241219110531.2096-2-quic_kangyang@quicinc.com
+Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
 Signed-off-by: Li hongliang <1468888505@139.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_csa.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/wireless/ath/ath11k/dp_rx.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_csa.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_csa.c
-@@ -110,7 +110,7 @@ int amdgpu_unmap_static_csa(struct amdgp
- 	struct drm_exec exec;
- 	int r;
- 
--	drm_exec_init(&exec, DRM_EXEC_INTERRUPTIBLE_WAIT);
-+	drm_exec_init(&exec, 0);
- 	drm_exec_until_all_locked(&exec) {
- 		r = amdgpu_vm_lock_pd(vm, &exec, 0);
- 		if (likely(!r))
+--- a/drivers/net/wireless/ath/ath11k/dp_rx.c
++++ b/drivers/net/wireless/ath/ath11k/dp_rx.c
+@@ -4728,7 +4728,7 @@ ath11k_dp_rx_mon_mpdu_pop(struct ath11k
+ 			if (!msdu) {
+ 				ath11k_dbg(ar->ab, ATH11K_DBG_DATA,
+ 					   "msdu_pop: invalid buf_id %d\n", buf_id);
+-				break;
++				goto next_msdu;
+ 			}
+ 			rxcb = ATH11K_SKB_RXCB(msdu);
+ 			if (!rxcb->unmapped) {
+@@ -5362,7 +5362,7 @@ ath11k_dp_rx_full_mon_mpdu_pop(struct at
+ 					   "full mon msdu_pop: invalid buf_id %d\n",
+ 					    buf_id);
+ 				spin_unlock_bh(&rx_ring->idr_lock);
+-				break;
++				goto next_msdu;
+ 			}
+ 			idr_remove(&rx_ring->bufs_idr, buf_id);
+ 			spin_unlock_bh(&rx_ring->idr_lock);
 
 
