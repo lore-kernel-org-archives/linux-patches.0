@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90BEC2FDC5D;
-	Wed, 28 Jan 2026 15:47:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27E0B1E1DFC;
+	Wed, 28 Jan 2026 15:47:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769615231; cv=none; b=omrt8Wm0lwyW4+oRBxcxqpZwRuwQyuCn/E1AvKGpaCNC4tdYd1yPAa4Z2hBUpaHjtM3Dn4CrtPoDjNkNlQgBoVerblmc2E8cstPeJ82UbG3Z8XmZPL7i/HS4Fm+55VtzS2svKUyF6lEdNkRDdKKDiQKZvIGjUMnd96bNL6uvyEY=
+	t=1769615235; cv=none; b=DUjx90at87jcXdHMz8WkTN6rQVk8KZz0uYx5uC6K/XQIRrLGIoK0Ja/63u6mK6b+NWfBAcq0+PupMdm6/bG5A5B1HUlF++Knp11DuNueyNH3FmBfWjgipAJzJQos9AxYMEABZ/DldS1wW+2HAqwfu/FR75r8fTuXS/9EmvzBLU4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769615231; c=relaxed/simple;
-	bh=w4JRScl6aevuPHU3l1Rokb0KgBwM3EnMjtoxElsW/JE=;
+	s=arc-20240116; t=1769615235; c=relaxed/simple;
+	bh=ok79+a6ZSuSbSo4DI47P2WkNttAw0y219xjjDGj3ypU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=nCfr8vygjh8yKlE0usV5IbHCkYyksxWnXcMt6FCzuVOOnNKnrovBuRF4i7iBispIa3Gi/VdfdEOOpZsufse7ZgOOV0ldeJP58TM91N/LpVcIF93L3aFUf0eqEUmqosTiSXXe0/gItbmg8On5y9xYjUFxYuWZRSHrHElByCjW6Z8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JYMAUeT8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=foNc8D7zR/sk5oj7pyTQpp7lobnGlLQWcr3TCvQfi1Xat3h+Tz0CEj/U7FO0bbpSzxkHeeSYvzZz5SpivfTgNo1keTINXFA1KdcxVRWf5zms3WZ//MGZjptf6ipz5aOMq5s22MThA6UiWQZ9a25sa+/hl+42yfgX76ESjWbkHIE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=K3W1PYyT; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JYMAUeT8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 008E2C4CEF1;
-	Wed, 28 Jan 2026 15:47:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="K3W1PYyT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 938A4C4CEF7;
+	Wed, 28 Jan 2026 15:47:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1769615231;
-	bh=w4JRScl6aevuPHU3l1Rokb0KgBwM3EnMjtoxElsW/JE=;
+	s=korg; t=1769615235;
+	bh=ok79+a6ZSuSbSo4DI47P2WkNttAw0y219xjjDGj3ypU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JYMAUeT8vvb/G6t8SNuxcez9WY+1f1qM1dGEJrZPu5Le9xH83507v0MXd8RJaA0B3
-	 yVo5fhgq3bKRETMHNHXq96OIO9mR7ilPvemG0vf1aGdV0fhWT82Kqjs12xtPvRig0U
-	 6cMeWv9QTag/jzkqahljeHN72QYrQOSipZSfQRD4=
+	b=K3W1PYyTpcduCmHO5PxF6syIOdu6CclBz1+5UJ3Zp61sHC7LQhKhkEMEO2iesuoq2
+	 oHsVp+YFhOsuVQzjO5SDEqr06ICMjPYUQ+YxxDYRNlo2A4LdnAvfaSdZM8d4ZnLorQ
+	 +usdR059K3C6vXm2aXnUJSeS1fqAA7OVcHsHRDF4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	=?UTF-8?q?Alex=20Ram=C3=ADrez?= <lxrmrz732@rocketmail.com>,
 	Lyude Paul <lyude@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 085/169] drm/nouveau: add missing DCB connector types
-Date: Wed, 28 Jan 2026 16:22:48 +0100
-Message-ID: <20260128145337.066608908@linuxfoundation.org>
+Subject: [PATCH 6.12 086/169] drm/nouveau: implement missing DCB connector types; gracefully handle unknown connectors
+Date: Wed, 28 Jan 2026 16:22:49 +0100
+Message-ID: <20260128145337.102687609@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260128145334.006287341@linuxfoundation.org>
 References: <20260128145334.006287341@linuxfoundation.org>
@@ -54,134 +54,114 @@ Content-Transfer-Encoding: 8bit
 
 From: Alex Ramírez <lxrmrz732@rocketmail.com>
 
-[ Upstream commit 3036b4ce4b209af690fa776e4616925892caba4c ]
+[ Upstream commit d0bd10792d6cc3725ddee43f03fd6ee234f24844 ]
 
-* Add missing DCB connectors in conn.h as per the NVIDIA DCB specification.
+* Implement missing DCB connectors in uconn.c previously defined in conn.h.
+* Replace kernel WARN_ON macro with printk message to more gracefully signify
+  an unknown connector was encountered.
 
-A lot of connector logic was rewritten for Linux v6.5; some display connector types
-went unaccounted-for which caused kernel warnings on devices with the now-unsupported
-DCB connectors. This patch adds all of the DCB connectors as defined by NVIDIA to the
-dcb_connector_type enum to bring back support for these connectors to the new logic.
+With this patch, unknown connectors are explicitly marked with value 0
+(DCB_CONNECTOR_VGA) to match the tested current behavior. Although 0xff
+(DCB_CONNECTOR_NONE) may be more suitable, I don't want to introduce a
+breaking change.
 
 Fixes: 8b7d92cad953 ("drm/nouveau/kms/nv50-: create connectors based on nvkm info")
 Link: https://download.nvidia.com/open-gpu-doc/DCB/1/DCB-4.0-Specification.html#_connector_table_entry
 Signed-off-by: Alex Ramírez <lxrmrz732@rocketmail.com>
 Reviewed-by: Lyude Paul <lyude@redhat.com>
-[Lyude: Clarify DCB_CONNECTOR_HDMI_0 weirdness in comments]
+[Lyude: Remove unneeded parenthesis around nvkm_warn()]
 Signed-off-by: Lyude Paul <lyude@redhat.com>
-Link: https://patch.msgid.link/20251213005327.9495-2-lxrmrz732@gmail.com
+Link: https://patch.msgid.link/20251213005327.9495-3-lxrmrz732@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../nouveau/include/nvkm/subdev/bios/conn.h   | 95 +++++++++++++++----
- 1 file changed, 74 insertions(+), 21 deletions(-)
+ .../gpu/drm/nouveau/nvkm/engine/disp/uconn.c  | 73 ++++++++++++++-----
+ 1 file changed, 53 insertions(+), 20 deletions(-)
 
-diff --git a/drivers/gpu/drm/nouveau/include/nvkm/subdev/bios/conn.h b/drivers/gpu/drm/nouveau/include/nvkm/subdev/bios/conn.h
-index d1beaad0c82b6..834ed6587aa52 100644
---- a/drivers/gpu/drm/nouveau/include/nvkm/subdev/bios/conn.h
-+++ b/drivers/gpu/drm/nouveau/include/nvkm/subdev/bios/conn.h
-@@ -1,28 +1,81 @@
- /* SPDX-License-Identifier: MIT */
- #ifndef __NVBIOS_CONN_H__
- #define __NVBIOS_CONN_H__
+diff --git a/drivers/gpu/drm/nouveau/nvkm/engine/disp/uconn.c b/drivers/gpu/drm/nouveau/nvkm/engine/disp/uconn.c
+index 2dab6612c4fc8..23d1e5c27bb1e 100644
+--- a/drivers/gpu/drm/nouveau/nvkm/engine/disp/uconn.c
++++ b/drivers/gpu/drm/nouveau/nvkm/engine/disp/uconn.c
+@@ -191,27 +191,60 @@ nvkm_uconn_new(const struct nvkm_oclass *oclass, void *argv, u32 argc, struct nv
+ 	spin_lock(&disp->client.lock);
+ 	if (!conn->object.func) {
+ 		switch (conn->info.type) {
+-		case DCB_CONNECTOR_VGA      : args->v0.type = NVIF_CONN_V0_VGA; break;
+-		case DCB_CONNECTOR_TV_0     :
+-		case DCB_CONNECTOR_TV_1     :
+-		case DCB_CONNECTOR_TV_3     : args->v0.type = NVIF_CONN_V0_TV; break;
+-		case DCB_CONNECTOR_DMS59_0  :
+-		case DCB_CONNECTOR_DMS59_1  :
+-		case DCB_CONNECTOR_DVI_I    : args->v0.type = NVIF_CONN_V0_DVI_I; break;
+-		case DCB_CONNECTOR_DVI_D    : args->v0.type = NVIF_CONN_V0_DVI_D; break;
+-		case DCB_CONNECTOR_LVDS     : args->v0.type = NVIF_CONN_V0_LVDS; break;
+-		case DCB_CONNECTOR_LVDS_SPWG: args->v0.type = NVIF_CONN_V0_LVDS_SPWG; break;
+-		case DCB_CONNECTOR_DMS59_DP0:
+-		case DCB_CONNECTOR_DMS59_DP1:
+-		case DCB_CONNECTOR_DP       :
+-		case DCB_CONNECTOR_mDP      :
+-		case DCB_CONNECTOR_USB_C    : args->v0.type = NVIF_CONN_V0_DP; break;
+-		case DCB_CONNECTOR_eDP      : args->v0.type = NVIF_CONN_V0_EDP; break;
+-		case DCB_CONNECTOR_HDMI_0   :
+-		case DCB_CONNECTOR_HDMI_1   :
+-		case DCB_CONNECTOR_HDMI_C   : args->v0.type = NVIF_CONN_V0_HDMI; break;
++		/* VGA */
++		case DCB_CONNECTOR_DVI_A	:
++		case DCB_CONNECTOR_POD_VGA	:
++		case DCB_CONNECTOR_VGA		: args->v0.type = NVIF_CONN_V0_VGA; break;
 +
-+/*
-+ * An enumerator representing all of the possible VBIOS connector types defined
-+ * by Nvidia at
-+ * https://nvidia.github.io/open-gpu-doc/DCB/DCB-4.x-Specification.html.
-+ *
-+ * [1] Nvidia's documentation actually claims DCB_CONNECTOR_HDMI_0 is a "3-Pin
-+ *     DIN Stereo Connector". This seems very likely to be a documentation typo
-+ *     or some sort of funny historical baggage, because we've treated this
-+ *     connector type as HDMI for years without issue.
-+ *     TODO: Check with Nvidia what's actually happening here.
-+ */
- enum dcb_connector_type {
--	DCB_CONNECTOR_VGA = 0x00,
--	DCB_CONNECTOR_TV_0 = 0x10,
--	DCB_CONNECTOR_TV_1 = 0x11,
--	DCB_CONNECTOR_TV_3 = 0x13,
--	DCB_CONNECTOR_DVI_I = 0x30,
--	DCB_CONNECTOR_DVI_D = 0x31,
--	DCB_CONNECTOR_DMS59_0 = 0x38,
--	DCB_CONNECTOR_DMS59_1 = 0x39,
--	DCB_CONNECTOR_LVDS = 0x40,
--	DCB_CONNECTOR_LVDS_SPWG = 0x41,
--	DCB_CONNECTOR_DP = 0x46,
--	DCB_CONNECTOR_eDP = 0x47,
--	DCB_CONNECTOR_mDP = 0x48,
--	DCB_CONNECTOR_HDMI_0 = 0x60,
--	DCB_CONNECTOR_HDMI_1 = 0x61,
--	DCB_CONNECTOR_HDMI_C = 0x63,
--	DCB_CONNECTOR_DMS59_DP0 = 0x64,
--	DCB_CONNECTOR_DMS59_DP1 = 0x65,
--	DCB_CONNECTOR_WFD	= 0x70,
--	DCB_CONNECTOR_USB_C = 0x71,
--	DCB_CONNECTOR_NONE = 0xff
-+	/* Analog outputs */
-+	DCB_CONNECTOR_VGA = 0x00,		// VGA 15-pin connector
-+	DCB_CONNECTOR_DVI_A = 0x01,		// DVI-A
-+	DCB_CONNECTOR_POD_VGA = 0x02,		// Pod - VGA 15-pin connector
-+	DCB_CONNECTOR_TV_0 = 0x10,		// TV - Composite Out
-+	DCB_CONNECTOR_TV_1 = 0x11,		// TV - S-Video Out
-+	DCB_CONNECTOR_TV_2 = 0x12,		// TV - S-Video Breakout - Composite
-+	DCB_CONNECTOR_TV_3 = 0x13,		// HDTV Component - YPrPb
-+	DCB_CONNECTOR_TV_SCART = 0x14,		// TV - SCART Connector
-+	DCB_CONNECTOR_TV_SCART_D = 0x16,	// TV - Composite SCART over D-connector
-+	DCB_CONNECTOR_TV_DTERM = 0x17,		// HDTV - D-connector (EIAJ4120)
-+	DCB_CONNECTOR_POD_TV_3 = 0x18,		// Pod - HDTV - YPrPb
-+	DCB_CONNECTOR_POD_TV_1 = 0x19,		// Pod - S-Video
-+	DCB_CONNECTOR_POD_TV_0 = 0x1a,		// Pod - Composite
++		/* TV */
++		case DCB_CONNECTOR_TV_0		:
++		case DCB_CONNECTOR_TV_1		:
++		case DCB_CONNECTOR_TV_2		:
++		case DCB_CONNECTOR_TV_SCART	:
++		case DCB_CONNECTOR_TV_SCART_D	:
++		case DCB_CONNECTOR_TV_DTERM	:
++		case DCB_CONNECTOR_POD_TV_3	:
++		case DCB_CONNECTOR_POD_TV_1	:
++		case DCB_CONNECTOR_POD_TV_0	:
++		case DCB_CONNECTOR_TV_3		: args->v0.type = NVIF_CONN_V0_TV; break;
 +
-+	/* DVI digital outputs */
-+	DCB_CONNECTOR_DVI_I_TV_1 = 0x20,	// DVI-I-TV-S-Video
-+	DCB_CONNECTOR_DVI_I_TV_0 = 0x21,	// DVI-I-TV-Composite
-+	DCB_CONNECTOR_DVI_I_TV_2 = 0x22,	// DVI-I-TV-S-Video Breakout-Composite
-+	DCB_CONNECTOR_DVI_I = 0x30,		// DVI-I
-+	DCB_CONNECTOR_DVI_D = 0x31,		// DVI-D
-+	DCB_CONNECTOR_DVI_ADC = 0x32,		// Apple Display Connector (ADC)
-+	DCB_CONNECTOR_DMS59_0 = 0x38,		// LFH-DVI-I-1
-+	DCB_CONNECTOR_DMS59_1 = 0x39,		// LFH-DVI-I-2
-+	DCB_CONNECTOR_BNC = 0x3c,		// BNC Connector [for SDI?]
++		/* DVI */
++		case DCB_CONNECTOR_DVI_I_TV_1	:
++		case DCB_CONNECTOR_DVI_I_TV_0	:
++		case DCB_CONNECTOR_DVI_I_TV_2	:
++		case DCB_CONNECTOR_DVI_ADC	:
++		case DCB_CONNECTOR_DMS59_0	:
++		case DCB_CONNECTOR_DMS59_1	:
++		case DCB_CONNECTOR_DVI_I	: args->v0.type = NVIF_CONN_V0_DVI_I; break;
++		case DCB_CONNECTOR_TMDS		:
++		case DCB_CONNECTOR_DVI_D	: args->v0.type = NVIF_CONN_V0_DVI_D; break;
 +
-+	/* LVDS / TMDS digital outputs */
-+	DCB_CONNECTOR_LVDS = 0x40,		// LVDS-SPWG-Attached [is this name correct?]
-+	DCB_CONNECTOR_LVDS_SPWG = 0x41,		// LVDS-OEM-Attached (non-removable)
-+	DCB_CONNECTOR_LVDS_REM = 0x42,		// LVDS-SPWG-Detached [following naming above]
-+	DCB_CONNECTOR_LVDS_SPWG_REM = 0x43,	// LVDS-OEM-Detached (removable)
-+	DCB_CONNECTOR_TMDS = 0x45,		// TMDS-OEM-Attached (non-removable)
++		/* LVDS */
++		case DCB_CONNECTOR_LVDS		: args->v0.type = NVIF_CONN_V0_LVDS; break;
++		case DCB_CONNECTOR_LVDS_SPWG	: args->v0.type = NVIF_CONN_V0_LVDS_SPWG; break;
 +
-+	/* DP digital outputs */
-+	DCB_CONNECTOR_DP = 0x46,		// DisplayPort External Connector
-+	DCB_CONNECTOR_eDP = 0x47,		// DisplayPort Internal Connector
-+	DCB_CONNECTOR_mDP = 0x48,		// DisplayPort (Mini) External Connector
++		/* DP */
++		case DCB_CONNECTOR_DMS59_DP0	:
++		case DCB_CONNECTOR_DMS59_DP1	:
++		case DCB_CONNECTOR_DP		:
++		case DCB_CONNECTOR_mDP		:
++		case DCB_CONNECTOR_USB_C	: args->v0.type = NVIF_CONN_V0_DP; break;
++		case DCB_CONNECTOR_eDP		: args->v0.type = NVIF_CONN_V0_EDP; break;
 +
-+	/* Dock outputs (not used) */
-+	DCB_CONNECTOR_DOCK_VGA_0 = 0x50,	// VGA 15-pin if not docked
-+	DCB_CONNECTOR_DOCK_VGA_1 = 0x51,	// VGA 15-pin if docked
-+	DCB_CONNECTOR_DOCK_DVI_I_0 = 0x52,	// DVI-I if not docked
-+	DCB_CONNECTOR_DOCK_DVI_I_1 = 0x53,	// DVI-I if docked
-+	DCB_CONNECTOR_DOCK_DVI_D_0 = 0x54,	// DVI-D if not docked
-+	DCB_CONNECTOR_DOCK_DVI_D_1 = 0x55,	// DVI-D if docked
-+	DCB_CONNECTOR_DOCK_DP_0 = 0x56,		// DisplayPort if not docked
-+	DCB_CONNECTOR_DOCK_DP_1 = 0x57,		// DisplayPort if docked
-+	DCB_CONNECTOR_DOCK_mDP_0 = 0x58,	// DisplayPort (Mini) if not docked
-+	DCB_CONNECTOR_DOCK_mDP_1 = 0x59,	// DisplayPort (Mini) if docked
++		/* HDMI */
++		case DCB_CONNECTOR_HDMI_0	:
++		case DCB_CONNECTOR_HDMI_1	:
++		case DCB_CONNECTOR_HDMI_C	: args->v0.type = NVIF_CONN_V0_HDMI; break;
 +
-+	/* HDMI? digital outputs */
-+	DCB_CONNECTOR_HDMI_0 = 0x60,		// HDMI? See [1] in top-level enum comment above
-+	DCB_CONNECTOR_HDMI_1 = 0x61,		// HDMI-A connector
-+	DCB_CONNECTOR_SPDIF = 0x62,		// Audio S/PDIF connector
-+	DCB_CONNECTOR_HDMI_C = 0x63,		// HDMI-C (Mini) connector
-+
-+	/* Misc. digital outputs */
-+	DCB_CONNECTOR_DMS59_DP0 = 0x64,		// LFH-DP-1
-+	DCB_CONNECTOR_DMS59_DP1 = 0x65,		// LFH-DP-2
-+	DCB_CONNECTOR_WFD = 0x70,		// Virtual connector for Wifi Display (WFD)
-+	DCB_CONNECTOR_USB_C = 0x71,		// [DP over USB-C; not present in docs]
-+	DCB_CONNECTOR_NONE = 0xff		// Skip Entry
- };
- 
- struct nvbios_connT {
++		/*
++		 * Dock & unused outputs.
++		 * BNC, SPDIF, WFD, and detached LVDS go here.
++		 */
+ 		default:
+-			WARN_ON(1);
++			nvkm_warn(&disp->engine.subdev,
++				  "unimplemented connector type 0x%02x\n",
++				  conn->info.type);
++			args->v0.type = NVIF_CONN_V0_VGA;
+ 			ret = -EINVAL;
+ 			break;
+ 		}
 -- 
 2.51.0
 
