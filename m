@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70E9F10A1E;
-	Wed, 28 Jan 2026 15:31:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB547242D7F;
+	Wed, 28 Jan 2026 15:31:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769614310; cv=none; b=PQua2HkQNqDFvOlDPrUw4Md+HS6glDywIcEI/AdEpXx4kpVQswiY6eg0WJENEqpGefC9XQwpNEXdtA+Gypte8o/qkZ8ZrwaP8UOj7Ea7Ama/7iU63wOZwYeG6R62FqZFBbdhgEyqF5rohaXA/D5rWRLWEKCSgkTJ0IBfBDG9UB4=
+	t=1769614313; cv=none; b=TIWdXBJrQIrJQFLF5Ozg5OcvttRn4DhfXgNibGRWHGqulaQ2XIBI9HHOqX6UdllA+0lxXnMLQpfFZ4JzDAIfRUv6JGEA3JWBDxfxUfcz1ioYdK5aD/tezUgr5unXX6k1AyUoMP8ZatZcdVxn+zaNEhCz16ZvZSDGDvezmxZi3Kg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769614310; c=relaxed/simple;
-	bh=hMlTLxWenfTe9+6MUM7uzWCpjvfU8GA3tk7i5A7PYP4=;
+	s=arc-20240116; t=1769614313; c=relaxed/simple;
+	bh=a2vm5U6ayVuFelazPCOHMLYIq0LJecDjEfVMqOhPgtY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=O63OeXhZKVW1E3MBGB0LUN+pJ7aiDCWYJRLDufkzwsYzi8vs3xV42HIaqwI3YhORLd5IawG5LzVWam+oouiex5RNyaVSNEfbtcjzpFOWbgQZ/NRXyU561vQi5JeQN9fP5FI+bm6QqwAaXZJ+/2k8ddsbSjG8G+Q15Q9Q6zUaqMo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Hx8A8Rv6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=JiUMqtKTJ42ZfQ26bT+2A9YO/XiEwXLOqBdZKZI08rYhhqqcDndyYd8WKWMcyRnDuf1QhOZWKvvtGlS6DaqkKfQox2C4XrqjZNN9PWhizG7PWkbU0G7bZ+dlPKDWk5CblLpeUAaR/iYWA98xJuqIwCDU+9uV3+z5m/ijc6EAObE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EqoOPNXE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Hx8A8Rv6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB595C4CEF1;
-	Wed, 28 Jan 2026 15:31:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EqoOPNXE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10264C4CEF1;
+	Wed, 28 Jan 2026 15:31:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1769614310;
-	bh=hMlTLxWenfTe9+6MUM7uzWCpjvfU8GA3tk7i5A7PYP4=;
+	s=korg; t=1769614313;
+	bh=a2vm5U6ayVuFelazPCOHMLYIq0LJecDjEfVMqOhPgtY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Hx8A8Rv64Sa1ZdAaaO0WXWSveSx//294VqZbNyCfmveEMnzMKMpRYh+S4hArgUHkC
-	 oryfTMYEF92Yr49+1fo1XkHunqclMk+28vKBwDLl4XW2aK7GT77pjIyPOrMOslFH2Y
-	 xDy+W/+OU2hB0PGGReMK5zgaG7bbGeKaqG45bfxA=
+	b=EqoOPNXE779PehbrUDF+QGIh1lHbn8IoH0+/TpUbM6oTpQrHQNCxRBl+71reoo+QP
+	 yXNcbOF2hoMXA7gmWGvxMdA7plm4iNdB2RqaixkVt9QsEPfhbd2okpyJdJXHi7J30T
+	 r4koEBtQvGd4zegxE36ipBdTEVhG6UAvh5GDvUzY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Richard Cochran <richardcochran@gmail.com>,
-	Vadim Fedorenko <vadim.fedorenko@linux.dev>,
-	Wojtek Wasko <wwasko@nvidia.com>,
-	"David S. Miller" <davem@davemloft.net>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 097/254] testptp: Add option to open PHC in readonly mode
-Date: Wed, 28 Jan 2026 16:21:13 +0100
-Message-ID: <20260128145348.317865496@linuxfoundation.org>
+	Lisa Robinson <lisa@bytefly.space>,
+	Huacai Chen <chenhuacai@loongson.cn>
+Subject: [PATCH 6.6 071/254] LoongArch: Fix PMU counter allocation for mixed-type event groups
+Date: Wed, 28 Jan 2026 16:20:47 +0100
+Message-ID: <20260128145347.252316409@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260128145344.698118637@linuxfoundation.org>
 References: <20260128145344.698118637@linuxfoundation.org>
@@ -53,120 +50,124 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wojtek Wasko <wwasko@nvidia.com>
+From: Lisa Robinson <lisa@bytefly.space>
 
-[ Upstream commit 76868642e42795353106197abf9c607ad80f4c9e ]
+commit a91f86e27087f250a5d9c89bb4a427b9c30fd815 upstream.
 
-PTP Hardware Clocks no longer require WRITE permission to perform
-readonly operations, such as listing device capabilities or listening to
-EXTTS events once they have been enabled by a process with WRITE
-permissions.
+When validating a perf event group, validate_group() unconditionally
+attempts to allocate hardware PMU counters for the leader, sibling
+events and the new event being added.
 
-Add '-r' option to testptp to open the PHC in readonly mode instead of
-the default read-write mode. Skip enabling EXTTS if readonly mode is
-requested.
+This is incorrect for mixed-type groups. If a PERF_TYPE_SOFTWARE event
+is part of the group, the current code still tries to allocate a hardware
+PMU counter for it, which can wrongly consume hardware PMU resources and
+cause spurious allocation failures.
 
-Acked-by: Richard Cochran <richardcochran@gmail.com>
-Reviewed-by: Vadim Fedorenko <vadim.fedorenko@linux.dev>
-Signed-off-by: Wojtek Wasko <wwasko@nvidia.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fix this by only allocating PMU counters for hardware events during group
+validation, and skipping software events.
+
+A trimmed down reproducer is as simple as this:
+
+  #include <stdio.h>
+  #include <assert.h>
+  #include <unistd.h>
+  #include <string.h>
+  #include <sys/syscall.h>
+  #include <linux/perf_event.h>
+
+  int main (int argc, char *argv[])
+  {
+  	struct perf_event_attr attr = { 0 };
+  	int fds[5];
+
+  	attr.disabled = 1;
+  	attr.exclude_kernel = 1;
+  	attr.exclude_hv = 1;
+  	attr.read_format = PERF_FORMAT_TOTAL_TIME_ENABLED |
+  		PERF_FORMAT_TOTAL_TIME_RUNNING | PERF_FORMAT_ID | PERF_FORMAT_GROUP;
+  	attr.size = sizeof (attr);
+
+  	attr.type = PERF_TYPE_SOFTWARE;
+  	attr.config = PERF_COUNT_SW_DUMMY;
+  	fds[0] = syscall (SYS_perf_event_open, &attr, 0, -1, -1, 0);
+  	assert (fds[0] >= 0);
+
+  	attr.type = PERF_TYPE_HARDWARE;
+  	attr.config = PERF_COUNT_HW_CPU_CYCLES;
+  	fds[1] = syscall (SYS_perf_event_open, &attr, 0, -1, fds[0], 0);
+  	assert (fds[1] >= 0);
+
+  	attr.type = PERF_TYPE_HARDWARE;
+  	attr.config = PERF_COUNT_HW_INSTRUCTIONS;
+  	fds[2] = syscall (SYS_perf_event_open, &attr, 0, -1, fds[0], 0);
+  	assert (fds[2] >= 0);
+
+  	attr.type = PERF_TYPE_HARDWARE;
+  	attr.config = PERF_COUNT_HW_BRANCH_MISSES;
+  	fds[3] = syscall (SYS_perf_event_open, &attr, 0, -1, fds[0], 0);
+  	assert (fds[3] >= 0);
+
+  	attr.type = PERF_TYPE_HARDWARE;
+  	attr.config = PERF_COUNT_HW_CACHE_REFERENCES;
+  	fds[4] = syscall (SYS_perf_event_open, &attr, 0, -1, fds[0], 0);
+  	assert (fds[4] >= 0);
+
+  	printf ("PASSED\n");
+
+  	return 0;
+  }
+
+Cc: stable@vger.kernel.org
+Fixes: b37042b2bb7c ("LoongArch: Add perf events support")
+Signed-off-by: Lisa Robinson <lisa@bytefly.space>
+Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/testing/selftests/ptp/testptp.c | 37 +++++++++++++++++----------
- 1 file changed, 23 insertions(+), 14 deletions(-)
+ arch/loongarch/kernel/perf_event.c |   21 ++++++++++++++++++---
+ 1 file changed, 18 insertions(+), 3 deletions(-)
 
-diff --git a/tools/testing/selftests/ptp/testptp.c b/tools/testing/selftests/ptp/testptp.c
-index 58064151f2c89..edc08a4433fd4 100644
---- a/tools/testing/selftests/ptp/testptp.c
-+++ b/tools/testing/selftests/ptp/testptp.c
-@@ -140,6 +140,7 @@ static void usage(char *progname)
- 		" -H val     set output phase to 'val' nanoseconds (requires -p)\n"
- 		" -w val     set output pulse width to 'val' nanoseconds (requires -p)\n"
- 		" -P val     enable or disable (val=1|0) the system clock PPS\n"
-+		" -r         open the ptp clock in readonly mode\n"
- 		" -s         set the ptp clock time from the system time\n"
- 		" -S         set the system time from the ptp clock time\n"
- 		" -t val     shift the ptp clock time by 'val' seconds\n"
-@@ -188,6 +189,7 @@ int main(int argc, char *argv[])
- 	int pin_index = -1, pin_func;
- 	int pps = -1;
- 	int seconds = 0;
-+	int readonly = 0;
- 	int settime = 0;
- 	int channel = -1;
- 	clockid_t ext_clockid = CLOCK_REALTIME;
-@@ -200,7 +202,7 @@ int main(int argc, char *argv[])
+--- a/arch/loongarch/kernel/perf_event.c
++++ b/arch/loongarch/kernel/perf_event.c
+@@ -637,6 +637,18 @@ static const struct loongarch_perf_event
+ 	return pev;
+ }
  
- 	progname = strrchr(argv[0], '/');
- 	progname = progname ? 1+progname : argv[0];
--	while (EOF != (c = getopt(argc, argv, "cd:e:f:F:ghH:i:k:lL:n:o:p:P:sSt:T:w:x:Xy:z"))) {
-+	while (EOF != (c = getopt(argc, argv, "cd:e:f:F:ghH:i:k:lL:n:o:p:P:rsSt:T:w:x:Xy:z"))) {
- 		switch (c) {
- 		case 'c':
- 			capabilities = 1;
-@@ -252,6 +254,9 @@ int main(int argc, char *argv[])
- 		case 'P':
- 			pps = atoi(optarg);
- 			break;
-+		case 'r':
-+			readonly = 1;
-+			break;
- 		case 's':
- 			settime = 1;
- 			break;
-@@ -308,7 +313,7 @@ int main(int argc, char *argv[])
- 		}
++static inline bool loongarch_pmu_event_requires_counter(const struct perf_event *event)
++{
++	switch (event->attr.type) {
++	case PERF_TYPE_HARDWARE:
++	case PERF_TYPE_HW_CACHE:
++	case PERF_TYPE_RAW:
++		return true;
++	default:
++		return false;
++	}
++}
++
+ static int validate_group(struct perf_event *event)
+ {
+ 	struct cpu_hw_events fake_cpuc;
+@@ -644,15 +656,18 @@ static int validate_group(struct perf_ev
+ 
+ 	memset(&fake_cpuc, 0, sizeof(fake_cpuc));
+ 
+-	if (loongarch_pmu_alloc_counter(&fake_cpuc, &leader->hw) < 0)
++	if (loongarch_pmu_event_requires_counter(leader) &&
++	    loongarch_pmu_alloc_counter(&fake_cpuc, &leader->hw) < 0)
+ 		return -EINVAL;
+ 
+ 	for_each_sibling_event(sibling, leader) {
+-		if (loongarch_pmu_alloc_counter(&fake_cpuc, &sibling->hw) < 0)
++		if (loongarch_pmu_event_requires_counter(sibling) &&
++		    loongarch_pmu_alloc_counter(&fake_cpuc, &sibling->hw) < 0)
+ 			return -EINVAL;
  	}
  
--	fd = open(device, O_RDWR);
-+	fd = open(device, readonly ? O_RDONLY : O_RDWR);
- 	if (fd < 0) {
- 		fprintf(stderr, "opening %s: %s\n", device, strerror(errno));
- 		return -1;
-@@ -436,14 +441,16 @@ int main(int argc, char *argv[])
- 	}
+-	if (loongarch_pmu_alloc_counter(&fake_cpuc, &event->hw) < 0)
++	if (loongarch_pmu_event_requires_counter(event) &&
++	    loongarch_pmu_alloc_counter(&fake_cpuc, &event->hw) < 0)
+ 		return -EINVAL;
  
- 	if (extts) {
--		memset(&extts_request, 0, sizeof(extts_request));
--		extts_request.index = index;
--		extts_request.flags = PTP_ENABLE_FEATURE;
--		if (ioctl(fd, PTP_EXTTS_REQUEST, &extts_request)) {
--			perror("PTP_EXTTS_REQUEST");
--			extts = 0;
--		} else {
--			puts("external time stamp request okay");
-+		if (!readonly) {
-+			memset(&extts_request, 0, sizeof(extts_request));
-+			extts_request.index = index;
-+			extts_request.flags = PTP_ENABLE_FEATURE;
-+			if (ioctl(fd, PTP_EXTTS_REQUEST, &extts_request)) {
-+				perror("PTP_EXTTS_REQUEST");
-+				extts = 0;
-+			} else {
-+				puts("external time stamp request okay");
-+			}
- 		}
- 		for (; extts; extts--) {
- 			cnt = read(fd, &event, sizeof(event));
-@@ -455,10 +462,12 @@ int main(int argc, char *argv[])
- 			       event.t.sec, event.t.nsec);
- 			fflush(stdout);
- 		}
--		/* Disable the feature again. */
--		extts_request.flags = 0;
--		if (ioctl(fd, PTP_EXTTS_REQUEST, &extts_request)) {
--			perror("PTP_EXTTS_REQUEST");
-+		if (!readonly) {
-+			/* Disable the feature again. */
-+			extts_request.flags = 0;
-+			if (ioctl(fd, PTP_EXTTS_REQUEST, &extts_request)) {
-+				perror("PTP_EXTTS_REQUEST");
-+			}
- 		}
- 	}
- 
--- 
-2.51.0
-
+ 	return 0;
 
 
