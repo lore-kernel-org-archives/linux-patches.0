@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A528B242D7F;
-	Wed, 28 Jan 2026 15:47:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD6B82DF155;
+	Wed, 28 Jan 2026 15:47:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769615269; cv=none; b=D5/hewVnMn8bfk19t0NeG16HIYqG+hTNIGCCfPVrC/IVb+jvqW7hFsnB8TYx2ZxR0yjyImiaTesDPLzbr/HWo6nQYds2Ou8gb1K/7qSQkSoMj9B9Bq1yj6mgevRbQDmC66AsSQ7MME1RPTM9x+Mna2Io+LKe7xTk0L3uhejeub8=
+	t=1769615272; cv=none; b=oWYkY8bUrBXigeQqiIBzfOUh0odDG6bguJm3tnffq/vcF4p5u55y2kre/BamfyqqO/OhA8blbN50G78Ei2zjArhiouVvO7aNYZWsB1AtbYtL6OtuX7lR8gXSUFrAKcntaSoRsdhUXRLOKGO+LzdJOQnnbl56/0+DPZ51fSCZneQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769615269; c=relaxed/simple;
-	bh=UGkgN0We3p0cNpJoQMa0fwKJy8zieScxVXqgyP2vGgI=;
+	s=arc-20240116; t=1769615272; c=relaxed/simple;
+	bh=4ikcEW48rDG0AJyynYPtwhXv2bTBedLUM9lGkjGAnTM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OG66L11xEmfwTObAxpzhHVCocfbOB38XPRwo8eNP+mMkbRw8ugpuo1UicBkKea2z8HdYJ/8jbb1aOt+E9/md44LHsg3bmpq8QlkvsQUAvetk5qm7xa4JnEf7KKonh4MSGFy/idnLuZAXsqHXFBcP541VqQ3Qlac7+ck5mS/+stQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=B0UKmiWg; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HjLh+QIGvdlt6U3D5IuQtLalxMihKiGu8fP2qPqt61tshOBOZh59jCA+vJsmyuDPFXyE57WiLBDjHWftZw2yHF3Jm4O8CPce5DkobauBks09eYnexjUqNYhJ+1yWRj18NQ/PfSEAeU+6VDdhvIgrBY25P2gHvGHb3LbvSUiYA04=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1IAbiPg8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="B0UKmiWg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5357C4CEF1;
-	Wed, 28 Jan 2026 15:47:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1IAbiPg8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3EA5DC4CEF7;
+	Wed, 28 Jan 2026 15:47:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1769615269;
-	bh=UGkgN0We3p0cNpJoQMa0fwKJy8zieScxVXqgyP2vGgI=;
+	s=korg; t=1769615272;
+	bh=4ikcEW48rDG0AJyynYPtwhXv2bTBedLUM9lGkjGAnTM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=B0UKmiWgK8GWe+3uhFz0p2ovAzzhhshB0CyZbkmbtPH8O9++kWhZ+wfkHPcHBUxYI
-	 HIFBMyoUh+ZWlumNjpk58JNtabYlcZS0cj4zFsEfOhDuA5QtnuIalY4mTlpjwROcF8
-	 XpTDRy5rBuZKaXBq0ptQxA3AG9+oBf6xPWJducNc=
+	b=1IAbiPg8g56D5kDQijwML5YIFOCMsZWB9mIapr2Hbld6W9W1i9PpRS+u520qx5DcF
+	 MTFcMkOQaul04lL4SsxQInQ15ki+pbsOlNgcFeEKYNmuSfEis3HVVKdCf6kMj4UeqL
+	 nVgYYj/y4fH9zc5Dht/zDg2U7S1Aj/XR+CxWRvbY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ingo Franzki <ifranzki@linux.ibm.com>,
-	Harald Freudenberger <freude@linux.ibm.com>,
-	Heiko Carstens <hca@linux.ibm.com>
-Subject: [PATCH 6.12 129/169] s390/ap: Fix wrong APQN fill calculation
-Date: Wed, 28 Jan 2026 16:23:32 +0100
-Message-ID: <20260128145338.651897043@linuxfoundation.org>
+	Wenkai Lin <linwenkai6@hisilicon.com>,
+	Chenghai Huang <huangchenghai2@huawei.com>,
+	Zhangfei Gao <zhangfei.gao@linaro.org>
+Subject: [PATCH 6.12 130/169] uacce: fix cdev handling in the cleanup path
+Date: Wed, 28 Jan 2026 16:23:33 +0100
+Message-ID: <20260128145338.688005823@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260128145334.006287341@linuxfoundation.org>
 References: <20260128145334.006287341@linuxfoundation.org>
@@ -51,52 +51,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Harald Freudenberger <freude@linux.ibm.com>
+From: Wenkai Lin <linwenkai6@hisilicon.com>
 
-commit 3317785a8803db629efc759d811d0f589d3a0b2d upstream.
+commit a3bece3678f6c88db1f44c602b2a63e84b4040ac upstream.
 
-The upper limit of the firmware queue fill state for each APQN
-is reported by the hwinfo.qd field. This field shows the
-numbers 0-7 for 1-8 queue spaces available. But the exploiting
-code assumed the real boundary is stored there and thus stoppes
-queuing in messages one tick too early.
+When cdev_device_add fails, it internally releases the cdev memory,
+and if cdev_device_del is then executed, it will cause a hang error.
+To fix it, we check the return value of cdev_device_add() and clear
+uacce->cdev to avoid calling cdev_device_del in the uacce_remove.
 
-Correct the limit calculation and thus offer a boost
-of 12.5% performance for high traffic on one APQN.
-
-Fixes: d4c53ae8e4948 ("s390/ap: store TAPQ hwinfo in struct ap_card")
+Fixes: 015d239ac014 ("uacce: add uacce driver")
 Cc: stable@vger.kernel.org
-Reported-by: Ingo Franzki <ifranzki@linux.ibm.com>
-Reviewed-by: Ingo Franzki <ifranzki@linux.ibm.com>
-Signed-off-by: Harald Freudenberger <freude@linux.ibm.com>
-Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
+Signed-off-by: Wenkai Lin <linwenkai6@hisilicon.com>
+Signed-off-by: Chenghai Huang <huangchenghai2@huawei.com>
+Acked-by: Zhangfei Gao <zhangfei.gao@linaro.org>
+Link: https://patch.msgid.link/20251202061256.4158641-2-huangchenghai2@huawei.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/s390/crypto/ap_card.c  |    2 +-
- drivers/s390/crypto/ap_queue.c |    2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+ drivers/misc/uacce/uacce.c |    8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
---- a/drivers/s390/crypto/ap_card.c
-+++ b/drivers/s390/crypto/ap_card.c
-@@ -44,7 +44,7 @@ static ssize_t depth_show(struct device
+--- a/drivers/misc/uacce/uacce.c
++++ b/drivers/misc/uacce/uacce.c
+@@ -556,6 +556,8 @@ EXPORT_SYMBOL_GPL(uacce_alloc);
+  */
+ int uacce_register(struct uacce_device *uacce)
  {
- 	struct ap_card *ac = to_ap_card(dev);
++	int ret;
++
+ 	if (!uacce)
+ 		return -ENODEV;
  
--	return sysfs_emit(buf, "%d\n", ac->hwinfo.qd);
-+	return sysfs_emit(buf, "%d\n", ac->hwinfo.qd + 1);
+@@ -566,7 +568,11 @@ int uacce_register(struct uacce_device *
+ 	uacce->cdev->ops = &uacce_fops;
+ 	uacce->cdev->owner = THIS_MODULE;
+ 
+-	return cdev_device_add(uacce->cdev, &uacce->dev);
++	ret = cdev_device_add(uacce->cdev, &uacce->dev);
++	if (ret)
++		uacce->cdev = NULL;
++
++	return ret;
  }
+ EXPORT_SYMBOL_GPL(uacce_register);
  
- static DEVICE_ATTR_RO(depth);
---- a/drivers/s390/crypto/ap_queue.c
-+++ b/drivers/s390/crypto/ap_queue.c
-@@ -268,7 +268,7 @@ static enum ap_sm_wait ap_sm_write(struc
- 		list_move_tail(&ap_msg->list, &aq->pendingq);
- 		aq->requestq_count--;
- 		aq->pendingq_count++;
--		if (aq->queue_count < aq->card->hwinfo.qd) {
-+		if (aq->queue_count < aq->card->hwinfo.qd + 1) {
- 			aq->sm_state = AP_SM_STATE_WORKING;
- 			return AP_SM_WAIT_AGAIN;
- 		}
 
 
