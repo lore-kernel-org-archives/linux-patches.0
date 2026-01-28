@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4A461D6AA;
-	Wed, 28 Jan 2026 15:59:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29A912874FE;
+	Wed, 28 Jan 2026 15:59:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769615958; cv=none; b=Sj2q4Sse3/dcM/b14GleC2npn+DM8XFA8dR02/FI2Fb/NTzpjsU1JKWJv5nd7hxyDdDp63JySzsvXGKzvmAPO8in6uzditiMVDchXCQaXi04D+p4RaT8YBnoStWzytPFh3lb3n4ryNI0tNZGtarFAzvY8jgFeS1IcTdfUsTy/ro=
+	t=1769615961; cv=none; b=YtF9wS5fMXHaSrtB7kGaEgW7lkPo0rAG+D4WNbtM+SRiZObJoEUR7fThEADfDbo22sQEP1pjOnBS+igdAXDpdo+yNIy/aNEY9s1XYgtq6SG/ot69xvFVvqo6slz6lqQieQ5ZgmpP8t3jX4cByNbfMKdj+8FrhMiEnRHolGwtM6o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769615958; c=relaxed/simple;
-	bh=To0/PcCE7ai5CZr7QEFT4B3r3v7OQv6j/Yr9cEiMcc4=;
+	s=arc-20240116; t=1769615961; c=relaxed/simple;
+	bh=iLcGVKO7uu/D/ezrEk89swetY3RRo1RJwFwY1UZAZdI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cckGpPhCdQfSG6PfLs00RNwhEZa06m6n6NVMthh3UDiQIaftTA+MkfeF440mhsna0ljQaH7ml0Fqy/x+64ORC0LEWSiFnvppgMySdUpX8/NaPvSIbkTmpq5yfLW/T0ti+HTEIi20wN0EiN/cBSklY5jVSAeL34g8SFVqSAtnPIA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0OOdlz/a; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=LSgKnruYTSMo4+KWM5wW0pqSR+aMcaSIlKkduwU07RzrRatxO2uA2VaIY+ZVja18Zypb/Ci1Qq2Mfn4yFiY3zZR7RPliZKoDYbNsM2Q+aDTI22yN19zqRHYE3xo5gwsG6IYK7Kejk/zTMblH/RvOmS7fxYeqITjr3qwjB/fh4jU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QMZ9B0So; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0OOdlz/a"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 47246C4CEF1;
-	Wed, 28 Jan 2026 15:59:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QMZ9B0So"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ABACEC4CEF1;
+	Wed, 28 Jan 2026 15:59:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1769615957;
-	bh=To0/PcCE7ai5CZr7QEFT4B3r3v7OQv6j/Yr9cEiMcc4=;
+	s=korg; t=1769615961;
+	bh=iLcGVKO7uu/D/ezrEk89swetY3RRo1RJwFwY1UZAZdI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0OOdlz/a4lwefXsGIA9BK4T96nWq1DL4b67G3M15isGUMNyPaqrv68HXEng2DMXIz
-	 RomXjLaFdVuHDjWaFsWcuctAjfW7zY8s44l3P7ayxGhIpOU/NSe+PURlbwa4UmpDKd
-	 gDqSGB1EKKCUQpOjIbaVIKZUzAgUWX3D/revvhZ8=
+	b=QMZ9B0SoGjdM98aRGNUJFP3OsflOjqjwhxPCLti/PE3BHy0345CvDMmOYyxha8ACV
+	 x1zxGGcBFUTrejy7ctTeCgCBXFIKM3ZhSGFelVWRiBG46cz84YZoqZ1+wU+Qg3B5YI
+	 AyXyFh1iptmPvaW22o/bFXtL70yd7noD3LoDuvlk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fiona Klute <fiona.klute@gmx.de>,
+	Miaoqian Lin <linmq006@gmail.com>,
+	=?UTF-8?q?Nuno=20S=C3=A1?= <nuno.sa@analog.com>,
+	Andy Shevchenko <andriy.shevchenko@intel.com>,
 	David Lechner <dlechner@baylibre.com>,
 	Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Subject: [PATCH 6.18 163/227] iio: chemical: scd4x: fix reported channel endianness
-Date: Wed, 28 Jan 2026 16:23:28 +0100
-Message-ID: <20260128145350.318497224@linuxfoundation.org>
+Subject: [PATCH 6.18 164/227] iio: dac: ad3552r-hs: fix out-of-bound write in ad3552r_hs_write_data_source
+Date: Wed, 28 Jan 2026 16:23:29 +0100
+Message-ID: <20260128145350.353655590@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260128145344.331957407@linuxfoundation.org>
 References: <20260128145344.331957407@linuxfoundation.org>
@@ -45,63 +47,69 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Fiona Klute <fiona.klute@gmx.de>
+From: Miaoqian Lin <linmq006@gmail.com>
 
-commit 81d5a5366d3c20203fb9d7345e1aa46d668445a2 upstream.
+commit 978d28136c53df38f8f0b747191930e2f95e9084 upstream.
 
-The driver converts values read from the sensor from BE to CPU
-endianness in scd4x_read_meas(). The result is then pushed into the
-buffer in scd4x_trigger_handler(), so on LE architectures parsing the
-buffer using the reported BE type gave wrong results.
+When simple_write_to_buffer() succeeds, it returns the number of bytes
+actually copied to the buffer. The code incorrectly uses 'count'
+as the index for null termination instead of the actual bytes copied.
+If count exceeds the buffer size, this leads to out-of-bounds write.
+Add a check for the count and use the return value as the index.
 
-scd4x_read_raw() which provides sysfs *_raw values is not affected, it
-used the values returned by scd4x_read_meas() without further
-conversion.
+The bug was validated using a demo module that mirrors the original
+code and was tested under QEMU.
 
-Fixes: 49d22b695cbb6 ("drivers: iio: chemical: Add support for Sensirion SCD4x CO2 sensor")
-Signed-off-by: Fiona Klute <fiona.klute@gmx.de>
+Pattern of the bug:
+- A fixed 64-byte stack buffer is filled using count.
+- If count > 64, the code still does buf[count] = '\0', causing an
+- out-of-bounds write on the stack.
+
+Steps for reproduce:
+- Opens the device node.
+- Writes 128 bytes of A to it.
+- This overflows the 64-byte stack buffer and KASAN reports the OOB.
+
+Found via static analysis. This is similar to the
+commit da9374819eb3 ("iio: backend: fix out-of-bound write")
+
+Fixes: b1c5d68ea66e ("iio: dac: ad3552r-hs: add support for internal ramp")
+Cc: stable@vger.kernel.org
+Signed-off-by: Miaoqian Lin <linmq006@gmail.com>
+Reviewed-by: Nuno Sá <nuno.sa@analog.com>
+Reviewed-by: Andy Shevchenko <andriy.shevchenko@intel.com>
 Reviewed-by: David Lechner <dlechner@baylibre.com>
-Cc: <stable@vger.kernel.org>
 Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/chemical/scd4x.c |    6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/iio/dac/ad3552r-hs.c |    5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
---- a/drivers/iio/chemical/scd4x.c
-+++ b/drivers/iio/chemical/scd4x.c
-@@ -584,7 +584,7 @@ static const struct iio_chan_spec scd4x_
- 			.sign = 'u',
- 			.realbits = 16,
- 			.storagebits = 16,
--			.endianness = IIO_BE,
-+			.endianness = IIO_CPU,
- 		},
- 	},
- 	{
-@@ -599,7 +599,7 @@ static const struct iio_chan_spec scd4x_
- 			.sign = 'u',
- 			.realbits = 16,
- 			.storagebits = 16,
--			.endianness = IIO_BE,
-+			.endianness = IIO_CPU,
- 		},
- 	},
- 	{
-@@ -612,7 +612,7 @@ static const struct iio_chan_spec scd4x_
- 			.sign = 'u',
- 			.realbits = 16,
- 			.storagebits = 16,
--			.endianness = IIO_BE,
-+			.endianness = IIO_CPU,
- 		},
- 	},
- };
+--- a/drivers/iio/dac/ad3552r-hs.c
++++ b/drivers/iio/dac/ad3552r-hs.c
+@@ -549,12 +549,15 @@ static ssize_t ad3552r_hs_write_data_sou
+ 
+ 	guard(mutex)(&st->lock);
+ 
++	if (count >= sizeof(buf))
++		return -ENOSPC;
++
+ 	ret = simple_write_to_buffer(buf, sizeof(buf) - 1, ppos, userbuf,
+ 				     count);
+ 	if (ret < 0)
+ 		return ret;
+ 
+-	buf[count] = '\0';
++	buf[ret] = '\0';
+ 
+ 	ret = match_string(dbgfs_attr_source, ARRAY_SIZE(dbgfs_attr_source),
+ 			   buf);
 
 
