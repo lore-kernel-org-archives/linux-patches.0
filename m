@@ -1,38 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F5913081BA;
-	Wed, 28 Jan 2026 15:58:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85F573033C4;
+	Wed, 28 Jan 2026 15:58:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769615918; cv=none; b=oOjmpeKnvys2ygXDig9Rfjq/6xIMmXqthxF2XaOvovtQf/CFXaEDfR4HszTTNvJ+Wn21Lh3xR6IHqiBILHkh4n58Dd5Xd/iiI6uuocYhB+gn2ORaYeJGyC5Wjm5sax/WAZ5Ox9tWZurcqChX9Bx43fSbXyNjEVcMlRiJJw00fpI=
+	t=1769615921; cv=none; b=TPhtvWPtkLBmfBoEpr+N8vyTqd2lPX+AOzfuFHLBodOI6S3bhtFpLX2QJa1YfeNG19tth9bTBB1M4YWcZyZJwNGKf2iWiDZSPxmxkfFEhvWk6VonKQ5aBFGdeNJ1Pm+T4paCmTMTnTAXskQBCXr1wWXBrz+954DiINQhKNX0L70=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769615918; c=relaxed/simple;
-	bh=acjSUe6s4OXQs6Y63e7tyoeKUjkLToLX8YkyNMAIBdI=;
+	s=arc-20240116; t=1769615921; c=relaxed/simple;
+	bh=fOK+cxiqC3Av4hc68UkY8n7KK8GSTtaC3ntasj9lUK0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=INsegt+mCrbYgkfM8BYOF8DhbRkxFA+XEG8u2AMYfMuT5wfPMN0w8bHVVSCDxlC16qPyZNqROYeVR5fi1Nq1qZECsU0bI9PH7zP8XEB3i+N9cOXbgx9KKuK0TbeKQTVvVL74LFwJQLrGiFwCIwfuQxbb1dyrUaT6lQtLKpPS/n8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CA7NCz85; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fYmrfGVyloHlrmns9vsrAlgqg9e4UumILNh7sIsb2cmlqsP1CHdEvUEWL4JIRcTwxx985yOuhFJa09R6849+FT0WuHBjy8UiIMwWYe1blcwF/5sATviywNSJMXPV8+Hft1duXRqRcokyMI4cOPzjvtByyGk2B2DWrighH7FOsKQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=V9iDn6vq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CA7NCz85"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7763EC4CEF7;
-	Wed, 28 Jan 2026 15:58:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="V9iDn6vq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D8473C4CEF1;
+	Wed, 28 Jan 2026 15:58:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1769615918;
-	bh=acjSUe6s4OXQs6Y63e7tyoeKUjkLToLX8YkyNMAIBdI=;
+	s=korg; t=1769615921;
+	bh=fOK+cxiqC3Av4hc68UkY8n7KK8GSTtaC3ntasj9lUK0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CA7NCz85XpI9fHlPHln0CBW2SN0KqHAdM3rLPtfAQwewhhb1qbmTW9VS287EeINMd
-	 fFWPkUXkbPNS7mFyBLdqjLJYcjl0xvOhIhwPjwX9N7dyeIWxUyFMkzg7LU1F6N1UHK
-	 V2qaK8VSLUe+4/0K2LWPcXmUQAaK+m+JQu+SBUnM=
+	b=V9iDn6vqC2LJtvUEiH23WsuXKiHfgBW8ItQAnRGBA06ISp4Tv5Ls/kVKD1l3OZBxP
+	 ZGmQkzH1NlkrGzXqR5axHLQym30LOUTmZsY5Y4hyGuChcH84dUiSqWnQW+jBkSYoIF
+	 g/e+MumyrLBCgHiyByH/UXSDl5F3u0YIFWyGzPw0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hans de Goede <johannes.goede@oss.qualcomm.com>,
-	Sebastian Reichel <sre@kernel.org>,
-	Lee Jones <lee@kernel.org>
-Subject: [PATCH 6.18 152/227] leds: led-class: Only Add LED to leds_list when it is fully ready
-Date: Wed, 28 Jan 2026 16:23:17 +0100
-Message-ID: <20260128145349.924598294@linuxfoundation.org>
+	Gal Pressman <gal@nvidia.com>,
+	Mark Bloch <mbloch@nvidia.com>,
+	Nimrod Oren <noren@nvidia.com>,
+	Feng Tang <feng.tang@linux.alibaba.com>,
+	Joel Granados <joel.granados@kernel.org>,
+	Petr Mladek <pmladek@suse.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.18 153/227] panic: only warn about deprecated panic_print on write access
+Date: Wed, 28 Jan 2026 16:23:18 +0100
+Message-ID: <20260128145349.960034539@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260128145344.331957407@linuxfoundation.org>
 References: <20260128145344.331957407@linuxfoundation.org>
@@ -51,80 +55,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hans de Goede <johannes.goede@oss.qualcomm.com>
+From: Gal Pressman <gal@nvidia.com>
 
-commit d1883cefd31752f0504b94c3bcfa1f6d511d6e87 upstream.
+commit 90f3c123247e9564f2ecf861946ec41ceaf5e198 upstream.
 
-Before this change the LED was added to leds_list before led_init_core()
-gets called adding it the list before led_classdev.set_brightness_work gets
-initialized.
+The panic_print_deprecated() warning is being triggered on both read and
+write operations to the panic_print parameter.
 
-This leaves a window where led_trigger_register() of a LED's default
-trigger will call led_trigger_set() which calls led_set_brightness()
-which in turn will end up queueing the *uninitialized*
-led_classdev.set_brightness_work.
+This causes spurious warnings when users run 'sysctl -a' to list all
+sysctl values, since that command reads /proc/sys/kernel/panic_print and
+triggers the deprecation notice.
 
-This race gets hit by the lenovo-thinkpad-t14s EC driver which registers
-2 LEDs with a default trigger provided by snd_ctl_led.ko in quick
-succession. The first led_classdev_register() causes an async modprobe of
-snd_ctl_led to run and that async modprobe manages to exactly hit
-the window where the second LED is on the leds_list without led_init_core()
-being called for it, resulting in:
+Modify the handlers to only emit the deprecation warning when the
+parameter is actually being set:
 
- ------------[ cut here ]------------
- WARNING: CPU: 11 PID: 5608 at kernel/workqueue.c:4234 __flush_work+0x344/0x390
- Hardware name: LENOVO 21N2S01F0B/21N2S01F0B, BIOS N42ET93W (2.23 ) 09/01/2025
- ...
- Call trace:
-  __flush_work+0x344/0x390 (P)
-  flush_work+0x2c/0x50
-  led_trigger_set+0x1c8/0x340
-  led_trigger_register+0x17c/0x1c0
-  led_trigger_register_simple+0x84/0xe8
-  snd_ctl_led_init+0x40/0xf88 [snd_ctl_led]
-  do_one_initcall+0x5c/0x318
-  do_init_module+0x9c/0x2b8
-  load_module+0x7e0/0x998
+ - sysctl_panic_print_handler(): check 'write' flag before warning.
+ - panic_print_get(): remove the deprecation call entirely.
 
-Close the race window by moving the adding of the LED to leds_list to
-after the led_init_core() call.
+This way, users are only warned when they actively try to use the
+deprecated parameter, not when passively querying system state.
 
-Cc: stable@vger.kernel.org
-Fixes: d23a22a74fde ("leds: delay led_set_brightness if stopping soft-blink")
-Signed-off-by: Hans de Goede <johannes.goede@oss.qualcomm.com>
-Reviewed-by: Sebastian Reichel <sre@kernel.org>
-Link: https://patch.msgid.link/20251211163727.366441-1-johannes.goede@oss.qualcomm.com
-Signed-off-by: Lee Jones <lee@kernel.org>
+Link: https://lkml.kernel.org/r/20260106163321.83586-1-gal@nvidia.com
+Fixes: ee13240cd78b ("panic: add note that panic_print sysctl interface is deprecated")
+Fixes: 2683df6539cb ("panic: add note that 'panic_print' parameter is deprecated")
+Signed-off-by: Gal Pressman <gal@nvidia.com>
+Reviewed-by: Mark Bloch <mbloch@nvidia.com>
+Reviewed-by: Nimrod Oren <noren@nvidia.com>
+Cc: Feng Tang <feng.tang@linux.alibaba.com>
+Cc: Joel Granados <joel.granados@kernel.org>
+Cc: Petr Mladek <pmladek@suse.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/leds/led-class.c |   10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ kernel/panic.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/leds/led-class.c
-+++ b/drivers/leds/led-class.c
-@@ -560,11 +560,6 @@ int led_classdev_register_ext(struct dev
- #ifdef CONFIG_LEDS_BRIGHTNESS_HW_CHANGED
- 	led_cdev->brightness_hw_changed = -1;
- #endif
--	/* add to the list of leds */
--	down_write(&leds_list_lock);
--	list_add_tail(&led_cdev->node, &leds_list);
--	up_write(&leds_list_lock);
--
- 	if (!led_cdev->max_brightness)
- 		led_cdev->max_brightness = LED_FULL;
+--- a/kernel/panic.c
++++ b/kernel/panic.c
+@@ -131,7 +131,8 @@ static int proc_taint(const struct ctl_t
+ static int sysctl_panic_print_handler(const struct ctl_table *table, int write,
+ 			   void *buffer, size_t *lenp, loff_t *ppos)
+ {
+-	panic_print_deprecated();
++	if (write)
++		panic_print_deprecated();
+ 	return proc_doulongvec_minmax(table, write, buffer, lenp, ppos);
+ }
  
-@@ -574,6 +569,11 @@ int led_classdev_register_ext(struct dev
+@@ -1010,7 +1011,6 @@ static int panic_print_set(const char *v
  
- 	led_init_core(led_cdev);
+ static int panic_print_get(char *val, const struct kernel_param *kp)
+ {
+-	panic_print_deprecated();
+ 	return  param_get_ulong(val, kp);
+ }
  
-+	/* add to the list of leds */
-+	down_write(&leds_list_lock);
-+	list_add_tail(&led_cdev->node, &leds_list);
-+	up_write(&leds_list_lock);
-+
- #ifdef CONFIG_LEDS_TRIGGERS
- 	led_trigger_set_default(led_cdev);
- #endif
 
 
