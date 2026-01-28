@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C3BC26ED4F;
-	Wed, 28 Jan 2026 15:30:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51D2113B7A3;
+	Wed, 28 Jan 2026 15:30:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769614250; cv=none; b=QMA2pPJeu+ppIsPovap8+Cg14M4Z7/0tkYtefvrwsBWioUu4LV7FE+XDLt/lfk9Aq+QIwg6pBJkh7xaDFHmgi4Idz+UsWGkGtc77l4NCDOvClL3782xbmhDxgqF0e+qlHydrvaZvCRyMEAG5zYfWl1ZwXotPsWOiWHu/JrOTUgE=
+	t=1769614253; cv=none; b=h/n9kCFSGsm4OCvedXEAvb4hmk/h5JMQEK0gNMNDPxVPvpAzxVFEIZeMu8MMf/K4sZv/xpihc8buqULri8n9wG4614wPG65zqI7qKl1h4GyNnq1p5+5PlK8XVq8GfQ4Qhz23USOpc64TgX4L4tdvbnu2CaWw9GX0q66z+VpnVG0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769614250; c=relaxed/simple;
-	bh=5OjwkeYH1XQ5VIzKd08iIfyKLqDr0LDv7lG7UTyPJs0=;
+	s=arc-20240116; t=1769614253; c=relaxed/simple;
+	bh=9/nPAM6bhJKlOac0r+IBNFuSZh1MYwp8Z2826sauD0U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QPdWBH96gk7GaZ6fo6NZcnSyWkxU5GPDU6wNN4AJkolmNExhCgID7ouMakfcRBj6V0ttLSeqNsBD8Mvdl2ez+mtsqmbrSiGMiia87CXufPyWxSeRaJhotxZk0780fpFX77VTwwrGeTN/hSabRVNoQoS2vUr3ZsrBxtXHxDDQp6w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JXjp6tCx; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qRgBX+67wRoBQ15rpWkfodM1ejRrmTiFfknmUQ2xDeQsm+JAmZ1vsJakTAcZhAzpzegfUlKSz3o18udjrm28geFnp0Vo0Aor82s9QMLVmFsxW1pnoXyDsZI5b2qHl9ypYh8SZ+VSvRf1T1BrHvBGhBSjzMitk1UGIxEXa2HOpos=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ryw3ZCHO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JXjp6tCx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 76D1EC116C6;
-	Wed, 28 Jan 2026 15:30:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ryw3ZCHO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0157C4CEF7;
+	Wed, 28 Jan 2026 15:30:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1769614250;
-	bh=5OjwkeYH1XQ5VIzKd08iIfyKLqDr0LDv7lG7UTyPJs0=;
+	s=korg; t=1769614253;
+	bh=9/nPAM6bhJKlOac0r+IBNFuSZh1MYwp8Z2826sauD0U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JXjp6tCxLk9u1e48BA1H8+0gFREKcfMVeSi8hO4eHXBSBqv6xg2nSJQa8nDfyZ9Ry
-	 /c+vRmiOgIJ/+WlYwVKLfO4on9cX6mb6mZVkEk9/IKhryS/W6xcR3VhA5ZjZWPwzLp
-	 Zn0NO8dMnKH9FRaKJG47QM6iZanItHNAYCSWSqJQ=
+	b=Ryw3ZCHOxpCsjfo+YYeBeO4PNkIft7jptZe1FAvRFoCMJPJiXAV3P4fLIC85kDTbX
+	 PTnStGqP4jA5e/yOoDF03Bq0n8q0ePnp4Ab20DaHGHQtR5mtDNaQrXuru2P+UrQc9N
+	 Zd3f1ZS7pV8PXoOHELAjnt4GENOQ1XghFY+Rv8Fs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Miquel Raynal <miquel.raynal@bootlin.com>,
 	Johan Hovold <johan@kernel.org>,
 	Vinod Koul <vkoul@kernel.org>
-Subject: [PATCH 6.6 080/254] dmaengine: bcm-sba-raid: fix device leak on probe
-Date: Wed, 28 Jan 2026 16:20:56 +0100
-Message-ID: <20260128145347.572733216@linuxfoundation.org>
+Subject: [PATCH 6.6 081/254] dmaengine: dw: dmamux: fix OF node leak on route allocation failure
+Date: Wed, 28 Jan 2026 16:20:57 +0100
+Message-ID: <20260128145347.609259864@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260128145344.698118637@linuxfoundation.org>
 References: <20260128145344.698118637@linuxfoundation.org>
@@ -52,49 +53,42 @@ Content-Transfer-Encoding: 8bit
 
 From: Johan Hovold <johan@kernel.org>
 
-commit 7c3a46ebf15a9796b763a54272407fdbf945bed8 upstream.
+commit ec25e60f9f95464aa11411db31d0906b3fb7b9f2 upstream.
 
-Make sure to drop the reference taken when looking up the mailbox device
-during probe on probe failures and on driver unbind.
+Make sure to drop the reference taken to the DMA master OF node also on
+late route allocation failures.
 
-Fixes: 743e1c8ffe4e ("dmaengine: Add Broadcom SBA RAID driver")
-Cc: stable@vger.kernel.org	# 4.13
+Fixes: 134d9c52fca2 ("dmaengine: dw: dmamux: Introduce RZN1 DMA router support")
+Cc: stable@vger.kernel.org	# 5.19
+Cc: Miquel Raynal <miquel.raynal@bootlin.com>
 Signed-off-by: Johan Hovold <johan@kernel.org>
-Link: https://patch.msgid.link/20251117161258.10679-4-johan@kernel.org
+Reviewed-by: Miquel Raynal <miquel.raynal@bootlin.com>
+Link: https://patch.msgid.link/20251117161258.10679-6-johan@kernel.org
 Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/dma/bcm-sba-raid.c |    6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ drivers/dma/dw/rzn1-dmamux.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/drivers/dma/bcm-sba-raid.c
-+++ b/drivers/dma/bcm-sba-raid.c
-@@ -1699,7 +1699,7 @@ static int sba_probe(struct platform_dev
- 	/* Prealloc channel resource */
- 	ret = sba_prealloc_channel_resources(sba);
- 	if (ret)
--		goto fail_free_mchan;
-+		goto fail_put_mbox;
+--- a/drivers/dma/dw/rzn1-dmamux.c
++++ b/drivers/dma/dw/rzn1-dmamux.c
+@@ -90,7 +90,7 @@ static void *rzn1_dmamux_route_allocate(
  
- 	/* Check availability of debugfs */
- 	if (!debugfs_initialized())
-@@ -1729,6 +1729,8 @@ skip_debugfs:
- fail_free_resources:
- 	debugfs_remove_recursive(sba->root);
- 	sba_freeup_channel_resources(sba);
-+fail_put_mbox:
-+	put_device(sba->mbox_dev);
- fail_free_mchan:
- 	mbox_free_channel(sba->mchan);
- 	return ret;
-@@ -1744,6 +1746,8 @@ static int sba_remove(struct platform_de
+ 	if (test_and_set_bit(map->req_idx, dmamux->used_chans)) {
+ 		ret = -EBUSY;
+-		goto free_map;
++		goto put_dma_spec_np;
+ 	}
  
- 	sba_freeup_channel_resources(sba);
+ 	mask = BIT(map->req_idx);
+@@ -103,6 +103,8 @@ static void *rzn1_dmamux_route_allocate(
  
-+	put_device(sba->mbox_dev);
-+
- 	mbox_free_channel(sba->mchan);
- 
- 	return 0;
+ clear_bitmap:
+ 	clear_bit(map->req_idx, dmamux->used_chans);
++put_dma_spec_np:
++	of_node_put(dma_spec->np);
+ free_map:
+ 	kfree(map);
+ put_device:
 
 
