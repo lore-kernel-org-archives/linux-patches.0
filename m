@@ -1,36 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1FA12FB983;
-	Wed, 28 Jan 2026 15:38:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0F712DE6FC;
+	Wed, 28 Jan 2026 15:38:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769614727; cv=none; b=Q+SvbiaigMBHH8hD3BqPpoHNHygCla8a9E16uB6CIoNni7ZznYWsLpQ3dFmgHmeebfJtb8RVXgadvBoR/eMhyawzRB7wszQ7Xh+R5Qmi7XbAq8JdJVxqTUi0FtQbXTZ2WZdK4u3NjmmQYTjHXjg7cWfhb2WTF0F34Li1/GlZzYk=
+	t=1769614730; cv=none; b=K8y2t5GXKwkE1EVWkHgphpnuZ6xpIinoijkMmw6HqWIxVoSvPq0PksnImjEv4Hnz2fG55uXGtTzlKY5ko4EIdPTlc1Y1Oz4+7V7lVcI0nUG+XjBae4l2zpg7tlLxWoDHXVssgqvb6yJxzFPAH2oDTclkp617nQqntB/RfOrilfw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769614727; c=relaxed/simple;
-	bh=f9w73AH8W1R9VEx0owRCcnEezKDwk/aaZwAJJogSbJE=;
+	s=arc-20240116; t=1769614730; c=relaxed/simple;
+	bh=15tPriOdj3X7gpPcubtNl7J2lLa1ObAmrqsN3hFv6VI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hLvKVWlF4etvs6NNr3ocKkVIsW0BTOZyqxMX6jPRN04eJh+aU4PaZXwsEBF3CFCmjPh3shkFUCekfvxwJem2d/+Q9xHT7IYyoO1l+Yt658ZUyYnWqIkko0/5zVbvrNdqi8aCWBAfPA/DJUqprf6kZ+eXl5Kc9CiKR7GUbmsNBGE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PisLz4OX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pZA+EmafB0132J6JiyepYl96eC+mKKbmJ2Bv351d4rAilv4xT3L1kKwWUEf0osr7HHWV8hblKWLcBzCIgFNutb1JHaHb4jEAklHRdGypN0jEyNu314zXvmWqrMmytIulbn9V1OIoSmus+W5n7jufBKUFCXmThtEvoEr43FUpw2E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RvgIdcUn; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PisLz4OX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A26D0C2BC87;
-	Wed, 28 Jan 2026 15:38:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RvgIdcUn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E2FFC2BC9E;
+	Wed, 28 Jan 2026 15:38:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1769614727;
-	bh=f9w73AH8W1R9VEx0owRCcnEezKDwk/aaZwAJJogSbJE=;
+	s=korg; t=1769614730;
+	bh=15tPriOdj3X7gpPcubtNl7J2lLa1ObAmrqsN3hFv6VI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PisLz4OXUtQn6MiDdGaQWWGsGsq/1+6gt6zionbrkP6ebptFcn/Or5YYDhm7peYqs
-	 hcdM+gzpG8kWbwPVINxgWf3h9lse9ycxlg0wGbTYxpLBlm9EVGGmrHk1XIbzgZLqjp
-	 dVZzykBUA13Z3QISDXZEQMbaiRd2JfhMPONe/t0o=
+	b=RvgIdcUnkeIK7fEZZWyKlrbpKkFf9kCBcqp/inYfJbquYQhWSLMOtBmb4h6mo8bQC
+	 Jn2QVfiheH7qsAvBMak/db83UhqMcbq6GafAHmFY7IrB/N6tq4LbbUrXotCYp2VT0N
+	 /VTVaOaIyN0uI6jOQ23B63CBQU2QXQ4egmktu7mc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marc Kleine-Budde <mkl@pengutronix.de>
-Subject: [PATCH 6.6 224/254] can: esd_usb: esd_usb_read_bulk_callback(): fix URB memory leak
-Date: Wed, 28 Jan 2026 16:23:20 +0100
-Message-ID: <20260128145352.845702637@linuxfoundation.org>
+	SeongJae Park <sj@kernel.org>,
+	chongjiapeng <jiapeng.chong@linux.alibaba.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.6 225/254] mm/damon/sysfs-scheme: cleanup access_pattern subdirs on scheme dir setup failure
+Date: Wed, 28 Jan 2026 16:23:21 +0100
+Message-ID: <20260128145352.881694537@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260128145344.698118637@linuxfoundation.org>
 References: <20260128145344.698118637@linuxfoundation.org>
@@ -49,59 +51,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Marc Kleine-Budde <mkl@pengutronix.de>
+From: SeongJae Park <sj@kernel.org>
 
-commit 5a4391bdc6c8357242f62f22069c865b792406b3 upstream.
+commit 392b3d9d595f34877dd745b470c711e8ebcd225c upstream.
 
-Fix similar memory leak as in commit 7352e1d5932a ("can: gs_usb:
-gs_usb_receive_bulk_callback(): fix URB memory leak").
+When a DAMOS-scheme DAMON sysfs directory setup fails after setup of
+access_pattern/ directory, subdirectories of access_pattern/ directory are
+not cleaned up.  As a result, DAMON sysfs interface is nearly broken until
+the system reboots, and the memory for the unremoved directory is leaked.
 
-In esd_usb_open(), the URBs for USB-in transfers are allocated, added to
-the dev->rx_submitted anchor and submitted. In the complete callback
-esd_usb_read_bulk_callback(), the URBs are processed and resubmitted. In
-esd_usb_close() the URBs are freed by calling
-usb_kill_anchored_urbs(&dev->rx_submitted).
+Cleanup the directories under such failures.
 
-However, this does not take into account that the USB framework unanchors
-the URB before the complete function is called. This means that once an
-in-URB has been completed, it is no longer anchored and is ultimately not
-released in esd_usb_close().
-
-Fix the memory leak by anchoring the URB in the
-esd_usb_read_bulk_callback() to the dev->rx_submitted anchor.
-
-Fixes: 96d8e90382dc ("can: Add driver for esd CAN-USB/2 device")
-Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20260116-can_usb-fix-memory-leak-v2-2-4b8cb2915571@pengutronix.de
-Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
+Link: https://lkml.kernel.org/r/20251225023043.18579-5-sj@kernel.org
+Fixes: 9bbb820a5bd5 ("mm/damon/sysfs: support DAMOS quotas")
+Signed-off-by: SeongJae Park <sj@kernel.org>
+Cc: chongjiapeng <jiapeng.chong@linux.alibaba.com>
+Cc: <stable@vger.kernel.org> # 5.18.x
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: SeongJae Park <sj@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/can/usb/esd_usb.c |    9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
+ mm/damon/sysfs-schemes.c |    6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
---- a/drivers/net/can/usb/esd_usb.c
-+++ b/drivers/net/can/usb/esd_usb.c
-@@ -539,13 +539,20 @@ resubmit_urb:
- 			  urb->transfer_buffer, ESD_USB_RX_BUFFER_SIZE,
- 			  esd_usb_read_bulk_callback, dev);
- 
-+	usb_anchor_urb(urb, &dev->rx_submitted);
+--- a/mm/damon/sysfs-schemes.c
++++ b/mm/damon/sysfs-schemes.c
+@@ -1282,9 +1282,10 @@ static int damon_sysfs_scheme_add_dirs(s
+ 	err = damon_sysfs_scheme_set_access_pattern(scheme);
+ 	if (err)
+ 		return err;
 +
- 	retval = usb_submit_urb(urb, GFP_ATOMIC);
-+	if (!retval)
-+		return;
-+
-+	usb_unanchor_urb(urb);
-+
- 	if (retval == -ENODEV) {
- 		for (i = 0; i < dev->net_count; i++) {
- 			if (dev->nets[i])
- 				netif_device_detach(dev->nets[i]->netdev);
- 		}
--	} else if (retval) {
-+	} else {
- 		dev_err(dev->udev->dev.parent,
- 			"failed resubmitting read bulk urb: %d\n", retval);
- 	}
+ 	err = damon_sysfs_scheme_set_quotas(scheme);
+ 	if (err)
+-		goto put_access_pattern_out;
++		goto rmdir_put_access_pattern_out;
+ 	err = damon_sysfs_scheme_set_watermarks(scheme);
+ 	if (err)
+ 		goto put_quotas_access_pattern_out;
+@@ -1311,7 +1312,8 @@ put_watermarks_quotas_access_pattern_out
+ put_quotas_access_pattern_out:
+ 	kobject_put(&scheme->quotas->kobj);
+ 	scheme->quotas = NULL;
+-put_access_pattern_out:
++rmdir_put_access_pattern_out:
++	damon_sysfs_access_pattern_rm_dirs(scheme->access_pattern);
+ 	kobject_put(&scheme->access_pattern->kobj);
+ 	scheme->access_pattern = NULL;
+ 	return err;
 
 
