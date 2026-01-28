@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA63B273D6D;
-	Wed, 28 Jan 2026 15:34:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6BE91885A5;
+	Wed, 28 Jan 2026 15:34:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769614451; cv=none; b=DKpz89GDP1XFCoUIfofdmQzm7vqC97hU2PCJKUekpnpcWBmGl8xo2LfNtYToBkl9wU9tHWN+c7hpt8Ulooh2NwL/tTsNqh41vkGymfhvsGHghHZ1xxw0eS3rXnGRt7lNE2umyM8I/h+B3BPi2VT6v8dOyg/32sN1H6BeoDseBNw=
+	t=1769614455; cv=none; b=nGkmVflglkhX48hAU5pCyFY/D5dBT2vnT7wQXyqHaT+cD8MrXt4dXtwVp5aJ8Zkf7l1+ge6+CkUyqpzxk0lFfGdv9Ei/R1rT2l9ZhDl6C9U2Rt3IMi+Sf0/KaD0m77tsinMtOs2OFglpnMDOuYP6T5gJ4UsA7YP9hmf28KBlDYs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769614451; c=relaxed/simple;
-	bh=vV+xjQBQc8rRRHqmLm/klwp3VcHgxeVb295sGn1YzLA=;
+	s=arc-20240116; t=1769614455; c=relaxed/simple;
+	bh=xi0X9MhWtg0iQ7vQ5fbFzUpwyCsYcYaRCTkfgTLakY0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iThT3ckeM/nWyvgwvhuRETZfkc+tF+10Y/540MfFo04rTBrkfiXRHGmrs03DmR2ggHuk6xBkLYb+t7quciAAWo36DC6fS/22D3zuI4tVvmYQwv1UjTcH8d19/7z8AakWBvi4yJsN9Rgnte+5wVw8bAIFDCayn9yPaeH/s4zGDgE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=p3rKfGqu; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uXa3EFTQ0UUte/7dZgb5Grue9/TMHTJCxlvzO2w7KhtzgvlK3+Me4zY+KIwly3ghxYOMAf5o+f61RW5Vtzv9u3haGfFBpOvPjH4btHBEYjp5krFlwELT4GPGE08zCNRyrxj9kQsW7VrYtCl85rWg6XojKzs06qkbX5iXp1EXkwg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dQMYwJQ3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="p3rKfGqu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39647C4AF09;
-	Wed, 28 Jan 2026 15:34:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dQMYwJQ3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 76842C4CEF1;
+	Wed, 28 Jan 2026 15:34:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1769614451;
-	bh=vV+xjQBQc8rRRHqmLm/klwp3VcHgxeVb295sGn1YzLA=;
+	s=korg; t=1769614454;
+	bh=xi0X9MhWtg0iQ7vQ5fbFzUpwyCsYcYaRCTkfgTLakY0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=p3rKfGqu3CzDSQglOKLw7oyEeNHKX9r+TXvUYy1epZ7+YESe2eHB2Nv3npLim5ds+
-	 kF1j3H1KPa8aSffZKwgQe8+MVdo1QPvlU8VU9e66NNSXIdNu3T/9FEz08SC0VKgIU6
-	 a+K/gGjUU9k1nWctYZfaZ2DHgJfkjjXeghiibn2s=
+	b=dQMYwJQ39UkjzoSOcg8lxfjybgYuyOylbNuLP9gJA2z0EqhmdDFBcnAjfz2n/eWiS
+	 /3+Ot4tiOT56zTwEqMny+bHX+9zN71kaSr943yPEbySE1nKbIKQa2H9xcOTNxQ9WPQ
+	 cO+jcaXPc+1j4fVQnrwGyi+zC92kEJFSfHgr+tK4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Rob Herring (Arm)" <robh@kernel.org>,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
 	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
 	Ulf Hansson <ulf.hansson@linaro.org>,
 	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 109/254] dt-bindings: power: qcom,rpmpd: Add SC8280XP_MXC_AO
-Date: Wed, 28 Jan 2026 16:21:25 +0100
-Message-ID: <20260128145348.747208589@linuxfoundation.org>
+Subject: [PATCH 6.6 110/254] pmdomain: qcom: rpmhpd: Add MXC to SC8280XP
+Date: Wed, 28 Jan 2026 16:21:26 +0100
+Message-ID: <20260128145348.783044291@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260128145344.698118637@linuxfoundation.org>
 References: <20260128145344.698118637@linuxfoundation.org>
@@ -55,34 +55,46 @@ Content-Transfer-Encoding: 8bit
 
 From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
 
-[ Upstream commit 45e1be5ddec98db71e7481fa7a3005673200d85c ]
+[ Upstream commit 5bc3e720e725cd5fa34875fa1e5434d565858067 ]
 
-Not sure how useful it's gonna be in practice, but the definition is
-missing (unlike the previously-unused SC8280XP_MXC-non-_AO), so add it
-to allow the driver to create the corresponding pmdomain.
+This was apparently accounted for in dt-bindings, but never made its
+way into the driver.
 
-Fixes: dbfb5f94e084 ("dt-bindings: power: rpmpd: Add sc8280xp RPMh power-domains")
-Acked-by: Rob Herring (Arm) <robh@kernel.org>
+Fix it for SC8280XP and its VDD_GFX-less cousin, SA8540P.
+
+Fixes: f68f1cb3437d ("soc: qcom: rpmhpd: add sc8280xp & sa8540p rpmh power-domains")
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
 Signed-off-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
 Reviewed-by: Ulf Hansson <ulf.hansson@linaro.org>
-Link: https://lore.kernel.org/r/20251202-topic-8280_mxc-v2-1-46cdf47a829e@oss.qualcomm.com
+Link: https://lore.kernel.org/r/20251202-topic-8280_mxc-v2-2-46cdf47a829e@oss.qualcomm.com
 Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/dt-bindings/power/qcom,rpmhpd.h | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/pmdomain/qcom/rpmhpd.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/include/dt-bindings/power/qcom,rpmhpd.h b/include/dt-bindings/power/qcom,rpmhpd.h
-index 758c3487bd662..0abd1c4c53143 100644
---- a/include/dt-bindings/power/qcom,rpmhpd.h
-+++ b/include/dt-bindings/power/qcom,rpmhpd.h
-@@ -260,5 +260,6 @@
- #define SC8280XP_NSP		13
- #define SC8280XP_QPHY		14
- #define SC8280XP_XO		15
-+#define SC8280XP_MXC_AO		16
+diff --git a/drivers/pmdomain/qcom/rpmhpd.c b/drivers/pmdomain/qcom/rpmhpd.c
+index 1bb9f70ab04c8..823604952b5ec 100644
+--- a/drivers/pmdomain/qcom/rpmhpd.c
++++ b/drivers/pmdomain/qcom/rpmhpd.c
+@@ -217,6 +217,8 @@ static struct rpmhpd *sa8540p_rpmhpds[] = {
+ 	[SC8280XP_MMCX_AO] = &mmcx_ao,
+ 	[SC8280XP_MX] = &mx,
+ 	[SC8280XP_MX_AO] = &mx_ao,
++	[SC8280XP_MXC] = &mxc,
++	[SC8280XP_MXC_AO] = &mxc_ao,
+ 	[SC8280XP_NSP] = &nsp,
+ };
  
- #endif
+@@ -541,6 +543,8 @@ static struct rpmhpd *sc8280xp_rpmhpds[] = {
+ 	[SC8280XP_MMCX_AO] = &mmcx_ao,
+ 	[SC8280XP_MX] = &mx,
+ 	[SC8280XP_MX_AO] = &mx_ao,
++	[SC8280XP_MXC] = &mxc,
++	[SC8280XP_MXC_AO] = &mxc_ao,
+ 	[SC8280XP_NSP] = &nsp,
+ 	[SC8280XP_QPHY] = &qphy,
+ };
 -- 
 2.51.0
 
