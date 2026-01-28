@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 304082874FE;
-	Wed, 28 Jan 2026 15:58:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C56AA242D7F;
+	Wed, 28 Jan 2026 15:58:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769615885; cv=none; b=bKc5MG8fbTCUKxLtnErWgn4zDOonTl6uvWivV27vkyaVqlPH0TiKKcFVfJjjz1XFLe4z7zhnHC+GmqMI4w1tgLLfNQUuUtEVXGok82at/kzoZGiIoIk40XEn/g5Lw+MtxwiXow9p7OwQGhVgYGMEFaE5Rpw8+2M2wfPT+FD/KOE=
+	t=1769615888; cv=none; b=V3md2z+4XUPCRbFINTYtC/UGngF0lxLuTf2R41qTlgOtuM8zjmn7n9DDXlf4xzWvY8bDUcONaCQKrEKp26ReaSwZPDm3xs3gMaTBYNfbcqTN8ZtrCd+tUJMB9kLN1GvfUPXAuUkv/UHRRUQHtEnq6Dd4jL0mLk2Es+eXgnoyIBE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769615885; c=relaxed/simple;
-	bh=flV/hm/IpEVVHWxSPcF2BzvM3lmKjS8My0i4X2Eb+S0=;
+	s=arc-20240116; t=1769615888; c=relaxed/simple;
+	bh=dCYTl6VA29VzxqEbW+8z+4jTN9noqZNIe8xXchhx6dY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GUazPLXCnIsg+U7z6m2d3N8lwC0lzJ0RNay5zHcU7O2ZgY4Q2OPePAHb4XtLVnqq+fYYPW9iLNHUGoLua/1oYZvMgCD/J1e2t3tiKCly17jr2dqIofx7dP9jCAQs56OCMPscmmHA/KD83RbhpAY3LTso3k5ChjL55eSJzwcbRqc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XHnm/c2g; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=FoFCi4hHAahzxHtM40sK+IRxnRAR4E/718DxNeu87G5KuUL65leXe9DE3Wz96C1uKdRRPY6JLijOKpyyWKHZo+H9Ckupf+3arkQRdAa9uiw0HAvo2qy02C1AC4CNIOvK2wtvs0IRRDRi91/LR/2doY2GQRKS9xLnSVord2UTxQY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=geEUi0Gs; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XHnm/c2g"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 95590C4CEF1;
-	Wed, 28 Jan 2026 15:58:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="geEUi0Gs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D083C4CEF1;
+	Wed, 28 Jan 2026 15:58:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1769615885;
-	bh=flV/hm/IpEVVHWxSPcF2BzvM3lmKjS8My0i4X2Eb+S0=;
+	s=korg; t=1769615888;
+	bh=dCYTl6VA29VzxqEbW+8z+4jTN9noqZNIe8xXchhx6dY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XHnm/c2gq8BlLWEJtjZbyi+S41fSd9ttAwTzcjrl/JOxM58FhC7AzmoUmAqPFwf4q
-	 Yunjx4BjTnDBte81odI7Npf5tz6CosVZGNvuvEDs/v/+3ATaiL7Ac/SyIlhvLr+dgR
-	 6Pv7lC1qAw13SNhTEbsw2i+cf3JoNz0Kug7edLV0=
+	b=geEUi0GsLy3pnJQvzKxi6CsiVHh+weAyJDjXl3J2Yru4EOpBDL5Bba1vP89CIigH1
+	 0pu2FEPhXI/u5CbCWMbkGA+YLo8L4/NBvozkkBEtwIAypi3Sh2WqKppyc+wAV9n2Jx
+	 9+14Ri2XONVjRwkaqp1NRQY/vBulbiiYRk7GrbnA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Stefano Garzarella <sgarzare@redhat.com>,
-	Melbin K Mathew <mlbnkm1@gmail.com>,
-	Luigi Leonardi <leonardi@redhat.com>,
 	"Michael S. Tsirkin" <mst@redhat.com>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 143/227] vsock/virtio: fix potential underflow in virtio_transport_get_credit()
-Date: Wed, 28 Jan 2026 16:23:08 +0100
-Message-ID: <20260128145349.604523526@linuxfoundation.org>
+Subject: [PATCH 6.18 144/227] vsock/test: fix seqpacket message bounds test
+Date: Wed, 28 Jan 2026 16:23:09 +0100
+Message-ID: <20260128145349.640412567@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260128145344.331957407@linuxfoundation.org>
 References: <20260128145344.331957407@linuxfoundation.org>
@@ -54,96 +52,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Melbin K Mathew <mlbnkm1@gmail.com>
+From: Stefano Garzarella <sgarzare@redhat.com>
 
-[ Upstream commit 3ef3d52a1a9860d094395c7a3e593f3aa26ff012 ]
+[ Upstream commit 0a98de80136968bab7db37b16282b37f044694d3 ]
 
-The credit calculation in virtio_transport_get_credit() uses unsigned
-arithmetic:
+The test requires the sender (client) to send all messages before waking
+up the receiver (server).
+Since virtio-vsock had a bug and did not respect the size of the TX
+buffer, this test worked, but now that we are going to fix the bug, the
+test hangs because the sender would fill the TX buffer before waking up
+the receiver.
 
-  ret = vvs->peer_buf_alloc - (vvs->tx_cnt - vvs->peer_fwd_cnt);
+Set the buffer size in the sender (client) as well, as we already do for
+the receiver (server).
 
-If the peer shrinks its advertised buffer (peer_buf_alloc) while bytes
-are in flight, the subtraction can underflow and produce a large
-positive value, potentially allowing more data to be queued than the
-peer can handle.
-
-Reuse virtio_transport_has_space() which already handles this case and
-add a comment to make it clear why we are doing that.
-
-Fixes: 06a8fc78367d ("VSOCK: Introduce virtio_vsock_common.ko")
-Suggested-by: Stefano Garzarella <sgarzare@redhat.com>
-Signed-off-by: Melbin K Mathew <mlbnkm1@gmail.com>
-[Stefano: use virtio_transport_has_space() instead of duplicating the code]
-[Stefano: tweak the commit message]
+Fixes: 5c338112e48a ("test/vsock: rework message bounds test")
 Signed-off-by: Stefano Garzarella <sgarzare@redhat.com>
-Reviewed-by: Luigi Leonardi <leonardi@redhat.com>
-Link: https://patch.msgid.link/20260121093628.9941-2-sgarzare@redhat.com
+Link: https://patch.msgid.link/20260121093628.9941-3-sgarzare@redhat.com
 Acked-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/vmw_vsock/virtio_transport_common.c | 16 +++++++++-------
- 1 file changed, 9 insertions(+), 7 deletions(-)
+ tools/testing/vsock/vsock_test.c | 11 +++++++++++
+ 1 file changed, 11 insertions(+)
 
-diff --git a/net/vmw_vsock/virtio_transport_common.c b/net/vmw_vsock/virtio_transport_common.c
-index 26b979ad71f09..6175124d63d34 100644
---- a/net/vmw_vsock/virtio_transport_common.c
-+++ b/net/vmw_vsock/virtio_transport_common.c
-@@ -28,6 +28,7 @@
+diff --git a/tools/testing/vsock/vsock_test.c b/tools/testing/vsock/vsock_test.c
+index d4517386e551e..667f6f0ad6afa 100644
+--- a/tools/testing/vsock/vsock_test.c
++++ b/tools/testing/vsock/vsock_test.c
+@@ -351,6 +351,7 @@ static void test_stream_msg_peek_server(const struct test_opts *opts)
  
- static void virtio_transport_cancel_close_work(struct vsock_sock *vsk,
- 					       bool cancel_timeout);
-+static s64 virtio_transport_has_space(struct virtio_vsock_sock *vvs);
- 
- static const struct virtio_transport *
- virtio_transport_get_ops(struct vsock_sock *vsk)
-@@ -499,9 +500,7 @@ u32 virtio_transport_get_credit(struct virtio_vsock_sock *vvs, u32 credit)
- 		return 0;
- 
- 	spin_lock_bh(&vvs->tx_lock);
--	ret = vvs->peer_buf_alloc - (vvs->tx_cnt - vvs->peer_fwd_cnt);
--	if (ret > credit)
--		ret = credit;
-+	ret = min_t(u32, credit, virtio_transport_has_space(vvs));
- 	vvs->tx_cnt += ret;
- 	vvs->bytes_unsent += ret;
- 	spin_unlock_bh(&vvs->tx_lock);
-@@ -877,11 +876,14 @@ u32 virtio_transport_seqpacket_has_data(struct vsock_sock *vsk)
- }
- EXPORT_SYMBOL_GPL(virtio_transport_seqpacket_has_data);
- 
--static s64 virtio_transport_has_space(struct vsock_sock *vsk)
-+static s64 virtio_transport_has_space(struct virtio_vsock_sock *vvs)
+ static void test_seqpacket_msg_bounds_client(const struct test_opts *opts)
  {
--	struct virtio_vsock_sock *vvs = vsk->trans;
- 	s64 bytes;
++	unsigned long long sock_buf_size;
+ 	unsigned long curr_hash;
+ 	size_t max_msg_size;
+ 	int page_size;
+@@ -363,6 +364,16 @@ static void test_seqpacket_msg_bounds_client(const struct test_opts *opts)
+ 		exit(EXIT_FAILURE);
+ 	}
  
-+	/* Use s64 arithmetic so if the peer shrinks peer_buf_alloc while
-+	 * we have bytes in flight (tx_cnt - peer_fwd_cnt), the subtraction
-+	 * does not underflow.
-+	 */
- 	bytes = (s64)vvs->peer_buf_alloc - (vvs->tx_cnt - vvs->peer_fwd_cnt);
- 	if (bytes < 0)
- 		bytes = 0;
-@@ -895,7 +897,7 @@ s64 virtio_transport_stream_has_space(struct vsock_sock *vsk)
- 	s64 bytes;
++	sock_buf_size = SOCK_BUF_SIZE;
++
++	setsockopt_ull_check(fd, AF_VSOCK, SO_VM_SOCKETS_BUFFER_MAX_SIZE,
++			     sock_buf_size,
++			     "setsockopt(SO_VM_SOCKETS_BUFFER_MAX_SIZE)");
++
++	setsockopt_ull_check(fd, AF_VSOCK, SO_VM_SOCKETS_BUFFER_SIZE,
++			     sock_buf_size,
++			     "setsockopt(SO_VM_SOCKETS_BUFFER_SIZE)");
++
+ 	/* Wait, until receiver sets buffer size. */
+ 	control_expectln("SRVREADY");
  
- 	spin_lock_bh(&vvs->tx_lock);
--	bytes = virtio_transport_has_space(vsk);
-+	bytes = virtio_transport_has_space(vvs);
- 	spin_unlock_bh(&vvs->tx_lock);
- 
- 	return bytes;
-@@ -1492,7 +1494,7 @@ static bool virtio_transport_space_update(struct sock *sk,
- 	spin_lock_bh(&vvs->tx_lock);
- 	vvs->peer_buf_alloc = le32_to_cpu(hdr->buf_alloc);
- 	vvs->peer_fwd_cnt = le32_to_cpu(hdr->fwd_cnt);
--	space_available = virtio_transport_has_space(vsk);
-+	space_available = virtio_transport_has_space(vvs);
- 	spin_unlock_bh(&vvs->tx_lock);
- 	return space_available;
- }
 -- 
 2.51.0
 
