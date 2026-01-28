@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76FD72DB791;
-	Wed, 28 Jan 2026 16:00:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BBBD181AA8;
+	Wed, 28 Jan 2026 16:01:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769616059; cv=none; b=YseEir3IsTQ5bKDVX0gzAu7jc6iUKPdKVy2yrgRSJSQ8SUmkFGOrNzMcN1V0QTTYUprJddCCkjY6Uy5k87Ltsw17essRxhydKUvqhicjUe2gUPYNRn1Eq+oaKyQngwm0WpG9ZQNJ5OD5JguRk0FGi61hNq3M1A3kMUvnmL+jT5I=
+	t=1769616062; cv=none; b=L7IkQYAvASgQUrarzg9JUFz1/XsgkJ9f7DJrFbFhHN0VxwrOFUalyIjlkLxq+YEgx5yOGmKuE8ogMTBY4pVWB/6anxqterFb/kr88yXX/+Oe6TSOBECaqs1x0bmEOI9n4OM74nU1cC049n0HuKxAvwvDTkswwY33kxCepaQ/wNQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769616059; c=relaxed/simple;
-	bh=yYffhX3I2oeHHt6tUTU58/YRziHVT3x0wVpnmTmz89g=;
+	s=arc-20240116; t=1769616062; c=relaxed/simple;
+	bh=XaCYyChh4cgjiGIbMoKM7JV+bYZYXeeOWt5r4IR8ewo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=toBJ4Fe6WA4jlMMthaEEjDvZcyUNtHCbALMDrmKvnAJtFIpO9v14sSU6q3Ny+9gJRz+bNYkXKpoeK3U8m08Jf+F7Fgxep9DvJ/JlwEIKdNakHgBK+8H4YOcmncL/p5II/8XN9wky5E0oMDw7+V3+OVRivm7Vt5W/6nNubeW3yhY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0AWoFJRK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Bqp37EKT06veiLCd82uWukvhl9/OqdI5uHq/69UShUlahpo+pakIERaFjjKnb8Tun1vrtZM+dViltT5Fn3K/QL71GkSC4ENZ8KUorfCzlPpLMoyaONo/M2MJR38rxVLb4SKJ/WFan77sXq6ueCZYbEGjmy2P3AlMFF8Qbi304JE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jBmqXitm; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0AWoFJRK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 015A3C4CEF1;
-	Wed, 28 Jan 2026 16:00:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jBmqXitm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C535C4CEF7;
+	Wed, 28 Jan 2026 16:01:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1769616059;
-	bh=yYffhX3I2oeHHt6tUTU58/YRziHVT3x0wVpnmTmz89g=;
+	s=korg; t=1769616062;
+	bh=XaCYyChh4cgjiGIbMoKM7JV+bYZYXeeOWt5r4IR8ewo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0AWoFJRKFLaH5/2qMEVLjroIpobVSkJx8Qmk3Tq3jRA8qLpcj7RC1WijgGQA9WOBC
-	 edv3EYuL/NitfXFXZ2pYtCKyDLyuTGksoG9kq5Zc0xeQUBY4vS47Llv6uJdEkBAxaz
-	 Py6Pi1rCvdMdrNaokkuzRIXswhigaS/u2YukYkzI=
+	b=jBmqXitmt6ljir6CxASfmsTBcoboGPsL3k4svP3oKSWs0l011MYkEl0zKLUe852Y8
+	 9Z68aDTa4DCzi8eYKBUqrtQLMOdTYU2dZDHBFVdVkvOm9i3L4WhHwDgex0uhCziy2P
+	 woRO+rcEvk738Pfa6hPGR5v/BNuOPhbzl5psUci8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chenghai Huang <huangchenghai2@huawei.com>,
-	Yang Shen <shenyang39@huawei.com>,
-	Zhangfei Gao <zhangfei.gao@linaro.org>
-Subject: [PATCH 6.18 194/227] uacce: ensure safe queue release with state management
-Date: Wed, 28 Jan 2026 16:23:59 +0100
-Message-ID: <20260128145351.426980967@linuxfoundation.org>
+	syzbot+999115c3bf275797dc27@syzkaller.appspotmail.com,
+	Jeongjun Park <aha310510@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.18 195/227] netrom: fix double-free in nr_route_frame()
+Date: Wed, 28 Jan 2026 16:24:00 +0100
+Message-ID: <20260128145351.462313081@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260128145344.331957407@linuxfoundation.org>
 References: <20260128145344.331957407@linuxfoundation.org>
@@ -51,89 +51,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chenghai Huang <huangchenghai2@huawei.com>
+From: Jeongjun Park <aha310510@gmail.com>
 
-commit 26c08dabe5475d99a13f353d8dd70e518de45663 upstream.
+commit ba1096c315283ee3292765f6aea4cca15816c4f7 upstream.
 
-Directly calling `put_queue` carries risks since it cannot
-guarantee that resources of `uacce_queue` have been fully released
-beforehand. So adding a `stop_queue` operation for the
-UACCE_CMD_PUT_Q command and leaving the `put_queue` operation to
-the final resource release ensures safety.
+In nr_route_frame(), old_skb is immediately freed without checking if
+nr_neigh->ax25 pointer is NULL. Therefore, if nr_neigh->ax25 is NULL,
+the caller function will free old_skb again, causing a double-free bug.
 
-Queue states are defined as follows:
-- UACCE_Q_ZOMBIE: Initial state
-- UACCE_Q_INIT: After opening `uacce`
-- UACCE_Q_STARTED: After `start` is issued via `ioctl`
+Therefore, to prevent this, we need to modify it to check whether
+nr_neigh->ax25 is NULL before freeing old_skb.
 
-When executing `poweroff -f` in virt while accelerator are still
-working, `uacce_fops_release` and `uacce_remove` may execute
-concurrently. This can cause `uacce_put_queue` within
-`uacce_fops_release` to access a NULL `ops` pointer. Therefore, add
-state checks to prevent accessing freed pointers.
-
-Fixes: 015d239ac014 ("uacce: add uacce driver")
-Cc: stable@vger.kernel.org
-Signed-off-by: Chenghai Huang <huangchenghai2@huawei.com>
-Signed-off-by: Yang Shen <shenyang39@huawei.com>
-Acked-by: Zhangfei Gao <zhangfei.gao@linaro.org>
-Link: https://patch.msgid.link/20251202061256.4158641-5-huangchenghai2@huawei.com
+Cc: <stable@vger.kernel.org>
+Reported-by: syzbot+999115c3bf275797dc27@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/all/69694d6f.050a0220.58bed.0029.GAE@google.com/
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Signed-off-by: Jeongjun Park <aha310510@gmail.com>
+Link: https://patch.msgid.link/20260119063359.10604-1-aha310510@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/misc/uacce/uacce.c |   28 +++++++++++++++++++++-------
- 1 file changed, 21 insertions(+), 7 deletions(-)
+ net/netrom/nr_route.c |   13 +++++++++----
+ 1 file changed, 9 insertions(+), 4 deletions(-)
 
---- a/drivers/misc/uacce/uacce.c
-+++ b/drivers/misc/uacce/uacce.c
-@@ -40,20 +40,34 @@ static int uacce_start_queue(struct uacc
- 	return 0;
+--- a/net/netrom/nr_route.c
++++ b/net/netrom/nr_route.c
+@@ -752,7 +752,7 @@ int nr_route_frame(struct sk_buff *skb,
+ 	unsigned char *dptr;
+ 	ax25_cb *ax25s;
+ 	int ret;
+-	struct sk_buff *skbn;
++	struct sk_buff *nskb, *oskb;
+ 
+ 	/*
+ 	 * Reject malformed packets early. Check that it contains at least 2
+@@ -811,14 +811,16 @@ int nr_route_frame(struct sk_buff *skb,
+ 	/* We are going to change the netrom headers so we should get our
+ 	   own skb, we also did not know until now how much header space
+ 	   we had to reserve... - RXQ */
+-	if ((skbn=skb_copy_expand(skb, dev->hard_header_len, 0, GFP_ATOMIC)) == NULL) {
++	nskb = skb_copy_expand(skb, dev->hard_header_len, 0, GFP_ATOMIC);
++
++	if (!nskb) {
+ 		nr_node_unlock(nr_node);
+ 		nr_node_put(nr_node);
+ 		dev_put(dev);
+ 		return 0;
+ 	}
+-	kfree_skb(skb);
+-	skb=skbn;
++	oskb = skb;
++	skb = nskb;
+ 	skb->data[14]--;
+ 
+ 	dptr  = skb_push(skb, 1);
+@@ -837,6 +839,9 @@ int nr_route_frame(struct sk_buff *skb,
+ 	nr_node_unlock(nr_node);
+ 	nr_node_put(nr_node);
+ 
++	if (ret)
++		kfree_skb(oskb);
++
+ 	return ret;
  }
  
--static int uacce_put_queue(struct uacce_queue *q)
-+static int uacce_stop_queue(struct uacce_queue *q)
- {
- 	struct uacce_device *uacce = q->uacce;
- 
--	if ((q->state == UACCE_Q_STARTED) && uacce->ops->stop_queue)
-+	if (q->state != UACCE_Q_STARTED)
-+		return 0;
-+
-+	if (uacce->ops->stop_queue)
- 		uacce->ops->stop_queue(q);
- 
--	if ((q->state == UACCE_Q_INIT || q->state == UACCE_Q_STARTED) &&
--	     uacce->ops->put_queue)
-+	q->state = UACCE_Q_INIT;
-+
-+	return 0;
-+}
-+
-+static void uacce_put_queue(struct uacce_queue *q)
-+{
-+	struct uacce_device *uacce = q->uacce;
-+
-+	uacce_stop_queue(q);
-+
-+	if (q->state != UACCE_Q_INIT)
-+		return;
-+
-+	if (uacce->ops->put_queue)
- 		uacce->ops->put_queue(q);
- 
- 	q->state = UACCE_Q_ZOMBIE;
--
--	return 0;
- }
- 
- static long uacce_fops_unl_ioctl(struct file *filep,
-@@ -80,7 +94,7 @@ static long uacce_fops_unl_ioctl(struct
- 		ret = uacce_start_queue(q);
- 		break;
- 	case UACCE_CMD_PUT_Q:
--		ret = uacce_put_queue(q);
-+		ret = uacce_stop_queue(q);
- 		break;
- 	default:
- 		if (uacce->ops->ioctl)
 
 
