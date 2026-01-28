@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FEA62DB791;
-	Wed, 28 Jan 2026 15:59:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 899242DB791;
+	Wed, 28 Jan 2026 16:00:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769615997; cv=none; b=UO6gNGBd5QfQb8LBPMhhg1V1qGkInfESvkt+N+pIXWSweB99Q1HQuvUrO8ihdSsbgFzFJdaMIYiDuMKtve+cJdZjJWSFpba1w5mBAyopA2YoowPHEyZ4ZArbleysVgh4gHgccEAmWZrtPAecubtJCMhWIFUu9DiRY4N9ItPCcA8=
+	t=1769616001; cv=none; b=GcKe/avhfYLeM3BwZDjZC9OHDJq+3k71BHLpko2V3L3+TbaIG3j9PSIiQWEYJyBTzlHHTB4is80UJKmcy+Pe7aPSIjOdLodb0fK5M+4sIajiug+Bw28FYm3OoX8fQ/KBnMr/DJIhvWLxvVG8zk5NKN81nYvTT18EhIUavKQ0nHg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769615997; c=relaxed/simple;
-	bh=cJmwZfEIlcEVFkuDoUX7b4N0m4PxaOf9fT6SeVhYIUc=;
+	s=arc-20240116; t=1769616001; c=relaxed/simple;
+	bh=jOp06s2wiamrqCsGL4FiFi1ETvn1lwWTwjJh61PhAyA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HksLpgsJZEfhxIbRCE0HPYjzOXhEs3NlEh3fk7m37ZECeqaRxZsoKGDvjx96XZSxLvpAwhVtd87ruqP8gKUqz+FoZO4NDUaiY7M68jEPvoGwbSL2LxCU+uWI6IWRB0oc4ZkzK12q3ys0pARmI/q5rqX2jVHNw7Yerv90dpyoYRE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mZ4ty13q; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=u3m0Ybjy96ay5D0YHp8DjcWCes20vkw8VC2QZCsLQ6P1YtRI5fNAOXZVowzA4MPZLM+knQCjPP/eYOFNKdkGETMPXyaitrLZxNrDUKqE+dUrWzXYpKWKOS+4Wn3Uo7gCVRKy9ooP7nh4I115c5EycPnViz4x1/RGgF5ShuqezaY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hFCmjx2j; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mZ4ty13q"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B751C4CEF1;
-	Wed, 28 Jan 2026 15:59:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hFCmjx2j"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 23077C4CEF7;
+	Wed, 28 Jan 2026 15:59:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1769615997;
-	bh=cJmwZfEIlcEVFkuDoUX7b4N0m4PxaOf9fT6SeVhYIUc=;
+	s=korg; t=1769616001;
+	bh=jOp06s2wiamrqCsGL4FiFi1ETvn1lwWTwjJh61PhAyA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mZ4ty13qu2Wckc7iCdxHc6SVdYUXOpdcC+2qJ6nRmdKeDoXzJiBkTWOta5yy1geII
-	 JGj4vIXwK48Q2V6BmtC0k1rSlplnhKjyNI98R0h+njtI11cyMb5W7kBzewEmDfqc8E
-	 F97N55BDodRZLDRaZglAsFrav6iRmQ9rz3wamxOE=
+	b=hFCmjx2jB0ZtPuSz0WCFNRHMtmhbadKjWfEAjn1+fIVVEnxg7YssRz/Q7l7GnVT/X
+	 o3GJ54LHz+gZ96cV5XfbcumnpTwTt62CIOuP8Vo/VveN7xRbvJWTfwPILKP0yvgrRU
+	 FkAzDmjgY/QaCGoCv1UJr5zY2BqujXwQjBtrL2qg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marek Vasut <marex@nabladev.com>,
-	Johannes Berg <johannes.berg@intel.com>
-Subject: [PATCH 6.18 177/227] wifi: rsi: Fix memory corruption due to not set vif driver data size
-Date: Wed, 28 Jan 2026 16:23:42 +0100
-Message-ID: <20260128145350.817912380@linuxfoundation.org>
+	syzbot+d4ab35af21e99d07ce67@syzkaller.appspotmail.com,
+	Mark Rutland <mark.rutland@arm.com>,
+	Mark Brown <broonie@kernel.org>,
+	Will Deacon <will@kernel.org>,
+	Catalin Marinas <catalin.marinas@arm.com>
+Subject: [PATCH 6.18 178/227] arm64/fpsimd: ptrace: Fix SVE writes on !SME systems
+Date: Wed, 28 Jan 2026 16:23:43 +0100
+Message-ID: <20260128145350.853666281@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260128145344.331957407@linuxfoundation.org>
 References: <20260128145344.331957407@linuxfoundation.org>
@@ -50,57 +53,93 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Marek Vasut <marex@nabladev.com>
+From: Mark Rutland <mark.rutland@arm.com>
 
-commit 4f431d88ea8093afc7ba55edf4652978c5a68f33 upstream.
+commit 128a7494a9f15aad60cc6b7e3546bf481ac54a13 upstream.
 
-The struct ieee80211_vif contains trailing space for vif driver data,
-when struct ieee80211_vif is allocated, the total memory size that is
-allocated is sizeof(struct ieee80211_vif) + size of vif driver data.
-The size of vif driver data is set by each WiFi driver as needed.
+When SVE is supported but SME is not supported, a ptrace write to the
+NT_ARM_SVE regset can place the tracee into an invalid state where
+(non-streaming) SVE register data is stored in FP_STATE_SVE format but
+TIF_SVE is clear. This can result in a later warning from
+fpsimd_restore_current_state(), e.g.
 
-The RSI911x driver does not set vif driver data size, no trailing space
-for vif driver data is therefore allocated past struct ieee80211_vif .
-The RSI911x driver does however use the vif driver data to store its
-vif driver data structure "struct vif_priv". An access to vif->drv_priv
-leads to access out of struct ieee80211_vif bounds and corruption of
-some memory.
+  WARNING: CPU: 0 PID: 7214 at arch/arm64/kernel/fpsimd.c:383 fpsimd_restore_current_state+0x50c/0x748
 
-In case of the failure observed locally, rsi_mac80211_add_interface()
-would write struct vif_priv *vif_info = (struct vif_priv *)vif->drv_priv;
-vif_info->vap_id = vap_idx. This write corrupts struct fq_tin member
-struct list_head new_flows . The flow = list_first_entry(head, struct
-fq_flow, flowchain); in fq_tin_reset() then reports non-NULL bogus
-address, which when accessed causes a crash.
+When this happens, fpsimd_restore_current_state() will set TIF_SVE,
+placing the task into the correct state. This occurs before any other
+check of TIF_SVE can possibly occur, as other checks of TIF_SVE only
+happen while the FPSIMD/SVE/SME state is live. Thus, aside from the
+warning, there is no functional issue.
 
-The trigger is very simple, boot the machine with init=/bin/sh , mount
-devtmpfs, sysfs, procfs, and then do "ip link set wlan0 up", "sleep 1",
-"ip link set wlan0 down" and the crash occurs.
+This bug was introduced during rework to error handling in commit:
 
-Fix this by setting the correct size of vif driver data, which is the
-size of "struct vif_priv", so that memory is allocated and the driver
-can store its driver data in it, instead of corrupting memory around
-it.
+  9f8bf718f2923 ("arm64/fpsimd: ptrace: Gracefully handle errors")
 
-Cc: stable@vger.kernel.org
-Fixes: dad0d04fa7ba ("rsi: Add RS9113 wireless driver")
-Signed-off-by: Marek Vasut <marex@nabladev.com>
-Link: https://patch.msgid.link/20260109235817.150330-1-marex@nabladev.com
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+... where the setting of TIF_SVE was moved into a block which is only
+executed when system_supports_sme() is true.
+
+Fix this by removing the system_supports_sme() check. This ensures that
+TIF_SVE is set for (SVE-formatted) writes to NT_ARM_SVE, at the cost of
+unconditionally manipulating the tracee's saved svcr value. The
+manipulation of svcr is benign and inexpensive, and we already do
+similar elsewhere (e.g. during signal handling), so I don't think it's
+worth guarding this with system_supports_sme() checks.
+
+Aside from the above, there is no functional change. The 'type' argument
+to sve_set_common() is only set to ARM64_VEC_SME (in ssve_set())) when
+system_supports_sme(), so the ARM64_VEC_SME case in the switch statement
+is still unreachable when !system_supports_sme(). When
+CONFIG_ARM64_SME=n, the only caller of sve_set_common() is sve_set(),
+and the compiler can constant-fold for the case where type is
+ARM64_VEC_SVE, removing the logic for other cases.
+
+Reported-by: syzbot+d4ab35af21e99d07ce67@syzkaller.appspotmail.com
+Fixes: 9f8bf718f292 ("arm64/fpsimd: ptrace: Gracefully handle errors")
+Signed-off-by: Mark Rutland <mark.rutland@arm.com>
+Cc: <stable@vger.kernel.org>
+Cc: Mark Brown <broonie@kernel.org>
+Cc: Will Deacon <will@kernel.org>
+Reviewed-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Catalin Marinas <catalin.marinas@arm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wireless/rsi/rsi_91x_mac80211.c |    1 +
- 1 file changed, 1 insertion(+)
+ arch/arm64/kernel/ptrace.c |   26 ++++++++++++--------------
+ 1 file changed, 12 insertions(+), 14 deletions(-)
 
---- a/drivers/net/wireless/rsi/rsi_91x_mac80211.c
-+++ b/drivers/net/wireless/rsi/rsi_91x_mac80211.c
-@@ -2035,6 +2035,7 @@ int rsi_mac80211_attach(struct rsi_commo
+--- a/arch/arm64/kernel/ptrace.c
++++ b/arch/arm64/kernel/ptrace.c
+@@ -942,20 +942,18 @@ static int sve_set_common(struct task_st
+ 	vq = sve_vq_from_vl(task_get_vl(target, type));
  
- 	hw->queues = MAX_HW_QUEUES;
- 	hw->extra_tx_headroom = RSI_NEEDED_HEADROOM;
-+	hw->vif_data_size = sizeof(struct vif_priv);
+ 	/* Enter/exit streaming mode */
+-	if (system_supports_sme()) {
+-		switch (type) {
+-		case ARM64_VEC_SVE:
+-			target->thread.svcr &= ~SVCR_SM_MASK;
+-			set_tsk_thread_flag(target, TIF_SVE);
+-			break;
+-		case ARM64_VEC_SME:
+-			target->thread.svcr |= SVCR_SM_MASK;
+-			set_tsk_thread_flag(target, TIF_SME);
+-			break;
+-		default:
+-			WARN_ON_ONCE(1);
+-			return -EINVAL;
+-		}
++	switch (type) {
++	case ARM64_VEC_SVE:
++		target->thread.svcr &= ~SVCR_SM_MASK;
++		set_tsk_thread_flag(target, TIF_SVE);
++		break;
++	case ARM64_VEC_SME:
++		target->thread.svcr |= SVCR_SM_MASK;
++		set_tsk_thread_flag(target, TIF_SME);
++		break;
++	default:
++		WARN_ON_ONCE(1);
++		return -EINVAL;
+ 	}
  
- 	hw->max_rates = 1;
- 	hw->max_rate_tries = MAX_RETRIES;
+ 	/* Always zero V regs, FPSR, and FPCR */
 
 
