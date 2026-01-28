@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4871D2D131D;
-	Wed, 28 Jan 2026 15:34:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55C822D239B;
+	Wed, 28 Jan 2026 15:35:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769614499; cv=none; b=dHsHMRKQPbk2JrCBvrc4w/0SMJYw5Pb4dGF1BWTwT/qookZvYQLymUcP6LZPoUhGpo/Ripg3QEIs2zWm+u+TBpSVxiOTpT9Bd1bYDpL4TgSxcqTBVa/FsYo5QB07qtt9NbZhYYJdF5xUaU4cQFCRnT3YG3QV0Vg2EDUYKaD/6E8=
+	t=1769614502; cv=none; b=oSJcjc9qLBOuPcEdpw+QlqgEZM4MR1Fv+DtNaLRhekyrnlhrSGRZRQmneGm9hwZ0HrKqm2YNsxGMOBWGp/ZG3gK4+We+BSCYcyxuub6jtf9J2wSFcSEHNuZgU1RSGbEM3tQzeYPup7CQmn7YOn/LFFb6NOfzJuzq0fjpw/pIdXw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769614499; c=relaxed/simple;
-	bh=bYQ9VN6mWGGbVnFVK8P+uDiuMnMEbDf2xbYEIxCsuPU=;
+	s=arc-20240116; t=1769614502; c=relaxed/simple;
+	bh=TGyIofuGB1YoTI+BTVialEZeJHRnQz9KWYm8q6AkP1k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oEIp4UqM8vtJsUnYJBEBqP9Z6gqSxjesWcPJuvG79WIc2oNFqCVaEKCwP+ckV8ESNRr+4vuJ6M0XEV8t7n0UEd4y0wRFkfL5LJH1qr8K/B7HbRrREAJ4iz/25RhGvrNRXvId7Jn5RRq6dNWuiGPkwjwqZpeUXpDNtSt6ZSJX2vc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Axf1Ez4f; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mBlAwqgFZ6Idxc7jGz4txN6F+0aaVxJfirIkskLJh0reM9/DJE7voonRb3BOdasjCIX4BuJRKcj8Y0L5lShzIySBGGnLpOgwHazuaxdCcbF+CB8/M86Xv61e1MKa1pk6cW9zGw3X0g7MYzM9N/HlmZxAXj+3NWTOzritXDrRuaA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=e3nM7oKu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Axf1Ez4f"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 62F77C4CEF1;
-	Wed, 28 Jan 2026 15:34:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="e3nM7oKu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C0F3AC4CEF1;
+	Wed, 28 Jan 2026 15:35:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1769614498;
-	bh=bYQ9VN6mWGGbVnFVK8P+uDiuMnMEbDf2xbYEIxCsuPU=;
+	s=korg; t=1769614502;
+	bh=TGyIofuGB1YoTI+BTVialEZeJHRnQz9KWYm8q6AkP1k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Axf1Ez4ftGXJESmRM+VrezKcJYIytQPsksJpBZHbliqnnecE5DVsDDllHluZqRC8l
-	 X1otXWAW9ixNfgXQPEMVC5McyPTalZerSDSluhnsaOmJB9OqhFiSsRao79gjpAXs6P
-	 bG025S/Ooqe3cCkyExb3OlU64HWy8VrwuQOS7vtI=
+	b=e3nM7oKufCqOvKnWyrhJslDKvdpN5hxSHW5lHrfrWh8TuOIuExegQifunbBWya0w2
+	 60E1TGA+aFm/N470p7aH0pamR9NkgdlLWNrdhukbuYLJi0FaIeKRBEXUV6iS1Yx0/f
+	 nmLb+k268FXG5G/VRJhryLEkyelFM5V9aSobr3sc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Felix Gu <gu_0233@qq.com>,
-	Baolin Wang <baolin.wang@linux.alibaba.com>,
-	Mark Brown <broonie@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 156/254] spi: spi-sprd-adi: Fix double free in probe error path
-Date: Wed, 28 Jan 2026 16:22:12 +0100
-Message-ID: <20260128145350.425259103@linuxfoundation.org>
+	Thadeu Lima de Souza Cascardo <cascardo@igalia.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.6 139/254] Revert "nfc/nci: Add the inconsistency check between the input data length and count"
+Date: Wed, 28 Jan 2026 16:21:55 +0100
+Message-ID: <20260128145349.819199427@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260128145344.698118637@linuxfoundation.org>
 References: <20260128145344.698118637@linuxfoundation.org>
@@ -52,113 +50,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Felix Gu <gu_0233@qq.com>
+From: Thadeu Lima de Souza Cascardo <cascardo@igalia.com>
 
-[ Upstream commit 383d4f5cffcc8df930d95b06518a9d25a6d74aac ]
+commit f40ddcc0c0ca1a0122a7f4440b429f97d5832bdf upstream.
 
-The driver currently uses spi_alloc_host() to allocate the controller
-but registers it using devm_spi_register_controller().
+This reverts commit 068648aab72c9ba7b0597354ef4d81ffaac7b979.
 
-If devm_register_restart_handler() fails, the code jumps to the
-put_ctlr label and calls spi_controller_put(). However, since the
-controller was registered via a devm function, the device core will
-automatically call spi_controller_put() again when the probe fails.
-This results in a double-free of the spi_controller structure.
+NFC packets may have NUL-bytes. Checking for string length is not a correct
+assumption here. As long as there is a check for the length copied from
+copy_from_user, all should be fine.
 
-Fix this by switching to devm_spi_alloc_host() and removing the
-manual spi_controller_put() call.
+The fix only prevented the syzbot reproducer from triggering the bug
+because the packet is not enqueued anymore and the code that triggers the
+bug is not exercised.
 
-Fixes: ac17750 ("spi: sprd: Add the support of restarting the system")
-Signed-off-by: Felix Gu <gu_0233@qq.com>
-Reviewed-by: Baolin Wang <baolin.wang@linux.alibaba.com>
-Link: https://patch.msgid.link/tencent_AC7D389CE7E24318445E226F7CDCCC2F0D07@qq.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+The fix even broke
+testing/selftests/nci/nci_dev, making all tests there fail. After the
+revert, 6 out of 8 tests pass.
+
+Fixes: 068648aab72c ("nfc/nci: Add the inconsistency check between the input data length and count")
+Cc: stable@vger.kernel.org
+Signed-off-by: Thadeu Lima de Souza Cascardo <cascardo@igalia.com>
+Link: https://patch.msgid.link/20260113202458.449455-1-cascardo@igalia.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/spi/spi-sprd-adi.c | 33 ++++++++++-----------------------
- 1 file changed, 10 insertions(+), 23 deletions(-)
+ drivers/nfc/virtual_ncidev.c |    4 ----
+ 1 file changed, 4 deletions(-)
 
-diff --git a/drivers/spi/spi-sprd-adi.c b/drivers/spi/spi-sprd-adi.c
-index 262c11d977ea3..f25b34a91756f 100644
---- a/drivers/spi/spi-sprd-adi.c
-+++ b/drivers/spi/spi-sprd-adi.c
-@@ -528,7 +528,7 @@ static int sprd_adi_probe(struct platform_device *pdev)
- 	pdev->id = of_alias_get_id(np, "spi");
- 	num_chipselect = of_get_child_count(np);
- 
--	ctlr = spi_alloc_host(&pdev->dev, sizeof(struct sprd_adi));
-+	ctlr = devm_spi_alloc_host(&pdev->dev, sizeof(struct sprd_adi));
- 	if (!ctlr)
- 		return -ENOMEM;
- 
-@@ -536,10 +536,8 @@ static int sprd_adi_probe(struct platform_device *pdev)
- 	sadi = spi_controller_get_devdata(ctlr);
- 
- 	sadi->base = devm_platform_get_and_ioremap_resource(pdev, 0, &res);
--	if (IS_ERR(sadi->base)) {
--		ret = PTR_ERR(sadi->base);
--		goto put_ctlr;
--	}
-+	if (IS_ERR(sadi->base))
-+		return PTR_ERR(sadi->base);
- 
- 	sadi->slave_vbase = (unsigned long)sadi->base +
- 			    data->slave_offset;
-@@ -551,18 +549,15 @@ static int sprd_adi_probe(struct platform_device *pdev)
- 	if (ret > 0 || (IS_ENABLED(CONFIG_HWSPINLOCK) && ret == 0)) {
- 		sadi->hwlock =
- 			devm_hwspin_lock_request_specific(&pdev->dev, ret);
--		if (!sadi->hwlock) {
--			ret = -ENXIO;
--			goto put_ctlr;
--		}
-+		if (!sadi->hwlock)
-+			return -ENXIO;
- 	} else {
- 		switch (ret) {
- 		case -ENOENT:
- 			dev_info(&pdev->dev, "no hardware spinlock supplied\n");
- 			break;
- 		default:
--			dev_err_probe(&pdev->dev, ret, "failed to find hwlock id\n");
--			goto put_ctlr;
-+			return dev_err_probe(&pdev->dev, ret, "failed to find hwlock id\n");
- 		}
+--- a/drivers/nfc/virtual_ncidev.c
++++ b/drivers/nfc/virtual_ncidev.c
+@@ -125,10 +125,6 @@ static ssize_t virtual_ncidev_write(stru
+ 		kfree_skb(skb);
+ 		return -EFAULT;
  	}
- 
-@@ -579,26 +574,18 @@ static int sprd_adi_probe(struct platform_device *pdev)
- 	ctlr->transfer_one = sprd_adi_transfer_one;
- 
- 	ret = devm_spi_register_controller(&pdev->dev, ctlr);
--	if (ret) {
--		dev_err(&pdev->dev, "failed to register SPI controller\n");
--		goto put_ctlr;
+-	if (strnlen(skb->data, count) != count) {
+-		kfree_skb(skb);
+-		return -EINVAL;
 -	}
-+	if (ret)
-+		return dev_err_probe(&pdev->dev, ret, "failed to register SPI controller\n");
  
- 	if (sadi->data->restart) {
- 		ret = devm_register_restart_handler(&pdev->dev,
- 						    sadi->data->restart,
- 						    sadi);
--		if (ret) {
--			dev_err(&pdev->dev, "can not register restart handler\n");
--			goto put_ctlr;
--		}
-+		if (ret)
-+			return dev_err_probe(&pdev->dev, ret, "can not register restart handler\n");
- 	}
- 
- 	return 0;
--
--put_ctlr:
--	spi_controller_put(ctlr);
--	return ret;
- }
- 
- static struct sprd_adi_data sc9860_data = {
--- 
-2.51.0
-
+ 	nci_recv_frame(vdev->ndev, skb);
+ 	return count;
 
 
