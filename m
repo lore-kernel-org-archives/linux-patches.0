@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7603B305E2E;
-	Wed, 28 Jan 2026 15:52:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46CFE270ED7;
+	Wed, 28 Jan 2026 15:52:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769615564; cv=none; b=hvFE0PHEKx0wVLKvWhCiQuPUqv0jpZzyuKawkDupzeDN5J6ZHUGY56uc1QH4i51JwWjEvudblrunAqzMgDslH3qjZnrsdcTaWZfpFZNA66KzCuZaync+cJQBHcITQpLUyqSC3D7PbqIk38OSY1EzJwS/G4ddQZyHAIZ2OLkUyBo=
+	t=1769615568; cv=none; b=kUsAhZ8hrzioltQDxFKvVfCXuryJeXrvh6uzy6424v6cqlWENECbU7fEiAG95X4bnnb9iUBbziTs9D/3ywQIbyNNdZmGujCiFr0Fpn9HzWrWtAlUHRirvXvhE5l8YSW+0UeqX3JJuqv3/Q+H0AC0lKqAlmrCg9DLctwNnoF8uqg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769615564; c=relaxed/simple;
-	bh=ytUou+EXtdYa4NKJvCj2Z+z4urSbpGz7lC81gXRWc7U=;
+	s=arc-20240116; t=1769615568; c=relaxed/simple;
+	bh=03iYZY3TMTZPVudXVpXNpUUnApEiMZjZFFdBGcqyU20=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CTZyBCIAISIKOsZWeG7MV6eW0IGTgXnSMLdizkKnwHkEwM72vOpdlM9Gs2ttPKOOAVQ9mnWGIHtTRcqlGyFY5obgNU+XpCle89yOvTja3qt0wEkz54jmK4wsPe8HXGPUxKQxsxqf10dUZPvXT313CiOf+VrhqlxwHHLiwWPOT/o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gsUlJ+eR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lAVDwVREN8NdDqEqXL8eMGHYzDfxfhBwd7zbjnhn7DGecaxCZOV1myU/+lPYPJ2gQMnnehevn0QNNaTJOjJ3iAFEEYGzevdCmaNXASIz6CeQRhd8S43KXga61/gzwfrXPQkVnsLxpeiz6qPbAo5YDNMbaSEGNMFd/CHGZnB4rhg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gA5qwUQm; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gsUlJ+eR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF8C2C4CEF1;
-	Wed, 28 Jan 2026 15:52:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gA5qwUQm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 92CC0C4CEF1;
+	Wed, 28 Jan 2026 15:52:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1769615564;
-	bh=ytUou+EXtdYa4NKJvCj2Z+z4urSbpGz7lC81gXRWc7U=;
+	s=korg; t=1769615568;
+	bh=03iYZY3TMTZPVudXVpXNpUUnApEiMZjZFFdBGcqyU20=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gsUlJ+eRXfNHoG6WjojuToohfOleG/7AHX9yTvsvrHH/zu5ChXMl3+l6XuqHccWd1
-	 up4ICfVAteCq1D3BNZQrZSrjcYUqPRuCyk66LtlJruVGWancxK8a7mbR/OfP+e63KP
-	 tnEL0wc0juTEWY9N08C2p/sC9kkQOuPkQ+M5wm7g=
+	b=gA5qwUQmJlGRZDsf8+lk6A6BH4xhpQe6CocRg6AytwMbetbAOFKXXrFPguP2dK68Y
+	 jTQF4wxhInIpJ0ksfTML+P9rSodHPkckcxgY+zAMoCsYt5bgDEWUprKpkaGxmKIrFj
+	 Di1WOY6quPQAE68lQkw418f4SCFeGrukPzunMqCE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+9c081b17773615f24672@syzkaller.appspotmail.com,
-	Eric Dumazet <edumazet@google.com>,
-	Andrew Lunn <andrew+netdev@lunn.ch>,
-	Jay Vosburgh <jv@jvosburgh.net>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Taeyang Lee <0wn@theori.io>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 029/227] bonding: limit BOND_MODE_8023AD to Ethernet devices
-Date: Wed, 28 Jan 2026 16:21:14 +0100
-Message-ID: <20260128145345.393271103@linuxfoundation.org>
+Subject: [PATCH 6.18 047/227] crypto: authencesn - reject too-short AAD (assoclen<8) to match ESP/ESN spec
+Date: Wed, 28 Jan 2026 16:21:32 +0100
+Message-ID: <20260128145346.036884243@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260128145344.331957407@linuxfoundation.org>
 References: <20260128145344.331957407@linuxfoundation.org>
@@ -54,89 +51,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Taeyang Lee <0wn@theori.io>
 
-[ Upstream commit c84fcb79e5dbde0b8d5aeeaf04282d2149aebcf6 ]
+[ Upstream commit 2397e9264676be7794f8f7f1e9763d90bd3c7335 ]
 
-BOND_MODE_8023AD makes sense for ARPHRD_ETHER only.
+authencesn assumes an ESP/ESN-formatted AAD. When assoclen is shorter than
+the minimum expected length, crypto_authenc_esn_decrypt() can advance past
+the end of the destination scatterlist and trigger a NULL pointer dereference
+in scatterwalk_map_and_copy(), leading to a kernel panic (DoS).
 
-syzbot reported:
+Add a minimum AAD length check to fail fast on invalid inputs.
 
- BUG: KASAN: global-out-of-bounds in __hw_addr_create net/core/dev_addr_lists.c:63 [inline]
- BUG: KASAN: global-out-of-bounds in __hw_addr_add_ex+0x25d/0x760 net/core/dev_addr_lists.c:118
-Read of size 16 at addr ffffffff8bf94040 by task syz.1.3580/19497
-
-CPU: 1 UID: 0 PID: 19497 Comm: syz.1.3580 Tainted: G             L      syzkaller #0 PREEMPT(full)
-Tainted: [L]=SOFTLOCKUP
-Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 10/25/2025
-Call Trace:
- <TASK>
-  dump_stack_lvl+0xe8/0x150 lib/dump_stack.c:120
-  print_address_description mm/kasan/report.c:378 [inline]
-  print_report+0xca/0x240 mm/kasan/report.c:482
-  kasan_report+0x118/0x150 mm/kasan/report.c:595
- check_region_inline mm/kasan/generic.c:-1 [inline]
-  kasan_check_range+0x2b0/0x2c0 mm/kasan/generic.c:200
-  __asan_memcpy+0x29/0x70 mm/kasan/shadow.c:105
-  __hw_addr_create net/core/dev_addr_lists.c:63 [inline]
-  __hw_addr_add_ex+0x25d/0x760 net/core/dev_addr_lists.c:118
-  __dev_mc_add net/core/dev_addr_lists.c:868 [inline]
-  dev_mc_add+0xa1/0x120 net/core/dev_addr_lists.c:886
-  bond_enslave+0x2b8b/0x3ac0 drivers/net/bonding/bond_main.c:2180
-  do_set_master+0x533/0x6d0 net/core/rtnetlink.c:2963
-  do_setlink+0xcf0/0x41c0 net/core/rtnetlink.c:3165
-  rtnl_changelink net/core/rtnetlink.c:3776 [inline]
-  __rtnl_newlink net/core/rtnetlink.c:3935 [inline]
-  rtnl_newlink+0x161c/0x1c90 net/core/rtnetlink.c:4072
-  rtnetlink_rcv_msg+0x7cf/0xb70 net/core/rtnetlink.c:6958
-  netlink_rcv_skb+0x208/0x470 net/netlink/af_netlink.c:2550
-  netlink_unicast_kernel net/netlink/af_netlink.c:1318 [inline]
-  netlink_unicast+0x82f/0x9e0 net/netlink/af_netlink.c:1344
-  netlink_sendmsg+0x805/0xb30 net/netlink/af_netlink.c:1894
-  sock_sendmsg_nosec net/socket.c:727 [inline]
-  __sock_sendmsg+0x21c/0x270 net/socket.c:742
-  ____sys_sendmsg+0x505/0x820 net/socket.c:2592
-  ___sys_sendmsg+0x21f/0x2a0 net/socket.c:2646
-  __sys_sendmsg+0x164/0x220 net/socket.c:2678
-  do_syscall_32_irqs_on arch/x86/entry/syscall_32.c:83 [inline]
-  __do_fast_syscall_32+0x1dc/0x560 arch/x86/entry/syscall_32.c:307
-  do_fast_syscall_32+0x34/0x80 arch/x86/entry/syscall_32.c:332
- entry_SYSENTER_compat_after_hwframe+0x84/0x8e
- </TASK>
-
-The buggy address belongs to the variable:
- lacpdu_mcast_addr+0x0/0x40
-
-Fixes: 872254dd6b1f ("net/bonding: Enable bonding to enslave non ARPHRD_ETHER")
-Reported-by: syzbot+9c081b17773615f24672@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/netdev/6966946b.a70a0220.245e30.0002.GAE@google.com/T/#u
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Cc: Andrew Lunn <andrew+netdev@lunn.ch>
-Acked-by: Jay Vosburgh <jv@jvosburgh.net>
-Link: https://patch.msgid.link/20260113191201.3970737-1-edumazet@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 104880a6b470 ("crypto: authencesn - Convert to new AEAD interface")
+Reported-By: Taeyang Lee <0wn@theori.io>
+Signed-off-by: Taeyang Lee <0wn@theori.io>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/bonding/bond_main.c | 6 ++++++
+ crypto/authencesn.c | 6 ++++++
  1 file changed, 6 insertions(+)
 
-diff --git a/drivers/net/bonding/bond_main.c b/drivers/net/bonding/bond_main.c
-index 5abef8a3b7758..c66cb2d43dcf1 100644
---- a/drivers/net/bonding/bond_main.c
-+++ b/drivers/net/bonding/bond_main.c
-@@ -1953,6 +1953,12 @@ int bond_enslave(struct net_device *bond_dev, struct net_device *slave_dev,
- 	 */
- 	if (!bond_has_slaves(bond)) {
- 		if (bond_dev->type != slave_dev->type) {
-+			if (slave_dev->type != ARPHRD_ETHER &&
-+			    BOND_MODE(bond) == BOND_MODE_8023AD) {
-+				SLAVE_NL_ERR(bond_dev, slave_dev, extack,
-+					     "8023AD mode requires Ethernet devices");
-+				return -EINVAL;
-+			}
- 			slave_dbg(bond_dev, slave_dev, "change device type from %d to %d\n",
- 				  bond_dev->type, slave_dev->type);
+diff --git a/crypto/authencesn.c b/crypto/authencesn.c
+index d1bf0fda3f2ef..542a978663b9e 100644
+--- a/crypto/authencesn.c
++++ b/crypto/authencesn.c
+@@ -169,6 +169,9 @@ static int crypto_authenc_esn_encrypt(struct aead_request *req)
+ 	struct scatterlist *src, *dst;
+ 	int err;
  
++	if (assoclen < 8)
++		return -EINVAL;
++
+ 	sg_init_table(areq_ctx->src, 2);
+ 	src = scatterwalk_ffwd(areq_ctx->src, req->src, assoclen);
+ 	dst = src;
+@@ -256,6 +259,9 @@ static int crypto_authenc_esn_decrypt(struct aead_request *req)
+ 	u32 tmp[2];
+ 	int err;
+ 
++	if (assoclen < 8)
++		return -EINVAL;
++
+ 	cryptlen -= authsize;
+ 
+ 	if (req->src != dst)
 -- 
 2.51.0
 
