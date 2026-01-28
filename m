@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3003C2D660E;
-	Wed, 28 Jan 2026 15:36:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC7D32D5408;
+	Wed, 28 Jan 2026 15:36:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769614592; cv=none; b=kFazwtU0u3SMy/dE9bmgwl2f+nBBEBu9RZqPkW9KnbGAswa8ZpfYJhM3+sU8qiXfJlnvim2JxGxtKuoWh7tLVEi8aunwLIhF/58x99j+Vy5Kvx4mnDlP6xGXf0WUxnWS+WvYHsCF6mFTcemFtb71NzbwO210dqewxIkDvhLOKzw=
+	t=1769614595; cv=none; b=nq8rTxUauNIVRqjl4njTw4TUtCNvjrURc/UxANdH2uFAFJAqLiN+B3z74ugHP13Q0eXtHecDMVi2K5VGr6L3OIzwyPLNyTdwIEVnBbvx+2ezwZ0f8TJWetwf/qjk+7ketiu2ngLIiyJETWvsWYpFZSIiOe5FyEVJtqPL6rkcR8M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769614592; c=relaxed/simple;
-	bh=1vO8J71t8Cxi1hlKVIiZB/YTbfzN2fsd1WR4lbqgiV8=;
+	s=arc-20240116; t=1769614595; c=relaxed/simple;
+	bh=HY6xEEuiRdS81MA3W95h6iSCGN/6SsojlPoSzUq65XM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UKi3/Rj/YXJiBhgans1xsZPieM2tGQZbu/cHPU3IBqkHtQwSrikA7hZHPUnqvXUqy7DPt1gyTi+UWkB20eXS11B2mgbUR/RWrZPbzXcPy0DSmFIRkwrWX1mN3oXRDwi+pxsjq7YStvO2xEZAv9OqF4oycq4w16UaGgjRsbxIR1c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mCK4g3eb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=FwNsUN7dx6/NZpzEFbQE3nfZaKxj6ehN8tTwQmp7bX+HPQN0H+pT92zs7a4TrC4VbHnydEExNDy2JYc3TxK3lPJXG6TstZwZEig14Qm1s7zqsScRkNBS1uV6UbmVV7by78wI1MDTjaXow4HqaWTrBefmvtAykiKN/lIo8XzntQw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dPaFx3AQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mCK4g3eb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 619A6C4CEF1;
-	Wed, 28 Jan 2026 15:36:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dPaFx3AQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D7934C16AAE;
+	Wed, 28 Jan 2026 15:36:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1769614591;
-	bh=1vO8J71t8Cxi1hlKVIiZB/YTbfzN2fsd1WR4lbqgiV8=;
+	s=korg; t=1769614595;
+	bh=HY6xEEuiRdS81MA3W95h6iSCGN/6SsojlPoSzUq65XM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mCK4g3eb6jeOH4vBTiAkBQNjBqQetqc930UQ2TwS1P84GTg4C3g1KzPlshFaQmsRf
-	 njJBE4GxastwXxZcP4GVVycMDSTZsvxGufQOyjml0emb9f3B3UpDUBKWBXje9ET6EN
-	 FPF6Rz4I4TcTTlnLpLi0mu0py32LD1QCxMFH8QRY=
+	b=dPaFx3AQymfSCelty0g8TgPH5uIoMod9uFtGvut3SnVaeBMnSEKDobo7V2QE0nwDp
+	 NlJrsLun3eDx8VrZdjKCfUbmAofoEPI8jtkrVwtuCBqJPdF1ezQQhJWdK2hF50+vHX
+	 KipiJRTJ+EmeZ5pUtkpz1VZajg15Rgmj0SbLxsnw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hans de Goede <johannes.goede@oss.qualcomm.com>,
-	Sebastian Reichel <sre@kernel.org>,
-	Lee Jones <lee@kernel.org>
-Subject: [PATCH 6.6 184/254] leds: led-class: Only Add LED to leds_list when it is fully ready
-Date: Wed, 28 Jan 2026 16:22:40 +0100
-Message-ID: <20260128145351.424389092@linuxfoundation.org>
+	Weigang He <geoffreyhe2@gmail.com>,
+	"Rob Herring (Arm)" <robh@kernel.org>
+Subject: [PATCH 6.6 185/254] of: fix reference count leak in of_alias_scan()
+Date: Wed, 28 Jan 2026 16:22:41 +0100
+Message-ID: <20260128145351.460107004@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260128145344.698118637@linuxfoundation.org>
 References: <20260128145344.698118637@linuxfoundation.org>
@@ -51,80 +50,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hans de Goede <johannes.goede@oss.qualcomm.com>
+From: Weigang He <geoffreyhe2@gmail.com>
 
-commit d1883cefd31752f0504b94c3bcfa1f6d511d6e87 upstream.
+commit 81122fba08fa3ccafab6ed272a5c6f2203923a7e upstream.
 
-Before this change the LED was added to leds_list before led_init_core()
-gets called adding it the list before led_classdev.set_brightness_work gets
-initialized.
+of_find_node_by_path() returns a device_node with its refcount
+incremented. When kstrtoint() fails or dt_alloc() fails, the function
+continues to the next iteration without calling of_node_put(), causing
+a reference count leak.
 
-This leaves a window where led_trigger_register() of a LED's default
-trigger will call led_trigger_set() which calls led_set_brightness()
-which in turn will end up queueing the *uninitialized*
-led_classdev.set_brightness_work.
+Add of_node_put(np) before continue on both error paths to properly
+release the device_node reference.
 
-This race gets hit by the lenovo-thinkpad-t14s EC driver which registers
-2 LEDs with a default trigger provided by snd_ctl_led.ko in quick
-succession. The first led_classdev_register() causes an async modprobe of
-snd_ctl_led to run and that async modprobe manages to exactly hit
-the window where the second LED is on the leds_list without led_init_core()
-being called for it, resulting in:
-
- ------------[ cut here ]------------
- WARNING: CPU: 11 PID: 5608 at kernel/workqueue.c:4234 __flush_work+0x344/0x390
- Hardware name: LENOVO 21N2S01F0B/21N2S01F0B, BIOS N42ET93W (2.23 ) 09/01/2025
- ...
- Call trace:
-  __flush_work+0x344/0x390 (P)
-  flush_work+0x2c/0x50
-  led_trigger_set+0x1c8/0x340
-  led_trigger_register+0x17c/0x1c0
-  led_trigger_register_simple+0x84/0xe8
-  snd_ctl_led_init+0x40/0xf88 [snd_ctl_led]
-  do_one_initcall+0x5c/0x318
-  do_init_module+0x9c/0x2b8
-  load_module+0x7e0/0x998
-
-Close the race window by moving the adding of the LED to leds_list to
-after the led_init_core() call.
-
+Fixes: 611cad720148 ("dt: add of_alias_scan and of_alias_get_id")
 Cc: stable@vger.kernel.org
-Fixes: d23a22a74fde ("leds: delay led_set_brightness if stopping soft-blink")
-Signed-off-by: Hans de Goede <johannes.goede@oss.qualcomm.com>
-Reviewed-by: Sebastian Reichel <sre@kernel.org>
-Link: https://patch.msgid.link/20251211163727.366441-1-johannes.goede@oss.qualcomm.com
-Signed-off-by: Lee Jones <lee@kernel.org>
+Signed-off-by: Weigang He <geoffreyhe2@gmail.com>
+Link: https://patch.msgid.link/20260117091238.481243-1-geoffreyhe2@gmail.com
+Signed-off-by: Rob Herring (Arm) <robh@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/leds/led-class.c |   10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ drivers/of/base.c |    8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
---- a/drivers/leds/led-class.c
-+++ b/drivers/leds/led-class.c
-@@ -546,11 +546,6 @@ int led_classdev_register_ext(struct dev
- #ifdef CONFIG_LEDS_BRIGHTNESS_HW_CHANGED
- 	led_cdev->brightness_hw_changed = -1;
- #endif
--	/* add to the list of leds */
--	down_write(&leds_list_lock);
--	list_add_tail(&led_cdev->node, &leds_list);
--	up_write(&leds_list_lock);
--
- 	if (!led_cdev->max_brightness)
- 		led_cdev->max_brightness = LED_FULL;
+--- a/drivers/of/base.c
++++ b/drivers/of/base.c
+@@ -1788,13 +1788,17 @@ void of_alias_scan(void * (*dt_alloc)(u6
+ 			end--;
+ 		len = end - start;
  
-@@ -558,6 +553,11 @@ int led_classdev_register_ext(struct dev
+-		if (kstrtoint(end, 10, &id) < 0)
++		if (kstrtoint(end, 10, &id) < 0) {
++			of_node_put(np);
+ 			continue;
++		}
  
- 	led_init_core(led_cdev);
- 
-+	/* add to the list of leds */
-+	down_write(&leds_list_lock);
-+	list_add_tail(&led_cdev->node, &leds_list);
-+	up_write(&leds_list_lock);
-+
- #ifdef CONFIG_LEDS_TRIGGERS
- 	led_trigger_set_default(led_cdev);
- #endif
+ 		/* Allocate an alias_prop with enough space for the stem */
+ 		ap = dt_alloc(sizeof(*ap) + len + 1, __alignof__(*ap));
+-		if (!ap)
++		if (!ap) {
++			of_node_put(np);
+ 			continue;
++		}
+ 		memset(ap, 0, sizeof(*ap) + len + 1);
+ 		ap->alias = start;
+ 		of_alias_add(ap, np, id, start, len);
 
 
