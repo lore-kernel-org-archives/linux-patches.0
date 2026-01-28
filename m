@@ -1,36 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC9D21E1DFC;
-	Wed, 28 Jan 2026 15:48:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C97582F745C;
+	Wed, 28 Jan 2026 15:48:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769615319; cv=none; b=nsWXYHSE5/tvyuJSsEbJ/7DY027Pmw74C7CzOCMQVZr7A2gpTf1T6qx4n7AA/T1xaSa33BwohQc8R5iiy695UhasFz/4dXH7CujXR+NrDlRDQ7QSshqbeeGbmKMDzvQqWOV/cdZm+2PhmtwLZ28yxj607typkF4hqkWcor0SyDI=
+	t=1769615322; cv=none; b=mU34SBpWN94yCtNd6oUxSMG1BM866qqLMV6FXwC4+OSUEMJjBeQD3Jl5mMZZbhSEMb3n/yGrRHHapeIvaWqewrPUuLPzgyal+Xj+yk4IXYR/13uFfKM0tk19J8YEcwM0wPpbUpWf1c79se036JSdKv94gvwgifJfY27YPRHo4vI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769615319; c=relaxed/simple;
-	bh=G5big1uJiM0ACa7xRW9fbVxpJbmjoUQJGoeYNoWnluk=;
+	s=arc-20240116; t=1769615322; c=relaxed/simple;
+	bh=mC2xPgLWW0+xoaxxeBlnbWqGuc1kELiW1TChk3z2H1M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IrkvQovRMr/hwIfFUoXjtWU5H89o4H4Y6GRuW0UwrVMvg4Q+muvt51utHJp1fWgoie2Zue+vBmLN5jwsk6S4F+z8u0kt5dEeFUGQ6vPN5UHeMAgHanhA1DxAKNjaCChzU5Rp+KuzCJ4IvROF3wlCcWtA40k8xMeD3sw/Y8ncrnk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hIPfUFcs; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ew/NRgnIPD5JqCpRIzSyEt1QGFBDcE7Ex9F0mV7UtTeUeCtnbNsCTqwDE3lsEM6a2b5JVmsAA6ZE9A5kpDvCCBqhoYZPm0QI0sAyg2/s/c0ilHAMK3K0sv5r5OPIHvjjR08fpkvQqwDJhO5NCIYP/v5b7kaFk4r3zQqrdHe4XNw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=E4U54ykO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hIPfUFcs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 49B2EC116C6;
-	Wed, 28 Jan 2026 15:48:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="E4U54ykO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 505ADC4CEF1;
+	Wed, 28 Jan 2026 15:48:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1769615319;
-	bh=G5big1uJiM0ACa7xRW9fbVxpJbmjoUQJGoeYNoWnluk=;
+	s=korg; t=1769615322;
+	bh=mC2xPgLWW0+xoaxxeBlnbWqGuc1kELiW1TChk3z2H1M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hIPfUFcsQmlDGu+RUHzQ7g9o+6u8lVsiO3Efp1LN6UEXyfxWxe/bKE1AdUIcPbxSL
-	 vuZHzDIhOsBT70yYz9sEv176zQeKm2Y2hD1m0Zqk4MQh87h3N4EPPvkWJ551kdb3BK
-	 mcB3wNox9Wxyb19mUtMWKb+muEVaQXuVJo6Tt/NI=
+	b=E4U54ykOPqiBCxvKwN5NNGy6oT9L3NQceWpfxkV+6SFu/JjWR4Rn9meLmVqStKldL
+	 2gCD174Zge5L/a0BLLxPonPVcrMtliPI/IO0gXP9QMmBKR+6GNZ7gygzFSpfSXQ2/T
+	 VcYBZ58bJuPN5eoPdXbRB+znRevMjtdc8z7TlW4g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marc Kleine-Budde <mkl@pengutronix.de>
-Subject: [PATCH 6.12 143/169] can: usb_8dev: usb_8dev_read_bulk_callback(): fix URB memory leak
-Date: Wed, 28 Jan 2026 16:23:46 +0100
-Message-ID: <20260128145339.152140009@linuxfoundation.org>
+	Thomas Fourier <fourier.thomas@gmail.com>,
+	Baochen Qiang <baochen.qiang@oss.qualcomm.com>,
+	Jeff Johnson <jeff.johnson@oss.qualcomm.com>
+Subject: [PATCH 6.12 117/169] wifi: ath10k: fix dma_free_coherent() pointer
+Date: Wed, 28 Jan 2026 16:23:20 +0100
+Message-ID: <20260128145338.214150086@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260128145334.006287341@linuxfoundation.org>
 References: <20260128145334.006287341@linuxfoundation.org>
@@ -49,56 +51,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Marc Kleine-Budde <mkl@pengutronix.de>
+From: Thomas Fourier <fourier.thomas@gmail.com>
 
-commit f7a980b3b8f80fe367f679da376cf76e800f9480 upstream.
+commit 9282a1e171ad8d2205067e8ec3bbe4e3cef4f29f upstream.
 
-Fix similar memory leak as in commit 7352e1d5932a ("can: gs_usb:
-gs_usb_receive_bulk_callback(): fix URB memory leak").
+dma_alloc_coherent() allocates a DMA mapped buffer and stores the
+addresses in XXX_unaligned fields.  Those should be reused when freeing
+the buffer rather than the aligned addresses.
 
-In usb_8dev_open() -> usb_8dev_start(), the URBs for USB-in transfers are
-allocated, added to the priv->rx_submitted anchor and submitted. In the
-complete callback usb_8dev_read_bulk_callback(), the URBs are processed and
-resubmitted. In usb_8dev_close() -> unlink_all_urbs() the URBs are freed by
-calling usb_kill_anchored_urbs(&priv->rx_submitted).
-
-However, this does not take into account that the USB framework unanchors
-the URB before the complete function is called. This means that once an
-in-URB has been completed, it is no longer anchored and is ultimately not
-released in usb_kill_anchored_urbs().
-
-Fix the memory leak by anchoring the URB in the
-usb_8dev_read_bulk_callback() to the priv->rx_submitted anchor.
-
-Fixes: 0024d8ad1639 ("can: usb_8dev: Add support for USB2CAN interface from 8 devices")
+Fixes: 2a1e1ad3fd37 ("ath10k: Add support for 64 bit ce descriptor")
 Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20260116-can_usb-fix-memory-leak-v2-5-4b8cb2915571@pengutronix.de
-Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
+Signed-off-by: Thomas Fourier <fourier.thomas@gmail.com>
+Reviewed-by: Baochen Qiang <baochen.qiang@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260105210439.20131-2-fourier.thomas@gmail.com
+Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/can/usb/usb_8dev.c |    8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ drivers/net/wireless/ath/ath10k/ce.c |   16 ++++++++--------
+ 1 file changed, 8 insertions(+), 8 deletions(-)
 
---- a/drivers/net/can/usb/usb_8dev.c
-+++ b/drivers/net/can/usb/usb_8dev.c
-@@ -541,11 +541,17 @@ resubmit_urb:
- 			  urb->transfer_buffer, RX_BUFFER_SIZE,
- 			  usb_8dev_read_bulk_callback, priv);
+--- a/drivers/net/wireless/ath/ath10k/ce.c
++++ b/drivers/net/wireless/ath/ath10k/ce.c
+@@ -1727,8 +1727,8 @@ static void _ath10k_ce_free_pipe(struct
+ 				  (ce_state->src_ring->nentries *
+ 				   sizeof(struct ce_desc) +
+ 				   CE_DESC_RING_ALIGN),
+-				  ce_state->src_ring->base_addr_owner_space,
+-				  ce_state->src_ring->base_addr_ce_space);
++				  ce_state->src_ring->base_addr_owner_space_unaligned,
++				  ce_state->src_ring->base_addr_ce_space_unaligned);
+ 		kfree(ce_state->src_ring);
+ 	}
  
-+	usb_anchor_urb(urb, &priv->rx_submitted);
-+
- 	retval = usb_submit_urb(urb, GFP_ATOMIC);
-+	if (!retval)
-+		return;
-+
-+	usb_unanchor_urb(urb);
+@@ -1737,8 +1737,8 @@ static void _ath10k_ce_free_pipe(struct
+ 				  (ce_state->dest_ring->nentries *
+ 				   sizeof(struct ce_desc) +
+ 				   CE_DESC_RING_ALIGN),
+-				  ce_state->dest_ring->base_addr_owner_space,
+-				  ce_state->dest_ring->base_addr_ce_space);
++				  ce_state->dest_ring->base_addr_owner_space_unaligned,
++				  ce_state->dest_ring->base_addr_ce_space_unaligned);
+ 		kfree(ce_state->dest_ring);
+ 	}
  
- 	if (retval == -ENODEV)
- 		netif_device_detach(netdev);
--	else if (retval)
-+	else
- 		netdev_err(netdev,
- 			"failed resubmitting read bulk urb: %d\n", retval);
- }
+@@ -1758,8 +1758,8 @@ static void _ath10k_ce_free_pipe_64(stru
+ 				  (ce_state->src_ring->nentries *
+ 				   sizeof(struct ce_desc_64) +
+ 				   CE_DESC_RING_ALIGN),
+-				  ce_state->src_ring->base_addr_owner_space,
+-				  ce_state->src_ring->base_addr_ce_space);
++				  ce_state->src_ring->base_addr_owner_space_unaligned,
++				  ce_state->src_ring->base_addr_ce_space_unaligned);
+ 		kfree(ce_state->src_ring);
+ 	}
+ 
+@@ -1768,8 +1768,8 @@ static void _ath10k_ce_free_pipe_64(stru
+ 				  (ce_state->dest_ring->nentries *
+ 				   sizeof(struct ce_desc_64) +
+ 				   CE_DESC_RING_ALIGN),
+-				  ce_state->dest_ring->base_addr_owner_space,
+-				  ce_state->dest_ring->base_addr_ce_space);
++				  ce_state->dest_ring->base_addr_owner_space_unaligned,
++				  ce_state->dest_ring->base_addr_ce_space_unaligned);
+ 		kfree(ce_state->dest_ring);
+ 	}
+ 
 
 
