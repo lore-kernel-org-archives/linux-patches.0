@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 101D72E2299;
-	Wed, 28 Jan 2026 15:40:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B93772DE1E4;
+	Wed, 28 Jan 2026 15:40:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769614828; cv=none; b=VEE96yrF2xT68sL4FvIgHGVGEa2/fuVwG7sx6V3aaHAodBdhWkZOvzpWKi5LUtU/eBhgZ/rWoF0GHKWnv9mdTU6NfvZf4uFdS7hwbbHskLFhRGRR4YgRjRfwx0BcZc65jyUEMWISW8J9ni645L9k9/oXMTYC17jaK0pg68aotsA=
+	t=1769614830; cv=none; b=tm5rgfl5rTKZgXFYZuuiOQhLsGlfGqieLT51mANl1jWCakXwpekGTH8EPy/9KhmFnhjBtvYCgX4PxYNQ7tY8aSFZWLg6rbXHWSKKRu4Ctm+lRszKIcRFkURqdS31LH33H/QK7Fydv2/5AwMLXVFHEbBwE+2oAnAPLlB2SIl9QBs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769614828; c=relaxed/simple;
-	bh=xRgGuSE53cqGx8RSeO9sdv8zRLAhUaQ/pvL0ljeqGzs=;
+	s=arc-20240116; t=1769614830; c=relaxed/simple;
+	bh=VLkF1DT22M3OglWVrwgqvQn6sU7xIfodaDKnaKu2778=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XtdNO8y2mCXSIRvbAD0+6qNI4nPzXVE5uDiSTHBqqgEqovE1+PCjwq7qDupGipLWgi5whw+JmkRie0FciYdDod+uglYsb1SVXd7IY5hPnAL39OwzRg/TO3kcp5MNBjQ9oAh5beDmcodFrgpnaFNfjLp98Nm4+9Ov2nRjsCjkZwo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SW42jWSp; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=r/XFte26uIc5akUGIY3cfoqeV/W+3eoFrUshYNUv4oOPMiw2YizPgVdn7YIIZkMlVGxlP0BwburKhHQR64h6pmVb710OTTnYZmWJ0gi9UAOKwGXEoPwkLjOen6WDA1RrsiRZWJSpv9OLcbcDXujmk8Gm27soYOhPWYOzyNLNAhs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rIIiquaq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SW42jWSp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE2FDC4CEF7;
-	Wed, 28 Jan 2026 15:40:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rIIiquaq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E73A5C4CEF1;
+	Wed, 28 Jan 2026 15:40:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1769614827;
-	bh=xRgGuSE53cqGx8RSeO9sdv8zRLAhUaQ/pvL0ljeqGzs=;
+	s=korg; t=1769614830;
+	bh=VLkF1DT22M3OglWVrwgqvQn6sU7xIfodaDKnaKu2778=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SW42jWSpXlQ7fNSFZkWDD1Y5M1ih8yfbgMq3cggPFGbOmS+L+wTURM0ljVAy7KHFJ
-	 6fDuGHmjnbJnSIcEeunB1ZQ42V/tYwojaTQCfmB3j1lMH18O55URqECtU3y/pUHIND
-	 2hSktrkv+7GGI5PpS6tsxCTktyCQjKQjohTrHYW4=
+	b=rIIiquaqIUXwQp2ut9NwayerFzgAsSlJwnlhzwylKKEKBP+zqZPx4mjTC2ut2RxIB
+	 C6kkMyy29T+hjkoJatEZ8BP980SVlOtZiAjehJRNBv3uWT+g2mG5WUYwi6s5aGVlN/
+	 oZMgTsNdK/G9bhGvCd/d1fljYCDl+UVfN+Q/TKw0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xu Yang <xu.yang_2@nxp.com>,
-	"Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>,
-	Vladimir Oltean <vladimir.oltean@nxp.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Rajani Kantha <681739313@139.com>
-Subject: [PATCH 6.6 254/254] net: phy: fix phy_uses_state_machine()
-Date: Wed, 28 Jan 2026 16:23:50 +0100
-Message-ID: <20260128145353.940562420@linuxfoundation.org>
+	Shubham Rana <s9.rana@samsung.com>,
+	Maninder Singh <maninder1.s@samsung.com>,
+	Jeff Layton <jlayton@kernel.org>,
+	Chuck Lever <chuck.lever@oracle.com>,
+	Rahul Sharma <black.hawk@163.com>
+Subject: [PATCH 6.6 245/254] NFSD: fix race between nfsd registration and exports_proc
+Date: Wed, 28 Jan 2026 16:23:41 +0100
+Message-ID: <20260128145353.613826173@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260128145344.698118637@linuxfoundation.org>
 References: <20260128145344.698118637@linuxfoundation.org>
@@ -53,77 +53,166 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: "Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>
+From: Maninder Singh <maninder1.s@samsung.com>
 
-[ Upstream commit e0d1c55501d377163eb57feed863777ed1c973ad ]
+[ Upstream commit f7fb730cac9aafda8b9813b55d04e28a9664d17c ]
 
-The blamed commit changed the conditions which phylib uses to stop
-and start the state machine in the suspend and resume paths, and
-while improving it, has caused two issues.
+As of now nfsd calls create_proc_exports_entry() at start of init_nfsd
+and cleanup by remove_proc_entry() at last of exit_nfsd.
 
-The original code used this test:
+Which causes kernel OOPs if there is race between below 2 operations:
+(i) exportfs -r
+(ii) mount -t nfsd none /proc/fs/nfsd
 
-	phydev->attached_dev && phydev->adjust_link
+for 5.4 kernel ARM64:
 
-and if true, the paths would handle the PHY state machine. This test
-evaluates true for normal drivers that are using phylib directly
-while the PHY is attached to the network device, but false in all
-other cases, which include the following cases:
+CPU 1:
+el1_irq+0xbc/0x180
+arch_counter_get_cntvct+0x14/0x18
+running_clock+0xc/0x18
+preempt_count_add+0x88/0x110
+prep_new_page+0xb0/0x220
+get_page_from_freelist+0x2d8/0x1778
+__alloc_pages_nodemask+0x15c/0xef0
+__vmalloc_node_range+0x28c/0x478
+__vmalloc_node_flags_caller+0x8c/0xb0
+kvmalloc_node+0x88/0xe0
+nfsd_init_net+0x6c/0x108 [nfsd]
+ops_init+0x44/0x170
+register_pernet_operations+0x114/0x270
+register_pernet_subsys+0x34/0x50
+init_nfsd+0xa8/0x718 [nfsd]
+do_one_initcall+0x54/0x2e0
 
-- when the PHY has never been attached to a network device.
-- when the PHY has been detached from a network device (as phy_detach()
-   sets phydev->attached_dev to NULL, phy_disconnect() calls
-   phy_detach() and additionally sets phydev->adjust_link NULL.)
-- when phylink is using the driver (as phydev->adjust_link is NULL.)
+CPU 2 :
+Unable to handle kernel NULL pointer dereference at virtual address 0000000000000010
 
-Only the third case was incorrect, and the blamed commit attempted to
-fix this by changing this test to (simplified for brevity, see
-phy_uses_state_machine()):
+PC is at : exports_net_open+0x50/0x68 [nfsd]
 
-	phydev->phy_link_change == phy_link_change ?
-		phydev->attached_dev && phydev->adjust_link : true
+Call trace:
+exports_net_open+0x50/0x68 [nfsd]
+exports_proc_open+0x2c/0x38 [nfsd]
+proc_reg_open+0xb8/0x198
+do_dentry_open+0x1c4/0x418
+vfs_open+0x38/0x48
+path_openat+0x28c/0xf18
+do_filp_open+0x70/0xe8
+do_sys_open+0x154/0x248
 
-However, this also incorrectly evaluates true in the first two cases.
+Sometimes it crashes at exports_net_open() and sometimes cache_seq_next_rcu().
 
-Fix the first case by ensuring that phy_uses_state_machine() returns
-false when phydev->phy_link_change is NULL.
+and same is happening on latest 6.14 kernel as well:
 
-Fix the second case by ensuring that phydev->phy_link_change is set to
-NULL when phy_detach() is called.
+[    0.000000] Linux version 6.14.0-rc5-next-20250304-dirty
+...
+[  285.455918] Unable to handle kernel paging request at virtual address 00001f4800001f48
+...
+[  285.464902] pc : cache_seq_next_rcu+0x78/0xa4
+...
+[  285.469695] Call trace:
+[  285.470083]  cache_seq_next_rcu+0x78/0xa4 (P)
+[  285.470488]  seq_read+0xe0/0x11c
+[  285.470675]  proc_reg_read+0x9c/0xf0
+[  285.470874]  vfs_read+0xc4/0x2fc
+[  285.471057]  ksys_read+0x6c/0xf4
+[  285.471231]  __arm64_sys_read+0x1c/0x28
+[  285.471428]  invoke_syscall+0x44/0x100
+[  285.471633]  el0_svc_common.constprop.0+0x40/0xe0
+[  285.471870]  do_el0_svc_compat+0x1c/0x34
+[  285.472073]  el0_svc_compat+0x2c/0x80
+[  285.472265]  el0t_32_sync_handler+0x90/0x140
+[  285.472473]  el0t_32_sync+0x19c/0x1a0
+[  285.472887] Code: f9400885 93407c23 937d7c27 11000421 (f86378a3)
+[  285.473422] ---[ end trace 0000000000000000 ]---
 
-Reported-by: Xu Yang <xu.yang_2@nxp.com>
-Link: https://lore.kernel.org/r/20250806082931.3289134-1-xu.yang_2@nxp.com
-Fixes: fc75ea20ffb4 ("net: phy: allow MDIO bus PM ops to start/stop state machine for phylink-controlled PHY")
-Signed-off-by: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
-Reviewed-by: Vladimir Oltean <vladimir.oltean@nxp.com>
-Link: https://patch.msgid.link/E1uvMEz-00000003Aoe-3qWe@rmk-PC.armlinux.org.uk
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Rajani Kantha <681739313@139.com>
+It reproduced simply with below script:
+while [ 1 ]
+do
+/exportfs -r
+done &
+
+while [ 1 ]
+do
+insmod /nfsd.ko
+mount -t nfsd none /proc/fs/nfsd
+umount /proc/fs/nfsd
+rmmod nfsd
+done &
+
+So exporting interfaces to user space shall be done at last and
+cleanup at first place.
+
+With change there is no Kernel OOPs.
+
+Co-developed-by: Shubham Rana <s9.rana@samsung.com>
+Signed-off-by: Shubham Rana <s9.rana@samsung.com>
+Signed-off-by: Maninder Singh <maninder1.s@samsung.com>
+Reviewed-by: Jeff Layton <jlayton@kernel.org>
+Cc: stable@vger.kernel.org
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+[ The context change is due to the commit bd9d6a3efa97
+("NFSD: add rpc_status netlink support")
+and the proper adoption is done. ]
+Signed-off-by: Rahul Sharma <black.hawk@163.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/phy/phy_device.c |    5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ fs/nfsd/nfsctl.c |   17 ++++++++---------
+ 1 file changed, 8 insertions(+), 9 deletions(-)
 
---- a/drivers/net/phy/phy_device.c
-+++ b/drivers/net/phy/phy_device.c
-@@ -304,8 +304,7 @@ static bool phy_uses_state_machine(struc
- 	if (phydev->phy_link_change == phy_link_change)
- 		return phydev->attached_dev && phydev->adjust_link;
+--- a/fs/nfsd/nfsctl.c
++++ b/fs/nfsd/nfsctl.c
+@@ -1582,12 +1582,9 @@ static int __init init_nfsd(void)
+ 	if (retval)
+ 		goto out_free_pnfs;
+ 	nfsd_lockd_init();	/* lockd->nfsd callbacks */
+-	retval = create_proc_exports_entry();
+-	if (retval)
+-		goto out_free_lockd;
+ 	retval = register_pernet_subsys(&nfsd_net_ops);
+ 	if (retval < 0)
+-		goto out_free_exports;
++		goto out_free_lockd;
+ 	retval = register_cld_notifier();
+ 	if (retval)
+ 		goto out_free_subsys;
+@@ -1596,17 +1593,19 @@ static int __init init_nfsd(void)
+ 		goto out_free_cld;
+ 	retval = register_filesystem(&nfsd_fs_type);
+ 	if (retval)
++		goto out_free_nfsd4;
++	retval = create_proc_exports_entry();
++	if (retval)
+ 		goto out_free_all;
+ 	return 0;
+ out_free_all:
++	unregister_filesystem(&nfsd_fs_type);
++out_free_nfsd4:
+ 	nfsd4_destroy_laundry_wq();
+ out_free_cld:
+ 	unregister_cld_notifier();
+ out_free_subsys:
+ 	unregister_pernet_subsys(&nfsd_net_ops);
+-out_free_exports:
+-	remove_proc_entry("fs/nfs/exports", NULL);
+-	remove_proc_entry("fs/nfs", NULL);
+ out_free_lockd:
+ 	nfsd_lockd_shutdown();
+ 	nfsd_drc_slab_free();
+@@ -1619,13 +1618,13 @@ out_free_slabs:
  
--	/* phydev->phy_link_change is implicitly phylink_phy_change() */
--	return true;
-+	return !!phydev->phy_link_change;
- }
- 
- static bool mdio_bus_phy_may_suspend(struct phy_device *phydev)
-@@ -1853,6 +1852,8 @@ void phy_detach(struct phy_device *phyde
- 		phydev->attached_dev->phydev = NULL;
- 		phydev->attached_dev = NULL;
- 	}
-+
-+	phydev->phy_link_change = NULL;
- 	phydev->phylink = NULL;
- 
- 	if (!phydev->is_on_sfp_module)
+ static void __exit exit_nfsd(void)
+ {
++	remove_proc_entry("fs/nfs/exports", NULL);
++	remove_proc_entry("fs/nfs", NULL);
+ 	unregister_filesystem(&nfsd_fs_type);
+ 	nfsd4_destroy_laundry_wq();
+ 	unregister_cld_notifier();
+ 	unregister_pernet_subsys(&nfsd_net_ops);
+ 	nfsd_drc_slab_free();
+-	remove_proc_entry("fs/nfs/exports", NULL);
+-	remove_proc_entry("fs/nfs", NULL);
+ 	nfsd_lockd_shutdown();
+ 	nfsd4_free_slabs();
+ 	nfsd4_exit_pnfs();
 
 
