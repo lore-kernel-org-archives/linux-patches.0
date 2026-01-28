@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61DE523E358;
-	Wed, 28 Jan 2026 15:32:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F87B25332E;
+	Wed, 28 Jan 2026 15:32:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769614367; cv=none; b=szSxYDewgF1O+aOpwZXg23DGrp2LCe/trNtTaBnKgr7mdRTkTx+5eMuLZrUimCq5Rn0ZceEKTOfjR/bN6FY/igQ4Veab38oo+tm7/pTRZ4MHwijOgONmD1sCpx9PCi24n1+IbovgEJOc4BlpXxllN3/RvMwEYpbGZhR/2NDa/O4=
+	t=1769614370; cv=none; b=MD5O2EBc0gos0hca4r7fjLlNwiGGWloKWum5Dayo74hzg73WK8z8u+qQ3Jdn2wmrV8N7rfvcckeLP+d6nM6wrSx1XWQbw8KNnF74u8Q8gID7FuaZ9znPh4v7KiZ5RX9aDQHwSW9KpKtJQwXDnLI0KPT04dwieNF5M3VGqGCIKyc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769614367; c=relaxed/simple;
-	bh=FiHB6+mYOqJikbsQ/BlK8w3YWwdjKimpP7y2wFywWCc=;
+	s=arc-20240116; t=1769614370; c=relaxed/simple;
+	bh=nQuxAamTAIQF85vrglY6EIXOw3BlTZMeMEvaxjT+Ftk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ac/tZl2T1o1TW54E5sOkgOqMeIhBRw6UlJ1vgqqG2zvrVrfLJvhSPP0pKwhRubBSQsupjSdsJVholj6vQKwcN4tpO+mmiIWvk/7T4Lr0fmexLYsRc0gSSVFH9TfseYJIQD6PvJLl8Up4kke8YwSuRMTPXsJdHBTmWK4qWKPSgrI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dEEG6B80; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=abQr4rIhgxBgcu+W/lwpW3Z+LoChRz/ngS5mXB2loeD+wVel1FY0uysUuY/vWw1tMCJOQsnyZ3T8UaKqW9fR089orHN1Laq8Vq6WunJNoz4s1MNzuu62Rwv5iBjtKNyVM0aXh1b0U0wIHscWoiYN1dkYWWqzpWZJGJSRpZHe1x4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XUxnxbtY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dEEG6B80"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E0F47C16AAE;
-	Wed, 28 Jan 2026 15:32:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XUxnxbtY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3C1CC4CEF7;
+	Wed, 28 Jan 2026 15:32:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1769614367;
-	bh=FiHB6+mYOqJikbsQ/BlK8w3YWwdjKimpP7y2wFywWCc=;
+	s=korg; t=1769614370;
+	bh=nQuxAamTAIQF85vrglY6EIXOw3BlTZMeMEvaxjT+Ftk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dEEG6B80mrnSF2riHAM3aQEoh0NlM+kHoM7GSCyF82chv2XHzHl0n4xuqj38IPfN3
-	 6099NL+lv1s37slYwEQW9qeoi5gDBWY/pl6iVgvd3mki4Y6CGZ2IrQPB0aNDUOi430
-	 QfxQKfnJzr73TSVymIroSf3ZuzRGMy5B0t9IkZVA=
+	b=XUxnxbtY/ATDS2YG7k4Vv5Vs+2J2YnB/xSjTJcXtPn+g1adGQ/ewfoMvRgovl/8wp
+	 NlCPaZQSJcXtHv/6Ntb0P5/xpwZJUTx0at+lEJmsya8nouOCiTYjCLiYpS9VKPxGJQ
+	 7E3/DoSd+J9FbI8+p40Z6w5Aep7Ubczo3RKzlrJ0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aleksandr Loktionov <aleksandr.loktionov@intel.com>,
 	Jacob Keller <jacob.e.keller@intel.com>,
-	Simon Horman <horms@kernel.org>,
+	Marcin Szycik <marcin.szycik@linux.intel.com>,
+	Dave Ertman <david.m.ertman@intel.com>,
 	Tony Nguyen <anthony.l.nguyen@intel.com>,
 	Sasha Levin <sashal@kernel.org>,
 	Rinitha S <sx.rinitha@intel.com>
-Subject: [PATCH 6.6 115/254] ice: initialize ring_stats->syncp
-Date: Wed, 28 Jan 2026 16:21:31 +0100
-Message-ID: <20260128145348.961720753@linuxfoundation.org>
+Subject: [PATCH 6.6 116/254] ice: Avoid detrimental cleanup for bond during interface stop
+Date: Wed, 28 Jan 2026 16:21:32 +0100
+Message-ID: <20260128145348.998357459@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260128145344.698118637@linuxfoundation.org>
 References: <20260128145344.698118637@linuxfoundation.org>
@@ -54,49 +54,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jacob Keller <jacob.e.keller@intel.com>
+From: Dave Ertman <david.m.ertman@intel.com>
 
-[ Upstream commit 8439016c3b8b5ab687c2420317b1691585106611 ]
+[ Upstream commit a9d45c22ed120cdd15ff56d0a6e4700c46451901 ]
 
-The u64_stats_sync structure is empty on 64-bit systems. However, on 32-bit
-systems it contains a seqcount_t which needs to be initialized. While the
-memory is zero-initialized, a lack of u64_stats_init means that lockdep
-won't get initialized properly. Fix this by adding u64_stats_init() calls
-to the rings just after allocation.
+When the user issues an administrative down to an interface that is the
+primary for an aggregate bond, the prune lists are being purged. This
+breaks communication to the secondary interface, which shares a prune
+list on the main switch block while bonded together.
 
-Fixes: 2b245cb29421 ("ice: Implement transmit and NAPI support")
-Reviewed-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
-Signed-off-by: Jacob Keller <jacob.e.keller@intel.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
+For the primary interface of an aggregate, avoid deleting these prune
+lists during stop, and since they are hardcoded to specific values for
+the default vlan and QinQ vlans, the attempt to re-add them during the
+up phase will quietly fail without any additional problem.
+
+Fixes: 1e0f9881ef79 ("ice: Flesh out implementation of support for SRIOV on bonded interface")
+Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
+Reviewed-by: Marcin Szycik <marcin.szycik@linux.intel.com>
+Signed-off-by: Dave Ertman <david.m.ertman@intel.com>
 Tested-by: Rinitha S <sx.rinitha@intel.com> (A Contingent worker at Intel)
 Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/ice/ice_lib.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/net/ethernet/intel/ice/ice_lib.c | 25 ++++++++++++++++--------
+ 1 file changed, 17 insertions(+), 8 deletions(-)
 
 diff --git a/drivers/net/ethernet/intel/ice/ice_lib.c b/drivers/net/ethernet/intel/ice/ice_lib.c
-index a6a290514e548..972c515d8789f 100644
+index 972c515d8789f..7aef40b50b898 100644
 --- a/drivers/net/ethernet/intel/ice/ice_lib.c
 +++ b/drivers/net/ethernet/intel/ice/ice_lib.c
-@@ -396,6 +396,8 @@ static int ice_vsi_alloc_ring_stats(struct ice_vsi *vsi)
- 			if (!ring_stats)
- 				goto err_out;
+@@ -3897,22 +3897,31 @@ int ice_vsi_add_vlan_zero(struct ice_vsi *vsi)
+ int ice_vsi_del_vlan_zero(struct ice_vsi *vsi)
+ {
+ 	struct ice_vsi_vlan_ops *vlan_ops = ice_get_compat_vsi_vlan_ops(vsi);
++	struct ice_pf *pf = vsi->back;
+ 	struct ice_vlan vlan;
+ 	int err;
  
-+			u64_stats_init(&ring_stats->syncp);
-+
- 			WRITE_ONCE(tx_ring_stats[i], ring_stats);
- 		}
+-	vlan = ICE_VLAN(0, 0, 0);
+-	err = vlan_ops->del_vlan(vsi, &vlan);
+-	if (err && err != -EEXIST)
+-		return err;
++	if (pf->lag && pf->lag->primary) {
++		dev_dbg(ice_pf_to_dev(pf), "Interface is primary in aggregate - not deleting prune list\n");
++	} else {
++		vlan = ICE_VLAN(0, 0, 0);
++		err = vlan_ops->del_vlan(vsi, &vlan);
++		if (err && err != -EEXIST)
++			return err;
++	}
  
-@@ -415,6 +417,8 @@ static int ice_vsi_alloc_ring_stats(struct ice_vsi *vsi)
- 			if (!ring_stats)
- 				goto err_out;
+ 	/* in SVM both VLAN 0 filters are identical */
+ 	if (!ice_is_dvm_ena(&vsi->back->hw))
+ 		return 0;
  
-+			u64_stats_init(&ring_stats->syncp);
-+
- 			WRITE_ONCE(rx_ring_stats[i], ring_stats);
- 		}
+-	vlan = ICE_VLAN(ETH_P_8021Q, 0, 0);
+-	err = vlan_ops->del_vlan(vsi, &vlan);
+-	if (err && err != -EEXIST)
+-		return err;
++	if (pf->lag && pf->lag->primary) {
++		dev_dbg(ice_pf_to_dev(pf), "Interface is primary in aggregate - not deleting QinQ prune list\n");
++	} else {
++		vlan = ICE_VLAN(ETH_P_8021Q, 0, 0);
++		err = vlan_ops->del_vlan(vsi, &vlan);
++		if (err && err != -EEXIST)
++			return err;
++	}
  
+ 	/* when deleting the last VLAN filter, make sure to disable the VLAN
+ 	 * promisc mode so the filter isn't left by accident
 -- 
 2.51.0
 
