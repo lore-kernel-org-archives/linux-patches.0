@@ -1,39 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 974611D6AA;
-	Wed, 28 Jan 2026 15:55:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 060A01D6AA;
+	Wed, 28 Jan 2026 15:55:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769615729; cv=none; b=ea4qxPN168YgRZy6R4IgYvLKOyENQU4tFuALE46BRgpIF8lcj68qGUNALnPS4zxqn70fETVnw65RxaZbK/hHT/h3NMr7ZpFZOAx/AkvMqCKgBkRM/yPIvghhak8KrHfNRnCbYML4WxOq1iu9fcT0gzjI9AlY/Ci53aQpQZqQ5MI=
+	t=1769615733; cv=none; b=JtVv2PjTYmJNT/dWb5yUa3fAk2dGOlpT+nC7rVpAVXfGpppdUNi06Nc2x0lvM510I3V96FDUN82ZZmos/QFkn9DXfiNgbp0v5/rsaJbB4iSvj4sBTbxvJYIlDyzrOG1yoJJ28LT8XVgW8Hd92ZOZk3ZAh6bQkRpms2TMzIq7cAA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769615729; c=relaxed/simple;
-	bh=VlLJrFSmb4RZadccmNbTvsOK3aTaIf4UEpgTT78RKto=;
+	s=arc-20240116; t=1769615733; c=relaxed/simple;
+	bh=ngpLxkl6vBKZ0Rv/TMh8TDGuJciE2fxIjZqM2L/Q8os=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=b5/YfOs+iE31NJGrDEYE+dE9kCpphjv67NJhfqYRvoU+VuhR9tD6CtXPGDnLD5ozN+TySkXtqGYbcXmHYQE7ZtjudArVV2mqyYufjhnafOUXWVQG+fg0+poWa11zpUcGGKDs+MYiTLyJfI4FHOBXL62irGORkG9kGxnfRtb8mhE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1YAYR66Y; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=pbcxCJVWgUZJBJcVXbKmZ23ariWzFXr5y4U6oW/roniYnewv88xKy9JNgn9+FZgQenmsjPSOW8h9gWPKcJt+FjW2DpSpXE++8IbLMKisZ3g08miW4FM53Hs52auUhujbQpcgT1orAM009/OZD36yZH16PTYqJZsXX34ilvWQ9UY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yxBEZwOf; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1YAYR66Y"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2531C4AF09;
-	Wed, 28 Jan 2026 15:55:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yxBEZwOf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 896ABC4CEF1;
+	Wed, 28 Jan 2026 15:55:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1769615729;
-	bh=VlLJrFSmb4RZadccmNbTvsOK3aTaIf4UEpgTT78RKto=;
+	s=korg; t=1769615732;
+	bh=ngpLxkl6vBKZ0Rv/TMh8TDGuJciE2fxIjZqM2L/Q8os=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1YAYR66Yj5hRk3NJ+Lkl2zW+l9fC84X4WcD7nW2KEuFMKv6z6gdWYc5ofC1kCQfEz
-	 UI7jMna2+IjKVjd46tIgNphrRYWaWiWP8JQ68svCHB9tHTM7jk8SwoKWsdb4ILU4il
-	 4uz169/vZYTkF7lLQaSoSj28KIELYyqwh7OzP5rU=
+	b=yxBEZwOf/Cd2++j4CZjG1MAbtF5QtEjuH20lqCl2YDO6sN25SbiEuY6hKSmvDqKf8
+	 d6XkhTZmCQTQ2D6QtW9YgFeJqNirV094VFseg6L2FTwSaqQtt+UA5H9xpExALTp/GI
+	 UjH8HFTx5w6VmOMTifLhYn+OBjBVY505dvjQKgPM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	fuyuanli <fuyuanli0722@gmail.com>,
-	Dave Jiang <dave.jiang@intel.com>,
-	Jon Mason <jdmason@kudzu.us>,
+	Rakuram Eswaran <rakuram.e96@gmail.com>,
+	=?UTF-8?q?J=C3=B6rg=20R=C3=B6del?= <joro@8bytes.org>,
+	kernel test robot <lkp@intel.com>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Vasant Hegde <vasant.hegde@amd.com>,
+	Joerg Roedel <joerg.roedel@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 095/227] ntb: transport: Fix uninitialized mutex
-Date: Wed, 28 Jan 2026 16:22:20 +0100
-Message-ID: <20260128145347.751674336@linuxfoundation.org>
+Subject: [PATCH 6.18 096/227] iommu/amd: Fix error path in amd_iommu_probe_device()
+Date: Wed, 28 Jan 2026 16:22:21 +0100
+Message-ID: <20260128145347.786825202@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260128145344.331957407@linuxfoundation.org>
 References: <20260128145344.331957407@linuxfoundation.org>
@@ -46,40 +49,57 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Dave Jiang <dave.jiang@intel.com>
+From: Vasant Hegde <vasant.hegde@amd.com>
 
-[ Upstream commit 2ccb5e8dbcd2dedf13e0270165ac48bd79b7f673 ]
+[ Upstream commit 3222b6de5145272c43a90cb8667377d676635ea0 ]
 
-When the mutex 'link_event_lock' was introduced, it was never
-initialized and it triggers kernel warnings when used with locking
-debug turned on. Add initialization for the mutex.
+Currently, the error path of amd_iommu_probe_device() unconditionally
+references dev_data, which may not be initialized if an early failure
+occurs (like iommu_init_device() fails).
 
-Fixes: 3db835dd8f9a ("ntb: Add mutex to make link_event_callback executed linearly.")
-Cc: fuyuanli <fuyuanli0722@gmail.com>
-Signed-off-by: Dave Jiang <dave.jiang@intel.com>
-Signed-off-by: Jon Mason <jdmason@kudzu.us>
+Move the out_err label to ensure the function exits immediately on
+failure without accessing potentially uninitialized dev_data.
+
+Fixes: 19e5cc156cb ("iommu/amd: Enable support for up to 2K interrupts per function")
+Cc: Rakuram Eswaran <rakuram.e96@gmail.com>
+Cc: Jörg Rödel <joro@8bytes.org>
+Reported-by: kernel test robot <lkp@intel.com>
+Reported-by: Dan Carpenter <dan.carpenter@linaro.org>
+Closes: https://lore.kernel.org/r/202512191724.meqJENXe-lkp@intel.com/
+Signed-off-by: Vasant Hegde <vasant.hegde@amd.com>
+Signed-off-by: Joerg Roedel <joerg.roedel@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/ntb/ntb_transport.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/iommu/amd/iommu.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/drivers/ntb/ntb_transport.c b/drivers/ntb/ntb_transport.c
-index eb875e3db2e3b..71d4bb25f7fdd 100644
---- a/drivers/ntb/ntb_transport.c
-+++ b/drivers/ntb/ntb_transport.c
-@@ -1394,6 +1394,7 @@ static int ntb_transport_probe(struct ntb_client *self, struct ntb_dev *ndev)
- 			goto err2;
+diff --git a/drivers/iommu/amd/iommu.c b/drivers/iommu/amd/iommu.c
+index a38304f1a8df5..5914bef0c8c19 100644
+--- a/drivers/iommu/amd/iommu.c
++++ b/drivers/iommu/amd/iommu.c
+@@ -2426,8 +2426,6 @@ static struct iommu_device *amd_iommu_probe_device(struct device *dev)
+ 		goto out_err;
  	}
  
-+	mutex_init(&nt->link_event_lock);
- 	INIT_DELAYED_WORK(&nt->link_work, ntb_transport_link_work);
- 	INIT_WORK(&nt->link_cleanup, ntb_transport_link_cleanup_work);
+-out_err:
+-
+ 	iommu_completion_wait(iommu);
+ 
+ 	if (FEATURE_NUM_INT_REMAP_SUP_2K(amd_iommu_efr2))
+@@ -2438,6 +2436,7 @@ static struct iommu_device *amd_iommu_probe_device(struct device *dev)
+ 	if (dev_is_pci(dev))
+ 		pci_prepare_ats(to_pci_dev(dev), PAGE_SHIFT);
+ 
++out_err:
+ 	return iommu_dev;
+ }
  
 -- 
 2.51.0
