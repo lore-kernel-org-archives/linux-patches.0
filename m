@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6B1E32720C;
-	Wed, 28 Jan 2026 15:45:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67124329C56;
+	Wed, 28 Jan 2026 15:45:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769615134; cv=none; b=pX5YaVfXNAxFFnYIr1xHP+QRdNHdmm5elyiuMDwbn6WXeNGHaEEh2aTvuMguF+ET1t4hE/pWvOpIikuhHN524I7AbxJdrzCHCnjVUBhHyyjOmZNnzgOJi1O/4v0Gri5jIbccHfQjMnMoqASkc6QziRh1PnVJbA08psDhV1GWJ1w=
+	t=1769615137; cv=none; b=cylUj0Bhxy2FM7JOjUYp3YuqrufsD/7tQs6hTxvxIxUE3+UeZeCnvnM3/1xrLCL6szqYrUYMWnmBJlQVdr3PZM5564KADJOExMf8Jpcs1QT0J6R3iRw8HaBsF7QcQ+8hBRhFIblUeXgMdUnFRxSSkB8Ri+ErqZ4ZigbF4C17RYc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769615134; c=relaxed/simple;
-	bh=qHvcV7aNR+GXCi2AHDfkV/h9J29bsUYCWmpliZyW4KU=;
+	s=arc-20240116; t=1769615137; c=relaxed/simple;
+	bh=DO98rQtHXodAFwi1N13p53O85uuYnG/h9R5/hpq08t4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KguVrBJ24JIFPmCfZ/rIGaWYThiAGi6iaX98k9YTfMuOJTIGD/be2tKNaS2rXYoWC3zfcbuyx/PUx6h5IyTTGLaGlEvYnUMvBBaEYv6p1q8WHV3h3vDgaRc0CutACWSMIrNgDeNqH7LziPdRzZ894mrvSn4TBUMuZWdiWmjMI9s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QHeEIdp8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HFZTR7k5RaTx6z6JA7u9lQv6v0hCT32sKWSM86i0a3AXcd9+ZUA/F2HkV91WGyJFQExW2wgcTOrRm22GpeSGMsYVrebEIeFbDyIQYtYp/tSHb7d4iVpO847/y4aFsj0rfZX1IL8XV3DwBgngDOwB2in+lF3zcoOfEPeRddbRP4c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SlVfIEET; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QHeEIdp8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4BD91C4CEF1;
-	Wed, 28 Jan 2026 15:45:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SlVfIEET"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90305C4CEF7;
+	Wed, 28 Jan 2026 15:45:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1769615133;
-	bh=qHvcV7aNR+GXCi2AHDfkV/h9J29bsUYCWmpliZyW4KU=;
+	s=korg; t=1769615137;
+	bh=DO98rQtHXodAFwi1N13p53O85uuYnG/h9R5/hpq08t4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QHeEIdp8taryBzy5abFfIruYCoPCZl3RzhAVkOOiOBw5uusW2fMFjCFhUdGK/4OQY
-	 YBWpvPugXLo+9fVgocbo7Lzt2Vj6eWa23Z7VB8kqD46Yh6JkK1VzVx2CsTzS1PuqAC
-	 FJ3FS9cjynGRBPImmeOjgygeBWmLEFTitUf6wbKs=
+	b=SlVfIEETH8X11xWviirvs7NtAgeRas12zucoYL0TR1UciJ4OHjvvI0g1TSn7KUGnz
+	 GOjsEmiB9/1wYyqRvG+pdiUF59VOJ5Iuwo0ib+Sr+gmEvrrAok1L+jaSR/mSqa1js6
+	 UfZIndm3yYRQ1A7QjkdORksiqWxsNackuBL3+DHc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+c46409299c70a221415e@syzkaller.appspotmail.com,
-	Eric Dumazet <edumazet@google.com>,
-	Matteo Croce <mcroce@redhat.com>,
-	Stanislav Fomichev <sdf@fomichev.me>,
+	Vladimir Oltean <vladimir.oltean@nxp.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 089/169] bonding: provide a net pointer to __skb_flow_dissect()
-Date: Wed, 28 Jan 2026 16:22:52 +0100
-Message-ID: <20260128145337.209571039@linuxfoundation.org>
+Subject: [PATCH 6.12 090/169] net: dsa: fix off-by-one in maximum bridge ID determination
+Date: Wed, 28 Jan 2026 16:22:53 +0100
+Message-ID: <20260128145337.245566250@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260128145334.006287341@linuxfoundation.org>
 References: <20260128145334.006287341@linuxfoundation.org>
@@ -54,65 +51,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Vladimir Oltean <vladimir.oltean@nxp.com>
 
-[ Upstream commit 5f9b329096596b7e53e07d041d7fca4cbe1be752 ]
+[ Upstream commit dfca045cd4d0ea07ff4198ba392be3e718acaddc ]
 
-After 3cbf4ffba5ee ("net: plumb network namespace into __skb_flow_dissect")
-we have to provide a net pointer to __skb_flow_dissect(),
-either via skb->dev, skb->sk, or a user provided pointer.
+Prior to the blamed commit, the bridge_num range was from
+0 to ds->max_num_bridges - 1. After the commit, it is from
+1 to ds->max_num_bridges.
 
-In the following case, syzbot was able to cook a bare skb.
+So this check:
+	if (bridge_num >= max)
+		return 0;
+must be updated to:
+	if (bridge_num > max)
+		return 0;
 
-WARNING: net/core/flow_dissector.c:1131 at __skb_flow_dissect+0xb57/0x68b0 net/core/flow_dissector.c:1131, CPU#1: syz.2.1418/11053
-Call Trace:
- <TASK>
-  bond_flow_dissect drivers/net/bonding/bond_main.c:4093 [inline]
-  __bond_xmit_hash+0x2d7/0xba0 drivers/net/bonding/bond_main.c:4157
-  bond_xmit_hash_xdp drivers/net/bonding/bond_main.c:4208 [inline]
-  bond_xdp_xmit_3ad_xor_slave_get drivers/net/bonding/bond_main.c:5139 [inline]
-  bond_xdp_get_xmit_slave+0x1fd/0x710 drivers/net/bonding/bond_main.c:5515
-  xdp_master_redirect+0x13f/0x2c0 net/core/filter.c:4388
-  bpf_prog_run_xdp include/net/xdp.h:700 [inline]
-  bpf_test_run+0x6b2/0x7d0 net/bpf/test_run.c:421
-  bpf_prog_test_run_xdp+0x795/0x10e0 net/bpf/test_run.c:1390
-  bpf_prog_test_run+0x2c7/0x340 kernel/bpf/syscall.c:4703
-  __sys_bpf+0x562/0x860 kernel/bpf/syscall.c:6182
-  __do_sys_bpf kernel/bpf/syscall.c:6274 [inline]
-  __se_sys_bpf kernel/bpf/syscall.c:6272 [inline]
-  __x64_sys_bpf+0x7c/0x90 kernel/bpf/syscall.c:6272
-  do_syscall_x64 arch/x86/entry/syscall_64.c:63 [inline]
-  do_syscall_64+0xec/0xf80 arch/x86/entry/syscall_64.c:94
+in order to allow the last bridge_num value (==max) to be used.
 
-Fixes: 58deb77cc52d ("bonding: balance ICMP echoes in layer3+4 mode")
-Reported-by: syzbot+c46409299c70a221415e@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/netdev/696faa23.050a0220.4cb9c.001f.GAE@google.com/T/#u
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Cc: Matteo Croce <mcroce@redhat.com>
-Acked-by: Stanislav Fomichev <sdf@fomichev.me>
-Link: https://patch.msgid.link/20260120161744.1893263-1-edumazet@google.com
+This is easiest visible when a driver sets ds->max_num_bridges=1.
+The observed behaviour is that even the first created bridge triggers
+the netlink extack "Range of offloadable bridges exceeded" warning, and
+is handled in software rather than being offloaded.
+
+Fixes: 3f9bb0301d50 ("net: dsa: make dp->bridge_num one-based")
+Signed-off-by: Vladimir Oltean <vladimir.oltean@nxp.com>
+Link: https://patch.msgid.link/20260120211039.3228999-1-vladimir.oltean@nxp.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/bonding/bond_main.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ net/dsa/dsa.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/bonding/bond_main.c b/drivers/net/bonding/bond_main.c
-index 6f87d7e29e19b..b52f5f64e3abb 100644
---- a/drivers/net/bonding/bond_main.c
-+++ b/drivers/net/bonding/bond_main.c
-@@ -4263,8 +4263,9 @@ static bool bond_flow_dissect(struct bonding *bond, struct sk_buff *skb, const v
- 	case BOND_XMIT_POLICY_ENCAP23:
- 	case BOND_XMIT_POLICY_ENCAP34:
- 		memset(fk, 0, sizeof(*fk));
--		return __skb_flow_dissect(NULL, skb, &flow_keys_bonding,
--					  fk, data, l2_proto, nhoff, hlen, 0);
-+		return __skb_flow_dissect(dev_net(bond->dev), skb,
-+					  &flow_keys_bonding, fk, data,
-+					  l2_proto, nhoff, hlen, 0);
- 	default:
- 		break;
- 	}
+diff --git a/net/dsa/dsa.c b/net/dsa/dsa.c
+index 97599e0d5a1d0..76a086e846c45 100644
+--- a/net/dsa/dsa.c
++++ b/net/dsa/dsa.c
+@@ -157,7 +157,7 @@ unsigned int dsa_bridge_num_get(const struct net_device *bridge_dev, int max)
+ 		bridge_num = find_next_zero_bit(&dsa_fwd_offloading_bridges,
+ 						DSA_MAX_NUM_OFFLOADING_BRIDGES,
+ 						1);
+-		if (bridge_num >= max)
++		if (bridge_num > max)
+ 			return 0;
+ 
+ 		set_bit(bridge_num, &dsa_fwd_offloading_bridges);
 -- 
 2.51.0
 
