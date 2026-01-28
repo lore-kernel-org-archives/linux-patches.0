@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1BEAC10A1E;
-	Wed, 28 Jan 2026 15:31:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42D8D242D86;
+	Wed, 28 Jan 2026 15:31:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769614304; cv=none; b=uZlRBcM9n014u6Z/NfO2DFBfWovagywmv6XNdPUclG2/axNPfK62qB3lL2I1Wky8yd2qLL7EQUQwhUGSH8XroJ2hJmYYfwlZZafQ6iV1vLxIptU9BJZuEnkHhiLbqjqA/XF28hQzUGz/UCL2aqYNWWUZHLIJFHQdL5ZXM3aKtYc=
+	t=1769614307; cv=none; b=J7IAhlbrybrA6tZODWzptfzL1YkLDw6EjYV6ICaeQ9FPNbA+SZem/nXuMm/5yEWw7M/fq44aY91gWeEBotuyHF9aqHU8a1pfUHTug03HaKUoyuPhfAUeHGh7jlq29RkO9T5uIlUjMzlLzL5lrEVTU07ZvHpG2cDd0ezYv8WD3Dw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769614304; c=relaxed/simple;
-	bh=M2MLBbV1IAuQ7aNioHMFConF6NA7jaMue7cl5xzUDA8=;
+	s=arc-20240116; t=1769614307; c=relaxed/simple;
+	bh=gSZTf4K7ti0IOcjNqU3w+QQVrgbhHPB+q2FrYnnlHK0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ih7ImyeBX7+wr6Ni7Liuo4L2kdpbt98qL5klBMkrRMcc+K5yB+q9wDFLlq4Xdh+02vbzNBWyIy8QTlZQt1eLIHkAUr+9F7yDCg1HJ8ezQUySohNmPMDF6mOCk5X2BZMKVA60yxhgkCnS2bi315WNqWUsnJeHWB4FP5BrogFBidY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=p4QchWVQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hOBdPBjYIAdLDUX9S9M5rZUXytiKEx0363P6m3xT8g1NP9R8U4YcFIV3qSXwGRxj4sSBdqe6OoT2RFyvMLx9xxUnNB3Uv5bPvoaJtz+3jUTCXPb22gKlIaIqL5UJx9flwyWoyH5BykuAUSUX2oD7hwNUfhxckbzmY8gi06NzugU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=B1WHokcQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="p4QchWVQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3BFD6C4CEF1;
-	Wed, 28 Jan 2026 15:31:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="B1WHokcQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 97153C4CEF1;
+	Wed, 28 Jan 2026 15:31:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1769614303;
-	bh=M2MLBbV1IAuQ7aNioHMFConF6NA7jaMue7cl5xzUDA8=;
+	s=korg; t=1769614307;
+	bh=gSZTf4K7ti0IOcjNqU3w+QQVrgbhHPB+q2FrYnnlHK0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=p4QchWVQeuekZItM5Me+XrxQSb1r7bwp3YnvHYsumTDLR5Ylotm5sC0tsheTizHoO
-	 n1QWr2bZ31gi2/M7GD2boljvg+Sy30jivXcO3GFxsQJCWpF6u8L2bFuCse1J87uv3k
-	 kuXIy0viOx/KFFkAOnfBL6qquIihk+pcCy64jIMU=
+	b=B1WHokcQ4C0xSNdEtS+O4kYi3G9Xf8+cEz9/dDUcHQOBOwILk1nxzffRvFNl00hDK
+	 nYwK5EM95/9L0z7NR4NEK/shcPvA4QwxVjeqXR8ZQ9pIKgqNOL98oMASSmccLngxDu
+	 mpfofQtuOLvnyGu1l/tE65tLxgFVz1PTteia32HU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xabier Marquiegui <reibax@gmail.com>,
+	Mahesh Bandewar <maheshb@google.com>,
+	Shuah Khan <shuah@kernel.org>,
 	Richard Cochran <richardcochran@gmail.com>,
-	Vinicius Costa Gomes <vinicius.gomes@intel.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 095/254] ptp: add testptp mask test
-Date: Wed, 28 Jan 2026 16:21:11 +0100
-Message-ID: <20260128145348.246509071@linuxfoundation.org>
+Subject: [PATCH 6.6 096/254] selftest/ptp: update ptp selftest to exercise the gettimex options
+Date: Wed, 28 Jan 2026 16:21:12 +0100
+Message-ID: <20260128145348.282190843@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260128145344.698118637@linuxfoundation.org>
 References: <20260128145344.698118637@linuxfoundation.org>
@@ -53,111 +53,141 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xabier Marquiegui <reibax@gmail.com>
+From: Mahesh Bandewar <maheshb@google.com>
 
-[ Upstream commit 26285e689c6cd2cf3849568c83b2ebe53f467143 ]
+[ Upstream commit 3d07b691ee707c00afaf365440975e81bb96cd9b ]
 
-Add option to test timestamp event queue mask manipulation in testptp.
+With the inclusion of commit c259acab839e ("ptp/ioctl: support
+MONOTONIC{,_RAW} timestamps for PTP_SYS_OFFSET_EXTENDED") clock_gettime()
+now allows retrieval of pre/post timestamps for CLOCK_MONOTONIC and
+CLOCK_MONOTONIC_RAW timebases along with the previously supported
+CLOCK_REALTIME.
 
-Option -F allows the user to specify a single channel that will be
-applied on the mask filter via IOCTL.
+This patch adds a command line option 'y' to the testptp program to
+choose one of the allowed timebases [realtime aka system, monotonic,
+and monotonic-raw).
 
-The test program will maintain the file open until user input is
-received.
-
-This allows checking the effect of the IOCTL in debugfs.
-
-eg:
-
-Console 1:
-```
-Channel 12 exclusively enabled. Check on debugfs.
-Press any key to continue
-```
-
-Console 2:
-```
-0x00000000 0x00000001 0x00000000 0x00000000 0x00000000 0x00000000
-0x00000000 0x00000000 0x00000000 0x00000000 0x00000000 0x00000000
-0x00000000 0x00000000 0x00000000 0x00000000 0x00000000 0x00000000
-0x00000000 0x00000000 0x00000000 0x00000000 0x00000000 0x00000000
-0x00000000 0x00000000 0x00000000 0x00000000 0x00000000 0x00000000
-0x00000000 0x00000000 0x00000000 0x00000000 0x00000000 0x00000000
-0x00000000 0x00000000 0x00000000 0x00000000 0x00000000 0x00000000
-0x00000000 0x00000000 0x00000000 0x00000000 0x00000000 0x00000000
-0x00000000 0x00000000 0x00000000 0x00000000 0x00000000 0x00000000
-0x00000000 0x00000000 0x00000000 0x00000000 0x00000000 0x00000000
-0x00000000 0x00000000 0x00000000 0x00000000
-```
-
-Signed-off-by: Xabier Marquiegui <reibax@gmail.com>
-Suggested-by: Richard Cochran <richardcochran@gmail.com>
-Suggested-by: Vinicius Costa Gomes <vinicius.gomes@intel.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Signed-off-by: Mahesh Bandewar <maheshb@google.com>
+Cc: Shuah Khan <shuah@kernel.org>
+Acked-by: Richard Cochran <richardcochran@gmail.com>
+Link: https://patch.msgid.link/20241003101506.769418-1-maheshb@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Stable-dep-of: 76868642e427 ("testptp: Add option to open PHC in readonly mode")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/ptp/testptp.c | 19 ++++++++++++++++++-
- 1 file changed, 18 insertions(+), 1 deletion(-)
+ tools/testing/selftests/ptp/testptp.c | 62 ++++++++++++++++++++++++---
+ 1 file changed, 57 insertions(+), 5 deletions(-)
 
 diff --git a/tools/testing/selftests/ptp/testptp.c b/tools/testing/selftests/ptp/testptp.c
-index c9f6cca4feb45..011252fe238c8 100644
+index 011252fe238c8..58064151f2c89 100644
 --- a/tools/testing/selftests/ptp/testptp.c
 +++ b/tools/testing/selftests/ptp/testptp.c
-@@ -121,6 +121,7 @@ static void usage(char *progname)
- 		" -d name    device to open\n"
- 		" -e val     read 'val' external time stamp events\n"
- 		" -f val     adjust the ptp clock frequency by 'val' ppb\n"
-+		" -F chan    Enable single channel mask and keep device open for debugfs verification.\n"
- 		" -g         get the ptp clock time\n"
- 		" -h         prints this message\n"
- 		" -i val     index for event/trigger\n"
-@@ -187,6 +188,7 @@ int main(int argc, char *argv[])
- 	int pps = -1;
+@@ -146,6 +146,7 @@ static void usage(char *progname)
+ 		" -T val     set the ptp clock time to 'val' seconds\n"
+ 		" -x val     get an extended ptp clock time with the desired number of samples (up to %d)\n"
+ 		" -X         get a ptp clock cross timestamp\n"
++		" -y val     pre/post tstamp timebase to use {realtime|monotonic|monotonic-raw}\n"
+ 		" -z         test combinations of rising/falling external time stamp flags\n",
+ 		progname, PTP_MAX_SAMPLES);
+ }
+@@ -189,6 +190,7 @@ int main(int argc, char *argv[])
  	int seconds = 0;
  	int settime = 0;
-+	int channel = -1;
+ 	int channel = -1;
++	clockid_t ext_clockid = CLOCK_REALTIME;
  
  	int64_t t1, t2, tp;
  	int64_t interval, offset;
-@@ -196,7 +198,7 @@ int main(int argc, char *argv[])
+@@ -198,7 +200,7 @@ int main(int argc, char *argv[])
  
  	progname = strrchr(argv[0], '/');
  	progname = progname ? 1+progname : argv[0];
--	while (EOF != (c = getopt(argc, argv, "cd:e:f:ghH:i:k:lL:n:o:p:P:sSt:T:w:x:Xz"))) {
-+	while (EOF != (c = getopt(argc, argv, "cd:e:f:F:ghH:i:k:lL:n:o:p:P:sSt:T:w:x:Xz"))) {
+-	while (EOF != (c = getopt(argc, argv, "cd:e:f:F:ghH:i:k:lL:n:o:p:P:sSt:T:w:x:Xz"))) {
++	while (EOF != (c = getopt(argc, argv, "cd:e:f:F:ghH:i:k:lL:n:o:p:P:sSt:T:w:x:Xy:z"))) {
  		switch (c) {
  		case 'c':
  			capabilities = 1;
-@@ -210,6 +212,9 @@ int main(int argc, char *argv[])
- 		case 'f':
- 			adjfreq = atoi(optarg);
+@@ -278,6 +280,21 @@ int main(int argc, char *argv[])
+ 		case 'X':
+ 			getcross = 1;
  			break;
-+		case 'F':
-+			channel = atoi(optarg);
++		case 'y':
++			if (!strcasecmp(optarg, "realtime"))
++				ext_clockid = CLOCK_REALTIME;
++			else if (!strcasecmp(optarg, "monotonic"))
++				ext_clockid = CLOCK_MONOTONIC;
++			else if (!strcasecmp(optarg, "monotonic-raw"))
++				ext_clockid = CLOCK_MONOTONIC_RAW;
++			else {
++				fprintf(stderr,
++					"type needs to be realtime, monotonic or monotonic-raw; was given %s\n",
++					optarg);
++				return -1;
++			}
 +			break;
- 		case 'g':
- 			gettime = 1;
- 			break;
-@@ -604,6 +609,18 @@ int main(int argc, char *argv[])
- 		free(xts);
- 	}
- 
-+	if (channel >= 0) {
-+		if (ioctl(fd, PTP_MASK_CLEAR_ALL)) {
-+			perror("PTP_MASK_CLEAR_ALL");
-+		} else if (ioctl(fd, PTP_MASK_EN_SINGLE, (unsigned int *)&channel)) {
-+			perror("PTP_MASK_EN_SINGLE");
-+		} else {
-+			printf("Channel %d exclusively enabled. Check on debugfs.\n", channel);
-+			printf("Press any key to continue\n.");
-+			getchar();
-+		}
-+	}
 +
- 	close(fd);
- 	return 0;
- }
+ 		case 'z':
+ 			flagtest = 1;
+ 			break;
+@@ -566,6 +583,7 @@ int main(int argc, char *argv[])
+ 		}
+ 
+ 		soe->n_samples = getextended;
++		soe->clockid = ext_clockid;
+ 
+ 		if (ioctl(fd, PTP_SYS_OFFSET_EXTENDED, soe)) {
+ 			perror("PTP_SYS_OFFSET_EXTENDED");
+@@ -574,12 +592,46 @@ int main(int argc, char *argv[])
+ 			       getextended);
+ 
+ 			for (i = 0; i < getextended; i++) {
+-				printf("sample #%2d: system time before: %lld.%09u\n",
+-				       i, soe->ts[i][0].sec, soe->ts[i][0].nsec);
++				switch (ext_clockid) {
++				case CLOCK_REALTIME:
++					printf("sample #%2d: real time before: %lld.%09u\n",
++					       i, soe->ts[i][0].sec,
++					       soe->ts[i][0].nsec);
++					break;
++				case CLOCK_MONOTONIC:
++					printf("sample #%2d: monotonic time before: %lld.%09u\n",
++					       i, soe->ts[i][0].sec,
++					       soe->ts[i][0].nsec);
++					break;
++				case CLOCK_MONOTONIC_RAW:
++					printf("sample #%2d: monotonic-raw time before: %lld.%09u\n",
++					       i, soe->ts[i][0].sec,
++					       soe->ts[i][0].nsec);
++					break;
++				default:
++					break;
++				}
+ 				printf("            phc time: %lld.%09u\n",
+ 				       soe->ts[i][1].sec, soe->ts[i][1].nsec);
+-				printf("            system time after: %lld.%09u\n",
+-				       soe->ts[i][2].sec, soe->ts[i][2].nsec);
++				switch (ext_clockid) {
++				case CLOCK_REALTIME:
++					printf("            real time after: %lld.%09u\n",
++					       soe->ts[i][2].sec,
++					       soe->ts[i][2].nsec);
++					break;
++				case CLOCK_MONOTONIC:
++					printf("            monotonic time after: %lld.%09u\n",
++					       soe->ts[i][2].sec,
++					       soe->ts[i][2].nsec);
++					break;
++				case CLOCK_MONOTONIC_RAW:
++					printf("            monotonic-raw time after: %lld.%09u\n",
++					       soe->ts[i][2].sec,
++					       soe->ts[i][2].nsec);
++					break;
++				default:
++					break;
++				}
+ 			}
+ 		}
+ 
 -- 
 2.51.0
 
