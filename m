@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D7082DE200;
-	Wed, 28 Jan 2026 15:40:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 997CD2F0C70;
+	Wed, 28 Jan 2026 15:40:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769614834; cv=none; b=XObzxY6Wd9gYuiRDpVyWqTxPzHkC+1k2XAfPXF8CBjExVsI52v3YbbncMTQUkAmQShJbYYclYw/cenQHwnwdtP1RFrtSAw1oz5uY2kF4StCkKnDa/yHb8kgnZ3YLBg9xR860fqHLlFJiHInQfV6iX+7tlUuMCYQhxloTY97Dif0=
+	t=1769614837; cv=none; b=uJY/HEoPqoYKS13VDfoRobVjHZKRlZtxVRjKEia2vq2AEY3KMlHHBu63ZNMC2ZKJGw6o6at8ARH3v+odGGJhN1k2siJIfe64g9h5lXfR/VuO7TQdaK2d8mUwcSwWfjxFdU/WYTStS/gLI27FdUJgtopoQ1+YPBj1lHdFB/UjyOY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769614834; c=relaxed/simple;
-	bh=15eGbPckJ5L5raoEhu08DJCQeNXkh626HEmVpCBrDNI=;
+	s=arc-20240116; t=1769614837; c=relaxed/simple;
+	bh=EXOVJcZYoJjOsIF/2kYmLlC/PvMNrNyFJKdc818a9Zk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Sjx60Qzu1Bayp5uYHJe0+3iOBH+7RJF1mISMBcIZLoMk3B4T3EwGOw1tNVbaZqHoRZ74makiYGJIMZVew6bbsdDIMGELWVb/NNr6WAh76F39lFvr8Moi5k2UEZG3OBUPwqm2tTZ2CbfWWq+cAnyZ+j39WcZfXsK+dx4kaYOUrcM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bFgdTGm+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mKWF5cOI+KMUiKYMrrwKpEw+kNggAox6bAOqxhdh/qTU3+YITcQyNrUZLcvqsnY2WLXMtH0KfH+z3XkRCowrrjQkG/qpk+Zk/6S5q2K+CjYPUsOF8GXj3vtsQsJbrb1eyeaADZKdxqqFBauNNy/CrF0XDGpI2XbViMX2hMvhtQg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=J4GvEN6g; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bFgdTGm+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D26FFC116C6;
-	Wed, 28 Jan 2026 15:40:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="J4GvEN6g"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 859BEC4CEF7;
+	Wed, 28 Jan 2026 15:40:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1769614833;
-	bh=15eGbPckJ5L5raoEhu08DJCQeNXkh626HEmVpCBrDNI=;
+	s=korg; t=1769614837;
+	bh=EXOVJcZYoJjOsIF/2kYmLlC/PvMNrNyFJKdc818a9Zk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bFgdTGm+HBB7uBYrEpNnTNrXrUwRfudJTQc6i4hsCC8hABDshpx8DvrQgir5I2LjF
-	 3DJEVnlJ/ZeNaz8EeI6hjyFMD93SOcJf1q+0OQB9MljwoohL2gOywkEddrSPKTfV8T
-	 vpDfxrX2fQMl9PNHguQLPOOh1uII/NTYMicG+Wkc=
+	b=J4GvEN6gOVA1RNdbKtiugZaFO3UIZb42PbfTa30PWta/YxVrZBh/zId53F3T13g2W
+	 BW6KHLSiMB2+MWwyw7Gqq7ZpOLQyZkYkt90G055Oaq8UFfTnlq8g2XLzFNflAYYXe9
+	 GxX/PrAtQaaXhMaM4To/XwR2hevot8cn/Z8RwUgU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jakub Kicinski <kuba@kernel.org>,
-	Zqiang <qiang.zhang@linux.dev>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Rahul Sharma <black.hawk@163.com>
-Subject: [PATCH 6.6 246/254] usbnet: Fix using smp_processor_id() in preemptible code warnings
-Date: Wed, 28 Jan 2026 16:23:42 +0100
-Message-ID: <20260128145353.650193051@linuxfoundation.org>
+	Norbert Szetei <norbert@doyensec.com>,
+	Namjae Jeon <linkinjeon@kernel.org>,
+	Steve French <stfrench@microsoft.com>,
+	Li hongliang <1468888505@139.com>
+Subject: [PATCH 6.6 247/254] ksmbd: fix use-after-free in ksmbd_session_rpc_open
+Date: Wed, 28 Jan 2026 16:23:43 +0100
+Message-ID: <20260128145353.686626088@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260128145344.698118637@linuxfoundation.org>
 References: <20260128145344.698118637@linuxfoundation.org>
@@ -52,75 +52,116 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zqiang <qiang.zhang@linux.dev>
+From: Namjae Jeon <linkinjeon@kernel.org>
 
-[ Upstream commit 327cd4b68b4398b6c24f10eb2b2533ffbfc10185 ]
+[ Upstream commit a1f46c99d9ea411f9bf30025b912d881d36fc709 ]
 
-Syzbot reported the following warning:
+A UAF issue can occur due to a race condition between
+ksmbd_session_rpc_open() and __session_rpc_close().
+Add rpc_lock to the session to protect it.
 
-BUG: using smp_processor_id() in preemptible [00000000] code: dhcpcd/2879
-caller is usbnet_skb_return+0x74/0x490 drivers/net/usb/usbnet.c:331
-CPU: 1 UID: 0 PID: 2879 Comm: dhcpcd Not tainted 6.15.0-rc4-syzkaller-00098-g615dca38c2ea #0 PREEMPT(voluntary)
-Call Trace:
- <TASK>
- __dump_stack lib/dump_stack.c:94 [inline]
- dump_stack_lvl+0x16c/0x1f0 lib/dump_stack.c:120
- check_preemption_disabled+0xd0/0xe0 lib/smp_processor_id.c:49
- usbnet_skb_return+0x74/0x490 drivers/net/usb/usbnet.c:331
- usbnet_resume_rx+0x4b/0x170 drivers/net/usb/usbnet.c:708
- usbnet_change_mtu+0x1be/0x220 drivers/net/usb/usbnet.c:417
- __dev_set_mtu net/core/dev.c:9443 [inline]
- netif_set_mtu_ext+0x369/0x5c0 net/core/dev.c:9496
- netif_set_mtu+0xb0/0x160 net/core/dev.c:9520
- dev_set_mtu+0xae/0x170 net/core/dev_api.c:247
- dev_ifsioc+0xa31/0x18d0 net/core/dev_ioctl.c:572
- dev_ioctl+0x223/0x10e0 net/core/dev_ioctl.c:821
- sock_do_ioctl+0x19d/0x280 net/socket.c:1204
- sock_ioctl+0x42f/0x6a0 net/socket.c:1311
- vfs_ioctl fs/ioctl.c:51 [inline]
- __do_sys_ioctl fs/ioctl.c:906 [inline]
- __se_sys_ioctl fs/ioctl.c:892 [inline]
- __x64_sys_ioctl+0x190/0x200 fs/ioctl.c:892
- do_syscall_x64 arch/x86/entry/syscall_64.c:63 [inline]
- do_syscall_64+0xcd/0x260 arch/x86/entry/syscall_64.c:94
- entry_SYSCALL_64_after_hwframe+0x77/0x7f
-
-For historical and portability reasons, the netif_rx() is usually
-run in the softirq or interrupt context, this commit therefore add
-local_bh_disable/enable() protection in the usbnet_resume_rx().
-
-Fixes: 43daa96b166c ("usbnet: Stop RX Q on MTU change")
-Link: https://syzkaller.appspot.com/bug?id=81f55dfa587ee544baaaa5a359a060512228c1e1
-Suggested-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Zqiang <qiang.zhang@linux.dev>
-Link: https://patch.msgid.link/20251011070518.7095-1-qiang.zhang@linux.dev
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-[ The context change is due to the commit 2c04d279e857
-("net: usb: Convert tasklet API to new bottom half workqueue mechanism")
-in v6.17 which is irrelevant to the logic of this patch.]
-Signed-off-by: Rahul Sharma <black.hawk@163.com>
+Cc: stable@vger.kernel.org
+Reported-by: Norbert Szetei <norbert@doyensec.com>
+Tested-by: Norbert Szetei <norbert@doyensec.com>
+Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Steve French <stfrench@microsoft.com>
+[ KSMBD_DEFAULT_GFP is introduced by commit 0066f623bce8 ("ksmbd: use __GFP_RETRY_MAYFAIL")
+ after linux-6.13. Here we still use GFP_KERNEL. ]
+Signed-off-by: Li hongliang <1468888505@139.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/usb/usbnet.c |    2 ++
- 1 file changed, 2 insertions(+)
+ fs/smb/server/mgmt/user_session.c |   20 ++++++++++++++------
+ fs/smb/server/mgmt/user_session.h |    1 +
+ 2 files changed, 15 insertions(+), 6 deletions(-)
 
---- a/drivers/net/usb/usbnet.c
-+++ b/drivers/net/usb/usbnet.c
-@@ -702,6 +702,7 @@ void usbnet_resume_rx(struct usbnet *dev
- 	struct sk_buff *skb;
- 	int num = 0;
+--- a/fs/smb/server/mgmt/user_session.c
++++ b/fs/smb/server/mgmt/user_session.c
+@@ -59,10 +59,12 @@ static void ksmbd_session_rpc_clear_list
+ 	struct ksmbd_session_rpc *entry;
+ 	long index;
  
-+	local_bh_disable();
- 	clear_bit(EVENT_RX_PAUSED, &dev->flags);
- 
- 	while ((skb = skb_dequeue(&dev->rxq_pause)) != NULL) {
-@@ -710,6 +711,7 @@ void usbnet_resume_rx(struct usbnet *dev
++	down_write(&sess->rpc_lock);
+ 	xa_for_each(&sess->rpc_handle_list, index, entry) {
+ 		xa_erase(&sess->rpc_handle_list, index);
+ 		__session_rpc_close(sess, entry);
  	}
++	up_write(&sess->rpc_lock);
  
- 	tasklet_schedule(&dev->bh);
-+	local_bh_enable();
+ 	xa_destroy(&sess->rpc_handle_list);
+ }
+@@ -92,7 +94,7 @@ int ksmbd_session_rpc_open(struct ksmbd_
+ {
+ 	struct ksmbd_session_rpc *entry, *old;
+ 	struct ksmbd_rpc_command *resp;
+-	int method;
++	int method, id;
  
- 	netif_dbg(dev, rx_status, dev->net,
- 		  "paused rx queue disabled, %d skbs requeued\n", num);
+ 	method = __rpc_method(rpc_name);
+ 	if (!method)
+@@ -102,26 +104,29 @@ int ksmbd_session_rpc_open(struct ksmbd_
+ 	if (!entry)
+ 		return -ENOMEM;
+ 
++	down_read(&sess->rpc_lock);
+ 	entry->method = method;
+-	entry->id = ksmbd_ipc_id_alloc();
+-	if (entry->id < 0)
++	entry->id = id = ksmbd_ipc_id_alloc();
++	if (id < 0)
+ 		goto free_entry;
+-	old = xa_store(&sess->rpc_handle_list, entry->id, entry, GFP_KERNEL);
++	old = xa_store(&sess->rpc_handle_list, id, entry, GFP_KERNEL);
+ 	if (xa_is_err(old))
+ 		goto free_id;
+ 
+-	resp = ksmbd_rpc_open(sess, entry->id);
++	resp = ksmbd_rpc_open(sess, id);
+ 	if (!resp)
+ 		goto erase_xa;
+ 
++	up_read(&sess->rpc_lock);
+ 	kvfree(resp);
+-	return entry->id;
++	return id;
+ erase_xa:
+ 	xa_erase(&sess->rpc_handle_list, entry->id);
+ free_id:
+ 	ksmbd_rpc_id_free(entry->id);
+ free_entry:
+ 	kfree(entry);
++	up_read(&sess->rpc_lock);
+ 	return -EINVAL;
+ }
+ 
+@@ -129,9 +134,11 @@ void ksmbd_session_rpc_close(struct ksmb
+ {
+ 	struct ksmbd_session_rpc *entry;
+ 
++	down_write(&sess->rpc_lock);
+ 	entry = xa_erase(&sess->rpc_handle_list, id);
+ 	if (entry)
+ 		__session_rpc_close(sess, entry);
++	up_write(&sess->rpc_lock);
+ }
+ 
+ int ksmbd_session_rpc_method(struct ksmbd_session *sess, int id)
+@@ -438,6 +445,7 @@ static struct ksmbd_session *__session_c
+ 	sess->sequence_number = 1;
+ 	rwlock_init(&sess->tree_conns_lock);
+ 	atomic_set(&sess->refcnt, 2);
++	init_rwsem(&sess->rpc_lock);
+ 
+ 	ret = __init_smb2_session(sess);
+ 	if (ret)
+--- a/fs/smb/server/mgmt/user_session.h
++++ b/fs/smb/server/mgmt/user_session.h
+@@ -63,6 +63,7 @@ struct ksmbd_session {
+ 	rwlock_t			tree_conns_lock;
+ 
+ 	atomic_t			refcnt;
++	struct rw_semaphore		rpc_lock;
+ };
+ 
+ static inline int test_session_flag(struct ksmbd_session *sess, int bit)
 
 
