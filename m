@@ -1,44 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A69423431F5;
-	Wed, 28 Jan 2026 22:33:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9AF6340A6F;
+	Wed, 28 Jan 2026 22:33:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769639620; cv=none; b=GKsLufZnRs8SmbphK4spjGyizshoO24AYpTHwc/noYS846Wi8jQOQ4aOXAPKU8Fq426P0SM0TRiPZjPSTr449ogNeu2rSPGlXKRxZ08msNB5CJT++Xx+tDCFE+tWfURQfzd3juF8eI9fkfjLSTq8MFUScVN+EaiMx+iNVGBy5q4=
+	t=1769639622; cv=none; b=uYei7PhZAg7svPXojlSGWURpDffXoh1alqY9jzO/Av0VE7Qw0Nz4sYkiYoz5CfH1brwsEj8OGxGXa+2cEi+29hr7PPqS4jD0Qz+NGBRlvXUTZQMwNkk6c4694CWnBR8Wsd7z/r9Yi/tFh+veY2PegEZI6ceQSku4R9IU+TccoOk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769639620; c=relaxed/simple;
-	bh=nPAS/85Ek0uD543PJk8cqGCFHC+UVj8dxfi3zLd+Nfk=;
+	s=arc-20240116; t=1769639622; c=relaxed/simple;
+	bh=FL7myEeyGHFrOKugpv3PS/Na7Tf919couL7+Cr2mTpE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oCzczwffu0U/cnzMo0D1tFPiXs78DLzILB1mRskpuJffMekHH6beSu0Aa3AEMZ9K/XZKtnq0L4vtMOSnu14ijFIY+fWwrvbeR5Yz1FiH87Y/NlLnk5N65GDw1AjVQpCccvod9GRdEqjoev0Vd9GjB7+w8J+eEmGlrh2VL13TBb0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=DtFnJchF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uBz1ffbfdXc3zGQuHJEGS6VlTt2JlAlaeppK4tbMMtlppwMbePVVsMhvhXUqHOJawgEexo/cpOWFnDnSSa6rl/1O1AFKwa1YL+hHVWJio+qFUG19sulEb2qUTiutPgxAObmyEWcRJAVnoG/0s5HNnqEdwjOr5dNrdgXceLMuPr0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=IxV6XZw2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="DtFnJchF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7499CC4CEF1;
-	Wed, 28 Jan 2026 22:33:39 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="IxV6XZw2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8AF74C4CEF1;
+	Wed, 28 Jan 2026 22:33:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1769639620;
-	bh=nPAS/85Ek0uD543PJk8cqGCFHC+UVj8dxfi3zLd+Nfk=;
+	s=k20201202; t=1769639622;
+	bh=FL7myEeyGHFrOKugpv3PS/Na7Tf919couL7+Cr2mTpE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DtFnJchFm4leumiJTiDtiY63pU9eBvspWhd5ALswgL0TYeru6jPMn2XV38M6CTnOx
-	 XLg9AW05R5jpI5bMHVf1pIymfrzK3QoMD1mW6d9ArM2BVAv9j40zsOInnlqgr9V8c/
-	 D3vdoV4xi/pwA8KvGujaP6p6z/CviTSuIPp28vbjD65c+8nSS1DoHNZ+dWvnHZE4sf
-	 1XsoZ3oiaAEp0ZftvgRUzQQUtMGf7+XQEKhkmzC/XMPbXoG2Q4huwroPfFGCkBuoYh
-	 xGjH1tzSbzx+3apbeStK6zJpaBWDkiYFsxuMWv0isuTVPPzIc0kvNcW9ULJpgV+olb
-	 gWU3p4nzzc3Rg==
+	b=IxV6XZw2e12yRgNdFpM5D+7d8FMDk1JWXzWQLmE19dZQ2SXhRJIERrmMSICbz21zY
+	 daA17YNvXmr1ZvuHzqaVEiWjpdeXNWWs6tCsENqfEYOyEUaDfZ3MPiqv5jHPndSO6e
+	 tuzode3/25iqkUZ5n6deQV/XtFQsEWaCYyAv0A9gR/CPWEq3lOkbExfen89oJJrWKz
+	 lfBkxBwoI2CbV9jLk22mMoRfrjnQFRpiEsP2BCrzPK/WXik4s0btCdektyTA3jbGIB
+	 Mus86Vfd1xghxEYTmA7hRMomUWRhN1JaxaWZeTIOMXXGHqGVWaecWZXjqLOGnmrahp
+	 VvQ7fTTAjo7lw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Martin Hamilton <m@martinh.net>,
+Cc: Lianqin Hu <hulianqin@vivo.com>,
+	Cryolitia PukNgae <cryolitia@uniontech.com>,
 	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>,
-	sbinding@opensource.cirrus.com,
-	kailang@realtek.com,
-	chris.chiu@canonical.com,
-	edip@medip.dev
-Subject: [PATCH AUTOSEL 6.18-6.1] ALSA: hda/realtek: ALC269 fixup for Lenovo Yoga Book 9i 13IRU8 audio
-Date: Wed, 28 Jan 2026 17:33:01 -0500
-Message-ID: <20260128223332.2806589-3-sashal@kernel.org>
+	pav@iki.fi,
+	jussi@sonarnerd.net,
+	roy.vegard.ovesen@gmail.com
+Subject: [PATCH AUTOSEL 6.18] ALSA: usb-audio: Add delay quirk for MOONDROP Moonriver2 Ti
+Date: Wed, 28 Jan 2026 17:33:02 -0500
+Message-ID: <20260128223332.2806589-4-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260128223332.2806589-1-sashal@kernel.org>
 References: <20260128223332.2806589-1-sashal@kernel.org>
@@ -53,158 +53,169 @@ X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.18.7
 Content-Transfer-Encoding: 8bit
 
-From: Martin Hamilton <m@martinh.net>
+From: Lianqin Hu <hulianqin@vivo.com>
 
-[ Upstream commit 64e0924ed3b446fdd758dfab582e0e961863a116 ]
+[ Upstream commit 49985bc466b51af88d534485631c8cd8c9c65f43 ]
 
-The amp/speakers on the Lenovo Yoga Book 9i 13IRU8 laptop aren't
-fully powered up, resulting in horrible tinny sound by default.
+Audio control requests that sets sampling frequency sometimes fail on
+this card. Adding delay between control messages eliminates that problem.
 
-The kernel has an existing quirk for PCI SSID 0x17aa3843 which
-matches this machine and several others. The quirk applies the
-ALC287_FIXUP_IDEAPAD_BASS_SPK_AMP fixup, however the fixup does not
-work on this machine.
+usb 1-1: New USB device found, idVendor=2fc6, idProduct=f06b
+usb 1-1: New USB device strings: Mfr=1, Product=2, SerialNumber=3
+usb 1-1: Product: MOONDROP Moonriver2 Ti
+usb 1-1: Manufacturer: MOONDROP
+usb 1-1: SerialNumber: MOONDROP Moonriver2 Ti
 
-This patch modifies the existing quirk by adding a check for the
-subsystem ID 0x17aa3881. If present, ALC287_FIXUP_TAS2781_I2C will
-be applied instead of ALC287_FIXUP_IDEAPAD_BASS_SPK_AMP. With this
-change the TAS2781 amp is powered up, firmware is downloaded and
-recognised by HDA/SOF - i.e. all is good, and we can boogie.
-
-Code is re-used from alc298_fixup_lenovo_c940_duet7(), which fixes a
-similar problem with two other Lenovo laptops.
-
-Cross checked against ALSA cardinfo database for potential clashes.
-Tested against 6.18.5 kernel built with Arch Linux default options.
-Tested in HDA mode and SOF mode.
-
-Note: Possible further work required to address quality of life issues
-caused by the firmware's agressive power saving, and to improve ALSA
-control mappings.
-
-Signed-off-by: Martin Hamilton <m@martinh.net>
-Link: https://patch.msgid.link/20260122-alc269-yogabook9i-fixup-v1-1-a6883429400f@martinh.net
+Signed-off-by: Lianqin Hu <hulianqin@vivo.com>
+Reviewed-by: Cryolitia PukNgae <cryolitia@uniontech.com>
 Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Link: https://patch.msgid.link/TYUPR06MB6217911EFC7E9224935FA507D28DA@TYUPR06MB6217.apcprd06.prod.outlook.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-The `alc298_fixup_lenovo_c940_duet7` pattern was introduced in June
-2022, making it well-established and available in all active stable
-trees.
+## Comprehensive Analysis
 
-## Summary
+### 1. COMMIT MESSAGE ANALYSIS
 
-### What the commit fixes:
-The Lenovo Yoga Book 9i 13IRU8 laptop has broken audio - "horrible tinny
-sound" - because the TAS2781 amplifier isn't being properly initialized.
-The machine shares a PCI SSID (0x17aa3843) with other Yoga 9i models,
-but needs a different fixup to work correctly.
+**Subject:** "ALSA: usb-audio: Add delay quirk for MOONDROP Moonriver2
+Ti"
 
-### Why it matters to stable users:
-This is a real-world hardware issue affecting laptop users who have
-completely broken speaker audio. The "tinny sound" described means the
-speakers are essentially unusable.
+**Key indicators:**
+- The commit describes a real hardware issue: "Audio control requests
+  that sets sampling frequency sometimes fail on this card"
+- The fix is adding a workaround: "Adding delay between control messages
+  eliminates that problem"
+- The commit has proper sign-offs and review tags (Reviewed-by, Signed-
+  off-by from maintainer Takashi Iwai)
+- Device identification is clearly provided (idVendor=2fc6,
+  idProduct=f06b)
 
-### Does it meet stable kernel rules?
+**Missing tags:** As expected for commits needing manual review, there's
+no `Cc: stable@vger.kernel.org` or `Fixes:` tag. This is NOT a negative
+signal - it's why this commit needs review.
 
-1. **Obviously correct**: Yes - follows an identical, proven pattern
-   from `alc298_fixup_lenovo_c940_duet7()` that has been in the kernel
-   since June 2022
-2. **Fixes a real bug**: Yes - "horrible tinny sound" is a significant
-   audio bug on production hardware
-3. **Fixes an important issue**: Yes - broken speakers on a premium
-   laptop significantly impact usability
-4. **Small and contained**: Yes - ~25 lines, single file, minimal scope
-5. **No new features**: Correct - it routes an existing machine to an
-   existing fixup (`ALC287_FIXUP_TAS2781_I2C`)
-6. **Applies cleanly**: Should apply cleanly as it only touches quirk
-   infrastructure
+### 2. CODE CHANGE ANALYSIS
 
-### Risk vs Benefit:
-- **Benefit**: High - fixes broken audio for Yoga Book 9i users
-- **Risk**: Very low - the check for subsystem ID 0x17aa3881 ensures
-  only the specific machine is affected. Other Yoga 9i models with SSID
-  0x17aa3843 will continue to get the existing
-  `ALC287_FIXUP_IDEAPAD_BASS_SPK_AMP` fixup
+The diff shows a simple two-line addition to `sound/usb/quirks.c`:
 
-### Dependencies:
-- `ALC287_FIXUP_TAS2781_I2C` must exist (added Aug 2023)
-- `__snd_hda_apply_fixup()` must exist (established infrastructure)
-- The pattern is well-tested from `alc298_fixup_lenovo_c940_duet7()`
+```c
+DEVICE_FLG(0x2fc6, 0xf06b, /* MOONDROP Moonriver2 Ti */
+           QUIRK_FLAG_CTL_MSG_DELAY),
+```
 
-### Concerns:
-- For older stable trees (6.1.y, 5.15.y), the `ALC287_FIXUP_TAS2781_I2C`
-  fixup may not exist, so this patch would only be applicable to 6.6+
-  stable trees
-- Tested by the author on 6.18.5 in both HDA and SOF modes
+This adds a USB device ID (vendor 0x2fc6, product 0xf06b) to a quirk
+flags table with the `QUIRK_FLAG_CTL_MSG_DELAY` flag.
 
-This is a textbook example of a hardware quirk/workaround that falls
-under the "quirks and workarounds" exception for stable. It fixes broken
-hardware using a proven pattern with minimal risk to other systems.
+**Technical mechanism:**
+- The USB audio device (MOONDROP Moonriver2 Ti DAC/amp) has buggy
+  firmware that cannot handle rapid control messages
+- Without the delay, sampling frequency setting fails intermittently
+- The `QUIRK_FLAG_CTL_MSG_DELAY` flag tells the USB audio driver to add
+  delays between control messages for this specific device
+- This is a well-established workaround pattern - other devices in the
+  same file use the same quirk (e.g., Luxman D-10X, iBasso DC07 Pro)
+
+### 3. CLASSIFICATION
+
+**This is a HARDWARE QUIRK addition** - one of the explicitly allowed
+exception categories for stable backports.
+
+- **NOT a new feature:** The quirk mechanism already exists; this just
+  adds a device to the list
+- **Fixes a real bug:** Audio device fails to work properly without the
+  quirk
+- **Zero code logic changes:** Just a table entry addition
+
+### 4. SCOPE AND RISK ASSESSMENT
+
+**Scope:**
+- 2 lines added
+- 1 file changed (quirks.c)
+- No logic changes, no new code paths
+
+**Risk:** **EXTREMELY LOW**
+- The change only affects the specific USB device (0x2fc6:0xf06b)
+- Users without this device are completely unaffected
+- The quirk mechanism is mature and well-tested
+- Similar quirk entries exist for many other devices (visible in the
+  context)
+- If the quirk were somehow wrong, it would only affect this one device
+  model
+
+### 5. USER IMPACT
+
+**Who is affected:**
+- Users of the MOONDROP Moonriver2 Ti USB DAC/amp
+- This is a commercially available audio device that users connect to
+  Linux systems
+
+**Severity without fix:**
+- Audio control requests fail intermittently
+- Device may not work properly at certain sample rates
+- This is a functional bug preventing normal use of hardware
+
+**Impact of fix:**
+- Device works correctly
+- No negative impact on any other hardware
+
+### 6. STABILITY INDICATORS
+
+- **Reviewed-by:** Cryolitia PukNgae from Uniontech (likely a testing/QA
+  role)
+- **Signed-off-by:** Takashi Iwai (ALSA maintainer at SUSE) - trusted
+  maintainer acceptance
+- The pattern follows identical entries in the same file
+- The quirk flag used (`QUIRK_FLAG_CTL_MSG_DELAY`) is well-established
+
+### 7. DEPENDENCY CHECK
+
+**Dependencies:** None
+- The `QUIRK_FLAG_CTL_MSG_DELAY` flag already exists in stable kernels
+- The `DEVICE_FLG` macro already exists
+- The quirk handling code already exists
+- This is a pure data addition to an existing table
+
+**Applies cleanly:** The change is a simple table entry insertion that
+should apply cleanly to any stable tree that has the USB audio quirks
+infrastructure.
+
+### Summary
+
+This commit is a **textbook example** of what SHOULD be backported to
+stable:
+
+1. **Obviously correct:** Simple device ID + existing quirk flag
+2. **Fixes a real bug:** Hardware doesn't work properly without it
+3. **Small and contained:** 2 lines, no logic changes
+4. **No new features:** Uses existing infrastructure
+5. **No new APIs:** Just a table entry
+6. **Falls under explicit exception:** Hardware quirk addition
+
+The fix enables a commercial USB audio device to work correctly on
+Linux. The risk is essentially zero since the change only affects this
+specific device model, and the benefit is direct hardware enablement for
+users who own this device.
 
 **YES**
 
- sound/hda/codecs/realtek/alc269.c | 24 +++++++++++++++++++++++-
- 1 file changed, 23 insertions(+), 1 deletion(-)
+ sound/usb/quirks.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/sound/hda/codecs/realtek/alc269.c b/sound/hda/codecs/realtek/alc269.c
-index c6dc44f5d3ab7..cbfcf7ad37591 100644
---- a/sound/hda/codecs/realtek/alc269.c
-+++ b/sound/hda/codecs/realtek/alc269.c
-@@ -3674,6 +3674,7 @@ enum {
- 	ALC287_FIXUP_LEGION_15IMHG05_AUTOMUTE,
- 	ALC287_FIXUP_YOGA7_14ITL_SPEAKERS,
- 	ALC298_FIXUP_LENOVO_C940_DUET7,
-+	ALC287_FIXUP_LENOVO_YOGA_BOOK_9I,
- 	ALC287_FIXUP_13S_GEN2_SPEAKERS,
- 	ALC256_FIXUP_SET_COEF_DEFAULTS,
- 	ALC256_FIXUP_SYSTEM76_MIC_NO_PRESENCE,
-@@ -3757,6 +3758,23 @@ static void alc298_fixup_lenovo_c940_duet7(struct hda_codec *codec,
- 	__snd_hda_apply_fixup(codec, id, action, 0);
- }
- 
-+/* A special fixup for Lenovo Yoga 9i and Yoga Book 9i 13IRU8
-+ * both have the very same PCI SSID and vendor ID, so we need
-+ * to apply different fixups depending on the subsystem ID
-+ */
-+static void alc287_fixup_lenovo_yoga_book_9i(struct hda_codec *codec,
-+					   const struct hda_fixup *fix,
-+					   int action)
-+{
-+	int id;
-+
-+	if (codec->core.subsystem_id == 0x17aa3881)
-+		id = ALC287_FIXUP_TAS2781_I2C; /* Yoga Book 9i 13IRU8 */
-+	else
-+		id = ALC287_FIXUP_IDEAPAD_BASS_SPK_AMP; /* Yoga 9i */
-+	__snd_hda_apply_fixup(codec, id, action, 0);
-+}
-+
- static const struct hda_fixup alc269_fixups[] = {
- 	[ALC269_FIXUP_GPIO2] = {
- 		.type = HDA_FIXUP_FUNC,
-@@ -5764,6 +5782,10 @@ static const struct hda_fixup alc269_fixups[] = {
- 		.type = HDA_FIXUP_FUNC,
- 		.v.func = alc298_fixup_lenovo_c940_duet7,
- 	},
-+	[ALC287_FIXUP_LENOVO_YOGA_BOOK_9I] = {
-+		.type = HDA_FIXUP_FUNC,
-+		.v.func = alc287_fixup_lenovo_yoga_book_9i,
-+	},
- 	[ALC287_FIXUP_13S_GEN2_SPEAKERS] = {
- 		.type = HDA_FIXUP_VERBS,
- 		.v.verbs = (const struct hda_verb[]) {
-@@ -7084,7 +7106,7 @@ static const struct hda_quirk alc269_fixup_tbl[] = {
- 	SND_PCI_QUIRK(0x17aa, 0x3827, "Ideapad S740", ALC285_FIXUP_IDEAPAD_S740_COEF),
- 	SND_PCI_QUIRK(0x17aa, 0x3834, "Lenovo IdeaPad Slim 9i 14ITL5", ALC287_FIXUP_YOGA7_14ITL_SPEAKERS),
- 	SND_PCI_QUIRK(0x17aa, 0x383d, "Legion Y9000X 2019", ALC285_FIXUP_LEGION_Y9000X_SPEAKERS),
--	SND_PCI_QUIRK(0x17aa, 0x3843, "Yoga 9i", ALC287_FIXUP_IDEAPAD_BASS_SPK_AMP),
-+	SND_PCI_QUIRK(0x17aa, 0x3843, "Lenovo Yoga 9i / Yoga Book 9i", ALC287_FIXUP_LENOVO_YOGA_BOOK_9I),
- 	SND_PCI_QUIRK(0x17aa, 0x3847, "Legion 7 16ACHG6", ALC287_FIXUP_LEGION_16ACHG6),
- 	SND_PCI_QUIRK(0x17aa, 0x384a, "Lenovo Yoga 7 15ITL5", ALC287_FIXUP_YOGA7_14ITL_SPEAKERS),
- 	SND_PCI_QUIRK(0x17aa, 0x3852, "Lenovo Yoga 7 14ITL5", ALC287_FIXUP_YOGA7_14ITL_SPEAKERS),
+diff --git a/sound/usb/quirks.c b/sound/usb/quirks.c
+index 94a8fdc9c6d3c..8a646891ebb44 100644
+--- a/sound/usb/quirks.c
++++ b/sound/usb/quirks.c
+@@ -2390,6 +2390,8 @@ static const struct usb_audio_quirk_flags_table quirk_flags_table[] = {
+ 		   QUIRK_FLAG_CTL_MSG_DELAY_1M),
+ 	DEVICE_FLG(0x2d99, 0x0026, /* HECATE G2 GAMING HEADSET */
+ 		   QUIRK_FLAG_MIXER_PLAYBACK_MIN_MUTE),
++	DEVICE_FLG(0x2fc6, 0xf06b, /* MOONDROP Moonriver2 Ti */
++		   QUIRK_FLAG_CTL_MSG_DELAY),
+ 	DEVICE_FLG(0x2fc6, 0xf0b7, /* iBasso DC07 Pro */
+ 		   QUIRK_FLAG_CTL_MSG_DELAY_1M),
+ 	DEVICE_FLG(0x30be, 0x0101, /* Schiit Hel */
 -- 
 2.51.0
 
