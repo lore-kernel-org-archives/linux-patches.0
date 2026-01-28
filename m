@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27E991D6AA;
-	Wed, 28 Jan 2026 15:58:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CEAE42FF178;
+	Wed, 28 Jan 2026 15:58:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769615905; cv=none; b=HuKOHljdrzdQ3JXNRhzZJ+cubtK8PDyi0K1JUf7Y1pXQ/wUks3qV0KA/K8aNvxKxUEWWAw3aKoxDD/gsh/Q19Ihk2WDZNv/LcBdjXEmKnYXcL/I80w9HzD+ZlYnleS8z0eshKGfAZ0TiB2PtPCFvJ1Qcp4aseiS2WIhFhIZILwc=
+	t=1769615908; cv=none; b=QHu7P/7T3Ru4ChT/3beIldj7C2EEDYaaBFnP2OMim9OeBJjsiBGhuBli0z8yZg2U0wdAU1Mcv9IYbb2B3lQXv+CIQ0sBsaAWC8990iCT7MXHuP1Pn64L5+82tPqXryaOxtcePReNfN1/Krt+YTU/qfRRUwUwUCEGUG5OMDfgFgs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769615905; c=relaxed/simple;
-	bh=Q54mKjHlPI0vixhlczRww4sBvGlKDqJx0bhK/LbXU40=;
+	s=arc-20240116; t=1769615908; c=relaxed/simple;
+	bh=wgjwVbS8ePusXgxicjjtBzO7MqseixBg2NnW1CiK9F4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=c31vUtgRZnM39/t47DCxRe/B9FVcCmtZUfcbVO0CrRqtPUgWuuYyAfksVWuKOHsH/o9vemwtJIfsxxGw5XiiSF4uUPFrEYoXXYkakKxkVahyKi0CViJtfegPK08mIrNYJUwwYfCxDdf1matnbMYjm/9SGJdVqFINqS8whQuzmDI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hYXdf2mh; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=IC7iIk6xCbTxEmPEbQeogaoMn2QMEyXsfIjVt6qi1zGcUXfUESH4Swm/Zhag7TKDpaKLpmlvbW+X5uHRz9CvoHeBXRUqaWhGhBR6W1WRIwWWCj1HCrD5ghoCXb9ISApiyGjNHoxf3dWsmuey58mDon6gKexmPzQHdmHuGLSURjw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QGYdq6FU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hYXdf2mh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F01BC4CEF1;
-	Wed, 28 Jan 2026 15:58:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QGYdq6FU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E8778C4CEF7;
+	Wed, 28 Jan 2026 15:58:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1769615905;
-	bh=Q54mKjHlPI0vixhlczRww4sBvGlKDqJx0bhK/LbXU40=;
+	s=korg; t=1769615908;
+	bh=wgjwVbS8ePusXgxicjjtBzO7MqseixBg2NnW1CiK9F4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hYXdf2mhur0M33UCaPwehKjIKQ7Fq4JQ5P2aRgZwoVZxUY5qpDHHtZyOX1Cjt9yRi
-	 7kQAjtqYM9t4kHewW3G61nDhAm0sXsywGR/Ryw95UqSNHkdJvquohnRRB68SuYi+21
-	 7N4Vg8IeIvsipcqeq2JSEf8CGLD/z3WiVmq4RKkM=
+	b=QGYdq6FUI6z9dNdr7KPI6K3uYjDGx2SvaUm9TkKmxLpIPJKzGNLz0rGkvrzEwRSpT
+	 9tT6t/AGjW0ZVRqYZoNuf968sQCLoLim800ptDouwnolOOq5q3/ZEjj65MGOnlHMes
+	 W1KwjXmhd5Invixgdt8rNmUSJ3efVmeUAHQKV9+w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hariprasad Kelam <hkelam@marvell.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Cedric Xing <cedric.xing@intel.com>,
+	Dave Hansen <dave.hansen@linux.intel.com>,
+	Peter Zijlstra <peterz@infradead.org>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 149/227] Octeontx2-af: Add proper checks for fwdata
-Date: Wed, 28 Jan 2026 16:23:14 +0100
-Message-ID: <20260128145349.818216903@linuxfoundation.org>
+Subject: [PATCH 6.18 150/227] x86: make page fault handling disable interrupts properly
+Date: Wed, 28 Jan 2026 16:23:15 +0100
+Message-ID: <20260128145349.853665327@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260128145344.331957407@linuxfoundation.org>
 References: <20260128145344.331957407@linuxfoundation.org>
@@ -51,64 +54,94 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hariprasad Kelam <hkelam@marvell.com>
+From: Cedric Xing <cedric.xing@intel.com>
 
-[ Upstream commit 4a3dba48188208e4f66822800e042686784d29d1 ]
+[ Upstream commit 614da1d3d4cdbd6e41aea06bc97ec15aacff6daf ]
 
-firmware populates MAC address, link modes (supported, advertised)
-and EEPROM data in shared firmware structure which kernel access
-via MAC block(CGX/RPM).
+There's a big comment in the x86 do_page_fault() about our interrupt
+disabling code:
 
-Accessing fwdata, on boards booted with out MAC block leading to
-kernel panics.
+    * User address page fault handling might have reenabled
+    * interrupts. Fixing up all potential exit points of
+    * do_user_addr_fault() and its leaf functions is just not
+    * doable w/o creating an unholy mess or turning the code
+    * upside down.
 
-Internal error: Oops: 0000000096000005 [#1]  SMP
-[   10.460721] Modules linked in:
-[   10.463779] CPU: 0 UID: 0 PID: 174 Comm: kworker/0:3 Not tainted 6.19.0-rc5-00154-g76ec646abdf7-dirty #3 PREEMPT
-[   10.474045] Hardware name: Marvell OcteonTX CN98XX board (DT)
-[   10.479793] Workqueue: events work_for_cpu_fn
-[   10.484159] pstate: 80400009 (Nzcv daif +PAN -UAO -TCO -DIT -SSBS BTYPE=--)
-[   10.491124] pc : rvu_sdp_init+0x18/0x114
-[   10.495051] lr : rvu_probe+0xe58/0x1d18
+but it turns out that comment is subtly wrong, and the code as a result
+is also wrong.
 
-Fixes: 997814491cee ("Octeontx2-af: Fetch MAC channel info from firmware")
-Fixes: 5f21226b79fd ("Octeontx2-pf: ethtool: support multi advertise mode")
-Signed-off-by: Hariprasad Kelam <hkelam@marvell.com>
-Link: https://patch.msgid.link/20260121094819.2566786-1-hkelam@marvell.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Because it's certainly true that we may have re-enabled interrupts when
+handling user page faults.  And it's most certainly true that we don't
+want to bother fixing up all the cases.
+
+But what isn't true is that it's limited to user address page faults.
+
+The confusion stems from the fact that we have logic here that depends
+on the address range of the access, but other code then depends on the
+_context_ the access was done in.  The two are not related, even though
+both of them are about user-vs-kernel.
+
+In other words, both user and kernel addresses can cause interrupts to
+have been enabled (eg when __bad_area_nosemaphore() gets called for user
+accesses to kernel addresses).  As a result we should make sure to
+disable interrupts again regardless of the address range before
+returning to the low-level fault handling code.
+
+The __bad_area_nosemaphore() code actually did disable interrupts again
+after enabling them, just not consistently.  Ironically, as noted in the
+original comment, fixing up all the cases is just not worth it, when the
+simple solution is to just do it unconditionally in one single place.
+
+So remove the incomplete case that unsuccessfully tried to do what the
+comment said was "not doable" in commit ca4c6a9858c2 ("x86/traps: Make
+interrupt enable/disable symmetric in C code"), and just make it do the
+simple and straightforward thing.
+
+Signed-off-by: Cedric Xing <cedric.xing@intel.com>
+Reviewed-by: Dave Hansen <dave.hansen@linux.intel.com>
+Fixes: ca4c6a9858c2 ("x86/traps: Make interrupt enable/disable symmetric in C code")
+Cc: Peter Zijlstra <peterz@infradead.org>
+Cc: Thomas Gleixner <tglx@linutronix.de>
+Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/marvell/octeontx2/af/rvu_cgx.c | 3 +++
- drivers/net/ethernet/marvell/octeontx2/af/rvu_sdp.c | 2 +-
- 2 files changed, 4 insertions(+), 1 deletion(-)
+ arch/x86/mm/fault.c | 15 +++++----------
+ 1 file changed, 5 insertions(+), 10 deletions(-)
 
-diff --git a/drivers/net/ethernet/marvell/octeontx2/af/rvu_cgx.c b/drivers/net/ethernet/marvell/octeontx2/af/rvu_cgx.c
-index 3abd750a4bd74..3d91a34f8b57b 100644
---- a/drivers/net/ethernet/marvell/octeontx2/af/rvu_cgx.c
-+++ b/drivers/net/ethernet/marvell/octeontx2/af/rvu_cgx.c
-@@ -1222,6 +1222,9 @@ int rvu_mbox_handler_cgx_set_link_mode(struct rvu *rvu,
- 	u8 cgx_idx, lmac;
- 	void *cgxd;
+diff --git a/arch/x86/mm/fault.c b/arch/x86/mm/fault.c
+index 998bd807fc7ba..b83a06739b511 100644
+--- a/arch/x86/mm/fault.c
++++ b/arch/x86/mm/fault.c
+@@ -821,8 +821,6 @@ __bad_area_nosemaphore(struct pt_regs *regs, unsigned long error_code,
+ 		force_sig_pkuerr((void __user *)address, pkey);
+ 	else
+ 		force_sig_fault(SIGSEGV, si_code, (void __user *)address);
+-
+-	local_irq_disable();
+ }
  
-+	if (!rvu->fwdata)
-+		return LMAC_AF_ERR_FIRMWARE_DATA_NOT_MAPPED;
-+
- 	if (!is_cgx_config_permitted(rvu, req->hdr.pcifunc))
- 		return -EPERM;
+ static noinline void
+@@ -1474,15 +1472,12 @@ handle_page_fault(struct pt_regs *regs, unsigned long error_code,
+ 		do_kern_addr_fault(regs, error_code, address);
+ 	} else {
+ 		do_user_addr_fault(regs, error_code, address);
+-		/*
+-		 * User address page fault handling might have reenabled
+-		 * interrupts. Fixing up all potential exit points of
+-		 * do_user_addr_fault() and its leaf functions is just not
+-		 * doable w/o creating an unholy mess or turning the code
+-		 * upside down.
+-		 */
+-		local_irq_disable();
+ 	}
++	/*
++	 * page fault handling might have reenabled interrupts,
++	 * make sure to disable them again.
++	 */
++	local_irq_disable();
+ }
  
-diff --git a/drivers/net/ethernet/marvell/octeontx2/af/rvu_sdp.c b/drivers/net/ethernet/marvell/octeontx2/af/rvu_sdp.c
-index e4a5f9fa6fd46..bbfd8231aed5c 100644
---- a/drivers/net/ethernet/marvell/octeontx2/af/rvu_sdp.c
-+++ b/drivers/net/ethernet/marvell/octeontx2/af/rvu_sdp.c
-@@ -56,7 +56,7 @@ int rvu_sdp_init(struct rvu *rvu)
- 	struct rvu_pfvf *pfvf;
- 	u32 i = 0;
- 
--	if (rvu->fwdata->channel_data.valid) {
-+	if (rvu->fwdata && rvu->fwdata->channel_data.valid) {
- 		sdp_pf_num[0] = 0;
- 		pfvf = &rvu->pf[sdp_pf_num[0]];
- 		pfvf->sdp_info = &rvu->fwdata->channel_data.info;
+ DEFINE_IDTENTRY_RAW_ERRORCODE(exc_page_fault)
 -- 
 2.51.0
 
