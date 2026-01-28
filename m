@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 559A081AA8;
-	Wed, 28 Jan 2026 16:01:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D78EA81AA8;
+	Wed, 28 Jan 2026 16:01:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769616100; cv=none; b=ToSYwmMFzXP8b+qEXv0ZwcLZFO2c9frdJjIm6T7rE0tXM6H27o4FBXFOhqJQAi5B9DOZmt1bPt/9EO0Md4s95ve8vOf9NHmUYinzmyAqYGP02mSUaJ/CE5lG6rqmYAwYPAWT40c9ncKHDitaSlm3nrlLEMPUeU+OXy0FkOdiq54=
+	t=1769616103; cv=none; b=ayJQlz6Vhp6bB5JCwdd/vwp/FMrqWS7ecZmtwDVXJu3syY1tM9RkRxZ++9O5hfwfxQ1rcfPjZV316T8XWDiS/YaLRjXZ20qq9mxlE0cHfWp9B77Em8Q0JjkLG0N1cIYgrhX5hbaQ9Ws8AoqLa0Z7r56VWix270V4pbetfLXdmZQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769616100; c=relaxed/simple;
-	bh=LXFa4VoPxVHpekAajJHCjORDjPF9c8WQCjK/CELfaLI=;
+	s=arc-20240116; t=1769616103; c=relaxed/simple;
+	bh=Wdry6PtqB5khVJJU/9jGoCdZoRVcvr4X4WRfJjPwA1k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=q3p4IlNRLawmoah6628IpzGjOHZIAXrtoCffiOOG2kqsDi0vRxt6HHcbvPpEACbWdUMHKT9/oxfTWysQ5JNJcmo9cVuBSFG3RC6bBWbExPv9bNODeKGgwHA/OYkNXwR9lTYfOvtlVydEt8Q1a84j4yleDTDtn8wILxw50TIXPNY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eJhm7LNZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qTRTs9TlIeJoy0pefIqOeVnGUvEbDyQAZEo0+QuB7yUYZc7tgVO2U5FcFRqaeqQA1LcxoiLrU0LtAj9Vm96iX2bxaCi0tE4lPEjWPNP8hDmR/acdr2fQycmUiCfxgKVfZO82sgxXBR/GW1VOgpunhsJ/g0JZpzF79sKAJq1Fgs4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hMVmxjno; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eJhm7LNZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C2DFBC4CEF1;
-	Wed, 28 Jan 2026 16:01:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hMVmxjno"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39491C4CEF1;
+	Wed, 28 Jan 2026 16:01:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1769616100;
-	bh=LXFa4VoPxVHpekAajJHCjORDjPF9c8WQCjK/CELfaLI=;
+	s=korg; t=1769616103;
+	bh=Wdry6PtqB5khVJJU/9jGoCdZoRVcvr4X4WRfJjPwA1k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eJhm7LNZZ6bgaLEO3TbLy4Qqpu9YzhXwqmyRhoXIQReX233PV4C/8sjUG8Nyqa+VC
-	 03XOwaUgUiS5mDIkN28PWGc6jsT5wL5NuwtTuquok6X6WH2XgjZQGhXx+Ks/8zxZ98
-	 Vg/xF1Yi6gx+rVpuD576SodLyCPDiLnAIjBu/MMw=
+	b=hMVmxjno+vgqUvJY/gJmww6X0r0G2yK3iqTjNzxsLl5XWmIUEa6viOtgBORCbQ8K8
+	 EHA6ZEtvS6XmD02xDNq4zZjPk2NMrRuWzI0bczHYoWcqfmVlaKE6uSrLUC7uaCyj05
+	 IxMYNJCRxFyPdqdQ4VzaKyw1A4bite3oWzyUKCwQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Thomas Fourier <fourier.thomas@gmail.com>,
 	Baochen Qiang <baochen.qiang@oss.qualcomm.com>,
 	Jeff Johnson <jeff.johnson@oss.qualcomm.com>
-Subject: [PATCH 6.18 174/227] wifi: ath10k: fix dma_free_coherent() pointer
-Date: Wed, 28 Jan 2026 16:23:39 +0100
-Message-ID: <20260128145350.711621517@linuxfoundation.org>
+Subject: [PATCH 6.18 175/227] wifi: ath12k: fix dma_free_coherent() pointer
+Date: Wed, 28 Jan 2026 16:23:40 +0100
+Message-ID: <20260128145350.747048431@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260128145344.331957407@linuxfoundation.org>
 References: <20260128145344.331957407@linuxfoundation.org>
@@ -53,68 +53,57 @@ Content-Transfer-Encoding: 8bit
 
 From: Thomas Fourier <fourier.thomas@gmail.com>
 
-commit 9282a1e171ad8d2205067e8ec3bbe4e3cef4f29f upstream.
+commit bb97131fbf9b708dd9616ac2bdc793ad102b5c48 upstream.
 
 dma_alloc_coherent() allocates a DMA mapped buffer and stores the
 addresses in XXX_unaligned fields.  Those should be reused when freeing
 the buffer rather than the aligned addresses.
 
-Fixes: 2a1e1ad3fd37 ("ath10k: Add support for 64 bit ce descriptor")
+Fixes: d889913205cf ("wifi: ath12k: driver for Qualcomm Wi-Fi 7 devices")
 Cc: stable@vger.kernel.org
 Signed-off-by: Thomas Fourier <fourier.thomas@gmail.com>
 Reviewed-by: Baochen Qiang <baochen.qiang@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260105210439.20131-2-fourier.thomas@gmail.com
+Link: https://patch.msgid.link/20260106084905.18622-2-fourier.thomas@gmail.com
 Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wireless/ath/ath10k/ce.c |   16 ++++++++--------
- 1 file changed, 8 insertions(+), 8 deletions(-)
+ drivers/net/wireless/ath/ath12k/ce.c |   12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
---- a/drivers/net/wireless/ath/ath10k/ce.c
-+++ b/drivers/net/wireless/ath/ath10k/ce.c
-@@ -1727,8 +1727,8 @@ static void _ath10k_ce_free_pipe(struct
- 				  (ce_state->src_ring->nentries *
- 				   sizeof(struct ce_desc) +
- 				   CE_DESC_RING_ALIGN),
--				  ce_state->src_ring->base_addr_owner_space,
--				  ce_state->src_ring->base_addr_ce_space);
-+				  ce_state->src_ring->base_addr_owner_space_unaligned,
-+				  ce_state->src_ring->base_addr_ce_space_unaligned);
- 		kfree(ce_state->src_ring);
- 	}
- 
-@@ -1737,8 +1737,8 @@ static void _ath10k_ce_free_pipe(struct
- 				  (ce_state->dest_ring->nentries *
- 				   sizeof(struct ce_desc) +
- 				   CE_DESC_RING_ALIGN),
--				  ce_state->dest_ring->base_addr_owner_space,
--				  ce_state->dest_ring->base_addr_ce_space);
-+				  ce_state->dest_ring->base_addr_owner_space_unaligned,
-+				  ce_state->dest_ring->base_addr_ce_space_unaligned);
- 		kfree(ce_state->dest_ring);
- 	}
- 
-@@ -1758,8 +1758,8 @@ static void _ath10k_ce_free_pipe_64(stru
- 				  (ce_state->src_ring->nentries *
- 				   sizeof(struct ce_desc_64) +
- 				   CE_DESC_RING_ALIGN),
--				  ce_state->src_ring->base_addr_owner_space,
--				  ce_state->src_ring->base_addr_ce_space);
-+				  ce_state->src_ring->base_addr_owner_space_unaligned,
-+				  ce_state->src_ring->base_addr_ce_space_unaligned);
- 		kfree(ce_state->src_ring);
- 	}
- 
-@@ -1768,8 +1768,8 @@ static void _ath10k_ce_free_pipe_64(stru
- 				  (ce_state->dest_ring->nentries *
- 				   sizeof(struct ce_desc_64) +
- 				   CE_DESC_RING_ALIGN),
--				  ce_state->dest_ring->base_addr_owner_space,
--				  ce_state->dest_ring->base_addr_ce_space);
-+				  ce_state->dest_ring->base_addr_owner_space_unaligned,
-+				  ce_state->dest_ring->base_addr_ce_space_unaligned);
- 		kfree(ce_state->dest_ring);
- 	}
- 
+--- a/drivers/net/wireless/ath/ath12k/ce.c
++++ b/drivers/net/wireless/ath/ath12k/ce.c
+@@ -984,8 +984,8 @@ void ath12k_ce_free_pipes(struct ath12k_
+ 			dma_free_coherent(ab->dev,
+ 					  pipe->src_ring->nentries * desc_sz +
+ 					  CE_DESC_RING_ALIGN,
+-					  pipe->src_ring->base_addr_owner_space,
+-					  pipe->src_ring->base_addr_ce_space);
++					  pipe->src_ring->base_addr_owner_space_unaligned,
++					  pipe->src_ring->base_addr_ce_space_unaligned);
+ 			kfree(pipe->src_ring);
+ 			pipe->src_ring = NULL;
+ 		}
+@@ -995,8 +995,8 @@ void ath12k_ce_free_pipes(struct ath12k_
+ 			dma_free_coherent(ab->dev,
+ 					  pipe->dest_ring->nentries * desc_sz +
+ 					  CE_DESC_RING_ALIGN,
+-					  pipe->dest_ring->base_addr_owner_space,
+-					  pipe->dest_ring->base_addr_ce_space);
++					  pipe->dest_ring->base_addr_owner_space_unaligned,
++					  pipe->dest_ring->base_addr_ce_space_unaligned);
+ 			kfree(pipe->dest_ring);
+ 			pipe->dest_ring = NULL;
+ 		}
+@@ -1007,8 +1007,8 @@ void ath12k_ce_free_pipes(struct ath12k_
+ 			dma_free_coherent(ab->dev,
+ 					  pipe->status_ring->nentries * desc_sz +
+ 					  CE_DESC_RING_ALIGN,
+-					  pipe->status_ring->base_addr_owner_space,
+-					  pipe->status_ring->base_addr_ce_space);
++					  pipe->status_ring->base_addr_owner_space_unaligned,
++					  pipe->status_ring->base_addr_ce_space_unaligned);
+ 			kfree(pipe->status_ring);
+ 			pipe->status_ring = NULL;
+ 		}
 
 
