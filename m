@@ -1,42 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16AB73431F5;
-	Wed, 28 Jan 2026 22:33:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8C23326927;
+	Wed, 28 Jan 2026 22:33:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769639627; cv=none; b=Bj//msBpnIA9cu5ibtuarAHIUe3U91L2DWMbZfC+yXEUmvo0DWcPo/LTjxxxkEcE1iTLFsIV1mBDSUrlWK9rUFOwuTnRpd7sXk2x5d6qT7JGlHdLDAxFwPjnyoGQm6YRTfAEtBuBTtnhJXJC2vCKf1oCQC0QhG/cyhhlKPbN+S8=
+	t=1769639629; cv=none; b=ZVbMIJfQzOowusgSG0YDLYLIWwf6M2NqyiLkk3Z+rJT3b+EDSCc/NfXRHewin/i8+7v/7KVUBIm8hVrWBRJ2LwBb9hJ6Yj4vm8BKdlDSh0zc4IANB4Vm939Su0DtMUwC4p9TBnAGKcTwsCRuYzUqyuLWr+C5LFuddVUkGi1MYIk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769639627; c=relaxed/simple;
-	bh=2Vgx4ah3QCD/wKqotM08VvSQGy89QT7N5q9u7CQOhxE=;
+	s=arc-20240116; t=1769639629; c=relaxed/simple;
+	bh=keMkaY4XqPcIvLRBPVo/lj1Ecpi9S0ehwNCbG204tYk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OPxs5vHvok1rdEo0eIwK3QN63ZWCWMw0b7/yR/kjX5LGX/J4flkogJNb7Gf1DWBTR+j0mdHCkoKMCA2Dd9fTgNy3WUPgxitvCjEV04q/T8N76fwMOKYDMuESlmP0koLen6GLYGfxfESlj2OeqTT4X0vLUxihLh/NZTieELEvSSQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=hMibdnu9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=UzuMGvGMTeOzfpeCpAqKQ+sAYhlzQ5j2q6Bq7m7qJ+OAIpLdX6+3oi+dOTD2e6sL747NI8N8WpH1gjqjw/HgueQFmwqK67xX/bspBJs2A9IEecwpT8XaRAce3QhdY6TSyErPMpsE60SHRIg/MJEUyxrS5U0S93SHSHjiy1jEmW0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=YSyj9OP5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="hMibdnu9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 40801C116C6;
-	Wed, 28 Jan 2026 22:33:46 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="YSyj9OP5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 65BE7C4CEF7;
+	Wed, 28 Jan 2026 22:33:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1769639627;
-	bh=2Vgx4ah3QCD/wKqotM08VvSQGy89QT7N5q9u7CQOhxE=;
+	s=k20201202; t=1769639629;
+	bh=keMkaY4XqPcIvLRBPVo/lj1Ecpi9S0ehwNCbG204tYk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hMibdnu9lQWDc5HQefdSyIPOYB3Dcar7j6PMILTf9yZGUesq/EVLqpqAtwn7GKjzc
-	 uqoF8GX0xR0KyHB2WhCQ5AOjTK/EBvUSwdhH7q3lnmuul8z/Wx2E3cuoNnMP/v5bIz
-	 yasdJIN5I57621kqR3HXJCjmt34rnwTWeLovfs5qs4vD6OoILOmcUvVNzL09HttQ0K
-	 dYz4rMXV9HAKavr/WfZJl4PmanIkrCCdqQ4QPMFopS00MEuzSemtnWLkY/SKu04Hua
-	 tIXu7S8dnDiVx5IjJGQ4CEnlRHQ0I+JEE5vJoOHfZc4sKe1Uv8eBbU1xV3rnciICrM
-	 2pgv1+3bg+1sQ==
+	b=YSyj9OP56wnyWgFvaTs/gklCn3pLd7g4fBZtJb4gdzPaIKdHUuTJEmEDZ2idiKmOf
+	 OmpG3f7oK7TpZnOMb46N7CUkEVJuxUDlzYQFxLBNnMF279mnrEZUNYXgkIvJ2sLZjP
+	 ucQNgXafV2QK+2DLArbLKmuEx5DnPkrzaJ6/FjxKs1Ho53t1rqQFlOjKqiC+UvpUlg
+	 XOOWAr9ZNnmB7w0koFSgWX///TdCr7JewzHOOOBnvO2ZK5hn4Doh8BvD3O00StosC8
+	 ZDlJUM5+KPckbLVgPY4EnX03pUSalDQeISr33Odu9CnUmXC2S5CqK73qc1YtwclWXe
+	 AQQ4mBjYSEuag==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Qiang Ma <maqianga@uniontech.com>,
-	David Sterba <dsterba@suse.com>,
+Cc: Maurizio Lombardi <mlombard@redhat.com>,
+	Zhaojuan Guo <zguo@redhat.com>,
+	Mike Christie <michael.christie@oracle.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>,
-	clm@fb.com,
-	linux-btrfs@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18] btrfs: fix Wmaybe-uninitialized warning in replay_one_buffer()
-Date: Wed, 28 Jan 2026 17:33:05 -0500
-Message-ID: <20260128223332.2806589-7-sashal@kernel.org>
+	tglx@kernel.org,
+	mingo@kernel.org
+Subject: [PATCH AUTOSEL 6.18-5.10] scsi: target: iscsi: Fix use-after-free in iscsit_dec_session_usage_count()
+Date: Wed, 28 Jan 2026 17:33:06 -0500
+Message-ID: <20260128223332.2806589-8-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260128223332.2806589-1-sashal@kernel.org>
 References: <20260128223332.2806589-1-sashal@kernel.org>
@@ -49,167 +51,163 @@ MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.18.7
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Qiang Ma <maqianga@uniontech.com>
+From: Maurizio Lombardi <mlombard@redhat.com>
 
-[ Upstream commit 9c7e71c97c8cd086b148d0d3d1cd84a1deab023c ]
+[ Upstream commit 84dc6037390b8607c5551047d3970336cb51ba9a ]
 
-Warning was found when compiling using loongarch64-gcc 12.3.1:
+In iscsit_dec_session_usage_count(), the function calls complete() while
+holding the sess->session_usage_lock. Similar to the connection usage count
+logic, the waiter signaled by complete() (e.g., in the session release
+path) may wake up and free the iscsit_session structure immediately.
 
-  $ make CFLAGS_tree-log.o=-Wmaybe-uninitialized
+This creates a race condition where the current thread may attempt to
+execute spin_unlock_bh() on a session structure that has already been
+deallocated, resulting in a KASAN slab-use-after-free.
 
-  In file included from fs/btrfs/ctree.h:21,
-		   from fs/btrfs/tree-log.c:12:
-  fs/btrfs/accessors.h: In function 'replay_one_buffer':
-  fs/btrfs/accessors.h:66:16: warning: 'inode_item' may be used uninitialized [-Wmaybe-uninitialized]
-     66 |         return btrfs_get_##bits(eb, s, offsetof(type, member));         \
-	|                ^~~~~~~~~~
-  fs/btrfs/tree-log.c:2803:42: note: 'inode_item' declared here
-   2803 |                 struct btrfs_inode_item *inode_item;
-	|                                          ^~~~~~~~~~
+To resolve this, release the session_usage_lock before calling complete()
+to ensure all dereferences of the sess pointer are finished before the
+waiter is allowed to proceed with deallocation.
 
-Initialize the inode_item to NULL, the compiler does not seem to see the
-relation between the first 'wc->log_key.type == BTRFS_INODE_ITEM_KEY'
-check and the other one that also checks the replay phase.
-
-Signed-off-by: Qiang Ma <maqianga@uniontech.com>
-Reviewed-by: David Sterba <dsterba@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Signed-off-by: Maurizio Lombardi <mlombard@redhat.com>
+Reported-by: Zhaojuan Guo <zguo@redhat.com>
+Reviewed-by: Mike Christie <michael.christie@oracle.com>
+Link: https://patch.msgid.link/20260112165352.138606-3-mlombard@redhat.com
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-Now I have a clear understanding of the code flow. Let me verify what
-the commit changes and analyze it:
+Excellent! Now I have a complete understanding. Let me summarize my
+analysis:
 
-## Analysis Summary
+## ANALYSIS
 
 ### 1. COMMIT MESSAGE ANALYSIS
 
-The commit addresses a compiler warning (`-Wmaybe-uninitialized`) for
-the `inode_item` pointer in `replay_one_buffer()`. The warning is
-triggered by certain compilers (loongarch64-gcc 12.3.1 in this case)
-that don't recognize the relationship between:
-- The first check: `wc->log_key.type == BTRFS_INODE_ITEM_KEY` (which
-  assigns `inode_item`)
-- The later use: `wc->log_key.type == BTRFS_INODE_ITEM_KEY && wc->stage
-  == LOG_WALK_REPLAY_INODES` (which uses `inode_item`)
-
-The compiler can't prove that `inode_item` is always initialized before
-use due to the complex conditional logic.
+The commit message clearly describes:
+- **Bug type:** Use-after-free (UAF)
+- **Root cause:** `complete()` is called while holding
+  `sess->session_usage_lock`, but the waiter (in session release path)
+  may wake up and call `kfree(sess)` before the lock is released
+- **Detection:** KASAN slab-use-after-free
+- **Fix:** Release the lock before calling `complete()`
+- **Tags:**
+  - `Reported-by:` - indicates a real bug report
+  - `Reviewed-by: Mike Christie` - credible reviewer for SCSI/iSCSI
+    target code
 
 ### 2. CODE CHANGE ANALYSIS
 
-The change is trivial:
-```c
-- struct btrfs_inode_item *inode_item;
-+ struct btrfs_inode_item *inode_item = NULL;
-```
+**The bug mechanism:**
+1. Thread A calls `iscsit_dec_session_usage_count()`, decrements count
+   to 0
+2. Thread A calls `complete()` while still holding
+   `sess->session_usage_lock`
+3. Thread B (waiting in `iscsit_check_session_usage_count()`) wakes up
+   from `wait_for_completion()`
+4. Thread B continues to `iscsit_close_session()` → `kfree(sess)` at
+   line 4519
+5. Thread A tries to call `spin_unlock_bh(&sess->session_usage_lock)` on
+   freed memory → **UAF**
 
-Looking at the control flow:
-- Line 2807: `if (wc->log_key.type == BTRFS_INODE_ITEM_KEY)` -
-  inode_item is assigned via `btrfs_item_ptr()`
-- Line 2838-2845: `if (wc->log_key.type == BTRFS_INODE_ITEM_KEY &&
-  wc->stage == LOG_WALK_REPLAY_INODES)` - inode_item is used via
-  `btrfs_inode_mode(eb, inode_item)`
+**The fix:**
+- Releases the spinlock *before* calling `complete()`
+- Uses early return to avoid double-unlock
+- This is a standard pattern for avoiding UAF when completion wakes up a
+  free-er
 
-Logically, whenever the second condition is true, the first condition
-must also have been true (both check `wc->log_key.type ==
-BTRFS_INODE_ITEM_KEY`), so `inode_item` will have been assigned. But
-some compilers cannot deduce this relationship due to the second
-condition also checking `wc->stage`.
+**Size:** +4 lines changed, -1 line changed = 3 net lines. Very small
+and surgical.
 
 ### 3. CLASSIFICATION
 
-This is a **build fix** - it silences a compiler warning. It falls under
-the "BUILD FIXES" exception category:
-- Fixes for compilation warnings
-- Zero risk of runtime regression (initializing a pointer to NULL that
-  will always be properly assigned before use)
+- **Bug fix:** Yes, fixes a clear use-after-free
+- **Security:** Use-after-free bugs can potentially be exploited for
+  privilege escalation or code execution, though this one is in iSCSI
+  target code which requires privileged access to configure
+- **Severity:** HIGH - UAF can cause kernel crashes (KASAN detected) and
+  potential security issues
 
 ### 4. SCOPE AND RISK ASSESSMENT
 
-- **Lines changed**: 1 line
-- **Files touched**: 1 file (fs/btrfs/tree-log.c)
-- **Complexity**: Trivial - just adding `= NULL` initialization
-- **Risk**: Extremely low - this is a defensive initialization that
-  doesn't change runtime behavior
-
-The only possible risk would be if the compiler warning was actually
-detecting a real bug. However, analyzing the code:
-- Line 2838 checks `wc->log_key.type == BTRFS_INODE_ITEM_KEY` AND
-  `wc->stage == LOG_WALK_REPLAY_INODES`
-- Line 2807 checks `wc->log_key.type == BTRFS_INODE_ITEM_KEY`
-- If we reach line 2845 (where `inode_item` is used), we must have
-  passed the check at 2838, which implies `wc->log_key.type ==
-  BTRFS_INODE_ITEM_KEY` is true, which means we also entered the block
-  at 2807 and assigned `inode_item`.
-
-The warning is a false positive.
+- **Lines changed:** ~5 lines (minimal)
+- **Files touched:** 1 file (`drivers/target/iscsi/iscsi_target_util.c`)
+- **Complexity:** Very low - simply reorders lock release and complete()
+  call
+- **Subsystem:** iSCSI target - mature, widely used for storage
+- **Risk:** Very LOW - the fix is semantically identical (unlock happens
+  either way), just changes order
 
 ### 5. USER IMPACT
 
-- This fixes a compiler warning that can be annoying for
-  developers/users who enable `-Wmaybe-uninitialized`
-- Some build configurations with stricter warning settings (e.g.,
-  `-Werror`) could fail to compile without this fix
-- The btrfs subsystem is widely used, so build issues affect many users
+- **Affected users:** Anyone using Linux iSCSI target (LIO) with active
+  session teardown
+- **Severity if hit:** Kernel crash/panic, or potentially worse
+  (security issue)
+- **Likelihood:** Race condition, so timing-dependent, but clearly can
+  be triggered (reported by Red Hat engineer with KASAN)
 
 ### 6. STABILITY INDICATORS
 
-- **Reviewed-by: David Sterba <dsterba@suse.com>** - David Sterba is the
-  btrfs maintainer
-- **Signed-off-by: David Sterba <dsterba@suse.com>** - Merged by the
-  maintainer
-- This is a simple, obviously correct fix
+- `Reviewed-by: Mike Christie <michael.christie@oracle.com>` - Mike
+  Christie is a well-known SCSI subsystem maintainer/contributor
+- `Reported-by:` tag indicates this is a real-world bug
+- Accepted by Martin K. Petersen (SCSI maintainer)
 
 ### 7. DEPENDENCY CHECK
 
 - No dependencies on other commits
-- This is a self-contained one-line change
-- The code exists in stable trees (tree-log.c is present in all kernel
-  versions)
+- The `session_usage_lock`, `session_waiting_on_uc`, and completion
+  structure exist in all stable trees (they're fundamental to iSCSI
+  target operation)
+- Clean, standalone fix
 
-## Conclusion
+### CONCLUSION
 
-This commit is an ideal candidate for stable backporting:
+This commit is an **ideal candidate for stable backport**:
 
-1. **Meets stable criteria**:
-   - Obviously correct - trivial initialization
-   - Fixes a real issue - compiler warning that could break builds with
-     strict settings
-   - Small and contained - single line change
-   - No new features
+1. **Fixes a real, serious bug:** Use-after-free detected by KASAN,
+   reported by Red Hat
+2. **Obviously correct:** Standard pattern of "unlock before complete
+   when waiter frees the object"
+3. **Small and contained:** Only 5 lines changed in one function
+4. **No new features:** Pure bug fix
+5. **Low risk:** The change is semantically equivalent (lock must be
+   released anyway), just changes order
+6. **Wide impact:** iSCSI target is widely deployed in enterprise
+   storage environments
+7. **Reviewed by expert:** Mike Christie is a recognized SCSI expert
 
-2. **Falls under BUILD FIXES exception**: Compiler warning fixes are
-   explicitly allowed in stable
-
-3. **Zero risk**: Initializing a pointer to NULL that is guaranteed to
-   be assigned before use cannot cause any runtime regression
-
-4. **Maintainer approved**: Reviewed and merged by David Sterba, the
-   btrfs maintainer
+The fix follows the well-established pattern seen in many similar fixes
+throughout the kernel where a completion must not be signaled while
+holding a lock that protects the structure being freed by the waiter.
 
 **YES**
 
- fs/btrfs/tree-log.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/target/iscsi/iscsi_target_util.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/fs/btrfs/tree-log.c b/fs/btrfs/tree-log.c
-index 1444857de9fe8..ae2e035d013e2 100644
---- a/fs/btrfs/tree-log.c
-+++ b/fs/btrfs/tree-log.c
-@@ -2800,7 +2800,7 @@ static int replay_one_buffer(struct extent_buffer *eb,
+diff --git a/drivers/target/iscsi/iscsi_target_util.c b/drivers/target/iscsi/iscsi_target_util.c
+index 5e6cf34929b55..262a3e76b4b1c 100644
+--- a/drivers/target/iscsi/iscsi_target_util.c
++++ b/drivers/target/iscsi/iscsi_target_util.c
+@@ -741,8 +741,11 @@ void iscsit_dec_session_usage_count(struct iscsit_session *sess)
+ 	spin_lock_bh(&sess->session_usage_lock);
+ 	sess->session_usage_count--;
  
- 	nritems = btrfs_header_nritems(eb);
- 	for (wc->log_slot = 0; wc->log_slot < nritems; wc->log_slot++) {
--		struct btrfs_inode_item *inode_item;
-+		struct btrfs_inode_item *inode_item = NULL;
+-	if (!sess->session_usage_count && sess->session_waiting_on_uc)
++	if (!sess->session_usage_count && sess->session_waiting_on_uc) {
++		spin_unlock_bh(&sess->session_usage_lock);
+ 		complete(&sess->session_waiting_on_uc_comp);
++		return;
++	}
  
- 		btrfs_item_key_to_cpu(eb, &wc->log_key, wc->log_slot);
- 
+ 	spin_unlock_bh(&sess->session_usage_lock);
+ }
 -- 
 2.51.0
 
