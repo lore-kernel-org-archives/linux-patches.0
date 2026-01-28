@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74D0F2874FE;
-	Wed, 28 Jan 2026 15:59:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0CEE242D7F;
+	Wed, 28 Jan 2026 15:59:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769615944; cv=none; b=M0UqwBlEsX3SygIi4R+9FHulkwmxwaeZGlse13FvBYjKk9Q1hzOpJPaTV7tnwGs6vKRvpwvfAdUaf4cQAgZU1ttVqAK3lkWm3zOhWPabJTbOlqWfE4NMSFlfyzuENqTDYaf7CLmful/uOCMCgR6PqpDZMuyGEgZHSVDqqnOiwp0=
+	t=1769615947; cv=none; b=s6ytD60DSJWa8V6frnDDnX+4cZRElVX6sdl7xHzw8oX3UHaFbKuDREFgbqiUgbpwGdy/BQnmIBBuO9GkppiA9W7l5pTcdhUwdGnL75sNbbl4ZFUuD/IVLMNfT/Mv1LDTAgKxrKMYP4VG/JH+ttNxVxVfeRXGc9CoqtJb7Gh8y20=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769615944; c=relaxed/simple;
-	bh=4MfH1XCzLJFSdpUXMoJrQ9DmU2OsiEBn+87ojDCWmA8=;
+	s=arc-20240116; t=1769615947; c=relaxed/simple;
+	bh=0IQ06FjQdoK07seCq+FBIWPC7g38VA0rvp90pYfzzi4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OmEmkAi6l0yAHaq69jmpLsngWmXhAzScFxdxLGhN9POYoOBdkHGQtygok4tOL72nJjAZGc+OmOY8z1P9y4euTTTxCKbeLm3NedzIaQQfoZ6PfrHNHkS0xD/44Q5Bbn52xuDu9zVUOfqlL6BhcvKbxUVmpn4AX6CzYB3SX6BP2ks=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ARuVoqZQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=nkJLyoVZTHkmvnZFa0sMJc9EChoJ457wrkM+5VCzY8o7tB9XID13Lp7v94cZ81UZaDs5RRSWfDL8OdCTrsE33+suWGFBIugm8ECQJkiOJmv1KI8lD1cBnOGTRTNC3xIJWrrxidnBpuIEAGYEBM3xX1k8UG2InGOVEDNn5KzFVrw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=X+jZVmfJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ARuVoqZQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E95CCC4CEF1;
-	Wed, 28 Jan 2026 15:59:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="X+jZVmfJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 18260C116C6;
+	Wed, 28 Jan 2026 15:59:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1769615944;
-	bh=4MfH1XCzLJFSdpUXMoJrQ9DmU2OsiEBn+87ojDCWmA8=;
+	s=korg; t=1769615947;
+	bh=0IQ06FjQdoK07seCq+FBIWPC7g38VA0rvp90pYfzzi4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ARuVoqZQ4p13vBhAuusJUO62Ypk3avEKZn7N0fV46mhz4pvCtkzSu3WZ/d2S786Sg
-	 +URWW8tBZ9DONlp8xIFe27SRDxbhZspd4FY+7vNfzD0tlHNBWNtZCHhKzRmWWe4r4E
-	 KC93YhNlIH6AOTkI++AlBykeG7vKGhNbnkjD193M=
+	b=X+jZVmfJXcELlaA+/qs1/0qDw0bt2uOSUInrBx6eBOmg5qX9+JXfcjlTzhgVj4pAl
+	 z2QQSwqBfs3z7f/OcqSy0jqJlZl7Bl3MH6iET/iybsuAUrvNbLpdDcANjuSXcXZ4fH
+	 gpeA5bqHCV4ZnKJafX/XKrVhmiIOEpR2+WRy2e8k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pei Xiao <xiaopei01@kylinos.cn>,
-	Stable@vger.kernel.org,
+	Johan Hovold <johan@kernel.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>,
 	Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Subject: [PATCH 6.18 160/227] iio: adc: at91-sama5d2_adc: Fix potential use-after-free in sama5d2_adc driver
-Date: Wed, 28 Jan 2026 16:23:25 +0100
-Message-ID: <20260128145350.210222464@linuxfoundation.org>
+Subject: [PATCH 6.18 161/227] iio: adc: exynos_adc: fix OF populate on driver rebind
+Date: Wed, 28 Jan 2026 16:23:26 +0100
+Message-ID: <20260128145350.247039410@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260128145344.331957407@linuxfoundation.org>
 References: <20260128145344.331957407@linuxfoundation.org>
@@ -51,48 +51,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pei Xiao <xiaopei01@kylinos.cn>
+From: Johan Hovold <johan@kernel.org>
 
-commit dbdb442218cd9d613adeab31a88ac973f22c4873 upstream.
+commit ea6b4feba85e996e840e0b661bc42793df6eb701 upstream.
 
-at91_adc_interrupt can call at91_adc_touch_data_handler function
-to start the work by schedule_work(&st->touch_st.workq).
+Since commit c6e126de43e7 ("of: Keep track of populated platform
+devices") child devices will not be created by of_platform_populate()
+if the devices had previously been deregistered individually so that the
+OF_POPULATED flag is still set in the corresponding OF nodes.
 
-If we remove the module which will call at91_adc_remove to
-make cleanup, it will free indio_dev through iio_device_unregister but
-quite a bit later. While the work mentioned above will be used. The
-sequence of operations that may lead to a UAF bug is as follows:
+Switch to using of_platform_depopulate() instead of open coding so that
+the child devices are created if the driver is rebound.
 
-CPU0                                      CPU1
-
-                                     | at91_adc_workq_handler
-at91_adc_remove                      |
-iio_device_unregister(indio_dev)     |
-//free indio_dev a bit later         |
-                                     | iio_push_to_buffers(indio_dev)
-                                     | //use indio_dev
-
-Fix it by ensuring that the work is canceled before proceeding with
-the cleanup in at91_adc_remove.
-
-Fixes: 23ec2774f1cc ("iio: adc: at91-sama5d2_adc: add support for position and pressure channels")
-Signed-off-by: Pei Xiao <xiaopei01@kylinos.cn>
-Cc: <Stable@vger.kernel.org>
+Fixes: c6e126de43e7 ("of: Keep track of populated platform devices")
+Cc: stable@vger.kernel.org	# 3.16
+Signed-off-by: Johan Hovold <johan@kernel.org>
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
 Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/adc/at91-sama5d2_adc.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/iio/adc/exynos_adc.c |   15 ++-------------
+ 1 file changed, 2 insertions(+), 13 deletions(-)
 
---- a/drivers/iio/adc/at91-sama5d2_adc.c
-+++ b/drivers/iio/adc/at91-sama5d2_adc.c
-@@ -2481,6 +2481,7 @@ static void at91_adc_remove(struct platf
- 	struct at91_adc_state *st = iio_priv(indio_dev);
+--- a/drivers/iio/adc/exynos_adc.c
++++ b/drivers/iio/adc/exynos_adc.c
+@@ -540,15 +540,6 @@ static const struct iio_chan_spec exynos
+ 	ADC_CHANNEL(9, "adc9"),
+ };
  
+-static int exynos_adc_remove_devices(struct device *dev, void *c)
+-{
+-	struct platform_device *pdev = to_platform_device(dev);
+-
+-	platform_device_unregister(pdev);
+-
+-	return 0;
+-}
+-
+ static int exynos_adc_probe(struct platform_device *pdev)
+ {
+ 	struct exynos_adc *info = NULL;
+@@ -660,8 +651,7 @@ static int exynos_adc_probe(struct platf
+ 	return 0;
+ 
+ err_of_populate:
+-	device_for_each_child(&indio_dev->dev, NULL,
+-				exynos_adc_remove_devices);
++	of_platform_depopulate(&indio_dev->dev);
  	iio_device_unregister(indio_dev);
-+	cancel_work_sync(&st->touch_st.workq);
+ err_irq:
+ 	free_irq(info->irq, info);
+@@ -681,8 +671,7 @@ static void exynos_adc_remove(struct pla
+ 	struct iio_dev *indio_dev = platform_get_drvdata(pdev);
+ 	struct exynos_adc *info = iio_priv(indio_dev);
  
- 	at91_adc_dma_disable(st);
- 
+-	device_for_each_child(&indio_dev->dev, NULL,
+-				exynos_adc_remove_devices);
++	of_platform_depopulate(&indio_dev->dev);
+ 	iio_device_unregister(indio_dev);
+ 	free_irq(info->irq, info);
+ 	if (info->data->exit_hw)
 
 
