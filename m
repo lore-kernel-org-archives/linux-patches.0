@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5174D32470D;
-	Wed, 28 Jan 2026 15:45:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB838311960;
+	Wed, 28 Jan 2026 15:45:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769615109; cv=none; b=BIXE3NdSQTZx7QWMmlgSP1M/NvFj2h5XKJvD5RBWyods9xk3+pD4rh7lEq0NtzXlodhJX8zi+/wVk0dJ2e6SW9m03sg9t3h3XKy02fpfs8wjRVdzRFhIvANWw3Gzl98gurOUrY/hj7IL2tBs84mum9jdpuXEEey/6dhXZ2dMTbY=
+	t=1769615112; cv=none; b=b3k1jm+52zTpMhLEAkEacado1ZBvAWgHFfwqu4+/Hb9GBJLYCNJl/Me31AcXxfbj9jd/aAlr/6Rd2ZhwEEsW7IMyhLkOG+a1ZeIvtDKnjvqCdfr6HS9/gZBxinuDmpuiV9iPsJw8HiEYFa8AD9cjnaIi+a2opRG8NvRerV6ou7w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769615109; c=relaxed/simple;
-	bh=VH1ZUqNShe7EENACYi+aGySGb7CRrQJhpNTztSvdeFg=;
+	s=arc-20240116; t=1769615112; c=relaxed/simple;
+	bh=h18qjHTCnIVyb5PWzxb0lz9SY+M6uH71DwAqS95kaOE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=U2fGe50NabUKD1NeR+ayqJeSA2CFyoMKsk+8wWXQO4WnPq89IvelnR6RY/MytOqhc0Rzz4AH/vFzODKTmMPbD10HdKlGnNkEiZ+lKkLDIxq2Oz80BVYqnHSErQX1vBPg8tvuMEkq0SK0TZcZv49kNMJaGof+9esUpsj3kbCLonY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MXgTJysJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ldG7vHr3RdWmZHQxsD//ZQrhX/3bVym5MCBkjFA8qi1CwMyP6F8WRq5ZaIk/BjUvb8kUG2Z2QffUtXQiQSKk0R8LPf/qRdZQ3vy4x++hLZFdU74o+ZI17NOekfEJUqOIZdgAn86WXAnrbWYc4wvltEYr3uNS7Ghhb4Z84zPz/Wo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=I/2zHQyp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MXgTJysJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CAD2DC4CEF1;
-	Wed, 28 Jan 2026 15:45:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="I/2zHQyp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 34B50C4CEF1;
+	Wed, 28 Jan 2026 15:45:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1769615109;
-	bh=VH1ZUqNShe7EENACYi+aGySGb7CRrQJhpNTztSvdeFg=;
+	s=korg; t=1769615112;
+	bh=h18qjHTCnIVyb5PWzxb0lz9SY+M6uH71DwAqS95kaOE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MXgTJysJ1UjTAXFQTlXr6rofuzljdYhS2GajXCKfNtE59GttE8C74BvDHZRQ4rAho
-	 drJIQ6wiBE+8kywcLVogk2l7HCs2aFjQSqluBw6q572bxxmcVIrjMzV2yfb1fD6+0B
-	 VJIkzK6G1KuNXtiOVxVYL4YIpzrWLCJY+pnR3TXo=
+	b=I/2zHQypxBz17V/Bsi70Jhh6LnpFNAWAGiQDRJySD2Zxr2ZqG1i0OFPWzLjEp1cYI
+	 Cb8i7I4vrBAJtFDBSI36UCCUlBUgH/hCzrPQz0SrbwW/N93ZDnCzzfVqZtmONwEBTN
+	 R25jTZxA0046vPIpfUa+qOz3IU/FR2jjIS/IYYPc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	feng <alec.jiang@gmail.com>,
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Subject: [PATCH 6.12 049/169] Input: i8042 - add quirk for ASUS Zenbook UX425QA_UM425QA
-Date: Wed, 28 Jan 2026 16:22:12 +0100
-Message-ID: <20260128145335.781663804@linuxfoundation.org>
+	stable@kernel.org,
+	Long Li <longli@microsoft.com>,
+	Michael Kelley <mhklinux@outlook.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>
+Subject: [PATCH 6.12 050/169] scsi: storvsc: Process unsupported MODE_SENSE_10
+Date: Wed, 28 Jan 2026 16:22:13 +0100
+Message-ID: <20260128145335.817310338@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260128145334.006287341@linuxfoundation.org>
 References: <20260128145334.006287341@linuxfoundation.org>
@@ -50,48 +52,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: feng <alec.jiang@gmail.com>
+From: Long Li <longli@microsoft.com>
 
-commit 2934325f56150ad8dab8ab92cbe2997242831396 upstream.
+commit 9eacec5d18f98f89be520eeeef4b377acee3e4b8 upstream.
 
-The ASUS Zenbook UX425QA_UM425QA fails to initialize the keyboard after
-a cold boot.
+The Hyper-V host does not support MODE_SENSE_10 and MODE_SENSE.  The
+driver handles MODE_SENSE as unsupported command, but not for
+MODE_SENSE_10. Add MODE_SENSE_10 to the same handling logic and return
+correct code to SCSI layer.
 
-A quirk already exists for "ZenBook UX425", but some Zenbooks report
-"Zenbook" with a lowercase 'b'. Since DMI matching is case-sensitive,
-the existing quirk is not applied to these "extra special" Zenbooks.
-
-Testing confirms that this model needs the same quirks as the ZenBook
-UX425 variants.
-
-Signed-off-by: feng <alec.jiang@gmail.com>
-Link: https://patch.msgid.link/20260122013957.11184-1-alec.jiang@gmail.com
-Cc: stable@vger.kernel.org
-Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Fixes: 89ae7d709357 ("Staging: hv: storvsc: Move the storage driver out of the staging area")
+Cc: stable@kernel.org
+Signed-off-by: Long Li <longli@microsoft.com>
+Reviewed-by: Michael Kelley <mhklinux@outlook.com>
+Link: https://patch.msgid.link/20260117010302.294068-1-longli@linux.microsoft.com
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/input/serio/i8042-acpipnpio.h |   11 +++++++++++
- 1 file changed, 11 insertions(+)
+ drivers/scsi/storvsc_drv.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/drivers/input/serio/i8042-acpipnpio.h
-+++ b/drivers/input/serio/i8042-acpipnpio.h
-@@ -116,6 +116,17 @@ static const struct dmi_system_id i8042_
- 		.driver_data = (void *)(SERIO_QUIRK_NOMUX | SERIO_QUIRK_RESET_NEVER)
- 	},
- 	{
-+		/*
-+		 * ASUS Zenbook UX425QA_UM425QA
-+		 * Some Zenbooks report "Zenbook" with a lowercase b.
-+		 */
-+		.matches = {
-+			DMI_MATCH(DMI_SYS_VENDOR, "ASUSTeK COMPUTER INC."),
-+			DMI_MATCH(DMI_PRODUCT_NAME, "Zenbook UX425QA_UM425QA"),
-+		},
-+		.driver_data = (void *)(SERIO_QUIRK_PROBE_DEFER | SERIO_QUIRK_RESET_NEVER)
-+	},
-+	{
- 		/* ASUS ZenBook UX425UA/QA */
- 		.matches = {
- 			DMI_MATCH(DMI_SYS_VENDOR, "ASUSTeK COMPUTER INC."),
+--- a/drivers/scsi/storvsc_drv.c
++++ b/drivers/scsi/storvsc_drv.c
+@@ -1145,7 +1145,7 @@ static void storvsc_on_io_completion(str
+ 	 * The current SCSI handling on the host side does
+ 	 * not correctly handle:
+ 	 * INQUIRY command with page code parameter set to 0x80
+-	 * MODE_SENSE command with cmd[2] == 0x1c
++	 * MODE_SENSE and MODE_SENSE_10 command with cmd[2] == 0x1c
+ 	 * MAINTENANCE_IN is not supported by HyperV FC passthrough
+ 	 *
+ 	 * Setup srb and scsi status so this won't be fatal.
+@@ -1155,6 +1155,7 @@ static void storvsc_on_io_completion(str
+ 
+ 	if ((stor_pkt->vm_srb.cdb[0] == INQUIRY) ||
+ 	   (stor_pkt->vm_srb.cdb[0] == MODE_SENSE) ||
++	   (stor_pkt->vm_srb.cdb[0] == MODE_SENSE_10) ||
+ 	   (stor_pkt->vm_srb.cdb[0] == MAINTENANCE_IN &&
+ 	   hv_dev_is_fc(device))) {
+ 		vstor_packet->vm_srb.scsi_status = 0;
 
 
