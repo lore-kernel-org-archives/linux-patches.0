@@ -1,53 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58ECC30BF69;
-	Wed, 28 Jan 2026 15:48:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94ED5306B06;
+	Wed, 28 Jan 2026 15:48:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769615332; cv=none; b=SAvVGpKx1jW9UKrYBRFC3SiGDuG6lCZ+SO28wxUP6jRzfeVV0Wbalw5NG9B0DCsSWuNxlDo6QbiZNa3qj7u6t8j9lzqIz2PUnMnLPa174N4VM348wchUSk8dZP4HeX6ugCpsygy49nfLcfaXawhu6WsvTk0SHlxLRIWqOxjiXdQ=
+	t=1769615335; cv=none; b=c3sitKOZQHbTroUeFmZSSO4/T2xZrPsKXZAjV9q1d+wqF0rQmTbX4PgQssYtH6tXv9Mf3dUfv4I4msvKdT9R/8K5zjlg5puxo+SwONlLh0Qe7bLeeJo3gyFp31pi6N+hHIn28ilOIQgXRinEc4upsEwzl7BSXGKb/Lidqg4CtS0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769615332; c=relaxed/simple;
-	bh=7r5KHb4fNdMUmtedPPYPetjjCH+Qv4HYRW9b3U9umHQ=;
+	s=arc-20240116; t=1769615335; c=relaxed/simple;
+	bh=8yQtMjg1urh581Z4KcnZvf8aDkJ8njQ3AQVy87zFM/M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mrKww2iqxZOJFXM89zB6KLtzB/oD6cQzii6PqNN54Eqd2Cl4brnfrmTE1vnyqAXOr9caG7Lkf5eIOJ6aYtSkmpUdrTXqFc7zm405U1d00FvO2f4/Ino2YiiO7Rv4iBdN4gvg9LzkFAByKVt+YiLk/xnGkXUgiOV3yWAITr2zj70=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dR/koxIY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QbSWOFeZM2zVJMBScm8SBxtJOLfMnSlcryDOVJ1GsEuYzP+XmPfF1rs3LuxBt6q1TYSQ6eQdCl0wfKbHxr9IQcCh1RM4Iy8fs6OcMO6md9ybIsojIfYhBub4W1pmj+FCZ9S/UHYSB8PGUECPk/ZVDmHw1lNp26W2h3agn0mDdGw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IEqQcEsP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dR/koxIY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5465C4CEF7;
-	Wed, 28 Jan 2026 15:48:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IEqQcEsP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0906C4CEF1;
+	Wed, 28 Jan 2026 15:48:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1769615332;
-	bh=7r5KHb4fNdMUmtedPPYPetjjCH+Qv4HYRW9b3U9umHQ=;
+	s=korg; t=1769615335;
+	bh=8yQtMjg1urh581Z4KcnZvf8aDkJ8njQ3AQVy87zFM/M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dR/koxIY4yCoKzZaWP4mDm0JdnzVVxVNblyOMO7qewT40fR+vnsYa4RRcRzBo/dev
-	 bEOLvowi2GlT8VVA6q5dY45FuZtI1n775ufKJYosBcnRAar1VZQnfzGDWn1nrFhszj
-	 Qs4QWyfK2PJZVGtXEVVQKbltMV9kPiw+EioqkQXk=
+	b=IEqQcEsP9CoSX0VTGSmYmvGT/u+VpIDS/3ZQovVe94RgYeN/sZ2xXIiPAWZdUCxkr
+	 3oTpt09rF1Nk8AOKPOUVBqDnc0VBmGk0kFYrYtCyoWAwhp50BSNgTVeGdEQK4Fsc7i
+	 dwg8r/ToOsTiId9Mhn8lZjJSLOXhfI1zM93cSErk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
-	syzbot+2d9c96466c978346b55f@syzkaller.appspotmail.com,
-	"David Hildenbrand (Red Hat)" <david@kernel.org>,
-	Zi Yan <ziy@nvidia.com>,
-	Alistair Popple <apopple@nvidia.com>,
-	Byungchul Park <byungchul@sk.com>,
-	Gregory Price <gourry@gourry.net>,
-	Jann Horn <jannh@google.com>,
-	Joshua Hahn <joshua.hahnjy@gmail.com>,
-	Liam Howlett <liam.howlett@oracle.com>,
-	Lorenzo Stoakes <lorenzo.stoakes@oracle.com>,
-	Matthew Brost <matthew.brost@intel.com>,
-	Rakie Kim <rakie.kim@sk.com>,
-	Rik van Riel <riel@surriel.com>,
-	Vlastimil Babka <vbabka@suse.cz>,
-	Ying Huang <ying.huang@linux.alibaba.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Lance Yang <lance.yang@linux.dev>
-Subject: [PATCH 6.12 146/169] migrate: correct lock ordering for hugetlb file folios
-Date: Wed, 28 Jan 2026 16:23:49 +0100
-Message-ID: <20260128145339.260207452@linuxfoundation.org>
+	Siddharth Vadapalli <s-vadapalli@ti.com>,
+	Peter Ujfalusi <peter.ujfalusi@gmail.com>,
+	Vinod Koul <vkoul@kernel.org>,
+	Sai Sree Kartheek Adivi <s-adivi@ti.com>
+Subject: [PATCH 6.12 147/169] dmaengine: ti: k3-udma: Enable second resource range for BCDMA and PKTDMA
+Date: Wed, 28 Jan 2026 16:23:50 +0100
+Message-ID: <20260128145339.295740565@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260128145334.006287341@linuxfoundation.org>
 References: <20260128145334.006287341@linuxfoundation.org>
@@ -66,106 +52,104 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Matthew Wilcox (Oracle) <willy@infradead.org>
+From: Siddharth Vadapalli <s-vadapalli@ti.com>
 
-commit b7880cb166ab62c2409046b2347261abf701530e upstream.
+commit 566beb347eded7a860511164a7a163bc882dc4d0 upstream.
 
-Syzbot has found a deadlock (analyzed by Lance Yang):
+The SoC DMA resources for UDMA, BCDMA and PKTDMA can be described via a
+combination of up to two resource ranges. The first resource range handles
+the default partitioning wherein all resources belonging to that range are
+allocated to a single entity and form a continuous range. For use-cases
+where the resources are shared across multiple entities and require to be
+described via discontinuous ranges, a second resource range is required.
 
-1) Task (5749): Holds folio_lock, then tries to acquire i_mmap_rwsem(read lock).
-2) Task (5754): Holds i_mmap_rwsem(write lock), then tries to acquire
-folio_lock.
+Currently, udma_setup_resources() supports handling resources that belong
+to the second range. Extend bcdma_setup_resources() and
+pktdma_setup_resources() to support the same.
 
-migrate_pages()
-  -> migrate_hugetlbs()
-    -> unmap_and_move_huge_page()     <- Takes folio_lock!
-      -> remove_migration_ptes()
-        -> __rmap_walk_file()
-          -> i_mmap_lock_read()       <- Waits for i_mmap_rwsem(read lock)!
-
-hugetlbfs_fallocate()
-  -> hugetlbfs_punch_hole()           <- Takes i_mmap_rwsem(write lock)!
-    -> hugetlbfs_zero_partial_page()
-     -> filemap_lock_hugetlb_folio()
-      -> filemap_lock_folio()
-        -> __filemap_get_folio        <- Waits for folio_lock!
-
-The migration path is the one taking locks in the wrong order according to
-the documentation at the top of mm/rmap.c.  So expand the scope of the
-existing i_mmap_lock to cover the calls to remove_migration_ptes() too.
-
-This is (mostly) how it used to be after commit c0d0381ade79.  That was
-removed by 336bf30eb765 for both file & anon hugetlb pages when it should
-only have been removed for anon hugetlb pages.
-
-Link: https://lkml.kernel.org/r/20260109041345.3863089-2-willy@infradead.org
-Signed-off-by: Matthew Wilcox (Oracle) <willy@infradead.org>
-Fixes: 336bf30eb765 ("hugetlbfs: fix anon huge page migration race")
-Reported-by: syzbot+2d9c96466c978346b55f@syzkaller.appspotmail.com
-Link: https://lore.kernel.org/all/68e9715a.050a0220.1186a4.000d.GAE@google.com
-Debugged-by: Lance Yang <lance.yang@linux.dev>
-Acked-by: David Hildenbrand (Red Hat) <david@kernel.org>
-Acked-by: Zi Yan <ziy@nvidia.com>
-Cc: Alistair Popple <apopple@nvidia.com>
-Cc: Byungchul Park <byungchul@sk.com>
-Cc: Gregory Price <gourry@gourry.net>
-Cc: Jann Horn <jannh@google.com>
-Cc: Joshua Hahn <joshua.hahnjy@gmail.com>
-Cc: Liam Howlett <liam.howlett@oracle.com>
-Cc: Lorenzo Stoakes <lorenzo.stoakes@oracle.com>
-Cc: Matthew Brost <matthew.brost@intel.com>
-Cc: Rakie Kim <rakie.kim@sk.com>
-Cc: Rik van Riel <riel@surriel.com>
-Cc: Vlastimil Babka <vbabka@suse.cz>
-Cc: Ying Huang <ying.huang@linux.alibaba.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Siddharth Vadapalli <s-vadapalli@ti.com>
+Acked-by: Peter Ujfalusi <peter.ujfalusi@gmail.com>
+Link: https://lore.kernel.org/r/20250205121805.316792-1-s-vadapalli@ti.com
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Tested-by: Sai Sree Kartheek Adivi <s-adivi@ti.com>
+Signed-off-by: Sai Sree Kartheek Adivi <s-adivi@ti.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/migrate.c |   12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ drivers/dma/ti/k3-udma.c |   36 ++++++++++++++++++++++++++++++++++++
+ 1 file changed, 36 insertions(+)
 
---- a/mm/migrate.c
-+++ b/mm/migrate.c
-@@ -1439,6 +1439,7 @@ static int unmap_and_move_huge_page(new_
- 	int page_was_mapped = 0;
- 	struct anon_vma *anon_vma = NULL;
- 	struct address_space *mapping = NULL;
-+	enum ttu_flags ttu = 0;
- 
- 	if (folio_ref_count(src) == 1) {
- 		/* page was freed from under us. So we are done. */
-@@ -1479,8 +1480,6 @@ static int unmap_and_move_huge_page(new_
- 		goto put_anon;
- 
- 	if (folio_mapped(src)) {
--		enum ttu_flags ttu = 0;
--
- 		if (!folio_test_anon(src)) {
- 			/*
- 			 * In shared mappings, try_to_unmap could potentially
-@@ -1497,9 +1496,6 @@ static int unmap_and_move_huge_page(new_
- 
- 		try_to_migrate(src, ttu);
- 		page_was_mapped = 1;
--
--		if (ttu & TTU_RMAP_LOCKED)
--			i_mmap_unlock_write(mapping);
- 	}
- 
- 	if (!folio_mapped(src))
-@@ -1507,7 +1503,11 @@ static int unmap_and_move_huge_page(new_
- 
- 	if (page_was_mapped)
- 		remove_migration_ptes(src,
--			rc == MIGRATEPAGE_SUCCESS ? dst : src, 0);
-+			rc == MIGRATEPAGE_SUCCESS ? dst : src,
-+				ttu ? RMP_LOCKED : 0);
+--- a/drivers/dma/ti/k3-udma.c
++++ b/drivers/dma/ti/k3-udma.c
+@@ -4876,6 +4876,12 @@ static int bcdma_setup_resources(struct
+ 				irq_res.desc[i].start = rm_res->desc[i].start +
+ 							oes->bcdma_bchan_ring;
+ 				irq_res.desc[i].num = rm_res->desc[i].num;
 +
-+	if (ttu & TTU_RMAP_LOCKED)
-+		i_mmap_unlock_write(mapping);
- 
- unlock_put_anon:
- 	folio_unlock(dst);
++				if (rm_res->desc[i].num_sec) {
++					irq_res.desc[i].start_sec = rm_res->desc[i].start_sec +
++									oes->bcdma_bchan_ring;
++					irq_res.desc[i].num_sec = rm_res->desc[i].num_sec;
++				}
+ 			}
+ 		}
+ 	} else {
+@@ -4899,6 +4905,15 @@ static int bcdma_setup_resources(struct
+ 				irq_res.desc[i + 1].start = rm_res->desc[j].start +
+ 							oes->bcdma_tchan_ring;
+ 				irq_res.desc[i + 1].num = rm_res->desc[j].num;
++
++				if (rm_res->desc[j].num_sec) {
++					irq_res.desc[i].start_sec = rm_res->desc[j].start_sec +
++									oes->bcdma_tchan_data;
++					irq_res.desc[i].num_sec = rm_res->desc[j].num_sec;
++					irq_res.desc[i + 1].start_sec = rm_res->desc[j].start_sec +
++									oes->bcdma_tchan_ring;
++					irq_res.desc[i + 1].num_sec = rm_res->desc[j].num_sec;
++				}
+ 			}
+ 		}
+ 	}
+@@ -4919,6 +4934,15 @@ static int bcdma_setup_resources(struct
+ 				irq_res.desc[i + 1].start = rm_res->desc[j].start +
+ 							oes->bcdma_rchan_ring;
+ 				irq_res.desc[i + 1].num = rm_res->desc[j].num;
++
++				if (rm_res->desc[j].num_sec) {
++					irq_res.desc[i].start_sec = rm_res->desc[j].start_sec +
++									oes->bcdma_rchan_data;
++					irq_res.desc[i].num_sec = rm_res->desc[j].num_sec;
++					irq_res.desc[i + 1].start_sec = rm_res->desc[j].start_sec +
++									oes->bcdma_rchan_ring;
++					irq_res.desc[i + 1].num_sec = rm_res->desc[j].num_sec;
++				}
+ 			}
+ 		}
+ 	}
+@@ -5053,6 +5077,12 @@ static int pktdma_setup_resources(struct
+ 			irq_res.desc[i].start = rm_res->desc[i].start +
+ 						oes->pktdma_tchan_flow;
+ 			irq_res.desc[i].num = rm_res->desc[i].num;
++
++			if (rm_res->desc[i].num_sec) {
++				irq_res.desc[i].start_sec = rm_res->desc[i].start_sec +
++								oes->pktdma_tchan_flow;
++				irq_res.desc[i].num_sec = rm_res->desc[i].num_sec;
++			}
+ 		}
+ 	}
+ 	rm_res = tisci_rm->rm_ranges[RM_RANGE_RFLOW];
+@@ -5064,6 +5094,12 @@ static int pktdma_setup_resources(struct
+ 			irq_res.desc[i].start = rm_res->desc[j].start +
+ 						oes->pktdma_rchan_flow;
+ 			irq_res.desc[i].num = rm_res->desc[j].num;
++
++			if (rm_res->desc[j].num_sec) {
++				irq_res.desc[i].start_sec = rm_res->desc[j].start_sec +
++								oes->pktdma_rchan_flow;
++				irq_res.desc[i].num_sec = rm_res->desc[j].num_sec;
++			}
+ 		}
+ 	}
+ 	ret = ti_sci_inta_msi_domain_alloc_irqs(ud->dev, &irq_res);
 
 
