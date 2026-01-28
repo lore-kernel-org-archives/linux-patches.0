@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B93772DE1E4;
-	Wed, 28 Jan 2026 15:40:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D7082DE200;
+	Wed, 28 Jan 2026 15:40:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769614830; cv=none; b=tm5rgfl5rTKZgXFYZuuiOQhLsGlfGqieLT51mANl1jWCakXwpekGTH8EPy/9KhmFnhjBtvYCgX4PxYNQ7tY8aSFZWLg6rbXHWSKKRu4Ctm+lRszKIcRFkURqdS31LH33H/QK7Fydv2/5AwMLXVFHEbBwE+2oAnAPLlB2SIl9QBs=
+	t=1769614834; cv=none; b=XObzxY6Wd9gYuiRDpVyWqTxPzHkC+1k2XAfPXF8CBjExVsI52v3YbbncMTQUkAmQShJbYYclYw/cenQHwnwdtP1RFrtSAw1oz5uY2kF4StCkKnDa/yHb8kgnZ3YLBg9xR860fqHLlFJiHInQfV6iX+7tlUuMCYQhxloTY97Dif0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769614830; c=relaxed/simple;
-	bh=VLkF1DT22M3OglWVrwgqvQn6sU7xIfodaDKnaKu2778=;
+	s=arc-20240116; t=1769614834; c=relaxed/simple;
+	bh=15eGbPckJ5L5raoEhu08DJCQeNXkh626HEmVpCBrDNI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=r/XFte26uIc5akUGIY3cfoqeV/W+3eoFrUshYNUv4oOPMiw2YizPgVdn7YIIZkMlVGxlP0BwburKhHQR64h6pmVb710OTTnYZmWJ0gi9UAOKwGXEoPwkLjOen6WDA1RrsiRZWJSpv9OLcbcDXujmk8Gm27soYOhPWYOzyNLNAhs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rIIiquaq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Sjx60Qzu1Bayp5uYHJe0+3iOBH+7RJF1mISMBcIZLoMk3B4T3EwGOw1tNVbaZqHoRZ74makiYGJIMZVew6bbsdDIMGELWVb/NNr6WAh76F39lFvr8Moi5k2UEZG3OBUPwqm2tTZ2CbfWWq+cAnyZ+j39WcZfXsK+dx4kaYOUrcM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bFgdTGm+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rIIiquaq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E73A5C4CEF1;
-	Wed, 28 Jan 2026 15:40:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bFgdTGm+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D26FFC116C6;
+	Wed, 28 Jan 2026 15:40:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1769614830;
-	bh=VLkF1DT22M3OglWVrwgqvQn6sU7xIfodaDKnaKu2778=;
+	s=korg; t=1769614833;
+	bh=15eGbPckJ5L5raoEhu08DJCQeNXkh626HEmVpCBrDNI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rIIiquaqIUXwQp2ut9NwayerFzgAsSlJwnlhzwylKKEKBP+zqZPx4mjTC2ut2RxIB
-	 C6kkMyy29T+hjkoJatEZ8BP980SVlOtZiAjehJRNBv3uWT+g2mG5WUYwi6s5aGVlN/
-	 oZMgTsNdK/G9bhGvCd/d1fljYCDl+UVfN+Q/TKw0=
+	b=bFgdTGm+HBB7uBYrEpNnTNrXrUwRfudJTQc6i4hsCC8hABDshpx8DvrQgir5I2LjF
+	 3DJEVnlJ/ZeNaz8EeI6hjyFMD93SOcJf1q+0OQB9MljwoohL2gOywkEddrSPKTfV8T
+	 vpDfxrX2fQMl9PNHguQLPOOh1uII/NTYMicG+Wkc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shubham Rana <s9.rana@samsung.com>,
-	Maninder Singh <maninder1.s@samsung.com>,
-	Jeff Layton <jlayton@kernel.org>,
-	Chuck Lever <chuck.lever@oracle.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Zqiang <qiang.zhang@linux.dev>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Rahul Sharma <black.hawk@163.com>
-Subject: [PATCH 6.6 245/254] NFSD: fix race between nfsd registration and exports_proc
-Date: Wed, 28 Jan 2026 16:23:41 +0100
-Message-ID: <20260128145353.613826173@linuxfoundation.org>
+Subject: [PATCH 6.6 246/254] usbnet: Fix using smp_processor_id() in preemptible code warnings
+Date: Wed, 28 Jan 2026 16:23:42 +0100
+Message-ID: <20260128145353.650193051@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260128145344.698118637@linuxfoundation.org>
 References: <20260128145344.698118637@linuxfoundation.org>
@@ -53,166 +52,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Maninder Singh <maninder1.s@samsung.com>
+From: Zqiang <qiang.zhang@linux.dev>
 
-[ Upstream commit f7fb730cac9aafda8b9813b55d04e28a9664d17c ]
+[ Upstream commit 327cd4b68b4398b6c24f10eb2b2533ffbfc10185 ]
 
-As of now nfsd calls create_proc_exports_entry() at start of init_nfsd
-and cleanup by remove_proc_entry() at last of exit_nfsd.
+Syzbot reported the following warning:
 
-Which causes kernel OOPs if there is race between below 2 operations:
-(i) exportfs -r
-(ii) mount -t nfsd none /proc/fs/nfsd
+BUG: using smp_processor_id() in preemptible [00000000] code: dhcpcd/2879
+caller is usbnet_skb_return+0x74/0x490 drivers/net/usb/usbnet.c:331
+CPU: 1 UID: 0 PID: 2879 Comm: dhcpcd Not tainted 6.15.0-rc4-syzkaller-00098-g615dca38c2ea #0 PREEMPT(voluntary)
+Call Trace:
+ <TASK>
+ __dump_stack lib/dump_stack.c:94 [inline]
+ dump_stack_lvl+0x16c/0x1f0 lib/dump_stack.c:120
+ check_preemption_disabled+0xd0/0xe0 lib/smp_processor_id.c:49
+ usbnet_skb_return+0x74/0x490 drivers/net/usb/usbnet.c:331
+ usbnet_resume_rx+0x4b/0x170 drivers/net/usb/usbnet.c:708
+ usbnet_change_mtu+0x1be/0x220 drivers/net/usb/usbnet.c:417
+ __dev_set_mtu net/core/dev.c:9443 [inline]
+ netif_set_mtu_ext+0x369/0x5c0 net/core/dev.c:9496
+ netif_set_mtu+0xb0/0x160 net/core/dev.c:9520
+ dev_set_mtu+0xae/0x170 net/core/dev_api.c:247
+ dev_ifsioc+0xa31/0x18d0 net/core/dev_ioctl.c:572
+ dev_ioctl+0x223/0x10e0 net/core/dev_ioctl.c:821
+ sock_do_ioctl+0x19d/0x280 net/socket.c:1204
+ sock_ioctl+0x42f/0x6a0 net/socket.c:1311
+ vfs_ioctl fs/ioctl.c:51 [inline]
+ __do_sys_ioctl fs/ioctl.c:906 [inline]
+ __se_sys_ioctl fs/ioctl.c:892 [inline]
+ __x64_sys_ioctl+0x190/0x200 fs/ioctl.c:892
+ do_syscall_x64 arch/x86/entry/syscall_64.c:63 [inline]
+ do_syscall_64+0xcd/0x260 arch/x86/entry/syscall_64.c:94
+ entry_SYSCALL_64_after_hwframe+0x77/0x7f
 
-for 5.4 kernel ARM64:
+For historical and portability reasons, the netif_rx() is usually
+run in the softirq or interrupt context, this commit therefore add
+local_bh_disable/enable() protection in the usbnet_resume_rx().
 
-CPU 1:
-el1_irq+0xbc/0x180
-arch_counter_get_cntvct+0x14/0x18
-running_clock+0xc/0x18
-preempt_count_add+0x88/0x110
-prep_new_page+0xb0/0x220
-get_page_from_freelist+0x2d8/0x1778
-__alloc_pages_nodemask+0x15c/0xef0
-__vmalloc_node_range+0x28c/0x478
-__vmalloc_node_flags_caller+0x8c/0xb0
-kvmalloc_node+0x88/0xe0
-nfsd_init_net+0x6c/0x108 [nfsd]
-ops_init+0x44/0x170
-register_pernet_operations+0x114/0x270
-register_pernet_subsys+0x34/0x50
-init_nfsd+0xa8/0x718 [nfsd]
-do_one_initcall+0x54/0x2e0
-
-CPU 2 :
-Unable to handle kernel NULL pointer dereference at virtual address 0000000000000010
-
-PC is at : exports_net_open+0x50/0x68 [nfsd]
-
-Call trace:
-exports_net_open+0x50/0x68 [nfsd]
-exports_proc_open+0x2c/0x38 [nfsd]
-proc_reg_open+0xb8/0x198
-do_dentry_open+0x1c4/0x418
-vfs_open+0x38/0x48
-path_openat+0x28c/0xf18
-do_filp_open+0x70/0xe8
-do_sys_open+0x154/0x248
-
-Sometimes it crashes at exports_net_open() and sometimes cache_seq_next_rcu().
-
-and same is happening on latest 6.14 kernel as well:
-
-[    0.000000] Linux version 6.14.0-rc5-next-20250304-dirty
-...
-[  285.455918] Unable to handle kernel paging request at virtual address 00001f4800001f48
-...
-[  285.464902] pc : cache_seq_next_rcu+0x78/0xa4
-...
-[  285.469695] Call trace:
-[  285.470083]  cache_seq_next_rcu+0x78/0xa4 (P)
-[  285.470488]  seq_read+0xe0/0x11c
-[  285.470675]  proc_reg_read+0x9c/0xf0
-[  285.470874]  vfs_read+0xc4/0x2fc
-[  285.471057]  ksys_read+0x6c/0xf4
-[  285.471231]  __arm64_sys_read+0x1c/0x28
-[  285.471428]  invoke_syscall+0x44/0x100
-[  285.471633]  el0_svc_common.constprop.0+0x40/0xe0
-[  285.471870]  do_el0_svc_compat+0x1c/0x34
-[  285.472073]  el0_svc_compat+0x2c/0x80
-[  285.472265]  el0t_32_sync_handler+0x90/0x140
-[  285.472473]  el0t_32_sync+0x19c/0x1a0
-[  285.472887] Code: f9400885 93407c23 937d7c27 11000421 (f86378a3)
-[  285.473422] ---[ end trace 0000000000000000 ]---
-
-It reproduced simply with below script:
-while [ 1 ]
-do
-/exportfs -r
-done &
-
-while [ 1 ]
-do
-insmod /nfsd.ko
-mount -t nfsd none /proc/fs/nfsd
-umount /proc/fs/nfsd
-rmmod nfsd
-done &
-
-So exporting interfaces to user space shall be done at last and
-cleanup at first place.
-
-With change there is no Kernel OOPs.
-
-Co-developed-by: Shubham Rana <s9.rana@samsung.com>
-Signed-off-by: Shubham Rana <s9.rana@samsung.com>
-Signed-off-by: Maninder Singh <maninder1.s@samsung.com>
-Reviewed-by: Jeff Layton <jlayton@kernel.org>
-Cc: stable@vger.kernel.org
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
-[ The context change is due to the commit bd9d6a3efa97
-("NFSD: add rpc_status netlink support")
-and the proper adoption is done. ]
+Fixes: 43daa96b166c ("usbnet: Stop RX Q on MTU change")
+Link: https://syzkaller.appspot.com/bug?id=81f55dfa587ee544baaaa5a359a060512228c1e1
+Suggested-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Zqiang <qiang.zhang@linux.dev>
+Link: https://patch.msgid.link/20251011070518.7095-1-qiang.zhang@linux.dev
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+[ The context change is due to the commit 2c04d279e857
+("net: usb: Convert tasklet API to new bottom half workqueue mechanism")
+in v6.17 which is irrelevant to the logic of this patch.]
 Signed-off-by: Rahul Sharma <black.hawk@163.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nfsd/nfsctl.c |   17 ++++++++---------
- 1 file changed, 8 insertions(+), 9 deletions(-)
+ drivers/net/usb/usbnet.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/fs/nfsd/nfsctl.c
-+++ b/fs/nfsd/nfsctl.c
-@@ -1582,12 +1582,9 @@ static int __init init_nfsd(void)
- 	if (retval)
- 		goto out_free_pnfs;
- 	nfsd_lockd_init();	/* lockd->nfsd callbacks */
--	retval = create_proc_exports_entry();
--	if (retval)
--		goto out_free_lockd;
- 	retval = register_pernet_subsys(&nfsd_net_ops);
- 	if (retval < 0)
--		goto out_free_exports;
-+		goto out_free_lockd;
- 	retval = register_cld_notifier();
- 	if (retval)
- 		goto out_free_subsys;
-@@ -1596,17 +1593,19 @@ static int __init init_nfsd(void)
- 		goto out_free_cld;
- 	retval = register_filesystem(&nfsd_fs_type);
- 	if (retval)
-+		goto out_free_nfsd4;
-+	retval = create_proc_exports_entry();
-+	if (retval)
- 		goto out_free_all;
- 	return 0;
- out_free_all:
-+	unregister_filesystem(&nfsd_fs_type);
-+out_free_nfsd4:
- 	nfsd4_destroy_laundry_wq();
- out_free_cld:
- 	unregister_cld_notifier();
- out_free_subsys:
- 	unregister_pernet_subsys(&nfsd_net_ops);
--out_free_exports:
--	remove_proc_entry("fs/nfs/exports", NULL);
--	remove_proc_entry("fs/nfs", NULL);
- out_free_lockd:
- 	nfsd_lockd_shutdown();
- 	nfsd_drc_slab_free();
-@@ -1619,13 +1618,13 @@ out_free_slabs:
+--- a/drivers/net/usb/usbnet.c
++++ b/drivers/net/usb/usbnet.c
+@@ -702,6 +702,7 @@ void usbnet_resume_rx(struct usbnet *dev
+ 	struct sk_buff *skb;
+ 	int num = 0;
  
- static void __exit exit_nfsd(void)
- {
-+	remove_proc_entry("fs/nfs/exports", NULL);
-+	remove_proc_entry("fs/nfs", NULL);
- 	unregister_filesystem(&nfsd_fs_type);
- 	nfsd4_destroy_laundry_wq();
- 	unregister_cld_notifier();
- 	unregister_pernet_subsys(&nfsd_net_ops);
- 	nfsd_drc_slab_free();
--	remove_proc_entry("fs/nfs/exports", NULL);
--	remove_proc_entry("fs/nfs", NULL);
- 	nfsd_lockd_shutdown();
- 	nfsd4_free_slabs();
- 	nfsd4_exit_pnfs();
++	local_bh_disable();
+ 	clear_bit(EVENT_RX_PAUSED, &dev->flags);
+ 
+ 	while ((skb = skb_dequeue(&dev->rxq_pause)) != NULL) {
+@@ -710,6 +711,7 @@ void usbnet_resume_rx(struct usbnet *dev
+ 	}
+ 
+ 	tasklet_schedule(&dev->bh);
++	local_bh_enable();
+ 
+ 	netif_dbg(dev, rx_status, dev->net,
+ 		  "paused rx queue disabled, %d skbs requeued\n", num);
 
 
