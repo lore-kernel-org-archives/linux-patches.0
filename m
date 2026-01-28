@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 067FA13B7A3;
-	Wed, 28 Jan 2026 15:33:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4934413B7A3;
+	Wed, 28 Jan 2026 15:33:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769614394; cv=none; b=g+1NaBHO742Zm4OZ0MoJtckkYyXrvGRpHPuX5pC50UUJtoFPCKvnUCJchOirg05ygNWfvMqNvbLFnnbXgs0o/DIxCnvkXcfLRmP1aN5cZD5UW/XGjmMPX018sA3tdq9qT1S/fYL1yoiskIbr8/154jXLKbNbqH/Nv6DtCr9rDv4=
+	t=1769614397; cv=none; b=htfTLgh/IbccCNpAjO/nUjBHxLIpIXCKGOuyEbOUzDlhCQZ57enXBJb4O/cLZcOQemmvtuEYyz3I0zYuO5MSPN/T1zcp1y4HJVe6zbnNwbYGR+2/8Ya3wBFXnnIfUUFnzr0j5zggT0TDAsj/fuqzePuvsvctqBjrLw7klPCbRjs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769614394; c=relaxed/simple;
-	bh=f9JynRnRtDieaoSsnjbCk/AjA1AV++jkeTUL+sNEx+E=;
+	s=arc-20240116; t=1769614397; c=relaxed/simple;
+	bh=aREihAJPU4TpK4kSrcxH5jLId5z4d+26h2VsRd4+R7c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=e/rnuIbMjNgKy2rCZ7h1/5h4uPrurptMiTTcRPKjWd5j4rsxjIgj2ZukgjWavuruZN0lAn7fUQ0aTbfuWG1ps3XBOPtlh1hwHSTbFaC+Mp29AzB8o4aymLyfXxTmYd1hECXt/H+hnzL1BNDKNfK9FocIXWVhswFhiabQyfFYPfg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dIlKqyn1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PeRaqdcVX/jg0uwvK+rVGWjBlvKMwUF3yQFrCgOCNs6Uf1fkFt4n3PgZmX0U2dE6eBTlwH0WL77LjTzlkwm598wr/9nlexqTlkAKWFiAYf5sx24NaqOUp1DXruNwIBVN0bqRxtl0zj7NS1YC8LUcfrFT03ab4jq4mwnDdsljC8Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2jKp9MHT; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dIlKqyn1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F3A2C4CEF1;
-	Wed, 28 Jan 2026 15:33:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2jKp9MHT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AFCA1C4CEF1;
+	Wed, 28 Jan 2026 15:33:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1769614393;
-	bh=f9JynRnRtDieaoSsnjbCk/AjA1AV++jkeTUL+sNEx+E=;
+	s=korg; t=1769614397;
+	bh=aREihAJPU4TpK4kSrcxH5jLId5z4d+26h2VsRd4+R7c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dIlKqyn1+dA13NtuVfTEcyk8v5cRwmkKSekf9ikQ5jKRUcbaqy/XQJGRrepi+J7E+
-	 HlKuHgbEXHzeporpmSE7QbJIm8nGY+HPdWJU07yZoshVOAUC9QMDOvYnGxHsq9Po0X
-	 NF9aXMdXTmQqQT8GFW2rkBb+pkneMVgIqDCAZ8SU=
+	b=2jKp9MHTLem/Medq88XzzEh5QsJ5z+jWzxoHhnARvSJ+H/p/ZcBGJSG+jLfVEiPXF
+	 /UUpO78rN+COL+nC/RfxfUyadoNa6cl2ORSEA0QiGjU1yMVpwdwd1WSlaljipxLz2A
+	 6A75yi49xEzKFcxBxoOzy0PVY0WyJ2lRntcBMq7k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sibi Sankar <quic_sibis@quicinc.com>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Ulf Hansson <ulf.hansson@linaro.org>,
+	Zhen Chen <chenzhen126@huawei.com>,
+	Xin Long <lucien.xin@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 105/254] dt-bindings: power: rpmpd: Update part number to X1E80100
-Date: Wed, 28 Jan 2026 16:21:21 +0100
-Message-ID: <20260128145348.604414300@linuxfoundation.org>
+Subject: [PATCH 6.6 123/254] sctp: move SCTP_CMD_ASSOC_SHKEY right after SCTP_CMD_PEER_INIT
+Date: Wed, 28 Jan 2026 16:21:39 +0100
+Message-ID: <20260128145349.248419555@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260128145344.698118637@linuxfoundation.org>
 References: <20260128145344.698118637@linuxfoundation.org>
@@ -52,38 +52,99 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sibi Sankar <quic_sibis@quicinc.com>
+From: Xin Long <lucien.xin@gmail.com>
 
-[ Upstream commit 3d123f513af055b4c085b555f9c856bbd7390536 ]
+[ Upstream commit a80c9d945aef55b23b54838334345f20251dad83 ]
 
-There was a recent part number update from SC8380XP to X1E80100 and as
-a result of which the SC8380xp rpmpd bindings introduced is no longer
-correct. Given that it currently has no users, it was agreed that it
-can be updated to the correct part number (X1E80100) without causing
-any binding breakage.
+A null-ptr-deref was reported in the SCTP transmit path when SCTP-AUTH key
+initialization fails:
 
-Signed-off-by: Sibi Sankar <quic_sibis@quicinc.com>
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Link: https://lore.kernel.org/r/20231123100021.10918-2-quic_sibis@quicinc.com
-Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
-Stable-dep-of: 45e1be5ddec9 ("dt-bindings: power: qcom,rpmpd: Add SC8280XP_MXC_AO")
+  ==================================================================
+  KASAN: null-ptr-deref in range [0x0000000000000018-0x000000000000001f]
+  CPU: 0 PID: 16 Comm: ksoftirqd/0 Tainted: G W 6.6.0 #2
+  RIP: 0010:sctp_packet_bundle_auth net/sctp/output.c:264 [inline]
+  RIP: 0010:sctp_packet_append_chunk+0xb36/0x1260 net/sctp/output.c:401
+  Call Trace:
+
+  sctp_packet_transmit_chunk+0x31/0x250 net/sctp/output.c:189
+  sctp_outq_flush_data+0xa29/0x26d0 net/sctp/outqueue.c:1111
+  sctp_outq_flush+0xc80/0x1240 net/sctp/outqueue.c:1217
+  sctp_cmd_interpreter.isra.0+0x19a5/0x62c0 net/sctp/sm_sideeffect.c:1787
+  sctp_side_effects net/sctp/sm_sideeffect.c:1198 [inline]
+  sctp_do_sm+0x1a3/0x670 net/sctp/sm_sideeffect.c:1169
+  sctp_assoc_bh_rcv+0x33e/0x640 net/sctp/associola.c:1052
+  sctp_inq_push+0x1dd/0x280 net/sctp/inqueue.c:88
+  sctp_rcv+0x11ae/0x3100 net/sctp/input.c:243
+  sctp6_rcv+0x3d/0x60 net/sctp/ipv6.c:1127
+
+The issue is triggered when sctp_auth_asoc_init_active_key() fails in
+sctp_sf_do_5_1C_ack() while processing an INIT_ACK. In this case, the
+command sequence is currently:
+
+- SCTP_CMD_PEER_INIT
+- SCTP_CMD_TIMER_STOP (T1_INIT)
+- SCTP_CMD_TIMER_START (T1_COOKIE)
+- SCTP_CMD_NEW_STATE (COOKIE_ECHOED)
+- SCTP_CMD_ASSOC_SHKEY
+- SCTP_CMD_GEN_COOKIE_ECHO
+
+If SCTP_CMD_ASSOC_SHKEY fails, asoc->shkey remains NULL, while
+asoc->peer.auth_capable and asoc->peer.peer_chunks have already been set by
+SCTP_CMD_PEER_INIT. This allows a DATA chunk with auth = 1 and shkey = NULL
+to be queued by sctp_datamsg_from_user().
+
+Since command interpretation stops on failure, no COOKIE_ECHO should been
+sent via SCTP_CMD_GEN_COOKIE_ECHO. However, the T1_COOKIE timer has already
+been started, and it may enqueue a COOKIE_ECHO into the outqueue later. As
+a result, the DATA chunk can be transmitted together with the COOKIE_ECHO
+in sctp_outq_flush_data(), leading to the observed issue.
+
+Similar to the other places where it calls sctp_auth_asoc_init_active_key()
+right after sctp_process_init(), this patch moves the SCTP_CMD_ASSOC_SHKEY
+immediately after SCTP_CMD_PEER_INIT, before stopping T1_INIT and starting
+T1_COOKIE. This ensures that if shared key generation fails, authenticated
+DATA cannot be sent. It also allows the T1_INIT timer to retransmit INIT,
+giving the client another chance to process INIT_ACK and retry key setup.
+
+Fixes: 730fc3d05cd4 ("[SCTP]: Implete SCTP-AUTH parameter processing")
+Reported-by: Zhen Chen <chenzhen126@huawei.com>
+Tested-by: Zhen Chen <chenzhen126@huawei.com>
+Signed-off-by: Xin Long <lucien.xin@gmail.com>
+Link: https://patch.msgid.link/44881224b375aa8853f5e19b4055a1a56d895813.1768324226.git.lucien.xin@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- Documentation/devicetree/bindings/power/qcom,rpmpd.yaml | 1 +
- 1 file changed, 1 insertion(+)
+ net/sctp/sm_statefuns.c | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/Documentation/devicetree/bindings/power/qcom,rpmpd.yaml b/Documentation/devicetree/bindings/power/qcom,rpmpd.yaml
-index 2803f7d568217..2ff246cf8b81d 100644
---- a/Documentation/devicetree/bindings/power/qcom,rpmpd.yaml
-+++ b/Documentation/devicetree/bindings/power/qcom,rpmpd.yaml
-@@ -56,6 +56,7 @@ properties:
-           - qcom,sm8450-rpmhpd
-           - qcom,sm8550-rpmhpd
-           - qcom,sm8650-rpmhpd
-+          - qcom,x1e80100-rpmhpd
-       - items:
-           - enum:
-               - qcom,msm8937-rpmpd
+diff --git a/net/sctp/sm_statefuns.c b/net/sctp/sm_statefuns.c
+index cd18b22b2bbae..e0e626dc79535 100644
+--- a/net/sctp/sm_statefuns.c
++++ b/net/sctp/sm_statefuns.c
+@@ -602,6 +602,11 @@ enum sctp_disposition sctp_sf_do_5_1C_ack(struct net *net,
+ 	sctp_add_cmd_sf(commands, SCTP_CMD_PEER_INIT,
+ 			SCTP_PEER_INIT(initchunk));
+ 
++	/* SCTP-AUTH: generate the association shared keys so that
++	 * we can potentially sign the COOKIE-ECHO.
++	 */
++	sctp_add_cmd_sf(commands, SCTP_CMD_ASSOC_SHKEY, SCTP_NULL());
++
+ 	/* Reset init error count upon receipt of INIT-ACK.  */
+ 	sctp_add_cmd_sf(commands, SCTP_CMD_INIT_COUNTER_RESET, SCTP_NULL());
+ 
+@@ -616,11 +621,6 @@ enum sctp_disposition sctp_sf_do_5_1C_ack(struct net *net,
+ 	sctp_add_cmd_sf(commands, SCTP_CMD_NEW_STATE,
+ 			SCTP_STATE(SCTP_STATE_COOKIE_ECHOED));
+ 
+-	/* SCTP-AUTH: generate the association shared keys so that
+-	 * we can potentially sign the COOKIE-ECHO.
+-	 */
+-	sctp_add_cmd_sf(commands, SCTP_CMD_ASSOC_SHKEY, SCTP_NULL());
+-
+ 	/* 5.1 C) "A" shall then send the State Cookie received in the
+ 	 * INIT ACK chunk in a COOKIE ECHO chunk, ...
+ 	 */
 -- 
 2.51.0
 
