@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D9C12C237E;
-	Wed, 28 Jan 2026 15:36:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD7722D5408;
+	Wed, 28 Jan 2026 15:36:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769614566; cv=none; b=mVAT3nVnOj1YH7jbC4nsZypIIXcey9qAkXz364Gwj8+0tzGAqhUy4GjmHMeEMhB3T34H44Ar/bZwVSQjIQLBJZJELUQHzzAEuUO4iN1bo0mHs+UP8djOGwDMFaG0ISzjK0ugsiJ2gtBezXh+KhhSLBlpZJ8o8lg+9L+zQjxu/vU=
+	t=1769614568; cv=none; b=J0aB6BN76bBnZKk1F0MWAQZ96gC0nQ/DRc5dUoWoAi3C/s5coRNPdTqRP+xwuS3MbxKS28yX8Dk6w3WkBc04xmkfU5d/8MDFUTRzBiLFgsPS1Ad5WhOnW1Kr44+wiqVj5nBUFH1Dk/7RhXNCIEWTBE6AWu4Lr1CCXOHnj70afSM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769614566; c=relaxed/simple;
-	bh=yU3nvLOaXAXnR/QFYVJkuuJzdmMTJrvqiQiO+1X+c6Q=;
+	s=arc-20240116; t=1769614568; c=relaxed/simple;
+	bh=xQOaN3km35MXAgeRRMpHSg9T5fh0Urj16K9bnknSOiw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aIxSK0A55Edf/PwiqtSduHQZFs9cYtdiBrMqpMjRuyB78OfdHDtNoL+yFJAUExoh3Xy1T+01ncLGgFsIsDgj4xdDHswB+SP3ikz2bya1IYCDAmjO9gEBR/TqzMyadvJwTJn7w0WTnGuo42XkSVDyBpfA6k0PoC+XcrIUGVi003I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nwwnWb4D; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tMslprQYBxrEL7xKcYwUL5w+UNkLqAMi1DEvngq3y0EkMe2Kadcj0uXMpX6VNSxHrzmYc/LkX0hadjk/BXDFiyKF+L+QCs5f34+EMAZniWsB8qNBOAl6zjnLZl99dDr5hC+/O7ees2/Ac4CKTw+mmSCfRoRUwzehUh4a8L2dUe0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AKPGjjQn; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nwwnWb4D"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 57E8DC4CEF1;
-	Wed, 28 Jan 2026 15:36:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AKPGjjQn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 40D18C4CEF1;
+	Wed, 28 Jan 2026 15:36:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1769614565;
-	bh=yU3nvLOaXAXnR/QFYVJkuuJzdmMTJrvqiQiO+1X+c6Q=;
+	s=korg; t=1769614568;
+	bh=xQOaN3km35MXAgeRRMpHSg9T5fh0Urj16K9bnknSOiw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nwwnWb4D4k9Zt9LDR0wQjW2aCDUV0nKAlzVQt1kZx3AN7UzXA0RNfaFjJPxgxgMg6
-	 Z4nfakMwhVW6eTDiEq5lEvZTRAofqrE4sEIFRIVWIEC3wPIrsIv5lQ3emr72lttLsE
-	 tJWP1+wURwbMblvUSmh3lrOgm1RpWSV/B1Dg0V9Y=
+	b=AKPGjjQnwKe4748UNJxcdGE+Tg29RyuuSL1YUmcGtUk0/Bftx+J8PZRNCQxWABYuj
+	 OPqvTUsmkO4TlLwIIlw1LI1gBCsnJHfgtoMC/pEkZXdptwT+fg9Xl37RF25Cjhpwwn
+	 MsoppP8inba7t5sz0/tBw1YhAIZ9M8iEP6B8jIGI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Abdun Nihaal <nihaal@cse.iitm.ac.in>,
-	Juergen Gross <jgross@suse.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>
-Subject: [PATCH 6.6 143/254] scsi: xen: scsiback: Fix potential memory leak in scsiback_remove()
-Date: Wed, 28 Jan 2026 16:21:59 +0100
-Message-ID: <20260128145349.961528019@linuxfoundation.org>
+	Shawn Lin <shawn.lin@rock-chips.com>,
+	Dragan Simic <dsimic@manjaro.org>,
+	Geraldo Nascimento <geraldogabriel@gmail.com>,
+	Heiko Stuebner <heiko@sntech.de>
+Subject: [PATCH 6.6 144/254] arm64: dts: rockchip: remove dangerous max-link-speed from helios64
+Date: Wed, 28 Jan 2026 16:22:00 +0100
+Message-ID: <20260128145349.996954674@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260128145344.698118637@linuxfoundation.org>
 References: <20260128145344.698118637@linuxfoundation.org>
@@ -51,35 +52,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Abdun Nihaal <nihaal@cse.iitm.ac.in>
+From: Geraldo Nascimento <geraldogabriel@gmail.com>
 
-commit 901a5f309daba412e2a30364d7ec1492fa11c32c upstream.
+commit 0368e4afcf20f377c81fa77b1c7d0dee4a625a44 upstream.
 
-Memory allocated for struct vscsiblk_info in scsiback_probe() is not
-freed in scsiback_remove() leading to potential memory leaks on remove,
-as well as in the scsiback_probe() error paths. Fix that by freeing it
-in scsiback_remove().
+Shawn Lin from Rockchip strongly discourages attempts to use their
+RK3399 PCIe core at 5.0 GT/s speed, citing concerns about catastrophic
+failures that may happen. Even if the odds are low, drop from last user
+of this non-default property for the RK3399 platform, helios64 board
+dts.
 
+Fixes: 755fff528b1b ("arm64: dts: rockchip: add variables for pcie completion to helios64")
+Link: https://lore.kernel.org/all/e8524bf8-a90c-423f-8a58-9ef05a3db1dd@rock-chips.com/
 Cc: stable@vger.kernel.org
-Fixes: d9d660f6e562 ("xen-scsiback: Add Xen PV SCSI backend driver")
-Signed-off-by: Abdun Nihaal <nihaal@cse.iitm.ac.in>
-Reviewed-by: Juergen Gross <jgross@suse.com>
-Link: https://patch.msgid.link/20251223063012.119035-1-nihaal@cse.iitm.ac.in
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Reported-by: Shawn Lin <shawn.lin@rock-chips.com>
+Reviewed-by: Dragan Simic <dsimic@manjaro.org>
+Signed-off-by: Geraldo Nascimento <geraldogabriel@gmail.com>
+Acked-by: Shawn Lin <shawn.lin@rock-chips.com>
+Link: https://patch.msgid.link/43bb639c120f599106fca2deee6c6599b2692c5c.1763415706.git.geraldogabriel@gmail.com
+Signed-off-by: Heiko Stuebner <heiko@sntech.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/xen/xen-scsiback.c |    1 +
- 1 file changed, 1 insertion(+)
+ arch/arm64/boot/dts/rockchip/rk3399-kobol-helios64.dts |    1 -
+ 1 file changed, 1 deletion(-)
 
---- a/drivers/xen/xen-scsiback.c
-+++ b/drivers/xen/xen-scsiback.c
-@@ -1262,6 +1262,7 @@ static void scsiback_remove(struct xenbu
- 	gnttab_page_cache_shrink(&info->free_pages, 0);
+--- a/arch/arm64/boot/dts/rockchip/rk3399-kobol-helios64.dts
++++ b/arch/arm64/boot/dts/rockchip/rk3399-kobol-helios64.dts
+@@ -427,7 +427,6 @@
  
- 	dev_set_drvdata(&dev->dev, NULL);
-+	kfree(info);
- }
- 
- static int scsiback_probe(struct xenbus_device *dev,
+ &pcie0 {
+ 	ep-gpios = <&gpio2 RK_PD4 GPIO_ACTIVE_HIGH>;
+-	max-link-speed = <2>;
+ 	num-lanes = <2>;
+ 	pinctrl-names = "default";
+ 	status = "okay";
 
 
