@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2DEC92857CD;
-	Wed, 28 Jan 2026 15:57:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6DF7D3081BA;
+	Wed, 28 Jan 2026 15:57:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769615821; cv=none; b=poBAuA78YCkPfO+/aY8cjPzvtK6fv61pIQPhuLq6giq6TJJzbnq2eZQVSyoSrnRtxM/e3TQjRDIHr11RyHr+EtL0tLrSfMTaku9Tm8d++HKePgfjKK5pMscaeU5ngncTH6pHDGrbetPI9KdjmKSxJpDX07DLmJahIsxYiGXHH58=
+	t=1769615824; cv=none; b=F0pMQHpd3iFnURBRz0fpGRPzvlIrzxu/PMU/KNDrX76jzLHfZNbeLJWHf0zH4chiVAZcla1f4p8Tq6LP1r5d3TumxmrrcNVj0kt0ym2+NWLD4e+9Jj8GROIkP5zeUeoe7O1Hyi3pl9LMMYoMEWCs6LZ/UpSIJcJGs/o0ruTCEE4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769615821; c=relaxed/simple;
-	bh=dV0sB9IRBK2jnS6D7m9A2tqND8LvOazw2Db/RyEmKEc=;
+	s=arc-20240116; t=1769615824; c=relaxed/simple;
+	bh=ElKQek7G97kSRJgqa0curSLAnQw7f7+MjM/YrQ5Aiwk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=qZ/+veWfFaY0XAlhj/6DDFW4VhgWxhzlk2pf3CWlzf6QouN3e2DC1WS8yqdvwe4iq3jixyJlzcQt3s8vb8xmv/ySwfv2h+wkq3Ho/CA9KuGsUIZOwHKj4jEw+rHF+nzLnYSbXGpvwYXxcc7C8vVkP7EqK9caxQTc1FzoApk5Btw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=G68/mu22; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pFygA6dSlDBHtf2iBMve0WcZgYzL6Jld0egMdsGxCisaexxlqxgKCLHYYm+2L31hx48zjgYX1NpBODnZ9DOO4mytUT8cCQMQRNzkOiBvgn3V/tNTitcyh1xJW0RUcqm8QY3EODA+77E0mS/a+1upkmc1vBgZ1k6MpOrMUz6RwBg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nf7fD37m; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="G68/mu22"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4DF97C4CEF1;
-	Wed, 28 Jan 2026 15:57:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nf7fD37m"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91A21C4CEF1;
+	Wed, 28 Jan 2026 15:57:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1769615820;
-	bh=dV0sB9IRBK2jnS6D7m9A2tqND8LvOazw2Db/RyEmKEc=;
+	s=korg; t=1769615824;
+	bh=ElKQek7G97kSRJgqa0curSLAnQw7f7+MjM/YrQ5Aiwk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=G68/mu221hKMQmx10G6IyTNMRQP2ejIwhJbeW+HboFrMX5mWKz9u6gMpuc1qLr25J
-	 h8TAlGhU7OrIbq2u3V5qPfhfCzw5EOY/a8OxiLPukcmW1vF2PMkRNyfcftIVnjB2Wo
-	 LlO31YhYvekzVHB6RQWsB6BPlxoUpanoqpVsCLlc=
+	b=nf7fD37mSVdJXAx8hzp9BWmvVUVNXMgrezvrSTm0Cy8dzLTeUbE52HtWaSRFkdnHm
+	 cZOa8Tqmo67CPqlgDG8/8PsDecVqJx1vp45Xc65UvLRNAxu10Kf+wE3YZlRVmGCvL9
+	 4GGPWDcpZLIx2YNmiI6mR/h66hRQdTmoQb+bqNi0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Seamus Connor <sconnor@purestorage.com>,
-	Caleb Sander Mateos <csander@purestorage.com>,
 	Ming Lei <ming.lei@redhat.com>,
 	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 123/227] ublk: fix ublksrv pid handling for pid namespaces
-Date: Wed, 28 Jan 2026 16:22:48 +0100
-Message-ID: <20260128145348.890561976@linuxfoundation.org>
+Subject: [PATCH 6.18 124/227] selftests/ublk: fix IO thread idle check
+Date: Wed, 28 Jan 2026 16:22:49 +0100
+Message-ID: <20260128145348.926181049@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260128145344.331957407@linuxfoundation.org>
 References: <20260128145344.331957407@linuxfoundation.org>
@@ -47,127 +45,41 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Seamus Connor <sconnor@purestorage.com>
+From: Ming Lei <ming.lei@redhat.com>
 
-[ Upstream commit 47bdf1d29caec7207b7f112230055db36602dfc0 ]
+[ Upstream commit 75aad5ffe099a1b1a342257236dc260493917ed2 ]
 
-When ublksrv runs inside a pid namespace, START/END_RECOVERY compared
-the stored init-ns tgid against the userspace pid (getpid vnr), so the
-check failed and control ops could not proceed. Compare against the
-caller’s init-ns tgid and store that value, then translate it back to
-the caller’s pid namespace when reporting GET_DEV_INFO so ublk list
-shows a sensible pid.
+Include cmd_inflight in ublk_thread_is_done() check. Without this,
+the thread may exit before all FETCH commands are completed, which
+may cause device deletion to hang.
 
-Testing: start/recover in a pid namespace; `ublk list` shows
-reasonable pid values in init, child, and sibling namespaces.
-
-Fixes: c2c8089f325e ("ublk: validate ublk server pid")
-Signed-off-by: Seamus Connor <sconnor@purestorage.com>
-Reviewed-by: Caleb Sander Mateos <csander@purestorage.com>
-Reviewed-by: Ming Lei <ming.lei@redhat.com>
+Fixes: 6aecda00b7d1 ("selftests: ublk: add kernel selftests for ublk")
+Signed-off-by: Ming Lei <ming.lei@redhat.com>
 Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/block/ublk_drv.c | 39 ++++++++++++++++++++++++++++++++++-----
- 1 file changed, 34 insertions(+), 5 deletions(-)
+ tools/testing/selftests/ublk/kublk.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/block/ublk_drv.c b/drivers/block/ublk_drv.c
-index e09c1b5999b75..4b6d7b785d7b3 100644
---- a/drivers/block/ublk_drv.c
-+++ b/drivers/block/ublk_drv.c
-@@ -2954,6 +2954,15 @@ static struct ublk_device *ublk_get_device_from_id(int idx)
- 	return ub;
+diff --git a/tools/testing/selftests/ublk/kublk.c b/tools/testing/selftests/ublk/kublk.c
+index 6b8123c12a7ae..0e863d13eaee4 100644
+--- a/tools/testing/selftests/ublk/kublk.c
++++ b/tools/testing/selftests/ublk/kublk.c
+@@ -718,7 +718,7 @@ static int ublk_thread_is_idle(struct ublk_thread *t)
+ 
+ static int ublk_thread_is_done(struct ublk_thread *t)
+ {
+-	return (t->state & UBLKS_T_STOPPING) && ublk_thread_is_idle(t);
++	return (t->state & UBLKS_T_STOPPING) && ublk_thread_is_idle(t) && !t->cmd_inflight;
  }
  
-+static bool ublk_validate_user_pid(struct ublk_device *ub, pid_t ublksrv_pid)
-+{
-+	rcu_read_lock();
-+	ublksrv_pid = pid_nr(find_vpid(ublksrv_pid));
-+	rcu_read_unlock();
-+
-+	return ub->ublksrv_tgid == ublksrv_pid;
-+}
-+
- static int ublk_ctrl_start_dev(struct ublk_device *ub,
- 		const struct ublksrv_ctrl_cmd *header)
- {
-@@ -3022,7 +3031,7 @@ static int ublk_ctrl_start_dev(struct ublk_device *ub,
- 	if (wait_for_completion_interruptible(&ub->completion) != 0)
- 		return -EINTR;
- 
--	if (ub->ublksrv_tgid != ublksrv_pid)
-+	if (!ublk_validate_user_pid(ub, ublksrv_pid))
- 		return -EINVAL;
- 
- 	mutex_lock(&ub->mutex);
-@@ -3041,7 +3050,7 @@ static int ublk_ctrl_start_dev(struct ublk_device *ub,
- 	disk->fops = &ub_fops;
- 	disk->private_data = ub;
- 
--	ub->dev_info.ublksrv_pid = ublksrv_pid;
-+	ub->dev_info.ublksrv_pid = ub->ublksrv_tgid;
- 	ub->ub_disk = disk;
- 
- 	ublk_apply_params(ub);
-@@ -3389,12 +3398,32 @@ static int ublk_ctrl_stop_dev(struct ublk_device *ub)
- static int ublk_ctrl_get_dev_info(struct ublk_device *ub,
- 		const struct ublksrv_ctrl_cmd *header)
- {
-+	struct task_struct *p;
-+	struct pid *pid;
-+	struct ublksrv_ctrl_dev_info dev_info;
-+	pid_t init_ublksrv_tgid = ub->dev_info.ublksrv_pid;
- 	void __user *argp = (void __user *)(unsigned long)header->addr;
- 
- 	if (header->len < sizeof(struct ublksrv_ctrl_dev_info) || !header->addr)
- 		return -EINVAL;
- 
--	if (copy_to_user(argp, &ub->dev_info, sizeof(ub->dev_info)))
-+	memcpy(&dev_info, &ub->dev_info, sizeof(dev_info));
-+	dev_info.ublksrv_pid = -1;
-+
-+	if (init_ublksrv_tgid > 0) {
-+		rcu_read_lock();
-+		pid = find_pid_ns(init_ublksrv_tgid, &init_pid_ns);
-+		p = pid_task(pid, PIDTYPE_TGID);
-+		if (p) {
-+			int vnr = task_tgid_vnr(p);
-+
-+			if (vnr)
-+				dev_info.ublksrv_pid = vnr;
-+		}
-+		rcu_read_unlock();
-+	}
-+
-+	if (copy_to_user(argp, &dev_info, sizeof(dev_info)))
- 		return -EFAULT;
- 
- 	return 0;
-@@ -3539,7 +3568,7 @@ static int ublk_ctrl_end_recovery(struct ublk_device *ub,
- 	pr_devel("%s: All FETCH_REQs received, dev id %d\n", __func__,
- 		 header->dev_id);
- 
--	if (ub->ublksrv_tgid != ublksrv_pid)
-+	if (!ublk_validate_user_pid(ub, ublksrv_pid))
- 		return -EINVAL;
- 
- 	mutex_lock(&ub->mutex);
-@@ -3550,7 +3579,7 @@ static int ublk_ctrl_end_recovery(struct ublk_device *ub,
- 		ret = -EBUSY;
- 		goto out_unlock;
- 	}
--	ub->dev_info.ublksrv_pid = ublksrv_pid;
-+	ub->dev_info.ublksrv_pid = ub->ublksrv_tgid;
- 	ub->dev_info.state = UBLK_S_DEV_LIVE;
- 	pr_devel("%s: new ublksrv_pid %d, dev id %d\n",
- 			__func__, ublksrv_pid, header->dev_id);
+ static inline void ublksrv_handle_tgt_cqe(struct ublk_thread *t,
 -- 
 2.51.0
 
