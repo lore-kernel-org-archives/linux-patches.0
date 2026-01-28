@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4E7F2DF155;
-	Wed, 28 Jan 2026 15:49:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22B1A27FD4A;
+	Wed, 28 Jan 2026 15:49:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769615375; cv=none; b=HacMHjYc+X07JaIynHJiaZPJKb6TwX4a99ITw9H1QGd4NI+IlRlQ9umaDG6ds9SwHpQKOTPWq1sogCrj53MxHWPJJWe9OpZaa/zX/nSC/8J1KynyNj8xeHv9ydsTlsY2ZOazs+N68HrtlimUjrYEzWXQPfqvhp4abXT2InwTT/w=
+	t=1769615378; cv=none; b=k3vLTqtTDyshCL2iTO/5I8fhsgi25i0MxuqcF5KjG6DugnOgogZTyPNpr3REOoniEJTBjngU1+nB/hQwgL81bITR9t3erQ9eQUf1E37Jt/DE//djCCUs6UWXh/MkZ5UEa5FDlMZnD+muEN7t4OqheaBAsnl7nVWvBhxnxv53eoQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769615375; c=relaxed/simple;
-	bh=nBdQrDcebKOccqvNRfOSUphHsWjV4QfzKTtcwQYqZTY=;
+	s=arc-20240116; t=1769615378; c=relaxed/simple;
+	bh=8VF/3oDm5oCyfIcKNvV1ojQk2hLqqnygG7FZDMQuR7g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JakIQAiP94n6asSVM5j2wq/asHCeat5PYOHpLBILdRTewHgsBa8H+No2h5hGvdegMXe+LzaDdMqbIZOkr5Ts5ovoUF0wh17mArpYAXvcw40YAEnNiGfhuH5RMATYppHQvgnwolZ/+BV2hPocDwOPB+4NJsoXJgYESGNl6vWC1E0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BYDNR+AF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Uj3yPB3/bOLbUQEJa1dHXXijYNjqKtr/fHb25LJT8Z5q5eaQQ92Km7DhO/Obvnuz5gEmMxlVYX5WV4wTrPO7ZEbczMURZzFSZNaa+Ud7xI7Lo33pXEwoTO2BAtvgEc4CbtmXbE41MurayTaZjruyYDL6pVh6NMt0SIN32DB4uHA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CkzV7JKc; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BYDNR+AF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10AF1C4CEF1;
-	Wed, 28 Jan 2026 15:49:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CkzV7JKc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 68681C4CEF1;
+	Wed, 28 Jan 2026 15:49:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1769615374;
-	bh=nBdQrDcebKOccqvNRfOSUphHsWjV4QfzKTtcwQYqZTY=;
+	s=korg; t=1769615377;
+	bh=8VF/3oDm5oCyfIcKNvV1ojQk2hLqqnygG7FZDMQuR7g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BYDNR+AF5zDaeBBfXHPIM2aiGBRNyOIh++SRBO7PtrFC2KgX3u9QV9Jl1/S1GFsZo
-	 RVJmxBStcjhcEGRIlI+MerT5FpwRwS8+ZxemZA2L+ELXVLlXOhqcLLB+KH09jX8d/0
-	 sDZOxGyBtqBzARu+Ok5D7ZfjWSzuC1qmHL7ceisc=
+	b=CkzV7JKcgloiFepX4BZLlR2DE1ZAirJ6P+Q5Hey2kOzDh/HmXIL7Wxy1mhhVb/fVs
+	 fk8bMibNQfWJpdv0TxMq4mRk9ElrIf7ykqKOXSh0DDVt+jZ2wJVaoUNAtpMzSXQyct
+	 eGhC0iSWHdGh6kPJoZjYgsUihuBrLQrtUd0vogzs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	P Praneesh <quic_ppranees@quicinc.com>,
-	Kang Yang <quic_kangyang@quicinc.com>,
-	Kalle Valo <kvalo@kernel.org>,
-	Jeff Johnson <quic_jjohnson@quicinc.com>,
-	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
-	Li hongliang <1468888505@139.com>
-Subject: [PATCH 6.12 161/169] wifi: ath11k: fix RCU stall while reaping monitor destination ring
-Date: Wed, 28 Jan 2026 16:24:04 +0100
-Message-ID: <20260128145339.812548350@linuxfoundation.org>
+	"kernel-dev@igalia.com, Heitor Alves de Siqueira" <halves@igalia.com>,
+	Stefano Garzarella <sgarzare@redhat.com>,
+	Will Deacon <will@kernel.org>,
+	"Michael S. Tsirkin" <mst@redhat.com>,
+	Heitor Alves de Siqueira <halves@igalia.com>
+Subject: [PATCH 6.12 162/169] vsock/virtio: Move length check to callers of virtio_vsock_skb_rx_put()
+Date: Wed, 28 Jan 2026 16:24:05 +0100
+Message-ID: <20260128145339.850587479@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260128145334.006287341@linuxfoundation.org>
 References: <20260128145334.006287341@linuxfoundation.org>
@@ -54,61 +53,79 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: P Praneesh <quic_ppranees@quicinc.com>
+From: Will Deacon <will@kernel.org>
 
-[ Upstream commit 16c6c35c03ea73054a1f6d3302a4ce4a331b427d ]
+[Upstream commit 87dbae5e36613a6020f3d64a2eaeac0a1e0e6dc6]
 
-While processing the monitor destination ring, MSDUs are reaped from the
-link descriptor based on the corresponding buf_id.
+virtio_vsock_skb_rx_put() only calls skb_put() if the length in the
+packet header is not zero even though skb_put() handles this case
+gracefully.
 
-However, sometimes the driver cannot obtain a valid buffer corresponding
-to the buf_id received from the hardware. This causes an infinite loop
-in the destination processing, resulting in a kernel crash.
+Remove the functionally redundant check from virtio_vsock_skb_rx_put()
+and, on the assumption that this is a worthwhile optimisation for
+handling credit messages, augment the existing length checks in
+virtio_transport_rx_work() to elide the call for zero-length payloads.
+Since the callers all have the length, extend virtio_vsock_skb_rx_put()
+to take it as an additional parameter rather than fish it back out of
+the packet header.
 
-kernel log:
-ath11k_pci 0000:58:00.0: data msdu_pop: invalid buf_id 309
-ath11k_pci 0000:58:00.0: data dp_rx_monitor_link_desc_return failed
-ath11k_pci 0000:58:00.0: data msdu_pop: invalid buf_id 309
-ath11k_pci 0000:58:00.0: data dp_rx_monitor_link_desc_return failed
+Note that the vhost code already has similar logic in
+vhost_vsock_alloc_skb().
 
-Fix this by skipping the problematic buf_id and reaping the next entry,
-replacing the break with the next MSDU processing.
-
-Tested-on: WCN6855 hw2.0 PCI WLAN.HSP.1.1-03125-QCAHSPSWPL_V1_V2_SILICONZ_LITE-3.6510.30
-Tested-on: QCN9074 hw1.0 PCI WLAN.HK.2.7.0.1-01744-QCAHKSWPL_SILICONZ-1
-
-Fixes: d5c65159f289 ("ath11k: driver for Qualcomm IEEE 802.11ax devices")
-Signed-off-by: P Praneesh <quic_ppranees@quicinc.com>
-Signed-off-by: Kang Yang <quic_kangyang@quicinc.com>
-Acked-by: Kalle Valo <kvalo@kernel.org>
-Acked-by: Jeff Johnson <quic_jjohnson@quicinc.com>
-Link: https://patch.msgid.link/20241219110531.2096-2-quic_kangyang@quicinc.com
-Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
-Signed-off-by: Li hongliang <1468888505@139.com>
+Reviewed-by: Stefano Garzarella <sgarzare@redhat.com>
+Signed-off-by: Will Deacon <will@kernel.org>
+Message-Id: <20250717090116.11987-4-will@kernel.org>
+Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+Signed-off-by: Heitor Alves de Siqueira <halves@igalia.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wireless/ath/ath11k/dp_rx.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/vhost/vsock.c            |    2 +-
+ include/linux/virtio_vsock.h     |    9 ++-------
+ net/vmw_vsock/virtio_transport.c |    4 +++-
+ 3 files changed, 6 insertions(+), 9 deletions(-)
 
---- a/drivers/net/wireless/ath/ath11k/dp_rx.c
-+++ b/drivers/net/wireless/ath/ath11k/dp_rx.c
-@@ -4777,7 +4777,7 @@ ath11k_dp_rx_mon_mpdu_pop(struct ath11k
- 			if (!msdu) {
- 				ath11k_dbg(ar->ab, ATH11K_DBG_DATA,
- 					   "msdu_pop: invalid buf_id %d\n", buf_id);
--				break;
-+				goto next_msdu;
+--- a/drivers/vhost/vsock.c
++++ b/drivers/vhost/vsock.c
+@@ -376,7 +376,7 @@ vhost_vsock_alloc_skb(struct vhost_virtq
+ 		return NULL;
+ 	}
+ 
+-	virtio_vsock_skb_rx_put(skb);
++	virtio_vsock_skb_rx_put(skb, payload_len);
+ 
+ 	nbytes = copy_from_iter(skb->data, payload_len, &iov_iter);
+ 	if (nbytes != payload_len) {
+--- a/include/linux/virtio_vsock.h
++++ b/include/linux/virtio_vsock.h
+@@ -47,14 +47,9 @@ static inline void virtio_vsock_skb_clea
+ 	VIRTIO_VSOCK_SKB_CB(skb)->tap_delivered = false;
+ }
+ 
+-static inline void virtio_vsock_skb_rx_put(struct sk_buff *skb)
++static inline void virtio_vsock_skb_rx_put(struct sk_buff *skb, u32 len)
+ {
+-	u32 len;
+-
+-	len = le32_to_cpu(virtio_vsock_hdr(skb)->len);
+-
+-	if (len > 0)
+-		skb_put(skb, len);
++	skb_put(skb, len);
+ }
+ 
+ static inline struct sk_buff *virtio_vsock_alloc_skb(unsigned int size, gfp_t mask)
+--- a/net/vmw_vsock/virtio_transport.c
++++ b/net/vmw_vsock/virtio_transport.c
+@@ -656,7 +656,9 @@ static void virtio_transport_rx_work(str
+ 				continue;
  			}
- 			rxcb = ATH11K_SKB_RXCB(msdu);
- 			if (!rxcb->unmapped) {
-@@ -5404,7 +5404,7 @@ ath11k_dp_rx_full_mon_mpdu_pop(struct at
- 					   "full mon msdu_pop: invalid buf_id %d\n",
- 					    buf_id);
- 				spin_unlock_bh(&rx_ring->idr_lock);
--				break;
-+				goto next_msdu;
- 			}
- 			idr_remove(&rx_ring->bufs_idr, buf_id);
- 			spin_unlock_bh(&rx_ring->idr_lock);
+ 
+-			virtio_vsock_skb_rx_put(skb);
++			if (payload_len)
++				virtio_vsock_skb_rx_put(skb, payload_len);
++
+ 			virtio_transport_deliver_tap_pkt(skb);
+ 			virtio_transport_recv_pkt(&virtio_transport, skb);
+ 		}
 
 
