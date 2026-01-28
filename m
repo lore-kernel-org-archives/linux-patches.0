@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45A3336D51E;
-	Wed, 28 Jan 2026 15:28:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B192536BCEE;
+	Wed, 28 Jan 2026 15:28:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769614127; cv=none; b=MT6ADUFIlXm8SBbceIBdkrGyftMOgbb6/EVq7I8+sYyid9mZWuOgtlPTvp5BlubuCsuTVn24FD1zEQs8CDqJOUvhgOHSKqtlXxcE7R9Rhgm/Kq+c6pLb9uNuK+EsGpEpv2RcEMtJwMq1aexolzj8BNthyU1tm554zSoL6fwlgrc=
+	t=1769614130; cv=none; b=XYp2H5OU4Ri4W26XFA76BqrpplzL71GlQtcAPLfwopRgLO3gFguXWHHSAMJ7oWXLTVMoV5jaas+kvA32vtyC8x4/n87lG37gpxDCErUXPlbKiWnIHscFijFBb2GRMu/p9c8z1gsOFB+rI+mbE7jUMFBpGLqpCh0nqFVNDPpklfU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769614127; c=relaxed/simple;
-	bh=loMrjhKUaQcAeLQ5ZMFYZYrkYrUGHceg3Ndgg4nHrvY=;
+	s=arc-20240116; t=1769614130; c=relaxed/simple;
+	bh=dAj8H7By3ofVBmElpU/D04y0L5OFHS/VnTJohs60Kks=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Uh10lXLxneNg+Ynhyuj+X1STvSXfKhu3374USC1+u6hcfKSBl4sOEXTGkxGFEJI/CotRImNlEcNAv+eS5/O21w67u1YTDMTz+QA4eniH4i/iR/PQidWyidFOYrETw2pmhX9qEB3l38nYQDoN0aeUSIwqDGwYET/yZTvjhUY4uKw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FpopWN/+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YBh11qYrTAzzjz5U0uLyDwfi+PEMQMxPmRntqQ/LGv23HVhA/4hpIy0NcHp/a54qtQpxPGI7kxIbMVbl9yZbLIrEKHWqCEe/qGMPfgR7xHZEaNTcWDHvijw+xiDpSpfh10X4ngxG//ylbysCqkFcHJOlk3I/+4/einPOQbSet48=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bqFTWGS7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FpopWN/+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B435BC4CEF1;
-	Wed, 28 Jan 2026 15:28:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bqFTWGS7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 302D0C4CEF1;
+	Wed, 28 Jan 2026 15:28:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1769614127;
-	bh=loMrjhKUaQcAeLQ5ZMFYZYrkYrUGHceg3Ndgg4nHrvY=;
+	s=korg; t=1769614130;
+	bh=dAj8H7By3ofVBmElpU/D04y0L5OFHS/VnTJohs60Kks=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FpopWN/+kO6trzSgaxqyTHRnvcdnxLgoqqyoioyFHmUos0Ntkfb/80X/pEQKG8lct
-	 ZjvWJQ+GebWw2Ow7Ln31LiM2VWGBAYT8mfPN1hw3pm1fCmTPOvoouZ8E9ud1vhIcmo
-	 YBWtot0iST1onBVOtBXCdy4ULbF4aMLU1Yw5q0vg=
+	b=bqFTWGS7AXfgai4a9nZ/Df2mZRf4yTgFfY+etoPASXf0cq82zSboa0MVzoW2YkDXD
+	 4U/ClRcYJh6R6fOEdVkvGleabYY+sEPUS+gkjfdt9iJ8aGw0vl2ghG4i3KdeHZn31t
+	 BPsZYkxj4v8ydjk4xwmOztvdAjo75kp3NQVVF4ow=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mario Limonciello <mario.limonciello@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
-	Aurabindo Pillai <aurabindo.pillai@amd.com>,
-	Alex Hung <alex.hung@amd.com>,
-	Rahul Sharma <black.hawk@163.com>
-Subject: [PATCH 6.6 044/254] drm/amd/display: Check dce_hwseq before dereferencing it
-Date: Wed, 28 Jan 2026 16:20:20 +0100
-Message-ID: <20260128145346.287246577@linuxfoundation.org>
+	Brian Kao <powenkao@google.com>,
+	Bart Van Assche <bvanassche@acm.org>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>
+Subject: [PATCH 6.6 045/254] scsi: core: Fix error handler encryption support
+Date: Wed, 28 Jan 2026 16:20:21 +0100
+Message-ID: <20260128145346.323166559@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260128145344.698118637@linuxfoundation.org>
 References: <20260128145344.698118637@linuxfoundation.org>
@@ -53,39 +51,105 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alex Hung <alex.hung@amd.com>
+From: Brian Kao <powenkao@google.com>
 
-commit b669507b637eb6b1aaecf347f193efccc65d756e upstream.
+commit 9a49157deeb23581fc5c8189b486340d7343264a upstream.
 
-[WHAT]
+Some low-level drivers (LLD) access block layer crypto fields, such as
+rq->crypt_keyslot and rq->crypt_ctx within `struct request`, to
+configure hardware for inline encryption.  However, SCSI Error Handling
+(EH) commands (e.g., TEST UNIT READY, START STOP UNIT) should not
+involve any encryption setup.
 
-hws was checked for null earlier in dce110_blank_stream, indicating hws
-can be null, and should be checked whenever it is used.
+To prevent drivers from erroneously applying crypto settings during EH,
+this patch saves the original values of rq->crypt_keyslot and
+rq->crypt_ctx before an EH command is prepared via scsi_eh_prep_cmnd().
+These fields in the 'struct request' are then set to NULL.  The original
+values are restored in scsi_eh_restore_cmnd() after the EH command
+completes.
 
-Cc: Mario Limonciello <mario.limonciello@amd.com>
-Cc: Alex Deucher <alexander.deucher@amd.com>
-Reviewed-by: Aurabindo Pillai <aurabindo.pillai@amd.com>
-Signed-off-by: Alex Hung <alex.hung@amd.com>
-Signed-off-by: Aurabindo Pillai <aurabindo.pillai@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 79db43611ff61280b6de58ce1305e0b2ecf675ad)
+This ensures that the block layer crypto context does not leak into EH
+command execution.
+
+Signed-off-by: Brian Kao <powenkao@google.com>
+Link: https://patch.msgid.link/20251218031726.2642834-1-powenkao@google.com
 Cc: stable@vger.kernel.org
-Signed-off-by: Rahul Sharma <black.hawk@163.com>
+Reviewed-by: Bart Van Assche <bvanassche@acm.org>
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/display/dc/dce110/dce110_hw_sequencer.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/scsi/scsi_error.c |   24 ++++++++++++++++++++++++
+ include/scsi/scsi_eh.h    |    6 ++++++
+ 2 files changed, 30 insertions(+)
 
---- a/drivers/gpu/drm/amd/display/dc/dce110/dce110_hw_sequencer.c
-+++ b/drivers/gpu/drm/amd/display/dc/dce110/dce110_hw_sequencer.c
-@@ -1228,7 +1228,7 @@ void dce110_blank_stream(struct pipe_ctx
- 	struct dce_hwseq *hws = link->dc->hwseq;
+--- a/drivers/scsi/scsi_error.c
++++ b/drivers/scsi/scsi_error.c
+@@ -1039,6 +1039,9 @@ void scsi_eh_prep_cmnd(struct scsi_cmnd
+ 			unsigned char *cmnd, int cmnd_size, unsigned sense_bytes)
+ {
+ 	struct scsi_device *sdev = scmd->device;
++#ifdef CONFIG_BLK_INLINE_ENCRYPTION
++	struct request *rq = scsi_cmd_to_rq(scmd);
++#endif
  
- 	if (link->local_sink && link->local_sink->sink_signal == SIGNAL_TYPE_EDP) {
--		if (!link->skip_implict_edp_power_control)
-+		if (!link->skip_implict_edp_power_control && hws)
- 			hws->funcs.edp_backlight_control(link, false);
- 		link->dc->hwss.set_abm_immediate_disable(pipe_ctx);
- 	}
+ 	/*
+ 	 * We need saved copies of a number of fields - this is because
+@@ -1091,6 +1094,18 @@ void scsi_eh_prep_cmnd(struct scsi_cmnd
+ 			(sdev->lun << 5 & 0xe0);
+ 
+ 	/*
++	 * Encryption must be disabled for the commands submitted by the error handler.
++	 * Hence, clear the encryption context information.
++	 */
++#ifdef CONFIG_BLK_INLINE_ENCRYPTION
++	ses->rq_crypt_keyslot = rq->crypt_keyslot;
++	ses->rq_crypt_ctx = rq->crypt_ctx;
++
++	rq->crypt_keyslot = NULL;
++	rq->crypt_ctx = NULL;
++#endif
++
++	/*
+ 	 * Zero the sense buffer.  The scsi spec mandates that any
+ 	 * untransferred sense data should be interpreted as being zero.
+ 	 */
+@@ -1107,6 +1122,10 @@ EXPORT_SYMBOL(scsi_eh_prep_cmnd);
+  */
+ void scsi_eh_restore_cmnd(struct scsi_cmnd* scmd, struct scsi_eh_save *ses)
+ {
++#ifdef CONFIG_BLK_INLINE_ENCRYPTION
++	struct request *rq = scsi_cmd_to_rq(scmd);
++#endif
++
+ 	/*
+ 	 * Restore original data
+ 	 */
+@@ -1119,6 +1138,11 @@ void scsi_eh_restore_cmnd(struct scsi_cm
+ 	scmd->underflow = ses->underflow;
+ 	scmd->prot_op = ses->prot_op;
+ 	scmd->eh_eflags = ses->eh_eflags;
++
++#ifdef CONFIG_BLK_INLINE_ENCRYPTION
++	rq->crypt_keyslot = ses->rq_crypt_keyslot;
++	rq->crypt_ctx = ses->rq_crypt_ctx;
++#endif
+ }
+ EXPORT_SYMBOL(scsi_eh_restore_cmnd);
+ 
+--- a/include/scsi/scsi_eh.h
++++ b/include/scsi/scsi_eh.h
+@@ -41,6 +41,12 @@ struct scsi_eh_save {
+ 	unsigned char cmnd[32];
+ 	struct scsi_data_buffer sdb;
+ 	struct scatterlist sense_sgl;
++
++	/* struct request fields */
++#ifdef CONFIG_BLK_INLINE_ENCRYPTION
++	struct bio_crypt_ctx *rq_crypt_ctx;
++	struct blk_crypto_keyslot *rq_crypt_keyslot;
++#endif
+ };
+ 
+ extern void scsi_eh_prep_cmnd(struct scsi_cmnd *scmd,
 
 
