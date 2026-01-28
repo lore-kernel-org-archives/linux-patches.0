@@ -1,35 +1,35 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EBA9E27FB2B;
-	Wed, 28 Jan 2026 14:27:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E496E2FD69D;
+	Wed, 28 Jan 2026 14:28:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769610425; cv=none; b=sgz1kiJEVkZte+FOECjR6BzhCvEdZFatrWm36wkn3r2kqL9uXm59zdQM29IAPWi+6K5npD5bz72JVrikcTbaF1S0HeAAs07OGURYNWW+zf2SQwUaeuX+t6vJSGS/fHWknHRk04mESAKkBIDH04W6lZhbsJm5OdNh2XsnLzrlK3M=
+	t=1769610491; cv=none; b=pP+KpVkjzOLR6jHTIaDDbdaNc2nD6fx7p/zCXpquTAxiSyi6XP+Iu8KYQ/S5cOj9be1Ce3O8k0n/fBEQhtCby2M1iIX8Xclkrqa71wZ/wD4GueAd3qSnRAozggAbfrWXSfuvMXwXt9lrz0N9nm9ihiJgQolwWN8jfZJhvDznJ/4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769610425; c=relaxed/simple;
-	bh=QncIyzcuS9hlmDGq0+O3nDSGEllt9myeHiPmqnuj5oU=;
+	s=arc-20240116; t=1769610491; c=relaxed/simple;
+	bh=1WCZIz4NVeFZCPEUxHK9MUoHvK2FlpVFyz2KGheqczQ=;
 	h=Subject:To:Cc:From:Date:In-Reply-To:Message-ID:MIME-Version:
-	 Content-Type; b=L0f/GwKu2gqj/JojiOAWLb6wgmV8Fiea+t/0CYIEeuU7nV22xwG9L98lmI+JzQDQgiIZ747LV90lmtRfHMMUmIOtg4AHsW5MSO/H5iRTzXasc+IRXv8JPD9l5cDaiiPkXXvdEjfpn8iJ+DoNaGMmrIy2c2+iwq+5rmtPNqfGyBU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jdeyTA/o; arc=none smtp.client-ip=10.30.226.201
+	 Content-Type; b=OExlxSDIm2pYuUlZ/gOlt0jhrwxaP3yaKvOVndVEUscN0BnePrLhob+HC0Xo33cENlFcv9t+ffb0QBR14SjBQYKIBX1nvpz7NLhq+tztpuQKaVOnOHuKrR+UY14VKcQ61Y1r+DaQ7jpiDG+6LwQlxPc5Mahi7PnK75Eyw0/mi/k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UN9poeLC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jdeyTA/o"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2AB33C4CEF1;
-	Wed, 28 Jan 2026 14:27:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UN9poeLC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0423C4CEF1;
+	Wed, 28 Jan 2026 14:28:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1769610424;
-	bh=QncIyzcuS9hlmDGq0+O3nDSGEllt9myeHiPmqnuj5oU=;
+	s=korg; t=1769610490;
+	bh=1WCZIz4NVeFZCPEUxHK9MUoHvK2FlpVFyz2KGheqczQ=;
 	h=Subject:To:Cc:From:Date:In-Reply-To:From;
-	b=jdeyTA/okZcsYHTc0MbLCQQyf2OSOOTtvhAwyvOJFnCl0b39qPmui4YTPA44/QUgP
-	 OjBXmUb27UX6o0qUA5eANSCGAhETMZDMOH76RZ9jDo+Qx8tlvULY50EgC75OwY/1iD
-	 cQrdb7uZB2I6cgm02E/3cXCrIA5l76100+oRHgIE=
-Subject: Patch "ksmbd: fix use-after-free in ksmbd_session_rpc_open" has been added to the 6.6-stable tree
-To: 1468888505@139.com,gregkh@linuxfoundation.org,linkinjeon@kernel.org,norbert@doyensec.com,patches@lists.linux.dev,sashal@kernel.org,senozhatsky@chromium.org,sfrench@samba.org,stfrench@microsoft.com,sujana.subramaniam@sap.com,tom@talpey.com
+	b=UN9poeLCu93Ci3vvVkAFLJHVIxPfSPixeA+40nSc/jGx3uGADms9G4gYKjIRbWtuQ
+	 AEfZrlA/apPw1NioCM8BCzMHPyHH5dysZD9cVGk+5d0gSlqycXOkdK/7ZklnloKN5Q
+	 PWeowXa/HXsiAU9GcGmEVTiv0cWtoJ0BU/1n1OR8=
+Subject: Patch "wifi: ath11k: fix RCU stall while reaping monitor destination ring" has been added to the 6.6-stable tree
+To: 1468888505@139.com,ath11k@lists.infradead.org,gregkh@linuxfoundation.org,jeff.johnson@oss.qualcomm.com,jjohnson@kernel.org,julia.lawall@lip6.fr,kvalo@kernel.org,patches@lists.linux.dev,quic_jjohnson@quicinc.com,quic_kangyang@quicinc.com,quic_msinada@quicinc.com,quic_ppranees@quicinc.com,quic_pradeepc@quicinc.com,rmanohar@codeaurora.org
 Cc: <stable-commits@vger.kernel.org>
 From: <gregkh@linuxfoundation.org>
-Date: Wed, 28 Jan 2026 15:24:55 +0100
-In-Reply-To: <20260127083149.3344689-1-1468888505@139.com>
-Message-ID: <2026012855-goldmine-likeness-94ce@gregkh>
+Date: Wed, 28 Jan 2026 15:24:57 +0100
+In-Reply-To: <20260128032715.1183385-1-1468888505@139.com>
+Message-ID: <2026012857-mystified-relenting-368c@gregkh>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -44,138 +44,83 @@ X-Patchwork-Hint: ignore
 
 This is a note to let you know that I've just added the patch titled
 
-    ksmbd: fix use-after-free in ksmbd_session_rpc_open
+    wifi: ath11k: fix RCU stall while reaping monitor destination ring
 
 to the 6.6-stable tree which can be found at:
     http://www.kernel.org/git/?p=linux/kernel/git/stable/stable-queue.git;a=summary
 
 The filename of the patch is:
-     ksmbd-fix-use-after-free-in-ksmbd_session_rpc_open.patch
+     wifi-ath11k-fix-rcu-stall-while-reaping-monitor-destination-ring.patch
 and it can be found in the queue-6.6 subdirectory.
 
 If you, or anyone else, feels it should not be added to the stable tree,
 please let <stable@vger.kernel.org> know about it.
 
 
-From stable+bounces-211734-greg=kroah.com@vger.kernel.org Tue Jan 27 09:32:16 2026
+From stable+bounces-211921-greg=kroah.com@vger.kernel.org Wed Jan 28 04:28:19 2026
 From: Li hongliang <1468888505@139.com>
-Date: Tue, 27 Jan 2026 16:31:49 +0800
-Subject: ksmbd: fix use-after-free in ksmbd_session_rpc_open
-To: gregkh@linuxfoundation.org, stable@vger.kernel.org, linkinjeon@kernel.org
-Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org, sfrench@samba.org, senozhatsky@chromium.org, tom@talpey.com, sujana.subramaniam@sap.com, sashal@kernel.org, linux-cifs@vger.kernel.org, norbert@doyensec.com, stfrench@microsoft.com
-Message-ID: <20260127083149.3344689-1-1468888505@139.com>
+Date: Wed, 28 Jan 2026 11:27:15 +0800
+Subject: wifi: ath11k: fix RCU stall while reaping monitor destination ring
+To: gregkh@linuxfoundation.org, stable@vger.kernel.org, quic_ppranees@quicinc.com
+Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org, quic_kangyang@quicinc.com, kvalo@kernel.org, quic_jjohnson@quicinc.com, jeff.johnson@oss.qualcomm.com, jjohnson@kernel.org, quic_msinada@quicinc.com, rmanohar@codeaurora.org, julia.lawall@lip6.fr, quic_pradeepc@quicinc.com, linux-wireless@vger.kernel.org, ath11k@lists.infradead.org
+Message-ID: <20260128032715.1183385-1-1468888505@139.com>
 
-From: Namjae Jeon <linkinjeon@kernel.org>
+From: P Praneesh <quic_ppranees@quicinc.com>
 
-[ Upstream commit a1f46c99d9ea411f9bf30025b912d881d36fc709 ]
+[ Upstream commit 16c6c35c03ea73054a1f6d3302a4ce4a331b427d ]
 
-A UAF issue can occur due to a race condition between
-ksmbd_session_rpc_open() and __session_rpc_close().
-Add rpc_lock to the session to protect it.
+While processing the monitor destination ring, MSDUs are reaped from the
+link descriptor based on the corresponding buf_id.
 
-Cc: stable@vger.kernel.org
-Reported-by: Norbert Szetei <norbert@doyensec.com>
-Tested-by: Norbert Szetei <norbert@doyensec.com>
-Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Steve French <stfrench@microsoft.com>
-[ KSMBD_DEFAULT_GFP is introduced by commit 0066f623bce8 ("ksmbd: use __GFP_RETRY_MAYFAIL")
- after linux-6.13. Here we still use GFP_KERNEL. ]
+However, sometimes the driver cannot obtain a valid buffer corresponding
+to the buf_id received from the hardware. This causes an infinite loop
+in the destination processing, resulting in a kernel crash.
+
+kernel log:
+ath11k_pci 0000:58:00.0: data msdu_pop: invalid buf_id 309
+ath11k_pci 0000:58:00.0: data dp_rx_monitor_link_desc_return failed
+ath11k_pci 0000:58:00.0: data msdu_pop: invalid buf_id 309
+ath11k_pci 0000:58:00.0: data dp_rx_monitor_link_desc_return failed
+
+Fix this by skipping the problematic buf_id and reaping the next entry,
+replacing the break with the next MSDU processing.
+
+Tested-on: WCN6855 hw2.0 PCI WLAN.HSP.1.1-03125-QCAHSPSWPL_V1_V2_SILICONZ_LITE-3.6510.30
+Tested-on: QCN9074 hw1.0 PCI WLAN.HK.2.7.0.1-01744-QCAHKSWPL_SILICONZ-1
+
+Fixes: d5c65159f289 ("ath11k: driver for Qualcomm IEEE 802.11ax devices")
+Signed-off-by: P Praneesh <quic_ppranees@quicinc.com>
+Signed-off-by: Kang Yang <quic_kangyang@quicinc.com>
+Acked-by: Kalle Valo <kvalo@kernel.org>
+Acked-by: Jeff Johnson <quic_jjohnson@quicinc.com>
+Link: https://patch.msgid.link/20241219110531.2096-2-quic_kangyang@quicinc.com
+Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
 Signed-off-by: Li hongliang <1468888505@139.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/server/mgmt/user_session.c |   20 ++++++++++++++------
- fs/smb/server/mgmt/user_session.h |    1 +
- 2 files changed, 15 insertions(+), 6 deletions(-)
+ drivers/net/wireless/ath/ath11k/dp_rx.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/fs/smb/server/mgmt/user_session.c
-+++ b/fs/smb/server/mgmt/user_session.c
-@@ -59,10 +59,12 @@ static void ksmbd_session_rpc_clear_list
- 	struct ksmbd_session_rpc *entry;
- 	long index;
- 
-+	down_write(&sess->rpc_lock);
- 	xa_for_each(&sess->rpc_handle_list, index, entry) {
- 		xa_erase(&sess->rpc_handle_list, index);
- 		__session_rpc_close(sess, entry);
- 	}
-+	up_write(&sess->rpc_lock);
- 
- 	xa_destroy(&sess->rpc_handle_list);
- }
-@@ -92,7 +94,7 @@ int ksmbd_session_rpc_open(struct ksmbd_
- {
- 	struct ksmbd_session_rpc *entry, *old;
- 	struct ksmbd_rpc_command *resp;
--	int method;
-+	int method, id;
- 
- 	method = __rpc_method(rpc_name);
- 	if (!method)
-@@ -102,26 +104,29 @@ int ksmbd_session_rpc_open(struct ksmbd_
- 	if (!entry)
- 		return -ENOMEM;
- 
-+	down_read(&sess->rpc_lock);
- 	entry->method = method;
--	entry->id = ksmbd_ipc_id_alloc();
--	if (entry->id < 0)
-+	entry->id = id = ksmbd_ipc_id_alloc();
-+	if (id < 0)
- 		goto free_entry;
--	old = xa_store(&sess->rpc_handle_list, entry->id, entry, GFP_KERNEL);
-+	old = xa_store(&sess->rpc_handle_list, id, entry, GFP_KERNEL);
- 	if (xa_is_err(old))
- 		goto free_id;
- 
--	resp = ksmbd_rpc_open(sess, entry->id);
-+	resp = ksmbd_rpc_open(sess, id);
- 	if (!resp)
- 		goto erase_xa;
- 
-+	up_read(&sess->rpc_lock);
- 	kvfree(resp);
--	return entry->id;
-+	return id;
- erase_xa:
- 	xa_erase(&sess->rpc_handle_list, entry->id);
- free_id:
- 	ksmbd_rpc_id_free(entry->id);
- free_entry:
- 	kfree(entry);
-+	up_read(&sess->rpc_lock);
- 	return -EINVAL;
- }
- 
-@@ -129,9 +134,11 @@ void ksmbd_session_rpc_close(struct ksmb
- {
- 	struct ksmbd_session_rpc *entry;
- 
-+	down_write(&sess->rpc_lock);
- 	entry = xa_erase(&sess->rpc_handle_list, id);
- 	if (entry)
- 		__session_rpc_close(sess, entry);
-+	up_write(&sess->rpc_lock);
- }
- 
- int ksmbd_session_rpc_method(struct ksmbd_session *sess, int id)
-@@ -438,6 +445,7 @@ static struct ksmbd_session *__session_c
- 	sess->sequence_number = 1;
- 	rwlock_init(&sess->tree_conns_lock);
- 	atomic_set(&sess->refcnt, 2);
-+	init_rwsem(&sess->rpc_lock);
- 
- 	ret = __init_smb2_session(sess);
- 	if (ret)
---- a/fs/smb/server/mgmt/user_session.h
-+++ b/fs/smb/server/mgmt/user_session.h
-@@ -63,6 +63,7 @@ struct ksmbd_session {
- 	rwlock_t			tree_conns_lock;
- 
- 	atomic_t			refcnt;
-+	struct rw_semaphore		rpc_lock;
- };
- 
- static inline int test_session_flag(struct ksmbd_session *sess, int bit)
+--- a/drivers/net/wireless/ath/ath11k/dp_rx.c
++++ b/drivers/net/wireless/ath/ath11k/dp_rx.c
+@@ -4728,7 +4728,7 @@ ath11k_dp_rx_mon_mpdu_pop(struct ath11k
+ 			if (!msdu) {
+ 				ath11k_dbg(ar->ab, ATH11K_DBG_DATA,
+ 					   "msdu_pop: invalid buf_id %d\n", buf_id);
+-				break;
++				goto next_msdu;
+ 			}
+ 			rxcb = ATH11K_SKB_RXCB(msdu);
+ 			if (!rxcb->unmapped) {
+@@ -5362,7 +5362,7 @@ ath11k_dp_rx_full_mon_mpdu_pop(struct at
+ 					   "full mon msdu_pop: invalid buf_id %d\n",
+ 					    buf_id);
+ 				spin_unlock_bh(&rx_ring->idr_lock);
+-				break;
++				goto next_msdu;
+ 			}
+ 			idr_remove(&rx_ring->bufs_idr, buf_id);
+ 			spin_unlock_bh(&rx_ring->idr_lock);
 
 
 Patches currently in stable-queue which might be from 1468888505@139.com are
