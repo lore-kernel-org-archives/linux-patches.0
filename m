@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D22FC30DD1E;
-	Wed, 28 Jan 2026 15:44:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23B4B2FB085;
+	Wed, 28 Jan 2026 15:44:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769615072; cv=none; b=uWPDVr88TD9D0Fv3YZZhkijyqszIvcZdNfJEsODxSo+cntMghsWir1DPIbjorV5Pg/dkYbEb+X0yPvvjKRuD4n+/4R/+6qIv/7h3wrDx78aNt/5fUH2GFft7wm5Rg/2yCgb2/613qnzpn0V1cjVnlCVsD/0Y8QJ3cCEiD46IPy4=
+	t=1769615076; cv=none; b=NhPpFi+H0dpY+h6uD7AyHbJ4EMUHM3nxzod4WsshrJi9V5p2M8KHkBOZJLoKjOXl0NQVVJh0mPZFCE2KNY8R1ETdIHFx8lTRuo5qWNW5/pdrdwEtwwp3xNlF4ll01OjXrHSVd5OdQjjZGRr6Og2YTXi2nZqYf7cKb6Amkj9l1fQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769615072; c=relaxed/simple;
-	bh=O7+LTkgBRLG5/nCsHlB624BvfUEr3zDYsZTDSAO4eRk=;
+	s=arc-20240116; t=1769615076; c=relaxed/simple;
+	bh=4DUm8MeRh89//LB8dFD5tIgSgUdYClSTkdmNIzTTcUs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jxBlLPT8XURui3G2yqUvuV0jnYr3/9RXQBS/88qSFdA6ubGG9fxAS9T4sslOFu4tgtLwL5dWJXPmiu4MDUQeOggk0cwcxSMxjxxHMCAww9imic9sNPb51CdexofWxulz6/Z/9Ddpyh2VEzme58+C4DBsbbFLv3ULP42dtEvdQU0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ed0P4bMy; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gOzwy74hxohxgFEpxhSRjTneHn8C9LMNl9qNKj/8rJ89DL93TvMFjruY0voBsk5m5t4u7qdNEaJ+cweorIQdvYbCzLmeOsfKvbVR8ZyaKUIoZmITd291AfgNNcUeY/W05q4EDs3n787gTYK75cTScQtceg0wyxRV0hY+q17SegQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VGSxPWqF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ed0P4bMy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 41AEFC4CEF1;
-	Wed, 28 Jan 2026 15:44:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VGSxPWqF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8550AC4CEF1;
+	Wed, 28 Jan 2026 15:44:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1769615072;
-	bh=O7+LTkgBRLG5/nCsHlB624BvfUEr3zDYsZTDSAO4eRk=;
+	s=korg; t=1769615076;
+	bh=4DUm8MeRh89//LB8dFD5tIgSgUdYClSTkdmNIzTTcUs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ed0P4bMy8bgcgMQNRfAYnvVusrcj6TRPYP+G8nXYDw3uoDDL4V5mc/WFr1ld0/HnP
-	 zBITpqcmkrs7E3eUDCm4eniUQ+flBFpdvqzTKKjLK/jHfMOIgbb+y9ZVKgGJGJtaSL
-	 z/EjyQ+DQPIDUOmfk4Lkl4CJcwruZtRQtP7k7vLY=
+	b=VGSxPWqFweeGRoAYbQ+73bmPbscLc1tQ1/4A1p2QIjLkiUfnl4RymR/kcfaog3Yj2
+	 u7iDJxUfMvuO8PwlsvqIysgOe8bEr3AZ+xM8Yq38FfX+9dqTTwJeLlOnuMOOVNebTY
+	 2k3QWXDHEMx8iu/rDsVzQttlkZ5PE8SUnqk8tN0E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jaroslav Kysela <perex@perex.cz>,
-	Takashi Iwai <tiwai@suse.com>,
-	linux-sound@vger.kernel.org,
-	Arun Raghavan <arunr@valvesoftware.com>,
-	Takashi Iwai <tiwai@suse.de>,
+	Brajesh Gupta <brajesh.gupta@imgtec.com>,
+	Matt Coster <matt.coster@imgtec.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 070/169] ALSA: usb: Increase volume range that triggers a warning
-Date: Wed, 28 Jan 2026 16:22:33 +0100
-Message-ID: <20260128145336.526246805@linuxfoundation.org>
+Subject: [PATCH 6.12 071/169] drm/imagination: Wait for FW trace update command completion
+Date: Wed, 28 Jan 2026 16:22:34 +0100
+Message-ID: <20260128145336.562720393@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260128145334.006287341@linuxfoundation.org>
 References: <20260128145334.006287341@linuxfoundation.org>
@@ -54,45 +51,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Arun Raghavan <arunr@valvesoftware.com>
+From: Brajesh Gupta <brajesh.gupta@imgtec.com>
 
-[ Upstream commit 6b971191fcfc9e3c2c0143eea22534f1f48dbb62 ]
+[ Upstream commit 812062e74a3945b575dce89d330b67cb50054a77 ]
 
-On at least the HyperX Cloud III, the range is 18944 (-18944 -> 0 in
-steps of 1), so the original check for 255 steps is definitely obsolete.
-Let's give ourselves a little more headroom before we emit a warning.
+Possibility of no FW trace available after update in the fw_trace_mask due
+to asynchronous mode of command consumption in the FW.
 
-Fixes: 80acefff3bc7 ("ALSA: usb-audio - Add volume range check and warn if it too big")
-Cc: Jaroslav Kysela <perex@perex.cz>
-Cc: Takashi Iwai <tiwai@suse.com>
-Cc: linux-sound@vger.kernel.org
-Signed-off-by: Arun Raghavan <arunr@valvesoftware.com>
-Link: https://patch.msgid.link/20260116225804.3845935-1-arunr@valvesoftware.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+To ensure FW trace is available after update, wait for FW trace log update
+command completion from the FW.
+
+Fixes: cc1aeedb98ad ("drm/imagination: Implement firmware infrastructure and META FW support")
+Signed-off-by: Brajesh Gupta <brajesh.gupta@imgtec.com>
+Reviewed-by: Matt Coster <matt.coster@imgtec.com>
+Link: https://patch.msgid.link/20260108040936.129769-1-brajesh.gupta@imgtec.com
+Signed-off-by: Matt Coster <matt.coster@imgtec.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/usb/mixer.c | 7 +++----
- 1 file changed, 3 insertions(+), 4 deletions(-)
+ drivers/gpu/drm/imagination/pvr_fw_trace.c | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
-diff --git a/sound/usb/mixer.c b/sound/usb/mixer.c
-index 7307e29c60b75..577f9121971e8 100644
---- a/sound/usb/mixer.c
-+++ b/sound/usb/mixer.c
-@@ -1807,11 +1807,10 @@ static void __build_feature_ctl(struct usb_mixer_interface *mixer,
+diff --git a/drivers/gpu/drm/imagination/pvr_fw_trace.c b/drivers/gpu/drm/imagination/pvr_fw_trace.c
+index 5dbb636d7d4ff..634c84bfc885a 100644
+--- a/drivers/gpu/drm/imagination/pvr_fw_trace.c
++++ b/drivers/gpu/drm/imagination/pvr_fw_trace.c
+@@ -141,6 +141,7 @@ update_logtype(struct pvr_device *pvr_dev, u32 group_mask)
+ 	struct rogue_fwif_kccb_cmd cmd;
+ 	int idx;
+ 	int err;
++	int slot;
  
- 	range = (cval->max - cval->min) / cval->res;
- 	/*
--	 * Are there devices with volume range more than 255? I use a bit more
--	 * to be sure. 384 is a resolution magic number found on Logitech
--	 * devices. It will definitively catch all buggy Logitech devices.
-+	 * There are definitely devices with a range of ~20,000, so let's be
-+	 * conservative and allow for a bit more.
- 	 */
--	if (range > 384) {
-+	if (range > 65535) {
- 		usb_audio_warn(mixer->chip,
- 			       "Warning! Unlikely big volume range (=%u), cval->res is probably wrong.",
- 			       range);
+ 	if (group_mask)
+ 		fw_trace->tracebuf_ctrl->log_type = ROGUE_FWIF_LOG_TYPE_TRACE | group_mask;
+@@ -158,8 +159,13 @@ update_logtype(struct pvr_device *pvr_dev, u32 group_mask)
+ 	cmd.cmd_type = ROGUE_FWIF_KCCB_CMD_LOGTYPE_UPDATE;
+ 	cmd.kccb_flags = 0;
+ 
+-	err = pvr_kccb_send_cmd(pvr_dev, &cmd, NULL);
++	err = pvr_kccb_send_cmd(pvr_dev, &cmd, &slot);
++	if (err)
++		goto err_drm_dev_exit;
++
++	err = pvr_kccb_wait_for_completion(pvr_dev, slot, HZ, NULL);
+ 
++err_drm_dev_exit:
+ 	drm_dev_exit(idx);
+ 
+ err_up_read:
 -- 
 2.51.0
 
