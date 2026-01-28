@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1039F1D6AA;
-	Wed, 28 Jan 2026 15:58:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3CACF146D53;
+	Wed, 28 Jan 2026 15:58:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769615892; cv=none; b=n3NcEpYtYUJ9+79N24OQKvW5+nJDOlydIij6hRz2bu8hYbdQbaf+SH1S1CN5la3DSIkoDBiDHCOfsO8Kce1SizgM8qZ6dgOuonXVYnF0uDZa9JezS8YL6e78BaH+SvaZQVnRhHl0Shz+72TgCu6hKWZGB1H0lRRzU1k1Xc8CFE0=
+	t=1769615895; cv=none; b=AIRtv4l+IgyvtexK4Kf/8bzCTB2cOHuE0jByhp4cebEzCoQ+nQwDWsoV/xp53Ea3jv0GCOG9krcn5IrRjg73B2hjLiXCpzvW3QcHKRFSVBLXahnBNEA4KRE2yPsAs0Xh085RuxfeRAyXuCadMJE09eRiJPbgTWSI782zMy50WAQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769615892; c=relaxed/simple;
-	bh=dL/Y4vy6CSkeuYDh6isk5AAu3I5gZR1CIojgeeqfIyg=;
+	s=arc-20240116; t=1769615895; c=relaxed/simple;
+	bh=PzGJxdZS05MHU366gbiqvgRULcrtQJGkzSNzz7XvYjU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WP5FDmN7eIQ7yEFqPUJtCox/r64lvEvYQSyEDfYQ151wowSTW5Tl23RMShKmffSQVJRV4zUgmywGFUhJywXaPYnFhQiasOxhbcZOMeSTqVpqjUdB/RkRAcA6MF7fEJK1SOHt7OVuBEUCRgabI/StgSlkZMBvrLB5v5CoF9db/Mg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bFBbT2AP; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Gw8y2PhiGDj7ygyrT0euPlla0x4U1mNFZ9g9g/mbvJnrBqvsSsy7ExleqRnjLh4uoFRFl8E6zW7Dak29gKuhsfYQCZ/rLxJwGqWofUX3JurWN/JozSzKum696JkyPN/xRzT9xiqH1Kya7eAaJu9lYvlxeCUEp6w+9YskyK2mz8Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sWc3Mowc; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bFBbT2AP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 767ADC4CEF1;
-	Wed, 28 Jan 2026 15:58:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sWc3Mowc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B94ECC4CEF1;
+	Wed, 28 Jan 2026 15:58:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1769615891;
-	bh=dL/Y4vy6CSkeuYDh6isk5AAu3I5gZR1CIojgeeqfIyg=;
+	s=korg; t=1769615895;
+	bh=PzGJxdZS05MHU366gbiqvgRULcrtQJGkzSNzz7XvYjU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bFBbT2APTF7W14TJlP4tJFJ0ZUdJHyiMR8Oidk7JtFNXplFlsImJYvEcGEJLwPzoc
-	 pZUzJsHz/oZsq+DXoAQ1Kk8jWWQAPJFwRqFWfgCy5FmPiBokpQZGzq8+X5irBlRDzL
-	 YSqVpaJobJcKmvnw1rqJSn/FaV1v8ijRE8DO8AjA=
+	b=sWc3Mowc67XwYoHkj7ENPSc6TQ/45dE7f8ijHOeR4wAjPuNVNCU2FjVOwH30ncGPr
+	 dt86IiHEKHUnYaiUdX8ckJaUgTF5jgBey7q0I2i0HQFqpITbtxnCAGeF+D0sx5F7ec
+	 F5YLWhCe2BrHsrT5x0YCC+/KZbkGLm8uMD+axEl4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stefano Garzarella <sgarzare@redhat.com>,
-	Melbin K Mathew <mlbnkm1@gmail.com>,
-	Luigi Leonardi <leonardi@redhat.com>,
-	"Michael S. Tsirkin" <mst@redhat.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Zhu Yikai <zhuyikai1@h-partners.com>,
+	Fan Gong <gongfan1@huawei.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 145/227] vsock/virtio: cap TX credit to local buffer size
-Date: Wed, 28 Jan 2026 16:23:10 +0100
-Message-ID: <20260128145349.676299117@linuxfoundation.org>
+Subject: [PATCH 6.18 146/227] hinic3: Fix netif_queue_set_napi queue_index input parameter error
+Date: Wed, 28 Jan 2026 16:23:11 +0100
+Message-ID: <20260128145349.711949061@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260128145344.331957407@linuxfoundation.org>
 References: <20260128145344.331957407@linuxfoundation.org>
@@ -54,126 +52,88 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Melbin K Mathew <mlbnkm1@gmail.com>
+From: Fan Gong <gongfan1@huawei.com>
 
-[ Upstream commit 8ee784fdf006cbe8739cfa093f54d326cbf54037 ]
+[ Upstream commit fb2bb2a1ebf7b9514c32b03bb5c3be5d518d437b ]
 
-The virtio transports derives its TX credit directly from peer_buf_alloc,
-which is set from the remote endpoint's SO_VM_SOCKETS_BUFFER_SIZE value.
+Incorrectly transmitted interrupt number instead of queue number
+when using netif_queue_set_napi. Besides, move this to appropriate
+code location to set napi.
 
-On the host side this means that the amount of data we are willing to
-queue for a connection is scaled by a guest-chosen buffer size, rather
-than the host's own vsock configuration. A malicious guest can advertise
-a large buffer and read slowly, causing the host to allocate a
-correspondingly large amount of sk_buff memory.
-The same thing would happen in the guest with a malicious host, since
-virtio transports share the same code base.
+Remove redundant netif_stop_subqueue beacuase it is not part of the
+hinic3_send_one_skb process.
 
-Introduce a small helper, virtio_transport_tx_buf_size(), that
-returns min(peer_buf_alloc, buf_alloc), and use it wherever we consume
-peer_buf_alloc.
-
-This ensures the effective TX window is bounded by both the peer's
-advertised buffer and our own buf_alloc (already clamped to
-buffer_max_size via SO_VM_SOCKETS_BUFFER_MAX_SIZE), so a remote peer
-cannot force the other to queue more data than allowed by its own
-vsock settings.
-
-On an unpatched Ubuntu 22.04 host (~64 GiB RAM), running a PoC with
-32 guest vsock connections advertising 2 GiB each and reading slowly
-drove Slab/SUnreclaim from ~0.5 GiB to ~57 GiB; the system only
-recovered after killing the QEMU process. That said, if QEMU memory is
-limited with cgroups, the maximum memory used will be limited.
-
-With this patch applied:
-
-  Before:
-    MemFree:        ~61.6 GiB
-    Slab:           ~142 MiB
-    SUnreclaim:     ~117 MiB
-
-  After 32 high-credit connections:
-    MemFree:        ~61.5 GiB
-    Slab:           ~178 MiB
-    SUnreclaim:     ~152 MiB
-
-Only ~35 MiB increase in Slab/SUnreclaim, no host OOM, and the guest
-remains responsive.
-
-Compatibility with non-virtio transports:
-
-  - VMCI uses the AF_VSOCK buffer knobs to size its queue pairs per
-    socket based on the local vsk->buffer_* values; the remote side
-    cannot enlarge those queues beyond what the local endpoint
-    configured.
-
-  - Hyper-V's vsock transport uses fixed-size VMBus ring buffers and
-    an MTU bound; there is no peer-controlled credit field comparable
-    to peer_buf_alloc, and the remote endpoint cannot drive in-flight
-    kernel memory above those ring sizes.
-
-  - The loopback path reuses virtio_transport_common.c, so it
-    naturally follows the same semantics as the virtio transport.
-
-This change is limited to virtio_transport_common.c and thus affects
-virtio-vsock, vhost-vsock, and loopback, bringing them in line with the
-"remote window intersected with local policy" behaviour that VMCI and
-Hyper-V already effectively have.
-
-Fixes: 06a8fc78367d ("VSOCK: Introduce virtio_vsock_common.ko")
-Suggested-by: Stefano Garzarella <sgarzare@redhat.com>
-Signed-off-by: Melbin K Mathew <mlbnkm1@gmail.com>
-[Stefano: small adjustments after changing the previous patch]
-[Stefano: tweak the commit message]
-Signed-off-by: Stefano Garzarella <sgarzare@redhat.com>
-Reviewed-by: Luigi Leonardi <leonardi@redhat.com>
-Link: https://patch.msgid.link/20260121093628.9941-4-sgarzare@redhat.com
-Acked-by: Michael S. Tsirkin <mst@redhat.com>
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: 17fcb3dc12bb ("hinic3: module initialization and tx/rx logic")
+Co-developed-by: Zhu Yikai <zhuyikai1@h-partners.com>
+Signed-off-by: Zhu Yikai <zhuyikai1@h-partners.com>
+Signed-off-by: Fan Gong <gongfan1@huawei.com>
+Link: https://patch.msgid.link/7b8e4eb5c53cbd873ee9aaefeb3d9dbbaff52deb.1769070766.git.zhuyikai1@h-partners.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/vmw_vsock/virtio_transport_common.c | 14 ++++++++++++--
- 1 file changed, 12 insertions(+), 2 deletions(-)
+ .../net/ethernet/huawei/hinic3/hinic3_irq.c   | 22 +++++++++++--------
+ 1 file changed, 13 insertions(+), 9 deletions(-)
 
-diff --git a/net/vmw_vsock/virtio_transport_common.c b/net/vmw_vsock/virtio_transport_common.c
-index 6175124d63d34..d3e26025ef589 100644
---- a/net/vmw_vsock/virtio_transport_common.c
-+++ b/net/vmw_vsock/virtio_transport_common.c
-@@ -821,6 +821,15 @@ virtio_transport_seqpacket_dequeue(struct vsock_sock *vsk,
+diff --git a/drivers/net/ethernet/huawei/hinic3/hinic3_irq.c b/drivers/net/ethernet/huawei/hinic3/hinic3_irq.c
+index a69b361225e90..84bee5d6e638e 100644
+--- a/drivers/net/ethernet/huawei/hinic3/hinic3_irq.c
++++ b/drivers/net/ethernet/huawei/hinic3/hinic3_irq.c
+@@ -43,21 +43,12 @@ static void qp_add_napi(struct hinic3_irq_cfg *irq_cfg)
+ 	struct hinic3_nic_dev *nic_dev = netdev_priv(irq_cfg->netdev);
+ 
+ 	netif_napi_add(nic_dev->netdev, &irq_cfg->napi, hinic3_poll);
+-	netif_queue_set_napi(irq_cfg->netdev, irq_cfg->irq_id,
+-			     NETDEV_QUEUE_TYPE_RX, &irq_cfg->napi);
+-	netif_queue_set_napi(irq_cfg->netdev, irq_cfg->irq_id,
+-			     NETDEV_QUEUE_TYPE_TX, &irq_cfg->napi);
+ 	napi_enable(&irq_cfg->napi);
  }
- EXPORT_SYMBOL_GPL(virtio_transport_seqpacket_dequeue);
  
-+static u32 virtio_transport_tx_buf_size(struct virtio_vsock_sock *vvs)
-+{
-+	/* The peer advertises its receive buffer via peer_buf_alloc, but we
-+	 * cap it to our local buf_alloc so a remote peer cannot force us to
-+	 * queue more data than our own buffer configuration allows.
-+	 */
-+	return min(vvs->peer_buf_alloc, vvs->buf_alloc);
-+}
+ static void qp_del_napi(struct hinic3_irq_cfg *irq_cfg)
+ {
+ 	napi_disable(&irq_cfg->napi);
+-	netif_queue_set_napi(irq_cfg->netdev, irq_cfg->irq_id,
+-			     NETDEV_QUEUE_TYPE_RX, NULL);
+-	netif_queue_set_napi(irq_cfg->netdev, irq_cfg->irq_id,
+-			     NETDEV_QUEUE_TYPE_TX, NULL);
+-	netif_stop_subqueue(irq_cfg->netdev, irq_cfg->irq_id);
+ 	netif_napi_del(&irq_cfg->napi);
+ }
+ 
+@@ -150,6 +141,11 @@ int hinic3_qps_irq_init(struct net_device *netdev)
+ 			goto err_release_irqs;
+ 		}
+ 
++		netif_queue_set_napi(irq_cfg->netdev, q_id,
++				     NETDEV_QUEUE_TYPE_RX, &irq_cfg->napi);
++		netif_queue_set_napi(irq_cfg->netdev, q_id,
++				     NETDEV_QUEUE_TYPE_TX, &irq_cfg->napi);
 +
- int
- virtio_transport_seqpacket_enqueue(struct vsock_sock *vsk,
- 				   struct msghdr *msg,
-@@ -830,7 +839,7 @@ virtio_transport_seqpacket_enqueue(struct vsock_sock *vsk,
- 
- 	spin_lock_bh(&vvs->tx_lock);
- 
--	if (len > vvs->peer_buf_alloc) {
-+	if (len > virtio_transport_tx_buf_size(vvs)) {
- 		spin_unlock_bh(&vvs->tx_lock);
- 		return -EMSGSIZE;
- 	}
-@@ -884,7 +893,8 @@ static s64 virtio_transport_has_space(struct virtio_vsock_sock *vvs)
- 	 * we have bytes in flight (tx_cnt - peer_fwd_cnt), the subtraction
- 	 * does not underflow.
- 	 */
--	bytes = (s64)vvs->peer_buf_alloc - (vvs->tx_cnt - vvs->peer_fwd_cnt);
-+	bytes = (s64)virtio_transport_tx_buf_size(vvs) -
-+		(vvs->tx_cnt - vvs->peer_fwd_cnt);
- 	if (bytes < 0)
- 		bytes = 0;
- 
+ 		hinic3_set_msix_auto_mask_state(nic_dev->hwdev,
+ 						irq_cfg->msix_entry_idx,
+ 						HINIC3_SET_MSIX_AUTO_MASK);
+@@ -164,6 +160,10 @@ int hinic3_qps_irq_init(struct net_device *netdev)
+ 		q_id--;
+ 		irq_cfg = &nic_dev->q_params.irq_cfg[q_id];
+ 		qp_del_napi(irq_cfg);
++		netif_queue_set_napi(irq_cfg->netdev, q_id,
++				     NETDEV_QUEUE_TYPE_RX, NULL);
++		netif_queue_set_napi(irq_cfg->netdev, q_id,
++				     NETDEV_QUEUE_TYPE_TX, NULL);
+ 		hinic3_set_msix_state(nic_dev->hwdev, irq_cfg->msix_entry_idx,
+ 				      HINIC3_MSIX_DISABLE);
+ 		hinic3_set_msix_auto_mask_state(nic_dev->hwdev,
+@@ -184,6 +184,10 @@ void hinic3_qps_irq_uninit(struct net_device *netdev)
+ 	for (q_id = 0; q_id < nic_dev->q_params.num_qps; q_id++) {
+ 		irq_cfg = &nic_dev->q_params.irq_cfg[q_id];
+ 		qp_del_napi(irq_cfg);
++		netif_queue_set_napi(irq_cfg->netdev, q_id,
++				     NETDEV_QUEUE_TYPE_RX, NULL);
++		netif_queue_set_napi(irq_cfg->netdev, q_id,
++				     NETDEV_QUEUE_TYPE_TX, NULL);
+ 		hinic3_set_msix_state(nic_dev->hwdev, irq_cfg->msix_entry_idx,
+ 				      HINIC3_MSIX_DISABLE);
+ 		hinic3_set_msix_auto_mask_state(nic_dev->hwdev,
 -- 
 2.51.0
 
