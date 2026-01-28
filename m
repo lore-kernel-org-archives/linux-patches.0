@@ -1,43 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F75A2FF178;
-	Wed, 28 Jan 2026 15:51:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B55F2FF178;
+	Wed, 28 Jan 2026 15:51:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769615496; cv=none; b=WJQdWAl62d3feH1SUcRmu6NMMxeEv+kn6arkxSYBOglSs+ODDZ1PRQWbvqDYCFwpiWbtCdjLFbJoowOhX6OdneWzZc/m75lgqYuYSTb1eXyf91tUYxToWc+Ni7u/x4TftXFpTp7rhiY7SMJR1fYA6tNnzYrnCNa4qj4M/IyjxGM=
+	t=1769615499; cv=none; b=gnrCW4HTte4ag6FAOTBBgxQabsC0VUU2QARkuWwe/lqSaCCtABHo1JEWKmWoU3CiMGUxLEREcvKcusySfXqaQ5UG9EzRMATdW8uOT1NFKYosMmQ2dbn4u2QL9z44BiuX86BiNedacMsRUuU18bcgH4mPyh/c1lktk0k9nsLIqOQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769615496; c=relaxed/simple;
-	bh=26Ww30JpgaZ33Bfi11SfwtKiA8yP8hImrEy5ytVjtNE=;
+	s=arc-20240116; t=1769615499; c=relaxed/simple;
+	bh=EAsxDL75wU/bbOfqjmVYPbYSmbF+uszJjFMcK0SkJFE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=unzQ9yBR8pNwP9jNnmVDYcNFGaML/EJPwOLUgrAIC1Wu31rFw9iPjF08eZy6AAIFcY7joMVoXIQ/ILzEx3ApSywDoJwdKnPvLoun7mES7n2nvgVH94vmqIAdQMPmRG7E4U3pUL2TY0MO1g/tOGm5I57/x3MeW4anTITEuYR7X8E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=g5e66FHs; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=f90KDgCSkGvJJZiXAcZypgSbU0EnjpcZ3Anc6HdSGBzOlKFATXAhj9HgOiuw7gVYLfw/jsbSkFGXcUXc8pXtI3yZL/mrybAjJa+5UVjkG0gynZqLBF2BwsHqNoy2t6sDDoBdxScR2tIpV9ls6o2bNbaCpVjAQaWQowhEjpntmtY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VlnQx9x4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="g5e66FHs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AEAECC4CEF1;
-	Wed, 28 Jan 2026 15:51:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VlnQx9x4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15572C4CEF7;
+	Wed, 28 Jan 2026 15:51:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1769615496;
-	bh=26Ww30JpgaZ33Bfi11SfwtKiA8yP8hImrEy5ytVjtNE=;
+	s=korg; t=1769615499;
+	bh=EAsxDL75wU/bbOfqjmVYPbYSmbF+uszJjFMcK0SkJFE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=g5e66FHsKgW+eutmYlOFn7nYmIWqMFHdBB1uTHQZQkNNvPcuk2OEJkyPgNQXTnsRR
-	 FqgsT3j+OuHMhp25aSmv5mHbfWBtoLlIAh3W9FVZsQKkkLTXvHrDxrKZ7tQq9bRTDh
-	 eI6vIXl2ZZn6mO+IH4qxIaxUM8pkirhQAj78sDyw=
+	b=VlnQx9x4nXZrTh2JLSs/U5nnVEjg5EBFkM4yPMM9FaXQkQAv+4EUXDXT7nmYvek6I
+	 BOLDGXzylMXQr2kAxyI1qiDDVGjkOffpx1NuK+XKxDjJa39bffFPCFlo9gUGFXUx0b
+	 qmOJwlCArTmC2tf2thVIubaLDPG/G6qsj9s2Mw0I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zdenek Bouska <zdenek.bouska@siemens.com>,
-	Paul Menzel <pmenzel@molgen.mpg.de>,
-	Simon Horman <horms@kernel.org>,
-	Aleksandr Loktionov <aleksandr.loktionov@intel.com>,
-	Chwee-Lin Choong <chwee.lin.choong@intel.com>,
-	Avigail Dahan <avigailx.dahan@intel.com>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>,
+	Krishna Kurapati <krishna.kurapati@oss.qualcomm.com>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 026/227] igc: Reduce TSN TX packet buffer from 7KB to 5KB per queue
-Date: Wed, 28 Jan 2026 16:21:11 +0100
-Message-ID: <20260128145345.287593477@linuxfoundation.org>
+Subject: [PATCH 6.18 003/227] arm64: dts: qcom: sm8650: Fix compile warnings in USB controller node
+Date: Wed, 28 Jan 2026 16:20:48 +0100
+Message-ID: <20260128145344.460705023@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260128145344.331957407@linuxfoundation.org>
 References: <20260128145344.331957407@linuxfoundation.org>
@@ -56,49 +52,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chwee-Lin Choong <chwee.lin.choong@intel.com>
+From: Krishna Kurapati <krishna.kurapati@oss.qualcomm.com>
 
-[ Upstream commit 8ad1b6c1e63d25f5465b7a8aa403bdcee84b86f9 ]
+[ Upstream commit 1f6ca557088eb96c8c554f853eb7c60862f8a0a8 ]
 
-The previous 7 KB per queue caused TX unit hangs under heavy
-timestamping load. Reducing to 5 KB avoids these hangs and matches
-the TSN recommendation in I225/I226 SW User Manual Section 7.5.4.
+With W=1, the following error comes up:
 
-The 8 KB "freed" by this change is currently unused. This reduction
-is not expected to impact throughput, as the i226 is PCIe-limited
-for small TSN packets rather than TX-buffer-limited.
+Warning (avoid_unnecessary_addr_size): /soc@0/usb@a600000: unnecessary #address-cells/#size-cells without "ranges", "dma-ranges" or child "reg" or "ranges" property
 
-Fixes: 0d58cdc902da ("igc: optimize TX packet buffer utilization for TSN mode")
-Reported-by: Zdenek Bouska <zdenek.bouska@siemens.com>
-Closes: https://lore.kernel.org/netdev/AS1PR10MB5675DBFE7CE5F2A9336ABFA4EBEAA@AS1PR10MB5675.EURPRD10.PROD.OUTLOOK.COM/
-Reviewed-by: Paul Menzel <pmenzel@molgen.mpg.de>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Reviewed-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
-Signed-off-by: Chwee-Lin Choong <chwee.lin.choong@intel.com>
-Tested-by: Avigail Dahan <avigailx.dahan@intel.com>
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+This is because the child node being removed during flattening and moving
+to latest bindings.
+
+Fixes: 77e1f16b9302 ("arm64: dts: qcom: sm8650: Flatten the USB nodes")
+Signed-off-by: Krishna Kurapati <krishna.kurapati@oss.qualcomm.com>
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
+Link: https://lore.kernel.org/r/20251203144856.2711440-3-krishna.kurapati@oss.qualcomm.com
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/igc/igc_defines.h | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ arch/arm64/boot/dts/qcom/sm8650.dtsi | 3 ---
+ 1 file changed, 3 deletions(-)
 
-diff --git a/drivers/net/ethernet/intel/igc/igc_defines.h b/drivers/net/ethernet/intel/igc/igc_defines.h
-index 498ba1522ca4d..9482ab11f050f 100644
---- a/drivers/net/ethernet/intel/igc/igc_defines.h
-+++ b/drivers/net/ethernet/intel/igc/igc_defines.h
-@@ -443,9 +443,10 @@
- #define IGC_TXPBSIZE_DEFAULT ( \
- 	IGC_TXPB0SIZE(20) | IGC_TXPB1SIZE(0) | IGC_TXPB2SIZE(0) | \
- 	IGC_TXPB3SIZE(0) | IGC_OS2BMCPBSIZE(4))
-+/* TSN value following I225/I226 SW User Manual Section 7.5.4 */
- #define IGC_TXPBSIZE_TSN ( \
--	IGC_TXPB0SIZE(7) | IGC_TXPB1SIZE(7) | IGC_TXPB2SIZE(7) | \
--	IGC_TXPB3SIZE(7) | IGC_OS2BMCPBSIZE(4))
-+	IGC_TXPB0SIZE(5) | IGC_TXPB1SIZE(5) | IGC_TXPB2SIZE(5) | \
-+	IGC_TXPB3SIZE(5) | IGC_OS2BMCPBSIZE(4))
+diff --git a/arch/arm64/boot/dts/qcom/sm8650.dtsi b/arch/arm64/boot/dts/qcom/sm8650.dtsi
+index 3b03c13539386..d22a26a416ccc 100644
+--- a/arch/arm64/boot/dts/qcom/sm8650.dtsi
++++ b/arch/arm64/boot/dts/qcom/sm8650.dtsi
+@@ -5115,9 +5115,6 @@ &mc_virt SLAVE_EBI1 QCOM_ICC_TAG_ALWAYS>,
  
- #define IGC_DTXMXPKTSZ_TSN	0x19 /* 1600 bytes of max TX DMA packet size */
- #define IGC_DTXMXPKTSZ_DEFAULT	0x98 /* 9728-byte Jumbo frames */
+ 			dma-coherent;
+ 
+-			#address-cells = <1>;
+-			#size-cells = <0>;
+-
+ 			status = "disabled";
+ 
+ 			ports {
 -- 
 2.51.0
 
