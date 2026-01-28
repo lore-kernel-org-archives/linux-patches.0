@@ -1,39 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 69FA729E0F8;
-	Wed, 28 Jan 2026 16:02:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E132826ED40;
+	Wed, 28 Jan 2026 16:02:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769616142; cv=none; b=lhbMO6tSHmqtSyamTraCfjxpuVJsCx2UKYxnV3FyEnYeOxKIASDEWchMcdwsz71nKWpd8PbyShdaWJLTyKuMiBVsSogKYYcRhf4tOmO+rFuICFJvzCwJq1ZWhQ9nGgp15yUtGn1M5fRrPeVroBzLZxdbhoHhP+Cf0PKNOxTDmH0=
+	t=1769616146; cv=none; b=AZVGCxO6cJ/BUr7QdtqbAGohFd9O4kMk5rMmAQzyweRqAwl9QHD1NnecVNc3vz5TYC2bnuj8UfEFcI7z2A45FgFnjiDY+rPBrsFl98g5dghxFHBHw2GHcwQvMCRfCw0lQNRf1pgrffy1N9r0p56OzjWkMMyZ1UnIlK6SGhVSf34=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769616142; c=relaxed/simple;
-	bh=iH+UFCDBsuOq2CKh8zcMTPp9qQBC6JEhVl3BMA06Qf4=;
+	s=arc-20240116; t=1769616146; c=relaxed/simple;
+	bh=Dfnp+XXpbWN1Oc8FBw86YD1xp/ulBZ8zNjbWqGS/6pk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Mx+VkXjsMLkSM+J1/Zqk5T3TEf67ryC9fx0qOOE+E5gN04TgNhiNhrx9zwHnCjBGDMoqJ+gJ2NgUhXAOhorqzsq1/VXPn177HLfsD9UH2eBRQ1xx+86swi4yexuTV3dkaQ4tI1+196yy2sLFy4eFNja5XO6g1beWzzhwAH1M5Ao=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XmL8Bye5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NyXYl5j1HxhI6TFv10cMEMewf6HhgI/1x9vNwktta9CFHKHP5oFejrvE4JuzY50ic3IUK3Ua/pIukvx++i0/22d1+THQjknxpEsK+U4S/xXryRY4ool14KyS5kQcQi0A0O5HsGQhWQvmxWfP1HTcr5+YCDAo5oHZL6IRie3GSMQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JmiVainq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XmL8Bye5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D1C21C4CEF1;
-	Wed, 28 Jan 2026 16:02:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JmiVainq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E853C4CEF1;
+	Wed, 28 Jan 2026 16:02:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1769616142;
-	bh=iH+UFCDBsuOq2CKh8zcMTPp9qQBC6JEhVl3BMA06Qf4=;
+	s=korg; t=1769616145;
+	bh=Dfnp+XXpbWN1Oc8FBw86YD1xp/ulBZ8zNjbWqGS/6pk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XmL8Bye5b/OdBOOnPbzW+mp677WceTO/vOhSrTkUaQtGloGuW4xjsl9xnl6EQO0Mn
-	 Yvp/K5XVz1VINgKB9W86T7ZFq8WTsNm6HUHfmwJqPPGv+5fc2K4liBYMDbTRTaK5Hn
-	 6W8JjYQeDIdtH9OhE9a5yWDdIyIr2SPL5a4t1dIg=
+	b=JmiVainq8AaBVYj9ztzYRUjMpYV5HW3Sx60RbXO1FhF4/2W4wi/qmou/zILWDbMIN
+	 jIDDRBgqxq+xc+7uDojGdvIuZuUAaXR09vbC0dDTne+1zONCS46GM+B1PSLKzQLIiY
+	 rLNt/rAqfI/xMFM84dRg0zLYf99+bpJYTyWw3j9w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ravindra <ravindra@intel.com>,
-	Kiran K <kiran.k@intel.com>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
-	Mariappan Ramasamy <mail@nappairam.dev>
-Subject: [PATCH 6.18 219/227] Bluetooth: btintel_pcie: Support for S4 (Hibernate)
-Date: Wed, 28 Jan 2026 16:24:24 +0100
-Message-ID: <20260128145352.312679196@linuxfoundation.org>
+	"jianyun.gao" <jianyungao89@gmail.com>,
+	SeongJae Park <sj@kernel.org>,
+	Wei Yang <richard.weiyang@gmail.com>,
+	Dev Jain <dev.jain@arm.com>,
+	"Liam R. Howlett" <Liam.Howlett@oracle.com>,
+	Chris Li <chrisl@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.18 220/227] mm: fix some typos in mm module
+Date: Wed, 28 Jan 2026 16:24:25 +0100
+Message-ID: <20260128145352.348738117@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260128145344.331957407@linuxfoundation.org>
 References: <20260128145344.331957407@linuxfoundation.org>
@@ -52,118 +56,269 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ravindra <ravindra@intel.com>
+From: "jianyun.gao" <jianyungao89@gmail.com>
 
-commit 1fb0d830dab89d0dc99bb84a7087b0ceca63d2d8 upstream.
+[ Upstream commit b6c46600bfb28b4be4e9cff7bad4f2cf357e0fb7 ]
 
-During S4 (hibernate), the Bluetooth device loses power. Upon resume,
-the driver performs the following actions:
+Below are some typos in the code comments:
 
-1. Unregisters hdev
-2. Calls function level reset
-3. Registers hdev
+  intevals ==> intervals
+  addesses ==> addresses
+  unavaliable ==> unavailable
+  facor ==> factor
+  droping ==> dropping
+  exlusive ==> exclusive
+  decription ==> description
+  confict ==> conflict
+  desriptions ==> descriptions
+  otherwize ==> otherwise
+  vlaue ==> value
+  cheching ==> checking
+  exisitng ==> existing
+  modifed ==> modified
+  differenciate ==> differentiate
+  refernece ==> reference
+  permissons ==> permissions
+  indepdenent ==> independent
+  spliting ==> splitting
 
-Test case:
-- run command sudo rtcwake -m disk -s 60
+Just fix it.
 
-Signed-off-by: Ravindra <ravindra@intel.com>
-Signed-off-by: Kiran K <kiran.k@intel.com>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Cc: Mariappan Ramasamy <mail@nappairam.dev>
+Link: https://lkml.kernel.org/r/20250929002608.1633825-1-jianyungao89@gmail.com
+Signed-off-by: jianyun.gao <jianyungao89@gmail.com>
+Reviewed-by: SeongJae Park <sj@kernel.org>
+Reviewed-by: Wei Yang <richard.weiyang@gmail.com>
+Reviewed-by: Dev Jain <dev.jain@arm.com>
+Reviewed-by: Liam R. Howlett <Liam.Howlett@oracle.com>
+Acked-by: Chris Li <chrisl@kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Stable-dep-of: 3937027caecb ("mm/hugetlb: fix two comments related to huge_pmd_unshare()")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/bluetooth/btintel_pcie.c |   41 +++++++++++++++++++++++++++++++++++++++
- drivers/bluetooth/btintel_pcie.h |    2 +
- 2 files changed, 43 insertions(+)
+ mm/damon/sysfs.c     |    2 +-
+ mm/gup.c             |    2 +-
+ mm/hugetlb.c         |    6 +++---
+ mm/hugetlb_vmemmap.c |    6 +++---
+ mm/kmsan/core.c      |    2 +-
+ mm/ksm.c             |    2 +-
+ mm/memory-tiers.c    |    2 +-
+ mm/memory.c          |    4 ++--
+ mm/secretmem.c       |    2 +-
+ mm/slab_common.c     |    2 +-
+ mm/slub.c            |    2 +-
+ mm/swapfile.c        |    2 +-
+ mm/userfaultfd.c     |    2 +-
+ mm/vma.c             |    4 ++--
+ 14 files changed, 20 insertions(+), 20 deletions(-)
 
---- a/drivers/bluetooth/btintel_pcie.c
-+++ b/drivers/bluetooth/btintel_pcie.c
-@@ -825,6 +825,11 @@ static inline bool btintel_pcie_in_d0(st
- 	return !(data->boot_stage_cache & BTINTEL_PCIE_CSR_BOOT_STAGE_D3_STATE_READY);
- }
+--- a/mm/damon/sysfs.c
++++ b/mm/damon/sysfs.c
+@@ -1267,7 +1267,7 @@ enum damon_sysfs_cmd {
+ 	DAMON_SYSFS_CMD_UPDATE_SCHEMES_EFFECTIVE_QUOTAS,
+ 	/*
+ 	 * @DAMON_SYSFS_CMD_UPDATE_TUNED_INTERVALS: Update the tuned monitoring
+-	 * intevals.
++	 * intervals.
+ 	 */
+ 	DAMON_SYSFS_CMD_UPDATE_TUNED_INTERVALS,
+ 	/*
+--- a/mm/gup.c
++++ b/mm/gup.c
+@@ -2710,7 +2710,7 @@ EXPORT_SYMBOL(get_user_pages_unlocked);
+  *
+  *  *) ptes can be read atomically by the architecture.
+  *
+- *  *) valid user addesses are below TASK_MAX_SIZE
++ *  *) valid user addresses are below TASK_MAX_SIZE
+  *
+  * The last two assumptions can be relaxed by the addition of helper functions.
+  *
+--- a/mm/hugetlb.c
++++ b/mm/hugetlb.c
+@@ -2934,7 +2934,7 @@ typedef enum {
+ 	 * NOTE: This is mostly identical to MAP_CHG_NEEDED, except
+ 	 * that currently vma_needs_reservation() has an unwanted side
+ 	 * effect to either use end() or commit() to complete the
+-	 * transaction.	 Hence it needs to differenciate from NEEDED.
++	 * transaction. Hence it needs to differentiate from NEEDED.
+ 	 */
+ 	MAP_CHG_ENFORCED = 2,
+ } map_chg_state;
+@@ -6007,7 +6007,7 @@ void __unmap_hugepage_range(struct mmu_g
+ 	/*
+ 	 * If we unshared PMDs, the TLB flush was not recorded in mmu_gather. We
+ 	 * could defer the flush until now, since by holding i_mmap_rwsem we
+-	 * guaranteed that the last refernece would not be dropped. But we must
++	 * guaranteed that the last reference would not be dropped. But we must
+ 	 * do the flushing before we return, as otherwise i_mmap_rwsem will be
+ 	 * dropped and the last reference to the shared PMDs page might be
+ 	 * dropped as well.
+@@ -7193,7 +7193,7 @@ long hugetlb_change_protection(struct vm
+ 		} else if (unlikely(is_pte_marker(pte))) {
+ 			/*
+ 			 * Do nothing on a poison marker; page is
+-			 * corrupted, permissons do not apply.  Here
++			 * corrupted, permissions do not apply. Here
+ 			 * pte_marker_uffd_wp()==true implies !poison
+ 			 * because they're mutual exclusive.
+ 			 */
+--- a/mm/hugetlb_vmemmap.c
++++ b/mm/hugetlb_vmemmap.c
+@@ -75,7 +75,7 @@ static int vmemmap_split_pmd(pmd_t *pmd,
+ 	if (likely(pmd_leaf(*pmd))) {
+ 		/*
+ 		 * Higher order allocations from buddy allocator must be able to
+-		 * be treated as indepdenent small pages (as they can be freed
++		 * be treated as independent small pages (as they can be freed
+ 		 * individually).
+ 		 */
+ 		if (!PageReserved(head))
+@@ -684,7 +684,7 @@ static void __hugetlb_vmemmap_optimize_f
+ 		ret = hugetlb_vmemmap_split_folio(h, folio);
  
-+static inline bool btintel_pcie_in_device_halt(struct btintel_pcie_data *data)
-+{
-+	return data->boot_stage_cache & BTINTEL_PCIE_CSR_BOOT_STAGE_DEVICE_HALTED;
-+}
-+
- static void btintel_pcie_wr_sleep_cntrl(struct btintel_pcie_data *data,
- 					u32 dxstate)
- {
-@@ -2532,6 +2537,8 @@ static int btintel_pcie_suspend_late(str
- 	dxstate = (mesg.event == PM_EVENT_SUSPEND ?
- 		   BTINTEL_PCIE_STATE_D3_HOT : BTINTEL_PCIE_STATE_D3_COLD);
+ 		/*
+-		 * Spliting the PMD requires allocating a page, thus lets fail
++		 * Splitting the PMD requires allocating a page, thus let's fail
+ 		 * early once we encounter the first OOM. No point in retrying
+ 		 * as it can be dynamically done on remap with the memory
+ 		 * we get back from the vmemmap deduplication.
+@@ -715,7 +715,7 @@ static void __hugetlb_vmemmap_optimize_f
+ 		/*
+ 		 * Pages to be freed may have been accumulated.  If we
+ 		 * encounter an ENOMEM,  free what we have and try again.
+-		 * This can occur in the case that both spliting fails
++		 * This can occur in the case that both splitting fails
+ 		 * halfway and head page allocation also failed. In this
+ 		 * case __hugetlb_vmemmap_optimize_folio() would free memory
+ 		 * allowing more vmemmap remaps to occur.
+--- a/mm/kmsan/core.c
++++ b/mm/kmsan/core.c
+@@ -33,7 +33,7 @@ bool kmsan_enabled __read_mostly;
  
-+	data->pm_sx_event = mesg.event;
-+
- 	data->gp0_received = false;
- 
- 	start = ktime_get();
-@@ -2581,6 +2588,20 @@ static int btintel_pcie_resume(struct de
- 
- 	start = ktime_get();
- 
-+	/* When the system enters S4 (hibernate) mode, bluetooth device loses
-+	 * power, which results in the erasure of its loaded firmware.
-+	 * Consequently, function level reset (flr) is required on system
-+	 * resume to bring the controller back into an operational state by
-+	 * initiating a new firmware download.
-+	 */
-+
-+	if (data->pm_sx_event == PM_EVENT_FREEZE ||
-+	    data->pm_sx_event == PM_EVENT_HIBERNATE) {
-+		set_bit(BTINTEL_PCIE_CORE_HALTED, &data->flags);
-+		btintel_pcie_reset(data->hdev);
-+		return 0;
-+	}
-+
- 	/* Refer: 6.4.11.7 -> Platform power management */
- 	btintel_pcie_wr_sleep_cntrl(data, BTINTEL_PCIE_STATE_D0);
- 	err = wait_event_timeout(data->gp0_wait_q, data->gp0_received,
-@@ -2589,6 +2610,26 @@ static int btintel_pcie_resume(struct de
- 		bt_dev_err(data->hdev,
- 			   "Timeout (%u ms) on alive interrupt for D0 entry",
- 			   BTINTEL_DEFAULT_INTR_TIMEOUT_MS);
-+
-+		/* Trigger function level reset if the controller is in error
-+		 * state during resume() to bring back the controller to
-+		 * operational mode
-+		 */
-+
-+		data->boot_stage_cache = btintel_pcie_rd_reg32(data,
-+				BTINTEL_PCIE_CSR_BOOT_STAGE_REG);
-+		if (btintel_pcie_in_error(data) ||
-+				btintel_pcie_in_device_halt(data)) {
-+			bt_dev_err(data->hdev, "Controller in error state for D0 entry");
-+			if (!test_and_set_bit(BTINTEL_PCIE_COREDUMP_INPROGRESS,
-+					      &data->flags)) {
-+				data->dmp_hdr.trigger_reason =
-+					BTINTEL_PCIE_TRIGGER_REASON_FW_ASSERT;
-+				queue_work(data->workqueue, &data->rx_work);
-+			}
-+			set_bit(BTINTEL_PCIE_CORE_HALTED, &data->flags);
-+			btintel_pcie_reset(data->hdev);
-+		}
- 		return -EBUSY;
- 	}
- 
---- a/drivers/bluetooth/btintel_pcie.h
-+++ b/drivers/bluetooth/btintel_pcie.h
-@@ -464,6 +464,7 @@ struct btintel_pcie_dump_header {
-  * @txq: TX Queue struct
-  * @rxq: RX Queue struct
-  * @alive_intr_ctxt: Alive interrupt context
-+ * @pm_sx_event: PM event on which system got suspended
+ /*
+  * Per-CPU KMSAN context to be used in interrupts, where current->kmsan is
+- * unavaliable.
++ * unavailable.
   */
- struct btintel_pcie_data {
- 	struct pci_dev	*pdev;
-@@ -513,6 +514,7 @@ struct btintel_pcie_data {
- 	u32	alive_intr_ctxt;
- 	struct btintel_pcie_dbgc	dbgc;
- 	struct btintel_pcie_dump_header dmp_hdr;
-+	u8	pm_sx_event;
- };
+ DEFINE_PER_CPU(struct kmsan_ctx, kmsan_percpu_ctx);
  
- static inline u32 btintel_pcie_rd_reg32(struct btintel_pcie_data *data,
+--- a/mm/ksm.c
++++ b/mm/ksm.c
+@@ -389,7 +389,7 @@ static unsigned long ewma(unsigned long
+  * exponentially weighted moving average. The new pages_to_scan value is
+  * multiplied with that change factor:
+  *
+- *      new_pages_to_scan *= change facor
++ *      new_pages_to_scan *= change factor
+  *
+  * The new_pages_to_scan value is limited by the cpu min and max values. It
+  * calculates the cpu percent for the last scan and calculates the new
+--- a/mm/memory-tiers.c
++++ b/mm/memory-tiers.c
+@@ -519,7 +519,7 @@ static inline void __init_node_memory_ty
+ 	 * for each device getting added in the same NUMA node
+ 	 * with this specific memtype, bump the map count. We
+ 	 * Only take memtype device reference once, so that
+-	 * changing a node memtype can be done by droping the
++	 * changing a node memtype can be done by dropping the
+ 	 * only reference count taken here.
+ 	 */
+ 
+--- a/mm/memory.c
++++ b/mm/memory.c
+@@ -4328,7 +4328,7 @@ static inline bool should_try_to_free_sw
+ 	 * If we want to map a page that's in the swapcache writable, we
+ 	 * have to detect via the refcount if we're really the exclusive
+ 	 * user. Try freeing the swapcache to get rid of the swapcache
+-	 * reference only in case it's likely that we'll be the exlusive user.
++	 * reference only in case it's likely that we'll be the exclusive user.
+ 	 */
+ 	return (fault_flags & FAULT_FLAG_WRITE) && !folio_test_ksm(folio) &&
+ 		folio_ref_count(folio) == (1 + folio_nr_pages(folio));
+@@ -5405,7 +5405,7 @@ vm_fault_t do_set_pmd(struct vm_fault *v
+ 
+ /**
+  * set_pte_range - Set a range of PTEs to point to pages in a folio.
+- * @vmf: Fault decription.
++ * @vmf: Fault description.
+  * @folio: The folio that contains @page.
+  * @page: The first page to create a PTE for.
+  * @nr: The number of PTEs to create.
+--- a/mm/secretmem.c
++++ b/mm/secretmem.c
+@@ -227,7 +227,7 @@ SYSCALL_DEFINE1(memfd_secret, unsigned i
+ 	struct file *file;
+ 	int fd, err;
+ 
+-	/* make sure local flags do not confict with global fcntl.h */
++	/* make sure local flags do not conflict with global fcntl.h */
+ 	BUILD_BUG_ON(SECRETMEM_FLAGS_MASK & O_CLOEXEC);
+ 
+ 	if (!secretmem_enable || !can_set_direct_map())
+--- a/mm/slab_common.c
++++ b/mm/slab_common.c
+@@ -259,7 +259,7 @@ out:
+  * @object_size: The size of objects to be created in this cache.
+  * @args: Additional arguments for the cache creation (see
+  *        &struct kmem_cache_args).
+- * @flags: See the desriptions of individual flags. The common ones are listed
++ * @flags: See the descriptions of individual flags. The common ones are listed
+  *         in the description below.
+  *
+  * Not to be called directly, use the kmem_cache_create() wrapper with the same
+--- a/mm/slub.c
++++ b/mm/slub.c
+@@ -2533,7 +2533,7 @@ bool slab_free_hook(struct kmem_cache *s
+ 		memset((char *)kasan_reset_tag(x) + inuse, 0,
+ 		       s->size - inuse - rsize);
+ 		/*
+-		 * Restore orig_size, otherwize kmalloc redzone overwritten
++		 * Restore orig_size, otherwise kmalloc redzone overwritten
+ 		 * would be reported
+ 		 */
+ 		set_orig_size(s, x, orig_size);
+--- a/mm/swapfile.c
++++ b/mm/swapfile.c
+@@ -1703,7 +1703,7 @@ static bool swap_entries_put_map_nr(stru
+ 
+ /*
+  * Check if it's the last ref of swap entry in the freeing path.
+- * Qualified vlaue includes 1, SWAP_HAS_CACHE or SWAP_MAP_SHMEM.
++ * Qualified value includes 1, SWAP_HAS_CACHE or SWAP_MAP_SHMEM.
+  */
+ static inline bool __maybe_unused swap_is_last_ref(unsigned char count)
+ {
+--- a/mm/userfaultfd.c
++++ b/mm/userfaultfd.c
+@@ -1578,7 +1578,7 @@ static int validate_move_areas(struct us
+ 
+ 	/*
+ 	 * For now, we keep it simple and only move between writable VMAs.
+-	 * Access flags are equal, therefore cheching only the source is enough.
++	 * Access flags are equal, therefore checking only the source is enough.
+ 	 */
+ 	if (!(src_vma->vm_flags & VM_WRITE))
+ 		return -EINVAL;
+--- a/mm/vma.c
++++ b/mm/vma.c
+@@ -109,7 +109,7 @@ static inline bool is_mergeable_vma(stru
+ static bool is_mergeable_anon_vma(struct vma_merge_struct *vmg, bool merge_next)
+ {
+ 	struct vm_area_struct *tgt = merge_next ? vmg->next : vmg->prev;
+-	struct vm_area_struct *src = vmg->middle; /* exisitng merge case. */
++	struct vm_area_struct *src = vmg->middle; /* existing merge case. */
+ 	struct anon_vma *tgt_anon = tgt->anon_vma;
+ 	struct anon_vma *src_anon = vmg->anon_vma;
+ 
+@@ -798,7 +798,7 @@ static bool can_merge_remove_vma(struct
+  * Returns: The merged VMA if merge succeeds, or NULL otherwise.
+  *
+  * ASSUMPTIONS:
+- * - The caller must assign the VMA to be modifed to @vmg->middle.
++ * - The caller must assign the VMA to be modified to @vmg->middle.
+  * - The caller must have set @vmg->prev to the previous VMA, if there is one.
+  * - The caller must not set @vmg->next, as we determine this.
+  * - The caller must hold a WRITE lock on the mm_struct->mmap_lock.
 
 
