@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A93D13093A8;
-	Wed, 28 Jan 2026 15:56:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F90D1D6AA;
+	Wed, 28 Jan 2026 15:56:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769615772; cv=none; b=ncIedgKp1a6+f7/iwNoRPri7+UWHPCtEv8lD1YiqHvq7VKjlYKTFe0VTV0Dc0Ro6sxVKbi4dFEGrbokTE/XwQPzjqFfN/2gn4kn6OTEeX+4ztOumM8oDWgdQjecrcH1n/w007filNsGkGzLM0abGi2aCidYdeRrdi6caczHjp+g=
+	t=1769615776; cv=none; b=UtWRYP/rVxGFHF4w10P75tYst48Oilh8ujWgIHrzeQgX8QJDrPnhyUQED4VwWMMmCDK963G6LuV9tzBrKegYDgp7naTtFEQuPyFD9cE8gZHXyOOowroxMJAitvrxt9yMMMbsiirdspCXHp/gmMm97RTVGcl8XghHLMVZt3S8xQ8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769615772; c=relaxed/simple;
-	bh=/5uWlqUOiVm+emkeZoVuit4wZR04nlC45VVoPPgC9Pk=;
+	s=arc-20240116; t=1769615776; c=relaxed/simple;
+	bh=KbCKkNKL0mz4ny+tIyV2c2OSk6qsRJnZdXPaw+gSTUc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Jw1uutKdpIJzPns9nkuW19zJvWrMjKTHD+yjbvQ667pYI31827ykh/eE0KMBp4YupIQXkNThsCjbYupo7Pz/dh8pCCTgp/SwlOKwyHTX1cTu5Oy/dv6EMUBa9mV96u7wCN4oiKV/7uOQNN76JU4kL4YN0k9IhaZMjsSLwTRxWy4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ak1iw8uu; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=oDGhbjkUmgTDdrFAe6uNwyMN+JIiZMmonOo2ht1nLUUGz6lClA0AoZgHF3N5MiZ9RIsOUxj/rZuHV14/e5qPRY8WghkPnnjTjAkQMAY/scv3NtNfKh/P1WsHvQdwLJHX3N2hMuXqhJdfzsXreyPWlC6SJsl5Qne/Ojh3s4PA6no=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BQnhxfwv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ak1iw8uu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 12930C4CEF1;
-	Wed, 28 Jan 2026 15:56:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BQnhxfwv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 56929C16AAE;
+	Wed, 28 Jan 2026 15:56:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1769615772;
-	bh=/5uWlqUOiVm+emkeZoVuit4wZR04nlC45VVoPPgC9Pk=;
+	s=korg; t=1769615775;
+	bh=KbCKkNKL0mz4ny+tIyV2c2OSk6qsRJnZdXPaw+gSTUc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ak1iw8uuU6BsJrgWBxMCW7GW+vesE8h0dblOdJMU8dJTrRXFs6LCtsRosQaMP6j/T
-	 y+29UkHX+HkxuFUXiQPiWrxByA9ARocrbA0N+DtSTTL5/X8MGMleZc+Y0lHQrT21TB
-	 cIHAuZbsz0tBOa5hN126e6PrZwnUmqZMSTGDGBrI=
+	b=BQnhxfwvQr13J3tRH6LZiGgGc1432scautjO3AuLt8qW+WOh5CyLCqIvk5aC4hnbR
+	 hF3We4yNR/0H2F2gC4FxzPL9vdwfw+wFMiysWufD4WPR2B8AjtVaxaBGt/pqj7Y1/6
+	 UGgrghaMPfW57shpVEuGm5ri5L9ujNn743xIFlMw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	David Yang <mmyangfl@gmail.com>,
-	Eric Dumazet <edumazet@google.com>,
+	Vadim Fedorenko <vadim.fedorenko@linux.dev>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 110/227] idpf: Fix data race in idpf_net_dim
-Date: Wed, 28 Jan 2026 16:22:35 +0100
-Message-ID: <20260128145348.426910922@linuxfoundation.org>
+Subject: [PATCH 6.18 111/227] be2net: fix data race in be_get_new_eqd
+Date: Wed, 28 Jan 2026 16:22:36 +0100
+Message-ID: <20260128145348.461668080@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260128145344.331957407@linuxfoundation.org>
 References: <20260128145344.331957407@linuxfoundation.org>
@@ -54,68 +54,57 @@ Content-Transfer-Encoding: 8bit
 
 From: David Yang <mmyangfl@gmail.com>
 
-[ Upstream commit 5fbe395cd1fdbc883584e7f38369e4ba5ca778d2 ]
+[ Upstream commit 302e5b481caa7b3d11ec0e058434c1fc95195e50 ]
 
-In idpf_net_dim(), some statistics protected by u64_stats_sync, are read
-and accumulated in ignorance of possible u64_stats_fetch_retry() events.
-The correct way to copy statistics is already illustrated by
-idpf_add_queue_stats(). Fix this by reading them into temporary variables
-first.
+In be_get_new_eqd(), statistics of pkts, protected by u64_stats_sync, are
+read and accumulated in ignorance of possible u64_stats_fetch_retry()
+events. Before the commit in question, these statistics were retrieved
+one by one directly from queues. Fix this by reading them into temporary
+variables first.
 
-Fixes: c2d548cad150 ("idpf: add TX splitq napi poll support")
-Fixes: 3a8845af66ed ("idpf: add RX splitq napi poll support")
+Fixes: 209477704187 ("be2net: set interrupt moderation for Skyhawk-R using EQ-DB")
 Signed-off-by: David Yang <mmyangfl@gmail.com>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Link: https://patch.msgid.link/20260119162720.1463859-1-mmyangfl@gmail.com
+Reviewed-by: Vadim Fedorenko <vadim.fedorenko@linux.dev>
+Link: https://patch.msgid.link/20260119153440.1440578-1-mmyangfl@gmail.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/idpf/idpf_txrx.c | 16 +++++++++++-----
- 1 file changed, 11 insertions(+), 5 deletions(-)
+ drivers/net/ethernet/emulex/benet/be_main.c | 8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/ethernet/intel/idpf/idpf_txrx.c b/drivers/net/ethernet/intel/idpf/idpf_txrx.c
-index f66948f5de78b..a48088eb9b822 100644
---- a/drivers/net/ethernet/intel/idpf/idpf_txrx.c
-+++ b/drivers/net/ethernet/intel/idpf/idpf_txrx.c
-@@ -3941,7 +3941,7 @@ static void idpf_update_dim_sample(struct idpf_q_vector *q_vector,
- static void idpf_net_dim(struct idpf_q_vector *q_vector)
- {
- 	struct dim_sample dim_sample = { };
--	u64 packets, bytes;
-+	u64 packets, bytes, pkts, bts;
- 	u32 i;
- 
- 	if (!IDPF_ITR_IS_DYNAMIC(q_vector->tx_intr_mode))
-@@ -3953,9 +3953,12 @@ static void idpf_net_dim(struct idpf_q_vector *q_vector)
- 
+diff --git a/drivers/net/ethernet/emulex/benet/be_main.c b/drivers/net/ethernet/emulex/benet/be_main.c
+index 5bb31c8fab391..995c159003d79 100644
+--- a/drivers/net/ethernet/emulex/benet/be_main.c
++++ b/drivers/net/ethernet/emulex/benet/be_main.c
+@@ -2141,7 +2141,7 @@ static int be_get_new_eqd(struct be_eq_obj *eqo)
+ 	struct be_aic_obj *aic;
+ 	struct be_rx_obj *rxo;
+ 	struct be_tx_obj *txo;
+-	u64 rx_pkts = 0, tx_pkts = 0;
++	u64 rx_pkts = 0, tx_pkts = 0, pkts;
+ 	ulong now;
+ 	u32 pps, delta;
+ 	int i;
+@@ -2157,15 +2157,17 @@ static int be_get_new_eqd(struct be_eq_obj *eqo)
+ 	for_all_rx_queues_on_eq(adapter, eqo, rxo, i) {
  		do {
- 			start = u64_stats_fetch_begin(&txq->stats_sync);
--			packets += u64_stats_read(&txq->q_stats.packets);
--			bytes += u64_stats_read(&txq->q_stats.bytes);
-+			pkts = u64_stats_read(&txq->q_stats.packets);
-+			bts = u64_stats_read(&txq->q_stats.bytes);
- 		} while (u64_stats_fetch_retry(&txq->stats_sync, start));
-+
-+		packets += pkts;
-+		bytes += bts;
+ 			start = u64_stats_fetch_begin(&rxo->stats.sync);
+-			rx_pkts += rxo->stats.rx_pkts;
++			pkts = rxo->stats.rx_pkts;
+ 		} while (u64_stats_fetch_retry(&rxo->stats.sync, start));
++		rx_pkts += pkts;
  	}
  
- 	idpf_update_dim_sample(q_vector, &dim_sample, &q_vector->tx_dim,
-@@ -3972,9 +3975,12 @@ static void idpf_net_dim(struct idpf_q_vector *q_vector)
- 
+ 	for_all_tx_queues_on_eq(adapter, eqo, txo, i) {
  		do {
- 			start = u64_stats_fetch_begin(&rxq->stats_sync);
--			packets += u64_stats_read(&rxq->q_stats.packets);
--			bytes += u64_stats_read(&rxq->q_stats.bytes);
-+			pkts = u64_stats_read(&rxq->q_stats.packets);
-+			bts = u64_stats_read(&rxq->q_stats.bytes);
- 		} while (u64_stats_fetch_retry(&rxq->stats_sync, start));
-+
-+		packets += pkts;
-+		bytes += bts;
+ 			start = u64_stats_fetch_begin(&txo->stats.sync);
+-			tx_pkts += txo->stats.tx_reqs;
++			pkts = txo->stats.tx_reqs;
+ 		} while (u64_stats_fetch_retry(&txo->stats.sync, start));
++		tx_pkts += pkts;
  	}
  
- 	idpf_update_dim_sample(q_vector, &dim_sample, &q_vector->rx_dim,
+ 	/* Skip, if wrapped around or first calculation */
 -- 
 2.51.0
 
