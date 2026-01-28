@@ -1,36 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 257CE2FABE1;
-	Wed, 28 Jan 2026 15:40:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 290F12FBDF5;
+	Wed, 28 Jan 2026 15:40:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769614814; cv=none; b=PtKU/u098M39jESHl3Gsd5dHoW85luo+neyiBES6JbQP3P+nFGd6UuyUVWHSuRLeiDXO0syinQ+rOcD0PzUJaYoox8hRUPoOAAQt6BlZa2TIPSFwkn1gOXfeIk/p1USZa2kh1S6SnKvZ/gER8X7s46dcCLnungGYf76HZlwRqtE=
+	t=1769614817; cv=none; b=nnjNY1WrGgN4OJyKWR6eHlJg/GZHuq+RL83bdTURs9FT/0JVQe0jiTxUMDKH98MR++aGMC+DUV1Cm2FLI+AFS/vAvhJhK/55roFWpfoDpeOKWZI//kUFJc3UsPIakRrCzva4M8xgxJvQGj8zRQGDGIgrvkstPJsmVeJ7WoF9N/o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769614814; c=relaxed/simple;
-	bh=/kz3gYaz/H6LH+ahT7TIR0ytE/NHS4PqASevnkZlgw8=;
+	s=arc-20240116; t=1769614817; c=relaxed/simple;
+	bh=1m0pxd9+He69BvGpdL5Lt3M78VxCPmE70gqfDFPOEY0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Te9TSe9pO/EO7tMfJkerzlHLWNMKx211G8RAPO4RHwsIpiGs/eNyLMjaezI+LzC6E1crpYGddP+4mK/yM74zgXL/JPQnGnv3bFulF8cW8C0dHJzX06KyJ1dFh6OcuoPzGfv1tuHO+pLLicrhKmW6T+6lYBamy7L54vU1c09EQ78=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rx6/cKwt; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=C2SS3CHnafBMkreG882QuQziD/gd7g3XHMnGcJg1eCXSkBQKXUPAs/lrh2msc0S6DtuW7VrAH+dI2KjGo3792QiKK94evdhPzjqq9ntuSgSeRm60fneMvXibfcnbLT4zimZfbbWA3PbUMJCOkHgKPU+VXyJuMm8KcGVhjinCNxA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=p+WO8zBa; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rx6/cKwt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F423BC4CEF1;
-	Wed, 28 Jan 2026 15:40:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="p+WO8zBa"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A56AC4CEF7;
+	Wed, 28 Jan 2026 15:40:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1769614813;
-	bh=/kz3gYaz/H6LH+ahT7TIR0ytE/NHS4PqASevnkZlgw8=;
+	s=korg; t=1769614816;
+	bh=1m0pxd9+He69BvGpdL5Lt3M78VxCPmE70gqfDFPOEY0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rx6/cKwtAJ1JV/bALsRyk9I5+aOjCrBC/l6MT3FX1ARRtv+SFvmTBQwsiqjGFQwzO
-	 2zdrvPzDMwVnhTb4KCWGOhhKrCOmVKlufOcCmf0ER8+8KdzSBf4rWafwAGr+zeCPYh
-	 G7/ISr6Ea+iZZJxG0K4USCswFRwwxFYWw0cNnLjI=
+	b=p+WO8zBaQPsakjCx8dvouQJXwihYqFdWqL1rdsv/vLZiiOtf9lDIlb98Mthf39FCz
+	 CO/CGbp97Zwqmk/FgUT4ql5dXsQLLW+Trdg7zqcbI0OroFiuQFS0t81dnxckLiDPQz
+	 mLH1vCfJVEvhToANwlbqwBl1itmTwRYi2FaAKW1E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marc Kleine-Budde <mkl@pengutronix.de>
-Subject: [PATCH 6.6 217/254] can: kvaser_usb: kvaser_usb_read_bulk_callback(): fix URB memory leak
-Date: Wed, 28 Jan 2026 16:23:13 +0100
-Message-ID: <20260128145352.598425454@linuxfoundation.org>
+	Chenghai Huang <huangchenghai2@huawei.com>,
+	Zhangfei Gao <zhangfei.gao@linaro.org>
+Subject: [PATCH 6.6 208/254] uacce: fix isolate sysfs check condition
+Date: Wed, 28 Jan 2026 16:23:04 +0100
+Message-ID: <20260128145352.279623228@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260128145344.698118637@linuxfoundation.org>
 References: <20260128145344.698118637@linuxfoundation.org>
@@ -49,62 +50,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Marc Kleine-Budde <mkl@pengutronix.de>
+From: Chenghai Huang <huangchenghai2@huawei.com>
 
-commit 248e8e1a125fa875158df521b30f2cc7e27eeeaa upstream.
+commit 98eec349259b1fd876f350b1c600403bcef8f85d upstream.
 
-Fix similar memory leak as in commit 7352e1d5932a ("can: gs_usb:
-gs_usb_receive_bulk_callback(): fix URB memory leak").
+uacce supports the device isolation feature. If the driver
+implements the isolate_err_threshold_read and
+isolate_err_threshold_write callback functions, uacce will create
+sysfs files now. Users can read and configure the isolation policy
+through sysfs. Currently, sysfs files are created as long as either
+isolate_err_threshold_read or isolate_err_threshold_write callback
+functions are present.
 
-In kvaser_usb_set_{,data_}bittiming() -> kvaser_usb_setup_rx_urbs(), the
-URBs for USB-in transfers are allocated, added to the dev->rx_submitted
-anchor and submitted. In the complete callback
-kvaser_usb_read_bulk_callback(), the URBs are processed and resubmitted. In
-kvaser_usb_remove_interfaces() the URBs are freed by calling
-usb_kill_anchored_urbs(&dev->rx_submitted).
+However, accessing a non-existent callback function may cause the
+system to crash. Therefore, intercept the creation of sysfs if
+neither read nor write exists; create sysfs if either is supported,
+but intercept unsupported operations at the call site.
 
-However, this does not take into account that the USB framework unanchors
-the URB before the complete function is called. This means that once an
-in-URB has been completed, it is no longer anchored and is ultimately not
-released in usb_kill_anchored_urbs().
-
-Fix the memory leak by anchoring the URB in the
-kvaser_usb_read_bulk_callback() to the dev->rx_submitted anchor.
-
-Fixes: 080f40a6fa28 ("can: kvaser_usb: Add support for Kvaser CAN/USB devices")
+Fixes: e3e289fbc0b5 ("uacce: supports device isolation feature")
 Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20260116-can_usb-fix-memory-leak-v2-3-4b8cb2915571@pengutronix.de
-Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
+Signed-off-by: Chenghai Huang <huangchenghai2@huawei.com>
+Acked-by: Zhangfei Gao <zhangfei.gao@linaro.org>
+Link: https://patch.msgid.link/20251202061256.4158641-3-huangchenghai2@huawei.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/can/usb/kvaser_usb/kvaser_usb_core.c |    9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
+ drivers/misc/uacce/uacce.c |    6 ++++++
+ 1 file changed, 6 insertions(+)
 
---- a/drivers/net/can/usb/kvaser_usb/kvaser_usb_core.c
-+++ b/drivers/net/can/usb/kvaser_usb/kvaser_usb_core.c
-@@ -349,7 +349,14 @@ resubmit_urb:
- 			  urb->transfer_buffer, KVASER_USB_RX_BUFFER_SIZE,
- 			  kvaser_usb_read_bulk_callback, dev);
+--- a/drivers/misc/uacce/uacce.c
++++ b/drivers/misc/uacce/uacce.c
+@@ -379,6 +379,9 @@ static ssize_t isolate_strategy_show(str
+ 	struct uacce_device *uacce = to_uacce_device(dev);
+ 	u32 val;
  
-+	usb_anchor_urb(urb, &dev->rx_submitted);
++	if (!uacce->ops->isolate_err_threshold_read)
++		return -ENOENT;
 +
- 	err = usb_submit_urb(urb, GFP_ATOMIC);
-+	if (!err)
-+		return;
-+
-+	usb_unanchor_urb(urb);
-+
- 	if (err == -ENODEV) {
- 		for (i = 0; i < dev->nchannels; i++) {
- 			if (!dev->nets[i])
-@@ -357,7 +364,7 @@ resubmit_urb:
+ 	val = uacce->ops->isolate_err_threshold_read(uacce);
  
- 			netif_device_detach(dev->nets[i]->netdev);
- 		}
--	} else if (err) {
-+	} else {
- 		dev_err(&dev->intf->dev,
- 			"Failed resubmitting read bulk urb: %d\n", err);
- 	}
+ 	return sysfs_emit(buf, "%u\n", val);
+@@ -391,6 +394,9 @@ static ssize_t isolate_strategy_store(st
+ 	unsigned long val;
+ 	int ret;
+ 
++	if (!uacce->ops->isolate_err_threshold_write)
++		return -ENOENT;
++
+ 	if (kstrtoul(buf, 0, &val) < 0)
+ 		return -EINVAL;
+ 
 
 
