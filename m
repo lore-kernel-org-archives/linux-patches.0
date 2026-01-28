@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93FBB2D8760;
-	Wed, 28 Jan 2026 15:41:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D95F92DF138;
+	Wed, 28 Jan 2026 15:41:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769614904; cv=none; b=OSC0XYJmUBiBwcNjwVEgPr71tAMV8SJs5J/RcpAMKyMSNJUY6IVoxt/EtxA2yNofVnptHdZuW/RhvgZeb9Y0GRrMoWmHxcW02OqBD+S56DfB/+hODJ0nWnPbz/bblWEoPF/gMftHV6H1uDXSmfaV+8krcvqmhBEQU5XPE/ilpN0=
+	t=1769614907; cv=none; b=jB1Rowm/pl11VHIsxdDrb7/1aoT8aErEqDYOBhCF1ZxFqUVIKpSbTT2QIQ8/AQACAo1pQIaXqJyZ+jfxAFhM7Odnb3ReMCXUmrnZGG74YtnM6Sx8BlAWd/QqFAtE1pe8ep9KJZko70dKasl7V2Fd4S/0ltbP73fBEF/mg16tBMA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769614904; c=relaxed/simple;
-	bh=P4aDm4fJNr9js6SMo8qEaXHaq8gd2BFgiWOuI9PZm6I=;
+	s=arc-20240116; t=1769614907; c=relaxed/simple;
+	bh=CkIgRs36VVcdl6Cs+6dMSUF6RKCQNLb6+Hkafp6jSEU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=p/MFAcCbSethT3X9OyABP/M7WZAiu8WJs3Ooo3QsxPFlcci6NiN60G+QCyZKaabp6vjT4tGLMnSXE6bONV64FaWZbiwl+puy+G6G6U97mGUHpM5xzcW9hXc0vx0RRlRspYqgLKjpFFxKna0JdLfEOMMPKinTW8aoeUfE8UG/Neg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GpzPp4E4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=UH+x4XOh/wrM16vHPsZbQIP6CtG583QEz1qsl/tvMP9+Fynfi8/0q5X880jEU3l/3kdi0kov625Bfhtq/4gdXpeRUlRkN7yunePzO6ssfdN5wrGhQD9wwh1NtGwh74/UjPCQpUr2JoD83493AqGwY20RgZbDhLgVqNwOWoAUknY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rPJWrLMw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GpzPp4E4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 081C0C4CEF7;
-	Wed, 28 Jan 2026 15:41:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rPJWrLMw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B536C4CEF1;
+	Wed, 28 Jan 2026 15:41:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1769614904;
-	bh=P4aDm4fJNr9js6SMo8qEaXHaq8gd2BFgiWOuI9PZm6I=;
+	s=korg; t=1769614907;
+	bh=CkIgRs36VVcdl6Cs+6dMSUF6RKCQNLb6+Hkafp6jSEU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GpzPp4E4RLjZwcvB7U1vTBYLpeyxGTYLW/zs297cBt4XJL7k+D6iPNBMYPGbZXA20
-	 6/0gflIFWTMaS4SiHj8q/TbP9PWE583qHsZSKXGTuTHcw6kP8yYn9tHPZyhwUgp5ja
-	 w05pt4udtSLHi+HBGKNJvMHO8kF0qXS0FyKcbbXk=
+	b=rPJWrLMwkScGn0ii325oQYcoFs5wUpPOeEOK6dWGWuruORsdDrW6cnpJohgK001oE
+	 q06dR7+tZanx+TE1tW9oTomksMy+QGP2vg1E//edIkszW56S5GByqGyNQg/IZvDVuv
+	 gbbqqXBy3KIGJvVEFwACIab4kQGQQVMXv1N7ctng=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kurt Kanzenbach <kurt@linutronix.de>,
+	Avi Shalev <avi.shalev@intel.com>,
 	Aleksandr Loktionov <aleksandr.loktionov@intel.com>,
+	Song Yoong Siang <yoong.siang.song@intel.com>,
+	Chwee-Lin Choong <chwee.lin.choong@intel.com>,
 	Avigail Dahan <avigailx.dahan@intel.com>,
-	Vinicius Costa Gomes <vinicius.gomes@intel.com>,
 	Tony Nguyen <anthony.l.nguyen@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 022/169] igc: Restore default Qbv schedule when changing channels
-Date: Wed, 28 Jan 2026 16:21:45 +0100
-Message-ID: <20260128145334.821244294@linuxfoundation.org>
+Subject: [PATCH 6.12 023/169] igc: fix race condition in TX timestamp read for register 0
+Date: Wed, 28 Jan 2026 16:21:46 +0100
+Message-ID: <20260128145334.857092377@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260128145334.006287341@linuxfoundation.org>
 References: <20260128145334.006287341@linuxfoundation.org>
@@ -54,86 +55,123 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kurt Kanzenbach <kurt@linutronix.de>
+From: Chwee-Lin Choong <chwee.lin.choong@intel.com>
 
-[ Upstream commit 41a9a6826f20a524242a6c984845c4855f629841 ]
+[ Upstream commit 6990dc392a9ab10e52af37e0bee8c7b753756dc4 ]
 
-The Multi-queue Priority (MQPRIO) and Earliest TxTime First (ETF) offloads
-utilize the Time Sensitive Networking (TSN) Tx mode. This mode is always
-coupled to IEEE 802.1Qbv time aware shaper (Qbv). Therefore, the driver
-sets a default Qbv schedule of all gates opened and a cycle time of
-1s. This schedule is set during probe.
+The current HW bug workaround checks the TXTT_0 ready bit first,
+then reads TXSTMPL_0 twice (before and after reading TXSTMPH_0)
+to detect whether a new timestamp was captured by timestamp
+register 0 during the workaround.
 
-However, the following sequence of events lead to Tx issues:
+This sequence has a race: if a new timestamp is captured after
+checking the TXTT_0 bit but before the first TXSTMPL_0 read, the
+detection fails because both the "old" and "new" values come from
+the same timestamp.
 
- - Boot a dual core system
-   igc_probe():
-     igc_tsn_clear_schedule():
-       -> Default Schedule is set
-       Note: At this point the driver has allocated two Tx/Rx queues, because
-       there are only two CPUs.
+Fix by reading TXSTMPL_0 first to establish a baseline, then
+checking the TXTT_0 bit. This ensures any timestamp captured
+during the race window will be detected.
 
- - ethtool -L enp3s0 combined 4
-   igc_ethtool_set_channels():
-     igc_reinit_queues()
-       -> Default schedule is gone, per Tx ring start and end time are zero
+Old sequence:
+  1. Check TXTT_0 ready bit
+  2. Read TXSTMPL_0 (baseline)
+  3. Read TXSTMPH_0 (interrupt workaround)
+  4. Read TXSTMPL_0 (detect changes vs baseline)
 
-  - tc qdisc replace dev enp3s0 handle 100 parent root mqprio \
-      num_tc 4 map 3 3 2 2 0 1 1 1 3 3 3 3 3 3 3 3 \
-      queues 1@0 1@1 1@2 1@3 hw 1
-    igc_tsn_offload_apply():
-      igc_tsn_enable_offload():
-        -> Writes zeros to IGC_STQT(i) and IGC_ENDQT(i), causing Tx to stall/fail
+New sequence:
+  1. Read TXSTMPL_0 (baseline)
+  2. Check TXTT_0 ready bit
+  3. Read TXSTMPH_0 (interrupt workaround)
+  4. Read TXSTMPL_0 (detect changes vs baseline)
 
-Therefore, restore the default Qbv schedule after changing the number of
-channels.
-
-Furthermore, add a restriction to not allow queue reconfiguration when
-TSN/Qbv is enabled, because it may lead to inconsistent states.
-
-Fixes: c814a2d2d48f ("igc: Use default cycle 'start' and 'end' values for queues")
-Signed-off-by: Kurt Kanzenbach <kurt@linutronix.de>
+Fixes: c789ad7cbebc ("igc: Work around HW bug causing missing timestamps")
+Suggested-by: Avi Shalev <avi.shalev@intel.com>
 Reviewed-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
+Co-developed-by: Song Yoong Siang <yoong.siang.song@intel.com>
+Signed-off-by: Song Yoong Siang <yoong.siang.song@intel.com>
+Signed-off-by: Chwee-Lin Choong <chwee.lin.choong@intel.com>
 Tested-by: Avigail Dahan <avigailx.dahan@intel.com>
-Acked-by: Vinicius Costa Gomes <vinicius.gomes@intel.com>
 Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/igc/igc_ethtool.c | 4 ++--
- drivers/net/ethernet/intel/igc/igc_main.c    | 5 +++++
- 2 files changed, 7 insertions(+), 2 deletions(-)
+ drivers/net/ethernet/intel/igc/igc_ptp.c | 43 ++++++++++++++----------
+ 1 file changed, 25 insertions(+), 18 deletions(-)
 
-diff --git a/drivers/net/ethernet/intel/igc/igc_ethtool.c b/drivers/net/ethernet/intel/igc/igc_ethtool.c
-index 5b0c6f4337679..f4179b814eafc 100644
---- a/drivers/net/ethernet/intel/igc/igc_ethtool.c
-+++ b/drivers/net/ethernet/intel/igc/igc_ethtool.c
-@@ -1540,8 +1540,8 @@ static int igc_ethtool_set_channels(struct net_device *netdev,
- 	if (ch->other_count != NON_Q_VECTORS)
- 		return -EINVAL;
+diff --git a/drivers/net/ethernet/intel/igc/igc_ptp.c b/drivers/net/ethernet/intel/igc/igc_ptp.c
+index efc7b30e42113..a272d1a29eadb 100644
+--- a/drivers/net/ethernet/intel/igc/igc_ptp.c
++++ b/drivers/net/ethernet/intel/igc/igc_ptp.c
+@@ -785,36 +785,43 @@ static void igc_ptp_tx_reg_to_stamp(struct igc_adapter *adapter,
+ static void igc_ptp_tx_hwtstamp(struct igc_adapter *adapter)
+ {
+ 	struct igc_hw *hw = &adapter->hw;
++	u32 txstmpl_old;
+ 	u64 regval;
+ 	u32 mask;
+ 	int i;
  
--	/* Do not allow channel reconfiguration when mqprio is enabled */
--	if (adapter->strict_priority_enable)
-+	/* Do not allow channel reconfiguration when any TSN qdisc is enabled */
-+	if (adapter->flags & IGC_FLAG_TSN_ANY_ENABLED)
- 		return -EINVAL;
- 
- 	/* Verify the number of channels doesn't exceed hw limits */
-diff --git a/drivers/net/ethernet/intel/igc/igc_main.c b/drivers/net/ethernet/intel/igc/igc_main.c
-index 9ba41a427e141..18dad521aefcc 100644
---- a/drivers/net/ethernet/intel/igc/igc_main.c
-+++ b/drivers/net/ethernet/intel/igc/igc_main.c
-@@ -7582,6 +7582,11 @@ int igc_reinit_queues(struct igc_adapter *adapter)
- 	if (netif_running(netdev))
- 		err = igc_open(netdev);
- 
-+	if (!err) {
-+		/* Restore default IEEE 802.1Qbv schedule after queue reinit */
-+		igc_tsn_clear_schedule(adapter);
-+	}
++	/* Establish baseline of TXSTMPL_0 before checking TXTT_0.
++	 * This baseline is used to detect if a new timestamp arrives in
++	 * register 0 during the hardware bug workaround below.
++	 */
++	txstmpl_old = rd32(IGC_TXSTMPL);
 +
- 	return err;
- }
+ 	mask = rd32(IGC_TSYNCTXCTL) & IGC_TSYNCTXCTL_TXTT_ANY;
+ 	if (mask & IGC_TSYNCTXCTL_TXTT_0) {
+ 		regval = rd32(IGC_TXSTMPL);
+ 		regval |= (u64)rd32(IGC_TXSTMPH) << 32;
+ 	} else {
+-		/* There's a bug in the hardware that could cause
+-		 * missing interrupts for TX timestamping. The issue
+-		 * is that for new interrupts to be triggered, the
+-		 * IGC_TXSTMPH_0 register must be read.
++		/* TXTT_0 not set - register 0 has no new timestamp initially.
++		 *
++		 * Hardware bug: Future timestamp interrupts won't fire unless
++		 * TXSTMPH_0 is read, even if the timestamp was captured in
++		 * registers 1-3.
+ 		 *
+-		 * To avoid discarding a valid timestamp that just
+-		 * happened at the "wrong" time, we need to confirm
+-		 * that there was no timestamp captured, we do that by
+-		 * assuming that no two timestamps in sequence have
+-		 * the same nanosecond value.
++		 * Workaround: Read TXSTMPH_0 here to enable future interrupts.
++		 * However, this read clears TXTT_0. If a timestamp arrives in
++		 * register 0 after checking TXTT_0 but before this read, it
++		 * would be lost.
+ 		 *
+-		 * So, we read the "low" register, read the "high"
+-		 * register (to latch a new timestamp) and read the
+-		 * "low" register again, if "old" and "new" versions
+-		 * of the "low" register are different, a valid
+-		 * timestamp was captured, we can read the "high"
+-		 * register again.
++		 * To detect this race: We saved a baseline read of TXSTMPL_0
++		 * before TXTT_0 check. After performing the workaround read of
++		 * TXSTMPH_0, we read TXSTMPL_0 again. Since consecutive
++		 * timestamps never share the same nanosecond value, a change
++		 * between the baseline and new TXSTMPL_0 indicates a timestamp
++		 * arrived during the race window. If so, read the complete
++		 * timestamp.
+ 		 */
+-		u32 txstmpl_old, txstmpl_new;
++		u32 txstmpl_new;
  
+-		txstmpl_old = rd32(IGC_TXSTMPL);
+ 		rd32(IGC_TXSTMPH);
+ 		txstmpl_new = rd32(IGC_TXSTMPL);
+ 
+@@ -829,7 +836,7 @@ static void igc_ptp_tx_hwtstamp(struct igc_adapter *adapter)
+ 
+ done:
+ 	/* Now that the problematic first register was handled, we can
+-	 * use retrieve the timestamps from the other registers
++	 * retrieve the timestamps from the other registers
+ 	 * (starting from '1') with less complications.
+ 	 */
+ 	for (i = 1; i < IGC_MAX_TX_TSTAMP_REGS; i++) {
 -- 
 2.51.0
 
