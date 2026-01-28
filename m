@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2EC8430E849;
-	Wed, 28 Jan 2026 15:57:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9B3C303A15;
+	Wed, 28 Jan 2026 15:57:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769615868; cv=none; b=tGZ5mjIVwPoKZN9Y270UHehfI6HbmneVRwKWkWIm0D8y0L6naQrzegggVe21ebrHg8j9L4wBe/ExObfLLPzq3ZBWyCtPb5v8weEz6UdwXfetfQF+E6lZJP4ny3fkq9eVQE+Z9Csyl3EJQQDqW2T7JW7ZwsYjcW6hIfVw/MIyguE=
+	t=1769615871; cv=none; b=spHnENHWSIv3HXwA9QUfZuctLwGZJPktuSAb4DZcrsDSqx5tPk1LnikmT0fRCGETjbCr91ajiOnb1EY1y83ycuXPRceFen+zl3XCgDE8IJK1vMmXwaTtY5Ti+JwGchdDtZp+k40wbGxRRKD0+Dgr9mhM7cE5g5QtgSTH5A4zR74=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769615868; c=relaxed/simple;
-	bh=B+OdNnadeCrojyxNHC3Da95ZmfZf57NH00DbGaB51Lg=;
+	s=arc-20240116; t=1769615871; c=relaxed/simple;
+	bh=qgSz4hj3xMqFI2UXfrSFy0s23pa+ju/3gu9jNQw2AW4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Q0KwHwQNrfjJFhMA220JYyn3FEhlPgDFUL/pMGDXRfaq+SCqlWzw5hsR95cke1fsVC+aTl4+EO5drKHs/ezw9O1pltQsn7iQUivX0of/QkM4h6tu53KmqRmqJqSnJYGWRuZafjynhkdm57uVafnmKAX9IIk1qBDasquI7vzKv5g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LCa6tawE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LJBoryTp9PqUkJQVPVYrDWPnH2WbKLDpKVbF9hWDVPYSdX2U9NJTCae3LL2DGByrP8Q5yHKB+HgcToo8hNGTjOyMfIBtfna4k4JSihzhQ3//3m2TdcXuz6FybqPXjzZscmIWzF3SxX6n0y/dCYFEQoaUMOh7ueO3yIfhhlrbnko=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DqZCujgn; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LCa6tawE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 81D04C4CEF1;
-	Wed, 28 Jan 2026 15:57:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DqZCujgn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F1AFBC4CEF1;
+	Wed, 28 Jan 2026 15:57:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1769615868;
-	bh=B+OdNnadeCrojyxNHC3Da95ZmfZf57NH00DbGaB51Lg=;
+	s=korg; t=1769615871;
+	bh=qgSz4hj3xMqFI2UXfrSFy0s23pa+ju/3gu9jNQw2AW4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LCa6tawElgOQSIhUgTCb6XTKI6M8vzVuKhx33tyONLLQQIbuhiI9DSn4N7e7oG1oS
-	 xcW2yMWB9VIawd03kYmsJ8EXGPtvTEEoH9MPbVY5VHXmYsYoEhUU4A32HvWh/hLvlv
-	 ZcYGF6AWcITsQ8Vyh+VIUuGKTat+aTOkRvpOT4nw=
+	b=DqZCujgna3gbF76pFtXvgjDBFp5yY+U9ETooDlTPQAUYtvAx2j1dqMVC9qGUxJuPk
+	 YkORDMIJrDfdLhAV6niNe53cG8UwyMiGBI2mtJjGQlcn15v2HOVBIMf6cUTZTFM0dR
+	 RFeNje3ZvEhVfM2Qc89bqrEQtMk09/uFrRatUcTo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Aleksandr Loktionov <aleksandr.loktionov@intel.com>,
-	Przemek Kitszel <przemyslaw.kitszel@intel.com>,
 	Paul Greenwalt <paul.greenwalt@intel.com>,
 	Paul Menzel <pmenzel@molgen.mpg.de>,
 	Tony Nguyen <anthony.l.nguyen@intel.com>,
 	Sasha Levin <sashal@kernel.org>,
 	Rinitha S <sx.rinitha@intel.com>
-Subject: [PATCH 6.18 105/227] ice: add missing ice_deinit_hw() in devlink reinit path
-Date: Wed, 28 Jan 2026 16:22:30 +0100
-Message-ID: <20260128145348.245206488@linuxfoundation.org>
+Subject: [PATCH 6.18 106/227] ice: fix devlink reload call trace
+Date: Wed, 28 Jan 2026 16:22:31 +0100
+Message-ID: <20260128145348.283494976@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260128145344.331957407@linuxfoundation.org>
 References: <20260128145344.331957407@linuxfoundation.org>
@@ -57,50 +56,69 @@ Content-Transfer-Encoding: 8bit
 
 From: Paul Greenwalt <paul.greenwalt@intel.com>
 
-[ Upstream commit 42fb5f3deb582cb96440e4683745017dbabb83d6 ]
+[ Upstream commit d3f867e7a04678640ebcbfb81893c59f4af48586 ]
 
-devlink-reload results in ice_init_hw failed error, and then removing
-the ice driver causes a NULL pointer dereference.
+Commit 4da71a77fc3b ("ice: read internal temperature sensor") introduced
+internal temperature sensor reading via HWMON. ice_hwmon_init() was added
+to ice_init_feature() and ice_hwmon_exit() was added to ice_remove(). As a
+result if devlink reload is used to reinit the device and then the driver
+is removed, a call trace can occur.
 
-[  +0.102213] ice 0000:ca:00.0: ice_init_hw failed: -16
-...
-[  +0.000001] Call Trace:
-[  +0.000003]  <TASK>
-[  +0.000006]  ice_unload+0x8f/0x100 [ice]
-[  +0.000081]  ice_remove+0xba/0x300 [ice]
+BUG: unable to handle page fault for address: ffffffffc0fd4b5d
+Call Trace:
+ string+0x48/0xe0
+ vsnprintf+0x1f9/0x650
+ sprintf+0x62/0x80
+ name_show+0x1f/0x30
+ dev_attr_show+0x19/0x60
 
-Commit 1390b8b3d2be ("ice: remove duplicate call to ice_deinit_hw() on
-error paths") removed ice_deinit_hw() from ice_deinit_dev(). As a result
-ice_devlink_reinit_down() no longer calls ice_deinit_hw(), but
-ice_devlink_reinit_up() still calls ice_init_hw(). Since the control
-queues are not uninitialized, ice_init_hw() fails with -EBUSY.
+The call trace repeats approximately every 10 minutes when system
+monitoring tools (e.g., sadc) attempt to read the orphaned hwmon sysfs
+attributes that reference freed module memory.
 
-Add ice_deinit_hw() to ice_devlink_reinit_down() to correspond with
-ice_init_hw() in ice_devlink_reinit_up().
+The sequence is:
+1. Driver load, ice_hwmon_init() gets called from ice_init_feature()
+2. Devlink reload down, flow does not call ice_remove()
+3. Devlink reload up, ice_hwmon_init() gets called from
+   ice_init_feature() resulting in a second instance
+4. Driver unload, ice_hwmon_exit() called from ice_remove() leaving the
+   first hwmon instance orphaned with dangling pointer
 
-Fixes: 1390b8b3d2be ("ice: remove duplicate call to ice_deinit_hw() on error paths")
+Fix this by moving ice_hwmon_exit() from ice_remove() to
+ice_deinit_features() to ensure proper cleanup symmetry with
+ice_hwmon_init().
+
+Fixes: 4da71a77fc3b ("ice: read internal temperature sensor")
 Reviewed-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
-Reviewed-by: Przemek Kitszel <przemyslaw.kitszel@intel.com>
 Signed-off-by: Paul Greenwalt <paul.greenwalt@intel.com>
 Reviewed-by: Paul Menzel <pmenzel@molgen.mpg.de>
 Tested-by: Rinitha S <sx.rinitha@intel.com> (A Contingent worker at Intel)
 Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/ice/devlink/devlink.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/net/ethernet/intel/ice/ice_main.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/drivers/net/ethernet/intel/ice/devlink/devlink.c b/drivers/net/ethernet/intel/ice/devlink/devlink.c
-index 938914abbe066..ac071c5b4ce38 100644
---- a/drivers/net/ethernet/intel/ice/devlink/devlink.c
-+++ b/drivers/net/ethernet/intel/ice/devlink/devlink.c
-@@ -460,6 +460,7 @@ static void ice_devlink_reinit_down(struct ice_pf *pf)
- 	ice_vsi_decfg(ice_get_main_vsi(pf));
- 	rtnl_unlock();
- 	ice_deinit_pf(pf);
-+	ice_deinit_hw(&pf->hw);
- 	ice_deinit_dev(pf);
+diff --git a/drivers/net/ethernet/intel/ice/ice_main.c b/drivers/net/ethernet/intel/ice/ice_main.c
+index 6c392495f4a76..fc284802e2bcd 100644
+--- a/drivers/net/ethernet/intel/ice/ice_main.c
++++ b/drivers/net/ethernet/intel/ice/ice_main.c
+@@ -4845,6 +4845,7 @@ static void ice_deinit_features(struct ice_pf *pf)
+ 		ice_dpll_deinit(pf);
+ 	if (pf->eswitch_mode == DEVLINK_ESWITCH_MODE_SWITCHDEV)
+ 		xa_destroy(&pf->eswitch.reprs);
++	ice_hwmon_exit(pf);
  }
+ 
+ static void ice_init_wakeup(struct ice_pf *pf)
+@@ -5446,8 +5447,6 @@ static void ice_remove(struct pci_dev *pdev)
+ 		ice_free_vfs(pf);
+ 	}
+ 
+-	ice_hwmon_exit(pf);
+-
+ 	if (!ice_is_safe_mode(pf))
+ 		ice_remove_arfs(pf);
  
 -- 
 2.51.0
