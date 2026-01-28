@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23F7A13B7A3;
-	Wed, 28 Jan 2026 15:30:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2AEC10A1E;
+	Wed, 28 Jan 2026 15:31:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769614260; cv=none; b=lk3N9a2NL5Cbj8WJsiKVE/0UQ6zOD9eLF8FBW8IJEyLONql3NsKUTxCZHsPjgfqfutFQNRCUg2J2C8X7mrBElxEPAFJ/DUnKUcXm3ns2FnaRac64nMT7Af3fcoXrWYFsx6DIKfYJEwgYMIH38wl4anhG6XE7VYcmyBrsNJkCCEA=
+	t=1769614263; cv=none; b=KJYI1hugwPmEH9IU0FdlYjmZNM2NdK8IFjGjBWbYBGBxFXKBaKRsP9cmv6Ij8y4c6nOd62Rl28oj/XNDenusJop1UUamu9bMEHPpmnSBc1yvL7DciyPU/ZWn8qGueDjLPaHUi5WqkEUdJybAn/l27bPXJFcoEBhhLs6hnZnpsZM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769614260; c=relaxed/simple;
-	bh=a8sdcO5QiFgtxZF6TohMgxn7N6IlClObtbe/lkmlbhk=;
+	s=arc-20240116; t=1769614263; c=relaxed/simple;
+	bh=nzM+RL/vd/t0Mzmc/2SQBT/vwAjJznwmgX3D11L2nio=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nE/3QgsNbhNZcaqzqOFOeGpY+RFrvEQsnkqZ8goyYOHLJUXlK+x2xcz9cwEny7kAj5Raai9IrQrJhX2zx6hTlWq149dPUDNgd4OxUrCBmr5HvTyRJ67wT7GB81/2+9GYZPLzYPh7Tsfal1dfzTl/k2c6VQECkSjxe0sDsSTw92Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TVJQ2vv8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PYAI8wmo00t1ChIJ2ESQv1Z0CoXOrtMT5Pjg3whD9YSbkkN5jABlpyl9kADZhOHenu5P5vW3v9OYwY2x4FpdiYzBwOg7w3ZU1BvQQlqIO5NIvj5LSsRNnh+456vk9KQXQjxi23QwemTXtTcu6cLe6QwNUGnfHQ4rHzuTU6UM1dw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Nc+5v+RT; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TVJQ2vv8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 37BC1C4CEF1;
-	Wed, 28 Jan 2026 15:30:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Nc+5v+RT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A2AAC4CEF1;
+	Wed, 28 Jan 2026 15:31:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1769614259;
-	bh=a8sdcO5QiFgtxZF6TohMgxn7N6IlClObtbe/lkmlbhk=;
+	s=korg; t=1769614262;
+	bh=nzM+RL/vd/t0Mzmc/2SQBT/vwAjJznwmgX3D11L2nio=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TVJQ2vv8nElr10g3NeuFnt8iDnDoMzSCjhXGjjMr6IjXZzNZgzXv9TUDgFIjF+ONg
-	 1myzcZwfdzP3z9RWE5Lc67V58dcBinEaPbbvQgOyoXoK9IILA7jSJqcQuEEK71zs7K
-	 Il0zTjnx66wbo3RXLVsDb9aC/hYnf8jD7oRZQNqw=
+	b=Nc+5v+RTuH8ZfvKwAJMUBHZ9OiQ3ON4wQNNcsozkNZ7ZAMSbfzE2aQx8Zx6PsYpth
+	 p+HcSwT3rnbnlQ6z6bW8g4s8eK12FV7ABBZs0xDs/u2hcstYAiHlwXKiZXf3MOp8KC
+	 3DLlfs6xLfMg0TTPzK/4iRlmuBzBadZgGkSpGD8I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johan Hovold <johan@kernel.org>,
-	Vladimir Zapolskiy <vz@mleia.com>,
+	Miaoqian Lin <linmq006@gmail.com>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Vinod Koul <vkoul@kernel.org>
-Subject: [PATCH 6.6 083/254] dmaengine: lpc18xx-dmamux: fix device leak on route allocation
-Date: Wed, 28 Jan 2026 16:20:59 +0100
-Message-ID: <20260128145347.683485011@linuxfoundation.org>
+Subject: [PATCH 6.6 084/254] dmaengine: qcom: gpi: Fix memory leak in gpi_peripheral_config()
+Date: Wed, 28 Jan 2026 16:21:00 +0100
+Message-ID: <20260128145347.722691043@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260128145344.698118637@linuxfoundation.org>
 References: <20260128145344.698118637@linuxfoundation.org>
@@ -51,89 +51,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johan Hovold <johan@kernel.org>
+From: Miaoqian Lin <linmq006@gmail.com>
 
-commit d4d63059dee7e7cae0c4d9a532ed558bc90efb55 upstream.
+commit 3f747004bbd641131d9396d87b5d2d3d1e182728 upstream.
 
-Make sure to drop the reference taken when looking up the DMA mux
-platform device during route allocation.
+Fix a memory leak in gpi_peripheral_config() where the original memory
+pointed to by gchan->config could be lost if krealloc() fails.
 
-Note that holding a reference to a device does not prevent its driver
-data from going away so there is no point in keeping the reference.
+The issue occurs when:
+1. gchan->config points to previously allocated memory
+2. krealloc() fails and returns NULL
+3. The function directly assigns NULL to gchan->config, losing the
+   reference to the original memory
+4. The original memory becomes unreachable and cannot be freed
 
-Fixes: e5f4ae84be74 ("dmaengine: add driver for lpc18xx dmamux")
-Cc: stable@vger.kernel.org	# 4.3
-Signed-off-by: Johan Hovold <johan@kernel.org>
-Reviewed-by: Vladimir Zapolskiy <vz@mleia.com>
-Link: https://patch.msgid.link/20251117161258.10679-8-johan@kernel.org
+Fix this by using a temporary variable to hold the krealloc() result
+and only updating gchan->config when the allocation succeeds.
+
+Found via static analysis and code review.
+
+Fixes: 5d0c3533a19f ("dmaengine: qcom: Add GPI dma driver")
+Cc: stable@vger.kernel.org
+Signed-off-by: Miaoqian Lin <linmq006@gmail.com>
+Reviewed-by: Bjorn Andersson <andersson@kernel.org>
+Link: https://patch.msgid.link/20251029123421.91973-1-linmq006@gmail.com
 Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/dma/lpc18xx-dmamux.c |   19 ++++++++++++++-----
- 1 file changed, 14 insertions(+), 5 deletions(-)
+ drivers/dma/qcom/gpi.c |    6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
---- a/drivers/dma/lpc18xx-dmamux.c
-+++ b/drivers/dma/lpc18xx-dmamux.c
-@@ -57,30 +57,31 @@ static void *lpc18xx_dmamux_reserve(stru
- 	struct lpc18xx_dmamux_data *dmamux = platform_get_drvdata(pdev);
- 	unsigned long flags;
- 	unsigned mux;
-+	int ret = -EINVAL;
+--- a/drivers/dma/qcom/gpi.c
++++ b/drivers/dma/qcom/gpi.c
+@@ -1621,14 +1621,16 @@ static int
+ gpi_peripheral_config(struct dma_chan *chan, struct dma_slave_config *config)
+ {
+ 	struct gchan *gchan = to_gchan(chan);
++	void *new_config;
  
- 	if (dma_spec->args_count != 3) {
- 		dev_err(&pdev->dev, "invalid number of dma mux args\n");
--		return ERR_PTR(-EINVAL);
-+		goto err_put_pdev;
- 	}
+ 	if (!config->peripheral_config)
+ 		return -EINVAL;
  
- 	mux = dma_spec->args[0];
- 	if (mux >= dmamux->dma_master_requests) {
- 		dev_err(&pdev->dev, "invalid mux number: %d\n",
- 			dma_spec->args[0]);
--		return ERR_PTR(-EINVAL);
-+		goto err_put_pdev;
- 	}
+-	gchan->config = krealloc(gchan->config, config->peripheral_size, GFP_NOWAIT);
+-	if (!gchan->config)
++	new_config = krealloc(gchan->config, config->peripheral_size, GFP_NOWAIT);
++	if (!new_config)
+ 		return -ENOMEM;
  
- 	if (dma_spec->args[1] > LPC18XX_DMAMUX_MAX_VAL) {
- 		dev_err(&pdev->dev, "invalid dma mux value: %d\n",
- 			dma_spec->args[1]);
--		return ERR_PTR(-EINVAL);
-+		goto err_put_pdev;
- 	}
++	gchan->config = new_config;
+ 	memcpy(gchan->config, config->peripheral_config, config->peripheral_size);
  
- 	/* The of_node_put() will be done in the core for the node */
- 	dma_spec->np = of_parse_phandle(ofdma->of_node, "dma-masters", 0);
- 	if (!dma_spec->np) {
- 		dev_err(&pdev->dev, "can't get dma master\n");
--		return ERR_PTR(-EINVAL);
-+		goto err_put_pdev;
- 	}
- 
- 	spin_lock_irqsave(&dmamux->lock, flags);
-@@ -89,7 +90,8 @@ static void *lpc18xx_dmamux_reserve(stru
- 		dev_err(&pdev->dev, "dma request %u busy with %u.%u\n",
- 			mux, mux, dmamux->muxes[mux].value);
- 		of_node_put(dma_spec->np);
--		return ERR_PTR(-EBUSY);
-+		ret = -EBUSY;
-+		goto err_put_pdev;
- 	}
- 
- 	dmamux->muxes[mux].busy = true;
-@@ -106,7 +108,14 @@ static void *lpc18xx_dmamux_reserve(stru
- 	dev_dbg(&pdev->dev, "mapping dmamux %u.%u to dma request %u\n", mux,
- 		dmamux->muxes[mux].value, mux);
- 
-+	put_device(&pdev->dev);
-+
- 	return &dmamux->muxes[mux];
-+
-+err_put_pdev:
-+	put_device(&pdev->dev);
-+
-+	return ERR_PTR(ret);
- }
- 
- static int lpc18xx_dmamux_probe(struct platform_device *pdev)
+ 	return 0;
 
 
