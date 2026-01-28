@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D8F02874FE;
-	Wed, 28 Jan 2026 15:59:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4A461D6AA;
+	Wed, 28 Jan 2026 15:59:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769615954; cv=none; b=shM1D4cgDnLwsdtrSfKY32tvYIMYND9E8cTVSHkkMxkmNbByk5po+tn25OF7+YTxSvQDZXqm08bm75X3kI0uB4I2PjVxywSCH6KF5i+Nhr93hRXjU028WahaKlq64YvC/mrS96v4AaIVvIah/KlchjvnkefA5CXUGKW+obGLNEY=
+	t=1769615958; cv=none; b=Sj2q4Sse3/dcM/b14GleC2npn+DM8XFA8dR02/FI2Fb/NTzpjsU1JKWJv5nd7hxyDdDp63JySzsvXGKzvmAPO8in6uzditiMVDchXCQaXi04D+p4RaT8YBnoStWzytPFh3lb3n4ryNI0tNZGtarFAzvY8jgFeS1IcTdfUsTy/ro=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769615954; c=relaxed/simple;
-	bh=E7NPyEpMhe4wJW20KmoB20dfhcPNQ2eIFv63qrnI2zQ=;
+	s=arc-20240116; t=1769615958; c=relaxed/simple;
+	bh=To0/PcCE7ai5CZr7QEFT4B3r3v7OQv6j/Yr9cEiMcc4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JytxP/TdUf1Jn+DmTqZx5RcFMCn3ajLZNV75AhA3FAHeIqgQ+i9J+Odqzhs/uRMi/nb4r1U7j+R7soJKanmtYefPctQ1r3BnHNP+HDuBTg7flrfdxam7qw7g45E+myJg1Nxr3eSb5xnZYAThXhEnYrXOczSD+caC73MmatoAxrA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Qz1CYxJ5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cckGpPhCdQfSG6PfLs00RNwhEZa06m6n6NVMthh3UDiQIaftTA+MkfeF440mhsna0ljQaH7ml0Fqy/x+64ORC0LEWSiFnvppgMySdUpX8/NaPvSIbkTmpq5yfLW/T0ti+HTEIi20wN0EiN/cBSklY5jVSAeL34g8SFVqSAtnPIA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0OOdlz/a; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Qz1CYxJ5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CEC8CC4CEF1;
-	Wed, 28 Jan 2026 15:59:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0OOdlz/a"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 47246C4CEF1;
+	Wed, 28 Jan 2026 15:59:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1769615954;
-	bh=E7NPyEpMhe4wJW20KmoB20dfhcPNQ2eIFv63qrnI2zQ=;
+	s=korg; t=1769615957;
+	bh=To0/PcCE7ai5CZr7QEFT4B3r3v7OQv6j/Yr9cEiMcc4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Qz1CYxJ5Eqd725QiGzUbmNjkm7V3p1moqwBYgJeq80KfUGaAuZCGyeuTI9dG9OCWV
-	 1MQuBjbtE2aaNgxB/UYlJQSiM4z3wHNPTnWBnYqYCA5OQ4gKxy8xiiiw1LdmKRZLiW
-	 QldZBBgnh7zPBeKQeQgYS8ALk+mbj02v14Wpyy6Y=
+	b=0OOdlz/a4lwefXsGIA9BK4T96nWq1DL4b67G3M15isGUMNyPaqrv68HXEng2DMXIz
+	 RomXjLaFdVuHDjWaFsWcuctAjfW7zY8s44l3P7ayxGhIpOU/NSe+PURlbwa4UmpDKd
+	 gDqSGB1EKKCUQpOjIbaVIKZUzAgUWX3D/revvhZ8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thorsten Blum <thorsten.blum@linux.dev>,
+	Fiona Klute <fiona.klute@gmx.de>,
+	David Lechner <dlechner@baylibre.com>,
 	Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Subject: [PATCH 6.18 162/227] iio: adc: pac1934: Fix clamped value in pac1934_reg_snapshot
-Date: Wed, 28 Jan 2026 16:23:27 +0100
-Message-ID: <20260128145350.283345867@linuxfoundation.org>
+Subject: [PATCH 6.18 163/227] iio: chemical: scd4x: fix reported channel endianness
+Date: Wed, 28 Jan 2026 16:23:28 +0100
+Message-ID: <20260128145350.318497224@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260128145344.331957407@linuxfoundation.org>
 References: <20260128145344.331957407@linuxfoundation.org>
@@ -50,38 +51,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thorsten Blum <thorsten.blum@linux.dev>
+From: Fiona Klute <fiona.klute@gmx.de>
 
-commit da934ef0fdff5ba21e82ec3ab3f95fe73137b0c9 upstream.
+commit 81d5a5366d3c20203fb9d7345e1aa46d668445a2 upstream.
 
-The local variable 'curr_energy' was never clamped to
-PAC_193X_MIN_POWER_ACC or PAC_193X_MAX_POWER_ACC because the return
-value of clamp() was not used. Fix this by assigning the clamped value
-back to 'curr_energy'.
+The driver converts values read from the sensor from BE to CPU
+endianness in scd4x_read_meas(). The result is then pushed into the
+buffer in scd4x_trigger_handler(), so on LE architectures parsing the
+buffer using the reported BE type gave wrong results.
 
-Cc: stable@vger.kernel.org
-Fixes: 0fb528c8255b ("iio: adc: adding support for PAC193x")
-Signed-off-by: Thorsten Blum <thorsten.blum@linux.dev>
+scd4x_read_raw() which provides sysfs *_raw values is not affected, it
+used the values returned by scd4x_read_meas() without further
+conversion.
+
+Fixes: 49d22b695cbb6 ("drivers: iio: chemical: Add support for Sensirion SCD4x CO2 sensor")
+Signed-off-by: Fiona Klute <fiona.klute@gmx.de>
+Reviewed-by: David Lechner <dlechner@baylibre.com>
+Cc: <stable@vger.kernel.org>
 Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/adc/pac1934.c |    6 +++---
+ drivers/iio/chemical/scd4x.c |    6 +++---
  1 file changed, 3 insertions(+), 3 deletions(-)
 
---- a/drivers/iio/adc/pac1934.c
-+++ b/drivers/iio/adc/pac1934.c
-@@ -665,9 +665,9 @@ static int pac1934_reg_snapshot(struct p
- 			/* add the power_acc field */
- 			curr_energy += inc;
- 
--			clamp(curr_energy, PAC_193X_MIN_POWER_ACC, PAC_193X_MAX_POWER_ACC);
--
--			reg_data->energy_sec_acc[cnt] = curr_energy;
-+			reg_data->energy_sec_acc[cnt] = clamp(curr_energy,
-+							      PAC_193X_MIN_POWER_ACC,
-+							      PAC_193X_MAX_POWER_ACC);
- 		}
- 
- 		offset_reg_data_p += PAC1934_VPOWER_ACC_REG_LEN;
+--- a/drivers/iio/chemical/scd4x.c
++++ b/drivers/iio/chemical/scd4x.c
+@@ -584,7 +584,7 @@ static const struct iio_chan_spec scd4x_
+ 			.sign = 'u',
+ 			.realbits = 16,
+ 			.storagebits = 16,
+-			.endianness = IIO_BE,
++			.endianness = IIO_CPU,
+ 		},
+ 	},
+ 	{
+@@ -599,7 +599,7 @@ static const struct iio_chan_spec scd4x_
+ 			.sign = 'u',
+ 			.realbits = 16,
+ 			.storagebits = 16,
+-			.endianness = IIO_BE,
++			.endianness = IIO_CPU,
+ 		},
+ 	},
+ 	{
+@@ -612,7 +612,7 @@ static const struct iio_chan_spec scd4x_
+ 			.sign = 'u',
+ 			.realbits = 16,
+ 			.storagebits = 16,
+-			.endianness = IIO_BE,
++			.endianness = IIO_CPU,
+ 		},
+ 	},
+ };
 
 
