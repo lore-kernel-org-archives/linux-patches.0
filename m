@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 945CB3064B3;
-	Wed, 28 Jan 2026 15:51:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 120B42F745C;
+	Wed, 28 Jan 2026 15:51:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769615475; cv=none; b=jddrkKsnVBo55tWhAx+hHOM+KukEQfHCn6ddetisLcK7wZjMB2UivkGMNiv89cnczdkdgdgOiNN+NjCqYHkdCaCwG1Pb2MOES+eo0hjwKB7/xxviyrTHAQyEdYr709CZhVbZi+c/eAMVXCjZbr4BcN1p4MVlshTtVlaYdBdjgos=
+	t=1769615479; cv=none; b=pjuNSAWRjOKfMfGwzDVrpIMmr2O+i85CdRFuJ4tEmIjIzkNnsRabOViT8pieEpgXQ966ajXazYYOIIWdQ7LmZWh8dFagBDHS3Js6t3d1upoefBCReayB+IzMziBuxMUEu3vENmLg3u6zjof6zI1J9KuUDBzV7SaVSome5JpbRlg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769615475; c=relaxed/simple;
-	bh=P9cT+ob1BKJYN7qrEVW9vUVBN/C7HG47qynnVheZugc=;
+	s=arc-20240116; t=1769615479; c=relaxed/simple;
+	bh=wozlRA2EAFJzsPGoj9y+sgQf//51T0ETdrvnbN2M5Y0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AGTdMug+/R8McDEHpoAeUGQ5Q4BmzjZT1VJQtpfwHSmLbeNvD9CCCyiVEHZ+UVwCyqlAIJ4dc2s1Z0H80P3uf7cZJkg7XZSiDFBuIZF4oL3pymiTNNZ3CtVCDd1qQvLjxTr6sOFU6y4+D1ifkfbmCrwl6fSYC6x45XIdI04NsSE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UNhUGAeT; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=sM8mQ+pswfn3NlX2yKSXdx5JTXSabDWPW9caDGL+8zD3hhiJR3pmlmLB26gVztJOWprS//MNN9pbKZutYZml8ZYbV8RE7L4Kl6grh/4mGE3gjc/7umh10Z1MVT6T1wTp+eCoYfqw5IZBb5wSKG3z0/G1Vd1jsHKEyZOASSqK44g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qmsvJwoJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UNhUGAeT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 083A2C4CEF1;
-	Wed, 28 Jan 2026 15:51:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qmsvJwoJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A7FCC116C6;
+	Wed, 28 Jan 2026 15:51:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1769615475;
-	bh=P9cT+ob1BKJYN7qrEVW9vUVBN/C7HG47qynnVheZugc=;
+	s=korg; t=1769615479;
+	bh=wozlRA2EAFJzsPGoj9y+sgQf//51T0ETdrvnbN2M5Y0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UNhUGAeT2CAbShMwQ4oRMFXyZURiHbuHV90oFpOeWqMbr2r1qi4BdkyoBG7u5SZvy
-	 jQXBHV7vSWZySsMU+yLi+P/KYdSLPcwz6mAI9fr12Dx0XiKHWKIvKL73eNrRpE++sc
-	 ETETikVJn1rvl9se9neNyXzvw3rG5aVkMusnSKAc=
+	b=qmsvJwoJtPGNwoSz+Nw/8Y+om4RfRRXvJK9iKhsMmxZvWIF1IDxKYOdqWrG2fvXZY
+	 EekzVrikQo4ptQZq4JJyNbvkuOKFGit/ui4Q9WXxJnRsl7oIzPBW4PABNeDCdi8dwK
+	 FJUqnvXwWCQyzSosjhyL7Kb6f0WkNIQXXmLa1N1A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yingying Tang <yingying.tang@oss.qualcomm.com>,
-	Baochen Qiang <baochen.qiang@oss.qualcomm.com>,
-	Vasanthakumar Thiagarajan <vasanthakumar.thiagarajan@oss.qualcomm.com>,
-	linux-next@vger.kernel.org,
-	netdev@vger.kernel.org,
-	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 020/227] wifi: ath12k: Fix wrong P2P device link id issue
-Date: Wed, 28 Jan 2026 16:21:05 +0100
-Message-ID: <20260128145345.069879352@linuxfoundation.org>
+	Aleksandr Loktionov <aleksandr.loktionov@intel.com>,
+	Jacob Keller <jacob.e.keller@intel.com>,
+	Simon Horman <horms@kernel.org>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>,
+	Sasha Levin <sashal@kernel.org>,
+	Rinitha S <sx.rinitha@intel.com>
+Subject: [PATCH 6.18 021/227] ice: initialize ring_stats->syncp
+Date: Wed, 28 Jan 2026 16:21:06 +0100
+Message-ID: <20260128145345.105545245@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260128145344.331957407@linuxfoundation.org>
 References: <20260128145344.331957407@linuxfoundation.org>
@@ -55,76 +54,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yingying Tang <yingying.tang@oss.qualcomm.com>
+From: Jacob Keller <jacob.e.keller@intel.com>
 
-[ Upstream commit 31707572108da55a005e7fed32cc3869c16b7c16 ]
+[ Upstream commit 8439016c3b8b5ab687c2420317b1691585106611 ]
 
-Wrong P2P device link id value of 0 was introduced in ath12k_mac_op_tx() by [1].
+The u64_stats_sync structure is empty on 64-bit systems. However, on 32-bit
+systems it contains a seqcount_t which needs to be initialized. While the
+memory is zero-initialized, a lack of u64_stats_init means that lockdep
+won't get initialized properly. Fix this by adding u64_stats_init() calls
+to the rings just after allocation.
 
-During the P2P negotiation process, there is only one scan vdev with link ID 15.
-Currently, the device link ID is incorrectly set to 0 in ath12k_mac_op_tx()
-during the P2P negotiation process, which leads to TX failures.
-
-Set the correct P2P device link ID to 15 to fix the TX failure issue.
-
-Tested-on: WCN7850 hw2.0 PCI WLAN.HMT.1.1.c5-00302-QCAHMTSWPL_V1.0_V2.0_SILICONZ-1.115823.3
-
-Fixes: 648a121bafa3 ("wifi: ath12k: ath12k_mac_op_tx(): MLO support") # [1]
-Signed-off-by: Yingying Tang <yingying.tang@oss.qualcomm.com>
-Reviewed-by: Baochen Qiang <baochen.qiang@oss.qualcomm.com>
-Reviewed-by: Vasanthakumar Thiagarajan <vasanthakumar.thiagarajan@oss.qualcomm.com>
-Cc: linux-next@vger.kernel.org
-Cc: netdev@vger.kernel.org
-Link: https://patch.msgid.link/20260113054636.2620035-1-yingying.tang@oss.qualcomm.com
-Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
-
----
-
-Note to linux-next and netdev maintainers:
-
-This patch going through the "current" tree conflicts with
-the following going through the "next" tree:
-commit 631ee338f04d ("Merge branch 'ath12k-ng' into ath-next")
-
-The conflict resolution is to leave the following file unmodified:
-drivers/net/wireless/ath/ath12k/mac.
-
-And to apply the following patch to ath12k_wifi7_mac_op_tx()
-in the file drivers/net/wireless/ath/ath12k/wifi7/hw.c -705,7 +705,10
-
- 			return;
- 		}
- 	} else {
--		link_id = 0;
-+		if (vif->type == NL80211_IFTYPE_P2P_DEVICE)
-+			link_id = ATH12K_FIRST_SCAN_LINK;
-+		else
-+			link_id = 0;
- 	}
-
- 	arvif = rcu_dereference(ahvif->link[link_id]);
-
+Fixes: 2b245cb29421 ("ice: Implement transmit and NAPI support")
+Reviewed-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
+Signed-off-by: Jacob Keller <jacob.e.keller@intel.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Tested-by: Rinitha S <sx.rinitha@intel.com> (A Contingent worker at Intel)
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/ath12k/mac.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/net/ethernet/intel/ice/ice_lib.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/net/wireless/ath/ath12k/mac.c b/drivers/net/wireless/ath/ath12k/mac.c
-index d6a44c19e2245..256ffae4d7f7d 100644
---- a/drivers/net/wireless/ath/ath12k/mac.c
-+++ b/drivers/net/wireless/ath/ath12k/mac.c
-@@ -8840,7 +8840,10 @@ static void ath12k_mac_op_tx(struct ieee80211_hw *hw,
- 			return;
- 		}
- 	} else {
--		link_id = 0;
-+		if (vif->type == NL80211_IFTYPE_P2P_DEVICE)
-+			link_id = ATH12K_FIRST_SCAN_LINK;
-+		else
-+			link_id = 0;
- 	}
+diff --git a/drivers/net/ethernet/intel/ice/ice_lib.c b/drivers/net/ethernet/intel/ice/ice_lib.c
+index 4479c824561e9..c0d221d4b4f47 100644
+--- a/drivers/net/ethernet/intel/ice/ice_lib.c
++++ b/drivers/net/ethernet/intel/ice/ice_lib.c
+@@ -398,6 +398,8 @@ static int ice_vsi_alloc_ring_stats(struct ice_vsi *vsi)
+ 			if (!ring_stats)
+ 				goto err_out;
  
- 	arvif = rcu_dereference(ahvif->link[link_id]);
++			u64_stats_init(&ring_stats->syncp);
++
+ 			WRITE_ONCE(tx_ring_stats[i], ring_stats);
+ 		}
+ 
+@@ -417,6 +419,8 @@ static int ice_vsi_alloc_ring_stats(struct ice_vsi *vsi)
+ 			if (!ring_stats)
+ 				goto err_out;
+ 
++			u64_stats_init(&ring_stats->syncp);
++
+ 			WRITE_ONCE(rx_ring_stats[i], ring_stats);
+ 		}
+ 
 -- 
 2.51.0
 
