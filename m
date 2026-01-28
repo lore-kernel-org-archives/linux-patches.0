@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 040D22512FF;
-	Wed, 28 Jan 2026 15:33:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 474151E9B1A;
+	Wed, 28 Jan 2026 15:33:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769614384; cv=none; b=DRrlGJUggF5O9NHkh/gXkQtMUzbxkobACnFnw8GJeRWH9KpDruMmBm+jpMhDIWrHcR0m1CgyKJyU9ydpW/nxvQglb18r0KSG8fmxCKQtYXBRK7bzYHXmUdfVdg5i40PioF1BoCsb5toTTBw0cG48i91shodOZkLG2Ffv1r2pqzU=
+	t=1769614387; cv=none; b=Tc1lSeGRkjHLdkDYp1SUCSNZLWkH3IXsu6akM4gYXbIIcndFqRc7aT1kRlehEB18lphN4YWHx679eclJgXrzE1KJv7/Vos+VaB7UhRSYuKrvGu0XpH7aR1HdaaFcYfqViuog6cQKjbcR4byvS19Bqej/Kbflk2aYpW3HkvtvT5M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769614384; c=relaxed/simple;
-	bh=iA19AhpldGnvCs3+y9ay4UAE/Ga0PsiZkqTNqRnSqg4=;
+	s=arc-20240116; t=1769614387; c=relaxed/simple;
+	bh=NdOXqBlxlyBbgYCnzwizihka61PnV6PRKNobQDA3cyA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QKdYEOo7J2nzdIHeDMM0x7c4mYFmwHPJlNvm76dlvwl6sivBgj7gShiqTdUF9YP9lCYPdxDcSj3DAl1kgtX+3zKasqdiv99uPCCKRja0ZCpjYANM8Xwd2RTJIXw96GFwGN6YFjOElnKvXA2JClrC8+xeae+MZXQ0Zb/uuCkYeBw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=voTJQkEu; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=Jfzjni3QBcWzSH4cqC0AYITQEMFSvtrGQWjXSnzonSxN/20g+aK7cxAG4xF1SzKAj83k1J04T2tfcLtdbe2m1H3jdslRLiCUQY1kYsBlkC/pQR/9m4utR0IdHgYNF1q7yu+gvbvga4qF4dHK95sMGmaUK49m6acefLZtpQkQsek=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dMkQ/3Lc; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="voTJQkEu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 66FD1C4CEF1;
-	Wed, 28 Jan 2026 15:33:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dMkQ/3Lc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA071C4CEF7;
+	Wed, 28 Jan 2026 15:33:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1769614383;
-	bh=iA19AhpldGnvCs3+y9ay4UAE/Ga0PsiZkqTNqRnSqg4=;
+	s=korg; t=1769614387;
+	bh=NdOXqBlxlyBbgYCnzwizihka61PnV6PRKNobQDA3cyA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=voTJQkEunGdOrOm90H3G2lzi3xcoTRYMFqGLEX98QLeiMFpcvcZCH68o0rNQIh9l7
-	 7iIuQu4BH3W39IzfiHw0TuqHRLQmpz8y/Hpg2zMk2A1hfupew/hCNDPwsotX67+63b
-	 ngeaco3tnWS+CgKTZRQocHlWjJrIMjqmderMYwWs=
+	b=dMkQ/3LcC1NfC9DEydB5/32CR1/U16Al4bfAdfo0M5m7Ryv4nalYShyOFxuuMGVbe
+	 QqcDdru+ddJEd4CKBd3gxBpelZgbODcodaq4oUFTdm7MX32HJeS4q6+Znu2eS3+FYM
+	 T7w67J6awWcRZRGE7LXxfoBNx2ZL4rt9FRN/CQig=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Ahern <dsahern@kernel.org>,
-	Hangbin Liu <liuhangbin@gmail.com>,
+	Fernando Fernandez Mancera <fmancera@suse.de>,
+	"=?UTF-8?q?Ricardo=20B . =20Marli=C3=A8re?=" <rbm@suse.com>,
+	Ido Schimmel <idosch@nvidia.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 120/254] selftests/net: convert fib-onlink-tests.sh to run it in unique namespace
-Date: Wed, 28 Jan 2026 16:21:36 +0100
-Message-ID: <20260128145349.141352657@linuxfoundation.org>
+Subject: [PATCH 6.6 121/254] selftests: net: fib-onlink-tests: Convert to use namespaces by default
+Date: Wed, 28 Jan 2026 16:21:37 +0100
+Message-ID: <20260128145349.177602137@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260128145344.698118637@linuxfoundation.org>
 References: <20260128145344.698118637@linuxfoundation.org>
@@ -46,87 +47,186 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Hangbin Liu <liuhangbin@gmail.com>
+From: Ricardo B. Marlière <rbm@suse.com>
 
-[ Upstream commit 3a06833b2adc0a902f2469ad4ce41ccd64f1f3ab ]
+[ Upstream commit 4f5f148dd7c0459229d2ab9a769b2e820f9ee6a2 ]
 
-Remove PEER_CMD, which is not used in this test
+Currently, the test breaks if the SUT already has a default route
+configured for IPv6. Fix by avoiding the use of the default namespace.
 
-Here is the test result after conversion.
-
- ]# ./fib-onlink-tests.sh
- Error: ipv4: FIB table does not exist.
- Flush terminated
- Error: ipv6: FIB table does not exist.
- Flush terminated
-
- ########################################
- Configuring interfaces
-
-   ...
-
-     TEST: Gateway resolves to wrong nexthop device - VRF      [ OK ]
-
- Tests passed:  38
- Tests failed:   0
-
-Acked-by: David Ahern <dsahern@kernel.org>
-Signed-off-by: Hangbin Liu <liuhangbin@gmail.com>
-Link: https://lore.kernel.org/r/20231213060856.4030084-11-liuhangbin@gmail.com
+Fixes: 4ed591c8ab44 ("net/ipv6: Allow onlink routes to have a device mismatch if it is the default route")
+Suggested-by: Fernando Fernandez Mancera <fmancera@suse.de>
+Signed-off-by: Ricardo B. Marlière <rbm@suse.com>
+Reviewed-by: Ido Schimmel <idosch@nvidia.com>
+Reviewed-by: Fernando Fernandez Mancera <fmancera@suse.de>
+Link: https://patch.msgid.link/20260113-selftests-net-fib-onlink-v2-1-89de2b931389@suse.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Stable-dep-of: 4f5f148dd7c0 ("selftests: net: fib-onlink-tests: Convert to use namespaces by default")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/net/fib-onlink-tests.sh | 9 +++------
- 1 file changed, 3 insertions(+), 6 deletions(-)
+ .../testing/selftests/net/fib-onlink-tests.sh | 71 ++++++++-----------
+ 1 file changed, 30 insertions(+), 41 deletions(-)
 
 diff --git a/tools/testing/selftests/net/fib-onlink-tests.sh b/tools/testing/selftests/net/fib-onlink-tests.sh
-index c287b90b8af80..ec2d6ceb1f08d 100755
+index ec2d6ceb1f08d..c01be076b210d 100755
 --- a/tools/testing/selftests/net/fib-onlink-tests.sh
 +++ b/tools/testing/selftests/net/fib-onlink-tests.sh
-@@ -3,6 +3,7 @@
+@@ -120,7 +120,7 @@ log_subsection()
  
- # IPv4 and IPv6 onlink tests
+ run_cmd()
+ {
+-	local cmd="$*"
++	local cmd="$1"
+ 	local out
+ 	local rc
  
-+source lib.sh
- PAUSE_ON_FAIL=${PAUSE_ON_FAIL:=no}
- VERBOSE=0
+@@ -145,7 +145,7 @@ get_linklocal()
+ 	local pfx
+ 	local addr
  
-@@ -74,9 +75,6 @@ TEST_NET4IN6[2]=10.2.1.254
- # mcast address
- MCAST6=ff02::1
+-	addr=$(${pfx} ip -6 -br addr show dev ${dev} | \
++	addr=$(${pfx} ${IP} -6 -br addr show dev ${dev} | \
+ 	awk '{
+ 		for (i = 3; i <= NF; ++i) {
+ 			if ($i ~ /^fe80/)
+@@ -173,58 +173,48 @@ setup()
  
--
--PEER_NS=bart
--PEER_CMD="ip netns exec ${PEER_NS}"
- VRF=lisa
- VRF_TABLE=1101
- PBR_TABLE=101
-@@ -176,8 +174,7 @@ setup()
  	set -e
  
- 	# create namespace
--	ip netns add ${PEER_NS}
--	ip -netns ${PEER_NS} li set lo up
-+	setup_ns PEER_NS
+-	# create namespace
+-	setup_ns PEER_NS
++	# create namespaces
++	setup_ns ns1
++	IP="ip -netns $ns1"
++	setup_ns ns2
  
  	# add vrf table
- 	ip li add ${VRF} type vrf table ${VRF_TABLE}
-@@ -219,7 +216,7 @@ setup()
- cleanup()
- {
- 	# make sure we start from a clean slate
--	ip netns del ${PEER_NS} 2>/dev/null
-+	cleanup_ns ${PEER_NS} 2>/dev/null
- 	for n in 1 3 5 7; do
- 		ip link del ${NETIFS[p${n}]} 2>/dev/null
+-	ip li add ${VRF} type vrf table ${VRF_TABLE}
+-	ip li set ${VRF} up
+-	ip ro add table ${VRF_TABLE} unreachable default metric 8192
+-	ip -6 ro add table ${VRF_TABLE} unreachable default metric 8192
++	${IP} li add ${VRF} type vrf table ${VRF_TABLE}
++	${IP} li set ${VRF} up
++	${IP} ro add table ${VRF_TABLE} unreachable default metric 8192
++	${IP} -6 ro add table ${VRF_TABLE} unreachable default metric 8192
+ 
+ 	# create test interfaces
+-	ip li add ${NETIFS[p1]} type veth peer name ${NETIFS[p2]}
+-	ip li add ${NETIFS[p3]} type veth peer name ${NETIFS[p4]}
+-	ip li add ${NETIFS[p5]} type veth peer name ${NETIFS[p6]}
+-	ip li add ${NETIFS[p7]} type veth peer name ${NETIFS[p8]}
++	${IP} li add ${NETIFS[p1]} type veth peer name ${NETIFS[p2]}
++	${IP} li add ${NETIFS[p3]} type veth peer name ${NETIFS[p4]}
++	${IP} li add ${NETIFS[p5]} type veth peer name ${NETIFS[p6]}
++	${IP} li add ${NETIFS[p7]} type veth peer name ${NETIFS[p8]}
+ 
+ 	# enslave vrf interfaces
+ 	for n in 5 7; do
+-		ip li set ${NETIFS[p${n}]} vrf ${VRF}
++		${IP} li set ${NETIFS[p${n}]} vrf ${VRF}
  	done
+ 
+ 	# add addresses
+ 	for n in 1 3 5 7; do
+-		ip li set ${NETIFS[p${n}]} up
+-		ip addr add ${V4ADDRS[p${n}]}/24 dev ${NETIFS[p${n}]}
+-		ip addr add ${V6ADDRS[p${n}]}/64 dev ${NETIFS[p${n}]} nodad
++		${IP} li set ${NETIFS[p${n}]} up
++		${IP} addr add ${V4ADDRS[p${n}]}/24 dev ${NETIFS[p${n}]}
++		${IP} addr add ${V6ADDRS[p${n}]}/64 dev ${NETIFS[p${n}]} nodad
+ 	done
+ 
+ 	# move peer interfaces to namespace and add addresses
+ 	for n in 2 4 6 8; do
+-		ip li set ${NETIFS[p${n}]} netns ${PEER_NS} up
+-		ip -netns ${PEER_NS} addr add ${V4ADDRS[p${n}]}/24 dev ${NETIFS[p${n}]}
+-		ip -netns ${PEER_NS} addr add ${V6ADDRS[p${n}]}/64 dev ${NETIFS[p${n}]} nodad
++		${IP} li set ${NETIFS[p${n}]} netns ${ns2} up
++		ip -netns $ns2 addr add ${V4ADDRS[p${n}]}/24 dev ${NETIFS[p${n}]}
++		ip -netns $ns2 addr add ${V6ADDRS[p${n}]}/64 dev ${NETIFS[p${n}]} nodad
+ 	done
+ 
+-	ip -6 ro add default via ${V6ADDRS[p3]/::[0-9]/::64}
+-	ip -6 ro add table ${VRF_TABLE} default via ${V6ADDRS[p7]/::[0-9]/::64}
++	${IP} -6 ro add default via ${V6ADDRS[p3]/::[0-9]/::64}
++	${IP} -6 ro add table ${VRF_TABLE} default via ${V6ADDRS[p7]/::[0-9]/::64}
+ 
+ 	set +e
+ }
+ 
+-cleanup()
+-{
+-	# make sure we start from a clean slate
+-	cleanup_ns ${PEER_NS} 2>/dev/null
+-	for n in 1 3 5 7; do
+-		ip link del ${NETIFS[p${n}]} 2>/dev/null
+-	done
+-	ip link del ${VRF} 2>/dev/null
+-	ip ro flush table ${VRF_TABLE}
+-	ip -6 ro flush table ${VRF_TABLE}
+-}
+-
+ ################################################################################
+ # IPv4 tests
+ #
+@@ -241,7 +231,7 @@ run_ip()
+ 	# dev arg may be empty
+ 	[ -n "${dev}" ] && dev="dev ${dev}"
+ 
+-	run_cmd ip ro add table "${table}" "${prefix}"/32 via "${gw}" "${dev}" onlink
++	run_cmd "${IP} ro add table ${table} ${prefix}/32 via ${gw} ${dev} onlink"
+ 	log_test $? ${exp_rc} "${desc}"
+ }
+ 
+@@ -257,8 +247,8 @@ run_ip_mpath()
+ 	# dev arg may be empty
+ 	[ -n "${dev}" ] && dev="dev ${dev}"
+ 
+-	run_cmd ip ro add table "${table}" "${prefix}"/32 \
+-		nexthop via ${nh1} nexthop via ${nh2}
++	run_cmd "${IP} ro add table ${table} ${prefix}/32 \
++		nexthop via ${nh1} nexthop via ${nh2}"
+ 	log_test $? ${exp_rc} "${desc}"
+ }
+ 
+@@ -339,7 +329,7 @@ run_ip6()
+ 	# dev arg may be empty
+ 	[ -n "${dev}" ] && dev="dev ${dev}"
+ 
+-	run_cmd ip -6 ro add table "${table}" "${prefix}"/128 via "${gw}" "${dev}" onlink
++	run_cmd "${IP} -6 ro add table ${table} ${prefix}/128 via ${gw} ${dev} onlink"
+ 	log_test $? ${exp_rc} "${desc}"
+ }
+ 
+@@ -353,8 +343,8 @@ run_ip6_mpath()
+ 	local exp_rc="$6"
+ 	local desc="$7"
+ 
+-	run_cmd ip -6 ro add table "${table}" "${prefix}"/128 "${opts}" \
+-		nexthop via ${nh1} nexthop via ${nh2}
++	run_cmd "${IP} -6 ro add table ${table} ${prefix}/128 ${opts} \
++		nexthop via ${nh1} nexthop via ${nh2}"
+ 	log_test $? ${exp_rc} "${desc}"
+ }
+ 
+@@ -491,10 +481,9 @@ do
+ 	esac
+ done
+ 
+-cleanup
+ setup
+ run_onlink_tests
+-cleanup
++cleanup_ns ${ns1} ${ns2}
+ 
+ if [ "$TESTS" != "none" ]; then
+ 	printf "\nTests passed: %3d\n" ${nsuccess}
 -- 
 2.51.0
 
