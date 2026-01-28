@@ -1,38 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9CABB81AA8;
-	Wed, 28 Jan 2026 16:00:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0422425783A;
+	Wed, 28 Jan 2026 16:00:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769616035; cv=none; b=c6/S3cyPUBXtJB8wHyjX0Dy1+6QDm/XlFfWKYmNlLgP6C9wykU04+nsTuAN4vYIzBoi3EEPEZFJxEaQNSwJjxhK35AzKBAIsyXTdRCT20enSwmvEJgrcQV4uyKenpr+KTYIbwN1mBKJck2QL+1i7aF9zWBwdhcJqLng+oBEu/D8=
+	t=1769616039; cv=none; b=KRocwd1S1zSwwBddFpNYLEpcmjkvngjwU0fBs4ZLfOESSXcloiz/Du/Juo+cnXbNSR2K6dQG1Kw6rwDitHnUNG+ipONhXVez5ghGmpwf/qc2n8soDhZVYtT5Pi9AriSzK/akr1GkmFY6Yaukx2X0Pav6eVkix41vGKIheKhzVJk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769616035; c=relaxed/simple;
-	bh=lD0QduN87EJ/+R32hA+u3D/v8/+B9rOZ8lb2frC1VRY=;
+	s=arc-20240116; t=1769616039; c=relaxed/simple;
+	bh=lv6hyZo/1nUucbxOewYmwFrKaulpqxN9kEfsgtDfoBI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pmcVPZg/52aBvDCMlcVQtCtjSolAAWNtpzCogqcDcsSooobCIsJiT/SQpaou1IiSco9TBWQT+AYg2xQYCZ+IxSCWY7oF3EWpUEzXdTggqGOey82ZQ3OTyqWzrMl8Xo3mEn6vIcO4e+Ie+7lIBn+XZupwGO9ZHTWR+mqq1UpFU3A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tkKD9A7C; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YjieO3B+3YU0EpWzUEoXub8yoi1vHDp4vvXOBO3eF+uoMtx4LsE5NlIeB5OKXBbUUA5BIAsLOZiAVdBa3CL1Z39jlLE6GpXOcgg/BK09u5lOMt7xDX/VS5DRPUvawxWBeGb+EEzJ/cbjjNaWxfUd85qsMMlZJLCHVTQn71yw9jY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Fk9AlHsI; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tkKD9A7C"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0AD02C4CEF1;
-	Wed, 28 Jan 2026 16:00:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Fk9AlHsI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 67EDEC4CEF1;
+	Wed, 28 Jan 2026 16:00:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1769616035;
-	bh=lD0QduN87EJ/+R32hA+u3D/v8/+B9rOZ8lb2frC1VRY=;
+	s=korg; t=1769616038;
+	bh=lv6hyZo/1nUucbxOewYmwFrKaulpqxN9kEfsgtDfoBI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tkKD9A7ChjoJAsO4OGzQOQ16VY09hRUgEyzTaJsYhxGD9r2zRut0r2weo42bXJ94m
-	 JVQ/w7QJN/w0gzBy5Fq6xUEyULNK6lPOfjeLBNn/Yoe4jueJVSX7OT13G0DtPcU4wj
-	 jRlm9ygJnHj6A9o0tC6+FXgtkareyF0O9xt4SYMQ=
+	b=Fk9AlHsIvwlZrHMLO5A/0TCI2O5JNpi/S55DrScT1HchpqBwoAKHcw72cVOjbJDbx
+	 byJ40oCjOPs9zrfGd92oh9Y0mVH+jzhFIm4t8sG6swIJhgI399hHBtzD4/JuOLFgpU
+	 4DUQ3e0L8ekbGrx5aq0aONMQn9bnjtZZmt+XDmHg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
-	Ma Ke <make24@iscas.ac.cn>,
-	Johan Hovold <johan@kernel.org>
-Subject: [PATCH 6.18 187/227] intel_th: fix device leak on output open()
-Date: Wed, 28 Jan 2026 16:23:52 +0100
-Message-ID: <20260128145351.174564265@linuxfoundation.org>
+	Alexander Usyskin <alexander.usyskin@intel.com>
+Subject: [PATCH 6.18 188/227] mei: trace: treat reg parameter as string
+Date: Wed, 28 Jan 2026 16:23:53 +0100
+Message-ID: <20260128145351.210987023@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260128145344.331957407@linuxfoundation.org>
 References: <20260128145344.331957407@linuxfoundation.org>
@@ -51,69 +49,98 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johan Hovold <johan@kernel.org>
+From: Alexander Usyskin <alexander.usyskin@intel.com>
 
-commit 95fc36a234da24bbc5f476f8104a5a15f99ed3e3 upstream.
+commit 06d5a7afe1d0b47102936d8fba568572c2b4b941 upstream.
 
-Make sure to drop the reference taken when looking up the th device
-during output device open() on errors and on close().
+The commit
+afd2627f727b ("tracing: Check "%s" dereference via the field and not the TP_printk format")
+forbids to emit event with a plain char* without a wrapper.
 
-Note that a recent commit fixed the leak in a couple of open() error
-paths but not all of them, and the reference is still leaking on
-successful open().
+The reg parameter always passed as static string and wrapper
+is not strictly required, contrary to dev parameter.
+Use the string wrapper anyway to check sanity of the reg parameters,
+store it value independently and prevent internal kernel data leaks.
 
-Fixes: 39f4034693b7 ("intel_th: Add driver infrastructure for Intel(R) Trace Hub devices")
-Fixes: 6d5925b667e4 ("intel_th: Fix error handling in intel_th_output_open")
-Cc: stable@vger.kernel.org	# 4.4: 6d5925b667e4
-Cc: Alexander Shishkin <alexander.shishkin@linux.intel.com>
-Cc: Ma Ke <make24@iscas.ac.cn>
-Signed-off-by: Johan Hovold <johan@kernel.org>
-Link: https://patch.msgid.link/20251208153524.68637-2-johan@kernel.org
+Since some code refactoring has taken place, explicit backporting may
+be needed for kernels older than 6.10.
+
+Cc: stable@vger.kernel.org  # v6.11+
+Fixes: a0a927d06d79 ("mei: me: add io register tracing")
+Signed-off-by: Alexander Usyskin <alexander.usyskin@intel.com>
+Link: https://patch.msgid.link/20260111145125.1754912-1-alexander.usyskin@intel.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hwtracing/intel_th/core.c |   19 ++++++++++++++++---
- 1 file changed, 16 insertions(+), 3 deletions(-)
+ drivers/misc/mei/mei-trace.h |   18 +++++++++---------
+ 1 file changed, 9 insertions(+), 9 deletions(-)
 
---- a/drivers/hwtracing/intel_th/core.c
-+++ b/drivers/hwtracing/intel_th/core.c
-@@ -810,9 +810,12 @@ static int intel_th_output_open(struct i
- 	int err;
+--- a/drivers/misc/mei/mei-trace.h
++++ b/drivers/misc/mei/mei-trace.h
+@@ -21,18 +21,18 @@ TRACE_EVENT(mei_reg_read,
+ 	TP_ARGS(dev, reg, offs, val),
+ 	TP_STRUCT__entry(
+ 		__string(dev, dev_name(dev))
+-		__field(const char *, reg)
++		__string(reg, reg)
+ 		__field(u32, offs)
+ 		__field(u32, val)
+ 	),
+ 	TP_fast_assign(
+ 		__assign_str(dev);
+-		__entry->reg  = reg;
++		__assign_str(reg);
+ 		__entry->offs = offs;
+ 		__entry->val = val;
+ 	),
+ 	TP_printk("[%s] read %s:[%#x] = %#x",
+-		  __get_str(dev), __entry->reg, __entry->offs, __entry->val)
++		  __get_str(dev), __get_str(reg), __entry->offs, __entry->val)
+ );
  
- 	dev = bus_find_device_by_devt(&intel_th_bus, inode->i_rdev);
--	if (!dev || !dev->driver) {
-+	if (!dev)
-+		return -ENODEV;
-+
-+	if (!dev->driver) {
- 		err = -ENODEV;
--		goto out_no_device;
-+		goto out_put_device;
- 	}
+ TRACE_EVENT(mei_reg_write,
+@@ -40,18 +40,18 @@ TRACE_EVENT(mei_reg_write,
+ 	TP_ARGS(dev, reg, offs, val),
+ 	TP_STRUCT__entry(
+ 		__string(dev, dev_name(dev))
+-		__field(const char *, reg)
++		__string(reg, reg)
+ 		__field(u32, offs)
+ 		__field(u32, val)
+ 	),
+ 	TP_fast_assign(
+ 		__assign_str(dev);
+-		__entry->reg = reg;
++		__assign_str(reg);
+ 		__entry->offs = offs;
+ 		__entry->val = val;
+ 	),
+ 	TP_printk("[%s] write %s[%#x] = %#x",
+-		  __get_str(dev), __entry->reg,  __entry->offs, __entry->val)
++		  __get_str(dev), __get_str(reg),  __entry->offs, __entry->val)
+ );
  
- 	thdrv = to_intel_th_driver(dev->driver);
-@@ -836,12 +839,22 @@ static int intel_th_output_open(struct i
+ TRACE_EVENT(mei_pci_cfg_read,
+@@ -59,18 +59,18 @@ TRACE_EVENT(mei_pci_cfg_read,
+ 	TP_ARGS(dev, reg, offs, val),
+ 	TP_STRUCT__entry(
+ 		__string(dev, dev_name(dev))
+-		__field(const char *, reg)
++		__string(reg, reg)
+ 		__field(u32, offs)
+ 		__field(u32, val)
+ 	),
+ 	TP_fast_assign(
+ 		__assign_str(dev);
+-		__entry->reg  = reg;
++		__assign_str(reg);
+ 		__entry->offs = offs;
+ 		__entry->val = val;
+ 	),
+ 	TP_printk("[%s] pci cfg read %s:[%#x] = %#x",
+-		  __get_str(dev), __entry->reg, __entry->offs, __entry->val)
++		  __get_str(dev), __get_str(reg), __entry->offs, __entry->val)
+ );
  
- out_put_device:
- 	put_device(dev);
--out_no_device:
-+
- 	return err;
- }
- 
-+static int intel_th_output_release(struct inode *inode, struct file *file)
-+{
-+	struct intel_th_device *thdev = file->private_data;
-+
-+	put_device(&thdev->dev);
-+
-+	return 0;
-+}
-+
- static const struct file_operations intel_th_output_fops = {
- 	.open	= intel_th_output_open,
-+	.release = intel_th_output_release,
- 	.llseek	= noop_llseek,
- };
- 
+ #endif /* _MEI_TRACE_H_ */
 
 
