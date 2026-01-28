@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D703155757;
-	Wed, 28 Jan 2026 15:31:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E3B7155757;
+	Wed, 28 Jan 2026 15:31:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769614276; cv=none; b=H5/uR7xYjLGNN8yMtc6dZFsjEGpoBKR1gs5CCEzti/7ZK8CPW4saehs+ggDDdSu6JAqS1mpNg/ko/+F4MgvY6TZ6J8jdjcPuSsgzogZ+J1ovrKd9PZCnrzi5fPuAzpEyYGUU7lWybHApoPCLOxECBTDf+rjRIRxhRiaH9XVzOm0=
+	t=1769614279; cv=none; b=qU1Yte/dgEVD3qrzPSzMwC18I7Xh1KaRVGIwyKhWhdRyutMwWXKPMlfjo/ZismDse+dRNAr7L5/QmA4r7VJMCY3F1WHAvc3rzjpQ/CiOuhO8ILu+yMBO8oAxyFo8hnyhwa/QidOUD/3MSNeF2PooWHfpVZuy7WXqkDZszGBeZ6o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769614276; c=relaxed/simple;
-	bh=gpeNHWzhI7tzEw+Ps3MIod7zh1+FfBmpSZL557ANRq4=;
+	s=arc-20240116; t=1769614279; c=relaxed/simple;
+	bh=7wvo+/J3viy1JyyZ6tB1a19BduzTy+Ywyeu2m1k3FUw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZQEHk8POCSVWO7nk+LapPQY9YSfqFpUPVUeY2kDj84w3nIfOAHY9/b09pkrtfyo65oA3ZkpGqJ3h1AIUD1aHrR0mJ8pG9iU5KnIRiDYgeBL4vi4BkVFe0vtwU71YB0uMMJCHudlDUhfJAD95ZzGlwHGKm0tKAyXWFKDVmbK0tbg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RXDECCgE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=re8tPs6dfpRWVqW9yg23Y0P6v1IthuCVGK0WyEpjx7wVa9rkF8eH0RlxCVjlD53V3AeXQPStnpb5LBLFg56xP8buiMXsi7S3JGI/hA4Mre8Qc7CXSYXBcDqZrpMKbDLa/9rEemaHDf5uaUNOZwdkoSiP+DkiRxR/39xXQyPmKCk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hNlgpEOV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RXDECCgE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C3998C4CEF1;
-	Wed, 28 Jan 2026 15:31:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hNlgpEOV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D702DC4CEF1;
+	Wed, 28 Jan 2026 15:31:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1769614276;
-	bh=gpeNHWzhI7tzEw+Ps3MIod7zh1+FfBmpSZL557ANRq4=;
+	s=korg; t=1769614279;
+	bh=7wvo+/J3viy1JyyZ6tB1a19BduzTy+Ywyeu2m1k3FUw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RXDECCgEpOUBncQiCcwv8Rzofelni987QFLKcc/mPgvzrJ4U+auGU5YXODwfGfCQO
-	 yts8hNHIPjRbNQY85BOrfwZcYLHdtsLMQCpPtaRqbYVSSPtw8StqyY1s/ngYdJ3PAe
-	 OC4laICTJAMrO/WDimdxYxNiv2wSmUlDxr+XZ+xA=
+	b=hNlgpEOVnlf2D2KWQR2fvcRSyQu71dMHuYpT7ELcOx7IqnDgtztWzIgjnazntuuc6
+	 Z+MmzlymqZtaSLhBvkjbKPDJ9zGykJuKosTB+hfAFzSqusibDthxzGRYom1+0J+3e9
+	 LxihT6W2ma8S+Hrk5lG2gb/roC/o7GwgNYpbsaQQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	SeongJae Park <sj@kernel.org>,
-	chongjiapeng <jiapeng.chong@linux.alibaba.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.6 070/254] mm/damon/sysfs: cleanup attrs subdirs on context dir setup failure
-Date: Wed, 28 Jan 2026 16:20:46 +0100
-Message-ID: <20260128145347.215359414@linuxfoundation.org>
+	Grygorii Strashko <grygorii.strashko@ti.com>,
+	Yu Kuai <yukuai3@huawei.com>,
+	Johan Hovold <johan@kernel.org>,
+	Vinod Koul <vkoul@kernel.org>
+Subject: [PATCH 6.6 088/254] dmaengine: ti: k3-udma: fix device leak on udma lookup
+Date: Wed, 28 Jan 2026 16:21:04 +0100
+Message-ID: <20260128145347.993953090@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260128145344.698118637@linuxfoundation.org>
 References: <20260128145344.698118637@linuxfoundation.org>
@@ -51,48 +52,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: SeongJae Park <sj@kernel.org>
+From: Johan Hovold <johan@kernel.org>
 
-commit 9814cc832b88bd040fc2a1817c2b5469d0f7e862 upstream.
+commit 430f7803b69cd5e5694e5dfc884c6628870af36e upstream.
 
-When a context DAMON sysfs directory setup is failed after setup of attrs/
-directory, subdirectories of attrs/ directory are not cleaned up.  As a
-result, DAMON sysfs interface is nearly broken until the system reboots,
-and the memory for the unremoved directory is leaked.
+Make sure to drop the reference taken when looking up the UDMA platform
+device.
 
-Cleanup the directories under such failures.
+Note that holding a reference to a platform device does not prevent its
+driver data from going away so there is no point in keeping the
+reference after the lookup helper returns.
 
-Link: https://lkml.kernel.org/r/20251225023043.18579-3-sj@kernel.org
-Fixes: c951cd3b8901 ("mm/damon: implement a minimal stub for sysfs-based DAMON interface")
-Signed-off-by: SeongJae Park <sj@kernel.org>
-Cc: chongjiapeng <jiapeng.chong@linux.alibaba.com>
-Cc: <stable@vger.kernel.org> # 5.18.x
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Fixes: d70241913413 ("dmaengine: ti: k3-udma: Add glue layer for non DMAengine users")
+Fixes: 1438cde8fe9c ("dmaengine: ti: k3-udma: add missing put_device() call in of_xudma_dev_get()")
+Cc: stable@vger.kernel.org	# 5.6: 1438cde8fe9c
+Cc: Grygorii Strashko <grygorii.strashko@ti.com>
+Cc: Yu Kuai <yukuai3@huawei.com>
+Signed-off-by: Johan Hovold <johan@kernel.org>
+Link: https://patch.msgid.link/20251117161258.10679-17-johan@kernel.org
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/damon/sysfs.c |    5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ drivers/dma/ti/k3-udma-private.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/mm/damon/sysfs.c
-+++ b/mm/damon/sysfs.c
-@@ -716,7 +716,7 @@ static int damon_sysfs_context_add_dirs(
+--- a/drivers/dma/ti/k3-udma-private.c
++++ b/drivers/dma/ti/k3-udma-private.c
+@@ -42,9 +42,9 @@ struct udma_dev *of_xudma_dev_get(struct
+ 	}
  
- 	err = damon_sysfs_context_set_targets(context);
- 	if (err)
--		goto put_attrs_out;
-+		goto rmdir_put_attrs_out;
+ 	ud = platform_get_drvdata(pdev);
++	put_device(&pdev->dev);
+ 	if (!ud) {
+ 		pr_debug("UDMA has not been probed\n");
+-		put_device(&pdev->dev);
+ 		return ERR_PTR(-EPROBE_DEFER);
+ 	}
  
- 	err = damon_sysfs_context_set_schemes(context);
- 	if (err)
-@@ -726,7 +726,8 @@ static int damon_sysfs_context_add_dirs(
- put_targets_attrs_out:
- 	kobject_put(&context->targets->kobj);
- 	context->targets = NULL;
--put_attrs_out:
-+rmdir_put_attrs_out:
-+	damon_sysfs_attrs_rm_dirs(context->attrs);
- 	kobject_put(&context->attrs->kobj);
- 	context->attrs = NULL;
- 	return err;
 
 
