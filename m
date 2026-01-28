@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD5E72512FF;
-	Wed, 28 Jan 2026 15:33:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 040D22512FF;
+	Wed, 28 Jan 2026 15:33:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769614380; cv=none; b=O9+0WVFnkjDg+NzPJMnFDLUKO+ONX6tnesUa+adrohXJw4qnHxVbzqjESUOBjfsCH7iQT296e695sQNY/R9SJXqNB5SHEclkJrmjTpf05Vzv0iYLZMRpjXM+BY4FHV5N26ANDpxsXuPHGx/UAIPaePiy1N/hipJ8CPacU6TZw2c=
+	t=1769614384; cv=none; b=DRrlGJUggF5O9NHkh/gXkQtMUzbxkobACnFnw8GJeRWH9KpDruMmBm+jpMhDIWrHcR0m1CgyKJyU9ydpW/nxvQglb18r0KSG8fmxCKQtYXBRK7bzYHXmUdfVdg5i40PioF1BoCsb5toTTBw0cG48i91shodOZkLG2Ffv1r2pqzU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769614380; c=relaxed/simple;
-	bh=zzEhH3WE0MT8nO+HEXtJo8C03Zd7d9RULUo8ymoaF2g=;
+	s=arc-20240116; t=1769614384; c=relaxed/simple;
+	bh=iA19AhpldGnvCs3+y9ay4UAE/Ga0PsiZkqTNqRnSqg4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Y2ACQX+Y6uZzp5Blvvu8RCFDpFia3mEOBHTK0mZQdzCZ8ZeuAbD49zmPYpDI2HOYnezdFj4QAPbUxJrc+j2qu1S/hYYypRx+bzIwmWYFWJ6w1zwOwPXytlWz6Cn3sUt0R9MDoYrl9WAqm9xqUjVav+EcSIsNPgdKcQVrSIqoDHk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DVY7wQHp; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QKdYEOo7J2nzdIHeDMM0x7c4mYFmwHPJlNvm76dlvwl6sivBgj7gShiqTdUF9YP9lCYPdxDcSj3DAl1kgtX+3zKasqdiv99uPCCKRja0ZCpjYANM8Xwd2RTJIXw96GFwGN6YFjOElnKvXA2JClrC8+xeae+MZXQ0Zb/uuCkYeBw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=voTJQkEu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DVY7wQHp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 07AFCC4CEF1;
-	Wed, 28 Jan 2026 15:32:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="voTJQkEu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 66FD1C4CEF1;
+	Wed, 28 Jan 2026 15:33:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1769614380;
-	bh=zzEhH3WE0MT8nO+HEXtJo8C03Zd7d9RULUo8ymoaF2g=;
+	s=korg; t=1769614383;
+	bh=iA19AhpldGnvCs3+y9ay4UAE/Ga0PsiZkqTNqRnSqg4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DVY7wQHprj3I9UHMfjfdewU119yP+V1Zb0932K+eLE0514HAeeaJHQaAgMR5kEnhq
-	 U16DHpog/mnhdew4w15yoYUdQZQCtGq1g7QSqPrwIg0Ka7uXNxkr/695Bq8TO/yacO
-	 Q9jtkwcZVdd6rF55QvrLTmnTwfRH0waGd4Jp1xkc=
+	b=voTJQkEunGdOrOm90H3G2lzi3xcoTRYMFqGLEX98QLeiMFpcvcZCH68o0rNQIh9l7
+	 7iIuQu4BH3W39IzfiHw0TuqHRLQmpz8y/Hpg2zMk2A1hfupew/hCNDPwsotX67+63b
+	 ngeaco3tnWS+CgKTZRQocHlWjJrIMjqmderMYwWs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+9c081b17773615f24672@syzkaller.appspotmail.com,
-	Eric Dumazet <edumazet@google.com>,
-	Andrew Lunn <andrew+netdev@lunn.ch>,
-	Jay Vosburgh <jv@jvosburgh.net>,
+	David Ahern <dsahern@kernel.org>,
+	Hangbin Liu <liuhangbin@gmail.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 119/254] bonding: limit BOND_MODE_8023AD to Ethernet devices
-Date: Wed, 28 Jan 2026 16:21:35 +0100
-Message-ID: <20260128145349.105956094@linuxfoundation.org>
+Subject: [PATCH 6.6 120/254] selftests/net: convert fib-onlink-tests.sh to run it in unique namespace
+Date: Wed, 28 Jan 2026 16:21:36 +0100
+Message-ID: <20260128145349.141352657@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260128145344.698118637@linuxfoundation.org>
 References: <20260128145344.698118637@linuxfoundation.org>
@@ -54,89 +52,81 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Hangbin Liu <liuhangbin@gmail.com>
 
-[ Upstream commit c84fcb79e5dbde0b8d5aeeaf04282d2149aebcf6 ]
+[ Upstream commit 3a06833b2adc0a902f2469ad4ce41ccd64f1f3ab ]
 
-BOND_MODE_8023AD makes sense for ARPHRD_ETHER only.
+Remove PEER_CMD, which is not used in this test
 
-syzbot reported:
+Here is the test result after conversion.
 
- BUG: KASAN: global-out-of-bounds in __hw_addr_create net/core/dev_addr_lists.c:63 [inline]
- BUG: KASAN: global-out-of-bounds in __hw_addr_add_ex+0x25d/0x760 net/core/dev_addr_lists.c:118
-Read of size 16 at addr ffffffff8bf94040 by task syz.1.3580/19497
+ ]# ./fib-onlink-tests.sh
+ Error: ipv4: FIB table does not exist.
+ Flush terminated
+ Error: ipv6: FIB table does not exist.
+ Flush terminated
 
-CPU: 1 UID: 0 PID: 19497 Comm: syz.1.3580 Tainted: G             L      syzkaller #0 PREEMPT(full)
-Tainted: [L]=SOFTLOCKUP
-Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 10/25/2025
-Call Trace:
- <TASK>
-  dump_stack_lvl+0xe8/0x150 lib/dump_stack.c:120
-  print_address_description mm/kasan/report.c:378 [inline]
-  print_report+0xca/0x240 mm/kasan/report.c:482
-  kasan_report+0x118/0x150 mm/kasan/report.c:595
- check_region_inline mm/kasan/generic.c:-1 [inline]
-  kasan_check_range+0x2b0/0x2c0 mm/kasan/generic.c:200
-  __asan_memcpy+0x29/0x70 mm/kasan/shadow.c:105
-  __hw_addr_create net/core/dev_addr_lists.c:63 [inline]
-  __hw_addr_add_ex+0x25d/0x760 net/core/dev_addr_lists.c:118
-  __dev_mc_add net/core/dev_addr_lists.c:868 [inline]
-  dev_mc_add+0xa1/0x120 net/core/dev_addr_lists.c:886
-  bond_enslave+0x2b8b/0x3ac0 drivers/net/bonding/bond_main.c:2180
-  do_set_master+0x533/0x6d0 net/core/rtnetlink.c:2963
-  do_setlink+0xcf0/0x41c0 net/core/rtnetlink.c:3165
-  rtnl_changelink net/core/rtnetlink.c:3776 [inline]
-  __rtnl_newlink net/core/rtnetlink.c:3935 [inline]
-  rtnl_newlink+0x161c/0x1c90 net/core/rtnetlink.c:4072
-  rtnetlink_rcv_msg+0x7cf/0xb70 net/core/rtnetlink.c:6958
-  netlink_rcv_skb+0x208/0x470 net/netlink/af_netlink.c:2550
-  netlink_unicast_kernel net/netlink/af_netlink.c:1318 [inline]
-  netlink_unicast+0x82f/0x9e0 net/netlink/af_netlink.c:1344
-  netlink_sendmsg+0x805/0xb30 net/netlink/af_netlink.c:1894
-  sock_sendmsg_nosec net/socket.c:727 [inline]
-  __sock_sendmsg+0x21c/0x270 net/socket.c:742
-  ____sys_sendmsg+0x505/0x820 net/socket.c:2592
-  ___sys_sendmsg+0x21f/0x2a0 net/socket.c:2646
-  __sys_sendmsg+0x164/0x220 net/socket.c:2678
-  do_syscall_32_irqs_on arch/x86/entry/syscall_32.c:83 [inline]
-  __do_fast_syscall_32+0x1dc/0x560 arch/x86/entry/syscall_32.c:307
-  do_fast_syscall_32+0x34/0x80 arch/x86/entry/syscall_32.c:332
- entry_SYSENTER_compat_after_hwframe+0x84/0x8e
- </TASK>
+ ########################################
+ Configuring interfaces
 
-The buggy address belongs to the variable:
- lacpdu_mcast_addr+0x0/0x40
+   ...
 
-Fixes: 872254dd6b1f ("net/bonding: Enable bonding to enslave non ARPHRD_ETHER")
-Reported-by: syzbot+9c081b17773615f24672@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/netdev/6966946b.a70a0220.245e30.0002.GAE@google.com/T/#u
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Cc: Andrew Lunn <andrew+netdev@lunn.ch>
-Acked-by: Jay Vosburgh <jv@jvosburgh.net>
-Link: https://patch.msgid.link/20260113191201.3970737-1-edumazet@google.com
+     TEST: Gateway resolves to wrong nexthop device - VRF      [ OK ]
+
+ Tests passed:  38
+ Tests failed:   0
+
+Acked-by: David Ahern <dsahern@kernel.org>
+Signed-off-by: Hangbin Liu <liuhangbin@gmail.com>
+Link: https://lore.kernel.org/r/20231213060856.4030084-11-liuhangbin@gmail.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Stable-dep-of: 4f5f148dd7c0 ("selftests: net: fib-onlink-tests: Convert to use namespaces by default")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/bonding/bond_main.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ tools/testing/selftests/net/fib-onlink-tests.sh | 9 +++------
+ 1 file changed, 3 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/net/bonding/bond_main.c b/drivers/net/bonding/bond_main.c
-index b3ccc064cbff2..9dfbbf4cd71f0 100644
---- a/drivers/net/bonding/bond_main.c
-+++ b/drivers/net/bonding/bond_main.c
-@@ -1942,6 +1942,12 @@ int bond_enslave(struct net_device *bond_dev, struct net_device *slave_dev,
- 	 */
- 	if (!bond_has_slaves(bond)) {
- 		if (bond_dev->type != slave_dev->type) {
-+			if (slave_dev->type != ARPHRD_ETHER &&
-+			    BOND_MODE(bond) == BOND_MODE_8023AD) {
-+				SLAVE_NL_ERR(bond_dev, slave_dev, extack,
-+					     "8023AD mode requires Ethernet devices");
-+				return -EINVAL;
-+			}
- 			slave_dbg(bond_dev, slave_dev, "change device type from %d to %d\n",
- 				  bond_dev->type, slave_dev->type);
+diff --git a/tools/testing/selftests/net/fib-onlink-tests.sh b/tools/testing/selftests/net/fib-onlink-tests.sh
+index c287b90b8af80..ec2d6ceb1f08d 100755
+--- a/tools/testing/selftests/net/fib-onlink-tests.sh
++++ b/tools/testing/selftests/net/fib-onlink-tests.sh
+@@ -3,6 +3,7 @@
  
+ # IPv4 and IPv6 onlink tests
+ 
++source lib.sh
+ PAUSE_ON_FAIL=${PAUSE_ON_FAIL:=no}
+ VERBOSE=0
+ 
+@@ -74,9 +75,6 @@ TEST_NET4IN6[2]=10.2.1.254
+ # mcast address
+ MCAST6=ff02::1
+ 
+-
+-PEER_NS=bart
+-PEER_CMD="ip netns exec ${PEER_NS}"
+ VRF=lisa
+ VRF_TABLE=1101
+ PBR_TABLE=101
+@@ -176,8 +174,7 @@ setup()
+ 	set -e
+ 
+ 	# create namespace
+-	ip netns add ${PEER_NS}
+-	ip -netns ${PEER_NS} li set lo up
++	setup_ns PEER_NS
+ 
+ 	# add vrf table
+ 	ip li add ${VRF} type vrf table ${VRF_TABLE}
+@@ -219,7 +216,7 @@ setup()
+ cleanup()
+ {
+ 	# make sure we start from a clean slate
+-	ip netns del ${PEER_NS} 2>/dev/null
++	cleanup_ns ${PEER_NS} 2>/dev/null
+ 	for n in 1 3 5 7; do
+ 		ip link del ${NETIFS[p${n}]} 2>/dev/null
+ 	done
 -- 
 2.51.0
 
