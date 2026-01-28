@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E661630DED8;
-	Wed, 28 Jan 2026 15:43:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23098302163;
+	Wed, 28 Jan 2026 15:43:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769614990; cv=none; b=WSG1kn46ZCA8uQa5zpKfogfdtGw29UualKPCOHV8AfT5fd3ETiqipWzkcINDnozrs0cUKpv047So9rCQjqG7fTpHQWqQ9X/HtXUBUy5WVlA6krg+KPuLSnUkHFK3e4dFqiuRe+QISO05qPym7C2bvJt49pYfnsp1wrCHSEAEDrI=
+	t=1769614993; cv=none; b=LQZ0vCbnNGmam1YNxYKTU/4TLIVFtbG8LB0kmGdPOY0AKTPeAfVAvoV09Mb8HCGXWhOZnhEVosk83N8CBxJN3eYN7wxJ2J7fCKCERpkxHnG9tAAK3397hFYElMBALNXRBUJ0vHftfrPbSSWUtR2/KO+RANjwiCKyg5o6PZCtDhA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769614990; c=relaxed/simple;
-	bh=qNTohIxFW2j/EwXaNfp+jG9g6TogB5/023dltnRguaQ=;
+	s=arc-20240116; t=1769614993; c=relaxed/simple;
+	bh=vXyjk19kuizrE4/SrHV+5N7eliwoPjj16lpTSmz8aAk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=qwM6e8rrB2SQbATO6EgNfc/HxPzTj0WEClzQjFvUAG47RtSsbL5zgXDQuAURO6YAx/q4o5alucly4G1CixH/dAGtBYhu2NNfmbzXBXHdw0RAaNZLWjNag5LIITNrqANCMFLlMwVE2hONDdS4uLz7F56w+toNgIYqF2WqbdrdKUU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FvgQCkXy; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HBRzUOYxW1ueevx73g4So5xSQI4gHRmP2JN9hUFBuDscNxm5axfk1oalHOHooDovd594B1aOr+71YX1KhnIVIqqIaAPWpjPfOFwVeZHBgPzFe1XiQDHqkcR6Gc+ZjkASEAkfiujyxdVQtcuapgp+9wEvsv6lGUYcgD79H9HwN0A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Z6Qeehj4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FvgQCkXy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 03DEBC4CEF1;
-	Wed, 28 Jan 2026 15:43:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Z6Qeehj4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 47F88C4CEF7;
+	Wed, 28 Jan 2026 15:43:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1769614989;
-	bh=qNTohIxFW2j/EwXaNfp+jG9g6TogB5/023dltnRguaQ=;
+	s=korg; t=1769614992;
+	bh=vXyjk19kuizrE4/SrHV+5N7eliwoPjj16lpTSmz8aAk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FvgQCkXy4HX+reZoSDmBmy/9z61pLiKGDluNu9Xh7S2qaEkIPf6gaYgrcZk/g6nV/
-	 4ssjXx9hdgTFPDhnrKKSugemqMDfduJOHy7+zKbho69Z8+WK1nMPmhM44T8njcxSKH
-	 V6ByFwF+UjIbsryRZzWxAIdAC8Z2rE+U58/uuT0k=
+	b=Z6Qeehj4NBF+BPG29PgvY7mkpmbtnXremo3k4+Q5gGrucml0z4vd23Epn3yVJZpGm
+	 8AgksiqcFFhtp2eSqs+pmAmekumkXdjRkrATHlMN/bRKImBJDMNQKoVUVBxAlFuTTT
+	 OBea602BPTrkS2Yhd6TOMphotaZNkOk/i2E2dFPo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Wolf <wolf@yoxt.cc>,
 	Damien Le Moal <dlemoal@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 013/169] ata: ahci: Do not read the per port area for unimplemented ports
-Date: Wed, 28 Jan 2026 16:21:36 +0100
-Message-ID: <20260128145334.493088050@linuxfoundation.org>
+Subject: [PATCH 6.12 014/169] ata: libata-sata: Improve link_power_management_supported sysfs attribute
+Date: Wed, 28 Jan 2026 16:21:37 +0100
+Message-ID: <20260128145334.528576255@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260128145334.006287341@linuxfoundation.org>
 References: <20260128145334.006287341@linuxfoundation.org>
@@ -46,7 +46,6 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
@@ -55,65 +54,48 @@ Content-Transfer-Encoding: 8bit
 
 From: Niklas Cassel <cassel@kernel.org>
 
-[ Upstream commit ea4d4ea6d10a561043922d285f1765c7e4bfd32a ]
+[ Upstream commit ce83767ea323baf8509a75eb0c783cd203e14789 ]
 
-An AHCI HBA specifies the number of ports it supports using CAP.NP.
-The HBA is free to only make a subset of the number of ports available
-using the PI (Ports Implemented) register.
+The link_power_management_supported sysfs attribute is currently set as
+true even for ata ports that lack a .set_lpm() callback, e.g. dummy ports.
 
-libata currently creates dummy ports for HBA ports that are provided by
-the HBA, but which are marked as "unavailable" using the PI register.
+This is a bit silly, because while writing to the
+link_power_management_policy sysfs attribute will make ata_scsi_lpm_store()
+update ap->target_lpm_policy (thus sysfs will reflect the new value) and
+call ata_port_schedule_eh() for the port, it is essentially a no-op.
 
-Each port will have a per port area of registers in the HBA, regardless
-if the port is marked as "unavailable" or not.
+This is because for a port without a .set_lpm() callback, once EH gets to
+run, the ata_eh_link_set_lpm() will simply return, since the port does not
+provide a .set_lpm() callback.
 
-ahci_mark_external_port() currently reads this per port area of registers
-using readl() to see if the port is marked as external/hotplug-capable.
+Thus, make sure that the link_power_management_supported sysfs attribute
+is set to false for ports that lack a .set_lpm() callback. This way the
+link_power_management_policy sysfs attribute will no longer be writable,
+so we will no longer be misleading users to think that their sysfs write
+actually does something.
 
-However, AHCI 1.3.1, section "3.1.4 Offset 0Ch: PI – Ports Implemented"
-states: "Software must not read or write to registers within unavailable
-ports."
-
-Thus, make sure that we only call ahci_mark_external_port() and
-ahci_update_initial_lpm_policy() for ports that are implemented.
-
->From a libata perspective, this should not change anything related to LPM,
-as dummy ports do not provide any ap->ops (they do not have a .set_lpm()
-callback), so even if EH were to call .set_lpm() on a dummy port, it was
-already a no-op.
-
-Fixes: f7131935238d ("ata: ahci: move marking of external port earlier")
+Fixes: 0060beec0bfa ("ata: libata-sata: Add link_power_management_supported sysfs attribute")
 Signed-off-by: Niklas Cassel <cassel@kernel.org>
 Tested-by: Wolf <wolf@yoxt.cc>
 Signed-off-by: Damien Le Moal <dlemoal@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/ata/ahci.c | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ drivers/ata/libata-sata.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/ata/ahci.c b/drivers/ata/ahci.c
-index 944e44caa2606..e78b97fe81708 100644
---- a/drivers/ata/ahci.c
-+++ b/drivers/ata/ahci.c
-@@ -2071,13 +2071,13 @@ static int ahci_init_one(struct pci_dev *pdev, const struct pci_device_id *ent)
- 		if (ap->flags & ATA_FLAG_EM)
- 			ap->em_message_type = hpriv->em_msg_type;
+diff --git a/drivers/ata/libata-sata.c b/drivers/ata/libata-sata.c
+index cad3855373cb1..5fbbdf6f87e34 100644
+--- a/drivers/ata/libata-sata.c
++++ b/drivers/ata/libata-sata.c
+@@ -909,7 +909,7 @@ static bool ata_scsi_lpm_supported(struct ata_port *ap)
+ 	struct ata_link *link;
+ 	struct ata_device *dev;
  
--		ahci_mark_external_port(ap);
--
--		ahci_update_initial_lpm_policy(ap);
--
- 		/* disabled/not-implemented port */
--		if (!(hpriv->port_map & (1 << i)))
-+		if (!(hpriv->port_map & (1 << i))) {
- 			ap->ops = &ata_dummy_port_ops;
-+		} else {
-+			ahci_mark_external_port(ap);
-+			ahci_update_initial_lpm_policy(ap);
-+		}
- 	}
+-	if (ap->flags & ATA_FLAG_NO_LPM)
++	if ((ap->flags & ATA_FLAG_NO_LPM) || !ap->ops->set_lpm)
+ 		return false;
  
- 	/* apply workaround for ASUS P5W DH Deluxe mainboard */
+ 	ata_for_each_link(link, ap, EDGE) {
 -- 
 2.51.0
 
