@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B27A1E9B1A;
-	Wed, 28 Jan 2026 15:31:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1BEAC10A1E;
+	Wed, 28 Jan 2026 15:31:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769614300; cv=none; b=UY225p8RYOe5rz39Ji21peNPibJes4u/byPaNTmY0okHCgHzGLUYEXzP2Hp5i5cVoTwh9OqsbR/KgZf2XXeXvoWutIV0vswJc2oSDAJIyrxUhkzqEdf+1OIBZsvIrneYoP4nvuUZue3hGOD2Tnj1XRErHVTODHN1mtGTmNPoMfk=
+	t=1769614304; cv=none; b=uZlRBcM9n014u6Z/NfO2DFBfWovagywmv6XNdPUclG2/axNPfK62qB3lL2I1Wky8yd2qLL7EQUQwhUGSH8XroJ2hJmYYfwlZZafQ6iV1vLxIptU9BJZuEnkHhiLbqjqA/XF28hQzUGz/UCL2aqYNWWUZHLIJFHQdL5ZXM3aKtYc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769614300; c=relaxed/simple;
-	bh=SDdG2h+/5V1hhoxgFB7bNd9VzTXBj/BbMuxm6FD3fCE=;
+	s=arc-20240116; t=1769614304; c=relaxed/simple;
+	bh=M2MLBbV1IAuQ7aNioHMFConF6NA7jaMue7cl5xzUDA8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=UYFJTTMMHS70t5QZu/As4vbmJvP9ohtwIzYaCthgcVblHRTY6Gn8sUEvI7PhpYxLWpxn7W/HfluZKnjdBB1L7Ho95wmjhb6YLRm8cHDOscp+SaWrXYUjCswiR/qYHD+LmxoKreZSHaDLVCsEOkZqlzDVl39NuidtueuwBEucYsg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gI1JI5EE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Ih7ImyeBX7+wr6Ni7Liuo4L2kdpbt98qL5klBMkrRMcc+K5yB+q9wDFLlq4Xdh+02vbzNBWyIy8QTlZQt1eLIHkAUr+9F7yDCg1HJ8ezQUySohNmPMDF6mOCk5X2BZMKVA60yxhgkCnS2bi315WNqWUsnJeHWB4FP5BrogFBidY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=p4QchWVQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gI1JI5EE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A14DDC4CEF7;
-	Wed, 28 Jan 2026 15:31:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="p4QchWVQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3BFD6C4CEF1;
+	Wed, 28 Jan 2026 15:31:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1769614300;
-	bh=SDdG2h+/5V1hhoxgFB7bNd9VzTXBj/BbMuxm6FD3fCE=;
+	s=korg; t=1769614303;
+	bh=M2MLBbV1IAuQ7aNioHMFConF6NA7jaMue7cl5xzUDA8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gI1JI5EEj/o2y//Vl4o8HPtYBM+zYn6frMPQ+wzyRJVpCaDppumnICrOWq1vwb0QL
-	 /CY9SfuWkW5PLl/lGuNc1oDhzdZu/d/1AxJ4b9BkPzdO6xmqbHvJCs/qDp9Jf8xvlT
-	 GPn/au87nirsxwPZbB++tdQwUx923BlTfIuZbrzA=
+	b=p4QchWVQeuekZItM5Me+XrxQSb1r7bwp3YnvHYsumTDLR5Ylotm5sC0tsheTizHoO
+	 n1QWr2bZ31gi2/M7GD2boljvg+Sy30jivXcO3GFxsQJCWpF6u8L2bFuCse1J87uv3k
+	 kuXIy0viOx/KFFkAOnfBL6qquIihk+pcCy64jIMU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Xabier Marquiegui <reibax@gmail.com>,
 	Richard Cochran <richardcochran@gmail.com>,
-	Vadim Fedorenko <vadim.fedorenko@linux.dev>,
-	Wojtek Wasko <wwasko@nvidia.com>,
-	Thomas Gleixner <tglx@linutronix.de>,
+	Vinicius Costa Gomes <vinicius.gomes@intel.com>,
 	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 094/254] ptp: Add PHC file mode checks. Allow RO adjtime() without FMODE_WRITE.
-Date: Wed, 28 Jan 2026 16:21:10 +0100
-Message-ID: <20260128145348.210690269@linuxfoundation.org>
+Subject: [PATCH 6.6 095/254] ptp: add testptp mask test
+Date: Wed, 28 Jan 2026 16:21:11 +0100
+Message-ID: <20260128145348.246509071@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260128145344.698118637@linuxfoundation.org>
 References: <20260128145344.698118637@linuxfoundation.org>
@@ -48,116 +47,117 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Wojtek Wasko <wwasko@nvidia.com>
+From: Xabier Marquiegui <reibax@gmail.com>
 
-[ Upstream commit b4e53b15c04e3852949003752f48f7a14ae39e86 ]
+[ Upstream commit 26285e689c6cd2cf3849568c83b2ebe53f467143 ]
 
-Many devices implement highly accurate clocks, which the kernel manages
-as PTP Hardware Clocks (PHCs). Userspace applications rely on these
-clocks to timestamp events, trace workload execution, correlate
-timescales across devices, and keep various clocks in sync.
+Add option to test timestamp event queue mask manipulation in testptp.
 
-The kernel’s current implementation of PTP clocks does not enforce file
-permissions checks for most device operations except for POSIX clock
-operations, where file mode is verified in the POSIX layer before
-forwarding the call to the PTP subsystem. Consequently, it is common
-practice to not give unprivileged userspace applications any access to
-PTP clocks whatsoever by giving the PTP chardevs 600 permissions. An
-example of users running into this limitation is documented in [1].
-Additionally, POSIX layer requires WRITE permission even for readonly
-adjtime() calls which are used in PTP layer to return current frequency
-offset applied to the PHC.
+Option -F allows the user to specify a single channel that will be
+applied on the mask filter via IOCTL.
 
-Add permission checks for functions that modify the state of a PTP
-device. Continue enforcing permission checks for POSIX clock operations
-(settime, adjtime) in the POSIX layer. Only require WRITE access for
-dynamic clocks adjtime() if any flags are set in the modes field.
+The test program will maintain the file open until user input is
+received.
 
-[1] https://lists.nwtime.org/sympa/arc/linuxptp-users/2024-01/msg00036.html
+This allows checking the effect of the IOCTL in debugfs.
 
-Changes in v4:
-- Require FMODE_WRITE in ajtime() only for calls modifying the clock in
-  any way.
+eg:
 
-Acked-by: Richard Cochran <richardcochran@gmail.com>
-Reviewed-by: Vadim Fedorenko <vadim.fedorenko@linux.dev>
-Signed-off-by: Wojtek Wasko <wwasko@nvidia.com>
-Reviewed-by: Thomas Gleixner <tglx@linutronix.de>
+Console 1:
+```
+Channel 12 exclusively enabled. Check on debugfs.
+Press any key to continue
+```
+
+Console 2:
+```
+0x00000000 0x00000001 0x00000000 0x00000000 0x00000000 0x00000000
+0x00000000 0x00000000 0x00000000 0x00000000 0x00000000 0x00000000
+0x00000000 0x00000000 0x00000000 0x00000000 0x00000000 0x00000000
+0x00000000 0x00000000 0x00000000 0x00000000 0x00000000 0x00000000
+0x00000000 0x00000000 0x00000000 0x00000000 0x00000000 0x00000000
+0x00000000 0x00000000 0x00000000 0x00000000 0x00000000 0x00000000
+0x00000000 0x00000000 0x00000000 0x00000000 0x00000000 0x00000000
+0x00000000 0x00000000 0x00000000 0x00000000 0x00000000 0x00000000
+0x00000000 0x00000000 0x00000000 0x00000000 0x00000000 0x00000000
+0x00000000 0x00000000 0x00000000 0x00000000 0x00000000 0x00000000
+0x00000000 0x00000000 0x00000000 0x00000000
+```
+
+Signed-off-by: Xabier Marquiegui <reibax@gmail.com>
+Suggested-by: Richard Cochran <richardcochran@gmail.com>
+Suggested-by: Vinicius Costa Gomes <vinicius.gomes@intel.com>
 Signed-off-by: David S. Miller <davem@davemloft.net>
+Stable-dep-of: 76868642e427 ("testptp: Add option to open PHC in readonly mode")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/ptp/ptp_chardev.c | 16 ++++++++++++++++
- kernel/time/posix-clock.c |  2 +-
- 2 files changed, 17 insertions(+), 1 deletion(-)
+ tools/testing/selftests/ptp/testptp.c | 19 ++++++++++++++++++-
+ 1 file changed, 18 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/ptp/ptp_chardev.c b/drivers/ptp/ptp_chardev.c
-index 6eecb53b3e670..1ed12e86ee000 100644
---- a/drivers/ptp/ptp_chardev.c
-+++ b/drivers/ptp/ptp_chardev.c
-@@ -153,6 +153,10 @@ long ptp_ioctl(struct posix_clock_context *pccontext, unsigned int cmd,
+diff --git a/tools/testing/selftests/ptp/testptp.c b/tools/testing/selftests/ptp/testptp.c
+index c9f6cca4feb45..011252fe238c8 100644
+--- a/tools/testing/selftests/ptp/testptp.c
++++ b/tools/testing/selftests/ptp/testptp.c
+@@ -121,6 +121,7 @@ static void usage(char *progname)
+ 		" -d name    device to open\n"
+ 		" -e val     read 'val' external time stamp events\n"
+ 		" -f val     adjust the ptp clock frequency by 'val' ppb\n"
++		" -F chan    Enable single channel mask and keep device open for debugfs verification.\n"
+ 		" -g         get the ptp clock time\n"
+ 		" -h         prints this message\n"
+ 		" -i val     index for event/trigger\n"
+@@ -187,6 +188,7 @@ int main(int argc, char *argv[])
+ 	int pps = -1;
+ 	int seconds = 0;
+ 	int settime = 0;
++	int channel = -1;
  
- 	case PTP_EXTTS_REQUEST:
- 	case PTP_EXTTS_REQUEST2:
-+		if ((pccontext->fp->f_mode & FMODE_WRITE) == 0) {
-+			err = -EACCES;
-+			break;
-+		}
- 		memset(&req, 0, sizeof(req));
+ 	int64_t t1, t2, tp;
+ 	int64_t interval, offset;
+@@ -196,7 +198,7 @@ int main(int argc, char *argv[])
  
- 		if (copy_from_user(&req.extts, (void __user *)arg,
-@@ -194,6 +198,10 @@ long ptp_ioctl(struct posix_clock_context *pccontext, unsigned int cmd,
- 
- 	case PTP_PEROUT_REQUEST:
- 	case PTP_PEROUT_REQUEST2:
-+		if ((pccontext->fp->f_mode & FMODE_WRITE) == 0) {
-+			err = -EACCES;
-+			break;
-+		}
- 		memset(&req, 0, sizeof(req));
- 
- 		if (copy_from_user(&req.perout, (void __user *)arg,
-@@ -262,6 +270,10 @@ long ptp_ioctl(struct posix_clock_context *pccontext, unsigned int cmd,
- 
- 	case PTP_ENABLE_PPS:
- 	case PTP_ENABLE_PPS2:
-+		if ((pccontext->fp->f_mode & FMODE_WRITE) == 0) {
-+			err = -EACCES;
-+			break;
-+		}
- 		memset(&req, 0, sizeof(req));
- 
- 		if (!capable(CAP_SYS_TIME))
-@@ -400,6 +412,10 @@ long ptp_ioctl(struct posix_clock_context *pccontext, unsigned int cmd,
- 
- 	case PTP_PIN_SETFUNC:
- 	case PTP_PIN_SETFUNC2:
-+		if ((pccontext->fp->f_mode & FMODE_WRITE) == 0) {
-+			err = -EACCES;
-+			break;
-+		}
- 		if (copy_from_user(&pd, (void __user *)arg, sizeof(pd))) {
- 			err = -EFAULT;
+ 	progname = strrchr(argv[0], '/');
+ 	progname = progname ? 1+progname : argv[0];
+-	while (EOF != (c = getopt(argc, argv, "cd:e:f:ghH:i:k:lL:n:o:p:P:sSt:T:w:x:Xz"))) {
++	while (EOF != (c = getopt(argc, argv, "cd:e:f:F:ghH:i:k:lL:n:o:p:P:sSt:T:w:x:Xz"))) {
+ 		switch (c) {
+ 		case 'c':
+ 			capabilities = 1;
+@@ -210,6 +212,9 @@ int main(int argc, char *argv[])
+ 		case 'f':
+ 			adjfreq = atoi(optarg);
  			break;
-diff --git a/kernel/time/posix-clock.c b/kernel/time/posix-clock.c
-index b130bb56cc4e0..827abede72745 100644
---- a/kernel/time/posix-clock.c
-+++ b/kernel/time/posix-clock.c
-@@ -253,7 +253,7 @@ static int pc_clock_adjtime(clockid_t id, struct __kernel_timex *tx)
- 	if (err)
- 		return err;
- 
--	if ((cd.fp->f_mode & FMODE_WRITE) == 0) {
-+	if (tx->modes && (cd.fp->f_mode & FMODE_WRITE) == 0) {
- 		err = -EACCES;
- 		goto out;
++		case 'F':
++			channel = atoi(optarg);
++			break;
+ 		case 'g':
+ 			gettime = 1;
+ 			break;
+@@ -604,6 +609,18 @@ int main(int argc, char *argv[])
+ 		free(xts);
  	}
+ 
++	if (channel >= 0) {
++		if (ioctl(fd, PTP_MASK_CLEAR_ALL)) {
++			perror("PTP_MASK_CLEAR_ALL");
++		} else if (ioctl(fd, PTP_MASK_EN_SINGLE, (unsigned int *)&channel)) {
++			perror("PTP_MASK_EN_SINGLE");
++		} else {
++			printf("Channel %d exclusively enabled. Check on debugfs.\n", channel);
++			printf("Press any key to continue\n.");
++			getchar();
++		}
++	}
++
+ 	close(fd);
+ 	return 0;
+ }
 -- 
 2.51.0
 
