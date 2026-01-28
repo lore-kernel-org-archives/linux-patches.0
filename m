@@ -1,36 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 059B326ED3A;
-	Wed, 28 Jan 2026 15:45:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 617A33254A2;
+	Wed, 28 Jan 2026 15:45:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769615127; cv=none; b=WtIi9DhgcfGG0XJ+lbR1r/ZYMVRAIZznBzZVxXTrR/dqk7Rx3RsnmXzSc6CVBGX9LOJeMISb9MCnkss75b9RIocSKhEZMmPOPB9TCEbQrd75PW2Ti/Sz6YMupiJvGx69C4E8YRg/y5U4heBudwtuCeQ7PVHOBImOyrx0RJtIG10=
+	t=1769615130; cv=none; b=A9quOoG2PE2fOKtvxEBKGmtK/F1D1iwtDIKzParRaWNiuCNi3jB68hh8UnSIcKTHtwd3rD/l8JQlIc2tQnrpb3dedEOAeD0F62DgHvWeO9cjXPH82y3OGz1LY5s3nN8m9l/4IxDbb6hyqPcBVAgad/V+kzp0L9pVdDlUOt9uQyQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769615127; c=relaxed/simple;
-	bh=Sircu57g6VZmdoAoHNImHMmbGX1G2IDlnI64FVVp7iE=;
+	s=arc-20240116; t=1769615130; c=relaxed/simple;
+	bh=5vS2YFKBBeizu+CjEJ3uBCR4aFjryFcVFxET9W5f7ns=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Xjp0X7O3AhkPmqLLiYbWs+U8gKSv1kQo7wYfsjuCLUrxEWS561htD1z7v+8VAEEy1a7g7vHF6BT59sn4meHJuyzvevunEkxb01Yt42gUh2T92oNUU70LNYcvmilWld7KZPuKDxdBLPt+l57kQGrAyqYjn9vqXIkctIAM4A1GzzY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=H90ve3Ky; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WJU2qBwv1vwJKinpYHuUem5GETC70kSI+z0UNQkgA+Fq6LPrmgmGhB+0byGIfif473yxxfWdPv2rn7EsfcQ/lAUmscIsLu+pkb5RpegLrwcIduknXMBVKY9ZBJCP2Lzd/vkQCWphE8Zmi49sfHFRdihDGIFBiVxT+BOzHIjnR5g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hJnbSqRj; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="H90ve3Ky"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 38D1BC4CEF1;
-	Wed, 28 Jan 2026 15:45:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hJnbSqRj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA98FC4CEF1;
+	Wed, 28 Jan 2026 15:45:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1769615126;
-	bh=Sircu57g6VZmdoAoHNImHMmbGX1G2IDlnI64FVVp7iE=;
+	s=korg; t=1769615130;
+	bh=5vS2YFKBBeizu+CjEJ3uBCR4aFjryFcVFxET9W5f7ns=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=H90ve3KyX/p9Fbc6lNjLBLqb1PRX07tZYJtlrjZRX1LNlaNuiP93j8qD49yVT/1UG
-	 LBxItVs4mnQg7xJ/XRngC3HnmrFfLWHJLy2klmGPyt1qJwGe5zRNVSmqUUV7Ch7i5a
-	 3sgMvaRKaQRnvgxl/MzMLVTeATCli85irlTe+00I=
+	b=hJnbSqRjimCnx7suVTbYYAS7/01lLfqtYaMiuixOWFal1dn93zRccn0Ta5pUg9O/N
+	 M2AFPDsWyvmzj1pMpDaTkzgJxzUusrpiRELfKpZI9YWCq2lDalf8qMlVJIfmkueoqc
+	 g6sb/74jwqOUfC99JuAihTJG4+KBUVbE/DLmr9r0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ian Abbott <abbotti@mev.co.uk>
-Subject: [PATCH 6.12 044/169] comedi: dmm32at: serialize use of paged registers
-Date: Wed, 28 Jan 2026 16:22:07 +0100
-Message-ID: <20260128145335.604738960@linuxfoundation.org>
+	Laurent Vivier <lvivier@redhat.com>,
+	Stefano Brivio <sbrivio@redhat.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.12 080/169] usbnet: limit max_mtu based on devices hard_mtu
+Date: Wed, 28 Jan 2026 16:22:43 +0100
+Message-ID: <20260128145336.885415400@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260128145334.006287341@linuxfoundation.org>
 References: <20260128145334.006287341@linuxfoundation.org>
@@ -49,127 +52,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ian Abbott <abbotti@mev.co.uk>
+From: Laurent Vivier <lvivier@redhat.com>
 
-commit e03b29b55f2b7c345a919a6ee36633b06bf3fb56 upstream.
+[ Upstream commit c7159e960f1472a5493ac99aff0086ab1d683594 ]
 
-Some of the hardware registers of the DMM-32-AT board are multiplexed,
-using the least significant two bits of the Miscellaneous Control
-register to select the function of registers at offsets 12 to 15:
+The usbnet driver initializes net->max_mtu to ETH_MAX_MTU before calling
+the device's bind() callback. When the bind() callback sets
+dev->hard_mtu based the device's actual capability (from CDC Ethernet's
+wMaxSegmentSize descriptor), max_mtu is never updated to reflect this
+hardware limitation).
 
- 00 => 8254 timer/counter registers are accessible
- 01 => 8255 digital I/O registers are accessible
- 10 => Reserved
- 11 => Calibration registers are accessible
+This allows userspace (DHCP or IPv6 RA) to configure MTU larger than the
+device can handle, leading to silent packet drops when the backend sends
+packet exceeding the device's buffer size.
 
-The interrupt service routine (`dmm32at_isr()`) clobbers the bottom two
-bits of the register with value 00, which would interfere with access to
-the 8255 registers by the `dm32at_8255_io()` function (used for Comedi
-instruction handling on the digital I/O subdevice).
+Fix this by limiting net->max_mtu to the device's hard_mtu after the
+bind callback returns.
 
-Make use of the generic Comedi device spin-lock `dev->spinlock` (which
-is otherwise unused by this driver) to serialize access to the
-miscellaneous control register and paged registers.
+See https://gitlab.com/qemu-project/qemu/-/issues/3268 and
+    https://bugs.passt.top/attachment.cgi?bugid=189
 
-Fixes: 3c501880ac44 ("Staging: comedi: add dmm32at driver")
-Cc: stable@vger.kernel.org
-Signed-off-by: Ian Abbott <abbotti@mev.co.uk>
-Link: https://patch.msgid.link/20260112162835.91688-1-abbotti@mev.co.uk
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: f77f0aee4da4 ("net: use core MTU range checking in USB NIC drivers")
+Signed-off-by: Laurent Vivier <lvivier@redhat.com>
+Link: https://bugs.passt.top/show_bug.cgi?id=189
+Reviewed-by: Stefano Brivio <sbrivio@redhat.com>
+Link: https://patch.msgid.link/20260119075518.2774373-1-lvivier@redhat.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/comedi/drivers/dmm32at.c |   32 ++++++++++++++++++++++++++++++--
- 1 file changed, 30 insertions(+), 2 deletions(-)
+ drivers/net/usb/usbnet.c | 9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
---- a/drivers/comedi/drivers/dmm32at.c
-+++ b/drivers/comedi/drivers/dmm32at.c
-@@ -330,6 +330,7 @@ static int dmm32at_ai_cmdtest(struct com
+diff --git a/drivers/net/usb/usbnet.c b/drivers/net/usb/usbnet.c
+index f1f61d85d9498..f4a05737abf7a 100644
+--- a/drivers/net/usb/usbnet.c
++++ b/drivers/net/usb/usbnet.c
+@@ -1797,9 +1797,12 @@ usbnet_probe (struct usb_interface *udev, const struct usb_device_id *prod)
+ 		if ((dev->driver_info->flags & FLAG_NOARP) != 0)
+ 			net->flags |= IFF_NOARP;
  
- static void dmm32at_setaitimer(struct comedi_device *dev, unsigned int nansec)
- {
-+	unsigned long irq_flags;
- 	unsigned char lo1, lo2, hi2;
- 	unsigned short both2;
- 
-@@ -342,6 +343,9 @@ static void dmm32at_setaitimer(struct co
- 	/* set counter clocks to 10MHz, disable all aux dio */
- 	outb(0, dev->iobase + DMM32AT_CTRDIO_CFG_REG);
- 
-+	/* serialize access to control register and paged registers */
-+	spin_lock_irqsave(&dev->spinlock, irq_flags);
+-		/* maybe the remote can't receive an Ethernet MTU */
+-		if (net->mtu > (dev->hard_mtu - net->hard_header_len))
+-			net->mtu = dev->hard_mtu - net->hard_header_len;
++		if (net->max_mtu > (dev->hard_mtu - net->hard_header_len))
++			net->max_mtu = dev->hard_mtu - net->hard_header_len;
 +
- 	/* get access to the clock regs */
- 	outb(DMM32AT_CTRL_PAGE_8254, dev->iobase + DMM32AT_CTRL_REG);
- 
-@@ -354,6 +358,8 @@ static void dmm32at_setaitimer(struct co
- 	outb(lo2, dev->iobase + DMM32AT_CLK2);
- 	outb(hi2, dev->iobase + DMM32AT_CLK2);
- 
-+	spin_unlock_irqrestore(&dev->spinlock, irq_flags);
++		if (net->mtu > net->max_mtu)
++			net->mtu = net->max_mtu;
 +
- 	/* enable the ai conversion interrupt and the clock to start scans */
- 	outb(DMM32AT_INTCLK_ADINT |
- 	     DMM32AT_INTCLK_CLKEN | DMM32AT_INTCLK_CLKSEL,
-@@ -363,13 +369,19 @@ static void dmm32at_setaitimer(struct co
- static int dmm32at_ai_cmd(struct comedi_device *dev, struct comedi_subdevice *s)
- {
- 	struct comedi_cmd *cmd = &s->async->cmd;
-+	unsigned long irq_flags;
- 	int ret;
- 
- 	dmm32at_ai_set_chanspec(dev, s, cmd->chanlist[0], cmd->chanlist_len);
- 
-+	/* serialize access to control register and paged registers */
-+	spin_lock_irqsave(&dev->spinlock, irq_flags);
-+
- 	/* reset the interrupt just in case */
- 	outb(DMM32AT_CTRL_INTRST, dev->iobase + DMM32AT_CTRL_REG);
- 
-+	spin_unlock_irqrestore(&dev->spinlock, irq_flags);
-+
- 	/*
- 	 * wait for circuit to settle
- 	 * we don't have the 'insn' here but it's not needed
-@@ -429,8 +441,13 @@ static irqreturn_t dmm32at_isr(int irq,
- 		comedi_handle_events(dev, s);
- 	}
- 
-+	/* serialize access to control register and paged registers */
-+	spin_lock(&dev->spinlock);
-+
- 	/* reset the interrupt */
- 	outb(DMM32AT_CTRL_INTRST, dev->iobase + DMM32AT_CTRL_REG);
-+
-+	spin_unlock(&dev->spinlock);
- 	return IRQ_HANDLED;
- }
- 
-@@ -481,14 +498,25 @@ static int dmm32at_ao_insn_write(struct
- static int dmm32at_8255_io(struct comedi_device *dev,
- 			   int dir, int port, int data, unsigned long regbase)
- {
-+	unsigned long irq_flags;
-+	int ret;
-+
-+	/* serialize access to control register and paged registers */
-+	spin_lock_irqsave(&dev->spinlock, irq_flags);
-+
- 	/* get access to the DIO regs */
- 	outb(DMM32AT_CTRL_PAGE_8255, dev->iobase + DMM32AT_CTRL_REG);
- 
- 	if (dir) {
- 		outb(data, dev->iobase + regbase + port);
--		return 0;
-+		ret = 0;
-+	} else {
-+		ret = inb(dev->iobase + regbase + port);
- 	}
--	return inb(dev->iobase + regbase + port);
-+
-+	spin_unlock_irqrestore(&dev->spinlock, irq_flags);
-+
-+	return ret;
- }
- 
- /* Make sure the board is there and put it to a known state */
+ 	} else if (!info->in || !info->out)
+ 		status = usbnet_get_endpoints (dev, udev);
+ 	else {
+-- 
+2.51.0
+
 
 
