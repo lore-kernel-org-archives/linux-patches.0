@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 243EE2EA172;
-	Wed, 28 Jan 2026 15:52:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7603B305E2E;
+	Wed, 28 Jan 2026 15:52:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769615561; cv=none; b=Ao0D6FZiKOp3ZimeTq4PJ3XpTb7jKMDUT9RgL7iQG9iAx7J0y2nWbjaYxZ2r2sy5PrPbk3gnybo+0FD/nf74ae4NP43/5KiqWlTetrK4/hMASOJNFabzTG3RKernaX2SuBw01OvySEiYfNqyGzm+wngM1KVRVEVV/lBN0X2uC0g=
+	t=1769615564; cv=none; b=hvFE0PHEKx0wVLKvWhCiQuPUqv0jpZzyuKawkDupzeDN5J6ZHUGY56uc1QH4i51JwWjEvudblrunAqzMgDslH3qjZnrsdcTaWZfpFZNA66KzCuZaync+cJQBHcITQpLUyqSC3D7PbqIk38OSY1EzJwS/G4ddQZyHAIZ2OLkUyBo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769615561; c=relaxed/simple;
-	bh=yXNuCZSXuFVnJW2Fu3t2JrooBUST4ju9EuHrVyc+YEk=;
+	s=arc-20240116; t=1769615564; c=relaxed/simple;
+	bh=ytUou+EXtdYa4NKJvCj2Z+z4urSbpGz7lC81gXRWc7U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=T0hAkesmkJeg+T0nhB+akYRudRZ3dgY+IKXG7UaeGHPn2qx80vXLqjOQOP4FS/TG9K5KBoJz/PfPO5HfEggULn2iBa2X9jDRJ02pKgukvBlRPP98LJw5CoMfM1twzyeSjuD3hqjc6FXtagSyawpUuhWD8b6M8mDCkCsay9xKKdA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=V94ANwzR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CTZyBCIAISIKOsZWeG7MV6eW0IGTgXnSMLdizkKnwHkEwM72vOpdlM9Gs2ttPKOOAVQ9mnWGIHtTRcqlGyFY5obgNU+XpCle89yOvTja3qt0wEkz54jmK4wsPe8HXGPUxKQxsxqf10dUZPvXT313CiOf+VrhqlxwHHLiwWPOT/o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gsUlJ+eR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="V94ANwzR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 64461C4CEF1;
-	Wed, 28 Jan 2026 15:52:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gsUlJ+eR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF8C2C4CEF1;
+	Wed, 28 Jan 2026 15:52:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1769615560;
-	bh=yXNuCZSXuFVnJW2Fu3t2JrooBUST4ju9EuHrVyc+YEk=;
+	s=korg; t=1769615564;
+	bh=ytUou+EXtdYa4NKJvCj2Z+z4urSbpGz7lC81gXRWc7U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=V94ANwzR1NNWPG8EHUDmT1zMYmRx0qJ2RilxpiBC6KLhRgmKVIwF7VlWWPbgsYCKp
-	 1XJF5GsD6osyxXNV2QPburOZa+HyrV5ZSm5qg9W6pBeHJjB0ngIyoVjAPttwL4JLf8
-	 y8wyXI1Ls9SfJKI1Gp0uUpzwFWrWIrqjMLuDLZM8=
+	b=gsUlJ+eRXfNHoG6WjojuToohfOleG/7AHX9yTvsvrHH/zu5ChXMl3+l6XuqHccWd1
+	 up4ICfVAteCq1D3BNZQrZSrjcYUqPRuCyk66LtlJruVGWancxK8a7mbR/OfP+e63KP
+	 tnEL0wc0juTEWY9N08C2p/sC9kkQOuPkQ+M5wm7g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jamal Hadi Salim <jhs@mojatatu.com>,
+	syzbot+9c081b17773615f24672@syzkaller.appspotmail.com,
+	Eric Dumazet <edumazet@google.com>,
+	Andrew Lunn <andrew+netdev@lunn.ch>,
+	Jay Vosburgh <jv@jvosburgh.net>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 046/227] net/sched: qfq: Use cl_is_active to determine whether class is active in qfq_rm_from_ag
-Date: Wed, 28 Jan 2026 16:21:31 +0100
-Message-ID: <20260128145346.001388169@linuxfoundation.org>
+Subject: [PATCH 6.18 029/227] bonding: limit BOND_MODE_8023AD to Ethernet devices
+Date: Wed, 28 Jan 2026 16:21:14 +0100
+Message-ID: <20260128145345.393271103@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260128145344.331957407@linuxfoundation.org>
 References: <20260128145344.331957407@linuxfoundation.org>
@@ -51,37 +54,89 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jamal Hadi Salim <jhs@mojatatu.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit d837fbee92453fbb829f950c8e7cf76207d73f33 ]
+[ Upstream commit c84fcb79e5dbde0b8d5aeeaf04282d2149aebcf6 ]
 
-This is more of a preventive patch to make the code more consistent and
-to prevent possible exploits that employ child qlen manipulations on qfq.
-use cl_is_active instead of relying on the child qdisc's qlen to determine
-class activation.
+BOND_MODE_8023AD makes sense for ARPHRD_ETHER only.
 
-Fixes: 462dbc9101acd ("pkt_sched: QFQ Plus: fair-queueing service at DRR cost")
-Signed-off-by: Jamal Hadi Salim <jhs@mojatatu.com>
-Link: https://patch.msgid.link/20260114160243.913069-3-jhs@mojatatu.com
+syzbot reported:
+
+ BUG: KASAN: global-out-of-bounds in __hw_addr_create net/core/dev_addr_lists.c:63 [inline]
+ BUG: KASAN: global-out-of-bounds in __hw_addr_add_ex+0x25d/0x760 net/core/dev_addr_lists.c:118
+Read of size 16 at addr ffffffff8bf94040 by task syz.1.3580/19497
+
+CPU: 1 UID: 0 PID: 19497 Comm: syz.1.3580 Tainted: G             L      syzkaller #0 PREEMPT(full)
+Tainted: [L]=SOFTLOCKUP
+Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 10/25/2025
+Call Trace:
+ <TASK>
+  dump_stack_lvl+0xe8/0x150 lib/dump_stack.c:120
+  print_address_description mm/kasan/report.c:378 [inline]
+  print_report+0xca/0x240 mm/kasan/report.c:482
+  kasan_report+0x118/0x150 mm/kasan/report.c:595
+ check_region_inline mm/kasan/generic.c:-1 [inline]
+  kasan_check_range+0x2b0/0x2c0 mm/kasan/generic.c:200
+  __asan_memcpy+0x29/0x70 mm/kasan/shadow.c:105
+  __hw_addr_create net/core/dev_addr_lists.c:63 [inline]
+  __hw_addr_add_ex+0x25d/0x760 net/core/dev_addr_lists.c:118
+  __dev_mc_add net/core/dev_addr_lists.c:868 [inline]
+  dev_mc_add+0xa1/0x120 net/core/dev_addr_lists.c:886
+  bond_enslave+0x2b8b/0x3ac0 drivers/net/bonding/bond_main.c:2180
+  do_set_master+0x533/0x6d0 net/core/rtnetlink.c:2963
+  do_setlink+0xcf0/0x41c0 net/core/rtnetlink.c:3165
+  rtnl_changelink net/core/rtnetlink.c:3776 [inline]
+  __rtnl_newlink net/core/rtnetlink.c:3935 [inline]
+  rtnl_newlink+0x161c/0x1c90 net/core/rtnetlink.c:4072
+  rtnetlink_rcv_msg+0x7cf/0xb70 net/core/rtnetlink.c:6958
+  netlink_rcv_skb+0x208/0x470 net/netlink/af_netlink.c:2550
+  netlink_unicast_kernel net/netlink/af_netlink.c:1318 [inline]
+  netlink_unicast+0x82f/0x9e0 net/netlink/af_netlink.c:1344
+  netlink_sendmsg+0x805/0xb30 net/netlink/af_netlink.c:1894
+  sock_sendmsg_nosec net/socket.c:727 [inline]
+  __sock_sendmsg+0x21c/0x270 net/socket.c:742
+  ____sys_sendmsg+0x505/0x820 net/socket.c:2592
+  ___sys_sendmsg+0x21f/0x2a0 net/socket.c:2646
+  __sys_sendmsg+0x164/0x220 net/socket.c:2678
+  do_syscall_32_irqs_on arch/x86/entry/syscall_32.c:83 [inline]
+  __do_fast_syscall_32+0x1dc/0x560 arch/x86/entry/syscall_32.c:307
+  do_fast_syscall_32+0x34/0x80 arch/x86/entry/syscall_32.c:332
+ entry_SYSENTER_compat_after_hwframe+0x84/0x8e
+ </TASK>
+
+The buggy address belongs to the variable:
+ lacpdu_mcast_addr+0x0/0x40
+
+Fixes: 872254dd6b1f ("net/bonding: Enable bonding to enslave non ARPHRD_ETHER")
+Reported-by: syzbot+9c081b17773615f24672@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/netdev/6966946b.a70a0220.245e30.0002.GAE@google.com/T/#u
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Cc: Andrew Lunn <andrew+netdev@lunn.ch>
+Acked-by: Jay Vosburgh <jv@jvosburgh.net>
+Link: https://patch.msgid.link/20260113191201.3970737-1-edumazet@google.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sched/sch_qfq.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/bonding/bond_main.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/net/sched/sch_qfq.c b/net/sched/sch_qfq.c
-index 9b16ad431028f..f94c9c9c90424 100644
---- a/net/sched/sch_qfq.c
-+++ b/net/sched/sch_qfq.c
-@@ -373,7 +373,7 @@ static void qfq_rm_from_agg(struct qfq_sched *q, struct qfq_class *cl)
- /* Deschedule class and remove it from its parent aggregate. */
- static void qfq_deact_rm_from_agg(struct qfq_sched *q, struct qfq_class *cl)
- {
--	if (cl->qdisc->q.qlen > 0) /* class is active */
-+	if (cl_is_active(cl)) /* class is active */
- 		qfq_deactivate_class(q, cl);
+diff --git a/drivers/net/bonding/bond_main.c b/drivers/net/bonding/bond_main.c
+index 5abef8a3b7758..c66cb2d43dcf1 100644
+--- a/drivers/net/bonding/bond_main.c
++++ b/drivers/net/bonding/bond_main.c
+@@ -1953,6 +1953,12 @@ int bond_enslave(struct net_device *bond_dev, struct net_device *slave_dev,
+ 	 */
+ 	if (!bond_has_slaves(bond)) {
+ 		if (bond_dev->type != slave_dev->type) {
++			if (slave_dev->type != ARPHRD_ETHER &&
++			    BOND_MODE(bond) == BOND_MODE_8023AD) {
++				SLAVE_NL_ERR(bond_dev, slave_dev, extack,
++					     "8023AD mode requires Ethernet devices");
++				return -EINVAL;
++			}
+ 			slave_dbg(bond_dev, slave_dev, "change device type from %d to %d\n",
+ 				  bond_dev->type, slave_dev->type);
  
- 	qfq_rm_from_agg(q, cl);
 -- 
 2.51.0
 
