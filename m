@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 290F12FBDF5;
-	Wed, 28 Jan 2026 15:40:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA0082EB872;
+	Wed, 28 Jan 2026 15:40:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769614817; cv=none; b=nnjNY1WrGgN4OJyKWR6eHlJg/GZHuq+RL83bdTURs9FT/0JVQe0jiTxUMDKH98MR++aGMC+DUV1Cm2FLI+AFS/vAvhJhK/55roFWpfoDpeOKWZI//kUFJc3UsPIakRrCzva4M8xgxJvQGj8zRQGDGIgrvkstPJsmVeJ7WoF9N/o=
+	t=1769614821; cv=none; b=PIsEbeyJyWJgXBNU9ok45MpphBjVmW5OlVKQ+wzVICD7FWmZahXMhw1PllenI4NihhlhusFsFlOF725HKtNM01Z8QVSyIqe8Yt1qYUcgYvWodcXkmbj7cWzdeoEDIo6PMm/lGvZ1yltET25nMen7UUBJhYs7lM35DLHXVXIXYMQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769614817; c=relaxed/simple;
-	bh=1m0pxd9+He69BvGpdL5Lt3M78VxCPmE70gqfDFPOEY0=;
+	s=arc-20240116; t=1769614821; c=relaxed/simple;
+	bh=+Op8iSMNzpwFdM0ezndRGGOtTZsr9RyZtF6fiFPqnlc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=C2SS3CHnafBMkreG882QuQziD/gd7g3XHMnGcJg1eCXSkBQKXUPAs/lrh2msc0S6DtuW7VrAH+dI2KjGo3792QiKK94evdhPzjqq9ntuSgSeRm60fneMvXibfcnbLT4zimZfbbWA3PbUMJCOkHgKPU+VXyJuMm8KcGVhjinCNxA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=p+WO8zBa; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=noT5lCBiRmCIDPXtoBq2eSZav2qgYqa19RhoWfJ9g4aT9yViuySuVpa7etSCImlLOQseIF6xfmbJG/Wu6CXx9K/tQ76+shd/P+vmCL9J1pknbUGFlp6Vf7A7IH33CLt7XFRpFQJjXbrMFdTb4DbligxAwlw6k69CFZZ+qKJvGB8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=u05ArCcs; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="p+WO8zBa"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A56AC4CEF7;
-	Wed, 28 Jan 2026 15:40:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="u05ArCcs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02692C4CEF1;
+	Wed, 28 Jan 2026 15:40:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1769614816;
-	bh=1m0pxd9+He69BvGpdL5Lt3M78VxCPmE70gqfDFPOEY0=;
+	s=korg; t=1769614820;
+	bh=+Op8iSMNzpwFdM0ezndRGGOtTZsr9RyZtF6fiFPqnlc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=p+WO8zBaQPsakjCx8dvouQJXwihYqFdWqL1rdsv/vLZiiOtf9lDIlb98Mthf39FCz
-	 CO/CGbp97Zwqmk/FgUT4ql5dXsQLLW+Trdg7zqcbI0OroFiuQFS0t81dnxckLiDPQz
-	 mLH1vCfJVEvhToANwlbqwBl1itmTwRYi2FaAKW1E=
+	b=u05ArCcsDaamt0R85qcrBBW0Y5hVaDBAbBGNWIgQoqXKJpIH1D07AbUhKVjqCST8w
+	 f+quGnIVm2J87Z81Y02pGT56LndotE6YpcwTH1O7Lj1XO8atMyy2DTj2ABLh5jPA6S
+	 zLKGIL4YFQnwNvNpGyzPhsoCQW79chJfKs45x0Qo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chenghai Huang <huangchenghai2@huawei.com>,
-	Zhangfei Gao <zhangfei.gao@linaro.org>
-Subject: [PATCH 6.6 208/254] uacce: fix isolate sysfs check condition
-Date: Wed, 28 Jan 2026 16:23:04 +0100
-Message-ID: <20260128145352.279623228@linuxfoundation.org>
+	Daniel Wagner <dwagner@suse.de>,
+	Nilay Shroff <nilay@linux.ibm.com>,
+	Keith Busch <kbusch@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 244/254] nvme: fix PCIe subsystem reset controller state transition
+Date: Wed, 28 Jan 2026 16:23:40 +0100
+Message-ID: <20260128145353.577439475@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260128145344.698118637@linuxfoundation.org>
 References: <20260128145344.698118637@linuxfoundation.org>
@@ -44,60 +46,62 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Chenghai Huang <huangchenghai2@huawei.com>
+From: Nilay Shroff <nilay@linux.ibm.com>
 
-commit 98eec349259b1fd876f350b1c600403bcef8f85d upstream.
+[ Upstream commit 0edb475ac0a7d153318a24d4dca175a270a5cc4f ]
 
-uacce supports the device isolation feature. If the driver
-implements the isolate_err_threshold_read and
-isolate_err_threshold_write callback functions, uacce will create
-sysfs files now. Users can read and configure the isolation policy
-through sysfs. Currently, sysfs files are created as long as either
-isolate_err_threshold_read or isolate_err_threshold_write callback
-functions are present.
+The commit d2fe192348f9 (“nvme: only allow entering LIVE from CONNECTING
+state”) disallows controller state transitions directly from RESETTING
+to LIVE. However, the NVMe PCIe subsystem reset path relies on this
+transition to recover the controller on PowerPC (PPC) systems.
 
-However, accessing a non-existent callback function may cause the
-system to crash. Therefore, intercept the creation of sysfs if
-neither read nor write exists; create sysfs if either is supported,
-but intercept unsupported operations at the call site.
+On PPC systems, issuing a subsystem reset causes a temporary loss of
+communication with the NVMe adapter. A subsequent PCIe MMIO read then
+triggers EEH recovery, which restores the PCIe link and brings the
+controller back online. For EEH recovery to proceed correctly, the
+controller must transition back to the LIVE state.
 
-Fixes: e3e289fbc0b5 ("uacce: supports device isolation feature")
+Due to the changes introduced by commit d2fe192348f9 (“nvme: only allow
+entering LIVE from CONNECTING state”), the controller can no longer
+transition directly from RESETTING to LIVE. As a result, EEH recovery
+exits prematurely, leaving the controller stuck in the RESETTING state.
+
+Fix this by explicitly transitioning the controller state from RESETTING
+to CONNECTING and then to LIVE. This satisfies the updated state
+transition rules and allows the controller to be successfully recovered
+on PPC systems following a PCIe subsystem reset.
+
 Cc: stable@vger.kernel.org
-Signed-off-by: Chenghai Huang <huangchenghai2@huawei.com>
-Acked-by: Zhangfei Gao <zhangfei.gao@linaro.org>
-Link: https://patch.msgid.link/20251202061256.4158641-3-huangchenghai2@huawei.com
+Fixes: d2fe192348f9 ("nvme: only allow entering LIVE from CONNECTING state")
+Reviewed-by: Daniel Wagner <dwagner@suse.de>
+Signed-off-by: Nilay Shroff <nilay@linux.ibm.com>
+Signed-off-by: Keith Busch <kbusch@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/misc/uacce/uacce.c |    6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/nvme/host/pci.c |    5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
---- a/drivers/misc/uacce/uacce.c
-+++ b/drivers/misc/uacce/uacce.c
-@@ -379,6 +379,9 @@ static ssize_t isolate_strategy_show(str
- 	struct uacce_device *uacce = to_uacce_device(dev);
- 	u32 val;
+--- a/drivers/nvme/host/pci.c
++++ b/drivers/nvme/host/pci.c
+@@ -1166,7 +1166,10 @@ static int nvme_pci_subsystem_reset(stru
+ 	}
  
-+	if (!uacce->ops->isolate_err_threshold_read)
-+		return -ENOENT;
+ 	writel(NVME_SUBSYS_RESET, dev->bar + NVME_REG_NSSR);
+-	nvme_change_ctrl_state(ctrl, NVME_CTRL_LIVE);
 +
- 	val = uacce->ops->isolate_err_threshold_read(uacce);
++	if (!nvme_change_ctrl_state(ctrl, NVME_CTRL_CONNECTING) ||
++	    !nvme_change_ctrl_state(ctrl, NVME_CTRL_LIVE))
++		goto unlock;
  
- 	return sysfs_emit(buf, "%u\n", val);
-@@ -391,6 +394,9 @@ static ssize_t isolate_strategy_store(st
- 	unsigned long val;
- 	int ret;
- 
-+	if (!uacce->ops->isolate_err_threshold_write)
-+		return -ENOENT;
-+
- 	if (kstrtoul(buf, 0, &val) < 0)
- 		return -EINVAL;
- 
+ 	/*
+ 	 * Read controller status to flush the previous write and trigger a
 
 
