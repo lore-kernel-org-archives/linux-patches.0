@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0797336CDFB;
-	Wed, 28 Jan 2026 15:46:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC6E036D51E;
+	Wed, 28 Jan 2026 15:46:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769615160; cv=none; b=jUxN5oDErZ0u83BpPQz1eEjcR+J6BlhCvVAsu2/b3Yg9ZPjukxPcwG7CIuXuj/bHCo+/zb2gKFd/jmDMHSlI6b2ivrbuygmK7ce+UuS9JWPphwpmzVm3pYzhr1bxSv//0zPmKHUFMa7zcgkG7iX0phARQWoInIckpD9TR8XEhBU=
+	t=1769615163; cv=none; b=fbJFyGmPrK1p2A8WSDkoKA20rjRaAgXUvNh3QmSXbCJtLWenW1G5qbyGPet3ZwZooQVVEGqOvKoQwRBItSTGDpR9E3XLxVteWKv8zHWiYFPsAxuUESCAEC5iX5WUM5ALUwsQbqsGHr/wSyXXhE/nxmYt4znfRGOnlSeCWYAfV64=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769615160; c=relaxed/simple;
-	bh=V4F+91RzA96Sf77keS1VgW5lbDKKbaPJPWLl6BQceZE=;
+	s=arc-20240116; t=1769615163; c=relaxed/simple;
+	bh=haSFqYP+QcDaZ5km4/8d/Nl8dX4EahImsVNAP3tVneg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pk7dAK9a71Pt30+ANe0pvfdrRCwt1p0mD7NF6L4I/saQzUatDMlXfIKJetbKE+LUz11lG+wPFK9jdEZo5A3zpQs8KGqtrMV5IVsAtjre6UEtSpBVGLfpXHea6S1oxK+2+SDLU13WY3FE1jf43u4v78VbeZyWsy65yg1V8IWWjlg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vWuUDapq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=RrPD6amvYjE9wHMzXILMQoAr1A1TIWTlPIS5KXBKRW32xRdfr2zawv79uB+DIl+VhcTQSpNhZFUN6QCiKB69jz34IZinauCIkr03k+6Bgqewwwze+o96ZTxuvLi2H22zsP9bZU4b46swZccuaM0wffh/RsFt2OXRuZtQJnTknjA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=06gqFCoS; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vWuUDapq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 644EDC4CEF1;
-	Wed, 28 Jan 2026 15:45:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="06gqFCoS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DCF15C4CEF1;
+	Wed, 28 Jan 2026 15:46:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1769615159;
-	bh=V4F+91RzA96Sf77keS1VgW5lbDKKbaPJPWLl6BQceZE=;
+	s=korg; t=1769615163;
+	bh=haSFqYP+QcDaZ5km4/8d/Nl8dX4EahImsVNAP3tVneg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vWuUDapqGAf/oZrz6Bo7od4L8JNOyvtu/99MVMzB1O8W+1s9DrTb1B1rbGXkiNpT9
-	 fxD3TaCWO15vK1yJ09RfhduFZCCiCdGcz5lTBeOknFvGkCdIA/c+Ktvw28O7sb3VjT
-	 jta+pzlbmHY7NcCeWfBqYOgvoVBMcENqan5O9N9Y=
+	b=06gqFCoSfDxbOBMcNL75FvLDfoXk3ClEA+6LxDL3NL/i0ywsT+AMiEr333D+TFzW3
+	 gObxnlY9/oz3B3/93UJCwBJv0vNAkYfyyxCc3auGwjMdtBz18aUNmq9O4/x7OuBoSi
+	 EuljSJDT+LWWW5cihvL73a4Adc3FTp/uilA7vPRo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ivan Vecera <ivecera@redhat.com>,
-	Arkadiusz Kubalewski <arkadiusz.kubalewski@intel.com>,
-	Vadim Fedorenko <vadim.fedorenko@linux.dev>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Cedric Xing <cedric.xing@intel.com>,
+	Dave Hansen <dave.hansen@linux.intel.com>,
+	Peter Zijlstra <peterz@infradead.org>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 097/169] dpll: Prevent duplicate registrations
-Date: Wed, 28 Jan 2026 16:23:00 +0100
-Message-ID: <20260128145337.498904778@linuxfoundation.org>
+Subject: [PATCH 6.12 098/169] x86: make page fault handling disable interrupts properly
+Date: Wed, 28 Jan 2026 16:23:01 +0100
+Message-ID: <20260128145337.534673470@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260128145334.006287341@linuxfoundation.org>
 References: <20260128145334.006287341@linuxfoundation.org>
@@ -53,66 +54,94 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ivan Vecera <ivecera@redhat.com>
+From: Cedric Xing <cedric.xing@intel.com>
 
-[ Upstream commit f3ddbaaaaf4d0633b40482f471753f9c71294a4a ]
+[ Upstream commit 614da1d3d4cdbd6e41aea06bc97ec15aacff6daf ]
 
-Modify the internal registration helpers dpll_xa_ref_{dpll,pin}_add()
-to reject duplicate registration attempts.
+There's a big comment in the x86 do_page_fault() about our interrupt
+disabling code:
 
-Previously, if a caller attempted to register the same pin multiple
-times (with the same ops, priv, and cookie) on the same device, the core
-silently increments the reference count and return success. This behavior
-is incorrect because if the caller makes these duplicate registrations
-then for the first one dpll_pin_registration is allocated and for others
-the associated dpll_pin_ref.refcount is incremented. During the first
-unregistration the associated dpll_pin_registration is freed and for
-others WARN is fired.
+    * User address page fault handling might have reenabled
+    * interrupts. Fixing up all potential exit points of
+    * do_user_addr_fault() and its leaf functions is just not
+    * doable w/o creating an unholy mess or turning the code
+    * upside down.
 
-Fix this by updating the logic to return `-EEXIST` if a matching
-registration is found to enforce a strict "register once" policy.
+but it turns out that comment is subtly wrong, and the code as a result
+is also wrong.
 
-Fixes: 9431063ad323 ("dpll: core: Add DPLL framework base functions")
-Signed-off-by: Ivan Vecera <ivecera@redhat.com>
-Reviewed-by: Arkadiusz Kubalewski <arkadiusz.kubalewski@intel.com>
-Reviewed-by: Vadim Fedorenko <vadim.fedorenko@linux.dev>
-Link: https://patch.msgid.link/20260121130012.112606-1-ivecera@redhat.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Because it's certainly true that we may have re-enabled interrupts when
+handling user page faults.  And it's most certainly true that we don't
+want to bother fixing up all the cases.
+
+But what isn't true is that it's limited to user address page faults.
+
+The confusion stems from the fact that we have logic here that depends
+on the address range of the access, but other code then depends on the
+_context_ the access was done in.  The two are not related, even though
+both of them are about user-vs-kernel.
+
+In other words, both user and kernel addresses can cause interrupts to
+have been enabled (eg when __bad_area_nosemaphore() gets called for user
+accesses to kernel addresses).  As a result we should make sure to
+disable interrupts again regardless of the address range before
+returning to the low-level fault handling code.
+
+The __bad_area_nosemaphore() code actually did disable interrupts again
+after enabling them, just not consistently.  Ironically, as noted in the
+original comment, fixing up all the cases is just not worth it, when the
+simple solution is to just do it unconditionally in one single place.
+
+So remove the incomplete case that unsuccessfully tried to do what the
+comment said was "not doable" in commit ca4c6a9858c2 ("x86/traps: Make
+interrupt enable/disable symmetric in C code"), and just make it do the
+simple and straightforward thing.
+
+Signed-off-by: Cedric Xing <cedric.xing@intel.com>
+Reviewed-by: Dave Hansen <dave.hansen@linux.intel.com>
+Fixes: ca4c6a9858c2 ("x86/traps: Make interrupt enable/disable symmetric in C code")
+Cc: Peter Zijlstra <peterz@infradead.org>
+Cc: Thomas Gleixner <tglx@linutronix.de>
+Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dpll/dpll_core.c | 12 ++++--------
- 1 file changed, 4 insertions(+), 8 deletions(-)
+ arch/x86/mm/fault.c | 15 +++++----------
+ 1 file changed, 5 insertions(+), 10 deletions(-)
 
-diff --git a/drivers/dpll/dpll_core.c b/drivers/dpll/dpll_core.c
-index 20bdc52f63a50..cafb8832219d0 100644
---- a/drivers/dpll/dpll_core.c
-+++ b/drivers/dpll/dpll_core.c
-@@ -83,10 +83,8 @@ dpll_xa_ref_pin_add(struct xarray *xa_pins, struct dpll_pin *pin,
- 		if (ref->pin != pin)
- 			continue;
- 		reg = dpll_pin_registration_find(ref, ops, priv, cookie);
--		if (reg) {
--			refcount_inc(&ref->refcount);
--			return 0;
--		}
-+		if (reg)
-+			return -EEXIST;
- 		ref_exists = true;
- 		break;
+diff --git a/arch/x86/mm/fault.c b/arch/x86/mm/fault.c
+index ac52255fab01f..adef0e8dc5e12 100644
+--- a/arch/x86/mm/fault.c
++++ b/arch/x86/mm/fault.c
+@@ -823,8 +823,6 @@ __bad_area_nosemaphore(struct pt_regs *regs, unsigned long error_code,
+ 		force_sig_pkuerr((void __user *)address, pkey);
+ 	else
+ 		force_sig_fault(SIGSEGV, si_code, (void __user *)address);
+-
+-	local_irq_disable();
+ }
+ 
+ static noinline void
+@@ -1479,15 +1477,12 @@ handle_page_fault(struct pt_regs *regs, unsigned long error_code,
+ 		do_kern_addr_fault(regs, error_code, address);
+ 	} else {
+ 		do_user_addr_fault(regs, error_code, address);
+-		/*
+-		 * User address page fault handling might have reenabled
+-		 * interrupts. Fixing up all potential exit points of
+-		 * do_user_addr_fault() and its leaf functions is just not
+-		 * doable w/o creating an unholy mess or turning the code
+-		 * upside down.
+-		 */
+-		local_irq_disable();
  	}
-@@ -164,10 +162,8 @@ dpll_xa_ref_dpll_add(struct xarray *xa_dplls, struct dpll_device *dpll,
- 		if (ref->dpll != dpll)
- 			continue;
- 		reg = dpll_pin_registration_find(ref, ops, priv, cookie);
--		if (reg) {
--			refcount_inc(&ref->refcount);
--			return 0;
--		}
-+		if (reg)
-+			return -EEXIST;
- 		ref_exists = true;
- 		break;
- 	}
++	/*
++	 * page fault handling might have reenabled interrupts,
++	 * make sure to disable them again.
++	 */
++	local_irq_disable();
+ }
+ 
+ DEFINE_IDTENTRY_RAW_ERRORCODE(exc_page_fault)
 -- 
 2.51.0
 
