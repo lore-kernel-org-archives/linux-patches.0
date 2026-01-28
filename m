@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D18962874FE;
-	Wed, 28 Jan 2026 15:56:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A91530E84B;
+	Wed, 28 Jan 2026 15:56:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769615796; cv=none; b=A4WicPATVNTDQobgz8NiDymOzoeqrXsqEHgAU1KbdQWXa634OJG5i20LuoaHry+4/qtP5DCksvPJz2dKWtmNJdFngMF93L7oBy7BUi9NSLsOrM7NRHQjCdlyqs7NbpZb1tGJ9PZZMO89RhezkZ8LhyWk5E3hnSwLCKlDVjAtUhs=
+	t=1769615800; cv=none; b=OpXxMdL6yVSR95OWt5BJYb1gpvCtQp8KuXEFWreKV6DqT9lD2/eM4tac7mrz0suqBxqeEs0NQHYQUgg18jKbmTtTUY2KyhpjLDUfIvLafWLHvHS5IwOOCYxDUnzHv+9+U+7CAwSG4OLNQR1iJh5t5J+Rf7ILGuIh0S0O6CfYsR0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769615796; c=relaxed/simple;
-	bh=ds59UJqtC1tRaznlPt4icHJkG4uCXyM4XPUO7ZckUZI=;
+	s=arc-20240116; t=1769615800; c=relaxed/simple;
+	bh=EVs4kYKepU8rjJ3+OPL3uqkR/vX+DqZMZdvdN0ee5R0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=RZOZq634lWktQvvI/EU6PN+2zPUlrmlKmaz8Bk7qduEczW6QgIqPG2c8eLRwkID8adxAkQLmK76qspeE7qFLUJN5YzjTTAnkVHwSOeLpYM/q+7cKpkpU2A8+or/QsM3zAaGZ3xbznNR7l63Z1pI38f5AMLklFOG5zTw96WrLGqk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=US8KuVJb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uDXGQ3Czob+KTuD0jBVbD/LorSvYZM9kMxufDYcOqGCRrBE0kQnjDnneHylS/Flpn4KdPdi2Q/5scqk3qgo7UVaN7svlrqGYUVzWL6iYozvIFVxVZ/QxNwBCkgkAhi+H0UnLrk88U5Si/PyGf+3/3ejIl4GzpggP4FjCAT49kSY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dGgeJPBL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="US8KuVJb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09F8FC4CEF1;
-	Wed, 28 Jan 2026 15:56:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dGgeJPBL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3687C4CEF1;
+	Wed, 28 Jan 2026 15:56:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1769615796;
-	bh=ds59UJqtC1tRaznlPt4icHJkG4uCXyM4XPUO7ZckUZI=;
+	s=korg; t=1769615800;
+	bh=EVs4kYKepU8rjJ3+OPL3uqkR/vX+DqZMZdvdN0ee5R0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=US8KuVJbUSGS6WYx+Q3wdU4PpPlpHRctWqeXzmXMRdFtaCcpPUpxr16rw8nw4IXEw
-	 Cxr3WoIKY/KcRFiUI1fJhTiJ0pSZeg8up5luv0Ct2CYm7E4gsGvDBOp9x8ms18vFwU
-	 AIN/OULby5Fnp9c1gSuBQvp4vOBoS26qCXQDwfDE=
+	b=dGgeJPBLfX4f8/V1KKjc25IjwNETUQfPddBfu929M1P2K9mYJmEDrsiKv45fym9px
+	 r989138x7+ZAlFoiPcBhshU1ujNwUfZ5vtNnZAVU4TxfLaeDwhLuANCZIgshUPR0MM
+	 fq3FEigMAq4SE2E/252Y4ZpX38a6cy0EAXISzxJc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matthew Brost <matthew.brost@intel.com>,
-	Umesh Nerlige Ramappa <umesh.nerlige.ramappa@intel.com>,
-	=?UTF-8?q?Thomas=20Hellstr=C3=B6m?= <thomas.hellstrom@linux.intel.com>,
+	Hariprasad Kelam <hkelam@marvell.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 099/227] drm/xe: Disable timestamp WA on VFs
-Date: Wed, 28 Jan 2026 16:22:24 +0100
-Message-ID: <20260128145348.028961226@linuxfoundation.org>
+Subject: [PATCH 6.18 117/227] Octeontx2-pf: Update xdp features
+Date: Wed, 28 Jan 2026 16:22:42 +0100
+Message-ID: <20260128145348.675287478@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260128145344.331957407@linuxfoundation.org>
 References: <20260128145344.331957407@linuxfoundation.org>
@@ -46,48 +45,44 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Matthew Brost <matthew.brost@intel.com>
+From: Hariprasad Kelam <hkelam@marvell.com>
 
-[ Upstream commit b886aa65eafe3098bbd691f0ca4a9abce03f9d03 ]
+[ Upstream commit cdf8de9c6bfe94508d251cb290ee66e34e6f3368 ]
 
-The timestamp WA does not work on a VF because it requires reading MMIO
-registers, which are inaccessible on a VF. This timestamp WA confuses
-LRC sampling on a VF during TDR, as the LRC timestamp would always read
-as 1 for any active context. Disable the timestamp WA on VFs to avoid
-this confusion.
+In recent testing, verification of XDP_REDIRECT and zero-copy features
+failed because the driver is not setting the corresponding feature flags.
 
-Signed-off-by: Matthew Brost <matthew.brost@intel.com>
-Reviewed-by: Umesh Nerlige Ramappa <umesh.nerlige.ramappa@intel.com>
-Fixes: 617d824c5323 ("drm/xe: Add WA BB to capture active context utilization")
-Link: https://patch.msgid.link/20260110012739.2888434-7-matthew.brost@intel.com
-(cherry picked from commit efffd56e4bd894e0935eea00e437f233b6cebc0d)
-Signed-off-by: Thomas Hellström <thomas.hellstrom@linux.intel.com>
+Fixes: efabce290151 ("octeontx2-pf: AF_XDP zero copy receive support")
+Fixes: 66c0e13ad236 ("drivers: net: turn on XDP features")
+Signed-off-by: Hariprasad Kelam <hkelam@marvell.com>
+Link: https://patch.msgid.link/20260119100222.2267925-1-hkelam@marvell.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/xe/xe_lrc.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/net/ethernet/marvell/octeontx2/nic/otx2_pf.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/xe/xe_lrc.c b/drivers/gpu/drm/xe/xe_lrc.c
-index 47e9df7750725..d77ef556e994e 100644
---- a/drivers/gpu/drm/xe/xe_lrc.c
-+++ b/drivers/gpu/drm/xe/xe_lrc.c
-@@ -1050,6 +1050,9 @@ static ssize_t setup_utilization_wa(struct xe_lrc *lrc,
- {
- 	u32 *cmd = batch;
+diff --git a/drivers/net/ethernet/marvell/octeontx2/nic/otx2_pf.c b/drivers/net/ethernet/marvell/octeontx2/nic/otx2_pf.c
+index e808995703cfd..a7a7bc0e1b675 100644
+--- a/drivers/net/ethernet/marvell/octeontx2/nic/otx2_pf.c
++++ b/drivers/net/ethernet/marvell/octeontx2/nic/otx2_pf.c
+@@ -3255,7 +3255,9 @@ static int otx2_probe(struct pci_dev *pdev, const struct pci_device_id *id)
+ 	netdev->watchdog_timeo = OTX2_TX_TIMEOUT;
  
-+	if (IS_SRIOV_VF(gt_to_xe(lrc->gt)))
-+		return 0;
-+
- 	if (xe_gt_WARN_ON(lrc->gt, max_len < 12))
- 		return -ENOSPC;
+ 	netdev->netdev_ops = &otx2_netdev_ops;
+-	netdev->xdp_features = NETDEV_XDP_ACT_BASIC | NETDEV_XDP_ACT_REDIRECT;
++	netdev->xdp_features = NETDEV_XDP_ACT_BASIC | NETDEV_XDP_ACT_REDIRECT |
++			       NETDEV_XDP_ACT_NDO_XMIT |
++			       NETDEV_XDP_ACT_XSK_ZEROCOPY;
  
+ 	netdev->min_mtu = OTX2_MIN_MTU;
+ 	netdev->max_mtu = otx2_get_max_mtu(pf);
 -- 
 2.51.0
 
