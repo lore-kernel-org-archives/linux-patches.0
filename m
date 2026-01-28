@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE6822E2DF4;
-	Wed, 28 Jan 2026 15:50:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41A992E2DF4;
+	Wed, 28 Jan 2026 15:50:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769615428; cv=none; b=S8Y56F3VD6IfmHkTUk7HcDh3drwwFcNUwDvV8HmaLPS/OfoK5w/uh9h6zZaVaVoUhqspKRy4dqlCXE+UMlkyolUVet1pHkMQGzRkLUzy+50K4yjkbqSzxarF43o+PvV8B3HNBc+QM+lugvK7OTtsnT2SyCxHOhVLADSUJ8lqO3Y=
+	t=1769615431; cv=none; b=QOFW2jHqVKFa9rDnC6qEJg4kUj1u8X4JP6ATZi/YbeBH8Uwusr6PNLAdjePYTpevkeMAE7gOps3SVtDligts88+ypDSyGC13qnlLSHAL1RgLqn2PQIabGe7qjyZcjQzyqgEJwJ5Ryjkt5sH3OtGGHeqoiOqUYfpJKq0buaFWeGU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769615428; c=relaxed/simple;
-	bh=QYJZudCO40mJwFXk8BpBmQExSeVjuIsxMqtvLyObrew=;
+	s=arc-20240116; t=1769615431; c=relaxed/simple;
+	bh=7dOKrgXDPkz6zD4XhW1zoZ8jysE6/gL5zhv7aFNOs9E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Pnvd0YaGgx8wFUO4x97npl91Mx6FPHPJjAf4N4fAAzOglaeN+JO+ez8BW69thRJ0WP1SNs81WGm+mnAo3iP6ppOS8ujcNhbwuc+3+SufFH3ikZm8MkPV7ejl99IzNoSOJlGsRFJzjnIuegQsZhp9zSoR74ftEX1GdYqfsjfS1gA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QXw3Qlu3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pLWHIFdDgiXLYvxEC8cH1iUEfoGnyWvqkvcS/T3UeqmjYV5zdz666RtglNNyHQWHLWxLhJoY4t2nzpuDa7MJR+S9D5EyDGYXKUuUOQ7CM3me82NtxNHR3MUNU69hOGH9tTDfpNAuAjPNq4B6ZosxrWs5Fbfl/s46Tft900Tluyg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=t4m8hJIN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QXw3Qlu3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5FD2FC4CEF1;
-	Wed, 28 Jan 2026 15:50:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="t4m8hJIN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A3BEDC4CEF1;
+	Wed, 28 Jan 2026 15:50:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1769615427;
-	bh=QYJZudCO40mJwFXk8BpBmQExSeVjuIsxMqtvLyObrew=;
+	s=korg; t=1769615431;
+	bh=7dOKrgXDPkz6zD4XhW1zoZ8jysE6/gL5zhv7aFNOs9E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QXw3Qlu3CrIxBaM1k8Z7uL+51nTVFPocLzqo9Hn5ZL44Gvcf2Xxg+1fr+piEQfyAU
-	 LJ0pW27dQICoamp8zrm/Iab1Yml7/oIMXZjcNlhXhwQnNjNJaH8yN/mKSKpZxRrwjP
-	 OHdTkcgjzDXqimbSC8jiERmEvJP3Frpl9Nhod4dc=
+	b=t4m8hJIN90M5Bwitkq1A3+SnuA6QUChE43j0wzpqt1OtQpdOVcgGQ4FfcXaBuLUMs
+	 tCfNRCC+1c/52XqERBUO7fjQgAUhF+quykoDyRM4YyYlnKf3uL2EhvJyixNAjKlZVZ
+	 799OhU5wUwGvBFUaZGevbDRAFIgyoeEahL2S2/2U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+332bd4e9d148f11a87dc@syzkaller.appspotmail.com,
-	syzbot+0399100e525dd9696764@syzkaller.appspotmail.com,
-	Khalid Aziz <khalid@kernel.org>,
-	Bartlomiej Kubik <kubik.bartlomiej@gmail.com>,
-	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
-	Li hongliang <1468888505@139.com>
-Subject: [PATCH 6.12 158/169] fs/ntfs3: Initialize allocated memory before use
-Date: Wed, 28 Jan 2026 16:24:01 +0100
-Message-ID: <20260128145339.700647111@linuxfoundation.org>
+	Ihor Solodrai <ihor.solodrai@pm.me>,
+	Andrii Nakryiko <andrii@kernel.org>,
+	Shung-Hsi Yu <shung-hsi.yu@suse.com>
+Subject: [PATCH 6.12 149/169] selftests/bpf: Check for timeout in perf_link test
+Date: Wed, 28 Jan 2026 16:23:52 +0100
+Message-ID: <20260128145339.367289379@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260128145334.006287341@linuxfoundation.org>
 References: <20260128145334.006287341@linuxfoundation.org>
@@ -54,72 +51,72 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bartlomiej Kubik <kubik.bartlomiej@gmail.com>
+From: Ihor Solodrai <ihor.solodrai@pm.me>
 
-[ Upstream commit a8a3ca23bbd9d849308a7921a049330dc6c91398 ]
+commit e6c209da7e0e9aaf955a7b59e91ed78c2b6c96fb upstream.
 
-KMSAN reports: Multiple uninitialized values detected:
+Recently perf_link test started unreliably failing on libbpf CI:
+  * https://github.com/libbpf/libbpf/actions/runs/11260672407/job/31312405473
+  * https://github.com/libbpf/libbpf/actions/runs/11260992334/job/31315514626
+  * https://github.com/libbpf/libbpf/actions/runs/11263162459/job/31320458251
 
-- KMSAN: uninit-value in ntfs_read_hdr (3)
-- KMSAN: uninit-value in bcmp (3)
+Part of the test is running a dummy loop for a while and then checking
+for a counter incremented by the test program.
 
-Memory is allocated by __getname(), which is a wrapper for
-kmem_cache_alloc(). This memory is used before being properly
-cleared. Change kmem_cache_alloc() to kmem_cache_zalloc() to
-properly allocate and clear memory before use.
+Instead of waiting for an arbitrary number of loop iterations once,
+check for the test counter in a loop and use get_time_ns() helper to
+enforce a 100ms timeout.
 
-Fixes: 82cae269cfa9 ("fs/ntfs3: Add initialization of super block")
-Fixes: 78ab59fee07f ("fs/ntfs3: Rework file operations")
-Tested-by: syzbot+332bd4e9d148f11a87dc@syzkaller.appspotmail.com
-Reported-by: syzbot+332bd4e9d148f11a87dc@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=332bd4e9d148f11a87dc
+v1: https://lore.kernel.org/bpf/zuRd072x9tumn2iN4wDNs5av0nu5nekMNV4PkR-YwCT10eFFTrUtZBRkLWFbrcCe7guvLStGQlhibo8qWojCO7i2-NGajes5GYIyynexD-w=@pm.me/
 
-Fixes: 82cae269cfa9 ("fs/ntfs3: Add initialization of super block")
-Fixes: 78ab59fee07f ("fs/ntfs3: Rework file operations")
-Tested-by: syzbot+0399100e525dd9696764@syzkaller.appspotmail.com
-Reported-by: syzbot+0399100e525dd9696764@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=0399100e525dd9696764
-
-Reviewed-by: Khalid Aziz <khalid@kernel.org>
-Signed-off-by: Bartlomiej Kubik <kubik.bartlomiej@gmail.com>
-Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
-Signed-off-by: Li hongliang <1468888505@139.com>
+Signed-off-by: Ihor Solodrai <ihor.solodrai@pm.me>
+Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
+Link: https://lore.kernel.org/bpf/20241011153104.249800-1-ihor.solodrai@pm.me
+Signed-off-by: Shung-Hsi Yu <shung-hsi.yu@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ntfs3/inode.c |    7 +++----
- 1 file changed, 3 insertions(+), 4 deletions(-)
+ tools/testing/selftests/bpf/prog_tests/perf_link.c |   15 +++++++++++++--
+ 1 file changed, 13 insertions(+), 2 deletions(-)
 
---- a/fs/ntfs3/inode.c
-+++ b/fs/ntfs3/inode.c
-@@ -1301,7 +1301,7 @@ int ntfs_create_inode(struct mnt_idmap *
- 		fa |= FILE_ATTRIBUTE_READONLY;
+--- a/tools/testing/selftests/bpf/prog_tests/perf_link.c
++++ b/tools/testing/selftests/bpf/prog_tests/perf_link.c
+@@ -4,8 +4,12 @@
+ #include <pthread.h>
+ #include <sched.h>
+ #include <test_progs.h>
++#include "testing_helpers.h"
+ #include "test_perf_link.skel.h"
  
- 	/* Allocate PATH_MAX bytes. */
--	new_de = __getname();
-+	new_de = kmem_cache_zalloc(names_cachep, GFP_KERNEL);
- 	if (!new_de) {
- 		err = -ENOMEM;
- 		goto out1;
-@@ -1734,10 +1734,9 @@ int ntfs_link_inode(struct inode *inode,
- 	struct NTFS_DE *de;
++#define BURN_TIMEOUT_MS 100
++#define BURN_TIMEOUT_NS BURN_TIMEOUT_MS * 1000000
++
+ static void burn_cpu(void)
+ {
+ 	volatile int j = 0;
+@@ -32,6 +36,7 @@ void serial_test_perf_link(void)
+ 	int run_cnt_before, run_cnt_after;
+ 	struct bpf_link_info info;
+ 	__u32 info_len = sizeof(info);
++	__u64 timeout_time_ns;
  
- 	/* Allocate PATH_MAX bytes. */
--	de = __getname();
-+	de = kmem_cache_zalloc(names_cachep, GFP_KERNEL);
- 	if (!de)
- 		return -ENOMEM;
--	memset(de, 0, PATH_MAX);
+ 	/* create perf event */
+ 	memset(&attr, 0, sizeof(attr));
+@@ -63,8 +68,14 @@ void serial_test_perf_link(void)
+ 	ASSERT_GT(info.prog_id, 0, "link_prog_id");
  
- 	/* Mark rw ntfs as dirty. It will be cleared at umount. */
- 	ntfs_set_state(sbi, NTFS_DIRTY_DIRTY);
-@@ -1773,7 +1772,7 @@ int ntfs_unlink_inode(struct inode *dir,
- 		return -EINVAL;
+ 	/* ensure we get at least one perf_event prog execution */
+-	burn_cpu();
+-	ASSERT_GT(skel->bss->run_cnt, 0, "run_cnt");
++	timeout_time_ns = get_time_ns() + BURN_TIMEOUT_NS;
++	while (true) {
++		burn_cpu();
++		if (skel->bss->run_cnt > 0)
++			break;
++	        if (!ASSERT_LT(get_time_ns(), timeout_time_ns, "run_cnt_timeout"))
++			break;
++	}
  
- 	/* Allocate PATH_MAX bytes. */
--	de = __getname();
-+	de = kmem_cache_zalloc(names_cachep, GFP_KERNEL);
- 	if (!de)
- 		return -ENOMEM;
- 
+ 	/* perf_event is still active, but we close link and BPF program
+ 	 * shouldn't be executed anymore
 
 
