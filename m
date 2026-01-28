@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C09E730C373;
-	Wed, 28 Jan 2026 15:45:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39CAB2F3618;
+	Wed, 28 Jan 2026 15:45:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769615119; cv=none; b=IuK+LktMpcMckuRKTyAly6DO5evuhuCZlcRfSN8u7uqc5bV5s6ifLk3Cuw4GKBc88e7eQCseqIu6RPdU2lQSt78nFVInWLpDWkcetAmO7bJx3XAYGdCqJPF7tfDc3GBUpxQakQftWqWh/cjgk6wBOx1l8AdkzLwNRWQvfD4AWYY=
+	t=1769615123; cv=none; b=M9ETqK2CJZlHL7WJQITcIg4ZDtPxQEKct56JAUSmr5WkHQSrWDlZGdCijVEZJUGSfq+ZJXyGKvXEUNuKGCyOcR3FhAVodLHxPyYqrkRHgNA0qRQeOwssBZB7dlLAwFMvzn4Y6HG/eDQDc+HCLWaefJh/Y/Y5s8x2B/lrAN5lc9k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769615119; c=relaxed/simple;
-	bh=XBLZZj/r43MYR/zhwOIRE843S8+zGU6msDf2Kv8BHIY=;
+	s=arc-20240116; t=1769615123; c=relaxed/simple;
+	bh=UWVwbfB1f+rfn2L8QFPTihKFppJeLq4YQmGfRh6KN5I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=f9iIG/gLrud/k25cvz/DBVlfwy2toobYO5rT62gamb9JfnbcZgclGqNdsFGOyTurYco32ferdchOAFEARA7FVny4V+MgJ9O8WkFLgl6xDKOnmdWXIlBsISezgdIrUyf4dokYmAp2b4e127DA4cfX1gsSBGHR/cfHx410XqqU65M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PvklVon2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ept/o6oWfchyejHc9hzPMT16pGQtlZFCLWOFpjPvmzZSycJh27N2ZXXb0DBKqKsYFo7OjVKXZcLTOdp0EYjBkvZl84tR+LN/StOB+xhQdzktp+yStLMfNRIeO51yQ3jOgSxaD9aQZShvVSKjDdXO42iftZgChV43GnvmfyBFFQo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zaN39HnJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PvklVon2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 293E6C4CEF1;
-	Wed, 28 Jan 2026 15:45:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zaN39HnJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A15CDC4CEF1;
+	Wed, 28 Jan 2026 15:45:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1769615119;
-	bh=XBLZZj/r43MYR/zhwOIRE843S8+zGU6msDf2Kv8BHIY=;
+	s=korg; t=1769615123;
+	bh=UWVwbfB1f+rfn2L8QFPTihKFppJeLq4YQmGfRh6KN5I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PvklVon2ilXXLNsAnc0ClJWu4mjrCwe9P5mD0GYCPJaKcJScQJwrze9dxqkxeGFhc
-	 k77ZxJfIq4MkFoYr5Z5xmNYr0rLTSqsvgm/iyd8MtU2IW66Vvyo6Y2XTAL29m8qNZ3
-	 oDbam3Tl0umvbDUV/cWWoE13nPyvRrCDSkplGd1w=
+	b=zaN39HnJBXEYYGkJft3TpP8AXyJurXkL7yEG8CgBEiWZgAqSqWsGtyxJEK7qoDt8u
+	 o/E3KXgjwnH6kJZvsBk1ftrhJzexnCqUccYc+W2C321tSrFCaV6THSCw8nPjmxXMaJ
+	 vcgMb6y1p9PPr+/Zh+FZdztdW2dFDT2qPS4rGTbo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shawn Lin <shawn.lin@rock-chips.com>,
-	Dragan Simic <dsimic@manjaro.org>,
-	Geraldo Nascimento <geraldogabriel@gmail.com>,
+	Ondrej Jirman <megi@xff.cz>,
+	Rudraksha Gupta <guptarud@gmail.com>,
+	Pavel Machek <pavel@ucw.cz>,
 	Heiko Stuebner <heiko@sntech.de>
-Subject: [PATCH 6.12 052/169] arm64: dts: rockchip: remove dangerous max-link-speed from helios64
-Date: Wed, 28 Jan 2026 16:22:15 +0100
-Message-ID: <20260128145335.887889658@linuxfoundation.org>
+Subject: [PATCH 6.12 053/169] arm64: dts: rockchip: Fix voltage threshold for volume keys for Pinephone Pro
+Date: Wed, 28 Jan 2026 16:22:16 +0100
+Message-ID: <20260128145335.923339393@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260128145334.006287341@linuxfoundation.org>
 References: <20260128145334.006287341@linuxfoundation.org>
@@ -52,39 +52,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Geraldo Nascimento <geraldogabriel@gmail.com>
+From: Ondrej Jirman <megi@xff.cz>
 
-commit 0368e4afcf20f377c81fa77b1c7d0dee4a625a44 upstream.
+commit 5497ffe305b2ea31ae62d4a311d7cabfb671f54a upstream.
 
-Shawn Lin from Rockchip strongly discourages attempts to use their
-RK3399 PCIe core at 5.0 GT/s speed, citing concerns about catastrophic
-failures that may happen. Even if the odds are low, drop from last user
-of this non-default property for the RK3399 platform, helios64 board
-dts.
+Previously sometimes pressing the volume-down button would register as
+a volume-up button. Match the thresholds as shown in the Pinephone Pro
+schematic.
 
-Fixes: 755fff528b1b ("arm64: dts: rockchip: add variables for pcie completion to helios64")
-Link: https://lore.kernel.org/all/e8524bf8-a90c-423f-8a58-9ef05a3db1dd@rock-chips.com/
+Tests:
+
+~ $ evtest
+    // Mashed the volume down ~100 times with varying intensity
+    Event: time xxx, type 1 (EV_KEY), code 114 (KEY_VOLUMEDOWN), value 1
+    Event: time xxx, type 1 (EV_KEY), code 114 (KEY_VOLUMEDOWN), value 0
+    // Mashed the volume up ~100 times with varying intensity
+    Event: time xxx, type 1 (EV_KEY), code 115 (KEY_VOLUMEUP), value 1
+    Event: time xxx, type 1 (EV_KEY), code 115 (KEY_VOLUMEUP), value 0
+
+Fixes: d3150ed53580 ("arm64: dts: rockchip: Add support for volume keys to rk3399-pinephone-pro")
 Cc: stable@vger.kernel.org
-Reported-by: Shawn Lin <shawn.lin@rock-chips.com>
-Reviewed-by: Dragan Simic <dsimic@manjaro.org>
-Signed-off-by: Geraldo Nascimento <geraldogabriel@gmail.com>
-Acked-by: Shawn Lin <shawn.lin@rock-chips.com>
-Link: https://patch.msgid.link/43bb639c120f599106fca2deee6c6599b2692c5c.1763415706.git.geraldogabriel@gmail.com
+Signed-off-by: Ondrej Jirman <megi@xff.cz>
+Signed-off-by: Rudraksha Gupta <guptarud@gmail.com>
+Reviewed-by: Pavel Machek <pavel@ucw.cz>
+Link: https://patch.msgid.link/20251124-ppp_light_accel_mag_vol-down-v5-4-f9a10a0a50eb@gmail.com
 Signed-off-by: Heiko Stuebner <heiko@sntech.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/boot/dts/rockchip/rk3399-kobol-helios64.dts |    1 -
- 1 file changed, 1 deletion(-)
+ arch/arm64/boot/dts/rockchip/rk3399-pinephone-pro.dts |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/arch/arm64/boot/dts/rockchip/rk3399-kobol-helios64.dts
-+++ b/arch/arm64/boot/dts/rockchip/rk3399-kobol-helios64.dts
-@@ -424,7 +424,6 @@
+--- a/arch/arm64/boot/dts/rockchip/rk3399-pinephone-pro.dts
++++ b/arch/arm64/boot/dts/rockchip/rk3399-pinephone-pro.dts
+@@ -40,13 +40,13 @@
+ 		button-up {
+ 			label = "Volume Up";
+ 			linux,code = <KEY_VOLUMEUP>;
+-			press-threshold-microvolt = <100000>;
++			press-threshold-microvolt = <2000>;
+ 		};
  
- &pcie0 {
- 	ep-gpios = <&gpio2 RK_PD4 GPIO_ACTIVE_HIGH>;
--	max-link-speed = <2>;
- 	num-lanes = <2>;
- 	pinctrl-names = "default";
- 	status = "okay";
+ 		button-down {
+ 			label = "Volume Down";
+ 			linux,code = <KEY_VOLUMEDOWN>;
+-			press-threshold-microvolt = <600000>;
++			press-threshold-microvolt = <300000>;
+ 		};
+ 	};
+ 
 
 
