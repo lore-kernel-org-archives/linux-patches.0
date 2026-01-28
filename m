@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F6282BE04C;
-	Wed, 28 Jan 2026 15:34:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 451D728B4FD;
+	Wed, 28 Jan 2026 15:34:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769614490; cv=none; b=dvmZ9dT32kaSLu/FSc35Vf2H9JcrIJzUgQyPJigZoQxZg+dJWIpN+xfGPBXYsI7o2WSBb7kfPhw9oAocTbcEbhcwDI3jbjcFTlCL3sdSsdrUf7JLQ7NZ+7b9f6dsA1nSfV/rrhzFL7ImihndFbe5dFXU6th4KJwB9Gth9V+bngc=
+	t=1769614493; cv=none; b=YrcoVHDFsvLNyUuWZwKauac3sW/GqjwIFQMPRHYbjhoKmAPuWT9TaFoKYbZXU4iw+xbVGhvAP9NGFxkfavfD0zXphXi/1dn74qoyOFKcs+7MbCh5RjBlVOlGwi4RQf8c56VEQbKGUO2OdXfnq/tagkI6ZQ7ob20/LgevbrC+53Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769614490; c=relaxed/simple;
-	bh=9XfhUg/dW/MC04Q5np7zNZh7qgI/UzUiwv+XbopQJd8=;
+	s=arc-20240116; t=1769614493; c=relaxed/simple;
+	bh=alTXFjzJWEBhzJrHFQ7HSoT1ppmfxlq1t4pGnsvB1N0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Hxx5Undr3gUzTw2E3SrVbXP0j3rpZTFf73D1kzQtOG+jvUcyuRVVTNFaTjCggllyTqtXBHS4Oqub9FVyukZi09HP0w7QO9y4gPUZ+IAPp6f47PPUgY0PgqtoH9jXks4dLPxBe0uYmRu85BPLI3tNoB1X4EvKkkPzPx5MNUaTa9s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ofc6PEUK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tOHomuBwSMo8fpvPGdS+OmLPGGqlpVGgs1bGG70Zr4ZgZ6rWGPBD5J5Ss1Os8IOsHymAV3MeedGN7Q4CVTOFINF48R6lEd+TwxOyZ9VWtkZblNoylz1YuOokWGgINCdnjUshbMv6rrT0COCSI2yjYnWrLByrxNzkWxdrbxW+xz0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LLtq6msH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ofc6PEUK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3DE6CC4CEF7;
-	Wed, 28 Jan 2026 15:34:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LLtq6msH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5CE42C4CEF1;
+	Wed, 28 Jan 2026 15:34:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1769614489;
-	bh=9XfhUg/dW/MC04Q5np7zNZh7qgI/UzUiwv+XbopQJd8=;
+	s=korg; t=1769614492;
+	bh=alTXFjzJWEBhzJrHFQ7HSoT1ppmfxlq1t4pGnsvB1N0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ofc6PEUKC16U743bpawNk6PHg35YsVS9ItsMkyhGQoVBg6E9tMGk7c/j5QpWy7Y6/
-	 JrviFqCwyo+IArNg/+jeQ6zvbsREhbEAMN+lNOw/DO4i2cke1JfHvkJAyrLUMI+grI
-	 yI3nZ37QCUGrUllRc1ZPVXWZA34nApJ2aq0cvVSo=
+	b=LLtq6msHYXEEmC9375Bo2LWKUIAplUeRVr0FCayWVMnRY2boaz4BMgNjpeVPUva5O
+	 7bvIhkCVyM2ekSxVGLr6macDXl3Y51/ZaO5+2q/Q2n3Fw52Fwj5yKbSaBJe5KIRxZJ
+	 2HtFFxbu65uxT2Qf30U1HZHGswqVectumjuoVJhw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Georgi Djakov <djakov@kernel.org>,
-	Kuan-Wei Chiu <visitorckw@gmail.com>,
+	Andrew Davis <afd@ti.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 153/254] interconnect: debugfs: initialize src_node and dst_node to empty strings
-Date: Wed, 28 Jan 2026 16:22:09 +0100
-Message-ID: <20260128145350.317019193@linuxfoundation.org>
+Subject: [PATCH 6.6 154/254] spi: sprd: adi: Use devm_register_restart_handler()
+Date: Wed, 28 Jan 2026 16:22:10 +0100
+Message-ID: <20260128145350.353155053@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260128145344.698118637@linuxfoundation.org>
 References: <20260128145344.698118637@linuxfoundation.org>
@@ -51,44 +51,113 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Georgi Djakov <djakov@kernel.org>
+From: Andrew Davis <afd@ti.com>
 
-[ Upstream commit 8cc27f5c6dd17dd090f3a696683f04336c162ff5 ]
+[ Upstream commit 8e6a43961f24cf841d3c0d199521d0b284d948b9 ]
 
-The debugfs_create_str() API assumes that the string pointer is either NULL
-or points to valid kmalloc() memory. Leaving the pointer uninitialized can
-cause problems.
+Use device life-cycle managed register function to simplify probe error
+path and eliminate need for explicit remove function.
 
-Initialize src_node and dst_node to empty strings before creating the
-debugfs entries to guarantee that reads and writes are safe.
-
-Fixes: 770c69f037c1 ("interconnect: Add debugfs test client")
-Signed-off-by: Georgi Djakov <djakov@kernel.org>
-Reviewed-by: Kuan-Wei Chiu <visitorckw@gmail.com>
-Tested-by: Kuan-Wei Chiu <visitorckw@gmail.com>
-Link: https://lore.kernel.org/r/20260109122523.125843-1-djakov@kernel.org
-Signed-off-by: Georgi Djakov <djakov@kernel.org>
+Signed-off-by: Andrew Davis <afd@ti.com>
+Link: https://lore.kernel.org/r/20231117161006.87734-5-afd@ti.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Stable-dep-of: 383d4f5cffcc ("spi: spi-sprd-adi: Fix double free in probe error path")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/interconnect/debugfs-client.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/spi/spi-sprd-adi.c | 30 ++++++++----------------------
+ 1 file changed, 8 insertions(+), 22 deletions(-)
 
-diff --git a/drivers/interconnect/debugfs-client.c b/drivers/interconnect/debugfs-client.c
-index 778deeb4a7e8a..24d7b5a577945 100644
---- a/drivers/interconnect/debugfs-client.c
-+++ b/drivers/interconnect/debugfs-client.c
-@@ -150,6 +150,11 @@ int icc_debugfs_client_init(struct dentry *icc_dir)
- 		return ret;
+diff --git a/drivers/spi/spi-sprd-adi.c b/drivers/spi/spi-sprd-adi.c
+index bf01feedbf93f..58c3badd9c79a 100644
+--- a/drivers/spi/spi-sprd-adi.c
++++ b/drivers/spi/spi-sprd-adi.c
+@@ -138,8 +138,7 @@ struct sprd_adi_data {
+ 	u32 slave_offset;
+ 	u32 slave_addr_size;
+ 	int (*read_check)(u32 val, u32 reg);
+-	int (*restart)(struct notifier_block *this,
+-		       unsigned long mode, void *cmd);
++	int (*restart)(struct sys_off_data *data);
+ 	void (*wdg_rst)(void *p);
+ };
+ 
+@@ -150,7 +149,6 @@ struct sprd_adi {
+ 	struct hwspinlock	*hwlock;
+ 	unsigned long		slave_vbase;
+ 	unsigned long		slave_pbase;
+-	struct notifier_block	restart_handler;
+ 	const struct sprd_adi_data *data;
+ };
+ 
+@@ -370,11 +368,9 @@ static void sprd_adi_set_wdt_rst_mode(void *p)
+ #endif
+ }
+ 
+-static int sprd_adi_restart(struct notifier_block *this, unsigned long mode,
+-				  void *cmd, struct sprd_adi_wdg *wdg)
++static int sprd_adi_restart(struct sprd_adi *sadi, unsigned long mode,
++			    const char *cmd, struct sprd_adi_wdg *wdg)
+ {
+-	struct sprd_adi *sadi = container_of(this, struct sprd_adi,
+-					     restart_handler);
+ 	u32 val, reboot_mode = 0;
+ 
+ 	if (!cmd)
+@@ -448,8 +444,7 @@ static int sprd_adi_restart(struct notifier_block *this, unsigned long mode,
+ 	return NOTIFY_DONE;
+ }
+ 
+-static int sprd_adi_restart_sc9860(struct notifier_block *this,
+-					   unsigned long mode, void *cmd)
++static int sprd_adi_restart_sc9860(struct sys_off_data *data)
+ {
+ 	struct sprd_adi_wdg wdg = {
+ 		.base = PMIC_WDG_BASE,
+@@ -458,7 +453,7 @@ static int sprd_adi_restart_sc9860(struct notifier_block *this,
+ 		.wdg_clk = PMIC_CLK_EN,
+ 	};
+ 
+-	return sprd_adi_restart(this, mode, cmd, &wdg);
++	return sprd_adi_restart(data->cb_data, data->mode, data->cmd, &wdg);
+ }
+ 
+ static void sprd_adi_hw_init(struct sprd_adi *sadi)
+@@ -590,9 +585,9 @@ static int sprd_adi_probe(struct platform_device *pdev)
  	}
  
-+	src_node = devm_kstrdup(&pdev->dev, "", GFP_KERNEL);
-+	dst_node = devm_kstrdup(&pdev->dev, "", GFP_KERNEL);
-+	if (!src_node || !dst_node)
-+		return -ENOMEM;
-+
- 	client_dir = debugfs_create_dir("test_client", icc_dir);
+ 	if (sadi->data->restart) {
+-		sadi->restart_handler.notifier_call = sadi->data->restart;
+-		sadi->restart_handler.priority = 128;
+-		ret = register_restart_handler(&sadi->restart_handler);
++		ret = devm_register_restart_handler(&pdev->dev,
++						    sadi->data->restart,
++						    sadi);
+ 		if (ret) {
+ 			dev_err(&pdev->dev, "can not register restart handler\n");
+ 			goto put_ctlr;
+@@ -606,14 +601,6 @@ static int sprd_adi_probe(struct platform_device *pdev)
+ 	return ret;
+ }
  
- 	debugfs_create_str("src_node", 0600, client_dir, &src_node);
+-static void sprd_adi_remove(struct platform_device *pdev)
+-{
+-	struct spi_controller *ctlr = dev_get_drvdata(&pdev->dev);
+-	struct sprd_adi *sadi = spi_controller_get_devdata(ctlr);
+-
+-	unregister_restart_handler(&sadi->restart_handler);
+-}
+-
+ static struct sprd_adi_data sc9860_data = {
+ 	.slave_offset = ADI_10BIT_SLAVE_OFFSET,
+ 	.slave_addr_size = ADI_10BIT_SLAVE_ADDR_SIZE,
+@@ -657,7 +644,6 @@ static struct platform_driver sprd_adi_driver = {
+ 		.of_match_table = sprd_adi_of_match,
+ 	},
+ 	.probe = sprd_adi_probe,
+-	.remove_new = sprd_adi_remove,
+ };
+ module_platform_driver(sprd_adi_driver);
+ 
 -- 
 2.51.0
 
