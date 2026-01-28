@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF3012F25EF;
-	Wed, 28 Jan 2026 15:53:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C599242D7F;
+	Wed, 28 Jan 2026 15:53:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769615628; cv=none; b=PSoHQIrMGYRJVebjsAE4FNE4Bu0jLHeB8si2imjLy0Svoyix2YE4AlPR++pLuPhl3KzeUXCrWO7Iv/wOS9wkwZ53Sj7hE2JB4iqNodqHlThwsolVkgT/tkr9LUVrLckRqyRNdSeQUKDsmcxEI8l2x5KNeluRwb/oiX9ZZT3WaRo=
+	t=1769615631; cv=none; b=RlHZkMt+tkPMlTcgTFuk1BFrwZ7/aQ0+8iM7+SqkqlKBT8Igo76nS+aE9wXklEuxBTuGPCp5m/TldsPRNgPM79eRtVZh3vHa5nFkg1CwEoi+KCzZouENdmBrpUTSPKnKDNJOFrWDBPAYszmAfHVAa8WA2QsHg9rqnHgS8FuKJkk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769615628; c=relaxed/simple;
-	bh=9KYV42BCiGA9uYUvd9Pz+SbDyk2NCwlr+7VpJe+nIJY=;
+	s=arc-20240116; t=1769615631; c=relaxed/simple;
+	bh=fzS1vHdpRSqQ2Z3wpUxA/J/eBxabEmFmZDRgS8uZ5A4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=haKUW2QKwiS7Y+aW5RPK1sG8ZXDVuiRFArLuFbZ9VQQAQTU5kD9T/r8W4FrLHKSlyZsrmBasEjDjQjf/zxai4ZzBO4/tCwTlzTTRNdmOP3Ur3LHpOl3n29EJIHh0N0lLqxIudse1IHEYOyAoBxLcrOTLcRbDQmtIpW3lanMtfHM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uEoZIIsZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CCa26SzqosyZZ+5B4026K/m4gcyiZ2fzNlN3rXUbOWABJ6S4UtTdBpFKzTGFSS2ZH7vxa1ru8itWprUTbpoE+eegv0hibsERSbvtsQLimvx7E2Yl0RWM08ujEDxhpoQutkQdkV7ODS04U1meBq9bqSrftOVa6oYb9Hi+6hwbifc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=t9PYn43K; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uEoZIIsZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7494DC4CEF1;
-	Wed, 28 Jan 2026 15:53:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="t9PYn43K"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A3306C4CEF1;
+	Wed, 28 Jan 2026 15:53:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1769615627;
-	bh=9KYV42BCiGA9uYUvd9Pz+SbDyk2NCwlr+7VpJe+nIJY=;
+	s=korg; t=1769615631;
+	bh=fzS1vHdpRSqQ2Z3wpUxA/J/eBxabEmFmZDRgS8uZ5A4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uEoZIIsZNrUzjycl4Gc0NHvEYP/5gg9BfWvDegflnMQaRIDkvSRmsHeLsgRptjdCf
-	 PnArHjpOJgGK7MpVyBiXdhffZv8+KBr0aqNh32z9A7QEEAX4ONOEa9Ak39VWYWSu6+
-	 9FaQVOH0vvx07hK3J56G7yLkDMuWDfSGPUXLj7p4=
+	b=t9PYn43KhhkGGyS0WkVgdbuDnG+WfqDN1ybR+wJDrywkAm6OHEi0T9hpr+gBJ/AnM
+	 83RKMFwDT6C5M7eN352Rz9gcSzMfcvDGmaCE1VP/yYIxqP02bmHLoW4tOvQytXDi22
+	 QljNOjCWt8fs8FxW3UCf5fQMMGnzjGhuv/WxZKTE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Zhen Chen <chenzhen126@huawei.com>,
+	Xin Long <lucien.xin@gmail.com>,
 	Jakub Kicinski <kuba@kernel.org>,
-	Marc Kleine-Budde <mkl@pengutronix.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 033/227] can: gs_usb: gs_usb_receive_bulk_callback(): unanchor URL on usb_submit_urb() error
-Date: Wed, 28 Jan 2026 16:21:18 +0100
-Message-ID: <20260128145345.536281652@linuxfoundation.org>
+Subject: [PATCH 6.18 034/227] sctp: move SCTP_CMD_ASSOC_SHKEY right after SCTP_CMD_PEER_INIT
+Date: Wed, 28 Jan 2026 16:21:19 +0100
+Message-ID: <20260128145345.571651087@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260128145344.331957407@linuxfoundation.org>
 References: <20260128145344.331957407@linuxfoundation.org>
@@ -51,58 +52,99 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Marc Kleine-Budde <mkl@pengutronix.de>
+From: Xin Long <lucien.xin@gmail.com>
 
-[ Upstream commit 79a6d1bfe1148bc921b8d7f3371a7fbce44e30f7 ]
+[ Upstream commit a80c9d945aef55b23b54838334345f20251dad83 ]
 
-In commit 7352e1d5932a ("can: gs_usb: gs_usb_receive_bulk_callback(): fix
-URB memory leak"), the URB was re-anchored before usb_submit_urb() in
-gs_usb_receive_bulk_callback() to prevent a leak of this URB during
-cleanup.
+A null-ptr-deref was reported in the SCTP transmit path when SCTP-AUTH key
+initialization fails:
 
-However, this patch did not take into account that usb_submit_urb() could
-fail. The URB remains anchored and
-usb_kill_anchored_urbs(&parent->rx_submitted) in gs_can_close() loops
-infinitely since the anchor list never becomes empty.
+  ==================================================================
+  KASAN: null-ptr-deref in range [0x0000000000000018-0x000000000000001f]
+  CPU: 0 PID: 16 Comm: ksoftirqd/0 Tainted: G W 6.6.0 #2
+  RIP: 0010:sctp_packet_bundle_auth net/sctp/output.c:264 [inline]
+  RIP: 0010:sctp_packet_append_chunk+0xb36/0x1260 net/sctp/output.c:401
+  Call Trace:
 
-To fix the bug, unanchor the URB when an usb_submit_urb() error occurs,
-also print an info message.
+  sctp_packet_transmit_chunk+0x31/0x250 net/sctp/output.c:189
+  sctp_outq_flush_data+0xa29/0x26d0 net/sctp/outqueue.c:1111
+  sctp_outq_flush+0xc80/0x1240 net/sctp/outqueue.c:1217
+  sctp_cmd_interpreter.isra.0+0x19a5/0x62c0 net/sctp/sm_sideeffect.c:1787
+  sctp_side_effects net/sctp/sm_sideeffect.c:1198 [inline]
+  sctp_do_sm+0x1a3/0x670 net/sctp/sm_sideeffect.c:1169
+  sctp_assoc_bh_rcv+0x33e/0x640 net/sctp/associola.c:1052
+  sctp_inq_push+0x1dd/0x280 net/sctp/inqueue.c:88
+  sctp_rcv+0x11ae/0x3100 net/sctp/input.c:243
+  sctp6_rcv+0x3d/0x60 net/sctp/ipv6.c:1127
 
-Fixes: 7352e1d5932a ("can: gs_usb: gs_usb_receive_bulk_callback(): fix URB memory leak")
-Reported-by: Jakub Kicinski <kuba@kernel.org>
-Closes: https://lore.kernel.org/all/20260110223836.3890248-1-kuba@kernel.org/
-Link: https://patch.msgid.link/20260116-can_usb-fix-reanchor-v1-1-9d74e7289225@pengutronix.de
-Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
+The issue is triggered when sctp_auth_asoc_init_active_key() fails in
+sctp_sf_do_5_1C_ack() while processing an INIT_ACK. In this case, the
+command sequence is currently:
+
+- SCTP_CMD_PEER_INIT
+- SCTP_CMD_TIMER_STOP (T1_INIT)
+- SCTP_CMD_TIMER_START (T1_COOKIE)
+- SCTP_CMD_NEW_STATE (COOKIE_ECHOED)
+- SCTP_CMD_ASSOC_SHKEY
+- SCTP_CMD_GEN_COOKIE_ECHO
+
+If SCTP_CMD_ASSOC_SHKEY fails, asoc->shkey remains NULL, while
+asoc->peer.auth_capable and asoc->peer.peer_chunks have already been set by
+SCTP_CMD_PEER_INIT. This allows a DATA chunk with auth = 1 and shkey = NULL
+to be queued by sctp_datamsg_from_user().
+
+Since command interpretation stops on failure, no COOKIE_ECHO should been
+sent via SCTP_CMD_GEN_COOKIE_ECHO. However, the T1_COOKIE timer has already
+been started, and it may enqueue a COOKIE_ECHO into the outqueue later. As
+a result, the DATA chunk can be transmitted together with the COOKIE_ECHO
+in sctp_outq_flush_data(), leading to the observed issue.
+
+Similar to the other places where it calls sctp_auth_asoc_init_active_key()
+right after sctp_process_init(), this patch moves the SCTP_CMD_ASSOC_SHKEY
+immediately after SCTP_CMD_PEER_INIT, before stopping T1_INIT and starting
+T1_COOKIE. This ensures that if shared key generation fails, authenticated
+DATA cannot be sent. It also allows the T1_INIT timer to retransmit INIT,
+giving the client another chance to process INIT_ACK and retry key setup.
+
+Fixes: 730fc3d05cd4 ("[SCTP]: Implete SCTP-AUTH parameter processing")
+Reported-by: Zhen Chen <chenzhen126@huawei.com>
+Tested-by: Zhen Chen <chenzhen126@huawei.com>
+Signed-off-by: Xin Long <lucien.xin@gmail.com>
+Link: https://patch.msgid.link/44881224b375aa8853f5e19b4055a1a56d895813.1768324226.git.lucien.xin@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/can/usb/gs_usb.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ net/sctp/sm_statefuns.c | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/net/can/usb/gs_usb.c b/drivers/net/can/usb/gs_usb.c
-index b14b132ad8e6a..fd7fb21b10989 100644
---- a/drivers/net/can/usb/gs_usb.c
-+++ b/drivers/net/can/usb/gs_usb.c
-@@ -754,6 +754,10 @@ static void gs_usb_receive_bulk_callback(struct urb *urb)
- 	usb_anchor_urb(urb, &parent->rx_submitted);
+diff --git a/net/sctp/sm_statefuns.c b/net/sctp/sm_statefuns.c
+index 3755ba079d077..7b823d7591419 100644
+--- a/net/sctp/sm_statefuns.c
++++ b/net/sctp/sm_statefuns.c
+@@ -603,6 +603,11 @@ enum sctp_disposition sctp_sf_do_5_1C_ack(struct net *net,
+ 	sctp_add_cmd_sf(commands, SCTP_CMD_PEER_INIT,
+ 			SCTP_PEER_INIT(initchunk));
  
- 	rc = usb_submit_urb(urb, GFP_ATOMIC);
-+	if (!rc)
-+		return;
++	/* SCTP-AUTH: generate the association shared keys so that
++	 * we can potentially sign the COOKIE-ECHO.
++	 */
++	sctp_add_cmd_sf(commands, SCTP_CMD_ASSOC_SHKEY, SCTP_NULL());
 +
-+	usb_unanchor_urb(urb);
+ 	/* Reset init error count upon receipt of INIT-ACK.  */
+ 	sctp_add_cmd_sf(commands, SCTP_CMD_INIT_COUNTER_RESET, SCTP_NULL());
  
- 	/* USB failure take down all interfaces */
- 	if (rc == -ENODEV) {
-@@ -762,6 +766,9 @@ static void gs_usb_receive_bulk_callback(struct urb *urb)
- 			if (parent->canch[rc])
- 				netif_device_detach(parent->canch[rc]->netdev);
- 		}
-+	} else if (rc != -ESHUTDOWN && net_ratelimit()) {
-+		netdev_info(netdev, "failed to re-submit IN URB: %pe\n",
-+			    ERR_PTR(urb->status));
- 	}
- }
+@@ -617,11 +622,6 @@ enum sctp_disposition sctp_sf_do_5_1C_ack(struct net *net,
+ 	sctp_add_cmd_sf(commands, SCTP_CMD_NEW_STATE,
+ 			SCTP_STATE(SCTP_STATE_COOKIE_ECHOED));
  
+-	/* SCTP-AUTH: generate the association shared keys so that
+-	 * we can potentially sign the COOKIE-ECHO.
+-	 */
+-	sctp_add_cmd_sf(commands, SCTP_CMD_ASSOC_SHKEY, SCTP_NULL());
+-
+ 	/* 5.1 C) "A" shall then send the State Cookie received in the
+ 	 * INIT ACK chunk in a COOKIE ECHO chunk, ...
+ 	 */
 -- 
 2.51.0
 
