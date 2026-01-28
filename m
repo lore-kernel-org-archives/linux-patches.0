@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B339F302779;
-	Wed, 28 Jan 2026 15:57:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B56BA302741;
+	Wed, 28 Jan 2026 15:57:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769615851; cv=none; b=fiMw5ov0m4HSwDZWyunyyR+YH6j6ziBKw7Wc4G4Ot9j3yc9f7xIZffx9qyi6ge+eYblIplDRmyiD/p17mxTb/9cZ4EmKcvJut4nUTowDRxqWETyofX8dr+riuEqVcx3ocgB05SUWR7AYeU8zUEhx4LZi7eGXg+JUTp1ztTEWNSY=
+	t=1769615854; cv=none; b=WTe7mC8bYKZn/HZpPSMZjc73GZQ/qtdu/YV1U6+WPZ0BEeaNV25PS/Msjj+cLm5TY4ZZDbX2aeeUwuYysD3sjPq1kkvUoc1GkZOd19rUqoecDq7p1oVtSaj9IluudWiM5c6+/rgjLMfln1UqVI9HaGy3a+DsLMwhpogPDB5OU5Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769615851; c=relaxed/simple;
-	bh=uslLRsxhBpHs8Z0mXsZiAGABmX6kcDn/VLv11ST2Bfo=;
+	s=arc-20240116; t=1769615854; c=relaxed/simple;
+	bh=PJGIZMNroizbX4tOJPLhXEdb2ZGW6xfCEQdFMg3+dK4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=B1VZ3Wx8KRKNyYz6CKeV99Cz9uwhLV73UamM9jxsYYA6Njd2QHBZYFj2MDqHIxXJ3VIfsEvXFtMbJjlgCUo8/uUUixdq8HK44IKnh4EJ0mzUYO6M7w1cfAKwI90lSvgOQWq0XNYxg+jzw9pWSCSMkAWmpCRJAveBKYDOfCYP5C4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SKa7Ex/y; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Ln8xqJgf6pMm1yuu2dD1djcxkh5pT72nggwr2a7MZ1qC+R4HvuDfXIPaIlwhcU6dwu63ywCmxhsCmJ2wUB/p3ry9hNZVzVCPlaOy8x1hwRb+3HMCk+FYCjFunVA6QvU1SYRe9CmS9Y4h531kapmLcHRryj4jqBFs50p6nqHdme4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RPdGTejy; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SKa7Ex/y"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F4087C4CEF1;
-	Wed, 28 Jan 2026 15:57:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RPdGTejy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 17E00C4CEF1;
+	Wed, 28 Jan 2026 15:57:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1769615851;
-	bh=uslLRsxhBpHs8Z0mXsZiAGABmX6kcDn/VLv11ST2Bfo=;
+	s=korg; t=1769615854;
+	bh=PJGIZMNroizbX4tOJPLhXEdb2ZGW6xfCEQdFMg3+dK4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SKa7Ex/yL6eT84FCHEMAnW+uEiUsBPQ4IMSQLxPLlBL1HYmAoWQByupQYO7B7yTVM
-	 cBey33s1aXJMyDh8PJPfFfvgxJjSXXtCy82L+sbya2cOiCgz5VjKI5fCPbIU5mPTTl
-	 XJmvAK3DJ69JbQq8Gb/E1D+znOGAeZJmfrMj25y0=
+	b=RPdGTejyN2JF6DechtwcneVhgh00uhrK6c8LpAU/ffJwsqJ2Hj4Ox6Z/uloNTPnXM
+	 d0BxpdndWvGOWyiYGCws+rMB5V9lvpSoe4v1JeQqRV2gW6LEdurRFiYviFsewJLqN6
+	 AFPrZE6gfz1eCL1ztglK6x/SJFiBTUR4jR8yKshw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alex Deucher <alexander.deucher@amd.com>,
-	=?UTF-8?q?Timur=20Krist=C3=B3f?= <timur.kristof@gmail.com>,
+	Brajesh Gupta <brajesh.gupta@imgtec.com>,
+	Matt Coster <matt.coster@imgtec.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 131/227] drm/amd/pm: Workaround SI powertune issue on Radeon 430 (v2)
-Date: Wed, 28 Jan 2026 16:22:56 +0100
-Message-ID: <20260128145349.174903574@linuxfoundation.org>
+Subject: [PATCH 6.18 101/227] drm/imagination: Wait for FW trace update command completion
+Date: Wed, 28 Jan 2026 16:22:26 +0100
+Message-ID: <20260128145348.099957874@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260128145344.331957407@linuxfoundation.org>
 References: <20260128145344.331957407@linuxfoundation.org>
@@ -45,85 +45,59 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Timur Kristóf <timur.kristof@gmail.com>
+From: Brajesh Gupta <brajesh.gupta@imgtec.com>
 
-[ Upstream commit 764a90eb02268a23b1bb98be5f4a13671346804a ]
+[ Upstream commit 812062e74a3945b575dce89d330b67cb50054a77 ]
 
-Radeon 430 and 520 are OEM GPUs from 2016~2017
-They have the same device id: 0x6611 and revision: 0x87
+Possibility of no FW trace available after update in the fw_trace_mask due
+to asynchronous mode of command consumption in the FW.
 
-On the Radeon 430, powertune is buggy and throttles the GPU,
-never allowing it to reach its maximum SCLK. Work around this
-bug by raising the TDP limits we program to the SMC from
-24W (specified by the VBIOS on Radeon 430) to 32W.
+To ensure FW trace is available after update, wait for FW trace log update
+command completion from the FW.
 
-Disabling powertune entirely is	not a viable workaround,
-because	it causes the Radeon 520 to heat up above 100 C,
-which I prefer to avoid.
-
-Additionally, revise the maximum SCLK limit. Considering the
-above issue, these GPUs never reached a high SCLK on Linux,
-and the workarounds were added before the GPUs were released,
-so the workaround likely didn't target these specifically.
-Use 780 MHz (the maximum SCLK according to the VBIOS on the
-Radeon 430). Note that the Radeon 520 VBIOS has a higher
-maximum SCLK: 905 MHz, but in practice it doesn't seem to
-perform better with the higher clock, only heats up more.
-
-v2:
-Move the workaround to si_populate_smc_tdp_limits.
-
-Fixes: 841686df9f7d ("drm/amdgpu: add SI DPM support (v4)")
-Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
-Signed-off-by: Timur Kristóf <timur.kristof@gmail.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 966d70f1e160bdfdecaf7ff2b3f22ad088516e9f)
+Fixes: cc1aeedb98ad ("drm/imagination: Implement firmware infrastructure and META FW support")
+Signed-off-by: Brajesh Gupta <brajesh.gupta@imgtec.com>
+Reviewed-by: Matt Coster <matt.coster@imgtec.com>
+Link: https://patch.msgid.link/20260108040936.129769-1-brajesh.gupta@imgtec.com
+Signed-off-by: Matt Coster <matt.coster@imgtec.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/pm/legacy-dpm/si_dpm.c | 13 ++++++++++++-
- 1 file changed, 12 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/imagination/pvr_fw_trace.c | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/amd/pm/legacy-dpm/si_dpm.c b/drivers/gpu/drm/amd/pm/legacy-dpm/si_dpm.c
-index 08ffa79154111..a1da3e5812ce3 100644
---- a/drivers/gpu/drm/amd/pm/legacy-dpm/si_dpm.c
-+++ b/drivers/gpu/drm/amd/pm/legacy-dpm/si_dpm.c
-@@ -2281,6 +2281,12 @@ static int si_populate_smc_tdp_limits(struct amdgpu_device *adev,
- 		if (ret)
- 			return ret;
+diff --git a/drivers/gpu/drm/imagination/pvr_fw_trace.c b/drivers/gpu/drm/imagination/pvr_fw_trace.c
+index a1098b5214856..e7f4554510fd4 100644
+--- a/drivers/gpu/drm/imagination/pvr_fw_trace.c
++++ b/drivers/gpu/drm/imagination/pvr_fw_trace.c
+@@ -136,6 +136,7 @@ update_logtype(struct pvr_device *pvr_dev, u32 group_mask)
+ 	struct rogue_fwif_kccb_cmd cmd;
+ 	int idx;
+ 	int err;
++	int slot;
  
-+		if (adev->pdev->device == 0x6611 && adev->pdev->revision == 0x87) {
-+			/* Workaround buggy powertune on Radeon 430 and 520. */
-+			tdp_limit = 32;
-+			near_tdp_limit = 28;
-+		}
+ 	if (group_mask)
+ 		fw_trace->tracebuf_ctrl->log_type = ROGUE_FWIF_LOG_TYPE_TRACE | group_mask;
+@@ -153,8 +154,13 @@ update_logtype(struct pvr_device *pvr_dev, u32 group_mask)
+ 	cmd.cmd_type = ROGUE_FWIF_KCCB_CMD_LOGTYPE_UPDATE;
+ 	cmd.kccb_flags = 0;
+ 
+-	err = pvr_kccb_send_cmd(pvr_dev, &cmd, NULL);
++	err = pvr_kccb_send_cmd(pvr_dev, &cmd, &slot);
++	if (err)
++		goto err_drm_dev_exit;
 +
- 		smc_table->dpm2Params.TDPLimit =
- 			cpu_to_be32(si_scale_power_for_smc(tdp_limit, scaling_factor) * 1000);
- 		smc_table->dpm2Params.NearTDPLimit =
-@@ -3468,10 +3474,15 @@ static void si_apply_state_adjust_rules(struct amdgpu_device *adev,
- 		    (adev->pdev->revision == 0x80) ||
- 		    (adev->pdev->revision == 0x81) ||
- 		    (adev->pdev->revision == 0x83) ||
--		    (adev->pdev->revision == 0x87) ||
-+		    (adev->pdev->revision == 0x87 &&
-+				adev->pdev->device != 0x6611) ||
- 		    (adev->pdev->device == 0x6604) ||
- 		    (adev->pdev->device == 0x6605)) {
- 			max_sclk = 75000;
-+		} else if (adev->pdev->revision == 0x87 &&
-+				adev->pdev->device == 0x6611) {
-+			/* Radeon 430 and 520 */
-+			max_sclk = 78000;
- 		}
- 	}
++	err = pvr_kccb_wait_for_completion(pvr_dev, slot, HZ, NULL);
  
++err_drm_dev_exit:
+ 	drm_dev_exit(idx);
+ 
+ err_up_read:
 -- 
 2.51.0
 
