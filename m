@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2B3936B07E;
-	Wed, 28 Jan 2026 15:28:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82E4D36B07E;
+	Wed, 28 Jan 2026 15:28:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769614099; cv=none; b=UMY8EWNxsXXpqjEy5Sos7gecGZHzEg5ChpKj54w0lnZAHGsDBUFwK3AjYyulyepe5hGppjYciyJoLtXEnlvgNxvb+VS5oRrhOfDJTm3jLdq3SCADnqe8SzG9i9uBxIPNDamE6ZZyGTigwzUFcgaQD0q9gTUIrdDMjkeqZP9crAY=
+	t=1769614102; cv=none; b=YOqpjyBemCUYNBiZeJREbreSzFkt2DVc2jPGs22RmSi/9JJqOGzZs278BZNRlmTe+kdFjRdNCqiR1zsTIWWH+mjFw1XybzxNB9SdTvM5sd0wQK7/Nierzox0kpdnQ+jpqZnFJGH4Zy0krHEKIK6owHZXoNbL94a1rSYr8YB5/dA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769614099; c=relaxed/simple;
-	bh=CvdzRGdff/5bJV1hKiR9eSebu6KPnaEgJBdRfzPKiic=;
+	s=arc-20240116; t=1769614102; c=relaxed/simple;
+	bh=6rvMxP8+UH8JJpoE4BCRiykAqYAWYVaS35Clke/z1Wo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rlrogcncgE+Q1tRaGjtrVkQ3y6QDQ7OECnN3cK88lFfZTwsmGzwxb8XuzvoKYjNrESgSKnLtl74dk6EXdRssGWZzXTlmprRAKIG6bDaEgqPksOmjHNe3Uqnm1CZKIchuZrn7FOWzf5ud8paWhaE2h9xadtZlOHJTNY8JCqvqELU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QM5zEFvp; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VuZNMZJwIQXiQCrsSXW14oaPCEEWJgMZyd0r8eopFAkFESOotzVNvjZQWeNyHvNzz6x6tnzVStWVHgCwPDCwxDrYxPUUPxMWETFviti/Nze1kIPDzoilQasEDwLWJjQ6iQUlZof4hsBjagiC0G/5DyN5u3wyT5hrYB8GAQyQPEI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=H/alVzQd; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QM5zEFvp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3DBCAC16AAE;
-	Wed, 28 Jan 2026 15:28:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="H/alVzQd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E0E57C4CEF1;
+	Wed, 28 Jan 2026 15:28:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1769614098;
-	bh=CvdzRGdff/5bJV1hKiR9eSebu6KPnaEgJBdRfzPKiic=;
+	s=korg; t=1769614102;
+	bh=6rvMxP8+UH8JJpoE4BCRiykAqYAWYVaS35Clke/z1Wo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QM5zEFvp2xtuCU1t+a6R2GuU9+yyTlCD0enPbslOJ1mCURorB8ZoTTKVgolKcgth7
-	 +eDfEBNTc6mq6bpESGR3EAnXnCc6tev2C2g0lI5vnwZsWew6HY46510wSqelaSnw3W
-	 rNq33s9ZraGr/yYSphmCBSex+RM32qS+aGR05k9I=
+	b=H/alVzQdviiLE7kQpq+2fojLFA741X+8EAwzJd+53mgTnun1ufeB0JBO/3dU4AxRc
+	 e1P1dXYLY2HPFQjogaYftzkcfZE8aYjNssxaKES5AF0FiHqtyNWG1SEzJS1lVLtUJ9
+	 OsG8H2KKLnJVdtkFT0OptqF6NnT4TksU13RCC+dg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Krzysztof Kozlowski <krzk@kernel.org>,
-	Johan Hovold <johan@kernel.org>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>,
-	Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>,
-	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 6.6 004/254] ASoC: codecs: wsa884x: fix codec initialisation
-Date: Wed, 28 Jan 2026 16:19:40 +0100
-Message-ID: <20260128145344.862117668@linuxfoundation.org>
+	Jianbo Liu <jianbol@nvidia.com>,
+	Sabrina Dubroca <sd@queasysnail.net>,
+	Steffen Klassert <steffen.klassert@secunet.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 005/254] xfrm: Fix inner mode lookup in tunnel mode GSO segmentation
+Date: Wed, 28 Jan 2026 16:19:41 +0100
+Message-ID: <20260128145344.898790405@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260128145344.698118637@linuxfoundation.org>
 References: <20260128145344.698118637@linuxfoundation.org>
@@ -53,54 +52,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johan Hovold <johan@kernel.org>
+From: Jianbo Liu <jianbol@nvidia.com>
 
-commit 120f3e6ff76209ee2f62a64e5e7e9d70274df42b upstream.
+[ Upstream commit 3d5221af9c7711b7aec8da1298c8fc393ef6183d ]
 
-The soundwire update_status() callback may be called multiple times with
-the same ATTACHED status but initialisation should only be done when
-transitioning from UNATTACHED to ATTACHED.
+Commit 61fafbee6cfe ("xfrm: Determine inner GSO type from packet inner
+protocol") attempted to fix GSO segmentation by reading the inner
+protocol from XFRM_MODE_SKB_CB(skb)->protocol. This was incorrect
+because the field holds the inner L4 protocol (TCP/UDP) instead of the
+required tunnel protocol. Also, the memory location (shared by
+XFRM_SKB_CB(skb) which could be overwritten by xfrm_replay_overflow())
+is prone to corruption. This combination caused the kernel to select
+the wrong inner mode and get the wrong address family.
 
-Fix the inverted hw_init flag which was set to false instead of true
-after initialisation which defeats its purpose and may result in
-repeated unnecessary initialisation.
+The correct value is in xfrm_offload(skb)->proto, which is set from
+the outer tunnel header's protocol field by esp[4|6]_gso_encap(). It
+is initialized by xfrm[4|6]_tunnel_encap_add() to either IPPROTO_IPIP
+or IPPROTO_IPV6, using xfrm_af2proto() and correctly reflects the
+inner packet's address family.
 
-Similarly, the initial state of the flag was also inverted so that the
-codec would only be initialised and brought out of regmap cache only
-mode if its status first transitions to UNATTACHED.
-
-Fixes: aa21a7d4f68a ("ASoC: codecs: wsa884x: Add WSA884x family of speakers")
-Cc: stable@vger.kernel.org	# 6.5
-Cc: Krzysztof Kozlowski <krzk@kernel.org>
-Signed-off-by: Johan Hovold <johan@kernel.org>
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
-Tested-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
-Reviewed-by: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260102111413.9605-4-johan@kernel.org
-Signed-off-by: Mark Brown <broonie@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 61fafbee6cfe ("xfrm: Determine inner GSO type from packet inner protocol")
+Signed-off-by: Jianbo Liu <jianbol@nvidia.com>
+Reviewed-by: Sabrina Dubroca <sd@queasysnail.net>
+Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/wsa884x.c |    3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ net/ipv4/esp4_offload.c | 4 ++--
+ net/ipv6/esp6_offload.c | 4 ++--
+ 2 files changed, 4 insertions(+), 4 deletions(-)
 
---- a/sound/soc/codecs/wsa884x.c
-+++ b/sound/soc/codecs/wsa884x.c
-@@ -1482,7 +1482,7 @@ static void wsa884x_init(struct wsa884x_
+diff --git a/net/ipv4/esp4_offload.c b/net/ipv4/esp4_offload.c
+index 11e33a4312674..028d2d3477d13 100644
+--- a/net/ipv4/esp4_offload.c
++++ b/net/ipv4/esp4_offload.c
+@@ -111,8 +111,8 @@ static struct sk_buff *xfrm4_tunnel_gso_segment(struct xfrm_state *x,
+ 						struct sk_buff *skb,
+ 						netdev_features_t features)
+ {
+-	const struct xfrm_mode *inner_mode = xfrm_ip2inner_mode(x,
+-					XFRM_MODE_SKB_CB(skb)->protocol);
++	struct xfrm_offload *xo = xfrm_offload(skb);
++	const struct xfrm_mode *inner_mode = xfrm_ip2inner_mode(x, xo->proto);
+ 	__be16 type = inner_mode->family == AF_INET6 ? htons(ETH_P_IPV6)
+ 						     : htons(ETH_P_IP);
  
- 	wsa884x_set_gain_parameters(wsa884x);
+diff --git a/net/ipv6/esp6_offload.c b/net/ipv6/esp6_offload.c
+index 438f9cbdca299..333d87557bf32 100644
+--- a/net/ipv6/esp6_offload.c
++++ b/net/ipv6/esp6_offload.c
+@@ -145,8 +145,8 @@ static struct sk_buff *xfrm6_tunnel_gso_segment(struct xfrm_state *x,
+ 						struct sk_buff *skb,
+ 						netdev_features_t features)
+ {
+-	const struct xfrm_mode *inner_mode = xfrm_ip2inner_mode(x,
+-					XFRM_MODE_SKB_CB(skb)->protocol);
++	struct xfrm_offload *xo = xfrm_offload(skb);
++	const struct xfrm_mode *inner_mode = xfrm_ip2inner_mode(x, xo->proto);
+ 	__be16 type = inner_mode->family == AF_INET ? htons(ETH_P_IP)
+ 						    : htons(ETH_P_IPV6);
  
--	wsa884x->hw_init = false;
-+	wsa884x->hw_init = true;
- }
- 
- static int wsa884x_update_status(struct sdw_slave *slave,
-@@ -1884,7 +1884,6 @@ static int wsa884x_probe(struct sdw_slav
- 
- 	/* Start in cache-only until device is enumerated */
- 	regcache_cache_only(wsa884x->regmap, true);
--	wsa884x->hw_init = true;
- 
- 	pm_runtime_set_autosuspend_delay(dev, 3000);
- 	pm_runtime_use_autosuspend(dev);
+-- 
+2.51.0
+
 
 
