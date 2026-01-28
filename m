@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C5033074B1;
-	Wed, 28 Jan 2026 15:42:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 818D22F5A2D;
+	Wed, 28 Jan 2026 15:42:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769614955; cv=none; b=blMZV8MU6ZosdcUCOpCunWEz/f4fQnKD59p1iq81dRQVGQgfMfvo0ChbnPZhrPAdbCJ9D6azJa1vyQH1ZZFj4JRGuXw3E3ihwGzZVthayRifyN9z4rpZ4+h7Bshkkm2G6u79GDd387bdMkYVZVo0AEEYGdQ3OzHZ7nqqS3XZLms=
+	t=1769614958; cv=none; b=ZquPYUgBCX607I8ziZAmNWOYkPkHqUyyKSL9lwYy6ymCZzd+ud4eWp+FQ5qBaOqJfxQoyCDAyqli0NJmjSIq1S21Rm/utM1BUx70drofBCKrANGSMthWmNxb9czwPhVavuWFuu1dsuf8KGyByBAGniPYkJLxXBR/0nK5ZsKZ0QI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769614955; c=relaxed/simple;
-	bh=WLk5EgqFbSl0KssoOmuxAhZZx6asp9BmPU9aL17wxVo=;
+	s=arc-20240116; t=1769614958; c=relaxed/simple;
+	bh=IEjRs53GFngZVrZ4pv4hHu5Kcjr/cj3HAXW0ZWQoMH0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FpeGLlZ3hhpX7P9eu3GdiWp5Do0mStE6kkp6peDU8o7slMNgQe7s7JUdGfjtdO7iGGwcv/MyXi4AhCTzAtf+bV4DtyeS/+ZxYuXUoBnCou3j2hC2hQk1hx79X72DWLIAV8OseSsWziGKtu627Cc10OMp2YQaXrGgq4rGz2geAfw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eyvRRZ1M; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KRiYaUQ3g9lAjlrfMSCPQm50IJV1zacrL6j3JjHD4uMLkVxNX9Fk7kxK4CMiA4l55SHryqSX72QslmFXZLkc1Op0kajh46X1it+dAsBfas1CJAUTg4iuakhPh6LkCO57d7tZcCNQ1fLbeO+ZbkKMgeHn/631nLxkLTgc1GYwkZg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uu1r+xIM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eyvRRZ1M"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F655C4CEF1;
-	Wed, 28 Jan 2026 15:42:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uu1r+xIM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5AA52C116C6;
+	Wed, 28 Jan 2026 15:42:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1769614954;
-	bh=WLk5EgqFbSl0KssoOmuxAhZZx6asp9BmPU9aL17wxVo=;
+	s=korg; t=1769614957;
+	bh=IEjRs53GFngZVrZ4pv4hHu5Kcjr/cj3HAXW0ZWQoMH0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eyvRRZ1MDCfo1VNWjaZ+Ts2OG/WJXrdgF5C21HPUEg88XJ6PIgSbdNUCXxb9UrExY
-	 VP6NqDJD1n6B400adrhDLdniaXOI0TtWSMy82mlblhDLQYW+2SQs3AkROddpzSKxys
-	 cFB7fYL5KgT3W+JgIINWqKURT0voKicSmwQhcRXM=
+	b=uu1r+xIMRunNeB1mCMiFf5sRpNobD/bC7t9n1y03KSgRmL2KWL+Ppq7qy7Ppj5/m9
+	 C91g8RWxy8qu3OYozifsOuTTB635W3IfQAqzWkQFbF78l6jk0HRZ6FWqPUOq29SDfO
+	 yqG+NQA+iUx57nEkKT8ZnDYCwCM0JSf6Xdf7ThVY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Yang <mmyangfl@gmail.com>,
+	syzbot+7312e82745f7fa2526db@syzkaller.appspotmail.com,
+	Eric Dumazet <edumazet@google.com>,
+	James Chapman <jchapman@katalix.com>,
+	Guillaume Nault <gnault@redhat.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 035/169] veth: fix data race in veth_get_ethtool_stats
-Date: Wed, 28 Jan 2026 16:21:58 +0100
-Message-ID: <20260128145335.284145140@linuxfoundation.org>
+Subject: [PATCH 6.12 036/169] l2tp: avoid one data-race in l2tp_tunnel_del_work()
+Date: Wed, 28 Jan 2026 16:21:59 +0100
+Message-ID: <20260128145335.319429275@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260128145334.006287341@linuxfoundation.org>
 References: <20260128145334.006287341@linuxfoundation.org>
@@ -51,52 +54,83 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Yang <mmyangfl@gmail.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit b47adaab8b3d443868096bac08fdbb3d403194ba ]
+[ Upstream commit 7a29f6bf60f2590fe5e9c4decb451e19afad2bcf ]
 
-In veth_get_ethtool_stats(), some statistics protected by
-u64_stats_sync, are read and accumulated in ignorance of possible
-u64_stats_fetch_retry() events. These statistics, peer_tq_xdp_xmit and
-peer_tq_xdp_xmit_err, are already accumulated by veth_xdp_xmit(). Fix
-this by reading them into a temporary buffer first.
+We should read sk->sk_socket only when dealing with kernel sockets.
 
-Fixes: 5fe6e56776ba ("veth: rely on peer veth_rq for ndo_xdp_xmit accounting")
-Signed-off-by: David Yang <mmyangfl@gmail.com>
-Link: https://patch.msgid.link/20260114122450.227982-1-mmyangfl@gmail.com
+syzbot reported the following data-race:
+
+BUG: KCSAN: data-race in l2tp_tunnel_del_work / sk_common_release
+
+write to 0xffff88811c182b20 of 8 bytes by task 5365 on cpu 0:
+  sk_set_socket include/net/sock.h:2092 [inline]
+  sock_orphan include/net/sock.h:2118 [inline]
+  sk_common_release+0xae/0x230 net/core/sock.c:4003
+  udp_lib_close+0x15/0x20 include/net/udp.h:325
+  inet_release+0xce/0xf0 net/ipv4/af_inet.c:437
+  __sock_release net/socket.c:662 [inline]
+  sock_close+0x6b/0x150 net/socket.c:1455
+  __fput+0x29b/0x650 fs/file_table.c:468
+  ____fput+0x1c/0x30 fs/file_table.c:496
+  task_work_run+0x131/0x1a0 kernel/task_work.c:233
+  resume_user_mode_work include/linux/resume_user_mode.h:50 [inline]
+  __exit_to_user_mode_loop kernel/entry/common.c:44 [inline]
+  exit_to_user_mode_loop+0x1fe/0x740 kernel/entry/common.c:75
+  __exit_to_user_mode_prepare include/linux/irq-entry-common.h:226 [inline]
+  syscall_exit_to_user_mode_prepare include/linux/irq-entry-common.h:256 [inline]
+  syscall_exit_to_user_mode_work include/linux/entry-common.h:159 [inline]
+  syscall_exit_to_user_mode include/linux/entry-common.h:194 [inline]
+  do_syscall_64+0x1e1/0x2b0 arch/x86/entry/syscall_64.c:100
+ entry_SYSCALL_64_after_hwframe+0x77/0x7f
+
+read to 0xffff88811c182b20 of 8 bytes by task 827 on cpu 1:
+  l2tp_tunnel_del_work+0x2f/0x1a0 net/l2tp/l2tp_core.c:1418
+  process_one_work kernel/workqueue.c:3257 [inline]
+  process_scheduled_works+0x4ce/0x9d0 kernel/workqueue.c:3340
+  worker_thread+0x582/0x770 kernel/workqueue.c:3421
+  kthread+0x489/0x510 kernel/kthread.c:463
+  ret_from_fork+0x149/0x290 arch/x86/kernel/process.c:158
+  ret_from_fork_asm+0x1a/0x30 arch/x86/entry/entry_64.S:246
+
+value changed: 0xffff88811b818000 -> 0x0000000000000000
+
+Fixes: d00fa9adc528 ("l2tp: fix races with tunnel socket close")
+Reported-by: syzbot+7312e82745f7fa2526db@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/netdev/6968b029.050a0220.58bed.0016.GAE@google.com/T/#u
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Cc: James Chapman <jchapman@katalix.com>
+Reviewed-by: Guillaume Nault <gnault@redhat.com>
+Link: https://patch.msgid.link/20260115092139.3066180-1-edumazet@google.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/veth.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ net/l2tp/l2tp_core.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/veth.c b/drivers/net/veth.c
-index 4ff0d4232914f..77e4b0d1ca557 100644
---- a/drivers/net/veth.c
-+++ b/drivers/net/veth.c
-@@ -227,16 +227,20 @@ static void veth_get_ethtool_stats(struct net_device *dev,
- 		const struct veth_rq_stats *rq_stats = &rcv_priv->rq[i].stats;
- 		const void *base = (void *)&rq_stats->vs;
- 		unsigned int start, tx_idx = idx;
-+		u64 buf[VETH_TQ_STATS_LEN];
- 		size_t offset;
+diff --git a/net/l2tp/l2tp_core.c b/net/l2tp/l2tp_core.c
+index 61fe27d71c230..95060ff7adc5f 100644
+--- a/net/l2tp/l2tp_core.c
++++ b/net/l2tp/l2tp_core.c
+@@ -1416,8 +1416,6 @@ static void l2tp_tunnel_del_work(struct work_struct *work)
+ {
+ 	struct l2tp_tunnel *tunnel = container_of(work, struct l2tp_tunnel,
+ 						  del_work);
+-	struct sock *sk = tunnel->sock;
+-	struct socket *sock = sk->sk_socket;
  
--		tx_idx += (i % dev->real_num_tx_queues) * VETH_TQ_STATS_LEN;
- 		do {
- 			start = u64_stats_fetch_begin(&rq_stats->syncp);
- 			for (j = 0; j < VETH_TQ_STATS_LEN; j++) {
- 				offset = veth_tq_stats_desc[j].offset;
--				data[tx_idx + j] += *(u64 *)(base + offset);
-+				buf[j] = *(u64 *)(base + offset);
- 			}
- 		} while (u64_stats_fetch_retry(&rq_stats->syncp, start));
+ 	l2tp_tunnel_closeall(tunnel);
+ 
+@@ -1425,6 +1423,8 @@ static void l2tp_tunnel_del_work(struct work_struct *work)
+ 	 * the sk API to release it here.
+ 	 */
+ 	if (tunnel->fd < 0) {
++		struct socket *sock = tunnel->sock->sk_socket;
 +
-+		tx_idx += (i % dev->real_num_tx_queues) * VETH_TQ_STATS_LEN;
-+		for (j = 0; j < VETH_TQ_STATS_LEN; j++)
-+			data[tx_idx + j] += buf[j];
- 	}
- 	pp_idx = idx + dev->real_num_tx_queues * VETH_TQ_STATS_LEN;
- 
+ 		if (sock) {
+ 			kernel_sock_shutdown(sock, SHUT_RDWR);
+ 			sock_release(sock);
 -- 
 2.51.0
 
