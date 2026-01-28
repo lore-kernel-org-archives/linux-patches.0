@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7DB9181AA8;
-	Wed, 28 Jan 2026 16:01:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB601285C8D;
+	Wed, 28 Jan 2026 16:01:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769616090; cv=none; b=Fxe1myPwhvek1NJ3V4YeLL05CDtSB1ToMPVk2G+b9NeXe5Sk7FcM4e7Tj+yJYPi+P6bxzKWDAkIlJqjZsr9O0kxefl8m04T1lmKKcPAuKi5Il1+BO2rrNzuXwgfJVUUKOfEDDw2hkVMBrLAbHDbBuU7TAFKE36oR4JOS3YTUIKM=
+	t=1769616093; cv=none; b=jEWVBxYlTSvUpV/kEgureA7G/KiKzijbTBOSAkMpCgnfZ2N4j+2bRuLPi82onyP/IB6fB+tl8TgyC7BVu7qaV+sCCIUiexlCJB7BteJCLrQ7OiuqIxs5+QTVr3lLwgFSgkmN5KABdHgK5GXD2PRdBGks5mNtKx550v0HGSa6HjA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769616090; c=relaxed/simple;
-	bh=lJL2RRIR8dlqPqYCFWrLwC+4Ot5vjMuN/L8UO5+au+Y=;
+	s=arc-20240116; t=1769616093; c=relaxed/simple;
+	bh=GqLwU8ZREyD7WldLDotDn3+J/czQXJU80cQ3e4PorK4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fuztdMuXFG+lw92kFA3EQ19KyDfc3KzbaBx8tn4hTJeSFHJ7HxmTNODRkFlwZrDY2NPMZLpcaz0yXms8vngMqOiXSial9iwDGfPfpaHTG4gSdnDuOMgzJiLaHh+bHJglWRfzQ5eysuqa0sv8OJCFCi524/jEW6JkGa5z0eKLkQw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fBgFwKPD; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kU+uZ1wBU12dR06/lbXljquGWznZ6D67y9vtkdoei/2c5lrc665wl0g9ZMjFT6e1AmTY55zjJfQPU3dgneucjRyw5sTHezFWkx1J8P6rAGEMvdClEjP9Q/eE0uwu7Nx2gURJ8Ch7GFx3m6jPfxuiYAZf4I27Or6L2meEgNOXrNU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EbmaJRc9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fBgFwKPD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 08B94C4CEF1;
-	Wed, 28 Jan 2026 16:01:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EbmaJRc9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 19D85C4CEF1;
+	Wed, 28 Jan 2026 16:01:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1769616090;
-	bh=lJL2RRIR8dlqPqYCFWrLwC+4Ot5vjMuN/L8UO5+au+Y=;
+	s=korg; t=1769616093;
+	bh=GqLwU8ZREyD7WldLDotDn3+J/czQXJU80cQ3e4PorK4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fBgFwKPDiWOR9sV4Xhp7jz9MWhlIyze6Ai/KXYnuzWAbjfoMw5NbubN/XwWvn/gn+
-	 U6wcUaVj0YlOeKGiMELg1U7tcKOqz8jcVb7RZH4zjqOr/t4x//I3pYWAdplGFWyQfJ
-	 hTDzX+8+k+2opArW6vEdWdZxa0vN7QhOk2gXgzzg=
+	b=EbmaJRc9gLs3UCJMS43uICMdhTwO62ZdidWfmM/2eoxYXKm1i4lDyQpyALrN0ilpK
+	 W473QV5n4mNc/2uLv1gal48EFnQ2A53Z46ADSD/fDdRVXF+wxoL18+6a2DUn/uDSFX
+	 J2GFfDsGIjHQlK9ftok95sE3v29d9q3QIPvAF2CY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sebastian Reichel <sebastian.reichel@collabora.com>,
-	Yifeng Zhao <yifeng.zhao@rock-chips.com>,
-	Shawn Lin <shawn.lin@rock-chips.com>,
-	Ulf Hansson <ulf.hansson@linaro.org>
-Subject: [PATCH 6.18 171/227] mmc: sdhci-of-dwcmshc: Prevent illegal clock reduction in HS200/HS400 mode
-Date: Wed, 28 Jan 2026 16:23:36 +0100
-Message-ID: <20260128145350.603844874@linuxfoundation.org>
+	Chaitanya Kulkarni <ckulkarnilinux@gmail.com>,
+	Will Deacon <will@kernel.org>,
+	Jason Gunthorpe <jgg@nvidia.com>,
+	Rob Clark <robin.clark@oss.qualcomm.com>,
+	Joerg Roedel <joerg.roedel@amd.com>
+Subject: [PATCH 6.18 172/227] iommu/io-pgtable-arm: fix size_t signedness bug in unmap path
+Date: Wed, 28 Jan 2026 16:23:37 +0100
+Message-ID: <20260128145350.639954084@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260128145344.331957407@linuxfoundation.org>
 References: <20260128145344.331957407@linuxfoundation.org>
@@ -52,56 +53,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shawn Lin <shawn.lin@rock-chips.com>
+From: Chaitanya Kulkarni <ckulkarnilinux@gmail.com>
 
-commit 3009738a855cf938bbfc9078bec725031ae623a4 upstream.
+commit 374e7af67d9d9d6103c2cfc8eb32abfecf3a2fd8 upstream.
 
-When operating in HS200 or HS400 timing modes, reducing the clock frequency
-below 52MHz will lead to link broken as the Rockchip DWC MSHC controller
-requires maintaining a minimum clock of 52MHz in these modes.
+__arm_lpae_unmap() returns size_t but was returning -ENOENT (negative
+error code) when encountering an unmapped PTE. Since size_t is unsigned,
+-ENOENT (typically -2) becomes a huge positive value (0xFFFFFFFFFFFFFFFE
+on 64-bit systems).
 
-Add a check to prevent illegal clock reduction through debugfs:
+This corrupted value propagates through the call chain:
+  __arm_lpae_unmap() returns -ENOENT as size_t
+  -> arm_lpae_unmap_pages() returns it
+  -> __iommu_unmap() adds it to iova address
+  -> iommu_pgsize() triggers BUG_ON due to corrupted iova
 
-root@debian:/# echo 50000000 > /sys/kernel/debug/mmc0/clock
-root@debian:/# [   30.090146] mmc0: running CQE recovery
-mmc0: cqhci: Failed to halt
-mmc0: cqhci: spurious TCN for tag 0
-WARNING: drivers/mmc/host/cqhci-core.c:797 at cqhci_irq+0x254/0x818, CPU#1: kworker/1:0H/24
-Modules linked in:
-CPU: 1 UID: 0 PID: 24 Comm: kworker/1:0H Not tainted 6.19.0-rc1-00001-g09db0998649d-dirty #204 PREEMPT
-Hardware name: Rockchip RK3588 EVB1 V10 Board (DT)
-Workqueue: kblockd blk_mq_run_work_fn
-pstate: 604000c9 (nZCv daIF +PAN -UAO -TCO -DIT -SSBS BTYPE=--)
-pc : cqhci_irq+0x254/0x818
-lr : cqhci_irq+0x254/0x818
-...
+This can cause IOVA address overflow in __iommu_unmap() loop and
+trigger BUG_ON in iommu_pgsize() from invalid address alignment.
 
-Fixes: c6f361cba51c ("mmc: sdhci-of-dwcmshc: add support for rk3588")
-Cc: Sebastian Reichel <sebastian.reichel@collabora.com>
-Cc: Yifeng Zhao <yifeng.zhao@rock-chips.com>
-Signed-off-by: Shawn Lin <shawn.lin@rock-chips.com>
+Fix by returning 0 instead of -ENOENT. The WARN_ON already signals
+the error condition, and returning 0 (meaning "nothing unmapped")
+is the correct semantic for size_t return type. This matches the
+behavior of other io-pgtable implementations (io-pgtable-arm-v7s,
+io-pgtable-dart) which return 0 on error conditions.
+
+Fixes: 3318f7b5cefb ("iommu/io-pgtable-arm: Add quirk to quiet WARN_ON()")
 Cc: stable@vger.kernel.org
-Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+Signed-off-by: Chaitanya Kulkarni <ckulkarnilinux@gmail.com>
+Acked-by: Will Deacon <will@kernel.org>
+Reviewed-by: Jason Gunthorpe <jgg@nvidia.com>
+Reviewed-by: Rob Clark <robin.clark@oss.qualcomm.com>
+Signed-off-by: Joerg Roedel <joerg.roedel@amd.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mmc/host/sdhci-of-dwcmshc.c |    7 +++++++
- 1 file changed, 7 insertions(+)
+ drivers/iommu/io-pgtable-arm.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/mmc/host/sdhci-of-dwcmshc.c
-+++ b/drivers/mmc/host/sdhci-of-dwcmshc.c
-@@ -608,6 +608,13 @@ static void dwcmshc_rk3568_set_clock(str
- 	sdhci_writel(host, extra, reg);
+--- a/drivers/iommu/io-pgtable-arm.c
++++ b/drivers/iommu/io-pgtable-arm.c
+@@ -639,7 +639,7 @@ static size_t __arm_lpae_unmap(struct ar
+ 	pte = READ_ONCE(*ptep);
+ 	if (!pte) {
+ 		WARN_ON(!(data->iop.cfg.quirks & IO_PGTABLE_QUIRK_NO_WARN));
+-		return -ENOENT;
++		return 0;
+ 	}
  
- 	if (clock <= 52000000) {
-+		if (host->mmc->ios.timing == MMC_TIMING_MMC_HS200 ||
-+		    host->mmc->ios.timing == MMC_TIMING_MMC_HS400) {
-+			dev_err(mmc_dev(host->mmc),
-+				"Can't reduce the clock below 52MHz in HS200/HS400 mode");
-+			return;
-+		}
-+
- 		/*
- 		 * Disable DLL and reset both of sample and drive clock.
- 		 * The bypass bit and start bit need to be set if DLL is not locked.
+ 	/* If the size matches this level, we're in the right place */
 
 
