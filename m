@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D5312D6E63;
-	Wed, 28 Jan 2026 15:38:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B58722EC096;
+	Wed, 28 Jan 2026 15:38:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769614717; cv=none; b=Ve3jhKX94R39sUubsku867M+b+NS91PmcGmhAWckVF9xl5a22Invq01J76262GXJbEH/GKfJsCKk+HoKdiXUljcH2McfAROwYIqqtf3lnbNMXE+lhiZxzfIa1nk4SZNZUlwlKWZc7c1vS0L+UFPbp7SstW+6BwJ6V2GXOQdsTFY=
+	t=1769614720; cv=none; b=GSvRArJWOhFW80pMeEmJfkfIiFzuoqFSgKvIor/G2wJ3cp+l8mLMBqAlb/CaQQXA/B5M+8iGdQ+Csrk4h7/PzWAxxIAQrKtsnRofI5CxryyXFPHUk0cbJlff//pKuJDb4F3IZMxWQVe4E/0PyrB7QF8WxcwtwHyvqymfdfhD5l4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769614717; c=relaxed/simple;
-	bh=TN73Z+vUolQIibn6Oa4B2+sTFD2adKZaMty5aMxI0IQ=;
+	s=arc-20240116; t=1769614720; c=relaxed/simple;
+	bh=GHS/wrrsh13UViQLe63rmJ5LcFsnwaIlaeU5f21ZOVY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Hw9gj6y4p3UVVfLxWgF78h4zUvh2socP9P/NYOEEm28WyBaGLy6ck6uAgEtB7raqToHFwokuQZuXVIh7PYCedjx4Am6fQqtdkBg7YZBlpBlcBLmBtONs/t0aIC3+RvlB88qb6zh3SLybnPjPzqGZxTOHjdI6dHmjh8Omak9Slv8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ry1hHE5i; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KminQqoIfkQsQbBY78+nKj9fQnI4t3OKoSzQ8vNAE4CwY4o+k0LXiWu25N2FHiLhUdJIxjvxBxhbDVvYyxL+zraEUIOaWcrTJQ5W6YvvdIM8F65joZH3tkqrXY351Nt5bTH3mKhKFInLu7d6tbjEigZz9Tp5B2AUAalYy6BLU7k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oOvyjqYQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ry1hHE5i"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F95BC4AF09;
-	Wed, 28 Jan 2026 15:38:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oOvyjqYQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 68A6FC4CEF7;
+	Wed, 28 Jan 2026 15:38:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1769614716;
-	bh=TN73Z+vUolQIibn6Oa4B2+sTFD2adKZaMty5aMxI0IQ=;
+	s=korg; t=1769614719;
+	bh=GHS/wrrsh13UViQLe63rmJ5LcFsnwaIlaeU5f21ZOVY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ry1hHE5i+vsx3rRzjObgyodwcIFzgvB+pwJyoX/24nr0VYcMts81XEGrEp4rTLnpC
-	 iyrX0s4BlvLUIkwE86oTqcNj83UpZFNe/BsUxCft/3+CTExZU7kAH4gsyXFLiMa5r7
-	 63UkCxs8WK+jL5vuLK0twGYUBaGg04sH74i9z2x8=
+	b=oOvyjqYQhueSpMgLqltMCvmXHWhFA3wEKwsrYCYF/mK9CeLspv0j7xrSPj3P3lltF
+	 a2+7j8iEFHJxqBeG7Qf/uek4/ZH/QAmay3NoHjyUkI+5p5AHuDSPihy1vmxtMoBDLb
+	 SKy4Uxolr8v7CnMTdBtIpq9I0CTBWQoGmcDsufTE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ihor Solodrai <ihor.solodrai@pm.me>,
-	Andrii Nakryiko <andrii@kernel.org>,
+	Yinhao Hu <dddddd@hust.edu.cn>,
+	Kaiyan Mei <M202472210@hust.edu.cn>,
+	Dongliang Mu <dzm91@hust.edu.cn>,
+	Daniel Borkmann <daniel@iogearbox.net>,
+	Martin KaFai Lau <martin.lau@kernel.org>,
 	Shung-Hsi Yu <shung-hsi.yu@suse.com>
-Subject: [PATCH 6.6 221/254] selftests/bpf: Check for timeout in perf_link test
-Date: Wed, 28 Jan 2026 16:23:17 +0100
-Message-ID: <20260128145352.739990201@linuxfoundation.org>
+Subject: [PATCH 6.6 222/254] bpf: Do not let BPF test infra emit invalid GSO types to stack
+Date: Wed, 28 Jan 2026 16:23:18 +0100
+Message-ID: <20260128145352.775480825@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260128145344.698118637@linuxfoundation.org>
 References: <20260128145344.698118637@linuxfoundation.org>
@@ -51,72 +54,78 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ihor Solodrai <ihor.solodrai@pm.me>
+From: Daniel Borkmann <daniel@iogearbox.net>
 
-commit e6c209da7e0e9aaf955a7b59e91ed78c2b6c96fb upstream.
+commit 04a899573fb87273a656f178b5f920c505f68875 upstream.
 
-Recently perf_link test started unreliably failing on libbpf CI:
-  * https://github.com/libbpf/libbpf/actions/runs/11260672407/job/31312405473
-  * https://github.com/libbpf/libbpf/actions/runs/11260992334/job/31315514626
-  * https://github.com/libbpf/libbpf/actions/runs/11263162459/job/31320458251
+Yinhao et al. reported that their fuzzer tool was able to trigger a
+skb_warn_bad_offload() from netif_skb_features() -> gso_features_check().
+When a BPF program - triggered via BPF test infra - pushes the packet
+to the loopback device via bpf_clone_redirect() then mentioned offload
+warning can be seen. GSO-related features are then rightfully disabled.
 
-Part of the test is running a dummy loop for a while and then checking
-for a counter incremented by the test program.
+We get into this situation due to convert___skb_to_skb() setting
+gso_segs and gso_size but not gso_type. Technically, it makes sense
+that this warning triggers since the GSO properties are malformed due
+to the gso_type. Potentially, the gso_type could be marked non-trustworthy
+through setting it at least to SKB_GSO_DODGY without any other specific
+assumptions, but that also feels wrong given we should not go further
+into the GSO engine in the first place.
 
-Instead of waiting for an arbitrary number of loop iterations once,
-check for the test counter in a loop and use get_time_ns() helper to
-enforce a 100ms timeout.
+The checks were added in 121d57af308d ("gso: validate gso_type in GSO
+handlers") because there were malicious (syzbot) senders that combine
+a protocol with a non-matching gso_type. If we would want to drop such
+packets, gso_features_check() currently only returns feature flags via
+netif_skb_features(), so one location for potentially dropping such skbs
+could be validate_xmit_unreadable_skb(), but then otoh it would be
+an additional check in the fast-path for a very corner case. Given
+bpf_clone_redirect() is the only place where BPF test infra could emit
+such packets, lets reject them right there.
 
-v1: https://lore.kernel.org/bpf/zuRd072x9tumn2iN4wDNs5av0nu5nekMNV4PkR-YwCT10eFFTrUtZBRkLWFbrcCe7guvLStGQlhibo8qWojCO7i2-NGajes5GYIyynexD-w=@pm.me/
-
-Signed-off-by: Ihor Solodrai <ihor.solodrai@pm.me>
-Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
-Link: https://lore.kernel.org/bpf/20241011153104.249800-1-ihor.solodrai@pm.me
+Fixes: 850a88cc4096 ("bpf: Expose __sk_buff wire_len/gso_segs to BPF_PROG_TEST_RUN")
+Fixes: cf62089b0edd ("bpf: Add gso_size to __sk_buff")
+Reported-by: Yinhao Hu <dddddd@hust.edu.cn>
+Reported-by: Kaiyan Mei <M202472210@hust.edu.cn>
+Reported-by: Dongliang Mu <dzm91@hust.edu.cn>
+Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
+Signed-off-by: Martin KaFai Lau <martin.lau@kernel.org>
+Link: https://patch.msgid.link/20251020075441.127980-1-daniel@iogearbox.net
 Signed-off-by: Shung-Hsi Yu <shung-hsi.yu@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/testing/selftests/bpf/prog_tests/perf_link.c |   15 +++++++++++++--
- 1 file changed, 13 insertions(+), 2 deletions(-)
+ net/bpf/test_run.c |    5 +++++
+ net/core/filter.c  |    7 +++++++
+ 2 files changed, 12 insertions(+)
 
---- a/tools/testing/selftests/bpf/prog_tests/perf_link.c
-+++ b/tools/testing/selftests/bpf/prog_tests/perf_link.c
-@@ -4,8 +4,12 @@
- #include <pthread.h>
- #include <sched.h>
- #include <test_progs.h>
-+#include "testing_helpers.h"
- #include "test_perf_link.skel.h"
+--- a/net/bpf/test_run.c
++++ b/net/bpf/test_run.c
+@@ -914,6 +914,11 @@ static int convert___skb_to_skb(struct s
  
-+#define BURN_TIMEOUT_MS 100
-+#define BURN_TIMEOUT_NS BURN_TIMEOUT_MS * 1000000
+ 	if (__skb->gso_segs > GSO_MAX_SEGS)
+ 		return -EINVAL;
 +
- static void burn_cpu(void)
- {
- 	volatile int j = 0;
-@@ -32,6 +36,7 @@ void serial_test_perf_link(void)
- 	int run_cnt_before, run_cnt_after;
- 	struct bpf_link_info info;
- 	__u32 info_len = sizeof(info);
-+	__u64 timeout_time_ns;
++	/* Currently GSO type is zero/unset. If this gets extended with
++	 * a small list of accepted GSO types in future, the filter for
++	 * an unset GSO type in bpf_clone_redirect() can be lifted.
++	 */
+ 	skb_shinfo(skb)->gso_segs = __skb->gso_segs;
+ 	skb_shinfo(skb)->gso_size = __skb->gso_size;
+ 	skb_shinfo(skb)->hwtstamps.hwtstamp = __skb->hwtstamp;
+--- a/net/core/filter.c
++++ b/net/core/filter.c
+@@ -2451,6 +2451,13 @@ BPF_CALL_3(bpf_clone_redirect, struct sk
+ 	if (unlikely(flags & (~(BPF_F_INGRESS) | BPF_F_REDIRECT_INTERNAL)))
+ 		return -EINVAL;
  
- 	/* create perf event */
- 	memset(&attr, 0, sizeof(attr));
-@@ -63,8 +68,14 @@ void serial_test_perf_link(void)
- 	ASSERT_GT(info.prog_id, 0, "link_prog_id");
- 
- 	/* ensure we get at least one perf_event prog execution */
--	burn_cpu();
--	ASSERT_GT(skel->bss->run_cnt, 0, "run_cnt");
-+	timeout_time_ns = get_time_ns() + BURN_TIMEOUT_NS;
-+	while (true) {
-+		burn_cpu();
-+		if (skel->bss->run_cnt > 0)
-+			break;
-+	        if (!ASSERT_LT(get_time_ns(), timeout_time_ns, "run_cnt_timeout"))
-+			break;
-+	}
- 
- 	/* perf_event is still active, but we close link and BPF program
- 	 * shouldn't be executed anymore
++	/* BPF test infra's convert___skb_to_skb() can create type-less
++	 * GSO packets. gso_features_check() will detect this as a bad
++	 * offload. However, lets not leak them out in the first place.
++	 */
++	if (unlikely(skb_is_gso(skb) && !skb_shinfo(skb)->gso_type))
++		return -EBADMSG;
++
+ 	dev = dev_get_by_index_rcu(dev_net(skb->dev), ifindex);
+ 	if (unlikely(!dev))
+ 		return -EINVAL;
 
 
