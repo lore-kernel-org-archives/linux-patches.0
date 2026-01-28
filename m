@@ -1,45 +1,50 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42B4E34106D;
-	Wed, 28 Jan 2026 22:33:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08E871DE3A4;
+	Wed, 28 Jan 2026 22:34:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769639637; cv=none; b=IA6Qv3wnV7YfAsctUvIoFO0BsOptcGPB92d1XNU/ItcZJlYtfNZibfSNlvmFlhJQgxHDRDp57+zyhxGRdVBFZ75xcXsW/1J6lFLzwA9Sxie2v+tUL6ZkxuyJGT9QVRpwIJo5LIR2mGg3z5lDwcnl3pAAYsocYrcmjSTo+RXHCq4=
+	t=1769639640; cv=none; b=gPDaX7+l54kk7+z1j9KBLMZEduCROPMpr7JLSfg5/X/ZSkLhmf3iYv+k97tZj0GBVFWbJyWSfFmGaydufRribxeACrcbb06nuroMYJQ9QhWc2tInvvaOtIFNw4EgLF8D+iO6JJQr4tDJ0U4JhDeNgdDqWEQlmZGVi/qAXcuaFsw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769639637; c=relaxed/simple;
-	bh=oFWWyg7TwmVD0dExZhQhiUm0QLjBZvwvGsZA6zvKIR4=;
+	s=arc-20240116; t=1769639640; c=relaxed/simple;
+	bh=+xRV2HkEsfrdZMBafEPY++3IUBK8ed73YGyM9OSrTOo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lsJCdhAueZsKigPuMX7qwo4+KZuS82o9TXWGv7t4/Efbdfl/aE76czfw5DJG1ov+V3/WA9Gg5ziFIthssYVOvYIcdKQuiHTtfuNf3n0nhUx0vJ7LiJkfmipN/e7BBVSqA0h98/j6AkGxHreWnk43WtD8YMf/kCi22Ycvg09QaMg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=LizM8k9g; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PFtPPDMfxlqHyBHY9L6mr7CozTnQSv2cuhLra6Tak1XE5vst+UjUEfi/9DR3MLnq+7IOblooIewd1J+gVvhEdapFhUOWc9GrykPZOPqvkX3ekmElb62fhS56dVROLfMXSRnWUpbf0vf3I5XVVn773ACZ2WV9HHgiYhNtkGTxKrg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=GFT+SJQe; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="LizM8k9g"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2DA95C4CEF7;
-	Wed, 28 Jan 2026 22:33:56 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="GFT+SJQe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 71F05C4CEF1;
+	Wed, 28 Jan 2026 22:33:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1769639637;
-	bh=oFWWyg7TwmVD0dExZhQhiUm0QLjBZvwvGsZA6zvKIR4=;
+	s=k20201202; t=1769639639;
+	bh=+xRV2HkEsfrdZMBafEPY++3IUBK8ed73YGyM9OSrTOo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LizM8k9gqTHyjry+ZGEv42OOEaJc52lg9k4UdbuKxxOFD4faIDcbl6QW6nKbfN56D
-	 FX4FJ1bc1IhRj/fwh461HzprJmac3A2x8wVdJKxdAXI/r23XuTKjQ20mD83+g6Xt/l
-	 sqRjNDzTse38eNDT8+PHI6CEOVRh2+DdDELaJaXrs/RZCH3033oeVlgIpdHQ7QY9yE
-	 ORUSv6XmPBQNBan242C0lIxo8etGZWXt5IBAUodqKh/zIb+0INw2epR66SMKaqizEU
-	 SXfkHS064K2jfN8pKaq1tHLwZVO2nRdYePGOLPVXSGr8x2BPUIP2uEK05onXMju6tO
-	 lTdmNPtxqFWnw==
+	b=GFT+SJQeWAxJBzAONEHlTGwIFAve74HlsN9l13gpE9tz/7iC7F/ISJiNzx7vK7W19
+	 wXWwm/bmuO+oyDtQwVHGCyNojeyjoX6cFiIswjJYGs+4Df7AkFK1US4WpAFHUvAud9
+	 ZWqXjwBVCfS8kigZf8AD/msz+Z71O63FtZkLB3AUaqZqnMgyjLEzD3MAfy+3eD++/W
+	 7Sk65RpglYcX62AISqL5InJ1zY08+imf60SdPuNqzIf9xzzYx4KDQNKRSszL0KJRbV
+	 Q9LI2t7OBvA8PRE/EL8rv7aFRKpm1JMmWIBPAltw29d0f/Nqka2rujCfRpEyc+tLIQ
+	 UZUJ3794T/22g==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Qu Wenruo <wqu@suse.com>,
-	Jiaming Zhang <r772577952@gmail.com>,
-	Boris Burkov <boris@bur.io>,
-	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
-	David Sterba <dsterba@suse.com>,
+Cc: Nathan Chancellor <nathan@kernel.org>,
+	Paul Walmsley <pjw@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	clm@fb.com,
-	linux-btrfs@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18-6.12] btrfs: reject new transactions if the fs is fully read-only
-Date: Wed, 28 Jan 2026 17:33:11 -0500
-Message-ID: <20260128223332.2806589-13-sashal@kernel.org>
+	palmer@dabbelt.com,
+	aou@eecs.berkeley.edu,
+	alexghiti@rivosinc.com,
+	cyrilbur@tenstorrent.com,
+	jszhang@kernel.org,
+	aurelien@aurel32.net,
+	tglx@kernel.org,
+	cleger@rivosinc.com,
+	linux-riscv@lists.infradead.org,
+	llvm@lists.linux.dev
+Subject: [PATCH AUTOSEL 6.18] riscv: Use 64-bit variable for output in __get_user_asm
+Date: Wed, 28 Jan 2026 17:33:12 -0500
+Message-ID: <20260128223332.2806589-14-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260128223332.2806589-1-sashal@kernel.org>
 References: <20260128223332.2806589-1-sashal@kernel.org>
@@ -54,307 +59,209 @@ X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.18.7
 Content-Transfer-Encoding: 8bit
 
-From: Qu Wenruo <wqu@suse.com>
+From: Nathan Chancellor <nathan@kernel.org>
 
-[ Upstream commit 1972f44c189c8aacde308fa9284e474c1a5cbd9f ]
+[ Upstream commit bdce162f2e57a969803e5e9375999a3e0546905f ]
 
-[BUG]
-There is a bug report where a heavily fuzzed fs is mounted with all
-rescue mount options, which leads to the following warnings during
-unmount:
+After commit f6bff7827a48 ("riscv: uaccess: use 'asm_goto_output' for
+get_user()"), which was the first commit that started using asm goto
+with outputs on RISC-V, builds of clang built with assertions enabled
+start crashing in certain files that use get_user() with:
 
-  BTRFS: Transaction aborted (error -22)
-  Modules linked in:
-  CPU: 0 UID: 0 PID: 9758 Comm: repro.out Not tainted
-  6.19.0-rc5-00002-gb71e635feefc #7 PREEMPT(full)
-  Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.15.0-1 04/01/2014
-  RIP: 0010:find_free_extent_update_loop fs/btrfs/extent-tree.c:4208 [inline]
-  RIP: 0010:find_free_extent+0x52f0/0x5d20 fs/btrfs/extent-tree.c:4611
-  Call Trace:
-   <TASK>
-   btrfs_reserve_extent+0x2cd/0x790 fs/btrfs/extent-tree.c:4705
-   btrfs_alloc_tree_block+0x1e1/0x10e0 fs/btrfs/extent-tree.c:5157
-   btrfs_force_cow_block+0x578/0x2410 fs/btrfs/ctree.c:517
-   btrfs_cow_block+0x3c4/0xa80 fs/btrfs/ctree.c:708
-   btrfs_search_slot+0xcad/0x2b50 fs/btrfs/ctree.c:2130
-   btrfs_truncate_inode_items+0x45d/0x2350 fs/btrfs/inode-item.c:499
-   btrfs_evict_inode+0x923/0xe70 fs/btrfs/inode.c:5628
-   evict+0x5f4/0xae0 fs/inode.c:837
-   __dentry_kill+0x209/0x660 fs/dcache.c:670
-   finish_dput+0xc9/0x480 fs/dcache.c:879
-   shrink_dcache_for_umount+0xa0/0x170 fs/dcache.c:1661
-   generic_shutdown_super+0x67/0x2c0 fs/super.c:621
-   kill_anon_super+0x3b/0x70 fs/super.c:1289
-   btrfs_kill_super+0x41/0x50 fs/btrfs/super.c:2127
-   deactivate_locked_super+0xbc/0x130 fs/super.c:474
-   cleanup_mnt+0x425/0x4c0 fs/namespace.c:1318
-   task_work_run+0x1d4/0x260 kernel/task_work.c:233
-   exit_task_work include/linux/task_work.h:40 [inline]
-   do_exit+0x694/0x22f0 kernel/exit.c:971
-   do_group_exit+0x21c/0x2d0 kernel/exit.c:1112
-   __do_sys_exit_group kernel/exit.c:1123 [inline]
-   __se_sys_exit_group kernel/exit.c:1121 [inline]
-   __x64_sys_exit_group+0x3f/0x40 kernel/exit.c:1121
-   x64_sys_call+0x2210/0x2210 arch/x86/include/generated/asm/syscalls_64.h:232
-   do_syscall_x64 arch/x86/entry/syscall_64.c:63 [inline]
-   do_syscall_64+0xe8/0xf80 arch/x86/entry/syscall_64.c:94
-   entry_SYSCALL_64_after_hwframe+0x77/0x7f
-  RIP: 0033:0x44f639
-  Code: Unable to access opcode bytes at 0x44f60f.
-  RSP: 002b:00007ffc15c4e088 EFLAGS: 00000246 ORIG_RAX: 00000000000000e7
-  RAX: ffffffffffffffda RBX: 00000000004c32f0 RCX: 000000000044f639
-  RDX: 000000000000003c RSI: 00000000000000e7 RDI: 0000000000000001
-  RBP: 0000000000000001 R08: ffffffffffffffc0 R09: 0000000000000000
-  R10: 0000000000000000 R11: 0000000000000246 R12: 00000000004c32f0
-  R13: 0000000000000001 R14: 0000000000000000 R15: 0000000000000001
-   </TASK>
+  clang: llvm/lib/CodeGen/SelectionDAG/SelectionDAGBuilder.cpp:12743: Register FollowCopyChain(MachineRegisterInfo &, Register): Assertion `MI->getOpcode() == TargetOpcode::COPY && "start of copy chain MUST be COPY"' failed.
 
-Since rescue mount options will mark the full fs read-only, there should
-be no new transaction triggered.
+Internally, LLVM generates an addiw instruction when the output of the
+inline asm (which may be any scalar type) needs to be sign extended for
+ABI reasons, such as a later function call, so that basic block does not
+have to do it.
 
-But during unmount we will evict all inodes, which can trigger a new
-transaction, and triggers warnings on a heavily corrupted fs.
+Use a temporary 64-bit variable as the output of the inline assembly in
+__get_user_asm() and explicitly cast it to truncate it if necessary,
+avoiding the addiw that triggers the assertion.
 
-[CAUSE]
-Btrfs allows new transaction even on a read-only fs, this is to allow
-log replay happen even on read-only mounts, just like what ext4/xfs do.
-
-However with rescue mount options, the fs is fully read-only and cannot
-be remounted read-write, thus in that case we should also reject any new
-transactions.
-
-[FIX]
-If we find the fs has rescue mount options, we should treat the fs as
-error, so that no new transaction can be started.
-
-Reported-by: Jiaming Zhang <r772577952@gmail.com>
-Link: https://lore.kernel.org/linux-btrfs/CANypQFYw8Nt8stgbhoycFojOoUmt+BoZ-z8WJOZVxcogDdwm=Q@mail.gmail.com/
-Reviewed-by: Boris Burkov <boris@bur.io>
-Reviewed-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
-Signed-off-by: Qu Wenruo <wqu@suse.com>
-Reviewed-by: David Sterba <dsterba@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Link: https://github.com/ClangBuiltLinux/linux/issues/2092
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Link: https://patch.msgid.link/20260116-riscv-wa-llvm-asm-goto-outputs-assertion-failure-v3-1-55b5775f989b@kernel.org
+Signed-off-by: Paul Walmsley <pjw@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-Now I have all the information I need to analyze this commit. Let me
-provide a comprehensive analysis.
+Looking at the full analysis based on what we have:
 
-## Commit Analysis
+## Analysis Summary
 
 ### 1. COMMIT MESSAGE ANALYSIS
 
-**Subject:** "btrfs: reject new transactions if the fs is fully read-
-only"
-
-The commit clearly describes a bug fix with:
-- A detailed BUG section with a full kernel stack trace showing warnings
-  during unmount with rescue mount options
-- A CAUSE section explaining why this bug happens
-- A FIX section describing the solution
-- The commit is well-documented with `Reported-by:` tag and a link to
-  the bug report
-- Multiple reviews: `Reviewed-by: Boris Burkov`, `Reviewed-by: Johannes
-  Thumshirn`, `Reviewed-by: David Sterba` (the btrfs maintainer)
-- Signed off by the btrfs maintainer David Sterba
+The commit message clearly states:
+- **After commit f6bff7827a48** - Clearly identifies the regressing
+  commit
+- **Builds of clang built with assertions enabled start crashing** -
+  This is a **build failure**, not just a warning
+- Provides a link to the ClangBuiltLinux issue tracker
+  (https://github.com/ClangBuiltLinux/linux/issues/2092)
+- The assertion failure message is in LLVM's code generation phase
+- Author: Nathan Chancellor (ClangBuiltLinux maintainer, well-known
+  kernel/LLVM expert)
 
 ### 2. CODE CHANGE ANALYSIS
 
-The fix consists of two parts:
+The change is small and surgical:
+- **Old code (asm_goto_output path):**
+  ```c
+  #define __get_user_asm(insn, x, ptr, label)  \
+  asm_goto_output(                          \
+  "1:\n"                                 \
+  "  " insn " %0, %1\n"                  \
+  _ASM_EXTABLE_UACCESS_ERR(1b, %l2, %0)  \
+  : "=&r" (x)                            \
+  : "m" (*(ptr)) : : label)
+  ```
 
-**Part 1 - New helper function (fs/btrfs/disk-io.c):**
-```c
-static bool fs_is_full_ro(const struct btrfs_fs_info *fs_info)
-{
-    if (!sb_rdonly(fs_info->sb))
-        return false;
-    if (unlikely(fs_info->mount_opt & BTRFS_MOUNT_FULL_RO_MASK))
-        return true;
-    return false;
-}
-```
-This helper checks if the filesystem is both read-only AND has any of
-the rescue mount options set.
+- **New code:**
+  ```c
+  #define __get_user_asm(insn, x, ptr, label)  \
+  do {                                          \
+  u64 __tmp;                                \
+  asm_goto_output(                          \
+  "1:\n"                                 \
+  "  " insn " %0, %1\n"                  \
+  _ASM_EXTABLE_UACCESS_ERR(1b, %l2, %0)  \
+  : "=&r" (__tmp)                        \
+  : "m" (*(ptr)) : : label);             \
+  (x) = (__typeof__(x))__tmp;               \
+  } while (0)
+  ```
 
-**Part 2 - Setting fs_error during mount (fs/btrfs/disk-io.c):**
-```c
-/* If the fs has any rescue options, no transaction is allowed. */
-if (fs_is_full_ro(fs_info))
-    WRITE_ONCE(fs_info->fs_error, -EROFS);
-```
-This sets the `fs_error` field during mount if rescue options are used.
-
-**Part 3 - New macro (fs/btrfs/fs.h):**
-```c
-#define BTRFS_MOUNT_FULL_RO_MASK        \
-    (BTRFS_MOUNT_NOLOGREPLAY |      \
-     BTRFS_MOUNT_IGNOREBADROOTS |       \
-     BTRFS_MOUNT_IGNOREDATACSUMS |      \
-     BTRFS_MOUNT_IGNOREMETACSUMS |      \
-     BTRFS_MOUNT_IGNORESUPERFLAGS)
-```
-
-**Why the fix works:**
-The existing code in `start_transaction()` (transaction.c:612-613)
-checks:
-```c
-if (BTRFS_FS_ERROR(fs_info))
-    return ERR_PTR(-EROFS);
-```
-
-By setting `fs_error` to `-EROFS` during mount when rescue options are
-present, any later attempt to start a transaction (including during
-inode eviction at unmount time) will fail early and return `-EROFS`
-instead of proceeding and hitting allocation failures.
+**Technical mechanism:**
+- The fix uses a 64-bit temporary variable (`u64 __tmp`) as the output
+  of the inline assembly
+- Then explicitly casts it to the expected type of `x`
+- This avoids LLVM generating an `addiw` instruction to sign-extend the
+  output for ABI reasons
+- The `addiw` was causing an assertion failure in LLVM's code generation
+  because it wasn't recognized as a proper copy instruction
 
 ### 3. CLASSIFICATION
 
-This is a **bug fix**, not a feature addition. It fixes a real-world
-issue where:
-- Mounting a corrupted filesystem with rescue mount options (which are
-  read-only only)
-- Trying to unmount causes inode eviction
-- Inode eviction triggers transaction creation
-- Transaction starts but fails because the fs can't actually write (it's
-  read-only with rescue options)
-- Results in WARN_ON/oops and potential issues
-
-The fix leverages the existing `fs_error` mechanism to reject
-transactions early instead of letting them start and fail later with
-confusing errors.
+This is a **BUILD FIX** - one of the exception categories that is
+explicitly allowed in stable:
+- Prevents compilation with Clang/LLVM on RISC-V
+- Without this fix, users cannot build kernel for RISC-V when using
+  Clang with assertions enabled
+- The underlying bug likely causes incorrect code generation even when
+  assertions are disabled
 
 ### 4. SCOPE AND RISK ASSESSMENT
 
-**Lines changed:** ~20 lines added, no lines removed
-**Files touched:** 2 files (fs/btrfs/disk-io.c, fs/btrfs/fs.h)
-**Complexity:** Low - simple check and assignment
-
-**Risk assessment:**
-- **LOW RISK**: The change is surgical and leverages existing mechanisms
-- The `fs_error` field and `BTRFS_FS_ERROR()` check are well-established
-  in btrfs
-- The rescue mount options already require read-only mode - this just
-  ensures transaction rejection is enforced
-- The fix is in the mount path, not a hot path
-- Multiple reviews from btrfs maintainers including David Sterba
-
-**Potential impact:**
-- Could theoretically affect behavior if some code expected transactions
-  to start (even if they'd fail later)
-- But this is the correct behavior - rescue options should never allow
-  writes
+**Lines changed:** ~10 lines, all in a single macro definition
+**Files touched:** 1 (arch/riscv/include/asm/uaccess.h)
+**Subsystem:** RISC-V uaccess (user-space access)
+**Risk:** Very low
+- Uses a temporary variable to hold the assembly output then casts it
+- This is a known safe pattern (used elsewhere in the kernel)
+- Does not change any runtime behavior for GCC builds
+- Only affects the `CONFIG_CC_HAS_ASM_GOTO_OUTPUT` code path
+  (Clang/modern GCC)
 
 ### 5. USER IMPACT
 
-**Who is affected:**
-- Users mounting heavily corrupted btrfs filesystems with rescue mount
-  options (e.g., `rescue=all`, `rescue=ibadroots`, etc.)
-- This is a common data recovery scenario
-
-**Severity:**
-- Without the fix: Users get confusing WARN_ON messages and potential
-  issues during unmount
-- With the fix: Clean rejection of transactions with clear `-EROFS`
-  error
+- **Who is affected:** All RISC-V kernel developers and users building
+  with Clang/LLVM
+- **Severity:** Cannot build the kernel at all on RISC-V with Clang
+  (when using assertion-enabled builds)
+- RISC-V is an increasingly popular architecture
+- Clang is a major compiler used by many distributions
 
 ### 6. STABILITY INDICATORS
 
-- The commit has been reviewed by 3 btrfs experts including the
-  maintainer
-- `Reviewed-by: Boris Burkov <boris@bur.io>`
-- `Reviewed-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>`
-- `Reviewed-by: David Sterba <dsterba@suse.com>`
-- Signed off by the maintainer
+- Written by Nathan Chancellor (ClangBuiltLinux project lead, kernel
+  developer)
+- Clear reference to upstream bug reports
+- Follows a known workaround pattern
 
 ### 7. DEPENDENCY CHECK
 
-- No dependencies on other commits
-- The code uses existing infrastructure (`fs_error`, mount option flags)
-- All the mount option flags (BTRFS_MOUNT_NOLOGREPLAY, etc.) exist in
-  all stable kernels where btrfs rescue options exist
-- The fix is self-contained
+**Critical:** This fix depends on commit **f6bff7827a48** ("riscv:
+uaccess: use 'asm_goto_output' for get_user()"), which was introduced in
+**v6.16-rc1**.
 
-### CONCLUSION
+The fix is only relevant for stable trees that contain v6.16+. For older
+stable trees (6.15.y and earlier), the problematic code doesn't exist,
+so this fix is not needed and wouldn't apply.
 
-**Recommendation: YES for backport**
+### Risk vs. Benefit Analysis
 
-This commit fixes a real bug that affects users mounting corrupted btrfs
-filesystems with rescue mount options - a legitimate and important data
-recovery scenario. The fix is:
+**Benefits:**
+- Fixes a **complete build failure** on RISC-V with Clang
+- Build fixes are explicitly allowed in stable rules
+- Critical for RISC-V users who use Clang
 
-1. **Small and surgical** - Only ~20 lines of simple, readable code
-2. **Fixes a real bug** - Prevents warnings and potential issues during
-   unmount with rescue options
-3. **Low risk** - Uses existing `fs_error` mechanism, well-tested
-   pattern
-4. **Well reviewed** - Multiple reviews from btrfs maintainers
-5. **No new features** - Just ensures correct rejection of transactions
-   that can't succeed anyway
-6. **Self-contained** - No dependencies on other patches
+**Risks:**
+- Minimal - adds a temporary variable and explicit cast
+- Does not change runtime behavior for correct code
+- Pattern is well-understood and used elsewhere
 
-The fix ensures that when rescue mount options are used (which are
-inherently read-only and cannot be remounted read-write), new
-transactions are rejected cleanly at start rather than failing later
-with confusing errors and warnings.
+### Concerns
+
+1. **Dependency:** Only applicable to stable trees containing 6.16+
+   (which have commit f6bff7827a48)
+2. **LLVM Bug:** This is a workaround for an LLVM bug (tracked at llvm-
+   project#143795). The LLVM bug may eventually be fixed, but kernel
+   builds need to work now.
+
+### Conclusion
+
+This commit is a **build fix** that solves a Clang compilation failure
+on RISC-V. Build fixes are explicitly allowed in stable kernel rules.
+The fix is:
+- Small (10 lines)
+- Surgical (single macro)
+- Safe (temporary variable + cast pattern)
+- Critical (prevents build failure)
+- Well-documented (links to bug reports)
+- Written by an expert (Nathan Chancellor)
+
+The only consideration is that it should only be backported to stable
+trees that contain the parent commit f6bff7827a48 (v6.16+), otherwise
+the fix addresses code that doesn't exist.
 
 **YES**
 
- fs/btrfs/disk-io.c | 13 +++++++++++++
- fs/btrfs/fs.h      |  8 ++++++++
- 2 files changed, 21 insertions(+)
+ arch/riscv/include/asm/uaccess.h | 14 ++++++++++++--
+ 1 file changed, 12 insertions(+), 2 deletions(-)
 
-diff --git a/fs/btrfs/disk-io.c b/fs/btrfs/disk-io.c
-index 0aa7e5d1b05f6..c5279aed7503f 100644
---- a/fs/btrfs/disk-io.c
-+++ b/fs/btrfs/disk-io.c
-@@ -3270,6 +3270,15 @@ int btrfs_check_features(struct btrfs_fs_info *fs_info, bool is_rw_mount)
- 	return 0;
- }
+diff --git a/arch/riscv/include/asm/uaccess.h b/arch/riscv/include/asm/uaccess.h
+index f5f4f7f85543f..1029c31026dcf 100644
+--- a/arch/riscv/include/asm/uaccess.h
++++ b/arch/riscv/include/asm/uaccess.h
+@@ -97,13 +97,23 @@ static inline unsigned long __untagged_addr_remote(struct mm_struct *mm, unsigne
+  */
  
-+static bool fs_is_full_ro(const struct btrfs_fs_info *fs_info)
-+{
-+	if (!sb_rdonly(fs_info->sb))
-+		return false;
-+	if (unlikely(fs_info->mount_opt & BTRFS_MOUNT_FULL_RO_MASK))
-+		return true;
-+	return false;
-+}
-+
- int __cold open_ctree(struct super_block *sb, struct btrfs_fs_devices *fs_devices)
- {
- 	u32 sectorsize;
-@@ -3378,6 +3387,10 @@ int __cold open_ctree(struct super_block *sb, struct btrfs_fs_devices *fs_device
- 	if (btrfs_super_flags(disk_super) & BTRFS_SUPER_FLAG_ERROR)
- 		WRITE_ONCE(fs_info->fs_error, -EUCLEAN);
- 
-+	/* If the fs has any rescue options, no transaction is allowed. */
-+	if (fs_is_full_ro(fs_info))
-+		WRITE_ONCE(fs_info->fs_error, -EROFS);
-+
- 	/* Set up fs_info before parsing mount options */
- 	nodesize = btrfs_super_nodesize(disk_super);
- 	sectorsize = btrfs_super_sectorsize(disk_super);
-diff --git a/fs/btrfs/fs.h b/fs/btrfs/fs.h
-index 814bbc9417d2a..37aa8d141a83d 100644
---- a/fs/btrfs/fs.h
-+++ b/fs/btrfs/fs.h
-@@ -250,6 +250,14 @@ enum {
- 	BTRFS_MOUNT_REF_TRACKER			= (1ULL << 33),
- };
- 
-+/* These mount options require a full read-only fs, no new transaction is allowed. */
-+#define BTRFS_MOUNT_FULL_RO_MASK		\
-+	(BTRFS_MOUNT_NOLOGREPLAY |		\
-+	 BTRFS_MOUNT_IGNOREBADROOTS |		\
-+	 BTRFS_MOUNT_IGNOREDATACSUMS |		\
-+	 BTRFS_MOUNT_IGNOREMETACSUMS |		\
-+	 BTRFS_MOUNT_IGNORESUPERFLAGS)
-+
- /*
-  * Compat flags that we support.  If any incompat flags are set other than the
-  * ones specified below then we will fail to mount
+ #ifdef CONFIG_CC_HAS_ASM_GOTO_OUTPUT
++/*
++ * Use a temporary variable for the output of the asm goto to avoid a
++ * triggering an LLVM assertion due to sign extending the output when
++ * it is used in later function calls:
++ * https://github.com/llvm/llvm-project/issues/143795
++ */
+ #define __get_user_asm(insn, x, ptr, label)			\
++do {								\
++	u64 __tmp;						\
+ 	asm_goto_output(					\
+ 		"1:\n"						\
+ 		"	" insn " %0, %1\n"			\
+ 		_ASM_EXTABLE_UACCESS_ERR(1b, %l2, %0)		\
+-		: "=&r" (x)					\
+-		: "m" (*(ptr)) : : label)
++		: "=&r" (__tmp)					\
++		: "m" (*(ptr)) : : label);			\
++	(x) = (__typeof__(x))__tmp;				\
++} while (0)
+ #else /* !CONFIG_CC_HAS_ASM_GOTO_OUTPUT */
+ #define __get_user_asm(insn, x, ptr, label)			\
+ do {								\
 -- 
 2.51.0
 
