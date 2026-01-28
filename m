@@ -1,42 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D95F92DF138;
-	Wed, 28 Jan 2026 15:41:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45DC62DF138;
+	Wed, 28 Jan 2026 15:41:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769614907; cv=none; b=jB1Rowm/pl11VHIsxdDrb7/1aoT8aErEqDYOBhCF1ZxFqUVIKpSbTT2QIQ8/AQACAo1pQIaXqJyZ+jfxAFhM7Odnb3ReMCXUmrnZGG74YtnM6Sx8BlAWd/QqFAtE1pe8ep9KJZko70dKasl7V2Fd4S/0ltbP73fBEF/mg16tBMA=
+	t=1769614911; cv=none; b=bJdAfknio1yXDm3BEbGF8UX2XHyzOXSZeAylFw7bJiNqyI89oLqYhepkKyeroikaKJ4gElZyLyvhM9kXtUlyi7ZqELQlZD1LH/HMjVTBSjAZweKnp8J9sRAUjAt1uaHyhXqBYnjwwOLJki2lvhzF7+vrf/2k52c1aO9d9L99e/8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769614907; c=relaxed/simple;
-	bh=CkIgRs36VVcdl6Cs+6dMSUF6RKCQNLb6+Hkafp6jSEU=;
+	s=arc-20240116; t=1769614911; c=relaxed/simple;
+	bh=915zPcSyQIqOrK+BtU5KepmFFeYur4vtRmNnWhCULq8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UH+x4XOh/wrM16vHPsZbQIP6CtG583QEz1qsl/tvMP9+Fynfi8/0q5X880jEU3l/3kdi0kov625Bfhtq/4gdXpeRUlRkN7yunePzO6ssfdN5wrGhQD9wwh1NtGwh74/UjPCQpUr2JoD83493AqGwY20RgZbDhLgVqNwOWoAUknY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rPJWrLMw; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gNxNcgUENYcSKnmQpglDfm/MRMGUBQeV4K80q2bOcA4ff9P3H0IIcca+6K6OKRV8uKZfv1sX8Y/bniTDTftXZYr40V51P4gJw4++EqzbhSaKM7vcDSdVuidjclULiPnbe+e1mqllEF5RqAi9gH0qW48xssqcYHw8cUsHjEfTYN0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wkURPJH1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rPJWrLMw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B536C4CEF1;
-	Wed, 28 Jan 2026 15:41:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wkURPJH1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A4883C4CEF1;
+	Wed, 28 Jan 2026 15:41:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1769614907;
-	bh=CkIgRs36VVcdl6Cs+6dMSUF6RKCQNLb6+Hkafp6jSEU=;
+	s=korg; t=1769614911;
+	bh=915zPcSyQIqOrK+BtU5KepmFFeYur4vtRmNnWhCULq8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rPJWrLMwkScGn0ii325oQYcoFs5wUpPOeEOK6dWGWuruORsdDrW6cnpJohgK001oE
-	 q06dR7+tZanx+TE1tW9oTomksMy+QGP2vg1E//edIkszW56S5GByqGyNQg/IZvDVuv
-	 gbbqqXBy3KIGJvVEFwACIab4kQGQQVMXv1N7ctng=
+	b=wkURPJH1uArkpP6PwVE1/vM8gZVEy/9FMCzvCSNYFNa+uNrhqjIK+uSjHlk8sxWZD
+	 IQXivxkmCTa0RJ70J82/JZSQSHWuGUsXwWl4SARMdv1CtKP0DMJSk15k3PLiEuAOXE
+	 I0b+t/s40KSqBA7c2A+wKiS2OifCIAKpiTlzU2zs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Avi Shalev <avi.shalev@intel.com>,
-	Aleksandr Loktionov <aleksandr.loktionov@intel.com>,
-	Song Yoong Siang <yoong.siang.song@intel.com>,
-	Chwee-Lin Choong <chwee.lin.choong@intel.com>,
-	Avigail Dahan <avigailx.dahan@intel.com>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>,
+	Michal Luczaj <mhal@rbox.co>,
+	Stefano Garzarella <sgarzare@redhat.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 023/169] igc: fix race condition in TX timestamp read for register 0
-Date: Wed, 28 Jan 2026 16:21:46 +0100
-Message-ID: <20260128145334.857092377@linuxfoundation.org>
+Subject: [PATCH 6.12 024/169] vsock/virtio: Coalesce only linear skb
+Date: Wed, 28 Jan 2026 16:21:47 +0100
+Message-ID: <20260128145334.892528411@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260128145334.006287341@linuxfoundation.org>
 References: <20260128145334.006287341@linuxfoundation.org>
@@ -55,123 +52,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chwee-Lin Choong <chwee.lin.choong@intel.com>
+From: Michal Luczaj <mhal@rbox.co>
 
-[ Upstream commit 6990dc392a9ab10e52af37e0bee8c7b753756dc4 ]
+[ Upstream commit 0386bd321d0f95d041a7b3d7b07643411b044a96 ]
 
-The current HW bug workaround checks the TXTT_0 ready bit first,
-then reads TXSTMPL_0 twice (before and after reading TXSTMPH_0)
-to detect whether a new timestamp was captured by timestamp
-register 0 during the workaround.
+vsock/virtio common tries to coalesce buffers in rx queue: if a linear skb
+(with a spare tail room) is followed by a small skb (length limited by
+GOOD_COPY_LEN = 128), an attempt is made to join them.
 
-This sequence has a race: if a new timestamp is captured after
-checking the TXTT_0 bit but before the first TXSTMPL_0 read, the
-detection fails because both the "old" and "new" values come from
-the same timestamp.
+Since the introduction of MSG_ZEROCOPY support, assumption that a small skb
+will always be linear is incorrect. In the zerocopy case, data is lost and
+the linear skb is appended with uninitialized kernel memory.
 
-Fix by reading TXSTMPL_0 first to establish a baseline, then
-checking the TXTT_0 bit. This ensures any timestamp captured
-during the race window will be detected.
+Of all 3 supported virtio-based transports, only loopback-transport is
+affected. G2H virtio-transport rx queue operates on explicitly linear skbs;
+see virtio_vsock_alloc_linear_skb() in virtio_vsock_rx_fill(). H2G
+vhost-transport may allocate non-linear skbs, but only for sizes that are
+not considered for coalescence; see PAGE_ALLOC_COSTLY_ORDER in
+virtio_vsock_alloc_skb().
 
-Old sequence:
-  1. Check TXTT_0 ready bit
-  2. Read TXSTMPL_0 (baseline)
-  3. Read TXSTMPH_0 (interrupt workaround)
-  4. Read TXSTMPL_0 (detect changes vs baseline)
+Ensure only linear skbs are coalesced. Note that skb_tailroom(last_skb) > 0
+guarantees last_skb is linear.
 
-New sequence:
-  1. Read TXSTMPL_0 (baseline)
-  2. Check TXTT_0 ready bit
-  3. Read TXSTMPH_0 (interrupt workaround)
-  4. Read TXSTMPL_0 (detect changes vs baseline)
-
-Fixes: c789ad7cbebc ("igc: Work around HW bug causing missing timestamps")
-Suggested-by: Avi Shalev <avi.shalev@intel.com>
-Reviewed-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
-Co-developed-by: Song Yoong Siang <yoong.siang.song@intel.com>
-Signed-off-by: Song Yoong Siang <yoong.siang.song@intel.com>
-Signed-off-by: Chwee-Lin Choong <chwee.lin.choong@intel.com>
-Tested-by: Avigail Dahan <avigailx.dahan@intel.com>
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+Fixes: 581512a6dc93 ("vsock/virtio: MSG_ZEROCOPY flag support")
+Signed-off-by: Michal Luczaj <mhal@rbox.co>
+Reviewed-by: Stefano Garzarella <sgarzare@redhat.com>
+Link: https://patch.msgid.link/20260113-vsock-recv-coalescence-v2-1-552b17837cf4@rbox.co
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/igc/igc_ptp.c | 43 ++++++++++++++----------
- 1 file changed, 25 insertions(+), 18 deletions(-)
+ net/vmw_vsock/virtio_transport_common.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/ethernet/intel/igc/igc_ptp.c b/drivers/net/ethernet/intel/igc/igc_ptp.c
-index efc7b30e42113..a272d1a29eadb 100644
---- a/drivers/net/ethernet/intel/igc/igc_ptp.c
-+++ b/drivers/net/ethernet/intel/igc/igc_ptp.c
-@@ -785,36 +785,43 @@ static void igc_ptp_tx_reg_to_stamp(struct igc_adapter *adapter,
- static void igc_ptp_tx_hwtstamp(struct igc_adapter *adapter)
- {
- 	struct igc_hw *hw = &adapter->hw;
-+	u32 txstmpl_old;
- 	u64 regval;
- 	u32 mask;
- 	int i;
+diff --git a/net/vmw_vsock/virtio_transport_common.c b/net/vmw_vsock/virtio_transport_common.c
+index 2c9b1011cdcc8..4e8a9771a04d6 100644
+--- a/net/vmw_vsock/virtio_transport_common.c
++++ b/net/vmw_vsock/virtio_transport_common.c
+@@ -1374,9 +1374,11 @@ virtio_transport_recv_enqueue(struct vsock_sock *vsk,
  
-+	/* Establish baseline of TXSTMPL_0 before checking TXTT_0.
-+	 * This baseline is used to detect if a new timestamp arrives in
-+	 * register 0 during the hardware bug workaround below.
-+	 */
-+	txstmpl_old = rd32(IGC_TXSTMPL);
-+
- 	mask = rd32(IGC_TSYNCTXCTL) & IGC_TSYNCTXCTL_TXTT_ANY;
- 	if (mask & IGC_TSYNCTXCTL_TXTT_0) {
- 		regval = rd32(IGC_TXSTMPL);
- 		regval |= (u64)rd32(IGC_TXSTMPH) << 32;
- 	} else {
--		/* There's a bug in the hardware that could cause
--		 * missing interrupts for TX timestamping. The issue
--		 * is that for new interrupts to be triggered, the
--		 * IGC_TXSTMPH_0 register must be read.
-+		/* TXTT_0 not set - register 0 has no new timestamp initially.
-+		 *
-+		 * Hardware bug: Future timestamp interrupts won't fire unless
-+		 * TXSTMPH_0 is read, even if the timestamp was captured in
-+		 * registers 1-3.
- 		 *
--		 * To avoid discarding a valid timestamp that just
--		 * happened at the "wrong" time, we need to confirm
--		 * that there was no timestamp captured, we do that by
--		 * assuming that no two timestamps in sequence have
--		 * the same nanosecond value.
-+		 * Workaround: Read TXSTMPH_0 here to enable future interrupts.
-+		 * However, this read clears TXTT_0. If a timestamp arrives in
-+		 * register 0 after checking TXTT_0 but before this read, it
-+		 * would be lost.
- 		 *
--		 * So, we read the "low" register, read the "high"
--		 * register (to latch a new timestamp) and read the
--		 * "low" register again, if "old" and "new" versions
--		 * of the "low" register are different, a valid
--		 * timestamp was captured, we can read the "high"
--		 * register again.
-+		 * To detect this race: We saved a baseline read of TXSTMPL_0
-+		 * before TXTT_0 check. After performing the workaround read of
-+		 * TXSTMPH_0, we read TXSTMPL_0 again. Since consecutive
-+		 * timestamps never share the same nanosecond value, a change
-+		 * between the baseline and new TXSTMPL_0 indicates a timestamp
-+		 * arrived during the race window. If so, read the complete
-+		 * timestamp.
- 		 */
--		u32 txstmpl_old, txstmpl_new;
-+		u32 txstmpl_new;
- 
--		txstmpl_old = rd32(IGC_TXSTMPL);
- 		rd32(IGC_TXSTMPH);
- 		txstmpl_new = rd32(IGC_TXSTMPL);
- 
-@@ -829,7 +836,7 @@ static void igc_ptp_tx_hwtstamp(struct igc_adapter *adapter)
- 
- done:
- 	/* Now that the problematic first register was handled, we can
--	 * use retrieve the timestamps from the other registers
-+	 * retrieve the timestamps from the other registers
- 	 * (starting from '1') with less complications.
+ 	/* Try to copy small packets into the buffer of last packet queued,
+ 	 * to avoid wasting memory queueing the entire buffer with a small
+-	 * payload.
++	 * payload. Skip non-linear (e.g. zerocopy) skbs; these carry payload
++	 * in skb_shinfo.
  	 */
- 	for (i = 1; i < IGC_MAX_TX_TSTAMP_REGS; i++) {
+-	if (len <= GOOD_COPY_LEN && !skb_queue_empty(&vvs->rx_queue)) {
++	if (len <= GOOD_COPY_LEN && !skb_queue_empty(&vvs->rx_queue) &&
++	    !skb_is_nonlinear(skb)) {
+ 		struct virtio_vsock_hdr *last_hdr;
+ 		struct sk_buff *last_skb;
+ 
 -- 
 2.51.0
 
