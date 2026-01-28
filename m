@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 514BB2D59FA;
-	Wed, 28 Jan 2026 15:35:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D4982C237E;
+	Wed, 28 Jan 2026 15:35:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769614515; cv=none; b=lP/Ac/m2V/BK/Z0LyrFvF5dJ2yg7dXs2kLh/6q6lD093Ir6sFlFzi17LUwA7yLsFuWQlkxb1sBdGInhO+e7XJvzh1Qs4ZM65odYsWm0GuyamTUuhyu0eQ/vFH5PoGyBUUzpwZ83+Pleg+GaupLnB74gm+HylRXOCcilq4DmAXd8=
+	t=1769614518; cv=none; b=OY2b6NccD2q3U7l+Mf6sjk/WL7joKseVMOwYPeZvgIbpNk9Px/YK6vTOQL6K0WzdkL/8L2cH49HEdRtliJ6sGA0iErvNmyTus+ixLaAI7Dx2Mex46fbMvlB7zKhmkP7NxbeAkc3MjPiYtVdBLSwtSXG5R6ViXz4lF8a+2pfnXm8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769614515; c=relaxed/simple;
-	bh=SyAVyjpcgYnfGAfPfP2qdd4ZFu0IefZHgikI+xwnza4=;
+	s=arc-20240116; t=1769614518; c=relaxed/simple;
+	bh=BUF4jHEYV0108bEFMUwOC7RPnYt5ou0gd53lKs/iAD8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OHBG/Q/lcZ+V2HYuAkwwWt3w3NYQ+sxkPoH/Agssw6O8JULk+ZyVhnhAEHOoXyYoQ89EKL8ySCWwZLiNiWpMILPezqwB8sqLWHvSyO+4DyIyxDdw8t6isJgFFYZGUdNm3G63H8yeK2bOkt14d8PgM++MXLcfEmFL4UC4gsOHM9c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yfwVzux5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=JzXsZdHZYI3c1WcPmzQpjOGl2+wMShytJ73SszTwBjYErydiwTk4f4mNyrK/r++dyeRXTnz21sNYIXeGMAFpr9jDP8y0NooUrdrFtaLJ/EuqZ3X2Hgd8YZWPYYgTmqjdqHQtHLNh3QVRDnTdxsBTQBZJZQpe5mCfUWf+dZco/uI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aMyYjlCx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yfwVzux5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC186C4CEF1;
-	Wed, 28 Jan 2026 15:35:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aMyYjlCx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B2B6C4CEF1;
+	Wed, 28 Jan 2026 15:35:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1769614515;
-	bh=SyAVyjpcgYnfGAfPfP2qdd4ZFu0IefZHgikI+xwnza4=;
+	s=korg; t=1769614518;
+	bh=BUF4jHEYV0108bEFMUwOC7RPnYt5ou0gd53lKs/iAD8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yfwVzux5ovjZv9na9C1u/qt9pGm2EclVcBFNmioSAJ5jm/qLthJrXKPqaC96+oscQ
-	 Bs56C1dlZKP1+BEU1wpi0Jpt05CLOvf5pr9MNnr9hgzlx25tdFPEeSH0ghz2Yunx1R
-	 lXPai8BI8ek+0C0f0+72Rak+Cfs5dOnkVDoxS1nU=
+	b=aMyYjlCx0lISTnsA0YbYCHEuFy/y9V/7bNQUSR7Uc7LYRMsast5pijgDQseCaw80a
+	 3zFPK+g0nFgwqfLdqAfVR2cTYWVTP0aZ4G3RyTXcI9Z9KMVRVjZJvyL1fXFkGq0MKE
+	 QRX/TGaoVMy26BT7hFwITRgwRjlntKRcooSu65jk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Jeffery <djeffery@redhat.com>,
-	Bart Van Assche <bvanassche@acm.org>,
+	Jiasheng Jiang <jiashengjiangcool@gmail.com>,
+	Himanshu Madhani <hmadhani2024@gmail.com>,
 	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 160/254] scsi: core: Wake up the error handler when final completions race against each other
-Date: Wed, 28 Jan 2026 16:22:16 +0100
-Message-ID: <20260128145350.568316491@linuxfoundation.org>
+Subject: [PATCH 6.6 161/254] scsi: qla2xxx: Sanitize payload size to prevent member overflow
+Date: Wed, 28 Jan 2026 16:22:17 +0100
+Message-ID: <20260128145350.603840664@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260128145344.698118637@linuxfoundation.org>
 References: <20260128145344.698118637@linuxfoundation.org>
@@ -52,93 +52,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Jeffery <djeffery@redhat.com>
+From: Jiasheng Jiang <jiashengjiangcool@gmail.com>
 
-[ Upstream commit fe2f8ad6f0999db3b318359a01ee0108c703a8c3 ]
+[ Upstream commit 19bc5f2a6962dfaa0e32d0e0bc2271993d85d414 ]
 
-The fragile ordering between marking commands completed or failed so
-that the error handler only wakes when the last running command
-completes or times out has race conditions. These race conditions can
-cause the SCSI layer to fail to wake the error handler, leaving I/O
-through the SCSI host stuck as the error state cannot advance.
+In qla27xx_copy_fpin_pkt() and qla27xx_copy_multiple_pkt(), the frame_size
+reported by firmware is used to calculate the copy length into
+item->iocb. However, the iocb member is defined as a fixed-size 64-byte
+array within struct purex_item.
 
-First, there is an memory ordering issue within scsi_dec_host_busy().
-The write which clears SCMD_STATE_INFLIGHT may be reordered with reads
-counting in scsi_host_busy(). While the local CPU will see its own
-write, reordering can allow other CPUs in scsi_dec_host_busy() or
-scsi_eh_inc_host_failed() to see a raised busy count, causing no CPU to
-see a host busy equal to the host_failed count.
+If the reported frame_size exceeds 64 bytes, subsequent memcpy calls will
+overflow the iocb member boundary. While extra memory might be allocated,
+this cross-member write is unsafe and triggers warnings under
+CONFIG_FORTIFY_SOURCE.
 
-This race condition can be prevented with a memory barrier on the error
-path to force the write to be visible before counting host busy
-commands.
+Fix this by capping total_bytes to the size of the iocb member (64 bytes)
+before allocation and copying. This ensures all copies remain within the
+bounds of the destination structure member.
 
-Second, there is a general ordering issue with scsi_eh_inc_host_failed(). By
-counting busy commands before incrementing host_failed, it can race with a
-final command in scsi_dec_host_busy(), such that scsi_dec_host_busy() does
-not see host_failed incremented but scsi_eh_inc_host_failed() counts busy
-commands before SCMD_STATE_INFLIGHT is cleared by scsi_dec_host_busy(),
-resulting in neither waking the error handler task.
-
-This needs the call to scsi_host_busy() to be moved after host_failed is
-incremented to close the race condition.
-
-Fixes: 6eb045e092ef ("scsi: core: avoid host-wide host_busy counter for scsi_mq")
-Signed-off-by: David Jeffery <djeffery@redhat.com>
-Reviewed-by: Bart Van Assche <bvanassche@acm.org>
-Link: https://patch.msgid.link/20260113161036.6730-1-djeffery@redhat.com
+Fixes: 875386b98857 ("scsi: qla2xxx: Add Unsolicited LS Request and Response Support for NVMe")
+Signed-off-by: Jiasheng Jiang <jiashengjiangcool@gmail.com>
+Reviewed-by: Himanshu Madhani <hmadhani2024@gmail.com>
+Link: https://patch.msgid.link/20260106205344.18031-1-jiashengjiangcool@gmail.com
 Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/scsi_error.c | 11 ++++++++++-
- drivers/scsi/scsi_lib.c   |  8 ++++++++
- 2 files changed, 18 insertions(+), 1 deletion(-)
+ drivers/scsi/qla2xxx/qla_isr.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/drivers/scsi/scsi_error.c b/drivers/scsi/scsi_error.c
-index 5882b5f80c049..c4c05cf38aa55 100644
---- a/drivers/scsi/scsi_error.c
-+++ b/drivers/scsi/scsi_error.c
-@@ -282,11 +282,20 @@ static void scsi_eh_inc_host_failed(struct rcu_head *head)
- {
- 	struct scsi_cmnd *scmd = container_of(head, typeof(*scmd), rcu);
- 	struct Scsi_Host *shost = scmd->device->host;
--	unsigned int busy = scsi_host_busy(shost);
-+	unsigned int busy;
- 	unsigned long flags;
+diff --git a/drivers/scsi/qla2xxx/qla_isr.c b/drivers/scsi/qla2xxx/qla_isr.c
+index a85d3a40ee490..ae2bea27a18a6 100644
+--- a/drivers/scsi/qla2xxx/qla_isr.c
++++ b/drivers/scsi/qla2xxx/qla_isr.c
+@@ -878,6 +878,9 @@ qla27xx_copy_multiple_pkt(struct scsi_qla_host *vha, void **pkt,
+ 		payload_size = sizeof(purex->els_frame_payload);
+ 	}
  
- 	spin_lock_irqsave(shost->host_lock, flags);
- 	shost->host_failed++;
-+	spin_unlock_irqrestore(shost->host_lock, flags);
-+	/*
-+	 * The counting of busy requests needs to occur after adding to
-+	 * host_failed or after the lock acquire for adding to host_failed
-+	 * to prevent a race with host unbusy and missing an eh wakeup.
-+	 */
-+	busy = scsi_host_busy(shost);
++	if (total_bytes > sizeof(item->iocb.iocb))
++		total_bytes = sizeof(item->iocb.iocb);
 +
-+	spin_lock_irqsave(shost->host_lock, flags);
- 	scsi_eh_wakeup(shost, busy);
- 	spin_unlock_irqrestore(shost->host_lock, flags);
- }
-diff --git a/drivers/scsi/scsi_lib.c b/drivers/scsi/scsi_lib.c
-index bd75e3ebc14da..efd1f1d6e4e9b 100644
---- a/drivers/scsi/scsi_lib.c
-+++ b/drivers/scsi/scsi_lib.c
-@@ -278,6 +278,14 @@ static void scsi_dec_host_busy(struct Scsi_Host *shost, struct scsi_cmnd *cmd)
- 	rcu_read_lock();
- 	__clear_bit(SCMD_STATE_INFLIGHT, &cmd->state);
- 	if (unlikely(scsi_host_in_recovery(shost))) {
-+		/*
-+		 * Ensure the clear of SCMD_STATE_INFLIGHT is visible to
-+		 * other CPUs before counting busy requests. Otherwise,
-+		 * reordering can cause CPUs to race and miss an eh wakeup
-+		 * when no CPU sees all busy requests as done or timed out.
-+		 */
-+		smp_mb();
-+
- 		unsigned int busy = scsi_host_busy(shost);
+ 	pending_bytes = total_bytes;
+ 	no_bytes = (pending_bytes > payload_size) ? payload_size :
+ 		   pending_bytes;
+@@ -1163,6 +1166,10 @@ qla27xx_copy_fpin_pkt(struct scsi_qla_host *vha, void **pkt,
  
- 		spin_lock_irqsave(shost->host_lock, flags);
+ 	total_bytes = (le16_to_cpu(purex->frame_size) & 0x0FFF)
+ 	    - PURX_ELS_HEADER_SIZE;
++
++	if (total_bytes > sizeof(item->iocb.iocb))
++		total_bytes = sizeof(item->iocb.iocb);
++
+ 	pending_bytes = total_bytes;
+ 	entry_count = entry_count_remaining = purex->entry_count;
+ 	no_bytes = (pending_bytes > sizeof(purex->els_frame_payload))  ?
 -- 
 2.51.0
 
