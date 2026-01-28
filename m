@@ -1,42 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D502E29ACD1;
-	Wed, 28 Jan 2026 22:33:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30A413431F5;
+	Wed, 28 Jan 2026 22:33:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769639623; cv=none; b=rBYdIEf0l51HdY/ajDLToa+d2LrSswVJOIjrFBZEfmKx+KyIhE43vhHhdkQ2XTvJGMR4UTeakTuBouwLk8jXNbuiiw1FoRLy3g1+f3Q+4Phv7mz1T1C1YHob6fo7ON3WKpixoZ2pBIFvyS1QnLqC2PhYJ5Z5uD5QbCPtcQgKHM0=
+	t=1769639626; cv=none; b=Sph5EFfEW8ojGm1/OCC9uJ2NqIlthIRh2RmOZkNX+f59oLr5f2onrj+mXKIYpZ14ASl6EAzqqc5lxZIVqoUAQC6XRub0zwlGVXOTTVeW6fT0sZh4K5JPh/SzyzIq6sBC8tZ5Fr2pIwXCQYf7LVOOzyWGxNaDUVmh+FpeoytB6+k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769639623; c=relaxed/simple;
-	bh=yMmc+gE/TeEIykfimutfHJ9UuR39OimXvChOlxkMweM=;
+	s=arc-20240116; t=1769639626; c=relaxed/simple;
+	bh=XPLLLQzpIAooc5kDBIwtZy3yzmxAdYstw8fdD46YujE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=BWRCUoaHOxPZn7LO+m7qzmxNixguk6Bvdkes5IFFjfCt63pamDmU34Xfq27cgMvKiHJHyyNem9oplUITsfSVy+w94459txvrBZqic4dBwDITMF6ua0ouLaL/Ys3RZbP/45a7C9LBvTikFK3uT8a6o3hWwKy1z9QfCw/7nDZdUDk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=HWLiv/KX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GMQSOE+VACql9/cKxI/L/giTUYGudPKEwPlUUgmwiTPmezDDjCIj1eHG3weqSe2GKayqJTwLMjy9m8cqDiXuuh02157dRGkgeRoqXg5zf6wSgAxOjcf8NT/QgWPU2un6sH2T9lOCykmSwg15febJ6O/i0I5sgAEfMTiFF2Idkt0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=OSL/900V; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="HWLiv/KX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2191C4CEF7;
-	Wed, 28 Jan 2026 22:33:42 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="OSL/900V"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB1DCC4CEF7;
+	Wed, 28 Jan 2026 22:33:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1769639623;
-	bh=yMmc+gE/TeEIykfimutfHJ9UuR39OimXvChOlxkMweM=;
+	s=k20201202; t=1769639625;
+	bh=XPLLLQzpIAooc5kDBIwtZy3yzmxAdYstw8fdD46YujE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HWLiv/KX7v5VKCBvilUEHxi9QEEqrOU0BNu2Hb15mO10uOVyLrClFvTFO30vm5ztR
-	 bhnn8WkIiTwfmBnnH/b2HmrssCMgBWi0Kujs3pFxZh2s0X4459p/+/83LyQTA53aZ/
-	 YMizzNkwNB2BbNvsv+6sDVBzqAiD4PDZR+Gc873jGDusytcaf/PP65zQf09U+U84PM
-	 SeH1hYBMqjnWaDFw1sq1+nlKzsZe7Ogpt/dw9dWqRNP9u35eBPrrRUrIPfbkwo2tpv
-	 7T8srvC3bVjn3e+9PdxVnccNBbmN1gzDBPiCmWdUe1H4qXsASY1OgkHEePI08vjh+r
-	 Cwy7BWcv42mAw==
+	b=OSL/900VonHsfPV01EX+pwL3mOEFOyGxrHP/ze+KIXjUHMHc22ESovDg8Vb7ZSm8Q
+	 617OwiMzBrr0ufySuXhfzYMgbFFJxTUq5c7vg9BKv6pu42CZOidYfPToeHegHR81dE
+	 COdSq8i0Q88XKMuQsmxOLKPkV8x9QpdyKxnP4hE9uG3prispqjmE5hLWBe506N0TO/
+	 iKL/ym48Ths4066qmDefw9vJaagDlXa4cHBDoOgczMYqrq2DO+SuMFmzmRw/c92uDY
+	 tpgxX/vzuOZEf7wHcq3Sm1Wau/+SW89EN2iOXgLkVjJ+EJ8ldcNab8/P61AzcMmSg0
+	 daIm1V4J6wPdw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Devyn Liu <liudingyuan@h-partners.com>,
-	Yang Shen <shenyang39@huawei.com>,
-	Mark Brown <broonie@kernel.org>,
+Cc: Maurizio Lombardi <mlombard@redhat.com>,
+	Zhaojuan Guo <zguo@redhat.com>,
+	Mike Christie <michael.christie@oracle.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>,
-	linux-spi@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18-6.6] spi: hisi-kunpeng: Fixed the wrong debugfs node name in hisi_spi debugfs initialization
-Date: Wed, 28 Jan 2026 17:33:03 -0500
-Message-ID: <20260128223332.2806589-5-sashal@kernel.org>
+	tglx@kernel.org,
+	mingo@kernel.org
+Subject: [PATCH AUTOSEL 6.18-5.10] scsi: target: iscsi: Fix use-after-free in iscsit_dec_conn_usage_count()
+Date: Wed, 28 Jan 2026 17:33:04 -0500
+Message-ID: <20260128223332.2806589-6-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260128223332.2806589-1-sashal@kernel.org>
 References: <20260128223332.2806589-1-sashal@kernel.org>
@@ -49,145 +51,108 @@ MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.18.7
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Devyn Liu <liudingyuan@h-partners.com>
+From: Maurizio Lombardi <mlombard@redhat.com>
 
-[ Upstream commit b062a899c997df7b9ce29c62164888baa7a85833 ]
+[ Upstream commit 9411a89e9e7135cc459178fa77a3f1d6191ae903 ]
 
-In hisi_spi_debugfs_init, spi controller pointer is calculated
-by container_of macro, and the member is hs->dev. But the host
-cannot be calculated offset directly by this. (hs->dev) points
-to (pdev->dev), and it is the (host->dev.parent) rather than
-(host->dev) points to the (pdev->dev), which is set in
-__spi_alloc_controller.
+In iscsit_dec_conn_usage_count(), the function calls complete() while
+holding the conn->conn_usage_lock. As soon as complete() is invoked, the
+waiter (such as iscsit_close_connection()) may wake up and proceed to free
+the iscsit_conn structure.
 
-In this patch, this issues is fixed by getting the spi_controller
-data from pdev->dev by dev_get_drvdata() directly. (dev->driver_data)
-points to the spi controller data in the probe stage.
+If the waiter frees the memory before the current thread reaches
+spin_unlock_bh(), it results in a KASAN slab-use-after-free as the function
+attempts to release a lock within the already-freed connection structure.
 
-Signed-off-by: Devyn Liu <liudingyuan@h-partners.com>
-Reviewed-by: Yang Shen <shenyang39@huawei.com>
-Link: https://patch.msgid.link/20260108075323.3831574-1-liudingyuan@h-partners.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fix this by releasing the spinlock before calling complete().
+
+Signed-off-by: Maurizio Lombardi <mlombard@redhat.com>
+Reported-by: Zhaojuan Guo <zguo@redhat.com>
+Reviewed-by: Mike Christie <michael.christie@oracle.com>
+Link: https://patch.msgid.link/20260112165352.138606-2-mlombard@redhat.com
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-In `struct spi_controller`, `dev` is at offset 0. So when `container_of`
-is used with an incorrect pointer, it will calculate the "base" of the
-spi_controller by subtracting 0 from the address - meaning it will use
-`hs->dev` (pdev->dev) directly as if it were an spi_controller!
+This confirms the race condition analysis perfectly:
+1. `iscsit_check_conn_usage_count(conn)` waits for usage count to become
+   0
+2. Once it returns (after `complete()` is called), it immediately calls
+   `iscsit_free_conn(conn)` at line 4363
+3. If the decrementer thread hasn't released the spinlock yet, it will
+   try to `spin_unlock_bh()` on freed memory
 
-This would cause the access to `host->bus_num` (used in the snprintf for
-creating debugfs directory name) to read from the wrong memory location.
-Looking at struct spi_controller, `bus_num` is at around offset 72-80
-bytes (after `dev` and `list`), so it would be reading random data from
-the platform_device structure.
+### FINAL ASSESSMENT
 
-Let me analyze the severity:
+**Why this should be backported:**
 
-1. **Best case**: Random garbage `bus_num` value → debugfs directory
-   created with garbage name like "hisi_spi-1234567" or some nonsense
-2. **Worst case**: Could potentially read out of bounds if pdev->dev is
-   at the end of an allocation
+1. **Fixes a real, reproducible bug:** The commit explicitly mentions
+   KASAN detection and has a "Reported-by" tag, confirming this is a
+   real issue that was hit in practice.
 
-The fix is simple, correct, and uses the proper method to retrieve the
-spi_controller pointer.
+2. **Serious bug type:** Use-after-free is a critical memory safety bug
+   that can cause:
+   - Kernel panics/crashes
+   - Data corruption
+   - Potential security exploits (UAF is a common attack vector)
 
-## Summary Analysis
+3. **Obvious correctness:** The fix follows the well-known pattern of
+   "unlock before complete" which is the standard way to avoid this
+   class of race conditions. The code change is straightforward and the
+   logic is preserved.
 
-### 1. COMMIT MESSAGE ANALYSIS
-The commit message clearly explains:
-- The bug: `container_of` is incorrectly used - `hs->dev` points to
-  `pdev->dev`, not `host->dev`
-- The fix: Use `dev_get_drvdata()` to correctly get the spi_controller
-  pointer
+4. **Small and contained:**
+   - Only 6 lines changed
+   - Single function modified
+   - No new APIs or features
+   - Self-contained fix
 
-### 2. CODE CHANGE ANALYSIS
-**The Bug:**
-- `hs->dev = dev` where `dev = &pdev->dev` (platform device's device)
-- `host = container_of(hs->dev, struct spi_controller, dev)` computes
-  wrong offset
-- Since `dev` is at offset 0 in spi_controller, this treats `pdev->dev`
-  as if it were the spi_controller
-- Accessing `host->bus_num` reads garbage from wrong memory location
+5. **Low regression risk:** The change only reorders operations (unlock
+   before complete instead of after). The same checks are made, same
+   operations performed.
 
-**The Fix:**
-- Uses `dev_get_drvdata(hs->dev)` to correctly retrieve the
-  spi_controller pointer
-- This works because `platform_set_drvdata(pdev, host)` was called in
-  probe
+6. **Affects production systems:** iSCSI target code is used in
+   enterprise storage environments where kernel crashes are
+   unacceptable.
 
-**The fix is obviously correct:** It mirrors how other parts of the
-driver (e.g., interrupt handler) retrieve the spi_controller.
+7. **Long-standing code:** The affected function has been in the kernel
+   since 2011, meaning all stable trees contain this vulnerable code.
 
-### 3. CLASSIFICATION
-- **Bug fix**: Yes, this fixes a real bug where incorrect memory is
-  accessed
-- **Category**: Bug fix for incorrect pointer calculation
+8. **Expert review:** Reviewed by Mike Christie (iSCSI maintainer) and
+   signed off by Martin K. Petersen (SCSI maintainer).
 
-### 4. SCOPE AND RISK ASSESSMENT
-- **Lines changed**: Net -4 lines, very small change
-- **Files touched**: 1 driver file
-- **Risk**: Very low - changes a local variable initialization in a
-  debugfs init function
-- **Could break something else?**: No, this is a purely local fix
+9. **Clean backport expected:** No dependencies on other commits, the
+   fix is self-contained and should apply cleanly to all stable trees.
 
-### 5. USER IMPACT
-- **Who is affected**: Users of HiSilicon Kunpeng SoC SPI controllers
-  with debugfs enabled
-- **Severity**: The bug causes incorrect debugfs directory naming and
-  potentially reads garbage memory
-- **Hardware support**: This driver is for specific Kunpeng server SoCs
-
-### 6. STABILITY INDICATORS
-- Has "Reviewed-by:" tag from another Huawei engineer
-- The fix is straightforward and mirrors existing patterns in the driver
-
-### 7. DEPENDENCY CHECK
-- The driver exists since v5.13, so this is relevant for 5.15.y, 6.1.y,
-  6.6.y, etc.
-- No dependencies on other commits - standalone fix
-
-## Conclusion
-
-This commit fixes a real bug in pointer calculation that causes
-incorrect memory access. The fix is:
-- Small and surgical (changes one variable initialization)
-- Obviously correct (uses the same pattern as other code in the driver)
-- Fixes a real bug (incorrect container_of usage)
-- Low risk (only affects debugfs, but still fixes incorrect memory
-  access)
-
-The bug could cause reading garbage values or potentially undefined
-behavior. While debugfs is primarily a debugging interface, the
-incorrect memory access is still a real bug that should be fixed in
-stable trees.
+**Risk assessment:** MINIMAL. The fix is a classic pattern, well-
+reviewed, and doesn't change functionality.
 
 **YES**
 
- drivers/spi/spi-hisi-kunpeng.c | 4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
+ drivers/target/iscsi/iscsi_target_util.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/spi/spi-hisi-kunpeng.c b/drivers/spi/spi-hisi-kunpeng.c
-index dadf558dd9c0c..80a1a15de0bc3 100644
---- a/drivers/spi/spi-hisi-kunpeng.c
-+++ b/drivers/spi/spi-hisi-kunpeng.c
-@@ -161,10 +161,8 @@ static const struct debugfs_reg32 hisi_spi_regs[] = {
- static int hisi_spi_debugfs_init(struct hisi_spi *hs)
- {
- 	char name[32];
-+	struct spi_controller *host = dev_get_drvdata(hs->dev);
+diff --git a/drivers/target/iscsi/iscsi_target_util.c b/drivers/target/iscsi/iscsi_target_util.c
+index 262a3e76b4b1c..c1888c42afdd5 100644
+--- a/drivers/target/iscsi/iscsi_target_util.c
++++ b/drivers/target/iscsi/iscsi_target_util.c
+@@ -813,8 +813,11 @@ void iscsit_dec_conn_usage_count(struct iscsit_conn *conn)
+ 	spin_lock_bh(&conn->conn_usage_lock);
+ 	conn->conn_usage_count--;
  
--	struct spi_controller *host;
--
--	host = container_of(hs->dev, struct spi_controller, dev);
- 	snprintf(name, 32, "hisi_spi%d", host->bus_num);
- 	hs->debugfs = debugfs_create_dir(name, NULL);
- 	if (IS_ERR(hs->debugfs))
+-	if (!conn->conn_usage_count && conn->conn_waiting_on_uc)
++	if (!conn->conn_usage_count && conn->conn_waiting_on_uc) {
++		spin_unlock_bh(&conn->conn_usage_lock);
+ 		complete(&conn->conn_waiting_on_uc_comp);
++		return;
++	}
+ 
+ 	spin_unlock_bh(&conn->conn_usage_lock);
+ }
 -- 
 2.51.0
 
