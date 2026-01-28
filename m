@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4681E21FF30;
-	Wed, 28 Jan 2026 15:30:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D15C724DFF9;
+	Wed, 28 Jan 2026 15:30:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769614212; cv=none; b=diUdszB5KnrOrb/JtMYCLXePX2mJ7i0EjBKFlnBo1tC4enGC7Z10RGcCHNjKttXmQaENs9QoXxX98nu39bY+/bJDXEsbozL60mH1zFCFS8BHf8hWwaZgnW843Y66yge1Pj0NQNl1s5BtoFemn7oi7FIQtvG0tWJGEMyocpmBrgo=
+	t=1769614215; cv=none; b=Jv9/ke39O/ilxsuavVsDiQv1UdCVho1LPxcDAxUt/j8ojs5W8Kb9kEubctyUgHsxZEgL0VG+ImJBmnmNiv3A4U3qd0ctv/+ljaIzJL1C7CfchU46ZneGhZ4AosOYsa6bSonaHfUmPUHB+nZ/eyE9tnlm/UULZ35DHzfHJbtErOc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769614212; c=relaxed/simple;
-	bh=/WBEDbccF3kkgtXOlc9cRlBZM1iuikxxLIkDVr+q6Ps=;
+	s=arc-20240116; t=1769614215; c=relaxed/simple;
+	bh=75JTW3wYnLN9M3nHjtalZBH0WtVcUQmYgNb3seo3rhg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TUJoIbawPJbTMCqwHh5ykcy0QBb3VJEte44WVO0P73mb0PPOIt59LXXMulgBCNYHBJkDzUQxh3ECO9uksAVObsC0cccw3GwpkOiRJT3hhlXXJpnbQPLkLWtViC3JsG2/GnijDFdRGyaU1vv7POx99skdjUPb8BXPm/Lglwili/8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PJrRTFeS; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mbY1hCQCcMMDnn/2MfgLEW0v2LLJL1ZucJlN43kk8mNnxwsMvJScAetnjYwi3xnQUAEXANTI6994GRO1wkPv2KwqFMXiXfrAwEjlgWS88R9yC15bvOG4Ra+ze+r99uN3tqoK2+iEHAw9TIEzG2yPCXShAHrzrXZoOobieN6u12o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=L5Ei5lKO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PJrRTFeS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C4969C4CEF1;
-	Wed, 28 Jan 2026 15:30:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="L5Ei5lKO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 05B97C4CEF1;
+	Wed, 28 Jan 2026 15:30:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1769614212;
-	bh=/WBEDbccF3kkgtXOlc9cRlBZM1iuikxxLIkDVr+q6Ps=;
+	s=korg; t=1769614215;
+	bh=75JTW3wYnLN9M3nHjtalZBH0WtVcUQmYgNb3seo3rhg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PJrRTFeSB5zhi+DpP9k3rHEop6PdPUQVCY4LGW1zTUR328d0g/T0POUq1zuXvQXSB
-	 IhzKSyEnr0pZklgCfXvIcgRZk7DLv4VRKZrILlC6w1bIz15MAZmmGckn4NnvVDq3fR
-	 pzCDLl9/HcbgH5CLOlO92yRru2RfBpbHh5NEhsyU=
+	b=L5Ei5lKOjqek7O1h9zs4benJKYTSl0iWGFxHaTUB1TtQmIkcP+n6pi9yqtZv0c1Du
+	 kAA7yd5FliQvcJeybof3NrOPOYhr8fVA8oVEgfdSX1dlYUOzihDDzeP02YENdha0mq
+	 6JXFTtGIkPMrrtyTJtTgF9QCiAnM+TNvgwwunOMs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xiaochen Shen <shenxiaochen@open-hieco.net>,
-	"Borislav Petkov (AMD)" <bp@alien8.de>,
-	Reinette Chatre <reinette.chatre@intel.com>
-Subject: [PATCH 6.6 067/254] x86/resctrl: Add missing resctrl initialization for Hygon
-Date: Wed, 28 Jan 2026 16:20:43 +0100
-Message-ID: <20260128145347.108949102@linuxfoundation.org>
+	Loic Poulain <loic.poulain@oss.qualcomm.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+	Abel Vesa <abel.vesa@oss.qualcomm.com>,
+	Vinod Koul <vkoul@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 038/254] phy: qcom-qusb2: Fix NULL pointer dereference on early suspend
+Date: Wed, 28 Jan 2026 16:20:14 +0100
+Message-ID: <20260128145346.072981063@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260128145344.698118637@linuxfoundation.org>
 References: <20260128145344.698118637@linuxfoundation.org>
@@ -51,58 +53,91 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xiaochen Shen <shenxiaochen@open-hieco.net>
+From: Loic Poulain <loic.poulain@oss.qualcomm.com>
 
-commit 6ee98aabdc700b5705e4f1833e2edc82a826b53b upstream.
+[ Upstream commit 1ca52c0983c34fca506921791202ed5bdafd5306 ]
 
-Hygon CPUs supporting Platform QoS features currently undergo partial resctrl
-initialization through resctrl_cpu_detect() in the Hygon BSP init helper and
-AMD/Hygon common initialization code. However, several critical data
-structures remain uninitialized for Hygon CPUs in the following paths:
+Enabling runtime PM before attaching the QPHY instance as driver data
+can lead to a NULL pointer dereference in runtime PM callbacks that
+expect valid driver data. There is a small window where the suspend
+callback may run after PM runtime enabling and before runtime forbid.
+This causes a sporadic crash during boot:
 
- - get_mem_config()-> __rdt_get_mem_config_amd():
-     rdt_resource::membw,alloc_capable
-     hw_res::num_closid
+```
+Unable to handle kernel NULL pointer dereference at virtual address 00000000000000a1
+[...]
+CPU: 0 UID: 0 PID: 11 Comm: kworker/0:1 Not tainted 6.16.7+ #116 PREEMPT
+Workqueue: pm pm_runtime_work
+pstate: 20000005 (nzCv daif -PAN -UAO -TCO -DIT -SSBS BTYPE=--)
+pc : qusb2_phy_runtime_suspend+0x14/0x1e0 [phy_qcom_qusb2]
+lr : pm_generic_runtime_suspend+0x2c/0x44
+[...]
+```
 
- - rdt_init_res_defs()->rdt_init_res_defs_amd():
-     rdt_resource::cache
-     hw_res::msr_base,msr_update
+Attach the QPHY instance as driver data before enabling runtime PM to
+prevent NULL pointer dereference in runtime PM callbacks.
 
-Add the missing AMD/Hygon common initialization to ensure proper Platform QoS
-functionality on Hygon CPUs.
+Reorder pm_runtime_enable() and pm_runtime_forbid() to prevent a
+short window where an unnecessary runtime suspend can occur.
 
-Fixes: d8df126349da ("x86/cpu/hygon: Add missing resctrl_cpu_detect() in bsp_init helper")
-Signed-off-by: Xiaochen Shen <shenxiaochen@open-hieco.net>
-Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Reviewed-by: Reinette Chatre <reinette.chatre@intel.com>
-Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20251209062650.1536952-2-shenxiaochen@open-hieco.net
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Use the devres-managed version to ensure PM runtime is symmetrically
+disabled during driver removal for proper cleanup.
+
+Fixes: 891a96f65ac3 ("phy: qcom-qusb2: Add support for runtime PM")
+Signed-off-by: Loic Poulain <loic.poulain@oss.qualcomm.com>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Reviewed-by: Abel Vesa <abel.vesa@oss.qualcomm.com>
+Link: https://patch.msgid.link/20251219085640.114473-1-loic.poulain@oss.qualcomm.com
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/kernel/cpu/resctrl/core.c |    6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/phy/qualcomm/phy-qcom-qusb2.c | 16 ++++++++--------
+ 1 file changed, 8 insertions(+), 8 deletions(-)
 
---- a/arch/x86/kernel/cpu/resctrl/core.c
-+++ b/arch/x86/kernel/cpu/resctrl/core.c
-@@ -755,7 +755,8 @@ static __init bool get_mem_config(void)
+diff --git a/drivers/phy/qualcomm/phy-qcom-qusb2.c b/drivers/phy/qualcomm/phy-qcom-qusb2.c
+index 531c3860c3160..d3c26a39873f7 100644
+--- a/drivers/phy/qualcomm/phy-qcom-qusb2.c
++++ b/drivers/phy/qualcomm/phy-qcom-qusb2.c
+@@ -1063,29 +1063,29 @@ static int qusb2_phy_probe(struct platform_device *pdev)
+ 		or->hsdisc_trim.override = true;
+ 	}
  
- 	if (boot_cpu_data.x86_vendor == X86_VENDOR_INTEL)
- 		return __get_mem_config_intel(&hw_res->r_resctrl);
--	else if (boot_cpu_data.x86_vendor == X86_VENDOR_AMD)
-+	else if (boot_cpu_data.x86_vendor == X86_VENDOR_AMD ||
-+		 boot_cpu_data.x86_vendor == X86_VENDOR_HYGON)
- 		return __rdt_get_mem_config_amd(&hw_res->r_resctrl);
+-	pm_runtime_set_active(dev);
+-	pm_runtime_enable(dev);
++	dev_set_drvdata(dev, qphy);
++
+ 	/*
+-	 * Prevent runtime pm from being ON by default. Users can enable
+-	 * it using power/control in sysfs.
++	 * Enable runtime PM support, but forbid it by default.
++	 * Users can allow it again via the power/control attribute in sysfs.
+ 	 */
++	pm_runtime_set_active(dev);
+ 	pm_runtime_forbid(dev);
++	ret = devm_pm_runtime_enable(dev);
++	if (ret)
++		return ret;
  
- 	return false;
-@@ -907,7 +908,8 @@ static __init void rdt_init_res_defs(voi
- {
- 	if (boot_cpu_data.x86_vendor == X86_VENDOR_INTEL)
- 		rdt_init_res_defs_intel();
--	else if (boot_cpu_data.x86_vendor == X86_VENDOR_AMD)
-+	else if (boot_cpu_data.x86_vendor == X86_VENDOR_AMD ||
-+		 boot_cpu_data.x86_vendor == X86_VENDOR_HYGON)
- 		rdt_init_res_defs_amd();
+ 	generic_phy = devm_phy_create(dev, NULL, &qusb2_phy_gen_ops);
+ 	if (IS_ERR(generic_phy)) {
+ 		ret = PTR_ERR(generic_phy);
+ 		dev_err(dev, "failed to create phy, %d\n", ret);
+-		pm_runtime_disable(dev);
+ 		return ret;
+ 	}
+ 	qphy->phy = generic_phy;
+ 
+-	dev_set_drvdata(dev, qphy);
+ 	phy_set_drvdata(generic_phy, qphy);
+ 
+ 	phy_provider = devm_of_phy_provider_register(dev, of_phy_simple_xlate);
+-	if (IS_ERR(phy_provider))
+-		pm_runtime_disable(dev);
+ 
+ 	return PTR_ERR_OR_ZERO(phy_provider);
  }
- 
+-- 
+2.51.0
+
 
 
