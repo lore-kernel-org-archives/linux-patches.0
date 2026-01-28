@@ -1,41 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE2F42E6CCD;
-	Wed, 28 Jan 2026 15:39:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 555A323EA92;
+	Wed, 28 Jan 2026 15:39:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769614793; cv=none; b=RBXVzyKPpSeJAYHKeuVUJY5BiaHMnqAZpiu83fiwixLPpFYSxuJSNlgkxuIeNqobanwyI8okzkdPpg5RhCRZjzoNINmZtWVccgdGEFSQr7YJQrhYNdg7245ZOtz22GJIuqBLYR6eXRd7FLpp5d2KioeudA8cXKDPeWlmazZC6mY=
+	t=1769614797; cv=none; b=PVaWtUEzTgRdf7/6fo1+bjuEMNNCO0GqmE5X8KvDwz46ix3q/Nj7SjsVDeYLVLdurr2ABddxWjj4WeNhvlB60GyGP7Wg6Tj/v3sEK8YvHzlLaMeMrc2Xep2lYqALBc5eISjOAhiSTm7E4jQrUWmpDggKr5t7W6aIdu+GrQVDpbc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769614793; c=relaxed/simple;
-	bh=qd1KW2QwFWmg1ynd0gpYocG2uAEsP17h8zkpuMYhBBA=;
+	s=arc-20240116; t=1769614797; c=relaxed/simple;
+	bh=XbexPGJBLGsjGJbUhiHSo14NMuAatsYtNko8vEKUuGE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YfyTmXAj2m1K5zvJfgZA+0Xags+W/YKFyXHx35x1m7aCTA+jZ/LD9W8acUDEaWMTKlPYRGtKH6O8/yJrNuAKwas2g/j0WjPjOAZVOJK71d/DNON4IQt5ZEh4/HnosruQzz+lnvrhj+3YX5lpXNfKNuynZJaD4V3WYrSbvdpPIxw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1b5xrpVO; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=R9wPriD2hyf1+ZwbLSu3HUf2c8VflngPfalzcevtb+YvR9CDIcPjt/+k330fRh/IgYFrqZPymkwVEdq0AgyqQHh0GqALNy4alQzum5VXMcvF5IJr+BQbkPa4Y0I9fbxr2Q6Of8maq7FfE2AoOktEZ2lFVNqN/DSQCVuEzpSHwQQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wO7IaTHZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1b5xrpVO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 223BAC4CEF1;
-	Wed, 28 Jan 2026 15:39:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wO7IaTHZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 81132C4CEF1;
+	Wed, 28 Jan 2026 15:39:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1769614793;
-	bh=qd1KW2QwFWmg1ynd0gpYocG2uAEsP17h8zkpuMYhBBA=;
+	s=korg; t=1769614797;
+	bh=XbexPGJBLGsjGJbUhiHSo14NMuAatsYtNko8vEKUuGE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1b5xrpVOOEowVs25y6n9n3BgJUuaOThxdmrDF7e/jcMTosmljCUP0JrUnwJIJxEo1
-	 uRsX8K4YnBR8gnG7TNnkiX+CIAcTPud9XBxpVeQxaiHl3MRNtibYzPAc7M8RrcrZl+
-	 tdNDRUQ+O3CSbZLxgoZTUk5DVGVpmPc29EImxfBg=
+	b=wO7IaTHZJ+BN6QRU0g+CUZy49vUcph49lg782j99qEil8Y27jazaFEYwyV8IgOrJg
+	 w3HHQAVNHt9gVHL5ADShp5lD1cMcVlVnw9ASJ+AKWdH4h/usMP5EcC2MrVNtElN5HF
+	 T6mTGhXF0WLMm+y6UsSK5OFRhVAWHgt0Tgffr1Xo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christoph Hellwig <hch@lst.de>,
-	Sagi Grimberg <sagi@grimberg.me>,
-	Hannes Reinecke <hare@suse.de>,
-	Daniel Wagner <dwagner@suse.de>,
-	Keith Busch <kbusch@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 242/254] nvme-fc: rename free_ctrl callback to match name pattern
-Date: Wed, 28 Jan 2026 16:23:38 +0100
-Message-ID: <20260128145353.504109393@linuxfoundation.org>
+	Mario Limonciello <mario.limonciello@amd.com>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>
+Subject: [PATCH 6.6 212/254] platform/x86: hp-bioscfg: Fix automatic module loading
+Date: Wed, 28 Jan 2026 16:23:08 +0100
+Message-ID: <20260128145352.421085955@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260128145344.698118637@linuxfoundation.org>
 References: <20260128145344.698118637@linuxfoundation.org>
@@ -48,50 +44,55 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Daniel Wagner <dwagner@suse.de>
+From: Mario Limonciello <mario.limonciello@amd.com>
 
-[ Upstream commit 205fb5fa6fde1b5b426015eb1ff69f2ff25ef5bb ]
+commit 467d4afc6caa64b84a6db1634f8091e931f4a7cb upstream.
 
-Rename nvme_fc_nvme_ctrl_freed to nvme_fc_free_ctrl to match the name
-pattern for the callback.
+hp-bioscfg has a MODULE_DEVICE_TABLE with a GUID in it that looks
+plausible, but the module doesn't automatically load on applicable
+systems.
 
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Reviewed-by: Sagi Grimberg <sagi@grimberg.me>
-Reviewed-by: Hannes Reinecke <hare@suse.de>
-Signed-off-by: Daniel Wagner <dwagner@suse.de>
-Signed-off-by: Keith Busch <kbusch@kernel.org>
-Stable-dep-of: 0edb475ac0a7 ("nvme: fix PCIe subsystem reset controller state transition")
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+This is because the GUID has some lower case characters and so it
+doesn't match the modalias during boot. Update the GUIDs to be all
+uppercase.
+
+Cc: stable@vger.kernel.org
+Fixes: 5f94f181ca25 ("platform/x86: hp-bioscfg: bioscfg-h")
+Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
+Link: https://patch.msgid.link/20260115203725.828434-4-mario.limonciello@amd.com
+Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/nvme/host/fc.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/platform/x86/hp/hp-bioscfg/bioscfg.h |    6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
---- a/drivers/nvme/host/fc.c
-+++ b/drivers/nvme/host/fc.c
-@@ -2384,7 +2384,7 @@ nvme_fc_ctrl_get(struct nvme_fc_ctrl *ct
-  * controller. Called after last nvme_put_ctrl() call
-  */
- static void
--nvme_fc_nvme_ctrl_freed(struct nvme_ctrl *nctrl)
-+nvme_fc_free_ctrl(struct nvme_ctrl *nctrl)
- {
- 	struct nvme_fc_ctrl *ctrl = to_fc_ctrl(nctrl);
+--- a/drivers/platform/x86/hp/hp-bioscfg/bioscfg.h
++++ b/drivers/platform/x86/hp/hp-bioscfg/bioscfg.h
+@@ -57,14 +57,14 @@ enum mechanism_values {
  
-@@ -3349,7 +3349,7 @@ static const struct nvme_ctrl_ops nvme_f
- 	.reg_read32		= nvmf_reg_read32,
- 	.reg_read64		= nvmf_reg_read64,
- 	.reg_write32		= nvmf_reg_write32,
--	.free_ctrl		= nvme_fc_nvme_ctrl_freed,
-+	.free_ctrl		= nvme_fc_free_ctrl,
- 	.submit_async_event	= nvme_fc_submit_async_event,
- 	.delete_ctrl		= nvme_fc_delete_ctrl,
- 	.get_address		= nvmf_get_address,
+ #define PASSWD_MECHANISM_TYPES "password"
+ 
+-#define HP_WMI_BIOS_GUID		"5FB7F034-2C63-45e9-BE91-3D44E2C707E4"
++#define HP_WMI_BIOS_GUID		"5FB7F034-2C63-45E9-BE91-3D44E2C707E4"
+ 
+-#define HP_WMI_BIOS_STRING_GUID		"988D08E3-68F4-4c35-AF3E-6A1B8106F83C"
++#define HP_WMI_BIOS_STRING_GUID		"988D08E3-68F4-4C35-AF3E-6A1B8106F83C"
+ #define HP_WMI_BIOS_INTEGER_GUID	"8232DE3D-663D-4327-A8F4-E293ADB9BF05"
+ #define HP_WMI_BIOS_ENUMERATION_GUID	"2D114B49-2DFB-4130-B8FE-4A3C09E75133"
+ #define HP_WMI_BIOS_ORDERED_LIST_GUID	"14EA9746-CE1F-4098-A0E0-7045CB4DA745"
+ #define HP_WMI_BIOS_PASSWORD_GUID	"322F2028-0F84-4901-988E-015176049E2D"
+-#define HP_WMI_SET_BIOS_SETTING_GUID	"1F4C91EB-DC5C-460b-951D-C7CB9B4B8D5E"
++#define HP_WMI_SET_BIOS_SETTING_GUID	"1F4C91EB-DC5C-460B-951D-C7CB9B4B8D5E"
+ 
+ enum hp_wmi_spm_commandtype {
+ 	HPWMI_SECUREPLATFORM_GET_STATE  = 0x10,
 
 
