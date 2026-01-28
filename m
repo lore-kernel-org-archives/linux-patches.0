@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC7D32D5408;
-	Wed, 28 Jan 2026 15:36:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B36572D0C62;
+	Wed, 28 Jan 2026 15:36:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769614595; cv=none; b=nq8rTxUauNIVRqjl4njTw4TUtCNvjrURc/UxANdH2uFAFJAqLiN+B3z74ugHP13Q0eXtHecDMVi2K5VGr6L3OIzwyPLNyTdwIEVnBbvx+2ezwZ0f8TJWetwf/qjk+7ketiu2ngLIiyJETWvsWYpFZSIiOe5FyEVJtqPL6rkcR8M=
+	t=1769614598; cv=none; b=pKAPswEtXwvx7zk5/BEOGMTrVEw1IZaSiMrUvqya8MfcKqlP43xa5RB0oB+rv9VNLKoYB5ljATdELdYzSlPT6Ddi7T4DhU9tcV6Js5ShDNkhDHVoqhnxAwll5xYspGQnlREw1lf4cm/iKSU8ZQg2/0KTWi1d3EvaSVyaXVuzPzo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769614595; c=relaxed/simple;
-	bh=HY6xEEuiRdS81MA3W95h6iSCGN/6SsojlPoSzUq65XM=;
+	s=arc-20240116; t=1769614598; c=relaxed/simple;
+	bh=mEOjuoiQwgV4KtbHMonZxgGvj96FSO+j0Emc3xl6+WE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FwNsUN7dx6/NZpzEFbQE3nfZaKxj6ehN8tTwQmp7bX+HPQN0H+pT92zs7a4TrC4VbHnydEExNDy2JYc3TxK3lPJXG6TstZwZEig14Qm1s7zqsScRkNBS1uV6UbmVV7by78wI1MDTjaXow4HqaWTrBefmvtAykiKN/lIo8XzntQw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dPaFx3AQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MS8S/dzVlP6rkGIlCAXqV7ttzlt1yTDnyGFm7J31/FkSb50SEly8UodobypvCSRq0paoQnEn8fecfgGlSc2peVN8Gwiqk8gBWI9ChnOYEi8syngngxEdpjiFOHXpQuKxO4fY7TJYI5KmqjP70NSkvrsdnrlar6FdZPG5IzGwwOw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=U4qeZdpf; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dPaFx3AQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D7934C16AAE;
-	Wed, 28 Jan 2026 15:36:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="U4qeZdpf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3CF9CC4CEF1;
+	Wed, 28 Jan 2026 15:36:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1769614595;
-	bh=HY6xEEuiRdS81MA3W95h6iSCGN/6SsojlPoSzUq65XM=;
+	s=korg; t=1769614598;
+	bh=mEOjuoiQwgV4KtbHMonZxgGvj96FSO+j0Emc3xl6+WE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dPaFx3AQymfSCelty0g8TgPH5uIoMod9uFtGvut3SnVaeBMnSEKDobo7V2QE0nwDp
-	 NlJrsLun3eDx8VrZdjKCfUbmAofoEPI8jtkrVwtuCBqJPdF1ezQQhJWdK2hF50+vHX
-	 KipiJRTJ+EmeZ5pUtkpz1VZajg15Rgmj0SbLxsnw=
+	b=U4qeZdpfgiMU8XD7ihQzrxZEr0bKdmb16NxzMeIygK0Kdbfzd4nlsEZJUAcVElqhj
+	 vsh7+OqxHWGFvWa9B5cWvqHb8hfPomOpeo1TuEbZ+697m4ZqMyQGos8AYRvIeIcQ3G
+	 VUZlw/SG+vIq8QRsh+/HCCeweRNeO/4Ea34SY/+A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Weigang He <geoffreyhe2@gmail.com>,
+	Sudeep Holla <sudeep.holla@arm.com>,
 	"Rob Herring (Arm)" <robh@kernel.org>
-Subject: [PATCH 6.6 185/254] of: fix reference count leak in of_alias_scan()
-Date: Wed, 28 Jan 2026 16:22:41 +0100
-Message-ID: <20260128145351.460107004@linuxfoundation.org>
+Subject: [PATCH 6.6 186/254] of: platform: Use default match table for /firmware
+Date: Wed, 28 Jan 2026 16:22:42 +0100
+Message-ID: <20260128145351.495631938@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260128145344.698118637@linuxfoundation.org>
 References: <20260128145344.698118637@linuxfoundation.org>
@@ -50,49 +50,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Weigang He <geoffreyhe2@gmail.com>
+From: Rob Herring (Arm) <robh@kernel.org>
 
-commit 81122fba08fa3ccafab6ed272a5c6f2203923a7e upstream.
+commit 48e6a9c4a20870e09f85ff1a3628275d6bce31c0 upstream.
 
-of_find_node_by_path() returns a device_node with its refcount
-incremented. When kstrtoint() fails or dt_alloc() fails, the function
-continues to the next iteration without calling of_node_put(), causing
-a reference count leak.
+Calling of_platform_populate() without a match table will only populate
+the immediate child nodes under /firmware. This is usually fine, but in
+the case of something like a "simple-mfd" node such as
+"raspberrypi,bcm2835-firmware", those child nodes will not be populated.
+And subsequent calls won't work either because the /firmware node is
+marked as processed already.
 
-Add of_node_put(np) before continue on both error paths to properly
-release the device_node reference.
+Switch the call to of_platform_default_populate() to solve this problem.
+It should be a nop for existing cases.
 
-Fixes: 611cad720148 ("dt: add of_alias_scan and of_alias_get_id")
+Fixes: 3aa0582fdb82 ("of: platform: populate /firmware/ node from of_platform_default_populate_init()")
 Cc: stable@vger.kernel.org
-Signed-off-by: Weigang He <geoffreyhe2@gmail.com>
-Link: https://patch.msgid.link/20260117091238.481243-1-geoffreyhe2@gmail.com
+Reviewed-by: Sudeep Holla <sudeep.holla@arm.com>
+Link: https://patch.msgid.link/20260114015158.692170-2-robh@kernel.org
 Signed-off-by: Rob Herring (Arm) <robh@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/of/base.c |    8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ drivers/of/platform.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/of/base.c
-+++ b/drivers/of/base.c
-@@ -1788,13 +1788,17 @@ void of_alias_scan(void * (*dt_alloc)(u6
- 			end--;
- 		len = end - start;
+--- a/drivers/of/platform.c
++++ b/drivers/of/platform.c
+@@ -616,7 +616,7 @@ static int __init of_platform_default_po
  
--		if (kstrtoint(end, 10, &id) < 0)
-+		if (kstrtoint(end, 10, &id) < 0) {
-+			of_node_put(np);
- 			continue;
-+		}
+ 		node = of_find_node_by_path("/firmware");
+ 		if (node) {
+-			of_platform_populate(node, NULL, NULL, NULL);
++			of_platform_default_populate(node, NULL, NULL);
+ 			of_node_put(node);
+ 		}
  
- 		/* Allocate an alias_prop with enough space for the stem */
- 		ap = dt_alloc(sizeof(*ap) + len + 1, __alignof__(*ap));
--		if (!ap)
-+		if (!ap) {
-+			of_node_put(np);
- 			continue;
-+		}
- 		memset(ap, 0, sizeof(*ap) + len + 1);
- 		ap->alias = start;
- 		of_alias_add(ap, np, id, start, len);
 
 
