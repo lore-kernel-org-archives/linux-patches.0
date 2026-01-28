@@ -1,45 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4FA9131280F;
-	Wed, 28 Jan 2026 15:43:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59AD2280327;
+	Wed, 28 Jan 2026 15:43:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769615031; cv=none; b=Ce/ZZAbWXXrDEsMgJsi6DcYGOblIA20g36saDmORmGZ2RMBopqVxbwagRYJOGRnqH8S18EoVo4Y7HNYEyhTRl65mh3rHfTaP3FhxrOFrrUGNJL1cCUnC18hwqQ2/HJSxJKs+l7HhZbtrfcTE4sVzMcIgl1jfq8YYw2Q0KgLCgaA=
+	t=1769615034; cv=none; b=LU9DH7tM+DD6tYboqpo0WiRpkUUWKsghweqHCYVlz8ikpzM5DvZuxvZcbIKSBx8EmWgm0MZJgxirKteMVPFDjwAuni7QdnQHw/WkxfcCMFsEsbs5omFYHPkM8L4sVKVQBWkmt1dvZC+GLBBvplocC1mS3NTku7+zy6agMADFnI0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769615031; c=relaxed/simple;
-	bh=ceO20kSzass4p5H+niKRrTD558uGYa3CQlaX3jAmmac=;
+	s=arc-20240116; t=1769615034; c=relaxed/simple;
+	bh=0h+sBSb4YnXf76GSR6XWTeA3xju9ItAMPsrjIBc4RA4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bV0uKxWdFbc88tdsVTeLgPMzgU6MdG/oBzadChiR4Dj6d7DTV3QXzz+jDil4pppjAw7XKs8gTTKj55TGw7gcwZhdvrzgLl3oHMqkwkIXdL2bWHv5mAFXsKR1zOt9ScxTFnu4Iyl7LZiWb9+or9y+zZt2zcN/VPnWNbemLmb6qf0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LSKQxowo; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=EF3ZaV5cDPRsCyaHw55HzS7hM/652hMRBRZm3IeoKT9LHkiCSlwAm6lsDsnaUH03vJdd47iId4tuoS0Ndnh1SXR9/RPsWF6g6b0H2bRNIbwb3MqN2jMXcgwf2n5l+zzp8cB6lqKkGxDfBTDPPcqoDM/hpREnQmPai3y+DAky1MU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=J8Jfp8Dc; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LSKQxowo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B598C4CEF1;
-	Wed, 28 Jan 2026 15:43:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="J8Jfp8Dc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A7FF3C16AAE;
+	Wed, 28 Jan 2026 15:43:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1769615030;
-	bh=ceO20kSzass4p5H+niKRrTD558uGYa3CQlaX3jAmmac=;
+	s=korg; t=1769615034;
+	bh=0h+sBSb4YnXf76GSR6XWTeA3xju9ItAMPsrjIBc4RA4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LSKQxowouReDYQ9BO4ItgDTWjOVmu/UBemxB0krFH1lXB/E9O+ScJU/MC5pK17zBu
-	 hzhinPZ/kXoNwzS2zAbgZ6N7d2XKID1hYb7rQsoWvruFewaoGgqe9qf0qsUvzTkq5h
-	 x6SdP4JeFZ0d1JZJbY8V4GfntiV3Vgdu53Z/T4FU=
+	b=J8Jfp8Dc3h4mX45uWJXn4aBuAyuBJ8vsikqmsuUGb+9S5q2+L5sqxHihcZ+7ZYSCI
+	 S+bmR/5wjEzLGFHnpeGDPGnXRkRqwEbWSqIrTxTNW4Ooo/TEnhUhcdx2RAxitwuZUT
+	 +qKuSohcxZR5JglX5yzmB2y3lcj7dW12sujHNVog=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"David Hildenbrand (Red Hat)" <david@kernel.org>,
-	Rik van Riel <riel@surriel.com>,
-	Laurence Oberman <loberman@redhat.com>,
-	Lorenzo Stoakes <lorenzo.stoakes@oracle.com>,
-	Oscar Salvador <osalvador@suse.de>,
-	Liu Shixin <liushixin2@huawei.com>,
-	Harry Yoo <harry.yoo@oracle.com>,
-	Lance Yang <lance.yang@linux.dev>,
-	"Uschakow, Stanislav" <suschako@amazon.de>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.12 058/169] mm/rmap: fix two comments related to huge_pmd_unshare()
-Date: Wed, 28 Jan 2026 16:22:21 +0100
-Message-ID: <20260128145336.100760224@linuxfoundation.org>
+	syzbot+4eb282331cab6d5b6588@syzkaller.appspotmail.com,
+	Jens Axboe <axboe@kernel.dk>
+Subject: [PATCH 6.12 059/169] io_uring/io-wq: check IO_WQ_BIT_EXIT inside work run loop
+Date: Wed, 28 Jan 2026 16:22:22 +0100
+Message-ID: <20260128145336.136898494@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260128145334.006287341@linuxfoundation.org>
 References: <20260128145334.006287341@linuxfoundation.org>
@@ -58,72 +50,89 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Hildenbrand (Red Hat) <david@kernel.org>
+From: Jens Axboe <axboe@kernel.dk>
 
-commit a8682d500f691b6dfaa16ae1502d990aeb86e8be upstream.
+commit 10dc959398175736e495f71c771f8641e1ca1907 upstream.
 
-PMD page table unsharing no longer touches the refcount of a PMD page
-table.  Also, it is not about dropping the refcount of a "PMD page" but
-the "PMD page table".
+Currently this is checked before running the pending work. Normally this
+is quite fine, as work items either end up blocking (which will create a
+new worker for other items), or they complete fairly quickly. But syzbot
+reports an issue where io-wq takes seemingly forever to exit, and with a
+bit of debugging, this turns out to be because it queues a bunch of big
+(2GB - 4096b) reads with a /dev/msr* file. Since this file type doesn't
+support ->read_iter(), loop_rw_iter() ends up handling them. Each read
+returns 16MB of data read, which takes 20 (!!) seconds. With a bunch of
+these pending, processing the whole chain can take a long time. Easily
+longer than the syzbot uninterruptible sleep timeout of 140 seconds.
+This then triggers a complaint off the io-wq exit path:
 
-Let's just simplify by saying that the PMD page table was unmapped,
-consequently also unmapping the folio that was mapped into this page.
+INFO: task syz.4.135:6326 blocked for more than 143 seconds.
+      Not tainted syzkaller #0
+      Blocked by coredump.
+"echo 0 > /proc/sys/kernel/hung_task_timeout_secs" disables this message.
+task:syz.4.135       state:D stack:26824 pid:6326  tgid:6324  ppid:5957   task_flags:0x400548 flags:0x00080000
+Call Trace:
+ <TASK>
+ context_switch kernel/sched/core.c:5256 [inline]
+ __schedule+0x1139/0x6150 kernel/sched/core.c:6863
+ __schedule_loop kernel/sched/core.c:6945 [inline]
+ schedule+0xe7/0x3a0 kernel/sched/core.c:6960
+ schedule_timeout+0x257/0x290 kernel/time/sleep_timeout.c:75
+ do_wait_for_common kernel/sched/completion.c:100 [inline]
+ __wait_for_common+0x2fc/0x4e0 kernel/sched/completion.c:121
+ io_wq_exit_workers io_uring/io-wq.c:1328 [inline]
+ io_wq_put_and_exit+0x271/0x8a0 io_uring/io-wq.c:1356
+ io_uring_clean_tctx+0x10d/0x190 io_uring/tctx.c:203
+ io_uring_cancel_generic+0x69c/0x9a0 io_uring/cancel.c:651
+ io_uring_files_cancel include/linux/io_uring.h:19 [inline]
+ do_exit+0x2ce/0x2bd0 kernel/exit.c:911
+ do_group_exit+0xd3/0x2a0 kernel/exit.c:1112
+ get_signal+0x2671/0x26d0 kernel/signal.c:3034
+ arch_do_signal_or_restart+0x8f/0x7e0 arch/x86/kernel/signal.c:337
+ __exit_to_user_mode_loop kernel/entry/common.c:41 [inline]
+ exit_to_user_mode_loop+0x8c/0x540 kernel/entry/common.c:75
+ __exit_to_user_mode_prepare include/linux/irq-entry-common.h:226 [inline]
+ syscall_exit_to_user_mode_prepare include/linux/irq-entry-common.h:256 [inline]
+ syscall_exit_to_user_mode_work include/linux/entry-common.h:159 [inline]
+ syscall_exit_to_user_mode include/linux/entry-common.h:194 [inline]
+ do_syscall_64+0x4ee/0xf80 arch/x86/entry/syscall_64.c:100
+ entry_SYSCALL_64_after_hwframe+0x77/0x7f
+RIP: 0033:0x7fa02738f749
+RSP: 002b:00007fa0281ae0e8 EFLAGS: 00000246 ORIG_RAX: 00000000000000ca
+RAX: fffffffffffffe00 RBX: 00007fa0275e6098 RCX: 00007fa02738f749
+RDX: 0000000000000000 RSI: 0000000000000080 RDI: 00007fa0275e6098
+RBP: 00007fa0275e6090 R08: 0000000000000000 R09: 0000000000000000
+R10: 0000000000000000 R11: 0000000000000246 R12: 0000000000000000
+R13: 00007fa0275e6128 R14: 00007fff14e4fcb0 R15: 00007fff14e4fd98
 
-This code should be deduplicated in the future.
+There's really nothing wrong here, outside of processing these reads
+will take a LONG time. However, we can speed up the exit by checking the
+IO_WQ_BIT_EXIT inside the io_worker_handle_work() loop, as syzbot will
+exit the ring after queueing up all of these reads. Then once the first
+item is processed, io-wq will simply cancel the rest. That should avoid
+syzbot running into this complaint again.
 
-Link: https://lkml.kernel.org/r/20251223214037.580860-4-david@kernel.org
-Fixes: 59d9094df3d7 ("mm: hugetlb: independent PMD page table shared count")
-Signed-off-by: David Hildenbrand (Red Hat) <david@kernel.org>
-Reviewed-by: Rik van Riel <riel@surriel.com>
-Tested-by: Laurence Oberman <loberman@redhat.com>
-Reviewed-by: Lorenzo Stoakes <lorenzo.stoakes@oracle.com>
-Acked-by: Oscar Salvador <osalvador@suse.de>
-Cc: Liu Shixin <liushixin2@huawei.com>
-Cc: Harry Yoo <harry.yoo@oracle.com>
-Cc: Lance Yang <lance.yang@linux.dev>
-Cc: "Uschakow, Stanislav" <suschako@amazon.de>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/all/68a2decc.050a0220.e29e5.0099.GAE@google.com/
+Reported-by: syzbot+4eb282331cab6d5b6588@syzkaller.appspotmail.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/rmap.c |   20 ++++----------------
- 1 file changed, 4 insertions(+), 16 deletions(-)
+ io_uring/io-wq.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/mm/rmap.c
-+++ b/mm/rmap.c
-@@ -1753,14 +1753,8 @@ static bool try_to_unmap_one(struct foli
- 					flush_tlb_range(vma,
- 						range.start, range.end);
- 					/*
--					 * The ref count of the PMD page was
--					 * dropped which is part of the way map
--					 * counting is done for shared PMDs.
--					 * Return 'true' here.  When there is
--					 * no other sharing, huge_pmd_unshare
--					 * returns false and we will unmap the
--					 * actual page and drop map count
--					 * to zero.
-+					 * The PMD table was unmapped,
-+					 * consequently unmapping the folio.
- 					 */
- 					goto walk_done;
- 				}
-@@ -2128,14 +2122,8 @@ static bool try_to_migrate_one(struct fo
- 						range.start, range.end);
+--- a/io_uring/io-wq.c
++++ b/io_uring/io-wq.c
+@@ -552,9 +552,9 @@ static void io_worker_handle_work(struct
+ 	__releases(&acct->lock)
+ {
+ 	struct io_wq *wq = worker->wq;
+-	bool do_kill = test_bit(IO_WQ_BIT_EXIT, &wq->state);
  
- 					/*
--					 * The ref count of the PMD page was
--					 * dropped which is part of the way map
--					 * counting is done for shared PMDs.
--					 * Return 'true' here.  When there is
--					 * no other sharing, huge_pmd_unshare
--					 * returns false and we will unmap the
--					 * actual page and drop map count
--					 * to zero.
-+					 * The PMD table was unmapped,
-+					 * consequently unmapping the folio.
- 					 */
- 					page_vma_mapped_walk_done(&pvmw);
- 					break;
+ 	do {
++		bool do_kill = test_bit(IO_WQ_BIT_EXIT, &wq->state);
+ 		struct io_wq_work *work;
+ 
+ 		/*
 
 
