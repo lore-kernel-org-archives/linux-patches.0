@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1699236C0C7;
-	Wed, 28 Jan 2026 15:27:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CCCA036AB62;
+	Wed, 28 Jan 2026 15:27:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769614042; cv=none; b=m6kb3vAi2Lh1o/lk5V1e9GibqKzuln6DcYW8ZBla0zgYPU334ozPAo6J4nWJXDlLFCEYMNmbgFN1+gNmF3R/6IZbnPWwgQxbqmyDfVn8Pm8ieK/2a0xEuezhNl/wa0ATBmF8aNhNp3pztzajpGTgbUk18I8R/xe+clFVwklrioI=
+	t=1769614044; cv=none; b=NY4fvujxgFHO1Mx3yw0pHMayvB/xEF7v42aN0lzjqpjpSTB8iiNp0Ov+HYQ0NSmy9hNF9rKnCz8Yrn70qyWqMc/VWZkQ5yEmFjTHjxuna6PhI52yh1reQPz8EZkGu5QSVy/COXwst0w3eC6jk6TEHkYgXXrovihNmo4jPiWonUU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769614042; c=relaxed/simple;
-	bh=D2oZRhmTJAiRSuiccxUCtQ4Gcmhj1FYFDviPe2B/TkI=;
+	s=arc-20240116; t=1769614044; c=relaxed/simple;
+	bh=uZnjDe43rS0MCe594Lrf736iTXZx0h2b7NWfHwkoDK0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UPvogvbGNH+Rg5DQVtBHZAN3nKd/hbvasv/SXxx/ABgkZbL4i8ZbNYtSbsCTOFK0i0am5DDXoeehQXK133Fo/giSaPQgx2wE7DGYxc3/hxTPUb66FkpjQZcFcqNJSc89oEp7JL92W0ynxQeAvShhzA4apj6V5V3twattGAmwVo8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Viv3AG2L; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PhqC1k1Ij1znZC0ff34OStaKJE0h7G4c8b70c8iRaTcIFWQXVfDIudYQmIsVXhuKpgXtgaumkwE+VLU8sjzNGZbbvgpGoPho7c6UPI2/6//WfwopF3DLKVsfKNlQIauULiXg0X7toijtCjhJKmfBg3O8TR5wryqsFMnZY6/22pw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EnwPD+Gg; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Viv3AG2L"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CDAF7C4CEF1;
-	Wed, 28 Jan 2026 15:27:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EnwPD+Gg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D772C4AF09;
+	Wed, 28 Jan 2026 15:27:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1769614041;
-	bh=D2oZRhmTJAiRSuiccxUCtQ4Gcmhj1FYFDviPe2B/TkI=;
+	s=korg; t=1769614044;
+	bh=uZnjDe43rS0MCe594Lrf736iTXZx0h2b7NWfHwkoDK0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Viv3AG2LIeQUPtchreLJ7o2rQOmVGsKt2P7Psg047yteqbcgVZL3gO07aC0DmULuN
-	 bgPqbM4f7U+LZ0tI6peFGZmYNUAUzZ7LS1S8KLmjc9ymAhEmG7plYcWbXjHV1y8ZSq
-	 KLwVbjk2Wd9+IGys2z9DV5Gvr6QxpetThDNVc+3o=
+	b=EnwPD+GgHFwltLmsS/nDBHLce3XZBY8DPclDUyyeMcmjEHnkfEBMBEWLgpiUPUCQv
+	 v2B6hkiEaPKLCQbJe357OhGVggXjfD3aaWG4TGzeuxCs0VZJWnPptPYQAdoNPMsxBk
+	 YWl29dRW+udkiQ50SsVhDo9vdSb/ikIofXHS3moE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Josef Bacik <josef@toxicpanda.com>,
-	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
-	Boris Burkov <boris@bur.io>,
-	David Sterba <dsterba@suse.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 019/254] btrfs: store fs_info in space_info
-Date: Wed, 28 Jan 2026 16:19:55 +0100
-Message-ID: <20260128145345.397708537@linuxfoundation.org>
+	Morduan Zang <zhangdandan@uniontech.com>,
+	Ard Biesheuvel <ardb@kernel.org>
+Subject: [PATCH 6.6 002/254] efi/cper: Fix cper_bits_to_str buffer handling and return value
+Date: Wed, 28 Jan 2026 16:19:38 +0100
+Message-ID: <20260128145344.791241510@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260128145344.698118637@linuxfoundation.org>
 References: <20260128145344.698118637@linuxfoundation.org>
@@ -53,53 +50,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Boris Burkov <boris@bur.io>
+From: Morduan Zang <zhangdandan@uniontech.com>
 
-[ Upstream commit 42f620aec182f62ee72e3fce41cb3353951b3508 ]
+commit d7f1b4bdc7108be1b178e1617b5f45c8918e88d7 upstream.
 
-This is handy when computing space_info dynamic reclaim thresholds where
-we do not have access to a block group. We could add it to the various
-functions as a parameter, but it seems reasonable for space_info to have
-an fs_info pointer.
+The return value calculation was incorrect: `return len - buf_size;`
+Initially `len = buf_size`, then `len` decreases with each operation.
+This results in a negative return value on success.
 
-Reviewed-by: Josef Bacik <josef@toxicpanda.com>
-Reviewed-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
-Signed-off-by: Boris Burkov <boris@bur.io>
-Reviewed-by: David Sterba <dsterba@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
-Stable-dep-of: a11224a016d6 ("btrfs: fix memory leaks in create_space_info() error paths")
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fix by returning `buf_size - len` which correctly calculates the actual
+number of bytes written.
+
+Fixes: a976d790f494 ("efi/cper: Add a new helper function to print bitmasks")
+Signed-off-by: Morduan Zang <zhangdandan@uniontech.com>
+Signed-off-by: Ard Biesheuvel <ardb@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/btrfs/space-info.c | 1 +
- fs/btrfs/space-info.h | 1 +
- 2 files changed, 2 insertions(+)
+ drivers/firmware/efi/cper.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/btrfs/space-info.c b/fs/btrfs/space-info.c
-index 27690c518f6d7..bf5e509eb9fa8 100644
---- a/fs/btrfs/space-info.c
-+++ b/fs/btrfs/space-info.c
-@@ -233,6 +233,7 @@ static int create_space_info(struct btrfs_fs_info *info, u64 flags)
- 	if (!space_info)
- 		return -ENOMEM;
+--- a/drivers/firmware/efi/cper.c
++++ b/drivers/firmware/efi/cper.c
+@@ -162,7 +162,7 @@ int cper_bits_to_str(char *buf, int buf_
+ 		len -= size;
+ 		str += size;
+ 	}
+-	return len - buf_size;
++	return buf_size - len;
+ }
+ EXPORT_SYMBOL_GPL(cper_bits_to_str);
  
-+	space_info->fs_info = info;
- 	for (i = 0; i < BTRFS_NR_RAID_TYPES; i++)
- 		INIT_LIST_HEAD(&space_info->block_groups[i]);
- 	init_rwsem(&space_info->groups_sem);
-diff --git a/fs/btrfs/space-info.h b/fs/btrfs/space-info.h
-index b0187f25dbb5e..39452e36625ae 100644
---- a/fs/btrfs/space-info.h
-+++ b/fs/btrfs/space-info.h
-@@ -84,6 +84,7 @@ enum btrfs_flush_state {
- };
- 
- struct btrfs_space_info {
-+	struct btrfs_fs_info *fs_info;
- 	spinlock_t lock;
- 
- 	u64 total_bytes;	/* total bytes in the space,
--- 
-2.51.0
-
 
 
