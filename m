@@ -1,37 +1,46 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2168C30FC21;
-	Wed, 28 Jan 2026 15:43:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 689A630FC1B;
+	Wed, 28 Jan 2026 15:43:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769615014; cv=none; b=txo61LHTI8jETJl0tQke24CYe68M6mJYG25i77tGv45S8flgGvzgW9lvzg65OL2UqrzY10U2KXWw/wM604zwngaPr/aTWPQ+7Vc2Vqq75N6SB8+2nMKPP7bOjLCYd5G8Mnu+2Riw6g4DU43gt79Ia4jYGA0FkEvtAEEJIwPYY+4=
+	t=1769615017; cv=none; b=tgDV4WEv1BqWYsv2RuUfVdfrllEJSRMqApezLVzi33a15wddoXalF6hdZSmzhp8whxf5UKHrecb92S2Ri11Qv27/Cc8epEFjKC24aAocw02ytlrB5pO1mKVyMcDQtTSJTupMxYPgX5LWfLsyF5ie6aNK3uAI5I+OP402gfXURKs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769615014; c=relaxed/simple;
-	bh=O4vc7yIErZhPD9+yfmHahpOk9E825nF6QhHLuzrLTyk=;
+	s=arc-20240116; t=1769615017; c=relaxed/simple;
+	bh=sBf1R5SchPsXqpaQGuDwzTIlyG+7KQzBgFHbpjStzIs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kGy5K9OrA2HQahgVXLkwWqslKIbRsH8cmjRtQomNRELVQifbH3oigrDp2riJcmiHEBIVcF5bQik8gzysnwC9thgPb+cXvO+zZgV1JUpETyWPiUtUunhYNPtqHQ4Xg40A/DgcM/Yg3m+CXpyTuC+AMMpb1ObsXCS9pea+Fmsbb94=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=H9vQ2duU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Nli6mXjPN5n1Jg/RR3dKuYFI3XugEiSyljQqK6YhbMdmkauPq9i3bKNfW9WMi7fx+9THmStiytK03mZKo3Y7Bcqy0oABV9NOCjxyIgGvCTpbjk0MnwlOcKbWz6i9YdkWuoDFyuX2Dgdhm8jlLxn3syqDeoI0xIoJt/nH3xt6UhY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Lha5LU0T; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="H9vQ2duU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4882CC4CEF7;
-	Wed, 28 Jan 2026 15:43:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Lha5LU0T"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8DFBBC4CEF1;
+	Wed, 28 Jan 2026 15:43:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1769615013;
-	bh=O4vc7yIErZhPD9+yfmHahpOk9E825nF6QhHLuzrLTyk=;
+	s=korg; t=1769615017;
+	bh=sBf1R5SchPsXqpaQGuDwzTIlyG+7KQzBgFHbpjStzIs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=H9vQ2duUsMUsJOAucMAD5aAQMP236NFfbgbLBDUCWUQTBfkD93jYm55gNuj7BoPrc
-	 fs4UG2RWWQpkkAJlBvZ7GFXphKxyyfMEMM/Cn0WyLen/XtSIW7ZGb9EQRHTn8bxj8Q
-	 /AD3UJPqHuiGx2WlDOlsEt972pJ1KhFRtSKEnaWA=
+	b=Lha5LU0T6HS4WuG+aoChsuT8DyJ8lBIjF/A4g416ZJN5/aoJBEPfKXGfJjgFpZBl/
+	 uVQ5X8fNx24lLiW9/JA8FYkUwq1NMZgPlB8kpord1+QSrK4suX7c335zLxI5EyYvpN
+	 zBwNxK+9DvbNRH3e3kMHzpL/vAVvWPMI00w9J2n4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thorsten Blum <thorsten.blum@linux.dev>,
-	Krzysztof Kozlowski <krzk@kernel.org>
-Subject: [PATCH 6.12 045/169] w1: therm: Fix off-by-one buffer overflow in alarms_store
-Date: Wed, 28 Jan 2026 16:22:08 +0100
-Message-ID: <20260128145335.640185404@linuxfoundation.org>
+	Andrew Cooper <andrew.cooper3@citrix.com>,
+	Marco Elver <elver@google.com>,
+	Alexander Potapenko <glider@google.com>,
+	Dmitry Vyukov <dvyukov@google.com>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	Ingo Molnar <mingo@redhat.com>,
+	Borislav Petkov <bp@alien8.de>,
+	Dave Hansen <dave.hansen@linux.intel.com>,
+	"H. Peter Anvin" <hpa@zytor.com>,
+	Jann Horn <jannh@google.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.12 054/169] x86/kfence: avoid writing L1TF-vulnerable PTEs
+Date: Wed, 28 Jan 2026 16:22:17 +0100
+Message-ID: <20260128145335.958425389@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260128145334.006287341@linuxfoundation.org>
 References: <20260128145334.006287341@linuxfoundation.org>
@@ -50,132 +59,114 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thorsten Blum <thorsten.blum@linux.dev>
+From: Andrew Cooper <andrew.cooper3@citrix.com>
 
-commit 761fcf46a1bd797bd32d23f3ea0141ffd437668a upstream.
+commit b505f1944535f83d369ae68813e7634d11b990d3 upstream.
 
-The sysfs buffer passed to alarms_store() is allocated with 'size + 1'
-bytes and a NUL terminator is appended. However, the 'size' argument
-does not account for this extra byte. The original code then allocated
-'size' bytes and used strcpy() to copy 'buf', which always writes one
-byte past the allocated buffer since strcpy() copies until the NUL
-terminator at index 'size'.
+For native, the choice of PTE is fine.  There's real memory backing the
+non-present PTE.  However, for XenPV, Xen complains:
 
-Fix this by parsing the 'buf' parameter directly using simple_strtoll()
-without allocating any intermediate memory or string copying. This
-removes the overflow while simplifying the code.
+  (XEN) d1 L1TF-vulnerable L1e 8010000018200066 - Shadowing
 
-Cc: stable@vger.kernel.org
-Fixes: e2c94d6f5720 ("w1_therm: adding alarm sysfs entry")
-Signed-off-by: Thorsten Blum <thorsten.blum@linux.dev>
-Link: https://patch.msgid.link/20251216145007.44328-2-thorsten.blum@linux.dev
-Signed-off-by: Krzysztof Kozlowski <krzk@kernel.org>
+To explain, some background on XenPV pagetables:
+
+  Xen PV guests are control their own pagetables; they choose the new
+  PTE value, and use hypercalls to make changes so Xen can audit for
+  safety.
+
+  In addition to a regular reference count, Xen also maintains a type
+  reference count.  e.g.  SegDesc (referenced by vGDT/vLDT), Writable
+  (referenced with _PAGE_RW) or L{1..4} (referenced by vCR3 or a lower
+  pagetable level).  This is in order to prevent e.g.  a page being
+  inserted into the pagetables for which the guest has a writable mapping.
+
+  For non-present mappings, all other bits become software accessible,
+  and typically contain metadata rather a real frame address.  There is
+  nothing that a reference count could sensibly be tied to.  As such, even
+  if Xen could recognise the address as currently safe, nothing would
+  prevent that frame from changing owner to another VM in the future.
+
+  When Xen detects a PV guest writing a L1TF-PTE, it responds by
+  activating shadow paging.  This is normally only used for the live phase
+  of migration, and comes with a reasonable overhead.
+
+KFENCE only cares about getting #PF to catch wild accesses; it doesn't
+care about the value for non-present mappings.  Use a fully inverted PTE,
+to avoid hitting the slow path when running under Xen.
+
+While adjusting the logic, take the opportunity to skip all actions if the
+PTE is already in the right state, half the number PVOps callouts, and
+skip TLB maintenance on a !P -> P transition which benefits non-Xen cases
+too.
+
+Link: https://lkml.kernel.org/r/20260106180426.710013-1-andrew.cooper3@citrix.com
+Fixes: 1dc0da6e9ec0 ("x86, kfence: enable KFENCE for x86")
+Signed-off-by: Andrew Cooper <andrew.cooper3@citrix.com>
+Tested-by: Marco Elver <elver@google.com>
+Cc: Alexander Potapenko <glider@google.com>
+Cc: Marco Elver <elver@google.com>
+Cc: Dmitry Vyukov <dvyukov@google.com>
+Cc: Thomas Gleixner <tglx@linutronix.de>
+Cc: Ingo Molnar <mingo@redhat.com>
+Cc: Borislav Petkov <bp@alien8.de>
+Cc: Dave Hansen <dave.hansen@linux.intel.com>
+Cc: "H. Peter Anvin" <hpa@zytor.com>
+Cc: Jann Horn <jannh@google.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/w1/slaves/w1_therm.c |   60 +++++++++++++------------------------------
- 1 file changed, 19 insertions(+), 41 deletions(-)
+ arch/x86/include/asm/kfence.h |   29 ++++++++++++++++++++++++-----
+ 1 file changed, 24 insertions(+), 5 deletions(-)
 
---- a/drivers/w1/slaves/w1_therm.c
-+++ b/drivers/w1/slaves/w1_therm.c
-@@ -1846,53 +1846,35 @@ static ssize_t alarms_store(struct devic
- 	struct w1_slave *sl = dev_to_w1_slave(device);
- 	struct therm_info info;
- 	u8 new_config_register[3];	/* array of data to be written */
--	int temp, ret;
--	char *token = NULL;
-+	long long temp;
-+	int ret = 0;
- 	s8 tl, th;	/* 1 byte per value + temp ring order */
--	char *p_args, *orig;
-+	const char *p = buf;
-+	char *endp;
+--- a/arch/x86/include/asm/kfence.h
++++ b/arch/x86/include/asm/kfence.h
+@@ -42,10 +42,34 @@ static inline bool kfence_protect_page(u
+ {
+ 	unsigned int level;
+ 	pte_t *pte = lookup_address(addr, &level);
++	pteval_t val;
  
--	p_args = orig = kmalloc(size, GFP_KERNEL);
--	/* Safe string copys as buf is const */
--	if (!p_args) {
--		dev_warn(device,
--			"%s: error unable to allocate memory %d\n",
--			__func__, -ENOMEM);
--		return size;
--	}
--	strcpy(p_args, buf);
+ 	if (WARN_ON(!pte || level != PG_LEVEL_4K))
+ 		return false;
+ 
++	val = pte_val(*pte);
++
++	/*
++	 * protect requires making the page not-present.  If the PTE is
++	 * already in the right state, there's nothing to do.
++	 */
++	if (protect != !!(val & _PAGE_PRESENT))
++		return true;
++
++	/*
++	 * Otherwise, invert the entire PTE.  This avoids writing out an
++	 * L1TF-vulnerable PTE (not present, without the high address bits
++	 * set).
++	 */
++	set_pte(pte, __pte(~val));
++
++	/*
++	 * If the page was protected (non-present) and we're making it
++	 * present, there is no need to flush the TLB at all.
++	 */
++	if (!protect)
++		return true;
++
+ 	/*
+ 	 * We need to avoid IPIs, as we may get KFENCE allocations or faults
+ 	 * with interrupts disabled. Therefore, the below is best-effort, and
+@@ -53,11 +77,6 @@ static inline bool kfence_protect_page(u
+ 	 * lazy fault handling takes care of faults after the page is PRESENT.
+ 	 */
+ 
+-	if (protect)
+-		set_pte(pte, __pte(pte_val(*pte) & ~_PAGE_PRESENT));
+-	else
+-		set_pte(pte, __pte(pte_val(*pte) | _PAGE_PRESENT));
 -
--	/* Split string using space char */
--	token = strsep(&p_args, " ");
--
--	if (!token)	{
--		dev_info(device,
--			"%s: error parsing args %d\n", __func__, -EINVAL);
--		goto free_m;
--	}
--
--	/* Convert 1st entry to int */
--	ret = kstrtoint (token, 10, &temp);
-+	temp = simple_strtoll(p, &endp, 10);
-+	if (p == endp || *endp != ' ')
-+		ret = -EINVAL;
-+	else if (temp < INT_MIN || temp > INT_MAX)
-+		ret = -ERANGE;
- 	if (ret) {
- 		dev_info(device,
- 			"%s: error parsing args %d\n", __func__, ret);
--		goto free_m;
-+		return size;
- 	}
- 
- 	tl = int_to_short(temp);
- 
--	/* Split string using space char */
--	token = strsep(&p_args, " ");
--	if (!token)	{
--		dev_info(device,
--			"%s: error parsing args %d\n", __func__, -EINVAL);
--		goto free_m;
--	}
--	/* Convert 2nd entry to int */
--	ret = kstrtoint (token, 10, &temp);
-+	p = endp + 1;
-+	temp = simple_strtoll(p, &endp, 10);
-+	if (p == endp)
-+		ret = -EINVAL;
-+	else if (temp < INT_MIN || temp > INT_MAX)
-+		ret = -ERANGE;
- 	if (ret) {
- 		dev_info(device,
- 			"%s: error parsing args %d\n", __func__, ret);
--		goto free_m;
-+		return size;
- 	}
- 
- 	/* Prepare to cast to short by eliminating out of range values */
-@@ -1915,7 +1897,7 @@ static ssize_t alarms_store(struct devic
- 		dev_info(device,
- 			"%s: error reading from the slave device %d\n",
- 			__func__, ret);
--		goto free_m;
-+		return size;
- 	}
- 
- 	/* Write data in the device RAM */
-@@ -1923,7 +1905,7 @@ static ssize_t alarms_store(struct devic
- 		dev_info(device,
- 			"%s: Device not supported by the driver %d\n",
- 			__func__, -ENODEV);
--		goto free_m;
-+		return size;
- 	}
- 
- 	ret = SLAVE_SPECIFIC_FUNC(sl)->write_data(sl, new_config_register);
-@@ -1932,10 +1914,6 @@ static ssize_t alarms_store(struct devic
- 			"%s: error writing to the slave device %d\n",
- 			__func__, ret);
- 
--free_m:
--	/* free allocated memory */
--	kfree(orig);
--
- 	return size;
- }
- 
+ 	/*
+ 	 * Flush this CPU's TLB, assuming whoever did the allocation/free is
+ 	 * likely to continue running on this CPU.
 
 
