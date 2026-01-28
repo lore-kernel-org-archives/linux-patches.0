@@ -1,51 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73C522E2DF4;
-	Wed, 28 Jan 2026 15:54:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54EFA2857CD;
+	Wed, 28 Jan 2026 15:54:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769615666; cv=none; b=siv9euI90GKVpkFHjy7w4EGU2pR8OBCAxZp67YgRnFzJBXC9PyVWN9+kI2Dyq5DTDYVKywUTqLSvCGQ9DFLlJt1qiPST9sjtFlYi2MrNtrVVBOZyzb0Nhn8pGj/QpguGNYKBI2B0STCquGgQSmwYGQBMIKJuSA5Cd/iZQATfqUc=
+	t=1769615669; cv=none; b=b2Y3EXPCMsv6B1yJm6nVxKc2dFdGkeoRU0tHR0pi7noyf0u2/6VUiKj1Vc4tMPo+/ySqvYO7ope9OTGjJ4U+rhhvCTOtl0sXOOeIz90sCyPF2spohWV5LUz7plP9ODnxhMzYfJ85+Nx0MXhiShNDJVvCTHsJc7IqPfp0odA1FQw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769615666; c=relaxed/simple;
-	bh=JH3fdT9tchRJTgiN5nfFtg08PdnmjkbCw+SC1lRp2CU=;
+	s=arc-20240116; t=1769615669; c=relaxed/simple;
+	bh=xBsjEFUc0YafeOUsXH/z1vK7003dYvI+Jm/8IWH2VLo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sMkCrLnLmU9eSz7RNGJeirohRRKV5eJ1BvKurZB5RgWF8yPR3EpNAuzHY3tK6Hx86lJYABBwQ6T5dsjb+gGC7qXQ9xbuXkDQQgTfSqxRTRc3F94KtuaR9fLsEAYAEDzBxUmPVkmuEP585asmi33eKCseeVYGpfvWQC20vf7YbdA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=w1DH/R9M; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=t6QUFn5FJZjGxvFW690V0NlgmklcOH0ZjzHdBwMyDrP+mr0cVkzrbG41Qf+ehAC3XTz6+bRGkRXxOzTK4/Un42nx3siK+bsNwr9Tmvgz1xZFLpzoCHeAClAW/lBXoYp6LCNGTX5Qbnsrax36ODqP863COIQypygN72gjmJVj7vg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZyJ82/y4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="w1DH/R9M"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C64C1C4CEF1;
-	Wed, 28 Jan 2026 15:54:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZyJ82/y4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D81F8C4CEF1;
+	Wed, 28 Jan 2026 15:54:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1769615666;
-	bh=JH3fdT9tchRJTgiN5nfFtg08PdnmjkbCw+SC1lRp2CU=;
+	s=korg; t=1769615669;
+	bh=xBsjEFUc0YafeOUsXH/z1vK7003dYvI+Jm/8IWH2VLo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=w1DH/R9MDRj08Adg5o/nhbX8NRYULVkMAQaotB+XlvIurDr2p32VwbMSOh0/VJzfG
-	 O8ZdZ66uPfPjOchIXSPFqw7q0dCtRimPdnEWyI2E0oHrYPN4HxwnMakOSUfikQ6bBg
-	 02LLI43LKSZLzcpV96hqqKZJTJ+tRXuNsThI/aQU=
+	b=ZyJ82/y4gid/fEE46b5KmwoBTE3JF/HsNI/txEYiWMm7FnzPOQggDa6teQsp7oOjw
+	 R8zawjTS06sJp9bIScq/m03hgZZWv7GAzGZFyi+ua2nAhDygaXSQg/3dcZTi3gcLVy
+	 KpUHSzPj0MxbCE2rjcq0zTNrpE+WOpwLcGR8N4/M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yosry Ahmed <yosry.ahmed@linux.dev>,
-	Shakeel Butt <shakeel.butt@linux.dev>,
-	Michal Hocko <mhocko@suse.com>,
-	Axel Rasmussen <axelrasmussen@google.com>,
-	David Hildenbrand <david@kernel.org>,
-	Davidlohr Bueso <dave@stgolabs.net>,
-	Johannes Weiner <hannes@cmpxchg.org>,
-	Liam Howlett <liam.howlett@oracle.com>,
-	Lorenzo Stoakes <lorenzo.stoakes@oracle.com>,
-	Mike Rapoport <rppt@kernel.org>,
-	Qi Zheng <zhengqi.arch@bytedance.com>,
-	Suren Baghdasaryan <surenb@google.com>,
-	Vlastimil Babka <vbabka@suse.cz>,
-	Wei Xu <weixugc@google.com>,
-	Yuanchu Xie <yuanchu@google.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.18 078/227] mm: restore per-memcg proactive reclaim with !CONFIG_NUMA
-Date: Wed, 28 Jan 2026 16:22:03 +0100
-Message-ID: <20260128145347.150482229@linuxfoundation.org>
+	=?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <thomas.weissschuh@linutronix.de>,
+	Thomas Gleixner <tglx@kernel.org>
+Subject: [PATCH 6.18 079/227] timekeeping: Adjust the leap state for the correct auxiliary timekeeper
+Date: Wed, 28 Jan 2026 16:22:04 +0100
+Message-ID: <20260128145347.186698418@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260128145344.331957407@linuxfoundation.org>
 References: <20260128145344.331957407@linuxfoundation.org>
@@ -58,103 +44,54 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Yosry Ahmed <yosry.ahmed@linux.dev>
+From: Thomas Weißschuh <thomas.weissschuh@linutronix.de>
 
-commit 16aca2c98a6fdf071e5a1a765a295995d7c7e346 upstream.
+commit e806f7dde8ba28bc72a7a0898589cac79f6362ac upstream.
 
-Commit 2b7226af730c ("mm/memcg: make memory.reclaim interface generic")
-moved proactive reclaim logic from memory.reclaim handler to a generic
-user_proactive_reclaim() helper to be used for per-node proactive reclaim.
+When __do_ajdtimex() was introduced to handle adjtimex for any
+timekeeper, this reference to tk_core was not updated. When called on an
+auxiliary timekeeper, the core timekeeper would be updated incorrectly.
 
-However, user_proactive_reclaim() was only defined under CONFIG_NUMA, with
-a stub always returning 0 otherwise.  This broke memory.reclaim on
-!CONFIG_NUMA configs, causing it to report success without actually
-attempting reclaim.
+This gets caught by the lock debugging diagnostics because the
+timekeepers sequence lock gets written to without holding its
+associated spinlock:
 
-Move the definition of user_proactive_reclaim() outside CONFIG_NUMA, and
-instead define a stub for __node_reclaim() in the !CONFIG_NUMA case.
-__node_reclaim() is only called from user_proactive_reclaim() when a write
-is made to sys/devices/system/node/nodeX/reclaim, which is only defined
-with CONFIG_NUMA.
+WARNING: include/linux/seqlock.h:226 at __do_adjtimex+0x394/0x3b0, CPU#2: test/125
+aux_clock_adj (kernel/time/timekeeping.c:2979)
+__do_sys_clock_adjtime (kernel/time/posix-timers.c:1161 kernel/time/posix-timers.c:1173)
+do_syscall_64 (arch/x86/entry/syscall_64.c:63 (discriminator 1) arch/x86/entry/syscall_64.c:94 (discriminator 1))
+entry_SYSCALL_64_after_hwframe (arch/x86/entry/entry_64.S:131)
 
-Link: https://lkml.kernel.org/r/20260116205247.928004-1-yosry.ahmed@linux.dev
-Fixes: 2b7226af730c ("mm/memcg: make memory.reclaim interface generic")
-Signed-off-by: Yosry Ahmed <yosry.ahmed@linux.dev>
-Acked-by: Shakeel Butt <shakeel.butt@linux.dev>
-Acked-by: Michal Hocko <mhocko@suse.com>
-Cc: Axel Rasmussen <axelrasmussen@google.com>
-Cc: David Hildenbrand <david@kernel.org>
-Cc: Davidlohr Bueso <dave@stgolabs.net>
-Cc: Johannes Weiner <hannes@cmpxchg.org>
-Cc: Liam Howlett <liam.howlett@oracle.com>
-Cc: Lorenzo Stoakes <lorenzo.stoakes@oracle.com>
-Cc: Mike Rapoport <rppt@kernel.org>
-Cc: Qi Zheng <zhengqi.arch@bytedance.com>
-Cc: Suren Baghdasaryan <surenb@google.com>
-Cc: Vlastimil Babka <vbabka@suse.cz>
-Cc: Wei Xu <weixugc@google.com>
-Cc: Yuanchu Xie <yuanchu@google.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Update the correct auxiliary timekeeper.
+
+Fixes: 775f71ebedd3 ("timekeeping: Make do_adjtimex() reusable")
+Fixes: ecf3e7030491 ("timekeeping: Provide adjtimex() for auxiliary clocks")
+Signed-off-by: Thomas Weißschuh <thomas.weissschuh@linutronix.de>
+Signed-off-by: Thomas Gleixner <tglx@kernel.org>
+Cc: stable@vger.kernel.org
+Link: https://patch.msgid.link/20260120-timekeeper-auxclock-leapstate-v1-1-5b358c6b3cfd@linutronix.de
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/internal.h |    8 --------
- mm/vmscan.c   |   13 +++++++++++--
- 2 files changed, 11 insertions(+), 10 deletions(-)
+ kernel/time/timekeeping.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/mm/internal.h
-+++ b/mm/internal.h
-@@ -538,16 +538,8 @@ extern unsigned long highest_memmap_pfn;
- bool folio_isolate_lru(struct folio *folio);
- void folio_putback_lru(struct folio *folio);
- extern void reclaim_throttle(pg_data_t *pgdat, enum vmscan_throttle_state reason);
--#ifdef CONFIG_NUMA
- int user_proactive_reclaim(char *buf,
- 			   struct mem_cgroup *memcg, pg_data_t *pgdat);
--#else
--static inline int user_proactive_reclaim(char *buf,
--			   struct mem_cgroup *memcg, pg_data_t *pgdat)
--{
--	return 0;
--}
--#endif
+--- a/kernel/time/timekeeping.c
++++ b/kernel/time/timekeeping.c
+@@ -2721,7 +2721,7 @@ static int __do_adjtimex(struct tk_data
+ 		timekeeping_update_from_shadow(tkd, TK_CLOCK_WAS_SET);
+ 		result->clock_set = true;
+ 	} else {
+-		tk_update_leap_state_all(&tk_core);
++		tk_update_leap_state_all(tkd);
+ 	}
  
- /*
-  * in mm/rmap.c:
---- a/mm/vmscan.c
-+++ b/mm/vmscan.c
-@@ -7740,6 +7740,17 @@ int node_reclaim(struct pglist_data *pgd
- 	return ret;
- }
- 
-+#else
-+
-+static unsigned long __node_reclaim(struct pglist_data *pgdat, gfp_t gfp_mask,
-+				    unsigned long nr_pages,
-+				    struct scan_control *sc)
-+{
-+	return 0;
-+}
-+
-+#endif
-+
- enum {
- 	MEMORY_RECLAIM_SWAPPINESS = 0,
- 	MEMORY_RECLAIM_SWAPPINESS_MAX,
-@@ -7847,8 +7858,6 @@ int user_proactive_reclaim(char *buf,
- 	return 0;
- }
- 
--#endif
--
- /**
-  * check_move_unevictable_folios - Move evictable folios to appropriate zone
-  * lru list
+ 	/* Update the multiplier immediately if frequency was set directly */
 
 
