@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38E842E06ED;
-	Wed, 28 Jan 2026 15:36:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A1EB2D77FF;
+	Wed, 28 Jan 2026 15:36:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769614612; cv=none; b=uO5vjVfV1crOYNILJFOtMUY9e+1uxlPp/tZk0/OLpYsYmKEwS56NXZGB7ag94IWct82U1u8lgdPSkqh9P9AMfMp6ZV77LESjYXEe0YTncMSTm2XnN6PK3lEjwPsp7gVt/L5uPgN6bY9mzyF/3oNtTnghCgusYE5foolG0kQYu2w=
+	t=1769614615; cv=none; b=W8fBzux19OjiQ6mY0VBxQmZ1iEtDnLTSe+cV+HgATJMzVZTuryzAjehV3Icw0ZzunmN2brvHyQgzNJy8WcRqoLosjQEKNzSuVB1vJHuo5PN6xUpJZD8INEcieX9m0wJz6yWsloat++GXsrsS7QI3qlSkSMd84SRRbMbVlVZUpAw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769614612; c=relaxed/simple;
-	bh=5IuL+YEThGIZfXNlo50ol9DkjnJi23lHfPA+Ck04LSY=;
+	s=arc-20240116; t=1769614615; c=relaxed/simple;
+	bh=BthJTBUs7J5mWyvwJUF7klpxDI6++B4vNOr7yg6551I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=An6R4HD7MlO5zg8uC5O2nKjLyD9PNwF4CfL6oss+uzbop2hBG03GBaQf7eT44W9Ci9l4VvQl1hbhlHqWzKI5oWcbfIhO77kWmBio4EsWlRB5W66WSQSQ3oy6m1onepwOg4XIxqc/GcmWgkSO/j+ovhhgd9XjlAuwFuYatY6ZW6c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0Whz3ubS; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=gmlYCccMtVM+U8y9YmLUn7JGTk4fYGyQEYAXjrflk+na6byo/M2I/AAoIrey8TItpHHzB6iyrqv0Q/po+uXUc0uRv2rsvSP5KTcpxHjx4SjDSc7HiJZ5CeXElSjw6rYcTKjv/pnAupl9Y8UUhwRzLoj4EgsT7k4KUEEfUwXFDws=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LvbSGMSN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0Whz3ubS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6ABBFC4CEF1;
-	Wed, 28 Jan 2026 15:36:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LvbSGMSN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D1812C4CEF1;
+	Wed, 28 Jan 2026 15:36:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1769614611;
-	bh=5IuL+YEThGIZfXNlo50ol9DkjnJi23lHfPA+Ck04LSY=;
+	s=korg; t=1769614615;
+	bh=BthJTBUs7J5mWyvwJUF7klpxDI6++B4vNOr7yg6551I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0Whz3ubSdjU3QviCzSqBa2q52CpMZabZAtwd3D50zyoJtsm0327eX2vUUcx2Rgu1k
-	 WsUcwMozL2fs9UkvgICvy1E05FQ7iNXyBkUvYL6ybcnZ1fXtbxWsPVMrND2hrruqHp
-	 HqekAV7RQW+1G5WYi0ht8lEIBNhiG/NmFNyi+fSA=
+	b=LvbSGMSNpAqWmZ/dYm33hiGpOxcAcizY3sAeW7VjUGr/+WRS7xJP+hT10VqMbk7Qp
+	 i8PwCxvWH6Q0MjLqjl9EMdsO7zmFR+ojfrl+ZJptpZeJ1YTDXxzG7B8GsDB8iCWMFH
+	 WncdIC2HNeypXEj+YWAqH1qJdKChSsraXlbT/Qs0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fiona Klute <fiona.klute@gmx.de>,
-	David Lechner <dlechner@baylibre.com>,
+	=?UTF-8?q?Andreas=20K=C3=BCbrich?= <andreas.kuebrich@spektra-dresden.de>,
 	Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Subject: [PATCH 6.6 190/254] iio: chemical: scd4x: fix reported channel endianness
-Date: Wed, 28 Jan 2026 16:22:46 +0100
-Message-ID: <20260128145351.636745067@linuxfoundation.org>
+Subject: [PATCH 6.6 191/254] iio: dac: ad5686: add AD5695R to ad5686_chip_info_tbl
+Date: Wed, 28 Jan 2026 16:22:47 +0100
+Message-ID: <20260128145351.672257911@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260128145344.698118637@linuxfoundation.org>
 References: <20260128145344.698118637@linuxfoundation.org>
@@ -45,63 +44,48 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Fiona Klute <fiona.klute@gmx.de>
+From: Kübrich, Andreas <andreas.kuebrich@spektra-dresden.de>
 
-commit 81d5a5366d3c20203fb9d7345e1aa46d668445a2 upstream.
+commit 441ac29923c9172bc5e4b2c4f52ae756192f5715 upstream.
 
-The driver converts values read from the sensor from BE to CPU
-endianness in scd4x_read_meas(). The result is then pushed into the
-buffer in scd4x_trigger_handler(), so on LE architectures parsing the
-buffer using the reported BE type gave wrong results.
+The chip info for this variant (I2C, four channels, 14 bit, internal
+reference) seems to have been left out due to oversight, so
+ad5686_chip_info_tbl[ID_AD5695R] is all zeroes. Initialisation of an
+AD5695R still succeeds, but the resulting IIO device has no channels and no
+/dev/iio:device* node.
 
-scd4x_read_raw() which provides sysfs *_raw values is not affected, it
-used the values returned by scd4x_read_meas() without further
-conversion.
+Add the missing chip info to the table.
 
-Fixes: 49d22b695cbb6 ("drivers: iio: chemical: Add support for Sensirion SCD4x CO2 sensor")
-Signed-off-by: Fiona Klute <fiona.klute@gmx.de>
-Reviewed-by: David Lechner <dlechner@baylibre.com>
-Cc: <stable@vger.kernel.org>
+Fixes: 4177381b4401 ("iio:dac:ad5686: Add AD5671R/75R/94/94R/95R/96/96R support")
+Signed-off-by: Andreas Kübrich <andreas.kuebrich@spektra-dresden.de>
+Cc: stable@vger.kernel.org
 Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/chemical/scd4x.c |    6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/iio/dac/ad5686.c |    6 ++++++
+ 1 file changed, 6 insertions(+)
 
---- a/drivers/iio/chemical/scd4x.c
-+++ b/drivers/iio/chemical/scd4x.c
-@@ -585,7 +585,7 @@ static const struct iio_chan_spec scd4x_
- 			.sign = 'u',
- 			.realbits = 16,
- 			.storagebits = 16,
--			.endianness = IIO_BE,
-+			.endianness = IIO_CPU,
- 		},
+--- a/drivers/iio/dac/ad5686.c
++++ b/drivers/iio/dac/ad5686.c
+@@ -434,6 +434,12 @@ static const struct ad5686_chip_info ad5
+ 		.num_channels = 4,
+ 		.regmap_type = AD5686_REGMAP,
  	},
- 	{
-@@ -600,7 +600,7 @@ static const struct iio_chan_spec scd4x_
- 			.sign = 'u',
- 			.realbits = 16,
- 			.storagebits = 16,
--			.endianness = IIO_BE,
-+			.endianness = IIO_CPU,
- 		},
- 	},
- 	{
-@@ -613,7 +613,7 @@ static const struct iio_chan_spec scd4x_
- 			.sign = 'u',
- 			.realbits = 16,
- 			.storagebits = 16,
--			.endianness = IIO_BE,
-+			.endianness = IIO_CPU,
- 		},
- 	},
- };
++	[ID_AD5695R] = {
++		.channels = ad5685r_channels,
++		.int_vref_mv = 2500,
++		.num_channels = 4,
++		.regmap_type = AD5686_REGMAP,
++	},
+ 	[ID_AD5696] = {
+ 		.channels = ad5686_channels,
+ 		.num_channels = 4,
 
 
