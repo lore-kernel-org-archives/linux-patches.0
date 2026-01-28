@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67CE930FC17;
-	Wed, 28 Jan 2026 15:57:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E8E03064B3;
+	Wed, 28 Jan 2026 15:57:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769615834; cv=none; b=Nz0gunUVVHUahWNo97Fal8ABxg6ATzFjO5QWWfkvy+WnejMUXe2NYRtgz+shGd7dH5L3cqAFxNQecgHmIHsz1F0gUg65JKncUjJYviU0uVepaJpWvTtWkSRwNIjfrKHZEjR3j3p+5wTwTsYkr8mE+IRY2UBXl1LjThd+stSGXg8=
+	t=1769615838; cv=none; b=V0DB3EO5SOGrg3ViqH1idIDgQuO9KEJtLj7MkZKlG5KY2Wz+ogXG4eROWW3CiPt7OMkdIrJtRv4saZGIzQ3CX9kbOkqHm9Br7JstO8LJ0Zcd/RCd0m5GiqnbXQ94PrnDnAtBqIGkYF5NmiFAfXbnTfgU03lzrwSUGXQC/jp1h9M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769615834; c=relaxed/simple;
-	bh=CSNp1zTmgK8V/4Y6uq4sOal7b0eCMdtin9+yjEc8sCA=;
+	s=arc-20240116; t=1769615838; c=relaxed/simple;
+	bh=W9lnycjaqNXGfMrVZuob9f7beMmUjTCvGREnxhcJbrM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Rp9T0cMpnOF83DQDW3JGwBgzFdsUF/ooOWi3673FSIVbirwu5fBbrbbyHPgQr0WxU9Iu1iiYGpeozUgJ2CasDZMnnKvDkZe+/ZbQbkXa+mZG+Do4msFKLjPOVJ6NRBIylBnKyhYIllLkvUspMHV3zAV6DBK91RsKlrBG/+SThwA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Km1jxJWG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TfKOPXQtfyuAIrNVYhWj7WUtkkKXRm2kcHi8OHq9VTKWKMpUayWdC2fd34FBTKRqq4XOnrlSRNtHfasU6mjKIVlU3r2IC8IVkv21EcBb5d/DjWCiFmjNZb94ixTRcyebXPHwmDxvyLs8M2dMYQV2Uu/hoT+94fercevqWXZ3XtI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FldKKH0e; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Km1jxJWG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C8D44C4CEF1;
-	Wed, 28 Jan 2026 15:57:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FldKKH0e"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 699D6C4CEF1;
+	Wed, 28 Jan 2026 15:57:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1769615834;
-	bh=CSNp1zTmgK8V/4Y6uq4sOal7b0eCMdtin9+yjEc8sCA=;
+	s=korg; t=1769615837;
+	bh=W9lnycjaqNXGfMrVZuob9f7beMmUjTCvGREnxhcJbrM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Km1jxJWGCoYlzbQmpcrdmjoeH5JC7kdkZs961N51vNns45+Ebm3kTpt22SQHyApk8
-	 VENqHxlRhsC/AFFoBB7W1MJGAi4D+wjw1/g/igzdfklmE8ZEpGCPKPM76nQ5+16oHI
-	 X0A5ET6oNGh0AznFm7REIJNQoNenp541c9Ff3e0c=
+	b=FldKKH0evaw/a8M6BGUGHukw608Bk9FQsNnLvNC0rpqHEdKuzLUwKjPmaTSwi6c8o
+	 AKupBywpGGdsIA7v+r6NO36kUUTg1JKfwAgoQoFLB8SRNpLcOFesoqvO29pzvv9XCD
+	 9YYndzAB5zBEgkrYXYojJCSJ5GpEDZAPtqCuHOTo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chen-Yu Tsai <wenst@chromium.org>,
-	CK Hu <ck.hu@mediatek.com>,
-	Chun-Kuang Hu <chunkuang.hu@kernel.org>,
+	Peter Zijlstra <peterz@infradead.org>,
+	Will Rosenberg <whrosenb@asu.edu>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 100/227] drm/mediatek: dpi: Find next bridge during probe
-Date: Wed, 28 Jan 2026 16:22:25 +0100
-Message-ID: <20260128145348.064441840@linuxfoundation.org>
+Subject: [PATCH 6.18 127/227] perf: Fix refcount warning on event->mmap_count increment
+Date: Wed, 28 Jan 2026 16:22:52 +0100
+Message-ID: <20260128145349.033202057@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260128145344.331957407@linuxfoundation.org>
 References: <20260128145344.331957407@linuxfoundation.org>
@@ -52,112 +51,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chen-Yu Tsai <wenst@chromium.org>
+From: Will Rosenberg <whrosenb@asu.edu>
 
-[ Upstream commit 21465e73400dc69a5f732ae7bcc2a58bad673cd1 ]
+[ Upstream commit d06bf78e55d5159c1b00072e606ab924ffbbad35 ]
 
-Trying to find the next bridge and deferring probe in the bridge attach
-callback is much too late. At this point the driver has already finished
-probing and is now running the component bind code path. What's even
-worse is that in the specific case of the DSI host being the last
-component to be added as part of the dsi_host_attach callback, the code
-path that this is in:
+When calling refcount_inc(&event->mmap_count) inside perf_mmap_rb(), the
+following warning is triggered:
 
- -> devm_drm_of_get_bridge()
-    mtk_dpi_bridge_attach()
-    drm_bridge_attach()
-    mtk_dpi_bind()
-    ...
-    component_add()
-    mtk_dsi_host_attach()
-    anx7625_attach_dsi()
-    anx7625_link_bridge()
-	- done_probing callback for of_dp_aux_populate_bus()
-    of_dp_aux_populate_bus()
-    anx7625_i2c_probe()
+        refcount_t: addition on 0; use-after-free.
+        WARNING: lib/refcount.c:25
 
-_cannot_ return probe defer:
+PoC:
 
-    anx7625 4-0058: [drm:anx7625_bridge_attach] drm attach
-    mediatek-drm mediatek-drm.15.auto: bound 14014000.dsi
-	(ops mtk_dsi_component_ops)
-    mediatek-drm mediatek-drm.15.auto: error -EPROBE_DEFER:
-	failed to attach bridge /soc/dpi@14015000 to encoder TMDS-37
-    [drm:mtk_dsi_host_attach] *ERROR* failed to add dsi_host
-	component: -517
-    anx7625 4-0058: [drm:anx7625_link_bridge] *ERROR* fail to attach dsi
-	to host.
-    panel-simple-dp-aux aux-4-0058: DP AUX done_probing() can't defer
-    panel-simple-dp-aux aux-4-0058: probe with driver panel-simple-dp-aux
-	failed with error -22
-    anx7625 4-0058: [drm:anx7625_i2c_probe] probe done
+    struct perf_event_attr attr = {0};
+    int fd = syscall(__NR_perf_event_open, &attr, 0, -1, -1, 0);
+    mmap(NULL, 0x3000, PROT_READ | PROT_WRITE, MAP_SHARED, fd, 0);
+    int victim = syscall(__NR_perf_event_open, &attr, 0, -1, fd,
+                         PERF_FLAG_FD_OUTPUT);
+    mmap(NULL, 0x3000, PROT_READ | PROT_WRITE, MAP_SHARED, victim, 0);
 
-This results in the whole display driver failing to probe.
+This occurs when creating a group member event with the flag
+PERF_FLAG_FD_OUTPUT. The group leader should be mmap-ed and then mmap-ing
+the event triggers the warning.
 
-Perhaps this was an attempt to mirror the structure in the DSI driver;
-but in the DSI driver the next bridge is retrieved in the DSI attach
-callback, not the bridge attach callback.
+Since the event has copied the output_event in perf_event_set_output(),
+event->rb is set. As a result, perf_mmap_rb() calls
+refcount_inc(&event->mmap_count) when event->mmap_count = 0.
 
-Move the code finding the next bridge back to the probe function so that
-deferred probing works correctly. Also rework the fallback to the old OF
-graph endpoint numbering scheme so that deferred probing logs in both
-cases.
+Disallow the case when event->mmap_count = 0. This also prevents two
+events from updating the same user_page.
 
-This issue was found on an MT8183 Jacuzzi device with an extra patch
-enabling the DPI-based external display pipeline. Also tested on an
-MT8192 Hayato device with both DSI and DPI display pipelines enabled.
-
-Fixes: 4c932840db1d ("drm/mediatek: Implement OF graphs support for display paths")
-Signed-off-by: Chen-Yu Tsai <wenst@chromium.org>
-Reviewed-by: CK Hu <ck.hu@mediatek.com>
-Link: https://patchwork.kernel.org/project/dri-devel/patch/20260114092243.3914836-1-wenst@chromium.org/
-Signed-off-by: Chun-Kuang Hu <chunkuang.hu@kernel.org>
+Fixes: 448f97fba901 ("perf: Convert mmap() refcounts to refcount_t")
+Suggested-by: Peter Zijlstra <peterz@infradead.org>
+Signed-off-by: Will Rosenberg <whrosenb@asu.edu>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Link: https://patch.msgid.link/20260119184956.801238-1-whrosenb@asu.edu
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/mediatek/mtk_dpi.c | 23 +++++++++--------------
- 1 file changed, 9 insertions(+), 14 deletions(-)
+ kernel/events/core.c | 9 +++++++++
+ 1 file changed, 9 insertions(+)
 
-diff --git a/drivers/gpu/drm/mediatek/mtk_dpi.c b/drivers/gpu/drm/mediatek/mtk_dpi.c
-index 61cab32e213af..53360b5d12ba5 100644
---- a/drivers/gpu/drm/mediatek/mtk_dpi.c
-+++ b/drivers/gpu/drm/mediatek/mtk_dpi.c
-@@ -836,20 +836,6 @@ static int mtk_dpi_bridge_attach(struct drm_bridge *bridge,
- 				 enum drm_bridge_attach_flags flags)
- {
- 	struct mtk_dpi *dpi = bridge_to_dpi(bridge);
--	int ret;
--
--	dpi->next_bridge = devm_drm_of_get_bridge(dpi->dev, dpi->dev->of_node, 1, -1);
--	if (IS_ERR(dpi->next_bridge)) {
--		ret = PTR_ERR(dpi->next_bridge);
--		if (ret == -EPROBE_DEFER)
--			return ret;
--
--		/* Old devicetree has only one endpoint */
--		dpi->next_bridge = devm_drm_of_get_bridge(dpi->dev, dpi->dev->of_node, 0, 0);
--		if (IS_ERR(dpi->next_bridge))
--			return dev_err_probe(dpi->dev, PTR_ERR(dpi->next_bridge),
--					     "Failed to get bridge\n");
--	}
+diff --git a/kernel/events/core.c b/kernel/events/core.c
+index d95f9dce018f4..df0717f4592a9 100644
+--- a/kernel/events/core.c
++++ b/kernel/events/core.c
+@@ -6996,6 +6996,15 @@ static int perf_mmap_rb(struct vm_area_struct *vma, struct perf_event *event,
+ 		if (data_page_nr(event->rb) != nr_pages)
+ 			return -EINVAL;
  
- 	return drm_bridge_attach(encoder, dpi->next_bridge,
- 				 &dpi->bridge, flags);
-@@ -1319,6 +1305,15 @@ static int mtk_dpi_probe(struct platform_device *pdev)
- 	if (dpi->irq < 0)
- 		return dpi->irq;
- 
-+	dpi->next_bridge = devm_drm_of_get_bridge(dpi->dev, dpi->dev->of_node, 1, -1);
-+	if (IS_ERR(dpi->next_bridge) && PTR_ERR(dpi->next_bridge) == -ENODEV) {
-+		/* Old devicetree has only one endpoint */
-+		dpi->next_bridge = devm_drm_of_get_bridge(dpi->dev, dpi->dev->of_node, 0, 0);
-+	}
-+	if (IS_ERR(dpi->next_bridge))
-+		return dev_err_probe(dpi->dev, PTR_ERR(dpi->next_bridge),
-+				     "Failed to get bridge\n");
++		/*
++		 * If this event doesn't have mmap_count, we're attempting to
++		 * create an alias of another event's mmap(); this would mean
++		 * both events will end up scribbling the same user_page;
++		 * which makes no sense.
++		 */
++		if (!refcount_read(&event->mmap_count))
++			return -EBUSY;
 +
- 	platform_set_drvdata(pdev, dpi);
- 
- 	dpi->bridge.of_node = dev->of_node;
+ 		if (refcount_inc_not_zero(&event->rb->mmap_count)) {
+ 			/*
+ 			 * Success -- managed to mmap() the same buffer
 -- 
 2.51.0
 
