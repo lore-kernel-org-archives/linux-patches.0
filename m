@@ -1,36 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8CFC32D8760;
-	Wed, 28 Jan 2026 15:37:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB4F2286D57;
+	Wed, 28 Jan 2026 15:37:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769614663; cv=none; b=L5pOYE5nBF63YZ890upGIe39HhAWB4pQzX9IIE6i3nXFJ+0JDnA+V63BQcsooUPEc1QXA221Ch2V6sZA9R82k6QUHq6SVPUdfEePwD+MYDAUoOMf1mycmjbvoqJsCWn6lTSwqYBAO+KNqcW/cA7OS5j8qKZjKQxdauxcMlMU04A=
+	t=1769614666; cv=none; b=lh2mAYz55Gh+AaWrx1xVSdSiDcuFG+o7llyj5DBv2UORYi2fgCiBDGaM+e0Z7BJM1SAxJqR8Vb9UE8iKoZs+Cv+lXMQa2c5w/lsgvfYmspfkXgapIUZDucVhsPAu3Zw1frwonnCI6fcY7hsOU5qoN615YT6uS9t7kE5qhc6I7To=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769614663; c=relaxed/simple;
-	bh=1trXuZd451CI71XM3CycCQHgucChLjU9/r3QtVeagY4=;
+	s=arc-20240116; t=1769614666; c=relaxed/simple;
+	bh=VmAFyCSSP0wtvS4WnaRoEskr5K3EEZ4MpHXvEdi3yeA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ormOanaIm44uqDloRERScHE7s1dCPBTvfQaV+AcrJ3Qsz7PoYvlftJC7sFMalnLW7p1GP5TuQHEzfM0fxv/dAsQ6Iywslk9NwuBnbYcuLMFGtJWXDAEoe/qw+tPyzUka4lCkaDu++sl6RV57FRRH3wcc8XLpnHrTlzqIZIuZInE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=B6SS15uy; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=eUu+joSFUrh2myigR/po3Ue5XSA8WPiw2TxCMvf9YnLlU7l+VE7D08gTmt0LbNOiteI0FWcKN+jPxt/dU0gkzcndK3Ui5x/a2Bo/b2krf5uOsDrZKAjBrTxpQbjqZdzTQs3wCtHKrSvvy8wS3sa0gY0MJ0BnebVckULkbOFM1Dc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=a4Ti/+5z; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="B6SS15uy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA661C116C6;
-	Wed, 28 Jan 2026 15:37:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="a4Ti/+5z"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 55226C4CEF1;
+	Wed, 28 Jan 2026 15:37:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1769614663;
-	bh=1trXuZd451CI71XM3CycCQHgucChLjU9/r3QtVeagY4=;
+	s=korg; t=1769614666;
+	bh=VmAFyCSSP0wtvS4WnaRoEskr5K3EEZ4MpHXvEdi3yeA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=B6SS15uygJNAD4s66ewRTo9Jc1jhLTkZXp/IQrmVcMB15le3wuXI1KW08u83q9Jqq
-	 SEvc9pxFu7lsEWBDgAHWlH/2cC4cQdiGgqkQHw6Q0u36IYYRJD2szsu1taG92CxOiU
-	 EhLCXsioXaxohBM6I/RZNsAFhnH+YJ1Brl8EE30Y=
+	b=a4Ti/+5z3QhEy8rDDfORQZA1fLov+ojNgtPM4Y7HoJZcRCAopltfv/fvyGCtWWgQR
+	 CFekKKlLIdw88Zc1tsgEXeK3ZsRu4KDRVYSvL9gSr+Hf0E+sR+6xAmhzaGg1/e66cP
+	 dZrw2ogp0wJZ+1qwuVnU9+nzwIJE3QHazRBmI60E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Johan Hovold <johan@kernel.org>
-Subject: [PATCH 6.6 203/254] slimbus: core: fix runtime PM imbalance on report present
-Date: Wed, 28 Jan 2026 16:22:59 +0100
-Message-ID: <20260128145352.099236788@linuxfoundation.org>
+Subject: [PATCH 6.6 204/254] slimbus: core: fix device reference leak on report present
+Date: Wed, 28 Jan 2026 16:23:00 +0100
+Message-ID: <20260128145352.136262662@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260128145344.698118637@linuxfoundation.org>
 References: <20260128145344.698118637@linuxfoundation.org>
@@ -51,53 +51,44 @@ Content-Transfer-Encoding: 8bit
 
 From: Johan Hovold <johan@kernel.org>
 
-commit 0eb4ff6596114aabba1070a66afa2c2f5593739f upstream.
+commit 9391380eb91ea5ac792aae9273535c8da5b9aa01 upstream.
 
-Make sure to balance the runtime PM usage count in case slimbus device
-or address allocation fails on report present, which would otherwise
-prevent the controller from suspending.
+Slimbus devices can be allocated dynamically upon reception of
+report-present messages.
 
-Fixes: 4b14e62ad3c9 ("slimbus: Add support for 'clock-pause' feature")
+Make sure to drop the reference taken when looking up already registered
+devices.
+
+Note that this requires taking an extra reference in case the device has
+not yet been registered and has to be allocated.
+
+Fixes: 46a2bb5a7f7e ("slimbus: core: Add slim controllers support")
 Cc: stable@vger.kernel.org	# 4.16
 Signed-off-by: Johan Hovold <johan@kernel.org>
-Link: https://patch.msgid.link/20251126145329.5022-3-johan@kernel.org
+Link: https://patch.msgid.link/20251126145329.5022-4-johan@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/slimbus/core.c |   16 +++++++++-------
- 1 file changed, 9 insertions(+), 7 deletions(-)
+ drivers/slimbus/core.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
 --- a/drivers/slimbus/core.c
 +++ b/drivers/slimbus/core.c
-@@ -496,21 +496,23 @@ int slim_device_report_present(struct sl
- 	if (ctrl->sched.clk_state != SLIM_CLK_ACTIVE) {
- 		dev_err(ctrl->dev, "slim ctrl not active,state:%d, ret:%d\n",
- 				    ctrl->sched.clk_state, ret);
--		goto slimbus_not_active;
-+		goto out_put_rpm;
+@@ -378,6 +378,8 @@ struct slim_device *slim_get_device(stru
+ 		sbdev = slim_alloc_device(ctrl, e_addr, NULL);
+ 		if (!sbdev)
+ 			return ERR_PTR(-ENOMEM);
++
++		get_device(&sbdev->dev);
  	}
  
- 	sbdev = slim_get_device(ctrl, e_addr);
--	if (IS_ERR(sbdev))
--		return -ENODEV;
-+	if (IS_ERR(sbdev)) {
-+		ret = -ENODEV;
-+		goto out_put_rpm;
-+	}
- 
- 	if (sbdev->is_laddr_valid) {
- 		*laddr = sbdev->laddr;
--		return 0;
-+		ret = 0;
-+	} else {
-+		ret = slim_device_alloc_laddr(sbdev, true);
+ 	return sbdev;
+@@ -512,6 +514,7 @@ int slim_device_report_present(struct sl
+ 		ret = slim_device_alloc_laddr(sbdev, true);
  	}
  
--	ret = slim_device_alloc_laddr(sbdev, true);
--
--slimbus_not_active:
-+out_put_rpm:
++	put_device(&sbdev->dev);
+ out_put_rpm:
  	pm_runtime_mark_last_busy(ctrl->dev);
  	pm_runtime_put_autosuspend(ctrl->dev);
- 	return ret;
 
 
