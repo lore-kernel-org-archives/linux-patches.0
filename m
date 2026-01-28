@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C7842C2346;
-	Wed, 28 Jan 2026 15:48:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 664552FE044;
+	Wed, 28 Jan 2026 15:48:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769615326; cv=none; b=N1GhpgxKqtcj4CRM8Y52IUe7dc47d7losW0clOZDbiuA2FMVfE83evVOEMi0qwyrftrY/sJyd71W03mARIgqK8vnQUiW41RWkyhrO5yGdxaun21FJfrJ3v3+Xstm2/+nI6Yo1DHYTcPW103iTHl9Ve0ABY+8DjoxVzUM8H8W940=
+	t=1769615329; cv=none; b=uXLwelzTFm5BN6Kg1ECJaBp/9D0foLJIOUn6VrTyQLPTqpNh04Hq30uhWWSNx8LSyDFg16XgCuVF4o16XmbmcTkvQ1uVgf8fJW67jQZDxAgRYvwCw5Aml48kHJPDDV8P/YgRulspn1OPvN3FPSsttMfe8jRartaZ4ecJTxZ5Yd0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769615326; c=relaxed/simple;
-	bh=oVqPr1YDXF2LPC15bgKtZR91erQ0evolbt4sCxH0ky0=;
+	s=arc-20240116; t=1769615329; c=relaxed/simple;
+	bh=BvWMQuLifGXD40IIuBptYfbqwVdMxUrm8+EfNqX8PF8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GBz8Ff/EI8Lgnw8U9jy0g81VUdN7QhHWnf3E05dno43uhCMTiPQCL51fdtidOGoSwSWz6xTidbgkeyhQUv4XezYN1MeoeOk3hok7nVLooMFpBLdyyP6VrP9vIQqw90CZX+8Uy5ZP9XwLg0R8ZVPk4sYSOtlPciix4bQG+7Qekzw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kk+aemPo; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=oRVlDJKmBtogZNlyLXQ27cHxIbJarkgTwmqyRh9gyu1vWbqFwEr8wwI4kA+fD/dJw5aYqsFiurMd1pMhE+iWEAKEo1bXEze4gMzUwl6ChvFhCEgRjhLqb1iFDi0PuPB0xAsly4Wp8tWQB2bxzw5bBLNmT9rKt7a8LHpGK+2+8qM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Mft0qRxK; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kk+aemPo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 79B80C4CEF1;
-	Wed, 28 Jan 2026 15:48:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Mft0qRxK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C4DFCC4CEF1;
+	Wed, 28 Jan 2026 15:48:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1769615326;
-	bh=oVqPr1YDXF2LPC15bgKtZR91erQ0evolbt4sCxH0ky0=;
+	s=korg; t=1769615329;
+	bh=BvWMQuLifGXD40IIuBptYfbqwVdMxUrm8+EfNqX8PF8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kk+aemPo3WZet5Ads++i6iTgznV8OK4r+1aWpjOANYBbYyj2GdCyTPXf8ShZvsmkT
-	 v6cN1DANYnvNA8cIeg1EGjdDyf72wgISe1KJgSY1EudoXwgQT2F9ZoAQtk1LTApYgl
-	 ili45WOXjHt5nuSkOYpMlf9RvZEclbY75Wm5Se9k=
+	b=Mft0qRxK0MaJWaqR1qs2tbuG9lDgzVT6jFdN3BXFCxtnzC6FTMzAoqFzMHYN8CEEG
+	 tqHn94CuHIPZLBIPmmb8X5FGeshPooQmBEg1yecfkzyrhrOu4JU2Y/hGB1h8tCk3Mq
+	 J/ehF+y7GAp7TotfPrYoIT9wPB61Cw9WntNOz5AA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Likun Gao <Likun.Gao@amd.com>,
-	Hawking Zhang <Hawking.Zhang@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.12 144/169] drm/amdgpu: remove frame cntl for gfx v12
-Date: Wed, 28 Jan 2026 16:23:47 +0100
-Message-ID: <20260128145339.187988820@linuxfoundation.org>
+	Tzung-Bi Shih <tzungbi@kernel.org>,
+	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+Subject: [PATCH 6.12 145/169] gpio: cdev: Correct return code on memory allocation failure
+Date: Wed, 28 Jan 2026 16:23:48 +0100
+Message-ID: <20260128145339.224122332@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260128145334.006287341@linuxfoundation.org>
 References: <20260128145334.006287341@linuxfoundation.org>
@@ -51,56 +50,33 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Likun Gao <Likun.Gao@amd.com>
+From: Tzung-Bi Shih <tzungbi@kernel.org>
 
-commit 10343253328e0dbdb465bff709a2619a08fe01ad upstream.
+commit faff6846474e99295a139997f93ef6db222b5cee upstream.
 
-Remove emit_frame_cntl function for gfx v12, which is not support.
+-ENOMEM is a more appropriate return code for memory allocation
+failures.  Correct it.
 
-Signed-off-by: Likun Gao <Likun.Gao@amd.com>
-Reviewed-by: Hawking Zhang <Hawking.Zhang@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 5aaa5058dec5bfdcb24c42fe17ad91565a3037ca)
 Cc: stable@vger.kernel.org
+Fixes: 20bddcb40b2b ("gpiolib: cdev: replace locking wrappers for gpio_device with guards")
+Signed-off-by: Tzung-Bi Shih <tzungbi@kernel.org>
+Link: https://lore.kernel.org/r/20260116081036.352286-6-tzungbi@kernel.org
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/gfx_v12_0.c |   12 ------------
- 1 file changed, 12 deletions(-)
+ drivers/gpio/gpiolib-cdev.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/amd/amdgpu/gfx_v12_0.c
-+++ b/drivers/gpu/drm/amd/amdgpu/gfx_v12_0.c
-@@ -248,7 +248,6 @@ static void gfx_v12_0_select_se_sh(struc
- 				   u32 sh_num, u32 instance, int xcc_id);
- static u32 gfx_v12_0_get_wgp_active_bitmap_per_sh(struct amdgpu_device *adev);
+--- a/drivers/gpio/gpiolib-cdev.c
++++ b/drivers/gpio/gpiolib-cdev.c
+@@ -2767,7 +2767,7 @@ static int gpio_chrdev_open(struct inode
  
--static void gfx_v12_0_ring_emit_frame_cntl(struct amdgpu_ring *ring, bool start, bool secure);
- static void gfx_v12_0_ring_emit_wreg(struct amdgpu_ring *ring, uint32_t reg,
- 				     uint32_t val);
- static int gfx_v12_0_wait_for_rlc_autoload_complete(struct amdgpu_device *adev);
-@@ -4556,16 +4555,6 @@ static int gfx_v12_0_ring_preempt_ib(str
- 	return r;
- }
+ 	cdev = kzalloc(sizeof(*cdev), GFP_KERNEL);
+ 	if (!cdev)
+-		return -ENODEV;
++		return -ENOMEM;
  
--static void gfx_v12_0_ring_emit_frame_cntl(struct amdgpu_ring *ring,
--					   bool start,
--					   bool secure)
--{
--	uint32_t v = secure ? FRAME_TMZ : 0;
--
--	amdgpu_ring_write(ring, PACKET3(PACKET3_FRAME_CONTROL, 0));
--	amdgpu_ring_write(ring, v | FRAME_CMD(start ? 0 : 1));
--}
--
- static void gfx_v12_0_ring_emit_rreg(struct amdgpu_ring *ring, uint32_t reg,
- 				     uint32_t reg_val_offs)
- {
-@@ -5316,7 +5305,6 @@ static const struct amdgpu_ring_funcs gf
- 	.emit_cntxcntl = gfx_v12_0_ring_emit_cntxcntl,
- 	.init_cond_exec = gfx_v12_0_ring_emit_init_cond_exec,
- 	.preempt_ib = gfx_v12_0_ring_preempt_ib,
--	.emit_frame_cntl = gfx_v12_0_ring_emit_frame_cntl,
- 	.emit_wreg = gfx_v12_0_ring_emit_wreg,
- 	.emit_reg_wait = gfx_v12_0_ring_emit_reg_wait,
- 	.emit_reg_write_reg_wait = gfx_v12_0_ring_emit_reg_write_reg_wait,
+ 	cdev->watched_lines = bitmap_zalloc(gdev->ngpio, GFP_KERNEL);
+ 	if (!cdev->watched_lines)
 
 
