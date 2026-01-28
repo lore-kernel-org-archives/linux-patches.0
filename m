@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D78EA81AA8;
-	Wed, 28 Jan 2026 16:01:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 000A181AA8;
+	Wed, 28 Jan 2026 16:01:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769616103; cv=none; b=ayJQlz6Vhp6bB5JCwdd/vwp/FMrqWS7ecZmtwDVXJu3syY1tM9RkRxZ++9O5hfwfxQ1rcfPjZV316T8XWDiS/YaLRjXZ20qq9mxlE0cHfWp9B77Em8Q0JjkLG0N1cIYgrhX5hbaQ9Ws8AoqLa0Z7r56VWix270V4pbetfLXdmZQ=
+	t=1769616107; cv=none; b=Mcqm73haYlYFhxIkXuQeXuwB0/MU2P+ZGMXsk1f+4yqxmHNW6ig97dsrsanO238luBz0+iqOD3gdbYQxsCXJm1q8ZhHNwMXT5gubClmoQgRlTNHa+n1K8Tbo4H1iimamwHJIoCgDwVnwHJTzJ2116tur7gTnNpE7iYzeHDIuO9c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769616103; c=relaxed/simple;
-	bh=Wdry6PtqB5khVJJU/9jGoCdZoRVcvr4X4WRfJjPwA1k=;
+	s=arc-20240116; t=1769616107; c=relaxed/simple;
+	bh=55x+eIGV0hk4S/sIHpFFRqcv3TSrxWyd5RwTkTmjO9Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qTRTs9TlIeJoy0pefIqOeVnGUvEbDyQAZEo0+QuB7yUYZc7tgVO2U5FcFRqaeqQA1LcxoiLrU0LtAj9Vm96iX2bxaCi0tE4lPEjWPNP8hDmR/acdr2fQycmUiCfxgKVfZO82sgxXBR/GW1VOgpunhsJ/g0JZpzF79sKAJq1Fgs4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hMVmxjno; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=S7Sc00Z+yXInzAK03qlKO5Q4ZLuIjebS5T2qvY+e8UdZ+0n8DBVCHyg9l1+8IcLGiBBuUZS+zE0J8I0RRjRe3qmuOcnO+4zDwcX4/weayS5vzD+M/tmxdB4L6/S667dF3H9IWvtXc9rOJ7H3mmPPltZ5s/p0aggDD7rDqGr9BAk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lkoHvPd2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hMVmxjno"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39491C4CEF1;
-	Wed, 28 Jan 2026 16:01:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lkoHvPd2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 65461C4CEF1;
+	Wed, 28 Jan 2026 16:01:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1769616103;
-	bh=Wdry6PtqB5khVJJU/9jGoCdZoRVcvr4X4WRfJjPwA1k=;
+	s=korg; t=1769616106;
+	bh=55x+eIGV0hk4S/sIHpFFRqcv3TSrxWyd5RwTkTmjO9Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hMVmxjno+vgqUvJY/gJmww6X0r0G2yK3iqTjNzxsLl5XWmIUEa6viOtgBORCbQ8K8
-	 EHA6ZEtvS6XmD02xDNq4zZjPk2NMrRuWzI0bczHYoWcqfmVlaKE6uSrLUC7uaCyj05
-	 IxMYNJCRxFyPdqdQ4VzaKyw1A4bite3oWzyUKCwQ=
+	b=lkoHvPd21mkTi0kz+tmm+5dq31u5JapoDTLraJwbRFaVvLmoubSGFgBhXm5gBzRa7
+	 Tlvh5airZUZ7o1oSi29meFtTxIntilQBTIVLvry6FpJ3EzCpE19fcBZkjj26r8s9sV
+	 tyPl4ngSxf31V9HBG9cCAxWQFomRQ/E9Z5sT4eDc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thomas Fourier <fourier.thomas@gmail.com>,
-	Baochen Qiang <baochen.qiang@oss.qualcomm.com>,
-	Jeff Johnson <jeff.johnson@oss.qualcomm.com>
-Subject: [PATCH 6.18 175/227] wifi: ath12k: fix dma_free_coherent() pointer
-Date: Wed, 28 Jan 2026 16:23:40 +0100
-Message-ID: <20260128145350.747048431@linuxfoundation.org>
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Jeff Chen <jeff.chen_1@nxp.com>,
+	Johannes Berg <johannes.berg@intel.com>
+Subject: [PATCH 6.18 176/227] wifi: mwifiex: Fix a loop in mwifiex_update_ampdu_rxwinsize()
+Date: Wed, 28 Jan 2026 16:23:41 +0100
+Message-ID: <20260128145350.782269447@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260128145344.331957407@linuxfoundation.org>
 References: <20260128145344.331957407@linuxfoundation.org>
@@ -51,59 +51,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thomas Fourier <fourier.thomas@gmail.com>
+From: Dan Carpenter <dan.carpenter@linaro.org>
 
-commit bb97131fbf9b708dd9616ac2bdc793ad102b5c48 upstream.
+commit 2120f3a3738a65730c81bf10447b1ff776078915 upstream.
 
-dma_alloc_coherent() allocates a DMA mapped buffer and stores the
-addresses in XXX_unaligned fields.  Those should be reused when freeing
-the buffer rather than the aligned addresses.
+The "i" iterator variable is used to count two different things but
+unfortunately we can't store two different numbers in the same variable.
+Use "i" for the outside loop and "j" for the inside loop.
 
-Fixes: d889913205cf ("wifi: ath12k: driver for Qualcomm Wi-Fi 7 devices")
 Cc: stable@vger.kernel.org
-Signed-off-by: Thomas Fourier <fourier.thomas@gmail.com>
-Reviewed-by: Baochen Qiang <baochen.qiang@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260106084905.18622-2-fourier.thomas@gmail.com
-Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
+Fixes: d219b7eb3792 ("mwifiex: handle BT coex event to adjust Rx BA window size")
+Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
+Reviewed-by: Jeff Chen <jeff.chen_1@nxp.com>
+Link: https://patch.msgid.link/aWAM2MGUWRP0zWUd@stanley.mountain
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wireless/ath/ath12k/ce.c |   12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ drivers/net/wireless/marvell/mwifiex/11n_rxreorder.c |    6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
---- a/drivers/net/wireless/ath/ath12k/ce.c
-+++ b/drivers/net/wireless/ath/ath12k/ce.c
-@@ -984,8 +984,8 @@ void ath12k_ce_free_pipes(struct ath12k_
- 			dma_free_coherent(ab->dev,
- 					  pipe->src_ring->nentries * desc_sz +
- 					  CE_DESC_RING_ALIGN,
--					  pipe->src_ring->base_addr_owner_space,
--					  pipe->src_ring->base_addr_ce_space);
-+					  pipe->src_ring->base_addr_owner_space_unaligned,
-+					  pipe->src_ring->base_addr_ce_space_unaligned);
- 			kfree(pipe->src_ring);
- 			pipe->src_ring = NULL;
+--- a/drivers/net/wireless/marvell/mwifiex/11n_rxreorder.c
++++ b/drivers/net/wireless/marvell/mwifiex/11n_rxreorder.c
+@@ -825,7 +825,7 @@ void mwifiex_update_rxreor_flags(struct
+ static void mwifiex_update_ampdu_rxwinsize(struct mwifiex_adapter *adapter,
+ 					   bool coex_flag)
+ {
+-	u8 i;
++	u8 i, j;
+ 	u32 rx_win_size;
+ 	struct mwifiex_private *priv;
+ 
+@@ -863,8 +863,8 @@ static void mwifiex_update_ampdu_rxwinsi
+ 		if (rx_win_size != priv->add_ba_param.rx_win_size) {
+ 			if (!priv->media_connected)
+ 				continue;
+-			for (i = 0; i < MAX_NUM_TID; i++)
+-				mwifiex_11n_delba(priv, i);
++			for (j = 0; j < MAX_NUM_TID; j++)
++				mwifiex_11n_delba(priv, j);
  		}
-@@ -995,8 +995,8 @@ void ath12k_ce_free_pipes(struct ath12k_
- 			dma_free_coherent(ab->dev,
- 					  pipe->dest_ring->nentries * desc_sz +
- 					  CE_DESC_RING_ALIGN,
--					  pipe->dest_ring->base_addr_owner_space,
--					  pipe->dest_ring->base_addr_ce_space);
-+					  pipe->dest_ring->base_addr_owner_space_unaligned,
-+					  pipe->dest_ring->base_addr_ce_space_unaligned);
- 			kfree(pipe->dest_ring);
- 			pipe->dest_ring = NULL;
- 		}
-@@ -1007,8 +1007,8 @@ void ath12k_ce_free_pipes(struct ath12k_
- 			dma_free_coherent(ab->dev,
- 					  pipe->status_ring->nentries * desc_sz +
- 					  CE_DESC_RING_ALIGN,
--					  pipe->status_ring->base_addr_owner_space,
--					  pipe->status_ring->base_addr_ce_space);
-+					  pipe->status_ring->base_addr_owner_space_unaligned,
-+					  pipe->status_ring->base_addr_ce_space_unaligned);
- 			kfree(pipe->status_ring);
- 			pipe->status_ring = NULL;
- 		}
+ 	}
+ }
 
 
