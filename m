@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1152308F05;
-	Wed, 28 Jan 2026 16:00:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11A5C306B06;
+	Wed, 28 Jan 2026 16:00:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769616011; cv=none; b=qNHJZ80sAxULD49hTEeUmMshDOJw8s3g63I87mwF8/x3YJg6dZCT2RnlpWPSalZdGlp/Tfy8qBqIl7COvWSJtdTAsXo/gSBARqa6rcH8hzE1C68Cjs7qWW3UptKYxsfETBECuduMdH/MpaSS/tpyhpjMwGNq0HKrd6RsMnTRmaE=
+	t=1769616015; cv=none; b=ejjx/u2MKZNGkFRKG7dBBiRDq+UkJJalB7XcuSGvys1Nzlc10cmo2A48SQ4TrFcpZrczouVzH8RSboN3n+/m3C0KWxItEKcPD5aU8Q4bUHPDgi+Vzjr4EQyNixBjo3t+NHd+p4jCQnmhYYY5qlZaL3HxlMiKb4QciDueDQGh3mI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769616011; c=relaxed/simple;
-	bh=OWdA2IwOs1W6siq1z11DImUN+WJ6iMSdFVhBKNGjRwQ=;
+	s=arc-20240116; t=1769616015; c=relaxed/simple;
+	bh=6C8/MlCuc5kVwFRFCRLY2rMKPkPyvWc1wT0Zm2sYT0Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gNFcGHsm8KfhyRcnw0hU86Q0AG/T3DgN9SWvWn3LxgpXkPT1iKx7AwM3ru7l6Up0KMsxA2edwVRZraZ5ja0gHu5HUa3vh9G6Tf4GeAip5PX2yXHwUoC1CPuTXVcQ8aFg9H87s/OWsnBePRQx06LVSYPrFiHSbwHr4/lgBKuls6w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IiT6ptwH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=FqpVsc61AdKtlRkLZ6bV+LAmzT4+f2f+50XfG1lQZ7X9cttrHZCSGaKHRvP/WYGcgozArsgovMzhEYUHxYrgd7wHz5ACwXc2gpz4prL6vUPeoXD9tcP/4r57tQa8oEB4x7BA8Bnqx5Sapw1XoXpojLpeG3rB000keqywIFnCqVo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=M3kE+4fr; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IiT6ptwH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 230BFC4CEF1;
-	Wed, 28 Jan 2026 16:00:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="M3kE+4fr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 706D8C4CEF7;
+	Wed, 28 Jan 2026 16:00:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1769616011;
-	bh=OWdA2IwOs1W6siq1z11DImUN+WJ6iMSdFVhBKNGjRwQ=;
+	s=korg; t=1769616014;
+	bh=6C8/MlCuc5kVwFRFCRLY2rMKPkPyvWc1wT0Zm2sYT0Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IiT6ptwHSX9vk0hYPabXXaedqNFppWQ7z80Puw/J9EhDDlrxHhBHbgxDgawkvpHSC
-	 Q6FEYkSGzxVIx9vFdQGELxLAr94wwpvsaPjwXtULOI71bNMGglAsE5v4I5xy7Fo7gD
-	 ZAh42vBWdIwCMaQ73ceU3Vu+CblU6IveVtXxKV0U=
+	b=M3kE+4frn+4J5AiLDiw6S8JAkn1g0c6MYA4lMS+ElLWciV1G8nIYZz3t0nZL3uciQ
+	 LXgopSeMwdTWEtw5maHA1v/wzyNj6TfWmJIZ51qUY/nEJXhyMGVppdD6zvA2JHjKAY
+	 3AmZp/c7qDHj2XEGO9euCmCOSWDrzesiP/XdmTBk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jeson Gao <jeson.gao@unisoc.com>,
-	Zhaoyang Huang <zhaoyang.huang@unisoc.com>,
-	Will Deacon <will@kernel.org>,
-	Mark Rutland <mark.rutland@arm.com>,
-	Catalin Marinas <catalin.marinas@arm.com>
-Subject: [PATCH 6.18 181/227] arm64: Set __nocfi on swsusp_arch_resume()
-Date: Wed, 28 Jan 2026 16:23:46 +0100
-Message-ID: <20260128145350.960323391@linuxfoundation.org>
+	Thomas Fourier <fourier.thomas@gmail.com>,
+	Namjae Jeon <linkinjeon@kernel.org>,
+	Steve French <stfrench@microsoft.com>
+Subject: [PATCH 6.18 182/227] ksmbd: smbd: fix dma_unmap_sg() nents
+Date: Wed, 28 Jan 2026 16:23:47 +0100
+Message-ID: <20260128145350.995653846@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260128145344.331957407@linuxfoundation.org>
 References: <20260128145344.331957407@linuxfoundation.org>
@@ -53,94 +51,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhaoyang Huang <zhaoyang.huang@unisoc.com>
+From: Thomas Fourier <fourier.thomas@gmail.com>
 
-commit e2f8216ca2d8e61a23cb6ec355616339667e0ba6 upstream.
+commit 98e3e2b561bc88f4dd218d1c05890672874692f6 upstream.
 
-A DABT is reported[1] on an android based system when resume from hiberate.
-This happens because swsusp_arch_suspend_exit() is marked with SYM_CODE_*()
-and does not have a CFI hash, but swsusp_arch_resume() will attempt to
-verify the CFI hash when calling a copy of swsusp_arch_suspend_exit().
+The dma_unmap_sg() functions should be called with the same nents as the
+dma_map_sg(), not the value the map function returned.
 
-Given that there's an existing requirement that the entrypoint to
-swsusp_arch_suspend_exit() is the first byte of the .hibernate_exit.text
-section, we cannot fix this by marking swsusp_arch_suspend_exit() with
-SYM_FUNC_*(). The simplest fix for now is to disable the CFI check in
-swsusp_arch_resume().
-
-Mark swsusp_arch_resume() as __nocfi to disable the CFI check.
-
-[1]
-[   22.991934][    T1] Unable to handle kernel paging request at virtual address 0000000109170ffc
-[   22.991934][    T1] Mem abort info:
-[   22.991934][    T1]   ESR = 0x0000000096000007
-[   22.991934][    T1]   EC = 0x25: DABT (current EL), IL = 32 bits
-[   22.991934][    T1]   SET = 0, FnV = 0
-[   22.991934][    T1]   EA = 0, S1PTW = 0
-[   22.991934][    T1]   FSC = 0x07: level 3 translation fault
-[   22.991934][    T1] Data abort info:
-[   22.991934][    T1]   ISV = 0, ISS = 0x00000007, ISS2 = 0x00000000
-[   22.991934][    T1]   CM = 0, WnR = 0, TnD = 0, TagAccess = 0
-[   22.991934][    T1]   GCS = 0, Overlay = 0, DirtyBit = 0, Xs = 0
-[   22.991934][    T1] [0000000109170ffc] user address but active_mm is swapper
-[   22.991934][    T1] Internal error: Oops: 0000000096000007 [#1] PREEMPT SMP
-[   22.991934][    T1] Dumping ftrace buffer:
-[   22.991934][    T1]    (ftrace buffer empty)
-[   22.991934][    T1] Modules linked in:
-[   22.991934][    T1] CPU: 0 PID: 1 Comm: swapper/0 Not tainted 6.6.98-android15-8-g0b1d2aee7fc3-dirty-4k #1 688c7060a825a3ac418fe53881730b355915a419
-[   22.991934][    T1] Hardware name: Unisoc UMS9360-base Board (DT)
-[   22.991934][    T1] pstate: 804000c5 (Nzcv daIF +PAN -UAO -TCO -DIT -SSBS BTYPE=--)
-[   22.991934][    T1] pc : swsusp_arch_resume+0x2ac/0x344
-[   22.991934][    T1] lr : swsusp_arch_resume+0x294/0x344
-[   22.991934][    T1] sp : ffffffc08006b960
-[   22.991934][    T1] x29: ffffffc08006b9c0 x28: 0000000000000000 x27: 0000000000000000
-[   22.991934][    T1] x26: 0000000000000000 x25: 0000000000000000 x24: 0000000000000820
-[   22.991934][    T1] x23: ffffffd0817e3000 x22: ffffffd0817e3000 x21: 0000000000000000
-[   22.991934][    T1] x20: ffffff8089171000 x19: ffffffd08252c8c8 x18: ffffffc080061058
-[   22.991934][    T1] x17: 00000000529c6ef0 x16: 00000000529c6ef0 x15: 0000000000000004
-[   22.991934][    T1] x14: ffffff8178c88000 x13: 0000000000000006 x12: 0000000000000000
-[   22.991934][    T1] x11: 0000000000000015 x10: 0000000000000001 x9 : ffffffd082533000
-[   22.991934][    T1] x8 : 0000000109171000 x7 : 205b5d3433393139 x6 : 392e32322020205b
-[   22.991934][    T1] x5 : 000000010916f000 x4 : 000000008164b000 x3 : ffffff808a4e0530
-[   22.991934][    T1] x2 : ffffffd08058e784 x1 : 0000000082326000 x0 : 000000010a283000
-[   22.991934][    T1] Call trace:
-[   22.991934][    T1]  swsusp_arch_resume+0x2ac/0x344
-[   22.991934][    T1]  hibernation_restore+0x158/0x18c
-[   22.991934][    T1]  load_image_and_restore+0xb0/0xec
-[   22.991934][    T1]  software_resume+0xf4/0x19c
-[   22.991934][    T1]  software_resume_initcall+0x34/0x78
-[   22.991934][    T1]  do_one_initcall+0xe8/0x370
-[   22.991934][    T1]  do_initcall_level+0xc8/0x19c
-[   22.991934][    T1]  do_initcalls+0x70/0xc0
-[   22.991934][    T1]  do_basic_setup+0x1c/0x28
-[   22.991934][    T1]  kernel_init_freeable+0xe0/0x148
-[   22.991934][    T1]  kernel_init+0x20/0x1a8
-[   22.991934][    T1]  ret_from_fork+0x10/0x20
-[   22.991934][    T1] Code: a9400a61 f94013e0 f9438923 f9400a64 (b85fc110)
-
-Co-developed-by: Jeson Gao <jeson.gao@unisoc.com>
-Signed-off-by: Jeson Gao <jeson.gao@unisoc.com>
-Signed-off-by: Zhaoyang Huang <zhaoyang.huang@unisoc.com>
-Acked-by: Will Deacon <will@kernel.org>
-Acked-by: Mark Rutland <mark.rutland@arm.com>
+Fixes: 0626e6641f6b ("cifsd: add server handler for central processing and tranport layers")
 Cc: <stable@vger.kernel.org>
-[catalin.marinas@arm.com: commit log updated by Mark Rutland]
-Signed-off-by: Catalin Marinas <catalin.marinas@arm.com>
+Signed-off-by: Thomas Fourier <fourier.thomas@gmail.com>
+Acked-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/kernel/hibernate.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/smb/server/transport_rdma.c |   15 +++++++--------
+ 1 file changed, 7 insertions(+), 8 deletions(-)
 
---- a/arch/arm64/kernel/hibernate.c
-+++ b/arch/arm64/kernel/hibernate.c
-@@ -402,7 +402,7 @@ int swsusp_arch_suspend(void)
-  * Memory allocated by get_safe_page() will be dealt with by the hibernate code,
-  * we don't need to free it here.
-  */
--int swsusp_arch_resume(void)
-+int __nocfi swsusp_arch_resume(void)
+--- a/fs/smb/server/transport_rdma.c
++++ b/fs/smb/server/transport_rdma.c
+@@ -1251,14 +1251,12 @@ static int get_sg_list(void *buf, int si
+ 
+ static int get_mapped_sg_list(struct ib_device *device, void *buf, int size,
+ 			      struct scatterlist *sg_list, int nentries,
+-			      enum dma_data_direction dir)
++			      enum dma_data_direction dir, int *npages)
  {
- 	int rc;
- 	void *zero_page;
+-	int npages;
+-
+-	npages = get_sg_list(buf, size, sg_list, nentries);
+-	if (npages < 0)
++	*npages = get_sg_list(buf, size, sg_list, nentries);
++	if (*npages < 0)
+ 		return -EINVAL;
+-	return ib_dma_map_sg(device, sg_list, npages, dir);
++	return ib_dma_map_sg(device, sg_list, *npages, dir);
+ }
+ 
+ static int post_sendmsg(struct smbdirect_socket *sc,
+@@ -1329,12 +1327,13 @@ static int smb_direct_post_send_data(str
+ 	for (i = 0; i < niov; i++) {
+ 		struct ib_sge *sge;
+ 		int sg_cnt;
++		int npages;
+ 
+ 		sg_init_table(sg, SMBDIRECT_SEND_IO_MAX_SGE - 1);
+ 		sg_cnt = get_mapped_sg_list(sc->ib.dev,
+ 					    iov[i].iov_base, iov[i].iov_len,
+ 					    sg, SMBDIRECT_SEND_IO_MAX_SGE - 1,
+-					    DMA_TO_DEVICE);
++					    DMA_TO_DEVICE, &npages);
+ 		if (sg_cnt <= 0) {
+ 			pr_err("failed to map buffer\n");
+ 			ret = -ENOMEM;
+@@ -1342,7 +1341,7 @@ static int smb_direct_post_send_data(str
+ 		} else if (sg_cnt + msg->num_sge > SMBDIRECT_SEND_IO_MAX_SGE) {
+ 			pr_err("buffer not fitted into sges\n");
+ 			ret = -E2BIG;
+-			ib_dma_unmap_sg(sc->ib.dev, sg, sg_cnt,
++			ib_dma_unmap_sg(sc->ib.dev, sg, npages,
+ 					DMA_TO_DEVICE);
+ 			goto err;
+ 		}
 
 
