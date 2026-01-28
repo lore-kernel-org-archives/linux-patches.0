@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08EEF36C0B1;
-	Wed, 28 Jan 2026 15:27:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D713936BCE8;
+	Wed, 28 Jan 2026 15:27:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769614025; cv=none; b=TkwHuDZxfN45h+FSDW5soQbWuchGGNbhsWcsj3kSCJIOVwpRn/6MFY3/ce16HBcRa1Fx5Ywk4b2xnKv+gWuARi+hkrESsxTPZTrIPN+Oq+hoZ6f92Jfu0sQWGRcAOPUN4j6Itf7iptzn8LaTE29aTiMGMeWo9JQjMQspkIPH9QY=
+	t=1769614027; cv=none; b=MyBfbnKHiLd852mqa5ghbHUnj/gZBVAyyW2kXeQYp5AjQoAsErHsHBRa2TJIsUZw30/HxDqbIKjNvDokOUOGs6cMhaB+eRHxqduX3fcwNHdGBfLqw1KUwPhBG89vGLboe4BK+BKPUDV46/Tl9yr1dr3FcQ0q4yTne32aKGroAUM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769614025; c=relaxed/simple;
-	bh=SCNHXyNQjVHq9qba2tNIComY2kBXWcHkMdmg13uCdnk=;
+	s=arc-20240116; t=1769614027; c=relaxed/simple;
+	bh=svOUUqwFw/slbWXbZUE2cKM8JHV9mCZWa6pmWx4dKUs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dNc5LwXjn9lhTm/lrqQd4m1zAY2gcI05vMxZMFUHu+2WN8Qq6hEyJmcnztvWPEdGyezLcdxQWFvtit/WsP1Z/znr/prPuPkB5kkwLonaKl1AF2kDSi0iLSKBCNQL99aA/YY/pp1BqXKpLpO5bLATx2O4uv+8ejZa4SpgqupCFUI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AjXdJ58R; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=M9be0Y+pOzJ01PMXfhr3b2kSIVwDR7rmkhdmuLHgDIAJ4vdlltk3eUNUJPwHEgBXmxxMOrzPz4c28swmGu9qTaDzSoznv29iGBEiXNCV9iqVb4EYfAkKl+e0HJfcsIqFVC36jsHprBP0g0xETiNE65ornb7o9OtL6wHf0gfk8EM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Cfl3L8yx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AjXdJ58R"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 07EEFC4CEF1;
-	Wed, 28 Jan 2026 15:27:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Cfl3L8yx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 380E1C116C6;
+	Wed, 28 Jan 2026 15:27:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1769614024;
-	bh=SCNHXyNQjVHq9qba2tNIComY2kBXWcHkMdmg13uCdnk=;
+	s=korg; t=1769614027;
+	bh=svOUUqwFw/slbWXbZUE2cKM8JHV9mCZWa6pmWx4dKUs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AjXdJ58RS16g1aVU7RpZfUQ6OCvjJyx0wMywtI7pyjNf+/T/3lTVGrq1Qg1ujM/8n
-	 Nuj98xdoFzFXEJ7N3SwJ3pGjjaQ/TaU1vwuaqMTql5sZunXpsCNSnI1i3CwYO5KuqZ
-	 kWzbZnCRA5pZJJc868QorZ0jvaKuBLEu48e7MTu0=
+	b=Cfl3L8yxaqvtoMCSnIbVV/irqaXeXAHJ2pnKH5S0xNQJ0Vy8sjVCZEHQ4hqxfGATU
+	 y0pxl6MNlgcxbbxTQOp9msvyk7HrcOdkIwgKRt0favhOrU6uEcExMYLERwhhjpm8yg
+	 NDnAnjos5S7jfZEsfYt4HOO+lLY4O3bQk8s3WwLQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	syzbot+7182fbe91e58602ec1fe@syzkaller.appspotmail.com,
 	Eric Dumazet <edumazet@google.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 014/254] net: update netdev_lock_{type,name}
-Date: Wed, 28 Jan 2026 16:19:50 +0100
-Message-ID: <20260128145345.217996360@linuxfoundation.org>
+Subject: [PATCH 6.6 015/254] macvlan: fix possible UAF in macvlan_forward_source()
+Date: Wed, 28 Jan 2026 16:19:51 +0100
+Message-ID: <20260128145345.255827560@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260128145344.698118637@linuxfoundation.org>
 References: <20260128145344.698118637@linuxfoundation.org>
@@ -53,87 +54,104 @@ Content-Transfer-Encoding: 8bit
 
 From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit eb74c19fe10872ee1f29a8f90ca5ce943921afe9 ]
+[ Upstream commit 7470a7a63dc162f07c26dbf960e41ee1e248d80e ]
 
-Add missing entries in netdev_lock_type[] and netdev_lock_name[] :
+Add RCU protection on (struct macvlan_source_entry)->vlan.
 
-CAN, MCTP, RAWIP, CAIF, IP6GRE, 6LOWPAN, NETLINK, VSOCKMON,
-IEEE802154_MONITOR.
+Whenever macvlan_hash_del_source() is called, we must clear
+entry->vlan pointer before RCU grace period starts.
 
-Also add a WARN_ONCE() in netdev_lock_pos() to help future bug hunting
-next time a protocol is added without updating these arrays.
+This allows macvlan_forward_source() to skip over
+entries queued for freeing.
 
-Fixes: 1a33e10e4a95 ("net: partially revert dynamic lockdep key changes")
+Note that macvlan_dev are already RCU protected, as they
+are embedded in a standard netdev (netdev_priv(ndev)).
+
+Fixes: 79cf79abce71 ("macvlan: add source mode")
+Reported-by: syzbot+7182fbe91e58602ec1fe@syzkaller.appspotmail.com
+https: //lore.kernel.org/netdev/695fb1e8.050a0220.1c677c.039f.GAE@google.com/T/#u
 Signed-off-by: Eric Dumazet <edumazet@google.com>
-Link: https://patch.msgid.link/20260108093244.830280-1-edumazet@google.com
+Link: https://patch.msgid.link/20260108133651.1130486-1-edumazet@google.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/dev.c | 25 +++++++++++++++++++------
- 1 file changed, 19 insertions(+), 6 deletions(-)
+ drivers/net/macvlan.c | 20 +++++++++++++-------
+ 1 file changed, 13 insertions(+), 7 deletions(-)
 
-diff --git a/net/core/dev.c b/net/core/dev.c
-index cf5b5a4cbfd70..8a7a5e16da00a 100644
---- a/net/core/dev.c
-+++ b/net/core/dev.c
-@@ -481,15 +481,21 @@ static const unsigned short netdev_lock_type[] = {
- 	 ARPHRD_IEEE1394, ARPHRD_EUI64, ARPHRD_INFINIBAND, ARPHRD_SLIP,
- 	 ARPHRD_CSLIP, ARPHRD_SLIP6, ARPHRD_CSLIP6, ARPHRD_RSRVD,
- 	 ARPHRD_ADAPT, ARPHRD_ROSE, ARPHRD_X25, ARPHRD_HWX25,
-+	 ARPHRD_CAN, ARPHRD_MCTP,
- 	 ARPHRD_PPP, ARPHRD_CISCO, ARPHRD_LAPB, ARPHRD_DDCMP,
--	 ARPHRD_RAWHDLC, ARPHRD_TUNNEL, ARPHRD_TUNNEL6, ARPHRD_FRAD,
-+	 ARPHRD_RAWHDLC, ARPHRD_RAWIP,
-+	 ARPHRD_TUNNEL, ARPHRD_TUNNEL6, ARPHRD_FRAD,
- 	 ARPHRD_SKIP, ARPHRD_LOOPBACK, ARPHRD_LOCALTLK, ARPHRD_FDDI,
- 	 ARPHRD_BIF, ARPHRD_SIT, ARPHRD_IPDDP, ARPHRD_IPGRE,
- 	 ARPHRD_PIMREG, ARPHRD_HIPPI, ARPHRD_ASH, ARPHRD_ECONET,
- 	 ARPHRD_IRDA, ARPHRD_FCPP, ARPHRD_FCAL, ARPHRD_FCPL,
- 	 ARPHRD_FCFABRIC, ARPHRD_IEEE80211, ARPHRD_IEEE80211_PRISM,
--	 ARPHRD_IEEE80211_RADIOTAP, ARPHRD_PHONET, ARPHRD_PHONET_PIPE,
--	 ARPHRD_IEEE802154, ARPHRD_VOID, ARPHRD_NONE};
-+	 ARPHRD_IEEE80211_RADIOTAP,
-+	 ARPHRD_IEEE802154, ARPHRD_IEEE802154_MONITOR,
-+	 ARPHRD_PHONET, ARPHRD_PHONET_PIPE,
-+	 ARPHRD_CAIF, ARPHRD_IP6GRE, ARPHRD_NETLINK, ARPHRD_6LOWPAN,
-+	 ARPHRD_VSOCKMON,
-+	 ARPHRD_VOID, ARPHRD_NONE};
+diff --git a/drivers/net/macvlan.c b/drivers/net/macvlan.c
+index c8da94af4161a..09db43ce31767 100644
+--- a/drivers/net/macvlan.c
++++ b/drivers/net/macvlan.c
+@@ -58,7 +58,7 @@ struct macvlan_port {
  
- static const char *const netdev_lock_name[] = {
- 	"_xmit_NETROM", "_xmit_ETHER", "_xmit_EETHER", "_xmit_AX25",
-@@ -498,15 +504,21 @@ static const char *const netdev_lock_name[] = {
- 	"_xmit_IEEE1394", "_xmit_EUI64", "_xmit_INFINIBAND", "_xmit_SLIP",
- 	"_xmit_CSLIP", "_xmit_SLIP6", "_xmit_CSLIP6", "_xmit_RSRVD",
- 	"_xmit_ADAPT", "_xmit_ROSE", "_xmit_X25", "_xmit_HWX25",
-+	"_xmit_CAN", "_xmit_MCTP",
- 	"_xmit_PPP", "_xmit_CISCO", "_xmit_LAPB", "_xmit_DDCMP",
--	"_xmit_RAWHDLC", "_xmit_TUNNEL", "_xmit_TUNNEL6", "_xmit_FRAD",
-+	"_xmit_RAWHDLC", "_xmit_RAWIP",
-+	"_xmit_TUNNEL", "_xmit_TUNNEL6", "_xmit_FRAD",
- 	"_xmit_SKIP", "_xmit_LOOPBACK", "_xmit_LOCALTLK", "_xmit_FDDI",
- 	"_xmit_BIF", "_xmit_SIT", "_xmit_IPDDP", "_xmit_IPGRE",
- 	"_xmit_PIMREG", "_xmit_HIPPI", "_xmit_ASH", "_xmit_ECONET",
- 	"_xmit_IRDA", "_xmit_FCPP", "_xmit_FCAL", "_xmit_FCPL",
- 	"_xmit_FCFABRIC", "_xmit_IEEE80211", "_xmit_IEEE80211_PRISM",
--	"_xmit_IEEE80211_RADIOTAP", "_xmit_PHONET", "_xmit_PHONET_PIPE",
--	"_xmit_IEEE802154", "_xmit_VOID", "_xmit_NONE"};
-+	"_xmit_IEEE80211_RADIOTAP",
-+	"_xmit_IEEE802154", "_xmit_IEEE802154_MONITOR",
-+	"_xmit_PHONET", "_xmit_PHONET_PIPE",
-+	"_xmit_CAIF", "_xmit_IP6GRE", "_xmit_NETLINK", "_xmit_6LOWPAN",
-+	"_xmit_VSOCKMON",
-+	"_xmit_VOID", "_xmit_NONE"};
+ struct macvlan_source_entry {
+ 	struct hlist_node	hlist;
+-	struct macvlan_dev	*vlan;
++	struct macvlan_dev __rcu *vlan;
+ 	unsigned char		addr[6+2] __aligned(sizeof(u16));
+ 	struct rcu_head		rcu;
+ };
+@@ -145,7 +145,7 @@ static struct macvlan_source_entry *macvlan_hash_lookup_source(
  
- static struct lock_class_key netdev_xmit_lock_key[ARRAY_SIZE(netdev_lock_type)];
- static struct lock_class_key netdev_addr_lock_key[ARRAY_SIZE(netdev_lock_type)];
-@@ -519,6 +531,7 @@ static inline unsigned short netdev_lock_pos(unsigned short dev_type)
- 		if (netdev_lock_type[i] == dev_type)
- 			return i;
- 	/* the last key is used by default */
-+	WARN_ONCE(1, "netdev_lock_pos() could not find dev_type=%u\n", dev_type);
- 	return ARRAY_SIZE(netdev_lock_type) - 1;
+ 	hlist_for_each_entry_rcu(entry, h, hlist, lockdep_rtnl_is_held()) {
+ 		if (ether_addr_equal_64bits(entry->addr, addr) &&
+-		    entry->vlan == vlan)
++		    rcu_access_pointer(entry->vlan) == vlan)
+ 			return entry;
+ 	}
+ 	return NULL;
+@@ -167,7 +167,7 @@ static int macvlan_hash_add_source(struct macvlan_dev *vlan,
+ 		return -ENOMEM;
+ 
+ 	ether_addr_copy(entry->addr, addr);
+-	entry->vlan = vlan;
++	RCU_INIT_POINTER(entry->vlan, vlan);
+ 	h = &port->vlan_source_hash[macvlan_eth_hash(addr)];
+ 	hlist_add_head_rcu(&entry->hlist, h);
+ 	vlan->macaddr_count++;
+@@ -186,6 +186,7 @@ static void macvlan_hash_add(struct macvlan_dev *vlan)
+ 
+ static void macvlan_hash_del_source(struct macvlan_source_entry *entry)
+ {
++	RCU_INIT_POINTER(entry->vlan, NULL);
+ 	hlist_del_rcu(&entry->hlist);
+ 	kfree_rcu(entry, rcu);
  }
+@@ -389,7 +390,7 @@ static void macvlan_flush_sources(struct macvlan_port *port,
+ 	int i;
  
+ 	hash_for_each_safe(port->vlan_source_hash, i, next, entry, hlist)
+-		if (entry->vlan == vlan)
++		if (rcu_access_pointer(entry->vlan) == vlan)
+ 			macvlan_hash_del_source(entry);
+ 
+ 	vlan->macaddr_count = 0;
+@@ -432,9 +433,14 @@ static bool macvlan_forward_source(struct sk_buff *skb,
+ 
+ 	hlist_for_each_entry_rcu(entry, h, hlist) {
+ 		if (ether_addr_equal_64bits(entry->addr, addr)) {
+-			if (entry->vlan->flags & MACVLAN_FLAG_NODST)
++			struct macvlan_dev *vlan = rcu_dereference(entry->vlan);
++
++			if (!vlan)
++				continue;
++
++			if (vlan->flags & MACVLAN_FLAG_NODST)
+ 				consume = true;
+-			macvlan_forward_source_one(skb, entry->vlan);
++			macvlan_forward_source_one(skb, vlan);
+ 		}
+ 	}
+ 
+@@ -1685,7 +1691,7 @@ static int macvlan_fill_info_macaddr(struct sk_buff *skb,
+ 	struct macvlan_source_entry *entry;
+ 
+ 	hlist_for_each_entry_rcu(entry, h, hlist, lockdep_rtnl_is_held()) {
+-		if (entry->vlan != vlan)
++		if (rcu_access_pointer(entry->vlan) != vlan)
+ 			continue;
+ 		if (nla_put(skb, IFLA_MACVLAN_MACADDR, ETH_ALEN, entry->addr))
+ 			return 1;
 -- 
 2.51.0
 
