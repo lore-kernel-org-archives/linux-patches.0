@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FABB2F1FFA;
-	Wed, 28 Jan 2026 15:40:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 311D72F260C;
+	Wed, 28 Jan 2026 15:40:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769614840; cv=none; b=ZDAV23d3OpIZZ7vNcqLkYNdDkdRv/9bCEbwA6RDQxkCZkjxxMGA2gMRXZZ4Cy+KU9E2vYmamx9KxjjjxC1lg8zMKXpMkm7eul4vnaCfO2aKiXwBOciVr9N71qr43dRf53EYFLUL34Hvh3rymqpa04DW/GEJIUzXoYN/8D5GRC0Q=
+	t=1769614844; cv=none; b=pxlNJqNzNItp6t2Sp8Y4T63uFNVpGdirGSR+FM5gsl1QPM81rbgwFBB3PhzJfrFgKYNsA3B//b03z/n0vSf16i7ZYa1QsDtW04yMDfgXleswToCVTZ0R0Crj0nRUdVJcyXT19oGPumwM5EE2wFfl0YEE0HyK2hB5ITHdv+iKKOg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769614840; c=relaxed/simple;
-	bh=Jff65hMtM8Jmm2XCQ6tD/ctPCVwxQ4pBmalDFzfgMsE=;
+	s=arc-20240116; t=1769614844; c=relaxed/simple;
+	bh=jdieLHJ88Vsoed3qLOBRvxmH/hkpbxELnZPmMOdEZ70=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=d88WnEgBenZ5X5wHI5mGoN7stVIDhVWiTxjLT0SjWG+QeLltpWNX38tlW7WEaUxNWbuhXE/Jm/+n3WNjMSHUfzbwnDoTYy1qINscqx2jed/Tl0MZfadydkfljVcJmYdi4HZEaSP0fjrriszZ8hB9WHc/JHNvfaFVsJ3qanNSzkw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Clpk/kUy; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=OtL1E0kyi/+dIKtopM1yzx81MwwwMSDUi2c9n0XG4QPMpBBVNfTTW6Ks1s5Yg6n4hIE2BsweDROqLP/c6ZslK7fzOPf6bkKJOs2dIXmduC51thRdeU7o8/82BS8CAPn/N5A00hNiomUAIGc8yVQ11cC72IzEQ5X4Sz+CIBnGTUc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Cc6dtUvB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Clpk/kUy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C95AC4CEF7;
-	Wed, 28 Jan 2026 15:40:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Cc6dtUvB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A155C4CEF1;
+	Wed, 28 Jan 2026 15:40:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1769614840;
-	bh=Jff65hMtM8Jmm2XCQ6tD/ctPCVwxQ4pBmalDFzfgMsE=;
+	s=korg; t=1769614843;
+	bh=jdieLHJ88Vsoed3qLOBRvxmH/hkpbxELnZPmMOdEZ70=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Clpk/kUyh/wGzUv0WEM3uAoc4JC8quejNu2VECW3N0Mbcoh/M70UQmynkDOq39BKQ
-	 mNY35/7d2O85HibhJ4V/2zWjHM2vuVx33opMTSNJ9CJ93M41cqIf8gwM8Bos3zTCMj
-	 7fe8vs1j2WibGhlQpWKlka8Ivhomaa2iA0cl4cFg=
+	b=Cc6dtUvBVFU1e9HvwfEczJtiIC+xA0YfezRJXNvne+g4mzSX5tqUgiHTimDrD/zNg
+	 42cMln1nOqRarwGfngkM87PTyiou6RMkVwyFS3SbJLtti80xAMWhWygWOBR8MBkcfB
+	 raLgaz9K26c09rgfNdSuxcmlnjXIaZGn46dOLtw0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+332bd4e9d148f11a87dc@syzkaller.appspotmail.com,
-	syzbot+0399100e525dd9696764@syzkaller.appspotmail.com,
-	Khalid Aziz <khalid@kernel.org>,
-	Bartlomiej Kubik <kubik.bartlomiej@gmail.com>,
-	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
+	Philip Yang <Philip.Yang@amd.com>,
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Li hongliang <1468888505@139.com>
-Subject: [PATCH 6.6 248/254] fs/ntfs3: Initialize allocated memory before use
-Date: Wed, 28 Jan 2026 16:23:44 +0100
-Message-ID: <20260128145353.723087716@linuxfoundation.org>
+Subject: [PATCH 6.6 249/254] drm/amdgpu: csa unmap use uninterruptible lock
+Date: Wed, 28 Jan 2026 16:23:45 +0100
+Message-ID: <20260128145353.759186047@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260128145344.698118637@linuxfoundation.org>
 References: <20260128145344.698118637@linuxfoundation.org>
@@ -48,78 +46,68 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Bartlomiej Kubik <kubik.bartlomiej@gmail.com>
+From: Philip Yang <Philip.Yang@amd.com>
 
-[ Upstream commit a8a3ca23bbd9d849308a7921a049330dc6c91398 ]
+[ Upstream commit a0fa7873f2f869087b1e7793f7fac3713a1e3afe ]
 
-KMSAN reports: Multiple uninitialized values detected:
+After process exit to unmap csa and free GPU vm, if signal is accepted
+and then waiting to take vm lock is interrupted and return, it causes
+memory leaking and below warning backtrace.
 
-- KMSAN: uninit-value in ntfs_read_hdr (3)
-- KMSAN: uninit-value in bcmp (3)
+Change to use uninterruptible wait lock fix the issue.
 
-Memory is allocated by __getname(), which is a wrapper for
-kmem_cache_alloc(). This memory is used before being properly
-cleared. Change kmem_cache_alloc() to kmem_cache_zalloc() to
-properly allocate and clear memory before use.
+WARNING: CPU: 69 PID: 167800 at amd/amdgpu/amdgpu_kms.c:1525
+ amdgpu_driver_postclose_kms+0x294/0x2a0 [amdgpu]
+ Call Trace:
+  <TASK>
+  drm_file_free.part.0+0x1da/0x230 [drm]
+  drm_close_helper.isra.0+0x65/0x70 [drm]
+  drm_release+0x6a/0x120 [drm]
+  amdgpu_drm_release+0x51/0x60 [amdgpu]
+  __fput+0x9f/0x280
+  ____fput+0xe/0x20
+  task_work_run+0x67/0xa0
+  do_exit+0x217/0x3c0
+  do_group_exit+0x3b/0xb0
+  get_signal+0x14a/0x8d0
+  arch_do_signal_or_restart+0xde/0x100
+  exit_to_user_mode_loop+0xc1/0x1a0
+  exit_to_user_mode_prepare+0xf4/0x100
+  syscall_exit_to_user_mode+0x17/0x40
+  do_syscall_64+0x69/0xc0
 
-Fixes: 82cae269cfa9 ("fs/ntfs3: Add initialization of super block")
-Fixes: 78ab59fee07f ("fs/ntfs3: Rework file operations")
-Tested-by: syzbot+332bd4e9d148f11a87dc@syzkaller.appspotmail.com
-Reported-by: syzbot+332bd4e9d148f11a87dc@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=332bd4e9d148f11a87dc
-
-Fixes: 82cae269cfa9 ("fs/ntfs3: Add initialization of super block")
-Fixes: 78ab59fee07f ("fs/ntfs3: Rework file operations")
-Tested-by: syzbot+0399100e525dd9696764@syzkaller.appspotmail.com
-Reported-by: syzbot+0399100e525dd9696764@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=0399100e525dd9696764
-
-Reviewed-by: Khalid Aziz <khalid@kernel.org>
-Signed-off-by: Bartlomiej Kubik <kubik.bartlomiej@gmail.com>
-Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
+Signed-off-by: Philip Yang <Philip.Yang@amd.com>
+Reviewed-by: Christian König <christian.koenig@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit 7dbbfb3c171a6f63b01165958629c9c26abf38ab)
+Cc: stable@vger.kernel.org
+[The third parameter of drm_exec_init() was introduced by commit
+ 05d249352f1a ("drm/exec: Pass in initial # of objects") after Linux 6.8.
+ This code targets linux 6.6, so the current implementation is used
+ and the third parameter is not needed.]
 Signed-off-by: Li hongliang <1468888505@139.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ntfs3/inode.c |    7 +++----
- 1 file changed, 3 insertions(+), 4 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_csa.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/fs/ntfs3/inode.c
-+++ b/fs/ntfs3/inode.c
-@@ -1327,7 +1327,7 @@ struct inode *ntfs_create_inode(struct m
- 		fa |= FILE_ATTRIBUTE_READONLY;
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_csa.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_csa.c
+@@ -110,7 +110,7 @@ int amdgpu_unmap_static_csa(struct amdgp
+ 	struct drm_exec exec;
+ 	int r;
  
- 	/* Allocate PATH_MAX bytes. */
--	new_de = __getname();
-+	new_de = kmem_cache_zalloc(names_cachep, GFP_KERNEL);
- 	if (!new_de) {
- 		err = -ENOMEM;
- 		goto out1;
-@@ -1756,10 +1756,9 @@ int ntfs_link_inode(struct inode *inode,
- 	struct NTFS_DE *de;
- 
- 	/* Allocate PATH_MAX bytes. */
--	de = __getname();
-+	de = kmem_cache_zalloc(names_cachep, GFP_KERNEL);
- 	if (!de)
- 		return -ENOMEM;
--	memset(de, 0, PATH_MAX);
- 
- 	/* Mark rw ntfs as dirty. It will be cleared at umount. */
- 	ntfs_set_state(sbi, NTFS_DIRTY_DIRTY);
-@@ -1795,7 +1794,7 @@ int ntfs_unlink_inode(struct inode *dir,
- 		return -EINVAL;
- 
- 	/* Allocate PATH_MAX bytes. */
--	de = __getname();
-+	de = kmem_cache_zalloc(names_cachep, GFP_KERNEL);
- 	if (!de)
- 		return -ENOMEM;
- 
+-	drm_exec_init(&exec, DRM_EXEC_INTERRUPTIBLE_WAIT);
++	drm_exec_init(&exec, 0);
+ 	drm_exec_until_all_locked(&exec) {
+ 		r = amdgpu_vm_lock_pd(vm, &exec, 0);
+ 		if (likely(!r))
 
 
