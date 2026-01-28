@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95AEC3033C4;
-	Wed, 28 Jan 2026 15:53:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BFFE02E2DF4;
+	Wed, 28 Jan 2026 15:54:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769615637; cv=none; b=ueo6NtQPsfAu1MDXIwY1etRyhvW7DhZuMI00p5cl8UXufoaGQSmXoWQmZg7U++vSQcd//2BMcylxVW3FaQYbNs4gLmXa0knGmuuLaGs1SsVLrZV8RmaE5AiuNXx/9iRdgy0XOoTIY/cVEXF9lxM8JH7c6faskTmAEfLaRDDyXf0=
+	t=1769615640; cv=none; b=Bfw/H9qvFZFCDBQkbPlhkt9ngo5jPfygLrxHrQhG/LrXRLE7vKhL8SZ1h9/FQXIfqpWXn1PNYB1UuG8eZdG3ULPzQwDA2ko1YmaxAg3EC3mKlXcnDiUGyrsxeI/ZjX9SVoDS4x3GDTN2qntLTLPjPEPdYKVrAkOkAitgFJib7os=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769615637; c=relaxed/simple;
-	bh=AG4Yf1wpt2WYF9ByK1bZ1k2Rx9laZ9N0gyqVZ9nAdCE=;
+	s=arc-20240116; t=1769615640; c=relaxed/simple;
+	bh=pzrdnueCqbSOy+/PJbIMn1JgSrJ5z9RxPWFdgpkJeZI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dD7XD/AB2QkL2NEJ9jwPaAKrMRSN+eqhJwfVk6nwwuobqrCGXc/ZTAXc/rqHr15Mq7uEZWuwv6dOirY7OK+R7zEM49EVnS96/FQUzk+O6OiRsv8leniz8PIAtxzqzGUzda8Xp0yM85tvI2z2sCNk6xQq6Ul3wxrAqHBD0BdchKY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SWl21XOB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dais1VerqOK1nC8BXYhb565O6JGWDGWrL/83xjSOIZ2bwrbAmwQlcs5AuYx9mvAxtCfJ54Re1rlLOnHIWgcw1cuTr5xO6aYtdvrqMsNwhLAkPCPxkajiXggcn/TdHYvnmrJkERm6mafV6QHUy4iF4ecFqEmJMKFgp7wOuX4R21c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rnvg7eel; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SWl21XOB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C424FC4CEF1;
-	Wed, 28 Jan 2026 15:53:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rnvg7eel"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F285C4CEF1;
+	Wed, 28 Jan 2026 15:54:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1769615637;
-	bh=AG4Yf1wpt2WYF9ByK1bZ1k2Rx9laZ9N0gyqVZ9nAdCE=;
+	s=korg; t=1769615640;
+	bh=pzrdnueCqbSOy+/PJbIMn1JgSrJ5z9RxPWFdgpkJeZI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SWl21XOB7l8yr0r9luq8mm4Ea0+iztOEBhetxRriE2GEh3OhVQlvkxlNNpFmGCO/Y
-	 ZmSJWdp+j4n1Lkg3s/uLhJEk/H9OAbKTyqozptRWF1DK25Q2iXcfKuo3rVSm9pFaBQ
-	 UsbmRPwsJCgmce8aVOTeMtT8AUiN2iQcQH2qp6mw=
+	b=rnvg7eelWOmjcx08QQ63TQm2jsUSIhCDBJ0WcCWiDVSFX89BNwNsiFhbYykvRhY9K
+	 iFeuMqzBwM7Gj0oTkNYgpgNB8gIufhxmOnN8tNQ/uj9QxMxSTPqW6BQPtMOyQtU85/
+	 X1Y2IPFX6KyrmNUnJdI8NPZfOlaxKK0gyPGW/pns=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+4d8c7d16b0e95c0d0f0d@syzkaller.appspotmail.com,
-	Kuniyuki Iwashima <kuniyu@google.com>,
-	Eric Dumazet <edumazet@google.com>,
+	Michal Luczaj <mhal@rbox.co>,
+	Stefano Garzarella <sgarzare@redhat.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 036/227] gue: Fix skb memleak with inner IP protocol 0.
-Date: Wed, 28 Jan 2026 16:21:21 +0100
-Message-ID: <20260128145345.642894163@linuxfoundation.org>
+Subject: [PATCH 6.18 027/227] vsock/virtio: Coalesce only linear skb
+Date: Wed, 28 Jan 2026 16:21:12 +0100
+Message-ID: <20260128145345.322972691@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260128145344.331957407@linuxfoundation.org>
 References: <20260128145344.331957407@linuxfoundation.org>
@@ -53,79 +52,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kuniyuki Iwashima <kuniyu@google.com>
+From: Michal Luczaj <mhal@rbox.co>
 
-[ Upstream commit 9a56796ad258786d3624eef5aefba394fc9bdded ]
+[ Upstream commit 0386bd321d0f95d041a7b3d7b07643411b044a96 ]
 
-syzbot reported skb memleak below. [0]
+vsock/virtio common tries to coalesce buffers in rx queue: if a linear skb
+(with a spare tail room) is followed by a small skb (length limited by
+GOOD_COPY_LEN = 128), an attempt is made to join them.
 
-The repro generated a GUE packet with its inner protocol 0.
+Since the introduction of MSG_ZEROCOPY support, assumption that a small skb
+will always be linear is incorrect. In the zerocopy case, data is lost and
+the linear skb is appended with uninitialized kernel memory.
 
-gue_udp_recv() returns -guehdr->proto_ctype for "resubmit"
-in ip_protocol_deliver_rcu(), but this only works with
-non-zero protocol number.
+Of all 3 supported virtio-based transports, only loopback-transport is
+affected. G2H virtio-transport rx queue operates on explicitly linear skbs;
+see virtio_vsock_alloc_linear_skb() in virtio_vsock_rx_fill(). H2G
+vhost-transport may allocate non-linear skbs, but only for sizes that are
+not considered for coalescence; see PAGE_ALLOC_COSTLY_ORDER in
+virtio_vsock_alloc_skb().
 
-Let's drop such packets.
+Ensure only linear skbs are coalesced. Note that skb_tailroom(last_skb) > 0
+guarantees last_skb is linear.
 
-Note that 0 is a valid number (IPv6 Hop-by-Hop Option).
-
-I think it is not practical to encap HOPOPT in GUE, so once
-someone starts to complain, we could pass down a resubmit
-flag pointer to distinguish two zeros from the upper layer:
-
-  * no error
-  * resubmit HOPOPT
-
-[0]
-BUG: memory leak
-unreferenced object 0xffff888109695a00 (size 240):
-  comm "syz.0.17", pid 6088, jiffies 4294943096
-  hex dump (first 32 bytes):
-    00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
-    00 40 c2 10 81 88 ff ff 00 00 00 00 00 00 00 00  .@..............
-  backtrace (crc a84b336f):
-    kmemleak_alloc_recursive include/linux/kmemleak.h:44 [inline]
-    slab_post_alloc_hook mm/slub.c:4958 [inline]
-    slab_alloc_node mm/slub.c:5263 [inline]
-    kmem_cache_alloc_noprof+0x3b4/0x590 mm/slub.c:5270
-    __build_skb+0x23/0x60 net/core/skbuff.c:474
-    build_skb+0x20/0x190 net/core/skbuff.c:490
-    __tun_build_skb drivers/net/tun.c:1541 [inline]
-    tun_build_skb+0x4a1/0xa40 drivers/net/tun.c:1636
-    tun_get_user+0xc12/0x2030 drivers/net/tun.c:1770
-    tun_chr_write_iter+0x71/0x120 drivers/net/tun.c:1999
-    new_sync_write fs/read_write.c:593 [inline]
-    vfs_write+0x45d/0x710 fs/read_write.c:686
-    ksys_write+0xa7/0x170 fs/read_write.c:738
-    do_syscall_x64 arch/x86/entry/syscall_64.c:63 [inline]
-    do_syscall_64+0xa4/0xf80 arch/x86/entry/syscall_64.c:94
-    entry_SYSCALL_64_after_hwframe+0x77/0x7f
-
-Fixes: 37dd0247797b1 ("gue: Receive side for Generic UDP Encapsulation")
-Reported-by: syzbot+4d8c7d16b0e95c0d0f0d@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/netdev/6965534b.050a0220.38aacd.0001.GAE@google.com/
-Signed-off-by: Kuniyuki Iwashima <kuniyu@google.com>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Link: https://patch.msgid.link/20260115172533.693652-2-kuniyu@google.com
+Fixes: 581512a6dc93 ("vsock/virtio: MSG_ZEROCOPY flag support")
+Signed-off-by: Michal Luczaj <mhal@rbox.co>
+Reviewed-by: Stefano Garzarella <sgarzare@redhat.com>
+Link: https://patch.msgid.link/20260113-vsock-recv-coalescence-v2-1-552b17837cf4@rbox.co
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/fou_core.c | 3 +++
- 1 file changed, 3 insertions(+)
+ net/vmw_vsock/virtio_transport_common.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/net/ipv4/fou_core.c b/net/ipv4/fou_core.c
-index 3970b6b7ace53..ab8f309f8925d 100644
---- a/net/ipv4/fou_core.c
-+++ b/net/ipv4/fou_core.c
-@@ -215,6 +215,9 @@ static int gue_udp_recv(struct sock *sk, struct sk_buff *skb)
- 		return gue_control_message(skb, guehdr);
+diff --git a/net/vmw_vsock/virtio_transport_common.c b/net/vmw_vsock/virtio_transport_common.c
+index dcc8a1d5851e6..26b979ad71f09 100644
+--- a/net/vmw_vsock/virtio_transport_common.c
++++ b/net/vmw_vsock/virtio_transport_common.c
+@@ -1359,9 +1359,11 @@ virtio_transport_recv_enqueue(struct vsock_sock *vsk,
  
- 	proto_ctype = guehdr->proto_ctype;
-+	if (unlikely(!proto_ctype))
-+		goto drop;
-+
- 	__skb_pull(skb, sizeof(struct udphdr) + hdrlen);
- 	skb_reset_transport_header(skb);
+ 	/* Try to copy small packets into the buffer of last packet queued,
+ 	 * to avoid wasting memory queueing the entire buffer with a small
+-	 * payload.
++	 * payload. Skip non-linear (e.g. zerocopy) skbs; these carry payload
++	 * in skb_shinfo.
+ 	 */
+-	if (len <= GOOD_COPY_LEN && !skb_queue_empty(&vvs->rx_queue)) {
++	if (len <= GOOD_COPY_LEN && !skb_queue_empty(&vvs->rx_queue) &&
++	    !skb_is_nonlinear(skb)) {
+ 		struct virtio_vsock_hdr *last_hdr;
+ 		struct sk_buff *last_skb;
  
 -- 
 2.51.0
