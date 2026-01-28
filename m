@@ -1,37 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3893C30BBA5;
-	Wed, 28 Jan 2026 15:52:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59D53302741;
+	Wed, 28 Jan 2026 15:53:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769615578; cv=none; b=Z0BJ+4tz4r091osq46vVMHi9SEiJkdSKX81tLXWDMoJ0hry+05jLw25S9tRjHQG/nfPGiDKb7EU/sqoRMFPJWea4NkssBEezeUV+rIDHOBJAOdik1VZ7YY1brNygWRWlJkO3cA0+bo5mzaa0jBmmy5mZWJVubdL/ggEEiTLkYb8=
+	t=1769615581; cv=none; b=JRJRGeaSK8go+/eDg0lpnjvTuVk9GMZhk97q6o8DwwybN4iZF5xV2MTyT+qqckI47C7wj5P00C9U/t6vDQ/OATzU2sIT7diHF7O0waX73Er7gizWn6KFk2gSLcO3+j/CkbPO04WPo1iWcY1jpUONh60p7cdwst4ZxpiZsn7aMfc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769615578; c=relaxed/simple;
-	bh=y1F3T6ZHbZm7HAKTCnws6YrmZOgvTQoL05FxKJwv164=;
+	s=arc-20240116; t=1769615581; c=relaxed/simple;
+	bh=dNqF7bHS4Vd+lyz3PSNgK36k7He89iYdeMJUAgCqWjU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sH+Wjt14rvzYlVzZ5TdrTqcNQVFfGd3UfxD5PpgwsGWO4u4cfI2IQm+VIPmrFSvk1vCj8nqAoVnTR11ce/Yx+jGBcbbivRP4g/D6Kj4Lh1YqJGHbBOoQCIRYbiGOf0zBAYjLDv8xkkn4rYRlVejylw6TOLSt+zy2k56ah5nLxRg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Bb/0ua3i; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=khMi97Pdc3qnP7+AjKUD8nVglX5JvZaVj1nOx22piXfUnO/vsTXg9Cup9b4lZ0C3SYlf0NBS1dQnCc2R8wbpj5cZHDPktEd9Dm7EBMbGh3iZaBJfUxJDaTdMGHWaPfmOydnIFSTFk5RR40Pi//i1xrBOUxV6wvVKsalNiPSkgHE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=s32PF8lL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Bb/0ua3i"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A112AC116C6;
-	Wed, 28 Jan 2026 15:52:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="s32PF8lL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C4C5AC4CEF1;
+	Wed, 28 Jan 2026 15:53:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1769615578;
-	bh=y1F3T6ZHbZm7HAKTCnws6YrmZOgvTQoL05FxKJwv164=;
+	s=korg; t=1769615581;
+	bh=dNqF7bHS4Vd+lyz3PSNgK36k7He89iYdeMJUAgCqWjU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Bb/0ua3iqwWzZrHfowecSqKWm7JULxkafwE+LegwL2JCWX48fU092ydfZTLaRFdsF
-	 vzxiWU+uzJ0Jq3Kol7U4gAUPP6fM6isgj0ZfN9VRUMyyQT4T4tzBgQwPHTfA5u5CFn
-	 U4KaosJ9vso80FZWjamaHk3L95Oscyz1UPlAdB/U=
+	b=s32PF8lLDGd7xpbZw/Az/sBKdqzhC0xRsaLQzpBZAvbczr+fEkvG5lu4dfJmsIX5Y
+	 GPb4+sUCZOMdhWQK6ay3TopTbdcuDtzl8UQ3UxbQoUsnf3KscgO0c4CldearJxgVa4
+	 XiVFUB1h6O7yS82KN7MxomuoF5EYa+oDCdpkiif0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>,
-	Jiri Slaby <jirislaby@kernel.org>
-Subject: [PATCH 6.18 050/227] serial: Fix not set tty->port race condition
-Date: Wed, 28 Jan 2026 16:21:35 +0100
-Message-ID: <20260128145346.143774672@linuxfoundation.org>
+	Ian Abbott <abbotti@mev.co.uk>
+Subject: [PATCH 6.18 051/227] comedi: dmm32at: serialize use of paged registers
+Date: Wed, 28 Jan 2026 16:21:36 +0100
+Message-ID: <20260128145346.179344215@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260128145344.331957407@linuxfoundation.org>
 References: <20260128145344.331957407@linuxfoundation.org>
@@ -50,93 +49,127 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
+From: Ian Abbott <abbotti@mev.co.uk>
 
-commit 32f37e57583f869140cff445feedeea8a5fea986 upstream.
+commit e03b29b55f2b7c345a919a6ee36633b06bf3fb56 upstream.
 
-Revert commit bfc467db60b7 ("serial: remove redundant
-tty_port_link_device()") because the tty_port_link_device() is not
-redundant: the tty->port has to be confured before we call
-uart_configure_port(), otherwise user-space can open console without TTY
-linked to the driver.
+Some of the hardware registers of the DMM-32-AT board are multiplexed,
+using the least significant two bits of the Miscellaneous Control
+register to select the function of registers at offsets 12 to 15:
 
-This tty_port_link_device() was added explicitly to avoid this exact
-issue in commit fb2b90014d78 ("tty: link tty and port before configuring
-it as console"), so offending commit basically reverted the fix saying
-it is redundant without addressing the actual race condition presented
-there.
+ 00 => 8254 timer/counter registers are accessible
+ 01 => 8255 digital I/O registers are accessible
+ 10 => Reserved
+ 11 => Calibration registers are accessible
 
-Reproducible always as tty->port warning on Qualcomm SoC with most of
-devices disabled, so with very fast boot, and one serial device being
-the console:
+The interrupt service routine (`dmm32at_isr()`) clobbers the bottom two
+bits of the register with value 00, which would interfere with access to
+the 8255 registers by the `dm32at_8255_io()` function (used for Comedi
+instruction handling on the digital I/O subdevice).
 
-  printk: legacy console [ttyMSM0] enabled
-  printk: legacy console [ttyMSM0] enabled
-  printk: legacy bootconsole [qcom_geni0] disabled
-  printk: legacy bootconsole [qcom_geni0] disabled
-  ------------[ cut here ]------------
-  tty_init_dev: ttyMSM driver does not set tty->port. This would crash the kernel. Fix the driver!
-  WARNING: drivers/tty/tty_io.c:1414 at tty_init_dev.part.0+0x228/0x25c, CPU#2: systemd/1
-  Modules linked in: socinfo tcsrcc_eliza gcc_eliza sm3_ce fuse ipv6
-  CPU: 2 UID: 0 PID: 1 Comm: systemd Tainted: G S                  6.19.0-rc4-next-20260108-00024-g2202f4d30aa8 #73 PREEMPT
-  Tainted: [S]=CPU_OUT_OF_SPEC
-  Hardware name: Qualcomm Technologies, Inc. Eliza (DT)
-  ...
-  tty_init_dev.part.0 (drivers/tty/tty_io.c:1414 (discriminator 11)) (P)
-  tty_open (arch/arm64/include/asm/atomic_ll_sc.h:95 (discriminator 3) drivers/tty/tty_io.c:2073 (discriminator 3) drivers/tty/tty_io.c:2120 (discriminator 3))
-  chrdev_open (fs/char_dev.c:411)
-  do_dentry_open (fs/open.c:962)
-  vfs_open (fs/open.c:1094)
-  do_open (fs/namei.c:4634)
-  path_openat (fs/namei.c:4793)
-  do_filp_open (fs/namei.c:4820)
-  do_sys_openat2 (fs/open.c:1391 (discriminator 3))
-  ...
-  Starting Network Name Resolution...
+Make use of the generic Comedi device spin-lock `dev->spinlock` (which
+is otherwise unused by this driver) to serialize access to the
+miscellaneous control register and paged registers.
 
-Apparently the flow with this small Yocto-based ramdisk user-space is:
-
-driver (qcom_geni_serial.c):                  user-space:
-============================                  ===========
-qcom_geni_serial_probe()
- uart_add_one_port()
-  serial_core_register_port()
-   serial_core_add_one_port()
-    uart_configure_port()
-     register_console()
-    |
-    |                                         open console
-    |                                          ...
-    |                                          tty_init_dev()
-    |                                           driver->ports[idx] is NULL
-    |
-    tty_port_register_device_attr_serdev()
-     tty_port_link_device() <- set driver->ports[idx]
-
-Fixes: bfc467db60b7 ("serial: remove redundant tty_port_link_device()")
+Fixes: 3c501880ac44 ("Staging: comedi: add dmm32at driver")
 Cc: stable@vger.kernel.org
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
-Reviewed-by: Jiri Slaby <jirislaby@kernel.org>
-Link: https://patch.msgid.link/20260123072139.53293-2-krzysztof.kozlowski@oss.qualcomm.com
+Signed-off-by: Ian Abbott <abbotti@mev.co.uk>
+Link: https://patch.msgid.link/20260112162835.91688-1-abbotti@mev.co.uk
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/tty/serial/serial_core.c |    6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/comedi/drivers/dmm32at.c |   32 ++++++++++++++++++++++++++++++--
+ 1 file changed, 30 insertions(+), 2 deletions(-)
 
---- a/drivers/tty/serial/serial_core.c
-+++ b/drivers/tty/serial/serial_core.c
-@@ -3102,6 +3102,12 @@ static int serial_core_add_one_port(stru
- 	if (uport->cons && uport->dev)
- 		of_console_check(uport->dev->of_node, uport->cons->name, uport->line);
+--- a/drivers/comedi/drivers/dmm32at.c
++++ b/drivers/comedi/drivers/dmm32at.c
+@@ -330,6 +330,7 @@ static int dmm32at_ai_cmdtest(struct com
  
-+	/*
-+	 * TTY port has to be linked with the driver before register_console()
-+	 * in uart_configure_port(), because user-space could open the console
-+	 * immediately after.
-+	 */
-+	tty_port_link_device(port, drv->tty_driver, uport->line);
- 	uart_configure_port(drv, state, uport);
+ static void dmm32at_setaitimer(struct comedi_device *dev, unsigned int nansec)
+ {
++	unsigned long irq_flags;
+ 	unsigned char lo1, lo2, hi2;
+ 	unsigned short both2;
  
- 	port->console = uart_console(uport);
+@@ -342,6 +343,9 @@ static void dmm32at_setaitimer(struct co
+ 	/* set counter clocks to 10MHz, disable all aux dio */
+ 	outb(0, dev->iobase + DMM32AT_CTRDIO_CFG_REG);
+ 
++	/* serialize access to control register and paged registers */
++	spin_lock_irqsave(&dev->spinlock, irq_flags);
++
+ 	/* get access to the clock regs */
+ 	outb(DMM32AT_CTRL_PAGE_8254, dev->iobase + DMM32AT_CTRL_REG);
+ 
+@@ -354,6 +358,8 @@ static void dmm32at_setaitimer(struct co
+ 	outb(lo2, dev->iobase + DMM32AT_CLK2);
+ 	outb(hi2, dev->iobase + DMM32AT_CLK2);
+ 
++	spin_unlock_irqrestore(&dev->spinlock, irq_flags);
++
+ 	/* enable the ai conversion interrupt and the clock to start scans */
+ 	outb(DMM32AT_INTCLK_ADINT |
+ 	     DMM32AT_INTCLK_CLKEN | DMM32AT_INTCLK_CLKSEL,
+@@ -363,13 +369,19 @@ static void dmm32at_setaitimer(struct co
+ static int dmm32at_ai_cmd(struct comedi_device *dev, struct comedi_subdevice *s)
+ {
+ 	struct comedi_cmd *cmd = &s->async->cmd;
++	unsigned long irq_flags;
+ 	int ret;
+ 
+ 	dmm32at_ai_set_chanspec(dev, s, cmd->chanlist[0], cmd->chanlist_len);
+ 
++	/* serialize access to control register and paged registers */
++	spin_lock_irqsave(&dev->spinlock, irq_flags);
++
+ 	/* reset the interrupt just in case */
+ 	outb(DMM32AT_CTRL_INTRST, dev->iobase + DMM32AT_CTRL_REG);
+ 
++	spin_unlock_irqrestore(&dev->spinlock, irq_flags);
++
+ 	/*
+ 	 * wait for circuit to settle
+ 	 * we don't have the 'insn' here but it's not needed
+@@ -429,8 +441,13 @@ static irqreturn_t dmm32at_isr(int irq,
+ 		comedi_handle_events(dev, s);
+ 	}
+ 
++	/* serialize access to control register and paged registers */
++	spin_lock(&dev->spinlock);
++
+ 	/* reset the interrupt */
+ 	outb(DMM32AT_CTRL_INTRST, dev->iobase + DMM32AT_CTRL_REG);
++
++	spin_unlock(&dev->spinlock);
+ 	return IRQ_HANDLED;
+ }
+ 
+@@ -481,14 +498,25 @@ static int dmm32at_ao_insn_write(struct
+ static int dmm32at_8255_io(struct comedi_device *dev,
+ 			   int dir, int port, int data, unsigned long regbase)
+ {
++	unsigned long irq_flags;
++	int ret;
++
++	/* serialize access to control register and paged registers */
++	spin_lock_irqsave(&dev->spinlock, irq_flags);
++
+ 	/* get access to the DIO regs */
+ 	outb(DMM32AT_CTRL_PAGE_8255, dev->iobase + DMM32AT_CTRL_REG);
+ 
+ 	if (dir) {
+ 		outb(data, dev->iobase + regbase + port);
+-		return 0;
++		ret = 0;
++	} else {
++		ret = inb(dev->iobase + regbase + port);
+ 	}
+-	return inb(dev->iobase + regbase + port);
++
++	spin_unlock_irqrestore(&dev->spinlock, irq_flags);
++
++	return ret;
+ }
+ 
+ /* Make sure the board is there and put it to a known state */
 
 
