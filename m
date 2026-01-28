@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36E053064B3;
-	Wed, 28 Jan 2026 15:54:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 764162FF178;
+	Wed, 28 Jan 2026 15:54:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769615685; cv=none; b=anhT0ZRuBoOPssE0DzDelyvG+2vwH8/QrArGH6zX4Ta054LD+Yr7ihMGbf0I6+ONIPrpoT9Q+APamiuR4SoDTq2LqSEjJ/T65JLlrZI6PduqfO9vmZJB6a8zlU7W47/IIxBp+ZfyvcPJ5SdbqDBhOeoo522Fx7Emn8L9U8cIRSo=
+	t=1769615688; cv=none; b=jhZrj4RGVRrdKAX1Ty/fairyKLB5cfuBxzQoOfz77smExF2SuAUBySQ5k1BmXMe3+dxZFesXeOdti6AzrDahSZjdz8RnF4MeMNByTNXs1QLuMi21kswazRzQvZl3r1ILo19LTqcGgCcI+Cw/OZDDOJ9HV9ne73YuZuvIr/Tv3YA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769615685; c=relaxed/simple;
-	bh=Bi8UooIjpO4O/7ykGq9wly7n40m4N3M+VmWklMoszSc=;
+	s=arc-20240116; t=1769615688; c=relaxed/simple;
+	bh=aw+HhDiCqGjLvIY5qRLFf2Vjnsmbv6dOanUb8dQV/sM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jKsUJYBrT+YJtZG+Kpu3gWDks8+s+7ulGRCzYNvfLv8ne9jTHpbpLCJLI71BLX/anO1H+Urx3c0xhaYa03Z7p79eKETR6kcjuznE6Y2HlUwLkCzQGt+AklPvd/gpYfdQRtZlI8pruhciR/SswjzTtcHw5N5TBTfQ7bS5RgtuNeM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HwfrJMEV; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kgbJqpS4gE8OJPXZkfZBn3xur1VOlvVRL+Q57gI6TVvaNiQQ/cAvA3n5xCKI+YoXa8/fEh6sBKo0ahH2TNYyRiR6WSI7aW/Ze1KXOWxn2cJgHjIZdEnoeXdrD/+DdoFw8UOr5fMR1dp+aX4BJuUIX1m16SLfJH+TWgHJIimQhms=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ClTfCNrw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HwfrJMEV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E50BC4CEF1;
-	Wed, 28 Jan 2026 15:54:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ClTfCNrw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC5AFC4CEF1;
+	Wed, 28 Jan 2026 15:54:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1769615685;
-	bh=Bi8UooIjpO4O/7ykGq9wly7n40m4N3M+VmWklMoszSc=;
+	s=korg; t=1769615688;
+	bh=aw+HhDiCqGjLvIY5qRLFf2Vjnsmbv6dOanUb8dQV/sM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HwfrJMEVWHDhOfVi7rMuA+lNFb3O4cXqIoN87RyHeeLTzzF2zc4q+jox3nbvkMeW4
-	 Bg0GpDNqY4EJiczz5SkmOx5bpF0STzbbIv1WORH8AIbXmUdJlUkUAXUwXMJTwycUEj
-	 Vzok6g+BQlJe445FGVc60zyjRsRPXlN2SdjZ6MfY=
+	b=ClTfCNrwpYQrxgQ9SHPotcWMX1CHko0hl1COfhh8YtozCfb7FFMDsPR2N9LYYS/S6
+	 lcUqi8oqn2doqORHP9ztjr5KmXGHwfCZBz3T4Ey1fAbfd+CzEuHUfulmc0QGebuDBy
+	 ml70/qDFTXXSVb6zX5zGk4VQqSUvV5HrZ0oTpNhM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Haotian Zhang <vulab@iscas.ac.cn>,
-	Andy Shevchenko <andy@kernel.org>,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+	Georgi Djakov <djakov@kernel.org>,
+	Kuan-Wei Chiu <visitorckw@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 083/227] iio: adc: ad7606: Fix incorrect type for error return variable
-Date: Wed, 28 Jan 2026 16:22:08 +0100
-Message-ID: <20260128145347.327690898@linuxfoundation.org>
+Subject: [PATCH 6.18 084/227] interconnect: debugfs: initialize src_node and dst_node to empty strings
+Date: Wed, 28 Jan 2026 16:22:09 +0100
+Message-ID: <20260128145347.363032844@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260128145344.331957407@linuxfoundation.org>
 References: <20260128145344.331957407@linuxfoundation.org>
@@ -52,38 +51,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Haotian Zhang <vulab@iscas.ac.cn>
+From: Georgi Djakov <djakov@kernel.org>
 
-[ Upstream commit c5512e016817a150fd6de97fbb3e74aa799ea3c1 ]
+[ Upstream commit 8cc27f5c6dd17dd090f3a696683f04336c162ff5 ]
 
-The variable ret is declared as unsigned int but is used to store return
-values from functions returning int, which may be negative error codes.
+The debugfs_create_str() API assumes that the string pointer is either NULL
+or points to valid kmalloc() memory. Leaving the pointer uninitialized can
+cause problems.
 
-Change ret from unsigned int to int.
+Initialize src_node and dst_node to empty strings before creating the
+debugfs entries to guarantee that reads and writes are safe.
 
-Fixes: 849cebf8dc67 ("iio: adc: ad7606: Add iio-backend support")
-Signed-off-by: Haotian Zhang <vulab@iscas.ac.cn>
-Reviewed-by: Andy Shevchenko <andy@kernel.org>
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Fixes: 770c69f037c1 ("interconnect: Add debugfs test client")
+Signed-off-by: Georgi Djakov <djakov@kernel.org>
+Reviewed-by: Kuan-Wei Chiu <visitorckw@gmail.com>
+Tested-by: Kuan-Wei Chiu <visitorckw@gmail.com>
+Link: https://lore.kernel.org/r/20260109122523.125843-1-djakov@kernel.org
+Signed-off-by: Georgi Djakov <djakov@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iio/adc/ad7606_par.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/interconnect/debugfs-client.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/drivers/iio/adc/ad7606_par.c b/drivers/iio/adc/ad7606_par.c
-index 634852c4bbd2c..b81e707ab40c5 100644
---- a/drivers/iio/adc/ad7606_par.c
-+++ b/drivers/iio/adc/ad7606_par.c
-@@ -43,7 +43,8 @@ static int ad7606_par_bus_setup_iio_backend(struct device *dev,
- 					    struct iio_dev *indio_dev)
- {
- 	struct ad7606_state *st = iio_priv(indio_dev);
--	unsigned int ret, c;
-+	unsigned int c;
-+	int ret;
- 	struct iio_backend_data_fmt data = {
- 		.sign_extend = true,
- 		.enable = true,
+diff --git a/drivers/interconnect/debugfs-client.c b/drivers/interconnect/debugfs-client.c
+index 778deeb4a7e8a..24d7b5a577945 100644
+--- a/drivers/interconnect/debugfs-client.c
++++ b/drivers/interconnect/debugfs-client.c
+@@ -150,6 +150,11 @@ int icc_debugfs_client_init(struct dentry *icc_dir)
+ 		return ret;
+ 	}
+ 
++	src_node = devm_kstrdup(&pdev->dev, "", GFP_KERNEL);
++	dst_node = devm_kstrdup(&pdev->dev, "", GFP_KERNEL);
++	if (!src_node || !dst_node)
++		return -ENOMEM;
++
+ 	client_dir = debugfs_create_dir("test_client", icc_dir);
+ 
+ 	debugfs_create_str("src_node", 0600, client_dir, &src_node);
 -- 
 2.51.0
 
