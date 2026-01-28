@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0AFC681AA8;
-	Wed, 28 Jan 2026 16:01:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D8E52836A6;
+	Wed, 28 Jan 2026 16:01:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769616066; cv=none; b=IEY2TJyTBibsNUZOprHqPYLuvD8p0zuAquetkpu5snXtMydLRKWEc7oqjU/G1PdAUNdbyidRGnmi0M6Fl+gRPpKd+4rIQXsrf2KnZysfTkgOL4kjhft1/tnHENFisqdr6s/G+GbBq6fX3JhE/7JQFwkcqIlMHMg9p0IPg2OEjME=
+	t=1769616069; cv=none; b=n8icMO7HWaAKgBW9VREjaKAHCeyYAUL2vhtW7e2x2qPXxDGcpHOTpNyBiouX8uZD58vmuBkhSWgUp2s6oTeKGPE4UbHWX+e1si5TQrF+1KSOVEjAx3lGo0iNBBjOehWVpZF9QUtd4mppW5aXk2R8ZGdUGbNYZ2UMlqXJnXx9QOc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769616066; c=relaxed/simple;
-	bh=pkfYbo+8F4YdO+Z8QTLCJsmmo1psVobCwHtzcR21qD8=;
+	s=arc-20240116; t=1769616069; c=relaxed/simple;
+	bh=iOhyQtNz4Jj9EOfjw4puMCEyj7Ys3GkrGLP+FUYHyKE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=XGhqth0eUBkk38aQaEKOUWn+sCa1WzvxXQ4A2h79USjwkNRlq/aYubXv0sDdleX2c8EekXgHVKUNHxCPHvux0ALp1QqDxtLZinV6++oS4gbtO9SnO7ka0hBzRvHGmykhxlYZ2Kac3gJiYumIw/45zJ20kCxHnTa6ZV5+HS/oAdw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sOCsA3YE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XpCBzaqv3ihh508rEPBW93WxgIWWu3VcyGEXEMVfBGxPRgzQoBvNO/cRPfAcBbJKLQCnJxgJjNSB0HGd+16XjecqnN3m44aM1xAp+Pi/ApNgy8ZLPZxxo6793T1YDbKECfw87ijBSD/VNtcVzrDWMD6H/egu9MQI6KXlgwW6pvY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GpKR/oAg; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sOCsA3YE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6EB67C4CEF1;
-	Wed, 28 Jan 2026 16:01:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GpKR/oAg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF712C116C6;
+	Wed, 28 Jan 2026 16:01:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1769616065;
-	bh=pkfYbo+8F4YdO+Z8QTLCJsmmo1psVobCwHtzcR21qD8=;
+	s=korg; t=1769616069;
+	bh=iOhyQtNz4Jj9EOfjw4puMCEyj7Ys3GkrGLP+FUYHyKE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sOCsA3YEcoyurERxX30PDJKcLiGcaJpz4iNGqJbV15ymR7CBrxKqIB2OAvJ9gYzRZ
-	 +lwJWqngtFScG65PF9VwcBsO/+MCdlCQw2JLGD3B2PSEP7jZZEP0Eb0ndvHQXZ2v+0
-	 qhibL3VKUaD7yYlTrFX5PW8n5PBAv5aQx9CnfLVE=
+	b=GpKR/oAgb9wpTKfbJAl8D8W6pcwvbWx4C+3TM2szDvKwYXsIIHxbhdD6fGde5qPIv
+	 MMENGwJwfwNWb+XGFsrb/OsRXgsoItfMI+d0s4gVOHA9KsPTs/HlYuNHmmjMxo9Gna
+	 ej96SO/ZoEPojI7X46Pk+lpysIR/kZPGI3yYkKd0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mario Limonciello <mario.limonciello@amd.com>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>
-Subject: [PATCH 6.18 196/227] platform/x86: hp-bioscfg: Fix automatic module loading
-Date: Wed, 28 Jan 2026 16:24:01 +0100
-Message-ID: <20260128145351.497409547@linuxfoundation.org>
+	Matthew Schwartz <matthew.schwartz@linux.dev>,
+	Ricky WU <ricky_wu@realtek.com>,
+	Ulf Hansson <ulf.hansson@linaro.org>
+Subject: [PATCH 6.18 170/227] mmc: rtsx_pci_sdmmc: implement sdmmc_card_busy function
+Date: Wed, 28 Jan 2026 16:23:35 +0100
+Message-ID: <20260128145350.568400691@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260128145344.331957407@linuxfoundation.org>
 References: <20260128145344.331957407@linuxfoundation.org>
@@ -44,55 +45,90 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Mario Limonciello <mario.limonciello@amd.com>
+From: Matthew Schwartz <matthew.schwartz@linux.dev>
 
-commit 467d4afc6caa64b84a6db1634f8091e931f4a7cb upstream.
+commit 122610220134b32c742cc056eaf64f7017ac8cd9 upstream.
 
-hp-bioscfg has a MODULE_DEVICE_TABLE with a GUID in it that looks
-plausible, but the module doesn't automatically load on applicable
-systems.
+rtsx_pci_sdmmc does not have an sdmmc_card_busy function, so any voltage
+switches cause a kernel warning, "mmc0: cannot verify signal voltage
+switch."
 
-This is because the GUID has some lower case characters and so it
-doesn't match the modalias during boot. Update the GUIDs to be all
-uppercase.
+Copy the sdmmc_card_busy function from rtsx_pci_usb to rtsx_pci_sdmmc to
+fix this.
 
+Fixes: ff984e57d36e ("mmc: Add realtek pcie sdmmc host driver")
+Signed-off-by: Matthew Schwartz <matthew.schwartz@linux.dev>
+Tested-by: Ricky WU <ricky_wu@realtek.com>
+Reviewed-by: Ricky WU <ricky_wu@realtek.com>
 Cc: stable@vger.kernel.org
-Fixes: 5f94f181ca25 ("platform/x86: hp-bioscfg: bioscfg-h")
-Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
-Link: https://patch.msgid.link/20260115203725.828434-4-mario.limonciello@amd.com
-Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/platform/x86/hp/hp-bioscfg/bioscfg.h |    6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/mmc/host/rtsx_pci_sdmmc.c |   41 ++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 41 insertions(+)
 
---- a/drivers/platform/x86/hp/hp-bioscfg/bioscfg.h
-+++ b/drivers/platform/x86/hp/hp-bioscfg/bioscfg.h
-@@ -57,14 +57,14 @@ enum mechanism_values {
+--- a/drivers/mmc/host/rtsx_pci_sdmmc.c
++++ b/drivers/mmc/host/rtsx_pci_sdmmc.c
+@@ -1306,6 +1306,46 @@ out:
+ 	return err;
+ }
  
- #define PASSWD_MECHANISM_TYPES "password"
- 
--#define HP_WMI_BIOS_GUID		"5FB7F034-2C63-45e9-BE91-3D44E2C707E4"
-+#define HP_WMI_BIOS_GUID		"5FB7F034-2C63-45E9-BE91-3D44E2C707E4"
- 
--#define HP_WMI_BIOS_STRING_GUID		"988D08E3-68F4-4c35-AF3E-6A1B8106F83C"
-+#define HP_WMI_BIOS_STRING_GUID		"988D08E3-68F4-4C35-AF3E-6A1B8106F83C"
- #define HP_WMI_BIOS_INTEGER_GUID	"8232DE3D-663D-4327-A8F4-E293ADB9BF05"
- #define HP_WMI_BIOS_ENUMERATION_GUID	"2D114B49-2DFB-4130-B8FE-4A3C09E75133"
- #define HP_WMI_BIOS_ORDERED_LIST_GUID	"14EA9746-CE1F-4098-A0E0-7045CB4DA745"
- #define HP_WMI_BIOS_PASSWORD_GUID	"322F2028-0F84-4901-988E-015176049E2D"
--#define HP_WMI_SET_BIOS_SETTING_GUID	"1F4C91EB-DC5C-460b-951D-C7CB9B4B8D5E"
-+#define HP_WMI_SET_BIOS_SETTING_GUID	"1F4C91EB-DC5C-460B-951D-C7CB9B4B8D5E"
- 
- enum hp_wmi_spm_commandtype {
- 	HPWMI_SECUREPLATFORM_GET_STATE  = 0x10,
++static int sdmmc_card_busy(struct mmc_host *mmc)
++{
++	struct realtek_pci_sdmmc *host = mmc_priv(mmc);
++	struct rtsx_pcr *pcr = host->pcr;
++	int err;
++	u8 stat;
++	u8 mask = SD_DAT3_STATUS | SD_DAT2_STATUS | SD_DAT1_STATUS
++	| SD_DAT0_STATUS;
++
++	mutex_lock(&pcr->pcr_mutex);
++
++	rtsx_pci_start_run(pcr);
++
++	err = rtsx_pci_write_register(pcr, SD_BUS_STAT,
++				      SD_CLK_TOGGLE_EN | SD_CLK_FORCE_STOP,
++			       SD_CLK_TOGGLE_EN);
++	if (err)
++		goto out;
++
++	mdelay(1);
++
++	err = rtsx_pci_read_register(pcr, SD_BUS_STAT, &stat);
++	if (err)
++		goto out;
++
++	err = rtsx_pci_write_register(pcr, SD_BUS_STAT,
++				      SD_CLK_TOGGLE_EN | SD_CLK_FORCE_STOP, 0);
++out:
++	mutex_unlock(&pcr->pcr_mutex);
++
++	if (err)
++		return err;
++
++	/* check if any pin between dat[0:3] is low */
++	if ((stat & mask) != mask)
++		return 1;
++	else
++		return 0;
++}
++
+ static int sdmmc_execute_tuning(struct mmc_host *mmc, u32 opcode)
+ {
+ 	struct realtek_pci_sdmmc *host = mmc_priv(mmc);
+@@ -1418,6 +1458,7 @@ static const struct mmc_host_ops realtek
+ 	.get_ro = sdmmc_get_ro,
+ 	.get_cd = sdmmc_get_cd,
+ 	.start_signal_voltage_switch = sdmmc_switch_voltage,
++	.card_busy = sdmmc_card_busy,
+ 	.execute_tuning = sdmmc_execute_tuning,
+ 	.init_sd_express = sdmmc_init_sd_express,
+ };
 
 
