@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F23D3093A8;
-	Wed, 28 Jan 2026 16:00:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1152308F05;
+	Wed, 28 Jan 2026 16:00:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769616008; cv=none; b=QKgibAljppODNML90TnJPpB57nez08qiAhVGag7WWDmQm6HJD07uvpMpxQgv6hZve/newg6ogJBpBzbhRGAK2j1x25WAUsDiJqyTS57q5FQBfWLWD5/FYjuqy8yDUAB1PHTyxoqGK6+KxXjj/qMiz2R2h6pCpHOjLsnjnKItsK0=
+	t=1769616011; cv=none; b=qNHJZ80sAxULD49hTEeUmMshDOJw8s3g63I87mwF8/x3YJg6dZCT2RnlpWPSalZdGlp/Tfy8qBqIl7COvWSJtdTAsXo/gSBARqa6rcH8hzE1C68Cjs7qWW3UptKYxsfETBECuduMdH/MpaSS/tpyhpjMwGNq0HKrd6RsMnTRmaE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769616008; c=relaxed/simple;
-	bh=rprHAku0AAvzzm5u/28k78rVU4bs0Ba5jP/3QOog8hU=;
+	s=arc-20240116; t=1769616011; c=relaxed/simple;
+	bh=OWdA2IwOs1W6siq1z11DImUN+WJ6iMSdFVhBKNGjRwQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Iosl7sxjpzLO8/mIMmEu5mylnqDn1tuoYK60/oAG9LvmL4/RLb/F1vg351xs+NY021pElCJXQM218MvguHA4LK2yioZSFw63FRpIe4iUpbddcfSz34AEIszQH91un+vB4lB6s2pKLdf5EYxc4VIJdsocp97PYUAyRgfnsLv7w8c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YGpsFurA; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gNFcGHsm8KfhyRcnw0hU86Q0AG/T3DgN9SWvWn3LxgpXkPT1iKx7AwM3ru7l6Up0KMsxA2edwVRZraZ5ja0gHu5HUa3vh9G6Tf4GeAip5PX2yXHwUoC1CPuTXVcQ8aFg9H87s/OWsnBePRQx06LVSYPrFiHSbwHr4/lgBKuls6w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IiT6ptwH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YGpsFurA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 988F7C4CEF1;
-	Wed, 28 Jan 2026 16:00:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IiT6ptwH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 230BFC4CEF1;
+	Wed, 28 Jan 2026 16:00:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1769616008;
-	bh=rprHAku0AAvzzm5u/28k78rVU4bs0Ba5jP/3QOog8hU=;
+	s=korg; t=1769616011;
+	bh=OWdA2IwOs1W6siq1z11DImUN+WJ6iMSdFVhBKNGjRwQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YGpsFurAlhK0pjZXImQBX/MKoEyagHskZMYfQCnQl6hGFlSk8iUVGAGfkFKiHVrcJ
-	 BPLx40Dd06mEMOfS4T0zQmi2wz07/gB94UrgK7jmzMymJ6YmUqP4M4lVX9hGlho7DL
-	 aGNY9WiaGavfc5IH79xH6wLgEQ9o2ZfBWPTzh59A=
+	b=IiT6ptwHSX9vk0hYPabXXaedqNFppWQ7z80Puw/J9EhDDlrxHhBHbgxDgawkvpHSC
+	 Q6FEYkSGzxVIx9vFdQGELxLAr94wwpvsaPjwXtULOI71bNMGglAsE5v4I5xy7Fo7gD
+	 ZAh42vBWdIwCMaQ73ceU3Vu+CblU6IveVtXxKV0U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mark Rutland <mark.rutland@arm.com>,
-	Mark Brown <broonie@kernel.org>,
+	Jeson Gao <jeson.gao@unisoc.com>,
+	Zhaoyang Huang <zhaoyang.huang@unisoc.com>,
 	Will Deacon <will@kernel.org>,
+	Mark Rutland <mark.rutland@arm.com>,
 	Catalin Marinas <catalin.marinas@arm.com>
-Subject: [PATCH 6.18 180/227] arm64/fpsimd: signal: Fix restoration of SVE context
-Date: Wed, 28 Jan 2026 16:23:45 +0100
-Message-ID: <20260128145350.925207006@linuxfoundation.org>
+Subject: [PATCH 6.18 181/227] arm64: Set __nocfi on swsusp_arch_resume()
+Date: Wed, 28 Jan 2026 16:23:46 +0100
+Message-ID: <20260128145350.960323391@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260128145344.331957407@linuxfoundation.org>
 References: <20260128145344.331957407@linuxfoundation.org>
@@ -52,131 +53,94 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mark Rutland <mark.rutland@arm.com>
+From: Zhaoyang Huang <zhaoyang.huang@unisoc.com>
 
-commit d2907cbe9ea0a54cbe078076f9d089240ee1e2d9 upstream.
+commit e2f8216ca2d8e61a23cb6ec355616339667e0ba6 upstream.
 
-When SME is supported, Restoring SVE signal context can go wrong in a
-few ways, including placing the task into an invalid state where the
-kernel may read from out-of-bounds memory (and may potentially take a
-fatal fault) and/or may kill the task with a SIGKILL.
+A DABT is reported[1] on an android based system when resume from hiberate.
+This happens because swsusp_arch_suspend_exit() is marked with SYM_CODE_*()
+and does not have a CFI hash, but swsusp_arch_resume() will attempt to
+verify the CFI hash when calling a copy of swsusp_arch_suspend_exit().
 
-(1) Restoring a context with SVE_SIG_FLAG_SM set can place the task into
-    an invalid state where SVCR.SM is set (and sve_state is non-NULL)
-    but TIF_SME is clear, consequently resuting in out-of-bounds memory
-    reads and/or killing the task with SIGKILL.
+Given that there's an existing requirement that the entrypoint to
+swsusp_arch_suspend_exit() is the first byte of the .hibernate_exit.text
+section, we cannot fix this by marking swsusp_arch_suspend_exit() with
+SYM_FUNC_*(). The simplest fix for now is to disable the CFI check in
+swsusp_arch_resume().
 
-    This can only occur in unusual (but legitimate) cases where the SVE
-    signal context has either been modified by userspace or was saved in
-    the context of another task (e.g. as with CRIU), as otherwise the
-    presence of an SVE signal context with SVE_SIG_FLAG_SM implies that
-    TIF_SME is already set.
+Mark swsusp_arch_resume() as __nocfi to disable the CFI check.
 
-    While in this state, task_fpsimd_load() will NOT configure SMCR_ELx
-    (leaving some arbitrary value configured in hardware) before
-    restoring SVCR and attempting to restore the streaming mode SVE
-    registers from memory via sve_load_state(). As the value of
-    SMCR_ELx.LEN may be larger than the task's streaming SVE vector
-    length, this may read memory outside of the task's allocated
-    sve_state, reading unrelated data and/or triggering a fault.
+[1]
+[   22.991934][    T1] Unable to handle kernel paging request at virtual address 0000000109170ffc
+[   22.991934][    T1] Mem abort info:
+[   22.991934][    T1]   ESR = 0x0000000096000007
+[   22.991934][    T1]   EC = 0x25: DABT (current EL), IL = 32 bits
+[   22.991934][    T1]   SET = 0, FnV = 0
+[   22.991934][    T1]   EA = 0, S1PTW = 0
+[   22.991934][    T1]   FSC = 0x07: level 3 translation fault
+[   22.991934][    T1] Data abort info:
+[   22.991934][    T1]   ISV = 0, ISS = 0x00000007, ISS2 = 0x00000000
+[   22.991934][    T1]   CM = 0, WnR = 0, TnD = 0, TagAccess = 0
+[   22.991934][    T1]   GCS = 0, Overlay = 0, DirtyBit = 0, Xs = 0
+[   22.991934][    T1] [0000000109170ffc] user address but active_mm is swapper
+[   22.991934][    T1] Internal error: Oops: 0000000096000007 [#1] PREEMPT SMP
+[   22.991934][    T1] Dumping ftrace buffer:
+[   22.991934][    T1]    (ftrace buffer empty)
+[   22.991934][    T1] Modules linked in:
+[   22.991934][    T1] CPU: 0 PID: 1 Comm: swapper/0 Not tainted 6.6.98-android15-8-g0b1d2aee7fc3-dirty-4k #1 688c7060a825a3ac418fe53881730b355915a419
+[   22.991934][    T1] Hardware name: Unisoc UMS9360-base Board (DT)
+[   22.991934][    T1] pstate: 804000c5 (Nzcv daIF +PAN -UAO -TCO -DIT -SSBS BTYPE=--)
+[   22.991934][    T1] pc : swsusp_arch_resume+0x2ac/0x344
+[   22.991934][    T1] lr : swsusp_arch_resume+0x294/0x344
+[   22.991934][    T1] sp : ffffffc08006b960
+[   22.991934][    T1] x29: ffffffc08006b9c0 x28: 0000000000000000 x27: 0000000000000000
+[   22.991934][    T1] x26: 0000000000000000 x25: 0000000000000000 x24: 0000000000000820
+[   22.991934][    T1] x23: ffffffd0817e3000 x22: ffffffd0817e3000 x21: 0000000000000000
+[   22.991934][    T1] x20: ffffff8089171000 x19: ffffffd08252c8c8 x18: ffffffc080061058
+[   22.991934][    T1] x17: 00000000529c6ef0 x16: 00000000529c6ef0 x15: 0000000000000004
+[   22.991934][    T1] x14: ffffff8178c88000 x13: 0000000000000006 x12: 0000000000000000
+[   22.991934][    T1] x11: 0000000000000015 x10: 0000000000000001 x9 : ffffffd082533000
+[   22.991934][    T1] x8 : 0000000109171000 x7 : 205b5d3433393139 x6 : 392e32322020205b
+[   22.991934][    T1] x5 : 000000010916f000 x4 : 000000008164b000 x3 : ffffff808a4e0530
+[   22.991934][    T1] x2 : ffffffd08058e784 x1 : 0000000082326000 x0 : 000000010a283000
+[   22.991934][    T1] Call trace:
+[   22.991934][    T1]  swsusp_arch_resume+0x2ac/0x344
+[   22.991934][    T1]  hibernation_restore+0x158/0x18c
+[   22.991934][    T1]  load_image_and_restore+0xb0/0xec
+[   22.991934][    T1]  software_resume+0xf4/0x19c
+[   22.991934][    T1]  software_resume_initcall+0x34/0x78
+[   22.991934][    T1]  do_one_initcall+0xe8/0x370
+[   22.991934][    T1]  do_initcall_level+0xc8/0x19c
+[   22.991934][    T1]  do_initcalls+0x70/0xc0
+[   22.991934][    T1]  do_basic_setup+0x1c/0x28
+[   22.991934][    T1]  kernel_init_freeable+0xe0/0x148
+[   22.991934][    T1]  kernel_init+0x20/0x1a8
+[   22.991934][    T1]  ret_from_fork+0x10/0x20
+[   22.991934][    T1] Code: a9400a61 f94013e0 f9438923 f9400a64 (b85fc110)
 
-    While this can result in secrets being loaded into streaming SVE
-    registers, these values are never exposed. As TIF_SME is clear,
-    fpsimd_bind_task_to_cpu() will configure CPACR_ELx.SMEN to trap EL0
-    accesses to streaming mode SVE registers, so these cannot be
-    accessed directly at EL0. As fpsimd_save_user_state() verifies the
-    live vector length before saving (S)SVE state to memory, no secret
-    values can be saved back to memory (and hence cannot be observed via
-    ptrace, signals, etc).
-
-    When the live vector length doesn't match the expected vector length
-    for the task, fpsimd_save_user_state() will send a fatal SIGKILL
-    signal to the task. Hence the task may be killed after executing
-    userspace for some period of time.
-
-(2) Restoring a context with SVE_SIG_FLAG_SM clear does not clear the
-    task's SVCR.SM. If SVCR.SM was set prior to restoring the context,
-    then the task will be left in streaming mode unexpectedly, and some
-    register state will be combined inconsistently, though the task will
-    be left in legitimate state from the kernel's PoV.
-
-    This can only occur in unusual (but legitimate) cases where ptrace
-    has been used to set SVCR.SM after entry to the sigreturn syscall,
-    as syscall entry clears SVCR.SM.
-
-    In these cases, the the provided SVE register data will be loaded
-    into the task's sve_state using the non-streaming SVE vector length
-    and the FPSIMD registers will be merged into this using the
-    streaming SVE vector length.
-
-Fix (1) by setting TIF_SME when setting SVCR.SM. This also requires
-ensuring that the task's sme_state has been allocated, but as this could
-contain live ZA state, it should not be zeroed. Fix (2) by clearing
-SVCR.SM when restoring a SVE signal context with SVE_SIG_FLAG_SM clear.
-
-For consistency, I've pulled the manipulation of SVCR, TIF_SVE, TIF_SME,
-and fp_type earlier, immediately after the allocation of
-sve_state/sme_state, before the restore of the actual register state.
-This makes it easier to ensure that these are always modified
-consistently, even if a fault is taken while reading the register data
-from the signal context. I do not expect any software to depend on the
-exact state restored when a fault is taken while reading the context.
-
-Fixes: 85ed24dad290 ("arm64/sme: Implement streaming SVE signal handling")
-Signed-off-by: Mark Rutland <mark.rutland@arm.com>
+Co-developed-by: Jeson Gao <jeson.gao@unisoc.com>
+Signed-off-by: Jeson Gao <jeson.gao@unisoc.com>
+Signed-off-by: Zhaoyang Huang <zhaoyang.huang@unisoc.com>
+Acked-by: Will Deacon <will@kernel.org>
+Acked-by: Mark Rutland <mark.rutland@arm.com>
 Cc: <stable@vger.kernel.org>
-Cc: Mark Brown <broonie@kernel.org>
-Cc: Will Deacon <will@kernel.org>
-Reviewed-by: Mark Brown <broonie@kernel.org>
+[catalin.marinas@arm.com: commit log updated by Mark Rutland]
 Signed-off-by: Catalin Marinas <catalin.marinas@arm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/kernel/signal.c |   22 ++++++++++++++++------
- 1 file changed, 16 insertions(+), 6 deletions(-)
+ arch/arm64/kernel/hibernate.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/arch/arm64/kernel/signal.c
-+++ b/arch/arm64/kernel/signal.c
-@@ -449,12 +449,28 @@ static int restore_sve_fpsimd_context(st
- 	if (user->sve_size < SVE_SIG_CONTEXT_SIZE(vq))
- 		return -EINVAL;
- 
-+	if (sm) {
-+		sme_alloc(current, false);
-+		if (!current->thread.sme_state)
-+			return -ENOMEM;
-+	}
-+
- 	sve_alloc(current, true);
- 	if (!current->thread.sve_state) {
- 		clear_thread_flag(TIF_SVE);
- 		return -ENOMEM;
- 	}
- 
-+	if (sm) {
-+		current->thread.svcr |= SVCR_SM_MASK;
-+		set_thread_flag(TIF_SME);
-+	} else {
-+		current->thread.svcr &= ~SVCR_SM_MASK;
-+		set_thread_flag(TIF_SVE);
-+	}
-+
-+	current->thread.fp_type = FP_STATE_SVE;
-+
- 	err = __copy_from_user(current->thread.sve_state,
- 			       (char __user const *)user->sve +
- 					SVE_SIG_REGS_OFFSET,
-@@ -462,12 +478,6 @@ static int restore_sve_fpsimd_context(st
- 	if (err)
- 		return -EFAULT;
- 
--	if (flags & SVE_SIG_FLAG_SM)
--		current->thread.svcr |= SVCR_SM_MASK;
--	else
--		set_thread_flag(TIF_SVE);
--	current->thread.fp_type = FP_STATE_SVE;
--
- 	err = read_fpsimd_context(&fpsimd, user);
- 	if (err)
- 		return err;
+--- a/arch/arm64/kernel/hibernate.c
++++ b/arch/arm64/kernel/hibernate.c
+@@ -402,7 +402,7 @@ int swsusp_arch_suspend(void)
+  * Memory allocated by get_safe_page() will be dealt with by the hibernate code,
+  * we don't need to free it here.
+  */
+-int swsusp_arch_resume(void)
++int __nocfi swsusp_arch_resume(void)
+ {
+ 	int rc;
+ 	void *zero_page;
 
 
