@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08BC626461F;
-	Wed, 28 Jan 2026 15:44:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 475402E2DF4;
+	Wed, 28 Jan 2026 15:44:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769615050; cv=none; b=qJ0CgVBOyugPQ2hETY16a5brcqEQOSK24+DXePVjLRwUdHNlta6lL0NmAtK5gJR9yX1TfcvB7ndsOPwZkHFNOpmLg9IahIDGd/HOHlWWhjIGwK8lCuw5HICHm3xWqsOfeh345IFeLEy64kspeEJSjBv+DyHFe2tf8AsEGanVuro=
+	t=1769615053; cv=none; b=duJWZkK2Yy6PaiCdSvLvAC9H2VQWVO3UWpJHqXnd0U2TSmAPvw0DGlxzukoPVbVD7+ZXSejoLT8DBPCIHvhYocC9i8d7h3BtW4sUEs5jO1xUhM5LCEGLpXobau0YSoHS8HXWZhU6VZnEdPMjXvcMpDzUo2Ktk7070h9A0zhwPAo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769615050; c=relaxed/simple;
-	bh=lYyWy04hy5bBfRrngIPq3QZMPuLIA2lQLdVeOja5KTg=;
+	s=arc-20240116; t=1769615053; c=relaxed/simple;
+	bh=KJRQaxYVsXypOBJP7Mq6xMwLZ8O6Pnl2YpLZnYGCC9Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uDmtfiLLNDj/NhWKp16ozKdLVochCLAXJ0A/odDbmZrtR1il3bikBWgffm+b96xxRRFErAgrExuumJkN4CRsmPFxXz8YPcpT7lclNvm03raeEGTOIYYM1brBkD2DUHwXHRU9gX4jYACccu79Ggfsp+bezP5JJiyZaU8/d/ePGzU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zE8E7yVe; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WXTU3JTpzlE1ybBpkvAgbo34a0VmPrnJnnhopjMirpWXzrAAFVpJlWbKp8uYo8qOjNeTXb6tlrWH02EJ7YVrxosfBTzbFVMPwasZEZnCPrauLXpwaE6tMIVjWoHJn/dmAo8Ux9203j3pta+A8fIcFhS9hDfGTHBNkUoxCkrfo2U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YT1UTiV3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zE8E7yVe"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 85608C4CEF1;
-	Wed, 28 Jan 2026 15:44:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YT1UTiV3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AEC4FC4CEF1;
+	Wed, 28 Jan 2026 15:44:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1769615049;
-	bh=lYyWy04hy5bBfRrngIPq3QZMPuLIA2lQLdVeOja5KTg=;
+	s=korg; t=1769615053;
+	bh=KJRQaxYVsXypOBJP7Mq6xMwLZ8O6Pnl2YpLZnYGCC9Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zE8E7yVenzRo0nggJAB6lXbzsBf9v0wsp4F1lLaf9WeDyT5wGNoTxCZF7NAdRh1N+
-	 3j0mYyN1/Zg+8bYc8R190U8R6+4VHp44pmdL9Rkvp/G2DE6yzuSh9zGHJuTIGBA8Wa
-	 0yxkzSPH8gWGrGiJVO/ml5hySlUOj4RHxr/cS5W4=
+	b=YT1UTiV3yfAq1Rb6JWnOUQGoh28tpdJuWgdpZi8Se1F2m3i62Ls8scLG/VVBvBVEa
+	 1rec4g/NKhF0whPxQcwZv+gScNJkwm3LutcbetA0xxMcdIF34pbZoY4h5fSurC6M8u
+	 ibazZE3sL3nkTKoml3bh8COBR+PyyapTuqryl0IA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Haoxiang Li <lihaoxiang@isrc.iscas.ac.cn>,
-	Krzysztof Kozlowski <krzk@kernel.org>
-Subject: [PATCH 6.12 046/169] w1: fix redundant counter decrement in w1_attach_slave_device()
-Date: Wed, 28 Jan 2026 16:22:09 +0100
-Message-ID: <20260128145335.675811658@linuxfoundation.org>
+	Cheng-Yu Lee <cylee12@realtek.com>,
+	Yu-Chun Lin <eleanor.lin@realtek.com>,
+	Mark Brown <broonie@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.12 064/169] regmap: Fix race condition in hwspinlock irqsave routine
+Date: Wed, 28 Jan 2026 16:22:27 +0100
+Message-ID: <20260128145336.314387163@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260128145334.006287341@linuxfoundation.org>
 References: <20260128145334.006287341@linuxfoundation.org>
@@ -50,36 +52,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Haoxiang Li <lihaoxiang@isrc.iscas.ac.cn>
+From: Cheng-Yu Lee <cylee12@realtek.com>
 
-commit cc8f92e41eb76f450f05234fef2054afc3633100 upstream.
+[ Upstream commit 4b58aac989c1e3fafb1c68a733811859df388250 ]
 
-In w1_attach_slave_device(), if __w1_attach_slave_device() fails,
-put_device() -> w1_slave_release() is called to do the cleanup job.
-In w1_slave_release(), sl->family->refcnt and sl->master->slave_count
-have already been decremented. There is no need to decrement twice
-in w1_attach_slave_device().
+Previously, the address of the shared member '&map->spinlock_flags' was
+passed directly to 'hwspin_lock_timeout_irqsave'. This creates a race
+condition where multiple contexts contending for the lock could overwrite
+the shared flags variable, potentially corrupting the state for the
+current lock owner.
 
-Fixes: 2c927c0c73fd ("w1: Fix slave count on 1-Wire bus (resend)")
-Cc: stable@vger.kernel.org
-Signed-off-by: Haoxiang Li <lihaoxiang@isrc.iscas.ac.cn>
-Link: https://patch.msgid.link/20251218111414.564403-1-lihaoxiang@isrc.iscas.ac.cn
-Signed-off-by: Krzysztof Kozlowski <krzk@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fix this by using a local stack variable 'flags' to store the IRQ state
+temporarily.
+
+Fixes: 8698b9364710 ("regmap: Add hardware spinlock support")
+Signed-off-by: Cheng-Yu Lee <cylee12@realtek.com>
+Co-developed-by: Yu-Chun Lin <eleanor.lin@realtek.com>
+Signed-off-by: Yu-Chun Lin <eleanor.lin@realtek.com>
+Link: https://patch.msgid.link/20260109032633.8732-1-eleanor.lin@realtek.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/w1/w1.c |    2 --
- 1 file changed, 2 deletions(-)
+ drivers/base/regmap/regmap.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/drivers/w1/w1.c
-+++ b/drivers/w1/w1.c
-@@ -758,8 +758,6 @@ int w1_attach_slave_device(struct w1_mas
- 	if (err < 0) {
- 		dev_err(&dev->dev, "%s: Attaching %s failed.\n", __func__,
- 			 sl->name);
--		dev->slave_count--;
--		w1_family_put(sl->family);
- 		atomic_dec(&sl->master->refcnt);
- 		kfree(sl);
- 		return err;
+diff --git a/drivers/base/regmap/regmap.c b/drivers/base/regmap/regmap.c
+index 66b3840bd96e3..70cde1bd04000 100644
+--- a/drivers/base/regmap/regmap.c
++++ b/drivers/base/regmap/regmap.c
+@@ -408,9 +408,11 @@ static void regmap_lock_hwlock_irq(void *__map)
+ static void regmap_lock_hwlock_irqsave(void *__map)
+ {
+ 	struct regmap *map = __map;
++	unsigned long flags = 0;
+ 
+ 	hwspin_lock_timeout_irqsave(map->hwlock, UINT_MAX,
+-				    &map->spinlock_flags);
++				    &flags);
++	map->spinlock_flags = flags;
+ }
+ 
+ static void regmap_unlock_hwlock(void *__map)
+-- 
+2.51.0
+
 
 
