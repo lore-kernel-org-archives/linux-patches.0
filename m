@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B39EF286D57;
-	Wed, 28 Jan 2026 15:37:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 699E72D6E63;
+	Wed, 28 Jan 2026 15:37:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769614628; cv=none; b=C9Xay5+UhsQZ2xl10hwn/EVrW9AwUITTuY/zK1v2oTMA+HDGcKXgC0iVrt5KpLTpsqmsckQ4KJj1y3cogWTRJknixNy5GpamQaWx0T+i5se96xyWndSVl6Nt7cK6a2k36bfOQmAVuQqjmPnIQKNpEfwn6e7Fgjih7IUiJf+6U20=
+	t=1769614632; cv=none; b=ErP3luq7PguEjNAHzFUOK1YPT5dCms9V/loYDZkklvc/he9gm60ZYos2x1p7N7UBPpztmHe3HzQU0jvlDnUO7v1UpTLZ/PSiG0TTfYOOnxd0GVUSHDHnIeC2xW8ELVjUTz7G7Ic1/RRzSLUpVo6pCjU5sV/TCoHvCfdkbiiVHko=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769614628; c=relaxed/simple;
-	bh=zy5GJVsTOad7f/1P60JvZKoP6MiFmQ8FbQgmBsyzs94=;
+	s=arc-20240116; t=1769614632; c=relaxed/simple;
+	bh=9hz7TB5XRHtIdJsDPosMmTwjJeimxfLq6j2YqRu0HKc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PySCzv2yGxtwwB51U/frSmUF86gW22IlUGTGZwu1REO80qFbT6keEurrh4xX/1xpWCVfu1VyUgN6sFws7oVyUug82UUbVDlNBd9KpXpg/kHjFsRcM6EdRcluby34dE7D500TZUTk1HrnM22HlSV2K3p8XBz/fvQ3oMsIc8ofI40=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XbKJDIhC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QHkyYTH7J/J1MhUMm+oA4UKjAixFXBaEQAIv8QFWw/LME+XSv5pySCNwlO81Gal+LRNdinAhf7SJyS9wYwLdikiuhdWKKDFEOK6wXYEg77nLYcOAUAQXbz6mYwpTnZ/dks+R+xXSf+dIhEPNHUdl7eh7H75mp9gAA6h53BBFYgU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cnAycEBR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XbKJDIhC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E5F9C16AAE;
-	Wed, 28 Jan 2026 15:37:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cnAycEBR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A9CFC4CEF1;
+	Wed, 28 Jan 2026 15:37:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1769614628;
-	bh=zy5GJVsTOad7f/1P60JvZKoP6MiFmQ8FbQgmBsyzs94=;
+	s=korg; t=1769614632;
+	bh=9hz7TB5XRHtIdJsDPosMmTwjJeimxfLq6j2YqRu0HKc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XbKJDIhCh+6expq97+nlHL4sAAjWcyX3t9o0c/EU8KA70g65lfDQsW734jDwb/W81
-	 x6JOw2pu/5EZlID8KTtumOZeGhtSQYV0ffzLsPOqScSsa1bsdf1cYMz0QTmY5B5eYZ
-	 6NPQKw9A7RoNUBkZec4N0kxTrsAqmJZIZS3CZdgM=
+	b=cnAycEBRsaV/unoyeOAKkD4Kuyn/KO0f4f2xRc0jjC4yc0ZEETm7HNJD7v14F6TrA
+	 T3VfZyGvAvl9mv6rXNIzYHxr7MyjUZ8W53jmuEAh5SHaEQqnC+Gz3+4/4+xQP87wdm
+	 s59x9ZA8o9n7URbZC24rkx8BLOfk/VGuQR6dA/gg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matthew Schwartz <matthew.schwartz@linux.dev>,
-	Ricky WU <ricky_wu@realtek.com>,
+	Sebastian Reichel <sebastian.reichel@collabora.com>,
+	Yifeng Zhao <yifeng.zhao@rock-chips.com>,
+	Shawn Lin <shawn.lin@rock-chips.com>,
 	Ulf Hansson <ulf.hansson@linaro.org>
-Subject: [PATCH 6.6 194/254] mmc: rtsx_pci_sdmmc: implement sdmmc_card_busy function
-Date: Wed, 28 Jan 2026 16:22:50 +0100
-Message-ID: <20260128145351.778906771@linuxfoundation.org>
+Subject: [PATCH 6.6 195/254] mmc: sdhci-of-dwcmshc: Prevent illegal clock reduction in HS200/HS400 mode
+Date: Wed, 28 Jan 2026 16:22:51 +0100
+Message-ID: <20260128145351.815107250@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260128145344.698118637@linuxfoundation.org>
 References: <20260128145344.698118637@linuxfoundation.org>
@@ -51,84 +52,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Matthew Schwartz <matthew.schwartz@linux.dev>
+From: Shawn Lin <shawn.lin@rock-chips.com>
 
-commit 122610220134b32c742cc056eaf64f7017ac8cd9 upstream.
+commit 3009738a855cf938bbfc9078bec725031ae623a4 upstream.
 
-rtsx_pci_sdmmc does not have an sdmmc_card_busy function, so any voltage
-switches cause a kernel warning, "mmc0: cannot verify signal voltage
-switch."
+When operating in HS200 or HS400 timing modes, reducing the clock frequency
+below 52MHz will lead to link broken as the Rockchip DWC MSHC controller
+requires maintaining a minimum clock of 52MHz in these modes.
 
-Copy the sdmmc_card_busy function from rtsx_pci_usb to rtsx_pci_sdmmc to
-fix this.
+Add a check to prevent illegal clock reduction through debugfs:
 
-Fixes: ff984e57d36e ("mmc: Add realtek pcie sdmmc host driver")
-Signed-off-by: Matthew Schwartz <matthew.schwartz@linux.dev>
-Tested-by: Ricky WU <ricky_wu@realtek.com>
-Reviewed-by: Ricky WU <ricky_wu@realtek.com>
+root@debian:/# echo 50000000 > /sys/kernel/debug/mmc0/clock
+root@debian:/# [   30.090146] mmc0: running CQE recovery
+mmc0: cqhci: Failed to halt
+mmc0: cqhci: spurious TCN for tag 0
+WARNING: drivers/mmc/host/cqhci-core.c:797 at cqhci_irq+0x254/0x818, CPU#1: kworker/1:0H/24
+Modules linked in:
+CPU: 1 UID: 0 PID: 24 Comm: kworker/1:0H Not tainted 6.19.0-rc1-00001-g09db0998649d-dirty #204 PREEMPT
+Hardware name: Rockchip RK3588 EVB1 V10 Board (DT)
+Workqueue: kblockd blk_mq_run_work_fn
+pstate: 604000c9 (nZCv daIF +PAN -UAO -TCO -DIT -SSBS BTYPE=--)
+pc : cqhci_irq+0x254/0x818
+lr : cqhci_irq+0x254/0x818
+...
+
+Fixes: c6f361cba51c ("mmc: sdhci-of-dwcmshc: add support for rk3588")
+Cc: Sebastian Reichel <sebastian.reichel@collabora.com>
+Cc: Yifeng Zhao <yifeng.zhao@rock-chips.com>
+Signed-off-by: Shawn Lin <shawn.lin@rock-chips.com>
 Cc: stable@vger.kernel.org
 Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mmc/host/rtsx_pci_sdmmc.c |   41 ++++++++++++++++++++++++++++++++++++++
- 1 file changed, 41 insertions(+)
+ drivers/mmc/host/sdhci-of-dwcmshc.c |    7 +++++++
+ 1 file changed, 7 insertions(+)
 
---- a/drivers/mmc/host/rtsx_pci_sdmmc.c
-+++ b/drivers/mmc/host/rtsx_pci_sdmmc.c
-@@ -1307,6 +1307,46 @@ out:
- 	return err;
- }
+--- a/drivers/mmc/host/sdhci-of-dwcmshc.c
++++ b/drivers/mmc/host/sdhci-of-dwcmshc.c
+@@ -244,6 +244,13 @@ static void dwcmshc_rk3568_set_clock(str
+ 	sdhci_writel(host, extra, reg);
  
-+static int sdmmc_card_busy(struct mmc_host *mmc)
-+{
-+	struct realtek_pci_sdmmc *host = mmc_priv(mmc);
-+	struct rtsx_pcr *pcr = host->pcr;
-+	int err;
-+	u8 stat;
-+	u8 mask = SD_DAT3_STATUS | SD_DAT2_STATUS | SD_DAT1_STATUS
-+	| SD_DAT0_STATUS;
+ 	if (clock <= 52000000) {
++		if (host->mmc->ios.timing == MMC_TIMING_MMC_HS200 ||
++		    host->mmc->ios.timing == MMC_TIMING_MMC_HS400) {
++			dev_err(mmc_dev(host->mmc),
++				"Can't reduce the clock below 52MHz in HS200/HS400 mode");
++			return;
++		}
 +
-+	mutex_lock(&pcr->pcr_mutex);
-+
-+	rtsx_pci_start_run(pcr);
-+
-+	err = rtsx_pci_write_register(pcr, SD_BUS_STAT,
-+				      SD_CLK_TOGGLE_EN | SD_CLK_FORCE_STOP,
-+			       SD_CLK_TOGGLE_EN);
-+	if (err)
-+		goto out;
-+
-+	mdelay(1);
-+
-+	err = rtsx_pci_read_register(pcr, SD_BUS_STAT, &stat);
-+	if (err)
-+		goto out;
-+
-+	err = rtsx_pci_write_register(pcr, SD_BUS_STAT,
-+				      SD_CLK_TOGGLE_EN | SD_CLK_FORCE_STOP, 0);
-+out:
-+	mutex_unlock(&pcr->pcr_mutex);
-+
-+	if (err)
-+		return err;
-+
-+	/* check if any pin between dat[0:3] is low */
-+	if ((stat & mask) != mask)
-+		return 1;
-+	else
-+		return 0;
-+}
-+
- static int sdmmc_execute_tuning(struct mmc_host *mmc, u32 opcode)
- {
- 	struct realtek_pci_sdmmc *host = mmc_priv(mmc);
-@@ -1405,6 +1445,7 @@ static const struct mmc_host_ops realtek
- 	.get_ro = sdmmc_get_ro,
- 	.get_cd = sdmmc_get_cd,
- 	.start_signal_voltage_switch = sdmmc_switch_voltage,
-+	.card_busy = sdmmc_card_busy,
- 	.execute_tuning = sdmmc_execute_tuning,
- 	.init_sd_express = sdmmc_init_sd_express,
- };
+ 		/*
+ 		 * Disable DLL and reset both of sample and drive clock.
+ 		 * The bypass bit and start bit need to be set if DLL is not locked.
 
 
