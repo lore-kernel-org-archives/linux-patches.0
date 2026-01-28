@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95BFB2D5408;
-	Wed, 28 Jan 2026 15:35:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E89B72C237E;
+	Wed, 28 Jan 2026 15:35:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769614525; cv=none; b=ao3p20o7bQeHiLiP2c7bTGaWISu7QSa2g64mi64jIVq/lmV+tYYtSSYaFZSPOQVDgF3uGC1Vl+p7JZLXb7cINNSrT9eA3w5pRtFLhLqzxzw3VFUaXejCtGUshxTTgxJ1O8proThLaIgCXFkZSZQExytGu3CIymKpOQMovtXl20o=
+	t=1769614529; cv=none; b=BWaAEu4sT2dTJGmtqQ1NSZ8ouLbqeQ1xGyka/Odzhtcr+yi4vltIH0I/JuqdkcK+VQJwaWmmasGOt5y3ZvtHNDklu9AIhMyCr5Eys62tEMG95+nczPZxDd60azb8gmNVECcUngIDklKbJz3h6iV2WRb6rr1NSt5ygV13G9YRlmc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769614525; c=relaxed/simple;
-	bh=UrVCHxh0hsdR86IeF8FZtzilSoeo0bOXj+407H+b0b4=;
+	s=arc-20240116; t=1769614529; c=relaxed/simple;
+	bh=LhmwDEDeId1LFjbgKT/XxaiAo62cgSU+cSDHbOz7xz8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Jw10NSvYFs9f8IiEMUoEszkS1iKjQKbyRlD+MsHBNgntw5uodh0CkEMQ58GU2M+Ge3JhaMRqGfWUbSYj5dSEyodDqswoTi6+ke2Wqof3LPw2Imvw6e/Vf6wKBwog78iMIsgop1aaiLmTs4v4v0o75NVFs/9jZSCXzIrz8uum2Wo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rEnfqoef; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=sXMbyY2j/cP9+phhhWuQzGC6sNE8kBomzn/qIe+d7BKfUJ1HFjTa8hlfENqb1aFWH5sr6tBzi9CYXow8KLnLYYRDhyFlCNLUmXPZgjmtT7msLJozUTwX1WulKtqqGNH0ePLpvkxth/BKxsW1wiBlhC4MwFlr9hPbo+R6LfabhHE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ceZzNA0O; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rEnfqoef"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD404C4CEF1;
-	Wed, 28 Jan 2026 15:35:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ceZzNA0O"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 327B6C4CEF1;
+	Wed, 28 Jan 2026 15:35:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1769614525;
-	bh=UrVCHxh0hsdR86IeF8FZtzilSoeo0bOXj+407H+b0b4=;
+	s=korg; t=1769614528;
+	bh=LhmwDEDeId1LFjbgKT/XxaiAo62cgSU+cSDHbOz7xz8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rEnfqoefJQyKQK/mP/9YwBzdtCo2k9/1HZM8LTFAUfyDFx5XA1fL4NF1vRbOQNJGd
-	 5T2TaHldEmIf1LbYrRoGFfjUrjbsZUjh5u14NfYkBA55ZQELI2NkMGE/ZtOcnuzU7d
-	 sXJNnOO+4rpVKXGuOe4bKwNU9TzcfyzzwjGjvnuU=
+	b=ceZzNA0OB6VikSByXGLvnAsdTL3HktUKmCcwFow60RHnyDh4BSrdWVo9X0H9DRhH/
+	 cSftlX0NDqn7qjCVD1YjVu0x4ynTgwNmpxF9w/wGphQ817h48ZcbFJq56+KwqeKd9R
+	 R3Wbf30GLy/3DKXyK/nIUSHo1Q4HZXzqwHB+UJno=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yinhao Hu <dddddd@hust.edu.cn>,
-	Kaiyan Mei <M202472210@hust.edu.cn>,
-	Yun Lu <luyun@kylinos.cn>,
-	Paolo Abeni <pabeni@redhat.com>,
+	David Yang <mmyangfl@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 163/254] netdevsim: fix a race issue related to the operation on bpf_bound_progs list
-Date: Wed, 28 Jan 2026 16:22:19 +0100
-Message-ID: <20260128145350.675286899@linuxfoundation.org>
+Subject: [PATCH 6.6 164/254] net: hns3: fix data race in hns3_fetch_stats
+Date: Wed, 28 Jan 2026 16:22:20 +0100
+Message-ID: <20260128145350.710985430@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260128145344.698118637@linuxfoundation.org>
 References: <20260128145344.698118637@linuxfoundation.org>
@@ -53,128 +51,110 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yun Lu <luyun@kylinos.cn>
+From: David Yang <mmyangfl@gmail.com>
 
-[ Upstream commit b97d5eedf4976cc94321243be83b39efe81a0e15 ]
+[ Upstream commit 748a81c8ceda1fdbdcd0af595947422e810442aa ]
 
-The netdevsim driver lacks a protection mechanism for operations on the
-bpf_bound_progs list. When the nsim_bpf_create_prog() performs
-list_add_tail, it is possible that nsim_bpf_destroy_prog() is
-simultaneously performs list_del. Concurrent operations on the list may
-lead to list corruption and trigger a kernel crash as follows:
+In hns3_fetch_stats(), ring statistics, protected by u64_stats_sync, are
+read and accumulated in ignorance of possible u64_stats_fetch_retry()
+events. These statistics are already accumulated by
+hns3_ring_stats_update(). Fix this by reading them into a temporary
+buffer first.
 
-[  417.290971] kernel BUG at lib/list_debug.c:62!
-[  417.290983] invalid opcode: 0000 [#1] PREEMPT SMP NOPTI
-[  417.290992] CPU: 10 PID: 168 Comm: kworker/10:1 Kdump: loaded Not tainted 6.19.0-rc5 #1
-[  417.291003] Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS 1.16.3-debian-1.16.3-2 04/01/2014
-[  417.291007] Workqueue: events bpf_prog_free_deferred
-[  417.291021] RIP: 0010:__list_del_entry_valid_or_report+0xa7/0xc0
-[  417.291034] Code: a8 ff 0f 0b 48 89 fe 48 89 ca 48 c7 c7 48 a1 eb ae e8 ed fb a8 ff 0f 0b 48 89 fe 48 89 c2 48 c7 c7 80 a1 eb ae e8 d9 fb a8 ff <0f> 0b 48 89 d1 48 c7 c7 d0 a1 eb ae 48 89 f2 48 89 c6 e8 c2 fb a8
-[  417.291040] RSP: 0018:ffffb16a40807df8 EFLAGS: 00010246
-[  417.291046] RAX: 000000000000006d RBX: ffff8e589866f500 RCX: 0000000000000000
-[  417.291051] RDX: 0000000000000000 RSI: ffff8e59f7b23180 RDI: ffff8e59f7b23180
-[  417.291055] RBP: ffffb16a412c9000 R08: 0000000000000000 R09: 0000000000000003
-[  417.291059] R10: ffffb16a40807c80 R11: ffffffffaf9edce8 R12: ffff8e594427ac20
-[  417.291063] R13: ffff8e59f7b44780 R14: ffff8e58800b7a05 R15: 0000000000000000
-[  417.291074] FS:  0000000000000000(0000) GS:ffff8e59f7b00000(0000) knlGS:0000000000000000
-[  417.291079] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-[  417.291083] CR2: 00007fc4083efe08 CR3: 00000001c3626006 CR4: 0000000000770ee0
-[  417.291088] PKRU: 55555554
-[  417.291091] Call Trace:
-[  417.291096]  <TASK>
-[  417.291103]  nsim_bpf_destroy_prog+0x31/0x80 [netdevsim]
-[  417.291154]  __bpf_prog_offload_destroy+0x2a/0x80
-[  417.291163]  bpf_prog_dev_bound_destroy+0x6f/0xb0
-[  417.291171]  bpf_prog_free_deferred+0x18e/0x1a0
-[  417.291178]  process_one_work+0x18a/0x3a0
-[  417.291188]  worker_thread+0x27b/0x3a0
-[  417.291197]  ? __pfx_worker_thread+0x10/0x10
-[  417.291207]  kthread+0xe5/0x120
-[  417.291214]  ? __pfx_kthread+0x10/0x10
-[  417.291221]  ret_from_fork+0x31/0x50
-[  417.291230]  ? __pfx_kthread+0x10/0x10
-[  417.291236]  ret_from_fork_asm+0x1a/0x30
-[  417.291246]  </TASK>
-
-Add a mutex lock, to prevent simultaneous addition and deletion operations
-on the list.
-
-Fixes: 31d3ad832948 ("netdevsim: add bpf offload support")
-Reported-by: Yinhao Hu <dddddd@hust.edu.cn>
-Reported-by: Kaiyan Mei <M202472210@hust.edu.cn>
-Signed-off-by: Yun Lu <luyun@kylinos.cn>
-Link: https://patch.msgid.link/20260116095308.11441-1-luyun_611@163.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: b20d7fe51e0d ("net: hns3: add some statitics info to tx process")
+Signed-off-by: David Yang <mmyangfl@gmail.com>
+Link: https://patch.msgid.link/20260119160759.1455950-1-mmyangfl@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/netdevsim/bpf.c       | 6 ++++++
- drivers/net/netdevsim/dev.c       | 2 ++
- drivers/net/netdevsim/netdevsim.h | 1 +
- 3 files changed, 9 insertions(+)
+ .../net/ethernet/hisilicon/hns3/hns3_enet.c   | 69 ++++++++++---------
+ 1 file changed, 36 insertions(+), 33 deletions(-)
 
-diff --git a/drivers/net/netdevsim/bpf.c b/drivers/net/netdevsim/bpf.c
-index 608953d4f98da..ca64136372fca 100644
---- a/drivers/net/netdevsim/bpf.c
-+++ b/drivers/net/netdevsim/bpf.c
-@@ -244,7 +244,9 @@ static int nsim_bpf_create_prog(struct nsim_dev *nsim_dev,
- 			    &state->state, &nsim_bpf_string_fops);
- 	debugfs_create_bool("loaded", 0400, state->ddir, &state->is_loaded);
- 
-+	mutex_lock(&nsim_dev->progs_list_lock);
- 	list_add_tail(&state->l, &nsim_dev->bpf_bound_progs);
-+	mutex_unlock(&nsim_dev->progs_list_lock);
- 
- 	prog->aux->offload->dev_priv = state;
- 
-@@ -273,12 +275,16 @@ static int nsim_bpf_translate(struct bpf_prog *prog)
- static void nsim_bpf_destroy_prog(struct bpf_prog *prog)
+diff --git a/drivers/net/ethernet/hisilicon/hns3/hns3_enet.c b/drivers/net/ethernet/hisilicon/hns3/hns3_enet.c
+index dbf44a17987eb..34627de2e311e 100644
+--- a/drivers/net/ethernet/hisilicon/hns3/hns3_enet.c
++++ b/drivers/net/ethernet/hisilicon/hns3/hns3_enet.c
+@@ -2505,44 +2505,47 @@ static netdev_features_t hns3_features_check(struct sk_buff *skb,
+ static void hns3_fetch_stats(struct rtnl_link_stats64 *stats,
+ 			     struct hns3_enet_ring *ring, bool is_tx)
  {
- 	struct nsim_bpf_bound_prog *state;
-+	struct nsim_dev *nsim_dev;
++	struct ring_stats ring_stats;
+ 	unsigned int start;
  
- 	state = prog->aux->offload->dev_priv;
-+	nsim_dev = state->nsim_dev;
- 	WARN(state->is_loaded,
- 	     "offload state destroyed while program still bound");
- 	debugfs_remove_recursive(state->ddir);
-+	mutex_lock(&nsim_dev->progs_list_lock);
- 	list_del(&state->l);
-+	mutex_unlock(&nsim_dev->progs_list_lock);
- 	kfree(state);
+ 	do {
+ 		start = u64_stats_fetch_begin(&ring->syncp);
+-		if (is_tx) {
+-			stats->tx_bytes += ring->stats.tx_bytes;
+-			stats->tx_packets += ring->stats.tx_pkts;
+-			stats->tx_dropped += ring->stats.sw_err_cnt;
+-			stats->tx_dropped += ring->stats.tx_vlan_err;
+-			stats->tx_dropped += ring->stats.tx_l4_proto_err;
+-			stats->tx_dropped += ring->stats.tx_l2l3l4_err;
+-			stats->tx_dropped += ring->stats.tx_tso_err;
+-			stats->tx_dropped += ring->stats.over_max_recursion;
+-			stats->tx_dropped += ring->stats.hw_limitation;
+-			stats->tx_dropped += ring->stats.copy_bits_err;
+-			stats->tx_dropped += ring->stats.skb2sgl_err;
+-			stats->tx_dropped += ring->stats.map_sg_err;
+-			stats->tx_errors += ring->stats.sw_err_cnt;
+-			stats->tx_errors += ring->stats.tx_vlan_err;
+-			stats->tx_errors += ring->stats.tx_l4_proto_err;
+-			stats->tx_errors += ring->stats.tx_l2l3l4_err;
+-			stats->tx_errors += ring->stats.tx_tso_err;
+-			stats->tx_errors += ring->stats.over_max_recursion;
+-			stats->tx_errors += ring->stats.hw_limitation;
+-			stats->tx_errors += ring->stats.copy_bits_err;
+-			stats->tx_errors += ring->stats.skb2sgl_err;
+-			stats->tx_errors += ring->stats.map_sg_err;
+-		} else {
+-			stats->rx_bytes += ring->stats.rx_bytes;
+-			stats->rx_packets += ring->stats.rx_pkts;
+-			stats->rx_dropped += ring->stats.l2_err;
+-			stats->rx_errors += ring->stats.l2_err;
+-			stats->rx_errors += ring->stats.l3l4_csum_err;
+-			stats->rx_crc_errors += ring->stats.l2_err;
+-			stats->multicast += ring->stats.rx_multicast;
+-			stats->rx_length_errors += ring->stats.err_pkt_len;
+-		}
++		ring_stats = ring->stats;
+ 	} while (u64_stats_fetch_retry(&ring->syncp, start));
++
++	if (is_tx) {
++		stats->tx_bytes += ring_stats.tx_bytes;
++		stats->tx_packets += ring_stats.tx_pkts;
++		stats->tx_dropped += ring_stats.sw_err_cnt;
++		stats->tx_dropped += ring_stats.tx_vlan_err;
++		stats->tx_dropped += ring_stats.tx_l4_proto_err;
++		stats->tx_dropped += ring_stats.tx_l2l3l4_err;
++		stats->tx_dropped += ring_stats.tx_tso_err;
++		stats->tx_dropped += ring_stats.over_max_recursion;
++		stats->tx_dropped += ring_stats.hw_limitation;
++		stats->tx_dropped += ring_stats.copy_bits_err;
++		stats->tx_dropped += ring_stats.skb2sgl_err;
++		stats->tx_dropped += ring_stats.map_sg_err;
++		stats->tx_errors += ring_stats.sw_err_cnt;
++		stats->tx_errors += ring_stats.tx_vlan_err;
++		stats->tx_errors += ring_stats.tx_l4_proto_err;
++		stats->tx_errors += ring_stats.tx_l2l3l4_err;
++		stats->tx_errors += ring_stats.tx_tso_err;
++		stats->tx_errors += ring_stats.over_max_recursion;
++		stats->tx_errors += ring_stats.hw_limitation;
++		stats->tx_errors += ring_stats.copy_bits_err;
++		stats->tx_errors += ring_stats.skb2sgl_err;
++		stats->tx_errors += ring_stats.map_sg_err;
++	} else {
++		stats->rx_bytes += ring_stats.rx_bytes;
++		stats->rx_packets += ring_stats.rx_pkts;
++		stats->rx_dropped += ring_stats.l2_err;
++		stats->rx_errors += ring_stats.l2_err;
++		stats->rx_errors += ring_stats.l3l4_csum_err;
++		stats->rx_crc_errors += ring_stats.l2_err;
++		stats->multicast += ring_stats.rx_multicast;
++		stats->rx_length_errors += ring_stats.err_pkt_len;
++	}
  }
  
-diff --git a/drivers/net/netdevsim/dev.c b/drivers/net/netdevsim/dev.c
-index 3e0b61202f0c9..2614d6509954c 100644
---- a/drivers/net/netdevsim/dev.c
-+++ b/drivers/net/netdevsim/dev.c
-@@ -1545,6 +1545,7 @@ int nsim_drv_probe(struct nsim_bus_dev *nsim_bus_dev)
- 	nsim_dev->max_macs = NSIM_DEV_MAX_MACS_DEFAULT;
- 	nsim_dev->test1 = NSIM_DEV_TEST1_DEFAULT;
- 	spin_lock_init(&nsim_dev->fa_cookie_lock);
-+	mutex_init(&nsim_dev->progs_list_lock);
- 
- 	dev_set_drvdata(&nsim_bus_dev->dev, nsim_dev);
- 
-@@ -1683,6 +1684,7 @@ void nsim_drv_remove(struct nsim_bus_dev *nsim_bus_dev)
- 	devl_unregister(devlink);
- 	kfree(nsim_dev->vfconfigs);
- 	kfree(nsim_dev->fa_cookie);
-+	mutex_destroy(&nsim_dev->progs_list_lock);
- 	devl_unlock(devlink);
- 	devlink_free(devlink);
- 	dev_set_drvdata(&nsim_bus_dev->dev, NULL);
-diff --git a/drivers/net/netdevsim/netdevsim.h b/drivers/net/netdevsim/netdevsim.h
-index dfc6e00b718e3..f2a31acc5e2e4 100644
---- a/drivers/net/netdevsim/netdevsim.h
-+++ b/drivers/net/netdevsim/netdevsim.h
-@@ -295,6 +295,7 @@ struct nsim_dev {
- 	u32 prog_id_gen;
- 	struct list_head bpf_bound_progs;
- 	struct list_head bpf_bound_maps;
-+	struct mutex progs_list_lock;
- 	struct netdev_phys_item_id switch_id;
- 	struct list_head port_list;
- 	bool fw_update_status;
+ static void hns3_nic_get_stats64(struct net_device *netdev,
 -- 
 2.51.0
 
