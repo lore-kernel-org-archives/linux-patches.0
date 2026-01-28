@@ -1,36 +1,53 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E5412D6E6A;
-	Wed, 28 Jan 2026 15:38:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A4B62D9796;
+	Wed, 28 Jan 2026 15:38:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769614711; cv=none; b=CAK9l7Ddvs2F45s5irI48lVdFfyfDkRWXdXSU4jRD7LVYKSy6OczyB+IYAUkrt8LJVE9REiXA/Ke3RFJuNQRcIJ8EoqxiVyG6+45/4+dLDuoXTv+2FeuVwc8NjYjPZm4ZqzWzXeVyc9mbQKU2GnCohNxcv1H3mxqBRWZbuwwU6Q=
+	t=1769614714; cv=none; b=qNegE0gEgKB8pXP9Cmj1sV9eIwVXqcCeBvZULENStN2Bb5SaN4+BjcrhGbOJ87VZTMpSvYnCic4IwfK8iXrFotEegMi407e+DXfglwSeY6Z4xbG0ynxDTrvJV7226wXcKsdz9J7oVWfQ6xr+TvChnAkOnmWKxi2qQGS0AUa1YBo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769614711; c=relaxed/simple;
-	bh=Ne8q+MnuhHEA/5nWIzTKSQsMGwc+aaePBv5QOP1ieG0=;
+	s=arc-20240116; t=1769614714; c=relaxed/simple;
+	bh=BLh/1Waz4wKNekqIFJyRAF8Jp0ekL9vjx71Nex08/RA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cdIkkwXkNJE5XO3+juowwbNQX5M7BOxVMyfZgT3WMW6vBTNiE3hjFN9g+A6YRrJKykGGmLKI3k9dRTf5WiXsoYoLL1GGa5SglFu8HEUFePKc0DUzOeMrdI2ayXtkUJiIjcDtMawPm+3Tz0KmbLTXdicKv4cO/VMoYo3JgpBcO10=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eUlEj0B1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qxPfbKmj5jgthGKhD6Rz2/Gc1EtJhcQvGS6wihmP6TkEccPl/KbQ87Vr4tZo4W2wVth1Zh+dtPeBXGrREHc/Lx5HEvEC4gwSc/yqtgjwcuAp2RQYDk7MAOfoxEE8Xc+duBJRc39M9ShONwG7+N2mRISActPu1uYpWFOYQOP17oI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HtO/anf1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eUlEj0B1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A7D7C4CEF7;
-	Wed, 28 Jan 2026 15:38:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HtO/anf1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 918F1C4CEF1;
+	Wed, 28 Jan 2026 15:38:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1769614710;
-	bh=Ne8q+MnuhHEA/5nWIzTKSQsMGwc+aaePBv5QOP1ieG0=;
+	s=korg; t=1769614713;
+	bh=BLh/1Waz4wKNekqIFJyRAF8Jp0ekL9vjx71Nex08/RA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eUlEj0B1yF1n6Ab4sR/FgjPmiznnGomAvWel4aELz2efhQblLQPVorUZ/cPPDjFZN
-	 0Oz3MwSKYt4mkN3+/UVuwGhvK4HR/47MmtbTnIYBjbZGJu6kRuU0r2/3b0iSFkawhG
-	 0gyVsC9SxFz9x/ZEy75ee3hVvyNQEnQ2TFiZUveo=
+	b=HtO/anf1cJKtke8IRWPnqg/Nuqj3z4t/R6UTC1dXOgWmM55lObLxSwaP0pxJfYFzH
+	 A60w1KtLY9FE2Pl+jqDokHROSFu47Qely+0ZWy5gyC3Zh6UXII8FPMFZgszE2E+K+4
+	 /dv8olXtn+ayGlBLALlYC1hNHxJh+CFQNT2a57zE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marc Kleine-Budde <mkl@pengutronix.de>
-Subject: [PATCH 6.6 219/254] can: usb_8dev: usb_8dev_read_bulk_callback(): fix URB memory leak
-Date: Wed, 28 Jan 2026 16:23:15 +0100
-Message-ID: <20260128145352.668615896@linuxfoundation.org>
+	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
+	syzbot+2d9c96466c978346b55f@syzkaller.appspotmail.com,
+	"David Hildenbrand (Red Hat)" <david@kernel.org>,
+	Zi Yan <ziy@nvidia.com>,
+	Alistair Popple <apopple@nvidia.com>,
+	Byungchul Park <byungchul@sk.com>,
+	Gregory Price <gourry@gourry.net>,
+	Jann Horn <jannh@google.com>,
+	Joshua Hahn <joshua.hahnjy@gmail.com>,
+	Liam Howlett <liam.howlett@oracle.com>,
+	Lorenzo Stoakes <lorenzo.stoakes@oracle.com>,
+	Matthew Brost <matthew.brost@intel.com>,
+	Rakie Kim <rakie.kim@sk.com>,
+	Rik van Riel <riel@surriel.com>,
+	Vlastimil Babka <vbabka@suse.cz>,
+	Ying Huang <ying.huang@linux.alibaba.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Lance Yang <lance.yang@linux.dev>
+Subject: [PATCH 6.6 220/254] migrate: correct lock ordering for hugetlb file folios
+Date: Wed, 28 Jan 2026 16:23:16 +0100
+Message-ID: <20260128145352.703397864@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260128145344.698118637@linuxfoundation.org>
 References: <20260128145344.698118637@linuxfoundation.org>
@@ -49,56 +66,106 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Marc Kleine-Budde <mkl@pengutronix.de>
+From: Matthew Wilcox (Oracle) <willy@infradead.org>
 
-commit f7a980b3b8f80fe367f679da376cf76e800f9480 upstream.
+commit b7880cb166ab62c2409046b2347261abf701530e upstream.
 
-Fix similar memory leak as in commit 7352e1d5932a ("can: gs_usb:
-gs_usb_receive_bulk_callback(): fix URB memory leak").
+Syzbot has found a deadlock (analyzed by Lance Yang):
 
-In usb_8dev_open() -> usb_8dev_start(), the URBs for USB-in transfers are
-allocated, added to the priv->rx_submitted anchor and submitted. In the
-complete callback usb_8dev_read_bulk_callback(), the URBs are processed and
-resubmitted. In usb_8dev_close() -> unlink_all_urbs() the URBs are freed by
-calling usb_kill_anchored_urbs(&priv->rx_submitted).
+1) Task (5749): Holds folio_lock, then tries to acquire i_mmap_rwsem(read lock).
+2) Task (5754): Holds i_mmap_rwsem(write lock), then tries to acquire
+folio_lock.
 
-However, this does not take into account that the USB framework unanchors
-the URB before the complete function is called. This means that once an
-in-URB has been completed, it is no longer anchored and is ultimately not
-released in usb_kill_anchored_urbs().
+migrate_pages()
+  -> migrate_hugetlbs()
+    -> unmap_and_move_huge_page()     <- Takes folio_lock!
+      -> remove_migration_ptes()
+        -> __rmap_walk_file()
+          -> i_mmap_lock_read()       <- Waits for i_mmap_rwsem(read lock)!
 
-Fix the memory leak by anchoring the URB in the
-usb_8dev_read_bulk_callback() to the priv->rx_submitted anchor.
+hugetlbfs_fallocate()
+  -> hugetlbfs_punch_hole()           <- Takes i_mmap_rwsem(write lock)!
+    -> hugetlbfs_zero_partial_page()
+     -> filemap_lock_hugetlb_folio()
+      -> filemap_lock_folio()
+        -> __filemap_get_folio        <- Waits for folio_lock!
 
-Fixes: 0024d8ad1639 ("can: usb_8dev: Add support for USB2CAN interface from 8 devices")
-Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20260116-can_usb-fix-memory-leak-v2-5-4b8cb2915571@pengutronix.de
-Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
+The migration path is the one taking locks in the wrong order according to
+the documentation at the top of mm/rmap.c.  So expand the scope of the
+existing i_mmap_lock to cover the calls to remove_migration_ptes() too.
+
+This is (mostly) how it used to be after commit c0d0381ade79.  That was
+removed by 336bf30eb765 for both file & anon hugetlb pages when it should
+only have been removed for anon hugetlb pages.
+
+Link: https://lkml.kernel.org/r/20260109041345.3863089-2-willy@infradead.org
+Signed-off-by: Matthew Wilcox (Oracle) <willy@infradead.org>
+Fixes: 336bf30eb765 ("hugetlbfs: fix anon huge page migration race")
+Reported-by: syzbot+2d9c96466c978346b55f@syzkaller.appspotmail.com
+Link: https://lore.kernel.org/all/68e9715a.050a0220.1186a4.000d.GAE@google.com
+Debugged-by: Lance Yang <lance.yang@linux.dev>
+Acked-by: David Hildenbrand (Red Hat) <david@kernel.org>
+Acked-by: Zi Yan <ziy@nvidia.com>
+Cc: Alistair Popple <apopple@nvidia.com>
+Cc: Byungchul Park <byungchul@sk.com>
+Cc: Gregory Price <gourry@gourry.net>
+Cc: Jann Horn <jannh@google.com>
+Cc: Joshua Hahn <joshua.hahnjy@gmail.com>
+Cc: Liam Howlett <liam.howlett@oracle.com>
+Cc: Lorenzo Stoakes <lorenzo.stoakes@oracle.com>
+Cc: Matthew Brost <matthew.brost@intel.com>
+Cc: Rakie Kim <rakie.kim@sk.com>
+Cc: Rik van Riel <riel@surriel.com>
+Cc: Vlastimil Babka <vbabka@suse.cz>
+Cc: Ying Huang <ying.huang@linux.alibaba.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/can/usb/usb_8dev.c |    8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ mm/migrate.c |   12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
---- a/drivers/net/can/usb/usb_8dev.c
-+++ b/drivers/net/can/usb/usb_8dev.c
-@@ -541,11 +541,17 @@ resubmit_urb:
- 			  urb->transfer_buffer, RX_BUFFER_SIZE,
- 			  usb_8dev_read_bulk_callback, priv);
+--- a/mm/migrate.c
++++ b/mm/migrate.c
+@@ -1369,6 +1369,7 @@ static int unmap_and_move_huge_page(new_
+ 	int page_was_mapped = 0;
+ 	struct anon_vma *anon_vma = NULL;
+ 	struct address_space *mapping = NULL;
++	enum ttu_flags ttu = 0;
  
-+	usb_anchor_urb(urb, &priv->rx_submitted);
-+
- 	retval = usb_submit_urb(urb, GFP_ATOMIC);
-+	if (!retval)
-+		return;
-+
-+	usb_unanchor_urb(urb);
+ 	if (folio_ref_count(src) == 1) {
+ 		/* page was freed from under us. So we are done. */
+@@ -1410,8 +1411,6 @@ static int unmap_and_move_huge_page(new_
+ 		goto put_anon;
  
- 	if (retval == -ENODEV)
- 		netif_device_detach(netdev);
--	else if (retval)
-+	else
- 		netdev_err(netdev,
- 			"failed resubmitting read bulk urb: %d\n", retval);
- }
+ 	if (folio_mapped(src)) {
+-		enum ttu_flags ttu = 0;
+-
+ 		if (!folio_test_anon(src)) {
+ 			/*
+ 			 * In shared mappings, try_to_unmap could potentially
+@@ -1428,9 +1427,6 @@ static int unmap_and_move_huge_page(new_
+ 
+ 		try_to_migrate(src, ttu);
+ 		page_was_mapped = 1;
+-
+-		if (ttu & TTU_RMAP_LOCKED)
+-			i_mmap_unlock_write(mapping);
+ 	}
+ 
+ 	if (!folio_mapped(src))
+@@ -1438,7 +1434,11 @@ static int unmap_and_move_huge_page(new_
+ 
+ 	if (page_was_mapped)
+ 		remove_migration_ptes(src,
+-			rc == MIGRATEPAGE_SUCCESS ? dst : src, false);
++			rc == MIGRATEPAGE_SUCCESS ? dst : src,
++				ttu ? true : false);
++
++	if (ttu & TTU_RMAP_LOCKED)
++		i_mmap_unlock_write(mapping);
+ 
+ unlock_put_anon:
+ 	folio_unlock(dst);
 
 
