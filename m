@@ -1,39 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94ED5306B06;
-	Wed, 28 Jan 2026 15:48:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 481E02E2DF4;
+	Wed, 28 Jan 2026 15:48:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769615335; cv=none; b=c3sitKOZQHbTroUeFmZSSO4/T2xZrPsKXZAjV9q1d+wqF0rQmTbX4PgQssYtH6tXv9Mf3dUfv4I4msvKdT9R/8K5zjlg5puxo+SwONlLh0Qe7bLeeJo3gyFp31pi6N+hHIn28ilOIQgXRinEc4upsEwzl7BSXGKb/Lidqg4CtS0=
+	t=1769615339; cv=none; b=ePw2FPq/ibhNSeQb8WTPU2qkNzTopn4pWAOneCa5LXl1TT0sbPyzO40WgAcvhQ5NXtMHHAIIVz3sabXKSi6omSlvszriSF3DLLTGRYtEN3dIQm4QW30L/XtmXrBFL/TwsNpmdM5DfT6dqw9dfZpc3ztE38PBSwHSUHknNJ9Ye0Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769615335; c=relaxed/simple;
-	bh=8yQtMjg1urh581Z4KcnZvf8aDkJ8njQ3AQVy87zFM/M=;
+	s=arc-20240116; t=1769615339; c=relaxed/simple;
+	bh=nH++8lLWXyG+6U6p/AyRNOEodETXHMvly5LwqepCYXU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QbSWOFeZM2zVJMBScm8SBxtJOLfMnSlcryDOVJ1GsEuYzP+XmPfF1rs3LuxBt6q1TYSQ6eQdCl0wfKbHxr9IQcCh1RM4Iy8fs6OcMO6md9ybIsojIfYhBub4W1pmj+FCZ9S/UHYSB8PGUECPk/ZVDmHw1lNp26W2h3agn0mDdGw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IEqQcEsP; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=iAZRlpxPr1iwCgp85zmjIg2hhpG3H5PZjB2iQElCy+QSrwfj2tp/pBKFCPVbKLEvslvGaDTqwVeQmHxFUYHv+/bVVLbWgIFKBbPDXa7QWHecYiAd5P6YCM5wV/uvN9xuC0imZh4QjQ6kXM6dAiAbldl2ny5jo+1kqIZjZjjXuhw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gvV4b1Co; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IEqQcEsP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0906C4CEF1;
-	Wed, 28 Jan 2026 15:48:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gvV4b1Co"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B1856C4CEF1;
+	Wed, 28 Jan 2026 15:48:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1769615335;
-	bh=8yQtMjg1urh581Z4KcnZvf8aDkJ8njQ3AQVy87zFM/M=;
+	s=korg; t=1769615339;
+	bh=nH++8lLWXyG+6U6p/AyRNOEodETXHMvly5LwqepCYXU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IEqQcEsP9CoSX0VTGSmYmvGT/u+VpIDS/3ZQovVe94RgYeN/sZ2xXIiPAWZdUCxkr
-	 3oTpt09rF1Nk8AOKPOUVBqDnc0VBmGk0kFYrYtCyoWAwhp50BSNgTVeGdEQK4Fsc7i
-	 dwg8r/ToOsTiId9Mhn8lZjJSLOXhfI1zM93cSErk=
+	b=gvV4b1CoxBBGT/8OUrxZOOQCItTf3qgeItj9IYiBh/daCsvDzqBPZ/L1R2++NfDzM
+	 jCMgDz5/wmPEzJOMxNFdfWjMKx3JKmR4pxREyjrfQWZoAHwc7Yi4iXt5ZuRmtMbxBF
+	 ccwKtx7m413jc7DHMjRGKkmtICrm/tp749fuSnCI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Siddharth Vadapalli <s-vadapalli@ti.com>,
-	Peter Ujfalusi <peter.ujfalusi@gmail.com>,
-	Vinod Koul <vkoul@kernel.org>,
-	Sai Sree Kartheek Adivi <s-adivi@ti.com>
-Subject: [PATCH 6.12 147/169] dmaengine: ti: k3-udma: Enable second resource range for BCDMA and PKTDMA
-Date: Wed, 28 Jan 2026 16:23:50 +0100
-Message-ID: <20260128145339.295740565@linuxfoundation.org>
+	Marc Kleine-Budde <mkl@pengutronix.de>
+Subject: [PATCH 6.12 148/169] can: esd_usb: esd_usb_read_bulk_callback(): fix URB memory leak
+Date: Wed, 28 Jan 2026 16:23:51 +0100
+Message-ID: <20260128145339.331924865@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260128145334.006287341@linuxfoundation.org>
 References: <20260128145334.006287341@linuxfoundation.org>
@@ -52,104 +49,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Siddharth Vadapalli <s-vadapalli@ti.com>
+From: Marc Kleine-Budde <mkl@pengutronix.de>
 
-commit 566beb347eded7a860511164a7a163bc882dc4d0 upstream.
+commit 5a4391bdc6c8357242f62f22069c865b792406b3 upstream.
 
-The SoC DMA resources for UDMA, BCDMA and PKTDMA can be described via a
-combination of up to two resource ranges. The first resource range handles
-the default partitioning wherein all resources belonging to that range are
-allocated to a single entity and form a continuous range. For use-cases
-where the resources are shared across multiple entities and require to be
-described via discontinuous ranges, a second resource range is required.
+Fix similar memory leak as in commit 7352e1d5932a ("can: gs_usb:
+gs_usb_receive_bulk_callback(): fix URB memory leak").
 
-Currently, udma_setup_resources() supports handling resources that belong
-to the second range. Extend bcdma_setup_resources() and
-pktdma_setup_resources() to support the same.
+In esd_usb_open(), the URBs for USB-in transfers are allocated, added to
+the dev->rx_submitted anchor and submitted. In the complete callback
+esd_usb_read_bulk_callback(), the URBs are processed and resubmitted. In
+esd_usb_close() the URBs are freed by calling
+usb_kill_anchored_urbs(&dev->rx_submitted).
 
-Signed-off-by: Siddharth Vadapalli <s-vadapalli@ti.com>
-Acked-by: Peter Ujfalusi <peter.ujfalusi@gmail.com>
-Link: https://lore.kernel.org/r/20250205121805.316792-1-s-vadapalli@ti.com
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
-Tested-by: Sai Sree Kartheek Adivi <s-adivi@ti.com>
-Signed-off-by: Sai Sree Kartheek Adivi <s-adivi@ti.com>
+However, this does not take into account that the USB framework unanchors
+the URB before the complete function is called. This means that once an
+in-URB has been completed, it is no longer anchored and is ultimately not
+released in esd_usb_close().
+
+Fix the memory leak by anchoring the URB in the
+esd_usb_read_bulk_callback() to the dev->rx_submitted anchor.
+
+Fixes: 96d8e90382dc ("can: Add driver for esd CAN-USB/2 device")
+Cc: stable@vger.kernel.org
+Link: https://patch.msgid.link/20260116-can_usb-fix-memory-leak-v2-2-4b8cb2915571@pengutronix.de
+Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/dma/ti/k3-udma.c |   36 ++++++++++++++++++++++++++++++++++++
- 1 file changed, 36 insertions(+)
+ drivers/net/can/usb/esd_usb.c |    9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
 
---- a/drivers/dma/ti/k3-udma.c
-+++ b/drivers/dma/ti/k3-udma.c
-@@ -4876,6 +4876,12 @@ static int bcdma_setup_resources(struct
- 				irq_res.desc[i].start = rm_res->desc[i].start +
- 							oes->bcdma_bchan_ring;
- 				irq_res.desc[i].num = rm_res->desc[i].num;
+--- a/drivers/net/can/usb/esd_usb.c
++++ b/drivers/net/can/usb/esd_usb.c
+@@ -539,13 +539,20 @@ resubmit_urb:
+ 			  urb->transfer_buffer, ESD_USB_RX_BUFFER_SIZE,
+ 			  esd_usb_read_bulk_callback, dev);
+ 
++	usb_anchor_urb(urb, &dev->rx_submitted);
 +
-+				if (rm_res->desc[i].num_sec) {
-+					irq_res.desc[i].start_sec = rm_res->desc[i].start_sec +
-+									oes->bcdma_bchan_ring;
-+					irq_res.desc[i].num_sec = rm_res->desc[i].num_sec;
-+				}
- 			}
- 		}
- 	} else {
-@@ -4899,6 +4905,15 @@ static int bcdma_setup_resources(struct
- 				irq_res.desc[i + 1].start = rm_res->desc[j].start +
- 							oes->bcdma_tchan_ring;
- 				irq_res.desc[i + 1].num = rm_res->desc[j].num;
+ 	retval = usb_submit_urb(urb, GFP_ATOMIC);
++	if (!retval)
++		return;
 +
-+				if (rm_res->desc[j].num_sec) {
-+					irq_res.desc[i].start_sec = rm_res->desc[j].start_sec +
-+									oes->bcdma_tchan_data;
-+					irq_res.desc[i].num_sec = rm_res->desc[j].num_sec;
-+					irq_res.desc[i + 1].start_sec = rm_res->desc[j].start_sec +
-+									oes->bcdma_tchan_ring;
-+					irq_res.desc[i + 1].num_sec = rm_res->desc[j].num_sec;
-+				}
- 			}
++	usb_unanchor_urb(urb);
++
+ 	if (retval == -ENODEV) {
+ 		for (i = 0; i < dev->net_count; i++) {
+ 			if (dev->nets[i])
+ 				netif_device_detach(dev->nets[i]->netdev);
  		}
+-	} else if (retval) {
++	} else {
+ 		dev_err(dev->udev->dev.parent,
+ 			"failed resubmitting read bulk urb: %d\n", retval);
  	}
-@@ -4919,6 +4934,15 @@ static int bcdma_setup_resources(struct
- 				irq_res.desc[i + 1].start = rm_res->desc[j].start +
- 							oes->bcdma_rchan_ring;
- 				irq_res.desc[i + 1].num = rm_res->desc[j].num;
-+
-+				if (rm_res->desc[j].num_sec) {
-+					irq_res.desc[i].start_sec = rm_res->desc[j].start_sec +
-+									oes->bcdma_rchan_data;
-+					irq_res.desc[i].num_sec = rm_res->desc[j].num_sec;
-+					irq_res.desc[i + 1].start_sec = rm_res->desc[j].start_sec +
-+									oes->bcdma_rchan_ring;
-+					irq_res.desc[i + 1].num_sec = rm_res->desc[j].num_sec;
-+				}
- 			}
- 		}
- 	}
-@@ -5053,6 +5077,12 @@ static int pktdma_setup_resources(struct
- 			irq_res.desc[i].start = rm_res->desc[i].start +
- 						oes->pktdma_tchan_flow;
- 			irq_res.desc[i].num = rm_res->desc[i].num;
-+
-+			if (rm_res->desc[i].num_sec) {
-+				irq_res.desc[i].start_sec = rm_res->desc[i].start_sec +
-+								oes->pktdma_tchan_flow;
-+				irq_res.desc[i].num_sec = rm_res->desc[i].num_sec;
-+			}
- 		}
- 	}
- 	rm_res = tisci_rm->rm_ranges[RM_RANGE_RFLOW];
-@@ -5064,6 +5094,12 @@ static int pktdma_setup_resources(struct
- 			irq_res.desc[i].start = rm_res->desc[j].start +
- 						oes->pktdma_rchan_flow;
- 			irq_res.desc[i].num = rm_res->desc[j].num;
-+
-+			if (rm_res->desc[j].num_sec) {
-+				irq_res.desc[i].start_sec = rm_res->desc[j].start_sec +
-+								oes->pktdma_rchan_flow;
-+				irq_res.desc[i].num_sec = rm_res->desc[j].num_sec;
-+			}
- 		}
- 	}
- 	ret = ti_sci_inta_msi_domain_alloc_irqs(ud->dev, &irq_res);
 
 
