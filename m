@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6BBD123EAB7;
-	Wed, 28 Jan 2026 15:32:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A437923EAB7;
+	Wed, 28 Jan 2026 15:32:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769614337; cv=none; b=qLofsnDUZPHzAIlYIQSOdmcs91HiAlAxm0VkIkb8khnDH+4CxYZLyLiODIZQiVQnxf6q+yuHx/Svt9SoGGUulx4Fux4JfGyc+8S8PxSBpdOVjHNyycmoJIsJfCX/L2vzhFvXM1rp5ruJ+3yAL8yhWa066HnLLUdezFnmOdHFVsI=
+	t=1769614340; cv=none; b=LicR3aCIvFpqMSzDsjAYCO7f/pGsSYUQ97QoGo6Gi3DoBZ3GFRQXTcHBUEfflY6IwpQguO8kfHyXIE5UY1w+L4G9r+echSihFOnWCC7wKWtMTf7fUN3HHhFkBrVU7nikminbjgpPn8DyxM7BUcBf/dMMzbe7u9vdU8Afsr9y034=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769614337; c=relaxed/simple;
-	bh=K+eT9P4bnp/Kor1wZvz65TJKuafK1iAZX7Yr5svUE7A=;
+	s=arc-20240116; t=1769614340; c=relaxed/simple;
+	bh=/RGzKA2etX539CJGIWkEfiNGua5FjJ/9HulmGSa49aU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hiwf6rmDHj6hCeFZFT5Jx6FKVZLAjEFNyp62yhR2yIGPV56hvIIBCS7TJ1ot2I3ucFnvPNX82V4epjjRpsvksQPwsgKFzZK8G5uNvJahzwurOrBbPi2u0G0x8DcfSUdd332WArr1mVcyUnBiBT0B6TK6zkS8U9zGTt0Hqufob7c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=a/su6UTn; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lw79lx8sW3UXp/gUFdJZfEwDJg8vWbJCVEoHXXCFDyhGDlQPgQVZou1K+DQ7OtMlkKlnMg9tA7ruKqTA6CpeKc15k+8QgD6T5Du4N9vb1De6EAmVmww+9O+6SLf5i9lqiIy5fgBoI0amDIbL98I6rXoiD2C87TLdLqBW+szZofA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wLIb0FUT; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="a/su6UTn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3DB7C4CEF1;
-	Wed, 28 Jan 2026 15:32:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wLIb0FUT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2AA44C4CEF1;
+	Wed, 28 Jan 2026 15:32:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1769614337;
-	bh=K+eT9P4bnp/Kor1wZvz65TJKuafK1iAZX7Yr5svUE7A=;
+	s=korg; t=1769614340;
+	bh=/RGzKA2etX539CJGIWkEfiNGua5FjJ/9HulmGSa49aU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=a/su6UTnGXn/YbRdb0dkyj6K+CTQ/fqAuTvMHbFWpL5iKJrpvMPGE9Ghz2XKWzwTO
-	 GJ1KRol2/Ws3a5K8ZcU+LfvnWAJTE+DysPLJ5ZXbkNgVH7qwe7rpsnE/wPHxuZWKa3
-	 wgBWYwDgiJ9mb2aFpEkBGq0lcwAfxxJOROFRdREI=
+	b=wLIb0FUTX86YplcVt2ZTtH5QL6hrxhPH2cYgGqVvZVpUJS8oDp8m98MEsXjZNnMp4
+	 vVGK8S/GqkqF4HVUIuKmhYYy6kmdBddyVdEhGGMzvAJojCVXHSRXtBItMfSzH9+W0A
+	 I7y30U6TkjAWtLR6qZtzFYKU8f8GPgXbG+tREWdY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kent.russell@amd.com,
-	"Mario Limonciello (AMD)" <superm1@kernel.org>,
+	Haoxiang Li <lihaoxiang@isrc.iscas.ac.cn>,
+	Felix Kuehling <felix.kuehling@amd.com>,
+	Oak Zeng <Oak.Zeng@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.6 073/254] drm/amd: Clean up kfd node on surprise disconnect
-Date: Wed, 28 Jan 2026 16:20:49 +0100
-Message-ID: <20260128145347.322641430@linuxfoundation.org>
+Subject: [PATCH 6.6 074/254] drm/amdkfd: fix a memory leak in device_queue_manager_init()
+Date: Wed, 28 Jan 2026 16:20:50 +0100
+Message-ID: <20260128145347.357963434@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260128145344.698118637@linuxfoundation.org>
 References: <20260128145344.698118637@linuxfoundation.org>
@@ -51,46 +52,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mario Limonciello (AMD) <superm1@kernel.org>
+From: Haoxiang Li <lihaoxiang@isrc.iscas.ac.cn>
 
-commit 28695ca09d326461f8078332aa01db516983e8a2 upstream.
+commit 80614c509810fc051312d1a7ccac8d0012d6b8d0 upstream.
 
-When an eGPU is unplugged the KFD topology should also be destroyed
-for that GPU. This never happens because the fini_sw callbacks never
-get to run. Run them manually before calling amdgpu_device_ip_fini_early()
-when a device has already been disconnected.
+If dqm->ops.initialize() fails, add deallocate_hiq_sdma_mqd()
+to release the memory allocated by allocate_hiq_sdma_mqd().
+Move deallocate_hiq_sdma_mqd() up to ensure proper function
+visibility at the point of use.
 
-This location is intentionally chosen to make sure that the kfd locking
-refcount doesn't get incremented unintentionally.
-
-Cc: kent.russell@amd.com
-Closes: https://community.frame.work/t/amd-egpu-on-linux/8691/33
-Signed-off-by: Mario Limonciello (AMD) <superm1@kernel.org>
-Reviewed-by: Kent Russell <kent.russell@amd.com>
+Fixes: 11614c36bc8f ("drm/amdkfd: Allocate MQD trunk for HIQ and SDMA")
+Signed-off-by: Haoxiang Li <lihaoxiang@isrc.iscas.ac.cn>
+Signed-off-by: Felix Kuehling <felix.kuehling@amd.com>
+Reviewed-by: Oak Zeng <Oak.Zeng@amd.com>
+Reviewed-by: Felix Kuehling <felix.kuehling@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 6a23e7b4332c10f8b56c33a9c5431b52ecff9aab)
+(cherry picked from commit b7cccc8286bb9919a0952c812872da1dcfe9d390)
 Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_device.c |    8 ++++++++
- 1 file changed, 8 insertions(+)
+ drivers/gpu/drm/amd/amdkfd/kfd_device_queue_manager.c |   19 ++++++++++--------
+ 1 file changed, 11 insertions(+), 8 deletions(-)
 
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
-@@ -4029,6 +4029,14 @@ void amdgpu_device_fini_hw(struct amdgpu
- 	/* disable ras feature must before hw fini */
- 	amdgpu_ras_pre_fini(adev);
+--- a/drivers/gpu/drm/amd/amdkfd/kfd_device_queue_manager.c
++++ b/drivers/gpu/drm/amd/amdkfd/kfd_device_queue_manager.c
+@@ -2446,6 +2446,14 @@ static int allocate_hiq_sdma_mqd(struct
+ 	return retval;
+ }
  
-+	/*
-+	 * device went through surprise hotplug; we need to destroy topology
-+	 * before ip_fini_early to prevent kfd locking refcount issues by calling
-+	 * amdgpu_amdkfd_suspend()
-+	 */
-+	if (drm_dev_is_unplugged(adev_to_drm(adev)))
-+		amdgpu_amdkfd_device_fini_sw(adev);
++static void deallocate_hiq_sdma_mqd(struct kfd_node *dev,
++				    struct kfd_mem_obj *mqd)
++{
++	WARN(!mqd, "No hiq sdma mqd trunk to free");
 +
- 	amdgpu_device_ip_fini_early(adev);
++	amdgpu_amdkfd_free_gtt_mem(dev->adev, &mqd->gtt_mem);
++}
++
+ struct device_queue_manager *device_queue_manager_init(struct kfd_node *dev)
+ {
+ 	struct device_queue_manager *dqm;
+@@ -2567,19 +2575,14 @@ struct device_queue_manager *device_queu
+ 		return dqm;
+ 	}
  
- 	amdgpu_irq_fini_hw(adev);
++	if (!dev->kfd->shared_resources.enable_mes)
++		deallocate_hiq_sdma_mqd(dev, &dqm->hiq_sdma_mqd);
++
+ out_free:
+ 	kfree(dqm);
+ 	return NULL;
+ }
+ 
+-static void deallocate_hiq_sdma_mqd(struct kfd_node *dev,
+-				    struct kfd_mem_obj *mqd)
+-{
+-	WARN(!mqd, "No hiq sdma mqd trunk to free");
+-
+-	amdgpu_amdkfd_free_gtt_mem(dev->adev, &mqd->gtt_mem);
+-}
+-
+ void device_queue_manager_uninit(struct device_queue_manager *dqm)
+ {
+ 	dqm->ops.stop(dqm);
 
 
