@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE46830E0D6;
-	Wed, 28 Jan 2026 15:43:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E661630DED8;
+	Wed, 28 Jan 2026 15:43:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769614986; cv=none; b=iTg6hOubMWGz6oVavUAE3QBdMMIsSycs6atrZs9yD82WdXRVO4e/RlyWYCt8K4kjize9nbjhcNQudS05KwtjSM6c7w9j0dLQj6sLUO1PypVXJ04h1c8ICXmbCSoH7zc4eaTuCJlDX+o8pts3ggFzF+fzEIF/7Y5yp/Unbw578go=
+	t=1769614990; cv=none; b=WSG1kn46ZCA8uQa5zpKfogfdtGw29UualKPCOHV8AfT5fd3ETiqipWzkcINDnozrs0cUKpv047So9rCQjqG7fTpHQWqQ9X/HtXUBUy5WVlA6krg+KPuLSnUkHFK3e4dFqiuRe+QISO05qPym7C2bvJt49pYfnsp1wrCHSEAEDrI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769614986; c=relaxed/simple;
-	bh=EOixVpeE+RsakAkpdpjpryhTBVE/oo5/E+k1ESd9AV8=;
+	s=arc-20240116; t=1769614990; c=relaxed/simple;
+	bh=qNTohIxFW2j/EwXaNfp+jG9g6TogB5/023dltnRguaQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bPFMu+eHwOmOBxfiiYyBw2Y7DzaQo/UosZG70yuJzls2YlZ1pXpk+VWmY3toieU8FVNCvHYy/HwSm5p7y621DIjcSCi+8z28TQjXVwHpAare2MKr6JKxGxB+14myb9hjdQF60vuAC29KSN/V9q8bX6UHz814yp2UqiuEQTpcEt8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gvVj3KeR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=qwM6e8rrB2SQbATO6EgNfc/HxPzTj0WEClzQjFvUAG47RtSsbL5zgXDQuAURO6YAx/q4o5alucly4G1CixH/dAGtBYhu2NNfmbzXBXHdw0RAaNZLWjNag5LIITNrqANCMFLlMwVE2hONDdS4uLz7F56w+toNgIYqF2WqbdrdKUU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FvgQCkXy; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gvVj3KeR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B5EBAC4CEF7;
-	Wed, 28 Jan 2026 15:43:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FvgQCkXy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 03DEBC4CEF1;
+	Wed, 28 Jan 2026 15:43:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1769614986;
-	bh=EOixVpeE+RsakAkpdpjpryhTBVE/oo5/E+k1ESd9AV8=;
+	s=korg; t=1769614989;
+	bh=qNTohIxFW2j/EwXaNfp+jG9g6TogB5/023dltnRguaQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gvVj3KeREcp8m/hqOY7Csf5Vu2WrVA/15LFGdy8rH57fgbNZfpP34F7O1Q5VZ6lsc
-	 dcPezRucPyL02hIAs69TvT5TcIMWCept3G6nHIw9W22fvhQUmDf1Nb9ujER1Hejdw5
-	 mU7aHSVkkKNhdTy1A1eN6vsuHsKMfdzon9WG5Apk=
+	b=FvgQCkXy4HX+reZoSDmBmy/9z61pLiKGDluNu9Xh7S2qaEkIPf6gaYgrcZk/g6nV/
+	 4ssjXx9hdgTFPDhnrKKSugemqMDfduJOHy7+zKbho69Z8+WK1nMPmhM44T8njcxSKH
+	 V6ByFwF+UjIbsryRZzWxAIdAC8Z2rE+U58/uuT0k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Marnix Rijnart <marnix.rijnart@iwell.eu>
-Subject: [PATCH 6.12 043/169] serial: 8250_pci: Fix broken RS485 for F81504/508/512
-Date: Wed, 28 Jan 2026 16:22:06 +0100
-Message-ID: <20260128145335.569121457@linuxfoundation.org>
+	Niklas Cassel <cassel@kernel.org>,
+	Wolf <wolf@yoxt.cc>,
+	Damien Le Moal <dlemoal@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.12 013/169] ata: ahci: Do not read the per port area for unimplemented ports
+Date: Wed, 28 Jan 2026 16:21:36 +0100
+Message-ID: <20260128145334.493088050@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260128145334.006287341@linuxfoundation.org>
 References: <20260128145334.006287341@linuxfoundation.org>
@@ -44,46 +46,76 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Marnix Rijnart <marnix.rijnart@iwell.eu>
+From: Niklas Cassel <cassel@kernel.org>
 
-commit 27aff0a56b3c77ea1a73641c9b3c4172a8f7238f upstream.
+[ Upstream commit ea4d4ea6d10a561043922d285f1765c7e4bfd32a ]
 
-Fintek F81504/508/512 can support both RTS_ON_SEND and RTS_AFTER_SEND,
-but pci_fintek_rs485_supported only announces the former.
+An AHCI HBA specifies the number of ports it supports using CAP.NP.
+The HBA is free to only make a subset of the number of ports available
+using the PI (Ports Implemented) register.
 
-This makes it impossible to unset SER_RS485_RTS_ON_SEND from
-userspace because of uart_sanitize_serial_rs485(). Some devices
-with these chips need RTS low on TX, so they are effectively broken.
+libata currently creates dummy ports for HBA ports that are provided by
+the HBA, but which are marked as "unavailable" using the PI register.
 
-Fix this by announcing the support for SER_RS485_RTS_AFTER_SEND,
-similar to commit 068d35a7be65 ("serial: sc16is7xx: announce support
-for SER_RS485_RTS_ON_SEND").
+Each port will have a per port area of registers in the HBA, regardless
+if the port is marked as "unavailable" or not.
 
-Fixes: 4afeced55baa ("serial: core: fix sanitizing check for RTS settings")
-Cc: stable <stable@kernel.org>
-Signed-off-by: Marnix Rijnart <marnix.rijnart@iwell.eu>
-Link: https://patch.msgid.link/20260112000931.61703-1-marnix.rijnart@iwell.eu
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+ahci_mark_external_port() currently reads this per port area of registers
+using readl() to see if the port is marked as external/hotplug-capable.
+
+However, AHCI 1.3.1, section "3.1.4 Offset 0Ch: PI – Ports Implemented"
+states: "Software must not read or write to registers within unavailable
+ports."
+
+Thus, make sure that we only call ahci_mark_external_port() and
+ahci_update_initial_lpm_policy() for ports that are implemented.
+
+>From a libata perspective, this should not change anything related to LPM,
+as dummy ports do not provide any ap->ops (they do not have a .set_lpm()
+callback), so even if EH were to call .set_lpm() on a dummy port, it was
+already a no-op.
+
+Fixes: f7131935238d ("ata: ahci: move marking of external port earlier")
+Signed-off-by: Niklas Cassel <cassel@kernel.org>
+Tested-by: Wolf <wolf@yoxt.cc>
+Signed-off-by: Damien Le Moal <dlemoal@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/tty/serial/8250/8250_pci.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/ata/ahci.c | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
---- a/drivers/tty/serial/8250/8250_pci.c
-+++ b/drivers/tty/serial/8250/8250_pci.c
-@@ -1641,7 +1641,7 @@ static int pci_fintek_rs485_config(struc
- }
+diff --git a/drivers/ata/ahci.c b/drivers/ata/ahci.c
+index 944e44caa2606..e78b97fe81708 100644
+--- a/drivers/ata/ahci.c
++++ b/drivers/ata/ahci.c
+@@ -2071,13 +2071,13 @@ static int ahci_init_one(struct pci_dev *pdev, const struct pci_device_id *ent)
+ 		if (ap->flags & ATA_FLAG_EM)
+ 			ap->em_message_type = hpriv->em_msg_type;
  
- static const struct serial_rs485 pci_fintek_rs485_supported = {
--	.flags = SER_RS485_ENABLED | SER_RS485_RTS_ON_SEND,
-+	.flags = SER_RS485_ENABLED | SER_RS485_RTS_ON_SEND | SER_RS485_RTS_AFTER_SEND,
- 	/* F81504/508/512 does not support RTS delay before or after send */
- };
+-		ahci_mark_external_port(ap);
+-
+-		ahci_update_initial_lpm_policy(ap);
+-
+ 		/* disabled/not-implemented port */
+-		if (!(hpriv->port_map & (1 << i)))
++		if (!(hpriv->port_map & (1 << i))) {
+ 			ap->ops = &ata_dummy_port_ops;
++		} else {
++			ahci_mark_external_port(ap);
++			ahci_update_initial_lpm_policy(ap);
++		}
+ 	}
  
+ 	/* apply workaround for ASUS P5W DH Deluxe mainboard */
+-- 
+2.51.0
+
 
 
