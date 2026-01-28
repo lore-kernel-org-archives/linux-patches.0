@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C86F304968;
-	Wed, 28 Jan 2026 15:53:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA1D13033C4;
+	Wed, 28 Jan 2026 15:53:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769615594; cv=none; b=C4tfykRc/EDxcf3R7ETEKMlLAvpi0td3NJCART+so21GbSkxJoYe7DU9bmKAbc57ipfMNE7Q27NmjyTAGGUtrqWy/yu++v5DgYp/2IMbUdB0gsyYSXUeK/OWIpIgN3HdLBczeEGOfkMNllUt8EQ5OUdQ6+idJWqnW0ivqdzzcpo=
+	t=1769615597; cv=none; b=AOoPvIueVSnSZrUsf6CZlzeNeByE45+elY3Z7cNXpS0cpBTZDFIuWqZdG8urLXXuuuDVaWKE704kErYKSkPT1jbPTZ6YRV3qrTX58kMg+z3peP9Pw3lcRbY5BuHDqUAGXSxGNaqDbzv/kEbdyjkprD+xou/BSb7awB8+a/ilPb4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769615594; c=relaxed/simple;
-	bh=D9tPILHVKhU9ZXQi1A7FEA/1bxYzhaL2xXq7na8BXKg=;
+	s=arc-20240116; t=1769615597; c=relaxed/simple;
+	bh=NuVUMhzwOazzLJIrQomvGYzzUN9fE/ixREc6b5R3jhg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=phdQFVAmgAKVPo/lXWbFhIDyxGPcPW8Mi8IAS9Bw6Gn1KejCt0S0HqcPXWbGDVHxAVGfqP//qr/esVVuAvy7ENhvy2gTBjkgvQTnEw7X8jS7Yk7VbBRUu+nl9L3DuSUlbDyW5xyOsH5Oux2o+qAsiehm2aY3tzSMYD4yu5D5AuU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0aV1qfWL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YugRIXtvjmtW/vIAw+ud9O076v3DAFbqSQQ8yMVntJx80ZL4BSmiKEhjmAYy+mNSn6ZWQ4Ui1Y8zUNNBzEEvHPWZ3uBwoTOxb0HLSGp5Iit8Lf74F+8gO5gmKESJGOQG8gCegpa+vph8x3ImI0wnfpX44B+qGMNJaRJExI+B8TI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RaPTbEWu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0aV1qfWL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DBBEBC4CEF1;
-	Wed, 28 Jan 2026 15:53:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RaPTbEWu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B4E0C4CEF1;
+	Wed, 28 Jan 2026 15:53:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1769615594;
-	bh=D9tPILHVKhU9ZXQi1A7FEA/1bxYzhaL2xXq7na8BXKg=;
+	s=korg; t=1769615597;
+	bh=NuVUMhzwOazzLJIrQomvGYzzUN9fE/ixREc6b5R3jhg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0aV1qfWL4mkAqJsEVLSsdcLSF54FYtDOStQs0mjJhKFHhlVF9nRndMRUlM2Cf/CS9
-	 IZBLIgGAwuzyvuDPHwTZKrdO+AFoB+317esTaic1oWuoL7UqRyBPC8bmpJoQoS6gir
-	 KXBThc5YxZfYaXmfgvnApGLgelwSC+yG9cap0A/E=
+	b=RaPTbEWuM9QfHLGU+bnz1+88nb4xdOez9r/rCGZLywo7lLm84WIG6EAq1ML9uZfdx
+	 OE/SxkzYBltIMJBFEGAlvwIfYJQ0lrw3l/fi7GtMJlF2UWAj89kY2WJAw5WjXRxyJT
+	 b66uGt2qojJuH8bp9iv6ZDuE8Qn+f1CZETR7LNLg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	gongqi <550230171hxy@gmail.com>,
+	feng <alec.jiang@gmail.com>,
 	Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Subject: [PATCH 6.18 055/227] Input: i8042 - add quirks for MECHREVO Wujie 15X Pro
-Date: Wed, 28 Jan 2026 16:21:40 +0100
-Message-ID: <20260128145346.322110746@linuxfoundation.org>
+Subject: [PATCH 6.18 056/227] Input: i8042 - add quirk for ASUS Zenbook UX425QA_UM425QA
+Date: Wed, 28 Jan 2026 16:21:41 +0100
+Message-ID: <20260128145346.357295772@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260128145344.331957407@linuxfoundation.org>
 References: <20260128145344.331957407@linuxfoundation.org>
@@ -50,38 +50,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: gongqi <550230171hxy@gmail.com>
+From: feng <alec.jiang@gmail.com>
 
-commit 19a5d9ba6208e9006a2a9d5962aea4d6e427d8ab upstream.
+commit 2934325f56150ad8dab8ab92cbe2997242831396 upstream.
 
-The MECHREVO Wujie 15X Pro requires several i8042 quirks to function
-correctly. Specifically, NOMUX, RESET_ALWAYS, NOLOOP, and NOPNP are
-needed to ensure the keyboard and touchpad work reliably.
+The ASUS Zenbook UX425QA_UM425QA fails to initialize the keyboard after
+a cold boot.
 
-Signed-off-by: gongqi <550230171hxy@gmail.com>
-Link: https://patch.msgid.link/20260122155501.376199-3-550230171hxy@gmail.com
+A quirk already exists for "ZenBook UX425", but some Zenbooks report
+"Zenbook" with a lowercase 'b'. Since DMI matching is case-sensitive,
+the existing quirk is not applied to these "extra special" Zenbooks.
+
+Testing confirms that this model needs the same quirks as the ZenBook
+UX425 variants.
+
+Signed-off-by: feng <alec.jiang@gmail.com>
+Link: https://patch.msgid.link/20260122013957.11184-1-alec.jiang@gmail.com
 Cc: stable@vger.kernel.org
 Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/input/serio/i8042-acpipnpio.h |    7 +++++++
- 1 file changed, 7 insertions(+)
+ drivers/input/serio/i8042-acpipnpio.h |   11 +++++++++++
+ 1 file changed, 11 insertions(+)
 
 --- a/drivers/input/serio/i8042-acpipnpio.h
 +++ b/drivers/input/serio/i8042-acpipnpio.h
-@@ -1176,6 +1176,13 @@ static const struct dmi_system_id i8042_
- 		.driver_data = (void *)(SERIO_QUIRK_NOMUX | SERIO_QUIRK_RESET_ALWAYS |
- 					SERIO_QUIRK_NOLOOP | SERIO_QUIRK_NOPNP)
+@@ -116,6 +116,17 @@ static const struct dmi_system_id i8042_
+ 		.driver_data = (void *)(SERIO_QUIRK_NOMUX | SERIO_QUIRK_RESET_NEVER)
  	},
-+	{
+ 	{
++		/*
++		 * ASUS Zenbook UX425QA_UM425QA
++		 * Some Zenbooks report "Zenbook" with a lowercase b.
++		 */
 +		.matches = {
-+			DMI_MATCH(DMI_BOARD_NAME, "WUJIE Series-X5SP4NAG"),
++			DMI_MATCH(DMI_SYS_VENDOR, "ASUSTeK COMPUTER INC."),
++			DMI_MATCH(DMI_PRODUCT_NAME, "Zenbook UX425QA_UM425QA"),
 +		},
-+		.driver_data = (void *)(SERIO_QUIRK_NOMUX | SERIO_QUIRK_RESET_ALWAYS |
-+					SERIO_QUIRK_NOLOOP | SERIO_QUIRK_NOPNP)
++		.driver_data = (void *)(SERIO_QUIRK_PROBE_DEFER | SERIO_QUIRK_RESET_NEVER)
 +	},
- 	/*
- 	 * A lot of modern Clevo barebones have touchpad and/or keyboard issues
- 	 * after suspend fixable with the forcenorestore quirk.
++	{
+ 		/* ASUS ZenBook UX425UA/QA */
+ 		.matches = {
+ 			DMI_MATCH(DMI_SYS_VENDOR, "ASUSTeK COMPUTER INC."),
 
 
