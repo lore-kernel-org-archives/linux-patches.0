@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E01023570A4;
-	Wed, 28 Jan 2026 15:28:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2DD80218592;
+	Wed, 28 Jan 2026 15:28:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769614088; cv=none; b=frDfpYyesCWt1XguC7o27Erz6EPilCsseMLzzVxuq5nuIT6mKxA3ehmT/n0yVCR7RZQULQFDe6/nPydaq2Zt5UE/BSaYWhgplZXlqKYu+a6HFAIcZ3V+A8tWma436cdX7VfIq2FQTB/dLWniCfEXYjillbvveiHDTLbEV6yxrOU=
+	t=1769614092; cv=none; b=RPEgtbCHQO85apvJrroi4iMVr5/BoyqwqmQwhmKJbE6gz6LAo0vZT4wKVYwU3zaMw8lDcdM1nS50wiHTXCSOKqZ2J7pQlxsbw9fpVFUMO+6znNvkdzwm4zB7ClNnu+PvL4VBYdA0F+95l2MwQn2+afT1GAtPImRuSq3FPu1mDLA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769614088; c=relaxed/simple;
-	bh=0zZzeAT17Duh4X9UowNQGCj8K2DhjzhSXBgU3iN4lPk=;
+	s=arc-20240116; t=1769614092; c=relaxed/simple;
+	bh=k3A4zVpCyOVAFFWvm4OoaDIirNu7DZrxQjUoQHXdu7Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hFMO+fOtv1/1LIsKW4WTgB+/LbfZeW6MqHqjVuNQzR9WwMYvaSGUkh/Y2EZXeiR/V3K/wTqtcXd9hiaSsHMlhalNKh6ABM2EGpUAc/StvJYtCAxpZip//867OWuFFjqDOVM3YfQ4bypUkoAdYAoAjJggH+c7v3L1RILsE3vuNvY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pmqtYXPZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PRyvAdh6yO3gQ1uvEEEckyfAQowzqTIGRn5Q1lNUSQYp+1hT13FpBe197aBspWBzGBq3ymMvPJawcg8tz7DZ2ZxV0FwNlpfMce7jUqJGJeP+piSuws8Hls+UdWKFdYD1aKArogVOZU/qNYnLOThpApjk1LFtXPWAtOVAvEkTyKQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=G+44lFkm; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pmqtYXPZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 47E20C4CEF1;
-	Wed, 28 Jan 2026 15:28:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="G+44lFkm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 89B4FC4CEF1;
+	Wed, 28 Jan 2026 15:28:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1769614088;
-	bh=0zZzeAT17Duh4X9UowNQGCj8K2DhjzhSXBgU3iN4lPk=;
+	s=korg; t=1769614092;
+	bh=k3A4zVpCyOVAFFWvm4OoaDIirNu7DZrxQjUoQHXdu7Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pmqtYXPZWJT2fJq4ZexDxsXXD0M/biuwVTMXSwOe1WQp+HCEEjdRGw/j5yo65AiB+
-	 if3KTQkaW6EmeCj91c+pY9fuGs5bZ0TVHzFMLl/+c0TgRAtYD4NU3Wmd2SEwyMYVCq
-	 HPIkMWE1XXTt6DPPSKw1Vo2ZsOGsK7BWxzTDo8Vo=
+	b=G+44lFkm04K5wX0zoFg41rjfq/nFrqsyHl1lcLuy0L8v33y0fqrmAx2k0dWuhGwNS
+	 SlzbduTZVK+4uWSZt2yZe7zLmUGXazzrJnMX679A5hWS+M7ZhzcOxv+mZcf0ZQxlyc
+	 5iB/HRZSZtVulEsj5bUxjka9x4lKsk20lD+ek+Co=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bagas Sanjaya <bagasdotme@gmail.com>,
-	Marco Elver <elver@google.com>,
-	"David Hildenbrand (Red Hat)" <david@kernel.org>,
-	Harry Yoo <harry.yoo@oracle.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
+	Lizhi Hou <lizhi.hou@amd.com>,
+	Radhey Shyam Pandey <radhey.shyam.pandey@amd.com>,
+	Alexander Stein <alexander.stein@ew.tq-group.com>,
+	Anthony Brandon <anthony@amarulasolutions.com>,
+	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 031/254] mm, kfence: describe @slab parameter in __kfence_obj_info()
-Date: Wed, 28 Jan 2026 16:20:07 +0100
-Message-ID: <20260128145345.822770897@linuxfoundation.org>
+Subject: [PATCH 6.6 032/254] dmaengine: xilinx: xdma: Fix regmap max_register
+Date: Wed, 28 Jan 2026 16:20:08 +0100
+Message-ID: <20260128145345.857938982@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260128145344.698118637@linuxfoundation.org>
 References: <20260128145344.698118637@linuxfoundation.org>
@@ -54,40 +54,83 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bagas Sanjaya <bagasdotme@gmail.com>
+From: Anthony Brandon <anthony@amarulasolutions.com>
 
-[ Upstream commit 6cfab50e1440fde19af7c614aacd85e11aa4dcea ]
+[ Upstream commit c7d436a6c1a274c1ac28d5fb3b8eb8f03b6d0e10 ]
 
-Sphinx reports kernel-doc warning:
+The max_register field is assigned the size of the register memory
+region instead of the offset of the last register.
+The result is that reading from the regmap via debugfs can cause
+a segmentation fault:
 
-WARNING: ./include/linux/kfence.h:220 function parameter 'slab' not described in '__kfence_obj_info'
+tail /sys/kernel/debug/regmap/xdma.1.auto/registers
+Unable to handle kernel paging request at virtual address ffff800082f70000
+Mem abort info:
+  ESR = 0x0000000096000007
+  EC = 0x25: DABT (current EL), IL = 32 bits
+  SET = 0, FnV = 0
+  EA = 0, S1PTW = 0
+  FSC = 0x07: level 3 translation fault
+[...]
+Call trace:
+ regmap_mmio_read32le+0x10/0x30
+ _regmap_bus_reg_read+0x74/0xc0
+ _regmap_read+0x68/0x198
+ regmap_read+0x54/0x88
+ regmap_read_debugfs+0x140/0x380
+ regmap_map_read_file+0x30/0x48
+ full_proxy_read+0x68/0xc8
+ vfs_read+0xcc/0x310
+ ksys_read+0x7c/0x120
+ __arm64_sys_read+0x24/0x40
+ invoke_syscall.constprop.0+0x64/0x108
+ do_el0_svc+0xb0/0xd8
+ el0_svc+0x38/0x130
+ el0t_64_sync_handler+0x120/0x138
+ el0t_64_sync+0x194/0x198
+Code: aa1e03e9 d503201f f9400000 8b214000 (b9400000)
+---[ end trace 0000000000000000 ]---
+note: tail[1217] exited with irqs disabled
+note: tail[1217] exited with preempt_count 1
+Segmentation fault
 
-Fix it by describing @slab parameter.
-
-Link: https://lkml.kernel.org/r/20251219014006.16328-6-bagasdotme@gmail.com
-Fixes: 2dfe63e61cc3 ("mm, kfence: support kmem_dump_obj() for KFENCE objects")
-Signed-off-by: Bagas Sanjaya <bagasdotme@gmail.com>
-Acked-by: Marco Elver <elver@google.com>
-Acked-by: David Hildenbrand (Red Hat) <david@kernel.org>
-Acked-by: Harry Yoo <harry.yoo@oracle.com>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Fixes: 17ce252266c7 ("dmaengine: xilinx: xdma: Add xilinx xdma driver")
+Reviewed-by: Lizhi Hou <lizhi.hou@amd.com>
+Reviewed-by: Radhey Shyam Pandey <radhey.shyam.pandey@amd.com>
+Reviewed-by: Alexander Stein <alexander.stein@ew.tq-group.com>
+Signed-off-by: Anthony Brandon <anthony@amarulasolutions.com>
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/kfence.h | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/dma/xilinx/xdma-regs.h | 1 +
+ drivers/dma/xilinx/xdma.c      | 2 +-
+ 2 files changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/include/linux/kfence.h b/include/linux/kfence.h
-index 401af47575141..90edba2e59f95 100644
---- a/include/linux/kfence.h
-+++ b/include/linux/kfence.h
-@@ -211,6 +211,7 @@ struct kmem_obj_info;
-  * __kfence_obj_info() - fill kmem_obj_info struct
-  * @kpp: kmem_obj_info to be filled
-  * @object: the object
-+ * @slab: the slab
-  *
-  * Return:
-  * * false - not a KFENCE object
+diff --git a/drivers/dma/xilinx/xdma-regs.h b/drivers/dma/xilinx/xdma-regs.h
+index dd98b4526b90a..b19c173d8bfce 100644
+--- a/drivers/dma/xilinx/xdma-regs.h
++++ b/drivers/dma/xilinx/xdma-regs.h
+@@ -9,6 +9,7 @@
+ 
+ /* The length of register space exposed to host */
+ #define XDMA_REG_SPACE_LEN	65536
++#define XDMA_MAX_REG_OFFSET	(XDMA_REG_SPACE_LEN - 4)
+ 
+ /*
+  * maximum number of DMA channels for each direction:
+diff --git a/drivers/dma/xilinx/xdma.c b/drivers/dma/xilinx/xdma.c
+index e0bfd129d563f..dbab4c4499143 100644
+--- a/drivers/dma/xilinx/xdma.c
++++ b/drivers/dma/xilinx/xdma.c
+@@ -38,7 +38,7 @@ static const struct regmap_config xdma_regmap_config = {
+ 	.reg_bits = 32,
+ 	.val_bits = 32,
+ 	.reg_stride = 4,
+-	.max_register = XDMA_REG_SPACE_LEN,
++	.max_register = XDMA_MAX_REG_OFFSET,
+ };
+ 
+ /**
 -- 
 2.51.0
 
