@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D52C2C237E;
-	Wed, 28 Jan 2026 15:36:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D9C12C237E;
+	Wed, 28 Jan 2026 15:36:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769614562; cv=none; b=B/xhjDI6rUzLld6+hyt2p9suFsdE+4vHYzW5Xx/RF4vlp0TlCv0rYtTOO5ZXkaFD4Pu/1gGYujSnFtNNrkPuBAClUWpAOhLuXHVVLjIvlFzuliEv8q50gmax9UCX+fGJln8jA6VoRVqF1xKBW7OakdKt4hMm9elCUdpUtw1n0TU=
+	t=1769614566; cv=none; b=mVAT3nVnOj1YH7jbC4nsZypIIXcey9qAkXz364Gwj8+0tzGAqhUy4GjmHMeEMhB3T34H44Ar/bZwVSQjIQLBJZJELUQHzzAEuUO4iN1bo0mHs+UP8djOGwDMFaG0ISzjK0ugsiJ2gtBezXh+KhhSLBlpZJ8o8lg+9L+zQjxu/vU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769614562; c=relaxed/simple;
-	bh=5u0WtFgUtnPxN1RuVLEcVXQfN1xV2SMwrSMyXZDg11s=;
+	s=arc-20240116; t=1769614566; c=relaxed/simple;
+	bh=yU3nvLOaXAXnR/QFYVJkuuJzdmMTJrvqiQiO+1X+c6Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BYdAVtSKYrFXy+zBSkcoereqmilj+nZObtca3U3Klvzm5HuFsgM68AoCGLVZCcEiMbe4a0OjfdVc6/3gwWi6z1dBCamyOwui8I0gWrkk7RN9d7QcW6INL+od05xg3OgmdM1+4sx465M15aLqVJGGfBtPwpKp8yvfGKbmhXV227w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tOLOVDQ+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=aIxSK0A55Edf/PwiqtSduHQZFs9cYtdiBrMqpMjRuyB78OfdHDtNoL+yFJAUExoh3Xy1T+01ncLGgFsIsDgj4xdDHswB+SP3ikz2bya1IYCDAmjO9gEBR/TqzMyadvJwTJn7w0WTnGuo42XkSVDyBpfA6k0PoC+XcrIUGVi003I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nwwnWb4D; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tOLOVDQ+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CBFEAC4CEF1;
-	Wed, 28 Jan 2026 15:36:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nwwnWb4D"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 57E8DC4CEF1;
+	Wed, 28 Jan 2026 15:36:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1769614562;
-	bh=5u0WtFgUtnPxN1RuVLEcVXQfN1xV2SMwrSMyXZDg11s=;
+	s=korg; t=1769614565;
+	bh=yU3nvLOaXAXnR/QFYVJkuuJzdmMTJrvqiQiO+1X+c6Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tOLOVDQ+oje5n/P9waK+Zn0XflE5/aUfYOfpdyEUin4ktNwHi/U8TeFYMFqWpMg2K
-	 JvvFKp/9hM5N+BvSwkVZ6AfRHoodVdGfLrqbwlfS5qbGRSJXKNTlONBCj86ah7mbnF
-	 Wjv4eBuyVSqzX18Unu4YWbBvLG3butyTHRZo9kog=
+	b=nwwnWb4D4k9Zt9LDR0wQjW2aCDUV0nKAlzVQt1kZx3AN7UzXA0RNfaFjJPxgxgMg6
+	 Z4nfakMwhVW6eTDiEq5lEvZTRAofqrE4sEIFRIVWIEC3wPIrsIv5lQ3emr72lttLsE
+	 tJWP1+wURwbMblvUSmh3lrOgm1RpWSV/B1Dg0V9Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Long Li <longli@microsoft.com>,
-	Michael Kelley <mhklinux@outlook.com>,
+	Abdun Nihaal <nihaal@cse.iitm.ac.in>,
+	Juergen Gross <jgross@suse.com>,
 	"Martin K. Petersen" <martin.petersen@oracle.com>
-Subject: [PATCH 6.6 142/254] scsi: storvsc: Process unsupported MODE_SENSE_10
-Date: Wed, 28 Jan 2026 16:21:58 +0100
-Message-ID: <20260128145349.926700181@linuxfoundation.org>
+Subject: [PATCH 6.6 143/254] scsi: xen: scsiback: Fix potential memory leak in scsiback_remove()
+Date: Wed, 28 Jan 2026 16:21:59 +0100
+Message-ID: <20260128145349.961528019@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260128145344.698118637@linuxfoundation.org>
 References: <20260128145344.698118637@linuxfoundation.org>
@@ -52,44 +51,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Long Li <longli@microsoft.com>
+From: Abdun Nihaal <nihaal@cse.iitm.ac.in>
 
-commit 9eacec5d18f98f89be520eeeef4b377acee3e4b8 upstream.
+commit 901a5f309daba412e2a30364d7ec1492fa11c32c upstream.
 
-The Hyper-V host does not support MODE_SENSE_10 and MODE_SENSE.  The
-driver handles MODE_SENSE as unsupported command, but not for
-MODE_SENSE_10. Add MODE_SENSE_10 to the same handling logic and return
-correct code to SCSI layer.
+Memory allocated for struct vscsiblk_info in scsiback_probe() is not
+freed in scsiback_remove() leading to potential memory leaks on remove,
+as well as in the scsiback_probe() error paths. Fix that by freeing it
+in scsiback_remove().
 
-Fixes: 89ae7d709357 ("Staging: hv: storvsc: Move the storage driver out of the staging area")
-Cc: stable@kernel.org
-Signed-off-by: Long Li <longli@microsoft.com>
-Reviewed-by: Michael Kelley <mhklinux@outlook.com>
-Link: https://patch.msgid.link/20260117010302.294068-1-longli@linux.microsoft.com
+Cc: stable@vger.kernel.org
+Fixes: d9d660f6e562 ("xen-scsiback: Add Xen PV SCSI backend driver")
+Signed-off-by: Abdun Nihaal <nihaal@cse.iitm.ac.in>
+Reviewed-by: Juergen Gross <jgross@suse.com>
+Link: https://patch.msgid.link/20251223063012.119035-1-nihaal@cse.iitm.ac.in
 Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/scsi/storvsc_drv.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/xen/xen-scsiback.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/scsi/storvsc_drv.c
-+++ b/drivers/scsi/storvsc_drv.c
-@@ -1145,7 +1145,7 @@ static void storvsc_on_io_completion(str
- 	 * The current SCSI handling on the host side does
- 	 * not correctly handle:
- 	 * INQUIRY command with page code parameter set to 0x80
--	 * MODE_SENSE command with cmd[2] == 0x1c
-+	 * MODE_SENSE and MODE_SENSE_10 command with cmd[2] == 0x1c
- 	 * MAINTENANCE_IN is not supported by HyperV FC passthrough
- 	 *
- 	 * Setup srb and scsi status so this won't be fatal.
-@@ -1155,6 +1155,7 @@ static void storvsc_on_io_completion(str
+--- a/drivers/xen/xen-scsiback.c
++++ b/drivers/xen/xen-scsiback.c
+@@ -1262,6 +1262,7 @@ static void scsiback_remove(struct xenbu
+ 	gnttab_page_cache_shrink(&info->free_pages, 0);
  
- 	if ((stor_pkt->vm_srb.cdb[0] == INQUIRY) ||
- 	   (stor_pkt->vm_srb.cdb[0] == MODE_SENSE) ||
-+	   (stor_pkt->vm_srb.cdb[0] == MODE_SENSE_10) ||
- 	   (stor_pkt->vm_srb.cdb[0] == MAINTENANCE_IN &&
- 	   hv_dev_is_fc(device))) {
- 		vstor_packet->vm_srb.scsi_status = 0;
+ 	dev_set_drvdata(&dev->dev, NULL);
++	kfree(info);
+ }
+ 
+ static int scsiback_probe(struct xenbus_device *dev,
 
 
