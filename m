@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42D8D242D86;
-	Wed, 28 Jan 2026 15:31:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70E9F10A1E;
+	Wed, 28 Jan 2026 15:31:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769614307; cv=none; b=J7IAhlbrybrA6tZODWzptfzL1YkLDw6EjYV6ICaeQ9FPNbA+SZem/nXuMm/5yEWw7M/fq44aY91gWeEBotuyHF9aqHU8a1pfUHTug03HaKUoyuPhfAUeHGh7jlq29RkO9T5uIlUjMzlLzL5lrEVTU07ZvHpG2cDd0ezYv8WD3Dw=
+	t=1769614310; cv=none; b=PQua2HkQNqDFvOlDPrUw4Md+HS6glDywIcEI/AdEpXx4kpVQswiY6eg0WJENEqpGefC9XQwpNEXdtA+Gypte8o/qkZ8ZrwaP8UOj7Ea7Ama/7iU63wOZwYeG6R62FqZFBbdhgEyqF5rohaXA/D5rWRLWEKCSgkTJ0IBfBDG9UB4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769614307; c=relaxed/simple;
-	bh=gSZTf4K7ti0IOcjNqU3w+QQVrgbhHPB+q2FrYnnlHK0=;
+	s=arc-20240116; t=1769614310; c=relaxed/simple;
+	bh=hMlTLxWenfTe9+6MUM7uzWCpjvfU8GA3tk7i5A7PYP4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hOBdPBjYIAdLDUX9S9M5rZUXytiKEx0363P6m3xT8g1NP9R8U4YcFIV3qSXwGRxj4sSBdqe6OoT2RFyvMLx9xxUnNB3Uv5bPvoaJtz+3jUTCXPb22gKlIaIqL5UJx9flwyWoyH5BykuAUSUX2oD7hwNUfhxckbzmY8gi06NzugU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=B1WHokcQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=O63OeXhZKVW1E3MBGB0LUN+pJ7aiDCWYJRLDufkzwsYzi8vs3xV42HIaqwI3YhORLd5IawG5LzVWam+oouiex5RNyaVSNEfbtcjzpFOWbgQZ/NRXyU561vQi5JeQN9fP5FI+bm6QqwAaXZJ+/2k8ddsbSjG8G+Q15Q9Q6zUaqMo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Hx8A8Rv6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="B1WHokcQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 97153C4CEF1;
-	Wed, 28 Jan 2026 15:31:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Hx8A8Rv6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB595C4CEF1;
+	Wed, 28 Jan 2026 15:31:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1769614307;
-	bh=gSZTf4K7ti0IOcjNqU3w+QQVrgbhHPB+q2FrYnnlHK0=;
+	s=korg; t=1769614310;
+	bh=hMlTLxWenfTe9+6MUM7uzWCpjvfU8GA3tk7i5A7PYP4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=B1WHokcQ4C0xSNdEtS+O4kYi3G9Xf8+cEz9/dDUcHQOBOwILk1nxzffRvFNl00hDK
-	 nYwK5EM95/9L0z7NR4NEK/shcPvA4QwxVjeqXR8ZQ9pIKgqNOL98oMASSmccLngxDu
-	 mpfofQtuOLvnyGu1l/tE65tLxgFVz1PTteia32HU=
+	b=Hx8A8Rv64Sa1ZdAaaO0WXWSveSx//294VqZbNyCfmveEMnzMKMpRYh+S4hArgUHkC
+	 oryfTMYEF92Yr49+1fo1XkHunqclMk+28vKBwDLl4XW2aK7GT77pjIyPOrMOslFH2Y
+	 xDy+W/+OU2hB0PGGReMK5zgaG7bbGeKaqG45bfxA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mahesh Bandewar <maheshb@google.com>,
-	Shuah Khan <shuah@kernel.org>,
 	Richard Cochran <richardcochran@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Vadim Fedorenko <vadim.fedorenko@linux.dev>,
+	Wojtek Wasko <wwasko@nvidia.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 096/254] selftest/ptp: update ptp selftest to exercise the gettimex options
-Date: Wed, 28 Jan 2026 16:21:12 +0100
-Message-ID: <20260128145348.282190843@linuxfoundation.org>
+Subject: [PATCH 6.6 097/254] testptp: Add option to open PHC in readonly mode
+Date: Wed, 28 Jan 2026 16:21:13 +0100
+Message-ID: <20260128145348.317865496@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260128145344.698118637@linuxfoundation.org>
 References: <20260128145344.698118637@linuxfoundation.org>
@@ -53,140 +53,117 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mahesh Bandewar <maheshb@google.com>
+From: Wojtek Wasko <wwasko@nvidia.com>
 
-[ Upstream commit 3d07b691ee707c00afaf365440975e81bb96cd9b ]
+[ Upstream commit 76868642e42795353106197abf9c607ad80f4c9e ]
 
-With the inclusion of commit c259acab839e ("ptp/ioctl: support
-MONOTONIC{,_RAW} timestamps for PTP_SYS_OFFSET_EXTENDED") clock_gettime()
-now allows retrieval of pre/post timestamps for CLOCK_MONOTONIC and
-CLOCK_MONOTONIC_RAW timebases along with the previously supported
-CLOCK_REALTIME.
+PTP Hardware Clocks no longer require WRITE permission to perform
+readonly operations, such as listing device capabilities or listening to
+EXTTS events once they have been enabled by a process with WRITE
+permissions.
 
-This patch adds a command line option 'y' to the testptp program to
-choose one of the allowed timebases [realtime aka system, monotonic,
-and monotonic-raw).
+Add '-r' option to testptp to open the PHC in readonly mode instead of
+the default read-write mode. Skip enabling EXTTS if readonly mode is
+requested.
 
-Signed-off-by: Mahesh Bandewar <maheshb@google.com>
-Cc: Shuah Khan <shuah@kernel.org>
 Acked-by: Richard Cochran <richardcochran@gmail.com>
-Link: https://patch.msgid.link/20241003101506.769418-1-maheshb@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Stable-dep-of: 76868642e427 ("testptp: Add option to open PHC in readonly mode")
+Reviewed-by: Vadim Fedorenko <vadim.fedorenko@linux.dev>
+Signed-off-by: Wojtek Wasko <wwasko@nvidia.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/ptp/testptp.c | 62 ++++++++++++++++++++++++---
- 1 file changed, 57 insertions(+), 5 deletions(-)
+ tools/testing/selftests/ptp/testptp.c | 37 +++++++++++++++++----------
+ 1 file changed, 23 insertions(+), 14 deletions(-)
 
 diff --git a/tools/testing/selftests/ptp/testptp.c b/tools/testing/selftests/ptp/testptp.c
-index 011252fe238c8..58064151f2c89 100644
+index 58064151f2c89..edc08a4433fd4 100644
 --- a/tools/testing/selftests/ptp/testptp.c
 +++ b/tools/testing/selftests/ptp/testptp.c
-@@ -146,6 +146,7 @@ static void usage(char *progname)
- 		" -T val     set the ptp clock time to 'val' seconds\n"
- 		" -x val     get an extended ptp clock time with the desired number of samples (up to %d)\n"
- 		" -X         get a ptp clock cross timestamp\n"
-+		" -y val     pre/post tstamp timebase to use {realtime|monotonic|monotonic-raw}\n"
- 		" -z         test combinations of rising/falling external time stamp flags\n",
- 		progname, PTP_MAX_SAMPLES);
- }
-@@ -189,6 +190,7 @@ int main(int argc, char *argv[])
+@@ -140,6 +140,7 @@ static void usage(char *progname)
+ 		" -H val     set output phase to 'val' nanoseconds (requires -p)\n"
+ 		" -w val     set output pulse width to 'val' nanoseconds (requires -p)\n"
+ 		" -P val     enable or disable (val=1|0) the system clock PPS\n"
++		" -r         open the ptp clock in readonly mode\n"
+ 		" -s         set the ptp clock time from the system time\n"
+ 		" -S         set the system time from the ptp clock time\n"
+ 		" -t val     shift the ptp clock time by 'val' seconds\n"
+@@ -188,6 +189,7 @@ int main(int argc, char *argv[])
+ 	int pin_index = -1, pin_func;
+ 	int pps = -1;
  	int seconds = 0;
++	int readonly = 0;
  	int settime = 0;
  	int channel = -1;
-+	clockid_t ext_clockid = CLOCK_REALTIME;
- 
- 	int64_t t1, t2, tp;
- 	int64_t interval, offset;
-@@ -198,7 +200,7 @@ int main(int argc, char *argv[])
+ 	clockid_t ext_clockid = CLOCK_REALTIME;
+@@ -200,7 +202,7 @@ int main(int argc, char *argv[])
  
  	progname = strrchr(argv[0], '/');
  	progname = progname ? 1+progname : argv[0];
--	while (EOF != (c = getopt(argc, argv, "cd:e:f:F:ghH:i:k:lL:n:o:p:P:sSt:T:w:x:Xz"))) {
-+	while (EOF != (c = getopt(argc, argv, "cd:e:f:F:ghH:i:k:lL:n:o:p:P:sSt:T:w:x:Xy:z"))) {
+-	while (EOF != (c = getopt(argc, argv, "cd:e:f:F:ghH:i:k:lL:n:o:p:P:sSt:T:w:x:Xy:z"))) {
++	while (EOF != (c = getopt(argc, argv, "cd:e:f:F:ghH:i:k:lL:n:o:p:P:rsSt:T:w:x:Xy:z"))) {
  		switch (c) {
  		case 'c':
  			capabilities = 1;
-@@ -278,6 +280,21 @@ int main(int argc, char *argv[])
- 		case 'X':
- 			getcross = 1;
+@@ -252,6 +254,9 @@ int main(int argc, char *argv[])
+ 		case 'P':
+ 			pps = atoi(optarg);
  			break;
-+		case 'y':
-+			if (!strcasecmp(optarg, "realtime"))
-+				ext_clockid = CLOCK_REALTIME;
-+			else if (!strcasecmp(optarg, "monotonic"))
-+				ext_clockid = CLOCK_MONOTONIC;
-+			else if (!strcasecmp(optarg, "monotonic-raw"))
-+				ext_clockid = CLOCK_MONOTONIC_RAW;
-+			else {
-+				fprintf(stderr,
-+					"type needs to be realtime, monotonic or monotonic-raw; was given %s\n",
-+					optarg);
-+				return -1;
-+			}
++		case 'r':
++			readonly = 1;
 +			break;
-+
- 		case 'z':
- 			flagtest = 1;
+ 		case 's':
+ 			settime = 1;
  			break;
-@@ -566,6 +583,7 @@ int main(int argc, char *argv[])
+@@ -308,7 +313,7 @@ int main(int argc, char *argv[])
  		}
+ 	}
  
- 		soe->n_samples = getextended;
-+		soe->clockid = ext_clockid;
+-	fd = open(device, O_RDWR);
++	fd = open(device, readonly ? O_RDONLY : O_RDWR);
+ 	if (fd < 0) {
+ 		fprintf(stderr, "opening %s: %s\n", device, strerror(errno));
+ 		return -1;
+@@ -436,14 +441,16 @@ int main(int argc, char *argv[])
+ 	}
  
- 		if (ioctl(fd, PTP_SYS_OFFSET_EXTENDED, soe)) {
- 			perror("PTP_SYS_OFFSET_EXTENDED");
-@@ -574,12 +592,46 @@ int main(int argc, char *argv[])
- 			       getextended);
- 
- 			for (i = 0; i < getextended; i++) {
--				printf("sample #%2d: system time before: %lld.%09u\n",
--				       i, soe->ts[i][0].sec, soe->ts[i][0].nsec);
-+				switch (ext_clockid) {
-+				case CLOCK_REALTIME:
-+					printf("sample #%2d: real time before: %lld.%09u\n",
-+					       i, soe->ts[i][0].sec,
-+					       soe->ts[i][0].nsec);
-+					break;
-+				case CLOCK_MONOTONIC:
-+					printf("sample #%2d: monotonic time before: %lld.%09u\n",
-+					       i, soe->ts[i][0].sec,
-+					       soe->ts[i][0].nsec);
-+					break;
-+				case CLOCK_MONOTONIC_RAW:
-+					printf("sample #%2d: monotonic-raw time before: %lld.%09u\n",
-+					       i, soe->ts[i][0].sec,
-+					       soe->ts[i][0].nsec);
-+					break;
-+				default:
-+					break;
-+				}
- 				printf("            phc time: %lld.%09u\n",
- 				       soe->ts[i][1].sec, soe->ts[i][1].nsec);
--				printf("            system time after: %lld.%09u\n",
--				       soe->ts[i][2].sec, soe->ts[i][2].nsec);
-+				switch (ext_clockid) {
-+				case CLOCK_REALTIME:
-+					printf("            real time after: %lld.%09u\n",
-+					       soe->ts[i][2].sec,
-+					       soe->ts[i][2].nsec);
-+					break;
-+				case CLOCK_MONOTONIC:
-+					printf("            monotonic time after: %lld.%09u\n",
-+					       soe->ts[i][2].sec,
-+					       soe->ts[i][2].nsec);
-+					break;
-+				case CLOCK_MONOTONIC_RAW:
-+					printf("            monotonic-raw time after: %lld.%09u\n",
-+					       soe->ts[i][2].sec,
-+					       soe->ts[i][2].nsec);
-+					break;
-+				default:
-+					break;
-+				}
- 			}
+ 	if (extts) {
+-		memset(&extts_request, 0, sizeof(extts_request));
+-		extts_request.index = index;
+-		extts_request.flags = PTP_ENABLE_FEATURE;
+-		if (ioctl(fd, PTP_EXTTS_REQUEST, &extts_request)) {
+-			perror("PTP_EXTTS_REQUEST");
+-			extts = 0;
+-		} else {
+-			puts("external time stamp request okay");
++		if (!readonly) {
++			memset(&extts_request, 0, sizeof(extts_request));
++			extts_request.index = index;
++			extts_request.flags = PTP_ENABLE_FEATURE;
++			if (ioctl(fd, PTP_EXTTS_REQUEST, &extts_request)) {
++				perror("PTP_EXTTS_REQUEST");
++				extts = 0;
++			} else {
++				puts("external time stamp request okay");
++			}
  		}
+ 		for (; extts; extts--) {
+ 			cnt = read(fd, &event, sizeof(event));
+@@ -455,10 +462,12 @@ int main(int argc, char *argv[])
+ 			       event.t.sec, event.t.nsec);
+ 			fflush(stdout);
+ 		}
+-		/* Disable the feature again. */
+-		extts_request.flags = 0;
+-		if (ioctl(fd, PTP_EXTTS_REQUEST, &extts_request)) {
+-			perror("PTP_EXTTS_REQUEST");
++		if (!readonly) {
++			/* Disable the feature again. */
++			extts_request.flags = 0;
++			if (ioctl(fd, PTP_EXTTS_REQUEST, &extts_request)) {
++				perror("PTP_EXTTS_REQUEST");
++			}
+ 		}
+ 	}
  
 -- 
 2.51.0
