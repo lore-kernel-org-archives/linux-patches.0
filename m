@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B99025783A;
-	Wed, 28 Jan 2026 16:00:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0A7A285C8D;
+	Wed, 28 Jan 2026 16:00:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769616049; cv=none; b=c3pDm04WP9O1Rb7auNhr4VJ0bjdVL8ZgMqY8TdbMWO4XfXT1lFYqYMQHSLrFTqh3m4A9ODCHkBpu87C1nVvlZFHo7907o/bG6vihTm+kWQ2Rt5XnFSRMP2XW+h4BLVbdSp8gFdCXg4qKC+2Q5OF4fN1+w8UmQJ/UJNaHk2p+tKk=
+	t=1769616052; cv=none; b=kH3wEvdi0lNTGerv6eEiiGs6wVSpowi2JFifJMnjCfppugpcANHqC4DAfRj3esS+WuVqp2a6cP1yyhttsC8cmxif3Da6djLszKlfRoJEkhmut3K7uZPdZJoaPQZ7DNCnU5wcvDqY/SXH0raIi8w11UPFpGN70ifDxrIDyNhc5wk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769616049; c=relaxed/simple;
-	bh=uk2kq3JCcr9+t5mJRXx3PsRczl9ZTA7/cXmYb2KzBGA=;
+	s=arc-20240116; t=1769616052; c=relaxed/simple;
+	bh=TAuLyX/6ti6bmYtOmDIBse4M6jXUWTevMU6X2p9IyR0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Jqmt+fIjrAniEaIleDQcsZVDVc33nUpq6wldQAKp6o5RgrwSmVMgFoRwT5k2LsJEsM1qWxK6adEEP8cvhny2qJm2wQ6hPORGBAdRfMX8wGP6Xwp8nB55K2fzDHjYUt8r5aSOJgjJ1B0XtoXXx+ZZW/N6YwWxt+3N2nZDmjySo60=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WZSlAPYE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gi8sclDXz2vd6A1jwCDD6i76GyRD01iNWesElYiWEmg+S7lUl15sPTdEQkMZHiY6GcfvEnUSsqhn9QqfJWfQxq5oDUNM62noxdZyVISqUGzfkDc2j3kznMyoSiXj/71OgcrMwjTa8TUXnLm7VBrJDrhoqLFsMDDCdGOvyYbxB5A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MEqBW7Nj; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WZSlAPYE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8BC7BC116C6;
-	Wed, 28 Jan 2026 16:00:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MEqBW7Nj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C4F5C4CEF1;
+	Wed, 28 Jan 2026 16:00:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1769616049;
-	bh=uk2kq3JCcr9+t5mJRXx3PsRczl9ZTA7/cXmYb2KzBGA=;
+	s=korg; t=1769616052;
+	bh=TAuLyX/6ti6bmYtOmDIBse4M6jXUWTevMU6X2p9IyR0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WZSlAPYEm/yjudJVyxP8A7qOh8R4szl+1yw2pqxXpQBGwhxHkoaUTrzLT39KGHkxY
-	 WsXxe9EEkgm76Rv9bCFaarnW2r+MHVWfaiZSQjiSxs8mejiaiKoxVuV3NTSzJQvAiQ
-	 w9WaodxukxgveATIBfqCP7wPf7SqDUSpDZ47ThxI=
+	b=MEqBW7NjS5Kv684PYeJ+7w/DIYlu03OS9oaCRuMYFrS+fTfIb6r8bYcF7q67UFoOx
+	 NrMUwLqQFa1DySB37cL/6GitgZIKdVpg+rUmUOrSzlQqRm3KEwyCYxHahqBw5olItV
+	 XnGrtDAxpDKBIsUbbCYiBSoWiCpG0scsHnE+P+6Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wenkai Lin <linwenkai6@hisilicon.com>,
 	Chenghai Huang <huangchenghai2@huawei.com>,
 	Zhangfei Gao <zhangfei.gao@linaro.org>
-Subject: [PATCH 6.18 191/227] uacce: fix cdev handling in the cleanup path
-Date: Wed, 28 Jan 2026 16:23:56 +0100
-Message-ID: <20260128145351.319459532@linuxfoundation.org>
+Subject: [PATCH 6.18 192/227] uacce: fix isolate sysfs check condition
+Date: Wed, 28 Jan 2026 16:23:57 +0100
+Message-ID: <20260128145351.356363276@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260128145344.331957407@linuxfoundation.org>
 References: <20260128145344.331957407@linuxfoundation.org>
@@ -51,50 +50,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wenkai Lin <linwenkai6@hisilicon.com>
+From: Chenghai Huang <huangchenghai2@huawei.com>
 
-commit a3bece3678f6c88db1f44c602b2a63e84b4040ac upstream.
+commit 98eec349259b1fd876f350b1c600403bcef8f85d upstream.
 
-When cdev_device_add fails, it internally releases the cdev memory,
-and if cdev_device_del is then executed, it will cause a hang error.
-To fix it, we check the return value of cdev_device_add() and clear
-uacce->cdev to avoid calling cdev_device_del in the uacce_remove.
+uacce supports the device isolation feature. If the driver
+implements the isolate_err_threshold_read and
+isolate_err_threshold_write callback functions, uacce will create
+sysfs files now. Users can read and configure the isolation policy
+through sysfs. Currently, sysfs files are created as long as either
+isolate_err_threshold_read or isolate_err_threshold_write callback
+functions are present.
 
-Fixes: 015d239ac014 ("uacce: add uacce driver")
+However, accessing a non-existent callback function may cause the
+system to crash. Therefore, intercept the creation of sysfs if
+neither read nor write exists; create sysfs if either is supported,
+but intercept unsupported operations at the call site.
+
+Fixes: e3e289fbc0b5 ("uacce: supports device isolation feature")
 Cc: stable@vger.kernel.org
-Signed-off-by: Wenkai Lin <linwenkai6@hisilicon.com>
 Signed-off-by: Chenghai Huang <huangchenghai2@huawei.com>
 Acked-by: Zhangfei Gao <zhangfei.gao@linaro.org>
-Link: https://patch.msgid.link/20251202061256.4158641-2-huangchenghai2@huawei.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Link: https://patch.msgid.link/20251202061256.4158641-3-huangchenghai2@huawei.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/misc/uacce/uacce.c |    8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ drivers/misc/uacce/uacce.c |    6 ++++++
+ 1 file changed, 6 insertions(+)
 
 --- a/drivers/misc/uacce/uacce.c
 +++ b/drivers/misc/uacce/uacce.c
-@@ -519,6 +519,8 @@ EXPORT_SYMBOL_GPL(uacce_alloc);
-  */
- int uacce_register(struct uacce_device *uacce)
- {
-+	int ret;
-+
- 	if (!uacce)
- 		return -ENODEV;
+@@ -382,6 +382,9 @@ static ssize_t isolate_strategy_show(str
+ 	struct uacce_device *uacce = to_uacce_device(dev);
+ 	u32 val;
  
-@@ -529,7 +531,11 @@ int uacce_register(struct uacce_device *
- 	uacce->cdev->ops = &uacce_fops;
- 	uacce->cdev->owner = THIS_MODULE;
- 
--	return cdev_device_add(uacce->cdev, &uacce->dev);
-+	ret = cdev_device_add(uacce->cdev, &uacce->dev);
-+	if (ret)
-+		uacce->cdev = NULL;
++	if (!uacce->ops->isolate_err_threshold_read)
++		return -ENOENT;
 +
-+	return ret;
- }
- EXPORT_SYMBOL_GPL(uacce_register);
+ 	val = uacce->ops->isolate_err_threshold_read(uacce);
+ 
+ 	return sysfs_emit(buf, "%u\n", val);
+@@ -394,6 +397,9 @@ static ssize_t isolate_strategy_store(st
+ 	unsigned long val;
+ 	int ret;
+ 
++	if (!uacce->ops->isolate_err_threshold_write)
++		return -ENOENT;
++
+ 	if (kstrtoul(buf, 0, &val) < 0)
+ 		return -EINVAL;
  
 
 
