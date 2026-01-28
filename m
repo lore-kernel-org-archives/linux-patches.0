@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE91C2EA172;
-	Wed, 28 Jan 2026 15:52:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20E942EA172;
+	Wed, 28 Jan 2026 15:52:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769615571; cv=none; b=CrC7kZAUMit2won5AFvK4gFiiW2t29R0Gfk2hVgL8sHVh7HB0wADD43VFLDBrGP0yxQOxfivFBd4NSxhiZCt3gkBsNYiF+Cbnojo4FcnLy18VsAxofKvGPo04SPWTqX9tYPrDwJj+h/u42QXtGwA1jvKJpto6EWkMwG1/WPrDiI=
+	t=1769615575; cv=none; b=rewac1hScs7Zkc9K3lgOkdEEDCKk2wv1bW5UAVjXypQi3cKH44pDaVBBY4DJ+4ibGvIOgiRVoKf3bccQV/yQAwFkTQUWqrRY/SbrL9vB/WHS34NbfEndwkdF/LAKV44TRUntuFazUV39a8aj5Z9iCewakdEzTGWBWnETInZgNvY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769615571; c=relaxed/simple;
-	bh=q5ClAZscUaSSsPvG3vmKuWJXgGrsE2rzXgRD/anrOAU=;
+	s=arc-20240116; t=1769615575; c=relaxed/simple;
+	bh=3REClZC+PjP5nmPY/im+NoFYL/x6rEWPIDxHvI2l9ME=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GVJN6v9UxjHIfXiN8AiqDeKjYdjrR+JEJDUdyvUVoFO520WhY4FwRRfUiM8XfjE4cWFR5W3srU3giQM3uBFL17pb1LTJv9Yhxh+aK4518kUendo3yFJoW8JpRMv3cs4HJ42h9TqqEsFbKbpVH15QPGLrvpQvp6H0LLOxaWV9tH0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KSXm3QAF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=g3j/5H1EkBJQQGwK18GgC67elgOXxQ0cPtMCnWvpo2jEwSdS6mbq9Pl+IDsI9q8huWtnGCd5zck71LXMNM/GqN2RY0vMU+UL1Jqz2Q+8nyy114Q2mtJYVrm4rEBBa+3GgRZce/ctptHm7A88uinCvI4vUwA5eWcPzmgfLAPRvwY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=acV55vwg; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KSXm3QAF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 110CCC4CEF1;
-	Wed, 28 Jan 2026 15:52:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="acV55vwg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 57C4FC4CEF7;
+	Wed, 28 Jan 2026 15:52:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1769615571;
-	bh=q5ClAZscUaSSsPvG3vmKuWJXgGrsE2rzXgRD/anrOAU=;
+	s=korg; t=1769615574;
+	bh=3REClZC+PjP5nmPY/im+NoFYL/x6rEWPIDxHvI2l9ME=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KSXm3QAF8MFjfydmL1Yr3+QHc5H0KlUkmUF0mpJ/zUq2yPjEsQ8egyHD//IH5djuQ
-	 PvAkvC252ngrGX8liLL14vlyYeRpkk7NGYOQsTBiihVxUP9e1WufYgjzS7z1BwdT6V
-	 mC7kVk5Cdejxpq94xtuQOvG+V15dZ66or0zfw0bk=
+	b=acV55vwgm1GHeweWXETWonzlylqUmIdYScNutTTDoU+9rAUwdeGln5VtOwvf/agnb
+	 FhNlW0xs6UuvYlt/JZrqc0Q/kEv+/2gM1CtAskCy9Sn2e6d5L239+F7zR8c5ZVMJX8
+	 fHYV3Fsa+e+bWMlRhEYzGxKb/GFeelDUvPPTzbcI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lachlan Hodges <lachlan.hodges@morsemicro.com>,
-	Johannes Berg <johannes.berg@intel.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 048/227] wifi: mac80211: dont perform DA check on S1G beacon
-Date: Wed, 28 Jan 2026 16:21:33 +0100
-Message-ID: <20260128145346.073034883@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Marnix Rijnart <marnix.rijnart@iwell.eu>
+Subject: [PATCH 6.18 049/227] serial: 8250_pci: Fix broken RS485 for F81504/508/512
+Date: Wed, 28 Jan 2026 16:21:34 +0100
+Message-ID: <20260128145346.108775235@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260128145344.331957407@linuxfoundation.org>
 References: <20260128145344.331957407@linuxfoundation.org>
@@ -51,48 +50,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lachlan Hodges <lachlan.hodges@morsemicro.com>
+From: Marnix Rijnart <marnix.rijnart@iwell.eu>
 
-[ Upstream commit 5dc6975566f5d142ec53eb7e97af688c45dd314d ]
+commit 27aff0a56b3c77ea1a73641c9b3c4172a8f7238f upstream.
 
-S1G beacons don't contain the DA field as per IEEE80211-2024 9.3.4.3,
-so the DA broadcast check reads the SA address of the S1G beacon which
-will subsequently lead to the beacon being dropped. As a result, passive
-scanning is not possible. Fix this by only performing the check on
-non-S1G beacons to allow S1G long beacons to be processed during a
-passive scan.
+Fintek F81504/508/512 can support both RTS_ON_SEND and RTS_AFTER_SEND,
+but pci_fintek_rs485_supported only announces the former.
 
-Fixes: ddf82e752f8a ("wifi: mac80211: Allow beacons to update BSS table regardless of scan")
-Signed-off-by: Lachlan Hodges <lachlan.hodges@morsemicro.com>
-Link: https://patch.msgid.link/20260120031122.309942-1-lachlan.hodges@morsemicro.com
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+This makes it impossible to unset SER_RS485_RTS_ON_SEND from
+userspace because of uart_sanitize_serial_rs485(). Some devices
+with these chips need RTS low on TX, so they are effectively broken.
+
+Fix this by announcing the support for SER_RS485_RTS_AFTER_SEND,
+similar to commit 068d35a7be65 ("serial: sc16is7xx: announce support
+for SER_RS485_RTS_ON_SEND").
+
+Fixes: 4afeced55baa ("serial: core: fix sanitizing check for RTS settings")
+Cc: stable <stable@kernel.org>
+Signed-off-by: Marnix Rijnart <marnix.rijnart@iwell.eu>
+Link: https://patch.msgid.link/20260112000931.61703-1-marnix.rijnart@iwell.eu
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/mac80211/scan.c | 9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
+ drivers/tty/serial/8250/8250_pci.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/mac80211/scan.c b/net/mac80211/scan.c
-index bb9563f50e7b4..1e06a465b49e3 100644
---- a/net/mac80211/scan.c
-+++ b/net/mac80211/scan.c
-@@ -343,8 +343,13 @@ void ieee80211_scan_rx(struct ieee80211_local *local, struct sk_buff *skb)
- 						 mgmt->da))
- 			return;
- 	} else {
--		/* Beacons are expected only with broadcast address */
--		if (!is_broadcast_ether_addr(mgmt->da))
-+		/*
-+		 * Non-S1G beacons are expected only with broadcast address.
-+		 * S1G beacons only carry the SA so no DA check is required
-+		 * nor possible.
-+		 */
-+		if (!ieee80211_is_s1g_beacon(mgmt->frame_control) &&
-+		    !is_broadcast_ether_addr(mgmt->da))
- 			return;
- 	}
+--- a/drivers/tty/serial/8250/8250_pci.c
++++ b/drivers/tty/serial/8250/8250_pci.c
+@@ -1650,7 +1650,7 @@ static int pci_fintek_rs485_config(struc
+ }
  
--- 
-2.51.0
-
+ static const struct serial_rs485 pci_fintek_rs485_supported = {
+-	.flags = SER_RS485_ENABLED | SER_RS485_RTS_ON_SEND,
++	.flags = SER_RS485_ENABLED | SER_RS485_RTS_ON_SEND | SER_RS485_RTS_AFTER_SEND,
+ 	/* F81504/508/512 does not support RTS delay before or after send */
+ };
+ 
 
 
