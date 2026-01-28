@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 304FF306B06;
-	Wed, 28 Jan 2026 16:02:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB48F26ED40;
+	Wed, 28 Jan 2026 16:02:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769616132; cv=none; b=MM/jou4p/QRYoR+MKIy90i0j5K/wvljocnJPZvSdHBTmCeD/kiJl+HnNFi9cJKQktrnapuMQeKTDKeQoXWge158s5TiRvrAmtuHsoEcOXC0ZGeCWV1nzbQ+2iorNV9GLB6O8ekKFYuf71Jueu43Da4/58tmySC5UGYMu55N69Bo=
+	t=1769616135; cv=none; b=Lp/uNMTX2Es+M5+cvtpo5nyYSD0KDRzJeTigle4E8ug/0+1qinGSMIqVItYuau4zmFHCPJ7QDb6aJBYZP3fxbgeZWnA/RRxZauELZbK8SCNfyaNnPgnlhGy0vmm60MnRJCYR0wi4XKZ0woyVJqw7lfYDSlAN9GObjHCGaDSfnTA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769616132; c=relaxed/simple;
-	bh=70LYdc2L//Uc69cdw5TN+eELvzaAW/qQVlXMEZFDMac=;
+	s=arc-20240116; t=1769616135; c=relaxed/simple;
+	bh=lLTo2ZDcbNuEJTXFDkTHr18ubxvzYzNa5LznhOGF3sQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GArRnwGE+BDIcOqgqQXXHRk7qon4n11XYT84bghCH0rSvRydQNnx9ZyTGykoXvGxAWiVvxCNm7dzqB/iafQQYtoosabnl4L2XJ2NmATF09mZ2yXoYX9b7nJGLTeKEPhtRFwO8TQyfRP31Yetf4xCa0hvd3FnLq/478CndL1lXOY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eeswfm2v; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=EfDymzKDWmR68Hma7Svgsn/800ScmTzhYu9wtUuoEKfLOx7an7lNvakDzUfs1QVMs4iOk0W9ZGdcZedcdgN69lsatxSbmMC1Na2CoZrm3osXsf6kQmgGHfulCb2CGhOwdhAb1S9BqAao/aH71gDqJL5+okk/XvdLsIvJJyPUisI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AoF+cWTQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eeswfm2v"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 98BA3C4CEF1;
-	Wed, 28 Jan 2026 16:02:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AoF+cWTQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B5C1C4CEF1;
+	Wed, 28 Jan 2026 16:02:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1769616132;
-	bh=70LYdc2L//Uc69cdw5TN+eELvzaAW/qQVlXMEZFDMac=;
+	s=korg; t=1769616135;
+	bh=lLTo2ZDcbNuEJTXFDkTHr18ubxvzYzNa5LznhOGF3sQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eeswfm2v7j9jsb/ph81kzXwIDLMRR8SE4D+0Kk9qlDdSaPYMAiuLXInvySXylt7BS
-	 hgr5IDMCCiBM+0TLvjm0VTVAAHLoeqKt08bhZJ02IrytBgoYfR7Mza20SC6VTp4K+t
-	 I+9kUM4PM1dB6SJOApu3fynsYdkC93L2Ek3AoLe8=
+	b=AoF+cWTQHNupsDsFMk6Ju+zlwNSXxqtG3XCzgZnxhfXj7X2J0NgLVGIAIsDmri6HB
+	 22SwoKQfZ6Ti9B5ILrqmrXyGypXBSZDxwnfY6qTkTiH+S8IHO6dM8VayABW1edX3pB
+	 MnjPEafymFuWT8m3qMmUAFaKJaFFBUsNVm0+w3js=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Tzung-Bi Shih <tzungbi@kernel.org>,
 	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
-Subject: [PATCH 6.18 216/227] gpio: cdev: Correct return code on memory allocation failure
-Date: Wed, 28 Jan 2026 16:24:21 +0100
-Message-ID: <20260128145352.206534173@linuxfoundation.org>
+Subject: [PATCH 6.18 217/227] gpio: cdev: Fix resource leaks on errors in lineinfo_changed_notify()
+Date: Wed, 28 Jan 2026 16:24:22 +0100
+Message-ID: <20260128145352.241475431@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260128145344.331957407@linuxfoundation.org>
 References: <20260128145344.331957407@linuxfoundation.org>
@@ -52,31 +52,30 @@ Content-Transfer-Encoding: 8bit
 
 From: Tzung-Bi Shih <tzungbi@kernel.org>
 
-commit faff6846474e99295a139997f93ef6db222b5cee upstream.
+commit 70b3c280533167749a8f740acaa8ef720f78f984 upstream.
 
--ENOMEM is a more appropriate return code for memory allocation
-failures.  Correct it.
+On error handling paths, lineinfo_changed_notify() doesn't free the
+allocated resources which results leaks.  Fix it.
 
 Cc: stable@vger.kernel.org
-Fixes: 20bddcb40b2b ("gpiolib: cdev: replace locking wrappers for gpio_device with guards")
+Fixes: d4cd0902c156 ("gpio: cdev: make sure the cdev fd is still active before emitting events")
 Signed-off-by: Tzung-Bi Shih <tzungbi@kernel.org>
-Link: https://lore.kernel.org/r/20260116081036.352286-6-tzungbi@kernel.org
+Link: https://lore.kernel.org/r/20260120030857.2144847-1-tzungbi@kernel.org
 Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpio/gpiolib-cdev.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpio/gpiolib-cdev.c |    1 +
+ 1 file changed, 1 insertion(+)
 
 --- a/drivers/gpio/gpiolib-cdev.c
 +++ b/drivers/gpio/gpiolib-cdev.c
-@@ -2720,7 +2720,7 @@ static int gpio_chrdev_open(struct inode
+@@ -2573,6 +2573,7 @@ static int lineinfo_changed_notify(struc
+ 	ctx = kzalloc(sizeof(*ctx), GFP_ATOMIC);
+ 	if (!ctx) {
+ 		pr_err("Failed to allocate memory for line info notification\n");
++		fput(fp);
+ 		return NOTIFY_DONE;
+ 	}
  
- 	cdev = kzalloc(sizeof(*cdev), GFP_KERNEL);
- 	if (!cdev)
--		return -ENODEV;
-+		return -ENOMEM;
- 
- 	cdev->watched_lines = bitmap_zalloc(gdev->ngpio, GFP_KERNEL);
- 	if (!cdev->watched_lines)
 
 
