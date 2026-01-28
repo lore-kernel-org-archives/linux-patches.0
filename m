@@ -1,44 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FEAD36C0D5;
-	Wed, 28 Jan 2026 15:28:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45A3336D51E;
+	Wed, 28 Jan 2026 15:28:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769614124; cv=none; b=h2PvyRXbJOfO0RVnzN7qGJW95AlYKPhLZK3ohuDMKLW/jeezeXzqpOim4XKjWqhfHePassj0Q5xuYBK8HpBQAVu74+g6vzKfZJRBBiobvqVaevCmivwtPX+iKlEKAdhow5bKVwC9MWTo1+KFmKIKOG5BdtTOT8wkwf3zLbr1X1w=
+	t=1769614127; cv=none; b=MT6ADUFIlXm8SBbceIBdkrGyftMOgbb6/EVq7I8+sYyid9mZWuOgtlPTvp5BlubuCsuTVn24FD1zEQs8CDqJOUvhgOHSKqtlXxcE7R9Rhgm/Kq+c6pLb9uNuK+EsGpEpv2RcEMtJwMq1aexolzj8BNthyU1tm554zSoL6fwlgrc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769614124; c=relaxed/simple;
-	bh=55iESlkvDdy1DAlTHepAP+4HQYZu46rvubKwhQBBIJg=;
+	s=arc-20240116; t=1769614127; c=relaxed/simple;
+	bh=loMrjhKUaQcAeLQ5ZMFYZYrkYrUGHceg3Ndgg4nHrvY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bB879x3lOu4EYih9BnfFAH3Clu3K6qA41Ugp4FwZxtEg2h/frkxl9nrOwlZkMdiQb5oqa1nUpFABP+QA6YVSd16jRVXTGbo+NUABxE8ztnqm5ACX4KwQrDJhFsU9lhPIsSRMCUhY/HZgsSNu8FYL24fBVDgQrSpkbzn77RW1wso=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1J8ZbNN2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Uh10lXLxneNg+Ynhyuj+X1STvSXfKhu3374USC1+u6hcfKSBl4sOEXTGkxGFEJI/CotRImNlEcNAv+eS5/O21w67u1YTDMTz+QA4eniH4i/iR/PQidWyidFOYrETw2pmhX9qEB3l38nYQDoN0aeUSIwqDGwYET/yZTvjhUY4uKw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FpopWN/+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1J8ZbNN2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 96A65C4CEF1;
-	Wed, 28 Jan 2026 15:28:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FpopWN/+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B435BC4CEF1;
+	Wed, 28 Jan 2026 15:28:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1769614124;
-	bh=55iESlkvDdy1DAlTHepAP+4HQYZu46rvubKwhQBBIJg=;
+	s=korg; t=1769614127;
+	bh=loMrjhKUaQcAeLQ5ZMFYZYrkYrUGHceg3Ndgg4nHrvY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1J8ZbNN2RrzypmNnrHKZSmDjTyDjw+e/hkA9gaHvGlFUyTm3wN8QmtpfNNrefxgCJ
-	 0OYuZR6zYxp04vIkyBHidoCYrwxzlfRtqV00wBv/3k80tCfmX5OKuj9C2XaqF7uIaK
-	 Xk9RoKsbS9+tgMWQGy5+qpFnHuZB0JtB+RkZjV+c=
+	b=FpopWN/+kO6trzSgaxqyTHRnvcdnxLgoqqyoioyFHmUos0Ntkfb/80X/pEQKG8lct
+	 ZjvWJQ+GebWw2Ow7Ln31LiM2VWGBAYT8mfPN1hw3pm1fCmTPOvoouZ8E9ud1vhIcmo
+	 YBWtot0iST1onBVOtBXCdy4ULbF4aMLU1Yw5q0vg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Leonid Segal <leonids@variscite.com>,
-	Pierluigi Passaro <pierluigi.p@variscite.com>,
-	Stefano Radaelli <stefano.r@variscite.com>,
-	Xu Yang <xu.yang_2@nxp.com>,
-	Frank Li <Frank.Li@nxp.com>,
-	Fabio Estevam <festevam@gmail.com>,
-	Ahmad Fatoum <a.fatoum@pengutronix.de>,
-	Vinod Koul <vkoul@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 035/254] phy: fsl-imx8mq-usb: Clear the PCS_TX_SWING_FULL field before using it
-Date: Wed, 28 Jan 2026 16:20:11 +0100
-Message-ID: <20260128145345.965751746@linuxfoundation.org>
+	Mario Limonciello <mario.limonciello@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	Aurabindo Pillai <aurabindo.pillai@amd.com>,
+	Alex Hung <alex.hung@amd.com>,
+	Rahul Sharma <black.hawk@163.com>
+Subject: [PATCH 6.6 044/254] drm/amd/display: Check dce_hwseq before dereferencing it
+Date: Wed, 28 Jan 2026 16:20:20 +0100
+Message-ID: <20260128145346.287246577@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260128145344.698118637@linuxfoundation.org>
 References: <20260128145344.698118637@linuxfoundation.org>
@@ -57,44 +53,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Stefano Radaelli <stefano.radaelli21@gmail.com>
+From: Alex Hung <alex.hung@amd.com>
 
-[ Upstream commit 8becf9179a4b45104a1701010ed666b55bf4b3a6 ]
+commit b669507b637eb6b1aaecf347f193efccc65d756e upstream.
 
-Clear the PCS_TX_SWING_FULL field mask before setting the new value
-in PHY_CTRL5 register. Without clearing the mask first, the OR operation
-could leave previously set bits, resulting in incorrect register
-configuration.
+[WHAT]
 
-Fixes: 63c85ad0cd81 ("phy: fsl-imx8mp-usb: add support for phy tuning")
-Suggested-by: Leonid Segal <leonids@variscite.com>
-Acked-by: Pierluigi Passaro <pierluigi.p@variscite.com>
-Signed-off-by: Stefano Radaelli <stefano.r@variscite.com>
-Reviewed-by: Xu Yang <xu.yang_2@nxp.com>
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Reviewed-by: Fabio Estevam <festevam@gmail.com>
-Reviewed-by: Ahmad Fatoum <a.fatoum@pengutronix.de>
-Link: https://patch.msgid.link/20251219160912.561431-1-stefano.r@variscite.com
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+hws was checked for null earlier in dce110_blank_stream, indicating hws
+can be null, and should be checked whenever it is used.
+
+Cc: Mario Limonciello <mario.limonciello@amd.com>
+Cc: Alex Deucher <alexander.deucher@amd.com>
+Reviewed-by: Aurabindo Pillai <aurabindo.pillai@amd.com>
+Signed-off-by: Alex Hung <alex.hung@amd.com>
+Signed-off-by: Aurabindo Pillai <aurabindo.pillai@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit 79db43611ff61280b6de58ce1305e0b2ecf675ad)
+Cc: stable@vger.kernel.org
+Signed-off-by: Rahul Sharma <black.hawk@163.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/phy/freescale/phy-fsl-imx8mq-usb.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/gpu/drm/amd/display/dc/dce110/dce110_hw_sequencer.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/phy/freescale/phy-fsl-imx8mq-usb.c b/drivers/phy/freescale/phy-fsl-imx8mq-usb.c
-index f914f016b3d2c..043063699e064 100644
---- a/drivers/phy/freescale/phy-fsl-imx8mq-usb.c
-+++ b/drivers/phy/freescale/phy-fsl-imx8mq-usb.c
-@@ -206,6 +206,7 @@ static void imx8m_phy_tune(struct imx8mq_usb_phy *imx_phy)
+--- a/drivers/gpu/drm/amd/display/dc/dce110/dce110_hw_sequencer.c
++++ b/drivers/gpu/drm/amd/display/dc/dce110/dce110_hw_sequencer.c
+@@ -1228,7 +1228,7 @@ void dce110_blank_stream(struct pipe_ctx
+ 	struct dce_hwseq *hws = link->dc->hwseq;
  
- 	if (imx_phy->pcs_tx_swing_full != PHY_TUNE_DEFAULT) {
- 		value = readl(imx_phy->base + PHY_CTRL5);
-+		value &= ~PHY_CTRL5_PCS_TX_SWING_FULL_MASK;
- 		value |= FIELD_PREP(PHY_CTRL5_PCS_TX_SWING_FULL_MASK,
- 				   imx_phy->pcs_tx_swing_full);
- 		writel(value, imx_phy->base + PHY_CTRL5);
--- 
-2.51.0
-
+ 	if (link->local_sink && link->local_sink->sink_signal == SIGNAL_TYPE_EDP) {
+-		if (!link->skip_implict_edp_power_control)
++		if (!link->skip_implict_edp_power_control && hws)
+ 			hws->funcs.edp_backlight_control(link, false);
+ 		link->dc->hwss.set_abm_immediate_disable(pipe_ctx);
+ 	}
 
 
