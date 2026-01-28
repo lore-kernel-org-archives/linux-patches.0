@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB8092857CD;
-	Wed, 28 Jan 2026 15:54:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 092973033F4;
+	Wed, 28 Jan 2026 15:54:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769615678; cv=none; b=fwHTowmfETD5cNCd2+LSWzT8Yunc06vpGAKqEMOklVtQ8365fOZ3GnF8irnLoPO5yLRrw0dzOmZEKWd0yJHgiqDxTVE6jTLAWaThjykNWKniEkkSxlmyYa65w4EppTJDz4rmldkkTMUY6ZrMjQPfBMzrJljjdCB743smrado7rU=
+	t=1769615682; cv=none; b=CpeeFu646oniwsvZgXS9Gqm0/L1JZPjdbalKAh4No3uiHX5vLSTzEisJVWupzztl1iZvN99RMN2yH2fTKqMDdwvyJetcnhYWznsdsMjRBbgJYrxQLYzrBBE4pVxZqyTLcVLGXPGQJ+wAxdNfIsdrTQpfS0yqnX6Sec2Fa+LwOx0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769615678; c=relaxed/simple;
-	bh=06VOZPNSo0B7Ujb7CIIhIXuG/+nv1GZWlGQ3dgsHBOY=;
+	s=arc-20240116; t=1769615682; c=relaxed/simple;
+	bh=C8K3LrlWfrtqKvkD144qdJ/+O0gyk1Qs/C2xJY3npiQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XknvcTfoPYb6kcckZe+S03oGWV3yrmcbreHM7ukQMCvYhpc6pHUpSkBsEsmLzyJvHqiZh0uMM6DLPErUkZgXU8E/gZIKORXeGnt+1H0iIx2MDgxG8riykvOt5l3iEIy2w+miv7THaKNZcsuZ079Cw9em9zyuiaUHqD/HZYVyfjo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JpYbK68x; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XlDS4m7e7ObT2C++ZNhaMrRXvQhm80KzcR17l+EpxjWeDBBTFXOoyrry3s9EBXHESto4cO3XvrcWZJiG395nzCDTdh2+Bffn8k4fwWucg2pSjrrIvEQbGGZGsudLbGazM8sm9bN1Mo6EesGYgioLGCczc53eA2ICSFz1YbIQw2w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=K3MDl79n; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JpYbK68x"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 44987C4CEF7;
-	Wed, 28 Jan 2026 15:54:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="K3MDl79n"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E3DCC4CEF1;
+	Wed, 28 Jan 2026 15:54:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1769615678;
-	bh=06VOZPNSo0B7Ujb7CIIhIXuG/+nv1GZWlGQ3dgsHBOY=;
+	s=korg; t=1769615681;
+	bh=C8K3LrlWfrtqKvkD144qdJ/+O0gyk1Qs/C2xJY3npiQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JpYbK68xgrkq+XxApjs2b4ILv4Q8R51QtVQkXRkNTMNsWXBs2KNhPhOtZCXz56Ieh
-	 8PY1Q6VnBfAv0HBYnrTMX8Ib+WZs7TUrCDx2fHid0zVhRC9I9uUcb2IP15dIORW5nE
-	 X6pdiKa7+pyb875WQKYbkHIRq7M+1OgS9kC0C1YQ=
+	b=K3MDl79nsnmZnK/b0ePjTnbQ6uVl0T4tQHyQa4zUpzrvPL3N7FDblsT2dXvTCsj+B
+	 JVEKTvknQ3Htvuga7ARGzq5esI+2aXg73KwV03uETcw+L3DkUGcngdWIMIgHf6c9uj
+	 86cmrbFupcJnbNMNavvhZd8LXYES0jHqgx2s6kCQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ondrej Jirman <megi@xff.cz>,
-	Rudraksha Gupta <guptarud@gmail.com>,
-	Pavel Machek <pavel@ucw.cz>,
-	Heiko Stuebner <heiko@sntech.de>
-Subject: [PATCH 6.18 064/227] arm64: dts: rockchip: Fix voltage threshold for volume keys for Pinephone Pro
-Date: Wed, 28 Jan 2026 16:21:49 +0100
-Message-ID: <20260128145346.645020168@linuxfoundation.org>
+	Pavel Zhigulin <Pavel.Zhigulin@kaspersky.com>,
+	Marcelo Schmitt <marcelo.schmitt@analog.com>,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.18 082/227] iio: adc: ad7280a: handle spi_setup() errors in probe()
+Date: Wed, 28 Jan 2026 16:22:07 +0100
+Message-ID: <20260128145347.293258379@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260128145344.331957407@linuxfoundation.org>
 References: <20260128145344.331957407@linuxfoundation.org>
@@ -52,53 +52,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ondrej Jirman <megi@xff.cz>
+From: Pavel Zhigulin <Pavel.Zhigulin@kaspersky.com>
 
-commit 5497ffe305b2ea31ae62d4a311d7cabfb671f54a upstream.
+[ Upstream commit 6b39824ac4c15783787e6434449772bfb2e31214 ]
 
-Previously sometimes pressing the volume-down button would register as
-a volume-up button. Match the thresholds as shown in the Pinephone Pro
-schematic.
+The probe() function ignored the return value of spi_setup(), leaving SPI
+configuration failures undetected. If spi_setup() fails, the driver should
+stop initialization and propagate the error to the caller.
 
-Tests:
+Add proper error handling: check the return value of spi_setup() and return
+it on failure.
 
-~ $ evtest
-    // Mashed the volume down ~100 times with varying intensity
-    Event: time xxx, type 1 (EV_KEY), code 114 (KEY_VOLUMEDOWN), value 1
-    Event: time xxx, type 1 (EV_KEY), code 114 (KEY_VOLUMEDOWN), value 0
-    // Mashed the volume up ~100 times with varying intensity
-    Event: time xxx, type 1 (EV_KEY), code 115 (KEY_VOLUMEUP), value 1
-    Event: time xxx, type 1 (EV_KEY), code 115 (KEY_VOLUMEUP), value 0
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
 
-Fixes: d3150ed53580 ("arm64: dts: rockchip: Add support for volume keys to rk3399-pinephone-pro")
-Cc: stable@vger.kernel.org
-Signed-off-by: Ondrej Jirman <megi@xff.cz>
-Signed-off-by: Rudraksha Gupta <guptarud@gmail.com>
-Reviewed-by: Pavel Machek <pavel@ucw.cz>
-Link: https://patch.msgid.link/20251124-ppp_light_accel_mag_vol-down-v5-4-f9a10a0a50eb@gmail.com
-Signed-off-by: Heiko Stuebner <heiko@sntech.de>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 2051f25d2a26 ("iio: adc: New driver for AD7280A Lithium Ion Battery Monitoring System")
+Signed-off-by: Pavel Zhigulin <Pavel.Zhigulin@kaspersky.com>
+Reviewed-by: Marcelo Schmitt <marcelo.schmitt@analog.com>
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/rockchip/rk3399-pinephone-pro.dts |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/iio/adc/ad7280a.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/arch/arm64/boot/dts/rockchip/rk3399-pinephone-pro.dts
-+++ b/arch/arm64/boot/dts/rockchip/rk3399-pinephone-pro.dts
-@@ -40,13 +40,13 @@
- 		button-up {
- 			label = "Volume Up";
- 			linux,code = <KEY_VOLUMEUP>;
--			press-threshold-microvolt = <100000>;
-+			press-threshold-microvolt = <2000>;
- 		};
+diff --git a/drivers/iio/adc/ad7280a.c b/drivers/iio/adc/ad7280a.c
+index 50a6ff7c8b1c7..ba12a3796e2b1 100644
+--- a/drivers/iio/adc/ad7280a.c
++++ b/drivers/iio/adc/ad7280a.c
+@@ -1024,7 +1024,9 @@ static int ad7280_probe(struct spi_device *spi)
  
- 		button-down {
- 			label = "Volume Down";
- 			linux,code = <KEY_VOLUMEDOWN>;
--			press-threshold-microvolt = <600000>;
-+			press-threshold-microvolt = <300000>;
- 		};
- 	};
+ 	st->spi->max_speed_hz = AD7280A_MAX_SPI_CLK_HZ;
+ 	st->spi->mode = SPI_MODE_1;
+-	spi_setup(st->spi);
++	ret = spi_setup(st->spi);
++	if (ret < 0)
++		return ret;
  
+ 	st->ctrl_lb = FIELD_PREP(AD7280A_CTRL_LB_ACQ_TIME_MSK, st->acquisition_time) |
+ 		FIELD_PREP(AD7280A_CTRL_LB_THERMISTOR_MSK, st->thermistor_term_en);
+-- 
+2.51.0
+
 
 
