@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B46E30274D;
-	Wed, 28 Jan 2026 15:49:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3EEBB2DF138;
+	Wed, 28 Jan 2026 15:49:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769615381; cv=none; b=rXnqXaMlmAkk3Wi1OpFslrh9KINjnyMY+jlBsVeeOnoUoD+NcuV9dDdcpvPHO+YX88jTTOwpZaASo97AmzznowElP9gfC5bXrsSIqAy3zylJyJ9lUvNLk9RmrInvK2I1bYjNFeFULqS1jmSTE4B38qoKPYAjsC6ldhvVLF7ep6k=
+	t=1769615384; cv=none; b=B/xUxCiuJyLsItohHa9rt6idvdYisoLwHxjBaWoXmmwjLGnfm0ZPu+zf6RtTUub1zOqWjU4EHuY041DgCIg3I5nhc0imnGQTNhoLNQrRiRsWWkEVJqhV5TCnLn0J0rYORpPopxr4g8mos/JLAAQIoBiYBb4cLzlvxb5zzAIoT0g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769615381; c=relaxed/simple;
-	bh=ejsACe6hwVjjBJMPbiOom7XoZXX0b8clbjQva0k/OG0=;
+	s=arc-20240116; t=1769615384; c=relaxed/simple;
+	bh=jHQ8FHa0oqSpsdAdVf+MqgAsnIaqhDQvD4Cf7yrBYNk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WoIB+ksQBpdSjkF3v02AjhwhtH6HfyjLHP8fo1aQaMv3hZ8pDxi2h+qFwJb0++QXhVj41jk9U5UpTkWc+u2nxsrI4zm8znmSM8hjlGkw3r94oXLz4QTwb3rYhgZMKTo/v38geX8jMSAlMWz22AawXrSVCYeFt3DBK/MzqEFLB2c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bT5qO1CG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=E6SJGH+6qU3jSZDt+KfnB2f3sXKo1nl29eoLpqEooFxl6OvOC2gwShznEUMfuJItBQYgp626E2zSwN1zRC3q14cYHJa3Ngl5ZicOZQo5vbG0HSsdY8mbO0XSdKnObV2HazDp+qY1KOu6v29E58SX7GJ8Wo2WY4BZigvHc9RvcR0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=h4QQ2sre; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bT5qO1CG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E10AC4CEF1;
-	Wed, 28 Jan 2026 15:49:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="h4QQ2sre"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A37D2C4CEF1;
+	Wed, 28 Jan 2026 15:49:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1769615381;
-	bh=ejsACe6hwVjjBJMPbiOom7XoZXX0b8clbjQva0k/OG0=;
+	s=korg; t=1769615384;
+	bh=jHQ8FHa0oqSpsdAdVf+MqgAsnIaqhDQvD4Cf7yrBYNk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bT5qO1CGMMkHDMJ/qOkft+GHsUuwBBZsmcpPVuAicCJVdpsHlkcefuUopkCW+E0Sn
-	 6UH7ma0Q+jBMgRRe13TRBh47tss8SEB6gkWohSCGKvsKd0WVLOOARkBfhfuXFMF04J
-	 XtGC+0/Y33Jvez8LXE46B5SsEl0UzipCO3C9VnQo=
+	b=h4QQ2sreiXTOeZEM7H1V1tkp2W0mjb9LLsrLQ285PiYd5tbnGvnfVXpSk34cy7eow
+	 mHItupdKAt6qOn+wRIW9C9xsJPWc07iXEJ5LuRrr62KZ1tQjmShTRw6O1aECY+WDap
+	 /zkEv7AU3reWtQfLoRHkju2U2HyYt6dSFAjL3nO4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -32,9 +32,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Will Deacon <will@kernel.org>,
 	"Michael S. Tsirkin" <mst@redhat.com>,
 	Heitor Alves de Siqueira <halves@igalia.com>
-Subject: [PATCH 6.12 163/169] vsock/virtio: Rename virtio_vsock_alloc_skb()
-Date: Wed, 28 Jan 2026 16:24:06 +0100
-Message-ID: <20260128145339.887737903@linuxfoundation.org>
+Subject: [PATCH 6.12 164/169] vsock/virtio: Move SKB allocation lower-bound check to callers
+Date: Wed, 28 Jan 2026 16:24:07 +0100
+Message-ID: <20260128145339.925653182@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260128145334.006287341@linuxfoundation.org>
 References: <20260128145334.006287341@linuxfoundation.org>
@@ -55,72 +55,51 @@ Content-Transfer-Encoding: 8bit
 
 From: Will Deacon <will@kernel.org>
 
-[Upstream commit 2304c64a2866c58534560c63dc6e79d09b8f8d8d]
+[Upstream commit fac6b82e0f3eaca33c8c67ec401681b21143ae17]
 
-In preparation for nonlinear allocations for large SKBs, rename
-virtio_vsock_alloc_skb() to virtio_vsock_alloc_linear_skb() to indicate
-that it returns linear SKBs unconditionally and switch all callers over
-to this new interface for now.
+virtio_vsock_alloc_linear_skb() checks that the requested size is at
+least big enough for the packet header (VIRTIO_VSOCK_SKB_HEADROOM).
 
-No functional change.
+Of the three callers of virtio_vsock_alloc_linear_skb(), only
+vhost_vsock_alloc_skb() can potentially pass a packet smaller than the
+header size and, as it already has a check against the maximum packet
+size, extend its bounds checking to consider the minimum packet size
+and remove the check from virtio_vsock_alloc_linear_skb().
 
 Reviewed-by: Stefano Garzarella <sgarzare@redhat.com>
 Signed-off-by: Will Deacon <will@kernel.org>
-Message-Id: <20250717090116.11987-6-will@kernel.org>
+Message-Id: <20250717090116.11987-7-will@kernel.org>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Heitor Alves de Siqueira <halves@igalia.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/vhost/vsock.c                   |    2 +-
- include/linux/virtio_vsock.h            |    3 ++-
- net/vmw_vsock/virtio_transport.c        |    2 +-
- net/vmw_vsock/virtio_transport_common.c |    2 +-
- 4 files changed, 5 insertions(+), 4 deletions(-)
+ drivers/vhost/vsock.c        |    3 ++-
+ include/linux/virtio_vsock.h |    3 ---
+ 2 files changed, 2 insertions(+), 4 deletions(-)
 
 --- a/drivers/vhost/vsock.c
 +++ b/drivers/vhost/vsock.c
-@@ -349,7 +349,7 @@ vhost_vsock_alloc_skb(struct vhost_virtq
+@@ -345,7 +345,8 @@ vhost_vsock_alloc_skb(struct vhost_virtq
+ 
+ 	len = iov_length(vq->iov, out);
+ 
+-	if (len > VIRTIO_VSOCK_MAX_PKT_BUF_SIZE + VIRTIO_VSOCK_SKB_HEADROOM)
++	if (len < VIRTIO_VSOCK_SKB_HEADROOM ||
++	    len > VIRTIO_VSOCK_MAX_PKT_BUF_SIZE + VIRTIO_VSOCK_SKB_HEADROOM)
  		return NULL;
  
  	/* len contains both payload and hdr */
--	skb = virtio_vsock_alloc_skb(len, GFP_KERNEL);
-+	skb = virtio_vsock_alloc_linear_skb(len, GFP_KERNEL);
- 	if (!skb)
- 		return NULL;
- 
 --- a/include/linux/virtio_vsock.h
 +++ b/include/linux/virtio_vsock.h
-@@ -52,7 +52,8 @@ static inline void virtio_vsock_skb_rx_p
- 	skb_put(skb, len);
- }
- 
--static inline struct sk_buff *virtio_vsock_alloc_skb(unsigned int size, gfp_t mask)
-+static inline struct sk_buff *
-+virtio_vsock_alloc_linear_skb(unsigned int size, gfp_t mask)
+@@ -57,9 +57,6 @@ virtio_vsock_alloc_linear_skb(unsigned i
  {
  	struct sk_buff *skb;
  
---- a/net/vmw_vsock/virtio_transport.c
-+++ b/net/vmw_vsock/virtio_transport.c
-@@ -316,7 +316,7 @@ static void virtio_vsock_rx_fill(struct
- 	vq = vsock->vqs[VSOCK_VQ_RX];
- 
- 	do {
--		skb = virtio_vsock_alloc_skb(total_len, GFP_KERNEL);
-+		skb = virtio_vsock_alloc_linear_skb(total_len, GFP_KERNEL);
- 		if (!skb)
- 			break;
- 
---- a/net/vmw_vsock/virtio_transport_common.c
-+++ b/net/vmw_vsock/virtio_transport_common.c
-@@ -263,7 +263,7 @@ static struct sk_buff *virtio_transport_
- 	if (!zcopy)
- 		skb_len += payload_len;
- 
--	skb = virtio_vsock_alloc_skb(skb_len, GFP_KERNEL);
-+	skb = virtio_vsock_alloc_linear_skb(skb_len, GFP_KERNEL);
+-	if (size < VIRTIO_VSOCK_SKB_HEADROOM)
+-		return NULL;
+-
+ 	skb = alloc_skb(size, mask);
  	if (!skb)
  		return NULL;
- 
 
 
