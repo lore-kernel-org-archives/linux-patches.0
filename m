@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59AD2280327;
-	Wed, 28 Jan 2026 15:43:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32BBC30AADB;
+	Wed, 28 Jan 2026 15:43:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769615034; cv=none; b=LU9DH7tM+DD6tYboqpo0WiRpkUUWKsghweqHCYVlz8ikpzM5DvZuxvZcbIKSBx8EmWgm0MZJgxirKteMVPFDjwAuni7QdnQHw/WkxfcCMFsEsbs5omFYHPkM8L4sVKVQBWkmt1dvZC+GLBBvplocC1mS3NTku7+zy6agMADFnI0=
+	t=1769615037; cv=none; b=BqJLuywDKYn6QklAsf28a0oCEFYmqHzoCBf1GcAQ3qM9Jq5qd9hRkhMxH+I/iOFajv2lYldqNoiVxg1NdQZMaU6b5IwZDeMs138r8kQW3KRn0WSTorCi0/Si1GRjwd0fpkdIeLYqh2OdWNA+uhSjXFxqUHZ9FhSJyaZv96C9i04=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769615034; c=relaxed/simple;
-	bh=0h+sBSb4YnXf76GSR6XWTeA3xju9ItAMPsrjIBc4RA4=;
+	s=arc-20240116; t=1769615037; c=relaxed/simple;
+	bh=7uW3kng9XlnO2/4IiiKqXXwhJVgSKKKvnzpYiKy7b4w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EF3ZaV5cDPRsCyaHw55HzS7hM/652hMRBRZm3IeoKT9LHkiCSlwAm6lsDsnaUH03vJdd47iId4tuoS0Ndnh1SXR9/RPsWF6g6b0H2bRNIbwb3MqN2jMXcgwf2n5l+zzp8cB6lqKkGxDfBTDPPcqoDM/hpREnQmPai3y+DAky1MU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=J8Jfp8Dc; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Cjk9F1Uie6GC5/Qw4NOTiCSIPr6ajeyKg5nUu7Eiwf96Fdc9eBmo3cBAoU+KZb+LkOdEQ8jSdgtSff7L9Wtf+Z+TBV7cyExtgQBXfG2x2ouWvrGWNX41ZcOH2QSMjhBeLN7wvEuJAflLNRH2Uj9JVKIZSKoEQkZQML8tXWxdlWs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iUSy6FMm; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="J8Jfp8Dc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A7FF3C16AAE;
-	Wed, 28 Jan 2026 15:43:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iUSy6FMm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE6DFC4CEF7;
+	Wed, 28 Jan 2026 15:43:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1769615034;
-	bh=0h+sBSb4YnXf76GSR6XWTeA3xju9ItAMPsrjIBc4RA4=;
+	s=korg; t=1769615037;
+	bh=7uW3kng9XlnO2/4IiiKqXXwhJVgSKKKvnzpYiKy7b4w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=J8Jfp8Dc3h4mX45uWJXn4aBuAyuBJ8vsikqmsuUGb+9S5q2+L5sqxHihcZ+7ZYSCI
-	 S+bmR/5wjEzLGFHnpeGDPGnXRkRqwEbWSqIrTxTNW4Ooo/TEnhUhcdx2RAxitwuZUT
-	 +qKuSohcxZR5JglX5yzmB2y3lcj7dW12sujHNVog=
+	b=iUSy6FMmMout0c4M9jsK5vO2XRHkW396Tqz2eVo7M2RgUGDlyw96gIPhN93OYeTpq
+	 gHGFa4n92CAOD7MsGiyYJgnse9i1UpeUqRnsDzGP6A+AVb2+tqVM/6jZBjg2CQbR3I
+	 DO2v18EBtuDvVzT8trH0TnILNWIkZTZTl4k0lKbg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+4eb282331cab6d5b6588@syzkaller.appspotmail.com,
-	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 6.12 059/169] io_uring/io-wq: check IO_WQ_BIT_EXIT inside work run loop
-Date: Wed, 28 Jan 2026 16:22:22 +0100
-Message-ID: <20260128145336.136898494@linuxfoundation.org>
+	Francesco Lavra <flavra@baylibre.com>,
+	Andy Shevchenko <andriy.shevchenko@intel.com>,
+	Lorenzo Bianconi <lorenzo@kernel.org>,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Subject: [PATCH 6.12 060/169] iio: imu: st_lsm6dsx: fix iio_chan_spec for sensors without event detection
+Date: Wed, 28 Jan 2026 16:22:23 +0100
+Message-ID: <20260128145336.172417507@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260128145334.006287341@linuxfoundation.org>
 References: <20260128145334.006287341@linuxfoundation.org>
@@ -50,89 +52,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jens Axboe <axboe@kernel.dk>
+From: Francesco Lavra <flavra@baylibre.com>
 
-commit 10dc959398175736e495f71c771f8641e1ca1907 upstream.
+commit c34e2e2d67b3bb8d5a6d09b0d6dac845cdd13fb3 upstream.
 
-Currently this is checked before running the pending work. Normally this
-is quite fine, as work items either end up blocking (which will create a
-new worker for other items), or they complete fairly quickly. But syzbot
-reports an issue where io-wq takes seemingly forever to exit, and with a
-bit of debugging, this turns out to be because it queues a bunch of big
-(2GB - 4096b) reads with a /dev/msr* file. Since this file type doesn't
-support ->read_iter(), loop_rw_iter() ends up handling them. Each read
-returns 16MB of data read, which takes 20 (!!) seconds. With a bunch of
-these pending, processing the whole chain can take a long time. Easily
-longer than the syzbot uninterruptible sleep timeout of 140 seconds.
-This then triggers a complaint off the io-wq exit path:
+The st_lsm6dsx_acc_channels array of struct iio_chan_spec has a non-NULL
+event_spec field, indicating support for IIO events. However, event
+detection is not supported for all sensors, and if userspace tries to
+configure accelerometer wakeup events on a sensor device that does not
+support them (e.g. LSM6DS0), st_lsm6dsx_write_event() dereferences a NULL
+pointer when trying to write to the wakeup register.
+Define an additional struct iio_chan_spec array whose members have a NULL
+event_spec field, and use this array instead of st_lsm6dsx_acc_channels for
+sensors without event detection capability.
 
-INFO: task syz.4.135:6326 blocked for more than 143 seconds.
-      Not tainted syzkaller #0
-      Blocked by coredump.
-"echo 0 > /proc/sys/kernel/hung_task_timeout_secs" disables this message.
-task:syz.4.135       state:D stack:26824 pid:6326  tgid:6324  ppid:5957   task_flags:0x400548 flags:0x00080000
-Call Trace:
- <TASK>
- context_switch kernel/sched/core.c:5256 [inline]
- __schedule+0x1139/0x6150 kernel/sched/core.c:6863
- __schedule_loop kernel/sched/core.c:6945 [inline]
- schedule+0xe7/0x3a0 kernel/sched/core.c:6960
- schedule_timeout+0x257/0x290 kernel/time/sleep_timeout.c:75
- do_wait_for_common kernel/sched/completion.c:100 [inline]
- __wait_for_common+0x2fc/0x4e0 kernel/sched/completion.c:121
- io_wq_exit_workers io_uring/io-wq.c:1328 [inline]
- io_wq_put_and_exit+0x271/0x8a0 io_uring/io-wq.c:1356
- io_uring_clean_tctx+0x10d/0x190 io_uring/tctx.c:203
- io_uring_cancel_generic+0x69c/0x9a0 io_uring/cancel.c:651
- io_uring_files_cancel include/linux/io_uring.h:19 [inline]
- do_exit+0x2ce/0x2bd0 kernel/exit.c:911
- do_group_exit+0xd3/0x2a0 kernel/exit.c:1112
- get_signal+0x2671/0x26d0 kernel/signal.c:3034
- arch_do_signal_or_restart+0x8f/0x7e0 arch/x86/kernel/signal.c:337
- __exit_to_user_mode_loop kernel/entry/common.c:41 [inline]
- exit_to_user_mode_loop+0x8c/0x540 kernel/entry/common.c:75
- __exit_to_user_mode_prepare include/linux/irq-entry-common.h:226 [inline]
- syscall_exit_to_user_mode_prepare include/linux/irq-entry-common.h:256 [inline]
- syscall_exit_to_user_mode_work include/linux/entry-common.h:159 [inline]
- syscall_exit_to_user_mode include/linux/entry-common.h:194 [inline]
- do_syscall_64+0x4ee/0xf80 arch/x86/entry/syscall_64.c:100
- entry_SYSCALL_64_after_hwframe+0x77/0x7f
-RIP: 0033:0x7fa02738f749
-RSP: 002b:00007fa0281ae0e8 EFLAGS: 00000246 ORIG_RAX: 00000000000000ca
-RAX: fffffffffffffe00 RBX: 00007fa0275e6098 RCX: 00007fa02738f749
-RDX: 0000000000000000 RSI: 0000000000000080 RDI: 00007fa0275e6098
-RBP: 00007fa0275e6090 R08: 0000000000000000 R09: 0000000000000000
-R10: 0000000000000000 R11: 0000000000000246 R12: 0000000000000000
-R13: 00007fa0275e6128 R14: 00007fff14e4fcb0 R15: 00007fff14e4fd98
-
-There's really nothing wrong here, outside of processing these reads
-will take a LONG time. However, we can speed up the exit by checking the
-IO_WQ_BIT_EXIT inside the io_worker_handle_work() loop, as syzbot will
-exit the ring after queueing up all of these reads. Then once the first
-item is processed, io-wq will simply cancel the rest. That should avoid
-syzbot running into this complaint again.
-
+Fixes: b5969abfa8b8 ("iio: imu: st_lsm6dsx: add motion events")
+Signed-off-by: Francesco Lavra <flavra@baylibre.com>
+Reviewed-by: Andy Shevchenko <andriy.shevchenko@intel.com>
+Acked-by: Lorenzo Bianconi <lorenzo@kernel.org>
 Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/all/68a2decc.050a0220.e29e5.0099.GAE@google.com/
-Reported-by: syzbot+4eb282331cab6d5b6588@syzkaller.appspotmail.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- io_uring/io-wq.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/iio/imu/st_lsm6dsx/st_lsm6dsx_core.c |   15 +++++++++++----
+ 1 file changed, 11 insertions(+), 4 deletions(-)
 
---- a/io_uring/io-wq.c
-+++ b/io_uring/io-wq.c
-@@ -552,9 +552,9 @@ static void io_worker_handle_work(struct
- 	__releases(&acct->lock)
- {
- 	struct io_wq *wq = worker->wq;
--	bool do_kill = test_bit(IO_WQ_BIT_EXIT, &wq->state);
+--- a/drivers/iio/imu/st_lsm6dsx/st_lsm6dsx_core.c
++++ b/drivers/iio/imu/st_lsm6dsx/st_lsm6dsx_core.c
+@@ -101,6 +101,13 @@ static const struct iio_chan_spec st_lsm
+ 	IIO_CHAN_SOFT_TIMESTAMP(3),
+ };
  
- 	do {
-+		bool do_kill = test_bit(IO_WQ_BIT_EXIT, &wq->state);
- 		struct io_wq_work *work;
- 
- 		/*
++static const struct iio_chan_spec st_lsm6ds0_acc_channels[] = {
++	ST_LSM6DSX_CHANNEL(IIO_ACCEL, 0x28, IIO_MOD_X, 0),
++	ST_LSM6DSX_CHANNEL(IIO_ACCEL, 0x2a, IIO_MOD_Y, 1),
++	ST_LSM6DSX_CHANNEL(IIO_ACCEL, 0x2c, IIO_MOD_Z, 2),
++	IIO_CHAN_SOFT_TIMESTAMP(3),
++};
++
+ static const struct iio_chan_spec st_lsm6dsx_gyro_channels[] = {
+ 	ST_LSM6DSX_CHANNEL(IIO_ANGL_VEL, 0x22, IIO_MOD_X, 0),
+ 	ST_LSM6DSX_CHANNEL(IIO_ANGL_VEL, 0x24, IIO_MOD_Y, 1),
+@@ -142,8 +149,8 @@ static const struct st_lsm6dsx_settings
+ 		},
+ 		.channels = {
+ 			[ST_LSM6DSX_ID_ACC] = {
+-				.chan = st_lsm6dsx_acc_channels,
+-				.len = ARRAY_SIZE(st_lsm6dsx_acc_channels),
++				.chan = st_lsm6ds0_acc_channels,
++				.len = ARRAY_SIZE(st_lsm6ds0_acc_channels),
+ 			},
+ 			[ST_LSM6DSX_ID_GYRO] = {
+ 				.chan = st_lsm6ds0_gyro_channels,
+@@ -1449,8 +1456,8 @@ static const struct st_lsm6dsx_settings
+ 		},
+ 		.channels = {
+ 			[ST_LSM6DSX_ID_ACC] = {
+-				.chan = st_lsm6dsx_acc_channels,
+-				.len = ARRAY_SIZE(st_lsm6dsx_acc_channels),
++				.chan = st_lsm6ds0_acc_channels,
++				.len = ARRAY_SIZE(st_lsm6ds0_acc_channels),
+ 			},
+ 			[ST_LSM6DSX_ID_GYRO] = {
+ 				.chan = st_lsm6dsx_gyro_channels,
 
 
