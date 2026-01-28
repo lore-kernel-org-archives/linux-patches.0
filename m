@@ -1,45 +1,51 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63ADF288C22;
-	Wed, 28 Jan 2026 15:54:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73C522E2DF4;
+	Wed, 28 Jan 2026 15:54:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769615663; cv=none; b=bPKUUvCXnc7Pl2Ao77h0sUB86cGLsnCyoLXSUfd9XyUFGoM2N/BB0WEfmQBBrJEkqqHko8MsIGwBh2BzGFkWv2w7mLdxLTXYagZaSByWpoqPI6g987i5/g/bFEsSB3aeBhfCTbT61tKcYm+mT2dG8vSrNFGJ7S0cCfBZsk3vCLs=
+	t=1769615666; cv=none; b=siv9euI90GKVpkFHjy7w4EGU2pR8OBCAxZp67YgRnFzJBXC9PyVWN9+kI2Dyq5DTDYVKywUTqLSvCGQ9DFLlJt1qiPST9sjtFlYi2MrNtrVVBOZyzb0Nhn8pGj/QpguGNYKBI2B0STCquGgQSmwYGQBMIKJuSA5Cd/iZQATfqUc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769615663; c=relaxed/simple;
-	bh=W3nIZ0/UTWNZpMYqmUtkrDjGOXfHlZAiIn5/pVdAaQ0=;
+	s=arc-20240116; t=1769615666; c=relaxed/simple;
+	bh=JH3fdT9tchRJTgiN5nfFtg08PdnmjkbCw+SC1lRp2CU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZfGJfzb8Ds3WwAD0y8BNHN9hinmcExQYGmudr/MRif4KkkwovY2zFv2Ve3f6U0JVxFXicRKr6wxJsk+9gNbvHWoCujSUD1vXi4hNw1tdNDUDhXcB/kQXtyg/YFVTfBp/e1ZhGDvR08aBB/Fw9ERL0pqs7r4OkfLMy7ZjupLK8XQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BrQxsIDo; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=sMkCrLnLmU9eSz7RNGJeirohRRKV5eJ1BvKurZB5RgWF8yPR3EpNAuzHY3tK6Hx86lJYABBwQ6T5dsjb+gGC7qXQ9xbuXkDQQgTfSqxRTRc3F94KtuaR9fLsEAYAEDzBxUmPVkmuEP585asmi33eKCseeVYGpfvWQC20vf7YbdA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=w1DH/R9M; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BrQxsIDo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B944C4CEF1;
-	Wed, 28 Jan 2026 15:54:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="w1DH/R9M"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C64C1C4CEF1;
+	Wed, 28 Jan 2026 15:54:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1769615663;
-	bh=W3nIZ0/UTWNZpMYqmUtkrDjGOXfHlZAiIn5/pVdAaQ0=;
+	s=korg; t=1769615666;
+	bh=JH3fdT9tchRJTgiN5nfFtg08PdnmjkbCw+SC1lRp2CU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BrQxsIDo3SJPYV3OxRQT07kWYIARv+YnafU36ZnmeMV8TH6Ey1ShaCmCjItv5Yfqn
-	 RKpSY33y8t4Ro/TtenIS46953/L2W8/7OSyhVO31Qt9McNKAPjhDfqFNmKXPwmrcgF
-	 ZOZBt7d6xHAqefA+Do35rGbVlLDWM9PjGBmKkWYU=
+	b=w1DH/R9MDRj08Adg5o/nhbX8NRYULVkMAQaotB+XlvIurDr2p32VwbMSOh0/VJzfG
+	 O8ZdZ66uPfPjOchIXSPFqw7q0dCtRimPdnEWyI2E0oHrYPN4HxwnMakOSUfikQ6bBg
+	 02LLI43LKSZLzcpV96hqqKZJTJ+tRXuNsThI/aQU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"David Hildenbrand (Red Hat)" <david@kernel.org>,
-	Rik van Riel <riel@surriel.com>,
-	Laurence Oberman <loberman@redhat.com>,
+	Yosry Ahmed <yosry.ahmed@linux.dev>,
+	Shakeel Butt <shakeel.butt@linux.dev>,
+	Michal Hocko <mhocko@suse.com>,
+	Axel Rasmussen <axelrasmussen@google.com>,
+	David Hildenbrand <david@kernel.org>,
+	Davidlohr Bueso <dave@stgolabs.net>,
+	Johannes Weiner <hannes@cmpxchg.org>,
+	Liam Howlett <liam.howlett@oracle.com>,
 	Lorenzo Stoakes <lorenzo.stoakes@oracle.com>,
-	Oscar Salvador <osalvador@suse.de>,
-	Liu Shixin <liushixin2@huawei.com>,
-	Harry Yoo <harry.yoo@oracle.com>,
-	Lance Yang <lance.yang@linux.dev>,
-	"Uschakow, Stanislav" <suschako@amazon.de>,
+	Mike Rapoport <rppt@kernel.org>,
+	Qi Zheng <zhengqi.arch@bytedance.com>,
+	Suren Baghdasaryan <surenb@google.com>,
+	Vlastimil Babka <vbabka@suse.cz>,
+	Wei Xu <weixugc@google.com>,
+	Yuanchu Xie <yuanchu@google.com>,
 	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.18 077/227] mm/rmap: fix two comments related to huge_pmd_unshare()
-Date: Wed, 28 Jan 2026 16:22:02 +0100
-Message-ID: <20260128145347.113772013@linuxfoundation.org>
+Subject: [PATCH 6.18 078/227] mm: restore per-memcg proactive reclaim with !CONFIG_NUMA
+Date: Wed, 28 Jan 2026 16:22:03 +0100
+Message-ID: <20260128145347.150482229@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260128145344.331957407@linuxfoundation.org>
 References: <20260128145344.331957407@linuxfoundation.org>
@@ -58,72 +64,97 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Hildenbrand (Red Hat) <david@kernel.org>
+From: Yosry Ahmed <yosry.ahmed@linux.dev>
 
-commit a8682d500f691b6dfaa16ae1502d990aeb86e8be upstream.
+commit 16aca2c98a6fdf071e5a1a765a295995d7c7e346 upstream.
 
-PMD page table unsharing no longer touches the refcount of a PMD page
-table.  Also, it is not about dropping the refcount of a "PMD page" but
-the "PMD page table".
+Commit 2b7226af730c ("mm/memcg: make memory.reclaim interface generic")
+moved proactive reclaim logic from memory.reclaim handler to a generic
+user_proactive_reclaim() helper to be used for per-node proactive reclaim.
 
-Let's just simplify by saying that the PMD page table was unmapped,
-consequently also unmapping the folio that was mapped into this page.
+However, user_proactive_reclaim() was only defined under CONFIG_NUMA, with
+a stub always returning 0 otherwise.  This broke memory.reclaim on
+!CONFIG_NUMA configs, causing it to report success without actually
+attempting reclaim.
 
-This code should be deduplicated in the future.
+Move the definition of user_proactive_reclaim() outside CONFIG_NUMA, and
+instead define a stub for __node_reclaim() in the !CONFIG_NUMA case.
+__node_reclaim() is only called from user_proactive_reclaim() when a write
+is made to sys/devices/system/node/nodeX/reclaim, which is only defined
+with CONFIG_NUMA.
 
-Link: https://lkml.kernel.org/r/20251223214037.580860-4-david@kernel.org
-Fixes: 59d9094df3d7 ("mm: hugetlb: independent PMD page table shared count")
-Signed-off-by: David Hildenbrand (Red Hat) <david@kernel.org>
-Reviewed-by: Rik van Riel <riel@surriel.com>
-Tested-by: Laurence Oberman <loberman@redhat.com>
-Reviewed-by: Lorenzo Stoakes <lorenzo.stoakes@oracle.com>
-Acked-by: Oscar Salvador <osalvador@suse.de>
-Cc: Liu Shixin <liushixin2@huawei.com>
-Cc: Harry Yoo <harry.yoo@oracle.com>
-Cc: Lance Yang <lance.yang@linux.dev>
-Cc: "Uschakow, Stanislav" <suschako@amazon.de>
+Link: https://lkml.kernel.org/r/20260116205247.928004-1-yosry.ahmed@linux.dev
+Fixes: 2b7226af730c ("mm/memcg: make memory.reclaim interface generic")
+Signed-off-by: Yosry Ahmed <yosry.ahmed@linux.dev>
+Acked-by: Shakeel Butt <shakeel.butt@linux.dev>
+Acked-by: Michal Hocko <mhocko@suse.com>
+Cc: Axel Rasmussen <axelrasmussen@google.com>
+Cc: David Hildenbrand <david@kernel.org>
+Cc: Davidlohr Bueso <dave@stgolabs.net>
+Cc: Johannes Weiner <hannes@cmpxchg.org>
+Cc: Liam Howlett <liam.howlett@oracle.com>
+Cc: Lorenzo Stoakes <lorenzo.stoakes@oracle.com>
+Cc: Mike Rapoport <rppt@kernel.org>
+Cc: Qi Zheng <zhengqi.arch@bytedance.com>
+Cc: Suren Baghdasaryan <surenb@google.com>
+Cc: Vlastimil Babka <vbabka@suse.cz>
+Cc: Wei Xu <weixugc@google.com>
+Cc: Yuanchu Xie <yuanchu@google.com>
 Cc: <stable@vger.kernel.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/rmap.c |   20 ++++----------------
- 1 file changed, 4 insertions(+), 16 deletions(-)
+ mm/internal.h |    8 --------
+ mm/vmscan.c   |   13 +++++++++++--
+ 2 files changed, 11 insertions(+), 10 deletions(-)
 
---- a/mm/rmap.c
-+++ b/mm/rmap.c
-@@ -2027,14 +2027,8 @@ static bool try_to_unmap_one(struct foli
- 					flush_tlb_range(vma,
- 						range.start, range.end);
- 					/*
--					 * The ref count of the PMD page was
--					 * dropped which is part of the way map
--					 * counting is done for shared PMDs.
--					 * Return 'true' here.  When there is
--					 * no other sharing, huge_pmd_unshare
--					 * returns false and we will unmap the
--					 * actual page and drop map count
--					 * to zero.
-+					 * The PMD table was unmapped,
-+					 * consequently unmapping the folio.
- 					 */
- 					goto walk_done;
- 				}
-@@ -2416,14 +2410,8 @@ static bool try_to_migrate_one(struct fo
- 						range.start, range.end);
+--- a/mm/internal.h
++++ b/mm/internal.h
+@@ -538,16 +538,8 @@ extern unsigned long highest_memmap_pfn;
+ bool folio_isolate_lru(struct folio *folio);
+ void folio_putback_lru(struct folio *folio);
+ extern void reclaim_throttle(pg_data_t *pgdat, enum vmscan_throttle_state reason);
+-#ifdef CONFIG_NUMA
+ int user_proactive_reclaim(char *buf,
+ 			   struct mem_cgroup *memcg, pg_data_t *pgdat);
+-#else
+-static inline int user_proactive_reclaim(char *buf,
+-			   struct mem_cgroup *memcg, pg_data_t *pgdat)
+-{
+-	return 0;
+-}
+-#endif
  
- 					/*
--					 * The ref count of the PMD page was
--					 * dropped which is part of the way map
--					 * counting is done for shared PMDs.
--					 * Return 'true' here.  When there is
--					 * no other sharing, huge_pmd_unshare
--					 * returns false and we will unmap the
--					 * actual page and drop map count
--					 * to zero.
-+					 * The PMD table was unmapped,
-+					 * consequently unmapping the folio.
- 					 */
- 					page_vma_mapped_walk_done(&pvmw);
- 					break;
+ /*
+  * in mm/rmap.c:
+--- a/mm/vmscan.c
++++ b/mm/vmscan.c
+@@ -7740,6 +7740,17 @@ int node_reclaim(struct pglist_data *pgd
+ 	return ret;
+ }
+ 
++#else
++
++static unsigned long __node_reclaim(struct pglist_data *pgdat, gfp_t gfp_mask,
++				    unsigned long nr_pages,
++				    struct scan_control *sc)
++{
++	return 0;
++}
++
++#endif
++
+ enum {
+ 	MEMORY_RECLAIM_SWAPPINESS = 0,
+ 	MEMORY_RECLAIM_SWAPPINESS_MAX,
+@@ -7847,8 +7858,6 @@ int user_proactive_reclaim(char *buf,
+ 	return 0;
+ }
+ 
+-#endif
+-
+ /**
+  * check_move_unevictable_folios - Move evictable folios to appropriate zone
+  * lru list
 
 
