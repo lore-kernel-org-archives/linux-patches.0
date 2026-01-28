@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4D9923E358;
-	Wed, 28 Jan 2026 15:33:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 364FE23E358;
+	Wed, 28 Jan 2026 15:33:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769614410; cv=none; b=mQsm1w4CcQC5+HUiouKy5ApTsic/qGz059rCDa1YqU0qjvPTaKQdtlgv1J7L0k46bginACRUju/Qp2J3YBaH75dyu9Dg2Hg07fQYTJOfj965WHncj7wUeU0tadzBWJG8ezcY+3vLciBc0iTkPYw2oGOWFJhYjJO+c999r43rw2M=
+	t=1769614414; cv=none; b=VII67fc+MU4JUxBO+6UzGJ+Av0logDLD3fE5t5LSRTqJ/KOVkP48ST1ognRqxULnYdtt0sC9yI1EWgYVnj5Kekm7Ea/wrCEbX5nj57c80H9IyVKi3Q8U8oBRuWQLlQb8FajpJIlTQcfvT22vcNu1Md8b/QSm5iQJu8IMtMLF0XQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769614410; c=relaxed/simple;
-	bh=hDex9PaA4SY6YReo+5nAA6gKJ7BpSH1NYpVUgyyhU+0=;
+	s=arc-20240116; t=1769614414; c=relaxed/simple;
+	bh=wvaDt7cbsVJ8ZIggSH12Ac/Vj8bCQ1rDjCMGBOxZD44=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=O/oEloJoWSPm2CXsqUxue63NFPKOPK+4wgnPt3mEipMcih8v45L0z5LohO01VkQah2ETAy6Fy4geBh/Z2HLjRcLuWpH761N58dsAAlCE388V3LwpxYwK7CRaiHrqWF9vFvwHx4y5DJNEjyPoes0+hEW2Ovx4yYLKGEAuWBYnuzs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ou0eL/XK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=DH63D4bCws99FVXMgnyfWUsRoEJMRnPWn9DgPiw4brPrQx9VQWzw4OqNlglSekGsa5VwEMFyN+4QKuaossM3LN8LBX/l5Qf2c+kb4HKWLFAF88aFOOWL8KCZZ4sKnx/lYEOuKeOKGOMWf5NsN09qBbalwXGRMPtKz8CUtNqdvF4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pExKAW+A; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ou0eL/XK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 241C0C4CEF1;
-	Wed, 28 Jan 2026 15:33:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pExKAW+A"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A3E8C4CEF1;
+	Wed, 28 Jan 2026 15:33:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1769614410;
-	bh=hDex9PaA4SY6YReo+5nAA6gKJ7BpSH1NYpVUgyyhU+0=;
+	s=korg; t=1769614414;
+	bh=wvaDt7cbsVJ8ZIggSH12Ac/Vj8bCQ1rDjCMGBOxZD44=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ou0eL/XKkF+7bMTE4CZvYyqPSjNrOEwN7oVusb+LQD4GskwDHBdjqPD1X0YFvU8B3
-	 89NDLICY3/K/5cgkxjshFO+/wcR9fdWLeqE4LPg9ux+dMH4x3z71KQblqbn7gHG1l4
-	 gkljaweVsh3I35ZkGIytHlUhxDaMAnnNYXh8XXuc=
+	b=pExKAW+A7Fvju1c9OvnIUeM3xS+PGXq9T8c+RMZVTlvKtoV7U5mEL2rGeqHzcvMgy
+	 jcbBwd/XJw+v9bvV2opUabApMwJc/sqMAkWoErGdPE0fdCzJpJgZKe2y5+hw3LA6vu
+	 0MMN0Hqk4ow2a/tOEDDxPENn+QYuvTSut1y/Fku0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kuniyuki Iwashima <kuniyu@google.com>,
-	Eric Dumazet <edumazet@google.com>,
+	David Yang <mmyangfl@gmail.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 127/254] fou: Dont allow 0 for FOU_ATTR_IPPROTO.
-Date: Wed, 28 Jan 2026 16:21:43 +0100
-Message-ID: <20260128145349.390771337@linuxfoundation.org>
+Subject: [PATCH 6.6 128/254] veth: fix data race in veth_get_ethtool_stats
+Date: Wed, 28 Jan 2026 16:21:44 +0100
+Message-ID: <20260128145349.425985453@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260128145344.698118637@linuxfoundation.org>
 References: <20260128145344.698118637@linuxfoundation.org>
@@ -52,55 +51,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kuniyuki Iwashima <kuniyu@google.com>
+From: David Yang <mmyangfl@gmail.com>
 
-[ Upstream commit 7a9bc9e3f42391e4c187e099263cf7a1c4b69ff5 ]
+[ Upstream commit b47adaab8b3d443868096bac08fdbb3d403194ba ]
 
-fou_udp_recv() has the same problem mentioned in the previous
-patch.
+In veth_get_ethtool_stats(), some statistics protected by
+u64_stats_sync, are read and accumulated in ignorance of possible
+u64_stats_fetch_retry() events. These statistics, peer_tq_xdp_xmit and
+peer_tq_xdp_xmit_err, are already accumulated by veth_xdp_xmit(). Fix
+this by reading them into a temporary buffer first.
 
-If FOU_ATTR_IPPROTO is set to 0, skb is not freed by
-fou_udp_recv() nor "resubmit"-ted in ip_protocol_deliver_rcu().
-
-Let's forbid 0 for FOU_ATTR_IPPROTO.
-
-Fixes: 23461551c0062 ("fou: Support for foo-over-udp RX path")
-Signed-off-by: Kuniyuki Iwashima <kuniyu@google.com>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Link: https://patch.msgid.link/20260115172533.693652-4-kuniyu@google.com
+Fixes: 5fe6e56776ba ("veth: rely on peer veth_rq for ndo_xdp_xmit accounting")
+Signed-off-by: David Yang <mmyangfl@gmail.com>
+Link: https://patch.msgid.link/20260114122450.227982-1-mmyangfl@gmail.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- Documentation/netlink/specs/fou.yaml | 2 ++
- net/ipv4/fou_nl.c                    | 2 +-
- 2 files changed, 3 insertions(+), 1 deletion(-)
+ drivers/net/veth.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/Documentation/netlink/specs/fou.yaml b/Documentation/netlink/specs/fou.yaml
-index 0af5ab842c04d..91721ee406413 100644
---- a/Documentation/netlink/specs/fou.yaml
-+++ b/Documentation/netlink/specs/fou.yaml
-@@ -39,6 +39,8 @@ attribute-sets:
-       -
-         name: ipproto
-         type: u8
-+        checks:
-+          min: 1
-       -
-         name: type
-         type: u8
-diff --git a/net/ipv4/fou_nl.c b/net/ipv4/fou_nl.c
-index 98b90107b5abc..bbd955f4c9d19 100644
---- a/net/ipv4/fou_nl.c
-+++ b/net/ipv4/fou_nl.c
-@@ -14,7 +14,7 @@
- const struct nla_policy fou_nl_policy[FOU_ATTR_IFINDEX + 1] = {
- 	[FOU_ATTR_PORT] = { .type = NLA_U16, },
- 	[FOU_ATTR_AF] = { .type = NLA_U8, },
--	[FOU_ATTR_IPPROTO] = { .type = NLA_U8, },
-+	[FOU_ATTR_IPPROTO] = NLA_POLICY_MIN(NLA_U8, 1),
- 	[FOU_ATTR_TYPE] = { .type = NLA_U8, },
- 	[FOU_ATTR_REMCSUM_NOPARTIAL] = { .type = NLA_FLAG, },
- 	[FOU_ATTR_LOCAL_V4] = { .type = NLA_U32, },
+diff --git a/drivers/net/veth.c b/drivers/net/veth.c
+index 7767b6ff5a155..2b3b0beb55c88 100644
+--- a/drivers/net/veth.c
++++ b/drivers/net/veth.c
+@@ -226,16 +226,20 @@ static void veth_get_ethtool_stats(struct net_device *dev,
+ 		const struct veth_rq_stats *rq_stats = &rcv_priv->rq[i].stats;
+ 		const void *base = (void *)&rq_stats->vs;
+ 		unsigned int start, tx_idx = idx;
++		u64 buf[VETH_TQ_STATS_LEN];
+ 		size_t offset;
+ 
+-		tx_idx += (i % dev->real_num_tx_queues) * VETH_TQ_STATS_LEN;
+ 		do {
+ 			start = u64_stats_fetch_begin(&rq_stats->syncp);
+ 			for (j = 0; j < VETH_TQ_STATS_LEN; j++) {
+ 				offset = veth_tq_stats_desc[j].offset;
+-				data[tx_idx + j] += *(u64 *)(base + offset);
++				buf[j] = *(u64 *)(base + offset);
+ 			}
+ 		} while (u64_stats_fetch_retry(&rq_stats->syncp, start));
++
++		tx_idx += (i % dev->real_num_tx_queues) * VETH_TQ_STATS_LEN;
++		for (j = 0; j < VETH_TQ_STATS_LEN; j++)
++			data[tx_idx + j] += buf[j];
+ 	}
+ 	pp_idx = idx + dev->real_num_tx_queues * VETH_TQ_STATS_LEN;
+ 
 -- 
 2.51.0
 
