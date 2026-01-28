@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2B2081AA8;
-	Wed, 28 Jan 2026 16:00:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B99025783A;
+	Wed, 28 Jan 2026 16:00:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769616045; cv=none; b=P0AaWMM3h+nzWsTJMBI8Cd942i+zJ9IGjDfsN/3SzppqgRexIVIW9EpaYez/xhWDBLhyrjopJUeHWh3mrBzs9QQwDyu7wQ47//uiE0dY34NGYFmMXsd/DL8wT+lI4IP9KxeZB09qK07K4w8Y5XWR1QRFF9VnPhfxmCoW8SbucXw=
+	t=1769616049; cv=none; b=c3pDm04WP9O1Rb7auNhr4VJ0bjdVL8ZgMqY8TdbMWO4XfXT1lFYqYMQHSLrFTqh3m4A9ODCHkBpu87C1nVvlZFHo7907o/bG6vihTm+kWQ2Rt5XnFSRMP2XW+h4BLVbdSp8gFdCXg4qKC+2Q5OF4fN1+w8UmQJ/UJNaHk2p+tKk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769616045; c=relaxed/simple;
-	bh=U5U+Dxyzbkv+frTwShZe3aDQQauM75213JRjwrOXeAA=;
+	s=arc-20240116; t=1769616049; c=relaxed/simple;
+	bh=uk2kq3JCcr9+t5mJRXx3PsRczl9ZTA7/cXmYb2KzBGA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=p5ArjUfH4tF4zngiPnM8Xzr6VMXW7e4m6xGtvPhmAHc2deTwM7JOmkOWua8V9MknEE26fIhvZ1wV5qUf9UgIGNjZNdl3+9l/bLiMqAwlPSnP66m/uDA3SpJS+/C3HI0odafaDjNtg31j6fS4kPIykLN69T4vmnC/0eOiRPCdpHs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iWjycgHg; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Jqmt+fIjrAniEaIleDQcsZVDVc33nUpq6wldQAKp6o5RgrwSmVMgFoRwT5k2LsJEsM1qWxK6adEEP8cvhny2qJm2wQ6hPORGBAdRfMX8wGP6Xwp8nB55K2fzDHjYUt8r5aSOJgjJ1B0XtoXXx+ZZW/N6YwWxt+3N2nZDmjySo60=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WZSlAPYE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iWjycgHg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4697AC4CEF1;
-	Wed, 28 Jan 2026 16:00:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WZSlAPYE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8BC7BC116C6;
+	Wed, 28 Jan 2026 16:00:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1769616045;
-	bh=U5U+Dxyzbkv+frTwShZe3aDQQauM75213JRjwrOXeAA=;
+	s=korg; t=1769616049;
+	bh=uk2kq3JCcr9+t5mJRXx3PsRczl9ZTA7/cXmYb2KzBGA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iWjycgHgYG2B4oC1GG7Me4OmzbcKpQWNey7EdZM/YucXiq89YkmmkTrR3KKPk96z+
-	 arfJVLs21zaBfxgJvQwIKbqFFkXbCcbtcX9x1GyI/hYBRwYJgcpXHVXt/k7nb1zdHG
-	 FIbfunXBg7iOVJGssLqDgetEBRwnUMRyosNHSHQA=
+	b=WZSlAPYEm/yjudJVyxP8A7qOh8R4szl+1yw2pqxXpQBGwhxHkoaUTrzLT39KGHkxY
+	 WsXxe9EEkgm76Rv9bCFaarnW2r+MHVWfaiZSQjiSxs8mejiaiKoxVuV3NTSzJQvAiQ
+	 w9WaodxukxgveATIBfqCP7wPf7SqDUSpDZ47ThxI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vasily Gorbik <gor@linux.ibm.com>,
-	Alexander Egorenkov <egorenar@linux.ibm.com>,
-	Heiko Carstens <hca@linux.ibm.com>
-Subject: [PATCH 6.18 190/227] s390/boot/vmlinux.lds.S: Ensure bzImage ends with SecureBoot trailer
-Date: Wed, 28 Jan 2026 16:23:55 +0100
-Message-ID: <20260128145351.282542187@linuxfoundation.org>
+	Wenkai Lin <linwenkai6@hisilicon.com>,
+	Chenghai Huang <huangchenghai2@huawei.com>,
+	Zhangfei Gao <zhangfei.gao@linaro.org>
+Subject: [PATCH 6.18 191/227] uacce: fix cdev handling in the cleanup path
+Date: Wed, 28 Jan 2026 16:23:56 +0100
+Message-ID: <20260128145351.319459532@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260128145344.331957407@linuxfoundation.org>
 References: <20260128145344.331957407@linuxfoundation.org>
@@ -51,60 +51,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexander Egorenkov <egorenar@linux.ibm.com>
+From: Wenkai Lin <linwenkai6@hisilicon.com>
 
-commit ddc6cbef3ef10359b5640b4ee810a520edc73586 upstream.
+commit a3bece3678f6c88db1f44c602b2a63e84b4040ac upstream.
 
-Since commit 3e86e4d74c04 ("kbuild: keep .modinfo section in
-vmlinux.unstripped") the .modinfo section which has SHF_ALLOC ends up
-in bzImage after the SecureBoot trailer. This breaks SecureBoot because
-the bootloader can no longer find the SecureBoot trailer with kernel's
-signature at the expected location in bzImage. To fix the bug,
-move discarded sections before the ELF_DETAILS macro and discard
-the .modinfo section which is not needed by the decompressor.
+When cdev_device_add fails, it internally releases the cdev memory,
+and if cdev_device_del is then executed, it will cause a hang error.
+To fix it, we check the return value of cdev_device_add() and clear
+uacce->cdev to avoid calling cdev_device_del in the uacce_remove.
 
-Fixes: 3e86e4d74c04 ("kbuild: keep .modinfo section in vmlinux.unstripped")
+Fixes: 015d239ac014 ("uacce: add uacce driver")
 Cc: stable@vger.kernel.org
-Suggested-by: Vasily Gorbik <gor@linux.ibm.com>
-Reviewed-by: Vasily Gorbik <gor@linux.ibm.com>
-Tested-by: Vasily Gorbik <gor@linux.ibm.com>
-Signed-off-by: Alexander Egorenkov <egorenar@linux.ibm.com>
-Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
+Signed-off-by: Wenkai Lin <linwenkai6@hisilicon.com>
+Signed-off-by: Chenghai Huang <huangchenghai2@huawei.com>
+Acked-by: Zhangfei Gao <zhangfei.gao@linaro.org>
+Link: https://patch.msgid.link/20251202061256.4158641-2-huangchenghai2@huawei.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/s390/boot/vmlinux.lds.S |   17 +++++++++--------
- 1 file changed, 9 insertions(+), 8 deletions(-)
+ drivers/misc/uacce/uacce.c |    8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
---- a/arch/s390/boot/vmlinux.lds.S
-+++ b/arch/s390/boot/vmlinux.lds.S
-@@ -137,6 +137,15 @@ SECTIONS
- 	}
- 	_end = .;
- 
-+	/* Sections to be discarded */
-+	/DISCARD/ : {
-+		COMMON_DISCARDS
-+		*(.eh_frame)
-+		*(*__ksymtab*)
-+		*(___kcrctab*)
-+		*(.modinfo)
-+	}
+--- a/drivers/misc/uacce/uacce.c
++++ b/drivers/misc/uacce/uacce.c
+@@ -519,6 +519,8 @@ EXPORT_SYMBOL_GPL(uacce_alloc);
+  */
+ int uacce_register(struct uacce_device *uacce)
+ {
++	int ret;
 +
- 	DWARF_DEBUG
- 	ELF_DETAILS
+ 	if (!uacce)
+ 		return -ENODEV;
  
-@@ -161,12 +170,4 @@ SECTIONS
- 		*(.rela.*) *(.rela_*)
- 	}
- 	ASSERT(SIZEOF(.rela.dyn) == 0, "Unexpected run-time relocations (.rela) detected!")
--
--	/* Sections to be discarded */
--	/DISCARD/ : {
--		COMMON_DISCARDS
--		*(.eh_frame)
--		*(*__ksymtab*)
--		*(___kcrctab*)
--	}
+@@ -529,7 +531,11 @@ int uacce_register(struct uacce_device *
+ 	uacce->cdev->ops = &uacce_fops;
+ 	uacce->cdev->owner = THIS_MODULE;
+ 
+-	return cdev_device_add(uacce->cdev, &uacce->dev);
++	ret = cdev_device_add(uacce->cdev, &uacce->dev);
++	if (ret)
++		uacce->cdev = NULL;
++
++	return ret;
  }
+ EXPORT_SYMBOL_GPL(uacce_register);
+ 
 
 
