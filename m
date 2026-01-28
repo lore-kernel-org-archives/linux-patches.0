@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79AC213B7A3;
-	Wed, 28 Jan 2026 15:31:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1BED01E9B1A;
+	Wed, 28 Jan 2026 15:31:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769614286; cv=none; b=oTwfnrjYj/2DlQN9iVlQhQugGb/T4z1Dfhly79SadcDhPNGe7a8pKD0l9poDgV+gYNZj8e46dD4ExJ8URLtQHlpG6AwfAvboxZDNIF3NgSfnNq8SOSTfTmJydr5X729Q8IKTAp0wQCQQgHW2JVVYy4ipxZyOETTROpH4197gtgU=
+	t=1769614290; cv=none; b=IpsHPDfN5Zyv/hOCN03h1R12SrBq3NDlXYVcq6wcIxm4vZcXUeC460irq/nJAJZn4Ex93+a1hw00fiQXNPWkZZNcDgHT7N5SgwvlgAiitxsf/dnY300TvRPd4QqilrPxJDEKOYunnFDJEgrBw57NPuzbMLTcHy+PwbxjV2zijQw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769614286; c=relaxed/simple;
-	bh=RSFgrDwGq8SiGLkrbj6qifFmkcwlZBzF1cCPYaFhcOg=;
+	s=arc-20240116; t=1769614290; c=relaxed/simple;
+	bh=PO3zOtUuMfxn2CncIdzXQzrbFIF059j8SItt6+cMVh4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jg6c8RvdtnsfcablZ50F9ZFwRh6vYlbXF+mmz52816fkbNJ3gX2Xa0HZW+OPz0quu3P8Ux65Xlbr+1LYVJ6aREtPylM0oixq8QvFp8CP56TRZSd4NptRNOOWbshoMj1uqR4C9f+xP8wWZe7dlXBTeIVM85bbXvJC9UP5bPhuNuM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=okNQtb0A; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ryT+ry7z/chqveLgEOK5OCXKBVaxEhpa9Wd9yzzpbJ0j1rKM0C6068j0B2JB6D5QMb7bYJpYJT26BhlUm6LxDauTj2ezxNqdE831QgMkFlTAsPrUicO5amLQSlnSPXrh2hb0F3ypUXZhM/yiSgfJN8LpAetlgCH8cZ9N8MMaiZQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0jVR+Yj+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="okNQtb0A"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3518C4CEF1;
-	Wed, 28 Jan 2026 15:31:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0jVR+Yj+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7FA97C4CEF1;
+	Wed, 28 Jan 2026 15:31:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1769614286;
-	bh=RSFgrDwGq8SiGLkrbj6qifFmkcwlZBzF1cCPYaFhcOg=;
+	s=korg; t=1769614290;
+	bh=PO3zOtUuMfxn2CncIdzXQzrbFIF059j8SItt6+cMVh4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=okNQtb0AJU+Nt6CoeGcnfssbdeo2Relhb2NwlTc+WMK652b0+A0Tn7QXQIFH9jsUk
-	 xW9M5yS4kMnNZYzc1vMeJH08b5mg5E6lBtxsiWdjLRR4W8eoBXU7hxL+VUTEkldt/A
-	 4GIXJRmvpw2Pum3TnqNwfnoFQr+iKOyl3Raoopes=
+	b=0jVR+Yj+Cg6SoJkqMjeDD4Q1QJwB31dLdUeQaDpEwjyeg//8GEmOSAYNz5X2VcwzG
+	 vYiuGYDi1x7ELnf54POXJntel2alTdQ6YdVTqlf9aO72r1lqwGMu9f8E4GYrZ5XJKe
+	 VuxxqIcDo0ORbDsLlnZNfCPEPMaSLJYLJ7agB5+Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ming Lei <ming.lei@redhat.com>,
-	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 6.6 090/254] io_uring: move local task_work in exit cancel loop
-Date: Wed, 28 Jan 2026 16:21:06 +0100
-Message-ID: <20260128145348.067899369@linuxfoundation.org>
+	Xabier Marquiegui <reibax@gmail.com>,
+	Richard Cochran <richardcochran@gmail.com>,
+	Vinicius Costa Gomes <vinicius.gomes@intel.com>,
+	"David S. Miller" <davem@davemloft.net>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 091/254] posix-clock: introduce posix_clock_context concept
+Date: Wed, 28 Jan 2026 16:21:07 +0100
+Message-ID: <20260128145348.103474143@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260128145344.698118637@linuxfoundation.org>
 References: <20260128145344.698118637@linuxfoundation.org>
@@ -50,62 +53,318 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ming Lei <ming.lei@redhat.com>
+From: Xabier Marquiegui <reibax@gmail.com>
 
-commit da579f05ef0faada3559e7faddf761c75cdf85e1 upstream.
+[ Upstream commit 60c6946675fc06dd2fd2b7a4b6fd1c1f046f1056 ]
 
-With IORING_SETUP_DEFER_TASKRUN, task work is queued to ctx->work_llist
-(local work) rather than the fallback list. During io_ring_exit_work(),
-io_move_task_work_from_local() was called once before the cancel loop,
-moving work from work_llist to fallback_llist.
+Add the necessary structure to support custom private-data per
+posix-clock user.
 
-However, task work can be added to work_llist during the cancel loop
-itself. There are two cases:
+The previous implementation of posix-clock assumed all file open
+instances need access to the same clock structure on private_data.
 
-1) io_kill_timeouts() is called from io_uring_try_cancel_requests() to
-cancel pending timeouts, and it adds task work via io_req_queue_tw_complete()
-for each cancelled timeout:
+The need for individual data structures per file open instance has been
+identified when developing support for multiple timestamp event queue
+users for ptp_clock.
 
-2) URING_CMD requests like ublk can be completed via
-io_uring_cmd_complete_in_task() from ublk_queue_rq() during canceling,
-given ublk request queue is only quiesced when canceling the 1st uring_cmd.
-
-Since io_allowed_defer_tw_run() returns false in io_ring_exit_work()
-(kworker != submitter_task), io_run_local_work() is never invoked,
-and the work_llist entries are never processed. This causes
-io_uring_try_cancel_requests() to loop indefinitely, resulting in
-100% CPU usage in kworker threads.
-
-Fix this by moving io_move_task_work_from_local() inside the cancel
-loop, ensuring any work on work_llist is moved to fallback before
-each cancel attempt.
-
-Cc: stable@vger.kernel.org
-Fixes: c0e0d6ba25f1 ("io_uring: add IORING_SETUP_DEFER_TASKRUN")
-Signed-off-by: Ming Lei <ming.lei@redhat.com>
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Xabier Marquiegui <reibax@gmail.com>
+Suggested-by: Richard Cochran <richardcochran@gmail.com>
+Suggested-by: Vinicius Costa Gomes <vinicius.gomes@intel.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Stable-dep-of: e859d375d169 ("posix-clock: Store file pointer in struct posix_clock_context")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- io_uring/io_uring.c |    8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/ptp/ptp_chardev.c   | 21 +++++++++++++--------
+ drivers/ptp/ptp_private.h   | 16 +++++++++-------
+ include/linux/posix-clock.h | 35 +++++++++++++++++++++++++++--------
+ kernel/time/posix-clock.c   | 36 +++++++++++++++++++++++++++---------
+ 4 files changed, 76 insertions(+), 32 deletions(-)
 
---- a/io_uring/io_uring.c
-+++ b/io_uring/io_uring.c
-@@ -3191,11 +3191,11 @@ static __cold void io_ring_exit_work(str
- 			mutex_unlock(&ctx->uring_lock);
- 		}
+diff --git a/drivers/ptp/ptp_chardev.c b/drivers/ptp/ptp_chardev.c
+index 6f6019fb41c0c..6eecb53b3e670 100644
+--- a/drivers/ptp/ptp_chardev.c
++++ b/drivers/ptp/ptp_chardev.c
+@@ -103,14 +103,16 @@ int ptp_set_pinfunc(struct ptp_clock *ptp, unsigned int pin,
+ 	return 0;
+ }
  
--		if (ctx->flags & IORING_SETUP_DEFER_TASKRUN)
--			io_move_task_work_from_local(ctx);
--
--		while (io_uring_try_cancel_requests(ctx, NULL, true))
-+		do {
-+			if (ctx->flags & IORING_SETUP_DEFER_TASKRUN)
-+				io_move_task_work_from_local(ctx);
- 			cond_resched();
-+		} while (io_uring_try_cancel_requests(ctx, NULL, true));
+-int ptp_open(struct posix_clock *pc, fmode_t fmode)
++int ptp_open(struct posix_clock_context *pccontext, fmode_t fmode)
+ {
+ 	return 0;
+ }
  
- 		if (ctx->sq_data) {
- 			struct io_sq_data *sqd = ctx->sq_data;
+-long ptp_ioctl(struct posix_clock *pc, unsigned int cmd, unsigned long arg)
++long ptp_ioctl(struct posix_clock_context *pccontext, unsigned int cmd,
++	       unsigned long arg)
+ {
+-	struct ptp_clock *ptp = container_of(pc, struct ptp_clock, clock);
++	struct ptp_clock *ptp =
++		container_of(pccontext->clk, struct ptp_clock, clock);
+ 	struct ptp_sys_offset_extended *extoff = NULL;
+ 	struct ptp_sys_offset_precise precise_offset;
+ 	struct system_device_crosststamp xtstamp;
+@@ -437,9 +439,11 @@ long ptp_ioctl(struct posix_clock *pc, unsigned int cmd, unsigned long arg)
+ 	return err;
+ }
+ 
+-__poll_t ptp_poll(struct posix_clock *pc, struct file *fp, poll_table *wait)
++__poll_t ptp_poll(struct posix_clock_context *pccontext, struct file *fp,
++		  poll_table *wait)
+ {
+-	struct ptp_clock *ptp = container_of(pc, struct ptp_clock, clock);
++	struct ptp_clock *ptp =
++		container_of(pccontext->clk, struct ptp_clock, clock);
+ 
+ 	poll_wait(fp, &ptp->tsev_wq, wait);
+ 
+@@ -448,10 +452,11 @@ __poll_t ptp_poll(struct posix_clock *pc, struct file *fp, poll_table *wait)
+ 
+ #define EXTTS_BUFSIZE (PTP_BUF_TIMESTAMPS * sizeof(struct ptp_extts_event))
+ 
+-ssize_t ptp_read(struct posix_clock *pc,
+-		 uint rdflags, char __user *buf, size_t cnt)
++ssize_t ptp_read(struct posix_clock_context *pccontext, uint rdflags,
++		 char __user *buf, size_t cnt)
+ {
+-	struct ptp_clock *ptp = container_of(pc, struct ptp_clock, clock);
++	struct ptp_clock *ptp =
++		container_of(pccontext->clk, struct ptp_clock, clock);
+ 	struct timestamp_event_queue *queue = &ptp->tsevq;
+ 	struct ptp_extts_event *event;
+ 	unsigned long flags;
+diff --git a/drivers/ptp/ptp_private.h b/drivers/ptp/ptp_private.h
+index 3fbd1d68a9bcb..e25be08fa6ae9 100644
+--- a/drivers/ptp/ptp_private.h
++++ b/drivers/ptp/ptp_private.h
+@@ -136,16 +136,18 @@ extern struct class *ptp_class;
+ int ptp_set_pinfunc(struct ptp_clock *ptp, unsigned int pin,
+ 		    enum ptp_pin_function func, unsigned int chan);
+ 
+-long ptp_ioctl(struct posix_clock *pc,
+-	       unsigned int cmd, unsigned long arg);
++long ptp_ioctl(struct posix_clock_context *pccontext, unsigned int cmd,
++	       unsigned long arg);
+ 
+-int ptp_open(struct posix_clock *pc, fmode_t fmode);
++int ptp_open(struct posix_clock_context *pccontext, fmode_t fmode);
+ 
+-ssize_t ptp_read(struct posix_clock *pc,
+-		 uint flags, char __user *buf, size_t cnt);
++int ptp_release(struct posix_clock_context *pccontext);
+ 
+-__poll_t ptp_poll(struct posix_clock *pc,
+-	      struct file *fp, poll_table *wait);
++ssize_t ptp_read(struct posix_clock_context *pccontext, uint flags, char __user *buf,
++		 size_t cnt);
++
++__poll_t ptp_poll(struct posix_clock_context *pccontext, struct file *fp,
++		  poll_table *wait);
+ 
+ /*
+  * see ptp_sysfs.c
+diff --git a/include/linux/posix-clock.h b/include/linux/posix-clock.h
+index 468328b1e1dd5..ef8619f489203 100644
+--- a/include/linux/posix-clock.h
++++ b/include/linux/posix-clock.h
+@@ -14,6 +14,7 @@
+ #include <linux/rwsem.h>
+ 
+ struct posix_clock;
++struct posix_clock_context;
+ 
+ /**
+  * struct posix_clock_operations - functional interface to the clock
+@@ -50,18 +51,18 @@ struct posix_clock_operations {
+ 	/*
+ 	 * Optional character device methods:
+ 	 */
+-	long    (*ioctl)   (struct posix_clock *pc,
+-			    unsigned int cmd, unsigned long arg);
++	long (*ioctl)(struct posix_clock_context *pccontext, unsigned int cmd,
++		      unsigned long arg);
+ 
+-	int     (*open)    (struct posix_clock *pc, fmode_t f_mode);
++	int (*open)(struct posix_clock_context *pccontext, fmode_t f_mode);
+ 
+-	__poll_t (*poll)   (struct posix_clock *pc,
+-			    struct file *file, poll_table *wait);
++	__poll_t (*poll)(struct posix_clock_context *pccontext, struct file *file,
++			 poll_table *wait);
+ 
+-	int     (*release) (struct posix_clock *pc);
++	int (*release)(struct posix_clock_context *pccontext);
+ 
+-	ssize_t (*read)    (struct posix_clock *pc,
+-			    uint flags, char __user *buf, size_t cnt);
++	ssize_t (*read)(struct posix_clock_context *pccontext, uint flags,
++			char __user *buf, size_t cnt);
+ };
+ 
+ /**
+@@ -90,6 +91,24 @@ struct posix_clock {
+ 	bool zombie;
+ };
+ 
++/**
++ * struct posix_clock_context - represents clock file operations context
++ *
++ * @clk:              Pointer to the clock
++ * @private_clkdata:  Pointer to user data
++ *
++ * Drivers should use struct posix_clock_context during specific character
++ * device file operation methods to access the posix clock.
++ *
++ * Drivers can store a private data structure during the open operation
++ * if they have specific information that is required in other file
++ * operations.
++ */
++struct posix_clock_context {
++	struct posix_clock *clk;
++	void *private_clkdata;
++};
++
+ /**
+  * posix_clock_register() - register a new clock
+  * @clk:   Pointer to the clock. Caller must provide 'ops' field
+diff --git a/kernel/time/posix-clock.c b/kernel/time/posix-clock.c
+index 05e73d209aa87..706559ed75793 100644
+--- a/kernel/time/posix-clock.c
++++ b/kernel/time/posix-clock.c
+@@ -19,7 +19,8 @@
+  */
+ static struct posix_clock *get_posix_clock(struct file *fp)
+ {
+-	struct posix_clock *clk = fp->private_data;
++	struct posix_clock_context *pccontext = fp->private_data;
++	struct posix_clock *clk = pccontext->clk;
+ 
+ 	down_read(&clk->rwsem);
+ 
+@@ -39,6 +40,7 @@ static void put_posix_clock(struct posix_clock *clk)
+ static ssize_t posix_clock_read(struct file *fp, char __user *buf,
+ 				size_t count, loff_t *ppos)
+ {
++	struct posix_clock_context *pccontext = fp->private_data;
+ 	struct posix_clock *clk = get_posix_clock(fp);
+ 	int err = -EINVAL;
+ 
+@@ -46,7 +48,7 @@ static ssize_t posix_clock_read(struct file *fp, char __user *buf,
+ 		return -ENODEV;
+ 
+ 	if (clk->ops.read)
+-		err = clk->ops.read(clk, fp->f_flags, buf, count);
++		err = clk->ops.read(pccontext, fp->f_flags, buf, count);
+ 
+ 	put_posix_clock(clk);
+ 
+@@ -55,6 +57,7 @@ static ssize_t posix_clock_read(struct file *fp, char __user *buf,
+ 
+ static __poll_t posix_clock_poll(struct file *fp, poll_table *wait)
+ {
++	struct posix_clock_context *pccontext = fp->private_data;
+ 	struct posix_clock *clk = get_posix_clock(fp);
+ 	__poll_t result = 0;
+ 
+@@ -62,7 +65,7 @@ static __poll_t posix_clock_poll(struct file *fp, poll_table *wait)
+ 		return EPOLLERR;
+ 
+ 	if (clk->ops.poll)
+-		result = clk->ops.poll(clk, fp, wait);
++		result = clk->ops.poll(pccontext, fp, wait);
+ 
+ 	put_posix_clock(clk);
+ 
+@@ -72,6 +75,7 @@ static __poll_t posix_clock_poll(struct file *fp, poll_table *wait)
+ static long posix_clock_ioctl(struct file *fp,
+ 			      unsigned int cmd, unsigned long arg)
+ {
++	struct posix_clock_context *pccontext = fp->private_data;
+ 	struct posix_clock *clk = get_posix_clock(fp);
+ 	int err = -ENOTTY;
+ 
+@@ -79,7 +83,7 @@ static long posix_clock_ioctl(struct file *fp,
+ 		return -ENODEV;
+ 
+ 	if (clk->ops.ioctl)
+-		err = clk->ops.ioctl(clk, cmd, arg);
++		err = clk->ops.ioctl(pccontext, cmd, arg);
+ 
+ 	put_posix_clock(clk);
+ 
+@@ -90,6 +94,7 @@ static long posix_clock_ioctl(struct file *fp,
+ static long posix_clock_compat_ioctl(struct file *fp,
+ 				     unsigned int cmd, unsigned long arg)
+ {
++	struct posix_clock_context *pccontext = fp->private_data;
+ 	struct posix_clock *clk = get_posix_clock(fp);
+ 	int err = -ENOTTY;
+ 
+@@ -97,7 +102,7 @@ static long posix_clock_compat_ioctl(struct file *fp,
+ 		return -ENODEV;
+ 
+ 	if (clk->ops.ioctl)
+-		err = clk->ops.ioctl(clk, cmd, arg);
++		err = clk->ops.ioctl(pccontext, cmd, arg);
+ 
+ 	put_posix_clock(clk);
+ 
+@@ -110,6 +115,7 @@ static int posix_clock_open(struct inode *inode, struct file *fp)
+ 	int err;
+ 	struct posix_clock *clk =
+ 		container_of(inode->i_cdev, struct posix_clock, cdev);
++	struct posix_clock_context *pccontext;
+ 
+ 	down_read(&clk->rwsem);
+ 
+@@ -117,14 +123,20 @@ static int posix_clock_open(struct inode *inode, struct file *fp)
+ 		err = -ENODEV;
+ 		goto out;
+ 	}
++	pccontext = kzalloc(sizeof(*pccontext), GFP_KERNEL);
++	if (!pccontext) {
++		err = -ENOMEM;
++		goto out;
++	}
++	pccontext->clk = clk;
++	fp->private_data = pccontext;
+ 	if (clk->ops.open)
+-		err = clk->ops.open(clk, fp->f_mode);
++		err = clk->ops.open(pccontext, fp->f_mode);
+ 	else
+ 		err = 0;
+ 
+ 	if (!err) {
+ 		get_device(clk->dev);
+-		fp->private_data = clk;
+ 	}
+ out:
+ 	up_read(&clk->rwsem);
+@@ -133,14 +145,20 @@ static int posix_clock_open(struct inode *inode, struct file *fp)
+ 
+ static int posix_clock_release(struct inode *inode, struct file *fp)
+ {
+-	struct posix_clock *clk = fp->private_data;
++	struct posix_clock_context *pccontext = fp->private_data;
++	struct posix_clock *clk;
+ 	int err = 0;
+ 
++	if (!pccontext)
++		return -ENODEV;
++	clk = pccontext->clk;
++
+ 	if (clk->ops.release)
+-		err = clk->ops.release(clk);
++		err = clk->ops.release(pccontext);
+ 
+ 	put_device(clk->dev);
+ 
++	kfree(pccontext);
+ 	fp->private_data = NULL;
+ 
+ 	return err;
+-- 
+2.51.0
+
 
 
