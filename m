@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B60B6288C22;
-	Wed, 28 Jan 2026 15:49:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2256D288C22;
+	Wed, 28 Jan 2026 15:49:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769615361; cv=none; b=O/VP9CYlez5Lau0d68VxtR3ioPpNcXliOOwoiiGK0CrpVu0K9U3THhonwviaK6u0Qgg1dVNly119W+o3m5FSF+6SM8gMcu/QDZuF8+Fq8W71jtJrsqgF6mGUk0LVaGDmG6ZVOH3IvzHzF+zlDIi+A5NEhNpJz0MyFQPtDwwn4+A=
+	t=1769615365; cv=none; b=huMWOqGau2+763+OHHfDuEOas7gq5a2Nsrhw5nL5Sjzp5N3D8gbPnZv+eHyBTbWJS8GqGLd8X+lZwZ+M5RzwWlFxO3gbc7ihtyjjtY6PPy8wPhIQTKiAarbb2hipv6GBuYq1vCfMvJTpCCcxCMBvcEHQObsheoFQGs6pZFF+JZk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769615361; c=relaxed/simple;
-	bh=hbizAjs2WfZZ9OCqgC4G1/JYVeHvDournV4zhJqNLPw=;
+	s=arc-20240116; t=1769615365; c=relaxed/simple;
+	bh=t6LyVt5vNooo02jx/vha1Ct3nCPWpT5EPHO8vhS1qpc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZcHZyjt4dfpjeddawsZmZpJN8b6l5BYyjV48QYe1E0WFN7GfE1FBPRfwEaTe2Wcaef5Voc3KbfpiSpu4XKWr5S1DUh9sqYqePWHb8EIyj9zZOqbmsn7iJQO2DyyRCiXK2lnIoryF9yYmCclnUMXu38GXn6IXu7+zX5Si7Te5FXI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FdhfqOeI; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YhtVdT+vf9Ds08QZJ081+hvKwB7Mk9tgEofrS3vujfe+RqOxEruF6czSLcoQtLo97cl7wSmz3aCrwjiTIXH1ra3fHxIiToaMSPkHtVWoGsQOz3SgvBM8wcyuPeYuM+nBlMVdYsM6lsrqgGL7BNlLIHH4ZTovfEIuTAPzq+0NF+g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Y0eInfSA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FdhfqOeI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 43576C4CEF1;
-	Wed, 28 Jan 2026 15:49:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Y0eInfSA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 98C34C116C6;
+	Wed, 28 Jan 2026 15:49:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1769615361;
-	bh=hbizAjs2WfZZ9OCqgC4G1/JYVeHvDournV4zhJqNLPw=;
+	s=korg; t=1769615365;
+	bh=t6LyVt5vNooo02jx/vha1Ct3nCPWpT5EPHO8vhS1qpc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FdhfqOeI00QER/TR6qpErZ848JtIYU01pRkqTWzEXA9tHz3OFfNkO9KgahWD+tNjR
-	 J9NLSBHLrPRZ4dmxxoNUYNZcMf+rJX7rKur4M9IxOT8Rm2ZBWC8m46E0hNo7Dy22Cj
-	 50PBIDNBDlXxEHFx8ehhwx0JVmwDflne3kUhUpls=
+	b=Y0eInfSAkpaUNehwNgDx06RKdlcrWLQHle82OG+XLSFQexkZTjatMkpll4gZKTcb5
+	 LmCb+0C0Eqw0d52bztb92A+sIiuBBwhjq5BAohK/6ZhBtsGn9WLAfKoDeL/ChKIN+N
+	 Sqa2zcE8J8FqCEbgIo7FTCEcTWI48E917f3JSCEA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matthew Schwartz <matthew.schwartz@linux.dev>,
-	Ricky WU <ricky_wu@realtek.com>,
-	Ulf Hansson <ulf.hansson@linaro.org>
-Subject: [PATCH 6.12 114/169] mmc: rtsx_pci_sdmmc: implement sdmmc_card_busy function
-Date: Wed, 28 Jan 2026 16:23:17 +0100
-Message-ID: <20260128145338.107099578@linuxfoundation.org>
+	Yinhao Hu <dddddd@hust.edu.cn>,
+	Kaiyan Mei <M202472210@hust.edu.cn>,
+	Dongliang Mu <dzm91@hust.edu.cn>,
+	Daniel Borkmann <daniel@iogearbox.net>,
+	Martin KaFai Lau <martin.lau@kernel.org>,
+	Shung-Hsi Yu <shung-hsi.yu@suse.com>
+Subject: [PATCH 6.12 150/169] bpf: Do not let BPF test infra emit invalid GSO types to stack
+Date: Wed, 28 Jan 2026 16:23:53 +0100
+Message-ID: <20260128145339.403235211@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260128145334.006287341@linuxfoundation.org>
 References: <20260128145334.006287341@linuxfoundation.org>
@@ -51,84 +54,78 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Matthew Schwartz <matthew.schwartz@linux.dev>
+From: Daniel Borkmann <daniel@iogearbox.net>
 
-commit 122610220134b32c742cc056eaf64f7017ac8cd9 upstream.
+commit 04a899573fb87273a656f178b5f920c505f68875 upstream.
 
-rtsx_pci_sdmmc does not have an sdmmc_card_busy function, so any voltage
-switches cause a kernel warning, "mmc0: cannot verify signal voltage
-switch."
+Yinhao et al. reported that their fuzzer tool was able to trigger a
+skb_warn_bad_offload() from netif_skb_features() -> gso_features_check().
+When a BPF program - triggered via BPF test infra - pushes the packet
+to the loopback device via bpf_clone_redirect() then mentioned offload
+warning can be seen. GSO-related features are then rightfully disabled.
 
-Copy the sdmmc_card_busy function from rtsx_pci_usb to rtsx_pci_sdmmc to
-fix this.
+We get into this situation due to convert___skb_to_skb() setting
+gso_segs and gso_size but not gso_type. Technically, it makes sense
+that this warning triggers since the GSO properties are malformed due
+to the gso_type. Potentially, the gso_type could be marked non-trustworthy
+through setting it at least to SKB_GSO_DODGY without any other specific
+assumptions, but that also feels wrong given we should not go further
+into the GSO engine in the first place.
 
-Fixes: ff984e57d36e ("mmc: Add realtek pcie sdmmc host driver")
-Signed-off-by: Matthew Schwartz <matthew.schwartz@linux.dev>
-Tested-by: Ricky WU <ricky_wu@realtek.com>
-Reviewed-by: Ricky WU <ricky_wu@realtek.com>
-Cc: stable@vger.kernel.org
-Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+The checks were added in 121d57af308d ("gso: validate gso_type in GSO
+handlers") because there were malicious (syzbot) senders that combine
+a protocol with a non-matching gso_type. If we would want to drop such
+packets, gso_features_check() currently only returns feature flags via
+netif_skb_features(), so one location for potentially dropping such skbs
+could be validate_xmit_unreadable_skb(), but then otoh it would be
+an additional check in the fast-path for a very corner case. Given
+bpf_clone_redirect() is the only place where BPF test infra could emit
+such packets, lets reject them right there.
+
+Fixes: 850a88cc4096 ("bpf: Expose __sk_buff wire_len/gso_segs to BPF_PROG_TEST_RUN")
+Fixes: cf62089b0edd ("bpf: Add gso_size to __sk_buff")
+Reported-by: Yinhao Hu <dddddd@hust.edu.cn>
+Reported-by: Kaiyan Mei <M202472210@hust.edu.cn>
+Reported-by: Dongliang Mu <dzm91@hust.edu.cn>
+Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
+Signed-off-by: Martin KaFai Lau <martin.lau@kernel.org>
+Link: https://patch.msgid.link/20251020075441.127980-1-daniel@iogearbox.net
+Signed-off-by: Shung-Hsi Yu <shung-hsi.yu@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mmc/host/rtsx_pci_sdmmc.c |   41 ++++++++++++++++++++++++++++++++++++++
- 1 file changed, 41 insertions(+)
+ net/bpf/test_run.c |    5 +++++
+ net/core/filter.c  |    7 +++++++
+ 2 files changed, 12 insertions(+)
 
---- a/drivers/mmc/host/rtsx_pci_sdmmc.c
-+++ b/drivers/mmc/host/rtsx_pci_sdmmc.c
-@@ -1308,6 +1308,46 @@ out:
- 	return err;
- }
+--- a/net/bpf/test_run.c
++++ b/net/bpf/test_run.c
+@@ -944,6 +944,11 @@ static int convert___skb_to_skb(struct s
  
-+static int sdmmc_card_busy(struct mmc_host *mmc)
-+{
-+	struct realtek_pci_sdmmc *host = mmc_priv(mmc);
-+	struct rtsx_pcr *pcr = host->pcr;
-+	int err;
-+	u8 stat;
-+	u8 mask = SD_DAT3_STATUS | SD_DAT2_STATUS | SD_DAT1_STATUS
-+	| SD_DAT0_STATUS;
+ 	if (__skb->gso_segs > GSO_MAX_SEGS)
+ 		return -EINVAL;
 +
-+	mutex_lock(&pcr->pcr_mutex);
++	/* Currently GSO type is zero/unset. If this gets extended with
++	 * a small list of accepted GSO types in future, the filter for
++	 * an unset GSO type in bpf_clone_redirect() can be lifted.
++	 */
+ 	skb_shinfo(skb)->gso_segs = __skb->gso_segs;
+ 	skb_shinfo(skb)->gso_size = __skb->gso_size;
+ 	skb_shinfo(skb)->hwtstamps.hwtstamp = __skb->hwtstamp;
+--- a/net/core/filter.c
++++ b/net/core/filter.c
+@@ -2466,6 +2466,13 @@ BPF_CALL_3(bpf_clone_redirect, struct sk
+ 	if (unlikely(flags & (~(BPF_F_INGRESS) | BPF_F_REDIRECT_INTERNAL)))
+ 		return -EINVAL;
+ 
++	/* BPF test infra's convert___skb_to_skb() can create type-less
++	 * GSO packets. gso_features_check() will detect this as a bad
++	 * offload. However, lets not leak them out in the first place.
++	 */
++	if (unlikely(skb_is_gso(skb) && !skb_shinfo(skb)->gso_type))
++		return -EBADMSG;
 +
-+	rtsx_pci_start_run(pcr);
-+
-+	err = rtsx_pci_write_register(pcr, SD_BUS_STAT,
-+				      SD_CLK_TOGGLE_EN | SD_CLK_FORCE_STOP,
-+			       SD_CLK_TOGGLE_EN);
-+	if (err)
-+		goto out;
-+
-+	mdelay(1);
-+
-+	err = rtsx_pci_read_register(pcr, SD_BUS_STAT, &stat);
-+	if (err)
-+		goto out;
-+
-+	err = rtsx_pci_write_register(pcr, SD_BUS_STAT,
-+				      SD_CLK_TOGGLE_EN | SD_CLK_FORCE_STOP, 0);
-+out:
-+	mutex_unlock(&pcr->pcr_mutex);
-+
-+	if (err)
-+		return err;
-+
-+	/* check if any pin between dat[0:3] is low */
-+	if ((stat & mask) != mask)
-+		return 1;
-+	else
-+		return 0;
-+}
-+
- static int sdmmc_execute_tuning(struct mmc_host *mmc, u32 opcode)
- {
- 	struct realtek_pci_sdmmc *host = mmc_priv(mmc);
-@@ -1420,6 +1460,7 @@ static const struct mmc_host_ops realtek
- 	.get_ro = sdmmc_get_ro,
- 	.get_cd = sdmmc_get_cd,
- 	.start_signal_voltage_switch = sdmmc_switch_voltage,
-+	.card_busy = sdmmc_card_busy,
- 	.execute_tuning = sdmmc_execute_tuning,
- 	.init_sd_express = sdmmc_init_sd_express,
- };
+ 	dev = dev_get_by_index_rcu(dev_net(skb->dev), ifindex);
+ 	if (unlikely(!dev))
+ 		return -EINVAL;
 
 
