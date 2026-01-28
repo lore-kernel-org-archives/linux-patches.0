@@ -1,131 +1,115 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E496E2FD69D;
-	Wed, 28 Jan 2026 14:28:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 617C7280CF6;
+	Wed, 28 Jan 2026 15:24:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769610491; cv=none; b=pP+KpVkjzOLR6jHTIaDDbdaNc2nD6fx7p/zCXpquTAxiSyi6XP+Iu8KYQ/S5cOj9be1Ce3O8k0n/fBEQhtCby2M1iIX8Xclkrqa71wZ/wD4GueAd3qSnRAozggAbfrWXSfuvMXwXt9lrz0N9nm9ihiJgQolwWN8jfZJhvDznJ/4=
+	t=1769613897; cv=none; b=E7aAcl3clkNinQWHfP7YDhqIoyH4iiyL/DsbK02lrN1Fy1eYUxg9MK+9dKogKsK6vYkJN0oOxej/PW+gybCB2EsbW+aP1s+txoNOaYjI9NimWavw8IaM0xESLPGUYmhlRcoBvoeVSq4fG0UO3uXHKAkhpAiDezBfMfKNAbKOoaU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769610491; c=relaxed/simple;
-	bh=1WCZIz4NVeFZCPEUxHK9MUoHvK2FlpVFyz2KGheqczQ=;
-	h=Subject:To:Cc:From:Date:In-Reply-To:Message-ID:MIME-Version:
-	 Content-Type; b=OExlxSDIm2pYuUlZ/gOlt0jhrwxaP3yaKvOVndVEUscN0BnePrLhob+HC0Xo33cENlFcv9t+ffb0QBR14SjBQYKIBX1nvpz7NLhq+tztpuQKaVOnOHuKrR+UY14VKcQ61Y1r+DaQ7jpiDG+6LwQlxPc5Mahi7PnK75Eyw0/mi/k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UN9poeLC; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1769613897; c=relaxed/simple;
+	bh=TNKoJuf/9AgJxtfSDWa1k8dxmH0R8oWcXPIiK1WihHs=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=pl4+uG0sVlY5hWjDTN2ktf6WgL/p63x0MYiyiwGsuKk/EiSLKZy2xI6o/nH2L2vZJBQXEHOVI/CoeT14VBiRnUWir2CeM+jXk3q/6OBIKHYIqml/611w6XlrR+blMg3wNr5DL6h+zhNHujiIMVcWbxNOWNzu37PkQJKkhgmF35M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QPhAu/33; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UN9poeLC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0423C4CEF1;
-	Wed, 28 Jan 2026 14:28:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QPhAu/33"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91FB3C116C6;
+	Wed, 28 Jan 2026 15:24:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1769610490;
-	bh=1WCZIz4NVeFZCPEUxHK9MUoHvK2FlpVFyz2KGheqczQ=;
-	h=Subject:To:Cc:From:Date:In-Reply-To:From;
-	b=UN9poeLCu93Ci3vvVkAFLJHVIxPfSPixeA+40nSc/jGx3uGADms9G4gYKjIRbWtuQ
-	 AEfZrlA/apPw1NioCM8BCzMHPyHH5dysZD9cVGk+5d0gSlqycXOkdK/7ZklnloKN5Q
-	 PWeowXa/HXsiAU9GcGmEVTiv0cWtoJ0BU/1n1OR8=
-Subject: Patch "wifi: ath11k: fix RCU stall while reaping monitor destination ring" has been added to the 6.6-stable tree
-To: 1468888505@139.com,ath11k@lists.infradead.org,gregkh@linuxfoundation.org,jeff.johnson@oss.qualcomm.com,jjohnson@kernel.org,julia.lawall@lip6.fr,kvalo@kernel.org,patches@lists.linux.dev,quic_jjohnson@quicinc.com,quic_kangyang@quicinc.com,quic_msinada@quicinc.com,quic_ppranees@quicinc.com,quic_pradeepc@quicinc.com,rmanohar@codeaurora.org
-Cc: <stable-commits@vger.kernel.org>
-From: <gregkh@linuxfoundation.org>
-Date: Wed, 28 Jan 2026 15:24:57 +0100
-In-Reply-To: <20260128032715.1183385-1-1468888505@139.com>
-Message-ID: <2026012857-mystified-relenting-368c@gregkh>
+	s=korg; t=1769613897;
+	bh=TNKoJuf/9AgJxtfSDWa1k8dxmH0R8oWcXPIiK1WihHs=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=QPhAu/33SQeENGyRqKFod420syI2mhuXfFV7CsnfR5vEFQn3CIGUT2OZPDWk7jHyj
+	 xuHm88TXhhfPMDnxee2+Xseb5XTZx/wOcGrzGVsTKYRQFkz7wBhF5uksZ7GR+JwUsy
+	 MnPuqMQVVBXQOvCCF0JWZ3HzT/9yj2cH97766pYI=
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: stable@vger.kernel.org
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	patches@lists.linux.dev,
+	Frank Li <Frank.Li@nxp.com>,
+	Peng Fan <peng.fan@nxp.com>,
+	Shawn Guo <shawnguo@kernel.org>,
+	Ben Hutchings <ben@decadent.org.uk>
+Subject: [PATCH 6.6 001/254] firmware: imx: scu-irq: Set mu_resource_id before get handle
+Date: Wed, 28 Jan 2026 16:19:37 +0100
+Message-ID: <20260128145344.755705316@linuxfoundation.org>
+X-Mailer: git-send-email 2.52.0
+In-Reply-To: <20260128145344.698118637@linuxfoundation.org>
+References: <20260128145344.698118637@linuxfoundation.org>
+User-Agent: quilt/0.69
+X-stable: review
+X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=ANSI_X3.4-1968
 Content-Transfer-Encoding: 8bit
-X-stable: commit
-X-Patchwork-Hint: ignore 
 
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
-This is a note to let you know that I've just added the patch titled
+------------------
 
-    wifi: ath11k: fix RCU stall while reaping monitor destination ring
+From: Peng Fan <peng.fan@nxp.com>
 
-to the 6.6-stable tree which can be found at:
-    http://www.kernel.org/git/?p=linux/kernel/git/stable/stable-queue.git;a=summary
+commit ff3f9913bc0749364fbfd86ea62ba2d31c6136c8 upstream.
 
-The filename of the patch is:
-     wifi-ath11k-fix-rcu-stall-while-reaping-monitor-destination-ring.patch
-and it can be found in the queue-6.6 subdirectory.
+mu_resource_id is referenced in imx_scu_irq_get_status() and
+imx_scu_irq_group_enable() which could be used by other modules, so
+need to set correct value before using imx_sc_irq_ipc_handle in
+SCU API call.
 
-If you, or anyone else, feels it should not be added to the stable tree,
-please let <stable@vger.kernel.org> know about it.
-
-
-From stable+bounces-211921-greg=kroah.com@vger.kernel.org Wed Jan 28 04:28:19 2026
-From: Li hongliang <1468888505@139.com>
-Date: Wed, 28 Jan 2026 11:27:15 +0800
-Subject: wifi: ath11k: fix RCU stall while reaping monitor destination ring
-To: gregkh@linuxfoundation.org, stable@vger.kernel.org, quic_ppranees@quicinc.com
-Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org, quic_kangyang@quicinc.com, kvalo@kernel.org, quic_jjohnson@quicinc.com, jeff.johnson@oss.qualcomm.com, jjohnson@kernel.org, quic_msinada@quicinc.com, rmanohar@codeaurora.org, julia.lawall@lip6.fr, quic_pradeepc@quicinc.com, linux-wireless@vger.kernel.org, ath11k@lists.infradead.org
-Message-ID: <20260128032715.1183385-1-1468888505@139.com>
-
-From: P Praneesh <quic_ppranees@quicinc.com>
-
-[ Upstream commit 16c6c35c03ea73054a1f6d3302a4ce4a331b427d ]
-
-While processing the monitor destination ring, MSDUs are reaped from the
-link descriptor based on the corresponding buf_id.
-
-However, sometimes the driver cannot obtain a valid buffer corresponding
-to the buf_id received from the hardware. This causes an infinite loop
-in the destination processing, resulting in a kernel crash.
-
-kernel log:
-ath11k_pci 0000:58:00.0: data msdu_pop: invalid buf_id 309
-ath11k_pci 0000:58:00.0: data dp_rx_monitor_link_desc_return failed
-ath11k_pci 0000:58:00.0: data msdu_pop: invalid buf_id 309
-ath11k_pci 0000:58:00.0: data dp_rx_monitor_link_desc_return failed
-
-Fix this by skipping the problematic buf_id and reaping the next entry,
-replacing the break with the next MSDU processing.
-
-Tested-on: WCN6855 hw2.0 PCI WLAN.HSP.1.1-03125-QCAHSPSWPL_V1_V2_SILICONZ_LITE-3.6510.30
-Tested-on: QCN9074 hw1.0 PCI WLAN.HK.2.7.0.1-01744-QCAHKSWPL_SILICONZ-1
-
-Fixes: d5c65159f289 ("ath11k: driver for Qualcomm IEEE 802.11ax devices")
-Signed-off-by: P Praneesh <quic_ppranees@quicinc.com>
-Signed-off-by: Kang Yang <quic_kangyang@quicinc.com>
-Acked-by: Kalle Valo <kvalo@kernel.org>
-Acked-by: Jeff Johnson <quic_jjohnson@quicinc.com>
-Link: https://patch.msgid.link/20241219110531.2096-2-quic_kangyang@quicinc.com
-Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
-Signed-off-by: Li hongliang <1468888505@139.com>
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Signed-off-by: Peng Fan <peng.fan@nxp.com>
+Signed-off-by: Shawn Guo <shawnguo@kernel.org>
+Fixes: 81fb53feb66a ("firmware: imx: scu-irq: Init workqueue before request mbox channel")
+Cc: Ben Hutchings <ben@decadent.org.uk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wireless/ath/ath11k/dp_rx.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/firmware/imx/imx-scu-irq.c |   24 ++++++++++++------------
+ 1 file changed, 12 insertions(+), 12 deletions(-)
 
---- a/drivers/net/wireless/ath/ath11k/dp_rx.c
-+++ b/drivers/net/wireless/ath/ath11k/dp_rx.c
-@@ -4728,7 +4728,7 @@ ath11k_dp_rx_mon_mpdu_pop(struct ath11k
- 			if (!msdu) {
- 				ath11k_dbg(ar->ab, ATH11K_DBG_DATA,
- 					   "msdu_pop: invalid buf_id %d\n", buf_id);
--				break;
-+				goto next_msdu;
- 			}
- 			rxcb = ATH11K_SKB_RXCB(msdu);
- 			if (!rxcb->unmapped) {
-@@ -5362,7 +5362,7 @@ ath11k_dp_rx_full_mon_mpdu_pop(struct at
- 					   "full mon msdu_pop: invalid buf_id %d\n",
- 					    buf_id);
- 				spin_unlock_bh(&rx_ring->idr_lock);
--				break;
-+				goto next_msdu;
- 			}
- 			idr_remove(&rx_ring->bufs_idr, buf_id);
- 			spin_unlock_bh(&rx_ring->idr_lock);
+--- a/drivers/firmware/imx/imx-scu-irq.c
++++ b/drivers/firmware/imx/imx-scu-irq.c
+@@ -203,6 +203,18 @@ int imx_scu_enable_general_irq_channel(s
+ 	struct mbox_chan *ch;
+ 	int ret = 0, i = 0;
+ 
++	if (!of_parse_phandle_with_args(dev->of_node, "mboxes",
++				       "#mbox-cells", 0, &spec)) {
++		i = of_alias_get_id(spec.np, "mu");
++		of_node_put(spec.np);
++	}
++
++	/* use mu1 as general mu irq channel if failed */
++	if (i < 0)
++		i = 1;
++
++	mu_resource_id = IMX_SC_R_MU_0A + i;
++
+ 	ret = imx_scu_get_handle(&imx_sc_irq_ipc_handle);
+ 	if (ret)
+ 		return ret;
+@@ -225,18 +237,6 @@ int imx_scu_enable_general_irq_channel(s
+ 		return ret;
+ 	}
+ 
+-	if (!of_parse_phandle_with_args(dev->of_node, "mboxes",
+-				       "#mbox-cells", 0, &spec)) {
+-		i = of_alias_get_id(spec.np, "mu");
+-		of_node_put(spec.np);
+-	}
+-
+-	/* use mu1 as general mu irq channel if failed */
+-	if (i < 0)
+-		i = 1;
+-
+-	mu_resource_id = IMX_SC_R_MU_0A + i;
+-
+ 	/* Create directory under /sysfs/firmware */
+ 	wakeup_obj = kobject_create_and_add("scu_wakeup_source", firmware_kobj);
+ 	if (!wakeup_obj) {
 
 
-Patches currently in stable-queue which might be from 1468888505@139.com are
-
-queue-6.6/fs-ntfs3-initialize-allocated-memory-before-use.patch
-queue-6.6/drm-amdgpu-csa-unmap-use-uninterruptible-lock.patch
-queue-6.6/wifi-ath11k-fix-rcu-stall-while-reaping-monitor-destination-ring.patch
-queue-6.6/ksmbd-fix-use-after-free-in-ksmbd_session_rpc_open.patch
