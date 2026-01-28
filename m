@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5C9436D4FB;
-	Wed, 28 Jan 2026 15:27:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D240F2517AC;
+	Wed, 28 Jan 2026 15:27:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769614065; cv=none; b=kV+U6O8eFgMuRH3CcV48QgJel7njvx1qvhHMuCp9SxE/a8oqlN9wkw8dsmw86jbzTQoU1rHnDMv9iCa69xhstMlrLhwGUEZa3ejW8smTKjJrMHKn7uXEFbJeCre5PyBvYFZfp/9rByHTpAuwp/c1bR7MSivabNBZ3BilK5rZF6s=
+	t=1769614068; cv=none; b=kLLFr1EtIqgfyYhKFznQtAeLtkNPLEaIpCmdmpAA0BoKi4karptZxDnY+naf3Ojixzybl2Uq1qJmuBySkSW0fnh3JN63xfObLXfrVBaoKgIwcyB6Ys85/g7uHnMHo4r4JqDLdyhtFT2q7jaq9CgDJJimO+3nfGR1pkcLFeh/Pq4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769614065; c=relaxed/simple;
-	bh=wSrIIYR4dZSPfrgZUppof3GijhiDxlkvK9BQhu0QWT4=;
+	s=arc-20240116; t=1769614068; c=relaxed/simple;
+	bh=xETikN5Dc3PhNjUzxP4g2FfXIOqW5wefrDUsJuJjy5s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=COsCf8d/BL2PECu2kx+Owvi4BvQ5an1RAD1npqDlljuTHz2dl+buTbBcpS0aOLBLdl4eQtumlHnp+zN+yH/kNJ9HG8w8++h7svAed+sRsj7SDFiXV6zyVnowxYWFF81vrDQ05m4W9BJ9VUXb1ukwBOGcP1TIUAbwkD4dlRzer4M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EMJ6qOnU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Ta1LXFIcICq0FGl8kAzjDGrpAlvQtOJk16TmaX6aKcvCH3caSIyGqxWH+q6Ktt8StdAeZsHJ774i6FvSgM70w0bk8VAM3y7CdBBLLXjpVeZUXcBJsQKsapevGSzByX3na/+NMuLvvPEBNxmTh1yU2nSHEER2izJ5YHg6iOWMQ2E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sqpeLJs8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EMJ6qOnU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 50F2CC4CEF7;
-	Wed, 28 Jan 2026 15:27:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sqpeLJs8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C7F7BC4CEF7;
+	Wed, 28 Jan 2026 15:27:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1769614064;
-	bh=wSrIIYR4dZSPfrgZUppof3GijhiDxlkvK9BQhu0QWT4=;
+	s=korg; t=1769614068;
+	bh=xETikN5Dc3PhNjUzxP4g2FfXIOqW5wefrDUsJuJjy5s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EMJ6qOnUs7tdtv/+9htw55PFoAPp2IBHpBCnTpkux9Mp5MSraSr+MZqIok6rcU04l
-	 lRRvZa6K2wLG+SfoMWuKWJsys5rFoPlipG/8sFJZ5yNtcQhKOQKctB7rXFjYXTsoCl
-	 QF+lz3ErM8HDZzBy+B7ItOnoz7YS9UW39wEsiLP4=
+	b=sqpeLJs84+ky3I4D4V8misvweMMUfYnwvS/CFdtX3z6KbDHPk7XUVhiG75RFnVRhv
+	 zq/acdznHR0U1yuxDpwemBm5fSsHBEnUkizc5w0MJLyI9O/rAwsb3t8AtWqKMlu1aH
+	 AOM3+nKehFXfW/z057XTuQMrd52gXIYZXM7DW1no=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+72e610f4f1a930ca9d8a@syzkaller.appspotmail.com,
-	Kuniyuki Iwashima <kuniyu@google.com>,
-	Hangbin Liu <liuhangbin@gmail.com>,
-	Eric Dumazet <edumazet@google.com>,
+	Nimrod Oren <noren@nvidia.com>,
+	Gal Pressman <gal@nvidia.com>,
+	Willem de Bruijn <willemb@google.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 025/254] ipv6: Fix use-after-free in inet6_addr_del().
-Date: Wed, 28 Jan 2026 16:20:01 +0100
-Message-ID: <20260128145345.609554846@linuxfoundation.org>
+Subject: [PATCH 6.6 026/254] selftests: drv-net: fix RPS mask handling for high CPU numbers
+Date: Wed, 28 Jan 2026 16:20:02 +0100
+Message-ID: <20260128145345.645019070@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260128145344.698118637@linuxfoundation.org>
 References: <20260128145344.698118637@linuxfoundation.org>
@@ -54,130 +53,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kuniyuki Iwashima <kuniyu@google.com>
+From: Gal Pressman <gal@nvidia.com>
 
-[ Upstream commit ddf96c393a33aef4887e2e406c76c2f8cda1419c ]
+[ Upstream commit cf055f8c000445aa688c53a706ef4f580818eedb ]
 
-syzbot reported use-after-free of inet6_ifaddr in
-inet6_addr_del(). [0]
+The RPS bitmask bounds check uses ~(RPS_MAX_CPUS - 1) which equals ~15 =
+0xfff0, only allowing CPUs 0-3.
 
-The cited commit accidentally moved ipv6_del_addr() for
-mngtmpaddr before reading its ifp->flags for temporary
-addresses in inet6_addr_del().
+Change the mask to ~((1UL << RPS_MAX_CPUS) - 1) = ~0xffff to allow CPUs
+0-15.
 
-Let's move ipv6_del_addr() down to fix the UAF.
-
-[0]:
-BUG: KASAN: slab-use-after-free in inet6_addr_del.constprop.0+0x67a/0x6b0 net/ipv6/addrconf.c:3117
-Read of size 4 at addr ffff88807b89c86c by task syz.3.1618/9593
-
-CPU: 0 UID: 0 PID: 9593 Comm: syz.3.1618 Not tainted syzkaller #0 PREEMPT(full)
-Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 10/25/2025
-Call Trace:
- <TASK>
- __dump_stack lib/dump_stack.c:94 [inline]
- dump_stack_lvl+0x116/0x1f0 lib/dump_stack.c:120
- print_address_description mm/kasan/report.c:378 [inline]
- print_report+0xcd/0x630 mm/kasan/report.c:482
- kasan_report+0xe0/0x110 mm/kasan/report.c:595
- inet6_addr_del.constprop.0+0x67a/0x6b0 net/ipv6/addrconf.c:3117
- addrconf_del_ifaddr+0x11e/0x190 net/ipv6/addrconf.c:3181
- inet6_ioctl+0x1e5/0x2b0 net/ipv6/af_inet6.c:582
- sock_do_ioctl+0x118/0x280 net/socket.c:1254
- sock_ioctl+0x227/0x6b0 net/socket.c:1375
- vfs_ioctl fs/ioctl.c:51 [inline]
- __do_sys_ioctl fs/ioctl.c:597 [inline]
- __se_sys_ioctl fs/ioctl.c:583 [inline]
- __x64_sys_ioctl+0x18e/0x210 fs/ioctl.c:583
- do_syscall_x64 arch/x86/entry/syscall_64.c:63 [inline]
- do_syscall_64+0xcd/0xf80 arch/x86/entry/syscall_64.c:94
- entry_SYSCALL_64_after_hwframe+0x77/0x7f
-RIP: 0033:0x7f164cf8f749
-Code: ff ff c3 66 2e 0f 1f 84 00 00 00 00 00 0f 1f 40 00 48 89 f8 48 89 f7 48 89 d6 48 89 ca 4d 89 c2 4d 89 c8 4c 8b 4c 24 08 0f 05 <48> 3d 01 f0 ff ff 73 01 c3 48 c7 c1 a8 ff ff ff f7 d8 64 89 01 48
-RSP: 002b:00007f164de64038 EFLAGS: 00000246 ORIG_RAX: 0000000000000010
-RAX: ffffffffffffffda RBX: 00007f164d1e5fa0 RCX: 00007f164cf8f749
-RDX: 0000200000000000 RSI: 0000000000008936 RDI: 0000000000000003
-RBP: 00007f164d013f91 R08: 0000000000000000 R09: 0000000000000000
-R10: 0000000000000000 R11: 0000000000000246 R12: 0000000000000000
-R13: 00007f164d1e6038 R14: 00007f164d1e5fa0 R15: 00007ffde15c8288
- </TASK>
-
-Allocated by task 9593:
- kasan_save_stack+0x33/0x60 mm/kasan/common.c:56
- kasan_save_track+0x14/0x30 mm/kasan/common.c:77
- poison_kmalloc_redzone mm/kasan/common.c:397 [inline]
- __kasan_kmalloc+0xaa/0xb0 mm/kasan/common.c:414
- kmalloc_noprof include/linux/slab.h:957 [inline]
- kzalloc_noprof include/linux/slab.h:1094 [inline]
- ipv6_add_addr+0x4e3/0x2010 net/ipv6/addrconf.c:1120
- inet6_addr_add+0x256/0x9b0 net/ipv6/addrconf.c:3050
- addrconf_add_ifaddr+0x1fc/0x450 net/ipv6/addrconf.c:3160
- inet6_ioctl+0x103/0x2b0 net/ipv6/af_inet6.c:580
- sock_do_ioctl+0x118/0x280 net/socket.c:1254
- sock_ioctl+0x227/0x6b0 net/socket.c:1375
- vfs_ioctl fs/ioctl.c:51 [inline]
- __do_sys_ioctl fs/ioctl.c:597 [inline]
- __se_sys_ioctl fs/ioctl.c:583 [inline]
- __x64_sys_ioctl+0x18e/0x210 fs/ioctl.c:583
- do_syscall_x64 arch/x86/entry/syscall_64.c:63 [inline]
- do_syscall_64+0xcd/0xf80 arch/x86/entry/syscall_64.c:94
- entry_SYSCALL_64_after_hwframe+0x77/0x7f
-
-Freed by task 6099:
- kasan_save_stack+0x33/0x60 mm/kasan/common.c:56
- kasan_save_track+0x14/0x30 mm/kasan/common.c:77
- kasan_save_free_info+0x3b/0x60 mm/kasan/generic.c:584
- poison_slab_object mm/kasan/common.c:252 [inline]
- __kasan_slab_free+0x5f/0x80 mm/kasan/common.c:284
- kasan_slab_free include/linux/kasan.h:234 [inline]
- slab_free_hook mm/slub.c:2540 [inline]
- slab_free_freelist_hook mm/slub.c:2569 [inline]
- slab_free_bulk mm/slub.c:6696 [inline]
- kmem_cache_free_bulk mm/slub.c:7383 [inline]
- kmem_cache_free_bulk+0x2bf/0x680 mm/slub.c:7362
- kfree_bulk include/linux/slab.h:830 [inline]
- kvfree_rcu_bulk+0x1b7/0x1e0 mm/slab_common.c:1523
- kvfree_rcu_drain_ready mm/slab_common.c:1728 [inline]
- kfree_rcu_monitor+0x1d0/0x2f0 mm/slab_common.c:1801
- process_one_work+0x9ba/0x1b20 kernel/workqueue.c:3257
- process_scheduled_works kernel/workqueue.c:3340 [inline]
- worker_thread+0x6c8/0xf10 kernel/workqueue.c:3421
- kthread+0x3c5/0x780 kernel/kthread.c:463
- ret_from_fork+0x983/0xb10 arch/x86/kernel/process.c:158
- ret_from_fork_asm+0x1a/0x30 arch/x86/entry/entry_64.S:246
-
-Fixes: 00b5b7aab9e42 ("net/ipv6: delete temporary address if mngtmpaddr is removed or unmanaged")
-Reported-by: syzbot+72e610f4f1a930ca9d8a@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/netdev/696598e9.050a0220.3be5c5.0009.GAE@google.com/
-Signed-off-by: Kuniyuki Iwashima <kuniyu@google.com>
-Reviewed-by: Hangbin Liu <liuhangbin@gmail.com>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Link: https://patch.msgid.link/20260113010538.2019411-1-kuniyu@google.com
+Fixes: 5ebfb4cc3048 ("selftests/net: toeplitz test")
+Reviewed-by: Nimrod Oren <noren@nvidia.com>
+Signed-off-by: Gal Pressman <gal@nvidia.com>
+Reviewed-by: Willem de Bruijn <willemb@google.com>
+Link: https://patch.msgid.link/20260112173715.384843-3-gal@nvidia.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv6/addrconf.c | 4 ++--
+ tools/testing/selftests/net/toeplitz.c | 4 ++--
  1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/net/ipv6/addrconf.c b/net/ipv6/addrconf.c
-index 2737bb4751e4c..4958452cd3320 100644
---- a/net/ipv6/addrconf.c
-+++ b/net/ipv6/addrconf.c
-@@ -3111,12 +3111,12 @@ static int inet6_addr_del(struct net *net, int ifindex, u32 ifa_flags,
- 			in6_ifa_hold(ifp);
- 			read_unlock_bh(&idev->lock);
+diff --git a/tools/testing/selftests/net/toeplitz.c b/tools/testing/selftests/net/toeplitz.c
+index 9ba03164d73a6..5099157f01b9a 100644
+--- a/tools/testing/selftests/net/toeplitz.c
++++ b/tools/testing/selftests/net/toeplitz.c
+@@ -473,8 +473,8 @@ static void parse_rps_bitmap(const char *arg)
  
--			ipv6_del_addr(ifp);
--
- 			if (!(ifp->flags & IFA_F_TEMPORARY) &&
- 			    (ifp->flags & IFA_F_MANAGETEMPADDR))
- 				delete_tempaddrs(idev, ifp);
+ 	bitmap = strtoul(arg, NULL, 0);
  
-+			ipv6_del_addr(ifp);
-+
- 			addrconf_verify_rtnl(net);
- 			if (ipv6_addr_is_multicast(pfx)) {
- 				ipv6_mc_config(net->ipv6.mc_autojoin_sk,
+-	if (bitmap & ~(RPS_MAX_CPUS - 1))
+-		error(1, 0, "rps bitmap 0x%lx out of bounds 0..%lu",
++	if (bitmap & ~((1UL << RPS_MAX_CPUS) - 1))
++		error(1, 0, "rps bitmap 0x%lx out of bounds, max cpu %lu",
+ 		      bitmap, RPS_MAX_CPUS - 1);
+ 
+ 	for (i = 0; i < RPS_MAX_CPUS; i++)
 -- 
 2.51.0
 
