@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03C712FF178;
-	Wed, 28 Jan 2026 15:59:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F17E2E2DF4;
+	Wed, 28 Jan 2026 15:59:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769615981; cv=none; b=jvJJ3vgHBHUwuUQ6MbQPFd1ejm2nx1RGuKr9hIpSD6h0x7RzH5v6rosjhRsKd0HwsDSMqqYzXylGjyFF3ptxcSpN/dJJ1N9BUftSnK7J7jI/4U+RBDJLGZRBw6D4rSQJRzDFhoTizrGPClYDvrloleWo4QAO+T+3KvIDWmbn/7I=
+	t=1769615984; cv=none; b=muj4R/QkGm4GlY+rTQciRYr3Q+QRsk4YsevyHrqna/BHHYHeedM6DjzY2IxE3+FnSyqc3vjOhaIpxw8bzWR/gy/5z5KnqK5gNDWOCREpVuonpBfW0TS7jBtNr/atBlbF6oQwjqZpkCJ+Kv3sL8S2B2qLlxnPVY63Ty9O6uAcJHQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769615981; c=relaxed/simple;
-	bh=n7opsP60JZMctz6oZAlAbuOYyp3BcPLUttV0d7Rez2A=;
+	s=arc-20240116; t=1769615984; c=relaxed/simple;
+	bh=c7p+zTBO7YnQTke28NpFtFiZOMNV7xCnddtJtLxpCQo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dE1cGD5AUqJHfTnYTJjRZEr8c2GuqqztIkT7+OeYAdCPC871z92d3D1xH57CA2MDgHqoLm2+njgYfBFn2ywiKYsy0yYPbybRtPBC8HJ4RFRqKaGrqXTjain7L+lxVp6Snb0akxoD3K4FpgueS8nqrtHUo3Bh4Ekni7avSkq/Yzo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wxiYOLfa; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YvBkAuY/Hx2D8Ll7zzlRjpVyZ99iwX0yS74GSqFCjkwf64gnpn4lquuYGKSsCbjIGXUkiGwsauzYhc1BazgbRE8DkywYMFOfg0meEPumi1tjOctLDUPK96tSUhw9nNbHRWPgFJO0ytRXP14wAtI1phUdpt4tPtLLxXyO2BdRECU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LBVeZlI7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wxiYOLfa"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39E2BC4CEF1;
-	Wed, 28 Jan 2026 15:59:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LBVeZlI7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9ECFDC4CEF1;
+	Wed, 28 Jan 2026 15:59:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1769615980;
-	bh=n7opsP60JZMctz6oZAlAbuOYyp3BcPLUttV0d7Rez2A=;
+	s=korg; t=1769615984;
+	bh=c7p+zTBO7YnQTke28NpFtFiZOMNV7xCnddtJtLxpCQo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wxiYOLfaVrWz5TessUVgdEWzqdrBo7Z12edsrD+/R9V9GjYo5VUwCh/bxQS31Hiaq
-	 gHQ/mv+uMHCHhLXlW8eNCm/2Dcjxw7bPkanYvjjTOEcNODDh1GTRutW6C/W3LfNZah
-	 ewEuZGCYgDdAoz/xz9Mv/TpI54Jgpr+9VpVwunTE=
+	b=LBVeZlI7lGHP+sOAU0OgnpX+WViIM1XHuo//0LcunyAAi0H4EMhMfaluL7gTubfF1
+	 ohCAsdbjdavxglx579ZHJ4KvFeUZMg/bkSMuX9lcFZjLqPt0nLZtW685Y+Qg3mN2mf
+	 UKJYPq1eUSPXwsMh5F7fc5oYQeFru5JIT5sUpxYw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vladimir Oltean <vladimir.oltean@nxp.com>,
+	Daniel Golle <daniel@makrotopia.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 139/227] net: dsa: fix off-by-one in maximum bridge ID determination
-Date: Wed, 28 Jan 2026 16:23:04 +0100
-Message-ID: <20260128145349.461565587@linuxfoundation.org>
+Subject: [PATCH 6.18 140/227] net: pcs: pcs-mtk-lynxi: report in-band capability for 2500Base-X
+Date: Wed, 28 Jan 2026 16:23:05 +0100
+Message-ID: <20260128145349.497854726@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260128145344.331957407@linuxfoundation.org>
 References: <20260128145344.331957407@linuxfoundation.org>
@@ -51,50 +51,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vladimir Oltean <vladimir.oltean@nxp.com>
+From: Daniel Golle <daniel@makrotopia.org>
 
-[ Upstream commit dfca045cd4d0ea07ff4198ba392be3e718acaddc ]
+[ Upstream commit e8ca461f7d19464b47c64fe4cf2f83162421bcc0 ]
 
-Prior to the blamed commit, the bridge_num range was from
-0 to ds->max_num_bridges - 1. After the commit, it is from
-1 to ds->max_num_bridges.
+It turns out that 2500Base-X actually works fine with in-band status on
+MediaTek's LynxI PCS -- I wrongly concluded it didn't because it is
+broken in all the copper SFP modules and GPON sticks I used for testing.
 
-So this check:
-	if (bridge_num >= max)
-		return 0;
-must be updated to:
-	if (bridge_num > max)
-		return 0;
+Hence report LINK_INBAND_ENABLE also for 2500Base-X mode.
 
-in order to allow the last bridge_num value (==max) to be used.
+This reverts most of commit a003c38d9bbb ("net: pcs: pcs-mtk-lynxi:
+correctly report in-band status capabilities").
 
-This is easiest visible when a driver sets ds->max_num_bridges=1.
-The observed behaviour is that even the first created bridge triggers
-the netlink extack "Range of offloadable bridges exceeded" warning, and
-is handled in software rather than being offloaded.
+The removal of the QSGMII interface mode was correct and is left
+untouched.
 
-Fixes: 3f9bb0301d50 ("net: dsa: make dp->bridge_num one-based")
-Signed-off-by: Vladimir Oltean <vladimir.oltean@nxp.com>
-Link: https://patch.msgid.link/20260120211039.3228999-1-vladimir.oltean@nxp.com
+Link: https://github.com/openwrt/openwrt/issues/21436
+Fixes: a003c38d9bbb ("net: pcs: pcs-mtk-lynxi: correctly report in-band status capabilities")
+Signed-off-by: Daniel Golle <daniel@makrotopia.org>
+Link: https://patch.msgid.link/b1cf26157b63fee838be09ae810497fb22fd8104.1768961746.git.daniel@makrotopia.org
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/dsa/dsa.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/pcs/pcs-mtk-lynxi.c | 4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
-diff --git a/net/dsa/dsa.c b/net/dsa/dsa.c
-index ded9a291e6204..0505e90033f23 100644
---- a/net/dsa/dsa.c
-+++ b/net/dsa/dsa.c
-@@ -157,7 +157,7 @@ unsigned int dsa_bridge_num_get(const struct net_device *bridge_dev, int max)
- 		bridge_num = find_next_zero_bit(&dsa_fwd_offloading_bridges,
- 						DSA_MAX_NUM_OFFLOADING_BRIDGES,
- 						1);
--		if (bridge_num >= max)
-+		if (bridge_num > max)
- 			return 0;
+diff --git a/drivers/net/pcs/pcs-mtk-lynxi.c b/drivers/net/pcs/pcs-mtk-lynxi.c
+index 149ddf51d7856..87df3a9dfc9bc 100644
+--- a/drivers/net/pcs/pcs-mtk-lynxi.c
++++ b/drivers/net/pcs/pcs-mtk-lynxi.c
+@@ -93,12 +93,10 @@ static unsigned int mtk_pcs_lynxi_inband_caps(struct phylink_pcs *pcs,
+ {
+ 	switch (interface) {
+ 	case PHY_INTERFACE_MODE_1000BASEX:
++	case PHY_INTERFACE_MODE_2500BASEX:
+ 	case PHY_INTERFACE_MODE_SGMII:
+ 		return LINK_INBAND_DISABLE | LINK_INBAND_ENABLE;
  
- 		set_bit(bridge_num, &dsa_fwd_offloading_bridges);
+-	case PHY_INTERFACE_MODE_2500BASEX:
+-		return LINK_INBAND_DISABLE;
+-
+ 	default:
+ 		return 0;
+ 	}
 -- 
 2.51.0
 
