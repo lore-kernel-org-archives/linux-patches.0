@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05CB22874FE;
-	Wed, 28 Jan 2026 15:56:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0A862874FE;
+	Wed, 28 Jan 2026 15:56:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769615790; cv=none; b=saqtrdQ7U50SWXaEpIyBZ44/f4ZFsfw5ARy1BwsIMRI4Ubc1PmedA++6fqZhcn+FkvOaLQ8J0l5lThUHj5XUIrQdFwGxHPsiD86P74Hb8k+SZ2EcVmSjJ3QAx+fO1H2sDlfnnJX0c31fqqhEUaz4c7Mep0O0RZINj2kjpnZvIkw=
+	t=1769615793; cv=none; b=qP+nK4ub3Nvw1p1HdalEGG037s9u7754NO5z6fbWwHDamypWFwYQZ3H2ty96Ok2R9dQGSVPcR15rjQ4PCoWcqvQivQub/hAl5wrT4eDfF2g89UDBEFEIc6zTUMFxUljBeKpWqA/5S0rKrmm1V8v5XNZ5wC5FzkjiEvCCZiwsGdI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769615790; c=relaxed/simple;
-	bh=xU+Y+sxGETLnZYg99/koE0L7Onr7frATdjv3FG3G3pg=;
+	s=arc-20240116; t=1769615793; c=relaxed/simple;
+	bh=XB5eoqvX9b0GesXKkIDvUNiiq5sgGs8ABiuFChLcae0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NldveVEMpdiW9Disaoey3xRO+aqI1B8RnCFaxbnHpDGd+FArRvdTSjkNj8ZBS3/YbplDDbgckk2wRm6xwn8fHBFaB1InUwH9EYEBS7i+GBvU+YZOfv46T9jAzu0fFd4+V6LHSr9IcTs1WwIizt8jVqRynl+nM55zoQKPnrfONMs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nfacPv2j; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=AitYNNDg+CoZxCr0bhbHfnNKWWFl2q5FfyRuAlMXy69kDAIdl95pSRbIKxbiXOUbTEEHJgmhwsd4opL7fQpbgy+j0xhQl3z15XUjMZyo94nRijhJIStxuzytnW7iPNy92cRfQDgVaupgvXgzYWWmx/ARQmZ2udraGIzM1O5I2mY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kjJwwdnj; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nfacPv2j"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 17496C4CEF1;
-	Wed, 28 Jan 2026 15:56:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kjJwwdnj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 554D5C4CEF1;
+	Wed, 28 Jan 2026 15:56:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1769615789;
-	bh=xU+Y+sxGETLnZYg99/koE0L7Onr7frATdjv3FG3G3pg=;
+	s=korg; t=1769615792;
+	bh=XB5eoqvX9b0GesXKkIDvUNiiq5sgGs8ABiuFChLcae0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nfacPv2jLsWFWpjN6OIXWVgtfmKmSwQEw5ZiHF/CvgRsu+LdX8D61OIx19bxeZnXK
-	 AUmt1i2AV3lpwPg2MtK1J3zx6Xo5DtSqAVG51n5EsyUcNoHpWFl6s6mL5CnohgbyVP
-	 +tn2X6zT5q0RP5kfSHfmMtYcrfv9EvQMp/H/21mg=
+	b=kjJwwdnjp+ZprDRWhPoC9LoVT7M/sdc7tBFTB9QIsbBRCXs5TWE8rKXHIUZdRAr4J
+	 L3ShKiAoH/hlutpHI4THkXZ860DQFs1L1NeAT/S+2Uo+Mhpzg53IhX8DGxdX30pozM
+	 ILNHBy0g8Zto/NtmC7sGcFUoI32ZN0vd5sbUTuZE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot <syzkaller@googlegroups.com>,
-	Eric Dumazet <edumazet@google.com>,
-	Rocco Yue <rocco.yue@mediatek.com>,
+	Laurent Vivier <lvivier@redhat.com>,
+	Stefano Brivio <sbrivio@redhat.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 115/227] ipv6: annotate data-race in ndisc_router_discovery()
-Date: Wed, 28 Jan 2026 16:22:40 +0100
-Message-ID: <20260128145348.603307607@linuxfoundation.org>
+Subject: [PATCH 6.18 116/227] usbnet: limit max_mtu based on devices hard_mtu
+Date: Wed, 28 Jan 2026 16:22:41 +0100
+Message-ID: <20260128145348.639674155@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260128145344.331957407@linuxfoundation.org>
 References: <20260128145344.331957407@linuxfoundation.org>
@@ -53,77 +52,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Laurent Vivier <lvivier@redhat.com>
 
-[ Upstream commit 9a063f96d87efc3a6cc667f8de096a3d38d74bb5 ]
+[ Upstream commit c7159e960f1472a5493ac99aff0086ab1d683594 ]
 
-syzbot found that ndisc_router_discovery() could read and write
-in6_dev->ra_mtu without holding a lock [1]
+The usbnet driver initializes net->max_mtu to ETH_MAX_MTU before calling
+the device's bind() callback. When the bind() callback sets
+dev->hard_mtu based the device's actual capability (from CDC Ethernet's
+wMaxSegmentSize descriptor), max_mtu is never updated to reflect this
+hardware limitation).
 
-This looks fine, IFLA_INET6_RA_MTU is best effort.
+This allows userspace (DHCP or IPv6 RA) to configure MTU larger than the
+device can handle, leading to silent packet drops when the backend sends
+packet exceeding the device's buffer size.
 
-Add READ_ONCE()/WRITE_ONCE() to document the race.
+Fix this by limiting net->max_mtu to the device's hard_mtu after the
+bind callback returns.
 
-Note that we might also reject illegal MTU values
-(mtu < IPV6_MIN_MTU || mtu > skb->dev->mtu) in a future patch.
+See https://gitlab.com/qemu-project/qemu/-/issues/3268 and
+    https://bugs.passt.top/attachment.cgi?bugid=189
 
-[1]
-BUG: KCSAN: data-race in ndisc_router_discovery / ndisc_router_discovery
-
-read to 0xffff888119809c20 of 4 bytes by task 25817 on cpu 1:
-  ndisc_router_discovery+0x151d/0x1c90 net/ipv6/ndisc.c:1558
-  ndisc_rcv+0x2ad/0x3d0 net/ipv6/ndisc.c:1841
-  icmpv6_rcv+0xe5a/0x12f0 net/ipv6/icmp.c:989
-  ip6_protocol_deliver_rcu+0xb2a/0x10d0 net/ipv6/ip6_input.c:438
-  ip6_input_finish+0xf0/0x1d0 net/ipv6/ip6_input.c:489
-  NF_HOOK include/linux/netfilter.h:318 [inline]
-  ip6_input+0x5e/0x140 net/ipv6/ip6_input.c:500
-  ip6_mc_input+0x27c/0x470 net/ipv6/ip6_input.c:590
-  dst_input include/net/dst.h:474 [inline]
-  ip6_rcv_finish+0x336/0x340 net/ipv6/ip6_input.c:79
-...
-
-write to 0xffff888119809c20 of 4 bytes by task 25816 on cpu 0:
-  ndisc_router_discovery+0x155a/0x1c90 net/ipv6/ndisc.c:1559
-  ndisc_rcv+0x2ad/0x3d0 net/ipv6/ndisc.c:1841
-  icmpv6_rcv+0xe5a/0x12f0 net/ipv6/icmp.c:989
-  ip6_protocol_deliver_rcu+0xb2a/0x10d0 net/ipv6/ip6_input.c:438
-  ip6_input_finish+0xf0/0x1d0 net/ipv6/ip6_input.c:489
-  NF_HOOK include/linux/netfilter.h:318 [inline]
-  ip6_input+0x5e/0x140 net/ipv6/ip6_input.c:500
-  ip6_mc_input+0x27c/0x470 net/ipv6/ip6_input.c:590
-  dst_input include/net/dst.h:474 [inline]
-  ip6_rcv_finish+0x336/0x340 net/ipv6/ip6_input.c:79
-...
-
-value changed: 0x00000000 -> 0xe5400659
-
-Fixes: 49b99da2c9ce ("ipv6: add IFLA_INET6_RA_MTU to expose mtu value")
-Reported-by: syzbot <syzkaller@googlegroups.com>
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Cc: Rocco Yue <rocco.yue@mediatek.com>
-Link: https://patch.msgid.link/20260118152941.2563857-1-edumazet@google.com
+Fixes: f77f0aee4da4 ("net: use core MTU range checking in USB NIC drivers")
+Signed-off-by: Laurent Vivier <lvivier@redhat.com>
+Link: https://bugs.passt.top/show_bug.cgi?id=189
+Reviewed-by: Stefano Brivio <sbrivio@redhat.com>
+Link: https://patch.msgid.link/20260119075518.2774373-1-lvivier@redhat.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv6/ndisc.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/net/usb/usbnet.c | 9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
-diff --git a/net/ipv6/ndisc.c b/net/ipv6/ndisc.c
-index f427e41e9c49b..0fd3f53dbb52e 100644
---- a/net/ipv6/ndisc.c
-+++ b/net/ipv6/ndisc.c
-@@ -1555,8 +1555,8 @@ static enum skb_drop_reason ndisc_router_discovery(struct sk_buff *skb)
- 		memcpy(&n, ((u8 *)(ndopts.nd_opts_mtu+1))+2, sizeof(mtu));
- 		mtu = ntohl(n);
+diff --git a/drivers/net/usb/usbnet.c b/drivers/net/usb/usbnet.c
+index 697cd9d866d3d..ab5ded8f38cf8 100644
+--- a/drivers/net/usb/usbnet.c
++++ b/drivers/net/usb/usbnet.c
+@@ -1803,9 +1803,12 @@ usbnet_probe (struct usb_interface *udev, const struct usb_device_id *prod)
+ 		if ((dev->driver_info->flags & FLAG_NOARP) != 0)
+ 			net->flags |= IFF_NOARP;
  
--		if (in6_dev->ra_mtu != mtu) {
--			in6_dev->ra_mtu = mtu;
-+		if (READ_ONCE(in6_dev->ra_mtu) != mtu) {
-+			WRITE_ONCE(in6_dev->ra_mtu, mtu);
- 			send_ifinfo_notify = true;
- 		}
- 
+-		/* maybe the remote can't receive an Ethernet MTU */
+-		if (net->mtu > (dev->hard_mtu - net->hard_header_len))
+-			net->mtu = dev->hard_mtu - net->hard_header_len;
++		if (net->max_mtu > (dev->hard_mtu - net->hard_header_len))
++			net->max_mtu = dev->hard_mtu - net->hard_header_len;
++
++		if (net->mtu > net->max_mtu)
++			net->mtu = net->max_mtu;
++
+ 	} else if (!info->in || !info->out)
+ 		status = usbnet_get_endpoints (dev, udev);
+ 	else {
 -- 
 2.51.0
 
