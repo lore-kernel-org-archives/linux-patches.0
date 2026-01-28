@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 775702D9780;
-	Wed, 28 Jan 2026 15:29:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D80022D9780;
+	Wed, 28 Jan 2026 15:29:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769614174; cv=none; b=p1PvQI4Upgbg+yER+4tMz9euqDy+2BcmzGtBmwOrkc68HzKcI65vbvGApdCmgAYESysPQ5r9Sr+fuU8GUkpZ/WarmKSrkt1TwlVsWBZJpLvxwTKUjydlead4IGYADBQpJor478nUkUkOJgkm14tEGfPtMaG3t5+0JPVOxZeRS9Q=
+	t=1769614177; cv=none; b=FKegxfPc7834TnAMqwAowYlBPcchR3xo9Wt1ikjv1yHTDm1v2T0qnCqL/H234Mp3UcxJGT6jlPcPYJdsm8J0Bn/5OB1VfNyrWVQRbGie63eKP6VcMTQaIWy7SGjlrF6MC/ygsCIQvxas4PNHwfMo2//VVDcbvig6TzqW/+xcGxs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769614174; c=relaxed/simple;
-	bh=j/jQdbemDabydDopaczq1GO5VYNdEx4MB8mvUjBxAhs=;
+	s=arc-20240116; t=1769614177; c=relaxed/simple;
+	bh=MIec4OYlrKtjN9rzD2dWTzxRNOQJaFlbG7WK0MXy5XE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=eSM2voNJ8xAr3PkoJDNlq+4tjLMiBQCQvgt8bLLCbRqczXKOp731uap1YmhL/vwa7xon0lpebkw4jbOdCE/0KDZSuHjkzpXO+X3Uwc6fwi399nvxtoI6ilTFd/3bdJZrOpRbFXTucYyKwr8/fS7xROH+bvNRSu78mT03lPS2EQI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AEJB2OPy; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gaCuEdWphoKvfBiXGXvZx/NtJsu1M6silH+3O5twpHodcEbVByflmBFHh6S0GjPGkSmHW6Rs1V1g/PlnriiwRzuCzsATMH5UmB5SptEpFYarIQpswEeSDPJanGpGrNf19obkPg+ayPlr/yu3jexRIp+0SCg9WeumfKODBpYd5P0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QVT5w8tu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AEJB2OPy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 908D6C4CEF1;
-	Wed, 28 Jan 2026 15:29:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QVT5w8tu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 46D3CC4CEF1;
+	Wed, 28 Jan 2026 15:29:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1769614174;
-	bh=j/jQdbemDabydDopaczq1GO5VYNdEx4MB8mvUjBxAhs=;
+	s=korg; t=1769614177;
+	bh=MIec4OYlrKtjN9rzD2dWTzxRNOQJaFlbG7WK0MXy5XE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AEJB2OPymw+CpxMtuHlSpFFij4ZyvRrdJnBM9fhC/9z7FaSkx09QydXPftS4QpLWz
-	 liKWdpJl3SvjBSxy8Fs1HYg63qBb2NR3LTHqD49MhW7QMFDYVF8BdsTn539wg856V9
-	 Pj7/keeJQNDabs4eJuGxe5VXno3z5rj/ii1AAlwQ=
+	b=QVT5w8tuwRj8tMn7e3WQaGGjMOsc3QQxhARfw45RKuHwZzb8U8NgqJVMhRysiwbiu
+	 vpkxQkL6NbgrXVcl+y5W+mu4xm4+AEAjAGdOMqxCoqg1psTBaMYSLTZ6sfnOYzz+jM
+	 q+f+KjFyN/ggP4AJJHaCrbmxyBOmoxm2qNMTA7F0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	stable <stable@kernel.org>,
-	=?UTF-8?q?Johannes=20Br=C3=BCderl?= <johannes.bruederl@gmail.com>
-Subject: [PATCH 6.6 057/254] usb: core: add USB_QUIRK_NO_BOS for devices that hang on BOS descriptor
-Date: Wed, 28 Jan 2026 16:20:33 +0100
-Message-ID: <20260128145346.751639088@linuxfoundation.org>
+	Shengwen Xiao <atzlinux@sina.com>,
+	Huacai Chen <chenhuacai@loongson.cn>,
+	Alan Stern <stern@rowland.harvard.edu>
+Subject: [PATCH 6.6 058/254] USB: OHCI/UHCI: Add soft dependencies on ehci_platform
+Date: Wed, 28 Jan 2026 16:20:34 +0100
+Message-ID: <20260128145346.787561410@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260128145344.698118637@linuxfoundation.org>
 References: <20260128145344.698118637@linuxfoundation.org>
@@ -44,69 +46,95 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Johannes Brüderl <johannes.bruederl@gmail.com>
+From: Huacai Chen <chenhuacai@loongson.cn>
 
-commit 2740ac33c87b3d0dfa022efd6ba04c6261b1abbd upstream.
+commit 01ef7f1b8713a78ab1a9512cf8096d2474c70633 upstream.
 
-Add USB_QUIRK_NO_BOS quirk flag to skip requesting the BOS descriptor
-for devices that cannot handle it.
+Commit 9beeee6584b9aa4f ("USB: EHCI: log a warning if ehci-hcd is not
+loaded first") said that ehci-hcd should be loaded before ohci-hcd and
+uhci-hcd. However, commit 05c92da0c52494ca ("usb: ohci/uhci - add soft
+dependencies on ehci_pci") only makes ohci-pci/uhci-pci depend on ehci-
+pci, which is not enough and we may still see the warnings in boot log.
 
-Add Elgato 4K X (0fd9:009b) to the quirk table. This device hangs when
-the BOS descriptor is requested at SuperSpeed Plus (10Gbps).
+To eliminate the warnings we should make ohci-hcd/uhci-hcd depend on
+ehci-hcd. But Alan said that the warning introduced by 9beeee6584b9aa4f
+is bogus, we only need the soft dependencies in the PCI level rather
+than the HCD level.
 
-Link: https://bugzilla.kernel.org/show_bug.cgi?id=220027
+However, there is really another neccessary soft dependencies between
+ohci-platform/uhci-platform and ehci-platform, which is added by this
+patch. The boot logs are below.
+
+1. ohci-platform loaded before ehci-platform:
+
+ ohci-platform 1f058000.usb: Generic Platform OHCI controller
+ ohci-platform 1f058000.usb: new USB bus registered, assigned bus number 1
+ ohci-platform 1f058000.usb: irq 28, io mem 0x1f058000
+ hub 1-0:1.0: USB hub found
+ hub 1-0:1.0: 4 ports detected
+ Warning! ehci_hcd should always be loaded before uhci_hcd and ohci_hcd, not after
+ usb 1-4: new low-speed USB device number 2 using ohci-platform
+ ehci-platform 1f050000.usb: EHCI Host Controller
+ ehci-platform 1f050000.usb: new USB bus registered, assigned bus number 2
+ ehci-platform 1f050000.usb: irq 29, io mem 0x1f050000
+ ehci-platform 1f050000.usb: USB 2.0 started, EHCI 1.00
+ usb 1-4: device descriptor read/all, error -62
+ hub 2-0:1.0: USB hub found
+ hub 2-0:1.0: 4 ports detected
+ usb 1-4: new low-speed USB device number 3 using ohci-platform
+ input: YSPRINGTECH USB OPTICAL MOUSE as /devices/platform/bus@10000000/1f058000.usb/usb1/1-4/1-4:1.0/0003:10C4:8105.0001/input/input0
+ hid-generic 0003:10C4:8105.0001: input,hidraw0: USB HID v1.11 Mouse [YSPRINGTECH USB OPTICAL MOUSE] on usb-1f058000.usb-4/input0
+
+2. ehci-platform loaded before ohci-platform:
+
+ ehci-platform 1f050000.usb: EHCI Host Controller
+ ehci-platform 1f050000.usb: new USB bus registered, assigned bus number 1
+ ehci-platform 1f050000.usb: irq 28, io mem 0x1f050000
+ ehci-platform 1f050000.usb: USB 2.0 started, EHCI 1.00
+ hub 1-0:1.0: USB hub found
+ hub 1-0:1.0: 4 ports detected
+ ohci-platform 1f058000.usb: Generic Platform OHCI controller
+ ohci-platform 1f058000.usb: new USB bus registered, assigned bus number 2
+ ohci-platform 1f058000.usb: irq 29, io mem 0x1f058000
+ hub 2-0:1.0: USB hub found
+ hub 2-0:1.0: 4 ports detected
+ usb 2-4: new low-speed USB device number 2 using ohci-platform
+ input: YSPRINGTECH USB OPTICAL MOUSE as /devices/platform/bus@10000000/1f058000.usb/usb2/2-4/2-4:1.0/0003:10C4:8105.0001/input/input0
+ hid-generic 0003:10C4:8105.0001: input,hidraw0: USB HID v1.11 Mouse [YSPRINGTECH USB OPTICAL MOUSE] on usb-1f058000.usb-4/input0
+
+In the later case, there is no re-connection for USB-1.0/1.1 devices,
+which is expected.
+
 Cc: stable <stable@kernel.org>
-Signed-off-by: Johannes Brüderl <johannes.bruederl@gmail.com>
-Link: https://patch.msgid.link/20251207090220.14807-1-johannes.bruederl@gmail.com
+Reported-by: Shengwen Xiao <atzlinux@sina.com>
+Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
+Reviewed-by: Alan Stern <stern@rowland.harvard.edu>
+Link: https://patch.msgid.link/20260112084802.1995923-1-chenhuacai@loongson.cn
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/core/config.c  |    5 +++++
- drivers/usb/core/quirks.c  |    3 +++
- include/linux/usb/quirks.h |    3 +++
- 3 files changed, 11 insertions(+)
+ drivers/usb/host/ohci-platform.c |    1 +
+ drivers/usb/host/uhci-platform.c |    1 +
+ 2 files changed, 2 insertions(+)
 
---- a/drivers/usb/core/config.c
-+++ b/drivers/usb/core/config.c
-@@ -1004,6 +1004,11 @@ int usb_get_bos_descriptor(struct usb_de
- 	__u8 cap_type;
- 	int ret;
- 
-+	if (dev->quirks & USB_QUIRK_NO_BOS) {
-+		dev_dbg(ddev, "skipping BOS descriptor\n");
-+		return -ENOMSG;
-+	}
-+
- 	bos = kzalloc(sizeof(*bos), GFP_KERNEL);
- 	if (!bos)
- 		return -ENOMEM;
---- a/drivers/usb/core/quirks.c
-+++ b/drivers/usb/core/quirks.c
-@@ -447,6 +447,9 @@ static const struct usb_device_id usb_qu
- 	{ USB_DEVICE(0x0c45, 0x7056), .driver_info =
- 			USB_QUIRK_IGNORE_REMOTE_WAKEUP },
- 
-+	/* Elgato 4K X - BOS descriptor fetch hangs at SuperSpeed Plus */
-+	{ USB_DEVICE(0x0fd9, 0x009b), .driver_info = USB_QUIRK_NO_BOS },
-+
- 	/* Sony Xperia XZ1 Compact (lilac) smartphone in fastboot mode */
- 	{ USB_DEVICE(0x0fce, 0x0dde), .driver_info = USB_QUIRK_NO_LPM },
- 
---- a/include/linux/usb/quirks.h
-+++ b/include/linux/usb/quirks.h
-@@ -75,4 +75,7 @@
- /* short SET_ADDRESS request timeout */
- #define USB_QUIRK_SHORT_SET_ADDRESS_REQ_TIMEOUT	BIT(16)
- 
-+/* skip BOS descriptor request */
-+#define USB_QUIRK_NO_BOS			BIT(17)
-+
- #endif /* __LINUX_USB_QUIRKS_H */
+--- a/drivers/usb/host/ohci-platform.c
++++ b/drivers/usb/host/ohci-platform.c
+@@ -376,3 +376,4 @@ MODULE_DESCRIPTION(DRIVER_DESC);
+ MODULE_AUTHOR("Hauke Mehrtens");
+ MODULE_AUTHOR("Alan Stern");
+ MODULE_LICENSE("GPL");
++MODULE_SOFTDEP("pre: ehci_platform");
+--- a/drivers/usb/host/uhci-platform.c
++++ b/drivers/usb/host/uhci-platform.c
+@@ -191,3 +191,4 @@ static struct platform_driver uhci_platf
+ 		.of_match_table = platform_uhci_ids,
+ 	},
+ };
++MODULE_SOFTDEP("pre: ehci_platform");
 
 
