@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2E84308F1D;
-	Wed, 28 Jan 2026 15:48:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 537FB2D3EC7;
+	Wed, 28 Jan 2026 15:48:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769615299; cv=none; b=sjBG50TZY4tXwiVZeE7+IhRkFFZ/tuH7s4sfOycSU3zYzc0Ropo61qvS3U0f8hu0j3pb/q77qiXsudAZk/zzXsmAno1W7RL0m6JpfaTy+Rbay7o6BWb6pxIPUV8/3XXa58vijP/kfttlfcCX2wwCsoKQQkY74aIFffGQcFQhgDI=
+	t=1769615303; cv=none; b=ONYKp9gRY+9I0oyk3CYProvtNfm119lzQH4IzgP8CVq+RR67QoGOLewIFczsyKyG803Jwl84FOtT71Pp6pLDDO5eY3gmqAAHB8QRKH5fTRlQfkFa94evaTQGdQBCoVPafdKOkYshhMUqvRJyqJb4NYiiOhij0KzKzWlsROKG/f8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769615299; c=relaxed/simple;
-	bh=1sEumzKNBDl9k/ek/iePFiALEqIKtp0rAwkcDKllBEo=;
+	s=arc-20240116; t=1769615303; c=relaxed/simple;
+	bh=fIB15zlxWCgCPPqLsoOanGBHCubi1WpykaCckCDTtnQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=KhlVwIct/nTUygBTKtRMJMazFeTU2LlqMi38s+b1KfRvuUJx0c13HMOqHWY+pxUtO3dWr4HLEw012rhHOxAUIgIzn/3The6FTaG4/m5kIL04UKBRFj7zcRUNoGY8Pe+BBCvYh876cjApTcm0Kh2uXkFrA8ebzQWmxHnHFJ1lS2U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JTF/MSee; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=N6uXSGW9fo30bgDiX5sWJtLvtDPtTKcGjIKzru8Y4sBNbGYkh1y62ONEvsrwWxx0LigMdOlybjq0hxxUAUcjPZKyUHfN6nL6XBfpqlo/dJV9RXbzq5zy0D4RzjSG6OY5UpfdmihYj+tWNzEGcQvvCinXux+pWnU6aTV4/SdLQ2k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=u/V2mORu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JTF/MSee"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 179CAC4CEF1;
-	Wed, 28 Jan 2026 15:48:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="u/V2mORu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 74046C116C6;
+	Wed, 28 Jan 2026 15:48:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1769615299;
-	bh=1sEumzKNBDl9k/ek/iePFiALEqIKtp0rAwkcDKllBEo=;
+	s=korg; t=1769615302;
+	bh=fIB15zlxWCgCPPqLsoOanGBHCubi1WpykaCckCDTtnQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JTF/MSeeZ0mFAbGqwgYr29fTeRiWtznpjskLyin+XWZ4dcRVSd1PHsUSP9x4Izu7x
-	 ozlP/DCaPCb7h6FX/jSt/i5xtBlKJH89qrbSzbN0axhD6hZ3aUzbDVRadsOxAI2Z5r
-	 XlcNy+QXICr7OY+unPWfqRTked3Pbxz9iqi/1Vlw=
+	b=u/V2mORuFZuxTRUGoHP7Vy1wRXOwAhLcdgdQSRx4hEt8l7LTZQnMcucNCdQ5sHY8o
+	 /oUn+w4CvfS7dl5DrwaSgeZe7HwHQy2tV+y0l0EGB0T89zs9xKgkIta65NCW0h3bYw
+	 5xoGD3POuSk4GVCuiik4ePInx1cs/WZtY+LPxriA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"=?UTF-8?q?Jan=20H . =20Sch=C3=B6nherr?=" <jschoenh@amazon.de>,
-	Peter Zijlstra <peterz@infradead.org>,
-	Fernand Sieber <sieberf@amazon.com>
-Subject: [PATCH 6.12 137/169] perf/x86/intel: Do not enable BTS for guests
-Date: Wed, 28 Jan 2026 16:23:40 +0100
-Message-ID: <20260128145338.938017302@linuxfoundation.org>
+	Arnd Bergmann <arnd@arndb.de>,
+	Thomas Gleixner <tglx@kernel.org>,
+	Marc Zyngier <maz@kernel.org>
+Subject: [PATCH 6.12 138/169] irqchip/gic-v3-its: Avoid truncating memory addresses
+Date: Wed, 28 Jan 2026 16:23:41 +0100
+Message-ID: <20260128145338.973266378@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260128145334.006287341@linuxfoundation.org>
 References: <20260128145334.006287341@linuxfoundation.org>
@@ -45,63 +45,80 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Fernand Sieber <sieberf@amazon.com>
+From: Arnd Bergmann <arnd@arndb.de>
 
-commit 91dcfae0ff2b9b9ab03c1ec95babaceefbffb9f4 upstream.
+commit 8d76a7d89c12d08382b66e2f21f20d0627d14859 upstream.
 
-By default when users program perf to sample branch instructions
-(PERF_COUNT_HW_BRANCH_INSTRUCTIONS) with a sample period of 1, perf
-interprets this as a special case and enables BTS (Branch Trace Store)
-as an optimization to avoid taking an interrupt on every branch.
+On 32-bit machines with CONFIG_ARM_LPAE, it is possible for lowmem
+allocations to be backed by addresses physical memory above the 32-bit
+address limit, as found while experimenting with larger VMSPLIT
+configurations.
 
-Since BTS doesn't virtualize, this optimization doesn't make sense when
-the request originates from a guest. Add an additional check that
-prevents this optimization for virtualized events (exclude_host).
+This caused the qemu virt model to crash in the GICv3 driver, which
+allocates the 'itt' object using GFP_KERNEL. Since all memory below
+the 4GB physical address limit is in ZONE_DMA in this configuration,
+kmalloc() defaults to higher addresses for ZONE_NORMAL, and the
+ITS driver stores the physical address in a 32-bit 'unsigned long'
+variable.
 
-Reported-by: Jan H. Schönherr <jschoenh@amazon.de>
-Suggested-by: Peter Zijlstra <peterz@infradead.org>
-Signed-off-by: Fernand Sieber <sieberf@amazon.com>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Cc: <stable@vger.kernel.org>
-Link: https://patch.msgid.link/20251211183604.868641-1-sieberf@amazon.com
+Change the itt_addr variable to the correct phys_addr_t type instead,
+along with all other variables in this driver that hold a physical
+address.
+
+The gicv5 driver correctly uses u64 variables, while all other irqchip
+drivers don't call virt_to_phys or similar interfaces. It's expected that
+other device drivers have similar issues, but fixing this one is
+sufficient for booting a virtio based guest.
+
+Fixes: cc2d3216f53c ("irqchip: GICv3: ITS command queue")
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Signed-off-by: Thomas Gleixner <tglx@kernel.org>
+Reviewed-by: Marc Zyngier <maz@kernel.org>
+Cc: stable@vger.kernel.org
+Link: https://patch.msgid.link/20260119201603.2713066-1-arnd@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/events/perf_event.h |   13 +++++++++++--
- 1 file changed, 11 insertions(+), 2 deletions(-)
+ drivers/irqchip/irq-gic-v3-its.c |    8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
---- a/arch/x86/events/perf_event.h
-+++ b/arch/x86/events/perf_event.h
-@@ -1513,13 +1513,22 @@ static inline bool intel_pmu_has_bts_per
- 	struct hw_perf_event *hwc = &event->hw;
- 	unsigned int hw_event, bts_event;
+--- a/drivers/irqchip/irq-gic-v3-its.c
++++ b/drivers/irqchip/irq-gic-v3-its.c
+@@ -619,7 +619,7 @@ static struct its_collection *its_build_
+ 						 struct its_cmd_block *cmd,
+ 						 struct its_cmd_desc *desc)
+ {
+-	unsigned long itt_addr;
++	phys_addr_t itt_addr;
+ 	u8 size = ilog2(desc->its_mapd_cmd.dev->nr_ites);
  
--	if (event->attr.freq)
-+	/*
-+	 * Only use BTS for fixed rate period==1 events.
-+	 */
-+	if (event->attr.freq || period != 1)
-+		return false;
-+
-+	/*
-+	 * BTS doesn't virtualize.
-+	 */
-+	if (event->attr.exclude_host)
- 		return false;
+ 	itt_addr = virt_to_phys(desc->its_mapd_cmd.dev->itt);
+@@ -790,7 +790,7 @@ static struct its_vpe *its_build_vmapp_c
+ 					   struct its_cmd_desc *desc)
+ {
+ 	struct its_vpe *vpe = valid_vpe(its, desc->its_vmapp_cmd.vpe);
+-	unsigned long vpt_addr, vconf_addr;
++	phys_addr_t vpt_addr, vconf_addr;
+ 	u64 target;
+ 	bool alloc;
  
- 	hw_event = hwc->config & INTEL_ARCH_EVENT_MASK;
- 	bts_event = x86_pmu.event_map(PERF_COUNT_HW_BRANCH_INSTRUCTIONS);
+@@ -2395,10 +2395,10 @@ retry_baser:
+ 	baser->psz = psz;
+ 	tmp = indirect ? GITS_LVL1_ENTRY_SIZE : esz;
  
--	return hw_event == bts_event && period == 1;
-+	return hw_event == bts_event;
- }
+-	pr_info("ITS@%pa: allocated %d %s @%lx (%s, esz %d, psz %dK, shr %d)\n",
++	pr_info("ITS@%pa: allocated %d %s @%llx (%s, esz %d, psz %dK, shr %d)\n",
+ 		&its->phys_base, (int)(PAGE_ORDER_TO_SIZE(order) / (int)tmp),
+ 		its_base_type_string[type],
+-		(unsigned long)virt_to_phys(base),
++		(u64)virt_to_phys(base),
+ 		indirect ? "indirect" : "flat", (int)esz,
+ 		psz / SZ_1K, (int)shr >> GITS_BASER_SHAREABILITY_SHIFT);
  
- static inline bool intel_pmu_has_bts(struct perf_event *event)
 
 
