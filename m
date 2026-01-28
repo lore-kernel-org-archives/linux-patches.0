@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AAB4B2D0C62;
-	Wed, 28 Jan 2026 15:35:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC8E62D0C62;
+	Wed, 28 Jan 2026 15:35:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769614552; cv=none; b=iRyijPaVoq4ey/fMLx0tGjh0qaiEd67QbR6LADNqyBl4byGk6enVuY9B0nk1Zs0GdWAMxtjxwMLCa7M6khb3GLRzLsV+qUwqWcrO7v9c+OVJcPcriK9Av9nxbuN+X/zq3QQeLGhJaOV4+RXbWEHEN/x9ETPLYA8yUgP8AmXWuAA=
+	t=1769614556; cv=none; b=HK5ivfh5PlCoUb+tOZB11CJZjJ9hYElsdyrHpdVkDvgfnt8JIPuJCLMPk4tMLXItS9ujBkBEyS2uXAK7ldvpqBHOv4smjd7kYEbnYGrJ4CopqxyEQlJCwgtXyohZWpwqb7husH9ywhKT8nj2QQN9GEk7M+EzbTMrT6j8lVaXP8k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769614552; c=relaxed/simple;
-	bh=NIV2zycBfHcGmFyiwaOotDr11z277vcbB2t95cK60YI=;
+	s=arc-20240116; t=1769614556; c=relaxed/simple;
+	bh=jLK4cBd2G0swFuzUr0la9jXhgvlDjKRXvozuY23vdi8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LI/pqUmVBg5VOkvD0/fHejGuFo0niKKawNhy9bpgSQ906Hmkd1E3SXKlHjK/81q6hycNyReCpFpz74WhN22Hy1R5kIvuPOpbrrs4yzFB+jpj+nZsNAjt4+rR7VqzVL3j9pLGc9FLyzhwBTaPHMjvWOfO45hggz/lX5sUj4EK7Gw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=StMTwkVy; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=TN7jx/jjbZwSiMG77slUC18hzLBXUG+g5z1HI/8Dxp/EsZoHv1m8aiB3lTdSKzarzs5KfSbu08bRH3e5pIouigHT65x8nPvQxSCrYl821sb0zIV2cGDXcXIWF+mowXvg7GJENuZC0DHomgDMi6cocF6PR/9AFcqPdIdlR2DbkVg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DNbToHw7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="StMTwkVy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D52CEC4CEF1;
-	Wed, 28 Jan 2026 15:35:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DNbToHw7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F75DC4CEF1;
+	Wed, 28 Jan 2026 15:35:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1769614552;
-	bh=NIV2zycBfHcGmFyiwaOotDr11z277vcbB2t95cK60YI=;
+	s=korg; t=1769614555;
+	bh=jLK4cBd2G0swFuzUr0la9jXhgvlDjKRXvozuY23vdi8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=StMTwkVyLFHF5OJkU+3SffR5wg9yKnx1kQMj8LNuBPoWLlyeA8WXf9nhlU+/vfd4/
-	 +c2dgG/dxHUtEBb7zSdFwHFsBtmSW6omORktC69H8QXlqmXcMLTzMUccsKffq3EkSQ
-	 e8BJmkJndsHoHJRzeVnBwyCXhkj/U2cClc2yJM9M=
+	b=DNbToHw7AFNMZzpzDHk+kvSoMhIPjO6IY2rRSFVFo6PDbTLQ6DhYSQPXw4Hofk6vD
+	 Q7F2zYgSLblHBnkjpidjU6Yr+BMO9nFk94a8SRWzGZzwUk/0/RDgF1T3QgsK7hgszB
+	 in/h7tpnOESBMWdo41yrbHTz2WtCNJggy69nxlxs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Laurent Vivier <lvivier@redhat.com>,
-	Stefano Brivio <sbrivio@redhat.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	=?UTF-8?q?Timur=20Krist=C3=B3f?= <timur.kristof@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 170/254] usbnet: limit max_mtu based on devices hard_mtu
-Date: Wed, 28 Jan 2026 16:22:26 +0100
-Message-ID: <20260128145350.924305851@linuxfoundation.org>
+Subject: [PATCH 6.6 171/254] drm/amd/pm: Dont clear SI SMC table when setting power limit
+Date: Wed, 28 Jan 2026 16:22:27 +0100
+Message-ID: <20260128145350.959751384@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260128145344.698118637@linuxfoundation.org>
 References: <20260128145344.698118637@linuxfoundation.org>
@@ -46,63 +45,60 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Laurent Vivier <lvivier@redhat.com>
+From: Timur Kristóf <timur.kristof@gmail.com>
 
-[ Upstream commit c7159e960f1472a5493ac99aff0086ab1d683594 ]
+[ Upstream commit d5077426e1a76d269e518e048bde2e9fc49b32ad ]
 
-The usbnet driver initializes net->max_mtu to ETH_MAX_MTU before calling
-the device's bind() callback. When the bind() callback sets
-dev->hard_mtu based the device's actual capability (from CDC Ethernet's
-wMaxSegmentSize descriptor), max_mtu is never updated to reflect this
-hardware limitation).
+There is no reason to clear the SMC table.
+We also don't need to recalculate the power limit then.
 
-This allows userspace (DHCP or IPv6 RA) to configure MTU larger than the
-device can handle, leading to silent packet drops when the backend sends
-packet exceeding the device's buffer size.
-
-Fix this by limiting net->max_mtu to the device's hard_mtu after the
-bind callback returns.
-
-See https://gitlab.com/qemu-project/qemu/-/issues/3268 and
-    https://bugs.passt.top/attachment.cgi?bugid=189
-
-Fixes: f77f0aee4da4 ("net: use core MTU range checking in USB NIC drivers")
-Signed-off-by: Laurent Vivier <lvivier@redhat.com>
-Link: https://bugs.passt.top/show_bug.cgi?id=189
-Reviewed-by: Stefano Brivio <sbrivio@redhat.com>
-Link: https://patch.msgid.link/20260119075518.2774373-1-lvivier@redhat.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 841686df9f7d ("drm/amdgpu: add SI DPM support (v4)")
+Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Timur Kristóf <timur.kristof@gmail.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit e214d626253f5b180db10dedab161b7caa41f5e9)
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/usb/usbnet.c | 9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
+ drivers/gpu/drm/amd/pm/legacy-dpm/si_dpm.c | 10 ----------
+ 1 file changed, 10 deletions(-)
 
-diff --git a/drivers/net/usb/usbnet.c b/drivers/net/usb/usbnet.c
-index e6a1864f03f94..e41649365efff 100644
---- a/drivers/net/usb/usbnet.c
-+++ b/drivers/net/usb/usbnet.c
-@@ -1799,9 +1799,12 @@ usbnet_probe (struct usb_interface *udev, const struct usb_device_id *prod)
- 		if ((dev->driver_info->flags & FLAG_NOARP) != 0)
- 			net->flags |= IFF_NOARP;
+diff --git a/drivers/gpu/drm/amd/pm/legacy-dpm/si_dpm.c b/drivers/gpu/drm/amd/pm/legacy-dpm/si_dpm.c
+index e5f68b2b8def3..e8ca74fc089b7 100644
+--- a/drivers/gpu/drm/amd/pm/legacy-dpm/si_dpm.c
++++ b/drivers/gpu/drm/amd/pm/legacy-dpm/si_dpm.c
+@@ -2257,8 +2257,6 @@ static int si_populate_smc_tdp_limits(struct amdgpu_device *adev,
+ 		if (scaling_factor == 0)
+ 			return -EINVAL;
  
--		/* maybe the remote can't receive an Ethernet MTU */
--		if (net->mtu > (dev->hard_mtu - net->hard_header_len))
--			net->mtu = dev->hard_mtu - net->hard_header_len;
-+		if (net->max_mtu > (dev->hard_mtu - net->hard_header_len))
-+			net->max_mtu = dev->hard_mtu - net->hard_header_len;
-+
-+		if (net->mtu > net->max_mtu)
-+			net->mtu = net->max_mtu;
-+
- 	} else if (!info->in || !info->out)
- 		status = usbnet_get_endpoints (dev, udev);
- 	else {
+-		memset(smc_table, 0, sizeof(SISLANDS_SMC_STATETABLE));
+-
+ 		ret = si_calculate_adjusted_tdp_limits(adev,
+ 						       false, /* ??? */
+ 						       adev->pm.dpm.tdp_adjustment,
+@@ -2312,16 +2310,8 @@ static int si_populate_smc_tdp_limits_2(struct amdgpu_device *adev,
+ 
+ 	if (ni_pi->enable_power_containment) {
+ 		SISLANDS_SMC_STATETABLE *smc_table = &si_pi->smc_statetable;
+-		u32 scaling_factor = si_get_smc_power_scaling_factor(adev);
+ 		int ret;
+ 
+-		memset(smc_table, 0, sizeof(SISLANDS_SMC_STATETABLE));
+-
+-		smc_table->dpm2Params.NearTDPLimit =
+-			cpu_to_be32(si_scale_power_for_smc(adev->pm.dpm.near_tdp_limit_adjusted, scaling_factor) * 1000);
+-		smc_table->dpm2Params.SafePowerLimit =
+-			cpu_to_be32(si_scale_power_for_smc((adev->pm.dpm.near_tdp_limit_adjusted * SISLANDS_DPM2_TDP_SAFE_LIMIT_PERCENT) / 100, scaling_factor) * 1000);
+-
+ 		ret = amdgpu_si_copy_bytes_to_smc(adev,
+ 						  (si_pi->state_table_start +
+ 						   offsetof(SISLANDS_SMC_STATETABLE, dpm2Params) +
 -- 
 2.51.0
 
