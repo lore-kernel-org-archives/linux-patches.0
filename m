@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1224E2FB085;
-	Wed, 28 Jan 2026 15:42:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10FFA30C37A;
+	Wed, 28 Jan 2026 15:43:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769614979; cv=none; b=Ku320oEPcIhli7A/hwwiDWfKC0A2gKhsgltQ8/vLnG+kvSidWGQlLs3oR+V2Xtkv0FitndIToFaz32hSqsu5AwUeGWH4lLB89kBN1p08t3JyQwSquul1iyqvsxoO1XSbtWcV/mwUZFIdWLpVuS2E8YJnDM9wtOVCwYUmdYIcz+4=
+	t=1769614983; cv=none; b=fLFvRYiZNTu3nE3TBo6lxkMuc0Rg3aC06kIfyRAMHxG75mZxdDZCaZBe6ZOZW4QYPnHu468SRxJrLZ9UZrV2m7SlL0z/2OtLKzmnSkyZ9rTF5huPXKjhUWV0bxRf+gEe7WDfkmML68ulPNxJXgOOmqX70+9/6iEGdvn4xPkKBIY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769614979; c=relaxed/simple;
-	bh=jjZUC70QU86d6CEzf1xuStGO6g3E12kufabXDEwSsnY=;
+	s=arc-20240116; t=1769614983; c=relaxed/simple;
+	bh=J7Oqo6X/uQ2S9zbHDmt+CLwB4c8p195xigBG00He75g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aDrnlPVZCW+vwJWsBREtUSOKgFsyAlV/WqquLkWf+EDVM0+Lik7+Dzj6NpeHGx5GDmf0dk0owlYQ5ZRhgVrwIX4MLnOgs1UBhmgMpA2tI5hsKB6pemALuMB32sOFAjcI/l0ChjhzLNT3F7a2jTjSqfKQ+aWq8VGR34KrIqmobyM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cGR4acbb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HBBv4b7ti2/5URnlTp5xAGSwlvWbLZBASmKXUP8ibqU9lFQ/NHKUSlcncLZUkHi8txJPBwqkZGx+f84umEq1uXhifOSnO/5A/Tc9iV3k9UuaqQqaNIA/0/0X/0BYGSXY6DZ20pVSFXBtMeFlFVe9nFW/HNfMwkxwXpqyaPL6a8E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NVr4fg9d; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cGR4acbb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 71B2BC4CEF1;
-	Wed, 28 Jan 2026 15:42:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NVr4fg9d"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45C79C4CEF1;
+	Wed, 28 Jan 2026 15:43:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1769614978;
-	bh=jjZUC70QU86d6CEzf1xuStGO6g3E12kufabXDEwSsnY=;
+	s=korg; t=1769614982;
+	bh=J7Oqo6X/uQ2S9zbHDmt+CLwB4c8p195xigBG00He75g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cGR4acbbw+bgGSz7cCoHGb21HiCSpPr1RLTy2ymXFvsonnv3mPc03bqJSI0j80Umb
-	 bLEHEmRUQsAm3UDRoj7ACAKhrnC9bX1GM8qvP2Knu+qbLNQRfjku9FHTIYYnPoNlD0
-	 0tvA4ft0Uh0u3w4aOBg/HEcpi+Q2tiWbgk/s8WFw=
+	b=NVr4fg9djNDySdFmFAF93gZG22p0o1Gr/UlB2ks9IDAzLlVfGil86VXT8e0wchMi3
+	 xvPWjVGIB9wizzxZXEHMzBQOTdqoMgwUlroIo+9yh/42CiS2P0+4iP8UZcDSSYy3PY
+	 U2rkyirn2wUZj1XXN5cXo3HVxi2VKAwy5K4GCMsc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Taeyang Lee <0wn@theori.io>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
+	Lachlan Hodges <lachlan.hodges@morsemicro.com>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 041/169] crypto: authencesn - reject too-short AAD (assoclen<8) to match ESP/ESN spec
-Date: Wed, 28 Jan 2026 16:22:04 +0100
-Message-ID: <20260128145335.499200752@linuxfoundation.org>
+Subject: [PATCH 6.12 042/169] wifi: mac80211: dont perform DA check on S1G beacon
+Date: Wed, 28 Jan 2026 16:22:05 +0100
+Message-ID: <20260128145335.534080190@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260128145334.006287341@linuxfoundation.org>
 References: <20260128145334.006287341@linuxfoundation.org>
@@ -51,50 +51,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Taeyang Lee <0wn@theori.io>
+From: Lachlan Hodges <lachlan.hodges@morsemicro.com>
 
-[ Upstream commit 2397e9264676be7794f8f7f1e9763d90bd3c7335 ]
+[ Upstream commit 5dc6975566f5d142ec53eb7e97af688c45dd314d ]
 
-authencesn assumes an ESP/ESN-formatted AAD. When assoclen is shorter than
-the minimum expected length, crypto_authenc_esn_decrypt() can advance past
-the end of the destination scatterlist and trigger a NULL pointer dereference
-in scatterwalk_map_and_copy(), leading to a kernel panic (DoS).
+S1G beacons don't contain the DA field as per IEEE80211-2024 9.3.4.3,
+so the DA broadcast check reads the SA address of the S1G beacon which
+will subsequently lead to the beacon being dropped. As a result, passive
+scanning is not possible. Fix this by only performing the check on
+non-S1G beacons to allow S1G long beacons to be processed during a
+passive scan.
 
-Add a minimum AAD length check to fail fast on invalid inputs.
-
-Fixes: 104880a6b470 ("crypto: authencesn - Convert to new AEAD interface")
-Reported-By: Taeyang Lee <0wn@theori.io>
-Signed-off-by: Taeyang Lee <0wn@theori.io>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Fixes: ddf82e752f8a ("wifi: mac80211: Allow beacons to update BSS table regardless of scan")
+Signed-off-by: Lachlan Hodges <lachlan.hodges@morsemicro.com>
+Link: https://patch.msgid.link/20260120031122.309942-1-lachlan.hodges@morsemicro.com
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- crypto/authencesn.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ net/mac80211/scan.c | 9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
-diff --git a/crypto/authencesn.c b/crypto/authencesn.c
-index 2cc933e2f7901..e08032e80f188 100644
---- a/crypto/authencesn.c
-+++ b/crypto/authencesn.c
-@@ -185,6 +185,9 @@ static int crypto_authenc_esn_encrypt(struct aead_request *req)
- 	struct scatterlist *src, *dst;
- 	int err;
+diff --git a/net/mac80211/scan.c b/net/mac80211/scan.c
+index ce6d5857214eb..8675d2e99c564 100644
+--- a/net/mac80211/scan.c
++++ b/net/mac80211/scan.c
+@@ -327,8 +327,13 @@ void ieee80211_scan_rx(struct ieee80211_local *local, struct sk_buff *skb)
+ 						 mgmt->da))
+ 			return;
+ 	} else {
+-		/* Beacons are expected only with broadcast address */
+-		if (!is_broadcast_ether_addr(mgmt->da))
++		/*
++		 * Non-S1G beacons are expected only with broadcast address.
++		 * S1G beacons only carry the SA so no DA check is required
++		 * nor possible.
++		 */
++		if (!ieee80211_is_s1g_beacon(mgmt->frame_control) &&
++		    !is_broadcast_ether_addr(mgmt->da))
+ 			return;
+ 	}
  
-+	if (assoclen < 8)
-+		return -EINVAL;
-+
- 	sg_init_table(areq_ctx->src, 2);
- 	src = scatterwalk_ffwd(areq_ctx->src, req->src, assoclen);
- 	dst = src;
-@@ -275,6 +278,9 @@ static int crypto_authenc_esn_decrypt(struct aead_request *req)
- 	u32 tmp[2];
- 	int err;
- 
-+	if (assoclen < 8)
-+		return -EINVAL;
-+
- 	cryptlen -= authsize;
- 
- 	if (req->src != dst) {
 -- 
 2.51.0
 
