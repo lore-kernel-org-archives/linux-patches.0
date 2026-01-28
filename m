@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B581925C804;
-	Wed, 28 Jan 2026 15:30:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56CDB2505AA;
+	Wed, 28 Jan 2026 15:30:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769614222; cv=none; b=NDpHRZ9H7WyqGrlysEbn5OYc7Vbmnwm2akyFDnoQCrvLchy4GSA0wZdBs5I+aqr4yjdIOzsJLYXOv8WBWsnvtzf/Os6+enYjuE59yxi/5T8FuvyC8A5XpGdcJ5gAC+dE+yfv/vnR+BtHaBcRjR5J1STy/Ujw58hykgmQsLcbpzM=
+	t=1769614226; cv=none; b=biMrYSQieuq97pUFRlxGcYfQZGZTOqh1t/Wn/U7HqZmcyYcnRo+UgHUhbG04APQF4CZDXKg5vAKFiGWiCB2fvGIicyPFAJyHh8t3o6lVfxp5E47vVRaz4BTjHGO6XbS1pUUVwIgfkKEXTfEwuiYSoRH1M/BAXYH5+wP9q/K82X8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769614222; c=relaxed/simple;
-	bh=bd3enJ2oLUUkez2nY69r6XNUjTF1QEIvshX3j3eQ4/g=;
+	s=arc-20240116; t=1769614226; c=relaxed/simple;
+	bh=9EiC/meF3rCyrbQ04wwIkmjtaGS5yS/r4p1JCQCCZhk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RrhWvkiRZndzSwCpPME9782l6QFKtJCrPHgg0OAagd/OnR+7S9XTSB47hScA8SRMUiBuPls2iCngPQfNWMhCsyy65W1uzyRPUlIKFcjO4bzQ1y+Rl8F2B/qGtBGWpZDOTVNB4BH+iazitxR+/NrBZYGy43bbjxSoWHSMotWKuzE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LAvOKtdL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NgaaIVS2TFvPIp5t12gANABs72cLR7J9kiNXdGDCPFX6mI0d7qDP6aCMNYbQEeEnkzdwFfaajpn3zTIhKPzjidrzYLNIzkru/X0IT9q2+uwOub2JHZ0wvyH9PLFaCiRJdG7fHfr1Y+oXTHRlsMMcVFURtE/cPv4ke71a1LqaHG4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ndn32o94; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LAvOKtdL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 24921C4CEF1;
-	Wed, 28 Jan 2026 15:30:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ndn32o94"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D664C4CEF1;
+	Wed, 28 Jan 2026 15:30:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1769614222;
-	bh=bd3enJ2oLUUkez2nY69r6XNUjTF1QEIvshX3j3eQ4/g=;
+	s=korg; t=1769614226;
+	bh=9EiC/meF3rCyrbQ04wwIkmjtaGS5yS/r4p1JCQCCZhk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LAvOKtdLC6HmRYTKbr/AMB5uhbzZsZ6cgmPvbgYLnwMY1NRqv06RsP4H1gHrtN8Va
-	 HzyM89axsmOQ6HJuzfhsRg60UQTK13XDliWteBANot1O02JOY1Yz0rJ6wUXgCapsPF
-	 bNoOhVF96Mdzx3gtE9+/5JM5UcwyfvGA11LdJlFo=
+	b=ndn32o94ra6c0JqYOq3/uK6FfQIERkq0FyeKsNzkxKTVC0356xGPksYEvf4/ut7f/
+	 0T+7uYGyPmcc8DYd22EF69drFSHe4CaIjZE3mvFregQnJINiUzkbK1ySotBsXw072k
+	 4r2OJcNR6Sfg2tD0wRo7g5HxyEb1vhMluokHBSFc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>,
+	Haotian Zhang <vulab@iscas.ac.cn>,
 	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 040/254] phy: broadcom: ns-usb3: Fix Wvoid-pointer-to-enum-cast warning (again)
-Date: Wed, 28 Jan 2026 16:20:16 +0100
-Message-ID: <20260128145346.144102730@linuxfoundation.org>
+Subject: [PATCH 6.6 041/254] dmaengine: omap-dma: fix dma_pool resource leak in error paths
+Date: Wed, 28 Jan 2026 16:20:17 +0100
+Message-ID: <20260128145346.179348455@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260128145344.698118637@linuxfoundation.org>
 References: <20260128145344.698118637@linuxfoundation.org>
@@ -51,44 +51,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
+From: Haotian Zhang <vulab@iscas.ac.cn>
 
-[ Upstream commit fb21116099bbea1fc59efa9207e63c4be390ab72 ]
+[ Upstream commit 2e1136acf8a8887c29f52e35a77b537309af321f ]
 
-"family" is an enum, thus cast of pointer on 64-bit compile test with
-clang W=1 causes:
+The dma_pool created by dma_pool_create() is not destroyed when
+dma_async_device_register() or of_dma_controller_register() fails,
+causing a resource leak in the probe error paths.
 
-  phy-bcm-ns-usb3.c:206:17: error: cast to smaller integer type 'enum bcm_ns_family' from 'const void *' [-Werror,-Wvoid-pointer-to-enum-cast]
+Add dma_pool_destroy() in both error paths to properly release the
+allocated dma_pool resource.
 
-This was already fixed in commit bd6e74a2f0a0 ("phy: broadcom: ns-usb3:
-fix Wvoid-pointer-to-enum-cast warning") but then got bad in commit
-21bf6fc47a1e ("phy: Use device_get_match_data()").
-
-Note that after various discussions the preferred cast is via "unsigned
-long", not "uintptr_t".
-
-Fixes: 21bf6fc47a1e ("phy: Use device_get_match_data()")
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
-Link: https://patch.msgid.link/20251224115533.154162-2-krzysztof.kozlowski@oss.qualcomm.com
+Fixes: 7bedaa553760 ("dmaengine: add OMAP DMA engine driver")
+Signed-off-by: Haotian Zhang <vulab@iscas.ac.cn>
+Link: https://patch.msgid.link/20251103073018.643-1-vulab@iscas.ac.cn
 Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/phy/broadcom/phy-bcm-ns-usb3.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/dma/ti/omap-dma.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/phy/broadcom/phy-bcm-ns-usb3.c b/drivers/phy/broadcom/phy-bcm-ns-usb3.c
-index 2c8b1b7dda5bd..5c2710597df2c 100644
---- a/drivers/phy/broadcom/phy-bcm-ns-usb3.c
-+++ b/drivers/phy/broadcom/phy-bcm-ns-usb3.c
-@@ -203,7 +203,7 @@ static int bcm_ns_usb3_mdio_probe(struct mdio_device *mdiodev)
- 	usb3->dev = dev;
- 	usb3->mdiodev = mdiodev;
- 
--	usb3->family = (enum bcm_ns_family)device_get_match_data(dev);
-+	usb3->family = (unsigned long)device_get_match_data(dev);
- 
- 	syscon_np = of_parse_phandle(dev->of_node, "usb3-dmp-syscon", 0);
- 	err = of_address_to_resource(syscon_np, 0, &res);
+diff --git a/drivers/dma/ti/omap-dma.c b/drivers/dma/ti/omap-dma.c
+index cf96cf915c0c7..efc9093707e5a 100644
+--- a/drivers/dma/ti/omap-dma.c
++++ b/drivers/dma/ti/omap-dma.c
+@@ -1809,6 +1809,8 @@ static int omap_dma_probe(struct platform_device *pdev)
+ 	if (rc) {
+ 		pr_warn("OMAP-DMA: failed to register slave DMA engine device: %d\n",
+ 			rc);
++		if (od->ll123_supported)
++			dma_pool_destroy(od->desc_pool);
+ 		omap_dma_free(od);
+ 		return rc;
+ 	}
+@@ -1824,6 +1826,8 @@ static int omap_dma_probe(struct platform_device *pdev)
+ 		if (rc) {
+ 			pr_warn("OMAP-DMA: failed to register DMA controller\n");
+ 			dma_async_device_unregister(&od->ddev);
++			if (od->ll123_supported)
++				dma_pool_destroy(od->desc_pool);
+ 			omap_dma_free(od);
+ 		}
+ 	}
 -- 
 2.51.0
 
