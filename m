@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4EAE30FC1B;
-	Wed, 28 Jan 2026 15:52:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C88EE308F3B;
+	Wed, 28 Jan 2026 15:52:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769615537; cv=none; b=PLrGiuIgNEzEVW6q1dAVrdgcoPsvpgx2etZl3QSZ//Eq6aVxA+g2jzBaYm1PsUTK5csn0F0+AwsMSDk26bBoD/bn1ACUYfoO0klOHfsecm2Tjc17KuGaR7Eprm5nim4lPgKtAZXL3eZMw3ZVgpnPPFI6ZBA4B4EGLuaGosbc7Pc=
+	t=1769615540; cv=none; b=lzW1I1e7eAO82+2NEKyT/jVDll8wp3qCK4yUM5sMOVqV4vDlhhUyB2Pwwp0lUcSXql/bR+DusdrL+HpeM+mV1UnOsnEj631NdFq+xHzrT+heFv9JzYPum3eM+nY0reONwNkmjKHAOf2RBJ6xT+x2vLh6LbuzCFZ8tnvWAX9VNuc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769615537; c=relaxed/simple;
-	bh=zDbrUndZMsgRO/BtVY74YLPnaEWATsIKBzSHT7JL+c4=;
+	s=arc-20240116; t=1769615540; c=relaxed/simple;
+	bh=6jXQdvS4rOltFuTDh5KwlMPwoeWEH363Hra+YgyFG0Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ryhPaRgipRq1wXDP8lE4Ud/GOH7vqwbAFQjEqdLUyfzkmS2SFjwE2y3AUbwNP9tJqnBrVChvus++Np1xB2NBKx3NeyE7HMz/7puCUejTSRTvCV0/gO6Up8ySxQURiRz0t21QbEHrD8Z0/Do+rJLn0UsYxn9CGikSheFeYPty07I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=D13hb9Zp; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=nrALTVt6UXmg324TJnrRUeUZoG97bLBroVAG6255RJuWPoe7dhV440PQPll82HdhzDPAuYjrkTgyPYer/J0Ds77e3fEw2jiji6epKg/qpraoNE2tmNDUVQK7Sv7iPuLyaelV43B0gg7miyEdi+xYO6d6dhk/PVeN9z+G9db4vLM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=olYOyq6k; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="D13hb9Zp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D63D7C4CEF1;
-	Wed, 28 Jan 2026 15:52:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="olYOyq6k"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E7CCC4CEF1;
+	Wed, 28 Jan 2026 15:52:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1769615537;
-	bh=zDbrUndZMsgRO/BtVY74YLPnaEWATsIKBzSHT7JL+c4=;
+	s=korg; t=1769615540;
+	bh=6jXQdvS4rOltFuTDh5KwlMPwoeWEH363Hra+YgyFG0Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=D13hb9ZpVbJfq7inQogOi/h/UXEJIinFOyYL8I9cW+Gi/rW/dsYCo/y2LotfX7LXd
-	 tFJygH32LYLuhziBUDbXpD7Vj0lFcMH0rnOMs/EGBZuOe/xevJy4MdMF5j+gt/79SL
-	 nLUd3w/l5TY2ehYWnfBpZ+/VjDtENJhzocltuEV4=
+	b=olYOyq6kb9sG6OORCBfDGvTnhmFJgj6T3PtwtZiDeGBKHijLqhVHPbfd/BS0H62he
+	 ABw+5rzBdPROKmDqYOR6y92v3R/BSwITLs5D305PnD48vbkbnW0RBbaok5RNSycPj5
+	 pDlmMySG2Y/Q+OxHghCZqvPj/4LPp5xxVs6x2UIA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Yang <mmyangfl@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@baylibre.com>,
+	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <ukleinek@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 039/227] veth: fix data race in veth_get_ethtool_stats
-Date: Wed, 28 Jan 2026 16:21:24 +0100
-Message-ID: <20260128145345.749801702@linuxfoundation.org>
+Subject: [PATCH 6.18 040/227] pwm: Ensure ioctl() returns a negative errno on error
+Date: Wed, 28 Jan 2026 16:21:25 +0100
+Message-ID: <20260128145345.785798692@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260128145344.331957407@linuxfoundation.org>
 References: <20260128145344.331957407@linuxfoundation.org>
@@ -45,58 +45,66 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: David Yang <mmyangfl@gmail.com>
+From: Uwe Kleine-König <u.kleine-koenig@baylibre.com>
 
-[ Upstream commit b47adaab8b3d443868096bac08fdbb3d403194ba ]
+[ Upstream commit c198b7773ca5bc3bdfb15b85e414fb9a99a5e5ba ]
 
-In veth_get_ethtool_stats(), some statistics protected by
-u64_stats_sync, are read and accumulated in ignorance of possible
-u64_stats_fetch_retry() events. These statistics, peer_tq_xdp_xmit and
-peer_tq_xdp_xmit_err, are already accumulated by veth_xdp_xmit(). Fix
-this by reading them into a temporary buffer first.
+copy_to_user() returns the number of bytes not copied, thus if there is
+a problem a positive number. However the ioctl callback is supposed to
+return a negative error code on error.
 
-Fixes: 5fe6e56776ba ("veth: rely on peer veth_rq for ndo_xdp_xmit accounting")
-Signed-off-by: David Yang <mmyangfl@gmail.com>
-Link: https://patch.msgid.link/20260114122450.227982-1-mmyangfl@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+This error is a unfortunate as strictly speaking it became ABI with the
+introduction of pwm character devices. However I never saw the issue in
+real life -- I found this by code inspection -- and it only affects an
+error case where readonly memory is passed to the ioctls or the address
+mapping changes while the ioctl is active. Also there are already error
+cases returning negative values, so the calling code must be prepared to
+see such values already.
+
+Fixes: 9c06f26ba5f5 ("pwm: Add support for pwmchip devices for faster and easier userspace access")
+Signed-off-by: Uwe Kleine-König <u.kleine-koenig@baylibre.com>
+Link: https://patch.msgid.link/20260119151325.571857-2-u.kleine-koenig@baylibre.com
+Signed-off-by: Uwe Kleine-König <ukleinek@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/veth.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ drivers/pwm/core.c | 10 ++++++----
+ 1 file changed, 6 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/net/veth.c b/drivers/net/veth.c
-index cc502bf022d55..b00613cb07cf0 100644
---- a/drivers/net/veth.c
-+++ b/drivers/net/veth.c
-@@ -228,16 +228,20 @@ static void veth_get_ethtool_stats(struct net_device *dev,
- 		const struct veth_rq_stats *rq_stats = &rcv_priv->rq[i].stats;
- 		const void *base = (void *)&rq_stats->vs;
- 		unsigned int start, tx_idx = idx;
-+		u64 buf[VETH_TQ_STATS_LEN];
- 		size_t offset;
+diff --git a/drivers/pwm/core.c b/drivers/pwm/core.c
+index 7dd1cf2ba4025..462c91a034c8e 100644
+--- a/drivers/pwm/core.c
++++ b/drivers/pwm/core.c
+@@ -2294,8 +2294,9 @@ static long pwm_cdev_ioctl(struct file *file, unsigned int cmd, unsigned long ar
+ 				.duty_offset_ns = wf.duty_offset_ns,
+ 			};
  
--		tx_idx += (i % dev->real_num_tx_queues) * VETH_TQ_STATS_LEN;
- 		do {
- 			start = u64_stats_fetch_begin(&rq_stats->syncp);
- 			for (j = 0; j < VETH_TQ_STATS_LEN; j++) {
- 				offset = veth_tq_stats_desc[j].offset;
--				data[tx_idx + j] += *(u64 *)(base + offset);
-+				buf[j] = *(u64 *)(base + offset);
- 			}
- 		} while (u64_stats_fetch_retry(&rq_stats->syncp, start));
-+
-+		tx_idx += (i % dev->real_num_tx_queues) * VETH_TQ_STATS_LEN;
-+		for (j = 0; j < VETH_TQ_STATS_LEN; j++)
-+			data[tx_idx + j] += buf[j];
- 	}
- 	pp_idx = idx + dev->real_num_tx_queues * VETH_TQ_STATS_LEN;
+-			return copy_to_user((struct pwmchip_waveform __user *)arg,
+-					    &cwf, sizeof(cwf));
++			ret = copy_to_user((struct pwmchip_waveform __user *)arg,
++					   &cwf, sizeof(cwf));
++			return ret ? -EFAULT : 0;
+ 		}
  
+ 	case PWM_IOCTL_GETWF:
+@@ -2328,8 +2329,9 @@ static long pwm_cdev_ioctl(struct file *file, unsigned int cmd, unsigned long ar
+ 				.duty_offset_ns = wf.duty_offset_ns,
+ 			};
+ 
+-			return copy_to_user((struct pwmchip_waveform __user *)arg,
+-					    &cwf, sizeof(cwf));
++			ret = copy_to_user((struct pwmchip_waveform __user *)arg,
++					   &cwf, sizeof(cwf));
++			return ret ? -EFAULT : 0;
+ 		}
+ 
+ 	case PWM_IOCTL_SETROUNDEDWF:
 -- 
 2.51.0
 
