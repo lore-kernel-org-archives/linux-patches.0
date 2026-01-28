@@ -1,39 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1510A35A93C;
-	Wed, 28 Jan 2026 15:27:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4DBCA356A37;
+	Wed, 28 Jan 2026 15:28:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769614079; cv=none; b=tLRwi31Na2Ipv28ahPCboKVa8VtFc0jg4UyLyJrG+0jgkahNiJV0B0yUIHoNpcIayxNx7Ez+3SUxGieQ6m/2Kfb9Yi25hVHgPb8H5i2jdwRP9Z/Ime6ZiAgG/PlmZ6IlhybkodsyX+w88vZanuoFuWvMY8XGK9biHzgb+07HJfc=
+	t=1769614082; cv=none; b=QWtLaOywXxmElCAE6m3623VZgV8O7MhCMKaFjPV2MOIeppGXoro2rYtlNe+EHy8J0nINV6OL2smC8KQYNN2LxWacN36jTCkDA3XT+aBz5TMkrqNBOWEcLISoLk9brf94axElJuejaEsE5+LN7AVY6ooInvx9uFa0KaAF7jLqOGE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769614079; c=relaxed/simple;
-	bh=4IOZ4dkA/aFRUedbe/812t+rmDKDldtQx0iELt/PVLw=;
+	s=arc-20240116; t=1769614082; c=relaxed/simple;
+	bh=616oOGs6FtdMqQ4MP3FiPeaGQbafvTzy36RiE1NWmcQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qaW32i+KTaMU4GHNyILoa9U1o5L0c6MkrO5s0sY6TbRFShe9gt76JhXpJzkiQ8bn+9rAUkQhMEXikwXS8Pdz8Rkchr0gCTpVSM9kr9Wm9+w4MXq/DF+BOjWqDMXNy/dosrH99ildQnszmG024IqOwPMuRZJii5nQC4VX8MngzDA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WMK0lC55; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HOcoVTSghG5CuC3HRqCE/rZN23dfwT4DCsBaqLFQgkJdzo80iZxIwPwftBQ0aGrVBlngVI6jQvAl4tNef8q94P3RQV9nz4zMBx+wcvdhGXWb96DcZpzUghrbpQi9RTTaTro+KayMpOdKWPxQoq/0uk1zqaQyzlHNWytvOi0E3dk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LRyS07d1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WMK0lC55"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 47127C4CEF1;
-	Wed, 28 Jan 2026 15:27:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LRyS07d1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2EB8C16AAE;
+	Wed, 28 Jan 2026 15:28:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1769614078;
-	bh=4IOZ4dkA/aFRUedbe/812t+rmDKDldtQx0iELt/PVLw=;
+	s=korg; t=1769614082;
+	bh=616oOGs6FtdMqQ4MP3FiPeaGQbafvTzy36RiE1NWmcQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WMK0lC55tKZEdEOZ24yEBfyP6YTB8LlWii5Z40m24ZhRdnfPtrx9iPRUSRcKmDJmn
-	 VilYwgts/c+bQjv3UBHUKGbZhYt4iKELK3vnPuoASrTsVg3YiZ7nz6LVPhKffd0U9A
-	 L5/zycPXkAP13RNehgxC+B6ztqJ8r047lPK47Q3Y=
+	b=LRyS07d1cOcCiHs/DrvchLXEfiYq63ysvxHCSCCQeNiwcljnVkWLfRISPoQrPOnF+
+	 BGTkAk+SaNMZyslU4EuExG0GIJt1/BN3tQhih6kU72+yhWVUAQX+qeDHz+MTz3ml7t
+	 RHOoVdCMJ7PzekbI1ZF5Epzh4eDlXjOEvTBOQ+r0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Emil Svendsen <emas@bang-olufsen.dk>,
-	Sascha Hauer <s.hauer@pengutronix.de>,
-	Mark Brown <broonie@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 029/254] ASoC: tlv320adcx140: fix word length
-Date: Wed, 28 Jan 2026 16:20:05 +0100
-Message-ID: <20260128145345.752360436@linuxfoundation.org>
+	Andreas Gruenbacher <agruenba@redhat.com>
+Subject: [PATCH 6.6 003/254] Revert "gfs2: Fix use of bio_chain"
+Date: Wed, 28 Jan 2026 16:19:39 +0100
+Message-ID: <20260128145344.826528915@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260128145344.698118637@linuxfoundation.org>
 References: <20260128145344.698118637@linuxfoundation.org>
@@ -52,50 +49,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Emil Svendsen <emas@bang-olufsen.dk>
+From: Andreas Gruenbacher <agruenba@redhat.com>
 
-[ Upstream commit 46378ab9fcb796dca46b51e10646f636e2c661f9 ]
+commit 469d71512d135907bf5ea0972dfab8c420f57848 upstream.
 
-The word length is the physical width of the channel slots. So the
-hw_params would misconfigure when format width and physical width
-doesn't match. Like S24_LE which has data width of 24 bits but physical
-width of 32 bits. So if using asymmetric formats you will get a lot of
-noise.
+This reverts commit 8a157e0a0aa5143b5d94201508c0ca1bb8cfb941.
 
-Fixes: 689c7655b50c5 ("ASoC: tlv320adcx140: Add the tlv320adcx140 codec driver family")
-Signed-off-by: Emil Svendsen <emas@bang-olufsen.dk>
-Signed-off-by: Sascha Hauer <s.hauer@pengutronix.de>
-Link: https://patch.msgid.link/20260113-sound-soc-codecs-tvl320adcx140-v4-4-8f7ecec525c8@pengutronix.de
-Signed-off-by: Mark Brown <broonie@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+That commit incorrectly assumed that the bio_chain() arguments were
+swapped in gfs2.  However, gfs2 intentionally constructs bio chains so
+that the first bio's bi_end_io callback is invoked when all bios in the
+chain have completed, unlike bio chains where the last bio's callback is
+invoked.
+
+Fixes: 8a157e0a0aa5 ("gfs2: Fix use of bio_chain")
+Cc: stable@vger.kernel.org
+Signed-off-by: Andreas Gruenbacher <agruenba@redhat.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/soc/codecs/tlv320adcx140.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ fs/gfs2/lops.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/sound/soc/codecs/tlv320adcx140.c b/sound/soc/codecs/tlv320adcx140.c
-index d366c1c51f07a..78d95b8be2f29 100644
---- a/sound/soc/codecs/tlv320adcx140.c
-+++ b/sound/soc/codecs/tlv320adcx140.c
-@@ -728,7 +728,7 @@ static int adcx140_hw_params(struct snd_pcm_substream *substream,
- 	struct adcx140_priv *adcx140 = snd_soc_component_get_drvdata(component);
- 	u8 data = 0;
- 
--	switch (params_width(params)) {
-+	switch (params_physical_width(params)) {
- 	case 16:
- 		data = ADCX140_16_BIT_WORD;
- 		break;
-@@ -743,7 +743,7 @@ static int adcx140_hw_params(struct snd_pcm_substream *substream,
- 		break;
- 	default:
- 		dev_err(component->dev, "%s: Unsupported width %d\n",
--			__func__, params_width(params));
-+			__func__, params_physical_width(params));
- 		return -EINVAL;
- 	}
- 
--- 
-2.51.0
-
+--- a/fs/gfs2/lops.c
++++ b/fs/gfs2/lops.c
+@@ -492,7 +492,7 @@ static struct bio *gfs2_chain_bio(struct
+ 	new = bio_alloc(prev->bi_bdev, nr_iovecs, prev->bi_opf, GFP_NOIO);
+ 	bio_clone_blkg_association(new, prev);
+ 	new->bi_iter.bi_sector = bio_end_sector(prev);
+-	bio_chain(prev, new);
++	bio_chain(new, prev);
+ 	submit_bio(prev);
+ 	return new;
+ }
 
 
