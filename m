@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FD75146D53;
-	Wed, 28 Jan 2026 16:02:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC80928D8DB;
+	Wed, 28 Jan 2026 16:02:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769616159; cv=none; b=UG3QixALeeajikHa3yL3nDu5iLNmbniuIz9UJA3gDj73ftiR4w+h+wD7niUboIVLMwtKOwjCPvmUx3JevNHvvL0kseOcLtw8vlk5DALt9HmWBHDbzxHFymTIUSY1PQGkUNvp/lrRfsrd8nudzcZqqc3yY6rG8PXlddECx8STC3Y=
+	t=1769616162; cv=none; b=JRD79IwwKhQzof1tO5k3r6slH3g7oL4bIZciV4sSYhCYQ+c5GCZTn0h4EfDHrYOaX5SAt+yci2A6NnFtqvetvpoV5VBUL1dIcSWxeLXXtN5GHp3VuQ3lVW4xqLhe6ola1gjvA9YvJaACvvsMCljESSyyTGX++GvvR/q8M51mYD0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769616159; c=relaxed/simple;
-	bh=VBRuSZn5HKvv0WwEYU58MLoiOvuI453R0/WpzKGXCbI=;
+	s=arc-20240116; t=1769616162; c=relaxed/simple;
+	bh=PDqloht/DxhcBHGsuybyF4IAn6y1YHZKeDU4wZXRjW4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iIFPeTIi1iE3L7SJItZnNoQZMF/OJeqiQsvQcNMI++GZcyreFAp1pgSQaSX/rSQqw3y9x7Kmf5cEa+boZVoK0QVnoT/Ryig72ecDJAFXjt3QU5YtBk8pdLh4aA6AUs+vgx4/3wEXcnjzE02/0cYtv0eqdcexxIBK0iCa6KcrcCs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CCzqZbHT; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=JY7CyCqGp4q0DyhnDVofg6mPTFYXSlutTvxo9bLjaTQ0ownVMAoIIOG93au/uHcF3uPvVvoPRAtLCwbZ/8eHTVweofrYlNR09/aStb9oyG3kfKnoEuN34j5/TEl+dYnzcNvGurTviSu356H685aJVocp5jQIOb/OsoncyNEQZm0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BMBIQ62f; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CCzqZbHT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B8A5CC4CEF1;
-	Wed, 28 Jan 2026 16:02:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BMBIQ62f"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F742C4CEF1;
+	Wed, 28 Jan 2026 16:02:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1769616159;
-	bh=VBRuSZn5HKvv0WwEYU58MLoiOvuI453R0/WpzKGXCbI=;
+	s=korg; t=1769616162;
+	bh=PDqloht/DxhcBHGsuybyF4IAn6y1YHZKeDU4wZXRjW4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CCzqZbHT08YPGwJnQ2KLRFf49+waH3XqVInWLyhoKyFYKnaEfj5IlQTM+pl+kgMSp
-	 I4dZH7p2p5ZZPKTID0VEb2FP1Pt2zQWAJJ3/AckZQDN2GMHjOwxNib5NEgml0d4dvT
-	 ThB0d9Yk2v5JLtrmgdRFyQMA3cQHWNXQDBjadcAQ=
+	b=BMBIQ62fxx6e/8wo9PvGA/NZK9i2vaR33oO5iPoC2F27MM5fZT03nryzH0SENLsl2
+	 LIpKJV13CtO8LEUiLjHPBxd7QpZgz1YaiJHIjhP1hsunOFgd+0QwOV8gvHTIT5YqJb
+	 Y0vezjEqK6AryK/cBWGzMPADbnkCgrw45Lj+q5sY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rasmus Villemoes <ravi@prevas.dk>,
-	Peter Rosin <peda@axentia.se>,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+	Pradeep P V K <pradeep.pragallapati@oss.qualcomm.com>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 223/227] iio: core: add separate lockdep class for info_exist_lock
-Date: Wed, 28 Jan 2026 16:24:28 +0100
-Message-ID: <20260128145352.459243403@linuxfoundation.org>
+Subject: [PATCH 6.18 224/227] arm64: dts: qcom: talos: Correct UFS clocks ordering
+Date: Wed, 28 Jan 2026 16:24:29 +0100
+Message-ID: <20260128145352.495743500@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260128145344.331957407@linuxfoundation.org>
 References: <20260128145344.331957407@linuxfoundation.org>
@@ -52,114 +51,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rasmus Villemoes <ravi@prevas.dk>
+From: Pradeep P V K <pradeep.pragallapati@oss.qualcomm.com>
 
-[ Upstream commit 9910159f06590c17df4fbddedaabb4c0201cc4cb ]
+[ Upstream commit 8bb3754909cde5df4f8c1012bde220b97d8ee3bc ]
 
-When one iio device is a consumer of another, it is possible that
-the ->info_exist_lock of both ends up being taken when reading the
-value of the consumer device.
+The current UFS clocks does not align with their respective names,
+causing the ref_clk to be set to an incorrect frequency as below,
+which results in command timeouts.
 
-Since they currently belong to the same lockdep class (being
-initialized in a single location with mutex_init()), that results in a
-lockdep warning
+ufshcd-qcom 1d84000.ufshc: invalid ref_clk setting = 300000000
 
-         CPU0
-         ----
-    lock(&iio_dev_opaque->info_exist_lock);
-    lock(&iio_dev_opaque->info_exist_lock);
+This commit fixes the issue by properly reordering the UFS clocks to
+match their names.
 
-   *** DEADLOCK ***
-
-   May be due to missing lock nesting notation
-
-  4 locks held by sensors/414:
-   #0: c31fd6dc (&p->lock){+.+.}-{3:3}, at: seq_read_iter+0x44/0x4e4
-   #1: c4f5a1c4 (&of->mutex){+.+.}-{3:3}, at: kernfs_seq_start+0x1c/0xac
-   #2: c2827548 (kn->active#34){.+.+}-{0:0}, at: kernfs_seq_start+0x30/0xac
-   #3: c1dd2b68 (&iio_dev_opaque->info_exist_lock){+.+.}-{3:3}, at: iio_read_channel_processed_scale+0x24/0xd8
-
-  stack backtrace:
-  CPU: 0 UID: 0 PID: 414 Comm: sensors Not tainted 6.17.11 #5 NONE
-  Hardware name: Generic AM33XX (Flattened Device Tree)
-  Call trace:
-   unwind_backtrace from show_stack+0x10/0x14
-   show_stack from dump_stack_lvl+0x44/0x60
-   dump_stack_lvl from print_deadlock_bug+0x2b8/0x334
-   print_deadlock_bug from __lock_acquire+0x13a4/0x2ab0
-   __lock_acquire from lock_acquire+0xd0/0x2c0
-   lock_acquire from __mutex_lock+0xa0/0xe8c
-   __mutex_lock from mutex_lock_nested+0x1c/0x24
-   mutex_lock_nested from iio_read_channel_raw+0x20/0x6c
-   iio_read_channel_raw from rescale_read_raw+0x128/0x1c4
-   rescale_read_raw from iio_channel_read+0xe4/0xf4
-   iio_channel_read from iio_read_channel_processed_scale+0x6c/0xd8
-   iio_read_channel_processed_scale from iio_hwmon_read_val+0x68/0xbc
-   iio_hwmon_read_val from dev_attr_show+0x18/0x48
-   dev_attr_show from sysfs_kf_seq_show+0x80/0x110
-   sysfs_kf_seq_show from seq_read_iter+0xdc/0x4e4
-   seq_read_iter from vfs_read+0x238/0x2e4
-   vfs_read from ksys_read+0x6c/0xec
-   ksys_read from ret_fast_syscall+0x0/0x1c
-
-Just as the mlock_key already has its own lockdep class, add a
-lock_class_key for the info_exist mutex.
-
-Note that this has in theory been a problem since before IIO first
-left staging, but it only occurs when a chain of consumers is in use
-and that is not often done.
-
-Fixes: ac917a81117c ("staging:iio:core set the iio_dev.info pointer to null on unregister under lock.")
-Signed-off-by: Rasmus Villemoes <ravi@prevas.dk>
-Reviewed-by: Peter Rosin <peda@axentia.se>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Fixes: ea172f61f4fd ("arm64: dts: qcom: qcs615: Fix up UFS clocks")
+Cc: stable@vger.kernel.org
+Signed-off-by: Pradeep P V K <pradeep.pragallapati@oss.qualcomm.com>
+Link: https://lore.kernel.org/r/20251126131146.16146-1-pradeep.pragallapati@oss.qualcomm.com
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/industrialio-core.c |    4 +++-
- include/linux/iio/iio-opaque.h  |    2 ++
- 2 files changed, 5 insertions(+), 1 deletion(-)
+ arch/arm64/boot/dts/qcom/sm6150.dtsi |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/iio/industrialio-core.c
-+++ b/drivers/iio/industrialio-core.c
-@@ -1657,6 +1657,7 @@ static void iio_dev_release(struct devic
- 	mutex_destroy(&iio_dev_opaque->info_exist_lock);
- 	mutex_destroy(&iio_dev_opaque->mlock);
- 
-+	lockdep_unregister_key(&iio_dev_opaque->info_exist_key);
- 	lockdep_unregister_key(&iio_dev_opaque->mlock_key);
- 
- 	ida_free(&iio_ida, iio_dev_opaque->id);
-@@ -1717,9 +1718,10 @@ struct iio_dev *iio_device_alloc(struct
- 	INIT_LIST_HEAD(&iio_dev_opaque->ioctl_handlers);
- 
- 	lockdep_register_key(&iio_dev_opaque->mlock_key);
-+	lockdep_register_key(&iio_dev_opaque->info_exist_key);
- 
- 	mutex_init_with_key(&iio_dev_opaque->mlock, &iio_dev_opaque->mlock_key);
--	mutex_init(&iio_dev_opaque->info_exist_lock);
-+	mutex_init_with_key(&iio_dev_opaque->info_exist_lock, &iio_dev_opaque->info_exist_key);
- 
- 	indio_dev->dev.parent = parent;
- 	indio_dev->dev.type = &iio_device_type;
---- a/include/linux/iio/iio-opaque.h
-+++ b/include/linux/iio/iio-opaque.h
-@@ -14,6 +14,7 @@
-  * @mlock:			lock used to prevent simultaneous device state changes
-  * @mlock_key:			lockdep class for iio_dev lock
-  * @info_exist_lock:		lock to prevent use during removal
-+ * @info_exist_key:		lockdep class for info_exist lock
-  * @trig_readonly:		mark the current trigger immutable
-  * @event_interface:		event chrdevs associated with interrupt lines
-  * @attached_buffers:		array of buffers statically attached by the driver
-@@ -47,6 +48,7 @@ struct iio_dev_opaque {
- 	struct mutex			mlock;
- 	struct lock_class_key		mlock_key;
- 	struct mutex			info_exist_lock;
-+	struct lock_class_key		info_exist_key;
- 	bool				trig_readonly;
- 	struct iio_event_interface	*event_interface;
- 	struct iio_buffer		**attached_buffers;
+--- a/arch/arm64/boot/dts/qcom/sm6150.dtsi
++++ b/arch/arm64/boot/dts/qcom/sm6150.dtsi
+@@ -1260,10 +1260,10 @@
+ 				 <&gcc GCC_AGGRE_UFS_PHY_AXI_CLK>,
+ 				 <&gcc GCC_UFS_PHY_AHB_CLK>,
+ 				 <&gcc GCC_UFS_PHY_UNIPRO_CORE_CLK>,
+-				 <&gcc GCC_UFS_PHY_ICE_CORE_CLK>,
+ 				 <&rpmhcc RPMH_CXO_CLK>,
+ 				 <&gcc GCC_UFS_PHY_TX_SYMBOL_0_CLK>,
+-				 <&gcc GCC_UFS_PHY_RX_SYMBOL_0_CLK>;
++				 <&gcc GCC_UFS_PHY_RX_SYMBOL_0_CLK>,
++				 <&gcc GCC_UFS_PHY_ICE_CORE_CLK>;
+ 			clock-names = "core_clk",
+ 				      "bus_aggr_clk",
+ 				      "iface_clk",
 
 
