@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B36572D0C62;
-	Wed, 28 Jan 2026 15:36:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C2D92D5408;
+	Wed, 28 Jan 2026 15:36:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769614598; cv=none; b=pKAPswEtXwvx7zk5/BEOGMTrVEw1IZaSiMrUvqya8MfcKqlP43xa5RB0oB+rv9VNLKoYB5ljATdELdYzSlPT6Ddi7T4DhU9tcV6Js5ShDNkhDHVoqhnxAwll5xYspGQnlREw1lf4cm/iKSU8ZQg2/0KTWi1d3EvaSVyaXVuzPzo=
+	t=1769614602; cv=none; b=SVEpJB50xFAqgJKgJec5gSGXqFslqwB/vU0DhPEhWqxaNl8cbvEDkMN6id4m12i004fj/9DdX7/jzVVXgSObRcbXuGsYm+lCwbCFMeUZXzpCMxa6AcGLQXTGvDjjY66cHOY7lpUrNEhyvaEvLG4A3WeWJUDakLEhshjAl6O4k0M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769614598; c=relaxed/simple;
-	bh=mEOjuoiQwgV4KtbHMonZxgGvj96FSO+j0Emc3xl6+WE=;
+	s=arc-20240116; t=1769614602; c=relaxed/simple;
+	bh=G57tj5yOpE95Db9062k3HsH2wzQksDxxPtnarZujv6c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MS8S/dzVlP6rkGIlCAXqV7ttzlt1yTDnyGFm7J31/FkSb50SEly8UodobypvCSRq0paoQnEn8fecfgGlSc2peVN8Gwiqk8gBWI9ChnOYEi8syngngxEdpjiFOHXpQuKxO4fY7TJYI5KmqjP70NSkvrsdnrlar6FdZPG5IzGwwOw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=U4qeZdpf; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fl+sSMDPHw48mLNml/gOo1VhyYqk1gLp8uPE5rw4821ULMvGEcoO9gjJ3JRTra+kN5nCgp9u7C9Nhkueh7hY5D6N8Kw6BZT/MG43aF6896ZYcGylAxBMNwJ+ngjSyuZI0BI4dSOMDvWqpDOkBCJHQ/jfQWI8bH3sDfJ1DAjY640=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aL9p10FY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="U4qeZdpf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3CF9CC4CEF1;
-	Wed, 28 Jan 2026 15:36:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aL9p10FY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 78C7BC2BC87;
+	Wed, 28 Jan 2026 15:36:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1769614598;
-	bh=mEOjuoiQwgV4KtbHMonZxgGvj96FSO+j0Emc3xl6+WE=;
+	s=korg; t=1769614601;
+	bh=G57tj5yOpE95Db9062k3HsH2wzQksDxxPtnarZujv6c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=U4qeZdpfgiMU8XD7ihQzrxZEr0bKdmb16NxzMeIygK0Kdbfzd4nlsEZJUAcVElqhj
-	 vsh7+OqxHWGFvWa9B5cWvqHb8hfPomOpeo1TuEbZ+697m4ZqMyQGos8AYRvIeIcQ3G
-	 VUZlw/SG+vIq8QRsh+/HCCeweRNeO/4Ea34SY/+A=
+	b=aL9p10FYYSm9P7/RKq/ACwC0kn/BMJK7BYNRdLz+2neZMNVNTjjftB1G1QbDibeUU
+	 rbGTuCNd52mLb9ktnwCNSlzKBsZbzX1+Y1IN+IZE6HVt7rRldm6dR3wBzMXc+LUoJr
+	 THb5dcx4cX6QFlOFFP5EwtvlnXgDOYjBCHW0vJf0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sudeep Holla <sudeep.holla@arm.com>,
-	"Rob Herring (Arm)" <robh@kernel.org>
-Subject: [PATCH 6.6 186/254] of: platform: Use default match table for /firmware
-Date: Wed, 28 Jan 2026 16:22:42 +0100
-Message-ID: <20260128145351.495631938@linuxfoundation.org>
+	Dimitri Fedrau <dimitri.fedrau@liebherr.com>,
+	Markus Koeniger <markus.koeniger@liebherr.com>,
+	Stable@vger.kernel.org,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Subject: [PATCH 6.6 187/254] iio: accel: iis328dq: fix gain values
+Date: Wed, 28 Jan 2026 16:22:43 +0100
+Message-ID: <20260128145351.530683134@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260128145344.698118637@linuxfoundation.org>
 References: <20260128145344.698118637@linuxfoundation.org>
@@ -50,40 +52,118 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rob Herring (Arm) <robh@kernel.org>
+From: Markus Koeniger <markus.koeniger@liebherr.com>
 
-commit 48e6a9c4a20870e09f85ff1a3628275d6bce31c0 upstream.
+commit b8f15d1df2e73322e2112de21a4a7f3553c7fb60 upstream.
 
-Calling of_platform_populate() without a match table will only populate
-the immediate child nodes under /firmware. This is usually fine, but in
-the case of something like a "simple-mfd" node such as
-"raspberrypi,bcm2835-firmware", those child nodes will not be populated.
-And subsequent calls won't work either because the /firmware node is
-marked as processed already.
+The sensors IIS328DQ and H3LIS331DL share one configuration but
+H3LIS331DL has different gain parameters, configs therefore
+need to be split up.
+The gain parameters for the IIS328DQ are 0.98, 1.95 and 3.91,
+depending on the selected measurement range.
 
-Switch the call to of_platform_default_populate() to solve this problem.
-It should be a nop for existing cases.
+See sensor manuals, chapter 2.1 "mechanical characteristics",
+parameter "Sensitivity".
 
-Fixes: 3aa0582fdb82 ("of: platform: populate /firmware/ node from of_platform_default_populate_init()")
-Cc: stable@vger.kernel.org
-Reviewed-by: Sudeep Holla <sudeep.holla@arm.com>
-Link: https://patch.msgid.link/20260114015158.692170-2-robh@kernel.org
-Signed-off-by: Rob Herring (Arm) <robh@kernel.org>
+Datasheet: https://www.st.com/resource/en/datasheet/iis328dq.pdf
+Datasheet: https://www.st.com/resource/en/datasheet/h3lis331dl.pdf
+Fixes: 46e33707fe95 ("iio: accel: add support for IIS328DQ variant")
+Reviewed-by: Dimitri Fedrau <dimitri.fedrau@liebherr.com>
+Signed-off-by: Markus Koeniger <markus.koeniger@liebherr.com>
+Cc: <Stable@vger.kernel.org>
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/of/platform.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/iio/accel/st_accel_core.c |   72 +++++++++++++++++++++++++++++++++++++-
+ 1 file changed, 71 insertions(+), 1 deletion(-)
 
---- a/drivers/of/platform.c
-+++ b/drivers/of/platform.c
-@@ -616,7 +616,7 @@ static int __init of_platform_default_po
- 
- 		node = of_find_node_by_path("/firmware");
- 		if (node) {
--			of_platform_populate(node, NULL, NULL, NULL);
-+			of_platform_default_populate(node, NULL, NULL);
- 			of_node_put(node);
- 		}
- 
+--- a/drivers/iio/accel/st_accel_core.c
++++ b/drivers/iio/accel/st_accel_core.c
+@@ -517,7 +517,6 @@ static const struct st_sensor_settings s
+ 		.wai_addr = ST_SENSORS_DEFAULT_WAI_ADDRESS,
+ 		.sensors_supported = {
+ 			[0] = H3LIS331DL_ACCEL_DEV_NAME,
+-			[1] = IIS328DQ_ACCEL_DEV_NAME,
+ 		},
+ 		.ch = (struct iio_chan_spec *)st_accel_12bit_channels,
+ 		.odr = {
+@@ -561,6 +560,77 @@ static const struct st_sensor_settings s
+ 				},
+ 			},
+ 		},
++		.bdu = {
++			.addr = 0x23,
++			.mask = 0x80,
++		},
++		.drdy_irq = {
++			.int1 = {
++				.addr = 0x22,
++				.mask = 0x02,
++			},
++			.int2 = {
++				.addr = 0x22,
++				.mask = 0x10,
++			},
++			.addr_ihl = 0x22,
++			.mask_ihl = 0x80,
++		},
++		.sim = {
++			.addr = 0x23,
++			.value = BIT(0),
++		},
++		.multi_read_bit = true,
++		.bootime = 2,
++	},
++	{
++		.wai = 0x32,
++		.wai_addr = ST_SENSORS_DEFAULT_WAI_ADDRESS,
++		.sensors_supported = {
++			[0] = IIS328DQ_ACCEL_DEV_NAME,
++		},
++		.ch = (struct iio_chan_spec *)st_accel_12bit_channels,
++		.odr = {
++			.addr = 0x20,
++			.mask = 0x18,
++			.odr_avl = {
++				{ .hz = 50, .value = 0x00, },
++				{ .hz = 100, .value = 0x01, },
++				{ .hz = 400, .value = 0x02, },
++				{ .hz = 1000, .value = 0x03, },
++			},
++		},
++		.pw = {
++			.addr = 0x20,
++			.mask = 0x20,
++			.value_on = ST_SENSORS_DEFAULT_POWER_ON_VALUE,
++			.value_off = ST_SENSORS_DEFAULT_POWER_OFF_VALUE,
++		},
++		.enable_axis = {
++			.addr = ST_SENSORS_DEFAULT_AXIS_ADDR,
++			.mask = ST_SENSORS_DEFAULT_AXIS_MASK,
++		},
++		.fs = {
++			.addr = 0x23,
++			.mask = 0x30,
++			.fs_avl = {
++				[0] = {
++					.num = ST_ACCEL_FS_AVL_100G,
++					.value = 0x00,
++					.gain = IIO_G_TO_M_S_2(980),
++				},
++				[1] = {
++					.num = ST_ACCEL_FS_AVL_200G,
++					.value = 0x01,
++					.gain = IIO_G_TO_M_S_2(1950),
++				},
++				[2] = {
++					.num = ST_ACCEL_FS_AVL_400G,
++					.value = 0x03,
++					.gain = IIO_G_TO_M_S_2(3910),
++				},
++			},
++		},
+ 		.bdu = {
+ 			.addr = 0x23,
+ 			.mask = 0x80,
 
 
