@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A1EB2D77FF;
-	Wed, 28 Jan 2026 15:36:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC74D2D6E63;
+	Wed, 28 Jan 2026 15:36:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769614615; cv=none; b=W8fBzux19OjiQ6mY0VBxQmZ1iEtDnLTSe+cV+HgATJMzVZTuryzAjehV3Icw0ZzunmN2brvHyQgzNJy8WcRqoLosjQEKNzSuVB1vJHuo5PN6xUpJZD8INEcieX9m0wJz6yWsloat++GXsrsS7QI3qlSkSMd84SRRbMbVlVZUpAw=
+	t=1769614618; cv=none; b=I8ULJe29a5GAMcTgnIHjg+t9GIG0yCYXuM+3hjrKof33BNjaYjME30/ZyGZkKEdVF6eTmPv/CpWnmzmk9urEX5BkrG+g2axEIhmpb3pTS51ly3gUGDB2sHc+BmOFR8dWZ89yyL8oSTPWoLkd39RaueJ98AQwFwNQ16p4IZPhSoY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769614615; c=relaxed/simple;
-	bh=BthJTBUs7J5mWyvwJUF7klpxDI6++B4vNOr7yg6551I=;
+	s=arc-20240116; t=1769614618; c=relaxed/simple;
+	bh=ZRjx3J/Wt4hs3u0jrNgyPrTQ6VVsqOdvuk/xBzEQGIk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=gmlYCccMtVM+U8y9YmLUn7JGTk4fYGyQEYAXjrflk+na6byo/M2I/AAoIrey8TItpHHzB6iyrqv0Q/po+uXUc0uRv2rsvSP5KTcpxHjx4SjDSc7HiJZ5CeXElSjw6rYcTKjv/pnAupl9Y8UUhwRzLoj4EgsT7k4KUEEfUwXFDws=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LvbSGMSN; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=P93Op9/leaO+T18J80WwIQDLFCbxD1xIKevRYMlhtf+2w/b3B+resnhM+LTHbM/UBEfGED/iRFlmaSLeKoJflIvLFpkBDZ1TEHzJWv2r4q/C0EqF4WUtSJeciXc45k++xvxdZQWgP8k1elURloOisHkG0Hh6ANHwEZKfZ8M4J9A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QawucV5L; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LvbSGMSN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D1812C4CEF1;
-	Wed, 28 Jan 2026 15:36:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QawucV5L"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45C18C4CEF1;
+	Wed, 28 Jan 2026 15:36:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1769614615;
-	bh=BthJTBUs7J5mWyvwJUF7klpxDI6++B4vNOr7yg6551I=;
+	s=korg; t=1769614618;
+	bh=ZRjx3J/Wt4hs3u0jrNgyPrTQ6VVsqOdvuk/xBzEQGIk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LvbSGMSNpAqWmZ/dYm33hiGpOxcAcizY3sAeW7VjUGr/+WRS7xJP+hT10VqMbk7Qp
-	 i8PwCxvWH6Q0MjLqjl9EMdsO7zmFR+ojfrl+ZJptpZeJ1YTDXxzG7B8GsDB8iCWMFH
-	 WncdIC2HNeypXEj+YWAqH1qJdKChSsraXlbT/Qs0=
+	b=QawucV5Lb5RMyYh+gJZ0eOZCkoup20SW8ph3ZFOcqhZ8OPYnJlP8GUwE4MSzuSmh8
+	 51pN82a5ZVMMnhzA5GU5Ez0Y9eBDgv1YsixguD22qi3n9oLqrTLlsjvz4DP2pTcMWa
+	 xo/2zUhPc5IGCAbEqDGuajmU6/Fs5k2elZesSSMA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Andreas=20K=C3=BCbrich?= <andreas.kuebrich@spektra-dresden.de>,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Subject: [PATCH 6.6 191/254] iio: dac: ad5686: add AD5695R to ad5686_chip_info_tbl
-Date: Wed, 28 Jan 2026 16:22:47 +0100
-Message-ID: <20260128145351.672257911@linuxfoundation.org>
+	Taehee Yoo <ap420073@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 174/254] selftests: net: amt: wait longer for connection before sending packets
+Date: Wed, 28 Jan 2026 16:22:30 +0100
+Message-ID: <20260128145351.067074810@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260128145344.698118637@linuxfoundation.org>
 References: <20260128145344.698118637@linuxfoundation.org>
@@ -44,48 +45,68 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Kübrich, Andreas <andreas.kuebrich@spektra-dresden.de>
+From: Taehee Yoo <ap420073@gmail.com>
 
-commit 441ac29923c9172bc5e4b2c4f52ae756192f5715 upstream.
+[ Upstream commit 04708606fd7bdc34b69089a4ff848ff36d7088f9 ]
 
-The chip info for this variant (I2C, four channels, 14 bit, internal
-reference) seems to have been left out due to oversight, so
-ad5686_chip_info_tbl[ID_AD5695R] is all zeroes. Initialisation of an
-AD5695R still succeeds, but the resulting IIO device has no channels and no
-/dev/iio:device* node.
+Both send_mcast4() and send_mcast6() use sleep 2 to wait for the tunnel
+connection between the gateway and the relay, and for the listener
+socket to be created in the LISTENER namespace.
 
-Add the missing chip info to the table.
+However, tests sometimes fail because packets are sent before the
+connection is fully established.
 
-Fixes: 4177381b4401 ("iio:dac:ad5686: Add AD5671R/75R/94/94R/95R/96/96R support")
-Signed-off-by: Andreas Kübrich <andreas.kuebrich@spektra-dresden.de>
-Cc: stable@vger.kernel.org
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Increase the waiting time to make the tests more reliable, and use
+wait_local_port_listen() to explicitly wait for the listener socket.
+
+Fixes: c08e8baea78e ("selftests: add amt interface selftest script")
+Signed-off-by: Taehee Yoo <ap420073@gmail.com>
+Link: https://patch.msgid.link/20260120133930.863845-1-ap420073@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iio/dac/ad5686.c |    6 ++++++
- 1 file changed, 6 insertions(+)
+ tools/testing/selftests/net/amt.sh | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
---- a/drivers/iio/dac/ad5686.c
-+++ b/drivers/iio/dac/ad5686.c
-@@ -434,6 +434,12 @@ static const struct ad5686_chip_info ad5
- 		.num_channels = 4,
- 		.regmap_type = AD5686_REGMAP,
- 	},
-+	[ID_AD5695R] = {
-+		.channels = ad5685r_channels,
-+		.int_vref_mv = 2500,
-+		.num_channels = 4,
-+		.regmap_type = AD5686_REGMAP,
-+	},
- 	[ID_AD5696] = {
- 		.channels = ad5686_channels,
- 		.num_channels = 4,
+diff --git a/tools/testing/selftests/net/amt.sh b/tools/testing/selftests/net/amt.sh
+index 7e7ed6c558da9..ea40b469a8c11 100755
+--- a/tools/testing/selftests/net/amt.sh
++++ b/tools/testing/selftests/net/amt.sh
+@@ -73,6 +73,8 @@
+ #       +------------------------+
+ #==============================================================================
+ 
++source lib.sh
++
+ readonly LISTENER=$(mktemp -u listener-XXXXXXXX)
+ readonly GATEWAY=$(mktemp -u gateway-XXXXXXXX)
+ readonly RELAY=$(mktemp -u relay-XXXXXXXX)
+@@ -240,14 +242,15 @@ test_ipv6_forward()
+ 
+ send_mcast4()
+ {
+-	sleep 2
++	sleep 5
++	wait_local_port_listen ${LISTENER} 4000 udp
+ 	ip netns exec "${SOURCE}" bash -c \
+ 		'printf "%s %128s" 172.17.0.2 | nc -w 1 -u 239.0.0.1 4000' &
+ }
+ 
+ send_mcast6()
+ {
+-	sleep 2
++	wait_local_port_listen ${LISTENER} 6000 udp
+ 	ip netns exec "${SOURCE}" bash -c \
+ 		'printf "%s %128s" 2001:db8:3::2 | nc -w 1 -u ff0e::5:6 6000' &
+ }
+-- 
+2.51.0
+
 
 
