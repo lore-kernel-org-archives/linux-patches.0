@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 617A33254A2;
-	Wed, 28 Jan 2026 15:45:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6B1E32720C;
+	Wed, 28 Jan 2026 15:45:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769615130; cv=none; b=A9quOoG2PE2fOKtvxEBKGmtK/F1D1iwtDIKzParRaWNiuCNi3jB68hh8UnSIcKTHtwd3rD/l8JQlIc2tQnrpb3dedEOAeD0F62DgHvWeO9cjXPH82y3OGz1LY5s3nN8m9l/4IxDbb6hyqPcBVAgad/V+kzp0L9pVdDlUOt9uQyQ=
+	t=1769615134; cv=none; b=pX5YaVfXNAxFFnYIr1xHP+QRdNHdmm5elyiuMDwbn6WXeNGHaEEh2aTvuMguF+ET1t4hE/pWvOpIikuhHN524I7AbxJdrzCHCnjVUBhHyyjOmZNnzgOJi1O/4v0Gri5jIbccHfQjMnMoqASkc6QziRh1PnVJbA08psDhV1GWJ1w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769615130; c=relaxed/simple;
-	bh=5vS2YFKBBeizu+CjEJ3uBCR4aFjryFcVFxET9W5f7ns=;
+	s=arc-20240116; t=1769615134; c=relaxed/simple;
+	bh=qHvcV7aNR+GXCi2AHDfkV/h9J29bsUYCWmpliZyW4KU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WJU2qBwv1vwJKinpYHuUem5GETC70kSI+z0UNQkgA+Fq6LPrmgmGhB+0byGIfif473yxxfWdPv2rn7EsfcQ/lAUmscIsLu+pkb5RpegLrwcIduknXMBVKY9ZBJCP2Lzd/vkQCWphE8Zmi49sfHFRdihDGIFBiVxT+BOzHIjnR5g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hJnbSqRj; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KguVrBJ24JIFPmCfZ/rIGaWYThiAGi6iaX98k9YTfMuOJTIGD/be2tKNaS2rXYoWC3zfcbuyx/PUx6h5IyTTGLaGlEvYnUMvBBaEYv6p1q8WHV3h3vDgaRc0CutACWSMIrNgDeNqH7LziPdRzZ894mrvSn4TBUMuZWdiWmjMI9s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QHeEIdp8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hJnbSqRj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA98FC4CEF1;
-	Wed, 28 Jan 2026 15:45:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QHeEIdp8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4BD91C4CEF1;
+	Wed, 28 Jan 2026 15:45:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1769615130;
-	bh=5vS2YFKBBeizu+CjEJ3uBCR4aFjryFcVFxET9W5f7ns=;
+	s=korg; t=1769615133;
+	bh=qHvcV7aNR+GXCi2AHDfkV/h9J29bsUYCWmpliZyW4KU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hJnbSqRjimCnx7suVTbYYAS7/01lLfqtYaMiuixOWFal1dn93zRccn0Ta5pUg9O/N
-	 M2AFPDsWyvmzj1pMpDaTkzgJxzUusrpiRELfKpZI9YWCq2lDalf8qMlVJIfmkueoqc
-	 g6sb/74jwqOUfC99JuAihTJG4+KBUVbE/DLmr9r0=
+	b=QHeEIdp8taryBzy5abFfIruYCoPCZl3RzhAVkOOiOBw5uusW2fMFjCFhUdGK/4OQY
+	 YBWpvPugXLo+9fVgocbo7Lzt2Vj6eWa23Z7VB8kqD46Yh6JkK1VzVx2CsTzS1PuqAC
+	 FJ3FS9cjynGRBPImmeOjgygeBWmLEFTitUf6wbKs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Laurent Vivier <lvivier@redhat.com>,
-	Stefano Brivio <sbrivio@redhat.com>,
+	syzbot+c46409299c70a221415e@syzkaller.appspotmail.com,
+	Eric Dumazet <edumazet@google.com>,
+	Matteo Croce <mcroce@redhat.com>,
+	Stanislav Fomichev <sdf@fomichev.me>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 080/169] usbnet: limit max_mtu based on devices hard_mtu
-Date: Wed, 28 Jan 2026 16:22:43 +0100
-Message-ID: <20260128145336.885415400@linuxfoundation.org>
+Subject: [PATCH 6.12 089/169] bonding: provide a net pointer to __skb_flow_dissect()
+Date: Wed, 28 Jan 2026 16:22:52 +0100
+Message-ID: <20260128145337.209571039@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260128145334.006287341@linuxfoundation.org>
 References: <20260128145334.006287341@linuxfoundation.org>
@@ -52,57 +54,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Laurent Vivier <lvivier@redhat.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit c7159e960f1472a5493ac99aff0086ab1d683594 ]
+[ Upstream commit 5f9b329096596b7e53e07d041d7fca4cbe1be752 ]
 
-The usbnet driver initializes net->max_mtu to ETH_MAX_MTU before calling
-the device's bind() callback. When the bind() callback sets
-dev->hard_mtu based the device's actual capability (from CDC Ethernet's
-wMaxSegmentSize descriptor), max_mtu is never updated to reflect this
-hardware limitation).
+After 3cbf4ffba5ee ("net: plumb network namespace into __skb_flow_dissect")
+we have to provide a net pointer to __skb_flow_dissect(),
+either via skb->dev, skb->sk, or a user provided pointer.
 
-This allows userspace (DHCP or IPv6 RA) to configure MTU larger than the
-device can handle, leading to silent packet drops when the backend sends
-packet exceeding the device's buffer size.
+In the following case, syzbot was able to cook a bare skb.
 
-Fix this by limiting net->max_mtu to the device's hard_mtu after the
-bind callback returns.
+WARNING: net/core/flow_dissector.c:1131 at __skb_flow_dissect+0xb57/0x68b0 net/core/flow_dissector.c:1131, CPU#1: syz.2.1418/11053
+Call Trace:
+ <TASK>
+  bond_flow_dissect drivers/net/bonding/bond_main.c:4093 [inline]
+  __bond_xmit_hash+0x2d7/0xba0 drivers/net/bonding/bond_main.c:4157
+  bond_xmit_hash_xdp drivers/net/bonding/bond_main.c:4208 [inline]
+  bond_xdp_xmit_3ad_xor_slave_get drivers/net/bonding/bond_main.c:5139 [inline]
+  bond_xdp_get_xmit_slave+0x1fd/0x710 drivers/net/bonding/bond_main.c:5515
+  xdp_master_redirect+0x13f/0x2c0 net/core/filter.c:4388
+  bpf_prog_run_xdp include/net/xdp.h:700 [inline]
+  bpf_test_run+0x6b2/0x7d0 net/bpf/test_run.c:421
+  bpf_prog_test_run_xdp+0x795/0x10e0 net/bpf/test_run.c:1390
+  bpf_prog_test_run+0x2c7/0x340 kernel/bpf/syscall.c:4703
+  __sys_bpf+0x562/0x860 kernel/bpf/syscall.c:6182
+  __do_sys_bpf kernel/bpf/syscall.c:6274 [inline]
+  __se_sys_bpf kernel/bpf/syscall.c:6272 [inline]
+  __x64_sys_bpf+0x7c/0x90 kernel/bpf/syscall.c:6272
+  do_syscall_x64 arch/x86/entry/syscall_64.c:63 [inline]
+  do_syscall_64+0xec/0xf80 arch/x86/entry/syscall_64.c:94
 
-See https://gitlab.com/qemu-project/qemu/-/issues/3268 and
-    https://bugs.passt.top/attachment.cgi?bugid=189
-
-Fixes: f77f0aee4da4 ("net: use core MTU range checking in USB NIC drivers")
-Signed-off-by: Laurent Vivier <lvivier@redhat.com>
-Link: https://bugs.passt.top/show_bug.cgi?id=189
-Reviewed-by: Stefano Brivio <sbrivio@redhat.com>
-Link: https://patch.msgid.link/20260119075518.2774373-1-lvivier@redhat.com
+Fixes: 58deb77cc52d ("bonding: balance ICMP echoes in layer3+4 mode")
+Reported-by: syzbot+c46409299c70a221415e@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/netdev/696faa23.050a0220.4cb9c.001f.GAE@google.com/T/#u
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Cc: Matteo Croce <mcroce@redhat.com>
+Acked-by: Stanislav Fomichev <sdf@fomichev.me>
+Link: https://patch.msgid.link/20260120161744.1893263-1-edumazet@google.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/usb/usbnet.c | 9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
+ drivers/net/bonding/bond_main.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/usb/usbnet.c b/drivers/net/usb/usbnet.c
-index f1f61d85d9498..f4a05737abf7a 100644
---- a/drivers/net/usb/usbnet.c
-+++ b/drivers/net/usb/usbnet.c
-@@ -1797,9 +1797,12 @@ usbnet_probe (struct usb_interface *udev, const struct usb_device_id *prod)
- 		if ((dev->driver_info->flags & FLAG_NOARP) != 0)
- 			net->flags |= IFF_NOARP;
- 
--		/* maybe the remote can't receive an Ethernet MTU */
--		if (net->mtu > (dev->hard_mtu - net->hard_header_len))
--			net->mtu = dev->hard_mtu - net->hard_header_len;
-+		if (net->max_mtu > (dev->hard_mtu - net->hard_header_len))
-+			net->max_mtu = dev->hard_mtu - net->hard_header_len;
-+
-+		if (net->mtu > net->max_mtu)
-+			net->mtu = net->max_mtu;
-+
- 	} else if (!info->in || !info->out)
- 		status = usbnet_get_endpoints (dev, udev);
- 	else {
+diff --git a/drivers/net/bonding/bond_main.c b/drivers/net/bonding/bond_main.c
+index 6f87d7e29e19b..b52f5f64e3abb 100644
+--- a/drivers/net/bonding/bond_main.c
++++ b/drivers/net/bonding/bond_main.c
+@@ -4263,8 +4263,9 @@ static bool bond_flow_dissect(struct bonding *bond, struct sk_buff *skb, const v
+ 	case BOND_XMIT_POLICY_ENCAP23:
+ 	case BOND_XMIT_POLICY_ENCAP34:
+ 		memset(fk, 0, sizeof(*fk));
+-		return __skb_flow_dissect(NULL, skb, &flow_keys_bonding,
+-					  fk, data, l2_proto, nhoff, hlen, 0);
++		return __skb_flow_dissect(dev_net(bond->dev), skb,
++					  &flow_keys_bonding, fk, data,
++					  l2_proto, nhoff, hlen, 0);
+ 	default:
+ 		break;
+ 	}
 -- 
 2.51.0
 
