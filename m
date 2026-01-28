@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E89B72C237E;
-	Wed, 28 Jan 2026 15:35:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 006D52C237E;
+	Wed, 28 Jan 2026 15:35:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769614529; cv=none; b=BWaAEu4sT2dTJGmtqQ1NSZ8ouLbqeQ1xGyka/Odzhtcr+yi4vltIH0I/JuqdkcK+VQJwaWmmasGOt5y3ZvtHNDklu9AIhMyCr5Eys62tEMG95+nczPZxDd60azb8gmNVECcUngIDklKbJz3h6iV2WRb6rr1NSt5ygV13G9YRlmc=
+	t=1769614532; cv=none; b=AJoFm02mgL1gUVG9q1XjTaOY2W6f83ckiya7AeUzZvVbFECjq4yWL+xuHJNvPoIIPE0T3QViAOBmf04gxwBZtRdglgTnRG0xuMGM/ZY/16gT2HDxtfv+sQEt9RLqmTspwDLq092JpOo/yvemL7ZvKx12PL0FFVOaYUw4PKxVghs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769614529; c=relaxed/simple;
-	bh=LhmwDEDeId1LFjbgKT/XxaiAo62cgSU+cSDHbOz7xz8=;
+	s=arc-20240116; t=1769614532; c=relaxed/simple;
+	bh=b1SDx0XIz5q507UOiaEmw9CTaoajF3UUtbkAinl8XyE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sXMbyY2j/cP9+phhhWuQzGC6sNE8kBomzn/qIe+d7BKfUJ1HFjTa8hlfENqb1aFWH5sr6tBzi9CYXow8KLnLYYRDhyFlCNLUmXPZgjmtT7msLJozUTwX1WulKtqqGNH0ePLpvkxth/BKxsW1wiBlhC4MwFlr9hPbo+R6LfabhHE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ceZzNA0O; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XU1HR982BZS2Nyqf3zOYMp3V6J5IF0Q6cPDsCxSCaeZDyK7JDc+1+bJvpdnMtoAJmfqx7sjX/5oWykbQnFb+yIBD8EYvYgJIXfd4JXKP+GBtdRwDswRya+V0vDHW9bn+1xpnTeBGa2bVS9B4zz+9QwPgSDJ3MfI38Vx/O4xfYsg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VYJXCMt2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ceZzNA0O"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 327B6C4CEF1;
-	Wed, 28 Jan 2026 15:35:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VYJXCMt2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 60BD2C4CEF7;
+	Wed, 28 Jan 2026 15:35:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1769614528;
-	bh=LhmwDEDeId1LFjbgKT/XxaiAo62cgSU+cSDHbOz7xz8=;
+	s=korg; t=1769614531;
+	bh=b1SDx0XIz5q507UOiaEmw9CTaoajF3UUtbkAinl8XyE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ceZzNA0OB6VikSByXGLvnAsdTL3HktUKmCcwFow60RHnyDh4BSrdWVo9X0H9DRhH/
-	 cSftlX0NDqn7qjCVD1YjVu0x4ynTgwNmpxF9w/wGphQ817h48ZcbFJq56+KwqeKd9R
-	 R3Wbf30GLy/3DKXyK/nIUSHo1Q4HZXzqwHB+UJno=
+	b=VYJXCMt2K3Rc9At9Ai6167oyLpqMukuhEs7iRiybZgULefNhpqqVz8HEWhIDQ8nqL
+	 zwWXwlWukd0M6r9nl3IL78g5qNSVmU0cXhbLYGM92DIv+MnoUAxP0wbDTpgUB9rE5f
+	 +rG8X6yJhn9vdFsjnzL7uOCmqAuosXtWQjn7Hl1o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	David Yang <mmyangfl@gmail.com>,
+	Vadim Fedorenko <vadim.fedorenko@linux.dev>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 164/254] net: hns3: fix data race in hns3_fetch_stats
-Date: Wed, 28 Jan 2026 16:22:20 +0100
-Message-ID: <20260128145350.710985430@linuxfoundation.org>
+Subject: [PATCH 6.6 165/254] be2net: fix data race in be_get_new_eqd
+Date: Wed, 28 Jan 2026 16:22:21 +0100
+Message-ID: <20260128145350.746924132@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260128145344.698118637@linuxfoundation.org>
 References: <20260128145344.698118637@linuxfoundation.org>
@@ -53,108 +54,57 @@ Content-Transfer-Encoding: 8bit
 
 From: David Yang <mmyangfl@gmail.com>
 
-[ Upstream commit 748a81c8ceda1fdbdcd0af595947422e810442aa ]
+[ Upstream commit 302e5b481caa7b3d11ec0e058434c1fc95195e50 ]
 
-In hns3_fetch_stats(), ring statistics, protected by u64_stats_sync, are
+In be_get_new_eqd(), statistics of pkts, protected by u64_stats_sync, are
 read and accumulated in ignorance of possible u64_stats_fetch_retry()
-events. These statistics are already accumulated by
-hns3_ring_stats_update(). Fix this by reading them into a temporary
-buffer first.
+events. Before the commit in question, these statistics were retrieved
+one by one directly from queues. Fix this by reading them into temporary
+variables first.
 
-Fixes: b20d7fe51e0d ("net: hns3: add some statitics info to tx process")
+Fixes: 209477704187 ("be2net: set interrupt moderation for Skyhawk-R using EQ-DB")
 Signed-off-by: David Yang <mmyangfl@gmail.com>
-Link: https://patch.msgid.link/20260119160759.1455950-1-mmyangfl@gmail.com
+Reviewed-by: Vadim Fedorenko <vadim.fedorenko@linux.dev>
+Link: https://patch.msgid.link/20260119153440.1440578-1-mmyangfl@gmail.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../net/ethernet/hisilicon/hns3/hns3_enet.c   | 69 ++++++++++---------
- 1 file changed, 36 insertions(+), 33 deletions(-)
+ drivers/net/ethernet/emulex/benet/be_main.c | 8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/ethernet/hisilicon/hns3/hns3_enet.c b/drivers/net/ethernet/hisilicon/hns3/hns3_enet.c
-index dbf44a17987eb..34627de2e311e 100644
---- a/drivers/net/ethernet/hisilicon/hns3/hns3_enet.c
-+++ b/drivers/net/ethernet/hisilicon/hns3/hns3_enet.c
-@@ -2505,44 +2505,47 @@ static netdev_features_t hns3_features_check(struct sk_buff *skb,
- static void hns3_fetch_stats(struct rtnl_link_stats64 *stats,
- 			     struct hns3_enet_ring *ring, bool is_tx)
- {
-+	struct ring_stats ring_stats;
- 	unsigned int start;
+diff --git a/drivers/net/ethernet/emulex/benet/be_main.c b/drivers/net/ethernet/emulex/benet/be_main.c
+index 011c8cc8429e3..2ed1e290f9d78 100644
+--- a/drivers/net/ethernet/emulex/benet/be_main.c
++++ b/drivers/net/ethernet/emulex/benet/be_main.c
+@@ -2141,7 +2141,7 @@ static int be_get_new_eqd(struct be_eq_obj *eqo)
+ 	struct be_aic_obj *aic;
+ 	struct be_rx_obj *rxo;
+ 	struct be_tx_obj *txo;
+-	u64 rx_pkts = 0, tx_pkts = 0;
++	u64 rx_pkts = 0, tx_pkts = 0, pkts;
+ 	ulong now;
+ 	u32 pps, delta;
+ 	int i;
+@@ -2157,15 +2157,17 @@ static int be_get_new_eqd(struct be_eq_obj *eqo)
+ 	for_all_rx_queues_on_eq(adapter, eqo, rxo, i) {
+ 		do {
+ 			start = u64_stats_fetch_begin(&rxo->stats.sync);
+-			rx_pkts += rxo->stats.rx_pkts;
++			pkts = rxo->stats.rx_pkts;
+ 		} while (u64_stats_fetch_retry(&rxo->stats.sync, start));
++		rx_pkts += pkts;
+ 	}
  
- 	do {
- 		start = u64_stats_fetch_begin(&ring->syncp);
--		if (is_tx) {
--			stats->tx_bytes += ring->stats.tx_bytes;
--			stats->tx_packets += ring->stats.tx_pkts;
--			stats->tx_dropped += ring->stats.sw_err_cnt;
--			stats->tx_dropped += ring->stats.tx_vlan_err;
--			stats->tx_dropped += ring->stats.tx_l4_proto_err;
--			stats->tx_dropped += ring->stats.tx_l2l3l4_err;
--			stats->tx_dropped += ring->stats.tx_tso_err;
--			stats->tx_dropped += ring->stats.over_max_recursion;
--			stats->tx_dropped += ring->stats.hw_limitation;
--			stats->tx_dropped += ring->stats.copy_bits_err;
--			stats->tx_dropped += ring->stats.skb2sgl_err;
--			stats->tx_dropped += ring->stats.map_sg_err;
--			stats->tx_errors += ring->stats.sw_err_cnt;
--			stats->tx_errors += ring->stats.tx_vlan_err;
--			stats->tx_errors += ring->stats.tx_l4_proto_err;
--			stats->tx_errors += ring->stats.tx_l2l3l4_err;
--			stats->tx_errors += ring->stats.tx_tso_err;
--			stats->tx_errors += ring->stats.over_max_recursion;
--			stats->tx_errors += ring->stats.hw_limitation;
--			stats->tx_errors += ring->stats.copy_bits_err;
--			stats->tx_errors += ring->stats.skb2sgl_err;
--			stats->tx_errors += ring->stats.map_sg_err;
--		} else {
--			stats->rx_bytes += ring->stats.rx_bytes;
--			stats->rx_packets += ring->stats.rx_pkts;
--			stats->rx_dropped += ring->stats.l2_err;
--			stats->rx_errors += ring->stats.l2_err;
--			stats->rx_errors += ring->stats.l3l4_csum_err;
--			stats->rx_crc_errors += ring->stats.l2_err;
--			stats->multicast += ring->stats.rx_multicast;
--			stats->rx_length_errors += ring->stats.err_pkt_len;
--		}
-+		ring_stats = ring->stats;
- 	} while (u64_stats_fetch_retry(&ring->syncp, start));
-+
-+	if (is_tx) {
-+		stats->tx_bytes += ring_stats.tx_bytes;
-+		stats->tx_packets += ring_stats.tx_pkts;
-+		stats->tx_dropped += ring_stats.sw_err_cnt;
-+		stats->tx_dropped += ring_stats.tx_vlan_err;
-+		stats->tx_dropped += ring_stats.tx_l4_proto_err;
-+		stats->tx_dropped += ring_stats.tx_l2l3l4_err;
-+		stats->tx_dropped += ring_stats.tx_tso_err;
-+		stats->tx_dropped += ring_stats.over_max_recursion;
-+		stats->tx_dropped += ring_stats.hw_limitation;
-+		stats->tx_dropped += ring_stats.copy_bits_err;
-+		stats->tx_dropped += ring_stats.skb2sgl_err;
-+		stats->tx_dropped += ring_stats.map_sg_err;
-+		stats->tx_errors += ring_stats.sw_err_cnt;
-+		stats->tx_errors += ring_stats.tx_vlan_err;
-+		stats->tx_errors += ring_stats.tx_l4_proto_err;
-+		stats->tx_errors += ring_stats.tx_l2l3l4_err;
-+		stats->tx_errors += ring_stats.tx_tso_err;
-+		stats->tx_errors += ring_stats.over_max_recursion;
-+		stats->tx_errors += ring_stats.hw_limitation;
-+		stats->tx_errors += ring_stats.copy_bits_err;
-+		stats->tx_errors += ring_stats.skb2sgl_err;
-+		stats->tx_errors += ring_stats.map_sg_err;
-+	} else {
-+		stats->rx_bytes += ring_stats.rx_bytes;
-+		stats->rx_packets += ring_stats.rx_pkts;
-+		stats->rx_dropped += ring_stats.l2_err;
-+		stats->rx_errors += ring_stats.l2_err;
-+		stats->rx_errors += ring_stats.l3l4_csum_err;
-+		stats->rx_crc_errors += ring_stats.l2_err;
-+		stats->multicast += ring_stats.rx_multicast;
-+		stats->rx_length_errors += ring_stats.err_pkt_len;
-+	}
- }
+ 	for_all_tx_queues_on_eq(adapter, eqo, txo, i) {
+ 		do {
+ 			start = u64_stats_fetch_begin(&txo->stats.sync);
+-			tx_pkts += txo->stats.tx_reqs;
++			pkts = txo->stats.tx_reqs;
+ 		} while (u64_stats_fetch_retry(&txo->stats.sync, start));
++		tx_pkts += pkts;
+ 	}
  
- static void hns3_nic_get_stats64(struct net_device *netdev,
+ 	/* Skip, if wrapped around or first calculation */
 -- 
 2.51.0
 
