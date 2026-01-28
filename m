@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E2E430C635;
-	Wed, 28 Jan 2026 15:52:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7DBE30FC1B;
+	Wed, 28 Jan 2026 15:52:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769615527; cv=none; b=iE8hQkjdBfHDCVcwKpo4zHb+hSokwe2DR7SGw2PYWtZwW2OOkNp/z0t4hOK8ldHEUA7Yp9iGDz8r4+3eM6ZD7Qq0TEcnwQXuQS43LSPn+Xi7GnYdC0SSxBCH7BeylETntxyHxaD5MCAAVeylEj4yjvXS+bo09VGL0ond6fpSqk8=
+	t=1769615530; cv=none; b=igFeBwYGpD0b16iQIf0VF59Ulf45s1ojw3CnnSEitQ3MAIRr5zhL1mEFnvT16jCnUoASr9cYh+CgCKaVbKnuPrUUUGnCKBQOsei6GuQEju5UxHr+I0mqGmpB+fPITr0Qn4tRd/0HdqjdXxM5zfG19Yy2OIwZf+oDovkSNEvRmqM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769615527; c=relaxed/simple;
-	bh=KODLhUv/oWf3c8XVsVLV4ela3dsNpbj2RcqNclMoi9M=;
+	s=arc-20240116; t=1769615530; c=relaxed/simple;
+	bh=bbfWmYYTsnx3NeT7oC2Fa7HU9lfxHSXrHQSIbH5KeLc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gZrSzUvoklE9McRl7OlQ3MvH/2BlXMAG1tX37dwpbdstxXDqp49vUY3i/wwixuh6lDV+YT9nNPyAGQKbMJVReHz8n6uGc6zfekOWtIFMFSNNzs9AR9ue5bDP/WwR1qtPFvq6yyzWZQuIQLwjhrKMzoIIzYJEFY4fkaN0UXIGTW0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZgdAmQoQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SDrCbYlWQGZwtGDDISnUm3fz0qyn/tqY5TP83XB8pcFyk6UKLRKywqoaKz/2+2qvbgKg5pyko4RspU+PGYAE4pdCP3G4ZMzOIIwhS+5zHw0BWMbU55rPsN8/w8rV2fe+FJQyYOZ9QRMJI3qPfBFHxf34on/x7qN8dGu55WEmEoE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CIKXcGoe; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZgdAmQoQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A079C116C6;
-	Wed, 28 Jan 2026 15:52:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CIKXcGoe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B10BC4CEF7;
+	Wed, 28 Jan 2026 15:52:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1769615527;
-	bh=KODLhUv/oWf3c8XVsVLV4ela3dsNpbj2RcqNclMoi9M=;
+	s=korg; t=1769615530;
+	bh=bbfWmYYTsnx3NeT7oC2Fa7HU9lfxHSXrHQSIbH5KeLc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZgdAmQoQv+Aj2+pUzf1EBlsNxLI2/jbJ5emJGoAUIK6JvtY5N8A2tSBXWw/bBoJgM
-	 chqu4FmkrSE7yzniFpunaQD8g5As+Fxi7HpnMXgE9heewtHLHr6BofSsRZvC4coK2j
-	 0StglzTHl2O6RqdaJ9zdicinZ5m0hq2DkoQeicDk=
+	b=CIKXcGoebpgY4UoB7/sI+xrGt/ReT1BniTuxUUN6h2uhIah5/UchvmEJFoaZxvkLl
+	 X66WxR3hmwV/KI5l02r+uAiukbZFZPspLppFe47y4+n5FA5qv+mqqbLui7qus9UiuQ
+	 YSIlXNOHLBDfVUezSqnGY99RrQRdOxkA1nrTn/V4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ethan Nelson-Moore <enelsonmoore@gmail.com>,
-	Peter Korsgaard <peter@korsgaard.com>,
 	Jakub Kicinski <kuba@kernel.org>,
+	Kuniyuki Iwashima <kuniyu@google.com>,
+	Eric Dumazet <edumazet@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 028/227] net: usb: dm9601: remove broken SR9700 support
-Date: Wed, 28 Jan 2026 16:21:13 +0100
-Message-ID: <20260128145345.358062577@linuxfoundation.org>
+Subject: [PATCH 6.18 037/227] tools: ynl: Specify --no-line-number in ynl-regen.sh.
+Date: Wed, 28 Jan 2026 16:21:22 +0100
+Message-ID: <20260128145345.678884443@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260128145344.331957407@linuxfoundation.org>
 References: <20260128145344.331957407@linuxfoundation.org>
@@ -52,51 +52,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ethan Nelson-Moore <enelsonmoore@gmail.com>
+From: Kuniyuki Iwashima <kuniyu@google.com>
 
-[ Upstream commit 7d7dbafefbe74f5a25efc4807af093b857a7612e ]
+[ Upstream commit 68578370f9b3a2aba5964b273312d51c581b6aad ]
 
-The SR9700 chip sends more than one packet in a USB transaction,
-like the DM962x chips can optionally do, but the dm9601 driver does not
-support this mode, and the hardware does not have the DM962x
-MODE_CTL register to disable it, so this driver drops packets on SR9700
-devices. The sr9700 driver correctly handles receiving more than one
-packet per transaction.
+If grep.lineNumber is enabled in .gitconfig,
 
-While the dm9601 driver could be improved to handle this, the easiest
-way to fix this issue in the short term is to remove the SR9700 device
-ID from the dm9601 driver so the sr9700 driver is always used. This
-device ID should not have been in more than one driver to begin with.
+  [grep]
+  lineNumber = true
 
-The "Fixes" commit was chosen so that the patch is automatically
-included in all kernels that have the sr9700 driver, even though the
-issue affects dm9601.
+ynl-regen.sh fails with the following error:
 
-Fixes: c9b37458e956 ("USB2NET : SR9700 : One chip USB 1.1 USB2NET SR9700Device Driver Support")
-Signed-off-by: Ethan Nelson-Moore <enelsonmoore@gmail.com>
-Acked-by: Peter Korsgaard <peter@korsgaard.com>
-Link: https://patch.msgid.link/20260113063924.74464-1-enelsonmoore@gmail.com
+  $ ./tools/net/ynl/ynl-regen.sh -f
+  ...
+  ynl_gen_c.py: error: argument --mode: invalid choice: '4:' (choose from user, kernel, uapi)
+  	GEN 4:	net/ipv4/fou_nl.c
+
+Let's specify --no-line-number explicitly.
+
+Fixes: be5bea1cc0bf ("net: add basic C code generators for Netlink")
+Suggested-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Kuniyuki Iwashima <kuniyu@google.com>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Link: https://patch.msgid.link/20260115172533.693652-3-kuniyu@google.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/usb/dm9601.c | 4 ----
- 1 file changed, 4 deletions(-)
+ tools/net/ynl/ynl-regen.sh | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/usb/dm9601.c b/drivers/net/usb/dm9601.c
-index 8b6d6a1b3c2ec..2b4716ccf0c5b 100644
---- a/drivers/net/usb/dm9601.c
-+++ b/drivers/net/usb/dm9601.c
-@@ -603,10 +603,6 @@ static const struct usb_device_id products[] = {
- 	USB_DEVICE(0x0fe6, 0x8101),	/* DM9601 USB to Fast Ethernet Adapter */
- 	.driver_info = (unsigned long)&dm9601_info,
- 	 },
--	{
--	 USB_DEVICE(0x0fe6, 0x9700),	/* DM9601 USB to Fast Ethernet Adapter */
--	 .driver_info = (unsigned long)&dm9601_info,
--	 },
- 	{
- 	 USB_DEVICE(0x0a46, 0x9000),	/* DM9000E */
- 	 .driver_info = (unsigned long)&dm9601_info,
+diff --git a/tools/net/ynl/ynl-regen.sh b/tools/net/ynl/ynl-regen.sh
+index 81b4ecd891006..d9809276db982 100755
+--- a/tools/net/ynl/ynl-regen.sh
++++ b/tools/net/ynl/ynl-regen.sh
+@@ -21,7 +21,7 @@ files=$(git grep --files-with-matches '^/\* YNL-GEN \(kernel\|uapi\|user\)')
+ for f in $files; do
+     # params:     0       1      2     3
+     #         $YAML YNL-GEN kernel $mode
+-    params=( $(git grep -B1 -h '/\* YNL-GEN' $f | sed 's@/\*\(.*\)\*/@\1@') )
++    params=( $(git grep --no-line-number -B1 -h '/\* YNL-GEN' $f | sed 's@/\*\(.*\)\*/@\1@') )
+     args=$(sed -n 's@/\* YNL-ARG \(.*\) \*/@\1@p' $f)
+ 
+     if [ $f -nt ${params[0]} -a -z "$force" ]; then
 -- 
 2.51.0
 
