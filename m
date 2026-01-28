@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5BFD9305057;
-	Wed, 28 Jan 2026 15:56:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7AD8630BBA5;
+	Wed, 28 Jan 2026 15:56:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769615814; cv=none; b=npeDOXARCOHNLUpFXSFe2r9x+d37Gy4fuw/rBnrCv6lc32VCKzFhRBJ2GYyaaNcSenwDKcZs6vKVIhlimr2Wgz6udYROZ6NRE8/efrlauSkfWNvHG4u5ogOs01iPQxu6ioauqYbhIGM0SygQMkV/NcDbZblFVrAsmWRVcqyNhyU=
+	t=1769615817; cv=none; b=o6vtmd1XBdklfpgQKuPfJee9JT7T+tQReImOzqp9DrnvjcC1QLvgbPUlfONz02NWxk8GqVTU8e1JcbvcRtv/na9oZqwz2SXS1OQm4eBL5Hz7ndVPjhuUoxIqVS08/Mt3ChS/t1TtBDOMu/6IQ1tc/coWK8K8v0ifyt3m1IhFvwQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769615814; c=relaxed/simple;
-	bh=UnM8/ko445BlkBQviDxXwOQVzWqjiDkpmnMfIo5CLPA=;
+	s=arc-20240116; t=1769615817; c=relaxed/simple;
+	bh=74KOMKX8jyGrZ+B2ISIABuDpb0q9H2tuJk6hB4QSHNw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=uBzPVBGYD5wolQxXMRVMys2BA7TUxYq9i2UXfY2lII75ypbyfx+sHmznaCrQlxbB02YxxL5tFzWxEhQv7VZA0Ru0gKXtJLrx47W1WY4ATq1tJPbopYoKUt1FLz4jsbf/p8PO46XbK2rQg8Z3A99yDE4VJkbJVDHf9bmdUf6O6LM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=op/C/DkA; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=omiPrBtf/MwUMo3wo70KHf80sdilrFtajHP26u8bkCtO7oKcpSpkthsfhAr6m9SuQbw7aCLZG5patV7hlTSSaWH99J76RbAnQfVwSdUBQNemFe3E+J6MYfARnIgRrezeFhSYsGDturhbog1FypmNFicL5zGcfdaKLs3RdKMXuaM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=up53kUZr; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="op/C/DkA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 53A67C4CEF7;
-	Wed, 28 Jan 2026 15:56:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="up53kUZr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B0D0DC4CEF1;
+	Wed, 28 Jan 2026 15:56:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1769615813;
-	bh=UnM8/ko445BlkBQviDxXwOQVzWqjiDkpmnMfIo5CLPA=;
+	s=korg; t=1769615817;
+	bh=74KOMKX8jyGrZ+B2ISIABuDpb0q9H2tuJk6hB4QSHNw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=op/C/DkA2o3GDRqX2ObeJox6J6oCx1idykHmL3KYAAdda0Dn3ZrZLK9yfMKQBn2Oe
-	 ftqgBhUEknMgaoVdQriaW2e0Y2FDwjSxov7OM7BwsCe49LrzvrloaVI/Uo7FD+0WNM
-	 JQjqPFkrpBsMBOyv2lJgw0jivHTk12Zwk+a7nn2E=
+	b=up53kUZrBPeWiODowAi9d6Fr7uNeex4OAjCTgBLCcATZBvx9PHe5ZuwCE96HqmWDr
+	 KydUb0lkxIzJ6OJb9Pf6wmnEY9okA8D8dffYVPqwqyzobtAjUD9DInayGopBzAt8Ne
+	 wMsnbukn5RcGSiravLZcuoIjl2Xy5r8c50thnjEM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gustavo Sousa <gustavo.sousa@intel.com>,
-	Michal Wajdeczko <michal.wajdeczko@intel.com>,
-	Matt Roper <matthew.d.roper@intel.com>,
+	Lukasz Laguna <lukasz.laguna@intel.com>,
+	Rodrigo Vivi <rodrigo.vivi@intel.com>,
 	=?UTF-8?q?Thomas=20Hellstr=C3=B6m?= <thomas.hellstrom@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 121/227] drm/xe/pm: Add scope-based cleanup helper for runtime PM
-Date: Wed, 28 Jan 2026 16:22:46 +0100
-Message-ID: <20260128145348.819333250@linuxfoundation.org>
+Subject: [PATCH 6.18 122/227] drm/xe: Update wedged.mode only after successful reset policy change
+Date: Wed, 28 Jan 2026 16:22:47 +0100
+Message-ID: <20260128145348.854929283@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260128145344.331957407@linuxfoundation.org>
 References: <20260128145344.331957407@linuxfoundation.org>
@@ -54,139 +53,244 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Matt Roper <matthew.d.roper@intel.com>
+From: Lukasz Laguna <lukasz.laguna@intel.com>
 
-[ Upstream commit 50a59230fa63989d59253622a8dd6386cca0db07 ]
+[ Upstream commit f262015b9797effdec15e8a81c81b2158ede9578 ]
 
-Add a scope-based helpers for runtime PM that may be used to simplify
-cleanup logic and potentially avoid goto-based cleanup.
+Previously, the driver's internal wedged.mode state was updated without
+verifying whether the corresponding engine reset policy update in GuC
+succeeded. This could leave the driver reporting a wedged.mode state
+that doesn't match the actual reset behavior programmed in GuC.
 
-For example, using
+With this change, the reset policy is updated first, and the driver's
+wedged.mode state is modified only if the policy update succeeds on all
+available GTs.
 
-        guard(xe_pm_runtime)(xe);
+This patch also introduces two functional improvements:
 
-will get runtime PM and cause a corresponding put to occur automatically
-when the current scope is exited.  'xe_pm_runtime_noresume' can be used
-as a guard replacement for the corresponding 'noresume' variant.
-There's also an xe_pm_runtime_ioctl conditional guard that can be used
-as a replacement for xe_runtime_ioctl():
+ - The policy is sent to GuC only when a change is required. An update
+   is needed only when entering or leaving XE_WEDGED_MODE_UPON_ANY_HANG,
+   because only in that case the reset policy changes. For example,
+   switching between XE_WEDGED_MODE_UPON_CRITICAL_ERROR and
+   XE_WEDGED_MODE_NEVER doesn't affect the reset policy, so there is no
+   need to send the same value to GuC.
 
-        ACQUIRE(xe_pm_runtime_ioctl, pm)(xe);
-        if ((ret = ACQUIRE_ERR(xe_pm_runtime_ioctl, &pm)) < 0)
-                /* failed */
+ - An inconsistent_reset flag is added to track cases where reset policy
+   update succeeds only on a subset of GTs. If such inconsistency is
+   detected, future wedged mode configuration will force a retry of the
+   reset policy update to restore a consistent state across all GTs.
 
-In a few rare cases (such as gt_reset_worker()) we need to ensure that
-runtime PM is dropped when the function is exited by any means
-(including error paths), but the function does not need to acquire
-runtime PM because that has already been done earlier by a different
-function.  For these special cases, an 'xe_pm_runtime_release_only'
-guard can be used to handle the release without doing an acquisition.
-
-These guards will be used in future patches to eliminate some of our
-goto-based cleanup.
-
-v2:
- - Specify success condition for xe_pm runtime_ioctl as _RET >= 0 so
-   that positive values will be properly identified as success and
-   trigger destructor cleanup properly.
-
-v3:
- - Add comments to the kerneldoc for the existing 'get' functions
-   indicating that scope-based handling should be preferred where
-   possible.  (Gustavo)
-
-Cc: Gustavo Sousa <gustavo.sousa@intel.com>
-Reviewed-by: Michal Wajdeczko <michal.wajdeczko@intel.com>
-Reviewed-by: Gustavo Sousa <gustavo.sousa@intel.com>
-Link: https://patch.msgid.link/20251118164338.3572146-31-matthew.d.roper@intel.com
-Signed-off-by: Matt Roper <matthew.d.roper@intel.com>
-(cherry picked from commit 59e7528dbfd52efbed05e0f11b2143217a12bc74)
+Fixes: 6b8ef44cc0a9 ("drm/xe: Introduce the wedged_mode debugfs")
+Signed-off-by: Lukasz Laguna <lukasz.laguna@intel.com>
+Link: https://patch.msgid.link/20260107174741.29163-3-lukasz.laguna@intel.com
+Reviewed-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
+Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
+(cherry picked from commit 0f13dead4e0385859f5c9c3625a19df116b389d3)
 Signed-off-by: Thomas Hellström <thomas.hellstrom@linux.intel.com>
-Stable-dep-of: f262015b9797 ("drm/xe: Update wedged.mode only after successful reset policy change")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/xe/xe_pm.c | 21 +++++++++++++++++++++
- drivers/gpu/drm/xe/xe_pm.h | 17 +++++++++++++++++
- 2 files changed, 38 insertions(+)
+ drivers/gpu/drm/xe/xe_debugfs.c      | 72 ++++++++++++++++++++++------
+ drivers/gpu/drm/xe/xe_device_types.h | 18 +++++++
+ drivers/gpu/drm/xe/xe_guc_ads.c      | 14 +++---
+ drivers/gpu/drm/xe/xe_guc_ads.h      |  5 +-
+ 4 files changed, 87 insertions(+), 22 deletions(-)
 
-diff --git a/drivers/gpu/drm/xe/xe_pm.c b/drivers/gpu/drm/xe/xe_pm.c
-index 2c5a44377994b..a58bf004aee73 100644
---- a/drivers/gpu/drm/xe/xe_pm.c
-+++ b/drivers/gpu/drm/xe/xe_pm.c
-@@ -660,6 +660,13 @@ static void xe_pm_runtime_lockdep_prime(void)
- /**
-  * xe_pm_runtime_get - Get a runtime_pm reference and resume synchronously
-  * @xe: xe device instance
-+ *
-+ * When possible, scope-based runtime PM (through guard(xe_pm_runtime)) is
-+ * be preferred over direct usage of this function.  Manual get/put handling
-+ * should only be used when the function contains goto-based logic which
-+ * can break scope-based handling, or when the lifetime of the runtime PM
-+ * reference does not match a specific scope (e.g., runtime PM obtained in one
-+ * function and released in a different one).
-  */
- void xe_pm_runtime_get(struct xe_device *xe)
- {
-@@ -692,6 +699,13 @@ void xe_pm_runtime_put(struct xe_device *xe)
-  * xe_pm_runtime_get_ioctl - Get a runtime_pm reference before ioctl
-  * @xe: xe device instance
-  *
-+ * When possible, scope-based runtime PM (through
-+ * ACQUIRE(xe_pm_runtime_ioctl, ...)) is be preferred over direct usage of this
-+ * function.  Manual get/put handling should only be used when the function
-+ * contains goto-based logic which can break scope-based handling, or when the
-+ * lifetime of the runtime PM reference does not match a specific scope (e.g.,
-+ * runtime PM obtained in one function and released in a different one).
-+ *
-  * Returns: Any number greater than or equal to 0 for success, negative error
-  * code otherwise.
-  */
-@@ -761,6 +775,13 @@ static bool xe_pm_suspending_or_resuming(struct xe_device *xe)
-  * It will warn if not protected.
-  * The reference should be put back after this function regardless, since it
-  * will always bump the usage counter, regardless.
-+ *
-+ * When possible, scope-based runtime PM (through guard(xe_pm_runtime_noresume))
-+ * is be preferred over direct usage of this function.  Manual get/put handling
-+ * should only be used when the function contains goto-based logic which can
-+ * break scope-based handling, or when the lifetime of the runtime PM reference
-+ * does not match a specific scope (e.g., runtime PM obtained in one function
-+ * and released in a different one).
-  */
- void xe_pm_runtime_get_noresume(struct xe_device *xe)
- {
-diff --git a/drivers/gpu/drm/xe/xe_pm.h b/drivers/gpu/drm/xe/xe_pm.h
-index 59678b310e55f..e8005775be39e 100644
---- a/drivers/gpu/drm/xe/xe_pm.h
-+++ b/drivers/gpu/drm/xe/xe_pm.h
-@@ -6,6 +6,7 @@
- #ifndef _XE_PM_H_
- #define _XE_PM_H_
+diff --git a/drivers/gpu/drm/xe/xe_debugfs.c b/drivers/gpu/drm/xe/xe_debugfs.c
+index cd977dbd1ef63..7b48bf90cab8f 100644
+--- a/drivers/gpu/drm/xe/xe_debugfs.c
++++ b/drivers/gpu/drm/xe/xe_debugfs.c
+@@ -255,14 +255,64 @@ static ssize_t wedged_mode_show(struct file *f, char __user *ubuf,
+ 	return simple_read_from_buffer(ubuf, size, pos, buf, len);
+ }
  
-+#include <linux/cleanup.h>
- #include <linux/pm_runtime.h>
- 
- #define DEFAULT_VRAM_THRESHOLD 300 /* in MB */
-@@ -35,4 +36,20 @@ bool xe_rpm_reclaim_safe(const struct xe_device *xe);
- struct task_struct *xe_pm_read_callback_task(struct xe_device *xe);
- int xe_pm_module_init(void);
- 
-+static inline void __xe_pm_runtime_noop(struct xe_device *xe) {}
++static int __wedged_mode_set_reset_policy(struct xe_gt *gt, enum xe_wedged_mode mode)
++{
++	bool enable_engine_reset;
++	int ret;
 +
-+DEFINE_GUARD(xe_pm_runtime, struct xe_device *,
-+	     xe_pm_runtime_get(_T), xe_pm_runtime_put(_T))
-+DEFINE_GUARD(xe_pm_runtime_noresume, struct xe_device *,
-+	     xe_pm_runtime_get_noresume(_T), xe_pm_runtime_put(_T))
-+DEFINE_GUARD_COND(xe_pm_runtime, _ioctl, xe_pm_runtime_get_ioctl(_T), _RET >= 0)
++	enable_engine_reset = (mode != XE_WEDGED_MODE_UPON_ANY_HANG_NO_RESET);
++	ret = xe_guc_ads_scheduler_policy_toggle_reset(&gt->uc.guc.ads,
++						       enable_engine_reset);
++	if (ret)
++		xe_gt_err(gt, "Failed to update GuC ADS scheduler policy (%pe)\n", ERR_PTR(ret));
 +
-+/*
-+ * Used when a function needs to release runtime PM in all possible cases
-+ * and error paths, but the wakeref was already acquired by a different
-+ * function (i.e., get() has already happened so only a put() is needed).
++	return ret;
++}
++
++static int wedged_mode_set_reset_policy(struct xe_device *xe, enum xe_wedged_mode mode)
++{
++	struct xe_gt *gt;
++	int ret;
++	u8 id;
++
++	guard(xe_pm_runtime)(xe);
++	for_each_gt(gt, xe, id) {
++		ret = __wedged_mode_set_reset_policy(gt, mode);
++		if (ret) {
++			if (id > 0) {
++				xe->wedged.inconsistent_reset = true;
++				drm_err(&xe->drm, "Inconsistent reset policy state between GTs\n");
++			}
++			return ret;
++		}
++	}
++
++	xe->wedged.inconsistent_reset = false;
++
++	return 0;
++}
++
++static bool wedged_mode_needs_policy_update(struct xe_device *xe, enum xe_wedged_mode mode)
++{
++	if (xe->wedged.inconsistent_reset)
++		return true;
++
++	if (xe->wedged.mode == mode)
++		return false;
++
++	if (xe->wedged.mode == XE_WEDGED_MODE_UPON_ANY_HANG_NO_RESET ||
++	    mode == XE_WEDGED_MODE_UPON_ANY_HANG_NO_RESET)
++		return true;
++
++	return false;
++}
++
+ static ssize_t wedged_mode_set(struct file *f, const char __user *ubuf,
+ 			       size_t size, loff_t *pos)
+ {
+ 	struct xe_device *xe = file_inode(f)->i_private;
+-	struct xe_gt *gt;
+ 	u32 wedged_mode;
+ 	ssize_t ret;
+-	u8 id;
+ 
+ 	ret = kstrtouint_from_user(ubuf, size, 0, &wedged_mode);
+ 	if (ret)
+@@ -271,22 +321,14 @@ static ssize_t wedged_mode_set(struct file *f, const char __user *ubuf,
+ 	if (wedged_mode > 2)
+ 		return -EINVAL;
+ 
+-	if (xe->wedged.mode == wedged_mode)
+-		return size;
++	if (wedged_mode_needs_policy_update(xe, wedged_mode)) {
++		ret = wedged_mode_set_reset_policy(xe, wedged_mode);
++		if (ret)
++			return ret;
++	}
+ 
+ 	xe->wedged.mode = wedged_mode;
+ 
+-	xe_pm_runtime_get(xe);
+-	for_each_gt(gt, xe, id) {
+-		ret = xe_guc_ads_scheduler_policy_toggle_reset(&gt->uc.guc.ads);
+-		if (ret) {
+-			xe_gt_err(gt, "Failed to update GuC ADS scheduler policy. GuC may still cause engine reset even with wedged_mode=2\n");
+-			xe_pm_runtime_put(xe);
+-			return -EIO;
+-		}
+-	}
+-	xe_pm_runtime_put(xe);
+-
+ 	return size;
+ }
+ 
+diff --git a/drivers/gpu/drm/xe/xe_device_types.h b/drivers/gpu/drm/xe/xe_device_types.h
+index 74d7af830b85d..0e80f2940c996 100644
+--- a/drivers/gpu/drm/xe/xe_device_types.h
++++ b/drivers/gpu/drm/xe/xe_device_types.h
+@@ -42,6 +42,22 @@ struct xe_pat_ops;
+ struct xe_pxp;
+ struct xe_vram_region;
+ 
++/**
++ * enum xe_wedged_mode - possible wedged modes
++ * @XE_WEDGED_MODE_NEVER: Device will never be declared wedged.
++ * @XE_WEDGED_MODE_UPON_CRITICAL_ERROR: Device will be declared wedged only
++ *	when critical error occurs like GT reset failure or firmware failure.
++ *	This is the default mode.
++ * @XE_WEDGED_MODE_UPON_ANY_HANG_NO_RESET: Device will be declared wedged on
++ *	any hang. In this mode, engine resets are disabled to avoid automatic
++ *	recovery attempts. This mode is primarily intended for debugging hangs.
 + */
-+DEFINE_GUARD(xe_pm_runtime_release_only, struct xe_device *,
-+	     __xe_pm_runtime_noop(_T), xe_pm_runtime_put(_T));
++enum xe_wedged_mode {
++	XE_WEDGED_MODE_NEVER = 0,
++	XE_WEDGED_MODE_UPON_CRITICAL_ERROR = 1,
++	XE_WEDGED_MODE_UPON_ANY_HANG_NO_RESET = 2,
++};
 +
+ #define XE_BO_INVALID_OFFSET	LONG_MAX
+ 
+ #define GRAPHICS_VER(xe) ((xe)->info.graphics_verx100 / 100)
+@@ -556,6 +572,8 @@ struct xe_device {
+ 		int mode;
+ 		/** @wedged.method: Recovery method to be sent in the drm device wedged uevent */
+ 		unsigned long method;
++		/** @wedged.inconsistent_reset: Inconsistent reset policy state between GTs */
++		bool inconsistent_reset;
+ 	} wedged;
+ 
+ 	/** @bo_device: Struct to control async free of BOs */
+diff --git a/drivers/gpu/drm/xe/xe_guc_ads.c b/drivers/gpu/drm/xe/xe_guc_ads.c
+index 58e0b0294a5bc..0e2bece1d8b83 100644
+--- a/drivers/gpu/drm/xe/xe_guc_ads.c
++++ b/drivers/gpu/drm/xe/xe_guc_ads.c
+@@ -979,16 +979,17 @@ static int guc_ads_action_update_policies(struct xe_guc_ads *ads, u32 policy_off
+ /**
+  * xe_guc_ads_scheduler_policy_toggle_reset - Toggle reset policy
+  * @ads: Additional data structures object
++ * @enable_engine_reset: true to enable engine resets, false otherwise
+  *
+- * This function update the GuC's engine reset policy based on wedged.mode.
++ * This function update the GuC's engine reset policy.
+  *
+  * Return: 0 on success, and negative error code otherwise.
+  */
+-int xe_guc_ads_scheduler_policy_toggle_reset(struct xe_guc_ads *ads)
++int xe_guc_ads_scheduler_policy_toggle_reset(struct xe_guc_ads *ads,
++					     bool enable_engine_reset)
+ {
+ 	struct guc_policies *policies;
+ 	struct xe_guc *guc = ads_to_guc(ads);
+-	struct xe_device *xe = ads_to_xe(ads);
+ 	CLASS(xe_guc_buf, buf)(&guc->buf, sizeof(*policies));
+ 
+ 	if (!xe_guc_buf_is_valid(buf))
+@@ -1000,10 +1001,11 @@ int xe_guc_ads_scheduler_policy_toggle_reset(struct xe_guc_ads *ads)
+ 	policies->dpc_promote_time = ads_blob_read(ads, policies.dpc_promote_time);
+ 	policies->max_num_work_items = ads_blob_read(ads, policies.max_num_work_items);
+ 	policies->is_valid = 1;
+-	if (xe->wedged.mode == 2)
+-		policies->global_flags |= GLOBAL_POLICY_DISABLE_ENGINE_RESET;
+-	else
++
++	if (enable_engine_reset)
+ 		policies->global_flags &= ~GLOBAL_POLICY_DISABLE_ENGINE_RESET;
++	else
++		policies->global_flags |= GLOBAL_POLICY_DISABLE_ENGINE_RESET;
+ 
+ 	return guc_ads_action_update_policies(ads, xe_guc_buf_flush(buf));
+ }
+diff --git a/drivers/gpu/drm/xe/xe_guc_ads.h b/drivers/gpu/drm/xe/xe_guc_ads.h
+index 2e6674c760ff9..7a39f361cb17d 100644
+--- a/drivers/gpu/drm/xe/xe_guc_ads.h
++++ b/drivers/gpu/drm/xe/xe_guc_ads.h
+@@ -6,6 +6,8 @@
+ #ifndef _XE_GUC_ADS_H_
+ #define _XE_GUC_ADS_H_
+ 
++#include <linux/types.h>
++
+ struct xe_guc_ads;
+ 
+ int xe_guc_ads_init(struct xe_guc_ads *ads);
+@@ -13,6 +15,7 @@ int xe_guc_ads_init_post_hwconfig(struct xe_guc_ads *ads);
+ void xe_guc_ads_populate(struct xe_guc_ads *ads);
+ void xe_guc_ads_populate_minimal(struct xe_guc_ads *ads);
+ void xe_guc_ads_populate_post_load(struct xe_guc_ads *ads);
+-int xe_guc_ads_scheduler_policy_toggle_reset(struct xe_guc_ads *ads);
++int xe_guc_ads_scheduler_policy_toggle_reset(struct xe_guc_ads *ads,
++					     bool enable_engine_reset);
+ 
  #endif
 -- 
 2.51.0
