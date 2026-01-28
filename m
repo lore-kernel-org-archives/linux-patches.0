@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A421A1E1DFC;
-	Wed, 28 Jan 2026 15:42:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5BFD2FBE05;
+	Wed, 28 Jan 2026 15:42:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769614928; cv=none; b=tJ0jozxW6bA+uuzeA94PVS7s925S4oZjFQe2+lxSLKOSaywW7z/yWSJAk277p3ALMn7c4Yn96PMo7yF0t12WDRQFS9OnUnLY7OY/fEWiuVvBOT42EzhEgwaPV+IU7r9faRPeozm7r8xqwtmcXsz0sN4Mg5lL66xoXQRsFG6kjG8=
+	t=1769614932; cv=none; b=e3F3fHWXpdjZ6a49U4bHer4waJe+ZEp05IGHYqPMQj0mZ/OuhTkk6Vu2AlzPn9cBqCyk7k9PB7hN+IVmwyeGu7IEp8HIv0G5wCIr3DNATNz3Z8xfdGhOzt9bOGSwQ55Cb90jgPmzP5zTU/sUU0T0GI9RWeQip4BDVlcJyTtpgno=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769614928; c=relaxed/simple;
-	bh=iigL5eXVL4/0ZjOSYpoqnmAbxz0YZs4IFehEzOe3tT8=;
+	s=arc-20240116; t=1769614932; c=relaxed/simple;
+	bh=LMK9nYn7l7Zh0Oy9KPc9uTi3SFckS26yUP5TrQL/kxw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fkTQC8Y7AqiW9BOOEr51nO1ZaZ5mfzfgG6s0kHw7FVjSnwuRUDSvRKM9Gy9R4X1YYwtvMN3Q6kW/sxj5r8bdXclrjLSo1W4loG7OVHvJ4iv7f7A+1ipZpAR1wsbcPmX2uDlAjNADX5yBA/6+N+ZGXxGHvnDMd6ZDyPHMJgUB9XM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RqXRUYlj; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=p34RLmOzV6qNBOahcitVlo8CUqOPf+dItJAwkYQtulyemu0lblCJO/D7fX583k8CisIV+iCpkRCB//j1f1RrPrIVuJzbbdIiG8/lHXoCqAAA9f/kcVoZ4v0KEISEyEYB0sor7it5YHZizUxqtJzbF2VCuyN1k3GgvlEhKO29T4A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wpaz4nld; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RqXRUYlj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 14B86C4CEF1;
-	Wed, 28 Jan 2026 15:42:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wpaz4nld"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C12BC4CEF1;
+	Wed, 28 Jan 2026 15:42:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1769614928;
-	bh=iigL5eXVL4/0ZjOSYpoqnmAbxz0YZs4IFehEzOe3tT8=;
+	s=korg; t=1769614931;
+	bh=LMK9nYn7l7Zh0Oy9KPc9uTi3SFckS26yUP5TrQL/kxw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RqXRUYljsqeqbk11wVVqFymuMgBfcFv9/mOH332WZ9b1tu1dse02xBdVgw8Et07EN
-	 /emM66fVSvBcrhHZ4JPVeFVkhmbxHEfaWfZTaSgJ+mJlbSVZDjO+Y9i5uTa297Muip
-	 EvdkMGt8bBTg5IDZSuvMDypJPfrGdvymEbeBWVjU=
+	b=wpaz4nldn4Bg8qkD+XAgqOnxfmwGEG+2tzMIGGw8used+kiQ1TVsP6k0bnZpxc93g
+	 mDuFRu4MalOJOygGyyrySXxmkEJl/Uo3mpH2EtGNyz+r+PR0D+RudBpfC9LCI6e/VC
+	 A/XJETOQ03wBn33rZcr4+YhSgSZ2ROkXDkZbatss=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Michael Kelley <mhklinux@outlook.com>,
-	Roman Kisel <vdso@mailbox.org>,
-	Wei Liu <wei.liu@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Marc Kleine-Budde <mkl@pengutronix.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 011/169] Drivers: hv: Always do Hyper-V panic notification in hv_kmsg_dump()
-Date: Wed, 28 Jan 2026 16:21:34 +0100
-Message-ID: <20260128145334.422274791@linuxfoundation.org>
+Subject: [PATCH 6.12 029/169] can: gs_usb: gs_usb_receive_bulk_callback(): unanchor URL on usb_submit_urb() error
+Date: Wed, 28 Jan 2026 16:21:52 +0100
+Message-ID: <20260128145335.071200175@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260128145334.006287341@linuxfoundation.org>
 References: <20260128145334.006287341@linuxfoundation.org>
@@ -54,68 +51,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michael Kelley <mhklinux@outlook.com>
+From: Marc Kleine-Budde <mkl@pengutronix.de>
 
-[ Upstream commit 49f49d47af67f8a7b221db1d758fc634242dc91a ]
+[ Upstream commit 79a6d1bfe1148bc921b8d7f3371a7fbce44e30f7 ]
 
-hv_kmsg_dump() currently skips the panic notification entirely if it
-doesn't get any message bytes to pass to Hyper-V due to an error from
-kmsg_dump_get_buffer(). Skipping the notification is undesirable because
-it leaves the Hyper-V host uncertain about the state of a panic'ed guest.
+In commit 7352e1d5932a ("can: gs_usb: gs_usb_receive_bulk_callback(): fix
+URB memory leak"), the URB was re-anchored before usb_submit_urb() in
+gs_usb_receive_bulk_callback() to prevent a leak of this URB during
+cleanup.
 
-Fix this by always doing the panic notification, even if bytes_written
-is zero. Also ensure that bytes_written is initialized, which fixes a
-kernel test robot warning. The warning is actually bogus because
-kmsg_dump_get_buffer() happens to set bytes_written even if it fails, and
-in the kernel test robot's CONFIG_PRINTK not set case, hv_kmsg_dump() is
-never called. But do the initialization for robustness and to quiet the
-static checker.
+However, this patch did not take into account that usb_submit_urb() could
+fail. The URB remains anchored and
+usb_kill_anchored_urbs(&parent->rx_submitted) in gs_can_close() loops
+infinitely since the anchor list never becomes empty.
 
-Fixes: 9c318a1d9b50 ("Drivers: hv: move panic report code from vmbus to hv early init code")
-Reported-by: kernel test robot <lkp@intel.com>
-Reported-by: Dan Carpenter <dan.carpenter@linaro.org>
-Closes: https://lore.kernel.org/all/202512172103.OcUspn1Z-lkp@intel.com/
-Signed-off-by: Michael Kelley <mhklinux@outlook.com>
-Reviewed-by: Roman Kisel <vdso@mailbox.org>
-Signed-off-by: Wei Liu <wei.liu@kernel.org>
+To fix the bug, unanchor the URB when an usb_submit_urb() error occurs,
+also print an info message.
+
+Fixes: 7352e1d5932a ("can: gs_usb: gs_usb_receive_bulk_callback(): fix URB memory leak")
+Reported-by: Jakub Kicinski <kuba@kernel.org>
+Closes: https://lore.kernel.org/all/20260110223836.3890248-1-kuba@kernel.org/
+Link: https://patch.msgid.link/20260116-can_usb-fix-reanchor-v1-1-9d74e7289225@pengutronix.de
+Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hv/hv_common.c | 12 +++++++-----
- 1 file changed, 7 insertions(+), 5 deletions(-)
+ drivers/net/can/usb/gs_usb.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/drivers/hv/hv_common.c b/drivers/hv/hv_common.c
-index 7a35c82976e0f..f69dd08475114 100644
---- a/drivers/hv/hv_common.c
-+++ b/drivers/hv/hv_common.c
-@@ -218,13 +218,15 @@ static void hv_kmsg_dump(struct kmsg_dumper *dumper,
+diff --git a/drivers/net/can/usb/gs_usb.c b/drivers/net/can/usb/gs_usb.c
+index 1aa2f99f92b20..e63e77f21801c 100644
+--- a/drivers/net/can/usb/gs_usb.c
++++ b/drivers/net/can/usb/gs_usb.c
+@@ -751,6 +751,10 @@ static void gs_usb_receive_bulk_callback(struct urb *urb)
+ 	usb_anchor_urb(urb, &parent->rx_submitted);
  
- 	/*
- 	 * Write dump contents to the page. No need to synchronize; panic should
--	 * be single-threaded.
-+	 * be single-threaded. Ignore failures from kmsg_dump_get_buffer() since
-+	 * panic notification should be done even if there is no message data.
-+	 * Don't assume bytes_written is set in case of failure, so initialize it.
- 	 */
- 	kmsg_dump_rewind(&iter);
--	kmsg_dump_get_buffer(&iter, false, hv_panic_page, HV_HYP_PAGE_SIZE,
-+	bytes_written = 0;
-+	(void)kmsg_dump_get_buffer(&iter, false, hv_panic_page, HV_HYP_PAGE_SIZE,
- 			     &bytes_written);
--	if (!bytes_written)
--		return;
+ 	rc = usb_submit_urb(urb, GFP_ATOMIC);
++	if (!rc)
++		return;
 +
- 	/*
- 	 * P3 to contain the physical address of the panic page & P4 to
- 	 * contain the size of the panic data in that page. Rest of the
-@@ -233,7 +235,7 @@ static void hv_kmsg_dump(struct kmsg_dumper *dumper,
- 	hv_set_msr(HV_MSR_CRASH_P0, 0);
- 	hv_set_msr(HV_MSR_CRASH_P1, 0);
- 	hv_set_msr(HV_MSR_CRASH_P2, 0);
--	hv_set_msr(HV_MSR_CRASH_P3, virt_to_phys(hv_panic_page));
-+	hv_set_msr(HV_MSR_CRASH_P3, bytes_written ? virt_to_phys(hv_panic_page) : 0);
- 	hv_set_msr(HV_MSR_CRASH_P4, bytes_written);
++	usb_unanchor_urb(urb);
  
- 	/*
+ 	/* USB failure take down all interfaces */
+ 	if (rc == -ENODEV) {
+@@ -759,6 +763,9 @@ static void gs_usb_receive_bulk_callback(struct urb *urb)
+ 			if (parent->canch[rc])
+ 				netif_device_detach(parent->canch[rc]->netdev);
+ 		}
++	} else if (rc != -ESHUTDOWN && net_ratelimit()) {
++		netdev_info(netdev, "failed to re-submit IN URB: %pe\n",
++			    ERR_PTR(urb->status));
+ 	}
+ }
+ 
 -- 
 2.51.0
 
