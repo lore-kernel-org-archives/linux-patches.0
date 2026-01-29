@@ -1,34 +1,34 @@
-Received: from n169-111.mail.139.com (n169-111.mail.139.com [120.232.169.111])
+Received: from n169-112.mail.139.com (n169-112.mail.139.com [120.232.169.112])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4363037BE8D
-	for <patches@lists.linux.dev>; Thu, 29 Jan 2026 09:13:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=120.232.169.111
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35F043783A5
+	for <patches@lists.linux.dev>; Thu, 29 Jan 2026 09:27:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=120.232.169.112
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769678023; cv=none; b=Y3GyiJUz5ZoBij3oUZIn1RJ8kMt3hhG326lIDX5vBsKCZrrIOPMB00fAZLZG7LtHTqgIBigtMry6rzHk15LuzN7pgUmhy9kw7/ucWyVbrE4oDvOSinhYXmwqgvGreIU7BMMm3MuPmLaUyfrwWcFtpdDbiaEQqkz+WfpAjTNt2aA=
+	t=1769678833; cv=none; b=JGUQfBzpjqiYcKuiryCIJx8S0b631tD1rwtiO2Y5mvMBWzAmz6sc6pkxTDLE4muudsVmmu7WzbZoWeruX1kaqX2KFUh4N3m6RMh1IXrHCQaicIk5dgZS3rdnCUvB9M+WJG6A+TeRfpnvQaYykK53wA2xh7lHi9RlJ5mX/XLRXik=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769678023; c=relaxed/simple;
-	bh=JbktDqKSXzklE26RGiNL4bCCl1CKSowtHRewb9NcX4c=;
-	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version:Content-Type; b=DxcdFmMMymSiDuxJ8Z4mOsOgb/sImp/008WbqwYe3bxl6zn62NaGzDA4wNU0NjyuqO7T1NZJn60bOaDNOXXwqE6VBQSLfgIS8+F54ft66SdEeRMPLFGKhn/EPQnCz8Nh8ZP8gjhQOap2hLIu+202II5CkmrVkiNWQKOraTuOJUs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=139.com; spf=pass smtp.mailfrom=139.com; dkim=pass (1024-bit key) header.d=139.com header.i=@139.com header.b=S4nqc7Fc; arc=none smtp.client-ip=120.232.169.111
+	s=arc-20240116; t=1769678833; c=relaxed/simple;
+	bh=FDJrsU/htVFcP8rdlh9hG9yd7Dl0StW8tP02rPBWEdU=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version:Content-Type; b=hL5aXg3KYWqOt8BaFc+laxdFVMa6n1xBVKrBEj+fLKOflAzb5Hh9p2kbNj4gpZLR0els2hzZVSz8/PLphzZI9TMb6u63y2omR4aKMs4e+HhLx0J1GVfiuqJhrjbul1EO95jh0Knx/jruzUgajw1Mest8ekVyKIoTXVELLTUHf+0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=139.com; spf=pass smtp.mailfrom=139.com; dkim=pass (1024-bit key) header.d=139.com header.i=@139.com header.b=MDHp6KJV; arc=none smtp.client-ip=120.232.169.112
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=139.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=139.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=139.com header.i=@139.com header.b="S4nqc7Fc"
+	dkim=pass (1024-bit key) header.d=139.com header.i=@139.com header.b="MDHp6KJV"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
 	d=139.com; s=dkim; l=0;
 	h=from:subject:message-id:to:cc:mime-version;
 	bh=47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU=;
-	b=S4nqc7FcSohhJvalh1BxGGC/0wnK575uL6Bc0d0NThsl96D2a9wU/IwkAwHIzIrhXD+6CC3cE5sGy
-	 ljN+eE6z1xWjlK+SVb9tYS5Svjwl2iKIx5NP+OzzhreX0yPGRpawrqezs/nk8POg5bTL9Gr/f3YFiC
-	 shlt4EEoO/+vt8vo=
+	b=MDHp6KJVMWP+O9hPvernCxw40sh50SQTtqee9BvqtJK8SU7tf5dfmt6PN0BklnLiP+9CQBsljfxFZ
+	 OGNWB6ZAO4kiVZC9g8Xz1cGcc+qUFFXfQmvqtkBr0q8ymmyAJ3wW7ZnAQI/xojNiaAG7p0QZF5G9N0
+	 fLcZnhwIncfCzi/0=
 X-RM-TagInfo: emlType=0                                       
 X-RM-SPAM:                                                                                        
 X-RM-SPAM-FLAG:00000000
 Received:from NTT-kernel-dev (unknown[60.247.85.88])
-	by rmsmtp-lg-appmail-16-12015 (RichMail) with SMTP id 2eef697b24b99e2-009f0;
-	Thu, 29 Jan 2026 17:13:32 +0800 (CST)
-X-RM-TRANSID:2eef697b24b99e2-009f0
+	by rmsmtp-lg-appmail-20-12023 (RichMail) with SMTP id 2ef7697b27e49b7-019de;
+	Thu, 29 Jan 2026 17:27:03 +0800 (CST)
+X-RM-TRANSID:2ef7697b27e49b7-019de
 From: Li hongliang <1468888505@139.com>
 To: gregkh@linuxfoundation.org,
 	stable@vger.kernel.org,
@@ -52,9 +52,9 @@ Cc: patches@lists.linux.dev,
 	dri-devel@lists.freedesktop.org,
 	lin.cao@amd.com,
 	Jingwen.Chen2@amd.com
-Subject: [PATCH 6.6.y] drm/amdgpu: Replace Mutex with Spinlock for RLCG register access to avoid Priority Inversion in SRIOV
-Date: Thu, 29 Jan 2026 17:13:25 +0800
-Message-Id: <20260129091325.3637010-1-1468888505@139.com>
+Subject: [PATCH 6.1.y] drm/amdgpu: Replace Mutex with Spinlock for RLCG register access to avoid Priority Inversion in SRIOV
+Date: Thu, 29 Jan 2026 17:27:02 +0800
+Message-Id: <20260129092702.3671189-1-1468888505@139.com>
 X-Mailer: git-send-email 2.34.1
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -171,10 +171,10 @@ Signed-off-by: Li hongliang <1468888505@139.com>
  3 files changed, 6 insertions(+), 4 deletions(-)
 
 diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
-index c1b9333d7b78..584f9bcbe294 100644
+index 38b81ae236cb..535cc74c5880 100644
 --- a/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
 +++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
-@@ -3582,7 +3582,6 @@ int amdgpu_device_init(struct amdgpu_device *adev,
+@@ -3652,7 +3652,6 @@ int amdgpu_device_init(struct amdgpu_device *adev,
  	mutex_init(&adev->grbm_idx_mutex);
  	mutex_init(&adev->mn_lock);
  	mutex_init(&adev->virt.vf_errors.lock);
@@ -182,7 +182,7 @@ index c1b9333d7b78..584f9bcbe294 100644
  	hash_init(adev->mn_hash);
  	mutex_init(&adev->psp.mutex);
  	mutex_init(&adev->notifier_lock);
-@@ -3604,6 +3603,7 @@ int amdgpu_device_init(struct amdgpu_device *adev,
+@@ -3674,6 +3673,7 @@ int amdgpu_device_init(struct amdgpu_device *adev,
  	spin_lock_init(&adev->se_cac_idx_lock);
  	spin_lock_init(&adev->audio_endpt_idx_lock);
  	spin_lock_init(&adev->mm_stats.lock);
@@ -191,10 +191,10 @@ index c1b9333d7b78..584f9bcbe294 100644
  	INIT_LIST_HEAD(&adev->shadow_list);
  	mutex_init(&adev->shadow_list_lock);
 diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_virt.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_virt.c
-index 5a4b1b625f03..0f4661d1f23b 100644
+index c626ed88e642..d300f7710ebb 100644
 --- a/drivers/gpu/drm/amd/amdgpu/amdgpu_virt.c
 +++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_virt.c
-@@ -1007,6 +1007,7 @@ static u32 amdgpu_virt_rlcg_reg_rw(struct amdgpu_device *adev, u32 offset, u32 v
+@@ -965,6 +965,7 @@ static u32 amdgpu_virt_rlcg_reg_rw(struct amdgpu_device *adev, u32 offset, u32 v
  	void *scratch_reg2;
  	void *scratch_reg3;
  	void *spare_int;
@@ -202,7 +202,7 @@ index 5a4b1b625f03..0f4661d1f23b 100644
  
  	if (!adev->gfx.rlc.rlcg_reg_access_supported) {
  		dev_err(adev->dev,
-@@ -1028,7 +1029,7 @@ static u32 amdgpu_virt_rlcg_reg_rw(struct amdgpu_device *adev, u32 offset, u32 v
+@@ -978,7 +979,7 @@ static u32 amdgpu_virt_rlcg_reg_rw(struct amdgpu_device *adev, u32 offset, u32 v
  	scratch_reg2 = (void __iomem *)adev->rmmio + 4 * reg_access_ctrl->scratch_reg2;
  	scratch_reg3 = (void __iomem *)adev->rmmio + 4 * reg_access_ctrl->scratch_reg3;
  
@@ -211,7 +211,7 @@ index 5a4b1b625f03..0f4661d1f23b 100644
  
  	if (reg_access_ctrl->spare_int)
  		spare_int = (void __iomem *)adev->rmmio + 4 * reg_access_ctrl->spare_int;
-@@ -1086,7 +1087,7 @@ static u32 amdgpu_virt_rlcg_reg_rw(struct amdgpu_device *adev, u32 offset, u32 v
+@@ -1034,7 +1035,7 @@ static u32 amdgpu_virt_rlcg_reg_rw(struct amdgpu_device *adev, u32 offset, u32 v
  
  	ret = readl(scratch_reg0);
  
@@ -221,10 +221,10 @@ index 5a4b1b625f03..0f4661d1f23b 100644
  	return ret;
  }
 diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_virt.h b/drivers/gpu/drm/amd/amdgpu/amdgpu_virt.h
-index 891713757a8f..bffbb7ef40d2 100644
+index fc2859726f0a..9267e792c4cf 100644
 --- a/drivers/gpu/drm/amd/amdgpu/amdgpu_virt.h
 +++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_virt.h
-@@ -267,7 +267,8 @@ struct amdgpu_virt {
+@@ -264,7 +264,8 @@ struct amdgpu_virt {
  	/* the ucode id to signal the autoload */
  	uint32_t autoload_ucode_id;
  
