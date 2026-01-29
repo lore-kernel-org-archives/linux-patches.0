@@ -1,77 +1,82 @@
-Received: from foss.arm.com (foss.arm.com [217.140.110.172])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8F6B32C21F6;
-	Thu, 29 Jan 2026 11:21:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.140.110.172
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F52C2749E0;
+	Thu, 29 Jan 2026 13:25:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769685722; cv=none; b=ObNCoYPay8eD1ldV4MIMYrWt82KiZFm9doYabf5NwVlRsgqYgu9CmfEJcZP4wAk/gCIxtdOFOqIWsMhaKz7lmcmfbduZjXv7EnS/ykIYcqz2ZRUuE9302FSQUPft6MMbZBMU+XF/SeJPOkateSifuhzMwHpDxwWrwcNvQBE60S8=
+	t=1769693110; cv=none; b=jXUq9OJxMI0X9EyeqyJrxNJgdqOunC+uceXJ2EJncCQWt+X4bs728Ivl9JWJ0U6si+whcm4hKSImeBmASTu9alyVjSN53lJH2tW5KqxyIsxuiaLYZ93224ZzPUme1hqTmXww6MH9MzGBAAFkbhU1DAM39Zd+NzS9fob0IR07CRI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769685722; c=relaxed/simple;
-	bh=lGCl60z37YqjJ8RMSq8NV/zX+bO4MMfbS6zsaNedjBA=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=FozuajwIwZEoEmdrkCvxGSvrRkxM+qj5dysanltCqCPD+1qKcmRWZOPcvDgCKnAfxVFA1K1XYesmNXx5dN5JX7qOKgUS0oILb08di00sRwp6GuU8mH/LpWayBUGA9BMhqzIjc2VBHl6yLjv4AI3FDF/IH2srMKwdn4mgzK9uSiA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; arc=none smtp.client-ip=217.140.110.172
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 0DFB41516;
-	Thu, 29 Jan 2026 03:21:52 -0800 (PST)
-Received: from [10.57.51.104] (unknown [10.57.51.104])
-	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id D53883F73F;
-	Thu, 29 Jan 2026 03:21:55 -0800 (PST)
-Message-ID: <b1b220be-fd5e-4f83-8f5e-7d5282be39f9@arm.com>
-Date: Thu, 29 Jan 2026 11:21:53 +0000
+	s=arc-20240116; t=1769693110; c=relaxed/simple;
+	bh=UJc7W0rSKjG1HH182YpZFctSb5yKFUYMvFMq4UEpWzs=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=eWibB0cv/H33uTelFn9uziRI/EqwkEbYSXd2RZilqcVWaKNsQ93Fg/TyEg+TMDvKuVJB9vLWgWrSoHaTsUJE4cf1PvtpbEm8rYW0HHS7uLoBySENugDASLt4JM6oj3eN0qQyzN1idVVjKPcHPqtOYoLO6gzwIVHk/vQ9x2PZyqs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=hAzecf9V; arc=none smtp.client-ip=10.30.226.201
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="hAzecf9V"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D60F2C4CEF7;
+	Thu, 29 Jan 2026 13:25:06 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1769693110;
+	bh=UJc7W0rSKjG1HH182YpZFctSb5yKFUYMvFMq4UEpWzs=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=hAzecf9VOMcevT9n7spAOAEuxG3kIyiT5xPBZtlEmVbuWNmZhmgkf7tVOaZdddImn
+	 EO4WZWhgbOnixHilMM06E54aT890aGVAnUxr396y0bLXsUvQDti9Rwl0Ob93lm10Co
+	 uK9ahDjNswr1w4TfHhhkzNZ//jcj1QgTFaYQZQrrJSeTEqEc3yZT8e9OmCED/kpShi
+	 AYbXzNkLHADyheA5jjC5Evk/gCoSL5jWXbVo+qqoOuJ0GXoGQiUbzhymGiK/77NHwt
+	 TNwWZ+9g85yk7kPZ0/YdvykVtPHzg5ZswepjhEmcEPg7clJ7pkllAcRsny0NHHYl5n
+	 CXJhofYXGAa1A==
+Date: Thu, 29 Jan 2026 13:25:04 +0000
+From: Mark Brown <broonie@kernel.org>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev,
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
+	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
+	jonathanh@nvidia.com, f.fainelli@gmail.com,
+	sudipm.mukherjee@gmail.com, rwarsow@gmx.de, conor@kernel.org,
+	hargar@microsoft.com, achill@achill.org, sr@sladewatkins.com
+Subject: Re: [PATCH 6.12 000/169] 6.12.68-rc1 review
+Message-ID: <f5a961cc-82dd-4b59-baf1-53a116db6cf6@sirena.org.uk>
+References: <20260128145334.006287341@linuxfoundation.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 0/5] Convert riscv to use the generic iommu page table
-To: Jason Gunthorpe <jgg@nvidia.com>, Vincent Chen <vincent.chen@sifive.com>
-Cc: Alexandre Ghiti <alex@ghiti.fr>, Albert Ou <aou@eecs.berkeley.edu>,
- iommu@lists.linux.dev, Joerg Roedel <joro@8bytes.org>,
- linux-riscv@lists.infradead.org, Palmer Dabbelt <palmer@dabbelt.com>,
- Paul Walmsley <pjw@kernel.org>, Tomasz Jeznach <tjeznach@rivosinc.com>,
- Will Deacon <will@kernel.org>, lihangjing@bytedance.com,
- Xu Lu <luxu.kernel@bytedance.com>, patches@lists.linux.dev,
- xieyongji@bytedance.com
-References: <0-v2-b11ebca8abb6+c096-iommu_pt_riscv_jgg@nvidia.com>
- <CABvJ_xiUK9BqUJS9-Sk1sS4vhVhyXN8P8NooZ0t_Zp7ycG0bAw@mail.gmail.com>
- <20260122153134.GO1134360@nvidia.com>
- <CABvJ_xgSbK3omxT7XGJ0N7oEva6dQAJwZxRhsBqi44BRNZ3G5Q@mail.gmail.com>
- <CABvJ_xhY_4ADOsVVbjhkBm8U1mKVOSwzKMfBw5mUsJe=kkUiLg@mail.gmail.com>
- <20260123135234.GW1134360@nvidia.com>
-From: Robin Murphy <robin.murphy@arm.com>
-Content-Language: en-GB
-In-Reply-To: <20260123135234.GW1134360@nvidia.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="P5fqAE329sMLrlGf"
+Content-Disposition: inline
+In-Reply-To: <20260128145334.006287341@linuxfoundation.org>
+X-Cookie: You have taken yourself too seriously.
 
-On 2026-01-23 1:52 pm, Jason Gunthorpe wrote:
-> On Fri, Jan 23, 2026 at 08:29:01PM +0800, Vincent Chen wrote:
-> 
->> With this codebase, the IOMMU group type is now correctly configured as
->> DMA:
->>
->>    # cat /sys/kernel/iommu_groups/0/type
->>    DMA
->>    # cat /sys/kernel/iommu_groups/1/type
->>    DMA
->>
->> I re-ran the iperf3 test in this environment, and the test passed
->> successfully.
-> 
-> OK great thanks alot!
-> 
-> I'm surprised it doesn't say DMA-FQ, someone from RISCV may want to
-> investigate that, it is probably reducing performance..
 
-The driver does not advertise IOMMU_CAP_DEFERRED_FLUSH, as the existing 
-pagetable code has never implemented the conditional TLB maintenance 
-optimisation that makes it meaningful. Mind you, I don't see any 
-reference to iommu_iotlb_gather_queued() in generic_pt either, so I have 
-no idea how that's trying to do it :/
+--P5fqAE329sMLrlGf
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
-Thanks,
-Robin.
+On Wed, Jan 28, 2026 at 04:21:23PM +0100, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 6.12.68 release.
+> There are 169 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+
+Tested-by: Mark Brown <broonie@kernel.org>
+
+--P5fqAE329sMLrlGf
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAml7X68ACgkQJNaLcl1U
+h9CWEQf+N8XE+NVT/ZzglYnmEKEs8i4+Vv4GO3HM11tOMuHRGo+ZVX6CfZWz0XYa
+vaBfp+7XJC/ZsOvVJyFaCwft2LI4uzz6TCOlf+hMfISKho9JOT97bJ2c8JmYneir
+33/OTO3QPMSWQuCLajTtJmZh5U+LFyBe2KK5ya3YYRQU2GC4Cn6PbOEuX7TCNGIk
+whHPttn7Hysd+Jg4FvLeY7wdp5czUUZ0lf8qb4780z7iO+/uWbHy3g/drV1rqyPk
+6IzwakqCIL2eXwJKV+fAoRjYNBHC6rxBRKvEwrLsfae1G3UDijpNA1byCHlb2oh4
+5rpOBZzRyQZCvcKjFX9SopFTXMX03w==
+=gEmw
+-----END PGP SIGNATURE-----
+
+--P5fqAE329sMLrlGf--
