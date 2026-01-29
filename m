@@ -1,105 +1,135 @@
-Received: from mail-qt1-f173.google.com (mail-qt1-f173.google.com [209.85.160.173])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from relay.hostedemail.com (smtprelay0017.hostedemail.com [216.40.44.17])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D17E264619
-	for <patches@lists.linux.dev>; Thu, 29 Jan 2026 00:46:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.173
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 216A7309EE8
+	for <patches@lists.linux.dev>; Thu, 29 Jan 2026 00:59:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=216.40.44.17
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769647604; cv=none; b=TC7wotWudSjliGlqmVCY6XwF3pzhdJTz6QJ8550kX+ZcEyl9bt0urleusCeLq7fMoVo0+WAF/nXahb0m7xPB7gtYB94dTU9MqcBBWPj37HkD31FthY3ymKrPoCOswpK/1iARG0VOLSc2oI83TUjOfxSZ9Q3C/M0Mwhj7+n8TThs=
+	t=1769648356; cv=none; b=K0O1pfttH7FdnZzHIlcFz6RXK2fJtCcayqabMTz+1k+AcqWIpOC6qRk6sOpXTLrM2ZcM16LpMEerCb63k+H9JgjbgRLaYGYmlCZl/pqJU7FDEiAcRl+DGmUdHWwOD+G1MQruDBxtWM/56QwYtR9y6SvL8vmREc3jh86BQjfWG98=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769647604; c=relaxed/simple;
-	bh=OF+MmJBRYqLO4yfcVi+gc8uySaBfiQSsc840eoOTyAI=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=SqrtJaUevOEFNwHmPPDQBW/yj13Ea75weRjvtafExwm+qr2YN0rllVv7Go5bpSDl0gD+fed7WE8SAw1YHXXWDuV9IHHZOItkPGnaBbv+nUiCOPPYu+buKl+h2P1yR5fBk+4+0tZoJGSAHMv3DqyAaVU3wBTytxh6cWLr11VrK+g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ziepe.ca; spf=pass smtp.mailfrom=ziepe.ca; dkim=pass (2048-bit key) header.d=ziepe.ca header.i=@ziepe.ca header.b=l/Qed0j6; arc=none smtp.client-ip=209.85.160.173
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ziepe.ca
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ziepe.ca
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ziepe.ca header.i=@ziepe.ca header.b="l/Qed0j6"
-Received: by mail-qt1-f173.google.com with SMTP id d75a77b69052e-50146483bf9so4295071cf.3
-        for <patches@lists.linux.dev>; Wed, 28 Jan 2026 16:46:42 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ziepe.ca; s=google; t=1769647602; x=1770252402; darn=lists.linux.dev;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=AaqVgHlI2seUK2YRo3bqtWiP6hNp3fDsIh3WrTJfgb4=;
-        b=l/Qed0j6fBcO2mibjtY3g/i2lXJsshiw76DLyVisO4fDliL8S84L9qI1tO10uOFUkk
-         0g1w8D3J2ItFP0ZydrVbew2Y7l2TWvsHlV12vAPGkloTFPkEx7Zlql/ZVGHJiPziynHh
-         Zo62sPX+BxpQXgNT6u93ReBPRfO5J+S1SPUreebmvOR2OAgeqpoETr7p5KUz/GIc7hHA
-         KwcdC6fQB+uYHuijOpHm8ZyNbjvxT8sLr7aZjM1FEuJ/MxK9Z2znBbSvYezEhebttq99
-         H8uYjYXkm1hG56G7/17J6JqovXrUa2RdNGhTWZ96Wd76KnifHLiIWNjE5fbICIJvYR2Y
-         ywjA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1769647602; x=1770252402;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=AaqVgHlI2seUK2YRo3bqtWiP6hNp3fDsIh3WrTJfgb4=;
-        b=T/za2LKjWtWMSjr9Gfp4GLX50Smn6Cw3nn+YD2PTew0SEpjGTpoe1knp02sZtCQz9s
-         Z335TB9PPn4tqPn5I4Ozwt0Ff1nBUCfxY6bc0UKxD5j7wjzhe4pVkkin2n2wTQQoUWXD
-         oS0gUaB5p9RkeaKRhrMCUWxdTW1jTVajaG4ecFURqFOR1SRGJ14OaeHmH0+ajLCSA8k3
-         3KeW7+u/S9J8fRDXLiCH/TcRdeKBRXSueDcdlb2Z4FfJYJcHAcYOrDOHzbNBJsjR2Hjq
-         9Hd+cD/JtVXp87F0t2fEZAjOMSyB2KNEKINEvPKbep97Wgp60PRlFaSZHVOuUxTjgoA7
-         jkTw==
-X-Forwarded-Encrypted: i=1; AJvYcCXnSkaSH3XirZ4XWLrBCa/TK/BdUwvm5zzZrn1GIwB1Ne2zUSaAIO21iuMVW788L+ZNtjNalAXH@lists.linux.dev
-X-Gm-Message-State: AOJu0Yzn9MkmyiXeLItKUw83UKdYFvQkGWKgfqrabwjnCy0dGGF8QhIc
-	7WRfO+WfPwCpA2c83j0eBXEusl/DTr2QRD/Cr+n0YNAoMbxOLFvFidIzlWMR6cd9Q/k=
-X-Gm-Gg: AZuq6aJdwRfXIgSEgjaDY4jKJ8Jpfk8YOsBbG6DqcR3L2Mg3AAsQRm1nJioe3sKu1Yz
-	B1X1r3m25nfyKVIBucfyn/hyut7exDDbm6rNdwpejybeNW1ljiSEsOYq1uVif44lWsez62pxvG9
-	HNgP5QMxZtHRyKLv5yBD05f5r41xlJ/pXv6467phvOCLn/07/+kjde2UjLCsU+hVNcvHVFpjZER
-	X0PJQiKlFP59KBgvmVVj5WLKogTp6PRaHG2BJJhlgxC9eUQ//aD5lAiK3USvNcznfRQB5yud4rz
-	e7GYrTtFGBAG1WGPyQtYFrfViSNcOniD324vAvAJAFJgd8Ni//+rSpywFJHJP/36SPfNHBLuzOU
-	t7p04gd99SCdxLLKQhx9NJwu+XoRRzXssH3S+HucxC265IygXpbWHUgrR66PTVkbMBYAS+MKVJ0
-	iCylCYcY726siBUEMvtGHQ0ziQoZpHtZQdc0e9zU8yaum2NLVd9NmFvSw7+9NBSlFqGJ4=
-X-Received: by 2002:a05:622a:188e:b0:4f4:bfc8:b7be with SMTP id d75a77b69052e-5032f742fe3mr89269221cf.12.1769647601991;
-        Wed, 28 Jan 2026 16:46:41 -0800 (PST)
-Received: from ziepe.ca (hlfxns017vw-142-162-112-119.dhcp-dynamic.fibreop.ns.bellaliant.net. [142.162.112.119])
-        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-894d36c2413sm27296786d6.15.2026.01.28.16.46.41
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 28 Jan 2026 16:46:41 -0800 (PST)
-Received: from jgg by wakko with local (Exim 4.97)
-	(envelope-from <jgg@ziepe.ca>)
-	id 1vlGBE-00000009gA4-3SP9;
-	Wed, 28 Jan 2026 20:46:40 -0400
-Date: Wed, 28 Jan 2026 20:46:40 -0400
-From: Jason Gunthorpe <jgg@ziepe.ca>
-To: Joerg Roedel <joro@8bytes.org>
-Cc: Tomasz Jeznach <tjeznach@rivosinc.com>, Alexandre Ghiti <alex@ghiti.fr>,
-	Albert Ou <aou@eecs.berkeley.edu>, iommu@lists.linux.dev,
-	linux-riscv@lists.infradead.org,
-	Palmer Dabbelt <palmer@dabbelt.com>, Paul Walmsley <pjw@kernel.org>,
-	Robin Murphy <robin.murphy@arm.com>, Will Deacon <will@kernel.org>,
-	lihangjing@bytedance.com, Xu Lu <luxu.kernel@bytedance.com>,
-	patches@lists.linux.dev, xieyongji@bytedance.com
-Subject: Re: [PATCH v2 0/5] Convert riscv to use the generic iommu page table
-Message-ID: <20260129004640.GB1641016@ziepe.ca>
-References: <0-v2-b11ebca8abb6+c096-iommu_pt_riscv_jgg@nvidia.com>
- <72olk767l4goaqsrkyelhtnzg33nxbtwnammy4asnqxukbolnh@gwypmg6n5t3e>
+	s=arc-20240116; t=1769648356; c=relaxed/simple;
+	bh=EusqMmX+WMv9jskb/QERDU7dXJeN+LErgGuNr2NmLI8=;
+	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=fS5HsMO8ZuRrS3wtd5WD38G6knOvX+PA4spsR6t9zdR3+fc6Pz98JpOmukaAu8mXvwy15MkxoF1zh6XRRYernSze8ttqUa/snBs0L8JrxdNfLaXIcWOoUVPsKxbQ4v0dJ/o6Vv74+Y6a/ymB+jZ9ruwtVL9uUySwDJqnWdVSNzA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=goodmis.org; spf=pass smtp.mailfrom=goodmis.org; arc=none smtp.client-ip=216.40.44.17
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=goodmis.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=goodmis.org
+Received: from omf02.hostedemail.com (a10.router.float.18 [10.200.18.1])
+	by unirelay05.hostedemail.com (Postfix) with ESMTP id B25255A20D;
+	Thu, 29 Jan 2026 00:59:12 +0000 (UTC)
+Received: from [HIDDEN] (Authenticated sender: rostedt@goodmis.org) by omf02.hostedemail.com (Postfix) with ESMTPA id AF2B180011;
+	Thu, 29 Jan 2026 00:59:10 +0000 (UTC)
+Date: Wed, 28 Jan 2026 19:59:20 -0500
+From: Steven Rostedt <rostedt@goodmis.org>
+To: Sasha Levin <sashal@kernel.org>
+Cc: patches@lists.linux.dev, stable@vger.kernel.org, Ian Rogers
+ <irogers@google.com>, Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
+ "Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
+ linux-kernel@vger.kernel.org, linux-trace-kernel@vger.kernel.org
+Subject: Re: [PATCH AUTOSEL 6.18] tracing: Avoid possible signed 64-bit
+ truncation
+Message-ID: <20260128195920.0fd14c6a@gandalf.local.home>
+In-Reply-To: <20260128223332.2806589-18-sashal@kernel.org>
+References: <20260128223332.2806589-1-sashal@kernel.org>
+	<20260128223332.2806589-18-sashal@kernel.org>
+X-Mailer: Claws Mail 3.20.0git84 (GTK+ 2.24.33; x86_64-pc-linux-gnu)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <72olk767l4goaqsrkyelhtnzg33nxbtwnammy4asnqxukbolnh@gwypmg6n5t3e>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+X-Stat-Signature: si16st6e8t3sqak3ah666q3x7pbnw1tr
+X-Rspamd-Server: rspamout04
+X-Rspamd-Queue-Id: AF2B180011
+X-Session-Marker: 726F737465647440676F6F646D69732E6F7267
+X-Session-ID: U2FsdGVkX19ke6BWJDhdg7mXD2/OF7XmCreCC5xhkrg=
+X-HE-Tag: 1769648350-390775
+X-HE-Meta: U2FsdGVkX18fRXYKIT0R68RwKdAAHx7j5ZZEZV+Mb+i5rqd1rpK6EW2ks5bpah48+ty4Af15AH3feBx4wxrbKxwLuFd1bmb5a9CdJBPSURQE0Te2R+PnUPiM2qq+USrrtSCuKDlRCJDFBBU7llXzpnE9F3MhsnJYNLrrRUtzL9Pm1oFaNTeuy1nkjsiLdWBbkTQLlUqUBqK6uCIbOb7rNCDMRD6/9Np1ugE+PDwdoK+ZhR6VhmogfEstlSoRX0I2pLqdfa5k0c6jhHN5MiqeFx1+uaafjfZmgmYfOWN+fhX+T8w9qjbnc1dQrn70Znd4qMKwmoEKjUoAnlscCeB4reQjHZnqRQHVVVkIJXNiqgjgBy9sX3SowXJNXTjLIwAD
 
-On Thu, Jan 22, 2026 at 08:56:12AM +0100, Joerg Roedel wrote:
-> Tomasz,
-> 
-> On Tue, Jan 06, 2026 at 11:06:44AM -0400, Jason Gunthorpe wrote:
-> > Jason Gunthorpe (5):
-> >   iommupt: Add the RISC-V page table format
-> >   iommu/riscv: Disable SADE
-> >   iommu/riscv: Use the generic iommu page table
-> >   iommu/riscv: Enable SVNAPOT support for contiguous ptes
-> >   iommu/riscv: Allow RISC_VIOMMU to COMPILE_TEST
-> 
-> Any opinion on that series?
+On Wed, 28 Jan 2026 17:33:16 -0500
+Sasha Levin <sashal@kernel.org> wrote:
 
-Let's take it if we don't hear from Tomasz this week? It brings
-the contiguous page feature people wanted and now that it is tested
-I'm not especially worried about it.
+> LLM Generated explanations, may be completely bogus:
+>=20
+> The original buggy code was introduced in v6.15 and later. It's only
+> present in 6.15+ kernels.
 
-Jason
+Interesting self discussion from the LLM.
+
+>=20
+> ### 8. SUMMARY OF ANALYSIS
+>=20
+> **The Bug:**
+> - The `cmp_mod_entry()` function uses subtraction of two `unsigned long`
+>   values and returns the result as `int`
+> - On 64-bit systems, if addresses differ by more than 2^31 (~2GB), the
+>   truncation from 64-bit to 32-bit can flip the sign
+> - This would cause `bsearch()` to make wrong decisions about search
+>   direction
+> - Result: potentially incorrect module address lookups in trace data
+>=20
+> **The Fix:**
+> - Replaces arithmetic subtraction with simple comparisons
+> - Returns -1, 0, or 1 directly based on comparisons
+> - No overflow or truncation possible with the new code
+> - Logic is more readable and provably correct
+>=20
+> **Stable Criteria Evaluation:**
+> 1. =E2=9C=85 **Obviously correct and tested**: Simple logic, reviewed by
+>    maintainers
+> 2. =E2=9C=85 **Fixes a real bug**: Yes, a potential comparator correctnes=
+s bug
+> 3. =E2=9A=A0=EF=B8=8F **Important issue**: Moderate - unlikely to trigger=
+ (requires >2GB
+>    address separation) but could cause incorrect trace output
+
+I purposely didn't add Cc: stable because there's basically no chance of
+two modules being more than 2GB apart.
+
+> 4. =E2=9C=85 **Small and contained**: Only changes one function body (~6 =
+lines)
+> 5. =E2=9C=85 **No new features**: Pure bug fix
+> 6. =E2=9C=85 **Applies cleanly**: Should apply to 6.15+ kernels where thi=
+s code
+>    exists
+>=20
+> **Risk Assessment:**
+> - Very low risk - the change is small and the new logic is simpler
+> - The original code has a provable bug (integer overflow on truncation)
+> - The new code has no such issues
+>=20
+> **Concerns:**
+> - The code only exists in 6.15+ kernels (introduced March 2025)
+> - The bug is "unlikely" per the author (requires addresses >2GB apart)
+> - No known real-world reports of this actually causing issues
+>=20
+> ### DECISION
+>=20
+> This is a valid bug fix that:
+> - Fixes a real (though unlikely to trigger) bug in the comparator
+>   function
+> - Is very small and self-contained
+> - Has been reviewed and acked by the tracing maintainers
+> - Has near-zero regression risk
+> - Applies to 6.15+ kernels only
+>=20
+> The fix is surgical, obviously correct, and addresses a potential
+> correctness issue. While the bug is unlikely to trigger in practice
+> (addresses must be >2GB apart), it could cause silent data corruption in
+> trace output when it does trigger. The fix is trivial and risk-free.
+>=20
+> **YES**
+
+But I see the bot considered the same thing, but because of the risk factor
+it decided to take it.
+
+I have no issue with backporting it (I did label it a "fix"). I was
+actually wondering if the bot would notice likeliness of it not happening.
+It did, but decided to take it for "correctness" reasons vs risk factor.
+
+Nice,
+
+-- Steve
