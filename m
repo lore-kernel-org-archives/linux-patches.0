@@ -1,240 +1,189 @@
-Received: from n169-112.mail.139.com (n169-112.mail.139.com [120.232.169.112])
+Received: from CH1PR05CU001.outbound.protection.outlook.com (mail-northcentralusazon11010011.outbound.protection.outlook.com [52.101.193.11])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35F043783A5
-	for <patches@lists.linux.dev>; Thu, 29 Jan 2026 09:27:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=120.232.169.112
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769678833; cv=none; b=JGUQfBzpjqiYcKuiryCIJx8S0b631tD1rwtiO2Y5mvMBWzAmz6sc6pkxTDLE4muudsVmmu7WzbZoWeruX1kaqX2KFUh4N3m6RMh1IXrHCQaicIk5dgZS3rdnCUvB9M+WJG6A+TeRfpnvQaYykK53wA2xh7lHi9RlJ5mX/XLRXik=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769678833; c=relaxed/simple;
-	bh=FDJrsU/htVFcP8rdlh9hG9yd7Dl0StW8tP02rPBWEdU=;
-	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version:Content-Type; b=hL5aXg3KYWqOt8BaFc+laxdFVMa6n1xBVKrBEj+fLKOflAzb5Hh9p2kbNj4gpZLR0els2hzZVSz8/PLphzZI9TMb6u63y2omR4aKMs4e+HhLx0J1GVfiuqJhrjbul1EO95jh0Knx/jruzUgajw1Mest8ekVyKIoTXVELLTUHf+0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=139.com; spf=pass smtp.mailfrom=139.com; dkim=pass (1024-bit key) header.d=139.com header.i=@139.com header.b=MDHp6KJV; arc=none smtp.client-ip=120.232.169.112
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=139.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=139.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B89D327C18
+	for <patches@lists.linux.dev>; Thu, 29 Jan 2026 09:49:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.193.11
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1769680158; cv=fail; b=hOzUg2BvFYZhbz5n+hbELyPY6UNqxdhMiP8zZ4804P+AV5k8YtfVQVuVyMYn1cAR0BvBs3a6TZYx2kD8bmOHbk7RBNusqBReFYAZOilJAwsm55JBc6nxJIBl9A11GBIN5K9wEYTBo2VTIkL9SEm/ti2enw5p+VY8RgXYe584Wkk=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1769680158; c=relaxed/simple;
+	bh=SpGGi3DT8ztMdnugd+QMOAZUNJW1u/v0yWjlsdUYSh4=;
+	h=From:To:CC:Subject:In-Reply-To:References:Content-Type:
+	 MIME-Version:Message-ID:Date; b=XyfMqdMQCol8mdiz/Hhor7RJEa/4tt+GyAlfHdg8vDJ97f1qtIdkjoIZv9D0DbSH9SytldPzDFJ7PuAZa76NEBLuWA5pfvRAv7HzBadQEGMkeguaBnyKFgHm/vTEim3oxhx+hGttdOzsh8Vzmc/lx89gr8RgJizhScPfVFW4AoU=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=YmFIp6pi; arc=fail smtp.client-ip=52.101.193.11
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=139.com header.i=@139.com header.b="MDHp6KJV"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-	d=139.com; s=dkim; l=0;
-	h=from:subject:message-id:to:cc:mime-version;
-	bh=47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU=;
-	b=MDHp6KJVMWP+O9hPvernCxw40sh50SQTtqee9BvqtJK8SU7tf5dfmt6PN0BklnLiP+9CQBsljfxFZ
-	 OGNWB6ZAO4kiVZC9g8Xz1cGcc+qUFFXfQmvqtkBr0q8ymmyAJ3wW7ZnAQI/xojNiaAG7p0QZF5G9N0
-	 fLcZnhwIncfCzi/0=
-X-RM-TagInfo: emlType=0                                       
-X-RM-SPAM:                                                                                        
-X-RM-SPAM-FLAG:00000000
-Received:from NTT-kernel-dev (unknown[60.247.85.88])
-	by rmsmtp-lg-appmail-20-12023 (RichMail) with SMTP id 2ef7697b27e49b7-019de;
-	Thu, 29 Jan 2026 17:27:03 +0800 (CST)
-X-RM-TRANSID:2ef7697b27e49b7-019de
-From: Li hongliang <1468888505@139.com>
-To: gregkh@linuxfoundation.org,
-	stable@vger.kernel.org,
-	srinivasan.shanmugam@amd.com
-Cc: patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org,
-	alexander.deucher@amd.com,
-	christian.koenig@amd.com,
-	Xinhui.Pan@amd.com,
-	airlied@gmail.com,
-	daniel@ffwll.ch,
-	sashal@kernel.org,
-	mario.limonciello@amd.com,
-	superm1@kernel.org,
-	Jun.Ma2@amd.com,
-	Zhigang.Luo@amd.com,
-	Hawking.Zhang@amd.com,
-	Jesse.Zhang@amd.com,
-	victor.skvortsov@amd.com,
-	amd-gfx@lists.freedesktop.org,
-	dri-devel@lists.freedesktop.org,
-	lin.cao@amd.com,
-	Jingwen.Chen2@amd.com
-Subject: [PATCH 6.1.y] drm/amdgpu: Replace Mutex with Spinlock for RLCG register access to avoid Priority Inversion in SRIOV
-Date: Thu, 29 Jan 2026 17:27:02 +0800
-Message-Id: <20260129092702.3671189-1-1468888505@139.com>
-X-Mailer: git-send-email 2.34.1
+	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="YmFIp6pi"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=ZL9JXQGsYsk04AMLzMA0VAqEmJ3ib/V+3Zvy0zKHpSVbj/6NmQeZn+CjqqIU7M9246pub6ujiOw1mNnQOGV8i4r/GS/kEzV1noBfeAx/npVNL5zdSKNYN2RivIbEtM9OtsU1z9EveTXMj0H6dIHx51EJgSmCvHZk37mwNlq1PfScyMiWjnuDa2ugHeQC6bLxlq+LW4b3uiRZO3MO0PiAwyla6xD1ATDZvXksPM2s3O5M3JQ5D7na7yR6/MsSNXJ/VmkU9kAP8/r6wz2FqH6lPHbT/6myEg8Vv/0Qg2TTFOHsmF+tGYqH7L394QeiS28G/QJoXDqPl2L3jPIe5o6f9Q==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=IY017yGuS+ML/q2bUkEMx8685lyr8uR7uLNTmEZcPic=;
+ b=aYT6tcwDueIEtLp9uUsmJV+/zG4TxWS53NuDQXxKsHM5U39XkiNmXBt4cHtrP5Ongg18UEMUvBYIKEvE7GoJm2/vxOl04J0t8dHhFBvIJ7EMIfqCtF9NjvjnrFh1cqxggR7MyKvD0npVcFbG5nhS8J419BC46usGjoFVzvmXCHh/XIq9sQAtDSYeBKx7URrIbxvHBZYWnU12fJ0Yjnj148vYGHZWwlmdf+ISCoa/XWIuaPlclls0b7IzMKyU5seVABYVSctGbkQAGO7z6GVtimKI2+x459MaVMk/T4qJZMBqoRSFhzmylTQVIcsDwIUSsah6CPB9hbGyuwLIzAtxYw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 216.228.117.161) smtp.rcpttodomain=linuxfoundation.org
+ smtp.mailfrom=nvidia.com; dmarc=pass (p=reject sp=reject pct=100) action=none
+ header.from=nvidia.com; dkim=none (message not signed); arc=none (0)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=IY017yGuS+ML/q2bUkEMx8685lyr8uR7uLNTmEZcPic=;
+ b=YmFIp6piLcNyOREpZCb3YNRcm5heHAr77HY8nqoQR0p8gP4rRfuf9xBwXHKaktoY3j4w7BntGiCVz6V0WquENT2EIemWNrYjW6YIxTTYB1XIJ5vi/hOAJOeMs99fkdbmuwA5mgGqewnlcHGwgwy13YXRAOw4wajn5W5KD47Lis4ZMfV6vDmliPpn4/395wsNxrrAL92F7tyFoF68fxhjj9s5u70nc/isF+2NZ7RKQa1Im/3s1k9eYwM1yMrNElvDpYwYQykhFaIasukrOD+19kiNjDZvUAWEYnVQtSPNo2Et+O9QmYky39GRNBIH6I38iumMe6sKSHTk7Ay3kZSOSQ==
+Received: from BY3PR04CA0011.namprd04.prod.outlook.com (2603:10b6:a03:217::16)
+ by SN7PR12MB6932.namprd12.prod.outlook.com (2603:10b6:806:260::14) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9564.7; Thu, 29 Jan
+ 2026 09:49:09 +0000
+Received: from SJ5PEPF000001D4.namprd05.prod.outlook.com
+ (2603:10b6:a03:217:cafe::57) by BY3PR04CA0011.outlook.office365.com
+ (2603:10b6:a03:217::16) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.20.9564.10 via Frontend Transport; Thu,
+ 29 Jan 2026 09:49:06 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 216.228.117.161)
+ smtp.mailfrom=nvidia.com; dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=nvidia.com;
+Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
+ 216.228.117.161 as permitted sender) receiver=protection.outlook.com;
+ client-ip=216.228.117.161; helo=mail.nvidia.com; pr=C
+Received: from mail.nvidia.com (216.228.117.161) by
+ SJ5PEPF000001D4.mail.protection.outlook.com (10.167.242.56) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.9564.3 via Frontend Transport; Thu, 29 Jan 2026 09:49:08 +0000
+Received: from rnnvmail204.nvidia.com (10.129.68.6) by mail.nvidia.com
+ (10.129.200.67) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.20; Thu, 29 Jan
+ 2026 01:48:54 -0800
+Received: from rnnvmail201.nvidia.com (10.129.68.8) by rnnvmail204.nvidia.com
+ (10.129.68.6) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.20; Thu, 29 Jan
+ 2026 01:48:54 -0800
+Received: from jonathanh-vm-01.nvidia.com (10.127.8.9) by mail.nvidia.com
+ (10.129.68.8) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.20 via Frontend
+ Transport; Thu, 29 Jan 2026 01:48:53 -0800
+From: Jon Hunter <jonathanh@nvidia.com>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+CC: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	<patches@lists.linux.dev>, <linux-kernel@vger.kernel.org>,
+	<torvalds@linux-foundation.org>, <akpm@linux-foundation.org>,
+	<linux@roeck-us.net>, <shuah@kernel.org>, <patches@kernelci.org>,
+	<lkft-triage@lists.linaro.org>, <pavel@denx.de>, <jonathanh@nvidia.com>,
+	<f.fainelli@gmail.com>, <sudipm.mukherjee@gmail.com>, <rwarsow@gmx.de>,
+	<conor@kernel.org>, <hargar@microsoft.com>, <broonie@kernel.org>,
+	<achill@achill.org>, <sr@sladewatkins.com>, <linux-tegra@vger.kernel.org>,
+	<stable@vger.kernel.org>
+Subject: Re: [PATCH 6.6 000/254] 6.6.122-rc1 review
+In-Reply-To: <20260128145344.698118637@linuxfoundation.org>
+References: <20260128145344.698118637@linuxfoundation.org>
+X-NVConfidentiality: public
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Message-ID: <700d60df-cfe4-486c-ace7-a40b5f4e77f5@rnnvmail201.nvidia.com>
+Date: Thu, 29 Jan 2026 01:48:53 -0800
+X-NV-OnPremToCloud: ExternallySecured
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: SJ5PEPF000001D4:EE_|SN7PR12MB6932:EE_
+X-MS-Office365-Filtering-Correlation-Id: 1f94cde1-0353-4d29-87cb-08de5f1ba5fd
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|7416014|82310400026|1800799024|376014|36860700013|13003099007;
+X-Microsoft-Antispam-Message-Info:
+	=?utf-8?B?cTFrN0FMRGNWT3NFdDBVcDBsbm0rVnFXRGN2TFRJVjZlZzJSMFlTZCsxdEZR?=
+ =?utf-8?B?aTkzbjBVVjE5K0NCeFowM1FjbFZGdVRoYitLR3pUM3Y1dUpXWVpvRHNxVG9i?=
+ =?utf-8?B?THhDSXNzeFY4M2h3YVNpRStZVnRtSzFtWVZ5elVqajI5bXh6UG5SdGswWTcv?=
+ =?utf-8?B?UlhuZjVLb0Q1OWlRcWplZ3drUFp0SGEzTGJSQ3VDTHNka1dhMnBQejNSQUJB?=
+ =?utf-8?B?SmFJVDhBYXl4YXZFUFpieWJGZDF4Vkw3WmtzMkpIalM2bm5VUkkvUzVIeVJj?=
+ =?utf-8?B?KzBCaFJpQ2dLVjdCMTdhZWdpNGFoMmxhYWtSSFJxa211WWQ3TDdTVC9UWkV0?=
+ =?utf-8?B?OWQyM1FWZjJnTUFVaDNhT0Z0cWE1NXdtYUFkQXBxVDcvaGIyL2QxanF5WG9L?=
+ =?utf-8?B?VnhFSEVaR1FpeVAvcGpmVFExY1dScUFqSFZpVlMvRS9HczUzUUFpMW1NUlZh?=
+ =?utf-8?B?ellDOXVEaUJMSmFjc2VtQTJNRE9XSGRyNUt6R0llaFB5b2t0K3N0dHRld2Fa?=
+ =?utf-8?B?V1Y2ZE8xNkJFOERUSG8zb0RlL1NHWTNNd0kwT3FVSjlpZHRmSTFlb3QrQWNE?=
+ =?utf-8?B?bVJ4VTdKa1NqVUYrR3F3SkdDRURTTHZ4b1ZBZGd2NmpBYlYyNnJINFV6ZXYz?=
+ =?utf-8?B?K2N1T0lESUltUXhFYUFhSlFiS25UL05OT2J5RS9qbTkwMkdtTmsyT1Mxczd3?=
+ =?utf-8?B?d3dqSmJUSmFmMkNRMFQ3dzdCYVJqRTBIYjRpbStxa0ZNVHdkZDVrbEF6SmJJ?=
+ =?utf-8?B?K0xtTmZmVUJIeXdnU2dndGVGMWl3emxPd09VeUJSYTVQai9NR1laV0QzSm9s?=
+ =?utf-8?B?UmxwWWNnQlI2QmhzMTNIREl3Z29HZVozV3Y1cXRRSW1zMHV1dDVwZjFsUTk5?=
+ =?utf-8?B?OHJFajVqQjdKUEJaSHcxRndqc1lqQUdYejVXTDBXQWhDempvbGR2T1RUVjZG?=
+ =?utf-8?B?UVhneS9QSGRJandMK2Y5ZnJ3MU15eUZlRUFsNVdON0JRNFdGS21DVEZPMGZ0?=
+ =?utf-8?B?YmVVUlE2RGV3elJpR2VleWozZnNDMU84WkNiNG0zMjVXWmcvSjBUb3RrczFJ?=
+ =?utf-8?B?ZE1kV3V2YVZWUzF3U2lLaGhMNC9idjlCRUY4YVo1QmlTK0o2Vzlwd2x5RmRw?=
+ =?utf-8?B?Yml1em5hSndaL09WREQ1ZFBlTTBqR01mN0V3VmhsQ3NJbk9keHVjdEYxeUZG?=
+ =?utf-8?B?R1JsQ1NHQTcwWER0NTJ3emZrVTNtcnBkUExhKzc3eHZJMGJXWitQVDMyZzdy?=
+ =?utf-8?B?aUFocWlnOHVMYUlBSjl0c01SeWxWMGl4R3JaY1pWeDA4WjYwQURQQTJyc09J?=
+ =?utf-8?B?UFZUc3lGQTVQVlRTMWN4eG5YYTN6Qk83VXRiTDlwQkxocFRlYmRyUk1ObXAw?=
+ =?utf-8?B?emxheGFXaVFJOVV5aUVSdkxueHBwekxTNW5KeFI3UWFZSEtubGgxV1hNT1di?=
+ =?utf-8?B?Zlp0bUFMYmpBbTFKc1VLZkJXV1NIZGIxUDJpU0hwZExBTlptMUtwMGlNLzNZ?=
+ =?utf-8?B?cExKUEZ4WnVNeE1uRnJJNzFZU2cxaitFUDB1ZDBxeHB4UG5aY2lSTmJNWEx4?=
+ =?utf-8?B?eXlHa2xXWGIvRWhXaXY5cmx1SDBXTGYyNVppZGtNTWN0TjU3N1VrR2lnVVpi?=
+ =?utf-8?B?QnlVdDFQVWc1cVdrWHV5MSs5eDRIeCtmczhpTGJoNDRDMDBvYndQYzIrUjJ4?=
+ =?utf-8?B?SHVQZnFUV0lxUnBCQU1qSkgyc3RoS1ZRN2d4aGRsMXR6b0M4WTB6b3FTWnFX?=
+ =?utf-8?B?RElhYTUydHZaU3k3VXkxQmpjbkd5aE43WjFGNkg3V2Q3dDJUaXBNemoyY3Nt?=
+ =?utf-8?B?cnVjeGNsLzNpWTErdy9ST05LRlg3ZDRGaDUvMGMzTkFPdHF3UlUycXZHSXJy?=
+ =?utf-8?B?U05nbzR6MWJHc3VqRWc3K2JmdVFnTktBcHByeEc2SjRhZ254WE03b0xISUxl?=
+ =?utf-8?B?Qm9GSFo4NU1tU2FpeUlSbW9XT2paUHA1NHFqZ0VPYXRWenJadHRQL2JPWHpS?=
+ =?utf-8?B?L1BzZmMzbGQ5ZG5nd1dZSUxmQkVyL1NtVnV0KzB6VlhrbDVZR3YwUzJPcFZn?=
+ =?utf-8?B?MTZTRHJvUHdrRytES091a0puYnVjc25DbCtOSjVVMmMxQ3lRR3hwbTVWVWRv?=
+ =?utf-8?B?SVVjd1RTWU1vZ2xwbndYMGRWZ240ZlJaSlFYcnZlVkZLSVZ0VzFBMlAxNEll?=
+ =?utf-8?B?OElSS21jZENGbXRUZVYxYWlBVldlK1g5OUdueHdLVGs5blRKbGNHOU1ZOHZt?=
+ =?utf-8?B?NzdYcVNLU0QzaWdBbGJRRlRDUHBBPT0=?=
+X-Forefront-Antispam-Report:
+	CIP:216.228.117.161;CTRY:US;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:mail.nvidia.com;PTR:dc6edge2.nvidia.com;CAT:NONE;SFS:(13230040)(7416014)(82310400026)(1800799024)(376014)(36860700013)(13003099007);DIR:OUT;SFP:1101;
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 29 Jan 2026 09:49:08.5386
+ (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 1f94cde1-0353-4d29-87cb-08de5f1ba5fd
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a;Ip=[216.228.117.161];Helo=[mail.nvidia.com]
+X-MS-Exchange-CrossTenant-AuthSource:
+	SJ5PEPF000001D4.namprd05.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SN7PR12MB6932
 
-From: Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>
+On Wed, 28 Jan 2026 16:19:36 +0100, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 6.6.122 release.
+> There are 254 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+> 
+> Responses should be made by Fri, 30 Jan 2026 14:53:02 +0000.
+> Anything received after that time might be too late.
+> 
+> The whole patch series can be found in one patch at:
+> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.6.122-rc1.gz
+> or in the git tree and branch at:
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.6.y
+> and the diffstat can be found below.
+> 
+> thanks,
+> 
+> greg k-h
 
-[ Upstream commit dc0297f3198bd60108ccbd167ee5d9fa4af31ed0 ]
+All tests passing for Tegra ...
 
-RLCG Register Access is a way for virtual functions to safely access GPU
-registers in a virtualized environment., including TLB flushes and
-register reads. When multiple threads or VFs try to access the same
-registers simultaneously, it can lead to race conditions. By using the
-RLCG interface, the driver can serialize access to the registers. This
-means that only one thread can access the registers at a time,
-preventing conflicts and ensuring that operations are performed
-correctly. Additionally, when a low-priority task holds a mutex that a
-high-priority task needs, ie., If a thread holding a spinlock tries to
-acquire a mutex, it can lead to priority inversion. register access in
-amdgpu_virt_rlcg_reg_rw especially in a fast code path is critical.
+Test results for stable-v6.6:
+    10 builds:	10 pass, 0 fail
+    28 boots:	28 pass, 0 fail
+    133 tests:	133 pass, 0 fail
 
-The call stack shows that the function amdgpu_virt_rlcg_reg_rw is being
-called, which attempts to acquire the mutex. This function is invoked
-from amdgpu_sriov_wreg, which in turn is called from
-gmc_v11_0_flush_gpu_tlb.
+Linux version:	6.6.122-rc1-g0ca0b0d44403
+Boards tested:	tegra124-jetson-tk1, tegra186-p2771-0000,
+                tegra186-p3509-0000+p3636-0001, tegra194-p2972-0000,
+                tegra194-p3509-0000+p3668-0000, tegra20-ventana,
+                tegra210-p2371-2180, tegra210-p3450-0000,
+                tegra30-cardhu-a04
 
-The [ BUG: Invalid wait context ] indicates that a thread is trying to
-acquire a mutex while it is in a context that does not allow it to sleep
-(like holding a spinlock).
+Tested-by: Jon Hunter <jonathanh@nvidia.com>
 
-Fixes the below:
-
-[  253.013423] =============================
-[  253.013434] [ BUG: Invalid wait context ]
-[  253.013446] 6.12.0-amdstaging-drm-next-lol-050225 #14 Tainted: G     U     OE
-[  253.013464] -----------------------------
-[  253.013475] kworker/0:1/10 is trying to lock:
-[  253.013487] ffff9f30542e3cf8 (&adev->virt.rlcg_reg_lock){+.+.}-{3:3}, at: amdgpu_virt_rlcg_reg_rw+0xf6/0x330 [amdgpu]
-[  253.013815] other info that might help us debug this:
-[  253.013827] context-{4:4}
-[  253.013835] 3 locks held by kworker/0:1/10:
-[  253.013847]  #0: ffff9f3040050f58 ((wq_completion)events){+.+.}-{0:0}, at: process_one_work+0x3f5/0x680
-[  253.013877]  #1: ffffb789c008be40 ((work_completion)(&wfc.work)){+.+.}-{0:0}, at: process_one_work+0x1d6/0x680
-[  253.013905]  #2: ffff9f3054281838 (&adev->gmc.invalidate_lock){+.+.}-{2:2}, at: gmc_v11_0_flush_gpu_tlb+0x198/0x4f0 [amdgpu]
-[  253.014154] stack backtrace:
-[  253.014164] CPU: 0 UID: 0 PID: 10 Comm: kworker/0:1 Tainted: G     U     OE      6.12.0-amdstaging-drm-next-lol-050225 #14
-[  253.014189] Tainted: [U]=USER, [O]=OOT_MODULE, [E]=UNSIGNED_MODULE
-[  253.014203] Hardware name: Microsoft Corporation Virtual Machine/Virtual Machine, BIOS Hyper-V UEFI Release v4.1 11/18/2024
-[  253.014224] Workqueue: events work_for_cpu_fn
-[  253.014241] Call Trace:
-[  253.014250]  <TASK>
-[  253.014260]  dump_stack_lvl+0x9b/0xf0
-[  253.014275]  dump_stack+0x10/0x20
-[  253.014287]  __lock_acquire+0xa47/0x2810
-[  253.014303]  ? srso_alias_return_thunk+0x5/0xfbef5
-[  253.014321]  lock_acquire+0xd1/0x300
-[  253.014333]  ? amdgpu_virt_rlcg_reg_rw+0xf6/0x330 [amdgpu]
-[  253.014562]  ? __lock_acquire+0xa6b/0x2810
-[  253.014578]  __mutex_lock+0x85/0xe20
-[  253.014591]  ? amdgpu_virt_rlcg_reg_rw+0xf6/0x330 [amdgpu]
-[  253.014782]  ? sched_clock_noinstr+0x9/0x10
-[  253.014795]  ? srso_alias_return_thunk+0x5/0xfbef5
-[  253.014808]  ? local_clock_noinstr+0xe/0xc0
-[  253.014822]  ? amdgpu_virt_rlcg_reg_rw+0xf6/0x330 [amdgpu]
-[  253.015012]  ? srso_alias_return_thunk+0x5/0xfbef5
-[  253.015029]  mutex_lock_nested+0x1b/0x30
-[  253.015044]  ? mutex_lock_nested+0x1b/0x30
-[  253.015057]  amdgpu_virt_rlcg_reg_rw+0xf6/0x330 [amdgpu]
-[  253.015249]  amdgpu_sriov_wreg+0xc5/0xd0 [amdgpu]
-[  253.015435]  gmc_v11_0_flush_gpu_tlb+0x44b/0x4f0 [amdgpu]
-[  253.015667]  gfx_v11_0_hw_init+0x499/0x29c0 [amdgpu]
-[  253.015901]  ? __pfx_smu_v13_0_update_pcie_parameters+0x10/0x10 [amdgpu]
-[  253.016159]  ? srso_alias_return_thunk+0x5/0xfbef5
-[  253.016173]  ? smu_hw_init+0x18d/0x300 [amdgpu]
-[  253.016403]  amdgpu_device_init+0x29ad/0x36a0 [amdgpu]
-[  253.016614]  amdgpu_driver_load_kms+0x1a/0xc0 [amdgpu]
-[  253.017057]  amdgpu_pci_probe+0x1c2/0x660 [amdgpu]
-[  253.017493]  local_pci_probe+0x4b/0xb0
-[  253.017746]  work_for_cpu_fn+0x1a/0x30
-[  253.017995]  process_one_work+0x21e/0x680
-[  253.018248]  worker_thread+0x190/0x330
-[  253.018500]  ? __pfx_worker_thread+0x10/0x10
-[  253.018746]  kthread+0xe7/0x120
-[  253.018988]  ? __pfx_kthread+0x10/0x10
-[  253.019231]  ret_from_fork+0x3c/0x60
-[  253.019468]  ? __pfx_kthread+0x10/0x10
-[  253.019701]  ret_from_fork_asm+0x1a/0x30
-[  253.019939]  </TASK>
-
-v2: s/spin_trylock/spin_lock_irqsave to be safe (Christian).
-
-Fixes: e864180ee49b ("drm/amdgpu: Add lock around VF RLCG interface")
-Cc: lin cao <lin.cao@amd.com>
-Cc: Jingwen Chen <Jingwen.Chen2@amd.com>
-Cc: Victor Skvortsov <victor.skvortsov@amd.com>
-Cc: Zhigang Luo <zhigang.luo@amd.com>
-Cc: Christian König <christian.koenig@amd.com>
-Cc: Alex Deucher <alexander.deucher@amd.com>
-Signed-off-by: Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>
-Suggested-by: Alex Deucher <alexander.deucher@amd.com>
-Reviewed-by: Christian König <christian.koenig@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-[ Minor conflict resolved. ]
-Signed-off-by: Li hongliang <1468888505@139.com>
----
- drivers/gpu/drm/amd/amdgpu/amdgpu_device.c | 2 +-
- drivers/gpu/drm/amd/amdgpu/amdgpu_virt.c   | 5 +++--
- drivers/gpu/drm/amd/amdgpu/amdgpu_virt.h   | 3 ++-
- 3 files changed, 6 insertions(+), 4 deletions(-)
-
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
-index 38b81ae236cb..535cc74c5880 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
-@@ -3652,7 +3652,6 @@ int amdgpu_device_init(struct amdgpu_device *adev,
- 	mutex_init(&adev->grbm_idx_mutex);
- 	mutex_init(&adev->mn_lock);
- 	mutex_init(&adev->virt.vf_errors.lock);
--	mutex_init(&adev->virt.rlcg_reg_lock);
- 	hash_init(adev->mn_hash);
- 	mutex_init(&adev->psp.mutex);
- 	mutex_init(&adev->notifier_lock);
-@@ -3674,6 +3673,7 @@ int amdgpu_device_init(struct amdgpu_device *adev,
- 	spin_lock_init(&adev->se_cac_idx_lock);
- 	spin_lock_init(&adev->audio_endpt_idx_lock);
- 	spin_lock_init(&adev->mm_stats.lock);
-+	spin_lock_init(&adev->virt.rlcg_reg_lock);
- 
- 	INIT_LIST_HEAD(&adev->shadow_list);
- 	mutex_init(&adev->shadow_list_lock);
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_virt.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_virt.c
-index c626ed88e642..d300f7710ebb 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_virt.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_virt.c
-@@ -965,6 +965,7 @@ static u32 amdgpu_virt_rlcg_reg_rw(struct amdgpu_device *adev, u32 offset, u32 v
- 	void *scratch_reg2;
- 	void *scratch_reg3;
- 	void *spare_int;
-+	unsigned long flags;
- 
- 	if (!adev->gfx.rlc.rlcg_reg_access_supported) {
- 		dev_err(adev->dev,
-@@ -978,7 +979,7 @@ static u32 amdgpu_virt_rlcg_reg_rw(struct amdgpu_device *adev, u32 offset, u32 v
- 	scratch_reg2 = (void __iomem *)adev->rmmio + 4 * reg_access_ctrl->scratch_reg2;
- 	scratch_reg3 = (void __iomem *)adev->rmmio + 4 * reg_access_ctrl->scratch_reg3;
- 
--	mutex_lock(&adev->virt.rlcg_reg_lock);
-+	spin_lock_irqsave(&adev->virt.rlcg_reg_lock, flags);
- 
- 	if (reg_access_ctrl->spare_int)
- 		spare_int = (void __iomem *)adev->rmmio + 4 * reg_access_ctrl->spare_int;
-@@ -1034,7 +1035,7 @@ static u32 amdgpu_virt_rlcg_reg_rw(struct amdgpu_device *adev, u32 offset, u32 v
- 
- 	ret = readl(scratch_reg0);
- 
--	mutex_unlock(&adev->virt.rlcg_reg_lock);
-+	spin_unlock_irqrestore(&adev->virt.rlcg_reg_lock, flags);
- 
- 	return ret;
- }
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_virt.h b/drivers/gpu/drm/amd/amdgpu/amdgpu_virt.h
-index fc2859726f0a..9267e792c4cf 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_virt.h
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_virt.h
-@@ -264,7 +264,8 @@ struct amdgpu_virt {
- 	/* the ucode id to signal the autoload */
- 	uint32_t autoload_ucode_id;
- 
--	struct mutex rlcg_reg_lock;
-+	/* Spinlock to protect access to the RLCG register interface */
-+	spinlock_t rlcg_reg_lock;
- };
- 
- struct amdgpu_video_codec_info;
--- 
-2.34.1
-
-
+Jon
