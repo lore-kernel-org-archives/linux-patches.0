@@ -1,45 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55A201C84BD;
-	Mon,  2 Feb 2026 21:46:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3EFFA1C84BD;
+	Mon,  2 Feb 2026 21:46:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770068810; cv=none; b=RgBNidGOrkw4REkXjg9xfNZ7Xzw6uz8yHxN3SccilJkxNrg4l3Toj+pDscfy76XHatas60kx3ig1hef9jq6qFGrkGtWR6nxxpq71FMmN8MUpomfALjDwMzQqJkyuqBoPzxIozF+p3OwLXbL+6Kl4FE9LS2WrTrp6DEA1Xe+/4Mk=
+	t=1770068811; cv=none; b=gJeUKNde84Bwty9w5UAqDwk+jPByjuvde9z77iOvMcbzKIe9XQal50vT9XbOMYJJrNeRCedJD4fAgbSpaL+bBBvw9siqxN1PCHFcGML2RcB1wUq1ayhlTg3JoPj9vOH/RCeDtKSXMJLJuNVb31CUSyYXp+Ef9eCJQ29biccDZis=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770068810; c=relaxed/simple;
-	bh=M+86yXXtwc6Wdmj+Dht6yANTQh5BXKZtJY6Y7N4/HYA=;
+	s=arc-20240116; t=1770068811; c=relaxed/simple;
+	bh=+HZx4uVfXrlII0VOsAjGVpd2yKagMxMZty1h4LjQAPU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=ntHextbgrZXpuBmJMdPkHMoQm+swas/bulqvOQA7hcHvYOuDZGwOxZK23ZxFTdtwnbGaBQwadX5Cswc8Ls/2c59ele1LLxTvBm0Tt5QkVphFtehq/oGEVL2LXGL4OYlCLZz/y/mEHyvZ3p9XhwsYucmDLolFTMDAjLJEZ7CW6w8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=DtweiGnZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=JOYRXiVTXZLJ+39KHXO5B/u6TQ20M0aXYS3wzGeZfPG1XuNYtjVrdC3g4fJcVO6WFugmzBmA9OAkSDXkVbsedS5waiJrrR1ywNNV7Qw5gtYXepPmXS5/euN294WxfssjmmxQwHw/jmttTxMzVhWRA0xRWp663XHih/dJPR0HXeY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Mtbwm7er; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="DtweiGnZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0AEBDC19421;
-	Mon,  2 Feb 2026 21:46:48 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Mtbwm7er"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 65B20C116C6;
+	Mon,  2 Feb 2026 21:46:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1770068810;
-	bh=M+86yXXtwc6Wdmj+Dht6yANTQh5BXKZtJY6Y7N4/HYA=;
+	s=k20201202; t=1770068811;
+	bh=+HZx4uVfXrlII0VOsAjGVpd2yKagMxMZty1h4LjQAPU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DtweiGnZcOlN+3Gk5BhiWqEljo7502Ycn91MUdbiekK6N4oa5YGfHjQLRXYql5vZQ
-	 hlp46n2cqn2E6FrmYipNyHRdire6Rjv4ESNIhpqD/vpK8mJ864AFEkpqyfrdi/el3I
-	 8W7fNepmp7CXXWyzld5J1OJD4UFPWtX3i2X7YA3duA6KM746cGFv/Bxa4VaX/JbLFo
-	 ZgQmHCWo7XHzis3FJ9ZQGrQRTCsbXFwfev/Jgnka8rRdQMLiocLNBP396l0dDde5+O
-	 GcIxaAafGxyCRLnlyHK7pG7+wRo+9nHs2pFEh+6ddLRirjhf5LL4XjfDQTqkOBl7Fh
-	 5ui75sYqtxMwA==
+	b=Mtbwm7era9Co/jrG2Jp8gvVe4o2qDtdumZFcMcTCcOHO3DrfDRK/zQTc/toMyf9wg
+	 qHnGqNYJwsSfTqSatr8FkkJsGv4A4TSjLLRAYCA0DQg+XsU3Nm0tIB9M2JuiL6tsWQ
+	 a4sQDrSl7R3G3KblDJg6lp0gOm1SNWyJWSotF8rOJ5GDoqCsufEFYHV9l9n0o42RPV
+	 OW7JO8vacY90HsyiamliQaEQFFd2M5SyH9yy1iiKjy4TBNtOYezE2y5L5SvIwkhIeP
+	 Ntx1joZhxc+6dy9+t1lHU9oH3kReSb7SmMIEh5wCSLrZr0KtdbwMNq16Yf3S7J3d82
+	 EHtg6wauXgedQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Tim Guttzeit <t.guttzeit@tuxedocomputers.com>,
-	Werner Sembach <wse@tuxedocomputers.com>,
-	Takashi Iwai <tiwai@suse.de>,
+Cc: Jens Axboe <axboe@kernel.dk>,
+	Nitesh Shetty <nj.shetty@samsung.com>,
 	Sasha Levin <sashal@kernel.org>,
-	sbinding@opensource.cirrus.com,
-	kailang@realtek.com,
-	chris.chiu@canonical.com,
-	edip@medip.dev
-Subject: [PATCH AUTOSEL 6.18-5.10] ALSA: hda/realtek: Fix headset mic for TongFang X6AR55xU
-Date: Mon,  2 Feb 2026 16:45:57 -0500
-Message-ID: <20260202214643.212290-2-sashal@kernel.org>
+	io-uring@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.18] io_uring/rw: free potentially allocated iovec on cache put failure
+Date: Mon,  2 Feb 2026 16:45:58 -0500
+Message-ID: <20260202214643.212290-3-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260202214643.212290-1-sashal@kernel.org>
 References: <20260202214643.212290-1-sashal@kernel.org>
@@ -52,85 +48,197 @@ MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.18.8
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Tim Guttzeit <t.guttzeit@tuxedocomputers.com>
+From: Jens Axboe <axboe@kernel.dk>
 
-[ Upstream commit b48fe9af1e60360baf09ca6b7a3cd6541f16e611 ]
+[ Upstream commit 4b9748055457ac3a0710bf210c229d01ea1b01b9 ]
 
-Add a PCI quirk to enable microphone detection on the headphone jack of
-TongFang X6AR55xU devices.
+If a read/write request goes through io_req_rw_cleanup() and has an
+allocated iovec attached and fails to put to the rw_cache, then it may
+end up with an unaccounted iovec pointer. Have io_rw_recycle() return
+whether it recycled the request or not, and use that to gauge whether to
+free a potential iovec or not.
 
-Signed-off-by: Tim Guttzeit <t.guttzeit@tuxedocomputers.com>
-Signed-off-by: Werner Sembach <wse@tuxedocomputers.com>
-Link: https://patch.msgid.link/20260119151626.35481-1-wse@tuxedocomputers.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Reviewed-by: Nitesh Shetty <nj.shetty@samsung.com>
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-The `ALC274_FIXUP_HP_HEADSET_MIC` fixup was added in October 2020, so it
-exists in all currently maintained stable trees (6.1.y, 6.6.y, 6.12.y,
-etc.). The new quirk entry will apply cleanly.
+Now let's understand the scope. This commit fix is for a memory leak bug
+in the io_uring rw (read/write) path. Let me summarize my analysis:
 
-### 8. SIMILAR COMMITS PATTERN
+## Analysis Summary
 
-This follows the exact same pattern as countless other HDA pin quirk
-additions that are routinely backported to stable. The HDA realtek
-driver has hundreds of similar entries in this table, all following the
-same format.
+### 1. COMMIT MESSAGE ANALYSIS
+- **Subject**: "io_uring/rw: free potentially allocated iovec on cache
+  put failure"
+- **Keywords**: "free", "allocated", "failure" - this is clearly a bug
+  fix for a resource leak
+- **Description**: When a read/write request goes through
+  io_req_rw_cleanup() with an allocated iovec and fails to put to the
+  rw_cache, the iovec pointer becomes unaccounted (leaked).
+- **Reviewed-by**: Nitesh Shetty (Samsung) - indicates review
+- **Author**: Jens Axboe (io_uring maintainer)
 
----
+### 2. CODE CHANGE ANALYSIS
 
-## Summary
+The bug is in `io_rw_recycle()` and `io_req_rw_cleanup()`:
 
-**What problem it solves:** Fixes non-functional headset microphone on
-TongFang X6AR55xU laptops by adding a pin quirk entry that applies an
-existing, proven fixup.
+**Before the fix:**
+```c
+static void io_rw_recycle(struct io_kiocb *req, unsigned int
+issue_flags)
+{
+    struct io_async_rw *rw = req->async_data;
 
-**Meets stable kernel rules:**
-- ✅ Obviously correct - simple table entry addition following
-  established pattern
-- ✅ Fixes a real bug - hardware doesn't work without it
-- ✅ Small and contained - 4 lines, 1 file, no logic changes
-- ✅ No new features - uses existing `ALC274_FIXUP_HP_HEADSET_MIC` fixup
-- ✅ Falls under "hardware quirks/workarounds" exception
+    if (unlikely(issue_flags & IO_URING_F_UNLOCKED))
+        return;  // Early return - iovec potentially leaked
 
-**Risk vs Benefit:**
-- **Risk:** Essentially zero - only affects specific hardware, cannot
-  impact other devices
-- **Benefit:** High for affected users - enables basic audio
-  functionality
+    io_alloc_cache_vec_kasan(&rw->vec);
+    if (rw->vec.nr > IO_VEC_CACHE_SOFT_CAP)
+        io_vec_free(&rw->vec);
 
-**Concerns:** None. The fixup already exists in stable trees since 2020.
-The change applies cleanly with no dependencies.
+    if (io_alloc_cache_put(&req->ctx->rw_cache, rw))
+        io_req_async_data_clear(req, 0);
+    // PROBLEM: If io_alloc_cache_put fails (returns false when cache is
+full),
+    // the rw structure is NOT freed and NOT put back into the cache,
+    // but the iovec inside rw->vec is also not freed!
+}
+```
 
-This is a textbook example of a backport-worthy commit: a minimal
-hardware quirk that fixes a real user-facing issue with zero risk to
-other systems.
+**After the fix:**
+```c
+static bool io_rw_recycle(struct io_kiocb *req, unsigned int
+issue_flags)
+{
+    // Returns bool to indicate if recycling succeeded
+
+    if (unlikely(issue_flags & IO_URING_F_UNLOCKED))
+        return false;  // Caller knows recycling failed
+
+    // ... same cleanup ...
+
+    if (io_alloc_cache_put(&req->ctx->rw_cache, rw)) {
+        io_req_async_data_clear(req, 0);
+        return true;  // Successfully recycled
+    }
+    return false;  // Failed to recycle - caller will free
+}
+
+static void io_req_rw_cleanup(struct io_kiocb *req, unsigned int
+issue_flags)
+{
+    if (!(req->flags & (REQ_F_REISSUE | REQ_F_REFCOUNT))) {
+        req->flags &= ~REQ_F_NEED_CLEANUP;
+        if (!io_rw_recycle(req, issue_flags)) {
+            struct io_async_rw *rw = req->async_data;
+            io_vec_free(&rw->vec);  // FIX: Free the iovec if recycle
+failed
+        }
+    }
+}
+```
+
+### 3. CLASSIFICATION
+- **Type**: Bug fix - memory leak
+- **Category**: Resource leak in io_uring read/write path
+- **Severity**: Medium - leads to memory leak over time with repeated
+  I/O operations when cache is full
+
+### 4. SCOPE AND RISK ASSESSMENT
+- **Lines changed**: 11 insertions, 4 deletions (small)
+- **Files touched**: 1 (io_uring/rw.c)
+- **Complexity**: Low - simple return value change and conditional free
+- **Risk**: Very low - the fix is straightforward and localized
+
+### 5. USER IMPACT
+- **Who is affected**: All io_uring users doing read/write operations
+- **How severe**: Memory leak - can cause gradual memory exhaustion on
+  systems with heavy io_uring usage
+- **Trigger conditions**: When the rw_cache is full (reaches
+  IO_ALLOC_CACHE_MAX=128 entries) and a request cleanup occurs
+
+### 6. STABILITY INDICATORS
+- **Reviewed-by**: Yes (Nitesh Shetty)
+- **Maintainer authored**: Yes (Jens Axboe is the io_uring maintainer)
+- **Testing**: The fix is straightforward and has a Reviewed-by tag
+
+### 7. DEPENDENCY CHECK
+- The code being fixed was introduced in v6.14-rc1 (commit
+  9ac273ae3dc29)
+- The `io_vec_free` function exists in v6.15+
+- This fix applies cleanly to 6.14+ and 6.15+ stable branches
+
+### Conclusion
+
+This commit should be backported because:
+
+1. **Fixes a real bug**: Memory leak when io_alloc_cache_put fails
+2. **Small and surgical**: Only 15 lines changed in one file
+3. **Obviously correct**: The fix simply ensures proper cleanup when
+   cache insertion fails
+4. **No new features**: Just fixes the existing resource management
+5. **Low risk**: The change is well-contained and logical
+6. **Affects production code**: io_uring is widely used, and memory
+   leaks in this path affect real users
+
+The fix is simple: change `io_rw_recycle()` to return a boolean
+indicating success/failure, and have `io_req_rw_cleanup()` call
+`io_vec_free()` when recycling fails. This ensures the iovec is always
+properly freed.
 
 **YES**
 
- sound/hda/codecs/realtek/alc269.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ io_uring/rw.c | 15 +++++++++++----
+ 1 file changed, 11 insertions(+), 4 deletions(-)
 
-diff --git a/sound/hda/codecs/realtek/alc269.c b/sound/hda/codecs/realtek/alc269.c
-index fedbc5afc4067..57bad9884158c 100644
---- a/sound/hda/codecs/realtek/alc269.c
-+++ b/sound/hda/codecs/realtek/alc269.c
-@@ -7676,6 +7676,10 @@ static const struct snd_hda_pin_quirk alc269_pin_fixup_tbl[] = {
- 		{0x12, 0x90a60140},
- 		{0x19, 0x04a11030},
- 		{0x21, 0x04211020}),
-+	SND_HDA_PIN_QUIRK(0x10ec0274, 0x1d05, "TongFang", ALC274_FIXUP_HP_HEADSET_MIC,
-+		{0x17, 0x90170110},
-+		{0x19, 0x03a11030},
-+		{0x21, 0x03211020}),
- 	SND_HDA_PIN_QUIRK(0x10ec0282, 0x1025, "Acer", ALC282_FIXUP_ACER_DISABLE_LINEOUT,
- 		ALC282_STANDARD_PINS,
- 		{0x12, 0x90a609c0},
+diff --git a/io_uring/rw.c b/io_uring/rw.c
+index abe68ba9c9dc8..d7388a4a3ea5e 100644
+--- a/io_uring/rw.c
++++ b/io_uring/rw.c
+@@ -144,19 +144,22 @@ static inline int io_import_rw_buffer(int rw, struct io_kiocb *req,
+ 	return 0;
+ }
+ 
+-static void io_rw_recycle(struct io_kiocb *req, unsigned int issue_flags)
++static bool io_rw_recycle(struct io_kiocb *req, unsigned int issue_flags)
+ {
+ 	struct io_async_rw *rw = req->async_data;
+ 
+ 	if (unlikely(issue_flags & IO_URING_F_UNLOCKED))
+-		return;
++		return false;
+ 
+ 	io_alloc_cache_vec_kasan(&rw->vec);
+ 	if (rw->vec.nr > IO_VEC_CACHE_SOFT_CAP)
+ 		io_vec_free(&rw->vec);
+ 
+-	if (io_alloc_cache_put(&req->ctx->rw_cache, rw))
++	if (io_alloc_cache_put(&req->ctx->rw_cache, rw)) {
+ 		io_req_async_data_clear(req, 0);
++		return true;
++	}
++	return false;
+ }
+ 
+ static void io_req_rw_cleanup(struct io_kiocb *req, unsigned int issue_flags)
+@@ -190,7 +193,11 @@ static void io_req_rw_cleanup(struct io_kiocb *req, unsigned int issue_flags)
+ 	 */
+ 	if (!(req->flags & (REQ_F_REISSUE | REQ_F_REFCOUNT))) {
+ 		req->flags &= ~REQ_F_NEED_CLEANUP;
+-		io_rw_recycle(req, issue_flags);
++		if (!io_rw_recycle(req, issue_flags)) {
++			struct io_async_rw *rw = req->async_data;
++
++			io_vec_free(&rw->vec);
++		}
+ 	}
+ }
+ 
 -- 
 2.51.0
 
