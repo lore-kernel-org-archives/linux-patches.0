@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0FB3C29ACD7;
-	Mon,  2 Feb 2026 21:47:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31EDE3164D6;
+	Mon,  2 Feb 2026 21:47:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770068839; cv=none; b=PrV/oiuSbTvKdcGnyqSRDI9HaOS5+XSETC3aodRzqzgJNKXTX8mxIbdOdzagPoW3aifHTLadSJ30FJ61f0Qat51shqWYgmXYfwvG8EaAJSjppVyS0EKdMopxKx0ZagYCIdbFTCNNgN7kJM47qSm9DDZvLwHnHbXcIcWK1yMqNjQ=
+	t=1770068840; cv=none; b=uQnE32/TWPdu7gWXIP0s4xTgdr26RdgQKUUcl1LIFIDn+02KaCxj/Lm0NnD42eyKDBlP7JQP6XMcx9JFngP2fO7LtCjJqSTXhHQFUCw5wC6RmaUfZzHbJXMSTVO2TLOvhTsexP6xlvLa0gKxuVpOj/HDXSDJheuDvmcC3yiIMu0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770068839; c=relaxed/simple;
-	bh=ZI+fCFtjOz2oqnn00AeNgkHp2Y04okKoJp/N2I2qaiY=;
+	s=arc-20240116; t=1770068840; c=relaxed/simple;
+	bh=fegejkVL+lLJoLfhYf6xVkGHeRs3KVjJLWElAzTPWGs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=K1O1tYtFXpzGx67H69QIZzuDOyn6wSUcA0bA5JJqtTRNWNIMf7DnIQtrAHGs15w1SUhzN2Fr/YR26shr+lJwOuMe+mNGTFm/dEEiKWEhtHAxCRixfJ2LPcbUHoWtvzbqQulvX7A4NcGHRdOEHUpx0SsfGcIVCKpA+YFweB8U/XM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=lAfeHZTm; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=idK+82QcZP/YID2acTC2j3YxmrRH9YbkXRogXu0xDOXOcQOmpP4+2UByy7b6yVYWNAmz7dES1H7PINhZed3tHS4AG4YrYn6mme48D5UXtMRK/X/5w6fv2XkAwb7B3PnjajoSpdU2+NuvKH14jhDjtdta+5Iv10jr0324Q8JNNe4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=qFav1RVr; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="lAfeHZTm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3618AC116C6;
-	Mon,  2 Feb 2026 21:47:18 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="qFav1RVr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 57308C19421;
+	Mon,  2 Feb 2026 21:47:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1770068838;
-	bh=ZI+fCFtjOz2oqnn00AeNgkHp2Y04okKoJp/N2I2qaiY=;
+	s=k20201202; t=1770068840;
+	bh=fegejkVL+lLJoLfhYf6xVkGHeRs3KVjJLWElAzTPWGs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lAfeHZTmXZed3kmiD5O0MuJ/05cvQE0CQvLIssYlg1mJ1uajri0sQXu1/cpJcEfMb
-	 xKPgMuOZbnq8sYKk010QbNe/sYw3NVTdBaCQ1hkx9fKlpf+0z9VW+wRia01Id8DRFG
-	 C+DBat5POc9LQwFP04AAqXErVMcNs3RPI75EhGDOIZhTbbe/Y7qDYFuzo4lrxQxvNP
-	 VrDRi8P0WPj0r2XPyLw/yqDfk8WANHLejg3/VhajNk3EJewZDuLBixeGAgc20Ndq8b
-	 HC8ctGaFsaLdGmfARAWvEbbncRWgqKSeRlA//mXboP9VnLTcJqhkBIfRUoWTU7cceC
-	 Z6PdhJ7lKTdvQ==
+	b=qFav1RVr94huZI2w0ReeYLORkxcA35dMioBH1mTjIMaKkZDqbX9D4rAaveX+iUPna
+	 QgY5J0CcMVWbOl5EqbUgtwOp7qAV+OWRgO1Oa/JOHtGwRIykAoRnrWpGTKIc1riAdz
+	 Bw4WsMn/qSBCCjdpH8y6hFWcoui5vmVMAH8BQjqSlhju8Ysy4G/vewhXiq8zaElRYo
+	 Z35qtlEgUxE0iZv5w8bKGwPAvouTNzhB5J81xKsZ/+ca3iH5KlWEGVfcmIEbnb8JRP
+	 sySmpgpI3qechey8bWNpW2d5RkT05LciThskH4yJDZtvaicOIPxo62hx8f0xSLYtFE
+	 c6cvTdVz/vmEw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Miri Korenblit <miriam.rachel.korenblit@intel.com>,
-	Johannes Berg <johannes.berg@intel.com>,
+Cc: Alan Borzeszkowski <alan.borzeszkowski@linux.intel.com>,
+	Mika Westerberg <mika.westerberg@linux.intel.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	johannes@sipsolutions.net,
-	linux-wireless@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18-5.10] wifi: mac80211: don't increment crypto_tx_tailroom_needed_cnt twice
-Date: Mon,  2 Feb 2026 16:46:11 -0500
-Message-ID: <20260202214643.212290-16-sashal@kernel.org>
+	linux-spi@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.18] spi: intel-pci: Add support for Nova Lake SPI serial flash
+Date: Mon,  2 Feb 2026 16:46:12 -0500
+Message-ID: <20260202214643.212290-17-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260202214643.212290-1-sashal@kernel.org>
 References: <20260202214643.212290-1-sashal@kernel.org>
@@ -51,140 +51,180 @@ X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.18.8
 Content-Transfer-Encoding: 8bit
 
-From: Miri Korenblit <miriam.rachel.korenblit@intel.com>
+From: Alan Borzeszkowski <alan.borzeszkowski@linux.intel.com>
 
-[ Upstream commit 3f3d8ff31496874a69b131866f62474eb24ed20a ]
+[ Upstream commit caa329649259d0f90c0056c9860ca659d4ba3211 ]
 
-In reconfig, in case the driver asks to disconnect during the reconfig,
-all the keys of the interface are marked as tainted.
-Then ieee80211_reenable_keys will loop over all the interface keys, and
-for each one it will
-a) increment crypto_tx_tailroom_needed_cnt
-b) call ieee80211_key_enable_hw_accel, which in turn will detect that
-this key is tainted, so it will mark it as "not in hardware", which is
-paired with crypto_tx_tailroom_needed_cnt incrementation, so we get two
-incrementations for each tainted key.
-Then we get a warning in ieee80211_free_keys.
+Add Intel Nova Lake PCH-S SPI serial flash PCI ID to the list of
+supported devices. This is the same controller found in previous
+generations.
 
-To fix it, don't increment the count in ieee80211_reenable_keys for
-tainted keys
-
-Reviewed-by: Johannes Berg <johannes.berg@intel.com>
-Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
-Link: https://patch.msgid.link/20260118092821.4ca111fddcda.Id6e554f4b1c83760aa02d5a9e4e3080edb197aa2@changeid
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Signed-off-by: Alan Borzeszkowski <alan.borzeszkowski@linux.intel.com>
+Acked-by: Mika Westerberg <mika.westerberg@linux.intel.com>
+Link: https://patch.msgid.link/20260115120305.10080-1-alan.borzeszkowski@linux.intel.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-So KEY_FLAG_TAINTED was introduced in v4.20. The bug being fixed is
-likely in all kernels from 4.20 onward. Let me verify the current state
-after the patch would be applied.
+## Comprehensive Backport Analysis
 
-The patch being analyzed changes:
+### 1. COMMIT MESSAGE ANALYSIS
+
+**Subject:** "spi: intel-pci: Add support for Nova Lake SPI serial
+flash"
+
+**Key information from message:**
+- Adds a new PCI ID for Intel Nova Lake PCH-S SPI serial flash
+  controller
+- Explicitly states: "This is the same controller found in previous
+  generations"
+- Has proper sign-offs from Intel developer and maintainer
+  acknowledgment
+- Link to patch message provided for traceability
+
+**Notable:** No Fixes: tag or Cc: stable tag, but as noted in the
+analysis guidelines, this is expected for commits requiring manual
+review.
+
+### 2. CODE CHANGE ANALYSIS
+
+The diff shows a **single-line addition**:
 ```c
-list_for_each_entry(key, &sdata->key_list, list) {
-    increment_tailroom_need_count(sdata);  // OLD: unconditional
-    ieee80211_key_enable_hw_accel(key);
-}
+{ PCI_VDEVICE(INTEL, 0x6e24), (unsigned long)&cnl_info },
 ```
 
-to:
-```c
-list_for_each_entry(key, &sdata->key_list, list) {
-    if (!(key->flags & KEY_FLAG_TAINTED))  // NEW: skip for tainted
-        increment_tailroom_need_count(sdata);
-    ieee80211_key_enable_hw_accel(key);
-}
-```
+This adds PCI device ID `0x6e24` to the `intel_spi_pci_ids[]` table,
+using the existing `cnl_info` configuration structure (Cannon Lake
+info).
 
-This is correct because:
-- For non-tainted keys: increment once here, and if HW accel succeeds,
-  it will be decremented in `ieee80211_key_enable_hw_accel()` (line
-  187). Net result: proper accounting.
-- For tainted keys: skip here, let `ieee80211_key_enable_hw_accel()`
-  handle the increment (line 141) when clearing
-  `KEY_FLAG_UPLOADED_TO_HARDWARE`. Net result: proper accounting.
+**Technical details:**
+- The change adds one entry to the PCI device ID table
+- Uses the well-established `PCI_VDEVICE()` macro
+- References `cnl_info`, which already exists and is used by many other
+  device IDs in this driver
+- The insertion is alphabetically ordered (0x6e24 is placed between
+  0x5825 and 0x7723)
+- No new code paths, functions, or logic introduced
 
-## Analysis Summary
+### 3. CLASSIFICATION
 
-**1. COMMIT MESSAGE ANALYSIS:**
-- Clear explanation of the problem: double increment of
-  `crypto_tx_tailroom_needed_cnt` for tainted keys during reconfig
-- The symptom is a warning in `ieee80211_free_keys`
-- Reviewed-by from Johannes Berg (mac80211 maintainer) adds confidence
+**This is a NEW DEVICE ID addition** - one of the explicitly listed
+exceptions in the stable kernel rules.
 
-**2. CODE CHANGE ANALYSIS:**
-- The bug: In `ieee80211_reenable_keys()`, for each key:
-  1. `increment_tailroom_need_count(sdata)` is called unconditionally
-  2. `ieee80211_key_enable_hw_accel(key)` is called
+From the guidelines:
+> **NEW DEVICE IDs (Very Common):**
+> - Adding PCI IDs, USB IDs, ACPI IDs, etc. to existing drivers
+> - These are trivial one-line additions that enable hardware support
+> - Rule: The driver must already exist in stable; only the ID is new
 
-- For tainted keys (marked when driver requests disconnect during
-  reconfig), `ieee80211_key_enable_hw_accel()` will:
-  - Also call `increment_tailroom_need_count(sdata)` at line 141 if the
-    key was uploaded to hardware
-  - Clear the `KEY_FLAG_UPLOADED_TO_HARDWARE` flag
+This commit fits this exception perfectly:
+- The `spi-intel-pci` driver already exists in stable kernels
+- Only the PCI ID is being added
+- Uses existing configuration (`cnl_info`)
 
-- Result: Two increments per tainted key instead of one
+### 4. SCOPE AND RISK ASSESSMENT
 
-- The fix: Skip the first increment for tainted keys since they'll get
-  their increment inside `ieee80211_key_enable_hw_accel()`
+**Scope:**
+- **Lines changed:** 1 line added
+- **Files touched:** 1 file (`drivers/spi/spi-intel-pci.c`)
+- **Complexity:** Minimal - just a table entry
 
-**3. CLASSIFICATION:**
-- This is a clear BUG FIX for a reference counting error
-- Not a feature addition
-- Fixes a real warning that users would see in kernel logs
+**Risk assessment:**
+- **Extremely LOW risk** - This is one of the safest possible changes
+- The new ID only matches Nova Lake hardware
+- Existing hardware continues to work exactly as before
+- If the ID is somehow wrong, only Nova Lake devices would be affected
+- The `cnl_info` structure is already well-tested with many other Intel
+  platforms
 
-**4. SCOPE AND RISK ASSESSMENT:**
-- Very small change: adds a simple conditional check (1 line changed)
-- Localized to mac80211 key handling
-- Low risk: the logic is straightforward and has been reviewed by the
-  subsystem maintainer
-- The worst-case if the fix is wrong would be the opposite accounting
-  error
+### 5. USER IMPACT
 
-**5. USER IMPACT:**
-- WiFi users doing rekeys or going through suspend/resume/HW restart
-  with certain driver/firmware combinations could hit this
-- The symptom is a kernel warning (WARN_ON_ONCE in
-  `ieee80211_free_keys`)
-- It causes incorrect tailroom accounting which could potentially lead
-  to issues with software encryption
+**Who benefits:**
+- Users with Intel Nova Lake PCH-S systems
+- Enterprise customers deploying on newer Intel hardware
+- Without this patch, SPI flash on Nova Lake systems won't be recognized
 
-**6. STABILITY INDICATORS:**
-- Reviewed-by: Johannes Berg (mac80211 maintainer)
-- The code path and fix are straightforward
+**Impact assessment:**
+- **Positive impact:** Enables SPI flash access on new hardware
+- **Negative impact potential:** None for existing users
+- **Hardware scope:** This is a platform-level chipset, so all Nova Lake
+  systems are affected
 
-**7. DEPENDENCY CHECK:**
-- KEY_FLAG_TAINTED exists since v4.20
-- The function `ieee80211_reenable_keys()` exists in stable trees
-- The code affected exists in all supported stable kernels
-- No dependency on other commits - this is a standalone fix
+### 6. STABILITY INDICATORS
 
-The fix is small, surgical, reviewed by the subsystem maintainer, fixes
-a real bug (warning + incorrect reference counting), and meets all
-stable kernel criteria.
+- **Acked-by:** Mika Westerberg (Intel kernel maintainer) - positive
+  signal
+- **Signed-off-by:** Mark Brown (SPI subsystem maintainer) - indicates
+  proper review
+- The commit message explicitly states this uses the "same controller
+  found in previous generations" - this suggests the hardware is
+  compatible and doesn't need new code
+
+### 7. DEPENDENCY CHECK
+
+**Dependencies:** None
+- This commit is completely self-contained
+- It only adds an entry to an existing table
+- No prerequisites needed - the driver infrastructure is already in
+  place
+
+**Stable tree compatibility:**
+- The `spi-intel-pci.c` driver has been in the kernel for years
+- The `cnl_info` structure exists in all relevant stable trees
+- This patch will apply cleanly to any stable kernel that has this
+  driver
+
+### 8. VERDICT REASONING
+
+**Why this SHOULD be backported:**
+
+1. **Explicitly allowed by stable rules:** New device IDs are a
+   documented exception that IS appropriate for stable trees
+
+2. **Zero regression risk:** Adding a new PCI ID to a table cannot
+   possibly break existing functionality
+
+3. **Minimal change:** Single line addition is as small and contained as
+   possible
+
+4. **Real user benefit:** Users with Nova Lake hardware need this to
+   have functional SPI flash support
+
+5. **Mature driver:** The intel-spi-pci driver is well-established and
+   the cnl_info configuration is used by many other platforms
+
+6. **Proper review:** Has maintainer acks from both Intel and SPI
+   subsystem maintainers
+
+**No concerns:**
+- No dependencies
+- No backport adjustments needed
+- Will apply cleanly
+- No new code paths or features
+
+This is a textbook example of a commit that should be backported to
+stable - it's a trivial device ID addition that enables hardware support
+using existing, well-tested driver code.
 
 **YES**
 
- net/mac80211/key.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/spi/spi-intel-pci.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/net/mac80211/key.c b/net/mac80211/key.c
-index d5da7ccea66e0..04c8809173d7f 100644
---- a/net/mac80211/key.c
-+++ b/net/mac80211/key.c
-@@ -987,7 +987,8 @@ void ieee80211_reenable_keys(struct ieee80211_sub_if_data *sdata)
- 
- 	if (ieee80211_sdata_running(sdata)) {
- 		list_for_each_entry(key, &sdata->key_list, list) {
--			increment_tailroom_need_count(sdata);
-+			if (!(key->flags & KEY_FLAG_TAINTED))
-+				increment_tailroom_need_count(sdata);
- 			ieee80211_key_enable_hw_accel(key);
- 		}
- 	}
+diff --git a/drivers/spi/spi-intel-pci.c b/drivers/spi/spi-intel-pci.c
+index b8c572394aac2..bce3d149bea18 100644
+--- a/drivers/spi/spi-intel-pci.c
++++ b/drivers/spi/spi-intel-pci.c
+@@ -81,6 +81,7 @@ static const struct pci_device_id intel_spi_pci_ids[] = {
+ 	{ PCI_VDEVICE(INTEL, 0x54a4), (unsigned long)&cnl_info },
+ 	{ PCI_VDEVICE(INTEL, 0x5794), (unsigned long)&cnl_info },
+ 	{ PCI_VDEVICE(INTEL, 0x5825), (unsigned long)&cnl_info },
++	{ PCI_VDEVICE(INTEL, 0x6e24), (unsigned long)&cnl_info },
+ 	{ PCI_VDEVICE(INTEL, 0x7723), (unsigned long)&cnl_info },
+ 	{ PCI_VDEVICE(INTEL, 0x7a24), (unsigned long)&cnl_info },
+ 	{ PCI_VDEVICE(INTEL, 0x7aa4), (unsigned long)&cnl_info },
 -- 
 2.51.0
 
