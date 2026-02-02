@@ -1,181 +1,233 @@
-Received: from mail-oo1-f48.google.com (mail-oo1-f48.google.com [209.85.161.48])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from n169-113.mail.139.com (n169-113.mail.139.com [120.232.169.113])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2BB4A23ED75
-	for <patches@lists.linux.dev>; Mon,  2 Feb 2026 06:02:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.161.48
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770012130; cv=pass; b=Kitp7bKKgmwL9SLuT3b+ACnbpzQsbBm51Z1zoLgel0lbPi4ygqUiCljRECyvylLkzgxWMnDDLrYzpwmbX2Q/rapM9rl3WsW+eaLrSFWQnQs9HX5CD7Zz70CrfnEoq+Xu2yICymooYx2a2DPW4Uz+itb7B7GFxJ3ZMSqcLciGFgo=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770012130; c=relaxed/simple;
-	bh=1PCVKoGEu5ZKGgsfNA8Godrm165Zgd+zEgQyqYZf1M4=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=Hg/C6VhwUhdye9QHynSXD4FnOZ80apshDC+M0BLEvzL3bwAQu2BGn+daPuVDWLBeep5sEIKCQjtaIIKpwc4J+LU4q+1ZqNI9Tb9QWJqSVNns1c8gP155AmCXy1phOF/AMHM6/uaUjWvesZ6xTqNJWiB6zQZ2n0Aj9JfgqPEklTY=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=rivosinc.com; spf=pass smtp.mailfrom=rivosinc.com; dkim=pass (2048-bit key) header.d=rivosinc.com header.i=@rivosinc.com header.b=OHnZiBCS; arc=pass smtp.client-ip=209.85.161.48
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=rivosinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=rivosinc.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A13BA30ACE6
+	for <patches@lists.linux.dev>; Mon,  2 Feb 2026 06:47:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=120.232.169.113
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1770014849; cv=none; b=Xcijy5rTkrRe+VYYufMWwj7M05WgdOe8l3O0HN45FGRDklcSzFLq+/xWWCTyisQ3UUwzHU9fID1QrPGOwODCCJOz6R+1GUJMe073TWGrPLQjIL15XSaS4RglfNNjHTVRH8CaQgu91az3+Ym3DlI8qC8zNao+0xRpet6914AtIDU=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1770014849; c=relaxed/simple;
+	bh=79QRdfY8Kh+DAQbA6nusrCU+fQQBIGh+BTOLrtWJ15M=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=nhgjli7d5GYbR3nOPE1jgaS6fpkM2QNsKbqYk9tzr2arTv3FNPIejXOyO4/AzpH68ZXV1Q5/yCclTBMvm+2+aqQ047E72xQGbOUMT+VdWF+p+aEj8n9mcjqa6YH3C11s1YC1P8cYmnoAPKvtCsaLNfkfbRRbCKTkwFpn+p3LOJM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=139.com; spf=pass smtp.mailfrom=139.com; dkim=pass (1024-bit key) header.d=139.com header.i=@139.com header.b=Ea7hJZIc; arc=none smtp.client-ip=120.232.169.113
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=139.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=139.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=rivosinc.com header.i=@rivosinc.com header.b="OHnZiBCS"
-Received: by mail-oo1-f48.google.com with SMTP id 006d021491bc7-6610e72112bso1920115eaf.1
-        for <patches@lists.linux.dev>; Sun, 01 Feb 2026 22:02:08 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1770012128; cv=none;
-        d=google.com; s=arc-20240605;
-        b=d75DJk869916dtdw7rXhnxYvPhHrj5ULgICAIfWhTo0/GunqBsmO9EVY15ywtHD5oR
-         TeGKto17fDuaAEA8vE9+hvGdW1JZPovQyOvSzJuZdjR9zoQ15l/RNA3iRPOV3EGx3b7d
-         9Nf4eYl9ujEHWEqE3wUHkA7rg8q8fv4OSaH6qydNId2rZwhmTxwXMI2en/fKbn86oIZU
-         x/OkE1gR4f9j6W4KSObfLMpJNx3CxGwxBGyorTNvJyOwx3ACqPBnp6sv2Qow5XLTlNCd
-         kIUyBwbmJEGgy7lh43piQDVoDBqnwmuGwNXDawNk7tEHRHHbDdyBID8PGftCDUMIJlfR
-         czgw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=GcxQOk1Ogg7o0Jhu3EeWbmSG4NAptutIfk5zNYKLdfs=;
-        fh=TAxxTSfOBsY9GbV+geWHipJh1pDeP7GdMW7mchE4uh0=;
-        b=PFVvDFSmGXhDT/OyYdXq3ouWUF8uUlHReYi7jYyl9mRPGfQF36bkCt24HTs/miLiUP
-         HnpGF6QPi1I5q7atvigSPWdN2CjP3Mramt/nJ6pfNZ0QtlTwV3AJn9gvHE+rObtZ2YE+
-         eC0foGeUyfonsoxIUraWobQmn8h/wZfBhtyhK3DHxniAQR215dJR/8mK/Vml+sEx09HF
-         Sa3EKtyOdUnNlktuSVzBBjDk4LuQQuX3keHs0ObubePurR08xox4M1PbG10VzsDsKGwQ
-         VjfVQLs4xa3PZnGOYuFwXBrWK8d50oNUYX6QrFylOuW0LoS3bB+mQUJSGIBYbSZatWc+
-         ENQg==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+	dkim=pass (1024-bit key) header.d=139.com header.i=@139.com header.b="Ea7hJZIc"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=rivosinc.com; s=google; t=1770012128; x=1770616928; darn=lists.linux.dev;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=GcxQOk1Ogg7o0Jhu3EeWbmSG4NAptutIfk5zNYKLdfs=;
-        b=OHnZiBCSB9tPxsfdQWn7b/NiHJIAAsn6CEMr7ZGnYp45eGyLYb5hIEc6+RuIFwhYHb
-         XXxDyWLCcsu5fGhszZI9gKFcvZzUkmhTWF16Blc99LPHHIXUh2IlaWzhfiumUvGpnbL9
-         REGaKqDUXlqsJmN8eK/fDd6FAlVc7hHwopixkpd1fyYkKLXy0FTOSgRmGP2evO9Is2ft
-         T3dkhySWMDJzi4Y/2hmpcHmup3NbCSJ/4kKVbiVCSuIE5/8fGV+fAUenL7ttexxsXGY9
-         3Y2luynKNll9jS+cdg9VobDZGRoymP+96DTRxz7rTcZpCChdeqO+kqFSznQL6EpbxUMZ
-         q+nw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1770012128; x=1770616928;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=GcxQOk1Ogg7o0Jhu3EeWbmSG4NAptutIfk5zNYKLdfs=;
-        b=goegamTqLkEsN2g8XxWbnLSELsF2MXZ5Y+RcNWlWhrmeDOTdiOVEslPGntPVoiZikc
-         G6cfj85FGCzCoShJqJ/niVTF2MZ4kq8ePuX4EfFh4gHAv+zoy7uR783CkQ57PtkXjxzH
-         qw7KeJf2BFbz6TtbO3d2ZBUTUasPvzVKQL9IWn4085VdvfUXFwzPrmkt3jySJVXXv0Bz
-         y5gCtyUJ2DU2swQTr0GBBr1dCzw3kllPg+x+UHIZyZE4/ztxYWf05VQnPnHsN2BXlnd+
-         CaHUtn2ppjFTJtcM5KXskXzwQ39RWwfmwGhD/omA+6sSrhueYhYmD/6w9HcMgqh8NUnP
-         iKeA==
-X-Forwarded-Encrypted: i=1; AJvYcCXE99JzcLTk/PAVh89U3lZKQVpmhrNxMG695W0S4wIooZCp1rLaLYKo8BSo1mdi1TVZoPV86hE+@lists.linux.dev
-X-Gm-Message-State: AOJu0YzEHnPiFmo8/jG5Qfighyo2WxKPM2q4kbdyflTbNNlKBr5L+V8H
-	qJKQRwc3sAVq3tUo5HJ9ejkZAAiAVg5JfRydp+RMOTBKV3rN9sYKP5XFHGap+RH/OTmGnbJK6To
-	1kDlaIa1PnR0qyibk0QMBObi6qqz3mYYR7ksxoRPYDw==
-X-Gm-Gg: AZuq6aKwUnbzxKKzy05d6iyjm6hBuiv9RMO2mlELZGxhsp+PBG9bnP3dYIPuUPH54rs
-	sXjQmdI/wnlyrZpb88VG3E3dq4tsbizeR5oedShAg+rFILLtlEeBSmG9L3WF2xklpONWhOniwMk
-	Nqc4TuA26Hc4HnTWuVxAXavOxjQtc/cLyFDIPeV2P/cuyH5xUyOgrZVRwyCP8DV0RKMdqPTAZYr
-	1nYKFd3okYwAO2scXJE5sQCyPLF4Vj8R/nNGWKgmQQ98oCr+Y3/bJ1YYo180RLp/u1C/VE=
-X-Received: by 2002:a05:6820:22a7:b0:662:fc84:fa6b with SMTP id
- 006d021491bc7-6630f35f60cmr5159965eaf.49.1770012128041; Sun, 01 Feb 2026
- 22:02:08 -0800 (PST)
+	d=139.com; s=dkim; l=0;
+	h=from:subject:message-id:to:cc:mime-version;
+	bh=47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU=;
+	b=Ea7hJZIcRwhgFQQhJKhefcXvmBkcNsRnweH1xGaUt9jFHnpLK3veN5QXseIugetZkpT8l+ifj+m4q
+	 ytaKl49Zi5FE56UTl3lp0axemitE/8mPsG+JenpR1ifs5RaFZm3eK4wBNMDH8h8x1mG6L3ozJyInBu
+	 8jHZMQ/qNtSLeVnc=
+X-RM-TagInfo: emlType=0                                       
+X-RM-SPAM:                                                                                        
+X-RM-SPAM-FLAG:00000000
+Received:from NTT-kernel-dev (unknown[60.247.85.88])
+	by rmsmtp-lg-appmail-36-12050 (RichMail) with SMTP id 2f1269804dba213-0223f;
+	Mon, 02 Feb 2026 15:09:54 +0800 (CST)
+X-RM-TRANSID:2f1269804dba213-0223f
+From: Li hongliang <1468888505@139.com>
+To: gregkh@linuxfoundation.org,
+	stable@vger.kernel.org,
+	michael.christie@oracle.com
+Cc: patches@lists.linux.dev,
+	linux-kernel@vger.kernel.org,
+	mst@redhat.com,
+	jasowang@redhat.com,
+	pbonzini@redhat.com,
+	stefanha@redhat.com,
+	mlombard@redhat.com,
+	asias@redhat.com,
+	nab@linux-iscsi.org,
+	virtualization@lists.linux-foundation.org,
+	kvm@vger.kernel.org,
+	netdev@vger.kernel.org,
+	wh1sper@zju.edu.cn,
+	sgarzare@redhat.com
+Subject: [PATCH 6.1.y] vhost-scsi: Fix handling of multiple calls to vhost_scsi_set_endpoint
+Date: Mon,  2 Feb 2026 14:47:19 +0800
+Message-Id: <20260202064719.642351-1-1468888505@139.com>
+X-Mailer: git-send-email 2.34.1
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <0-v3-9dbf0a72a51c+302-iommu_pt_riscv_jgg@nvidia.com>
-In-Reply-To: <0-v3-9dbf0a72a51c+302-iommu_pt_riscv_jgg@nvidia.com>
-From: Tomasz Jeznach <tjeznach@rivosinc.com>
-Date: Sun, 1 Feb 2026 22:01:55 -0800
-X-Gm-Features: AZwV_Qje4rxoo7R40kPWf455fQUtzOoH5ybCxsGtQwxNUqW6waJoYKR0ZFyVEDA
-Message-ID: <CAH2o1u5-VuEUJp2MNb41uxQJk=SR1uZbQkiqQWoLBj-+GXTVkw@mail.gmail.com>
-Subject: Re: [PATCH v3 0/5] Convert riscv to use the generic iommu page table
-To: Jason Gunthorpe <jgg@nvidia.com>
-Cc: Alexandre Ghiti <alex@ghiti.fr>, Albert Ou <aou@eecs.berkeley.edu>, iommu@lists.linux.dev, 
-	Joerg Roedel <joro@8bytes.org>, linux-riscv@lists.infradead.org, 
-	Palmer Dabbelt <palmer@dabbelt.com>, Robin Murphy <robin.murphy@arm.com>, Will Deacon <will@kernel.org>, 
-	lihangjing@bytedance.com, Xu Lu <luxu.kernel@bytedance.com>, 
-	patches@lists.linux.dev, Paul Walmsley <pjw@kernel.org>, 
-	Vincent Chen <vincent.chen@sifive.com>, xieyongji@bytedance.com, tjeznach@fb.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 
-On Fri, Jan 30, 2026 at 4:00=E2=80=AFPM Jason Gunthorpe <jgg@nvidia.com> wr=
-ote:
->
-> [ Joerg, I think we are good now, please pick it up this cycle ]
->
-> This is a fairly straightforward conversion of the RISC-V iommu driver to
-> use the now merged generic iommu page table code.
->
-> It brings support for SVNAPOT which is a 64K contiguous page. Otherwise i=
-t
-> should not change the behavior.
->
-> The series disables SADE as the dirty tracking support is not implemented
-> in the driver and should be done somewhat differently. The generic code
-> gets further along though this does not include the format implementation
-> of read and clear dirty.
->
-> The format implementation should be able to support the 32 bit option, bu=
-t
-> this does not enable the iommu implementation as there seems to be no use=
-r
-> today.
->
-> It looks like RISCV could support the DYNAMIC_TOP option. It would requir=
-e
-> some additional work on the core side to interact safely with SIGN_EXTEND=
-.
->
-> This is on github: https://github.com/jgunthorpe/linux/commits/iommu_pt_r=
-iscv
->
-> v3:
->  - Rebase to v6.19-rc7
->  - Add missed line in Kconfig
-> v2: https://patch.msgid.link/r/0-v2-b11ebca8abb6+c096-iommu_pt_riscv_jgg@=
-nvidia.com
->  - Rebase to v6.19-rc1
->  - Fix typo in PT_FEAT_RISCV_SVNAPOT_64K
-> v1: https://patch.msgid.link/r/0-v1-d3317b0ee398+50-iommu_pt_riscv_jgg@nv=
-idia.com
->
-> Jason Gunthorpe (5):
->   iommupt: Add the RISC-V page table format
->   iommu/riscv: Disable SADE
->   iommu/riscv: Use the generic iommu page table
->   iommu/riscv: Enable SVNAPOT support for contiguous ptes
->   iommu/riscv: Allow RISC_VIOMMU to COMPILE_TEST
->
->  drivers/iommu/generic_pt/.kunitconfig        |   1 +
->  drivers/iommu/generic_pt/Kconfig             |  11 +
->  drivers/iommu/generic_pt/fmt/Makefile        |   2 +
->  drivers/iommu/generic_pt/fmt/defs_riscv.h    |  29 ++
->  drivers/iommu/generic_pt/fmt/iommu_riscv64.c |  11 +
->  drivers/iommu/generic_pt/fmt/riscv.h         | 313 +++++++++++++++++++
->  drivers/iommu/riscv/Kconfig                  |   8 +-
->  drivers/iommu/riscv/iommu-bits.h             |   4 +-
->  drivers/iommu/riscv/iommu.c                  | 302 +++---------------
->  include/linux/generic_pt/common.h            |  16 +
->  include/linux/generic_pt/iommu.h             |  11 +
->  11 files changed, 447 insertions(+), 261 deletions(-)
->  create mode 100644 drivers/iommu/generic_pt/fmt/defs_riscv.h
->  create mode 100644 drivers/iommu/generic_pt/fmt/iommu_riscv64.c
->  create mode 100644 drivers/iommu/generic_pt/fmt/riscv.h
->
->
-> base-commit: 63804fed149a6750ffd28610c5c1c98cce6bd377
-> --
-> 2.43.0
->
+From: Mike Christie <michael.christie@oracle.com>
 
-Thanks Jason for this change.
+[ Upstream commit 5dd639a1646ef5fe8f4bf270fad47c5c3755b9b6 ]
 
-All tested, run with NVMe / NICs. No issues. Some minor performance
-changes (positive or negative depending on the workload). No issues.
-Open issue on QEMU RISC-V IOMMU model - SVNAPOT support is missing.
-I've made a local change to fix it, and will post it soon.
+If vhost_scsi_set_endpoint is called multiple times without a
+vhost_scsi_clear_endpoint between them, we can hit multiple bugs
+found by Haoran Zhang:
 
-Reviewed-by: Tomasz Jeznach <tjeznach@rivosinc.com>
-Tested-by: Tomasz Jeznach <tjeznach@rivosinc.com>
+1. Use-after-free when no tpgs are found:
 
-Best,
-- Tomasz
+This fixes a use after free that occurs when vhost_scsi_set_endpoint is
+called more than once and calls after the first call do not find any
+tpgs to add to the vs_tpg. When vhost_scsi_set_endpoint first finds
+tpgs to add to the vs_tpg array match=true, so we will do:
+
+vhost_vq_set_backend(vq, vs_tpg);
+...
+
+kfree(vs->vs_tpg);
+vs->vs_tpg = vs_tpg;
+
+If vhost_scsi_set_endpoint is called again and no tpgs are found
+match=false so we skip the vhost_vq_set_backend call leaving the
+pointer to the vs_tpg we then free via:
+
+kfree(vs->vs_tpg);
+vs->vs_tpg = vs_tpg;
+
+If a scsi request is then sent we do:
+
+vhost_scsi_handle_vq -> vhost_scsi_get_req -> vhost_vq_get_backend
+
+which sees the vs_tpg we just did a kfree on.
+
+2. Tpg dir removal hang:
+
+This patch fixes an issue where we cannot remove a LIO/target layer
+tpg (and structs above it like the target) dir due to the refcount
+dropping to -1.
+
+The problem is that if vhost_scsi_set_endpoint detects a tpg is already
+in the vs->vs_tpg array or if the tpg has been removed so
+target_depend_item fails, the undepend goto handler will do
+target_undepend_item on all tpgs in the vs_tpg array dropping their
+refcount to 0. At this time vs_tpg contains both the tpgs we have added
+in the current vhost_scsi_set_endpoint call as well as tpgs we added in
+previous calls which are also in vs->vs_tpg.
+
+Later, when vhost_scsi_clear_endpoint runs it will do
+target_undepend_item on all the tpgs in the vs->vs_tpg which will drop
+their refcount to -1. Userspace will then not be able to remove the tpg
+and will hang when it tries to do rmdir on the tpg dir.
+
+3. Tpg leak:
+
+This fixes a bug where we can leak tpgs and cause them to be
+un-removable because the target name is overwritten when
+vhost_scsi_set_endpoint is called multiple times but with different
+target names.
+
+The bug occurs if a user has called VHOST_SCSI_SET_ENDPOINT and setup
+a vhost-scsi device to target/tpg mapping, then calls
+VHOST_SCSI_SET_ENDPOINT again with a new target name that has tpgs we
+haven't seen before (target1 has tpg1 but target2 has tpg2). When this
+happens we don't teardown the old target tpg mapping and just overwrite
+the target name and the vs->vs_tpg array. Later when we do
+vhost_scsi_clear_endpoint, we are passed in either target1 or target2's
+name and we will only match that target's tpgs when we loop over the
+vs->vs_tpg. We will then return from the function without doing
+target_undepend_item on the tpgs.
+
+Because of all these bugs, it looks like being able to call
+vhost_scsi_set_endpoint multiple times was never supported. The major
+user, QEMU, already has checks to prevent this use case. So to fix the
+issues, this patch prevents vhost_scsi_set_endpoint from being called
+if it's already successfully added tpgs. To add, remove or change the
+tpg config or target name, you must do a vhost_scsi_clear_endpoint
+first.
+
+Fixes: 25b98b64e284 ("vhost scsi: alloc cmds per vq instead of session")
+Fixes: 4f7f46d32c98 ("tcm_vhost: Use vq->private_data to indicate if the endpoint is setup")
+Reported-by: Haoran Zhang <wh1sper@zju.edu.cn>
+Closes: https://lore.kernel.org/virtualization/e418a5ee-45ca-4d18-9b5d-6f8b6b1add8e@oracle.com/T/#me6c0041ce376677419b9b2563494172a01487ecb
+Signed-off-by: Mike Christie <michael.christie@oracle.com>
+Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
+Message-Id: <20250129210922.121533-1-michael.christie@oracle.com>
+Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+Acked-by: Stefano Garzarella <sgarzare@redhat.com>
+[ Minor conflict resolved. ]
+Signed-off-by: Li hongliang <1468888505@139.com>
+---
+ drivers/vhost/scsi.c | 24 +++++++++++++-----------
+ 1 file changed, 13 insertions(+), 11 deletions(-)
+
+diff --git a/drivers/vhost/scsi.c b/drivers/vhost/scsi.c
+index de6f108a50a9..f9ef17c3e566 100644
+--- a/drivers/vhost/scsi.c
++++ b/drivers/vhost/scsi.c
+@@ -1572,14 +1572,19 @@ vhost_scsi_set_endpoint(struct vhost_scsi *vs,
+ 		}
+ 	}
+ 
++	if (vs->vs_tpg) {
++		pr_err("vhost-scsi endpoint already set for %s.\n",
++		       vs->vs_vhost_wwpn);
++		ret = -EEXIST;
++		goto out;
++	}
++
+ 	len = sizeof(vs_tpg[0]) * VHOST_SCSI_MAX_TARGET;
+ 	vs_tpg = kzalloc(len, GFP_KERNEL);
+ 	if (!vs_tpg) {
+ 		ret = -ENOMEM;
+ 		goto out;
+ 	}
+-	if (vs->vs_tpg)
+-		memcpy(vs_tpg, vs->vs_tpg, len);
+ 
+ 	list_for_each_entry(tpg, &vhost_scsi_list, tv_tpg_list) {
+ 		mutex_lock(&tpg->tv_tpg_mutex);
+@@ -1594,11 +1599,6 @@ vhost_scsi_set_endpoint(struct vhost_scsi *vs,
+ 		tv_tport = tpg->tport;
+ 
+ 		if (!strcmp(tv_tport->tport_name, t->vhost_wwpn)) {
+-			if (vs->vs_tpg && vs->vs_tpg[tpg->tport_tpgt]) {
+-				mutex_unlock(&tpg->tv_tpg_mutex);
+-				ret = -EEXIST;
+-				goto undepend;
+-			}
+ 			/*
+ 			 * In order to ensure individual vhost-scsi configfs
+ 			 * groups cannot be removed while in use by vhost ioctl,
+@@ -1643,15 +1643,15 @@ vhost_scsi_set_endpoint(struct vhost_scsi *vs,
+ 		}
+ 		ret = 0;
+ 	} else {
+-		ret = -EEXIST;
++		ret = -ENODEV;
++		goto free_tpg;
+ 	}
+ 
+ 	/*
+-	 * Act as synchronize_rcu to make sure access to
+-	 * old vs->vs_tpg is finished.
++	 * Act as synchronize_rcu to make sure requests after this point
++	 * see a fully setup device.
+ 	 */
+ 	vhost_scsi_flush(vs);
+-	kfree(vs->vs_tpg);
+ 	vs->vs_tpg = vs_tpg;
+ 	goto out;
+ 
+@@ -1668,6 +1668,7 @@ vhost_scsi_set_endpoint(struct vhost_scsi *vs,
+ 			target_undepend_item(&tpg->se_tpg.tpg_group.cg_item);
+ 		}
+ 	}
++free_tpg:
+ 	kfree(vs_tpg);
+ out:
+ 	mutex_unlock(&vs->dev.mutex);
+@@ -1757,6 +1758,7 @@ vhost_scsi_clear_endpoint(struct vhost_scsi *vs,
+ 	vhost_scsi_flush(vs);
+ 	kfree(vs->vs_tpg);
+ 	vs->vs_tpg = NULL;
++	memset(vs->vs_vhost_wwpn, 0, sizeof(vs->vs_vhost_wwpn));
+ 	WARN_ON(vs->vs_events_nr);
+ 	mutex_unlock(&vs->dev.mutex);
+ 	mutex_unlock(&vhost_scsi_mutex);
+-- 
+2.34.1
+
+
