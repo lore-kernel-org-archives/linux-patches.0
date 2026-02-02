@@ -1,44 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4856244186;
-	Mon,  2 Feb 2026 21:47:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 826981C84BD;
+	Mon,  2 Feb 2026 21:47:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770068830; cv=none; b=WJWEIJVr5JRXBSDXCf4LyuJS9y5uU/ps79aIdayJAtKAcVxZ4yFN+c4je1cWQklfS6NWJZMIuXOv5v8Lb6rLggkT4T2GCPYjVEite5bkQomkc3ZCRqvFyOCCWBRURCDSD+sPbSMx8B3Dx280PablWHBI4jRkJfa4HhDR48F5PWI=
+	t=1770068831; cv=none; b=H0cxHkzsd0QqTH6J3w44p2XIGGNjNd7B3fb64mxPHFo84mhWM1t4jux5m6s3csm9G5GRNgE0TBvC6pd1n2BCJVjWHmEtvOdf4c/NS2IVAK+bcdZuHrp+NcQ17cpt95c2bNMFEAdBh4zrRBqODvogBAOBFDnsubToZbLCG2y/ASM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770068830; c=relaxed/simple;
-	bh=rf76p7P7EQrUbXBDSkkDe2pkCFjhVruNCBUmHdBWNj4=;
+	s=arc-20240116; t=1770068831; c=relaxed/simple;
+	bh=2Vgx4ah3QCD/wKqotM08VvSQGy89QT7N5q9u7CQOhxE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HV/K/9f3rmw78X1qP1qg7x7aaWLDaXctCLVN4exdRS/zntDA36Wor1iz/VNXijFbJpQ4LnWTztyP7FnMV9iaAUH+cCIle1nFoE1PV3irQzhZaUb1W77uaJ7UdNUDLX2jZO10DE/yY38sc2fEWP5NoKTIEnBKo3fnmmHJtL2zlDg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=juYS+oBe; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tMAw3AjR+H+JQ1AE0xhpqY5dzkaNo7Dp3y/e/Cq2vZksJLZtxAjLPXvlx999oBlv6R6YzW2xEg9MajJO6jzAEICGXRj25CaRnTuEdhuCsjYP5+VeQTe9TUV+x/iNy9j7sXORI4/Pe7dIBJokq7cONfV23Z9dUiKVImjTYrylc7Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ZUcye/ro; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="juYS+oBe"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 62B8FC19421;
-	Mon,  2 Feb 2026 21:47:09 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ZUcye/ro"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9475C2BC86;
+	Mon,  2 Feb 2026 21:47:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1770068830;
-	bh=rf76p7P7EQrUbXBDSkkDe2pkCFjhVruNCBUmHdBWNj4=;
+	s=k20201202; t=1770068831;
+	bh=2Vgx4ah3QCD/wKqotM08VvSQGy89QT7N5q9u7CQOhxE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=juYS+oBemepquZygEhUW/5rhpD/JZqh3uVV9c0bPLmrlDSthy2DrEjWb+6gqj27/s
-	 raAPSjzDuLwbsdNQqEI6evq/6+rRL62h3vEtuTvbW1w/VDBFlnAmDeHa2FixazgGhd
-	 MfhT2r1bIj5XtjwJb4ieJBoKFQ1QT5VRHjFruevugVMhcTqZjXzajsXb4gu469dUq0
-	 WWCYR1BkfIkqeGmYm4Rd6M9ASTPzEw5H7zEvrGhuz5RIjb/lvXTaNZEcZVKycry4Yy
-	 RMIUWK2sbAhoLrb4PCu/4z3Kd6If9Oq2nYXcM6prKBa16WttR0dJYgtNKEg8K0QUZ5
-	 8P5pmSOxGxpsw==
+	b=ZUcye/ronTYMEs/46ooywyd35mBBoA5HcihuQxyLecV0f1tBY01FqaW9FZNSTl+WS
+	 Li8Zyxkm2GFh7rzFBa1L9ZYrm4/Ka48XJFLMuXi7vwQsm8zx9RfHieQNrM7I508C/E
+	 CyPadaY9g4PEq6AT6ThVl6rfa/+yZLhYR1k9JP817dmKke9so24ZGpy0TBmjUtSwXu
+	 OaWwgud1yKGNSRBBFsEz06nzyxCTq8OUsBwx0myNFHB1ucVX/wkcKcwL7cXve48G96
+	 UvXmym5Blel39QG0AWP0fGrEhG/tK367PMilr9x2FP8ny+T5zopS6ZyCQlkNAC3i9+
+	 77jLI4GUdfBww==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Zhang Heng <zhangheng@kylinos.cn>,
-	Takashi Iwai <tiwai@suse.de>,
+Cc: Qiang Ma <maqianga@uniontech.com>,
+	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>,
-	sbinding@opensource.cirrus.com,
-	kailang@realtek.com,
-	chris.chiu@canonical.com,
-	edip@medip.dev
-Subject: [PATCH AUTOSEL 6.18-6.1] ALSA: hda/realtek: Add quirk for Inspur S14-G1
-Date: Mon,  2 Feb 2026 16:46:06 -0500
-Message-ID: <20260202214643.212290-11-sashal@kernel.org>
+	clm@fb.com,
+	linux-btrfs@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.18] btrfs: fix Wmaybe-uninitialized warning in replay_one_buffer()
+Date: Mon,  2 Feb 2026 16:46:07 -0500
+Message-ID: <20260202214643.212290-12-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260202214643.212290-1-sashal@kernel.org>
 References: <20260202214643.212290-1-sashal@kernel.org>
@@ -53,158 +51,165 @@ X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.18.8
 Content-Transfer-Encoding: 8bit
 
-From: Zhang Heng <zhangheng@kylinos.cn>
+From: Qiang Ma <maqianga@uniontech.com>
 
-[ Upstream commit 9e18920e783d0bcd4c127a7adc66565243ab9655 ]
+[ Upstream commit 9c7e71c97c8cd086b148d0d3d1cd84a1deab023c ]
 
-Inspur S14-G1 is equipped with ALC256.
-Enable "power saving mode" and Enable "headset jack mode".
+Warning was found when compiling using loongarch64-gcc 12.3.1:
 
-Signed-off-by: Zhang Heng <zhangheng@kylinos.cn>
-Link: https://patch.msgid.link/20260126073508.3897461-2-zhangheng@kylinos.cn
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+  $ make CFLAGS_tree-log.o=-Wmaybe-uninitialized
+
+  In file included from fs/btrfs/ctree.h:21,
+		   from fs/btrfs/tree-log.c:12:
+  fs/btrfs/accessors.h: In function 'replay_one_buffer':
+  fs/btrfs/accessors.h:66:16: warning: 'inode_item' may be used uninitialized [-Wmaybe-uninitialized]
+     66 |         return btrfs_get_##bits(eb, s, offsetof(type, member));         \
+	|                ^~~~~~~~~~
+  fs/btrfs/tree-log.c:2803:42: note: 'inode_item' declared here
+   2803 |                 struct btrfs_inode_item *inode_item;
+	|                                          ^~~~~~~~~~
+
+Initialize the inode_item to NULL, the compiler does not seem to see the
+relation between the first 'wc->log_key.type == BTRFS_INODE_ITEM_KEY'
+check and the other one that also checks the replay phase.
+
+Signed-off-by: Qiang Ma <maqianga@uniontech.com>
+Reviewed-by: David Sterba <dsterba@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-## Analysis: ALSA: hda/realtek: Add quirk for Inspur S14-G1
+Now I have a clear understanding of the code flow. Let me verify what
+the commit changes and analyze it:
+
+## Analysis Summary
 
 ### 1. COMMIT MESSAGE ANALYSIS
 
-The commit message is straightforward:
-- Subject indicates this adds a quirk for the Inspur S14-G1 laptop
-- The device uses an ALC256 codec
-- The quirk enables "power saving mode" and "headset jack mode"
-- Has proper sign-offs and review chain (Takashi Iwai is the HDA
-  subsystem maintainer)
+The commit addresses a compiler warning (`-Wmaybe-uninitialized`) for
+the `inode_item` pointer in `replay_one_buffer()`. The warning is
+triggered by certain compilers (loongarch64-gcc 12.3.1 in this case)
+that don't recognize the relationship between:
+- The first check: `wc->log_key.type == BTRFS_INODE_ITEM_KEY` (which
+  assigns `inode_item`)
+- The later use: `wc->log_key.type == BTRFS_INODE_ITEM_KEY && wc->stage
+  == LOG_WALK_REPLAY_INODES` (which uses `inode_item`)
 
-No Fixes: tag or Cc: stable tag is present, which is expected for
-commits under review.
+The compiler can't prove that `inode_item` is always initialized before
+use due to the complex conditional logic.
 
 ### 2. CODE CHANGE ANALYSIS
 
-The change is a single line addition to the `alc269_fixup_tbl[]` quirk
-table:
-
+The change is trivial:
 ```c
-SND_PCI_QUIRK(0x2039, 0x0001, "Inspur S14-G1",
-ALC295_FIXUP_CHROME_BOOK),
+- struct btrfs_inode_item *inode_item;
++ struct btrfs_inode_item *inode_item = NULL;
 ```
 
-This adds a PCI quirk entry with:
-- Vendor ID: `0x2039` (Inspur)
-- Device ID: `0x0001`
-- Description: "Inspur S14-G1"
-- Fixup: `ALC295_FIXUP_CHROME_BOOK`
+Looking at the control flow:
+- Line 2807: `if (wc->log_key.type == BTRFS_INODE_ITEM_KEY)` -
+  inode_item is assigned via `btrfs_item_ptr()`
+- Line 2838-2845: `if (wc->log_key.type == BTRFS_INODE_ITEM_KEY &&
+  wc->stage == LOG_WALK_REPLAY_INODES)` - inode_item is used via
+  `btrfs_inode_mode(eb, inode_item)`
 
-The `ALC295_FIXUP_CHROME_BOOK` fixup is an existing, well-tested fixup
-that's already used by other devices in this table (e.g., Intel NUC 13
-at line 8086:3038).
+Logically, whenever the second condition is true, the first condition
+must also have been true (both check `wc->log_key.type ==
+BTRFS_INODE_ITEM_KEY`), so `inode_item` will have been assigned. But
+some compilers cannot deduce this relationship due to the second
+condition also checking `wc->stage`.
 
 ### 3. CLASSIFICATION
 
-**This is a HARDWARE QUIRK addition** - one of the explicit exceptions
-allowed in stable trees.
-
-This falls under the category of "QUIRKS and WORKAROUNDS" which are
-explicitly allowed because:
-- The driver (snd-hda-intel with Realtek codec support) already exists
-  in stable
-- Only a device ID mapping is being added
-- The fixup being used (`ALC295_FIXUP_CHROME_BOOK`) already exists and
-  is tested
-- This enables proper audio functionality on specific hardware
+This is a **build fix** - it silences a compiler warning. It falls under
+the "BUILD FIXES" exception category:
+- Fixes for compilation warnings
+- Zero risk of runtime regression (initializing a pointer to NULL that
+  will always be properly assigned before use)
 
 ### 4. SCOPE AND RISK ASSESSMENT
 
-**Scope:**
-- 1 line changed
-- 1 file touched
-- Adds entry to a static quirk table
-- No logic changes whatsoever
+- **Lines changed**: 1 line
+- **Files touched**: 1 file (fs/btrfs/tree-log.c)
+- **Complexity**: Trivial - just adding `= NULL` initialization
+- **Risk**: Extremely low - this is a defensive initialization that
+  doesn't change runtime behavior
 
-**Risk: EXTREMELY LOW**
-- The quirk table is a simple array of PCI ID to fixup mappings
-- This change only affects devices with vendor:device ID `0x2039:0x0001`
-- No other hardware can be affected
-- The fixup being applied (`ALC295_FIXUP_CHROME_BOOK`) is already proven
-  stable
+The only possible risk would be if the compiler warning was actually
+detecting a real bug. However, analyzing the code:
+- Line 2838 checks `wc->log_key.type == BTRFS_INODE_ITEM_KEY` AND
+  `wc->stage == LOG_WALK_REPLAY_INODES`
+- Line 2807 checks `wc->log_key.type == BTRFS_INODE_ITEM_KEY`
+- If we reach line 2845 (where `inode_item` is used), we must have
+  passed the check at 2838, which implies `wc->log_key.type ==
+  BTRFS_INODE_ITEM_KEY` is true, which means we also entered the block
+  at 2807 and assigned `inode_item`.
+
+The warning is a false positive.
 
 ### 5. USER IMPACT
 
-**Who is affected:**
-- Users of Inspur S14-G1 laptops (a specific Inspur laptop model)
-
-**Problem without this patch:**
-- Headset jack may not work properly
-- Power management for audio may not be optimal
-- These are real usability issues for affected hardware owners
-
-**Severity:** Moderate - affects audio usability but not a crash or data
-corruption
+- This fixes a compiler warning that can be annoying for
+  developers/users who enable `-Wmaybe-uninitialized`
+- Some build configurations with stricter warning settings (e.g.,
+  `-Werror`) could fail to compile without this fix
+- The btrfs subsystem is widely used, so build issues affect many users
 
 ### 6. STABILITY INDICATORS
 
-- Signed off by Takashi Iwai (long-time HDA maintainer at SUSE)
-- Follows the standard pattern used by hundreds of other quirk entries
-  in this file
-- Uses an existing, tested fixup (`ALC295_FIXUP_CHROME_BOOK`)
+- **Reviewed-by: David Sterba <dsterba@suse.com>** - David Sterba is the
+  btrfs maintainer
+- **Signed-off-by: David Sterba <dsterba@suse.com>** - Merged by the
+  maintainer
+- This is a simple, obviously correct fix
 
 ### 7. DEPENDENCY CHECK
 
-**Dependencies: NONE**
-- The `ALC295_FIXUP_CHROME_BOOK` fixup has existed in the kernel for
-  years
-- The quirk table structure is stable across kernel versions
-- This will apply cleanly to any stable tree that has the Realtek HDA
-  driver
+- No dependencies on other commits
+- This is a self-contained one-line change
+- The code exists in stable trees (tree-log.c is present in all kernel
+  versions)
 
-### Summary
+## Conclusion
 
-This commit is a textbook example of a stable-appropriate quirk
-addition:
+This commit is an ideal candidate for stable backporting:
 
-1. **Meets stable rules:**
-   - Obviously correct (single line addition to quirk table)
-   - Fixes a real bug (audio not working properly on specific hardware)
-   - Small and contained (1 line)
-   - Does NOT add new features (uses existing fixup)
+1. **Meets stable criteria**:
+   - Obviously correct - trivial initialization
+   - Fixes a real issue - compiler warning that could break builds with
+     strict settings
+   - Small and contained - single line change
+   - No new features
 
-2. **Falls under allowed exceptions:**
-   - Hardware quirk/workaround for a specific device
-   - Enables proper functionality on hardware that exists in the field
+2. **Falls under BUILD FIXES exception**: Compiler warning fixes are
+   explicitly allowed in stable
 
-3. **Risk vs Benefit:**
-   - Risk: Near zero (only affects one specific device ID)
-   - Benefit: Audio functionality for Inspur S14-G1 users
+3. **Zero risk**: Initializing a pointer to NULL that is guaranteed to
+   be assigned before use cannot cause any runtime regression
 
-4. **No concerns:**
-   - No dependencies
-   - Applies cleanly to any kernel with the Realtek HDA driver
-   - Standard practice followed by hundreds of similar entries
-
-This is exactly the type of patch that stable trees accept regularly - a
-simple hardware quirk that enables device support without any risk to
-other systems.
+4. **Maintainer approved**: Reviewed and merged by David Sterba, the
+   btrfs maintainer
 
 **YES**
 
- sound/hda/codecs/realtek/alc269.c | 1 +
- 1 file changed, 1 insertion(+)
+ fs/btrfs/tree-log.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/sound/hda/codecs/realtek/alc269.c b/sound/hda/codecs/realtek/alc269.c
-index 32cba2c81ccdd..4ab89cb6e55f2 100644
---- a/sound/hda/codecs/realtek/alc269.c
-+++ b/sound/hda/codecs/realtek/alc269.c
-@@ -7239,6 +7239,7 @@ static const struct hda_quirk alc269_fixup_tbl[] = {
- 	SND_PCI_QUIRK(0x1ee7, 0x2078, "HONOR BRB-X M1010", ALC2XX_FIXUP_HEADSET_MIC),
- 	SND_PCI_QUIRK(0x1f66, 0x0105, "Ayaneo Portable Game Player", ALC287_FIXUP_CS35L41_I2C_2),
- 	SND_PCI_QUIRK(0x2014, 0x800a, "Positivo ARN50", ALC269_FIXUP_LIMIT_INT_MIC_BOOST),
-+	SND_PCI_QUIRK(0x2039, 0x0001, "Inspur S14-G1", ALC295_FIXUP_CHROME_BOOK),
- 	SND_PCI_QUIRK(0x2782, 0x0214, "VAIO VJFE-CL", ALC269_FIXUP_LIMIT_INT_MIC_BOOST),
- 	SND_PCI_QUIRK(0x2782, 0x0228, "Infinix ZERO BOOK 13", ALC269VB_FIXUP_INFINIX_ZERO_BOOK_13),
- 	SND_PCI_QUIRK(0x2782, 0x0232, "CHUWI CoreBook XPro", ALC269VB_FIXUP_CHUWI_COREBOOK_XPRO),
+diff --git a/fs/btrfs/tree-log.c b/fs/btrfs/tree-log.c
+index 1444857de9fe8..ae2e035d013e2 100644
+--- a/fs/btrfs/tree-log.c
++++ b/fs/btrfs/tree-log.c
+@@ -2800,7 +2800,7 @@ static int replay_one_buffer(struct extent_buffer *eb,
+ 
+ 	nritems = btrfs_header_nritems(eb);
+ 	for (wc->log_slot = 0; wc->log_slot < nritems; wc->log_slot++) {
+-		struct btrfs_inode_item *inode_item;
++		struct btrfs_inode_item *inode_item = NULL;
+ 
+ 		btrfs_item_key_to_cpu(eb, &wc->log_key, wc->log_slot);
+ 
 -- 
 2.51.0
 
