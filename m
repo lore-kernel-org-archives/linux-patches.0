@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40B30314A95;
-	Mon,  2 Feb 2026 21:47:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38BE83164C1;
+	Mon,  2 Feb 2026 21:47:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770068846; cv=none; b=Au33yWLuHd8yq0YSS4Z/XLdhBDUJvmJHl9brFR6ab+9Mk/7/h1LOwFTucOB56psl+sI/FRtm75qKPZZ5D7nG4nHHEGH61TRaUxa3dR3QlUvvS2v/8tz8lZHg0vufrtlzrD1cDlgIvGpB+3JOqpo+wdLuwooAoQL+kXBhAtKs5PM=
+	t=1770068848; cv=none; b=SHUKpTHouMXSBxZu9yo7hAs9iKcrPpBE2LsQWOaAoEGRJUOtR51eUtX26aIUuYeREkWERJctvOD1D31TlhemLVcCqoYxM25V9+IftDSZYyBL8CNa351dUXmqEs2Hh3l2xHSl8C3Bc5IQIqjXsj1vKKAn8OTsdRCVsn1rrGO84UI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770068846; c=relaxed/simple;
-	bh=Igh4cD88rLtWgMOfnORH/Vs+R3zOyCvczFSHP9CmAgU=;
+	s=arc-20240116; t=1770068848; c=relaxed/simple;
+	bh=9FNYbSajliKQ80x4jgX5YNUAuU69EDRTeqWnRx2tesM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MR1o8lmCQLScKr/4QMaASCPxDnwMYIM9p71q3uoQaK2aFWP8Q6Gl6p/D0XvSpLIRcFG97IpTTTqj5ilbFHNCYPrvQjntR+KgNjNP0TYjRtXb6jfyTor12glyd61tC7q7BG3S8Q5x4pAMMhNEqq29xk9NLWusneHD4dEYXqhbjZ0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=lnwqj4Na; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=nsFyHuzkQdR4gsftLcaSiu6Sr3ynLSunIoEkPdQVTsnwljBNbNajlOqoXKos7mQOWWzdVlg8uuZALK4Jmyo3h8+Zwozc0adpdYkL1kD/QSNHfL3O1Yi11yim7eCqCKIJzwI8Ela2DuWgmLK1aL+QQrU19EgRhXXMPfnBBPtpG7M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=pdoN6bjx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="lnwqj4Na"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 66E67C2BC86;
-	Mon,  2 Feb 2026 21:47:25 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="pdoN6bjx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5711AC19421;
+	Mon,  2 Feb 2026 21:47:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1770068846;
-	bh=Igh4cD88rLtWgMOfnORH/Vs+R3zOyCvczFSHP9CmAgU=;
+	s=k20201202; t=1770068848;
+	bh=9FNYbSajliKQ80x4jgX5YNUAuU69EDRTeqWnRx2tesM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lnwqj4NaxcjjQLXMZHQPozOZrZwY0EVYxOXePJChekMCaf8fYjPKYGy1QFa5t0lo1
-	 LpOwMUtI7cjpKg6ccqJ1+KPIX5rD+lt/LkZw6j/HqfG1CKilKslQLlsNaK0EJbabKA
-	 vDcDldAcNVxNO7Iqmr9Bs9ijHV1DIAQJW6wSAzzhKFsizS1yf9fNAepUgmPm65/Aah
-	 h83novl3wN8YO36WTD/R8XYc9wV2keez6Zya2QR3wIj+/q89DQD9RtLUOCkzl1CiiP
-	 G/pQ78lEZ48O9ySgRToaXsWyPbfB6kPgVqvmmdyrMqnwAJoXdkcc3XiwGQFVm8bRKe
-	 HNs27YXY1F1wg==
+	b=pdoN6bjxvVcOMvRCWBv4qSnJhY0PMbGggb3sltRmNcjGNY1dF5AZvIZoTar0p81xx
+	 BgesdRNxqoakCUENs7t4eFvjMGXYIiM6bVl1YChj562BMp2DeNVFPOjoQ9V49YiAER
+	 eHsBR+3+2eotZQGZ2N4Zr9Pz7y6XR+wjiFvIIRtSbw3uoV52SZiNMGF1uULwpCsAmH
+	 LtsofeoU5YjxI0jtFCBuMbiAHaAGMEl4x9qR7NyWbRd1jMU2pTDE+gXxWDa2mbHxpS
+	 D/xCrTuC4yA36obm8OQsQJOBnZ+Kf0/Wd78bl++oZdF5tXd3OG9E/sh9AOOuDYs385
+	 dj5giasMbDDDg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Miri Korenblit <miriam.rachel.korenblit@intel.com>,
-	Johannes Berg <johannes.berg@intel.com>,
+Cc: Deepanshu Kartikey <kartikey406@gmail.com>,
+	syzbot+9c4e33e12283d9437c25@syzkaller.appspotmail.com,
+	Christian Brauner <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	johannes@sipsolutions.net,
-	linux-wireless@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18-6.6] wifi: mac80211: correctly check if CSA is active
-Date: Mon,  2 Feb 2026 16:46:16 -0500
-Message-ID: <20260202214643.212290-21-sashal@kernel.org>
+	mjguzik@gmail.com
+Subject: [PATCH AUTOSEL 6.18-5.10] romfs: check sb_set_blocksize() return value
+Date: Mon,  2 Feb 2026 16:46:17 -0500
+Message-ID: <20260202214643.212290-22-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260202214643.212290-1-sashal@kernel.org>
 References: <20260202214643.212290-1-sashal@kernel.org>
@@ -51,218 +51,160 @@ X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.18.8
 Content-Transfer-Encoding: 8bit
 
-From: Miri Korenblit <miriam.rachel.korenblit@intel.com>
+From: Deepanshu Kartikey <kartikey406@gmail.com>
 
-[ Upstream commit db1d0b6ab11f612ea8a327663a578c8946efeee9 ]
+[ Upstream commit ab7ad7abb3660c58ffffdf07ff3bb976e7e0afa0 ]
 
-We are not adding an interface if an existing one is doing CSA.
-But the check won't work for MLO station interfaces, since for those,
-vif->bss_conf is zeroed out.
-Fix this by checking if any link of the vif has an active CSA.
+romfs_fill_super() ignores the return value of sb_set_blocksize(), which
+can fail if the requested block size is incompatible with the block
+device's configuration.
 
-Reviewed-by: Johannes Berg <johannes.berg@intel.com>
-Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
-Link: https://patch.msgid.link/20260111191912.7ceff62fc561.Ia38d27f42684d1cfd82d930d232bd5dea6ab9282@changeid
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+This can be triggered by setting a loop device's block size larger than
+PAGE_SIZE using ioctl(LOOP_SET_BLOCK_SIZE, 32768), then mounting a romfs
+filesystem on that device.
+
+When sb_set_blocksize(sb, ROMBSIZE) is called with ROMBSIZE=4096 but the
+device has logical_block_size=32768, bdev_validate_blocksize() fails
+because the requested size is smaller than the device's logical block
+size. sb_set_blocksize() returns 0 (failure), but romfs ignores this and
+continues mounting.
+
+The superblock's block size remains at the device's logical block size
+(32768). Later, when sb_bread() attempts I/O with this oversized block
+size, it triggers a kernel BUG in folio_set_bh():
+
+    kernel BUG at fs/buffer.c:1582!
+    BUG_ON(size > PAGE_SIZE);
+
+Fix by checking the return value of sb_set_blocksize() and failing the
+mount with -EINVAL if it returns 0.
+
+Reported-by: syzbot+9c4e33e12283d9437c25@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=9c4e33e12283d9437c25
+Signed-off-by: Deepanshu Kartikey <kartikey406@gmail.com>
+Link: https://patch.msgid.link/20260113084037.1167887-1-kartikey406@gmail.com
+Signed-off-by: Christian Brauner <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-Now I have a complete picture. Let me analyze this commit
-comprehensively.
+The bug has existed since 2009 when romfs was originally written. The
+pattern of not checking `sb_set_blocksize()` return value has been there
+from the beginning.
 
-## Analysis
+## Analysis Summary
 
 ### 1. COMMIT MESSAGE ANALYSIS
-
-**Subject**: "wifi: mac80211: correctly check if CSA is active"
-
-The commit clearly describes a bug fix - the existing CSA (Channel
-Switch Announcement) check doesn't work properly for MLO (Multi-Link
-Operation) station interfaces. The message explains:
-- The problem: "the check won't work for MLO station interfaces, since
-  for those, vif->bss_conf is zeroed out"
-- The fix: "checking if any link of the vif has an active CSA"
-
-**Tags present**:
-- Reviewed-by: Johannes Berg (mac80211 maintainer) - strong credibility
-  signal
-- Signed-off-by: Miri Korenblit (Intel wireless developer)
-- Link to mailing list
-
-No explicit Fixes: tag, but that's expected for commits we're reviewing.
+- **Clear bug description**: The commit message explains that
+  `romfs_fill_super()` ignores the return value of `sb_set_blocksize()`,
+  which can fail when the requested block size is incompatible with the
+  block device's configuration.
+- **Reproducibility**: The bug can be triggered by setting a loop
+  device's block size larger than PAGE_SIZE using
+  `ioctl(LOOP_SET_BLOCK_SIZE, 32768)`, then mounting a romfs filesystem.
+- **Impact clearly stated**: Results in a kernel BUG in `folio_set_bh()`
+  at fs/buffer.c
+- **Syzbot reported**: Has `Reported-by:` tag from syzbot with a link to
+  the bug report
+- **Signed-off**: Proper sign-off chain from submitter and Christian
+  Brauner (VFS maintainer)
 
 ### 2. CODE CHANGE ANALYSIS
+The fix is straightforward and minimal:
+- **Before**: `sb_set_blocksize(sb, ROMBSIZE);` (return value ignored)
+- **After**: Checks if `sb_set_blocksize()` returns 0 (failure), prints
+  an error message, and returns `-EINVAL`
 
-**The Bug:**
-The original code at line 379:
-```c
-if (nsdata->vif.bss_conf.csa_active)
-    return -EBUSY;
-```
-
-This check is used in `ieee80211_check_concurrent_iface()` to prevent
-adding a new interface while an existing interface is performing a
-channel switch operation.
-
-**Why it's broken for MLO:**
-For MLO (Multi-Link Operation) station interfaces introduced in WiFi 7
-(802.11be):
-- `vif->bss_conf` is zeroed out by design
-- Each link has its own BSS configuration stored in `link_conf[link_id]`
-- The CSA state (`csa_active`) is per-link, not per-VIF
-- Checking `vif->bss_conf.csa_active` will always return `false` for MLO
-  interfaces, even if one of the links is actively switching channels
-
-**The Fix:**
-```c
-struct ieee80211_link_data *link;
-...
-for_each_link_data(nsdata, link) {
-    if (link->conf->csa_active)
-        return -EBUSY;
-}
-```
-
-This properly iterates through all valid links and checks if ANY link
-has an active CSA. The `for_each_link_data` macro:
-- For non-MLO interfaces: iterates once with the single (deflink) link
-- For MLO interfaces: iterates through all links with bits set in
-  `valid_links`
-
-**Technical mechanism**: The fix is correct because it unifies the check
-- it works for both MLO and non-MLO interfaces while maintaining the
-same semantics.
+The bug mechanism:
+1. `sb_set_blocksize()` can fail if the requested block size (ROMBSIZE =
+   1024) is smaller than the block device's logical block size
+2. When it fails, it returns 0 but romfs ignores this and continues
+   mounting
+3. The superblock retains the device's (larger) block size instead of
+   ROMBSIZE
+4. Later buffer head allocations use this oversized block size
+5. This triggers a BUG_ON condition when the block size exceeds folio
+   size
 
 ### 3. CLASSIFICATION
-
-This is clearly a **bug fix**, not a new feature:
-- The concurrent interface protection during CSA was always intended to
-  work
-- It just doesn't work for the newer MLO interface type
-- This is a correctness fix for existing functionality
+- **Bug fix**: This is clearly fixing a bug, not adding a feature
+- **Type**: Missing error check leading to kernel BUG/crash
+- **Security implications**: Could potentially be triggered by
+  unprivileged users via loop device mounting (if permitted)
 
 ### 4. SCOPE AND RISK ASSESSMENT
-
-**Lines changed**: Small - adds ~6 lines, removes 2 lines (net +4)
-**Files touched**: 1 file (net/mac80211/iface.c)
-**Complexity**: Low - simple loop iteration replacing a single field
-access
-**Subsystem**: mac80211 WiFi subsystem - widely used but WiFi-specific
-
-**Risk level**: LOW
-- The change is straightforward and the logic is sound
-- The `for_each_link_data` macro is designed for exactly this use case
-- Reviewed by Johannes Berg, the mac80211 maintainer
-- Failure mode: If the fix doesn't work, we're no worse than before
-  (still have the bug)
+- **Lines changed**: Only 4 lines changed (+3, -1)
+- **Files touched**: 1 file (fs/romfs/super.c)
+- **Subsystem**: romfs filesystem (simple, mature, read-only FS)
+- **Risk**: Very low - the fix simply adds error checking that matches
+  the pattern used by all other filesystems
+- **Could this break something?**: No - it only fails the mount earlier
+  with a clear error message instead of proceeding to a kernel BUG
 
 ### 5. USER IMPACT
-
-**Who is affected?**: Users with MLO-capable WiFi hardware (WiFi 7 /
-802.11be devices)
-**Severity**: Medium - Without this fix:
-- A new interface could be incorrectly allowed to be added during an
-  ongoing channel switch on an MLO interface
-- This could cause interference, connectivity issues, or undefined
-  behavior
-- Channel switches are relatively rare events, so impact is somewhat
-  limited
+- **Severity**: HIGH - causes kernel BUG (crash/oops)
+- **Affected users**: Anyone using romfs on block devices with non-
+  standard block sizes
+- **Triggerable by**: Can be triggered through loop device configuration
 
 ### 6. STABILITY INDICATORS
-
-- **Reviewed-by**: Johannes Berg (mac80211 maintainer) - strong positive
-  signal
-- Author: Miri Korenblit from Intel - active wireless developer
+- **Reported by syzbot**: Yes, with reproducible test case
+- **Maintainer sign-off**: Christian Brauner (VFS maintainer) signed off
+- **In mainline**: Merged in v6.19-rc8 cycle
+- **Pattern matches other filesystems**: The fix follows the exact same
+  pattern used by ext2, ext4, fuse, f2fs, minix, qnx6, ufs, hfs, exfat,
+  erofs, gfs2, ocfs2, udf, nilfs2, freevxfs, efs, and many other
+  filesystems
 
 ### 7. DEPENDENCY CHECK
+- **Dependencies**: None - standalone fix
+- **Code exists in stable**: Yes - romfs has been in the kernel since
+  2.6.x era with this same vulnerable pattern
+- **Clean backport**: Should apply cleanly - the fix is self-contained
 
-**Critical dependency**: This fix uses the `for_each_link_data` macro
-which was introduced in commit f61c7b3d442be ("wifi: mac80211: Add link
-iteration macro for link data") in kernel v6.16.
+## Verdict
 
-**Backport applicability**:
-- **v6.16+**: Can be applied directly - has the macro
-- **v6.1-v6.15**: Would require either:
-  1. Backporting the `for_each_link_data` macro first, OR
-  2. Writing an alternative fix using open-coded link iteration
+This commit is an excellent candidate for stable backporting:
 
-MLO support was introduced in v6.1, so the bug exists in all kernels
-v6.1 through current that have MLO station interface support.
+1. **Fixes a real bug**: Kernel BUG/crash (oops) when mounting romfs on
+   certain block device configurations
+2. **Obviously correct**: Simply adds the same error check that every
+   other filesystem has
+3. **Small and contained**: 4 lines changed in one file
+4. **No new features**: Just error handling
+5. **Low risk**: The fix is defensive and can only make mount fail early
+   with a clear error instead of crashing
+6. **Well documented**: Clear commit message with syzbot link
+7. **Maintainer approved**: Signed off by VFS maintainer
+8. **Long-standing bug**: Has existed since 2009 when romfs gained block
+   device support
 
-### Summary
-
-| Criteria | Assessment |
-|----------|------------|
-| Obviously correct | YES - simple iteration fix |
-| Fixes real bug | YES - incorrect CSA check for MLO |
-| Important issue | MEDIUM - affects interface addition during channel
-switch |
-| Small and contained | YES - 4 net lines changed |
-| No new features | YES - fixes existing feature |
-| Applies cleanly | DEPENDS - needs v6.16+ for macro dependency |
-
-### VERDICT
-
-This is a legitimate bug fix for MLO WiFi support:
-- It fixes a real, demonstrable bug where CSA detection fails for MLO
-  interfaces
-- The fix is small, surgical, and well-reviewed
-- It doesn't introduce new features or change APIs
-- It improves correctness of existing functionality
-
-**However**, there are important caveats:
-1. The fix has a dependency on the `for_each_link_data` macro
-   (introduced in v6.16)
-2. For stable trees before v6.16, a backport would need the macro too or
-   use an alternative approach
-3. MLO is relatively new technology (WiFi 7), so the affected user base
-   is smaller
-
-Given that this fix:
-- Is obviously correct and addresses a real bug
-- Was reviewed by the subsystem maintainer
-- Has low risk of regression
-- Affects real user scenarios (channel switching during interface
-  operations)
-
-The fix is appropriate for stable backporting to kernels that have both
-MLO support and the `for_each_link_data` macro (v6.16+). For older
-stable trees (v6.1-v6.15), a modified backport with the macro or open-
-coded iteration would be needed.
+The fix follows established kernel filesystem patterns and poses
+essentially zero risk of regression while fixing a reproducible kernel
+BUG.
 
 **YES**
 
- net/mac80211/iface.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ fs/romfs/super.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/net/mac80211/iface.c b/net/mac80211/iface.c
-index 0ca55b9655a7f..72c129478da08 100644
---- a/net/mac80211/iface.c
-+++ b/net/mac80211/iface.c
-@@ -350,6 +350,8 @@ static int ieee80211_check_concurrent_iface(struct ieee80211_sub_if_data *sdata,
- 	/* we hold the RTNL here so can safely walk the list */
- 	list_for_each_entry(nsdata, &local->interfaces, list) {
- 		if (nsdata != sdata && ieee80211_sdata_running(nsdata)) {
-+			struct ieee80211_link_data *link;
-+
- 			/*
- 			 * Only OCB and monitor mode may coexist
- 			 */
-@@ -376,8 +378,10 @@ static int ieee80211_check_concurrent_iface(struct ieee80211_sub_if_data *sdata,
- 			 * will not add another interface while any channel
- 			 * switch is active.
- 			 */
--			if (nsdata->vif.bss_conf.csa_active)
--				return -EBUSY;
-+			for_each_link_data(nsdata, link) {
-+				if (link->conf->csa_active)
-+					return -EBUSY;
-+			}
+diff --git a/fs/romfs/super.c b/fs/romfs/super.c
+index 0addcc849ff2c..e83f9b78d7a16 100644
+--- a/fs/romfs/super.c
++++ b/fs/romfs/super.c
+@@ -458,7 +458,10 @@ static int romfs_fill_super(struct super_block *sb, struct fs_context *fc)
  
- 			/*
- 			 * The remaining checks are only performed for interfaces
+ #ifdef CONFIG_BLOCK
+ 	if (!sb->s_mtd) {
+-		sb_set_blocksize(sb, ROMBSIZE);
++		if (!sb_set_blocksize(sb, ROMBSIZE)) {
++			errorf(fc, "romfs: unable to set blocksize\n");
++			return -EINVAL;
++		}
+ 	} else {
+ 		sb->s_blocksize = ROMBSIZE;
+ 		sb->s_blocksize_bits = blksize_bits(ROMBSIZE);
 -- 
 2.51.0
 
