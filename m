@@ -1,44 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B3EE244186;
-	Mon,  2 Feb 2026 21:47:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4856244186;
+	Mon,  2 Feb 2026 21:47:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770068826; cv=none; b=pBVI1G4Xr+tSB0mvUbe0NkXaurxHKXrqzDkimjrxCIlHXS4q8OqJh5CAhekRuFfjCdHpdBQPbNChK3umMIYdCIHVQJaNTm9625GULFd6vSY5x1apJvv/+XinJecc7se/Q/dxbTzDvPCJMoT12c/KBgGyr8qnWy5+vNY7O8ie5JA=
+	t=1770068830; cv=none; b=WJWEIJVr5JRXBSDXCf4LyuJS9y5uU/ps79aIdayJAtKAcVxZ4yFN+c4je1cWQklfS6NWJZMIuXOv5v8Lb6rLggkT4T2GCPYjVEite5bkQomkc3ZCRqvFyOCCWBRURCDSD+sPbSMx8B3Dx280PablWHBI4jRkJfa4HhDR48F5PWI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770068826; c=relaxed/simple;
-	bh=XPLLLQzpIAooc5kDBIwtZy3yzmxAdYstw8fdD46YujE=;
+	s=arc-20240116; t=1770068830; c=relaxed/simple;
+	bh=rf76p7P7EQrUbXBDSkkDe2pkCFjhVruNCBUmHdBWNj4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jj1df0UYQXBcfwIOm64Ts+jsab82aXEwjyOn7YqYEj1ONyC6FlSb0cu9QH19gLlcUouTNyWE/muGIgoA0huPMzAg/4E4aBNVl8jhAdZTNeDNQ2M7+WkCInZMxLRZb5RgBOyCLvWo/0W0DHVbrSjUacSlnawnIHGx8V0gTkQ+N6Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=p9Vndd7K; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HV/K/9f3rmw78X1qP1qg7x7aaWLDaXctCLVN4exdRS/zntDA36Wor1iz/VNXijFbJpQ4LnWTztyP7FnMV9iaAUH+cCIle1nFoE1PV3irQzhZaUb1W77uaJ7UdNUDLX2jZO10DE/yY38sc2fEWP5NoKTIEnBKo3fnmmHJtL2zlDg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=juYS+oBe; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="p9Vndd7K"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 649F5C19421;
-	Mon,  2 Feb 2026 21:47:05 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="juYS+oBe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 62B8FC19421;
+	Mon,  2 Feb 2026 21:47:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1770068826;
-	bh=XPLLLQzpIAooc5kDBIwtZy3yzmxAdYstw8fdD46YujE=;
+	s=k20201202; t=1770068830;
+	bh=rf76p7P7EQrUbXBDSkkDe2pkCFjhVruNCBUmHdBWNj4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=p9Vndd7KeVU5/UE2/ZbXb1o85k1stDQHIXvOrExJgkC/jmPDinuAR5PEhkl+QRb/T
-	 60uUv+tnki9OiuArDEINBlo4rRPAskIDPiurDgNMhYg3Xk+5orX0yfaqjYY1/58rUZ
-	 sd54XJ/SqMahDqgnAyq6Tn5gEsqT43dtImlleYPVYzsOthppvS/HNOld65pAqR32BO
-	 LeL35kiur+hqqBsqi/0DdrwmwKRilM9bLT0DPQ0SSDLsm7/Xny2nobw97+9HM9bPb2
-	 1GYF0DZAYpvvfEgjczXCPBvIr088retb8AgB6l4oQQW9CRVG0fqbKkJDkKwTuUyJ51
-	 45V873pQ+YQaw==
+	b=juYS+oBemepquZygEhUW/5rhpD/JZqh3uVV9c0bPLmrlDSthy2DrEjWb+6gqj27/s
+	 raAPSjzDuLwbsdNQqEI6evq/6+rRL62h3vEtuTvbW1w/VDBFlnAmDeHa2FixazgGhd
+	 MfhT2r1bIj5XtjwJb4ieJBoKFQ1QT5VRHjFruevugVMhcTqZjXzajsXb4gu469dUq0
+	 WWCYR1BkfIkqeGmYm4Rd6M9ASTPzEw5H7zEvrGhuz5RIjb/lvXTaNZEcZVKycry4Yy
+	 RMIUWK2sbAhoLrb4PCu/4z3Kd6If9Oq2nYXcM6prKBa16WttR0dJYgtNKEg8K0QUZ5
+	 8P5pmSOxGxpsw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Maurizio Lombardi <mlombard@redhat.com>,
-	Zhaojuan Guo <zguo@redhat.com>,
-	Mike Christie <michael.christie@oracle.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+Cc: Zhang Heng <zhangheng@kylinos.cn>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>,
-	tglx@kernel.org,
-	mingo@kernel.org
-Subject: [PATCH AUTOSEL 6.18-5.10] scsi: target: iscsi: Fix use-after-free in iscsit_dec_conn_usage_count()
-Date: Mon,  2 Feb 2026 16:46:05 -0500
-Message-ID: <20260202214643.212290-10-sashal@kernel.org>
+	sbinding@opensource.cirrus.com,
+	kailang@realtek.com,
+	chris.chiu@canonical.com,
+	edip@medip.dev
+Subject: [PATCH AUTOSEL 6.18-6.1] ALSA: hda/realtek: Add quirk for Inspur S14-G1
+Date: Mon,  2 Feb 2026 16:46:06 -0500
+Message-ID: <20260202214643.212290-11-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260202214643.212290-1-sashal@kernel.org>
 References: <20260202214643.212290-1-sashal@kernel.org>
@@ -53,106 +53,158 @@ X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.18.8
 Content-Transfer-Encoding: 8bit
 
-From: Maurizio Lombardi <mlombard@redhat.com>
+From: Zhang Heng <zhangheng@kylinos.cn>
 
-[ Upstream commit 9411a89e9e7135cc459178fa77a3f1d6191ae903 ]
+[ Upstream commit 9e18920e783d0bcd4c127a7adc66565243ab9655 ]
 
-In iscsit_dec_conn_usage_count(), the function calls complete() while
-holding the conn->conn_usage_lock. As soon as complete() is invoked, the
-waiter (such as iscsit_close_connection()) may wake up and proceed to free
-the iscsit_conn structure.
+Inspur S14-G1 is equipped with ALC256.
+Enable "power saving mode" and Enable "headset jack mode".
 
-If the waiter frees the memory before the current thread reaches
-spin_unlock_bh(), it results in a KASAN slab-use-after-free as the function
-attempts to release a lock within the already-freed connection structure.
-
-Fix this by releasing the spinlock before calling complete().
-
-Signed-off-by: Maurizio Lombardi <mlombard@redhat.com>
-Reported-by: Zhaojuan Guo <zguo@redhat.com>
-Reviewed-by: Mike Christie <michael.christie@oracle.com>
-Link: https://patch.msgid.link/20260112165352.138606-2-mlombard@redhat.com
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Signed-off-by: Zhang Heng <zhangheng@kylinos.cn>
+Link: https://patch.msgid.link/20260126073508.3897461-2-zhangheng@kylinos.cn
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-This confirms the race condition analysis perfectly:
-1. `iscsit_check_conn_usage_count(conn)` waits for usage count to become
-   0
-2. Once it returns (after `complete()` is called), it immediately calls
-   `iscsit_free_conn(conn)` at line 4363
-3. If the decrementer thread hasn't released the spinlock yet, it will
-   try to `spin_unlock_bh()` on freed memory
+## Analysis: ALSA: hda/realtek: Add quirk for Inspur S14-G1
 
-### FINAL ASSESSMENT
+### 1. COMMIT MESSAGE ANALYSIS
 
-**Why this should be backported:**
+The commit message is straightforward:
+- Subject indicates this adds a quirk for the Inspur S14-G1 laptop
+- The device uses an ALC256 codec
+- The quirk enables "power saving mode" and "headset jack mode"
+- Has proper sign-offs and review chain (Takashi Iwai is the HDA
+  subsystem maintainer)
 
-1. **Fixes a real, reproducible bug:** The commit explicitly mentions
-   KASAN detection and has a "Reported-by" tag, confirming this is a
-   real issue that was hit in practice.
+No Fixes: tag or Cc: stable tag is present, which is expected for
+commits under review.
 
-2. **Serious bug type:** Use-after-free is a critical memory safety bug
-   that can cause:
-   - Kernel panics/crashes
-   - Data corruption
-   - Potential security exploits (UAF is a common attack vector)
+### 2. CODE CHANGE ANALYSIS
 
-3. **Obvious correctness:** The fix follows the well-known pattern of
-   "unlock before complete" which is the standard way to avoid this
-   class of race conditions. The code change is straightforward and the
-   logic is preserved.
+The change is a single line addition to the `alc269_fixup_tbl[]` quirk
+table:
 
-4. **Small and contained:**
-   - Only 6 lines changed
-   - Single function modified
-   - No new APIs or features
-   - Self-contained fix
+```c
+SND_PCI_QUIRK(0x2039, 0x0001, "Inspur S14-G1",
+ALC295_FIXUP_CHROME_BOOK),
+```
 
-5. **Low regression risk:** The change only reorders operations (unlock
-   before complete instead of after). The same checks are made, same
-   operations performed.
+This adds a PCI quirk entry with:
+- Vendor ID: `0x2039` (Inspur)
+- Device ID: `0x0001`
+- Description: "Inspur S14-G1"
+- Fixup: `ALC295_FIXUP_CHROME_BOOK`
 
-6. **Affects production systems:** iSCSI target code is used in
-   enterprise storage environments where kernel crashes are
-   unacceptable.
+The `ALC295_FIXUP_CHROME_BOOK` fixup is an existing, well-tested fixup
+that's already used by other devices in this table (e.g., Intel NUC 13
+at line 8086:3038).
 
-7. **Long-standing code:** The affected function has been in the kernel
-   since 2011, meaning all stable trees contain this vulnerable code.
+### 3. CLASSIFICATION
 
-8. **Expert review:** Reviewed by Mike Christie (iSCSI maintainer) and
-   signed off by Martin K. Petersen (SCSI maintainer).
+**This is a HARDWARE QUIRK addition** - one of the explicit exceptions
+allowed in stable trees.
 
-9. **Clean backport expected:** No dependencies on other commits, the
-   fix is self-contained and should apply cleanly to all stable trees.
+This falls under the category of "QUIRKS and WORKAROUNDS" which are
+explicitly allowed because:
+- The driver (snd-hda-intel with Realtek codec support) already exists
+  in stable
+- Only a device ID mapping is being added
+- The fixup being used (`ALC295_FIXUP_CHROME_BOOK`) already exists and
+  is tested
+- This enables proper audio functionality on specific hardware
 
-**Risk assessment:** MINIMAL. The fix is a classic pattern, well-
-reviewed, and doesn't change functionality.
+### 4. SCOPE AND RISK ASSESSMENT
+
+**Scope:**
+- 1 line changed
+- 1 file touched
+- Adds entry to a static quirk table
+- No logic changes whatsoever
+
+**Risk: EXTREMELY LOW**
+- The quirk table is a simple array of PCI ID to fixup mappings
+- This change only affects devices with vendor:device ID `0x2039:0x0001`
+- No other hardware can be affected
+- The fixup being applied (`ALC295_FIXUP_CHROME_BOOK`) is already proven
+  stable
+
+### 5. USER IMPACT
+
+**Who is affected:**
+- Users of Inspur S14-G1 laptops (a specific Inspur laptop model)
+
+**Problem without this patch:**
+- Headset jack may not work properly
+- Power management for audio may not be optimal
+- These are real usability issues for affected hardware owners
+
+**Severity:** Moderate - affects audio usability but not a crash or data
+corruption
+
+### 6. STABILITY INDICATORS
+
+- Signed off by Takashi Iwai (long-time HDA maintainer at SUSE)
+- Follows the standard pattern used by hundreds of other quirk entries
+  in this file
+- Uses an existing, tested fixup (`ALC295_FIXUP_CHROME_BOOK`)
+
+### 7. DEPENDENCY CHECK
+
+**Dependencies: NONE**
+- The `ALC295_FIXUP_CHROME_BOOK` fixup has existed in the kernel for
+  years
+- The quirk table structure is stable across kernel versions
+- This will apply cleanly to any stable tree that has the Realtek HDA
+  driver
+
+### Summary
+
+This commit is a textbook example of a stable-appropriate quirk
+addition:
+
+1. **Meets stable rules:**
+   - Obviously correct (single line addition to quirk table)
+   - Fixes a real bug (audio not working properly on specific hardware)
+   - Small and contained (1 line)
+   - Does NOT add new features (uses existing fixup)
+
+2. **Falls under allowed exceptions:**
+   - Hardware quirk/workaround for a specific device
+   - Enables proper functionality on hardware that exists in the field
+
+3. **Risk vs Benefit:**
+   - Risk: Near zero (only affects one specific device ID)
+   - Benefit: Audio functionality for Inspur S14-G1 users
+
+4. **No concerns:**
+   - No dependencies
+   - Applies cleanly to any kernel with the Realtek HDA driver
+   - Standard practice followed by hundreds of similar entries
+
+This is exactly the type of patch that stable trees accept regularly - a
+simple hardware quirk that enables device support without any risk to
+other systems.
 
 **YES**
 
- drivers/target/iscsi/iscsi_target_util.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ sound/hda/codecs/realtek/alc269.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/target/iscsi/iscsi_target_util.c b/drivers/target/iscsi/iscsi_target_util.c
-index 262a3e76b4b1c..c1888c42afdd5 100644
---- a/drivers/target/iscsi/iscsi_target_util.c
-+++ b/drivers/target/iscsi/iscsi_target_util.c
-@@ -813,8 +813,11 @@ void iscsit_dec_conn_usage_count(struct iscsit_conn *conn)
- 	spin_lock_bh(&conn->conn_usage_lock);
- 	conn->conn_usage_count--;
- 
--	if (!conn->conn_usage_count && conn->conn_waiting_on_uc)
-+	if (!conn->conn_usage_count && conn->conn_waiting_on_uc) {
-+		spin_unlock_bh(&conn->conn_usage_lock);
- 		complete(&conn->conn_waiting_on_uc_comp);
-+		return;
-+	}
- 
- 	spin_unlock_bh(&conn->conn_usage_lock);
- }
+diff --git a/sound/hda/codecs/realtek/alc269.c b/sound/hda/codecs/realtek/alc269.c
+index 32cba2c81ccdd..4ab89cb6e55f2 100644
+--- a/sound/hda/codecs/realtek/alc269.c
++++ b/sound/hda/codecs/realtek/alc269.c
+@@ -7239,6 +7239,7 @@ static const struct hda_quirk alc269_fixup_tbl[] = {
+ 	SND_PCI_QUIRK(0x1ee7, 0x2078, "HONOR BRB-X M1010", ALC2XX_FIXUP_HEADSET_MIC),
+ 	SND_PCI_QUIRK(0x1f66, 0x0105, "Ayaneo Portable Game Player", ALC287_FIXUP_CS35L41_I2C_2),
+ 	SND_PCI_QUIRK(0x2014, 0x800a, "Positivo ARN50", ALC269_FIXUP_LIMIT_INT_MIC_BOOST),
++	SND_PCI_QUIRK(0x2039, 0x0001, "Inspur S14-G1", ALC295_FIXUP_CHROME_BOOK),
+ 	SND_PCI_QUIRK(0x2782, 0x0214, "VAIO VJFE-CL", ALC269_FIXUP_LIMIT_INT_MIC_BOOST),
+ 	SND_PCI_QUIRK(0x2782, 0x0228, "Infinix ZERO BOOK 13", ALC269VB_FIXUP_INFINIX_ZERO_BOOK_13),
+ 	SND_PCI_QUIRK(0x2782, 0x0232, "CHUWI CoreBook XPro", ALC269VB_FIXUP_CHUWI_COREBOOK_XPRO),
 -- 
 2.51.0
 
