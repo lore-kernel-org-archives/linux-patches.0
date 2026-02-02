@@ -1,45 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B2A326FDAC;
-	Mon,  2 Feb 2026 21:47:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B3EE244186;
+	Mon,  2 Feb 2026 21:47:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770068824; cv=none; b=GnFUDxI2hGsCAcyNQ5aRjDPzDdmvm5baww5pXn6NWyeuzufpwWadWPnOQ4y2Cqw9YegWBEwm8cqY1Mt0uLtD0/q4/jQ0oZ5QFJqa1FDUX62buIMGjgpqIrLFxvv8r44h6G+O7h6zGF9o0ey+/cvNpefPG8ofnPVw4XfWYQLq0ic=
+	t=1770068826; cv=none; b=pBVI1G4Xr+tSB0mvUbe0NkXaurxHKXrqzDkimjrxCIlHXS4q8OqJh5CAhekRuFfjCdHpdBQPbNChK3umMIYdCIHVQJaNTm9625GULFd6vSY5x1apJvv/+XinJecc7se/Q/dxbTzDvPCJMoT12c/KBgGyr8qnWy5+vNY7O8ie5JA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770068824; c=relaxed/simple;
-	bh=+6iROAG5/9Xm34mS31BAd6t3JchO9wLqj3VtDUs1EWU=;
+	s=arc-20240116; t=1770068826; c=relaxed/simple;
+	bh=XPLLLQzpIAooc5kDBIwtZy3yzmxAdYstw8fdD46YujE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=rYjSmV8RXt5Ean9HM1iMMYCkhxHCIjDHYha8qpJqWFeC7DOSb/3W4SCWq9qx+ekEp8epvOB0/SO9o3y4xFoZhlq3hNBszSiZjlC9grSKIx9kvHAuBdvQajucGs+AzYyYmJuX17XmGMeXvBBcv1dwH9YSYO57yi7f2ymCimzl+sM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=LjJ2IhtJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jj1df0UYQXBcfwIOm64Ts+jsab82aXEwjyOn7YqYEj1ONyC6FlSb0cu9QH19gLlcUouTNyWE/muGIgoA0huPMzAg/4E4aBNVl8jhAdZTNeDNQ2M7+WkCInZMxLRZb5RgBOyCLvWo/0W0DHVbrSjUacSlnawnIHGx8V0gTkQ+N6Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=p9Vndd7K; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="LjJ2IhtJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F2CDFC19425;
-	Mon,  2 Feb 2026 21:47:02 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="p9Vndd7K"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 649F5C19421;
+	Mon,  2 Feb 2026 21:47:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1770068824;
-	bh=+6iROAG5/9Xm34mS31BAd6t3JchO9wLqj3VtDUs1EWU=;
+	s=k20201202; t=1770068826;
+	bh=XPLLLQzpIAooc5kDBIwtZy3yzmxAdYstw8fdD46YujE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LjJ2IhtJf1GHcCQMfbXwAksuSLmnCOtrMqgaUuW7ckxK4M+t50H2OxVu/7QEAkKom
-	 ZYV1rknkE/NqImbd9scT0yxS/MNkNBrd3Nb1hWKfIE7jQhKrMrtc1YA34ZW66Je6P/
-	 a/gfLy42OPf3mvZss7s9frwSbZyLDnMfVQCIEecYvbfgjXn/OLQNA1QY1eIJzpddAN
-	 G48rzC9w9hP1UWf+DsQvzkkZaXYWaJrrGbo/lMYTYbefnXL0NhR9kWStkKSgVo8zkB
-	 homvsVTDj8i9hapQP5omFjCJvQtcAfPkx4Q7zxrRIqbv2GUWGmgA0BdE7eESMNFatt
-	 3OwL/AznFC+7Q==
+	b=p9Vndd7KeVU5/UE2/ZbXb1o85k1stDQHIXvOrExJgkC/jmPDinuAR5PEhkl+QRb/T
+	 60uUv+tnki9OiuArDEINBlo4rRPAskIDPiurDgNMhYg3Xk+5orX0yfaqjYY1/58rUZ
+	 sd54XJ/SqMahDqgnAyq6Tn5gEsqT43dtImlleYPVYzsOthppvS/HNOld65pAqR32BO
+	 LeL35kiur+hqqBsqi/0DdrwmwKRilM9bLT0DPQ0SSDLsm7/Xny2nobw97+9HM9bPb2
+	 1GYF0DZAYpvvfEgjczXCPBvIr088retb8AgB6l4oQQW9CRVG0fqbKkJDkKwTuUyJ51
+	 45V873pQ+YQaw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Ricardo Rivera-Matos <rriveram@opensource.cirrus.com>,
-	Charles Keepax <ckeepax@opensource.cirrus.com>,
-	Mark Brown <broonie@kernel.org>,
+Cc: Maurizio Lombardi <mlombard@redhat.com>,
+	Zhaojuan Guo <zguo@redhat.com>,
+	Mike Christie <michael.christie@oracle.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>,
-	david.rhodes@cirrus.com,
-	rf@opensource.cirrus.com,
-	linux-sound@vger.kernel.org,
-	patches@opensource.cirrus.com
-Subject: [PATCH AUTOSEL 6.18-6.1] ASoC: cs35l45: Corrects ASP_TX5 DAPM widget channel
-Date: Mon,  2 Feb 2026 16:46:04 -0500
-Message-ID: <20260202214643.212290-9-sashal@kernel.org>
+	tglx@kernel.org,
+	mingo@kernel.org
+Subject: [PATCH AUTOSEL 6.18-5.10] scsi: target: iscsi: Fix use-after-free in iscsit_dec_conn_usage_count()
+Date: Mon,  2 Feb 2026 16:46:05 -0500
+Message-ID: <20260202214643.212290-10-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260202214643.212290-1-sashal@kernel.org>
 References: <20260202214643.212290-1-sashal@kernel.org>
@@ -52,161 +51,108 @@ MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.18.8
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ricardo Rivera-Matos <rriveram@opensource.cirrus.com>
+From: Maurizio Lombardi <mlombard@redhat.com>
 
-[ Upstream commit 6dd0fdc908c02318c28ec2c0979661846ee0a9f7 ]
+[ Upstream commit 9411a89e9e7135cc459178fa77a3f1d6191ae903 ]
 
-ASP_TX5 was incorrectly mapped to a channel value of 3 corrects,
-the channel value of 4.
+In iscsit_dec_conn_usage_count(), the function calls complete() while
+holding the conn->conn_usage_lock. As soon as complete() is invoked, the
+waiter (such as iscsit_close_connection()) may wake up and proceed to free
+the iscsit_conn structure.
 
-Reviewed-by: Charles Keepax <ckeepax@opensource.cirrus.com>
-Signed-off-by: Ricardo Rivera-Matos <rriveram@opensource.cirrus.com>
-Link: https://patch.msgid.link/20260115192523.1335742-2-rriveram@opensource.cirrus.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+If the waiter frees the memory before the current thread reaches
+spin_unlock_bh(), it results in a KASAN slab-use-after-free as the function
+attempts to release a lock within the already-freed connection structure.
+
+Fix this by releasing the spinlock before calling complete().
+
+Signed-off-by: Maurizio Lombardi <mlombard@redhat.com>
+Reported-by: Zhaojuan Guo <zguo@redhat.com>
+Reviewed-by: Mike Christie <michael.christie@oracle.com>
+Link: https://patch.msgid.link/20260112165352.138606-2-mlombard@redhat.com
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-## Analysis of ASoC: cs35l45 DAPM Widget Channel Fix
+This confirms the race condition analysis perfectly:
+1. `iscsit_check_conn_usage_count(conn)` waits for usage count to become
+   0
+2. Once it returns (after `complete()` is called), it immediately calls
+   `iscsit_free_conn(conn)` at line 4363
+3. If the decrementer thread hasn't released the spinlock yet, it will
+   try to `spin_unlock_bh()` on freed memory
 
-### 1. COMMIT MESSAGE ANALYSIS
+### FINAL ASSESSMENT
 
-The commit message is straightforward: it corrects the ASP_TX5 DAPM
-widget channel value from 3 to 4. The message explicitly states this is
-a correction of an incorrect mapping. Key observations:
-- Uses the word "Corrects" indicating this is a bug fix
-- Has a "Reviewed-by:" tag from Charles Keepax (Cirrus Logic engineer)
-- No Fixes: tag or Cc: stable tag (expected for commits under review)
+**Why this should be backported:**
 
-### 2. CODE CHANGE ANALYSIS
+1. **Fixes a real, reproducible bug:** The commit explicitly mentions
+   KASAN detection and has a "Reported-by" tag, confirming this is a
+   real issue that was hit in practice.
 
-The change is a single-character fix:
-```c
-- SND_SOC_DAPM_AIF_OUT("ASP_TX5", NULL, 3, CS35L45_ASP_ENABLES1,
-  CS35L45_ASP_TX5_EN_SHIFT, 0),
-+ SND_SOC_DAPM_AIF_OUT("ASP_TX5", NULL, 4, CS35L45_ASP_ENABLES1,
-CS35L45_ASP_TX5_EN_SHIFT, 0),
-```
+2. **Serious bug type:** Use-after-free is a critical memory safety bug
+   that can cause:
+   - Kernel panics/crashes
+   - Data corruption
+   - Potential security exploits (UAF is a common attack vector)
 
-Looking at the context, the third parameter in `SND_SOC_DAPM_AIF_OUT`
-represents the channel number. The pattern in the code is clear:
-- ASP_TX1: channel 0
-- ASP_TX2: channel 1
-- ASP_TX3: channel 2
-- ASP_TX4: channel 3
-- ASP_TX5: was 3 (duplicate!), should be 4
+3. **Obvious correctness:** The fix follows the well-known pattern of
+   "unlock before complete" which is the standard way to avoid this
+   class of race conditions. The code change is straightforward and the
+   logic is preserved.
 
-This is an obvious copy-paste error where ASP_TX5 was accidentally given
-the same channel number (3) as ASP_TX4. Each TX widget should have a
-unique, sequential channel number.
+4. **Small and contained:**
+   - Only 6 lines changed
+   - Single function modified
+   - No new APIs or features
+   - Self-contained fix
 
-### 3. CLASSIFICATION
+5. **Low regression risk:** The change only reorders operations (unlock
+   before complete instead of after). The same checks are made, same
+   operations performed.
 
-**Bug Fix**: This is clearly fixing an incorrect configuration value,
-not adding a feature. The channel parameter is used by the ALSA/ASoC
-framework to route audio data correctly. Having two TX widgets with the
-same channel number would cause incorrect audio routing behavior.
+6. **Affects production systems:** iSCSI target code is used in
+   enterprise storage environments where kernel crashes are
+   unacceptable.
 
-**Type of Bug**: Data/configuration corruption - audio data intended for
-channel 5 would be misrouted.
+7. **Long-standing code:** The affected function has been in the kernel
+   since 2011, meaning all stable trees contain this vulnerable code.
 
-### 4. SCOPE AND RISK ASSESSMENT
+8. **Expert review:** Reviewed by Mike Christie (iSCSI maintainer) and
+   signed off by Martin K. Petersen (SCSI maintainer).
 
-- **Lines changed**: 1 line
-- **Files changed**: 1 file (sound/soc/codecs/cs35l45.c)
-- **Complexity**: Trivially simple - changing a single integer constant
-- **Risk**: Extremely low - this is correcting an obviously wrong value
-  to an obviously correct value
-- **Subsystem**: ASoC codec driver for Cirrus Logic CS35L45 (audio
-  amplifier IC)
+9. **Clean backport expected:** No dependencies on other commits, the
+   fix is self-contained and should apply cleanly to all stable trees.
 
-The fix cannot introduce any new bugs because:
-1. It's correcting a clearly wrong value (duplicate channel number)
-2. The correct value (4) follows the obvious sequential pattern
-3. No logic changes, just a constant correction
-
-### 5. USER IMPACT
-
-The CS35L45 is an audio amplifier commonly used in:
-- Laptops
-- Smartphones
-- Tablets
-- Other mobile/embedded devices
-
-Users with CS35L45 hardware who use ASP_TX5 would experience:
-- Incorrect audio routing
-- Audio data corruption or loss on channel 5
-- Potentially broken audio capture/monitoring functionality
-
-While this may not affect all users of the driver (only those using all
-5 TX channels), those who do use TX5 would definitely hit this bug.
-
-### 6. STABILITY INDICATORS
-
-- **Reviewed-by**: Charles Keepax (Cirrus Logic kernel engineer) -
-  indicates the fix was reviewed by a domain expert
-- **Maintainer sign-off**: Mark Brown (ASoC maintainer) accepted the
-  patch
-- The fix is trivially correct by inspection
-
-### 7. DEPENDENCY CHECK
-
-- No dependencies on other commits
-- The cs35l45 driver exists in stable kernels
-- The fix applies to the same code structure that has existed since the
-  driver was introduced
-
-### 8. STABLE KERNEL CRITERIA EVALUATION
-
-| Criterion | Assessment |
-|-----------|------------|
-| Obviously correct | ✅ Yes - sequential channel numbering is obvious |
-| Fixes a real bug | ✅ Yes - duplicate channel causes audio routing
-issues |
-| Important issue | ✅ Moderate - affects audio functionality for
-affected users |
-| Small and contained | ✅ Yes - 1 line change |
-| No new features | ✅ Correct - just fixes misconfiguration |
-| No new APIs | ✅ Correct |
-
-### CONCLUSION
-
-This is an ideal stable backport candidate:
-1. **Trivially simple**: Single character change (3 → 4)
-2. **Obviously correct**: The sequential pattern makes the error and fix
-   self-evident
-3. **Real bug**: Duplicate channel numbers cause actual audio routing
-   problems
-4. **Zero risk**: Cannot introduce regressions - it's correcting an
-   obvious typo
-5. **Well-reviewed**: Has review from Cirrus Logic engineer and ASoC
-   maintainer
-6. **Self-contained**: No dependencies, applies cleanly
-
-The fix is small, surgical, and meets all stable kernel criteria.
+**Risk assessment:** MINIMAL. The fix is a classic pattern, well-
+reviewed, and doesn't change functionality.
 
 **YES**
 
- sound/soc/codecs/cs35l45.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/target/iscsi/iscsi_target_util.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/sound/soc/codecs/cs35l45.c b/sound/soc/codecs/cs35l45.c
-index d4dcdf37bb709..9b1eff4e9bb71 100644
---- a/sound/soc/codecs/cs35l45.c
-+++ b/sound/soc/codecs/cs35l45.c
-@@ -455,7 +455,7 @@ static const struct snd_soc_dapm_widget cs35l45_dapm_widgets[] = {
- 	SND_SOC_DAPM_AIF_OUT("ASP_TX2", NULL, 1, CS35L45_ASP_ENABLES1, CS35L45_ASP_TX2_EN_SHIFT, 0),
- 	SND_SOC_DAPM_AIF_OUT("ASP_TX3", NULL, 2, CS35L45_ASP_ENABLES1, CS35L45_ASP_TX3_EN_SHIFT, 0),
- 	SND_SOC_DAPM_AIF_OUT("ASP_TX4", NULL, 3, CS35L45_ASP_ENABLES1, CS35L45_ASP_TX4_EN_SHIFT, 0),
--	SND_SOC_DAPM_AIF_OUT("ASP_TX5", NULL, 3, CS35L45_ASP_ENABLES1, CS35L45_ASP_TX5_EN_SHIFT, 0),
-+	SND_SOC_DAPM_AIF_OUT("ASP_TX5", NULL, 4, CS35L45_ASP_ENABLES1, CS35L45_ASP_TX5_EN_SHIFT, 0),
+diff --git a/drivers/target/iscsi/iscsi_target_util.c b/drivers/target/iscsi/iscsi_target_util.c
+index 262a3e76b4b1c..c1888c42afdd5 100644
+--- a/drivers/target/iscsi/iscsi_target_util.c
++++ b/drivers/target/iscsi/iscsi_target_util.c
+@@ -813,8 +813,11 @@ void iscsit_dec_conn_usage_count(struct iscsit_conn *conn)
+ 	spin_lock_bh(&conn->conn_usage_lock);
+ 	conn->conn_usage_count--;
  
- 	SND_SOC_DAPM_MUX("ASP_TX1 Source", SND_SOC_NOPM, 0, 0, &cs35l45_asp_muxes[0]),
- 	SND_SOC_DAPM_MUX("ASP_TX2 Source", SND_SOC_NOPM, 0, 0, &cs35l45_asp_muxes[1]),
+-	if (!conn->conn_usage_count && conn->conn_waiting_on_uc)
++	if (!conn->conn_usage_count && conn->conn_waiting_on_uc) {
++		spin_unlock_bh(&conn->conn_usage_lock);
+ 		complete(&conn->conn_waiting_on_uc_comp);
++		return;
++	}
+ 
+ 	spin_unlock_bh(&conn->conn_usage_lock);
+ }
 -- 
 2.51.0
 
