@@ -1,42 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0C062D8DD1;
-	Mon,  2 Feb 2026 21:47:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B2A326FDAC;
+	Mon,  2 Feb 2026 21:47:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770068823; cv=none; b=tpglGsnvEV0QhE8O943lLMQksC7xIWCvSrwQOTpN4jvzat2DzeOi4QmQvz4jafib6N3icdk6dgSNYvhebcMXLYPFWXY7vN8wEp4L/5IRP0YwNJC/GX3u4BWIi6nlYDWRAUeCUmOiu55e6d6tGoPJf6VAJUFSqVtC8wwdV7Al01k=
+	t=1770068824; cv=none; b=GnFUDxI2hGsCAcyNQ5aRjDPzDdmvm5baww5pXn6NWyeuzufpwWadWPnOQ4y2Cqw9YegWBEwm8cqY1Mt0uLtD0/q4/jQ0oZ5QFJqa1FDUX62buIMGjgpqIrLFxvv8r44h6G+O7h6zGF9o0ey+/cvNpefPG8ofnPVw4XfWYQLq0ic=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770068823; c=relaxed/simple;
-	bh=yMmc+gE/TeEIykfimutfHJ9UuR39OimXvChOlxkMweM=;
+	s=arc-20240116; t=1770068824; c=relaxed/simple;
+	bh=+6iROAG5/9Xm34mS31BAd6t3JchO9wLqj3VtDUs1EWU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=uCCMeYq9B9nRlvPMAqKgVstAlrhrBKcw5pgZJw9E7Q3wntp80Mdbdll+jpXb4ET+inuWdsCUTV4RxioJd5oZRUM2AxNpJrjh/XLgiL4NK4IK7IV/5f4D7mcxwp/kfHBKF5dcrcch6+s5WmgyQFjrhvHtErvH/7ajYCDdf/O5m14=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=p5w/LoB1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=rYjSmV8RXt5Ean9HM1iMMYCkhxHCIjDHYha8qpJqWFeC7DOSb/3W4SCWq9qx+ekEp8epvOB0/SO9o3y4xFoZhlq3hNBszSiZjlC9grSKIx9kvHAuBdvQajucGs+AzYyYmJuX17XmGMeXvBBcv1dwH9YSYO57yi7f2ymCimzl+sM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=LjJ2IhtJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="p5w/LoB1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5565C19421;
-	Mon,  2 Feb 2026 21:47:01 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="LjJ2IhtJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F2CDFC19425;
+	Mon,  2 Feb 2026 21:47:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1770068822;
-	bh=yMmc+gE/TeEIykfimutfHJ9UuR39OimXvChOlxkMweM=;
+	s=k20201202; t=1770068824;
+	bh=+6iROAG5/9Xm34mS31BAd6t3JchO9wLqj3VtDUs1EWU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=p5w/LoB1rQ5xrffwr8k1ObXK2oeFKK28VJ5FMXY88XD6+8mjG+wqub7/K98M46BCX
-	 tyPcQOlFWA92S1K6ljFMvNxGQMZdDyZXzRkr/WCPgwXf8tSMjxxdTpXz6zv0rvD5h9
-	 92HQbNIPM9WVmlkVl+HZJRFm9dE1qOjekEwhapGZ6PtXNcNGGX/yXGAUJoTFTWu6W5
-	 O39KN0I7hm+/kkq08SJ45R8wJQ7AVbjxN8KR+2HiN2puu6PSzsxb5XKBkmCZoCWtv6
-	 QGg80vXdTmDO5Ofz3Ghm4JODTA7sE/IjH/Ffcv2C43Z9wM8QGrX6xVzsXefYCMV1BP
-	 9IfCeMsBhelhg==
+	b=LjJ2IhtJf1GHcCQMfbXwAksuSLmnCOtrMqgaUuW7ckxK4M+t50H2OxVu/7QEAkKom
+	 ZYV1rknkE/NqImbd9scT0yxS/MNkNBrd3Nb1hWKfIE7jQhKrMrtc1YA34ZW66Je6P/
+	 a/gfLy42OPf3mvZss7s9frwSbZyLDnMfVQCIEecYvbfgjXn/OLQNA1QY1eIJzpddAN
+	 G48rzC9w9hP1UWf+DsQvzkkZaXYWaJrrGbo/lMYTYbefnXL0NhR9kWStkKSgVo8zkB
+	 homvsVTDj8i9hapQP5omFjCJvQtcAfPkx4Q7zxrRIqbv2GUWGmgA0BdE7eESMNFatt
+	 3OwL/AznFC+7Q==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Devyn Liu <liudingyuan@h-partners.com>,
-	Yang Shen <shenyang39@huawei.com>,
+Cc: Ricardo Rivera-Matos <rriveram@opensource.cirrus.com>,
+	Charles Keepax <ckeepax@opensource.cirrus.com>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	linux-spi@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18-6.6] spi: hisi-kunpeng: Fixed the wrong debugfs node name in hisi_spi debugfs initialization
-Date: Mon,  2 Feb 2026 16:46:03 -0500
-Message-ID: <20260202214643.212290-8-sashal@kernel.org>
+	david.rhodes@cirrus.com,
+	rf@opensource.cirrus.com,
+	linux-sound@vger.kernel.org,
+	patches@opensource.cirrus.com
+Subject: [PATCH AUTOSEL 6.18-6.1] ASoC: cs35l45: Corrects ASP_TX5 DAPM widget channel
+Date: Mon,  2 Feb 2026 16:46:04 -0500
+Message-ID: <20260202214643.212290-9-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260202214643.212290-1-sashal@kernel.org>
 References: <20260202214643.212290-1-sashal@kernel.org>
@@ -52,142 +55,158 @@ X-stable-base: Linux 6.18.8
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Devyn Liu <liudingyuan@h-partners.com>
+From: Ricardo Rivera-Matos <rriveram@opensource.cirrus.com>
 
-[ Upstream commit b062a899c997df7b9ce29c62164888baa7a85833 ]
+[ Upstream commit 6dd0fdc908c02318c28ec2c0979661846ee0a9f7 ]
 
-In hisi_spi_debugfs_init, spi controller pointer is calculated
-by container_of macro, and the member is hs->dev. But the host
-cannot be calculated offset directly by this. (hs->dev) points
-to (pdev->dev), and it is the (host->dev.parent) rather than
-(host->dev) points to the (pdev->dev), which is set in
-__spi_alloc_controller.
+ASP_TX5 was incorrectly mapped to a channel value of 3 corrects,
+the channel value of 4.
 
-In this patch, this issues is fixed by getting the spi_controller
-data from pdev->dev by dev_get_drvdata() directly. (dev->driver_data)
-points to the spi controller data in the probe stage.
-
-Signed-off-by: Devyn Liu <liudingyuan@h-partners.com>
-Reviewed-by: Yang Shen <shenyang39@huawei.com>
-Link: https://patch.msgid.link/20260108075323.3831574-1-liudingyuan@h-partners.com
+Reviewed-by: Charles Keepax <ckeepax@opensource.cirrus.com>
+Signed-off-by: Ricardo Rivera-Matos <rriveram@opensource.cirrus.com>
+Link: https://patch.msgid.link/20260115192523.1335742-2-rriveram@opensource.cirrus.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-In `struct spi_controller`, `dev` is at offset 0. So when `container_of`
-is used with an incorrect pointer, it will calculate the "base" of the
-spi_controller by subtracting 0 from the address - meaning it will use
-`hs->dev` (pdev->dev) directly as if it were an spi_controller!
-
-This would cause the access to `host->bus_num` (used in the snprintf for
-creating debugfs directory name) to read from the wrong memory location.
-Looking at struct spi_controller, `bus_num` is at around offset 72-80
-bytes (after `dev` and `list`), so it would be reading random data from
-the platform_device structure.
-
-Let me analyze the severity:
-
-1. **Best case**: Random garbage `bus_num` value → debugfs directory
-   created with garbage name like "hisi_spi-1234567" or some nonsense
-2. **Worst case**: Could potentially read out of bounds if pdev->dev is
-   at the end of an allocation
-
-The fix is simple, correct, and uses the proper method to retrieve the
-spi_controller pointer.
-
-## Summary Analysis
+## Analysis of ASoC: cs35l45 DAPM Widget Channel Fix
 
 ### 1. COMMIT MESSAGE ANALYSIS
-The commit message clearly explains:
-- The bug: `container_of` is incorrectly used - `hs->dev` points to
-  `pdev->dev`, not `host->dev`
-- The fix: Use `dev_get_drvdata()` to correctly get the spi_controller
-  pointer
+
+The commit message is straightforward: it corrects the ASP_TX5 DAPM
+widget channel value from 3 to 4. The message explicitly states this is
+a correction of an incorrect mapping. Key observations:
+- Uses the word "Corrects" indicating this is a bug fix
+- Has a "Reviewed-by:" tag from Charles Keepax (Cirrus Logic engineer)
+- No Fixes: tag or Cc: stable tag (expected for commits under review)
 
 ### 2. CODE CHANGE ANALYSIS
-**The Bug:**
-- `hs->dev = dev` where `dev = &pdev->dev` (platform device's device)
-- `host = container_of(hs->dev, struct spi_controller, dev)` computes
-  wrong offset
-- Since `dev` is at offset 0 in spi_controller, this treats `pdev->dev`
-  as if it were the spi_controller
-- Accessing `host->bus_num` reads garbage from wrong memory location
 
-**The Fix:**
-- Uses `dev_get_drvdata(hs->dev)` to correctly retrieve the
-  spi_controller pointer
-- This works because `platform_set_drvdata(pdev, host)` was called in
-  probe
+The change is a single-character fix:
+```c
+- SND_SOC_DAPM_AIF_OUT("ASP_TX5", NULL, 3, CS35L45_ASP_ENABLES1,
+  CS35L45_ASP_TX5_EN_SHIFT, 0),
++ SND_SOC_DAPM_AIF_OUT("ASP_TX5", NULL, 4, CS35L45_ASP_ENABLES1,
+CS35L45_ASP_TX5_EN_SHIFT, 0),
+```
 
-**The fix is obviously correct:** It mirrors how other parts of the
-driver (e.g., interrupt handler) retrieve the spi_controller.
+Looking at the context, the third parameter in `SND_SOC_DAPM_AIF_OUT`
+represents the channel number. The pattern in the code is clear:
+- ASP_TX1: channel 0
+- ASP_TX2: channel 1
+- ASP_TX3: channel 2
+- ASP_TX4: channel 3
+- ASP_TX5: was 3 (duplicate!), should be 4
+
+This is an obvious copy-paste error where ASP_TX5 was accidentally given
+the same channel number (3) as ASP_TX4. Each TX widget should have a
+unique, sequential channel number.
 
 ### 3. CLASSIFICATION
-- **Bug fix**: Yes, this fixes a real bug where incorrect memory is
-  accessed
-- **Category**: Bug fix for incorrect pointer calculation
+
+**Bug Fix**: This is clearly fixing an incorrect configuration value,
+not adding a feature. The channel parameter is used by the ALSA/ASoC
+framework to route audio data correctly. Having two TX widgets with the
+same channel number would cause incorrect audio routing behavior.
+
+**Type of Bug**: Data/configuration corruption - audio data intended for
+channel 5 would be misrouted.
 
 ### 4. SCOPE AND RISK ASSESSMENT
-- **Lines changed**: Net -4 lines, very small change
-- **Files touched**: 1 driver file
-- **Risk**: Very low - changes a local variable initialization in a
-  debugfs init function
-- **Could break something else?**: No, this is a purely local fix
+
+- **Lines changed**: 1 line
+- **Files changed**: 1 file (sound/soc/codecs/cs35l45.c)
+- **Complexity**: Trivially simple - changing a single integer constant
+- **Risk**: Extremely low - this is correcting an obviously wrong value
+  to an obviously correct value
+- **Subsystem**: ASoC codec driver for Cirrus Logic CS35L45 (audio
+  amplifier IC)
+
+The fix cannot introduce any new bugs because:
+1. It's correcting a clearly wrong value (duplicate channel number)
+2. The correct value (4) follows the obvious sequential pattern
+3. No logic changes, just a constant correction
 
 ### 5. USER IMPACT
-- **Who is affected**: Users of HiSilicon Kunpeng SoC SPI controllers
-  with debugfs enabled
-- **Severity**: The bug causes incorrect debugfs directory naming and
-  potentially reads garbage memory
-- **Hardware support**: This driver is for specific Kunpeng server SoCs
+
+The CS35L45 is an audio amplifier commonly used in:
+- Laptops
+- Smartphones
+- Tablets
+- Other mobile/embedded devices
+
+Users with CS35L45 hardware who use ASP_TX5 would experience:
+- Incorrect audio routing
+- Audio data corruption or loss on channel 5
+- Potentially broken audio capture/monitoring functionality
+
+While this may not affect all users of the driver (only those using all
+5 TX channels), those who do use TX5 would definitely hit this bug.
 
 ### 6. STABILITY INDICATORS
-- Has "Reviewed-by:" tag from another Huawei engineer
-- The fix is straightforward and mirrors existing patterns in the driver
+
+- **Reviewed-by**: Charles Keepax (Cirrus Logic kernel engineer) -
+  indicates the fix was reviewed by a domain expert
+- **Maintainer sign-off**: Mark Brown (ASoC maintainer) accepted the
+  patch
+- The fix is trivially correct by inspection
 
 ### 7. DEPENDENCY CHECK
-- The driver exists since v5.13, so this is relevant for 5.15.y, 6.1.y,
-  6.6.y, etc.
-- No dependencies on other commits - standalone fix
 
-## Conclusion
+- No dependencies on other commits
+- The cs35l45 driver exists in stable kernels
+- The fix applies to the same code structure that has existed since the
+  driver was introduced
 
-This commit fixes a real bug in pointer calculation that causes
-incorrect memory access. The fix is:
-- Small and surgical (changes one variable initialization)
-- Obviously correct (uses the same pattern as other code in the driver)
-- Fixes a real bug (incorrect container_of usage)
-- Low risk (only affects debugfs, but still fixes incorrect memory
-  access)
+### 8. STABLE KERNEL CRITERIA EVALUATION
 
-The bug could cause reading garbage values or potentially undefined
-behavior. While debugfs is primarily a debugging interface, the
-incorrect memory access is still a real bug that should be fixed in
-stable trees.
+| Criterion | Assessment |
+|-----------|------------|
+| Obviously correct | ✅ Yes - sequential channel numbering is obvious |
+| Fixes a real bug | ✅ Yes - duplicate channel causes audio routing
+issues |
+| Important issue | ✅ Moderate - affects audio functionality for
+affected users |
+| Small and contained | ✅ Yes - 1 line change |
+| No new features | ✅ Correct - just fixes misconfiguration |
+| No new APIs | ✅ Correct |
+
+### CONCLUSION
+
+This is an ideal stable backport candidate:
+1. **Trivially simple**: Single character change (3 → 4)
+2. **Obviously correct**: The sequential pattern makes the error and fix
+   self-evident
+3. **Real bug**: Duplicate channel numbers cause actual audio routing
+   problems
+4. **Zero risk**: Cannot introduce regressions - it's correcting an
+   obvious typo
+5. **Well-reviewed**: Has review from Cirrus Logic engineer and ASoC
+   maintainer
+6. **Self-contained**: No dependencies, applies cleanly
+
+The fix is small, surgical, and meets all stable kernel criteria.
 
 **YES**
 
- drivers/spi/spi-hisi-kunpeng.c | 4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
+ sound/soc/codecs/cs35l45.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/spi/spi-hisi-kunpeng.c b/drivers/spi/spi-hisi-kunpeng.c
-index dadf558dd9c0c..80a1a15de0bc3 100644
---- a/drivers/spi/spi-hisi-kunpeng.c
-+++ b/drivers/spi/spi-hisi-kunpeng.c
-@@ -161,10 +161,8 @@ static const struct debugfs_reg32 hisi_spi_regs[] = {
- static int hisi_spi_debugfs_init(struct hisi_spi *hs)
- {
- 	char name[32];
-+	struct spi_controller *host = dev_get_drvdata(hs->dev);
+diff --git a/sound/soc/codecs/cs35l45.c b/sound/soc/codecs/cs35l45.c
+index d4dcdf37bb709..9b1eff4e9bb71 100644
+--- a/sound/soc/codecs/cs35l45.c
++++ b/sound/soc/codecs/cs35l45.c
+@@ -455,7 +455,7 @@ static const struct snd_soc_dapm_widget cs35l45_dapm_widgets[] = {
+ 	SND_SOC_DAPM_AIF_OUT("ASP_TX2", NULL, 1, CS35L45_ASP_ENABLES1, CS35L45_ASP_TX2_EN_SHIFT, 0),
+ 	SND_SOC_DAPM_AIF_OUT("ASP_TX3", NULL, 2, CS35L45_ASP_ENABLES1, CS35L45_ASP_TX3_EN_SHIFT, 0),
+ 	SND_SOC_DAPM_AIF_OUT("ASP_TX4", NULL, 3, CS35L45_ASP_ENABLES1, CS35L45_ASP_TX4_EN_SHIFT, 0),
+-	SND_SOC_DAPM_AIF_OUT("ASP_TX5", NULL, 3, CS35L45_ASP_ENABLES1, CS35L45_ASP_TX5_EN_SHIFT, 0),
++	SND_SOC_DAPM_AIF_OUT("ASP_TX5", NULL, 4, CS35L45_ASP_ENABLES1, CS35L45_ASP_TX5_EN_SHIFT, 0),
  
--	struct spi_controller *host;
--
--	host = container_of(hs->dev, struct spi_controller, dev);
- 	snprintf(name, 32, "hisi_spi%d", host->bus_num);
- 	hs->debugfs = debugfs_create_dir(name, NULL);
- 	if (IS_ERR(hs->debugfs))
+ 	SND_SOC_DAPM_MUX("ASP_TX1 Source", SND_SOC_NOPM, 0, 0, &cs35l45_asp_muxes[0]),
+ 	SND_SOC_DAPM_MUX("ASP_TX2 Source", SND_SOC_NOPM, 0, 0, &cs35l45_asp_muxes[1]),
 -- 
 2.51.0
 
