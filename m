@@ -1,174 +1,181 @@
-Received: from n169-113.mail.139.com (n169-113.mail.139.com [120.232.169.113])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D5F0633E7
-	for <patches@lists.linux.dev>; Mon,  2 Feb 2026 03:19:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=120.232.169.113
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770002364; cv=none; b=e8aFb3Sm18NjcAlYTjLkTsLNHZs7NIgLkEelzLTDPZWQAr+wZOo/FUchvlceugHzu1Lmo/ljID7pXPApBPxgI/6EV5zdayrSgyLumDuQNH/Ucg/OZq1x1xpdJ4U/MkyM948idv36DkkOhxnarqwv+M4b+geGIHWvij9aqDkc5Xk=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770002364; c=relaxed/simple;
-	bh=hkKN4IEXtI+q3M1llnEEpthTvKvZyF+I4P0hEeDzTSA=;
-	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=oKq/knmty/cP5cJah1leHzGOtJ4bmBEuP1fn21tR9s0wM0yjg9cmk9dmUfqX9IUqO750M6bLYJkZspSkJk+/dkP/AiGhE3lxbRY/TXfBqLQD1Z2GLLLxjfVrOBvwF3Z9hZu9hZ7Tk8poiM9H2IGsH70ElPruXluOAvfhB9kVR6I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=139.com; spf=pass smtp.mailfrom=139.com; dkim=pass (1024-bit key) header.d=139.com header.i=@139.com header.b=otFBNxGZ; arc=none smtp.client-ip=120.232.169.113
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=139.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=139.com
+Received: from mail-oo1-f48.google.com (mail-oo1-f48.google.com [209.85.161.48])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2BB4A23ED75
+	for <patches@lists.linux.dev>; Mon,  2 Feb 2026 06:02:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.161.48
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1770012130; cv=pass; b=Kitp7bKKgmwL9SLuT3b+ACnbpzQsbBm51Z1zoLgel0lbPi4ygqUiCljRECyvylLkzgxWMnDDLrYzpwmbX2Q/rapM9rl3WsW+eaLrSFWQnQs9HX5CD7Zz70CrfnEoq+Xu2yICymooYx2a2DPW4Uz+itb7B7GFxJ3ZMSqcLciGFgo=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1770012130; c=relaxed/simple;
+	bh=1PCVKoGEu5ZKGgsfNA8Godrm165Zgd+zEgQyqYZf1M4=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=Hg/C6VhwUhdye9QHynSXD4FnOZ80apshDC+M0BLEvzL3bwAQu2BGn+daPuVDWLBeep5sEIKCQjtaIIKpwc4J+LU4q+1ZqNI9Tb9QWJqSVNns1c8gP155AmCXy1phOF/AMHM6/uaUjWvesZ6xTqNJWiB6zQZ2n0Aj9JfgqPEklTY=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=rivosinc.com; spf=pass smtp.mailfrom=rivosinc.com; dkim=pass (2048-bit key) header.d=rivosinc.com header.i=@rivosinc.com header.b=OHnZiBCS; arc=pass smtp.client-ip=209.85.161.48
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=rivosinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=rivosinc.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=139.com header.i=@139.com header.b="otFBNxGZ"
+	dkim=pass (2048-bit key) header.d=rivosinc.com header.i=@rivosinc.com header.b="OHnZiBCS"
+Received: by mail-oo1-f48.google.com with SMTP id 006d021491bc7-6610e72112bso1920115eaf.1
+        for <patches@lists.linux.dev>; Sun, 01 Feb 2026 22:02:08 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1770012128; cv=none;
+        d=google.com; s=arc-20240605;
+        b=d75DJk869916dtdw7rXhnxYvPhHrj5ULgICAIfWhTo0/GunqBsmO9EVY15ywtHD5oR
+         TeGKto17fDuaAEA8vE9+hvGdW1JZPovQyOvSzJuZdjR9zoQ15l/RNA3iRPOV3EGx3b7d
+         9Nf4eYl9ujEHWEqE3wUHkA7rg8q8fv4OSaH6qydNId2rZwhmTxwXMI2en/fKbn86oIZU
+         x/OkE1gR4f9j6W4KSObfLMpJNx3CxGwxBGyorTNvJyOwx3ACqPBnp6sv2Qow5XLTlNCd
+         kIUyBwbmJEGgy7lh43piQDVoDBqnwmuGwNXDawNk7tEHRHHbDdyBID8PGftCDUMIJlfR
+         czgw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=GcxQOk1Ogg7o0Jhu3EeWbmSG4NAptutIfk5zNYKLdfs=;
+        fh=TAxxTSfOBsY9GbV+geWHipJh1pDeP7GdMW7mchE4uh0=;
+        b=PFVvDFSmGXhDT/OyYdXq3ouWUF8uUlHReYi7jYyl9mRPGfQF36bkCt24HTs/miLiUP
+         HnpGF6QPi1I5q7atvigSPWdN2CjP3Mramt/nJ6pfNZ0QtlTwV3AJn9gvHE+rObtZ2YE+
+         eC0foGeUyfonsoxIUraWobQmn8h/wZfBhtyhK3DHxniAQR215dJR/8mK/Vml+sEx09HF
+         Sa3EKtyOdUnNlktuSVzBBjDk4LuQQuX3keHs0ObubePurR08xox4M1PbG10VzsDsKGwQ
+         VjfVQLs4xa3PZnGOYuFwXBrWK8d50oNUYX6QrFylOuW0LoS3bB+mQUJSGIBYbSZatWc+
+         ENQg==;
+        darn=lists.linux.dev
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-	d=139.com; s=dkim; l=0;
-	h=from:subject:message-id:to:cc:mime-version;
-	bh=47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU=;
-	b=otFBNxGZRAcu7HGFfDRkgVagwHwvyTUo7FzmhCjyj1eqqQEE/JefeS/IRjbXvbymPoY6I+ZEBr0Ya
-	 3yQIeIYG8wfAI8shSCRYF8fLW4sL+cKiLA3egnw7B45nlBAE1ILzjPNwdA7ckSy40MI9pZRv2yXmI2
-	 Ad/WqvhlMkudoe/c=
-X-RM-TagInfo: emlType=0                                       
-X-RM-SPAM:                                                                                        
-X-RM-SPAM-FLAG:00000000
-Received:from NTT-kernel-dev (unknown[60.247.85.88])
-	by rmsmtp-lg-appmail-32-12046 (RichMail) with SMTP id 2f0e698016dadd9-00df7;
-	Mon, 02 Feb 2026 11:15:40 +0800 (CST)
-X-RM-TRANSID:2f0e698016dadd9-00df7
-From: Li hongliang <1468888505@139.com>
-To: gregkh@linuxfoundation.org,
-	stable@vger.kernel.org,
-	linkinjeon@kernel.org
-Cc: patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org,
-	norbert@doyensec.com,
-	ysk@kzalloc.com,
-	sfrench@samba.org,
-	senozhatsky@chromium.org,
-	tom@talpey.com,
-	akendo@akendo.eu,
-	set_pte_at@outlook.com,
-	linux-cifs@vger.kernel.org,
-	stfrench@microsoft.com
-Subject: [PATCH 6.1.y 1/2] ksmbd: fix use-after-free in ksmbd_session_rpc_open
-Date: Mon,  2 Feb 2026 11:15:50 +0800
-Message-Id: <20260202031550.514894-1-1468888505@139.com>
-X-Mailer: git-send-email 2.34.1
+        d=rivosinc.com; s=google; t=1770012128; x=1770616928; darn=lists.linux.dev;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=GcxQOk1Ogg7o0Jhu3EeWbmSG4NAptutIfk5zNYKLdfs=;
+        b=OHnZiBCSB9tPxsfdQWn7b/NiHJIAAsn6CEMr7ZGnYp45eGyLYb5hIEc6+RuIFwhYHb
+         XXxDyWLCcsu5fGhszZI9gKFcvZzUkmhTWF16Blc99LPHHIXUh2IlaWzhfiumUvGpnbL9
+         REGaKqDUXlqsJmN8eK/fDd6FAlVc7hHwopixkpd1fyYkKLXy0FTOSgRmGP2evO9Is2ft
+         T3dkhySWMDJzi4Y/2hmpcHmup3NbCSJ/4kKVbiVCSuIE5/8fGV+fAUenL7ttexxsXGY9
+         3Y2luynKNll9jS+cdg9VobDZGRoymP+96DTRxz7rTcZpCChdeqO+kqFSznQL6EpbxUMZ
+         q+nw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1770012128; x=1770616928;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=GcxQOk1Ogg7o0Jhu3EeWbmSG4NAptutIfk5zNYKLdfs=;
+        b=goegamTqLkEsN2g8XxWbnLSELsF2MXZ5Y+RcNWlWhrmeDOTdiOVEslPGntPVoiZikc
+         G6cfj85FGCzCoShJqJ/niVTF2MZ4kq8ePuX4EfFh4gHAv+zoy7uR783CkQ57PtkXjxzH
+         qw7KeJf2BFbz6TtbO3d2ZBUTUasPvzVKQL9IWn4085VdvfUXFwzPrmkt3jySJVXXv0Bz
+         y5gCtyUJ2DU2swQTr0GBBr1dCzw3kllPg+x+UHIZyZE4/ztxYWf05VQnPnHsN2BXlnd+
+         CaHUtn2ppjFTJtcM5KXskXzwQ39RWwfmwGhD/omA+6sSrhueYhYmD/6w9HcMgqh8NUnP
+         iKeA==
+X-Forwarded-Encrypted: i=1; AJvYcCXE99JzcLTk/PAVh89U3lZKQVpmhrNxMG695W0S4wIooZCp1rLaLYKo8BSo1mdi1TVZoPV86hE+@lists.linux.dev
+X-Gm-Message-State: AOJu0YzEHnPiFmo8/jG5Qfighyo2WxKPM2q4kbdyflTbNNlKBr5L+V8H
+	qJKQRwc3sAVq3tUo5HJ9ejkZAAiAVg5JfRydp+RMOTBKV3rN9sYKP5XFHGap+RH/OTmGnbJK6To
+	1kDlaIa1PnR0qyibk0QMBObi6qqz3mYYR7ksxoRPYDw==
+X-Gm-Gg: AZuq6aKwUnbzxKKzy05d6iyjm6hBuiv9RMO2mlELZGxhsp+PBG9bnP3dYIPuUPH54rs
+	sXjQmdI/wnlyrZpb88VG3E3dq4tsbizeR5oedShAg+rFILLtlEeBSmG9L3WF2xklpONWhOniwMk
+	Nqc4TuA26Hc4HnTWuVxAXavOxjQtc/cLyFDIPeV2P/cuyH5xUyOgrZVRwyCP8DV0RKMdqPTAZYr
+	1nYKFd3okYwAO2scXJE5sQCyPLF4Vj8R/nNGWKgmQQ98oCr+Y3/bJ1YYo180RLp/u1C/VE=
+X-Received: by 2002:a05:6820:22a7:b0:662:fc84:fa6b with SMTP id
+ 006d021491bc7-6630f35f60cmr5159965eaf.49.1770012128041; Sun, 01 Feb 2026
+ 22:02:08 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <0-v3-9dbf0a72a51c+302-iommu_pt_riscv_jgg@nvidia.com>
+In-Reply-To: <0-v3-9dbf0a72a51c+302-iommu_pt_riscv_jgg@nvidia.com>
+From: Tomasz Jeznach <tjeznach@rivosinc.com>
+Date: Sun, 1 Feb 2026 22:01:55 -0800
+X-Gm-Features: AZwV_Qje4rxoo7R40kPWf455fQUtzOoH5ybCxsGtQwxNUqW6waJoYKR0ZFyVEDA
+Message-ID: <CAH2o1u5-VuEUJp2MNb41uxQJk=SR1uZbQkiqQWoLBj-+GXTVkw@mail.gmail.com>
+Subject: Re: [PATCH v3 0/5] Convert riscv to use the generic iommu page table
+To: Jason Gunthorpe <jgg@nvidia.com>
+Cc: Alexandre Ghiti <alex@ghiti.fr>, Albert Ou <aou@eecs.berkeley.edu>, iommu@lists.linux.dev, 
+	Joerg Roedel <joro@8bytes.org>, linux-riscv@lists.infradead.org, 
+	Palmer Dabbelt <palmer@dabbelt.com>, Robin Murphy <robin.murphy@arm.com>, Will Deacon <will@kernel.org>, 
+	lihangjing@bytedance.com, Xu Lu <luxu.kernel@bytedance.com>, 
+	patches@lists.linux.dev, Paul Walmsley <pjw@kernel.org>, 
+	Vincent Chen <vincent.chen@sifive.com>, xieyongji@bytedance.com, tjeznach@fb.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-From: Namjae Jeon <linkinjeon@kernel.org>
+On Fri, Jan 30, 2026 at 4:00=E2=80=AFPM Jason Gunthorpe <jgg@nvidia.com> wr=
+ote:
+>
+> [ Joerg, I think we are good now, please pick it up this cycle ]
+>
+> This is a fairly straightforward conversion of the RISC-V iommu driver to
+> use the now merged generic iommu page table code.
+>
+> It brings support for SVNAPOT which is a 64K contiguous page. Otherwise i=
+t
+> should not change the behavior.
+>
+> The series disables SADE as the dirty tracking support is not implemented
+> in the driver and should be done somewhat differently. The generic code
+> gets further along though this does not include the format implementation
+> of read and clear dirty.
+>
+> The format implementation should be able to support the 32 bit option, bu=
+t
+> this does not enable the iommu implementation as there seems to be no use=
+r
+> today.
+>
+> It looks like RISCV could support the DYNAMIC_TOP option. It would requir=
+e
+> some additional work on the core side to interact safely with SIGN_EXTEND=
+.
+>
+> This is on github: https://github.com/jgunthorpe/linux/commits/iommu_pt_r=
+iscv
+>
+> v3:
+>  - Rebase to v6.19-rc7
+>  - Add missed line in Kconfig
+> v2: https://patch.msgid.link/r/0-v2-b11ebca8abb6+c096-iommu_pt_riscv_jgg@=
+nvidia.com
+>  - Rebase to v6.19-rc1
+>  - Fix typo in PT_FEAT_RISCV_SVNAPOT_64K
+> v1: https://patch.msgid.link/r/0-v1-d3317b0ee398+50-iommu_pt_riscv_jgg@nv=
+idia.com
+>
+> Jason Gunthorpe (5):
+>   iommupt: Add the RISC-V page table format
+>   iommu/riscv: Disable SADE
+>   iommu/riscv: Use the generic iommu page table
+>   iommu/riscv: Enable SVNAPOT support for contiguous ptes
+>   iommu/riscv: Allow RISC_VIOMMU to COMPILE_TEST
+>
+>  drivers/iommu/generic_pt/.kunitconfig        |   1 +
+>  drivers/iommu/generic_pt/Kconfig             |  11 +
+>  drivers/iommu/generic_pt/fmt/Makefile        |   2 +
+>  drivers/iommu/generic_pt/fmt/defs_riscv.h    |  29 ++
+>  drivers/iommu/generic_pt/fmt/iommu_riscv64.c |  11 +
+>  drivers/iommu/generic_pt/fmt/riscv.h         | 313 +++++++++++++++++++
+>  drivers/iommu/riscv/Kconfig                  |   8 +-
+>  drivers/iommu/riscv/iommu-bits.h             |   4 +-
+>  drivers/iommu/riscv/iommu.c                  | 302 +++---------------
+>  include/linux/generic_pt/common.h            |  16 +
+>  include/linux/generic_pt/iommu.h             |  11 +
+>  11 files changed, 447 insertions(+), 261 deletions(-)
+>  create mode 100644 drivers/iommu/generic_pt/fmt/defs_riscv.h
+>  create mode 100644 drivers/iommu/generic_pt/fmt/iommu_riscv64.c
+>  create mode 100644 drivers/iommu/generic_pt/fmt/riscv.h
+>
+>
+> base-commit: 63804fed149a6750ffd28610c5c1c98cce6bd377
+> --
+> 2.43.0
+>
 
-[ Upstream commit a1f46c99d9ea411f9bf30025b912d881d36fc709 ]
+Thanks Jason for this change.
 
-A UAF issue can occur due to a race condition between
-ksmbd_session_rpc_open() and __session_rpc_close().
-Add rpc_lock to the session to protect it.
+All tested, run with NVMe / NICs. No issues. Some minor performance
+changes (positive or negative depending on the workload). No issues.
+Open issue on QEMU RISC-V IOMMU model - SVNAPOT support is missing.
+I've made a local change to fix it, and will post it soon.
 
-Cc: stable@vger.kernel.org
-Reported-by: Norbert Szetei <norbert@doyensec.com>
-Tested-by: Norbert Szetei <norbert@doyensec.com>
-Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Steve French <stfrench@microsoft.com>
-[ KSMBD_DEFAULT_GFP is introduced by commit 0066f623bce8 ("ksmbd: use __GFP_RETRY_MAYFAIL")
- after linux-6.13. Here we still use GFP_KERNEL. ]
-Signed-off-by: Li hongliang <1468888505@139.com>
----
- fs/smb/server/mgmt/user_session.c | 20 ++++++++++++++------
- fs/smb/server/mgmt/user_session.h |  1 +
- 2 files changed, 15 insertions(+), 6 deletions(-)
+Reviewed-by: Tomasz Jeznach <tjeznach@rivosinc.com>
+Tested-by: Tomasz Jeznach <tjeznach@rivosinc.com>
 
-diff --git a/fs/smb/server/mgmt/user_session.c b/fs/smb/server/mgmt/user_session.c
-index f78820afd354..2603f7dcea58 100644
---- a/fs/smb/server/mgmt/user_session.c
-+++ b/fs/smb/server/mgmt/user_session.c
-@@ -59,10 +59,12 @@ static void ksmbd_session_rpc_clear_list(struct ksmbd_session *sess)
- 	struct ksmbd_session_rpc *entry;
- 	long index;
- 
-+	down_write(&sess->rpc_lock);
- 	xa_for_each(&sess->rpc_handle_list, index, entry) {
- 		xa_erase(&sess->rpc_handle_list, index);
- 		__session_rpc_close(sess, entry);
- 	}
-+	up_write(&sess->rpc_lock);
- 
- 	xa_destroy(&sess->rpc_handle_list);
- }
-@@ -92,7 +94,7 @@ int ksmbd_session_rpc_open(struct ksmbd_session *sess, char *rpc_name)
- {
- 	struct ksmbd_session_rpc *entry, *old;
- 	struct ksmbd_rpc_command *resp;
--	int method;
-+	int method, id;
- 
- 	method = __rpc_method(rpc_name);
- 	if (!method)
-@@ -102,26 +104,29 @@ int ksmbd_session_rpc_open(struct ksmbd_session *sess, char *rpc_name)
- 	if (!entry)
- 		return -ENOMEM;
- 
-+	down_read(&sess->rpc_lock);
- 	entry->method = method;
--	entry->id = ksmbd_ipc_id_alloc();
--	if (entry->id < 0)
-+	entry->id = id = ksmbd_ipc_id_alloc();
-+	if (id < 0)
- 		goto free_entry;
--	old = xa_store(&sess->rpc_handle_list, entry->id, entry, GFP_KERNEL);
-+	old = xa_store(&sess->rpc_handle_list, id, entry, GFP_KERNEL);
- 	if (xa_is_err(old))
- 		goto free_id;
- 
--	resp = ksmbd_rpc_open(sess, entry->id);
-+	resp = ksmbd_rpc_open(sess, id);
- 	if (!resp)
- 		goto erase_xa;
- 
-+	up_read(&sess->rpc_lock);
- 	kvfree(resp);
--	return entry->id;
-+	return id;
- erase_xa:
- 	xa_erase(&sess->rpc_handle_list, entry->id);
- free_id:
- 	ksmbd_rpc_id_free(entry->id);
- free_entry:
- 	kfree(entry);
-+	up_read(&sess->rpc_lock);
- 	return -EINVAL;
- }
- 
-@@ -129,9 +134,11 @@ void ksmbd_session_rpc_close(struct ksmbd_session *sess, int id)
- {
- 	struct ksmbd_session_rpc *entry;
- 
-+	down_write(&sess->rpc_lock);
- 	entry = xa_erase(&sess->rpc_handle_list, id);
- 	if (entry)
- 		__session_rpc_close(sess, entry);
-+	up_write(&sess->rpc_lock);
- }
- 
- int ksmbd_session_rpc_method(struct ksmbd_session *sess, int id)
-@@ -404,6 +411,7 @@ static struct ksmbd_session *__session_create(int protocol)
- 	sess->sequence_number = 1;
- 	rwlock_init(&sess->tree_conns_lock);
- 	atomic_set(&sess->refcnt, 2);
-+	init_rwsem(&sess->rpc_lock);
- 
- 	ret = __init_smb2_session(sess);
- 	if (ret)
-diff --git a/fs/smb/server/mgmt/user_session.h b/fs/smb/server/mgmt/user_session.h
-index f4da293c4dbb..011362e975b0 100644
---- a/fs/smb/server/mgmt/user_session.h
-+++ b/fs/smb/server/mgmt/user_session.h
-@@ -63,6 +63,7 @@ struct ksmbd_session {
- 	rwlock_t			tree_conns_lock;
- 
- 	atomic_t			refcnt;
-+	struct rw_semaphore		rpc_lock;
- };
- 
- static inline int test_session_flag(struct ksmbd_session *sess, int bit)
--- 
-2.34.1
-
-
+Best,
+- Tomasz
