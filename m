@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21BEA312811;
-	Mon,  2 Feb 2026 21:47:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40B30314A95;
+	Mon,  2 Feb 2026 21:47:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770068845; cv=none; b=jE6REGKE7oUKtW5q+yfVzFgLl8N5hoD4PnRMuFzE5jrcYlC7L6oVWLN0+xmT6ClAdw+dAvNei6aBJGhlnddhIzXMoNfteCP5PoGNKHmc9jHmGPkC/kYfjcSdqIu4+QRRRhJjsoyCO2Bs5z2w5+CfCiEHxfRIFx+5xgnJBjw3tqY=
+	t=1770068846; cv=none; b=Au33yWLuHd8yq0YSS4Z/XLdhBDUJvmJHl9brFR6ab+9Mk/7/h1LOwFTucOB56psl+sI/FRtm75qKPZZ5D7nG4nHHEGH61TRaUxa3dR3QlUvvS2v/8tz8lZHg0vufrtlzrD1cDlgIvGpB+3JOqpo+wdLuwooAoQL+kXBhAtKs5PM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770068845; c=relaxed/simple;
-	bh=4WPF0RWd/+xw+ffbBSv0gvLKr2HM/4sbMFAx5UJIYNk=;
+	s=arc-20240116; t=1770068846; c=relaxed/simple;
+	bh=Igh4cD88rLtWgMOfnORH/Vs+R3zOyCvczFSHP9CmAgU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=DhDhOEP6lS7IRAu2XD4q1EsHcN3pUMEmaZt0HAmmuavXLWS1M9y7nTqsOIby5tMOsDM1jfzqwcgQ/fBZtQDDSlK4d3uk3YZhXPNmKB9+tMvxRENqrFcVxmqfjMIWfsh4gNOgOan53cc8HQP6zIO5eQkO8D6RIRKmZDA8VjJGHBE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=CJiIKqiG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MR1o8lmCQLScKr/4QMaASCPxDnwMYIM9p71q3uoQaK2aFWP8Q6Gl6p/D0XvSpLIRcFG97IpTTTqj5ilbFHNCYPrvQjntR+KgNjNP0TYjRtXb6jfyTor12glyd61tC7q7BG3S8Q5x4pAMMhNEqq29xk9NLWusneHD4dEYXqhbjZ0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=lnwqj4Na; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="CJiIKqiG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B7FEC116C6;
-	Mon,  2 Feb 2026 21:47:24 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="lnwqj4Na"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 66E67C2BC86;
+	Mon,  2 Feb 2026 21:47:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1770068845;
-	bh=4WPF0RWd/+xw+ffbBSv0gvLKr2HM/4sbMFAx5UJIYNk=;
+	s=k20201202; t=1770068846;
+	bh=Igh4cD88rLtWgMOfnORH/Vs+R3zOyCvczFSHP9CmAgU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CJiIKqiGoKwZbPnU/3o/Kw7yvq6/SenmWMXkRNmIOXVn8tECpvUyo8LjExmRbyA8p
-	 X8a9dJcQvODtrWv6GU/DnwF+nYQMeNnX72JvQkL2tcj0yqWpyHE/tVhlaZQzM8yguy
-	 QWaO27jyxrCt4dsytPkho4mm4nOfr78cxx12hBrkiwQRck3lfVC4G6o1H7QINRaKDV
-	 HbIrAfWqJfQULoPCijCesRKDWJbxaq8PsTfSSRi4b/Cc7S9dXIUOVpEco3VZvfhmTe
-	 7iBuHfF340EIUgR+wTqz/DkJ+RwDn9V72onto1B10pH08Dh6T/YLfEr+r2DQJqHCzK
-	 672CdCSr8oP9A==
+	b=lnwqj4NaxcjjQLXMZHQPozOZrZwY0EVYxOXePJChekMCaf8fYjPKYGy1QFa5t0lo1
+	 LpOwMUtI7cjpKg6ccqJ1+KPIX5rD+lt/LkZw6j/HqfG1CKilKslQLlsNaK0EJbabKA
+	 vDcDldAcNVxNO7Iqmr9Bs9ijHV1DIAQJW6wSAzzhKFsizS1yf9fNAepUgmPm65/Aah
+	 h83novl3wN8YO36WTD/R8XYc9wV2keez6Zya2QR3wIj+/q89DQD9RtLUOCkzl1CiiP
+	 G/pQ78lEZ48O9ySgRToaXsWyPbfB6kPgVqvmmdyrMqnwAJoXdkcc3XiwGQFVm8bRKe
+	 HNs27YXY1F1wg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Kaushlendra Kumar <kaushlendra.kumar@intel.com>,
-	Mark Brown <broonie@kernel.org>,
+Cc: Miri Korenblit <miriam.rachel.korenblit@intel.com>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>,
-	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18-6.6] regmap: maple: free entry on mas_store_gfp() failure
-Date: Mon,  2 Feb 2026 16:46:15 -0500
-Message-ID: <20260202214643.212290-20-sashal@kernel.org>
+	johannes@sipsolutions.net,
+	linux-wireless@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.18-6.6] wifi: mac80211: correctly check if CSA is active
+Date: Mon,  2 Feb 2026 16:46:16 -0500
+Message-ID: <20260202214643.212290-21-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260202214643.212290-1-sashal@kernel.org>
 References: <20260202214643.212290-1-sashal@kernel.org>
@@ -48,94 +49,220 @@ MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.18.8
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Kaushlendra Kumar <kaushlendra.kumar@intel.com>
+From: Miri Korenblit <miriam.rachel.korenblit@intel.com>
 
-[ Upstream commit f3f380ce6b3d5c9805c7e0b3d5bc28d9ec41e2e8 ]
+[ Upstream commit db1d0b6ab11f612ea8a327663a578c8946efeee9 ]
 
-regcache_maple_write() allocates a new block ('entry') to merge
-adjacent ranges and then stores it with mas_store_gfp().
-When mas_store_gfp() fails, the new 'entry' remains allocated and
-is never freed, leaking memory.
+We are not adding an interface if an existing one is doing CSA.
+But the check won't work for MLO station interfaces, since for those,
+vif->bss_conf is zeroed out.
+Fix this by checking if any link of the vif has an active CSA.
 
-Free 'entry' on the failure path; on success continue freeing the
-replaced neighbor blocks ('lower', 'upper').
-
-Signed-off-by: Kaushlendra Kumar <kaushlendra.kumar@intel.com>
-Link: https://patch.msgid.link/20260105031820.260119-1-kaushlendra.kumar@intel.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Reviewed-by: Johannes Berg <johannes.berg@intel.com>
+Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
+Link: https://patch.msgid.link/20260111191912.7ceff62fc561.Ia38d27f42684d1cfd82d930d232bd5dea6ab9282@changeid
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-### SUMMARY
+Now I have a complete picture. Let me analyze this commit
+comprehensively.
 
-**What the commit fixes:**
-A memory leak in `regcache_maple_write()` where the allocated `entry`
-block is not freed when `mas_store_gfp()` fails. This is a clear
-resource leak bug.
+## Analysis
 
-**Why it matters to stable users:**
-- Memory leaks affect system stability over time, especially on long-
-  running embedded systems that commonly use regmap
-- Under memory pressure scenarios, this leak compounds the problem
-- regmap is core infrastructure used by many hardware drivers
+### 1. COMMIT MESSAGE ANALYSIS
 
-**Stable kernel criteria assessment:**
-1. ✅ **Obviously correct**: The fix follows standard kernel error
-   handling patterns - allocate, try to use, free on failure
-2. ✅ **Fixes a real bug**: Memory leak is a real, user-visible issue
-3. ✅ **Important issue**: Memory leaks can lead to system
-   instability/OOM
-4. ✅ **Small and contained**: ~8 lines changed in a single file, single
-   function
-5. ✅ **No new features**: Pure bug fix
-6. ✅ **Clean backport**: Self-contained fix with no dependencies
+**Subject**: "wifi: mac80211: correctly check if CSA is active"
 
-**Risk vs Benefit:**
-- **Risk**: Very low - the change only affects the error path of
-  `mas_store_gfp()` failure
-- **Benefit**: Fixes a memory leak in widely-used infrastructure code
-- The logic is straightforward and the fix is obviously correct
+The commit clearly describes a bug fix - the existing CSA (Channel
+Switch Announcement) check doesn't work properly for MLO (Multi-Link
+Operation) station interfaces. The message explains:
+- The problem: "the check won't work for MLO station interfaces, since
+  for those, vif->bss_conf is zeroed out"
+- The fix: "checking if any link of the vif has an active CSA"
 
-**Affected versions:**
-- The regcache-maple.c file was introduced in v6.4
-- Applicable to stable trees: 6.4.y, 6.6.y (LTS), and newer
+**Tags present**:
+- Reviewed-by: Johannes Berg (mac80211 maintainer) - strong credibility
+  signal
+- Signed-off-by: Miri Korenblit (Intel wireless developer)
+- Link to mailing list
 
-**Concerns:**
-- None - this is a textbook stable backport candidate
+No explicit Fixes: tag, but that's expected for commits we're reviewing.
+
+### 2. CODE CHANGE ANALYSIS
+
+**The Bug:**
+The original code at line 379:
+```c
+if (nsdata->vif.bss_conf.csa_active)
+    return -EBUSY;
+```
+
+This check is used in `ieee80211_check_concurrent_iface()` to prevent
+adding a new interface while an existing interface is performing a
+channel switch operation.
+
+**Why it's broken for MLO:**
+For MLO (Multi-Link Operation) station interfaces introduced in WiFi 7
+(802.11be):
+- `vif->bss_conf` is zeroed out by design
+- Each link has its own BSS configuration stored in `link_conf[link_id]`
+- The CSA state (`csa_active`) is per-link, not per-VIF
+- Checking `vif->bss_conf.csa_active` will always return `false` for MLO
+  interfaces, even if one of the links is actively switching channels
+
+**The Fix:**
+```c
+struct ieee80211_link_data *link;
+...
+for_each_link_data(nsdata, link) {
+    if (link->conf->csa_active)
+        return -EBUSY;
+}
+```
+
+This properly iterates through all valid links and checks if ANY link
+has an active CSA. The `for_each_link_data` macro:
+- For non-MLO interfaces: iterates once with the single (deflink) link
+- For MLO interfaces: iterates through all links with bits set in
+  `valid_links`
+
+**Technical mechanism**: The fix is correct because it unifies the check
+- it works for both MLO and non-MLO interfaces while maintaining the
+same semantics.
+
+### 3. CLASSIFICATION
+
+This is clearly a **bug fix**, not a new feature:
+- The concurrent interface protection during CSA was always intended to
+  work
+- It just doesn't work for the newer MLO interface type
+- This is a correctness fix for existing functionality
+
+### 4. SCOPE AND RISK ASSESSMENT
+
+**Lines changed**: Small - adds ~6 lines, removes 2 lines (net +4)
+**Files touched**: 1 file (net/mac80211/iface.c)
+**Complexity**: Low - simple loop iteration replacing a single field
+access
+**Subsystem**: mac80211 WiFi subsystem - widely used but WiFi-specific
+
+**Risk level**: LOW
+- The change is straightforward and the logic is sound
+- The `for_each_link_data` macro is designed for exactly this use case
+- Reviewed by Johannes Berg, the mac80211 maintainer
+- Failure mode: If the fix doesn't work, we're no worse than before
+  (still have the bug)
+
+### 5. USER IMPACT
+
+**Who is affected?**: Users with MLO-capable WiFi hardware (WiFi 7 /
+802.11be devices)
+**Severity**: Medium - Without this fix:
+- A new interface could be incorrectly allowed to be added during an
+  ongoing channel switch on an MLO interface
+- This could cause interference, connectivity issues, or undefined
+  behavior
+- Channel switches are relatively rare events, so impact is somewhat
+  limited
+
+### 6. STABILITY INDICATORS
+
+- **Reviewed-by**: Johannes Berg (mac80211 maintainer) - strong positive
+  signal
+- Author: Miri Korenblit from Intel - active wireless developer
+
+### 7. DEPENDENCY CHECK
+
+**Critical dependency**: This fix uses the `for_each_link_data` macro
+which was introduced in commit f61c7b3d442be ("wifi: mac80211: Add link
+iteration macro for link data") in kernel v6.16.
+
+**Backport applicability**:
+- **v6.16+**: Can be applied directly - has the macro
+- **v6.1-v6.15**: Would require either:
+  1. Backporting the `for_each_link_data` macro first, OR
+  2. Writing an alternative fix using open-coded link iteration
+
+MLO support was introduced in v6.1, so the bug exists in all kernels
+v6.1 through current that have MLO station interface support.
+
+### Summary
+
+| Criteria | Assessment |
+|----------|------------|
+| Obviously correct | YES - simple iteration fix |
+| Fixes real bug | YES - incorrect CSA check for MLO |
+| Important issue | MEDIUM - affects interface addition during channel
+switch |
+| Small and contained | YES - 4 net lines changed |
+| No new features | YES - fixes existing feature |
+| Applies cleanly | DEPENDS - needs v6.16+ for macro dependency |
+
+### VERDICT
+
+This is a legitimate bug fix for MLO WiFi support:
+- It fixes a real, demonstrable bug where CSA detection fails for MLO
+  interfaces
+- The fix is small, surgical, and well-reviewed
+- It doesn't introduce new features or change APIs
+- It improves correctness of existing functionality
+
+**However**, there are important caveats:
+1. The fix has a dependency on the `for_each_link_data` macro
+   (introduced in v6.16)
+2. For stable trees before v6.16, a backport would need the macro too or
+   use an alternative approach
+3. MLO is relatively new technology (WiFi 7), so the affected user base
+   is smaller
+
+Given that this fix:
+- Is obviously correct and addresses a real bug
+- Was reviewed by the subsystem maintainer
+- Has low risk of regression
+- Affects real user scenarios (channel switching during interface
+  operations)
+
+The fix is appropriate for stable backporting to kernels that have both
+MLO support and the `for_each_link_data` macro (v6.16+). For older
+stable trees (v6.1-v6.15), a modified backport with the macro or open-
+coded iteration would be needed.
 
 **YES**
 
- drivers/base/regmap/regcache-maple.c | 11 ++++++-----
- 1 file changed, 6 insertions(+), 5 deletions(-)
+ net/mac80211/iface.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/base/regmap/regcache-maple.c b/drivers/base/regmap/regcache-maple.c
-index 2319c30283a6d..9cf0384ce7b95 100644
---- a/drivers/base/regmap/regcache-maple.c
-+++ b/drivers/base/regmap/regcache-maple.c
-@@ -95,12 +95,13 @@ static int regcache_maple_write(struct regmap *map, unsigned int reg,
+diff --git a/net/mac80211/iface.c b/net/mac80211/iface.c
+index 0ca55b9655a7f..72c129478da08 100644
+--- a/net/mac80211/iface.c
++++ b/net/mac80211/iface.c
+@@ -350,6 +350,8 @@ static int ieee80211_check_concurrent_iface(struct ieee80211_sub_if_data *sdata,
+ 	/* we hold the RTNL here so can safely walk the list */
+ 	list_for_each_entry(nsdata, &local->interfaces, list) {
+ 		if (nsdata != sdata && ieee80211_sdata_running(nsdata)) {
++			struct ieee80211_link_data *link;
++
+ 			/*
+ 			 * Only OCB and monitor mode may coexist
+ 			 */
+@@ -376,8 +378,10 @@ static int ieee80211_check_concurrent_iface(struct ieee80211_sub_if_data *sdata,
+ 			 * will not add another interface while any channel
+ 			 * switch is active.
+ 			 */
+-			if (nsdata->vif.bss_conf.csa_active)
+-				return -EBUSY;
++			for_each_link_data(nsdata, link) {
++				if (link->conf->csa_active)
++					return -EBUSY;
++			}
  
- 	mas_unlock(&mas);
- 
--	if (ret == 0) {
--		kfree(lower);
--		kfree(upper);
-+	if (ret) {
-+		kfree(entry);
-+		return ret;
- 	}
--	
--	return ret;
-+	kfree(lower);
-+	kfree(upper);
-+	return 0;
- }
- 
- static int regcache_maple_drop(struct regmap *map, unsigned int min,
+ 			/*
+ 			 * The remaining checks are only performed for interfaces
 -- 
 2.51.0
 
