@@ -1,148 +1,160 @@
-Received: from mail-oo1-f51.google.com (mail-oo1-f51.google.com [209.85.161.51])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from n169-114.mail.139.com (n169-114.mail.139.com [120.232.169.114])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA20F2F616E
-	for <patches@lists.linux.dev>; Sat, 31 Jan 2026 01:28:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.161.51
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769822898; cv=pass; b=c+vT2dv/AZ6VcTmEYAkw1Wsle72LDU7PQ1beraifp0qT7ISgYaK9bbaW1PJZc+nRB9KgEnEHawVJ3e2K8+OXBbjfb4X/ES3YxVzFTYqs+kFRTcwSoys7+qBi0DzOuPQRQ8A4y9hegcIUuPBQJFZIynoZ5gRzn6LtoAOvhRPkykc=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769822898; c=relaxed/simple;
-	bh=xdF1VHSvk5HtQPQo93L5tHmtzKUQ+pGnABByZHwLB/U=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=Aga6pViuKYmGJmxF+hIOxFmaOQrriOkPP4y+TG4XgfTshDKYI8KFiFIAaelZbE7w0jiWybD9JJLxt8ILJRrcktZjn1/Cvp/qCFg0Of/hp6Ls/k+fJvZ0iCY3H4O5qdA0ozM9i/zmK+FlCNrwrPOfLNgk5pkbb0HOUNmfa8JSuhk=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=rivosinc.com; spf=pass smtp.mailfrom=rivosinc.com; dkim=pass (2048-bit key) header.d=rivosinc.com header.i=@rivosinc.com header.b=NS+RGObc; arc=pass smtp.client-ip=209.85.161.51
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=rivosinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=rivosinc.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0FB12218596
+	for <patches@lists.linux.dev>; Mon,  2 Feb 2026 03:17:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=120.232.169.114
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1770002247; cv=none; b=soFL4hpuAvCcmAC9EhTG1M2gyIOUth0t51ko8tDBNHLDJDYTP3tzOnJcfTX0mLn8E9YJhosNjjgNXBlTe7U4vryk2bCLs5jbAMd+ctTRA6mUkiGsZZ7hpEVla1phQ27pj+2P6MEyGJV4RRg2LxD0GUdeCL7pK8PpMiVJaGcBxMg=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1770002247; c=relaxed/simple;
+	bh=HMsz3kpyciQy5v9iuqnMxlhI16+FIExlcxR4iWeJkB8=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=JeuUt8ndXMSJ9IfjLZ1vTaeLW82p+rspFugwKGhlmQUp8wuUdJw2m+RiC/qazTWDQrS11se8Iy1IIB80Qaz6v3/sZbOtHWsvocWv/y/e84ZR3TMvJ/kmoC1LTDYpheBQiObEScFxsOKdjnQBeFOQ3cz+WjNz6SCQY1m0c9Bod14=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=139.com; spf=pass smtp.mailfrom=139.com; dkim=pass (1024-bit key) header.d=139.com header.i=@139.com header.b=md2EZToZ; arc=none smtp.client-ip=120.232.169.114
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=139.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=139.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=rivosinc.com header.i=@rivosinc.com header.b="NS+RGObc"
-Received: by mail-oo1-f51.google.com with SMTP id 006d021491bc7-6610b05b37dso2158411eaf.2
-        for <patches@lists.linux.dev>; Fri, 30 Jan 2026 17:28:16 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1769822895; cv=none;
-        d=google.com; s=arc-20240605;
-        b=RFrdmNO1yxF7TA37ZouTpZCafNOZFMbi/T9OUHub8WjCYQTDPQUz8W5cDf8c/LcA/K
-         rhEq/oDGp0VsislkSp4FAAPLR/9b0RvYj5idP4wtoQCfI7+nOz86Rw0fFhnjfyaYJ2P1
-         5BbgwAgoh/feo4ZpA3VaQfpDs5Z6SCzZokvQkxwH5RPur7WRb2alr+4q2rxl/oQl0AkJ
-         dA0FwA0ASy103KiyDlkBdcaUUU5901ZSoAn3jRgt2w/7kQBaahrrepu5SZghC68OfUof
-         Fqe5IzOGpvGFQdjU1LfS07KEsBmum1E+MkEJbOHU9vOY/B6jLQiDgLfeD1R0w8v+unoO
-         4Hmg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=hAdK8PSPpbAG4ZF3DDf9iwcQO/z7KVY0C1nZwOLHMfE=;
-        fh=lvQT+HXBqlsk0zYJ6CUVhLUErEi7UMEEKNHO0RAGiD8=;
-        b=JLU0caPR6aAYzGgsqG6zc2XYtraYIKd3GqjowPlkjep9AEPb0UE8+TPOqYLIT9zqpO
-         FnbBcoJJRinOgh+tws+d21pTMWzKASfZoniwqgNd6XHWxQ9gfR6FYWmlkf7NgL3fBy7G
-         /yrWwRw43GOlZC7O2pzbmfZDR4VUdJEdcbqMbqJZimBlsL+GSoxGAvIP6ohny7q8C7bR
-         Zjl5VZrel3k5BuYdftzg43oCcGZ5pLTJIRrby7APSkiA3ROjuqIxkA3ad2MvNoMAHUIw
-         O3MiuITceqRd9M1riqApkgeeoBPlXWwcQxEomPfUFFVB94N+I6pxZV2zF3Jar11qsL92
-         3U7A==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+	dkim=pass (1024-bit key) header.d=139.com header.i=@139.com header.b="md2EZToZ"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=rivosinc.com; s=google; t=1769822895; x=1770427695; darn=lists.linux.dev;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=hAdK8PSPpbAG4ZF3DDf9iwcQO/z7KVY0C1nZwOLHMfE=;
-        b=NS+RGObcCq6a68s9lz8DD3702YTOoX1zmm1bEgNIqdXW+NwqMdo+XHiTjc7T1hrs6x
-         BYjMTeLKtQUTx9p4CYgCtnETNM0P0B0xSvKNJFl5/2PBMl2KpdUVMCEJ83wfsjeyyeb0
-         nfp8ZGT6viDZJinCvoRLNf82umyG3IGdV95K2Ps4Quage1mQPtfvqAV0MplI2ZmwL7eO
-         7fnVAHICnxLgdChGBIhuFDcungjDzzCNJ34e7jy6tfS7oOTFEYYDcKDOAECpyGYRwWX9
-         YydXa8AX3oLKLfsNc752tTFHGyAu/jXTUxNLrwITAa9w6u8PkdPBy1/OxBVcDzoHsnJh
-         W6LA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1769822895; x=1770427695;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=hAdK8PSPpbAG4ZF3DDf9iwcQO/z7KVY0C1nZwOLHMfE=;
-        b=nzXnBHJ8YdX80JvXDB5VGFO5vwGSmtuCKdlngOewpR/IQ/d+qJYxxHS6Ved58bp3DD
-         0BBQb3+fB+5/dxSGWixutE+e2AUahwD0KKN26OpwgOW8LjVGnStxW4Yycqc9VjWDKQjU
-         eGsO4aBYKX3zd5ckQGa0PQY+isKssDtnA0ZTTE94TXVZOJwSkAJUYuS+FySgqjPqAiYv
-         VojjwkKP05qItjwVRjbfPbBni5qsIV5POWJBhLNLhri+wX4cl54S0xz8fmo40GNLb9NE
-         pUj5g34WvlnD5YJF0IzIr4tG1mzWpCgNxNW6zr/5A10w2bqDfxmaj7noG424qFPUcZLp
-         Njnw==
-X-Forwarded-Encrypted: i=1; AJvYcCVrHwawP0zvrUqMZY8KZ0myjZAJJCazmg8WANXruPr4XX7NvG08urrfzi4+r2GmO6MSILdFea1V@lists.linux.dev
-X-Gm-Message-State: AOJu0YyDdSxo5IYPfPEMhgQvc5b4p+olxiu8aNH+6BJ1NhdU44pCdC8g
-	owBgpbrHmR2jWwrvVGtt9qHpKwD7+9m2RYKtTx0v5DJSzr24oS2H/cB3o9U1Io7sANQSkm6FNMx
-	FNMo7YqqqVWkapJzcdm7uKm/jDcj3S/ymT++8xg3aww==
-X-Gm-Gg: AZuq6aJ0lcd5mtqUGFd+HIhpjkT8vreXoasAsykndkaHE9Ey8bzoAHt6DkYqMsaf9lk
-	vu7QipIZp+xjBHNRBr9CSyDUo/kYwcGG/kfOC/Nss/I207njtLdl0LflOzB2B17Oh+ryJndZnDR
-	sydXjWjgtyo/vA4ae4zFnwUHUvFmf9wVgM9S4E8AAQ6ikIm6WPj9eowqEEcgwPPhjV1mF2GnPRO
-	lgtbMYLZ0P8NdmhIYcjUBHGz74tv5QMKrEM2CtfQsVd9NL3SefnKXU5L+cF/TRsAJ8vtg5cc3lS
-	W9ikxQ==
-X-Received: by 2002:a05:6820:22a9:b0:65b:257b:a898 with SMTP id
- 006d021491bc7-6630f0507ffmr2047585eaf.29.1769822894013; Fri, 30 Jan 2026
- 17:28:14 -0800 (PST)
+	d=139.com; s=dkim; l=0;
+	h=from:subject:message-id:to:cc:mime-version;
+	bh=47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU=;
+	b=md2EZToZK87j0vas3ttn5WXJcRLuJA1Hart0GcbtKkF9IMp7bPzBHy2YouabBX1q/W5GtjwfN9G9F
+	 FDjymZczJSc6zCsBppyKbeWUi1XnjoIiow8y2npKJM+2AncXLrDrRw6UPCR29GXhhMwGGy79ttQJiY
+	 UbyV0iBfSCJfDfKo=
+X-RM-TagInfo: emlType=0                                       
+X-RM-SPAM:                                                                                        
+X-RM-SPAM-FLAG:00000000
+Received:from NTT-kernel-dev (unknown[60.247.85.88])
+	by rmsmtp-lg-appmail-37-12051 (RichMail) with SMTP id 2f13698017857e9-01807;
+	Mon, 02 Feb 2026 11:18:32 +0800 (CST)
+X-RM-TRANSID:2f13698017857e9-01807
+From: Li hongliang <1468888505@139.com>
+To: gregkh@linuxfoundation.org,
+	stable@vger.kernel.org,
+	ysk@kzalloc.com
+Cc: patches@lists.linux.dev,
+	linux-kernel@vger.kernel.org,
+	linkinjeon@kernel.org,
+	sfrench@samba.org,
+	senozhatsky@chromium.org,
+	tom@talpey.com,
+	akendo@akendo.eu,
+	set_pte_at@outlook.com,
+	linux-cifs@vger.kernel.org,
+	stfrench@microsoft.com
+Subject: [PATCH 6.1.y 2/2] ksmbd: Fix race condition in RPC handle list access
+Date: Mon,  2 Feb 2026 11:17:11 +0800
+Message-Id: <20260202031711.515125-1-1468888505@139.com>
+X-Mailer: git-send-email 2.34.1
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <0-v2-b11ebca8abb6+c096-iommu_pt_riscv_jgg@nvidia.com>
- <72olk767l4goaqsrkyelhtnzg33nxbtwnammy4asnqxukbolnh@gwypmg6n5t3e>
- <20260129004640.GB1641016@ziepe.ca> <63c38161-762f-bff5-0b9c-0148140c695b@kernel.org>
-In-Reply-To: <63c38161-762f-bff5-0b9c-0148140c695b@kernel.org>
-From: Tomasz Jeznach <tjeznach@rivosinc.com>
-Date: Fri, 30 Jan 2026 17:28:03 -0800
-X-Gm-Features: AZwV_Qj0tZjKAecspcSVxodkCX0io_Vn0UvzOmM88WNtFjCfrWhK6JNivTo3BO4
-Message-ID: <CAH2o1u4_bieYiNUwCvhheKeRg6wvjH3Y4hZY9AGLcMbH5A-rDQ@mail.gmail.com>
-Subject: Re: [PATCH v2 0/5] Convert riscv to use the generic iommu page table
-To: tjeznach@fb.com, Jason Gunthorpe <jgg@ziepe.ca>
-Cc: Joerg Roedel <joro@8bytes.org>, Alexandre Ghiti <alex@ghiti.fr>, Albert Ou <aou@eecs.berkeley.edu>, 
-	iommu@lists.linux.dev, linux-riscv@lists.infradead.org, 
-	Palmer Dabbelt <palmer@dabbelt.com>, Robin Murphy <robin.murphy@arm.com>, Will Deacon <will@kernel.org>, 
-	lihangjing@bytedance.com, Xu Lu <luxu.kernel@bytedance.com>, 
-	patches@lists.linux.dev, xieyongji@bytedance.com, 
-	Paul Walmsley <pjw@kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 
-Hello everyone,
+From: Yunseong Kim <ysk@kzalloc.com>
 
-Sorry for the very long radio silence. I'm back online. I'll update my
-email in the MAINTAINERS file soon, for now adding my new address to
-the recipients.
+[ Upstream commit 305853cce379407090a73b38c5de5ba748893aee ]
 
-Thanks Jason for this change, I've looked at the v1, looks good. It
-passed my initial testing at the time. Unfortunately I had to hold off
-on testing for a while...
+The 'sess->rpc_handle_list' XArray manages RPC handles within a ksmbd
+session. Access to this list is intended to be protected by
+'sess->rpc_lock' (an rw_semaphore). However, the locking implementation was
+flawed, leading to potential race conditions.
 
-I've revived RISC-V test flows based on v6.19-rc7 + this patchset and
-hit translation failures on DMAs from/to NVMe SSD. Hopefully
-unrelated, still investigating.
+In ksmbd_session_rpc_open(), the code incorrectly acquired only a read lock
+before calling xa_store() and xa_erase(). Since these operations modify
+the XArray structure, a write lock is required to ensure exclusive access
+and prevent data corruption from concurrent modifications.
 
-Best,
-- Tomasz
+Furthermore, ksmbd_session_rpc_method() accessed the list using xa_load()
+without holding any lock at all. This could lead to reading inconsistent
+data or a potential use-after-free if an entry is concurrently removed and
+the pointer is dereferenced.
+
+Fix these issues by:
+1. Using down_write() and up_write() in ksmbd_session_rpc_open()
+   to ensure exclusive access during XArray modification, and ensuring
+   the lock is correctly released on error paths.
+2. Adding down_read() and up_read() in ksmbd_session_rpc_method()
+   to safely protect the lookup.
+
+Fixes: a1f46c99d9ea ("ksmbd: fix use-after-free in ksmbd_session_rpc_open")
+Fixes: b685757c7b08 ("ksmbd: Implements sess->rpc_handle_list as xarray")
+Cc: stable@vger.kernel.org
+Signed-off-by: Yunseong Kim <ysk@kzalloc.com>
+Acked-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Steve French <stfrench@microsoft.com>
+[ Minor conflict resolved. ]
+Signed-off-by: Li hongliang <1468888505@139.com>
+---
+ fs/smb/server/mgmt/user_session.c | 26 +++++++++++++++++---------
+ 1 file changed, 17 insertions(+), 9 deletions(-)
+
+diff --git a/fs/smb/server/mgmt/user_session.c b/fs/smb/server/mgmt/user_session.c
+index 2603f7dcea58..89ae52e03858 100644
+--- a/fs/smb/server/mgmt/user_session.c
++++ b/fs/smb/server/mgmt/user_session.c
+@@ -104,29 +104,32 @@ int ksmbd_session_rpc_open(struct ksmbd_session *sess, char *rpc_name)
+ 	if (!entry)
+ 		return -ENOMEM;
+ 
+-	down_read(&sess->rpc_lock);
+ 	entry->method = method;
+ 	entry->id = id = ksmbd_ipc_id_alloc();
+ 	if (id < 0)
+ 		goto free_entry;
++
++	down_write(&sess->rpc_lock);
+ 	old = xa_store(&sess->rpc_handle_list, id, entry, GFP_KERNEL);
+-	if (xa_is_err(old))
++	if (xa_is_err(old)) {
++		up_write(&sess->rpc_lock);
+ 		goto free_id;
++	}
+ 
+ 	resp = ksmbd_rpc_open(sess, id);
+-	if (!resp)
+-		goto erase_xa;
++	if (!resp) {
++		xa_erase(&sess->rpc_handle_list, entry->id);
++		up_write(&sess->rpc_lock);
++		goto free_id;
++	}
+ 
+-	up_read(&sess->rpc_lock);
++	up_write(&sess->rpc_lock);
+ 	kvfree(resp);
+ 	return id;
+-erase_xa:
+-	xa_erase(&sess->rpc_handle_list, entry->id);
+ free_id:
+ 	ksmbd_rpc_id_free(entry->id);
+ free_entry:
+ 	kfree(entry);
+-	up_read(&sess->rpc_lock);
+ 	return -EINVAL;
+ }
+ 
+@@ -144,9 +147,14 @@ void ksmbd_session_rpc_close(struct ksmbd_session *sess, int id)
+ int ksmbd_session_rpc_method(struct ksmbd_session *sess, int id)
+ {
+ 	struct ksmbd_session_rpc *entry;
++	int method;
+ 
++	down_read(&sess->rpc_lock);
+ 	entry = xa_load(&sess->rpc_handle_list, id);
+-	return entry ? entry->method : 0;
++	method = entry ? entry->method : 0;
++	up_read(&sess->rpc_lock);
++
++	return method;
+ }
+ 
+ void ksmbd_session_destroy(struct ksmbd_session *sess)
+-- 
+2.34.1
 
 
-On Fri, Jan 30, 2026 at 3:14=E2=80=AFPM Paul Walmsley <pjw@kernel.org> wrot=
-e:
->
-> On Wed, 28 Jan 2026, Jason Gunthorpe wrote:
->
-> > On Thu, Jan 22, 2026 at 08:56:12AM +0100, Joerg Roedel wrote:
-> > > Tomasz,
-> > >
-> > > On Tue, Jan 06, 2026 at 11:06:44AM -0400, Jason Gunthorpe wrote:
-> > > > Jason Gunthorpe (5):
-> > > >   iommupt: Add the RISC-V page table format
-> > > >   iommu/riscv: Disable SADE
-> > > >   iommu/riscv: Use the generic iommu page table
-> > > >   iommu/riscv: Enable SVNAPOT support for contiguous ptes
-> > > >   iommu/riscv: Allow RISC_VIOMMU to COMPILE_TEST
-> > >
-> > > Any opinion on that series?
-> >
-> > Let's take it if we don't hear from Tomasz this week? It brings
-> > the contiguous page feature people wanted and now that it is tested
-> > I'm not especially worried about it.
->
-> In the event that you don't hear from Tomasz:
->
-> Acked-by: Paul Walmsley <pjw@kernel.org> # arch/riscv
->
->
-> - Paul
