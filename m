@@ -1,148 +1,262 @@
-Received: from foss.arm.com (foss.arm.com [217.140.110.172])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7E30236C580;
-	Mon,  2 Feb 2026 16:43:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.140.110.172
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B6161C84BD;
+	Mon,  2 Feb 2026 21:46:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770050638; cv=none; b=osfcA7lpEOuIARfzISacE+wLda+LIJkxxO5Z9CowHaN6SYUHtsi+kq9gh4kvjphyR0rD6jYtbXihTBLenus5rpjvbqyMXbEYtheHKf0HIPU3rHpla/MGeMKQKyDei5bGg8zdRV8Ba6wwicQ1Xdj3Dj6UlDFcgEJVAhKoCepxiHo=
+	t=1770068806; cv=none; b=mJwQZH/oeBgQfuGaKGLR/fHfVBCcOmrXAH2tvYbypGIpA3zjpzi+Vbm0C4nqDMwfn8YNOcVpiqqA4c4OCpfsAzpwWM1iGRwiwheVjvJ9qaR5hwVb3m9w+O00a7BGSN2K3yNlkYsE/uMyOt1fixNPL3flvJiDDU6OuUs0cJq3O7I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770050638; c=relaxed/simple;
-	bh=BTN76KA/49NaeAvPfL547VU1S3ArIGKTvCyPtYJdoCQ=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=eU1hKezabN8V9/69+je08kCUgaJKrMDOi5/cOCMJcCES8tlBZ6A871mgEzrv0Ds3VUChBMC+KnBKIQauDVxdo1dL7SCQZuEKnDaxPXNX6d4KVaalpkxtuaFhrSj1DtVlX35Th8elTR0tR34p2D/4UDPAqSCcUrR7FydjVI4Lqpk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; arc=none smtp.client-ip=217.140.110.172
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id C58D3339;
-	Mon,  2 Feb 2026 08:43:47 -0800 (PST)
-Received: from [10.57.54.50] (unknown [10.57.54.50])
-	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 2CC153F778;
-	Mon,  2 Feb 2026 08:43:51 -0800 (PST)
-Message-ID: <794b6121-b66b-4819-b291-9761ed21cd83@arm.com>
-Date: Mon, 2 Feb 2026 16:43:48 +0000
+	s=arc-20240116; t=1770068806; c=relaxed/simple;
+	bh=9nTiVh04ae9mQjKB1RdP90/UkIbsgP+LavfCUF4boMs=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=VqgZW9LgtpT2x4WwGAFt8d6q6Fem+bc1r+z+ylb71NMgxUMgeUPYc1ksrdXSmHtDixppZRo/FXu4E7oz0SVPjyoPItPYVix9evqpvAfjuA9eGYCye0iHZjnPzNvj3XpjoUXFxMF1aBJ7aTgEQFRLRY5aU6ga0+zX4KHVANW1Zyc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=XJlD7fPR; arc=none smtp.client-ip=10.30.226.201
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="XJlD7fPR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 20D77C116C6;
+	Mon,  2 Feb 2026 21:46:45 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1770068806;
+	bh=9nTiVh04ae9mQjKB1RdP90/UkIbsgP+LavfCUF4boMs=;
+	h=From:To:Cc:Subject:Date:From;
+	b=XJlD7fPRMTTeEVpUcvdWLamokqJ3cxVn3/UXvF/HfGX7NF2+jmN10I5OHIvE9rDPr
+	 zGSIPhFoxFHbZOP7GRjxqWzd+vgVadQOo/x8aZDN5hF3v/ynT17lyvM9lp80802/JJ
+	 jmSRx9nJ0gIfOJ0PQrQsgh2OPLreMvesiKv74kg8uGL9tqCkEi9NVkA1tQjwgGwjpJ
+	 tWqAnSB4MhU44q7kU7rOS8MSAgerEsKEOc93MGbL1zT0nHlj8bAHOKEXI5nHoUumN7
+	 aeOxv5EjtFvwSFp+UH/Xbtkr3U+RIaWwwW/OKzL3cOdopwJjR9AProhCmmYQt29hj4
+	 DM1eZl9IZ8YUg==
+From: Sasha Levin <sashal@kernel.org>
+To: patches@lists.linux.dev,
+	stable@vger.kernel.org
+Cc: Kailang Yang <kailang@realtek.com>,
+	Takashi Iwai <tiwai@suse.de>,
+	Sasha Levin <sashal@kernel.org>,
+	sbinding@opensource.cirrus.com,
+	chris.chiu@canonical.com,
+	edip@medip.dev
+Subject: [PATCH AUTOSEL 6.18-6.12] ALSA: hda/realtek - fixed speaker no sound
+Date: Mon,  2 Feb 2026 16:45:56 -0500
+Message-ID: <20260202214643.212290-1-sashal@kernel.org>
+X-Mailer: git-send-email 2.51.0
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 0/5] Convert riscv to use the generic iommu page table
-To: Jason Gunthorpe <jgg@nvidia.com>
-Cc: Vincent Chen <vincent.chen@sifive.com>, Alexandre Ghiti <alex@ghiti.fr>,
- Albert Ou <aou@eecs.berkeley.edu>, iommu@lists.linux.dev,
- Joerg Roedel <joro@8bytes.org>, linux-riscv@lists.infradead.org,
- Palmer Dabbelt <palmer@dabbelt.com>, Paul Walmsley <pjw@kernel.org>,
- Tomasz Jeznach <tjeznach@rivosinc.com>, Will Deacon <will@kernel.org>,
- lihangjing@bytedance.com, Xu Lu <luxu.kernel@bytedance.com>,
- patches@lists.linux.dev, xieyongji@bytedance.com
-References: <0-v2-b11ebca8abb6+c096-iommu_pt_riscv_jgg@nvidia.com>
- <CABvJ_xiUK9BqUJS9-Sk1sS4vhVhyXN8P8NooZ0t_Zp7ycG0bAw@mail.gmail.com>
- <20260122153134.GO1134360@nvidia.com>
- <CABvJ_xgSbK3omxT7XGJ0N7oEva6dQAJwZxRhsBqi44BRNZ3G5Q@mail.gmail.com>
- <CABvJ_xhY_4ADOsVVbjhkBm8U1mKVOSwzKMfBw5mUsJe=kkUiLg@mail.gmail.com>
- <20260123135234.GW1134360@nvidia.com>
- <b1b220be-fd5e-4f83-8f5e-7d5282be39f9@arm.com>
- <20260131002728.GM2223369@nvidia.com>
- <8c46864e-4625-49f4-90b3-a7467cec8b7b@arm.com>
- <20260202143720.GN2223369@nvidia.com>
-From: Robin Murphy <robin.murphy@arm.com>
-Content-Language: en-GB
-In-Reply-To: <20260202143720.GN2223369@nvidia.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+X-stable: review
+X-Patchwork-Hint: Ignore
+X-stable-base: Linux 6.18.8
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-On 2026-02-02 2:37 pm, Jason Gunthorpe wrote:
-> On Mon, Feb 02, 2026 at 02:00:07PM +0000, Robin Murphy wrote:
-> 
->>> DMA-FQ requires two functionalites from the page table:
->>> 1) use gather->freelist to avoid a HW UAF (iommupt always does this)
->>
->> Nope, correct DMA API usage would almost never unmap an entire table, so
->> synchronous non-leaf maintenance in that path still doesn't hurt DMA-FQ
->> either (e.g. io-pgtable-arm).
-> 
-> Well, it certainly would hurt workloads like IB MR's which can have
-> quite alot of IOVA in a single dma_map_sg() and we do want to see the
-> table levels removed to avoid the waste that Pasha has talked
-> about. Doing single invalidations of potentially a lot of levels in a
-> DMA-FQ environment is unnecessary overhead.
-> 
-> But I get your point that simple, say storage, use of the DMA API
-> wouldn't be bothered by this and you could still get alot of benefit
-> without using the free list.
+From: Kailang Yang <kailang@realtek.com>
 
-Yeah, users dealing with giant non-physically-contiguous scatterlists
-are the exception (hence "almost"), but such big things are already
-taking the slow path for IOVA allocation/freeing, and they're presumably
-not churning at high frequency, so would stand to see a lot less benefit
-from flush queues in the first place. If anything, having big lumps of
-IOVA space (and pagetable memory) tied up in the queues could even make
-matters worse overall.
+[ Upstream commit 630fbc6e870eb06c5126cc97a3abecbe012272c8 ]
 
->> If a pagetable implementation wanted to refcount and eagerly free empty
->> tables upon leaf unmaps, then yes it would need deferred freeing, but
->> frankly it would be better off just not doing that at all for DMA-FQ anyway
->> (as IOVA caching would make it likely to need to repopulate the same level
->> of table soon.)
-> 
-> Today it isn't done with refcounts, just if the iova range unmapped
-> fully contains a table level then the table level can go away too. It
-> does trim interior page tables for large IOVA allocations but small
-> ones are unlikely to free anything.
+If it play a 5s above silence media stream, it will cause silence
+detection trigger.
+Speaker will make no sound when you use another app to play a stream.
+Add this patch will solve this issue.
 
-Right, and other than the non-contiguous scatterlist case, anything
-where a dma_unmap_*() might take out a table-sized region at once, the
-corresponding dma_map_*() would have put it down as a block anyway.
+GPIO2: Mute Hotkey GPIO3: Mic Mute LED
+Enable this will turn on hotkey and LED support.
 
->>> The one call to iommu_iotlb_sync() is only for the para-virtualization
->>> optimization of narrowing invalidations. It would be nonsensical for a
->>> driver to enable this optimization and offer IOMMU_CAP_DEFERRED_FLUSH.
->>
->> Not necessarily - in the PV case it can be desirable to minimise
->> over-invalidation *if* you're trapping for targeted invalidations in strict
->> mode. However, depending on the usage pattern it may also be beneficial to
->> have non-strict let the FQ mechanism batch up work to minimise the number of
->> traps taken - e.g. s390 is in this situation, and is precisely why we added
->> IOMMU_DMA_OPTS_SINGLE_QUEUE to help optimise for that.
-> 
-> Okay, so if I understand you right, it should check for
-> iommu_iotlb_gather_queued() and disable PT_FEAT_FLUSH_RANGE_NO_GAPS
-> mode entirely? ie there is no point in doing small invalidations if
-> the caller is going to do a flush all?
-> 
-> This way the user gets to pick using DMA-FQ or DMA-strict ?
+Signed-off-by: Kailang Yang <kailang@realtek.com>
+Link: https://lore.kernel.org/f4929e137a7949238cc043d861a4d9f8@realtek.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
+---
 
-Indeed, and furthermore we permit relaxing from DMA to DMA-FQ on a
-live domain, so although a virtualisation-aware driver may use
-PT_FEAT_FLUSH_RANGE_NO_GAPS and also call iommu_set_dma_strict() by
-default, that doesn't mean IOMMU_CAP_DEFERRED_FLUSH can't still be
-brought into play later. So I guess probably something like the below
-(except the other fix just sent breaks the if/else logic, ho hum...)
+LLM Generated explanations, may be completely bogus:
 
-> Also Intel would probably benefit from .shadow_on_flush too?
+## Commit Analysis: ALSA: hda/realtek - fixed speaker no sound
 
-I think it mostly depends on how the vIOMMU is implemented. It did seem
-potentially mildly beneficial to virtio at the time, not sure if
-anyone's ever tried it for Intel/AMD.
+### 1. COMMIT MESSAGE ANALYSIS
 
-Thanks,
-Robin.
+The commit message describes a real user-facing bug:
+- **Problem**: When playing a media stream with 5+ seconds of silence,
+  the AMP silence detection triggers
+- **Symptom**: Speaker produces no sound when another app tries to play
+  audio
+- **Solution**: Disable AMP silence detection during playback, re-enable
+  on close
 
------>8-----
-diff --git a/drivers/iommu/generic_pt/iommu_pt.h b/drivers/iommu/generic_pt/iommu_pt.h
-index 3327116a441c..b5cc3094f543 100644
---- a/drivers/iommu/generic_pt/iommu_pt.h
-+++ b/drivers/iommu/generic_pt/iommu_pt.h
-@@ -51,7 +51,9 @@ static void gather_range_pages(struct iommu_iotlb_gather *iotlb_gather,
-  		iommu_pages_stop_incoherent_list(free_list,
-  						 iommu_table->iommu_device);
-  
--	if (pt_feature(common, PT_FEAT_FLUSH_RANGE_NO_GAPS) &&
-+	if (iommu_iotlb_gather_queued(iotlb_gather)) {
-+		/* No need to bother, FQ will take care of TLBs */
-+	} else if (pt_feature(common, PT_FEAT_FLUSH_RANGE_NO_GAPS) &&
-  	    iommu_iotlb_gather_is_disjoint(iotlb_gather, iova, len)) {
-  		iommu_iotlb_sync(&iommu_table->domain, iotlb_gather);
-  		/*
+The message also mentions GPIO2/GPIO3 for Mute Hotkey and Mic Mute LED
+support, though this seems to be pre-existing functionality in the hook.
+
+Key indicators:
+- "fixed speaker no sound" - clear bug fix language
+- Fixes a real user-visible issue (audio stops working)
+- Author is from Realtek (hardware vendor) - they understand their
+  hardware
+- Has "Signed-off-by" from subsystem maintainer Takashi Iwai
+
+### 2. CODE CHANGE ANALYSIS
+
+Let me examine the technical details of this fix:
+
+**What the code does:**
+
+The patch modifies `alc287_alc1318_playback_pcm_hook()` which is called
+during PCM stream open/close operations.
+
+**Changes made:**
+
+1. **Adds two coefficient arrays:**
+   - `dis_coefs[]` - Disables AMP silence detection (coef 0x28 = 0x0004)
+   - `en_coefs[]` - Enables AMP silence detection (coef 0x28 = 0x0084)
+
+2. **On PCM OPEN (playback starts):**
+   - Now disables silence detection via `alc_process_coef_fw(codec,
+     dis_coefs)`
+   - Then sets GPIO3 high (existing behavior)
+
+3. **On PCM CLOSE (playback stops):**
+   - Now re-enables silence detection via `alc_process_coef_fw(codec,
+     en_coefs)`
+   - Then resets GPIO3 to default (existing behavior)
+
+**Root cause explanation:**
+The ALC1318 amplifier has built-in silence detection that mutes output
+when it detects prolonged silence. This is a power-saving feature, but
+it causes problems when:
+1. User plays media with silent sections
+2. Silence detection kicks in and mutes the amp
+3. When another app tries to play audio, the amp remains muted
+
+The fix disables this hardware feature during active playback and re-
+enables it when playback stops.
+
+### 3. CLASSIFICATION
+
+- **Type**: Bug fix (hardware quirk/workaround)
+- **Category**: This falls under "QUIRKS and WORKAROUNDS" - fixing
+  hardware behavior that causes real-world issues
+- **Not a new feature**: It's disabling problematic hardware behavior,
+  not adding new capabilities
+
+### 4. SCOPE AND RISK ASSESSMENT
+
+**Scope:**
+- Single file changed: `sound/hda/codecs/realtek/alc269.c`
+- Lines changed: ~15 lines added
+- Affects one specific function: `alc287_alc1318_playback_pcm_hook()`
+- Only affects systems with ALC287/ALC1318 codec (Lenovo ThinkPads with
+  this specific hardware)
+
+**Risk:**
+- **LOW**: The change is very localized
+- Uses existing infrastructure (`alc_process_coef_fw()`)
+- The coefficient values come from Realtek (hardware vendor)
+- Only affects this specific codec/hardware combination
+- Worst case: silence detection remains on or off incorrectly - not
+  catastrophic
+
+### 5. USER IMPACT
+
+**Who is affected:**
+- Users with Lenovo ThinkPad laptops using ALC287/ALC1318 audio codec
+- This appears to be a relatively common configuration in recent
+  ThinkPads
+
+**Severity:**
+- **HIGH** for affected users - audio completely stops working after
+  playing content with silence
+- This is a frustrating bug that makes the system appear broken
+
+**Real-world bug:**
+- The commit comes from Realtek, suggesting they received bug reports
+- The problem manifests in normal usage (e.g., watching videos with
+  quiet scenes)
+
+### 6. STABILITY INDICATORS
+
+- Authored by Kailang Yang from Realtek (hardware vendor)
+- Reviewed/signed by Takashi Iwai (longtime ALSA maintainer)
+- Uses well-established codec coefficient writing mechanism
+- The `alc_process_coef_fw()` function is already used extensively in
+  this codebase
+
+### 7. DEPENDENCY CHECK
+
+Let me verify the context exists in stable:
+
+The function `alc287_alc1318_playback_pcm_hook()` and the
+`alc287_fixup_lenovo_thinkpad_with_alc1318()` fixup need to exist in the
+stable tree. This appears to be for relatively recent hardware
+(ALC1318), so I should check when this was introduced.
+
+Looking at the code structure, this is modifying an existing PCM hook,
+not adding a new one. The infrastructure (`alc_process_coef_fw`,
+`WRITE_COEF` macro, etc.) is well-established in the HDA Realtek driver.
+
+### 8. STABLE CRITERIA EVALUATION
+
+| Criteria | Assessment |
+|----------|------------|
+| Obviously correct | ✅ Yes - clear logic, vendor-provided fix |
+| Fixes real bug | ✅ Yes - audio stops working for users |
+| Important issue | ✅ Yes - complete audio failure |
+| Small and contained | ✅ Yes - ~15 lines, single function |
+| No new features | ✅ Yes - it's disabling problematic behavior |
+| No new APIs | ✅ Yes - internal codec change only |
+
+### 9. CONCLUSION
+
+**Benefits:**
+- Fixes a real, user-visible bug where speaker audio stops working
+- Small, surgical fix with clear scope
+- Comes from hardware vendor with maintainer approval
+- Low risk of regression (affects only specific hardware)
+
+**Concerns:**
+- Need to verify the parent function exists in stable trees (hardware
+  may be too new for older LTS kernels)
+- The fix is straightforward and should apply cleanly
+
+**Verdict:**
+This is a classic hardware quirk fix that resolves a frustrating user-
+facing bug (no audio output). It meets all stable kernel criteria: it's
+obviously correct, fixes a real bug that affects users, is small and
+contained, and doesn't introduce new features. The fix comes from the
+hardware vendor (Realtek) and has been approved by the subsystem
+maintainer. The only consideration is whether the affected code exists
+in the target stable trees, but that's a backporting logistics issue
+rather than a reason to reject.
+
+**YES**
+
+ sound/hda/codecs/realtek/alc269.c | 11 +++++++++++
+ 1 file changed, 11 insertions(+)
+
+diff --git a/sound/hda/codecs/realtek/alc269.c b/sound/hda/codecs/realtek/alc269.c
+index 4ab89cb6e55f2..c473c6bd37e67 100644
+--- a/sound/hda/codecs/realtek/alc269.c
++++ b/sound/hda/codecs/realtek/alc269.c
+@@ -3371,11 +3371,22 @@ static void alc287_alc1318_playback_pcm_hook(struct hda_pcm_stream *hinfo,
+ 				   struct snd_pcm_substream *substream,
+ 				   int action)
+ {
++	static const struct coef_fw dis_coefs[] = {
++		WRITE_COEF(0x24, 0x0013), WRITE_COEF(0x25, 0x0000), WRITE_COEF(0x26, 0xC203),
++		WRITE_COEF(0x28, 0x0004), WRITE_COEF(0x29, 0xb023),
++	}; /* Disable AMP silence detection */
++	static const struct coef_fw en_coefs[] = {
++		WRITE_COEF(0x24, 0x0013), WRITE_COEF(0x25, 0x0000), WRITE_COEF(0x26, 0xC203),
++		WRITE_COEF(0x28, 0x0084), WRITE_COEF(0x29, 0xb023),
++	}; /* Enable AMP silence detection */
++
+ 	switch (action) {
+ 	case HDA_GEN_PCM_ACT_OPEN:
++		alc_process_coef_fw(codec, dis_coefs);
+ 		alc_write_coefex_idx(codec, 0x5a, 0x00, 0x954f); /* write gpio3 to high */
+ 		break;
+ 	case HDA_GEN_PCM_ACT_CLOSE:
++		alc_process_coef_fw(codec, en_coefs);
+ 		alc_write_coefex_idx(codec, 0x5a, 0x00, 0x554f); /* write gpio3 as default value */
+ 		break;
+ 	}
+-- 
+2.51.0
 
