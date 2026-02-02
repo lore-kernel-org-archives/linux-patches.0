@@ -1,49 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 933402D8DD1;
-	Mon,  2 Feb 2026 21:47:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0C062D8DD1;
+	Mon,  2 Feb 2026 21:47:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770068821; cv=none; b=ezW68TyxcOOJ0M0Hi7/9/qcr0bXNUo6RTCnWrJDuzqup+pNq1XX/WwGPPwteuHddPrxe+I0wSGx3xXXVF7Uat6Rvb0rBSTs4bDizO6mUfc9ksSVBEIKUpSR1xk/5acFUOZt5CJCUmNFS1u/6Fw24nu//9Cw1wAAvPHAIOKuDvTc=
+	t=1770068823; cv=none; b=tpglGsnvEV0QhE8O943lLMQksC7xIWCvSrwQOTpN4jvzat2DzeOi4QmQvz4jafib6N3icdk6dgSNYvhebcMXLYPFWXY7vN8wEp4L/5IRP0YwNJC/GX3u4BWIi6nlYDWRAUeCUmOiu55e6d6tGoPJf6VAJUFSqVtC8wwdV7Al01k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770068821; c=relaxed/simple;
-	bh=qPSzOtnJs389fCRczvT042YaNEiHH6grHBp9Lv5PF60=;
+	s=arc-20240116; t=1770068823; c=relaxed/simple;
+	bh=yMmc+gE/TeEIykfimutfHJ9UuR39OimXvChOlxkMweM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=J2vcUm7THCfK4bzJ39aJGyeEU4UEXwyEghjgLergoD1hQbCmTPDcXRrbJfrJMKrUEzBjxpPmxp2pWiudh9vWaku1VR2bHYwRqMP1Qts0IN85m425/KFFMppb2S9mk3oqC5WwhFIWEIyEhX6rO6yyVHSlzD6Dq8Zbh1tYvaGqyKc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=RLa23lN+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=uCCMeYq9B9nRlvPMAqKgVstAlrhrBKcw5pgZJw9E7Q3wntp80Mdbdll+jpXb4ET+inuWdsCUTV4RxioJd5oZRUM2AxNpJrjh/XLgiL4NK4IK7IV/5f4D7mcxwp/kfHBKF5dcrcch6+s5WmgyQFjrhvHtErvH/7ajYCDdf/O5m14=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=p5w/LoB1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="RLa23lN+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22572C116C6;
-	Mon,  2 Feb 2026 21:47:00 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="p5w/LoB1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5565C19421;
+	Mon,  2 Feb 2026 21:47:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1770068821;
-	bh=qPSzOtnJs389fCRczvT042YaNEiHH6grHBp9Lv5PF60=;
+	s=k20201202; t=1770068822;
+	bh=yMmc+gE/TeEIykfimutfHJ9UuR39OimXvChOlxkMweM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RLa23lN+Zpuq0fmt/qSY5PODlLfvtgvkWP5euQjo4nLIMuQr403OwwEuPIXXH3TPH
-	 nwuyAR94620PDR4ZsLw7hFMNl6XsFYxP47WeZRYGpwuBjhJILnAAbLI6mMgo4rpTwo
-	 wFos8+VmJVfvVi1yovE1jMbcIfgNcqjVn0ccyr7zXC8HHvbcnRFO6+P1/sMf5YPL2S
-	 3QV655FITYV3hmiUqWRefUnY4aYrjiJRZaTTY7oMYzMN0KTYoUqDmdxCTau8/CpxEX
-	 NlKl0W75TXvXiJNucMQEGbtF/71nXipej0U8IrOwmy5S6YXvM+FQbeqf80WR+KoRSG
-	 OwiiPv7fPuUWQ==
+	b=p5w/LoB1rQ5xrffwr8k1ObXK2oeFKK28VJ5FMXY88XD6+8mjG+wqub7/K98M46BCX
+	 tyPcQOlFWA92S1K6ljFMvNxGQMZdDyZXzRkr/WCPgwXf8tSMjxxdTpXz6zv0rvD5h9
+	 92HQbNIPM9WVmlkVl+HZJRFm9dE1qOjekEwhapGZ6PtXNcNGGX/yXGAUJoTFTWu6W5
+	 O39KN0I7hm+/kkq08SJ45R8wJQ7AVbjxN8KR+2HiN2puu6PSzsxb5XKBkmCZoCWtv6
+	 QGg80vXdTmDO5Ofz3Ghm4JODTA7sE/IjH/Ffcv2C43Z9wM8QGrX6xVzsXefYCMV1BP
+	 9IfCeMsBhelhg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Xuewen Yan <xuewen.yan@unisoc.com>,
-	Baolin Wang <baolin.wang@linux.alibaba.com>,
-	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
-	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
+Cc: Devyn Liu <liudingyuan@h-partners.com>,
+	Yang Shen <shenyang39@huawei.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	linusw@kernel.org,
-	brgl@kernel.org,
-	orsonzhai@gmail.com,
-	clrkwllms@kernel.org,
-	rostedt@goodmis.org,
-	linux-gpio@vger.kernel.org,
-	linux-rt-devel@lists.linux.dev
-Subject: [PATCH AUTOSEL 6.18-5.10] gpio: sprd: Change sprd_gpio lock to raw_spin_lock
-Date: Mon,  2 Feb 2026 16:46:02 -0500
-Message-ID: <20260202214643.212290-7-sashal@kernel.org>
+	linux-spi@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.18-6.6] spi: hisi-kunpeng: Fixed the wrong debugfs node name in hisi_spi debugfs initialization
+Date: Mon,  2 Feb 2026 16:46:03 -0500
+Message-ID: <20260202214643.212290-8-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260202214643.212290-1-sashal@kernel.org>
 References: <20260202214643.212290-1-sashal@kernel.org>
@@ -59,160 +52,142 @@ X-stable-base: Linux 6.18.8
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Xuewen Yan <xuewen.yan@unisoc.com>
+From: Devyn Liu <liudingyuan@h-partners.com>
 
-[ Upstream commit 96313fcc1f062ba239f4832c9eff685da6c51c99 ]
+[ Upstream commit b062a899c997df7b9ce29c62164888baa7a85833 ]
 
-There was a lockdep warning in sprd_gpio:
+In hisi_spi_debugfs_init, spi controller pointer is calculated
+by container_of macro, and the member is hs->dev. But the host
+cannot be calculated offset directly by this. (hs->dev) points
+to (pdev->dev), and it is the (host->dev.parent) rather than
+(host->dev) points to the (pdev->dev), which is set in
+__spi_alloc_controller.
 
-[    6.258269][T329@C6] [ BUG: Invalid wait context ]
-[    6.258270][T329@C6] 6.18.0-android17-0-g30527ad7aaae-ab00009-4k #1 Tainted: G        W  OE
-[    6.258272][T329@C6] -----------------------------
-[    6.258273][T329@C6] modprobe/329 is trying to lock:
-[    6.258275][T329@C6] ffffff8081c91690 (&sprd_gpio->lock){....}-{3:3}, at: sprd_gpio_irq_unmask+0x4c/0xa4 [gpio_sprd]
-[    6.258282][T329@C6] other info that might help us debug this:
-[    6.258283][T329@C6] context-{5:5}
-[    6.258285][T329@C6] 3 locks held by modprobe/329:
-[    6.258286][T329@C6]  #0: ffffff808baca108 (&dev->mutex){....}-{4:4}, at: __driver_attach+0xc4/0x204
-[    6.258295][T329@C6]  #1: ffffff80965e7240 (request_class#4){+.+.}-{4:4}, at: __setup_irq+0x1cc/0x82c
-[    6.258304][T329@C6]  #2: ffffff80965e70c8 (lock_class#4){....}-{2:2}, at: __setup_irq+0x21c/0x82c
-[    6.258313][T329@C6] stack backtrace:
-[    6.258314][T329@C6] CPU: 6 UID: 0 PID: 329 Comm: modprobe Tainted: G        W  OE       6.18.0-android17-0-g30527ad7aaae-ab00009-4k #1 PREEMPT  3ad5b0f45741a16e5838da790706e16ceb6717df
-[    6.258316][T329@C6] Tainted: [W]=WARN, [O]=OOT_MODULE, [E]=UNSIGNED_MODULE
-[    6.258317][T329@C6] Hardware name: Unisoc UMS9632-base Board (DT)
-[    6.258318][T329@C6] Call trace:
-[    6.258318][T329@C6]  show_stack+0x20/0x30 (C)
-[    6.258321][T329@C6]  __dump_stack+0x28/0x3c
-[    6.258324][T329@C6]  dump_stack_lvl+0xac/0xf0
-[    6.258326][T329@C6]  dump_stack+0x18/0x3c
-[    6.258329][T329@C6]  __lock_acquire+0x824/0x2c28
-[    6.258331][T329@C6]  lock_acquire+0x148/0x2cc
-[    6.258333][T329@C6]  _raw_spin_lock_irqsave+0x6c/0xb4
-[    6.258334][T329@C6]  sprd_gpio_irq_unmask+0x4c/0xa4 [gpio_sprd 814535e93c6d8e0853c45c02eab0fa88a9da6487]
-[    6.258337][T329@C6]  irq_startup+0x238/0x350
-[    6.258340][T329@C6]  __setup_irq+0x504/0x82c
-[    6.258342][T329@C6]  request_threaded_irq+0x118/0x184
-[    6.258344][T329@C6]  devm_request_threaded_irq+0x94/0x120
-[    6.258347][T329@C6]  sc8546_init_irq+0x114/0x170 [sc8546_charger 223586ccafc27439f7db4f95b0c8e6e882349a99]
-[    6.258352][T329@C6]  sc8546_charger_probe+0x53c/0x5a0 [sc8546_charger 223586ccafc27439f7db4f95b0c8e6e882349a99]
-[    6.258358][T329@C6]  i2c_device_probe+0x2c8/0x350
-[    6.258361][T329@C6]  really_probe+0x1a8/0x46c
-[    6.258363][T329@C6]  __driver_probe_device+0xa4/0x10c
-[    6.258366][T329@C6]  driver_probe_device+0x44/0x1b4
-[    6.258369][T329@C6]  __driver_attach+0xd0/0x204
-[    6.258371][T329@C6]  bus_for_each_dev+0x10c/0x168
-[    6.258373][T329@C6]  driver_attach+0x2c/0x3c
-[    6.258376][T329@C6]  bus_add_driver+0x154/0x29c
-[    6.258378][T329@C6]  driver_register+0x70/0x10c
-[    6.258381][T329@C6]  i2c_register_driver+0x48/0xc8
-[    6.258384][T329@C6]  init_module+0x28/0xfd8 [sc8546_charger 223586ccafc27439f7db4f95b0c8e6e882349a99]
-[    6.258389][T329@C6]  do_one_initcall+0x128/0x42c
-[    6.258392][T329@C6]  do_init_module+0x60/0x254
-[    6.258395][T329@C6]  load_module+0x1054/0x1220
-[    6.258397][T329@C6]  __arm64_sys_finit_module+0x240/0x35c
-[    6.258400][T329@C6]  invoke_syscall+0x60/0xec
-[    6.258402][T329@C6]  el0_svc_common+0xb0/0xe4
-[    6.258405][T329@C6]  do_el0_svc+0x24/0x30
-[    6.258407][T329@C6]  el0_svc+0x54/0x1c4
-[    6.258409][T329@C6]  el0t_64_sync_handler+0x68/0xdc
-[    6.258411][T329@C6]  el0t_64_sync+0x1c4/0x1c8
+In this patch, this issues is fixed by getting the spi_controller
+data from pdev->dev by dev_get_drvdata() directly. (dev->driver_data)
+points to the spi controller data in the probe stage.
 
-This is because the spin_lock would change to rt_mutex in PREEMPT_RT,
-however the sprd_gpio->lock would use in hard-irq, this is unsafe.
-
-So change the spin_lock_t to raw_spin_lock_t to use the spinlock
-in hard-irq.
-
-Signed-off-by: Xuewen Yan <xuewen.yan@unisoc.com>
-Reviewed-by: Baolin Wang <baolin.wang@linux.alibaba.com>
-Reviewed-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
-Link: https://lore.kernel.org/r/20260126094209.9855-1-xuewen.yan@unisoc.com
-[Bartosz: tweaked the commit message]
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+Signed-off-by: Devyn Liu <liudingyuan@h-partners.com>
+Reviewed-by: Yang Shen <shenyang39@huawei.com>
+Link: https://patch.msgid.link/20260108075323.3831574-1-liudingyuan@h-partners.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-The driver has been present since kernel 4.14 (initial commit
-`9a3821c2bb47d`). The patch should apply cleanly to all stable versions
-as it's a simple lock type change with no dependencies.
+In `struct spi_controller`, `dev` is at offset 0. So when `container_of`
+is used with an incorrect pointer, it will calculate the "base" of the
+spi_controller by subtracting 0 from the address - meaning it will use
+`hs->dev` (pdev->dev) directly as if it were an spi_controller!
 
-### 9. SIMILAR PRECEDENT
+This would cause the access to `host->bus_num` (used in the snprintf for
+creating debugfs directory name) to read from the wrong memory location.
+Looking at struct spi_controller, `bus_num` is at around offset 72-80
+bytes (after `dev` and `list`), so it would be reading random data from
+the platform_device structure.
 
-This type of fix (spin_lock → raw_spin_lock for RT compatibility in IRQ
-context) is extremely common and well-understood. It's a standard
-pattern that has been applied to many drivers.
+Let me analyze the severity:
 
-### SUMMARY
+1. **Best case**: Random garbage `bus_num` value → debugfs directory
+   created with garbage name like "hisi_spi-1234567" or some nonsense
+2. **Worst case**: Could potentially read out of bounds if pdev->dev is
+   at the end of an allocation
 
-**Pros:**
-- Fixes a real lockdep warning/bug on PREEMPT_RT systems
-- Very small, mechanical, and obviously correct change
-- Reviewed by PREEMPT_RT maintainer (Sebastian Andrzej Siewior)
-- No functional change on non-RT kernels
-- Pattern has been applied many times before
-- Clean backport - no dependencies
+The fix is simple, correct, and uses the proper method to retrieve the
+spi_controller pointer.
 
-**Cons:**
-- Affects only PREEMPT_RT users (smaller user base)
-- The driver is for Spreadtrum/Unisoc hardware (embedded/mobile)
+## Summary Analysis
 
-**Risk vs Benefit:**
-- Risk: Negligible - the change is mechanical and well-understood
-- Benefit: Fixes potential deadlock/invalid context on RT systems
+### 1. COMMIT MESSAGE ANALYSIS
+The commit message clearly explains:
+- The bug: `container_of` is incorrectly used - `hs->dev` points to
+  `pdev->dev`, not `host->dev`
+- The fix: Use `dev_get_drvdata()` to correctly get the spi_controller
+  pointer
 
-This commit is an excellent candidate for stable backporting. It fixes a
-real bug (lockdep warning indicating invalid wait context), is small and
-contained (10 lines), has been reviewed by domain experts, and follows a
-well-established pattern. The change is a no-op on non-RT kernels and
-fixes the bug on RT kernels.
+### 2. CODE CHANGE ANALYSIS
+**The Bug:**
+- `hs->dev = dev` where `dev = &pdev->dev` (platform device's device)
+- `host = container_of(hs->dev, struct spi_controller, dev)` computes
+  wrong offset
+- Since `dev` is at offset 0 in spi_controller, this treats `pdev->dev`
+  as if it were the spi_controller
+- Accessing `host->bus_num` reads garbage from wrong memory location
+
+**The Fix:**
+- Uses `dev_get_drvdata(hs->dev)` to correctly retrieve the
+  spi_controller pointer
+- This works because `platform_set_drvdata(pdev, host)` was called in
+  probe
+
+**The fix is obviously correct:** It mirrors how other parts of the
+driver (e.g., interrupt handler) retrieve the spi_controller.
+
+### 3. CLASSIFICATION
+- **Bug fix**: Yes, this fixes a real bug where incorrect memory is
+  accessed
+- **Category**: Bug fix for incorrect pointer calculation
+
+### 4. SCOPE AND RISK ASSESSMENT
+- **Lines changed**: Net -4 lines, very small change
+- **Files touched**: 1 driver file
+- **Risk**: Very low - changes a local variable initialization in a
+  debugfs init function
+- **Could break something else?**: No, this is a purely local fix
+
+### 5. USER IMPACT
+- **Who is affected**: Users of HiSilicon Kunpeng SoC SPI controllers
+  with debugfs enabled
+- **Severity**: The bug causes incorrect debugfs directory naming and
+  potentially reads garbage memory
+- **Hardware support**: This driver is for specific Kunpeng server SoCs
+
+### 6. STABILITY INDICATORS
+- Has "Reviewed-by:" tag from another Huawei engineer
+- The fix is straightforward and mirrors existing patterns in the driver
+
+### 7. DEPENDENCY CHECK
+- The driver exists since v5.13, so this is relevant for 5.15.y, 6.1.y,
+  6.6.y, etc.
+- No dependencies on other commits - standalone fix
+
+## Conclusion
+
+This commit fixes a real bug in pointer calculation that causes
+incorrect memory access. The fix is:
+- Small and surgical (changes one variable initialization)
+- Obviously correct (uses the same pattern as other code in the driver)
+- Fixes a real bug (incorrect container_of usage)
+- Low risk (only affects debugfs, but still fixes incorrect memory
+  access)
+
+The bug could cause reading garbage values or potentially undefined
+behavior. While debugfs is primarily a debugging interface, the
+incorrect memory access is still a real bug that should be fixed in
+stable trees.
 
 **YES**
 
- drivers/gpio/gpio-sprd.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/spi/spi-hisi-kunpeng.c | 4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
-diff --git a/drivers/gpio/gpio-sprd.c b/drivers/gpio/gpio-sprd.c
-index 413bcd0a42405..2cc8abe705cdb 100644
---- a/drivers/gpio/gpio-sprd.c
-+++ b/drivers/gpio/gpio-sprd.c
-@@ -35,7 +35,7 @@
- struct sprd_gpio {
- 	struct gpio_chip chip;
- 	void __iomem *base;
--	spinlock_t lock;
-+	raw_spinlock_t lock;
- 	int irq;
- };
+diff --git a/drivers/spi/spi-hisi-kunpeng.c b/drivers/spi/spi-hisi-kunpeng.c
+index dadf558dd9c0c..80a1a15de0bc3 100644
+--- a/drivers/spi/spi-hisi-kunpeng.c
++++ b/drivers/spi/spi-hisi-kunpeng.c
+@@ -161,10 +161,8 @@ static const struct debugfs_reg32 hisi_spi_regs[] = {
+ static int hisi_spi_debugfs_init(struct hisi_spi *hs)
+ {
+ 	char name[32];
++	struct spi_controller *host = dev_get_drvdata(hs->dev);
  
-@@ -54,7 +54,7 @@ static void sprd_gpio_update(struct gpio_chip *chip, unsigned int offset,
- 	unsigned long flags;
- 	u32 tmp;
- 
--	spin_lock_irqsave(&sprd_gpio->lock, flags);
-+	raw_spin_lock_irqsave(&sprd_gpio->lock, flags);
- 	tmp = readl_relaxed(base + reg);
- 
- 	if (val)
-@@ -63,7 +63,7 @@ static void sprd_gpio_update(struct gpio_chip *chip, unsigned int offset,
- 		tmp &= ~BIT(SPRD_GPIO_BIT(offset));
- 
- 	writel_relaxed(tmp, base + reg);
--	spin_unlock_irqrestore(&sprd_gpio->lock, flags);
-+	raw_spin_unlock_irqrestore(&sprd_gpio->lock, flags);
- }
- 
- static int sprd_gpio_read(struct gpio_chip *chip, unsigned int offset, u16 reg)
-@@ -236,7 +236,7 @@ static int sprd_gpio_probe(struct platform_device *pdev)
- 	if (IS_ERR(sprd_gpio->base))
- 		return PTR_ERR(sprd_gpio->base);
- 
--	spin_lock_init(&sprd_gpio->lock);
-+	raw_spin_lock_init(&sprd_gpio->lock);
- 
- 	sprd_gpio->chip.label = dev_name(&pdev->dev);
- 	sprd_gpio->chip.ngpio = SPRD_GPIO_NR;
+-	struct spi_controller *host;
+-
+-	host = container_of(hs->dev, struct spi_controller, dev);
+ 	snprintf(name, 32, "hisi_spi%d", host->bus_num);
+ 	hs->debugfs = debugfs_create_dir(name, NULL);
+ 	if (IS_ERR(hs->debugfs))
 -- 
 2.51.0
 
