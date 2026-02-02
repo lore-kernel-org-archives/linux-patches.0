@@ -1,44 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E958229ACD7;
-	Mon,  2 Feb 2026 21:47:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0FB3C29ACD7;
+	Mon,  2 Feb 2026 21:47:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770068838; cv=none; b=YYRi/CNM0LQJC2ETo/DYvB75fTMN88M3xM+v5kHCHn8as1M2J6y8iJFlQkg6l+XKMW2jXMioqgma4f2QFP0e48PEInMtwwucqUJ4ZxHc3ylb2dKoalb/POZwFAZlJ5J4mpSGvCC5wZ++Pw3+doxJ86UxkuVG8OOGsd0YmxaNcSQ=
+	t=1770068839; cv=none; b=PrV/oiuSbTvKdcGnyqSRDI9HaOS5+XSETC3aodRzqzgJNKXTX8mxIbdOdzagPoW3aifHTLadSJ30FJ61f0Qat51shqWYgmXYfwvG8EaAJSjppVyS0EKdMopxKx0ZagYCIdbFTCNNgN7kJM47qSm9DDZvLwHnHbXcIcWK1yMqNjQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770068838; c=relaxed/simple;
-	bh=Uhu+OJ3/Ct+nm1SqSDzlrwEegfw9IFUXsLNNcY+v7es=;
+	s=arc-20240116; t=1770068839; c=relaxed/simple;
+	bh=ZI+fCFtjOz2oqnn00AeNgkHp2Y04okKoJp/N2I2qaiY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Q4jurEk6BiesVhm+CjllmCnVTYSId9yJu7sj+KM/s70oZ1Q/F5t1NK3cNETdgjXDURA0aLiI4DWuA3xbzltmMQb5gUkSNHvFFWjG7SjU19Y6cP6Nr4rRShNsUUcW8TyVQ1SOVx3k9nmlph5JlfGU70ejZBNZiDpQShKwfSYMk88=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=NKRGplfL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=K1O1tYtFXpzGx67H69QIZzuDOyn6wSUcA0bA5JJqtTRNWNIMf7DnIQtrAHGs15w1SUhzN2Fr/YR26shr+lJwOuMe+mNGTFm/dEEiKWEhtHAxCRixfJ2LPcbUHoWtvzbqQulvX7A4NcGHRdOEHUpx0SsfGcIVCKpA+YFweB8U/XM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=lAfeHZTm; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="NKRGplfL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2CB8C116C6;
-	Mon,  2 Feb 2026 21:47:16 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="lAfeHZTm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3618AC116C6;
+	Mon,  2 Feb 2026 21:47:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1770068837;
-	bh=Uhu+OJ3/Ct+nm1SqSDzlrwEegfw9IFUXsLNNcY+v7es=;
+	s=k20201202; t=1770068838;
+	bh=ZI+fCFtjOz2oqnn00AeNgkHp2Y04okKoJp/N2I2qaiY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NKRGplfLh8xfzxssG9u10DG/T+lU2W1PyoUVsIu670b4dRab52dRRbgM68+cRRFH/
-	 ZupNPb65rVCw975Wd2FmSradSWtq+ciTY7s3J8mlRUaBby4NOAd6J6UaXaDI9nZpLH
-	 66vZuT9yI5jfadNDKHMtqdm1xzXiVJQR7gPKiAUJ4Z3RnST7IpVwlAUnJNckOrZ+GQ
-	 F5EUPyWceycghKD3JN2m6bgQbycA/y0tKqohg6PvoqUJGBlQJGBInl8IeaLtDl/yXL
-	 xakga/6ooDJuiUKaZhyW/YH/0Ew/9qJOIWNV5JGJKxBGysyo+Ost7H/pefaROJeA5j
-	 dmRz7L6DQawuQ==
+	b=lAfeHZTmXZed3kmiD5O0MuJ/05cvQE0CQvLIssYlg1mJ1uajri0sQXu1/cpJcEfMb
+	 xKPgMuOZbnq8sYKk010QbNe/sYw3NVTdBaCQ1hkx9fKlpf+0z9VW+wRia01Id8DRFG
+	 C+DBat5POc9LQwFP04AAqXErVMcNs3RPI75EhGDOIZhTbbe/Y7qDYFuzo4lrxQxvNP
+	 VrDRi8P0WPj0r2XPyLw/yqDfk8WANHLejg3/VhajNk3EJewZDuLBixeGAgc20Ndq8b
+	 HC8ctGaFsaLdGmfARAWvEbbncRWgqKSeRlA//mXboP9VnLTcJqhkBIfRUoWTU7cceC
+	 Z6PdhJ7lKTdvQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Edward Adam Davis <eadavis@qq.com>,
-	syzbot+b4a2af3000eaa84d95d5@syzkaller.appspotmail.com,
-	Filipe Manana <fdmanana@suse.com>,
-	David Sterba <dsterba@suse.com>,
+Cc: Miri Korenblit <miriam.rachel.korenblit@intel.com>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>,
-	clm@fb.com,
-	linux-btrfs@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18] btrfs: sync read disk super and set block size
-Date: Mon,  2 Feb 2026 16:46:10 -0500
-Message-ID: <20260202214643.212290-15-sashal@kernel.org>
+	johannes@sipsolutions.net,
+	linux-wireless@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.18-5.10] wifi: mac80211: don't increment crypto_tx_tailroom_needed_cnt twice
+Date: Mon,  2 Feb 2026 16:46:11 -0500
+Message-ID: <20260202214643.212290-16-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260202214643.212290-1-sashal@kernel.org>
 References: <20260202214643.212290-1-sashal@kernel.org>
@@ -53,211 +51,140 @@ X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.18.8
 Content-Transfer-Encoding: 8bit
 
-From: Edward Adam Davis <eadavis@qq.com>
+From: Miri Korenblit <miriam.rachel.korenblit@intel.com>
 
-[ Upstream commit 3f29d661e5686f3aa14e6f11537ff5c49846f2e2 ]
+[ Upstream commit 3f3d8ff31496874a69b131866f62474eb24ed20a ]
 
-When the user performs a btrfs mount, the block device is not set
-correctly. The user sets the block size of the block device to 0x4000
-by executing the BLKBSZSET command.
-Since the block size change also changes the mapping->flags value, this
-further affects the result of the mapping_min_folio_order() calculation.
+In reconfig, in case the driver asks to disconnect during the reconfig,
+all the keys of the interface are marked as tainted.
+Then ieee80211_reenable_keys will loop over all the interface keys, and
+for each one it will
+a) increment crypto_tx_tailroom_needed_cnt
+b) call ieee80211_key_enable_hw_accel, which in turn will detect that
+this key is tainted, so it will mark it as "not in hardware", which is
+paired with crypto_tx_tailroom_needed_cnt incrementation, so we get two
+incrementations for each tainted key.
+Then we get a warning in ieee80211_free_keys.
 
-Let's analyze the following two scenarios:
+To fix it, don't increment the count in ieee80211_reenable_keys for
+tainted keys
 
-Scenario 1: Without executing the BLKBSZSET command, the block size is
-0x1000, and mapping_min_folio_order() returns 0;
-
-Scenario 2: After executing the BLKBSZSET command, the block size is
-0x4000, and mapping_min_folio_order() returns 2.
-
-do_read_cache_folio() allocates a folio before the BLKBSZSET command
-is executed. This results in the allocated folio having an order value
-of 0. Later, after BLKBSZSET is executed, the block size increases to
-0x4000, and the mapping_min_folio_order() calculation result becomes 2.
-
-This leads to two undesirable consequences:
-
-1. filemap_add_folio() triggers a VM_BUG_ON_FOLIO(folio_order(folio) <
-mapping_min_folio_order(mapping)) assertion.
-
-2. The syzbot report [1] shows a null pointer dereference in
-create_empty_buffers() due to a buffer head allocation failure.
-
-Synchronization should be established based on the inode between the
-BLKBSZSET command and read cache page to prevent inconsistencies in
-block size or mapping flags before and after folio allocation.
-
-[1]
-KASAN: null-ptr-deref in range [0x0000000000000000-0x0000000000000007]
-RIP: 0010:create_empty_buffers+0x4d/0x480 fs/buffer.c:1694
-Call Trace:
- folio_create_buffers+0x109/0x150 fs/buffer.c:1802
- block_read_full_folio+0x14c/0x850 fs/buffer.c:2403
- filemap_read_folio+0xc8/0x2a0 mm/filemap.c:2496
- do_read_cache_folio+0x266/0x5c0 mm/filemap.c:4096
- do_read_cache_page mm/filemap.c:4162 [inline]
- read_cache_page_gfp+0x29/0x120 mm/filemap.c:4195
- btrfs_read_disk_super+0x192/0x500 fs/btrfs/volumes.c:1367
-
-Reported-by: syzbot+b4a2af3000eaa84d95d5@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=b4a2af3000eaa84d95d5
-Signed-off-by: Edward Adam Davis <eadavis@qq.com>
-Reviewed-by: Filipe Manana <fdmanana@suse.com>
-Signed-off-by: Filipe Manana <fdmanana@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Reviewed-by: Johannes Berg <johannes.berg@intel.com>
+Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
+Link: https://patch.msgid.link/20260118092821.4ca111fddcda.Id6e554f4b1c83760aa02d5a9e4e3080edb197aa2@changeid
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-So this commit is going into v6.19. Let me now analyze the complete
-picture.
+So KEY_FLAG_TAINTED was introduced in v4.20. The bug being fixed is
+likely in all kernels from 4.20 onward. Let me verify the current state
+after the patch would be applied.
+
+The patch being analyzed changes:
+```c
+list_for_each_entry(key, &sdata->key_list, list) {
+    increment_tailroom_need_count(sdata);  // OLD: unconditional
+    ieee80211_key_enable_hw_accel(key);
+}
+```
+
+to:
+```c
+list_for_each_entry(key, &sdata->key_list, list) {
+    if (!(key->flags & KEY_FLAG_TAINTED))  // NEW: skip for tainted
+        increment_tailroom_need_count(sdata);
+    ieee80211_key_enable_hw_accel(key);
+}
+```
+
+This is correct because:
+- For non-tainted keys: increment once here, and if HW accel succeeds,
+  it will be decremented in `ieee80211_key_enable_hw_accel()` (line
+  187). Net result: proper accounting.
+- For tainted keys: skip here, let `ieee80211_key_enable_hw_accel()`
+  handle the increment (line 141) when clearing
+  `KEY_FLAG_UPLOADED_TO_HARDWARE`. Net result: proper accounting.
 
 ## Analysis Summary
 
-### 1. COMMIT MESSAGE ANALYSIS
+**1. COMMIT MESSAGE ANALYSIS:**
+- Clear explanation of the problem: double increment of
+  `crypto_tx_tailroom_needed_cnt` for tainted keys during reconfig
+- The symptom is a warning in `ieee80211_free_keys`
+- Reviewed-by from Johannes Berg (mac80211 maintainer) adds confidence
 
-**Subject:** "btrfs: sync read disk super and set block size"
+**2. CODE CHANGE ANALYSIS:**
+- The bug: In `ieee80211_reenable_keys()`, for each key:
+  1. `increment_tailroom_need_count(sdata)` is called unconditionally
+  2. `ieee80211_key_enable_hw_accel(key)` is called
 
-**Key indicators:**
-- **Reported-by: syzbot**: Indicates a real bug found by fuzzing
-- **Closes: syzkaller bug link**: Confirms this is fixing a reported
-  issue
-- **Reviewed-by: Filipe Manana**: Core btrfs maintainer reviewed and
-  approved
-- **Signed-off-by: David Sterba**: Btrfs maintainer signed off
+- For tainted keys (marked when driver requests disconnect during
+  reconfig), `ieee80211_key_enable_hw_accel()` will:
+  - Also call `increment_tailroom_need_count(sdata)` at line 141 if the
+    key was uploaded to hardware
+  - Clear the `KEY_FLAG_UPLOADED_TO_HARDWARE` flag
 
-The commit message describes a race condition that leads to:
-1. `VM_BUG_ON_FOLIO` assertion failure
-2. Null pointer dereference in `create_empty_buffers()`
+- Result: Two increments per tainted key instead of one
 
-### 2. CODE CHANGE ANALYSIS
+- The fix: Skip the first increment for tainted keys since they'll get
+  their increment inside `ieee80211_key_enable_hw_accel()`
 
-The fix is **extremely simple** - just 2 lines added:
-```c
-+       filemap_invalidate_lock(mapping);
-        page = read_cache_page_gfp(mapping, bytenr >> PAGE_SHIFT,
-GFP_NOFS);
-+       filemap_invalidate_unlock(mapping);
-```
+**3. CLASSIFICATION:**
+- This is a clear BUG FIX for a reference counting error
+- Not a feature addition
+- Fixes a real warning that users would see in kernel logs
 
-**Root cause:** A race between:
-1. `btrfs_read_disk_super()` allocating a folio via
-   `read_cache_page_gfp()`
-2. User space calling `BLKBSZSET` ioctl to change block size
+**4. SCOPE AND RISK ASSESSMENT:**
+- Very small change: adds a simple conditional check (1 line changed)
+- Localized to mac80211 key handling
+- Low risk: the logic is straightforward and has been reviewed by the
+  subsystem maintainer
+- The worst-case if the fix is wrong would be the opposite accounting
+  error
 
-When the block size changes mid-operation, the folio order requirements
-change, causing either a BUG_ON or null pointer dereference.
+**5. USER IMPACT:**
+- WiFi users doing rekeys or going through suspend/resume/HW restart
+  with certain driver/firmware combinations could hit this
+- The symptom is a kernel warning (WARN_ON_ONCE in
+  `ieee80211_free_keys`)
+- It causes incorrect tailroom accounting which could potentially lead
+  to issues with software encryption
 
-**Why the fix works:** The `filemap_invalidate_lock()` provides
-synchronization between the page cache reader and the block size setter
-(in `set_blocksize()`), preventing the race.
+**6. STABILITY INDICATORS:**
+- Reviewed-by: Johannes Berg (mac80211 maintainer)
+- The code path and fix are straightforward
 
-### 3. CLASSIFICATION
+**7. DEPENDENCY CHECK:**
+- KEY_FLAG_TAINTED exists since v4.20
+- The function `ieee80211_reenable_keys()` exists in stable trees
+- The code affected exists in all supported stable kernels
+- No dependency on other commits - this is a standalone fix
 
-- **Bug type:** Race condition leading to kernel crash (null pointer
-  deref) or BUG_ON
-- **Severity:** High - causes kernel panic/crash
-- **Category:** Synchronization fix
-
-### 4. SCOPE AND RISK ASSESSMENT
-
-- **Lines changed:** 2 additions only
-- **Files touched:** 1 (fs/btrfs/volumes.c)
-- **Complexity:** Very low - just lock/unlock pair around existing call
-- **Risk:** LOW - the lock is well-understood and used elsewhere for
-  exactly this purpose
-
-### 5. USER IMPACT
-
-- **Who is affected:** Any btrfs user where concurrent block device
-  operations occur
-- **Triggering scenario:** User space modifying block device size while
-  btrfs is mounting/reading superblock
-- **Severity of impact:** Kernel crash (HIGH)
-
-### 6. STABILITY INDICATORS
-
-- **Reviewed-by:** Filipe Manana (senior btrfs developer at SUSE)
-- **Multiple sign-offs:** Through the btrfs maintainer chain
-- **Syzbot reported:** Reproducible issue
-
-### 7. CRITICAL DEPENDENCY CHECK
-
-**THIS IS THE KEY ISSUE:** The fix relies on `set_blocksize()` also
-taking `filemap_invalidate_lock()`. This was added by commit
-`c0e473a0d2264` ("block: fix race between set_blocksize and read paths")
-which is **only in kernel 6.15+**.
-
-Without that block layer fix:
-- On kernels < 6.15: `set_blocksize()` does NOT take
-  `filemap_invalidate_lock`, so this btrfs fix would NOT provide proper
-  synchronization
-- The btrfs fix by itself would be ineffective in preventing the race
-
-### Risk vs Benefit Analysis
-
-**Benefits:**
-- Fixes real crash reported by syzbot
-- Very small, surgical fix (2 lines)
-- Well-reviewed by btrfs maintainers
-- Follows established synchronization pattern
-
-**Risks/Concerns:**
-- **CRITICAL DEPENDENCY**: Requires `c0e473a0d2264` to be present for
-  the synchronization to work
-- Without the block layer fix, this btrfs fix is essentially a no-op
-  (won't actually synchronize)
-- The block layer fix is only in 6.15+, so backporting this btrfs fix to
-  6.14 or earlier would be pointless without also backporting the block
-  layer changes
-
-### Conclusion
-
-This commit fixes a real kernel crash (null pointer dereference) in
-btrfs that was reported by syzbot. The fix itself is minimal and correct
-- it adds proper locking around the `read_cache_page_gfp()` call to
-synchronize with block size changes.
-
-However, there is a **critical dependency issue**: This fix only
-provides effective synchronization when paired with commit
-`c0e473a0d2264` ("block: fix race between set_blocksize and read paths")
-which adds the corresponding lock acquisition in `set_blocksize()`. That
-commit is only in kernel 6.15+.
-
-For stable trees **6.15.y and later**: This is a clear YES - fixes a
-real crash with minimal risk.
-
-For stable trees **6.14 and earlier**: The fix would be ineffective
-without also backporting the block layer changes, which are more
-invasive.
-
-Given that the question is about backporting in general and this commit
-would only be effective in 6.15+ (where the block layer infrastructure
-exists), and the fix is correct, small, and addresses a real crash, the
-answer depends on the target kernel. For the current stable (6.15+),
-this should be backported.
+The fix is small, surgical, reviewed by the subsystem maintainer, fixes
+a real bug (warning + incorrect reference counting), and meets all
+stable kernel criteria.
 
 **YES**
 
- fs/btrfs/volumes.c | 2 ++
- 1 file changed, 2 insertions(+)
+ net/mac80211/key.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/fs/btrfs/volumes.c b/fs/btrfs/volumes.c
-index 48e717c105c35..8e7dcb12af4c4 100644
---- a/fs/btrfs/volumes.c
-+++ b/fs/btrfs/volumes.c
-@@ -1365,7 +1365,9 @@ struct btrfs_super_block *btrfs_read_disk_super(struct block_device *bdev,
- 				      (bytenr + BTRFS_SUPER_INFO_SIZE) >> PAGE_SHIFT);
+diff --git a/net/mac80211/key.c b/net/mac80211/key.c
+index d5da7ccea66e0..04c8809173d7f 100644
+--- a/net/mac80211/key.c
++++ b/net/mac80211/key.c
+@@ -987,7 +987,8 @@ void ieee80211_reenable_keys(struct ieee80211_sub_if_data *sdata)
+ 
+ 	if (ieee80211_sdata_running(sdata)) {
+ 		list_for_each_entry(key, &sdata->key_list, list) {
+-			increment_tailroom_need_count(sdata);
++			if (!(key->flags & KEY_FLAG_TAINTED))
++				increment_tailroom_need_count(sdata);
+ 			ieee80211_key_enable_hw_accel(key);
+ 		}
  	}
- 
-+	filemap_invalidate_lock(mapping);
- 	page = read_cache_page_gfp(mapping, bytenr >> PAGE_SHIFT, GFP_NOFS);
-+	filemap_invalidate_unlock(mapping);
- 	if (IS_ERR(page))
- 		return ERR_CAST(page);
- 
 -- 
 2.51.0
 
