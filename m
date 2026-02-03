@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D49733B8D5F;
-	Tue,  3 Feb 2026 15:59:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C2653BFE5E;
+	Tue,  3 Feb 2026 16:00:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770134387; cv=none; b=Cq7Br4M6EA2OBAfrJEX76jM3yGfe4c+9mDK4lZTFXnarfGoe3xrguqz8uVY4TlCs2noIv4tu0z/hvI6YDgpVpyUx4kD40z1cKTNluPrikMdiuEEWYXtKfo+vf6uwRoT1J71yu14AudWjio2MSj4JZyyPRRNpXAH6j7MpwFIl2as=
+	t=1770134404; cv=none; b=ORVGnMvrRmvf6QZC/sdSyOIWTq0HBQ04uEiAaIeTHpYfPELK5fVsm9xkzGhJlDowX/kN5rMOBI1hWXyEZl7/WTDwtaMfCQ6gkwo1DOigDjXR13yAm2YNb3nytKfP59N7RM30bQlTEMUDzXA+n3I4VL4/JXES4JP/TNcAL+gXDm8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770134387; c=relaxed/simple;
-	bh=QvI791hkbSam4XEYdOoSmCwiOfUhGvejURrmRygpJA8=;
+	s=arc-20240116; t=1770134404; c=relaxed/simple;
+	bh=lQsOTUMduDTmDGOcZDV9kazq+nu2hUBGi53sa4ZKfjc=;
 	h=Subject:To:Cc:From:Date:In-Reply-To:Message-ID:MIME-Version:
-	 Content-Type; b=cBGJ16dCBBG3y1WUqFqSVHvkIMCRprCqwdRS5/QsgAF2ExywTqX7ZzrIiVr16fd1mRNPS5Ywv+XJ7/muoNNKC18/h5ICNO5+YdqjUxo9t/kcieN4cMVoBa5bZOGek9z9OcNaWRrxlrIDhk9NkZipiRHnMdQpPygE9Rx2uml2rjw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xwuV7SNC; arc=none smtp.client-ip=10.30.226.201
+	 Content-Type; b=ACyfR4B2C1kQk007Geftljw0vvKt/xaQAhuYQWXWQXuTUaabYd8kf16vxH6vjSRT/O5imBYETbydPuUdOXPNmhOhur+gQHiAxwreqqA2BsgYS5GDs/Kma+ZZYpH9FAB/DHOGel2i+BkvOsmQl3fcSxvCdNJXNbPOXEMah/MS6Ac=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=usx3h4xU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xwuV7SNC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC10EC116D0;
-	Tue,  3 Feb 2026 15:59:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="usx3h4xU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2CE33C116D0;
+	Tue,  3 Feb 2026 16:00:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770134387;
-	bh=QvI791hkbSam4XEYdOoSmCwiOfUhGvejURrmRygpJA8=;
+	s=korg; t=1770134403;
+	bh=lQsOTUMduDTmDGOcZDV9kazq+nu2hUBGi53sa4ZKfjc=;
 	h=Subject:To:Cc:From:Date:In-Reply-To:From;
-	b=xwuV7SNCfWS1WLaBVURatTzUdUW8Sy4EmlqjH9GrEBsziXFEx1n2Phw/Gqu0nX748
-	 qAq7K+Zbt8wY+FckjTTpmHHrlaSdCNHuZCzTtMNLB21pe0iZt+vvqBnEXFbMZd1Hef
-	 toUiJhQRSspYI8++gSILMF3nc6e+p+MWVWQtOcSE=
-Subject: Patch "drm/amdgpu: Replace Mutex with Spinlock for RLCG register access to avoid Priority Inversion in SRIOV" has been added to the 6.1-stable tree
-To: 1468888505@139.com,Hawking.Zhang@amd.com,Jesse.Zhang@amd.com,Jingwen.Chen2@amd.com,Jun.Ma2@amd.com,Xinhui.Pan@amd.com,Zhigang.Luo@amd.com,airlied@gmail.com,alexander.deucher@amd.com,amd-gfx@lists.freedesktop.org,christian.koenig@amd.com,daniel@ffwll.ch,dri-devel@lists.freedesktop.org,gregkh@linuxfoundation.org,lin.cao@amd.com,mario.limonciello@amd.com,patches@lists.linux.dev,sashal@kernel.org,srinivasan.shanmugam@amd.com,superm1@kernel.org,victor.skvortsov@amd.com,zhigang.luo@amd.com
+	b=usx3h4xUYXeHdwhDT7gfk/0vJLCoGeCESD/yxwxehOen62jzjO1cfeu9E5oxlSK2I
+	 1tRWV7UlLD0eRod2SgwRKXRgMjQOBOzyFTljfXD4y2kDBz8NFQz31R13aV4o59SICw
+	 8TNGjCwv5Qmn+VdkD/X7anDU+jGNoGuWToamqiuA=
+Subject: Patch "sctp: linearize cloned gso packets in sctp_rcv" has been added to the 6.1-stable tree
+To: 1468888505@139.com,davem@davemloft.net,edumazet@google.com,gregkh@linuxfoundation.org,kuba@kernel.org,lucien.xin@gmail.com,marcelo.leitner@gmail.com,nhorman@tuxdriver.com,pabeni@redhat.com,patches@lists.linux.dev,syzbot+70a42f45e76bede082be@syzkaller.appspotmail.com,syzbot+773e51afe420baaf0e2b@syzkaller.appspotmail.com,vyasevich@gmail.com
 Cc: <stable-commits@vger.kernel.org>
 From: <gregkh@linuxfoundation.org>
-Date: Tue, 03 Feb 2026 16:59:08 +0100
-In-Reply-To: <20260129092702.3671189-1-1468888505@139.com>
-Message-ID: <2026020308-chain-pectin-78ba@gregkh>
+Date: Tue, 03 Feb 2026 16:59:09 +0100
+In-Reply-To: <20260130071038.3931297-1-1468888505@139.com>
+Message-ID: <2026020309-lyrics-shed-2f77@gregkh>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=ANSI_X3.4-1968
 Content-Transfer-Encoding: 8bit
 X-stable: commit
 X-Patchwork-Hint: ignore 
@@ -44,191 +44,99 @@ X-Patchwork-Hint: ignore
 
 This is a note to let you know that I've just added the patch titled
 
-    drm/amdgpu: Replace Mutex with Spinlock for RLCG register access to avoid Priority Inversion in SRIOV
+    sctp: linearize cloned gso packets in sctp_rcv
 
 to the 6.1-stable tree which can be found at:
     http://www.kernel.org/git/?p=linux/kernel/git/stable/stable-queue.git;a=summary
 
 The filename of the patch is:
-     drm-amdgpu-replace-mutex-with-spinlock-for-rlcg-register-access-to-avoid-priority-inversion-in-sriov.patch
+     sctp-linearize-cloned-gso-packets-in-sctp_rcv.patch
 and it can be found in the queue-6.1 subdirectory.
 
 If you, or anyone else, feels it should not be added to the stable tree,
 please let <stable@vger.kernel.org> know about it.
 
 
-From stable+bounces-212755-greg=kroah.com@vger.kernel.org Thu Jan 29 10:27:16 2026
+From stable+bounces-212845-greg=kroah.com@vger.kernel.org Fri Jan 30 08:11:03 2026
 From: Li hongliang <1468888505@139.com>
-Date: Thu, 29 Jan 2026 17:27:02 +0800
-Subject: drm/amdgpu: Replace Mutex with Spinlock for RLCG register access to avoid Priority Inversion in SRIOV
-To: gregkh@linuxfoundation.org, stable@vger.kernel.org, srinivasan.shanmugam@amd.com
-Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org, alexander.deucher@amd.com, christian.koenig@amd.com, Xinhui.Pan@amd.com, airlied@gmail.com, daniel@ffwll.ch, sashal@kernel.org, mario.limonciello@amd.com, superm1@kernel.org, Jun.Ma2@amd.com, Zhigang.Luo@amd.com, Hawking.Zhang@amd.com, Jesse.Zhang@amd.com, victor.skvortsov@amd.com, amd-gfx@lists.freedesktop.org, dri-devel@lists.freedesktop.org, lin.cao@amd.com, Jingwen.Chen2@amd.com
-Message-ID: <20260129092702.3671189-1-1468888505@139.com>
+Date: Fri, 30 Jan 2026 15:10:38 +0800
+Subject: sctp: linearize cloned gso packets in sctp_rcv
+To: gregkh@linuxfoundation.org, stable@vger.kernel.org, lucien.xin@gmail.com
+Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org, vyasevich@gmail.com, nhorman@tuxdriver.com, marcelo.leitner@gmail.com, davem@davemloft.net, edumazet@google.com, kuba@kernel.org, pabeni@redhat.com, linux-sctp@vger.kernel.org, netdev@vger.kernel.org
+Message-ID: <20260130071038.3931297-1-1468888505@139.com>
 
-From: Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>
+From: Xin Long <lucien.xin@gmail.com>
 
-[ Upstream commit dc0297f3198bd60108ccbd167ee5d9fa4af31ed0 ]
+[ Upstream commit fd60d8a086191fe33c2d719732d2482052fa6805 ]
 
-RLCG Register Access is a way for virtual functions to safely access GPU
-registers in a virtualized environment., including TLB flushes and
-register reads. When multiple threads or VFs try to access the same
-registers simultaneously, it can lead to race conditions. By using the
-RLCG interface, the driver can serialize access to the registers. This
-means that only one thread can access the registers at a time,
-preventing conflicts and ensuring that operations are performed
-correctly. Additionally, when a low-priority task holds a mutex that a
-high-priority task needs, ie., If a thread holding a spinlock tries to
-acquire a mutex, it can lead to priority inversion. register access in
-amdgpu_virt_rlcg_reg_rw especially in a fast code path is critical.
+A cloned head skb still shares these frag skbs in fraglist with the
+original head skb. It's not safe to access these frag skbs.
 
-The call stack shows that the function amdgpu_virt_rlcg_reg_rw is being
-called, which attempts to acquire the mutex. This function is invoked
-from amdgpu_sriov_wreg, which in turn is called from
-gmc_v11_0_flush_gpu_tlb.
+syzbot reported two use-of-uninitialized-memory bugs caused by this:
 
-The [ BUG: Invalid wait context ] indicates that a thread is trying to
-acquire a mutex while it is in a context that does not allow it to sleep
-(like holding a spinlock).
+  BUG: KMSAN: uninit-value in sctp_inq_pop+0x15b7/0x1920 net/sctp/inqueue.c:211
+   sctp_inq_pop+0x15b7/0x1920 net/sctp/inqueue.c:211
+   sctp_assoc_bh_rcv+0x1a7/0xc50 net/sctp/associola.c:998
+   sctp_inq_push+0x2ef/0x380 net/sctp/inqueue.c:88
+   sctp_backlog_rcv+0x397/0xdb0 net/sctp/input.c:331
+   sk_backlog_rcv+0x13b/0x420 include/net/sock.h:1122
+   __release_sock+0x1da/0x330 net/core/sock.c:3106
+   release_sock+0x6b/0x250 net/core/sock.c:3660
+   sctp_wait_for_connect+0x487/0x820 net/sctp/socket.c:9360
+   sctp_sendmsg_to_asoc+0x1ec1/0x1f00 net/sctp/socket.c:1885
+   sctp_sendmsg+0x32b9/0x4a80 net/sctp/socket.c:2031
+   inet_sendmsg+0x25a/0x280 net/ipv4/af_inet.c:851
+   sock_sendmsg_nosec net/socket.c:718 [inline]
 
-Fixes the below:
+and
 
-[  253.013423] =============================
-[  253.013434] [ BUG: Invalid wait context ]
-[  253.013446] 6.12.0-amdstaging-drm-next-lol-050225 #14 Tainted: G     U     OE
-[  253.013464] -----------------------------
-[  253.013475] kworker/0:1/10 is trying to lock:
-[  253.013487] ffff9f30542e3cf8 (&adev->virt.rlcg_reg_lock){+.+.}-{3:3}, at: amdgpu_virt_rlcg_reg_rw+0xf6/0x330 [amdgpu]
-[  253.013815] other info that might help us debug this:
-[  253.013827] context-{4:4}
-[  253.013835] 3 locks held by kworker/0:1/10:
-[  253.013847]  #0: ffff9f3040050f58 ((wq_completion)events){+.+.}-{0:0}, at: process_one_work+0x3f5/0x680
-[  253.013877]  #1: ffffb789c008be40 ((work_completion)(&wfc.work)){+.+.}-{0:0}, at: process_one_work+0x1d6/0x680
-[  253.013905]  #2: ffff9f3054281838 (&adev->gmc.invalidate_lock){+.+.}-{2:2}, at: gmc_v11_0_flush_gpu_tlb+0x198/0x4f0 [amdgpu]
-[  253.014154] stack backtrace:
-[  253.014164] CPU: 0 UID: 0 PID: 10 Comm: kworker/0:1 Tainted: G     U     OE      6.12.0-amdstaging-drm-next-lol-050225 #14
-[  253.014189] Tainted: [U]=USER, [O]=OOT_MODULE, [E]=UNSIGNED_MODULE
-[  253.014203] Hardware name: Microsoft Corporation Virtual Machine/Virtual Machine, BIOS Hyper-V UEFI Release v4.1 11/18/2024
-[  253.014224] Workqueue: events work_for_cpu_fn
-[  253.014241] Call Trace:
-[  253.014250]  <TASK>
-[  253.014260]  dump_stack_lvl+0x9b/0xf0
-[  253.014275]  dump_stack+0x10/0x20
-[  253.014287]  __lock_acquire+0xa47/0x2810
-[  253.014303]  ? srso_alias_return_thunk+0x5/0xfbef5
-[  253.014321]  lock_acquire+0xd1/0x300
-[  253.014333]  ? amdgpu_virt_rlcg_reg_rw+0xf6/0x330 [amdgpu]
-[  253.014562]  ? __lock_acquire+0xa6b/0x2810
-[  253.014578]  __mutex_lock+0x85/0xe20
-[  253.014591]  ? amdgpu_virt_rlcg_reg_rw+0xf6/0x330 [amdgpu]
-[  253.014782]  ? sched_clock_noinstr+0x9/0x10
-[  253.014795]  ? srso_alias_return_thunk+0x5/0xfbef5
-[  253.014808]  ? local_clock_noinstr+0xe/0xc0
-[  253.014822]  ? amdgpu_virt_rlcg_reg_rw+0xf6/0x330 [amdgpu]
-[  253.015012]  ? srso_alias_return_thunk+0x5/0xfbef5
-[  253.015029]  mutex_lock_nested+0x1b/0x30
-[  253.015044]  ? mutex_lock_nested+0x1b/0x30
-[  253.015057]  amdgpu_virt_rlcg_reg_rw+0xf6/0x330 [amdgpu]
-[  253.015249]  amdgpu_sriov_wreg+0xc5/0xd0 [amdgpu]
-[  253.015435]  gmc_v11_0_flush_gpu_tlb+0x44b/0x4f0 [amdgpu]
-[  253.015667]  gfx_v11_0_hw_init+0x499/0x29c0 [amdgpu]
-[  253.015901]  ? __pfx_smu_v13_0_update_pcie_parameters+0x10/0x10 [amdgpu]
-[  253.016159]  ? srso_alias_return_thunk+0x5/0xfbef5
-[  253.016173]  ? smu_hw_init+0x18d/0x300 [amdgpu]
-[  253.016403]  amdgpu_device_init+0x29ad/0x36a0 [amdgpu]
-[  253.016614]  amdgpu_driver_load_kms+0x1a/0xc0 [amdgpu]
-[  253.017057]  amdgpu_pci_probe+0x1c2/0x660 [amdgpu]
-[  253.017493]  local_pci_probe+0x4b/0xb0
-[  253.017746]  work_for_cpu_fn+0x1a/0x30
-[  253.017995]  process_one_work+0x21e/0x680
-[  253.018248]  worker_thread+0x190/0x330
-[  253.018500]  ? __pfx_worker_thread+0x10/0x10
-[  253.018746]  kthread+0xe7/0x120
-[  253.018988]  ? __pfx_kthread+0x10/0x10
-[  253.019231]  ret_from_fork+0x3c/0x60
-[  253.019468]  ? __pfx_kthread+0x10/0x10
-[  253.019701]  ret_from_fork_asm+0x1a/0x30
-[  253.019939]  </TASK>
+  BUG: KMSAN: uninit-value in sctp_assoc_bh_rcv+0x34e/0xbc0 net/sctp/associola.c:987
+   sctp_assoc_bh_rcv+0x34e/0xbc0 net/sctp/associola.c:987
+   sctp_inq_push+0x2a3/0x350 net/sctp/inqueue.c:88
+   sctp_backlog_rcv+0x3c7/0xda0 net/sctp/input.c:331
+   sk_backlog_rcv+0x142/0x420 include/net/sock.h:1148
+   __release_sock+0x1d3/0x330 net/core/sock.c:3213
+   release_sock+0x6b/0x270 net/core/sock.c:3767
+   sctp_wait_for_connect+0x458/0x820 net/sctp/socket.c:9367
+   sctp_sendmsg_to_asoc+0x223a/0x2260 net/sctp/socket.c:1886
+   sctp_sendmsg+0x3910/0x49f0 net/sctp/socket.c:2032
+   inet_sendmsg+0x269/0x2a0 net/ipv4/af_inet.c:851
+   sock_sendmsg_nosec net/socket.c:712 [inline]
 
-v2: s/spin_trylock/spin_lock_irqsave to be safe (Christian).
+This patch fixes it by linearizing cloned gso packets in sctp_rcv().
 
-Fixes: e864180ee49b ("drm/amdgpu: Add lock around VF RLCG interface")
-Cc: lin cao <lin.cao@amd.com>
-Cc: Jingwen Chen <Jingwen.Chen2@amd.com>
-Cc: Victor Skvortsov <victor.skvortsov@amd.com>
-Cc: Zhigang Luo <zhigang.luo@amd.com>
-Cc: Christian König <christian.koenig@amd.com>
-Cc: Alex Deucher <alexander.deucher@amd.com>
-Signed-off-by: Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>
-Suggested-by: Alex Deucher <alexander.deucher@amd.com>
-Reviewed-by: Christian König <christian.koenig@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-[ Minor conflict resolved. ]
+Fixes: 90017accff61 ("sctp: Add GSO support")
+Reported-by: syzbot+773e51afe420baaf0e2b@syzkaller.appspotmail.com
+Reported-by: syzbot+70a42f45e76bede082be@syzkaller.appspotmail.com
+Signed-off-by: Xin Long <lucien.xin@gmail.com>
+Reviewed-by: Marcelo Ricardo Leitner <marcelo.leitner@gmail.com>
+Link: https://patch.msgid.link/dd7dc337b99876d4132d0961f776913719f7d225.1754595611.git.lucien.xin@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Li hongliang <1468888505@139.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_device.c |    2 +-
- drivers/gpu/drm/amd/amdgpu/amdgpu_virt.c   |    5 +++--
- drivers/gpu/drm/amd/amdgpu/amdgpu_virt.h   |    3 ++-
- 3 files changed, 6 insertions(+), 4 deletions(-)
+This patch is lost/missing, as it has already been added
+into stable branches less than and greater than 6.1. Previous patch in
+https://lore.kernel.org/stable/20251022075549.195012-1-kovalev@altlinux.org/ is still not added.
+So I resent it again.
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+---
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+---
+ net/sctp/input.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
-@@ -3652,7 +3652,6 @@ int amdgpu_device_init(struct amdgpu_dev
- 	mutex_init(&adev->grbm_idx_mutex);
- 	mutex_init(&adev->mn_lock);
- 	mutex_init(&adev->virt.vf_errors.lock);
--	mutex_init(&adev->virt.rlcg_reg_lock);
- 	hash_init(adev->mn_hash);
- 	mutex_init(&adev->psp.mutex);
- 	mutex_init(&adev->notifier_lock);
-@@ -3674,6 +3673,7 @@ int amdgpu_device_init(struct amdgpu_dev
- 	spin_lock_init(&adev->se_cac_idx_lock);
- 	spin_lock_init(&adev->audio_endpt_idx_lock);
- 	spin_lock_init(&adev->mm_stats.lock);
-+	spin_lock_init(&adev->virt.rlcg_reg_lock);
+--- a/net/sctp/input.c
++++ b/net/sctp/input.c
+@@ -114,7 +114,7 @@ int sctp_rcv(struct sk_buff *skb)
+ 	 * it's better to just linearize it otherwise crc computing
+ 	 * takes longer.
+ 	 */
+-	if ((!is_gso && skb_linearize(skb)) ||
++	if (((!is_gso || skb_cloned(skb)) && skb_linearize(skb)) ||
+ 	    !pskb_may_pull(skb, sizeof(struct sctphdr)))
+ 		goto discard_it;
  
- 	INIT_LIST_HEAD(&adev->shadow_list);
- 	mutex_init(&adev->shadow_list_lock);
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_virt.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_virt.c
-@@ -965,6 +965,7 @@ static u32 amdgpu_virt_rlcg_reg_rw(struc
- 	void *scratch_reg2;
- 	void *scratch_reg3;
- 	void *spare_int;
-+	unsigned long flags;
- 
- 	if (!adev->gfx.rlc.rlcg_reg_access_supported) {
- 		dev_err(adev->dev,
-@@ -978,7 +979,7 @@ static u32 amdgpu_virt_rlcg_reg_rw(struc
- 	scratch_reg2 = (void __iomem *)adev->rmmio + 4 * reg_access_ctrl->scratch_reg2;
- 	scratch_reg3 = (void __iomem *)adev->rmmio + 4 * reg_access_ctrl->scratch_reg3;
- 
--	mutex_lock(&adev->virt.rlcg_reg_lock);
-+	spin_lock_irqsave(&adev->virt.rlcg_reg_lock, flags);
- 
- 	if (reg_access_ctrl->spare_int)
- 		spare_int = (void __iomem *)adev->rmmio + 4 * reg_access_ctrl->spare_int;
-@@ -1034,7 +1035,7 @@ static u32 amdgpu_virt_rlcg_reg_rw(struc
- 
- 	ret = readl(scratch_reg0);
- 
--	mutex_unlock(&adev->virt.rlcg_reg_lock);
-+	spin_unlock_irqrestore(&adev->virt.rlcg_reg_lock, flags);
- 
- 	return ret;
- }
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_virt.h
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_virt.h
-@@ -264,7 +264,8 @@ struct amdgpu_virt {
- 	/* the ucode id to signal the autoload */
- 	uint32_t autoload_ucode_id;
- 
--	struct mutex rlcg_reg_lock;
-+	/* Spinlock to protect access to the RLCG register interface */
-+	spinlock_t rlcg_reg_lock;
- };
- 
- struct amdgpu_video_codec_info;
 
 
 Patches currently in stable-queue which might be from 1468888505@139.com are
