@@ -1,151 +1,137 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E441336EC7;
-	Mon,  2 Feb 2026 22:14:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E571946C;
+	Tue,  3 Feb 2026 00:24:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770070464; cv=none; b=B+nf0pRghLqhN6ys0PjHw4BGzazCy9G5H8AECPrjzxDDIuTbYK7ya3hDm48fsMaYIy9WjcKKBzp6NzpOs332PsTTFH+PrAwM1TpdWj0wKJTi0E0tIG7HAqkOpPes8QvLZQeo6ZiWH0ObyDtV2aryR0Ceuzb8Iooo9Yh38QkyPOs=
+	t=1770078281; cv=none; b=hauz9VcX222W2Ogczc0E5GcUjGDoT6/AmvHF7jfA69S3pD5wUmCJf6DhjaWPCfek6hl7TmFPanYwwOpG4Hw1ZCjLJQHKgoVVjeLSnG7HLIIAm+KdkhNvb7umpn5I3rhaJpiSkZn8AlJQGjMHscPYcu/RRVPqh8vRGXZIaF3fu+c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770070464; c=relaxed/simple;
-	bh=sO5KPNQ8TrkL4sJvZKSQZoiBVi33bIgn3j10AQb7f2k=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=KWiWe3vBnGr8fPW36OOBIwGbX35BlU3DRkJCTLOjT1nd7OT4+81+wsRFiRF+Tqe/QIPFB1rRZE9sup7t1T3X0eY/LSK7n+Mkf8DLMq6OuTg8nmzBuAoJ+EieD/GikxCU/jb3ER8EB/0X0bcLXoBWHPSABPMKpEfpPQuIZmxZGz8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=VX+E3OSh; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1770078281; c=relaxed/simple;
+	bh=ckGYPXGGVk5q9yYyLc4KnqazjXpZvCXMS9y+kEXYUnA=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=K515JZPKLDxYV/IHJgCL12pLQyjyQeBcE+VTur+KFVBLN4ZXpSs9jaBaL1LPnrjw2OR9CoyaCwZeuJKrFjqJYhM5iRUNraOkl2Pb0ZIpf58HrDPX/OamYwbEocTRBgY3c2gdmFonTIMP2/FVXS1Uu1MkZAA7+7DKUS9EczmRqTw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=kCgIR7Lk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="VX+E3OSh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA797C116C6;
-	Mon,  2 Feb 2026 22:14:21 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="kCgIR7Lk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F5C4C116C6;
+	Tue,  3 Feb 2026 00:24:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1770070464;
-	bh=sO5KPNQ8TrkL4sJvZKSQZoiBVi33bIgn3j10AQb7f2k=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=VX+E3OShKLDfDhSRpROGEgofypRa6ipIYNLJdS/bzT5kMqki+Sq5mceA5k1fl/VyV
-	 yQhBEwL6VBTGZLaauoINn8ZDSGaBZuJdD5SwJcfbgasAYeWb8GLpOMxf1EBORTS0B1
-	 IheeKPPBg4W9Nw3sIT8oGKlX3JCMrk4Fo2M5Z+DwQxYxKxnW9XDYgwEwOyeezk4Gxt
-	 ENNHPD6PY7odbG+OI/lpKTa/SuowlfdGtkFUWg1h0rfUfcRJIMJqHX7dS09Vx9as6X
-	 QqziNEjvLjzp6h/c9sKuQksuU3qNpXX4SXZUfrU7GDvEKIjbKJqgQgioCPM6IjcP0F
-	 uRcR63eTdYfFA==
-Date: Mon, 2 Feb 2026 15:14:19 -0700
-From: Nathan Chancellor <nathan@kernel.org>
-To: Neil Armstrong <neil.armstrong@linaro.org>,
-	Jessica Zhang <jesszhan0024@gmail.com>,
-	Langyan Ye <yelangyan@huaqin.corp-partner.google.com>,
-	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-	Maxime Ripard <mripard@kernel.org>,
-	Thomas Zimmermann <tzimmermann@suse.de>
-Cc: Nick Desaulniers <nick.desaulniers+lkml@gmail.com>,
-	Bill Wendling <morbo@google.com>,
-	Justin Stitt <justinstitt@google.com>,
-	dri-devel@lists.freedesktop.org, llvm@lists.linux.dev,
-	patches@lists.linux.dev
-Subject: Re: [PATCH] drm/panel: ilitek-ili9882t: Remove duplicate
- initializers in tianma_il79900a_dsc
-Message-ID: <20260202221419.GA229639@ax162>
-References: <20260114-panel-ilitek-ili9882t-fix-override-init-v1-1-1d69a2b096df@kernel.org>
+	s=k20201202; t=1770078281;
+	bh=ckGYPXGGVk5q9yYyLc4KnqazjXpZvCXMS9y+kEXYUnA=;
+	h=From:To:Cc:Subject:Date:From;
+	b=kCgIR7LkX479n1JxK48u7WAvhs9K8bCbe2zOO0QMCcIXMcjIk02EHO8Lq9/gE5yOH
+	 KsVMDSyCMOTr6X/y8mitSjpehoOi1AksS88l+EnTz+ZRH0OZ5F06U1+3UYzCeZyZYp
+	 1CVii8+VLRVzQXSqvD0/7lMG6Ji8mtImFiC/lc4KHIxdsBnMVfYykEzVFx1KY6c07l
+	 NaZEl/x9Tu25dCg+k/H6foWI+4QULVNYEcsWi6Wn7FiV6+U6WLPEVIIGP3TuX6A0E2
+	 niYoRGK85SQIMM5ENoXMuMZo4STt2mNtckPNnZRZdEZHJLgK1+gSIKYloToVW7vC8I
+	 esx5hSCe9UGCw==
+From: Stephen Boyd <sboyd@kernel.org>
+To: Michael Turquette <mturquette@baylibre.com>,
+	Stephen Boyd <sboyd@kernel.org>
+Cc: linux-kernel@vger.kernel.org,
+	linux-clk@vger.kernel.org,
+	patches@lists.linux.dev,
+	Alexander Stein <alexander.stein@ew.tq-group.com>,
+	Mark Brown <broonie@kernel.org>,
+	Nicolas Frattaroli <nicolas.frattaroli@collabora.com>,
+	Brian Masney <bmasney@redhat.com>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Chen-Yu Tsai <wenst@chromium.org>
+Subject: [PATCH] Revert "clk: Respect CLK_OPS_PARENT_ENABLE during recalc"
+Date: Mon,  2 Feb 2026 16:24:38 -0800
+Message-ID: <20260203002439.1223213-1-sboyd@kernel.org>
+X-Mailer: git-send-email 2.51.1
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260114-panel-ilitek-ili9882t-fix-override-init-v1-1-1d69a2b096df@kernel.org>
+Content-Transfer-Encoding: 8bit
 
-Ping? This is still breaking builds and we are about to be in the merge
-window...
+This reverts commit 669917676e93fca5ea3c66fc9539830312bec58e.
+It's been shown to cause problems on i.MX and STM32 platforms
+where the board doesn't boot. In one case, a clk with
+CLK_IS_CRITICAL and CLK_OPS_PARENT_ENABLE is being registered
+causing the parent to be enabled, the rate recalculated, and then
+the parent is disabled causing the critical clk being registered
+to stop clocking.
 
-On Wed, Jan 14, 2026 at 01:43:31PM -0700, Nathan Chancellor wrote:
-> Clang warns (or errors with CONFIG_WERROR=y / W=e):
-> 
->   drivers/gpu/drm/panel/panel-ilitek-ili9882t.c:95:16: error: initializer overrides prior initialization of this subobject [-Werror,-Winitializer-overrides]
->      95 |         .vbr_enable = 0,
->         |                       ^
->   drivers/gpu/drm/panel/panel-ilitek-ili9882t.c:90:16: note: previous initialization is here
->      90 |         .vbr_enable = false,
->         |                       ^~~~~
->   drivers/gpu/drm/panel/panel-ilitek-ili9882t.c:97:19: error: initializer overrides prior initialization of this subobject [-Werror,-Winitializer-overrides]
->      97 |         .rc_model_size = DSC_RC_MODEL_SIZE_CONST,
->         |                          ^~~~~~~~~~~~~~~~~~~~~~~
->   include/drm/display/drm_dsc.h:22:38: note: expanded from macro 'DSC_RC_MODEL_SIZE_CONST'
->      22 | #define DSC_RC_MODEL_SIZE_CONST             8192
->         |                                             ^~~~
->   drivers/gpu/drm/panel/panel-ilitek-ili9882t.c:91:19: note: previous initialization is here
->      91 |         .rc_model_size = DSC_RC_MODEL_SIZE_CONST,
->         |                          ^~~~~~~~~~~~~~~~~~~~~~~
->   include/drm/display/drm_dsc.h:22:38: note: expanded from macro 'DSC_RC_MODEL_SIZE_CONST'
->      22 | #define DSC_RC_MODEL_SIZE_CONST             8192
->         |                                             ^~~~
->   drivers/gpu/drm/panel/panel-ilitek-ili9882t.c:132:25: error: initializer overrides prior initialization of this subobject [-Werror,-Winitializer-overrides]
->     132 |         .initial_scale_value = 32,
->         |                                ^~
->   drivers/gpu/drm/panel/panel-ilitek-ili9882t.c:126:25: note: previous initialization is here
->     126 |         .initial_scale_value = 32,
->         |                                ^~
->   drivers/gpu/drm/panel/panel-ilitek-ili9882t.c:133:20: error: initializer overrides prior initialization of this subobject [-Werror,-Winitializer-overrides]
->     133 |         .nfl_bpg_offset = 3511,
->         |                           ^~~~
->   drivers/gpu/drm/panel/panel-ilitek-ili9882t.c:108:20: note: previous initialization is here
->     108 |         .nfl_bpg_offset = 1402,
->         |                           ^~~~
-> 
-> GCC would warn about this in the same manner but its version,
-> -Woverride-init, is disabled for a normal kernel build in
-> scripts/Makefile.warn. For clang, -Wextra in drivers/gpu/drm/Makefile
-> turns it back but GCC respects turning it off earlier in the command
-> line.
-> 
-> Of all the duplicate fields in the initializer, only nfl_bpg_offset is a
-> different value. Clear up the duplicate initializers, keeping the
-> 'false' value for .vbr_enable, as it is bool, and the second value for
-> .nfl_bpg_offset, assuming it is the correct one since it was the one
-> tested in the original change.
-> 
-> Fixes: 65ce1f5834e9 ("drm/panel: ilitek-ili9882t: Switch Tianma TL121BVMS07 to DSC 120Hz mode")
-> Signed-off-by: Nathan Chancellor <nathan@kernel.org>
-> ---
->  drivers/gpu/drm/panel/panel-ilitek-ili9882t.c | 4 ----
->  1 file changed, 4 deletions(-)
-> 
-> diff --git a/drivers/gpu/drm/panel/panel-ilitek-ili9882t.c b/drivers/gpu/drm/panel/panel-ilitek-ili9882t.c
-> index 370424ddfc80..8b2bfb7d3638 100644
-> --- a/drivers/gpu/drm/panel/panel-ilitek-ili9882t.c
-> +++ b/drivers/gpu/drm/panel/panel-ilitek-ili9882t.c
-> @@ -88,11 +88,9 @@ static const struct drm_dsc_config tianma_il79900a_dsc = {
->  	.native_422 = false,
->  	.simple_422 = false,
->  	.vbr_enable = false,
-> -	.rc_model_size = DSC_RC_MODEL_SIZE_CONST,
->  	.pic_width = 1600,
->  	.pic_height = 2560,
->  	.convert_rgb = 0,
-> -	.vbr_enable = 0,
->  	.rc_buf_thresh = {14, 28, 42, 56, 70, 84, 98, 105, 112, 119, 121, 123, 125, 126},
->  	.rc_model_size = DSC_RC_MODEL_SIZE_CONST,
->  	.rc_edge_factor = DSC_RC_EDGE_FACTOR_CONST,
-> @@ -105,7 +103,6 @@ static const struct drm_dsc_config tianma_il79900a_dsc = {
->  	.initial_offset = 6144,
->  	.rc_quant_incr_limit0 = 11,
->  	.rc_quant_incr_limit1 = 11,
-> -	.nfl_bpg_offset = 1402,
->  	.rc_range_params = {
->  		{ 0,  4, DSC_BPG_OFFSET(2)},
->  		{ 0,  4, DSC_BPG_OFFSET(0)},
-> @@ -123,7 +120,6 @@ static const struct drm_dsc_config tianma_il79900a_dsc = {
->  		{ 9, 12, DSC_BPG_OFFSET(-12)},
->  		{12, 13, DSC_BPG_OFFSET(-12)},
->  	},
-> -	.initial_scale_value = 32,
->  	.slice_chunk_size = 800,
->  	.initial_dec_delay = 657,
->  	.final_offset = 4320,
-> 
-> ---
-> base-commit: b36178488d479e9a53bbef2b01280378b5586e60
-> change-id: 20260114-panel-ilitek-ili9882t-fix-override-init-21e19143f770
-> 
-> Best regards,
-> --  
-> Nathan Chancellor <nathan@kernel.org>
-> 
+A fix for that would be to calculate the rate of the clk after
+enabling the critical clk itself, but that wouldn't fix another
+problem where a clk with CLK_OPS_PARENT_ENABLE is registered
+before the parent is registered. In this case the hardware access
+in the clk_ops::recalc_rate() function would fail if the parent
+is disabled.
+
+There are even more problems exposed by this patch because it
+introduces logic that disables clks earlier in system boot than
+has existed previously. Historically we've not disabled clks
+until late init (clk_disable_unused) under the assumption that
+clks have been registered enough to have a consistent view of the
+clk tree. The clk_disable_unused logic doesn't work very well
+though, leading to quite a few devices booting with
+clk_ignore_unused on the kernel command line.
+
+Long story short, disabling clks during clk registration is full
+of pitfalls. Revert this commit until a proper solution can be
+found.
+
+Reported-by: Alexander Stein <alexander.stein@ew.tq-group.com>
+Closes: https://lore.kernel.org/r/6239343.lOV4Wx5bFT@steina-w
+Reported-by: Mark Brown <broonie@kernel.org>
+Closes: https://lore.kernel.org/r/036da7ce-6487-4a6e-9b15-97c6d3bcdcec@sirena.org.uk
+Cc: Nicolas Frattaroli <nicolas.frattaroli@collabora.com>
+Cc: Brian Masney <bmasney@redhat.com>
+Cc: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Cc: Chen-Yu Tsai <wenst@chromium.org>
+Signed-off-by: Stephen Boyd <sboyd@kernel.org>
+---
+ drivers/clk/clk.c | 13 -------------
+ 1 file changed, 13 deletions(-)
+
+diff --git a/drivers/clk/clk.c b/drivers/clk/clk.c
+index 1b0f9d567f48..85d2f2481acf 100644
+--- a/drivers/clk/clk.c
++++ b/drivers/clk/clk.c
+@@ -1921,14 +1921,7 @@ static unsigned long clk_recalc(struct clk_core *core,
+ 	unsigned long rate = parent_rate;
+ 
+ 	if (core->ops->recalc_rate && !clk_pm_runtime_get(core)) {
+-		if (core->flags & CLK_OPS_PARENT_ENABLE)
+-			clk_core_prepare_enable(core->parent);
+-
+ 		rate = core->ops->recalc_rate(core->hw, parent_rate);
+-
+-		if (core->flags & CLK_OPS_PARENT_ENABLE)
+-			clk_core_disable_unprepare(core->parent);
+-
+ 		clk_pm_runtime_put(core);
+ 	}
+ 	return rate;
+@@ -4038,9 +4031,6 @@ static int __clk_core_init(struct clk_core *core)
+ 	 */
+ 	clk_core_update_duty_cycle_nolock(core);
+ 
+-	if (core->flags & CLK_OPS_PARENT_ENABLE)
+-		clk_core_prepare_enable(core->parent);
+-
+ 	/*
+ 	 * Set clk's rate.  The preferred method is to use .recalc_rate.  For
+ 	 * simple clocks and lazy developers the default fallback is to use the
+@@ -4056,9 +4046,6 @@ static int __clk_core_init(struct clk_core *core)
+ 		rate = 0;
+ 	core->rate = core->req_rate = rate;
+ 
+-	if (core->flags & CLK_OPS_PARENT_ENABLE)
+-		clk_core_disable_unprepare(core->parent);
+-
+ 	/*
+ 	 * Enable CLK_IS_CRITICAL clocks so newly added critical clocks
+ 	 * don't get accidentally disabled when walking the orphan tree and
+
+base-commit: aa2ad19210a6a444111bce55e8b69579f29318fb
+-- 
+https://git.kernel.org/pub/scm/linux/kernel/git/clk/linux.git
+https://git.kernel.org/pub/scm/linux/kernel/git/sboyd/spmi.git
+
