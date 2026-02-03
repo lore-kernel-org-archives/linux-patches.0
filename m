@@ -1,35 +1,35 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8242A3B8BCA;
-	Tue,  3 Feb 2026 15:59:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F18A3C1981;
+	Tue,  3 Feb 2026 15:59:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770134371; cv=none; b=FImqXfnRtP1TaNIm6Mf+hKUTVObR0NvZNnEEuiqFMnc2SXIk8WsIJOUuLgIIdNdF0P4c/QLKIcWDn35vVoMnW9anCtOMciRNMFi2Ds6HxniAmzENpspkP5m1w6QrBrKVJTunxgvaxgS1k2/iaV4Ya2pupXda/d56nQ6XhNd2zRY=
+	t=1770134374; cv=none; b=cSRt6ClPqFtsnmDh2mpK+9erOTn9ok6966mUjjB2MzPTpRRA9Io4FmwNi8Yt8gdL9upS9J902CDymNCwQ9hgks1ZHhZnp8tbqykq3FLmK6TUq9gRkhP0H9dPvlNyt5MOHfHdEgWmpEaY0v8IoKXVui3zxHO7d3B+XjbIQf15wiA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770134371; c=relaxed/simple;
-	bh=RwnFXHCSRr93XQC8pa5aGNUxua6lOjbRFetYWmw4iy4=;
+	s=arc-20240116; t=1770134374; c=relaxed/simple;
+	bh=QoKf8sgDmEMVcEPGsTpZW7+qhA+Z2AKxzdPgL2BCNOc=;
 	h=Subject:To:Cc:From:Date:In-Reply-To:Message-ID:MIME-Version:
-	 Content-Type; b=ockBDuG+ctO98phoLZXj4NAshezWjvVwidMimjxnM1I8dQ6mE9cRuwEEuI+5Bz9eWZriooiaOBCcV2dehPs6ZpMc3bQP5u9VfuQF7fUE9NuEKm4bnEQqmzTUsTiTLQvqO6mNr8LXERLeXZPjv6Xpv95zrKS9adUcGxPDniuvMlE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IKcJ6ec1; arc=none smtp.client-ip=10.30.226.201
+	 Content-Type; b=NNIYCLW946Kv7oaEPlarrn1/cJqJzXDMqB/cFNoWO9uA2SvQuCCswBNK8iyBEJcTPV+PdaAnCJVCDZfCzhrnSXL1u9dxgZT3GiDB6gsBAORsUrNrDWHmObLSwBtl1RkRkSUTbQTzaOK2zMVqGuwCoZTpj2/f8hDJ12lq6nNBdus=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OfZxO49J; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IKcJ6ec1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB4DFC116D0;
-	Tue,  3 Feb 2026 15:59:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OfZxO49J"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE23FC16AAE;
+	Tue,  3 Feb 2026 15:59:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770134371;
-	bh=RwnFXHCSRr93XQC8pa5aGNUxua6lOjbRFetYWmw4iy4=;
+	s=korg; t=1770134374;
+	bh=QoKf8sgDmEMVcEPGsTpZW7+qhA+Z2AKxzdPgL2BCNOc=;
 	h=Subject:To:Cc:From:Date:In-Reply-To:From;
-	b=IKcJ6ec1L+hToUV3KndBq3KUkclYNvMvFdBkXwJU9aYbVvyj4pnC8mFc2vQT9UI47
-	 iaENlZTqoMwHTal1g8DRaRZZPCMWkRzp/MFsX7x0QExIXSUCZzRiaqsWS2L5Fee+yd
-	 dTqRC0CbM+wCmTaCDErVMHyHpU25H1lmdpe2iWNI=
-Subject: Patch "drm/radeon: delete radeon_fence_process in is_signaled, no deadlock" has been added to the 6.1-stable tree
-To: 1468888505@139.com,Xinhui.Pan@amd.com,airlied@gmail.com,alexander.deucher@amd.com,amd-gfx@lists.freedesktop.org,christian.koenig@amd.com,daniel@ffwll.ch,dri-devel@lists.freedesktop.org,gregkh@linuxfoundation.org,patches@lists.linux.dev,rbmccav@gmail.com
+	b=OfZxO49JsiZ0kId0admiOBrKd7iYdjKPDrJyS9virL07IrUNti2FzglhsK9a+g6p8
+	 x4dLgfN/jRQT6VyVhNcR1NDoKrQdplmhKW3wuZB1r6SR/mNV/Rzu1LfF4CQwnsFi/b
+	 2Ym0cqGLeEwjhSIyShoL5pgjUiXJnGCQwjVK9bQU=
+Subject: Patch "fs/ntfs3: Initialize allocated memory before use" has been added to the 6.1-stable tree
+To: 1468888505@139.com,almaz.alexandrovich@paragon-software.com,gregkh@linuxfoundation.org,khalid@kernel.org,kubik.bartlomiej@gmail.com,ntfs3@lists.linux.dev,patches@lists.linux.dev,syzbot+0399100e525dd9696764@syzkaller.appspotmail.com,syzbot+332bd4e9d148f11a87dc@syzkaller.appspotmail.com
 Cc: <stable-commits@vger.kernel.org>
 From: <gregkh@linuxfoundation.org>
 Date: Tue, 03 Feb 2026 16:59:08 +0100
-In-Reply-To: <20260202075855.947632-1-1468888505@139.com>
-Message-ID: <2026020308-sandpit-carbon-ce38@gregkh>
+In-Reply-To: <20260126061933.1206836-1-1468888505@139.com>
+Message-ID: <2026020308-librarian-shining-4257@gregkh>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -44,70 +44,93 @@ X-Patchwork-Hint: ignore
 
 This is a note to let you know that I've just added the patch titled
 
-    drm/radeon: delete radeon_fence_process in is_signaled, no deadlock
+    fs/ntfs3: Initialize allocated memory before use
 
 to the 6.1-stable tree which can be found at:
     http://www.kernel.org/git/?p=linux/kernel/git/stable/stable-queue.git;a=summary
 
 The filename of the patch is:
-     drm-radeon-delete-radeon_fence_process-in-is_signaled-no-deadlock.patch
+     fs-ntfs3-initialize-allocated-memory-before-use.patch
 and it can be found in the queue-6.1 subdirectory.
 
 If you, or anyone else, feels it should not be added to the stable tree,
 please let <stable@vger.kernel.org> know about it.
 
 
-From stable+bounces-213031-greg=kroah.com@vger.kernel.org Mon Feb  2 08:59:14 2026
+From stable+bounces-211512-greg=kroah.com@vger.kernel.org Mon Jan 26 07:21:17 2026
 From: Li hongliang <1468888505@139.com>
-Date: Mon,  2 Feb 2026 15:58:55 +0800
-Subject: drm/radeon: delete radeon_fence_process in is_signaled, no deadlock
-To: gregkh@linuxfoundation.org, stable@vger.kernel.org, rbmccav@gmail.com
-Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org, alexander.deucher@amd.com, christian.koenig@amd.com, Xinhui.Pan@amd.com, airlied@gmail.com, daniel@ffwll.ch, amd-gfx@lists.freedesktop.org, dri-devel@lists.freedesktop.org
-Message-ID: <20260202075855.947632-1-1468888505@139.com>
+Date: Mon, 26 Jan 2026 14:19:33 +0800
+Subject: fs/ntfs3: Initialize allocated memory before use
+To: gregkh@linuxfoundation.org, stable@vger.kernel.org, kubik.bartlomiej@gmail.com
+Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org, almaz.alexandrovich@paragon-software.com, ntfs3@lists.linux.dev, khalid@kernel.org
+Message-ID: <20260126061933.1206836-1-1468888505@139.com>
 
-From: Robert McClinton <rbmccav@gmail.com>
+From: Bartlomiej Kubik <kubik.bartlomiej@gmail.com>
 
-[ Upstream commit 9eb00b5f5697bd56baa3222c7a1426fa15bacfb5 ]
+[ Upstream commit a8a3ca23bbd9d849308a7921a049330dc6c91398 ]
 
-Delete the attempt to progress the queue when checking if fence is
-signaled. This avoids deadlock.
+KMSAN reports: Multiple uninitialized values detected:
 
-dma-fence_ops::signaled can be called with the fence lock in unknown
-state. For radeon, the fence lock is also the wait queue lock. This can
-cause a self deadlock when signaled() tries to make forward progress on
-the wait queue. But advancing the queue is unneeded because incorrectly
-returning false from signaled() is perfectly acceptable.
+- KMSAN: uninit-value in ntfs_read_hdr (3)
+- KMSAN: uninit-value in bcmp (3)
 
-Link: https://github.com/brave/brave-browser/issues/49182
-Closes: https://gitlab.freedesktop.org/drm/amd/-/issues/4641
-Cc: Alex Deucher <alexander.deucher@amd.com>
-Signed-off-by: Robert McClinton <rbmccav@gmail.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 527ba26e50ec2ca2be9c7c82f3ad42998a75d0db)
-Cc: stable@vger.kernel.org
-[ Minor conflict resolved. ]
+Memory is allocated by __getname(), which is a wrapper for
+kmem_cache_alloc(). This memory is used before being properly
+cleared. Change kmem_cache_alloc() to kmem_cache_zalloc() to
+properly allocate and clear memory before use.
+
+Fixes: 82cae269cfa9 ("fs/ntfs3: Add initialization of super block")
+Fixes: 78ab59fee07f ("fs/ntfs3: Rework file operations")
+Tested-by: syzbot+332bd4e9d148f11a87dc@syzkaller.appspotmail.com
+Reported-by: syzbot+332bd4e9d148f11a87dc@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=332bd4e9d148f11a87dc
+
+Fixes: 82cae269cfa9 ("fs/ntfs3: Add initialization of super block")
+Fixes: 78ab59fee07f ("fs/ntfs3: Rework file operations")
+Tested-by: syzbot+0399100e525dd9696764@syzkaller.appspotmail.com
+Reported-by: syzbot+0399100e525dd9696764@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=0399100e525dd9696764
+
+Reviewed-by: Khalid Aziz <khalid@kernel.org>
+Signed-off-by: Bartlomiej Kubik <kubik.bartlomiej@gmail.com>
+Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
 Signed-off-by: Li hongliang <1468888505@139.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/radeon/radeon_fence.c |    8 --------
- 1 file changed, 8 deletions(-)
+ fs/ntfs3/inode.c |    7 +++----
+ 1 file changed, 3 insertions(+), 4 deletions(-)
 
---- a/drivers/gpu/drm/radeon/radeon_fence.c
-+++ b/drivers/gpu/drm/radeon/radeon_fence.c
-@@ -362,14 +362,6 @@ static bool radeon_fence_is_signaled(str
- 		return true;
- 	}
+--- a/fs/ntfs3/inode.c
++++ b/fs/ntfs3/inode.c
+@@ -1294,7 +1294,7 @@ struct inode *ntfs_create_inode(struct u
+ 		fa |= FILE_ATTRIBUTE_READONLY;
  
--	if (down_read_trylock(&rdev->exclusive_lock)) {
--		radeon_fence_process(rdev, ring);
--		up_read(&rdev->exclusive_lock);
--
--		if (atomic64_read(&rdev->fence_drv[ring].last_seq) >= seq) {
--			return true;
--		}
--	}
- 	return false;
- }
+ 	/* Allocate PATH_MAX bytes. */
+-	new_de = __getname();
++	new_de = kmem_cache_zalloc(names_cachep, GFP_KERNEL);
+ 	if (!new_de) {
+ 		err = -ENOMEM;
+ 		goto out1;
+@@ -1698,10 +1698,9 @@ int ntfs_link_inode(struct inode *inode,
+ 	struct NTFS_DE *de;
+ 
+ 	/* Allocate PATH_MAX bytes. */
+-	de = __getname();
++	de = kmem_cache_zalloc(names_cachep, GFP_KERNEL);
+ 	if (!de)
+ 		return -ENOMEM;
+-	memset(de, 0, PATH_MAX);
+ 
+ 	/* Mark rw ntfs as dirty. It will be cleared at umount. */
+ 	ntfs_set_state(sbi, NTFS_DIRTY_DIRTY);
+@@ -1737,7 +1736,7 @@ int ntfs_unlink_inode(struct inode *dir,
+ 		return -EINVAL;
+ 
+ 	/* Allocate PATH_MAX bytes. */
+-	de = __getname();
++	de = kmem_cache_zalloc(names_cachep, GFP_KERNEL);
+ 	if (!de)
+ 		return -ENOMEM;
  
 
 
