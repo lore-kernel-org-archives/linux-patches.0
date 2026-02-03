@@ -1,35 +1,35 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C2653BFE5E;
-	Tue,  3 Feb 2026 16:00:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 066E53C1988;
+	Tue,  3 Feb 2026 16:00:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770134404; cv=none; b=ORVGnMvrRmvf6QZC/sdSyOIWTq0HBQ04uEiAaIeTHpYfPELK5fVsm9xkzGhJlDowX/kN5rMOBI1hWXyEZl7/WTDwtaMfCQ6gkwo1DOigDjXR13yAm2YNb3nytKfP59N7RM30bQlTEMUDzXA+n3I4VL4/JXES4JP/TNcAL+gXDm8=
+	t=1770134410; cv=none; b=ZHtwu1gExCYrSFkkyXXfWLAgtAAiJTlyHcycRAwKp/wpGKFBlnJiUJl2mgXuVTU9XdGWWOxfuHW/FhUAtx/77U2+1k1GGOUGEPVtqiOmF7BqzauxsuISuekXRLyP6s3OTQjHy1nSs9Dh+DTgHWVU8mBLt4ChvxLuL+0h6l+rmQk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770134404; c=relaxed/simple;
-	bh=lQsOTUMduDTmDGOcZDV9kazq+nu2hUBGi53sa4ZKfjc=;
+	s=arc-20240116; t=1770134410; c=relaxed/simple;
+	bh=LoLt3v0dhdP4FPlor9Yj0E9wWO56b//9KaBP2kyWPgY=;
 	h=Subject:To:Cc:From:Date:In-Reply-To:Message-ID:MIME-Version:
-	 Content-Type; b=ACyfR4B2C1kQk007Geftljw0vvKt/xaQAhuYQWXWQXuTUaabYd8kf16vxH6vjSRT/O5imBYETbydPuUdOXPNmhOhur+gQHiAxwreqqA2BsgYS5GDs/Kma+ZZYpH9FAB/DHOGel2i+BkvOsmQl3fcSxvCdNJXNbPOXEMah/MS6Ac=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=usx3h4xU; arc=none smtp.client-ip=10.30.226.201
+	 Content-Type; b=WqaB5ePXJeyyChXazIjXXEvNKZPZ65G/hbIZZ4CbyRnXDiAs4kixjdBXVwrF5x9YxH9YZzJEOxHb8TR+sxZMdwyVjquvuMatYdQen4MEJrgqxbi3pfNERr5X/G3IzJT0uL9UoxhtwFXHjUdpxHRWq6lCg7maIXr+NBZ6/QRz/uQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nKhcqq90; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="usx3h4xU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2CE33C116D0;
-	Tue,  3 Feb 2026 16:00:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nKhcqq90"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 89BFCC16AAE;
+	Tue,  3 Feb 2026 16:00:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770134403;
-	bh=lQsOTUMduDTmDGOcZDV9kazq+nu2hUBGi53sa4ZKfjc=;
+	s=korg; t=1770134409;
+	bh=LoLt3v0dhdP4FPlor9Yj0E9wWO56b//9KaBP2kyWPgY=;
 	h=Subject:To:Cc:From:Date:In-Reply-To:From;
-	b=usx3h4xUYXeHdwhDT7gfk/0vJLCoGeCESD/yxwxehOen62jzjO1cfeu9E5oxlSK2I
-	 1tRWV7UlLD0eRod2SgwRKXRgMjQOBOzyFTljfXD4y2kDBz8NFQz31R13aV4o59SICw
-	 8TNGjCwv5Qmn+VdkD/X7anDU+jGNoGuWToamqiuA=
-Subject: Patch "sctp: linearize cloned gso packets in sctp_rcv" has been added to the 6.1-stable tree
-To: 1468888505@139.com,davem@davemloft.net,edumazet@google.com,gregkh@linuxfoundation.org,kuba@kernel.org,lucien.xin@gmail.com,marcelo.leitner@gmail.com,nhorman@tuxdriver.com,pabeni@redhat.com,patches@lists.linux.dev,syzbot+70a42f45e76bede082be@syzkaller.appspotmail.com,syzbot+773e51afe420baaf0e2b@syzkaller.appspotmail.com,vyasevich@gmail.com
+	b=nKhcqq90wQBkzZTis99xWliFRySRSY8nqhB+zWRlY3S8d61EF3QPxZZZ1gicFA6zd
+	 nTYMXrKg4My1uIZy7Yqpe0SgQlQq7ayPJlJRB1r46vWQ4Ak2uGDXev1g2jreCAyGZF
+	 JCQJw0gxLkK+/iumd2zrm/A6zArsW227mboj7lk4=
+Subject: Patch "ksmbd: fix use-after-free in ksmbd_session_rpc_open" has been added to the 6.1-stable tree
+To: 1468888505@139.com,akendo@akendo.eu,gregkh@linuxfoundation.org,linkinjeon@kernel.org,norbert@doyensec.com,patches@lists.linux.dev,senozhatsky@chromium.org,set_pte_at@outlook.com,sfrench@samba.org,stfrench@microsoft.com,tom@talpey.com,ysk@kzalloc.com
 Cc: <stable-commits@vger.kernel.org>
 From: <gregkh@linuxfoundation.org>
 Date: Tue, 03 Feb 2026 16:59:09 +0100
-In-Reply-To: <20260130071038.3931297-1-1468888505@139.com>
-Message-ID: <2026020309-lyrics-shed-2f77@gregkh>
+In-Reply-To: <20260202031550.514894-1-1468888505@139.com>
+Message-ID: <2026020308-negligee-passover-a6ed@gregkh>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -44,99 +44,138 @@ X-Patchwork-Hint: ignore
 
 This is a note to let you know that I've just added the patch titled
 
-    sctp: linearize cloned gso packets in sctp_rcv
+    ksmbd: fix use-after-free in ksmbd_session_rpc_open
 
 to the 6.1-stable tree which can be found at:
     http://www.kernel.org/git/?p=linux/kernel/git/stable/stable-queue.git;a=summary
 
 The filename of the patch is:
-     sctp-linearize-cloned-gso-packets-in-sctp_rcv.patch
+     ksmbd-fix-use-after-free-in-ksmbd_session_rpc_open.patch
 and it can be found in the queue-6.1 subdirectory.
 
 If you, or anyone else, feels it should not be added to the stable tree,
 please let <stable@vger.kernel.org> know about it.
 
 
-From stable+bounces-212845-greg=kroah.com@vger.kernel.org Fri Jan 30 08:11:03 2026
+From 1468888505@139.com Mon Feb  2 04:15:55 2026
 From: Li hongliang <1468888505@139.com>
-Date: Fri, 30 Jan 2026 15:10:38 +0800
-Subject: sctp: linearize cloned gso packets in sctp_rcv
-To: gregkh@linuxfoundation.org, stable@vger.kernel.org, lucien.xin@gmail.com
-Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org, vyasevich@gmail.com, nhorman@tuxdriver.com, marcelo.leitner@gmail.com, davem@davemloft.net, edumazet@google.com, kuba@kernel.org, pabeni@redhat.com, linux-sctp@vger.kernel.org, netdev@vger.kernel.org
-Message-ID: <20260130071038.3931297-1-1468888505@139.com>
+Date: Mon,  2 Feb 2026 11:15:50 +0800
+Subject: ksmbd: fix use-after-free in ksmbd_session_rpc_open
+To: gregkh@linuxfoundation.org, stable@vger.kernel.org, linkinjeon@kernel.org
+Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org, norbert@doyensec.com, ysk@kzalloc.com, sfrench@samba.org, senozhatsky@chromium.org, tom@talpey.com, akendo@akendo.eu, set_pte_at@outlook.com, linux-cifs@vger.kernel.org, stfrench@microsoft.com
+Message-ID: <20260202031550.514894-1-1468888505@139.com>
 
-From: Xin Long <lucien.xin@gmail.com>
+From: Namjae Jeon <linkinjeon@kernel.org>
 
-[ Upstream commit fd60d8a086191fe33c2d719732d2482052fa6805 ]
+[ Upstream commit a1f46c99d9ea411f9bf30025b912d881d36fc709 ]
 
-A cloned head skb still shares these frag skbs in fraglist with the
-original head skb. It's not safe to access these frag skbs.
+A UAF issue can occur due to a race condition between
+ksmbd_session_rpc_open() and __session_rpc_close().
+Add rpc_lock to the session to protect it.
 
-syzbot reported two use-of-uninitialized-memory bugs caused by this:
-
-  BUG: KMSAN: uninit-value in sctp_inq_pop+0x15b7/0x1920 net/sctp/inqueue.c:211
-   sctp_inq_pop+0x15b7/0x1920 net/sctp/inqueue.c:211
-   sctp_assoc_bh_rcv+0x1a7/0xc50 net/sctp/associola.c:998
-   sctp_inq_push+0x2ef/0x380 net/sctp/inqueue.c:88
-   sctp_backlog_rcv+0x397/0xdb0 net/sctp/input.c:331
-   sk_backlog_rcv+0x13b/0x420 include/net/sock.h:1122
-   __release_sock+0x1da/0x330 net/core/sock.c:3106
-   release_sock+0x6b/0x250 net/core/sock.c:3660
-   sctp_wait_for_connect+0x487/0x820 net/sctp/socket.c:9360
-   sctp_sendmsg_to_asoc+0x1ec1/0x1f00 net/sctp/socket.c:1885
-   sctp_sendmsg+0x32b9/0x4a80 net/sctp/socket.c:2031
-   inet_sendmsg+0x25a/0x280 net/ipv4/af_inet.c:851
-   sock_sendmsg_nosec net/socket.c:718 [inline]
-
-and
-
-  BUG: KMSAN: uninit-value in sctp_assoc_bh_rcv+0x34e/0xbc0 net/sctp/associola.c:987
-   sctp_assoc_bh_rcv+0x34e/0xbc0 net/sctp/associola.c:987
-   sctp_inq_push+0x2a3/0x350 net/sctp/inqueue.c:88
-   sctp_backlog_rcv+0x3c7/0xda0 net/sctp/input.c:331
-   sk_backlog_rcv+0x142/0x420 include/net/sock.h:1148
-   __release_sock+0x1d3/0x330 net/core/sock.c:3213
-   release_sock+0x6b/0x270 net/core/sock.c:3767
-   sctp_wait_for_connect+0x458/0x820 net/sctp/socket.c:9367
-   sctp_sendmsg_to_asoc+0x223a/0x2260 net/sctp/socket.c:1886
-   sctp_sendmsg+0x3910/0x49f0 net/sctp/socket.c:2032
-   inet_sendmsg+0x269/0x2a0 net/ipv4/af_inet.c:851
-   sock_sendmsg_nosec net/socket.c:712 [inline]
-
-This patch fixes it by linearizing cloned gso packets in sctp_rcv().
-
-Fixes: 90017accff61 ("sctp: Add GSO support")
-Reported-by: syzbot+773e51afe420baaf0e2b@syzkaller.appspotmail.com
-Reported-by: syzbot+70a42f45e76bede082be@syzkaller.appspotmail.com
-Signed-off-by: Xin Long <lucien.xin@gmail.com>
-Reviewed-by: Marcelo Ricardo Leitner <marcelo.leitner@gmail.com>
-Link: https://patch.msgid.link/dd7dc337b99876d4132d0961f776913719f7d225.1754595611.git.lucien.xin@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Cc: stable@vger.kernel.org
+Reported-by: Norbert Szetei <norbert@doyensec.com>
+Tested-by: Norbert Szetei <norbert@doyensec.com>
+Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Steve French <stfrench@microsoft.com>
+[ KSMBD_DEFAULT_GFP is introduced by commit 0066f623bce8 ("ksmbd: use __GFP_RETRY_MAYFAIL")
+ after linux-6.13. Here we still use GFP_KERNEL. ]
 Signed-off-by: Li hongliang <1468888505@139.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
-This patch is lost/missing, as it has already been added
-into stable branches less than and greater than 6.1. Previous patch in
-https://lore.kernel.org/stable/20251022075549.195012-1-kovalev@altlinux.org/ is still not added.
-So I resent it again.
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
----
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
----
- net/sctp/input.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/smb/server/mgmt/user_session.c |   20 ++++++++++++++------
+ fs/smb/server/mgmt/user_session.h |    1 +
+ 2 files changed, 15 insertions(+), 6 deletions(-)
 
---- a/net/sctp/input.c
-+++ b/net/sctp/input.c
-@@ -114,7 +114,7 @@ int sctp_rcv(struct sk_buff *skb)
- 	 * it's better to just linearize it otherwise crc computing
- 	 * takes longer.
- 	 */
--	if ((!is_gso && skb_linearize(skb)) ||
-+	if (((!is_gso || skb_cloned(skb)) && skb_linearize(skb)) ||
- 	    !pskb_may_pull(skb, sizeof(struct sctphdr)))
- 		goto discard_it;
+--- a/fs/smb/server/mgmt/user_session.c
++++ b/fs/smb/server/mgmt/user_session.c
+@@ -59,10 +59,12 @@ static void ksmbd_session_rpc_clear_list
+ 	struct ksmbd_session_rpc *entry;
+ 	long index;
  
++	down_write(&sess->rpc_lock);
+ 	xa_for_each(&sess->rpc_handle_list, index, entry) {
+ 		xa_erase(&sess->rpc_handle_list, index);
+ 		__session_rpc_close(sess, entry);
+ 	}
++	up_write(&sess->rpc_lock);
+ 
+ 	xa_destroy(&sess->rpc_handle_list);
+ }
+@@ -92,7 +94,7 @@ int ksmbd_session_rpc_open(struct ksmbd_
+ {
+ 	struct ksmbd_session_rpc *entry, *old;
+ 	struct ksmbd_rpc_command *resp;
+-	int method;
++	int method, id;
+ 
+ 	method = __rpc_method(rpc_name);
+ 	if (!method)
+@@ -102,26 +104,29 @@ int ksmbd_session_rpc_open(struct ksmbd_
+ 	if (!entry)
+ 		return -ENOMEM;
+ 
++	down_read(&sess->rpc_lock);
+ 	entry->method = method;
+-	entry->id = ksmbd_ipc_id_alloc();
+-	if (entry->id < 0)
++	entry->id = id = ksmbd_ipc_id_alloc();
++	if (id < 0)
+ 		goto free_entry;
+-	old = xa_store(&sess->rpc_handle_list, entry->id, entry, GFP_KERNEL);
++	old = xa_store(&sess->rpc_handle_list, id, entry, GFP_KERNEL);
+ 	if (xa_is_err(old))
+ 		goto free_id;
+ 
+-	resp = ksmbd_rpc_open(sess, entry->id);
++	resp = ksmbd_rpc_open(sess, id);
+ 	if (!resp)
+ 		goto erase_xa;
+ 
++	up_read(&sess->rpc_lock);
+ 	kvfree(resp);
+-	return entry->id;
++	return id;
+ erase_xa:
+ 	xa_erase(&sess->rpc_handle_list, entry->id);
+ free_id:
+ 	ksmbd_rpc_id_free(entry->id);
+ free_entry:
+ 	kfree(entry);
++	up_read(&sess->rpc_lock);
+ 	return -EINVAL;
+ }
+ 
+@@ -129,9 +134,11 @@ void ksmbd_session_rpc_close(struct ksmb
+ {
+ 	struct ksmbd_session_rpc *entry;
+ 
++	down_write(&sess->rpc_lock);
+ 	entry = xa_erase(&sess->rpc_handle_list, id);
+ 	if (entry)
+ 		__session_rpc_close(sess, entry);
++	up_write(&sess->rpc_lock);
+ }
+ 
+ int ksmbd_session_rpc_method(struct ksmbd_session *sess, int id)
+@@ -404,6 +411,7 @@ static struct ksmbd_session *__session_c
+ 	sess->sequence_number = 1;
+ 	rwlock_init(&sess->tree_conns_lock);
+ 	atomic_set(&sess->refcnt, 2);
++	init_rwsem(&sess->rpc_lock);
+ 
+ 	ret = __init_smb2_session(sess);
+ 	if (ret)
+--- a/fs/smb/server/mgmt/user_session.h
++++ b/fs/smb/server/mgmt/user_session.h
+@@ -63,6 +63,7 @@ struct ksmbd_session {
+ 	rwlock_t			tree_conns_lock;
+ 
+ 	atomic_t			refcnt;
++	struct rw_semaphore		rpc_lock;
+ };
+ 
+ static inline int test_session_flag(struct ksmbd_session *sess, int bit)
 
 
 Patches currently in stable-queue which might be from 1468888505@139.com are
