@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 561452D5926;
-	Wed,  4 Feb 2026 15:28:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86F7429AB1D;
+	Wed,  4 Feb 2026 15:28:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770218885; cv=none; b=lAke4y7NQUMxIVsQbtfjtmhHfnHTk3sYfTZE+m38lHqC7P/wx6CcU7X3YbwWtyJSByFwY3YAM+NF8fzOymKiACUBXlDo5YwbqDsTLGL4AUrv5qy75THg9FzIW5wiTLCzrIiaaE6BC8rbvucf0m5YGQxR+JNO8WpXfvVr+1ba0SQ=
+	t=1770218888; cv=none; b=BlyAxrzhzAzvQJFCZGHAjHI9FTj2rRQmEp8cspeiGQAgfC5RZqnWuKbCAcbrhDARKWzb+RrnNczMIyyJIq6Zo8H98TfVd4FcXQLIfrol7tH8eVHIGnSxZMOo9WffDAilEGBU65Z2B8ReMrRYAQ4Pi4XeO6euTfTP58uUSHBcJZM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770218885; c=relaxed/simple;
-	bh=8LQbF5leAVqE4VoIgmNNWccQvpfaW6zvG5eKZgJjlyg=;
+	s=arc-20240116; t=1770218888; c=relaxed/simple;
+	bh=7N8Zd3557fKq7lVAmYbmezgR3tQ7m/57ZSEtF4aebo0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RIBsQNTgqkM67IrRE/e/OmgGheQ2zsLBRSeBARvNXd4MUyy+CQ+dnn025nT3FuiYOgcoroXGnpwJgxKuQJHDaaxd5uNUfyErcjvPmJ/iPQ3mFviEFlhkNXZvOWPaj/E8N8shvXfp9x7xvOY5ocv5v1IHbZMCGCjfkFpAPkBfLT0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AQWDKcdk; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=eKhFyMfkcfZvzN2nBWUEFzeuHNWewd9zcJ2mCNh3pdvc7goDXvFOAJbhjWqGwTlzohr9YH80nIrQnlJ08+PsorIY4Y9Mg8JaA4bNFoa83FLlSAJcR229VgSZ1cmSBemJy6LkOigIJ8nbmGEwL+zZ08iliJNAISmcfgJvbB8s4As=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iIqNzajg; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AQWDKcdk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8992EC4CEF7;
-	Wed,  4 Feb 2026 15:28:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iIqNzajg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E83FBC4CEF7;
+	Wed,  4 Feb 2026 15:28:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770218885;
-	bh=8LQbF5leAVqE4VoIgmNNWccQvpfaW6zvG5eKZgJjlyg=;
+	s=korg; t=1770218888;
+	bh=7N8Zd3557fKq7lVAmYbmezgR3tQ7m/57ZSEtF4aebo0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AQWDKcdkQRYILKJchuamqees1NoSV2SgVLq8DOP+xFr9VtUSq8ws8CpUYeNx9hgbt
-	 2QzEu4MY+tUfN18sa3xmazG/3SbjKldc5mHDT8oa5LkgdQyOjP0ffJqc00FhI8Uh/u
-	 fOHnt0uk3I60CeJmmBK+JFsudlV8oZckfTGTAeUQ=
+	b=iIqNzajg8qyAuiNZpPqdASpBPdWgO0cy2n91AGzxLMbHinm0pj2kJBbCva37MtnyW
+	 mW/5ou75sGLnKVmt9NgPQDwvOMnV0r4CeGZNzPPa9bLMrA3KYfYoKMV6Ily9wlm0BH
+	 wcRIJl2SfBJWn6Y0Xu/XWg7JaXqe7sF+ROVAD3xo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tamir Duberstein <tamird@kernel.org>,
-	Miguel Ojeda <ojeda@kernel.org>
-Subject: [PATCH 6.12 57/87] scripts: generate_rust_analyzer: compile sysroot with correct edition
-Date: Wed,  4 Feb 2026 15:40:55 +0100
-Message-ID: <20260204143848.970149131@linuxfoundation.org>
+	Geliang Tang <geliang@kernel.org>,
+	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.12 48/87] selftests: mptcp: check no dup close events after error
+Date: Wed,  4 Feb 2026 15:40:46 +0100
+Message-ID: <20260204143848.645473107@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260204143846.906385641@linuxfoundation.org>
 References: <20260204143846.906385641@linuxfoundation.org>
@@ -50,73 +51,110 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tamir Duberstein <tamird@kernel.org>
+From: Matthieu Baerts (NGI0) <matttbe@kernel.org>
 
-commit ac3c50b9a24e9ebeb585679078d6c47922034bb6 upstream.
+commit 8467458dfa61b37e259e3485a5d3e415d08193c1 upstream.
 
-Use `core_edition` for all sysroot crates rather than just core as all
-were updated to edition 2024 in Rust 1.87.
+This validates the previous commit: subflow closed events are re-sent
+with less info when the initial subflow is disconnected after an error
+and each time a subflow is closed after that.
 
-Fixes: f4daa80d6be7 ("rust: compile libcore with edition 2024 for 1.87+")
-Signed-off-by: Tamir Duberstein <tamird@kernel.org>
+In this new test, the userspace PM is involved because that's how it was
+discovered, but it is not specific to it. The initial subflow is
+terminated with a RESET, and that will cause the subflow disconnect.
+Then, a new subflow is initiated, but also got rejected, which cause a
+second subflow closed event, but not a third one.
+
+While at it, in case of failure to get the expected amount of events,
+the events are printed.
+
+The 'Fixes' tag here below is the same as the one from the previous
+commit: this patch here is not fixing anything wrong in the selftests,
+but it validates the previous fix for an issue introduced by this commit
+ID.
+
+Fixes: d82809b6c5f2 ("mptcp: avoid duplicated SUB_CLOSED events")
 Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20260116-rust-analyzer-sysroot-v2-1-094aedc33208@kernel.org
-[ Added `>`s to make the quote a single block. - Miguel ]
-Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
+Reviewed-by: Geliang Tang <geliang@kernel.org>
+Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Link: https://patch.msgid.link/20260127-net-mptcp-dup-nl-events-v1-2-7f71e1bc4feb@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- scripts/generate_rust_analyzer.py |   29 ++++++++++++++++++++++++++---
- 1 file changed, 26 insertions(+), 3 deletions(-)
+ tools/testing/selftests/net/mptcp/mptcp_join.sh |   51 ++++++++++++++++++++++++
+ 1 file changed, 51 insertions(+)
 
---- a/scripts/generate_rust_analyzer.py
-+++ b/scripts/generate_rust_analyzer.py
-@@ -53,7 +53,6 @@ def generate_crates(srctree, objtree, sy
-         display_name,
-         deps,
-         cfg=[],
--        edition="2021",
-     ):
-         append_crate(
-             display_name,
-@@ -61,13 +60,37 @@ def generate_crates(srctree, objtree, sy
-             deps,
-             cfg,
-             is_workspace_member=False,
--            edition=edition,
-+            # Miguel Ojeda writes:
-+            #
-+            # > ... in principle even the sysroot crates may have different
-+            # > editions.
-+            # >
-+            # > For instance, in the move to 2024, it seems all happened at once
-+            # > in 1.87.0 in these upstream commits:
-+            # >
-+            # >     0e071c2c6a58 ("Migrate core to Rust 2024")
-+            # >     f505d4e8e380 ("Migrate alloc to Rust 2024")
-+            # >     0b2489c226c3 ("Migrate proc_macro to Rust 2024")
-+            # >     993359e70112 ("Migrate std to Rust 2024")
-+            # >
-+            # > But in the previous move to 2021, `std` moved in 1.59.0, while
-+            # > the others in 1.60.0:
-+            # >
-+            # >     b656384d8398 ("Update stdlib to the 2021 edition")
-+            # >     06a1c14d52a8 ("Switch all libraries to the 2021 edition")
-+            #
-+            # Link: https://lore.kernel.org/all/CANiq72kd9bHdKaAm=8xCUhSHMy2csyVed69bOc4dXyFAW4sfuw@mail.gmail.com/
-+            #
-+            # At the time of writing all rust versions we support build the
-+            # sysroot crates with the same edition. We may need to relax this
-+            # assumption if future edition moves span multiple rust versions.
-+            edition=core_edition,
-         )
+--- a/tools/testing/selftests/net/mptcp/mptcp_join.sh
++++ b/tools/testing/selftests/net/mptcp/mptcp_join.sh
+@@ -3506,11 +3506,32 @@ chk_evt_nr()
+ 	count=$(grep -cw "type:${evt}" "${evts}")
+ 	if [ "${count}" != "${exp}" ]; then
+ 		fail_test "got ${count} events, expected ${exp}"
++		cat "${evts}"
+ 	else
+ 		print_ok
+ 	fi
+ }
  
-     # NB: sysroot crates reexport items from one another so setting up our transitive dependencies
-     # here is important for ensuring that rust-analyzer can resolve symbols. The sources of truth
-     # for this dependency graph are `(sysroot_src / crate / "Cargo.toml" for crate in crates)`.
--    append_sysroot_crate("core", [], cfg=crates_cfgs.get("core", []), edition=core_edition)
-+    append_sysroot_crate("core", [], cfg=crates_cfgs.get("core", []))
-     append_sysroot_crate("alloc", ["core"])
-     append_sysroot_crate("std", ["alloc", "core"])
-     append_sysroot_crate("proc_macro", ["core", "std"])
++# $1: ns ; $2: event type ; $3: expected count
++wait_event()
++{
++	local ns="${1}"
++	local evt_name="${2}"
++	local exp="${3}"
++
++	local evt="${!evt_name}"
++	local evts="${evts_ns1}"
++	local count
++
++	[ "${ns}" == "ns2" ] && evts="${evts_ns2}"
++
++	for _ in $(seq 100); do
++		count=$(grep -cw "type:${evt}" "${evts}")
++		[ "${count}" -ge "${exp}" ] && break
++		sleep 0.1
++	done
++}
++
+ userspace_tests()
+ {
+ 	# userspace pm type prevents add_addr
+@@ -3717,6 +3738,36 @@ userspace_tests()
+ 		kill_events_pids
+ 		mptcp_lib_kill_group_wait $tests_pid
+ 	fi
++
++	# userspace pm no duplicated spurious close events after an error
++	if reset_with_events "userspace pm no dup close events after error" &&
++	   continue_if mptcp_lib_has_file '/proc/sys/net/mptcp/pm_type'; then
++		set_userspace_pm $ns2
++		pm_nl_set_limits $ns1 0 2
++		{ timeout_test=120 test_linkfail=128 speed=slow \
++			run_tests $ns1 $ns2 10.0.1.1 & } 2>/dev/null
++		local tests_pid=$!
++		wait_event ns2 MPTCP_LIB_EVENT_ESTABLISHED 1
++		userspace_pm_add_sf $ns2 10.0.3.2 20
++		chk_mptcp_info subflows 1 subflows 1
++		chk_subflows_total 2 2
++
++		# force quick loss
++		ip netns exec $ns2 sysctl -q net.ipv4.tcp_syn_retries=1
++		if ip netns exec "${ns1}" ${iptables} -A INPUT -s "10.0.1.2" \
++		      -p tcp --tcp-option 30 -j REJECT --reject-with tcp-reset &&
++		   ip netns exec "${ns2}" ${iptables} -A INPUT -d "10.0.1.2" \
++		      -p tcp --tcp-option 30 -j REJECT --reject-with tcp-reset; then
++			wait_event ns2 MPTCP_LIB_EVENT_SUB_CLOSED 1
++			wait_event ns1 MPTCP_LIB_EVENT_SUB_CLOSED 1
++			chk_subflows_total 1 1
++			userspace_pm_add_sf $ns2 10.0.1.2 0
++			wait_event ns2 MPTCP_LIB_EVENT_SUB_CLOSED 2
++			chk_evt_nr ns2 MPTCP_LIB_EVENT_SUB_CLOSED 2
++		fi
++		kill_events_pids
++		mptcp_lib_kill_group_wait $tests_pid
++	fi
+ }
+ 
+ endpoint_tests()
 
 
