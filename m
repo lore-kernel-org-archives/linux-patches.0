@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6579B2BEFED;
-	Wed,  4 Feb 2026 15:01:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D89828853A;
+	Wed,  4 Feb 2026 15:01:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770217272; cv=none; b=O3wowQp5rLpnY+CM8v4BcFwey4QhDw4khuWSrTH8Vxag9L7PoKZwjWC7SOnLXb3Z41KzdaPxDc+WbAMjGmW/+VJgKRX3PrZ/BHzP2Epa2QGfUc3Saih8iLql4N6js1fCBak7/PiZWpenNMs1kniJubyUgg5daYmIB3W1o6zLuQs=
+	t=1770217275; cv=none; b=OQadao3av72NbL/+a39+mQ9/b3QVk63LJD+WbZF7Y2BInKm8Glyx/EUH90GjhcBX68axsfYFVCAkaommkU4980X1LO6mcs94zLp0JPvmmwR0uIX94IHWxQTJ+Ms90+fLNt2xQnunx2pQKQvxutHSbT4fk4XT7/muiYQAcwU+pfI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770217272; c=relaxed/simple;
-	bh=chxGI0Wj+tr9zJIxzjXbY2Dsafi0QQE4zqEhCWXiLmI=;
+	s=arc-20240116; t=1770217275; c=relaxed/simple;
+	bh=FCM45A789tGL89W4sQ+jJj9aX6lwFMqIZ5iokV/7IbM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Yqw41VDY2m7c3i6yvxA7IMvIbLjPsL/yESA2OhySqzQ3WgV3SK0TTuRKCRXQfY9hesAlGwF9cuJespePLeKOIK9UJO32i3o3hjcRjLKnEgOeSH/kqyRqcwmBqaTo0Jq3pryuJfdtRVo4P9opZAKVjG1iEeswE9jtl2fq45W85nY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JTRxUVfp; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=J+QJp0jkmixraHiatmTp8ZTx6LdhGvCwaydJLi8QyueSmQSm76+a40ES0247d3OEmFKl0joWmYdrQi6NaNvx7LebJmB2wocOqKW20sh4QyW4vTJBL26ffH9WWsXs7HJgqTEzzv3b3dJ5W66GhXjqaC1M9+BDej6Co1AQHtWP84I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bRy+iaBx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JTRxUVfp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 56DF9C2BC86;
-	Wed,  4 Feb 2026 15:01:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bRy+iaBx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E0BA6C116C6;
+	Wed,  4 Feb 2026 15:01:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770217272;
-	bh=chxGI0Wj+tr9zJIxzjXbY2Dsafi0QQE4zqEhCWXiLmI=;
+	s=korg; t=1770217275;
+	bh=FCM45A789tGL89W4sQ+jJj9aX6lwFMqIZ5iokV/7IbM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JTRxUVfprZtmax2VEUMQ/8w2rS0MqIwaxMo3BoJQMETizQKixSN0UAhlQJHLvVYSs
-	 WsFZcwolJ1cfkE5WyhS+bhBnMTY+bLUzC3KG5H26sNTbufDk0omrjgHsb3T7hiBCHt
-	 lDBjOy544Y+T+Vs1D1J71mNQAdSgxEwSHVr1ov9k=
+	b=bRy+iaBxQLXhATSIExSN1aoR/e+3LmAuSSICYPOLxxyrBtcXhxz69/Ml+bMmCut5r
+	 ItsC1yvl6nFTrV7SVufjUpsZlUFMpMpH+sx8KLjau/Ga1bwVugmc5tsNH8w5e2tVwn
+	 AQeJaPIdkiLIj1TMIU5ZZjKIQYFashEmYbXl2XCo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gaosheng Cui <cuigaosheng1@huawei.com>,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
-	Rahul Sharma <black.hawk@163.com>
-Subject: [PATCH 5.15 175/206] drm/ttm: fix undefined behavior in bit shift for TTM_TT_FLAG_PRIV_POPULATED
-Date: Wed,  4 Feb 2026 15:40:06 +0100
-Message-ID: <20260204143904.515368980@linuxfoundation.org>
+	Qianchang Zhao <pioooooooooip@gmail.com>,
+	Zhitong Liu <liuzhitong1993@gmail.com>,
+	Namjae Jeon <linkinjeon@kernel.org>,
+	Steve French <stfrench@microsoft.com>,
+	Rajani Kantha <681739313@139.com>
+Subject: [PATCH 5.15 176/206] ksmbd: fix use-after-free in ksmbd_tree_connect_put under concurrency
+Date: Wed,  4 Feb 2026 15:40:07 +0100
+Message-ID: <20260204143904.552224393@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260204143858.193781818@linuxfoundation.org>
 References: <20260204143858.193781818@linuxfoundation.org>
@@ -45,104 +47,104 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Gaosheng Cui <cuigaosheng1@huawei.com>
+From: Namjae Jeon <linkinjeon@kernel.org>
 
-[ Upstream 387659939c00156f8d6bab0fbc55b4eaf2b6bc5b commit ]
+[ Upstream commit b39a1833cc4a2755b02603eec3a71a85e9dff926 ]
 
-Shifting signed 32-bit value by 31 bits is undefined, so changing
-significant bit to unsigned. The UBSAN warning calltrace like below:
+Under high concurrency, A tree-connection object (tcon) is freed on
+a disconnect path while another path still holds a reference and later
+executes *_put()/write on it.
 
-UBSAN: shift-out-of-bounds in ./include/drm/ttm/ttm_tt.h:122:26
-left shift of 1 by 31 places cannot be represented in type 'int'
-Call Trace:
- <TASK>
- dump_stack_lvl+0x7d/0xa5
- dump_stack+0x15/0x1b
- ubsan_epilogue+0xe/0x4e
- __ubsan_handle_shift_out_of_bounds+0x1e7/0x20c
- ttm_bo_move_memcpy+0x3b4/0x460 [ttm]
- bo_driver_move+0x32/0x40 [drm_vram_helper]
- ttm_bo_handle_move_mem+0x118/0x200 [ttm]
- ttm_bo_validate+0xfa/0x220 [ttm]
- drm_gem_vram_pin_locked+0x70/0x1b0 [drm_vram_helper]
- drm_gem_vram_pin+0x48/0xb0 [drm_vram_helper]
- drm_gem_vram_plane_helper_prepare_fb+0x53/0xe0 [drm_vram_helper]
- drm_gem_vram_simple_display_pipe_prepare_fb+0x26/0x30 [drm_vram_helper]
- drm_simple_kms_plane_prepare_fb+0x4d/0xe0 [drm_kms_helper]
- drm_atomic_helper_prepare_planes+0xda/0x210 [drm_kms_helper]
- drm_atomic_helper_commit+0xc3/0x1e0 [drm_kms_helper]
- drm_atomic_commit+0x9c/0x160 [drm]
- drm_client_modeset_commit_atomic+0x33a/0x380 [drm]
- drm_client_modeset_commit_locked+0x77/0x220 [drm]
- drm_client_modeset_commit+0x31/0x60 [drm]
- __drm_fb_helper_restore_fbdev_mode_unlocked+0xa7/0x170 [drm_kms_helper]
- drm_fb_helper_set_par+0x51/0x90 [drm_kms_helper]
- fbcon_init+0x316/0x790
- visual_init+0x113/0x1d0
- do_bind_con_driver+0x2a3/0x5c0
- do_take_over_console+0xa9/0x270
- do_fbcon_takeover+0xa1/0x170
- do_fb_registered+0x2a8/0x340
- fbcon_fb_registered+0x47/0xe0
- register_framebuffer+0x294/0x4a0
- __drm_fb_helper_initial_config_and_unlock+0x43c/0x880 [drm_kms_helper]
- drm_fb_helper_initial_config+0x52/0x80 [drm_kms_helper]
- drm_fbdev_client_hotplug+0x156/0x1b0 [drm_kms_helper]
- drm_fbdev_generic_setup+0xfc/0x290 [drm_kms_helper]
- bochs_pci_probe+0x6ca/0x772 [bochs]
- local_pci_probe+0x4d/0xb0
- pci_device_probe+0x119/0x320
- really_probe+0x181/0x550
- __driver_probe_device+0xc6/0x220
- driver_probe_device+0x32/0x100
- __driver_attach+0x195/0x200
- bus_for_each_dev+0xbb/0x120
- driver_attach+0x27/0x30
- bus_add_driver+0x22e/0x2f0
- driver_register+0xa9/0x190
- __pci_register_driver+0x90/0xa0
- bochs_pci_driver_init+0x52/0x1000 [bochs]
- do_one_initcall+0x76/0x430
- do_init_module+0x61/0x28a
- load_module+0x1f82/0x2e50
- __do_sys_finit_module+0xf8/0x190
- __x64_sys_finit_module+0x23/0x30
- do_syscall_64+0x58/0x80
- entry_SYSCALL_64_after_hwframe+0x63/0xcd
- </TASK>
-
-Fixes: 3312be8f6fc8 ("drm/ttm: move populated state into page flags")
-Signed-off-by: Gaosheng Cui <cuigaosheng1@huawei.com>
-Reviewed-by: Christian König <christian.koenig@amd.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20221031113350.4180975-1-cuigaosheng1@huawei.com
-Signed-off-by: Christian König <christian.koenig@amd.com>
-[ The context change is due to the commit 43d46f0b78bb
-("drm/ttm: s/FLAG_SG/FLAG_EXTERNAL/") in v5.16
-which is irrelevant to the logic of this patch.
-In addition, v6.1 has included the fix. ]
-Signed-off-by: Rahul Sharma <black.hawk@163.com>
+Reported-by: Qianchang Zhao <pioooooooooip@gmail.com>
+Reported-by: Zhitong Liu <liuzhitong1993@gmail.com>
+Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Steve French <stfrench@microsoft.com>
+Signed-off-by: Rajani Kantha <681739313@139.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/drm/ttm/ttm_tt.h |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/ksmbd/mgmt/tree_connect.c |   18 ++++--------------
+ fs/ksmbd/mgmt/tree_connect.h |    1 -
+ fs/ksmbd/smb2pdu.c           |    3 ---
+ 3 files changed, 4 insertions(+), 18 deletions(-)
 
---- a/include/drm/ttm/ttm_tt.h
-+++ b/include/drm/ttm/ttm_tt.h
-@@ -43,7 +43,7 @@ struct ttm_operation_ctx;
- #define TTM_PAGE_FLAG_SG              (1 << 8)
- #define TTM_PAGE_FLAG_NO_RETRY	      (1 << 9)
+--- a/fs/ksmbd/mgmt/tree_connect.c
++++ b/fs/ksmbd/mgmt/tree_connect.c
+@@ -76,7 +76,6 @@ ksmbd_tree_conn_connect(struct ksmbd_con
+ 	tree_conn->t_state = TREE_NEW;
+ 	status.tree_conn = tree_conn;
+ 	atomic_set(&tree_conn->refcount, 1);
+-	init_waitqueue_head(&tree_conn->refcount_q);
  
--#define TTM_PAGE_FLAG_PRIV_POPULATED  (1 << 31)
-+#define TTM_PAGE_FLAG_PRIV_POPULATED  (1U << 31)
+ 	ret = xa_err(xa_store(&sess->tree_conns, tree_conn->id, tree_conn,
+ 			      GFP_KERNEL));
+@@ -98,14 +97,8 @@ out_error:
  
- /**
-  * struct ttm_tt
+ void ksmbd_tree_connect_put(struct ksmbd_tree_connect *tcon)
+ {
+-	/*
+-	 * Checking waitqueue to releasing tree connect on
+-	 * tree disconnect. waitqueue_active is safe because it
+-	 * uses atomic operation for condition.
+-	 */
+-	if (!atomic_dec_return(&tcon->refcount) &&
+-	    waitqueue_active(&tcon->refcount_q))
+-		wake_up(&tcon->refcount_q);
++	if (atomic_dec_and_test(&tcon->refcount))
++		kfree(tcon);
+ }
+ 
+ int ksmbd_tree_conn_disconnect(struct ksmbd_session *sess,
+@@ -117,14 +110,11 @@ int ksmbd_tree_conn_disconnect(struct ks
+ 	xa_erase(&sess->tree_conns, tree_conn->id);
+ 	write_unlock(&sess->tree_conns_lock);
+ 
+-	if (!atomic_dec_and_test(&tree_conn->refcount))
+-		wait_event(tree_conn->refcount_q,
+-			   atomic_read(&tree_conn->refcount) == 0);
+-
+ 	ret = ksmbd_ipc_tree_disconnect_request(sess->id, tree_conn->id);
+ 	ksmbd_release_tree_conn_id(sess, tree_conn->id);
+ 	ksmbd_share_config_put(tree_conn->share_conf);
+-	kfree(tree_conn);
++	if (atomic_dec_and_test(&tree_conn->refcount))
++		kfree(tree_conn);
+ 	return ret;
+ }
+ 
+--- a/fs/ksmbd/mgmt/tree_connect.h
++++ b/fs/ksmbd/mgmt/tree_connect.h
+@@ -32,7 +32,6 @@ struct ksmbd_tree_connect {
+ 	int				maximal_access;
+ 	bool				posix_extensions;
+ 	atomic_t			refcount;
+-	wait_queue_head_t		refcount_q;
+ 	unsigned int			t_state;
+ };
+ 
+--- a/fs/ksmbd/smb2pdu.c
++++ b/fs/ksmbd/smb2pdu.c
+@@ -2169,7 +2169,6 @@ int smb2_tree_disconnect(struct ksmbd_wo
+ 		goto err_out;
+ 	}
+ 
+-	WARN_ON_ONCE(atomic_dec_and_test(&tcon->refcount));
+ 	tcon->t_state = TREE_DISCONNECTED;
+ 	write_unlock(&sess->tree_conns_lock);
+ 
+@@ -2179,8 +2178,6 @@ int smb2_tree_disconnect(struct ksmbd_wo
+ 		goto err_out;
+ 	}
+ 
+-	work->tcon = NULL;
+-
+ 	rsp->StructureSize = cpu_to_le16(4);
+ 	err = ksmbd_iov_pin_rsp(work, rsp,
+ 				sizeof(struct smb2_tree_disconnect_rsp));
 
 
