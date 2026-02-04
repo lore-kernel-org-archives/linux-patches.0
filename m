@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BAB57284B37;
-	Wed,  4 Feb 2026 15:16:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4253641C301;
+	Wed,  4 Feb 2026 15:16:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770218186; cv=none; b=UVI3hIrmEBf2e0eLfgXU6APon8aXweo6JknX4RPDwt/2CvU1bY0finizgbUB+MStS/U03/c0GSdvz15kyil8tDutT5pa68NkSj5D2AryHMs2HozAzteKqRB7Pe8mOF095FJnUbb3jnlw1UOXvpijBbVKLkKkq5B2KN5vmpWNOwc=
+	t=1770218190; cv=none; b=JsHSjwLFxG670s9tGIPuQM3TA0b5BtxvGPHhlzvHTTX+27MiShLcE2ZyT0Q232CvUTDtj584OX+W9HPgDqkM2f85eWpMm0l8MowAMnVLoCKnlovGKc4e81V5EYbY9G7U3h4uDklGj39ybMKUrakns8ByS54L/Vy1Oiu+Z8aHqNc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770218186; c=relaxed/simple;
-	bh=d/sg6Oz+wt6PM8Q2mWu5IkoFRWH/ZLG70y4xCefDom8=;
+	s=arc-20240116; t=1770218190; c=relaxed/simple;
+	bh=z9tsET8YBsDylTIuo6AgySI1vqMwRjhphGBpgwoXU08=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tX72/qP0UMfRf6V4ny1D5RGqiK9KnOvyqqjz1rlZYO/3cNfB5yfx/NvLkQAvJSUT7B9xkdXvDDOTVSOJkuupVWz8m/VP1HE6TL9JYCQyUExLVy+KmI9ZWApd0egSdGkCwSEvNdBVtNk1tUbqJt1E6stpGi+2AaVrZ3/LEvPnzDQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ot8kw1nq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=aulEpiWMbY+dtOupGlPY+fTZKVs6kJzI3cvkx6NRV3CYUL/5boGRZFBchw2P4Y8fH9AR0NBJaGb9QQy60anhcIerqLThR5iECAK2Gygg7KBvTXEX2eGqpZ8BJz+mZr5YtjqZ2haL9XRBfpJqwrT3SWGcprXMZkgUvPA0BCIH97I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Zr9lwRav; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ot8kw1nq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F35DC4CEF7;
-	Wed,  4 Feb 2026 15:16:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Zr9lwRav"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F7D4C4CEF7;
+	Wed,  4 Feb 2026 15:16:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770218186;
-	bh=d/sg6Oz+wt6PM8Q2mWu5IkoFRWH/ZLG70y4xCefDom8=;
+	s=korg; t=1770218190;
+	bh=z9tsET8YBsDylTIuo6AgySI1vqMwRjhphGBpgwoXU08=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ot8kw1nqs7IczaQjNIw3eUCuDH+v+T34l3CDrhBTY9DsKZsooU6/nbVZjXmqrw97z
-	 rPNOh99EFrvoUVcHkG6RUdAwjeUdsBkyyEuB0HxwwF1KcATHa+rza2X++5TsPBWt6T
-	 WDSSefsOhizzVOlAsu5//d7WxwPfCGXhxuMVacWk=
+	b=Zr9lwRavRqdzhOEk1i20wZ0EaT1LZ03niOWiqevPtXpo0F18UiYf0kbBJS7DhPXhl
+	 WfLhiDnDNhyTuivSOQ4xCvwsVXlMz/7KEEQ7aOZsbSPll1M02r+TaiPGTaS54F1pa5
+	 nblR+c7DHjvkhClepwyiyonj08MLNPbZ92LCigwM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Denis Sergeev <denserg.edu@gmail.com>,
-	Mika Westerberg <westeri@kernel.org>,
-	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
+	Kery Qi <qikeyu2017@gmail.com>,
+	Simon Horman <horms@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 204/280] gpiolib: acpi: use BIT_ULL() for u64 mask in address space handler
-Date: Wed,  4 Feb 2026 15:39:38 +0100
-Message-ID: <20260204143916.942018489@linuxfoundation.org>
+Subject: [PATCH 6.1 195/280] rocker: fix memory leak in rocker_world_port_post_fini()
+Date: Wed,  4 Feb 2026 15:39:29 +0100
+Message-ID: <20260204143916.622804444@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260204143909.614719725@linuxfoundation.org>
 References: <20260204143909.614719725@linuxfoundation.org>
@@ -52,43 +52,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Denis Sergeev <denserg.edu@gmail.com>
+From: Kery Qi <qikeyu2017@gmail.com>
 
-[ Upstream commit c0ae43d303e45764918fa8c1dc13d6a5db59c479 ]
+[ Upstream commit 8d7ba71e46216b8657a82ca2ec118bc93812a4d0 ]
 
-The BIT() macro uses unsigned long, which is 32 bits on 32-bit
-architectures. When iterating over GPIO pins with index >= 32,
-the expression (*value & BIT(i)) causes undefined behavior due
-to shifting by a value >= type width.
+In rocker_world_port_pre_init(), rocker_port->wpriv is allocated with
+kzalloc(wops->port_priv_size, GFP_KERNEL). However, in
+rocker_world_port_post_fini(), the memory is only freed when
+wops->port_post_fini callback is set:
 
-Since 'value' is a pointer to u64, use BIT_ULL() to ensure correct
-64-bit mask on all architectures.
+    if (!wops->port_post_fini)
+        return;
+    wops->port_post_fini(rocker_port);
+    kfree(rocker_port->wpriv);
 
-Found by Linux Verification Center (linuxtesting.org) with Svace.
+Since rocker_ofdpa_ops does not implement port_post_fini callback
+(it is NULL), the wpriv memory allocated for each port is never freed
+when ports are removed. This leads to a memory leak of
+sizeof(struct ofdpa_port) bytes per port on every device removal.
 
-Fixes: 2c4d00cb8fc5 ("gpiolib: acpi: Use BIT() macro to increase readability")
-Signed-off-by: Denis Sergeev <denserg.edu@gmail.com>
-Reviewed-by: Mika Westerberg <westeri@kernel.org>
-Link: https://lore.kernel.org/r/20260126035914.16586-1-denserg.edu@gmail.com
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+Fix this by always calling kfree(rocker_port->wpriv) regardless of
+whether the port_post_fini callback exists.
+
+Fixes: e420114eef4a ("rocker: introduce worlds infrastructure")
+Signed-off-by: Kery Qi <qikeyu2017@gmail.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20260123211030.2109-2-qikeyu2017@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpio/gpiolib-acpi.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/ethernet/rocker/rocker_main.c | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/gpio/gpiolib-acpi.c b/drivers/gpio/gpiolib-acpi.c
-index baa77a8e83652..11338f47d884d 100644
---- a/drivers/gpio/gpiolib-acpi.c
-+++ b/drivers/gpio/gpiolib-acpi.c
-@@ -1184,7 +1184,7 @@ acpi_gpio_adr_space_handler(u32 function, acpi_physical_address address,
- 		mutex_unlock(&achip->conn_lock);
+diff --git a/drivers/net/ethernet/rocker/rocker_main.c b/drivers/net/ethernet/rocker/rocker_main.c
+index 2e2826c901fcc..b741d335b1dc4 100644
+--- a/drivers/net/ethernet/rocker/rocker_main.c
++++ b/drivers/net/ethernet/rocker/rocker_main.c
+@@ -1525,9 +1525,8 @@ static void rocker_world_port_post_fini(struct rocker_port *rocker_port)
+ {
+ 	struct rocker_world_ops *wops = rocker_port->rocker->wops;
  
- 		if (function == ACPI_WRITE)
--			gpiod_set_raw_value_cansleep(desc, !!(*value & BIT(i)));
-+			gpiod_set_raw_value_cansleep(desc, !!(*value & BIT_ULL(i)));
- 		else
- 			*value |= (u64)gpiod_get_raw_value_cansleep(desc) << i;
- 	}
+-	if (!wops->port_post_fini)
+-		return;
+-	wops->port_post_fini(rocker_port);
++	if (wops->port_post_fini)
++		wops->port_post_fini(rocker_port);
+ 	kfree(rocker_port->wpriv);
+ }
+ 
 -- 
 2.51.0
 
