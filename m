@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D97CA41B34E;
-	Wed,  4 Feb 2026 14:54:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1366B27F749;
+	Wed,  4 Feb 2026 14:54:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770216848; cv=none; b=KOjn+aVHyK3ORO7J3X1eRKZ0GskWvbwQ5w3lG6GO5OPnSpRRWrEZQbZQIbfB2iQL76LV5+Q3ely3oBccXCOHJaEa0B/z5dqjUGRJn1QO/CVa8L91q2N9sXfvfOWUcS5dzyJjAPqZbyUugvQrQ//hfarlzoNis5sLac/3NXoHNbA=
+	t=1770216852; cv=none; b=Qx1pJ9+nC1fLNtyYc80s1E6QYjlZGlrkORDgxoWJzJ+b/s5sko/Wd854XmdxqKpWlDSUO2d8+6JwwDuK7ZzjN9aHfdfZEPq1y73QXX6WYajARHfu7iOgCqNQJWmf9kDeJfTV1pI9y84sJalULNhYkb832TLrz0Ej3wSnFX3f/IU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770216848; c=relaxed/simple;
-	bh=voJLeiAegyPdcNs6ToGtu0qwVQzHtql+cu3f7pdxQZ4=;
+	s=arc-20240116; t=1770216852; c=relaxed/simple;
+	bh=V9F3IMDegiXFD//RgPEd8wx8LEB2piF5MKGOGp3ZrQc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FTwiIGL1EwVLfsYikwifwlM9lkOL6kjhusjd7Yy3Dz6ZoudJoXNpMyIIdJUMiSnzWLZYAvBvMpmsqj9uCSDJNOaekEr63aGshwnA86eofbbaWBEAixZ5gCCaurcrxPvXgP4LlwcsUaesr20PaxMpCulJNhvIMkkxVbdOWmenlf4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gBWkWKHG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GeJFpptTW0+iCoPmkFAmVHCMsGt/1FBZ+qrlbVD4VCKMoqDPRMZcv+KEGFwcbfmHNPLiycKzwLuaqqUM1dJ336PiJpjYIcLjP8g8ElH8lpwDK/PTVd9qR/BavA3RU+YkCE3xGkYX/3GnGBe/WoM5d6tTSesK9H3yLR3FVZd5BfU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=t5N4P8C+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gBWkWKHG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C5D8C4CEF7;
-	Wed,  4 Feb 2026 14:54:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="t5N4P8C+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 58AD8C4CEF7;
+	Wed,  4 Feb 2026 14:54:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770216848;
-	bh=voJLeiAegyPdcNs6ToGtu0qwVQzHtql+cu3f7pdxQZ4=;
+	s=korg; t=1770216852;
+	bh=V9F3IMDegiXFD//RgPEd8wx8LEB2piF5MKGOGp3ZrQc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gBWkWKHG1TX3KEC2heZEaGdMGe1NHVofSfzYrx1u8n9SKV7hl8PHA41dSYyPBhk3/
-	 cZVQ+MT9a+4enRsiCPL/oB172qXajbQdA7Z4zA7guKm3zCCfS6r3xj/QKpcVT1N76W
-	 D5OHctnIqGD8QeHafTjjURsypFC/5HMYOevfqE8M=
+	b=t5N4P8C+nFeIfWFtUBBxSiKfCULE3GVo6ypLq2hzNFEyJHe1OHW84txCsFgDnBI+t
+	 1kmEnopYuCYz4+zW5ChbR7Hin+1TOy8kXA2D07awkBno6ybk8D/WJkFTfBCOiF4vff
+	 F08r66KvKhrMJv+MNKXuOD1SBGQSh0UOGKMQL11g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Benjamin Tissoires <bentiss@kernel.org>,
-	Salvatore Bonaccorso <carnil@debian.org>
-Subject: [PATCH 5.15 022/206] HID: usbhid: paper over wrong bNumDescriptor field
-Date: Wed,  4 Feb 2026 15:37:33 +0100
-Message-ID: <20260204143859.001913709@linuxfoundation.org>
+	Miaoqian Lin <linmq006@gmail.com>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Vinod Koul <vkoul@kernel.org>
+Subject: [PATCH 5.15 049/206] dmaengine: qcom: gpi: Fix memory leak in gpi_peripheral_config()
+Date: Wed,  4 Feb 2026 15:38:00 +0100
+Message-ID: <20260204143859.983275694@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260204143858.193781818@linuxfoundation.org>
 References: <20260204143858.193781818@linuxfoundation.org>
@@ -50,55 +51,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Benjamin Tissoires <bentiss@kernel.org>
+From: Miaoqian Lin <linmq006@gmail.com>
 
-commit f28beb69c51517aec7067dfb2074e7c751542384 upstream.
+commit 3f747004bbd641131d9396d87b5d2d3d1e182728 upstream.
 
-Some faulty devices (ZWO EFWmini) have a wrong optional HID class
-descriptor count compared to the provided length.
+Fix a memory leak in gpi_peripheral_config() where the original memory
+pointed to by gchan->config could be lost if krealloc() fails.
 
-Given that we plainly ignore those optional descriptor, we can attempt
-to fix the provided number so we do not lock out those devices.
+The issue occurs when:
+1. gchan->config points to previously allocated memory
+2. krealloc() fails and returns NULL
+3. The function directly assigns NULL to gchan->config, losing the
+   reference to the original memory
+4. The original memory becomes unreachable and cannot be freed
 
-Signed-off-by: Benjamin Tissoires <bentiss@kernel.org>
-Cc: Salvatore Bonaccorso <carnil@debian.org>
+Fix this by using a temporary variable to hold the krealloc() result
+and only updating gchan->config when the allocation succeeds.
+
+Found via static analysis and code review.
+
+Fixes: 5d0c3533a19f ("dmaengine: qcom: Add GPI dma driver")
+Cc: stable@vger.kernel.org
+Signed-off-by: Miaoqian Lin <linmq006@gmail.com>
+Reviewed-by: Bjorn Andersson <andersson@kernel.org>
+Link: https://patch.msgid.link/20251029123421.91973-1-linmq006@gmail.com
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hid/usbhid/hid-core.c |   17 ++++++++++++++++-
- 1 file changed, 16 insertions(+), 1 deletion(-)
+ drivers/dma/qcom/gpi.c |    6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
---- a/drivers/hid/usbhid/hid-core.c
-+++ b/drivers/hid/usbhid/hid-core.c
-@@ -983,6 +983,7 @@ static int usbhid_parse(struct hid_devic
- 	struct usb_device *dev = interface_to_usbdev (intf);
- 	struct hid_descriptor *hdesc;
- 	struct hid_class_descriptor *hcdesc;
-+	__u8 fixed_opt_descriptors_size;
- 	u32 quirks = 0;
- 	unsigned int rsize = 0;
- 	char *rdesc;
-@@ -1013,7 +1014,21 @@ static int usbhid_parse(struct hid_devic
- 			      (hdesc->bNumDescriptors - 1) * sizeof(*hcdesc)) {
- 		dbg_hid("hid descriptor invalid, bLen=%hhu bNum=%hhu\n",
- 			hdesc->bLength, hdesc->bNumDescriptors);
--		return -EINVAL;
-+
-+		/*
-+		 * Some devices may expose a wrong number of descriptors compared
-+		 * to the provided length.
-+		 * However, we ignore the optional hid class descriptors entirely
-+		 * so we can safely recompute the proper field.
-+		 */
-+		if (hdesc->bLength >= sizeof(*hdesc)) {
-+			fixed_opt_descriptors_size = hdesc->bLength - sizeof(*hdesc);
-+
-+			hid_warn(intf, "fixing wrong optional hid class descriptors count\n");
-+			hdesc->bNumDescriptors = fixed_opt_descriptors_size / sizeof(*hcdesc) + 1;
-+		} else {
-+			return -EINVAL;
-+		}
- 	}
+--- a/drivers/dma/qcom/gpi.c
++++ b/drivers/dma/qcom/gpi.c
+@@ -1621,14 +1621,16 @@ static int
+ gpi_peripheral_config(struct dma_chan *chan, struct dma_slave_config *config)
+ {
+ 	struct gchan *gchan = to_gchan(chan);
++	void *new_config;
  
- 	hid->version = le16_to_cpu(hdesc->bcdHID);
+ 	if (!config->peripheral_config)
+ 		return -EINVAL;
+ 
+-	gchan->config = krealloc(gchan->config, config->peripheral_size, GFP_NOWAIT);
+-	if (!gchan->config)
++	new_config = krealloc(gchan->config, config->peripheral_size, GFP_NOWAIT);
++	if (!new_config)
+ 		return -ENOMEM;
+ 
++	gchan->config = new_config;
+ 	memcpy(gchan->config, config->peripheral_config, config->peripheral_size);
+ 
+ 	return 0;
 
 
