@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F630421EE2;
-	Wed,  4 Feb 2026 15:18:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B8752BD012;
+	Wed,  4 Feb 2026 15:18:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770218320; cv=none; b=bUYEEFwA0/Yg8q4ivrd3GE7wUIbsNzfhB8lkDY6ANfW1gWaYU/DdLqnKVjyAPwkE29ZxiPOEptdPvP0ifv6N7G21XHq3oUxOhLH0JuBiSGzFPlSpx2SNHs+y4Hn3pn9dxGw25tKyoXlWmFJHVP1HV/ongWWZNmcYm4gWm4DO5ug=
+	t=1770218323; cv=none; b=J0A4o39rWkm4xtTlx0ZShZDMxAN4RSuunaWr7/WrpRahXr6cvtmgUiTpNrSiUIa6lSoGM47LWFDKBbs2zy3gxQEhI1ap5uZPuykXhg8lDHayqNtkZw/VLh6bZgVp3yviQS718Dk/Klwcq/T0YlDQPXcH2byLPnqa0vgbncir7Js=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770218320; c=relaxed/simple;
-	bh=qX927nqQuolOy0OD5WATdC9XYHrT5ZmUbj9q8EIJjt0=;
+	s=arc-20240116; t=1770218323; c=relaxed/simple;
+	bh=m4rPtjOGspYILChpynzt/3roVAqSHeaKJ1EADyV/JZQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=laH+DuP0hvAS4G+zfJSPuo7Cj4gULBd6ARvb6HsEX0pDpKj6KoZAYmXGT2DyVbjAN/3JZBZXK3+XwXnXTidv6cFhdDIi9OZP8UVGUxVoxIVvEcpFPUUlJuKxafc25bbIyfGWymXvsOCseYSCry8rD9s8r6FHcgOY2BKP9ZncyMw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dAArVy32; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bW4+0+EilUtrqn3Y5xVWgh3Hv2hBXsaZP0HO7mhcJqmbaAFqCIeALwLHl3VJPlV1bv+90oDt226nqKM8MgH3FuJ6vuJoXIChPREKK91LQeGnruQuygArmM47xC3vpL+6ta3jQRF7L2gAF1yiCB97hTUeBJXNAahflWixVvjIbSA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dRluMFPK; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dAArVy32"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 49DF8C2BCAF;
-	Wed,  4 Feb 2026 15:18:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dRluMFPK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 92521C4CEF7;
+	Wed,  4 Feb 2026 15:18:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770218319;
-	bh=qX927nqQuolOy0OD5WATdC9XYHrT5ZmUbj9q8EIJjt0=;
+	s=korg; t=1770218323;
+	bh=m4rPtjOGspYILChpynzt/3roVAqSHeaKJ1EADyV/JZQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dAArVy32VPgthaOlfIHMRGsojb1/Hwx9h17T1RofbLMzv8mY3usp9XeKtkzGvcF3w
-	 cZoNpsOAFqP8E1VskxwThZ4aePlaGe3CHlf0DOgpYkIaAo01dAhbAbX+n6omVx2k5L
-	 FijwyzzXgNwVjOhLYErlBrSJ/KDWrj1d3h554Wdc=
+	b=dRluMFPK9TABnl7PahwZPDjR2HC5XQet0jGi7dFLqN3QCFeDKrka5PqXn2BtjJeqh
+	 Lf8KxtWECkIHJP92pFOVTXBqAF95g2HQQmfPLJNl1ZjeIgLN+J0AU+DjTnEOQv/4dW
+	 2oJgAt9PwWYGWYJsjepvcpWqnfeDFYkaORnztITE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Norbert Szetei <norbert@doyensec.com>,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Steve French <stfrench@microsoft.com>,
-	Li hongliang <1468888505@139.com>
-Subject: [PATCH 6.1 269/280] ksmbd: fix use-after-free in ksmbd_session_rpc_open
-Date: Wed,  4 Feb 2026 15:40:43 +0100
-Message-ID: <20260204143919.380141609@linuxfoundation.org>
+	Philipp Zabel <p.zabel@pengutronix.de>,
+	Frank Li <Frank.Li@nxp.com>,
+	Johan Hovold <johan@kernel.org>,
+	Maxime Ripard <mripard@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 278/280] drm/imx/tve: fix probe device leak
+Date: Wed,  4 Feb 2026 15:40:52 +0100
+Message-ID: <20260204143919.708360263@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260204143909.614719725@linuxfoundation.org>
 References: <20260204143909.614719725@linuxfoundation.org>
@@ -52,116 +53,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Namjae Jeon <linkinjeon@kernel.org>
+From: Johan Hovold <johan@kernel.org>
 
-[ Upstream commit a1f46c99d9ea411f9bf30025b912d881d36fc709 ]
+[ Upstream commit e535c23513c63f02f67e3e09e0787907029efeaf ]
 
-A UAF issue can occur due to a race condition between
-ksmbd_session_rpc_open() and __session_rpc_close().
-Add rpc_lock to the session to protect it.
+Make sure to drop the reference taken to the DDC device during probe on
+probe failure (e.g. probe deferral) and on driver unbind.
 
-Cc: stable@vger.kernel.org
-Reported-by: Norbert Szetei <norbert@doyensec.com>
-Tested-by: Norbert Szetei <norbert@doyensec.com>
-Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Steve French <stfrench@microsoft.com>
-[ KSMBD_DEFAULT_GFP is introduced by commit 0066f623bce8 ("ksmbd: use __GFP_RETRY_MAYFAIL")
- after linux-6.13. Here we still use GFP_KERNEL. ]
-Signed-off-by: Li hongliang <1468888505@139.com>
+Fixes: fcbc51e54d2a ("staging: drm/imx: Add support for Television Encoder (TVEv2)")
+Cc: stable@vger.kernel.org	# 3.10
+Cc: Philipp Zabel <p.zabel@pengutronix.de>
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Signed-off-by: Johan Hovold <johan@kernel.org>
+Link: https://patch.msgid.link/20251030163456.15807-1-johan@kernel.org
+Signed-off-by: Maxime Ripard <mripard@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/server/mgmt/user_session.c |   20 ++++++++++++++------
- fs/smb/server/mgmt/user_session.h |    1 +
- 2 files changed, 15 insertions(+), 6 deletions(-)
+ drivers/gpu/drm/imx/imx-tve.c |   13 +++++++++++++
+ 1 file changed, 13 insertions(+)
 
---- a/fs/smb/server/mgmt/user_session.c
-+++ b/fs/smb/server/mgmt/user_session.c
-@@ -59,10 +59,12 @@ static void ksmbd_session_rpc_clear_list
- 	struct ksmbd_session_rpc *entry;
- 	long index;
- 
-+	down_write(&sess->rpc_lock);
- 	xa_for_each(&sess->rpc_handle_list, index, entry) {
- 		xa_erase(&sess->rpc_handle_list, index);
- 		__session_rpc_close(sess, entry);
- 	}
-+	up_write(&sess->rpc_lock);
- 
- 	xa_destroy(&sess->rpc_handle_list);
- }
-@@ -92,7 +94,7 @@ int ksmbd_session_rpc_open(struct ksmbd_
- {
- 	struct ksmbd_session_rpc *entry, *old;
- 	struct ksmbd_rpc_command *resp;
--	int method;
-+	int method, id;
- 
- 	method = __rpc_method(rpc_name);
- 	if (!method)
-@@ -102,26 +104,29 @@ int ksmbd_session_rpc_open(struct ksmbd_
- 	if (!entry)
- 		return -ENOMEM;
- 
-+	down_read(&sess->rpc_lock);
- 	entry->method = method;
--	entry->id = ksmbd_ipc_id_alloc();
--	if (entry->id < 0)
-+	entry->id = id = ksmbd_ipc_id_alloc();
-+	if (id < 0)
- 		goto free_entry;
--	old = xa_store(&sess->rpc_handle_list, entry->id, entry, GFP_KERNEL);
-+	old = xa_store(&sess->rpc_handle_list, id, entry, GFP_KERNEL);
- 	if (xa_is_err(old))
- 		goto free_id;
- 
--	resp = ksmbd_rpc_open(sess, entry->id);
-+	resp = ksmbd_rpc_open(sess, id);
- 	if (!resp)
- 		goto erase_xa;
- 
-+	up_read(&sess->rpc_lock);
- 	kvfree(resp);
--	return entry->id;
-+	return id;
- erase_xa:
- 	xa_erase(&sess->rpc_handle_list, entry->id);
- free_id:
- 	ksmbd_rpc_id_free(entry->id);
- free_entry:
- 	kfree(entry);
-+	up_read(&sess->rpc_lock);
- 	return -EINVAL;
- }
- 
-@@ -129,9 +134,11 @@ void ksmbd_session_rpc_close(struct ksmb
- {
- 	struct ksmbd_session_rpc *entry;
- 
-+	down_write(&sess->rpc_lock);
- 	entry = xa_erase(&sess->rpc_handle_list, id);
- 	if (entry)
- 		__session_rpc_close(sess, entry);
-+	up_write(&sess->rpc_lock);
- }
- 
- int ksmbd_session_rpc_method(struct ksmbd_session *sess, int id)
-@@ -404,6 +411,7 @@ static struct ksmbd_session *__session_c
- 	sess->sequence_number = 1;
- 	rwlock_init(&sess->tree_conns_lock);
- 	atomic_set(&sess->refcnt, 2);
-+	init_rwsem(&sess->rpc_lock);
- 
- 	ret = __init_smb2_session(sess);
- 	if (ret)
---- a/fs/smb/server/mgmt/user_session.h
-+++ b/fs/smb/server/mgmt/user_session.h
-@@ -63,6 +63,7 @@ struct ksmbd_session {
- 	rwlock_t			tree_conns_lock;
- 
- 	atomic_t			refcnt;
-+	struct rw_semaphore		rpc_lock;
+--- a/drivers/gpu/drm/imx/imx-tve.c
++++ b/drivers/gpu/drm/imx/imx-tve.c
+@@ -522,6 +522,13 @@ static const struct component_ops imx_tv
+ 	.bind	= imx_tve_bind,
  };
  
- static inline int test_session_flag(struct ksmbd_session *sess, int bit)
++static void imx_tve_put_device(void *_dev)
++{
++	struct device *dev = _dev;
++
++	put_device(dev);
++}
++
+ static int imx_tve_probe(struct platform_device *pdev)
+ {
+ 	struct device *dev = &pdev->dev;
+@@ -543,6 +550,12 @@ static int imx_tve_probe(struct platform
+ 	if (ddc_node) {
+ 		tve->ddc = of_find_i2c_adapter_by_node(ddc_node);
+ 		of_node_put(ddc_node);
++		if (tve->ddc) {
++			ret = devm_add_action_or_reset(dev, imx_tve_put_device,
++						       &tve->ddc->dev);
++			if (ret)
++				return ret;
++		}
+ 	}
+ 
+ 	tve->mode = of_get_tve_mode(np);
 
 
