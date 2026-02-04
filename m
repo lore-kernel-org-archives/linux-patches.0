@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4DEB29AB1D;
-	Wed,  4 Feb 2026 15:26:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 594AD27702D;
+	Wed,  4 Feb 2026 15:26:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770218778; cv=none; b=NFgi0C7VtdOiVJXiYK0Gg9lf8IudUfdL5myen/c998myqorl9WqaOOrAlz/LU7Hcx1pVOEA2fc52nnlDzAI47dkwsqGiK/I3gLn8NF9fMyGpOjAzjo8tH/1W7mEpeAy2lVQG0N7gjowgEAnLTNag9Bach60AEUlls58GFhkNQ+s=
+	t=1770218781; cv=none; b=GdHuKic8h+NWzQjJGoY2iZ/9OQMf9Xee2Rlu3jDayhIg79wijSOMEdE1dbJnRmUclrbmNUXYYld88zNPebCafyRrDTqZtvMJBNSkoCk8VT5J/rfRFe6mm54Ug3KqyGSWgBs+ZR+nWf3/yt+4USsPos1kw2o8wCU4mwZS8X1nnDM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770218778; c=relaxed/simple;
-	bh=UK6Yjv8B/n6fKeXqpMN9Pp6oWrF3tAYpyqXjpbMhehw=;
+	s=arc-20240116; t=1770218781; c=relaxed/simple;
+	bh=5bVxUs5Z+KGlbrbRHTvJSsWL6YUQownL0bYp70P4zKE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SK/gVl2Q3TZga3k00AyomjJK5N/sd0SO2C293nnz5tKMREZi1Or8BK355TL9t/4f0GMvi6z5hkB3ylPmNkW8MLUX4LQMo9cFC0vKeRIhk9ZK6P5WIt1D7RvFzS42Nfh4VNlcxI+BSWrUq7pxd8AWKzMt6ocH6cGn50sgNPZZ1gM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ik3NVhn9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=puFtlQd9QPUt8fCBWecAnOJZIWEx6Pvcei+e0rGVbVMDfqvwS8spCT8J62BI2iHIiV2lNyDpHmAMavCw1fWotgYVrYi2jxTGf5pjfQLRPEtg4eAYsJKyRQj8a1bU5CD0XwNcBQu84LjXLDEB6WMnGbBb/AQuUSy18wA34/FjSAI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AQAvuUwi; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ik3NVhn9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 55EA9C4CEF7;
-	Wed,  4 Feb 2026 15:26:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AQAvuUwi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B21CFC4CEF7;
+	Wed,  4 Feb 2026 15:26:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770218777;
-	bh=UK6Yjv8B/n6fKeXqpMN9Pp6oWrF3tAYpyqXjpbMhehw=;
+	s=korg; t=1770218781;
+	bh=5bVxUs5Z+KGlbrbRHTvJSsWL6YUQownL0bYp70P4zKE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ik3NVhn98dzjwpdoUyXmDWUaa8DxFjvo1A6G3u1L6oLk7ArI8yDwViVi0a3v/cRI3
-	 ZhRcQVKonO0saJYfvGmW5lSZSDFiigDnx+p/iTjNKJJwwTqsCMpBiaWUw2LvRh5m6Z
-	 Jd/Q6EQzbMU09tS2ueTtkwALe0sECAp64Pn3y8VY=
+	b=AQAvuUwiboZtDhMgTb+L0p3dmdtV0nY2W9JzLP7CL5sKzwIA6K/bjYikRTu8Fo8sS
+	 MxjKYz9PvUlTUF/8x0cHtbJlx3bNto47uMd3Zfg+lEi1N10DxIUJq2trqgpt4qPA9C
+	 q5fRk8qmDZAB2m1EfeF6cgyT0NLxgGo2Ll9oOmfE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konradybcio@kernel.org>,
+	Philipp Zabel <p.zabel@pengutronix.de>,
+	Frank Li <Frank.Li@nxp.com>,
 	Johan Hovold <johan@kernel.org>,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	Akhil P Oommen <akhilpo@oss.qualcomm.com>,
-	Rob Clark <robin.clark@oss.qualcomm.com>
-Subject: [PATCH 6.12 59/87] drm/msm/a6xx: fix bogus hwcg register updates
-Date: Wed,  4 Feb 2026 15:40:57 +0100
-Message-ID: <20260204143849.041662612@linuxfoundation.org>
+	Maxime Ripard <mripard@kernel.org>
+Subject: [PATCH 6.12 60/87] drm/imx/tve: fix probe device leak
+Date: Wed,  4 Feb 2026 15:40:58 +0100
+Message-ID: <20260204143849.079061090@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260204143846.906385641@linuxfoundation.org>
 References: <20260204143846.906385641@linuxfoundation.org>
@@ -56,49 +54,51 @@ Content-Transfer-Encoding: 8bit
 
 From: Johan Hovold <johan@kernel.org>
 
-commit dedb897f11c5d7e32c0e0a0eff7cec23a8047167 upstream.
+commit e535c23513c63f02f67e3e09e0787907029efeaf upstream.
 
-The hw clock gating register sequence consists of register value pairs
-that are written to the GPU during initialisation.
+Make sure to drop the reference taken to the DDC device during probe on
+probe failure (e.g. probe deferral) and on driver unbind.
 
-The a690 hwcg sequence has two GMU registers in it that used to amount
-to random writes in the GPU mapping, but since commit 188db3d7fe66
-("drm/msm/a6xx: Rebase GMU register offsets") they trigger a fault as
-the updated offsets now lie outside the mapping. This in turn breaks
-boot of machines like the Lenovo ThinkPad X13s.
-
-Note that the updates of these GMU registers is already taken care of
-properly since commit 40c297eb245b ("drm/msm/a6xx: Set GMU CGC
-properties on a6xx too"), but for some reason these two entries were
-left in the table.
-
-Fixes: 5e7665b5e484 ("drm/msm/adreno: Add Adreno A690 support")
-Cc: stable@vger.kernel.org	# 6.5
-Cc: Bjorn Andersson <andersson@kernel.org>
-Cc: Konrad Dybcio <konradybcio@kernel.org>
+Fixes: fcbc51e54d2a ("staging: drm/imx: Add support for Television Encoder (TVEv2)")
+Cc: stable@vger.kernel.org	# 3.10
+Cc: Philipp Zabel <p.zabel@pengutronix.de>
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
 Signed-off-by: Johan Hovold <johan@kernel.org>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Reviewed-by: Akhil P Oommen <akhilpo@oss.qualcomm.com>
-Fixes: 188db3d7fe66 ("drm/msm/a6xx: Rebase GMU register offsets")
-Patchwork: https://patchwork.freedesktop.org/patch/695778/
-Message-ID: <20251221164552.19990-1-johan@kernel.org>
-Signed-off-by: Rob Clark <robin.clark@oss.qualcomm.com>
-(cherry picked from commit dcbd2f8280eea2c965453ed8c3c69d6f121e950b)
+Link: https://patch.msgid.link/20251030163456.15807-1-johan@kernel.org
+Signed-off-by: Maxime Ripard <mripard@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/msm/adreno/a6xx_catalog.c |    2 --
- 1 file changed, 2 deletions(-)
+ drivers/gpu/drm/imx/ipuv3/imx-tve.c |   13 +++++++++++++
+ 1 file changed, 13 insertions(+)
 
---- a/drivers/gpu/drm/msm/adreno/a6xx_catalog.c
-+++ b/drivers/gpu/drm/msm/adreno/a6xx_catalog.c
-@@ -501,8 +501,6 @@ static const struct adreno_reglist a690_
- 	{REG_A6XX_RBBM_CLOCK_CNTL_GMU_GX, 0x00000222},
- 	{REG_A6XX_RBBM_CLOCK_DELAY_GMU_GX, 0x00000111},
- 	{REG_A6XX_RBBM_CLOCK_HYST_GMU_GX, 0x00000555},
--	{REG_A6XX_GPU_GMU_AO_GMU_CGC_DELAY_CNTL, 0x10111},
--	{REG_A6XX_GPU_GMU_AO_GMU_CGC_HYST_CNTL, 0x5555},
- 	{}
+--- a/drivers/gpu/drm/imx/ipuv3/imx-tve.c
++++ b/drivers/gpu/drm/imx/ipuv3/imx-tve.c
+@@ -519,6 +519,13 @@ static const struct component_ops imx_tv
+ 	.bind	= imx_tve_bind,
  };
  
++static void imx_tve_put_device(void *_dev)
++{
++	struct device *dev = _dev;
++
++	put_device(dev);
++}
++
+ static int imx_tve_probe(struct platform_device *pdev)
+ {
+ 	struct device *dev = &pdev->dev;
+@@ -540,6 +547,12 @@ static int imx_tve_probe(struct platform
+ 	if (ddc_node) {
+ 		tve->ddc = of_find_i2c_adapter_by_node(ddc_node);
+ 		of_node_put(ddc_node);
++		if (tve->ddc) {
++			ret = devm_add_action_or_reset(dev, imx_tve_put_device,
++						       &tve->ddc->dev);
++			if (ret)
++				return ret;
++		}
+ 	}
+ 
+ 	tve->mode = of_get_tve_mode(np);
 
 
