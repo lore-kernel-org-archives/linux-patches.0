@@ -1,39 +1,54 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6005F2D5950;
-	Wed,  4 Feb 2026 15:05:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B7DA2D5950;
+	Wed,  4 Feb 2026 15:05:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770217529; cv=none; b=BboSa2Zq+KhHwiQN5pVvX0/csAgfJVjSFw8og4OIs519iO+unmaNRauMUfLDnp8I9Yz3aORuxRMEcznuhNW2prneUXoTWIUlpxv+E+dbeJWIq+D3H2WTPW7XKq20dBbLOov9X3iAN57AwKaulMquLdEmaPNO3USJLNRjVpE6fUQ=
+	t=1770217533; cv=none; b=pPcqCQVORLokWgWSvYvkhtLfJ/d5pq81bk/jBhGrPEroe7CPaITWtSfGOm6IGM32tYT/suwoXm07KB4Bycx+NJh5/6AaAl/cVBeoDUX/a9SoJMPb/T1kkpFqNMcqD6GSm8HhvBl4JrxogOslWYQwz4BU8Rh+4Xn1j4neuqRGtJg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770217529; c=relaxed/simple;
-	bh=yg/mRHnMsDEXF6DxHRJY/bdJL2bxvyPftKGHhI94oxY=;
+	s=arc-20240116; t=1770217533; c=relaxed/simple;
+	bh=R1j9yhtAOGYexbF5vLKSA3mApGXFiZwdOJp4h6U4X3I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=X/j9eldwAkVkRXXxP0kuGpB4uQA0naRNOJM88GJb8EnR7HZLKxrskAeQgh3RAzWqVnHNf/sbkvmpyPGkkDODIoiopXp9VF6gDdvVRaMT5A+lj94MAglwFl+68V9HZ0RzrlYO9uS7uALEr74HwrfHjEbfTIp4fLM6UI0D2LQyqW4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LCmMpRHA; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pPPCMYcSpdbq1tZ16FvjJM20ES12JDUFoZaI5AOhFVgW/2z7ZkgF+TBvBCzuOP7vG0OhRY1L6uSG+IDlFZeD5B6jJWsyn7SIZLw5Jkehff7eZH1xvkh6pGyGnAIm7pP2wO0I4QyZNCB89bbAB4Uu3Vb/aYJTQiWugp5Ez2+zUxU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PvdoA4xt; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LCmMpRHA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE56BC4CEF7;
-	Wed,  4 Feb 2026 15:05:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PvdoA4xt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 736EBC4CEF7;
+	Wed,  4 Feb 2026 15:05:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770217529;
-	bh=yg/mRHnMsDEXF6DxHRJY/bdJL2bxvyPftKGHhI94oxY=;
+	s=korg; t=1770217533;
+	bh=R1j9yhtAOGYexbF5vLKSA3mApGXFiZwdOJp4h6U4X3I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LCmMpRHAd0jN36k38EbY7OolRYN08ePSKCGeb/4QgVyt+x2TmFEQRZaGrG5FOyZzw
-	 wCyWIu5XPTPuCxjlvf7/2JssuiBFymAO5n7cBRiXgylicPCvkoFQpqnHBdkyVb7qlD
-	 dRnD+rToaSCo5vODaQA+fATUo64bkNFY0w505rvM=
+	b=PvdoA4xtJZeY9Mfa/hIVpiKKyg8WaxfJDB9E31HvGSDJD+UIgRiltPfKCiRvKMfeQ
+	 GN5abq3b0X6hRh1Cixw3d0eChlvculX51ZeE/UCyhbrCmVytXHQezLQ/bSUy8sbOQg
+	 FRbXGHTm9kIMsXWGTZbOKzWHQRFJrOLJDO7/nkxQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Saeed Mahameed <saeedm@nvidia.com>,
-	Tariq Toukan <tariqt@nvidia.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 015/280] net/mlx5e: Restore destroying state bit after profile cleanup
-Date: Wed,  4 Feb 2026 15:36:29 +0100
-Message-ID: <20260204143910.179404261@linuxfoundation.org>
+	Ingo Molnar <mingo@kernel.org>,
+	Kees Cook <kees@kernel.org>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Peter Zijlstra <peterz@infradead.org>,
+	Andy Lutomirski <luto@kernel.org>,
+	Logan Gunthorpe <logang@deltatee.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	David Hildenbrand <david@redhat.com>,
+	Lorenzo Stoakes <lorenzo.stoakes@oracle.com>,
+	"Liam R. Howlett" <Liam.Howlett@oracle.com>,
+	Vlastimil Babka <vbabka@suse.cz>,
+	Mike Rapoport <rppt@kernel.org>,
+	Suren Baghdasaryan <surenb@google.com>,
+	Michal Hocko <mhocko@suse.com>,
+	Dan Williams <dan.j.williams@intel.com>,
+	Balbir Singh <balbirs@nvidia.com>,
+	Yasunori Goto <y-goto@fujitsu.com>,
+	Dave Hansen <dave.hansen@linux.intel.com>,
+	Dave Jiang <dave.jiang@intel.com>
+Subject: [PATCH 6.1 042/280] x86/kaslr: Recognize all ZONE_DEVICE users as physaddr consumers
+Date: Wed,  4 Feb 2026 15:36:56 +0100
+Message-ID: <20260204143911.152130954@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260204143909.614719725@linuxfoundation.org>
 References: <20260204143909.614719725@linuxfoundation.org>
@@ -52,69 +67,111 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Saeed Mahameed <saeedm@nvidia.com>
+From: Dan Williams <dan.j.williams@intel.com>
 
-[ Upstream commit 5629f8859dca7ef74d7314b60de6a957f23166c0 ]
+commit 269031b15c1433ff39e30fa7ea3ab8f0be9d6ae2 upstream.
 
-Profile rollback can fail in mlx5e_netdev_change_profile() and we will
-end up with invalid mlx5e_priv memset to 0, we must maintain the
-'destroying' bit in order to gracefully shutdown even if the
-profile/priv are not valid.
+Commit 7ffb791423c7 ("x86/kaslr: Reduce KASLR entropy on most x86 systems")
+is too narrow. The effect being mitigated in that commit is caused by
+ZONE_DEVICE which PCI_P2PDMA has a dependency. ZONE_DEVICE, in general,
+lets any physical address be added to the direct-map. I.e. not only ACPI
+hotplug ranges, CXL Memory Windows, or EFI Specific Purpose Memory, but
+also any PCI MMIO range for the DEVICE_PRIVATE and PCI_P2PDMA cases. Update
+the mitigation, limit KASLR entropy, to apply in all ZONE_DEVICE=y cases.
 
-This patch maintains the previous state of the 'destroying' state of
-mlx5e_priv after priv cleanup, to allow the remove flow to cleanup
-common resources from mlx5_core to avoid FW fatal errors as seen below:
+Distro kernels typically have PCI_P2PDMA=y, so the practical exposure of
+this problem is limited to the PCI_P2PDMA=n case.
 
-$ devlink dev eswitch set pci/0000:00:03.0 mode switchdev
-    Error: mlx5_core: Failed setting eswitch to offloads.
-dmesg: mlx5_core 0000:00:03.0 enp0s3np0: failed to rollback to orig profile, ...
+A potential path to recover entropy would be to walk ACPI and determine the
+limits for hotplug and PCI MMIO before kernel_randomize_memory(). On
+smaller systems that could yield some KASLR address bits. This needs
+additional investigation to determine if some limited ACPI table scanning
+can happen this early without an open coded solution like
+arch/x86/boot/compressed/acpi.c needs to deploy.
 
-$ devlink dev reload pci/0000:00:03.0
-
-mlx5_core 0000:00:03.0: E-Switch: Disable: mode(LEGACY), nvfs(0), necvfs(0), active vports(0)
-mlx5_core 0000:00:03.0: poll_health:803:(pid 519): Fatal error 3 detected
-mlx5_core 0000:00:03.0: firmware version: 28.41.1000
-mlx5_core 0000:00:03.0: 0.000 Gb/s available PCIe bandwidth (Unknown x255 link)
-mlx5_core 0000:00:03.0: mlx5_function_enable:1200:(pid 519): enable hca failed
-mlx5_core 0000:00:03.0: mlx5_function_enable:1200:(pid 519): enable hca failed
-mlx5_core 0000:00:03.0: mlx5_health_try_recover:340:(pid 141): handling bad device here
-mlx5_core 0000:00:03.0: mlx5_handle_bad_state:285:(pid 141): Expected to see disabled NIC but it is full driver
-mlx5_core 0000:00:03.0: mlx5_error_sw_reset:236:(pid 141): start
-mlx5_core 0000:00:03.0: NIC IFC still 0 after 4000ms.
-
-Fixes: c4d7eb57687f ("net/mxl5e: Add change profile method")
-Signed-off-by: Saeed Mahameed <saeedm@nvidia.com>
-Reviewed-by: Tariq Toukan <tariqt@nvidia.com>
-Link: https://patch.msgid.link/20260108212657.25090-5-saeed@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Cc: Ingo Molnar <mingo@kernel.org>
+Cc: Kees Cook <kees@kernel.org>
+Cc: Bjorn Helgaas <bhelgaas@google.com>
+Cc: Peter Zijlstra <peterz@infradead.org>
+Cc: Andy Lutomirski <luto@kernel.org>
+Cc: Logan Gunthorpe <logang@deltatee.com>
+Cc: Andrew Morton <akpm@linux-foundation.org>
+Cc: David Hildenbrand <david@redhat.com>
+Cc: Lorenzo Stoakes <lorenzo.stoakes@oracle.com>
+Cc: "Liam R. Howlett" <Liam.Howlett@oracle.com>
+Cc: Vlastimil Babka <vbabka@suse.cz>
+Cc: Mike Rapoport <rppt@kernel.org>
+Cc: Suren Baghdasaryan <surenb@google.com>
+Cc: Michal Hocko <mhocko@suse.com>
+Fixes: 7ffb791423c7 ("x86/kaslr: Reduce KASLR entropy on most x86 systems")
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Dan Williams <dan.j.williams@intel.com>
+Reviewed-by: Balbir Singh <balbirs@nvidia.com>
+Tested-by: Yasunori Goto <y-goto@fujitsu.com>
+Acked-by: Dave Hansen <dave.hansen@linux.intel.com>
+Link: http://patch.msgid.link/692e08b2516d4_261c1100a3@dwillia2-mobl4.notmuch
+Signed-off-by: Dave Jiang <dave.jiang@intel.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/mellanox/mlx5/core/en_main.c | 3 +++
- 1 file changed, 3 insertions(+)
+ arch/x86/mm/kaslr.c |   10 +++++-----
+ drivers/pci/Kconfig |    6 ------
+ mm/Kconfig          |   10 +++++++---
+ 3 files changed, 12 insertions(+), 14 deletions(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en_main.c b/drivers/net/ethernet/mellanox/mlx5/core/en_main.c
-index 0c1f89196f6c1..73011870e5ff6 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/en_main.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/en_main.c
-@@ -5566,6 +5566,7 @@ int mlx5e_priv_init(struct mlx5e_priv *priv,
+--- a/arch/x86/mm/kaslr.c
++++ b/arch/x86/mm/kaslr.c
+@@ -111,12 +111,12 @@ void __init kernel_randomize_memory(void
  
- void mlx5e_priv_cleanup(struct mlx5e_priv *priv)
- {
-+	bool destroying = test_bit(MLX5E_STATE_DESTROYING, &priv->state);
- 	int i;
+ 	/*
+ 	 * Adapt physical memory region size based on available memory,
+-	 * except when CONFIG_PCI_P2PDMA is enabled. P2PDMA exposes the
+-	 * device BAR space assuming the direct map space is large enough
+-	 * for creating a ZONE_DEVICE mapping in the direct map corresponding
+-	 * to the physical BAR address.
++	 * except when CONFIG_ZONE_DEVICE is enabled. ZONE_DEVICE wants to map
++	 * any physical address into the direct-map. KASLR wants to reliably
++	 * steal some physical address bits. Those design choices are in direct
++	 * conflict.
+ 	 */
+-	if (!IS_ENABLED(CONFIG_PCI_P2PDMA) && (memory_tb < kaslr_regions[0].size_tb))
++	if (!IS_ENABLED(CONFIG_ZONE_DEVICE) && (memory_tb < kaslr_regions[0].size_tb))
+ 		kaslr_regions[0].size_tb = memory_tb;
  
- 	/* bail if change profile failed and also rollback failed */
-@@ -5591,6 +5592,8 @@ void mlx5e_priv_cleanup(struct mlx5e_priv *priv)
- 	}
+ 	/*
+--- a/drivers/pci/Kconfig
++++ b/drivers/pci/Kconfig
+@@ -184,12 +184,6 @@ config PCI_P2PDMA
+ 	  P2P DMA transactions must be between devices behind the same root
+ 	  port.
  
- 	memset(priv, 0, sizeof(*priv));
-+	if (destroying) /* restore destroying bit, to allow unload */
-+		set_bit(MLX5E_STATE_DESTROYING, &priv->state);
- }
+-	  Enabling this option will reduce the entropy of x86 KASLR memory
+-	  regions. For example - on a 46 bit system, the entropy goes down
+-	  from 16 bits to 15 bits. The actual reduction in entropy depends
+-	  on the physical address bits, on processor features, kernel config
+-	  (5 level page table) and physical memory present on the system.
+-
+ 	  If unsure, say N.
  
- static unsigned int mlx5e_get_max_num_txqs(struct mlx5_core_dev *mdev,
--- 
-2.51.0
-
+ config PCI_LABEL
+--- a/mm/Kconfig
++++ b/mm/Kconfig
+@@ -994,10 +994,14 @@ config ZONE_DEVICE
+ 	  Device memory hotplug support allows for establishing pmem,
+ 	  or other device driver discovered memory regions, in the
+ 	  memmap. This allows pfn_to_page() lookups of otherwise
+-	  "device-physical" addresses which is needed for using a DAX
+-	  mapping in an O_DIRECT operation, among other things.
++	  "device-physical" addresses which is needed for DAX, PCI_P2PDMA, and
++	  DEVICE_PRIVATE features among others.
+ 
+-	  If FS_DAX is enabled, then say Y.
++	  Enabling this option will reduce the entropy of x86 KASLR memory
++	  regions. For example - on a 46 bit system, the entropy goes down
++	  from 16 bits to 15 bits. The actual reduction in entropy depends
++	  on the physical address bits, on processor features, kernel config
++	  (5 level page table) and physical memory present on the system.
+ 
+ #
+ # Helpers to mirror range of the CPU page tables of a process into device page
 
 
