@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C01312BE7C0;
-	Wed,  4 Feb 2026 15:17:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F19372BE7C0;
+	Wed,  4 Feb 2026 15:17:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770218265; cv=none; b=iMmKeasSoDk/uppyLK/9/wE/MZgNM7ICnEPz+jck6sxFvjSyXesmS+9sk2QRn2yT/pp1tQzcT9AAj2ajbHHLN+IzPi0on8tukps/Uj+oJbRAA1TnDYWIgf4kcnSVHNDN3pny06pMLafriEqB60hxgQeKl9ZKbBcoaOeHGBzWz6o=
+	t=1770218269; cv=none; b=WCC3rwcfTIPR6f6SJmua226U2FTW5LcscsQ7HfvSYVnkV0zvx4PObmBTvRQRQR/Rp91D0I+G7k53TczRxP8XvbtD/j4TJHUT7/MNOXxXjnkNBc0Fn+Ctub3UQAF5uHckwZLw8qSo0cXnoVhN27JwRa927FqdwDveri/VCbX8+rg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770218265; c=relaxed/simple;
-	bh=r6rEZUqso2UNF5OWHXB/6OqyFYD9igul1k/WsROAvlw=;
+	s=arc-20240116; t=1770218269; c=relaxed/simple;
+	bh=jKMBLoMnlPt5A10C8XsZVOMku/VGo4CvTwjx0tN2hak=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oqjBrM8zXmk4JA/nBfxwTgyT+26RR4x52PoDZAkt11veBdEfCb4P/i7wE/X9jtAXPJ9GG613KZHd0fWX20acUfNHepUrNX3WHhuIehKzfBDEF7xK5e3ispWWhqQS8dyP4n4/cAnwQzvDuGUy+WYzS3yiR2n72rOJyadAn6zeofI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aNpqejFq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=keykfRTh778CH3+K9+a40vgImMCo3n4mhBX7RPxtwn1JS8CQN0Ete84CMd7VsxJ5PzWiqK5/g1Fo2fvvPOXhSHeJz1hIWdDxajEgBzMMCMFDmnBjm08jjrkSJTmOrFIp52XRv2F42LQPp3My98AfKDsoNrOVZRCf6NbEolihI7E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GjbNKWHh; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aNpqejFq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E66A4C4CEF7;
-	Wed,  4 Feb 2026 15:17:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GjbNKWHh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 65316C4CEF7;
+	Wed,  4 Feb 2026 15:17:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770218265;
-	bh=r6rEZUqso2UNF5OWHXB/6OqyFYD9igul1k/WsROAvlw=;
+	s=korg; t=1770218268;
+	bh=jKMBLoMnlPt5A10C8XsZVOMku/VGo4CvTwjx0tN2hak=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aNpqejFqJU/7nuJGfkofzu0wZAKYXwcYUQMyoZBb9baIafD9QjtJVlTUWMvt4SWHG
-	 lfuxh46/JZrGFPMEG6PsjN0lGW74lPxvge8tidW1H+z/jZ8b49p4+gZVxp6u8eCmfM
-	 ijVV/w5OCg3MsHqQw1Ew80k200hXnSxPKmDC3QTQ=
+	b=GjbNKWHh0WCZ1z3KL0FNDm/JK4zALvqUB+zwWBIcPtyGy6NzQwv891xolaRzQN9fe
+	 S3GmG7Y8D+PcaZqwBW1h++v1ZXKM5bdy9IxduF+u0hhfl6TwH778XkBznKW0TeR8mV
+	 PWmPqOZ+TQH05inIBh0MhZW9oUk1x3625f9bmEkk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+332bd4e9d148f11a87dc@syzkaller.appspotmail.com,
-	syzbot+0399100e525dd9696764@syzkaller.appspotmail.com,
-	Khalid Aziz <khalid@kernel.org>,
-	Bartlomiej Kubik <kubik.bartlomiej@gmail.com>,
-	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
-	Li hongliang <1468888505@139.com>
-Subject: [PATCH 6.1 260/280] fs/ntfs3: Initialize allocated memory before use
-Date: Wed,  4 Feb 2026 15:40:34 +0100
-Message-ID: <20260204143919.053961151@linuxfoundation.org>
+	Sebastian Reichel <sebastian.reichel@collabora.com>,
+	Yifeng Zhao <yifeng.zhao@rock-chips.com>,
+	Shawn Lin <shawn.lin@rock-chips.com>,
+	Ulf Hansson <ulf.hansson@linaro.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 234/280] mmc: sdhci-of-dwcmshc: Prevent illegal clock reduction in HS200/HS400 mode
+Date: Wed,  4 Feb 2026 15:40:08 +0100
+Message-ID: <20260204143918.044596621@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260204143909.614719725@linuxfoundation.org>
 References: <20260204143909.614719725@linuxfoundation.org>
@@ -54,72 +53,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bartlomiej Kubik <kubik.bartlomiej@gmail.com>
+From: Shawn Lin <shawn.lin@rock-chips.com>
 
-[ Upstream commit a8a3ca23bbd9d849308a7921a049330dc6c91398 ]
+[ Upstream commit 3009738a855cf938bbfc9078bec725031ae623a4 ]
 
-KMSAN reports: Multiple uninitialized values detected:
+When operating in HS200 or HS400 timing modes, reducing the clock frequency
+below 52MHz will lead to link broken as the Rockchip DWC MSHC controller
+requires maintaining a minimum clock of 52MHz in these modes.
 
-- KMSAN: uninit-value in ntfs_read_hdr (3)
-- KMSAN: uninit-value in bcmp (3)
+Add a check to prevent illegal clock reduction through debugfs:
 
-Memory is allocated by __getname(), which is a wrapper for
-kmem_cache_alloc(). This memory is used before being properly
-cleared. Change kmem_cache_alloc() to kmem_cache_zalloc() to
-properly allocate and clear memory before use.
+root@debian:/# echo 50000000 > /sys/kernel/debug/mmc0/clock
+root@debian:/# [   30.090146] mmc0: running CQE recovery
+mmc0: cqhci: Failed to halt
+mmc0: cqhci: spurious TCN for tag 0
+WARNING: drivers/mmc/host/cqhci-core.c:797 at cqhci_irq+0x254/0x818, CPU#1: kworker/1:0H/24
+Modules linked in:
+CPU: 1 UID: 0 PID: 24 Comm: kworker/1:0H Not tainted 6.19.0-rc1-00001-g09db0998649d-dirty #204 PREEMPT
+Hardware name: Rockchip RK3588 EVB1 V10 Board (DT)
+Workqueue: kblockd blk_mq_run_work_fn
+pstate: 604000c9 (nZCv daIF +PAN -UAO -TCO -DIT -SSBS BTYPE=--)
+pc : cqhci_irq+0x254/0x818
+lr : cqhci_irq+0x254/0x818
+...
 
-Fixes: 82cae269cfa9 ("fs/ntfs3: Add initialization of super block")
-Fixes: 78ab59fee07f ("fs/ntfs3: Rework file operations")
-Tested-by: syzbot+332bd4e9d148f11a87dc@syzkaller.appspotmail.com
-Reported-by: syzbot+332bd4e9d148f11a87dc@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=332bd4e9d148f11a87dc
-
-Fixes: 82cae269cfa9 ("fs/ntfs3: Add initialization of super block")
-Fixes: 78ab59fee07f ("fs/ntfs3: Rework file operations")
-Tested-by: syzbot+0399100e525dd9696764@syzkaller.appspotmail.com
-Reported-by: syzbot+0399100e525dd9696764@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=0399100e525dd9696764
-
-Reviewed-by: Khalid Aziz <khalid@kernel.org>
-Signed-off-by: Bartlomiej Kubik <kubik.bartlomiej@gmail.com>
-Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
-Signed-off-by: Li hongliang <1468888505@139.com>
+Fixes: c6f361cba51c ("mmc: sdhci-of-dwcmshc: add support for rk3588")
+Cc: Sebastian Reichel <sebastian.reichel@collabora.com>
+Cc: Yifeng Zhao <yifeng.zhao@rock-chips.com>
+Signed-off-by: Shawn Lin <shawn.lin@rock-chips.com>
+Cc: stable@vger.kernel.org
+Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ntfs3/inode.c |    7 +++----
- 1 file changed, 3 insertions(+), 4 deletions(-)
+ drivers/mmc/host/sdhci-of-dwcmshc.c |    7 +++++++
+ 1 file changed, 7 insertions(+)
 
---- a/fs/ntfs3/inode.c
-+++ b/fs/ntfs3/inode.c
-@@ -1294,7 +1294,7 @@ struct inode *ntfs_create_inode(struct u
- 		fa |= FILE_ATTRIBUTE_READONLY;
+--- a/drivers/mmc/host/sdhci-of-dwcmshc.c
++++ b/drivers/mmc/host/sdhci-of-dwcmshc.c
+@@ -236,6 +236,13 @@ static void dwcmshc_rk3568_set_clock(str
+ 	sdhci_writel(host, extra, reg);
  
- 	/* Allocate PATH_MAX bytes. */
--	new_de = __getname();
-+	new_de = kmem_cache_zalloc(names_cachep, GFP_KERNEL);
- 	if (!new_de) {
- 		err = -ENOMEM;
- 		goto out1;
-@@ -1698,10 +1698,9 @@ int ntfs_link_inode(struct inode *inode,
- 	struct NTFS_DE *de;
- 
- 	/* Allocate PATH_MAX bytes. */
--	de = __getname();
-+	de = kmem_cache_zalloc(names_cachep, GFP_KERNEL);
- 	if (!de)
- 		return -ENOMEM;
--	memset(de, 0, PATH_MAX);
- 
- 	/* Mark rw ntfs as dirty. It will be cleared at umount. */
- 	ntfs_set_state(sbi, NTFS_DIRTY_DIRTY);
-@@ -1737,7 +1736,7 @@ int ntfs_unlink_inode(struct inode *dir,
- 		return -EINVAL;
- 
- 	/* Allocate PATH_MAX bytes. */
--	de = __getname();
-+	de = kmem_cache_zalloc(names_cachep, GFP_KERNEL);
- 	if (!de)
- 		return -ENOMEM;
- 
+ 	if (clock <= 52000000) {
++		if (host->mmc->ios.timing == MMC_TIMING_MMC_HS200 ||
++		    host->mmc->ios.timing == MMC_TIMING_MMC_HS400) {
++			dev_err(mmc_dev(host->mmc),
++				"Can't reduce the clock below 52MHz in HS200/HS400 mode");
++			return;
++		}
++
+ 		/*
+ 		 * Disable DLL and reset both of sample and drive clock.
+ 		 * The bypass bit and start bit need to be set if DLL is not locked.
 
 
