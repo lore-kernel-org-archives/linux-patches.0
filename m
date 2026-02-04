@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D1E428D8D0;
-	Wed,  4 Feb 2026 15:11:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 705912D879E;
+	Wed,  4 Feb 2026 15:11:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770217889; cv=none; b=mG+MXjNCdrsIEOcQBhrd1AcxOaiU9fiAyozeMl8t3OkvB0g3BLgPXZMerqrQUSqaYomMxrBq2karQWmF59rCQZgoseGrkO2qjqideBnQ0GCTuAuL5Xgtp/AAE/Lyp4HaITnph4VXfSQKpQB2lID6/yB41TEf6F0zgfgKsvywSU0=
+	t=1770217892; cv=none; b=KG0VQ6vFyKoTIi1fugQJ4fka/Q9i5XQO430kKbNqXJwbMgxrYGajByQBN04DZaUbi+9ojc3uSz0wbVWC/xHqB4Y2gxn5bFM3/mgbDRJ7ldFuICOxdwVPrCC1JYcFgZGKDbKVKj9xQEDG/P8Heg27DWv5ERQvqgHpsvkxxY2kbd0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770217889; c=relaxed/simple;
-	bh=f/1T4mHwkiiW3lb4u2DASRhiQS9Ff2NssFj4DNaNO1k=;
+	s=arc-20240116; t=1770217892; c=relaxed/simple;
+	bh=cNRG5Fiisyk2dFmz146MhQWze0W650LJbZs7uVsN5SA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bZstYgH4l+Pgzf/u9lBXzMavJk96wQLrvXBYmY9FXjoNck1ysOoguVsEZZDetATBTPoHZjrn15gGf/C8QzaFpKyuHaZuHjeHmVXyQwRM6WwtlqG3AH9ZKMVlHYTW56Q95PEJv8xE1U3zMu7FRMVYz+FGgfT/srXKm+GRDMIj9Gw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cQQVDiZi; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KEH0KMzxV2rvnlExv4YPYbp9Qmv2GS/IrbBL4jsOQzAK+3nE/WlN/PmqywHwHOsigjbQSZw7LtN4kM0RNxuyoyA/qKC2vEdnqLhzThNANKDSc3ppH5QyHFxP5WEXybG1Fei3xwAaqGqB3WDlJmMHINwJdSNor7oyTX0XYtgY0j8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=S+RQ3p7L; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cQQVDiZi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8232AC4CEF7;
-	Wed,  4 Feb 2026 15:11:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="S+RQ3p7L"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA4F4C4CEF7;
+	Wed,  4 Feb 2026 15:11:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770217889;
-	bh=f/1T4mHwkiiW3lb4u2DASRhiQS9Ff2NssFj4DNaNO1k=;
+	s=korg; t=1770217892;
+	bh=cNRG5Fiisyk2dFmz146MhQWze0W650LJbZs7uVsN5SA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cQQVDiZitOPcHZuRLSoE+cr8gKes8zMB3PPCH5lK1Hk5y0TFNs6p/EgdmAU+CZCBp
-	 Ktj9J4hQM70cORvh3TSUyR22TicknPd7dhtv4HZTiL/eZQUCHspBxO/yWe5id/jTEb
-	 ED3P+cQHQaeBglqYuL5kcBsHUbPPAVMHIkGZuHxg=
+	b=S+RQ3p7LTKE6CyDGOd/4QzVtz0f6JDgH+dscCNYAQLUI0O2Br+HSJrmz2tamH06lq
+	 kiW4v9uQ4PiGRX/KGZLuurzSYoBukJ+byODmEtaTQ0Ou3Tc7ZNQG3K5T1oeic1xpvA
+	 z38HGScIWCiol05Xeurzet4u39WfU4/XbSQX9DO0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+c46409299c70a221415e@syzkaller.appspotmail.com,
-	Eric Dumazet <edumazet@google.com>,
-	Matteo Croce <mcroce@redhat.com>,
-	Stanislav Fomichev <sdf@fomichev.me>,
+	Ratheesh Kannoth <rkannoth@marvell.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 149/280] bonding: provide a net pointer to __skb_flow_dissect()
-Date: Wed,  4 Feb 2026 15:38:43 +0100
-Message-ID: <20260204143914.994201696@linuxfoundation.org>
+Subject: [PATCH 6.1 150/280] octeontx2-af: Fix error handling
+Date: Wed,  4 Feb 2026 15:38:44 +0100
+Message-ID: <20260204143915.029343812@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260204143909.614719725@linuxfoundation.org>
 References: <20260204143909.614719725@linuxfoundation.org>
@@ -54,65 +51,186 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Ratheesh Kannoth <rkannoth@marvell.com>
 
-[ Upstream commit 5f9b329096596b7e53e07d041d7fca4cbe1be752 ]
+[ Upstream commit 19e4175e997a5b85eab97d522f00cc99abd1873c ]
 
-After 3cbf4ffba5ee ("net: plumb network namespace into __skb_flow_dissect")
-we have to provide a net pointer to __skb_flow_dissect(),
-either via skb->dev, skb->sk, or a user provided pointer.
+This commit adds error handling and rollback logic to
+rvu_mbox_handler_attach_resources() to properly clean up partially
+attached resources when rvu_attach_block() fails.
 
-In the following case, syzbot was able to cook a bare skb.
-
-WARNING: net/core/flow_dissector.c:1131 at __skb_flow_dissect+0xb57/0x68b0 net/core/flow_dissector.c:1131, CPU#1: syz.2.1418/11053
-Call Trace:
- <TASK>
-  bond_flow_dissect drivers/net/bonding/bond_main.c:4093 [inline]
-  __bond_xmit_hash+0x2d7/0xba0 drivers/net/bonding/bond_main.c:4157
-  bond_xmit_hash_xdp drivers/net/bonding/bond_main.c:4208 [inline]
-  bond_xdp_xmit_3ad_xor_slave_get drivers/net/bonding/bond_main.c:5139 [inline]
-  bond_xdp_get_xmit_slave+0x1fd/0x710 drivers/net/bonding/bond_main.c:5515
-  xdp_master_redirect+0x13f/0x2c0 net/core/filter.c:4388
-  bpf_prog_run_xdp include/net/xdp.h:700 [inline]
-  bpf_test_run+0x6b2/0x7d0 net/bpf/test_run.c:421
-  bpf_prog_test_run_xdp+0x795/0x10e0 net/bpf/test_run.c:1390
-  bpf_prog_test_run+0x2c7/0x340 kernel/bpf/syscall.c:4703
-  __sys_bpf+0x562/0x860 kernel/bpf/syscall.c:6182
-  __do_sys_bpf kernel/bpf/syscall.c:6274 [inline]
-  __se_sys_bpf kernel/bpf/syscall.c:6272 [inline]
-  __x64_sys_bpf+0x7c/0x90 kernel/bpf/syscall.c:6272
-  do_syscall_x64 arch/x86/entry/syscall_64.c:63 [inline]
-  do_syscall_64+0xec/0xf80 arch/x86/entry/syscall_64.c:94
-
-Fixes: 58deb77cc52d ("bonding: balance ICMP echoes in layer3+4 mode")
-Reported-by: syzbot+c46409299c70a221415e@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/netdev/696faa23.050a0220.4cb9c.001f.GAE@google.com/T/#u
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Cc: Matteo Croce <mcroce@redhat.com>
-Acked-by: Stanislav Fomichev <sdf@fomichev.me>
-Link: https://patch.msgid.link/20260120161744.1893263-1-edumazet@google.com
+Fixes: 746ea74241fa0 ("octeontx2-af: Add RVU block LF provisioning support")
+Signed-off-by: Ratheesh Kannoth <rkannoth@marvell.com>
+Link: https://patch.msgid.link/20260121033934.1900761-1-rkannoth@marvell.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/bonding/bond_main.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ .../net/ethernet/marvell/octeontx2/af/rvu.c   | 86 ++++++++++++++-----
+ 1 file changed, 64 insertions(+), 22 deletions(-)
 
-diff --git a/drivers/net/bonding/bond_main.c b/drivers/net/bonding/bond_main.c
-index dd0ea86d7934a..b0bc811aaab91 100644
---- a/drivers/net/bonding/bond_main.c
-+++ b/drivers/net/bonding/bond_main.c
-@@ -4128,8 +4128,9 @@ static bool bond_flow_dissect(struct bonding *bond, struct sk_buff *skb, const v
- 	case BOND_XMIT_POLICY_ENCAP23:
- 	case BOND_XMIT_POLICY_ENCAP34:
- 		memset(fk, 0, sizeof(*fk));
--		return __skb_flow_dissect(NULL, skb, &flow_keys_bonding,
--					  fk, data, l2_proto, nhoff, hlen, 0);
-+		return __skb_flow_dissect(dev_net(bond->dev), skb,
-+					  &flow_keys_bonding, fk, data,
-+					  l2_proto, nhoff, hlen, 0);
- 	default:
- 		break;
+diff --git a/drivers/net/ethernet/marvell/octeontx2/af/rvu.c b/drivers/net/ethernet/marvell/octeontx2/af/rvu.c
+index d9c68f8166aff..7034a977102ea 100644
+--- a/drivers/net/ethernet/marvell/octeontx2/af/rvu.c
++++ b/drivers/net/ethernet/marvell/octeontx2/af/rvu.c
+@@ -1540,8 +1540,8 @@ static int rvu_get_attach_blkaddr(struct rvu *rvu, int blktype,
+ 	return -ENODEV;
+ }
+ 
+-static void rvu_attach_block(struct rvu *rvu, int pcifunc, int blktype,
+-			     int num_lfs, struct rsrc_attach *attach)
++static int rvu_attach_block(struct rvu *rvu, int pcifunc, int blktype,
++			    int num_lfs, struct rsrc_attach *attach)
+ {
+ 	struct rvu_pfvf *pfvf = rvu_get_pfvf(rvu, pcifunc);
+ 	struct rvu_hwinfo *hw = rvu->hw;
+@@ -1551,21 +1551,21 @@ static void rvu_attach_block(struct rvu *rvu, int pcifunc, int blktype,
+ 	u64 cfg;
+ 
+ 	if (!num_lfs)
+-		return;
++		return -EINVAL;
+ 
+ 	blkaddr = rvu_get_attach_blkaddr(rvu, blktype, pcifunc, attach);
+ 	if (blkaddr < 0)
+-		return;
++		return -EFAULT;
+ 
+ 	block = &hw->block[blkaddr];
+ 	if (!block->lf.bmap)
+-		return;
++		return -ESRCH;
+ 
+ 	for (slot = 0; slot < num_lfs; slot++) {
+ 		/* Allocate the resource */
+ 		lf = rvu_alloc_rsrc(&block->lf);
+ 		if (lf < 0)
+-			return;
++			return -EFAULT;
+ 
+ 		cfg = (1ULL << 63) | (pcifunc << 8) | slot;
+ 		rvu_write64(rvu, blkaddr, block->lfcfg_reg |
+@@ -1576,6 +1576,8 @@ static void rvu_attach_block(struct rvu *rvu, int pcifunc, int blktype,
+ 		/* Set start MSIX vector for this LF within this PF/VF */
+ 		rvu_set_msix_offset(rvu, pfvf, block, lf);
  	}
++
++	return 0;
+ }
+ 
+ static int rvu_check_rsrc_availability(struct rvu *rvu,
+@@ -1713,22 +1715,31 @@ int rvu_mbox_handler_attach_resources(struct rvu *rvu,
+ 	int err;
+ 
+ 	/* If first request, detach all existing attached resources */
+-	if (!attach->modify)
+-		rvu_detach_rsrcs(rvu, NULL, pcifunc);
++	if (!attach->modify) {
++		err = rvu_detach_rsrcs(rvu, NULL, pcifunc);
++		if (err)
++			return err;
++	}
+ 
+ 	mutex_lock(&rvu->rsrc_lock);
+ 
+ 	/* Check if the request can be accommodated */
+ 	err = rvu_check_rsrc_availability(rvu, attach, pcifunc);
+ 	if (err)
+-		goto exit;
++		goto fail1;
+ 
+ 	/* Now attach the requested resources */
+-	if (attach->npalf)
+-		rvu_attach_block(rvu, pcifunc, BLKTYPE_NPA, 1, attach);
++	if (attach->npalf) {
++		err = rvu_attach_block(rvu, pcifunc, BLKTYPE_NPA, 1, attach);
++		if (err)
++			goto fail1;
++	}
+ 
+-	if (attach->nixlf)
+-		rvu_attach_block(rvu, pcifunc, BLKTYPE_NIX, 1, attach);
++	if (attach->nixlf) {
++		err = rvu_attach_block(rvu, pcifunc, BLKTYPE_NIX, 1, attach);
++		if (err)
++			goto fail2;
++	}
+ 
+ 	if (attach->sso) {
+ 		/* RVU func doesn't know which exact LF or slot is attached
+@@ -1738,33 +1749,64 @@ int rvu_mbox_handler_attach_resources(struct rvu *rvu,
+ 		 */
+ 		if (attach->modify)
+ 			rvu_detach_block(rvu, pcifunc, BLKTYPE_SSO);
+-		rvu_attach_block(rvu, pcifunc, BLKTYPE_SSO,
+-				 attach->sso, attach);
++		err = rvu_attach_block(rvu, pcifunc, BLKTYPE_SSO,
++				       attach->sso, attach);
++		if (err)
++			goto fail3;
+ 	}
+ 
+ 	if (attach->ssow) {
+ 		if (attach->modify)
+ 			rvu_detach_block(rvu, pcifunc, BLKTYPE_SSOW);
+-		rvu_attach_block(rvu, pcifunc, BLKTYPE_SSOW,
+-				 attach->ssow, attach);
++		err = rvu_attach_block(rvu, pcifunc, BLKTYPE_SSOW,
++				       attach->ssow, attach);
++		if (err)
++			goto fail4;
+ 	}
+ 
+ 	if (attach->timlfs) {
+ 		if (attach->modify)
+ 			rvu_detach_block(rvu, pcifunc, BLKTYPE_TIM);
+-		rvu_attach_block(rvu, pcifunc, BLKTYPE_TIM,
+-				 attach->timlfs, attach);
++		err = rvu_attach_block(rvu, pcifunc, BLKTYPE_TIM,
++				       attach->timlfs, attach);
++		if (err)
++			goto fail5;
+ 	}
+ 
+ 	if (attach->cptlfs) {
+ 		if (attach->modify &&
+ 		    rvu_attach_from_same_block(rvu, BLKTYPE_CPT, attach))
+ 			rvu_detach_block(rvu, pcifunc, BLKTYPE_CPT);
+-		rvu_attach_block(rvu, pcifunc, BLKTYPE_CPT,
+-				 attach->cptlfs, attach);
++		err = rvu_attach_block(rvu, pcifunc, BLKTYPE_CPT,
++				       attach->cptlfs, attach);
++		if (err)
++			goto fail6;
+ 	}
+ 
+-exit:
++	mutex_unlock(&rvu->rsrc_lock);
++	return 0;
++
++fail6:
++	if (attach->timlfs)
++		rvu_detach_block(rvu, pcifunc, BLKTYPE_TIM);
++
++fail5:
++	if (attach->ssow)
++		rvu_detach_block(rvu, pcifunc, BLKTYPE_SSOW);
++
++fail4:
++	if (attach->sso)
++		rvu_detach_block(rvu, pcifunc, BLKTYPE_SSO);
++
++fail3:
++	if (attach->nixlf)
++		rvu_detach_block(rvu, pcifunc, BLKTYPE_NIX);
++
++fail2:
++	if (attach->npalf)
++		rvu_detach_block(rvu, pcifunc, BLKTYPE_NPA);
++
++fail1:
+ 	mutex_unlock(&rvu->rsrc_lock);
+ 	return err;
+ }
 -- 
 2.51.0
 
