@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77F2A42189F;
-	Wed,  4 Feb 2026 15:03:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B34FC4218A8;
+	Wed,  4 Feb 2026 15:03:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770217435; cv=none; b=O3ek91QjRPFjbyyMZH9rmL71oV6LhWAp8+N7kdfQa+mpGIJhNY3TuuMeYyfoRpUyNa7lBEx297+P+QGswPFQ6VNDrsBMMVVNmx/Izv/vhi37+qDGgDWuq6CJFdJkPbd6QTqeahkkA3Ci/hC3QrLPWehFPOh3uTD943gTBVWkb6Y=
+	t=1770217438; cv=none; b=Yv8hacCg/CbPTrU+UVzTnmRpbpDUB3wOYxXS7IFC/pz+tBJEYJjKumm8HsK8bDtlKssheEV+HT0kTEjQxihd0aw0hbDntZPiYEVq0DKUmglqDiQ/lU5/uhMlqqOwoUo6figw2Mm4CH+n5SkUY/U2inKPlnbTJ+adKmIV1oPjXr0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770217435; c=relaxed/simple;
-	bh=NpXE1MInl9BqsKrjEEM9kuB2e70bG/CAOmmU63iq0qQ=;
+	s=arc-20240116; t=1770217438; c=relaxed/simple;
+	bh=7hIS0F4/quzd8CZEJ9my07kozPpNem2TioZwG6SXx+8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aDe2Oh9/MaHEgl2fnOJVyedDMn35Ne27nZZJt1vuvgC0km3dQLQ2rfIIoWdUTYeu/c/OP9EmhbbrAs/ZQHf1z64Jr1PxwAIBbACxh3Q9ATsXmRqTLbOiRrDihGbYG6yFphI5F5MOMsW7eTBp20ProIftnIdA40T3T5ZxMtnPGsA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WJ1sxC3d; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rPzJ3SFOsQH9nD3zyvRJMRONQ3ZrjUBfWUTA5AXYAdhTV3+VffLch3BOKJUrZTiEq8eCAiPttN8HFChidA+RW2vvuMbWJrb2K8JOuSNwI7LMxN3PG6A6ShRrhr/uILjX5B3WI6g+m4xGQQKFkuwU2xM1cbj+YLrGl7uEBON8m2M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DDRKubcK; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WJ1sxC3d"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 87A10C4CEF7;
-	Wed,  4 Feb 2026 15:03:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DDRKubcK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4FB8C4CEF7;
+	Wed,  4 Feb 2026 15:03:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770217435;
-	bh=NpXE1MInl9BqsKrjEEM9kuB2e70bG/CAOmmU63iq0qQ=;
+	s=korg; t=1770217438;
+	bh=7hIS0F4/quzd8CZEJ9my07kozPpNem2TioZwG6SXx+8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WJ1sxC3dM1QKV3sDcso89PlKwJcGd2HX7FfgGdDf2vJei33ZTzzHub6ja075xDF54
-	 bP7+OpM8XlUCpqgz5NT4cShqHY+yRtWe9oCzmRa8k7XqDpnpY+z7AlWylZtRUt0gj1
-	 2UfH2vMFXWr99tL0hT4WS0xdhATpL6oEsk8dtr2M=
+	b=DDRKubcKGzj7GdHmUsdZLvizFldMrXvKHnV2q4DKU2hdlNiiy045jc0zMpfgKrQCq
+	 ukxTMylc/UICwauaoldJriHcoU2dJXffkndC28iQGpGFvAl15/bP1u9EO7n6dPEVqf
+	 fY437APeKhHt0t5tH/84sn1wVM3kXpRKSGYJODeo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+e8cb6691a7cf68256cb8@syzkaller.appspotmail.com,
-	Szymon Wilczek <swilczek.lx@gmail.com>,
-	Vincent Mailhol <mailhol@kernel.org>,
-	Marc Kleine-Budde <mkl@pengutronix.de>,
+	Maurizio Lombardi <mlombard@redhat.com>,
+	Sagi Grimberg <sagi@grimberg.me>,
+	Keith Busch <kbusch@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 006/280] can: etas_es58x: allow partial RX URB allocation to succeed
-Date: Wed,  4 Feb 2026 15:36:20 +0100
-Message-ID: <20260204143909.855193874@linuxfoundation.org>
+Subject: [PATCH 6.1 007/280] nvmet-tcp: remove boilerplate code
+Date: Wed,  4 Feb 2026 15:36:21 +0100
+Message-ID: <20260204143909.891584992@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260204143909.614719725@linuxfoundation.org>
 References: <20260204143909.614719725@linuxfoundation.org>
@@ -53,48 +52,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Szymon Wilczek <swilczek.lx@gmail.com>
+From: Maurizio Lombardi <mlombard@redhat.com>
 
-[ Upstream commit b1979778e98569c1e78c2c7f16bb24d76541ab00 ]
+[ Upstream commit 75011bd0f9c55db523242f9f9a0b0b826165f14b ]
 
-When es58x_alloc_rx_urbs() fails to allocate the requested number of
-URBs but succeeds in allocating some, it returns an error code.
-This causes es58x_open() to return early, skipping the cleanup label
-'free_urbs', which leads to the anchored URBs being leaked.
+Simplify the nvmet_tcp_handle_h2c_data_pdu() function by removing
+boilerplate code.
 
-As pointed out by maintainer Vincent Mailhol, the driver is designed
-to handle partial URB allocation gracefully. Therefore, partial
-allocation should not be treated as a fatal error.
-
-Modify es58x_alloc_rx_urbs() to return 0 if at least one URB has been
-allocated, restoring the intended behavior and preventing the leak
-in es58x_open().
-
-Fixes: 8537257874e9 ("can: etas_es58x: add core support for ETAS ES58X CAN USB interfaces")
-Reported-by: syzbot+e8cb6691a7cf68256cb8@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=e8cb6691a7cf68256cb8
-Signed-off-by: Szymon Wilczek <swilczek.lx@gmail.com>
-Reviewed-by: Vincent Mailhol <mailhol@kernel.org>
-Link: https://patch.msgid.link/20251223011732.39361-1-swilczek.lx@gmail.com
-Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
+Signed-off-by: Maurizio Lombardi <mlombard@redhat.com>
+Reviewed-by: Sagi Grimberg <sagi@grimberg.me>
+Signed-off-by: Keith Busch <kbusch@kernel.org>
+Stable-dep-of: 32b63acd78f5 ("nvme-tcp: fix NULL pointer dereferences in nvmet_tcp_build_pdu_iovec")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/can/usb/etas_es58x/es58x_core.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/nvme/target/tcp.c | 16 ++++++++--------
+ 1 file changed, 8 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/net/can/usb/etas_es58x/es58x_core.c b/drivers/net/can/usb/etas_es58x/es58x_core.c
-index 41bea531234db..6995fbce829ad 100644
---- a/drivers/net/can/usb/etas_es58x/es58x_core.c
-+++ b/drivers/net/can/usb/etas_es58x/es58x_core.c
-@@ -1735,7 +1735,7 @@ static int es58x_alloc_rx_urbs(struct es58x_device *es58x_dev)
- 	dev_dbg(dev, "%s: Allocated %d rx URBs each of size %u\n",
- 		__func__, i, rx_buf_len);
+diff --git a/drivers/nvme/target/tcp.c b/drivers/nvme/target/tcp.c
+index eee052dbf80c1..8fc626ddc1275 100644
+--- a/drivers/nvme/target/tcp.c
++++ b/drivers/nvme/target/tcp.c
+@@ -930,8 +930,7 @@ static int nvmet_tcp_handle_h2c_data_pdu(struct nvmet_tcp_queue *queue)
+ 		if (unlikely(data->ttag >= queue->nr_cmds)) {
+ 			pr_err("queue %d: received out of bound ttag %u, nr_cmds %u\n",
+ 				queue->idx, data->ttag, queue->nr_cmds);
+-			nvmet_tcp_fatal_error(queue);
+-			return -EPROTO;
++			goto err_proto;
+ 		}
+ 		cmd = &queue->cmds[data->ttag];
+ 	} else {
+@@ -942,9 +941,7 @@ static int nvmet_tcp_handle_h2c_data_pdu(struct nvmet_tcp_queue *queue)
+ 		pr_err("ttag %u unexpected data offset %u (expected %u)\n",
+ 			data->ttag, le32_to_cpu(data->data_offset),
+ 			cmd->rbytes_done);
+-		/* FIXME: use path and transport errors */
+-		nvmet_tcp_fatal_error(queue);
+-		return -EPROTO;
++		goto err_proto;
+ 	}
  
--	return ret;
-+	return 0;
+ 	exp_data_len = le32_to_cpu(data->hdr.plen) -
+@@ -957,9 +954,7 @@ static int nvmet_tcp_handle_h2c_data_pdu(struct nvmet_tcp_queue *queue)
+ 		     cmd->pdu_len == 0 ||
+ 		     cmd->pdu_len > NVMET_TCP_MAXH2CDATA)) {
+ 		pr_err("H2CData PDU len %u is invalid\n", cmd->pdu_len);
+-		/* FIXME: use proper transport errors */
+-		nvmet_tcp_fatal_error(queue);
+-		return -EPROTO;
++		goto err_proto;
+ 	}
+ 	cmd->pdu_recv = 0;
+ 	nvmet_tcp_build_pdu_iovec(cmd);
+@@ -967,6 +962,11 @@ static int nvmet_tcp_handle_h2c_data_pdu(struct nvmet_tcp_queue *queue)
+ 	queue->rcv_state = NVMET_TCP_RECV_DATA;
+ 
+ 	return 0;
++
++err_proto:
++	/* FIXME: use proper transport errors */
++	nvmet_tcp_fatal_error(queue);
++	return -EPROTO;
  }
  
- /**
+ static int nvmet_tcp_done_recv_pdu(struct nvmet_tcp_queue *queue)
 -- 
 2.51.0
 
