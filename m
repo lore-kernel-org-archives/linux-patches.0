@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64DD4237A4F;
-	Wed,  4 Feb 2026 15:00:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6885019DFAB;
+	Wed,  4 Feb 2026 15:00:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770217220; cv=none; b=oVtwR8+noZfQXJkiRup62Ajgx64wSPlYZUZZaTDrCtfiCC3nfgPbEt8RNUMevpGQvsh7ZJNlGNddAd7iZqOlpy95A+nwdrbKq4SoJem3yrXRMigNa7OJ3+E6QlArInETLnxB3Cu8M4h97yDlVrw+xgFUE3W//v8GKTzzwUUF+0I=
+	t=1770217224; cv=none; b=bfLGBTIkC8GOTHYilaDyaZHEfyd7acb0LAjYggsJVBjVRxFZ3sMPB8U4kVQwPgLUmVnqTPy8pyaaAKuyrj9JklqFVaRL03gbnSj/E1VlwFUbZO29CU7YRJdZDIgBJga0i85hW7cpRuM1W1iBAjg6GyUA8RUptZjHGiiNDn1vF7g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770217220; c=relaxed/simple;
-	bh=ZGWhr14wUGxFdwwLG3eERbq90EFYWGlPUfSXWo1VAo0=;
+	s=arc-20240116; t=1770217224; c=relaxed/simple;
+	bh=Zd81Z3dEdXHZkMQnZUW3i1OHPleCd7KlK+lA/kd5IEQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=midok5ZB/HwglJsUJJJNj6+sQCdD53fwXBGtgdkIpBl+u2y+qlanuptKy+h45owUwF41d+OIYOUfu8Y1wQ8Pl5dEfTyDmbhUuwuFQQfqci7eB9BFds/lMpF6I1LWUwPaqfKl8t54icpieaiGIUXsZn5WAIEfq9VhdHRtt34kn8w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1yD/SciB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=R4f61rGNYYVC8dMcgdMY1WDo6GNcTZNItLVUwrdPlWzYnuTrMwxi57RbMFzPCX3uVmnhih0bJ2zHLD5SzZ05+yY+VAlcSiOQQ9DxuhTUxQqIuR6OLGlZyinhFsHj1vfCaPg42CbM2ms48m2V75u8cm9rOMBE9z5mveOfAj3TM3M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vvd/XAzb; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1yD/SciB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E0779C4CEF7;
-	Wed,  4 Feb 2026 15:00:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vvd/XAzb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E444AC116C6;
+	Wed,  4 Feb 2026 15:00:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770217220;
-	bh=ZGWhr14wUGxFdwwLG3eERbq90EFYWGlPUfSXWo1VAo0=;
+	s=korg; t=1770217224;
+	bh=Zd81Z3dEdXHZkMQnZUW3i1OHPleCd7KlK+lA/kd5IEQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1yD/SciB5+vrC2Jfe9NbLYQdQXpIonX901j48Sc72c2OO1H+X4XkQqBJR9ok8EL/c
-	 r+NDeHJtNOmKN7avcX+QZ8hOE0KSsQkeTm8LR6Ymz2ctfX6298ptdPBnhzmrk+DBHQ
-	 4HTanznj5OAmPgi+Bp674exelFRmi1vzY+u23FME=
+	b=vvd/XAzbjJzw/FwhxCtaM+j/fsp10X2M1NCo4WM3jSiNlRc6ilyPSvMrdIHpAs8YS
+	 ucmZH/1yRD7svFDd94DXnQavzVA3QNe2feW/8UM6t4p2R0hiXmbwRTAVoetAbKIhB+
+	 6zm90869LN4PVxXJJMFUSQvt0KxZYAOn1bIr5398=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sudeep Holla <sudeep.holla@arm.com>,
-	"Rob Herring (Arm)" <robh@kernel.org>
-Subject: [PATCH 5.15 158/206] of: platform: Use default match table for /firmware
-Date: Wed,  4 Feb 2026 15:39:49 +0100
-Message-ID: <20260204143903.894917836@linuxfoundation.org>
+	Johan Hovold <johan@kernel.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 159/206] iio: adc: exynos_adc: fix OF populate on driver rebind
+Date: Wed,  4 Feb 2026 15:39:50 +0100
+Message-ID: <20260204143903.930128291@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260204143858.193781818@linuxfoundation.org>
 References: <20260204143858.193781818@linuxfoundation.org>
@@ -50,40 +52,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rob Herring (Arm) <robh@kernel.org>
+From: Johan Hovold <johan@kernel.org>
 
-commit 48e6a9c4a20870e09f85ff1a3628275d6bce31c0 upstream.
+[ Upstream commit ea6b4feba85e996e840e0b661bc42793df6eb701 ]
 
-Calling of_platform_populate() without a match table will only populate
-the immediate child nodes under /firmware. This is usually fine, but in
-the case of something like a "simple-mfd" node such as
-"raspberrypi,bcm2835-firmware", those child nodes will not be populated.
-And subsequent calls won't work either because the /firmware node is
-marked as processed already.
+Since commit c6e126de43e7 ("of: Keep track of populated platform
+devices") child devices will not be created by of_platform_populate()
+if the devices had previously been deregistered individually so that the
+OF_POPULATED flag is still set in the corresponding OF nodes.
 
-Switch the call to of_platform_default_populate() to solve this problem.
-It should be a nop for existing cases.
+Switch to using of_platform_depopulate() instead of open coding so that
+the child devices are created if the driver is rebound.
 
-Fixes: 3aa0582fdb82 ("of: platform: populate /firmware/ node from of_platform_default_populate_init()")
-Cc: stable@vger.kernel.org
-Reviewed-by: Sudeep Holla <sudeep.holla@arm.com>
-Link: https://patch.msgid.link/20260114015158.692170-2-robh@kernel.org
-Signed-off-by: Rob Herring (Arm) <robh@kernel.org>
+Fixes: c6e126de43e7 ("of: Keep track of populated platform devices")
+Cc: stable@vger.kernel.org	# 3.16
+Signed-off-by: Johan Hovold <johan@kernel.org>
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+[ Adjust context ]
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/of/platform.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/iio/adc/exynos_adc.c |   13 ++-----------
+ 1 file changed, 2 insertions(+), 11 deletions(-)
 
---- a/drivers/of/platform.c
-+++ b/drivers/of/platform.c
-@@ -533,7 +533,7 @@ static int __init of_platform_default_po
+--- a/drivers/iio/adc/exynos_adc.c
++++ b/drivers/iio/adc/exynos_adc.c
+@@ -721,14 +721,7 @@ static const struct iio_chan_spec exynos
+ 	ADC_CHANNEL(9, "adc9"),
+ };
  
- 	node = of_find_node_by_path("/firmware");
- 	if (node) {
--		of_platform_populate(node, NULL, NULL, NULL);
-+		of_platform_default_populate(node, NULL, NULL);
- 		of_node_put(node);
+-static int exynos_adc_remove_devices(struct device *dev, void *c)
+-{
+-	struct platform_device *pdev = to_platform_device(dev);
+-
+-	platform_device_unregister(pdev);
+ 
+-	return 0;
+-}
+ 
+ static int exynos_adc_ts_open(struct input_dev *dev)
+ {
+@@ -929,8 +922,7 @@ static int exynos_adc_probe(struct platf
+ 	return 0;
+ 
+ err_of_populate:
+-	device_for_each_child(&indio_dev->dev, NULL,
+-				exynos_adc_remove_devices);
++	of_platform_depopulate(&indio_dev->dev);
+ 	if (has_ts) {
+ 		input_unregister_device(info->input);
+ 		free_irq(info->tsirq, info);
+@@ -959,8 +951,7 @@ static int exynos_adc_remove(struct plat
+ 		free_irq(info->tsirq, info);
+ 		input_unregister_device(info->input);
  	}
- 
+-	device_for_each_child(&indio_dev->dev, NULL,
+-				exynos_adc_remove_devices);
++	of_platform_depopulate(&indio_dev->dev);
+ 	iio_device_unregister(indio_dev);
+ 	free_irq(info->irq, info);
+ 	if (info->data->exit_hw)
 
 
