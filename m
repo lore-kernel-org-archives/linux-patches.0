@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F19372BE7C0;
-	Wed,  4 Feb 2026 15:17:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94AAE2BE7C0;
+	Wed,  4 Feb 2026 15:17:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770218269; cv=none; b=WCC3rwcfTIPR6f6SJmua226U2FTW5LcscsQ7HfvSYVnkV0zvx4PObmBTvRQRQR/Rp91D0I+G7k53TczRxP8XvbtD/j4TJHUT7/MNOXxXjnkNBc0Fn+Ctub3UQAF5uHckwZLw8qSo0cXnoVhN27JwRa927FqdwDveri/VCbX8+rg=
+	t=1770218272; cv=none; b=pCLQdxbwA4nxn0QxQbK04rDqzl6eG+4taNvAXJIfbAkxGsLXN8CEIhp055yP6yrTnhoCn0ejeSP0Tn7dWyjP50yZiwURenxg5kuV3qS0fV8Gemrv/Q6xRWZ8AE52EiuhMRzC/7AOVk4BLgzuAHj+JaPGj2kU2CGPIae3fYU4938=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770218269; c=relaxed/simple;
-	bh=jKMBLoMnlPt5A10C8XsZVOMku/VGo4CvTwjx0tN2hak=;
+	s=arc-20240116; t=1770218272; c=relaxed/simple;
+	bh=5iFf3jn30wgNrKmPDLbLQmbnRIR3fPATdn/SCYHQAmI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=keykfRTh778CH3+K9+a40vgImMCo3n4mhBX7RPxtwn1JS8CQN0Ete84CMd7VsxJ5PzWiqK5/g1Fo2fvvPOXhSHeJz1hIWdDxajEgBzMMCMFDmnBjm08jjrkSJTmOrFIp52XRv2F42LQPp3My98AfKDsoNrOVZRCf6NbEolihI7E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GjbNKWHh; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Z5oFx4yjiOV9CiUl+7eiWENEJ6TVHg27YBpOcO6IFDxolMcYNbQwfB3vC/3EM68dWew7zWY8qZzczwVAtvW3A645q9Ta+GoSwEgEMwg/LIM8Bnb7K1modKCA97+YxxREmCdAO1oeTZkoJRvqQmqM0EaBMHB2hQmoppRyUkRTgcw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BbRcX3Nt; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GjbNKWHh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 65316C4CEF7;
-	Wed,  4 Feb 2026 15:17:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BbRcX3Nt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 029DEC4CEF7;
+	Wed,  4 Feb 2026 15:17:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770218268;
-	bh=jKMBLoMnlPt5A10C8XsZVOMku/VGo4CvTwjx0tN2hak=;
+	s=korg; t=1770218272;
+	bh=5iFf3jn30wgNrKmPDLbLQmbnRIR3fPATdn/SCYHQAmI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GjbNKWHh0WCZ1z3KL0FNDm/JK4zALvqUB+zwWBIcPtyGy6NzQwv891xolaRzQN9fe
-	 S3GmG7Y8D+PcaZqwBW1h++v1ZXKM5bdy9IxduF+u0hhfl6TwH778XkBznKW0TeR8mV
-	 PWmPqOZ+TQH05inIBh0MhZW9oUk1x3625f9bmEkk=
+	b=BbRcX3NtRZ5ZeOaowJHXzsq/lfsfYPeDlNW73EHmyzQ934Mjr6MyXd/TVnnepewSU
+	 cnoMBrYqYpoCtVh11+2Opxpw8MEQII1/2MwZeU+XpX4M3fWl9s8Q6mVLKBHL3Rmbf8
+	 hvwvZp7jfw6f4rkji4cTIVRn2G4g5O6gr6jsEiTk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sebastian Reichel <sebastian.reichel@collabora.com>,
-	Yifeng Zhao <yifeng.zhao@rock-chips.com>,
-	Shawn Lin <shawn.lin@rock-chips.com>,
-	Ulf Hansson <ulf.hansson@linaro.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 234/280] mmc: sdhci-of-dwcmshc: Prevent illegal clock reduction in HS200/HS400 mode
-Date: Wed,  4 Feb 2026 15:40:08 +0100
-Message-ID: <20260204143918.044596621@linuxfoundation.org>
+	Waiman Long <longman@redhat.com>,
+	Ming Lei <ming.lei@redhat.com>,
+	Tejun Heo <tj@kernel.org>,
+	Jens Axboe <axboe@kernel.dk>,
+	Alva Lan <alvalan9@foxmail.com>
+Subject: [PATCH 6.1 261/280] blk-cgroup: Reinit blkg_iostat_set after clearing in blkcg_reset_stats()
+Date: Wed,  4 Feb 2026 15:40:35 +0100
+Message-ID: <20260204143919.090825055@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260204143909.614719725@linuxfoundation.org>
 References: <20260204143909.614719725@linuxfoundation.org>
@@ -53,57 +53,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shawn Lin <shawn.lin@rock-chips.com>
+From: Waiman Long <longman@redhat.com>
 
-[ Upstream commit 3009738a855cf938bbfc9078bec725031ae623a4 ]
+[ Upstream commit 3d2af77e31ade05ff7ccc3658c3635ec1bea0979 ]
 
-When operating in HS200 or HS400 timing modes, reducing the clock frequency
-below 52MHz will lead to link broken as the Rockchip DWC MSHC controller
-requires maintaining a minimum clock of 52MHz in these modes.
+When blkg_alloc() is called to allocate a blkcg_gq structure
+with the associated blkg_iostat_set's, there are 2 fields within
+blkg_iostat_set that requires proper initialization - blkg & sync.
+The former field was introduced by commit 3b8cc6298724 ("blk-cgroup:
+Optimize blkcg_rstat_flush()") while the later one was introduced by
+commit f73316482977 ("blk-cgroup: reimplement basic IO stats using
+cgroup rstat").
 
-Add a check to prevent illegal clock reduction through debugfs:
+Unfortunately those fields in the blkg_iostat_set's are not properly
+re-initialized when they are cleared in v1's blkcg_reset_stats(). This
+can lead to a kernel panic due to NULL pointer access of the blkg
+pointer. The missing initialization of sync is less problematic and
+can be a problem in a debug kernel due to missing lockdep initialization.
 
-root@debian:/# echo 50000000 > /sys/kernel/debug/mmc0/clock
-root@debian:/# [   30.090146] mmc0: running CQE recovery
-mmc0: cqhci: Failed to halt
-mmc0: cqhci: spurious TCN for tag 0
-WARNING: drivers/mmc/host/cqhci-core.c:797 at cqhci_irq+0x254/0x818, CPU#1: kworker/1:0H/24
-Modules linked in:
-CPU: 1 UID: 0 PID: 24 Comm: kworker/1:0H Not tainted 6.19.0-rc1-00001-g09db0998649d-dirty #204 PREEMPT
-Hardware name: Rockchip RK3588 EVB1 V10 Board (DT)
-Workqueue: kblockd blk_mq_run_work_fn
-pstate: 604000c9 (nZCv daIF +PAN -UAO -TCO -DIT -SSBS BTYPE=--)
-pc : cqhci_irq+0x254/0x818
-lr : cqhci_irq+0x254/0x818
-...
+Fix these problems by re-initializing them after memory clearing.
 
-Fixes: c6f361cba51c ("mmc: sdhci-of-dwcmshc: add support for rk3588")
-Cc: Sebastian Reichel <sebastian.reichel@collabora.com>
-Cc: Yifeng Zhao <yifeng.zhao@rock-chips.com>
-Signed-off-by: Shawn Lin <shawn.lin@rock-chips.com>
-Cc: stable@vger.kernel.org
-Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 3b8cc6298724 ("blk-cgroup: Optimize blkcg_rstat_flush()")
+Fixes: f73316482977 ("blk-cgroup: reimplement basic IO stats using cgroup rstat")
+Signed-off-by: Waiman Long <longman@redhat.com>
+Reviewed-by: Ming Lei <ming.lei@redhat.com>
+Acked-by: Tejun Heo <tj@kernel.org>
+Link: https://lore.kernel.org/r/20230606180724.2455066-1-longman@redhat.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
+[ Remove this line: bis -> blkg = blkg for blkg was introduced by commit
+  3b8cc6298724 ("blk-cgroup: Optimize blkcg_rstat_flush()") since v6.2. ]
+Signed-off-by: Alva Lan <alvalan9@foxmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mmc/host/sdhci-of-dwcmshc.c |    7 +++++++
- 1 file changed, 7 insertions(+)
+ block/blk-cgroup.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/drivers/mmc/host/sdhci-of-dwcmshc.c
-+++ b/drivers/mmc/host/sdhci-of-dwcmshc.c
-@@ -236,6 +236,13 @@ static void dwcmshc_rk3568_set_clock(str
- 	sdhci_writel(host, extra, reg);
- 
- 	if (clock <= 52000000) {
-+		if (host->mmc->ios.timing == MMC_TIMING_MMC_HS200 ||
-+		    host->mmc->ios.timing == MMC_TIMING_MMC_HS400) {
-+			dev_err(mmc_dev(host->mmc),
-+				"Can't reduce the clock below 52MHz in HS200/HS400 mode");
-+			return;
-+		}
+--- a/block/blk-cgroup.c
++++ b/block/blk-cgroup.c
+@@ -531,8 +531,12 @@ static int blkcg_reset_stats(struct cgro
+ 			struct blkg_iostat_set *bis =
+ 				per_cpu_ptr(blkg->iostat_cpu, cpu);
+ 			memset(bis, 0, sizeof(*bis));
 +
- 		/*
- 		 * Disable DLL and reset both of sample and drive clock.
- 		 * The bypass bit and start bit need to be set if DLL is not locked.
++			/* Re-initialize the cleared blkg_iostat_set */
++			u64_stats_init(&bis->sync);
+ 		}
+ 		memset(&blkg->iostat, 0, sizeof(blkg->iostat));
++		u64_stats_init(&blkg->iostat.sync);
+ 
+ 		for (i = 0; i < BLKCG_MAX_POLS; i++) {
+ 			struct blkcg_policy *pol = blkcg_policy[i];
 
 
