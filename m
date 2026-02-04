@@ -1,39 +1,46 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0551421A02;
-	Wed,  4 Feb 2026 14:56:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DDD8C421EF6;
+	Wed,  4 Feb 2026 14:56:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770216977; cv=none; b=IxNvz8Ctlw0Ma44DaxwLbdFIWIrajVabQSU6bYeo9X6dbYYxJhdBPQMxiBtIDWXNRnaycP9uz3lh9AXW/SACr+6m9Wat8Ass8hANw0pe72NfxaILziVusz0CRvC/fL9PYZQJsOcmCltTCPW5ljbt3UBLPCIGjZbS05uRPA4VjwY=
+	t=1770216980; cv=none; b=CmFI3L7qtSYG4iJkHkD5gQv1EmSRHuNiPzcGDgL5XbdyeeadlG7e4o6sr7R/A5JAeI25KmUYiwvZOwx4l2uyj6aNosFTTgvMLG2GRVqSB3eRLUg7cFYgLSaL5G7RS4bycV+s5iQOWBMv6t/TEHlcvvVBTnIgfDRZRwukxShU/5Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770216977; c=relaxed/simple;
-	bh=jBcjopp3ngF2qef8WFKt+F7lgIJk3GBmmwmGAyfmIFQ=;
+	s=arc-20240116; t=1770216980; c=relaxed/simple;
+	bh=ENxqwzCp5URyJDiJK42QG6oPsMlF8B8rb1sh0iZW1yE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FVEySHIwwguJVG5ESSfgF+nw3f7K8E7yR9ZjEKC7gKO/011zD9+8OBlmHGdf+5wM2YoGOFsRVjoW3iY5YGVf3bIbXzlethVxo63WDM8qgSNao9KeK3HGpkAv05tvQO0jE19v5ZyLfDCojyUaLiqMT6FR7FIrWRTiHrKUDkjbIw4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PDPlYYev; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fwXqyGNOeEWBWXiHz0SrdzSDXFXsF3/SM+HoaVt0Yn+OFgL+hE0eFX5S9om20HkO04YhT7BxN+nCmKmkd6qWIjgWUNJHUKYjcLwrop31rTnpydKK6zEdnCp4cohSbL1RGbkdAEgnJZmUuCb1e5xj5D/5ZXBn3j3VWfMyOP8J9Q4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KYeOQvK0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PDPlYYev"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 394C1C4CEF7;
-	Wed,  4 Feb 2026 14:56:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KYeOQvK0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 343FFC19423;
+	Wed,  4 Feb 2026 14:56:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770216977;
-	bh=jBcjopp3ngF2qef8WFKt+F7lgIJk3GBmmwmGAyfmIFQ=;
+	s=korg; t=1770216980;
+	bh=ENxqwzCp5URyJDiJK42QG6oPsMlF8B8rb1sh0iZW1yE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PDPlYYevBSCVKE5pnftgxqOMRLwexeId1a+dRxM63kjQaWDSNLN8/hYcHAUtZ5u+e
-	 mztf/LrV3EBKxDJZ7prs+xP/QLLp1X2SSIv/fDAYSAio31TD7pHCeT3NBSKIQzRZrE
-	 78KNlMGB76H3kdc/6XI0B7xHE/+4ARZD9C1IJuuQ=
+	b=KYeOQvK0rOXHy/3rSRa6MoFn/v/PUE7Pzvc6DFZyuyYsB9CL2O3k1cJTiDKEWKjtm
+	 xDsrwMJpYVp8sdgfPVfCD8M0iV8IVdxBaPHHkf9POPBnlrMMs3dntIuRG0nZEWEe3z
+	 Ol5KvfguHU6rKytSK2aS5aKFNnrnZd6Z4FERbeZM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Long Li <longli@microsoft.com>,
-	Michael Kelley <mhklinux@outlook.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>
-Subject: [PATCH 5.15 087/206] scsi: storvsc: Process unsupported MODE_SENSE_10
-Date: Wed,  4 Feb 2026 15:38:38 +0100
-Message-ID: <20260204143901.344121619@linuxfoundation.org>
+	Andrew Cooper <andrew.cooper3@citrix.com>,
+	Marco Elver <elver@google.com>,
+	Alexander Potapenko <glider@google.com>,
+	Dmitry Vyukov <dvyukov@google.com>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	Ingo Molnar <mingo@redhat.com>,
+	Borislav Petkov <bp@alien8.de>,
+	Dave Hansen <dave.hansen@linux.intel.com>,
+	"H. Peter Anvin" <hpa@zytor.com>,
+	Jann Horn <jannh@google.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 5.15 088/206] x86/kfence: avoid writing L1TF-vulnerable PTEs
+Date: Wed,  4 Feb 2026 15:38:39 +0100
+Message-ID: <20260204143901.379813111@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260204143858.193781818@linuxfoundation.org>
 References: <20260204143858.193781818@linuxfoundation.org>
@@ -52,44 +59,114 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Long Li <longli@microsoft.com>
+From: Andrew Cooper <andrew.cooper3@citrix.com>
 
-commit 9eacec5d18f98f89be520eeeef4b377acee3e4b8 upstream.
+commit b505f1944535f83d369ae68813e7634d11b990d3 upstream.
 
-The Hyper-V host does not support MODE_SENSE_10 and MODE_SENSE.  The
-driver handles MODE_SENSE as unsupported command, but not for
-MODE_SENSE_10. Add MODE_SENSE_10 to the same handling logic and return
-correct code to SCSI layer.
+For native, the choice of PTE is fine.  There's real memory backing the
+non-present PTE.  However, for XenPV, Xen complains:
 
-Fixes: 89ae7d709357 ("Staging: hv: storvsc: Move the storage driver out of the staging area")
-Cc: stable@kernel.org
-Signed-off-by: Long Li <longli@microsoft.com>
-Reviewed-by: Michael Kelley <mhklinux@outlook.com>
-Link: https://patch.msgid.link/20260117010302.294068-1-longli@linux.microsoft.com
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+  (XEN) d1 L1TF-vulnerable L1e 8010000018200066 - Shadowing
+
+To explain, some background on XenPV pagetables:
+
+  Xen PV guests are control their own pagetables; they choose the new
+  PTE value, and use hypercalls to make changes so Xen can audit for
+  safety.
+
+  In addition to a regular reference count, Xen also maintains a type
+  reference count.  e.g.  SegDesc (referenced by vGDT/vLDT), Writable
+  (referenced with _PAGE_RW) or L{1..4} (referenced by vCR3 or a lower
+  pagetable level).  This is in order to prevent e.g.  a page being
+  inserted into the pagetables for which the guest has a writable mapping.
+
+  For non-present mappings, all other bits become software accessible,
+  and typically contain metadata rather a real frame address.  There is
+  nothing that a reference count could sensibly be tied to.  As such, even
+  if Xen could recognise the address as currently safe, nothing would
+  prevent that frame from changing owner to another VM in the future.
+
+  When Xen detects a PV guest writing a L1TF-PTE, it responds by
+  activating shadow paging.  This is normally only used for the live phase
+  of migration, and comes with a reasonable overhead.
+
+KFENCE only cares about getting #PF to catch wild accesses; it doesn't
+care about the value for non-present mappings.  Use a fully inverted PTE,
+to avoid hitting the slow path when running under Xen.
+
+While adjusting the logic, take the opportunity to skip all actions if the
+PTE is already in the right state, half the number PVOps callouts, and
+skip TLB maintenance on a !P -> P transition which benefits non-Xen cases
+too.
+
+Link: https://lkml.kernel.org/r/20260106180426.710013-1-andrew.cooper3@citrix.com
+Fixes: 1dc0da6e9ec0 ("x86, kfence: enable KFENCE for x86")
+Signed-off-by: Andrew Cooper <andrew.cooper3@citrix.com>
+Tested-by: Marco Elver <elver@google.com>
+Cc: Alexander Potapenko <glider@google.com>
+Cc: Marco Elver <elver@google.com>
+Cc: Dmitry Vyukov <dvyukov@google.com>
+Cc: Thomas Gleixner <tglx@linutronix.de>
+Cc: Ingo Molnar <mingo@redhat.com>
+Cc: Borislav Petkov <bp@alien8.de>
+Cc: Dave Hansen <dave.hansen@linux.intel.com>
+Cc: "H. Peter Anvin" <hpa@zytor.com>
+Cc: Jann Horn <jannh@google.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/scsi/storvsc_drv.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ arch/x86/include/asm/kfence.h |   29 ++++++++++++++++++++++++-----
+ 1 file changed, 24 insertions(+), 5 deletions(-)
 
---- a/drivers/scsi/storvsc_drv.c
-+++ b/drivers/scsi/storvsc_drv.c
-@@ -1199,7 +1199,7 @@ static void storvsc_on_io_completion(str
- 	 * The current SCSI handling on the host side does
- 	 * not correctly handle:
- 	 * INQUIRY command with page code parameter set to 0x80
--	 * MODE_SENSE command with cmd[2] == 0x1c
-+	 * MODE_SENSE and MODE_SENSE_10 command with cmd[2] == 0x1c
- 	 * MAINTENANCE_IN is not supported by HyperV FC passthrough
- 	 *
- 	 * Setup srb and scsi status so this won't be fatal.
-@@ -1209,6 +1209,7 @@ static void storvsc_on_io_completion(str
+--- a/arch/x86/include/asm/kfence.h
++++ b/arch/x86/include/asm/kfence.h
+@@ -42,10 +42,34 @@ static inline bool kfence_protect_page(u
+ {
+ 	unsigned int level;
+ 	pte_t *pte = lookup_address(addr, &level);
++	pteval_t val;
  
- 	if ((stor_pkt->vm_srb.cdb[0] == INQUIRY) ||
- 	   (stor_pkt->vm_srb.cdb[0] == MODE_SENSE) ||
-+	   (stor_pkt->vm_srb.cdb[0] == MODE_SENSE_10) ||
- 	   (stor_pkt->vm_srb.cdb[0] == MAINTENANCE_IN &&
- 	   hv_dev_is_fc(device))) {
- 		vstor_packet->vm_srb.scsi_status = 0;
+ 	if (WARN_ON(!pte || level != PG_LEVEL_4K))
+ 		return false;
+ 
++	val = pte_val(*pte);
++
++	/*
++	 * protect requires making the page not-present.  If the PTE is
++	 * already in the right state, there's nothing to do.
++	 */
++	if (protect != !!(val & _PAGE_PRESENT))
++		return true;
++
++	/*
++	 * Otherwise, invert the entire PTE.  This avoids writing out an
++	 * L1TF-vulnerable PTE (not present, without the high address bits
++	 * set).
++	 */
++	set_pte(pte, __pte(~val));
++
++	/*
++	 * If the page was protected (non-present) and we're making it
++	 * present, there is no need to flush the TLB at all.
++	 */
++	if (!protect)
++		return true;
++
+ 	/*
+ 	 * We need to avoid IPIs, as we may get KFENCE allocations or faults
+ 	 * with interrupts disabled. Therefore, the below is best-effort, and
+@@ -53,11 +77,6 @@ static inline bool kfence_protect_page(u
+ 	 * lazy fault handling takes care of faults after the page is PRESENT.
+ 	 */
+ 
+-	if (protect)
+-		set_pte(pte, __pte(pte_val(*pte) & ~_PAGE_PRESENT));
+-	else
+-		set_pte(pte, __pte(pte_val(*pte) | _PAGE_PRESENT));
+-
+ 	/*
+ 	 * Flush this CPU's TLB, assuming whoever did the allocation/free is
+ 	 * likely to continue running on this CPU.
 
 
