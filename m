@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C3511A0BF1;
-	Wed,  4 Feb 2026 15:29:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64F3918859B;
+	Wed,  4 Feb 2026 15:29:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770218961; cv=none; b=WDGm3ZbDcWxPz8RxQGd+aWiqQER/YwsC/Wz2oyXn76Zz+AxG2bmU6YPtR92LAFP1qOLUmS5pQD/3H0pDcJzKNqFxLW7ABPD/SJr9U+SsLQQVJvF8ggOPQ5ZboBAzxxhavpdZBb/cvIuNSR64vaNU3nqNbgkHEnlBQ/qj4TAjhn0=
+	t=1770218964; cv=none; b=tx17vmVEhF7fnc4QC2YV6X6S++vR8u1wn3LB+VZ4HUH8kNG0H13uBm9Huw4QF6YsWQ0xeRakzV+RbL+te0wdgoG6R7nRKRoXJ50KUYYxKHgMYyJ7QsqgtfV5VemN1hQ+IBmQTFDZEmhMMJiJpt0hWleUaHcFqTv/Ij/gSbhV9UY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770218961; c=relaxed/simple;
-	bh=63B0EZoq/qvJ70S/Xx+ASuphhatpvn5pHSBePAk2Iv4=;
+	s=arc-20240116; t=1770218964; c=relaxed/simple;
+	bh=K5qv9jUFbjIcEMIhOX7CfdUpR7qCTEWCZhakmhHY+kk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FGHDD4fui9jdCpctGCxjux8Fcg3NrY+z5xLCim2K67Y+13EnY/LbUzE+KDFQbSzicxc6Yz4yFZaWVKptsAuR2GXIEPf8LmvdHVSBYtB91CMEZ44sywZ0mbeaaPvTyMlwarkZWCvN4078+4RYMguWG/EBZd0HMiz+KRv/4iv9H2c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=y4hAc+bM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uwbGBTeGGqIUnCUAP0vMcUfdjec9V/JtT1b3UwcG/51Ua2ux/BTdNlU/Bbf9By6IZgAfUwgajwMoysJiq1NLTS0ggZbgPPg4xGWqmnuq1aHQDtmqfxF6IPnOyI4kP3hpFOYtIJaEhq8zSgFkRQ9s2CmiUqdP+stWk9fQCax8iuk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hYlub55C; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="y4hAc+bM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CFF77C4CEF7;
-	Wed,  4 Feb 2026 15:29:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hYlub55C"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D75DCC4CEF7;
+	Wed,  4 Feb 2026 15:29:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770218961;
-	bh=63B0EZoq/qvJ70S/Xx+ASuphhatpvn5pHSBePAk2Iv4=;
+	s=korg; t=1770218964;
+	bh=K5qv9jUFbjIcEMIhOX7CfdUpR7qCTEWCZhakmhHY+kk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=y4hAc+bMbG2jbpiivWYv5HsktehZGOh+CeDXNUL/rRK6OGi78sKSiph7qxUejJCES
-	 kBSrDXTehJzxZmJIrB2+BeR5GfdnSFM3SPx96Ctj7WzrO1p7uztnC2x7/zFPvvLm3N
-	 r+NUaT0aZnd3/oSTLPBZbV+zfIblfbfcRCt9k7Cg=
+	b=hYlub55C1LSzZB/pibe0nzoZzc4u8ONzoNAiMqXOr47OO0FxNSBr4yD+C04XxAVSn
+	 YyBvoiTAzNBNgXwIz/8hHCMx0tMnx994hAE7sxevF8gyEogSBEEkS3+Mgl6T5OiKnC
+	 ZxpeN8sspTwYEyfvI9K45559AIk+Uf11II9TmZ+Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Justin Chen <justin.chen@broadcom.com>,
+	Florian Fainelli <florian.fainelli@broadcom.com>,
 	Jakub Kicinski <kuba@kernel.org>,
-	Marc Kleine-Budde <mkl@pengutronix.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 007/122] can: gs_usb: gs_usb_receive_bulk_callback(): fix error message
-Date: Wed,  4 Feb 2026 15:39:49 +0100
-Message-ID: <20260204143852.128899297@linuxfoundation.org>
+Subject: [PATCH 6.18 008/122] net: bcmasp: fix early exit leak with fixed phy
+Date: Wed,  4 Feb 2026 15:39:50 +0100
+Message-ID: <20260204143852.164798957@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260204143851.857060534@linuxfoundation.org>
 References: <20260204143851.857060534@linuxfoundation.org>
@@ -51,50 +52,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Marc Kleine-Budde <mkl@pengutronix.de>
+From: Justin Chen <justin.chen@broadcom.com>
 
-[ Upstream commit 494fc029f662c331e06b7c2031deff3c64200eed ]
+[ Upstream commit 6de4436bf369e1444606445e4cd5df5bcfc74b48 ]
 
-Sinc commit 79a6d1bfe114 ("can: gs_usb: gs_usb_receive_bulk_callback():
-unanchor URL on usb_submit_urb() error") a failing resubmit URB will print
-an info message.
+We are not deregistering the fixed phy link when hitting the early
+exit condition. Add the correct early exit sequence.
 
-In the case of a short read where netdev has not yet been assigned,
-initialize as NULL to avoid dereferencing an undefined value. Also report
-the error value of the failed resubmit.
-
-Fixes: 79a6d1bfe114 ("can: gs_usb: gs_usb_receive_bulk_callback(): unanchor URL on usb_submit_urb() error")
-Reported-by: Jakub Kicinski <kuba@kernel.org>
-Closes: https://lore.kernel.org/all/20260119181904.1209979-1-kuba@kernel.org/
-Link: https://patch.msgid.link/20260120-gs_usb-fix-error-message-v1-1-6be04de572bc@pengutronix.de
-Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
+Fixes: 490cb412007d ("net: bcmasp: Add support for ASP2.0 Ethernet controller")
+Signed-off-by: Justin Chen <justin.chen@broadcom.com>
+Reviewed-by: Florian Fainelli <florian.fainelli@broadcom.com>
+Link: https://patch.msgid.link/20260122194001.1098859-1-justin.chen@broadcom.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/can/usb/gs_usb.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/net/ethernet/broadcom/asp2/bcmasp_intf.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/can/usb/gs_usb.c b/drivers/net/can/usb/gs_usb.c
-index fd7fb21b10989..861b583935225 100644
---- a/drivers/net/can/usb/gs_usb.c
-+++ b/drivers/net/can/usb/gs_usb.c
-@@ -610,7 +610,7 @@ static void gs_usb_receive_bulk_callback(struct urb *urb)
- {
- 	struct gs_usb *parent = urb->context;
- 	struct gs_can *dev;
--	struct net_device *netdev;
-+	struct net_device *netdev = NULL;
- 	int rc;
- 	struct net_device_stats *stats;
- 	struct gs_host_frame *hf = urb->transfer_buffer;
-@@ -768,7 +768,7 @@ static void gs_usb_receive_bulk_callback(struct urb *urb)
- 		}
- 	} else if (rc != -ESHUTDOWN && net_ratelimit()) {
- 		netdev_info(netdev, "failed to re-submit IN URB: %pe\n",
--			    ERR_PTR(urb->status));
-+			    ERR_PTR(rc));
+diff --git a/drivers/net/ethernet/broadcom/asp2/bcmasp_intf.c b/drivers/net/ethernet/broadcom/asp2/bcmasp_intf.c
+index b9973956c4809..ceb6c11431dd9 100644
+--- a/drivers/net/ethernet/broadcom/asp2/bcmasp_intf.c
++++ b/drivers/net/ethernet/broadcom/asp2/bcmasp_intf.c
+@@ -1261,7 +1261,7 @@ struct bcmasp_intf *bcmasp_interface_create(struct bcmasp_priv *priv,
+ 		netdev_err(intf->ndev, "invalid PHY mode: %s for port %d\n",
+ 			   phy_modes(intf->phy_interface), intf->port);
+ 		ret = -EINVAL;
+-		goto err_free_netdev;
++		goto err_deregister_fixed_link;
  	}
- }
  
+ 	ret = of_get_ethdev_address(ndev_dn, ndev);
+@@ -1286,6 +1286,9 @@ struct bcmasp_intf *bcmasp_interface_create(struct bcmasp_priv *priv,
+ 
+ 	return intf;
+ 
++err_deregister_fixed_link:
++	if (of_phy_is_fixed_link(ndev_dn))
++		of_phy_deregister_fixed_link(ndev_dn);
+ err_free_netdev:
+ 	free_netdev(ndev);
+ err:
 -- 
 2.51.0
 
