@@ -1,38 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 892CC421F1C;
-	Wed,  4 Feb 2026 15:13:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C632421F1C;
+	Wed,  4 Feb 2026 15:13:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770217987; cv=none; b=hgZj4m6/S119s4lzXMQmQLxnrKl6PQI8vg98lKAro00TBuOROFuaRHlCA7RwQy1YkZOGdDw2LQuZBio7P5z8Ej57vgNs1FKCOyz76LQThGUsXOrLx/Z0GM24RDYCRhCazEapegTT+ur6wyEXHC/WuoZHDjHsh75tsrhx5oqiAv4=
+	t=1770217990; cv=none; b=YrN75D82EaO6oaLZC+wCxLfTx101yqWGK6QFc6oeE7RtTNpXuz+jOOD6Jm+YNw9Tm0bmHLACCP3cbdtffbttbyeUTmcKsTv4+gAspyoXzc8SIegldcGD4mol0/n0vm4lhCPqVRofb+s5KakdNe9g0pPFDndv/2p8fkOWd/CSevo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770217987; c=relaxed/simple;
-	bh=Q+rHH/9Tnr3clgeCoH8qd5Nybdnr+EHvod1ljTYYWcM=;
+	s=arc-20240116; t=1770217990; c=relaxed/simple;
+	bh=JdbzGt5k/op9cywIESTsPHBOMYMFwiz1PC7KQ/yZtlo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nI8TFI7tVYDra8KWp4R2r3nDBidBo1/zqtJwULTqa7KA069mLEwpm5X24IDLzq1x2ZjEd8uNdkYHhA9VTg8KhOYAmZ4F86x4mesq+t1C//Xv3hLWvNWXYzLcrFrLetZn7I0G+jE7BawAmEM92Czr8fW6+RXn1T8wlD+BcImdahU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RFuclH7W; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qlTwXfQhhSeIwm/W2TgmXvQcp/PzVRv7qTcdt2t1o1CPmreVLFwlEgV9YG1RfYPCKgBprtklVpFk28gtEmb2RSIH6W3GEBbv7LYXY5z7fBfoppXhn11qT+erHNh1SiDAQZ+/mbkMxTpg4KmP9KIQ9B9uyaXmC8X3L1q5pTNbkRU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uEfEL8az; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RFuclH7W"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA3A4C4CEF7;
-	Wed,  4 Feb 2026 15:13:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uEfEL8az"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F042AC4CEF7;
+	Wed,  4 Feb 2026 15:13:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770217987;
-	bh=Q+rHH/9Tnr3clgeCoH8qd5Nybdnr+EHvod1ljTYYWcM=;
+	s=korg; t=1770217990;
+	bh=JdbzGt5k/op9cywIESTsPHBOMYMFwiz1PC7KQ/yZtlo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RFuclH7WT4v2gXpn1lT52kg27zFjHgFicnv8n9QCFEH86A8Ip3XU/cJJvfJl89uK2
-	 SliEOsRqPLHcTI1fFULJ6xXd2TTYnN5GOc6+ejWFvP/UiXwL70Wh0WL8ichnWi1bgN
-	 QNNX+PlHY1R9iKfOklPylSUSN4IrI9QwNFv+FZgI=
+	b=uEfEL8azVJilxJZoS7YWj/BHWvWl1yY5u4WBMcxw3vfBQ/m6zFyX5FxHZtvqxtKW+
+	 d+zkZJNDhN4NaKvksjuPy+pPCCboSdCRVTrfDyzU/D8iOp9pqk55lUmoLLah9l9mK+
+	 om9zjJlXPRswAzqx4LfAz4EA5nRxjbuTsAAsXgew=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arnd Bergmann <arnd@arndb.de>,
-	Thomas Gleixner <tglx@kernel.org>,
-	Marc Zyngier <maz@kernel.org>
-Subject: [PATCH 6.1 178/280] irqchip/gic-v3-its: Avoid truncating memory addresses
-Date: Wed,  4 Feb 2026 15:39:12 +0100
-Message-ID: <20260204143916.024042739@linuxfoundation.org>
+	Marc Kleine-Budde <mkl@pengutronix.de>
+Subject: [PATCH 6.1 179/280] can: ems_usb: ems_usb_read_bulk_callback(): fix URB memory leak
+Date: Wed,  4 Feb 2026 15:39:13 +0100
+Message-ID: <20260204143916.059164956@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260204143909.614719725@linuxfoundation.org>
 References: <20260204143909.614719725@linuxfoundation.org>
@@ -51,74 +49,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Arnd Bergmann <arnd@arndb.de>
+From: Marc Kleine-Budde <mkl@pengutronix.de>
 
-commit 8d76a7d89c12d08382b66e2f21f20d0627d14859 upstream.
+commit 0ce73a0eb5a27070957b67fd74059b6da89cc516 upstream.
 
-On 32-bit machines with CONFIG_ARM_LPAE, it is possible for lowmem
-allocations to be backed by addresses physical memory above the 32-bit
-address limit, as found while experimenting with larger VMSPLIT
-configurations.
+Fix similar memory leak as in commit 7352e1d5932a ("can: gs_usb:
+gs_usb_receive_bulk_callback(): fix URB memory leak").
 
-This caused the qemu virt model to crash in the GICv3 driver, which
-allocates the 'itt' object using GFP_KERNEL. Since all memory below
-the 4GB physical address limit is in ZONE_DMA in this configuration,
-kmalloc() defaults to higher addresses for ZONE_NORMAL, and the
-ITS driver stores the physical address in a 32-bit 'unsigned long'
-variable.
+In ems_usb_open(), the URBs for USB-in transfers are allocated, added to
+the dev->rx_submitted anchor and submitted. In the complete callback
+ems_usb_read_bulk_callback(), the URBs are processed and resubmitted. In
+ems_usb_close() the URBs are freed by calling
+usb_kill_anchored_urbs(&dev->rx_submitted).
 
-Change the itt_addr variable to the correct phys_addr_t type instead,
-along with all other variables in this driver that hold a physical
-address.
+However, this does not take into account that the USB framework unanchors
+the URB before the complete function is called. This means that once an
+in-URB has been completed, it is no longer anchored and is ultimately not
+released in ems_usb_close().
 
-The gicv5 driver correctly uses u64 variables, while all other irqchip
-drivers don't call virt_to_phys or similar interfaces. It's expected that
-other device drivers have similar issues, but fixing this one is
-sufficient for booting a virtio based guest.
+Fix the memory leak by anchoring the URB in the
+ems_usb_read_bulk_callback() to the dev->rx_submitted anchor.
 
-Fixes: cc2d3216f53c ("irqchip: GICv3: ITS command queue")
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
-Signed-off-by: Thomas Gleixner <tglx@kernel.org>
-Reviewed-by: Marc Zyngier <maz@kernel.org>
+Fixes: 702171adeed3 ("ems_usb: Added support for EMS CPC-USB/ARM7 CAN/USB interface")
 Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20260119201603.2713066-1-arnd@kernel.org
+Link: https://patch.msgid.link/20260116-can_usb-fix-memory-leak-v2-1-4b8cb2915571@pengutronix.de
+Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/irqchip/irq-gic-v3-its.c |    8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/net/can/usb/ems_usb.c |    8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
---- a/drivers/irqchip/irq-gic-v3-its.c
-+++ b/drivers/irqchip/irq-gic-v3-its.c
-@@ -613,7 +613,7 @@ static struct its_collection *its_build_
- 						 struct its_cmd_block *cmd,
- 						 struct its_cmd_desc *desc)
- {
--	unsigned long itt_addr;
-+	phys_addr_t itt_addr;
- 	u8 size = ilog2(desc->its_mapd_cmd.dev->nr_ites);
+--- a/drivers/net/can/usb/ems_usb.c
++++ b/drivers/net/can/usb/ems_usb.c
+@@ -486,11 +486,17 @@ resubmit_urb:
+ 			  urb->transfer_buffer, RX_BUFFER_SIZE,
+ 			  ems_usb_read_bulk_callback, dev);
  
- 	itt_addr = virt_to_phys(desc->its_mapd_cmd.dev->itt);
-@@ -784,7 +784,7 @@ static struct its_vpe *its_build_vmapp_c
- 					   struct its_cmd_desc *desc)
- {
- 	struct its_vpe *vpe = valid_vpe(its, desc->its_vmapp_cmd.vpe);
--	unsigned long vpt_addr, vconf_addr;
-+	phys_addr_t vpt_addr, vconf_addr;
- 	u64 target;
- 	bool alloc;
++	usb_anchor_urb(urb, &dev->rx_submitted);
++
+ 	retval = usb_submit_urb(urb, GFP_ATOMIC);
++	if (!retval)
++		return;
++
++	usb_unanchor_urb(urb);
  
-@@ -2399,10 +2399,10 @@ retry_baser:
- 	baser->psz = psz;
- 	tmp = indirect ? GITS_LVL1_ENTRY_SIZE : esz;
- 
--	pr_info("ITS@%pa: allocated %d %s @%lx (%s, esz %d, psz %dK, shr %d)\n",
-+	pr_info("ITS@%pa: allocated %d %s @%llx (%s, esz %d, psz %dK, shr %d)\n",
- 		&its->phys_base, (int)(PAGE_ORDER_TO_SIZE(order) / (int)tmp),
- 		its_base_type_string[type],
--		(unsigned long)virt_to_phys(base),
-+		(u64)virt_to_phys(base),
- 		indirect ? "indirect" : "flat", (int)esz,
- 		psz / SZ_1K, (int)shr >> GITS_BASER_SHAREABILITY_SHIFT);
- 
+ 	if (retval == -ENODEV)
+ 		netif_device_detach(netdev);
+-	else if (retval)
++	else
+ 		netdev_err(netdev,
+ 			   "failed resubmitting read bulk urb: %d\n", retval);
+ }
 
 
