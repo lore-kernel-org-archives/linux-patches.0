@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1B8B41B357;
-	Wed,  4 Feb 2026 15:04:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20EAD41B357;
+	Wed,  4 Feb 2026 15:04:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770217480; cv=none; b=CxheSdbw4qi9aYigXICTBZF5h5VlRn60XPrjRj6/82QvNLtOibBG1Jey5ut2NLSU0NaXTgwklPrQnBRZUXZZiSrF3SPv3Tm5HPu2EqDlZplT1hxVEr6hMfAUeHSbBxOlS6EZ4KawGRnWhb3+SsdjFvp4hjY7oasG4/TNHP692FE=
+	t=1770217484; cv=none; b=a7s8Ld8Jk06PbFbJmb28oN1K+yU+h9ZvczTkq2rSFTBUOzGp6CRaNXGYrwRLl/J7rsm2x3+Ey1ElzDjtxyem3Dn0yr4Aj/JWCZ8dvWYLjC45mT8I6NZxvlweKKO+F5MvR3+9La9nFzUmjeeAQaWSQviZOKFD5fDMFSREKCLGsok=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770217480; c=relaxed/simple;
-	bh=UZdTxqDPsaPfLeIbVdI/oYjalVGa/InhyvxKcuXRPHc=;
+	s=arc-20240116; t=1770217484; c=relaxed/simple;
+	bh=UGabwtwBUgOXxuqkwwMDqc0A0Kl/4mpemoAP11FUdWc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AnJpUci4RrTZU78P41+zynIU2MxhFp4/2ObJ8hZ2pt9LRqE/XsfMJkkWJvsGQMScmVufzaaehEv22jO+egNN8f9zgRWrBfsi3lI5q/TC5yxZSvYQMY2Zv4KzJYAw6jC3pQQJkLTFWBS1stl7Kn0JMi4CqmqnPK0soKBSGMTp9GU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ftWUde65; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gBDF6Oiz9eJj9TkPxuFX9NFPSzwSbg+UUMoYPVvPt9YSf7GzxafRs6V3VDEda5ZnfzPaj2V2RYGQcqqC5cTx6xKWjpDf6ZgFgSsFTvxbEZDQFWGKKUn2l43VNbgwmJqYzsz0FOD0piasa2snczfkWGlYkvQRQ+wRIiZWqF7pmVo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=plsfismU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ftWUde65"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E7534C4CEF7;
-	Wed,  4 Feb 2026 15:04:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="plsfismU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31407C4CEF7;
+	Wed,  4 Feb 2026 15:04:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770217480;
-	bh=UZdTxqDPsaPfLeIbVdI/oYjalVGa/InhyvxKcuXRPHc=;
+	s=korg; t=1770217483;
+	bh=UGabwtwBUgOXxuqkwwMDqc0A0Kl/4mpemoAP11FUdWc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ftWUde65GYVdagPPVeOZ+Tb8plCQr8pLoNnHXMEg+0aMNPn4HzgQYjJ2XWsP1ZgtK
-	 jSNHzggUv9X0yPAxi4N943FTHfgfd1QeYZv+Rr62FtdO60IX9KPkMEHgywJy3vJqMx
-	 J+O2NBndcR3lSJc6z6YqWIrwcJc61OJd7/5iWLUY=
+	b=plsfismUiCwpl3NKEO+QXG3fM5Uj6oPS4rSQkMNhRdvjvfDZ40ThjnkX1Kwi5QVv+
+	 Pe8lt0l2aDuoEa/BFRui0ml1NmUW8kDiEO5WlU8iJV1zz4r9Od44i6WSUlKRrmF8ZO
+	 jPagofHolPJxlKjutH59pUqyXsu5ci07gAnfEdHE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Emil Svendsen <emas@bang-olufsen.dk>,
-	Sascha Hauer <s.hauer@pengutronix.de>,
-	Mark Brown <broonie@kernel.org>,
+	Bagas Sanjaya <bagasdotme@gmail.com>,
+	Thomas Graf <tgraf@suug.ch>,
+	"David S. Miller" <davem@davemloft.net>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 028/280] ASoC: tlv320adcx140: fix word length
-Date: Wed,  4 Feb 2026 15:36:42 +0100
-Message-ID: <20260204143910.648673202@linuxfoundation.org>
+Subject: [PATCH 6.1 029/280] textsearch: describe @list member in ts_ops search
+Date: Wed,  4 Feb 2026 15:36:43 +0100
+Message-ID: <20260204143910.686302760@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260204143909.614719725@linuxfoundation.org>
 References: <20260204143909.614719725@linuxfoundation.org>
@@ -52,48 +53,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Emil Svendsen <emas@bang-olufsen.dk>
+From: Bagas Sanjaya <bagasdotme@gmail.com>
 
-[ Upstream commit 46378ab9fcb796dca46b51e10646f636e2c661f9 ]
+[ Upstream commit f26528478bb102c28e7ac0cbfc8ec8185afdafc7 ]
 
-The word length is the physical width of the channel slots. So the
-hw_params would misconfigure when format width and physical width
-doesn't match. Like S24_LE which has data width of 24 bits but physical
-width of 32 bits. So if using asymmetric formats you will get a lot of
-noise.
+Sphinx reports kernel-doc warning:
 
-Fixes: 689c7655b50c5 ("ASoC: tlv320adcx140: Add the tlv320adcx140 codec driver family")
-Signed-off-by: Emil Svendsen <emas@bang-olufsen.dk>
-Signed-off-by: Sascha Hauer <s.hauer@pengutronix.de>
-Link: https://patch.msgid.link/20260113-sound-soc-codecs-tvl320adcx140-v4-4-8f7ecec525c8@pengutronix.de
-Signed-off-by: Mark Brown <broonie@kernel.org>
+WARNING: ./include/linux/textsearch.h:49 struct member 'list' not described in 'ts_ops'
+
+Describe @list member to fix it.
+
+Link: https://lkml.kernel.org/r/20251219014006.16328-4-bagasdotme@gmail.com
+Fixes: 2de4ff7bd658 ("[LIB]: Textsearch infrastructure.")
+Signed-off-by: Bagas Sanjaya <bagasdotme@gmail.com>
+Cc: Thomas Graf <tgraf@suug.ch>
+Cc: "David S. Miller" <davem@davemloft.net>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/tlv320adcx140.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ include/linux/textsearch.h | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/sound/soc/codecs/tlv320adcx140.c b/sound/soc/codecs/tlv320adcx140.c
-index 4405934120e51..67eef894d0c2d 100644
---- a/sound/soc/codecs/tlv320adcx140.c
-+++ b/sound/soc/codecs/tlv320adcx140.c
-@@ -728,7 +728,7 @@ static int adcx140_hw_params(struct snd_pcm_substream *substream,
- 	struct adcx140_priv *adcx140 = snd_soc_component_get_drvdata(component);
- 	u8 data = 0;
- 
--	switch (params_width(params)) {
-+	switch (params_physical_width(params)) {
- 	case 16:
- 		data = ADCX140_16_BIT_WORD;
- 		break;
-@@ -743,7 +743,7 @@ static int adcx140_hw_params(struct snd_pcm_substream *substream,
- 		break;
- 	default:
- 		dev_err(component->dev, "%s: Unsupported width %d\n",
--			__func__, params_width(params));
-+			__func__, params_physical_width(params));
- 		return -EINVAL;
- 	}
- 
+diff --git a/include/linux/textsearch.h b/include/linux/textsearch.h
+index 6673e4d4ac2e1..4933777404d61 100644
+--- a/include/linux/textsearch.h
++++ b/include/linux/textsearch.h
+@@ -35,6 +35,7 @@ struct ts_state
+  * @get_pattern: return head of pattern
+  * @get_pattern_len: return length of pattern
+  * @owner: module reference to algorithm
++ * @list: list to search
+  */
+ struct ts_ops
+ {
 -- 
 2.51.0
 
