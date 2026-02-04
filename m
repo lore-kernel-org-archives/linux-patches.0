@@ -1,43 +1,48 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8D8018859B;
-	Wed,  4 Feb 2026 15:15:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A3EA18859B;
+	Wed,  4 Feb 2026 15:15:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770218145; cv=none; b=I0VXda7nljGbWpKepolAON56J30bLKJ22pyvEQTKqNNwT/kdLtlY1jQ5glcs2rHkX5Rg7WVgaq27drgjswb5v7wWFetvxz9O8wYIQT3LfUHzxSEQLBOoigaFpe4sLLkU++LFt4JzTAc6u2ZmE823UavSM3yGUMrkeY2m5ZkJjgQ=
+	t=1770218149; cv=none; b=WJROKyfSohjnnDL2JGnCf5ge4XOlA8dU6XepZOgQcoMtTt2NBAvXZ6lWWCn8FnKCsu171pdDPdfSGUqQo6fez8Qn74NpZsS4sKBYb/gdBGiMiG02AeerB/jICGkm9cPVzk8qU+STKrmvKPJLJqS3XqVMaPFqMOEZ4TU6X1LJ4iE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770218145; c=relaxed/simple;
-	bh=UNsBoyW7USq1wVSHc6nGwWVGs4INctXUmuYbNaPzdzM=;
+	s=arc-20240116; t=1770218149; c=relaxed/simple;
+	bh=kJjHXV9UfGGZwGaPBdPG8DFq+miDiL/eTC9UuCdH9Mk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=OSw2gGoQx5klqmWQ8WOO15pSwuO8UtjWmkxqjTXeLIYYjhi0qouUsAeC7XgZ7Vied1lcoMUJSOxL1Fw+rpKqxzOE/PEFTNQN7fxdxQRhg+6bnGksYEL3/jeev7q7wNg0TVUvVs5vafMPAp79xb+4nayPDE2syq5rMIjNGLwzTWE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VDsqb/dt; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZH1MrfUwyLBuV2Z40FQ20oUKxyWcIVxlMwoFY7l/dw5kJJeJAeswHzJhQi1durXi67F6CfjAQZooKBeKAVrObG+p2Bnx/IZHrGhoIlrJ8Mc9gLJIREGyEgWjOqzB8pQoL0sqeZrgm7H2MGykTUmtmkDIlUEE5IKci98RZz0DQeU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xU3MKW6H; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VDsqb/dt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 51CC2C4CEF7;
-	Wed,  4 Feb 2026 15:15:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xU3MKW6H"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F1B8C4CEF7;
+	Wed,  4 Feb 2026 15:15:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770218145;
-	bh=UNsBoyW7USq1wVSHc6nGwWVGs4INctXUmuYbNaPzdzM=;
+	s=korg; t=1770218149;
+	bh=kJjHXV9UfGGZwGaPBdPG8DFq+miDiL/eTC9UuCdH9Mk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VDsqb/dtKukfkOeAw2vdTJqSU9VJcWl2vuS3rdCUlpQV09YbV7DXX94T7h6mwmXtM
-	 jTVUaT89AOvhUFkmt4EOCLKoO+0FbGxVPvjKtEV8pUEBQZWoJoDnc81VWMVLoQftnx
-	 DAqX/GB+gDjGw9ASKVrU8vFJIMtG4BebxwI0OYI4=
+	b=xU3MKW6HPtVjRLJ9RmegmTtfCpPV7GDJYKrU2+oRGEKR5vpUoGRUXLsxbysG4kpAZ
+	 t7Oosc1JxAEjoZ7eQY0wQ008lE9GG5avCW1Sb/eHrMjNHC28VnEu9YXImSJZCCk/kH
+	 W52YzFZ29XyMkPeJoFECKXuDmLpJnbbrA2daIve4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jakub Kicinski <kuba@kernel.org>,
-	Yafang Shao <laoar.shao@gmail.com>,
-	Saeed Mahameed <saeedm@nvidia.com>,
-	Leon Romanovsky <leon@kernel.org>,
-	Gal Pressman <gal@nvidia.com>,
-	Simon Horman <horms@kernel.org>,
-	Tariq Toukan <tariqt@nvidia.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 198/280] net/mlx5e: Report rx_discards_phy via rx_dropped
-Date: Wed,  4 Feb 2026 15:39:32 +0100
-Message-ID: <20260204143916.729768612@linuxfoundation.org>
+	Vlastimil Babka <vbabka@suse.cz>,
+	kernel test robot <oliver.sang@intel.com>,
+	Mel Gorman <mgorman@techsingularity.net>,
+	Brendan Jackman <jackmanb@google.com>,
+	Johannes Weiner <hannes@cmpxchg.org>,
+	Michal Hocko <mhocko@suse.com>,
+	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
+	Steven Rostedt <rostedt@goodmis.org>,
+	Suren Baghdasaryan <surenb@google.com>,
+	Zi Yan <ziy@nvidia.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Sasha Levin <sashal@kernel.org>,
+	Matthew Wilcox <willy@infradead.org>
+Subject: [PATCH 6.1 225/280] mm/page_alloc: prevent pcp corruption with SMP=n
+Date: Wed,  4 Feb 2026 15:39:59 +0100
+Message-ID: <20260204143917.709818674@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260204143909.614719725@linuxfoundation.org>
 References: <20260204143909.614719725@linuxfoundation.org>
@@ -50,54 +55,174 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Yafang Shao <laoar.shao@gmail.com>
+From: Vlastimil Babka <vbabka@suse.cz>
 
-[ Upstream commit c9cfced17365b1df8c6ae6cd5db56aebd7ed9b57 ]
+[ Upstream commit 038a102535eb49e10e93eafac54352fcc5d78847 ]
 
-We noticed a high number of rx_discards_phy events on certain servers while
-running `ethtool -S`. However, this critical counter is not currently
-included in the standard /proc/net/dev statistics file, making it difficult
-to monitor effectively—especially given the diversity of vendors across a
-large fleet of servers.
+The kernel test robot has reported:
 
-Let's report it via the standard rx_dropped metric.
+ BUG: spinlock trylock failure on UP on CPU#0, kcompactd0/28
+  lock: 0xffff888807e35ef0, .magic: dead4ead, .owner: kcompactd0/28, .owner_cpu: 0
+ CPU: 0 UID: 0 PID: 28 Comm: kcompactd0 Not tainted 6.18.0-rc5-00127-ga06157804399 #1 PREEMPT  8cc09ef94dcec767faa911515ce9e609c45db470
+ Call Trace:
+  <IRQ>
+  __dump_stack (lib/dump_stack.c:95)
+  dump_stack_lvl (lib/dump_stack.c:123)
+  dump_stack (lib/dump_stack.c:130)
+  spin_dump (kernel/locking/spinlock_debug.c:71)
+  do_raw_spin_trylock (kernel/locking/spinlock_debug.c:?)
+  _raw_spin_trylock (include/linux/spinlock_api_smp.h:89 kernel/locking/spinlock.c:138)
+  __free_frozen_pages (mm/page_alloc.c:2973)
+  ___free_pages (mm/page_alloc.c:5295)
+  __free_pages (mm/page_alloc.c:5334)
+  tlb_remove_table_rcu (include/linux/mm.h:? include/linux/mm.h:3122 include/asm-generic/tlb.h:220 mm/mmu_gather.c:227 mm/mmu_gather.c:290)
+  ? __cfi_tlb_remove_table_rcu (mm/mmu_gather.c:289)
+  ? rcu_core (kernel/rcu/tree.c:?)
+  rcu_core (include/linux/rcupdate.h:341 kernel/rcu/tree.c:2607 kernel/rcu/tree.c:2861)
+  rcu_core_si (kernel/rcu/tree.c:2879)
+  handle_softirqs (arch/x86/include/asm/jump_label.h:36 include/trace/events/irq.h:142 kernel/softirq.c:623)
+  __irq_exit_rcu (arch/x86/include/asm/jump_label.h:36 kernel/softirq.c:725)
+  irq_exit_rcu (kernel/softirq.c:741)
+  sysvec_apic_timer_interrupt (arch/x86/kernel/apic/apic.c:1052)
+  </IRQ>
+  <TASK>
+ RIP: 0010:_raw_spin_unlock_irqrestore (arch/x86/include/asm/preempt.h:95 include/linux/spinlock_api_smp.h:152 kernel/locking/spinlock.c:194)
+  free_pcppages_bulk (mm/page_alloc.c:1494)
+  drain_pages_zone (include/linux/spinlock.h:391 mm/page_alloc.c:2632)
+  __drain_all_pages (mm/page_alloc.c:2731)
+  drain_all_pages (mm/page_alloc.c:2747)
+  kcompactd (mm/compaction.c:3115)
+  kthread (kernel/kthread.c:465)
+  ? __cfi_kcompactd (mm/compaction.c:3166)
+  ? __cfi_kthread (kernel/kthread.c:412)
+  ret_from_fork (arch/x86/kernel/process.c:164)
+  ? __cfi_kthread (kernel/kthread.c:412)
+  ret_from_fork_asm (arch/x86/entry/entry_64.S:255)
+  </TASK>
 
-Suggested-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Yafang Shao <laoar.shao@gmail.com>
-Cc: Saeed Mahameed <saeedm@nvidia.com>
-Cc: Leon Romanovsky <leon@kernel.org>
-Cc: Gal Pressman <gal@nvidia.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Reviewed-by: Tariq Toukan <tariqt@nvidia.com>
-Link: https://patch.msgid.link/20241210022706.6665-1-laoar.shao@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Stable-dep-of: 476681f10cc1 ("net/mlx5e: Account for netdev stats in ndo_get_stats64")
+Matthew has analyzed the report and identified that in drain_page_zone()
+we are in a section protected by spin_lock(&pcp->lock) and then get an
+interrupt that attempts spin_trylock() on the same lock.  The code is
+designed to work this way without disabling IRQs and occasionally fail the
+trylock with a fallback.  However, the SMP=n spinlock implementation
+assumes spin_trylock() will always succeed, and thus it's normally a
+no-op.  Here the enabled lock debugging catches the problem, but otherwise
+it could cause a corruption of the pcp structure.
+
+The problem has been introduced by commit 574907741599 ("mm/page_alloc:
+leave IRQs enabled for per-cpu page allocations").  The pcp locking scheme
+recognizes the need for disabling IRQs to prevent nesting spin_trylock()
+sections on SMP=n, but the need to prevent the nesting in spin_lock() has
+not been recognized.  Fix it by introducing local wrappers that change the
+spin_lock() to spin_lock_iqsave() with SMP=n and use them in all places
+that do spin_lock(&pcp->lock).
+
+[vbabka@suse.cz: add pcp_ prefix to the spin_lock_irqsave wrappers, per Steven]
+Link: https://lkml.kernel.org/r/20260105-fix-pcp-up-v1-1-5579662d2071@suse.cz
+Fixes: 574907741599 ("mm/page_alloc: leave IRQs enabled for per-cpu page allocations")
+Signed-off-by: Vlastimil Babka <vbabka@suse.cz>
+Reported-by: kernel test robot <oliver.sang@intel.com>
+Closes: https://lore.kernel.org/oe-lkp/202512101320.e2f2dd6f-lkp@intel.com
+Analyzed-by: Matthew Wilcox <willy@infradead.org>
+Link: https://lore.kernel.org/all/aUW05pyc9nZkvY-1@casper.infradead.org/
+Acked-by: Mel Gorman <mgorman@techsingularity.net>
+Cc: Brendan Jackman <jackmanb@google.com>
+Cc: Johannes Weiner <hannes@cmpxchg.org>
+Cc: Michal Hocko <mhocko@suse.com>
+Cc: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+Cc: Steven Rostedt <rostedt@goodmis.org>
+Cc: Suren Baghdasaryan <surenb@google.com>
+Cc: Zi Yan <ziy@nvidia.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+[ drop changes to decay_pcp_high() and zone_pcp_update_cacheinfo() ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/mellanox/mlx5/core/en_main.c | 1 +
- 1 file changed, 1 insertion(+)
+ mm/page_alloc.c |   37 +++++++++++++++++++++++++++++++++----
+ 1 file changed, 33 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en_main.c b/drivers/net/ethernet/mellanox/mlx5/core/en_main.c
-index 73011870e5ff6..1d7fe4ffdd734 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/en_main.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/en_main.c
-@@ -3667,6 +3667,7 @@ mlx5e_get_stats(struct net_device *dev, struct rtnl_link_stats64 *stats)
+--- a/mm/page_alloc.c
++++ b/mm/page_alloc.c
+@@ -198,6 +198,33 @@ static DEFINE_MUTEX(pcp_batch_high_lock)
+ #define pcp_spin_unlock(ptr)						\
+ 	pcpu_spin_unlock(lock, ptr)
+ 
++/*
++ * With the UP spinlock implementation, when we spin_lock(&pcp->lock) (for i.e.
++ * a potentially remote cpu drain) and get interrupted by an operation that
++ * attempts pcp_spin_trylock(), we can't rely on the trylock failure due to UP
++ * spinlock assumptions making the trylock a no-op. So we have to turn that
++ * spin_lock() to a spin_lock_irqsave(). This works because on UP there are no
++ * remote cpu's so we can only be locking the only existing local one.
++ */
++#if defined(CONFIG_SMP) || defined(CONFIG_PREEMPT_RT)
++static inline void __flags_noop(unsigned long *flags) { }
++#define pcp_spin_lock_maybe_irqsave(ptr, flags)		\
++({							\
++	 __flags_noop(&(flags));			\
++	 spin_lock(&(ptr)->lock);			\
++})
++#define pcp_spin_unlock_maybe_irqrestore(ptr, flags)	\
++({							\
++	 spin_unlock(&(ptr)->lock);			\
++	 __flags_noop(&(flags));			\
++})
++#else
++#define pcp_spin_lock_maybe_irqsave(ptr, flags)		\
++		spin_lock_irqsave(&(ptr)->lock, flags)
++#define pcp_spin_unlock_maybe_irqrestore(ptr, flags)	\
++		spin_unlock_irqrestore(&(ptr)->lock, flags)
++#endif
++
+ #ifdef CONFIG_USE_PERCPU_NUMA_NODE_ID
+ DEFINE_PER_CPU(int, numa_node);
+ EXPORT_PER_CPU_SYMBOL(numa_node);
+@@ -3174,14 +3201,15 @@ static int rmqueue_bulk(struct zone *zon
+  */
+ void drain_zone_pages(struct zone *zone, struct per_cpu_pages *pcp)
+ {
++	unsigned long UP_flags;
+ 	int to_drain, batch;
+ 
+ 	batch = READ_ONCE(pcp->batch);
+ 	to_drain = min(pcp->count, batch);
+ 	if (to_drain > 0) {
+-		spin_lock(&pcp->lock);
++		pcp_spin_lock_maybe_irqsave(pcp, UP_flags);
+ 		free_pcppages_bulk(zone, to_drain, pcp, 0);
+-		spin_unlock(&pcp->lock);
++		pcp_spin_unlock_maybe_irqrestore(pcp, UP_flags);
  	}
+ }
+ #endif
+@@ -3192,10 +3220,11 @@ void drain_zone_pages(struct zone *zone,
+ static void drain_pages_zone(unsigned int cpu, struct zone *zone)
+ {
+ 	struct per_cpu_pages *pcp = per_cpu_ptr(zone->per_cpu_pageset, cpu);
++	unsigned long UP_flags;
+ 	int count;
  
- 	stats->rx_missed_errors = priv->stats.qcnt.rx_out_of_buffer;
-+	stats->rx_dropped = PPORT_2863_GET(pstats, if_in_discards);
+ 	do {
+-		spin_lock(&pcp->lock);
++		pcp_spin_lock_maybe_irqsave(pcp, UP_flags);
+ 		count = pcp->count;
+ 		if (count) {
+ 			int to_drain = min(count,
+@@ -3204,7 +3233,7 @@ static void drain_pages_zone(unsigned in
+ 			free_pcppages_bulk(zone, to_drain, pcp, 0);
+ 			count -= to_drain;
+ 		}
+-		spin_unlock(&pcp->lock);
++		pcp_spin_unlock_maybe_irqrestore(pcp, UP_flags);
+ 	} while (count);
+ }
  
- 	stats->rx_length_errors =
- 		PPORT_802_3_GET(pstats, a_in_range_length_errors) +
--- 
-2.51.0
-
 
 
