@@ -1,39 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B04BE41C305;
-	Wed,  4 Feb 2026 14:59:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 536C541C31D;
+	Wed,  4 Feb 2026 14:59:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770217140; cv=none; b=DBqaqIevIJBBniKGzKGcTVCfiQNQ536KQhX/PW3oCk7o+8mlxoPZ+S7pDEr/5YjkLJGCnRoYzdYh7v8WszeAIjFeFk4qvpZG+FYPU2hRX6xiT85ba9KZEzk3ZJaGvuYmIKijbG4Ry9xaN4M/DMU4dOfy5L/vmblpLFOaPxpG2xo=
+	t=1770217144; cv=none; b=XUwfBI210v/6/C6lQlg2et9fvXChUbsoGmj+kBjb+YxznsFspdHeOO2h1YAqIaLmh/BZC7coHm+q/H0GvvoQiZdGNj06gXoODg9pqsicDWa/okhXKeq/YCbj9rwfn5/3m+r6L5/WMVe2O0FPGlXoes8l+dS1c/7/vw/6f1PP+08=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770217140; c=relaxed/simple;
-	bh=ViaJJA8cS9Zn15SPF0Ps2e+ezusPp5sKmnY6qkL5JLY=;
+	s=arc-20240116; t=1770217144; c=relaxed/simple;
+	bh=vJqTQ9nUOlod3uG684xUKSHZgccBP7CDl0gRJbt2Bds=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OEXViib/cjRdEnb3hBDTgaHFIizQvBWX9Zi3xD/SUPNzjuYrdb7MEUDDjwrP2+68Z79F1r0MrzQXSplz3ccnOSfYOFp5ZeXa3vBW7QRXO1CWhhjLhpjM2G/O1kUBXKAiGhkHfGGi3KitICf63FLB5otSQF+VVICqkIshnVj/KDI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pdNiuk7A; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=EXqPfiTl9Qt10gULo5DRGsTS/0evA+Jta7q+VNHQHECdZIdute51QbSn55T5XT8aVBzmhTEtsHm0Y3zgXUuE75JDgkHr3wUYOCpj2xBfmr4twLkEoVSoJo1sNy2hAdCdfP2nlS19720EA//8XUECBHcRxiAA6Sbac0OUVKWuCBg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zwJfXWqM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pdNiuk7A"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D1C4CC4CEF7;
-	Wed,  4 Feb 2026 14:58:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zwJfXWqM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 88A16C116C6;
+	Wed,  4 Feb 2026 14:59:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770217140;
-	bh=ViaJJA8cS9Zn15SPF0Ps2e+ezusPp5sKmnY6qkL5JLY=;
+	s=korg; t=1770217143;
+	bh=vJqTQ9nUOlod3uG684xUKSHZgccBP7CDl0gRJbt2Bds=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pdNiuk7A3KDe+KhhgjeeY58WsmYCdIdUZMibUMJkjUQK5frAtInqTqnHX7JX255yL
-	 Psz9V3dXGisuCID5B6Tb7RuZiXlj7iEukp5bbdJv39FuhqofPe/eKjTbF4mGtrCIlw
-	 VyEY/L/gwWlPgOuDyZJBpCFBgQlW2zQRK0zxSuP4=
+	b=zwJfXWqMtrwWdWCWxb8eZW10CoJl0HZcsQ64ueZQrZl7iXmCBwSBjm6DLbgHF29P0
+	 h40wCWxWikj3AnJNTlWKqiHO3ZsJeqNZiXdSxL5fQnkvaqUA5GBXSgjtdg6B3UTrcc
+	 3BFvIr8SwyFZAN8H91q7Yew+JrEHcmtI1hZpAk30=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cheng-Yu Lee <cylee12@realtek.com>,
-	Yu-Chun Lin <eleanor.lin@realtek.com>,
-	Mark Brown <broonie@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 092/206] regmap: Fix race condition in hwspinlock irqsave routine
-Date: Wed,  4 Feb 2026 15:38:43 +0100
-Message-ID: <20260204143901.521872302@linuxfoundation.org>
+	Marc Kleine-Budde <mkl@pengutronix.de>
+Subject: [PATCH 5.15 129/206] can: kvaser_usb: kvaser_usb_read_bulk_callback(): fix URB memory leak
+Date: Wed,  4 Feb 2026 15:39:20 +0100
+Message-ID: <20260204143902.845911696@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260204143858.193781818@linuxfoundation.org>
 References: <20260204143858.193781818@linuxfoundation.org>
@@ -52,49 +49,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cheng-Yu Lee <cylee12@realtek.com>
+From: Marc Kleine-Budde <mkl@pengutronix.de>
 
-[ Upstream commit 4b58aac989c1e3fafb1c68a733811859df388250 ]
+commit 248e8e1a125fa875158df521b30f2cc7e27eeeaa upstream.
 
-Previously, the address of the shared member '&map->spinlock_flags' was
-passed directly to 'hwspin_lock_timeout_irqsave'. This creates a race
-condition where multiple contexts contending for the lock could overwrite
-the shared flags variable, potentially corrupting the state for the
-current lock owner.
+Fix similar memory leak as in commit 7352e1d5932a ("can: gs_usb:
+gs_usb_receive_bulk_callback(): fix URB memory leak").
 
-Fix this by using a local stack variable 'flags' to store the IRQ state
-temporarily.
+In kvaser_usb_set_{,data_}bittiming() -> kvaser_usb_setup_rx_urbs(), the
+URBs for USB-in transfers are allocated, added to the dev->rx_submitted
+anchor and submitted. In the complete callback
+kvaser_usb_read_bulk_callback(), the URBs are processed and resubmitted. In
+kvaser_usb_remove_interfaces() the URBs are freed by calling
+usb_kill_anchored_urbs(&dev->rx_submitted).
 
-Fixes: 8698b9364710 ("regmap: Add hardware spinlock support")
-Signed-off-by: Cheng-Yu Lee <cylee12@realtek.com>
-Co-developed-by: Yu-Chun Lin <eleanor.lin@realtek.com>
-Signed-off-by: Yu-Chun Lin <eleanor.lin@realtek.com>
-Link: https://patch.msgid.link/20260109032633.8732-1-eleanor.lin@realtek.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+However, this does not take into account that the USB framework unanchors
+the URB before the complete function is called. This means that once an
+in-URB has been completed, it is no longer anchored and is ultimately not
+released in usb_kill_anchored_urbs().
+
+Fix the memory leak by anchoring the URB in the
+kvaser_usb_read_bulk_callback() to the dev->rx_submitted anchor.
+
+Fixes: 080f40a6fa28 ("can: kvaser_usb: Add support for Kvaser CAN/USB devices")
+Cc: stable@vger.kernel.org
+Link: https://patch.msgid.link/20260116-can_usb-fix-memory-leak-v2-3-4b8cb2915571@pengutronix.de
+Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/base/regmap/regmap.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/net/can/usb/kvaser_usb/kvaser_usb_core.c |    9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/base/regmap/regmap.c b/drivers/base/regmap/regmap.c
-index 35cfbec6bf9ac..e1380b08685f4 100644
---- a/drivers/base/regmap/regmap.c
-+++ b/drivers/base/regmap/regmap.c
-@@ -473,9 +473,11 @@ static void regmap_lock_hwlock_irq(void *__map)
- static void regmap_lock_hwlock_irqsave(void *__map)
- {
- 	struct regmap *map = __map;
-+	unsigned long flags = 0;
+--- a/drivers/net/can/usb/kvaser_usb/kvaser_usb_core.c
++++ b/drivers/net/can/usb/kvaser_usb/kvaser_usb_core.c
+@@ -350,7 +350,14 @@ resubmit_urb:
+ 			  urb->transfer_buffer, KVASER_USB_RX_BUFFER_SIZE,
+ 			  kvaser_usb_read_bulk_callback, dev);
  
- 	hwspin_lock_timeout_irqsave(map->hwlock, UINT_MAX,
--				    &map->spinlock_flags);
-+				    &flags);
-+	map->spinlock_flags = flags;
- }
++	usb_anchor_urb(urb, &dev->rx_submitted);
++
+ 	err = usb_submit_urb(urb, GFP_ATOMIC);
++	if (!err)
++		return;
++
++	usb_unanchor_urb(urb);
++
+ 	if (err == -ENODEV) {
+ 		for (i = 0; i < dev->nchannels; i++) {
+ 			if (!dev->nets[i])
+@@ -358,7 +365,7 @@ resubmit_urb:
  
- static void regmap_unlock_hwlock(void *__map)
--- 
-2.51.0
-
+ 			netif_device_detach(dev->nets[i]->netdev);
+ 		}
+-	} else if (err) {
++	} else {
+ 		dev_err(&dev->intf->dev,
+ 			"Failed resubmitting read bulk urb: %d\n", err);
+ 	}
 
 
