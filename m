@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 300892D879A;
-	Wed,  4 Feb 2026 15:04:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6527D42314E;
+	Wed,  4 Feb 2026 15:04:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770217490; cv=none; b=AWyKj5t6FbW1XUlKXornZDGCL5FCGWoask5yfsGeMu+fewKynelUFq83GOyNtMbZ4ewmHknFzffwXEU+k1rQ3vjsqxys+di45XmMbqcRDINaOISYGfBIxAXjrAawS6awFbxWZQ+KoohBGMvG46Lyuqimnxqal8jOXntGcDaur50=
+	t=1770217493; cv=none; b=Vd2gszo92NtYBqe13NsxARYx70ftRJOcPbux4GCvUQcs0XJlSARCvUeTiw2qcvIT371jlKEv79xr21wKcFgl/WzQETXzZnWtpmmzH5SbsgDA7xEhYFL855X093iI5Y/WvA/ZdRjU4YIvFZiUgKzRX2gLQH8J+/TTW84RtkUXC3M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770217490; c=relaxed/simple;
-	bh=B5RCoeEsaNQWy1tDlVz8AwecQwhjjk9ReDDXO6Th+tI=;
+	s=arc-20240116; t=1770217493; c=relaxed/simple;
+	bh=2LE8zAJ+/vC3Fv0WquBjOQZxyQMlxxUXzZSWnIftcQo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SjB/CZ71MDQSRvva01YBdVU7hEVRM7iHZN9ECSaQ43fiwBSRkbaNoJ0GSWjrbBgGuvcyykf25ykSsIzbticS85ybD/cHvxz2Fxwj1725YeYFiX93mRNyVzSTEgBgqwbR+cHsuAoEnA0QObdrJoJ0shyPmwY4b4orbbFob9mGnE8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QUklQ1NL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dRuZl8NhV3ug2Hl5MiwQYP2JORAd1jAB6lAgLLwcn9C7FwM8Stlp8vklvEqkrOMCRidgnACd5Wkwdf6/rz22sx6+e+gZk1YYi3u1OwuQISpqdTpw7HfWEQGf0ywTUZJpmv6KBk5PSM6hlwYEKd5R2cOJUZ4aHzBDVE1U/oyL/iw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xVWlSid8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QUklQ1NL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF710C4CEF7;
-	Wed,  4 Feb 2026 15:04:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xVWlSid8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE687C4CEF7;
+	Wed,  4 Feb 2026 15:04:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770217490;
-	bh=B5RCoeEsaNQWy1tDlVz8AwecQwhjjk9ReDDXO6Th+tI=;
+	s=korg; t=1770217493;
+	bh=2LE8zAJ+/vC3Fv0WquBjOQZxyQMlxxUXzZSWnIftcQo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QUklQ1NL6BGwfckMyerLIprCNfAiEisfNstKV+WXAul8nECiPBMr09+dj9As46S7D
-	 yETA1Oy/o0in8vBzqe5V+OMxcJ0J+cBZhQ+3hDwSOZL178jGhDI2nXXI/xbDjx7dZU
-	 cQpSdc8OK1l1PMiCIrM4xehanAp//yXFKqu0EvvU=
+	b=xVWlSid8o6VMpqNvxIpY767W6hTbAfhdZiVDOct7DK0hVxS4dXLfqZs0gYNtFfy0D
+	 wrmPgOX8VxAvB6uhYBGFjlGVwSPBCi/KCXYizU9JxovTZ9ZacEjL22XHbceaNDAQ/B
+	 slsBaMVSr9iLgsgMw3DyBSvI28PmKs+Q4eK8WzHU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sheetal <sheetal@nvidia.com>,
-	Thierry Reding <treding@nvidia.com>,
-	Vinod Koul <vkoul@kernel.org>,
+	Luigi Leonardi <leonardi@redhat.com>,
+	Stefano Garzarella <sgarzare@redhat.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 031/280] dmaengine: tegra-adma: Fix use-after-free
-Date: Wed,  4 Feb 2026 15:36:45 +0100
-Message-ID: <20260204143910.758947765@linuxfoundation.org>
+Subject: [PATCH 6.1 014/280] vsock/test: add a final full barrier after run all tests
+Date: Wed,  4 Feb 2026 15:36:28 +0100
+Message-ID: <20260204143910.143907528@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260204143909.614719725@linuxfoundation.org>
 References: <20260204143909.614719725@linuxfoundation.org>
@@ -52,108 +52,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sheetal <sheetal@nvidia.com>
+From: Stefano Garzarella <sgarzare@redhat.com>
 
-[ Upstream commit 2efd07a7c36949e6fa36a69183df24d368bf9e96 ]
+[ Upstream commit c39a6a277e0e67ffff6a8efcbbf7e7e23ce9e38c ]
 
-A use-after-free bug exists in the Tegra ADMA driver when audio streams
-are terminated, particularly during XRUN conditions. The issue occurs
-when the DMA buffer is freed by tegra_adma_terminate_all() before the
-vchan completion tasklet finishes accessing it.
+If the last test fails, the other side still completes correctly,
+which could lead to false positives.
 
-The race condition follows this sequence:
+Let's add a final barrier that ensures that the last test has finished
+correctly on both sides, but also that the two sides agree on the
+number of tests to be performed.
 
-  1. DMA transfer completes, triggering an interrupt that schedules the
-     completion tasklet (tasklet has not executed yet)
-  2. Audio playback stops, calling tegra_adma_terminate_all() which
-     frees the DMA buffer memory via kfree()
-  3. The scheduled tasklet finally executes, calling vchan_complete()
-     which attempts to access the already-freed memory
-
-Since tasklets can execute at any time after being scheduled, there is
-no guarantee that the buffer will remain valid when vchan_complete()
-runs.
-
-Fix this by properly synchronizing the virtual channel completion:
- - Calling vchan_terminate_vdesc() in tegra_adma_stop() to mark the
-   descriptors as terminated instead of freeing the descriptor.
- - Add the callback tegra_adma_synchronize() that calls
-   vchan_synchronize() which kills any pending tasklets and frees any
-   terminated descriptors.
-
-Crash logs:
-[  337.427523] BUG: KASAN: use-after-free in vchan_complete+0x124/0x3b0
-[  337.427544] Read of size 8 at addr ffff000132055428 by task swapper/0/0
-
-[  337.427562] Call trace:
-[  337.427564]  dump_backtrace+0x0/0x320
-[  337.427571]  show_stack+0x20/0x30
-[  337.427575]  dump_stack_lvl+0x68/0x84
-[  337.427584]  print_address_description.constprop.0+0x74/0x2b8
-[  337.427590]  kasan_report+0x1f4/0x210
-[  337.427598]  __asan_load8+0xa0/0xd0
-[  337.427603]  vchan_complete+0x124/0x3b0
-[  337.427609]  tasklet_action_common.constprop.0+0x190/0x1d0
-[  337.427617]  tasklet_action+0x30/0x40
-[  337.427623]  __do_softirq+0x1a0/0x5c4
-[  337.427628]  irq_exit+0x110/0x140
-[  337.427633]  handle_domain_irq+0xa4/0xe0
-[  337.427640]  gic_handle_irq+0x64/0x160
-[  337.427644]  call_on_irq_stack+0x20/0x4c
-[  337.427649]  do_interrupt_handler+0x7c/0x90
-[  337.427654]  el1_interrupt+0x30/0x80
-[  337.427659]  el1h_64_irq_handler+0x18/0x30
-[  337.427663]  el1h_64_irq+0x7c/0x80
-[  337.427667]  cpuidle_enter_state+0xe4/0x540
-[  337.427674]  cpuidle_enter+0x54/0x80
-[  337.427679]  do_idle+0x2e0/0x380
-[  337.427685]  cpu_startup_entry+0x2c/0x70
-[  337.427690]  rest_init+0x114/0x130
-[  337.427695]  arch_call_rest_init+0x18/0x24
-[  337.427702]  start_kernel+0x380/0x3b4
-[  337.427706]  __primary_switched+0xc0/0xc8
-
-Fixes: f46b195799b5 ("dmaengine: tegra-adma: Add support for Tegra210 ADMA")
-Signed-off-by: Sheetal <sheetal@nvidia.com>
-Acked-by: Thierry Reding <treding@nvidia.com>
-Link: https://patch.msgid.link/20251110142445.3842036-1-sheetal@nvidia.com
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Fixes: 2f65b44e199c ("VSOCK: add full barrier between test cases")
+Reviewed-by: Luigi Leonardi <leonardi@redhat.com>
+Signed-off-by: Stefano Garzarella <sgarzare@redhat.com>
+Link: https://patch.msgid.link/20260108114419.52747-1-sgarzare@redhat.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dma/tegra210-adma.c | 10 +++++++++-
- 1 file changed, 9 insertions(+), 1 deletion(-)
+ tools/testing/vsock/util.c | 12 ++++++++++++
+ 1 file changed, 12 insertions(+)
 
-diff --git a/drivers/dma/tegra210-adma.c b/drivers/dma/tegra210-adma.c
-index 79da93cc77b64..db79e92f5e611 100644
---- a/drivers/dma/tegra210-adma.c
-+++ b/drivers/dma/tegra210-adma.c
-@@ -341,10 +341,17 @@ static void tegra_adma_stop(struct tegra_adma_chan *tdc)
- 		return;
- 	}
+diff --git a/tools/testing/vsock/util.c b/tools/testing/vsock/util.c
+index 2acbb7703c6a0..259d33ae6293b 100644
+--- a/tools/testing/vsock/util.c
++++ b/tools/testing/vsock/util.c
+@@ -360,6 +360,18 @@ void run_tests(const struct test_case *test_cases,
  
--	kfree(tdc->desc);
-+	vchan_terminate_vdesc(&tdc->desc->vd);
- 	tdc->desc = NULL;
+ 		printf("ok\n");
+ 	}
++
++	printf("All tests have been executed. Waiting other peer...");
++	fflush(stdout);
++
++	/*
++	 * Final full barrier, to ensure that all tests have been run and
++	 * that even the last one has been successful on both sides.
++	 */
++	control_writeln("COMPLETED");
++	control_expectln("COMPLETED");
++
++	printf("ok\n");
  }
  
-+static void tegra_adma_synchronize(struct dma_chan *dc)
-+{
-+	struct tegra_adma_chan *tdc = to_tegra_adma_chan(dc);
-+
-+	vchan_synchronize(&tdc->vc);
-+}
-+
- static void tegra_adma_start(struct tegra_adma_chan *tdc)
- {
- 	struct virt_dma_desc *vd = vchan_next_desc(&tdc->vc);
-@@ -910,6 +917,7 @@ static int tegra_adma_probe(struct platform_device *pdev)
- 	tdma->dma_dev.device_config = tegra_adma_slave_config;
- 	tdma->dma_dev.device_tx_status = tegra_adma_tx_status;
- 	tdma->dma_dev.device_terminate_all = tegra_adma_terminate_all;
-+	tdma->dma_dev.device_synchronize = tegra_adma_synchronize;
- 	tdma->dma_dev.src_addr_widths = BIT(DMA_SLAVE_BUSWIDTH_4_BYTES);
- 	tdma->dma_dev.dst_addr_widths = BIT(DMA_SLAVE_BUSWIDTH_4_BYTES);
- 	tdma->dma_dev.directions = BIT(DMA_DEV_TO_MEM) | BIT(DMA_MEM_TO_DEV);
+ void list_tests(const struct test_case *test_cases)
 -- 
 2.51.0
 
