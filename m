@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3BAAD27B359;
-	Wed,  4 Feb 2026 14:51:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3290281530;
+	Wed,  4 Feb 2026 14:51:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770216665; cv=none; b=YPy/Hv7amOT75as/PcmuOQTyRAVuwwQC7J05+CN/B5NeUsa/v7gUvX9dzWgYhA7KrUcSxM8FrnllHUegmGfddL5OjAYteYtGoRS57h3JLjC2Hrh4t6y1mFUkHQf9y7zkc23u/5UFlPdNOpvvhEaHT8YOsrSnCcTRNvzFaYi8GH4=
+	t=1770216668; cv=none; b=MEtEZmapXMeZuVprm4TSnamGU5NfeVXdMCr8W9h/y/P1YX332lmHvu6PAcvm1A9CDyENobCs/iU/ejRt13qyS+SWibcnryRe8NDYI2LnOgXgBEzlFROXAUqZ+a9qApkZLR1MuX/qS+yfCNmpep4SoUo5ZTU+22PX4Ri4LQy+XEE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770216665; c=relaxed/simple;
-	bh=yMMeitiJrTOFNI2wUz6ECLeup/k4234cBZSSjUhkMY4=;
+	s=arc-20240116; t=1770216668; c=relaxed/simple;
+	bh=xkAK6z+n7/NUeOiKc+Kg9wszmzadtFEEj3Jk73ciU+Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eyUSHETAxHRQ8WDluUTr0X/3rfcb0NfXA97zQxfnF1ykJvA+hlSIgpguCZU8gGj7ZUAuStWP9KzOUPeEJsf2uFd4Ta0O+sLAMmQebwljeKNl5iR8rl9hevndi/X3XExrIoTD9v/IyMnTXBE3A8pYEAExjjvMjySF5AuQZqJFdqM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=twRSQhvY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Bou1ptcepRinBIhDx8SvOZi5OLZhjQEWIbnt512dQduEcjHcwu2CCQbLhspWD2YDmiKx9LvPfdLX0uc2eBT8UWSAlDZAwXUsDRzb8Hylh3BQhv2NIcBcYhBjR/mGmXCK2D8tANlxb0pEIj7qTgtLNLAL3+J7wLFqLzys1mGXTl4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QC/W+l5K; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="twRSQhvY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AFE30C4CEF7;
-	Wed,  4 Feb 2026 14:51:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QC/W+l5K"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D6A5BC4CEF7;
+	Wed,  4 Feb 2026 14:51:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770216665;
-	bh=yMMeitiJrTOFNI2wUz6ECLeup/k4234cBZSSjUhkMY4=;
+	s=korg; t=1770216668;
+	bh=xkAK6z+n7/NUeOiKc+Kg9wszmzadtFEEj3Jk73ciU+Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=twRSQhvYnnLyuroumyTdoDsCfmMLFeWtm1GPEt0ABBQHfCNvZVs9+mtSsltxAiFTq
-	 l86EdpHbS3fqjNLSCIEZ01Nil4ESM1eAq9Gfe7IrfyIGbzPatu6a4LmoboJPfWDDMn
-	 tn8aa38iEhGUvx2gptarDKxzFVf0Lis2lTfjVLwk=
+	b=QC/W+l5KjZw867VroHSXR/OZnCaWNG94TKmF30gQ+xxzHhFYfwY3DF4uFEmMYuDcn
+	 TE6xSlKqUKrVBg6hjwYfoskA8jhH6vfiqAccpFyVBe6nrOuc6n6eDKJAw7WVQg2pSP
+	 bM/20jlUjc7Y/9N11s/3syHJ3SZQb8P+iXes1kwo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marek Szyprowski <m.szyprowski@samsung.com>,
-	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
-	Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
-	Linus Walleij <linusw@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 156/161] pinctrl: meson: mark the GPIO controller as sleeping
-Date: Wed,  4 Feb 2026 15:40:19 +0100
-Message-ID: <20260204143857.360989070@linuxfoundation.org>
+	syzbot+3a0ebe8a52b89c63739d@syzkaller.appspotmail.com,
+	Maxime Ripard <mripard@kernel.org>,
+	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
+	Rahul Rameshbabu <sergeantsagara@protonmail.com>,
+	Benjamin Tissoires <bentiss@kernel.org>,
+	Wenshan Lan <jetlan9@163.com>
+Subject: [PATCH 5.10 157/161] HID: uclogic: Correct devm device reference for hidinput input_dev name
+Date: Wed,  4 Feb 2026 15:40:20 +0100
+Message-ID: <20260204143857.397058309@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260204143851.755002596@linuxfoundation.org>
 References: <20260204143851.755002596@linuxfoundation.org>
@@ -54,92 +54,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+From: Rahul Rameshbabu <sergeantsagara@protonmail.com>
 
-[ Upstream commit 28f24068387169722b508bba6b5257cb68b86e74 ]
+[ Upstream commit dd613a4e45f8d35f49a63a2064e5308fa5619e29 ]
 
-The GPIO controller is configured as non-sleeping but it uses generic
-pinctrl helpers which use a mutex for synchronization.
+Reference the HID device rather than the input device for the devm
+allocation of the input_dev name. Referencing the input_dev would lead to a
+use-after-free when the input_dev was unregistered and subsequently fires a
+uevent that depends on the name. At the point of firing the uevent, the
+name would be freed by devres management.
 
-This can cause the following lockdep splat with shared GPIOs enabled on
-boards which have multiple devices using the same GPIO:
+Use devm_kasprintf to simplify the logic for allocating memory and
+formatting the input_dev name string.
 
-BUG: sleeping function called from invalid context at
-kernel/locking/mutex.c:591
-in_atomic(): 1, irqs_disabled(): 1, non_block: 0, pid: 142, name:
-kworker/u25:3
-preempt_count: 1, expected: 0
-RCU nest depth: 0, expected: 0
-INFO: lockdep is turned off.
-irq event stamp: 46379
-hardirqs last  enabled at (46379): [<ffff8000813acb24>]
-_raw_spin_unlock_irqrestore+0x74/0x78
-hardirqs last disabled at (46378): [<ffff8000813abf38>]
-_raw_spin_lock_irqsave+0x84/0x88
-softirqs last  enabled at (46330): [<ffff8000800c71b4>]
-handle_softirqs+0x4c4/0x4dc
-softirqs last disabled at (46295): [<ffff800080010674>]
-__do_softirq+0x14/0x20
-CPU: 1 UID: 0 PID: 142 Comm: kworker/u25:3 Tainted: G C
-6.19.0-rc4-next-20260105+ #11963 PREEMPT
-Tainted: [C]=CRAP
-Hardware name: Khadas VIM3 (DT)
-Workqueue: events_unbound deferred_probe_work_func
-Call trace:
-  show_stack+0x18/0x24 (C)
-  dump_stack_lvl+0x90/0xd0
-  dump_stack+0x18/0x24
-  __might_resched+0x144/0x248
-  __might_sleep+0x48/0x98
-  __mutex_lock+0x5c/0x894
-  mutex_lock_nested+0x24/0x30
-  pinctrl_get_device_gpio_range+0x44/0x128
-  pinctrl_gpio_set_config+0x40/0xdc
-  gpiochip_generic_config+0x28/0x3c
-  gpio_do_set_config+0xa8/0x194
-  gpiod_set_config+0x34/0xfc
-  gpio_shared_proxy_set_config+0x6c/0xfc [gpio_shared_proxy]
-  gpio_do_set_config+0xa8/0x194
-  gpiod_set_transitory+0x4c/0xf0
-  gpiod_configure_flags+0xa4/0x480
-  gpiod_find_and_request+0x1a0/0x574
-  gpiod_get_index+0x58/0x84
-  devm_gpiod_get_index+0x20/0xb4
-  devm_gpiod_get+0x18/0x24
-  mmc_pwrseq_emmc_probe+0x40/0xb8
-  platform_probe+0x5c/0xac
-  really_probe+0xbc/0x298
-  __driver_probe_device+0x78/0x12c
-  driver_probe_device+0xdc/0x164
-  __device_attach_driver+0xb8/0x138
-  bus_for_each_drv+0x80/0xdc
-  __device_attach+0xa8/0x1b0
-
-Fixes: 6ac730951104 ("pinctrl: add driver for Amlogic Meson SoCs")
-Cc: stable@vger.kernel.org
-Reported-by: Marek Szyprowski <m.szyprowski@samsung.com>
-Closes: https://lore.kernel.org/all/00107523-7737-4b92-a785-14ce4e93b8cb@samsung.com/
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
-Reviewed-by: Martin Blumenstingl <martin.blumenstingl@googlemail.com>
-Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
-Signed-off-by: Linus Walleij <linusw@kernel.org>
+Reported-by: syzbot+3a0ebe8a52b89c63739d@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/linux-input/ZOZIZCND+L0P1wJc@penguin/T/
+Reported-by: Maxime Ripard <mripard@kernel.org>
+Closes: https://lore.kernel.org/linux-input/ZOZIZCND+L0P1wJc@penguin/T/#m443f3dce92520f74b6cf6ffa8653f9c92643d4ae
+Fixes: cce2dbdf258e ("HID: uclogic: name the input nodes based on their tool")
+Suggested-by: Maxime Ripard <mripard@kernel.org>
+Suggested-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Signed-off-by: Rahul Rameshbabu <sergeantsagara@protonmail.com>
+Reviewed-by: Maxime Ripard <mripard@kernel.org>
+Link: https://lore.kernel.org/r/20230824061308.222021-2-sergeantsagara@protonmail.com
+Signed-off-by: Benjamin Tissoires <bentiss@kernel.org>
 [ Adjust context ]
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Wenshan Lan <jetlan9@163.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pinctrl/meson/pinctrl-meson.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/hid/hid-uclogic-core.c |   13 +++----------
+ 1 file changed, 3 insertions(+), 10 deletions(-)
 
---- a/drivers/pinctrl/meson/pinctrl-meson.c
-+++ b/drivers/pinctrl/meson/pinctrl-meson.c
-@@ -614,7 +614,7 @@ static int meson_gpiolib_register(struct
- 	pc->chip.set = meson_gpio_set;
- 	pc->chip.base = -1;
- 	pc->chip.ngpio = pc->data->num_pins;
--	pc->chip.can_sleep = false;
-+	pc->chip.can_sleep = true;
- 	pc->chip.of_node = pc->of_node;
- 	pc->chip.of_gpio_n_cells = 2;
+--- a/drivers/hid/hid-uclogic-core.c
++++ b/drivers/hid/hid-uclogic-core.c
+@@ -104,10 +104,8 @@ static int uclogic_input_configured(stru
+ {
+ 	struct uclogic_drvdata *drvdata = hid_get_drvdata(hdev);
+ 	struct uclogic_params *params = &drvdata->params;
+-	char *name;
+ 	const char *suffix = NULL;
+ 	struct hid_field *field;
+-	size_t len;
  
+ 	/* no report associated (HID_QUIRK_MULTI_INPUT not set) */
+ 	if (!hi->report)
+@@ -145,14 +143,9 @@ static int uclogic_input_configured(stru
+ 		break;
+ 	}
+ 
+-	if (suffix) {
+-		len = strlen(hdev->name) + 2 + strlen(suffix);
+-		name = devm_kzalloc(&hi->input->dev, len, GFP_KERNEL);
+-		if (name) {
+-			snprintf(name, len, "%s %s", hdev->name, suffix);
+-			hi->input->name = name;
+-		}
+-	}
++	if (suffix)
++		hi->input->name = devm_kasprintf(&hdev->dev, GFP_KERNEL,
++						 "%s %s", hdev->name, suffix);
+ 
+ 	return 0;
+ }
 
 
