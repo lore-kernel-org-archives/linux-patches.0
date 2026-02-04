@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B34FC4218A8;
-	Wed,  4 Feb 2026 15:03:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45A574219ED;
+	Wed,  4 Feb 2026 15:04:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770217438; cv=none; b=Yv8hacCg/CbPTrU+UVzTnmRpbpDUB3wOYxXS7IFC/pz+tBJEYJjKumm8HsK8bDtlKssheEV+HT0kTEjQxihd0aw0hbDntZPiYEVq0DKUmglqDiQ/lU5/uhMlqqOwoUo6figw2Mm4CH+n5SkUY/U2inKPlnbTJ+adKmIV1oPjXr0=
+	t=1770217442; cv=none; b=gqUgPlP7aUACoKhMaq5KdJIDDIH2ILWgPXes2aEm5fop2kpzAvb+1gIl/hXmcanXduqCh3vjnnXTi9tZ6MM+AImbvNNlkdhPrV++2mC24NPy3Pj4jAu1SOAwqxSx6a6KxmsPiadztA2nlpxlQDki8qIPFb65GjHFmjZB8Wx3OIk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770217438; c=relaxed/simple;
-	bh=7hIS0F4/quzd8CZEJ9my07kozPpNem2TioZwG6SXx+8=;
+	s=arc-20240116; t=1770217442; c=relaxed/simple;
+	bh=6bhQLK+5pRob8v+JnLg2809Mwvo3LL3Wfx2MTuSW4a0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rPzJ3SFOsQH9nD3zyvRJMRONQ3ZrjUBfWUTA5AXYAdhTV3+VffLch3BOKJUrZTiEq8eCAiPttN8HFChidA+RW2vvuMbWJrb2K8JOuSNwI7LMxN3PG6A6ShRrhr/uILjX5B3WI6g+m4xGQQKFkuwU2xM1cbj+YLrGl7uEBON8m2M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DDRKubcK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=SrzXCvlQYZRZa9MtDJoNXH+GaSN4HFviNveP8FX04CuIPiFig0nSBm1HndJSoOhwtjaHJbP56eGWGAr+HzS06/JvqOudZOf460por36RwBkcOgmwGZYd41COdpuzBjCmwadsXRNcEANc+l9wFrT9STbN/A5gozSBv2ej5k272jg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YcRVW2cU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DDRKubcK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4FB8C4CEF7;
-	Wed,  4 Feb 2026 15:03:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YcRVW2cU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C925C116C6;
+	Wed,  4 Feb 2026 15:04:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770217438;
-	bh=7hIS0F4/quzd8CZEJ9my07kozPpNem2TioZwG6SXx+8=;
+	s=korg; t=1770217442;
+	bh=6bhQLK+5pRob8v+JnLg2809Mwvo3LL3Wfx2MTuSW4a0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DDRKubcKGzj7GdHmUsdZLvizFldMrXvKHnV2q4DKU2hdlNiiy045jc0zMpfgKrQCq
-	 ukxTMylc/UICwauaoldJriHcoU2dJXffkndC28iQGpGFvAl15/bP1u9EO7n6dPEVqf
-	 fY437APeKhHt0t5tH/84sn1wVM3kXpRKSGYJODeo=
+	b=YcRVW2cUN54UZ0wBxWVlA9LgB1yoklmMQnItnrzvHhAq8NMI9Re9wXwVd7BPf1QG2
+	 B+sxIJTOcqCoeKRtjPZYzyRU3xOlnvGJPA5Q4UoJ2Z+PD2gv1BGv5gepseQd8z3hbw
+	 GKOM7gbPM0v25Toccl/0iYCS1vZQ58gMETe5YlPE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Maurizio Lombardi <mlombard@redhat.com>,
 	Sagi Grimberg <sagi@grimberg.me>,
+	Shivam Kumar <kumar.shivam43666@gmail.com>,
 	Keith Busch <kbusch@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 007/280] nvmet-tcp: remove boilerplate code
-Date: Wed,  4 Feb 2026 15:36:21 +0100
-Message-ID: <20260204143909.891584992@linuxfoundation.org>
+Subject: [PATCH 6.1 008/280] nvme-tcp: fix NULL pointer dereferences in nvmet_tcp_build_pdu_iovec
+Date: Wed,  4 Feb 2026 15:36:22 +0100
+Message-ID: <20260204143909.927511373@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260204143909.614719725@linuxfoundation.org>
 References: <20260204143909.614719725@linuxfoundation.org>
@@ -46,76 +46,71 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Maurizio Lombardi <mlombard@redhat.com>
+From: Shivam Kumar <kumar.shivam43666@gmail.com>
 
-[ Upstream commit 75011bd0f9c55db523242f9f9a0b0b826165f14b ]
+[ Upstream commit 32b63acd78f577b332d976aa06b56e70d054cbba ]
 
-Simplify the nvmet_tcp_handle_h2c_data_pdu() function by removing
-boilerplate code.
+Commit efa56305908b ("nvmet-tcp: Fix a kernel panic when host sends an invalid H2C PDU length")
+added ttag bounds checking and data_offset
+validation in nvmet_tcp_handle_h2c_data_pdu(), but it did not validate
+whether the command's data structures (cmd->req.sg and cmd->iov) have
+been properly initialized before processing H2C_DATA PDUs.
 
-Signed-off-by: Maurizio Lombardi <mlombard@redhat.com>
+The nvmet_tcp_build_pdu_iovec() function dereferences these pointers
+without NULL checks. This can be triggered by sending H2C_DATA PDU
+immediately after the ICREQ/ICRESP handshake, before
+sending a CONNECT command or NVMe write command.
+
+Attack vectors that trigger NULL pointer dereferences:
+1. H2C_DATA PDU sent before CONNECT → both pointers NULL
+2. H2C_DATA PDU for READ command → cmd->req.sg allocated, cmd->iov NULL
+3. H2C_DATA PDU for uninitialized command slot → both pointers NULL
+
+The fix validates both cmd->req.sg and cmd->iov before calling
+nvmet_tcp_build_pdu_iovec(). Both checks are required because:
+- Uninitialized commands: both NULL
+- READ commands: cmd->req.sg allocated, cmd->iov NULL
+- WRITE commands: both allocated
+
+Fixes: efa56305908b ("nvmet-tcp: Fix a kernel panic when host sends an invalid H2C PDU length")
 Reviewed-by: Sagi Grimberg <sagi@grimberg.me>
+Signed-off-by: Shivam Kumar <kumar.shivam43666@gmail.com>
 Signed-off-by: Keith Busch <kbusch@kernel.org>
-Stable-dep-of: 32b63acd78f5 ("nvme-tcp: fix NULL pointer dereferences in nvmet_tcp_build_pdu_iovec")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/target/tcp.c | 16 ++++++++--------
- 1 file changed, 8 insertions(+), 8 deletions(-)
+ drivers/nvme/target/tcp.c | 12 ++++++++++++
+ 1 file changed, 12 insertions(+)
 
 diff --git a/drivers/nvme/target/tcp.c b/drivers/nvme/target/tcp.c
-index eee052dbf80c1..8fc626ddc1275 100644
+index 8fc626ddc1275..7fae0103a515b 100644
 --- a/drivers/nvme/target/tcp.c
 +++ b/drivers/nvme/target/tcp.c
-@@ -930,8 +930,7 @@ static int nvmet_tcp_handle_h2c_data_pdu(struct nvmet_tcp_queue *queue)
- 		if (unlikely(data->ttag >= queue->nr_cmds)) {
- 			pr_err("queue %d: received out of bound ttag %u, nr_cmds %u\n",
- 				queue->idx, data->ttag, queue->nr_cmds);
--			nvmet_tcp_fatal_error(queue);
--			return -EPROTO;
-+			goto err_proto;
- 		}
- 		cmd = &queue->cmds[data->ttag];
- 	} else {
-@@ -942,9 +941,7 @@ static int nvmet_tcp_handle_h2c_data_pdu(struct nvmet_tcp_queue *queue)
- 		pr_err("ttag %u unexpected data offset %u (expected %u)\n",
- 			data->ttag, le32_to_cpu(data->data_offset),
- 			cmd->rbytes_done);
--		/* FIXME: use path and transport errors */
--		nvmet_tcp_fatal_error(queue);
--		return -EPROTO;
-+		goto err_proto;
- 	}
- 
- 	exp_data_len = le32_to_cpu(data->hdr.plen) -
-@@ -957,9 +954,7 @@ static int nvmet_tcp_handle_h2c_data_pdu(struct nvmet_tcp_queue *queue)
- 		     cmd->pdu_len == 0 ||
- 		     cmd->pdu_len > NVMET_TCP_MAXH2CDATA)) {
+@@ -956,6 +956,18 @@ static int nvmet_tcp_handle_h2c_data_pdu(struct nvmet_tcp_queue *queue)
  		pr_err("H2CData PDU len %u is invalid\n", cmd->pdu_len);
--		/* FIXME: use proper transport errors */
--		nvmet_tcp_fatal_error(queue);
--		return -EPROTO;
-+		goto err_proto;
+ 		goto err_proto;
  	}
++       /*
++	* Ensure command data structures are initialized. We must check both
++	* cmd->req.sg and cmd->iov because they can have different NULL states:
++	* - Uninitialized commands: both NULL
++	* - READ commands: cmd->req.sg allocated, cmd->iov NULL
++	* - WRITE commands: both allocated
++	*/
++	if (unlikely(!cmd->req.sg || !cmd->iov)) {
++		pr_err("queue %d: H2CData PDU received for invalid command state (ttag %u)\n",
++			queue->idx, data->ttag);
++		goto err_proto;
++	}
  	cmd->pdu_recv = 0;
  	nvmet_tcp_build_pdu_iovec(cmd);
-@@ -967,6 +962,11 @@ static int nvmet_tcp_handle_h2c_data_pdu(struct nvmet_tcp_queue *queue)
- 	queue->rcv_state = NVMET_TCP_RECV_DATA;
- 
- 	return 0;
-+
-+err_proto:
-+	/* FIXME: use proper transport errors */
-+	nvmet_tcp_fatal_error(queue);
-+	return -EPROTO;
- }
- 
- static int nvmet_tcp_done_recv_pdu(struct nvmet_tcp_queue *queue)
+ 	queue->cmd = cmd;
 -- 
 2.51.0
 
