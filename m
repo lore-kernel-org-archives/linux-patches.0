@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F6E427B359;
-	Wed,  4 Feb 2026 14:51:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7BFA527B359;
+	Wed,  4 Feb 2026 14:51:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770216695; cv=none; b=HbYbxSfK9jFlyCAlWmOAAMiyZwySyOtGU+v+lXHEYtKJyWki5Z0yKKKOF1FauA6ySyZ4DvGsaHEziajO1pxFgZNOR1/VC1qg++NyADdcWzHoKEv0hlQJJCKmu9LMy+146X7YxjFWcjKtwLUw7AoUbjdVV9VmIw8rAIPpGRP7vag=
+	t=1770216699; cv=none; b=nhQ063qKU07YqaHwhblylqMUZEgqDadofpboRJ9HLDN2xXpuvYOT0zfQp0dSEJaEtgDGEMPHqhTa06dLARJ8YUdiIDpkPb1A+abp5DOYFe1UZRwn4ancRK1FFONfeC61c7nqq5rJIsJVTlurVDDWt+lyMwaqRjir8Fx/3Ra8Zc8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770216695; c=relaxed/simple;
-	bh=J9IFNBQwlLbEpQf1fzgxmBYq/+IyZAGrFneWcn3rsqs=;
+	s=arc-20240116; t=1770216699; c=relaxed/simple;
+	bh=t/v8m/SIwkljKuUkIzV6npDR3hZAyMMtNIR+wWBkuIQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=n3T90NUzs1Iua0h2O58M9jVJ83bxM8JXL2X3mlfbvXRJQBJ8HcGzYzMYW91A9M5+omwFCjAUMHJ31OHm9g/OaF/kckmhhLFpDNt5o/wNnQxulXVGpaIwX4sELkTRyKgbwbEkJKZxm3i0Zw4s+1NzGlNtMtp1pIuytsJ4MsnKyAg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sPZX+9qT; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gLDxUxb3dWeKCXOTkd6vge64vUDqWZNkLK3pMvrVh+0iWPkKaZ2COANgv1bhOnfBv+0Sl8Qk0CmhmQgUgipKeaJqXrDVVdutEFHmkr31Rpj/YEKzI2lPXq1JgOcrg9VVlQqwfDeLzEKHCiBbN2AMTIeAdf8A6IFA3osHJ2OJ784=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pPCAaMZG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sPZX+9qT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 81E5BC4CEF7;
-	Wed,  4 Feb 2026 14:51:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pPCAaMZG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C9DF2C4CEF7;
+	Wed,  4 Feb 2026 14:51:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770216695;
-	bh=J9IFNBQwlLbEpQf1fzgxmBYq/+IyZAGrFneWcn3rsqs=;
+	s=korg; t=1770216699;
+	bh=t/v8m/SIwkljKuUkIzV6npDR3hZAyMMtNIR+wWBkuIQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sPZX+9qTvcl0d2/ORjWV7kgFlKHb/DucStdiwm99LQgoIyxKDnW1U+iUInOqxPvba
-	 IJGMo5+AQTVYT7YOZEfvtgTBvC26/Wudhuxcunqeu57/RvAGhafOrrTC/kUQ4YRqqx
-	 OmWZD+WPzCfnottLTOSflEZlZ+842JRdFFempsgw=
+	b=pPCAaMZGljEksb9aVJcQMzS6qw6L0Tv6/za1+lwFS4GDqAHqK4rT2S734I5tSqbjP
+	 HjE2Rq+0D2tfr80YxipZV2HiWOcAD9rK5jdsfIzZNGmITD8ikLtLQNKFKGNv1DARv9
+	 detkk5omakwp5gNxPdcpJfFQgbaOXZl8sK+G8Vm4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Abdun Nihaal <nihaal@cse.iitm.ac.in>,
-	Juergen Gross <jgross@suse.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Zeal Robot <zealci@zte.com.cn>,
+	David Yang <davidcomponentone@gmail.com>,
+	Yang Guang <yang.guang5@zte.com.cn>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 140/161] scsi: xen: scsiback: Fix potential memory leak in scsiback_remove()
-Date: Wed,  4 Feb 2026 15:40:03 +0100
-Message-ID: <20260204143856.784191129@linuxfoundation.org>
+Subject: [PATCH 5.10 141/161] w1: w1_therm: use swap() to make code cleaner
+Date: Wed,  4 Feb 2026 15:40:04 +0100
+Message-ID: <20260204143856.820566035@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260204143851.755002596@linuxfoundation.org>
 References: <20260204143851.755002596@linuxfoundation.org>
@@ -52,37 +52,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Abdun Nihaal <nihaal@cse.iitm.ac.in>
+From: Yang Guang <yang.guang5@zte.com.cn>
 
-[ Upstream commit 901a5f309daba412e2a30364d7ec1492fa11c32c ]
+[ Upstream commit e233897b1f7a859092bd20b10bfd412013381a10 ]
 
-Memory allocated for struct vscsiblk_info in scsiback_probe() is not
-freed in scsiback_remove() leading to potential memory leaks on remove,
-as well as in the scsiback_probe() error paths. Fix that by freeing it
-in scsiback_remove().
+Use the macro 'swap()' defined in 'include/linux/minmax.h' to avoid
+opencoding it.
 
-Cc: stable@vger.kernel.org
-Fixes: d9d660f6e562 ("xen-scsiback: Add Xen PV SCSI backend driver")
-Signed-off-by: Abdun Nihaal <nihaal@cse.iitm.ac.in>
-Reviewed-by: Juergen Gross <jgross@suse.com>
-Link: https://patch.msgid.link/20251223063012.119035-1-nihaal@cse.iitm.ac.in
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
-[ adapted void scsiback_remove() to int return type with return 0 statement ]
+Reported-by: Zeal Robot <zealci@zte.com.cn>
+Signed-off-by: David Yang <davidcomponentone@gmail.com>
+Signed-off-by: Yang Guang <yang.guang5@zte.com.cn>
+Link: https://lore.kernel.org/r/cb14f9e6e86cf8494ed2ddce6eec8ebd988908d9.1640077704.git.yang.guang5@zte.com.cn
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Stable-dep-of: 761fcf46a1bd ("w1: therm: Fix off-by-one buffer overflow in alarms_store")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/xen/xen-scsiback.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/w1/slaves/w1_therm.c |    7 +++----
+ 1 file changed, 3 insertions(+), 4 deletions(-)
 
---- a/drivers/xen/xen-scsiback.c
-+++ b/drivers/xen/xen-scsiback.c
-@@ -1202,6 +1202,7 @@ static int scsiback_remove(struct xenbus
- 	gnttab_page_cache_shrink(&info->free_pages, 0);
+--- a/drivers/w1/slaves/w1_therm.c
++++ b/drivers/w1/slaves/w1_therm.c
+@@ -1783,7 +1783,7 @@ static ssize_t alarms_store(struct devic
+ 	u8 new_config_register[3];	/* array of data to be written */
+ 	int temp, ret;
+ 	char *token = NULL;
+-	s8 tl, th, tt;	/* 1 byte per value + temp ring order */
++	s8 tl, th;	/* 1 byte per value + temp ring order */
+ 	char *p_args, *orig;
  
- 	dev_set_drvdata(&dev->dev, NULL);
-+	kfree(info);
+ 	p_args = orig = kmalloc(size, GFP_KERNEL);
+@@ -1834,9 +1834,8 @@ static ssize_t alarms_store(struct devic
+ 	th = int_to_short(temp);
  
- 	return 0;
- }
+ 	/* Reorder if required th and tl */
+-	if (tl > th) {
+-		tt = tl; tl = th; th = tt;
+-	}
++	if (tl > th)
++		swap(tl, th);
+ 
+ 	/*
+ 	 * Read the scratchpad to change only the required bits
 
 
