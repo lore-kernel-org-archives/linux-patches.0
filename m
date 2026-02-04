@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1550A2D5A14;
-	Wed,  4 Feb 2026 15:18:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 716B128853E;
+	Wed,  4 Feb 2026 15:18:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770218303; cv=none; b=qvIAPIxLDtPSRhtKKAKFcfMBZ/8iDpONtjk9wMNa7xE79c3J3mWkjVFcKTobSxWOfTSVr44EuIjyIWpi91aYxboMwIgDUqVoenY2YuBUGqQRiJFISu6SThISkhEbrZKgW2VeRGtOH151nE6gZHAqsrALgN69VNdZb/IAZDStYbk=
+	t=1770218306; cv=none; b=mXjpp6YL0Q06PEPnxWl7ai5OcmqoXC/Fbfn3wtNcEvC0KOK0zVff/ViXTKUWyVjwwmVcZ883iuzYdDeJn8JmBmQgDq4Kd8wC+lxqXuSIouC9w6/EnXHDVlopmSyUPg0uTQh5M9IAxR/JyFAQux+Yd04aNGeOTgGDFY7oDJ/yxWw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770218303; c=relaxed/simple;
-	bh=HQeaG6J06uq/VOAhgATsflV/Mqd8qmbE/uN5eKDw/Co=;
+	s=arc-20240116; t=1770218306; c=relaxed/simple;
+	bh=577+cu04M7gN50x954ZOVAYvqfB6xWfUzRQ3YE0/ZHM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=O6Sp2z5qyblaByMMpUeGu6LcY9BnawNw+c/eS88FHi4lGV7Cel8aVy/6FvA2FH3XsfIZddD8Eohq47684KqN9iycdBvt4lnN+BWecxmReGLs+ctNL225PmFQqj0hC2/d9DGkU7iqmKaPe5OowPcDCOTd5G1wAk0I1+tpJyA+vEQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=y3m+XwUg; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=R3XorWaTZgDuctfr4aZr8xxvvTMtKTVQrKXgwI6IqjZfSDYE4PK1wfL5H68/976uMdARlgshFDr3ZImhr/hMligxSAQrG7jkGhUK1+o1IRhZBC23Hb1TvupfrK1NNn83BZhLhhoHZT3VaBhv6M37YyZj/2yKNCoHdeN98TtBawI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=p8Faxn4J; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="y3m+XwUg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4FA70C4CEF7;
-	Wed,  4 Feb 2026 15:18:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="p8Faxn4J"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E06FC4CEF7;
+	Wed,  4 Feb 2026 15:18:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770218302;
-	bh=HQeaG6J06uq/VOAhgATsflV/Mqd8qmbE/uN5eKDw/Co=;
+	s=korg; t=1770218306;
+	bh=577+cu04M7gN50x954ZOVAYvqfB6xWfUzRQ3YE0/ZHM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=y3m+XwUgXt/pIJKtwG5QoPbIhMS5/zD789oV1aI3E+CxrWXzojyy2G/yzaAVENf5/
-	 Mcj6sN6OxOOrp0iWY9dKGsNNYRWSObCV/p6M3aGJdfWJJYUnnzrHuxKk+QHsNUvrFI
-	 n9PdaAWZTH/6QFRYOMj2x5jHCT5kdmTUHBrIJ6bU=
+	b=p8Faxn4Jmgo76JDvEH3TIWCGRPg2miz9KUT8u7wzAe4T7apzJGk6IYT4vESRhWOHc
+	 gZ1OaiPrXTYC9/5ipvvHvDbKKst8GK+mbL4/zyj/Gnktc6h4EOaNpZn+FX1v/AvYA+
+	 ZFNqGZ4j7OVyILYvVAUtvijgCjTVnbYFi9PaQ1zo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fiona Klute <fiona.klute@gmx.de>,
-	David Lechner <dlechner@baylibre.com>,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+	Christoph Hellwig <hch@lst.de>,
+	Sagi Grimberg <sagi@grimberg.me>,
+	Hannes Reinecke <hare@suse.de>,
+	Daniel Wagner <dwagner@suse.de>,
+	Keith Busch <kbusch@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 237/280] iio: chemical: scd4x: fix reported channel endianness
-Date: Wed,  4 Feb 2026 15:40:11 +0100
-Message-ID: <20260204143918.153535636@linuxfoundation.org>
+Subject: [PATCH 6.1 238/280] nvme-fc: rename free_ctrl callback to match name pattern
+Date: Wed,  4 Feb 2026 15:40:12 +0100
+Message-ID: <20260204143918.190534970@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260204143909.614719725@linuxfoundation.org>
 References: <20260204143909.614719725@linuxfoundation.org>
@@ -52,58 +54,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fiona Klute <fiona.klute@gmx.de>
+From: Daniel Wagner <dwagner@suse.de>
 
-[ Upstream commit 81d5a5366d3c20203fb9d7345e1aa46d668445a2 ]
+[ Upstream commit 205fb5fa6fde1b5b426015eb1ff69f2ff25ef5bb ]
 
-The driver converts values read from the sensor from BE to CPU
-endianness in scd4x_read_meas(). The result is then pushed into the
-buffer in scd4x_trigger_handler(), so on LE architectures parsing the
-buffer using the reported BE type gave wrong results.
+Rename nvme_fc_nvme_ctrl_freed to nvme_fc_free_ctrl to match the name
+pattern for the callback.
 
-scd4x_read_raw() which provides sysfs *_raw values is not affected, it
-used the values returned by scd4x_read_meas() without further
-conversion.
-
-Fixes: 49d22b695cbb6 ("drivers: iio: chemical: Add support for Sensirion SCD4x CO2 sensor")
-Signed-off-by: Fiona Klute <fiona.klute@gmx.de>
-Reviewed-by: David Lechner <dlechner@baylibre.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Reviewed-by: Sagi Grimberg <sagi@grimberg.me>
+Reviewed-by: Hannes Reinecke <hare@suse.de>
+Signed-off-by: Daniel Wagner <dwagner@suse.de>
+Signed-off-by: Keith Busch <kbusch@kernel.org>
+Stable-dep-of: 0edb475ac0a7 ("nvme: fix PCIe subsystem reset controller state transition")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/chemical/scd4x.c |    6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/nvme/host/fc.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/iio/chemical/scd4x.c
-+++ b/drivers/iio/chemical/scd4x.c
-@@ -518,7 +518,7 @@ static const struct iio_chan_spec scd4x_
- 			.sign = 'u',
- 			.realbits = 16,
- 			.storagebits = 16,
--			.endianness = IIO_BE,
-+			.endianness = IIO_CPU,
- 		},
- 	},
- 	{
-@@ -533,7 +533,7 @@ static const struct iio_chan_spec scd4x_
- 			.sign = 'u',
- 			.realbits = 16,
- 			.storagebits = 16,
--			.endianness = IIO_BE,
-+			.endianness = IIO_CPU,
- 		},
- 	},
- 	{
-@@ -546,7 +546,7 @@ static const struct iio_chan_spec scd4x_
- 			.sign = 'u',
- 			.realbits = 16,
- 			.storagebits = 16,
--			.endianness = IIO_BE,
-+			.endianness = IIO_CPU,
- 		},
- 	},
- };
+--- a/drivers/nvme/host/fc.c
++++ b/drivers/nvme/host/fc.c
+@@ -2417,7 +2417,7 @@ nvme_fc_ctrl_get(struct nvme_fc_ctrl *ct
+  * controller. Called after last nvme_put_ctrl() call
+  */
+ static void
+-nvme_fc_nvme_ctrl_freed(struct nvme_ctrl *nctrl)
++nvme_fc_free_ctrl(struct nvme_ctrl *nctrl)
+ {
+ 	struct nvme_fc_ctrl *ctrl = to_fc_ctrl(nctrl);
+ 
+@@ -3362,7 +3362,7 @@ static const struct nvme_ctrl_ops nvme_f
+ 	.reg_read32		= nvmf_reg_read32,
+ 	.reg_read64		= nvmf_reg_read64,
+ 	.reg_write32		= nvmf_reg_write32,
+-	.free_ctrl		= nvme_fc_nvme_ctrl_freed,
++	.free_ctrl		= nvme_fc_free_ctrl,
+ 	.submit_async_event	= nvme_fc_submit_async_event,
+ 	.delete_ctrl		= nvme_fc_delete_ctrl,
+ 	.get_address		= nvmf_get_address,
 
 
