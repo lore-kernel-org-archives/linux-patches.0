@@ -1,36 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B0862417E0;
-	Wed,  4 Feb 2026 14:50:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F5B327B359;
+	Wed,  4 Feb 2026 14:50:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770216639; cv=none; b=I0DNo4vphYXmj49/5CaIcEbsytTJpWPmNykYuDbczsU4Ig00jUPomZANZW/pPRCacOQwYbnlOaJBIGlwravNgQxS/x5NUFdKBJYaPgjDMIOc65KGv2HY2XyLAU5twzofqiJx5VAqgjzNiA5BCsWHpShnLJbeVajpAonEOppdmkQ=
+	t=1770216642; cv=none; b=MUWiL359K69ObUL+uO/4btflvc7UGSxzcBlAxXCp2kFzuC1zUSjTBmTfTkZCrffB0WBrnS5EuFMLJBs75AcrLfFTe6gLKcB65mlpSiDHHGNNQOP5BQhyrBF9pBUQFhef7vz2ElZdWgYWlGX7A4SiGQqoYSbr1UlM3KKiqumkGQg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770216639; c=relaxed/simple;
-	bh=q3uXTO4Bujsd+d5fC0LwcJFr2jM4LtvfqrlX/bg7fx0=;
+	s=arc-20240116; t=1770216642; c=relaxed/simple;
+	bh=dekjgBspRktqjgcLl7wNkO30w1nhJ59FGAGh79z/JTg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=J9ElrRxBu2Byn5jDAM7DCkXr3JHt6rE1I/Zq1yd+yS3M8r71X3xsxphbW51JVo6WzAw0tSsqglcEZP1wPraK4MB7respqA1/0qpudKh2VbMT9iFgsRrf36YRRQO5apFccw2PhrUs2U1qTb4bB0trPfJ0vYtA6Y5TASFHDq0qq2Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cUfXf2Lj; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cQne/DN9qzvxOT5mwfaOrszLKGheB0MazeOJCzmAPFGjZT3I2IfphbunhbVSbHDwechNVV34940Bi8lWNxmvQp0q6diiaFZB+RfU3YVdlClo/BauXPThdpGe4RAc9xL1LQq23psf5mwf0I+O5xNvfoddKj38ketPuYkRHAurwoo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YHJb9Lvz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cUfXf2Lj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AAD2BC4CEF7;
-	Wed,  4 Feb 2026 14:50:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YHJb9Lvz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E4B41C4CEF7;
+	Wed,  4 Feb 2026 14:50:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770216639;
-	bh=q3uXTO4Bujsd+d5fC0LwcJFr2jM4LtvfqrlX/bg7fx0=;
+	s=korg; t=1770216642;
+	bh=dekjgBspRktqjgcLl7wNkO30w1nhJ59FGAGh79z/JTg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cUfXf2LjVr89w+xfI9P8N8TpveN6tvoHNsKwCLCuzqlJjQNAKXKDekFpCdz0Gb70S
-	 4DA4Gtdx12EV7FDlCjrjObIP2VPJyCTlrReEZ49j9tZjYT+nVH03o4yJQRZYjhc+VN
-	 xxpnCVDjQJc9I1+TrIIsIH5d2UvtEBidHATKRpP8=
+	b=YHJb9Lvz1BemRUshqjRcYU+hccLfDncTpOqgGTllo3+TRoZfRJQLTGe1Pefo7RSbt
+	 8TlhypZjA0T+c9OFGLSnAojuU/q1i8mXkJRjjN42cK2hguxC/ian9iwledAEqAmOE/
+	 tLRVjyQGfdtrqN1hoWIXM0xVa0Xvny2aAWjgyxl4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ian Abbott <abbotti@mev.co.uk>
-Subject: [PATCH 5.10 149/161] comedi: Fix getting range information for subdevices 16 to 255
-Date: Wed,  4 Feb 2026 15:40:12 +0100
-Message-ID: <20260204143857.110678644@linuxfoundation.org>
+	Marc Kleine-Budde <mkl@pengutronix.de>
+Subject: [PATCH 5.10 150/161] can: esd_usb: esd_usb_read_bulk_callback(): fix URB memory leak
+Date: Wed,  4 Feb 2026 15:40:13 +0100
+Message-ID: <20260204143857.146561155@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260204143851.755002596@linuxfoundation.org>
 References: <20260204143851.755002596@linuxfoundation.org>
@@ -49,100 +49,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ian Abbott <abbotti@mev.co.uk>
+From: Marc Kleine-Budde <mkl@pengutronix.de>
 
-commit 10d28cffb3f6ec7ad67f0a4cd32c2afa92909452 upstream.
+commit 5a4391bdc6c8357242f62f22069c865b792406b3 upstream.
 
-The `COMEDI_RANGEINFO` ioctl does not work properly for subdevice
-indices above 15.  Currently, the only in-tree COMEDI drivers that
-support more than 16 subdevices are the "8255" driver and the
-"comedi_bond" driver.  Making the ioctl work for subdevice indices up to
-255 is achievable.  It needs minor changes to the handling of the
-`COMEDI_RANGEINFO` and `COMEDI_CHANINFO` ioctls that should be mostly
-harmless to user-space, apart from making them less broken.  Details
-follow...
+Fix similar memory leak as in commit 7352e1d5932a ("can: gs_usb:
+gs_usb_receive_bulk_callback(): fix URB memory leak").
 
-The `COMEDI_RANGEINFO` ioctl command gets the list of supported ranges
-(usually with units of volts or milliamps) for a COMEDI subdevice or
-channel.  (Only some subdevices have per-channel range tables, indicated
-by the `SDF_RANGETYPE` flag in the subdevice information.)  It uses a
-`range_type` value and a user-space pointer, both supplied by
-user-space, but the `range_type` value should match what was obtained
-using the `COMEDI_CHANINFO` ioctl (if the subdevice has per-channel
-range tables)  or `COMEDI_SUBDINFO` ioctl (if the subdevice uses a
-single range table for all channels).  Bits 15 to 0 of the `range_type`
-value contain the length of the range table, which is the only part that
-user-space should care about (so it can use a suitably sized buffer to
-fetch the range table).  Bits 23 to 16 store the channel index, which is
-assumed to be no more than 255 if the subdevice has per-channel range
-tables, and is set to 0 if the subdevice has a single range table.  For
-`range_type` values produced by the `COMEDI_SUBDINFO` ioctl, bits 31 to
-24 contain the subdevice index, which is assumed to be no more than 255.
-But for `range_type` values produced by the `COMEDI_CHANINFO` ioctl,
-bits 27 to 24 contain the subdevice index, which is assumed to be no
-more than 15, and bits 31 to 28 contain the COMEDI device's minor device
-number for some unknown reason lost in the mists of time.  The
-`COMEDI_RANGEINFO` ioctl extract the length from bits 15 to 0 of the
-user-supplied `range_type` value, extracts the channel index from bits
-23 to 16 (only used if the subdevice has per-channel range tables),
-extracts the subdevice index from bits 27 to 24, and ignores bits 31 to
-28.  So for subdevice indices 16 to 255, the `COMEDI_SUBDINFO` or
-`COMEDI_CHANINFO` ioctl will report a `range_type` value that doesn't
-work with the `COMEDI_RANGEINFO` ioctl.  It will either get the range
-table for the subdevice index modulo 16, or will fail with `-EINVAL`.
+In esd_usb_open(), the URBs for USB-in transfers are allocated, added to
+the dev->rx_submitted anchor and submitted. In the complete callback
+esd_usb_read_bulk_callback(), the URBs are processed and resubmitted. In
+esd_usb_close() the URBs are freed by calling
+usb_kill_anchored_urbs(&dev->rx_submitted).
 
-To fix this, always use bits 31 to 24 of the `range_type` value to hold
-the subdevice index (assumed to be no more than 255).  This affects the
-`COMEDI_CHANINFO` and `COMEDI_RANGEINFO` ioctls.  There should not be
-anything in user-space that depends on the old, broken usage, although
-it may now see different values in bits 31 to 28 of the `range_type`
-values reported by the `COMEDI_CHANINFO` ioctl for subdevices that have
-per-channel subdevices.  User-space should not be trying to decode bits
-31 to 16 of the `range_type` values anyway.
+However, this does not take into account that the USB framework unanchors
+the URB before the complete function is called. This means that once an
+in-URB has been completed, it is no longer anchored and is ultimately not
+released in esd_usb_close().
 
-Fixes: ed9eccbe8970 ("Staging: add comedi core")
-Cc: stable@vger.kernel.org #5.17+
-Signed-off-by: Ian Abbott <abbotti@mev.co.uk>
-Link: https://patch.msgid.link/20251203162438.176841-1-abbotti@mev.co.uk
+Fix the memory leak by anchoring the URB in the
+esd_usb_read_bulk_callback() to the dev->rx_submitted anchor.
+
+Fixes: 96d8e90382dc ("can: Add driver for esd CAN-USB/2 device")
+Cc: stable@vger.kernel.org
+Link: https://patch.msgid.link/20260116-can_usb-fix-memory-leak-v2-2-4b8cb2915571@pengutronix.de
+Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/staging/comedi/comedi.h      |    2 +-
- drivers/staging/comedi/comedi_fops.c |    2 +-
- drivers/staging/comedi/range.c       |    2 +-
- 3 files changed, 3 insertions(+), 3 deletions(-)
+ drivers/net/can/usb/esd_usb2.c |    9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
 
---- a/drivers/staging/comedi/comedi.h
-+++ b/drivers/staging/comedi/comedi.h
-@@ -640,7 +640,7 @@ struct comedi_chaninfo {
+--- a/drivers/net/can/usb/esd_usb2.c
++++ b/drivers/net/can/usb/esd_usb2.c
+@@ -441,13 +441,20 @@ resubmit_urb:
+ 			  urb->transfer_buffer, RX_BUFFER_SIZE,
+ 			  esd_usb2_read_bulk_callback, dev);
  
- /**
-  * struct comedi_rangeinfo - used to retrieve the range table for a channel
-- * @range_type:		Encodes subdevice index (bits 27:24), channel index
-+ * @range_type:		Encodes subdevice index (bits 31:24), channel index
-  *			(bits 23:16) and range table length (bits 15:0).
-  * @range_ptr:		Pointer to array of @struct comedi_krange to be filled
-  *			in with the range table for the channel or subdevice.
---- a/drivers/staging/comedi/comedi_fops.c
-+++ b/drivers/staging/comedi/comedi_fops.c
-@@ -1095,7 +1095,7 @@ static int do_chaninfo_ioctl(struct come
- 		for (i = 0; i < s->n_chan; i++) {
- 			int x;
- 
--			x = (dev->minor << 28) | (it->subdev << 24) | (i << 16) |
-+			x = (it->subdev << 24) | (i << 16) |
- 			    (s->range_table_list[i]->length);
- 			if (put_user(x, it->rangelist + i))
- 				return -EFAULT;
---- a/drivers/staging/comedi/range.c
-+++ b/drivers/staging/comedi/range.c
-@@ -52,7 +52,7 @@ int do_rangeinfo_ioctl(struct comedi_dev
- 	const struct comedi_lrange *lr;
- 	struct comedi_subdevice *s;
- 
--	subd = (it->range_type >> 24) & 0xf;
-+	subd = (it->range_type >> 24) & 0xff;
- 	chan = (it->range_type >> 16) & 0xff;
- 
- 	if (!dev->attached)
++	usb_anchor_urb(urb, &dev->rx_submitted);
++
+ 	retval = usb_submit_urb(urb, GFP_ATOMIC);
++	if (!retval)
++		return;
++
++	usb_unanchor_urb(urb);
++
+ 	if (retval == -ENODEV) {
+ 		for (i = 0; i < dev->net_count; i++) {
+ 			if (dev->nets[i])
+ 				netif_device_detach(dev->nets[i]->netdev);
+ 		}
+-	} else if (retval) {
++	} else {
+ 		dev_err(dev->udev->dev.parent,
+ 			"failed resubmitting read bulk urb: %d\n", retval);
+ 	}
 
 
