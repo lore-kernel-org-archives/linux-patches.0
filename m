@@ -1,44 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6B2327702D;
-	Wed,  4 Feb 2026 15:32:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9670A2BE7C0;
+	Wed,  4 Feb 2026 15:33:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770219177; cv=none; b=FypfUE1QSh5g7aZm2iu/2vupIlDHnE+88Qt0BpM5IpsWn2FMH3VtslsJDIA4jBmuU8ICAZxHoF05Z19bhdQn0a7B5H5Q14EozVODhOAcnX/bg7ryA9QEiHw2RvpEjSHyD7AvUiVez6BhmkweCbmVxRYIxaAVxxhs11pIjazNNk0=
+	t=1770219181; cv=none; b=ORU18gB6up8v6CPM1bBVgxfFRI/+pqKwZIuhb4HvWl7noz1RuJpCUgja9g+BddfHC7arm3CR5Hdr7hbPZHzOm9AnMO6Aj/t/x9WssNbHyDAufeM9TFOpBJG0eeRKE2YddL60Fiabwx8If/Hg80ubMCBtD4m5HLMVyIpfRaPozuQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770219177; c=relaxed/simple;
-	bh=v7htO4GSCqmKrKy6QRiLaXvn2yz6Iog72WyfcjfjeKM=;
+	s=arc-20240116; t=1770219181; c=relaxed/simple;
+	bh=+5TO9k74+KFTwIhLTgLjSJ0V3E3mFxzepDJ7MiuF/bc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tn4qdMS/JPMU8DFbYhUbl3SeZ5yQWHbhFwfYccl7a5ff0vr6Pq+TAGW7q9p00mHhXVkYRQI6n2RenWlmkc7K91bJ4TaoFDjCTOa5QnZ9Mk0InBpQxvUZfKFAlpR6kKyvAA5AtVzHqNhFrn8BLq7kb3JrgPtAsyAXgR8+1nN3cz8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZzY1pNjP; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=EeNtAL1lVdK3FgW4lIf9QH3afqNR+LeJ8hRi91JzCHvuTghdL/dyQMcj+Is8DSaZIQEDZaHkiiTkYAkmQSra3EAQaeeIGtgdV8b3f80hyQJTWjvabRCGKBE6nom7f068HAgohZz5to3jI3qvlbSGmqO2KE9QiomBBbHRpHq0ms4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2VC5cvuA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZzY1pNjP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 513EBC4CEF7;
-	Wed,  4 Feb 2026 15:32:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2VC5cvuA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3915C4CEF7;
+	Wed,  4 Feb 2026 15:33:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770219177;
-	bh=v7htO4GSCqmKrKy6QRiLaXvn2yz6Iog72WyfcjfjeKM=;
+	s=korg; t=1770219181;
+	bh=+5TO9k74+KFTwIhLTgLjSJ0V3E3mFxzepDJ7MiuF/bc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZzY1pNjP1C184UwS2TKAj3Q+xuqPsPwxn3fPabYsyebbbGtT6SIDefFoq8O5slhQM
-	 99R2e+yvfkbVWSPyhaj6tnXl3zvxIYyPvsfLKqUfomezxJp9lq2Acl8aArkVv49L2/
-	 T2G8pHQ528ZMKm7mAFk2uLtwt0ktRxdFRcHuKN+k=
+	b=2VC5cvuArsfFGXAwT6W6NkLYPWv6qYK34EjuFLUf3BlI09lyEKQkqKBRjA2EjeU/e
+	 TC9Wl5NZnsoNdb4DJv3V3TORLi8OdCfBJEOmppwEZw7v/x+YGasWqGaZe3QQasNCOC
+	 cgNVdGwuz/VUYudfw6zcGPcbDo7nCeYbAiTO36N0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kairui Song <kasong@tencent.com>,
-	Nhat Pham <nphamcs@gmail.com>,
-	Chris Li <chrisl@kernel.org>,
-	Baolin Wang <baolin.wang@linux.alibaba.com>,
-	Baoquan He <bhe@redhat.com>,
-	Barry Song <baohua@kernel.org>,
-	Hugh Dickins <hughd@google.com>,
-	Kemeng Shi <shikemeng@huaweicloud.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.18 089/122] mm/shmem, swap: fix race of truncate and swap entry split
-Date: Wed,  4 Feb 2026 15:41:11 +0100
-Message-ID: <20260204143855.054517475@linuxfoundation.org>
+	Jibin Zhang <jibin.zhang@mediatek.com>,
+	Paolo Abeni <pabeni@redhat.com>
+Subject: [PATCH 6.18 090/122] net: fix segmentation of forwarding fraglist GRO
+Date: Wed,  4 Feb 2026 15:41:12 +0100
+Message-ID: <20260204143855.090203126@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260204143851.857060534@linuxfoundation.org>
 References: <20260204143851.857060534@linuxfoundation.org>
@@ -57,130 +50,99 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kairui Song <kasong@tencent.com>
+From: Jibin Zhang <jibin.zhang@mediatek.com>
 
-commit 8a1968bd997f45a9b11aefeabdd1232e1b6c7184 upstream.
+commit 426ca15c7f6cb6562a081341ca88893a50c59fa2 upstream.
 
-The helper for shmem swap freeing is not handling the order of swap
-entries correctly.  It uses xa_cmpxchg_irq to erase the swap entry, but it
-gets the entry order before that using xa_get_order without lock
-protection, and it may get an outdated order value if the entry is split
-or changed in other ways after the xa_get_order and before the
-xa_cmpxchg_irq.
+This patch enhances GSO segment handling by properly checking
+the SKB_GSO_DODGY flag for frag_list GSO packets, addressing
+low throughput issues observed when a station accesses IPv4
+servers via hotspots with an IPv6-only upstream interface.
 
-And besides, the order could grow and be larger than expected, and cause
-truncation to erase data beyond the end border.  For example, if the
-target entry and following entries are swapped in or freed, then a large
-folio was added in place and swapped out, using the same entry, the
-xa_cmpxchg_irq will still succeed, it's very unlikely to happen though.
+Specifically, it fixes a bug in GSO segmentation when forwarding
+GRO packets containing a frag_list. The function skb_segment_list
+cannot correctly process GRO skbs that have been converted by XLAT,
+since XLAT only translates the header of the head skb. Consequently,
+skbs in the frag_list may remain untranslated, resulting in protocol
+inconsistencies and reduced throughput.
 
-To fix that, open code the Xarray cmpxchg and put the order retrieval and
-value checking in the same critical section.  Also, ensure the order won't
-exceed the end border, skip it if the entry goes across the border.
+To address this, the patch explicitly sets the SKB_GSO_DODGY flag
+for GSO packets in XLAT's IPv4/IPv6 protocol translation helpers
+(bpf_skb_proto_4_to_6 and bpf_skb_proto_6_to_4). This marks GSO
+packets as potentially modified after protocol translation. As a
+result, GSO segmentation will avoid using skb_segment_list and
+instead falls back to skb_segment for packets with the SKB_GSO_DODGY
+flag. This ensures that only safe and fully translated frag_list
+packets are processed by skb_segment_list, resolving protocol
+inconsistencies and improving throughput when forwarding GRO packets
+converted by XLAT.
 
-Skipping large swap entries crosses the end border is safe here.  Shmem
-truncate iterates the range twice, in the first iteration,
-find_lock_entries already filtered such entries, and shmem will swapin the
-entries that cross the end border and partially truncate the folio (split
-the folio or at least zero part of it).  So in the second loop here, if we
-see a swap entry that crosses the end order, it must at least have its
-content erased already.
-
-I observed random swapoff hangs and kernel panics when stress testing
-ZSWAP with shmem.  After applying this patch, all problems are gone.
-
-Link: https://lkml.kernel.org/r/20260120-shmem-swap-fix-v3-1-3d33ebfbc057@tencent.com
-Fixes: 809bc86517cc ("mm: shmem: support large folio swap out")
-Signed-off-by: Kairui Song <kasong@tencent.com>
-Reviewed-by: Nhat Pham <nphamcs@gmail.com>
-Acked-by: Chris Li <chrisl@kernel.org>
-Cc: Baolin Wang <baolin.wang@linux.alibaba.com>
-Cc: Baoquan He <bhe@redhat.com>
-Cc: Barry Song <baohua@kernel.org>
-Cc: Hugh Dickins <hughd@google.com>
-Cc: Kemeng Shi <shikemeng@huaweicloud.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Jibin Zhang <jibin.zhang@mediatek.com>
+Fixes: 9fd1ff5d2ac7 ("udp: Support UDP fraglist GRO/GSO.")
+Cc: stable@vger.kernel.org
+Link: https://patch.msgid.link/20260126152114.1211-1-jibin.zhang@mediatek.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/shmem.c |   45 ++++++++++++++++++++++++++++++++++-----------
- 1 file changed, 34 insertions(+), 11 deletions(-)
+ net/core/filter.c        |    2 ++
+ net/ipv4/tcp_offload.c   |    3 ++-
+ net/ipv4/udp_offload.c   |    3 ++-
+ net/ipv6/tcpv6_offload.c |    3 ++-
+ 4 files changed, 8 insertions(+), 3 deletions(-)
 
---- a/mm/shmem.c
-+++ b/mm/shmem.c
-@@ -944,17 +944,29 @@ static void shmem_delete_from_page_cache
-  * being freed).
-  */
- static long shmem_free_swap(struct address_space *mapping,
--			    pgoff_t index, void *radswap)
-+			    pgoff_t index, pgoff_t end, void *radswap)
- {
--	int order = xa_get_order(&mapping->i_pages, index);
--	void *old;
-+	XA_STATE(xas, &mapping->i_pages, index);
-+	unsigned int nr_pages = 0;
-+	pgoff_t base;
-+	void *entry;
-+
-+	xas_lock_irq(&xas);
-+	entry = xas_load(&xas);
-+	if (entry == radswap) {
-+		nr_pages = 1 << xas_get_order(&xas);
-+		base = round_down(xas.xa_index, nr_pages);
-+		if (base < index || base + nr_pages - 1 > end)
-+			nr_pages = 0;
-+		else
-+			xas_store(&xas, NULL);
-+	}
-+	xas_unlock_irq(&xas);
+--- a/net/core/filter.c
++++ b/net/core/filter.c
+@@ -3352,6 +3352,7 @@ static int bpf_skb_proto_4_to_6(struct s
+ 			shinfo->gso_type &= ~SKB_GSO_TCPV4;
+ 			shinfo->gso_type |=  SKB_GSO_TCPV6;
+ 		}
++		shinfo->gso_type |=  SKB_GSO_DODGY;
+ 	}
  
--	old = xa_cmpxchg_irq(&mapping->i_pages, index, radswap, NULL, 0);
--	if (old != radswap)
--		return 0;
--	free_swap_and_cache_nr(radix_to_swp_entry(radswap), 1 << order);
-+	if (nr_pages)
-+		free_swap_and_cache_nr(radix_to_swp_entry(radswap), nr_pages);
+ 	bpf_skb_change_protocol(skb, ETH_P_IPV6);
+@@ -3382,6 +3383,7 @@ static int bpf_skb_proto_6_to_4(struct s
+ 			shinfo->gso_type &= ~SKB_GSO_TCPV6;
+ 			shinfo->gso_type |=  SKB_GSO_TCPV4;
+ 		}
++		shinfo->gso_type |=  SKB_GSO_DODGY;
+ 	}
  
--	return 1 << order;
-+	return nr_pages;
- }
+ 	bpf_skb_change_protocol(skb, ETH_P_IP);
+--- a/net/ipv4/tcp_offload.c
++++ b/net/ipv4/tcp_offload.c
+@@ -107,7 +107,8 @@ static struct sk_buff *tcp4_gso_segment(
+ 	if (skb_shinfo(skb)->gso_type & SKB_GSO_FRAGLIST) {
+ 		struct tcphdr *th = tcp_hdr(skb);
  
- /*
-@@ -1106,8 +1118,8 @@ static void shmem_undo_range(struct inod
- 			if (xa_is_value(folio)) {
- 				if (unfalloc)
- 					continue;
--				nr_swaps_freed += shmem_free_swap(mapping,
--							indices[i], folio);
-+				nr_swaps_freed += shmem_free_swap(mapping, indices[i],
-+								  end - 1, folio);
- 				continue;
- 			}
+-		if (skb_pagelen(skb) - th->doff * 4 == skb_shinfo(skb)->gso_size)
++		if ((skb_pagelen(skb) - th->doff * 4 == skb_shinfo(skb)->gso_size) &&
++		    !(skb_shinfo(skb)->gso_type & SKB_GSO_DODGY))
+ 			return __tcp4_gso_segment_list(skb, features);
  
-@@ -1173,12 +1185,23 @@ whole_folios:
- 			folio = fbatch.folios[i];
+ 		skb->ip_summed = CHECKSUM_NONE;
+--- a/net/ipv4/udp_offload.c
++++ b/net/ipv4/udp_offload.c
+@@ -514,7 +514,8 @@ struct sk_buff *__udp_gso_segment(struct
  
- 			if (xa_is_value(folio)) {
-+				int order;
- 				long swaps_freed;
+ 	if (skb_shinfo(gso_skb)->gso_type & SKB_GSO_FRAGLIST) {
+ 		 /* Detect modified geometry and pass those to skb_segment. */
+-		if (skb_pagelen(gso_skb) - sizeof(*uh) == skb_shinfo(gso_skb)->gso_size)
++		if ((skb_pagelen(gso_skb) - sizeof(*uh) == skb_shinfo(gso_skb)->gso_size) &&
++		    !(skb_shinfo(gso_skb)->gso_type & SKB_GSO_DODGY))
+ 			return __udp_gso_segment_list(gso_skb, features, is_ipv6);
  
- 				if (unfalloc)
- 					continue;
--				swaps_freed = shmem_free_swap(mapping, indices[i], folio);
-+				swaps_freed = shmem_free_swap(mapping, indices[i],
-+							      end - 1, folio);
- 				if (!swaps_freed) {
-+					/*
-+					 * If found a large swap entry cross the end border,
-+					 * skip it as the truncate_inode_partial_folio above
-+					 * should have at least zerod its content once.
-+					 */
-+					order = shmem_confirm_swap(mapping, indices[i],
-+								   radix_to_swp_entry(folio));
-+					if (order > 0 && indices[i] + (1 << order) > end)
-+						continue;
- 					/* Swap was replaced by page: retry */
- 					index = indices[i];
- 					break;
+ 		ret = __skb_linearize(gso_skb);
+--- a/net/ipv6/tcpv6_offload.c
++++ b/net/ipv6/tcpv6_offload.c
+@@ -170,7 +170,8 @@ static struct sk_buff *tcp6_gso_segment(
+ 	if (skb_shinfo(skb)->gso_type & SKB_GSO_FRAGLIST) {
+ 		struct tcphdr *th = tcp_hdr(skb);
+ 
+-		if (skb_pagelen(skb) - th->doff * 4 == skb_shinfo(skb)->gso_size)
++		if ((skb_pagelen(skb) - th->doff * 4 == skb_shinfo(skb)->gso_size) &&
++		    !(skb_shinfo(skb)->gso_type & SKB_GSO_DODGY))
+ 			return __tcp6_gso_segment_list(skb, features);
+ 
+ 		skb->ip_summed = CHECKSUM_NONE;
 
 
