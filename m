@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4571A280A3B;
-	Wed,  4 Feb 2026 14:44:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB6D240758D;
+	Wed,  4 Feb 2026 14:44:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770216254; cv=none; b=svkjXmlGjYiN3K9ogDf0M7GyWW1miniLhy51n5pNUUibT608jeJWe9TS3eKk6xVCQ0MHmSYSuBBqJROxwCjQqPC55WjcUOcMTI4GtenynZQHW9plQZsvBdqKjJCHJU4INQe64FbhPWcORwrQ2n891bvqo++e9MuvGIbU6JKCzxU=
+	t=1770216257; cv=none; b=ft2LmMontGcIbt0wddJrKljgKPXhD5LZHmbfDff4gwQpP3Uy1XVusUsNxrGuzAQFxBEMfFNZIuA03X2HUDuxy5XyPsXJpPi9/BnVH5nFBMvODBUmn+Z0qaODFxEgV3YAIaG4avFTK4MVkHjcZI+QumXNK1c5uZotZgYSzzuQ9Ng=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770216254; c=relaxed/simple;
-	bh=SMAbFt/O4nUk6C6HqvHF96AkyxWWCVdfbBW+cSrH+dA=;
+	s=arc-20240116; t=1770216257; c=relaxed/simple;
+	bh=S8XrTO6j0KrocNUd036mt6sEeoPwAtmFZR0nOYN9bNo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZJbFkmrLYBzvMdEmONr5xjBae/dAefSRoyFBwNKmvIIduHGiFJ7jralO1SuMVIy0uOThhFJ+tTQwzTPx2ksu/M7DwO31QD6wDEYUpaIJ88E6hO+2f7FHFGyzfbsOXNFyRVDRqrq0NyYBk42up0v+J7VjhUYeHk5f8TDE+iequ/I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UZQLQ87b; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Mhi1DqJAGVimFm3j+2F5giVHu/Ijqs2ZcZ8EU4Rn1Y9rhW5JjfITQA1ZF9KLrGZxD7PQpEfWkUbBiu8xfEb7sj8Pi5IVyxQqd+8g/T5lyynzEWo4/pVW0udUQ1tKKBi+OARj6IMgnWrNrfO2EqvvsWC9LiigRgkXZdvy/6vXdwY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CB1+wk2b; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UZQLQ87b"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 72E04C4CEF7;
-	Wed,  4 Feb 2026 14:44:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CB1+wk2b"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E8021C4CEF7;
+	Wed,  4 Feb 2026 14:44:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770216253;
-	bh=SMAbFt/O4nUk6C6HqvHF96AkyxWWCVdfbBW+cSrH+dA=;
+	s=korg; t=1770216257;
+	bh=S8XrTO6j0KrocNUd036mt6sEeoPwAtmFZR0nOYN9bNo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UZQLQ87bx+tKzJvdP510PBNSyIigq2Tc68GPD1kxOGvSPekZ/z9VxDZ6UCfbgrRhS
-	 TklLkSxa0P0ITXELKCvcZGNWr2I/X4mcWC37PhQ5tygFzdbXf7so1J4o2wDH6A0VcW
-	 q6RT510m1QNULRU7nBzeobiVoYc6vrs64xL64eM0=
+	b=CB1+wk2bFugVb3MafZuIV+0+34yRmeuVE19zPt1CRZ4SE8YkKC9uidker4Y97bOUI
+	 zS3dPTqPuiZIEThl1KshYupwOLdlyHGzDae29EJqm+mzrcOG62HH+qePfgNKohegoR
+	 aviLZ/GVMqNh7lfxXu9JziSvNfH+mCKaz3k2Qc08=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dave Airlie <airlied@redhat.com>,
-	Lyude Paul <lyude@redhat.com>
-Subject: [PATCH 5.10 034/161] drm/nouveau/disp/nv50-: Set lock_core in curs507a_prepare
-Date: Wed,  4 Feb 2026 15:38:17 +0100
-Message-ID: <20260204143852.988539132@linuxfoundation.org>
+	Marek Vasut <marex@nabladev.com>,
+	Neil Armstrong <neil.armstrong@linaro.org>
+Subject: [PATCH 5.10 035/161] drm/panel-simple: fix connector type for DataImage SCF0700C48GGU18 panel
+Date: Wed,  4 Feb 2026 15:38:18 +0100
+Message-ID: <20260204143853.025128966@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260204143851.755002596@linuxfoundation.org>
 References: <20260204143851.755002596@linuxfoundation.org>
@@ -50,56 +50,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lyude Paul <lyude@redhat.com>
+From: Marek Vasut <marex@nabladev.com>
 
-commit 9e9bc6be0fa0b6b6b73f4f831f3b77716d0a8d9e upstream.
+commit 6ab3d4353bf75005eaa375677c9fed31148154d6 upstream.
 
-For a while, I've been seeing a strange issue where some (usually not all)
-of the display DMA channels will suddenly hang, particularly when there is
-a visible cursor on the screen that is being frequently updated, and
-especially when said cursor happens to go between two screens. While this
-brings back lovely memories of fixing Intel Skylake bugs, I would quite
-like to fix it :).
+The connector type for the DataImage SCF0700C48GGU18 panel is missing and
+devm_drm_panel_bridge_add() requires connector type to be set. This leads
+to a warning and a backtrace in the kernel log and panel does not work:
+"
+WARNING: CPU: 3 PID: 38 at drivers/gpu/drm/bridge/panel.c:379 devm_drm_of_get_bridge+0xac/0xb8
+"
+The warning is triggered by a check for valid connector type in
+devm_drm_panel_bridge_add(). If there is no valid connector type
+set for a panel, the warning is printed and panel is not added.
+Fill in the missing connector type to fix the warning and make
+the panel operational once again.
 
-It turns out the problem that's happening here is that we're managing to
-reach nv50_head_flush_set() in our atomic commit path without actually
-holding nv50_disp->mutex. This means that cursor updates happening in
-parallel (along with any other atomic updates that need to use the core
-channel) will race with eachother, which eventually causes us to corrupt
-the pushbuffer - leading to a plethora of various GSP errors, usually:
-
-  nouveau 0000:c1:00.0: gsp: Xid:56 CMDre 00000000 00000218 00102680 00000004 00800003
-  nouveau 0000:c1:00.0: gsp: Xid:56 CMDre 00000000 0000021c 00040509 00000004 00000001
-  nouveau 0000:c1:00.0: gsp: Xid:56 CMDre 00000000 00000000 00000000 00000001 00000001
-
-The reason this is happening is because generally we check whether we need
-to set nv50_atom->lock_core at the end of nv50_head_atomic_check().
-However, curs507a_prepare is called from the fb_prepare callback, which
-happens after the atomic check phase. As a result, this can lead to commits
-that both touch the core channel but also don't grab nv50_disp->mutex.
-
-So, fix this by making sure that we set nv50_atom->lock_core in
-cus507a_prepare().
-
-Reviewed-by: Dave Airlie <airlied@redhat.com>
-Signed-off-by: Lyude Paul <lyude@redhat.com>
-Fixes: 1590700d94ac ("drm/nouveau/kms/nv50-: split each resource type into their own source files")
-Cc: <stable@vger.kernel.org> # v4.18+
-Link: https://patch.msgid.link/20251219215344.170852-2-lyude@redhat.com
+Cc: stable@vger.kernel.org
+Fixes: 97ceb1fb08b6 ("drm/panel: simple: Add support for DataImage SCF0700C48GGU18")
+Signed-off-by: Marek Vasut <marex@nabladev.com>
+Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
+Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+Link: https://patch.msgid.link/20260110152750.73848-1-marex@nabladev.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/nouveau/dispnv50/curs507a.c |    1 +
+ drivers/gpu/drm/panel/panel-simple.c |    1 +
  1 file changed, 1 insertion(+)
 
---- a/drivers/gpu/drm/nouveau/dispnv50/curs507a.c
-+++ b/drivers/gpu/drm/nouveau/dispnv50/curs507a.c
-@@ -84,6 +84,7 @@ curs507a_prepare(struct nv50_wndw *wndw,
- 		asyh->curs.handle = handle;
- 		asyh->curs.offset = offset;
- 		asyh->set.curs = asyh->curs.visible;
-+		nv50_atom(asyh->state.state)->lock_core = true;
- 	}
- }
+--- a/drivers/gpu/drm/panel/panel-simple.c
++++ b/drivers/gpu/drm/panel/panel-simple.c
+@@ -1627,6 +1627,7 @@ static const struct panel_desc dataimage
+ 	},
+ 	.bus_format = MEDIA_BUS_FMT_RGB888_1X24,
+ 	.bus_flags = DRM_BUS_FLAG_DE_HIGH | DRM_BUS_FLAG_PIXDATA_DRIVE_POSEDGE,
++	.connector_type = DRM_MODE_CONNECTOR_DPI,
+ };
  
+ static const struct display_timing dlc_dlc0700yzg_1_timing = {
 
 
