@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E33427702D;
-	Wed,  4 Feb 2026 15:26:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2DBDB41B356;
+	Wed,  4 Feb 2026 15:26:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770218784; cv=none; b=WmmkeL9W7ZQbVkquq7s0vtaWjTBdbKWvlWpfcGNGIxW1gs9RnBETkO3ZWI3eSEA3rYkggM8DvJSOufhvwJQ5+8cZ686l4dcFVq/jwTTJIIAhejZxtfx/5b4A0J2hgPLsr8eWqbMY3Enlw1XeaPuaSQ6AzU6sf/BX9aoUeMRhJYY=
+	t=1770218788; cv=none; b=j0k9oEsUtxRxpvlDIZDm3MGBBvO6hoiRSKspjwAhjsYDdxYdDdjNTVEGFez0QYdg3wuSKoawS9mJThi/gKHK9jkOXySyINTdvf/Etf7VCLu1fADru/+4NqrZRd0gKNJ3MK8HX+V3syBvayn8h88mpZvL43v3H6TKSfQSyxQgddQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770218784; c=relaxed/simple;
-	bh=sO/DuiGIzkkgKmkBlSfVb9cjzTCA81jotny3e2C/DHg=;
+	s=arc-20240116; t=1770218788; c=relaxed/simple;
+	bh=zZE31RSx8ScZudavd+1OK4YDwFB+ctjvB0PBAaXVthQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jFuaTvuKXmsKqrG5ejFV/dJZiDiLJzoaKPCErn+7kcRpELjHKtlSVr6C7ouCCyqWGBiX8CxBfj/xpVPRkR2s356ZF3lNpJWRoX4CcHLSwNZlheyjZ90soNPag9R8PP3n1uAw7wLd75BTxrn9TxN30Q/Mnly+FGKAr2K00lgC4t0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HUx/POfn; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=Y32jaFfJ2HUoUpag1/iwJMYau3rGSLhr+sTPPR8mMFV06o4Njh8UJI6Gfv343eXCB/Qr85LObHWv6NEe5LcP1qUOmQeM46m7tkwS+QVhj+kyRW8ZYcWgMEEsiilTatMeEFYeec94Nlj+xOwApWrmDOhTc+JCwhLYqY+1ThW9/ag=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=n7l6qzYU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HUx/POfn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 079E7C4CEF7;
-	Wed,  4 Feb 2026 15:26:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="n7l6qzYU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7975CC4CEF7;
+	Wed,  4 Feb 2026 15:26:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770218784;
-	bh=sO/DuiGIzkkgKmkBlSfVb9cjzTCA81jotny3e2C/DHg=;
+	s=korg; t=1770218788;
+	bh=zZE31RSx8ScZudavd+1OK4YDwFB+ctjvB0PBAaXVthQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HUx/POfnqgziWgA5nf9M9eGo6RUjiKeoX9+CHRk8/LE5mlOIJlgh01pxjx6gBa7t/
-	 a76iutBrBjVZywXm8R6igMR+kimoVzAbQ4SBxELxjwkGAgyN74iu55Bf1CXFAjkeYF
-	 vhh+qhXZpRjI3M5MCCFI+99lrYyDKp20gVdh0JSc=
+	b=n7l6qzYUJRFciHF9mSQcspDhR5Gp7qlS4yg/rOrY61YWxRHIZX9JOKgZ2YQjoX4yY
+	 rEoR/toUpjaVRIqcwvwIofl7JYT8dr2xxk83D0HutfOKdjZDF8nHIfP5tGsIioOBSs
+	 XYoMQ30jgaXSZRXkRG4IwAlpwe26A55ju032ziTw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jesse Zhang <Jesse.Zhang@amd.com>,
+	=?UTF-8?q?Timur=20Krist=C3=B3f?= <timur.kristof@gmail.com>,
+	Jesse Zhang <jesse.zhang@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.12 61/87] drm/amdgpu/soc21: fix xclk for APUs
-Date: Wed,  4 Feb 2026 15:40:59 +0100
-Message-ID: <20260204143849.115106449@linuxfoundation.org>
+Subject: [PATCH 6.12 62/87] drm/amdgpu/gfx10: fix wptr reset in KGQ init
+Date: Wed,  4 Feb 2026 15:41:00 +0100
+Message-ID: <20260204143849.150847110@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260204143846.906385641@linuxfoundation.org>
 References: <20260204143846.906385641@linuxfoundation.org>
@@ -44,6 +45,7 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
@@ -52,37 +54,32 @@ Content-Transfer-Encoding: 8bit
 
 From: Alex Deucher <alexander.deucher@amd.com>
 
-commit e7fbff9e7622a00c2b53cb14df481916f0019742 upstream.
+commit cc4f433b14e05eaa4a98fd677b836e9229422387 upstream.
 
-The reference clock is supposed to be 100Mhz, but it
-appears to actually be slightly lower (99.81Mhz).
+wptr is a 64 bit value and we need to update the
+full value, not just 32 bits. Align with what we
+already do for KCQs.
 
-Closes: https://gitlab.freedesktop.org/mesa/mesa/-/issues/14451
-Reviewed-by: Jesse Zhang <Jesse.Zhang@amd.com>
+Reviewed-by: Timur Kristóf <timur.kristof@gmail.com>
+Reviewed-by: Jesse Zhang <jesse.zhang@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 637fee3954d4bd509ea9d95ad1780fc174489860)
+(cherry picked from commit e80b1d1aa1073230b6c25a1a72e88f37e425ccda)
 Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/soc21.c |    8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/amd/amdgpu/gfx_v10_0.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/amd/amdgpu/soc21.c
-+++ b/drivers/gpu/drm/amd/amdgpu/soc21.c
-@@ -225,7 +225,13 @@ static u32 soc21_get_config_memsize(stru
- 
- static u32 soc21_get_xclk(struct amdgpu_device *adev)
- {
--	return adev->clock.spll.reference_freq;
-+	u32 reference_clock = adev->clock.spll.reference_freq;
-+
-+	/* reference clock is actually 99.81 Mhz rather than 100 Mhz */
-+	if ((adev->flags & AMD_IS_APU) && reference_clock == 10000)
-+		return 9981;
-+
-+	return reference_clock;
- }
- 
+--- a/drivers/gpu/drm/amd/amdgpu/gfx_v10_0.c
++++ b/drivers/gpu/drm/amd/amdgpu/gfx_v10_0.c
+@@ -6729,7 +6729,7 @@ static int gfx_v10_0_kgq_init_queue(stru
+ 			memcpy_toio(mqd, adev->gfx.me.mqd_backup[mqd_idx], sizeof(*mqd));
+ 		/* reset the ring */
+ 		ring->wptr = 0;
+-		*ring->wptr_cpu_addr = 0;
++		atomic64_set((atomic64_t *)ring->wptr_cpu_addr, 0);
+ 		amdgpu_ring_clear_ring(ring);
+ 	}
  
 
 
