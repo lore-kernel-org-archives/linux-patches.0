@@ -1,36 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F5B327B359;
-	Wed,  4 Feb 2026 14:50:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DDC7F281530;
+	Wed,  4 Feb 2026 14:50:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770216642; cv=none; b=MUWiL359K69ObUL+uO/4btflvc7UGSxzcBlAxXCp2kFzuC1zUSjTBmTfTkZCrffB0WBrnS5EuFMLJBs75AcrLfFTe6gLKcB65mlpSiDHHGNNQOP5BQhyrBF9pBUQFhef7vz2ElZdWgYWlGX7A4SiGQqoYSbr1UlM3KKiqumkGQg=
+	t=1770216645; cv=none; b=rnotvMmP4kRu7JKS90pYeQxzBQ+lZHA+OQmVbnY3dvgN/nFhh5g8BDO83tkJQTrJeb7m/sWsEtBZGUUGktbpdNBO6ZCk6YwwKNUoZIqZNsieAjBzyyPpMLVz+8V0fuZ0Xk+7g0g50TutOHHoz/++4ifQyOzDq/kJ5gIZrRUVyDg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770216642; c=relaxed/simple;
-	bh=dekjgBspRktqjgcLl7wNkO30w1nhJ59FGAGh79z/JTg=;
+	s=arc-20240116; t=1770216645; c=relaxed/simple;
+	bh=gV1JhdC8MSUKC+wzR3t90b7tbLeH+SbLl2DsGlP5NhI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cQne/DN9qzvxOT5mwfaOrszLKGheB0MazeOJCzmAPFGjZT3I2IfphbunhbVSbHDwechNVV34940Bi8lWNxmvQp0q6diiaFZB+RfU3YVdlClo/BauXPThdpGe4RAc9xL1LQq23psf5mwf0I+O5xNvfoddKj38ketPuYkRHAurwoo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YHJb9Lvz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=aHdMoGVlSjEjQ4P4TwEtZugGWaXsbXWU7E2tUDCv/cb91HY8n0c9aVS8w/XhcwNLmjGvM17R5lkdqQap9gbO7PruuqbxZmxVLTTDPsCTSkHJg28LDEYtjt4GA1wzSn9GMVttTx3EgAs3yDuN75txPhqat1liH2fs559/Rujv398=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YhIoBkWC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YHJb9Lvz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E4B41C4CEF7;
-	Wed,  4 Feb 2026 14:50:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YhIoBkWC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 177B8C4CEF7;
+	Wed,  4 Feb 2026 14:50:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770216642;
-	bh=dekjgBspRktqjgcLl7wNkO30w1nhJ59FGAGh79z/JTg=;
+	s=korg; t=1770216645;
+	bh=gV1JhdC8MSUKC+wzR3t90b7tbLeH+SbLl2DsGlP5NhI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YHJb9Lvz1BemRUshqjRcYU+hccLfDncTpOqgGTllo3+TRoZfRJQLTGe1Pefo7RSbt
-	 8TlhypZjA0T+c9OFGLSnAojuU/q1i8mXkJRjjN42cK2hguxC/ian9iwledAEqAmOE/
-	 tLRVjyQGfdtrqN1hoWIXM0xVa0Xvny2aAWjgyxl4=
+	b=YhIoBkWCeylYUSB/DRheM2dTyX2KuuaHVX6QeIu37hgxAyVzPOQFBEZBKzIVYosYa
+	 MbKanVBm61DWN4SJQP6DYj6JXJE4E9TvvWlQKAAxgnYe9bAe7dKt13oq9jeMXKZWk0
+	 NcJkyihVsgqI/7fPu2pxpq5S7ZLysbtRp6DijmEA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marc Kleine-Budde <mkl@pengutronix.de>
-Subject: [PATCH 5.10 150/161] can: esd_usb: esd_usb_read_bulk_callback(): fix URB memory leak
-Date: Wed,  4 Feb 2026 15:40:13 +0100
-Message-ID: <20260204143857.146561155@linuxfoundation.org>
+	Sudeep Holla <sudeep.holla@arm.com>,
+	"Rob Herring (Arm)" <robh@kernel.org>
+Subject: [PATCH 5.10 151/161] of: platform: Use default match table for /firmware
+Date: Wed,  4 Feb 2026 15:40:14 +0100
+Message-ID: <20260204143857.181912448@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260204143851.755002596@linuxfoundation.org>
 References: <20260204143851.755002596@linuxfoundation.org>
@@ -49,59 +50,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Marc Kleine-Budde <mkl@pengutronix.de>
+From: Rob Herring (Arm) <robh@kernel.org>
 
-commit 5a4391bdc6c8357242f62f22069c865b792406b3 upstream.
+commit 48e6a9c4a20870e09f85ff1a3628275d6bce31c0 upstream.
 
-Fix similar memory leak as in commit 7352e1d5932a ("can: gs_usb:
-gs_usb_receive_bulk_callback(): fix URB memory leak").
+Calling of_platform_populate() without a match table will only populate
+the immediate child nodes under /firmware. This is usually fine, but in
+the case of something like a "simple-mfd" node such as
+"raspberrypi,bcm2835-firmware", those child nodes will not be populated.
+And subsequent calls won't work either because the /firmware node is
+marked as processed already.
 
-In esd_usb_open(), the URBs for USB-in transfers are allocated, added to
-the dev->rx_submitted anchor and submitted. In the complete callback
-esd_usb_read_bulk_callback(), the URBs are processed and resubmitted. In
-esd_usb_close() the URBs are freed by calling
-usb_kill_anchored_urbs(&dev->rx_submitted).
+Switch the call to of_platform_default_populate() to solve this problem.
+It should be a nop for existing cases.
 
-However, this does not take into account that the USB framework unanchors
-the URB before the complete function is called. This means that once an
-in-URB has been completed, it is no longer anchored and is ultimately not
-released in esd_usb_close().
-
-Fix the memory leak by anchoring the URB in the
-esd_usb_read_bulk_callback() to the dev->rx_submitted anchor.
-
-Fixes: 96d8e90382dc ("can: Add driver for esd CAN-USB/2 device")
+Fixes: 3aa0582fdb82 ("of: platform: populate /firmware/ node from of_platform_default_populate_init()")
 Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20260116-can_usb-fix-memory-leak-v2-2-4b8cb2915571@pengutronix.de
-Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
+Reviewed-by: Sudeep Holla <sudeep.holla@arm.com>
+Link: https://patch.msgid.link/20260114015158.692170-2-robh@kernel.org
+Signed-off-by: Rob Herring (Arm) <robh@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/can/usb/esd_usb2.c |    9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
+ drivers/of/platform.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/net/can/usb/esd_usb2.c
-+++ b/drivers/net/can/usb/esd_usb2.c
-@@ -441,13 +441,20 @@ resubmit_urb:
- 			  urb->transfer_buffer, RX_BUFFER_SIZE,
- 			  esd_usb2_read_bulk_callback, dev);
+--- a/drivers/of/platform.c
++++ b/drivers/of/platform.c
+@@ -533,7 +533,7 @@ static int __init of_platform_default_po
  
-+	usb_anchor_urb(urb, &dev->rx_submitted);
-+
- 	retval = usb_submit_urb(urb, GFP_ATOMIC);
-+	if (!retval)
-+		return;
-+
-+	usb_unanchor_urb(urb);
-+
- 	if (retval == -ENODEV) {
- 		for (i = 0; i < dev->net_count; i++) {
- 			if (dev->nets[i])
- 				netif_device_detach(dev->nets[i]->netdev);
- 		}
--	} else if (retval) {
-+	} else {
- 		dev_err(dev->udev->dev.parent,
- 			"failed resubmitting read bulk urb: %d\n", retval);
+ 	node = of_find_node_by_path("/firmware");
+ 	if (node) {
+-		of_platform_populate(node, NULL, NULL, NULL);
++		of_platform_default_populate(node, NULL, NULL);
+ 		of_node_put(node);
  	}
+ 
 
 
