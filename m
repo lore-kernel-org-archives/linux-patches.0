@@ -1,36 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39D02423A6B;
-	Wed,  4 Feb 2026 15:05:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6FAA8423A6B;
+	Wed,  4 Feb 2026 15:05:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770217550; cv=none; b=aJjLnawAh9iZe4f3uLjIgNxjRmHT+ucgqIB8RWkYVd5WM1J0UITYRHZIiEFxpmiNpGb1VjrJplsnCe+MM9P5WyEnrgYggBkJPSmf/Jr2iaiXAcCAAZPOUX/GbMZxrHUYwcszFPcH1Cd6jvyoUVLUx1y5McP772ALy/xjgqlFJH8=
+	t=1770217553; cv=none; b=Uh5suzaM0z1Qb3UmyS6XKc6ILgnBj/eCFbzXKQI0aAIZDoDioxr6P3VJthBZ3+HzhfG50Lh6aNymOnhrnWXDaAfw5Yj/ijIS1zJh/fR/AoJjZKL78+eU7TO/Pp2LpgNg7RsycEhgLPJ6bUeBm1sgAU4tT4dqUpqD7IwFo/L385Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770217550; c=relaxed/simple;
-	bh=bNLg2FHds4AijLuVedig8NipCIGaLg+wK47hdjoEzBU=;
+	s=arc-20240116; t=1770217553; c=relaxed/simple;
+	bh=AwTaZxdNwG4AfAxE7lyau58URsgWlsUwl1pWYceA8WI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EZ6L8FH1CQd3sgZ2IhBtqzvarvrKpnR3CfIA2XNx2vaTy4Iw3jnWmeFDNP9T6gMH2w+vc6zgzdDAkQf/Vp1gngDfgu7hiNf3WWnAMbUUZWyKHjjxl/5AK9mxsDSSQGboLyibzHpbUJKLXsW7XBkR6S4m8DFf+arPsesomYWXQL4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iaMnF0vl; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=IgcF0MwuH/htUBMCW+Tv/Kl2eD80SzdKNZ8Ai3HvNpYKiPBzyMMPV4G+BFcLtfSLGO13iI76dpIQ1SrSyM2VnGDtTeJ1ceuMHN5/MGGRTPTpgjcr370i7aXfzG7W1ix9CHYxSze8lPXuSaaIdABefk5jgQn3Wa80nuKd48H9Os8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IsNCMnoh; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iaMnF0vl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A180FC4CEF7;
-	Wed,  4 Feb 2026 15:05:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IsNCMnoh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3E1BC4CEF7;
+	Wed,  4 Feb 2026 15:05:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770217550;
-	bh=bNLg2FHds4AijLuVedig8NipCIGaLg+wK47hdjoEzBU=;
+	s=korg; t=1770217553;
+	bh=AwTaZxdNwG4AfAxE7lyau58URsgWlsUwl1pWYceA8WI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iaMnF0vldbjaoPUqMzdmzt/vx1exeMHp+HqbCo2Qy5et9aPmL0cWnQ59QR/LOlqve
-	 QC8kya53c2Qp2bCKycIqCfZlBnZbRu87Go7eDbTnLicA3uIrnasC28TW0TwuPu5Xpe
-	 j7Ko8UmJetu9toof6YQbK/w87ticVC38V79i0bbQ=
+	b=IsNCMnohH/kwjDUpIl8QPupfHrFwCsRO8PFjnDJRPEdq6CNZ3TM5aHbCV4aOYsJ45
+	 ztD/kTVXt+rYKjhOMIrBft8cyVIRbeGiW7X6/79+RYcOx6JoYe9igbJiHiXmW6vCCA
+	 exjVXky68UW/lxVvnH4gSCkZ1AYKgcDOCBWXvZz0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thinh Nguyen <Thinh.Nguyen@synopsys.com>
-Subject: [PATCH 6.1 047/280] usb: dwc3: Check for USB4 IP_NAME
-Date: Wed,  4 Feb 2026 15:37:01 +0100
-Message-ID: <20260204143911.330087837@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	=?UTF-8?q?Johannes=20Br=C3=BCderl?= <johannes.bruederl@gmail.com>
+Subject: [PATCH 6.1 048/280] usb: core: add USB_QUIRK_NO_BOS for devices that hang on BOS descriptor
+Date: Wed,  4 Feb 2026 15:37:02 +0100
+Message-ID: <20260204143911.365125524@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260204143909.614719725@linuxfoundation.org>
 References: <20260204143909.614719725@linuxfoundation.org>
@@ -43,50 +44,69 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
+From: Johannes Brüderl <johannes.bruederl@gmail.com>
 
-commit 0ed91d47959cb7573c17e06487f0fb891d59dfb3 upstream.
+commit 2740ac33c87b3d0dfa022efd6ba04c6261b1abbd upstream.
 
-Synopsys renamed DWC_usb32 IP to DWC_usb4 as of IP version 1.30. No
-functional change except checking for the IP_NAME here. The driver will
-treat the new IP_NAME as if it's DWC_usb32. Additional features for USB4
-will be introduced and checked separately.
+Add USB_QUIRK_NO_BOS quirk flag to skip requesting the BOS descriptor
+for devices that cannot handle it.
 
-Cc: stable@vger.kernel.org
-Signed-off-by: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
-Link: https://patch.msgid.link/e6f1827754c7a7ddc5eb7382add20bfe3a9b312f.1767390747.git.Thinh.Nguyen@synopsys.com
+Add Elgato 4K X (0fd9:009b) to the quirk table. This device hangs when
+the BOS descriptor is requested at SuperSpeed Plus (10Gbps).
+
+Link: https://bugzilla.kernel.org/show_bug.cgi?id=220027
+Cc: stable <stable@kernel.org>
+Signed-off-by: Johannes Brüderl <johannes.bruederl@gmail.com>
+Link: https://patch.msgid.link/20251207090220.14807-1-johannes.bruederl@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/dwc3/core.c |    2 ++
- drivers/usb/dwc3/core.h |    1 +
- 2 files changed, 3 insertions(+)
+ drivers/usb/core/config.c  |    5 +++++
+ drivers/usb/core/quirks.c  |    3 +++
+ include/linux/usb/quirks.h |    3 +++
+ 3 files changed, 11 insertions(+)
 
---- a/drivers/usb/dwc3/core.c
-+++ b/drivers/usb/dwc3/core.c
-@@ -905,6 +905,8 @@ static bool dwc3_core_is_valid(struct dw
+--- a/drivers/usb/core/config.c
++++ b/drivers/usb/core/config.c
+@@ -1004,6 +1004,11 @@ int usb_get_bos_descriptor(struct usb_de
+ 	__u8 cap_type;
+ 	int ret;
  
- 	reg = dwc3_readl(dwc->regs, DWC3_GSNPSID);
- 	dwc->ip = DWC3_GSNPS_ID(reg);
-+	if (dwc->ip == DWC4_IP)
-+		dwc->ip = DWC32_IP;
++	if (dev->quirks & USB_QUIRK_NO_BOS) {
++		dev_dbg(ddev, "skipping BOS descriptor\n");
++		return -ENOMSG;
++	}
++
+ 	bos = kzalloc(sizeof(*bos), GFP_KERNEL);
+ 	if (!bos)
+ 		return -ENOMEM;
+--- a/drivers/usb/core/quirks.c
++++ b/drivers/usb/core/quirks.c
+@@ -447,6 +447,9 @@ static const struct usb_device_id usb_qu
+ 	{ USB_DEVICE(0x0c45, 0x7056), .driver_info =
+ 			USB_QUIRK_IGNORE_REMOTE_WAKEUP },
  
- 	/* This should read as U3 followed by revision number */
- 	if (DWC3_IP_IS(DWC3)) {
---- a/drivers/usb/dwc3/core.h
-+++ b/drivers/usb/dwc3/core.h
-@@ -1211,6 +1211,7 @@ struct dwc3 {
- #define DWC3_IP			0x5533
- #define DWC31_IP		0x3331
- #define DWC32_IP		0x3332
-+#define DWC4_IP			0x3430
++	/* Elgato 4K X - BOS descriptor fetch hangs at SuperSpeed Plus */
++	{ USB_DEVICE(0x0fd9, 0x009b), .driver_info = USB_QUIRK_NO_BOS },
++
+ 	/* Sony Xperia XZ1 Compact (lilac) smartphone in fastboot mode */
+ 	{ USB_DEVICE(0x0fce, 0x0dde), .driver_info = USB_QUIRK_NO_LPM },
  
- 	u32			revision;
+--- a/include/linux/usb/quirks.h
++++ b/include/linux/usb/quirks.h
+@@ -75,4 +75,7 @@
+ /* short SET_ADDRESS request timeout */
+ #define USB_QUIRK_SHORT_SET_ADDRESS_REQ_TIMEOUT	BIT(16)
  
++/* skip BOS descriptor request */
++#define USB_QUIRK_NO_BOS			BIT(17)
++
+ #endif /* __LINUX_USB_QUIRKS_H */
 
 
