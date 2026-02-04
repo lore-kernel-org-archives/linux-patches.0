@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 918E22D6611;
-	Wed,  4 Feb 2026 15:34:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2F1B286890;
+	Wed,  4 Feb 2026 15:34:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770219259; cv=none; b=bydMuR4fAdWQZqqxjRVNKb0axa3gBoS1a3kwfJE1kEZmSD8K+HrQsLGiWvjEewgbOl8KLf++VkaDa7fV25deqKwF+YQxm9Vqf8ZgW2AFQR9qiQuE19/4rmTDnLHe9TdDQ2a52zbBbBav/kMYzjEV+2/HYF6cSybXxjOemNEMruM=
+	t=1770219262; cv=none; b=MxFLOfivmQYVIJTbi1vMaawDbm9CWWwOplerbHdEA95s95Xsm/K4w3WoTirK/GYsXWOASMy2PELQGuClfyAO7n2spjiSya2tkQH8FDxeQXDoNuly6ZV2hkT1bPxVgD0o76kx59UPxfuEqaDEwY+YcDBca6Byqy7eFE5R0zvXdnw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770219259; c=relaxed/simple;
-	bh=ydqz8MTILKryS+L4pDy3YONvp8VxMHgfnv4nGpMtdaw=;
+	s=arc-20240116; t=1770219262; c=relaxed/simple;
+	bh=Jk5F99hdFj1AHGyCrjPvlUv+AB6gSLY/6Zasx67o43s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=deZ8AQbSZ0ci8XbSRMhYH3AkVPl6mS3haqQU0Fqb/eP0YKy1vSj1n0w4sudxkyg36Mz/EOzDxz2jWzPBBn1GqF/0sKv0XJSEk+NXclsoqROMUyS0TBp53i0R2tErsFQLjGu6xsckAv4+FE63Eff4po/t5JQSWXWATs7neLvy49Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xIYub/J3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=APGXGSonGs46btutoF5AwCgV8qRUV6hNp1hnMLb1tTeYlZKFHKgrG6AfTAbRiIM98JvWTbyzo3lPS05bKte6N6Q80X9+CBazr5MkcGTgN1jz0aD4HDeJHT3kh0ZL+fv4mSbC4Njvh2sZAp7C7p9Gr34YMETl5O0+/1JQCt5+jD4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vanqRl9u; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xIYub/J3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B6B8C4CEF7;
-	Wed,  4 Feb 2026 15:34:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vanqRl9u"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3046BC4CEF7;
+	Wed,  4 Feb 2026 15:34:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770219259;
-	bh=ydqz8MTILKryS+L4pDy3YONvp8VxMHgfnv4nGpMtdaw=;
+	s=korg; t=1770219262;
+	bh=Jk5F99hdFj1AHGyCrjPvlUv+AB6gSLY/6Zasx67o43s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xIYub/J3KRspcK62BNcevwwTIYYjYQQX9rxBY3sope3/IocKJeeisXu1OkMwTB8Om
-	 22xhvFp7h6TQMR1q7R1sRKH2i0t3j0W45T5U7YGaUEQPA1njQ9BS9vfwblRTlLpsx3
-	 0qj8JsrkPN8l2FTm/xJZVI1MAAi8wdGav4TdD8Bw=
+	b=vanqRl9uMHTpLjUrVIty0whztduA3rA8/puz24WDKnS2PzbIxZCF86kXzGK/cGR0k
+	 E4Fxp8tvIUrgEfIHn8O/jRoB9E6YtG20oToFczr9l3OF6bJVYBaz6RsOPyaUML/pmd
+	 e2ocx8Abl4wzM8APpFPPwWMTsgmukLs9UNP5FQds=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jesse Zhang <Jesse.Zhang@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.18 114/122] drm/amdgpu: Fix cond_exec handling in amdgpu_ib_schedule()
-Date: Wed,  4 Feb 2026 15:41:36 +0100
-Message-ID: <20260204143855.954698840@linuxfoundation.org>
+	Bao Nguyen <ncqb@google.com>,
+	Nicolin Chen <nicolinc@nvidia.com>,
+	Joerg Roedel <joerg.roedel@amd.com>
+Subject: [PATCH 6.18 115/122] iommu/tegra241-cmdqv: Reset VCMDQ in tegra241_vcmdq_hw_init_user()
+Date: Wed,  4 Feb 2026 15:41:37 +0100
+Message-ID: <20260204143855.990041224@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260204143851.857060534@linuxfoundation.org>
 References: <20260204143851.857060534@linuxfoundation.org>
@@ -50,46 +51,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alex Deucher <alexander.deucher@amd.com>
+From: Nicolin Chen <nicolinc@nvidia.com>
 
-commit b1defcdc4457649db236415ee618a7151e28788c upstream.
+commit 80f1a2c2332fee0edccd006fe87fc8a6db94bab3 upstream.
 
-The EXEC_COUNT field must be > 0.  In the gfx shadow
-handling we always emit a cond_exec packet after the gfx_shadow
-packet, but the EXEC_COUNT never gets patched.  This leads
-to a hang when we try and reset queues on gfx11 APUs.
+The Enable bits in CMDQV/VINTF/VCMDQ_CONFIG registers do not actually reset
+the HW registers. So, the driver explicitly clears all the registers when a
+VINTF or VCMDQ is being initialized calling its hw_deinit() function.
 
-Fixes: c68cbbfd54c6 ("drm/amdgpu: cleanup conditional execution")
-Closes: https://gitlab.freedesktop.org/drm/amd/-/issues/4789
-Reviewed-by: Jesse Zhang <Jesse.Zhang@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit ba205ac3d6e83f56c4f824f23f1b4522cb844ff3)
+However, a userspace VCMDQ is not properly reset, unlike an in-kernel VCMDQ
+getting reset in tegra241_vcmdq_hw_init().
+
+Meanwhile, tegra241_vintf_hw_init() calling tegra241_vintf_hw_deinit() will
+not deinit any VCMDQ, since there is no userspace VCMDQ mapped to the VINTF
+at that stage.
+
+Then, this may result in dirty VCMDQ registers, which can fail the VM.
+
+Like tegra241_vcmdq_hw_init(), reset a VCMDQ in tegra241_vcmdq_hw_init() to
+fix this bug. This is required by a host kernel.
+
+Fixes: 6717f26ab1e7 ("iommu/tegra241-cmdqv: Add user-space use support")
 Cc: stable@vger.kernel.org
+Reported-by: Bao Nguyen <ncqb@google.com>
+Signed-off-by: Nicolin Chen <nicolinc@nvidia.com>
+Signed-off-by: Joerg Roedel <joerg.roedel@amd.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_ib.c |    5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ drivers/iommu/arm/arm-smmu-v3/tegra241-cmdqv.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_ib.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_ib.c
-@@ -228,7 +228,7 @@ int amdgpu_ib_schedule(struct amdgpu_rin
+diff --git a/drivers/iommu/arm/arm-smmu-v3/tegra241-cmdqv.c b/drivers/iommu/arm/arm-smmu-v3/tegra241-cmdqv.c
+index 378104cd395e..04cc7a9036e4 100644
+--- a/drivers/iommu/arm/arm-smmu-v3/tegra241-cmdqv.c
++++ b/drivers/iommu/arm/arm-smmu-v3/tegra241-cmdqv.c
+@@ -1078,6 +1078,9 @@ static int tegra241_vcmdq_hw_init_user(struct tegra241_vcmdq *vcmdq)
+ {
+ 	char header[64];
  
- 	amdgpu_ring_ib_begin(ring);
++	/* Reset VCMDQ */
++	tegra241_vcmdq_hw_deinit(vcmdq);
++
+ 	/* Configure the vcmdq only; User space does the enabling */
+ 	writeq_relaxed(vcmdq->cmdq.q.q_base, REG_VCMDQ_PAGE1(vcmdq, BASE));
  
--	if (ring->funcs->emit_gfx_shadow)
-+	if (ring->funcs->emit_gfx_shadow && adev->gfx.cp_gfx_shadow)
- 		amdgpu_ring_emit_gfx_shadow(ring, shadow_va, csa_va, gds_va,
- 					    init_shadow, vmid);
- 
-@@ -284,7 +284,8 @@ int amdgpu_ib_schedule(struct amdgpu_rin
- 				       fence_flags | AMDGPU_FENCE_FLAG_64BIT);
- 	}
- 
--	if (ring->funcs->emit_gfx_shadow && ring->funcs->init_cond_exec) {
-+	if (ring->funcs->emit_gfx_shadow && ring->funcs->init_cond_exec &&
-+	    adev->gfx.cp_gfx_shadow) {
- 		amdgpu_ring_emit_gfx_shadow(ring, 0, 0, 0, false, 0);
- 		amdgpu_ring_init_cond_exec(ring, ring->cond_exe_gpu_addr);
- 	}
+-- 
+2.53.0
+
 
 
