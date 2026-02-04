@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3296141C2F0;
-	Wed,  4 Feb 2026 14:59:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6ACE43D413D;
+	Wed,  4 Feb 2026 14:59:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770217182; cv=none; b=gm1FVNE01c9RIulruwDX2fLKSEClNsnp6GoWK6O1gCGgSMFZN06kDLRpsH6pjGt/0VMVNGfmYCy9/ntdg/lSr47WAYeAXWe/Q/H1H6+tHCpqC4bVCLkXBoKFrAlfPcC5w17ShB6vlBMiqxL6OD9C3tZ5pAroVDmW95NRaORxVJE=
+	t=1770217185; cv=none; b=LwkievRtj683giMedpa/REnU2JBt2iHSd3e+MqB3S89EhdJ11JucNRgj8KMRPQl6pgargy3mfS9tDfE9TKRc8AiAlO6n2txtdEW0eay6NpuiaA+MxowGFs6N5PMWxceSfQhKs0o+iScAm9zPAqHl48kS2ph+mbdwfrJVIAn8qUo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770217182; c=relaxed/simple;
-	bh=7Dui+O+ZWgco3ZR/EpGxkmIt24qlIQ9d16qFn6ee70U=;
+	s=arc-20240116; t=1770217185; c=relaxed/simple;
+	bh=QNIpkEvDbbiQ99qYgKreBciW+5obgd8r7lTnY9DQcP0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iy5ICxTvUwTiPNq9aPwt0PxgWLSMXlvySfAUPKj7UMOgHHz4w/DBckmgSYafjXdFCyWhs8cD3o++GQDDDTYzgTxIP5ISsNf5z+YzWZ2nMM4eM0xRQShkJbyosNNdf8eVOSjtp+WYmC6uPqclm6fOnuPhJrHKK8WPvSO2dILGmfc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wwfu1GqO; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QWs502IynHzD6s9qzxL0XlK34fjexI2u7sbYdDKaO7sKW4OBiDIoqCXa1suP66pewhRlEHuX6GjHIGYiQ6vb2gAKFbHhhRUKuxGTL6jh2PwRXls3ZU+sxmzj2psDe6YYIbBzIGV6dv6c0A6B34ldoRMkrTEHPYpPo87bgkMYFOI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=n0uwIGgm; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wwfu1GqO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C30BC4CEF7;
-	Wed,  4 Feb 2026 14:59:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="n0uwIGgm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C39E4C4CEF7;
+	Wed,  4 Feb 2026 14:59:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770217182;
-	bh=7Dui+O+ZWgco3ZR/EpGxkmIt24qlIQ9d16qFn6ee70U=;
+	s=korg; t=1770217185;
+	bh=QNIpkEvDbbiQ99qYgKreBciW+5obgd8r7lTnY9DQcP0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wwfu1GqOlB2B2dvz7KBxovKxOifig4zFKCHH7yQl54c37AGCQIAgSMoZ4Y4E/MGX+
-	 PYQ0JKumPLCbsu3PKbjmgD55ZwKZDt8I7O5pY+HclxovlBKHX7tCEfu0dXCQ0tnCIF
-	 I5Bh4ZqyAMwWUeL9YVfRMIXpaZH96ffJUmbAASH8=
+	b=n0uwIGgmivPjE3z0TGosf0y+qpr8k/CB7n8dmqJXpSCmZYYdLSo8/s372R3UYAaby
+	 nnuUHuaeE2hag2E5t7ay/xTegwP1hQ//NbOr4y5hw5ChZDl+oeGEbvH03p2V+o0yX9
+	 cplbAimah2tKOcByoC/G3g/FPFHCVPfrZr40Edl8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kery Qi <qikeyu2017@gmail.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Denis Sergeev <denserg.edu@gmail.com>,
+	Mika Westerberg <westeri@kernel.org>,
+	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 148/206] scsi: firewire: sbp-target: Fix overflow in sbp_make_tpg()
-Date: Wed,  4 Feb 2026 15:39:39 +0100
-Message-ID: <20260204143903.534911182@linuxfoundation.org>
+Subject: [PATCH 5.15 149/206] gpiolib: acpi: use BIT_ULL() for u64 mask in address space handler
+Date: Wed,  4 Feb 2026 15:39:40 +0100
+Message-ID: <20260204143903.571943834@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260204143858.193781818@linuxfoundation.org>
 References: <20260204143858.193781818@linuxfoundation.org>
@@ -51,54 +52,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kery Qi <qikeyu2017@gmail.com>
+From: Denis Sergeev <denserg.edu@gmail.com>
 
-[ Upstream commit b2d6b1d443009ed4da2d69f5423ab38e5780505a ]
+[ Upstream commit c0ae43d303e45764918fa8c1dc13d6a5db59c479 ]
 
-The code in sbp_make_tpg() limits "tpgt" to UINT_MAX but the data type of
-"tpg->tport_tpgt" is u16. This causes a type truncation issue.
+The BIT() macro uses unsigned long, which is 32 bits on 32-bit
+architectures. When iterating over GPIO pins with index >= 32,
+the expression (*value & BIT(i)) causes undefined behavior due
+to shifting by a value >= type width.
 
-When a user creates a TPG via configfs mkdir, for example:
+Since 'value' is a pointer to u64, use BIT_ULL() to ensure correct
+64-bit mask on all architectures.
 
-    mkdir /sys/kernel/config/target/sbp/<wwn>/tpgt_70000
+Found by Linux Verification Center (linuxtesting.org) with Svace.
 
-The value 70000 passes the "tpgt > UINT_MAX" check since 70000 is far less
-than 4294967295. However, when assigned to the u16 field tpg->tport_tpgt,
-the value is silently truncated to 4464 (70000 & 0xFFFF). This causes the
-value the user specified to differ from what is actually stored, leading to
-confusion and potential unexpected behavior.
-
-Fix this by changing the type of "tpgt" to u16 and using kstrtou16() which
-will properly reject values outside the u16 range.
-
-Fixes: a511ce339780 ("sbp-target: Initial merge of firewire/ieee-1394 target mode support")
-Signed-off-by: Kery Qi <qikeyu2017@gmail.com>
-Link: https://patch.msgid.link/20260121114515.1829-2-qikeyu2017@gmail.com
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Fixes: 2c4d00cb8fc5 ("gpiolib: acpi: Use BIT() macro to increase readability")
+Signed-off-by: Denis Sergeev <denserg.edu@gmail.com>
+Reviewed-by: Mika Westerberg <westeri@kernel.org>
+Link: https://lore.kernel.org/r/20260126035914.16586-1-denserg.edu@gmail.com
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/target/sbp/sbp_target.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/gpio/gpiolib-acpi.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/target/sbp/sbp_target.c b/drivers/target/sbp/sbp_target.c
-index b9f9fb5d7e63e..7e7d32669dfbc 100644
---- a/drivers/target/sbp/sbp_target.c
-+++ b/drivers/target/sbp/sbp_target.c
-@@ -1986,12 +1986,12 @@ static struct se_portal_group *sbp_make_tpg(struct se_wwn *wwn,
- 		container_of(wwn, struct sbp_tport, tport_wwn);
+diff --git a/drivers/gpio/gpiolib-acpi.c b/drivers/gpio/gpiolib-acpi.c
+index 27e3fb9938049..3e4fd028a82da 100644
+--- a/drivers/gpio/gpiolib-acpi.c
++++ b/drivers/gpio/gpiolib-acpi.c
+@@ -1173,7 +1173,7 @@ acpi_gpio_adr_space_handler(u32 function, acpi_physical_address address,
+ 		mutex_unlock(&achip->conn_lock);
  
- 	struct sbp_tpg *tpg;
--	unsigned long tpgt;
-+	u16 tpgt;
- 	int ret;
- 
- 	if (strstr(name, "tpgt_") != name)
- 		return ERR_PTR(-EINVAL);
--	if (kstrtoul(name + 5, 10, &tpgt) || tpgt > UINT_MAX)
-+	if (kstrtou16(name + 5, 10, &tpgt))
- 		return ERR_PTR(-EINVAL);
- 
- 	if (tport->tpg) {
+ 		if (function == ACPI_WRITE)
+-			gpiod_set_raw_value_cansleep(desc, !!(*value & BIT(i)));
++			gpiod_set_raw_value_cansleep(desc, !!(*value & BIT_ULL(i)));
+ 		else
+ 			*value |= (u64)gpiod_get_raw_value_cansleep(desc) << i;
+ 	}
 -- 
 2.51.0
 
