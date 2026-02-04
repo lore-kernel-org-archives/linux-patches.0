@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB72D28853A;
-	Wed,  4 Feb 2026 15:18:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B1562C3254;
+	Wed,  4 Feb 2026 15:18:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770218293; cv=none; b=h5iVV2MmIms/4wlgqnPqIRLt+L7o2u56CMVL78GzEf9DP0/a0OJP7Q/cB8YXv5hp/e9Dt35/PpGUmFzUwSKlS1eRti+us50/P/07Ac5Rk/lIvMzCo5HbfGBUEtsLcw2fTH8xn/ZJR+8Ho+C4daEroRtJk0YSOZ/9U64lBBEXMxM=
+	t=1770218296; cv=none; b=KHSqNoXFWbb2J7hn0AFDyo6m9xh6Hju8jgTokOhhCS1I1s7DDvmL0QG0mgBt568+fgM0VzXWqgiCaPPP/7dp9AJOhTreBIsKslbyk7VDODg97gXEebNCQ8rAl5iZ48LJqidqSxXHAhLxuLJ0TAykTrrOUrnzYz+aVnjtHkKDjwI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770218293; c=relaxed/simple;
-	bh=xj3UgVhfs5P5wp6YFfk7tkG2otdHxzyWVXE6KHb/AXE=;
+	s=arc-20240116; t=1770218296; c=relaxed/simple;
+	bh=YARGO4eLUQasnuLB7qdbR/Pk1OJteSo1S5FFYpbISVM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=BWeCGORWzd5MVzkBS2tv0MTl5ubA76cHfyJ2awQcO+XJOTTPQy/IjIwo7+f6+zWEmfchZVoqGJdFmEo3jT1OAx7n3c6He5FnP85yCOgFGgc+NCe6Rsmu18EeUXrCGFCjuPTS8E2X+1ZFbfY2daACAbuO3yzVICEwSHg/jgMr6yo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=f2QFVkJL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fMY7ituG7k5U1nHKWgDd26UHhrJURQzG1YvWz8xtkGIfAgmAkjTKVLxMGGjGt1hv6ry1qmjIEGCQRZdkblJgLtUjkVl6+iGuoOlVpjdKvwbcJRMBjKe25Ikc2uVucAqRQtVflt8d95k3FpmIW9REBTt9p3W4R9K2bhb7Ip0NgF0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=guPTyfx0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="f2QFVkJL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 450AEC4CEF7;
-	Wed,  4 Feb 2026 15:18:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="guPTyfx0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3DE1C116C6;
+	Wed,  4 Feb 2026 15:18:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770218292;
-	bh=xj3UgVhfs5P5wp6YFfk7tkG2otdHxzyWVXE6KHb/AXE=;
+	s=korg; t=1770218296;
+	bh=YARGO4eLUQasnuLB7qdbR/Pk1OJteSo1S5FFYpbISVM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=f2QFVkJLOYzYmhcvfxE2+NiuXwfRPqU7tGgH6sKbUVRc9456ti+O++6srgmRk4BkF
-	 HBTnS1+vnqft/qChWs2Q0bkgu42nhjAW0UfPpEJS773YWOgVqxisD6R4R1toH5tDYW
-	 imoAGQUkVyCpSFJaCWIr9uQ8+Ft7bbXPN18fH9ac=
+	b=guPTyfx0atbC+J5bPOlcAgj9S1uYRSzEFeaRGR2YJHFipMTOILfE7BZziJ2cuCzfX
+	 KDQZpaK7ZnTjBv8FZFW5lHCZEDtqktHTA1PVeKTEtSrHZspg+AObX4fcukHWq2Nw/8
+	 PA3kU62f/tb1l2w/bfj/korZUeRWj5qDPGPNc7ns=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Maxime Chevallier <maxime.chevallier@bootlin.com>,
-	=?UTF-8?q?Alexis=20Lothor=C3=A9?= <alexis.lothore@bootlin.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Rahul Sharma <black.hawk@163.com>
-Subject: [PATCH 6.1 267/280] net: stmmac: make sure that ptp_rate is not 0 before configuring EST
-Date: Wed,  4 Feb 2026 15:40:41 +0100
-Message-ID: <20260204143919.307733721@linuxfoundation.org>
+	Samasth Norway Ananda <samasth.norway.ananda@oracle.com>,
+	Takashi Iwai <tiwai@suse.de>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 235/280] ALSA: scarlett2: Fix buffer overflow in config retrieval
+Date: Wed,  4 Feb 2026 15:40:09 +0100
+Message-ID: <20260204143918.080987529@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260204143909.614719725@linuxfoundation.org>
 References: <20260204143909.614719725@linuxfoundation.org>
@@ -46,66 +45,60 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Alexis Lothoré <alexis.lothore@bootlin.com>
+From: Samasth Norway Ananda <samasth.norway.ananda@oracle.com>
 
-[ Upstream commit cbefe2ffa7784525ec5d008ba87c7add19ec631a ]
+[ Upstream commit 6f5c69f72e50d51be3a8c028ae7eda42c82902cb ]
 
-If the ptp_rate recorded earlier in the driver happens to be 0, this
-bogus value will propagate up to EST configuration, where it will
-trigger a division by 0.
+The scarlett2_usb_get_config() function has a logic error in the
+endianness conversion code that can cause buffer overflows when
+count > 1.
 
-Prevent this division by 0 by adding the corresponding check and error
-code.
+The code checks `if (size == 2)` where `size` is the total buffer size in
+bytes, then loops `count` times treating each element as u16 (2 bytes).
+This causes the loop to access `count * 2` bytes when the buffer only
+has `size` bytes allocated.
 
-Suggested-by: Maxime Chevallier <maxime.chevallier@bootlin.com>
-Signed-off-by: Alexis Lothoré <alexis.lothore@bootlin.com>
-Fixes: 8572aec3d0dc ("net: stmmac: Add basic EST support for XGMAC")
-Link: https://patch.msgid.link/20250529-stmmac_tstamp_div-v4-2-d73340a794d5@bootlin.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-[ The context change is due to the commit c3f3b97238f6
-("net: stmmac: Refactor EST implementation")
-and the proper adoption is done. ]
-Signed-off-by: Rahul Sharma <black.hawk@163.com>
+Fix by checking the element size (config_item->size) instead of the
+total buffer size. This ensures the endianness conversion matches the
+actual element type.
+
+Fixes: ac34df733d2d ("ALSA: usb-audio: scarlett2: Update get_config to do endian conversion")
+Cc: stable@vger.kernel.org
+Signed-off-by: Samasth Norway Ananda <samasth.norway.ananda@oracle.com>
+Link: https://patch.msgid.link/20260117012706.1715574-1-samasth.norway.ananda@oracle.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+[ add 32-bit handling block ]
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/stmicro/stmmac/dwmac5.c        |    5 +++++
- drivers/net/ethernet/stmicro/stmmac/dwxgmac2_core.c |    5 +++++
- 2 files changed, 10 insertions(+)
+ sound/usb/mixer_scarlett2.c |    7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
---- a/drivers/net/ethernet/stmicro/stmmac/dwmac5.c
-+++ b/drivers/net/ethernet/stmicro/stmmac/dwmac5.c
-@@ -597,6 +597,11 @@ int dwmac5_est_configure(void __iomem *i
- 	int i, ret = 0x0;
- 	u32 ctrl;
+--- a/sound/usb/mixer_scarlett2.c
++++ b/sound/usb/mixer_scarlett2.c
+@@ -1408,11 +1408,16 @@ static int scarlett2_usb_get_config(
+ 		err = scarlett2_usb_get(mixer, config_item->offset, buf, size);
+ 		if (err < 0)
+ 			return err;
+-		if (size == 2) {
++		if (config_item->size == 16) {
+ 			u16 *buf_16 = buf;
  
-+	if (!ptp_rate) {
-+		pr_warn("Dwmac5: Invalid PTP rate");
-+		return -EINVAL;
-+	}
+ 			for (i = 0; i < count; i++, buf_16++)
+ 				*buf_16 = le16_to_cpu(*(__le16 *)buf_16);
++		} else if (config_item->size == 32) {
++			u32 *buf_32 = (u32 *)buf;
 +
- 	ret |= dwmac5_est_write(ioaddr, BTR_LOW, cfg->btr[0], false);
- 	ret |= dwmac5_est_write(ioaddr, BTR_HIGH, cfg->btr[1], false);
- 	ret |= dwmac5_est_write(ioaddr, TER, cfg->ter, false);
---- a/drivers/net/ethernet/stmicro/stmmac/dwxgmac2_core.c
-+++ b/drivers/net/ethernet/stmicro/stmmac/dwxgmac2_core.c
-@@ -1497,6 +1497,11 @@ static int dwxgmac3_est_configure(void _
- 	int i, ret = 0x0;
- 	u32 ctrl;
- 
-+	if (!ptp_rate) {
-+		pr_warn("Dwxgmac2: Invalid PTP rate");
-+		return -EINVAL;
-+	}
-+
- 	ret |= dwxgmac3_est_write(ioaddr, XGMAC_BTR_LOW, cfg->btr[0], false);
- 	ret |= dwxgmac3_est_write(ioaddr, XGMAC_BTR_HIGH, cfg->btr[1], false);
- 	ret |= dwxgmac3_est_write(ioaddr, XGMAC_TER, cfg->ter, false);
++			for (i = 0; i < count; i++, buf_32++)
++				*buf_32 = le32_to_cpu(*(__le32 *)buf_32);
+ 		}
+ 		return 0;
+ 	}
 
 
