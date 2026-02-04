@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0DD7D4218BC;
-	Wed,  4 Feb 2026 14:58:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31D6A4218A8;
+	Wed,  4 Feb 2026 14:58:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770217110; cv=none; b=l0rVQBPrxNTw/NNbWIlru+vE4tk2hA90Jv5mYsn1jVxlgH0YOb0opircVrDaUdOiMQaupkhPjoDJb4sB/wz4gGPIK0hhLmEQHVE0HO9rQ11Sxr6pqAgQ4NNsfT9mHPPeoQQp5rQClvYEnaehetnaHE4EhaEvl2YJzkNWE3bBpes=
+	t=1770217113; cv=none; b=XxD2h/VRPjEBwayQWcqBtk8tYDP2oZ6HL2eVPVWA4yyMaZsdaKNuNQGCYky+GaDGL9NltAdYF2EdkNDzUS7727hzKS2odpH31VmVcKBMh5vKgZ/P6QOjaqWuThhW+0Wmym/nIUrYIRscVocP05GcLk3s9xHPukT+suw5AuxA0o0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770217110; c=relaxed/simple;
-	bh=UfuThLJfdr3ACRRSjtecsUWeOr/okClWEKJp5Vn/T7M=;
+	s=arc-20240116; t=1770217113; c=relaxed/simple;
+	bh=AxvBq/tDhx19rNihNKLrGjPUjvp9H+hXgmFsIb+q09M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SLHBpEHhmAVhmSZesdEVEJBsbWLZxIsh7rIfqfKSLvYSFZmJA9ry2OWRJg+7w6sxUjd8JI+BW3RpON/2Igluz3B/9BKxwtr8IrbEveayCxWd2Z+Bx2sVBFpFWm1YWWgx2YxIEqqT4fKW8D/+iPv2SnRUp6EngXGL1wtt+HxmfHQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HPiKjqU5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=hyU8hfsxHxrGFAvmp1WApFsLWObGmiaBVvjIg5U8DAfnuDtxkmcfIMFNwG9YKlie4xZtzJ3CIX50oL6F1VdJzciohIH2rJ0S6IhuHyidNZVc5k6ALSr6KM9umj/egM9VRiLGsQio9rGsbU7unf6aszS5ndhYv3R6W5oHLbiAHoo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vLY117Bq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HPiKjqU5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 50079C4CEF7;
-	Wed,  4 Feb 2026 14:58:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vLY117Bq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9420FC4CEF7;
+	Wed,  4 Feb 2026 14:58:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770217109;
-	bh=UfuThLJfdr3ACRRSjtecsUWeOr/okClWEKJp5Vn/T7M=;
+	s=korg; t=1770217113;
+	bh=AxvBq/tDhx19rNihNKLrGjPUjvp9H+hXgmFsIb+q09M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HPiKjqU5xoMNlSnqNSlS+h/6li/i7c+GhfKpfG1oTaCCZWA3UrcocrZMJkzHEcUvl
-	 tRmPcqtPn5YShkqfrbm9FoJUPp211+6K344U4p6MnAUdwZzOoeopV8UfytPWo1JiOO
-	 ip5P7R01+ckHRWi7m0fiP+fjTsXv3tWOReGdmr54=
+	b=vLY117Bq2UYCOYXXGqbtLj5l2CMxpgkXDUYNUPcB/kb/ZCAKPouuwZktbDSxYr3oc
+	 Vewgd5NIHp4n/R5hsihu4Of8PWkC3RDdrT2vZLHrtDi26wIKodMixtm0218EFLTwiK
+	 NnfCF7F0VlEFEpIOKMe7kl5hnT+zF915pM0NullI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+999115c3bf275797dc27@syzkaller.appspotmail.com,
-	Jeongjun Park <aha310510@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 5.15 125/206] netrom: fix double-free in nr_route_frame()
-Date: Wed,  4 Feb 2026 15:39:16 +0100
-Message-ID: <20260204143902.703723606@linuxfoundation.org>
+	"=?UTF-8?q?Jan=20H . =20Sch=C3=B6nherr?=" <jschoenh@amazon.de>,
+	Peter Zijlstra <peterz@infradead.org>,
+	Fernand Sieber <sieberf@amazon.com>
+Subject: [PATCH 5.15 126/206] perf/x86/intel: Do not enable BTS for guests
+Date: Wed,  4 Feb 2026 15:39:17 +0100
+Message-ID: <20260204143902.739105439@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260204143858.193781818@linuxfoundation.org>
 References: <20260204143858.193781818@linuxfoundation.org>
@@ -45,75 +45,63 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jeongjun Park <aha310510@gmail.com>
+From: Fernand Sieber <sieberf@amazon.com>
 
-commit ba1096c315283ee3292765f6aea4cca15816c4f7 upstream.
+commit 91dcfae0ff2b9b9ab03c1ec95babaceefbffb9f4 upstream.
 
-In nr_route_frame(), old_skb is immediately freed without checking if
-nr_neigh->ax25 pointer is NULL. Therefore, if nr_neigh->ax25 is NULL,
-the caller function will free old_skb again, causing a double-free bug.
+By default when users program perf to sample branch instructions
+(PERF_COUNT_HW_BRANCH_INSTRUCTIONS) with a sample period of 1, perf
+interprets this as a special case and enables BTS (Branch Trace Store)
+as an optimization to avoid taking an interrupt on every branch.
 
-Therefore, to prevent this, we need to modify it to check whether
-nr_neigh->ax25 is NULL before freeing old_skb.
+Since BTS doesn't virtualize, this optimization doesn't make sense when
+the request originates from a guest. Add an additional check that
+prevents this optimization for virtualized events (exclude_host).
 
+Reported-by: Jan H. Schönherr <jschoenh@amazon.de>
+Suggested-by: Peter Zijlstra <peterz@infradead.org>
+Signed-off-by: Fernand Sieber <sieberf@amazon.com>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
 Cc: <stable@vger.kernel.org>
-Reported-by: syzbot+999115c3bf275797dc27@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/all/69694d6f.050a0220.58bed.0029.GAE@google.com/
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Signed-off-by: Jeongjun Park <aha310510@gmail.com>
-Link: https://patch.msgid.link/20260119063359.10604-1-aha310510@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Link: https://patch.msgid.link/20251211183604.868641-1-sieberf@amazon.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/netrom/nr_route.c |   13 +++++++++----
- 1 file changed, 9 insertions(+), 4 deletions(-)
+ arch/x86/events/perf_event.h |   13 +++++++++++--
+ 1 file changed, 11 insertions(+), 2 deletions(-)
 
---- a/net/netrom/nr_route.c
-+++ b/net/netrom/nr_route.c
-@@ -752,7 +752,7 @@ int nr_route_frame(struct sk_buff *skb,
- 	unsigned char *dptr;
- 	ax25_cb *ax25s;
- 	int ret;
--	struct sk_buff *skbn;
-+	struct sk_buff *nskb, *oskb;
+--- a/arch/x86/events/perf_event.h
++++ b/arch/x86/events/perf_event.h
+@@ -1286,13 +1286,22 @@ static inline bool intel_pmu_has_bts_per
+ 	struct hw_perf_event *hwc = &event->hw;
+ 	unsigned int hw_event, bts_event;
  
- 	/*
- 	 * Reject malformed packets early. Check that it contains at least 2
-@@ -811,14 +811,16 @@ int nr_route_frame(struct sk_buff *skb,
- 	/* We are going to change the netrom headers so we should get our
- 	   own skb, we also did not know until now how much header space
- 	   we had to reserve... - RXQ */
--	if ((skbn=skb_copy_expand(skb, dev->hard_header_len, 0, GFP_ATOMIC)) == NULL) {
-+	nskb = skb_copy_expand(skb, dev->hard_header_len, 0, GFP_ATOMIC);
+-	if (event->attr.freq)
++	/*
++	 * Only use BTS for fixed rate period==1 events.
++	 */
++	if (event->attr.freq || period != 1)
++		return false;
 +
-+	if (!nskb) {
- 		nr_node_unlock(nr_node);
- 		nr_node_put(nr_node);
- 		dev_put(dev);
- 		return 0;
- 	}
--	kfree_skb(skb);
--	skb=skbn;
-+	oskb = skb;
-+	skb = nskb;
- 	skb->data[14]--;
++	/*
++	 * BTS doesn't virtualize.
++	 */
++	if (event->attr.exclude_host)
+ 		return false;
  
- 	dptr  = skb_push(skb, 1);
-@@ -837,6 +839,9 @@ int nr_route_frame(struct sk_buff *skb,
- 	nr_node_unlock(nr_node);
- 	nr_node_put(nr_node);
+ 	hw_event = hwc->config & INTEL_ARCH_EVENT_MASK;
+ 	bts_event = x86_pmu.event_map(PERF_COUNT_HW_BRANCH_INSTRUCTIONS);
  
-+	if (ret)
-+		kfree_skb(oskb);
-+
- 	return ret;
+-	return hw_event == bts_event && period == 1;
++	return hw_event == bts_event;
  }
  
+ static inline bool intel_pmu_has_bts(struct perf_event *event)
 
 
