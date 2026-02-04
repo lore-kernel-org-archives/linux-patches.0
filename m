@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 818E527B359;
-	Wed,  4 Feb 2026 14:50:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DDFDB27B359;
+	Wed,  4 Feb 2026 14:51:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770216658; cv=none; b=lJwNPuua4GOBBwKcJ4HPyzpcYi53HnfljBnlsXP66SYVTdzfn5YN1utysCBPAycXrftpt1lwL+/Qe3ulG/FYSX9azLCbevLLRPvuc920ZqiySFdNjOJg4HRsI2eM2A9sSDjR2RL1iv9Smslu12frBwircHsPYCcwcirP+jHltj0=
+	t=1770216661; cv=none; b=Q1O8IeNBucLhW939VLCLlay2F57EC0zoxK4uVAk+ncc9xmG1qWikC+0p+ogb1vlWSiulyulcz8qJdNN/FfOMbk4Nv/499Qouwi7mhOfsNzqnDO5X81+AYw223zd5p7xVvP6xOcqAe6J0Snpfl9V9txp/1X/HPAIqpwokgjX/5gY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770216658; c=relaxed/simple;
-	bh=h/fWJaeif3ukjKRBlvHats0uq2CT7HlPVLaMIRLqgXM=;
+	s=arc-20240116; t=1770216661; c=relaxed/simple;
+	bh=HzeyMSVPZvgwULciV4usITTKn2EtsNmcMsmuRGmP8xk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WAnrYBOMbKWimPj82m1C+LnqI22wNP3vTIeevTQWDVWHjrFbb9l7fJHek2yGZLv1cVH6VPYOO0H2/lveQApnlm5Hi+28IfCp50xmd1GrNjZx124fkqFJ2XeNaiDGo8QvEGY2j1hx8noOTiBu42Lgw4PYVJ27FubRfmRRkG8jQYY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=060mv8/f; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=JGq6gCcIYTBvJCbpQhaOORm9puAi8LOEXStybjaALMje05aiinbpUym/s93nTykXyiLy9eRofagwJ17qLZdLwXobrR0UVdLrLTPE6SjbjVeEhUEVn3KiuEcq/Ffb7zCHG6XaAbBQPEuaXPn2pYSwAwVWiOQrp0n0gKa34mIeEfA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BoXx+HHs; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="060mv8/f"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C104C4CEF7;
-	Wed,  4 Feb 2026 14:50:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BoXx+HHs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E06BC4CEF7;
+	Wed,  4 Feb 2026 14:51:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770216658;
-	bh=h/fWJaeif3ukjKRBlvHats0uq2CT7HlPVLaMIRLqgXM=;
+	s=korg; t=1770216661;
+	bh=HzeyMSVPZvgwULciV4usITTKn2EtsNmcMsmuRGmP8xk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=060mv8/fJl0s9nlhcAUkDsEnS5NnPPy1edTDyIJtOkouJ+SSv0QXrI5wbuD5pfzHA
-	 1PCtKyBGZneD86TnlWgdEIrk5jkqXmTVJZjAUH05samN2jxPCGD5SKBxGBuRjQXBop
-	 r7NJalQyg9JgZUX5yT0uwQBRBHOivcU1Ja0rvVX8=
+	b=BoXx+HHsB7hDZVEYDbE6EQycmlPkUxlkhmQSwbxVUwEMre54SxVWeFOPL+/5vC3VE
+	 k6S9Kp9VoQQV42JJGpK9Kv+i2UmREBePeCX4YZ09IuvAzryJxAyrVv9a1ukxW0qy03
+	 SBMkuefJmmtZt+MX04ysvz49MnVbckw4go1GiXeo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ben Hutchings <ben@decadent.org.uk>,
-	David Ahern <dsahern@kernel.org>,
-	Simon Horman <horms@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Laveesh Bansal <laveeshb@laveeshbansal.com>,
+	Jan Kara <jack@suse.cz>,
+	Christian Brauner <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 154/161] Revert "selftests: Replace sleep with slowwait"
-Date: Wed,  4 Feb 2026 15:40:17 +0100
-Message-ID: <20260204143857.288131968@linuxfoundation.org>
+Subject: [PATCH 5.10 155/161] writeback: fix 100% CPU usage when dirtytime_expire_interval is 0
+Date: Wed,  4 Feb 2026 15:40:18 +0100
+Message-ID: <20260204143857.324065738@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260204143851.755002596@linuxfoundation.org>
 References: <20260204143851.755002596@linuxfoundation.org>
@@ -53,36 +52,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+From: Laveesh Bansal <laveeshb@laveeshbansal.com>
 
-This reverts commit 780095c51e34ec7cdf6f651b4c4f2b35680779e4 which is
-commit 2f186dd5585c3afb415df80e52f71af16c9d3655 upstream.
+[ Upstream commit 543467d6fe97e27e22a26e367fda972dbefebbff ]
 
-To quote Ben:
-	The slowwait function isn't defined in 5.10 (or any stable
-	branch older than 6.9).
+When vm.dirtytime_expire_seconds is set to 0, wakeup_dirtytime_writeback()
+schedules delayed work with a delay of 0, causing immediate execution.
+The function then reschedules itself with 0 delay again, creating an
+infinite busy loop that causes 100% kworker CPU usage.
 
-Link: https://lore.kernel.org/r/b052b71589bb576dcad441eba38c20da81443a46.camel@decadent.org.uk
-Reported-by: Ben Hutchings <ben@decadent.org.uk>
-Cc: David Ahern <dsahern@kernel.org>
-Cc: Simon Horman <horms@kernel.org>
-Cc: Jakub Kicinski <kuba@kernel.org>
-Cc: Sasha Levin <sashal@kernel.org>
+Fix by:
+- Only scheduling delayed work in wakeup_dirtytime_writeback() when
+  dirtytime_expire_interval is non-zero
+- Cancelling the delayed work in dirtytime_interval_handler() when
+  the interval is set to 0
+- Adding a guard in start_dirtytime_writeback() for defensive coding
+
+Tested by booting kernel in QEMU with virtme-ng:
+- Before fix: kworker CPU spikes to ~73%
+- After fix: CPU remains at normal levels
+- Setting interval back to non-zero correctly resumes writeback
+
+Fixes: a2f4870697a5 ("fs: make sure the timestamps for lazytime inodes eventually get written")
+Cc: stable@vger.kernel.org
+Closes: https://bugzilla.kernel.org/show_bug.cgi?id=220227
+Signed-off-by: Laveesh Bansal <laveeshb@laveeshbansal.com>
+Link: https://patch.msgid.link/20260106145059.543282-2-laveeshb@laveeshbansal.com
+Reviewed-by: Jan Kara <jack@suse.cz>
+Signed-off-by: Christian Brauner <brauner@kernel.org>
+[ adapted system_percpu_wq to system_wq for the workqueue used in dirtytime_interval_handler() ]
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/testing/selftests/net/fcnal-test.sh |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/fs-writeback.c |   14 ++++++++++----
+ 1 file changed, 10 insertions(+), 4 deletions(-)
 
---- a/tools/testing/selftests/net/fcnal-test.sh
-+++ b/tools/testing/selftests/net/fcnal-test.sh
-@@ -183,7 +183,7 @@ show_hint()
- kill_procs()
- {
- 	killall nettest ping ping6 >/dev/null 2>&1
--	slowwait 2 sh -c 'test -z "$(pgrep '"'^(nettest|ping|ping6)$'"')"'
-+	sleep 1
+--- a/fs/fs-writeback.c
++++ b/fs/fs-writeback.c
+@@ -2187,12 +2187,14 @@ static void wakeup_dirtytime_writeback(s
+ 				wb_wakeup(wb);
+ 	}
+ 	rcu_read_unlock();
+-	schedule_delayed_work(&dirtytime_work, dirtytime_expire_interval * HZ);
++	if (dirtytime_expire_interval)
++		schedule_delayed_work(&dirtytime_work, dirtytime_expire_interval * HZ);
  }
  
- do_run_cmd()
+ static int __init start_dirtytime_writeback(void)
+ {
+-	schedule_delayed_work(&dirtytime_work, dirtytime_expire_interval * HZ);
++	if (dirtytime_expire_interval)
++		schedule_delayed_work(&dirtytime_work, dirtytime_expire_interval * HZ);
+ 	return 0;
+ }
+ __initcall(start_dirtytime_writeback);
+@@ -2203,8 +2205,12 @@ int dirtytime_interval_handler(struct ct
+ 	int ret;
+ 
+ 	ret = proc_dointvec_minmax(table, write, buffer, lenp, ppos);
+-	if (ret == 0 && write)
+-		mod_delayed_work(system_wq, &dirtytime_work, 0);
++	if (ret == 0 && write) {
++		if (dirtytime_expire_interval)
++			mod_delayed_work(system_wq, &dirtytime_work, 0);
++		else
++			cancel_delayed_work_sync(&dirtytime_work);
++	}
+ 	return ret;
+ }
+ 
 
 
