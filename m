@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 758A2261B91;
-	Wed,  4 Feb 2026 15:20:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 236FB3EFD00;
+	Wed,  4 Feb 2026 15:20:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770218455; cv=none; b=rm6WIhpYVjqb4HYrR5Hgd/6VSaWSpY8Oc1FFrOFgu4bIWbUmbHTXGUxdfjljOhb7KSx+lwKqDenkugBFEKRFriuvlTUAEq6PkvagQI8sRT1FYt78wgG6MgQozbnSP7A2iAQhHQm/CjPaYQaQjwouGQXfUnlTYMYvPWccq4TJPbM=
+	t=1770218459; cv=none; b=eYKW4iYY08FUOYr2Rkkd+b3i38qbhk6GpuPFCYwc9hky7nOscWtUlst4Gyu/uK24vQ/m7S58gyBhJ1im4CO0b5PugviVz52Gr5QZyreOd8ZZRWuVmiCcrDedkZI9eq+CVsmfKY5BivQIujtdCob+s7XTYhsKuOqn7sWXHKO9GY0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770218455; c=relaxed/simple;
-	bh=Z3F7Ni/n3u4U3do6mFXGKKtefgDVbvUix0rpU7VGjy0=;
+	s=arc-20240116; t=1770218459; c=relaxed/simple;
+	bh=PqSx2EMA+ZA9Nr/gEy3c3jG9ekTqfWQbDTK5sR9d35k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ckKe4sYyeJs+0+80OaUii68KCdJK0Jn822oT90jgFEgdPvPXF3RzgKS82sCOEoyeJ0NB7UQU787IA0ev/HgWMsEWOFEdqd+7q09FQTxzoz+7JAbdcqDK0ykoVGrd/NaC1Ucc5yMg5aoIf0Bxf8fepqh613Jaf0/fqaLQ9Uz6j8g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rutUbvkh; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cgNaMEgYXXdbTg2+2om2kwIz9sWjRmJQ7c4neK9XSrHcmRCKJOXw7POACXrywTjny7Voo5SkrZCYmYG0K2m5OhQZPtJvDO+nUjUk7jLUkicW/sEl/WpgQKMejN688uoLlqJPb7fh4wg4Vqq38/3UUYzcsciDbI8WbVx1ZJUoCf4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iLYv/cWa; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rutUbvkh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB58BC4CEF7;
-	Wed,  4 Feb 2026 15:20:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iLYv/cWa"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4401BC4CEF7;
+	Wed,  4 Feb 2026 15:20:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770218455;
-	bh=Z3F7Ni/n3u4U3do6mFXGKKtefgDVbvUix0rpU7VGjy0=;
+	s=korg; t=1770218458;
+	bh=PqSx2EMA+ZA9Nr/gEy3c3jG9ekTqfWQbDTK5sR9d35k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rutUbvkhlwI2LXneTUCFJfNNXOfZUHZAnUvtYKx8x9MdC/fFBrdLS1f94LMgLi6v+
-	 ZGE2xKTvJNAgLDz1gD0p/24rsxZRtDq7jXoabR3vYQEDqMOHx8+i5nKMILVkE6WXe4
-	 luririnlnL/kcDLdsBQU6d23VNPyb3AGkK0jTlnQ=
+	b=iLYv/cWaD4cM3x5PoITkvCMOPvrR7H3BzBsLqdns8Jvmi7aWViW+sIM1gONqp3j0S
+	 SKED9cYTuaXHeF9S37dscyj3dnY6odezoTd8iwhzE8iT4xSf4cpIm+qVXLxuozpfrT
+	 lpqfsJvIEC0qhzs8bLG4RkflywO+UAy9ReFaUI0I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Geliang Tang <geliang@kernel.org>,
+	Mat Martineau <martineau@kernel.org>,
 	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.6 34/72] selftests: mptcp: check subflow errors in close events
-Date: Wed,  4 Feb 2026 15:40:37 +0100
-Message-ID: <20260204143846.861412255@linuxfoundation.org>
+Subject: [PATCH 6.6 35/72] selftests: mptcp: join: fix local endp not being tracked
+Date: Wed,  4 Feb 2026 15:40:38 +0100
+Message-ID: <20260204143846.896105833@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260204143845.603454952@linuxfoundation.org>
 References: <20260204143845.603454952@linuxfoundation.org>
@@ -53,91 +53,58 @@ Content-Transfer-Encoding: 8bit
 
 From: Matthieu Baerts (NGI0) <matttbe@kernel.org>
 
-commit 2ef9e3a3845d0a20b62b01f5b731debd0364688d upstream.
+commit c5d5ecf21fdd9ce91e6116feb3aa83cee73352cc upstream.
 
-This validates the previous commit: subflow closed events should contain
-an error field when a subflow got closed with an error, e.g. reset or
-timeout.
+When running this mptcp_join.sh selftest on older kernel versions not
+supporting local endpoints tracking, this test fails because 3 MP_JOIN
+ACKs have been received, while only 2 were expected.
 
-For this test, the chk_evt_nr helper has been extended to check
-attributes in the matched events.
+It is not clear why only 2 MP_JOIN ACKs were expected on old kernel
+versions, while 3 MP_JOIN SYN and SYN+ACK were expected. When testing on
+the v5.15.197 kernel, 3 MP_JOIN ACKs are seen, which is also what is
+expected in the selftests included in this kernel version, see commit
+f4480eaad489 ("selftests: mptcp: add missing join check").
 
-In this test, the 2 subflow closed events should have an error.
+Switch the expected MP_JOIN ACKs to 3. While at it, move this
+chk_join_nr helper out of the special condition for older kernel
+versions as it is now the same as with more recent ones. Also, invert
+the condition to be more logical: what's expected on newer kernel
+versions having such helper first.
 
-The 'Fixes' tag here below is the same as the one from the previous
-commit: this patch here is not fixing anything wrong in the selftests,
-but it validates the previous fix for an issue introduced by this commit
-ID.
-
-Fixes: 15cc10453398 ("mptcp: deliver ssk errors to msk")
+Fixes: d4c81bbb8600 ("selftests: mptcp: join: support local endpoint being tracked or not")
 Cc: stable@vger.kernel.org
-Reviewed-by: Geliang Tang <geliang@kernel.org>
+Reviewed-by: Mat Martineau <martineau@kernel.org>
 Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Link: https://patch.msgid.link/20260127-net-mptcp-dup-nl-events-v1-4-7f71e1bc4feb@kernel.org
+Link: https://patch.msgid.link/20260127-net-mptcp-dup-nl-events-v1-5-7f71e1bc4feb@kernel.org
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/testing/selftests/net/mptcp/mptcp_join.sh |   23 ++++++++++++++++++++---
- 1 file changed, 20 insertions(+), 3 deletions(-)
+ tools/testing/selftests/net/mptcp/mptcp_join.sh |    9 ++++-----
+ 1 file changed, 4 insertions(+), 5 deletions(-)
 
 --- a/tools/testing/selftests/net/mptcp/mptcp_join.sh
 +++ b/tools/testing/selftests/net/mptcp/mptcp_join.sh
-@@ -3544,21 +3544,28 @@ userspace_pm_chk_get_addr()
+@@ -2203,17 +2203,16 @@ signal_address_tests()
+ 		ip netns exec $ns1 sysctl -q net.mptcp.add_addr_timeout=1
+ 		speed=slow \
+ 			run_tests $ns1 $ns2 10.0.1.1
++		chk_join_nr 3 3 3
+ 
+ 		# It is not directly linked to the commit introducing this
+ 		# symbol but for the parent one which is linked anyway.
+-		if ! mptcp_lib_kallsyms_has "mptcp_pm_subflow_check_next$"; then
+-			chk_join_nr 3 3 2
+-			chk_add_nr 4 4
+-		else
+-			chk_join_nr 3 3 3
++		if mptcp_lib_kallsyms_has "mptcp_pm_subflow_check_next$"; then
+ 			# the server will not signal the address terminating
+ 			# the MPC subflow
+ 			chk_add_nr 3 3
++		else
++			chk_add_nr 4 4
+ 		fi
  	fi
  }
- 
--# $1: ns ; $2: event type ; $3: count
-+# $1: ns ; $2: event type ; $3: count ; [ $4: attr ; $5: attr count ]
- chk_evt_nr()
- {
- 	local ns=${1}
- 	local evt_name="${2}"
- 	local exp="${3}"
-+	local attr="${4}"
-+	local attr_exp="${5}"
- 
- 	local evts="${evts_ns1}"
- 	local evt="${!evt_name}"
-+	local attr_name
- 	local count
- 
-+	if [ -n "${attr}" ]; then
-+		attr_name=", ${attr}: ${attr_exp}"
-+	fi
-+
- 	evt_name="${evt_name:16}" # without MPTCP_LIB_EVENT_
- 	[ "${ns}" == "ns2" ] && evts="${evts_ns2}"
- 
--	print_check "event ${ns} ${evt_name} (${exp})"
-+	print_check "event ${ns} ${evt_name} (${exp}${attr_name})"
- 
- 	if [[ "${evt_name}" = "LISTENER_"* ]] &&
- 	   ! mptcp_lib_kallsyms_has "mptcp_event_pm_listener$"; then
-@@ -3570,6 +3577,16 @@ chk_evt_nr()
- 	if [ "${count}" != "${exp}" ]; then
- 		fail_test "got ${count} events, expected ${exp}"
- 		cat "${evts}"
-+		return
-+	elif [ -z "${attr}" ]; then
-+		print_ok
-+		return
-+	fi
-+
-+	count=$(grep -w "type:${evt}" "${evts}" | grep -c ",${attr}:")
-+	if [ "${count}" != "${attr_exp}" ]; then
-+		fail_test "got ${count} event attributes, expected ${attr_exp}"
-+		grep -w "type:${evt}" "${evts}"
- 	else
- 		print_ok
- 	fi
-@@ -3776,7 +3793,7 @@ userspace_tests()
- 			chk_subflows_total 1 1
- 			userspace_pm_add_sf $ns2 10.0.1.2 0
- 			wait_event ns2 MPTCP_LIB_EVENT_SUB_CLOSED 2
--			chk_evt_nr ns2 MPTCP_LIB_EVENT_SUB_CLOSED 2
-+			chk_evt_nr ns2 MPTCP_LIB_EVENT_SUB_CLOSED 2 error 2
- 		fi
- 		kill_events_pids
- 		mptcp_lib_kill_group_wait $tests_pid
 
 
