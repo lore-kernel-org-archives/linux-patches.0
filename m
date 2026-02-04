@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31D20286A4;
-	Wed,  4 Feb 2026 14:52:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F8E941B36C;
+	Wed,  4 Feb 2026 14:52:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770216742; cv=none; b=TNhUZL7QYV5q1rl0qnVz9gTa674PlnyJLmJto25her3cr8W54K1Vx/4p2eY2NVEALRGzeHYrhE2IK1DeUZw7FEcYAK0q6W6W6MTymwify2+AN0j2HivPt20hFmpbiNP2DzQWkyEBPHq7WjMv2nYBAiBZiViG2Zj6Cgy6y0pK6xQ=
+	t=1770216745; cv=none; b=SNKl1uZOA/ZdXiFpZTY0VlyqX1LeOwb+ywgjhY56YM/wh9Y7PR3d7kf4WGrDh17eOEeBci6TZ76CK5Wjk6lTs4xebfJe1+VKUPhRdpN9zNJTxJV7jqJgq24Sr6yqjNvZojHCR2G3r47BS0ulVUJ/WFj3jrnGCrKQ4RcW05pPFqM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770216742; c=relaxed/simple;
-	bh=woWI2tswE43FooyxNHwKxSlIciTFDyEsY06xCSq5tAw=;
+	s=arc-20240116; t=1770216745; c=relaxed/simple;
+	bh=T/fN9z7xOlh1wdoUzweXabLdzI34Vw1td4zFH1Kv7is=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=g2QrAkKvDDpyRXS4pAa+Bp5roZOCH3Pts9N8HVLWGB/UE2kMYG7ySl02KOt3H5tPfseYxHGoyzX5RBWHz/1CxTQjbC3CNJXAXVRU9bruc3tq2CIF+sbJikKbQpHdRN9RlO20MYzcVWc+9/9q5nsLCXUi++tkBh2NB9ir0o/3gTc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=y6EmZo51; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dnspxFMtZMm7Y3lI4qcdmwlik6LWpoVD8TNBjw1bkYZeVgNk1FO2gGV9mWjS08/S89NgYnWf0A+RF+nem3PN+HyRkL8M32PxYwxKwUSdORe8bLM3yqBqRgDGmQgFFvklfhhkfwGENSh88vrWZVeZ12LvMAkOkPMUlFK7FjGDzmM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xzZ2fBIN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="y6EmZo51"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 94AB0C4CEF7;
-	Wed,  4 Feb 2026 14:52:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xzZ2fBIN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF422C19423;
+	Wed,  4 Feb 2026 14:52:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770216742;
-	bh=woWI2tswE43FooyxNHwKxSlIciTFDyEsY06xCSq5tAw=;
+	s=korg; t=1770216745;
+	bh=T/fN9z7xOlh1wdoUzweXabLdzI34Vw1td4zFH1Kv7is=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=y6EmZo51gEM+bq/6M1FHgARP2e5bssUm9maClL7tfkmXZTsC/VmhrGc+PpEpky56N
-	 aEFR3bqY58VGlnCPB8O2mxm4cH85/BghUB5bvkdd1Ezzokt5rYVaxIaGFz9F9ZLTg0
-	 Bg1+Mf53PxoWHIGcmpv4DZ5q0t88wEK1rACVxCqQ=
+	b=xzZ2fBINUn7gofL+Fa6VVxbtueYgnnKJCY6CFmR9pOwYHeoqhH9H/MbaerNJIeHCv
+	 a7AN8eTyTIYe60IZV6cilnY4xSrhkE3JrI+i3Ysa/zPgufm61sNqJAZuiAzJ1D2tZ+
+	 Q53eYr8G7DgbXJMz9TLLmeM5hYLaaslRwhE2/oDw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Suraj Gupta <suraj.gupta2@amd.com>,
-	Radhey Shyam Pandey <radhey.shyam.pandey@amd.com>,
-	Folker Schwesinger <dev@folker-schwesinger.de>,
-	Vinod Koul <vkoul@kernel.org>,
+	syzbot+e8cb6691a7cf68256cb8@syzkaller.appspotmail.com,
+	Szymon Wilczek <swilczek.lx@gmail.com>,
+	Vincent Mailhol <mailhol@kernel.org>,
+	Marc Kleine-Budde <mkl@pengutronix.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 018/206] dmaengine: xilinx_dma: Fix uninitialized addr_width when "xlnx,addrwidth" property is missing
-Date: Wed,  4 Feb 2026 15:37:29 +0100
-Message-ID: <20260204143858.858687407@linuxfoundation.org>
+Subject: [PATCH 5.15 002/206] can: etas_es58x: allow partial RX URB allocation to succeed
+Date: Wed,  4 Feb 2026 15:37:13 +0100
+Message-ID: <20260204143858.286759051@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260204143858.193781818@linuxfoundation.org>
 References: <20260204143858.193781818@linuxfoundation.org>
@@ -53,58 +53,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Suraj Gupta <suraj.gupta2@amd.com>
+From: Szymon Wilczek <swilczek.lx@gmail.com>
 
-[ Upstream commit c0732fe78728718c853ef8e7af5bbb05262acbd1 ]
+[ Upstream commit b1979778e98569c1e78c2c7f16bb24d76541ab00 ]
 
-When device tree lacks optional "xlnx,addrwidth" property, the addr_width
-variable remained uninitialized with garbage values, causing incorrect
-DMA mask configuration and subsequent probe failure. The fix ensures a
-fallback to the default 32-bit address width when this property is missing.
+When es58x_alloc_rx_urbs() fails to allocate the requested number of
+URBs but succeeds in allocating some, it returns an error code.
+This causes es58x_open() to return early, skipping the cleanup label
+'free_urbs', which leads to the anchored URBs being leaked.
 
-Signed-off-by: Suraj Gupta <suraj.gupta2@amd.com>
-Fixes: b72db4005fe4 ("dmaengine: vdma: Add 64 bit addressing support to the driver")
-Reviewed-by: Radhey Shyam Pandey <radhey.shyam.pandey@amd.com>
-Reviewed-by: Folker Schwesinger <dev@folker-schwesinger.de>
-Link: https://patch.msgid.link/20251021183006.3434495-1-suraj.gupta2@amd.com
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+As pointed out by maintainer Vincent Mailhol, the driver is designed
+to handle partial URB allocation gracefully. Therefore, partial
+allocation should not be treated as a fatal error.
+
+Modify es58x_alloc_rx_urbs() to return 0 if at least one URB has been
+allocated, restoring the intended behavior and preventing the leak
+in es58x_open().
+
+Fixes: 8537257874e9 ("can: etas_es58x: add core support for ETAS ES58X CAN USB interfaces")
+Reported-by: syzbot+e8cb6691a7cf68256cb8@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=e8cb6691a7cf68256cb8
+Signed-off-by: Szymon Wilczek <swilczek.lx@gmail.com>
+Reviewed-by: Vincent Mailhol <mailhol@kernel.org>
+Link: https://patch.msgid.link/20251223011732.39361-1-swilczek.lx@gmail.com
+Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dma/xilinx/xilinx_dma.c | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ drivers/net/can/usb/etas_es58x/es58x_core.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/dma/xilinx/xilinx_dma.c b/drivers/dma/xilinx/xilinx_dma.c
-index 48ac51447baee..ba5850ca39ddd 100644
---- a/drivers/dma/xilinx/xilinx_dma.c
-+++ b/drivers/dma/xilinx/xilinx_dma.c
-@@ -128,6 +128,7 @@
- #define XILINX_MCDMA_MAX_CHANS_PER_DEVICE	0x20
- #define XILINX_DMA_MAX_CHANS_PER_DEVICE		0x2
- #define XILINX_CDMA_MAX_CHANS_PER_DEVICE	0x1
-+#define XILINX_DMA_DFAULT_ADDRWIDTH		0x20
+diff --git a/drivers/net/can/usb/etas_es58x/es58x_core.c b/drivers/net/can/usb/etas_es58x/es58x_core.c
+index a8273ad5dd9e0..bb73680f8dcee 100644
+--- a/drivers/net/can/usb/etas_es58x/es58x_core.c
++++ b/drivers/net/can/usb/etas_es58x/es58x_core.c
+@@ -1743,7 +1743,7 @@ static int es58x_alloc_rx_urbs(struct es58x_device *es58x_dev)
+ 	dev_dbg(dev, "%s: Allocated %d rx URBs each of size %zu\n",
+ 		__func__, i, rx_buf_len);
  
- #define XILINX_DMA_DMAXR_ALL_IRQ_MASK	\
- 		(XILINX_DMA_DMASR_FRM_CNT_IRQ | \
-@@ -3013,7 +3014,7 @@ static int xilinx_dma_probe(struct platform_device *pdev)
- 	struct device_node *node = pdev->dev.of_node;
- 	struct xilinx_dma_device *xdev;
- 	struct device_node *child, *np = pdev->dev.of_node;
--	u32 num_frames, addr_width, len_width;
-+	u32 num_frames, addr_width = XILINX_DMA_DFAULT_ADDRWIDTH, len_width;
- 	int i, err;
+-	return ret;
++	return 0;
+ }
  
- 	/* Allocate and initialize the DMA engine structure */
-@@ -3082,7 +3083,9 @@ static int xilinx_dma_probe(struct platform_device *pdev)
- 
- 	err = of_property_read_u32(node, "xlnx,addrwidth", &addr_width);
- 	if (err < 0)
--		dev_warn(xdev->dev, "missing xlnx,addrwidth property\n");
-+		dev_warn(xdev->dev,
-+			 "missing xlnx,addrwidth property, using default value %d\n",
-+			 XILINX_DMA_DFAULT_ADDRWIDTH);
- 
- 	if (addr_width > 32)
- 		xdev->ext_addr = true;
+ /**
 -- 
 2.51.0
 
