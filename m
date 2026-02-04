@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A328C41B369;
-	Wed,  4 Feb 2026 15:15:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C7DC18859B;
+	Wed,  4 Feb 2026 15:15:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770218135; cv=none; b=lrVxMoHJf15MkjIwJkuo2iYwbLk3I8I8dHc0dbHpaDFLDXSR4FFWHDJ2YUpFWoyR1IGxuHom7zy0ehZ0gQjTmzRWdCrfg+DWg9SmCUik5W0hRMeHnVQQppPDfeMipAX6AGR36RijA4SMGP/alXkA7sUL1vrh0+xxStzOzojkkoA=
+	t=1770218139; cv=none; b=Axz9SrguEaYlUPQiIpIJZm9QALhEb67wlunoAJZrO1xwu/9jg0pF1Y2GoeCLjdKdUozftUloueQJg/Qr3G67SDJ06X9WHMf7TWRnBX9CjRtzT1JOAm0FpKv0LMeYv0eVdNLaANtFWBeclRIVBVErJCxNNfMB8TnLcRwm8LE5Hcc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770218135; c=relaxed/simple;
-	bh=lgkv7/MsxCB1uLdE7bV9QdAX+jQ149dgk769kxetb3c=;
+	s=arc-20240116; t=1770218139; c=relaxed/simple;
+	bh=vJ1d5US3IRPBB9KnWCrItYPdBgpTuCE1HUV7GQwwfE0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HP1+3UtrCTMX28Q9dDaQkJrYidGr0htJkcy4hYf+d/gNBlzet25ZXTidDl754Q76Sjry+Cc3f2GzmkXP9xT6hO4JqLLL38MeBkX/06pRWBdgjXRKvas/kItcQ94yrebcxYatJmcCRkMcSoSP6Li+VlkbbxJ9CDmZAiGGiOO0mOo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TYjw1iBh; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=DpoeRFjfeDfS3tRB+47v8tJ57wqPE+AlomFOXByCP53pt9ILsNf23Po71KpxWGiws2KY5XLTLq8rFFdhbk/OnnYYR3/63svsPOirHcWomgWbUfe9zR95j4yCt6Cv5rfBdlx0w1j0acaocPr7sWYVNae4pVDDGeC1nm+/wkPZl9k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=D7ufntIV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TYjw1iBh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15286C4CEF7;
-	Wed,  4 Feb 2026 15:15:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="D7ufntIV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A6D07C4CEF7;
+	Wed,  4 Feb 2026 15:15:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770218135;
-	bh=lgkv7/MsxCB1uLdE7bV9QdAX+jQ149dgk769kxetb3c=;
+	s=korg; t=1770218139;
+	bh=vJ1d5US3IRPBB9KnWCrItYPdBgpTuCE1HUV7GQwwfE0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TYjw1iBhd/Aeyd0RRGt2pyYxaGcC30FTUcP5H3l+u1QpmMlvb4KTc9fSQyKijKcZJ
-	 TebxkMXWJjkSRxwvV6GGNgRZ4Z9RbiR5KI5zioxzwNzqJIuYzNi6IP3J5kWH3q7nye
-	 tBeiYDbmRXZ6cA5CfWx3mHctjjrXMQAZSOmbRX5E=
+	b=D7ufntIVQtgmbWfP2fdMPOoNEqB1cZX9mixqwZUATsY9aPMEYfO0RZdDlScXwmJni
+	 ebaFwNBfeNijSFc2ZRW7igz3HnhHlKke7i7CdcxXZUYrqzVOQAME0cGu6KaflvfZW1
+	 zv9Jr82g1g+WcT4l1Hn2LtCcuyM6ZM9wuBFpje8Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Abdun Nihaal <nihaal@cse.iitm.ac.in>,
 	Juergen Gross <jgross@suse.com>,
-	Dawei Li <set_pte_at@outlook.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 222/280] xen: make remove callback of xen driver void returned
-Date: Wed,  4 Feb 2026 15:39:56 +0100
-Message-ID: <20260204143917.598866163@linuxfoundation.org>
+Subject: [PATCH 6.1 223/280] scsi: xen: scsiback: Fix potential memory leak in scsiback_remove()
+Date: Wed,  4 Feb 2026 15:39:57 +0100
+Message-ID: <20260204143917.634812744@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260204143909.614719725@linuxfoundation.org>
 References: <20260204143909.614719725@linuxfoundation.org>
@@ -51,405 +52,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dawei Li <set_pte_at@outlook.com>
+From: Abdun Nihaal <nihaal@cse.iitm.ac.in>
 
-[ Upstream commit 7cffcade57a429667447c4f41d8414bbcf1b3aaa ]
+[ Upstream commit 901a5f309daba412e2a30364d7ec1492fa11c32c ]
 
-Since commit fc7a6209d571 ("bus: Make remove callback return void")
-forces bus_type::remove be void-returned, it doesn't make much sense for
-any bus based driver implementing remove callbalk to return non-void to
-its caller.
+Memory allocated for struct vscsiblk_info in scsiback_probe() is not
+freed in scsiback_remove() leading to potential memory leaks on remove,
+as well as in the scsiback_probe() error paths. Fix that by freeing it
+in scsiback_remove().
 
-This change is for xen bus based drivers.
-
-Acked-by: Juergen Gross <jgross@suse.com>
-Signed-off-by: Dawei Li <set_pte_at@outlook.com>
-Link: https://lore.kernel.org/r/TYCP286MB23238119AB4DF190997075C9CAE39@TYCP286MB2323.JPNP286.PROD.OUTLOOK.COM
-Signed-off-by: Juergen Gross <jgross@suse.com>
-Stable-dep-of: 901a5f309dab ("scsi: xen: scsiback: Fix potential memory leak in scsiback_remove()")
+Cc: stable@vger.kernel.org
+Fixes: d9d660f6e562 ("xen-scsiback: Add Xen PV SCSI backend driver")
+Signed-off-by: Abdun Nihaal <nihaal@cse.iitm.ac.in>
+Reviewed-by: Juergen Gross <jgross@suse.com>
+Link: https://patch.msgid.link/20251223063012.119035-1-nihaal@cse.iitm.ac.in
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/block/xen-blkback/xenbus.c  |    4 +---
- drivers/block/xen-blkfront.c        |    3 +--
- drivers/char/tpm/xen-tpmfront.c     |    3 +--
- drivers/gpu/drm/xen/xen_drm_front.c |    3 +--
- drivers/input/misc/xen-kbdfront.c   |    5 ++---
- drivers/net/xen-netback/xenbus.c    |    3 +--
- drivers/net/xen-netfront.c          |    4 +---
- drivers/pci/xen-pcifront.c          |    4 +---
- drivers/scsi/xen-scsifront.c        |    4 +---
- drivers/tty/hvc/hvc_xen.c           |    4 ++--
- drivers/usb/host/xen-hcd.c          |    4 +---
- drivers/video/fbdev/xen-fbfront.c   |    6 ++----
- drivers/xen/pvcalls-back.c          |    3 +--
- drivers/xen/pvcalls-front.c         |    3 +--
- drivers/xen/xen-pciback/xenbus.c    |    4 +---
- drivers/xen/xen-scsiback.c          |    4 +---
- include/xen/xenbus.h                |    2 +-
- net/9p/trans_xen.c                  |    3 +--
- sound/xen/xen_snd_front.c           |    3 +--
- 19 files changed, 22 insertions(+), 47 deletions(-)
+ drivers/xen/xen-scsiback.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/block/xen-blkback/xenbus.c
-+++ b/drivers/block/xen-blkback/xenbus.c
-@@ -524,7 +524,7 @@ static int xen_vbd_create(struct xen_blk
- 	return 0;
- }
- 
--static int xen_blkbk_remove(struct xenbus_device *dev)
-+static void xen_blkbk_remove(struct xenbus_device *dev)
- {
- 	struct backend_info *be = dev_get_drvdata(&dev->dev);
- 
-@@ -547,8 +547,6 @@ static int xen_blkbk_remove(struct xenbu
- 		/* Put the reference we set in xen_blkif_alloc(). */
- 		xen_blkif_put(be->blkif);
- 	}
--
--	return 0;
- }
- 
- int xen_blkbk_flush_diskcache(struct xenbus_transaction xbt,
---- a/drivers/block/xen-blkfront.c
-+++ b/drivers/block/xen-blkfront.c
-@@ -2469,7 +2469,7 @@ static void blkback_changed(struct xenbu
- 	}
- }
- 
--static int blkfront_remove(struct xenbus_device *xbdev)
-+static void blkfront_remove(struct xenbus_device *xbdev)
- {
- 	struct blkfront_info *info = dev_get_drvdata(&xbdev->dev);
- 
-@@ -2490,7 +2490,6 @@ static int blkfront_remove(struct xenbus
- 	}
- 
- 	kfree(info);
--	return 0;
- }
- 
- static int blkfront_is_ready(struct xenbus_device *dev)
---- a/drivers/char/tpm/xen-tpmfront.c
-+++ b/drivers/char/tpm/xen-tpmfront.c
-@@ -360,14 +360,13 @@ static int tpmfront_probe(struct xenbus_
- 	return tpm_chip_register(priv->chip);
- }
- 
--static int tpmfront_remove(struct xenbus_device *dev)
-+static void tpmfront_remove(struct xenbus_device *dev)
- {
- 	struct tpm_chip *chip = dev_get_drvdata(&dev->dev);
- 	struct tpm_private *priv = dev_get_drvdata(&chip->dev);
- 	tpm_chip_unregister(chip);
- 	ring_free(priv);
- 	dev_set_drvdata(&chip->dev, NULL);
--	return 0;
- }
- 
- static int tpmfront_resume(struct xenbus_device *dev)
---- a/drivers/gpu/drm/xen/xen_drm_front.c
-+++ b/drivers/gpu/drm/xen/xen_drm_front.c
-@@ -717,7 +717,7 @@ static int xen_drv_probe(struct xenbus_d
- 	return xenbus_switch_state(xb_dev, XenbusStateInitialising);
- }
- 
--static int xen_drv_remove(struct xenbus_device *dev)
-+static void xen_drv_remove(struct xenbus_device *dev)
- {
- 	struct xen_drm_front_info *front_info = dev_get_drvdata(&dev->dev);
- 	int to = 100;
-@@ -751,7 +751,6 @@ static int xen_drv_remove(struct xenbus_
- 
- 	xen_drm_drv_fini(front_info);
- 	xenbus_frontend_closed(dev);
--	return 0;
- }
- 
- static const struct xenbus_device_id xen_driver_ids[] = {
---- a/drivers/input/misc/xen-kbdfront.c
-+++ b/drivers/input/misc/xen-kbdfront.c
-@@ -51,7 +51,7 @@ module_param_array(ptr_size, int, NULL,
- MODULE_PARM_DESC(ptr_size,
- 	"Pointing device width, height in pixels (default 800,600)");
- 
--static int xenkbd_remove(struct xenbus_device *);
-+static void xenkbd_remove(struct xenbus_device *);
- static int xenkbd_connect_backend(struct xenbus_device *, struct xenkbd_info *);
- static void xenkbd_disconnect_backend(struct xenkbd_info *);
- 
-@@ -404,7 +404,7 @@ static int xenkbd_resume(struct xenbus_d
- 	return xenkbd_connect_backend(dev, info);
- }
- 
--static int xenkbd_remove(struct xenbus_device *dev)
-+static void xenkbd_remove(struct xenbus_device *dev)
- {
- 	struct xenkbd_info *info = dev_get_drvdata(&dev->dev);
- 
-@@ -417,7 +417,6 @@ static int xenkbd_remove(struct xenbus_d
- 		input_unregister_device(info->mtouch);
- 	free_page((unsigned long)info->page);
- 	kfree(info);
--	return 0;
- }
- 
- static int xenkbd_connect_backend(struct xenbus_device *dev,
---- a/drivers/net/xen-netback/xenbus.c
-+++ b/drivers/net/xen-netback/xenbus.c
-@@ -977,7 +977,7 @@ static int read_xenbus_vif_flags(struct
- 	return 0;
- }
- 
--static int netback_remove(struct xenbus_device *dev)
-+static void netback_remove(struct xenbus_device *dev)
- {
- 	struct backend_info *be = dev_get_drvdata(&dev->dev);
- 
-@@ -992,7 +992,6 @@ static int netback_remove(struct xenbus_
- 	kfree(be->hotplug_script);
- 	kfree(be);
- 	dev_set_drvdata(&dev->dev, NULL);
--	return 0;
- }
- 
- /*
---- a/drivers/net/xen-netfront.c
-+++ b/drivers/net/xen-netfront.c
-@@ -2652,7 +2652,7 @@ static void xennet_bus_close(struct xenb
- 	} while (!ret);
- }
- 
--static int xennet_remove(struct xenbus_device *dev)
-+static void xennet_remove(struct xenbus_device *dev)
- {
- 	struct netfront_info *info = dev_get_drvdata(&dev->dev);
- 
-@@ -2668,8 +2668,6 @@ static int xennet_remove(struct xenbus_d
- 		rtnl_unlock();
- 	}
- 	xennet_free_netdev(info->netdev);
--
--	return 0;
- }
- 
- static const struct xenbus_device_id netfront_ids[] = {
---- a/drivers/pci/xen-pcifront.c
-+++ b/drivers/pci/xen-pcifront.c
-@@ -1055,14 +1055,12 @@ out:
- 	return err;
- }
- 
--static int pcifront_xenbus_remove(struct xenbus_device *xdev)
-+static void pcifront_xenbus_remove(struct xenbus_device *xdev)
- {
- 	struct pcifront_device *pdev = dev_get_drvdata(&xdev->dev);
- 
- 	if (pdev)
- 		free_pdev(pdev);
--
--	return 0;
- }
- 
- static const struct xenbus_device_id xenpci_ids[] = {
---- a/drivers/scsi/xen-scsifront.c
-+++ b/drivers/scsi/xen-scsifront.c
-@@ -995,7 +995,7 @@ static int scsifront_suspend(struct xenb
- 	return err;
- }
- 
--static int scsifront_remove(struct xenbus_device *dev)
-+static void scsifront_remove(struct xenbus_device *dev)
- {
- 	struct vscsifrnt_info *info = dev_get_drvdata(&dev->dev);
- 
-@@ -1011,8 +1011,6 @@ static int scsifront_remove(struct xenbu
- 
- 	scsifront_free_ring(info);
- 	scsi_host_put(info->host);
--
--	return 0;
- }
- 
- static void scsifront_disconnect(struct vscsifrnt_info *info)
---- a/drivers/tty/hvc/hvc_xen.c
-+++ b/drivers/tty/hvc/hvc_xen.c
-@@ -420,9 +420,9 @@ static int xen_console_remove(struct xen
- 	return 0;
- }
- 
--static int xencons_remove(struct xenbus_device *dev)
-+static void xencons_remove(struct xenbus_device *dev)
- {
--	return xen_console_remove(dev_get_drvdata(&dev->dev));
-+	xen_console_remove(dev_get_drvdata(&dev->dev));
- }
- 
- static int xencons_connect_backend(struct xenbus_device *dev,
---- a/drivers/usb/host/xen-hcd.c
-+++ b/drivers/usb/host/xen-hcd.c
-@@ -1530,15 +1530,13 @@ static void xenhcd_backend_changed(struc
- 	}
- }
- 
--static int xenhcd_remove(struct xenbus_device *dev)
-+static void xenhcd_remove(struct xenbus_device *dev)
- {
- 	struct xenhcd_info *info = dev_get_drvdata(&dev->dev);
- 	struct usb_hcd *hcd = xenhcd_info_to_hcd(info);
- 
- 	xenhcd_destroy_rings(info);
- 	usb_put_hcd(hcd);
--
--	return 0;
- }
- 
- static int xenhcd_probe(struct xenbus_device *dev,
---- a/drivers/video/fbdev/xen-fbfront.c
-+++ b/drivers/video/fbdev/xen-fbfront.c
-@@ -67,7 +67,7 @@ MODULE_PARM_DESC(video,
- 	"Video memory size in MB, width, height in pixels (default 2,800,600)");
- 
- static void xenfb_make_preferred_console(void);
--static int xenfb_remove(struct xenbus_device *);
-+static void xenfb_remove(struct xenbus_device *);
- static void xenfb_init_shared_page(struct xenfb_info *, struct fb_info *);
- static int xenfb_connect_backend(struct xenbus_device *, struct xenfb_info *);
- static void xenfb_disconnect_backend(struct xenfb_info *);
-@@ -527,7 +527,7 @@ static int xenfb_resume(struct xenbus_de
- 	return xenfb_connect_backend(dev, info);
- }
- 
--static int xenfb_remove(struct xenbus_device *dev)
-+static void xenfb_remove(struct xenbus_device *dev)
- {
- 	struct xenfb_info *info = dev_get_drvdata(&dev->dev);
- 
-@@ -542,8 +542,6 @@ static int xenfb_remove(struct xenbus_de
- 	vfree(info->gfns);
- 	vfree(info->fb);
- 	kfree(info);
--
--	return 0;
- }
- 
- static unsigned long vmalloc_to_gfn(void *address)
---- a/drivers/xen/pvcalls-back.c
-+++ b/drivers/xen/pvcalls-back.c
-@@ -1180,9 +1180,8 @@ static void pvcalls_back_changed(struct
- 	}
- }
- 
--static int pvcalls_back_remove(struct xenbus_device *dev)
-+static void pvcalls_back_remove(struct xenbus_device *dev)
- {
--	return 0;
- }
- 
- static int pvcalls_back_uevent(struct xenbus_device *xdev,
---- a/drivers/xen/pvcalls-front.c
-+++ b/drivers/xen/pvcalls-front.c
-@@ -1087,7 +1087,7 @@ static const struct xenbus_device_id pvc
- 	{ "" }
- };
- 
--static int pvcalls_front_remove(struct xenbus_device *dev)
-+static void pvcalls_front_remove(struct xenbus_device *dev)
- {
- 	struct pvcalls_bedata *bedata;
- 	struct sock_mapping *map = NULL, *n;
-@@ -1123,7 +1123,6 @@ static int pvcalls_front_remove(struct x
- 	kfree(bedata->ring.sring);
- 	kfree(bedata);
- 	xenbus_switch_state(dev, XenbusStateClosed);
--	return 0;
- }
- 
- static int pvcalls_front_probe(struct xenbus_device *dev,
---- a/drivers/xen/xen-pciback/xenbus.c
-+++ b/drivers/xen/xen-pciback/xenbus.c
-@@ -716,14 +716,12 @@ out:
- 	return err;
- }
- 
--static int xen_pcibk_xenbus_remove(struct xenbus_device *dev)
-+static void xen_pcibk_xenbus_remove(struct xenbus_device *dev)
- {
- 	struct xen_pcibk_device *pdev = dev_get_drvdata(&dev->dev);
- 
- 	if (pdev != NULL)
- 		free_pdev(pdev);
--
--	return 0;
- }
- 
- static const struct xenbus_device_id xen_pcibk_ids[] = {
 --- a/drivers/xen/xen-scsiback.c
 +++ b/drivers/xen/xen-scsiback.c
-@@ -1249,7 +1249,7 @@ static void scsiback_release_translation
- 	spin_unlock_irqrestore(&info->v2p_lock, flags);
- }
- 
--static int scsiback_remove(struct xenbus_device *dev)
-+static void scsiback_remove(struct xenbus_device *dev)
- {
- 	struct vscsibk_info *info = dev_get_drvdata(&dev->dev);
- 
-@@ -1261,8 +1261,6 @@ static int scsiback_remove(struct xenbus
+@@ -1261,6 +1261,7 @@ static void scsiback_remove(struct xenbu
  	gnttab_page_cache_shrink(&info->free_pages, 0);
  
  	dev_set_drvdata(&dev->dev, NULL);
--
--	return 0;
++	kfree(info);
  }
  
  static int scsiback_probe(struct xenbus_device *dev,
---- a/include/xen/xenbus.h
-+++ b/include/xen/xenbus.h
-@@ -117,7 +117,7 @@ struct xenbus_driver {
- 		     const struct xenbus_device_id *id);
- 	void (*otherend_changed)(struct xenbus_device *dev,
- 				 enum xenbus_state backend_state);
--	int (*remove)(struct xenbus_device *dev);
-+	void (*remove)(struct xenbus_device *dev);
- 	int (*suspend)(struct xenbus_device *dev);
- 	int (*resume)(struct xenbus_device *dev);
- 	int (*uevent)(struct xenbus_device *, struct kobj_uevent_env *);
---- a/net/9p/trans_xen.c
-+++ b/net/9p/trans_xen.c
-@@ -307,13 +307,12 @@ static void xen_9pfs_front_free(struct x
- 	kfree(priv);
- }
- 
--static int xen_9pfs_front_remove(struct xenbus_device *dev)
-+static void xen_9pfs_front_remove(struct xenbus_device *dev)
- {
- 	struct xen_9pfs_front_priv *priv = dev_get_drvdata(&dev->dev);
- 
- 	dev_set_drvdata(&dev->dev, NULL);
- 	xen_9pfs_front_free(priv);
--	return 0;
- }
- 
- static int xen_9pfs_front_alloc_dataring(struct xenbus_device *dev,
---- a/sound/xen/xen_snd_front.c
-+++ b/sound/xen/xen_snd_front.c
-@@ -311,7 +311,7 @@ static int xen_drv_probe(struct xenbus_d
- 	return xenbus_switch_state(xb_dev, XenbusStateInitialising);
- }
- 
--static int xen_drv_remove(struct xenbus_device *dev)
-+static void xen_drv_remove(struct xenbus_device *dev)
- {
- 	struct xen_snd_front_info *front_info = dev_get_drvdata(&dev->dev);
- 	int to = 100;
-@@ -345,7 +345,6 @@ static int xen_drv_remove(struct xenbus_
- 
- 	xen_snd_drv_fini(front_info);
- 	xenbus_frontend_closed(dev);
--	return 0;
- }
- 
- static const struct xenbus_device_id xen_drv_ids[] = {
 
 
