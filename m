@@ -1,43 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47E3919E96D;
-	Wed,  4 Feb 2026 15:31:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5247E19E96D;
+	Wed,  4 Feb 2026 15:31:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770219068; cv=none; b=F29fyXvxiwq+nJP8YcrsR4qeJMaQrhaZQBvlDvwyY5EnUqJasMlA1PSpUZwKQPGxJHe1dNSlrO890ZBc5PQvFKj5SW12D65+DR2XdBARaMfQ/FkH5tlmgrjSTlZYWMhGeCxMRUVSyaj3F8eSSj830Q8i5N2doBUS2H4LceVwM6U=
+	t=1770219071; cv=none; b=Cltt/cbA10OPpdypdsOsTsWJgvevabtLHkyQ/669Lc1fWvgHcr1bxZQSEc7UwgM70VetkaLvZwvMvDO5YGK9lFKio2KDSkgGQDm2YnfGwzTSZGNWGpt5aFqH4VwnSUdm0w/kV/m9z1nV3vUvsHxOPruWDnknKZNlTECo5+0anM0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770219068; c=relaxed/simple;
-	bh=BTAIEYbota6cAdxQoS/Cq+00w/Zt0Rb3z3Aao+7tKDs=;
+	s=arc-20240116; t=1770219071; c=relaxed/simple;
+	bh=SWtcAxDyNjpl37qNxHY5s8s3MEBToxtgcHSEf1bPNVw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Z7sscQrZvKi0zYUQB8tgMHlWt5EtSAkZF9fuK2J4ya7kcghIS9lCedq18KVeNbBGABsp/OXsS8ihb/+GbDLtMp7Rys+dZ0XTi+yC9Czp+EqAw3vdOlDPIO9nJO2Wq7zXYlrTqHh7kbOHwbosjU+Un0wey9QmjWBHzkx3gQIvD1I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QIzxO3/E; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=G6cUKCl9MmsgVU3/hGgkapacd9nJhGqkD+xpN3p8CgIpsplwbd9sNJ5s5j3byn8Ht/G8d7S/26vH5gKkFlUgavmTiF0WGGgp/9Yx4h4uE3QNv6qvAFPs25MBi1XsEvYjYK2LmUsU5DmEv203LD71fSPnYpegpfXqnG345xpPpC4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1t5XzWfl; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QIzxO3/E"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 560A1C4CEF7;
-	Wed,  4 Feb 2026 15:31:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1t5XzWfl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0AB7C4CEF7;
+	Wed,  4 Feb 2026 15:31:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770219067;
-	bh=BTAIEYbota6cAdxQoS/Cq+00w/Zt0Rb3z3Aao+7tKDs=;
+	s=korg; t=1770219071;
+	bh=SWtcAxDyNjpl37qNxHY5s8s3MEBToxtgcHSEf1bPNVw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QIzxO3/Eo/T/URQYtUDISRhSoXfJP1+BgyTG0ooHbTZYIi+6VNPoXsBOj8NiRhivV
-	 MDx9gF1AMf8oaYKPcVTePteZcSOWktRVdpsoNtUpvZB0zJHAvrYVVMnfUbAWKlx1YE
-	 3ZA7zDbFw6T+6WpEqOiGQ6twI8uAAkmAXx7OFHSA=
+	b=1t5XzWflOesT3tAHa5cYEIM9hJJhkdXCjiYOscex4zXrFQ7Pe7o4yNP2Oy7wIRpq+
+	 cgx8t+XaiLXu9VnRAMI4ASYeKlDTdxCTnkJM6q0UdZcj2lI8nGYhk7r//R7AchOORC
+	 8VWxHSYb9nLLrmDhJ9VrdiD7Q2n3/E32KFV0VX/E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nitin Gote <nitin.r.gote@intel.com>,
-	Brian Nguyen <brian3.nguyen@intel.com>,
-	Alexander Usyskin <alexander.usyskin@intel.com>,
-	Rodrigo Vivi <rodrigo.vivi@intel.com>,
-	Shuicheng Lin <shuicheng.lin@intel.com>,
-	Ashutosh Dixit <ashutosh.dixit@intel.com>,
-	=?UTF-8?q?Thomas=20Hellstr=C3=B6m?= <thomas.hellstrom@linux.intel.com>,
+	Mark Bloch <mbloch@nvidia.com>,
+	Shay Drori <shayd@nvidia.com>,
+	Tariq Toukan <tariqt@nvidia.com>,
+	Simon Horman <horms@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 056/122] drm/xe/nvm: Fix double-free on aux add failure
-Date: Wed,  4 Feb 2026 15:40:38 +0100
-Message-ID: <20260204143853.870156993@linuxfoundation.org>
+Subject: [PATCH 6.18 025/122] net/mlx5e: TC, delete flows only for existing peers
+Date: Wed,  4 Feb 2026 15:40:07 +0100
+Message-ID: <20260204143852.770106215@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260204143851.857060534@linuxfoundation.org>
 References: <20260204143851.857060534@linuxfoundation.org>
@@ -50,90 +48,136 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Shuicheng Lin <shuicheng.lin@intel.com>
+From: Mark Bloch <mbloch@nvidia.com>
 
-[ Upstream commit 8a44241b0b83a6047c5448da1fff03fcc29496b5 ]
+[ Upstream commit f67666938ae626cbda63fbf5176b3583c07e7124 ]
 
-After a successful auxiliary_device_init(), aux_dev->dev.release
-(xe_nvm_release_dev()) is responsible for the kfree(nvm). When
-there is failure with auxiliary_device_add(), driver will call
-auxiliary_device_uninit(), which call put_device(). So that the
-.release callback will be triggered to free the memory associated
-with the auxiliary_device.
+When deleting TC steering flows, iterate only over actual devcom
+peers instead of assuming all possible ports exist. This avoids
+touching non-existent peers and ensures cleanup is limited to
+devices the driver is currently connected to.
 
-Move the kfree(nvm) into the auxiliary_device_init() failure path
-and remove the err goto path to fix below error.
+ BUG: kernel NULL pointer dereference, address: 0000000000000008
+ #PF: supervisor write access in kernel mode
+ #PF: error_code(0x0002) - not-present page
+ PGD 133c8a067 P4D 0
+ Oops: Oops: 0002 [#1] SMP
+ CPU: 19 UID: 0 PID: 2169 Comm: tc Not tainted 6.18.0+ #156 NONE
+ Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS rel-1.16.0-0-gd239552ce722-prebuilt.qemu.org 04/01/2014
+ RIP: 0010:mlx5e_tc_del_fdb_peers_flow+0xbe/0x200 [mlx5_core]
+ Code: 00 00 a8 08 74 a8 49 8b 46 18 f6 c4 02 74 9f 4c 8d bf a0 12 00 00 4c 89 ff e8 0e e7 96 e1 49 8b 44 24 08 49 8b 0c 24 4c 89 ff <48> 89 41 08 48 89 08 49 89 2c 24 49 89 5c 24 08 e8 7d ce 96 e1 49
+ RSP: 0018:ff11000143867528 EFLAGS: 00010246
+ RAX: 0000000000000000 RBX: dead000000000122 RCX: 0000000000000000
+ RDX: ff11000143691580 RSI: ff110001026e5000 RDI: ff11000106f3d2a0
+ RBP: dead000000000100 R08: 00000000000003fd R09: 0000000000000002
+ R10: ff11000101c75690 R11: ff1100085faea178 R12: ff11000115f0ae78
+ R13: 0000000000000000 R14: ff11000115f0a800 R15: ff11000106f3d2a0
+ FS:  00007f35236bf740(0000) GS:ff110008dc809000(0000) knlGS:0000000000000000
+ CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+ CR2: 0000000000000008 CR3: 0000000157a01001 CR4: 0000000000373eb0
+ Call Trace:
+  <TASK>
+  mlx5e_tc_del_flow+0x46/0x270 [mlx5_core]
+  mlx5e_flow_put+0x25/0x50 [mlx5_core]
+  mlx5e_delete_flower+0x2a6/0x3e0 [mlx5_core]
+  tc_setup_cb_reoffload+0x20/0x80
+  fl_reoffload+0x26f/0x2f0 [cls_flower]
+  ? mlx5e_tc_reoffload_flows_work+0xc0/0xc0 [mlx5_core]
+  ? mlx5e_tc_reoffload_flows_work+0xc0/0xc0 [mlx5_core]
+  tcf_block_playback_offloads+0x9e/0x1c0
+  tcf_block_unbind+0x7b/0xd0
+  tcf_block_setup+0x186/0x1d0
+  tcf_block_offload_cmd.isra.0+0xef/0x130
+  tcf_block_offload_unbind+0x43/0x70
+  __tcf_block_put+0x85/0x160
+  ingress_destroy+0x32/0x110 [sch_ingress]
+  __qdisc_destroy+0x44/0x100
+  qdisc_graft+0x22b/0x610
+  tc_get_qdisc+0x183/0x4d0
+  rtnetlink_rcv_msg+0x2d7/0x3d0
+  ? rtnl_calcit.isra.0+0x100/0x100
+  netlink_rcv_skb+0x53/0x100
+  netlink_unicast+0x249/0x320
+  ? __alloc_skb+0x102/0x1f0
+  netlink_sendmsg+0x1e3/0x420
+  __sock_sendmsg+0x38/0x60
+  ____sys_sendmsg+0x1ef/0x230
+  ? copy_msghdr_from_user+0x6c/0xa0
+  ___sys_sendmsg+0x7f/0xc0
+  ? ___sys_recvmsg+0x8a/0xc0
+  ? __sys_sendto+0x119/0x180
+  __sys_sendmsg+0x61/0xb0
+  do_syscall_64+0x55/0x640
+  entry_SYSCALL_64_after_hwframe+0x4b/0x53
+ RIP: 0033:0x7f35238bb764
+ Code: 15 b9 86 0c 00 f7 d8 64 89 02 b8 ff ff ff ff eb bf 0f 1f 44 00 00 f3 0f 1e fa 80 3d e5 08 0d 00 00 74 13 b8 2e 00 00 00 0f 05 <48> 3d 00 f0 ff ff 77 4c c3 0f 1f 00 55 48 89 e5 48 83 ec 20 89 55
+ RSP: 002b:00007ffed4c35638 EFLAGS: 00000202 ORIG_RAX: 000000000000002e
+ RAX: ffffffffffffffda RBX: 000055a2efcc75e0 RCX: 00007f35238bb764
+ RDX: 0000000000000000 RSI: 00007ffed4c356a0 RDI: 0000000000000003
+ RBP: 00007ffed4c35710 R08: 0000000000000010 R09: 00007f3523984b20
+ R10: 0000000000000004 R11: 0000000000000202 R12: 00007ffed4c35790
+ R13: 000000006947df8f R14: 000055a2efcc75e0 R15: 00007ffed4c35780
 
-"
-[   13.232905] ==================================================================
-[   13.232911] BUG: KASAN: double-free in xe_nvm_init+0x751/0xf10 [xe]
-[   13.233112] Free of addr ffff888120635000 by task systemd-udevd/273
-
-[   13.233120] CPU: 8 UID: 0 PID: 273 Comm: systemd-udevd Not tainted 6.19.0-rc2-lgci-xe-kernel+ #225 PREEMPT(voluntary)
-...
-[   13.233125] Call Trace:
-[   13.233126]  <TASK>
-[   13.233127]  dump_stack_lvl+0x7f/0xc0
-[   13.233132]  print_report+0xce/0x610
-[   13.233136]  ? kasan_complete_mode_report_info+0x5d/0x1e0
-[   13.233139]  ? xe_nvm_init+0x751/0xf10 [xe]
-...
-"
-
-v2: drop err goto path. (Alexander)
-
-Fixes: 7926ba2143d8 ("drm/xe: defer free of NVM auxiliary container to device release callback")
-Reviewed-by: Nitin Gote <nitin.r.gote@intel.com>
-Reviewed-by: Brian Nguyen <brian3.nguyen@intel.com>
-Cc: Alexander Usyskin <alexander.usyskin@intel.com>
-Cc: Rodrigo Vivi <rodrigo.vivi@intel.com>
-Suggested-by: Brian Nguyen <brian3.nguyen@intel.com>
-Signed-off-by: Shuicheng Lin <shuicheng.lin@intel.com>
-Signed-off-by: Ashutosh Dixit <ashutosh.dixit@intel.com>
-Link: https://patch.msgid.link/20260120183239.2966782-7-shuicheng.lin@intel.com
-(cherry picked from commit a3187c0c2bbd947ffff97f90d077ac88f9c2a215)
-Signed-off-by: Thomas Hellström <thomas.hellstrom@linux.intel.com>
+Fixes: 9be6c21fdcf8 ("net/mlx5e: Handle offloads flows per peer")
+Signed-off-by: Mark Bloch <mbloch@nvidia.com>
+Reviewed-by: Shay Drori <shayd@nvidia.com>
+Signed-off-by: Tariq Toukan <tariqt@nvidia.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/1769411695-18820-3-git-send-email-tariqt@nvidia.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/xe/xe_nvm.c | 12 +++++-------
- 1 file changed, 5 insertions(+), 7 deletions(-)
+ .../net/ethernet/mellanox/mlx5/core/en_tc.c   | 19 +++++++++++++------
+ 1 file changed, 13 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/gpu/drm/xe/xe_nvm.c b/drivers/gpu/drm/xe/xe_nvm.c
-index 1fff24dbc7cd4..6da42b2b5e467 100644
---- a/drivers/gpu/drm/xe/xe_nvm.c
-+++ b/drivers/gpu/drm/xe/xe_nvm.c
-@@ -153,19 +153,17 @@ int xe_nvm_init(struct xe_device *xe)
- 	ret = auxiliary_device_init(aux_dev);
- 	if (ret) {
- 		drm_err(&xe->drm, "xe-nvm aux init failed %d\n", ret);
--		goto err;
-+		kfree(nvm);
-+		xe->nvm = NULL;
-+		return ret;
- 	}
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en_tc.c b/drivers/net/ethernet/mellanox/mlx5/core/en_tc.c
+index 00c2763e57ca1..ebea43c235cc3 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/en_tc.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/en_tc.c
+@@ -2147,11 +2147,14 @@ static void mlx5e_tc_del_fdb_peer_flow(struct mlx5e_tc_flow *flow,
  
- 	ret = auxiliary_device_add(aux_dev);
- 	if (ret) {
- 		drm_err(&xe->drm, "xe-nvm aux add failed %d\n", ret);
- 		auxiliary_device_uninit(aux_dev);
--		goto err;
-+		xe->nvm = NULL;
-+		return ret;
+ static void mlx5e_tc_del_fdb_peers_flow(struct mlx5e_tc_flow *flow)
+ {
++	struct mlx5_devcom_comp_dev *devcom;
++	struct mlx5_devcom_comp_dev *pos;
++	struct mlx5_eswitch *peer_esw;
+ 	int i;
+ 
+-	for (i = 0; i < MLX5_MAX_PORTS; i++) {
+-		if (i == mlx5_get_dev_index(flow->priv->mdev))
+-			continue;
++	devcom = flow->priv->mdev->priv.eswitch->devcom;
++	mlx5_devcom_for_each_peer_entry(devcom, peer_esw, pos) {
++		i = mlx5_get_dev_index(peer_esw->dev);
+ 		mlx5e_tc_del_fdb_peer_flow(flow, i);
  	}
- 	return devm_add_action_or_reset(xe->drm.dev, xe_nvm_fini, xe);
--
--err:
--	kfree(nvm);
--	xe->nvm = NULL;
--	return ret;
  }
+@@ -5511,12 +5514,16 @@ int mlx5e_tc_num_filters(struct mlx5e_priv *priv, unsigned long flags)
+ 
+ void mlx5e_tc_clean_fdb_peer_flows(struct mlx5_eswitch *esw)
+ {
++	struct mlx5_devcom_comp_dev *devcom;
++	struct mlx5_devcom_comp_dev *pos;
+ 	struct mlx5e_tc_flow *flow, *tmp;
++	struct mlx5_eswitch *peer_esw;
+ 	int i;
+ 
+-	for (i = 0; i < MLX5_MAX_PORTS; i++) {
+-		if (i == mlx5_get_dev_index(esw->dev))
+-			continue;
++	devcom = esw->devcom;
++
++	mlx5_devcom_for_each_peer_entry(devcom, peer_esw, pos) {
++		i = mlx5_get_dev_index(peer_esw->dev);
+ 		list_for_each_entry_safe(flow, tmp, &esw->offloads.peer_flows[i], peer[i])
+ 			mlx5e_tc_del_fdb_peers_flow(flow);
+ 	}
 -- 
 2.51.0
 
