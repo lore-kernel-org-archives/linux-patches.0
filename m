@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4FA2221F17;
-	Wed,  4 Feb 2026 14:47:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26206221F17;
+	Wed,  4 Feb 2026 14:47:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770216429; cv=none; b=PXDZ87MDybm8G6VL/zQSqRNfxjw3204bq8hVWrm+I6+YYetTcDB3+Jmpv+V+Ew5Gcr5icrwRL+2LYa9hZLQm5UdW7/IXo52P5uBbTeTbgX2f0kP+jb271OTws3dIqa9j53KaeoNXj5NpslnSrqM7FTcWB5qLFjSGoKK5bqdiIbU=
+	t=1770216433; cv=none; b=DMeltVghkEGxGnegL1DiXEJIot8/KBjpFSVBAMp/D0U/OjXi2I7sMmtTol2xatgl05QItbM0l0jhWqQmamDzQzu7h3um2ReB6AiquWMaUMgk77ZX1YpRXxS4gTRYWqfI1G0PAbGAupl3LEOYuOADP1Kkm9hBv3cgAJKRMUtP0xM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770216429; c=relaxed/simple;
-	bh=eNTPvV2VVsri2BWC9Y8meyCjEJgSXTsAtcmipV++uuo=;
+	s=arc-20240116; t=1770216433; c=relaxed/simple;
+	bh=vkkytA5sH0ENL6wZJDCIXZiU1Fv5vM3Cujg3+sB2mew=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EfWoRZLv4Rc9q6ueMOVKckSjnYZ8eYinFb0j1f5t/8xgIfsrWXKnSjyk/t0SBcTJJHwkInyYqZNUfNXoLtganfCJwc2zIr6lx85wS5h9NIM07y1c2+l+VbktC2ej82Ppnf+t9OuFJjC5tpNR/YuOJBGmH2w+AMRQSKH9nSBxsGk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=liS/vvPY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pCxnjSa7QFqyx4iw8RqvkETODU7P8sumTSt+RuPTxew/nWApMq1KnUVoF2U+6R5n1s+Zlx+fjR8l4NNtcSoUe0sjMfeg8pTCLnDSJhW4QOPsT7nHI/ohJr6qFvgA2Rs5elpKLFaLhgv1toLTsJxipxAcpAi8HeMDZXmR2x/ytuc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UBKBDYJO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="liS/vvPY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 47C8BC4CEF7;
-	Wed,  4 Feb 2026 14:47:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UBKBDYJO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A2317C4CEF7;
+	Wed,  4 Feb 2026 14:47:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770216429;
-	bh=eNTPvV2VVsri2BWC9Y8meyCjEJgSXTsAtcmipV++uuo=;
+	s=korg; t=1770216433;
+	bh=vkkytA5sH0ENL6wZJDCIXZiU1Fv5vM3Cujg3+sB2mew=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=liS/vvPYn/uQbfuJb5EjkLhXVbZ/FRWArWig8EPTBJeY+RAyao6U5f33nrGvw+0Xn
-	 2Ow0CtwLYIO1x0DVDnHzEFS8/bm18URPuoc2Gjk+/hCpnapLe9fUAoDr0Wh8afLevT
-	 hEFaued6MmUb3unTGbPhq+FnbY2HYlWrWRHcgYj8=
+	b=UBKBDYJOck0MHEKbSdCKuRRJGfEyz62nlv189mc21MbPiXXArc7L9DFV1gW+RdCwb
+	 YYx+GAQ2xcIxTGd+EDzjZXX+YBUhGVwhlK1X7kJBtcUIAYE4uZn8p5DxCtPQulWtVa
+	 lZrQozlrHQMwyetv3YcRbELWlvjx+YTtv3/UdhNY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ratheesh Kannoth <rkannoth@marvell.com>,
+	syzbot+5cf914f193dffde3bd3c@syzkaller.appspotmail.com,
+	Eric Dumazet <edumazet@google.com>,
+	Yotam Gigi <yotam.gi@gmail.com>,
+	Jamal Hadi Salim <jhs@mojatatu.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 085/161] octeontx2-af: Fix error handling
-Date: Wed,  4 Feb 2026 15:39:08 +0100
-Message-ID: <20260204143854.807048551@linuxfoundation.org>
+Subject: [PATCH 5.10 086/161] net/sched: act_ife: avoid possible NULL deref
+Date: Wed,  4 Feb 2026 15:39:09 +0100
+Message-ID: <20260204143854.842733342@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260204143851.755002596@linuxfoundation.org>
 References: <20260204143851.755002596@linuxfoundation.org>
@@ -51,186 +54,80 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ratheesh Kannoth <rkannoth@marvell.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 19e4175e997a5b85eab97d522f00cc99abd1873c ]
+[ Upstream commit 27880b0b0d35ad1c98863d09788254e36f874968 ]
 
-This commit adds error handling and rollback logic to
-rvu_mbox_handler_attach_resources() to properly clean up partially
-attached resources when rvu_attach_block() fails.
+tcf_ife_encode() must make sure ife_encode() does not return NULL.
 
-Fixes: 746ea74241fa0 ("octeontx2-af: Add RVU block LF provisioning support")
-Signed-off-by: Ratheesh Kannoth <rkannoth@marvell.com>
-Link: https://patch.msgid.link/20260121033934.1900761-1-rkannoth@marvell.com
+syzbot reported:
+
+Oops: general protection fault, probably for non-canonical address 0xdffffc0000000000: 0000 [#1] SMP KASAN NOPTI
+KASAN: null-ptr-deref in range [0x0000000000000000-0x0000000000000007]
+ RIP: 0010:ife_tlv_meta_encode+0x41/0xa0 net/ife/ife.c:166
+CPU: 3 UID: 0 PID: 8990 Comm: syz.0.696 Not tainted syzkaller #0 PREEMPT(full)
+Call Trace:
+ <TASK>
+  ife_encode_meta_u32+0x153/0x180 net/sched/act_ife.c:101
+  tcf_ife_encode net/sched/act_ife.c:841 [inline]
+  tcf_ife_act+0x1022/0x1de0 net/sched/act_ife.c:877
+  tc_act include/net/tc_wrapper.h:130 [inline]
+  tcf_action_exec+0x1c0/0xa20 net/sched/act_api.c:1152
+  tcf_exts_exec include/net/pkt_cls.h:349 [inline]
+  mall_classify+0x1a0/0x2a0 net/sched/cls_matchall.c:42
+  tc_classify include/net/tc_wrapper.h:197 [inline]
+  __tcf_classify net/sched/cls_api.c:1764 [inline]
+  tcf_classify+0x7f2/0x1380 net/sched/cls_api.c:1860
+  multiq_classify net/sched/sch_multiq.c:39 [inline]
+  multiq_enqueue+0xe0/0x510 net/sched/sch_multiq.c:66
+  dev_qdisc_enqueue+0x45/0x250 net/core/dev.c:4147
+  __dev_xmit_skb net/core/dev.c:4262 [inline]
+  __dev_queue_xmit+0x2998/0x46c0 net/core/dev.c:4798
+
+Fixes: 295a6e06d21e ("net/sched: act_ife: Change to use ife module")
+Reported-by: syzbot+5cf914f193dffde3bd3c@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/netdev/6970d61d.050a0220.706b.0010.GAE@google.com/T/#u
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Cc: Yotam Gigi <yotam.gi@gmail.com>
+Reviewed-by: Jamal Hadi Salim <jhs@mojatatu.com>
+Link: https://patch.msgid.link/20260121133724.3400020-1-edumazet@google.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../net/ethernet/marvell/octeontx2/af/rvu.c   | 86 ++++++++++++++-----
- 1 file changed, 64 insertions(+), 22 deletions(-)
+ net/sched/act_ife.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/ethernet/marvell/octeontx2/af/rvu.c b/drivers/net/ethernet/marvell/octeontx2/af/rvu.c
-index f8e86f2535635..3514564e2cc60 100644
---- a/drivers/net/ethernet/marvell/octeontx2/af/rvu.c
-+++ b/drivers/net/ethernet/marvell/octeontx2/af/rvu.c
-@@ -1273,8 +1273,8 @@ static int rvu_get_attach_blkaddr(struct rvu *rvu, int blktype,
- 	return -ENODEV;
- }
- 
--static void rvu_attach_block(struct rvu *rvu, int pcifunc, int blktype,
--			     int num_lfs, struct rsrc_attach *attach)
-+static int rvu_attach_block(struct rvu *rvu, int pcifunc, int blktype,
-+			    int num_lfs, struct rsrc_attach *attach)
- {
- 	struct rvu_pfvf *pfvf = rvu_get_pfvf(rvu, pcifunc);
- 	struct rvu_hwinfo *hw = rvu->hw;
-@@ -1284,21 +1284,21 @@ static void rvu_attach_block(struct rvu *rvu, int pcifunc, int blktype,
- 	u64 cfg;
- 
- 	if (!num_lfs)
--		return;
-+		return -EINVAL;
- 
- 	blkaddr = rvu_get_attach_blkaddr(rvu, blktype, pcifunc, attach);
- 	if (blkaddr < 0)
--		return;
-+		return -EFAULT;
- 
- 	block = &hw->block[blkaddr];
- 	if (!block->lf.bmap)
--		return;
-+		return -ESRCH;
- 
- 	for (slot = 0; slot < num_lfs; slot++) {
- 		/* Allocate the resource */
- 		lf = rvu_alloc_rsrc(&block->lf);
- 		if (lf < 0)
--			return;
-+			return -EFAULT;
- 
- 		cfg = (1ULL << 63) | (pcifunc << 8) | slot;
- 		rvu_write64(rvu, blkaddr, block->lfcfg_reg |
-@@ -1309,6 +1309,8 @@ static void rvu_attach_block(struct rvu *rvu, int pcifunc, int blktype,
- 		/* Set start MSIX vector for this LF within this PF/VF */
- 		rvu_set_msix_offset(rvu, pfvf, block, lf);
+diff --git a/net/sched/act_ife.c b/net/sched/act_ife.c
+index 892d4824d81d5..a953d29c1892e 100644
+--- a/net/sched/act_ife.c
++++ b/net/sched/act_ife.c
+@@ -820,6 +820,7 @@ static int tcf_ife_encode(struct sk_buff *skb, const struct tc_action *a,
+ 	/* could be stupid policy setup or mtu config
+ 	 * so lets be conservative.. */
+ 	if ((action == TC_ACT_SHOT) || exceed_mtu) {
++drop:
+ 		qstats_drop_inc(this_cpu_ptr(ife->common.cpu_qstats));
+ 		return TC_ACT_SHOT;
  	}
-+
-+	return 0;
- }
+@@ -828,6 +829,8 @@ static int tcf_ife_encode(struct sk_buff *skb, const struct tc_action *a,
+ 		skb_push(skb, skb->dev->hard_header_len);
  
- static int rvu_check_rsrc_availability(struct rvu *rvu,
-@@ -1446,22 +1448,31 @@ int rvu_mbox_handler_attach_resources(struct rvu *rvu,
- 	int err;
+ 	ife_meta = ife_encode(skb, metalen);
++	if (!ife_meta)
++		goto drop;
  
- 	/* If first request, detach all existing attached resources */
--	if (!attach->modify)
--		rvu_detach_rsrcs(rvu, NULL, pcifunc);
-+	if (!attach->modify) {
-+		err = rvu_detach_rsrcs(rvu, NULL, pcifunc);
-+		if (err)
-+			return err;
-+	}
+ 	spin_lock(&ife->tcf_lock);
  
- 	mutex_lock(&rvu->rsrc_lock);
- 
- 	/* Check if the request can be accommodated */
- 	err = rvu_check_rsrc_availability(rvu, attach, pcifunc);
- 	if (err)
--		goto exit;
-+		goto fail1;
- 
- 	/* Now attach the requested resources */
--	if (attach->npalf)
--		rvu_attach_block(rvu, pcifunc, BLKTYPE_NPA, 1, attach);
-+	if (attach->npalf) {
-+		err = rvu_attach_block(rvu, pcifunc, BLKTYPE_NPA, 1, attach);
-+		if (err)
-+			goto fail1;
-+	}
- 
--	if (attach->nixlf)
--		rvu_attach_block(rvu, pcifunc, BLKTYPE_NIX, 1, attach);
-+	if (attach->nixlf) {
-+		err = rvu_attach_block(rvu, pcifunc, BLKTYPE_NIX, 1, attach);
-+		if (err)
-+			goto fail2;
-+	}
- 
- 	if (attach->sso) {
- 		/* RVU func doesn't know which exact LF or slot is attached
-@@ -1471,33 +1482,64 @@ int rvu_mbox_handler_attach_resources(struct rvu *rvu,
- 		 */
- 		if (attach->modify)
- 			rvu_detach_block(rvu, pcifunc, BLKTYPE_SSO);
--		rvu_attach_block(rvu, pcifunc, BLKTYPE_SSO,
--				 attach->sso, attach);
-+		err = rvu_attach_block(rvu, pcifunc, BLKTYPE_SSO,
-+				       attach->sso, attach);
-+		if (err)
-+			goto fail3;
+@@ -843,8 +846,7 @@ static int tcf_ife_encode(struct sk_buff *skb, const struct tc_action *a,
+ 		if (err < 0) {
+ 			/* too corrupt to keep around if overwritten */
+ 			spin_unlock(&ife->tcf_lock);
+-			qstats_drop_inc(this_cpu_ptr(ife->common.cpu_qstats));
+-			return TC_ACT_SHOT;
++			goto drop;
+ 		}
+ 		skboff += err;
  	}
- 
- 	if (attach->ssow) {
- 		if (attach->modify)
- 			rvu_detach_block(rvu, pcifunc, BLKTYPE_SSOW);
--		rvu_attach_block(rvu, pcifunc, BLKTYPE_SSOW,
--				 attach->ssow, attach);
-+		err = rvu_attach_block(rvu, pcifunc, BLKTYPE_SSOW,
-+				       attach->ssow, attach);
-+		if (err)
-+			goto fail4;
- 	}
- 
- 	if (attach->timlfs) {
- 		if (attach->modify)
- 			rvu_detach_block(rvu, pcifunc, BLKTYPE_TIM);
--		rvu_attach_block(rvu, pcifunc, BLKTYPE_TIM,
--				 attach->timlfs, attach);
-+		err = rvu_attach_block(rvu, pcifunc, BLKTYPE_TIM,
-+				       attach->timlfs, attach);
-+		if (err)
-+			goto fail5;
- 	}
- 
- 	if (attach->cptlfs) {
- 		if (attach->modify &&
- 		    rvu_attach_from_same_block(rvu, BLKTYPE_CPT, attach))
- 			rvu_detach_block(rvu, pcifunc, BLKTYPE_CPT);
--		rvu_attach_block(rvu, pcifunc, BLKTYPE_CPT,
--				 attach->cptlfs, attach);
-+		err = rvu_attach_block(rvu, pcifunc, BLKTYPE_CPT,
-+				       attach->cptlfs, attach);
-+		if (err)
-+			goto fail6;
- 	}
- 
--exit:
-+	mutex_unlock(&rvu->rsrc_lock);
-+	return 0;
-+
-+fail6:
-+	if (attach->timlfs)
-+		rvu_detach_block(rvu, pcifunc, BLKTYPE_TIM);
-+
-+fail5:
-+	if (attach->ssow)
-+		rvu_detach_block(rvu, pcifunc, BLKTYPE_SSOW);
-+
-+fail4:
-+	if (attach->sso)
-+		rvu_detach_block(rvu, pcifunc, BLKTYPE_SSO);
-+
-+fail3:
-+	if (attach->nixlf)
-+		rvu_detach_block(rvu, pcifunc, BLKTYPE_NIX);
-+
-+fail2:
-+	if (attach->npalf)
-+		rvu_detach_block(rvu, pcifunc, BLKTYPE_NPA);
-+
-+fail1:
- 	mutex_unlock(&rvu->rsrc_lock);
- 	return err;
- }
 -- 
 2.51.0
 
