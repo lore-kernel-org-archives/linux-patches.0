@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 603AD1C5D77;
-	Wed,  4 Feb 2026 14:46:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BACCD1C5D77;
+	Wed,  4 Feb 2026 14:46:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770216362; cv=none; b=eY7NFTybUoyHzOPakOxW41Zsad0i4ZN6um27AqO2IKriPCEn9ilae6GTGiE6RhqLy7lGZ5C15PK4j3lYYK7cRTpGjdSWRQIRIB/jxHA4+fkhUrdlRLJ+QqoRvtCKIDs4/G7zcw5f+P5nx3RbWyQxAf5C5PosacUnIAA+V92Bd0Q=
+	t=1770216365; cv=none; b=XPhpHXJx9dN4b4FF8m3YUR8tOhWmpyp11Jw0RZR9ayNSG69wuv8uMS5c5JGX7dsWRXn+Rto3VJsX/zMgBfj6TVx9AlIH1061hV+hMuCfJfeZ98XRnGpzkOpg78IygEoKdwjziSkhgguu5VSn10NpoWkrmkf/+pFpIcmpRL/56pg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770216362; c=relaxed/simple;
-	bh=sosSK0FlF57JsLeVMkgvlCIv2B3pxlDTFGNmiy7PBVg=;
+	s=arc-20240116; t=1770216365; c=relaxed/simple;
+	bh=ReLRP15TJqRpdTtW9gzupObn1Ts9rXRMS6vsrsmnGFM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TYbBf8TjlHcrBWPZXpG9lRnZIsMUvYefMWDKSmZ8BhBibDfaJGliRB3UYkSdsHQAioi3Fn3XOEIkRZA+Mt4fKn732pA9ogTRIUMC+wyU71h3hJwTWGk/JpnfoSyFSwSwjqLgZpJRJw8w1OEqgeLshUtZn4J1+tjhc5TzEkljaWI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZLggdc47; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Tt5b2bKNfSyQ04J3fflVztpBxs6Hv+8fP1n+mCmPqHio1qVe2mX1J6XGOypgI+YUoJ8dT7LXDzPeG4xFodv5FxAu3rr+3Fo/h1hkUMDPzNVuhelzDCFdQxZAag6y+JedRqCrqYos+0j4HZYAw9zjQYsICZk5v5IkS71buGBS7c4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bF3HqNXx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZLggdc47"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C610EC116C6;
-	Wed,  4 Feb 2026 14:46:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bF3HqNXx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2FE82C4CEF7;
+	Wed,  4 Feb 2026 14:46:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770216362;
-	bh=sosSK0FlF57JsLeVMkgvlCIv2B3pxlDTFGNmiy7PBVg=;
+	s=korg; t=1770216365;
+	bh=ReLRP15TJqRpdTtW9gzupObn1Ts9rXRMS6vsrsmnGFM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZLggdc47SjlFw0U/TxUhFkxXlEhEeYnz2SUzVojiX3qmgTzjN9vQz60b8yJKi7bBF
-	 VfxcA/ClQba5DL5UuF16Ljy87h9IJRDHQIavY8scwPqjwV8je3evpou9kfjs+xlpc4
-	 BRR+iboRemOThdZiDPOB/99jnZmYPo99doFmag4Q=
+	b=bF3HqNXxdtNys6nRiqOtO0A0oJwLHzJ/N4Ntm6Mzgk2iN1CVmmOkmg9J784+eL6e8
+	 17YMuRIyg9awnjv1o6Oielx7XPkoQ1/V74velWXZFPZM24WDmfFStP/YZmgekYpYTa
+	 KZlX6jF6M+AQAqy7QVkUGPUHK6e5p27Rt4pyI5D0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Haoxiang Li <lihaoxiang@isrc.iscas.ac.cn>,
-	"Borislav Petkov (AMD)" <bp@alien8.de>
-Subject: [PATCH 5.10 031/161] EDAC/i3200: Fix a resource leak in i3200_probe1()
-Date: Wed,  4 Feb 2026 15:38:14 +0100
-Message-ID: <20260204143852.880616824@linuxfoundation.org>
+	Xiaochen Shen <shenxiaochen@open-hieco.net>,
+	"Borislav Petkov (AMD)" <bp@alien8.de>,
+	Tony Luck <tony.luck@intel.com>,
+	Reinette Chatre <reinette.chatre@intel.com>
+Subject: [PATCH 5.10 032/161] x86/resctrl: Fix memory bandwidth counter width for Hygon
+Date: Wed,  4 Feb 2026 15:38:15 +0100
+Message-ID: <20260204143852.915513471@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260204143851.755002596@linuxfoundation.org>
 References: <20260204143851.755002596@linuxfoundation.org>
@@ -50,52 +52,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Haoxiang Li <lihaoxiang@isrc.iscas.ac.cn>
+From: Xiaochen Shen <shenxiaochen@open-hieco.net>
 
-commit d42d5715dcb559342ff356327b241c53a67584d9 upstream.
+commit 7517e899e1b87b4c22a92c7e40d8733c48e4ec3c upstream.
 
-If edac_mc_alloc() fails, also unmap the window.
+The memory bandwidth calculation relies on reading the hardware counter
+and measuring the delta between samples. To ensure accurate measurement,
+the software reads the counter frequently enough to prevent it from
+rolling over twice between reads.
 
-  [ bp: Use separate labels, turning it into the classic unwind pattern. ]
+The default Memory Bandwidth Monitoring (MBM) counter width is 24 bits.
+Hygon CPUs provide a 32-bit width counter, but they do not support the
+MBM capability CPUID leaf (0xF.[ECX=1]:EAX) to report the width offset
+(from 24 bits).
 
-Fixes: dd8ef1db87a4 ("edac: i3200 memory controller driver")
-Signed-off-by: Haoxiang Li <lihaoxiang@isrc.iscas.ac.cn>
+Consequently, the kernel falls back to the 24-bit default counter width,
+which causes incorrect overflow handling on Hygon CPUs.
+
+Fix this by explicitly setting the counter width offset to 8 bits (resulting
+in a 32-bit total counter width) for Hygon CPUs.
+
+Fixes: d8df126349da ("x86/cpu/hygon: Add missing resctrl_cpu_detect() in bsp_init helper")
+Signed-off-by: Xiaochen Shen <shenxiaochen@open-hieco.net>
 Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+Reviewed-by: Tony Luck <tony.luck@intel.com>
+Reviewed-by: Reinette Chatre <reinette.chatre@intel.com>
 Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20251223123202.1492038-1-lihaoxiang@isrc.iscas.ac.cn
+Link: https://patch.msgid.link/20251209062650.1536952-3-shenxiaochen@open-hieco.net
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/edac/i3200_edac.c |   11 ++++++-----
- 1 file changed, 6 insertions(+), 5 deletions(-)
+ arch/x86/kernel/cpu/resctrl/core.c     |   15 +++++++++++++--
+ arch/x86/kernel/cpu/resctrl/internal.h |    3 +++
+ 2 files changed, 16 insertions(+), 2 deletions(-)
 
---- a/drivers/edac/i3200_edac.c
-+++ b/drivers/edac/i3200_edac.c
-@@ -359,10 +359,11 @@ static int i3200_probe1(struct pci_dev *
- 	layers[1].type = EDAC_MC_LAYER_CHANNEL;
- 	layers[1].size = nr_channels;
- 	layers[1].is_virt_csrow = false;
--	mci = edac_mc_alloc(0, ARRAY_SIZE(layers), layers,
--			    sizeof(struct i3200_priv));
-+
-+	rc = -ENOMEM;
-+	mci = edac_mc_alloc(0, ARRAY_SIZE(layers), layers, sizeof(struct i3200_priv));
- 	if (!mci)
--		return -ENOMEM;
-+		goto unmap;
+--- a/arch/x86/kernel/cpu/resctrl/core.c
++++ b/arch/x86/kernel/cpu/resctrl/core.c
+@@ -991,8 +991,19 @@ void resctrl_cpu_detect(struct cpuinfo_x
+ 		c->x86_cache_occ_scale = ebx;
+ 		c->x86_cache_mbm_width_offset = eax & 0xff;
  
- 	edac_dbg(3, "MC: init mci\n");
- 
-@@ -422,9 +423,9 @@ static int i3200_probe1(struct pci_dev *
- 	return 0;
- 
- fail:
-+	edac_mc_free(mci);
-+unmap:
- 	iounmap(window);
--	if (mci)
--		edac_mc_free(mci);
- 
- 	return rc;
+-		if (c->x86_vendor == X86_VENDOR_AMD && !c->x86_cache_mbm_width_offset)
+-			c->x86_cache_mbm_width_offset = MBM_CNTR_WIDTH_OFFSET_AMD;
++		if (!c->x86_cache_mbm_width_offset) {
++			switch (c->x86_vendor) {
++			case X86_VENDOR_AMD:
++				c->x86_cache_mbm_width_offset = MBM_CNTR_WIDTH_OFFSET_AMD;
++				break;
++			case X86_VENDOR_HYGON:
++				c->x86_cache_mbm_width_offset = MBM_CNTR_WIDTH_OFFSET_HYGON;
++				break;
++			default:
++				/* Leave c->x86_cache_mbm_width_offset as 0 */
++				break;
++			}
++		}
+ 	}
  }
+ 
+--- a/arch/x86/kernel/cpu/resctrl/internal.h
++++ b/arch/x86/kernel/cpu/resctrl/internal.h
+@@ -39,6 +39,9 @@
+ #define MAX_MBA_BW_AMD			0x800
+ #define MBM_CNTR_WIDTH_OFFSET_AMD	20
+ 
++/* Hygon MBM counter width as an offset from MBM_CNTR_WIDTH_BASE */
++#define MBM_CNTR_WIDTH_OFFSET_HYGON	8
++
+ #define RMID_VAL_ERROR			BIT_ULL(63)
+ #define RMID_VAL_UNAVAIL		BIT_ULL(62)
+ /*
 
 
