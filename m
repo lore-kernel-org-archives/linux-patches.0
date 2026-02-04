@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B8752BD012;
-	Wed,  4 Feb 2026 15:18:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A96303D994;
+	Wed,  4 Feb 2026 15:18:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770218323; cv=none; b=J0A4o39rWkm4xtTlx0ZShZDMxAN4RSuunaWr7/WrpRahXr6cvtmgUiTpNrSiUIa6lSoGM47LWFDKBbs2zy3gxQEhI1ap5uZPuykXhg8lDHayqNtkZw/VLh6bZgVp3yviQS718Dk/Klwcq/T0YlDQPXcH2byLPnqa0vgbncir7Js=
+	t=1770218326; cv=none; b=nPThPvXO3mkVV/KzBeH8cndhc4LzbY+rjT6LRG13evNhpyDGRnmh+ouYChYt4FEUPmdYCyPrAK3hKLGJ3a30gf+yRJ7nUUaBVdCWYsEG8XV+OfqmB7u4W9F5ltljLS0jZ78WNl4R5ciVahfXc0Km0E6rtC3dwLd6uqBXItZiTuM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770218323; c=relaxed/simple;
-	bh=m4rPtjOGspYILChpynzt/3roVAqSHeaKJ1EADyV/JZQ=;
+	s=arc-20240116; t=1770218326; c=relaxed/simple;
+	bh=z27aVRf5HmM0mwOrqfCodMLTagonYDIczSsOETrQUVk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bW4+0+EilUtrqn3Y5xVWgh3Hv2hBXsaZP0HO7mhcJqmbaAFqCIeALwLHl3VJPlV1bv+90oDt226nqKM8MgH3FuJ6vuJoXIChPREKK91LQeGnruQuygArmM47xC3vpL+6ta3jQRF7L2gAF1yiCB97hTUeBJXNAahflWixVvjIbSA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dRluMFPK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=m6GrQB8ZOcifOlELT/6W2DVymG4EDmiZBAii171WGTiMNhBndCtkZXr3qseOlfgDwkDCqYh8oJORELZW1Y8I0xWITgyrXptonUSyttHrZDCa7dYLNbzGV1AI7PKKkN/uncUvqSsTZFq3aPUuhoCkxpg+YRxhU30mGtnm/G/zP+8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=htOr6N/V; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dRluMFPK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 92521C4CEF7;
-	Wed,  4 Feb 2026 15:18:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="htOr6N/V"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3E21C4CEF7;
+	Wed,  4 Feb 2026 15:18:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770218323;
-	bh=m4rPtjOGspYILChpynzt/3roVAqSHeaKJ1EADyV/JZQ=;
+	s=korg; t=1770218326;
+	bh=z27aVRf5HmM0mwOrqfCodMLTagonYDIczSsOETrQUVk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dRluMFPK9TABnl7PahwZPDjR2HC5XQet0jGi7dFLqN3QCFeDKrka5PqXn2BtjJeqh
-	 Lf8KxtWECkIHJP92pFOVTXBqAF95g2HQQmfPLJNl1ZjeIgLN+J0AU+DjTnEOQv/4dW
-	 2oJgAt9PwWYGWYJsjepvcpWqnfeDFYkaORnztITE=
+	b=htOr6N/V4pqb0nGaKhM1ew0nFt44mKeyoLQvic6jH5ILPK6AIOSDAgirov+WgeoWc
+	 41osx+fMvZoMb3EDSIkXudoklcogvxD4jvGHh7RKBFRn1nwsuKHwhsixhlHCbCgx00
+	 usYn95RQZ5VewlYwKTofvVrEXZivDdyXooqADVwo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Philipp Zabel <p.zabel@pengutronix.de>,
-	Frank Li <Frank.Li@nxp.com>,
-	Johan Hovold <johan@kernel.org>,
-	Maxime Ripard <mripard@kernel.org>,
+	Abel Vesa <abelvesa@kernel.org>,
+	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Abel Vesa <abel.vesa@oss.qualcomm.com>,
+	Linus Walleij <linusw@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 278/280] drm/imx/tve: fix probe device leak
-Date: Wed,  4 Feb 2026 15:40:52 +0100
-Message-ID: <20260204143919.708360263@linuxfoundation.org>
+Subject: [PATCH 6.1 279/280] pinctrl: lpass-lpi: implement .get_direction() for the GPIO driver
+Date: Wed,  4 Feb 2026 15:40:53 +0100
+Message-ID: <20260204143919.746097751@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260204143909.614719725@linuxfoundation.org>
 References: <20260204143909.614719725@linuxfoundation.org>
@@ -53,54 +54,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johan Hovold <johan@kernel.org>
+From: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
 
-[ Upstream commit e535c23513c63f02f67e3e09e0787907029efeaf ]
+[ Upstream commit 4f0d22ec60cee420125f4055af76caa0f373a3fe ]
 
-Make sure to drop the reference taken to the DDC device during probe on
-probe failure (e.g. probe deferral) and on driver unbind.
+GPIO controller driver should typically implement the .get_direction()
+callback as GPIOLIB internals may try to use it to determine the state
+of a pin. Add it for the LPASS LPI driver.
 
-Fixes: fcbc51e54d2a ("staging: drm/imx: Add support for Television Encoder (TVEv2)")
-Cc: stable@vger.kernel.org	# 3.10
-Cc: Philipp Zabel <p.zabel@pengutronix.de>
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Signed-off-by: Johan Hovold <johan@kernel.org>
-Link: https://patch.msgid.link/20251030163456.15807-1-johan@kernel.org
-Signed-off-by: Maxime Ripard <mripard@kernel.org>
+Reported-by: Abel Vesa <abelvesa@kernel.org>
+Cc: stable@vger.kernel.org
+Fixes: 6e261d1090d6 ("pinctrl: qcom: Add sm8250 lpass lpi pinctrl driver")
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Tested-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com> # X1E CRD
+Tested-by: Abel Vesa <abel.vesa@oss.qualcomm.com>
+Signed-off-by: Linus Walleij <linusw@kernel.org>
+[ PIN_CONFIG_LEVEL => PIN_CONFIG_OUTPUT ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/imx/imx-tve.c |   13 +++++++++++++
- 1 file changed, 13 insertions(+)
+ drivers/pinctrl/qcom/pinctrl-lpass-lpi.c |   17 +++++++++++++++++
+ 1 file changed, 17 insertions(+)
 
---- a/drivers/gpu/drm/imx/imx-tve.c
-+++ b/drivers/gpu/drm/imx/imx-tve.c
-@@ -522,6 +522,13 @@ static const struct component_ops imx_tv
- 	.bind	= imx_tve_bind,
+--- a/drivers/pinctrl/qcom/pinctrl-lpass-lpi.c
++++ b/drivers/pinctrl/qcom/pinctrl-lpass-lpi.c
+@@ -248,6 +248,22 @@ static const struct pinconf_ops lpi_gpio
+ 	.pin_config_group_set		= lpi_config_set,
  };
  
-+static void imx_tve_put_device(void *_dev)
++static int lpi_gpio_get_direction(struct gpio_chip *chip, unsigned int pin)
 +{
-+	struct device *dev = _dev;
++	unsigned long config = pinconf_to_config_packed(PIN_CONFIG_OUTPUT, 0);
++	struct lpi_pinctrl *state = gpiochip_get_data(chip);
++	unsigned long arg;
++	int ret;
 +
-+	put_device(dev);
++	ret = lpi_config_get(state->ctrl, pin, &config);
++	if (ret)
++		return ret;
++
++	arg = pinconf_to_config_argument(config);
++
++	return arg ? GPIO_LINE_DIRECTION_OUT : GPIO_LINE_DIRECTION_IN;
 +}
 +
- static int imx_tve_probe(struct platform_device *pdev)
+ static int lpi_gpio_direction_input(struct gpio_chip *chip, unsigned int pin)
  {
- 	struct device *dev = &pdev->dev;
-@@ -543,6 +550,12 @@ static int imx_tve_probe(struct platform
- 	if (ddc_node) {
- 		tve->ddc = of_find_i2c_adapter_by_node(ddc_node);
- 		of_node_put(ddc_node);
-+		if (tve->ddc) {
-+			ret = devm_add_action_or_reset(dev, imx_tve_put_device,
-+						       &tve->ddc->dev);
-+			if (ret)
-+				return ret;
-+		}
- 	}
+ 	struct lpi_pinctrl *state = gpiochip_get_data(chip);
+@@ -346,6 +362,7 @@ static void lpi_gpio_dbg_show(struct seq
+ #endif
  
- 	tve->mode = of_get_tve_mode(np);
+ static const struct gpio_chip lpi_gpio_template = {
++	.get_direction		= lpi_gpio_get_direction,
+ 	.direction_input	= lpi_gpio_direction_input,
+ 	.direction_output	= lpi_gpio_direction_output,
+ 	.get			= lpi_gpio_get,
 
 
