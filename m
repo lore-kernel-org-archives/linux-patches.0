@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 351DC2D8763;
-	Wed,  4 Feb 2026 15:16:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7870E41C317;
+	Wed,  4 Feb 2026 15:16:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770218197; cv=none; b=n+ODwVwhMrSyi8NUCuWsx3C5j+cQ45zvPU82SG4k/8rJdteJUhZU5wD7vq1HFtR8YADEDQdQlMait91n1nbrunV6a12eg9TvERHt2Je90dx4RH7gR31XbJ8teodcxnDGYuR+2kWguLUUfZnopyvF9jKWNVJMu+BSaYEzat6V3Qo=
+	t=1770218200; cv=none; b=hrVhkVD+CVcM/ocL8WP3JgxCDDaXixlsAlzj73jDV2bYH2GbV0cenQa8aXVwbRare5X3XRYIXLj5bQrffZ5Z3moYQkC33EoxiFLzRrEXvGGTrLqciU50QqL0cJ16yRpmMz2hBkRYDV0TMG9QIKxaaO6N/0lFFvFRlFtCK7EM22A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770218197; c=relaxed/simple;
-	bh=oN+2V/PZOZYWi/uqvDCXcGW9uFENmkrrkKcFhlNNM6s=;
+	s=arc-20240116; t=1770218200; c=relaxed/simple;
+	bh=us+febwFpiCbyjVG+8yoiKeoSDZ/nFB+g68Y9AqpX5A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=U3gzoWmUgfwtPjn2efO4PFYgWkncRE3HaoxmI/pbV91zgcFYaKXzxbbTTzYqEHiPP8wepiDd8cWseOIQyonhYGbmTgfjSJHWb4AQYmjNTGdZMC1JeGpLNq260DPyHw9hJp0DsTS4L+LhIAfaT5+3Eym6aD4KizMyfJEpkV0x0fY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MsipeoJT; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BxLV3dUKLEObZDaFJnQ8PQ7/RNemV+qWrd0Z194FDt0YSvPGHcZXfEQCVb8GRaaZaGdme3z07WalWUoJxsewJnLrES5rnbFp7ZbSvVrFI2DKHqxg69eG6OTkVQ3Yrlc8ao/Lvxnt4Y2a43zRgQL+j2Z97kKXCzs0s4WkxxT4WIA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WI1bTjFA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MsipeoJT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B35EEC4CEF7;
-	Wed,  4 Feb 2026 15:16:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WI1bTjFA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD619C4CEF7;
+	Wed,  4 Feb 2026 15:16:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770218197;
-	bh=oN+2V/PZOZYWi/uqvDCXcGW9uFENmkrrkKcFhlNNM6s=;
+	s=korg; t=1770218200;
+	bh=us+febwFpiCbyjVG+8yoiKeoSDZ/nFB+g68Y9AqpX5A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MsipeoJT6WiNZCj5VCkV0bXePmewW34Sc2XOapRJV/UJyL5uwnVHzMCXlkxXnmcot
-	 7tjFdcGpiMeTwbWLtkan3+tMYdaaQbXV3i4Z+XeveBdCNlKuT6tOXWqSYc7a2MqVFq
-	 GTUPDd8ReEZN6Id4s/Urp/qXjLal6z0HdKhQiwQ4=
+	b=WI1bTjFA/jzu730vaMLB0qjwgp3HzoXYf9QOXXh6uCVyHnTiEWA64cNvLL42lh28t
+	 Lm8fogFOPJ/oV87eyRAkmJYiC7SNWKoq2E/iupqHgVWz/yoC5TfwgZBCiF6LZQUzBw
+	 k0SOTPWjXzG4vxQbFoE5r07nFRl7pF1hsg3K39aQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sebastian Reichel <sebastian.reichel@collabora.com>,
+	Dragan Simic <dsimic@manjaro.org>,
+	Heiko Stuebner <heiko@sntech.de>,
 	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 241/280] phy: phy-rockchip-inno-usb2: simplify phy clock handling
-Date: Wed,  4 Feb 2026 15:40:15 +0100
-Message-ID: <20260204143918.301429980@linuxfoundation.org>
+Subject: [PATCH 6.1 242/280] phy: phy-rockchip-inno-usb2: Use dev_err_probe() in the probe path
+Date: Wed,  4 Feb 2026 15:40:16 +0100
+Message-ID: <20260204143918.342039738@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260204143909.614719725@linuxfoundation.org>
 References: <20260204143909.614719725@linuxfoundation.org>
@@ -51,61 +52,87 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sebastian Reichel <sebastian.reichel@collabora.com>
+From: Dragan Simic <dsimic@manjaro.org>
 
-[ Upstream commit b43511233c6e34b9c0d9a55e41b078d10e7d9ea6 ]
+[ Upstream commit 40452520850683f6771094ca218ff206d1fcb022 ]
 
-Simplify phyclk handling by using devm_clk_get_optional_enabled to
-acquire and enable the optional clock. This also fixes a resource
-leak in driver remove path and adds proper error handling.
+Improve error handling in the probe path by using function dev_err_probe()
+instead of function dev_err(), where appropriate.
 
-Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
-Link: https://lore.kernel.org/r/20230522170324.61349-6-sebastian.reichel@collabora.com
+Signed-off-by: Dragan Simic <dsimic@manjaro.org>
+Reviewed-by: Heiko Stuebner <heiko@sntech.de>
+Link: https://lore.kernel.org/r/d4ccd9fc278fb46ea868406bf77811ee507f0e4e.1725524803.git.dsimic@manjaro.org
 Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Stable-dep-of: e07dea3de508 ("phy: rockchip: inno-usb2: Fix a double free bug in rockchip_usb2phy_probe()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/phy/rockchip/phy-rockchip-inno-usb2.c |   17 +++++------------
- 1 file changed, 5 insertions(+), 12 deletions(-)
+ drivers/phy/rockchip/phy-rockchip-inno-usb2.c |   27 +++++++++-----------------
+ 1 file changed, 10 insertions(+), 17 deletions(-)
 
 --- a/drivers/phy/rockchip/phy-rockchip-inno-usb2.c
 +++ b/drivers/phy/rockchip/phy-rockchip-inno-usb2.c
-@@ -1273,18 +1273,16 @@ static int rockchip_usb2phy_probe(struct
- 		return -EINVAL;
+@@ -380,11 +380,9 @@ static int rockchip_usb2phy_extcon_regis
+ 
+ 	if (of_property_read_bool(node, "extcon")) {
+ 		edev = extcon_get_edev_by_phandle(rphy->dev, 0);
+-		if (IS_ERR(edev)) {
+-			if (PTR_ERR(edev) != -EPROBE_DEFER)
+-				dev_err(rphy->dev, "Invalid or missing extcon\n");
+-			return PTR_ERR(edev);
+-		}
++		if (IS_ERR(edev))
++			return dev_err_probe(rphy->dev, PTR_ERR(edev),
++					     "invalid or missing extcon\n");
+ 	} else {
+ 		/* Initialize extcon device */
+ 		edev = devm_extcon_dev_allocate(rphy->dev,
+@@ -394,10 +392,9 @@ static int rockchip_usb2phy_extcon_regis
+ 			return -ENOMEM;
+ 
+ 		ret = devm_extcon_dev_register(rphy->dev, edev);
+-		if (ret) {
+-			dev_err(rphy->dev, "failed to register extcon device\n");
+-			return ret;
+-		}
++		if (ret)
++			return dev_err_probe(rphy->dev, ret,
++					     "failed to register extcon device\n");
  	}
  
--	rphy->clk = of_clk_get_by_name(np, "phyclk");
--	if (!IS_ERR(rphy->clk)) {
--		clk_prepare_enable(rphy->clk);
--	} else {
--		dev_info(&pdev->dev, "no phyclk specified\n");
--		rphy->clk = NULL;
-+	rphy->clk = devm_clk_get_optional_enabled(dev, "phyclk");
-+	if (IS_ERR(rphy->clk)) {
-+		return dev_err_probe(&pdev->dev, PTR_ERR(rphy->clk),
-+				     "failed to get phyclk\n");
+ 	rphy->edev = edev;
+@@ -1280,10 +1277,8 @@ static int rockchip_usb2phy_probe(struct
  	}
  
  	ret = rockchip_usb2phy_clk480m_register(rphy);
- 	if (ret) {
- 		dev_err(dev, "failed to register 480m output clock\n");
--		goto disable_clks;
-+		return ret;
- 	}
+-	if (ret) {
+-		dev_err(dev, "failed to register 480m output clock\n");
+-		return ret;
+-	}
++	if (ret)
++		return dev_err_probe(dev, ret, "failed to register 480m output clock\n");
  
  	index = 0;
-@@ -1347,11 +1345,6 @@ next_child:
+ 	for_each_available_child_of_node(np, child_np) {
+@@ -1297,8 +1292,7 @@ static int rockchip_usb2phy_probe(struct
  
- put_child:
- 	of_node_put(child_np);
--disable_clks:
--	if (rphy->clk) {
--		clk_disable_unprepare(rphy->clk);
--		clk_put(rphy->clk);
--	}
- 	return ret;
- }
+ 		phy = devm_phy_create(dev, child_np, &rockchip_usb2phy_ops);
+ 		if (IS_ERR(phy)) {
+-			dev_err_probe(dev, PTR_ERR(phy), "failed to create phy\n");
+-			ret = PTR_ERR(phy);
++			ret = dev_err_probe(dev, PTR_ERR(phy), "failed to create phy\n");
+ 			goto put_child;
+ 		}
  
+@@ -1335,8 +1329,7 @@ next_child:
+ 						"rockchip_usb2phy",
+ 						rphy);
+ 		if (ret) {
+-			dev_err(rphy->dev,
+-				"failed to request usb2phy irq handle\n");
++			dev_err_probe(rphy->dev, ret, "failed to request usb2phy irq handle\n");
+ 			goto put_child;
+ 		}
+ 	}
 
 
