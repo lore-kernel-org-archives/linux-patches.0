@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF6A42E92BC;
-	Wed,  4 Feb 2026 14:49:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D0D5219301;
+	Wed,  4 Feb 2026 14:49:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770216592; cv=none; b=qDdUIwAKgXBc4mFgJ4eUQcC5/KEDGprags5IrKJK+9VAuqbOr9a1ydt6N8v4767tcSXGlxsqelo3zLKdTwzppLwDV8dDpObYoSKqt8akBqHVCVgLtrtbVtZjjpOEpYBS8J387Lu6/GGACY6IHd7p2FR28DzQ+YWTKC7fsA992Ig=
+	t=1770216595; cv=none; b=RW0FJ3qF/aSf1Q6fmU+9oGrZqhJw+g+2ImXrPgIiBwQpueSLgPTN2jx/O0Nz3W26iyakVRvsh2WvHgoRQH63B8aEGA56mTAiDtCXf0pzXxQ5hRLbZxT7oD3pKYwrMNMYzFifzN785cAoshinA1HYIhxmhcSiQywfx5VCWl7M928=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770216592; c=relaxed/simple;
-	bh=fb7iBes+zu354m62/te8IDItj63iIPnMpROGyrZ24bI=;
+	s=arc-20240116; t=1770216595; c=relaxed/simple;
+	bh=lD1go5YAY6Wx9EIKHaVYu2tQhzB4sNx4P5ypkkLzMj8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IP+XfQGtmYBagvJgZBaqKEfqMcZAVb+tjRkoQcvEu4tHs+QwN+68tGe2UCRGpXdyIz2lw0ONMpItSzo/Sx2K4782Gqdg0RxmGxc7mX2uCcEP/HZSOF5QtIqxENbO/35/bP4C/9Js0BqoHIApw/1WNsuNxlaqJCKW65sbq4nmo2U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uLTsqMoX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=etWdq0heUqc8jjQLXD/ABNgv3fMj+/HiymKXoZyyo4bHjl9DnBqzwHAVGxMgXVPmLieQkD3kBwIYuWdZdZni9bBc1RN2SOuXonCNoPDTQqERmitPMNHl+wnJDVDO5XamD8fDt+M2QrpXyaFhvno8FyBexHoRpjtVFUNHoe1N6kU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HvvUy3h7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uLTsqMoX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2EEA7C19423;
-	Wed,  4 Feb 2026 14:49:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HvvUy3h7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 78F2EC4CEF7;
+	Wed,  4 Feb 2026 14:49:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770216591;
-	bh=fb7iBes+zu354m62/te8IDItj63iIPnMpROGyrZ24bI=;
+	s=korg; t=1770216594;
+	bh=lD1go5YAY6Wx9EIKHaVYu2tQhzB4sNx4P5ypkkLzMj8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uLTsqMoXe3Ob1ld/ArWJDr0HmO3NRvXnFZ8dmdCckBk7GqVhRD29obteC+w05hRfs
-	 nuC6zjdqpr6nl90JD2xM5v0RmGjAXcNsDmzudvT533j3x8BeIJUpXTSkcOgfFpEVic
-	 +O4ZKX9N6rUmQhm9WCYcvDoFzrhfUnbLjkloqtQg=
+	b=HvvUy3h7fAKtQb4H+53GOqoYSRjjuNnvKw+0SGDvpsOcCro+TVdLO+yG32VRIbXDi
+	 i5tULjYAKLS2LqfHHzlhVAe+zraPzWQA2RgoeNOBTZOKkVVJhgouM3E/r8smSCY2Sn
+	 u2teCkw0HksD6kvR8uMRwx+x3QvClAoNOtzeCJe0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Haoxiang Li <lihaoxiang@isrc.iscas.ac.cn>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>
-Subject: [PATCH 5.10 132/161] scsi: be2iscsi: Fix a memory leak in beiscsi_boot_get_sinfo()
-Date: Wed,  4 Feb 2026 15:39:55 +0100
-Message-ID: <20260204143856.492441722@linuxfoundation.org>
+	Chen Ni <nichen@iscas.ac.cn>,
+	Jamal Hadi Salim <jhs@mojatatu.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Ben Hutchings <ben@decadent.org.uk>
+Subject: [PATCH 5.10 133/161] net/sched: act_ife: convert comma to semicolon
+Date: Wed,  4 Feb 2026 15:39:56 +0100
+Message-ID: <20260204143856.527080591@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260204143851.755002596@linuxfoundation.org>
 References: <20260204143851.755002596@linuxfoundation.org>
@@ -50,32 +52,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Haoxiang Li <lihaoxiang@isrc.iscas.ac.cn>
+From: Chen Ni <nichen@iscas.ac.cn>
 
-commit 4747bafaa50115d9667ece446b1d2d4aba83dc7f upstream.
+commit 205305c028ad986d0649b8b100bab6032dcd1bb5 upstream.
 
-If nonemb_cmd->va fails to be allocated, free the allocation previously
-made by alloc_mcc_wrb().
+Replace comma between expressions with semicolons.
 
-Fixes: 50a4b824be9e ("scsi: be2iscsi: Fix to make boot discovery non-blocking")
-Cc: stable@vger.kernel.org
-Signed-off-by: Haoxiang Li <lihaoxiang@isrc.iscas.ac.cn>
-Link: https://patch.msgid.link/20251213083643.301240-1-lihaoxiang@isrc.iscas.ac.cn
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Using a ',' in place of a ';' can have unintended side effects.
+Although that is not the case here, it is seems best to use ';'
+unless ',' is intended.
+
+Found by inspection.
+No functional change intended.
+Compile tested only.
+
+Signed-off-by: Chen Ni <nichen@iscas.ac.cn>
+Reviewed-by: Jamal Hadi Salim <jhs@mojatatu.com>
+Link: https://patch.msgid.link/20251112072709.73755-1-nichen@iscas.ac.cn
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Cc: Ben Hutchings <ben@decadent.org.uk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/scsi/be2iscsi/be_mgmt.c |    1 +
- 1 file changed, 1 insertion(+)
+ net/sched/act_ife.c |    6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
---- a/drivers/scsi/be2iscsi/be_mgmt.c
-+++ b/drivers/scsi/be2iscsi/be_mgmt.c
-@@ -1019,6 +1019,7 @@ unsigned int beiscsi_boot_get_sinfo(stru
- 					      &nonemb_cmd->dma,
- 					      GFP_KERNEL);
- 	if (!nonemb_cmd->va) {
-+		free_mcc_wrb(ctrl, tag);
- 		mutex_unlock(&ctrl->mbox_lock);
- 		return 0;
- 	}
+--- a/net/sched/act_ife.c
++++ b/net/sched/act_ife.c
+@@ -648,9 +648,9 @@ static int tcf_ife_dump(struct sk_buff *
+ 
+ 	memset(&opt, 0, sizeof(opt));
+ 
+-	opt.index = ife->tcf_index,
+-	opt.refcnt = refcount_read(&ife->tcf_refcnt) - ref,
+-	opt.bindcnt = atomic_read(&ife->tcf_bindcnt) - bind,
++	opt.index = ife->tcf_index;
++	opt.refcnt = refcount_read(&ife->tcf_refcnt) - ref;
++	opt.bindcnt = atomic_read(&ife->tcf_bindcnt) - bind;
+ 
+ 	spin_lock_bh(&ife->tcf_lock);
+ 	opt.action = ife->tcf_action;
 
 
