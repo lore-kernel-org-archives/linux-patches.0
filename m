@@ -1,42 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2166F4218B4;
-	Wed,  4 Feb 2026 14:54:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56FE342314D;
+	Wed,  4 Feb 2026 14:54:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770216895; cv=none; b=rqPZqMiwyVlfKD116RWhhhpdSiRA6QNK3JP6mf6xDTuaRPenDfLjf/UBDIrxaLib8dHEm5NycBpOL8fauiMcKKGdUvLGrAHUUGPo+AjNhrXmLXzOlSPY+j/oW7EgNXO/vBLORwT3tZCBWnJJ8EhlXSXPufFsKYcLKCsmxh5En2o=
+	t=1770216898; cv=none; b=YBOSoTADx8xgVROaOOMqdPcVV2txMUpm8G0X1ES+HQYvhfl7fv9ySmWxcW2wB+Q9GS09i/61apjI6HSJsiKQ58InE6oX4QGx7DO4umXZ8XPDTouvVr+7e0KHhO67u85TMEHk6fvFWh9dLUb/PMm8ledmfUqLuLCHJZDOZv+lGh4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770216895; c=relaxed/simple;
-	bh=tl7AxjjDcNY9plGKgr2sHBk7xlKa3oX/P1q/mrb1t+k=;
+	s=arc-20240116; t=1770216898; c=relaxed/simple;
+	bh=5YsJei5woJuxThfSRBtyGYMc87U/Kll13AGG3mIsmE0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=K40wtxBMBcrZSeQnkRNwaU7nPS7i+omELhpaUjf5JBlyZeJFQvflulBSokmQJy3yzESnIOCG101aIsHyRKRB820h4xr67JIKK/Bjx8+65aeTffnR872X5UW9cHMV6uLFs0axfj5aqRqR4iVJolQ6xNajx+EJV/uFrWn9pRKoHoA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FYj6Z7EF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=og7QZVpXWT4UkrFKJmkVIMPWBY1cyPnw+1wWz6DQsD5SINIbW3woRtmbxocXxmKOoV5KyP9W6cZENps3b0lSdT2RZjJ9MqezH2NL1P7Vu8MVy9FXw8r3urnZ7RTXBxZmPiCMZu1oukLYeP0mhOMcG5FkJPofxvQeMhOT/r4S0fM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fN4Ql4U6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FYj6Z7EF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 945B6C19423;
-	Wed,  4 Feb 2026 14:54:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fN4Ql4U6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BAD3BC4CEF7;
+	Wed,  4 Feb 2026 14:54:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770216895;
-	bh=tl7AxjjDcNY9plGKgr2sHBk7xlKa3oX/P1q/mrb1t+k=;
+	s=korg; t=1770216898;
+	bh=5YsJei5woJuxThfSRBtyGYMc87U/Kll13AGG3mIsmE0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FYj6Z7EF1gYpjT5JdpWOYVk1LZi3sUlBbDIrl6mhrRhFOsokPJm9smziNHU7e9DQB
-	 xVSoqQmljExa6RRL0cl3rJVT/AQUZcAAPL2eZKqrycQ/XRHnEVyyafhyCmSKVbLmdU
-	 fIgVGu5fjY4yYgrB1YoDVXCOhZ/ezXtFESBzhH7Q=
+	b=fN4Ql4U65sRXbumlcKy/LEBsfXpx9Ow+TJD87sZG8bDUVci+e9nWp8ODdLGgFCX86
+	 0TvE3Sm80deRwk89qoB0ZYS/Tp8VV7LK/07rOVOAnRrzov7rwyNbMEGDI4zJixjHu7
+	 vStuOAURrJkhC+PHgyGiBlDTezOJFS9b0UtI6U+o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rohit Keshri <rkeshri@redhat.com>,
-	Oleg Nesterov <oleg@redhat.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Richard Cochran <richardcochran@gmail.com>,
+	Vadim Fedorenko <vadim.fedorenko@linux.dev>,
+	Wojtek Wasko <wwasko@nvidia.com>,
 	"David S. Miller" <davem@davemloft.net>,
-	Thomas Gleixner <tglx@linutronix.de>,
-	Linus Torvalds <torvalds@linuxfoundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 056/206] Fix memory leak in posix_clock_open()
-Date: Wed,  4 Feb 2026 15:38:07 +0100
-Message-ID: <20260204143900.235544868@linuxfoundation.org>
+Subject: [PATCH 5.15 065/206] testptp: Add option to open PHC in readonly mode
+Date: Wed,  4 Feb 2026 15:38:16 +0100
+Message-ID: <20260204143900.555706528@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260204143858.193781818@linuxfoundation.org>
 References: <20260204143858.193781818@linuxfoundation.org>
@@ -55,57 +53,118 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Linus Torvalds <torvalds@linux-foundation.org>
+From: Wojtek Wasko <wwasko@nvidia.com>
 
-[ Upstream commit 5b4cdd9c5676559b8a7c944ac5269b914b8c0bb8 ]
+[ Upstream commit 76868642e42795353106197abf9c607ad80f4c9e ]
 
-If the clk ops.open() function returns an error, we don't release the
-pccontext we allocated for this clock.
+PTP Hardware Clocks no longer require WRITE permission to perform
+readonly operations, such as listing device capabilities or listening to
+EXTTS events once they have been enabled by a process with WRITE
+permissions.
 
-Re-organize the code slightly to make it all more obvious.
+Add '-r' option to testptp to open the PHC in readonly mode instead of
+the default read-write mode. Skip enabling EXTTS if readonly mode is
+requested.
 
-Reported-by: Rohit Keshri <rkeshri@redhat.com>
-Acked-by: Oleg Nesterov <oleg@redhat.com>
-Fixes: 60c6946675fc ("posix-clock: introduce posix_clock_context concept")
-Cc: Jakub Kicinski <kuba@kernel.org>
-Cc: David S. Miller <davem@davemloft.net>
-Cc: Thomas Gleixner <tglx@linutronix.de>
-Signed-off-by: Linus Torvalds <torvalds@linuxfoundation.org>
-Stable-dep-of: e859d375d169 ("posix-clock: Store file pointer in struct posix_clock_context")
+Acked-by: Richard Cochran <richardcochran@gmail.com>
+Reviewed-by: Vadim Fedorenko <vadim.fedorenko@linux.dev>
+Signed-off-by: Wojtek Wasko <wwasko@nvidia.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/time/posix-clock.c | 16 +++++++++-------
- 1 file changed, 9 insertions(+), 7 deletions(-)
+ tools/testing/selftests/ptp/testptp.c | 37 +++++++++++++++++----------
+ 1 file changed, 23 insertions(+), 14 deletions(-)
 
-diff --git a/kernel/time/posix-clock.c b/kernel/time/posix-clock.c
-index 706559ed75793..a6487a9d60853 100644
---- a/kernel/time/posix-clock.c
-+++ b/kernel/time/posix-clock.c
-@@ -129,15 +129,17 @@ static int posix_clock_open(struct inode *inode, struct file *fp)
- 		goto out;
+diff --git a/tools/testing/selftests/ptp/testptp.c b/tools/testing/selftests/ptp/testptp.c
+index d3922e3c437f1..89b4f43a7ba45 100644
+--- a/tools/testing/selftests/ptp/testptp.c
++++ b/tools/testing/selftests/ptp/testptp.c
+@@ -140,6 +140,7 @@ static void usage(char *progname)
+ 		" -H val     set output phase to 'val' nanoseconds (requires -p)\n"
+ 		" -w val     set output pulse width to 'val' nanoseconds (requires -p)\n"
+ 		" -P val     enable or disable (val=1|0) the system clock PPS\n"
++		" -r         open the ptp clock in readonly mode\n"
+ 		" -s         set the ptp clock time from the system time\n"
+ 		" -S         set the system time from the ptp clock time\n"
+ 		" -t val     shift the ptp clock time by 'val' seconds\n"
+@@ -188,6 +189,7 @@ int main(int argc, char *argv[])
+ 	int pin_index = -1, pin_func;
+ 	int pps = -1;
+ 	int seconds = 0;
++	int readonly = 0;
+ 	int settime = 0;
+ 	int channel = -1;
+ 	clockid_t ext_clockid = CLOCK_REALTIME;
+@@ -200,7 +202,7 @@ int main(int argc, char *argv[])
+ 
+ 	progname = strrchr(argv[0], '/');
+ 	progname = progname ? 1+progname : argv[0];
+-	while (EOF != (c = getopt(argc, argv, "cd:e:f:F:ghH:i:k:lL:n:o:p:P:sSt:T:w:x:Xy:z"))) {
++	while (EOF != (c = getopt(argc, argv, "cd:e:f:F:ghH:i:k:lL:n:o:p:P:rsSt:T:w:x:Xy:z"))) {
+ 		switch (c) {
+ 		case 'c':
+ 			capabilities = 1;
+@@ -252,6 +254,9 @@ int main(int argc, char *argv[])
+ 		case 'P':
+ 			pps = atoi(optarg);
+ 			break;
++		case 'r':
++			readonly = 1;
++			break;
+ 		case 's':
+ 			settime = 1;
+ 			break;
+@@ -308,7 +313,7 @@ int main(int argc, char *argv[])
+ 		}
  	}
- 	pccontext->clk = clk;
--	fp->private_data = pccontext;
--	if (clk->ops.open)
-+	if (clk->ops.open) {
- 		err = clk->ops.open(pccontext, fp->f_mode);
--	else
--		err = 0;
--
--	if (!err) {
--		get_device(clk->dev);
-+		if (err) {
-+			kfree(pccontext);
-+			goto out;
-+		}
+ 
+-	fd = open(device, O_RDWR);
++	fd = open(device, readonly ? O_RDONLY : O_RDWR);
+ 	if (fd < 0) {
+ 		fprintf(stderr, "opening %s: %s\n", device, strerror(errno));
+ 		return -1;
+@@ -422,14 +427,16 @@ int main(int argc, char *argv[])
  	}
-+
-+	fp->private_data = pccontext;
-+	get_device(clk->dev);
-+	err = 0;
- out:
- 	up_read(&clk->rwsem);
- 	return err;
+ 
+ 	if (extts) {
+-		memset(&extts_request, 0, sizeof(extts_request));
+-		extts_request.index = index;
+-		extts_request.flags = PTP_ENABLE_FEATURE;
+-		if (ioctl(fd, PTP_EXTTS_REQUEST, &extts_request)) {
+-			perror("PTP_EXTTS_REQUEST");
+-			extts = 0;
+-		} else {
+-			puts("external time stamp request okay");
++		if (!readonly) {
++			memset(&extts_request, 0, sizeof(extts_request));
++			extts_request.index = index;
++			extts_request.flags = PTP_ENABLE_FEATURE;
++			if (ioctl(fd, PTP_EXTTS_REQUEST, &extts_request)) {
++				perror("PTP_EXTTS_REQUEST");
++				extts = 0;
++			} else {
++				puts("external time stamp request okay");
++			}
+ 		}
+ 		for (; extts; extts--) {
+ 			cnt = read(fd, &event, sizeof(event));
+@@ -441,10 +448,12 @@ int main(int argc, char *argv[])
+ 			       event.t.sec, event.t.nsec);
+ 			fflush(stdout);
+ 		}
+-		/* Disable the feature again. */
+-		extts_request.flags = 0;
+-		if (ioctl(fd, PTP_EXTTS_REQUEST, &extts_request)) {
+-			perror("PTP_EXTTS_REQUEST");
++		if (!readonly) {
++			/* Disable the feature again. */
++			extts_request.flags = 0;
++			if (ioctl(fd, PTP_EXTTS_REQUEST, &extts_request)) {
++				perror("PTP_EXTTS_REQUEST");
++			}
+ 		}
+ 	}
+ 
 -- 
 2.51.0
 
