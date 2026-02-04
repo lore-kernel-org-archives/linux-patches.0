@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC500271A9A;
-	Wed,  4 Feb 2026 14:45:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A2D5271A9A;
+	Wed,  4 Feb 2026 14:45:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770216356; cv=none; b=PBtCmNwIjwML4ssB/QvqOzys+4iUp9XlGYbo7i6DpvoD0i6aGBDPlDzKxPFZ8TnkByjIntMryQlQ4NUSmY9koulMaE+bKdEbt+VUqUfJOGAaWphl17RcVrSGw6TRfCav/Cbf9qiKVlf3Ot3U9kLE3TJoNEyadGGK1x3c6hzFS9Q=
+	t=1770216359; cv=none; b=lNMFrDBuSoG5JAEhQq/vQYqP50QGlm9mFS9DmuL91q5jbTZgNRoy0YDmYQEADTeYUYwYyjR5iAoBnpR8qDDQfK1YooWsiXoDNLb9hUkI3bKNCz3lJvP+4A7JYSKzZNFtic12fh9VUhwkSvGF4ghyrX5hGuHy4s+e0sGsq1/16z8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770216356; c=relaxed/simple;
-	bh=OVYMUJsWl0iKhMAQFPNBg7IT5PHkF4tjhhoGLT2fAXY=;
+	s=arc-20240116; t=1770216359; c=relaxed/simple;
+	bh=iLrD3K7qyyAWsqdqqmP6jyT8jW6dNIDIm5yq93tzVN4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fIIruT07tmFPLcVmVJaCo2ZpG91Ad1/CdAuR7WmeMI5g5L7FaHSYa5t5nYnQrDjLuq+SmeCGMmK9CqLPWdVfFoWrd7iAMyM+bnBZuXHWynNEUpssK0DZtmPvi9GjsRz3typRYRYQNWKxDfP+0cxTEKveJ2EOvByZGWnwfE9IsGQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rChSv89m; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Ic4nWEJrXSlGXdgrMrk8+nDpcbzMDMUmhzPhejYP0GABzncm9IHpcFQ7GAdJi+h0DX/Ru7zgN85MduZV3Lt0bSV6dCx+FvpyZ4GoB6mqMhP5rniWi8uha/1/0HjI3ZVvap/UDjhfZypJ7YQC+XtSASFojlpa+YMgMBLuV1DJBv8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KiE3ER3Q; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rChSv89m"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1114EC4CEF7;
-	Wed,  4 Feb 2026 14:45:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KiE3ER3Q"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 81270C4CEF7;
+	Wed,  4 Feb 2026 14:45:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770216355;
-	bh=OVYMUJsWl0iKhMAQFPNBg7IT5PHkF4tjhhoGLT2fAXY=;
+	s=korg; t=1770216358;
+	bh=iLrD3K7qyyAWsqdqqmP6jyT8jW6dNIDIm5yq93tzVN4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rChSv89mBvyMHy0NjT9dYLqbvqC2h2mOK2EELRz/FJdZ0U4JUmHo6eFKQNr+krwiQ
-	 4IHL9Kr0/MWBfvzBhHjsJn382IwmpcK/ZbM2CqJdDi/yIDY3gdoOJyo6tfvy6SrlvF
-	 Q8wX40gpWb0xFbEVDXg1QUPaF0x5euwSWoseMRZE=
+	b=KiE3ER3QIfSeZbjzIsyJhdnyhvekpa3t+4LB+/FPXXq14Sk8OfL09nzHwhplOgyz1
+	 grZQiVrNGpmPmc9Yp23s6CG/Ts5Brn09i3tJdm5U3+b9Km60hjSHpgSQF98qC+iOBu
+	 Ry0nDEEkvPbOIdSIb0JiKWjuabBlU2qJ9urYHRHc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yang Erkun <yangerkun@huawei.com>,
-	Baokun Li <libaokun1@huawei.com>,
-	Zhang Yi <yi.zhang@huawei.com>,
-	Theodore Tso <tytso@mit.edu>,
-	stable@kernel.org
-Subject: [PATCH 5.10 029/161] ext4: fix iloc.bh leak in ext4_xattr_inode_update_ref
-Date: Wed,  4 Feb 2026 15:38:12 +0100
-Message-ID: <20260204143852.809345602@linuxfoundation.org>
+	Haoxiang Li <lihaoxiang@isrc.iscas.ac.cn>,
+	"Borislav Petkov (AMD)" <bp@alien8.de>
+Subject: [PATCH 5.10 030/161] EDAC/x38: Fix a resource leak in x38_probe1()
+Date: Wed,  4 Feb 2026 15:38:13 +0100
+Message-ID: <20260204143852.844965853@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260204143851.755002596@linuxfoundation.org>
 References: <20260204143851.755002596@linuxfoundation.org>
@@ -53,34 +50,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yang Erkun <yangerkun@huawei.com>
+From: Haoxiang Li <lihaoxiang@isrc.iscas.ac.cn>
 
-commit d250bdf531d9cd4096fedbb9f172bb2ca660c868 upstream.
+commit 0ff7c44106b4715fc27a2e455d9f57f1dfcfd54f upstream.
 
-The error branch for ext4_xattr_inode_update_ref forget to release the
-refcount for iloc.bh. Find this when review code.
+If edac_mc_alloc() fails, also unmap the window.
 
-Fixes: 57295e835408 ("ext4: guard against EA inode refcount underflow in xattr update")
-Signed-off-by: Yang Erkun <yangerkun@huawei.com>
-Reviewed-by: Baokun Li <libaokun1@huawei.com>
-Reviewed-by: Zhang Yi <yi.zhang@huawei.com>
-Link: https://patch.msgid.link/20251213055706.3417529-1-yangerkun@huawei.com
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
-Cc: stable@kernel.org
+  [ bp: Use separate labels, turning it into the classic unwind pattern. ]
+
+Fixes: df8bc08c192f ("edac x38: new MC driver module")
+Signed-off-by: Haoxiang Li <lihaoxiang@isrc.iscas.ac.cn>
+Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+Cc: stable@vger.kernel.org
+Link: https://patch.msgid.link/20251223124350.1496325-1-lihaoxiang@isrc.iscas.ac.cn
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ext4/xattr.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/edac/x38_edac.c |    9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
---- a/fs/ext4/xattr.c
-+++ b/fs/ext4/xattr.c
-@@ -980,6 +980,7 @@ static int ext4_xattr_inode_update_ref(h
- 		ext4_error_inode(ea_inode, __func__, __LINE__, 0,
- 			"EA inode %lu ref wraparound: ref_count=%lld ref_change=%d",
- 			ea_inode->i_ino, ref_count, ref_change);
-+		brelse(iloc.bh);
- 		ret = -EFSCORRUPTED;
- 		goto out;
- 	}
+--- a/drivers/edac/x38_edac.c
++++ b/drivers/edac/x38_edac.c
+@@ -342,9 +342,12 @@ static int x38_probe1(struct pci_dev *pd
+ 	layers[1].type = EDAC_MC_LAYER_CHANNEL;
+ 	layers[1].size = x38_channel_num;
+ 	layers[1].is_virt_csrow = false;
++
++
++	rc = -ENOMEM;
+ 	mci = edac_mc_alloc(0, ARRAY_SIZE(layers), layers, 0);
+ 	if (!mci)
+-		return -ENOMEM;
++		goto unmap;
+ 
+ 	edac_dbg(3, "MC: init mci\n");
+ 
+@@ -404,9 +407,9 @@ static int x38_probe1(struct pci_dev *pd
+ 	return 0;
+ 
+ fail:
++	edac_mc_free(mci);
++unmap:
+ 	iounmap(window);
+-	if (mci)
+-		edac_mc_free(mci);
+ 
+ 	return rc;
+ }
 
 
