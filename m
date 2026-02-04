@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A36752D6E73;
-	Wed,  4 Feb 2026 15:08:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8CBBA2D94AF;
+	Wed,  4 Feb 2026 15:08:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770217698; cv=none; b=KJrppcirntuGoXuHabWqITrN17RxXccqUgur/He256usaWgJpbceKEY4vvztTpS+stA7qI3DPckYEqiFRK70SXYnnhWjGyvXv/YOkyRxtamHMfboa3Uo4gwN1gD3PQuJIhfcmMZQhtFO3wKugrQd2JBaBV/G1IRhk0nVNaIaUn8=
+	t=1770217701; cv=none; b=CyYHFju7JulmH9EB61OSaUR/GuhJbMGhAcFP/JP3gZF3yt76mkAjTfH2pOXR1B97tnNL9qKB5NfPsu2dAzpYzVlVJIfg8APaHUKx4E8agbcfo/3EnnM522IClUkJMUFATvcAcOj9ilCHIby8G+5zbLvbQobX+hyVOPhW3M628Wk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770217698; c=relaxed/simple;
-	bh=2XEcskkxwG+cqwAyhz6h4PvNNE+X2yiYCBtW9OxKhxw=;
+	s=arc-20240116; t=1770217701; c=relaxed/simple;
+	bh=t16wP1+LOyhGU/gvPOjy5raJ2ruNjuMKgMwsbvFqM7k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kNgy5WPYzQLBUlE7I3LE+k/fsl8rp8rXrfpB0+5NQSHYVrIiTligsLuERKpvc02OcANGaJ8b48wxwZ+O4+MAZpFU1sfd6rpNA1i+UD4XaQF4zjuVxif3zUfh9HK1pveklH5eLEvXXLlvBTn4da9TZ5WvVBzuJHsGPAHbaX+KMuk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=y6w7L+SL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=JGzm9dIWUzWULVI5vNvgJyODTeqjIukz/J5mgaexdwUMxfokCJKihREOhWBPzNbg/G0JbJdA93JJoX8xajaExuo9dxKjuzOJfdS/zV9lGE8ps1ffES0uDPdYa+JJSO4khxCgVuuW3Sbhc755sNZ1oLFbPhU2Ps8iy9z1hyQS09w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EV2N7cOw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="y6w7L+SL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D6D58C4CEF7;
-	Wed,  4 Feb 2026 15:08:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EV2N7cOw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C34BDC116C6;
+	Wed,  4 Feb 2026 15:08:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770217698;
-	bh=2XEcskkxwG+cqwAyhz6h4PvNNE+X2yiYCBtW9OxKhxw=;
+	s=korg; t=1770217701;
+	bh=t16wP1+LOyhGU/gvPOjy5raJ2ruNjuMKgMwsbvFqM7k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=y6w7L+SL656uGpaVU0pcBdOsw0/aJzgMdlqgR8sAl/Dp8ELn4LsXFr2I+LIBIN2bf
-	 2jj46+gnwdqB/2WiChstOvzDQuTsYJoHl946kOrAQQTZGpNkxNSN0kvECHSO0xnzBd
-	 3PgFEwC294LfI9E95WajyTPt+tGjlpmeDWIfXL1E=
+	b=EV2N7cOw9rLi4QkNtGyWazi2FsnXv98MozLy01ya4VRg14AdBWhd0Egirv4zyi9tY
+	 vv9DHP4pFzOob2hVri+jvukdvQ0GwItWvjJL0RYLFGmvSK5+4xvZRLc/9D98E1QbzN
+	 9HSBsVq4bpKA5uIQpZxghYXqVKcwqa7TnV7o6uuw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xiaochen Shen <shenxiaochen@open-hieco.net>,
-	"Borislav Petkov (AMD)" <bp@alien8.de>,
-	Tony Luck <tony.luck@intel.com>,
-	Reinette Chatre <reinette.chatre@intel.com>
-Subject: [PATCH 6.1 058/280] x86/resctrl: Fix memory bandwidth counter width for Hygon
-Date: Wed,  4 Feb 2026 15:37:12 +0100
-Message-ID: <20260204143911.740066961@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Shengwen Xiao <atzlinux@sina.com>,
+	Huacai Chen <chenhuacai@loongson.cn>,
+	Alan Stern <stern@rowland.harvard.edu>
+Subject: [PATCH 6.1 049/280] USB: OHCI/UHCI: Add soft dependencies on ehci_platform
+Date: Wed,  4 Feb 2026 15:37:03 +0100
+Message-ID: <20260204143911.400660908@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260204143909.614719725@linuxfoundation.org>
 References: <20260204143909.614719725@linuxfoundation.org>
@@ -52,74 +52,89 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xiaochen Shen <shenxiaochen@open-hieco.net>
+From: Huacai Chen <chenhuacai@loongson.cn>
 
-commit 7517e899e1b87b4c22a92c7e40d8733c48e4ec3c upstream.
+commit 01ef7f1b8713a78ab1a9512cf8096d2474c70633 upstream.
 
-The memory bandwidth calculation relies on reading the hardware counter
-and measuring the delta between samples. To ensure accurate measurement,
-the software reads the counter frequently enough to prevent it from
-rolling over twice between reads.
+Commit 9beeee6584b9aa4f ("USB: EHCI: log a warning if ehci-hcd is not
+loaded first") said that ehci-hcd should be loaded before ohci-hcd and
+uhci-hcd. However, commit 05c92da0c52494ca ("usb: ohci/uhci - add soft
+dependencies on ehci_pci") only makes ohci-pci/uhci-pci depend on ehci-
+pci, which is not enough and we may still see the warnings in boot log.
 
-The default Memory Bandwidth Monitoring (MBM) counter width is 24 bits.
-Hygon CPUs provide a 32-bit width counter, but they do not support the
-MBM capability CPUID leaf (0xF.[ECX=1]:EAX) to report the width offset
-(from 24 bits).
+To eliminate the warnings we should make ohci-hcd/uhci-hcd depend on
+ehci-hcd. But Alan said that the warning introduced by 9beeee6584b9aa4f
+is bogus, we only need the soft dependencies in the PCI level rather
+than the HCD level.
 
-Consequently, the kernel falls back to the 24-bit default counter width,
-which causes incorrect overflow handling on Hygon CPUs.
+However, there is really another neccessary soft dependencies between
+ohci-platform/uhci-platform and ehci-platform, which is added by this
+patch. The boot logs are below.
 
-Fix this by explicitly setting the counter width offset to 8 bits (resulting
-in a 32-bit total counter width) for Hygon CPUs.
+1. ohci-platform loaded before ehci-platform:
 
-Fixes: d8df126349da ("x86/cpu/hygon: Add missing resctrl_cpu_detect() in bsp_init helper")
-Signed-off-by: Xiaochen Shen <shenxiaochen@open-hieco.net>
-Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Reviewed-by: Tony Luck <tony.luck@intel.com>
-Reviewed-by: Reinette Chatre <reinette.chatre@intel.com>
-Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20251209062650.1536952-3-shenxiaochen@open-hieco.net
+ ohci-platform 1f058000.usb: Generic Platform OHCI controller
+ ohci-platform 1f058000.usb: new USB bus registered, assigned bus number 1
+ ohci-platform 1f058000.usb: irq 28, io mem 0x1f058000
+ hub 1-0:1.0: USB hub found
+ hub 1-0:1.0: 4 ports detected
+ Warning! ehci_hcd should always be loaded before uhci_hcd and ohci_hcd, not after
+ usb 1-4: new low-speed USB device number 2 using ohci-platform
+ ehci-platform 1f050000.usb: EHCI Host Controller
+ ehci-platform 1f050000.usb: new USB bus registered, assigned bus number 2
+ ehci-platform 1f050000.usb: irq 29, io mem 0x1f050000
+ ehci-platform 1f050000.usb: USB 2.0 started, EHCI 1.00
+ usb 1-4: device descriptor read/all, error -62
+ hub 2-0:1.0: USB hub found
+ hub 2-0:1.0: 4 ports detected
+ usb 1-4: new low-speed USB device number 3 using ohci-platform
+ input: YSPRINGTECH USB OPTICAL MOUSE as /devices/platform/bus@10000000/1f058000.usb/usb1/1-4/1-4:1.0/0003:10C4:8105.0001/input/input0
+ hid-generic 0003:10C4:8105.0001: input,hidraw0: USB HID v1.11 Mouse [YSPRINGTECH USB OPTICAL MOUSE] on usb-1f058000.usb-4/input0
+
+2. ehci-platform loaded before ohci-platform:
+
+ ehci-platform 1f050000.usb: EHCI Host Controller
+ ehci-platform 1f050000.usb: new USB bus registered, assigned bus number 1
+ ehci-platform 1f050000.usb: irq 28, io mem 0x1f050000
+ ehci-platform 1f050000.usb: USB 2.0 started, EHCI 1.00
+ hub 1-0:1.0: USB hub found
+ hub 1-0:1.0: 4 ports detected
+ ohci-platform 1f058000.usb: Generic Platform OHCI controller
+ ohci-platform 1f058000.usb: new USB bus registered, assigned bus number 2
+ ohci-platform 1f058000.usb: irq 29, io mem 0x1f058000
+ hub 2-0:1.0: USB hub found
+ hub 2-0:1.0: 4 ports detected
+ usb 2-4: new low-speed USB device number 2 using ohci-platform
+ input: YSPRINGTECH USB OPTICAL MOUSE as /devices/platform/bus@10000000/1f058000.usb/usb2/2-4/2-4:1.0/0003:10C4:8105.0001/input/input0
+ hid-generic 0003:10C4:8105.0001: input,hidraw0: USB HID v1.11 Mouse [YSPRINGTECH USB OPTICAL MOUSE] on usb-1f058000.usb-4/input0
+
+In the later case, there is no re-connection for USB-1.0/1.1 devices,
+which is expected.
+
+Cc: stable <stable@kernel.org>
+Reported-by: Shengwen Xiao <atzlinux@sina.com>
+Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
+Reviewed-by: Alan Stern <stern@rowland.harvard.edu>
+Link: https://patch.msgid.link/20260112084802.1995923-1-chenhuacai@loongson.cn
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kernel/cpu/resctrl/core.c     |   15 +++++++++++++--
- arch/x86/kernel/cpu/resctrl/internal.h |    3 +++
- 2 files changed, 16 insertions(+), 2 deletions(-)
+ drivers/usb/host/ohci-platform.c |    1 +
+ drivers/usb/host/uhci-platform.c |    1 +
+ 2 files changed, 2 insertions(+)
 
---- a/arch/x86/kernel/cpu/resctrl/core.c
-+++ b/arch/x86/kernel/cpu/resctrl/core.c
-@@ -896,8 +896,19 @@ void resctrl_cpu_detect(struct cpuinfo_x
- 		c->x86_cache_occ_scale = ebx;
- 		c->x86_cache_mbm_width_offset = eax & 0xff;
- 
--		if (c->x86_vendor == X86_VENDOR_AMD && !c->x86_cache_mbm_width_offset)
--			c->x86_cache_mbm_width_offset = MBM_CNTR_WIDTH_OFFSET_AMD;
-+		if (!c->x86_cache_mbm_width_offset) {
-+			switch (c->x86_vendor) {
-+			case X86_VENDOR_AMD:
-+				c->x86_cache_mbm_width_offset = MBM_CNTR_WIDTH_OFFSET_AMD;
-+				break;
-+			case X86_VENDOR_HYGON:
-+				c->x86_cache_mbm_width_offset = MBM_CNTR_WIDTH_OFFSET_HYGON;
-+				break;
-+			default:
-+				/* Leave c->x86_cache_mbm_width_offset as 0 */
-+				break;
-+			}
-+		}
- 	}
- }
- 
---- a/arch/x86/kernel/cpu/resctrl/internal.h
-+++ b/arch/x86/kernel/cpu/resctrl/internal.h
-@@ -31,6 +31,9 @@
- #define MAX_MBA_BW_AMD			0x800
- #define MBM_CNTR_WIDTH_OFFSET_AMD	20
- 
-+/* Hygon MBM counter width as an offset from MBM_CNTR_WIDTH_BASE */
-+#define MBM_CNTR_WIDTH_OFFSET_HYGON	8
-+
- #define RMID_VAL_ERROR			BIT_ULL(63)
- #define RMID_VAL_UNAVAIL		BIT_ULL(62)
- /*
+--- a/drivers/usb/host/ohci-platform.c
++++ b/drivers/usb/host/ohci-platform.c
+@@ -379,3 +379,4 @@ MODULE_DESCRIPTION(DRIVER_DESC);
+ MODULE_AUTHOR("Hauke Mehrtens");
+ MODULE_AUTHOR("Alan Stern");
+ MODULE_LICENSE("GPL");
++MODULE_SOFTDEP("pre: ehci_platform");
+--- a/drivers/usb/host/uhci-platform.c
++++ b/drivers/usb/host/uhci-platform.c
+@@ -194,3 +194,4 @@ static struct platform_driver uhci_platf
+ 		.of_match_table = platform_uhci_ids,
+ 	},
+ };
++MODULE_SOFTDEP("pre: ehci_platform");
 
 
