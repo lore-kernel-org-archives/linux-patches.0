@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7DC4719E96D;
-	Wed,  4 Feb 2026 15:34:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F1A72DEA7A;
+	Wed,  4 Feb 2026 15:34:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770219276; cv=none; b=A6xyaX+Zx4Bx4er4EzQQX4PSt0ZLj57azuJp9BbFo3qQbyuBtkIIYjGSb/alLNMssJZ+NYBI4NyFqj28p+dYDT9LHaPfbKDl5R5UnxXmRjg9Awib/iNdBbGyy8aOJECiF0ldY0J7ql601CwnOJmllqS137x/Hsg3HIh0tHMbqOQ=
+	t=1770219280; cv=none; b=nAZDbeP6/wNAfaP7qjo8xTYYV3kC66/ybeLKUaH5U3UujVwFvAIDnvemuGLjvxAxfn3WGZ5hHvBsPfQuUdGxVReZUaIsoaIK1jIc+V5pE0fS+jYXFivnsn7ngOgEpjj4RkVIkA9scAGKJeE/YLkCidYnEOFuLcehFb+RvbGFY9w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770219276; c=relaxed/simple;
-	bh=cBZE5Sw4tbmaapWC1/ZpPp/iPNYHm4UmjRYFwuPIB+s=;
+	s=arc-20240116; t=1770219280; c=relaxed/simple;
+	bh=muUuoq5qZO4w6riKWFyswqYCJ3369rje0QROC3GKgfY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SFnOhhaFC4TXmqZ7Y45lzq7MmSm9VG3dP0916C5CCqXTOwtwcWXNfLfyPu9yTH+IwgYHpfGjsoLwm2LNrNABDhmzjfDvzzl6SmxPWUSHgwamCGL74qse3VxRjY+sSTw3JHXJFnIY2lOzqVr5yF3A7VWAcfp5Ad6UO9RBJ+4WR0c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wGI+3kBZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bzhDLAMjltfz/xS1+dKjJO6wCmpOQHCOUawztKIC3spo6C+Cf9D5gabZsnKeLFaauwfDR++zWD9n2uzNbrXEpKk0U0/yYwPWZLa1UexsiE9MBHiiGtrOUS0yFdnW0y0xPSHGyXyDpqb/xvjeUiv1D+X27S6/yox+4ncT3qOZ15U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BIub3n2s; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wGI+3kBZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E647FC4CEF7;
-	Wed,  4 Feb 2026 15:34:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BIub3n2s"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8603CC4CEF7;
+	Wed,  4 Feb 2026 15:34:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770219276;
-	bh=cBZE5Sw4tbmaapWC1/ZpPp/iPNYHm4UmjRYFwuPIB+s=;
+	s=korg; t=1770219280;
+	bh=muUuoq5qZO4w6riKWFyswqYCJ3369rje0QROC3GKgfY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wGI+3kBZT7hxMnXSuIYH7pTnWIQnFLoGVqKvZVk2hP1Dt/aUmUohsQZ+WeWb25giJ
-	 ZO/mx2XNU03fdUl9mAAidp/kMbWlXpO0YQF5zal9IxJgt7voFcy20wFww021Ra9vdr
-	 V2bXIBzl0syFQETL79A6/nnNSHpXH2rbVzrwJUjs=
+	b=BIub3n2socCwJFl2ZzQjU8fFlnLU2NJb1s9NbKDXBIM0qgi3YIEvAqc1qpj3eA0le
+	 4WtGIdY6SdXuSsOEf5rPYCyJpAa/0r9p5zNujwLRTGWjh41URO0zvbseiytMGVSGbR
+	 jOmOjMyDXmTmwb0bQ0peaIvhcHoz4CWkmAjyTRpg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chen Ni <nichen@iscas.ac.cn>,
-	Jamal Hadi Salim <jhs@mojatatu.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Ben Hutchings <ben@decadent.org.uk>
-Subject: [PATCH 6.18 119/122] net/sched: act_ife: convert comma to semicolon
-Date: Wed,  4 Feb 2026 15:41:41 +0100
-Message-ID: <20260204143856.132414382@linuxfoundation.org>
+	"arighi@nvidia.com, void@manifault.com, sched-ext@lists.linux.dev, Christian Loehle" <christian.loehle@arm.com>,
+	Andrea Righi <arighi@nvidia.com>,
+	Tejun Heo <tj@kernel.org>,
+	Christian Loehle <christian.loehle@arm.com>
+Subject: [PATCH 6.18 120/122] sched_ext: Dont kick CPUs running higher classes
+Date: Wed,  4 Feb 2026 15:41:42 +0100
+Message-ID: <20260204143856.168042743@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260204143851.857060534@linuxfoundation.org>
 References: <20260204143851.857060534@linuxfoundation.org>
@@ -52,44 +52,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chen Ni <nichen@iscas.ac.cn>
+From: Tejun Heo <tj@kernel.org>
 
-commit 205305c028ad986d0649b8b100bab6032dcd1bb5 upstream.
+commit a9c1fbbd6dadbaa38c157a07d5d11005460b86b9 upstream.
 
-Replace comma between expressions with semicolons.
+When a sched_ext scheduler tries to kick a CPU, the CPU may be running a
+higher class task. sched_ext has no control over such CPUs. A sched_ext
+scheduler couldn't have expected to get access to the CPU after kicking it
+anyway. Skip kicking when the target CPU is running a higher class.
 
-Using a ',' in place of a ';' can have unintended side effects.
-Although that is not the case here, it is seems best to use ';'
-unless ',' is intended.
-
-Found by inspection.
-No functional change intended.
-Compile tested only.
-
-Signed-off-by: Chen Ni <nichen@iscas.ac.cn>
-Reviewed-by: Jamal Hadi Salim <jhs@mojatatu.com>
-Link: https://patch.msgid.link/20251112072709.73755-1-nichen@iscas.ac.cn
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Cc: Ben Hutchings <ben@decadent.org.uk>
+Reviewed-by: Andrea Righi <arighi@nvidia.com>
+Signed-off-by: Tejun Heo <tj@kernel.org>
+Signed-off-by: Christian Loehle <christian.loehle@arm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/sched/act_ife.c |    6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ kernel/sched/ext.c |   11 ++++++++---
+ 1 file changed, 8 insertions(+), 3 deletions(-)
 
---- a/net/sched/act_ife.c
-+++ b/net/sched/act_ife.c
-@@ -649,9 +649,9 @@ static int tcf_ife_dump(struct sk_buff *
+--- a/kernel/sched/ext.c
++++ b/kernel/sched/ext.c
+@@ -5164,18 +5164,23 @@ static bool kick_one_cpu(s32 cpu, struct
+ {
+ 	struct rq *rq = cpu_rq(cpu);
+ 	struct scx_rq *this_scx = &this_rq->scx;
++	const struct sched_class *cur_class;
+ 	bool should_wait = false;
+ 	unsigned long flags;
  
- 	memset(&opt, 0, sizeof(opt));
+ 	raw_spin_rq_lock_irqsave(rq, flags);
++	cur_class = rq->curr->sched_class;
  
--	opt.index = ife->tcf_index,
--	opt.refcnt = refcount_read(&ife->tcf_refcnt) - ref,
--	opt.bindcnt = atomic_read(&ife->tcf_bindcnt) - bind,
-+	opt.index = ife->tcf_index;
-+	opt.refcnt = refcount_read(&ife->tcf_refcnt) - ref;
-+	opt.bindcnt = atomic_read(&ife->tcf_bindcnt) - bind;
- 
- 	spin_lock_bh(&ife->tcf_lock);
- 	opt.action = ife->tcf_action;
+ 	/*
+ 	 * During CPU hotplug, a CPU may depend on kicking itself to make
+-	 * forward progress. Allow kicking self regardless of online state.
++	 * forward progress. Allow kicking self regardless of online state. If
++	 * @cpu is running a higher class task, we have no control over @cpu.
++	 * Skip kicking.
+ 	 */
+-	if (cpu_online(cpu) || cpu == cpu_of(this_rq)) {
++	if ((cpu_online(cpu) || cpu == cpu_of(this_rq)) &&
++	    !sched_class_above(cur_class, &ext_sched_class)) {
+ 		if (cpumask_test_cpu(cpu, this_scx->cpus_to_preempt)) {
+-			if (rq->curr->sched_class == &ext_sched_class)
++			if (cur_class == &ext_sched_class)
+ 				rq->curr->scx.slice = 0;
+ 			cpumask_clear_cpu(cpu, this_scx->cpus_to_preempt);
+ 		}
 
 
