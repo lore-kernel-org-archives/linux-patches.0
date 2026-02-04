@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C83F221F17;
-	Wed,  4 Feb 2026 15:27:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9FAC1221F17;
+	Wed,  4 Feb 2026 15:27:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770218822; cv=none; b=P0SnraWPL/fkEn33TdV3iVZ6q1I5dIGVGkEBl8RDAndk5S0bO3vUMQcshBwQdapQ9rRcobiHoTnpvRfWuzBH+7qSGMyTv2W/kvGupXCWHfCwnQ/2rqT+BXe1prypdkPTZbTnX+JDVzwewn4yY9en+YAzsFRxMCcYTa6OgQwnbWc=
+	t=1770218825; cv=none; b=p9JBK3Iy+380mIUrjP9cjODrSXRCFAswCIMIMyQUxDgVtvN9EMswi4p1M/JmQnRbJp5+P6R2K45PJ8vy+gVaGyqmbmzlf6xQC3wMS3X++KwNGWILQrAU2NEft1m8eYAwDdNXNqQMaW5lJiB3poqvocJOgl59H2iIBhiYmZJlm60=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770218822; c=relaxed/simple;
-	bh=bT4iEhSzxuJIucQ4a0k/c35KLR3gaQscE3rrro9xjyY=;
+	s=arc-20240116; t=1770218825; c=relaxed/simple;
+	bh=hBwyWkIibevi9ibnl4ebi5YXJvVV2xAU29aLSjEpc/4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Qnsnne2ZY00hQjOXGgtBlPRVqc5bLaGZbgEFwMHgzRuTkKVANpQpcM6E3Zagq3zSWWrz0Ht60el5N3A44xc5mLWz4PelOBWQyJeL3bAcSBeKmh5zMcKNxp0ry+MINwq08rlw98klbEwaca0tOP2suV57n4yj3nTbXwPRQzCSDz4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iY6lBx+Y; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=GT1Q+50QAGbrXywzOXdkfxh+86IxmsxT3UnQcRBsJmaSvfGTHCChlBKevJfdKo4yPZF+d4WS6qP7A14nBL8GytxmdWwwZHEyzd6CBCRZ/mJKpSEu6VNq7HmTJzljYQykMX9PkQyQbjUQwtMdpWvfQ5D0iY2lLjczpqwl4QEpZHc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Yqbc5xrM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iY6lBx+Y"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 614DEC4CEF7;
-	Wed,  4 Feb 2026 15:27:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Yqbc5xrM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10BE6C4CEF7;
+	Wed,  4 Feb 2026 15:27:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770218822;
-	bh=bT4iEhSzxuJIucQ4a0k/c35KLR3gaQscE3rrro9xjyY=;
+	s=korg; t=1770218825;
+	bh=hBwyWkIibevi9ibnl4ebi5YXJvVV2xAU29aLSjEpc/4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iY6lBx+YhmIokilgbHWhgsPBMU6aBxnTN6zGKhIp1NRDg2+qX8ubV9ZW4ciUi4iiY
-	 mHTvTcrC5YfoLeVnPwiJoK5aZHwgns7MLLvWFKRCbRdo5mz3XY+avrJ2WX+TLTCgIO
-	 mEiBR5kqejvXn0BWqaTDShoxpp7GAiZxLZ8v8S0g=
+	b=Yqbc5xrMZpgR1dVCOHTKWKyczzHPPwOaqWzDgS63HYUr56m1QjVQ35b4Wa6ytLpYD
+	 VsEW7kTZJO38XjHyv3+rvX44ZlPvzh5Uivg1x9RuHVFs3qHjkwFtDa4/fjouhS5/+d
+	 2gjaPlE4YLMZccq87lcwaaTn4ah5gwO1ux6GXP+E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thomas Fourier <fourier.thomas@gmail.com>,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Steve French <stfrench@microsoft.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 71/87] ksmbd: smbd: fix dma_unmap_sg() nents
-Date: Wed,  4 Feb 2026 15:41:09 +0100
-Message-ID: <20260204143849.473431118@linuxfoundation.org>
+	Florian Weimer <fweimer@redhat.com>,
+	Andrii Nakryiko <andrii@kernel.org>,
+	Mikhail Gavrilov <mikhail.v.gavrilov@gmail.com>,
+	Alexei Starovoitov <ast@kernel.org>,
+	Shung-Hsi Yu <shung-hsi.yu@suse.com>
+Subject: [PATCH 6.12 72/87] libbpf: Fix -Wdiscarded-qualifiers under C23
+Date: Wed,  4 Feb 2026 15:41:10 +0100
+Message-ID: <20260204143849.510379380@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260204143846.906385641@linuxfoundation.org>
 References: <20260204143846.906385641@linuxfoundation.org>
@@ -46,75 +47,59 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Thomas Fourier <fourier.thomas@gmail.com>
+From: Mikhail Gavrilov <mikhail.v.gavrilov@gmail.com>
 
-[ Upstream commit 98e3e2b561bc88f4dd218d1c05890672874692f6 ]
+commit d70f79fef65810faf64dbae1f3a1b5623cdb2345 upstream.
 
-The dma_unmap_sg() functions should be called with the same nents as the
-dma_map_sg(), not the value the map function returned.
+glibc ≥ 2.42 (GCC 15) defaults to -std=gnu23, which promotes
+-Wdiscarded-qualifiers to an error.
 
-Fixes: 0626e6641f6b ("cifsd: add server handler for central processing and tranport layers")
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Thomas Fourier <fourier.thomas@gmail.com>
-Acked-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Steve French <stfrench@microsoft.com>
-[ Context ]
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+In C23, strstr() and strchr() return "const char *".
+
+Change variable types to const char * where the pointers are never
+modified (res, sym_sfx, next_path).
+
+Suggested-by: Florian Weimer <fweimer@redhat.com>
+Suggested-by: Andrii Nakryiko <andrii@kernel.org>
+Signed-off-by: Mikhail Gavrilov <mikhail.v.gavrilov@gmail.com>
+Link: https://lore.kernel.org/r/20251206092825.1471385-1-mikhail.v.gavrilov@gmail.com
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+[ shung-hsi.yu: needed to fix kernel build failure due to libbpf since glibc
+  2.43+ (which adds 'const' qualifier to strstr). 'sym_sfx' hunk dropped because
+  commit f8a05692de06 ("libbpf: Work around kernel inconsistently stripping
+  '.llvm.' suffix") is not present. ]
+Signed-off-by: Shung-Hsi Yu <shung-hsi.yu@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/server/transport_rdma.c |   15 +++++++--------
- 1 file changed, 7 insertions(+), 8 deletions(-)
+ tools/lib/bpf/libbpf.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/fs/smb/server/transport_rdma.c
-+++ b/fs/smb/server/transport_rdma.c
-@@ -1108,14 +1108,12 @@ static int get_sg_list(void *buf, int si
+--- a/tools/lib/bpf/libbpf.c
++++ b/tools/lib/bpf/libbpf.c
+@@ -8174,7 +8174,7 @@ static int kallsyms_cb(unsigned long lon
+ 	struct bpf_object *obj = ctx;
+ 	const struct btf_type *t;
+ 	struct extern_desc *ext;
+-	char *res;
++	const char *res;
  
- static int get_mapped_sg_list(struct ib_device *device, void *buf, int size,
- 			      struct scatterlist *sg_list, int nentries,
--			      enum dma_data_direction dir)
-+			      enum dma_data_direction dir, int *npages)
- {
--	int npages;
--
--	npages = get_sg_list(buf, size, sg_list, nentries);
--	if (npages < 0)
-+	*npages = get_sg_list(buf, size, sg_list, nentries);
-+	if (*npages < 0)
- 		return -EINVAL;
--	return ib_dma_map_sg(device, sg_list, npages, dir);
-+	return ib_dma_map_sg(device, sg_list, *npages, dir);
- }
+ 	res = strstr(sym_name, ".llvm.");
+ 	if (sym_type == 'd' && res)
+@@ -11959,7 +11959,7 @@ static int resolve_full_path(const char
+ 		if (!search_paths[i])
+ 			continue;
+ 		for (s = search_paths[i]; s != NULL; s = strchr(s, ':')) {
+-			char *next_path;
++			const char *next_path;
+ 			int seg_len;
  
- static int post_sendmsg(struct smb_direct_transport *t,
-@@ -1184,12 +1182,13 @@ static int smb_direct_post_send_data(str
- 	for (i = 0; i < niov; i++) {
- 		struct ib_sge *sge;
- 		int sg_cnt;
-+		int npages;
- 
- 		sg_init_table(sg, SMB_DIRECT_MAX_SEND_SGES - 1);
- 		sg_cnt = get_mapped_sg_list(t->cm_id->device,
- 					    iov[i].iov_base, iov[i].iov_len,
- 					    sg, SMB_DIRECT_MAX_SEND_SGES - 1,
--					    DMA_TO_DEVICE);
-+					    DMA_TO_DEVICE, &npages);
- 		if (sg_cnt <= 0) {
- 			pr_err("failed to map buffer\n");
- 			ret = -ENOMEM;
-@@ -1197,7 +1196,7 @@ static int smb_direct_post_send_data(str
- 		} else if (sg_cnt + msg->num_sge > SMB_DIRECT_MAX_SEND_SGES) {
- 			pr_err("buffer not fitted into sges\n");
- 			ret = -E2BIG;
--			ib_dma_unmap_sg(t->cm_id->device, sg, sg_cnt,
-+			ib_dma_unmap_sg(t->cm_id->device, sg, npages,
- 					DMA_TO_DEVICE);
- 			goto err;
- 		}
+ 			if (s[0] == ':')
 
 
