@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62E9D19E96D;
-	Wed,  4 Feb 2026 15:31:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF6B227702D;
+	Wed,  4 Feb 2026 15:32:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770219117; cv=none; b=tBo7CSW98PsLkhGtwGZpnoD+13vRdhyYFnUHuLWsHH4gCI7AiPSzdL3Gqox1HCP1XQVp/RBum+bR21bIeHl7ZZjJA9VrrXOTFqCij8LEWCRc6tXolR+d16x8jb0bKwPajWMcIe/zhXMt7Aj7X180jf1A7lfrhUhJO3ojzIvf30c=
+	t=1770219121; cv=none; b=L00lvnnEbyX7u3p57opHmZAGvVEXU0B05RgQ4OQY6bg5jOC+cIIC3FgVSQkaWgznsYIRYntFidcdfcGrvQEv2y8TlvOuDVLkb1xxVxY8lyQ+1+EPF9MN5M5IVy1aRyCj2wpZdaVw9k1lPM/EsUMI0y2GJHl+K7XT52ttH5B9URw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770219117; c=relaxed/simple;
-	bh=1EqjtZSD35DxHjWdZKi9b8CeYZ0MafL4wrwiGdz2MAc=;
+	s=arc-20240116; t=1770219121; c=relaxed/simple;
+	bh=eUdMCAcMiJ+Xqdasf0Neum9nf/QzUwBm8o5ZITPdPa8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=e+a2WsxJ2BX231dU872ySW4MmEx4BZj7T+wFZ+9MLSZZ80BZ34PKKrKUCUkOmhZaTcjZVHWj+L0HBkIGZeLetoHOk5VMpFBhQLdQpPbFjzH9zR/3I6P0h++kJfPQmvEQ2OxWdLG/rXOJrhUV2yHyuKPzNvT8hEb8C5xhAVachEo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sdE9Dg+h; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GMgOqQwL4/4sf36XSXksfX1YvQoX9711hjZUoWStWV7WcO+M67DHcz6s/xhazUOs6lQRbvxQBFqZxEVlQw9vfFrTzX1zuXRacKY8p9X+edmNpgFgprY10dsz1UI/Vh0DD5iZ9zVavJeCShSObKQqoIqfX3bkgDPbyPKWMB9cJEU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fOi9kCYm; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sdE9Dg+h"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C79ADC4CEF7;
-	Wed,  4 Feb 2026 15:31:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fOi9kCYm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 62812C4CEF7;
+	Wed,  4 Feb 2026 15:32:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770219117;
-	bh=1EqjtZSD35DxHjWdZKi9b8CeYZ0MafL4wrwiGdz2MAc=;
+	s=korg; t=1770219120;
+	bh=eUdMCAcMiJ+Xqdasf0Neum9nf/QzUwBm8o5ZITPdPa8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sdE9Dg+hzWqeuCCIddYLbH/INB3gq15O0Vw7Wlo+64q5zpPwW0uUru+yz7nsK8plS
-	 mnwqZFNpdbgTSxPoMSHLXx3xb4WE+rT3sUOa0cVhipJ6SD6i6vyfhiBaaERi2/tDKS
-	 /k0vtDP55XYt6PSo72jq2opkMegFpprq5jvs20Z0=
+	b=fOi9kCYm8FkS5WytYTCAY7QZqp4xL+2cPJptdDr9aNyTF/ySyvNwdxQuvAxPUSRrG
+	 UgZHEYdo6P0kpD55eO4XS2tbMCRK2tMH6j3ngIIMxybLcNSu5XmYFMS9jPyNvFr5NW
+	 /rcnxQ2nPtA/IeyQANu/WetmqhsoWcdgSXYnGlaU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thomas Fourier <fourier.thomas@gmail.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>
-Subject: [PATCH 6.18 073/122] scsi: qla2xxx: edif: Fix dma_free_coherent() size
-Date: Wed,  4 Feb 2026 15:40:55 +0100
-Message-ID: <20260204143854.478792729@linuxfoundation.org>
+	Kohei Enju <kohei@enjuk.jp>,
+	Ard Biesheuvel <ardb@kernel.org>
+Subject: [PATCH 6.18 074/122] efivarfs: fix error propagation in efivar_entry_get()
+Date: Wed,  4 Feb 2026 15:40:56 +0100
+Message-ID: <20260204143854.513548497@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260204143851.857060534@linuxfoundation.org>
 References: <20260204143851.857060534@linuxfoundation.org>
@@ -50,34 +50,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thomas Fourier <fourier.thomas@gmail.com>
+From: Kohei Enju <kohei@enjuk.jp>
 
-commit 56bd3c0f749f45793d1eae1d0ddde4255c749bf6 upstream.
+commit 4b22ec1685ce1fc0d862dcda3225d852fb107995 upstream.
 
-Earlier in the function, the ha->flt buffer is allocated with size
-sizeof(struct qla_flt_header) + FLT_REGIONS_SIZE but freed in the error
-path with size SFP_DEV_SIZE.
+efivar_entry_get() always returns success even if the underlying
+__efivar_entry_get() fails, masking errors.
 
-Fixes: 84318a9f01ce ("scsi: qla2xxx: edif: Add send, receive, and accept for auth_els")
-Cc: stable@vger.kernel.org
-Signed-off-by: Thomas Fourier <fourier.thomas@gmail.com>
-Link: https://patch.msgid.link/20260112134326.55466-2-fourier.thomas@gmail.com
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+This may result in uninitialized heap memory being copied to userspace
+in the efivarfs_file_read() path.
+
+Fix it by returning the error from __efivar_entry_get().
+
+Fixes: 2d82e6227ea1 ("efi: vars: Move efivar caching layer into efivarfs")
+Cc: <stable@vger.kernel.org> # v6.1+
+Signed-off-by: Kohei Enju <kohei@enjuk.jp>
+Signed-off-by: Ard Biesheuvel <ardb@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/scsi/qla2xxx/qla_os.c |    2 +-
+ fs/efivarfs/vars.c |    2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/scsi/qla2xxx/qla_os.c
-+++ b/drivers/scsi/qla2xxx/qla_os.c
-@@ -4488,7 +4488,7 @@ fail_lsrjt:
- fail_elsrej:
- 	dma_pool_destroy(ha->purex_dma_pool);
- fail_flt:
--	dma_free_coherent(&ha->pdev->dev, SFP_DEV_SIZE,
-+	dma_free_coherent(&ha->pdev->dev, sizeof(struct qla_flt_header) + FLT_REGIONS_SIZE,
- 	    ha->flt, ha->flt_dma);
+--- a/fs/efivarfs/vars.c
++++ b/fs/efivarfs/vars.c
+@@ -552,7 +552,7 @@ int efivar_entry_get(struct efivar_entry
+ 	err = __efivar_entry_get(entry, attributes, size, data);
+ 	efivar_unlock();
  
- fail_flt_buffer:
+-	return 0;
++	return err;
+ }
+ 
+ /**
 
 
