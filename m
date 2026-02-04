@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A72112BEFED;
-	Wed,  4 Feb 2026 15:01:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6579B2BEFED;
+	Wed,  4 Feb 2026 15:01:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770217268; cv=none; b=I68ONfiayHPT9+yvis9Waw7N/H2UScdzZr+Rz1YPpOv9UKTQDpHRL9/FaKIhmlC838tgcTZBN/yxcP3EcWa5NrgF7RfCn8BONbBYA1xZsEnj92cOLKYHLNY3fcCuN+av5ZJMggCm4l/NrbJSjFsp+nns6lxGUiM23pXJ0aIQm5A=
+	t=1770217272; cv=none; b=O3wowQp5rLpnY+CM8v4BcFwey4QhDw4khuWSrTH8Vxag9L7PoKZwjWC7SOnLXb3Z41KzdaPxDc+WbAMjGmW/+VJgKRX3PrZ/BHzP2Epa2QGfUc3Saih8iLql4N6js1fCBak7/PiZWpenNMs1kniJubyUgg5daYmIB3W1o6zLuQs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770217268; c=relaxed/simple;
-	bh=KtAw6q3QLq/OYT80MH3/uDcZs0wyhsf1XiQ+lmN7MAQ=;
+	s=arc-20240116; t=1770217272; c=relaxed/simple;
+	bh=chxGI0Wj+tr9zJIxzjXbY2Dsafi0QQE4zqEhCWXiLmI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VSSBaxYja4smHs9LZtrPPJFpGz5ntCjavtWK2EGmSvGENGRjdoJbHU5dTjSyXS7GJU65pzTviy0igB4Lqe9PtnWzPkiN34T0UWaAFuU/MpnImODZmw3vU2aIDKd/HEf/sLTnK47xUGbcE0B13NzWD/AWiW3bGmYgiLKXbhXpOUA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=w8XHsQnf; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=Yqw41VDY2m7c3i6yvxA7IMvIbLjPsL/yESA2OhySqzQ3WgV3SK0TTuRKCRXQfY9hesAlGwF9cuJespePLeKOIK9UJO32i3o3hjcRjLKnEgOeSH/kqyRqcwmBqaTo0Jq3pryuJfdtRVo4P9opZAKVjG1iEeswE9jtl2fq45W85nY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JTRxUVfp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="w8XHsQnf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0BEC4C19423;
-	Wed,  4 Feb 2026 15:01:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JTRxUVfp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 56DF9C2BC86;
+	Wed,  4 Feb 2026 15:01:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770217268;
-	bh=KtAw6q3QLq/OYT80MH3/uDcZs0wyhsf1XiQ+lmN7MAQ=;
+	s=korg; t=1770217272;
+	bh=chxGI0Wj+tr9zJIxzjXbY2Dsafi0QQE4zqEhCWXiLmI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=w8XHsQnfJKol70B+HNoDAtmICgn0eni9T37noZ/6PNf9FHgpL2Kj7hGqr1NOQsUGt
-	 lvd5GciUZjtdhtmPj0XFXST6brMOiLKkrSuAE4/Qfad3F5BcZi44QknVheoSIz/rV+
-	 WdFFOUAy9j2Lh/s5xys36p+fXJlbOE29QkzjYqUc=
+	b=JTRxUVfprZtmax2VEUMQ/8w2rS0MqIwaxMo3BoJQMETizQKixSN0UAhlQJHLvVYSs
+	 WsFZcwolJ1cfkE5WyhS+bhBnMTY+bLUzC3KG5H26sNTbufDk0omrjgHsb3T7hiBCHt
+	 lDBjOy544Y+T+Vs1D1J71mNQAdSgxEwSHVr1ov9k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Brian Foster <bfoster@redhat.com>,
-	"Darrick J. Wong" <djwong@kernel.org>,
-	Carlos Maiolino <cem@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 166/206] xfs: set max_agbno to allow sparse alloc of last full inode chunk
-Date: Wed,  4 Feb 2026 15:39:57 +0100
-Message-ID: <20260204143904.185503995@linuxfoundation.org>
+	Gaosheng Cui <cuigaosheng1@huawei.com>,
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+	Rahul Sharma <black.hawk@163.com>
+Subject: [PATCH 5.15 175/206] drm/ttm: fix undefined behavior in bit shift for TTM_TT_FLAG_PRIV_POPULATED
+Date: Wed,  4 Feb 2026 15:40:06 +0100
+Message-ID: <20260204143904.515368980@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260204143858.193781818@linuxfoundation.org>
 References: <20260204143858.193781818@linuxfoundation.org>
@@ -46,88 +45,104 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Brian Foster <bfoster@redhat.com>
+From: Gaosheng Cui <cuigaosheng1@huawei.com>
 
-[ Upstream commit c360004c0160dbe345870f59f24595519008926f ]
+[ Upstream 387659939c00156f8d6bab0fbc55b4eaf2b6bc5b commit ]
 
-Sparse inode cluster allocation sets min/max agbno values to avoid
-allocating an inode cluster that might map to an invalid inode
-chunk. For example, we can't have an inode record mapped to agbno 0
-or that extends past the end of a runt AG of misaligned size.
+Shifting signed 32-bit value by 31 bits is undefined, so changing
+significant bit to unsigned. The UBSAN warning calltrace like below:
 
-The initial calculation of max_agbno is unnecessarily conservative,
-however. This has triggered a corner case allocation failure where a
-small runt AG (i.e. 2063 blocks) is mostly full save for an extent
-to the EOFS boundary: [2050,13]. max_agbno is set to 2048 in this
-case, which happens to be the offset of the last possible valid
-inode chunk in the AG. In practice, we should be able to allocate
-the 4-block cluster at agbno 2052 to map to the parent inode record
-at agbno 2048, but the max_agbno value precludes it.
+UBSAN: shift-out-of-bounds in ./include/drm/ttm/ttm_tt.h:122:26
+left shift of 1 by 31 places cannot be represented in type 'int'
+Call Trace:
+ <TASK>
+ dump_stack_lvl+0x7d/0xa5
+ dump_stack+0x15/0x1b
+ ubsan_epilogue+0xe/0x4e
+ __ubsan_handle_shift_out_of_bounds+0x1e7/0x20c
+ ttm_bo_move_memcpy+0x3b4/0x460 [ttm]
+ bo_driver_move+0x32/0x40 [drm_vram_helper]
+ ttm_bo_handle_move_mem+0x118/0x200 [ttm]
+ ttm_bo_validate+0xfa/0x220 [ttm]
+ drm_gem_vram_pin_locked+0x70/0x1b0 [drm_vram_helper]
+ drm_gem_vram_pin+0x48/0xb0 [drm_vram_helper]
+ drm_gem_vram_plane_helper_prepare_fb+0x53/0xe0 [drm_vram_helper]
+ drm_gem_vram_simple_display_pipe_prepare_fb+0x26/0x30 [drm_vram_helper]
+ drm_simple_kms_plane_prepare_fb+0x4d/0xe0 [drm_kms_helper]
+ drm_atomic_helper_prepare_planes+0xda/0x210 [drm_kms_helper]
+ drm_atomic_helper_commit+0xc3/0x1e0 [drm_kms_helper]
+ drm_atomic_commit+0x9c/0x160 [drm]
+ drm_client_modeset_commit_atomic+0x33a/0x380 [drm]
+ drm_client_modeset_commit_locked+0x77/0x220 [drm]
+ drm_client_modeset_commit+0x31/0x60 [drm]
+ __drm_fb_helper_restore_fbdev_mode_unlocked+0xa7/0x170 [drm_kms_helper]
+ drm_fb_helper_set_par+0x51/0x90 [drm_kms_helper]
+ fbcon_init+0x316/0x790
+ visual_init+0x113/0x1d0
+ do_bind_con_driver+0x2a3/0x5c0
+ do_take_over_console+0xa9/0x270
+ do_fbcon_takeover+0xa1/0x170
+ do_fb_registered+0x2a8/0x340
+ fbcon_fb_registered+0x47/0xe0
+ register_framebuffer+0x294/0x4a0
+ __drm_fb_helper_initial_config_and_unlock+0x43c/0x880 [drm_kms_helper]
+ drm_fb_helper_initial_config+0x52/0x80 [drm_kms_helper]
+ drm_fbdev_client_hotplug+0x156/0x1b0 [drm_kms_helper]
+ drm_fbdev_generic_setup+0xfc/0x290 [drm_kms_helper]
+ bochs_pci_probe+0x6ca/0x772 [bochs]
+ local_pci_probe+0x4d/0xb0
+ pci_device_probe+0x119/0x320
+ really_probe+0x181/0x550
+ __driver_probe_device+0xc6/0x220
+ driver_probe_device+0x32/0x100
+ __driver_attach+0x195/0x200
+ bus_for_each_dev+0xbb/0x120
+ driver_attach+0x27/0x30
+ bus_add_driver+0x22e/0x2f0
+ driver_register+0xa9/0x190
+ __pci_register_driver+0x90/0xa0
+ bochs_pci_driver_init+0x52/0x1000 [bochs]
+ do_one_initcall+0x76/0x430
+ do_init_module+0x61/0x28a
+ load_module+0x1f82/0x2e50
+ __do_sys_finit_module+0xf8/0x190
+ __x64_sys_finit_module+0x23/0x30
+ do_syscall_64+0x58/0x80
+ entry_SYSCALL_64_after_hwframe+0x63/0xcd
+ </TASK>
 
-Note that this can result in filesystem shutdown via dirty trans
-cancel on stable kernels prior to commit 9eb775968b68 ("xfs: walk
-all AGs if TRYLOCK passed to xfs_alloc_vextent_iterate_ags") because
-the tail AG selection by the allocator sets t_highest_agno on the
-transaction. If the inode allocator spins around and finds an inode
-chunk with free inodes in an earlier AG, the subsequent dir name
-creation path may still fail to allocate due to the AG restriction
-and cancel.
-
-To avoid this problem, update the max_agbno calculation to the agbno
-prior to the last chunk aligned agbno in the AG. This is not
-necessarily the last valid allocation target for a sparse chunk, but
-since inode chunks (i.e. records) are chunk aligned and sparse
-allocs are cluster sized/aligned, this allows the sb_spino_align
-alignment restriction to take over and round down the max effective
-agbno to within the last valid inode chunk in the AG.
-
-Note that even though the allocator improvements in the
-aforementioned commit seem to avoid this particular dirty trans
-cancel situation, the max_agbno logic improvement still applies as
-we should be able to allocate from an AG that has been appropriately
-selected. The more important target for this patch however are
-older/stable kernels prior to this allocator rework/improvement.
-
-Cc: stable@vger.kernel.org # v4.2
-Fixes: 56d1115c9bc7 ("xfs: allocate sparse inode chunks on full chunk allocation failure")
-Signed-off-by: Brian Foster <bfoster@redhat.com>
-Reviewed-by: Darrick J. Wong <djwong@kernel.org>
-Signed-off-by: Carlos Maiolino <cem@kernel.org>
-[ xfs_ag_block_count(args.mp, pag_agno(pag)) => args.mp->m_sb.sb_agblocks ]
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 3312be8f6fc8 ("drm/ttm: move populated state into page flags")
+Signed-off-by: Gaosheng Cui <cuigaosheng1@huawei.com>
+Reviewed-by: Christian König <christian.koenig@amd.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20221031113350.4180975-1-cuigaosheng1@huawei.com
+Signed-off-by: Christian König <christian.koenig@amd.com>
+[ The context change is due to the commit 43d46f0b78bb
+("drm/ttm: s/FLAG_SG/FLAG_EXTERNAL/") in v5.16
+which is irrelevant to the logic of this patch.
+In addition, v6.1 has included the fix. ]
+Signed-off-by: Rahul Sharma <black.hawk@163.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/xfs/libxfs/xfs_ialloc.c |   11 ++++++-----
- 1 file changed, 6 insertions(+), 5 deletions(-)
+ include/drm/ttm/ttm_tt.h |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/fs/xfs/libxfs/xfs_ialloc.c
-+++ b/fs/xfs/libxfs/xfs_ialloc.c
-@@ -772,14 +772,15 @@ sparse_alloc:
- 		 * invalid inode records, such as records that start at agbno 0
- 		 * or extend beyond the AG.
- 		 *
--		 * Set min agbno to the first aligned, non-zero agbno and max to
--		 * the last aligned agbno that is at least one full chunk from
--		 * the end of the AG.
-+		 * Set min agbno to the first chunk aligned, non-zero agbno and
-+		 * max to one less than the last chunk aligned agbno from the
-+		 * end of the AG. We subtract 1 from max so that the cluster
-+		 * allocation alignment takes over and allows allocation within
-+		 * the last full inode chunk in the AG.
- 		 */
- 		args.min_agbno = args.mp->m_sb.sb_inoalignmt;
- 		args.max_agbno = round_down(args.mp->m_sb.sb_agblocks,
--					    args.mp->m_sb.sb_inoalignmt) -
--				 igeo->ialloc_blks;
-+					    args.mp->m_sb.sb_inoalignmt) - 1;
+--- a/include/drm/ttm/ttm_tt.h
++++ b/include/drm/ttm/ttm_tt.h
+@@ -43,7 +43,7 @@ struct ttm_operation_ctx;
+ #define TTM_PAGE_FLAG_SG              (1 << 8)
+ #define TTM_PAGE_FLAG_NO_RETRY	      (1 << 9)
  
- 		error = xfs_alloc_vextent(&args);
- 		if (error)
+-#define TTM_PAGE_FLAG_PRIV_POPULATED  (1 << 31)
++#define TTM_PAGE_FLAG_PRIV_POPULATED  (1U << 31)
+ 
+ /**
+  * struct ttm_tt
 
 
