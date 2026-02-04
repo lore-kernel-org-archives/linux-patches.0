@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A8F841B37C;
-	Wed,  4 Feb 2026 15:25:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F51F41B37C;
+	Wed,  4 Feb 2026 15:25:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770218724; cv=none; b=BWBeRudnBmPEb3wi7J0l72u6IvTfl3B4j9v71328v6fmT8rg4d0S4oxWmupcDvPSjUnpPqQqbE8x1yovfV/4GP942HZKRbMPAqee0n6aN/Lw+UpMt28HoToyj0ldvD2UsWTzt5Im3mNWZ0bvPqtUsS62w9plDQjULJDLZf8w540=
+	t=1770218727; cv=none; b=RA4FKdXAmrNTXcj2LADaQQ8r6I7djP/QpH0YiXRnehwauKVgaRRKkGO+hp3RZve2Q8GEE4hmY38nhpY5rZTZH1M1VTdzJz+ui7LXERApHRwC70rT0oWkmdBl8gWDIGpT3MT2thK8VQg1TBr7n74CxR0RKmQk8pFeuLcUvV2qr4M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770218724; c=relaxed/simple;
-	bh=sPUmy/Bko9pv9VH3Dtytvm5wYL3M/xEe7g3hGF2PaH8=;
+	s=arc-20240116; t=1770218727; c=relaxed/simple;
+	bh=xkIp0huhjp3z5DkBB7YBsFHf25KagRl36eTOSBnBjo4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lfjkV0mILhV5SrmZJqUyUROT98eL1Iqswq4LmYkhcelk3NDLH9cbG38sKdn2MYV7bYS7aAeZT0cYeKMo7uoXfZAoNHJEYFthsXJIFbh24OYNiVffzAEqhCcuUG8sHd/NA70+qHffq+MDlCGT1KIvH4nHbgSlUAC8O6RUCLESr8k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Cn6Y+LpP; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=s3iza7U6VsgOR+wAV7P0RyKmtL/GL+C/Sl5YE7/RQrW9PKvNGS5f8N7O+58/X3s/JxM5ul2Sip4K/OtHAgAbXWS5FnvppwtMK3SNTM/lLzwiSNkd6PwyLNkMvIhEWfo81fNDgwmfoTP8lp/tN1X61EDmv7l4hVgHT5gIuG66d28=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GE3KStNi; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Cn6Y+LpP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A7549C4CEF7;
-	Wed,  4 Feb 2026 15:25:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GE3KStNi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D83F8C4CEF7;
+	Wed,  4 Feb 2026 15:25:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770218724;
-	bh=sPUmy/Bko9pv9VH3Dtytvm5wYL3M/xEe7g3hGF2PaH8=;
+	s=korg; t=1770218727;
+	bh=xkIp0huhjp3z5DkBB7YBsFHf25KagRl36eTOSBnBjo4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Cn6Y+LpPph/DhdAH7YgvIhKAwFxXPm9uz2+BnVs8p7lTqymw251BC85rIE+knPBwi
-	 0qdpHQacPjKG3OKkB5CSd/gPjiWuXGdUdi0e4t04f8eeyIkAZkEDO6ytga5bb4JgI6
-	 R2tavMOl9A8PTFYTZJBWL7wyI7CIP/00E2kVU67Y=
+	b=GE3KStNiv2cHRO+tYVbNoSuCryXmWjfJXTkIdbuvz1/WXvMI2V3EZIEKItWSl8mTZ
+	 bSktKFTLO0FKP6MwKqWZxEDq8ylK/krjpVSbmqRWbaNsgkJOQex2/JK8vZ0tf38Rj+
+	 IGEolWwRIRSCUnmFg6Mwwf0Jgg/x/23Eaxx3nfKU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tony Nguyen <anthony.l.nguyen@intel.com>,
-	Jake Keller <jacob.e.keller@intel.com>,
-	IWL <intel-wired-lan@lists.osuosl.org>,
-	Jesse Brandeburg <jbrandeburg@cloudflare.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 15/87] ice: stop counting UDP csum mismatch as rx_errors
-Date: Wed,  4 Feb 2026 15:40:13 +0100
-Message-ID: <20260204143847.460660010@linuxfoundation.org>
+	Thomas Fourier <fourier.thomas@gmail.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>
+Subject: [PATCH 6.12 42/87] scsi: qla2xxx: edif: Fix dma_free_coherent() size
+Date: Wed,  4 Feb 2026 15:40:40 +0100
+Message-ID: <20260204143848.429921932@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260204143846.906385641@linuxfoundation.org>
 References: <20260204143846.906385641@linuxfoundation.org>
@@ -53,62 +50,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jesse Brandeburg <jbrandeburg@cloudflare.com>
+From: Thomas Fourier <fourier.thomas@gmail.com>
 
-[ Upstream commit 05faf2c0a76581d0a7fdbb8ec46477ba183df95b ]
+commit 56bd3c0f749f45793d1eae1d0ddde4255c749bf6 upstream.
 
-Since the beginning, the Intel ice driver has counted receive checksum
-offload mismatches into the rx_errors member of the rtnl_link_stats64
-struct. In ethtool -S these show up as rx_csum_bad.nic.
+Earlier in the function, the ha->flt buffer is allocated with size
+sizeof(struct qla_flt_header) + FLT_REGIONS_SIZE but freed in the error
+path with size SFP_DEV_SIZE.
 
-I believe counting these in rx_errors is fundamentally wrong, as it's
-pretty clear from the comments in if_link.h and from every other statistic
-the driver is summing into rx_errors, that all of them would cause a
-"hardware drop" except for the UDP checksum mismatch, as well as the fact
-that all the other causes for rx_errors are L2 reasons, and this L4 UDP
-"mismatch" is an outlier.
-
-A last nail in the coffin is that rx_errors is monitored in production and
-can indicate a bad NIC/cable/Switch port, but instead some random series of
-UDP packets with bad checksums will now trigger this alert. This false
-positive makes the alert useless and affects us as well as other companies.
-
-This packet with presumably a bad UDP checksum is *already* passed to the
-stack, just not marked as offloaded by the hardware/driver. If it is
-dropped by the stack it will show up as UDP_MIB_CSUMERRORS.
-
-And one more thing, none of the other Intel drivers, and at least bnxt_en
-and mlx5 both don't appear to count UDP offload mismatches as rx_errors.
-
-Here is a related customer complaint:
-https://community.intel.com/t5/Ethernet-Products/ice-rx-errros-is-too-sensitive-to-IP-TCP-attack-packets-Intel/td-p/1662125
-
-Fixes: 4f1fe43c920b ("ice: Add more Rx errors to netdev's rx_error counter")
-Cc: Tony Nguyen <anthony.l.nguyen@intel.com>
-Cc: Jake Keller <jacob.e.keller@intel.com>
-Cc: IWL <intel-wired-lan@lists.osuosl.org>
-Signed-off-by: Jesse Brandeburg <jbrandeburg@cloudflare.com>
-Acked-by: Jacob Keller <jacob.e.keller@intel.com>
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 84318a9f01ce ("scsi: qla2xxx: edif: Add send, receive, and accept for auth_els")
+Cc: stable@vger.kernel.org
+Signed-off-by: Thomas Fourier <fourier.thomas@gmail.com>
+Link: https://patch.msgid.link/20260112134326.55466-2-fourier.thomas@gmail.com
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/intel/ice/ice_main.c | 1 -
- 1 file changed, 1 deletion(-)
+ drivers/scsi/qla2xxx/qla_os.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/intel/ice/ice_main.c b/drivers/net/ethernet/intel/ice/ice_main.c
-index d024e71722de3..8e0f180ec38e1 100644
---- a/drivers/net/ethernet/intel/ice/ice_main.c
-+++ b/drivers/net/ethernet/intel/ice/ice_main.c
-@@ -6974,7 +6974,6 @@ void ice_update_vsi_stats(struct ice_vsi *vsi)
- 		cur_ns->rx_errors = pf->stats.crc_errors +
- 				    pf->stats.illegal_bytes +
- 				    pf->stats.rx_undersize +
--				    pf->hw_csum_rx_error +
- 				    pf->stats.rx_jabber +
- 				    pf->stats.rx_fragments +
- 				    pf->stats.rx_oversize;
--- 
-2.51.0
-
+--- a/drivers/scsi/qla2xxx/qla_os.c
++++ b/drivers/scsi/qla2xxx/qla_os.c
+@@ -4484,7 +4484,7 @@ fail_lsrjt:
+ fail_elsrej:
+ 	dma_pool_destroy(ha->purex_dma_pool);
+ fail_flt:
+-	dma_free_coherent(&ha->pdev->dev, SFP_DEV_SIZE,
++	dma_free_coherent(&ha->pdev->dev, sizeof(struct qla_flt_header) + FLT_REGIONS_SIZE,
+ 	    ha->flt, ha->flt_dma);
+ 
+ fail_flt_buffer:
 
 
