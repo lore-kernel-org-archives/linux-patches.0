@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C5BC410D10;
-	Wed,  4 Feb 2026 14:53:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7DA4227F749;
+	Wed,  4 Feb 2026 14:53:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770216786; cv=none; b=IRqqWhIxMenxAVOpnDbhUNSf9Y88nu8OX6FQIBxBex7y6vtlylvHxas5CsbzuSKmpoR3tknKac9d/yiAqnO3JmQ54ZCg0aCCYCGFcMhOvAbKD0mUPfSUaze0AJrlDz0unCfGROunEdD8l9zNB8bTCO5APVgbPMth1+alfYEx3pc=
+	t=1770216789; cv=none; b=nW6MmpxlKErWsSLUUmKsUBvzkPwZ+AsiE7n7+kDCyoZffIzD3uZ2nKh+4fspgiK5LPnr0KcM7lNDJKrbUajaSUNomFlPTr+ZXLeJJ0cyGQb052GtjohrUx6IOfogD0WjRp88ZQR/RG0636encszyCGVhjcodmCtCJ8LENUPW6+k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770216786; c=relaxed/simple;
-	bh=L5lhawl9WqxnJpXdHcpR0gc4Oo69zTp27cO4O++RJNE=;
+	s=arc-20240116; t=1770216789; c=relaxed/simple;
+	bh=TRy+/3hnquhpm/3TbeK1IK/Bjgmaxz/JRam5wILkV80=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=k9cikYKPgyGzYHzSwLIthzqzLO3HFXt6b3Ln1q7AYdQ6NmLA39OoCzLUwKciXkRYmpovajj+IVo0bJZ90yx9KJ9rIdU8I4KLXjb6KiM8t1VXHm3IIq5C2tn7BBPu+iq8Pa5NzR07PgisknSXdA9LOoummb6gJtTn8EyvjYWFZG4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hSyyXJNu; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PCw95/xQdP8zyDylB+Nin71Cagi2AglQU+FuhFDeMeuMlGhpJHFIjmI16IKXn5YEhFMMQY6eIqYD1HcRFrM93+Baw8F2hvJPVngvS5z+OCZHCf7PAtR96de7b7LMGRGFFJr0A29eC1N0SJEU9zJqk+vlOWUYJ7CbaTvNtMx7cks=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=es/5ZF5L; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hSyyXJNu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F7D8C4CEF7;
-	Wed,  4 Feb 2026 14:53:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="es/5ZF5L"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 06BD4C19423;
+	Wed,  4 Feb 2026 14:53:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770216786;
-	bh=L5lhawl9WqxnJpXdHcpR0gc4Oo69zTp27cO4O++RJNE=;
+	s=korg; t=1770216789;
+	bh=TRy+/3hnquhpm/3TbeK1IK/Bjgmaxz/JRam5wILkV80=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hSyyXJNuEO8w+1llhroUbqqqWpLObG7nSI5OtsKFLnfi0/1O++L9jIUnxTE3lVege
-	 ZgpUaA4z2LK/bhuz2aT/B4jbAWsA8Dw9nYCJW79ibBBiiwolliniRXelR68FReoFwQ
-	 gpNXRop9s73kulv3tp32ccbOe4F+8bZIdj//SzCI=
+	b=es/5ZF5Lo7Q5ny3XIQXjbxS4vR3AOt/xhSROTt1Us4kLIkgkeQeLnsoL2h/Up9pdz
+	 uKNzMTrWDF6Jg181meBzPeYLNMvKNzuHXruQfov9gHgPVJcGk1JqcWvI3bVP2a3Mlj
+	 sXWli+JQxnrsB9eUXYq5ivqi24sv7YWud4x5C1CA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ulrich Mohr <u.mohr@semex-engcon.com>,
+	Ethan Nelson-Moore <enelsonmoore@gmail.com>,
 	Johan Hovold <johan@kernel.org>
-Subject: [PATCH 5.15 031/206] USB: serial: option: add Telit LE910 MBIM composition
-Date: Wed,  4 Feb 2026 15:37:42 +0100
-Message-ID: <20260204143859.323726908@linuxfoundation.org>
+Subject: [PATCH 5.15 032/206] USB: serial: ftdi_sio: add support for PICAXE AXE027 cable
+Date: Wed,  4 Feb 2026 15:37:43 +0100
+Message-ID: <20260204143859.359452039@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260204143858.193781818@linuxfoundation.org>
 References: <20260204143858.193781818@linuxfoundation.org>
@@ -50,62 +50,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ulrich Mohr <u.mohr@semex-engcon.com>
+From: Ethan Nelson-Moore <enelsonmoore@gmail.com>
 
-commit 8af4274ab5999831f4757dfd5bd11665ba3b1569 upstream.
+commit c0afe95e62984ceea171c3ea319beaf84a21181c upstream.
 
-Add support for Telit LE910 module when operating in MBIM composition
-with additional ttys. This USB product ID is used by the module
-when AT#USBCFG is set to 7.
+The vendor provides instructions to write "0403 bd90" to
+/sys/bus/usb-serial/drivers/ftdi_sio/new_id; see:
+https://picaxe.com/docs/picaxe_linux_instructions.pdf
 
-0x1252: MBIM + tty(NMEA) + tty(MODEM) + tty(MODEM) + SAP
-
-T:  Bus=01 Lev=01 Prnt=01 Port=01 Cnt=01 Dev#=  2 Spd=480  MxCh= 0
-D:  Ver= 2.00 Cls=ef(misc ) Sub=02 Prot=01 MxPS=64 #Cfgs=  1
-P:  Vendor=1bc7 ProdID=1252 Rev=03.18
-S:  Manufacturer=Android
-S:  Product=LE910C1-EU
-S:  SerialNumber=0123456789ABCDEF
-C:  #Ifs= 6 Cfg#= 1 Atr=a0 MxPwr=500mA
-I:  If#= 0 Alt= 0 #EPs= 1 Cls=02(commc) Sub=0e Prot=00 Driver=cdc_mbim
-E:  Ad=82(I) Atr=03(Int.) MxPS=  64 Ivl=32ms
-I:  If#= 1 Alt= 1 #EPs= 2 Cls=0a(data ) Sub=00 Prot=02 Driver=cdc_mbim
-E:  Ad=01(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=81(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-I:  If#= 2 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
-E:  Ad=02(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=83(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=84(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
-I:  If#= 3 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
-E:  Ad=03(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=85(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=86(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
-I:  If#= 4 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
-E:  Ad=04(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=87(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=88(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
-I:  If#= 5 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
-E:  Ad=05(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=89(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=8a(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
-
-Signed-off-by: Ulrich Mohr <u.mohr@semex-engcon.com>
 Cc: stable@vger.kernel.org
+Signed-off-by: Ethan Nelson-Moore <enelsonmoore@gmail.com>
 Signed-off-by: Johan Hovold <johan@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/serial/option.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/usb/serial/ftdi_sio.c     |    1 +
+ drivers/usb/serial/ftdi_sio_ids.h |    2 ++
+ 2 files changed, 3 insertions(+)
 
---- a/drivers/usb/serial/option.c
-+++ b/drivers/usb/serial/option.c
-@@ -1505,6 +1505,7 @@ static const struct usb_device_id option
- 	{ USB_DEVICE_INTERFACE_CLASS(TELIT_VENDOR_ID, 0x1231, 0xff),	/* Telit LE910Cx (RNDIS) */
- 	  .driver_info = NCTRL(2) | RSVD(3) },
- 	{ USB_DEVICE_AND_INTERFACE_INFO(TELIT_VENDOR_ID, 0x1250, 0xff, 0x00, 0x00) },	/* Telit LE910Cx (rmnet) */
-+	{ USB_DEVICE_INTERFACE_CLASS(TELIT_VENDOR_ID, 0x1252, 0xff) },	/* Telit LE910Cx (MBIM) */
- 	{ USB_DEVICE(TELIT_VENDOR_ID, 0x1260),
- 	  .driver_info = NCTRL(0) | RSVD(1) | RSVD(2) },
- 	{ USB_DEVICE(TELIT_VENDOR_ID, 0x1261),
+--- a/drivers/usb/serial/ftdi_sio.c
++++ b/drivers/usb/serial/ftdi_sio.c
+@@ -828,6 +828,7 @@ static const struct usb_device_id id_tab
+ 	{ USB_DEVICE_INTERFACE_NUMBER(FTDI_VID, LMI_LM3S_DEVEL_BOARD_PID, 1) },
+ 	{ USB_DEVICE_INTERFACE_NUMBER(FTDI_VID, LMI_LM3S_EVAL_BOARD_PID, 1) },
+ 	{ USB_DEVICE_INTERFACE_NUMBER(FTDI_VID, LMI_LM3S_ICDI_BOARD_PID, 1) },
++	{ USB_DEVICE(FTDI_VID, FTDI_AXE027_PID) },
+ 	{ USB_DEVICE_INTERFACE_NUMBER(FTDI_VID, FTDI_TURTELIZER_PID, 1) },
+ 	{ USB_DEVICE(RATOC_VENDOR_ID, RATOC_PRODUCT_ID_USB60F) },
+ 	{ USB_DEVICE(RATOC_VENDOR_ID, RATOC_PRODUCT_ID_SCU18) },
+--- a/drivers/usb/serial/ftdi_sio_ids.h
++++ b/drivers/usb/serial/ftdi_sio_ids.h
+@@ -89,6 +89,8 @@
+ #define LMI_LM3S_EVAL_BOARD_PID		0xbcd9
+ #define LMI_LM3S_ICDI_BOARD_PID		0xbcda
+ 
++#define FTDI_AXE027_PID		0xBD90 /* PICAXE AXE027 USB download cable */
++
+ #define FTDI_TURTELIZER_PID	0xBDC8 /* JTAG/RS-232 adapter by egnite GmbH */
+ 
+ /* OpenDCC (www.opendcc.de) product id */
 
 
