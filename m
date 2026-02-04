@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4F9142B725;
-	Wed,  4 Feb 2026 15:09:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6627C41B369;
+	Wed,  4 Feb 2026 15:09:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770217776; cv=none; b=iac/gLP3CPMVmmWeL7W+lTFxueJYT2Q+aq5q9cS7kChLHflKzcCYd98lJQ9nVVWsahEXkUWtiP+r5BHIxxxZMnM/mPUngQ/u/VvsO2qHiS0IgYEv8t3HqA/HZD731xsoMPSl+3XYxvBtkdHm6c0czGdFBJZp2rTz0r5UXsGRR1M=
+	t=1770217779; cv=none; b=dScO/ORKKq0pp2HOmopVectKEI+MVPJEwPT3ylyhg+c8fL7w+ZuqSXcT/iaD5lETnDp7FnsjwRVRodJAlNpsvIwQVHXb9FuOtODki26Gycp1nnMnu8x1Ba+fU24eZOao0TGrNqCAI96xJLR+0NF0YOPXkTc1XBkej2DU23n9ybo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770217776; c=relaxed/simple;
-	bh=c11y4grOC4SsSq97zTPne4Z4mPiw1WePzyKWozutD4o=;
+	s=arc-20240116; t=1770217779; c=relaxed/simple;
+	bh=ykM9PETldvXrLYIKROuKa4vHOZ8hSW1Xox5bT41hXCs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ct9rkpzwGtU9o+1dvzFMUVeSe8QAPqPHdy15jl0Y+Wqm5guKCi5Ctlzq4szpoknvJ7if9AXv20urlzKAjR6bzwni+SXiBMVa04cMwJn7EVtOOr1WV8jcrfyiwfWoVvhP/Iz0jqnqfPVPPf4cfwBCDEdpGWPG9iBkV7kI4spopxw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LHxa/PgB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OUm6jLxNPycp9mjg/uWhuWwUyGSwB2XyoHn/7S2x0kyNwMelRvggXsSuhmLAuqj1okaYWHp5FQWb1zAAm1Ub+mryGKbu/6LXMoFRhV82wrpSBpMic2zeA33Qcl+cZmgAecbi1F55s+8mPunFXGabjBOmDlymlpDeh3FbevPw4OM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mrgx3DyI; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LHxa/PgB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B2BDC4CEF7;
-	Wed,  4 Feb 2026 15:09:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mrgx3DyI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CEF66C116C6;
+	Wed,  4 Feb 2026 15:09:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770217775;
-	bh=c11y4grOC4SsSq97zTPne4Z4mPiw1WePzyKWozutD4o=;
+	s=korg; t=1770217779;
+	bh=ykM9PETldvXrLYIKROuKa4vHOZ8hSW1Xox5bT41hXCs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LHxa/PgBmGyEYYARcswi0CYcGDsISw7ndcegHsPktcz+/N6iZaVwbP27uIxy/nf4p
-	 3GEv6tbWEqoMchKVP+JhW20brqFqMAd7nLatvcksbKyh6eP6nJwRkKL/+Kz1pCtK91
-	 k9vJdKcoHn9Fx5yIlwXSU6Rw9feZAE0H2bEycVdQ=
+	b=mrgx3DyI+xMdmWWu0JP1T+NDJJ59eWDe3njLoq+QY4sTENTXvPKrGeUKSe/QSvMJ6
+	 kDVYpk5tfBtnfw1UbVj9fbfvEeHAgr1sUBlHdwm7tsX2ES1ru2PN9/zQeNCiYCX8FL
+	 LEAR3SH3CMXP8cl+yPzBdwkAL7DHPBm9kl2QHxrY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Richard Cochran <richardcochran@gmail.com>,
-	Vadim Fedorenko <vadim.fedorenko@linux.dev>,
-	Wojtek Wasko <wwasko@nvidia.com>,
-	"David S. Miller" <davem@davemloft.net>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 088/280] testptp: Add option to open PHC in readonly mode
-Date: Wed,  4 Feb 2026 15:37:42 +0100
-Message-ID: <20260204143912.824943936@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Marnix Rijnart <marnix.rijnart@iwell.eu>
+Subject: [PATCH 6.1 115/280] serial: 8250_pci: Fix broken RS485 for F81504/508/512
+Date: Wed,  4 Feb 2026 15:38:09 +0100
+Message-ID: <20260204143913.780216794@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260204143909.614719725@linuxfoundation.org>
 References: <20260204143909.614719725@linuxfoundation.org>
@@ -53,120 +50,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wojtek Wasko <wwasko@nvidia.com>
+From: Marnix Rijnart <marnix.rijnart@iwell.eu>
 
-[ Upstream commit 76868642e42795353106197abf9c607ad80f4c9e ]
+commit 27aff0a56b3c77ea1a73641c9b3c4172a8f7238f upstream.
 
-PTP Hardware Clocks no longer require WRITE permission to perform
-readonly operations, such as listing device capabilities or listening to
-EXTTS events once they have been enabled by a process with WRITE
-permissions.
+Fintek F81504/508/512 can support both RTS_ON_SEND and RTS_AFTER_SEND,
+but pci_fintek_rs485_supported only announces the former.
 
-Add '-r' option to testptp to open the PHC in readonly mode instead of
-the default read-write mode. Skip enabling EXTTS if readonly mode is
-requested.
+This makes it impossible to unset SER_RS485_RTS_ON_SEND from
+userspace because of uart_sanitize_serial_rs485(). Some devices
+with these chips need RTS low on TX, so they are effectively broken.
 
-Acked-by: Richard Cochran <richardcochran@gmail.com>
-Reviewed-by: Vadim Fedorenko <vadim.fedorenko@linux.dev>
-Signed-off-by: Wojtek Wasko <wwasko@nvidia.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fix this by announcing the support for SER_RS485_RTS_AFTER_SEND,
+similar to commit 068d35a7be65 ("serial: sc16is7xx: announce support
+for SER_RS485_RTS_ON_SEND").
+
+Fixes: 4afeced55baa ("serial: core: fix sanitizing check for RTS settings")
+Cc: stable <stable@kernel.org>
+Signed-off-by: Marnix Rijnart <marnix.rijnart@iwell.eu>
+Link: https://patch.msgid.link/20260112000931.61703-1-marnix.rijnart@iwell.eu
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/testing/selftests/ptp/testptp.c | 37 +++++++++++++++++----------
- 1 file changed, 23 insertions(+), 14 deletions(-)
+ drivers/tty/serial/8250/8250_pci.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/tools/testing/selftests/ptp/testptp.c b/tools/testing/selftests/ptp/testptp.c
-index 2323a3329b298..532fb6a5d0591 100644
---- a/tools/testing/selftests/ptp/testptp.c
-+++ b/tools/testing/selftests/ptp/testptp.c
-@@ -140,6 +140,7 @@ static void usage(char *progname)
- 		" -H val     set output phase to 'val' nanoseconds (requires -p)\n"
- 		" -w val     set output pulse width to 'val' nanoseconds (requires -p)\n"
- 		" -P val     enable or disable (val=1|0) the system clock PPS\n"
-+		" -r         open the ptp clock in readonly mode\n"
- 		" -s         set the ptp clock time from the system time\n"
- 		" -S         set the system time from the ptp clock time\n"
- 		" -t val     shift the ptp clock time by 'val' seconds\n"
-@@ -188,6 +189,7 @@ int main(int argc, char *argv[])
- 	int pin_index = -1, pin_func;
- 	int pps = -1;
- 	int seconds = 0;
-+	int readonly = 0;
- 	int settime = 0;
- 	int channel = -1;
- 	clockid_t ext_clockid = CLOCK_REALTIME;
-@@ -200,7 +202,7 @@ int main(int argc, char *argv[])
+--- a/drivers/tty/serial/8250/8250_pci.c
++++ b/drivers/tty/serial/8250/8250_pci.c
+@@ -1583,7 +1583,7 @@ static int pci_fintek_rs485_config(struc
+ }
  
- 	progname = strrchr(argv[0], '/');
- 	progname = progname ? 1+progname : argv[0];
--	while (EOF != (c = getopt(argc, argv, "cd:e:f:F:ghH:i:k:lL:n:o:p:P:sSt:T:w:x:Xy:z"))) {
-+	while (EOF != (c = getopt(argc, argv, "cd:e:f:F:ghH:i:k:lL:n:o:p:P:rsSt:T:w:x:Xy:z"))) {
- 		switch (c) {
- 		case 'c':
- 			capabilities = 1;
-@@ -252,6 +254,9 @@ int main(int argc, char *argv[])
- 		case 'P':
- 			pps = atoi(optarg);
- 			break;
-+		case 'r':
-+			readonly = 1;
-+			break;
- 		case 's':
- 			settime = 1;
- 			break;
-@@ -308,7 +313,7 @@ int main(int argc, char *argv[])
- 		}
- 	}
+ static const struct serial_rs485 pci_fintek_rs485_supported = {
+-	.flags = SER_RS485_ENABLED | SER_RS485_RTS_ON_SEND,
++	.flags = SER_RS485_ENABLED | SER_RS485_RTS_ON_SEND | SER_RS485_RTS_AFTER_SEND,
+ 	/* F81504/508/512 does not support RTS delay before or after send */
+ };
  
--	fd = open(device, O_RDWR);
-+	fd = open(device, readonly ? O_RDONLY : O_RDWR);
- 	if (fd < 0) {
- 		fprintf(stderr, "opening %s: %s\n", device, strerror(errno));
- 		return -1;
-@@ -434,14 +439,16 @@ int main(int argc, char *argv[])
- 	}
- 
- 	if (extts) {
--		memset(&extts_request, 0, sizeof(extts_request));
--		extts_request.index = index;
--		extts_request.flags = PTP_ENABLE_FEATURE;
--		if (ioctl(fd, PTP_EXTTS_REQUEST, &extts_request)) {
--			perror("PTP_EXTTS_REQUEST");
--			extts = 0;
--		} else {
--			puts("external time stamp request okay");
-+		if (!readonly) {
-+			memset(&extts_request, 0, sizeof(extts_request));
-+			extts_request.index = index;
-+			extts_request.flags = PTP_ENABLE_FEATURE;
-+			if (ioctl(fd, PTP_EXTTS_REQUEST, &extts_request)) {
-+				perror("PTP_EXTTS_REQUEST");
-+				extts = 0;
-+			} else {
-+				puts("external time stamp request okay");
-+			}
- 		}
- 		for (; extts; extts--) {
- 			cnt = read(fd, &event, sizeof(event));
-@@ -453,10 +460,12 @@ int main(int argc, char *argv[])
- 			       event.t.sec, event.t.nsec);
- 			fflush(stdout);
- 		}
--		/* Disable the feature again. */
--		extts_request.flags = 0;
--		if (ioctl(fd, PTP_EXTTS_REQUEST, &extts_request)) {
--			perror("PTP_EXTTS_REQUEST");
-+		if (!readonly) {
-+			/* Disable the feature again. */
-+			extts_request.flags = 0;
-+			if (ioctl(fd, PTP_EXTTS_REQUEST, &extts_request)) {
-+				perror("PTP_EXTTS_REQUEST");
-+			}
- 		}
- 	}
- 
--- 
-2.51.0
-
 
 
