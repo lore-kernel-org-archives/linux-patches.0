@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56FE342314D;
-	Wed,  4 Feb 2026 14:54:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E369423A91;
+	Wed,  4 Feb 2026 14:55:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770216898; cv=none; b=YBOSoTADx8xgVROaOOMqdPcVV2txMUpm8G0X1ES+HQYvhfl7fv9ySmWxcW2wB+Q9GS09i/61apjI6HSJsiKQ58InE6oX4QGx7DO4umXZ8XPDTouvVr+7e0KHhO67u85TMEHk6fvFWh9dLUb/PMm8ledmfUqLuLCHJZDOZv+lGh4=
+	t=1770216901; cv=none; b=eFZSIEaPg41DboSNLvQNiYDT4TxhdY3FAXezeSSzzuFsmqRK0upctSBGZOQfL9Bo9i2jhTSINvXdL2o76dIAd38xg1TwD5FYGUP5e0aZBZfERKoOEcBSXDeDPHgbOw3f/nmS4W42erQujnYGt/kZ9nqm7j9ULRKw/5pW3JlM7sk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770216898; c=relaxed/simple;
-	bh=5YsJei5woJuxThfSRBtyGYMc87U/Kll13AGG3mIsmE0=;
+	s=arc-20240116; t=1770216901; c=relaxed/simple;
+	bh=sPyKGl6tmLsD13/njDltul/yw6XYLRz7epmmeGqd3Gk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=og7QZVpXWT4UkrFKJmkVIMPWBY1cyPnw+1wWz6DQsD5SINIbW3woRtmbxocXxmKOoV5KyP9W6cZENps3b0lSdT2RZjJ9MqezH2NL1P7Vu8MVy9FXw8r3urnZ7RTXBxZmPiCMZu1oukLYeP0mhOMcG5FkJPofxvQeMhOT/r4S0fM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fN4Ql4U6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BsMDSm7SOpjduGjs0cCxo6I5Oumg59oghwSlivVe+lE5y6eM10fhSeetNRalhYXW8PDHSp2r1LGu+ejiN2MtBDvbyqbJ/+LFrbFE8xImQD6op+OX9XjrrOyljCKpxHZKDfOPOKjIC7zlqJXXEcW5lvp8kxeqlgLtX/CJIFE/c18=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SpJygPYh; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fN4Ql4U6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BAD3BC4CEF7;
-	Wed,  4 Feb 2026 14:54:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SpJygPYh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E8C25C19424;
+	Wed,  4 Feb 2026 14:55:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770216898;
-	bh=5YsJei5woJuxThfSRBtyGYMc87U/Kll13AGG3mIsmE0=;
+	s=korg; t=1770216901;
+	bh=sPyKGl6tmLsD13/njDltul/yw6XYLRz7epmmeGqd3Gk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fN4Ql4U65sRXbumlcKy/LEBsfXpx9Ow+TJD87sZG8bDUVci+e9nWp8ODdLGgFCX86
-	 0TvE3Sm80deRwk89qoB0ZYS/Tp8VV7LK/07rOVOAnRrzov7rwyNbMEGDI4zJixjHu7
-	 vStuOAURrJkhC+PHgyGiBlDTezOJFS9b0UtI6U+o=
+	b=SpJygPYhUks3zpCTj22sRdk87ilFRhOv4F3/3TsBjw4B8Aw3+Y0CU+R3oUw3KHej7
+	 cxLhhHAxTYmCcflROSqa1MgbHP+3hu/7p0LxbXTbhMPMbtk2q+mjz5u+zHhRci8zQC
+	 Uv2bj4eWgfM2pEOet1s+RXy8swh66Jk9a/1mIAuk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Richard Cochran <richardcochran@gmail.com>,
-	Vadim Fedorenko <vadim.fedorenko@linux.dev>,
-	Wojtek Wasko <wwasko@nvidia.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Ethan Nelson-Moore <enelsonmoore@gmail.com>,
+	Peter Korsgaard <peter@korsgaard.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 065/206] testptp: Add option to open PHC in readonly mode
-Date: Wed,  4 Feb 2026 15:38:16 +0100
-Message-ID: <20260204143900.555706528@linuxfoundation.org>
+Subject: [PATCH 5.15 066/206] net: usb: dm9601: remove broken SR9700 support
+Date: Wed,  4 Feb 2026 15:38:17 +0100
+Message-ID: <20260204143900.591732978@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260204143858.193781818@linuxfoundation.org>
 References: <20260204143858.193781818@linuxfoundation.org>
@@ -53,118 +52,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wojtek Wasko <wwasko@nvidia.com>
+From: Ethan Nelson-Moore <enelsonmoore@gmail.com>
 
-[ Upstream commit 76868642e42795353106197abf9c607ad80f4c9e ]
+[ Upstream commit 7d7dbafefbe74f5a25efc4807af093b857a7612e ]
 
-PTP Hardware Clocks no longer require WRITE permission to perform
-readonly operations, such as listing device capabilities or listening to
-EXTTS events once they have been enabled by a process with WRITE
-permissions.
+The SR9700 chip sends more than one packet in a USB transaction,
+like the DM962x chips can optionally do, but the dm9601 driver does not
+support this mode, and the hardware does not have the DM962x
+MODE_CTL register to disable it, so this driver drops packets on SR9700
+devices. The sr9700 driver correctly handles receiving more than one
+packet per transaction.
 
-Add '-r' option to testptp to open the PHC in readonly mode instead of
-the default read-write mode. Skip enabling EXTTS if readonly mode is
-requested.
+While the dm9601 driver could be improved to handle this, the easiest
+way to fix this issue in the short term is to remove the SR9700 device
+ID from the dm9601 driver so the sr9700 driver is always used. This
+device ID should not have been in more than one driver to begin with.
 
-Acked-by: Richard Cochran <richardcochran@gmail.com>
-Reviewed-by: Vadim Fedorenko <vadim.fedorenko@linux.dev>
-Signed-off-by: Wojtek Wasko <wwasko@nvidia.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+The "Fixes" commit was chosen so that the patch is automatically
+included in all kernels that have the sr9700 driver, even though the
+issue affects dm9601.
+
+Fixes: c9b37458e956 ("USB2NET : SR9700 : One chip USB 1.1 USB2NET SR9700Device Driver Support")
+Signed-off-by: Ethan Nelson-Moore <enelsonmoore@gmail.com>
+Acked-by: Peter Korsgaard <peter@korsgaard.com>
+Link: https://patch.msgid.link/20260113063924.74464-1-enelsonmoore@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/ptp/testptp.c | 37 +++++++++++++++++----------
- 1 file changed, 23 insertions(+), 14 deletions(-)
+ drivers/net/usb/dm9601.c | 4 ----
+ 1 file changed, 4 deletions(-)
 
-diff --git a/tools/testing/selftests/ptp/testptp.c b/tools/testing/selftests/ptp/testptp.c
-index d3922e3c437f1..89b4f43a7ba45 100644
---- a/tools/testing/selftests/ptp/testptp.c
-+++ b/tools/testing/selftests/ptp/testptp.c
-@@ -140,6 +140,7 @@ static void usage(char *progname)
- 		" -H val     set output phase to 'val' nanoseconds (requires -p)\n"
- 		" -w val     set output pulse width to 'val' nanoseconds (requires -p)\n"
- 		" -P val     enable or disable (val=1|0) the system clock PPS\n"
-+		" -r         open the ptp clock in readonly mode\n"
- 		" -s         set the ptp clock time from the system time\n"
- 		" -S         set the system time from the ptp clock time\n"
- 		" -t val     shift the ptp clock time by 'val' seconds\n"
-@@ -188,6 +189,7 @@ int main(int argc, char *argv[])
- 	int pin_index = -1, pin_func;
- 	int pps = -1;
- 	int seconds = 0;
-+	int readonly = 0;
- 	int settime = 0;
- 	int channel = -1;
- 	clockid_t ext_clockid = CLOCK_REALTIME;
-@@ -200,7 +202,7 @@ int main(int argc, char *argv[])
- 
- 	progname = strrchr(argv[0], '/');
- 	progname = progname ? 1+progname : argv[0];
--	while (EOF != (c = getopt(argc, argv, "cd:e:f:F:ghH:i:k:lL:n:o:p:P:sSt:T:w:x:Xy:z"))) {
-+	while (EOF != (c = getopt(argc, argv, "cd:e:f:F:ghH:i:k:lL:n:o:p:P:rsSt:T:w:x:Xy:z"))) {
- 		switch (c) {
- 		case 'c':
- 			capabilities = 1;
-@@ -252,6 +254,9 @@ int main(int argc, char *argv[])
- 		case 'P':
- 			pps = atoi(optarg);
- 			break;
-+		case 'r':
-+			readonly = 1;
-+			break;
- 		case 's':
- 			settime = 1;
- 			break;
-@@ -308,7 +313,7 @@ int main(int argc, char *argv[])
- 		}
- 	}
- 
--	fd = open(device, O_RDWR);
-+	fd = open(device, readonly ? O_RDONLY : O_RDWR);
- 	if (fd < 0) {
- 		fprintf(stderr, "opening %s: %s\n", device, strerror(errno));
- 		return -1;
-@@ -422,14 +427,16 @@ int main(int argc, char *argv[])
- 	}
- 
- 	if (extts) {
--		memset(&extts_request, 0, sizeof(extts_request));
--		extts_request.index = index;
--		extts_request.flags = PTP_ENABLE_FEATURE;
--		if (ioctl(fd, PTP_EXTTS_REQUEST, &extts_request)) {
--			perror("PTP_EXTTS_REQUEST");
--			extts = 0;
--		} else {
--			puts("external time stamp request okay");
-+		if (!readonly) {
-+			memset(&extts_request, 0, sizeof(extts_request));
-+			extts_request.index = index;
-+			extts_request.flags = PTP_ENABLE_FEATURE;
-+			if (ioctl(fd, PTP_EXTTS_REQUEST, &extts_request)) {
-+				perror("PTP_EXTTS_REQUEST");
-+				extts = 0;
-+			} else {
-+				puts("external time stamp request okay");
-+			}
- 		}
- 		for (; extts; extts--) {
- 			cnt = read(fd, &event, sizeof(event));
-@@ -441,10 +448,12 @@ int main(int argc, char *argv[])
- 			       event.t.sec, event.t.nsec);
- 			fflush(stdout);
- 		}
--		/* Disable the feature again. */
--		extts_request.flags = 0;
--		if (ioctl(fd, PTP_EXTTS_REQUEST, &extts_request)) {
--			perror("PTP_EXTTS_REQUEST");
-+		if (!readonly) {
-+			/* Disable the feature again. */
-+			extts_request.flags = 0;
-+			if (ioctl(fd, PTP_EXTTS_REQUEST, &extts_request)) {
-+				perror("PTP_EXTTS_REQUEST");
-+			}
- 		}
- 	}
- 
+diff --git a/drivers/net/usb/dm9601.c b/drivers/net/usb/dm9601.c
+index f7357d884d6aa..2d98238293a64 100644
+--- a/drivers/net/usb/dm9601.c
++++ b/drivers/net/usb/dm9601.c
+@@ -603,10 +603,6 @@ static const struct usb_device_id products[] = {
+ 	USB_DEVICE(0x0fe6, 0x8101),	/* DM9601 USB to Fast Ethernet Adapter */
+ 	.driver_info = (unsigned long)&dm9601_info,
+ 	 },
+-	{
+-	 USB_DEVICE(0x0fe6, 0x9700),	/* DM9601 USB to Fast Ethernet Adapter */
+-	 .driver_info = (unsigned long)&dm9601_info,
+-	 },
+ 	{
+ 	 USB_DEVICE(0x0a46, 0x9000),	/* DM9000E */
+ 	 .driver_info = (unsigned long)&dm9601_info,
 -- 
 2.51.0
 
