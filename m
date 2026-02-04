@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B559423152;
-	Wed,  4 Feb 2026 15:13:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B65D421F1C;
+	Wed,  4 Feb 2026 15:13:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770218007; cv=none; b=kyi8UChvlurjNBS50bxBmx+UmGijoTMlpZgJVq+22FXGBO54+hJ2/xE9xg81GEgp+9gRZ22eoS6hzP5UakqbQr94dQCsdyqHloo6rBuWEpBFZBQE42CLNQXT+/MUa1YvnQwkCBCzDuESdpE6XMSitEcwnyPYmLrgjRhsWh7nh/8=
+	t=1770218011; cv=none; b=rLl706uo82RIMpEA+FlPAo+BTDATfp/TAQrMks1EDBGBpd92NZfQQYqygA0YRStC+H0yEOE127Jmf3TMaMoWEc9nqFcp1xQl0Ek4GFx5uu1H5H53rWP/hAC2Jpr2c7ztYGGPWLI9ZYyh8ms0V0IxBRvlGsNF5gHnpdQ7iiFnNk4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770218007; c=relaxed/simple;
-	bh=7oRpsxN8uojkCK3kB9cBFX9IGGiE7U7O5mmstAHSwZM=;
+	s=arc-20240116; t=1770218011; c=relaxed/simple;
+	bh=NkRzTTgp5749KvN6w9LKEQNOxVAjmHxHrzZvL7pkvz8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UMxsUVtme0atGN5ipM1bOcrmkvp3P9S7OFMYhjOta47xZOX3wWPq0mpnMb4/kLZVCRPZUQOoMR/jqbqOJDmyI8WG5VphIPJtULAr3HGK+yeehS53axZAUeMnnS0eaL/pbYyJAgTz9r+G8NtP0uPWAm2bc8HDpjQwE2l5bUNKRkE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KQA1r/nj; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ogfcLfX1kvKO65/GOJbtptPPL0hDbTanlFqnpRNaOzwjZXrMCZfSt3qLD/aUmYXuVHDJPuKEnrTGr1BcBUegnwSeRzqzHcaGqVNc2QccM0ifZ8wpMWLhYegmbG0kCqocZ8ekA4+AF5oXuHOOH8FGkKb9uwz2W1Lq/3s3rHC32I4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=y2X5Fhp8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KQA1r/nj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC392C4CEF7;
-	Wed,  4 Feb 2026 15:13:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="y2X5Fhp8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 73344C4CEF7;
+	Wed,  4 Feb 2026 15:13:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770218007;
-	bh=7oRpsxN8uojkCK3kB9cBFX9IGGiE7U7O5mmstAHSwZM=;
+	s=korg; t=1770218010;
+	bh=NkRzTTgp5749KvN6w9LKEQNOxVAjmHxHrzZvL7pkvz8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KQA1r/njYdXWWpaziEp+Wk7felekwZ70rxtgTHMJLPi165DYHVTGPkp9B+zPjUDos
-	 qaFdQP6BVeHSz836gPb3Y1Q4Ge7daYSV9LRV6j2Cs66L+x/53Tw/+l5IR3P2RQUIN/
-	 nabEX0zHuSAApfe+8AzvcGBNGqx3FOnCiwz961B0=
+	b=y2X5Fhp8+u7fm7OIFT7oOof8WqiEPgWwp6JRFZjjYmmeUSHLpyiwWETiM/3LOTdgn
+	 mkWeXz6grZZYp5QGvXZ2X3lT7dOLRB2K9FAtwFPgVmg+k+FEJZA9Hr8MNA7yDVlowm
+	 yRnWK92bnoTq1W+Ru7UbVgPSGj84eOrhOv8X7Fok=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yinhao Hu <dddddd@hust.edu.cn>,
-	Kaiyan Mei <M202472210@hust.edu.cn>,
-	Dongliang Mu <dzm91@hust.edu.cn>,
-	Daniel Borkmann <daniel@iogearbox.net>,
+	syzbot+0ef84a7bdf5301d4cbec@syzkaller.appspotmail.com,
+	Paul Chaignon <paul.chaignon@gmail.com>,
 	Martin KaFai Lau <martin.lau@kernel.org>,
+	Eduard Zingerman <eddyz87@gmail.com>,
 	Shung-Hsi Yu <shung-hsi.yu@suse.com>
-Subject: [PATCH 6.1 184/280] bpf: Do not let BPF test infra emit invalid GSO types to stack
-Date: Wed,  4 Feb 2026 15:39:18 +0100
-Message-ID: <20260204143916.234396600@linuxfoundation.org>
+Subject: [PATCH 6.1 185/280] bpf: Reject narrower access to pointer ctx fields
+Date: Wed,  4 Feb 2026 15:39:19 +0100
+Message-ID: <20260204143916.269224948@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260204143909.614719725@linuxfoundation.org>
 References: <20260204143909.614719725@linuxfoundation.org>
@@ -54,78 +53,158 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Daniel Borkmann <daniel@iogearbox.net>
+From: Paul Chaignon <paul.chaignon@gmail.com>
 
-commit 04a899573fb87273a656f178b5f920c505f68875 upstream.
+commit e09299225d5ba3916c91ef70565f7d2187e4cca0 upstream.
 
-Yinhao et al. reported that their fuzzer tool was able to trigger a
-skb_warn_bad_offload() from netif_skb_features() -> gso_features_check().
-When a BPF program - triggered via BPF test infra - pushes the packet
-to the loopback device via bpf_clone_redirect() then mentioned offload
-warning can be seen. GSO-related features are then rightfully disabled.
+The following BPF program, simplified from a syzkaller repro, causes a
+kernel warning:
 
-We get into this situation due to convert___skb_to_skb() setting
-gso_segs and gso_size but not gso_type. Technically, it makes sense
-that this warning triggers since the GSO properties are malformed due
-to the gso_type. Potentially, the gso_type could be marked non-trustworthy
-through setting it at least to SKB_GSO_DODGY without any other specific
-assumptions, but that also feels wrong given we should not go further
-into the GSO engine in the first place.
+    r0 = *(u8 *)(r1 + 169);
+    exit;
 
-The checks were added in 121d57af308d ("gso: validate gso_type in GSO
-handlers") because there were malicious (syzbot) senders that combine
-a protocol with a non-matching gso_type. If we would want to drop such
-packets, gso_features_check() currently only returns feature flags via
-netif_skb_features(), so one location for potentially dropping such skbs
-could be validate_xmit_unreadable_skb(), but then otoh it would be
-an additional check in the fast-path for a very corner case. Given
-bpf_clone_redirect() is the only place where BPF test infra could emit
-such packets, lets reject them right there.
+With pointer field sk being at offset 168 in __sk_buff. This access is
+detected as a narrower read in bpf_skb_is_valid_access because it
+doesn't match offsetof(struct __sk_buff, sk). It is therefore allowed
+and later proceeds to bpf_convert_ctx_access. Note that for the
+"is_narrower_load" case in the convert_ctx_accesses(), the insn->off
+is aligned, so the cnt may not be 0 because it matches the
+offsetof(struct __sk_buff, sk) in the bpf_convert_ctx_access. However,
+the target_size stays 0 and the verifier errors with a kernel warning:
 
-Fixes: 850a88cc4096 ("bpf: Expose __sk_buff wire_len/gso_segs to BPF_PROG_TEST_RUN")
-Fixes: cf62089b0edd ("bpf: Add gso_size to __sk_buff")
-Reported-by: Yinhao Hu <dddddd@hust.edu.cn>
-Reported-by: Kaiyan Mei <M202472210@hust.edu.cn>
-Reported-by: Dongliang Mu <dzm91@hust.edu.cn>
-Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
+    verifier bug: error during ctx access conversion(1)
+
+This patch fixes that to return a proper "invalid bpf_context access
+off=X size=Y" error on the load instruction.
+
+The same issue affects multiple other fields in context structures that
+allow narrow access. Some other non-affected fields (for sk_msg,
+sk_lookup, and sockopt) were also changed to use bpf_ctx_range_ptr for
+consistency.
+
+Note this syzkaller crash was reported in the "Closes" link below, which
+used to be about a different bug, fixed in
+commit fce7bd8e385a ("bpf/verifier: Handle BPF_LOAD_ACQ instructions
+in insn_def_regno()"). Because syzbot somehow confused the two bugs,
+the new crash and repro didn't get reported to the mailing list.
+
+Fixes: f96da09473b52 ("bpf: simplify narrower ctx access")
+Fixes: 0df1a55afa832 ("bpf: Warn on internal verifier errors")
+Reported-by: syzbot+0ef84a7bdf5301d4cbec@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=0ef84a7bdf5301d4cbec
+Signed-off-by: Paul Chaignon <paul.chaignon@gmail.com>
 Signed-off-by: Martin KaFai Lau <martin.lau@kernel.org>
-Link: https://patch.msgid.link/20251020075441.127980-1-daniel@iogearbox.net
+Acked-by: Eduard Zingerman <eddyz87@gmail.com>
+Link: https://patch.msgid.link/3b8dcee67ff4296903351a974ddd9c4dca768b64.1753194596.git.paul.chaignon@gmail.com
+[shung-hsi.yu: offset(struct bpf_sock_ops, skb_hwtstamp) case was
+dropped becasuse it was only added in v6.2 with commit 9bb053490f1a
+("bpf: Add hwtstamp field for the sockops prog")]
 Signed-off-by: Shung-Hsi Yu <shung-hsi.yu@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/bpf/test_run.c |    5 +++++
- net/core/filter.c  |    7 +++++++
- 2 files changed, 12 insertions(+)
+ kernel/bpf/cgroup.c |    8 ++++----
+ net/core/filter.c   |   18 +++++++++---------
+ 2 files changed, 13 insertions(+), 13 deletions(-)
 
---- a/net/bpf/test_run.c
-+++ b/net/bpf/test_run.c
-@@ -1047,6 +1047,11 @@ static int convert___skb_to_skb(struct s
+--- a/kernel/bpf/cgroup.c
++++ b/kernel/bpf/cgroup.c
+@@ -2384,22 +2384,22 @@ static bool cg_sockopt_is_valid_access(i
+ 	}
  
- 	if (__skb->gso_segs > GSO_MAX_SEGS)
- 		return -EINVAL;
-+
-+	/* Currently GSO type is zero/unset. If this gets extended with
-+	 * a small list of accepted GSO types in future, the filter for
-+	 * an unset GSO type in bpf_clone_redirect() can be lifted.
-+	 */
- 	skb_shinfo(skb)->gso_segs = __skb->gso_segs;
- 	skb_shinfo(skb)->gso_size = __skb->gso_size;
- 	skb_shinfo(skb)->hwtstamps.hwtstamp = __skb->hwtstamp;
+ 	switch (off) {
+-	case offsetof(struct bpf_sockopt, sk):
++	case bpf_ctx_range_ptr(struct bpf_sockopt, sk):
+ 		if (size != sizeof(__u64))
+ 			return false;
+ 		info->reg_type = PTR_TO_SOCKET;
+ 		break;
+-	case offsetof(struct bpf_sockopt, optval):
++	case bpf_ctx_range_ptr(struct bpf_sockopt, optval):
+ 		if (size != sizeof(__u64))
+ 			return false;
+ 		info->reg_type = PTR_TO_PACKET;
+ 		break;
+-	case offsetof(struct bpf_sockopt, optval_end):
++	case bpf_ctx_range_ptr(struct bpf_sockopt, optval_end):
+ 		if (size != sizeof(__u64))
+ 			return false;
+ 		info->reg_type = PTR_TO_PACKET_END;
+ 		break;
+-	case offsetof(struct bpf_sockopt, retval):
++	case bpf_ctx_range(struct bpf_sockopt, retval):
+ 		if (size != size_default)
+ 			return false;
+ 		return prog->expected_attach_type == BPF_CGROUP_GETSOCKOPT;
 --- a/net/core/filter.c
 +++ b/net/core/filter.c
-@@ -2444,6 +2444,13 @@ BPF_CALL_3(bpf_clone_redirect, struct sk
- 	if (unlikely(flags & (~(BPF_F_INGRESS) | BPF_F_REDIRECT_INTERNAL)))
- 		return -EINVAL;
+@@ -8522,7 +8522,7 @@ static bool bpf_skb_is_valid_access(int
+ 		if (size != sizeof(__u64))
+ 			return false;
+ 		break;
+-	case offsetof(struct __sk_buff, sk):
++	case bpf_ctx_range_ptr(struct __sk_buff, sk):
+ 		if (type == BPF_WRITE || size != sizeof(__u64))
+ 			return false;
+ 		info->reg_type = PTR_TO_SOCK_COMMON_OR_NULL;
+@@ -9106,7 +9106,7 @@ static bool sock_addr_is_valid_access(in
+ 				return false;
+ 		}
+ 		break;
+-	case offsetof(struct bpf_sock_addr, sk):
++	case bpf_ctx_range_ptr(struct bpf_sock_addr, sk):
+ 		if (type != BPF_READ)
+ 			return false;
+ 		if (size != sizeof(__u64))
+@@ -9160,17 +9160,17 @@ static bool sock_ops_is_valid_access(int
+ 			if (size != sizeof(__u64))
+ 				return false;
+ 			break;
+-		case offsetof(struct bpf_sock_ops, sk):
++		case bpf_ctx_range_ptr(struct bpf_sock_ops, sk):
+ 			if (size != sizeof(__u64))
+ 				return false;
+ 			info->reg_type = PTR_TO_SOCKET_OR_NULL;
+ 			break;
+-		case offsetof(struct bpf_sock_ops, skb_data):
++		case bpf_ctx_range_ptr(struct bpf_sock_ops, skb_data):
+ 			if (size != sizeof(__u64))
+ 				return false;
+ 			info->reg_type = PTR_TO_PACKET;
+ 			break;
+-		case offsetof(struct bpf_sock_ops, skb_data_end):
++		case bpf_ctx_range_ptr(struct bpf_sock_ops, skb_data_end):
+ 			if (size != sizeof(__u64))
+ 				return false;
+ 			info->reg_type = PTR_TO_PACKET_END;
+@@ -9245,17 +9245,17 @@ static bool sk_msg_is_valid_access(int o
+ 		return false;
  
-+	/* BPF test infra's convert___skb_to_skb() can create type-less
-+	 * GSO packets. gso_features_check() will detect this as a bad
-+	 * offload. However, lets not leak them out in the first place.
-+	 */
-+	if (unlikely(skb_is_gso(skb) && !skb_shinfo(skb)->gso_type))
-+		return -EBADMSG;
-+
- 	dev = dev_get_by_index_rcu(dev_net(skb->dev), ifindex);
- 	if (unlikely(!dev))
- 		return -EINVAL;
+ 	switch (off) {
+-	case offsetof(struct sk_msg_md, data):
++	case bpf_ctx_range_ptr(struct sk_msg_md, data):
+ 		info->reg_type = PTR_TO_PACKET;
+ 		if (size != sizeof(__u64))
+ 			return false;
+ 		break;
+-	case offsetof(struct sk_msg_md, data_end):
++	case bpf_ctx_range_ptr(struct sk_msg_md, data_end):
+ 		info->reg_type = PTR_TO_PACKET_END;
+ 		if (size != sizeof(__u64))
+ 			return false;
+ 		break;
+-	case offsetof(struct sk_msg_md, sk):
++	case bpf_ctx_range_ptr(struct sk_msg_md, sk):
+ 		if (size != sizeof(__u64))
+ 			return false;
+ 		info->reg_type = PTR_TO_SOCKET;
+@@ -11444,7 +11444,7 @@ static bool sk_lookup_is_valid_access(in
+ 		return false;
+ 
+ 	switch (off) {
+-	case offsetof(struct bpf_sk_lookup, sk):
++	case bpf_ctx_range_ptr(struct bpf_sk_lookup, sk):
+ 		info->reg_type = PTR_TO_SOCKET_OR_NULL;
+ 		return size == sizeof(__u64);
+ 
 
 
