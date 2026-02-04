@@ -1,40 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ECDAF41B369;
-	Wed,  4 Feb 2026 15:15:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8D8018859B;
+	Wed,  4 Feb 2026 15:15:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770218143; cv=none; b=Oh0mSYOJHxevHQovyUGmevlQsSraDUSLEe7S7e+FTSorYbZ3LFsqb3J7FkIee7kX/Bbfg1pSt+URKZ5vHf97EtkgOuBn0G3RkYRLw41VmH8WBaIyu96QpfsAo7NcyzO9cxrDLqGqnEqfdTNZo4DVZ5SdVKFPhxzcIySfn7xmsLE=
+	t=1770218145; cv=none; b=I0VXda7nljGbWpKepolAON56J30bLKJ22pyvEQTKqNNwT/kdLtlY1jQ5glcs2rHkX5Rg7WVgaq27drgjswb5v7wWFetvxz9O8wYIQT3LfUHzxSEQLBOoigaFpe4sLLkU++LFt4JzTAc6u2ZmE823UavSM3yGUMrkeY2m5ZkJjgQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770218143; c=relaxed/simple;
-	bh=/lnYK48ZGMChdonse0/OZRpN3O4ou2/11bwODGAq3Yk=;
+	s=arc-20240116; t=1770218145; c=relaxed/simple;
+	bh=UNsBoyW7USq1wVSHc6nGwWVGs4INctXUmuYbNaPzdzM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UzWcsm4BUlR4ZEO7dIL0CZKfbO9v6xl0cpGOdEw4gxBe+tzBu4V5qv2fn4kx7AMrEJ+fgN91GrD74L0+GPSMOo7CiMRWyb31z8E6n+/a26rvu/slPV/X+AZA3kj72BtH/7psB/WzRvL7ofqJUU+zMv2MpyNK+SRjCIOlBVanl9E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sBZtG+iK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=OSw2gGoQx5klqmWQ8WOO15pSwuO8UtjWmkxqjTXeLIYYjhi0qouUsAeC7XgZ7Vied1lcoMUJSOxL1Fw+rpKqxzOE/PEFTNQN7fxdxQRhg+6bnGksYEL3/jeev7q7wNg0TVUvVs5vafMPAp79xb+4nayPDE2syq5rMIjNGLwzTWE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VDsqb/dt; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sBZtG+iK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0FA6BC4CEF7;
-	Wed,  4 Feb 2026 15:15:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VDsqb/dt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 51CC2C4CEF7;
+	Wed,  4 Feb 2026 15:15:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770218142;
-	bh=/lnYK48ZGMChdonse0/OZRpN3O4ou2/11bwODGAq3Yk=;
+	s=korg; t=1770218145;
+	bh=UNsBoyW7USq1wVSHc6nGwWVGs4INctXUmuYbNaPzdzM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sBZtG+iKbjayo/XbqmRhnDkFsBytMsrFzOhD6nzJ8yup6KL9uq9pDUc0MsZHyeFwF
-	 ZiBEmOn47/7dDP7Hh2ONSiUrniglBo3ZbeUvTgIx7V3Faopp7b4wTNTtNVP2ouAoHK
-	 WxCBSTWwWILs5kyYyxKbUqJXBFcyNz5ksdJeLJHQ=
+	b=VDsqb/dtKukfkOeAw2vdTJqSU9VJcWl2vuS3rdCUlpQV09YbV7DXX94T7h6mwmXtM
+	 jTVUaT89AOvhUFkmt4EOCLKoO+0FbGxVPvjKtEV8pUEBQZWoJoDnc81VWMVLoQftnx
+	 DAqX/GB+gDjGw9ASKVrU8vFJIMtG4BebxwI0OYI4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pierre-Yves MORDRET <pierre-yves.mordret@foss.st.com>,
-	Johan Hovold <johan@kernel.org>,
-	Amelie Delaunay <amelie.delaunay@foss.st.com>,
-	Vinod Koul <vkoul@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Yafang Shao <laoar.shao@gmail.com>,
+	Saeed Mahameed <saeedm@nvidia.com>,
+	Leon Romanovsky <leon@kernel.org>,
+	Gal Pressman <gal@nvidia.com>,
+	Simon Horman <horms@kernel.org>,
+	Tariq Toukan <tariqt@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 224/280] dmaengine: stm32: dmamux: fix OF node leak on route allocation failure
-Date: Wed,  4 Feb 2026 15:39:58 +0100
-Message-ID: <20260204143917.672160715@linuxfoundation.org>
+Subject: [PATCH 6.1 198/280] net/mlx5e: Report rx_discards_phy via rx_dropped
+Date: Wed,  4 Feb 2026 15:39:32 +0100
+Message-ID: <20260204143916.729768612@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260204143909.614719725@linuxfoundation.org>
 References: <20260204143909.614719725@linuxfoundation.org>
@@ -47,51 +50,54 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Johan Hovold <johan@kernel.org>
+From: Yafang Shao <laoar.shao@gmail.com>
 
-[ Upstream commit b1b590a590af13ded598e70f0b72bc1e515787a1 ]
+[ Upstream commit c9cfced17365b1df8c6ae6cd5db56aebd7ed9b57 ]
 
-Make sure to drop the reference taken to the DMA master OF node also on
-late route allocation failures.
+We noticed a high number of rx_discards_phy events on certain servers while
+running `ethtool -S`. However, this critical counter is not currently
+included in the standard /proc/net/dev statistics file, making it difficult
+to monitor effectively—especially given the diversity of vendors across a
+large fleet of servers.
 
-Fixes: df7e762db5f6 ("dmaengine: Add STM32 DMAMUX driver")
-Cc: stable@vger.kernel.org      # 4.15
-Cc: Pierre-Yves MORDRET <pierre-yves.mordret@foss.st.com>
-Signed-off-by: Johan Hovold <johan@kernel.org>
-Reviewed-by: Amelie Delaunay <amelie.delaunay@foss.st.com>
-Link: https://patch.msgid.link/20251117161258.10679-12-johan@kernel.org
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Let's report it via the standard rx_dropped metric.
+
+Suggested-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Yafang Shao <laoar.shao@gmail.com>
+Cc: Saeed Mahameed <saeedm@nvidia.com>
+Cc: Leon Romanovsky <leon@kernel.org>
+Cc: Gal Pressman <gal@nvidia.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Reviewed-by: Tariq Toukan <tariqt@nvidia.com>
+Link: https://patch.msgid.link/20241210022706.6665-1-laoar.shao@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Stable-dep-of: 476681f10cc1 ("net/mlx5e: Account for netdev stats in ndo_get_stats64")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/dma/stm32-dmamux.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/net/ethernet/mellanox/mlx5/core/en_main.c | 1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/dma/stm32-dmamux.c
-+++ b/drivers/dma/stm32-dmamux.c
-@@ -140,7 +140,7 @@ static void *stm32_dmamux_route_allocate
- 	ret = pm_runtime_resume_and_get(&pdev->dev);
- 	if (ret < 0) {
- 		spin_unlock_irqrestore(&dmamux->lock, flags);
--		goto error;
-+		goto err_put_dma_spec_np;
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en_main.c b/drivers/net/ethernet/mellanox/mlx5/core/en_main.c
+index 73011870e5ff6..1d7fe4ffdd734 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/en_main.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/en_main.c
+@@ -3667,6 +3667,7 @@ mlx5e_get_stats(struct net_device *dev, struct rtnl_link_stats64 *stats)
  	}
- 	spin_unlock_irqrestore(&dmamux->lock, flags);
  
-@@ -160,6 +160,8 @@ static void *stm32_dmamux_route_allocate
+ 	stats->rx_missed_errors = priv->stats.qcnt.rx_out_of_buffer;
++	stats->rx_dropped = PPORT_2863_GET(pstats, if_in_discards);
  
- 	return mux;
- 
-+err_put_dma_spec_np:
-+	of_node_put(dma_spec->np);
- error:
- 	clear_bit(mux->chan_id, dmamux->dma_inuse);
- 
+ 	stats->rx_length_errors =
+ 		PPORT_802_3_GET(pstats, a_in_range_length_errors) +
+-- 
+2.51.0
+
 
 
