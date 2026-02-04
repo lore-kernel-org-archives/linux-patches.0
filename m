@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 128603D994;
-	Wed,  4 Feb 2026 15:12:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2CE2D2D5926;
+	Wed,  4 Feb 2026 15:12:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770217926; cv=none; b=csFDHslT8/cimU7QtZL8c16IZvjXADiVuUudzUWcfVyakDzavBVKpPmvmnMMsGZHATOhqvFlsbcQYxLxvLizu9ZSFNe2E+g06qysTgpd2P6+f/6tJqP0hqBPr12AcaN1G0nDnfAA6sXsZjCWfXIVdzgjCZaWwOeBeETiMaaVjPk=
+	t=1770217930; cv=none; b=Iprg0DAFxYJ/9EzMWxmxXnrwUvvVX/xRV1lURdEAuRQjhmzrBwIaUiBrmwHyaHYj0s//jNcMh6TOlJDgPZGUVwUsFr2Ciwzt71+nYoCsPyQAUtnRShoqT68ID1KbGgoAU5oJtV93UXUi/7KHZp3NkcVMONDBLrVjPxhC+0oqq3c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770217926; c=relaxed/simple;
-	bh=QrY7Mj5AKqaLwBO7ly2fg1nBp9f2ny7VQr25fq64i7A=;
+	s=arc-20240116; t=1770217930; c=relaxed/simple;
+	bh=sJF0iGo1Hjwgt3SH4mGLIUzR71OquTRRgkx3amdA0U8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ojOVQsOOKJzQULZTYgaS7Y9OSPL1GekssMicVFfsWJzyc9/DTm1lQsIcaWWIvwuREXhbE0sUmLcTyYSqabMfQAUFQ0kTxTU360krpKjxb2gNQZhsbNxTDrvjSBbuDYHHV/ff9xPLEg6fK40nakzuQHijYmpUnLQpkOhkCctKPRQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xh1eeeOd; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=lQFOj7MJYsOBL/Ff6btmfxw4OBGqgPIVkPBjqst4lBw5PpkPZN3t+hEga4iczXm2yaZdKqrBzUgd9l0Q7sgBH5fKdNoSPkKck8vBCa1ILwPKGlkEn/EfU3jtr1z1rB8Rf4sZ27pYP4sv8b1mmrQ9OgCSD9XYi3X6xwuo/ifsE9s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=L5e8bymi; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xh1eeeOd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 769B5C4CEF7;
-	Wed,  4 Feb 2026 15:12:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="L5e8bymi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 41FEDC4CEF7;
+	Wed,  4 Feb 2026 15:12:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770217926;
-	bh=QrY7Mj5AKqaLwBO7ly2fg1nBp9f2ny7VQr25fq64i7A=;
+	s=korg; t=1770217929;
+	bh=sJF0iGo1Hjwgt3SH4mGLIUzR71OquTRRgkx3amdA0U8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xh1eeeOdGC4UA4/+WyZs/SGSsz+Ir0gO1NsOgajvz9hSHu61XO7ZlGaD1LeVgmtUQ
-	 w4jB+cItdLJIEZNW5n/Hxg26xyOQ1nv57AIrx08BQ97QUMSPSMGjLCcVPfA33CcTGb
-	 uOir3JId2UbT6K2a4E2mtKnlOfVpAAtPjIYjRrvE=
+	b=L5e8bymi80ANTsS4gPqyf5kDnwOpqZ2tjvWhn0Na3UHrEpe9uyM7iIk572rf35jAu
+	 VbYzv3PLhpvYVdkDtpr+tZeFHgfC0HZB1aMYgNO4pxpXd672gKba/bggZ8RNsTwkrX
+	 22qYLo3fKsBSf0x1gR/MRvB5uS0j1itVosDCoSsE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pavel Zhigulin <Pavel.Zhigulin@kaspersky.com>,
-	Marcelo Schmitt <marcelo.schmitt@analog.com>,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 127/280] iio: adc: ad7280a: handle spi_setup() errors in probe()
-Date: Wed,  4 Feb 2026 15:38:21 +0100
-Message-ID: <20260204143914.206822501@linuxfoundation.org>
+Subject: [PATCH 6.1 128/280] spi: sprd-adi: Convert to platform remove callback returning void
+Date: Wed,  4 Feb 2026 15:38:22 +0100
+Message-ID: <20260204143914.242134646@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260204143909.614719725@linuxfoundation.org>
 References: <20260204143909.614719725@linuxfoundation.org>
@@ -46,49 +45,65 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Pavel Zhigulin <Pavel.Zhigulin@kaspersky.com>
+From: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
 
-[ Upstream commit 6b39824ac4c15783787e6434449772bfb2e31214 ]
+[ Upstream commit f7f785f125d03360d3766d96d04cf08b8472ce8f ]
 
-The probe() function ignored the return value of spi_setup(), leaving SPI
-configuration failures undetected. If spi_setup() fails, the driver should
-stop initialization and propagate the error to the caller.
+The .remove() callback for a platform driver returns an int which makes
+many driver authors wrongly assume it's possible to do error handling by
+returning an error code. However the value returned is (mostly) ignored
+and this typically results in resource leaks. To improve here there is a
+quest to make the remove callback return void. In the first step of this
+quest all drivers are converted to .remove_new() which already returns
+void.
 
-Add proper error handling: check the return value of spi_setup() and return
-it on failure.
+Trivially convert this driver from always returning zero in the remove
+callback to the void returning variant.
 
-Found by Linux Verification Center (linuxtesting.org) with SVACE.
-
-Fixes: 2051f25d2a26 ("iio: adc: New driver for AD7280A Lithium Ion Battery Monitoring System")
-Signed-off-by: Pavel Zhigulin <Pavel.Zhigulin@kaspersky.com>
-Reviewed-by: Marcelo Schmitt <marcelo.schmitt@analog.com>
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+Link: https://lore.kernel.org/r/20230303172041.2103336-71-u.kleine-koenig@pengutronix.de
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Stable-dep-of: 383d4f5cffcc ("spi: spi-sprd-adi: Fix double free in probe error path")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iio/adc/ad7280a.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/spi/spi-sprd-adi.c | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/iio/adc/ad7280a.c b/drivers/iio/adc/ad7280a.c
-index 9080c795dcb7e..10cc623bf62a3 100644
---- a/drivers/iio/adc/ad7280a.c
-+++ b/drivers/iio/adc/ad7280a.c
-@@ -1028,7 +1028,9 @@ static int ad7280_probe(struct spi_device *spi)
+diff --git a/drivers/spi/spi-sprd-adi.c b/drivers/spi/spi-sprd-adi.c
+index 1edbf44c05a72..3b158124d79f7 100644
+--- a/drivers/spi/spi-sprd-adi.c
++++ b/drivers/spi/spi-sprd-adi.c
+@@ -608,13 +608,12 @@ static int sprd_adi_probe(struct platform_device *pdev)
+ 	return ret;
+ }
  
- 	st->spi->max_speed_hz = AD7280A_MAX_SPI_CLK_HZ;
- 	st->spi->mode = SPI_MODE_1;
--	spi_setup(st->spi);
-+	ret = spi_setup(st->spi);
-+	if (ret < 0)
-+		return ret;
+-static int sprd_adi_remove(struct platform_device *pdev)
++static void sprd_adi_remove(struct platform_device *pdev)
+ {
+ 	struct spi_controller *ctlr = dev_get_drvdata(&pdev->dev);
+ 	struct sprd_adi *sadi = spi_controller_get_devdata(ctlr);
  
- 	st->ctrl_lb = FIELD_PREP(AD7280A_CTRL_LB_ACQ_TIME_MSK, st->acquisition_time) |
- 		FIELD_PREP(AD7280A_CTRL_LB_THERMISTOR_MSK, st->thermistor_term_en);
+ 	unregister_restart_handler(&sadi->restart_handler);
+-	return 0;
+ }
+ 
+ static struct sprd_adi_data sc9860_data = {
+@@ -660,7 +659,7 @@ static struct platform_driver sprd_adi_driver = {
+ 		.of_match_table = sprd_adi_of_match,
+ 	},
+ 	.probe = sprd_adi_probe,
+-	.remove = sprd_adi_remove,
++	.remove_new = sprd_adi_remove,
+ };
+ module_platform_driver(sprd_adi_driver);
+ 
 -- 
 2.51.0
 
