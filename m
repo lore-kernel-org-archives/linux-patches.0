@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9845E421EE3;
-	Wed,  4 Feb 2026 15:22:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50BA6421F1E;
+	Wed,  4 Feb 2026 15:22:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770218542; cv=none; b=Dp0pNiPdLPaTqSyNwz9M5tF2a9r4aqVHIkXfN9UIcNlLhtJJF76CINiLGektIXk5t3+TjuJRxaW2D7E/oYy9pNzVwqAQDhIRPsq2FjwplL9gGiiz+MXADZ2eJMla2xqKk8T/TDwvwVhxTj/Bd6aNEncu7QBv+D0GZBJhhs24tFQ=
+	t=1770218546; cv=none; b=N6Lg03801yufprh+rkOAEUEvF5HbzEmDiFvpTVbFLEsgDZ0mzWdjiVrzWxZ0VngYWhwGaLOsPXuCUX8ARkZbbHwtDR7V47ZEax7+285zYuhZFPbpd7E6s16/dBMd19W7iCaVmuB+pKcwg09OOvvGwljoOvn7GhWHKmBgiK4Z6gU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770218542; c=relaxed/simple;
-	bh=+I1FDEMk8gHlolBaisguGF5ccGAFcaDS0czDHyHhrzg=;
+	s=arc-20240116; t=1770218546; c=relaxed/simple;
+	bh=2zqryaA4699ni6ZDSwkOeniwwvT+cHkmv1sa+UaiaWY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ctPhiwhpWqFY/v0UN4IR6Umla7SiuYQi/l6OGdT6x2YpLa43c2YhK5YuFC+ooK3sCt7YJZ55C7NpY+rG6jpbMwXlttbjPqKUuRpu4gCPobY53n069i6oatWHR4WWqImJwaeBL/RW18F8PzrLXIOZw51O/s+hgzzZ/s6UnC9i7QA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=I4ATHmoy; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SnefEdXWTeYvh5zjzUSggcVPKf6SpFT04FlhF+N562UwEhyJRXokrhP9ucGswbp7PtpfE+SIjp0d/fPytevHJ9Btk+2R/oKFRP+/M1VeMAbRmzMdqW1og3zILpvb0QHKEhQZseUluxA5fxtRtvHqPLTyiIxr5hLgdglWDvJ/Ep8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VVYcrjdH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="I4ATHmoy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 06025C116C6;
-	Wed,  4 Feb 2026 15:22:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VVYcrjdH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2982C4AF0E;
+	Wed,  4 Feb 2026 15:22:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770218542;
-	bh=+I1FDEMk8gHlolBaisguGF5ccGAFcaDS0czDHyHhrzg=;
+	s=korg; t=1770218546;
+	bh=2zqryaA4699ni6ZDSwkOeniwwvT+cHkmv1sa+UaiaWY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=I4ATHmoyuAP6shWCVfRYJ+6kwbLS3EzBWmWURV29zaRFeIbdCslbO7vFvfe7h7Rg+
-	 PAjyPVsYNUj6y4hQYqX4HBGA0yH5up0AYyICUrXXI95T8q/aVprzdECkqqW10rLaV+
-	 hs6VNyT1HXnBs3qqAEHuZKLurzvburXothZVnb9g=
+	b=VVYcrjdHLeymh8Msss5n9neJhDVaE6ECezWUf2//6fD5rbQlULH4mDBVgAFIjVXCA
+	 HHT59qBchL3HFuHvngBo2VgDeDwqiSHIGbXVO2jVTlWnyDl815ivQ/zVd7Rvb7FshG
+	 FhQvc6+YRCDq6tmiIIWOvEe7AMBwovbVR3qrp6Us=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Laveesh Bansal <laveeshb@laveeshbansal.com>,
-	Jan Kara <jack@suse.cz>,
-	Christian Brauner <brauner@kernel.org>,
+	Marco Angaroni <marco.angaroni@italtel.com>,
+	Geliang Tang <geliang@kernel.org>,
+	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 61/72] writeback: fix 100% CPU usage when dirtytime_expire_interval is 0
-Date: Wed,  4 Feb 2026 15:41:04 +0100
-Message-ID: <20260204143847.846881184@linuxfoundation.org>
+Subject: [PATCH 6.6 62/72] mptcp: avoid dup SUB_CLOSED events after disconnect
+Date: Wed,  4 Feb 2026 15:41:05 +0100
+Message-ID: <20260204143847.883889704@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260204143845.603454952@linuxfoundation.org>
 References: <20260204143845.603454952@linuxfoundation.org>
@@ -52,74 +53,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Laveesh Bansal <laveeshb@laveeshbansal.com>
+From: "Matthieu Baerts (NGI0)" <matttbe@kernel.org>
 
-[ Upstream commit 543467d6fe97e27e22a26e367fda972dbefebbff ]
+[ Upstream commit 280d654324e33f8e6e3641f76764694c7b64c5db ]
 
-When vm.dirtytime_expire_seconds is set to 0, wakeup_dirtytime_writeback()
-schedules delayed work with a delay of 0, causing immediate execution.
-The function then reschedules itself with 0 delay again, creating an
-infinite busy loop that causes 100% kworker CPU usage.
+In case of subflow disconnect(), which can also happen with the first
+subflow in case of errors like timeout or reset, mptcp_subflow_ctx_reset
+will reset most fields from the mptcp_subflow_context structure,
+including close_event_done. Then, when another subflow is closed, yet
+another SUB_CLOSED event for the disconnected initial subflow is sent.
+Because of the previous reset, there are no source address and
+destination port.
 
-Fix by:
-- Only scheduling delayed work in wakeup_dirtytime_writeback() when
-  dirtytime_expire_interval is non-zero
-- Cancelling the delayed work in dirtytime_interval_handler() when
-  the interval is set to 0
-- Adding a guard in start_dirtytime_writeback() for defensive coding
+A solution is then to also check the subflow's local id: it shouldn't be
+negative anyway.
 
-Tested by booting kernel in QEMU with virtme-ng:
-- Before fix: kworker CPU spikes to ~73%
-- After fix: CPU remains at normal levels
-- Setting interval back to non-zero correctly resumes writeback
+Another solution would be not to reset subflow->close_event_done at
+disconnect time, but when reused. But then, probably the whole reset
+could be done when being reused. Let's not change this logic, similar
+to TCP with tcp_disconnect().
 
-Fixes: a2f4870697a5 ("fs: make sure the timestamps for lazytime inodes eventually get written")
+Fixes: d82809b6c5f2 ("mptcp: avoid duplicated SUB_CLOSED events")
 Cc: stable@vger.kernel.org
-Closes: https://bugzilla.kernel.org/show_bug.cgi?id=220227
-Signed-off-by: Laveesh Bansal <laveeshb@laveeshbansal.com>
-Link: https://patch.msgid.link/20260106145059.543282-2-laveeshb@laveeshbansal.com
-Reviewed-by: Jan Kara <jack@suse.cz>
-Signed-off-by: Christian Brauner <brauner@kernel.org>
-[ adapted system_percpu_wq to system_wq for the workqueue used in dirtytime_interval_handler() ]
+Reported-by: Marco Angaroni <marco.angaroni@italtel.com>
+Closes: https://github.com/multipath-tcp/mptcp_net-next/issues/603
+Reviewed-by: Geliang Tang <geliang@kernel.org>
+Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Link: https://patch.msgid.link/20260127-net-mptcp-dup-nl-events-v1-1-7f71e1bc4feb@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+[ Adjust context ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/fs-writeback.c |   14 ++++++++++----
- 1 file changed, 10 insertions(+), 4 deletions(-)
+ net/mptcp/protocol.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/fs/fs-writeback.c
-+++ b/fs/fs-writeback.c
-@@ -2382,12 +2382,14 @@ static void wakeup_dirtytime_writeback(s
- 				wb_wakeup(wb);
- 	}
- 	rcu_read_unlock();
--	schedule_delayed_work(&dirtytime_work, dirtytime_expire_interval * HZ);
-+	if (dirtytime_expire_interval)
-+		schedule_delayed_work(&dirtytime_work, dirtytime_expire_interval * HZ);
- }
- 
- static int __init start_dirtytime_writeback(void)
+--- a/net/mptcp/protocol.c
++++ b/net/mptcp/protocol.c
+@@ -2554,8 +2554,8 @@ out:
+ void mptcp_close_ssk(struct sock *sk, struct sock *ssk,
+ 		     struct mptcp_subflow_context *subflow)
  {
--	schedule_delayed_work(&dirtytime_work, dirtytime_expire_interval * HZ);
-+	if (dirtytime_expire_interval)
-+		schedule_delayed_work(&dirtytime_work, dirtytime_expire_interval * HZ);
- 	return 0;
- }
- __initcall(start_dirtytime_writeback);
-@@ -2398,8 +2400,12 @@ int dirtytime_interval_handler(struct ct
- 	int ret;
+-	/* The first subflow can already be closed and still in the list */
+-	if (subflow->close_event_done)
++	/* The first subflow can already be closed or disconnected */
++	if (subflow->close_event_done || READ_ONCE(subflow->local_id) < 0)
+ 		return;
  
- 	ret = proc_dointvec_minmax(table, write, buffer, lenp, ppos);
--	if (ret == 0 && write)
--		mod_delayed_work(system_wq, &dirtytime_work, 0);
-+	if (ret == 0 && write) {
-+		if (dirtytime_expire_interval)
-+			mod_delayed_work(system_wq, &dirtytime_work, 0);
-+		else
-+			cancel_delayed_work_sync(&dirtytime_work);
-+	}
- 	return ret;
- }
- 
+ 	subflow->close_event_done = true;
 
 
