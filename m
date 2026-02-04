@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E2942D6E73;
-	Wed,  4 Feb 2026 15:01:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12AA7285404;
+	Wed,  4 Feb 2026 15:01:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770217299; cv=none; b=TROdd0Bfb7padh0iFUUZYpQ5K+QG5SAUnwiSs+btjA/G2k6uMbAC77HyX7zex9LgrysK6xr3+N935Cn1LO5zg2qavxbTUfCYbTkV00J5KR8TXxBOR62EIm3nq7wg1dBHLp9Ets6Eysrieg3wCdMrMZw3QmszOU/ShEJwoFJIAtg=
+	t=1770217303; cv=none; b=GhwPSgiRta5dmYWtObS5dcGAeHZN4dmkdcoG3maCDCIO/51tLnZal5bcuWTfpO+k9BAP5/MoNRli505vBF/FlRmtfxOGOyoJogBTEFY4+pTuE7I5sdQ0I+Ai5yq6aLDDs9QisDCO7V99VuWcozdvpe+ni6bJVfCfO7/0t1OoLkQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770217299; c=relaxed/simple;
-	bh=4v+AAwHMF04KZOQ8HjtmZ/tilu/qPVWfYyt0aa29BVg=;
+	s=arc-20240116; t=1770217303; c=relaxed/simple;
+	bh=8V8D4l2dzhmg6/GRhObbgTrF+syftXFtWre9W8aFE60=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=LiKnobPygtdJGtc2tkNtxcnHo0xUx6M7J6/q+dtbB/Iw+6XT8Ea8tau0g7q532OzQykkbR+xCShBCaA8+HrcTLcttDD8gsT+eE9fmM9aaU7iVxvBIQO5S4PzieuZp330iwn+3OaL50KfKi9/86TC+myhmZqpXXaPO5iH9aV5E98=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=A1Ghey6z; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=s5FxPaWyBmbWgXS8N3mhEzqPn7UGQ4o1lID/JVlgwwcSfYxqln6e7MnAoAPqEVWEO9s9GkMmy+cB2UIiipXgpZKj1HcmA7Y3vXzbGfJGCiHHXJV0/A/E9nsA9yZoazDQ5ngCh2FElURUjRq0zG73nL2Yumc/k5IrbdyjSFJSAoI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Y04N6Jqz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="A1Ghey6z"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A56C7C116C6;
-	Wed,  4 Feb 2026 15:01:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Y04N6Jqz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 41269C4CEF7;
+	Wed,  4 Feb 2026 15:01:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770217299;
-	bh=4v+AAwHMF04KZOQ8HjtmZ/tilu/qPVWfYyt0aa29BVg=;
+	s=korg; t=1770217302;
+	bh=8V8D4l2dzhmg6/GRhObbgTrF+syftXFtWre9W8aFE60=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=A1Ghey6z24E5B0nrJoapDKytQpwMpNA9rqd9fSC6u+GKROhAluxme/lcNdPUR/iAa
-	 D6b2LBjoDmbliiSOjpEWlAE0fTrW7OT37srjUzuKqGsd3rPTo7PMldjFS2nDQ/SWUd
-	 TrgWXyIfxGG6HTXedd4jTsPeDKiWrRLlYNfap2ks=
+	b=Y04N6Jqz5BGSpb6M4Pju8/vTnvpDbfNosL9rMzhrOQpsniDVdfkFNst+dqY31JbaL
+	 MF1nmOip+7f2XFz3z7tbDDJl10oe6Xg9e5L/ReGlUAY5Mu/cnHEASWmM3VJMth/X6/
+	 tg3cmbAbv1mjjqWD8aII57kxSb3osSySGATTcYoQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Maxime Chevallier <maxime.chevallier@bootlin.com>,
-	=?UTF-8?q?Alexis=20Lothor=C3=A9?= <alexis.lothore@bootlin.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Rahul Sharma <black.hawk@163.com>
-Subject: [PATCH 5.15 183/206] net: stmmac: make sure that ptp_rate is not 0 before configuring EST
-Date: Wed,  4 Feb 2026 15:40:14 +0100
-Message-ID: <20260204143904.810936064@linuxfoundation.org>
+	Ying Hsu <yinghsu@chromium.org>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Wenshan Lan <jetlan9@163.com>
+Subject: [PATCH 5.15 184/206] Bluetooth: Fix hci_suspend_sync crash
+Date: Wed,  4 Feb 2026 15:40:15 +0100
+Message-ID: <20260204143904.847167191@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260204143858.193781818@linuxfoundation.org>
 References: <20260204143858.193781818@linuxfoundation.org>
@@ -46,66 +45,69 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Alexis Lothoré <alexis.lothore@bootlin.com>
+From: Ying Hsu <yinghsu@chromium.org>
 
-[ Upstream commit cbefe2ffa7784525ec5d008ba87c7add19ec631a ]
+[ Upstream commit 573ebae162111063eedc6c838a659ba628f66a0f ]
 
-If the ptp_rate recorded earlier in the driver happens to be 0, this
-bogus value will propagate up to EST configuration, where it will
-trigger a division by 0.
+If hci_unregister_dev() frees the hci_dev object but hci_suspend_notifier
+may still be accessing it, it can cause the program to crash.
+Here's the call trace:
+  <4>[102152.653246] Call Trace:
+  <4>[102152.653254]  hci_suspend_sync+0x109/0x301 [bluetooth]
+  <4>[102152.653259]  hci_suspend_dev+0x78/0xcd [bluetooth]
+  <4>[102152.653263]  hci_suspend_notifier+0x42/0x7a [bluetooth]
+  <4>[102152.653268]  notifier_call_chain+0x43/0x6b
+  <4>[102152.653271]  __blocking_notifier_call_chain+0x48/0x69
+  <4>[102152.653273]  __pm_notifier_call_chain+0x22/0x39
+  <4>[102152.653276]  pm_suspend+0x287/0x57c
+  <4>[102152.653278]  state_store+0xae/0xe5
+  <4>[102152.653281]  kernfs_fop_write+0x109/0x173
+  <4>[102152.653284]  __vfs_write+0x16f/0x1a2
+  <4>[102152.653287]  ? selinux_file_permission+0xca/0x16f
+  <4>[102152.653289]  ? security_file_permission+0x36/0x109
+  <4>[102152.653291]  vfs_write+0x114/0x21d
+  <4>[102152.653293]  __x64_sys_write+0x7b/0xdb
+  <4>[102152.653296]  do_syscall_64+0x59/0x194
+  <4>[102152.653299]  entry_SYSCALL_64_after_hwframe+0x5c/0xc1
 
-Prevent this division by 0 by adding the corresponding check and error
-code.
+This patch holds the reference count of the hci_dev object while
+processing it in hci_suspend_notifier to avoid potential crash
+caused by the race condition.
 
-Suggested-by: Maxime Chevallier <maxime.chevallier@bootlin.com>
-Signed-off-by: Alexis Lothoré <alexis.lothore@bootlin.com>
-Fixes: 8572aec3d0dc ("net: stmmac: Add basic EST support for XGMAC")
-Link: https://patch.msgid.link/20250529-stmmac_tstamp_div-v4-2-d73340a794d5@bootlin.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-[ The context change is due to the commit c3f3b97238f6
-("net: stmmac: Refactor EST implementation")
-and the proper adoption is done. ]
-Signed-off-by: Rahul Sharma <black.hawk@163.com>
+Signed-off-by: Ying Hsu <yinghsu@chromium.org>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+[ Adjust context ]
+Signed-off-by: Wenshan Lan <jetlan9@163.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/stmicro/stmmac/dwmac5.c        |    5 +++++
- drivers/net/ethernet/stmicro/stmmac/dwxgmac2_core.c |    5 +++++
- 2 files changed, 10 insertions(+)
+ net/bluetooth/hci_core.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/drivers/net/ethernet/stmicro/stmmac/dwmac5.c
-+++ b/drivers/net/ethernet/stmicro/stmmac/dwmac5.c
-@@ -597,6 +597,11 @@ int dwmac5_est_configure(void __iomem *i
- 	int i, ret = 0x0;
- 	u32 ctrl;
+--- a/net/bluetooth/hci_core.c
++++ b/net/bluetooth/hci_core.c
+@@ -3706,6 +3706,9 @@ static int hci_suspend_notifier(struct n
+ 	int ret = 0;
+ 	u8 state = BT_RUNNING;
  
-+	if (!ptp_rate) {
-+		pr_warn("Dwmac5: Invalid PTP rate");
-+		return -EINVAL;
-+	}
++	/* To avoid a potential race with hci_unregister_dev. */
++	hci_dev_hold(hdev);
 +
- 	ret |= dwmac5_est_write(ioaddr, BTR_LOW, cfg->btr[0], false);
- 	ret |= dwmac5_est_write(ioaddr, BTR_HIGH, cfg->btr[1], false);
- 	ret |= dwmac5_est_write(ioaddr, TER, cfg->ter, false);
---- a/drivers/net/ethernet/stmicro/stmmac/dwxgmac2_core.c
-+++ b/drivers/net/ethernet/stmicro/stmmac/dwxgmac2_core.c
-@@ -1494,6 +1494,11 @@ static int dwxgmac3_est_configure(void _
- 	int i, ret = 0x0;
- 	u32 ctrl;
+ 	/* If powering down, wait for completion. */
+ 	if (mgmt_powering_down(hdev)) {
+ 		set_bit(SUSPEND_POWERING_DOWN, hdev->suspend_tasks);
+@@ -3757,6 +3760,7 @@ done:
+ 		bt_dev_err(hdev, "Suspend notifier action (%lu) failed: %d",
+ 			   action, ret);
  
-+	if (!ptp_rate) {
-+		pr_warn("Dwxgmac2: Invalid PTP rate");
-+		return -EINVAL;
-+	}
-+
- 	ret |= dwxgmac3_est_write(ioaddr, XGMAC_BTR_LOW, cfg->btr[0], false);
- 	ret |= dwxgmac3_est_write(ioaddr, XGMAC_BTR_HIGH, cfg->btr[1], false);
- 	ret |= dwxgmac3_est_write(ioaddr, XGMAC_TER, cfg->ter, false);
++	hci_dev_put(hdev);
+ 	return NOTIFY_DONE;
+ }
+ 
 
 
