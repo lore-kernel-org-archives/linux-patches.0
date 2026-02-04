@@ -1,43 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD1293ACF06;
-	Wed,  4 Feb 2026 15:19:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A01FB29AB1D;
+	Wed,  4 Feb 2026 15:19:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770218353; cv=none; b=kOUB7qQvE1fUqYBZWimJ/L5Viw5wgGLyDxlijmUoe4iFHUpOQX3O/cgZ+6JCtosI92/f5IDbRTkD5pMkOls5A+edZPsTMv0BkeoAjeMDMvfVdtcATCrIl63Gd/pgBWNbQIFx0qLECP7/M+o5NK23S28uwgalRu0gXR11RA7fWh0=
+	t=1770218357; cv=none; b=fdMzSRkyLN4Wvyx8W3X415xNB7b6X1HJLxg+s1Nxg4+p/wMpSBzbRyYGxMHPck7GAVBLGhZWfh4wHccO0r7C/QwwwrzDDwSOa9Eym4HFS07VIH/xxSj6QzulLF8VZvou/KsFwjPcRFbA2q8z7/ABWDNpLP9980KI8GDESWEt1YI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770218353; c=relaxed/simple;
-	bh=IKIJEQ5OFo0XgMxH+A0D660rb6QFLBhvl6vdGIkf6x0=;
+	s=arc-20240116; t=1770218357; c=relaxed/simple;
+	bh=sAsxKTxKPfun+eUmNbL+7JJpMtrx528E2vH36nHw8II=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZS3lEjm+0YfMp98y9ukHnniHxJ2i51ih2wwsOjfdg3+1KJyrzRJfWDhk0VyXhgLBBNH0L/NgJuvGNyzoBcu6CuUkAGXWVL5NYdcHfesH1kOt4uwhyufvZa2LK8UluMFNmEQo5mxT9kOqCc+2JkdIBPDmO0W24R3RANlDXALm+Kw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TkXo5vjw; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=o7afco+V00s6oMJryhm1vn02bszoH6XiqjbJ51Hr1bFMK+iPp/uhvRrXP6EYZzDOc1WdpJ0OH82xSCZc3ZDP9XG4tIp+FbSqZ/eHAFgyb4bV/bmKhZoIYiUVuHMag4VwDfLWeq6B+8PIhHSF8qVIJoAzWNqVEibtl3HhFQF5V74=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=i99zJ1Us; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TkXo5vjw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B7CAC116C6;
-	Wed,  4 Feb 2026 15:19:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="i99zJ1Us"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB94FC4CEF7;
+	Wed,  4 Feb 2026 15:19:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770218353;
-	bh=IKIJEQ5OFo0XgMxH+A0D660rb6QFLBhvl6vdGIkf6x0=;
+	s=korg; t=1770218357;
+	bh=sAsxKTxKPfun+eUmNbL+7JJpMtrx528E2vH36nHw8II=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TkXo5vjwpnv+oplgv0LJSu/FzdUpbZD1Yn/w1Emt5lJUvC8TiOKKB2BEw+1Ef581J
-	 YueOB88j8E21ItB6xhZhqlwu2dSJ7XnLYAhKy8JZcL2xNXpGn6hdGjS/drojD8feuI
-	 TPcgZpelNWIVYGmYZJNhCg0lYz5/KfPWI3jFbw0Q=
+	b=i99zJ1UsSk64p9DTXnlxssB9bLvipkWJQtCcqvZGJoWS9AJyniHjKV+ezAxtuacBU
+	 KF/Y+oqOKBWGwyZRJHVX//FtoMDLcwJqgfB5JsV0vAvTlM6MpS4/5gYwRfPEghWCpw
+	 /DCoN6gJr7OZtPjX6d9EVzgI2GobALy1OYcf+U1k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pimyn Girgis <pimyn@google.com>,
-	Alexander Potapenko <glider@google.com>,
-	Dmitry Vyukov <dvyukov@google.com>,
-	Marco Elver <elver@google.com>,
-	Ernesto Martnez Garca <ernesto.martinezgarcia@tugraz.at>,
-	Kees Cook <kees@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>,
+	Laveesh Bansal <laveeshb@laveeshbansal.com>,
+	Jan Kara <jack@suse.cz>,
+	Christian Brauner <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 276/280] mm/kfence: randomize the freelist on initialization
-Date: Wed,  4 Feb 2026 15:40:50 +0100
-Message-ID: <20260204143919.636646321@linuxfoundation.org>
+Subject: [PATCH 6.1 277/280] writeback: fix 100% CPU usage when dirtytime_expire_interval is 0
+Date: Wed,  4 Feb 2026 15:40:51 +0100
+Message-ID: <20260204143919.672252584@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260204143909.614719725@linuxfoundation.org>
 References: <20260204143909.614719725@linuxfoundation.org>
@@ -56,85 +52,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pimyn Girgis <pimyn@google.com>
+From: Laveesh Bansal <laveeshb@laveeshbansal.com>
 
-[ Upstream commit 870ff19251bf3910dda7a7245da826924045fedd ]
+[ Upstream commit 543467d6fe97e27e22a26e367fda972dbefebbff ]
 
-Randomize the KFENCE freelist during pool initialization to make
-allocation patterns less predictable.  This is achieved by shuffling the
-order in which metadata objects are added to the freelist using
-get_random_u32_below().
+When vm.dirtytime_expire_seconds is set to 0, wakeup_dirtytime_writeback()
+schedules delayed work with a delay of 0, causing immediate execution.
+The function then reschedules itself with 0 delay again, creating an
+infinite busy loop that causes 100% kworker CPU usage.
 
-Additionally, ensure the error path correctly calculates the address range
-to be reset if initialization fails, as the address increment logic has
-been moved to a separate loop.
+Fix by:
+- Only scheduling delayed work in wakeup_dirtytime_writeback() when
+  dirtytime_expire_interval is non-zero
+- Cancelling the delayed work in dirtytime_interval_handler() when
+  the interval is set to 0
+- Adding a guard in start_dirtytime_writeback() for defensive coding
 
-Link: https://lkml.kernel.org/r/20260120161510.3289089-1-pimyn@google.com
-Fixes: 0ce20dd84089 ("mm: add Kernel Electric-Fence infrastructure")
-Signed-off-by: Pimyn Girgis <pimyn@google.com>
-Reviewed-by: Alexander Potapenko <glider@google.com>
-Cc: Dmitry Vyukov <dvyukov@google.com>
-Cc: Marco Elver <elver@google.com>
-Cc: Ernesto Martnez Garca <ernesto.martinezgarcia@tugraz.at>
-Cc: Greg KH <gregkh@linuxfoundation.org>
-Cc: Kees Cook <kees@kernel.org>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-[ replaced kfence_metadata_init with kfence_metadata ]
+Tested by booting kernel in QEMU with virtme-ng:
+- Before fix: kworker CPU spikes to ~73%
+- After fix: CPU remains at normal levels
+- Setting interval back to non-zero correctly resumes writeback
+
+Fixes: a2f4870697a5 ("fs: make sure the timestamps for lazytime inodes eventually get written")
+Cc: stable@vger.kernel.org
+Closes: https://bugzilla.kernel.org/show_bug.cgi?id=220227
+Signed-off-by: Laveesh Bansal <laveeshb@laveeshbansal.com>
+Link: https://patch.msgid.link/20260106145059.543282-2-laveeshb@laveeshbansal.com
+Reviewed-by: Jan Kara <jack@suse.cz>
+Signed-off-by: Christian Brauner <brauner@kernel.org>
+[ adapted system_percpu_wq to system_wq for the workqueue used in dirtytime_interval_handler() ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/kfence/core.c |   23 +++++++++++++++++++----
- 1 file changed, 19 insertions(+), 4 deletions(-)
+ fs/fs-writeback.c |   14 ++++++++++----
+ 1 file changed, 10 insertions(+), 4 deletions(-)
 
---- a/mm/kfence/core.c
-+++ b/mm/kfence/core.c
-@@ -542,7 +542,7 @@ static unsigned long kfence_init_pool(vo
- {
- 	unsigned long addr = (unsigned long)__kfence_pool;
- 	struct page *pages;
--	int i;
-+	int i, rand;
- 
- 	if (!arch_kfence_init_pool())
- 		return addr;
-@@ -590,19 +590,34 @@ static unsigned long kfence_init_pool(vo
- 		INIT_LIST_HEAD(&meta->list);
- 		raw_spin_lock_init(&meta->lock);
- 		meta->state = KFENCE_OBJECT_UNUSED;
--		meta->addr = addr; /* Initialize for validation in metadata_to_pageaddr(). */
--		list_add_tail(&meta->list, &kfence_freelist);
-+		/* Use addr to randomize the freelist. */
-+		meta->addr = i;
- 
- 		/* Protect the right redzone. */
--		if (unlikely(!kfence_protect(addr + PAGE_SIZE)))
-+		if (unlikely(!kfence_protect(addr + 2 * i * PAGE_SIZE + PAGE_SIZE)))
- 			goto reset_slab;
-+	}
-+
-+	for (i = CONFIG_KFENCE_NUM_OBJECTS; i > 0; i--) {
-+		rand = get_random_u32_below(i);
-+		swap(kfence_metadata[i - 1].addr, kfence_metadata[rand].addr);
-+	}
- 
-+	for (i = 0; i < CONFIG_KFENCE_NUM_OBJECTS; i++) {
-+		struct kfence_metadata *meta_1 = &kfence_metadata[i];
-+		struct kfence_metadata *meta_2 = &kfence_metadata[meta_1->addr];
-+
-+		list_add_tail(&meta_2->list, &kfence_freelist);
-+	}
-+	for (i = 0; i < CONFIG_KFENCE_NUM_OBJECTS; i++) {
-+		kfence_metadata[i].addr = addr;
- 		addr += 2 * PAGE_SIZE;
+--- a/fs/fs-writeback.c
++++ b/fs/fs-writeback.c
+@@ -2360,12 +2360,14 @@ static void wakeup_dirtytime_writeback(s
+ 				wb_wakeup(wb);
  	}
+ 	rcu_read_unlock();
+-	schedule_delayed_work(&dirtytime_work, dirtytime_expire_interval * HZ);
++	if (dirtytime_expire_interval)
++		schedule_delayed_work(&dirtytime_work, dirtytime_expire_interval * HZ);
+ }
  
+ static int __init start_dirtytime_writeback(void)
+ {
+-	schedule_delayed_work(&dirtytime_work, dirtytime_expire_interval * HZ);
++	if (dirtytime_expire_interval)
++		schedule_delayed_work(&dirtytime_work, dirtytime_expire_interval * HZ);
  	return 0;
+ }
+ __initcall(start_dirtytime_writeback);
+@@ -2376,8 +2378,12 @@ int dirtytime_interval_handler(struct ct
+ 	int ret;
  
- reset_slab:
-+	addr += 2 * i * PAGE_SIZE;
- 	for (i = 0; i < KFENCE_POOL_SIZE / PAGE_SIZE; i++) {
- 		struct slab *slab = page_slab(nth_page(pages, i));
+ 	ret = proc_dointvec_minmax(table, write, buffer, lenp, ppos);
+-	if (ret == 0 && write)
+-		mod_delayed_work(system_wq, &dirtytime_work, 0);
++	if (ret == 0 && write) {
++		if (dirtytime_expire_interval)
++			mod_delayed_work(system_wq, &dirtytime_work, 0);
++		else
++			cancel_delayed_work_sync(&dirtytime_work);
++	}
+ 	return ret;
+ }
  
 
 
