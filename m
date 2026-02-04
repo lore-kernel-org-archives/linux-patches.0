@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8A311C5D77;
-	Wed,  4 Feb 2026 14:46:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DDCF7221F17;
+	Wed,  4 Feb 2026 14:46:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770216402; cv=none; b=nAtKMxSQOBCasDvCJIXa2bYJn07u77PqldfQXvApi3J6In5cNZ68wgo4TcD4dPCTlIWQDM2xCDDKEEXgRZ39mFAwtedGQlF/KeunXTgElqYEGDd2ZGNKrWvMBL15Tj17g7TpzywMNYw1/HFUfSWZHZTVm08eWO1txnyLKJ39aKg=
+	t=1770216405; cv=none; b=ZJBkajDSzYfBqEyTzObjQepRyu4Pas1G0zTGRbki15DswbdSX+FXvFSsYwHo173np84FlFyE5/Gv9MNc7o0TtEMpbrDDyD6rpd6NHxMrzaZiynuV2NirGE+zEXT0hW5+G+hGKwYMwMgbCC/NumPt4uFnu+PcMZzAbjvJc/kuTEQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770216402; c=relaxed/simple;
-	bh=N/aK6n/k1U6fsvDvQy+WZ0GY9mKkOBx6gb7GHqDEWNc=;
+	s=arc-20240116; t=1770216405; c=relaxed/simple;
+	bh=rPsruh6xD5uDPIEMvTKGK3ULoNEfUxwDeEz/u8+QjIk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Xd8ksn1jTJ98DFvCxKWHvgwmr5xfkuBM9om2yvOUfzKKQu1UplNb/DPkgiZguFQupFLUdE7Xg5JlojBWse2gD3e0dMrb5pFbOaUh3HVt7t4dDnXpZEiUePhQCqJPNSqalzsm2NqAwqB6IoHoxUhkjDmgjUuFiZX4PRR9A9iqpBA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YYP9Ca7u; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VlpAK591p2LtH+bYzBwGep9ablj61CQPLTY6elel3DCXT4I390xGUvJAlsGyuKlQXvjvrwoU8yEZ3DiY7JjvaRGoVDqQFES3OPx1mjbkT5YnTa9sK3YCDstRI7LPgk1Q+bxmHOj9Q7l2bIqMIjU566QKy7uWXF7qOtEFZ6nCEWs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IMKtDjrr; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YYP9Ca7u"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 231F4C19423;
-	Wed,  4 Feb 2026 14:46:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IMKtDjrr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E02EC4CEF7;
+	Wed,  4 Feb 2026 14:46:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770216402;
-	bh=N/aK6n/k1U6fsvDvQy+WZ0GY9mKkOBx6gb7GHqDEWNc=;
+	s=korg; t=1770216405;
+	bh=rPsruh6xD5uDPIEMvTKGK3ULoNEfUxwDeEz/u8+QjIk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YYP9Ca7udA0gdjDiJRF0t5Fb5ipvyGKADdOsDJSSfBlQWKjadEU+g4jPToipWRd9t
-	 VaeWvdT/zGmrt0biQREt+a8uawvmX2pMLUIKTSlVt3YMlUIXDU7b8cGS8xPJ3L6PwN
-	 J1kovveOWYrqFGfcfPI0rLeN2B8/yqv1P2Uf4/AA=
+	b=IMKtDjrrsu9jH1AsETTmFyXz8X7T6disWncvDHfGz1ZsSbjIZN6+ILgo1TYqb5V/O
+	 Jxl8SGasC+Co+XqaIC3n2sbJk2iVs3ATu6MrpSNTwtJqySioub6cJ3pAtxr9PzAJnU
+	 H3zpJM3VY4+f3p5uT5LaSzaNjgaveV/1DH1XWU34=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot <syzkaller@googlegroups.com>,
-	Eric Dumazet <edumazet@google.com>,
+	Laurent Vivier <lvivier@redhat.com>,
+	Stefano Brivio <sbrivio@redhat.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 078/161] mISDN: annotate data-race around dev->work
-Date: Wed,  4 Feb 2026 15:39:01 +0100
-Message-ID: <20260204143854.558409734@linuxfoundation.org>
+Subject: [PATCH 5.10 079/161] usbnet: limit max_mtu based on devices hard_mtu
+Date: Wed,  4 Feb 2026 15:39:02 +0100
+Message-ID: <20260204143854.593546229@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260204143851.755002596@linuxfoundation.org>
 References: <20260204143851.755002596@linuxfoundation.org>
@@ -52,101 +52,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Laurent Vivier <lvivier@redhat.com>
 
-[ Upstream commit 8175dbf174d487afab81e936a862a8d9b8a1ccb6 ]
+[ Upstream commit c7159e960f1472a5493ac99aff0086ab1d683594 ]
 
-dev->work can re read locklessly in mISDN_read()
-and mISDN_poll(). Add READ_ONCE()/WRITE_ONCE() annotations.
+The usbnet driver initializes net->max_mtu to ETH_MAX_MTU before calling
+the device's bind() callback. When the bind() callback sets
+dev->hard_mtu based the device's actual capability (from CDC Ethernet's
+wMaxSegmentSize descriptor), max_mtu is never updated to reflect this
+hardware limitation).
 
-BUG: KCSAN: data-race in mISDN_ioctl / mISDN_read
+This allows userspace (DHCP or IPv6 RA) to configure MTU larger than the
+device can handle, leading to silent packet drops when the backend sends
+packet exceeding the device's buffer size.
 
-write to 0xffff88812d848280 of 4 bytes by task 10864 on cpu 1:
-  misdn_add_timer drivers/isdn/mISDN/timerdev.c:175 [inline]
-  mISDN_ioctl+0x2fb/0x550 drivers/isdn/mISDN/timerdev.c:233
-  vfs_ioctl fs/ioctl.c:51 [inline]
-  __do_sys_ioctl fs/ioctl.c:597 [inline]
-  __se_sys_ioctl+0xce/0x140 fs/ioctl.c:583
-  __x64_sys_ioctl+0x43/0x50 fs/ioctl.c:583
-  x64_sys_call+0x14b0/0x3000 arch/x86/include/generated/asm/syscalls_64.h:17
-  do_syscall_x64 arch/x86/entry/syscall_64.c:63 [inline]
-  do_syscall_64+0xd8/0x2c0 arch/x86/entry/syscall_64.c:94
- entry_SYSCALL_64_after_hwframe+0x77/0x7f
+Fix this by limiting net->max_mtu to the device's hard_mtu after the
+bind callback returns.
 
-read to 0xffff88812d848280 of 4 bytes by task 10857 on cpu 0:
-  mISDN_read+0x1f2/0x470 drivers/isdn/mISDN/timerdev.c:112
-  do_loop_readv_writev fs/read_write.c:847 [inline]
-  vfs_readv+0x3fb/0x690 fs/read_write.c:1020
-  do_readv+0xe7/0x210 fs/read_write.c:1080
-  __do_sys_readv fs/read_write.c:1165 [inline]
-  __se_sys_readv fs/read_write.c:1162 [inline]
-  __x64_sys_readv+0x45/0x50 fs/read_write.c:1162
-  x64_sys_call+0x2831/0x3000 arch/x86/include/generated/asm/syscalls_64.h:20
-  do_syscall_x64 arch/x86/entry/syscall_64.c:63 [inline]
-  do_syscall_64+0xd8/0x2c0 arch/x86/entry/syscall_64.c:94
- entry_SYSCALL_64_after_hwframe+0x77/0x7f
+See https://gitlab.com/qemu-project/qemu/-/issues/3268 and
+    https://bugs.passt.top/attachment.cgi?bugid=189
 
-value changed: 0x00000000 -> 0x00000001
-
-Fixes: 1b2b03f8e514 ("Add mISDN core files")
-Reported-by: syzbot <syzkaller@googlegroups.com>
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Link: https://patch.msgid.link/20260118132528.2349573-1-edumazet@google.com
+Fixes: f77f0aee4da4 ("net: use core MTU range checking in USB NIC drivers")
+Signed-off-by: Laurent Vivier <lvivier@redhat.com>
+Link: https://bugs.passt.top/show_bug.cgi?id=189
+Reviewed-by: Stefano Brivio <sbrivio@redhat.com>
+Link: https://patch.msgid.link/20260119075518.2774373-1-lvivier@redhat.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/isdn/mISDN/timerdev.c | 13 ++++++++-----
- 1 file changed, 8 insertions(+), 5 deletions(-)
+ drivers/net/usb/usbnet.c | 9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/isdn/mISDN/timerdev.c b/drivers/isdn/mISDN/timerdev.c
-index abdf36ac3bee5..74d6ed49dc368 100644
---- a/drivers/isdn/mISDN/timerdev.c
-+++ b/drivers/isdn/mISDN/timerdev.c
-@@ -109,14 +109,14 @@ mISDN_read(struct file *filep, char __user *buf, size_t count, loff_t *off)
- 		spin_unlock_irq(&dev->lock);
- 		if (filep->f_flags & O_NONBLOCK)
- 			return -EAGAIN;
--		wait_event_interruptible(dev->wait, (dev->work ||
-+		wait_event_interruptible(dev->wait, (READ_ONCE(dev->work) ||
- 						     !list_empty(list)));
- 		if (signal_pending(current))
- 			return -ERESTARTSYS;
- 		spin_lock_irq(&dev->lock);
- 	}
- 	if (dev->work)
--		dev->work = 0;
-+		WRITE_ONCE(dev->work, 0);
- 	if (!list_empty(list)) {
- 		timer = list_first_entry(list, struct mISDNtimer, list);
- 		list_del(&timer->list);
-@@ -141,13 +141,16 @@ mISDN_poll(struct file *filep, poll_table *wait)
- 	if (*debug & DEBUG_TIMER)
- 		printk(KERN_DEBUG "%s(%p, %p)\n", __func__, filep, wait);
- 	if (dev) {
-+		u32 work;
-+
- 		poll_wait(filep, &dev->wait, wait);
- 		mask = 0;
--		if (dev->work || !list_empty(&dev->expired))
-+		work = READ_ONCE(dev->work);
-+		if (work || !list_empty(&dev->expired))
- 			mask |= (EPOLLIN | EPOLLRDNORM);
- 		if (*debug & DEBUG_TIMER)
- 			printk(KERN_DEBUG "%s work(%d) empty(%d)\n", __func__,
--			       dev->work, list_empty(&dev->expired));
-+			       work, list_empty(&dev->expired));
- 	}
- 	return mask;
- }
-@@ -172,7 +175,7 @@ misdn_add_timer(struct mISDNtimerdev *dev, int timeout)
- 	struct mISDNtimer	*timer;
+diff --git a/drivers/net/usb/usbnet.c b/drivers/net/usb/usbnet.c
+index 9ac9fbdad5c08..4a83228a2db57 100644
+--- a/drivers/net/usb/usbnet.c
++++ b/drivers/net/usb/usbnet.c
+@@ -1745,9 +1745,12 @@ usbnet_probe (struct usb_interface *udev, const struct usb_device_id *prod)
+ 		if ((dev->driver_info->flags & FLAG_NOARP) != 0)
+ 			net->flags |= IFF_NOARP;
  
- 	if (!timeout) {
--		dev->work = 1;
-+		WRITE_ONCE(dev->work, 1);
- 		wake_up_interruptible(&dev->wait);
- 		id = 0;
- 	} else {
+-		/* maybe the remote can't receive an Ethernet MTU */
+-		if (net->mtu > (dev->hard_mtu - net->hard_header_len))
+-			net->mtu = dev->hard_mtu - net->hard_header_len;
++		if (net->max_mtu > (dev->hard_mtu - net->hard_header_len))
++			net->max_mtu = dev->hard_mtu - net->hard_header_len;
++
++		if (net->mtu > net->max_mtu)
++			net->mtu = net->max_mtu;
++
+ 	} else if (!info->in || !info->out)
+ 		status = usbnet_get_endpoints (dev, udev);
+ 	else {
 -- 
 2.51.0
 
