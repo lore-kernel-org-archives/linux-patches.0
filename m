@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B45E541B371;
-	Wed,  4 Feb 2026 14:57:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7D8B41C2E7;
+	Wed,  4 Feb 2026 14:57:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770217073; cv=none; b=AJbI7RcUSRM6zIaKzUQzZSl1wYdDHT5gZB9A/wWaFxNTXWXosz3oqQARVeX/0nbWlVwVXTkqiwE6VGUfmoGrOG23rQmcPHEFbnMFUiuMduylqfBTPLF56LMbeuCnsjcWYLsWpIjkdEjy2MNdy8NcDSF9eqNxSr7rucKh44LQu3g=
+	t=1770217077; cv=none; b=UoW9/ZFzvQFHAocN/g9K1iA0YxHwLTNgZWQMlTOHcL6159IqQY4pZVsJqL05RJypT45tdxyzwEIknJ/Nl5aDXc5FYzPmTD7kH72NjOvwFlFeIxEnqJj6LZlztSGQiHPm1/qTV6hr6UMlNhCMi1nwLtzImlKJby3s9ZTyurfLwnE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770217073; c=relaxed/simple;
-	bh=+iaebYaFgedcx4rSDcQA/l4sHbI70figFNC5swhRnIk=;
+	s=arc-20240116; t=1770217077; c=relaxed/simple;
+	bh=BiUpwFIv6xnex3N189Hz7fteiN7tF5jbCc3eJEhWI6Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NEyBjCQJb3dUC7kR+jZd4wbg/gK5ZqdPOodfdW+eC6C9XBoBhse9HYI1zDwwbXirp6zbITfSsYBd/GYotWHubl9cNlDByHbK/9g2uvJu246Nr+uGkWdQWcPaSvVJWGCkbYEvugX24ObVxoRIXLBIbq44TEN7W5T7+1M2/MfB0kI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=InHWBaMk; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VKMLGxwKO8LrBaChiaO/wzUli8U4zNM8nIo3QBBpraSvO6B2jwVSRqi+snnObsKDbu7PUZA2u/kSY+ELpVjpVAbOxRB22scAiCaj1ZMZENXGoOL/o01hbaUwC7CRaNYjUiQOvjF5sbZkF6aXhCgJTzsp8VxVWQqBlxYxp0OdPOc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fKo1Poka; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="InHWBaMk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC3F2C19424;
-	Wed,  4 Feb 2026 14:57:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fKo1Poka"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 258A6C4CEF7;
+	Wed,  4 Feb 2026 14:57:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770217073;
-	bh=+iaebYaFgedcx4rSDcQA/l4sHbI70figFNC5swhRnIk=;
+	s=korg; t=1770217076;
+	bh=BiUpwFIv6xnex3N189Hz7fteiN7tF5jbCc3eJEhWI6Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=InHWBaMkbH05ay19XuZle3qjaGDa5eEE4/KqUmJdOg8VFmw3+gZVxSl/FJjmeTs1B
-	 GpCHWrpsMVI4rkLjZoxLrCI+iPHZ6Z89+bcfp2mDQLZeeDVQp4LvjjXr0kSHeKt9tB
-	 kU8mIcudiIN2V9ciXHwagKwFRnjLheIIIpxqeZVs=
+	b=fKo1PokaanTgoC5qAY0tnWIHJLcjO7Eq0eznu33Zk0V1DAzRGt4Z/SaOJ8QCh/f0C
+	 /I2lRaGZiW4LIShzlTq0xiPPzUslkD2+Pelmpuk/ZKS83ZBUrqVBF++VA+vv0y0GhB
+	 fwR5kmDbfi0D1yeny5kbOhGgiScZhWQCHHb6qfu8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Jeff Chen <jeff.chen_1@nxp.com>,
+	Marek Vasut <marex@nabladev.com>,
 	Johannes Berg <johannes.berg@intel.com>
-Subject: [PATCH 5.15 115/206] wifi: mwifiex: Fix a loop in mwifiex_update_ampdu_rxwinsize()
-Date: Wed,  4 Feb 2026 15:39:06 +0100
-Message-ID: <20260204143902.344775704@linuxfoundation.org>
+Subject: [PATCH 5.15 116/206] wifi: rsi: Fix memory corruption due to not set vif driver data size
+Date: Wed,  4 Feb 2026 15:39:07 +0100
+Message-ID: <20260204143902.380377456@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260204143858.193781818@linuxfoundation.org>
 References: <20260204143858.193781818@linuxfoundation.org>
@@ -51,46 +50,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dan Carpenter <dan.carpenter@linaro.org>
+From: Marek Vasut <marex@nabladev.com>
 
-commit 2120f3a3738a65730c81bf10447b1ff776078915 upstream.
+commit 4f431d88ea8093afc7ba55edf4652978c5a68f33 upstream.
 
-The "i" iterator variable is used to count two different things but
-unfortunately we can't store two different numbers in the same variable.
-Use "i" for the outside loop and "j" for the inside loop.
+The struct ieee80211_vif contains trailing space for vif driver data,
+when struct ieee80211_vif is allocated, the total memory size that is
+allocated is sizeof(struct ieee80211_vif) + size of vif driver data.
+The size of vif driver data is set by each WiFi driver as needed.
+
+The RSI911x driver does not set vif driver data size, no trailing space
+for vif driver data is therefore allocated past struct ieee80211_vif .
+The RSI911x driver does however use the vif driver data to store its
+vif driver data structure "struct vif_priv". An access to vif->drv_priv
+leads to access out of struct ieee80211_vif bounds and corruption of
+some memory.
+
+In case of the failure observed locally, rsi_mac80211_add_interface()
+would write struct vif_priv *vif_info = (struct vif_priv *)vif->drv_priv;
+vif_info->vap_id = vap_idx. This write corrupts struct fq_tin member
+struct list_head new_flows . The flow = list_first_entry(head, struct
+fq_flow, flowchain); in fq_tin_reset() then reports non-NULL bogus
+address, which when accessed causes a crash.
+
+The trigger is very simple, boot the machine with init=/bin/sh , mount
+devtmpfs, sysfs, procfs, and then do "ip link set wlan0 up", "sleep 1",
+"ip link set wlan0 down" and the crash occurs.
+
+Fix this by setting the correct size of vif driver data, which is the
+size of "struct vif_priv", so that memory is allocated and the driver
+can store its driver data in it, instead of corrupting memory around
+it.
 
 Cc: stable@vger.kernel.org
-Fixes: d219b7eb3792 ("mwifiex: handle BT coex event to adjust Rx BA window size")
-Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
-Reviewed-by: Jeff Chen <jeff.chen_1@nxp.com>
-Link: https://patch.msgid.link/aWAM2MGUWRP0zWUd@stanley.mountain
+Fixes: dad0d04fa7ba ("rsi: Add RS9113 wireless driver")
+Signed-off-by: Marek Vasut <marex@nabladev.com>
+Link: https://patch.msgid.link/20260109235817.150330-1-marex@nabladev.com
 Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wireless/marvell/mwifiex/11n_rxreorder.c |    6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/net/wireless/rsi/rsi_91x_mac80211.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/net/wireless/marvell/mwifiex/11n_rxreorder.c
-+++ b/drivers/net/wireless/marvell/mwifiex/11n_rxreorder.c
-@@ -839,7 +839,7 @@ void mwifiex_update_rxreor_flags(struct
- static void mwifiex_update_ampdu_rxwinsize(struct mwifiex_adapter *adapter,
- 					   bool coex_flag)
- {
--	u8 i;
-+	u8 i, j;
- 	u32 rx_win_size;
- 	struct mwifiex_private *priv;
+--- a/drivers/net/wireless/rsi/rsi_91x_mac80211.c
++++ b/drivers/net/wireless/rsi/rsi_91x_mac80211.c
+@@ -2022,6 +2022,7 @@ int rsi_mac80211_attach(struct rsi_commo
  
-@@ -879,8 +879,8 @@ static void mwifiex_update_ampdu_rxwinsi
- 		if (rx_win_size != priv->add_ba_param.rx_win_size) {
- 			if (!priv->media_connected)
- 				continue;
--			for (i = 0; i < MAX_NUM_TID; i++)
--				mwifiex_11n_delba(priv, i);
-+			for (j = 0; j < MAX_NUM_TID; j++)
-+				mwifiex_11n_delba(priv, j);
- 		}
- 	}
- }
+ 	hw->queues = MAX_HW_QUEUES;
+ 	hw->extra_tx_headroom = RSI_NEEDED_HEADROOM;
++	hw->vif_data_size = sizeof(struct vif_priv);
+ 
+ 	hw->max_rates = 1;
+ 	hw->max_rate_tries = MAX_RETRIES;
 
 
