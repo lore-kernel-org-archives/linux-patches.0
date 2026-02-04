@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4894A2D593E;
-	Wed,  4 Feb 2026 15:11:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 698523D994;
+	Wed,  4 Feb 2026 15:11:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770217909; cv=none; b=E1qZsq0YaIf8JhKMxxO8yI5jx3p6dMrpORjyZOhezAgxO4KLz2xg5QQ44wh4AAiIKUsJn8/4K1HmFbuBigPGnpz/fZsTIeSooi/yfKNzZHO8s/38ij+unwqJTbEz+tIr6d5K4QMiLb+zfu5wdAFn3xwadqQkLtq5TeUFjztxFcw=
+	t=1770217912; cv=none; b=k+UVfi/WSwoB5WtnX8NtENHUe6s5lLUy6iiZZvte/fQeJWGw/Uqv0QOzSKKRt05vdhxQ4kDMPKdqGowI7muUK/K3Z3r2gLAYyqoUqc5L33Jt2iWe6kiIpPLNn8ZtGEkPB1W3yAytYtTWzConO2OYSHY8XIlCjpZQmHFI2VABpiQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770217909; c=relaxed/simple;
-	bh=2DwsjoQlQblf2TypGIASCw4KrpOThYQVL5/nsZPzpQo=;
+	s=arc-20240116; t=1770217912; c=relaxed/simple;
+	bh=DCcUl/W9DNTdLtj9hI7mvbesM/XdDf5aD17FkYpn5/w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aB7iAcXW0Y8nhT1k4iuxGe1fo3P1Lv1LBjQg8bvekgqJfdKH19HiURvGtWfWl3Rt2kE4XGH2wkAmW7RCNl4kY9kwnU/IUZFerb6R7KN1/4GQWsHOOACy3fWfeL05SdC3RRbA/vnUOJHopit3BsLCsRJ5hWegA7ZWy10G5g3Vyuo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=p2muYk6m; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Kr0PJXR+1dWiB5dUwDuAopdeBYpfKagMkTwRbE+KT0skf9YetjiEv4se+gLkbQ22jxcJTG4d6qpD8L528ey/dDBK2PLfHl4kUtsFYBbT6IBH3C4RDMIxsqYpaUrMPMilMVz+JAQq/ISLcW/9XQyhCiJ4quelN/uIvz4u4zwEE/s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TBNv0s+J; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="p2muYk6m"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A48B4C4CEF7;
-	Wed,  4 Feb 2026 15:11:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TBNv0s+J"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D1FB6C4CEF7;
+	Wed,  4 Feb 2026 15:11:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770217909;
-	bh=2DwsjoQlQblf2TypGIASCw4KrpOThYQVL5/nsZPzpQo=;
+	s=korg; t=1770217912;
+	bh=DCcUl/W9DNTdLtj9hI7mvbesM/XdDf5aD17FkYpn5/w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=p2muYk6mmmP+avfvlUStFp2ENNg2Tcj7Gpn6s89egQpnhqAxbW9jkxYT0kkUP+mUV
-	 9T8/HJL8Zjup3JwJw462Ot45WnVWkGbSWsqyO2qj0YKUYdgzlZKLg6ewyVeretGIVf
-	 Oanc4BcS41f8QfC/C4teI96lLiEa3XUi5eBN8bhg=
+	b=TBNv0s+JqYhmMWX75OFUkFVDK7WrkDGaVZJwKR3JOH7UFRZUVjxAN1VyoazaNBXYN
+	 JXYd6sk6B1H2RGoom+YsboKycS6BIxmuIcFQNzxX6xiCrDcb0MGjdo34B3aTFVrcMw
+	 kHcE6uUIaQ+2gIgqvYRr83uB/O+GtfzB+MV4QnPY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cedric Xing <cedric.xing@intel.com>,
-	Dave Hansen <dave.hansen@linux.intel.com>,
-	Peter Zijlstra <peterz@infradead.org>,
-	Thomas Gleixner <tglx@linutronix.de>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 154/280] x86: make page fault handling disable interrupts properly
-Date: Wed,  4 Feb 2026 15:38:48 +0100
-Message-ID: <20260204143915.170969680@linuxfoundation.org>
+	Hans de Goede <johannes.goede@oss.qualcomm.com>,
+	Sebastian Reichel <sre@kernel.org>,
+	Lee Jones <lee@kernel.org>
+Subject: [PATCH 6.1 155/280] leds: led-class: Only Add LED to leds_list when it is fully ready
+Date: Wed,  4 Feb 2026 15:38:49 +0100
+Message-ID: <20260204143915.206313134@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260204143909.614719725@linuxfoundation.org>
 References: <20260204143909.614719725@linuxfoundation.org>
@@ -54,96 +51,80 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cedric Xing <cedric.xing@intel.com>
+From: Hans de Goede <johannes.goede@oss.qualcomm.com>
 
-[ Upstream commit 614da1d3d4cdbd6e41aea06bc97ec15aacff6daf ]
+commit d1883cefd31752f0504b94c3bcfa1f6d511d6e87 upstream.
 
-There's a big comment in the x86 do_page_fault() about our interrupt
-disabling code:
+Before this change the LED was added to leds_list before led_init_core()
+gets called adding it the list before led_classdev.set_brightness_work gets
+initialized.
 
-    * User address page fault handling might have reenabled
-    * interrupts. Fixing up all potential exit points of
-    * do_user_addr_fault() and its leaf functions is just not
-    * doable w/o creating an unholy mess or turning the code
-    * upside down.
+This leaves a window where led_trigger_register() of a LED's default
+trigger will call led_trigger_set() which calls led_set_brightness()
+which in turn will end up queueing the *uninitialized*
+led_classdev.set_brightness_work.
 
-but it turns out that comment is subtly wrong, and the code as a result
-is also wrong.
+This race gets hit by the lenovo-thinkpad-t14s EC driver which registers
+2 LEDs with a default trigger provided by snd_ctl_led.ko in quick
+succession. The first led_classdev_register() causes an async modprobe of
+snd_ctl_led to run and that async modprobe manages to exactly hit
+the window where the second LED is on the leds_list without led_init_core()
+being called for it, resulting in:
 
-Because it's certainly true that we may have re-enabled interrupts when
-handling user page faults.  And it's most certainly true that we don't
-want to bother fixing up all the cases.
+ ------------[ cut here ]------------
+ WARNING: CPU: 11 PID: 5608 at kernel/workqueue.c:4234 __flush_work+0x344/0x390
+ Hardware name: LENOVO 21N2S01F0B/21N2S01F0B, BIOS N42ET93W (2.23 ) 09/01/2025
+ ...
+ Call trace:
+  __flush_work+0x344/0x390 (P)
+  flush_work+0x2c/0x50
+  led_trigger_set+0x1c8/0x340
+  led_trigger_register+0x17c/0x1c0
+  led_trigger_register_simple+0x84/0xe8
+  snd_ctl_led_init+0x40/0xf88 [snd_ctl_led]
+  do_one_initcall+0x5c/0x318
+  do_init_module+0x9c/0x2b8
+  load_module+0x7e0/0x998
 
-But what isn't true is that it's limited to user address page faults.
+Close the race window by moving the adding of the LED to leds_list to
+after the led_init_core() call.
 
-The confusion stems from the fact that we have logic here that depends
-on the address range of the access, but other code then depends on the
-_context_ the access was done in.  The two are not related, even though
-both of them are about user-vs-kernel.
-
-In other words, both user and kernel addresses can cause interrupts to
-have been enabled (eg when __bad_area_nosemaphore() gets called for user
-accesses to kernel addresses).  As a result we should make sure to
-disable interrupts again regardless of the address range before
-returning to the low-level fault handling code.
-
-The __bad_area_nosemaphore() code actually did disable interrupts again
-after enabling them, just not consistently.  Ironically, as noted in the
-original comment, fixing up all the cases is just not worth it, when the
-simple solution is to just do it unconditionally in one single place.
-
-So remove the incomplete case that unsuccessfully tried to do what the
-comment said was "not doable" in commit ca4c6a9858c2 ("x86/traps: Make
-interrupt enable/disable symmetric in C code"), and just make it do the
-simple and straightforward thing.
-
-Signed-off-by: Cedric Xing <cedric.xing@intel.com>
-Reviewed-by: Dave Hansen <dave.hansen@linux.intel.com>
-Fixes: ca4c6a9858c2 ("x86/traps: Make interrupt enable/disable symmetric in C code")
-Cc: Peter Zijlstra <peterz@infradead.org>
-Cc: Thomas Gleixner <tglx@linutronix.de>
-Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Cc: stable@vger.kernel.org
+Fixes: d23a22a74fde ("leds: delay led_set_brightness if stopping soft-blink")
+Signed-off-by: Hans de Goede <johannes.goede@oss.qualcomm.com>
+Reviewed-by: Sebastian Reichel <sre@kernel.org>
+Link: https://patch.msgid.link/20251211163727.366441-1-johannes.goede@oss.qualcomm.com
+Signed-off-by: Lee Jones <lee@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/mm/fault.c | 15 +++++----------
- 1 file changed, 5 insertions(+), 10 deletions(-)
+ drivers/leds/led-class.c |   10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/arch/x86/mm/fault.c b/arch/x86/mm/fault.c
-index 2fc007752ceb1..54f8fe0ea5a93 100644
---- a/arch/x86/mm/fault.c
-+++ b/arch/x86/mm/fault.c
-@@ -835,8 +835,6 @@ __bad_area_nosemaphore(struct pt_regs *regs, unsigned long error_code,
- 		force_sig_pkuerr((void __user *)address, pkey);
- 	else
- 		force_sig_fault(SIGSEGV, si_code, (void __user *)address);
+--- a/drivers/leds/led-class.c
++++ b/drivers/leds/led-class.c
+@@ -410,11 +410,6 @@ int led_classdev_register_ext(struct dev
+ #ifdef CONFIG_LEDS_BRIGHTNESS_HW_CHANGED
+ 	led_cdev->brightness_hw_changed = -1;
+ #endif
+-	/* add to the list of leds */
+-	down_write(&leds_list_lock);
+-	list_add_tail(&led_cdev->node, &leds_list);
+-	up_write(&leds_list_lock);
 -
--	local_irq_disable();
- }
+ 	if (!led_cdev->max_brightness)
+ 		led_cdev->max_brightness = LED_FULL;
  
- static noinline void
-@@ -1429,15 +1427,12 @@ handle_page_fault(struct pt_regs *regs, unsigned long error_code,
- 		do_kern_addr_fault(regs, error_code, address);
- 	} else {
- 		do_user_addr_fault(regs, error_code, address);
--		/*
--		 * User address page fault handling might have reenabled
--		 * interrupts. Fixing up all potential exit points of
--		 * do_user_addr_fault() and its leaf functions is just not
--		 * doable w/o creating an unholy mess or turning the code
--		 * upside down.
--		 */
--		local_irq_disable();
- 	}
-+	/*
-+	 * page fault handling might have reenabled interrupts,
-+	 * make sure to disable them again.
-+	 */
-+	local_irq_disable();
- }
+@@ -422,6 +417,11 @@ int led_classdev_register_ext(struct dev
  
- DEFINE_IDTENTRY_RAW_ERRORCODE(exc_page_fault)
--- 
-2.51.0
-
+ 	led_init_core(led_cdev);
+ 
++	/* add to the list of leds */
++	down_write(&leds_list_lock);
++	list_add_tail(&led_cdev->node, &leds_list);
++	up_write(&leds_list_lock);
++
+ #ifdef CONFIG_LEDS_TRIGGERS
+ 	led_trigger_set_default(led_cdev);
+ #endif
 
 
