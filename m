@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 705912D879E;
-	Wed,  4 Feb 2026 15:11:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED0824219E8;
+	Wed,  4 Feb 2026 15:11:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770217892; cv=none; b=KG0VQ6vFyKoTIi1fugQJ4fka/Q9i5XQO430kKbNqXJwbMgxrYGajByQBN04DZaUbi+9ojc3uSz0wbVWC/xHqB4Y2gxn5bFM3/mgbDRJ7ldFuICOxdwVPrCC1JYcFgZGKDbKVKj9xQEDG/P8Heg27DWv5ERQvqgHpsvkxxY2kbd0=
+	t=1770217896; cv=none; b=Nhtjs1hbZ4lNOH0w+gT6rMvwBuscycGs8W1GKQgQb5Lysk6IGT934yhaRcexnytkiMeF2op25gBq02nTKqKvcc45Kjcr9mHS70z+cTsAWJ4wL3m5fBj+GsY0PGoej8DkZTRmQ4+ojE6IMHgrPv6Mk6TVcICCUK4w7Smff8wfqng=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770217892; c=relaxed/simple;
-	bh=cNRG5Fiisyk2dFmz146MhQWze0W650LJbZs7uVsN5SA=;
+	s=arc-20240116; t=1770217896; c=relaxed/simple;
+	bh=sTlER3dHcH53KTxw/3KZAkqUpL2eA+H7ntg9vN7F+Ag=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KEH0KMzxV2rvnlExv4YPYbp9Qmv2GS/IrbBL4jsOQzAK+3nE/WlN/PmqywHwHOsigjbQSZw7LtN4kM0RNxuyoyA/qKC2vEdnqLhzThNANKDSc3ppH5QyHFxP5WEXybG1Fei3xwAaqGqB3WDlJmMHINwJdSNor7oyTX0XYtgY0j8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=S+RQ3p7L; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=EmplkjBPjY2B2IkIkBoO/I4yvXtFxVtniyyRABMyRvhIpU0u7IRr7g6gdQZHFO+hAIRSBhVm31SG7VbOwZJbotJqikLwtQ/aSs5DeS0KInPja94tl+9CywiLesLXrOSZeT+6+lBnVjHB7GL3X2cKcMl8vuHmtbB+ste1rn2SRKU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WFn4z5Vg; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="S+RQ3p7L"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA4F4C4CEF7;
-	Wed,  4 Feb 2026 15:11:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WFn4z5Vg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 467C6C4CEF7;
+	Wed,  4 Feb 2026 15:11:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770217892;
-	bh=cNRG5Fiisyk2dFmz146MhQWze0W650LJbZs7uVsN5SA=;
+	s=korg; t=1770217895;
+	bh=sTlER3dHcH53KTxw/3KZAkqUpL2eA+H7ntg9vN7F+Ag=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=S+RQ3p7LTKE6CyDGOd/4QzVtz0f6JDgH+dscCNYAQLUI0O2Br+HSJrmz2tamH06lq
-	 kiW4v9uQ4PiGRX/KGZLuurzSYoBukJ+byODmEtaTQ0Ou3Tc7ZNQG3K5T1oeic1xpvA
-	 z38HGScIWCiol05Xeurzet4u39WfU4/XbSQX9DO0=
+	b=WFn4z5VglHIj1WobEzGeNJK86kK7NI3R5ZI4ElmrVRve/IfQdt7irRdtr7LqOdjAc
+	 SoYvIHZFWGDP9JZIifiWEUEQFe/mvBE/wZNV4jXciWDHedyaPi04pClkeiRV7uj8s3
+	 lc91i84FcQMIAgQ5gm3kBkrfUioSfFH1vVbER0xA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ratheesh Kannoth <rkannoth@marvell.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Stefano Garzarella <sgarzare@redhat.com>,
+	Melbin K Mathew <mlbnkm1@gmail.com>,
+	Luigi Leonardi <leonardi@redhat.com>,
+	"Michael S. Tsirkin" <mst@redhat.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 150/280] octeontx2-af: Fix error handling
-Date: Wed,  4 Feb 2026 15:38:44 +0100
-Message-ID: <20260204143915.029343812@linuxfoundation.org>
+Subject: [PATCH 6.1 151/280] vsock/virtio: fix potential underflow in virtio_transport_get_credit()
+Date: Wed,  4 Feb 2026 15:38:45 +0100
+Message-ID: <20260204143915.064489249@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260204143909.614719725@linuxfoundation.org>
 References: <20260204143909.614719725@linuxfoundation.org>
@@ -51,185 +54,95 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ratheesh Kannoth <rkannoth@marvell.com>
+From: Melbin K Mathew <mlbnkm1@gmail.com>
 
-[ Upstream commit 19e4175e997a5b85eab97d522f00cc99abd1873c ]
+[ Upstream commit 3ef3d52a1a9860d094395c7a3e593f3aa26ff012 ]
 
-This commit adds error handling and rollback logic to
-rvu_mbox_handler_attach_resources() to properly clean up partially
-attached resources when rvu_attach_block() fails.
+The credit calculation in virtio_transport_get_credit() uses unsigned
+arithmetic:
 
-Fixes: 746ea74241fa0 ("octeontx2-af: Add RVU block LF provisioning support")
-Signed-off-by: Ratheesh Kannoth <rkannoth@marvell.com>
-Link: https://patch.msgid.link/20260121033934.1900761-1-rkannoth@marvell.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+  ret = vvs->peer_buf_alloc - (vvs->tx_cnt - vvs->peer_fwd_cnt);
+
+If the peer shrinks its advertised buffer (peer_buf_alloc) while bytes
+are in flight, the subtraction can underflow and produce a large
+positive value, potentially allowing more data to be queued than the
+peer can handle.
+
+Reuse virtio_transport_has_space() which already handles this case and
+add a comment to make it clear why we are doing that.
+
+Fixes: 06a8fc78367d ("VSOCK: Introduce virtio_vsock_common.ko")
+Suggested-by: Stefano Garzarella <sgarzare@redhat.com>
+Signed-off-by: Melbin K Mathew <mlbnkm1@gmail.com>
+[Stefano: use virtio_transport_has_space() instead of duplicating the code]
+[Stefano: tweak the commit message]
+Signed-off-by: Stefano Garzarella <sgarzare@redhat.com>
+Reviewed-by: Luigi Leonardi <leonardi@redhat.com>
+Link: https://patch.msgid.link/20260121093628.9941-2-sgarzare@redhat.com
+Acked-by: Michael S. Tsirkin <mst@redhat.com>
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../net/ethernet/marvell/octeontx2/af/rvu.c   | 86 ++++++++++++++-----
- 1 file changed, 64 insertions(+), 22 deletions(-)
+ net/vmw_vsock/virtio_transport_common.c | 16 +++++++++-------
+ 1 file changed, 9 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/net/ethernet/marvell/octeontx2/af/rvu.c b/drivers/net/ethernet/marvell/octeontx2/af/rvu.c
-index d9c68f8166aff..7034a977102ea 100644
---- a/drivers/net/ethernet/marvell/octeontx2/af/rvu.c
-+++ b/drivers/net/ethernet/marvell/octeontx2/af/rvu.c
-@@ -1540,8 +1540,8 @@ static int rvu_get_attach_blkaddr(struct rvu *rvu, int blktype,
- 	return -ENODEV;
- }
+diff --git a/net/vmw_vsock/virtio_transport_common.c b/net/vmw_vsock/virtio_transport_common.c
+index a65da57fe26fd..76329191102a0 100644
+--- a/net/vmw_vsock/virtio_transport_common.c
++++ b/net/vmw_vsock/virtio_transport_common.c
+@@ -28,6 +28,7 @@
  
--static void rvu_attach_block(struct rvu *rvu, int pcifunc, int blktype,
--			     int num_lfs, struct rsrc_attach *attach)
-+static int rvu_attach_block(struct rvu *rvu, int pcifunc, int blktype,
-+			    int num_lfs, struct rsrc_attach *attach)
+ static void virtio_transport_cancel_close_work(struct vsock_sock *vsk,
+ 					       bool cancel_timeout);
++static s64 virtio_transport_has_space(struct virtio_vsock_sock *vvs);
+ 
+ static const struct virtio_transport *
+ virtio_transport_get_ops(struct vsock_sock *vsk)
+@@ -284,9 +285,7 @@ u32 virtio_transport_get_credit(struct virtio_vsock_sock *vvs, u32 credit)
+ 	u32 ret;
+ 
+ 	spin_lock_bh(&vvs->tx_lock);
+-	ret = vvs->peer_buf_alloc - (vvs->tx_cnt - vvs->peer_fwd_cnt);
+-	if (ret > credit)
+-		ret = credit;
++	ret = min_t(u32, credit, virtio_transport_has_space(vvs));
+ 	vvs->tx_cnt += ret;
+ 	spin_unlock_bh(&vvs->tx_lock);
+ 
+@@ -588,11 +587,14 @@ u32 virtio_transport_seqpacket_has_data(struct vsock_sock *vsk)
+ }
+ EXPORT_SYMBOL_GPL(virtio_transport_seqpacket_has_data);
+ 
+-static s64 virtio_transport_has_space(struct vsock_sock *vsk)
++static s64 virtio_transport_has_space(struct virtio_vsock_sock *vvs)
  {
- 	struct rvu_pfvf *pfvf = rvu_get_pfvf(rvu, pcifunc);
- 	struct rvu_hwinfo *hw = rvu->hw;
-@@ -1551,21 +1551,21 @@ static void rvu_attach_block(struct rvu *rvu, int pcifunc, int blktype,
- 	u64 cfg;
+-	struct virtio_vsock_sock *vvs = vsk->trans;
+ 	s64 bytes;
  
- 	if (!num_lfs)
--		return;
-+		return -EINVAL;
++	/* Use s64 arithmetic so if the peer shrinks peer_buf_alloc while
++	 * we have bytes in flight (tx_cnt - peer_fwd_cnt), the subtraction
++	 * does not underflow.
++	 */
+ 	bytes = (s64)vvs->peer_buf_alloc - (vvs->tx_cnt - vvs->peer_fwd_cnt);
+ 	if (bytes < 0)
+ 		bytes = 0;
+@@ -606,7 +608,7 @@ s64 virtio_transport_stream_has_space(struct vsock_sock *vsk)
+ 	s64 bytes;
  
- 	blkaddr = rvu_get_attach_blkaddr(rvu, blktype, pcifunc, attach);
- 	if (blkaddr < 0)
--		return;
-+		return -EFAULT;
+ 	spin_lock_bh(&vvs->tx_lock);
+-	bytes = virtio_transport_has_space(vsk);
++	bytes = virtio_transport_has_space(vvs);
+ 	spin_unlock_bh(&vvs->tx_lock);
  
- 	block = &hw->block[blkaddr];
- 	if (!block->lf.bmap)
--		return;
-+		return -ESRCH;
- 
- 	for (slot = 0; slot < num_lfs; slot++) {
- 		/* Allocate the resource */
- 		lf = rvu_alloc_rsrc(&block->lf);
- 		if (lf < 0)
--			return;
-+			return -EFAULT;
- 
- 		cfg = (1ULL << 63) | (pcifunc << 8) | slot;
- 		rvu_write64(rvu, blkaddr, block->lfcfg_reg |
-@@ -1576,6 +1576,8 @@ static void rvu_attach_block(struct rvu *rvu, int pcifunc, int blktype,
- 		/* Set start MSIX vector for this LF within this PF/VF */
- 		rvu_set_msix_offset(rvu, pfvf, block, lf);
- 	}
-+
-+	return 0;
- }
- 
- static int rvu_check_rsrc_availability(struct rvu *rvu,
-@@ -1713,22 +1715,31 @@ int rvu_mbox_handler_attach_resources(struct rvu *rvu,
- 	int err;
- 
- 	/* If first request, detach all existing attached resources */
--	if (!attach->modify)
--		rvu_detach_rsrcs(rvu, NULL, pcifunc);
-+	if (!attach->modify) {
-+		err = rvu_detach_rsrcs(rvu, NULL, pcifunc);
-+		if (err)
-+			return err;
-+	}
- 
- 	mutex_lock(&rvu->rsrc_lock);
- 
- 	/* Check if the request can be accommodated */
- 	err = rvu_check_rsrc_availability(rvu, attach, pcifunc);
- 	if (err)
--		goto exit;
-+		goto fail1;
- 
- 	/* Now attach the requested resources */
--	if (attach->npalf)
--		rvu_attach_block(rvu, pcifunc, BLKTYPE_NPA, 1, attach);
-+	if (attach->npalf) {
-+		err = rvu_attach_block(rvu, pcifunc, BLKTYPE_NPA, 1, attach);
-+		if (err)
-+			goto fail1;
-+	}
- 
--	if (attach->nixlf)
--		rvu_attach_block(rvu, pcifunc, BLKTYPE_NIX, 1, attach);
-+	if (attach->nixlf) {
-+		err = rvu_attach_block(rvu, pcifunc, BLKTYPE_NIX, 1, attach);
-+		if (err)
-+			goto fail2;
-+	}
- 
- 	if (attach->sso) {
- 		/* RVU func doesn't know which exact LF or slot is attached
-@@ -1738,33 +1749,64 @@ int rvu_mbox_handler_attach_resources(struct rvu *rvu,
- 		 */
- 		if (attach->modify)
- 			rvu_detach_block(rvu, pcifunc, BLKTYPE_SSO);
--		rvu_attach_block(rvu, pcifunc, BLKTYPE_SSO,
--				 attach->sso, attach);
-+		err = rvu_attach_block(rvu, pcifunc, BLKTYPE_SSO,
-+				       attach->sso, attach);
-+		if (err)
-+			goto fail3;
- 	}
- 
- 	if (attach->ssow) {
- 		if (attach->modify)
- 			rvu_detach_block(rvu, pcifunc, BLKTYPE_SSOW);
--		rvu_attach_block(rvu, pcifunc, BLKTYPE_SSOW,
--				 attach->ssow, attach);
-+		err = rvu_attach_block(rvu, pcifunc, BLKTYPE_SSOW,
-+				       attach->ssow, attach);
-+		if (err)
-+			goto fail4;
- 	}
- 
- 	if (attach->timlfs) {
- 		if (attach->modify)
- 			rvu_detach_block(rvu, pcifunc, BLKTYPE_TIM);
--		rvu_attach_block(rvu, pcifunc, BLKTYPE_TIM,
--				 attach->timlfs, attach);
-+		err = rvu_attach_block(rvu, pcifunc, BLKTYPE_TIM,
-+				       attach->timlfs, attach);
-+		if (err)
-+			goto fail5;
- 	}
- 
- 	if (attach->cptlfs) {
- 		if (attach->modify &&
- 		    rvu_attach_from_same_block(rvu, BLKTYPE_CPT, attach))
- 			rvu_detach_block(rvu, pcifunc, BLKTYPE_CPT);
--		rvu_attach_block(rvu, pcifunc, BLKTYPE_CPT,
--				 attach->cptlfs, attach);
-+		err = rvu_attach_block(rvu, pcifunc, BLKTYPE_CPT,
-+				       attach->cptlfs, attach);
-+		if (err)
-+			goto fail6;
- 	}
- 
--exit:
-+	mutex_unlock(&rvu->rsrc_lock);
-+	return 0;
-+
-+fail6:
-+	if (attach->timlfs)
-+		rvu_detach_block(rvu, pcifunc, BLKTYPE_TIM);
-+
-+fail5:
-+	if (attach->ssow)
-+		rvu_detach_block(rvu, pcifunc, BLKTYPE_SSOW);
-+
-+fail4:
-+	if (attach->sso)
-+		rvu_detach_block(rvu, pcifunc, BLKTYPE_SSO);
-+
-+fail3:
-+	if (attach->nixlf)
-+		rvu_detach_block(rvu, pcifunc, BLKTYPE_NIX);
-+
-+fail2:
-+	if (attach->npalf)
-+		rvu_detach_block(rvu, pcifunc, BLKTYPE_NPA);
-+
-+fail1:
- 	mutex_unlock(&rvu->rsrc_lock);
- 	return err;
+ 	return bytes;
+@@ -1207,7 +1209,7 @@ static bool virtio_transport_space_update(struct sock *sk,
+ 	spin_lock_bh(&vvs->tx_lock);
+ 	vvs->peer_buf_alloc = le32_to_cpu(hdr->buf_alloc);
+ 	vvs->peer_fwd_cnt = le32_to_cpu(hdr->fwd_cnt);
+-	space_available = virtio_transport_has_space(vsk);
++	space_available = virtio_transport_has_space(vvs);
+ 	spin_unlock_bh(&vvs->tx_lock);
+ 	return space_available;
  }
 -- 
 2.51.0
