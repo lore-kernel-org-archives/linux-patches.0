@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 349294218AB;
-	Wed,  4 Feb 2026 15:23:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77CE82DCF61;
+	Wed,  4 Feb 2026 15:23:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770218619; cv=none; b=dnLu/Nfgqbjr+EJpMXRzWgUjeL0EOqbsFF8I0F4a+X//WIjmYdyAcUfhsoHdltE369Lnk9BuixiVfdfVKXuQClthmLFEfX0niFdyU+6eGEkIUy86QNxLc1k7JSf7SZzZrX6EBnrWqMOeQvc/DDYZo5zVYX7oXKntJeCkal+DoLE=
+	t=1770218622; cv=none; b=fZbi/ABF2Lch0grPczaWWqpiDvr5LdytVx7U8GIcUfADD1TZMArtdG8M5BhdOcE5WSZDEPG0eMw3hDYaFv2RQYTtL6h/HFbShsgBgl32P/L7JiG0lAj7zjBcWz8j62jaNvbv2o89EJyGCAG5qjVDg6dbA22a/BLyeY9qE1B07ls=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770218619; c=relaxed/simple;
-	bh=4h670GeaaOa2gaXJIEDuiDGxm5BeVr4B6NIBKEXTBdE=;
+	s=arc-20240116; t=1770218622; c=relaxed/simple;
+	bh=ZEivupDTlLBTH+Buyb7K6pcho3UgNqQ3EW6TcGLdsIc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ONSn8VcPMr9LfrqQQ5aR5CW295ayWhmdWiLv7jatYZfo+8OBSu87sZ5nsVcx2VKEnBxthOaXF+VEhZdLKnGlXcNQhW514+7y6XotSP56irDHTBv5jQxa5Ha61IgbXXZcQzzpT15BPbWNbV7c71lirP8tPpyMnAjcREZ5inP4Amg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cqdS01xC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VKWowv1a7kWjW6+eozNm1COCGvNBhOZCfNti7iKCKoIa9v8HA6s4xoNxq6ARabbY+VqoqaaoZdBvtQkGRlWzSo8t0qC69maI/f0yWjkFA+BdPsM5C94T49kim243EUTNFLKSkhRspbvsWI37L78U2LM7JJvvlt1/YeUBB0WEXXs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=InmyqMFx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cqdS01xC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 99599C4CEF7;
-	Wed,  4 Feb 2026 15:23:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="InmyqMFx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DBF30C4CEF7;
+	Wed,  4 Feb 2026 15:23:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770218619;
-	bh=4h670GeaaOa2gaXJIEDuiDGxm5BeVr4B6NIBKEXTBdE=;
+	s=korg; t=1770218622;
+	bh=ZEivupDTlLBTH+Buyb7K6pcho3UgNqQ3EW6TcGLdsIc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cqdS01xCpQ2/cwEjy2bNju2JZ1AU8qruCU2G6nqzRtm4gj+JN3paIebJ1zU+p6o2x
-	 IAJY3Iw0/73ESEt7hnhuFqFrJ3epAgfA9Z6QaXRCTgfDmonYKorfho7QDvBlV8yOX6
-	 xIrPwJAR9C8H3E0Th8gVrOr6aDI/FhMShbQpxBM8=
+	b=InmyqMFxSJrMayWWWmYMZo0XSbpiEyXxfrUarX1F4PNc7ASwWBhf6o+v/zfykAC0M
+	 0q5k79KN6d+Kwu2Pw45rEnUWeVZ8CHM07UrJL8wa9goLsNxwfjOynXem1FpgRskNgC
+	 y+n+vC0juVEo6D+nnzXNvxK66M4ESl2LT6nS3N/o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kery Qi <qikeyu2017@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Jia-Hong Su <s11242586@gmail.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 11/87] net: wwan: t7xx: fix potential skb->frags overflow in RX path
-Date: Wed,  4 Feb 2026 15:40:09 +0100
-Message-ID: <20260204143847.319238338@linuxfoundation.org>
+Subject: [PATCH 6.12 02/87] Bluetooth: hci_uart: fix null-ptr-deref in hci_uart_write_work
+Date: Wed,  4 Feb 2026 15:40:00 +0100
+Message-ID: <20260204143846.999685580@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260204143846.906385641@linuxfoundation.org>
 References: <20260204143846.906385641@linuxfoundation.org>
@@ -51,81 +51,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kery Qi <qikeyu2017@gmail.com>
+From: Jia-Hong Su <s11242586@gmail.com>
 
-[ Upstream commit f0813bcd2d9d97fdbdf2efb9532ab03ae92e99e6 ]
+[ Upstream commit 0c3cd7a0b862c37acbee6d9502107146cc944398 ]
 
-When receiving data in the DPMAIF RX path,
-the t7xx_dpmaif_set_frag_to_skb() function adds
-page fragments to an skb without checking if the number of
-fragments has exceeded MAX_SKB_FRAGS. This could lead to a buffer overflow
-in skb_shinfo(skb)->frags[] array, corrupting adjacent memory and
-potentially causing kernel crashes or other undefined behavior.
+hci_uart_set_proto() sets HCI_UART_PROTO_INIT before calling
+hci_uart_register_dev(), which calls proto->open() to initialize
+hu->priv. However, if a TTY write wakeup occurs during this window,
+hci_uart_tx_wakeup() may schedule write_work before hu->priv is
+initialized, leading to a NULL pointer dereference in
+hci_uart_write_work() when proto->dequeue() accesses hu->priv.
 
-This issue was identified through static code analysis by comparing with a
-similar vulnerability fixed in the mt76 driver commit b102f0c522cf ("mt76:
-fix array overflow on receiving too many fragments for a packet").
+The race condition is:
 
-The vulnerability could be triggered if the modem firmware sends packets
-with excessive fragments. While under normal protocol conditions (MTU 3080
-bytes, BAT buffer 3584 bytes),
-a single packet should not require additional
-fragments, the kernel should not blindly trust firmware behavior.
-Malicious, buggy, or compromised firmware could potentially craft packets
-with more fragments than the kernel expects.
+  CPU0                              CPU1
+  ----                              ----
+  hci_uart_set_proto()
+    set_bit(HCI_UART_PROTO_INIT)
+    hci_uart_register_dev()
+                                    tty write wakeup
+                                      hci_uart_tty_wakeup()
+                                        hci_uart_tx_wakeup()
+                                          schedule_work(&hu->write_work)
+      proto->open(hu)
+        // initializes hu->priv
+                                    hci_uart_write_work()
+                                      hci_uart_dequeue()
+                                        proto->dequeue(hu)
+                                          // accesses hu->priv (NULL!)
 
-Fix this by adding a bounds check before calling skb_add_rx_frag() to
-ensure nr_frags does not exceed MAX_SKB_FRAGS.
+Fix this by moving set_bit(HCI_UART_PROTO_INIT) after proto->open()
+succeeds, ensuring hu->priv is initialized before any work can be
+scheduled.
 
-The check must be performed before unmapping to avoid a page leak
-and double DMA unmap during device teardown.
+Fixes: 5df5dafc171b ("Bluetooth: hci_uart: Fix another race during initialization")
+Link: https://lore.kernel.org/linux-bluetooth/6969764f.170a0220.2b9fc4.35a7@mx.google.com/
 
-Fixes: d642b012df70a ("net: wwan: t7xx: Add data path interface")
-Signed-off-by: Kery Qi <qikeyu2017@gmail.com>
-Link: https://patch.msgid.link/20260122170401.1986-2-qikeyu2017@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Jia-Hong Su <s11242586@gmail.com>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wwan/t7xx/t7xx_hif_dpmaif_rx.c | 9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
+ drivers/bluetooth/hci_ldisc.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/wwan/t7xx/t7xx_hif_dpmaif_rx.c b/drivers/net/wwan/t7xx/t7xx_hif_dpmaif_rx.c
-index 7a9c09cd4fdcf..6b0df637afeb8 100644
---- a/drivers/net/wwan/t7xx/t7xx_hif_dpmaif_rx.c
-+++ b/drivers/net/wwan/t7xx/t7xx_hif_dpmaif_rx.c
-@@ -394,6 +394,7 @@ static int t7xx_dpmaif_set_frag_to_skb(const struct dpmaif_rx_queue *rxq,
- 				       struct sk_buff *skb)
- {
- 	unsigned long long data_bus_addr, data_base_addr;
-+	struct skb_shared_info *shinfo = skb_shinfo(skb);
- 	struct device *dev = rxq->dpmaif_ctrl->dev;
- 	struct dpmaif_bat_page *page_info;
- 	unsigned int data_len;
-@@ -401,18 +402,22 @@ static int t7xx_dpmaif_set_frag_to_skb(const struct dpmaif_rx_queue *rxq,
+diff --git a/drivers/bluetooth/hci_ldisc.c b/drivers/bluetooth/hci_ldisc.c
+index 2f322f890b81f..436ee77d4bf2f 100644
+--- a/drivers/bluetooth/hci_ldisc.c
++++ b/drivers/bluetooth/hci_ldisc.c
+@@ -685,6 +685,8 @@ static int hci_uart_register_dev(struct hci_uart *hu)
+ 		return err;
+ 	}
  
- 	page_info = rxq->bat_frag->bat_skb;
- 	page_info += t7xx_normal_pit_bid(pkt_info);
--	dma_unmap_page(dev, page_info->data_bus_addr, page_info->data_len, DMA_FROM_DEVICE);
- 
- 	if (!page_info->page)
- 		return -EINVAL;
- 
-+	if (shinfo->nr_frags >= MAX_SKB_FRAGS)
-+		return -EINVAL;
++	set_bit(HCI_UART_PROTO_INIT, &hu->flags);
 +
-+	dma_unmap_page(dev, page_info->data_bus_addr, page_info->data_len, DMA_FROM_DEVICE);
-+
- 	data_bus_addr = le32_to_cpu(pkt_info->pd.data_addr_h);
- 	data_bus_addr = (data_bus_addr << 32) + le32_to_cpu(pkt_info->pd.data_addr_l);
- 	data_base_addr = page_info->data_bus_addr;
- 	data_offset = data_bus_addr - data_base_addr;
- 	data_offset += page_info->offset;
- 	data_len = FIELD_GET(PD_PIT_DATA_LEN, le32_to_cpu(pkt_info->header));
--	skb_add_rx_frag(skb, skb_shinfo(skb)->nr_frags, page_info->page,
-+	skb_add_rx_frag(skb, shinfo->nr_frags, page_info->page,
- 			data_offset, data_len, page_info->data_len);
+ 	if (test_bit(HCI_UART_INIT_PENDING, &hu->hdev_flags))
+ 		return 0;
  
- 	page_info->page = NULL;
+@@ -712,8 +714,6 @@ static int hci_uart_set_proto(struct hci_uart *hu, int id)
+ 
+ 	hu->proto = p;
+ 
+-	set_bit(HCI_UART_PROTO_INIT, &hu->flags);
+-
+ 	err = hci_uart_register_dev(hu);
+ 	if (err) {
+ 		return err;
 -- 
 2.51.0
 
