@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20DD2421F01;
-	Wed,  4 Feb 2026 15:04:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29E0518871F;
+	Wed,  4 Feb 2026 15:04:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770217461; cv=none; b=ILpBm9WtXz8VValg4WqwnpQqoLPCKRGnr7te+qm0rCqRF+9K0ZFGLGyqAKka3wIdmyWyhuKr+7w+v3eYIQN4enzL6DKjIzgUyGpUgBgJPTe8PYdY1Y38ocNIUBOHKjsyEnV48DsvnDsHqycICLaJxjk2rBgEjt5DWzQxgfF1ClY=
+	t=1770217464; cv=none; b=lmRycDDcYJxaOdBKJ+5TrBOETtZ+HULdTxuZDqkgua4GARmKkX4EBOXWhMS5GbLoOLBpjRCl1OUhp9bqdbaYN/nmOZepC2h++a/pkbDOkt8kWIOftWb3YvIGcGbCGxSoK2WmrQyl55syChO4oO4f1FNbKXy/j/tUlz06IvgJEFc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770217461; c=relaxed/simple;
-	bh=NPPmgR0nYzlTJElYxR3pBkp6ySLOeWlVPOGmzGdvaKw=;
+	s=arc-20240116; t=1770217464; c=relaxed/simple;
+	bh=uKQrg53avu4S6muhDBP8Qiyl8BwHa6sWawk9ewIpNjU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ys8MBOjbWBzZeT34L8dqYvjpz+KS1nfpEux4wLAY3saHgZA06U0HJB8H30GLXvGeGHHVwg8jRX/hbnMZKt5VKV4UzcjxALq769enmIv+2oOfl4dLv29XOMwjTTGuLthKj77nnyB/w2MtWYMA3W8QoZjGwIFmkH+TFENZPr3XUAw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PYh1MW+u; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=iyWaDCw5xHT/evz+4V16MLYuo86txerThHEnbagZa3iy6UiXyGCA7OJdFCcHpub8wLeBAqAy3SOqyYyj7X64XgPSzuxVYavxAn+5vKFzc1oXHT8PRLJqwRMClB6WpMNZIIWdqdaj6yx6s/gB7LPNJ2z3P1Dt8FXi+qDEZw8uYvs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=x0UEG+kg; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PYh1MW+u"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C7C7C2BC86;
-	Wed,  4 Feb 2026 15:04:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="x0UEG+kg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 573C3C4CEF7;
+	Wed,  4 Feb 2026 15:04:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770217460;
-	bh=NPPmgR0nYzlTJElYxR3pBkp6ySLOeWlVPOGmzGdvaKw=;
+	s=korg; t=1770217464;
+	bh=uKQrg53avu4S6muhDBP8Qiyl8BwHa6sWawk9ewIpNjU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PYh1MW+uFYUmD9uBLmH1Q7YP6WLNZV3RRE6qiLudyJfaASJpJi2bVQpLBnvlTf77D
-	 rpA2eqD2fy9t9CpYehDpzAzI7TeEIIq6r0ltaTaNI2u3mHyrCSDXw44KDI5By2zft5
-	 kcdhgQPrJK+BGpsAMGTikmQdwxnmy/9Zw/gGzjS0=
+	b=x0UEG+kgNolxAubqftMI9J98pCkdj4iZCjP3uMax13CbenXxvH2gN3OmD9wvjeVdL
+	 8PanHW82leNalnN2JyMF5LUZNSy/+bCp68hKdElIRiq8mwORbkZCXDks3ixoF1Yvcu
+	 xbSv8E0I7z7wwGnoXZ7kooLIQBiGxEgxzw7J3iZM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shradha Gupta <shradhagupta@linux.microsoft.com>,
+	Aditya Garg <gargaditya@linux.microsoft.com>,
+	Dipayaan Roy <dipayanroy@linux.microsoft.com>,
 	Haiyang Zhang <haiyangz@microsoft.com>,
-	Simon Horman <simon.horman@corigine.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 022/280] hv_netvsc: Allocate rx indirection table size dynamically
-Date: Wed,  4 Feb 2026 15:36:36 +0100
-Message-ID: <20260204143910.431191183@linuxfoundation.org>
+Subject: [PATCH 6.1 023/280] net: hv_netvsc: reject RSS hash key programming without RX indirection table
+Date: Wed,  4 Feb 2026 15:36:37 +0100
+Message-ID: <20260204143910.466919545@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260204143909.614719725@linuxfoundation.org>
 References: <20260204143909.614719725@linuxfoundation.org>
@@ -53,179 +53,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shradha Gupta <shradhagupta@linux.microsoft.com>
+From: Aditya Garg <gargaditya@linux.microsoft.com>
 
-[ Upstream commit 4cab498f33f7adaa01ad15909c0f34a81e5a0b0a ]
+[ Upstream commit d23564955811da493f34412d7de60fa268c8cb50 ]
 
-Allocate the size of rx indirection table dynamically in netvsc
-from the value of size provided by OID_GEN_RECEIVE_SCALE_CAPABILITIES
-query instead of using a constant value of ITAB_NUM.
+RSS configuration requires a valid RX indirection table. When the device
+reports a single receive queue, rndis_filter_device_add() does not
+allocate an indirection table, accepting RSS hash key updates in this
+state leads to a hang.
 
-Signed-off-by: Shradha Gupta <shradhagupta@linux.microsoft.com>
+Fix this by gating netvsc_set_rxfh() on ndc->rx_table_sz and return
+-EOPNOTSUPP when the table is absent. This aligns set_rxfh with the device
+capabilities and prevents incorrect behavior.
+
+Fixes: 962f3fee83a4 ("netvsc: add ethtool ops to get/set RSS key")
+Signed-off-by: Aditya Garg <gargaditya@linux.microsoft.com>
+Reviewed-by: Dipayaan Roy <dipayanroy@linux.microsoft.com>
 Reviewed-by: Haiyang Zhang <haiyangz@microsoft.com>
-Tested-on: Ubuntu22 (azure VM, SKU size: Standard_F72s_v2)
-Testcases:
-1. ethtool -x eth0 output
-2. LISA testcase:PERF-NETWORK-TCP-THROUGHPUT-MULTICONNECTION-NTTTCP-Synthetic
-3. LISA testcase:PERF-NETWORK-TCP-THROUGHPUT-MULTICONNECTION-NTTTCP-SRIOV
-Reviewed-by: Simon Horman <simon.horman@corigine.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
-Stable-dep-of: d23564955811 ("net: hv_netvsc: reject RSS hash key programming without RX indirection table")
+Link: https://patch.msgid.link/1768212093-1594-1-git-send-email-gargaditya@linux.microsoft.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/hyperv/hyperv_net.h   |  5 ++++-
- drivers/net/hyperv/netvsc_drv.c   | 10 ++++++----
- drivers/net/hyperv/rndis_filter.c | 29 +++++++++++++++++++++++++----
- 3 files changed, 35 insertions(+), 9 deletions(-)
+ drivers/net/hyperv/netvsc_drv.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/net/hyperv/hyperv_net.h b/drivers/net/hyperv/hyperv_net.h
-index ea9cb1ac4bbe1..97952229a7b77 100644
---- a/drivers/net/hyperv/hyperv_net.h
-+++ b/drivers/net/hyperv/hyperv_net.h
-@@ -74,6 +74,7 @@ struct ndis_recv_scale_cap { /* NDIS_RECEIVE_SCALE_CAPABILITIES */
- #define NDIS_RSS_HASH_SECRET_KEY_MAX_SIZE_REVISION_2   40
- 
- #define ITAB_NUM 128
-+#define ITAB_NUM_MAX 256
- 
- struct ndis_recv_scale_param { /* NDIS_RECEIVE_SCALE_PARAMETERS */
- 	struct ndis_obj_header hdr;
-@@ -1045,7 +1046,9 @@ struct net_device_context {
- 
- 	u32 tx_table[VRSS_SEND_TAB_SIZE];
- 
--	u16 rx_table[ITAB_NUM];
-+	u16 *rx_table;
-+
-+	u32 rx_table_sz;
- 
- 	/* Ethtool settings */
- 	u8 duplex;
 diff --git a/drivers/net/hyperv/netvsc_drv.c b/drivers/net/hyperv/netvsc_drv.c
-index 7433fe7699432..68dfe77a6bbfe 100644
+index 68dfe77a6bbfe..20c584f46ec01 100644
 --- a/drivers/net/hyperv/netvsc_drv.c
 +++ b/drivers/net/hyperv/netvsc_drv.c
-@@ -1717,7 +1717,9 @@ static u32 netvsc_get_rxfh_key_size(struct net_device *dev)
+@@ -1762,6 +1762,9 @@ static int netvsc_set_rxfh(struct net_device *dev, const u32 *indir,
+ 	if (hfunc != ETH_RSS_HASH_NO_CHANGE && hfunc != ETH_RSS_HASH_TOP)
+ 		return -EOPNOTSUPP;
  
- static u32 netvsc_rss_indir_size(struct net_device *dev)
- {
--	return ITAB_NUM;
-+	struct net_device_context *ndc = netdev_priv(dev);
++	if (!ndc->rx_table_sz)
++		return -EOPNOTSUPP;
 +
-+	return ndc->rx_table_sz;
- }
- 
- static int netvsc_get_rxfh(struct net_device *dev, u32 *indir, u8 *key,
-@@ -1736,7 +1738,7 @@ static int netvsc_get_rxfh(struct net_device *dev, u32 *indir, u8 *key,
- 
  	rndis_dev = ndev->extension;
  	if (indir) {
--		for (i = 0; i < ITAB_NUM; i++)
-+		for (i = 0; i < ndc->rx_table_sz; i++)
- 			indir[i] = ndc->rx_table[i];
- 	}
- 
-@@ -1762,11 +1764,11 @@ static int netvsc_set_rxfh(struct net_device *dev, const u32 *indir,
- 
- 	rndis_dev = ndev->extension;
- 	if (indir) {
--		for (i = 0; i < ITAB_NUM; i++)
-+		for (i = 0; i < ndc->rx_table_sz; i++)
- 			if (indir[i] >= ndev->num_chn)
- 				return -EINVAL;
- 
--		for (i = 0; i < ITAB_NUM; i++)
-+		for (i = 0; i < ndc->rx_table_sz; i++)
- 			ndc->rx_table[i] = indir[i];
- 	}
- 
-diff --git a/drivers/net/hyperv/rndis_filter.c b/drivers/net/hyperv/rndis_filter.c
-index bb656ea097731..09144f0ec2aa4 100644
---- a/drivers/net/hyperv/rndis_filter.c
-+++ b/drivers/net/hyperv/rndis_filter.c
-@@ -21,6 +21,7 @@
- #include <linux/rtnetlink.h>
- #include <linux/ucs2_string.h>
- #include <linux/string.h>
-+#include <linux/slab.h>
- 
- #include "hyperv_net.h"
- #include "netvsc_trace.h"
-@@ -913,7 +914,7 @@ static int rndis_set_rss_param_msg(struct rndis_device *rdev,
- 	struct rndis_set_request *set;
- 	struct rndis_set_complete *set_complete;
- 	u32 extlen = sizeof(struct ndis_recv_scale_param) +
--		     4 * ITAB_NUM + NETVSC_HASH_KEYLEN;
-+		     4 * ndc->rx_table_sz + NETVSC_HASH_KEYLEN;
- 	struct ndis_recv_scale_param *rssp;
- 	u32 *itab;
- 	u8 *keyp;
-@@ -939,7 +940,7 @@ static int rndis_set_rss_param_msg(struct rndis_device *rdev,
- 	rssp->hashinfo = NDIS_HASH_FUNC_TOEPLITZ | NDIS_HASH_IPV4 |
- 			 NDIS_HASH_TCP_IPV4 | NDIS_HASH_IPV6 |
- 			 NDIS_HASH_TCP_IPV6;
--	rssp->indirect_tabsize = 4*ITAB_NUM;
-+	rssp->indirect_tabsize = 4 * ndc->rx_table_sz;
- 	rssp->indirect_taboffset = sizeof(struct ndis_recv_scale_param);
- 	rssp->hashkey_size = NETVSC_HASH_KEYLEN;
- 	rssp->hashkey_offset = rssp->indirect_taboffset +
-@@ -947,7 +948,7 @@ static int rndis_set_rss_param_msg(struct rndis_device *rdev,
- 
- 	/* Set indirection table entries */
- 	itab = (u32 *)(rssp + 1);
--	for (i = 0; i < ITAB_NUM; i++)
-+	for (i = 0; i < ndc->rx_table_sz; i++)
- 		itab[i] = ndc->rx_table[i];
- 
- 	/* Set hask key values */
-@@ -1534,6 +1535,18 @@ struct netvsc_device *rndis_filter_device_add(struct hv_device *dev,
- 	if (ret || rsscap.num_recv_que < 2)
- 		goto out;
- 
-+	if (rsscap.num_indirect_tabent &&
-+	    rsscap.num_indirect_tabent <= ITAB_NUM_MAX)
-+		ndc->rx_table_sz = rsscap.num_indirect_tabent;
-+	else
-+		ndc->rx_table_sz = ITAB_NUM;
-+
-+	ndc->rx_table = kcalloc(ndc->rx_table_sz, sizeof(u16), GFP_KERNEL);
-+	if (!ndc->rx_table) {
-+		ret = -ENOMEM;
-+		goto err_dev_remv;
-+	}
-+
- 	/* This guarantees that num_possible_rss_qs <= num_online_cpus */
- 	num_possible_rss_qs = min_t(u32, num_online_cpus(),
- 				    rsscap.num_recv_que);
-@@ -1544,7 +1557,7 @@ struct netvsc_device *rndis_filter_device_add(struct hv_device *dev,
- 	net_device->num_chn = min(net_device->max_chn, device_info->num_chn);
- 
- 	if (!netif_is_rxfh_configured(net)) {
--		for (i = 0; i < ITAB_NUM; i++)
-+		for (i = 0; i < ndc->rx_table_sz; i++)
- 			ndc->rx_table[i] = ethtool_rxfh_indir_default(
- 						i, net_device->num_chn);
- 	}
-@@ -1582,11 +1595,19 @@ void rndis_filter_device_remove(struct hv_device *dev,
- 				struct netvsc_device *net_dev)
- {
- 	struct rndis_device *rndis_dev = net_dev->extension;
-+	struct net_device *net = hv_get_drvdata(dev);
-+	struct net_device_context *ndc;
-+
-+	ndc = netdev_priv(net);
- 
- 	/* Halt and release the rndis device */
- 	rndis_filter_halt_device(net_dev, rndis_dev);
- 
- 	netvsc_device_remove(dev);
-+
-+	ndc->rx_table_sz = 0;
-+	kfree(ndc->rx_table);
-+	ndc->rx_table = NULL;
- }
- 
- int rndis_filter_open(struct netvsc_device *nvdev)
+ 		for (i = 0; i < ndc->rx_table_sz; i++)
 -- 
 2.51.0
 
