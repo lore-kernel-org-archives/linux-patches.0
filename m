@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A40A27F749;
-	Wed,  4 Feb 2026 14:53:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B18627F749;
+	Wed,  4 Feb 2026 14:53:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770216806; cv=none; b=FBmtb142c6k+8ZgO6Q02lGYLU6glL0JiuTrOHdKzho73WTv7gYUXAfqWLSdb3LCiUxHCdhui/zMdWMc1Pn2EsIC/qKqLZEOEvvI0uM/KhPtdEmiUuqzcG0OfRSwWHmg4bfAOu1OaYko6NQOxLeO0IZto6S9rlsgsT9Y3Kp2qN/o=
+	t=1770216809; cv=none; b=bD1VzZr7QTkLOG6X9Lx3xfWHGnAjvORSSREIAEiP3Hgwfg5k3At3Az36J9oCBjbbb3cxyNtpqSC/zAp+gPz3cLiHHRd7LTLy4QVC7t7xQgihhkAnW/KAZXKuDiB3pMmlW8ipMcPZCyLZROIBuBcyHDbSiIvWuG+txnfNeIAsUCc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770216806; c=relaxed/simple;
-	bh=kBi+UpvZxoI8pP602xTjp5Xst37ebJjj9ZScOumLuz0=;
+	s=arc-20240116; t=1770216809; c=relaxed/simple;
+	bh=VsJ1PxU+c6a4ksC/+U1y4JWeFKBfIZXcnYxGy12Lv+A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tpEM2qUnw6hD5ZJX0PXWP9UqhI19MZ+cQeuttatB72pzPYH4sTJF5xkRwlb/sMBbGdQRiWbA7lJiVPcBF61io/8owct1PAC0Ma5mMXraW+1WR/SFtRqHdYbPIDtA0yktija+SMxi7FO/0mkt/ubmgQ0QkIsX1i/9lyJ0eceewtE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=M65SaSUA; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=EYCPEocF7RdW+n1Yz7GfxpKUxS4VT6RCoS/eDH4vMNtLNVZvDs0x/CxTfmQ9CvnW3pD/ukeTsGLt6caFFrC3t3DOGYLXkJwKXOg3DTI6/szgb2JcXO3EIrr2HV6Q+BttGYnUIw717vRtgAsU/cLSNQd51tcxEbvvQioIZszCIC4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WgKgCbDZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="M65SaSUA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B08BCC4CEF7;
-	Wed,  4 Feb 2026 14:53:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WgKgCbDZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1BC7BC4CEF7;
+	Wed,  4 Feb 2026 14:53:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770216806;
-	bh=kBi+UpvZxoI8pP602xTjp5Xst37ebJjj9ZScOumLuz0=;
+	s=korg; t=1770216809;
+	bh=VsJ1PxU+c6a4ksC/+U1y4JWeFKBfIZXcnYxGy12Lv+A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=M65SaSUAOcmUeL7iJomCXK5NBf+5kySP08/e/GXfagbpmt0eJbA+sAyjmsXSPVaFV
-	 nec5sY1Gd70fxMZFErOQdykuIqTbqG9O4OJvYMY1pnDLOTsg+CuH1rT56VpmOu0fFh
-	 Aes43FqcE6Pdm8/I1rO6n4jqXxQQm2mP3pj+JXcs=
+	b=WgKgCbDZVVmKnEh15LEzcU0EFR4KsyE7Bezwa/1P4q5+Dimhy561AQDcr1T3fpKD7
+	 jUvrMWGBISJ1NgM7oZBWwgTXOnpVFiXOLRxAGXA9ilteMt3lZC467I1HWH5CoYK3SL
+	 oiLxrHbgIhuIoA8dissTdcPz50KTSGnX8arBo+Vk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Haoxiang Li <lihaoxiang@isrc.iscas.ac.cn>,
-	"Borislav Petkov (AMD)" <bp@alien8.de>
-Subject: [PATCH 5.15 037/206] EDAC/i3200: Fix a resource leak in i3200_probe1()
-Date: Wed,  4 Feb 2026 15:37:48 +0100
-Message-ID: <20260204143859.545051646@linuxfoundation.org>
+	Xiaochen Shen <shenxiaochen@open-hieco.net>,
+	"Borislav Petkov (AMD)" <bp@alien8.de>,
+	Reinette Chatre <reinette.chatre@intel.com>
+Subject: [PATCH 5.15 038/206] x86/resctrl: Add missing resctrl initialization for Hygon
+Date: Wed,  4 Feb 2026 15:37:49 +0100
+Message-ID: <20260204143859.584350952@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260204143858.193781818@linuxfoundation.org>
 References: <20260204143858.193781818@linuxfoundation.org>
@@ -50,52 +51,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Haoxiang Li <lihaoxiang@isrc.iscas.ac.cn>
+From: Xiaochen Shen <shenxiaochen@open-hieco.net>
 
-commit d42d5715dcb559342ff356327b241c53a67584d9 upstream.
+commit 6ee98aabdc700b5705e4f1833e2edc82a826b53b upstream.
 
-If edac_mc_alloc() fails, also unmap the window.
+Hygon CPUs supporting Platform QoS features currently undergo partial resctrl
+initialization through resctrl_cpu_detect() in the Hygon BSP init helper and
+AMD/Hygon common initialization code. However, several critical data
+structures remain uninitialized for Hygon CPUs in the following paths:
 
-  [ bp: Use separate labels, turning it into the classic unwind pattern. ]
+ - get_mem_config()-> __rdt_get_mem_config_amd():
+     rdt_resource::membw,alloc_capable
+     hw_res::num_closid
 
-Fixes: dd8ef1db87a4 ("edac: i3200 memory controller driver")
-Signed-off-by: Haoxiang Li <lihaoxiang@isrc.iscas.ac.cn>
+ - rdt_init_res_defs()->rdt_init_res_defs_amd():
+     rdt_resource::cache
+     hw_res::msr_base,msr_update
+
+Add the missing AMD/Hygon common initialization to ensure proper Platform QoS
+functionality on Hygon CPUs.
+
+Fixes: d8df126349da ("x86/cpu/hygon: Add missing resctrl_cpu_detect() in bsp_init helper")
+Signed-off-by: Xiaochen Shen <shenxiaochen@open-hieco.net>
 Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+Reviewed-by: Reinette Chatre <reinette.chatre@intel.com>
 Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20251223123202.1492038-1-lihaoxiang@isrc.iscas.ac.cn
+Link: https://patch.msgid.link/20251209062650.1536952-2-shenxiaochen@open-hieco.net
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/edac/i3200_edac.c |   11 ++++++-----
- 1 file changed, 6 insertions(+), 5 deletions(-)
+ arch/x86/kernel/cpu/resctrl/core.c |    6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
---- a/drivers/edac/i3200_edac.c
-+++ b/drivers/edac/i3200_edac.c
-@@ -358,10 +358,11 @@ static int i3200_probe1(struct pci_dev *
- 	layers[1].type = EDAC_MC_LAYER_CHANNEL;
- 	layers[1].size = nr_channels;
- 	layers[1].is_virt_csrow = false;
--	mci = edac_mc_alloc(0, ARRAY_SIZE(layers), layers,
--			    sizeof(struct i3200_priv));
-+
-+	rc = -ENOMEM;
-+	mci = edac_mc_alloc(0, ARRAY_SIZE(layers), layers, sizeof(struct i3200_priv));
- 	if (!mci)
--		return -ENOMEM;
-+		goto unmap;
+--- a/arch/x86/kernel/cpu/resctrl/core.c
++++ b/arch/x86/kernel/cpu/resctrl/core.c
+@@ -769,7 +769,8 @@ static __init bool get_mem_config(void)
  
- 	edac_dbg(3, "MC: init mci\n");
+ 	if (boot_cpu_data.x86_vendor == X86_VENDOR_INTEL)
+ 		return __get_mem_config_intel(&hw_res->r_resctrl);
+-	else if (boot_cpu_data.x86_vendor == X86_VENDOR_AMD)
++	else if (boot_cpu_data.x86_vendor == X86_VENDOR_AMD ||
++		 boot_cpu_data.x86_vendor == X86_VENDOR_HYGON)
+ 		return __rdt_get_mem_config_amd(&hw_res->r_resctrl);
  
-@@ -421,9 +422,9 @@ static int i3200_probe1(struct pci_dev *
- 	return 0;
- 
- fail:
-+	edac_mc_free(mci);
-+unmap:
- 	iounmap(window);
--	if (mci)
--		edac_mc_free(mci);
- 
- 	return rc;
+ 	return false;
+@@ -904,7 +905,8 @@ static __init void rdt_init_res_defs(voi
+ {
+ 	if (boot_cpu_data.x86_vendor == X86_VENDOR_INTEL)
+ 		rdt_init_res_defs_intel();
+-	else if (boot_cpu_data.x86_vendor == X86_VENDOR_AMD)
++	else if (boot_cpu_data.x86_vendor == X86_VENDOR_AMD ||
++		 boot_cpu_data.x86_vendor == X86_VENDOR_HYGON)
+ 		rdt_init_res_defs_amd();
  }
+ 
 
 
