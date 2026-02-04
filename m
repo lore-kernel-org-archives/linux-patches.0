@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5F093C1963;
-	Wed,  4 Feb 2026 15:08:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E81923C1963;
+	Wed,  4 Feb 2026 15:08:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770217728; cv=none; b=K30guO/LRUTdOrUc4roRJN9sfjtecaFuzKXG5iMaQyqG9otE62YWFH6WqN7fxjon1zzhe0CWdnKMH3LZ7Jfh3b6oM5mVttxgTMiHTHLMJKNyI8MaqLtbwA+gaK9VD2y5dKorStaR5TZmX739EeDXYn8SDl6xVF49PO2E6Q6Grzs=
+	t=1770217733; cv=none; b=fOrxc1NBL18f+tURecI/LVSziIClB2DQo4omUJzonqJRGvkdpgXmxkGoN4RC4ojUZurScDLqmlzcuKf7LoBz/AnlvYxc0tfFcKupKAixxOqal5ihzrHOyTYTcH83pKRzPZ+YHL+5Igi0yWHDbwThM6VBxpvz3Z/+4BH9uvuiP9g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770217728; c=relaxed/simple;
-	bh=fHf8nom3iJEDacwBX1O+ka4JJAc+M1AeNSmZGypVrwE=;
+	s=arc-20240116; t=1770217733; c=relaxed/simple;
+	bh=uxX/E2Dz8Js0dEwv/ktNsUQkENcElyRNsHgfW2w2IFc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=s2d+Lx/uHCY1X4MjjE8f+/Qm3JqoYPTusG+BDTvqPRAR7117+ZFGHbiqbuPPXR/o/dKBVI2iWVi/ZKlPPg7u9t7tMTbQ3587cM9aIeMNwspvkAr0RVfZpAp5pbQXn5OKvQp50znpKrllqaJDKFMM2+ozzSWdvRFb9F0sumSC6+w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Y3rR2Mgt; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=POHaHxGOLeopB+ITy8f+HVW24h+QGw0EInruevLV0BV+R2EuVzTeYPrb9GoUm4QO3HMmfwIh+99hO3/yeVPvhWikjRavNPuCixlzkCdGvQmoGYmMvLHJZLy+Rk+VKM8k2OWIxCIiFgDeMfkTU16SvAXc3/HY3AQnLmNIH+YEuVk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=C9S5twRl; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Y3rR2Mgt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2EB4CC116C6;
-	Wed,  4 Feb 2026 15:08:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="C9S5twRl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 325BAC116C6;
+	Wed,  4 Feb 2026 15:08:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770217728;
-	bh=fHf8nom3iJEDacwBX1O+ka4JJAc+M1AeNSmZGypVrwE=;
+	s=korg; t=1770217732;
+	bh=uxX/E2Dz8Js0dEwv/ktNsUQkENcElyRNsHgfW2w2IFc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Y3rR2Mgt7VYZAp8MVxct+wcEMcLyKMMaUVUarSTmde6Xdz6ffPMIGH6lYKy25O3l5
-	 kk43RP8jekJAylOMb4iYewDRA2spAtVsHaFCbaZ+GmBuc0ALuyIrG5kyesG0rhAFS1
-	 jVjx/cdSrW5K9xZYrBYpFv0R5AQcyA8J25WNBvxc=
+	b=C9S5twRloIptaKa9em5DTVW7fbvHxaluhyWZr3EStjzvNrrfDdG1RIw41cj933IHl
+	 Kr9CxDVfk1csiwnlv9elTbS4tb8Ao69IKiHbAesyhYwB4FczHeS7PQdbXS6iMZmljc
+	 MbD2/kZg+vpY1qVAL32wD4a9Bv+4+pGnUzoM5kwc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhen Chen <chenzhen126@huawei.com>,
-	Xin Long <lucien.xin@gmail.com>,
+	Raju Rangoju <Raju.Rangoju@amd.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 102/280] sctp: move SCTP_CMD_ASSOC_SHKEY right after SCTP_CMD_PEER_INIT
-Date: Wed,  4 Feb 2026 15:37:56 +0100
-Message-ID: <20260204143913.320979851@linuxfoundation.org>
+Subject: [PATCH 6.1 103/280] amd-xgbe: avoid misleading per-packet error log
+Date: Wed,  4 Feb 2026 15:37:57 +0100
+Message-ID: <20260204143913.356046438@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260204143909.614719725@linuxfoundation.org>
 References: <20260204143909.614719725@linuxfoundation.org>
@@ -52,99 +51,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xin Long <lucien.xin@gmail.com>
+From: Raju Rangoju <Raju.Rangoju@amd.com>
 
-[ Upstream commit a80c9d945aef55b23b54838334345f20251dad83 ]
+[ Upstream commit c158f985cf6c2c36c99c4f67af2ff3f5ebe09f8f ]
 
-A null-ptr-deref was reported in the SCTP transmit path when SCTP-AUTH key
-initialization fails:
+On the receive path, packet can be damaged because of buffer
+overflow in Rx FIFO. Avoid misleading per-packet error log when
+packet->errors is set, this can flood the log. Instead, rely on the
+standard rtnl_link_stats64 stats.
 
-  ==================================================================
-  KASAN: null-ptr-deref in range [0x0000000000000018-0x000000000000001f]
-  CPU: 0 PID: 16 Comm: ksoftirqd/0 Tainted: G W 6.6.0 #2
-  RIP: 0010:sctp_packet_bundle_auth net/sctp/output.c:264 [inline]
-  RIP: 0010:sctp_packet_append_chunk+0xb36/0x1260 net/sctp/output.c:401
-  Call Trace:
-
-  sctp_packet_transmit_chunk+0x31/0x250 net/sctp/output.c:189
-  sctp_outq_flush_data+0xa29/0x26d0 net/sctp/outqueue.c:1111
-  sctp_outq_flush+0xc80/0x1240 net/sctp/outqueue.c:1217
-  sctp_cmd_interpreter.isra.0+0x19a5/0x62c0 net/sctp/sm_sideeffect.c:1787
-  sctp_side_effects net/sctp/sm_sideeffect.c:1198 [inline]
-  sctp_do_sm+0x1a3/0x670 net/sctp/sm_sideeffect.c:1169
-  sctp_assoc_bh_rcv+0x33e/0x640 net/sctp/associola.c:1052
-  sctp_inq_push+0x1dd/0x280 net/sctp/inqueue.c:88
-  sctp_rcv+0x11ae/0x3100 net/sctp/input.c:243
-  sctp6_rcv+0x3d/0x60 net/sctp/ipv6.c:1127
-
-The issue is triggered when sctp_auth_asoc_init_active_key() fails in
-sctp_sf_do_5_1C_ack() while processing an INIT_ACK. In this case, the
-command sequence is currently:
-
-- SCTP_CMD_PEER_INIT
-- SCTP_CMD_TIMER_STOP (T1_INIT)
-- SCTP_CMD_TIMER_START (T1_COOKIE)
-- SCTP_CMD_NEW_STATE (COOKIE_ECHOED)
-- SCTP_CMD_ASSOC_SHKEY
-- SCTP_CMD_GEN_COOKIE_ECHO
-
-If SCTP_CMD_ASSOC_SHKEY fails, asoc->shkey remains NULL, while
-asoc->peer.auth_capable and asoc->peer.peer_chunks have already been set by
-SCTP_CMD_PEER_INIT. This allows a DATA chunk with auth = 1 and shkey = NULL
-to be queued by sctp_datamsg_from_user().
-
-Since command interpretation stops on failure, no COOKIE_ECHO should been
-sent via SCTP_CMD_GEN_COOKIE_ECHO. However, the T1_COOKIE timer has already
-been started, and it may enqueue a COOKIE_ECHO into the outqueue later. As
-a result, the DATA chunk can be transmitted together with the COOKIE_ECHO
-in sctp_outq_flush_data(), leading to the observed issue.
-
-Similar to the other places where it calls sctp_auth_asoc_init_active_key()
-right after sctp_process_init(), this patch moves the SCTP_CMD_ASSOC_SHKEY
-immediately after SCTP_CMD_PEER_INIT, before stopping T1_INIT and starting
-T1_COOKIE. This ensures that if shared key generation fails, authenticated
-DATA cannot be sent. It also allows the T1_INIT timer to retransmit INIT,
-giving the client another chance to process INIT_ACK and retry key setup.
-
-Fixes: 730fc3d05cd4 ("[SCTP]: Implete SCTP-AUTH parameter processing")
-Reported-by: Zhen Chen <chenzhen126@huawei.com>
-Tested-by: Zhen Chen <chenzhen126@huawei.com>
-Signed-off-by: Xin Long <lucien.xin@gmail.com>
-Link: https://patch.msgid.link/44881224b375aa8853f5e19b4055a1a56d895813.1768324226.git.lucien.xin@gmail.com
+Fixes: c5aa9e3b8156 ("amd-xgbe: Initial AMD 10GbE platform driver")
+Signed-off-by: Raju Rangoju <Raju.Rangoju@amd.com>
+Link: https://patch.msgid.link/20260114163037.2062606-1-Raju.Rangoju@amd.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sctp/sm_statefuns.c | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ drivers/net/ethernet/amd/xgbe/xgbe-drv.c | 5 +----
+ 1 file changed, 1 insertion(+), 4 deletions(-)
 
-diff --git a/net/sctp/sm_statefuns.c b/net/sctp/sm_statefuns.c
-index beae92ad25bb0..80a6b9fc964e5 100644
---- a/net/sctp/sm_statefuns.c
-+++ b/net/sctp/sm_statefuns.c
-@@ -602,6 +602,11 @@ enum sctp_disposition sctp_sf_do_5_1C_ack(struct net *net,
- 	sctp_add_cmd_sf(commands, SCTP_CMD_PEER_INIT,
- 			SCTP_PEER_INIT(initchunk));
+diff --git a/drivers/net/ethernet/amd/xgbe/xgbe-drv.c b/drivers/net/ethernet/amd/xgbe/xgbe-drv.c
+index b4d57da71de2a..3d6f8f3a83366 100644
+--- a/drivers/net/ethernet/amd/xgbe/xgbe-drv.c
++++ b/drivers/net/ethernet/amd/xgbe/xgbe-drv.c
+@@ -2105,7 +2105,7 @@ static void xgbe_get_stats64(struct net_device *netdev,
+ 	s->multicast = pstats->rxmulticastframes_g;
+ 	s->rx_length_errors = pstats->rxlengtherror;
+ 	s->rx_crc_errors = pstats->rxcrcerror;
+-	s->rx_fifo_errors = pstats->rxfifooverflow;
++	s->rx_over_errors = pstats->rxfifooverflow;
  
-+	/* SCTP-AUTH: generate the association shared keys so that
-+	 * we can potentially sign the COOKIE-ECHO.
-+	 */
-+	sctp_add_cmd_sf(commands, SCTP_CMD_ASSOC_SHKEY, SCTP_NULL());
-+
- 	/* Reset init error count upon receipt of INIT-ACK.  */
- 	sctp_add_cmd_sf(commands, SCTP_CMD_INIT_COUNTER_RESET, SCTP_NULL());
+ 	s->tx_packets = pstats->txframecount_gb;
+ 	s->tx_bytes = pstats->txoctetcount_gb;
+@@ -2559,9 +2559,6 @@ static int xgbe_rx_poll(struct xgbe_channel *channel, int budget)
+ 			goto read_again;
  
-@@ -616,11 +621,6 @@ enum sctp_disposition sctp_sf_do_5_1C_ack(struct net *net,
- 	sctp_add_cmd_sf(commands, SCTP_CMD_NEW_STATE,
- 			SCTP_STATE(SCTP_STATE_COOKIE_ECHOED));
- 
--	/* SCTP-AUTH: generate the association shared keys so that
--	 * we can potentially sign the COOKIE-ECHO.
--	 */
--	sctp_add_cmd_sf(commands, SCTP_CMD_ASSOC_SHKEY, SCTP_NULL());
--
- 	/* 5.1 C) "A" shall then send the State Cookie received in the
- 	 * INIT ACK chunk in a COOKIE ECHO chunk, ...
- 	 */
+ 		if (error || packet->errors) {
+-			if (packet->errors)
+-				netif_err(pdata, rx_err, netdev,
+-					  "error in received packet\n");
+ 			dev_kfree_skb(skb);
+ 			goto next_packet;
+ 		}
 -- 
 2.51.0
 
