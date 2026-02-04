@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9551642188D;
-	Wed,  4 Feb 2026 15:22:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 365812BD012;
+	Wed,  4 Feb 2026 15:22:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770218563; cv=none; b=IiLzNMIGXSOSha7R890zskovmXjPasrJUlL3ccC/iMnhYlonqmpNF/8fvorQMh4SD10bw2JTXwj17LZrP39cictTHfQP0e4ubdZQ3dtI0nkLvk8hB2AcrZZXKwg5tXFwlSTYTa1M3S57CnJDRRZYx2jrEls3R/z5cx7fvQWU3z4=
+	t=1770218567; cv=none; b=p2JIirptrKnxAdygpn/AsD5pY9UE+NdXDSrHdI1XD+JzwQfYmy5+SAwE/ZpOQCA2An1O2ZtzjxgNblN7y7kO+JEFrko4oLSBuVKDBkaYZQzu7L+L/GxwzowQnj7U+W4nJVUBJmWygelBZEGL9TP7oFHYJoo1LXfd7ks8SnzNoSU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770218563; c=relaxed/simple;
-	bh=bMkEpfz59UE83EY+szsmkWFahSkJl2VSp7ONwXjKPyI=;
+	s=arc-20240116; t=1770218567; c=relaxed/simple;
+	bh=2Tmx5KMSnK4IlxjG84fxrTpP2KaVQLh0szaLTQ4Wt0g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NemaGdjUOq5JsUcobPvxAMoMGhOyb5Ew4unUfDW+cl6BdjEscVm/3Z8H8Q/8SgLOoXZgCHpmwaEQABrY5Oul0uHdUYqA7n4WC2+lGrFEGWkf1wcRJgnP19u2NLlqcdCbEhpdI0LTVzdsRo7YP5NysuI0WfM4hUUNMgfD7u/sq8M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2lXyJui0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Ct48kyWRmnQVWOySyivP8W2iK3nuaS3daneC+zE+SXGkQF71VNsTJ5IGhG+Xpqbtlu8mSW7p1c+I/VGLbHJJofdVIrWfHYHVlmXc7yhzcaaSKZL/GMOitrd1HAEugGA7WxDw3WbAQyozmd7WwkQyW4Id89wNzs/nHwl0V2eVj44=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EnKTl9NF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2lXyJui0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0497EC4CEF7;
-	Wed,  4 Feb 2026 15:22:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EnKTl9NF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9670FC4CEF7;
+	Wed,  4 Feb 2026 15:22:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770218563;
-	bh=bMkEpfz59UE83EY+szsmkWFahSkJl2VSp7ONwXjKPyI=;
+	s=korg; t=1770218567;
+	bh=2Tmx5KMSnK4IlxjG84fxrTpP2KaVQLh0szaLTQ4Wt0g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2lXyJui0KpC3PEZCtllnehAU9pUxb+P3MOLNopbrrcrkLx6bhkHaHtCEliZsNJzUF
-	 FPZ4xY1GtgJ7f2AAvcOZN/qDoDNyKeNRBAvH8E1q7YDkwgaFHp1WDJcknRjZ0fq/Ve
-	 rrAEETx8VXK1rYOEBtYWAhMglGXiLv3+SGHUscJk=
+	b=EnKTl9NFxKWGrbC3Slts18gHKXoRtLz3v+OiUb3emRAyUw4GgZLdFiDS4eA9WbbkK
+	 3CyKOsC64ZDMGOK0dZMAis0+a9RdZjIkffDy/vAXvNh9lVaHmVfe+VNVfosvRcpEBx
+	 MXn+Z8kSKHMksRZ2k8CBGDv9aeI7TfJvVsAGMhG0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marios Makassikis <mmakassikis@freebox.fr>,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Steve French <stfrench@microsoft.com>,
-	Li hongliang <1468888505@139.com>
-Subject: [PATCH 6.6 67/72] ksmbd: fix recursive locking in RPC handle list access
-Date: Wed,  4 Feb 2026 15:41:10 +0100
-Message-ID: <20260204143848.069797467@linuxfoundation.org>
+	syzbot+f56a5c5eac2b28439810@syzkaller.appspotmail.com,
+	Eric Dumazet <edumazet@google.com>,
+	"Michael S. Tsirkin" <mst@redhat.com>,
+	Jason Wang <jasowang@redhat.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Alva Lan <alvalan9@foxmail.com>
+Subject: [PATCH 6.6 68/72] ptr_ring: do not block hard interrupts in ptr_ring_resize_multiple()
+Date: Wed,  4 Feb 2026 15:41:11 +0100
+Message-ID: <20260204143848.106234102@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260204143845.603454952@linuxfoundation.org>
 References: <20260204143845.603454952@linuxfoundation.org>
@@ -52,155 +54,189 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Marios Makassikis <mmakassikis@freebox.fr>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 88f170814fea74911ceab798a43cbd7c5599bed4 ]
+[ Upstream commit a126061c80d5efb4baef4bcf346094139cd81df6 ]
 
-Since commit 305853cce3794 ("ksmbd: Fix race condition in RPC handle list
-access"), ksmbd_session_rpc_method() attempts to lock sess->rpc_lock.
+Jakub added a lockdep_assert_no_hardirq() check in __page_pool_put_page()
+to increase test coverage.
 
-This causes hung connections / tasks when a client attempts to open
-a named pipe. Using Samba's rpcclient tool:
+syzbot found a splat caused by hard irq blocking in
+ptr_ring_resize_multiple() [1]
 
- $ rpcclient //192.168.1.254 -U user%password
- $ rpcclient $> srvinfo
- <connection hung here>
+As current users of ptr_ring_resize_multiple() do not require
+hard irqs being masked, replace it to only block BH.
 
-Kernel side:
-  "echo 0 > /proc/sys/kernel/hung_task_timeout_secs" disables this message.
-  task:kworker/0:0 state:D stack:0 pid:5021 tgid:5021 ppid:2 flags:0x00200000
-  Workqueue: ksmbd-io handle_ksmbd_work
-  Call trace:
-  __schedule from schedule+0x3c/0x58
-  schedule from schedule_preempt_disabled+0xc/0x10
-  schedule_preempt_disabled from rwsem_down_read_slowpath+0x1b0/0x1d8
-  rwsem_down_read_slowpath from down_read+0x28/0x30
-  down_read from ksmbd_session_rpc_method+0x18/0x3c
-  ksmbd_session_rpc_method from ksmbd_rpc_open+0x34/0x68
-  ksmbd_rpc_open from ksmbd_session_rpc_open+0x194/0x228
-  ksmbd_session_rpc_open from create_smb2_pipe+0x8c/0x2c8
-  create_smb2_pipe from smb2_open+0x10c/0x27ac
-  smb2_open from handle_ksmbd_work+0x238/0x3dc
-  handle_ksmbd_work from process_scheduled_works+0x160/0x25c
-  process_scheduled_works from worker_thread+0x16c/0x1e8
-  worker_thread from kthread+0xa8/0xb8
-  kthread from ret_from_fork+0x14/0x38
-  Exception stack(0x8529ffb0 to 0x8529fff8)
+Rename helpers to better reflect they are safe against BH only.
 
-The task deadlocks because the lock is already held:
-  ksmbd_session_rpc_open
-    down_write(&sess->rpc_lock)
-    ksmbd_rpc_open
-      ksmbd_session_rpc_method
-        down_read(&sess->rpc_lock)   <-- deadlock
+- ptr_ring_resize_multiple() to ptr_ring_resize_multiple_bh()
+- skb_array_resize_multiple() to skb_array_resize_multiple_bh()
 
-Adjust ksmbd_session_rpc_method() callers to take the lock when necessary.
+[1]
 
-Fixes: 305853cce3794 ("ksmbd: Fix race condition in RPC handle list access")
-Signed-off-by: Marios Makassikis <mmakassikis@freebox.fr>
-Acked-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Steve French <stfrench@microsoft.com>
-Signed-off-by: Li hongliang <1468888505@139.com>
+WARNING: CPU: 1 PID: 9150 at net/core/page_pool.c:709 __page_pool_put_page net/core/page_pool.c:709 [inline]
+WARNING: CPU: 1 PID: 9150 at net/core/page_pool.c:709 page_pool_put_unrefed_netmem+0x157/0xa40 net/core/page_pool.c:780
+Modules linked in:
+CPU: 1 UID: 0 PID: 9150 Comm: syz.1.1052 Not tainted 6.11.0-rc3-syzkaller-00202-gf8669d7b5f5d #0
+Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 08/06/2024
+RIP: 0010:__page_pool_put_page net/core/page_pool.c:709 [inline]
+RIP: 0010:page_pool_put_unrefed_netmem+0x157/0xa40 net/core/page_pool.c:780
+Code: 74 0e e8 7c aa fb f7 eb 43 e8 75 aa fb f7 eb 3c 65 8b 1d 38 a8 6a 76 31 ff 89 de e8 a3 ae fb f7 85 db 74 0b e8 5a aa fb f7 90 <0f> 0b 90 eb 1d 65 8b 1d 15 a8 6a 76 31 ff 89 de e8 84 ae fb f7 85
+RSP: 0018:ffffc9000bda6b58 EFLAGS: 00010083
+RAX: ffffffff8997e523 RBX: 0000000000000000 RCX: 0000000000040000
+RDX: ffffc9000fbd0000 RSI: 0000000000001842 RDI: 0000000000001843
+RBP: 0000000000000000 R08: ffffffff8997df2c R09: 1ffffd40003a000d
+R10: dffffc0000000000 R11: fffff940003a000e R12: ffffea0001d00040
+R13: ffff88802e8a4000 R14: dffffc0000000000 R15: 00000000ffffffff
+FS:  00007fb7aaf716c0(0000) GS:ffff8880b9300000(0000) knlGS:0000000000000000
+CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+CR2: 00007fa15a0d4b72 CR3: 00000000561b0000 CR4: 00000000003506f0
+DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
+DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
+Call Trace:
+ <TASK>
+ tun_ptr_free drivers/net/tun.c:617 [inline]
+ __ptr_ring_swap_queue include/linux/ptr_ring.h:571 [inline]
+ ptr_ring_resize_multiple_noprof include/linux/ptr_ring.h:643 [inline]
+ tun_queue_resize drivers/net/tun.c:3694 [inline]
+ tun_device_event+0xaaf/0x1080 drivers/net/tun.c:3714
+ notifier_call_chain+0x19f/0x3e0 kernel/notifier.c:93
+ call_netdevice_notifiers_extack net/core/dev.c:2032 [inline]
+ call_netdevice_notifiers net/core/dev.c:2046 [inline]
+ dev_change_tx_queue_len+0x158/0x2a0 net/core/dev.c:9024
+ do_setlink+0xff6/0x41f0 net/core/rtnetlink.c:2923
+ rtnl_setlink+0x40d/0x5a0 net/core/rtnetlink.c:3201
+ rtnetlink_rcv_msg+0x73f/0xcf0 net/core/rtnetlink.c:6647
+ netlink_rcv_skb+0x1e3/0x430 net/netlink/af_netlink.c:2550
+
+Fixes: ff4e538c8c3e ("page_pool: add a lockdep check for recycling in hardirq")
+Reported-by: syzbot+f56a5c5eac2b28439810@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/netdev/671e10df.050a0220.2b8c0f.01cf.GAE@google.com/T/
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Acked-by: Michael S. Tsirkin <mst@redhat.com>
+Acked-by: Jason Wang <jasowang@redhat.com>
+Link: https://patch.msgid.link/20241217135121.326370-1-edumazet@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+[ 2c321f3f70bc ("mm: change inlined allocation helpers to account at the call site")
+  is not ported to Linux-6.6.y. So remove the suffix "_noprof". ]
+Signed-off-by: Alva Lan <alvalan9@foxmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/server/mgmt/user_session.c |    7 ++-----
- fs/smb/server/smb2pdu.c           |    9 ++++++++-
- fs/smb/server/transport_ipc.c     |   12 ++++++++++++
- 3 files changed, 22 insertions(+), 6 deletions(-)
+ drivers/net/tap.c         |    6 +++---
+ drivers/net/tun.c         |    6 +++---
+ include/linux/ptr_ring.h  |   17 ++++++++---------
+ include/linux/skb_array.h |   14 ++++++++------
+ net/sched/sch_generic.c   |    4 ++--
+ 5 files changed, 24 insertions(+), 23 deletions(-)
 
---- a/fs/smb/server/mgmt/user_session.c
-+++ b/fs/smb/server/mgmt/user_session.c
-@@ -147,14 +147,11 @@ void ksmbd_session_rpc_close(struct ksmb
- int ksmbd_session_rpc_method(struct ksmbd_session *sess, int id)
+--- a/drivers/net/tap.c
++++ b/drivers/net/tap.c
+@@ -1330,9 +1330,9 @@ int tap_queue_resize(struct tap_dev *tap
+ 	list_for_each_entry(q, &tap->queue_list, next)
+ 		rings[i++] = &q->ring;
+ 
+-	ret = ptr_ring_resize_multiple(rings, n,
+-				       dev->tx_queue_len, GFP_KERNEL,
+-				       __skb_array_destroy_skb);
++	ret = ptr_ring_resize_multiple_bh(rings, n,
++					  dev->tx_queue_len, GFP_KERNEL,
++					  __skb_array_destroy_skb);
+ 
+ 	kfree(rings);
+ 	return ret;
+--- a/drivers/net/tun.c
++++ b/drivers/net/tun.c
+@@ -3682,9 +3682,9 @@ static int tun_queue_resize(struct tun_s
+ 	list_for_each_entry(tfile, &tun->disabled, next)
+ 		rings[i++] = &tfile->tx_ring;
+ 
+-	ret = ptr_ring_resize_multiple(rings, n,
+-				       dev->tx_queue_len, GFP_KERNEL,
+-				       tun_ptr_free);
++	ret = ptr_ring_resize_multiple_bh(rings, n,
++					  dev->tx_queue_len, GFP_KERNEL,
++					  tun_ptr_free);
+ 
+ 	kfree(rings);
+ 	return ret;
+--- a/include/linux/ptr_ring.h
++++ b/include/linux/ptr_ring.h
+@@ -613,15 +613,14 @@ static inline int ptr_ring_resize(struct
+ /*
+  * Note: producer lock is nested within consumer lock, so if you
+  * resize you must make sure all uses nest correctly.
+- * In particular if you consume ring in interrupt or BH context, you must
+- * disable interrupts/BH when doing so.
++ * In particular if you consume ring in BH context, you must
++ * disable BH when doing so.
+  */
+-static inline int ptr_ring_resize_multiple(struct ptr_ring **rings,
+-					   unsigned int nrings,
+-					   int size,
+-					   gfp_t gfp, void (*destroy)(void *))
++static inline int ptr_ring_resize_multiple_bh(struct ptr_ring **rings,
++						     unsigned int nrings,
++						     int size, gfp_t gfp,
++						     void (*destroy)(void *))
  {
- 	struct ksmbd_session_rpc *entry;
--	int method;
+-	unsigned long flags;
+ 	void ***queues;
+ 	int i;
  
--	down_read(&sess->rpc_lock);
-+	lockdep_assert_held(&sess->rpc_lock);
- 	entry = xa_load(&sess->rpc_handle_list, id);
--	method = entry ? entry->method : 0;
--	up_read(&sess->rpc_lock);
+@@ -636,12 +635,12 @@ static inline int ptr_ring_resize_multip
+ 	}
  
--	return method;
-+	return entry ? entry->method : 0;
+ 	for (i = 0; i < nrings; ++i) {
+-		spin_lock_irqsave(&(rings[i])->consumer_lock, flags);
++		spin_lock_bh(&(rings[i])->consumer_lock);
+ 		spin_lock(&(rings[i])->producer_lock);
+ 		queues[i] = __ptr_ring_swap_queue(rings[i], queues[i],
+ 						  size, gfp, destroy);
+ 		spin_unlock(&(rings[i])->producer_lock);
+-		spin_unlock_irqrestore(&(rings[i])->consumer_lock, flags);
++		spin_unlock_bh(&(rings[i])->consumer_lock);
+ 	}
+ 
+ 	for (i = 0; i < nrings; ++i)
+--- a/include/linux/skb_array.h
++++ b/include/linux/skb_array.h
+@@ -198,16 +198,18 @@ static inline int skb_array_resize(struc
+ 	return ptr_ring_resize(&a->ring, size, gfp, __skb_array_destroy_skb);
  }
  
- void ksmbd_session_destroy(struct ksmbd_session *sess)
---- a/fs/smb/server/smb2pdu.c
-+++ b/fs/smb/server/smb2pdu.c
-@@ -4614,8 +4614,15 @@ static int smb2_get_info_file_pipe(struc
- 	 * pipe without opening it, checking error condition here
- 	 */
- 	id = req->VolatileFileId;
--	if (!ksmbd_session_rpc_method(sess, id))
+-static inline int skb_array_resize_multiple(struct skb_array **rings,
+-					    int nrings, unsigned int size,
+-					    gfp_t gfp)
++static inline int skb_array_resize_multiple_bh(struct skb_array **rings,
++						      int nrings,
++						      unsigned int size,
++						      gfp_t gfp)
+ {
+ 	BUILD_BUG_ON(offsetof(struct skb_array, ring));
+-	return ptr_ring_resize_multiple((struct ptr_ring **)rings,
+-					nrings, size, gfp,
+-					__skb_array_destroy_skb);
++	return ptr_ring_resize_multiple_bh((struct ptr_ring **)rings,
++					          nrings, size, gfp,
++					          __skb_array_destroy_skb);
+ }
+ 
 +
-+	lockdep_assert_not_held(&sess->rpc_lock);
-+
-+	down_read(&sess->rpc_lock);
-+	if (!ksmbd_session_rpc_method(sess, id)) {
-+		up_read(&sess->rpc_lock);
- 		return -ENOENT;
-+	}
-+	up_read(&sess->rpc_lock);
+ static inline void skb_array_cleanup(struct skb_array *a)
+ {
+ 	ptr_ring_cleanup(&a->ring, __skb_array_destroy_skb);
+--- a/net/sched/sch_generic.c
++++ b/net/sched/sch_generic.c
+@@ -910,8 +910,8 @@ static int pfifo_fast_change_tx_queue_le
+ 		bands[prio] = q;
+ 	}
  
- 	ksmbd_debug(SMB, "FileInfoClass %u, FileId 0x%llx\n",
- 		    req->FileInfoClass, req->VolatileFileId);
---- a/fs/smb/server/transport_ipc.c
-+++ b/fs/smb/server/transport_ipc.c
-@@ -778,6 +778,9 @@ struct ksmbd_rpc_command *ksmbd_rpc_writ
- 	if (!msg)
- 		return NULL;
+-	return skb_array_resize_multiple(bands, PFIFO_FAST_BANDS, new_len,
+-					 GFP_KERNEL);
++	return skb_array_resize_multiple_bh(bands, PFIFO_FAST_BANDS, new_len,
++					    GFP_KERNEL);
+ }
  
-+	lockdep_assert_not_held(&sess->rpc_lock);
-+
-+	down_read(&sess->rpc_lock);
- 	msg->type = KSMBD_EVENT_RPC_REQUEST;
- 	req = (struct ksmbd_rpc_command *)msg->payload;
- 	req->handle = handle;
-@@ -786,6 +789,7 @@ struct ksmbd_rpc_command *ksmbd_rpc_writ
- 	req->flags |= KSMBD_RPC_WRITE_METHOD;
- 	req->payload_sz = payload_sz;
- 	memcpy(req->payload, payload, payload_sz);
-+	up_read(&sess->rpc_lock);
- 
- 	resp = ipc_msg_send_request(msg, req->handle);
- 	ipc_msg_free(msg);
-@@ -802,6 +806,9 @@ struct ksmbd_rpc_command *ksmbd_rpc_read
- 	if (!msg)
- 		return NULL;
- 
-+	lockdep_assert_not_held(&sess->rpc_lock);
-+
-+	down_read(&sess->rpc_lock);
- 	msg->type = KSMBD_EVENT_RPC_REQUEST;
- 	req = (struct ksmbd_rpc_command *)msg->payload;
- 	req->handle = handle;
-@@ -809,6 +816,7 @@ struct ksmbd_rpc_command *ksmbd_rpc_read
- 	req->flags |= rpc_context_flags(sess);
- 	req->flags |= KSMBD_RPC_READ_METHOD;
- 	req->payload_sz = 0;
-+	up_read(&sess->rpc_lock);
- 
- 	resp = ipc_msg_send_request(msg, req->handle);
- 	ipc_msg_free(msg);
-@@ -829,6 +837,9 @@ struct ksmbd_rpc_command *ksmbd_rpc_ioct
- 	if (!msg)
- 		return NULL;
- 
-+	lockdep_assert_not_held(&sess->rpc_lock);
-+
-+	down_read(&sess->rpc_lock);
- 	msg->type = KSMBD_EVENT_RPC_REQUEST;
- 	req = (struct ksmbd_rpc_command *)msg->payload;
- 	req->handle = handle;
-@@ -837,6 +848,7 @@ struct ksmbd_rpc_command *ksmbd_rpc_ioct
- 	req->flags |= KSMBD_RPC_IOCTL_METHOD;
- 	req->payload_sz = payload_sz;
- 	memcpy(req->payload, payload, payload_sz);
-+	up_read(&sess->rpc_lock);
- 
- 	resp = ipc_msg_send_request(msg, req->handle);
- 	ipc_msg_free(msg);
+ struct Qdisc_ops pfifo_fast_ops __read_mostly = {
 
 
