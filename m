@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F5BC413254;
-	Wed,  4 Feb 2026 14:58:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B441A4218A8;
+	Wed,  4 Feb 2026 14:58:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770217103; cv=none; b=Try70vuL3jKwD3FVJefYQUoy/VKSV6XvevEVgMvOiW+8dunxWlNeKhRBYR0d/QPX8m/xy09uDERSV6274I4eGKE5fWiSl0iz0wLzEQ+Qp9Q0n5thFGYVy+wYmU9Bq5LnjvHdfeaWCjpwcpGSW4bvysvvwvSgs6bSOBMw1kKBZoo=
+	t=1770217106; cv=none; b=CTODxfJ5ib8o4fwaVWXaEUzJFqmZldxWlHknUQh2byKyNpYoIgvDx2wruBHIPZb58BnBy4WK+qEHw3aumTRlY8RrQ82dr50+vgqda6LTpe1wYzlczP5Po93NupwveVnYjIbxrNL/sdtfxrIIr1RrP3+mAXZpjnR11AcRxGcZtCw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770217103; c=relaxed/simple;
-	bh=vJP5m2f3khQBEgmgs+9+twt8C4ydITpqEKXX1NFAMJ4=;
+	s=arc-20240116; t=1770217106; c=relaxed/simple;
+	bh=2H2Mj66sMuxRRVby+p1QBSmrbM/Z9LNNvUYPN9sgoqY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZpUI0+I6XdWfZiw/LCSI5pRBo6pqww5UU6oIx5ZSSvad2uzgjdqHYd/juL9h8/nOn5bQC8aGPye9iSgH6OVTEbKZFsOIf47zltechgYbl1GyFCnvEUNsgtV2jz6joVR5oYjlHWNcF/rUyJMjh/ZDOqFAX2p1NLiczL4PfqjU8LA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1T34pblz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=EL6Y1ERJ6n9+zFr8+leC7onzh0KD6hm7LTa4AbNsqCLlaSrRx+AuGQXbqTiDLoiB32W7rXdHk3zZfVU3JojfP1UFI38f46kc1emiummVsQztVwoVY8vrt+1BZ1rWZf2d3QyTjFx4JGCeUqXpS1IxREKdkUNWQwqnUe/Z6Vv6X7Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2BdiQFhz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1T34pblz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D9E0EC4CEF7;
-	Wed,  4 Feb 2026 14:58:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2BdiQFhz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 28714C4CEF7;
+	Wed,  4 Feb 2026 14:58:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770217103;
-	bh=vJP5m2f3khQBEgmgs+9+twt8C4ydITpqEKXX1NFAMJ4=;
+	s=korg; t=1770217106;
+	bh=2H2Mj66sMuxRRVby+p1QBSmrbM/Z9LNNvUYPN9sgoqY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1T34pblzHjHyAE1vJombcfHG+srsZ4Gr55VVyad/T+gws8/AyrVgKgx+Lwrpn9Ex/
-	 3jKe1fuwG4qYTfKqPoWB36CYW8EDeMvp22Q/xfzRwEzKCpkOfaKAQURdxJle429+3R
-	 rq99freju0ib/Cc28YPrRxhbOc/ZHypffeeOMDIY=
+	b=2BdiQFhz6+LoAYuOuqJWm3+5jagFhOfHWsY/vpMBG5lSpeBDW74NNqcnbZ4+Mh+kE
+	 XBVgfuRrF8E5G4Kh0zWTPhGWAnShV0YJrE5x/0ailhC5EB3sW/7Psrfm2v/LFo7FQA
+	 wQ+hZfYW1a7GSuVygSicFmOVuYh+L1UO8m5f0jg8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yang Shen <shenyang39@huawei.com>,
 	Chenghai Huang <huangchenghai2@huawei.com>,
+	Yang Shen <shenyang39@huawei.com>,
 	Zhangfei Gao <zhangfei.gao@linaro.org>
-Subject: [PATCH 5.15 123/206] uacce: implement mremap in uacce_vm_ops to return -EPERM
-Date: Wed,  4 Feb 2026 15:39:14 +0100
-Message-ID: <20260204143902.633218047@linuxfoundation.org>
+Subject: [PATCH 5.15 124/206] uacce: ensure safe queue release with state management
+Date: Wed,  4 Feb 2026 15:39:15 +0100
+Message-ID: <20260204143902.668464211@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260204143858.193781818@linuxfoundation.org>
 References: <20260204143858.193781818@linuxfoundation.org>
@@ -51,52 +51,89 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yang Shen <shenyang39@huawei.com>
+From: Chenghai Huang <huangchenghai2@huawei.com>
 
-commit 02695347be532b628f22488300d40c4eba48b9b7 upstream.
+commit 26c08dabe5475d99a13f353d8dd70e518de45663 upstream.
 
-The current uacce_vm_ops does not support the mremap operation of
-vm_operations_struct. Implement .mremap to return -EPERM to remind
-users.
+Directly calling `put_queue` carries risks since it cannot
+guarantee that resources of `uacce_queue` have been fully released
+beforehand. So adding a `stop_queue` operation for the
+UACCE_CMD_PUT_Q command and leaving the `put_queue` operation to
+the final resource release ensures safety.
 
-The reason we need to explicitly disable mremap is that when the
-driver does not implement .mremap, it uses the default mremap
-method. This could lead to a risk scenario:
+Queue states are defined as follows:
+- UACCE_Q_ZOMBIE: Initial state
+- UACCE_Q_INIT: After opening `uacce`
+- UACCE_Q_STARTED: After `start` is issued via `ioctl`
 
-An application might first mmap address p1, then mremap to p2,
-followed by munmap(p1), and finally munmap(p2). Since the default
-mremap copies the original vma's vm_private_data (i.e., q) to the
-new vma, both munmap operations would trigger vma_close, causing
-q->qfr to be freed twice(qfr will be set to null here, so repeated
-release is ok).
+When executing `poweroff -f` in virt while accelerator are still
+working, `uacce_fops_release` and `uacce_remove` may execute
+concurrently. This can cause `uacce_put_queue` within
+`uacce_fops_release` to access a NULL `ops` pointer. Therefore, add
+state checks to prevent accessing freed pointers.
 
 Fixes: 015d239ac014 ("uacce: add uacce driver")
 Cc: stable@vger.kernel.org
-Signed-off-by: Yang Shen <shenyang39@huawei.com>
 Signed-off-by: Chenghai Huang <huangchenghai2@huawei.com>
+Signed-off-by: Yang Shen <shenyang39@huawei.com>
 Acked-by: Zhangfei Gao <zhangfei.gao@linaro.org>
-Link: https://patch.msgid.link/20251202061256.4158641-4-huangchenghai2@huawei.com
+Link: https://patch.msgid.link/20251202061256.4158641-5-huangchenghai2@huawei.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/misc/uacce/uacce.c |    6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/misc/uacce/uacce.c |   28 +++++++++++++++++++++-------
+ 1 file changed, 21 insertions(+), 7 deletions(-)
 
 --- a/drivers/misc/uacce/uacce.c
 +++ b/drivers/misc/uacce/uacce.c
-@@ -208,8 +208,14 @@ static void uacce_vma_close(struct vm_ar
- 	kfree(qfr);
+@@ -37,20 +37,34 @@ static int uacce_start_queue(struct uacc
+ 	return 0;
  }
  
-+static int uacce_vma_mremap(struct vm_area_struct *area)
-+{
-+	return -EPERM;
+-static int uacce_put_queue(struct uacce_queue *q)
++static int uacce_stop_queue(struct uacce_queue *q)
+ {
+ 	struct uacce_device *uacce = q->uacce;
+ 
+-	if ((q->state == UACCE_Q_STARTED) && uacce->ops->stop_queue)
++	if (q->state != UACCE_Q_STARTED)
++		return 0;
++
++	if (uacce->ops->stop_queue)
+ 		uacce->ops->stop_queue(q);
+ 
+-	if ((q->state == UACCE_Q_INIT || q->state == UACCE_Q_STARTED) &&
+-	     uacce->ops->put_queue)
++	q->state = UACCE_Q_INIT;
++
++	return 0;
 +}
 +
- static const struct vm_operations_struct uacce_vm_ops = {
- 	.close = uacce_vma_close,
-+	.mremap = uacce_vma_mremap,
- };
++static void uacce_put_queue(struct uacce_queue *q)
++{
++	struct uacce_device *uacce = q->uacce;
++
++	uacce_stop_queue(q);
++
++	if (q->state != UACCE_Q_INIT)
++		return;
++
++	if (uacce->ops->put_queue)
+ 		uacce->ops->put_queue(q);
  
- static int uacce_fops_mmap(struct file *filep, struct vm_area_struct *vma)
+ 	q->state = UACCE_Q_ZOMBIE;
+-
+-	return 0;
+ }
+ 
+ static long uacce_fops_unl_ioctl(struct file *filep,
+@@ -77,7 +91,7 @@ static long uacce_fops_unl_ioctl(struct
+ 		ret = uacce_start_queue(q);
+ 		break;
+ 	case UACCE_CMD_PUT_Q:
+-		ret = uacce_put_queue(q);
++		ret = uacce_stop_queue(q);
+ 		break;
+ 	default:
+ 		if (uacce->ops->ioctl)
 
 
