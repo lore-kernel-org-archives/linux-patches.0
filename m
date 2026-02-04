@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA54C27F163;
-	Wed,  4 Feb 2026 15:21:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C45E21FF4C;
+	Wed,  4 Feb 2026 15:21:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770218512; cv=none; b=QLWumPDj7nmw1HwWOkfMDpmfGgzT+Yzgm7DLB5Eg/lKKmqnuz/jsUXDPz4aqfohrrkLcWYzSbjPi/GbUIbBOE2z9M3+eY1b+Rc/d5Zi3t0RwxCPiUikfUXUAk8UAZLeB0vySdOkFWK5QG0vHOybo+0WO/10koWOq6J0l7Ja/7GY=
+	t=1770218516; cv=none; b=Uu5uNmpCKXUyxPTLlaPboqHBrJ7eyOTmJJ7ynPkvEDwMwUxhRA6UHcgnPYnPBAA96ku3UpYQXvTEtq8Dltd/vIbTBjNZFck/3S9e6Vs/duPykF1WmQING/UWHfJW77G4AU7+sBVeDvynQdglgvxfQNnN2yCuP6jtniLJIxvn9gA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770218512; c=relaxed/simple;
-	bh=m960e9P1Mc/aFZOn5mTutKgDEoiaXzTeKx8JwlhcU1M=;
+	s=arc-20240116; t=1770218516; c=relaxed/simple;
+	bh=KgEG+fr7EBFrWVtyAc1bdAZgG630vkzmwNxdRpFNly4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GLb6EcUIfzR5994BiI+UHmx5cW4oVhxxhWsS2xHCzTbd0h+P3mO7RbJXNYibLG97a2U9M61DCaec2Fi4rfcrBXRRuJ6q9jqtTnzcwCIEjo573+xYXfB3dhgM/CUrDW1QRrUQuD7wNZOg+9CYUfr/oW2/eZaNJYiV+AtZc/bBsQM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hnzNLeJG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pyp9vCduS6GVvvMztaxP89QSyw92fhnJP9TitlGM6JXiJ5KXv72chEfdBEsNjRABFzrPzL9BfRa2cuyz3oXornNIXTmdC1Kqioqx11xwXzTO7jFyNwYFuZAgd4vrdAbZ5HasmcUEO3vB1K3oOjDtFnUfFQ2cRoEB3a8KtEO3t9w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=d8LJiYA+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hnzNLeJG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 388B6C4CEF7;
-	Wed,  4 Feb 2026 15:21:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="d8LJiYA+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 93961C4CEF7;
+	Wed,  4 Feb 2026 15:21:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770218512;
-	bh=m960e9P1Mc/aFZOn5mTutKgDEoiaXzTeKx8JwlhcU1M=;
+	s=korg; t=1770218516;
+	bh=KgEG+fr7EBFrWVtyAc1bdAZgG630vkzmwNxdRpFNly4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hnzNLeJGf3JWkk/I/M4Gaxe0KFKuWiLQcQX8DCUCAKBjPR/YrQrEnTvH9/Shh1P8+
-	 d5b63GdAZ4Oez9CqFO6Adx+Rl9TgeOAvtMgOU1UYnYU3OI856FT1CPqqmMx6ArTgPh
-	 u8JCSU6oOaxGbYJn6DpLJg4OBrjlW51ymMwVElhk=
+	b=d8LJiYA+djdnSXjvluUzUm/0oGaAZnT3N6vsWVyrqLkqfmIJyddHV7q/VwVOapodi
+	 FmungB5WL2SruzISjlRdi8trszA1E90RvP55HuavbBm/G5gvZn8hqLNPPjrqKhXWxm
+	 NoyHg/X2qcYsT92Q8c79jiVbwSwaSPZLm+tUEAlM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+a2a3b519de727b0f7903@syzkaller.appspotmail.com,
-	"Nikola Z. Ivanov" <zlatistiv@gmail.com>,
-	Jiri Pirko <jiri@nvidia.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Rahul Sharma <black.hawk@163.com>
-Subject: [PATCH 6.6 53/72] team: Move team device type change at the end of team_port_add
-Date: Wed,  4 Feb 2026 15:40:56 +0100
-Message-ID: <20260204143847.555430569@linuxfoundation.org>
+	Alex Deucher <alexander.deucher@amd.com>,
+	Robert McClinton <rbmccav@gmail.com>,
+	Li hongliang <1468888505@139.com>
+Subject: [PATCH 6.6 54/72] drm/radeon: delete radeon_fence_process in is_signaled, no deadlock
+Date: Wed,  4 Feb 2026 15:40:57 +0100
+Message-ID: <20260204143847.591590326@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260204143845.603454952@linuxfoundation.org>
 References: <20260204143845.603454952@linuxfoundation.org>
@@ -53,114 +51,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: "Nikola Z. Ivanov" <zlatistiv@gmail.com>
+From: Robert McClinton <rbmccav@gmail.com>
 
-[ Upstream commit 0ae9cfc454ea5ead5f3ddbdfe2e70270d8e2c8ef ]
+[ Upstream commit 9eb00b5f5697bd56baa3222c7a1426fa15bacfb5 ]
 
-Attempting to add a port device that is already up will expectedly fail,
-but not before modifying the team device header_ops.
+Delete the attempt to progress the queue when checking if fence is
+signaled. This avoids deadlock.
 
-In the case of the syzbot reproducer the gre0 device is
-already in state UP when it attempts to add it as a
-port device of team0, this fails but before that
-header_ops->create of team0 is changed from eth_header to ipgre_header
-in the call to team_dev_type_check_change.
+dma-fence_ops::signaled can be called with the fence lock in unknown
+state. For radeon, the fence lock is also the wait queue lock. This can
+cause a self deadlock when signaled() tries to make forward progress on
+the wait queue. But advancing the queue is unneeded because incorrectly
+returning false from signaled() is perfectly acceptable.
 
-Later when we end up in ipgre_header() struct ip_tunnel* points to nonsense
-as the private data of the device still holds a struct team.
-
-Example sequence of iproute2 commands to reproduce the hang/BUG():
-ip link add dev team0 type team
-ip link add dev gre0 type gre
-ip link set dev gre0 up
-ip link set dev gre0 master team0
-ip link set dev team0 up
-ping -I team0 1.1.1.1
-
-Move team_dev_type_check_change down where all other checks have passed
-as it changes the dev type with no way to restore it in case
-one of the checks that follow it fail.
-
-Also make sure to preserve the origial mtu assignment:
-  - If port_dev is not the same type as dev, dev takes mtu from port_dev
-  - If port_dev is the same type as dev, port_dev takes mtu from dev
-
-This is done by adding a conditional before the call to dev_set_mtu
-to prevent it from assigning port_dev->mtu = dev->mtu and instead
-letting team_dev_type_check_change assign dev->mtu = port_dev->mtu.
-The conditional is needed because the patch moves the call to
-team_dev_type_check_change past dev_set_mtu.
-
-Testing:
-  - team device driver in-tree selftests
-  - Add/remove various devices as slaves of team device
-  - syzbot
-
-Reported-by: syzbot+a2a3b519de727b0f7903@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=a2a3b519de727b0f7903
-Fixes: 1d76efe1577b ("team: add support for non-ethernet devices")
-Signed-off-by: Nikola Z. Ivanov <zlatistiv@gmail.com>
-Reviewed-by: Jiri Pirko <jiri@nvidia.com>
-Link: https://patch.msgid.link/20251122002027.695151-1-zlatistiv@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Rahul Sharma <black.hawk@163.com>
+Link: https://github.com/brave/brave-browser/issues/49182
+Closes: https://gitlab.freedesktop.org/drm/amd/-/issues/4641
+Cc: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Robert McClinton <rbmccav@gmail.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit 527ba26e50ec2ca2be9c7c82f3ad42998a75d0db)
+Cc: stable@vger.kernel.org
+[ Minor conflict resolved. ]
+Signed-off-by: Li hongliang <1468888505@139.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/team/team.c |   23 +++++++++++++++--------
- 1 file changed, 15 insertions(+), 8 deletions(-)
+ drivers/gpu/drm/radeon/radeon_fence.c |    8 --------
+ 1 file changed, 8 deletions(-)
 
---- a/drivers/net/team/team.c
-+++ b/drivers/net/team/team.c
-@@ -1184,10 +1184,6 @@ static int team_port_add(struct team *te
- 		return -EPERM;
+--- a/drivers/gpu/drm/radeon/radeon_fence.c
++++ b/drivers/gpu/drm/radeon/radeon_fence.c
+@@ -362,14 +362,6 @@ static bool radeon_fence_is_signaled(str
+ 		return true;
  	}
  
--	err = team_dev_type_check_change(dev, port_dev);
--	if (err)
--		return err;
+-	if (down_read_trylock(&rdev->exclusive_lock)) {
+-		radeon_fence_process(rdev, ring);
+-		up_read(&rdev->exclusive_lock);
 -
- 	if (port_dev->flags & IFF_UP) {
- 		NL_SET_ERR_MSG(extack, "Device is up. Set it down before adding it as a team port");
- 		netdev_err(dev, "Device %s is up. Set it down before adding it as a team port\n",
-@@ -1205,10 +1201,16 @@ static int team_port_add(struct team *te
- 	INIT_LIST_HEAD(&port->qom_list);
- 
- 	port->orig.mtu = port_dev->mtu;
--	err = dev_set_mtu(port_dev, dev->mtu);
--	if (err) {
--		netdev_dbg(dev, "Error %d calling dev_set_mtu\n", err);
--		goto err_set_mtu;
-+	/*
-+	 * MTU assignment will be handled in team_dev_type_check_change
-+	 * if dev and port_dev are of different types
-+	 */
-+	if (dev->type == port_dev->type) {
-+		err = dev_set_mtu(port_dev, dev->mtu);
-+		if (err) {
-+			netdev_dbg(dev, "Error %d calling dev_set_mtu\n", err);
-+			goto err_set_mtu;
-+		}
- 	}
- 
- 	memcpy(port->orig.dev_addr, port_dev->dev_addr, port_dev->addr_len);
-@@ -1283,6 +1285,10 @@ static int team_port_add(struct team *te
- 		}
- 	}
- 
-+	err = team_dev_type_check_change(dev, port_dev);
-+	if (err)
-+		goto err_set_dev_type;
-+
- 	if (dev->flags & IFF_UP) {
- 		netif_addr_lock_bh(dev);
- 		dev_uc_sync_multiple(port_dev, dev);
-@@ -1301,6 +1307,7 @@ static int team_port_add(struct team *te
- 
- 	return 0;
- 
-+err_set_dev_type:
- err_set_slave_promisc:
- 	__team_option_inst_del_port(team, port);
+-		if (atomic64_read(&rdev->fence_drv[ring].last_seq) >= seq) {
+-			return true;
+-		}
+-	}
+ 	return false;
+ }
  
 
 
