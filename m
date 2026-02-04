@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64F3918859B;
-	Wed,  4 Feb 2026 15:29:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ACCEA1A0BF1;
+	Wed,  4 Feb 2026 15:29:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770218964; cv=none; b=tx17vmVEhF7fnc4QC2YV6X6S++vR8u1wn3LB+VZ4HUH8kNG0H13uBm9Huw4QF6YsWQ0xeRakzV+RbL+te0wdgoG6R7nRKRoXJ50KUYYxKHgMYyJ7QsqgtfV5VemN1hQ+IBmQTFDZEmhMMJiJpt0hWleUaHcFqTv/Ij/gSbhV9UY=
+	t=1770218967; cv=none; b=XgUWFOLqpCYX22J7xTTzVrt2CTtUBty92GanSBLldwS7s+HwvzxGOK1pM63zw3YgICxQYU3Up79JH6fwgg8DR/+aJIOCs1dH74IUn30/FQcNPQ+LUaaTnb4F+8x1qu1Ul7sCtIIozhVduh0X9HfLnVeHMo5MR7qf5wC+2QMNvZg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770218964; c=relaxed/simple;
-	bh=K5qv9jUFbjIcEMIhOX7CfdUpR7qCTEWCZhakmhHY+kk=;
+	s=arc-20240116; t=1770218967; c=relaxed/simple;
+	bh=zfBROlFXU52Hmg89gTb275QFj5cHf7jdySi1wFD4/sc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uwbGBTeGGqIUnCUAP0vMcUfdjec9V/JtT1b3UwcG/51Ua2ux/BTdNlU/Bbf9By6IZgAfUwgajwMoysJiq1NLTS0ggZbgPPg4xGWqmnuq1aHQDtmqfxF6IPnOyI4kP3hpFOYtIJaEhq8zSgFkRQ9s2CmiUqdP+stWk9fQCax8iuk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hYlub55C; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=DmWvgK8QYrklwZ1PlsVCOm2NSgryG6cqrMPCRuQsgydheN8lYmXxazpcvKj9w9MaOSHd2L2Q7G+j9l+Lr9C6lXTNJMIosazkry3/S+c1hUxiGiT5uUJMxJFjTPEl9zbMkgrdAKIJE7asGT9Vsn5/7i524ZHmIRcf83ctVvdEGVo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CN9pQPWG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hYlub55C"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D75DCC4CEF7;
-	Wed,  4 Feb 2026 15:29:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CN9pQPWG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 354D0C4CEF7;
+	Wed,  4 Feb 2026 15:29:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770218964;
-	bh=K5qv9jUFbjIcEMIhOX7CfdUpR7qCTEWCZhakmhHY+kk=;
+	s=korg; t=1770218967;
+	bh=zfBROlFXU52Hmg89gTb275QFj5cHf7jdySi1wFD4/sc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hYlub55C1LSzZB/pibe0nzoZzc4u8ONzoNAiMqXOr47OO0FxNSBr4yD+C04XxAVSn
-	 YyBvoiTAzNBNgXwIz/8hHCMx0tMnx994hAE7sxevF8gyEogSBEEkS3+Mgl6T5OiKnC
-	 ZxpeN8sspTwYEyfvI9K45559AIk+Uf11II9TmZ+Q=
+	b=CN9pQPWGXYQRdn4WAC/AJgk53l8tn8YWtNg5Az799tuUXQafOkDE6IrQqkoc9WHqA
+	 sc9kdARCm6u7Yx5bS0PopN2u/Y18W+e2gNMUEGljH6jT0gFJNMqPZ/X2p1I1PFOfJJ
+	 8U8adjt6p1MEkNz4P4ydti1RKQdphT0Ghd6pTGcs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Justin Chen <justin.chen@broadcom.com>,
-	Florian Fainelli <florian.fainelli@broadcom.com>,
+	Zilin Guan <zilin@seu.edu.cn>,
+	Vadim Fedorenko <vadim.fedorenko@linux.dev>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 008/122] net: bcmasp: fix early exit leak with fixed phy
-Date: Wed,  4 Feb 2026 15:39:50 +0100
-Message-ID: <20260204143852.164798957@linuxfoundation.org>
+Subject: [PATCH 6.18 009/122] octeon_ep: Fix memory leak in octep_device_setup()
+Date: Wed,  4 Feb 2026 15:39:51 +0100
+Message-ID: <20260204143852.200734566@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260204143851.857060534@linuxfoundation.org>
 References: <20260204143851.857060534@linuxfoundation.org>
@@ -52,46 +52,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Justin Chen <justin.chen@broadcom.com>
+From: Zilin Guan <zilin@seu.edu.cn>
 
-[ Upstream commit 6de4436bf369e1444606445e4cd5df5bcfc74b48 ]
+[ Upstream commit 8016dc5ee19a77678c264f8ba368b1e873fa705b ]
 
-We are not deregistering the fixed phy link when hitting the early
-exit condition. Add the correct early exit sequence.
+In octep_device_setup(), if octep_ctrl_net_init() fails, the function
+returns directly without unmapping the mapped resources and freeing the
+allocated configuration memory.
 
-Fixes: 490cb412007d ("net: bcmasp: Add support for ASP2.0 Ethernet controller")
-Signed-off-by: Justin Chen <justin.chen@broadcom.com>
-Reviewed-by: Florian Fainelli <florian.fainelli@broadcom.com>
-Link: https://patch.msgid.link/20260122194001.1098859-1-justin.chen@broadcom.com
+Fix this by jumping to the unsupported_dev label, which performs the
+necessary cleanup. This aligns with the error handling logic of other
+paths in this function.
+
+Compile tested only. Issue found using a prototype static analysis tool
+and code review.
+
+Fixes: 577f0d1b1c5f ("octeon_ep: add separate mailbox command and response queues")
+Signed-off-by: Zilin Guan <zilin@seu.edu.cn>
+Reviewed-by: Vadim Fedorenko <vadim.fedorenko@linux.dev>
+Link: https://patch.msgid.link/20260121130551.3717090-1-zilin@seu.edu.cn
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/broadcom/asp2/bcmasp_intf.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/net/ethernet/marvell/octeon_ep/octep_main.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/broadcom/asp2/bcmasp_intf.c b/drivers/net/ethernet/broadcom/asp2/bcmasp_intf.c
-index b9973956c4809..ceb6c11431dd9 100644
---- a/drivers/net/ethernet/broadcom/asp2/bcmasp_intf.c
-+++ b/drivers/net/ethernet/broadcom/asp2/bcmasp_intf.c
-@@ -1261,7 +1261,7 @@ struct bcmasp_intf *bcmasp_interface_create(struct bcmasp_priv *priv,
- 		netdev_err(intf->ndev, "invalid PHY mode: %s for port %d\n",
- 			   phy_modes(intf->phy_interface), intf->port);
- 		ret = -EINVAL;
--		goto err_free_netdev;
-+		goto err_deregister_fixed_link;
- 	}
+diff --git a/drivers/net/ethernet/marvell/octeon_ep/octep_main.c b/drivers/net/ethernet/marvell/octeon_ep/octep_main.c
+index bcea3fc26a8c7..57db7ea2f5be9 100644
+--- a/drivers/net/ethernet/marvell/octeon_ep/octep_main.c
++++ b/drivers/net/ethernet/marvell/octeon_ep/octep_main.c
+@@ -1338,7 +1338,7 @@ int octep_device_setup(struct octep_device *oct)
  
- 	ret = of_get_ethdev_address(ndev_dn, ndev);
-@@ -1286,6 +1286,9 @@ struct bcmasp_intf *bcmasp_interface_create(struct bcmasp_priv *priv,
+ 	ret = octep_ctrl_net_init(oct);
+ 	if (ret)
+-		return ret;
++		goto unsupported_dev;
  
- 	return intf;
- 
-+err_deregister_fixed_link:
-+	if (of_phy_is_fixed_link(ndev_dn))
-+		of_phy_deregister_fixed_link(ndev_dn);
- err_free_netdev:
- 	free_netdev(ndev);
- err:
+ 	INIT_WORK(&oct->tx_timeout_task, octep_tx_timeout_task);
+ 	INIT_WORK(&oct->ctrl_mbox_task, octep_ctrl_mbox_task);
 -- 
 2.51.0
 
