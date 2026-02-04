@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86F7429AB1D;
-	Wed,  4 Feb 2026 15:28:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C328B29AB1D;
+	Wed,  4 Feb 2026 15:28:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770218888; cv=none; b=BlyAxrzhzAzvQJFCZGHAjHI9FTj2rRQmEp8cspeiGQAgfC5RZqnWuKbCAcbrhDARKWzb+RrnNczMIyyJIq6Zo8H98TfVd4FcXQLIfrol7tH8eVHIGnSxZMOo9WffDAilEGBU65Z2B8ReMrRYAQ4Pi4XeO6euTfTP58uUSHBcJZM=
+	t=1770218891; cv=none; b=jYzYDAj5FYolCm+wR2AOWtS/WAARornWkQzexU/oefbWWEmNyAli0F4TejWjfstQvo7lTqmqdh812Qj147Ueh9V/YZK6yz7rcK4leMDhlrh5SOa2UnV1MazcAxXmYizjKiK59zmkfX+XupZzNyoKRnRRvKZaYQECkx3GeEzcTAc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770218888; c=relaxed/simple;
-	bh=7N8Zd3557fKq7lVAmYbmezgR3tQ7m/57ZSEtF4aebo0=;
+	s=arc-20240116; t=1770218891; c=relaxed/simple;
+	bh=OQbECWL7HYwsPMucwct1Z2kT6/e1fuNO1TYn2pB6HSA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eKhFyMfkcfZvzN2nBWUEFzeuHNWewd9zcJ2mCNh3pdvc7goDXvFOAJbhjWqGwTlzohr9YH80nIrQnlJ08+PsorIY4Y9Mg8JaA4bNFoa83FLlSAJcR229VgSZ1cmSBemJy6LkOigIJ8nbmGEwL+zZ08iliJNAISmcfgJvbB8s4As=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iIqNzajg; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VksrY0rWqD6H+euChXOP7QyaP9H07skHrMB9GbKX0OFo64ooMBOGioaZE3d0ZeMGyXbMkMjFBIp7mbpSwRKDrmRlk4yLedP7w6Nhh/021wx/XT4nfeXGYIozUcbC7opzXrEZiajP8o4VkuXUHzDsP1upOVJ35LQCB1GSxINzjHs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iz/G/ZT1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iIqNzajg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E83FBC4CEF7;
-	Wed,  4 Feb 2026 15:28:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iz/G/ZT1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3786FC4CEF7;
+	Wed,  4 Feb 2026 15:28:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770218888;
-	bh=7N8Zd3557fKq7lVAmYbmezgR3tQ7m/57ZSEtF4aebo0=;
+	s=korg; t=1770218891;
+	bh=OQbECWL7HYwsPMucwct1Z2kT6/e1fuNO1TYn2pB6HSA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iIqNzajg8qyAuiNZpPqdASpBPdWgO0cy2n91AGzxLMbHinm0pj2kJBbCva37MtnyW
-	 mW/5ou75sGLnKVmt9NgPQDwvOMnV0r4CeGZNzPPa9bLMrA3KYfYoKMV6Ily9wlm0BH
-	 wcRIJl2SfBJWn6Y0Xu/XWg7JaXqe7sF+ROVAD3xo=
+	b=iz/G/ZT1BXSdYG+cCbs9M32Qtsk3aoTR9CHw/dPykKPZ5+1Sp9oI90VkGarWAT/rr
+	 4YTEaUObjhF100I9peZEM2nQIFZovS87ktvFgnK/vlN+PjVOXX3gEopLPtvUKNjJgH
+	 cVqPOfL4jA8ZyHaPlTjRS9a96vTbGFO1ui9/DMQo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Geliang Tang <geliang@kernel.org>,
-	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.12 48/87] selftests: mptcp: check no dup close events after error
-Date: Wed,  4 Feb 2026 15:40:46 +0100
-Message-ID: <20260204143848.645473107@linuxfoundation.org>
+	Long Li <longli@microsoft.com>,
+	Leon Romanovsky <leon@kernel.org>,
+	stable@kernel.org
+Subject: [PATCH 6.12 85/87] net: mana: Change the function signature of mana_get_primary_netdev_rcu
+Date: Wed,  4 Feb 2026 15:41:23 +0100
+Message-ID: <20260204143849.987193792@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260204143846.906385641@linuxfoundation.org>
 References: <20260204143846.906385641@linuxfoundation.org>
@@ -51,110 +51,112 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+From: Long Li <longli@microsoft.com>
 
-commit 8467458dfa61b37e259e3485a5d3e415d08193c1 upstream.
+commit a8445cfec101c42e9d64cdb2dac13973b22c205c upstream.
 
-This validates the previous commit: subflow closed events are re-sent
-with less info when the initial subflow is disconnected after an error
-and each time a subflow is closed after that.
+Change mana_get_primary_netdev_rcu() to mana_get_primary_netdev(), and
+return the ndev with refcount held. The caller is responsible for dropping
+the refcount.
 
-In this new test, the userspace PM is involved because that's how it was
-discovered, but it is not specific to it. The initial subflow is
-terminated with a RESET, and that will cause the subflow disconnect.
-Then, a new subflow is initiated, but also got rejected, which cause a
-second subflow closed event, but not a third one.
+Also drop the check for IFF_SLAVE as it is not necessary if the upper
+device is present.
 
-While at it, in case of failure to get the expected amount of events,
-the events are printed.
-
-The 'Fixes' tag here below is the same as the one from the previous
-commit: this patch here is not fixing anything wrong in the selftests,
-but it validates the previous fix for an issue introduced by this commit
-ID.
-
-Fixes: d82809b6c5f2 ("mptcp: avoid duplicated SUB_CLOSED events")
-Cc: stable@vger.kernel.org
-Reviewed-by: Geliang Tang <geliang@kernel.org>
-Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Link: https://patch.msgid.link/20260127-net-mptcp-dup-nl-events-v1-2-7f71e1bc4feb@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Long Li <longli@microsoft.com>
+Link: https://patch.msgid.link/1741821332-9392-1-git-send-email-longli@linuxonhyperv.com
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Fixes: 1df03a4b4414 ("RDMA/mana_ib: Set correct device into ib")
+Cc: stable@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/testing/selftests/net/mptcp/mptcp_join.sh |   51 ++++++++++++++++++++++++
- 1 file changed, 51 insertions(+)
+ drivers/infiniband/hw/mana/device.c           |    7 +++----
+ drivers/infiniband/hw/mana/mana_ib.h          |    1 +
+ drivers/net/ethernet/microsoft/mana/mana_en.c |   22 ++++++++++++++--------
+ include/net/mana/mana.h                       |    4 +++-
+ 4 files changed, 21 insertions(+), 13 deletions(-)
 
---- a/tools/testing/selftests/net/mptcp/mptcp_join.sh
-+++ b/tools/testing/selftests/net/mptcp/mptcp_join.sh
-@@ -3506,11 +3506,32 @@ chk_evt_nr()
- 	count=$(grep -cw "type:${evt}" "${evts}")
- 	if [ "${count}" != "${exp}" ]; then
- 		fail_test "got ${count} events, expected ${exp}"
-+		cat "${evts}"
- 	else
- 		print_ok
- 	fi
+--- a/drivers/infiniband/hw/mana/device.c
++++ b/drivers/infiniband/hw/mana/device.c
+@@ -84,10 +84,8 @@ static int mana_ib_probe(struct auxiliar
+ 	dev->ib_dev.num_comp_vectors = mdev->gdma_context->max_num_queues;
+ 	dev->ib_dev.dev.parent = mdev->gdma_context->dev;
+ 
+-	rcu_read_lock(); /* required to get primary netdev */
+-	ndev = mana_get_primary_netdev_rcu(mc, 0);
++	ndev = mana_get_primary_netdev(mc, 0, &dev->dev_tracker);
+ 	if (!ndev) {
+-		rcu_read_unlock();
+ 		ret = -ENODEV;
+ 		ibdev_err(&dev->ib_dev, "Failed to get netdev for IB port 1");
+ 		goto free_ib_device;
+@@ -95,7 +93,8 @@ static int mana_ib_probe(struct auxiliar
+ 	ether_addr_copy(mac_addr, ndev->dev_addr);
+ 	addrconf_addr_eui48((u8 *)&dev->ib_dev.node_guid, ndev->dev_addr);
+ 	ret = ib_device_set_netdev(&dev->ib_dev, ndev, 1);
+-	rcu_read_unlock();
++	/* mana_get_primary_netdev() returns ndev with refcount held */
++	netdev_put(ndev, &dev->dev_tracker);
+ 	if (ret) {
+ 		ibdev_err(&dev->ib_dev, "Failed to set ib netdev, ret %d", ret);
+ 		goto free_ib_device;
+--- a/drivers/infiniband/hw/mana/mana_ib.h
++++ b/drivers/infiniband/hw/mana/mana_ib.h
+@@ -64,6 +64,7 @@ struct mana_ib_dev {
+ 	struct gdma_queue **eqs;
+ 	struct xarray qp_table_wq;
+ 	struct mana_ib_adapter_caps adapter_caps;
++	netdevice_tracker dev_tracker;
+ };
+ 
+ struct mana_ib_wq {
+--- a/drivers/net/ethernet/microsoft/mana/mana_en.c
++++ b/drivers/net/ethernet/microsoft/mana/mana_en.c
+@@ -3000,21 +3000,27 @@ out:
+ 	kfree(ac);
  }
  
-+# $1: ns ; $2: event type ; $3: expected count
-+wait_event()
-+{
-+	local ns="${1}"
-+	local evt_name="${2}"
-+	local exp="${3}"
-+
-+	local evt="${!evt_name}"
-+	local evts="${evts_ns1}"
-+	local count
-+
-+	[ "${ns}" == "ns2" ] && evts="${evts_ns2}"
-+
-+	for _ in $(seq 100); do
-+		count=$(grep -cw "type:${evt}" "${evts}")
-+		[ "${count}" -ge "${exp}" ] && break
-+		sleep 0.1
-+	done
-+}
-+
- userspace_tests()
+-struct net_device *mana_get_primary_netdev_rcu(struct mana_context *ac, u32 port_index)
++struct net_device *mana_get_primary_netdev(struct mana_context *ac,
++					   u32 port_index,
++					   netdevice_tracker *tracker)
  {
- 	# userspace pm type prevents add_addr
-@@ -3717,6 +3738,36 @@ userspace_tests()
- 		kill_events_pids
- 		mptcp_lib_kill_group_wait $tests_pid
- 	fi
-+
-+	# userspace pm no duplicated spurious close events after an error
-+	if reset_with_events "userspace pm no dup close events after error" &&
-+	   continue_if mptcp_lib_has_file '/proc/sys/net/mptcp/pm_type'; then
-+		set_userspace_pm $ns2
-+		pm_nl_set_limits $ns1 0 2
-+		{ timeout_test=120 test_linkfail=128 speed=slow \
-+			run_tests $ns1 $ns2 10.0.1.1 & } 2>/dev/null
-+		local tests_pid=$!
-+		wait_event ns2 MPTCP_LIB_EVENT_ESTABLISHED 1
-+		userspace_pm_add_sf $ns2 10.0.3.2 20
-+		chk_mptcp_info subflows 1 subflows 1
-+		chk_subflows_total 2 2
-+
-+		# force quick loss
-+		ip netns exec $ns2 sysctl -q net.ipv4.tcp_syn_retries=1
-+		if ip netns exec "${ns1}" ${iptables} -A INPUT -s "10.0.1.2" \
-+		      -p tcp --tcp-option 30 -j REJECT --reject-with tcp-reset &&
-+		   ip netns exec "${ns2}" ${iptables} -A INPUT -d "10.0.1.2" \
-+		      -p tcp --tcp-option 30 -j REJECT --reject-with tcp-reset; then
-+			wait_event ns2 MPTCP_LIB_EVENT_SUB_CLOSED 1
-+			wait_event ns1 MPTCP_LIB_EVENT_SUB_CLOSED 1
-+			chk_subflows_total 1 1
-+			userspace_pm_add_sf $ns2 10.0.1.2 0
-+			wait_event ns2 MPTCP_LIB_EVENT_SUB_CLOSED 2
-+			chk_evt_nr ns2 MPTCP_LIB_EVENT_SUB_CLOSED 2
-+		fi
-+		kill_events_pids
-+		mptcp_lib_kill_group_wait $tests_pid
-+	fi
- }
+ 	struct net_device *ndev;
  
- endpoint_tests()
+-	RCU_LOCKDEP_WARN(!rcu_read_lock_held(),
+-			 "Taking primary netdev without holding the RCU read lock");
+ 	if (port_index >= ac->num_ports)
+ 		return NULL;
+ 
+-	/* When mana is used in netvsc, the upper netdevice should be returned. */
+-	if (ac->ports[port_index]->flags & IFF_SLAVE)
+-		ndev = netdev_master_upper_dev_get_rcu(ac->ports[port_index]);
+-	else
++	rcu_read_lock();
++
++	/* If mana is used in netvsc, the upper netdevice should be returned. */
++	ndev = netdev_master_upper_dev_get_rcu(ac->ports[port_index]);
++
++	/* If there is no upper device, use the parent Ethernet device */
++	if (!ndev)
+ 		ndev = ac->ports[port_index];
+ 
++	netdev_hold(ndev, tracker, GFP_ATOMIC);
++	rcu_read_unlock();
++
+ 	return ndev;
+ }
+-EXPORT_SYMBOL_NS(mana_get_primary_netdev_rcu, NET_MANA);
++EXPORT_SYMBOL_NS(mana_get_primary_netdev, NET_MANA);
+--- a/include/net/mana/mana.h
++++ b/include/net/mana/mana.h
+@@ -819,5 +819,7 @@ int mana_cfg_vport(struct mana_port_cont
+ 		   u32 doorbell_pg_id);
+ void mana_uncfg_vport(struct mana_port_context *apc);
+ 
+-struct net_device *mana_get_primary_netdev_rcu(struct mana_context *ac, u32 port_index);
++struct net_device *mana_get_primary_netdev(struct mana_context *ac,
++					   u32 port_index,
++					   netdevice_tracker *tracker);
+ #endif /* _MANA_H */
 
 
