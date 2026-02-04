@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8030442315E;
-	Wed,  4 Feb 2026 15:13:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4EBE2C21F2;
+	Wed,  4 Feb 2026 15:13:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770218021; cv=none; b=i6QV0zXvi3NMPt0jJNVBgIebWxdK4VT+fFdGQtu+enegMmWELBhwZoRMJcmsM99VDMFgucr+nETCkwIi/eIDLCspKbBEH6aKqT0hr4nqBFbk+tYpxYGiBfWBg8RgUjZLqZvXF4n8KZDXf8IZC37ivQgE+mfrBo57PmJbCjY7PWE=
+	t=1770218024; cv=none; b=TugXSweNp3oYyhCCDErHZ1hNqUkbJklKtWKaMKeMESB3XZs0/yBSc00KSchSjmdUspHnjTGCXoFAkwXzWmJ2rdj/1HY3iXLCHf7nmISHyFl/2BE3CANTwz9rOlwBkAi+J3Fzs+2QL0nxBnc2wEooMSuDwSyWr+jL7Cu9fI5Pbc8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770218021; c=relaxed/simple;
-	bh=Vah/wqgHkRuLec5x0zMoEuoyFXhoQbqncVLC93tBLzM=;
+	s=arc-20240116; t=1770218024; c=relaxed/simple;
+	bh=6zXDiY3JTJktOwp4W5EmYdXaUefyapKCIIS7wapVM1c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BFyd5ukmukyW6pexDTU6uBHjLR+rHl50afBnv51v5/Ea0nxCX/CCzy+8851kg0OfvNpmD7r/f0EwFfCA+wwCRGPKlCt2Uej7z7qCJ7XNXeCF2gMeAoBRvLLDFstyGpw5IqcwI6DD4XyEFQ6LkVCxBr5I/049DszP+zcRIt4ek5k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qksHCqLO; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=JF/0JCE4w2r3PBrMLtNyGvlonFqpkAtBL/EmZTU4KxwhWiWvPbXiNLzeh4rxQqeLC5PFM7Pa+g9WQn40VKyU6WtgN+3Hiq1YpCXqYsglWm+WpFFW55pIkzH6CbEq46lPUe4DLHZKHaznolQA1PvwJwnm/hW2u84zH+QS/uz63zU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FMrW8ygD; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qksHCqLO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ABE8DC4CEF7;
-	Wed,  4 Feb 2026 15:13:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FMrW8ygD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15F78C4CEF7;
+	Wed,  4 Feb 2026 15:13:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770218021;
-	bh=Vah/wqgHkRuLec5x0zMoEuoyFXhoQbqncVLC93tBLzM=;
+	s=korg; t=1770218024;
+	bh=6zXDiY3JTJktOwp4W5EmYdXaUefyapKCIIS7wapVM1c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qksHCqLOI3+hU2XhFxigfO068iGWfKx4VnyFMkIioKu1wkxRjcrGI/tSA+qo0RxeH
-	 cxZLHSkYbZbgSW+bbSswHTTpTjmS73TZ1ZRL+oJYxmqWQgaNyXfZG4SAU5c1/mJwS0
-	 AKLArbqJCXsgbAPIb81YWEVZ2n5LxazBM5Pk1Quo=
+	b=FMrW8ygDhcomtFIgU/0BSLR0rVWGE9zN/LVdlGq22rvapM+RJqpvqgXYyyAPwd3hl
+	 q5ksp+9ByLr53qsJSQaM2/y/dMY6TDWrstJ2UiaGyL94RNpbzQAHCSzzTddZdanwEJ
+	 lCu6WtYSy5U5VUSWPrwnsQlARtEGuQPLsRrc8xCc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Salvatore Bonaccorso <carnil@debian.org>,
-	Karsten Hohmeier <linux@hohmatik.de>,
-	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 6.1 161/280] ALSA: ctxfi: Fix potential OOB access in audio mixer handling
-Date: Wed,  4 Feb 2026 15:38:55 +0100
-Message-ID: <20260204143915.420466638@linuxfoundation.org>
+	Jia-Hong Su <s11242586@gmail.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 188/280] Bluetooth: hci_uart: fix null-ptr-deref in hci_uart_write_work
+Date: Wed,  4 Feb 2026 15:39:22 +0100
+Message-ID: <20260204143916.377189349@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260204143909.614719725@linuxfoundation.org>
 References: <20260204143909.614719725@linuxfoundation.org>
@@ -51,54 +51,73 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Takashi Iwai <tiwai@suse.de>
+From: Jia-Hong Su <s11242586@gmail.com>
 
-commit 61006c540cbdedea83b05577dc7fb7fa18fe1276 upstream.
+[ Upstream commit 0c3cd7a0b862c37acbee6d9502107146cc944398 ]
 
-In the audio mixer handling code of ctxfi driver, the conf field is
-used as a kind of loop index, and it's referred in the index callbacks
-(amixer_index() and sum_index()).
+hci_uart_set_proto() sets HCI_UART_PROTO_INIT before calling
+hci_uart_register_dev(), which calls proto->open() to initialize
+hu->priv. However, if a TTY write wakeup occurs during this window,
+hci_uart_tx_wakeup() may schedule write_work before hu->priv is
+initialized, leading to a NULL pointer dereference in
+hci_uart_write_work() when proto->dequeue() accesses hu->priv.
 
-As spotted recently by fuzzers, the current code causes OOB access at
-those functions.
-| UBSAN: array-index-out-of-bounds in /build/reproducible-path/linux-6.17.8/sound/pci/ctxfi/ctamixer.c:347:48
-| index 8 is out of range for type 'unsigned char [8]'
+The race condition is:
 
-After the analysis, the cause was found to be the lack of the proper
-(re-)initialization of conj field.
+  CPU0                              CPU1
+  ----                              ----
+  hci_uart_set_proto()
+    set_bit(HCI_UART_PROTO_INIT)
+    hci_uart_register_dev()
+                                    tty write wakeup
+                                      hci_uart_tty_wakeup()
+                                        hci_uart_tx_wakeup()
+                                          schedule_work(&hu->write_work)
+      proto->open(hu)
+        // initializes hu->priv
+                                    hci_uart_write_work()
+                                      hci_uart_dequeue()
+                                        proto->dequeue(hu)
+                                          // accesses hu->priv (NULL!)
 
-This patch addresses those OOB accesses by adding the proper
-initializations of the loop indices.
+Fix this by moving set_bit(HCI_UART_PROTO_INIT) after proto->open()
+succeeds, ensuring hu->priv is initialized before any work can be
+scheduled.
 
-Reported-by: Salvatore Bonaccorso <carnil@debian.org>
-Tested-by: Karsten Hohmeier <linux@hohmatik.de>
-Closes: https://bugs.debian.org/1121535
-Cc: <stable@vger.kernel.org>
-Link: https://lore.kernel.org/all/aSk8KJI35H7gFru6@eldamar.lan/
-Link: https://patch.msgid.link/20260119133212.189129-1-tiwai@suse.de
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 5df5dafc171b ("Bluetooth: hci_uart: Fix another race during initialization")
+Link: https://lore.kernel.org/linux-bluetooth/6969764f.170a0220.2b9fc4.35a7@mx.google.com/
+
+Signed-off-by: Jia-Hong Su <s11242586@gmail.com>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/pci/ctxfi/ctamixer.c |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/bluetooth/hci_ldisc.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/sound/pci/ctxfi/ctamixer.c
-+++ b/sound/pci/ctxfi/ctamixer.c
-@@ -205,6 +205,7 @@ static int amixer_rsc_init(struct amixer
- 
- 	/* Set amixer specific operations */
- 	amixer->rsc.ops = &amixer_basic_rsc_ops;
-+	amixer->rsc.conj = 0;
- 	amixer->ops = &amixer_ops;
- 	amixer->input = NULL;
- 	amixer->sum = NULL;
-@@ -369,6 +370,7 @@ static int sum_rsc_init(struct sum *sum,
+diff --git a/drivers/bluetooth/hci_ldisc.c b/drivers/bluetooth/hci_ldisc.c
+index 6a90fc69ef444..2752857dbccf3 100644
+--- a/drivers/bluetooth/hci_ldisc.c
++++ b/drivers/bluetooth/hci_ldisc.c
+@@ -687,6 +687,8 @@ static int hci_uart_register_dev(struct hci_uart *hu)
  		return err;
+ 	}
  
- 	sum->rsc.ops = &sum_basic_rsc_ops;
-+	sum->rsc.conj = 0;
++	set_bit(HCI_UART_PROTO_INIT, &hu->flags);
++
+ 	if (test_bit(HCI_UART_INIT_PENDING, &hu->hdev_flags))
+ 		return 0;
  
- 	return 0;
- }
+@@ -714,8 +716,6 @@ static int hci_uart_set_proto(struct hci_uart *hu, int id)
+ 
+ 	hu->proto = p;
+ 
+-	set_bit(HCI_UART_PROTO_INIT, &hu->flags);
+-
+ 	err = hci_uart_register_dev(hu);
+ 	if (err) {
+ 		return err;
+-- 
+2.51.0
+
 
 
