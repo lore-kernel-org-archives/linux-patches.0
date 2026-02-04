@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D98FE2D0292;
-	Wed,  4 Feb 2026 15:28:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A07427F163;
+	Wed,  4 Feb 2026 15:29:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770218938; cv=none; b=GEgrqv8TCcFgGpoNYK0Z/5eNxYVLIITBSeSiacH/L2ZtpPZpx+/4RHm0Q6Z5orYJSYRAqJ2l1eaVvXOrr6ppJRGgyhpI8TK3slG64IIIblg8HDWV+Rku9dGHda5ueaR2EbiL2sDO5lpt/KcowhuxqxwQeQmMLEO8oCPyVnff3IM=
+	t=1770218942; cv=none; b=flURjKrpQY7IrPmOxNmYKDboNlSr+MjNZE/QD7qfJpetlH3ALhA7cS4n1jzeuaX2lJOJMeO75L84V0jRKQBHv4EszLnAAr5dc6V0oWaowbls4O5nI4H/LVUP7RLoeWeKDTCywItTmcwoTtb8JwxUgMrx2rnOgXgbIG5cLslrtD0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770218938; c=relaxed/simple;
-	bh=nrVDHzecMTKUJ493nC30tCILH1oasXHaF3cWyx9BKiY=;
+	s=arc-20240116; t=1770218942; c=relaxed/simple;
+	bh=fW8YkMmwBeWot5NfO4UwNbbEbDAZT0u/G6MUt+tgTQ0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=e8DSj3yiDCDuL0BOAZ7NX0FPA7tZYi2TIA30JEzykfmG/R8eC7kNj8fpdruySANLDfpsHSrcIXyBrGdCbmHghMv0lMw2OK1MLI9FQBIfJpvLbZoWYd5A7Gno4XI4epY/TU5ayvoixmYmMvFJn8b/8Hw8XSt+lcz/7ClD6LQ+4M0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lfy7+SZY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rCnzPFkdw9nK02tdvmXXG+Jenxp2bnOVqcq+cZDZz8djt9Ct+i6a2RHcmFIU3k57cLEFoS45LlIdhGZC1koQM8uxOdDX4hOU9QiNZyrVdjHkogU8qU77NHsKVTmACmE6MqLUOSkSJVsCYH2qgRXiPMtV6wDWRfTPhFBOEkDb0fw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wgHA2Ysq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lfy7+SZY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F1CEC4CEF7;
-	Wed,  4 Feb 2026 15:28:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wgHA2Ysq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C5D2C4CEF7;
+	Wed,  4 Feb 2026 15:29:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770218938;
-	bh=nrVDHzecMTKUJ493nC30tCILH1oasXHaF3cWyx9BKiY=;
+	s=korg; t=1770218941;
+	bh=fW8YkMmwBeWot5NfO4UwNbbEbDAZT0u/G6MUt+tgTQ0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lfy7+SZYISyXjrqbF7/8hKVU/LvEh1SiLU0fsyJBLKS4y/y70rfWMsqbzh94M5/3H
-	 l7p3YAsMBQ7jTMP3k7JcuN1/7ODUezlLRz+KLNXRxYHw7ECOAYn0wZS65qU1WKQ+eB
-	 jQQIOYm1SidfmtGC94ff+d+YwJC4LsbW4RhkF4BM=
+	b=wgHA2Ysq4xh2x6UjNc7UMyRMq2iseAMSL6ctFWtbGh+qBp9vg12RNZVV1yQKelpak
+	 aUxws7bEBuNf6AfW+xSf9zYh/F1bjQ8vj3uuhUNLfv8Ho/VmmUSsSofosp5W/K9Vs9
+	 UtYZRoVSutATyDsrGl490JhyNKSMNe7lrq+hRvRo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+f2d245f1d76bbfa50e4c@syzkaller.appspotmail.com,
-	Kuniyuki Iwashima <kuniyu@google.com>,
-	Simon Horman <horms@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 019/122] nfc: llcp: Fix memleak in nfc_llcp_send_ui_frame().
-Date: Wed,  4 Feb 2026 15:40:01 +0100
-Message-ID: <20260204143852.558414212@linuxfoundation.org>
+	Boris Burkov <boris@bur.io>,
+	Qu Wenruo <wqu@suse.com>,
+	David Sterba <dsterba@suse.com>,
+	Sasha Levin <sashal@kernel.org>,
+	linux-s390@vger.kernel.org
+Subject: [PATCH 6.18 002/122] btrfs: zlib: fix the folio leak on S390 hardware acceleration
+Date: Wed,  4 Feb 2026 15:39:44 +0100
+Message-ID: <20260204143851.948762654@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260204143851.857060534@linuxfoundation.org>
 References: <20260204143851.857060534@linuxfoundation.org>
@@ -53,165 +53,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kuniyuki Iwashima <kuniyu@google.com>
+From: Qu Wenruo <wqu@suse.com>
 
-[ Upstream commit 165c34fb6068ff153e3fc99a932a80a9d5755709 ]
+[ Upstream commit 0d0f1314e8f86f5205f71f9e31e272a1d008e40b ]
 
-syzbot reported various memory leaks related to NFC, struct
-nfc_llcp_sock, sk_buff, nfc_dev, etc. [0]
+[BUG]
+After commit aa60fe12b4f4 ("btrfs: zlib: refactor S390x HW acceleration
+buffer preparation"), we no longer release the folio of the page cache
+of folio returned by btrfs_compress_filemap_get_folio() for S390
+hardware acceleration path.
 
-The leading log hinted that nfc_llcp_send_ui_frame() failed
-to allocate skb due to sock_error(sk) being -ENXIO.
+[CAUSE]
+Before that commit, we call kumap_local() and folio_put() after handling
+each folio.
 
-ENXIO is set by nfc_llcp_socket_release() when struct
-nfc_llcp_local is destroyed by local_cleanup().
+Although the timing is not ideal (it release previous folio at the
+beginning of the loop, and rely on some extra cleanup out of the loop),
+it at least handles the folio release correctly.
 
-The problem is that there is no synchronisation between
-nfc_llcp_send_ui_frame() and local_cleanup(), and skb
-could be put into local->tx_queue after it was purged in
-local_cleanup():
+Meanwhile the refactored code is easier to read, it lacks the call to
+release the filemap folio.
 
-  CPU1                          CPU2
-  ----                          ----
-  nfc_llcp_send_ui_frame()      local_cleanup()
-  |- do {                       '
-     |- pdu = nfc_alloc_send_skb(..., &err)
-     |                          .
-     |                          |- nfc_llcp_socket_release(local, false, ENXIO);
-     |                          |- skb_queue_purge(&local->tx_queue);      |
-     |                          '                                          |
-     |- skb_queue_tail(&local->tx_queue, pdu);                             |
-    ...                                                                    |
-     |- pdu = nfc_alloc_send_skb(..., &err)                                |
-                                       ^._________________________________.'
+[FIX]
+Add the missing folio_put() for copy_data_into_buffer().
 
-local_cleanup() is called for struct nfc_llcp_local only
-after nfc_llcp_remove_local() unlinks it from llcp_devices.
-
-If we hold local->tx_queue.lock then, we can synchronise
-the thread and nfc_llcp_send_ui_frame().
-
-Let's do that and check list_empty(&local->list) before
-queuing skb to local->tx_queue in nfc_llcp_send_ui_frame().
-
-[0]:
-[   56.074943][ T6096] llcp: nfc_llcp_send_ui_frame: Could not allocate PDU (error=-6)
-[   64.318868][ T5813] kmemleak: 6 new suspected memory leaks (see /sys/kernel/debug/kmemleak)
-BUG: memory leak
-unreferenced object 0xffff8881272f6800 (size 1024):
-  comm "syz.0.17", pid 6096, jiffies 4294942766
-  hex dump (first 32 bytes):
-    00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
-    27 00 03 40 00 00 00 00 00 00 00 00 00 00 00 00  '..@............
-  backtrace (crc da58d84d):
-    kmemleak_alloc_recursive include/linux/kmemleak.h:44 [inline]
-    slab_post_alloc_hook mm/slub.c:4979 [inline]
-    slab_alloc_node mm/slub.c:5284 [inline]
-    __do_kmalloc_node mm/slub.c:5645 [inline]
-    __kmalloc_noprof+0x3e3/0x6b0 mm/slub.c:5658
-    kmalloc_noprof include/linux/slab.h:961 [inline]
-    sk_prot_alloc+0x11a/0x1b0 net/core/sock.c:2239
-    sk_alloc+0x36/0x360 net/core/sock.c:2295
-    nfc_llcp_sock_alloc+0x37/0x130 net/nfc/llcp_sock.c:979
-    llcp_sock_create+0x71/0xd0 net/nfc/llcp_sock.c:1044
-    nfc_sock_create+0xc9/0xf0 net/nfc/af_nfc.c:31
-    __sock_create+0x1a9/0x340 net/socket.c:1605
-    sock_create net/socket.c:1663 [inline]
-    __sys_socket_create net/socket.c:1700 [inline]
-    __sys_socket+0xb9/0x1a0 net/socket.c:1747
-    __do_sys_socket net/socket.c:1761 [inline]
-    __se_sys_socket net/socket.c:1759 [inline]
-    __x64_sys_socket+0x1b/0x30 net/socket.c:1759
-    do_syscall_x64 arch/x86/entry/syscall_64.c:63 [inline]
-    do_syscall_64+0xa4/0xfa0 arch/x86/entry/syscall_64.c:94
-    entry_SYSCALL_64_after_hwframe+0x77/0x7f
-
-BUG: memory leak
-unreferenced object 0xffff88810fbd9800 (size 240):
-  comm "syz.0.17", pid 6096, jiffies 4294942850
-  hex dump (first 32 bytes):
-    68 f0 ff 08 81 88 ff ff 68 f0 ff 08 81 88 ff ff  h.......h.......
-    00 00 00 00 00 00 00 00 00 68 2f 27 81 88 ff ff  .........h/'....
-  backtrace (crc 6cc652b1):
-    kmemleak_alloc_recursive include/linux/kmemleak.h:44 [inline]
-    slab_post_alloc_hook mm/slub.c:4979 [inline]
-    slab_alloc_node mm/slub.c:5284 [inline]
-    kmem_cache_alloc_node_noprof+0x36f/0x5e0 mm/slub.c:5336
-    __alloc_skb+0x203/0x240 net/core/skbuff.c:660
-    alloc_skb include/linux/skbuff.h:1383 [inline]
-    alloc_skb_with_frags+0x69/0x3f0 net/core/skbuff.c:6671
-    sock_alloc_send_pskb+0x379/0x3e0 net/core/sock.c:2965
-    sock_alloc_send_skb include/net/sock.h:1859 [inline]
-    nfc_alloc_send_skb+0x45/0x80 net/nfc/core.c:724
-    nfc_llcp_send_ui_frame+0x162/0x360 net/nfc/llcp_commands.c:766
-    llcp_sock_sendmsg+0x14c/0x1d0 net/nfc/llcp_sock.c:814
-    sock_sendmsg_nosec net/socket.c:727 [inline]
-    __sock_sendmsg net/socket.c:742 [inline]
-    __sys_sendto+0x2d8/0x2f0 net/socket.c:2244
-    __do_sys_sendto net/socket.c:2251 [inline]
-    __se_sys_sendto net/socket.c:2247 [inline]
-    __x64_sys_sendto+0x28/0x30 net/socket.c:2247
-    do_syscall_x64 arch/x86/entry/syscall_64.c:63 [inline]
-    do_syscall_64+0xa4/0xfa0 arch/x86/entry/syscall_64.c:94
-    entry_SYSCALL_64_after_hwframe+0x77/0x7f
-
-Fixes: 94f418a20664 ("NFC: UI frame sending routine implementation")
-Reported-by: syzbot+f2d245f1d76bbfa50e4c@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/netdev/697569c7.a00a0220.33ccc7.0014.GAE@google.com/T/#u
-Signed-off-by: Kuniyuki Iwashima <kuniyu@google.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20260125010214.1572439-1-kuniyu@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+CC: linux-s390@vger.kernel.org # 6.18+
+Fixes: aa60fe12b4f4 ("btrfs: zlib: refactor S390x HW acceleration buffer preparation")
+Reviewed-by: Boris Burkov <boris@bur.io>
+Signed-off-by: Qu Wenruo <wqu@suse.com>
+Reviewed-by: David Sterba <dsterba@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/nfc/llcp_commands.c | 17 ++++++++++++++++-
- net/nfc/llcp_core.c     |  4 +++-
- 2 files changed, 19 insertions(+), 2 deletions(-)
+ fs/btrfs/zlib.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/net/nfc/llcp_commands.c b/net/nfc/llcp_commands.c
-index e2680a3bef799..b652323bc2c12 100644
---- a/net/nfc/llcp_commands.c
-+++ b/net/nfc/llcp_commands.c
-@@ -778,8 +778,23 @@ int nfc_llcp_send_ui_frame(struct nfc_llcp_sock *sock, u8 ssap, u8 dsap,
- 		if (likely(frag_len > 0))
- 			skb_put_data(pdu, msg_ptr, frag_len);
- 
-+		spin_lock(&local->tx_queue.lock);
-+
-+		if (list_empty(&local->list)) {
-+			spin_unlock(&local->tx_queue.lock);
-+
-+			kfree_skb(pdu);
-+
-+			len -= remaining_len;
-+			if (len == 0)
-+				len = -ENXIO;
-+			break;
-+		}
-+
- 		/* No need to check for the peer RW for UI frames */
--		skb_queue_tail(&local->tx_queue, pdu);
-+		__skb_queue_tail(&local->tx_queue, pdu);
-+
-+		spin_unlock(&local->tx_queue.lock);
- 
- 		remaining_len -= frag_len;
- 		msg_ptr += frag_len;
-diff --git a/net/nfc/llcp_core.c b/net/nfc/llcp_core.c
-index beeb3b4d28cab..444a3774c8e80 100644
---- a/net/nfc/llcp_core.c
-+++ b/net/nfc/llcp_core.c
-@@ -316,7 +316,9 @@ static struct nfc_llcp_local *nfc_llcp_remove_local(struct nfc_dev *dev)
- 	spin_lock(&llcp_devices_lock);
- 	list_for_each_entry_safe(local, tmp, &llcp_devices, list)
- 		if (local->dev == dev) {
--			list_del(&local->list);
-+			spin_lock(&local->tx_queue.lock);
-+			list_del_init(&local->list);
-+			spin_unlock(&local->tx_queue.lock);
- 			spin_unlock(&llcp_devices_lock);
- 			return local;
- 		}
+diff --git a/fs/btrfs/zlib.c b/fs/btrfs/zlib.c
+index 6caba8be7c845..10ed48d4a8466 100644
+--- a/fs/btrfs/zlib.c
++++ b/fs/btrfs/zlib.c
+@@ -139,6 +139,7 @@ static int copy_data_into_buffer(struct address_space *mapping,
+ 		data_in = kmap_local_folio(folio, offset);
+ 		memcpy(workspace->buf + cur - filepos, data_in, copy_length);
+ 		kunmap_local(data_in);
++		folio_put(folio);
+ 		cur += copy_length;
+ 	}
+ 	return 0;
 -- 
 2.51.0
 
