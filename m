@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AAFD0219301;
-	Wed,  4 Feb 2026 14:49:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49113219301;
+	Wed,  4 Feb 2026 14:49:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770216584; cv=none; b=VlaRiffWNISRP5XW3e0H9D53TQYQHWDj1KzWqtN2N0oEz7lK9BFcrDuAGXmYBcTYcjx1DfhUdDFk6nFCe72QgzyxqWoFCceV5xHO1mRt7Ww3QS8L5N1zkKkly7i9abydFJTDwBjaqKbhJXW63UuEl4ggMbVkvl+zjexEA0Nf9IU=
+	t=1770216588; cv=none; b=bExVfM+EaUZ7iNVhAnfEbbUSparB3HkXoIgeeXwKdUhOYUC72zEu89Tp9F57L88lJE11Ee+9K8sHM9dckyLCv+1Yn1oL5Mfe1tiRWHpZ4Doo8OZdXKxHvrGB4lFvhyYx9ISyAYREbAlwQk66WFR11k4qJS3Nree9S6b52fknRVs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770216584; c=relaxed/simple;
-	bh=xtb4Yg1NQnFbabo4vF5AjqgyHVuG4VbZzV/4zpZxE5E=;
+	s=arc-20240116; t=1770216588; c=relaxed/simple;
+	bh=Ld1d69TiqeuMuNxbSE3FIefMMmRmZUa/3qm6ljFSwcw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=t723G7NCI6RHJPl8cPdNMWahm/renvvSSPCjtJIX46gUg7MroHZMgTJMKGdxfKGP23BWdmL8sHCInxs/cvVlW1OATpxrVjRYorx+xQ6jDSKgOcPgNFX9rDxT5nalnGI+8NmIOkf+fJ8W9zQ6T5MNfd7c3Ckrb6p0Ob5tbcYb5Ro=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=puXoj6hF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SvNPOq5ew2bLMWesRyKeHgvVtRzEQL4jBufcyUb0ARRASStxXjINKXKSJhnOVQE//aJE4QiU1ja5/hkOy82O1PbdWvExtWZnlVrNPiUe06Zq30u87zVnFp2B8TCf9IIBXozJu7/okuHW6d/gq1OB66tGwyPHcvSLNXuE02Y8In8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=z3/g1o71; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="puXoj6hF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 294E0C4CEF7;
-	Wed,  4 Feb 2026 14:49:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="z3/g1o71"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AD836C4CEF7;
+	Wed,  4 Feb 2026 14:49:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770216584;
-	bh=xtb4Yg1NQnFbabo4vF5AjqgyHVuG4VbZzV/4zpZxE5E=;
+	s=korg; t=1770216588;
+	bh=Ld1d69TiqeuMuNxbSE3FIefMMmRmZUa/3qm6ljFSwcw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=puXoj6hFIpYDnKlMHC5aksz8Y249EEcYPUM8qc0IpmRF7QIm9hSbdeIKWliIFEaJU
-	 ZFfHg3dTJ3wusx+UUtQmfRTqxrpl+/M03JPrGPyc7R5KfcY3coPlEkyOc7bZWKNdLi
-	 PEMk8fydizmW3tLw+bzmWO3K4SmHzTg6y2Xn/V2M=
+	b=z3/g1o71QwEKm17wXa74qonnOcICQbELgUm6iTG8mEnbec5B34zU1JFiGIFjNJXy7
+	 dQ7jKRSIJY95E1e0W2blrm/JKczuA6eAC2zVC5V8mZGW6lc3joOgL6IhHROkZLp2Br
+	 tCDJDpC8eqAvSAkRK7a8slRh1ASZwlAWHv/PkR1k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kery Qi <qikeyu2017@gmail.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Sai Sree Kartheek Adivi <s-adivi@ti.com>,
+	Robin Murphy <robin.murphy@arm.com>,
+	Marek Szyprowski <m.szyprowski@samsung.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 130/161] scsi: firewire: sbp-target: Fix overflow in sbp_make_tpg()
-Date: Wed,  4 Feb 2026 15:39:53 +0100
-Message-ID: <20260204143856.419562830@linuxfoundation.org>
+Subject: [PATCH 5.10 131/161] dma/pool: distinguish between missing and exhausted atomic pools
+Date: Wed,  4 Feb 2026 15:39:54 +0100
+Message-ID: <20260204143856.456488383@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260204143851.755002596@linuxfoundation.org>
 References: <20260204143851.755002596@linuxfoundation.org>
@@ -51,56 +52,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kery Qi <qikeyu2017@gmail.com>
+From: Sai Sree Kartheek Adivi <s-adivi@ti.com>
 
-[ Upstream commit b2d6b1d443009ed4da2d69f5423ab38e5780505a ]
+[ Upstream commit 56c430c7f06d838fe3b2077dbbc4cc0bf992312b ]
 
-The code in sbp_make_tpg() limits "tpgt" to UINT_MAX but the data type of
-"tpg->tport_tpgt" is u16. This causes a type truncation issue.
+Currently, dma_alloc_from_pool() unconditionally warns and dumps a stack
+trace when an allocation fails, with the message "Failed to get suitable
+pool".
 
-When a user creates a TPG via configfs mkdir, for example:
+This conflates two distinct failure modes:
+1. Configuration error: No atomic pool is available for the requested
+   DMA mask (a fundamental system setup issue)
+2. Resource Exhaustion: A suitable pool exists but is currently full (a
+   recoverable runtime state)
 
-    mkdir /sys/kernel/config/target/sbp/<wwn>/tpgt_70000
+This lack of distinction prevents drivers from using __GFP_NOWARN to
+suppress error messages during temporary pressure spikes, such as when
+awaiting synchronous reclaim of descriptors.
 
-The value 70000 passes the "tpgt > UINT_MAX" check since 70000 is far less
-than 4294967295. However, when assigned to the u16 field tpg->tport_tpgt,
-the value is silently truncated to 4464 (70000 & 0xFFFF). This causes the
-value the user specified to differ from what is actually stored, leading to
-confusion and potential unexpected behavior.
+Refactor the error handling to distinguish these cases:
+- If no suitable pool is found, keep the unconditional WARN regarding
+  the missing pool.
+- If a pool was found but is exhausted, respect __GFP_NOWARN and update
+  the warning message to explicitly state "DMA pool exhausted".
 
-Fix this by changing the type of "tpgt" to u16 and using kstrtou16() which
-will properly reject values outside the u16 range.
-
-Fixes: a511ce339780 ("sbp-target: Initial merge of firewire/ieee-1394 target mode support")
-Signed-off-by: Kery Qi <qikeyu2017@gmail.com>
-Link: https://patch.msgid.link/20260121114515.1829-2-qikeyu2017@gmail.com
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Fixes: 9420139f516d ("dma-pool: fix coherent pool allocations for IOMMU mappings")
+Signed-off-by: Sai Sree Kartheek Adivi <s-adivi@ti.com>
+Reviewed-by: Robin Murphy <robin.murphy@arm.com>
+Signed-off-by: Marek Szyprowski <m.szyprowski@samsung.com>
+Link: https://lore.kernel.org/r/20260128133554.3056582-1-s-adivi@ti.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/target/sbp/sbp_target.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ kernel/dma/pool.c |    7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/target/sbp/sbp_target.c b/drivers/target/sbp/sbp_target.c
-index e4a9b9fe3dfb0..9445bf3409fd1 100644
---- a/drivers/target/sbp/sbp_target.c
-+++ b/drivers/target/sbp/sbp_target.c
-@@ -1989,12 +1989,12 @@ static struct se_portal_group *sbp_make_tpg(struct se_wwn *wwn,
- 		container_of(wwn, struct sbp_tport, tport_wwn);
+--- a/kernel/dma/pool.c
++++ b/kernel/dma/pool.c
+@@ -271,15 +271,20 @@ struct page *dma_alloc_from_pool(struct
+ {
+ 	struct gen_pool *pool = NULL;
+ 	struct page *page;
++	bool pool_found = false;
  
- 	struct sbp_tpg *tpg;
--	unsigned long tpgt;
-+	u16 tpgt;
- 	int ret;
+ 	while ((pool = dma_guess_pool(pool, gfp))) {
++		pool_found = true;
+ 		page = __dma_alloc_from_pool(dev, size, pool, cpu_addr,
+ 					     phys_addr_ok);
+ 		if (page)
+ 			return page;
+ 	}
  
- 	if (strstr(name, "tpgt_") != name)
- 		return ERR_PTR(-EINVAL);
--	if (kstrtoul(name + 5, 10, &tpgt) || tpgt > UINT_MAX)
-+	if (kstrtou16(name + 5, 10, &tpgt))
- 		return ERR_PTR(-EINVAL);
+-	WARN(1, "Failed to get suitable pool for %s\n", dev_name(dev));
++	if (pool_found)
++		WARN(!(gfp & __GFP_NOWARN), "DMA pool exhausted for %s\n", dev_name(dev));
++	else
++		WARN(1, "Failed to get suitable pool for %s\n", dev_name(dev));
+ 	return NULL;
+ }
  
- 	if (tport->tpg) {
--- 
-2.51.0
-
 
 
