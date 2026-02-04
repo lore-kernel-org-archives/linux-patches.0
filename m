@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC87121FF4C;
-	Wed,  4 Feb 2026 15:29:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB5C621FF4C;
+	Wed,  4 Feb 2026 15:29:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770218980; cv=none; b=XNhqPNFw5hvZQdwIwgiGOpJ+0lmILJbn+YsdVnLQcLH05iIhwQKlZXajhn+vh+b+HJrZl8b0/D8v8hw/IFiFapkRWcsbk8EfB6XBFSPNSgVu3bDXzzNegScuflYVa+INd3YgI8TYDziTFwv4TPuuSzzhM9cg/Cfzg9Xm1N6JYPA=
+	t=1770218983; cv=none; b=XTKMraEeHY6SjDYsd+vA31pnDR053bbLoIeb1z1iSBfMnxj8Lb/BAT6kDXWHP0MskenNMRAa2qquejG9ZSK2LhOKWHDE4UHtlYLYkJWd+zAPW878kGrMqZKBqab5kEZO7/jwC24Fn9slU1zlEPiwTiDzPhKfn9mKD/G47uietfU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770218980; c=relaxed/simple;
-	bh=3Fh1ShpVoLJnyGwZmS3nODR1f5jkQJKCiStZCxX2J0U=;
+	s=arc-20240116; t=1770218983; c=relaxed/simple;
+	bh=MQquqfJ7U+bn8onvwBK8GTBqejkMztzVXok3NpFe2Kw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Y2MX01bgIMgIjUlgy0lN0qI+Ua6jjOiM4jjRetGfKT7dvw1ROWIgNlTQ4nShPm29tLcySu0dGM3lBOuXBnPjBENA9dTQ/keBqf+/Z9R52gvLRCvsazWoQl8lCLi7h6K55K3uyP3oMKW7ynfuEMbbIigEWPv/fHttfguGEh8HpJU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0Ttv4ptA; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=s57DFo5vL+J1hc0y7mo8uolZQQ+VVmbcMDzhotLFcZeWtlckKdNO42NqbjGPMvTMD9hg7f4+1/wg+eJ6vzHyJTvUv1I+fpQJ2sWQs4YWoeD28v7eMQJPBTFB/Z2DJFIUReGXqpHrCM0FMLJpmdhUVTvPapPxdqzuirXDpMTskPU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NerQec5r; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0Ttv4ptA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C2AFC4CEF7;
-	Wed,  4 Feb 2026 15:29:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NerQec5r"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 603F4C19424;
+	Wed,  4 Feb 2026 15:29:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770218980;
-	bh=3Fh1ShpVoLJnyGwZmS3nODR1f5jkQJKCiStZCxX2J0U=;
+	s=korg; t=1770218983;
+	bh=MQquqfJ7U+bn8onvwBK8GTBqejkMztzVXok3NpFe2Kw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0Ttv4ptAskCs3tPZRqNGJMknkwYjoW0j5F+7wDzZdsAw0XrqUltablRnbJE8f3T4R
-	 lyYteM+hf/MezXH5s0RGOuHFF0lwOV5mwVDePdh5rLa9TzdU5KB80i9gGOj80A7x5Q
-	 /7SaKmEMTkh+VP+T+43TA8oQZi5ckJq6c3tVP+rI=
+	b=NerQec5rN/IvQqZYfSCGgn2mVe9gyiQSRhVLeeH4UO2cxb1qi6DwethfnNZxNLrz5
+	 glK6GCpNysHfxsd5W3PQ4b/XW1Pe9H6HOXchxb+cHtO+cZ3SWJdWjbkvSGrVmiF9mo
+	 CHzCUW0PX3Cz1zQG9gqsA+lxnxubU4HvLJjR8fAY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cosmin Ratiu <cratiu@nvidia.com>,
-	Carolina Jubran <cjubran@nvidia.com>,
+	Parav Pandit <parav@nvidia.com>,
+	Shay Drori <shayd@nvidia.com>,
+	Simon Horman <horms@kernel.org>,
 	Tariq Toukan <tariqt@nvidia.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 032/122] net/mlx5: Initialize events outside devlink lock
-Date: Wed,  4 Feb 2026 15:40:14 +0100
-Message-ID: <20260204143853.017599349@linuxfoundation.org>
+Subject: [PATCH 6.18 033/122] net/mlx5: Fix vhca_id access call trace use before alloc
+Date: Wed,  4 Feb 2026 15:40:15 +0100
+Message-ID: <20260204143853.053050551@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260204143851.857060534@linuxfoundation.org>
 References: <20260204143851.857060534@linuxfoundation.org>
@@ -53,113 +54,156 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cosmin Ratiu <cratiu@nvidia.com>
+From: Parav Pandit <parav@nvidia.com>
 
-[ Upstream commit b6b03097f9826db72aeb3f751774c5e9edd9a5b3 ]
+[ Upstream commit a8f930b7be7be3f18f14446df461e17137400407 ]
 
-Move event init/cleanup outside of mlx5_init_one() / mlx5_uninit_one()
-and into the mlx5_mdev_init() / mlx5_mdev_uninit() functions.
+HCA CAP structure is allocated in mlx5_hca_caps_alloc().
+mlx5_mdev_init()
+  mlx5_hca_caps_alloc()
 
-By doing this, we avoid the events being reinitialized on devlink reload
-and, more importantly, the events->sw_nh notifier chain becomes
-available earlier in the init procedure, which will be used in
-subsequent patches. This makes sense because the events struct is pure
-software, independent of any HW details.
+And HCA CAP is read from the device in mlx5_init_one().
 
-Signed-off-by: Cosmin Ratiu <cratiu@nvidia.com>
-Reviewed-by: Carolina Jubran <cjubran@nvidia.com>
+The vhca_id's debugfs file is published even before above two
+operations are done.
+Due to this when user reads the vhca id before the initialization,
+following call trace is observed.
+
+Fix this by deferring debugfs publication until the HCA CAP is
+allocated and read from the device.
+
+BUG: kernel NULL pointer dereference, address: 0000000000000004
+PGD 0 P4D 0
+Oops: Oops: 0000 [#1] SMP PTI
+CPU: 23 UID: 0 PID: 6605 Comm: cat Kdump: loaded Not tainted 6.18.0-rc7-sf+ #110 PREEMPT(full)
+Hardware name: Supermicro SYS-6028U-TR4+/X10DRU-i+, BIOS 2.0b 08/09/2016
+RIP: 0010:vhca_id_show+0x17/0x30 [mlx5_core]
+Code: cb 66 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 0f 1f 44 00 00 48 8b 47 70 48 c7 c6 45 f0 12 c1 48 8b 80 70 03 00 00 <8b> 50 04 0f ca 0f b7 d2 e8 8c 82 47 cb 31 c0 c3 cc cc cc cc 0f 1f
+RSP: 0018:ffffd37f4f337d40 EFLAGS: 00010203
+RAX: 0000000000000000 RBX: ffff8f18445c9b40 RCX: 0000000000000001
+RDX: ffff8f1109825180 RSI: ffffffffc112f045 RDI: ffff8f18445c9b40
+RBP: 0000000000000000 R08: 0000645eac0d2928 R09: 0000000000000006
+R10: ffffd37f4f337d48 R11: 0000000000000000 R12: ffffd37f4f337dd8
+R13: ffffd37f4f337db0 R14: ffff8f18445c9b68 R15: 0000000000000001
+FS:  00007f3eea099580(0000) GS:ffff8f2090f1f000(0000) knlGS:0000000000000000
+CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+CR2: 0000000000000004 CR3: 00000008b64e4006 CR4: 00000000003726f0
+Call Trace:
+ <TASK>
+ seq_read_iter+0x11f/0x4f0
+ ? _raw_spin_unlock+0x15/0x30
+ ? do_anonymous_page+0x104/0x810
+ seq_read+0xf6/0x120
+ ? srso_alias_untrain_ret+0x1/0x10
+ full_proxy_read+0x5c/0x90
+ vfs_read+0xad/0x320
+ ? handle_mm_fault+0x1ab/0x290
+ ksys_read+0x52/0xd0
+ do_syscall_64+0x61/0x11e0
+ entry_SYSCALL_64_after_hwframe+0x76/0x7e
+
+Fixes: dd3dd7263cde ("net/mlx5: Expose vhca_id to debugfs")
+Signed-off-by: Parav Pandit <parav@nvidia.com>
+Reviewed-by: Shay Drori <shayd@nvidia.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
 Signed-off-by: Tariq Toukan <tariqt@nvidia.com>
-Link: https://patch.msgid.link/1763325940-1231508-2-git-send-email-tariqt@nvidia.com
+Link: https://patch.msgid.link/1769503961-124173-4-git-send-email-tariqt@nvidia.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Stable-dep-of: a8f930b7be7b ("net/mlx5: Fix vhca_id access call trace use before alloc")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../net/ethernet/mellanox/mlx5/core/main.c    | 34 +++++++++++++------
- 1 file changed, 24 insertions(+), 10 deletions(-)
+ .../net/ethernet/mellanox/mlx5/core/debugfs.c    | 16 ++++++++++++++++
+ drivers/net/ethernet/mellanox/mlx5/core/main.c   | 14 +++-----------
+ .../net/ethernet/mellanox/mlx5/core/mlx5_core.h  |  1 +
+ .../ethernet/mellanox/mlx5/core/sf/dev/driver.c  |  1 +
+ 4 files changed, 21 insertions(+), 11 deletions(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/main.c b/drivers/net/ethernet/mellanox/mlx5/core/main.c
-index 9e0c9e6266a47..236cb1eb98c82 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/main.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/main.c
-@@ -999,16 +999,10 @@ static int mlx5_init_once(struct mlx5_core_dev *dev)
- 		goto err_irq_cleanup;
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/debugfs.c b/drivers/net/ethernet/mellanox/mlx5/core/debugfs.c
+index 36806e813c33c..1301c56e20d65 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/debugfs.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/debugfs.c
+@@ -613,3 +613,19 @@ void mlx5_debug_cq_remove(struct mlx5_core_dev *dev, struct mlx5_core_cq *cq)
+ 		cq->dbg = NULL;
  	}
- 
--	err = mlx5_events_init(dev);
--	if (err) {
--		mlx5_core_err(dev, "failed to initialize events\n");
--		goto err_eq_cleanup;
--	}
--
- 	err = mlx5_fw_reset_init(dev);
- 	if (err) {
- 		mlx5_core_err(dev, "failed to initialize fw reset events\n");
--		goto err_events_cleanup;
-+		goto err_eq_cleanup;
- 	}
- 
- 	mlx5_cq_debugfs_init(dev);
-@@ -1110,8 +1104,6 @@ static int mlx5_init_once(struct mlx5_core_dev *dev)
- 	mlx5_cleanup_reserved_gids(dev);
- 	mlx5_cq_debugfs_cleanup(dev);
- 	mlx5_fw_reset_cleanup(dev);
--err_events_cleanup:
--	mlx5_events_cleanup(dev);
- err_eq_cleanup:
- 	mlx5_eq_table_cleanup(dev);
- err_irq_cleanup:
-@@ -1144,7 +1136,6 @@ static void mlx5_cleanup_once(struct mlx5_core_dev *dev)
- 	mlx5_cleanup_reserved_gids(dev);
- 	mlx5_cq_debugfs_cleanup(dev);
- 	mlx5_fw_reset_cleanup(dev);
--	mlx5_events_cleanup(dev);
- 	mlx5_eq_table_cleanup(dev);
- 	mlx5_irq_table_cleanup(dev);
- 	mlx5_devcom_unregister_device(dev->priv.devc);
-@@ -1822,6 +1813,24 @@ static int vhca_id_show(struct seq_file *file, void *priv)
- 
- DEFINE_SHOW_ATTRIBUTE(vhca_id);
- 
-+static int mlx5_notifiers_init(struct mlx5_core_dev *dev)
+ }
++
++static int vhca_id_show(struct seq_file *file, void *priv)
 +{
-+	int err;
++	struct mlx5_core_dev *dev = file->private;
 +
-+	err = mlx5_events_init(dev);
-+	if (err) {
-+		mlx5_core_err(dev, "failed to initialize events\n");
-+		return err;
-+	}
-+
++	seq_printf(file, "0x%x\n", MLX5_CAP_GEN(dev, vhca_id));
 +	return 0;
 +}
 +
-+static void mlx5_notifiers_cleanup(struct mlx5_core_dev *dev)
++DEFINE_SHOW_ATTRIBUTE(vhca_id);
++
++void mlx5_vhca_debugfs_init(struct mlx5_core_dev *dev)
 +{
-+	mlx5_events_cleanup(dev);
++	debugfs_create_file("vhca_id", 0400, dev->priv.dbg.dbg_root, dev,
++			    &vhca_id_fops);
 +}
-+
- int mlx5_mdev_init(struct mlx5_core_dev *dev, int profile_idx)
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/main.c b/drivers/net/ethernet/mellanox/mlx5/core/main.c
+index 236cb1eb98c82..14c57d4372802 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/main.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/main.c
+@@ -1803,16 +1803,6 @@ static int mlx5_hca_caps_alloc(struct mlx5_core_dev *dev)
+ 	return -ENOMEM;
+ }
+ 
+-static int vhca_id_show(struct seq_file *file, void *priv)
+-{
+-	struct mlx5_core_dev *dev = file->private;
+-
+-	seq_printf(file, "0x%x\n", MLX5_CAP_GEN(dev, vhca_id));
+-	return 0;
+-}
+-
+-DEFINE_SHOW_ATTRIBUTE(vhca_id);
+-
+ static int mlx5_notifiers_init(struct mlx5_core_dev *dev)
  {
- 	struct mlx5_priv *priv = &dev->priv;
-@@ -1877,6 +1886,10 @@ int mlx5_mdev_init(struct mlx5_core_dev *dev, int profile_idx)
- 	if (err)
- 		goto err_hca_caps;
- 
-+	err = mlx5_notifiers_init(dev);
-+	if (err)
-+		goto err_hca_caps;
+ 	int err;
+@@ -1855,7 +1845,7 @@ int mlx5_mdev_init(struct mlx5_core_dev *dev, int profile_idx)
+ 	priv->numa_node = dev_to_node(mlx5_core_dma_dev(dev));
+ 	priv->dbg.dbg_root = debugfs_create_dir(dev_name(dev->device),
+ 						mlx5_debugfs_root);
+-	debugfs_create_file("vhca_id", 0400, priv->dbg.dbg_root, dev, &vhca_id_fops);
 +
- 	/* The conjunction of sw_vhca_id with sw_owner_id will be a global
- 	 * unique id per function which uses mlx5_core.
- 	 * Those values are supplied to FW as part of the init HCA command to
-@@ -1919,6 +1932,7 @@ void mlx5_mdev_uninit(struct mlx5_core_dev *dev)
- 	if (priv->sw_vhca_id > 0)
- 		ida_free(&sw_vhca_ida, dev->priv.sw_vhca_id);
+ 	INIT_LIST_HEAD(&priv->traps);
  
-+	mlx5_notifiers_cleanup(dev);
- 	mlx5_hca_caps_free(dev);
- 	mlx5_adev_cleanup(dev);
- 	mlx5_pagealloc_cleanup(dev);
+ 	err = mlx5_cmd_init(dev);
+@@ -1993,6 +1983,8 @@ static int probe_one(struct pci_dev *pdev, const struct pci_device_id *id)
+ 		goto err_init_one;
+ 	}
+ 
++	mlx5_vhca_debugfs_init(dev);
++
+ 	pci_save_state(pdev);
+ 	return 0;
+ 
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/mlx5_core.h b/drivers/net/ethernet/mellanox/mlx5/core/mlx5_core.h
+index 082259b56816c..da5345e19082d 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/mlx5_core.h
++++ b/drivers/net/ethernet/mellanox/mlx5/core/mlx5_core.h
+@@ -258,6 +258,7 @@ int mlx5_wait_for_pages(struct mlx5_core_dev *dev, int *pages);
+ void mlx5_cmd_flush(struct mlx5_core_dev *dev);
+ void mlx5_cq_debugfs_init(struct mlx5_core_dev *dev);
+ void mlx5_cq_debugfs_cleanup(struct mlx5_core_dev *dev);
++void mlx5_vhca_debugfs_init(struct mlx5_core_dev *dev);
+ 
+ int mlx5_query_pcam_reg(struct mlx5_core_dev *dev, u32 *pcam, u8 feature_group,
+ 			u8 access_reg_group);
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/sf/dev/driver.c b/drivers/net/ethernet/mellanox/mlx5/core/sf/dev/driver.c
+index b706f1486504a..c45540fe7d9d9 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/sf/dev/driver.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/sf/dev/driver.c
+@@ -76,6 +76,7 @@ static int mlx5_sf_dev_probe(struct auxiliary_device *adev, const struct auxilia
+ 		goto init_one_err;
+ 	}
+ 
++	mlx5_vhca_debugfs_init(mdev);
+ 	return 0;
+ 
+ init_one_err:
 -- 
 2.51.0
 
