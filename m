@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA3F7221F17;
-	Wed,  4 Feb 2026 14:47:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6957627FD56;
+	Wed,  4 Feb 2026 14:48:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770216478; cv=none; b=seTKIeduWgRv7dd3pVbWHXVD02oKrrGgVtt45YnH7uM2LhkYBiF/8UlCVCOxWF1U53DMswyBVjrSDmZF2gHcFjH96wdKwZbF7F7x4wbgNQ/rLjt8bxIvjiduhfXvz4g6khI4Jm55knOF6FJ8CKxqyJfV02i0dlXTQzSzg9Hsh2I=
+	t=1770216481; cv=none; b=Sgrvm4pLzRmLZ4WMUH2WFm3NRTFI9a/7ZxYIOnu02FqAQ3mdqOPtXmgR+YKY7RjuFyCU37NnHJBWC+17BwNd8T0WC6b0Nz+XnxNgZMh0zsmcxVheLX4Lp2yumSwkCwtMEzcmxYF5DPTVP+tXt74mvvew/CYcjZUV5CXqNOrAQCg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770216478; c=relaxed/simple;
-	bh=6bHzCVPyxZ6cFFhTrDkLbJAmNHiM14SO6aWfCGwT/1M=;
+	s=arc-20240116; t=1770216481; c=relaxed/simple;
+	bh=/rFtltnl4vnhNfmRrMuVdCcEtvcE5tcTuzLevWlR96Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HtGuUZMXid8hzHfKHkbUbt4+MoSXstNf5O4TlakJx1paQTrfOLDZ2ZPSRConYU/T9U+p/n+wMWbxMCWd2eJtwKCGFdScYvU3oAOC3sBjWre4TbT2ZXcXxxuhu+35Fd3Z2UtBHuawq8KgQO6aCr8BC8stv3QjYbAs9bEcG2wAlKg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PvZhaFBf; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZzRH2GzwWzFpVK7PeCQIAiThLIWI7HGdt7QMzIN2K0H3n3AofOcw2sRBGpbceypOV15G2J2xR0R5D9hA94j/P3IiovwvLywRWUFlxWzRFl06KJzWaVJV+c9thiNSiO/oKq4pCzFXO+BAgO4p203MKCenXs2ZJ9gKEzrRcoc0X6Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hpJeidAQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PvZhaFBf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D022C4CEF7;
-	Wed,  4 Feb 2026 14:47:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hpJeidAQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA444C4CEF7;
+	Wed,  4 Feb 2026 14:48:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770216477;
-	bh=6bHzCVPyxZ6cFFhTrDkLbJAmNHiM14SO6aWfCGwT/1M=;
+	s=korg; t=1770216481;
+	bh=/rFtltnl4vnhNfmRrMuVdCcEtvcE5tcTuzLevWlR96Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PvZhaFBfe14yVJwtJz3Dg5NYApvl6mZlMsJT1c8O0zZ3oLq0Pt8kMlTH+O/n+FGSE
-	 8dOIlu7fHxiuh+EsSIV35oArIKme9zBwAG6eElnwod5tFLz15Hs0vxxwvGHhnfTIG3
-	 2oYK6v9K+k8yzeM71ZZb9iazEfXMdfGNCXbV/IE4=
+	b=hpJeidAQqmbTTlgYCf+coeIzhqf3c7qtymsKdI7F0Lg2yJMjK/74M8EPdk1ouUEBb
+	 ZCzoYO05OolNlZ3ESG4dsQ/pfCkgP4Bg7YECTXNHrHVV6G2F2duE1IF7egndblWim5
+	 2KqLdi7vIFed+U4DI3KoOe6DmuItnfBMYwhrOnu8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Haoxiang Li <lihaoxiang@isrc.iscas.ac.cn>,
-	Krzysztof Kozlowski <krzk@kernel.org>
-Subject: [PATCH 5.10 066/161] w1: fix redundant counter decrement in w1_attach_slave_device()
-Date: Wed,  4 Feb 2026 15:38:49 +0100
-Message-ID: <20260204143854.131484291@linuxfoundation.org>
+	gongqi <550230171hxy@gmail.com>,
+	Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Subject: [PATCH 5.10 067/161] Input: i8042 - add quirks for MECHREVO Wujie 15X Pro
+Date: Wed,  4 Feb 2026 15:38:50 +0100
+Message-ID: <20260204143854.166339868@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260204143851.755002596@linuxfoundation.org>
 References: <20260204143851.755002596@linuxfoundation.org>
@@ -50,36 +50,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Haoxiang Li <lihaoxiang@isrc.iscas.ac.cn>
+From: gongqi <550230171hxy@gmail.com>
 
-commit cc8f92e41eb76f450f05234fef2054afc3633100 upstream.
+commit 19a5d9ba6208e9006a2a9d5962aea4d6e427d8ab upstream.
 
-In w1_attach_slave_device(), if __w1_attach_slave_device() fails,
-put_device() -> w1_slave_release() is called to do the cleanup job.
-In w1_slave_release(), sl->family->refcnt and sl->master->slave_count
-have already been decremented. There is no need to decrement twice
-in w1_attach_slave_device().
+The MECHREVO Wujie 15X Pro requires several i8042 quirks to function
+correctly. Specifically, NOMUX, RESET_ALWAYS, NOLOOP, and NOPNP are
+needed to ensure the keyboard and touchpad work reliably.
 
-Fixes: 2c927c0c73fd ("w1: Fix slave count on 1-Wire bus (resend)")
+Signed-off-by: gongqi <550230171hxy@gmail.com>
+Link: https://patch.msgid.link/20260122155501.376199-3-550230171hxy@gmail.com
 Cc: stable@vger.kernel.org
-Signed-off-by: Haoxiang Li <lihaoxiang@isrc.iscas.ac.cn>
-Link: https://patch.msgid.link/20251218111414.564403-1-lihaoxiang@isrc.iscas.ac.cn
-Signed-off-by: Krzysztof Kozlowski <krzk@kernel.org>
+Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/w1/w1.c |    2 --
- 1 file changed, 2 deletions(-)
+ drivers/input/serio/i8042-acpipnpio.h |    7 +++++++
+ 1 file changed, 7 insertions(+)
 
---- a/drivers/w1/w1.c
-+++ b/drivers/w1/w1.c
-@@ -765,8 +765,6 @@ int w1_attach_slave_device(struct w1_mas
- 	if (err < 0) {
- 		dev_err(&dev->dev, "%s: Attaching %s failed.\n", __func__,
- 			 sl->name);
--		dev->slave_count--;
--		w1_family_put(sl->family);
- 		atomic_dec(&sl->master->refcnt);
- 		kfree(sl);
- 		return err;
+--- a/drivers/input/serio/i8042-acpipnpio.h
++++ b/drivers/input/serio/i8042-acpipnpio.h
+@@ -1176,6 +1176,13 @@ static const struct dmi_system_id i8042_
+ 		.driver_data = (void *)(SERIO_QUIRK_NOMUX | SERIO_QUIRK_RESET_ALWAYS |
+ 					SERIO_QUIRK_NOLOOP | SERIO_QUIRK_NOPNP)
+ 	},
++	{
++		.matches = {
++			DMI_MATCH(DMI_BOARD_NAME, "WUJIE Series-X5SP4NAG"),
++		},
++		.driver_data = (void *)(SERIO_QUIRK_NOMUX | SERIO_QUIRK_RESET_ALWAYS |
++					SERIO_QUIRK_NOLOOP | SERIO_QUIRK_NOPNP)
++	},
+ 	/*
+ 	 * A lot of modern Clevo barebones have touchpad and/or keyboard issues
+ 	 * after suspend fixable with nomux + reset + noloop + nopnp. Luckily,
 
 
