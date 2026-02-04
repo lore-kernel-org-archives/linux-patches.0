@@ -1,52 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6BD6A2D8798;
-	Wed,  4 Feb 2026 15:32:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6B2327702D;
+	Wed,  4 Feb 2026 15:32:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770219174; cv=none; b=T3+oqRMrk+2rK4edQPcrJcnuejJqV15PTEjQoWh1NW58nr51tIz5OSJbBlG1S418CpBCV5q+lekxxUNvQ8ERAiXIG3QtugBfiSfCIpNkoOwqsbW0A9jR7UonUyzfm2NGrhQK1BGEibvH3uaVuN7Njmo2Xc0VBC+f4q8THmM++lg=
+	t=1770219177; cv=none; b=FypfUE1QSh5g7aZm2iu/2vupIlDHnE+88Qt0BpM5IpsWn2FMH3VtslsJDIA4jBmuU8ICAZxHoF05Z19bhdQn0a7B5H5Q14EozVODhOAcnX/bg7ryA9QEiHw2RvpEjSHyD7AvUiVez6BhmkweCbmVxRYIxaAVxxhs11pIjazNNk0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770219174; c=relaxed/simple;
-	bh=KVVOQyf2Bv6ZvyhF/5tDXb1jDgI1VUIa30flrdXJ9LI=;
+	s=arc-20240116; t=1770219177; c=relaxed/simple;
+	bh=v7htO4GSCqmKrKy6QRiLaXvn2yz6Iog72WyfcjfjeKM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Jzy8nWMP8TyEvEI6NAGd0kdQTtXCM4mFPatg+PziDi0F95VhTMI+4ZkefIqkwhrL8Sg/06OjJJT3Z0lAgSbRmIFWO0TL7lmlsNHa85KN+SvK9MLMZ+vAifilUNxNj7Gip0k0wH0GS6EptTSIvDniFZXXWWxPsPLr/Ysx0r8kH+0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sFGR6TcT; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tn4qdMS/JPMU8DFbYhUbl3SeZ5yQWHbhFwfYccl7a5ff0vr6Pq+TAGW7q9p00mHhXVkYRQI6n2RenWlmkc7K91bJ4TaoFDjCTOa5QnZ9Mk0InBpQxvUZfKFAlpR6kKyvAA5AtVzHqNhFrn8BLq7kb3JrgPtAsyAXgR8+1nN3cz8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZzY1pNjP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sFGR6TcT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B77DFC116C6;
-	Wed,  4 Feb 2026 15:32:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZzY1pNjP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 513EBC4CEF7;
+	Wed,  4 Feb 2026 15:32:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770219174;
-	bh=KVVOQyf2Bv6ZvyhF/5tDXb1jDgI1VUIa30flrdXJ9LI=;
+	s=korg; t=1770219177;
+	bh=v7htO4GSCqmKrKy6QRiLaXvn2yz6Iog72WyfcjfjeKM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sFGR6TcT2eij0ggvF9MEYPT69fEEK+WkPxIghwUzZZqiKVO9VTTqG84b6B5+2nRJ/
-	 tz1omaizJhA/i35aetLxzBlOlSEQy5jS4za0SbPLyuwzBjeANj49mM6dW5uYHItRcB
-	 GI+P+DDrp8C7Uq2UW1xZS170qXwnt00Dh1mUA/64=
+	b=ZzY1pNjP1C184UwS2TKAj3Q+xuqPsPwxn3fPabYsyebbbGtT6SIDefFoq8O5slhQM
+	 99R2e+yvfkbVWSPyhaj6tnXl3zvxIYyPvsfLKqUfomezxJp9lq2Acl8aArkVv49L2/
+	 T2G8pHQ528ZMKm7mAFk2uLtwt0ktRxdFRcHuKN+k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jane Chu <jane.chu@oracle.com>,
-	"Liam R. Howlett" <Liam.Howlett@oracle.com>,
-	Miaohe Lin <linmiaohe@huawei.com>,
-	Chris Mason <clm@meta.com>,
-	David Hildenbrand <david@kernel.org>,
-	David Rientjes <rientjes@google.com>,
-	Jiaqi Yan <jiaqiyan@google.com>,
-	Lorenzo Stoakes <lorenzo.stoakes@oracle.com>,
-	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
-	Michal Hocko <mhocko@suse.com>,
-	Mike Rapoport <rppt@kernel.org>,
-	Muchun Song <muchun.song@linux.dev>,
-	Naoya Horiguchi <nao.horiguchi@gmail.com>,
-	Oscar Salvador <osalvador@suse.de>,
-	Suren Baghdasaryan <surenb@google.com>,
-	William Roche <william.roche@oracle.com>,
+	Kairui Song <kasong@tencent.com>,
+	Nhat Pham <nphamcs@gmail.com>,
+	Chris Li <chrisl@kernel.org>,
+	Baolin Wang <baolin.wang@linux.alibaba.com>,
+	Baoquan He <bhe@redhat.com>,
+	Barry Song <baohua@kernel.org>,
+	Hugh Dickins <hughd@google.com>,
+	Kemeng Shi <shikemeng@huaweicloud.com>,
 	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.18 088/122] mm/memory-failure: teach kill_accessing_process to accept hugetlb tail page pfn
-Date: Wed,  4 Feb 2026 15:41:10 +0100
-Message-ID: <20260204143855.018435887@linuxfoundation.org>
+Subject: [PATCH 6.18 089/122] mm/shmem, swap: fix race of truncate and swap entry split
+Date: Wed,  4 Feb 2026 15:41:11 +0100
+Message-ID: <20260204143855.054517475@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260204143851.857060534@linuxfoundation.org>
 References: <20260204143851.857060534@linuxfoundation.org>
@@ -65,86 +57,130 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jane Chu <jane.chu@oracle.com>
+From: Kairui Song <kasong@tencent.com>
 
-commit 057a6f2632c956483e2b2628477f0fcd1cd8a844 upstream.
+commit 8a1968bd997f45a9b11aefeabdd1232e1b6c7184 upstream.
 
-When a hugetlb folio is being poisoned again, try_memory_failure_hugetlb()
-passed head pfn to kill_accessing_process(), that is not right.  The
-precise pfn of the poisoned page should be used in order to determine the
-precise vaddr as the SIGBUS payload.
+The helper for shmem swap freeing is not handling the order of swap
+entries correctly.  It uses xa_cmpxchg_irq to erase the swap entry, but it
+gets the entry order before that using xa_get_order without lock
+protection, and it may get an outdated order value if the entry is split
+or changed in other ways after the xa_get_order and before the
+xa_cmpxchg_irq.
 
-This issue has already been taken care of in the normal path, that is,
-hwpoison_user_mappings(), see [1][2].  Further more, for [3] to work
-correctly in the hugetlb repoisoning case, it's essential to inform VM the
-precise poisoned page, not the head page.
+And besides, the order could grow and be larger than expected, and cause
+truncation to erase data beyond the end border.  For example, if the
+target entry and following entries are swapped in or freed, then a large
+folio was added in place and swapped out, using the same entry, the
+xa_cmpxchg_irq will still succeed, it's very unlikely to happen though.
 
-[1] https://lkml.kernel.org/r/20231218135837.3310403-1-willy@infradead.org
-[2] https://lkml.kernel.org/r/20250224211445.2663312-1-jane.chu@oracle.com
-[3] https://lore.kernel.org/lkml/20251116013223.1557158-1-jiaqiyan@google.com/
+To fix that, open code the Xarray cmpxchg and put the order retrieval and
+value checking in the same critical section.  Also, ensure the order won't
+exceed the end border, skip it if the entry goes across the border.
 
-Link: https://lkml.kernel.org/r/20260120232234.3462258-2-jane.chu@oracle.com
-Signed-off-by: Jane Chu <jane.chu@oracle.com>
-Reviewed-by: Liam R. Howlett <Liam.Howlett@oracle.com>
-Acked-by: Miaohe Lin <linmiaohe@huawei.com>
-Cc: Chris Mason <clm@meta.com>
-Cc: David Hildenbrand <david@kernel.org>
-Cc: David Rientjes <rientjes@google.com>
-Cc: Jiaqi Yan <jiaqiyan@google.com>
-Cc: Lorenzo Stoakes <lorenzo.stoakes@oracle.com>
-Cc: Matthew Wilcox (Oracle) <willy@infradead.org>
-Cc: Michal Hocko <mhocko@suse.com>
-Cc: Mike Rapoport <rppt@kernel.org>
-Cc: Muchun Song <muchun.song@linux.dev>
-Cc: Naoya Horiguchi <nao.horiguchi@gmail.com>
-Cc: Oscar Salvador <osalvador@suse.de>
-Cc: Suren Baghdasaryan <surenb@google.com>
-Cc: William Roche <william.roche@oracle.com>
+Skipping large swap entries crosses the end border is safe here.  Shmem
+truncate iterates the range twice, in the first iteration,
+find_lock_entries already filtered such entries, and shmem will swapin the
+entries that cross the end border and partially truncate the folio (split
+the folio or at least zero part of it).  So in the second loop here, if we
+see a swap entry that crosses the end order, it must at least have its
+content erased already.
+
+I observed random swapoff hangs and kernel panics when stress testing
+ZSWAP with shmem.  After applying this patch, all problems are gone.
+
+Link: https://lkml.kernel.org/r/20260120-shmem-swap-fix-v3-1-3d33ebfbc057@tencent.com
+Fixes: 809bc86517cc ("mm: shmem: support large folio swap out")
+Signed-off-by: Kairui Song <kasong@tencent.com>
+Reviewed-by: Nhat Pham <nphamcs@gmail.com>
+Acked-by: Chris Li <chrisl@kernel.org>
+Cc: Baolin Wang <baolin.wang@linux.alibaba.com>
+Cc: Baoquan He <bhe@redhat.com>
+Cc: Barry Song <baohua@kernel.org>
+Cc: Hugh Dickins <hughd@google.com>
+Cc: Kemeng Shi <shikemeng@huaweicloud.com>
 Cc: <stable@vger.kernel.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/memory-failure.c |   14 ++++++++------
- 1 file changed, 8 insertions(+), 6 deletions(-)
+ mm/shmem.c |   45 ++++++++++++++++++++++++++++++++++-----------
+ 1 file changed, 34 insertions(+), 11 deletions(-)
 
---- a/mm/memory-failure.c
-+++ b/mm/memory-failure.c
-@@ -684,6 +684,8 @@ static int check_hwpoisoned_entry(pte_t
- 				unsigned long poisoned_pfn, struct to_kill *tk)
+--- a/mm/shmem.c
++++ b/mm/shmem.c
+@@ -944,17 +944,29 @@ static void shmem_delete_from_page_cache
+  * being freed).
+  */
+ static long shmem_free_swap(struct address_space *mapping,
+-			    pgoff_t index, void *radswap)
++			    pgoff_t index, pgoff_t end, void *radswap)
  {
- 	unsigned long pfn = 0;
-+	unsigned long hwpoison_vaddr;
-+	unsigned long mask;
+-	int order = xa_get_order(&mapping->i_pages, index);
+-	void *old;
++	XA_STATE(xas, &mapping->i_pages, index);
++	unsigned int nr_pages = 0;
++	pgoff_t base;
++	void *entry;
++
++	xas_lock_irq(&xas);
++	entry = xas_load(&xas);
++	if (entry == radswap) {
++		nr_pages = 1 << xas_get_order(&xas);
++		base = round_down(xas.xa_index, nr_pages);
++		if (base < index || base + nr_pages - 1 > end)
++			nr_pages = 0;
++		else
++			xas_store(&xas, NULL);
++	}
++	xas_unlock_irq(&xas);
  
- 	if (pte_present(pte)) {
- 		pfn = pte_pfn(pte);
-@@ -694,10 +696,12 @@ static int check_hwpoisoned_entry(pte_t
- 			pfn = swp_offset_pfn(swp);
- 	}
+-	old = xa_cmpxchg_irq(&mapping->i_pages, index, radswap, NULL, 0);
+-	if (old != radswap)
+-		return 0;
+-	free_swap_and_cache_nr(radix_to_swp_entry(radswap), 1 << order);
++	if (nr_pages)
++		free_swap_and_cache_nr(radix_to_swp_entry(radswap), nr_pages);
  
--	if (!pfn || pfn != poisoned_pfn)
-+	mask = ~((1UL << (shift - PAGE_SHIFT)) - 1);
-+	if (!pfn || pfn != (poisoned_pfn & mask))
- 		return 0;
- 
--	set_to_kill(tk, addr, shift);
-+	hwpoison_vaddr = addr + ((poisoned_pfn - pfn) << PAGE_SHIFT);
-+	set_to_kill(tk, hwpoison_vaddr, shift);
- 	return 1;
+-	return 1 << order;
++	return nr_pages;
  }
  
-@@ -2042,10 +2046,8 @@ retry:
- 	case MF_HUGETLB_FOLIO_PRE_POISONED:
- 	case MF_HUGETLB_PAGE_PRE_POISONED:
- 		rv = -EHWPOISON;
--		if (flags & MF_ACTION_REQUIRED) {
--			folio = page_folio(p);
--			rv = kill_accessing_process(current, folio_pfn(folio), flags);
--		}
-+		if (flags & MF_ACTION_REQUIRED)
-+			rv = kill_accessing_process(current, pfn, flags);
- 		if (res == MF_HUGETLB_PAGE_PRE_POISONED)
- 			action_result(pfn, MF_MSG_ALREADY_POISONED, MF_FAILED);
- 		else
+ /*
+@@ -1106,8 +1118,8 @@ static void shmem_undo_range(struct inod
+ 			if (xa_is_value(folio)) {
+ 				if (unfalloc)
+ 					continue;
+-				nr_swaps_freed += shmem_free_swap(mapping,
+-							indices[i], folio);
++				nr_swaps_freed += shmem_free_swap(mapping, indices[i],
++								  end - 1, folio);
+ 				continue;
+ 			}
+ 
+@@ -1173,12 +1185,23 @@ whole_folios:
+ 			folio = fbatch.folios[i];
+ 
+ 			if (xa_is_value(folio)) {
++				int order;
+ 				long swaps_freed;
+ 
+ 				if (unfalloc)
+ 					continue;
+-				swaps_freed = shmem_free_swap(mapping, indices[i], folio);
++				swaps_freed = shmem_free_swap(mapping, indices[i],
++							      end - 1, folio);
+ 				if (!swaps_freed) {
++					/*
++					 * If found a large swap entry cross the end border,
++					 * skip it as the truncate_inode_partial_folio above
++					 * should have at least zerod its content once.
++					 */
++					order = shmem_confirm_swap(mapping, indices[i],
++								   radix_to_swp_entry(folio));
++					if (order > 0 && indices[i] + (1 << order) > end)
++						continue;
+ 					/* Swap was replaced by page: retry */
+ 					index = indices[i];
+ 					break;
 
 
