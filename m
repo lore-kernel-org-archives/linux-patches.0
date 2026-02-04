@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9779E2C0263;
-	Wed,  4 Feb 2026 14:50:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB4A01E520C;
+	Wed,  4 Feb 2026 14:50:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770216623; cv=none; b=evB/zPGt3Or1bbUTFf/UMvYVpAnLtlYZC3K+LUVnGWdVISvzE+pkd6AVTcUkWrJv31FubkAl9WkFuheHQxlvuz6Vchm/poIGnXrkw3FZhKkZbXaSE9FIYFrwp9YFTXxdUKCuS4+VJ3NJjJvS2EyQRAP99Y2y6K3apnNVwK9NAz4=
+	t=1770216626; cv=none; b=OYpEZJ/YZX82bXi+0Jp33POYCYyvcdBnsDemSIN/05BXg5OlWYL8oIe5c0UkddKfa/HLpg0mU2y5KJVosgutzfNAREWaqylauoFATPV1LBHfAujYJS8sBvBtnQTqj4gl/FaIh0WrobByISHKPzBPKDajVnAzX7yBT436I5Vttjo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770216623; c=relaxed/simple;
-	bh=+D9acfTw+UOarThg/eAiE++XkUMgujvfLHtbPc0J9t0=;
+	s=arc-20240116; t=1770216626; c=relaxed/simple;
+	bh=IfwKdxuXWmuf/+1n9Bp3s+IsG8lcmajhjLfwczTxnbA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UyQtUMSLRMcJSPKSdIs6fh2HdKUNjuhJKq1RQVMIb0QTHoGg2WA3xi4Y0/vWwxPaYr2HuqrhaxqxkDv97Hkj3/dIn6HWIZQPu7cNu124q48xG5cbGyf9AL6hik/F3QzD/v3RmDgXuzsfasKuR5cnvyLhntWLzZkKD89HrWWaGns=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=u4od8URP; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=i0jxLf0SPy80zevlPQDYl3SxOvePGjSSvfBOQGBuAk+7qkIihMlYnu7g4L1po6ir0eqEhRlGvyi4NXr41HfvygjxvVVaJEb5i86CilMvpVBaCkkn8TOZ4hNUhpdTFfGCFowSMdTPcXS2RHEVeM7C4evDQ0VYs5xLjR4mVto2BWc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tYjkIsVL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="u4od8URP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10F2FC4CEF7;
-	Wed,  4 Feb 2026 14:50:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tYjkIsVL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D46AC4CEF7;
+	Wed,  4 Feb 2026 14:50:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770216623;
-	bh=+D9acfTw+UOarThg/eAiE++XkUMgujvfLHtbPc0J9t0=;
+	s=korg; t=1770216626;
+	bh=IfwKdxuXWmuf/+1n9Bp3s+IsG8lcmajhjLfwczTxnbA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=u4od8URPkc56GYLxf5dgMC0hVR5VUHrrCq9KN4hC/sAkbrQaPOhikltXK1X/+hYnD
-	 gXY/HyAAcqYi21s+TZZfG9HcIo/DNcvZvKDKDKRQBgytG0qP42tn5fcrRpzeXgPR9g
-	 SJLPLG9t4y4SoFtpYbzIVvzmiPzuRepvvlRgkivI=
+	b=tYjkIsVLQqt56AfWjCmdL9aAf/oVcdLEVt/tadjQxkMvFuZzcvaErqvs2Q21QOyEl
+	 7y8KrXT576napXqJUCmU65xrSHNPAsXz59ZK3ts22+Rdpxm4P20jS5QO2e8dApCGpu
+	 PRKJpBA4Ry34HCW0GKYEhKSbFZG+EUD6eBWwnDYs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexander Usyskin <alexander.usyskin@intel.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 144/161] mei: trace: treat reg parameter as string
-Date: Wed,  4 Feb 2026 15:40:07 +0100
-Message-ID: <20260204143856.929031980@linuxfoundation.org>
+	Yang Yingliang <yangyingliang@huawei.com>,
+	Alva Lan <alvalan9@foxmail.com>
+Subject: [PATCH 5.10 145/161] driver core: fix potential null-ptr-deref in device_add()
+Date: Wed,  4 Feb 2026 15:40:08 +0100
+Message-ID: <20260204143856.965634095@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260204143851.755002596@linuxfoundation.org>
 References: <20260204143851.755002596@linuxfoundation.org>
@@ -50,101 +50,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexander Usyskin <alexander.usyskin@intel.com>
+From: Yang Yingliang <yangyingliang@huawei.com>
 
-[ Upstream commit 06d5a7afe1d0b47102936d8fba568572c2b4b941 ]
+[ Upstream commit f6837f34a34973ef6600c08195ed300e24e97317 ]
 
-The commit
-afd2627f727b ("tracing: Check "%s" dereference via the field and not the TP_printk format")
-forbids to emit event with a plain char* without a wrapper.
+I got the following null-ptr-deref report while doing fault injection test:
 
-The reg parameter always passed as static string and wrapper
-is not strictly required, contrary to dev parameter.
-Use the string wrapper anyway to check sanity of the reg parameters,
-store it value independently and prevent internal kernel data leaks.
+BUG: kernel NULL pointer dereference, address: 0000000000000058
+CPU: 2 PID: 278 Comm: 37-i2c-ds2482 Tainted: G    B   W        N 6.1.0-rc3+
+RIP: 0010:klist_put+0x2d/0xd0
+Call Trace:
+ <TASK>
+ klist_remove+0xf1/0x1c0
+ device_release_driver_internal+0x196/0x210
+ bus_remove_device+0x1bd/0x240
+ device_add+0xd3d/0x1100
+ w1_add_master_device+0x476/0x490 [wire]
+ ds2482_probe+0x303/0x3e0 [ds2482]
 
-Since some code refactoring has taken place, explicit backporting may
-be needed for kernels older than 6.10.
+This is how it happened:
 
-Cc: stable@vger.kernel.org  # v6.11+
-Fixes: a0a927d06d79 ("mei: me: add io register tracing")
-Signed-off-by: Alexander Usyskin <alexander.usyskin@intel.com>
-Link: https://patch.msgid.link/20260111145125.1754912-1-alexander.usyskin@intel.com
+w1_alloc_dev()
+  // The dev->driver is set to w1_master_driver.
+  memcpy(&dev->dev, device, sizeof(struct device));
+  device_add()
+    bus_add_device()
+    dpm_sysfs_add() // It fails, calls bus_remove_device.
+
+    // error path
+    bus_remove_device()
+      // The dev->driver is not null, but driver is not bound.
+      __device_release_driver()
+        klist_remove(&dev->p->knode_driver) <-- It causes null-ptr-deref.
+
+    // normal path
+    bus_probe_device() // It's not called yet.
+      device_bind_driver()
+
+If dev->driver is set, in the error path after calling bus_add_device()
+in device_add(), bus_remove_device() is called, then the device will be
+detached from driver. But device_bind_driver() is not called yet, so it
+causes null-ptr-deref while access the 'knode_driver'. To fix this, set
+dev->driver to null in the error path before calling bus_remove_device().
+
+Fixes: 57eee3d23e88 ("Driver core: Call device_pm_add() after bus_add_device() in device_add()")
+Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
+Link: https://lore.kernel.org/r/20221205034904.2077765-1-yangyingliang@huawei.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-[ adapted single-argument __assign_str() calls to two-argument form ]
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Alva Lan <alvalan9@foxmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/misc/mei/mei-trace.h |   18 +++++++++---------
- 1 file changed, 9 insertions(+), 9 deletions(-)
+ drivers/base/core.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/misc/mei/mei-trace.h
-+++ b/drivers/misc/mei/mei-trace.h
-@@ -21,18 +21,18 @@ TRACE_EVENT(mei_reg_read,
- 	TP_ARGS(dev, reg, offs, val),
- 	TP_STRUCT__entry(
- 		__string(dev, dev_name(dev))
--		__field(const char *, reg)
-+		__string(reg, reg)
- 		__field(u32, offs)
- 		__field(u32, val)
- 	),
- 	TP_fast_assign(
- 		__assign_str(dev, dev_name(dev))
--		__entry->reg  = reg;
-+		__assign_str(reg, reg)
- 		__entry->offs = offs;
- 		__entry->val = val;
- 	),
- 	TP_printk("[%s] read %s:[%#x] = %#x",
--		  __get_str(dev), __entry->reg, __entry->offs, __entry->val)
-+		  __get_str(dev), __get_str(reg), __entry->offs, __entry->val)
- );
- 
- TRACE_EVENT(mei_reg_write,
-@@ -40,18 +40,18 @@ TRACE_EVENT(mei_reg_write,
- 	TP_ARGS(dev, reg, offs, val),
- 	TP_STRUCT__entry(
- 		__string(dev, dev_name(dev))
--		__field(const char *, reg)
-+		__string(reg, reg)
- 		__field(u32, offs)
- 		__field(u32, val)
- 	),
- 	TP_fast_assign(
- 		__assign_str(dev, dev_name(dev))
--		__entry->reg = reg;
-+		__assign_str(reg, reg)
- 		__entry->offs = offs;
- 		__entry->val = val;
- 	),
- 	TP_printk("[%s] write %s[%#x] = %#x",
--		  __get_str(dev), __entry->reg,  __entry->offs, __entry->val)
-+		  __get_str(dev), __get_str(reg),  __entry->offs, __entry->val)
- );
- 
- TRACE_EVENT(mei_pci_cfg_read,
-@@ -59,18 +59,18 @@ TRACE_EVENT(mei_pci_cfg_read,
- 	TP_ARGS(dev, reg, offs, val),
- 	TP_STRUCT__entry(
- 		__string(dev, dev_name(dev))
--		__field(const char *, reg)
-+		__string(reg, reg)
- 		__field(u32, offs)
- 		__field(u32, val)
- 	),
- 	TP_fast_assign(
- 		__assign_str(dev, dev_name(dev))
--		__entry->reg  = reg;
-+		__assign_str(reg, reg)
- 		__entry->offs = offs;
- 		__entry->val = val;
- 	),
- 	TP_printk("[%s] pci cfg read %s:[%#x] = %#x",
--		  __get_str(dev), __entry->reg, __entry->offs, __entry->val)
-+		  __get_str(dev), __get_str(reg), __entry->offs, __entry->val)
- );
- 
- #endif /* _MEI_TRACE_H_ */
+--- a/drivers/base/core.c
++++ b/drivers/base/core.c
+@@ -3036,6 +3036,7 @@ done:
+ 	device_pm_remove(dev);
+ 	dpm_sysfs_remove(dev);
+  DPMError:
++	dev->driver = NULL;
+ 	bus_remove_device(dev);
+  BusError:
+ 	device_remove_attrs(dev);
 
 
