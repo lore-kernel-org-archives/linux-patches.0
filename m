@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F39D4223323;
-	Wed,  4 Feb 2026 14:53:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 640E927F749;
+	Wed,  4 Feb 2026 14:53:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770216823; cv=none; b=iPhOZK3CVyLneHBBLXDMhyjD67S6XfhITlm4/M4zkAl4PhfvH3OvQ3gl5vTIMH0JMRf6V38PZwoDupBJEGFUo/ybKd6k/vL63ktMjrkT1rVDQTjT+daCoHNR+6GXJNxnS9RjS+m11aH2KNtNxJO4rOTPNYakPi6TxYDdsAcuO10=
+	t=1770216826; cv=none; b=F9msioe3mLWJJEYlDdiFGbGMv2mJMFkJ0fmGp7eBJrLeNQCDwjV2XWDKekwkJfglPXanHCu7f9RG1oPKIJTxdXYbuPpQ91m6iaUHo2nwdUVgCbg4MnxMuP1ALowSbSyHrcm1XaUN5F2qr1wD4eLw6ZdvOOnY9WNEZ6n9y3J3K08=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770216823; c=relaxed/simple;
-	bh=RaWDu2BHUtigv1V6wdi5qocO/zwieVbCTiglU0ZSG1M=;
+	s=arc-20240116; t=1770216826; c=relaxed/simple;
+	bh=g0Q0KXpUqMNgYpwXspCA1ZvISK28ni7cUjbd8Yu45YQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BD5gaT8n/PM6MuL6lUnYlfGVaFrpT7fz+nriFfOzU/qfAXUsyB3zSs+7WBwp0QZ8t191Ulc1kD00A2/oGdgP0ZwccSgqpyBsz6msW/dpwsoonUpi0T+4IZm0Fn5J3uZesr03e2PZNuISop440DFf2RyVLfykqFstWYwz4rYcoGk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UISTYtxr; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Fvphy33PnYcPTO9HUwPSanRDP8GPz94gJJOzmj9i7WbhUeBEaYtVjGU8LZweaUv1Yq2iwvccqbRjpPyunv+AKPNmARVxp562hTrGa2qpHi+VtAelHPd3h725JfJa6fyBYLlZvGfiH/ivqZfPkz+w9Fw7nadNU/wr39cvX1PBSdg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TYdezitF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UISTYtxr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6186EC4CEF7;
-	Wed,  4 Feb 2026 14:53:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TYdezitF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D2A3C4CEF7;
+	Wed,  4 Feb 2026 14:53:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770216822;
-	bh=RaWDu2BHUtigv1V6wdi5qocO/zwieVbCTiglU0ZSG1M=;
+	s=korg; t=1770216825;
+	bh=g0Q0KXpUqMNgYpwXspCA1ZvISK28ni7cUjbd8Yu45YQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UISTYtxrICM9npqB1pKasL7t2K7VLXvX7/53nmHYKUPuMEDg3fLI/Jv2NbTdHLlUV
-	 SXV0M2mztd2RQ5+6MslE2BJHeRVb3Zjk8so3XvUXkb0e33wu5jd18V7I9cGbF5IJnF
-	 6xDIUAS1/QiepCy1eduvxW82Nk/iYwq4Jdc1cRbw=
+	b=TYdezitFRNC/iFsq0ADcLIe8E8uorrSyRNrSB4DM8ba4DW/vf9f3gDt9h/18WnP7x
+	 TFUOKmxkiUp+GT+PovnmUVxlbriGZeR3QiGd6F3qM/O9ZrAe2s+qRvcCyUCdh0LnnO
+	 PsWDn4KhTCvGaN93gEjwVyTJyoPF89ywy8ThiMgw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kent.russell@amd.com,
-	"Mario Limonciello (AMD)" <superm1@kernel.org>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 5.15 041/206] drm/amd: Clean up kfd node on surprise disconnect
-Date: Wed,  4 Feb 2026 15:37:52 +0100
-Message-ID: <20260204143859.691255047@linuxfoundation.org>
+	Dave Airlie <airlied@redhat.com>,
+	Lyude Paul <lyude@redhat.com>
+Subject: [PATCH 5.15 042/206] drm/nouveau/disp/nv50-: Set lock_core in curs507a_prepare
+Date: Wed,  4 Feb 2026 15:37:53 +0100
+Message-ID: <20260204143859.726506932@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260204143858.193781818@linuxfoundation.org>
 References: <20260204143858.193781818@linuxfoundation.org>
@@ -51,46 +50,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mario Limonciello (AMD) <superm1@kernel.org>
+From: Lyude Paul <lyude@redhat.com>
 
-commit 28695ca09d326461f8078332aa01db516983e8a2 upstream.
+commit 9e9bc6be0fa0b6b6b73f4f831f3b77716d0a8d9e upstream.
 
-When an eGPU is unplugged the KFD topology should also be destroyed
-for that GPU. This never happens because the fini_sw callbacks never
-get to run. Run them manually before calling amdgpu_device_ip_fini_early()
-when a device has already been disconnected.
+For a while, I've been seeing a strange issue where some (usually not all)
+of the display DMA channels will suddenly hang, particularly when there is
+a visible cursor on the screen that is being frequently updated, and
+especially when said cursor happens to go between two screens. While this
+brings back lovely memories of fixing Intel Skylake bugs, I would quite
+like to fix it :).
 
-This location is intentionally chosen to make sure that the kfd locking
-refcount doesn't get incremented unintentionally.
+It turns out the problem that's happening here is that we're managing to
+reach nv50_head_flush_set() in our atomic commit path without actually
+holding nv50_disp->mutex. This means that cursor updates happening in
+parallel (along with any other atomic updates that need to use the core
+channel) will race with eachother, which eventually causes us to corrupt
+the pushbuffer - leading to a plethora of various GSP errors, usually:
 
-Cc: kent.russell@amd.com
-Closes: https://community.frame.work/t/amd-egpu-on-linux/8691/33
-Signed-off-by: Mario Limonciello (AMD) <superm1@kernel.org>
-Reviewed-by: Kent Russell <kent.russell@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 6a23e7b4332c10f8b56c33a9c5431b52ecff9aab)
-Cc: stable@vger.kernel.org
+  nouveau 0000:c1:00.0: gsp: Xid:56 CMDre 00000000 00000218 00102680 00000004 00800003
+  nouveau 0000:c1:00.0: gsp: Xid:56 CMDre 00000000 0000021c 00040509 00000004 00000001
+  nouveau 0000:c1:00.0: gsp: Xid:56 CMDre 00000000 00000000 00000000 00000001 00000001
+
+The reason this is happening is because generally we check whether we need
+to set nv50_atom->lock_core at the end of nv50_head_atomic_check().
+However, curs507a_prepare is called from the fb_prepare callback, which
+happens after the atomic check phase. As a result, this can lead to commits
+that both touch the core channel but also don't grab nv50_disp->mutex.
+
+So, fix this by making sure that we set nv50_atom->lock_core in
+cus507a_prepare().
+
+Reviewed-by: Dave Airlie <airlied@redhat.com>
+Signed-off-by: Lyude Paul <lyude@redhat.com>
+Fixes: 1590700d94ac ("drm/nouveau/kms/nv50-: split each resource type into their own source files")
+Cc: <stable@vger.kernel.org> # v4.18+
+Link: https://patch.msgid.link/20251219215344.170852-2-lyude@redhat.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_device.c |    8 ++++++++
- 1 file changed, 8 insertions(+)
+ drivers/gpu/drm/nouveau/dispnv50/curs507a.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
-@@ -3999,6 +3999,14 @@ void amdgpu_device_fini_hw(struct amdgpu
+--- a/drivers/gpu/drm/nouveau/dispnv50/curs507a.c
++++ b/drivers/gpu/drm/nouveau/dispnv50/curs507a.c
+@@ -84,6 +84,7 @@ curs507a_prepare(struct nv50_wndw *wndw,
+ 		asyh->curs.handle = handle;
+ 		asyh->curs.offset = offset;
+ 		asyh->set.curs = asyh->curs.visible;
++		nv50_atom(asyh->state.state)->lock_core = true;
+ 	}
+ }
  
- 	amdgpu_irq_fini_hw(adev);
- 
-+	/*
-+	 * device went through surprise hotplug; we need to destroy topology
-+	 * before ip_fini_early to prevent kfd locking refcount issues by calling
-+	 * amdgpu_amdkfd_suspend()
-+	 */
-+	if (drm_dev_is_unplugged(adev_to_drm(adev)))
-+		amdgpu_amdkfd_device_fini_sw(adev);
-+
- 	amdgpu_device_ip_fini_early(adev);
- 
- 	amdgpu_gart_dummy_page_fini(adev);
 
 
