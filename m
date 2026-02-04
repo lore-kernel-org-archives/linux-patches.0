@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E5E642189D;
-	Wed,  4 Feb 2026 15:20:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98EF142189D;
+	Wed,  4 Feb 2026 15:20:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770218424; cv=none; b=uapKxciFeQZESsPBB5+L4P2U3MgX8I56EY0QOTnwqG+Y4r52Uv6+cQyKRik9V3+TKj63rnZ7X5knBIFv0quj+edKqkj59PLvvZJ0YRgnMI/cZc+D8pDztvbOgKp5BFJoUKglWXY2rukH08Ral+MsUqPrtdrmggV2YrOKAbrKu1s=
+	t=1770218427; cv=none; b=HQ0FuoBM+kOaKRUIGwllcVH51TDUllhKca8WAqxkCsaLcU2o0KHF+KhOFa1kykyVXKTyJCY3MKpTkWBNF/uCdHuJg22eqBZXvaqmC7cs5nHTLp6doSkUMr+oqdJHtYPvHaanYX/chkUCqX+p3XiPfRZd1JSS8Xuge8b7xPKqE1k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770218424; c=relaxed/simple;
-	bh=rneGumcGLSl/rPcDY+0xI+N0i8FGhcC5zWWACzQf7n0=;
+	s=arc-20240116; t=1770218427; c=relaxed/simple;
+	bh=a3SRKLzudoySewPGRKeBVAChmQXEqFvEPCW0q5aWl3Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=drjJp1vl1evfit2rApAl5dEs9jSGEitmRg3yYxBTj4bRUkJsfw6DvIvGOgt/L+lGwaAE0A6WzH3xr5KxZClnXM0VjrWSEKr89xbIqqowGaB4Nfb6MCu404PCaYewpd0mgnlCmr7BG2LKgZ8j6e1di6mHKAD8vzZ1j9Ixz2i4tcc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cCu5PlD4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Cffl+QKd8M1i6q6giAjcVwmELgJMAffveBg1Bbek/89tZjCZvTbD9tK4QaA7DSC49oUD18n7YLV9L3pnB1z2xXt0+A/xhx5hOt6Fjmv3jDn7yW+q+lnKy6uhDK+DNCmdvvK04+JVbYipDiO/QUh4HjQHl0J+LfTrRxGiODjGzZw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xi3tv0av; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cCu5PlD4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B861EC4CEF7;
-	Wed,  4 Feb 2026 15:20:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xi3tv0av"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D86DC4CEF7;
+	Wed,  4 Feb 2026 15:20:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770218424;
-	bh=rneGumcGLSl/rPcDY+0xI+N0i8FGhcC5zWWACzQf7n0=;
+	s=korg; t=1770218427;
+	bh=a3SRKLzudoySewPGRKeBVAChmQXEqFvEPCW0q5aWl3Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cCu5PlD40LFjraH9Jpt+90uQwwTKRjzpkVwMAqpJfMR0m1xTlm0N0aXkOfMHz6ww5
-	 62NDUIKVtgDQM82gXSGGtXXzYEUWHampTUYicwHuqOhfqHOaOuw2wuFFagxEtB9B70
-	 wTbxdixajvEk4FzQVCu8U0b6pbFxzzNAuNdHgeIU=
+	b=xi3tv0av3dyaEY4ednzPP1S1Q6d7K5wP+3wGFl1WVYfjaWU2BMPVCDurO6duCAmiL
+	 fPfxDY8ZWl4W5R/J4dUCYcZA61DglQo5wgcHbDRoHU+taOg+pXpA/YjAxFK+wt6jXU
+	 dguYrA4Y/1jKfcw7geJqAa1azDN8+RmqV6mbvmP8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fabio Estevam <festevam@gmail.com>,
-	Shengjiu Wang <shengjiu.wang@gmail.com>,
-	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 6.6 26/72] ASoC: fsl: imx-card: Do not force slot width to sample width
-Date: Wed,  4 Feb 2026 15:40:29 +0100
-Message-ID: <20260204143846.573371497@linuxfoundation.org>
+	Haoxiang Li <lihaoxiang@isrc.iscas.ac.cn>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>
+Subject: [PATCH 6.6 27/72] scsi: be2iscsi: Fix a memory leak in beiscsi_boot_get_sinfo()
+Date: Wed,  4 Feb 2026 15:40:30 +0100
+Message-ID: <20260204143846.610151401@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260204143845.603454952@linuxfoundation.org>
 References: <20260204143845.603454952@linuxfoundation.org>
@@ -51,47 +50,32 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fabio Estevam <festevam@gmail.com>
+From: Haoxiang Li <lihaoxiang@isrc.iscas.ac.cn>
 
-commit 9210f5ff6318163835d9e42ee68006be4da0f531 upstream.
+commit 4747bafaa50115d9667ece446b1d2d4aba83dc7f upstream.
 
-imx-card currently sets the slot width to the physical sample width
-for I2S links. This breaks controllers that use fixed-width slots
-(e.g. 32-bit FIFO words), causing the unused bits in the slot to
-contain undefined data when playing 16-bit streams.
+If nonemb_cmd->va fails to be allocated, free the allocation previously
+made by alloc_mcc_wrb().
 
-Do not override the slot width in the machine driver and let the CPU
-DAI select an appropriate default instead. This matches the behavior
-of simple-audio-card and avoids embedding controller-specific policy
-in the machine driver.
-
-On an i.MX8MP-based board using SAI as the I2S master with 32-bit slots,
-playing 16-bit audio resulted in spurious frequencies and an incorrect
-SAI data waveform, as the slot width was forced to 16 bits. After this
-change, audio artifacts are eliminated and the 16-bit samples correctly
-occupy the first half of the 32-bit slot, with the remaining bits padded
-with zeroes.
-
+Fixes: 50a4b824be9e ("scsi: be2iscsi: Fix to make boot discovery non-blocking")
 Cc: stable@vger.kernel.org
-Fixes: aa736700f42f ("ASoC: imx-card: Add imx-card machine driver")
-Signed-off-by: Fabio Estevam <festevam@gmail.com>
-Acked-by: Shengjiu Wang <shengjiu.wang@gmail.com>
-Link: https://patch.msgid.link/20260118205030.1532696-1-festevam@gmail.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Haoxiang Li <lihaoxiang@isrc.iscas.ac.cn>
+Link: https://patch.msgid.link/20251213083643.301240-1-lihaoxiang@isrc.iscas.ac.cn
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/soc/fsl/imx-card.c |    1 -
- 1 file changed, 1 deletion(-)
+ drivers/scsi/be2iscsi/be_mgmt.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/sound/soc/fsl/imx-card.c
-+++ b/sound/soc/fsl/imx-card.c
-@@ -314,7 +314,6 @@ static int imx_aif_hw_params(struct snd_
- 			      SND_SOC_DAIFMT_PDM;
- 		} else {
- 			slots = 2;
--			slot_width = params_physical_width(params);
- 			fmt = (rtd->dai_link->dai_fmt & ~SND_SOC_DAIFMT_FORMAT_MASK) |
- 			      SND_SOC_DAIFMT_I2S;
- 		}
+--- a/drivers/scsi/be2iscsi/be_mgmt.c
++++ b/drivers/scsi/be2iscsi/be_mgmt.c
+@@ -1025,6 +1025,7 @@ unsigned int beiscsi_boot_get_sinfo(stru
+ 					      &nonemb_cmd->dma,
+ 					      GFP_KERNEL);
+ 	if (!nonemb_cmd->va) {
++		free_mcc_wrb(ctrl, tag);
+ 		mutex_unlock(&ctrl->mbox_lock);
+ 		return 0;
+ 	}
 
 
