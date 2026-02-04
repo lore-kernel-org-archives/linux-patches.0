@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB8FF2D8764;
-	Wed,  4 Feb 2026 15:05:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA0C8423A71;
+	Wed,  4 Feb 2026 15:05:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770217556; cv=none; b=RpIkpWitLATdvbD3IZ0YuLlqoyhZmtidKg4BDzQht842t17YXdAreef2ahRpx5Xa3puT+h9ROX95n0mrre/oPb68JByPH3LXZaDNytEMmBQjqEFaZjLgp3Y2tB4+qkUOio1lAcGqJt3ThY2tMzxTfSGcNZ1ugXsmQwp3n7PQUK8=
+	t=1770217559; cv=none; b=pMTm+NyjG6wD0OolWrClGxf2FjTvyxV1dvYNrloSiBvjyklLKqQvLR93n0M0z1xuKHRn4ILxmic5u31NMUoEfIn/ryXNHs/Fz3V9A1+etJreXK2Mzilbw5qqidl062frLVxa8lnSbzdMKXVGS2e0+gn1GwsJPKo1PSjPXv2gc6w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770217556; c=relaxed/simple;
-	bh=LAo/nwXj3ErhybTyYKfSOwFR/XT05yfwDs/2dNCqNlc=;
+	s=arc-20240116; t=1770217559; c=relaxed/simple;
+	bh=p9TWvBUtE1JjcQA8+MWrotYSz6i7RBqD/J0Oj0Pp4Q8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Hk7Ca/U+SW2VCD4okX4MwmXYsoug0aNf8GNRpkcD5oyNtrQRE4E65XKs0BBMs2HLe57MWsVaOpX/3dcuMkuPfrJI1fVYElnd/ODl8KTAmV8rVAtgQ1M9Ju9YP2KVLHVgP4ywazULrju5oy4jNsGaBqbyL/bcD81Mp3qax9WfLrw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YNXov7kT; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ncoh8fYGm3RgMmbYpcO2eutLEkxFhhFFxO3ezQRaiXNFQGwWcCZfNYWp+e4N4Ip+ZkvtmNfDoiUIIesc304SReVq68Tu3epsC7DPDXBPM6fGQt/uPLZujAdmAdlJalrsQBcdkcPoGO36crwKmkKOu/k/9ciiAmKFWl7cgoBpyLc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gbd6g9RN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YNXov7kT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C5CDC4CEF7;
-	Wed,  4 Feb 2026 15:05:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gbd6g9RN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2EC77C4CEF7;
+	Wed,  4 Feb 2026 15:05:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770217556;
-	bh=LAo/nwXj3ErhybTyYKfSOwFR/XT05yfwDs/2dNCqNlc=;
+	s=korg; t=1770217559;
+	bh=p9TWvBUtE1JjcQA8+MWrotYSz6i7RBqD/J0Oj0Pp4Q8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YNXov7kTF249ld8kCzHlcHcCMV4ibMnQ9WkiYYyyL+qBJv4g3Oxg61Vw+yZh7e5Ne
-	 FNyHltyPXTRAHVCBMpE0IyKHEh6sQ3K+wTBzylPEUhghm21HlvSadek7BOrNnLHhWU
-	 cLeFaQzTzaUe0+G/6b5SZySBjdQI1lckNqzb+fM8=
+	b=gbd6g9RNchD38KqmgzOssasRUaUKpbwEtTuSjC2hV82k8eSbTX6DPDPQ8IfjlVULA
+	 hyIf6+3nvPA1DzV71f/OT5q0XPxPEO0rI7hX/goKA/pam2QOUwTjpixILZ/XbGPyod
+	 vve7DNCO8iE9lTTUIJSzT9PsI4iGqjvjQvyq9KNI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qu Wenruo <wqu@suse.com>,
-	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
 	Josef Bacik <josef@toxicpanda.com>,
+	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
+	Boris Burkov <boris@bur.io>,
 	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 016/280] btrfs: move flush related definitions to space-info.h
-Date: Wed,  4 Feb 2026 15:36:30 +0100
-Message-ID: <20260204143910.214944805@linuxfoundation.org>
+Subject: [PATCH 6.1 017/280] btrfs: store fs_info in space_info
+Date: Wed,  4 Feb 2026 15:36:31 +0100
+Message-ID: <20260204143910.251856299@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260204143909.614719725@linuxfoundation.org>
 References: <20260204143909.614719725@linuxfoundation.org>
@@ -53,216 +53,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Josef Bacik <josef@toxicpanda.com>
+From: Boris Burkov <boris@bur.io>
 
-[ Upstream commit f1e5c6185ca166cde0c7c2eeeab5d233ef315140 ]
+[ Upstream commit 42f620aec182f62ee72e3fce41cb3353951b3508 ]
 
-This code is used in space-info.c, move the definitions to space-info.h.
+This is handy when computing space_info dynamic reclaim thresholds where
+we do not have access to a block group. We could add it to the various
+functions as a parameter, but it seems reasonable for space_info to have
+an fs_info pointer.
 
-Reviewed-by: Qu Wenruo <wqu@suse.com>
+Reviewed-by: Josef Bacik <josef@toxicpanda.com>
 Reviewed-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
-Signed-off-by: Josef Bacik <josef@toxicpanda.com>
+Signed-off-by: Boris Burkov <boris@bur.io>
 Reviewed-by: David Sterba <dsterba@suse.com>
 Signed-off-by: David Sterba <dsterba@suse.com>
 Stable-dep-of: a11224a016d6 ("btrfs: fix memory leaks in create_space_info() error paths")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/ctree.h         | 59 ----------------------------------------
- fs/btrfs/delayed-inode.c |  1 +
- fs/btrfs/inode-item.c    |  1 +
- fs/btrfs/props.c         |  1 +
- fs/btrfs/relocation.c    |  1 +
- fs/btrfs/space-info.h    | 59 ++++++++++++++++++++++++++++++++++++++++
- 6 files changed, 63 insertions(+), 59 deletions(-)
+ fs/btrfs/space-info.c | 1 +
+ fs/btrfs/space-info.h | 1 +
+ 2 files changed, 2 insertions(+)
 
-diff --git a/fs/btrfs/ctree.h b/fs/btrfs/ctree.h
-index da8986e0c4222..bd84a8b774a68 100644
---- a/fs/btrfs/ctree.h
-+++ b/fs/btrfs/ctree.h
-@@ -2925,65 +2925,6 @@ int btrfs_inc_extent_ref(struct btrfs_trans_handle *trans,
+diff --git a/fs/btrfs/space-info.c b/fs/btrfs/space-info.c
+index bede72f3dffc3..069df2ebd1ca5 100644
+--- a/fs/btrfs/space-info.c
++++ b/fs/btrfs/space-info.c
+@@ -230,6 +230,7 @@ static int create_space_info(struct btrfs_fs_info *info, u64 flags)
+ 	if (!space_info)
+ 		return -ENOMEM;
  
- void btrfs_clear_space_info_full(struct btrfs_fs_info *info);
- 
--/*
-- * Different levels for to flush space when doing space reservations.
-- *
-- * The higher the level, the more methods we try to reclaim space.
-- */
--enum btrfs_reserve_flush_enum {
--	/* If we are in the transaction, we can't flush anything.*/
--	BTRFS_RESERVE_NO_FLUSH,
--
--	/*
--	 * Flush space by:
--	 * - Running delayed inode items
--	 * - Allocating a new chunk
--	 */
--	BTRFS_RESERVE_FLUSH_LIMIT,
--
--	/*
--	 * Flush space by:
--	 * - Running delayed inode items
--	 * - Running delayed refs
--	 * - Running delalloc and waiting for ordered extents
--	 * - Allocating a new chunk
--	 */
--	BTRFS_RESERVE_FLUSH_EVICT,
--
--	/*
--	 * Flush space by above mentioned methods and by:
--	 * - Running delayed iputs
--	 * - Committing transaction
--	 *
--	 * Can be interrupted by a fatal signal.
--	 */
--	BTRFS_RESERVE_FLUSH_DATA,
--	BTRFS_RESERVE_FLUSH_FREE_SPACE_INODE,
--	BTRFS_RESERVE_FLUSH_ALL,
--
--	/*
--	 * Pretty much the same as FLUSH_ALL, but can also steal space from
--	 * global rsv.
--	 *
--	 * Can be interrupted by a fatal signal.
--	 */
--	BTRFS_RESERVE_FLUSH_ALL_STEAL,
--};
--
--enum btrfs_flush_state {
--	FLUSH_DELAYED_ITEMS_NR	=	1,
--	FLUSH_DELAYED_ITEMS	=	2,
--	FLUSH_DELAYED_REFS_NR	=	3,
--	FLUSH_DELAYED_REFS	=	4,
--	FLUSH_DELALLOC		=	5,
--	FLUSH_DELALLOC_WAIT	=	6,
--	FLUSH_DELALLOC_FULL	=	7,
--	ALLOC_CHUNK		=	8,
--	ALLOC_CHUNK_FORCE	=	9,
--	RUN_DELAYED_IPUTS	=	10,
--	COMMIT_TRANS		=	11,
--};
--
- int btrfs_subvolume_reserve_metadata(struct btrfs_root *root,
- 				     struct btrfs_block_rsv *rsv,
- 				     int nitems, bool use_global_rsv);
-diff --git a/fs/btrfs/delayed-inode.c b/fs/btrfs/delayed-inode.c
-index 052112d0daa74..214168868ac08 100644
---- a/fs/btrfs/delayed-inode.c
-+++ b/fs/btrfs/delayed-inode.c
-@@ -14,6 +14,7 @@
- #include "qgroup.h"
- #include "locking.h"
- #include "inode-item.h"
-+#include "space-info.h"
- 
- #define BTRFS_DELAYED_WRITEBACK		512
- #define BTRFS_DELAYED_BACKGROUND	128
-diff --git a/fs/btrfs/inode-item.c b/fs/btrfs/inode-item.c
-index 5add022d3534f..ce5c51ffdc0d0 100644
---- a/fs/btrfs/inode-item.c
-+++ b/fs/btrfs/inode-item.c
-@@ -8,6 +8,7 @@
- #include "disk-io.h"
- #include "transaction.h"
- #include "print-tree.h"
-+#include "space-info.h"
- 
- struct btrfs_inode_ref *btrfs_find_name_in_backref(struct extent_buffer *leaf,
- 						   int slot,
-diff --git a/fs/btrfs/props.c b/fs/btrfs/props.c
-index 055a631276ce1..07f62e3ba6a51 100644
---- a/fs/btrfs/props.c
-+++ b/fs/btrfs/props.c
-@@ -10,6 +10,7 @@
- #include "ctree.h"
- #include "xattr.h"
- #include "compression.h"
-+#include "space-info.h"
- 
- #define BTRFS_PROP_HANDLERS_HT_BITS 8
- static DEFINE_HASHTABLE(prop_handlers_ht, BTRFS_PROP_HANDLERS_HT_BITS);
-diff --git a/fs/btrfs/relocation.c b/fs/btrfs/relocation.c
-index 3fdf5519336f9..795df859cdbfc 100644
---- a/fs/btrfs/relocation.c
-+++ b/fs/btrfs/relocation.c
-@@ -27,6 +27,7 @@
- #include "subpage.h"
- #include "zoned.h"
- #include "inode-item.h"
-+#include "space-info.h"
- 
- /*
-  * Relocation overview
++	space_info->fs_info = info;
+ 	for (i = 0; i < BTRFS_NR_RAID_TYPES; i++)
+ 		INIT_LIST_HEAD(&space_info->block_groups[i]);
+ 	init_rwsem(&space_info->groups_sem);
 diff --git a/fs/btrfs/space-info.h b/fs/btrfs/space-info.h
-index 99ce3225dd59d..fea2f93674e7c 100644
+index fea2f93674e7c..d6b34f2738b53 100644
 --- a/fs/btrfs/space-info.h
 +++ b/fs/btrfs/space-info.h
-@@ -5,6 +5,65 @@
+@@ -65,6 +65,7 @@ enum btrfs_flush_state {
+ };
  
- #include "volumes.h"
- 
-+/*
-+ * Different levels for to flush space when doing space reservations.
-+ *
-+ * The higher the level, the more methods we try to reclaim space.
-+ */
-+enum btrfs_reserve_flush_enum {
-+	/* If we are in the transaction, we can't flush anything.*/
-+	BTRFS_RESERVE_NO_FLUSH,
-+
-+	/*
-+	 * Flush space by:
-+	 * - Running delayed inode items
-+	 * - Allocating a new chunk
-+	 */
-+	BTRFS_RESERVE_FLUSH_LIMIT,
-+
-+	/*
-+	 * Flush space by:
-+	 * - Running delayed inode items
-+	 * - Running delayed refs
-+	 * - Running delalloc and waiting for ordered extents
-+	 * - Allocating a new chunk
-+	 */
-+	BTRFS_RESERVE_FLUSH_EVICT,
-+
-+	/*
-+	 * Flush space by above mentioned methods and by:
-+	 * - Running delayed iputs
-+	 * - Committing transaction
-+	 *
-+	 * Can be interrupted by a fatal signal.
-+	 */
-+	BTRFS_RESERVE_FLUSH_DATA,
-+	BTRFS_RESERVE_FLUSH_FREE_SPACE_INODE,
-+	BTRFS_RESERVE_FLUSH_ALL,
-+
-+	/*
-+	 * Pretty much the same as FLUSH_ALL, but can also steal space from
-+	 * global rsv.
-+	 *
-+	 * Can be interrupted by a fatal signal.
-+	 */
-+	BTRFS_RESERVE_FLUSH_ALL_STEAL,
-+};
-+
-+enum btrfs_flush_state {
-+	FLUSH_DELAYED_ITEMS_NR	= 1,
-+	FLUSH_DELAYED_ITEMS	= 2,
-+	FLUSH_DELAYED_REFS_NR	= 3,
-+	FLUSH_DELAYED_REFS	= 4,
-+	FLUSH_DELALLOC		= 5,
-+	FLUSH_DELALLOC_WAIT	= 6,
-+	FLUSH_DELALLOC_FULL	= 7,
-+	ALLOC_CHUNK		= 8,
-+	ALLOC_CHUNK_FORCE	= 9,
-+	RUN_DELAYED_IPUTS	= 10,
-+	COMMIT_TRANS		= 11,
-+};
-+
  struct btrfs_space_info {
++	struct btrfs_fs_info *fs_info;
  	spinlock_t lock;
  
+ 	u64 total_bytes;	/* total bytes in the space,
 -- 
 2.51.0
 
