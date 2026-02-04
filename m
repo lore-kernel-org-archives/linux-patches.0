@@ -1,43 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD7C140FDAE;
-	Wed,  4 Feb 2026 15:26:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C83F221F17;
+	Wed,  4 Feb 2026 15:27:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770218818; cv=none; b=FA6Q9oLd+nrv1a/A5D0Xm37vRJuuiaklmXbc8nW1FfbPdND7umWvoUXNYzZVZ786J11U79dOHkhEthVmykJU3yt6iLi6epMi9nhEQSe40DB7k8rD98betsSZ9YOISqsEGHW8GNM53qEEQsnE6HMyqbLNxuqj0OiGHWN6OCflkes=
+	t=1770218822; cv=none; b=P0SnraWPL/fkEn33TdV3iVZ6q1I5dIGVGkEBl8RDAndk5S0bO3vUMQcshBwQdapQ9rRcobiHoTnpvRfWuzBH+7qSGMyTv2W/kvGupXCWHfCwnQ/2rqT+BXe1prypdkPTZbTnX+JDVzwewn4yY9en+YAzsFRxMCcYTa6OgQwnbWc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770218818; c=relaxed/simple;
-	bh=dNzBueu0BvOGI4iv+j9+qrCTWhhPMrYqALkAqPvPPlU=;
+	s=arc-20240116; t=1770218822; c=relaxed/simple;
+	bh=bT4iEhSzxuJIucQ4a0k/c35KLR3gaQscE3rrro9xjyY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JThKaSU+UVoyOqRFo2g0ml+W3HvcBJ5qdRjpqAEaTeZVNGT5A/u2yghsJ8Wd56HY3x2I3YoLZvT65zWTDIXQPHQPS9GqqlxzR6ITR5E94LB9dxftW7hr8sglayCJH9z/Yz2Ky2XM9jTWLW+bZZifrk9NrU1wJ4sUnJtmj0OTf0U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Cbg7EKWf; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Qnsnne2ZY00hQjOXGgtBlPRVqc5bLaGZbgEFwMHgzRuTkKVANpQpcM6E3Zagq3zSWWrz0Ht60el5N3A44xc5mLWz4PelOBWQyJeL3bAcSBeKmh5zMcKNxp0ry+MINwq08rlw98klbEwaca0tOP2suV57n4yj3nTbXwPRQzCSDz4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iY6lBx+Y; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Cbg7EKWf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 094AAC4CEF7;
-	Wed,  4 Feb 2026 15:26:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iY6lBx+Y"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 614DEC4CEF7;
+	Wed,  4 Feb 2026 15:27:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770218818;
-	bh=dNzBueu0BvOGI4iv+j9+qrCTWhhPMrYqALkAqPvPPlU=;
+	s=korg; t=1770218822;
+	bh=bT4iEhSzxuJIucQ4a0k/c35KLR3gaQscE3rrro9xjyY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Cbg7EKWfqeWv0ic2A1Z3bU7gKV+CC4kiYm1JBf5GdZexqpoHOO4l8Ezklg1aHoZaB
-	 IOPLKVkYV5KjNQGK5TYrn8CXGZ6aG4MkUUxuQQMp5qBpmmyc52y4r5jH/KQGAysPl8
-	 1nd31Q7TiYHvXsT8MaEx/7R5/M2f+ko/8Bh8YqNc=
+	b=iY6lBx+YhmIokilgbHWhgsPBMU6aBxnTN6zGKhIp1NRDg2+qX8ubV9ZW4ciUi4iiY
+	 mHTvTcrC5YfoLeVnPwiJoK5aZHwgns7MLLvWFKRCbRdo5mz3XY+avrJ2WX+TLTCgIO
+	 mEiBR5kqejvXn0BWqaTDShoxpp7GAiZxLZ8v8S0g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+6182afad5045e6703b3d@syzkaller.appspotmail.com,
-	David Howells <dhowells@redhat.com>,
-	Marc Dionne <marc.dionne@auristor.com>,
-	Simon Horman <horms@kernel.org>,
-	linux-afs@lists.infradead.org,
-	stable@kernel.org,
-	Jakub Kicinski <kuba@kernel.org>,
+	Thomas Fourier <fourier.thomas@gmail.com>,
+	Namjae Jeon <linkinjeon@kernel.org>,
+	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 70/87] rxrpc: Fix data-race warning and potential load/store tearing
-Date: Wed,  4 Feb 2026 15:41:08 +0100
-Message-ID: <20260204143849.436984832@linuxfoundation.org>
+Subject: [PATCH 6.12 71/87] ksmbd: smbd: fix dma_unmap_sg() nents
+Date: Wed,  4 Feb 2026 15:41:09 +0100
+Message-ID: <20260204143849.473431118@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260204143846.906385641@linuxfoundation.org>
 References: <20260204143846.906385641@linuxfoundation.org>
@@ -56,209 +52,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Howells <dhowells@redhat.com>
+From: Thomas Fourier <fourier.thomas@gmail.com>
 
-[ Upstream commit 5d5fe8bcd331f1e34e0943ec7c18432edfcf0e8b ]
+[ Upstream commit 98e3e2b561bc88f4dd218d1c05890672874692f6 ]
 
-Fix the following:
+The dma_unmap_sg() functions should be called with the same nents as the
+dma_map_sg(), not the value the map function returned.
 
-        BUG: KCSAN: data-race in rxrpc_peer_keepalive_worker / rxrpc_send_data_packet
-
-which is reporting an issue with the reads and writes to ->last_tx_at in:
-
-        conn->peer->last_tx_at = ktime_get_seconds();
-
-and:
-
-        keepalive_at = peer->last_tx_at + RXRPC_KEEPALIVE_TIME;
-
-The lockless accesses to these to values aren't actually a problem as the
-read only needs an approximate time of last transmission for the purposes
-of deciding whether or not the transmission of a keepalive packet is
-warranted yet.
-
-Also, as ->last_tx_at is a 64-bit value, tearing can occur on a 32-bit
-arch.
-
-Fix both of these by switching to an unsigned int for ->last_tx_at and only
-storing the LSW of the time64_t.  It can then be reconstructed at need
-provided no more than 68 years has elapsed since the last transmission.
-
-Fixes: ace45bec6d77 ("rxrpc: Fix firewall route keepalive")
-Reported-by: syzbot+6182afad5045e6703b3d@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/r/695e7cfb.050a0220.1c677c.036b.GAE@google.com/
-Signed-off-by: David Howells <dhowells@redhat.com>
-cc: Marc Dionne <marc.dionne@auristor.com>
-cc: Simon Horman <horms@kernel.org>
-cc: linux-afs@lists.infradead.org
-cc: stable@kernel.org
-Link: https://patch.msgid.link/1107124.1768903985@warthog.procyon.org.uk
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-[ different struct fields (peer->mtu, peer->srtt_us, peer->rto_us) and different output.c code structure ]
+Fixes: 0626e6641f6b ("cifsd: add server handler for central processing and tranport layers")
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Thomas Fourier <fourier.thomas@gmail.com>
+Acked-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Steve French <stfrench@microsoft.com>
+[ Context ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/rxrpc/ar-internal.h |    9 ++++++++-
- net/rxrpc/conn_event.c  |    2 +-
- net/rxrpc/output.c      |   10 +++++-----
- net/rxrpc/peer_event.c  |   17 ++++++++++++++++-
- net/rxrpc/proc.c        |    4 ++--
- net/rxrpc/rxkad.c       |    4 ++--
- 6 files changed, 34 insertions(+), 12 deletions(-)
+ fs/smb/server/transport_rdma.c |   15 +++++++--------
+ 1 file changed, 7 insertions(+), 8 deletions(-)
 
---- a/net/rxrpc/ar-internal.h
-+++ b/net/rxrpc/ar-internal.h
-@@ -335,7 +335,7 @@ struct rxrpc_peer {
- 	struct hlist_head	error_targets;	/* targets for net error distribution */
- 	struct rb_root		service_conns;	/* Service connections */
- 	struct list_head	keepalive_link;	/* Link in net->peer_keepalive[] */
--	time64_t		last_tx_at;	/* Last time packet sent here */
-+	unsigned int		last_tx_at;	/* Last time packet sent here (time64_t LSW) */
- 	seqlock_t		service_conn_lock;
- 	spinlock_t		lock;		/* access lock */
- 	unsigned int		if_mtu;		/* interface MTU for this peer */
-@@ -1161,6 +1161,13 @@ void rxrpc_transmit_one(struct rxrpc_cal
- void rxrpc_input_error(struct rxrpc_local *, struct sk_buff *);
- void rxrpc_peer_keepalive_worker(struct work_struct *);
+--- a/fs/smb/server/transport_rdma.c
++++ b/fs/smb/server/transport_rdma.c
+@@ -1108,14 +1108,12 @@ static int get_sg_list(void *buf, int si
  
-+/* Update the last transmission time on a peer for keepalive purposes. */
-+static inline void rxrpc_peer_mark_tx(struct rxrpc_peer *peer)
-+{
-+	/* To avoid tearing on 32-bit systems, we only keep the LSW. */
-+	WRITE_ONCE(peer->last_tx_at, ktime_get_seconds());
-+}
-+
- /*
-  * peer_object.c
-  */
---- a/net/rxrpc/conn_event.c
-+++ b/net/rxrpc/conn_event.c
-@@ -180,7 +180,7 @@ void rxrpc_conn_retransmit_call(struct r
- 	}
- 
- 	ret = kernel_sendmsg(conn->local->socket, &msg, iov, ioc, len);
--	conn->peer->last_tx_at = ktime_get_seconds();
-+	rxrpc_peer_mark_tx(conn->peer);
- 	if (ret < 0)
- 		trace_rxrpc_tx_fail(chan->call_debug_id, serial, ret,
- 				    rxrpc_tx_point_call_final_resend);
---- a/net/rxrpc/output.c
-+++ b/net/rxrpc/output.c
-@@ -209,7 +209,7 @@ static void rxrpc_send_ack_packet(struct
- 	iov_iter_kvec(&msg.msg_iter, WRITE, txb->kvec, txb->nr_kvec, txb->len);
- 	rxrpc_local_dont_fragment(conn->local, false);
- 	ret = do_udp_sendmsg(conn->local->socket, &msg, txb->len);
--	call->peer->last_tx_at = ktime_get_seconds();
-+	rxrpc_peer_mark_tx(call->peer);
- 	if (ret < 0) {
- 		trace_rxrpc_tx_fail(call->debug_id, txb->serial, ret,
- 				    rxrpc_tx_point_call_ack);
-@@ -310,7 +310,7 @@ int rxrpc_send_abort_packet(struct rxrpc
- 
- 	iov_iter_kvec(&msg.msg_iter, WRITE, iov, 1, sizeof(pkt));
- 	ret = do_udp_sendmsg(conn->local->socket, &msg, sizeof(pkt));
--	conn->peer->last_tx_at = ktime_get_seconds();
-+	rxrpc_peer_mark_tx(conn->peer);
- 	if (ret < 0)
- 		trace_rxrpc_tx_fail(call->debug_id, serial, ret,
- 				    rxrpc_tx_point_call_abort);
-@@ -486,7 +486,7 @@ retry:
- 	 */
- 	rxrpc_inc_stat(call->rxnet, stat_tx_data_send);
- 	ret = do_udp_sendmsg(conn->local->socket, &msg, len);
--	conn->peer->last_tx_at = ktime_get_seconds();
-+	rxrpc_peer_mark_tx(conn->peer);
- 
- 	if (ret < 0) {
- 		rxrpc_inc_stat(call->rxnet, stat_tx_data_send_fail);
-@@ -573,7 +573,7 @@ void rxrpc_send_conn_abort(struct rxrpc_
- 
- 	trace_rxrpc_tx_packet(conn->debug_id, &whdr, rxrpc_tx_point_conn_abort);
- 
--	conn->peer->last_tx_at = ktime_get_seconds();
-+	rxrpc_peer_mark_tx(conn->peer);
+ static int get_mapped_sg_list(struct ib_device *device, void *buf, int size,
+ 			      struct scatterlist *sg_list, int nentries,
+-			      enum dma_data_direction dir)
++			      enum dma_data_direction dir, int *npages)
+ {
+-	int npages;
+-
+-	npages = get_sg_list(buf, size, sg_list, nentries);
+-	if (npages < 0)
++	*npages = get_sg_list(buf, size, sg_list, nentries);
++	if (*npages < 0)
+ 		return -EINVAL;
+-	return ib_dma_map_sg(device, sg_list, npages, dir);
++	return ib_dma_map_sg(device, sg_list, *npages, dir);
  }
  
- /*
-@@ -692,7 +692,7 @@ void rxrpc_send_keepalive(struct rxrpc_p
- 		trace_rxrpc_tx_packet(peer->debug_id, &whdr,
- 				      rxrpc_tx_point_version_keepalive);
+ static int post_sendmsg(struct smb_direct_transport *t,
+@@ -1184,12 +1182,13 @@ static int smb_direct_post_send_data(str
+ 	for (i = 0; i < niov; i++) {
+ 		struct ib_sge *sge;
+ 		int sg_cnt;
++		int npages;
  
--	peer->last_tx_at = ktime_get_seconds();
-+	rxrpc_peer_mark_tx(peer);
- 	_leave("");
- }
- 
---- a/net/rxrpc/peer_event.c
-+++ b/net/rxrpc/peer_event.c
-@@ -225,6 +225,21 @@ static void rxrpc_distribute_error(struc
- }
- 
- /*
-+ * Reconstruct the last transmission time.  The difference calculated should be
-+ * valid provided no more than ~68 years elapsed since the last transmission.
-+ */
-+static time64_t rxrpc_peer_get_tx_mark(const struct rxrpc_peer *peer, time64_t base)
-+{
-+	s32 last_tx_at = READ_ONCE(peer->last_tx_at);
-+	s32 base_lsw = base;
-+	s32 diff = last_tx_at - base_lsw;
-+
-+	diff = clamp(diff, -RXRPC_KEEPALIVE_TIME, RXRPC_KEEPALIVE_TIME);
-+
-+	return diff + base;
-+}
-+
-+/*
-  * Perform keep-alive pings.
-  */
- static void rxrpc_peer_keepalive_dispatch(struct rxrpc_net *rxnet,
-@@ -252,7 +267,7 @@ static void rxrpc_peer_keepalive_dispatc
- 		spin_unlock_bh(&rxnet->peer_hash_lock);
- 
- 		if (use) {
--			keepalive_at = peer->last_tx_at + RXRPC_KEEPALIVE_TIME;
-+			keepalive_at = rxrpc_peer_get_tx_mark(peer, base) + RXRPC_KEEPALIVE_TIME;
- 			slot = keepalive_at - base;
- 			_debug("%02x peer %u t=%d {%pISp}",
- 			       cursor, peer->debug_id, slot, &peer->srx.transport);
---- a/net/rxrpc/proc.c
-+++ b/net/rxrpc/proc.c
-@@ -299,13 +299,13 @@ static int rxrpc_peer_seq_show(struct se
- 	now = ktime_get_seconds();
- 	seq_printf(seq,
- 		   "UDP   %-47.47s %-47.47s %3u"
--		   " %3u %5u %6llus %8u %8u\n",
-+		   " %3u %5u %6ds %8u %8u\n",
- 		   lbuff,
- 		   rbuff,
- 		   refcount_read(&peer->ref),
- 		   peer->cong_ssthresh,
- 		   peer->mtu,
--		   now - peer->last_tx_at,
-+		   (s32)now - (s32)READ_ONCE(peer->last_tx_at),
- 		   peer->srtt_us >> 3,
- 		   peer->rto_us);
- 
---- a/net/rxrpc/rxkad.c
-+++ b/net/rxrpc/rxkad.c
-@@ -676,7 +676,7 @@ static int rxkad_issue_challenge(struct
- 		return -EAGAIN;
- 	}
- 
--	conn->peer->last_tx_at = ktime_get_seconds();
-+	rxrpc_peer_mark_tx(conn->peer);
- 	trace_rxrpc_tx_packet(conn->debug_id, &whdr,
- 			      rxrpc_tx_point_rxkad_challenge);
- 	_leave(" = 0");
-@@ -734,7 +734,7 @@ static int rxkad_send_response(struct rx
- 		return -EAGAIN;
- 	}
- 
--	conn->peer->last_tx_at = ktime_get_seconds();
-+	rxrpc_peer_mark_tx(conn->peer);
- 	_leave(" = 0");
- 	return 0;
- }
+ 		sg_init_table(sg, SMB_DIRECT_MAX_SEND_SGES - 1);
+ 		sg_cnt = get_mapped_sg_list(t->cm_id->device,
+ 					    iov[i].iov_base, iov[i].iov_len,
+ 					    sg, SMB_DIRECT_MAX_SEND_SGES - 1,
+-					    DMA_TO_DEVICE);
++					    DMA_TO_DEVICE, &npages);
+ 		if (sg_cnt <= 0) {
+ 			pr_err("failed to map buffer\n");
+ 			ret = -ENOMEM;
+@@ -1197,7 +1196,7 @@ static int smb_direct_post_send_data(str
+ 		} else if (sg_cnt + msg->num_sge > SMB_DIRECT_MAX_SEND_SGES) {
+ 			pr_err("buffer not fitted into sges\n");
+ 			ret = -E2BIG;
+-			ib_dma_unmap_sg(t->cm_id->device, sg, sg_cnt,
++			ib_dma_unmap_sg(t->cm_id->device, sg, npages,
+ 					DMA_TO_DEVICE);
+ 			goto err;
+ 		}
 
 
