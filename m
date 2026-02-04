@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D49C221F17;
-	Wed,  4 Feb 2026 14:47:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD91E244675;
+	Wed,  4 Feb 2026 14:47:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770216443; cv=none; b=cfWrbZcmCf+YWsRMlr840zFX++tLq3N3rLy6dXPWzNUnij0VP/alF5nEYJfbbQeyL4GjjU6yQ0IwpN9sVZ5Ut9mh6rXVyrJbGhBaaNA72cf2Qso7OWEHLWYHjG5LL1MYVcL3mjs/dj/Ctd+m5wimmfR8F80t8KqOcr+0mUmcrQs=
+	t=1770216446; cv=none; b=Z/WWf5Pge81mWbLi99GJGUHSfslJudUoI+on2buyVcVbc5/jfiqSmSm7kPRRoF+ZW2RIRjKyPI9T2xMtuU2TdAsDruDpm1WSg5PCjq8QLDHc36uynsKZY/9Sz5asQNY4+qp9vGFskazcZoNgNqkoivVBsSJOhKQbLpe1oS6miKg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770216443; c=relaxed/simple;
-	bh=AQziWlub5coi3zQtgC74WXTzuCewkJfkNz504EwV200=;
+	s=arc-20240116; t=1770216446; c=relaxed/simple;
+	bh=qvor09EpHF619Q/TgH+TxMBwYWWtnfHzqcgYLS7XVqM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=pbGQxIrJYZvqVMgkweMuxt9t9qLCpZwvDrGsLaX8lLlvv4wBwL4e/xTz7xD/2rdPxjP+T2MN36Z4B2jLKeDRB8bp9nqZzd0HmYXCu65Q/UEv3lQDIG+xpWYEPTeR572Yfah5WI6PTBtpWkZgzYCAtIDG52XCeOs39CJ8gsk0p9s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QHMD0zKx; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ITbpdN73jl1NNs8OwgkakBzmFzEd00InCOjWi+/O7bPd+4XfmWK6Z3BsZfq2TodZVAHE9kpLNoMjEgaEBycU3Opv7HQj7RmHqHdPjRqxU1vkGNdm7rI4iMjz8dNANu8y+odVzBzNjvme7adbbWnyrKDPI99eGRfyEjqMjq+8anc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tl3gSYNc; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QHMD0zKx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C3D4CC4CEF7;
-	Wed,  4 Feb 2026 14:47:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tl3gSYNc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F0ADC4CEF7;
+	Wed,  4 Feb 2026 14:47:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770216443;
-	bh=AQziWlub5coi3zQtgC74WXTzuCewkJfkNz504EwV200=;
+	s=korg; t=1770216446;
+	bh=qvor09EpHF619Q/TgH+TxMBwYWWtnfHzqcgYLS7XVqM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QHMD0zKxrQWUWzZNw555t+Jgb6YiuP9miUwkLkbA7QoEcNgAz8GKIbd5Bmcvzd05e
-	 Lba+h2zXiyGpKNfIlqNEyzr9tgvSGH0ou95VZeUrTELl65dvuUqRZOl8mT5ijCWyEC
-	 zSK6mngZL4km2pplsbdLE4Ur4yVL5W6/E+z5v/PI=
+	b=tl3gSYNc/eCbZ325eYDWqPgX9YGcqq71myhDqg2viiMLVMHUafw+l1r1MOz7nDyNg
+	 muks9gUwSWdtP1JCvIa4gzcKtwZHzhvFOBGY3rpARcwmJ+mdEYOnu4N1Nnq2I+RcEg
+	 Y6k4dxJAJarzFW87pUeIsIaO/0dHMem2ORpZPMdo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andy Shevchenko <andriy.shevchenko@intel.com>,
-	=?UTF-8?q?Nuno=20S=C3=A1?= <nuno.sa@analog.com>,
-	David Lechner <dlechner@baylibre.com>,
-	Tomas Melin <tomas.melin@vaisala.com>,
+	Pei Xiao <xiaopei01@kylinos.cn>,
 	Stable@vger.kernel.org,
 	Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Subject: [PATCH 5.10 089/161] iio: adc: ad9467: fix ad9434 vref mask
-Date: Wed,  4 Feb 2026 15:39:12 +0100
-Message-ID: <20260204143854.948893701@linuxfoundation.org>
+Subject: [PATCH 5.10 090/161] iio: adc: at91-sama5d2_adc: Fix potential use-after-free in sama5d2_adc driver
+Date: Wed,  4 Feb 2026 15:39:13 +0100
+Message-ID: <20260204143854.984685082@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260204143851.755002596@linuxfoundation.org>
 References: <20260204143851.755002596@linuxfoundation.org>
@@ -48,44 +45,54 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Tomas Melin <tomas.melin@vaisala.com>
+From: Pei Xiao <xiaopei01@kylinos.cn>
 
-commit 92452b1760ff2d1d411414965d4d06f75e1bda9a upstream.
+commit dbdb442218cd9d613adeab31a88ac973f22c4873 upstream.
 
-The mask setting is 5 bits wide for the ad9434
-(ref. data sheet register 0x18 FLEX_VREF). Apparently the settings
-from ad9265 were copied by mistake when support for the device was added
-to the driver.
+at91_adc_interrupt can call at91_adc_touch_data_handler function
+to start the work by schedule_work(&st->touch_st.workq).
 
-Fixes: 4606d0f4b05f ("iio: adc: ad9467: add support for AD9434 high-speed ADC")
-Reviewed-by: Andy Shevchenko <andriy.shevchenko@intel.com>
-Reviewed-by: Nuno Sá <nuno.sa@analog.com>
-Reviewed-by: David Lechner <dlechner@baylibre.com>
-Signed-off-by: Tomas Melin <tomas.melin@vaisala.com>
+If we remove the module which will call at91_adc_remove to
+make cleanup, it will free indio_dev through iio_device_unregister but
+quite a bit later. While the work mentioned above will be used. The
+sequence of operations that may lead to a UAF bug is as follows:
+
+CPU0                                      CPU1
+
+                                     | at91_adc_workq_handler
+at91_adc_remove                      |
+iio_device_unregister(indio_dev)     |
+//free indio_dev a bit later         |
+                                     | iio_push_to_buffers(indio_dev)
+                                     | //use indio_dev
+
+Fix it by ensuring that the work is canceled before proceeding with
+the cleanup in at91_adc_remove.
+
+Fixes: 23ec2774f1cc ("iio: adc: at91-sama5d2_adc: add support for position and pressure channels")
+Signed-off-by: Pei Xiao <xiaopei01@kylinos.cn>
 Cc: <Stable@vger.kernel.org>
 Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/adc/ad9467.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/iio/adc/at91-sama5d2_adc.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/iio/adc/ad9467.c
-+++ b/drivers/iio/adc/ad9467.c
-@@ -90,7 +90,7 @@
+--- a/drivers/iio/adc/at91-sama5d2_adc.c
++++ b/drivers/iio/adc/at91-sama5d2_adc.c
+@@ -1891,6 +1891,7 @@ static int at91_adc_remove(struct platfo
+ 	struct at91_adc_state *st = iio_priv(indio_dev);
  
- #define CHIPID_AD9434			0x6A
- #define AD9434_DEF_OUTPUT_MODE		0x00
--#define AD9434_REG_VREF_MASK		0xC0
-+#define AD9434_REG_VREF_MASK		GENMASK(4, 0)
+ 	iio_device_unregister(indio_dev);
++	cancel_work_sync(&st->touch_st.workq);
  
- /*
-  * Analog Devices AD9467 16-Bit, 200/250 MSPS ADC
+ 	at91_adc_dma_disable(pdev);
+ 
 
 
