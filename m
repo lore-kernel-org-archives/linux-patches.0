@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37187270575;
-	Wed,  4 Feb 2026 14:45:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5D731C5D77;
+	Wed,  4 Feb 2026 14:45:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770216325; cv=none; b=pCzJczRRjdVbCjsyPPsipYE211yz7d6ywflkGNZWaIoHCOO5Wrwt8mjyV3YDOxKD1uLZP/nDGxWLxiNrJCbQ/sreOVMt4HvRQC6wHVAhYkvW9QKJdrUZqxu8r9CuWqVhmWQkQ8JBcxFkJTNAX9vxx2j6uPqP0D2VZibr2G+SBpU=
+	t=1770216328; cv=none; b=Uk8pwqNeSrxFjQ5nOXiT+67G6DICKl48TNMFWg9KbnCHT+s0R6eGtK0Tdhp7sPP4naeUXNHrjhyG+imvfitcFl6WdblZ6T0fuDh9b13A/CEhY4ULOGzr5/ewmIxSrJYx3C8sBaJYZaRIZh6+FXN14YBg1Ycv7QDhwbW/1bjVvuA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770216325; c=relaxed/simple;
-	bh=tn5G3xYcTvCqVflj7hfuFi+dXUP7Z3Kd2aUnpqlihEI=;
+	s=arc-20240116; t=1770216328; c=relaxed/simple;
+	bh=TGL1fpaAh/w+zt7IZxpimUMAq/Y2OKTanYquiyTwqwM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=U0HS7qYSOTzsU+bJSCmuf48SCcXSkpZSx5qeBEcFLhXyUt84yrSte9nWwMhBpLhXKiz+ku/iHy1zxkwcdDMrS7Kzqbtbw17hXEJUUyxJAaV0r7hvUqT0fZVLt1DiYGiLtnmPK3nsJum0V4xSZUQJtB7/ymKd/dbRXAgMB+1gmjU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yULSCNRH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Tzn1PFDxkIS1XqGXZIZMsttSVvMWiWQf69dpyo1CWeKC2+6Ig1T+Sc4JTqHSlLvEefJqGtEUsJPcWfBJxhcIRu2uMXxcz4K7dPqDHiDArkXOCc1u7zqQ1BY33MrQzSj4MNECmLtPGWavi/QTBv1OMC1S7eCrzE4yhDcuo8lCD3k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=umQhAprk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yULSCNRH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B5462C4CEF7;
-	Wed,  4 Feb 2026 14:45:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="umQhAprk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 03D7EC4CEF7;
+	Wed,  4 Feb 2026 14:45:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770216325;
-	bh=tn5G3xYcTvCqVflj7hfuFi+dXUP7Z3Kd2aUnpqlihEI=;
+	s=korg; t=1770216328;
+	bh=TGL1fpaAh/w+zt7IZxpimUMAq/Y2OKTanYquiyTwqwM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yULSCNRHSaiDUzCoakAa4cHVja/o+Ikx01lWyXarZugRfUjfRTHxRPnWVkDKNhMgT
-	 OXUrFvKsUT0DuEFiXZfv8JuBxrtC94f94+aLlQB3QuiC0NL3xSns+4Q9KB6MVh/8L/
-	 sWNi+BzCYf7MC36G01Dy1Ln8nlTWz7SqtRZuAVWo=
+	b=umQhAprksoCX74o2GfMMQKEs0Ysc3gkx3jDeX9f0Q+Tdee5LK1byzig/RDu5BshgM
+	 JB/RA2mBEyIdfQ93TiABYBxezo4wx/Wxh6SiqA8YtPjnZ4M7L+u5sc0/+wd2uekovB
+	 dazaTDWvxqf/92stlqzPlyFdlQJEWzmKIwuh9w1U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ulrich Mohr <u.mohr@semex-engcon.com>,
-	Johan Hovold <johan@kernel.org>
-Subject: [PATCH 5.10 027/161] USB: serial: option: add Telit LE910 MBIM composition
-Date: Wed,  4 Feb 2026 15:38:10 +0100
-Message-ID: <20260204143852.739444759@linuxfoundation.org>
+	Raju Rangoju <Raju.Rangoju@amd.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 054/161] amd-xgbe: avoid misleading per-packet error log
+Date: Wed,  4 Feb 2026 15:38:37 +0100
+Message-ID: <20260204143853.705132474@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260204143851.755002596@linuxfoundation.org>
 References: <20260204143851.755002596@linuxfoundation.org>
@@ -50,62 +51,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ulrich Mohr <u.mohr@semex-engcon.com>
+From: Raju Rangoju <Raju.Rangoju@amd.com>
 
-commit 8af4274ab5999831f4757dfd5bd11665ba3b1569 upstream.
+[ Upstream commit c158f985cf6c2c36c99c4f67af2ff3f5ebe09f8f ]
 
-Add support for Telit LE910 module when operating in MBIM composition
-with additional ttys. This USB product ID is used by the module
-when AT#USBCFG is set to 7.
+On the receive path, packet can be damaged because of buffer
+overflow in Rx FIFO. Avoid misleading per-packet error log when
+packet->errors is set, this can flood the log. Instead, rely on the
+standard rtnl_link_stats64 stats.
 
-0x1252: MBIM + tty(NMEA) + tty(MODEM) + tty(MODEM) + SAP
-
-T:  Bus=01 Lev=01 Prnt=01 Port=01 Cnt=01 Dev#=  2 Spd=480  MxCh= 0
-D:  Ver= 2.00 Cls=ef(misc ) Sub=02 Prot=01 MxPS=64 #Cfgs=  1
-P:  Vendor=1bc7 ProdID=1252 Rev=03.18
-S:  Manufacturer=Android
-S:  Product=LE910C1-EU
-S:  SerialNumber=0123456789ABCDEF
-C:  #Ifs= 6 Cfg#= 1 Atr=a0 MxPwr=500mA
-I:  If#= 0 Alt= 0 #EPs= 1 Cls=02(commc) Sub=0e Prot=00 Driver=cdc_mbim
-E:  Ad=82(I) Atr=03(Int.) MxPS=  64 Ivl=32ms
-I:  If#= 1 Alt= 1 #EPs= 2 Cls=0a(data ) Sub=00 Prot=02 Driver=cdc_mbim
-E:  Ad=01(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=81(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-I:  If#= 2 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
-E:  Ad=02(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=83(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=84(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
-I:  If#= 3 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
-E:  Ad=03(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=85(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=86(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
-I:  If#= 4 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
-E:  Ad=04(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=87(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=88(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
-I:  If#= 5 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
-E:  Ad=05(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=89(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=8a(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
-
-Signed-off-by: Ulrich Mohr <u.mohr@semex-engcon.com>
-Cc: stable@vger.kernel.org
-Signed-off-by: Johan Hovold <johan@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: c5aa9e3b8156 ("amd-xgbe: Initial AMD 10GbE platform driver")
+Signed-off-by: Raju Rangoju <Raju.Rangoju@amd.com>
+Link: https://patch.msgid.link/20260114163037.2062606-1-Raju.Rangoju@amd.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/serial/option.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/net/ethernet/amd/xgbe/xgbe-drv.c | 5 +----
+ 1 file changed, 1 insertion(+), 4 deletions(-)
 
---- a/drivers/usb/serial/option.c
-+++ b/drivers/usb/serial/option.c
-@@ -1505,6 +1505,7 @@ static const struct usb_device_id option
- 	{ USB_DEVICE_INTERFACE_CLASS(TELIT_VENDOR_ID, 0x1231, 0xff),	/* Telit LE910Cx (RNDIS) */
- 	  .driver_info = NCTRL(2) | RSVD(3) },
- 	{ USB_DEVICE_AND_INTERFACE_INFO(TELIT_VENDOR_ID, 0x1250, 0xff, 0x00, 0x00) },	/* Telit LE910Cx (rmnet) */
-+	{ USB_DEVICE_INTERFACE_CLASS(TELIT_VENDOR_ID, 0x1252, 0xff) },	/* Telit LE910Cx (MBIM) */
- 	{ USB_DEVICE(TELIT_VENDOR_ID, 0x1260),
- 	  .driver_info = NCTRL(0) | RSVD(1) | RSVD(2) },
- 	{ USB_DEVICE(TELIT_VENDOR_ID, 0x1261),
+diff --git a/drivers/net/ethernet/amd/xgbe/xgbe-drv.c b/drivers/net/ethernet/amd/xgbe/xgbe-drv.c
+index 9cd6dac033630..3de7674a84675 100644
+--- a/drivers/net/ethernet/amd/xgbe/xgbe-drv.c
++++ b/drivers/net/ethernet/amd/xgbe/xgbe-drv.c
+@@ -2112,7 +2112,7 @@ static void xgbe_get_stats64(struct net_device *netdev,
+ 	s->multicast = pstats->rxmulticastframes_g;
+ 	s->rx_length_errors = pstats->rxlengtherror;
+ 	s->rx_crc_errors = pstats->rxcrcerror;
+-	s->rx_fifo_errors = pstats->rxfifooverflow;
++	s->rx_over_errors = pstats->rxfifooverflow;
+ 
+ 	s->tx_packets = pstats->txframecount_gb;
+ 	s->tx_bytes = pstats->txoctetcount_gb;
+@@ -2568,9 +2568,6 @@ static int xgbe_rx_poll(struct xgbe_channel *channel, int budget)
+ 			goto read_again;
+ 
+ 		if (error || packet->errors) {
+-			if (packet->errors)
+-				netif_err(pdata, rx_err, netdev,
+-					  "error in received packet\n");
+ 			dev_kfree_skb(skb);
+ 			goto next_packet;
+ 		}
+-- 
+2.51.0
+
 
 
