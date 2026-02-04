@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D61CC2D8763;
-	Wed,  4 Feb 2026 15:06:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4619425CDB;
+	Wed,  4 Feb 2026 15:06:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770217572; cv=none; b=AD1wyYUqvSvsCJzKEB4D5wy8YxIusFP6OkGbZBQo/3YNeXCynnA16V9+M8gPkFYTvQIUWn4qGhV6S5mWnGnBm58CaZkOf0hjTK0YXcGFNeRhpSMzKeACoWYFppt0M+YbMEJodwoxO02v8YGTDDmeyB1TG/GmKnRAGjauz8K7MRg=
+	t=1770217575; cv=none; b=ri7xmbsjPrpcPKpX1wp9RmMS1PUqM9/S9qgavwdVLmVcMPkeTKxAIlx6oRRlP4CotFdjZkVGHW/UupOrkdUZrG4MORGk3c8+asPyvaI7puK15I3ZszqEjVPowCZiTiLcAZstv1uEFKVrjrRmPoGn+PDwJOhxMCtd+e0oMbSu5bk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770217572; c=relaxed/simple;
-	bh=UZ9sl+46k5ydKGmxj6z4H6+Wdb79WXs9vHJ9iKOCoWE=;
+	s=arc-20240116; t=1770217575; c=relaxed/simple;
+	bh=vIwPzEau/rTd/gX+3vH1d44tmWY8qyC7QIrnlYxaPQ4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tjjLzlOPKCCXyHNWbkHFv+4ZFl8jldyxl3jWT+4Adl2cCKO914GYPQPOWMmULnsX872G/jY/iPDceI7XN6wwghFMAMYNwAVaZcPa+Q55vimGXqUQcPl1uBMvBi0wYRlpTjzhHcLiYaJhoTnP6TMEy2ytS9VYU+TvzOqW0WGQTfs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JOco2Cr4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SLSNGiRPtz0WyxAC1A9AlhABYo9tWffLZn7ih058cBcIUYKkwXG7KRQeOlw5AWXNoJEiHyPf8oDXmxjHEWwe6GXM1zrerCzozSPDKHGL+xhC427n5bwsoINjsywBcB+ROCFFwdfK+uzJzYMm7WltI6IQokb4m4WY8FxXARH/wpk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kkrpIEwJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JOco2Cr4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 16397C4CEF7;
-	Wed,  4 Feb 2026 15:06:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kkrpIEwJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 37C9AC19423;
+	Wed,  4 Feb 2026 15:06:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770217572;
-	bh=UZ9sl+46k5ydKGmxj6z4H6+Wdb79WXs9vHJ9iKOCoWE=;
+	s=korg; t=1770217575;
+	bh=vIwPzEau/rTd/gX+3vH1d44tmWY8qyC7QIrnlYxaPQ4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JOco2Cr4wVZN930dbkPK93JGhkYqSzy4S0GPlMkyn+QvE14rz4FKLmFUJ26Ah/wNF
-	 8lDNUZlYr1Y7GDyF6xQisC73NmMBj85kKTF7SZNvWtF7c6Yd11mCz/6FuUqeZYhnUD
-	 yeJ0N+bcBqAVLburRrbwMGJ9l1+mY7xMj0MAAXXU=
+	b=kkrpIEwJLP2Ur8G2t2/zrLcZZv5Gd3tM44W2q8RmP9KdVM/OwxL5e3p4bgkK6jira
+	 tFSDQuAZrufgPK1SMlfRMBBk2jtvh5+wRaoOatF4+eoO+5FtCzb6mr7A+GoeXNo73i
+	 ABczieiBXjF9lGjh4q6mwLeis2hxyQnUhiBXDqXU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qu Wenruo <wqu@suse.com>,
-	Jiasheng Jiang <jiashengjiangcool@gmail.com>,
-	David Sterba <dsterba@suse.com>,
+	syzbot+7182fbe91e58602ec1fe@syzkaller.appspotmail.com,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 021/280] btrfs: fix memory leaks in create_space_info() error paths
-Date: Wed,  4 Feb 2026 15:36:35 +0100
-Message-ID: <20260204143910.394895454@linuxfoundation.org>
+Subject: [PATCH 6.1 012/280] macvlan: fix possible UAF in macvlan_forward_source()
+Date: Wed,  4 Feb 2026 15:36:26 +0100
+Message-ID: <20260204143910.069738713@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260204143909.614719725@linuxfoundation.org>
 References: <20260204143909.614719725@linuxfoundation.org>
@@ -52,59 +52,106 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiasheng Jiang <jiashengjiangcool@gmail.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit a11224a016d6d1d46a4d9b6573244448a80d4d7f ]
+[ Upstream commit 7470a7a63dc162f07c26dbf960e41ee1e248d80e ]
 
-In create_space_info(), the 'space_info' object is allocated at the
-beginning of the function. However, there are two error paths where the
-function returns an error code without freeing the allocated memory:
+Add RCU protection on (struct macvlan_source_entry)->vlan.
 
-1. When create_space_info_sub_group() fails in zoned mode.
-2. When btrfs_sysfs_add_space_info_type() fails.
+Whenever macvlan_hash_del_source() is called, we must clear
+entry->vlan pointer before RCU grace period starts.
 
-In both cases, 'space_info' has not yet been added to the
-fs_info->space_info list, resulting in a memory leak. Fix this by
-adding an error handling label to kfree(space_info) before returning.
+This allows macvlan_forward_source() to skip over
+entries queued for freeing.
 
-Fixes: 2be12ef79fe9 ("btrfs: Separate space_info create/update")
-Reviewed-by: Qu Wenruo <wqu@suse.com>
-Signed-off-by: Jiasheng Jiang <jiashengjiangcool@gmail.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Note that macvlan_dev are already RCU protected, as they
+are embedded in a standard netdev (netdev_priv(ndev)).
+
+Fixes: 79cf79abce71 ("macvlan: add source mode")
+Reported-by: syzbot+7182fbe91e58602ec1fe@syzkaller.appspotmail.com
+https: //lore.kernel.org/netdev/695fb1e8.050a0220.1c677c.039f.GAE@google.com/T/#u
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Link: https://patch.msgid.link/20260108133651.1130486-1-edumazet@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/space-info.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ drivers/net/macvlan.c | 20 +++++++++++++-------
+ 1 file changed, 13 insertions(+), 7 deletions(-)
 
-diff --git a/fs/btrfs/space-info.c b/fs/btrfs/space-info.c
-index 15c578f49caab..230e086ddee8e 100644
---- a/fs/btrfs/space-info.c
-+++ b/fs/btrfs/space-info.c
-@@ -285,18 +285,22 @@ static int create_space_info(struct btrfs_fs_info *info, u64 flags)
- 							  BTRFS_SUB_GROUP_DATA_RELOC,
- 							  0);
- 		if (ret)
--			return ret;
-+			goto out_free;
+diff --git a/drivers/net/macvlan.c b/drivers/net/macvlan.c
+index 012830d12fde6..428b139822cf6 100644
+--- a/drivers/net/macvlan.c
++++ b/drivers/net/macvlan.c
+@@ -56,7 +56,7 @@ struct macvlan_port {
+ 
+ struct macvlan_source_entry {
+ 	struct hlist_node	hlist;
+-	struct macvlan_dev	*vlan;
++	struct macvlan_dev __rcu *vlan;
+ 	unsigned char		addr[6+2] __aligned(sizeof(u16));
+ 	struct rcu_head		rcu;
+ };
+@@ -143,7 +143,7 @@ static struct macvlan_source_entry *macvlan_hash_lookup_source(
+ 
+ 	hlist_for_each_entry_rcu(entry, h, hlist, lockdep_rtnl_is_held()) {
+ 		if (ether_addr_equal_64bits(entry->addr, addr) &&
+-		    entry->vlan == vlan)
++		    rcu_access_pointer(entry->vlan) == vlan)
+ 			return entry;
+ 	}
+ 	return NULL;
+@@ -165,7 +165,7 @@ static int macvlan_hash_add_source(struct macvlan_dev *vlan,
+ 		return -ENOMEM;
+ 
+ 	ether_addr_copy(entry->addr, addr);
+-	entry->vlan = vlan;
++	RCU_INIT_POINTER(entry->vlan, vlan);
+ 	h = &port->vlan_source_hash[macvlan_eth_hash(addr)];
+ 	hlist_add_head_rcu(&entry->hlist, h);
+ 	vlan->macaddr_count++;
+@@ -184,6 +184,7 @@ static void macvlan_hash_add(struct macvlan_dev *vlan)
+ 
+ static void macvlan_hash_del_source(struct macvlan_source_entry *entry)
+ {
++	RCU_INIT_POINTER(entry->vlan, NULL);
+ 	hlist_del_rcu(&entry->hlist);
+ 	kfree_rcu(entry, rcu);
+ }
+@@ -382,7 +383,7 @@ static void macvlan_flush_sources(struct macvlan_port *port,
+ 	int i;
+ 
+ 	hash_for_each_safe(port->vlan_source_hash, i, next, entry, hlist)
+-		if (entry->vlan == vlan)
++		if (rcu_access_pointer(entry->vlan) == vlan)
+ 			macvlan_hash_del_source(entry);
+ 
+ 	vlan->macaddr_count = 0;
+@@ -425,9 +426,14 @@ static bool macvlan_forward_source(struct sk_buff *skb,
+ 
+ 	hlist_for_each_entry_rcu(entry, h, hlist) {
+ 		if (ether_addr_equal_64bits(entry->addr, addr)) {
+-			if (entry->vlan->flags & MACVLAN_FLAG_NODST)
++			struct macvlan_dev *vlan = rcu_dereference(entry->vlan);
++
++			if (!vlan)
++				continue;
++
++			if (vlan->flags & MACVLAN_FLAG_NODST)
+ 				consume = true;
+-			macvlan_forward_source_one(skb, entry->vlan);
++			macvlan_forward_source_one(skb, vlan);
+ 		}
  	}
  
- 	ret = btrfs_sysfs_add_space_info_type(info, space_info);
- 	if (ret)
--		return ret;
-+		goto out_free;
+@@ -1648,7 +1654,7 @@ static int macvlan_fill_info_macaddr(struct sk_buff *skb,
+ 	struct macvlan_source_entry *entry;
  
- 	list_add(&space_info->list, &info->space_info);
- 	if (flags & BTRFS_BLOCK_GROUP_DATA)
- 		info->data_sinfo = space_info;
- 
- 	return ret;
-+
-+out_free:
-+	kfree(space_info);
-+	return ret;
- }
- 
- int btrfs_init_space_info(struct btrfs_fs_info *fs_info)
+ 	hlist_for_each_entry_rcu(entry, h, hlist, lockdep_rtnl_is_held()) {
+-		if (entry->vlan != vlan)
++		if (rcu_access_pointer(entry->vlan) != vlan)
+ 			continue;
+ 		if (nla_put(skb, IFLA_MACVLAN_MACADDR, ETH_ALEN, entry->addr))
+ 			return 1;
 -- 
 2.51.0
 
