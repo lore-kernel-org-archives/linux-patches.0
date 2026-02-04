@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1841B41B37C;
-	Wed,  4 Feb 2026 15:25:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7723241C309;
+	Wed,  4 Feb 2026 15:25:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770218734; cv=none; b=crS39VeLc9/E+jdT7Vtruu+qyUXo4gfnTXJ8WPE3aixy0CVS3HndgLEzCyOdyzK1gwGS0UGlQgqdsdoIRdGO8qZooMLgzAzirq6XZRQJxJ1ZfKQ3zzJDfxl2G/3Xs0vxPNZFXrFA0PZj/vWw+urJigAX+saok3URKAaS8CObRh8=
+	t=1770218737; cv=none; b=WfLi3h1FopTFRiQDDEwN11HQ81rzt2n6rmknrfA66iVR9e4KeHO7eeu7K5IDa/DD6zgpONh3HWAv/zZ78Kx2t6N4RYm0jR0KVoWKw4jPXeQ4nuGqolAf9Qa3JQZe0D99JmK4rz9hGnT6iu8xipGrv0AyiJ+7R0fNP70vzLD7b5g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770218734; c=relaxed/simple;
-	bh=jSXh/I9L2B+lGjuvmADad/vOi5Dw/ppLRHD/7gFuUGA=;
+	s=arc-20240116; t=1770218737; c=relaxed/simple;
+	bh=IbopASy/KkGpKHzXtlkKLg/cTtQEkEQSkAO4oETwdeM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Aqvi4AG3tZjYiui3fOIKt5QyEsiNzYNff8mm3YPvTQUg6S8gDVjLHUxzlwEz24f7io3Usw3fjfIc0JTyPrUTON+iao4FHa28wQCdXk3pVR2tTW9EEh36o29kMmQJhiqFYbTvGYt0sEgf1vjpG68sXxvDbtkbVGz8WFI9Wx7i36Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DlIn7ZZi; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Hp5LM0GRwBi3CjbKY8QK/MZnDh/85kkGELLCiKaiKTFaY20klNAyM6NqrgE3t8aArflzBMr06OY4j5nAsZJEDjdlNDMX1jt0ZuuH05/XKublaakGPI/wKzj1nJtqTY6Cvy/rjroKsXGivmu9ncRPF6QP2LkhM0QIiiF00QXbDgQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Eh/Gaa5R; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DlIn7ZZi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F864C4CEF7;
-	Wed,  4 Feb 2026 15:25:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Eh/Gaa5R"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DDE3AC4CEF7;
+	Wed,  4 Feb 2026 15:25:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770218734;
-	bh=jSXh/I9L2B+lGjuvmADad/vOi5Dw/ppLRHD/7gFuUGA=;
+	s=korg; t=1770218737;
+	bh=IbopASy/KkGpKHzXtlkKLg/cTtQEkEQSkAO4oETwdeM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DlIn7ZZi4qfUhbtX7TOOk6fac8BG6p76oDLu0wQMVa5ji5NmBHGw2d95pEj/dOqWo
-	 KfbbfDF5SNzIM9Bv42xxb9ri4Xxauj1/FYYRyJHi1KxipS/FNxWAJs3cf41+u2XU6L
-	 1wUbK6xBqI8qOu9RrZXUwMAZL+5nXTDaKXsK2P6U=
+	b=Eh/Gaa5R57b4o7TCCL4630cHF2bnG3ayYlBzP79jpBKDq+3tmX34R56fZfUNVQwvl
+	 tSalG9ahgFKPCoN0nSjhUaO0wsvolyjH/VK/dK6J/tkXNvQwYbo+At2c9ywnOAoiwo
+	 w6YaPUXXEB0MoNmlBvHX4hGCW5jrLxENrl5UqXcQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Bogdanov <d.bogdanov@yadro.com>,
-	Guangwu Zhang <guazhang@redhat.com>,
-	Christoph Hellwig <hch@lst.de>,
-	Ming Lei <ming.lei@redhat.com>,
-	Keith Busch <kbusch@kernel.org>
-Subject: [PATCH 6.12 44/87] nvmet: fix race in nvmet_bio_done() leading to NULL pointer dereference
-Date: Wed,  4 Feb 2026 15:40:42 +0100
-Message-ID: <20260204143848.500885527@linuxfoundation.org>
+	Heiko Stuebner <heiko@sntech.de>,
+	Robin Murphy <robin.murphy@arm.com>,
+	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+Subject: [PATCH 6.12 45/87] gpio: rockchip: Stop calling pinctrl for set_direction
+Date: Wed,  4 Feb 2026 15:40:43 +0100
+Message-ID: <20260204143848.536194801@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260204143846.906385641@linuxfoundation.org>
 References: <20260204143846.906385641@linuxfoundation.org>
@@ -53,61 +51,89 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ming Lei <ming.lei@redhat.com>
+From: Robin Murphy <robin.murphy@arm.com>
 
-commit 0fcee2cfc4b2e16e62ff8e0cc2cd8dd24efad65e upstream.
+commit 7ca497be00163610afb663867db24ac408752f13 upstream.
 
-There is a race condition in nvmet_bio_done() that can cause a NULL
-pointer dereference in blk_cgroup_bio_start():
+Marking the whole controller as sleeping due to the pinctrl calls in the
+.direction_{input,output} callbacks has the unfortunate side effect that
+legitimate invocations of .get and .set, which cannot themselves sleep,
+in atomic context now spew WARN()s from gpiolib.
 
-1. nvmet_bio_done() is called when a bio completes
-2. nvmet_req_complete() is called, which invokes req->ops->queue_response(req)
-3. The queue_response callback can re-queue and re-submit the same request
-4. The re-submission reuses the same inline_bio from nvmet_req
-5. Meanwhile, nvmet_req_bio_put() (called after nvmet_req_complete)
-   invokes bio_uninit() for inline_bio, which sets bio->bi_blkg to NULL
-6. The re-submitted bio enters submit_bio_noacct_nocheck()
-7. blk_cgroup_bio_start() dereferences bio->bi_blkg, causing a crash:
+However, as Heiko points out, the driver doing this is a bit silly to
+begin with, as the pinctrl .gpio_set_direction hook doesn't even care
+about the direction, the hook is only used to claim the mux. And sure
+enough, the .gpio_request_enable hook exists to serve this very purpose,
+so switch to that and remove the problematic business entirely.
 
-  BUG: kernel NULL pointer dereference, address: 0000000000000028
-  #PF: supervisor read access in kernel mode
-  RIP: 0010:blk_cgroup_bio_start+0x10/0xd0
-  Call Trace:
-   submit_bio_noacct_nocheck+0x44/0x250
-   nvmet_bdev_execute_rw+0x254/0x370 [nvmet]
-   process_one_work+0x193/0x3c0
-   worker_thread+0x281/0x3a0
-
-Fix this by reordering nvmet_bio_done() to call nvmet_req_bio_put()
-BEFORE nvmet_req_complete(). This ensures the bio is cleaned up before
-the request can be re-submitted, preventing the race condition.
-
-Fixes: 190f4c2c863a ("nvmet: fix memory leak of bio integrity")
-Cc: Dmitry Bogdanov <d.bogdanov@yadro.com>
 Cc: stable@vger.kernel.org
-Cc: Guangwu Zhang <guazhang@redhat.com>
-Link: http://www.mail-archive.com/debian-kernel@lists.debian.org/msg146238.html
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Signed-off-by: Ming Lei <ming.lei@redhat.com>
-Signed-off-by: Keith Busch <kbusch@kernel.org>
+Fixes: 20cf2aed89ac ("gpio: rockchip: mark the GPIO controller as sleeping")
+Suggested-by: Heiko Stuebner <heiko@sntech.de>
+Signed-off-by: Robin Murphy <robin.murphy@arm.com>
+Reviewed-by: Heiko Stuebner <heiko@sntech.de>
+Link: https://lore.kernel.org/r/bddc0469f25843ca5ae0cf578ab3671435ae98a7.1769429546.git.robin.murphy@arm.com
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/nvme/target/io-cmd-bdev.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/gpio/gpio-rockchip.c       |    8 --------
+ drivers/pinctrl/pinctrl-rockchip.c |    9 ++++-----
+ 2 files changed, 4 insertions(+), 13 deletions(-)
 
---- a/drivers/nvme/target/io-cmd-bdev.c
-+++ b/drivers/nvme/target/io-cmd-bdev.c
-@@ -176,9 +176,10 @@ u16 blk_to_nvme_status(struct nvmet_req
- static void nvmet_bio_done(struct bio *bio)
- {
- 	struct nvmet_req *req = bio->bi_private;
-+	blk_status_t blk_status = bio->bi_status;
+--- a/drivers/gpio/gpio-rockchip.c
++++ b/drivers/gpio/gpio-rockchip.c
+@@ -18,7 +18,6 @@
+ #include <linux/of.h>
+ #include <linux/of_address.h>
+ #include <linux/of_irq.h>
+-#include <linux/pinctrl/consumer.h>
+ #include <linux/pinctrl/pinconf-generic.h>
+ #include <linux/platform_device.h>
+ #include <linux/regmap.h>
+@@ -157,12 +156,6 @@ static int rockchip_gpio_set_direction(s
+ 	unsigned long flags;
+ 	u32 data = input ? 0 : 1;
  
--	nvmet_req_complete(req, blk_to_nvme_status(req, bio->bi_status));
- 	nvmet_req_bio_put(req, bio);
-+	nvmet_req_complete(req, blk_to_nvme_status(req, blk_status));
+-
+-	if (input)
+-		pinctrl_gpio_direction_input(chip, offset);
+-	else
+-		pinctrl_gpio_direction_output(chip, offset);
+-
+ 	raw_spin_lock_irqsave(&bank->slock, flags);
+ 	rockchip_gpio_writel_bit(bank, offset, data, bank->gpio_regs->port_ddr);
+ 	raw_spin_unlock_irqrestore(&bank->slock, flags);
+@@ -584,7 +577,6 @@ static int rockchip_gpiolib_register(str
+ 	gc->ngpio = bank->nr_pins;
+ 	gc->label = bank->name;
+ 	gc->parent = bank->dev;
+-	gc->can_sleep = true;
+ 
+ 	ret = gpiochip_add_data(gc, bank);
+ 	if (ret) {
+--- a/drivers/pinctrl/pinctrl-rockchip.c
++++ b/drivers/pinctrl/pinctrl-rockchip.c
+@@ -2922,10 +2922,9 @@ static int rockchip_pmx_set(struct pinct
+ 	return 0;
  }
  
- #ifdef CONFIG_BLK_DEV_INTEGRITY
+-static int rockchip_pmx_gpio_set_direction(struct pinctrl_dev *pctldev,
+-					   struct pinctrl_gpio_range *range,
+-					   unsigned offset,
+-					   bool input)
++static int rockchip_pmx_gpio_request_enable(struct pinctrl_dev *pctldev,
++					    struct pinctrl_gpio_range *range,
++					    unsigned int offset)
+ {
+ 	struct rockchip_pinctrl *info = pinctrl_dev_get_drvdata(pctldev);
+ 	struct rockchip_pin_bank *bank;
+@@ -2939,7 +2938,7 @@ static const struct pinmux_ops rockchip_
+ 	.get_function_name	= rockchip_pmx_get_func_name,
+ 	.get_function_groups	= rockchip_pmx_get_groups,
+ 	.set_mux		= rockchip_pmx_set,
+-	.gpio_set_direction	= rockchip_pmx_gpio_set_direction,
++	.gpio_request_enable	= rockchip_pmx_gpio_request_enable,
+ };
+ 
+ /*
 
 
