@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9EACF28853A;
-	Wed,  4 Feb 2026 15:10:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9EC4B221F17;
+	Wed,  4 Feb 2026 15:10:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770217812; cv=none; b=rwQ6rxSJaqedoqyYTa7pKxNAOl+6Js6ck/1d+x4H7pNbxeA1g5eKwx3urslr+5jucwnD5NUijB7kWfyOLRKzxqutYbDokP5uh9TrjpENZ9qyJtJNR1MQsxeTK4e6lU1eoyg7WG2i7pnd5GajXtwq1IvrhHeLwspN+/EwmwZA3VI=
+	t=1770217815; cv=none; b=c293o8SAUih6wAv8ovddVaoxWaAhhkoN19ZjxHwxh+4Viv8GbNA/xfjekPZMYIHLMXXvgXQy705NkqO3JSS8GgAkC+yegghwKc5Npb2qTrdqNAcbB8d2Ko/nBYjeKPeBqIvnIgT9m3lAd0BHwBrXowgBfOYabw3kQHTVcs54T2c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770217812; c=relaxed/simple;
-	bh=GBk689YEUVqWXhVuwcCK+9AzgzUlq5AHShYh6dSMS8c=;
+	s=arc-20240116; t=1770217815; c=relaxed/simple;
+	bh=0E9YX59eDMih1j/AXtgc8mPo+lYRkZG7L9IY6SFUots=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=chR/KMq91OcyHWD1VvfMQ1bgCDUR4KS49Qh92QDNSjE8QZ8vvJQMptuMlfBgM+dLxghhTqzr3AmrTEG3Kctv0uOUokcVy2Q1gIpkIu8TUph5hWeyNkxyaTt1SMyiyiFst9M8JxqXrjpMce+AfRifDUCrO7ODXE2WKy0j5yziu1Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kEmKBYoY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cyRqF/f7/BD30xGgIVXyPKetumN2McI6yLEd/ND/MI5HyRm5aXIzR7Jed1lxmAgJs80VKiOnmEA0qT7YWlX+CL/6SoS5LcIkCk/vWUUvIKDSeTdrOPsN+Txmb2GTkatIWyVI6Zh/7jTSUIepP00jEOqkVZ+/39mJ/n4EaKTlGGo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dOx3SncZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kEmKBYoY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD262C4CEF7;
-	Wed,  4 Feb 2026 15:10:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dOx3SncZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 16417C4CEF7;
+	Wed,  4 Feb 2026 15:10:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770217812;
-	bh=GBk689YEUVqWXhVuwcCK+9AzgzUlq5AHShYh6dSMS8c=;
+	s=korg; t=1770217815;
+	bh=0E9YX59eDMih1j/AXtgc8mPo+lYRkZG7L9IY6SFUots=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kEmKBYoYiWDPNZL6n7Fc8wf7nps8Dsh9Tj/JFBEP+4Isnzz0MBbri55VmgZy85i/p
-	 GOkpcLYvuIZXQxZf9vBk9JIs82GWQXA34sPFnokD2RdrDw29XVLaYEe9PFxOTUHhVC
-	 NmvcPnBxXjPB6y3BBCrMalrc9RaQaZLAZPybQc50=
+	b=dOx3SncZ0gdaAnHFFiyy50KAT1dgEv04nOfm5r0cjgtg7Zw6h+ESIHJNSqw1x0mym
+	 DXHs8AX8E9xat7qvvzr2JbKm+4RGKd2TCUyvSyQeEMIQsrqW62S4OpYwJIKXhGPkZq
+	 dQ4JvMGKAvbacJ59CPePFy/ZrUWDIwfuSMkOi50s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -34,9 +34,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
 	Niklas Cassel <niklas.cassel@wdc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 092/280] ata: libata: Introduce ata_ncq_supported()
-Date: Wed,  4 Feb 2026 15:37:46 +0100
-Message-ID: <20260204143912.966509643@linuxfoundation.org>
+Subject: [PATCH 6.1 093/280] ata: libata: cleanup fua support detection
+Date: Wed,  4 Feb 2026 15:37:47 +0100
+Message-ID: <20260204143913.001562869@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260204143909.614719725@linuxfoundation.org>
 References: <20260204143909.614719725@linuxfoundation.org>
@@ -57,11 +57,35 @@ Content-Transfer-Encoding: 8bit
 
 From: Damien Le Moal <damien.lemoal@opensource.wdc.com>
 
-[ Upstream commit fa5bde139ee43ab91087c01e690c61aec957c339 ]
+[ Upstream commit 4d2e4980a5289ae31a1cff40d258b68573182a37 ]
 
-Introduce the inline helper function ata_ncq_supported() to test if a
-device supports NCQ commands. The function ata_ncq_enabled() is also
-rewritten using this new helper function.
+Move the detection of a device FUA support from
+ata_scsiop_mode_sense()/ata_dev_supports_fua() to device scan time in
+ata_dev_configure().
+
+The function ata_dev_config_fua() is introduced to detect if a device
+supports FUA and this support is indicated using the new device flag
+ATA_DFLAG_FUA.
+
+In order to blacklist known buggy devices, the horkage flag
+ATA_HORKAGE_NO_FUA is introduced. Similarly to other horkage flags, the
+libata.force= arguments "fua" and "nofua" are also introduced to allow
+a user to control this horkage flag through the "force" libata
+module parameter.
+
+The ATA_DFLAG_FUA device flag is set only and only if all the following
+conditions are met:
+* libata.fua module parameter is set to 1
+* The device supports the WRITE DMA FUA EXT command,
+* The device is not marked with the ATA_HORKAGE_NO_FUA flag, either from
+  the blacklist or set by the user with libata.force=nofua
+* The device supports NCQ (while this is not mandated by the standards,
+  this restriction is introduced to avoid problems with older non-NCQ
+  devices).
+
+Enabling or diabling libata FUA support for all devices can now also be
+done using the "force=[no]fua" module parameter when libata.fua is set
+to 1.
 
 Signed-off-by: Damien Le Moal <damien.lemoal@opensource.wdc.com>
 Reviewed-by: Hannes Reinecke <hare@suse.de>
@@ -72,56 +96,183 @@ Reviewed-by: Niklas Cassel <niklas.cassel@wdc.com>
 Stable-dep-of: c8c6fb886f57 ("ata: libata: Print features also for ATAPI devices")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/libata.h | 28 +++++++++++++++++++++-------
- 1 file changed, 21 insertions(+), 7 deletions(-)
+ .../admin-guide/kernel-parameters.txt         |  3 ++
+ drivers/ata/libata-core.c                     | 30 ++++++++++++++++++-
+ drivers/ata/libata-scsi.c                     | 30 ++-----------------
+ include/linux/libata.h                        |  8 +++--
+ 4 files changed, 39 insertions(+), 32 deletions(-)
 
-diff --git a/include/linux/libata.h b/include/linux/libata.h
-index 363462d3f0773..99886930fb819 100644
---- a/include/linux/libata.h
-+++ b/include/linux/libata.h
-@@ -1694,21 +1694,35 @@ extern struct ata_device *ata_dev_next(struct ata_device *dev,
- 	     (dev) = ata_dev_next((dev), (link), ATA_DITER_##mode))
+diff --git a/Documentation/admin-guide/kernel-parameters.txt b/Documentation/admin-guide/kernel-parameters.txt
+index 05ab068c1cc6d..b026eb1c4c7db 100644
+--- a/Documentation/admin-guide/kernel-parameters.txt
++++ b/Documentation/admin-guide/kernel-parameters.txt
+@@ -2852,6 +2852,9 @@
+ 			* [no]setxfer: Indicate if transfer speed mode setting
+ 			  should be skipped.
  
- /**
-- *	ata_ncq_enabled - Test whether NCQ is enabled
-- *	@dev: ATA device to test for
-+ *	ata_ncq_supported - Test whether NCQ is supported
-+ *	@dev: ATA device to test
-  *
-  *	LOCKING:
-  *	spin_lock_irqsave(host lock)
-  *
-  *	RETURNS:
-- *	1 if NCQ is enabled for @dev, 0 otherwise.
-+ *	true if @dev supports NCQ, false otherwise.
-  */
--static inline int ata_ncq_enabled(struct ata_device *dev)
-+static inline bool ata_ncq_supported(struct ata_device *dev)
- {
- 	if (!IS_ENABLED(CONFIG_SATA_HOST))
--		return 0;
--	return (dev->flags & (ATA_DFLAG_PIO | ATA_DFLAG_NCQ_OFF |
--			      ATA_DFLAG_NCQ)) == ATA_DFLAG_NCQ;
-+		return false;
-+	return (dev->flags & (ATA_DFLAG_PIO | ATA_DFLAG_NCQ)) == ATA_DFLAG_NCQ;
-+}
++			* [no]fua: Disable or enable FUA (Force Unit Access)
++			  support for devices supporting this feature.
 +
-+/**
-+ *	ata_ncq_enabled - Test whether NCQ is enabled
-+ *	@dev: ATA device to test
-+ *
-+ *	LOCKING:
-+ *	spin_lock_irqsave(host lock)
-+ *
-+ *	RETURNS:
-+ *	true if NCQ is enabled for @dev, false otherwise.
-+ */
-+static inline bool ata_ncq_enabled(struct ata_device *dev)
-+{
-+	return ata_ncq_supported(dev) && !(dev->flags & ATA_DFLAG_NCQ_OFF);
+ 			* dump_id: Dump IDENTIFY data.
+ 
+ 			* disable: Disable this device.
+diff --git a/drivers/ata/libata-core.c b/drivers/ata/libata-core.c
+index 98d610c37e8c7..31c8156a4f3d3 100644
+--- a/drivers/ata/libata-core.c
++++ b/drivers/ata/libata-core.c
+@@ -2513,6 +2513,28 @@ static void ata_dev_config_chs(struct ata_device *dev)
+ 			     dev->heads, dev->sectors);
  }
  
- static inline bool ata_fpdma_dsm_supported(struct ata_device *dev)
++static void ata_dev_config_fua(struct ata_device *dev)
++{
++	/* Ignore FUA support if its use is disabled globally */
++	if (!libata_fua)
++		goto nofua;
++
++	/* Ignore devices without support for WRITE DMA FUA EXT */
++	if (!(dev->flags & ATA_DFLAG_LBA48) || !ata_id_has_fua(dev->id))
++		goto nofua;
++
++	/* Ignore known bad devices and devices that lack NCQ support */
++	if (!ata_ncq_supported(dev) || (dev->horkage & ATA_HORKAGE_NO_FUA))
++		goto nofua;
++
++	dev->flags |= ATA_DFLAG_FUA;
++
++	return;
++
++nofua:
++	dev->flags &= ~ATA_DFLAG_FUA;
++}
++
+ static void ata_dev_config_devslp(struct ata_device *dev)
+ {
+ 	u8 *sata_setting = dev->link->ap->sector_buf;
+@@ -2601,7 +2623,8 @@ static void ata_dev_print_features(struct ata_device *dev)
+ 		return;
+ 
+ 	ata_dev_info(dev,
+-		     "Features:%s%s%s%s%s%s\n",
++		     "Features:%s%s%s%s%s%s%s\n",
++		     dev->flags & ATA_DFLAG_FUA ? " FUA" : "",
+ 		     dev->flags & ATA_DFLAG_TRUSTED ? " Trust" : "",
+ 		     dev->flags & ATA_DFLAG_DA ? " Dev-Attention" : "",
+ 		     dev->flags & ATA_DFLAG_DEVSLP ? " Dev-Sleep" : "",
+@@ -2762,6 +2785,7 @@ int ata_dev_configure(struct ata_device *dev)
+ 			ata_dev_config_chs(dev);
+ 		}
+ 
++		ata_dev_config_fua(dev);
+ 		ata_dev_config_devslp(dev);
+ 		ata_dev_config_sense_reporting(dev);
+ 		ata_dev_config_zac(dev);
+@@ -4199,6 +4223,9 @@ static const struct ata_blacklist_entry ata_device_blacklist [] = {
+ 	 */
+ 	{ "SATADOM-ML 3ME",		NULL,	ATA_HORKAGE_NO_LOG_DIR },
+ 
++	/* Buggy FUA */
++	{ "Maxtor",		"BANC1G10",	ATA_HORKAGE_NO_FUA },
++
+ 	/* End Marker */
+ 	{ }
+ };
+@@ -6351,6 +6378,7 @@ static const struct ata_force_param force_tbl[] __initconst = {
+ 	force_horkage_onoff(lpm,	ATA_HORKAGE_NOLPM),
+ 	force_horkage_onoff(setxfer,	ATA_HORKAGE_NOSETXFER),
+ 	force_horkage_on(dump_id,	ATA_HORKAGE_DUMP_ID),
++	force_horkage_onoff(fua,	ATA_HORKAGE_NO_FUA),
+ 
+ 	force_horkage_on(disable,	ATA_HORKAGE_DISABLE),
+ };
+diff --git a/drivers/ata/libata-scsi.c b/drivers/ata/libata-scsi.c
+index c838bc8cc4f3d..430970db482a8 100644
+--- a/drivers/ata/libata-scsi.c
++++ b/drivers/ata/libata-scsi.c
+@@ -2283,30 +2283,6 @@ static unsigned int ata_msense_rw_recovery(u8 *buf, bool changeable)
+ 	return sizeof(def_rw_recovery_mpage);
+ }
+ 
+-/*
+- * We can turn this into a real blacklist if it's needed, for now just
+- * blacklist any Maxtor BANC1G10 revision firmware
+- */
+-static int ata_dev_supports_fua(u16 *id)
+-{
+-	unsigned char model[ATA_ID_PROD_LEN + 1], fw[ATA_ID_FW_REV_LEN + 1];
+-
+-	if (!libata_fua)
+-		return 0;
+-	if (!ata_id_has_fua(id))
+-		return 0;
+-
+-	ata_id_c_string(id, model, ATA_ID_PROD, sizeof(model));
+-	ata_id_c_string(id, fw, ATA_ID_FW_REV, sizeof(fw));
+-
+-	if (strcmp(model, "Maxtor"))
+-		return 1;
+-	if (strcmp(fw, "BANC1G10"))
+-		return 1;
+-
+-	return 0; /* blacklisted */
+-}
+-
+ /**
+  *	ata_scsiop_mode_sense - Simulate MODE SENSE 6, 10 commands
+  *	@args: device IDENTIFY data / SCSI command of interest.
+@@ -2330,7 +2306,7 @@ static unsigned int ata_scsiop_mode_sense(struct ata_scsi_args *args, u8 *rbuf)
+ 	};
+ 	u8 pg, spg;
+ 	unsigned int ebd, page_control, six_byte;
+-	u8 dpofua, bp = 0xff;
++	u8 dpofua = 0, bp = 0xff;
+ 	u16 fp;
+ 
+ 	six_byte = (scsicmd[0] == MODE_SENSE);
+@@ -2393,9 +2369,7 @@ static unsigned int ata_scsiop_mode_sense(struct ata_scsi_args *args, u8 *rbuf)
+ 		goto invalid_fld;
+ 	}
+ 
+-	dpofua = 0;
+-	if (ata_dev_supports_fua(args->id) && (dev->flags & ATA_DFLAG_LBA48) &&
+-	    (!(dev->flags & ATA_DFLAG_PIO) || dev->multi_count))
++	if (dev->flags & ATA_DFLAG_FUA)
+ 		dpofua = 1 << 4;
+ 
+ 	if (six_byte) {
+diff --git a/include/linux/libata.h b/include/linux/libata.h
+index 99886930fb819..d7f86de11d18e 100644
+--- a/include/linux/libata.h
++++ b/include/linux/libata.h
+@@ -90,6 +90,7 @@ enum {
+ 	ATA_DFLAG_ACPI_FAILED	= (1 << 6), /* ACPI on devcfg has failed */
+ 	ATA_DFLAG_AN		= (1 << 7), /* AN configured */
+ 	ATA_DFLAG_TRUSTED	= (1 << 8), /* device supports trusted send/recv */
++	ATA_DFLAG_FUA		= (1 << 9), /* device supports FUA */
+ 	ATA_DFLAG_DMADIR	= (1 << 10), /* device requires DMADIR */
+ 	ATA_DFLAG_CFG_MASK	= (1 << 12) - 1,
+ 
+@@ -114,9 +115,9 @@ enum {
+ 	ATA_DFLAG_D_SENSE	= (1 << 29), /* Descriptor sense requested */
+ 	ATA_DFLAG_ZAC		= (1 << 30), /* ZAC device */
+ 
+-	ATA_DFLAG_FEATURES_MASK	= ATA_DFLAG_TRUSTED | ATA_DFLAG_DA | \
+-				  ATA_DFLAG_DEVSLP | ATA_DFLAG_NCQ_SEND_RECV | \
+-				  ATA_DFLAG_NCQ_PRIO,
++	ATA_DFLAG_FEATURES_MASK	= (ATA_DFLAG_TRUSTED | ATA_DFLAG_DA |	\
++				   ATA_DFLAG_DEVSLP | ATA_DFLAG_NCQ_SEND_RECV | \
++				   ATA_DFLAG_NCQ_PRIO | ATA_DFLAG_FUA),
+ 
+ 	ATA_DEV_UNKNOWN		= 0,	/* unknown device */
+ 	ATA_DEV_ATA		= 1,	/* ATA device */
+@@ -389,6 +390,7 @@ enum {
+ 	ATA_HORKAGE_NO_NCQ_ON_ATI = (1 << 27),	/* Disable NCQ on ATI chipset */
+ 	ATA_HORKAGE_NO_ID_DEV_LOG = (1 << 28),	/* Identify device log missing */
+ 	ATA_HORKAGE_NO_LOG_DIR	= (1 << 29),	/* Do not read log directory */
++	ATA_HORKAGE_NO_FUA	= (1 << 30),	/* Do not use FUA */
+ 
+ 	 /* DMA mask for user DMA control: User visible values; DO NOT
+ 	    renumber */
 -- 
 2.51.0
 
