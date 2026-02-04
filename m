@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA0C8423A71;
-	Wed,  4 Feb 2026 15:05:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08E01423A71;
+	Wed,  4 Feb 2026 15:06:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770217559; cv=none; b=pMTm+NyjG6wD0OolWrClGxf2FjTvyxV1dvYNrloSiBvjyklLKqQvLR93n0M0z1xuKHRn4ILxmic5u31NMUoEfIn/ryXNHs/Fz3V9A1+etJreXK2Mzilbw5qqidl062frLVxa8lnSbzdMKXVGS2e0+gn1GwsJPKo1PSjPXv2gc6w=
+	t=1770217563; cv=none; b=nl6S/zf89amL6vGFjI6wgnhjksYGuG+ULYnf2i2U+gjIm+76uNQ1DIO+aDqy5h45YJ80qmACr9zMqMckgI0wAfQVdfkFFmV3to3ZZJkAOOGkYZ6mJBZx5b6ofAdDVlc1TzOLWCK/123XUi8iQCqTIfTpYKZI94dFuE1GFYAF1EU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770217559; c=relaxed/simple;
-	bh=p9TWvBUtE1JjcQA8+MWrotYSz6i7RBqD/J0Oj0Pp4Q8=;
+	s=arc-20240116; t=1770217563; c=relaxed/simple;
+	bh=g+OpgI5Wc04TfRMtHYXsy4DyZVTC/rQ/O3u3NQhehjE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ncoh8fYGm3RgMmbYpcO2eutLEkxFhhFFxO3ezQRaiXNFQGwWcCZfNYWp+e4N4Ip+ZkvtmNfDoiUIIesc304SReVq68Tu3epsC7DPDXBPM6fGQt/uPLZujAdmAdlJalrsQBcdkcPoGO36crwKmkKOu/k/9ciiAmKFWl7cgoBpyLc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gbd6g9RN; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HeaM3wlYaSh3A1Gj96Y9rMhpe0PPd6eyJy7g4CxBtF7HmYcRt0AaFDnnL4Mg1vO8GmEjoKfoxkMl1RkaPzQvsjXtcrT5Rephhh6ud3SlDMeGdVt8gwjR2MWfW8LOyp4fKj36ATQWF8yGhYAr50w6o4XSH+74cIsEQ6fE/g1bSEA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SD4T5FvC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gbd6g9RN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2EC77C4CEF7;
-	Wed,  4 Feb 2026 15:05:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SD4T5FvC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F545C4CEF7;
+	Wed,  4 Feb 2026 15:06:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770217559;
-	bh=p9TWvBUtE1JjcQA8+MWrotYSz6i7RBqD/J0Oj0Pp4Q8=;
+	s=korg; t=1770217562;
+	bh=g+OpgI5Wc04TfRMtHYXsy4DyZVTC/rQ/O3u3NQhehjE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gbd6g9RNchD38KqmgzOssasRUaUKpbwEtTuSjC2hV82k8eSbTX6DPDPQ8IfjlVULA
-	 hyIf6+3nvPA1DzV71f/OT5q0XPxPEO0rI7hX/goKA/pam2QOUwTjpixILZ/XbGPyod
-	 vve7DNCO8iE9lTTUIJSzT9PsI4iGqjvjQvyq9KNI=
+	b=SD4T5FvC/o06HmTRMjLMxN+itKp2Zg9vTBhjbDRhvbyuNyjhTQfpog0vD4jMvN4gP
+	 rJDghwS/YR55QrYSJcJ5BfyF2Zq6+4KcIaL5hfv22msxMDmr4S7e8zSk4kJE4qJ9bH
+	 OOfnu0DcviEvUizpH9aTasQKcVQ9xvggWpAKmpoI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Josef Bacik <josef@toxicpanda.com>,
 	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
-	Boris Burkov <boris@bur.io>,
+	Naohiro Aota <naohiro.aota@wdc.com>,
 	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 017/280] btrfs: store fs_info in space_info
-Date: Wed,  4 Feb 2026 15:36:31 +0100
-Message-ID: <20260204143910.251856299@linuxfoundation.org>
+Subject: [PATCH 6.1 018/280] btrfs: factor out init_space_info() from create_space_info()
+Date: Wed,  4 Feb 2026 15:36:32 +0100
+Message-ID: <20260204143910.288032207@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260204143909.614719725@linuxfoundation.org>
 References: <20260204143909.614719725@linuxfoundation.org>
@@ -53,51 +52,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Boris Burkov <boris@bur.io>
+From: Naohiro Aota <naohiro.aota@wdc.com>
 
-[ Upstream commit 42f620aec182f62ee72e3fce41cb3353951b3508 ]
+[ Upstream commit ac5578fef380e68e539a2238ba63dd978a450ef2 ]
 
-This is handy when computing space_info dynamic reclaim thresholds where
-we do not have access to a block group. We could add it to the various
-functions as a parameter, but it seems reasonable for space_info to have
-an fs_info pointer.
+Factor out initialization of the space_info struct, which is used in a
+later patch. There is no functional change.
 
-Reviewed-by: Josef Bacik <josef@toxicpanda.com>
 Reviewed-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
-Signed-off-by: Boris Burkov <boris@bur.io>
+Signed-off-by: Naohiro Aota <naohiro.aota@wdc.com>
 Reviewed-by: David Sterba <dsterba@suse.com>
 Signed-off-by: David Sterba <dsterba@suse.com>
 Stable-dep-of: a11224a016d6 ("btrfs: fix memory leaks in create_space_info() error paths")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/space-info.c | 1 +
- fs/btrfs/space-info.h | 1 +
- 2 files changed, 2 insertions(+)
+ fs/btrfs/space-info.c | 27 ++++++++++++++++-----------
+ 1 file changed, 16 insertions(+), 11 deletions(-)
 
 diff --git a/fs/btrfs/space-info.c b/fs/btrfs/space-info.c
-index bede72f3dffc3..069df2ebd1ca5 100644
+index 069df2ebd1ca5..88cd37a13c0ee 100644
 --- a/fs/btrfs/space-info.c
 +++ b/fs/btrfs/space-info.c
-@@ -230,6 +230,7 @@ static int create_space_info(struct btrfs_fs_info *info, u64 flags)
- 	if (!space_info)
- 		return -ENOMEM;
+@@ -219,19 +219,11 @@ void btrfs_update_space_info_chunk_size(struct btrfs_space_info *space_info,
+ 	WRITE_ONCE(space_info->chunk_size, chunk_size);
+ }
  
-+	space_info->fs_info = info;
- 	for (i = 0; i < BTRFS_NR_RAID_TYPES; i++)
+-static int create_space_info(struct btrfs_fs_info *info, u64 flags)
++static void init_space_info(struct btrfs_fs_info *info,
++			    struct btrfs_space_info *space_info, u64 flags)
+ {
+-
+-	struct btrfs_space_info *space_info;
+-	int i;
+-	int ret;
+-
+-	space_info = kzalloc(sizeof(*space_info), GFP_NOFS);
+-	if (!space_info)
+-		return -ENOMEM;
+-
+ 	space_info->fs_info = info;
+-	for (i = 0; i < BTRFS_NR_RAID_TYPES; i++)
++	for (int i = 0; i < BTRFS_NR_RAID_TYPES; i++)
  		INIT_LIST_HEAD(&space_info->block_groups[i]);
  	init_rwsem(&space_info->groups_sem);
-diff --git a/fs/btrfs/space-info.h b/fs/btrfs/space-info.h
-index fea2f93674e7c..d6b34f2738b53 100644
---- a/fs/btrfs/space-info.h
-+++ b/fs/btrfs/space-info.h
-@@ -65,6 +65,7 @@ enum btrfs_flush_state {
- };
+ 	spin_lock_init(&space_info->lock);
+@@ -245,6 +237,19 @@ static int create_space_info(struct btrfs_fs_info *info, u64 flags)
  
- struct btrfs_space_info {
-+	struct btrfs_fs_info *fs_info;
- 	spinlock_t lock;
+ 	if (btrfs_is_zoned(info))
+ 		space_info->bg_reclaim_threshold = BTRFS_DEFAULT_ZONED_RECLAIM_THRESH;
++}
++
++static int create_space_info(struct btrfs_fs_info *info, u64 flags)
++{
++
++	struct btrfs_space_info *space_info;
++	int ret;
++
++	space_info = kzalloc(sizeof(*space_info), GFP_NOFS);
++	if (!space_info)
++		return -ENOMEM;
++
++	init_space_info(info, space_info, flags);
  
- 	u64 total_bytes;	/* total bytes in the space,
+ 	ret = btrfs_sysfs_add_space_info_type(info, space_info);
+ 	if (ret)
 -- 
 2.51.0
 
