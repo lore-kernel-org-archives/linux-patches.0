@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BABC640FDAE;
-	Wed,  4 Feb 2026 14:51:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0CB072E92BC;
+	Wed,  4 Feb 2026 14:51:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770216706; cv=none; b=mOc7A3RlEk8Bm0pr0MNkTid+iWT1kZy8LrolLgJYouhJHgXXhHnvkitvM7Ews6aXro5f3AW2bAFHP+BHcexzMgkSxFSNalBl57f26yLSwMuYY7U5BLmfy+oDN3eppILUHpQP5hz4ngtfcGvEPmXP4MH9BlFaNVNvV6iiF/AkqSM=
+	t=1770216710; cv=none; b=CgVLLua9fIA8s7QktP1G0IdMIO37EVHpiy7IAEthAipIZlqEQ/8PMXD0al6a6btGP66C1MIFYvef5ch/f9qboDANuf9V6u20j75WBDkw1+oPISpYQd8WYHfchUvqeRq8KfbZxtxmkVzF8INN83wl9o8+dZ58kNH+Tf4P/vgMNDA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770216706; c=relaxed/simple;
-	bh=8m7GuHDMpbGjehG3ps+dL6yG55CTW5bM9RT0yq4aElo=;
+	s=arc-20240116; t=1770216710; c=relaxed/simple;
+	bh=qDIRZX9oX0sANq4IsTX1ZGHQQ8apeVJbOPFCbr4aBtM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZCKx+h9WKOwxshqDyi3S/cntWybY2Zq8xtBBa5XX9BYf8H0pU+lpQVGcEXe8zO3NcmXGoZABB61WmjNTC7sGvmZi3AIVdpRCsJt04SGSWV5d+n7trjnKH+JPaQXdSEd1TIDW6gxnGYLQK37Ign5+C4Qk5oFSBotsTN3anfEn5GA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ogWu4ntr; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MPm/HhQ7l1hpfMP2jK6uN323vPMnkzZH6ojGqv3JOszlrJn2uZqjgepmG857NsBU3FnyD0iaPdtkA5DIyfP3IecaVV+d9Bk6R2j/I2tTNa2N5TxuY01moO7MM83BQNoQIwup+LjMVEgGnVshGYf9eSzTTFFTfBp9QgIoKCzjwuk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uDDyKeG3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ogWu4ntr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EFC7EC4CEF7;
-	Wed,  4 Feb 2026 14:51:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uDDyKeG3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 734E9C4CEF7;
+	Wed,  4 Feb 2026 14:51:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770216706;
-	bh=8m7GuHDMpbGjehG3ps+dL6yG55CTW5bM9RT0yq4aElo=;
+	s=korg; t=1770216709;
+	bh=qDIRZX9oX0sANq4IsTX1ZGHQQ8apeVJbOPFCbr4aBtM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ogWu4ntrnStERoyqn0Qex7dFLUwk99KAINjHTHwVj0323F+FvhAh4tmRgBtoTryQa
-	 yIEQzfXnke6ADwegBGaQag2oI2yHB7cpBmHy/dSRgmJ61nqJC1HRMICR65dK7TOVGQ
-	 zVChRIIO7LTkI2SJUkQlMaleMDE2fNAklMNUUzfg=
+	b=uDDyKeG3zzsEPsqRx17OGZgIx8TMKfJ7qFBT7TrL6As/0ZeAiQRQTeujgrYzQUQy7
+	 tWrAQTkeprvDrdWQhXWcbJ/98TSLgc+xY+sBO1IR9gGkCGe9aR6AVIAYgQV50uj9Rr
+	 OVsOGnAB8w2oE+F1hYKTlcUMAa2Ag0SCwdJjA8bY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johan Hovold <johan@kernel.org>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+	Christoph Hellwig <hch@lst.de>,
+	Sagi Grimberg <sagi@grimberg.me>,
+	Hannes Reinecke <hare@suse.de>,
+	Daniel Wagner <dwagner@suse.de>,
+	Keith Busch <kbusch@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 143/161] iio: adc: exynos_adc: fix OF populate on driver rebind
-Date: Wed,  4 Feb 2026 15:40:06 +0100
-Message-ID: <20260204143856.892888522@linuxfoundation.org>
+Subject: [PATCH 5.10 134/161] nvme-fc: rename free_ctrl callback to match name pattern
+Date: Wed,  4 Feb 2026 15:39:57 +0100
+Message-ID: <20260204143856.562412785@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260204143851.755002596@linuxfoundation.org>
 References: <20260204143851.755002596@linuxfoundation.org>
@@ -52,66 +54,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johan Hovold <johan@kernel.org>
+From: Daniel Wagner <dwagner@suse.de>
 
-[ Upstream commit ea6b4feba85e996e840e0b661bc42793df6eb701 ]
+[ Upstream commit 205fb5fa6fde1b5b426015eb1ff69f2ff25ef5bb ]
 
-Since commit c6e126de43e7 ("of: Keep track of populated platform
-devices") child devices will not be created by of_platform_populate()
-if the devices had previously been deregistered individually so that the
-OF_POPULATED flag is still set in the corresponding OF nodes.
+Rename nvme_fc_nvme_ctrl_freed to nvme_fc_free_ctrl to match the name
+pattern for the callback.
 
-Switch to using of_platform_depopulate() instead of open coding so that
-the child devices are created if the driver is rebound.
-
-Fixes: c6e126de43e7 ("of: Keep track of populated platform devices")
-Cc: stable@vger.kernel.org	# 3.16
-Signed-off-by: Johan Hovold <johan@kernel.org>
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-[ Adjust context ]
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Reviewed-by: Sagi Grimberg <sagi@grimberg.me>
+Reviewed-by: Hannes Reinecke <hare@suse.de>
+Signed-off-by: Daniel Wagner <dwagner@suse.de>
+Signed-off-by: Keith Busch <kbusch@kernel.org>
+Stable-dep-of: 0edb475ac0a7 ("nvme: fix PCIe subsystem reset controller state transition")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/adc/exynos_adc.c |   13 ++-----------
- 1 file changed, 2 insertions(+), 11 deletions(-)
+ drivers/nvme/host/fc.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/iio/adc/exynos_adc.c
-+++ b/drivers/iio/adc/exynos_adc.c
-@@ -718,14 +718,7 @@ static const struct iio_chan_spec exynos
- 	ADC_CHANNEL(9, "adc9"),
- };
- 
--static int exynos_adc_remove_devices(struct device *dev, void *c)
--{
--	struct platform_device *pdev = to_platform_device(dev);
--
--	platform_device_unregister(pdev);
- 
--	return 0;
--}
- 
- static int exynos_adc_ts_open(struct input_dev *dev)
+--- a/drivers/nvme/host/fc.c
++++ b/drivers/nvme/host/fc.c
+@@ -2409,7 +2409,7 @@ nvme_fc_ctrl_get(struct nvme_fc_ctrl *ct
+  * controller. Called after last nvme_put_ctrl() call
+  */
+ static void
+-nvme_fc_nvme_ctrl_freed(struct nvme_ctrl *nctrl)
++nvme_fc_free_ctrl(struct nvme_ctrl *nctrl)
  {
-@@ -924,8 +917,7 @@ static int exynos_adc_probe(struct platf
- 	return 0;
+ 	struct nvme_fc_ctrl *ctrl = to_fc_ctrl(nctrl);
  
- err_of_populate:
--	device_for_each_child(&indio_dev->dev, NULL,
--				exynos_adc_remove_devices);
-+	of_platform_depopulate(&indio_dev->dev);
- 	if (has_ts) {
- 		input_unregister_device(info->input);
- 		free_irq(info->tsirq, info);
-@@ -954,8 +946,7 @@ static int exynos_adc_remove(struct plat
- 		free_irq(info->tsirq, info);
- 		input_unregister_device(info->input);
- 	}
--	device_for_each_child(&indio_dev->dev, NULL,
--				exynos_adc_remove_devices);
-+	of_platform_depopulate(&indio_dev->dev);
- 	iio_device_unregister(indio_dev);
- 	free_irq(info->irq, info);
- 	if (info->data->exit_hw)
+@@ -3350,7 +3350,7 @@ static const struct nvme_ctrl_ops nvme_f
+ 	.reg_read32		= nvmf_reg_read32,
+ 	.reg_read64		= nvmf_reg_read64,
+ 	.reg_write32		= nvmf_reg_write32,
+-	.free_ctrl		= nvme_fc_nvme_ctrl_freed,
++	.free_ctrl		= nvme_fc_free_ctrl,
+ 	.submit_async_event	= nvme_fc_submit_async_event,
+ 	.delete_ctrl		= nvme_fc_delete_ctrl,
+ 	.get_address		= nvmf_get_address,
 
 
