@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD9352BD012;
-	Wed,  4 Feb 2026 15:30:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 098922BD012;
+	Wed,  4 Feb 2026 15:30:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770219050; cv=none; b=mOkakpOSwOhK+/0IOID1S5HIrs6fuE8T3gXkTLpDAaY4n7OY1hsbc7NvI10P1w8Vr3vJDwu2Uh4N1moM89CjI/nsg9n1f0Bvy+p7R7IXes0CWnPg1hRPac30Db7sDZt7PtXKbnrH1/3gygO29/h5um1CgXTwRKcFI9SVuellqVI=
+	t=1770219054; cv=none; b=SJJHBF9xpZNSK0hPNXFoJZGokquBliW1JGUUbv37GMla9Ah8XVXJ2FgCaPT1PcR4DCkaiozSRZtdzFeqaFggHpRpGHVas8W6Wne4DgoixTU4j5UuvjVELKfgIr5rw91TMV9K173b9pgM4xJBB5btiWWSORF8nJ37RYIuf/8vKIE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770219050; c=relaxed/simple;
-	bh=vOZk9XFidI8jn2Y5SNPY/yXhF+gEhxjn9MH1g4rkemQ=;
+	s=arc-20240116; t=1770219054; c=relaxed/simple;
+	bh=9hPi2L0mhSIE/SLy4Av5LP3QFOG9nohFZi044rmolCE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XWxiNE0VTEfIgXIZjTTD+hfIEY8UBx9BMqWMemqZ9pikRjFJqEpHDi+S9PiJD0GK9e6KXOBgqKtAA1H4FVByS3gdJsAYvKuS/wZARnJ+LuJ5xhBcB1i/E0D8ndFjVa6omMT9hrBVHEzY/ftHtanr9IqwSdGW7+h9Hh++8Opt26s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bqzzyYmT; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uzHrXpFHtK9SMdZKoGYe0W445DEXfK+oaVMYJdGVeulKYNRIBE+vJQDYdqwwHQ3KUWWf0g7/KwXmxJt+ia8rxHVsgKf8NPKMBAlIm2OIO6zJzuN773STnhM0Etst3fCZZSSxItu/VC9/IOLl55iE9I/v8jA6ffrl0GVUQVIFbCo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vXHEgmj6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bqzzyYmT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D14CC4CEF7;
-	Wed,  4 Feb 2026 15:30:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vXHEgmj6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 69A1FC116C6;
+	Wed,  4 Feb 2026 15:30:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770219050;
-	bh=vOZk9XFidI8jn2Y5SNPY/yXhF+gEhxjn9MH1g4rkemQ=;
+	s=korg; t=1770219053;
+	bh=9hPi2L0mhSIE/SLy4Av5LP3QFOG9nohFZi044rmolCE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bqzzyYmTVyLVvjJkZnNYc4QmYi/z5+y+4fMtm9RhJMnQMWBExlHjDOBiWJ0a9O/Cr
-	 x9VWv4kmLxA017n6uOmrsKe89EjjzrRfDLRWyjMp98C8+4+S8eNmacE1h9Vl+orqke
-	 oczshNGf7g5VoXvFV5arDuE5rh3cimxwuymxfAr0=
+	b=vXHEgmj6jbONryX765V+9aCIaXdyQuDOFtGsLwtX43hKWgdwd/ohGiYg4qZzub/3J
+	 rblDDlsVgHsFfrTJ9rGLlQDGVwqyyTDuri1B8kDN8BiY88sDhGVvRFJaaPNf5D7wEn
+	 2HfyXkwpTdFQqs56oO3KgJ6NZPDX4mmzwaGEFjJk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christoph Hellwig <hch@lst.de>,
 	Shida Zhang <zhangshida@kylinos.cn>,
 	Coly Li <colyli@fnnas.com>,
+	Christoph Hellwig <hch@lst.de>,
 	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 051/122] bcache: use bio cloning for detached device requests
-Date: Wed,  4 Feb 2026 15:40:33 +0100
-Message-ID: <20260204143853.692314234@linuxfoundation.org>
+Subject: [PATCH 6.18 052/122] bcache: fix I/O accounting leak in detached_dev_do_request
+Date: Wed,  4 Feb 2026 15:40:34 +0100
+Message-ID: <20260204143853.727442698@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260204143851.857060534@linuxfoundation.org>
 References: <20260204143851.857060534@linuxfoundation.org>
@@ -55,230 +55,35 @@ Content-Transfer-Encoding: 8bit
 
 From: Shida Zhang <zhangshida@kylinos.cn>
 
-[ Upstream commit 3ef825dfd4e487d6f92b23ee2df2455814583ef4 ]
+[ Upstream commit 4da7c5c3ec34d839bba6e035c3d05c447a2f9d4f ]
 
-Previously, bcache hijacked the bi_end_io and bi_private fields of
-the incoming bio when the backing device was in a detached state.
-This is fragile and breaks if the bio is needed to be processed by
-other layers.
+When a bcache device is detached, discard requests are completed
+immediately. However, the I/O accounting started in
+cached_dev_make_request() is not ended, leading to 100% disk
+utilization reports in iostat. Add the missing bio_end_io_acct() call.
 
-This patch transitions to using a cloned bio embedded within a private
-structure. This ensures the original bio's metadata remains untouched.
-
-Fixes: 53280e398471 ("bcache: fix improper use of bi_end_io")
-Co-developed-by: Christoph Hellwig <hch@lst.de>
-Signed-off-by: Christoph Hellwig <hch@lst.de>
+Fixes: cafe56359144 ("bcache: A block layer cache")
 Signed-off-by: Shida Zhang <zhangshida@kylinos.cn>
 Acked-by: Coly Li <colyli@fnnas.com>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
 Signed-off-by: Jens Axboe <axboe@kernel.dk>
-Stable-dep-of: 4da7c5c3ec34 ("bcache: fix I/O accounting leak in detached_dev_do_request")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/md/bcache/bcache.h  |  9 +++++
- drivers/md/bcache/request.c | 79 ++++++++++++++++---------------------
- drivers/md/bcache/super.c   | 12 +++++-
- 3 files changed, 54 insertions(+), 46 deletions(-)
+ drivers/md/bcache/request.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/md/bcache/bcache.h b/drivers/md/bcache/bcache.h
-index 1d33e40d26ea5..cca5756030d71 100644
---- a/drivers/md/bcache/bcache.h
-+++ b/drivers/md/bcache/bcache.h
-@@ -273,6 +273,8 @@ struct bcache_device {
- 
- 	struct bio_set		bio_split;
- 
-+	struct bio_set		bio_detached;
-+
- 	unsigned int		data_csum:1;
- 
- 	int (*cache_miss)(struct btree *b, struct search *s,
-@@ -755,6 +757,13 @@ struct bbio {
- 	struct bio		bio;
- };
- 
-+struct detached_dev_io_private {
-+	struct bcache_device	*d;
-+	unsigned long		start_time;
-+	struct bio		*orig_bio;
-+	struct bio              bio;
-+};
-+
- #define BTREE_PRIO		USHRT_MAX
- #define INITIAL_PRIO		32768U
- 
 diff --git a/drivers/md/bcache/request.c b/drivers/md/bcache/request.c
-index 82fdea7dea7aa..a02aecac05cdf 100644
+index a02aecac05cdf..6cba1180be8aa 100644
 --- a/drivers/md/bcache/request.c
 +++ b/drivers/md/bcache/request.c
-@@ -1077,68 +1077,58 @@ static CLOSURE_CALLBACK(cached_dev_nodata)
- 	continue_at(cl, cached_dev_bio_complete, NULL);
- }
+@@ -1107,6 +1107,7 @@ static void detached_dev_do_request(struct bcache_device *d,
  
--struct detached_dev_io_private {
--	struct bcache_device	*d;
--	unsigned long		start_time;
--	bio_end_io_t		*bi_end_io;
--	void			*bi_private;
--	struct block_device	*orig_bdev;
--};
--
- static void detached_dev_end_io(struct bio *bio)
- {
--	struct detached_dev_io_private *ddip;
--
--	ddip = bio->bi_private;
--	bio->bi_end_io = ddip->bi_end_io;
--	bio->bi_private = ddip->bi_private;
-+	struct detached_dev_io_private *ddip =
-+		container_of(bio, struct detached_dev_io_private, bio);
-+	struct bio *orig_bio = ddip->orig_bio;
- 
- 	/* Count on the bcache device */
--	bio_end_io_acct_remapped(bio, ddip->start_time, ddip->orig_bdev);
-+	bio_end_io_acct(orig_bio, ddip->start_time);
- 
- 	if (bio->bi_status) {
--		struct cached_dev *dc = container_of(ddip->d,
--						     struct cached_dev, disk);
-+		struct cached_dev *dc = bio->bi_private;
-+
- 		/* should count I/O error for backing device here */
- 		bch_count_backing_io_errors(dc, bio);
-+		orig_bio->bi_status = bio->bi_status;
- 	}
- 
--	kfree(ddip);
--	bio_endio(bio);
-+	bio_put(bio);
-+	bio_endio(orig_bio);
- }
- 
--static void detached_dev_do_request(struct bcache_device *d, struct bio *bio,
--		struct block_device *orig_bdev, unsigned long start_time)
-+static void detached_dev_do_request(struct bcache_device *d,
-+		struct bio *orig_bio, unsigned long start_time)
- {
- 	struct detached_dev_io_private *ddip;
- 	struct cached_dev *dc = container_of(d, struct cached_dev, disk);
-+	struct bio *clone_bio;
- 
--	/*
--	 * no need to call closure_get(&dc->disk.cl),
--	 * because upper layer had already opened bcache device,
--	 * which would call closure_get(&dc->disk.cl)
--	 */
--	ddip = kzalloc(sizeof(struct detached_dev_io_private), GFP_NOIO);
--	if (!ddip) {
--		bio->bi_status = BLK_STS_RESOURCE;
--		bio_endio(bio);
-+	if (bio_op(orig_bio) == REQ_OP_DISCARD &&
-+	    !bdev_max_discard_sectors(dc->bdev)) {
-+		bio_endio(orig_bio);
+ 	if (bio_op(orig_bio) == REQ_OP_DISCARD &&
+ 	    !bdev_max_discard_sectors(dc->bdev)) {
++		bio_end_io_acct(orig_bio, start_time);
+ 		bio_endio(orig_bio);
  		return;
  	}
- 
--	ddip->d = d;
-+	clone_bio = bio_alloc_clone(dc->bdev, orig_bio, GFP_NOIO,
-+				    &d->bio_detached);
-+	if (!clone_bio) {
-+		orig_bio->bi_status = BLK_STS_RESOURCE;
-+		bio_endio(orig_bio);
-+		return;
-+	}
-+
-+	ddip = container_of(clone_bio, struct detached_dev_io_private, bio);
- 	/* Count on the bcache device */
--	ddip->orig_bdev = orig_bdev;
-+	ddip->d = d;
- 	ddip->start_time = start_time;
--	ddip->bi_end_io = bio->bi_end_io;
--	ddip->bi_private = bio->bi_private;
--	bio->bi_end_io = detached_dev_end_io;
--	bio->bi_private = ddip;
--
--	if ((bio_op(bio) == REQ_OP_DISCARD) &&
--	    !bdev_max_discard_sectors(dc->bdev))
--		detached_dev_end_io(bio);
--	else
--		submit_bio_noacct(bio);
-+	ddip->orig_bio = orig_bio;
-+
-+	clone_bio->bi_end_io = detached_dev_end_io;
-+	clone_bio->bi_private = dc;
-+
-+	submit_bio_noacct(clone_bio);
- }
- 
- static void quit_max_writeback_rate(struct cache_set *c,
-@@ -1214,10 +1204,10 @@ void cached_dev_submit_bio(struct bio *bio)
- 
- 	start_time = bio_start_io_acct(bio);
- 
--	bio_set_dev(bio, dc->bdev);
- 	bio->bi_iter.bi_sector += dc->sb.data_offset;
- 
- 	if (cached_dev_get(dc)) {
-+		bio_set_dev(bio, dc->bdev);
- 		s = search_alloc(bio, d, orig_bdev, start_time);
- 		trace_bcache_request_start(s->d, bio);
- 
-@@ -1237,9 +1227,10 @@ void cached_dev_submit_bio(struct bio *bio)
- 			else
- 				cached_dev_read(dc, s);
- 		}
--	} else
-+	} else {
- 		/* I/O request sent to backing device */
--		detached_dev_do_request(d, bio, orig_bdev, start_time);
-+		detached_dev_do_request(d, bio, start_time);
-+	}
- }
- 
- static int cached_dev_ioctl(struct bcache_device *d, blk_mode_t mode,
-diff --git a/drivers/md/bcache/super.c b/drivers/md/bcache/super.c
-index 6d250e366412c..9218b9dbd4af2 100644
---- a/drivers/md/bcache/super.c
-+++ b/drivers/md/bcache/super.c
-@@ -887,6 +887,7 @@ static void bcache_device_free(struct bcache_device *d)
- 	}
- 
- 	bioset_exit(&d->bio_split);
-+	bioset_exit(&d->bio_detached);
- 	kvfree(d->full_dirty_stripes);
- 	kvfree(d->stripe_sectors_dirty);
- 
-@@ -949,6 +950,11 @@ static int bcache_device_init(struct bcache_device *d, unsigned int block_size,
- 			BIOSET_NEED_BVECS|BIOSET_NEED_RESCUER))
- 		goto out_ida_remove;
- 
-+	if (bioset_init(&d->bio_detached, 4,
-+			offsetof(struct detached_dev_io_private, bio),
-+			BIOSET_NEED_BVECS|BIOSET_NEED_RESCUER))
-+		goto out_bioset_split_exit;
-+
- 	if (lim.logical_block_size > PAGE_SIZE && cached_bdev) {
- 		/*
- 		 * This should only happen with BCACHE_SB_VERSION_BDEV.
-@@ -964,7 +970,7 @@ static int bcache_device_init(struct bcache_device *d, unsigned int block_size,
- 
- 	d->disk = blk_alloc_disk(&lim, NUMA_NO_NODE);
- 	if (IS_ERR(d->disk))
--		goto out_bioset_exit;
-+		goto out_bioset_detach_exit;
- 
- 	set_capacity(d->disk, sectors);
- 	snprintf(d->disk->disk_name, DISK_NAME_LEN, "bcache%i", idx);
-@@ -976,7 +982,9 @@ static int bcache_device_init(struct bcache_device *d, unsigned int block_size,
- 	d->disk->private_data	= d;
- 	return 0;
- 
--out_bioset_exit:
-+out_bioset_detach_exit:
-+	bioset_exit(&d->bio_detached);
-+out_bioset_split_exit:
- 	bioset_exit(&d->bio_split);
- out_ida_remove:
- 	ida_free(&bcache_device_idx, idx);
 -- 
 2.51.0
 
