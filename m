@@ -1,38 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64A2E285404;
-	Wed,  4 Feb 2026 15:02:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1A10285404;
+	Wed,  4 Feb 2026 15:02:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770217326; cv=none; b=pP4Lp3/Sk0yq4oIZ70kB5ZOte0A0d63BLlDVFQ3KTS9bOVW+BVc4e8nOtPqLg9Wr4mjQ9Buv3UAf0m2jSoBpH2KxrxetPZmpzhlOIm6Po/GrNmO6LrovJCSvmJf5lUHc/myCnzH2C8VcukVETMyakwv6aghVem7YiOAHJN/96aQ=
+	t=1770217329; cv=none; b=Kw6H7u0YhxPIeqSwA149u9Q3KtG5fG9t0Vh+wq9Ajhm2TMcMwzfw6ZJpfgyqQ1dQDxDtTnsk6iKj8lsLeCjckqfVkCchjtT4IFk1LR0yChZCT+H6Go1XDdBPQFkFqvfdKo8ixYgDv4Qwx5yaMg4cyXrmCsR4UIkWUW1nm//IdQo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770217326; c=relaxed/simple;
-	bh=P2BELcVbfinIBkMoEun56XN8FehbiMZ2mTp9yRwjOUo=;
+	s=arc-20240116; t=1770217329; c=relaxed/simple;
+	bh=7NqI4bhQE/IocWjm82ZA/pWsaxPhcP+1D1uBC6Jo/as=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XEhwRYlzItwZwxY0pb6CBguGza6wqVxZku4F3sAnosTuM4HpC7nlY7qNhaXuhPQbGMT6//RV42sP0xdaT0yTD8hauZgCEKhxbtcH9T7cqztsBy71r1xldFaR0QKa7r5sNvXqpFWZ5ykGn/3iCAKm1QM59wiP9ZsliYEXxUzPS/0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aDA3/L7T; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Xp3ob0JIqtIWKuEJqPjzW6YmuhFwxv3pDdgxml5dod4pUTGoCO/kvZeonIAELiQCbdHDjIx9iRqEUI0AMYi32J3nUsUwjOES6XnPSKtQJJfTWbg/x+LAMu4Y6W69jGqudWLKk3RvoNnkyn2xbC7QcqUk7I04MlqAPXL37zwFuBw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hIqIdXI8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aDA3/L7T"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C5B0DC4CEF7;
-	Wed,  4 Feb 2026 15:02:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hIqIdXI8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2EB1EC4CEF7;
+	Wed,  4 Feb 2026 15:02:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770217326;
-	bh=P2BELcVbfinIBkMoEun56XN8FehbiMZ2mTp9yRwjOUo=;
+	s=korg; t=1770217329;
+	bh=7NqI4bhQE/IocWjm82ZA/pWsaxPhcP+1D1uBC6Jo/as=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aDA3/L7TmYlxI8ThXbfIXatX+Kn+yMKrByqWylkj6WPDBbu5xQIBrBfQFWLF5zE4Q
-	 1IOECgEbBXmm6MKeOz338fFY5uYb/M4FJCKUdXXYTDysPWWNTeutbv69fcBCSineKj
-	 bVrak61X5Y+x+vkbwNkdOag8y/rwcA1wgnaUvePA=
+	b=hIqIdXI8+VW/4ipxl49k2jRWDqtcshl1DWHI24oHmiJ6LleKzRXbFEfKwQ8+ilmGm
+	 7gGEaef0mVolfc/fZcA7HcHGJS+D6e7KHWEVTB4Dl/jZw6NGMs2V1RZjR4DYMlVec1
+	 uYQcCtqU7YhqaAd7cBN/9au0C3aoa8uaVIJG3pGo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gyeyoung Baek <gye976@gmail.com>,
-	Thomas Gleixner <tglx@linutronix.de>,
-	Rahul Sharma <black.hawk@163.com>
-Subject: [PATCH 5.15 190/206] genirq/irq_sim: Initialize work context pointers properly
-Date: Wed,  4 Feb 2026 15:40:21 +0100
-Message-ID: <20260204143905.067939066@linuxfoundation.org>
+	Marc Kleine-Budde <mkl@pengutronix.de>
+Subject: [PATCH 5.15 191/206] can: esd_usb: esd_usb_read_bulk_callback(): fix URB memory leak
+Date: Wed,  4 Feb 2026 15:40:22 +0100
+Message-ID: <20260204143905.103860466@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260204143858.193781818@linuxfoundation.org>
 References: <20260204143858.193781818@linuxfoundation.org>
@@ -51,36 +49,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gyeyoung Baek <gye976@gmail.com>
+From: Marc Kleine-Budde <mkl@pengutronix.de>
 
-[ Upstream commit 8a2277a3c9e4cc5398f80821afe7ecbe9bdf2819 ]
+commit 5a4391bdc6c8357242f62f22069c865b792406b3 upstream.
 
-Initialize `ops` member's pointers properly by using kzalloc() instead of
-kmalloc() when allocating the simulation work context. Otherwise the
-pointers contain random content leading to invalid dereferencing.
+Fix similar memory leak as in commit 7352e1d5932a ("can: gs_usb:
+gs_usb_receive_bulk_callback(): fix URB memory leak").
 
-Signed-off-by: Gyeyoung Baek <gye976@gmail.com>
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Link: https://lore.kernel.org/all/20250612124827.63259-1-gye976@gmail.com
-[ The context change is due to the commit 011f583781fa
-("genirq/irq_sim: add an extended irq_sim initializer")
-which is irrelevant to the logic of this patch. ]
-Signed-off-by: Rahul Sharma <black.hawk@163.com>
+In esd_usb_open(), the URBs for USB-in transfers are allocated, added to
+the dev->rx_submitted anchor and submitted. In the complete callback
+esd_usb_read_bulk_callback(), the URBs are processed and resubmitted. In
+esd_usb_close() the URBs are freed by calling
+usb_kill_anchored_urbs(&dev->rx_submitted).
+
+However, this does not take into account that the USB framework unanchors
+the URB before the complete function is called. This means that once an
+in-URB has been completed, it is no longer anchored and is ultimately not
+released in esd_usb_close().
+
+Fix the memory leak by anchoring the URB in the
+esd_usb_read_bulk_callback() to the dev->rx_submitted anchor.
+
+Fixes: 96d8e90382dc ("can: Add driver for esd CAN-USB/2 device")
+Cc: stable@vger.kernel.org
+Link: https://patch.msgid.link/20260116-can_usb-fix-memory-leak-v2-2-4b8cb2915571@pengutronix.de
+Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/irq/irq_sim.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/can/usb/esd_usb2.c |    9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
 
---- a/kernel/irq/irq_sim.c
-+++ b/kernel/irq/irq_sim.c
-@@ -166,7 +166,7 @@ struct irq_domain *irq_domain_create_sim
- {
- 	struct irq_sim_work_ctx *work_ctx;
+--- a/drivers/net/can/usb/esd_usb2.c
++++ b/drivers/net/can/usb/esd_usb2.c
+@@ -440,13 +440,20 @@ resubmit_urb:
+ 			  urb->transfer_buffer, RX_BUFFER_SIZE,
+ 			  esd_usb2_read_bulk_callback, dev);
  
--	work_ctx = kmalloc(sizeof(*work_ctx), GFP_KERNEL);
-+	work_ctx = kzalloc(sizeof(*work_ctx), GFP_KERNEL);
- 	if (!work_ctx)
- 		goto err_out;
- 
++	usb_anchor_urb(urb, &dev->rx_submitted);
++
+ 	retval = usb_submit_urb(urb, GFP_ATOMIC);
++	if (!retval)
++		return;
++
++	usb_unanchor_urb(urb);
++
+ 	if (retval == -ENODEV) {
+ 		for (i = 0; i < dev->net_count; i++) {
+ 			if (dev->nets[i])
+ 				netif_device_detach(dev->nets[i]->netdev);
+ 		}
+-	} else if (retval) {
++	} else {
+ 		dev_err(dev->udev->dev.parent,
+ 			"failed resubmitting read bulk urb: %d\n", retval);
+ 	}
 
 
