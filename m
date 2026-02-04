@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 171D841C2E4;
-	Wed,  4 Feb 2026 14:55:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 393DF41B34E;
+	Wed,  4 Feb 2026 14:55:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770216911; cv=none; b=DoG0MgFM2QR0dHEhRwOqAJTpdvy2d71wq4JP6u8vEWZxAe6E95QMfwRbWG4HcJWa3EZ8CQVPL9naimB3D+D2koRqzA2NHa8Jk1jKqrUvUQ/15j3FLOfcxHrbnCyt/mNS+rXo/zOaaG5QFm09Pt9bOHuasHfNfPVjNQXXJrp2QLY=
+	t=1770216914; cv=none; b=PMf2pfloXAcnJKpAIIS44GPAQ1AXifggsCjBQLZz57FDGZxDEvOUfBcMTB6NenDpupBhZccXGTiB+q0ABDaeDFqH7Hk8On//xV70WiXmjQ2GCXzVNr2PXY0tLzGXXnN1nlGQLRcJsAypSJMS1hjy4qE41GnxEy60MJmzj9a1Vfs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770216911; c=relaxed/simple;
-	bh=NrdpF7I9Jc/NhK2sqPIdLHk2EztU+zx5zsAzdO7wMgs=;
+	s=arc-20240116; t=1770216914; c=relaxed/simple;
+	bh=lZktKEqcTiR9XB+5lC+MYbgoub58/S5CehekVM5DVQI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=grRCXpk45RzHbEkm6NWlNDo6TvZutGbuyh07WeV0OyC+TBrkvdAye5BbZM6vBOWNqdnAubJSNRg3bJofFTpzSUHeCTUZp4X67lkUmpD0XQl9Pajrbro/uHR9LBH+wwnY6ouxdSw+0M49PLf2z8uQcDsiZlAOI2U05/rOMNohWH0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UNnSK7rJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WfgMx4w/NI8yu5nlGg3wmd5X+IzA2uT1tM8nuI1pXNeOxwMW3reO3jcpZMBrlmVmfoNkTA6Jk7zvJ7G/D7uVNaRr3l2z8DgKghH42BVoUWJzI/3+8MMWyr0Uss8T9PeeiXmpOGS1S4vWj6ub7+q+IIRT9icB7itE7Sa4luwU6VE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gGyyOokC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UNnSK7rJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E672C4CEF7;
-	Wed,  4 Feb 2026 14:55:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gGyyOokC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B6266C4CEF7;
+	Wed,  4 Feb 2026 14:55:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770216911;
-	bh=NrdpF7I9Jc/NhK2sqPIdLHk2EztU+zx5zsAzdO7wMgs=;
+	s=korg; t=1770216914;
+	bh=lZktKEqcTiR9XB+5lC+MYbgoub58/S5CehekVM5DVQI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UNnSK7rJqDv+6N3tbiaCi+MlU6/jqWAYGa1mtpLd3hawhr9nqspANxOfZR2ZUOrOV
-	 H2YspCX4JGpym0ZckWeSuXYpX2hB+gBJ6kNdlvIFN+IoPBFdiW7IDRphGbyTk5UfpA
-	 uVBrtAs3QP7QXfvOEM44MQLOjaScDC2gCOlJl9NE=
+	b=gGyyOokC7a4QtFxtqwzN0lYC0hthzlk/KxncKIQwedRuL8Crjxbwpnacf3ZopBi1Q
+	 EKqn4P7lmOG8LIP8iI3nwkvP5Y0kVkgblxD2pNvJ7Ft7fAafyqtwXlsmss3Fdmng6b
+	 FItcru1KqalCrjPyYjVjarCSypr5r3gcE+SZJxsM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fernando Fernandez Mancera <fmancera@suse.de>,
-	"=?UTF-8?q?Ricardo=20B . =20Marli=C3=A8re?=" <rbm@suse.com>,
-	Ido Schimmel <idosch@nvidia.com>,
+	Zhen Chen <chenzhen126@huawei.com>,
+	Xin Long <lucien.xin@gmail.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 069/206] selftests: net: fib-onlink-tests: Convert to use namespaces by default
-Date: Wed,  4 Feb 2026 15:38:20 +0100
-Message-ID: <20260204143900.699047060@linuxfoundation.org>
+Subject: [PATCH 5.15 070/206] sctp: move SCTP_CMD_ASSOC_SHKEY right after SCTP_CMD_PEER_INIT
+Date: Wed,  4 Feb 2026 15:38:21 +0100
+Message-ID: <20260204143900.734741941@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260204143858.193781818@linuxfoundation.org>
 References: <20260204143858.193781818@linuxfoundation.org>
@@ -47,186 +46,105 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ricardo B. Marlière <rbm@suse.com>
+From: Xin Long <lucien.xin@gmail.com>
 
-[ Upstream commit 4f5f148dd7c0459229d2ab9a769b2e820f9ee6a2 ]
+[ Upstream commit a80c9d945aef55b23b54838334345f20251dad83 ]
 
-Currently, the test breaks if the SUT already has a default route
-configured for IPv6. Fix by avoiding the use of the default namespace.
+A null-ptr-deref was reported in the SCTP transmit path when SCTP-AUTH key
+initialization fails:
 
-Fixes: 4ed591c8ab44 ("net/ipv6: Allow onlink routes to have a device mismatch if it is the default route")
-Suggested-by: Fernando Fernandez Mancera <fmancera@suse.de>
-Signed-off-by: Ricardo B. Marlière <rbm@suse.com>
-Reviewed-by: Ido Schimmel <idosch@nvidia.com>
-Reviewed-by: Fernando Fernandez Mancera <fmancera@suse.de>
-Link: https://patch.msgid.link/20260113-selftests-net-fib-onlink-v2-1-89de2b931389@suse.com
+  ==================================================================
+  KASAN: null-ptr-deref in range [0x0000000000000018-0x000000000000001f]
+  CPU: 0 PID: 16 Comm: ksoftirqd/0 Tainted: G W 6.6.0 #2
+  RIP: 0010:sctp_packet_bundle_auth net/sctp/output.c:264 [inline]
+  RIP: 0010:sctp_packet_append_chunk+0xb36/0x1260 net/sctp/output.c:401
+  Call Trace:
+
+  sctp_packet_transmit_chunk+0x31/0x250 net/sctp/output.c:189
+  sctp_outq_flush_data+0xa29/0x26d0 net/sctp/outqueue.c:1111
+  sctp_outq_flush+0xc80/0x1240 net/sctp/outqueue.c:1217
+  sctp_cmd_interpreter.isra.0+0x19a5/0x62c0 net/sctp/sm_sideeffect.c:1787
+  sctp_side_effects net/sctp/sm_sideeffect.c:1198 [inline]
+  sctp_do_sm+0x1a3/0x670 net/sctp/sm_sideeffect.c:1169
+  sctp_assoc_bh_rcv+0x33e/0x640 net/sctp/associola.c:1052
+  sctp_inq_push+0x1dd/0x280 net/sctp/inqueue.c:88
+  sctp_rcv+0x11ae/0x3100 net/sctp/input.c:243
+  sctp6_rcv+0x3d/0x60 net/sctp/ipv6.c:1127
+
+The issue is triggered when sctp_auth_asoc_init_active_key() fails in
+sctp_sf_do_5_1C_ack() while processing an INIT_ACK. In this case, the
+command sequence is currently:
+
+- SCTP_CMD_PEER_INIT
+- SCTP_CMD_TIMER_STOP (T1_INIT)
+- SCTP_CMD_TIMER_START (T1_COOKIE)
+- SCTP_CMD_NEW_STATE (COOKIE_ECHOED)
+- SCTP_CMD_ASSOC_SHKEY
+- SCTP_CMD_GEN_COOKIE_ECHO
+
+If SCTP_CMD_ASSOC_SHKEY fails, asoc->shkey remains NULL, while
+asoc->peer.auth_capable and asoc->peer.peer_chunks have already been set by
+SCTP_CMD_PEER_INIT. This allows a DATA chunk with auth = 1 and shkey = NULL
+to be queued by sctp_datamsg_from_user().
+
+Since command interpretation stops on failure, no COOKIE_ECHO should been
+sent via SCTP_CMD_GEN_COOKIE_ECHO. However, the T1_COOKIE timer has already
+been started, and it may enqueue a COOKIE_ECHO into the outqueue later. As
+a result, the DATA chunk can be transmitted together with the COOKIE_ECHO
+in sctp_outq_flush_data(), leading to the observed issue.
+
+Similar to the other places where it calls sctp_auth_asoc_init_active_key()
+right after sctp_process_init(), this patch moves the SCTP_CMD_ASSOC_SHKEY
+immediately after SCTP_CMD_PEER_INIT, before stopping T1_INIT and starting
+T1_COOKIE. This ensures that if shared key generation fails, authenticated
+DATA cannot be sent. It also allows the T1_INIT timer to retransmit INIT,
+giving the client another chance to process INIT_ACK and retry key setup.
+
+Fixes: 730fc3d05cd4 ("[SCTP]: Implete SCTP-AUTH parameter processing")
+Reported-by: Zhen Chen <chenzhen126@huawei.com>
+Tested-by: Zhen Chen <chenzhen126@huawei.com>
+Signed-off-by: Xin Long <lucien.xin@gmail.com>
+Link: https://patch.msgid.link/44881224b375aa8853f5e19b4055a1a56d895813.1768324226.git.lucien.xin@gmail.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../testing/selftests/net/fib-onlink-tests.sh | 71 ++++++++-----------
- 1 file changed, 30 insertions(+), 41 deletions(-)
+ net/sctp/sm_statefuns.c | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/tools/testing/selftests/net/fib-onlink-tests.sh b/tools/testing/selftests/net/fib-onlink-tests.sh
-index ec2d6ceb1f08d..c01be076b210d 100755
---- a/tools/testing/selftests/net/fib-onlink-tests.sh
-+++ b/tools/testing/selftests/net/fib-onlink-tests.sh
-@@ -120,7 +120,7 @@ log_subsection()
+diff --git a/net/sctp/sm_statefuns.c b/net/sctp/sm_statefuns.c
+index f9882e0e67b1b..dc758ad0051e0 100644
+--- a/net/sctp/sm_statefuns.c
++++ b/net/sctp/sm_statefuns.c
+@@ -601,6 +601,11 @@ enum sctp_disposition sctp_sf_do_5_1C_ack(struct net *net,
+ 	sctp_add_cmd_sf(commands, SCTP_CMD_PEER_INIT,
+ 			SCTP_PEER_INIT(initchunk));
  
- run_cmd()
- {
--	local cmd="$*"
-+	local cmd="$1"
- 	local out
- 	local rc
++	/* SCTP-AUTH: generate the association shared keys so that
++	 * we can potentially sign the COOKIE-ECHO.
++	 */
++	sctp_add_cmd_sf(commands, SCTP_CMD_ASSOC_SHKEY, SCTP_NULL());
++
+ 	/* Reset init error count upon receipt of INIT-ACK.  */
+ 	sctp_add_cmd_sf(commands, SCTP_CMD_INIT_COUNTER_RESET, SCTP_NULL());
  
-@@ -145,7 +145,7 @@ get_linklocal()
- 	local pfx
- 	local addr
+@@ -615,11 +620,6 @@ enum sctp_disposition sctp_sf_do_5_1C_ack(struct net *net,
+ 	sctp_add_cmd_sf(commands, SCTP_CMD_NEW_STATE,
+ 			SCTP_STATE(SCTP_STATE_COOKIE_ECHOED));
  
--	addr=$(${pfx} ip -6 -br addr show dev ${dev} | \
-+	addr=$(${pfx} ${IP} -6 -br addr show dev ${dev} | \
- 	awk '{
- 		for (i = 3; i <= NF; ++i) {
- 			if ($i ~ /^fe80/)
-@@ -173,58 +173,48 @@ setup()
- 
- 	set -e
- 
--	# create namespace
--	setup_ns PEER_NS
-+	# create namespaces
-+	setup_ns ns1
-+	IP="ip -netns $ns1"
-+	setup_ns ns2
- 
- 	# add vrf table
--	ip li add ${VRF} type vrf table ${VRF_TABLE}
--	ip li set ${VRF} up
--	ip ro add table ${VRF_TABLE} unreachable default metric 8192
--	ip -6 ro add table ${VRF_TABLE} unreachable default metric 8192
-+	${IP} li add ${VRF} type vrf table ${VRF_TABLE}
-+	${IP} li set ${VRF} up
-+	${IP} ro add table ${VRF_TABLE} unreachable default metric 8192
-+	${IP} -6 ro add table ${VRF_TABLE} unreachable default metric 8192
- 
- 	# create test interfaces
--	ip li add ${NETIFS[p1]} type veth peer name ${NETIFS[p2]}
--	ip li add ${NETIFS[p3]} type veth peer name ${NETIFS[p4]}
--	ip li add ${NETIFS[p5]} type veth peer name ${NETIFS[p6]}
--	ip li add ${NETIFS[p7]} type veth peer name ${NETIFS[p8]}
-+	${IP} li add ${NETIFS[p1]} type veth peer name ${NETIFS[p2]}
-+	${IP} li add ${NETIFS[p3]} type veth peer name ${NETIFS[p4]}
-+	${IP} li add ${NETIFS[p5]} type veth peer name ${NETIFS[p6]}
-+	${IP} li add ${NETIFS[p7]} type veth peer name ${NETIFS[p8]}
- 
- 	# enslave vrf interfaces
- 	for n in 5 7; do
--		ip li set ${NETIFS[p${n}]} vrf ${VRF}
-+		${IP} li set ${NETIFS[p${n}]} vrf ${VRF}
- 	done
- 
- 	# add addresses
- 	for n in 1 3 5 7; do
--		ip li set ${NETIFS[p${n}]} up
--		ip addr add ${V4ADDRS[p${n}]}/24 dev ${NETIFS[p${n}]}
--		ip addr add ${V6ADDRS[p${n}]}/64 dev ${NETIFS[p${n}]} nodad
-+		${IP} li set ${NETIFS[p${n}]} up
-+		${IP} addr add ${V4ADDRS[p${n}]}/24 dev ${NETIFS[p${n}]}
-+		${IP} addr add ${V6ADDRS[p${n}]}/64 dev ${NETIFS[p${n}]} nodad
- 	done
- 
- 	# move peer interfaces to namespace and add addresses
- 	for n in 2 4 6 8; do
--		ip li set ${NETIFS[p${n}]} netns ${PEER_NS} up
--		ip -netns ${PEER_NS} addr add ${V4ADDRS[p${n}]}/24 dev ${NETIFS[p${n}]}
--		ip -netns ${PEER_NS} addr add ${V6ADDRS[p${n}]}/64 dev ${NETIFS[p${n}]} nodad
-+		${IP} li set ${NETIFS[p${n}]} netns ${ns2} up
-+		ip -netns $ns2 addr add ${V4ADDRS[p${n}]}/24 dev ${NETIFS[p${n}]}
-+		ip -netns $ns2 addr add ${V6ADDRS[p${n}]}/64 dev ${NETIFS[p${n}]} nodad
- 	done
- 
--	ip -6 ro add default via ${V6ADDRS[p3]/::[0-9]/::64}
--	ip -6 ro add table ${VRF_TABLE} default via ${V6ADDRS[p7]/::[0-9]/::64}
-+	${IP} -6 ro add default via ${V6ADDRS[p3]/::[0-9]/::64}
-+	${IP} -6 ro add table ${VRF_TABLE} default via ${V6ADDRS[p7]/::[0-9]/::64}
- 
- 	set +e
- }
- 
--cleanup()
--{
--	# make sure we start from a clean slate
--	cleanup_ns ${PEER_NS} 2>/dev/null
--	for n in 1 3 5 7; do
--		ip link del ${NETIFS[p${n}]} 2>/dev/null
--	done
--	ip link del ${VRF} 2>/dev/null
--	ip ro flush table ${VRF_TABLE}
--	ip -6 ro flush table ${VRF_TABLE}
--}
+-	/* SCTP-AUTH: generate the association shared keys so that
+-	 * we can potentially sign the COOKIE-ECHO.
+-	 */
+-	sctp_add_cmd_sf(commands, SCTP_CMD_ASSOC_SHKEY, SCTP_NULL());
 -
- ################################################################################
- # IPv4 tests
- #
-@@ -241,7 +231,7 @@ run_ip()
- 	# dev arg may be empty
- 	[ -n "${dev}" ] && dev="dev ${dev}"
- 
--	run_cmd ip ro add table "${table}" "${prefix}"/32 via "${gw}" "${dev}" onlink
-+	run_cmd "${IP} ro add table ${table} ${prefix}/32 via ${gw} ${dev} onlink"
- 	log_test $? ${exp_rc} "${desc}"
- }
- 
-@@ -257,8 +247,8 @@ run_ip_mpath()
- 	# dev arg may be empty
- 	[ -n "${dev}" ] && dev="dev ${dev}"
- 
--	run_cmd ip ro add table "${table}" "${prefix}"/32 \
--		nexthop via ${nh1} nexthop via ${nh2}
-+	run_cmd "${IP} ro add table ${table} ${prefix}/32 \
-+		nexthop via ${nh1} nexthop via ${nh2}"
- 	log_test $? ${exp_rc} "${desc}"
- }
- 
-@@ -339,7 +329,7 @@ run_ip6()
- 	# dev arg may be empty
- 	[ -n "${dev}" ] && dev="dev ${dev}"
- 
--	run_cmd ip -6 ro add table "${table}" "${prefix}"/128 via "${gw}" "${dev}" onlink
-+	run_cmd "${IP} -6 ro add table ${table} ${prefix}/128 via ${gw} ${dev} onlink"
- 	log_test $? ${exp_rc} "${desc}"
- }
- 
-@@ -353,8 +343,8 @@ run_ip6_mpath()
- 	local exp_rc="$6"
- 	local desc="$7"
- 
--	run_cmd ip -6 ro add table "${table}" "${prefix}"/128 "${opts}" \
--		nexthop via ${nh1} nexthop via ${nh2}
-+	run_cmd "${IP} -6 ro add table ${table} ${prefix}/128 ${opts} \
-+		nexthop via ${nh1} nexthop via ${nh2}"
- 	log_test $? ${exp_rc} "${desc}"
- }
- 
-@@ -491,10 +481,9 @@ do
- 	esac
- done
- 
--cleanup
- setup
- run_onlink_tests
--cleanup
-+cleanup_ns ${ns1} ${ns2}
- 
- if [ "$TESTS" != "none" ]; then
- 	printf "\nTests passed: %3d\n" ${nsuccess}
+ 	/* 5.1 C) "A" shall then send the State Cookie received in the
+ 	 * INIT ACK chunk in a COOKIE ECHO chunk, ...
+ 	 */
 -- 
 2.51.0
 
