@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 650B7421EE4;
-	Wed,  4 Feb 2026 15:22:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9551642188D;
+	Wed,  4 Feb 2026 15:22:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770218560; cv=none; b=mFEO1Mi3cn2UnA0WjrvrA+DkG5NvzJCCY3M4+IW7+pTsJYSXu0E7dl5oTca1WnlrqS3KEtHG/BHkN9FMAfGRmw9ZlMpsULhOGSfqJ/1Dh1sumCEqWE1kVIYMQ5dI56VhWQoUNB/MZNQnSS3RBCyEK9+mHrQt9XFJjfI3n6cLyhU=
+	t=1770218563; cv=none; b=IiLzNMIGXSOSha7R890zskovmXjPasrJUlL3ccC/iMnhYlonqmpNF/8fvorQMh4SD10bw2JTXwj17LZrP39cictTHfQP0e4ubdZQ3dtI0nkLvk8hB2AcrZZXKwg5tXFwlSTYTa1M3S57CnJDRRZYx2jrEls3R/z5cx7fvQWU3z4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770218560; c=relaxed/simple;
-	bh=76Z1IF2GUYuIPxFznPSTfcdM6QCyxTxUNi2aJK+1fxE=;
+	s=arc-20240116; t=1770218563; c=relaxed/simple;
+	bh=bMkEpfz59UE83EY+szsmkWFahSkJl2VSp7ONwXjKPyI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TlxUBGosXTW+yUKae7Gybv1RLRav10p93R/DKVZrcUPiPJ+17s9st81gfKEu0f3QSse+mfhK7ZBQUqBoYktymWYrRc7VmM2U4zOGAGICtaIYEbyO3hutA6mEltvfXviMZ99gEevWdfdZLe1KT9xijB01LecJv9yQotPKr7ABMt8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jTzwlqTe; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NemaGdjUOq5JsUcobPvxAMoMGhOyb5Ew4unUfDW+cl6BdjEscVm/3Z8H8Q/8SgLOoXZgCHpmwaEQABrY5Oul0uHdUYqA7n4WC2+lGrFEGWkf1wcRJgnP19u2NLlqcdCbEhpdI0LTVzdsRo7YP5NysuI0WfM4hUUNMgfD7u/sq8M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2lXyJui0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jTzwlqTe"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF642C4CEF7;
-	Wed,  4 Feb 2026 15:22:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2lXyJui0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0497EC4CEF7;
+	Wed,  4 Feb 2026 15:22:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770218560;
-	bh=76Z1IF2GUYuIPxFznPSTfcdM6QCyxTxUNi2aJK+1fxE=;
+	s=korg; t=1770218563;
+	bh=bMkEpfz59UE83EY+szsmkWFahSkJl2VSp7ONwXjKPyI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jTzwlqTeNdl0Oa5O7MhipEJ5AHP0a/Q077WCZzZ/XtA+xC5twYGhFfzIG/0xqaoeQ
-	 kIb1pW45Ub3zq3X8YQoQuwZzg6i0UAWIhxbQNt6qh83Fn+NMymMtlFSv1EwNvY5hV+
-	 EiCvd6kZMvay1CIYWAtKfZO6b7K3syhF23Y36d1U=
+	b=2lXyJui0KpC3PEZCtllnehAU9pUxb+P3MOLNopbrrcrkLx6bhkHaHtCEliZsNJzUF
+	 FPZ4xY1GtgJ7f2AAvcOZN/qDoDNyKeNRBAvH8E1q7YDkwgaFHp1WDJcknRjZ0fq/Ve
+	 rrAEETx8VXK1rYOEBtYWAhMglGXiLv3+SGHUscJk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eryk Kubanski <e.kubanski@partner.samsung.com>,
-	Magnus Karlsson <magnus.karlsson@intel.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Jianqiang kang <jianqkang@sina.cn>
-Subject: [PATCH 6.6 66/72] xsk: Fix race condition in AF_XDP generic RX path
-Date: Wed,  4 Feb 2026 15:41:09 +0100
-Message-ID: <20260204143848.031785612@linuxfoundation.org>
+	Marios Makassikis <mmakassikis@freebox.fr>,
+	Namjae Jeon <linkinjeon@kernel.org>,
+	Steve French <stfrench@microsoft.com>,
+	Li hongliang <1468888505@139.com>
+Subject: [PATCH 6.6 67/72] ksmbd: fix recursive locking in RPC handle list access
+Date: Wed,  4 Feb 2026 15:41:10 +0100
+Message-ID: <20260204143848.069797467@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260204143845.603454952@linuxfoundation.org>
 References: <20260204143845.603454952@linuxfoundation.org>
@@ -52,113 +52,155 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: "e.kubanski" <e.kubanski@partner.samsung.com>
+From: Marios Makassikis <mmakassikis@freebox.fr>
 
-[ Upstream commit a1356ac7749cafc4e27aa62c0c4604b5dca4983e ]
+[ Upstream commit 88f170814fea74911ceab798a43cbd7c5599bed4 ]
 
-Move rx_lock from xsk_socket to xsk_buff_pool.
-Fix synchronization for shared umem mode in
-generic RX path where multiple sockets share
-single xsk_buff_pool.
+Since commit 305853cce3794 ("ksmbd: Fix race condition in RPC handle list
+access"), ksmbd_session_rpc_method() attempts to lock sess->rpc_lock.
 
-RX queue is exclusive to xsk_socket, while FILL
-queue can be shared between multiple sockets.
-This could result in race condition where two
-CPU cores access RX path of two different sockets
-sharing the same umem.
+This causes hung connections / tasks when a client attempts to open
+a named pipe. Using Samba's rpcclient tool:
 
-Protect both queues by acquiring spinlock in shared
-xsk_buff_pool.
+ $ rpcclient //192.168.1.254 -U user%password
+ $ rpcclient $> srvinfo
+ <connection hung here>
 
-Lock contention may be minimized in the future by some
-per-thread FQ buffering.
+Kernel side:
+  "echo 0 > /proc/sys/kernel/hung_task_timeout_secs" disables this message.
+  task:kworker/0:0 state:D stack:0 pid:5021 tgid:5021 ppid:2 flags:0x00200000
+  Workqueue: ksmbd-io handle_ksmbd_work
+  Call trace:
+  __schedule from schedule+0x3c/0x58
+  schedule from schedule_preempt_disabled+0xc/0x10
+  schedule_preempt_disabled from rwsem_down_read_slowpath+0x1b0/0x1d8
+  rwsem_down_read_slowpath from down_read+0x28/0x30
+  down_read from ksmbd_session_rpc_method+0x18/0x3c
+  ksmbd_session_rpc_method from ksmbd_rpc_open+0x34/0x68
+  ksmbd_rpc_open from ksmbd_session_rpc_open+0x194/0x228
+  ksmbd_session_rpc_open from create_smb2_pipe+0x8c/0x2c8
+  create_smb2_pipe from smb2_open+0x10c/0x27ac
+  smb2_open from handle_ksmbd_work+0x238/0x3dc
+  handle_ksmbd_work from process_scheduled_works+0x160/0x25c
+  process_scheduled_works from worker_thread+0x16c/0x1e8
+  worker_thread from kthread+0xa8/0xb8
+  kthread from ret_from_fork+0x14/0x38
+  Exception stack(0x8529ffb0 to 0x8529fff8)
 
-It's safe and necessary to move spin_lock_bh(rx_lock)
-after xsk_rcv_check():
-* xs->pool and spinlock_init is synchronized by
-  xsk_bind() -> xsk_is_bound() memory barriers.
-* xsk_rcv_check() may return true at the moment
-  of xsk_release() or xsk_unbind_dev(),
-  however this will not cause any data races or
-  race conditions. xsk_unbind_dev() removes xdp
-  socket from all maps and waits for completion
-  of all outstanding rx operations. Packets in
-  RX path will either complete safely or drop.
+The task deadlocks because the lock is already held:
+  ksmbd_session_rpc_open
+    down_write(&sess->rpc_lock)
+    ksmbd_rpc_open
+      ksmbd_session_rpc_method
+        down_read(&sess->rpc_lock)   <-- deadlock
 
-Signed-off-by: Eryk Kubanski <e.kubanski@partner.samsung.com>
-Fixes: bf0bdd1343efb ("xdp: fix race on generic receive path")
-Acked-by: Magnus Karlsson <magnus.karlsson@intel.com>
-Link: https://patch.msgid.link/20250416101908.10919-1-e.kubanski@partner.samsung.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-[ Conflict is resolved when backporting this fix. ]
-Signed-off-by: Jianqiang kang <jianqkang@sina.cn>
+Adjust ksmbd_session_rpc_method() callers to take the lock when necessary.
+
+Fixes: 305853cce3794 ("ksmbd: Fix race condition in RPC handle list access")
+Signed-off-by: Marios Makassikis <mmakassikis@freebox.fr>
+Acked-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Steve French <stfrench@microsoft.com>
+Signed-off-by: Li hongliang <1468888505@139.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/net/xdp_sock.h      |    3 ---
- include/net/xsk_buff_pool.h |    2 ++
- net/xdp/xsk.c               |    6 +++---
- net/xdp/xsk_buff_pool.c     |    1 +
- 4 files changed, 6 insertions(+), 6 deletions(-)
+ fs/smb/server/mgmt/user_session.c |    7 ++-----
+ fs/smb/server/smb2pdu.c           |    9 ++++++++-
+ fs/smb/server/transport_ipc.c     |   12 ++++++++++++
+ 3 files changed, 22 insertions(+), 6 deletions(-)
 
---- a/include/net/xdp_sock.h
-+++ b/include/net/xdp_sock.h
-@@ -63,9 +63,6 @@ struct xdp_sock {
+--- a/fs/smb/server/mgmt/user_session.c
++++ b/fs/smb/server/mgmt/user_session.c
+@@ -147,14 +147,11 @@ void ksmbd_session_rpc_close(struct ksmb
+ int ksmbd_session_rpc_method(struct ksmbd_session *sess, int id)
+ {
+ 	struct ksmbd_session_rpc *entry;
+-	int method;
  
- 	struct xsk_queue *tx ____cacheline_aligned_in_smp;
- 	struct list_head tx_list;
--	/* Protects generic receive. */
--	spinlock_t rx_lock;
--
- 	/* Statistics */
- 	u64 rx_dropped;
- 	u64 rx_queue_full;
---- a/include/net/xsk_buff_pool.h
-+++ b/include/net/xsk_buff_pool.h
-@@ -54,6 +54,8 @@ struct xsk_buff_pool {
- 	refcount_t users;
- 	struct xdp_umem *umem;
- 	struct work_struct work;
-+	/* Protects generic receive in shared and non-shared umem mode. */
-+	spinlock_t rx_lock;
- 	struct list_head free_list;
- 	struct list_head xskb_list;
- 	u32 heads_cnt;
---- a/net/xdp/xsk.c
-+++ b/net/xdp/xsk.c
-@@ -339,13 +339,14 @@ int xsk_generic_rcv(struct xdp_sock *xs,
- 	u32 len = xdp_get_buff_len(xdp);
- 	int err;
+-	down_read(&sess->rpc_lock);
++	lockdep_assert_held(&sess->rpc_lock);
+ 	entry = xa_load(&sess->rpc_handle_list, id);
+-	method = entry ? entry->method : 0;
+-	up_read(&sess->rpc_lock);
  
--	spin_lock_bh(&xs->rx_lock);
- 	err = xsk_rcv_check(xs, xdp, len);
- 	if (!err) {
-+		spin_lock_bh(&xs->pool->rx_lock);
- 		err = __xsk_rcv(xs, xdp, len);
- 		xsk_flush(xs);
-+		spin_unlock_bh(&xs->pool->rx_lock);
- 	}
--	spin_unlock_bh(&xs->rx_lock);
-+
- 	return err;
+-	return method;
++	return entry ? entry->method : 0;
  }
  
-@@ -1647,7 +1648,6 @@ static int xsk_create(struct net *net, s
- 	xs = xdp_sk(sk);
- 	xs->state = XSK_READY;
- 	mutex_init(&xs->mutex);
--	spin_lock_init(&xs->rx_lock);
+ void ksmbd_session_destroy(struct ksmbd_session *sess)
+--- a/fs/smb/server/smb2pdu.c
++++ b/fs/smb/server/smb2pdu.c
+@@ -4614,8 +4614,15 @@ static int smb2_get_info_file_pipe(struc
+ 	 * pipe without opening it, checking error condition here
+ 	 */
+ 	id = req->VolatileFileId;
+-	if (!ksmbd_session_rpc_method(sess, id))
++
++	lockdep_assert_not_held(&sess->rpc_lock);
++
++	down_read(&sess->rpc_lock);
++	if (!ksmbd_session_rpc_method(sess, id)) {
++		up_read(&sess->rpc_lock);
+ 		return -ENOENT;
++	}
++	up_read(&sess->rpc_lock);
  
- 	INIT_LIST_HEAD(&xs->map_list);
- 	spin_lock_init(&xs->map_list_lock);
---- a/net/xdp/xsk_buff_pool.c
-+++ b/net/xdp/xsk_buff_pool.c
-@@ -85,6 +85,7 @@ struct xsk_buff_pool *xp_create_and_assi
- 		XDP_PACKET_HEADROOM;
- 	pool->umem = umem;
- 	pool->addrs = umem->addrs;
-+	spin_lock_init(&pool->rx_lock);
- 	INIT_LIST_HEAD(&pool->free_list);
- 	INIT_LIST_HEAD(&pool->xskb_list);
- 	INIT_LIST_HEAD(&pool->xsk_tx_list);
+ 	ksmbd_debug(SMB, "FileInfoClass %u, FileId 0x%llx\n",
+ 		    req->FileInfoClass, req->VolatileFileId);
+--- a/fs/smb/server/transport_ipc.c
++++ b/fs/smb/server/transport_ipc.c
+@@ -778,6 +778,9 @@ struct ksmbd_rpc_command *ksmbd_rpc_writ
+ 	if (!msg)
+ 		return NULL;
+ 
++	lockdep_assert_not_held(&sess->rpc_lock);
++
++	down_read(&sess->rpc_lock);
+ 	msg->type = KSMBD_EVENT_RPC_REQUEST;
+ 	req = (struct ksmbd_rpc_command *)msg->payload;
+ 	req->handle = handle;
+@@ -786,6 +789,7 @@ struct ksmbd_rpc_command *ksmbd_rpc_writ
+ 	req->flags |= KSMBD_RPC_WRITE_METHOD;
+ 	req->payload_sz = payload_sz;
+ 	memcpy(req->payload, payload, payload_sz);
++	up_read(&sess->rpc_lock);
+ 
+ 	resp = ipc_msg_send_request(msg, req->handle);
+ 	ipc_msg_free(msg);
+@@ -802,6 +806,9 @@ struct ksmbd_rpc_command *ksmbd_rpc_read
+ 	if (!msg)
+ 		return NULL;
+ 
++	lockdep_assert_not_held(&sess->rpc_lock);
++
++	down_read(&sess->rpc_lock);
+ 	msg->type = KSMBD_EVENT_RPC_REQUEST;
+ 	req = (struct ksmbd_rpc_command *)msg->payload;
+ 	req->handle = handle;
+@@ -809,6 +816,7 @@ struct ksmbd_rpc_command *ksmbd_rpc_read
+ 	req->flags |= rpc_context_flags(sess);
+ 	req->flags |= KSMBD_RPC_READ_METHOD;
+ 	req->payload_sz = 0;
++	up_read(&sess->rpc_lock);
+ 
+ 	resp = ipc_msg_send_request(msg, req->handle);
+ 	ipc_msg_free(msg);
+@@ -829,6 +837,9 @@ struct ksmbd_rpc_command *ksmbd_rpc_ioct
+ 	if (!msg)
+ 		return NULL;
+ 
++	lockdep_assert_not_held(&sess->rpc_lock);
++
++	down_read(&sess->rpc_lock);
+ 	msg->type = KSMBD_EVENT_RPC_REQUEST;
+ 	req = (struct ksmbd_rpc_command *)msg->payload;
+ 	req->handle = handle;
+@@ -837,6 +848,7 @@ struct ksmbd_rpc_command *ksmbd_rpc_ioct
+ 	req->flags |= KSMBD_RPC_IOCTL_METHOD;
+ 	req->payload_sz = payload_sz;
+ 	memcpy(req->payload, payload, payload_sz);
++	up_read(&sess->rpc_lock);
+ 
+ 	resp = ipc_msg_send_request(msg, req->handle);
+ 	ipc_msg_free(msg);
 
 
