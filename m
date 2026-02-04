@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ABF203D994;
-	Wed,  4 Feb 2026 15:16:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3C09421898;
+	Wed,  4 Feb 2026 15:17:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770218217; cv=none; b=eL3jQYvD7TW4XcZaaFdGN9MXExVOxVm14U1pvfoxV4LMyAmZENdFGn6f2j+kgeJZxkw42KV3mOuHwqlDx4xsE3hVWIfdZqUkioRWbBATZfgK0VN2Dj+1mIKdIEU2RVmbKHXi8K9r8K93+N7UF4h+IIkQ5SpFMmPwnlurDZCyyoA=
+	t=1770218220; cv=none; b=CdfOV3KU9r19q6KL03CACQdo4xlRMTstZPNV9z2lj7oFoogT6TiQ+ltiQWAflFpUsYPoUWMiLHqx6ffckHSs5PFnZ7xjicD5gwGbn5of+uxDie45XRlvuNm4/f6VoiwkSJU7L4G9V5LRNLAQ3Mqffhu5/bDDAF5/DhBcFfA+vEQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770218217; c=relaxed/simple;
-	bh=8qTrFQQDnm75LH/wCmIW55cCmTbN9jLmz4aYo6tcTsU=;
+	s=arc-20240116; t=1770218220; c=relaxed/simple;
+	bh=MxGKHJiEtqPDqBrteinioS1/NY7xYjlSaNfNXAcNl1o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=r2ghDRKC2ozBO4i+/ClCNlYZ11obD+jy19lVp9+RDZ9EPYh23bdnkgAXY0FCnGVKvDpexrltO3Gdwh6yuSoRhrVpPM/z8U/EpRAbJt3Stq1m3YzUNqIlmhP9pbtEN7TJ/4kQMJ/2EVlCqvhcy8WeYOcYJFwVR9V+8IJYrK1QMII=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wJ+QZYDq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=q/gotSWvuJaCWoQyUhDiUvvlwpnQAj87saeQvEXeV5QLnekM0RfNPIxKB77P/xOt/rjKfD0kDw/nA7jQq06nmdjHkftAdhmu/qBlSdMkvPrnyGYiZ+YaLLqzsd3e648N6zWRwaCaU6xk2+bPB3GjP9YKGJq8VjbUDiqH0DJE+BE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UKOabvZ/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wJ+QZYDq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A3EEC4CEF7;
-	Wed,  4 Feb 2026 15:16:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UKOabvZ/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A745C19423;
+	Wed,  4 Feb 2026 15:17:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770218217;
-	bh=8qTrFQQDnm75LH/wCmIW55cCmTbN9jLmz4aYo6tcTsU=;
+	s=korg; t=1770218220;
+	bh=MxGKHJiEtqPDqBrteinioS1/NY7xYjlSaNfNXAcNl1o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wJ+QZYDqXVAkP50SuFQCMq0BR7gVzDol7ygr4ol2QdZE6Jdh52XhXcvRpEOPDi188
-	 1V15Be8vt6q9QCQodsspMayAU+qf0BKU9gAL2dFK6pMiLV1Y3631n+6mtg5XAtSoBd
-	 hzyWbxLVn2nDj0w99aWwFha0vaPVg+MrVkk1xrjQ=
+	b=UKOabvZ/j5PyuG8JcFR8x6cVQcf5IPR3GwaQ5UTNFB/fujGilTR1KDFNob9kPLbeb
+	 PBOCS1CE/xNotehVVCx3gFeJeJoKeCvUCe6m5eV5TaIgJ6FVwcz0YQ2Jn9EmQo/qyb
+	 HzAz9yej0UeaKIheZ6hzAXwG/IGHqHPS0kWq5sfk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -33,9 +33,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 247/280] ASoC: codecs: wsa881x: fix unnecessary initialisation
-Date: Wed,  4 Feb 2026 15:40:21 +0100
-Message-ID: <20260204143918.527380933@linuxfoundation.org>
+Subject: [PATCH 6.1 248/280] ASoC: codecs: wsa883x: fix unnecessary initialisation
+Date: Wed,  4 Feb 2026 15:40:22 +0100
+Message-ID: <20260204143918.563308904@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260204143909.614719725@linuxfoundation.org>
 References: <20260204143909.614719725@linuxfoundation.org>
@@ -56,64 +56,75 @@ Content-Transfer-Encoding: 8bit
 
 From: Johan Hovold <johan@kernel.org>
 
-[ Upstream commit 29d71b8a5a40708b3eed9ba4953bfc2312c9c776 ]
+[ Upstream commit 49aadf830eb048134d33ad7329d92ecff45d8dbb ]
 
 The soundwire update_status() callback may be called multiple times with
 the same ATTACHED status but initialisation should only be done when
 transitioning from UNATTACHED to ATTACHED.
 
-Fixes: a0aab9e1404a ("ASoC: codecs: add wsa881x amplifier support")
-Cc: stable@vger.kernel.org	# 5.6
+This avoids repeated initialisation of the codecs during boot of
+machines like the Lenovo ThinkPad X13s:
+
+[   11.614523] wsa883x-codec sdw:1:0:0217:0202:00:1: WSA883X Version 1_1, Variant: WSA8835_V2
+[   11.618022] wsa883x-codec sdw:1:0:0217:0202:00:1: WSA883X Version 1_1, Variant: WSA8835_V2
+[   11.621377] wsa883x-codec sdw:1:0:0217:0202:00:1: WSA883X Version 1_1, Variant: WSA8835_V2
+[   11.624065] wsa883x-codec sdw:1:0:0217:0202:00:1: WSA883X Version 1_1, Variant: WSA8835_V2
+[   11.631382] wsa883x-codec sdw:1:0:0217:0202:00:2: WSA883X Version 1_1, Variant: WSA8835_V2
+[   11.634424] wsa883x-codec sdw:1:0:0217:0202:00:2: WSA883X Version 1_1, Variant: WSA8835_V2
+
+Fixes: 43b8c7dc85a1 ("ASoC: codecs: add wsa883x amplifier support")
+Cc: stable@vger.kernel.org	# 6.0
 Cc: Srinivas Kandagatla <srini@kernel.org>
 Signed-off-by: Johan Hovold <johan@kernel.org>
 Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
 Reviewed-by: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260102111413.9605-3-johan@kernel.org
+Link: https://patch.msgid.link/20260102111413.9605-2-johan@kernel.org
 Signed-off-by: Mark Brown <broonie@kernel.org>
+[ Adjust context ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/soc/codecs/wsa881x.c |    9 +++++++++
+ sound/soc/codecs/wsa883x.c |    9 +++++++++
  1 file changed, 9 insertions(+)
 
---- a/sound/soc/codecs/wsa881x.c
-+++ b/sound/soc/codecs/wsa881x.c
-@@ -684,6 +684,7 @@ struct wsa881x_priv {
- 	 */
- 	unsigned int sd_n_val;
+--- a/sound/soc/codecs/wsa883x.c
++++ b/sound/soc/codecs/wsa883x.c
+@@ -448,6 +448,7 @@ struct wsa883x_priv {
  	int active_ports;
+ 	int dev_mode;
+ 	int comp_offset;
 +	bool hw_init;
- 	bool port_prepared[WSA881X_MAX_SWR_PORTS];
- 	bool port_enable[WSA881X_MAX_SWR_PORTS];
  };
-@@ -693,6 +694,9 @@ static void wsa881x_init(struct wsa881x_
- 	struct regmap *rm = wsa881x->regmap;
- 	unsigned int val = 0;
  
-+	if (wsa881x->hw_init)
-+		return;
-+
- 	regmap_register_patch(wsa881x->regmap, wsa881x_rev_2_0,
- 			      ARRAY_SIZE(wsa881x_rev_2_0));
+ enum {
+@@ -1007,6 +1008,9 @@ static int wsa883x_init(struct wsa883x_p
+ 	struct regmap *regmap = wsa883x->regmap;
+ 	int variant, version, ret;
  
-@@ -730,6 +734,8 @@ static void wsa881x_init(struct wsa881x_
- 	regmap_update_bits(rm, WSA881X_OTP_REG_28, 0x3F, 0x3A);
- 	regmap_update_bits(rm, WSA881X_BONGO_RESRV_REG1, 0xFF, 0xB2);
- 	regmap_update_bits(rm, WSA881X_BONGO_RESRV_REG2, 0xFF, 0x05);
++	if (wsa883x->hw_init)
++		return 0;
 +
-+	wsa881x->hw_init = true;
+ 	ret = regmap_read(regmap, WSA883X_OTP_REG_0, &variant);
+ 	if (ret)
+ 		return ret;
+@@ -1050,6 +1054,8 @@ static int wsa883x_init(struct wsa883x_p
+ 				   wsa883x->comp_offset);
+ 	}
+ 
++	wsa883x->hw_init = true;
++
+ 	return 0;
  }
  
- static int wsa881x_component_probe(struct snd_soc_component *comp)
-@@ -1074,6 +1080,9 @@ static int wsa881x_update_status(struct
+@@ -1058,6 +1064,9 @@ static int wsa883x_update_status(struct
  {
- 	struct wsa881x_priv *wsa881x = dev_get_drvdata(&slave->dev);
+ 	struct wsa883x_priv *wsa883x = dev_get_drvdata(&slave->dev);
  
 +	if (status == SDW_SLAVE_UNATTACHED)
-+		wsa881x->hw_init = false;
++		wsa883x->hw_init = false;
 +
  	if (status == SDW_SLAVE_ATTACHED && slave->dev_num > 0)
- 		wsa881x_init(wsa881x);
+ 		return wsa883x_init(wsa883x);
  
 
 
