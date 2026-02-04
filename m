@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DDFDB27B359;
-	Wed,  4 Feb 2026 14:51:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3BAAD27B359;
+	Wed,  4 Feb 2026 14:51:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770216661; cv=none; b=Q1O8IeNBucLhW939VLCLlay2F57EC0zoxK4uVAk+ncc9xmG1qWikC+0p+ogb1vlWSiulyulcz8qJdNN/FfOMbk4Nv/499Qouwi7mhOfsNzqnDO5X81+AYw223zd5p7xVvP6xOcqAe6J0Snpfl9V9txp/1X/HPAIqpwokgjX/5gY=
+	t=1770216665; cv=none; b=YPy/Hv7amOT75as/PcmuOQTyRAVuwwQC7J05+CN/B5NeUsa/v7gUvX9dzWgYhA7KrUcSxM8FrnllHUegmGfddL5OjAYteYtGoRS57h3JLjC2Hrh4t6y1mFUkHQf9y7zkc23u/5UFlPdNOpvvhEaHT8YOsrSnCcTRNvzFaYi8GH4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770216661; c=relaxed/simple;
-	bh=HzeyMSVPZvgwULciV4usITTKn2EtsNmcMsmuRGmP8xk=;
+	s=arc-20240116; t=1770216665; c=relaxed/simple;
+	bh=yMMeitiJrTOFNI2wUz6ECLeup/k4234cBZSSjUhkMY4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JGq6gCcIYTBvJCbpQhaOORm9puAi8LOEXStybjaALMje05aiinbpUym/s93nTykXyiLy9eRofagwJ17qLZdLwXobrR0UVdLrLTPE6SjbjVeEhUEVn3KiuEcq/Ffb7zCHG6XaAbBQPEuaXPn2pYSwAwVWiOQrp0n0gKa34mIeEfA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BoXx+HHs; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=eyUSHETAxHRQ8WDluUTr0X/3rfcb0NfXA97zQxfnF1ykJvA+hlSIgpguCZU8gGj7ZUAuStWP9KzOUPeEJsf2uFd4Ta0O+sLAMmQebwljeKNl5iR8rl9hevndi/X3XExrIoTD9v/IyMnTXBE3A8pYEAExjjvMjySF5AuQZqJFdqM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=twRSQhvY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BoXx+HHs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E06BC4CEF7;
-	Wed,  4 Feb 2026 14:51:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="twRSQhvY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AFE30C4CEF7;
+	Wed,  4 Feb 2026 14:51:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770216661;
-	bh=HzeyMSVPZvgwULciV4usITTKn2EtsNmcMsmuRGmP8xk=;
+	s=korg; t=1770216665;
+	bh=yMMeitiJrTOFNI2wUz6ECLeup/k4234cBZSSjUhkMY4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BoXx+HHsB7hDZVEYDbE6EQycmlPkUxlkhmQSwbxVUwEMre54SxVWeFOPL+/5vC3VE
-	 k6S9Kp9VoQQV42JJGpK9Kv+i2UmREBePeCX4YZ09IuvAzryJxAyrVv9a1ukxW0qy03
-	 SBMkuefJmmtZt+MX04ysvz49MnVbckw4go1GiXeo=
+	b=twRSQhvYnnLyuroumyTdoDsCfmMLFeWtm1GPEt0ABBQHfCNvZVs9+mtSsltxAiFTq
+	 l86EdpHbS3fqjNLSCIEZ01Nil4ESM1eAq9Gfe7IrfyIGbzPatu6a4LmoboJPfWDDMn
+	 tn8aa38iEhGUvx2gptarDKxzFVf0Lis2lTfjVLwk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Laveesh Bansal <laveeshb@laveeshbansal.com>,
-	Jan Kara <jack@suse.cz>,
-	Christian Brauner <brauner@kernel.org>,
+	Marek Szyprowski <m.szyprowski@samsung.com>,
+	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
+	Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
+	Linus Walleij <linusw@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 155/161] writeback: fix 100% CPU usage when dirtytime_expire_interval is 0
-Date: Wed,  4 Feb 2026 15:40:18 +0100
-Message-ID: <20260204143857.324065738@linuxfoundation.org>
+Subject: [PATCH 5.10 156/161] pinctrl: meson: mark the GPIO controller as sleeping
+Date: Wed,  4 Feb 2026 15:40:19 +0100
+Message-ID: <20260204143857.360989070@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260204143851.755002596@linuxfoundation.org>
 References: <20260204143851.755002596@linuxfoundation.org>
@@ -52,74 +54,92 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Laveesh Bansal <laveeshb@laveeshbansal.com>
+From: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
 
-[ Upstream commit 543467d6fe97e27e22a26e367fda972dbefebbff ]
+[ Upstream commit 28f24068387169722b508bba6b5257cb68b86e74 ]
 
-When vm.dirtytime_expire_seconds is set to 0, wakeup_dirtytime_writeback()
-schedules delayed work with a delay of 0, causing immediate execution.
-The function then reschedules itself with 0 delay again, creating an
-infinite busy loop that causes 100% kworker CPU usage.
+The GPIO controller is configured as non-sleeping but it uses generic
+pinctrl helpers which use a mutex for synchronization.
 
-Fix by:
-- Only scheduling delayed work in wakeup_dirtytime_writeback() when
-  dirtytime_expire_interval is non-zero
-- Cancelling the delayed work in dirtytime_interval_handler() when
-  the interval is set to 0
-- Adding a guard in start_dirtytime_writeback() for defensive coding
+This can cause the following lockdep splat with shared GPIOs enabled on
+boards which have multiple devices using the same GPIO:
 
-Tested by booting kernel in QEMU with virtme-ng:
-- Before fix: kworker CPU spikes to ~73%
-- After fix: CPU remains at normal levels
-- Setting interval back to non-zero correctly resumes writeback
+BUG: sleeping function called from invalid context at
+kernel/locking/mutex.c:591
+in_atomic(): 1, irqs_disabled(): 1, non_block: 0, pid: 142, name:
+kworker/u25:3
+preempt_count: 1, expected: 0
+RCU nest depth: 0, expected: 0
+INFO: lockdep is turned off.
+irq event stamp: 46379
+hardirqs last  enabled at (46379): [<ffff8000813acb24>]
+_raw_spin_unlock_irqrestore+0x74/0x78
+hardirqs last disabled at (46378): [<ffff8000813abf38>]
+_raw_spin_lock_irqsave+0x84/0x88
+softirqs last  enabled at (46330): [<ffff8000800c71b4>]
+handle_softirqs+0x4c4/0x4dc
+softirqs last disabled at (46295): [<ffff800080010674>]
+__do_softirq+0x14/0x20
+CPU: 1 UID: 0 PID: 142 Comm: kworker/u25:3 Tainted: G C
+6.19.0-rc4-next-20260105+ #11963 PREEMPT
+Tainted: [C]=CRAP
+Hardware name: Khadas VIM3 (DT)
+Workqueue: events_unbound deferred_probe_work_func
+Call trace:
+  show_stack+0x18/0x24 (C)
+  dump_stack_lvl+0x90/0xd0
+  dump_stack+0x18/0x24
+  __might_resched+0x144/0x248
+  __might_sleep+0x48/0x98
+  __mutex_lock+0x5c/0x894
+  mutex_lock_nested+0x24/0x30
+  pinctrl_get_device_gpio_range+0x44/0x128
+  pinctrl_gpio_set_config+0x40/0xdc
+  gpiochip_generic_config+0x28/0x3c
+  gpio_do_set_config+0xa8/0x194
+  gpiod_set_config+0x34/0xfc
+  gpio_shared_proxy_set_config+0x6c/0xfc [gpio_shared_proxy]
+  gpio_do_set_config+0xa8/0x194
+  gpiod_set_transitory+0x4c/0xf0
+  gpiod_configure_flags+0xa4/0x480
+  gpiod_find_and_request+0x1a0/0x574
+  gpiod_get_index+0x58/0x84
+  devm_gpiod_get_index+0x20/0xb4
+  devm_gpiod_get+0x18/0x24
+  mmc_pwrseq_emmc_probe+0x40/0xb8
+  platform_probe+0x5c/0xac
+  really_probe+0xbc/0x298
+  __driver_probe_device+0x78/0x12c
+  driver_probe_device+0xdc/0x164
+  __device_attach_driver+0xb8/0x138
+  bus_for_each_drv+0x80/0xdc
+  __device_attach+0xa8/0x1b0
 
-Fixes: a2f4870697a5 ("fs: make sure the timestamps for lazytime inodes eventually get written")
+Fixes: 6ac730951104 ("pinctrl: add driver for Amlogic Meson SoCs")
 Cc: stable@vger.kernel.org
-Closes: https://bugzilla.kernel.org/show_bug.cgi?id=220227
-Signed-off-by: Laveesh Bansal <laveeshb@laveeshbansal.com>
-Link: https://patch.msgid.link/20260106145059.543282-2-laveeshb@laveeshbansal.com
-Reviewed-by: Jan Kara <jack@suse.cz>
-Signed-off-by: Christian Brauner <brauner@kernel.org>
-[ adapted system_percpu_wq to system_wq for the workqueue used in dirtytime_interval_handler() ]
+Reported-by: Marek Szyprowski <m.szyprowski@samsung.com>
+Closes: https://lore.kernel.org/all/00107523-7737-4b92-a785-14ce4e93b8cb@samsung.com/
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+Reviewed-by: Martin Blumenstingl <martin.blumenstingl@googlemail.com>
+Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
+Signed-off-by: Linus Walleij <linusw@kernel.org>
+[ Adjust context ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/fs-writeback.c |   14 ++++++++++----
- 1 file changed, 10 insertions(+), 4 deletions(-)
+ drivers/pinctrl/meson/pinctrl-meson.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/fs/fs-writeback.c
-+++ b/fs/fs-writeback.c
-@@ -2187,12 +2187,14 @@ static void wakeup_dirtytime_writeback(s
- 				wb_wakeup(wb);
- 	}
- 	rcu_read_unlock();
--	schedule_delayed_work(&dirtytime_work, dirtytime_expire_interval * HZ);
-+	if (dirtytime_expire_interval)
-+		schedule_delayed_work(&dirtytime_work, dirtytime_expire_interval * HZ);
- }
- 
- static int __init start_dirtytime_writeback(void)
- {
--	schedule_delayed_work(&dirtytime_work, dirtytime_expire_interval * HZ);
-+	if (dirtytime_expire_interval)
-+		schedule_delayed_work(&dirtytime_work, dirtytime_expire_interval * HZ);
- 	return 0;
- }
- __initcall(start_dirtytime_writeback);
-@@ -2203,8 +2205,12 @@ int dirtytime_interval_handler(struct ct
- 	int ret;
- 
- 	ret = proc_dointvec_minmax(table, write, buffer, lenp, ppos);
--	if (ret == 0 && write)
--		mod_delayed_work(system_wq, &dirtytime_work, 0);
-+	if (ret == 0 && write) {
-+		if (dirtytime_expire_interval)
-+			mod_delayed_work(system_wq, &dirtytime_work, 0);
-+		else
-+			cancel_delayed_work_sync(&dirtytime_work);
-+	}
- 	return ret;
- }
+--- a/drivers/pinctrl/meson/pinctrl-meson.c
++++ b/drivers/pinctrl/meson/pinctrl-meson.c
+@@ -614,7 +614,7 @@ static int meson_gpiolib_register(struct
+ 	pc->chip.set = meson_gpio_set;
+ 	pc->chip.base = -1;
+ 	pc->chip.ngpio = pc->data->num_pins;
+-	pc->chip.can_sleep = false;
++	pc->chip.can_sleep = true;
+ 	pc->chip.of_node = pc->of_node;
+ 	pc->chip.of_gpio_n_cells = 2;
  
 
 
