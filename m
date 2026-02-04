@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC76C429805;
-	Wed,  4 Feb 2026 15:09:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46068429822;
+	Wed,  4 Feb 2026 15:09:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770217747; cv=none; b=aGhHst+eQnw9qIIWRb8DP+9Zc9Z9jyEtwRyaUeh5F9oO0LKkrJeoWIb9rfnnu0wUvx58hyk04N4+dMK2XT03omaTc6Vs/mbYzXqAdm0QzrcoxtOJRA0rAl4TCbCGjK8C9JD5BW5Xj/9snVqzSDgYiZrPw+zXSszZOCIsluQOOWk=
+	t=1770217750; cv=none; b=aOOjKVmkxlNBr22SJStYcIprmbMRpRoebpQM/3FQy4j9boDclBPNPqEwwTtXSISjvuIga3Cw14+OyCJofqn/mMEz9FPSntOLxqVMUj1nC/n4J24JuruzOuWJRrg+rdiGNcT1yrMII5OjPBmYBs/beVP0lQb4/Pz40Oh2yEJwXqg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770217747; c=relaxed/simple;
-	bh=sPs3Fv2F6verJncFd9/8PvWtqjyfOm7QizThuvQArO8=;
+	s=arc-20240116; t=1770217750; c=relaxed/simple;
+	bh=nR6Jq6r9wE7KGwi+CK1dBZS2ud9AgaVuoxdkkAXLeyo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HrvLEGJKUg9rqylqJCvDBwWaU0rmTGGzoJqWevXhdNPtdc3/w7r9wvW6kUyPto8vsmdwTv++udCk0fvC/hK0lqj9TvbbRSYjaTuv0NRTyx+F9r79V23Ey9zqH3aSRI9SdXGZYj9Ay8pWa71QJBzMMYWUqeju+5eQdCAtlrn9i0c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=G+zQM3au; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bMLDItKCwsrLfz5ev1mfmWIv+pwamy7X/iIwGurfLsvrdm1e7A1UkC40fu4CkmdxSbRsUIVgZeCLdhOd/QGou+aZcPxADFtblmhjzhtnvCJlWGRH283mBW3C9jqtCVff4e0tjruuSI9yWW/dP66nh3dxBrJlkTL49ttA+FH7RtI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=l2ZKaYMk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="G+zQM3au"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 73E1CC19423;
-	Wed,  4 Feb 2026 15:09:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="l2ZKaYMk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9FECEC4CEF7;
+	Wed,  4 Feb 2026 15:09:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770217746;
-	bh=sPs3Fv2F6verJncFd9/8PvWtqjyfOm7QizThuvQArO8=;
+	s=korg; t=1770217750;
+	bh=nR6Jq6r9wE7KGwi+CK1dBZS2ud9AgaVuoxdkkAXLeyo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=G+zQM3audjwRIqZQ7Xua1rrT+TsJ7SIH79KG2mxYNr7LK4X/qo+YmdekvdyaV+A7L
-	 fvAGDp9dIUYd/tGU19WTBwngv7VdW47KA8Av+wxdKgJDsl+msZfVQ8fw6lGrRV5+KT
-	 MFZZR87MN778x/FEeHi2HnWgfN2Y5BQ7vLERIZJc=
+	b=l2ZKaYMklqbrIXx0idMrKfjH/gHPLXL7TpQxZT6mZaV3U6B++OX3MjXVPpqvpoQU/
+	 3xp9o8XUvGX56gsVTA5J3ONp7/XslZPCHz/AjSUt9q3dGm6D3Wx4qcuEO5OcBYuk2q
+	 QFPf44XO2fIig2hK6UdoyFmo+yT0HzAlxQLESBr4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 106/280] net: fou: rename the source for linking
-Date: Wed,  4 Feb 2026 15:38:00 +0100
-Message-ID: <20260204143913.461985453@linuxfoundation.org>
+Subject: [PATCH 6.1 107/280] net: fou: use policy and operation tables generated from the spec
+Date: Wed,  4 Feb 2026 15:38:01 +0100
+Message-ID: <20260204143913.498139352@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260204143909.614719725@linuxfoundation.org>
 References: <20260204143909.614719725@linuxfoundation.org>
@@ -54,11 +54,11 @@ Content-Transfer-Encoding: 8bit
 
 From: Jakub Kicinski <kuba@kernel.org>
 
-[ Upstream commit 08d323234d10eab077cbf0093eeb5991478a261a ]
+[ Upstream commit 1d562c32e4392cc091c940918ee1ffd7bfcb9e96 ]
 
-We'll need to link two objects together to form the fou module.
-This means the source can't be called fou, the build system expects
-fou.o to be the combined object.
+Generate and plug in the spec-based tables.
+
+A little bit of renaming is needed in the FOU code.
 
 Acked-by: Stanislav Fomichev <sdf@google.com>
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
@@ -66,27 +66,217 @@ Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Stable-dep-of: 7a9bc9e3f423 ("fou: Don't allow 0 for FOU_ATTR_IPPROTO.")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/Makefile              | 1 +
- net/ipv4/{fou.c => fou_core.c} | 0
- 2 files changed, 1 insertion(+)
- rename net/ipv4/{fou.c => fou_core.c} (100%)
+ net/ipv4/Makefile   |  2 +-
+ net/ipv4/fou_core.c | 47 +++++++-------------------------------------
+ net/ipv4/fou_nl.c   | 48 +++++++++++++++++++++++++++++++++++++++++++++
+ net/ipv4/fou_nl.h   | 25 +++++++++++++++++++++++
+ 4 files changed, 81 insertions(+), 41 deletions(-)
+ create mode 100644 net/ipv4/fou_nl.c
+ create mode 100644 net/ipv4/fou_nl.h
 
 diff --git a/net/ipv4/Makefile b/net/ipv4/Makefile
-index bbdd9c44f14e3..e694a5e5b0302 100644
+index e694a5e5b0302..d1c8d4beb77d4 100644
 --- a/net/ipv4/Makefile
 +++ b/net/ipv4/Makefile
-@@ -26,6 +26,7 @@ obj-$(CONFIG_IP_MROUTE) += ipmr.o
+@@ -26,7 +26,7 @@ obj-$(CONFIG_IP_MROUTE) += ipmr.o
  obj-$(CONFIG_IP_MROUTE_COMMON) += ipmr_base.o
  obj-$(CONFIG_NET_IPIP) += ipip.o
  gre-y := gre_demux.o
-+fou-y := fou_core.o
+-fou-y := fou_core.o
++fou-y := fou_core.o fou_nl.o
  obj-$(CONFIG_NET_FOU) += fou.o
  obj-$(CONFIG_NET_IPGRE_DEMUX) += gre.o
  obj-$(CONFIG_NET_IPGRE) += ip_gre.o
-diff --git a/net/ipv4/fou.c b/net/ipv4/fou_core.c
-similarity index 100%
-rename from net/ipv4/fou.c
-rename to net/ipv4/fou_core.c
+diff --git a/net/ipv4/fou_core.c b/net/ipv4/fou_core.c
+index 9d4ae723d2e7d..4ee6c424d96b7 100644
+--- a/net/ipv4/fou_core.c
++++ b/net/ipv4/fou_core.c
+@@ -19,6 +19,8 @@
+ #include <uapi/linux/fou.h>
+ #include <uapi/linux/genetlink.h>
+ 
++#include "fou_nl.h"
++
+ struct fou {
+ 	struct socket *sock;
+ 	u8 protocol;
+@@ -662,20 +664,6 @@ static int fou_destroy(struct net *net, struct fou_cfg *cfg)
+ 
+ static struct genl_family fou_nl_family;
+ 
+-static const struct nla_policy fou_nl_policy[FOU_ATTR_MAX + 1] = {
+-	[FOU_ATTR_PORT]			= { .type = NLA_U16, },
+-	[FOU_ATTR_AF]			= { .type = NLA_U8, },
+-	[FOU_ATTR_IPPROTO]		= { .type = NLA_U8, },
+-	[FOU_ATTR_TYPE]			= { .type = NLA_U8, },
+-	[FOU_ATTR_REMCSUM_NOPARTIAL]	= { .type = NLA_FLAG, },
+-	[FOU_ATTR_LOCAL_V4]		= { .type = NLA_U32, },
+-	[FOU_ATTR_PEER_V4]		= { .type = NLA_U32, },
+-	[FOU_ATTR_LOCAL_V6]		= { .len = sizeof(struct in6_addr), },
+-	[FOU_ATTR_PEER_V6]		= { .len = sizeof(struct in6_addr), },
+-	[FOU_ATTR_PEER_PORT]		= { .type = NLA_U16, },
+-	[FOU_ATTR_IFINDEX]		= { .type = NLA_S32, },
+-};
+-
+ static int parse_nl_config(struct genl_info *info,
+ 			   struct fou_cfg *cfg)
+ {
+@@ -767,7 +755,7 @@ static int parse_nl_config(struct genl_info *info,
+ 	return 0;
+ }
+ 
+-static int fou_nl_cmd_add_port(struct sk_buff *skb, struct genl_info *info)
++int fou_nl_add_doit(struct sk_buff *skb, struct genl_info *info)
+ {
+ 	struct net *net = genl_info_net(info);
+ 	struct fou_cfg cfg;
+@@ -780,7 +768,7 @@ static int fou_nl_cmd_add_port(struct sk_buff *skb, struct genl_info *info)
+ 	return fou_create(net, &cfg, NULL);
+ }
+ 
+-static int fou_nl_cmd_rm_port(struct sk_buff *skb, struct genl_info *info)
++int fou_nl_del_doit(struct sk_buff *skb, struct genl_info *info)
+ {
+ 	struct net *net = genl_info_net(info);
+ 	struct fou_cfg cfg;
+@@ -849,7 +837,7 @@ static int fou_dump_info(struct fou *fou, u32 portid, u32 seq,
+ 	return -EMSGSIZE;
+ }
+ 
+-static int fou_nl_cmd_get_port(struct sk_buff *skb, struct genl_info *info)
++int fou_nl_get_doit(struct sk_buff *skb, struct genl_info *info)
+ {
+ 	struct net *net = genl_info_net(info);
+ 	struct fou_net *fn = net_generic(net, fou_net_id);
+@@ -896,7 +884,7 @@ static int fou_nl_cmd_get_port(struct sk_buff *skb, struct genl_info *info)
+ 	return ret;
+ }
+ 
+-static int fou_nl_dump(struct sk_buff *skb, struct netlink_callback *cb)
++int fou_nl_get_dumpit(struct sk_buff *skb, struct netlink_callback *cb)
+ {
+ 	struct net *net = sock_net(skb->sk);
+ 	struct fou_net *fn = net_generic(net, fou_net_id);
+@@ -919,33 +907,12 @@ static int fou_nl_dump(struct sk_buff *skb, struct netlink_callback *cb)
+ 	return skb->len;
+ }
+ 
+-static const struct genl_small_ops fou_nl_ops[] = {
+-	{
+-		.cmd = FOU_CMD_ADD,
+-		.validate = GENL_DONT_VALIDATE_STRICT | GENL_DONT_VALIDATE_DUMP,
+-		.doit = fou_nl_cmd_add_port,
+-		.flags = GENL_ADMIN_PERM,
+-	},
+-	{
+-		.cmd = FOU_CMD_DEL,
+-		.validate = GENL_DONT_VALIDATE_STRICT | GENL_DONT_VALIDATE_DUMP,
+-		.doit = fou_nl_cmd_rm_port,
+-		.flags = GENL_ADMIN_PERM,
+-	},
+-	{
+-		.cmd = FOU_CMD_GET,
+-		.validate = GENL_DONT_VALIDATE_STRICT | GENL_DONT_VALIDATE_DUMP,
+-		.doit = fou_nl_cmd_get_port,
+-		.dumpit = fou_nl_dump,
+-	},
+-};
+-
+ static struct genl_family fou_nl_family __ro_after_init = {
+ 	.hdrsize	= 0,
+ 	.name		= FOU_GENL_NAME,
+ 	.version	= FOU_GENL_VERSION,
+ 	.maxattr	= FOU_ATTR_MAX,
+-	.policy = fou_nl_policy,
++	.policy		= fou_nl_policy,
+ 	.netnsok	= true,
+ 	.module		= THIS_MODULE,
+ 	.small_ops	= fou_nl_ops,
+diff --git a/net/ipv4/fou_nl.c b/net/ipv4/fou_nl.c
+new file mode 100644
+index 0000000000000..6c3820f41dd5d
+--- /dev/null
++++ b/net/ipv4/fou_nl.c
+@@ -0,0 +1,48 @@
++// SPDX-License-Identifier: BSD-3-Clause
++/* Do not edit directly, auto-generated from: */
++/*	Documentation/netlink/specs/fou.yaml */
++/* YNL-GEN kernel source */
++
++#include <net/netlink.h>
++#include <net/genetlink.h>
++
++#include "fou_nl.h"
++
++#include <linux/fou.h>
++
++/* Global operation policy for fou */
++const struct nla_policy fou_nl_policy[FOU_ATTR_IFINDEX + 1] = {
++	[FOU_ATTR_PORT] = { .type = NLA_U16, },
++	[FOU_ATTR_AF] = { .type = NLA_U8, },
++	[FOU_ATTR_IPPROTO] = { .type = NLA_U8, },
++	[FOU_ATTR_TYPE] = { .type = NLA_U8, },
++	[FOU_ATTR_REMCSUM_NOPARTIAL] = { .type = NLA_FLAG, },
++	[FOU_ATTR_LOCAL_V4] = { .type = NLA_U32, },
++	[FOU_ATTR_LOCAL_V6] = { .len = 16, },
++	[FOU_ATTR_PEER_V4] = { .type = NLA_U32, },
++	[FOU_ATTR_PEER_V6] = { .len = 16, },
++	[FOU_ATTR_PEER_PORT] = { .type = NLA_U16, },
++	[FOU_ATTR_IFINDEX] = { .type = NLA_S32, },
++};
++
++/* Ops table for fou */
++const struct genl_small_ops fou_nl_ops[3] = {
++	{
++		.cmd		= FOU_CMD_ADD,
++		.validate	= GENL_DONT_VALIDATE_STRICT | GENL_DONT_VALIDATE_DUMP,
++		.doit		= fou_nl_add_doit,
++		.flags		= GENL_ADMIN_PERM,
++	},
++	{
++		.cmd		= FOU_CMD_DEL,
++		.validate	= GENL_DONT_VALIDATE_STRICT | GENL_DONT_VALIDATE_DUMP,
++		.doit		= fou_nl_del_doit,
++		.flags		= GENL_ADMIN_PERM,
++	},
++	{
++		.cmd		= FOU_CMD_GET,
++		.validate	= GENL_DONT_VALIDATE_STRICT | GENL_DONT_VALIDATE_DUMP,
++		.doit		= fou_nl_get_doit,
++		.dumpit		= fou_nl_get_dumpit,
++	},
++};
+diff --git a/net/ipv4/fou_nl.h b/net/ipv4/fou_nl.h
+new file mode 100644
+index 0000000000000..b7a68121ce6f7
+--- /dev/null
++++ b/net/ipv4/fou_nl.h
+@@ -0,0 +1,25 @@
++/* SPDX-License-Identifier: BSD-3-Clause */
++/* Do not edit directly, auto-generated from: */
++/*	Documentation/netlink/specs/fou.yaml */
++/* YNL-GEN kernel header */
++
++#ifndef _LINUX_FOU_GEN_H
++#define _LINUX_FOU_GEN_H
++
++#include <net/netlink.h>
++#include <net/genetlink.h>
++
++#include <linux/fou.h>
++
++/* Global operation policy for fou */
++extern const struct nla_policy fou_nl_policy[FOU_ATTR_IFINDEX + 1];
++
++/* Ops table for fou */
++extern const struct genl_small_ops fou_nl_ops[3];
++
++int fou_nl_add_doit(struct sk_buff *skb, struct genl_info *info);
++int fou_nl_del_doit(struct sk_buff *skb, struct genl_info *info);
++int fou_nl_get_doit(struct sk_buff *skb, struct genl_info *info);
++int fou_nl_get_dumpit(struct sk_buff *skb, struct netlink_callback *cb);
++
++#endif /* _LINUX_FOU_GEN_H */
 -- 
 2.51.0
 
