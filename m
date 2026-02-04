@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42B09221F17;
-	Wed,  4 Feb 2026 14:47:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2116221F17;
+	Wed,  4 Feb 2026 14:47:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770216467; cv=none; b=IMFIYeUAD9TXgieOpKfZlqC0tf5RuxNU3eiQx3LsEDlyyb1Tne9ByycPjbFMBjV/TUggsLoKajvu+K0A1O4xh11JY7AQGETfOWbTzK7vYo9XVtEiXPDDrC5LUjBpO9bbfrz8sqsSPuITrwaKuaeDdomW/dT0oy9v7Oi8o9ov1dM=
+	t=1770216470; cv=none; b=NDjuH1WflLRk80ZKgDHCKbwxO2W4dvz6DuMNtaGbSE6bUezQiwIhCPdX9kh6va9GcfK/6KpOciloLbPsSL0lwb5hEpD95eEs8GSH80RsQ6bzeuamnwX+PUKkjiIwqdEqWxgANw49jICspSxZDKgdhgopvrnlrWp/afGWvvj87JQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770216467; c=relaxed/simple;
-	bh=T0oXPex2cVYUwT/7Dl8cjqeedn+noozU1Ms/zomlnFA=;
+	s=arc-20240116; t=1770216470; c=relaxed/simple;
+	bh=gERMgZCqStClJnMP25wmHuKB88fZOCItuknWK5Pq1hM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Jvob1vDX8IhhVAvNyc108OPlS+hOZH10xVnSOBhgmtH8DLAbCHqF5UuozKy4UCP9XpQs3F1JNqk68Q4LxV+L6tImsqeCjbRQJ2+IMVkMEn8FtxErUTcw2qGaT0Ps+qv+ziW6ylrz0SyUwWTJiKf6u/xiLUaQp6G5j6YBXjOuRhk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wSCNLBWN; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Tv0R5U1QECgVQ/IdKlstK/JNO20WmzFbtdjgAj8nkTqfUEGJZz1KvXiH+UHk+MW0lHc1eE3JePKHXT3hQKYjV8MasJGMJp3A8jzEmQsZhGd4iM2k+gBpYfDrxmxMEhA3+IResjCUc3yunFVRzusB5d1b8YRzNW42dEK6YLITdQ4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IMKp72SY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wSCNLBWN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5350C116C6;
-	Wed,  4 Feb 2026 14:47:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IMKp72SY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 358FEC4CEF7;
+	Wed,  4 Feb 2026 14:47:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770216467;
-	bh=T0oXPex2cVYUwT/7Dl8cjqeedn+noozU1Ms/zomlnFA=;
+	s=korg; t=1770216470;
+	bh=gERMgZCqStClJnMP25wmHuKB88fZOCItuknWK5Pq1hM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wSCNLBWNbODhfdT2brqf/3gGTUDN7XwNmQoOpK7VPVk81RUyC8vtA9isWkV+iBa43
-	 PpJwHXHTG83VyLuCGChrcwWuUD2mnp7kGS1LwLs1aMg4DMa2sMTlVJjy5UbFd0evdM
-	 2oKBZkpfY3HEsyzZzCxPk3QWTXTWYXZSVWI33qdg=
+	b=IMKp72SYBeQ0JSifanBtfQBcBdHr89kGi7GgnGdKDMy6kRoyZbWYoYBHlCcNjl9VL
+	 zYZ+9jbcRtUQluvH1yOCJ4NN1yuX5MWS+tLJ8+V6UDg0zwCWZf5lqigoQIg89ArJoi
+	 nGOJeKnPk/E/2OeH0YFJCcDxG8g7jYZ5PoN5xwBU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thomas Fourier <fourier.thomas@gmail.com>,
-	Baochen Qiang <baochen.qiang@oss.qualcomm.com>,
-	Jeff Johnson <jeff.johnson@oss.qualcomm.com>
-Subject: [PATCH 5.10 095/161] wifi: ath10k: fix dma_free_coherent() pointer
-Date: Wed,  4 Feb 2026 15:39:18 +0100
-Message-ID: <20260204143855.161370450@linuxfoundation.org>
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Jeff Chen <jeff.chen_1@nxp.com>,
+	Johannes Berg <johannes.berg@intel.com>
+Subject: [PATCH 5.10 096/161] wifi: mwifiex: Fix a loop in mwifiex_update_ampdu_rxwinsize()
+Date: Wed,  4 Feb 2026 15:39:19 +0100
+Message-ID: <20260204143855.197413139@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260204143851.755002596@linuxfoundation.org>
 References: <20260204143851.755002596@linuxfoundation.org>
@@ -51,70 +51,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thomas Fourier <fourier.thomas@gmail.com>
+From: Dan Carpenter <dan.carpenter@linaro.org>
 
-commit 9282a1e171ad8d2205067e8ec3bbe4e3cef4f29f upstream.
+commit 2120f3a3738a65730c81bf10447b1ff776078915 upstream.
 
-dma_alloc_coherent() allocates a DMA mapped buffer and stores the
-addresses in XXX_unaligned fields.  Those should be reused when freeing
-the buffer rather than the aligned addresses.
+The "i" iterator variable is used to count two different things but
+unfortunately we can't store two different numbers in the same variable.
+Use "i" for the outside loop and "j" for the inside loop.
 
-Fixes: 2a1e1ad3fd37 ("ath10k: Add support for 64 bit ce descriptor")
 Cc: stable@vger.kernel.org
-Signed-off-by: Thomas Fourier <fourier.thomas@gmail.com>
-Reviewed-by: Baochen Qiang <baochen.qiang@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260105210439.20131-2-fourier.thomas@gmail.com
-Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
+Fixes: d219b7eb3792 ("mwifiex: handle BT coex event to adjust Rx BA window size")
+Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
+Reviewed-by: Jeff Chen <jeff.chen_1@nxp.com>
+Link: https://patch.msgid.link/aWAM2MGUWRP0zWUd@stanley.mountain
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wireless/ath/ath10k/ce.c |   16 ++++++++--------
- 1 file changed, 8 insertions(+), 8 deletions(-)
+ drivers/net/wireless/marvell/mwifiex/11n_rxreorder.c |    6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
---- a/drivers/net/wireless/ath/ath10k/ce.c
-+++ b/drivers/net/wireless/ath/ath10k/ce.c
-@@ -1791,8 +1791,8 @@ static void _ath10k_ce_free_pipe(struct
- 				  (ce_state->src_ring->nentries *
- 				   sizeof(struct ce_desc) +
- 				   CE_DESC_RING_ALIGN),
--				  ce_state->src_ring->base_addr_owner_space,
--				  ce_state->src_ring->base_addr_ce_space);
-+				  ce_state->src_ring->base_addr_owner_space_unaligned,
-+				  ce_state->src_ring->base_addr_ce_space_unaligned);
- 		kfree(ce_state->src_ring);
- 	}
+--- a/drivers/net/wireless/marvell/mwifiex/11n_rxreorder.c
++++ b/drivers/net/wireless/marvell/mwifiex/11n_rxreorder.c
+@@ -839,7 +839,7 @@ void mwifiex_update_rxreor_flags(struct
+ static void mwifiex_update_ampdu_rxwinsize(struct mwifiex_adapter *adapter,
+ 					   bool coex_flag)
+ {
+-	u8 i;
++	u8 i, j;
+ 	u32 rx_win_size;
+ 	struct mwifiex_private *priv;
  
-@@ -1801,8 +1801,8 @@ static void _ath10k_ce_free_pipe(struct
- 				  (ce_state->dest_ring->nentries *
- 				   sizeof(struct ce_desc) +
- 				   CE_DESC_RING_ALIGN),
--				  ce_state->dest_ring->base_addr_owner_space,
--				  ce_state->dest_ring->base_addr_ce_space);
-+				  ce_state->dest_ring->base_addr_owner_space_unaligned,
-+				  ce_state->dest_ring->base_addr_ce_space_unaligned);
- 		kfree(ce_state->dest_ring);
+@@ -879,8 +879,8 @@ static void mwifiex_update_ampdu_rxwinsi
+ 		if (rx_win_size != priv->add_ba_param.rx_win_size) {
+ 			if (!priv->media_connected)
+ 				continue;
+-			for (i = 0; i < MAX_NUM_TID; i++)
+-				mwifiex_11n_delba(priv, i);
++			for (j = 0; j < MAX_NUM_TID; j++)
++				mwifiex_11n_delba(priv, j);
+ 		}
  	}
- 
-@@ -1822,8 +1822,8 @@ static void _ath10k_ce_free_pipe_64(stru
- 				  (ce_state->src_ring->nentries *
- 				   sizeof(struct ce_desc_64) +
- 				   CE_DESC_RING_ALIGN),
--				  ce_state->src_ring->base_addr_owner_space,
--				  ce_state->src_ring->base_addr_ce_space);
-+				  ce_state->src_ring->base_addr_owner_space_unaligned,
-+				  ce_state->src_ring->base_addr_ce_space_unaligned);
- 		kfree(ce_state->src_ring);
- 	}
- 
-@@ -1832,8 +1832,8 @@ static void _ath10k_ce_free_pipe_64(stru
- 				  (ce_state->dest_ring->nentries *
- 				   sizeof(struct ce_desc_64) +
- 				   CE_DESC_RING_ALIGN),
--				  ce_state->dest_ring->base_addr_owner_space,
--				  ce_state->dest_ring->base_addr_ce_space);
-+				  ce_state->dest_ring->base_addr_owner_space_unaligned,
-+				  ce_state->dest_ring->base_addr_ce_space_unaligned);
- 		kfree(ce_state->dest_ring);
- 	}
- 
+ }
 
 
