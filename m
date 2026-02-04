@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B36C41C303;
-	Wed,  4 Feb 2026 15:19:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7FA992D877F;
+	Wed,  4 Feb 2026 15:19:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770218394; cv=none; b=GTIauJPuX9dmoG6MWYQch/AkoBZylNOoTlXOXjZs1zeOwrcwRawSUn+ql9z/8WZ9XFo5SqI97VDl+HkPp/8i5QA+FF2jWg43+suNLY9Sk1vlYx0P0ShEpebls5i/8ZCozAHIGp5uUz7usfhGmnJn5s0MVZjYuaL4Yer0dLYpGFQ=
+	t=1770218397; cv=none; b=IU0ycKTD+vlqryuRcAMkvXn2MvfcLFeb+fYQleas8Svos7NVwHG8Z68TJQhOq5fGCO3SMgHAzFkx3hmrqfSVEVVq878Yy0AIzADsnvrgglbRZTOywNitrNdmGIapQ3i6Tb9yNrmL0r87prAuPcKOhPDKw7LQz7yes2oz8XAoCjs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770218394; c=relaxed/simple;
-	bh=6ABKFSBLdx07wdo6LwA61flnk8CT6F6tYqd+6TGwj3s=;
+	s=arc-20240116; t=1770218397; c=relaxed/simple;
+	bh=F88QJ+A04mZgX9sBBxQQNp4h2Mm0kBqwe5Gg1yF9I3U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=c4NRJ0HC3KOyzmGVmuAYlccjAotasNIIXEx9TyJUrtMf/AbLsFpdOG+VStPAPbQEaV+dzK6QA6kcmyRhkILf+VOnmZwtWoylIpXcIYlO33mhAtshDaxmiVZglytb5xL3emtj5LeHlI+qCrbQGYNxfgqiJk9LHj/VjJKVIioHrmU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nZM5UcfE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=smbk29P85mGMbaK9Zzbn1giwHyHbHAoGSF94i4G1Xk82Q+JLAWfcK5v7FgKFexpSRMZYcKoKmG4n7Odss2ok+retfEXedXgupSmUnLuQdOn7xedt4YTBnRhNsWgxs53Gz7yOLAVnFepRh4lUJft5vBC+66UQ8HJ9vRByP44syOc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ITCSIPjc; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nZM5UcfE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8CD5EC4CEF7;
-	Wed,  4 Feb 2026 15:19:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ITCSIPjc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E7C85C4CEF7;
+	Wed,  4 Feb 2026 15:19:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770218394;
-	bh=6ABKFSBLdx07wdo6LwA61flnk8CT6F6tYqd+6TGwj3s=;
+	s=korg; t=1770218397;
+	bh=F88QJ+A04mZgX9sBBxQQNp4h2Mm0kBqwe5Gg1yF9I3U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nZM5UcfEK2hCvZRSjaUpFE3pp9p+kAWPVaVR+kHh+pypw74/F9Dz8tiJfWX3y87W2
-	 EpAmOy4gyuoFSQlcOY1lIyCCvmlMg8K5/2/vw1TMwF18Qf3uPIiuTEnWvfN0n2lTN4
-	 SrGpliz20zenv9mT/gQbBF0ezz1dWQSw9I3+7ndk=
+	b=ITCSIPjclyDj+f3FogrHz0AUXCVqjN7bOT5VWYo+o5HppToBhyOWqfQvnA8rAHOpt
+	 Do+0kp50r6JJUu6znoEIQQ1mjMwJOz3ss5dVzjFe7NXLAnanayiL6teRQaJ4CaVur/
+	 BojzXuBtGzTEJ44i8MWn1GdesyjNP/94yrhxFHlI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jianbo Liu <jianbol@nvidia.com>,
-	Leon Romanovsky <leonro@nvidia.com>,
-	Simon Horman <horms@kernel.org>,
-	Tariq Toukan <tariqt@nvidia.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Kery Qi <qikeyu2017@gmail.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 18/72] net/mlx5e: Skip ESN replay window setup for IPsec crypto offload
-Date: Wed,  4 Feb 2026 15:40:21 +0100
-Message-ID: <20260204143846.282598489@linuxfoundation.org>
+Subject: [PATCH 6.6 19/72] scsi: firewire: sbp-target: Fix overflow in sbp_make_tpg()
+Date: Wed,  4 Feb 2026 15:40:22 +0100
+Message-ID: <20260204143846.319386012@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260204143845.603454952@linuxfoundation.org>
 References: <20260204143845.603454952@linuxfoundation.org>
@@ -54,48 +51,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jianbo Liu <jianbol@nvidia.com>
+From: Kery Qi <qikeyu2017@gmail.com>
 
-[ Upstream commit 011be342dd24b5168a5dcf408b14c3babe503341 ]
+[ Upstream commit b2d6b1d443009ed4da2d69f5423ab38e5780505a ]
 
-Commit a5e400a985df ("net/mlx5e: Honor user choice of IPsec replay
-window size") introduced logic to setup the ESN replay window size.
-This logic is only valid for packet offload.
+The code in sbp_make_tpg() limits "tpgt" to UINT_MAX but the data type of
+"tpg->tport_tpgt" is u16. This causes a type truncation issue.
 
-However, the check to skip this block only covered outbound offloads.
-It was not skipped for crypto offload, causing it to fall through to
-the new switch statement and trigger its WARN_ON default case (for
-instance, if a window larger than 256 bits was configured).
+When a user creates a TPG via configfs mkdir, for example:
 
-Fix this by amending the condition to also skip the replay window
-setup if the offload type is not XFRM_DEV_OFFLOAD_PACKET.
+    mkdir /sys/kernel/config/target/sbp/<wwn>/tpgt_70000
 
-Fixes: a5e400a985df ("net/mlx5e: Honor user choice of IPsec replay window size")
-Signed-off-by: Jianbo Liu <jianbol@nvidia.com>
-Reviewed-by: Leon Romanovsky <leonro@nvidia.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Signed-off-by: Tariq Toukan <tariqt@nvidia.com>
-Link: https://patch.msgid.link/1769503961-124173-5-git-send-email-tariqt@nvidia.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+The value 70000 passes the "tpgt > UINT_MAX" check since 70000 is far less
+than 4294967295. However, when assigned to the u16 field tpg->tport_tpgt,
+the value is silently truncated to 4464 (70000 & 0xFFFF). This causes the
+value the user specified to differ from what is actually stored, leading to
+confusion and potential unexpected behavior.
+
+Fix this by changing the type of "tpgt" to u16 and using kstrtou16() which
+will properly reject values outside the u16 range.
+
+Fixes: a511ce339780 ("sbp-target: Initial merge of firewire/ieee-1394 target mode support")
+Signed-off-by: Kery Qi <qikeyu2017@gmail.com>
+Link: https://patch.msgid.link/20260121114515.1829-2-qikeyu2017@gmail.com
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mellanox/mlx5/core/en_accel/ipsec.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/target/sbp/sbp_target.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en_accel/ipsec.c b/drivers/net/ethernet/mellanox/mlx5/core/en_accel/ipsec.c
-index 5161bf51fa110..fdf664e9c46e9 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/en_accel/ipsec.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/en_accel/ipsec.c
-@@ -350,7 +350,8 @@ void mlx5e_ipsec_build_accel_xfrm_attrs(struct mlx5e_ipsec_sa_entry *sa_entry,
- 		attrs->replay_esn.esn = sa_entry->esn_state.esn;
- 		attrs->replay_esn.esn_msb = sa_entry->esn_state.esn_msb;
- 		attrs->replay_esn.overlap = sa_entry->esn_state.overlap;
--		if (attrs->dir == XFRM_DEV_OFFLOAD_OUT)
-+		if (attrs->dir == XFRM_DEV_OFFLOAD_OUT ||
-+		    x->xso.type != XFRM_DEV_OFFLOAD_PACKET)
- 			goto skip_replay_window;
+diff --git a/drivers/target/sbp/sbp_target.c b/drivers/target/sbp/sbp_target.c
+index 2a761bc091938..ac20c3cd71061 100644
+--- a/drivers/target/sbp/sbp_target.c
++++ b/drivers/target/sbp/sbp_target.c
+@@ -1961,12 +1961,12 @@ static struct se_portal_group *sbp_make_tpg(struct se_wwn *wwn,
+ 		container_of(wwn, struct sbp_tport, tport_wwn);
  
- 		switch (x->replay_esn->replay_window) {
+ 	struct sbp_tpg *tpg;
+-	unsigned long tpgt;
++	u16 tpgt;
+ 	int ret;
+ 
+ 	if (strstr(name, "tpgt_") != name)
+ 		return ERR_PTR(-EINVAL);
+-	if (kstrtoul(name + 5, 10, &tpgt) || tpgt > UINT_MAX)
++	if (kstrtou16(name + 5, 10, &tpgt))
+ 		return ERR_PTR(-EINVAL);
+ 
+ 	if (tport->tpg) {
 -- 
 2.51.0
 
