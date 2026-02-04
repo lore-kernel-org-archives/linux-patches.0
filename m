@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B14228B7EA;
-	Wed,  4 Feb 2026 14:48:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E535A2C08AC;
+	Wed,  4 Feb 2026 14:48:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770216487; cv=none; b=ngSL3rsrXP2p2VMdYZVUkSkMA9KvffJvkylgfFX/n4/FjBiZrsy1YlZNgvHemFbPfwmEWC3VqYarx5sX07akTc5FclsgzXSlKX1r3KoZ+I7uKLSDssSGL2aJUbl5fzp2PRKDv3hZy5JG47B2JUeLnYsZQqKSQwFfzXzR+wYFNbc=
+	t=1770216491; cv=none; b=tQ8pXdl/nqLPL8pVHeyHEGbsZn1EK3GDVijFktGg4KOe63O2DHwCFjicEyADGZ1oT9YSi2K/oV+93UVjh/VmHp/thbYA6s0OUsT9pTSTeQK0xo/1CelIwzCOxKgwEO9pDn81zvMZ7nqdJCn4LMrqPphFSX4cp4lu5rzBZaiP1KI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770216487; c=relaxed/simple;
-	bh=0HzR3i9abPaTRDApo3qiniaRW/IJvZkMCAtwdwVUDPY=;
+	s=arc-20240116; t=1770216491; c=relaxed/simple;
+	bh=jD9K5nG6WSowIQnPg8w2WFITWQDbDSwzDNnqwAjCgyE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SAxo4BI7Fb4RocQqZ35opTP7V5JXUvMnbX6RJWYjVTv/M172HY9SDlkZV7YedCzlmD62ygt5NG3C4dVCqwks3B+CQD9C/2GjMLWGnUkIE02+TqYKbRwtO7H63dyw0y7sI9PTWHYvG7Vq11vKppu+H8kcmkhu2uNwEVBklOvABgo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AnS55Ai/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ckrXR/bhkkxJRGJSkJfmjlz7NtnU2tQW1eFTXKwO8ZVZ9c3DalLTSBQpGzWhu5Of4hkHfKGSrbyxym+BcsIpjiCpVkXhqA7f8Ic1nBqCBKJ0QeIr6iEurpkxdPhTfAgCZH4p3CPa9F8OQTdJyxxULqv8zRnBIg4MgQcqlXOnfBE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yJJtFong; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AnS55Ai/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 067BDC116C6;
-	Wed,  4 Feb 2026 14:48:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yJJtFong"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B90DC19423;
+	Wed,  4 Feb 2026 14:48:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770216487;
-	bh=0HzR3i9abPaTRDApo3qiniaRW/IJvZkMCAtwdwVUDPY=;
+	s=korg; t=1770216490;
+	bh=jD9K5nG6WSowIQnPg8w2WFITWQDbDSwzDNnqwAjCgyE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AnS55Ai/JhXUGEGa0Qb7EpX+6nYyv80B02uzgjagqtT/PYmm2xdv1lTA8Ox3WZ5IX
-	 TbaFqskp2QdoAV38inCJVa1CgutB2Ft/snle3bQhdJ6HNlLylVxl5q9XgcBR08eNAF
-	 NhUNyKCkcgR7w+N6XNSyd+fJdCnneAMvrPZ+i83g=
+	b=yJJtFongUbBlusbw/mQUTGJMWm1ZgM2ZVOfZUKvFq8q/MJA74dXkEJXxZiPFVWmVx
+	 hzwfMjvcCIu3afzLvCwqyHTtwug1fMVTP8N9ZhKVVGAWGDbOdjqZlrFUCxvN48HRyu
+	 sW+s0wwVMrMGkK9kJEBTtN0k/bD8nC9nS5RSfuA8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Long Li <longli@microsoft.com>,
-	Michael Kelley <mhklinux@outlook.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>
-Subject: [PATCH 5.10 069/161] scsi: storvsc: Process unsupported MODE_SENSE_10
-Date: Wed,  4 Feb 2026 15:38:52 +0100
-Message-ID: <20260204143854.239661696@linuxfoundation.org>
+	Francesco Lavra <flavra@baylibre.com>,
+	Andy Shevchenko <andriy.shevchenko@intel.com>,
+	Lorenzo Bianconi <lorenzo@kernel.org>,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Subject: [PATCH 5.10 070/161] iio: imu: st_lsm6dsx: fix iio_chan_spec for sensors without event detection
+Date: Wed,  4 Feb 2026 15:38:53 +0100
+Message-ID: <20260204143854.274769162@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260204143851.755002596@linuxfoundation.org>
 References: <20260204143851.755002596@linuxfoundation.org>
@@ -52,44 +52,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Long Li <longli@microsoft.com>
+From: Francesco Lavra <flavra@baylibre.com>
 
-commit 9eacec5d18f98f89be520eeeef4b377acee3e4b8 upstream.
+commit c34e2e2d67b3bb8d5a6d09b0d6dac845cdd13fb3 upstream.
 
-The Hyper-V host does not support MODE_SENSE_10 and MODE_SENSE.  The
-driver handles MODE_SENSE as unsupported command, but not for
-MODE_SENSE_10. Add MODE_SENSE_10 to the same handling logic and return
-correct code to SCSI layer.
+The st_lsm6dsx_acc_channels array of struct iio_chan_spec has a non-NULL
+event_spec field, indicating support for IIO events. However, event
+detection is not supported for all sensors, and if userspace tries to
+configure accelerometer wakeup events on a sensor device that does not
+support them (e.g. LSM6DS0), st_lsm6dsx_write_event() dereferences a NULL
+pointer when trying to write to the wakeup register.
+Define an additional struct iio_chan_spec array whose members have a NULL
+event_spec field, and use this array instead of st_lsm6dsx_acc_channels for
+sensors without event detection capability.
 
-Fixes: 89ae7d709357 ("Staging: hv: storvsc: Move the storage driver out of the staging area")
-Cc: stable@kernel.org
-Signed-off-by: Long Li <longli@microsoft.com>
-Reviewed-by: Michael Kelley <mhklinux@outlook.com>
-Link: https://patch.msgid.link/20260117010302.294068-1-longli@linux.microsoft.com
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Fixes: b5969abfa8b8 ("iio: imu: st_lsm6dsx: add motion events")
+Signed-off-by: Francesco Lavra <flavra@baylibre.com>
+Reviewed-by: Andy Shevchenko <andriy.shevchenko@intel.com>
+Acked-by: Lorenzo Bianconi <lorenzo@kernel.org>
+Cc: stable@vger.kernel.org
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/scsi/storvsc_drv.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/iio/imu/st_lsm6dsx/st_lsm6dsx_core.c |   15 +++++++++++----
+ 1 file changed, 11 insertions(+), 4 deletions(-)
 
---- a/drivers/scsi/storvsc_drv.c
-+++ b/drivers/scsi/storvsc_drv.c
-@@ -1154,7 +1154,7 @@ static void storvsc_on_io_completion(str
- 	 * The current SCSI handling on the host side does
- 	 * not correctly handle:
- 	 * INQUIRY command with page code parameter set to 0x80
--	 * MODE_SENSE command with cmd[2] == 0x1c
-+	 * MODE_SENSE and MODE_SENSE_10 command with cmd[2] == 0x1c
- 	 * MAINTENANCE_IN is not supported by HyperV FC passthrough
- 	 *
- 	 * Setup srb and scsi status so this won't be fatal.
-@@ -1164,6 +1164,7 @@ static void storvsc_on_io_completion(str
+--- a/drivers/iio/imu/st_lsm6dsx/st_lsm6dsx_core.c
++++ b/drivers/iio/imu/st_lsm6dsx/st_lsm6dsx_core.c
+@@ -74,6 +74,13 @@ static const struct iio_chan_spec st_lsm
+ 	IIO_CHAN_SOFT_TIMESTAMP(3),
+ };
  
- 	if ((stor_pkt->vm_srb.cdb[0] == INQUIRY) ||
- 	   (stor_pkt->vm_srb.cdb[0] == MODE_SENSE) ||
-+	   (stor_pkt->vm_srb.cdb[0] == MODE_SENSE_10) ||
- 	   (stor_pkt->vm_srb.cdb[0] == MAINTENANCE_IN &&
- 	   hv_dev_is_fc(device))) {
- 		vstor_packet->vm_srb.scsi_status = 0;
++static const struct iio_chan_spec st_lsm6ds0_acc_channels[] = {
++	ST_LSM6DSX_CHANNEL(IIO_ACCEL, 0x28, IIO_MOD_X, 0),
++	ST_LSM6DSX_CHANNEL(IIO_ACCEL, 0x2a, IIO_MOD_Y, 1),
++	ST_LSM6DSX_CHANNEL(IIO_ACCEL, 0x2c, IIO_MOD_Z, 2),
++	IIO_CHAN_SOFT_TIMESTAMP(3),
++};
++
+ static const struct iio_chan_spec st_lsm6dsx_gyro_channels[] = {
+ 	ST_LSM6DSX_CHANNEL(IIO_ANGL_VEL, 0x22, IIO_MOD_X, 0),
+ 	ST_LSM6DSX_CHANNEL(IIO_ANGL_VEL, 0x24, IIO_MOD_Y, 1),
+@@ -115,8 +122,8 @@ static const struct st_lsm6dsx_settings
+ 		},
+ 		.channels = {
+ 			[ST_LSM6DSX_ID_ACC] = {
+-				.chan = st_lsm6dsx_acc_channels,
+-				.len = ARRAY_SIZE(st_lsm6dsx_acc_channels),
++				.chan = st_lsm6ds0_acc_channels,
++				.len = ARRAY_SIZE(st_lsm6ds0_acc_channels),
+ 			},
+ 			[ST_LSM6DSX_ID_GYRO] = {
+ 				.chan = st_lsm6ds0_gyro_channels,
+@@ -1170,8 +1177,8 @@ static const struct st_lsm6dsx_settings
+ 		},
+ 		.channels = {
+ 			[ST_LSM6DSX_ID_ACC] = {
+-				.chan = st_lsm6dsx_acc_channels,
+-				.len = ARRAY_SIZE(st_lsm6dsx_acc_channels),
++				.chan = st_lsm6ds0_acc_channels,
++				.len = ARRAY_SIZE(st_lsm6ds0_acc_channels),
+ 			},
+ 			[ST_LSM6DSX_ID_GYRO] = {
+ 				.chan = st_lsm6dsx_gyro_channels,
 
 
