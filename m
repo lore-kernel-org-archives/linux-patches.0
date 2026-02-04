@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E5442D94AF;
-	Wed,  4 Feb 2026 15:08:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E51282DCF61;
+	Wed,  4 Feb 2026 15:08:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770217704; cv=none; b=pb90wkJq75zU0yahlwSdlNjyy25mrI6/eKXs7Xa0IG7z2c2VaIBUmDEtdBrY7KDzG+iUN60X2qVItu2vMdBuDfDXN1CBU6ASYyJRZzYIzNjofb/Iq29yN8pU2P6g3+rppBTZG+xDg2zDG9gwvt9a22thn7EYQwViEU+BP176eKo=
+	t=1770217707; cv=none; b=HRvlzUGN/i1FvNljATHVqFWlGONg8A4wtAYxdrGCYCiHVpFhD8nGJng47qBSnNZoxF5xDtIOzOm20EfMTvzEV+R1/WYWRB0h6V7ZEFgzL366WGi5P5QRowfgxD2Kg60FenviDLEXBZovkc/g53LT+FNXzUA8l98ANBepCsrIMJE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770217704; c=relaxed/simple;
-	bh=XmdUC1lSXAF+KarqW9Ar4hSbvjzTjDoWgAu10rNUjMQ=;
+	s=arc-20240116; t=1770217707; c=relaxed/simple;
+	bh=I94jVX0DJTshUsH6Wg5jJ6aEBo9tKAcRLnzJlpHBDSE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OdayOjXki+FsxxJzup0+/BWoWEERHKptyerlL6I6gn8Apkn1/ucseP+aSTJuiLbE3zsv9oi7CbKRrrKLOr9Fry42oHI6VJ7lR9CCiiht/1RFqjswRpnfmXcVrWDce7ljxx8iIzsGehWrVgooOviFqV7e6ynSvbw9ogHc353QAU8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TR3ETfCt; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XzQtlOsuE4OASc+6kBfxmu530+4Gb58XBIgpwzcshlnielquX9/uSsTSCg8+7RURUdI9fkxm0Gp6g346cdhlpMajoYQFxiyjz5WbXB1obf21QpCjJ4VR8GeBNuTpmbyJ+WWBTLgoopkCRbTcnx3kiS+ePBC18DnWx0f/3JD3/2g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=j+n3HPAX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TR3ETfCt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8EAC4C4CEF7;
-	Wed,  4 Feb 2026 15:08:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="j+n3HPAX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 71F29C19424;
+	Wed,  4 Feb 2026 15:08:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770217703;
-	bh=XmdUC1lSXAF+KarqW9Ar4hSbvjzTjDoWgAu10rNUjMQ=;
+	s=korg; t=1770217706;
+	bh=I94jVX0DJTshUsH6Wg5jJ6aEBo9tKAcRLnzJlpHBDSE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TR3ETfCtned17JoA3xZEVi7BoRYo6DczkCnRvYVZl1beAWOCBSmCVLV+LUzxOyV0j
-	 hbWXrzEP2ggiOCSUUztUnpgGDcyJ7cGVNip6T31gUNgOb/z2y04UFQNDJBYn5N5vwU
-	 +DwpQ/hq/8eMRpFciHbg9iUii7fW6zUbyR/8GKBI=
+	b=j+n3HPAXCGNE4WWsp2ZFCX3mASRXlsyGyBsiklFrJR0HyskqoGI2R0+cRhS82eQ2C
+	 QpmY8UxBBLaBOMuNrpyvICVcTNm2XFSI7pbnOIUWHdV1pnIy30iIb/FHApFkR/YjwE
+	 LTf60poZZIizkE/ELTYh8DI89WXSavFT9qQ+xUB8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xabier Marquiegui <reibax@gmail.com>,
-	Richard Cochran <richardcochran@gmail.com>,
-	Vinicius Costa Gomes <vinicius.gomes@intel.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Niklas Cassel <cassel@kernel.org>,
+	Wolf <wolf@yoxt.cc>,
+	Damien Le Moal <dlemoal@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 086/280] ptp: add testptp mask test
-Date: Wed,  4 Feb 2026 15:37:40 +0100
-Message-ID: <20260204143912.753363723@linuxfoundation.org>
+Subject: [PATCH 6.1 095/280] ata: libata: Call ata_dev_config_lpm() for ATAPI devices
+Date: Wed,  4 Feb 2026 15:37:49 +0100
+Message-ID: <20260204143913.072241669@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260204143909.614719725@linuxfoundation.org>
 References: <20260204143909.614719725@linuxfoundation.org>
@@ -53,111 +52,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xabier Marquiegui <reibax@gmail.com>
+From: Niklas Cassel <cassel@kernel.org>
 
-[ Upstream commit 26285e689c6cd2cf3849568c83b2ebe53f467143 ]
+[ Upstream commit 8f3fb33f8f3f825c708ece800c921977c157f9b6 ]
 
-Add option to test timestamp event queue mask manipulation in testptp.
+Commit d360121832d8 ("ata: libata-core: Introduce ata_dev_config_lpm()")
+introduced ata_dev_config_lpm(). However, it only called this function for
+ATA_DEV_ATA and ATA_DEV_ZAC devices, not for ATA_DEV_ATAPI devices.
 
-Option -F allows the user to specify a single channel that will be
-applied on the mask filter via IOCTL.
+Additionally, commit d99a9142e782 ("ata: libata-core: Move device LPM quirk
+settings to ata_dev_config_lpm()") moved the LPM quirk application from
+ata_dev_configure() to ata_dev_config_lpm(), causing LPM quirks for ATAPI
+devices to no longer be applied.
 
-The test program will maintain the file open until user input is
-received.
+Call ata_dev_config_lpm() also for ATAPI devices, such that LPM quirks are
+applied for ATAPI devices with an entry in __ata_dev_quirks once again.
 
-This allows checking the effect of the IOCTL in debugfs.
-
-eg:
-
-Console 1:
-```
-Channel 12 exclusively enabled. Check on debugfs.
-Press any key to continue
-```
-
-Console 2:
-```
-0x00000000 0x00000001 0x00000000 0x00000000 0x00000000 0x00000000
-0x00000000 0x00000000 0x00000000 0x00000000 0x00000000 0x00000000
-0x00000000 0x00000000 0x00000000 0x00000000 0x00000000 0x00000000
-0x00000000 0x00000000 0x00000000 0x00000000 0x00000000 0x00000000
-0x00000000 0x00000000 0x00000000 0x00000000 0x00000000 0x00000000
-0x00000000 0x00000000 0x00000000 0x00000000 0x00000000 0x00000000
-0x00000000 0x00000000 0x00000000 0x00000000 0x00000000 0x00000000
-0x00000000 0x00000000 0x00000000 0x00000000 0x00000000 0x00000000
-0x00000000 0x00000000 0x00000000 0x00000000 0x00000000 0x00000000
-0x00000000 0x00000000 0x00000000 0x00000000 0x00000000 0x00000000
-0x00000000 0x00000000 0x00000000 0x00000000
-```
-
-Signed-off-by: Xabier Marquiegui <reibax@gmail.com>
-Suggested-by: Richard Cochran <richardcochran@gmail.com>
-Suggested-by: Vinicius Costa Gomes <vinicius.gomes@intel.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
-Stable-dep-of: 76868642e427 ("testptp: Add option to open PHC in readonly mode")
+Fixes: d360121832d8 ("ata: libata-core: Introduce ata_dev_config_lpm()")
+Fixes: d99a9142e782 ("ata: libata-core: Move device LPM quirk settings to ata_dev_config_lpm()")
+Signed-off-by: Niklas Cassel <cassel@kernel.org>
+Tested-by: Wolf <wolf@yoxt.cc>
+Signed-off-by: Damien Le Moal <dlemoal@kernel.org>
+Stable-dep-of: c8c6fb886f57 ("ata: libata: Print features also for ATAPI devices")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/ptp/testptp.c | 19 ++++++++++++++++++-
- 1 file changed, 18 insertions(+), 1 deletion(-)
+ drivers/ata/libata-core.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/tools/testing/selftests/ptp/testptp.c b/tools/testing/selftests/ptp/testptp.c
-index 863699434296a..b609efbdea55d 100644
---- a/tools/testing/selftests/ptp/testptp.c
-+++ b/tools/testing/selftests/ptp/testptp.c
-@@ -121,6 +121,7 @@ static void usage(char *progname)
- 		" -d name    device to open\n"
- 		" -e val     read 'val' external time stamp events\n"
- 		" -f val     adjust the ptp clock frequency by 'val' ppb\n"
-+		" -F chan    Enable single channel mask and keep device open for debugfs verification.\n"
- 		" -g         get the ptp clock time\n"
- 		" -h         prints this message\n"
- 		" -i val     index for event/trigger\n"
-@@ -187,6 +188,7 @@ int main(int argc, char *argv[])
- 	int pps = -1;
- 	int seconds = 0;
- 	int settime = 0;
-+	int channel = -1;
- 
- 	int64_t t1, t2, tp;
- 	int64_t interval, offset;
-@@ -196,7 +198,7 @@ int main(int argc, char *argv[])
- 
- 	progname = strrchr(argv[0], '/');
- 	progname = progname ? 1+progname : argv[0];
--	while (EOF != (c = getopt(argc, argv, "cd:e:f:ghH:i:k:lL:n:o:p:P:sSt:T:w:x:Xz"))) {
-+	while (EOF != (c = getopt(argc, argv, "cd:e:f:F:ghH:i:k:lL:n:o:p:P:sSt:T:w:x:Xz"))) {
- 		switch (c) {
- 		case 'c':
- 			capabilities = 1;
-@@ -210,6 +212,9 @@ int main(int argc, char *argv[])
- 		case 'f':
- 			adjfreq = atoi(optarg);
- 			break;
-+		case 'F':
-+			channel = atoi(optarg);
-+			break;
- 		case 'g':
- 			gettime = 1;
- 			break;
-@@ -602,6 +607,18 @@ int main(int argc, char *argv[])
- 		free(xts);
+diff --git a/drivers/ata/libata-core.c b/drivers/ata/libata-core.c
+index 1277b80726535..3fb7f7a5181a9 100644
+--- a/drivers/ata/libata-core.c
++++ b/drivers/ata/libata-core.c
+@@ -2882,6 +2882,8 @@ int ata_dev_configure(struct ata_device *dev)
+ 				     ata_mode_string(xfer_mask),
+ 				     cdb_intr_string, atapi_an_string,
+ 				     dma_dir_string);
++
++		ata_dev_config_lpm(dev);
  	}
  
-+	if (channel >= 0) {
-+		if (ioctl(fd, PTP_MASK_CLEAR_ALL)) {
-+			perror("PTP_MASK_CLEAR_ALL");
-+		} else if (ioctl(fd, PTP_MASK_EN_SINGLE, (unsigned int *)&channel)) {
-+			perror("PTP_MASK_EN_SINGLE");
-+		} else {
-+			printf("Channel %d exclusively enabled. Check on debugfs.\n", channel);
-+			printf("Press any key to continue\n.");
-+			getchar();
-+		}
-+	}
-+
- 	close(fd);
- 	return 0;
- }
+ 	/* determine max_sectors */
 -- 
 2.51.0
 
