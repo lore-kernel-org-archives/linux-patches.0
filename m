@@ -1,36 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1A10285404;
-	Wed,  4 Feb 2026 15:02:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CCFA528853A;
+	Wed,  4 Feb 2026 15:02:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770217329; cv=none; b=Kw6H7u0YhxPIeqSwA149u9Q3KtG5fG9t0Vh+wq9Ajhm2TMcMwzfw6ZJpfgyqQ1dQDxDtTnsk6iKj8lsLeCjckqfVkCchjtT4IFk1LR0yChZCT+H6Go1XDdBPQFkFqvfdKo8ixYgDv4Qwx5yaMg4cyXrmCsR4UIkWUW1nm//IdQo=
+	t=1770217332; cv=none; b=f+16puQCTu6VukDe22nl5xqlXXEzfVt0+t1bZpPNRzMBm7SkxrJIorJZfPwFa4S+uTZ3M9VF9PxJhWbHm82jDEu9qiYsXl69A+i7m0UiZw9fNs68xpT8LpvGj1sqFWZpG9Kie0ikDjQEZZEXnf+ZvOwcfJntHsl6V+nWpN+NiZ4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770217329; c=relaxed/simple;
-	bh=7NqI4bhQE/IocWjm82ZA/pWsaxPhcP+1D1uBC6Jo/as=;
+	s=arc-20240116; t=1770217332; c=relaxed/simple;
+	bh=RWobgHbIUFQjkVC/aP7rowwVC5TIgWGqHxhsGL6JU8Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Xp3ob0JIqtIWKuEJqPjzW6YmuhFwxv3pDdgxml5dod4pUTGoCO/kvZeonIAELiQCbdHDjIx9iRqEUI0AMYi32J3nUsUwjOES6XnPSKtQJJfTWbg/x+LAMu4Y6W69jGqudWLKk3RvoNnkyn2xbC7QcqUk7I04MlqAPXL37zwFuBw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hIqIdXI8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=nC98DeHki8+clDl0UdFsiUDpKrRSdixANfq+MY3K2utoUWI6Za0A0bDfV7LpUXmBE18yqmbWr0/yJWRUnwgD4uUFrytbDzsR3QDO80nId3v54i9+keHy3YWiqrIzptC4CNXzi/zQcd2RP7Ht/tNGJP8vMjIX9PZUF9zlHVlurqc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oBypYqun; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hIqIdXI8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2EB1EC4CEF7;
-	Wed,  4 Feb 2026 15:02:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oBypYqun"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 58F33C4CEF7;
+	Wed,  4 Feb 2026 15:02:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770217329;
-	bh=7NqI4bhQE/IocWjm82ZA/pWsaxPhcP+1D1uBC6Jo/as=;
+	s=korg; t=1770217332;
+	bh=RWobgHbIUFQjkVC/aP7rowwVC5TIgWGqHxhsGL6JU8Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hIqIdXI8+VW/4ipxl49k2jRWDqtcshl1DWHI24oHmiJ6LleKzRXbFEfKwQ8+ilmGm
-	 7gGEaef0mVolfc/fZcA7HcHGJS+D6e7KHWEVTB4Dl/jZw6NGMs2V1RZjR4DYMlVec1
-	 uYQcCtqU7YhqaAd7cBN/9au0C3aoa8uaVIJG3pGo=
+	b=oBypYqun8v9/xfj6EWX4XRX/HjfLLL1f4MdfM5+2OJFO0cK2TLzV+2DLPgOFFBMB8
+	 +KjMX5ld19B3aiOWForSOKFBrqzCgE3r50IijoTOAcoFAHToLtswnFX4HZsc1nUgnB
+	 VXDfSxRD6VukSMJt6ZA4Eq7xncz4C2XUzBuZhHP0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marc Kleine-Budde <mkl@pengutronix.de>
-Subject: [PATCH 5.15 191/206] can: esd_usb: esd_usb_read_bulk_callback(): fix URB memory leak
-Date: Wed,  4 Feb 2026 15:40:22 +0100
-Message-ID: <20260204143905.103860466@linuxfoundation.org>
+	Haoxiang Li <lihaoxiang@isrc.iscas.ac.cn>,
+	Felix Kuehling <felix.kuehling@amd.com>,
+	Oak Zeng <Oak.Zeng@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 5.15 192/206] drm/amdkfd: fix a memory leak in device_queue_manager_init()
+Date: Wed,  4 Feb 2026 15:40:23 +0100
+Message-ID: <20260204143905.139247881@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260204143858.193781818@linuxfoundation.org>
 References: <20260204143858.193781818@linuxfoundation.org>
@@ -49,59 +52,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Marc Kleine-Budde <mkl@pengutronix.de>
+From: Haoxiang Li <lihaoxiang@isrc.iscas.ac.cn>
 
-commit 5a4391bdc6c8357242f62f22069c865b792406b3 upstream.
+commit 80614c509810fc051312d1a7ccac8d0012d6b8d0 upstream.
 
-Fix similar memory leak as in commit 7352e1d5932a ("can: gs_usb:
-gs_usb_receive_bulk_callback(): fix URB memory leak").
+If dqm->ops.initialize() fails, add deallocate_hiq_sdma_mqd()
+to release the memory allocated by allocate_hiq_sdma_mqd().
+Move deallocate_hiq_sdma_mqd() up to ensure proper function
+visibility at the point of use.
 
-In esd_usb_open(), the URBs for USB-in transfers are allocated, added to
-the dev->rx_submitted anchor and submitted. In the complete callback
-esd_usb_read_bulk_callback(), the URBs are processed and resubmitted. In
-esd_usb_close() the URBs are freed by calling
-usb_kill_anchored_urbs(&dev->rx_submitted).
-
-However, this does not take into account that the USB framework unanchors
-the URB before the complete function is called. This means that once an
-in-URB has been completed, it is no longer anchored and is ultimately not
-released in esd_usb_close().
-
-Fix the memory leak by anchoring the URB in the
-esd_usb_read_bulk_callback() to the dev->rx_submitted anchor.
-
-Fixes: 96d8e90382dc ("can: Add driver for esd CAN-USB/2 device")
+Fixes: 11614c36bc8f ("drm/amdkfd: Allocate MQD trunk for HIQ and SDMA")
+Signed-off-by: Haoxiang Li <lihaoxiang@isrc.iscas.ac.cn>
+Signed-off-by: Felix Kuehling <felix.kuehling@amd.com>
+Reviewed-by: Oak Zeng <Oak.Zeng@amd.com>
+Reviewed-by: Felix Kuehling <felix.kuehling@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit b7cccc8286bb9919a0952c812872da1dcfe9d390)
 Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20260116-can_usb-fix-memory-leak-v2-2-4b8cb2915571@pengutronix.de
-Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
+Signed-off-by: Felix Kuehling <felix.kuehling@amd.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/can/usb/esd_usb2.c |    9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/amd/amdkfd/kfd_device_queue_manager.c |   18 ++++++++++--------
+ 1 file changed, 10 insertions(+), 8 deletions(-)
 
---- a/drivers/net/can/usb/esd_usb2.c
-+++ b/drivers/net/can/usb/esd_usb2.c
-@@ -440,13 +440,20 @@ resubmit_urb:
- 			  urb->transfer_buffer, RX_BUFFER_SIZE,
- 			  esd_usb2_read_bulk_callback, dev);
+--- a/drivers/gpu/drm/amd/amdkfd/kfd_device_queue_manager.c
++++ b/drivers/gpu/drm/amd/amdkfd/kfd_device_queue_manager.c
+@@ -1847,6 +1847,14 @@ static int allocate_hiq_sdma_mqd(struct
+ 	return retval;
+ }
  
-+	usb_anchor_urb(urb, &dev->rx_submitted);
++static void deallocate_hiq_sdma_mqd(struct kfd_dev *dev,
++				    struct kfd_mem_obj *mqd)
++{
++	WARN(!mqd, "No hiq sdma mqd trunk to free");
 +
- 	retval = usb_submit_urb(urb, GFP_ATOMIC);
-+	if (!retval)
-+		return;
++	amdgpu_amdkfd_free_gtt_mem(dev->kgd, &mqd->gtt_mem);
++}
 +
-+	usb_unanchor_urb(urb);
+ struct device_queue_manager *device_queue_manager_init(struct kfd_dev *dev)
+ {
+ 	struct device_queue_manager *dqm;
+@@ -1980,19 +1988,13 @@ struct device_queue_manager *device_queu
+ 	if (!dqm->ops.initialize(dqm))
+ 		return dqm;
+ 
++	deallocate_hiq_sdma_mqd(dev, &dqm->hiq_sdma_mqd);
 +
- 	if (retval == -ENODEV) {
- 		for (i = 0; i < dev->net_count; i++) {
- 			if (dev->nets[i])
- 				netif_device_detach(dev->nets[i]->netdev);
- 		}
--	} else if (retval) {
-+	} else {
- 		dev_err(dev->udev->dev.parent,
- 			"failed resubmitting read bulk urb: %d\n", retval);
- 	}
+ out_free:
+ 	kfree(dqm);
+ 	return NULL;
+ }
+ 
+-static void deallocate_hiq_sdma_mqd(struct kfd_dev *dev,
+-				    struct kfd_mem_obj *mqd)
+-{
+-	WARN(!mqd, "No hiq sdma mqd trunk to free");
+-
+-	amdgpu_amdkfd_free_gtt_mem(dev->kgd, mqd->gtt_mem);
+-}
+-
+ void device_queue_manager_uninit(struct device_queue_manager *dqm)
+ {
+ 	dqm->ops.uninitialize(dqm);
 
 
