@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7BAC2D4B68;
-	Wed,  4 Feb 2026 15:24:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67A2A18859B;
+	Wed,  4 Feb 2026 15:24:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770218685; cv=none; b=BsH7bzEDA+QJOKZnmpLt+hWYLHrvdrf0PuSP+E6iPfO1qAWmrG3eyfM3/GksHVFQMZJpBpNYpDwftdHDGZ5xf7KI5FEjjqQr1dyzroxtvNADxX3dFtS6zAMhl/BYTQIlCxERN7iUEy0wREQBqSs0aPV+ni4QbwVo/UFeedbbL2U=
+	t=1770218688; cv=none; b=CsPPSE8ziTB0kLbUPOzO8ThAgSopAt+t9p0G9fY25UtCPjqq0Mq9FvNofxda5//ZDMD6KicOG0bQINTighu5rRhSAJjJfxWw3k2bas8AgrVPDIHnQsz5SKCrweMvFDyYPP15DzhhZHPahZQ2VGmOi/g0FCXA1zXpugAJwPGW6fU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770218685; c=relaxed/simple;
-	bh=pePw0sSoeCPYLQoHy1kL9oGGjZN2EpxB90iG8KUTZ2Q=;
+	s=arc-20240116; t=1770218688; c=relaxed/simple;
+	bh=E3T0erTom1gXfdo3Bjokg8CqcFiaMirtzDurCmdnOqM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=piOJvv508XkknLtpHAItl6pSNCtdSRpIT0xCtcPypZq0vhas01kDc4XJgsS/BNe6DhD59SB8i4OtFOmTs+Xz4/hB5Z5NHmUUXkgFJX3zwRncMq5b3BFx05JQLH1mLAFE1zSWqN/+norZRkvHl9aE+rpzAAFGNEFt18FjMZw5TQs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=d1TkFmHl; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mtTn7tIrxsovrmRLwtHBSp6C194KxBYJ9FRF+FpGobEuZZOhE8VxCtJfe0d7u4rfAqI8li52NCv6zXpatVReoxgAdBEOQYkULehfEQvNZoz5tUnax7pBGqLLgSbqKJUY5SB+0F5pCeJ3v3mdm9gBm7L4XT+xiEPEKVuxMVPHP2k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pKpzxyOD; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="d1TkFmHl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 743D3C4CEF7;
-	Wed,  4 Feb 2026 15:24:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pKpzxyOD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E13DC4CEF7;
+	Wed,  4 Feb 2026 15:24:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770218684;
-	bh=pePw0sSoeCPYLQoHy1kL9oGGjZN2EpxB90iG8KUTZ2Q=;
+	s=korg; t=1770218688;
+	bh=E3T0erTom1gXfdo3Bjokg8CqcFiaMirtzDurCmdnOqM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=d1TkFmHlVE3xj7RmR0rCzC7T1tK6Q/FAv6WpOg6lQryjwqJGl/5takbI2TDM/dB+r
-	 Su0FvfGfZPKYj4ysNB/iLk7eQHleRYSx6ne/Z4bZuW3BwUGmffVxQU4NOzBNGWFaA4
-	 g/mcAHWqV1txUFfm/f7XLdVi4Lc/I4RK1rLeAwgc=
+	b=pKpzxyODex66FUFDPw+D/nTzTRDFtQEqkwWVN1nn+6StMR39Bs2HzvzM8CkUJiNG4
+	 7gXshOCrTT8l6x0Rzz2xUC34/KVoUvFKhwBIRjw9iD8yqSlE5AKMlcIKqd0d7D3u8o
+	 4T0Wtr07nIqeFfHd9lDG6Zsse5/voKpUXw1MxDrE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sai Sree Kartheek Adivi <s-adivi@ti.com>,
-	Robin Murphy <robin.murphy@arm.com>,
-	Marek Szyprowski <m.szyprowski@samsung.com>,
+	Aleksandr Loktionov <aleksandr.loktionov@intel.com>,
+	Aaron Ma <aaron.ma@canonical.com>,
+	Paul Menzel <pmenzel@molgen.mpg.de>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 31/87] dma/pool: distinguish between missing and exhausted atomic pools
-Date: Wed,  4 Feb 2026 15:40:29 +0100
-Message-ID: <20260204143848.032521157@linuxfoundation.org>
+Subject: [PATCH 6.12 14/87] ice: Fix NULL pointer dereference in ice_vsi_set_napi_queues
+Date: Wed,  4 Feb 2026 15:40:12 +0100
+Message-ID: <20260204143847.425894413@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260204143846.906385641@linuxfoundation.org>
 References: <20260204143846.906385641@linuxfoundation.org>
@@ -52,66 +53,94 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sai Sree Kartheek Adivi <s-adivi@ti.com>
+From: Aaron Ma <aaron.ma@canonical.com>
 
-[ Upstream commit 56c430c7f06d838fe3b2077dbbc4cc0bf992312b ]
+[ Upstream commit 9bb30be4d89ff9a8d7ab1aa0eb2edaca83431f85 ]
 
-Currently, dma_alloc_from_pool() unconditionally warns and dumps a stack
-trace when an allocation fails, with the message "Failed to get suitable
-pool".
+Add NULL pointer checks in ice_vsi_set_napi_queues() to prevent crashes
+during resume from suspend when rings[q_idx]->q_vector is NULL.
 
-This conflates two distinct failure modes:
-1. Configuration error: No atomic pool is available for the requested
-   DMA mask (a fundamental system setup issue)
-2. Resource Exhaustion: A suitable pool exists but is currently full (a
-   recoverable runtime state)
+Tested adaptor:
+60:00.0 Ethernet controller [0200]: Intel Corporation Ethernet Controller E810-XXV for SFP [8086:159b] (rev 02)
+        Subsystem: Intel Corporation Ethernet Network Adapter E810-XXV-2 [8086:4003]
 
-This lack of distinction prevents drivers from using __GFP_NOWARN to
-suppress error messages during temporary pressure spikes, such as when
-awaiting synchronous reclaim of descriptors.
+SR-IOV state: both disabled and enabled can reproduce this issue.
 
-Refactor the error handling to distinguish these cases:
-- If no suitable pool is found, keep the unconditional WARN regarding
-  the missing pool.
-- If a pool was found but is exhausted, respect __GFP_NOWARN and update
-  the warning message to explicitly state "DMA pool exhausted".
+kernel version: v6.18
 
-Fixes: 9420139f516d ("dma-pool: fix coherent pool allocations for IOMMU mappings")
-Signed-off-by: Sai Sree Kartheek Adivi <s-adivi@ti.com>
-Reviewed-by: Robin Murphy <robin.murphy@arm.com>
-Signed-off-by: Marek Szyprowski <m.szyprowski@samsung.com>
-Link: https://lore.kernel.org/r/20260128133554.3056582-1-s-adivi@ti.com
+Reproduce steps:
+Boot up and execute suspend like systemctl suspend or rtcwake.
+
+Log:
+<1>[  231.443607] BUG: kernel NULL pointer dereference, address: 0000000000000040
+<1>[  231.444052] #PF: supervisor read access in kernel mode
+<1>[  231.444484] #PF: error_code(0x0000) - not-present page
+<6>[  231.444913] PGD 0 P4D 0
+<4>[  231.445342] Oops: Oops: 0000 [#1] SMP NOPTI
+<4>[  231.446635] RIP: 0010:netif_queue_set_napi+0xa/0x170
+<4>[  231.447067] Code: 31 f6 31 ff c3 cc cc cc cc 0f 1f 80 00 00 00 00 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 0f 1f 44 00 00 48 85 c9 74 0b <48> 83 79 30 00 0f 84 39 01 00 00 55 41 89 d1 49 89 f8 89 f2 48 89
+<4>[  231.447513] RSP: 0018:ffffcc780fc078c0 EFLAGS: 00010202
+<4>[  231.447961] RAX: ffff8b848ca30400 RBX: ffff8b848caf2028 RCX: 0000000000000010
+<4>[  231.448443] RDX: 0000000000000000 RSI: 0000000000000000 RDI: ffff8b848dbd4000
+<4>[  231.448896] RBP: ffffcc780fc078e8 R08: 0000000000000000 R09: 0000000000000000
+<4>[  231.449345] R10: 0000000000000000 R11: 0000000000000000 R12: 0000000000000001
+<4>[  231.449817] R13: ffff8b848dbd4000 R14: ffff8b84833390c8 R15: 0000000000000000
+<4>[  231.450265] FS:  00007c7b29e9d740(0000) GS:ffff8b8c068e2000(0000) knlGS:0000000000000000
+<4>[  231.450715] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+<4>[  231.451179] CR2: 0000000000000040 CR3: 000000030626f004 CR4: 0000000000f72ef0
+<4>[  231.451629] PKRU: 55555554
+<4>[  231.452076] Call Trace:
+<4>[  231.452549]  <TASK>
+<4>[  231.452996]  ? ice_vsi_set_napi_queues+0x4d/0x110 [ice]
+<4>[  231.453482]  ice_resume+0xfd/0x220 [ice]
+<4>[  231.453977]  ? __pfx_pci_pm_resume+0x10/0x10
+<4>[  231.454425]  pci_pm_resume+0x8c/0x140
+<4>[  231.454872]  ? __pfx_pci_pm_resume+0x10/0x10
+<4>[  231.455347]  dpm_run_callback+0x5f/0x160
+<4>[  231.455796]  ? dpm_wait_for_superior+0x107/0x170
+<4>[  231.456244]  device_resume+0x177/0x270
+<4>[  231.456708]  dpm_resume+0x209/0x2f0
+<4>[  231.457151]  dpm_resume_end+0x15/0x30
+<4>[  231.457596]  suspend_devices_and_enter+0x1da/0x2b0
+<4>[  231.458054]  enter_state+0x10e/0x570
+
+Add defensive checks for both the ring pointer and its q_vector
+before dereferencing, allowing the system to resume successfully even when
+q_vectors are unmapped.
+
+Fixes: 2a5dc090b92cf ("ice: move netif_queue_set_napi to rtnl-protected sections")
+Reviewed-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
+Signed-off-by: Aaron Ma <aaron.ma@canonical.com>
+Reviewed-by: Paul Menzel <pmenzel@molgen.mpg.de>
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/dma/pool.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ drivers/net/ethernet/intel/ice/ice_lib.c | 10 ++++++----
+ 1 file changed, 6 insertions(+), 4 deletions(-)
 
-diff --git a/kernel/dma/pool.c b/kernel/dma/pool.c
-index 26392badc36b0..985d6aa102b67 100644
---- a/kernel/dma/pool.c
-+++ b/kernel/dma/pool.c
-@@ -268,15 +268,20 @@ struct page *dma_alloc_from_pool(struct device *dev, size_t size,
- {
- 	struct gen_pool *pool = NULL;
- 	struct page *page;
-+	bool pool_found = false;
+diff --git a/drivers/net/ethernet/intel/ice/ice_lib.c b/drivers/net/ethernet/intel/ice/ice_lib.c
+index 4e022de9e4bbd..4ad21c21c5c57 100644
+--- a/drivers/net/ethernet/intel/ice/ice_lib.c
++++ b/drivers/net/ethernet/intel/ice/ice_lib.c
+@@ -2731,12 +2731,14 @@ void ice_vsi_set_napi_queues(struct ice_vsi *vsi)
+ 		return;
  
- 	while ((pool = dma_guess_pool(pool, gfp))) {
-+		pool_found = true;
- 		page = __dma_alloc_from_pool(dev, size, pool, cpu_addr,
- 					     phys_addr_ok);
- 		if (page)
- 			return page;
- 	}
+ 	ice_for_each_rxq(vsi, q_idx)
+-		netif_queue_set_napi(netdev, q_idx, NETDEV_QUEUE_TYPE_RX,
+-				     &vsi->rx_rings[q_idx]->q_vector->napi);
++		if (vsi->rx_rings[q_idx] && vsi->rx_rings[q_idx]->q_vector)
++			netif_queue_set_napi(netdev, q_idx, NETDEV_QUEUE_TYPE_RX,
++					     &vsi->rx_rings[q_idx]->q_vector->napi);
  
--	WARN(1, "Failed to get suitable pool for %s\n", dev_name(dev));
-+	if (pool_found)
-+		WARN(!(gfp & __GFP_NOWARN), "DMA pool exhausted for %s\n", dev_name(dev));
-+	else
-+		WARN(1, "Failed to get suitable pool for %s\n", dev_name(dev));
- 	return NULL;
- }
- 
+ 	ice_for_each_txq(vsi, q_idx)
+-		netif_queue_set_napi(netdev, q_idx, NETDEV_QUEUE_TYPE_TX,
+-				     &vsi->tx_rings[q_idx]->q_vector->napi);
++		if (vsi->tx_rings[q_idx] && vsi->tx_rings[q_idx]->q_vector)
++			netif_queue_set_napi(netdev, q_idx, NETDEV_QUEUE_TYPE_TX,
++					     &vsi->tx_rings[q_idx]->q_vector->napi);
+ 	/* Also set the interrupt number for the NAPI */
+ 	ice_for_each_q_vector(vsi, v_idx) {
+ 		struct ice_q_vector *q_vector = vsi->q_vectors[v_idx];
 -- 
 2.51.0
 
