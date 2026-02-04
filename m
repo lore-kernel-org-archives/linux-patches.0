@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C060D3D994;
-	Wed,  4 Feb 2026 15:12:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F097F3D994;
+	Wed,  4 Feb 2026 15:12:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770217943; cv=none; b=QzD4yLhZqj7Q+uyYJSBf/rGY6Vzo6GL1bNuOq1B0muh4b0wV89P9lSs1rt9LluacnFsItPfPTsO7UX+je8frZVWAWLWLcyKvN70yqGwZO521oyVns0TUElu8UOWLHFoTNr+UFc1z3jz/auPAff79yLVE/g9A6lIrJNHQKNb/Mog=
+	t=1770217947; cv=none; b=Fl939NrEjS6XH0EMmWvSYjzh9MFoYT/E5Mgoy6IpLEr7uARNx+WU4w7X80jmy/kUtN5FVqjkYSx/Wh8OzScNPC3keSxI2df8qpWzgu8CZhw3PVrXwZ9Ag9ZPnJQj0IWw5o4QZRQHirAm8+K0ylMAzfL1C9H2nNbeVZHBhoVJQfA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770217943; c=relaxed/simple;
-	bh=Yi96/XQthGPDrVLccWV7DSNC59xBmouYuhTAMLgQnxA=;
+	s=arc-20240116; t=1770217947; c=relaxed/simple;
+	bh=VM/PGWc5YWp4gBk74mvtisL4O073AzevcqLzJN83Z9s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SehAVTnNpI8rsUJMQfI4rqh6fLgl45qbq/cCZXlNvTCbkmugrqYXIinLPJ2AflM0j1dTaDDwE2fFLJySjUR6U32IrJfLCTaZhLE4GQDgC5+Ta+aJBEjXsNE2jzI9hEqF64GErWZsKBlHkl/0DED9X5MbIWCG7+7KoHTuQ2PgkEI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qrMWc7RA; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=RGkNi9SnMI2zhMQwRsSzpljAREkRVDEOkwkvwvjW4imxyXGbezAXsTzqZ855twyyrcX1YJFJn38RLgfzxmXvcDbliHXUbZzgwBSuPRhmjXA7KFOKUgQU+UYxZE7VvBl2GWPILozzOaqweHgKpu9w2PAMBFa0/1Z4BqtBAXy6lwo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=P0pyonQo; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qrMWc7RA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D674CC4CEF7;
-	Wed,  4 Feb 2026 15:12:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="P0pyonQo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 769FFC4CEF7;
+	Wed,  4 Feb 2026 15:12:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770217943;
-	bh=Yi96/XQthGPDrVLccWV7DSNC59xBmouYuhTAMLgQnxA=;
+	s=korg; t=1770217946;
+	bh=VM/PGWc5YWp4gBk74mvtisL4O073AzevcqLzJN83Z9s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qrMWc7RAB/bdZ61ZMuV6rPD6hdNnWHIq1LowxrDu8p6Z7J5lg9rDpFlJZsLF4tLOR
-	 Fbzpjdi3ae2xGTDXO38dKgYOcd7i7zj3Ak/WaBfOHtWcKcW3B6aijC/VEFzL+kcEnv
-	 OttMud9429XyPxhnv2TFbI6OlO5KyA1ucZwSa+Vs=
+	b=P0pyonQo/H/ozTFGjglLDE3NHqBCBAII2QfbM+j2xZMGIsr+KQQ4iTa5guMeJTmZQ
+	 PeLUxOPzXvppWcoB5T/hdhFGfciwhRWiuicaYykkposp+nnAZMX9gwNdjcYkdICiFJ
+	 b3pEMBFJmvnX4fcjXS1U7QHuKQZREVn59/Sa34Qo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Long Li <longli@microsoft.com>,
-	Michael Kelley <mhklinux@outlook.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>
-Subject: [PATCH 6.1 122/280] scsi: storvsc: Process unsupported MODE_SENSE_10
-Date: Wed,  4 Feb 2026 15:38:16 +0100
-Message-ID: <20260204143914.026295165@linuxfoundation.org>
+	Pei Xiao <xiaopei01@kylinos.cn>,
+	Stable@vger.kernel.org,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Subject: [PATCH 6.1 159/280] iio: adc: at91-sama5d2_adc: Fix potential use-after-free in sama5d2_adc driver
+Date: Wed,  4 Feb 2026 15:38:53 +0100
+Message-ID: <20260204143915.345966075@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260204143909.614719725@linuxfoundation.org>
 References: <20260204143909.614719725@linuxfoundation.org>
@@ -52,44 +51,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Long Li <longli@microsoft.com>
+From: Pei Xiao <xiaopei01@kylinos.cn>
 
-commit 9eacec5d18f98f89be520eeeef4b377acee3e4b8 upstream.
+commit dbdb442218cd9d613adeab31a88ac973f22c4873 upstream.
 
-The Hyper-V host does not support MODE_SENSE_10 and MODE_SENSE.  The
-driver handles MODE_SENSE as unsupported command, but not for
-MODE_SENSE_10. Add MODE_SENSE_10 to the same handling logic and return
-correct code to SCSI layer.
+at91_adc_interrupt can call at91_adc_touch_data_handler function
+to start the work by schedule_work(&st->touch_st.workq).
 
-Fixes: 89ae7d709357 ("Staging: hv: storvsc: Move the storage driver out of the staging area")
-Cc: stable@kernel.org
-Signed-off-by: Long Li <longli@microsoft.com>
-Reviewed-by: Michael Kelley <mhklinux@outlook.com>
-Link: https://patch.msgid.link/20260117010302.294068-1-longli@linux.microsoft.com
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+If we remove the module which will call at91_adc_remove to
+make cleanup, it will free indio_dev through iio_device_unregister but
+quite a bit later. While the work mentioned above will be used. The
+sequence of operations that may lead to a UAF bug is as follows:
+
+CPU0                                      CPU1
+
+                                     | at91_adc_workq_handler
+at91_adc_remove                      |
+iio_device_unregister(indio_dev)     |
+//free indio_dev a bit later         |
+                                     | iio_push_to_buffers(indio_dev)
+                                     | //use indio_dev
+
+Fix it by ensuring that the work is canceled before proceeding with
+the cleanup in at91_adc_remove.
+
+Fixes: 23ec2774f1cc ("iio: adc: at91-sama5d2_adc: add support for position and pressure channels")
+Signed-off-by: Pei Xiao <xiaopei01@kylinos.cn>
+Cc: <Stable@vger.kernel.org>
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/scsi/storvsc_drv.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/iio/adc/at91-sama5d2_adc.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/scsi/storvsc_drv.c
-+++ b/drivers/scsi/storvsc_drv.c
-@@ -1136,7 +1136,7 @@ static void storvsc_on_io_completion(str
- 	 * The current SCSI handling on the host side does
- 	 * not correctly handle:
- 	 * INQUIRY command with page code parameter set to 0x80
--	 * MODE_SENSE command with cmd[2] == 0x1c
-+	 * MODE_SENSE and MODE_SENSE_10 command with cmd[2] == 0x1c
- 	 * MAINTENANCE_IN is not supported by HyperV FC passthrough
- 	 *
- 	 * Setup srb and scsi status so this won't be fatal.
-@@ -1146,6 +1146,7 @@ static void storvsc_on_io_completion(str
+--- a/drivers/iio/adc/at91-sama5d2_adc.c
++++ b/drivers/iio/adc/at91-sama5d2_adc.c
+@@ -2521,6 +2521,7 @@ static int at91_adc_remove(struct platfo
+ 	struct at91_adc_state *st = iio_priv(indio_dev);
  
- 	if ((stor_pkt->vm_srb.cdb[0] == INQUIRY) ||
- 	   (stor_pkt->vm_srb.cdb[0] == MODE_SENSE) ||
-+	   (stor_pkt->vm_srb.cdb[0] == MODE_SENSE_10) ||
- 	   (stor_pkt->vm_srb.cdb[0] == MAINTENANCE_IN &&
- 	   hv_dev_is_fc(device))) {
- 		vstor_packet->vm_srb.scsi_status = 0;
+ 	iio_device_unregister(indio_dev);
++	cancel_work_sync(&st->touch_st.workq);
+ 
+ 	at91_adc_dma_disable(st);
+ 
 
 
