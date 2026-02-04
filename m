@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23FAB2BE03C;
-	Wed,  4 Feb 2026 15:14:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7EBF43C196E;
+	Wed,  4 Feb 2026 15:14:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770218078; cv=none; b=bwgBXQqGB3NB5Nd7WFqCAQQwmvn8kIYQ1Oe4Xn57gwsJcC8IHWtsooymhlLiOvpzhekbmOyFehO9OvibH0bZtNECV2xyi5vqP0OaNSCX2sxC6FpN5XvHvl3gKYjIpHDG2C5xrG6rKR0VyNvhfSyIDdcYLQqg7Znx8mAJiOwsu78=
+	t=1770218081; cv=none; b=Fp3c96GikmoysQFp72QKPvp4lLAm0BVcu3D3NohS5HP5dUMaI8ltqk1wvi1jd15VSVlLc7FYJIaCyhhD809LAoPGMO/mA5c+gRWHAmWlUdYDuPoKauWnWOBz/nrKWj6JG1XJVesNnFPj9TSykQlliRJZ6S7mfXGHN5Pr/EFw4Lk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770218078; c=relaxed/simple;
-	bh=whnWarVCekQqeykREQkr+oifLYMtJLeUCVFDckMnf54=;
+	s=arc-20240116; t=1770218081; c=relaxed/simple;
+	bh=7O8fhQ6la0JGfPuCb9wdi/MxaoAQmx4GuW30WRkddRQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EzN1walkn8ggpdCbtFd9lvLMDbMMEII1PF2NRrXc+nDckVbm1elBXfU45PK1aiDpiO0ux8VU1dqIufBLGMZt3KO1Dcng2D+rTLDIhIJUoNGXX/1INuVpLzhyT81hkJhBqxS6cUYWNKY5GX7WvQXZpdoF+Tk+7FKT6dPVPGSWeKI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qAqjf2T6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cagWxKmJ3KHtCGQklDO9bvYCfpgX7dGsRL/NGWISoOO3hdIiqQVF7RYEENWUpQgSbUeuLmijvkTzshI5Dmm3xgM0zEz5T9bsaKYMlqpTsQIhkF4tkyQb+3CN+0FdiyRsx6eshFfiTzts6Ke3A0lOtnpOGepU1a0yj48aq/r+g/s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hqy6FVIY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qAqjf2T6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D1E1C4CEF7;
-	Wed,  4 Feb 2026 15:14:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hqy6FVIY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 06EB8C4CEF7;
+	Wed,  4 Feb 2026 15:14:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770218078;
-	bh=whnWarVCekQqeykREQkr+oifLYMtJLeUCVFDckMnf54=;
+	s=korg; t=1770218081;
+	bh=7O8fhQ6la0JGfPuCb9wdi/MxaoAQmx4GuW30WRkddRQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qAqjf2T6i/8Os/3StYFCc+8+EE62Eszf1eF1NVmpwAjabt4iaiyZI9FR0DsxEfQxa
-	 RiQf6Xb/6sUtNidPWpEQG0TW0OHKIW/D/1bmZGuPCwjFPQmDPFHrvdtJDIuf0tX+1A
-	 kxbpRqHAgurvmFNE6m0M6Sp66Nzs2KfblRcT+ilg=
+	b=hqy6FVIYVgkmTyWVgmTifVSIwXwQiSxyXNTi6GPnxCprMIBgD46kA+hIlwdMEKoBg
+	 zDq6PFt00o1h3uY8Pxf1DBvG7Aai8Ac9jd5+bnZQNzzdgaGbY01MuPV9qh8D/DKzgc
+	 Jy0hhTYjuBz8kzZJIpFOhw3GmC+EVCLOkfK8DC0U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marek Szyprowski <m.szyprowski@samsung.com>,
-	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
-	Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
-	Linus Walleij <linusw@kernel.org>
-Subject: [PATCH 6.1 206/280] pinctrl: meson: mark the GPIO controller as sleeping
-Date: Wed,  4 Feb 2026 15:39:40 +0100
-Message-ID: <20260204143917.013694262@linuxfoundation.org>
+	Han Gao <gaohan@iscas.ac.cn>,
+	"Guo Ren (Alibaba Damo Academy)" <guoren@kernel.org>,
+	Paul Walmsley <pjw@kernel.org>
+Subject: [PATCH 6.1 207/280] riscv: compat: fix COMPAT_UTS_MACHINE definition
+Date: Wed,  4 Feb 2026 15:39:41 +0100
+Message-ID: <20260204143917.050884305@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260204143909.614719725@linuxfoundation.org>
 References: <20260204143909.614719725@linuxfoundation.org>
@@ -53,90 +51,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+From: Han Gao <gaohan@iscas.ac.cn>
 
-commit 28f24068387169722b508bba6b5257cb68b86e74 upstream.
+commit 0ea05c4f7527a98f5946f96c829733788934311d upstream.
 
-The GPIO controller is configured as non-sleeping but it uses generic
-pinctrl helpers which use a mutex for synchronization.
+The COMPAT_UTS_MACHINE for riscv was incorrectly defined as "riscv".
+Change it to "riscv32" to reflect the correct 32-bit compat name.
 
-This can cause the following lockdep splat with shared GPIOs enabled on
-boards which have multiple devices using the same GPIO:
-
-BUG: sleeping function called from invalid context at
-kernel/locking/mutex.c:591
-in_atomic(): 1, irqs_disabled(): 1, non_block: 0, pid: 142, name:
-kworker/u25:3
-preempt_count: 1, expected: 0
-RCU nest depth: 0, expected: 0
-INFO: lockdep is turned off.
-irq event stamp: 46379
-hardirqs last  enabled at (46379): [<ffff8000813acb24>]
-_raw_spin_unlock_irqrestore+0x74/0x78
-hardirqs last disabled at (46378): [<ffff8000813abf38>]
-_raw_spin_lock_irqsave+0x84/0x88
-softirqs last  enabled at (46330): [<ffff8000800c71b4>]
-handle_softirqs+0x4c4/0x4dc
-softirqs last disabled at (46295): [<ffff800080010674>]
-__do_softirq+0x14/0x20
-CPU: 1 UID: 0 PID: 142 Comm: kworker/u25:3 Tainted: G C
-6.19.0-rc4-next-20260105+ #11963 PREEMPT
-Tainted: [C]=CRAP
-Hardware name: Khadas VIM3 (DT)
-Workqueue: events_unbound deferred_probe_work_func
-Call trace:
-  show_stack+0x18/0x24 (C)
-  dump_stack_lvl+0x90/0xd0
-  dump_stack+0x18/0x24
-  __might_resched+0x144/0x248
-  __might_sleep+0x48/0x98
-  __mutex_lock+0x5c/0x894
-  mutex_lock_nested+0x24/0x30
-  pinctrl_get_device_gpio_range+0x44/0x128
-  pinctrl_gpio_set_config+0x40/0xdc
-  gpiochip_generic_config+0x28/0x3c
-  gpio_do_set_config+0xa8/0x194
-  gpiod_set_config+0x34/0xfc
-  gpio_shared_proxy_set_config+0x6c/0xfc [gpio_shared_proxy]
-  gpio_do_set_config+0xa8/0x194
-  gpiod_set_transitory+0x4c/0xf0
-  gpiod_configure_flags+0xa4/0x480
-  gpiod_find_and_request+0x1a0/0x574
-  gpiod_get_index+0x58/0x84
-  devm_gpiod_get_index+0x20/0xb4
-  devm_gpiod_get+0x18/0x24
-  mmc_pwrseq_emmc_probe+0x40/0xb8
-  platform_probe+0x5c/0xac
-  really_probe+0xbc/0x298
-  __driver_probe_device+0x78/0x12c
-  driver_probe_device+0xdc/0x164
-  __device_attach_driver+0xb8/0x138
-  bus_for_each_drv+0x80/0xdc
-  __device_attach+0xa8/0x1b0
-
-Fixes: 6ac730951104 ("pinctrl: add driver for Amlogic Meson SoCs")
+Fixes: 06d0e3723647 ("riscv: compat: Add basic compat data type implementation")
 Cc: stable@vger.kernel.org
-Reported-by: Marek Szyprowski <m.szyprowski@samsung.com>
-Closes: https://lore.kernel.org/all/00107523-7737-4b92-a785-14ce4e93b8cb@samsung.com/
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
-Reviewed-by: Martin Blumenstingl <martin.blumenstingl@googlemail.com>
-Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
-Signed-off-by: Linus Walleij <linusw@kernel.org>
+Signed-off-by: Han Gao <gaohan@iscas.ac.cn>
+Reviewed-by: Guo Ren (Alibaba Damo Academy) <guoren@kernel.org>
+Link: https://patch.msgid.link/20260127190711.2264664-1-gaohan@iscas.ac.cn
+Signed-off-by: Paul Walmsley <pjw@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pinctrl/meson/pinctrl-meson.c |    2 +-
+ arch/riscv/include/asm/compat.h |    2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/pinctrl/meson/pinctrl-meson.c
-+++ b/drivers/pinctrl/meson/pinctrl-meson.c
-@@ -619,7 +619,7 @@ static int meson_gpiolib_register(struct
- 	pc->chip.set = meson_gpio_set;
- 	pc->chip.base = -1;
- 	pc->chip.ngpio = pc->data->num_pins;
--	pc->chip.can_sleep = false;
-+	pc->chip.can_sleep = true;
+--- a/arch/riscv/include/asm/compat.h
++++ b/arch/riscv/include/asm/compat.h
+@@ -2,7 +2,7 @@
+ #ifndef __ASM_COMPAT_H
+ #define __ASM_COMPAT_H
  
- 	ret = gpiochip_add_data(&pc->chip, pc);
- 	if (ret) {
+-#define COMPAT_UTS_MACHINE	"riscv\0\0"
++#define COMPAT_UTS_MACHINE	"riscv32\0\0"
+ 
+ /*
+  * Architecture specific compatibility types
 
 
