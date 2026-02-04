@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4578421892;
-	Wed,  4 Feb 2026 15:26:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D51E541B356;
+	Wed,  4 Feb 2026 15:26:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770218791; cv=none; b=rOIHPkD6kCIMNFwPE+JcTiwR93Lqxej+KZaxAX/+8VfgS96uMaAW8r4iaauYo2b1Tct4ZE4f8P7eVpHyAevaUKZejNEJPT+r6StP7JrT2y/wIfWeJCyPqf0+uN8CF4/RxLZlsI+1AG/Zg7l1TnJ3j3YUFZkg6dKHEOyhywUm6+o=
+	t=1770218794; cv=none; b=XgwN3wRklgUl407XxambRaRhHPZG/m/TCg6IW9A/ZKo+1cdBuTvepFSlr29vegn1oE/EW0uIoechz9oqwOeoOlzSimfhq+jWhJ/pX5fgjsDMwW4wXxiPSwk9OUU6hn0jc/i1Oinuk3JHBWuooZf3QEe+xzTLJT0YEbov9y7z0GY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770218791; c=relaxed/simple;
-	bh=E8rqheUmT5MtZuykYBK5jPiuCgDQ/xEwtpZA02nytfU=;
+	s=arc-20240116; t=1770218794; c=relaxed/simple;
+	bh=7OqgB1ARxEzFO7EVWUQ31mBtAMTUcGJPSJm1zbko/10=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=KFQB6IsZBiaImmPUR4/kJApiSKsIbSrgDMbtGc7m3famRtZQhrOgfq0c0xVrE5gcQSatLGAN36Ji0Tprbrs+MdnzteDat9vFXfkafpEG9JNd6sGM9tuvubUayd3IfCQYGAai56lUBtAGBmpBw9klDKeeu1ePKOepAKXJleBx1lc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Eji4EaWJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=P20OZT5C/pfvrfc3drJp0+XXJM3jkOpk5rUVj5YQR7Yg3Wl44p7Ez1WHm6reZNFEZJ031PuwQjInYhh0xlfwZAbtbpQx+/RShZ23wQoGP5+Fzwnq9Mi2cGVJcK3Ij0pRWsJg29DfWm25NgXfpOND3Z5fxIn2XVyJKBgjJYm6sxk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tyNTHhoq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Eji4EaWJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A94AC19423;
-	Wed,  4 Feb 2026 15:26:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tyNTHhoq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5442EC4CEF7;
+	Wed,  4 Feb 2026 15:26:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770218791;
-	bh=E8rqheUmT5MtZuykYBK5jPiuCgDQ/xEwtpZA02nytfU=;
+	s=korg; t=1770218794;
+	bh=7OqgB1ARxEzFO7EVWUQ31mBtAMTUcGJPSJm1zbko/10=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Eji4EaWJwnBZktLM+3AozcETmJC8GdgESMfh9FrjdAA7Nei9owHDHTBXtJ5aMQatp
-	 4IlQtnUfmQJRY1UFzIQzBCTb3MmTN+/XEWsyA6OkJaybs1pLAagBDpDVW+dvtDjmjt
-	 Xc0QTJBihaCFXWxM+bes787UZBQoXpGrmRN8Rh2Q=
+	b=tyNTHhoqugWqSczkRAxCtBQtMIaY6Kf/Hx0I9QcX/8/KQrv6xpYO0GF5hIScCaQW6
+	 HcHoU52eWqS82IJcdwM3ZB/2GZn4iUsbD8g+pVKU6KZL/veUgb3oGcAYvQ80bXLlD8
+	 DrzIQGRv7zYIE+DsLz11G42+hUNt/4NitoUTuCi4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	=?UTF-8?q?Timur=20Krist=C3=B3f?= <timur.kristof@gmail.com>,
 	Jesse Zhang <jesse.zhang@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.12 63/87] drm/amdgpu/gfx11: fix wptr reset in KGQ init
-Date: Wed,  4 Feb 2026 15:41:01 +0100
-Message-ID: <20260204143849.186891368@linuxfoundation.org>
+Subject: [PATCH 6.12 64/87] drm/amdgpu/gfx12: fix wptr reset in KGQ init
+Date: Wed,  4 Feb 2026 15:41:02 +0100
+Message-ID: <20260204143849.222423200@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260204143846.906385641@linuxfoundation.org>
 References: <20260204143846.906385641@linuxfoundation.org>
@@ -54,7 +54,7 @@ Content-Transfer-Encoding: 8bit
 
 From: Alex Deucher <alexander.deucher@amd.com>
 
-commit b1f810471c6a6bd349f7f9f2f2fed96082056d46 upstream.
+commit 9077d32a4b570fa20500aa26e149981c366c965d upstream.
 
 wptr is a 64 bit value and we need to update the
 full value, not just 32 bits. Align with what we
@@ -63,16 +63,16 @@ already do for KCQs.
 Reviewed-by: Timur Kristóf <timur.kristof@gmail.com>
 Reviewed-by: Jesse Zhang <jesse.zhang@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 1f16866bdb1daed7a80ca79ae2837a9832a74fbc)
+(cherry picked from commit a2918f958d3f677ea93c0ac257cb6ba69b7abb7c)
 Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/gfx_v11_0.c |    2 +-
+ drivers/gpu/drm/amd/amdgpu/gfx_v12_0.c |    2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/amd/amdgpu/gfx_v11_0.c
-+++ b/drivers/gpu/drm/amd/amdgpu/gfx_v11_0.c
-@@ -4026,7 +4026,7 @@ static int gfx_v11_0_kgq_init_queue(stru
+--- a/drivers/gpu/drm/amd/amdgpu/gfx_v12_0.c
++++ b/drivers/gpu/drm/amd/amdgpu/gfx_v12_0.c
+@@ -2958,7 +2958,7 @@ static int gfx_v12_0_kgq_init_queue(stru
  			memcpy_toio(mqd, adev->gfx.me.mqd_backup[mqd_idx], sizeof(*mqd));
  		/* reset the ring */
  		ring->wptr = 0;
