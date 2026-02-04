@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A434B426EC1;
-	Wed,  4 Feb 2026 15:20:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09F4C22332E;
+	Wed,  4 Feb 2026 15:20:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770218438; cv=none; b=XRN+cKcTVUKAFB5QZbHWxWQsRTEpkdikiNZ19dOxsuahFSsI15U2mFX1lqOYhtCe+5oOtOFBSrLsFBTMn/dEBdVGPavac80cdFuZ3PGdpLOB5wGpR6+kje/8vZUDp/K3R6CY2mPrCZKk2FLOtEqhqxe5Fmfz3emAF71RZfjgy7g=
+	t=1770218442; cv=none; b=QpPAb6w/21Sp4Fjh+GifdoojHYdFqqyJOOacSHHyHLImpEivU7T48/Or0KqlI4r7RtFjzh6vROmzWS5cWBqaAV+h8y1GXIqRDLbPiqZLcSJ0B4C+Wto4gsL0HK4cQ3Rh7EuLOIw4/ILeJCsZhaa5DpMUTDh/OrOoLP8fkh5XCbg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770218438; c=relaxed/simple;
-	bh=Hdpu7mzeMxOAiestlOGxIvhiKIZjd9bf/jzzxBa9mUM=;
+	s=arc-20240116; t=1770218442; c=relaxed/simple;
+	bh=UkDV5oFWDqE12Ree5Ts1sc83Auh+JDFOM20KcPVZhfc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EayZ95/PK17lbtS5t5MQl9phCX6oRUej+ndiyvKPlI6k3riac3N3eR8EddGA9DN0peLDtuATfRrGrZ+mah/gZh4vlLgSbE/PN8p3bde+pyNASTiZhTiV7qlgrVGXJ3rHW6D5yUzrnjbYWq5RSQJt0y6BFSsWiVbJ9lK2utS3IIk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UQOsvKeI; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=RmgmeKTEV3OiW/pjHHm8v8mOyaf5cSK2aaTVtA9IwKD12GpruEr7MUGZ6fXXzlyjD960FfFs4xkNtvgdBksffcvWhGEcCSxdNltd1HqcGuJhV6R97DABnn1T+Ir9l/64nKJ6tq83BqejmxQC4sQKHD6UOnJt8wwznT7IVmoOTXI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dF23e8LO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UQOsvKeI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C4B9CC19425;
-	Wed,  4 Feb 2026 15:20:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dF23e8LO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A852C4CEF7;
+	Wed,  4 Feb 2026 15:20:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770218438;
-	bh=Hdpu7mzeMxOAiestlOGxIvhiKIZjd9bf/jzzxBa9mUM=;
+	s=korg; t=1770218441;
+	bh=UkDV5oFWDqE12Ree5Ts1sc83Auh+JDFOM20KcPVZhfc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UQOsvKeI0YsA6QPrnKXLbtPFYSk5lk1U6IRajgwdCez9Kzi8u67Ns2iN6kzhnF7iJ
-	 u4u85McJr873FYbSBAjfxhMji3xtKiEbqKZapI+ggHhzyxcN14F8RUnPp8H1eCXdpm
-	 Z8duPI0WX2BdpccuadNPvIuFCiag/ihPTh1l6qI4=
+	b=dF23e8LOx4lzDfu8svrtnslA6+2o4CgUqLsbU1qJaBH2KWvyVFQ0qlUkRLKMqrGn6
+	 OfJ2T/8jboZG1lTzvsCccaLJNT46zgShK39qfBFumPdB1bf1FjhpznN1rfTGCFL6gM
+	 KCBv51OnWdQulXnYqh/YxPuFI2mgHXtFE9EVWCpo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thomas Fourier <fourier.thomas@gmail.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>
-Subject: [PATCH 6.6 30/72] scsi: qla2xxx: edif: Fix dma_free_coherent() size
-Date: Wed,  4 Feb 2026 15:40:33 +0100
-Message-ID: <20260204143846.717883958@linuxfoundation.org>
+	Kohei Enju <kohei@enjuk.jp>,
+	Ard Biesheuvel <ardb@kernel.org>
+Subject: [PATCH 6.6 31/72] efivarfs: fix error propagation in efivar_entry_get()
+Date: Wed,  4 Feb 2026 15:40:34 +0100
+Message-ID: <20260204143846.753639099@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260204143845.603454952@linuxfoundation.org>
 References: <20260204143845.603454952@linuxfoundation.org>
@@ -50,34 +50,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thomas Fourier <fourier.thomas@gmail.com>
+From: Kohei Enju <kohei@enjuk.jp>
 
-commit 56bd3c0f749f45793d1eae1d0ddde4255c749bf6 upstream.
+commit 4b22ec1685ce1fc0d862dcda3225d852fb107995 upstream.
 
-Earlier in the function, the ha->flt buffer is allocated with size
-sizeof(struct qla_flt_header) + FLT_REGIONS_SIZE but freed in the error
-path with size SFP_DEV_SIZE.
+efivar_entry_get() always returns success even if the underlying
+__efivar_entry_get() fails, masking errors.
 
-Fixes: 84318a9f01ce ("scsi: qla2xxx: edif: Add send, receive, and accept for auth_els")
-Cc: stable@vger.kernel.org
-Signed-off-by: Thomas Fourier <fourier.thomas@gmail.com>
-Link: https://patch.msgid.link/20260112134326.55466-2-fourier.thomas@gmail.com
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+This may result in uninitialized heap memory being copied to userspace
+in the efivarfs_file_read() path.
+
+Fix it by returning the error from __efivar_entry_get().
+
+Fixes: 2d82e6227ea1 ("efi: vars: Move efivar caching layer into efivarfs")
+Cc: <stable@vger.kernel.org> # v6.1+
+Signed-off-by: Kohei Enju <kohei@enjuk.jp>
+Signed-off-by: Ard Biesheuvel <ardb@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/scsi/qla2xxx/qla_os.c |    2 +-
+ fs/efivarfs/vars.c |    2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/scsi/qla2xxx/qla_os.c
-+++ b/drivers/scsi/qla2xxx/qla_os.c
-@@ -4482,7 +4482,7 @@ fail_lsrjt:
- fail_elsrej:
- 	dma_pool_destroy(ha->purex_dma_pool);
- fail_flt:
--	dma_free_coherent(&ha->pdev->dev, SFP_DEV_SIZE,
-+	dma_free_coherent(&ha->pdev->dev, sizeof(struct qla_flt_header) + FLT_REGIONS_SIZE,
- 	    ha->flt, ha->flt_dma);
+--- a/fs/efivarfs/vars.c
++++ b/fs/efivarfs/vars.c
+@@ -609,7 +609,7 @@ int efivar_entry_get(struct efivar_entry
+ 	err = __efivar_entry_get(entry, attributes, size, data);
+ 	efivar_unlock();
  
- fail_flt_buffer:
+-	return 0;
++	return err;
+ }
+ 
+ /**
 
 
