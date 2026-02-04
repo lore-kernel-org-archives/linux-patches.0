@@ -1,42 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B45F527702D;
-	Wed,  4 Feb 2026 15:28:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C65D27F163;
+	Wed,  4 Feb 2026 15:28:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770218931; cv=none; b=k+oSGKvxSuyIBSt54YPUN9G+ZDiHUtkX8B4a6CAT2BTlZp4H0ZFhVUwRE0Zxmp5Aiylk4Z89dBpNMNHHMAq8j3kiv7kNzjFzC741mCNymfs0je6aqRkY9n2AH7zKfXU1TuB0lrlX1Z0gpWZ+6RZFQuo0LDphpNberNQ1hXXYJk0=
+	t=1770218935; cv=none; b=ooVu4OKk95SaH06h3lH31r2Keo63FUV20tHBPI927IZDX5FjO/HuLEpC71c64BXwqAfVjFbFSgfD1fFx5fMwO6UYgqHdcc/8RKgfJorEyCN1aHKBulmBXRKTcmMDzjHAjiCttlCc3+5sdFO+q/kWcCL6Wnv9m1UUAAkDapDXTkc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770218931; c=relaxed/simple;
-	bh=DqQp8pi4C0X8tZBe7LNLOU0eIqZ/zlaU0pRfSLAN7zY=;
+	s=arc-20240116; t=1770218935; c=relaxed/simple;
+	bh=k0yY5ZAQbzF+ht4D5bwzTMGPKxj5eBfygvZYVjUp8q8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=a0wU4xVregb5INp6ecaAsKJPH8Jvz12e3wkntJJ7W4QDyJYzF3DKmuQCvSy+vtCxVWnl3Sv9D4V01I03lbVPOHS5/DnhGEc8qneJLdM7CwJ89mvTFL5wu62+9OPTfltsop3aHWymPCvBETuuIalQf70P3RO/Q3M49WrpZJFU5Qg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WfI4ItGF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OuG8A8p2dYbcHZw1IRr6Jbyn1StoVkBlZBp4uKSXqNx09DvswiiNizRLfzFCIgsN2Tnf3lvZ5e10cmFk0rBUYjJWWN6VKAOopQm4OrEI1Xe/vvyj7R/zaCgIU8mIolXRXPMZ9u9BxrngiMkq2iI5QrFsSGWjGe/uAP9W3tLouNQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=o92nHtav; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WfI4ItGF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 28C6CC4CEF7;
-	Wed,  4 Feb 2026 15:28:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="o92nHtav"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B2DFC4CEF7;
+	Wed,  4 Feb 2026 15:28:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770218931;
-	bh=DqQp8pi4C0X8tZBe7LNLOU0eIqZ/zlaU0pRfSLAN7zY=;
+	s=korg; t=1770218935;
+	bh=k0yY5ZAQbzF+ht4D5bwzTMGPKxj5eBfygvZYVjUp8q8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WfI4ItGFITMvYRC5i7ghoQjJdhD3egs0xZnF+8nzlA4BU3HBkJ4a18cRFcDlFSEq5
-	 KW8wQJxPwVTWKhVOj+T1YPQNrLTPtljZuWNhwGsUwj08DUUb7DwRlLR2inRXv17Evh
-	 hyiaifF1S6ips9/9JtHZSYp/XQA14g3Opd4hbptg=
+	b=o92nHtavfVm0Q9HlcVEhgw+zqlg5UetAX3BXW/w52V2LxYJ3C+q6ji4a/U7WnhdU5
+	 mHSCpZEa+RAWZ1kn9V0ZXcqVYqRy6fQSX6lkzBU0kYjC9Xbt1BeO9M0NjSrcMgDN+0
+	 6Yav+TNvPAwZ4SJ1JB8g/6BxEKX0WprcW3VE35t8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	syzbot+5498a510ff9de39d37da@syzkaller.appspotmail.com,
-	Eulgyu Kim <eulgyukim@snu.ac.kr>,
-	Mat Martineau <martineau@kernel.org>,
-	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
+	Chukun Pan <amadeus@jmu.edu.cn>,
+	Vivian Wang <wangruikang@iscas.ac.cn>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 017/122] mptcp: fix race in mptcp_pm_nl_flush_addrs_doit()
-Date: Wed,  4 Feb 2026 15:39:59 +0100
-Message-ID: <20260204143852.486890750@linuxfoundation.org>
+Subject: [PATCH 6.18 018/122] net: spacemit: Check for netif_carrier_ok() in emac_stats_update()
+Date: Wed,  4 Feb 2026 15:40:00 +0100
+Message-ID: <20260204143852.522778230@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260204143851.857060534@linuxfoundation.org>
 References: <20260204143851.857060534@linuxfoundation.org>
@@ -55,70 +52,99 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Vivian Wang <wangruikang@iscas.ac.cn>
 
-[ Upstream commit e2a9eeb69f7d4ca4cf4c70463af77664fdb6ab1d ]
+[ Upstream commit 2c84959167d6493dbdac88965c7389b8ab88bf4e ]
 
-syzbot and Eulgyu Kim reported crashes in mptcp_pm_nl_get_local_id()
-and/or mptcp_pm_nl_is_backup()
+Some PHYs stop the refclk for power saving, usually while link down.
+This causes reading stats to time out.
 
-Root cause is list_splice_init() in mptcp_pm_nl_flush_addrs_doit()
-which is not RCU ready.
+Therefore, in emac_stats_update(), also don't update and reschedule if
+!netif_carrier_ok(). But that means we could be missing later updates if
+the link comes back up, so also reschedule when link up is detected in
+emac_adjust_link().
 
-list_splice_init_rcu() can not be called here while holding pernet->lock
-spinlock.
+While we're at it, improve the comments and error message prints around
+this to reflect the better understanding of how this could happen.
+Hopefully if this happens again on new hardware, these comments will
+direct towards a solution.
 
-Many thanks to Eulgyu Kim for providing a repro and testing our patches.
-
-Fixes: 141694df6573 ("mptcp: remove address when netlink flushes addrs")
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Reported-by: syzbot+5498a510ff9de39d37da@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/all/6970a46d.a00a0220.3ad28e.5cf0.GAE@google.com/T/
-Reported-by: Eulgyu Kim <eulgyukim@snu.ac.kr>
-Closes: https://github.com/multipath-tcp/mptcp_net-next/issues/611
-Reviewed-by: Mat Martineau <martineau@kernel.org>
-Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Link: https://patch.msgid.link/20260124-net-mptcp-race_nl_flush_addrs-v3-1-b2dc1b613e9d@kernel.org
+Closes: https://lore.kernel.org/r/20260119141620.1318102-1-amadeus@jmu.edu.cn/
+Fixes: bfec6d7f2001 ("net: spacemit: Add K1 Ethernet MAC")
+Co-developed-by: Chukun Pan <amadeus@jmu.edu.cn>
+Signed-off-by: Chukun Pan <amadeus@jmu.edu.cn>
+Signed-off-by: Vivian Wang <wangruikang@iscas.ac.cn>
+Link: https://patch.msgid.link/20260123-k1-ethernet-clarify-stat-timeout-v3-1-93b9df627e87@iscas.ac.cn
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/mptcp/pm_kernel.c | 16 +++++++++++++---
- 1 file changed, 13 insertions(+), 3 deletions(-)
+ drivers/net/ethernet/spacemit/k1_emac.c | 34 ++++++++++++++++++++-----
+ 1 file changed, 27 insertions(+), 7 deletions(-)
 
-diff --git a/net/mptcp/pm_kernel.c b/net/mptcp/pm_kernel.c
-index 0a50fd5edc06d..1b517a81e0299 100644
---- a/net/mptcp/pm_kernel.c
-+++ b/net/mptcp/pm_kernel.c
-@@ -1276,16 +1276,26 @@ static void __reset_counters(struct pm_nl_pernet *pernet)
- int mptcp_pm_nl_flush_addrs_doit(struct sk_buff *skb, struct genl_info *info)
- {
- 	struct pm_nl_pernet *pernet = genl_info_pm_nl(info);
--	LIST_HEAD(free_list);
-+	struct list_head free_list;
+diff --git a/drivers/net/ethernet/spacemit/k1_emac.c b/drivers/net/ethernet/spacemit/k1_emac.c
+index 220eb5ce75833..88e9424d2d51a 100644
+--- a/drivers/net/ethernet/spacemit/k1_emac.c
++++ b/drivers/net/ethernet/spacemit/k1_emac.c
+@@ -1099,7 +1099,13 @@ static int emac_read_stat_cnt(struct emac_priv *priv, u8 cnt, u32 *res,
+ 					100, 10000);
  
- 	spin_lock_bh(&pernet->lock);
--	list_splice_init(&pernet->endp_list, &free_list);
-+	free_list = pernet->endp_list;
-+	INIT_LIST_HEAD_RCU(&pernet->endp_list);
- 	__reset_counters(pernet);
- 	pernet->next_id = 1;
- 	bitmap_zero(pernet->id_bitmap, MPTCP_PM_MAX_ADDR_ID + 1);
- 	spin_unlock_bh(&pernet->lock);
--	mptcp_nl_flush_addrs_list(sock_net(skb->sk), &free_list);
+ 	if (ret) {
+-		netdev_err(priv->ndev, "Read stat timeout\n");
++		/*
++		 * This could be caused by the PHY stopping its refclk even when
++		 * the link is up, for power saving. See also comments in
++		 * emac_stats_update().
++		 */
++		dev_err_ratelimited(&priv->ndev->dev,
++				    "Read stat timeout. PHY clock stopped?\n");
+ 		return ret;
+ 	}
+ 
+@@ -1147,17 +1153,25 @@ static void emac_stats_update(struct emac_priv *priv)
+ 
+ 	assert_spin_locked(&priv->stats_lock);
+ 
+-	if (!netif_running(priv->ndev) || !netif_device_present(priv->ndev)) {
+-		/* Not up, don't try to update */
++	/*
++	 * We can't read statistics if the interface is not up. Also, some PHYs
++	 * stop their reference clocks for link down power saving, which also
++	 * causes reading statistics to time out. Don't update and don't
++	 * reschedule in these cases.
++	 */
++	if (!netif_running(priv->ndev) ||
++	    !netif_carrier_ok(priv->ndev) ||
++	    !netif_device_present(priv->ndev)) {
+ 		return;
+ 	}
+ 
+ 	for (i = 0; i < sizeof(priv->tx_stats) / sizeof(*tx_stats); i++) {
+ 		/*
+-		 * If reading stats times out, everything is broken and there's
+-		 * nothing we can do. Reading statistics also can't return an
+-		 * error, so just return without updating and without
+-		 * rescheduling.
++		 * If reading stats times out anyway, the stat registers will be
++		 * stuck, and we can't really recover from that.
++		 *
++		 * Reading statistics also can't return an error, so just return
++		 * without updating and without rescheduling.
+ 		 */
+ 		if (emac_tx_read_stat_cnt(priv, i, &res))
+ 			return;
+@@ -1636,6 +1650,12 @@ static void emac_adjust_link(struct net_device *dev)
+ 		emac_wr(priv, MAC_GLOBAL_CONTROL, ctrl);
+ 
+ 		emac_set_fc_autoneg(priv);
 +
-+	if (free_list.next == &pernet->endp_list)
-+		return 0;
-+
- 	synchronize_rcu();
-+
-+	/* Adjust the pointers to free_list instead of pernet->endp_list */
-+	free_list.prev->next = &free_list;
-+	free_list.next->prev = &free_list;
-+
-+	mptcp_nl_flush_addrs_list(sock_net(skb->sk), &free_list);
- 	__flush_addrs(&free_list);
- 	return 0;
- }
++		/*
++		 * Reschedule stats updates now that link is up. See comments in
++		 * emac_stats_update().
++		 */
++		mod_timer(&priv->stats_timer, jiffies);
+ 	}
+ 
+ 	phy_print_status(phydev);
 -- 
 2.51.0
 
