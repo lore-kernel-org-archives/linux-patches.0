@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D664518871F;
-	Wed,  4 Feb 2026 15:04:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 424C92D3725;
+	Wed,  4 Feb 2026 15:04:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770217470; cv=none; b=O63+Y+0slU6/HELz/H7rc/tkhYsRmgceu9QRKHSMevw5VcrhHTxjd5gh0zDlfAsrONZDpyRW/0W+tdI2+ceQDgE1qtNuKJcPv+zHwLgRDQWEO/fOSwJI9PNQJJE8GyUDg2+rVbdneH2tOfPZl+S9JRkIBcfga0UeRC0koCXM4zE=
+	t=1770217474; cv=none; b=AekIyscjnUmjPLhnY/G5++WoxPvblb61u6iz8B12KPxVA/+gY6+kyMA89M7rmUQQeBSROig2LYmMJ/0RQ5dRCIw8EQDNBqz0Gqnvi6cKnI45H4CxtTI+xCa32ZlcbCmcHb6qJm6/aCGaO52XzONrDN/sf2OX4ZlKTXMxxkpdTp4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770217470; c=relaxed/simple;
-	bh=YBug2/feWgYH5DjZUsTkygCAo01TwRKGTl7GUJBHXz4=;
+	s=arc-20240116; t=1770217474; c=relaxed/simple;
+	bh=1btNxiqO0gpGdyD3ZaCBkG9Gq/oGtPRkLtSjpWkrXBs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=J3YDc7kY/Ua95PBX+0EgRMJ3TXT24t0lX0jDtGNvrXCSaFfeIDJN44iWDcparXr4DEc+CUN3KJOzy5ouSNuWOCJ7ucEJo3AO1ErrEjM224Qjklx3EYW7AGs7KRV36M007iBA4h4QYWcn+a7WWoKjcfRS7tfDM24to6BFKuQggzU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nsWK7huH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BsvXEvUhPGtxkYGKOmFdTZrey93CWElMyMc/IRIG0qK2G2QKxiGSgbxfHJ2PSsylnxceCoPHaoUAFQuJIVto3kQMrjmi7g8eLh8YC8Gi7PlKZZ6Rl2a1pSx+8HJwVAYxGG5TcdzBl/um95rzBDwkHuq6dCNyxh++C+TYJPs1sZc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=L72lZiAB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nsWK7huH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B472C4CEF7;
-	Wed,  4 Feb 2026 15:04:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="L72lZiAB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C3DD3C4CEF7;
+	Wed,  4 Feb 2026 15:04:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770217470;
-	bh=YBug2/feWgYH5DjZUsTkygCAo01TwRKGTl7GUJBHXz4=;
+	s=korg; t=1770217474;
+	bh=1btNxiqO0gpGdyD3ZaCBkG9Gq/oGtPRkLtSjpWkrXBs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nsWK7huHSuBJT0+3VQJSIMzzgSh2GXh+maBvtgYU1R7gNqwRfVI5euTSX4/hkHK64
-	 g3iRgwtTyirhhgt/bOlGFttG3MhgJ9ppNLL+WE8ksxbk2LqvdPqSrreoiF79RGGwVU
-	 Rsr9zMfnb7qvzQ6OOE//zlrspCZQRE3qHvldjL/0=
+	b=L72lZiABM+AUWnlWWb2ECreDJqsn7+hKJD1YdsfKO/TiNG6jl6BhG6PAxKSIe8nfq
+	 dX+2QyqB5uWrg/V2xH7ChzjdjhixZiTkUlVg0v9Vfhgp7fru4wIvRoUZAHAW7+RAIB
+	 8BIL01jdvsAO3TlFrti3x8uGQrouN1CqcYiyxwTU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nimrod Oren <noren@nvidia.com>,
-	Gal Pressman <gal@nvidia.com>,
-	Willem de Bruijn <willemb@google.com>,
+	syzbot+07f3f38f723c335f106d@syzkaller.appspotmail.com,
+	Eric Dumazet <edumazet@google.com>,
+	Jamal Hadi Salim <jhs@mojatatu.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 025/280] selftests: drv-net: fix RPS mask handling for high CPU numbers
-Date: Wed,  4 Feb 2026 15:36:39 +0100
-Message-ID: <20260204143910.540041926@linuxfoundation.org>
+Subject: [PATCH 6.1 026/280] net/sched: sch_qfq: do not free existing class in qfq_change_class()
+Date: Wed,  4 Feb 2026 15:36:40 +0100
+Message-ID: <20260204143910.575822527@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260204143909.614719725@linuxfoundation.org>
 References: <20260204143909.614719725@linuxfoundation.org>
@@ -53,42 +53,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gal Pressman <gal@nvidia.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit cf055f8c000445aa688c53a706ef4f580818eedb ]
+[ Upstream commit 3879cffd9d07aa0377c4b8835c4f64b4fb24ac78 ]
 
-The RPS bitmask bounds check uses ~(RPS_MAX_CPUS - 1) which equals ~15 =
-0xfff0, only allowing CPUs 0-3.
+Fixes qfq_change_class() error case.
 
-Change the mask to ~((1UL << RPS_MAX_CPUS) - 1) = ~0xffff to allow CPUs
-0-15.
+cl->qdisc and cl should only be freed if a new class and qdisc
+were allocated, or we risk various UAF.
 
-Fixes: 5ebfb4cc3048 ("selftests/net: toeplitz test")
-Reviewed-by: Nimrod Oren <noren@nvidia.com>
-Signed-off-by: Gal Pressman <gal@nvidia.com>
-Reviewed-by: Willem de Bruijn <willemb@google.com>
-Link: https://patch.msgid.link/20260112173715.384843-3-gal@nvidia.com
+Fixes: 462dbc9101ac ("pkt_sched: QFQ Plus: fair-queueing service at DRR cost")
+Reported-by: syzbot+07f3f38f723c335f106d@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/netdev/6965351d.050a0220.eaf7.00c5.GAE@google.com/T/#u
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: Jamal Hadi Salim <jhs@mojatatu.com>
+Link: https://patch.msgid.link/20260112175656.17605-1-edumazet@google.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/net/toeplitz.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ net/sched/sch_qfq.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/tools/testing/selftests/net/toeplitz.c b/tools/testing/selftests/net/toeplitz.c
-index 9ba03164d73a6..5099157f01b9a 100644
---- a/tools/testing/selftests/net/toeplitz.c
-+++ b/tools/testing/selftests/net/toeplitz.c
-@@ -473,8 +473,8 @@ static void parse_rps_bitmap(const char *arg)
+diff --git a/net/sched/sch_qfq.c b/net/sched/sch_qfq.c
+index 80a7173843b90..0047f35504348 100644
+--- a/net/sched/sch_qfq.c
++++ b/net/sched/sch_qfq.c
+@@ -533,8 +533,10 @@ static int qfq_change_class(struct Qdisc *sch, u32 classid, u32 parentid,
+ 	return 0;
  
- 	bitmap = strtoul(arg, NULL, 0);
+ destroy_class:
+-	qdisc_put(cl->qdisc);
+-	kfree(cl);
++	if (!existing) {
++		qdisc_put(cl->qdisc);
++		kfree(cl);
++	}
+ 	return err;
+ }
  
--	if (bitmap & ~(RPS_MAX_CPUS - 1))
--		error(1, 0, "rps bitmap 0x%lx out of bounds 0..%lu",
-+	if (bitmap & ~((1UL << RPS_MAX_CPUS) - 1))
-+		error(1, 0, "rps bitmap 0x%lx out of bounds, max cpu %lu",
- 		      bitmap, RPS_MAX_CPUS - 1);
- 
- 	for (i = 0; i < RPS_MAX_CPUS; i++)
 -- 
 2.51.0
 
