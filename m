@@ -1,41 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3C2F421F0E;
-	Wed,  4 Feb 2026 15:19:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF23529993F;
+	Wed,  4 Feb 2026 15:19:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770218377; cv=none; b=m0dx2an7n+c3g4Xl2Gjdj1Wex7w7r9RbW51y8NYS7HQ7GM0ykrnDgEFLC7tt2vN0F7ZBkYtVyjxfEzfCVod3GgLrotDYOOnO3gojjGcMT4XC76AgwNX5g3tkdF4UNQvddxDI8ZE7GQwaZ1XGB89ploMD6p23rOBzss2wP2bmX74=
+	t=1770218380; cv=none; b=tejChqO+IhqWQT+vigXAsxwNJzQMwrPEpLkWivnCy9YJqjndoTM75hUAhWF3cS/yQYwL++K8f9/WBR03dOqC+5kEr3rP5WxBFOVQKgretAGoJeHxceLTWtKTzOu7RqY6YNylV8+R/cYjMjQwW3SBeonCcFRAr7clkKqBfL6wlGw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770218377; c=relaxed/simple;
-	bh=G2KVxg2xJpfmSnuWTQPV3wjwQFdPsTqtAxcNfdtJT6U=;
+	s=arc-20240116; t=1770218380; c=relaxed/simple;
+	bh=BaTNUOnM1ukr2lfLTwya4RELFm6sqwucgez0azHTjcs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=S5LVLSuUzFMqpmapH71F86k252QdO3rCCtkIkySVZhtiSqFxCB99RuOlNEmTdyNhmmaAwIb7AwhGFoaXwXAjXTz9vPiepbV78+2gkQbMRpumgdbPlcy3UUUE150T9Z5uLp6Vo4LMR4ZnzB5huITbURryvZMhJGckiJmMNaST01k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gj0sKflH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=Zsh3y9W2qPlX085Jz7WBCB9mVa3D14/eJiBHhriRoxLasNVoAymQC8+NT/1l8a0ueNF4XxHkrJLROEsnvBf7/0MHX37j455oQiA7FqPUHq2KVo0YpuvdGKoS34+7zDit+D0Htsb4CWBt/jLoKx+h2I4cD6yYjGmXYpzWvmOyRZo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=o2diM6+Y; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gj0sKflH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E57EC19424;
-	Wed,  4 Feb 2026 15:19:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="o2diM6+Y"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 53749C116C6;
+	Wed,  4 Feb 2026 15:19:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770218377;
-	bh=G2KVxg2xJpfmSnuWTQPV3wjwQFdPsTqtAxcNfdtJT6U=;
+	s=korg; t=1770218380;
+	bh=BaTNUOnM1ukr2lfLTwya4RELFm6sqwucgez0azHTjcs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gj0sKflHQgBBKCduQ8iWEjP6cXjDO8kdcXEjSLUluSAXsTmDFJo9QwaPECVLV9e4q
-	 Qu1q+8/dynu2B3K94R+Bzz/ABI/+0wRTV7APoONDdAGPjneojmrC3idCNoGALcQ17K
-	 tX+9/pclwWfMjHcakwAyrfORuwyOjPXvxf3KLLqI=
+	b=o2diM6+Y2pHzhQi1uz2uymNTqhVujEQ64S4f1hZjnuAkBpiFtZXG5AZ9WAyktlXid
+	 BsaMPQx8zYJeDzWOadoabcyWFGxhOlcf/8wC2lXw/oh9ll1GLROR611zy5ao1HJBLz
+	 61suA/qQbvtBS2ylV3nK/vg4M9SZvzNQBo1/wllg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mark Bloch <mbloch@nvidia.com>,
-	Shay Drori <shayd@nvidia.com>,
-	Tariq Toukan <tariqt@nvidia.com>,
-	Simon Horman <horms@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>,
+	Yafang Shao <laoar.shao@gmail.com>,
+	Saeed Mahameed <saeedm@nvidia.com>,
+	Leon Romanovsky <leon@kernel.org>,
+	Gal Pressman <gal@nvidia.com>,
+	Simon Horman <horms@kernel.org>,
+	Tariq Toukan <tariqt@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 13/72] net/mlx5e: TC, delete flows only for existing peers
-Date: Wed,  4 Feb 2026 15:40:16 +0100
-Message-ID: <20260204143846.098860952@linuxfoundation.org>
+Subject: [PATCH 6.6 14/72] net/mlx5e: Report rx_discards_phy via rx_dropped
+Date: Wed,  4 Feb 2026 15:40:17 +0100
+Message-ID: <20260204143846.134096846@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260204143845.603454952@linuxfoundation.org>
 References: <20260204143845.603454952@linuxfoundation.org>
@@ -48,136 +50,52 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Mark Bloch <mbloch@nvidia.com>
+From: Yafang Shao <laoar.shao@gmail.com>
 
-[ Upstream commit f67666938ae626cbda63fbf5176b3583c07e7124 ]
+[ Upstream commit c9cfced17365b1df8c6ae6cd5db56aebd7ed9b57 ]
 
-When deleting TC steering flows, iterate only over actual devcom
-peers instead of assuming all possible ports exist. This avoids
-touching non-existent peers and ensures cleanup is limited to
-devices the driver is currently connected to.
+We noticed a high number of rx_discards_phy events on certain servers while
+running `ethtool -S`. However, this critical counter is not currently
+included in the standard /proc/net/dev statistics file, making it difficult
+to monitor effectively—especially given the diversity of vendors across a
+large fleet of servers.
 
- BUG: kernel NULL pointer dereference, address: 0000000000000008
- #PF: supervisor write access in kernel mode
- #PF: error_code(0x0002) - not-present page
- PGD 133c8a067 P4D 0
- Oops: Oops: 0002 [#1] SMP
- CPU: 19 UID: 0 PID: 2169 Comm: tc Not tainted 6.18.0+ #156 NONE
- Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS rel-1.16.0-0-gd239552ce722-prebuilt.qemu.org 04/01/2014
- RIP: 0010:mlx5e_tc_del_fdb_peers_flow+0xbe/0x200 [mlx5_core]
- Code: 00 00 a8 08 74 a8 49 8b 46 18 f6 c4 02 74 9f 4c 8d bf a0 12 00 00 4c 89 ff e8 0e e7 96 e1 49 8b 44 24 08 49 8b 0c 24 4c 89 ff <48> 89 41 08 48 89 08 49 89 2c 24 49 89 5c 24 08 e8 7d ce 96 e1 49
- RSP: 0018:ff11000143867528 EFLAGS: 00010246
- RAX: 0000000000000000 RBX: dead000000000122 RCX: 0000000000000000
- RDX: ff11000143691580 RSI: ff110001026e5000 RDI: ff11000106f3d2a0
- RBP: dead000000000100 R08: 00000000000003fd R09: 0000000000000002
- R10: ff11000101c75690 R11: ff1100085faea178 R12: ff11000115f0ae78
- R13: 0000000000000000 R14: ff11000115f0a800 R15: ff11000106f3d2a0
- FS:  00007f35236bf740(0000) GS:ff110008dc809000(0000) knlGS:0000000000000000
- CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
- CR2: 0000000000000008 CR3: 0000000157a01001 CR4: 0000000000373eb0
- Call Trace:
-  <TASK>
-  mlx5e_tc_del_flow+0x46/0x270 [mlx5_core]
-  mlx5e_flow_put+0x25/0x50 [mlx5_core]
-  mlx5e_delete_flower+0x2a6/0x3e0 [mlx5_core]
-  tc_setup_cb_reoffload+0x20/0x80
-  fl_reoffload+0x26f/0x2f0 [cls_flower]
-  ? mlx5e_tc_reoffload_flows_work+0xc0/0xc0 [mlx5_core]
-  ? mlx5e_tc_reoffload_flows_work+0xc0/0xc0 [mlx5_core]
-  tcf_block_playback_offloads+0x9e/0x1c0
-  tcf_block_unbind+0x7b/0xd0
-  tcf_block_setup+0x186/0x1d0
-  tcf_block_offload_cmd.isra.0+0xef/0x130
-  tcf_block_offload_unbind+0x43/0x70
-  __tcf_block_put+0x85/0x160
-  ingress_destroy+0x32/0x110 [sch_ingress]
-  __qdisc_destroy+0x44/0x100
-  qdisc_graft+0x22b/0x610
-  tc_get_qdisc+0x183/0x4d0
-  rtnetlink_rcv_msg+0x2d7/0x3d0
-  ? rtnl_calcit.isra.0+0x100/0x100
-  netlink_rcv_skb+0x53/0x100
-  netlink_unicast+0x249/0x320
-  ? __alloc_skb+0x102/0x1f0
-  netlink_sendmsg+0x1e3/0x420
-  __sock_sendmsg+0x38/0x60
-  ____sys_sendmsg+0x1ef/0x230
-  ? copy_msghdr_from_user+0x6c/0xa0
-  ___sys_sendmsg+0x7f/0xc0
-  ? ___sys_recvmsg+0x8a/0xc0
-  ? __sys_sendto+0x119/0x180
-  __sys_sendmsg+0x61/0xb0
-  do_syscall_64+0x55/0x640
-  entry_SYSCALL_64_after_hwframe+0x4b/0x53
- RIP: 0033:0x7f35238bb764
- Code: 15 b9 86 0c 00 f7 d8 64 89 02 b8 ff ff ff ff eb bf 0f 1f 44 00 00 f3 0f 1e fa 80 3d e5 08 0d 00 00 74 13 b8 2e 00 00 00 0f 05 <48> 3d 00 f0 ff ff 77 4c c3 0f 1f 00 55 48 89 e5 48 83 ec 20 89 55
- RSP: 002b:00007ffed4c35638 EFLAGS: 00000202 ORIG_RAX: 000000000000002e
- RAX: ffffffffffffffda RBX: 000055a2efcc75e0 RCX: 00007f35238bb764
- RDX: 0000000000000000 RSI: 00007ffed4c356a0 RDI: 0000000000000003
- RBP: 00007ffed4c35710 R08: 0000000000000010 R09: 00007f3523984b20
- R10: 0000000000000004 R11: 0000000000000202 R12: 00007ffed4c35790
- R13: 000000006947df8f R14: 000055a2efcc75e0 R15: 00007ffed4c35780
+Let's report it via the standard rx_dropped metric.
 
-Fixes: 9be6c21fdcf8 ("net/mlx5e: Handle offloads flows per peer")
-Signed-off-by: Mark Bloch <mbloch@nvidia.com>
-Reviewed-by: Shay Drori <shayd@nvidia.com>
-Signed-off-by: Tariq Toukan <tariqt@nvidia.com>
+Suggested-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Yafang Shao <laoar.shao@gmail.com>
+Cc: Saeed Mahameed <saeedm@nvidia.com>
+Cc: Leon Romanovsky <leon@kernel.org>
+Cc: Gal Pressman <gal@nvidia.com>
 Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/1769411695-18820-3-git-send-email-tariqt@nvidia.com
+Reviewed-by: Tariq Toukan <tariqt@nvidia.com>
+Link: https://patch.msgid.link/20241210022706.6665-1-laoar.shao@gmail.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Stable-dep-of: 476681f10cc1 ("net/mlx5e: Account for netdev stats in ndo_get_stats64")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../net/ethernet/mellanox/mlx5/core/en_tc.c   | 19 +++++++++++++------
- 1 file changed, 13 insertions(+), 6 deletions(-)
+ drivers/net/ethernet/mellanox/mlx5/core/en_main.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en_tc.c b/drivers/net/ethernet/mellanox/mlx5/core/en_tc.c
-index 2be9c69daad5f..f1f4225057311 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/en_tc.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/en_tc.c
-@@ -2025,11 +2025,14 @@ static void mlx5e_tc_del_fdb_peer_flow(struct mlx5e_tc_flow *flow,
- 
- static void mlx5e_tc_del_fdb_peers_flow(struct mlx5e_tc_flow *flow)
- {
-+	struct mlx5_devcom_comp_dev *devcom;
-+	struct mlx5_devcom_comp_dev *pos;
-+	struct mlx5_eswitch *peer_esw;
- 	int i;
- 
--	for (i = 0; i < MLX5_MAX_PORTS; i++) {
--		if (i == mlx5_get_dev_index(flow->priv->mdev))
--			continue;
-+	devcom = flow->priv->mdev->priv.eswitch->devcom;
-+	mlx5_devcom_for_each_peer_entry(devcom, peer_esw, pos) {
-+		i = mlx5_get_dev_index(peer_esw->dev);
- 		mlx5e_tc_del_fdb_peer_flow(flow, i);
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en_main.c b/drivers/net/ethernet/mellanox/mlx5/core/en_main.c
+index 03201bcda1a68..c72c085be603c 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/en_main.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/en_main.c
+@@ -3760,6 +3760,7 @@ mlx5e_get_stats(struct net_device *dev, struct rtnl_link_stats64 *stats)
  	}
- }
-@@ -5404,12 +5407,16 @@ int mlx5e_tc_num_filters(struct mlx5e_priv *priv, unsigned long flags)
  
- void mlx5e_tc_clean_fdb_peer_flows(struct mlx5_eswitch *esw)
- {
-+	struct mlx5_devcom_comp_dev *devcom;
-+	struct mlx5_devcom_comp_dev *pos;
- 	struct mlx5e_tc_flow *flow, *tmp;
-+	struct mlx5_eswitch *peer_esw;
- 	int i;
+ 	stats->rx_missed_errors = priv->stats.qcnt.rx_out_of_buffer;
++	stats->rx_dropped = PPORT_2863_GET(pstats, if_in_discards);
  
--	for (i = 0; i < MLX5_MAX_PORTS; i++) {
--		if (i == mlx5_get_dev_index(esw->dev))
--			continue;
-+	devcom = esw->devcom;
-+
-+	mlx5_devcom_for_each_peer_entry(devcom, peer_esw, pos) {
-+		i = mlx5_get_dev_index(peer_esw->dev);
- 		list_for_each_entry_safe(flow, tmp, &esw->offloads.peer_flows[i], peer[i])
- 			mlx5e_tc_del_fdb_peers_flow(flow);
- 	}
+ 	stats->rx_length_errors =
+ 		PPORT_802_3_GET(pstats, a_in_range_length_errors) +
 -- 
 2.51.0
 
