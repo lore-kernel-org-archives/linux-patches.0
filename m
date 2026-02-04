@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7BFA527B359;
-	Wed,  4 Feb 2026 14:51:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 454782E92BC;
+	Wed,  4 Feb 2026 14:51:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770216699; cv=none; b=nhQ063qKU07YqaHwhblylqMUZEgqDadofpboRJ9HLDN2xXpuvYOT0zfQp0dSEJaEtgDGEMPHqhTa06dLARJ8YUdiIDpkPb1A+abp5DOYFe1UZRwn4ancRK1FFONfeC61c7nqq5rJIsJVTlurVDDWt+lyMwaqRjir8Fx/3Ra8Zc8=
+	t=1770216703; cv=none; b=cvuXUeVDikcRnbHYxKikpTEjJyQt40VCtKVFJN/i/TxxB52P3KQ0VcwbxcLXtnd5ewo0m6lf5VCccF1uPJbdXblC6LQq4SrVAq6tuqCBXS4eVqlrTVOYsy5ow9/Xn6MuKf/p7SeYLeC3JjutA781aymjXPp+KngtVKjPnyUn5Wo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770216699; c=relaxed/simple;
-	bh=t/v8m/SIwkljKuUkIzV6npDR3hZAyMMtNIR+wWBkuIQ=;
+	s=arc-20240116; t=1770216703; c=relaxed/simple;
+	bh=OsOT9Wn++I1j9hJx254LcokUMqp/d1moUB2kYcpmayE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gLDxUxb3dWeKCXOTkd6vge64vUDqWZNkLK3pMvrVh+0iWPkKaZ2COANgv1bhOnfBv+0Sl8Qk0CmhmQgUgipKeaJqXrDVVdutEFHmkr31Rpj/YEKzI2lPXq1JgOcrg9VVlQqwfDeLzEKHCiBbN2AMTIeAdf8A6IFA3osHJ2OJ784=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pPCAaMZG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=RgS6e3P8AGSBLE/RgRWRQ1mTR09j8lLbQi4Vw8Jkg0U2rRUUpb5l/ZlGWD8Nsn6hW2gzN/05r6rdK7yb6foQPwf2LLNHm8FkeUZqslQWXvpfUOF77CHEl1b8GbQW6o9e9q1QNLXr7vJa2elizwd+Brl+HY+TV0jW7FvNMeoQRhM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aaOBwJYH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pPCAaMZG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C9DF2C4CEF7;
-	Wed,  4 Feb 2026 14:51:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aaOBwJYH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F578C4CEF7;
+	Wed,  4 Feb 2026 14:51:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770216699;
-	bh=t/v8m/SIwkljKuUkIzV6npDR3hZAyMMtNIR+wWBkuIQ=;
+	s=korg; t=1770216702;
+	bh=OsOT9Wn++I1j9hJx254LcokUMqp/d1moUB2kYcpmayE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pPCAaMZGljEksb9aVJcQMzS6qw6L0Tv6/za1+lwFS4GDqAHqK4rT2S734I5tSqbjP
-	 HjE2Rq+0D2tfr80YxipZV2HiWOcAD9rK5jdsfIzZNGmITD8ikLtLQNKFKGNv1DARv9
-	 detkk5omakwp5gNxPdcpJfFQgbaOXZl8sK+G8Vm4=
+	b=aaOBwJYHMNqMdyIzqp1orRkEOcS2asvbuV9P6cRea8OGjVMrF34k+ketfVId/vGXJ
+	 hOle2AxZ5LCJrL/r7etdhKdPWQmV9Gmkbii3aZ1q7RM6zsDo/x0IR6mlwzl+kkUWS2
+	 6DGdMv7dU2ua/7R2ErwFTBVLxhG7f/yrsS90i5sg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zeal Robot <zealci@zte.com.cn>,
-	David Yang <davidcomponentone@gmail.com>,
-	Yang Guang <yang.guang5@zte.com.cn>,
+	Thorsten Blum <thorsten.blum@linux.dev>,
+	Krzysztof Kozlowski <krzk@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 141/161] w1: w1_therm: use swap() to make code cleaner
-Date: Wed,  4 Feb 2026 15:40:04 +0100
-Message-ID: <20260204143856.820566035@linuxfoundation.org>
+Subject: [PATCH 5.10 142/161] w1: therm: Fix off-by-one buffer overflow in alarms_store
+Date: Wed,  4 Feb 2026 15:40:05 +0100
+Message-ID: <20260204143856.856228777@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260204143851.755002596@linuxfoundation.org>
 References: <20260204143851.755002596@linuxfoundation.org>
@@ -52,47 +51,133 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yang Guang <yang.guang5@zte.com.cn>
+From: Thorsten Blum <thorsten.blum@linux.dev>
 
-[ Upstream commit e233897b1f7a859092bd20b10bfd412013381a10 ]
+[ Upstream commit 761fcf46a1bd797bd32d23f3ea0141ffd437668a ]
 
-Use the macro 'swap()' defined in 'include/linux/minmax.h' to avoid
-opencoding it.
+The sysfs buffer passed to alarms_store() is allocated with 'size + 1'
+bytes and a NUL terminator is appended. However, the 'size' argument
+does not account for this extra byte. The original code then allocated
+'size' bytes and used strcpy() to copy 'buf', which always writes one
+byte past the allocated buffer since strcpy() copies until the NUL
+terminator at index 'size'.
 
-Reported-by: Zeal Robot <zealci@zte.com.cn>
-Signed-off-by: David Yang <davidcomponentone@gmail.com>
-Signed-off-by: Yang Guang <yang.guang5@zte.com.cn>
-Link: https://lore.kernel.org/r/cb14f9e6e86cf8494ed2ddce6eec8ebd988908d9.1640077704.git.yang.guang5@zte.com.cn
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Stable-dep-of: 761fcf46a1bd ("w1: therm: Fix off-by-one buffer overflow in alarms_store")
+Fix this by parsing the 'buf' parameter directly using simple_strtoll()
+without allocating any intermediate memory or string copying. This
+removes the overflow while simplifying the code.
+
+Cc: stable@vger.kernel.org
+Fixes: e2c94d6f5720 ("w1_therm: adding alarm sysfs entry")
+Signed-off-by: Thorsten Blum <thorsten.blum@linux.dev>
+Link: https://patch.msgid.link/20251216145007.44328-2-thorsten.blum@linux.dev
+Signed-off-by: Krzysztof Kozlowski <krzk@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/w1/slaves/w1_therm.c |    7 +++----
- 1 file changed, 3 insertions(+), 4 deletions(-)
+ drivers/w1/slaves/w1_therm.c |   60 +++++++++++++------------------------------
+ 1 file changed, 19 insertions(+), 41 deletions(-)
 
 --- a/drivers/w1/slaves/w1_therm.c
 +++ b/drivers/w1/slaves/w1_therm.c
-@@ -1783,7 +1783,7 @@ static ssize_t alarms_store(struct devic
+@@ -1781,53 +1781,35 @@ static ssize_t alarms_store(struct devic
+ 	struct w1_slave *sl = dev_to_w1_slave(device);
+ 	struct therm_info info;
  	u8 new_config_register[3];	/* array of data to be written */
- 	int temp, ret;
- 	char *token = NULL;
--	s8 tl, th, tt;	/* 1 byte per value + temp ring order */
-+	s8 tl, th;	/* 1 byte per value + temp ring order */
- 	char *p_args, *orig;
+-	int temp, ret;
+-	char *token = NULL;
++	long long temp;
++	int ret = 0;
+ 	s8 tl, th;	/* 1 byte per value + temp ring order */
+-	char *p_args, *orig;
++	const char *p = buf;
++	char *endp;
  
- 	p_args = orig = kmalloc(size, GFP_KERNEL);
-@@ -1834,9 +1834,8 @@ static ssize_t alarms_store(struct devic
- 	th = int_to_short(temp);
- 
- 	/* Reorder if required th and tl */
--	if (tl > th) {
--		tt = tl; tl = th; th = tt;
+-	p_args = orig = kmalloc(size, GFP_KERNEL);
+-	/* Safe string copys as buf is const */
+-	if (!p_args) {
+-		dev_warn(device,
+-			"%s: error unable to allocate memory %d\n",
+-			__func__, -ENOMEM);
+-		return size;
 -	}
-+	if (tl > th)
-+		swap(tl, th);
+-	strcpy(p_args, buf);
+-
+-	/* Split string using space char */
+-	token = strsep(&p_args, " ");
+-
+-	if (!token)	{
+-		dev_info(device,
+-			"%s: error parsing args %d\n", __func__, -EINVAL);
+-		goto free_m;
+-	}
+-
+-	/* Convert 1st entry to int */
+-	ret = kstrtoint (token, 10, &temp);
++	temp = simple_strtoll(p, &endp, 10);
++	if (p == endp || *endp != ' ')
++		ret = -EINVAL;
++	else if (temp < INT_MIN || temp > INT_MAX)
++		ret = -ERANGE;
+ 	if (ret) {
+ 		dev_info(device,
+ 			"%s: error parsing args %d\n", __func__, ret);
+-		goto free_m;
++		return size;
+ 	}
  
- 	/*
- 	 * Read the scratchpad to change only the required bits
+ 	tl = int_to_short(temp);
+ 
+-	/* Split string using space char */
+-	token = strsep(&p_args, " ");
+-	if (!token)	{
+-		dev_info(device,
+-			"%s: error parsing args %d\n", __func__, -EINVAL);
+-		goto free_m;
+-	}
+-	/* Convert 2nd entry to int */
+-	ret = kstrtoint (token, 10, &temp);
++	p = endp + 1;
++	temp = simple_strtoll(p, &endp, 10);
++	if (p == endp)
++		ret = -EINVAL;
++	else if (temp < INT_MIN || temp > INT_MAX)
++		ret = -ERANGE;
+ 	if (ret) {
+ 		dev_info(device,
+ 			"%s: error parsing args %d\n", __func__, ret);
+-		goto free_m;
++		return size;
+ 	}
+ 
+ 	/* Prepare to cast to short by eliminating out of range values */
+@@ -1850,7 +1832,7 @@ static ssize_t alarms_store(struct devic
+ 		dev_info(device,
+ 			"%s: error reading from the slave device %d\n",
+ 			__func__, ret);
+-		goto free_m;
++		return size;
+ 	}
+ 
+ 	/* Write data in the device RAM */
+@@ -1858,7 +1840,7 @@ static ssize_t alarms_store(struct devic
+ 		dev_info(device,
+ 			"%s: Device not supported by the driver %d\n",
+ 			__func__, -ENODEV);
+-		goto free_m;
++		return size;
+ 	}
+ 
+ 	ret = SLAVE_SPECIFIC_FUNC(sl)->write_data(sl, new_config_register);
+@@ -1867,10 +1849,6 @@ static ssize_t alarms_store(struct devic
+ 			"%s: error writing to the slave device %d\n",
+ 			__func__, ret);
+ 
+-free_m:
+-	/* free allocated memory */
+-	kfree(orig);
+-
+ 	return size;
+ }
+ 
 
 
