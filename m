@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 469A942DFF8;
-	Wed,  4 Feb 2026 15:03:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B10F641C2E1;
+	Wed,  4 Feb 2026 15:03:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770217405; cv=none; b=oXY2lAETJmpj2FoYXF2k3e9TvcRNzrmmALhPuMkg0onk/U9EFIzmjtrAFKnRBc+PGT2/yyVx0PIgamC9gzGMoeSi8F9ksS/+gtfSBLBpB8Qgls0WOkJ4g5Ud+DtTFEMfpGVBdP1Pkffi0peioppmHeh9+GW/egYYutbFsXHMXgo=
+	t=1770217408; cv=none; b=mKQ930xONL5dvrqgIIWS4Fr+zzEfIfd2bEO1jQN25Tm8aiM2SusuDz31ll7n+hufhgYK3O1x+cvK/FiW+a8C2ZHBEMQhbUDfB985mZVeIjA3tzLcLDsLT5bZHdv9dMhMGg6j9COdoQXv1+hfCPCbSk6L6wO/ebhNYJHqv7mUCYk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770217405; c=relaxed/simple;
-	bh=w/q48A4Oyh2alQ+widBSV0kFM1T73GcPD7KRoVmtoFs=;
+	s=arc-20240116; t=1770217408; c=relaxed/simple;
+	bh=ZUym/sVbFHsC92DefzaxGEbCgt7YsgIqnNjCa6seFxI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SVZGhKIKI/IKVl7aZyyN7TIOI5R3NKKYKUhYFzZNey70AYPzF/C6i5oMQ/pCTipUYSSFe+NiGlxAfMhdNEWUk7RVgnAwkXQ9LZTVZv5lhbMD3z6Vw7CrcqY+6JptV5N4YRtm2XjhTeMBYBTkn532r0Qi0A7+/7If/vWIaaPTsfI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=f3Usdtvl; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=aYEy+mc9rYIX8uLkB2Ore0i/kUw6vTIfDqqTqDwFy44pDJbcEZMWpw926ZmBe5EGEvpLjKY+3YbN1DP0KHdC2CWdIrhuTz/frKx2z3H+uIYV+RmK2OaHisd3FgfWQZ/FGQCJL/wbqhJQ4VocrQS8VSEcuJ2fPwcT9FP7kpu6JIo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vvTMltks; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="f3Usdtvl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5AC4EC4CEF7;
-	Wed,  4 Feb 2026 15:03:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vvTMltks"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CBEF3C4CEF7;
+	Wed,  4 Feb 2026 15:03:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770217404;
-	bh=w/q48A4Oyh2alQ+widBSV0kFM1T73GcPD7KRoVmtoFs=;
+	s=korg; t=1770217408;
+	bh=ZUym/sVbFHsC92DefzaxGEbCgt7YsgIqnNjCa6seFxI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=f3UsdtvlhoiaoAm62J/tgP9SP+Wzd/PsQzDu2KzUTPuMdDey6Qiq0hJOL0uU2NccF
-	 1APZuGzf8pO3iiV2nIZtxTbyxWOyjtyJOAJBh0q3BLe9p3o2ILB0IfVienzpocS/Tu
-	 BKWX7+V8LE66a/6Lua3WQzgEvo+S1DuoTG+oj7wY=
+	b=vvTMltksy4P52VSjAXKh8X33qXigF910UkpMQAGOh3iCtR90FEo0YBgJc0exdtmEp
+	 WS0g9FE9nRS8ZcmMoWFhGuEPxf0gSEFMr+wTF2uRj690wCh9VgqtYAZTR/dFeJCiag
+	 vut31Peds/Rn31G3C44OBbdpIsTxJPplUgIZ5UI0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+aaf0488c83d1d5f4f029@syzkaller.appspotmail.com,
-	Edward Adam Davis <eadavis@qq.com>,
-	Johannes Berg <johannes.berg@intel.com>
-Subject: [PATCH 5.15 206/206] wifi: cfg80211: init wiphy_work before allocating rfkill fails
-Date: Wed,  4 Feb 2026 15:40:37 +0100
-Message-ID: <20260204143905.648694967@linuxfoundation.org>
+	syzbot+a2a3b519de727b0f7903@syzkaller.appspotmail.com,
+	"Nikola Z. Ivanov" <zlatistiv@gmail.com>,
+	Jiri Pirko <jiri@nvidia.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Rahul Sharma <black.hawk@163.com>
+Subject: [PATCH 5.15 201/206] team: Move team device type change at the end of team_port_add
+Date: Wed,  4 Feb 2026 15:40:32 +0100
+Message-ID: <20260204143905.469264145@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260204143858.193781818@linuxfoundation.org>
 References: <20260204143858.193781818@linuxfoundation.org>
@@ -51,97 +53,114 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Edward Adam Davis <eadavis@qq.com>
+From: "Nikola Z. Ivanov" <zlatistiv@gmail.com>
 
-commit fc88dee89d7b63eeb17699393eb659aadf9d9b7c upstream.
+[ Upstream commit 0ae9cfc454ea5ead5f3ddbdfe2e70270d8e2c8ef ]
 
-syzbort reported a uninitialize wiphy_work_lock in cfg80211_dev_free. [1]
+Attempting to add a port device that is already up will expectedly fail,
+but not before modifying the team device header_ops.
 
-After rfkill allocation fails, the wiphy release process will be performed,
-which will cause cfg80211_dev_free to access the uninitialized wiphy_work
-related data.
+In the case of the syzbot reproducer the gre0 device is
+already in state UP when it attempts to add it as a
+port device of team0, this fails but before that
+header_ops->create of team0 is changed from eth_header to ipgre_header
+in the call to team_dev_type_check_change.
 
-Move the initialization of wiphy_work to before rfkill initialization to
-avoid this issue.
+Later when we end up in ipgre_header() struct ip_tunnel* points to nonsense
+as the private data of the device still holds a struct team.
 
-[1]
-INFO: trying to register non-static key.
-The code is fine but needs lockdep annotation, or maybe
-you didn't initialize this object before use?
-turning off the locking correctness validator.
-CPU: 0 UID: 0 PID: 5935 Comm: syz-executor550 Not tainted 6.14.0-rc6-syzkaller-00103-g4003c9e78778 #0
-Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS 1.16.3-debian-1.16.3-2~bpo12+1 04/01/2014
-Call Trace:
- <TASK>
- __dump_stack lib/dump_stack.c:94 [inline]
- dump_stack_lvl+0x116/0x1f0 lib/dump_stack.c:120
- assign_lock_key kernel/locking/lockdep.c:983 [inline]
- register_lock_class+0xc39/0x1240 kernel/locking/lockdep.c:1297
- __lock_acquire+0x135/0x3c40 kernel/locking/lockdep.c:5103
- lock_acquire.part.0+0x11b/0x380 kernel/locking/lockdep.c:5851
- __raw_spin_lock_irqsave include/linux/spinlock_api_smp.h:110 [inline]
- _raw_spin_lock_irqsave+0x3a/0x60 kernel/locking/spinlock.c:162
- cfg80211_dev_free+0x30/0x3d0 net/wireless/core.c:1196
- device_release+0xa1/0x240 drivers/base/core.c:2568
- kobject_cleanup lib/kobject.c:689 [inline]
- kobject_release lib/kobject.c:720 [inline]
- kref_put include/linux/kref.h:65 [inline]
- kobject_put+0x1e4/0x5a0 lib/kobject.c:737
- put_device+0x1f/0x30 drivers/base/core.c:3774
- wiphy_free net/wireless/core.c:1224 [inline]
- wiphy_new_nm+0x1c1f/0x2160 net/wireless/core.c:562
- ieee80211_alloc_hw_nm+0x1b7a/0x2260 net/mac80211/main.c:835
- mac80211_hwsim_new_radio+0x1d6/0x54e0 drivers/net/wireless/virtual/mac80211_hwsim.c:5185
- hwsim_new_radio_nl+0xb42/0x12b0 drivers/net/wireless/virtual/mac80211_hwsim.c:6242
- genl_family_rcv_msg_doit+0x202/0x2f0 net/netlink/genetlink.c:1115
- genl_family_rcv_msg net/netlink/genetlink.c:1195 [inline]
- genl_rcv_msg+0x565/0x800 net/netlink/genetlink.c:1210
- netlink_rcv_skb+0x16b/0x440 net/netlink/af_netlink.c:2533
- genl_rcv+0x28/0x40 net/netlink/genetlink.c:1219
- netlink_unicast_kernel net/netlink/af_netlink.c:1312 [inline]
- netlink_unicast+0x53c/0x7f0 net/netlink/af_netlink.c:1338
- netlink_sendmsg+0x8b8/0xd70 net/netlink/af_netlink.c:1882
- sock_sendmsg_nosec net/socket.c:718 [inline]
- __sock_sendmsg net/socket.c:733 [inline]
- ____sys_sendmsg+0xaaf/0xc90 net/socket.c:2573
- ___sys_sendmsg+0x135/0x1e0 net/socket.c:2627
- __sys_sendmsg+0x16e/0x220 net/socket.c:2659
- do_syscall_x64 arch/x86/entry/common.c:52 [inline]
- do_syscall_64+0xcd/0x250 arch/x86/entry/common.c:83
+Example sequence of iproute2 commands to reproduce the hang/BUG():
+ip link add dev team0 type team
+ip link add dev gre0 type gre
+ip link set dev gre0 up
+ip link set dev gre0 master team0
+ip link set dev team0 up
+ping -I team0 1.1.1.1
 
-Fixes: 72d520476a2f ("wifi: cfg80211: cancel wiphy_work before freeing wiphy")
-Reported-by: syzbot+aaf0488c83d1d5f4f029@syzkaller.appspotmail.com
-Close: https://syzkaller.appspot.com/bug?extid=aaf0488c83d1d5f4f029
-Tested-by: syzbot+aaf0488c83d1d5f4f029@syzkaller.appspotmail.com
-Signed-off-by: Edward Adam Davis <eadavis@qq.com>
-Link: https://patch.msgid.link/tencent_258DD9121DDDB9DD9A1939CFAA0D8625B107@qq.com
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Move team_dev_type_check_change down where all other checks have passed
+as it changes the dev type with no way to restore it in case
+one of the checks that follow it fail.
+
+Also make sure to preserve the origial mtu assignment:
+  - If port_dev is not the same type as dev, dev takes mtu from port_dev
+  - If port_dev is the same type as dev, port_dev takes mtu from dev
+
+This is done by adding a conditional before the call to dev_set_mtu
+to prevent it from assigning port_dev->mtu = dev->mtu and instead
+letting team_dev_type_check_change assign dev->mtu = port_dev->mtu.
+The conditional is needed because the patch moves the call to
+team_dev_type_check_change past dev_set_mtu.
+
+Testing:
+  - team device driver in-tree selftests
+  - Add/remove various devices as slaves of team device
+  - syzbot
+
+Reported-by: syzbot+a2a3b519de727b0f7903@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=a2a3b519de727b0f7903
+Fixes: 1d76efe1577b ("team: add support for non-ethernet devices")
+Signed-off-by: Nikola Z. Ivanov <zlatistiv@gmail.com>
+Reviewed-by: Jiri Pirko <jiri@nvidia.com>
+Link: https://patch.msgid.link/20251122002027.695151-1-zlatistiv@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Rahul Sharma <black.hawk@163.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/wireless/core.c |    6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/net/team/team.c |   23 +++++++++++++++--------
+ 1 file changed, 15 insertions(+), 8 deletions(-)
 
---- a/net/wireless/core.c
-+++ b/net/wireless/core.c
-@@ -546,6 +546,9 @@ use_default_name:
- 	INIT_WORK(&rdev->mgmt_registrations_update_wk,
- 		  cfg80211_mgmt_registrations_update_wk);
- 	spin_lock_init(&rdev->mgmt_registrations_lock);
-+	INIT_WORK(&rdev->wiphy_work, cfg80211_wiphy_work);
-+	INIT_LIST_HEAD(&rdev->wiphy_work_list);
-+	spin_lock_init(&rdev->wiphy_work_lock);
- 
- #ifdef CONFIG_CFG80211_DEFAULT_PS
- 	rdev->wiphy.flags |= WIPHY_FLAG_PS_ON_BY_DEFAULT;
-@@ -563,9 +566,6 @@ use_default_name:
- 		return NULL;
+--- a/drivers/net/team/team.c
++++ b/drivers/net/team/team.c
+@@ -1181,10 +1181,6 @@ static int team_port_add(struct team *te
+ 		return -EPERM;
  	}
  
--	INIT_WORK(&rdev->wiphy_work, cfg80211_wiphy_work);
--	INIT_LIST_HEAD(&rdev->wiphy_work_list);
--	spin_lock_init(&rdev->wiphy_work_lock);
- 	INIT_WORK(&rdev->rfkill_block, cfg80211_rfkill_block_work);
- 	INIT_WORK(&rdev->conn_work, cfg80211_conn_work);
- 	INIT_WORK(&rdev->event_work, cfg80211_event_work);
+-	err = team_dev_type_check_change(dev, port_dev);
+-	if (err)
+-		return err;
+-
+ 	if (port_dev->flags & IFF_UP) {
+ 		NL_SET_ERR_MSG(extack, "Device is up. Set it down before adding it as a team port");
+ 		netdev_err(dev, "Device %s is up. Set it down before adding it as a team port\n",
+@@ -1202,10 +1198,16 @@ static int team_port_add(struct team *te
+ 	INIT_LIST_HEAD(&port->qom_list);
+ 
+ 	port->orig.mtu = port_dev->mtu;
+-	err = dev_set_mtu(port_dev, dev->mtu);
+-	if (err) {
+-		netdev_dbg(dev, "Error %d calling dev_set_mtu\n", err);
+-		goto err_set_mtu;
++	/*
++	 * MTU assignment will be handled in team_dev_type_check_change
++	 * if dev and port_dev are of different types
++	 */
++	if (dev->type == port_dev->type) {
++		err = dev_set_mtu(port_dev, dev->mtu);
++		if (err) {
++			netdev_dbg(dev, "Error %d calling dev_set_mtu\n", err);
++			goto err_set_mtu;
++		}
+ 	}
+ 
+ 	memcpy(port->orig.dev_addr, port_dev->dev_addr, port_dev->addr_len);
+@@ -1280,6 +1282,10 @@ static int team_port_add(struct team *te
+ 		}
+ 	}
+ 
++	err = team_dev_type_check_change(dev, port_dev);
++	if (err)
++		goto err_set_dev_type;
++
+ 	if (dev->flags & IFF_UP) {
+ 		netif_addr_lock_bh(dev);
+ 		dev_uc_sync_multiple(port_dev, dev);
+@@ -1298,6 +1304,7 @@ static int team_port_add(struct team *te
+ 
+ 	return 0;
+ 
++err_set_dev_type:
+ err_set_slave_promisc:
+ 	__team_option_inst_del_port(team, port);
+ 
 
 
