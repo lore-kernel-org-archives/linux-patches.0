@@ -1,39 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB79D261B91;
-	Wed,  4 Feb 2026 15:28:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B45F527702D;
+	Wed,  4 Feb 2026 15:28:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770218928; cv=none; b=IB3g6lIEyW3byyljE0z5yJQIljGH44U6UEl1rf1pLuQGwIcuL6wmqA9FSn0ycDjXdF27orvFiHzLlGEnY33tcvm91sQT5+XGpIYhAPviaoYB2vBkpcNRwuvQDKnqdvpi0cDSKtD5947Q6bYVwc0hP8ajcoTeX+MhmYvf/evePfc=
+	t=1770218931; cv=none; b=k+oSGKvxSuyIBSt54YPUN9G+ZDiHUtkX8B4a6CAT2BTlZp4H0ZFhVUwRE0Zxmp5Aiylk4Z89dBpNMNHHMAq8j3kiv7kNzjFzC741mCNymfs0je6aqRkY9n2AH7zKfXU1TuB0lrlX1Z0gpWZ+6RZFQuo0LDphpNberNQ1hXXYJk0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770218928; c=relaxed/simple;
-	bh=onO1zxNOudpklcCbFDcagFQPh4GjaiMAzHK2KBewA2c=;
+	s=arc-20240116; t=1770218931; c=relaxed/simple;
+	bh=DqQp8pi4C0X8tZBe7LNLOU0eIqZ/zlaU0pRfSLAN7zY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bqrcVc4h6Kwoi96MjAVydrTbQnlrY24i1pkFpuzt6qqhZT6u3dB63RiDblgW11iAI2rn4nUNJD3qGmctOFDAdqpp6shAhAX4vJ/iE5oGHGOWofVL1pQWT/pkrRp5nKXxq75a5xj6uDyZrKu8g0D/fsJnxalC4gUuSuEJY05Zkww=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zWJTWjqZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=a0wU4xVregb5INp6ecaAsKJPH8Jvz12e3wkntJJ7W4QDyJYzF3DKmuQCvSy+vtCxVWnl3Sv9D4V01I03lbVPOHS5/DnhGEc8qneJLdM7CwJ89mvTFL5wu62+9OPTfltsop3aHWymPCvBETuuIalQf70P3RO/Q3M49WrpZJFU5Qg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WfI4ItGF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zWJTWjqZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F0BEFC4CEF7;
-	Wed,  4 Feb 2026 15:28:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WfI4ItGF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 28C6CC4CEF7;
+	Wed,  4 Feb 2026 15:28:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770218928;
-	bh=onO1zxNOudpklcCbFDcagFQPh4GjaiMAzHK2KBewA2c=;
+	s=korg; t=1770218931;
+	bh=DqQp8pi4C0X8tZBe7LNLOU0eIqZ/zlaU0pRfSLAN7zY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zWJTWjqZjKzSNct/pqqKkJALznixws2infxIrjTBNl5MPWbqG52uAMz0DK8MwACnU
-	 46IQOEMqx023nbLlvjtTsrMn9wf47s6ep4UW0gYMqYfGdKm1Atec13FVCYalUrIRu2
-	 PZme4F0hFr/3d+Crj32JAHvVdENaIGxuYQ3PXtRQ=
+	b=WfI4ItGFITMvYRC5i7ghoQjJdhD3egs0xZnF+8nzlA4BU3HBkJ4a18cRFcDlFSEq5
+	 KW8wQJxPwVTWKhVOj+T1YPQNrLTPtljZuWNhwGsUwj08DUUb7DwRlLR2inRXv17Evh
+	 hyiaifF1S6ips9/9JtHZSYp/XQA14g3Opd4hbptg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kery Qi <qikeyu2017@gmail.com>,
-	Simon Horman <horms@kernel.org>,
+	Eric Dumazet <edumazet@google.com>,
+	syzbot+5498a510ff9de39d37da@syzkaller.appspotmail.com,
+	Eulgyu Kim <eulgyukim@snu.ac.kr>,
+	Mat Martineau <martineau@kernel.org>,
+	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 016/122] rocker: fix memory leak in rocker_world_port_post_fini()
-Date: Wed,  4 Feb 2026 15:39:58 +0100
-Message-ID: <20260204143852.451331169@linuxfoundation.org>
+Subject: [PATCH 6.18 017/122] mptcp: fix race in mptcp_pm_nl_flush_addrs_doit()
+Date: Wed,  4 Feb 2026 15:39:59 +0100
+Message-ID: <20260204143852.486890750@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260204143851.857060534@linuxfoundation.org>
 References: <20260204143851.857060534@linuxfoundation.org>
@@ -52,54 +55,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kery Qi <qikeyu2017@gmail.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 8d7ba71e46216b8657a82ca2ec118bc93812a4d0 ]
+[ Upstream commit e2a9eeb69f7d4ca4cf4c70463af77664fdb6ab1d ]
 
-In rocker_world_port_pre_init(), rocker_port->wpriv is allocated with
-kzalloc(wops->port_priv_size, GFP_KERNEL). However, in
-rocker_world_port_post_fini(), the memory is only freed when
-wops->port_post_fini callback is set:
+syzbot and Eulgyu Kim reported crashes in mptcp_pm_nl_get_local_id()
+and/or mptcp_pm_nl_is_backup()
 
-    if (!wops->port_post_fini)
-        return;
-    wops->port_post_fini(rocker_port);
-    kfree(rocker_port->wpriv);
+Root cause is list_splice_init() in mptcp_pm_nl_flush_addrs_doit()
+which is not RCU ready.
 
-Since rocker_ofdpa_ops does not implement port_post_fini callback
-(it is NULL), the wpriv memory allocated for each port is never freed
-when ports are removed. This leads to a memory leak of
-sizeof(struct ofdpa_port) bytes per port on every device removal.
+list_splice_init_rcu() can not be called here while holding pernet->lock
+spinlock.
 
-Fix this by always calling kfree(rocker_port->wpriv) regardless of
-whether the port_post_fini callback exists.
+Many thanks to Eulgyu Kim for providing a repro and testing our patches.
 
-Fixes: e420114eef4a ("rocker: introduce worlds infrastructure")
-Signed-off-by: Kery Qi <qikeyu2017@gmail.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20260123211030.2109-2-qikeyu2017@gmail.com
+Fixes: 141694df6573 ("mptcp: remove address when netlink flushes addrs")
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Reported-by: syzbot+5498a510ff9de39d37da@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/all/6970a46d.a00a0220.3ad28e.5cf0.GAE@google.com/T/
+Reported-by: Eulgyu Kim <eulgyukim@snu.ac.kr>
+Closes: https://github.com/multipath-tcp/mptcp_net-next/issues/611
+Reviewed-by: Mat Martineau <martineau@kernel.org>
+Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Link: https://patch.msgid.link/20260124-net-mptcp-race_nl_flush_addrs-v3-1-b2dc1b613e9d@kernel.org
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/rocker/rocker_main.c | 5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ net/mptcp/pm_kernel.c | 16 +++++++++++++---
+ 1 file changed, 13 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/ethernet/rocker/rocker_main.c b/drivers/net/ethernet/rocker/rocker_main.c
-index 36af94a2e062a..2794f75df8fcb 100644
---- a/drivers/net/ethernet/rocker/rocker_main.c
-+++ b/drivers/net/ethernet/rocker/rocker_main.c
-@@ -1524,9 +1524,8 @@ static void rocker_world_port_post_fini(struct rocker_port *rocker_port)
+diff --git a/net/mptcp/pm_kernel.c b/net/mptcp/pm_kernel.c
+index 0a50fd5edc06d..1b517a81e0299 100644
+--- a/net/mptcp/pm_kernel.c
++++ b/net/mptcp/pm_kernel.c
+@@ -1276,16 +1276,26 @@ static void __reset_counters(struct pm_nl_pernet *pernet)
+ int mptcp_pm_nl_flush_addrs_doit(struct sk_buff *skb, struct genl_info *info)
  {
- 	struct rocker_world_ops *wops = rocker_port->rocker->wops;
+ 	struct pm_nl_pernet *pernet = genl_info_pm_nl(info);
+-	LIST_HEAD(free_list);
++	struct list_head free_list;
  
--	if (!wops->port_post_fini)
--		return;
--	wops->port_post_fini(rocker_port);
-+	if (wops->port_post_fini)
-+		wops->port_post_fini(rocker_port);
- 	kfree(rocker_port->wpriv);
+ 	spin_lock_bh(&pernet->lock);
+-	list_splice_init(&pernet->endp_list, &free_list);
++	free_list = pernet->endp_list;
++	INIT_LIST_HEAD_RCU(&pernet->endp_list);
+ 	__reset_counters(pernet);
+ 	pernet->next_id = 1;
+ 	bitmap_zero(pernet->id_bitmap, MPTCP_PM_MAX_ADDR_ID + 1);
+ 	spin_unlock_bh(&pernet->lock);
+-	mptcp_nl_flush_addrs_list(sock_net(skb->sk), &free_list);
++
++	if (free_list.next == &pernet->endp_list)
++		return 0;
++
+ 	synchronize_rcu();
++
++	/* Adjust the pointers to free_list instead of pernet->endp_list */
++	free_list.prev->next = &free_list;
++	free_list.next->prev = &free_list;
++
++	mptcp_nl_flush_addrs_list(sock_net(skb->sk), &free_list);
+ 	__flush_addrs(&free_list);
+ 	return 0;
  }
- 
 -- 
 2.51.0
 
