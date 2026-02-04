@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49AF0413254;
-	Wed,  4 Feb 2026 15:30:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5CF95413254;
+	Wed,  4 Feb 2026 15:30:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770219007; cv=none; b=BSa2MN6ytdvYC2Lnf+ANijmrAM1Z1ssEkVBKpdiaRkbVUpe03lD12jAF8cTudd9hfV9nTx0H0sfOi5ouDDKYHIXi54LqBEoznTFwcJ2iuiOQW1Br2lN3cyqR49XqqJdRXzFYXmOTAjzD98YdxkQ7z8z+8uV9KubG2uA0OfW5JUY=
+	t=1770219010; cv=none; b=K//rQZZ0TxB4lRmWtV5aGpk9mDtilpJjuoQke/STOYp6TTydTc1NX9J/ARr14MVwpC4/mma9rdcpCxe4CqXhcDn2wYFnfe/vN4zJfq5gYMCE/cLfB9ELVG/DhQWVFFYkRyw7aXRreOJmabTmX8HpWZOqu7YPVzHiEPBwBlfrG3o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770219007; c=relaxed/simple;
-	bh=PVDfDHW1t8VA/Tolfuyq8Eaeca2W039/dzBrkob9/gM=;
+	s=arc-20240116; t=1770219010; c=relaxed/simple;
+	bh=z9T+ZmVRoGbI6KJhngZmTtrmTm87Mq6/SadWlmcj574=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=V9LW5uD0ARq9sPZBCSHh4l23BpRmTW8c6xG/Kiii3LiIlaH2nEE5AJKJFHC7Sm77tF+cEQNLXCj5uvvExFVKMjmLGPkzcyZvosql4BlHWDLNiWTZkGWINCQSeAh8VOJ2HkgrVybHmTeSnyrFTbToO1ZiJUedf2jdl9TGcnSBk48=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=B8hZ4iwf; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZKBL4Z9m28KpDjPHGFemBKsntmwAKtizoD5IVlpLR/CTA0vmZThTTpZp5Tdt2xzOIBKPcGH6D9/6HFBw/bahj7sZfqx/Do1sIK5sVuVpvieqX/909O+C/BNFWr4uTRx1LkMZ7EZtgTFfN/qiDhDUrO7Xm0zoOkTCo8QTkHjw1DQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vKCcYAnS; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="B8hZ4iwf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C4965C4CEF7;
-	Wed,  4 Feb 2026 15:30:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vKCcYAnS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D40C1C4CEF7;
+	Wed,  4 Feb 2026 15:30:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770219007;
-	bh=PVDfDHW1t8VA/Tolfuyq8Eaeca2W039/dzBrkob9/gM=;
+	s=korg; t=1770219010;
+	bh=z9T+ZmVRoGbI6KJhngZmTtrmTm87Mq6/SadWlmcj574=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=B8hZ4iwfdlwyg7i/Kz1i4HwqJgYXpuK88pkMUuS1ByH9Uoen1JfAb/01Pi2QwH8m3
-	 vp7NaHjdwagWgHnmxlGuxYdjau2/czzn79RDXxAbrzVp01fNYL1eT7hUXsIQ1ORhLG
-	 FfNZBgTyv5x+N+v2QhuJE6Y3jdd+GIaK3k0TDU5c=
+	b=vKCcYAnS8MJcpfLHiD7w215wTOBAMVxAunaeNyK/dL8Pl/4T9dCpW8cTZ9OMqHfnN
+	 /seD52qPqN3U9yAazlj+YYKmRx3LsuDJdHrJ0yLiPPApIDRvwfyCsNMeX7ctdApKPW
+	 KajYpbiIwF8bQgJ/kM5KqT1K0+ivaM2TO7uwtImA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matthew Brost <matthew.brost@intel.com>,
-	Shuicheng Lin <shuicheng.lin@intel.com>,
-	=?UTF-8?q?Thomas=20Hellstr=C3=B6m?= <thomas.hellstrom@linux.intel.com>,
+	Aleksandr Loktionov <aleksandr.loktionov@intel.com>,
+	Aaron Ma <aaron.ma@canonical.com>,
+	Paul Menzel <pmenzel@molgen.mpg.de>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 040/122] drm/xe: Skip address copy for sync-only execs
-Date: Wed,  4 Feb 2026 15:40:22 +0100
-Message-ID: <20260204143853.302731430@linuxfoundation.org>
+Subject: [PATCH 6.18 023/122] ice: Fix NULL pointer dereference in ice_vsi_set_napi_queues
+Date: Wed,  4 Feb 2026 15:40:05 +0100
+Message-ID: <20260204143852.699328069@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260204143851.857060534@linuxfoundation.org>
 References: <20260204143851.857060534@linuxfoundation.org>
@@ -46,64 +47,100 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Shuicheng Lin <shuicheng.lin@intel.com>
+From: Aaron Ma <aaron.ma@canonical.com>
 
-[ Upstream commit c73a8917b31e8ddbd53cc248e17410cec27f8f58 ]
+[ Upstream commit 9bb30be4d89ff9a8d7ab1aa0eb2edaca83431f85 ]
 
-For parallel exec queues, xe_exec_ioctl() copied the batch buffer address
-array from userspace without checking num_batch_buffer.
-If user creates a sync-only exec that doesn't use the address field, the
-exec will fail with -EFAULT.
-Add num_batch_buffer check to skip the copy, and the exec could be executed
-successfully.
+Add NULL pointer checks in ice_vsi_set_napi_queues() to prevent crashes
+during resume from suspend when rings[q_idx]->q_vector is NULL.
 
-Here is the sync-only exec:
-struct drm_xe_exec exec = {
-    .extensions = 0,
-    .exec_queue_id = qid,
-    .num_syncs = 1,
-    .syncs = (uintptr_t)&sync,
-    .address = 0,            /* ignored for sync-only */
-    .num_batch_buffer = 0,   /* sync-only */
-};
+Tested adaptor:
+60:00.0 Ethernet controller [0200]: Intel Corporation Ethernet Controller E810-XXV for SFP [8086:159b] (rev 02)
+        Subsystem: Intel Corporation Ethernet Network Adapter E810-XXV-2 [8086:4003]
 
-Fixes: dd08ebf6c352 ("drm/xe: Introduce a new DRM driver for Intel GPUs")
-Cc: Matthew Brost <matthew.brost@intel.com>
-Signed-off-by: Shuicheng Lin <shuicheng.lin@intel.com>
-Reviewed-by: Matthew Brost <matthew.brost@intel.com>
-Signed-off-by: Matthew Brost <matthew.brost@intel.com>
-Link: https://patch.msgid.link/20260122214053.3189366-2-shuicheng.lin@intel.com
-(cherry picked from commit 4761791c1e736273d612ff564f318bfbbb04fa4e)
-Signed-off-by: Thomas Hellström <thomas.hellstrom@linux.intel.com>
+SR-IOV state: both disabled and enabled can reproduce this issue.
+
+kernel version: v6.18
+
+Reproduce steps:
+Boot up and execute suspend like systemctl suspend or rtcwake.
+
+Log:
+<1>[  231.443607] BUG: kernel NULL pointer dereference, address: 0000000000000040
+<1>[  231.444052] #PF: supervisor read access in kernel mode
+<1>[  231.444484] #PF: error_code(0x0000) - not-present page
+<6>[  231.444913] PGD 0 P4D 0
+<4>[  231.445342] Oops: Oops: 0000 [#1] SMP NOPTI
+<4>[  231.446635] RIP: 0010:netif_queue_set_napi+0xa/0x170
+<4>[  231.447067] Code: 31 f6 31 ff c3 cc cc cc cc 0f 1f 80 00 00 00 00 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 0f 1f 44 00 00 48 85 c9 74 0b <48> 83 79 30 00 0f 84 39 01 00 00 55 41 89 d1 49 89 f8 89 f2 48 89
+<4>[  231.447513] RSP: 0018:ffffcc780fc078c0 EFLAGS: 00010202
+<4>[  231.447961] RAX: ffff8b848ca30400 RBX: ffff8b848caf2028 RCX: 0000000000000010
+<4>[  231.448443] RDX: 0000000000000000 RSI: 0000000000000000 RDI: ffff8b848dbd4000
+<4>[  231.448896] RBP: ffffcc780fc078e8 R08: 0000000000000000 R09: 0000000000000000
+<4>[  231.449345] R10: 0000000000000000 R11: 0000000000000000 R12: 0000000000000001
+<4>[  231.449817] R13: ffff8b848dbd4000 R14: ffff8b84833390c8 R15: 0000000000000000
+<4>[  231.450265] FS:  00007c7b29e9d740(0000) GS:ffff8b8c068e2000(0000) knlGS:0000000000000000
+<4>[  231.450715] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+<4>[  231.451179] CR2: 0000000000000040 CR3: 000000030626f004 CR4: 0000000000f72ef0
+<4>[  231.451629] PKRU: 55555554
+<4>[  231.452076] Call Trace:
+<4>[  231.452549]  <TASK>
+<4>[  231.452996]  ? ice_vsi_set_napi_queues+0x4d/0x110 [ice]
+<4>[  231.453482]  ice_resume+0xfd/0x220 [ice]
+<4>[  231.453977]  ? __pfx_pci_pm_resume+0x10/0x10
+<4>[  231.454425]  pci_pm_resume+0x8c/0x140
+<4>[  231.454872]  ? __pfx_pci_pm_resume+0x10/0x10
+<4>[  231.455347]  dpm_run_callback+0x5f/0x160
+<4>[  231.455796]  ? dpm_wait_for_superior+0x107/0x170
+<4>[  231.456244]  device_resume+0x177/0x270
+<4>[  231.456708]  dpm_resume+0x209/0x2f0
+<4>[  231.457151]  dpm_resume_end+0x15/0x30
+<4>[  231.457596]  suspend_devices_and_enter+0x1da/0x2b0
+<4>[  231.458054]  enter_state+0x10e/0x570
+
+Add defensive checks for both the ring pointer and its q_vector
+before dereferencing, allowing the system to resume successfully even when
+q_vectors are unmapped.
+
+Fixes: 2a5dc090b92cf ("ice: move netif_queue_set_napi to rtnl-protected sections")
+Reviewed-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
+Signed-off-by: Aaron Ma <aaron.ma@canonical.com>
+Reviewed-by: Paul Menzel <pmenzel@molgen.mpg.de>
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/xe/xe_exec.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/net/ethernet/intel/ice/ice_lib.c | 10 ++++++----
+ 1 file changed, 6 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/gpu/drm/xe/xe_exec.c b/drivers/gpu/drm/xe/xe_exec.c
-index ca85f7c15fabe..87a32b61bece6 100644
---- a/drivers/gpu/drm/xe/xe_exec.c
-+++ b/drivers/gpu/drm/xe/xe_exec.c
-@@ -182,9 +182,9 @@ int xe_exec_ioctl(struct drm_device *dev, void *data, struct drm_file *file)
- 		goto err_syncs;
- 	}
+diff --git a/drivers/net/ethernet/intel/ice/ice_lib.c b/drivers/net/ethernet/intel/ice/ice_lib.c
+index 5a3e7d6697325..3d14932871c58 100644
+--- a/drivers/net/ethernet/intel/ice/ice_lib.c
++++ b/drivers/net/ethernet/intel/ice/ice_lib.c
+@@ -2784,12 +2784,14 @@ void ice_vsi_set_napi_queues(struct ice_vsi *vsi)
+ 		return;
  
--	if (xe_exec_queue_is_parallel(q)) {
--		err = copy_from_user(addresses, addresses_user, sizeof(u64) *
--				     q->width);
-+	if (args->num_batch_buffer && xe_exec_queue_is_parallel(q)) {
-+		err = copy_from_user(addresses, addresses_user,
-+				     sizeof(u64) * q->width);
- 		if (err) {
- 			err = -EFAULT;
- 			goto err_syncs;
+ 	ice_for_each_rxq(vsi, q_idx)
+-		netif_queue_set_napi(netdev, q_idx, NETDEV_QUEUE_TYPE_RX,
+-				     &vsi->rx_rings[q_idx]->q_vector->napi);
++		if (vsi->rx_rings[q_idx] && vsi->rx_rings[q_idx]->q_vector)
++			netif_queue_set_napi(netdev, q_idx, NETDEV_QUEUE_TYPE_RX,
++					     &vsi->rx_rings[q_idx]->q_vector->napi);
+ 
+ 	ice_for_each_txq(vsi, q_idx)
+-		netif_queue_set_napi(netdev, q_idx, NETDEV_QUEUE_TYPE_TX,
+-				     &vsi->tx_rings[q_idx]->q_vector->napi);
++		if (vsi->tx_rings[q_idx] && vsi->tx_rings[q_idx]->q_vector)
++			netif_queue_set_napi(netdev, q_idx, NETDEV_QUEUE_TYPE_TX,
++					     &vsi->tx_rings[q_idx]->q_vector->napi);
+ 	/* Also set the interrupt number for the NAPI */
+ 	ice_for_each_q_vector(vsi, v_idx) {
+ 		struct ice_q_vector *q_vector = vsi->q_vectors[v_idx];
 -- 
 2.51.0
 
