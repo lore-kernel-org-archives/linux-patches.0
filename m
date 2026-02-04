@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 188E1426EDA;
-	Wed,  4 Feb 2026 15:07:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 616DB4279E0;
+	Wed,  4 Feb 2026 15:07:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770217647; cv=none; b=Bbp3/igEslsFIjEP/yWoTVjOOfKg6jjFeyK9ea+NiJl7kN/7GIjsIaHwAdaAlWC7MUz5+7zhyxrxn4RhxiROpeX7Qd2Uptwz0+pC9QSM/ySUa0voeT1gBne5U0q19q3fWXbp49fJqq3RwcsXxFPInaEkOuyGx711k4gtOXowpvc=
+	t=1770217650; cv=none; b=dadZ+g0zzcEw7LL6JVAqXAH0bEGatJVUwRFewYZHFpW/K3U0dQP7NJvgPXdyZW4ZKNiHxsRsIQkoSqQQTCtvpkFtCA5S8IC+oIpZ9iKNnASsOQVnVoyJSDUN2073S/VM6hZsMvkIDJ1NFdPq2vAPC6XO3LeHNUp94UKO5LO8uiQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770217647; c=relaxed/simple;
-	bh=9mX7xzHgsYiLiCF3QO3EH4ej4Ugar0T4biTnDwkr1cc=;
+	s=arc-20240116; t=1770217650; c=relaxed/simple;
+	bh=uAphLxceMWm25xCx8uzLAgrgvcXe15oS3UA0CEWw+OQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=AMbnaRS8taMThjVzFX8yn6cYTtt8bYfyWrdMdpeQkkX1Eg3UO3g1x3bD4jxJyOn9lOxj6EwhiKxVqZiV3Y4KffO75HEVQLjZdbVXM1+v3IN77X75fAT231Dw91BzzDjc0wWxvO/fPctK3j2YiSThnA+LhqjZaSLj8BnVVDXrzgE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XjI5b9f+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ut2RA71cyF/l9TBbjeGv86bTb5tQ4NOv7PA+0IlJOnA15S2nHadCsKA9awQbTntGZqt8J+OPjUsgwiphEwd2sgp2UWKuKF27KIMW0Lkwb3Huqc0yFIYLdwAKQnVUgloHpCEvoi4tWgG5gX5pjLiL3Lm/Adn7ytWnU/ljTO3eQWk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Bfku+MNV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XjI5b9f+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 82D4BC4CEF7;
-	Wed,  4 Feb 2026 15:07:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Bfku+MNV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C712CC4CEF7;
+	Wed,  4 Feb 2026 15:07:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770217647;
-	bh=9mX7xzHgsYiLiCF3QO3EH4ej4Ugar0T4biTnDwkr1cc=;
+	s=korg; t=1770217650;
+	bh=uAphLxceMWm25xCx8uzLAgrgvcXe15oS3UA0CEWw+OQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XjI5b9f+9nhoQJthi57eHyytiJHszEOaDiDnbdnHX5CuzGiW3L+YbcVpGh7Mq0KgS
-	 SLHU+cXRKT+NnQKDb0A5EeoicQMg5VEbG8Cegd2YoEzcU82z20DyG+T36T5Wpyq/S0
-	 lQtxFAdq+paUekcn1M4gWmYz6qctLLT7fQfHu4go=
+	b=Bfku+MNVXEO3i91hb+hRwaN6T0WJMm+7OcGOQQABg0hcV2cQ6IEjBEwrCuydt6tJB
+	 4XIKNFGJuvoZDoq9eBMOTHOFfCPb891kbtmvK0yUC7bVAc0TK+GK0I9GMIAH1c5QrP
+	 t66xlljkdPk31H0AdIHC0UkT3RatbI1ntl2cfV5M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Filipe Manana <fdmanana@suse.com>,
-	Robbie Ko <robbieko@synology.com>,
-	David Sterba <dsterba@suse.com>,
-	=?UTF-8?q?Motiejus=20Jak=C5=A1tys?= <motiejus@jakstys.lt>
-Subject: [PATCH 6.1 077/280] btrfs: fix deadlock in wait_current_trans() due to ignored transaction type
-Date: Wed,  4 Feb 2026 15:37:31 +0100
-Message-ID: <20260204143912.429923209@linuxfoundation.org>
+	Ming Lei <ming.lei@redhat.com>,
+	Jens Axboe <axboe@kernel.dk>
+Subject: [PATCH 6.1 078/280] io_uring: move local task_work in exit cancel loop
+Date: Wed,  4 Feb 2026 15:37:32 +0100
+Message-ID: <20260204143912.465899539@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260204143909.614719725@linuxfoundation.org>
 References: <20260204143909.614719725@linuxfoundation.org>
@@ -46,161 +44,68 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Robbie Ko <robbieko@synology.com>
+From: Ming Lei <ming.lei@redhat.com>
 
-commit 5037b342825df7094a4906d1e2a9674baab50cb2 upstream.
+commit da579f05ef0faada3559e7faddf761c75cdf85e1 upstream.
 
-When wait_current_trans() is called during start_transaction(), it
-currently waits for a blocked transaction without considering whether
-the given transaction type actually needs to wait for that particular
-transaction state. The btrfs_blocked_trans_types[] array already defines
-which transaction types should wait for which transaction states, but
-this check was missing in wait_current_trans().
+With IORING_SETUP_DEFER_TASKRUN, task work is queued to ctx->work_llist
+(local work) rather than the fallback list. During io_ring_exit_work(),
+io_move_task_work_from_local() was called once before the cancel loop,
+moving work from work_llist to fallback_llist.
 
-This can lead to a deadlock scenario involving two transactions and
-pending ordered extents:
+However, task work can be added to work_llist during the cancel loop
+itself. There are two cases:
 
-  1. Transaction A is in TRANS_STATE_COMMIT_DOING state
+1) io_kill_timeouts() is called from io_uring_try_cancel_requests() to
+cancel pending timeouts, and it adds task work via io_req_queue_tw_complete()
+for each cancelled timeout:
 
-  2. A worker processing an ordered extent calls start_transaction()
-     with TRANS_JOIN
+2) URING_CMD requests like ublk can be completed via
+io_uring_cmd_complete_in_task() from ublk_queue_rq() during canceling,
+given ublk request queue is only quiesced when canceling the 1st uring_cmd.
 
-  3. join_transaction() returns -EBUSY because Transaction A is in
-     TRANS_STATE_COMMIT_DOING
+Since io_allowed_defer_tw_run() returns false in io_ring_exit_work()
+(kworker != submitter_task), io_run_local_work() is never invoked,
+and the work_llist entries are never processed. This causes
+io_uring_try_cancel_requests() to loop indefinitely, resulting in
+100% CPU usage in kworker threads.
 
-  4. Transaction A moves to TRANS_STATE_UNBLOCKED and completes
+Fix this by moving io_move_task_work_from_local() inside the cancel
+loop, ensuring any work on work_llist is moved to fallback before
+each cancel attempt.
 
-  5. A new Transaction B is created (TRANS_STATE_RUNNING)
-
-  6. The ordered extent from step 2 is added to Transaction B's
-     pending ordered extents
-
-  7. Transaction B immediately starts commit by another task and
-     enters TRANS_STATE_COMMIT_START
-
-  8. The worker finally reaches wait_current_trans(), sees Transaction B
-     in TRANS_STATE_COMMIT_START (a blocked state), and waits
-     unconditionally
-
-  9. However, TRANS_JOIN should NOT wait for TRANS_STATE_COMMIT_START
-     according to btrfs_blocked_trans_types[]
-
-  10. Transaction B is waiting for pending ordered extents to complete
-
-  11. Deadlock: Transaction B waits for ordered extent, ordered extent
-      waits for Transaction B
-
-This can be illustrated by the following call stacks:
-  CPU0                              CPU1
-                                    btrfs_finish_ordered_io()
-                                      start_transaction(TRANS_JOIN)
-                                        join_transaction()
-                                          # -EBUSY (Transaction A is
-                                          # TRANS_STATE_COMMIT_DOING)
-  # Transaction A completes
-  # Transaction B created
-  # ordered extent added to
-  # Transaction B's pending list
-  btrfs_commit_transaction()
-    # Transaction B enters
-    # TRANS_STATE_COMMIT_START
-    # waiting for pending ordered
-    # extents
-                                        wait_current_trans()
-                                          # waits for Transaction B
-                                          # (should not wait!)
-
-Task bstore_kv_sync in btrfs_commit_transaction waiting for ordered
-extents:
-
-  __schedule+0x2e7/0x8a0
-  schedule+0x64/0xe0
-  btrfs_commit_transaction+0xbf7/0xda0 [btrfs]
-  btrfs_sync_file+0x342/0x4d0 [btrfs]
-  __x64_sys_fdatasync+0x4b/0x80
-  do_syscall_64+0x33/0x40
-  entry_SYSCALL_64_after_hwframe+0x44/0xa9
-
-Task kworker in wait_current_trans waiting for transaction commit:
-
-  Workqueue: btrfs-syno_nocow btrfs_work_helper [btrfs]
-  __schedule+0x2e7/0x8a0
-  schedule+0x64/0xe0
-  wait_current_trans+0xb0/0x110 [btrfs]
-  start_transaction+0x346/0x5b0 [btrfs]
-  btrfs_finish_ordered_io.isra.0+0x49b/0x9c0 [btrfs]
-  btrfs_work_helper+0xe8/0x350 [btrfs]
-  process_one_work+0x1d3/0x3c0
-  worker_thread+0x4d/0x3e0
-  kthread+0x12d/0x150
-  ret_from_fork+0x1f/0x30
-
-Fix this by passing the transaction type to wait_current_trans() and
-checking btrfs_blocked_trans_types[cur_trans->state] against the given
-type before deciding to wait. This ensures that transaction types which
-are allowed to join during certain blocked states will not unnecessarily
-wait and cause deadlocks.
-
-Reviewed-by: Filipe Manana <fdmanana@suse.com>
-Signed-off-by: Robbie Ko <robbieko@synology.com>
-Signed-off-by: Filipe Manana <fdmanana@suse.com>
-Reviewed-by: David Sterba <dsterba@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
-Cc: Motiejus Jakštys <motiejus@jakstys.lt>
+Cc: stable@vger.kernel.org
+Fixes: c0e0d6ba25f1 ("io_uring: add IORING_SETUP_DEFER_TASKRUN")
+Signed-off-by: Ming Lei <ming.lei@redhat.com>
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/btrfs/transaction.c |   11 ++++++-----
- 1 file changed, 6 insertions(+), 5 deletions(-)
+ io_uring/io_uring.c |    8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
---- a/fs/btrfs/transaction.c
-+++ b/fs/btrfs/transaction.c
-@@ -503,13 +503,14 @@ static inline int is_transaction_blocked
-  * when this is done, it is safe to start a new transaction, but the current
-  * transaction might not be fully on disk.
-  */
--static void wait_current_trans(struct btrfs_fs_info *fs_info)
-+static void wait_current_trans(struct btrfs_fs_info *fs_info, unsigned int type)
- {
- 	struct btrfs_transaction *cur_trans;
- 
- 	spin_lock(&fs_info->trans_lock);
- 	cur_trans = fs_info->running_transaction;
--	if (cur_trans && is_transaction_blocked(cur_trans)) {
-+	if (cur_trans && is_transaction_blocked(cur_trans) &&
-+	    (btrfs_blocked_trans_types[cur_trans->state] & type)) {
- 		refcount_inc(&cur_trans->use_count);
- 		spin_unlock(&fs_info->trans_lock);
- 
-@@ -661,12 +662,12 @@ again:
- 		sb_start_intwrite(fs_info->sb);
- 
- 	if (may_wait_transaction(fs_info, type))
--		wait_current_trans(fs_info);
-+		wait_current_trans(fs_info, type);
- 
+--- a/io_uring/io_uring.c
++++ b/io_uring/io_uring.c
+@@ -2867,11 +2867,11 @@ static __cold void io_ring_exit_work(str
+ 	 * as nobody else will be looking for them.
+ 	 */
  	do {
- 		ret = join_transaction(fs_info, type);
- 		if (ret == -EBUSY) {
--			wait_current_trans(fs_info);
-+			wait_current_trans(fs_info, type);
- 			if (unlikely(type == TRANS_ATTACH ||
- 				     type == TRANS_JOIN_NOSTART))
- 				ret = -ENOENT;
-@@ -948,7 +949,7 @@ out:
+-		if (ctx->flags & IORING_SETUP_DEFER_TASKRUN)
+-			io_move_task_work_from_local(ctx);
+-
+-		while (io_uring_try_cancel_requests(ctx, NULL, true))
++		do {
++			if (ctx->flags & IORING_SETUP_DEFER_TASKRUN)
++				io_move_task_work_from_local(ctx);
+ 			cond_resched();
++		} while (io_uring_try_cancel_requests(ctx, NULL, true));
  
- void btrfs_throttle(struct btrfs_fs_info *fs_info)
- {
--	wait_current_trans(fs_info);
-+	wait_current_trans(fs_info, TRANS_START);
- }
- 
- static bool should_end_transaction(struct btrfs_trans_handle *trans)
+ 		if (ctx->sq_data) {
+ 			struct io_sq_data *sqd = ctx->sq_data;
 
 
