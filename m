@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE6B7280A3B;
-	Wed,  4 Feb 2026 14:43:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED51A280A3B;
+	Wed,  4 Feb 2026 14:43:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770216214; cv=none; b=KCUqi7J9E0Lx/LWI0Gt4sGgl30rA16+roSrdIQrNSxDvow3Ua9UkMFOMu4sKXnPSPIowLrs4Zt5uXUktlCOkLbeyUP/pNXkdvvXWKbI7CZ82jsInmuq2LUMvEzk+f6MNRAHE7gRivPo8a9uhpndMwHf5qzVZLTxeMUs+tjhOK54=
+	t=1770216218; cv=none; b=FKI1dd65slnbdOYdtM8lYn+S70YDO1CHNATI/pHM1Rkbpw2/uZ2DbYwPWts6guAEVG04wmwjC2r/T6k7mueXQjEp0mwcpKPuSUEMW6HyO2UYoHezhcYjYcfUnVKgRHskM39DcbQClqmeRdoog/me18F+AkX6IoO/iPSowdRq4d4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770216214; c=relaxed/simple;
-	bh=O1H2aEhRpmk2b+Iwa3mE2BXPEom8t/i6gtL3oIfRA+c=;
+	s=arc-20240116; t=1770216218; c=relaxed/simple;
+	bh=ryUG+DAngtHih/4Xm6jvNj4NRYvcOjnG5PlIAHqNBg4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jsCYfIy+C+z1PtHSNgzhZzgCRjsTMT8qVtXEO9rh+HRiNn93UIpkXC1G8ZQwI97E89xgfc8E6p1V5xyI8ZJrfj/2mzR8BpupsCoWE9HQLCjHZ+CvW7HjjxxRguQwKsWUopbtN3tAs9Or0sgmSoWInt2UFb7qki46TeXewMmhiTQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Bax34qkY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=LBMVBEDlTH1XquqHUCchhwrc1QY5w5psVFQ+P6BnttURTK6eO5ypIZuV+oobjmcYg86E8js4DfeXS9qE+Wz3+2DhTIWk0nEX1yDWc4CauHJ7WBcQccaAg3JrhdeowL5Yazhp28gPoQieaSI8+sthfrfvxs+BHQwx4tPVNAt7qug=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KgBKwNIb; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Bax34qkY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E4113C4CEF7;
-	Wed,  4 Feb 2026 14:43:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KgBKwNIb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F716C4CEF7;
+	Wed,  4 Feb 2026 14:43:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770216214;
-	bh=O1H2aEhRpmk2b+Iwa3mE2BXPEom8t/i6gtL3oIfRA+c=;
+	s=korg; t=1770216217;
+	bh=ryUG+DAngtHih/4Xm6jvNj4NRYvcOjnG5PlIAHqNBg4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Bax34qkYZHl0fUoAS9jiqiOzeM+MMQ53CbYdX0qw2wnKlv8CraPL473M9aeaXf6t/
-	 SHdTVfnbuKhygyuL9dDC1CNN5kCAQRCDKNN/QvS3V3yGfEou+lI2bnvvJV60s5tMWQ
-	 aV0n878q694S57Zt71cbCf07psM9xjG/A+D0V7Uc=
+	b=KgBKwNIbpHrYHkjwTlk3oDKNpBgWfJwdZ5g6H9/fzehiUELOsp0mRew950MKmwIbx
+	 VRI4AYlreFo22Pvfw4kbDI0JY9s57fRuESpq6K93+YVoaG4IrzMZ8DDYsMEp5HHSEG
+	 AeOYAztT/ZpP9yjOTI9HxzE9ut3kyfv7FFTXvero=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot <syzbot+881d65229ca4f9ae8c84@syzkaller.appspotmail.com>,
-	Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>,
-	Oleksij Rempel <o.rempel@pengutronix.de>,
-	Marc Kleine-Budde <mkl@pengutronix.de>
-Subject: [PATCH 5.10 021/161] net: can: j1939: j1939_xtp_rx_rts_session_active(): deactivate session upon receiving the second rts
-Date: Wed,  4 Feb 2026 15:38:04 +0100
-Message-ID: <20260204143852.527608936@linuxfoundation.org>
+	Luca Ceresoli <luca.ceresoli@bootlin.com>,
+	=?UTF-8?q?Th=C3=A9o=20Lebrun?= <theo.lebrun@bootlin.com>,
+	Vinod Koul <vkoul@kernel.org>
+Subject: [PATCH 5.10 022/161] phy: rockchip: inno-usb2: fix communication disruption in gadget mode
+Date: Wed,  4 Feb 2026 15:38:05 +0100
+Message-ID: <20260204143852.563376077@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260204143851.755002596@linuxfoundation.org>
 References: <20260204143851.755002596@linuxfoundation.org>
@@ -46,58 +45,84 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
+From: Luca Ceresoli <luca.ceresoli@bootlin.com>
 
-commit 1809c82aa073a11b7d335ae932d81ce51a588a4a upstream.
+commit 7d8f725b79e35fa47e42c88716aad8711e1168d8 upstream.
 
-Since j1939_session_deactivate_activate_next() in j1939_tp_rxtimer() is
-called only when the timer is enabled, we need to call
-j1939_session_deactivate_activate_next() if we cancelled the timer.
-Otherwise, refcount for j1939_session leaks, which will later appear as
+When the OTG USB port is used to power to SoC, configured as peripheral and
+used in gadget mode, communication stops without notice about 6 seconds
+after the gadget is configured and enumerated.
 
-| unregister_netdevice: waiting for vcan0 to become free. Usage count = 2.
+The problem was observed on a Radxa Rock Pi S board, which can only be
+powered by the only USB-C connector. That connector is the only one usable
+in gadget mode. This implies the USB cable is connected from before boot
+and never disconnects while the kernel runs.
 
-problem.
+The related code flow in the PHY driver code can be summarized as:
 
-Reported-by: syzbot <syzbot+881d65229ca4f9ae8c84@syzkaller.appspotmail.com>
-Closes: https://syzkaller.appspot.com/bug?extid=881d65229ca4f9ae8c84
-Signed-off-by: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
-Tested-by: Oleksij Rempel <o.rempel@pengutronix.de>
-Acked-by: Oleksij Rempel <o.rempel@pengutronix.de>
-Fixes: 9d71dd0c7009 ("can: add support of SAE J1939 protocol")
-Link: https://patch.msgid.link/b1212653-8fa1-44e1-be9d-12f950fb3a07@I-love.SAKURA.ne.jp
+ * the first time chg_detect_work starts (6 seconds after gadget is
+   configured and enumerated)
+   -> rockchip_chg_detect_work():
+       if chg_state is UNDEFINED:
+          property_enable(base, &rphy->phy_cfg->chg_det.opmode, false); [Y]
+
+ * rockchip_chg_detect_work() changes state and re-triggers itself a few
+   times until it reaches the DETECTED state:
+   -> rockchip_chg_detect_work():
+       if chg_state is DETECTED:
+          property_enable(base, &rphy->phy_cfg->chg_det.opmode, true); [Z]
+
+At [Y] all existing communications stop. E.g. using a CDC serial gadget,
+the /dev/tty* devices are still present on both host and device, but no
+data is transferred anymore. The later call with a 'true' argument at [Z]
+does not restore it.
+
+Due to the lack of documentation, what chg_det.opmode does exactly is not
+clear, however by code inspection it seems reasonable that is disables
+something needed to keep the communication working, and testing proves that
+disabling these lines lets gadget mode keep working. So prevent changes to
+chg_det.opmode when there is a cable connected (VBUS present).
+
+Fixes: 98898f3bc83c ("phy: rockchip-inno-usb2: support otg-port for rk3399")
 Cc: stable@vger.kernel.org
-Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
+Closes: https://lore.kernel.org/lkml/20250414185458.7767aabc@booty/
+Signed-off-by: Luca Ceresoli <luca.ceresoli@bootlin.com>
+Reviewed-by: Théo Lebrun <theo.lebrun@bootlin.com>
+Link: https://patch.msgid.link/20251127-rk3308-fix-usb-gadget-phy-disconnect-v2-2-dac8a02cd2ca@bootlin.com
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/can/j1939/transport.c |   10 +++++++++-
- 1 file changed, 9 insertions(+), 1 deletion(-)
+ drivers/phy/rockchip/phy-rockchip-inno-usb2.c |    6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
---- a/net/can/j1939/transport.c
-+++ b/net/can/j1939/transport.c
-@@ -1680,8 +1680,16 @@ static int j1939_xtp_rx_rts_session_acti
- 
- 		j1939_session_timers_cancel(session);
- 		j1939_session_cancel(session, J1939_XTP_ABORT_BUSY);
--		if (session->transmission)
-+		if (session->transmission) {
- 			j1939_session_deactivate_activate_next(session);
-+		} else if (session->state == J1939_SESSION_WAITING_ABORT) {
-+			/* Force deactivation for the receiver.
-+			 * If we rely on the timer starting in j1939_session_cancel,
-+			 * a second RTS call here will cancel that timer and fail
-+			 * to restart it because the state is already WAITING_ABORT.
-+			 */
-+			j1939_session_deactivate_activate_next(session);
-+		}
- 
- 		return -EBUSY;
- 	}
+--- a/drivers/phy/rockchip/phy-rockchip-inno-usb2.c
++++ b/drivers/phy/rockchip/phy-rockchip-inno-usb2.c
+@@ -699,7 +699,8 @@ static void rockchip_chg_detect_work(str
+ 		if (!rport->suspended)
+ 			rockchip_usb2phy_power_off(rport->phy);
+ 		/* put the controller in non-driving mode */
+-		property_enable(base, &rphy->phy_cfg->chg_det.opmode, false);
++		if (!vbus_attach)
++			property_enable(base, &rphy->phy_cfg->chg_det.opmode, false);
+ 		/* Start DCD processing stage 1 */
+ 		rockchip_chg_enable_dcd(rphy, true);
+ 		rphy->chg_state = USB_CHG_STATE_WAIT_FOR_DCD;
+@@ -763,7 +764,8 @@ static void rockchip_chg_detect_work(str
+ 		fallthrough;
+ 	case USB_CHG_STATE_DETECTED:
+ 		/* put the controller in normal mode */
+-		property_enable(base, &rphy->phy_cfg->chg_det.opmode, true);
++		if (!vbus_attach)
++			property_enable(base, &rphy->phy_cfg->chg_det.opmode, true);
+ 		rockchip_usb2phy_otg_sm_work(&rport->otg_sm_work.work);
+ 		dev_dbg(&rport->phy->dev, "charger = %s\n",
+ 			 chg_to_string(rphy->chg_type));
 
 
