@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 501F021ABC9;
-	Wed,  4 Feb 2026 15:28:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 791B221ABC9;
+	Wed,  4 Feb 2026 15:28:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770218905; cv=none; b=J8s9ZUyq8YlE/hf4OfDf9UpRlamVNYQc9EXnkvSJ/fQYyP3zMHkMgJwuT+9v+mW/vEeDYxtby7jKKPss6F7qtXYbEwGQl0O5LnR3UUPNdpc25pvxz7j1LoyDwsMmbRo/FTjWDtTUrSjIoSvTdVBc2RDvNo1fLpMv9I7MpBXsoAI=
+	t=1770218908; cv=none; b=GPZxuAEBfeLznmp7jsrERNz79HXdaOD1iXcs5EvGwhYWEZo0Wcx5cDo3vP+/q6q8oLSUWgGo5Z5ikTeK/OZSXhC7JK0xRXsXP57UDxfTs+JVTfQpx9yL0NTf74vxiOE1OsFdD2euerZ5Dw70MTYKVXY57p1WZa+sboJEmmjwN6o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770218905; c=relaxed/simple;
-	bh=zpP712wHkCX0ZcR/yqmHj4ermrRt/Fdzbs1K0SqCwg8=;
+	s=arc-20240116; t=1770218908; c=relaxed/simple;
+	bh=kDpaH8U9SywpTyc0L7oUFs+ZkhwheUzVTTSJs6mO850=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PZu7ymOEYeos4kI6tK+7NQ5Re0EbpqHWqxP2Ym4PMh+DEe7NT1vqXEEi+FYhXBG9XyokyMynH3QsDP8xElv2Kxl4doW7qessTVSVpSc8MG9bcox6HzlVYXlYYSObUz3JTpqVGkUhnplU1SIUytI4T5x29rHk37mY1VtUaYnnxLw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mqDQ+Acu; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=iRiF4MA7bDCQDM23oZn8DG0aQxyJzwxxwJHY2APYhQpYCAvLv2rAPn6rGa2LrnE8rTBhgh3Hi061/mo6qPdfVHnHfVLS5a3yx9GuPEpYiUVT6lRQ86Qrq4QlCAQyPdW8AulkzOHBm9Uy0m1odUX08xqTne1BzKGWgDojRBKwZtE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vBp6vgQI; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mqDQ+Acu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B7464C4CEF7;
-	Wed,  4 Feb 2026 15:28:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vBp6vgQI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9338C4CEF7;
+	Wed,  4 Feb 2026 15:28:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770218905;
-	bh=zpP712wHkCX0ZcR/yqmHj4ermrRt/Fdzbs1K0SqCwg8=;
+	s=korg; t=1770218908;
+	bh=kDpaH8U9SywpTyc0L7oUFs+ZkhwheUzVTTSJs6mO850=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mqDQ+AcuKab+yldYLKreJyO8g09YCsqSwwZeY0FgLNxPvEYhWpHo2XlD6jbEV3rbg
-	 eC2cg1y9v7cabLoab5W/jGNaLoI9MDBMKsFSI+I0i9dBvOZzJL9Ef05my8cJ4xIv6M
-	 J8kheK4T5cXk4h7qPCakX66dSGoSElmzf7JvS5C0=
+	b=vBp6vgQIXGsDj3mHd1vLW3HLVDFfP/Qg2+WmgxHNHJvHUXTDYnX3gIAWt4h8vbfg4
+	 nDmSGGWc28l/rp0lIiNOwUV1NFCc4ldf1Wk21xtFefCA3Zv11yc5rPZeX3QqqAPV2o
+	 PnsrYrjywf3+OoPaqfcEyLhlzokW0zIkiCvyNvKI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chunsheng Luo <luochunsheng@ustc.edu>,
-	Amir Goldstein <amir73il@gmail.com>,
-	Christian Brauner <brauner@kernel.org>,
+	Eric Dumazet <edumazet@google.com>,
+	syzbot <syzkaller@googlegroups.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 001/122] readdir: require opt-in for d_type flags
-Date: Wed,  4 Feb 2026 15:39:43 +0100
-Message-ID: <20260204143851.913403161@linuxfoundation.org>
+Subject: [PATCH 6.18 010/122] bonding: annotate data-races around slave->last_rx
+Date: Wed,  4 Feb 2026 15:39:52 +0100
+Message-ID: <20260204143852.236300788@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260204143851.857060534@linuxfoundation.org>
 References: <20260204143851.857060534@linuxfoundation.org>
@@ -52,90 +52,176 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Amir Goldstein <amir73il@gmail.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit c644bce62b9c6b441143a03c910f986109c47001 ]
+[ Upstream commit f6c3665b6dc53c3ab7d31b585446a953a74340ef ]
 
-Commit c31f91c6af96 ("fuse: don't allow signals to interrupt getdents
-copying") introduced the use of high bits in d_type as flags. However,
-overlayfs was not adapted to handle this change.
+slave->last_rx and slave->target_last_arp_rx[...] can be read and written
+locklessly. Add READ_ONCE() and WRITE_ONCE() annotations.
 
-In ovl_cache_entry_new(), the code checks if d_type == DT_CHR to
-determine if an entry might be a whiteout. When fuse is used as the
-lower layer and sets high bits in d_type, this comparison fails,
-causing whiteout files to not be recognized properly and resulting in
-incorrect overlayfs behavior.
+syzbot reported:
 
-Fix this by requiring callers of iterate_dir() to opt-in for getting
-flag bits in d_type outside of S_DT_MASK.
+BUG: KCSAN: data-race in bond_rcv_validate / bond_rcv_validate
 
-Fixes: c31f91c6af96 ("fuse: don't allow signals to interrupt getdents copying")
-Link: https://lore.kernel.org/all/20260107034551.439-1-luochunsheng@ustc.edu/
-Link: https://github.com/containerd/stargz-snapshotter/issues/2214
-Reported-by: Chunsheng Luo <luochunsheng@ustc.edu>
-Reviewed-by: Chunsheng Luo <luochunsheng@ustc.edu>
-Tested-by: Chunsheng Luo <luochunsheng@ustc.edu>
-Signed-off-by: Amir Goldstein <amir73il@gmail.com>
-Link: https://patch.msgid.link/20260108074522.3400998-1-amir73il@gmail.com
-Signed-off-by: Christian Brauner <brauner@kernel.org>
+write to 0xffff888149f0d428 of 8 bytes by interrupt on cpu 1:
+  bond_rcv_validate+0x202/0x7a0 drivers/net/bonding/bond_main.c:3335
+  bond_handle_frame+0xde/0x5e0 drivers/net/bonding/bond_main.c:1533
+  __netif_receive_skb_core+0x5b1/0x1950 net/core/dev.c:6039
+  __netif_receive_skb_one_core net/core/dev.c:6150 [inline]
+  __netif_receive_skb+0x59/0x270 net/core/dev.c:6265
+  netif_receive_skb_internal net/core/dev.c:6351 [inline]
+  netif_receive_skb+0x4b/0x2d0 net/core/dev.c:6410
+...
+
+write to 0xffff888149f0d428 of 8 bytes by interrupt on cpu 0:
+  bond_rcv_validate+0x202/0x7a0 drivers/net/bonding/bond_main.c:3335
+  bond_handle_frame+0xde/0x5e0 drivers/net/bonding/bond_main.c:1533
+  __netif_receive_skb_core+0x5b1/0x1950 net/core/dev.c:6039
+  __netif_receive_skb_one_core net/core/dev.c:6150 [inline]
+  __netif_receive_skb+0x59/0x270 net/core/dev.c:6265
+  netif_receive_skb_internal net/core/dev.c:6351 [inline]
+  netif_receive_skb+0x4b/0x2d0 net/core/dev.c:6410
+  br_netif_receive_skb net/bridge/br_input.c:30 [inline]
+  NF_HOOK include/linux/netfilter.h:318 [inline]
+...
+
+value changed: 0x0000000100005365 -> 0x0000000100005366
+
+Fixes: f5b2b966f032 ("[PATCH] bonding: Validate probe replies in ARP monitor")
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Reported-by: syzbot <syzkaller@googlegroups.com>
+Link: https://patch.msgid.link/20260122162914.2299312-1-edumazet@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/readdir.c       | 3 +++
- include/linux/fs.h | 6 +++++-
- 2 files changed, 8 insertions(+), 1 deletion(-)
+ drivers/net/bonding/bond_main.c    | 18 ++++++++++--------
+ drivers/net/bonding/bond_options.c |  8 ++++----
+ include/net/bonding.h              | 13 +++++++------
+ 3 files changed, 21 insertions(+), 18 deletions(-)
 
-diff --git a/fs/readdir.c b/fs/readdir.c
-index 7764b86389788..73707b6816e9a 100644
---- a/fs/readdir.c
-+++ b/fs/readdir.c
-@@ -316,6 +316,7 @@ SYSCALL_DEFINE3(getdents, unsigned int, fd,
- 	struct getdents_callback buf = {
- 		.ctx.actor = filldir,
- 		.ctx.count = count,
-+		.ctx.dt_flags_mask = FILLDIR_FLAG_NOINTR,
- 		.current_dir = dirent
- 	};
- 	int error;
-@@ -400,6 +401,7 @@ SYSCALL_DEFINE3(getdents64, unsigned int, fd,
- 	struct getdents_callback64 buf = {
- 		.ctx.actor = filldir64,
- 		.ctx.count = count,
-+		.ctx.dt_flags_mask = FILLDIR_FLAG_NOINTR,
- 		.current_dir = dirent
- 	};
- 	int error;
-@@ -569,6 +571,7 @@ COMPAT_SYSCALL_DEFINE3(getdents, unsigned int, fd,
- 	struct compat_getdents_callback buf = {
- 		.ctx.actor = compat_filldir,
- 		.ctx.count = count,
-+		.ctx.dt_flags_mask = FILLDIR_FLAG_NOINTR,
- 		.current_dir = dirent,
- 	};
- 	int error;
-diff --git a/include/linux/fs.h b/include/linux/fs.h
-index 9b2230fb2332f..3e965c77fa1b1 100644
---- a/include/linux/fs.h
-+++ b/include/linux/fs.h
-@@ -2207,6 +2207,8 @@ struct dir_context {
- 	 * INT_MAX  unlimited
- 	 */
- 	int count;
-+	/* @actor supports these flags in d_type high bits */
-+	unsigned int dt_flags_mask;
- };
- 
- /* If OR-ed with d_type, pending signals are not checked */
-@@ -3985,7 +3987,9 @@ static inline bool dir_emit(struct dir_context *ctx,
- 			    const char *name, int namelen,
- 			    u64 ino, unsigned type)
- {
--	return ctx->actor(ctx, name, namelen, ctx->pos, ino, type);
-+	unsigned int dt_mask = S_DT_MASK | ctx->dt_flags_mask;
-+
-+	return ctx->actor(ctx, name, namelen, ctx->pos, ino, type & dt_mask);
+diff --git a/drivers/net/bonding/bond_main.c b/drivers/net/bonding/bond_main.c
+index 595fda2444b1f..99adfffcca044 100644
+--- a/drivers/net/bonding/bond_main.c
++++ b/drivers/net/bonding/bond_main.c
+@@ -3138,8 +3138,8 @@ static void bond_validate_arp(struct bonding *bond, struct slave *slave, __be32
+ 			   __func__, &sip);
+ 		return;
+ 	}
+-	slave->last_rx = jiffies;
+-	slave->target_last_arp_rx[i] = jiffies;
++	WRITE_ONCE(slave->last_rx, jiffies);
++	WRITE_ONCE(slave->target_last_arp_rx[i], jiffies);
  }
- static inline bool dir_emit_dot(struct file *file, struct dir_context *ctx)
+ 
+ static int bond_arp_rcv(const struct sk_buff *skb, struct bonding *bond,
+@@ -3358,8 +3358,8 @@ static void bond_validate_na(struct bonding *bond, struct slave *slave,
+ 			  __func__, saddr);
+ 		return;
+ 	}
+-	slave->last_rx = jiffies;
+-	slave->target_last_arp_rx[i] = jiffies;
++	WRITE_ONCE(slave->last_rx, jiffies);
++	WRITE_ONCE(slave->target_last_arp_rx[i], jiffies);
+ }
+ 
+ static int bond_na_rcv(const struct sk_buff *skb, struct bonding *bond,
+@@ -3429,7 +3429,7 @@ int bond_rcv_validate(const struct sk_buff *skb, struct bonding *bond,
+ 		    (slave_do_arp_validate_only(bond) && is_ipv6) ||
+ #endif
+ 		    !slave_do_arp_validate_only(bond))
+-			slave->last_rx = jiffies;
++			WRITE_ONCE(slave->last_rx, jiffies);
+ 		return RX_HANDLER_ANOTHER;
+ 	} else if (is_arp) {
+ 		return bond_arp_rcv(skb, bond, slave);
+@@ -3497,7 +3497,7 @@ static void bond_loadbalance_arp_mon(struct bonding *bond)
+ 
+ 		if (slave->link != BOND_LINK_UP) {
+ 			if (bond_time_in_interval(bond, last_tx, 1) &&
+-			    bond_time_in_interval(bond, slave->last_rx, 1)) {
++			    bond_time_in_interval(bond, READ_ONCE(slave->last_rx), 1)) {
+ 
+ 				bond_propose_link_state(slave, BOND_LINK_UP);
+ 				slave_state_changed = 1;
+@@ -3521,8 +3521,10 @@ static void bond_loadbalance_arp_mon(struct bonding *bond)
+ 			 * when the source ip is 0, so don't take the link down
+ 			 * if we don't know our ip yet
+ 			 */
+-			if (!bond_time_in_interval(bond, last_tx, bond->params.missed_max) ||
+-			    !bond_time_in_interval(bond, slave->last_rx, bond->params.missed_max)) {
++			if (!bond_time_in_interval(bond, last_tx,
++						   bond->params.missed_max) ||
++			    !bond_time_in_interval(bond, READ_ONCE(slave->last_rx),
++						   bond->params.missed_max)) {
+ 
+ 				bond_propose_link_state(slave, BOND_LINK_DOWN);
+ 				slave_state_changed = 1;
+diff --git a/drivers/net/bonding/bond_options.c b/drivers/net/bonding/bond_options.c
+index 384499c869b8d..f1c6e9d8f6167 100644
+--- a/drivers/net/bonding/bond_options.c
++++ b/drivers/net/bonding/bond_options.c
+@@ -1152,7 +1152,7 @@ static void _bond_options_arp_ip_target_set(struct bonding *bond, int slot,
+ 
+ 	if (slot >= 0 && slot < BOND_MAX_ARP_TARGETS) {
+ 		bond_for_each_slave(bond, slave, iter)
+-			slave->target_last_arp_rx[slot] = last_rx;
++			WRITE_ONCE(slave->target_last_arp_rx[slot], last_rx);
+ 		targets[slot] = target;
+ 	}
+ }
+@@ -1221,8 +1221,8 @@ static int bond_option_arp_ip_target_rem(struct bonding *bond, __be32 target)
+ 	bond_for_each_slave(bond, slave, iter) {
+ 		targets_rx = slave->target_last_arp_rx;
+ 		for (i = ind; (i < BOND_MAX_ARP_TARGETS-1) && targets[i+1]; i++)
+-			targets_rx[i] = targets_rx[i+1];
+-		targets_rx[i] = 0;
++			WRITE_ONCE(targets_rx[i], READ_ONCE(targets_rx[i+1]));
++		WRITE_ONCE(targets_rx[i], 0);
+ 	}
+ 	for (i = ind; (i < BOND_MAX_ARP_TARGETS-1) && targets[i+1]; i++)
+ 		targets[i] = targets[i+1];
+@@ -1377,7 +1377,7 @@ static void _bond_options_ns_ip6_target_set(struct bonding *bond, int slot,
+ 
+ 	if (slot >= 0 && slot < BOND_MAX_NS_TARGETS) {
+ 		bond_for_each_slave(bond, slave, iter) {
+-			slave->target_last_arp_rx[slot] = last_rx;
++			WRITE_ONCE(slave->target_last_arp_rx[slot], last_rx);
+ 			slave_set_ns_maddr(bond, slave, target, &targets[slot]);
+ 		}
+ 		targets[slot] = *target;
+diff --git a/include/net/bonding.h b/include/net/bonding.h
+index 49edc7da05867..4620784035570 100644
+--- a/include/net/bonding.h
++++ b/include/net/bonding.h
+@@ -521,13 +521,14 @@ static inline int bond_is_ip6_target_ok(struct in6_addr *addr)
+ static inline unsigned long slave_oldest_target_arp_rx(struct bonding *bond,
+ 						       struct slave *slave)
  {
++	unsigned long tmp, ret = READ_ONCE(slave->target_last_arp_rx[0]);
+ 	int i = 1;
+-	unsigned long ret = slave->target_last_arp_rx[0];
+-
+-	for (; (i < BOND_MAX_ARP_TARGETS) && bond->params.arp_targets[i]; i++)
+-		if (time_before(slave->target_last_arp_rx[i], ret))
+-			ret = slave->target_last_arp_rx[i];
+ 
++	for (; (i < BOND_MAX_ARP_TARGETS) && bond->params.arp_targets[i]; i++) {
++		tmp = READ_ONCE(slave->target_last_arp_rx[i]);
++		if (time_before(tmp, ret))
++			ret = tmp;
++	}
+ 	return ret;
+ }
+ 
+@@ -537,7 +538,7 @@ static inline unsigned long slave_last_rx(struct bonding *bond,
+ 	if (bond->params.arp_all_targets == BOND_ARP_TARGETS_ALL)
+ 		return slave_oldest_target_arp_rx(bond, slave);
+ 
+-	return slave->last_rx;
++	return READ_ONCE(slave->last_rx);
+ }
+ 
+ static inline void slave_update_last_tx(struct slave *slave)
 -- 
 2.51.0
 
