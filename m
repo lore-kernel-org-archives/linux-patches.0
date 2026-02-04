@@ -1,39 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D53C285404;
-	Wed,  4 Feb 2026 15:02:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7183228853A;
+	Wed,  4 Feb 2026 15:02:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770217343; cv=none; b=LyotURzKeSGF0RVA65gFyElDZ2jAj9N0pkXLCCEaZn/t79/5ctsvpFZwtwjiIg304o5PN2CyPxCfJuGi/FU16P04RBmrsKe4IjkBvq0owYegenKqSyQJCRTBjVx7LOoZZpC4W6m6WEMGAx60wG4ORwUGcZkhTZrWh3rLiKn2eqY=
+	t=1770217346; cv=none; b=CTaC7mTbaX34gVoptfbHkxzLgwmBRqrJzcamPDzyIRHACce7r71W9TuVnTqRQ/a768UX8yEBWGXJIWVHp0aDIjI1+SUGFShAyPyrScX/jQPpm4PqsntMzdOzGBno/KHed+VktmIgEC1+ccmiIiRlDMB8RQILpWjBW2TYSbddRDQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770217343; c=relaxed/simple;
-	bh=CYhUmA9DwIvZsWpj3SSzaiAgjiIrEDgvrd7pQEzuWko=;
+	s=arc-20240116; t=1770217346; c=relaxed/simple;
+	bh=kEkPiNE+AixBrHdwwHh70fsQk+okmkuwAnzPb6v5yf0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=K6ebkw9HT9/ICCKn+viSKDCuURydBpdX7NhEvwklzBymg3fSKBFRYkyyCk03rP6k77IUkuduDS/4ph6OxAsk6Lqresps3NCqDAJplkWCrR4Mybll0aMduZeK22sACKcYXmhyLHVtj0aT3MzMOboKGw0czKVxUT7hG2Ok2ntLHbQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hDRRXJ+3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=FXNBuDoyIAYnfOgtLC/xmYB9lg41cKMvdlMilqM1Zo/iAxiz1U+IH+vTjHvRLTSyagYOVJ6F+UHAF6xduZOq8mmtAv/of06UzD2sKH+5eKLUq74r0UKf1ePPJX5l9y5LWj9m49FobVy8HBhISjpReg+W/7W8FkAT8uRmhqIdoig=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WyW+66lT; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hDRRXJ+3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8AACFC4CEF7;
-	Wed,  4 Feb 2026 15:02:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WyW+66lT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D8B39C19423;
+	Wed,  4 Feb 2026 15:02:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770217342;
-	bh=CYhUmA9DwIvZsWpj3SSzaiAgjiIrEDgvrd7pQEzuWko=;
+	s=korg; t=1770217346;
+	bh=kEkPiNE+AixBrHdwwHh70fsQk+okmkuwAnzPb6v5yf0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hDRRXJ+3HLO6d9GDEnHv6eF71jeyegnPmB12tJKf8ZfS82dWn+quPkTTG9yLkm6oQ
-	 wQYqjCaiFQhxRwnijH6l6eiXfs6+0+VrET3zDVGqfocblNTd1Tvgsv/t5mukSJOYly
-	 kQoSkryqc+14NQMMep5pyaTlu5Spa7AW1UKAjIYo=
+	b=WyW+66lTcLQO+W1SMNKFgWinIRioxOYFy70FgzKXsU1lzFP9PBhqcQDxqkCWrNbmB
+	 SF+qK3wfqSvP8v4gDqaucLJkRYn0V+phf4uZLWpztIfQxP+gs8DWaenIOSrZmv13df
+	 uFWEkuFKOzuOUGN1csIa1zfnA873RG6992CQfjys=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nilay Shroff <nilay@linux.ibm.com>,
-	Christoph Hellwig <hch@lst.de>,
-	Keith Busch <kbusch@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 168/206] nvme-pci: do not directly handle subsys reset fallout
-Date: Wed,  4 Feb 2026 15:39:59 +0100
-Message-ID: <20260204143904.258847414@linuxfoundation.org>
+	Pimyn Girgis <pimyn@google.com>,
+	Alexander Potapenko <glider@google.com>,
+	Dmitry Vyukov <dvyukov@google.com>,
+	Marco Elver <elver@google.com>,
+	Ernesto Martnez Garca <ernesto.martinezgarcia@tugraz.at>,
+	Kees Cook <kees@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 5.15 195/206] mm/kfence: randomize the freelist on initialization
+Date: Wed,  4 Feb 2026 15:40:26 +0100
+Message-ID: <20260204143905.245830999@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260204143858.193781818@linuxfoundation.org>
 References: <20260204143858.193781818@linuxfoundation.org>
@@ -52,202 +55,86 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Keith Busch <kbusch@kernel.org>
+From: Pimyn Girgis <pimyn@google.com>
 
-[ Upstream commit 210b1f6576e8b367907e7ff51ef425062e1468e4 ]
+commit 870ff19251bf3910dda7a7245da826924045fedd upstream.
 
-Scheduling reset_work after a nvme subsystem reset is expected to fail
-on pcie, but this also prevents potential handling the platform's pcie
-services may provide that might successfully recovering the link without
-re-enumeration. Such examples include AER, DPC, and power's EEH.
+Randomize the KFENCE freelist during pool initialization to make
+allocation patterns less predictable.  This is achieved by shuffling the
+order in which metadata objects are added to the freelist using
+get_random_u32_below().
 
-Provide a pci specific operation that safely initiates a subsystem
-reset, and instead of scheduling reset work, read back the status
-register to trigger a pcie read error.
+Additionally, ensure the error path correctly calculates the address range
+to be reset if initialization fails, as the address increment logic has
+been moved to a separate loop.
 
-Since this only affects pci, the other fabrics drivers subscribe to a
-generic nvmf subsystem reset that is exactly the same as before. The
-loop fabric doesn't use it because nvmet doesn't support setting that
-property anyway.
-
-And since we're using the magic NSSR value in two places now, provide a
-symbolic define for it.
-
-Reported-by: Nilay Shroff <nilay@linux.ibm.com>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Signed-off-by: Keith Busch <kbusch@kernel.org>
-Stable-dep-of: 0edb475ac0a7 ("nvme: fix PCIe subsystem reset controller state transition")
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Link: https://lkml.kernel.org/r/20260120161510.3289089-1-pimyn@google.com
+Fixes: 0ce20dd84089 ("mm: add Kernel Electric-Fence infrastructure")
+Signed-off-by: Pimyn Girgis <pimyn@google.com>
+Reviewed-by: Alexander Potapenko <glider@google.com>
+Cc: Dmitry Vyukov <dvyukov@google.com>
+Cc: Marco Elver <elver@google.com>
+Cc: Ernesto Martnez Garca <ernesto.martinezgarcia@tugraz.at>
+Cc: Greg KH <gregkh@linuxfoundation.org>
+Cc: Kees Cook <kees@kernel.org>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Pimyn Girgis <pimyn@google.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/nvme/host/fabrics.c |   15 +++++++++++++++
- drivers/nvme/host/fabrics.h |    1 +
- drivers/nvme/host/fc.c      |    1 +
- drivers/nvme/host/nvme.h    |   14 +++-----------
- drivers/nvme/host/pci.c     |   36 ++++++++++++++++++++++++++++++++++++
- drivers/nvme/host/rdma.c    |    1 +
- drivers/nvme/host/tcp.c     |    1 +
- include/linux/nvme.h        |    3 +++
- 8 files changed, 61 insertions(+), 11 deletions(-)
+ mm/kfence/core.c |   24 ++++++++++++++++++++----
+ 1 file changed, 20 insertions(+), 4 deletions(-)
 
---- a/drivers/nvme/host/fabrics.c
-+++ b/drivers/nvme/host/fabrics.c
-@@ -254,6 +254,21 @@ int nvmf_reg_write32(struct nvme_ctrl *c
- }
- EXPORT_SYMBOL_GPL(nvmf_reg_write32);
- 
-+int nvmf_subsystem_reset(struct nvme_ctrl *ctrl)
-+{
-+	int ret;
-+
-+	if (!nvme_wait_reset(ctrl))
-+		return -EBUSY;
-+
-+	ret = ctrl->ops->reg_write32(ctrl, NVME_REG_NSSR, NVME_SUBSYS_RESET);
-+	if (ret)
-+		return ret;
-+
-+	return nvme_try_sched_reset(ctrl);
-+}
-+EXPORT_SYMBOL_GPL(nvmf_subsystem_reset);
-+
- /**
-  * nvmf_log_connect_error() - Error-parsing-diagnostic print out function for
-  * 				connect() errors.
---- a/drivers/nvme/host/fabrics.h
-+++ b/drivers/nvme/host/fabrics.h
-@@ -182,6 +182,7 @@ nvmf_ctlr_matches_baseopts(struct nvme_c
- int nvmf_reg_read32(struct nvme_ctrl *ctrl, u32 off, u32 *val);
- int nvmf_reg_read64(struct nvme_ctrl *ctrl, u32 off, u64 *val);
- int nvmf_reg_write32(struct nvme_ctrl *ctrl, u32 off, u32 val);
-+int nvmf_subsystem_reset(struct nvme_ctrl *ctrl);
- int nvmf_connect_admin_queue(struct nvme_ctrl *ctrl);
- int nvmf_connect_io_queue(struct nvme_ctrl *ctrl, u16 qid);
- int nvmf_register_transport(struct nvmf_transport_ops *ops);
---- a/drivers/nvme/host/fc.c
-+++ b/drivers/nvme/host/fc.c
-@@ -3361,6 +3361,7 @@ static const struct nvme_ctrl_ops nvme_f
- 	.reg_read32		= nvmf_reg_read32,
- 	.reg_read64		= nvmf_reg_read64,
- 	.reg_write32		= nvmf_reg_write32,
-+	.subsystem_reset	= nvmf_subsystem_reset,
- 	.free_ctrl		= nvme_fc_free_ctrl,
- 	.submit_async_event	= nvme_fc_submit_async_event,
- 	.delete_ctrl		= nvme_fc_delete_ctrl,
---- a/drivers/nvme/host/nvme.h
-+++ b/drivers/nvme/host/nvme.h
-@@ -514,6 +514,7 @@ struct nvme_ctrl_ops {
- 	int (*reg_read64)(struct nvme_ctrl *ctrl, u32 off, u64 *val);
- 	void (*free_ctrl)(struct nvme_ctrl *ctrl);
- 	void (*submit_async_event)(struct nvme_ctrl *ctrl);
-+	int (*subsystem_reset)(struct nvme_ctrl *ctrl);
- 	void (*delete_ctrl)(struct nvme_ctrl *ctrl);
- 	void (*stop_ctrl)(struct nvme_ctrl *ctrl);
- 	int (*get_address)(struct nvme_ctrl *ctrl, char *buf, int size);
-@@ -583,18 +584,9 @@ int nvme_try_sched_reset(struct nvme_ctr
- 
- static inline int nvme_reset_subsystem(struct nvme_ctrl *ctrl)
+--- a/mm/kfence/core.c
++++ b/mm/kfence/core.c
+@@ -520,7 +520,7 @@ static bool __init kfence_init_pool(void
  {
--	int ret;
--
--	if (!ctrl->subsystem)
-+	if (!ctrl->subsystem || !ctrl->ops->subsystem_reset)
- 		return -ENOTTY;
--	if (!nvme_wait_reset(ctrl))
--		return -EBUSY;
--
--	ret = ctrl->ops->reg_write32(ctrl, NVME_REG_NSSR, 0x4E564D65);
--	if (ret)
--		return ret;
--
--	return nvme_try_sched_reset(ctrl);
-+	return ctrl->ops->subsystem_reset(ctrl);
- }
+ 	unsigned long addr = (unsigned long)__kfence_pool;
+ 	struct page *pages;
+-	int i;
++	int i, rand;
+ 	char *p;
  
- /*
---- a/drivers/nvme/host/pci.c
-+++ b/drivers/nvme/host/pci.c
-@@ -1121,6 +1121,41 @@ static void nvme_pci_submit_async_event(
- 	spin_unlock(&nvmeq->sq_lock);
- }
+ 	if (!__kfence_pool)
+@@ -576,13 +576,28 @@ static bool __init kfence_init_pool(void
+ 		INIT_LIST_HEAD(&meta->list);
+ 		raw_spin_lock_init(&meta->lock);
+ 		meta->state = KFENCE_OBJECT_UNUSED;
+-		meta->addr = addr; /* Initialize for validation in metadata_to_pageaddr(). */
+-		list_add_tail(&meta->list, &kfence_freelist);
++		/* Use addr to randomize the freelist. */
++		meta->addr = i;
  
-+static int nvme_pci_subsystem_reset(struct nvme_ctrl *ctrl)
-+{
-+	struct nvme_dev *dev = to_nvme_dev(ctrl);
-+	int ret = 0;
-+
-+	/*
-+	 * Taking the shutdown_lock ensures the BAR mapping is not being
-+	 * altered by reset_work. Holding this lock before the RESETTING state
-+	 * change, if successful, also ensures nvme_remove won't be able to
-+	 * proceed to iounmap until we're done.
-+	 */
-+	mutex_lock(&dev->shutdown_lock);
-+	if (!dev->bar_mapped_size) {
-+		ret = -ENODEV;
-+		goto unlock;
+ 		/* Protect the right redzone. */
+-		if (unlikely(!kfence_protect(addr + PAGE_SIZE)))
++		if (unlikely(!kfence_protect(addr + 2 * i * PAGE_SIZE + PAGE_SIZE)))
+ 			goto err;
 +	}
 +
-+	if (!nvme_change_ctrl_state(ctrl, NVME_CTRL_RESETTING)) {
-+		ret = -EBUSY;
-+		goto unlock;
++	for (i = CONFIG_KFENCE_NUM_OBJECTS; i > 0; i--) {
++		rand = get_random_u32() % i;
++		swap(kfence_metadata[i - 1].addr, kfence_metadata[rand].addr);
 +	}
 +
-+	writel(NVME_SUBSYS_RESET, dev->bar + NVME_REG_NSSR);
-+	nvme_change_ctrl_state(ctrl, NVME_CTRL_LIVE);
++	for (i = 0; i < CONFIG_KFENCE_NUM_OBJECTS; i++) {
++		struct kfence_metadata *meta_1 = &kfence_metadata[i];
++		struct kfence_metadata *meta_2 = &kfence_metadata[meta_1->addr];
 +
-+	/*
-+	 * Read controller status to flush the previous write and trigger a
-+	 * pcie read error.
-+	 */
-+	readl(dev->bar + NVME_REG_CSTS);
-+unlock:
-+	mutex_unlock(&dev->shutdown_lock);
-+	return ret;
-+}
-+
- static int adapter_delete_queue(struct nvme_dev *dev, u8 opcode, u16 id)
- {
- 	struct nvme_command c = { };
-@@ -2905,6 +2940,7 @@ static const struct nvme_ctrl_ops nvme_p
- 	.reg_read64		= nvme_pci_reg_read64,
- 	.free_ctrl		= nvme_pci_free_ctrl,
- 	.submit_async_event	= nvme_pci_submit_async_event,
-+	.subsystem_reset	= nvme_pci_subsystem_reset,
- 	.get_address		= nvme_pci_get_address,
- };
++		list_add_tail(&meta_2->list, &kfence_freelist);
++	}
  
---- a/drivers/nvme/host/rdma.c
-+++ b/drivers/nvme/host/rdma.c
-@@ -2287,6 +2287,7 @@ static const struct nvme_ctrl_ops nvme_r
- 	.reg_read32		= nvmf_reg_read32,
- 	.reg_read64		= nvmf_reg_read64,
- 	.reg_write32		= nvmf_reg_write32,
-+	.subsystem_reset	= nvmf_subsystem_reset,
- 	.free_ctrl		= nvme_rdma_free_ctrl,
- 	.submit_async_event	= nvme_rdma_submit_async_event,
- 	.delete_ctrl		= nvme_rdma_delete_ctrl,
---- a/drivers/nvme/host/tcp.c
-+++ b/drivers/nvme/host/tcp.c
-@@ -2559,6 +2559,7 @@ static const struct nvme_ctrl_ops nvme_t
- 	.reg_read32		= nvmf_reg_read32,
- 	.reg_read64		= nvmf_reg_read64,
- 	.reg_write32		= nvmf_reg_write32,
-+	.subsystem_reset	= nvmf_subsystem_reset,
- 	.free_ctrl		= nvme_tcp_free_ctrl,
- 	.submit_async_event	= nvme_tcp_submit_async_event,
- 	.delete_ctrl		= nvme_tcp_delete_ctrl,
---- a/include/linux/nvme.h
-+++ b/include/linux/nvme.h
-@@ -27,6 +27,9 @@
++	for (i = 0; i < CONFIG_KFENCE_NUM_OBJECTS; i++) {
++		kfence_metadata[i].addr = addr;
+ 		addr += 2 * PAGE_SIZE;
+ 	}
  
- #define NVME_NSID_ALL		0xffffffff
+@@ -597,6 +612,7 @@ static bool __init kfence_init_pool(void
+ 	return true;
  
-+/* Special NSSR value, 'NVMe' */
-+#define NVME_SUBSYS_RESET	0x4E564D65
-+
- enum nvme_subsys_type {
- 	NVME_NQN_DISC	= 1,		/* Discovery type target subsystem */
- 	NVME_NQN_NVME	= 2,		/* NVME type target subsystem */
+ err:
++	addr += 2 * i * PAGE_SIZE;
+ 	/*
+ 	 * Only release unprotected pages, and do not try to go back and change
+ 	 * page attributes due to risk of failing to do so as well. If changing
 
 
