@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D2A519E96D;
-	Wed,  4 Feb 2026 15:34:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C9B819E96D;
+	Wed,  4 Feb 2026 15:34:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770219293; cv=none; b=NHs4k0qq39TV949CWKgyYBL96FXLulf1/B0YciigjLr01dnS44fHr5TGk3HvO/YxJwvDvJLoh/H/UcCpo8NYdbU3F09cAters26rB6Ps6qtz7euz1FMNjaDNURHJ+f8XcJ/GYrvng6t3xqYpyPW6MU8CJhnEtVRyzzmrYhrIdls=
+	t=1770219296; cv=none; b=mQ3CDLoj87WtABEtNNPAo+SyR+jZR/hCYlwVSWKWLudhAdvVoTMkkTcddX13VEYikUNXJ13Goek41HxGPLS30MMoxHKWyilGMyd6I69pKDfSzoAGSJxL6E1AOgwbcinVNcSE2vq9SuUKiAJAedtU8WAWjzLvz4ahuLBUZo2zAe4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770219293; c=relaxed/simple;
-	bh=5KpP/PhRPy8Qy/5UB7otTC/JHlziHkIwWvkN0uNBWP0=;
+	s=arc-20240116; t=1770219296; c=relaxed/simple;
+	bh=nL3NUhHf2dSsL5qnHcF/PqAYj+cN2gxjmziNHXb9WP4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=o/6NAEZfpI46ObCItopwbIUs0dY8xmPExM5dqIIIO5lbv8HXsY/oKh9RtKDBy6qU+TDoLOaK062AbmUdXaJIcvj+Lufg8+tMwA2mk5Kdk1skZpIUFGxk8+804KYHPAzdaecAC1/02jYq6zHrOwmC2EZDhDlKohVXQgGY5hRvzPg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=i98tz17q; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Ump/AhGEdATPvYrYPpJYR/+ZoMsbpkJPuVEXoE6ooCTDNJpzm9NiaHdKtM/PtyFS09C1c7BTqkzD9GyjbR7qUDnIf/9dapjHUbhTCVTVCzUL32ff6iFD6qrniscOpjOx58mdQR09fX3tnezBYL6PasVoA0ardBzbNgiy5Qa30EI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iwZmT4YQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="i98tz17q"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 99ECBC4CEF7;
-	Wed,  4 Feb 2026 15:34:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iwZmT4YQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E0441C4CEF7;
+	Wed,  4 Feb 2026 15:34:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770219293;
-	bh=5KpP/PhRPy8Qy/5UB7otTC/JHlziHkIwWvkN0uNBWP0=;
+	s=korg; t=1770219296;
+	bh=nL3NUhHf2dSsL5qnHcF/PqAYj+cN2gxjmziNHXb9WP4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=i98tz17qu2uwcyDwPNntrtlysrP1FV0oS0fo8iu6eyzRAJuwZfntrD7D92iMG6PgT
-	 wF0xvDpI2DcNwiD0wrfd+pnY/m81yLQJJk/HHG1ri1qXxZ190ixgRu5DPWHPwKfSRY
-	 znzAwEvzs8Ow11XfOcxMkkSfNrKVVEXCa22tIvfA=
+	b=iwZmT4YQDX7Pqx6qHajB94h2iXYKqEywy+FzDFvHT3H9K678X8q1iUnmb+UwvMj0h
+	 8yEhx3rsOMAICUq8Jq4OZ1Kgdy5BNZfeCxybEFfrIEbG0LigVaWIQx7RGHUc5F6k6F
+	 Kqc2dKKKgb4lFN11SO2/jZEB+KGkOH2cZ9OfyZbE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	SeungJong Ha <engineer.jjhama@gmail.com>,
 	Tamir Duberstein <tamird@kernel.org>,
-	Gary Guo <gary@garyguo.net>,
 	Jesung Yang <y.j3ms.n@gmail.com>,
+	Benno Lossin <lossin@kernel.org>,
 	Miguel Ojeda <ojeda@kernel.org>
-Subject: [PATCH 6.18 098/122] scripts: generate_rust_analyzer: fix resolution of #[pin_data] macros
-Date: Wed,  4 Feb 2026 15:41:20 +0100
-Message-ID: <20260204143855.375498698@linuxfoundation.org>
+Subject: [PATCH 6.18 099/122] scripts: generate_rust_analyzer: Add compiler_builtins -> core dep
+Date: Wed,  4 Feb 2026 15:41:21 +0100
+Message-ID: <20260204143855.411224449@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260204143851.857060534@linuxfoundation.org>
 References: <20260204143851.857060534@linuxfoundation.org>
@@ -53,25 +52,21 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: SeungJong Ha <engineer.jjhama@gmail.com>
+From: Tamir Duberstein <tamird@kernel.org>
 
-commit e440bc5c190cd0e5f148b2892aeb1f4bbbf54507 upstream.
+commit 5157c328edb35bac05ce77da473c3209d20e0bbb upstream.
 
-Currently, rust-analyzer fails to properly resolve structs annotated with
-`#[pin_data]`. This prevents IDE features like "Go to Definition" from
-working correctly for those structs.
+Add a dependency edge from `compiler_builtins` to `core` to
+`scripts/generate_rust_analyzer.py` to match `rust/Makefile`. This has
+been incorrect since commit 8c4555ccc55c ("scripts: add
+`generate_rust_analyzer.py`")
 
-Add the missing configuration to `generate_rust_analyzer.py` to ensure
-the `pin-init` crate macros are handled correctly.
-
-Signed-off-by: SeungJong Ha <engineer.jjhama@gmail.com>
-Fixes: d7659acca7a3 ("rust: add pin-init crate build infrastructure")
-Cc: stable@vger.kernel.org
-Tested-by: Tamir Duberstein <tamird@kernel.org>
-Acked-by: Tamir Duberstein <tamird@kernel.org>
-Acked-by: Gary Guo <gary@garyguo.net>
+Signed-off-by: Tamir Duberstein <tamird@kernel.org>
 Reviewed-by: Jesung Yang <y.j3ms.n@gmail.com>
-Link: https://patch.msgid.link/20260123-fix-pin-init-crate-dependecies-v2-1-bb1c2500e54c@gmail.com
+Acked-by: Benno Lossin <lossin@kernel.org>
+Fixes: 8c4555ccc55c ("scripts: add `generate_rust_analyzer.py`")
+Cc: stable@vger.kernel.org
+Link: https://patch.msgid.link/20250723-rust-analyzer-pin-init-v1-1-3c6956173c78@kernel.org
 Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
@@ -80,14 +75,14 @@ Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 
 --- a/scripts/generate_rust_analyzer.py
 +++ b/scripts/generate_rust_analyzer.py
-@@ -192,7 +192,7 @@ def generate_crates(srctree, objtree, sy
-             append_crate(
-                 name,
-                 path,
--                ["core", "kernel"],
-+                ["core", "kernel", "pin_init"],
-                 cfg=cfg,
-             )
+@@ -106,7 +106,7 @@ def generate_crates(srctree, objtree, sy
+     append_crate(
+         "compiler_builtins",
+         srctree / "rust" / "compiler_builtins.rs",
+-        [],
++        ["core"],
+     )
  
+     append_crate(
 
 
