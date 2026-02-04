@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9CFFA41C2F7;
-	Wed,  4 Feb 2026 15:15:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA3A72C21CB;
+	Wed,  4 Feb 2026 15:16:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770218159; cv=none; b=exjU2umjyvZfaUZK2BVSFN6gMCAWP0aR+jIlKJC+9cP7VYEH8btcjOP/FBwaRaHoHjHV49n9JflAxV5npnnv5GIsqN/D1Y6vba4tcVSx3J0RdN/uandhlf98w9SREyCrUTxyUjt+8ndRmuThJTXT+Qko153zZlK0PnnY5ZsXTSY=
+	t=1770218163; cv=none; b=nckaIzMGv81KAl+/aChlH2udArZek+fuQQ/j5kT/OlWsJuCsGVqCnBTlBGJZcI8Rmy7doJQ8vzoDpFli+cRXpHBTGVhlyrsSCbZt1h2w+E5vgkU3p3rZK9PGg9KspN6VS9wU/QeZFw3gbAFoaT/2nQrdKI5IGBFZGJwz7E2vW+A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770218159; c=relaxed/simple;
-	bh=tZymRsF8Xu3mnFhRUwRDeGK2iXbbyKQohVG+ymEHjTs=;
+	s=arc-20240116; t=1770218163; c=relaxed/simple;
+	bh=sqxE/YzKzKju44qm8b3p+AxWQyp228zF1IYYktldEzA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SQbDsV3PhLES1n4CCvGZbOrDRw6bwXZjz2lmT4nhGOp/5J3TQg/+f69TK7D3HdP9idPiTHvOga+1VchAFk3pV0/+q+ncnDM8DYYFP3jtWbNZM10ivEJlcmVelQpLk4RrVuBT/R7xGHJQ7xMHc8KqSoM94Ous15hzTUkC/XcC33Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LNRVCsdF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=D8r05ekcmr3AXGK+w8pnNVubV4YHwGMqGNdnl7nl5OCQrKM+sjLBe9Irx/s7K06j7U6EDq5SuRVZi62ssUdQfflJBMbVlZC/v/MUFWmgMod8lxJI18GlsJ6+5kvtH7/nIXTnMbP90lwi0E1mywj5d3PIMtkAqmHcKKadAUr9n50=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mbFL0cvN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LNRVCsdF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0EE2FC4CEF7;
-	Wed,  4 Feb 2026 15:15:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mbFL0cvN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4FF7CC4CEF7;
+	Wed,  4 Feb 2026 15:16:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770218159;
-	bh=tZymRsF8Xu3mnFhRUwRDeGK2iXbbyKQohVG+ymEHjTs=;
+	s=korg; t=1770218162;
+	bh=sqxE/YzKzKju44qm8b3p+AxWQyp228zF1IYYktldEzA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LNRVCsdFvPsyg93j66My85ARIMWNXcxfOMMhFfdNMsXeYXtp87ValR8jyaBIP9ORJ
-	 yoZdhrZV1eT7qQ9YPt5m70N/G1qgd9MaRG1QPZh0RaRoLwnaD/GMMhJlkVbjGPSIY7
-	 UkBW185LXDsOcPXZ/69BCCHy6aGXp15Nhf2+dch8=
+	b=mbFL0cvNIy+CxhRHsciLqV+UzP3/Ym5DTZvjMoEJqTbJZuBRMNVTYwi/9XFXSs+Pv
+	 w7TViEBncPXPV0tB6Yp8t9XKbNtByfEH2S1zo6KnkILT3jndvJ7D3gWTy5iZNDtgyX
+	 bLK+eCbZoc+Hq3fIYqId1qPubZyrq4oIdVIqAXpI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Brian Foster <bfoster@redhat.com>,
-	"Darrick J. Wong" <djwong@kernel.org>,
-	Carlos Maiolino <cem@kernel.org>,
+	Ming Qian <ming.qian@oss.nxp.com>,
+	Benjamin Gaignard <benjamin.gaignard@collabora.com>,
+	Peng Fan <peng.fan@nxp.com>,
+	Frank Li <Frank.Li@nxp.com>,
+	Ulf Hansson <ulf.hansson@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 228/280] xfs: set max_agbno to allow sparse alloc of last full inode chunk
-Date: Wed,  4 Feb 2026 15:40:02 +0100
-Message-ID: <20260204143917.822325603@linuxfoundation.org>
+Subject: [PATCH 6.1 229/280] pmdomain: imx8m-blk-ctrl: Remove separate rst and clk mask for 8mq vpu
+Date: Wed,  4 Feb 2026 15:40:03 +0100
+Message-ID: <20260204143917.859861173@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260204143909.614719725@linuxfoundation.org>
 References: <20260204143909.614719725@linuxfoundation.org>
@@ -52,82 +54,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Brian Foster <bfoster@redhat.com>
+From: Ming Qian <ming.qian@oss.nxp.com>
 
-[ Upstream commit c360004c0160dbe345870f59f24595519008926f ]
+[ Upstream commit 3de49966499634454fd59e0e6fecd50baab7febd ]
 
-Sparse inode cluster allocation sets min/max agbno values to avoid
-allocating an inode cluster that might map to an invalid inode
-chunk. For example, we can't have an inode record mapped to agbno 0
-or that extends past the end of a runt AG of misaligned size.
+For i.MX8MQ platform, the ADB in the VPUMIX domain has no separate reset
+and clock enable bits, but is ungated and reset together with the VPUs.
+So we can't reset G1 or G2 separately, it may led to the system hang.
+Remove rst_mask and clk_mask of imx8mq_vpu_blk_ctl_domain_data.
+Let imx8mq_vpu_power_notifier() do really vpu reset.
 
-The initial calculation of max_agbno is unnecessarily conservative,
-however. This has triggered a corner case allocation failure where a
-small runt AG (i.e. 2063 blocks) is mostly full save for an extent
-to the EOFS boundary: [2050,13]. max_agbno is set to 2048 in this
-case, which happens to be the offset of the last possible valid
-inode chunk in the AG. In practice, we should be able to allocate
-the 4-block cluster at agbno 2052 to map to the parent inode record
-at agbno 2048, but the max_agbno value precludes it.
-
-Note that this can result in filesystem shutdown via dirty trans
-cancel on stable kernels prior to commit 9eb775968b68 ("xfs: walk
-all AGs if TRYLOCK passed to xfs_alloc_vextent_iterate_ags") because
-the tail AG selection by the allocator sets t_highest_agno on the
-transaction. If the inode allocator spins around and finds an inode
-chunk with free inodes in an earlier AG, the subsequent dir name
-creation path may still fail to allocate due to the AG restriction
-and cancel.
-
-To avoid this problem, update the max_agbno calculation to the agbno
-prior to the last chunk aligned agbno in the AG. This is not
-necessarily the last valid allocation target for a sparse chunk, but
-since inode chunks (i.e. records) are chunk aligned and sparse
-allocs are cluster sized/aligned, this allows the sb_spino_align
-alignment restriction to take over and round down the max effective
-agbno to within the last valid inode chunk in the AG.
-
-Note that even though the allocator improvements in the
-aforementioned commit seem to avoid this particular dirty trans
-cancel situation, the max_agbno logic improvement still applies as
-we should be able to allocate from an AG that has been appropriately
-selected. The more important target for this patch however are
-older/stable kernels prior to this allocator rework/improvement.
-
-Cc: stable@vger.kernel.org # v4.2
-Fixes: 56d1115c9bc7 ("xfs: allocate sparse inode chunks on full chunk allocation failure")
-Signed-off-by: Brian Foster <bfoster@redhat.com>
-Reviewed-by: Darrick J. Wong <djwong@kernel.org>
-Signed-off-by: Carlos Maiolino <cem@kernel.org>
-[ xfs_ag_block_count(args.mp, pag_agno(pag)) => args.mp->m_sb.sb_agblocks ]
+Fixes: 608d7c325e85 ("soc: imx: imx8m-blk-ctrl: add i.MX8MQ VPU blk-ctrl")
+Signed-off-by: Ming Qian <ming.qian@oss.nxp.com>
+Reviewed-by: Benjamin Gaignard <benjamin.gaignard@collabora.com>
+Reviewed-by: Peng Fan <peng.fan@nxp.com>
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Cc: stable@vger.kernel.org
+Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/xfs/libxfs/xfs_ialloc.c |   11 ++++++-----
- 1 file changed, 6 insertions(+), 5 deletions(-)
+ drivers/soc/imx/imx8m-blk-ctrl.c |   11 +++++++----
+ 1 file changed, 7 insertions(+), 4 deletions(-)
 
---- a/fs/xfs/libxfs/xfs_ialloc.c
-+++ b/fs/xfs/libxfs/xfs_ialloc.c
-@@ -772,14 +772,15 @@ sparse_alloc:
- 		 * invalid inode records, such as records that start at agbno 0
- 		 * or extend beyond the AG.
- 		 *
--		 * Set min agbno to the first aligned, non-zero agbno and max to
--		 * the last aligned agbno that is at least one full chunk from
--		 * the end of the AG.
-+		 * Set min agbno to the first chunk aligned, non-zero agbno and
-+		 * max to one less than the last chunk aligned agbno from the
-+		 * end of the AG. We subtract 1 from max so that the cluster
-+		 * allocation alignment takes over and allows allocation within
-+		 * the last full inode chunk in the AG.
- 		 */
- 		args.min_agbno = args.mp->m_sb.sb_inoalignmt;
- 		args.max_agbno = round_down(args.mp->m_sb.sb_agblocks,
--					    args.mp->m_sb.sb_inoalignmt) -
--				 igeo->ialloc_blks;
-+					    args.mp->m_sb.sb_inoalignmt) - 1;
+--- a/drivers/soc/imx/imx8m-blk-ctrl.c
++++ b/drivers/soc/imx/imx8m-blk-ctrl.c
+@@ -810,22 +810,25 @@ static int imx8mq_vpu_power_notifier(str
+ 	return NOTIFY_OK;
+ }
  
- 		error = xfs_alloc_vextent(&args);
- 		if (error)
++/*
++ * For i.MX8MQ, the ADB in the VPUMIX domain has no separate reset and clock
++ * enable bits, but is ungated and reset together with the VPUs.
++ * Resetting G1 or G2 separately may led to system hang.
++ * Remove the rst_mask and clk_mask from the domain data of G1 and G2,
++ * Let imx8mq_vpu_power_notifier() do really vpu reset.
++ */
+ static const struct imx8m_blk_ctrl_domain_data imx8mq_vpu_blk_ctl_domain_data[] = {
+ 	[IMX8MQ_VPUBLK_PD_G1] = {
+ 		.name = "vpublk-g1",
+ 		.clk_names = (const char *[]){ "g1", },
+ 		.num_clks = 1,
+ 		.gpc_name = "g1",
+-		.rst_mask = BIT(1),
+-		.clk_mask = BIT(1),
+ 	},
+ 	[IMX8MQ_VPUBLK_PD_G2] = {
+ 		.name = "vpublk-g2",
+ 		.clk_names = (const char *[]){ "g2", },
+ 		.num_clks = 1,
+ 		.gpc_name = "g2",
+-		.rst_mask = BIT(0),
+-		.clk_mask = BIT(0),
+ 	},
+ };
+ 
 
 
