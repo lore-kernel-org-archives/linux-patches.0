@@ -1,40 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B78E2D8DA8;
-	Wed,  4 Feb 2026 15:07:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80DA52D9484;
+	Wed,  4 Feb 2026 15:07:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770217657; cv=none; b=Zfz0qn7acXNTeviIEsLZXazToDts2ANjWSfnOL4P+LK957bVAsFuFt602tBAjUsLhLD0b8MncdupnvtoU2kB95xe8Z1aVjmkIzF7OL3KUzOt9jQk1SSQ1M4PWsU550WNTpH0DRckWpssh3V5LSTHVWIrN61FsxsisMYXoEfwmL0=
+	t=1770217660; cv=none; b=prRnMaT/39Klxh7YRI3Iuu0rNuZrpHEVNZ/oRiBnYwRX3EfINWUVg8jWR9Uh0lXFFrp84NL3QM1k8uydN158JO+WBsYKXusBC69ZhHfAwm7oaooNWBVEoOz4J8Qf+o+wH4Nu4TJDTunVzazrEQUe+dRtiuGANvtckDy27Y4Mxeo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770217657; c=relaxed/simple;
-	bh=8B78SKN4KJPZ+AVLf7/OOEgIB4Fr2v1W6tj5NUkw7M8=;
+	s=arc-20240116; t=1770217660; c=relaxed/simple;
+	bh=b+Jdz5qOZ0IkEsC07ytgthlTA/mpprX2bNRnyKcvpaU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Dd08jQIAVNUwW9KN/eSGxWDap8poAs8OBtKqrvqNuDFMEnZoNafmXtWEsILaYgRoAt+7q2OowlWZMk+M+/mO4Voa1qPVgwIr6my6zIIPtaatRL08FL8KT76sVTGnYs0Zp+jH+xoV6zUCI92YCPRrmQOvLhABBmmyEdtFByATxHA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=D1Ld9rnq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=nruuWD80BkgVI1ZxJKTlK+PsiT9a0IYKc6AK89In9hBdQn04aIR56uRBB1poYb3O8yoU1kOeUMpo++hQKkOmQfy37ud4BEe0DXjY5LTlQS6+ey701VwwheSPw+gIlQdwmrYI8mdI1K1cN6twbzc0UGCGMTWVrikpKgzaWcqX2h4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KdvvtvuT; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="D1Ld9rnq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A4FDAC4CEF7;
-	Wed,  4 Feb 2026 15:07:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KdvvtvuT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C4C4C4CEF7;
+	Wed,  4 Feb 2026 15:07:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770217657;
-	bh=8B78SKN4KJPZ+AVLf7/OOEgIB4Fr2v1W6tj5NUkw7M8=;
+	s=korg; t=1770217660;
+	bh=b+Jdz5qOZ0IkEsC07ytgthlTA/mpprX2bNRnyKcvpaU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=D1Ld9rnqBrTSxrF9hxbqU9+V5zQIOGPm3paC8DWL/DEesp6+5TUkD/M8NWVVgo2bV
-	 vd9KWfZELn5BW/yxWJ58s/96D5Y2GriLkvitwmKjnnU3pjDijC7qoR5K6knh+ygKCD
-	 n5g54znQW5QD3/fNyAxmhwd5xJPS3GuG5optQUR4=
+	b=KdvvtvuTZFUA7RrEJAzUw1NbLIMtJhRhmm11oiDLIPYJochEhu4ujXlLUmFcNQ56O
+	 6qgCVt/KxMJjR3Lckm9oW81b/EEm0Xa2/srfEvMnjeCA9TowpT8J5mFQgr3NYUDnSy
+	 ahJtHmmWh1IPm6DaULv/rCzBhVmzb6IZj7vjOitE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xabier Marquiegui <reibax@gmail.com>,
-	Richard Cochran <richardcochran@gmail.com>,
-	Vinicius Costa Gomes <vinicius.gomes@intel.com>,
+	Rohit Keshri <rkeshri@redhat.com>,
+	Oleg Nesterov <oleg@redhat.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	"David S. Miller" <davem@davemloft.net>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	Linus Torvalds <torvalds@linuxfoundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 079/280] posix-clock: introduce posix_clock_context concept
-Date: Wed,  4 Feb 2026 15:37:33 +0100
-Message-ID: <20260204143912.502492275@linuxfoundation.org>
+Subject: [PATCH 6.1 080/280] Fix memory leak in posix_clock_open()
+Date: Wed,  4 Feb 2026 15:37:34 +0100
+Message-ID: <20260204143912.537247884@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260204143909.614719725@linuxfoundation.org>
 References: <20260204143909.614719725@linuxfoundation.org>
@@ -53,315 +55,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xabier Marquiegui <reibax@gmail.com>
+From: Linus Torvalds <torvalds@linux-foundation.org>
 
-[ Upstream commit 60c6946675fc06dd2fd2b7a4b6fd1c1f046f1056 ]
+[ Upstream commit 5b4cdd9c5676559b8a7c944ac5269b914b8c0bb8 ]
 
-Add the necessary structure to support custom private-data per
-posix-clock user.
+If the clk ops.open() function returns an error, we don't release the
+pccontext we allocated for this clock.
 
-The previous implementation of posix-clock assumed all file open
-instances need access to the same clock structure on private_data.
+Re-organize the code slightly to make it all more obvious.
 
-The need for individual data structures per file open instance has been
-identified when developing support for multiple timestamp event queue
-users for ptp_clock.
-
-Signed-off-by: Xabier Marquiegui <reibax@gmail.com>
-Suggested-by: Richard Cochran <richardcochran@gmail.com>
-Suggested-by: Vinicius Costa Gomes <vinicius.gomes@intel.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Reported-by: Rohit Keshri <rkeshri@redhat.com>
+Acked-by: Oleg Nesterov <oleg@redhat.com>
+Fixes: 60c6946675fc ("posix-clock: introduce posix_clock_context concept")
+Cc: Jakub Kicinski <kuba@kernel.org>
+Cc: David S. Miller <davem@davemloft.net>
+Cc: Thomas Gleixner <tglx@linutronix.de>
+Signed-off-by: Linus Torvalds <torvalds@linuxfoundation.org>
 Stable-dep-of: e859d375d169 ("posix-clock: Store file pointer in struct posix_clock_context")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/ptp/ptp_chardev.c   | 21 +++++++++++++--------
- drivers/ptp/ptp_private.h   | 16 +++++++++-------
- include/linux/posix-clock.h | 35 +++++++++++++++++++++++++++--------
- kernel/time/posix-clock.c   | 36 +++++++++++++++++++++++++++---------
- 4 files changed, 76 insertions(+), 32 deletions(-)
+ kernel/time/posix-clock.c | 16 +++++++++-------
+ 1 file changed, 9 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/ptp/ptp_chardev.c b/drivers/ptp/ptp_chardev.c
-index 6b36003567975..fcee202f4484c 100644
---- a/drivers/ptp/ptp_chardev.c
-+++ b/drivers/ptp/ptp_chardev.c
-@@ -103,14 +103,16 @@ int ptp_set_pinfunc(struct ptp_clock *ptp, unsigned int pin,
- 	return 0;
- }
- 
--int ptp_open(struct posix_clock *pc, fmode_t fmode)
-+int ptp_open(struct posix_clock_context *pccontext, fmode_t fmode)
- {
- 	return 0;
- }
- 
--long ptp_ioctl(struct posix_clock *pc, unsigned int cmd, unsigned long arg)
-+long ptp_ioctl(struct posix_clock_context *pccontext, unsigned int cmd,
-+	       unsigned long arg)
- {
--	struct ptp_clock *ptp = container_of(pc, struct ptp_clock, clock);
-+	struct ptp_clock *ptp =
-+		container_of(pccontext->clk, struct ptp_clock, clock);
- 	struct ptp_sys_offset_extended *extoff = NULL;
- 	struct ptp_sys_offset_precise precise_offset;
- 	struct system_device_crosststamp xtstamp;
-@@ -434,9 +436,11 @@ long ptp_ioctl(struct posix_clock *pc, unsigned int cmd, unsigned long arg)
- 	return err;
- }
- 
--__poll_t ptp_poll(struct posix_clock *pc, struct file *fp, poll_table *wait)
-+__poll_t ptp_poll(struct posix_clock_context *pccontext, struct file *fp,
-+		  poll_table *wait)
- {
--	struct ptp_clock *ptp = container_of(pc, struct ptp_clock, clock);
-+	struct ptp_clock *ptp =
-+		container_of(pccontext->clk, struct ptp_clock, clock);
- 
- 	poll_wait(fp, &ptp->tsev_wq, wait);
- 
-@@ -445,10 +449,11 @@ __poll_t ptp_poll(struct posix_clock *pc, struct file *fp, poll_table *wait)
- 
- #define EXTTS_BUFSIZE (PTP_BUF_TIMESTAMPS * sizeof(struct ptp_extts_event))
- 
--ssize_t ptp_read(struct posix_clock *pc,
--		 uint rdflags, char __user *buf, size_t cnt)
-+ssize_t ptp_read(struct posix_clock_context *pccontext, uint rdflags,
-+		 char __user *buf, size_t cnt)
- {
--	struct ptp_clock *ptp = container_of(pc, struct ptp_clock, clock);
-+	struct ptp_clock *ptp =
-+		container_of(pccontext->clk, struct ptp_clock, clock);
- 	struct timestamp_event_queue *queue = &ptp->tsevq;
- 	struct ptp_extts_event *event;
- 	unsigned long flags;
-diff --git a/drivers/ptp/ptp_private.h b/drivers/ptp/ptp_private.h
-index a54124269c2f4..a431eb79fe77d 100644
---- a/drivers/ptp/ptp_private.h
-+++ b/drivers/ptp/ptp_private.h
-@@ -131,16 +131,18 @@ extern struct class *ptp_class;
- int ptp_set_pinfunc(struct ptp_clock *ptp, unsigned int pin,
- 		    enum ptp_pin_function func, unsigned int chan);
- 
--long ptp_ioctl(struct posix_clock *pc,
--	       unsigned int cmd, unsigned long arg);
-+long ptp_ioctl(struct posix_clock_context *pccontext, unsigned int cmd,
-+	       unsigned long arg);
- 
--int ptp_open(struct posix_clock *pc, fmode_t fmode);
-+int ptp_open(struct posix_clock_context *pccontext, fmode_t fmode);
- 
--ssize_t ptp_read(struct posix_clock *pc,
--		 uint flags, char __user *buf, size_t cnt);
-+int ptp_release(struct posix_clock_context *pccontext);
- 
--__poll_t ptp_poll(struct posix_clock *pc,
--	      struct file *fp, poll_table *wait);
-+ssize_t ptp_read(struct posix_clock_context *pccontext, uint flags, char __user *buf,
-+		 size_t cnt);
-+
-+__poll_t ptp_poll(struct posix_clock_context *pccontext, struct file *fp,
-+		  poll_table *wait);
- 
- /*
-  * see ptp_sysfs.c
-diff --git a/include/linux/posix-clock.h b/include/linux/posix-clock.h
-index 468328b1e1dd5..ef8619f489203 100644
---- a/include/linux/posix-clock.h
-+++ b/include/linux/posix-clock.h
-@@ -14,6 +14,7 @@
- #include <linux/rwsem.h>
- 
- struct posix_clock;
-+struct posix_clock_context;
- 
- /**
-  * struct posix_clock_operations - functional interface to the clock
-@@ -50,18 +51,18 @@ struct posix_clock_operations {
- 	/*
- 	 * Optional character device methods:
- 	 */
--	long    (*ioctl)   (struct posix_clock *pc,
--			    unsigned int cmd, unsigned long arg);
-+	long (*ioctl)(struct posix_clock_context *pccontext, unsigned int cmd,
-+		      unsigned long arg);
- 
--	int     (*open)    (struct posix_clock *pc, fmode_t f_mode);
-+	int (*open)(struct posix_clock_context *pccontext, fmode_t f_mode);
- 
--	__poll_t (*poll)   (struct posix_clock *pc,
--			    struct file *file, poll_table *wait);
-+	__poll_t (*poll)(struct posix_clock_context *pccontext, struct file *file,
-+			 poll_table *wait);
- 
--	int     (*release) (struct posix_clock *pc);
-+	int (*release)(struct posix_clock_context *pccontext);
- 
--	ssize_t (*read)    (struct posix_clock *pc,
--			    uint flags, char __user *buf, size_t cnt);
-+	ssize_t (*read)(struct posix_clock_context *pccontext, uint flags,
-+			char __user *buf, size_t cnt);
- };
- 
- /**
-@@ -90,6 +91,24 @@ struct posix_clock {
- 	bool zombie;
- };
- 
-+/**
-+ * struct posix_clock_context - represents clock file operations context
-+ *
-+ * @clk:              Pointer to the clock
-+ * @private_clkdata:  Pointer to user data
-+ *
-+ * Drivers should use struct posix_clock_context during specific character
-+ * device file operation methods to access the posix clock.
-+ *
-+ * Drivers can store a private data structure during the open operation
-+ * if they have specific information that is required in other file
-+ * operations.
-+ */
-+struct posix_clock_context {
-+	struct posix_clock *clk;
-+	void *private_clkdata;
-+};
-+
- /**
-  * posix_clock_register() - register a new clock
-  * @clk:   Pointer to the clock. Caller must provide 'ops' field
 diff --git a/kernel/time/posix-clock.c b/kernel/time/posix-clock.c
-index 05e73d209aa87..706559ed75793 100644
+index 706559ed75793..a6487a9d60853 100644
 --- a/kernel/time/posix-clock.c
 +++ b/kernel/time/posix-clock.c
-@@ -19,7 +19,8 @@
-  */
- static struct posix_clock *get_posix_clock(struct file *fp)
- {
--	struct posix_clock *clk = fp->private_data;
-+	struct posix_clock_context *pccontext = fp->private_data;
-+	struct posix_clock *clk = pccontext->clk;
- 
- 	down_read(&clk->rwsem);
- 
-@@ -39,6 +40,7 @@ static void put_posix_clock(struct posix_clock *clk)
- static ssize_t posix_clock_read(struct file *fp, char __user *buf,
- 				size_t count, loff_t *ppos)
- {
-+	struct posix_clock_context *pccontext = fp->private_data;
- 	struct posix_clock *clk = get_posix_clock(fp);
- 	int err = -EINVAL;
- 
-@@ -46,7 +48,7 @@ static ssize_t posix_clock_read(struct file *fp, char __user *buf,
- 		return -ENODEV;
- 
- 	if (clk->ops.read)
--		err = clk->ops.read(clk, fp->f_flags, buf, count);
-+		err = clk->ops.read(pccontext, fp->f_flags, buf, count);
- 
- 	put_posix_clock(clk);
- 
-@@ -55,6 +57,7 @@ static ssize_t posix_clock_read(struct file *fp, char __user *buf,
- 
- static __poll_t posix_clock_poll(struct file *fp, poll_table *wait)
- {
-+	struct posix_clock_context *pccontext = fp->private_data;
- 	struct posix_clock *clk = get_posix_clock(fp);
- 	__poll_t result = 0;
- 
-@@ -62,7 +65,7 @@ static __poll_t posix_clock_poll(struct file *fp, poll_table *wait)
- 		return EPOLLERR;
- 
- 	if (clk->ops.poll)
--		result = clk->ops.poll(clk, fp, wait);
-+		result = clk->ops.poll(pccontext, fp, wait);
- 
- 	put_posix_clock(clk);
- 
-@@ -72,6 +75,7 @@ static __poll_t posix_clock_poll(struct file *fp, poll_table *wait)
- static long posix_clock_ioctl(struct file *fp,
- 			      unsigned int cmd, unsigned long arg)
- {
-+	struct posix_clock_context *pccontext = fp->private_data;
- 	struct posix_clock *clk = get_posix_clock(fp);
- 	int err = -ENOTTY;
- 
-@@ -79,7 +83,7 @@ static long posix_clock_ioctl(struct file *fp,
- 		return -ENODEV;
- 
- 	if (clk->ops.ioctl)
--		err = clk->ops.ioctl(clk, cmd, arg);
-+		err = clk->ops.ioctl(pccontext, cmd, arg);
- 
- 	put_posix_clock(clk);
- 
-@@ -90,6 +94,7 @@ static long posix_clock_ioctl(struct file *fp,
- static long posix_clock_compat_ioctl(struct file *fp,
- 				     unsigned int cmd, unsigned long arg)
- {
-+	struct posix_clock_context *pccontext = fp->private_data;
- 	struct posix_clock *clk = get_posix_clock(fp);
- 	int err = -ENOTTY;
- 
-@@ -97,7 +102,7 @@ static long posix_clock_compat_ioctl(struct file *fp,
- 		return -ENODEV;
- 
- 	if (clk->ops.ioctl)
--		err = clk->ops.ioctl(clk, cmd, arg);
-+		err = clk->ops.ioctl(pccontext, cmd, arg);
- 
- 	put_posix_clock(clk);
- 
-@@ -110,6 +115,7 @@ static int posix_clock_open(struct inode *inode, struct file *fp)
- 	int err;
- 	struct posix_clock *clk =
- 		container_of(inode->i_cdev, struct posix_clock, cdev);
-+	struct posix_clock_context *pccontext;
- 
- 	down_read(&clk->rwsem);
- 
-@@ -117,14 +123,20 @@ static int posix_clock_open(struct inode *inode, struct file *fp)
- 		err = -ENODEV;
+@@ -129,15 +129,17 @@ static int posix_clock_open(struct inode *inode, struct file *fp)
  		goto out;
  	}
-+	pccontext = kzalloc(sizeof(*pccontext), GFP_KERNEL);
-+	if (!pccontext) {
-+		err = -ENOMEM;
-+		goto out;
-+	}
-+	pccontext->clk = clk;
-+	fp->private_data = pccontext;
- 	if (clk->ops.open)
--		err = clk->ops.open(clk, fp->f_mode);
-+		err = clk->ops.open(pccontext, fp->f_mode);
- 	else
- 		err = 0;
- 
- 	if (!err) {
- 		get_device(clk->dev);
--		fp->private_data = clk;
+ 	pccontext->clk = clk;
+-	fp->private_data = pccontext;
+-	if (clk->ops.open)
++	if (clk->ops.open) {
+ 		err = clk->ops.open(pccontext, fp->f_mode);
+-	else
+-		err = 0;
+-
+-	if (!err) {
+-		get_device(clk->dev);
++		if (err) {
++			kfree(pccontext);
++			goto out;
++		}
  	}
++
++	fp->private_data = pccontext;
++	get_device(clk->dev);
++	err = 0;
  out:
  	up_read(&clk->rwsem);
-@@ -133,14 +145,20 @@ static int posix_clock_open(struct inode *inode, struct file *fp)
- 
- static int posix_clock_release(struct inode *inode, struct file *fp)
- {
--	struct posix_clock *clk = fp->private_data;
-+	struct posix_clock_context *pccontext = fp->private_data;
-+	struct posix_clock *clk;
- 	int err = 0;
- 
-+	if (!pccontext)
-+		return -ENODEV;
-+	clk = pccontext->clk;
-+
- 	if (clk->ops.release)
--		err = clk->ops.release(clk);
-+		err = clk->ops.release(pccontext);
- 
- 	put_device(clk->dev);
- 
-+	kfree(pccontext);
- 	fp->private_data = NULL;
- 
  	return err;
 -- 
 2.51.0
