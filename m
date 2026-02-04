@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D9FB21FF4C;
-	Wed,  4 Feb 2026 15:27:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A105421FF4C;
+	Wed,  4 Feb 2026 15:27:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770218852; cv=none; b=PqTN1LwAfrtNOU3g/451uTmLai8ZDbVEUKJr4S+0uwyBc9wh8f1hdLCtsV3iQvGLhbFPgqWFsVKrybzsn8Th2tT9a5S1YKW8/CHs93xU0CvHybcqBfHoHcjhyASeA/XzKPIVfu2vzRNSoPZ+gco+Ee6YjmhPCeD79iyjOrBbVnE=
+	t=1770218855; cv=none; b=ceVX5DLxbxkyfewr6y0co9cXXe1pDeij8semPGqoZlAdgK9WYIaMTL5Fc0Bgeyq/D+ahfcVLIvS0cdYDG5Rhbf+POLPF0dKuCqfY9jUe0l9AiXzSGRwfpqGdzPNvARAtBTJo3uYG9rLjWcoKFcTjIXYmnfruSLXHPFzEllkzI6s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770218852; c=relaxed/simple;
-	bh=n9XOavn3+XIU3IrrPKhSCYLenAH4HUND+s84snbLsw8=;
+	s=arc-20240116; t=1770218855; c=relaxed/simple;
+	bh=/kQ6QmIdkugjZKN5V7eG16jMg60pfux8ZRd2p8aHH5o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=a65H1pAvWOj7KhUZf7qskSrNqro8eu3QlJ+BJ9X7rtzf0Eajs3MZxlcn2GbjxcUdlaG1s+dIpIdmbLdjOVLbMuNYEojXMm9lMLcV8zXFoP2BEgH7FcKhuegQzH0b9P7X3Vc5XIrKgl3IvftUHd+KnHq7ReBAqQZmDzI27SBay9E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=P5tqFeOV; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XhNJjdJTgc35rLMzdhMEIfkzExExNjhBXfN+UllvLsbRaStjANOBLvPQoqwhmH2a40kikxycw73EQeehjeCXwSCn6bXbGw4SIl1KQ/lwxFKCNzTP6cg2NSO/9F1T7wkkUVJLfPDIobWnLG5xPxwHlGW4giXkKrWEcsQvcNC+1PU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1CiiXDGM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="P5tqFeOV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9604DC4CEF7;
-	Wed,  4 Feb 2026 15:27:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1CiiXDGM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E1DA3C4CEF7;
+	Wed,  4 Feb 2026 15:27:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770218852;
-	bh=n9XOavn3+XIU3IrrPKhSCYLenAH4HUND+s84snbLsw8=;
+	s=korg; t=1770218855;
+	bh=/kQ6QmIdkugjZKN5V7eG16jMg60pfux8ZRd2p8aHH5o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=P5tqFeOVRo1D2R9hHxKQU3iowp13P5h4iXNagSumZD0Gw8bwPpxpBSC2dr9q+42/j
-	 5txJ6p3x7MNQhzra4fjINHZDN21qu1wRn7qH+cDKI44jex9dL1UF2vqbTdn8k7GXcr
-	 n0hgUQt7ZpbupODzwYJS42muwxU+V69fZwjHUF4E=
+	b=1CiiXDGMQvDh9efBMsnNrnDW2gRDApLangHemZE5bWLw89vMPpJ6VL63M38pliHCZ
+	 6vxvyXr4v4fr4p+lwKuu9gUCJWrxPNwTLKkrpg9G4TYOSVF7rKDQAzfPrVPXgE1S/L
+	 ezcvT1MIF7IOu+0vylQPpIcD5fOo7qLG6Q9k1fmA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marco Angaroni <marco.angaroni@italtel.com>,
-	Geliang Tang <geliang@kernel.org>,
-	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Josh Poimboeuf <jpoimboe@kernel.org>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Namhyung Kim <namhyung@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 79/87] mptcp: avoid dup SUB_CLOSED events after disconnect
-Date: Wed,  4 Feb 2026 15:41:17 +0100
-Message-ID: <20260204143849.765435919@linuxfoundation.org>
+Subject: [PATCH 6.12 80/87] perf: Simplify get_perf_callchain() user logic
+Date: Wed,  4 Feb 2026 15:41:18 +0100
+Message-ID: <20260204143849.802154433@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260204143846.906385641@linuxfoundation.org>
 References: <20260204143846.906385641@linuxfoundation.org>
@@ -53,53 +53,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: "Matthieu Baerts (NGI0)" <matttbe@kernel.org>
+From: Josh Poimboeuf <jpoimboe@kernel.org>
 
-[ Upstream commit 280d654324e33f8e6e3641f76764694c7b64c5db ]
+[ Upstream commit d77e3319e31098a6cb97b7ce4e71ba676e327fd7 ]
 
-In case of subflow disconnect(), which can also happen with the first
-subflow in case of errors like timeout or reset, mptcp_subflow_ctx_reset
-will reset most fields from the mptcp_subflow_context structure,
-including close_event_done. Then, when another subflow is closed, yet
-another SUB_CLOSED event for the disconnected initial subflow is sent.
-Because of the previous reset, there are no source address and
-destination port.
+Simplify the get_perf_callchain() user logic a bit.  task_pt_regs()
+should never be NULL.
 
-A solution is then to also check the subflow's local id: it shouldn't be
-negative anyway.
-
-Another solution would be not to reset subflow->close_event_done at
-disconnect time, but when reused. But then, probably the whole reset
-could be done when being reused. Let's not change this logic, similar
-to TCP with tcp_disconnect().
-
-Fixes: d82809b6c5f2 ("mptcp: avoid duplicated SUB_CLOSED events")
-Cc: stable@vger.kernel.org
-Reported-by: Marco Angaroni <marco.angaroni@italtel.com>
-Closes: https://github.com/multipath-tcp/mptcp_net-next/issues/603
-Reviewed-by: Geliang Tang <geliang@kernel.org>
-Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Link: https://patch.msgid.link/20260127-net-mptcp-dup-nl-events-v1-1-7f71e1bc4feb@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-[ Adjust context ]
+Signed-off-by: Josh Poimboeuf <jpoimboe@kernel.org>
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Acked-by: Namhyung Kim <namhyung@kernel.org>
+Link: https://lore.kernel.org/r/20250820180428.760066227@kernel.org
+Stable-dep-of: 76ed27608f7d ("perf: sched: Fix perf crash with new is_user_task() helper")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/mptcp/protocol.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ kernel/events/callchain.c |   18 ++++++++----------
+ 1 file changed, 8 insertions(+), 10 deletions(-)
 
---- a/net/mptcp/protocol.c
-+++ b/net/mptcp/protocol.c
-@@ -2591,8 +2591,8 @@ out:
- void mptcp_close_ssk(struct sock *sk, struct sock *ssk,
- 		     struct mptcp_subflow_context *subflow)
- {
--	/* The first subflow can already be closed and still in the list */
--	if (subflow->close_event_done)
-+	/* The first subflow can already be closed or disconnected */
-+	if (subflow->close_event_done || READ_ONCE(subflow->local_id) < 0)
- 		return;
+--- a/kernel/events/callchain.c
++++ b/kernel/events/callchain.c
+@@ -246,21 +246,19 @@ get_perf_callchain(struct pt_regs *regs,
+ 	if (user && !crosstask) {
+ 		if (!user_mode(regs)) {
+ 			if (current->flags & (PF_KTHREAD | PF_USER_WORKER))
+-				regs = NULL;
+-			else
+-				regs = task_pt_regs(current);
++				goto exit_put;
++			regs = task_pt_regs(current);
+ 		}
  
- 	subflow->close_event_done = true;
+-		if (regs) {
+-			if (add_mark)
+-				perf_callchain_store_context(&ctx, PERF_CONTEXT_USER);
++		if (add_mark)
++			perf_callchain_store_context(&ctx, PERF_CONTEXT_USER);
+ 
+-			start_entry_idx = entry->nr;
+-			perf_callchain_user(&ctx, regs);
+-			fixup_uretprobe_trampoline_entries(entry, start_entry_idx);
+-		}
++		start_entry_idx = entry->nr;
++		perf_callchain_user(&ctx, regs);
++		fixup_uretprobe_trampoline_entries(entry, start_entry_idx);
+ 	}
+ 
++exit_put:
+ 	put_callchain_entry(rctx);
+ 
+ 	return entry;
 
 
