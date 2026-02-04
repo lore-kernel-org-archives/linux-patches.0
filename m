@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86DD7421EFE;
-	Wed,  4 Feb 2026 15:13:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 015FE421EFE;
+	Wed,  4 Feb 2026 15:13:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770217980; cv=none; b=WjlFO2/u92LPclSSGTcIDw76K0GnxW2Zu0CAPRwjXzD4Pw6VrIngA8exA2caX4/zVGJV5xQh/aRL4pUV8mYLZN7yTyW6oybqK18L1GcPsr1tJWnkz4JAGSiULoPfqAv816uCVo53lrQHxIjRLUuXQ90uENY/NSbsfuve67ZKuF0=
+	t=1770217984; cv=none; b=SrEk5sd3jgZf21M/gW0UPWTwmYsh060Y6YOchHy04fgBCAVkppudDYs0KQypvSKiMumXQJzLL1GULsif1nXVVnIVBJ18mDbDYW8pbkf1GFcfLLfAPGw7dQqebcfUfmEo3epiRl3kFUsY/618rcAAkOhgtNjyARJ33j+NHHowu8Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770217980; c=relaxed/simple;
-	bh=Fwp8aShMoYTe8WepbfVD07pnX1xXZH3aQ5jZXEPCYe8=;
+	s=arc-20240116; t=1770217984; c=relaxed/simple;
+	bh=GroNBRWxD24o2ms0whYPG66TchxBxNUZ1GG0Qqkpmug=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=f56C5J7vZaTzq/siMyp6a4vf0WL3kjpEMJFinHaqw/LEX8xm8K8D2SIOdVoea5SE71YHzRxy8nX8X9qg1snU+iYPKLLqNBScIaFgAXipGPde9ddrga4+Knhtqg08ikquTA1z5ytyhJjxjlvsna+iiHZWaqttQBRzfqttm/9pdC0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XfhP9fb9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=SeB3lXa8BKc54zaIp+AX0PiltnvH3dyhwr/bQCzFwhbUPfuouAvhchB6//PPcBuApYvgsfN4Mus2Zd93SDYOgVJdqNqTYbE5aLdfAoSEQqjm/9zluP/pL5X14zGTORYhIiCPIQs6lkbOZcQ3SM10cuRBV9Oz1gaCTsoccbulKPo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=L/Fl3VOk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XfhP9fb9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA7CBC116C6;
-	Wed,  4 Feb 2026 15:12:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="L/Fl3VOk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 81D0AC4CEF7;
+	Wed,  4 Feb 2026 15:13:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770217980;
-	bh=Fwp8aShMoYTe8WepbfVD07pnX1xXZH3aQ5jZXEPCYe8=;
+	s=korg; t=1770217983;
+	bh=GroNBRWxD24o2ms0whYPG66TchxBxNUZ1GG0Qqkpmug=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XfhP9fb9w+V6Ubx2hw24dDtspoNtjJwnWBfmODyvYqP2iFcx29InYdkt5av1akLWj
-	 t+jXZw+7yTYq3ocUdvtA9ZT4JO3T6oAeZ1DsMSj4Yly4Oj6zMrjmFaYsAzz/HZNaAV
-	 3KXK/rwwYGNXBXYDVWq6gD5bqStVsQKFAPv7qXD8=
+	b=L/Fl3VOkCjbHQf0sAyuNRQc2NM329DIz25D6K9NLNtV1Yepqa/bZX4GmwnFG5Xjfi
+	 22NyMVLBK/KlN0xLXo7AsodUo60ym94cRet/Kn/4Dyt7ND+dnpW/aLBcEBG15YUTPz
+	 S+r+NYlG4Cm+Y7ncGQbHSfa01FwrByWXHY0M5tJ8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"=?UTF-8?q?Jan=20H . =20Sch=C3=B6nherr?=" <jschoenh@amazon.de>,
-	Peter Zijlstra <peterz@infradead.org>,
-	Fernand Sieber <sieberf@amazon.com>
-Subject: [PATCH 6.1 177/280] perf/x86/intel: Do not enable BTS for guests
-Date: Wed,  4 Feb 2026 15:39:11 +0100
-Message-ID: <20260204143915.987867790@linuxfoundation.org>
+	=?UTF-8?q?Andreas=20K=C3=BCbrich?= <andreas.kuebrich@spektra-dresden.de>,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Subject: [PATCH 6.1 160/280] iio: dac: ad5686: add AD5695R to ad5686_chip_info_tbl
+Date: Wed,  4 Feb 2026 15:38:54 +0100
+Message-ID: <20260204143915.385199183@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260204143909.614719725@linuxfoundation.org>
 References: <20260204143909.614719725@linuxfoundation.org>
@@ -52,56 +51,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fernand Sieber <sieberf@amazon.com>
+From: Kübrich, Andreas <andreas.kuebrich@spektra-dresden.de>
 
-commit 91dcfae0ff2b9b9ab03c1ec95babaceefbffb9f4 upstream.
+commit 441ac29923c9172bc5e4b2c4f52ae756192f5715 upstream.
 
-By default when users program perf to sample branch instructions
-(PERF_COUNT_HW_BRANCH_INSTRUCTIONS) with a sample period of 1, perf
-interprets this as a special case and enables BTS (Branch Trace Store)
-as an optimization to avoid taking an interrupt on every branch.
+The chip info for this variant (I2C, four channels, 14 bit, internal
+reference) seems to have been left out due to oversight, so
+ad5686_chip_info_tbl[ID_AD5695R] is all zeroes. Initialisation of an
+AD5695R still succeeds, but the resulting IIO device has no channels and no
+/dev/iio:device* node.
 
-Since BTS doesn't virtualize, this optimization doesn't make sense when
-the request originates from a guest. Add an additional check that
-prevents this optimization for virtualized events (exclude_host).
+Add the missing chip info to the table.
 
-Reported-by: Jan H. Schönherr <jschoenh@amazon.de>
-Suggested-by: Peter Zijlstra <peterz@infradead.org>
-Signed-off-by: Fernand Sieber <sieberf@amazon.com>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Cc: <stable@vger.kernel.org>
-Link: https://patch.msgid.link/20251211183604.868641-1-sieberf@amazon.com
+Fixes: 4177381b4401 ("iio:dac:ad5686: Add AD5671R/75R/94/94R/95R/96/96R support")
+Signed-off-by: Andreas Kübrich <andreas.kuebrich@spektra-dresden.de>
+Cc: stable@vger.kernel.org
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/events/perf_event.h |   13 +++++++++++--
- 1 file changed, 11 insertions(+), 2 deletions(-)
+ drivers/iio/dac/ad5686.c |    6 ++++++
+ 1 file changed, 6 insertions(+)
 
---- a/arch/x86/events/perf_event.h
-+++ b/arch/x86/events/perf_event.h
-@@ -1421,13 +1421,22 @@ static inline bool intel_pmu_has_bts_per
- 	struct hw_perf_event *hwc = &event->hw;
- 	unsigned int hw_event, bts_event;
- 
--	if (event->attr.freq)
-+	/*
-+	 * Only use BTS for fixed rate period==1 events.
-+	 */
-+	if (event->attr.freq || period != 1)
-+		return false;
-+
-+	/*
-+	 * BTS doesn't virtualize.
-+	 */
-+	if (event->attr.exclude_host)
- 		return false;
- 
- 	hw_event = hwc->config & INTEL_ARCH_EVENT_MASK;
- 	bts_event = x86_pmu.event_map(PERF_COUNT_HW_BRANCH_INSTRUCTIONS);
- 
--	return hw_event == bts_event && period == 1;
-+	return hw_event == bts_event;
- }
- 
- static inline bool intel_pmu_has_bts(struct perf_event *event)
+--- a/drivers/iio/dac/ad5686.c
++++ b/drivers/iio/dac/ad5686.c
+@@ -427,6 +427,12 @@ static const struct ad5686_chip_info ad5
+ 		.num_channels = 4,
+ 		.regmap_type = AD5686_REGMAP,
+ 	},
++	[ID_AD5695R] = {
++		.channels = ad5685r_channels,
++		.int_vref_mv = 2500,
++		.num_channels = 4,
++		.regmap_type = AD5686_REGMAP,
++	},
+ 	[ID_AD5696] = {
+ 		.channels = ad5686_channels,
+ 		.num_channels = 4,
 
 
