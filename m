@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08E01423A71;
-	Wed,  4 Feb 2026 15:06:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68D31423A71;
+	Wed,  4 Feb 2026 15:06:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770217563; cv=none; b=nl6S/zf89amL6vGFjI6wgnhjksYGuG+ULYnf2i2U+gjIm+76uNQ1DIO+aDqy5h45YJ80qmACr9zMqMckgI0wAfQVdfkFFmV3to3ZZJkAOOGkYZ6mJBZx5b6ofAdDVlc1TzOLWCK/123XUi8iQCqTIfTpYKZI94dFuE1GFYAF1EU=
+	t=1770217566; cv=none; b=uDKAXQW2N+yv5L048Q2wma5e6XVoSrKsPR6VYc/beIOii731U0NRwot8cHL5RV62POwR4J0wfffrqvwwXzU65uCLVmiYCQGOgRXSlQw+Wm2N43mQIUmSHu+2fPtWUE18rxXJ/Je+hQDkg8wG8ba4MDGEnK2XwHMhjIMyrLwtZZM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770217563; c=relaxed/simple;
-	bh=g+OpgI5Wc04TfRMtHYXsy4DyZVTC/rQ/O3u3NQhehjE=;
+	s=arc-20240116; t=1770217566; c=relaxed/simple;
+	bh=+3D83u3v9UhlKPz8f7AriLTdNXZ2PfysRxkWBra5kec=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HeaM3wlYaSh3A1Gj96Y9rMhpe0PPd6eyJy7g4CxBtF7HmYcRt0AaFDnnL4Mg1vO8GmEjoKfoxkMl1RkaPzQvsjXtcrT5Rephhh6ud3SlDMeGdVt8gwjR2MWfW8LOyp4fKj36ATQWF8yGhYAr50w6o4XSH+74cIsEQ6fE/g1bSEA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SD4T5FvC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SSasuoh2HoWqk6yAuAgqvKASZWiZyiBmRARtwGW1O+A/czeAJRL2ZehpX6GTaKNwkRCnlAb3VHo447SscKGcWcO4NqA6f/fNo14vzJU58mNMq0lYBhmLyDRjjd/AlxHJC1VKztwmMMc4/Ota7PDVykbPy4KTgZ1+ywypB7/oegU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aisucc9O; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SD4T5FvC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F545C4CEF7;
-	Wed,  4 Feb 2026 15:06:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aisucc9O"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE690C116C6;
+	Wed,  4 Feb 2026 15:06:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770217562;
-	bh=g+OpgI5Wc04TfRMtHYXsy4DyZVTC/rQ/O3u3NQhehjE=;
+	s=korg; t=1770217566;
+	bh=+3D83u3v9UhlKPz8f7AriLTdNXZ2PfysRxkWBra5kec=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SD4T5FvC/o06HmTRMjLMxN+itKp2Zg9vTBhjbDRhvbyuNyjhTQfpog0vD4jMvN4gP
-	 rJDghwS/YR55QrYSJcJ5BfyF2Zq6+4KcIaL5hfv22msxMDmr4S7e8zSk4kJE4qJ9bH
-	 OOfnu0DcviEvUizpH9aTasQKcVQ9xvggWpAKmpoI=
+	b=aisucc9OLVY0yW/kiRZ4OXeSfiWiP2Aw8j8HikqFWDwCmhdfR4Eg2PU3KyZpGSu82
+	 OfHjJnwBSsYo/22aiXDHsykd/ZFMvauogiCejF0ldil+1uhujcnaTmL9Kzopr5B05o
+	 kun9hr8+0v3M3qU0emyRhkbW2kWqVVsmz8AWtAFE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Naohiro Aota <naohiro.aota@wdc.com>,
 	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 018/280] btrfs: factor out init_space_info() from create_space_info()
-Date: Wed,  4 Feb 2026 15:36:32 +0100
-Message-ID: <20260204143910.288032207@linuxfoundation.org>
+Subject: [PATCH 6.1 019/280] btrfs: factor out check_removing_space_info() from btrfs_free_block_groups()
+Date: Wed,  4 Feb 2026 15:36:33 +0100
+Message-ID: <20260204143910.323382272@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260204143909.614719725@linuxfoundation.org>
 References: <20260204143909.614719725@linuxfoundation.org>
@@ -54,10 +54,10 @@ Content-Transfer-Encoding: 8bit
 
 From: Naohiro Aota <naohiro.aota@wdc.com>
 
-[ Upstream commit ac5578fef380e68e539a2238ba63dd978a450ef2 ]
+[ Upstream commit 1cfdbe0d53b27b4b4a4f4cf2a4e430bc65ba2ba5 ]
 
-Factor out initialization of the space_info struct, which is used in a
-later patch. There is no functional change.
+Factor out check_removing_space_info() from btrfs_free_block_groups(). It
+sanity checks a to-be-removed space_info. There is no functional change.
 
 Reviewed-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
 Signed-off-by: Naohiro Aota <naohiro.aota@wdc.com>
@@ -66,56 +66,76 @@ Signed-off-by: David Sterba <dsterba@suse.com>
 Stable-dep-of: a11224a016d6 ("btrfs: fix memory leaks in create_space_info() error paths")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/space-info.c | 27 ++++++++++++++++-----------
- 1 file changed, 16 insertions(+), 11 deletions(-)
+ fs/btrfs/block-group.c | 49 +++++++++++++++++++++++-------------------
+ 1 file changed, 27 insertions(+), 22 deletions(-)
 
-diff --git a/fs/btrfs/space-info.c b/fs/btrfs/space-info.c
-index 069df2ebd1ca5..88cd37a13c0ee 100644
---- a/fs/btrfs/space-info.c
-+++ b/fs/btrfs/space-info.c
-@@ -219,19 +219,11 @@ void btrfs_update_space_info_chunk_size(struct btrfs_space_info *space_info,
- 	WRITE_ONCE(space_info->chunk_size, chunk_size);
+diff --git a/fs/btrfs/block-group.c b/fs/btrfs/block-group.c
+index 3295fb978a35b..797df5ddbcd12 100644
+--- a/fs/btrfs/block-group.c
++++ b/fs/btrfs/block-group.c
+@@ -4145,6 +4145,32 @@ void btrfs_put_block_group_cache(struct btrfs_fs_info *info)
+ 	}
  }
  
--static int create_space_info(struct btrfs_fs_info *info, u64 flags)
-+static void init_space_info(struct btrfs_fs_info *info,
-+			    struct btrfs_space_info *space_info, u64 flags)
- {
--
--	struct btrfs_space_info *space_info;
--	int i;
--	int ret;
--
--	space_info = kzalloc(sizeof(*space_info), GFP_NOFS);
--	if (!space_info)
--		return -ENOMEM;
--
- 	space_info->fs_info = info;
--	for (i = 0; i < BTRFS_NR_RAID_TYPES; i++)
-+	for (int i = 0; i < BTRFS_NR_RAID_TYPES; i++)
- 		INIT_LIST_HEAD(&space_info->block_groups[i]);
- 	init_rwsem(&space_info->groups_sem);
- 	spin_lock_init(&space_info->lock);
-@@ -245,6 +237,19 @@ static int create_space_info(struct btrfs_fs_info *info, u64 flags)
- 
- 	if (btrfs_is_zoned(info))
- 		space_info->bg_reclaim_threshold = BTRFS_DEFAULT_ZONED_RECLAIM_THRESH;
++static void check_removing_space_info(struct btrfs_space_info *space_info)
++{
++	struct btrfs_fs_info *info = space_info->fs_info;
++
++	/*
++	 * Do not hide this behind enospc_debug, this is actually important and
++	 * indicates a real bug if this happens.
++	 */
++	if (WARN_ON(space_info->bytes_pinned > 0 || space_info->bytes_may_use > 0))
++		btrfs_dump_space_info(info, space_info, 0, 0);
++
++	/*
++	 * If there was a failure to cleanup a log tree, very likely due to an
++	 * IO failure on a writeback attempt of one or more of its extent
++	 * buffers, we could not do proper (and cheap) unaccounting of their
++	 * reserved space, so don't warn on bytes_reserved > 0 in that case.
++	 */
++	if (!(space_info->flags & BTRFS_BLOCK_GROUP_METADATA) ||
++	    !BTRFS_FS_LOG_CLEANUP_ERROR(info)) {
++		if (WARN_ON(space_info->bytes_reserved > 0))
++			btrfs_dump_space_info(info, space_info, 0, 0);
++	}
++
++	WARN_ON(space_info->reclaim_size > 0);
 +}
 +
-+static int create_space_info(struct btrfs_fs_info *info, u64 flags)
-+{
-+
-+	struct btrfs_space_info *space_info;
-+	int ret;
-+
-+	space_info = kzalloc(sizeof(*space_info), GFP_NOFS);
-+	if (!space_info)
-+		return -ENOMEM;
-+
-+	init_space_info(info, space_info, flags);
+ /*
+  * Must be called only after stopping all workers, since we could have block
+  * group caching kthreads running, and therefore they could race with us if we
+@@ -4235,28 +4261,7 @@ int btrfs_free_block_groups(struct btrfs_fs_info *info)
+ 					struct btrfs_space_info,
+ 					list);
  
- 	ret = btrfs_sysfs_add_space_info_type(info, space_info);
- 	if (ret)
+-		/*
+-		 * Do not hide this behind enospc_debug, this is actually
+-		 * important and indicates a real bug if this happens.
+-		 */
+-		if (WARN_ON(space_info->bytes_pinned > 0 ||
+-			    space_info->bytes_may_use > 0))
+-			btrfs_dump_space_info(info, space_info, 0, 0);
+-
+-		/*
+-		 * If there was a failure to cleanup a log tree, very likely due
+-		 * to an IO failure on a writeback attempt of one or more of its
+-		 * extent buffers, we could not do proper (and cheap) unaccounting
+-		 * of their reserved space, so don't warn on bytes_reserved > 0 in
+-		 * that case.
+-		 */
+-		if (!(space_info->flags & BTRFS_BLOCK_GROUP_METADATA) ||
+-		    !BTRFS_FS_LOG_CLEANUP_ERROR(info)) {
+-			if (WARN_ON(space_info->bytes_reserved > 0))
+-				btrfs_dump_space_info(info, space_info, 0, 0);
+-		}
+-
+-		WARN_ON(space_info->reclaim_size > 0);
++		check_removing_space_info(space_info);
+ 		list_del(&space_info->list);
+ 		btrfs_sysfs_remove_space_info(space_info);
+ 	}
 -- 
 2.51.0
 
