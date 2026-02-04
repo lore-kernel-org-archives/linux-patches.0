@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5BD0840FD98;
-	Wed,  4 Feb 2026 15:25:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9042D41B357;
+	Wed,  4 Feb 2026 15:25:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770218701; cv=none; b=mdhIlKsNITKU99ilNVIkz8rIH96oz/QW8/7p/BIOeQeEZDe1L0UApWza2WU6IRtZ6gDuzJb2ONo6RMunabXJbLuYcqaF4c0kw5OslPfukoKjIK9wlKRaVBrCRZVj/7rtGtua4Hm/9Lch8Ble40jg6552z1PmzXmWaf3tUY7/sRg=
+	t=1770218704; cv=none; b=FvVvdY+q5atC3K0JuNJUdSfI90AlPQc17Ud4g9fQQKkWhp6LY0LmCi3XuDwmfB5FYdKetkPaQPnmf550+hDj+zP77C9B6C7AJ+SiXZImz+uGdkvaBKYlWD7ogOCmkoayKRWrWbAwheTRh5cyUJJKkS75cuxAjPXYLjJyASxhHrw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770218701; c=relaxed/simple;
-	bh=pWjdrjUHSivLZm+HQiW2oM1oAGJlO//KI6ecpHF8doQ=;
+	s=arc-20240116; t=1770218704; c=relaxed/simple;
+	bh=KQ1QqCki+7LjXp1LjosVRofyZ1LdkMf2M9ADwxoeL6w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nF5ucly4nYH2d2nBovP2Ug4/2SyyRjChJB2ih0IZZ1oGpF5AKM3ZUIAjysODcJx9x8fZJo4wquln+enc24I2AywA3gmcU4wbuA1GtRtqWYvJ5L3pgUO/voougckckws0bKd9Iq4hT5jlA/wUeKqNBZDWYcE4z4zzmOkHXJ60+gc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2o2hILtq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=RXIlY+XM7KEEVEPRLHE9mafPg10IZP8a/AbtecTWb8Q/FkAyj75PLY/yN4Hvpwi2IC+t2AzzGpVeNEzT8o8hEtkd+LF+q54ZhMurIYyAwZVctRxwH0Zg/US6U84k37G5zwijc2UyaVMY6pyQv0McVRYZ0PESPli9rMAacEzZYZw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gHnChmBm; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2o2hILtq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD4C0C4CEF7;
-	Wed,  4 Feb 2026 15:25:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gHnChmBm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 074B7C4CEF7;
+	Wed,  4 Feb 2026 15:25:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770218701;
-	bh=pWjdrjUHSivLZm+HQiW2oM1oAGJlO//KI6ecpHF8doQ=;
+	s=korg; t=1770218704;
+	bh=KQ1QqCki+7LjXp1LjosVRofyZ1LdkMf2M9ADwxoeL6w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2o2hILtqPShySMU5l9eAe+NyY4icx2XjuyHee501vO9IQ3qWBgkRxZzboR0ReDiFD
-	 CfGmYnOZYfvAeWXbAaq+ysXCm7BpT8JBl+UNyaHO7QS9aAoe+haIkBt7xD10irKbPX
-	 ZmNwrcfaQRZDY3ac2YqlJIVuaHUqGg/NA9938B7w=
+	b=gHnChmBmomYKGWh4G064e6vGQWstM2OmqJCF12nr+VoBts9E+GUS64Fq6xykN5YpK
+	 uzMMGe1rOwWo+p2Wb9NSqsyPdOf9wust7VrRUG4PZjOoNKJkiyhNTmJTikiIKkVKnK
+	 CyaEACHDvCxF3yMBBWNRU1824DnxKGmrT1BEhi7w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Han Gao <gaohan@iscas.ac.cn>,
-	"Guo Ren (Alibaba Damo Academy)" <guoren@kernel.org>,
-	Paul Walmsley <pjw@kernel.org>
-Subject: [PATCH 6.12 35/87] riscv: compat: fix COMPAT_UTS_MACHINE definition
-Date: Wed,  4 Feb 2026 15:40:33 +0100
-Message-ID: <20260204143848.177407215@linuxfoundation.org>
+	Alice Ryhl <aliceryhl@google.com>,
+	Hang Shu <m18080292938@163.com>,
+	Miguel Ojeda <ojeda@kernel.org>,
+	Gary Guo <gary@garyguo.net>
+Subject: [PATCH 6.12 36/87] rust: rbtree: fix documentation typo in CursorMut peek_next method
+Date: Wed,  4 Feb 2026 15:40:34 +0100
+Message-ID: <20260204143848.212769328@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260204143846.906385641@linuxfoundation.org>
 References: <20260204143846.906385641@linuxfoundation.org>
@@ -51,34 +52,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Han Gao <gaohan@iscas.ac.cn>
+From: Hang Shu <m18080292938@163.com>
 
-commit 0ea05c4f7527a98f5946f96c829733788934311d upstream.
+commit 45f6aed8a835ee2bdd0a5d5ee626a91fe285014f upstream.
 
-The COMPAT_UTS_MACHINE for riscv was incorrectly defined as "riscv".
-Change it to "riscv32" to reflect the correct 32-bit compat name.
+The peek_next method's doc comment incorrectly stated it accesses the
+"previous" node when it actually accesses the next node.
 
-Fixes: 06d0e3723647 ("riscv: compat: Add basic compat data type implementation")
+Fix the documentation to accurately reflect the method's behavior.
+
+Fixes: 98c14e40e07a ("rust: rbtree: add cursor")
+Reviewed-by: Alice Ryhl <aliceryhl@google.com>
+Signed-off-by: Hang Shu <m18080292938@163.com>
+Reported-by: Miguel Ojeda <ojeda@kernel.org>
+Closes: https://github.com/Rust-for-Linux/linux/issues/1205
 Cc: stable@vger.kernel.org
-Signed-off-by: Han Gao <gaohan@iscas.ac.cn>
-Reviewed-by: Guo Ren (Alibaba Damo Academy) <guoren@kernel.org>
-Link: https://patch.msgid.link/20260127190711.2264664-1-gaohan@iscas.ac.cn
-Signed-off-by: Paul Walmsley <pjw@kernel.org>
+Reviewed-by: Gary Guo <gary@garyguo.net>
+Link: https://patch.msgid.link/20251107093921.3379954-1-m18080292938@163.com
+[ Reworded slightly. - Miguel ]
+Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/riscv/include/asm/compat.h |    2 +-
+ rust/kernel/rbtree.rs |    2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/arch/riscv/include/asm/compat.h
-+++ b/arch/riscv/include/asm/compat.h
-@@ -2,7 +2,7 @@
- #ifndef __ASM_COMPAT_H
- #define __ASM_COMPAT_H
+--- a/rust/kernel/rbtree.rs
++++ b/rust/kernel/rbtree.rs
+@@ -838,7 +838,7 @@ impl<'a, K, V> Cursor<'a, K, V> {
+         self.peek(Direction::Prev)
+     }
  
--#define COMPAT_UTS_MACHINE	"riscv\0\0"
-+#define COMPAT_UTS_MACHINE	"riscv32\0\0"
- 
- /*
-  * Architecture specific compatibility types
+-    /// Access the previous node without moving the cursor.
++    /// Access the next node without moving the cursor.
+     pub fn peek_next(&self) -> Option<(&K, &V)> {
+         self.peek(Direction::Next)
+     }
 
 
