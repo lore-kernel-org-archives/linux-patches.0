@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA3A72C21CB;
-	Wed,  4 Feb 2026 15:16:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 304F92BEFED;
+	Wed,  4 Feb 2026 15:16:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770218163; cv=none; b=nckaIzMGv81KAl+/aChlH2udArZek+fuQQ/j5kT/OlWsJuCsGVqCnBTlBGJZcI8Rmy7doJQ8vzoDpFli+cRXpHBTGVhlyrsSCbZt1h2w+E5vgkU3p3rZK9PGg9KspN6VS9wU/QeZFw3gbAFoaT/2nQrdKI5IGBFZGJwz7E2vW+A=
+	t=1770218166; cv=none; b=KcxVWzYPH6+rxmn11qY88XToMH8OUNTIcDaalXQFeHDtvHmF7jzUYbiZAzzlr0Hm5aA/HenTvP/M3bP6MSpoIm/V4hyDkJgJuQS2Lese4bDAefBiGE6fPFBcySXKHLOwQlOTHqyOmMkt1uDyWIdLihZfZcKrqgPcLXN56/bgsik=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770218163; c=relaxed/simple;
-	bh=sqxE/YzKzKju44qm8b3p+AxWQyp228zF1IYYktldEzA=;
+	s=arc-20240116; t=1770218166; c=relaxed/simple;
+	bh=8rGPeXRFILS8TeBfSerupNifSxFdc84nZau9x6lDx/o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=D8r05ekcmr3AXGK+w8pnNVubV4YHwGMqGNdnl7nl5OCQrKM+sjLBe9Irx/s7K06j7U6EDq5SuRVZi62ssUdQfflJBMbVlZC/v/MUFWmgMod8lxJI18GlsJ6+5kvtH7/nIXTnMbP90lwi0E1mywj5d3PIMtkAqmHcKKadAUr9n50=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mbFL0cvN; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VKVk3fxPUNLQ7GHwVSgp2ONdycAejpPzS5T0AihmIhrqQfbCNM63bfU1C1HQrUMW6TdyweLqKkdJ9yvQ4gCJw7GJJkViwb7uzNmxxD3RBb20CXjvo0V9kk5P3D8p9dteKkkZdW4bOcRnLmdYRXVajLFPJuPrjutjwUG67T4voBY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=U+u8/9Ec; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mbFL0cvN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4FF7CC4CEF7;
-	Wed,  4 Feb 2026 15:16:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="U+u8/9Ec"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 95632C4CEF7;
+	Wed,  4 Feb 2026 15:16:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770218162;
-	bh=sqxE/YzKzKju44qm8b3p+AxWQyp228zF1IYYktldEzA=;
+	s=korg; t=1770218166;
+	bh=8rGPeXRFILS8TeBfSerupNifSxFdc84nZau9x6lDx/o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mbFL0cvNIy+CxhRHsciLqV+UzP3/Ym5DTZvjMoEJqTbJZuBRMNVTYwi/9XFXSs+Pv
-	 w7TViEBncPXPV0tB6Yp8t9XKbNtByfEH2S1zo6KnkILT3jndvJ7D3gWTy5iZNDtgyX
-	 bLK+eCbZoc+Hq3fIYqId1qPubZyrq4oIdVIqAXpI=
+	b=U+u8/9EcgQyKoxFqHXiSGE8K5d2oHh0EKkSX63RMcCJVbFAMkMybkoTcyElOLaYru
+	 grSKcnWm6my3Pl6xZ8DNoWOKIV8jCfu5OBIfWC1jBV5LvHkwoFSpaJGNTPLxHgN2UJ
+	 FT+FEUZmRk05Mhp/4hRFLJgg//EwwHscOEQWAB+Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ming Qian <ming.qian@oss.nxp.com>,
-	Benjamin Gaignard <benjamin.gaignard@collabora.com>,
-	Peng Fan <peng.fan@nxp.com>,
-	Frank Li <Frank.Li@nxp.com>,
-	Ulf Hansson <ulf.hansson@linaro.org>,
+	Thomas Fourier <fourier.thomas@gmail.com>,
+	Namjae Jeon <linkinjeon@kernel.org>,
+	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 229/280] pmdomain: imx8m-blk-ctrl: Remove separate rst and clk mask for 8mq vpu
-Date: Wed,  4 Feb 2026 15:40:03 +0100
-Message-ID: <20260204143917.859861173@linuxfoundation.org>
+Subject: [PATCH 6.1 230/280] ksmbd: smbd: fix dma_unmap_sg() nents
+Date: Wed,  4 Feb 2026 15:40:04 +0100
+Message-ID: <20260204143917.897069584@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260204143909.614719725@linuxfoundation.org>
 References: <20260204143909.614719725@linuxfoundation.org>
@@ -54,60 +52,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ming Qian <ming.qian@oss.nxp.com>
+From: Thomas Fourier <fourier.thomas@gmail.com>
 
-[ Upstream commit 3de49966499634454fd59e0e6fecd50baab7febd ]
+[ Upstream commit 98e3e2b561bc88f4dd218d1c05890672874692f6 ]
 
-For i.MX8MQ platform, the ADB in the VPUMIX domain has no separate reset
-and clock enable bits, but is ungated and reset together with the VPUs.
-So we can't reset G1 or G2 separately, it may led to the system hang.
-Remove rst_mask and clk_mask of imx8mq_vpu_blk_ctl_domain_data.
-Let imx8mq_vpu_power_notifier() do really vpu reset.
+The dma_unmap_sg() functions should be called with the same nents as the
+dma_map_sg(), not the value the map function returned.
 
-Fixes: 608d7c325e85 ("soc: imx: imx8m-blk-ctrl: add i.MX8MQ VPU blk-ctrl")
-Signed-off-by: Ming Qian <ming.qian@oss.nxp.com>
-Reviewed-by: Benjamin Gaignard <benjamin.gaignard@collabora.com>
-Reviewed-by: Peng Fan <peng.fan@nxp.com>
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Cc: stable@vger.kernel.org
-Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+Fixes: 0626e6641f6b ("cifsd: add server handler for central processing and tranport layers")
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Thomas Fourier <fourier.thomas@gmail.com>
+Acked-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Steve French <stfrench@microsoft.com>
+[ Context ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/soc/imx/imx8m-blk-ctrl.c |   11 +++++++----
- 1 file changed, 7 insertions(+), 4 deletions(-)
+ fs/smb/server/transport_rdma.c |   15 +++++++--------
+ 1 file changed, 7 insertions(+), 8 deletions(-)
 
---- a/drivers/soc/imx/imx8m-blk-ctrl.c
-+++ b/drivers/soc/imx/imx8m-blk-ctrl.c
-@@ -810,22 +810,25 @@ static int imx8mq_vpu_power_notifier(str
- 	return NOTIFY_OK;
+--- a/fs/smb/server/transport_rdma.c
++++ b/fs/smb/server/transport_rdma.c
+@@ -1103,14 +1103,12 @@ static int get_sg_list(void *buf, int si
+ 
+ static int get_mapped_sg_list(struct ib_device *device, void *buf, int size,
+ 			      struct scatterlist *sg_list, int nentries,
+-			      enum dma_data_direction dir)
++			      enum dma_data_direction dir, int *npages)
+ {
+-	int npages;
+-
+-	npages = get_sg_list(buf, size, sg_list, nentries);
+-	if (npages < 0)
++	*npages = get_sg_list(buf, size, sg_list, nentries);
++	if (*npages < 0)
+ 		return -EINVAL;
+-	return ib_dma_map_sg(device, sg_list, npages, dir);
++	return ib_dma_map_sg(device, sg_list, *npages, dir);
  }
  
-+/*
-+ * For i.MX8MQ, the ADB in the VPUMIX domain has no separate reset and clock
-+ * enable bits, but is ungated and reset together with the VPUs.
-+ * Resetting G1 or G2 separately may led to system hang.
-+ * Remove the rst_mask and clk_mask from the domain data of G1 and G2,
-+ * Let imx8mq_vpu_power_notifier() do really vpu reset.
-+ */
- static const struct imx8m_blk_ctrl_domain_data imx8mq_vpu_blk_ctl_domain_data[] = {
- 	[IMX8MQ_VPUBLK_PD_G1] = {
- 		.name = "vpublk-g1",
- 		.clk_names = (const char *[]){ "g1", },
- 		.num_clks = 1,
- 		.gpc_name = "g1",
--		.rst_mask = BIT(1),
--		.clk_mask = BIT(1),
- 	},
- 	[IMX8MQ_VPUBLK_PD_G2] = {
- 		.name = "vpublk-g2",
- 		.clk_names = (const char *[]){ "g2", },
- 		.num_clks = 1,
- 		.gpc_name = "g2",
--		.rst_mask = BIT(0),
--		.clk_mask = BIT(0),
- 	},
- };
+ static int post_sendmsg(struct smb_direct_transport *t,
+@@ -1179,12 +1177,13 @@ static int smb_direct_post_send_data(str
+ 	for (i = 0; i < niov; i++) {
+ 		struct ib_sge *sge;
+ 		int sg_cnt;
++		int npages;
  
+ 		sg_init_table(sg, SMB_DIRECT_MAX_SEND_SGES - 1);
+ 		sg_cnt = get_mapped_sg_list(t->cm_id->device,
+ 					    iov[i].iov_base, iov[i].iov_len,
+ 					    sg, SMB_DIRECT_MAX_SEND_SGES - 1,
+-					    DMA_TO_DEVICE);
++					    DMA_TO_DEVICE, &npages);
+ 		if (sg_cnt <= 0) {
+ 			pr_err("failed to map buffer\n");
+ 			ret = -ENOMEM;
+@@ -1192,7 +1191,7 @@ static int smb_direct_post_send_data(str
+ 		} else if (sg_cnt + msg->num_sge > SMB_DIRECT_MAX_SEND_SGES) {
+ 			pr_err("buffer not fitted into sges\n");
+ 			ret = -E2BIG;
+-			ib_dma_unmap_sg(t->cm_id->device, sg, sg_cnt,
++			ib_dma_unmap_sg(t->cm_id->device, sg, npages,
+ 					DMA_TO_DEVICE);
+ 			goto err;
+ 		}
 
 
