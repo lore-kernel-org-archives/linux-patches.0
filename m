@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 594AD27702D;
-	Wed,  4 Feb 2026 15:26:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E33427702D;
+	Wed,  4 Feb 2026 15:26:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770218781; cv=none; b=GdHuKic8h+NWzQjJGoY2iZ/9OQMf9Xee2Rlu3jDayhIg79wijSOMEdE1dbJnRmUclrbmNUXYYld88zNPebCafyRrDTqZtvMJBNSkoCk8VT5J/rfRFe6mm54Ug3KqyGSWgBs+ZR+nWf3/yt+4USsPos1kw2o8wCU4mwZS8X1nnDM=
+	t=1770218784; cv=none; b=WmmkeL9W7ZQbVkquq7s0vtaWjTBdbKWvlWpfcGNGIxW1gs9RnBETkO3ZWI3eSEA3rYkggM8DvJSOufhvwJQ5+8cZ686l4dcFVq/jwTTJIIAhejZxtfx/5b4A0J2hgPLsr8eWqbMY3Enlw1XeaPuaSQ6AzU6sf/BX9aoUeMRhJYY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770218781; c=relaxed/simple;
-	bh=5bVxUs5Z+KGlbrbRHTvJSsWL6YUQownL0bYp70P4zKE=;
+	s=arc-20240116; t=1770218784; c=relaxed/simple;
+	bh=sO/DuiGIzkkgKmkBlSfVb9cjzTCA81jotny3e2C/DHg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=puFtlQd9QPUt8fCBWecAnOJZIWEx6Pvcei+e0rGVbVMDfqvwS8spCT8J62BI2iHIiV2lNyDpHmAMavCw1fWotgYVrYi2jxTGf5pjfQLRPEtg4eAYsJKyRQj8a1bU5CD0XwNcBQu84LjXLDEB6WMnGbBb/AQuUSy18wA34/FjSAI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AQAvuUwi; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jFuaTvuKXmsKqrG5ejFV/dJZiDiLJzoaKPCErn+7kcRpELjHKtlSVr6C7ouCCyqWGBiX8CxBfj/xpVPRkR2s356ZF3lNpJWRoX4CcHLSwNZlheyjZ90soNPag9R8PP3n1uAw7wLd75BTxrn9TxN30Q/Mnly+FGKAr2K00lgC4t0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HUx/POfn; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AQAvuUwi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B21CFC4CEF7;
-	Wed,  4 Feb 2026 15:26:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HUx/POfn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 079E7C4CEF7;
+	Wed,  4 Feb 2026 15:26:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770218781;
-	bh=5bVxUs5Z+KGlbrbRHTvJSsWL6YUQownL0bYp70P4zKE=;
+	s=korg; t=1770218784;
+	bh=sO/DuiGIzkkgKmkBlSfVb9cjzTCA81jotny3e2C/DHg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AQAvuUwiboZtDhMgTb+L0p3dmdtV0nY2W9JzLP7CL5sKzwIA6K/bjYikRTu8Fo8sS
-	 MxjKYz9PvUlTUF/8x0cHtbJlx3bNto47uMd3Zfg+lEi1N10DxIUJq2trqgpt4qPA9C
-	 q5fRk8qmDZAB2m1EfeF6cgyT0NLxgGo2Ll9oOmfE=
+	b=HUx/POfnqgziWgA5nf9M9eGo6RUjiKeoX9+CHRk8/LE5mlOIJlgh01pxjx6gBa7t/
+	 a76iutBrBjVZywXm8R6igMR+kimoVzAbQ4SBxELxjwkGAgyN74iu55Bf1CXFAjkeYF
+	 vhh+qhXZpRjI3M5MCCFI+99lrYyDKp20gVdh0JSc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Philipp Zabel <p.zabel@pengutronix.de>,
-	Frank Li <Frank.Li@nxp.com>,
-	Johan Hovold <johan@kernel.org>,
-	Maxime Ripard <mripard@kernel.org>
-Subject: [PATCH 6.12 60/87] drm/imx/tve: fix probe device leak
-Date: Wed,  4 Feb 2026 15:40:58 +0100
-Message-ID: <20260204143849.079061090@linuxfoundation.org>
+	Jesse Zhang <Jesse.Zhang@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 6.12 61/87] drm/amdgpu/soc21: fix xclk for APUs
+Date: Wed,  4 Feb 2026 15:40:59 +0100
+Message-ID: <20260204143849.115106449@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260204143846.906385641@linuxfoundation.org>
 References: <20260204143846.906385641@linuxfoundation.org>
@@ -52,53 +50,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johan Hovold <johan@kernel.org>
+From: Alex Deucher <alexander.deucher@amd.com>
 
-commit e535c23513c63f02f67e3e09e0787907029efeaf upstream.
+commit e7fbff9e7622a00c2b53cb14df481916f0019742 upstream.
 
-Make sure to drop the reference taken to the DDC device during probe on
-probe failure (e.g. probe deferral) and on driver unbind.
+The reference clock is supposed to be 100Mhz, but it
+appears to actually be slightly lower (99.81Mhz).
 
-Fixes: fcbc51e54d2a ("staging: drm/imx: Add support for Television Encoder (TVEv2)")
-Cc: stable@vger.kernel.org	# 3.10
-Cc: Philipp Zabel <p.zabel@pengutronix.de>
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Signed-off-by: Johan Hovold <johan@kernel.org>
-Link: https://patch.msgid.link/20251030163456.15807-1-johan@kernel.org
-Signed-off-by: Maxime Ripard <mripard@kernel.org>
+Closes: https://gitlab.freedesktop.org/mesa/mesa/-/issues/14451
+Reviewed-by: Jesse Zhang <Jesse.Zhang@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit 637fee3954d4bd509ea9d95ad1780fc174489860)
+Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/imx/ipuv3/imx-tve.c |   13 +++++++++++++
- 1 file changed, 13 insertions(+)
+ drivers/gpu/drm/amd/amdgpu/soc21.c |    8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/imx/ipuv3/imx-tve.c
-+++ b/drivers/gpu/drm/imx/ipuv3/imx-tve.c
-@@ -519,6 +519,13 @@ static const struct component_ops imx_tv
- 	.bind	= imx_tve_bind,
- };
+--- a/drivers/gpu/drm/amd/amdgpu/soc21.c
++++ b/drivers/gpu/drm/amd/amdgpu/soc21.c
+@@ -225,7 +225,13 @@ static u32 soc21_get_config_memsize(stru
  
-+static void imx_tve_put_device(void *_dev)
-+{
-+	struct device *dev = _dev;
-+
-+	put_device(dev);
-+}
-+
- static int imx_tve_probe(struct platform_device *pdev)
+ static u32 soc21_get_xclk(struct amdgpu_device *adev)
  {
- 	struct device *dev = &pdev->dev;
-@@ -540,6 +547,12 @@ static int imx_tve_probe(struct platform
- 	if (ddc_node) {
- 		tve->ddc = of_find_i2c_adapter_by_node(ddc_node);
- 		of_node_put(ddc_node);
-+		if (tve->ddc) {
-+			ret = devm_add_action_or_reset(dev, imx_tve_put_device,
-+						       &tve->ddc->dev);
-+			if (ret)
-+				return ret;
-+		}
- 	}
+-	return adev->clock.spll.reference_freq;
++	u32 reference_clock = adev->clock.spll.reference_freq;
++
++	/* reference clock is actually 99.81 Mhz rather than 100 Mhz */
++	if ((adev->flags & AMD_IS_APU) && reference_clock == 10000)
++		return 9981;
++
++	return reference_clock;
+ }
  
- 	tve->mode = of_get_tve_mode(np);
+ 
 
 
