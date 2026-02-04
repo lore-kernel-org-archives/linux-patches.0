@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F71F2417E0;
-	Wed,  4 Feb 2026 15:29:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 262652BD02A;
+	Wed,  4 Feb 2026 15:29:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770218955; cv=none; b=Bc5szAt48pgZOMQv3+fFgMMdWRISHdR9/ML3lxXIyub6XtxJAOX1X0vMu+TGP4TRW8eLX6JIKb2WpI3pWfHAkoHxuJis/iMXwR8xF9nbNxoki2A/UGdYVEBwl/4py70eQa23Y0zdXNzEyP7DBFaQVxnBfIWsp/5kU7zWKb/k0Os=
+	t=1770218958; cv=none; b=tuTXaZwwXcCA7qoT4LDJz28mPwGUOnPjhmqqDdZpBFTMHM86Hy34xCMd7FviHAQp6DJIoAS26krbyeoRiiMNw3sIqU7QnG/g3Y2CQ2CwsPwXtU3bf4xO3oiq6UJG1tev4QeECiikEIo4D2SRQt0I/d9JrL5ZixYw+NGRuxNHg+U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770218955; c=relaxed/simple;
-	bh=6RBG54rI1LSoBLS76gXxRCTDScRJ3CD/WzEug+YcZyY=;
+	s=arc-20240116; t=1770218958; c=relaxed/simple;
+	bh=eyp1pEctYUKnMU7gJNTGNbjLx6U5Q5QlLC4lNbm8x4Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EoRMzSK8xsf4cLh5bFfEcCxEEL5Uii4eI3AAW9JCK7TWDEmg81lrDt+ZzQ35dpPgAjozxO1gAWDaiaM6JQadSXJUp77Kt4zXZfKCBZ3dc8+iG8xNA+7Dq4oHTKr0bt2SVCiNAbWkOMRUb4FlYDcvwpRXe9JFMGesD18MGBBcHAM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PCbDzOnu; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=DsWdAe7+BTXghCsuMxGJkqnTT8/AOucfkXTzxIorSHxF3KLL+uj/dUQwwGz8cTPbkwPWs6/62L1OH9e/9XD8HW9k1ydPFKI0ZkZ0rmWB/DrwjvalShIJ04DXN44GCW8tInoAPF7PoxeCcswnHuYez8+XWWx1kAbH8tHrlmDGTgk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=D6J4PQT1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PCbDzOnu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 931CFC4CEF7;
-	Wed,  4 Feb 2026 15:29:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="D6J4PQT1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8DF8CC4CEF7;
+	Wed,  4 Feb 2026 15:29:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770218954;
-	bh=6RBG54rI1LSoBLS76gXxRCTDScRJ3CD/WzEug+YcZyY=;
+	s=korg; t=1770218958;
+	bh=eyp1pEctYUKnMU7gJNTGNbjLx6U5Q5QlLC4lNbm8x4Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PCbDzOnusUajjIgecuPkTXEuY6UAUTJWxH1HApn49Wk4dEgoI86FbOpHe0Ltn/Gql
-	 9EZdM4pdEBYw/HoebnRpTcdvnWWCFWB4P7Kgiga9MRwLBQF2jb2mv5bzVMXrDjCBQO
-	 FKCF+XOP2o4/2OdVIZx4HhbT94iHHlQgbeX5nRfc=
+	b=D6J4PQT1zCHoEk+bZjSJtwwcclD7mt6J744XtJEYbnWx+O5JS1cSFzRpJU6UVX8+z
+	 dxbVITz8FpSySmDoBssLQ1bVOlf1QRLz263dVLDe9D56W8OEdhSfbBo3ekoaYht3I4
+	 t8Hs7fmfR3iJNr6vft4erBsDP6q2dlHD60VT6OoE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jianpeng Chang <jianpeng.chang.cn@windriver.com>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Zilin Guan <zilin@seu.edu.cn>,
+	Tariq Toukan <tariqt@nvidia.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 005/122] Bluetooth: MGMT: Fix memory leak in set_ssp_complete
-Date: Wed,  4 Feb 2026 15:39:47 +0100
-Message-ID: <20260204143852.057467266@linuxfoundation.org>
+Subject: [PATCH 6.18 006/122] net/mlx5: Fix memory leak in esw_acl_ingress_lgcy_setup()
+Date: Wed,  4 Feb 2026 15:39:48 +0100
+Message-ID: <20260204143852.092831869@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260204143851.857060534@linuxfoundation.org>
 References: <20260204143851.857060534@linuxfoundation.org>
@@ -51,61 +52,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jianpeng Chang <jianpeng.chang.cn@windriver.com>
+From: Zilin Guan <zilin@seu.edu.cn>
 
-[ Upstream commit 1b9c17fd0a7fdcbe69ec5d6fe8e50bc5ed7f01f2 ]
+[ Upstream commit 108948f723b13874b7ebf6b3f1cc598a7de38622 ]
 
-Fix memory leak in set_ssp_complete() where mgmt_pending_cmd structures
-are not freed after being removed from the pending list.
+In esw_acl_ingress_lgcy_setup(), if esw_acl_table_create() fails,
+the function returns directly without releasing the previously
+created counter, leading to a memory leak.
 
-Commit 302a1f674c00 ("Bluetooth: MGMT: Fix possible UAFs") replaced
-mgmt_pending_foreach() calls with individual command handling but missed
-adding mgmt_pending_free() calls in both error and success paths of
-set_ssp_complete(). Other completion functions like set_le_complete()
-were fixed correctly in the same commit.
+Fix this by jumping to the out label instead of returning directly,
+which aligns with the error handling logic of other paths in this
+function.
 
-This causes a memory leak of the mgmt_pending_cmd structure and its
-associated parameter data for each SSP command that completes.
+Compile tested only. Issue found using a prototype static analysis tool
+and code review.
 
-Add the missing mgmt_pending_free(cmd) calls in both code paths to fix
-the memory leak. Also fix the same issue in set_advertising_complete().
-
-Fixes: 302a1f674c00 ("Bluetooth: MGMT: Fix possible UAFs")
-Signed-off-by: Jianpeng Chang <jianpeng.chang.cn@windriver.com>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Fixes: 07bab9502641 ("net/mlx5: E-Switch, Refactor eswitch ingress acl codes")
+Signed-off-by: Zilin Guan <zilin@seu.edu.cn>
+Reviewed-by: Tariq Toukan <tariqt@nvidia.com>
+Link: https://patch.msgid.link/20260120134640.2717808-1-zilin@seu.edu.cn
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/mgmt.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/net/ethernet/mellanox/mlx5/core/esw/acl/ingress_lgcy.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/bluetooth/mgmt.c b/net/bluetooth/mgmt.c
-index 211951eb832af..ee2dd26b1b82b 100644
---- a/net/bluetooth/mgmt.c
-+++ b/net/bluetooth/mgmt.c
-@@ -1954,6 +1954,7 @@ static void set_ssp_complete(struct hci_dev *hdev, void *data, int err)
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/esw/acl/ingress_lgcy.c b/drivers/net/ethernet/mellanox/mlx5/core/esw/acl/ingress_lgcy.c
+index 1c37098e09ea5..49a637829c594 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/esw/acl/ingress_lgcy.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/esw/acl/ingress_lgcy.c
+@@ -188,7 +188,7 @@ int esw_acl_ingress_lgcy_setup(struct mlx5_eswitch *esw,
+ 		if (IS_ERR(vport->ingress.acl)) {
+ 			err = PTR_ERR(vport->ingress.acl);
+ 			vport->ingress.acl = NULL;
+-			return err;
++			goto out;
  		}
  
- 		mgmt_cmd_status(cmd->sk, cmd->hdev->id, cmd->opcode, mgmt_err);
-+		mgmt_pending_free(cmd);
- 		return;
- 	}
- 
-@@ -1972,6 +1973,7 @@ static void set_ssp_complete(struct hci_dev *hdev, void *data, int err)
- 		sock_put(match.sk);
- 
- 	hci_update_eir_sync(hdev);
-+	mgmt_pending_free(cmd);
- }
- 
- static int set_ssp_sync(struct hci_dev *hdev, void *data)
-@@ -6356,6 +6358,7 @@ static void set_advertising_complete(struct hci_dev *hdev, void *data, int err)
- 		hci_dev_clear_flag(hdev, HCI_ADVERTISING);
- 
- 	settings_rsp(cmd, &match);
-+	mgmt_pending_free(cmd);
- 
- 	new_settings(hdev, match.sk);
- 
+ 		err = esw_acl_ingress_lgcy_groups_create(esw, vport);
 -- 
 2.51.0
 
