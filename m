@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D92A221F17;
-	Wed,  4 Feb 2026 14:47:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 160A1221F17;
+	Wed,  4 Feb 2026 14:47:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770216457; cv=none; b=cxbRfZqbLqGyAOMM4IJk0T/uA0IUpromK3C9veYCPjvtCVpbaGXUuBWtP5WUswVJmnX1B5Mq2E0FRt4whQJ5im546w1l9/ue5049/eqby03k7b4t8Rykpw49tooex3TxbUUsOYvFd6i0vEpdLd4G7FElrR2cLt6w59W9gKTeQJc=
+	t=1770216461; cv=none; b=cqI5DUr2ojpjXIKjIV7su7lxw0texlnp1ZqfTLybVNRW2xq5SGYUT9EwR6zfbY3LUGoeVSyCJ/H9xnaqMhqSFJIBIEjPQOkAxJx4/70bICuO1D/4PH8ODe+zBA3xIvSj8e00LfQxFMR4LML/W5Du1A3OirpdNrX0tJNQ49CcN4w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770216457; c=relaxed/simple;
-	bh=lUQqjUfi1OlME1FKaHTcsqp+a5OlC3FCaegi4Ncdjv0=;
+	s=arc-20240116; t=1770216461; c=relaxed/simple;
+	bh=bw3DrZXnAfcGWsAtlAtraSMNJb3z/saVPQ3/RtwIWGE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uVCcNwUu7MBK+gC1RLoaxkKvjIWhdSlDuSdZU1nBRs/xDZHyni7abIK4KXUqzyzd7r1SVI31M9coqbezaEbBAW15kDtV3xMiQk0Ei8Sim6uj9rnzqFlkiZWLeILbAkepLezXMdlJhLkiSyHjeqRzPtCPO7XeZLwXKB0rhBGcTxM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0zKYe2Ij; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=f5M39XTam+/6dvWfk9fdZ9wf13Jl99QNbBzybhPg8KpJFiBg+KLBSI/MMlzxbMSBIBeqxqsWmQATf5g1iZ1B4UEM7235yrcE1LeuCiiP+TTZwjfOE9tbsZK5jBbMdOyCfPg916/zgtJe7PBr+xp+Rmnsfh7+JbKPR3dobDZqrO8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kQ++2q+y; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0zKYe2Ij"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 997D0C4CEF7;
-	Wed,  4 Feb 2026 14:47:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kQ++2q+y"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1DD13C4CEF7;
+	Wed,  4 Feb 2026 14:47:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770216457;
-	bh=lUQqjUfi1OlME1FKaHTcsqp+a5OlC3FCaegi4Ncdjv0=;
+	s=korg; t=1770216460;
+	bh=bw3DrZXnAfcGWsAtlAtraSMNJb3z/saVPQ3/RtwIWGE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0zKYe2Ij5qzMjro2th0rJnnmU08L0FZdLxzKC2xYMZMtr2zMs7KyMd6tZhR5BCSej
-	 +9hH9I224uIJfRcW/EtSavfiiWfhgNjhqm5zIcsVithEk+DYvgXKjYks+U+xQkiwJE
-	 0wtTrNy8jo1CAE9wpQfoVM42eYuofSW8PvUM9vBI=
+	b=kQ++2q+yvbNkuYlTPbGQ+poo4H72nN23NBqe7bjRKH0QOqsj+HlXne9lFLtofE72o
+	 tABxIROZ1yt8hNOtumvTdUeVoLlkI+2YDR0wpGQIw+bu0v4IV9pa9fP9ScLCfD26T4
+	 UejUVqU8kMEx8ATm89k2d7mewclmnpuNqtO0j/+E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Salvatore Bonaccorso <carnil@debian.org>,
-	Karsten Hohmeier <linux@hohmatik.de>,
+	Andrey Konovalov <andreyknvl@gmail.com>,
+	Berk Cem Goksel <berkcgoksel@gmail.com>,
 	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 5.10 092/161] ALSA: ctxfi: Fix potential OOB access in audio mixer handling
-Date: Wed,  4 Feb 2026 15:39:15 +0100
-Message-ID: <20260204143855.055475328@linuxfoundation.org>
+Subject: [PATCH 5.10 093/161] ALSA: usb-audio: Fix use-after-free in snd_usb_mixer_free()
+Date: Wed,  4 Feb 2026 15:39:16 +0100
+Message-ID: <20260204143855.091018060@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260204143851.755002596@linuxfoundation.org>
 References: <20260204143851.755002596@linuxfoundation.org>
@@ -51,54 +51,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Takashi Iwai <tiwai@suse.de>
+From: Berk Cem Goksel <berkcgoksel@gmail.com>
 
-commit 61006c540cbdedea83b05577dc7fb7fa18fe1276 upstream.
+commit 930e69757b74c3ae083b0c3c7419bfe7f0edc7b2 upstream.
 
-In the audio mixer handling code of ctxfi driver, the conf field is
-used as a kind of loop index, and it's referred in the index callbacks
-(amixer_index() and sum_index()).
+When snd_usb_create_mixer() fails, snd_usb_mixer_free() frees
+mixer->id_elems but the controls already added to the card still
+reference the freed memory. Later when snd_card_register() runs,
+the OSS mixer layer calls their callbacks and hits a use-after-free read.
 
-As spotted recently by fuzzers, the current code causes OOB access at
-those functions.
-| UBSAN: array-index-out-of-bounds in /build/reproducible-path/linux-6.17.8/sound/pci/ctxfi/ctamixer.c:347:48
-| index 8 is out of range for type 'unsigned char [8]'
+Call trace:
+  get_ctl_value+0x63f/0x820 sound/usb/mixer.c:411
+  get_min_max_with_quirks.isra.0+0x240/0x1f40 sound/usb/mixer.c:1241
+  mixer_ctl_feature_info+0x26b/0x490 sound/usb/mixer.c:1381
+  snd_mixer_oss_build_test+0x174/0x3a0 sound/core/oss/mixer_oss.c:887
+  ...
+  snd_card_register+0x4ed/0x6d0 sound/core/init.c:923
+  usb_audio_probe+0x5ef/0x2a90 sound/usb/card.c:1025
 
-After the analysis, the cause was found to be the lack of the proper
-(re-)initialization of conj field.
+Fix by calling snd_ctl_remove() for all mixer controls before freeing
+id_elems. We save the next pointer first because snd_ctl_remove()
+frees the current element.
 
-This patch addresses those OOB accesses by adding the proper
-initializations of the loop indices.
-
-Reported-by: Salvatore Bonaccorso <carnil@debian.org>
-Tested-by: Karsten Hohmeier <linux@hohmatik.de>
-Closes: https://bugs.debian.org/1121535
-Cc: <stable@vger.kernel.org>
-Link: https://lore.kernel.org/all/aSk8KJI35H7gFru6@eldamar.lan/
-Link: https://patch.msgid.link/20260119133212.189129-1-tiwai@suse.de
+Fixes: 6639b6c2367f ("[ALSA] usb-audio - add mixer control notifications")
+Cc: stable@vger.kernel.org
+Cc: Andrey Konovalov <andreyknvl@gmail.com>
+Signed-off-by: Berk Cem Goksel <berkcgoksel@gmail.com>
+Link: https://patch.msgid.link/20260120102855.7300-1-berkcgoksel@gmail.com
 Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/pci/ctxfi/ctamixer.c |    2 ++
- 1 file changed, 2 insertions(+)
+ sound/usb/mixer.c |   15 ++++++++++++++-
+ 1 file changed, 14 insertions(+), 1 deletion(-)
 
---- a/sound/pci/ctxfi/ctamixer.c
-+++ b/sound/pci/ctxfi/ctamixer.c
-@@ -205,6 +205,7 @@ static int amixer_rsc_init(struct amixer
+--- a/sound/usb/mixer.c
++++ b/sound/usb/mixer.c
+@@ -2858,10 +2858,23 @@ static int parse_audio_unit(struct mixer
  
- 	/* Set amixer specific operations */
- 	amixer->rsc.ops = &amixer_basic_rsc_ops;
-+	amixer->rsc.conj = 0;
- 	amixer->ops = &amixer_ops;
- 	amixer->input = NULL;
- 	amixer->sum = NULL;
-@@ -369,6 +370,7 @@ static int sum_rsc_init(struct sum *sum,
- 		return err;
+ static void snd_usb_mixer_free(struct usb_mixer_interface *mixer)
+ {
++	struct usb_mixer_elem_list *list, *next;
++	int id;
++
+ 	/* kill pending URBs */
+ 	snd_usb_mixer_disconnect(mixer);
  
- 	sum->rsc.ops = &sum_basic_rsc_ops;
-+	sum->rsc.conj = 0;
- 
- 	return 0;
- }
+-	kfree(mixer->id_elems);
++	/* Unregister controls first, snd_ctl_remove() frees the element */
++	if (mixer->id_elems) {
++		for (id = 0; id < MAX_ID_ELEMS; id++) {
++			for (list = mixer->id_elems[id]; list; list = next) {
++				next = list->next_id_elem;
++				if (list->kctl)
++					snd_ctl_remove(mixer->chip->card, list->kctl);
++			}
++		}
++		kfree(mixer->id_elems);
++	}
+ 	if (mixer->urb) {
+ 		kfree(mixer->urb->transfer_buffer);
+ 		usb_free_urb(mixer->urb);
 
 
