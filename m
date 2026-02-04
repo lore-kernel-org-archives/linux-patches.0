@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C062218859B;
-	Wed,  4 Feb 2026 15:15:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B3E718859B;
+	Wed,  4 Feb 2026 15:15:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770218152; cv=none; b=D17AhqPT9/9h2DRLNbWZ2Leffac3I+Yu1PX1p2JIKL/+Hz1lvKyTdI0UP6KJ5LkKxwwVrhhvhAQM4dU0vgBACI9+H0m0GAVk//qlG4sf4DjXODtmQVV2rEGTEETG/L237122v1KTffbM+ABdV6utucdgM6EzGGgPU7RHOnojYGo=
+	t=1770218156; cv=none; b=IPiZBSBb/6m2y0acNMYt4TZ6oxfLdstg+H+bpYfnxYTlkIJh4Ze88pR7YDQ0+4su3mS+MXtS3okTBf+eI7psvTLwYMnEAsU5BqGZeUpqaeNWztNhOWUj9RmU0wEqzatohVyu3wpnuZy3tnSTGtt5KOPyWM2+rbRTtMXUCD3Hj34=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770218152; c=relaxed/simple;
-	bh=PofuUck1i57DKHqT+dFF/Dq7H3+haRm99XXHJ9Og47A=;
+	s=arc-20240116; t=1770218156; c=relaxed/simple;
+	bh=IrsmqFrraKSC5+OAk0m4y9OWJp6nWwP/qcax3bD/5fg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EoQk4BTMmzV9triRmF3GEq6XQuuzXPvLc+NuGO2SPxhBAekDaHEVej/ZSlP5vmcCw3ffZTmdwVojmCUgb6WcArQGtkyZhBAOlzMl7xFcQJt+YOK+RGBrv9hPILPZ6Cgh/Gr6iE4klEUfARkkRNv0UwhyaguWjv2WSlEy6gSMFvk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lJOITvdg; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=huKBHxyX3PXdrcli4KDBmOvmmdJXVlvLPDy9qQwqVTYwtCXpxAY2aY7KhLhpJ2NUPdRxasyBZVT6qQKCNU2tTnE1inUpj6GeyKFzu2LGfVyGqdSXuG2jjmnqwscXhaSJeH7OluBNSGHVg/YZsPXD1iVVdqoSD6TcTb7uNuiFH70=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Q8kOdxB2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lJOITvdg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30B21C4CEF7;
-	Wed,  4 Feb 2026 15:15:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Q8kOdxB2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A351EC4CEF7;
+	Wed,  4 Feb 2026 15:15:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770218152;
-	bh=PofuUck1i57DKHqT+dFF/Dq7H3+haRm99XXHJ9Og47A=;
+	s=korg; t=1770218156;
+	bh=IrsmqFrraKSC5+OAk0m4y9OWJp6nWwP/qcax3bD/5fg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lJOITvdgC7g2bjDicrTRJLjlIai30kFUOYk96q9JJUoBVZYYxxVuRbR73CLWk43rC
-	 rohuFEStpjZrfZEb/25vw5KmDPpp+EOBNqVc/5sVgrD12imwSzu1KnqCy7vwcphi1P
-	 GBsVRBqBv+ADArFG5RzUxGDrekzYImQzgdftCHog=
+	b=Q8kOdxB2phNdipHpgnvYqW/0t7CczURfmcgaYDOo+kR2LAj0bayLXgJjlJXTlqx0d
+	 B99dV/nTq4LM2bjxet5Q/VJy1dDxhFXJ7UMrhKBsCKEdBj8JBSEPVG/vix1xzfA92J
+	 zgHzYDD8Ej/6OQqo2F8Yf56WfCQyrjsou8KZAbg4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pierre-Yves MORDRET <pierre-yves.mordret@foss.st.com>,
-	Johan Hovold <johan@kernel.org>,
-	Amelie Delaunay <amelie.delaunay@foss.st.com>,
-	Vinod Koul <vkoul@kernel.org>,
+	Ryan Roberts <ryan.roberts@arm.com>,
+	Alexander Potapenko <glider@google.com>,
+	Dmitriy Vyukov <dvyukov@google.com>,
+	Marco Elver <elver@google.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 226/280] dmaengine: stm32: dmamux: fix device leak on route allocation
-Date: Wed,  4 Feb 2026 15:40:00 +0100
-Message-ID: <20260204143917.747046745@linuxfoundation.org>
+Subject: [PATCH 6.1 227/280] mm: kmsan: fix poisoning of high-order non-compound pages
+Date: Wed,  4 Feb 2026 15:40:01 +0100
+Message-ID: <20260204143917.784992942@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260204143909.614719725@linuxfoundation.org>
 References: <20260204143909.614719725@linuxfoundation.org>
@@ -53,88 +54,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johan Hovold <johan@kernel.org>
+From: Ryan Roberts <ryan.roberts@arm.com>
 
-[ Upstream commit dd6e4943889fb354efa3f700e42739da9bddb6ef ]
+[ Upstream commit 4795d205d78690a46b60164f44b8bb7b3e800865 ]
 
-Make sure to drop the reference taken when looking up the DMA mux
-platform device during route allocation.
+kmsan_free_page() is called by the page allocator's free_pages_prepare()
+during page freeing.  Its job is to poison all the memory covered by the
+page.  It can be called with an order-0 page, a compound high-order page
+or a non-compound high-order page.  But page_size() only works for order-0
+and compound pages.  For a non-compound high-order page it will
+incorrectly return PAGE_SIZE.
 
-Note that holding a reference to a device does not prevent its driver
-data from going away so there is no point in keeping the reference.
+The implication is that the tail pages of a high-order non-compound page
+do not get poisoned at free, so any invalid access while they are free
+could go unnoticed.  It looks like the pages will be poisoned again at
+allocation time, so that would bookend the window.
 
-Fixes: df7e762db5f6 ("dmaengine: Add STM32 DMAMUX driver")
-Cc: stable@vger.kernel.org	# 4.15
-Cc: Pierre-Yves MORDRET <pierre-yves.mordret@foss.st.com>
-Signed-off-by: Johan Hovold <johan@kernel.org>
-Reviewed-by: Amelie Delaunay <amelie.delaunay@foss.st.com>
-Link: https://patch.msgid.link/20251117161258.10679-11-johan@kernel.org
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Fix this by using the order parameter to calculate the size.
+
+Link: https://lkml.kernel.org/r/20260104134348.3544298-1-ryan.roberts@arm.com
+Fixes: b073d7f8aee4 ("mm: kmsan: maintain KMSAN metadata for page operations")
+Signed-off-by: Ryan Roberts <ryan.roberts@arm.com>
+Reviewed-by: Alexander Potapenko <glider@google.com>
+Tested-by: Alexander Potapenko <glider@google.com>
+Cc: Dmitriy Vyukov <dvyukov@google.com>
+Cc: Dmitry Vyukov <dvyukov@google.com>
+Cc: Marco Elver <elver@google.com>
+Cc: Ryan Roberts <ryan.roberts@arm.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/dma/stm32-dmamux.c |   18 ++++++++++++------
- 1 file changed, 12 insertions(+), 6 deletions(-)
+ mm/kmsan/shadow.c |    3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
---- a/drivers/dma/stm32-dmamux.c
-+++ b/drivers/dma/stm32-dmamux.c
-@@ -88,23 +88,25 @@ static void *stm32_dmamux_route_allocate
- 	struct stm32_dmamux_data *dmamux = platform_get_drvdata(pdev);
- 	struct stm32_dmamux *mux;
- 	u32 i, min, max;
--	int ret;
-+	int ret = -EINVAL;
- 	unsigned long flags;
- 
- 	if (dma_spec->args_count != 3) {
- 		dev_err(&pdev->dev, "invalid number of dma mux args\n");
--		return ERR_PTR(-EINVAL);
-+		goto err_put_pdev;
- 	}
- 
- 	if (dma_spec->args[0] > dmamux->dmamux_requests) {
- 		dev_err(&pdev->dev, "invalid mux request number: %d\n",
- 			dma_spec->args[0]);
--		return ERR_PTR(-EINVAL);
-+		goto err_put_pdev;
- 	}
- 
- 	mux = kzalloc(sizeof(*mux), GFP_KERNEL);
--	if (!mux)
--		return ERR_PTR(-ENOMEM);
-+	if (!mux) {
-+		ret = -ENOMEM;
-+		goto err_put_pdev;
-+	}
- 
- 	spin_lock_irqsave(&dmamux->lock, flags);
- 	mux->chan_id = find_first_zero_bit(dmamux->dma_inuse,
-@@ -131,7 +133,6 @@ static void *stm32_dmamux_route_allocate
- 	dma_spec->np = of_parse_phandle(ofdma->of_node, "dma-masters", i - 1);
- 	if (!dma_spec->np) {
- 		dev_err(&pdev->dev, "can't get dma master\n");
--		ret = -EINVAL;
- 		goto error;
- 	}
- 
-@@ -158,6 +159,8 @@ static void *stm32_dmamux_route_allocate
- 	dev_dbg(&pdev->dev, "Mapping DMAMUX(%u) to DMA%u(%u)\n",
- 		mux->request, mux->master, mux->chan_id);
- 
-+	put_device(&pdev->dev);
-+
- 	return mux;
- 
- err_put_dma_spec_np:
-@@ -167,6 +170,9 @@ error:
- 
- error_chan_id:
- 	kfree(mux);
-+err_put_pdev:
-+	put_device(&pdev->dev);
-+
- 	return ERR_PTR(ret);
- }
- 
+--- a/mm/kmsan/shadow.c
++++ b/mm/kmsan/shadow.c
+@@ -209,8 +209,7 @@ void kmsan_free_page(struct page *page,
+ 	if (!kmsan_enabled || kmsan_in_runtime())
+ 		return;
+ 	kmsan_enter_runtime();
+-	kmsan_internal_poison_memory(page_address(page),
+-				     PAGE_SIZE << compound_order(page),
++	kmsan_internal_poison_memory(page_address(page), PAGE_SIZE << order,
+ 				     GFP_KERNEL,
+ 				     KMSAN_POISON_CHECK | KMSAN_POISON_FREE);
+ 	kmsan_leave_runtime();
 
 
