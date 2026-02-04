@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87CBD284B37;
-	Wed,  4 Feb 2026 15:21:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA54C27F163;
+	Wed,  4 Feb 2026 15:21:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770218509; cv=none; b=KSF/Hvy06iS0N1i4L0m1yJkqyWY0oLNhLC+7ZHVFfOIgFV70c+yPCROYwdDMlkkxWeboJBGg8h2g1f8Dp5QTKGxDyXpWKqsi4fOOIIxajblpaY8h2Ysav6nKa4/TOxRAde4Hg/4wiVDM7KXGNR3yeYnqkGXN3wt/tMMO/dgnTSA=
+	t=1770218512; cv=none; b=QLWumPDj7nmw1HwWOkfMDpmfGgzT+Yzgm7DLB5Eg/lKKmqnuz/jsUXDPz4aqfohrrkLcWYzSbjPi/GbUIbBOE2z9M3+eY1b+Rc/d5Zi3t0RwxCPiUikfUXUAk8UAZLeB0vySdOkFWK5QG0vHOybo+0WO/10koWOq6J0l7Ja/7GY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770218509; c=relaxed/simple;
-	bh=oWB+rhjTGfJ9rz4XpAFl5bjn3oZj0tOd2AAjxNSHPc0=;
+	s=arc-20240116; t=1770218512; c=relaxed/simple;
+	bh=m960e9P1Mc/aFZOn5mTutKgDEoiaXzTeKx8JwlhcU1M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PRqmJRkvbUvmOnxT1HPBEnhGyYiepKOeJhJjyMych3yAxfTNGSTJwl+YcqILFQJZ5fmYnc+OvRYIfqh7ZZm7ycCRIFKlo/rH2EGmBN+/JdhG67v7FrxwQ/wUm8DEXZ8tFqLpislYhn68lkz4Kta05rFC4/DXvwG1ELmlY1hX+nE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=M8ho9wDK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GLb6EcUIfzR5994BiI+UHmx5cW4oVhxxhWsS2xHCzTbd0h+P3mO7RbJXNYibLG97a2U9M61DCaec2Fi4rfcrBXRRuJ6q9jqtTnzcwCIEjo573+xYXfB3dhgM/CUrDW1QRrUQuD7wNZOg+9CYUfr/oW2/eZaNJYiV+AtZc/bBsQM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hnzNLeJG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="M8ho9wDK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10044C4CEF7;
-	Wed,  4 Feb 2026 15:21:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hnzNLeJG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 388B6C4CEF7;
+	Wed,  4 Feb 2026 15:21:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770218509;
-	bh=oWB+rhjTGfJ9rz4XpAFl5bjn3oZj0tOd2AAjxNSHPc0=;
+	s=korg; t=1770218512;
+	bh=m960e9P1Mc/aFZOn5mTutKgDEoiaXzTeKx8JwlhcU1M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=M8ho9wDKShym+cUdXEiCSLeWDqCTObDmotfBZKOgW6fiiVr8xw5tvDPecPuoMXrId
-	 JzgrC2G4neOqEkAWJLz5TDaFGPPn+TS0mZM/mv1Z5omQd0myVWm3vp6hr77L2qn58q
-	 o4vE3/3iAxk7NGVboUiYoZnwkPvp0GtLmpBwlKz4=
+	b=hnzNLeJGf3JWkk/I/M4Gaxe0KFKuWiLQcQX8DCUCAKBjPR/YrQrEnTvH9/Shh1P8+
+	 d5b63GdAZ4Oez9CqFO6Adx+Rl9TgeOAvtMgOU1UYnYU3OI856FT1CPqqmMx6ArTgPh
+	 u8JCSU6oOaxGbYJn6DpLJg4OBrjlW51ymMwVElhk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kang Yang <quic_kangyang@quicinc.com>,
-	Jeff Johnson <quic_jjohnson@quicinc.com>,
-	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
-	Li hongliang <1468888505@139.com>
-Subject: [PATCH 6.6 52/72] wifi: ath11k: add srng->lock for ath11k_hal_srng_* in monitor mode
-Date: Wed,  4 Feb 2026 15:40:55 +0100
-Message-ID: <20260204143847.518125589@linuxfoundation.org>
+	syzbot+a2a3b519de727b0f7903@syzkaller.appspotmail.com,
+	"Nikola Z. Ivanov" <zlatistiv@gmail.com>,
+	Jiri Pirko <jiri@nvidia.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Rahul Sharma <black.hawk@163.com>
+Subject: [PATCH 6.6 53/72] team: Move team device type change at the end of team_port_add
+Date: Wed,  4 Feb 2026 15:40:56 +0100
+Message-ID: <20260204143847.555430569@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260204143845.603454952@linuxfoundation.org>
 References: <20260204143845.603454952@linuxfoundation.org>
@@ -52,102 +53,114 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kang Yang <quic_kangyang@quicinc.com>
+From: "Nikola Z. Ivanov" <zlatistiv@gmail.com>
 
-[ Upstream commit 63b7af49496d0e32f7a748b6af3361ec138b1bd3 ]
+[ Upstream commit 0ae9cfc454ea5ead5f3ddbdfe2e70270d8e2c8ef ]
 
-ath11k_hal_srng_* should be used with srng->lock to protect srng data.
+Attempting to add a port device that is already up will expectedly fail,
+but not before modifying the team device header_ops.
 
-For ath11k_dp_rx_mon_dest_process() and ath11k_dp_full_mon_process_rx(),
-they use ath11k_hal_srng_* for many times but never call srng->lock.
+In the case of the syzbot reproducer the gre0 device is
+already in state UP when it attempts to add it as a
+port device of team0, this fails but before that
+header_ops->create of team0 is changed from eth_header to ipgre_header
+in the call to team_dev_type_check_change.
 
-So when running (full) monitor mode, warning will occur:
-RIP: 0010:ath11k_hal_srng_dst_peek+0x18/0x30 [ath11k]
-Call Trace:
- ? ath11k_hal_srng_dst_peek+0x18/0x30 [ath11k]
- ath11k_dp_rx_process_mon_status+0xc45/0x1190 [ath11k]
- ? idr_alloc_u32+0x97/0xd0
- ath11k_dp_rx_process_mon_rings+0x32a/0x550 [ath11k]
- ath11k_dp_service_srng+0x289/0x5a0 [ath11k]
- ath11k_pcic_ext_grp_napi_poll+0x30/0xd0 [ath11k]
- __napi_poll+0x30/0x1f0
- net_rx_action+0x198/0x320
- __do_softirq+0xdd/0x319
+Later when we end up in ipgre_header() struct ip_tunnel* points to nonsense
+as the private data of the device still holds a struct team.
 
-So add srng->lock for them to avoid such warnings.
+Example sequence of iproute2 commands to reproduce the hang/BUG():
+ip link add dev team0 type team
+ip link add dev gre0 type gre
+ip link set dev gre0 up
+ip link set dev gre0 master team0
+ip link set dev team0 up
+ping -I team0 1.1.1.1
 
-Inorder to fetch the srng->lock, should change srng's definition from
-'void' to 'struct hal_srng'. And initialize them elsewhere to prevent
-one line of code from being too long. This is consistent with other ring
-process functions, such as ath11k_dp_process_rx().
+Move team_dev_type_check_change down where all other checks have passed
+as it changes the dev type with no way to restore it in case
+one of the checks that follow it fail.
 
-Tested-on: WCN6855 hw2.0 PCI WLAN.HSP.1.1-03125-QCAHSPSWPL_V1_V2_SILICONZ_LITE-3.6510.30
-Tested-on: QCN9074 hw1.0 PCI WLAN.HK.2.7.0.1-01744-QCAHKSWPL_SILICONZ-1
+Also make sure to preserve the origial mtu assignment:
+  - If port_dev is not the same type as dev, dev takes mtu from port_dev
+  - If port_dev is the same type as dev, port_dev takes mtu from dev
 
-Fixes: d5c65159f289 ("ath11k: driver for Qualcomm IEEE 802.11ax devices")
-Signed-off-by: Kang Yang <quic_kangyang@quicinc.com>
-Acked-by: Jeff Johnson <quic_jjohnson@quicinc.com>
-Link: https://patch.msgid.link/20241219110531.2096-3-quic_kangyang@quicinc.com
-Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
-Signed-off-by: Li hongliang <1468888505@139.com>
+This is done by adding a conditional before the call to dev_set_mtu
+to prevent it from assigning port_dev->mtu = dev->mtu and instead
+letting team_dev_type_check_change assign dev->mtu = port_dev->mtu.
+The conditional is needed because the patch moves the call to
+team_dev_type_check_change past dev_set_mtu.
+
+Testing:
+  - team device driver in-tree selftests
+  - Add/remove various devices as slaves of team device
+  - syzbot
+
+Reported-by: syzbot+a2a3b519de727b0f7903@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=a2a3b519de727b0f7903
+Fixes: 1d76efe1577b ("team: add support for non-ethernet devices")
+Signed-off-by: Nikola Z. Ivanov <zlatistiv@gmail.com>
+Reviewed-by: Jiri Pirko <jiri@nvidia.com>
+Link: https://patch.msgid.link/20251122002027.695151-1-zlatistiv@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Rahul Sharma <black.hawk@163.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wireless/ath/ath11k/dp_rx.c |   10 ++++++++--
- 1 file changed, 8 insertions(+), 2 deletions(-)
+ drivers/net/team/team.c |   23 +++++++++++++++--------
+ 1 file changed, 15 insertions(+), 8 deletions(-)
 
---- a/drivers/net/wireless/ath/ath11k/dp_rx.c
-+++ b/drivers/net/wireless/ath/ath11k/dp_rx.c
-@@ -5093,7 +5093,7 @@ static void ath11k_dp_rx_mon_dest_proces
- 	struct ath11k_mon_data *pmon = (struct ath11k_mon_data *)&dp->mon_data;
- 	const struct ath11k_hw_hal_params *hal_params;
- 	void *ring_entry;
--	void *mon_dst_srng;
-+	struct hal_srng *mon_dst_srng;
- 	u32 ppdu_id;
- 	u32 rx_bufs_used;
- 	u32 ring_id;
-@@ -5117,6 +5117,7 @@ static void ath11k_dp_rx_mon_dest_proces
- 
- 	spin_lock_bh(&pmon->mon_lock);
- 
-+	spin_lock_bh(&mon_dst_srng->lock);
- 	ath11k_hal_srng_access_begin(ar->ab, mon_dst_srng);
- 
- 	ppdu_id = pmon->mon_ppdu_info.ppdu_id;
-@@ -5175,6 +5176,7 @@ static void ath11k_dp_rx_mon_dest_proces
- 								mon_dst_srng);
- 	}
- 	ath11k_hal_srng_access_end(ar->ab, mon_dst_srng);
-+	spin_unlock_bh(&mon_dst_srng->lock);
- 
- 	spin_unlock_bh(&pmon->mon_lock);
- 
-@@ -5564,7 +5566,7 @@ static int ath11k_dp_full_mon_process_rx
- 	struct hal_sw_mon_ring_entries *sw_mon_entries;
- 	struct ath11k_pdev_mon_stats *rx_mon_stats;
- 	struct sk_buff *head_msdu, *tail_msdu;
--	void *mon_dst_srng = &ar->ab->hal.srng_list[dp->rxdma_mon_dst_ring.ring_id];
-+	struct hal_srng *mon_dst_srng;
- 	void *ring_entry;
- 	u32 rx_bufs_used = 0, mpdu_rx_bufs_used;
- 	int quota = 0, ret;
-@@ -5580,6 +5582,9 @@ static int ath11k_dp_full_mon_process_rx
- 		goto reap_status_ring;
+--- a/drivers/net/team/team.c
++++ b/drivers/net/team/team.c
+@@ -1184,10 +1184,6 @@ static int team_port_add(struct team *te
+ 		return -EPERM;
  	}
  
-+	mon_dst_srng = &ar->ab->hal.srng_list[dp->rxdma_mon_dst_ring.ring_id];
-+	spin_lock_bh(&mon_dst_srng->lock);
+-	err = team_dev_type_check_change(dev, port_dev);
+-	if (err)
+-		return err;
+-
+ 	if (port_dev->flags & IFF_UP) {
+ 		NL_SET_ERR_MSG(extack, "Device is up. Set it down before adding it as a team port");
+ 		netdev_err(dev, "Device %s is up. Set it down before adding it as a team port\n",
+@@ -1205,10 +1201,16 @@ static int team_port_add(struct team *te
+ 	INIT_LIST_HEAD(&port->qom_list);
+ 
+ 	port->orig.mtu = port_dev->mtu;
+-	err = dev_set_mtu(port_dev, dev->mtu);
+-	if (err) {
+-		netdev_dbg(dev, "Error %d calling dev_set_mtu\n", err);
+-		goto err_set_mtu;
++	/*
++	 * MTU assignment will be handled in team_dev_type_check_change
++	 * if dev and port_dev are of different types
++	 */
++	if (dev->type == port_dev->type) {
++		err = dev_set_mtu(port_dev, dev->mtu);
++		if (err) {
++			netdev_dbg(dev, "Error %d calling dev_set_mtu\n", err);
++			goto err_set_mtu;
++		}
+ 	}
+ 
+ 	memcpy(port->orig.dev_addr, port_dev->dev_addr, port_dev->addr_len);
+@@ -1283,6 +1285,10 @@ static int team_port_add(struct team *te
+ 		}
+ 	}
+ 
++	err = team_dev_type_check_change(dev, port_dev);
++	if (err)
++		goto err_set_dev_type;
 +
- 	ath11k_hal_srng_access_begin(ar->ab, mon_dst_srng);
- 	while ((ring_entry = ath11k_hal_srng_dst_peek(ar->ab, mon_dst_srng))) {
- 		head_msdu = NULL;
-@@ -5623,6 +5628,7 @@ next_entry:
- 	}
+ 	if (dev->flags & IFF_UP) {
+ 		netif_addr_lock_bh(dev);
+ 		dev_uc_sync_multiple(port_dev, dev);
+@@ -1301,6 +1307,7 @@ static int team_port_add(struct team *te
  
- 	ath11k_hal_srng_access_end(ar->ab, mon_dst_srng);
-+	spin_unlock_bh(&mon_dst_srng->lock);
- 	spin_unlock_bh(&pmon->mon_lock);
+ 	return 0;
  
- 	if (rx_bufs_used) {
++err_set_dev_type:
+ err_set_slave_promisc:
+ 	__team_option_inst_del_port(team, port);
+ 
 
 
