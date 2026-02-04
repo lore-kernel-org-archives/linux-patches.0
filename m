@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0DD78410D10;
-	Wed,  4 Feb 2026 14:53:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8838841B352;
+	Wed,  4 Feb 2026 14:53:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770216813; cv=none; b=hd2X00sSQ1FTkD8V5m0oRnacC3ikTdxsgITGeGArcWLhKIDu3rVuz2waU5Mlw5dJtS3oXHBt5uh5BGZ9icg3qA9WcIVv03h/N46N1aZaQwuqalknAFkkdzq2MmAVCrTrjFO8sKGGb4Sa+ql2OyKJ0hqYxwk22l8AUJhFa+fD3V0=
+	t=1770216816; cv=none; b=nre2qv0FY2kt5pm8otgmGJ2swSOXja857gMlUtu7RFaTITnutv6GBZ5U0fHCTmMFVHpwtLerDiE7MZ8q1STr6/evRZCJrDgUbvJKWaXNtrQyBDnTN1UKMNVQC0E5k0LNxjmxC3LZU1PagnO/b6VO5RBFtZ/DiaRamkkW1pxQCHg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770216813; c=relaxed/simple;
-	bh=I158yrltoyUFMgsfptMA/xQ4y6uY9eahrj2GqnRBES0=;
+	s=arc-20240116; t=1770216816; c=relaxed/simple;
+	bh=/Yft/O9nqTLU4WNHvSMnxYGrdLygB3hY6WJxJGnxjLA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MwDMmI5FshWgVVppRngBykTEmxRW/dzUcVG6U/9dqdupBD1bhJaVpTV6aJr5tQFkolofGmLioQTm9s8tOQDfFO910yozOLo2qBucVaIisMSypEawALCBTHfJKt/xJM/K+0y2V7OlE6loDOVhN/QVc9FtMFC+S5CVNubZNlZ5s8I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GZ3vyIGh; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Whuh/WSRZdKcVtx1ic4gSH9sfkRQCK1UZ0SWBA16X3Y7PmNLaXADt/Qxj1I747PTc847gBrVt0CXS8KFWU8W9ucTfro30sxzou38/oxLOfvfb4thuV3rJsd0REGpMNrpjiELAgW1bqnpjOvaPFxMl06ZJ3uGRYfStpdOZgIJVGk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=y3i73/1g; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GZ3vyIGh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77949C4CEF7;
-	Wed,  4 Feb 2026 14:53:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="y3i73/1g"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB136C4CEF7;
+	Wed,  4 Feb 2026 14:53:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770216812;
-	bh=I158yrltoyUFMgsfptMA/xQ4y6uY9eahrj2GqnRBES0=;
+	s=korg; t=1770216816;
+	bh=/Yft/O9nqTLU4WNHvSMnxYGrdLygB3hY6WJxJGnxjLA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GZ3vyIGhWXl5Xyaz3CUnnqhP7fcwO1p+/axpMi0X9y/OtIyFVoc193HUFwDSRTF0m
-	 +DGVwbo29UQY7u5xIUFS+9b0M3P9ijtfPZzBw4fI5s8VPf/wlSDo1WMstr1Attou5u
-	 WkEWwr4xvSAwhn8VvPEJUn/iMshrIYsgTSzab290=
+	b=y3i73/1ga27ibfQe4hWceHWyX+oGp8/Ppl7xlSer7oztDODdQlP109nob+l+KK7kU
+	 23uvZM78haZpsa4o/QndKlM0rCCZnOMsEFpHP6VpMoITjCejQgdAJW/b+o6ueFrq3a
+	 IkTOOEH8G3sGQr6eY9LzBEwNMdWidPLEvEvQX9co=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Haotian Zhang <vulab@iscas.ac.cn>,
-	Vinod Koul <vkoul@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 021/206] dmaengine: omap-dma: fix dma_pool resource leak in error paths
-Date: Wed,  4 Feb 2026 15:37:32 +0100
-Message-ID: <20260204143858.966974741@linuxfoundation.org>
+	Xiaochen Shen <shenxiaochen@open-hieco.net>,
+	"Borislav Petkov (AMD)" <bp@alien8.de>,
+	Tony Luck <tony.luck@intel.com>,
+	Reinette Chatre <reinette.chatre@intel.com>
+Subject: [PATCH 5.15 039/206] x86/resctrl: Fix memory bandwidth counter width for Hygon
+Date: Wed,  4 Feb 2026 15:37:50 +0100
+Message-ID: <20260204143859.619873455@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260204143858.193781818@linuxfoundation.org>
 References: <20260204143858.193781818@linuxfoundation.org>
@@ -51,50 +52,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Haotian Zhang <vulab@iscas.ac.cn>
+From: Xiaochen Shen <shenxiaochen@open-hieco.net>
 
-[ Upstream commit 2e1136acf8a8887c29f52e35a77b537309af321f ]
+commit 7517e899e1b87b4c22a92c7e40d8733c48e4ec3c upstream.
 
-The dma_pool created by dma_pool_create() is not destroyed when
-dma_async_device_register() or of_dma_controller_register() fails,
-causing a resource leak in the probe error paths.
+The memory bandwidth calculation relies on reading the hardware counter
+and measuring the delta between samples. To ensure accurate measurement,
+the software reads the counter frequently enough to prevent it from
+rolling over twice between reads.
 
-Add dma_pool_destroy() in both error paths to properly release the
-allocated dma_pool resource.
+The default Memory Bandwidth Monitoring (MBM) counter width is 24 bits.
+Hygon CPUs provide a 32-bit width counter, but they do not support the
+MBM capability CPUID leaf (0xF.[ECX=1]:EAX) to report the width offset
+(from 24 bits).
 
-Fixes: 7bedaa553760 ("dmaengine: add OMAP DMA engine driver")
-Signed-off-by: Haotian Zhang <vulab@iscas.ac.cn>
-Link: https://patch.msgid.link/20251103073018.643-1-vulab@iscas.ac.cn
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Consequently, the kernel falls back to the 24-bit default counter width,
+which causes incorrect overflow handling on Hygon CPUs.
+
+Fix this by explicitly setting the counter width offset to 8 bits (resulting
+in a 32-bit total counter width) for Hygon CPUs.
+
+Fixes: d8df126349da ("x86/cpu/hygon: Add missing resctrl_cpu_detect() in bsp_init helper")
+Signed-off-by: Xiaochen Shen <shenxiaochen@open-hieco.net>
+Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+Reviewed-by: Tony Luck <tony.luck@intel.com>
+Reviewed-by: Reinette Chatre <reinette.chatre@intel.com>
+Cc: stable@vger.kernel.org
+Link: https://patch.msgid.link/20251209062650.1536952-3-shenxiaochen@open-hieco.net
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/dma/ti/omap-dma.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ arch/x86/kernel/cpu/resctrl/core.c     |   15 +++++++++++++--
+ arch/x86/kernel/cpu/resctrl/internal.h |    3 +++
+ 2 files changed, 16 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/dma/ti/omap-dma.c b/drivers/dma/ti/omap-dma.c
-index 7cb577e6587b1..be47a9b8ac96e 100644
---- a/drivers/dma/ti/omap-dma.c
-+++ b/drivers/dma/ti/omap-dma.c
-@@ -1804,6 +1804,8 @@ static int omap_dma_probe(struct platform_device *pdev)
- 	if (rc) {
- 		pr_warn("OMAP-DMA: failed to register slave DMA engine device: %d\n",
- 			rc);
-+		if (od->ll123_supported)
-+			dma_pool_destroy(od->desc_pool);
- 		omap_dma_free(od);
- 		return rc;
+--- a/arch/x86/kernel/cpu/resctrl/core.c
++++ b/arch/x86/kernel/cpu/resctrl/core.c
+@@ -937,8 +937,19 @@ void resctrl_cpu_detect(struct cpuinfo_x
+ 		c->x86_cache_occ_scale = ebx;
+ 		c->x86_cache_mbm_width_offset = eax & 0xff;
+ 
+-		if (c->x86_vendor == X86_VENDOR_AMD && !c->x86_cache_mbm_width_offset)
+-			c->x86_cache_mbm_width_offset = MBM_CNTR_WIDTH_OFFSET_AMD;
++		if (!c->x86_cache_mbm_width_offset) {
++			switch (c->x86_vendor) {
++			case X86_VENDOR_AMD:
++				c->x86_cache_mbm_width_offset = MBM_CNTR_WIDTH_OFFSET_AMD;
++				break;
++			case X86_VENDOR_HYGON:
++				c->x86_cache_mbm_width_offset = MBM_CNTR_WIDTH_OFFSET_HYGON;
++				break;
++			default:
++				/* Leave c->x86_cache_mbm_width_offset as 0 */
++				break;
++			}
++		}
  	}
-@@ -1819,6 +1821,8 @@ static int omap_dma_probe(struct platform_device *pdev)
- 		if (rc) {
- 			pr_warn("OMAP-DMA: failed to register DMA controller\n");
- 			dma_async_device_unregister(&od->ddev);
-+			if (od->ll123_supported)
-+				dma_pool_destroy(od->desc_pool);
- 			omap_dma_free(od);
- 		}
- 	}
--- 
-2.51.0
-
+ }
+ 
+--- a/arch/x86/kernel/cpu/resctrl/internal.h
++++ b/arch/x86/kernel/cpu/resctrl/internal.h
+@@ -40,6 +40,9 @@
+ #define MAX_MBA_BW_AMD			0x800
+ #define MBM_CNTR_WIDTH_OFFSET_AMD	20
+ 
++/* Hygon MBM counter width as an offset from MBM_CNTR_WIDTH_BASE */
++#define MBM_CNTR_WIDTH_OFFSET_HYGON	8
++
+ #define RMID_VAL_ERROR			BIT_ULL(63)
+ #define RMID_VAL_UNAVAIL		BIT_ULL(62)
+ /*
 
 
