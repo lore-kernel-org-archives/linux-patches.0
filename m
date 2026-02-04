@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D429E42848B;
-	Wed,  4 Feb 2026 15:08:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0907642848B;
+	Wed,  4 Feb 2026 15:08:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770217712; cv=none; b=F/o3JK4pF+Gx6yBzQ/zUWe6AwIZd2bY5JuzxxTOSD50ypD8kgQz4/tAPrxaZ2PRSxin16SUabQ1WFSpfJsOJJmQALJKZttfacNdeYbLVakbCBh970OyTlFwS3Q1xKtcQGVaFT4QqEl/spyXOiJzHFb7QiSalA+IvcMKnMKA+pOw=
+	t=1770217716; cv=none; b=nxVzBuEGpRKSchNAzz3NbuheWVyNga/dFa1yTBStQ+SZTkFH8WrNuWi5n4E/8Q1m4cm7YdUPG17nfa7xBGGtQsrrgw5/917Gwwa5oBpG2XN0tMjBXn8uj2PlcwlgOH95tk5gYJ25wY7z0LxQZIRR8PXjQyh6b77+EAyxY3CEvgk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770217712; c=relaxed/simple;
-	bh=b7bQjR2k8ZvrUqmSkTsYkRvPXjwwkrYfJKaj5dTjioY=;
+	s=arc-20240116; t=1770217716; c=relaxed/simple;
+	bh=EfNSAKmyAQfVuP6mZh69QsHEKJ0MRIFFcWbBBNDkldI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=U9j/5RIzB+S2ww7vukyiD6sxM9eeCsiVvo/vVPOvRR50Z4qjXSzdJo4jdivN7IJWSVthSP5zq/cD3/ky3jo2c3CEw0v/Gi3xRvjOni5cWfmcmT5HWI8CzA0WczRS3EP0RWlj9BUeMm84/3l4CXQmwtyFxAQ93jC3wx6FpxE2zHg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=z+IwCSnm; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=krwl8dqsz2sSECACEYS4aEdX4PL9Jyc0gC4pQpWz65hiBqKTsurGe94xo5SJWUg6jB9IxKuQv8ivrCEjEfHQhRXrPO92oU+IxpK7j75rAvgZiAdRJYeFuYTdAaVd30h6HzdEiStaehCkSxzwkfj0Jk4zqKjiTrMf9Tor+YfLBhg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iqBSf6A9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="z+IwCSnm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 52215C4CEF7;
-	Wed,  4 Feb 2026 15:08:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iqBSf6A9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6914AC4CEF7;
+	Wed,  4 Feb 2026 15:08:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770217712;
-	bh=b7bQjR2k8ZvrUqmSkTsYkRvPXjwwkrYfJKaj5dTjioY=;
+	s=korg; t=1770217715;
+	bh=EfNSAKmyAQfVuP6mZh69QsHEKJ0MRIFFcWbBBNDkldI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=z+IwCSnm0IiRaqTwLdZR8YSrtP3R6eO2+vpvik3VPX1itZfgomxQ+4Ve66bPJ3cF1
-	 IzaNQ3CM7EdcSDeLyMssDYZC8fNWXc92Q+j2PwXYyNsWapKCtlQOTSkSr14WZKSXxM
-	 3PpzIKAsMabnDbpneS4z3oz2MjA62Fl+bZLOx8Vs=
+	b=iqBSf6A90qLQ272sQFpqj62Xti80WzjC7LcByJgW4d6PjeSuk7x9WeYux00boUK5f
+	 CINCXPCmPNOlp2eR+nZbJd7+UUGxw6yyXe3504ICMplPMOEmWNqFBSHwS76X2BprRL
+	 xjVVFetVoFGY3aKcaqxO+vr+amW610BMK64iT71g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ethan Nelson-Moore <enelsonmoore@gmail.com>,
-	Peter Korsgaard <peter@korsgaard.com>,
+	syzbot+9c081b17773615f24672@syzkaller.appspotmail.com,
+	Eric Dumazet <edumazet@google.com>,
+	Andrew Lunn <andrew+netdev@lunn.ch>,
+	Jay Vosburgh <jv@jvosburgh.net>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 097/280] net: usb: dm9601: remove broken SR9700 support
-Date: Wed,  4 Feb 2026 15:37:51 +0100
-Message-ID: <20260204143913.143297355@linuxfoundation.org>
+Subject: [PATCH 6.1 098/280] bonding: limit BOND_MODE_8023AD to Ethernet devices
+Date: Wed,  4 Feb 2026 15:37:52 +0100
+Message-ID: <20260204143913.179457754@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260204143909.614719725@linuxfoundation.org>
 References: <20260204143909.614719725@linuxfoundation.org>
@@ -52,51 +54,89 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ethan Nelson-Moore <enelsonmoore@gmail.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 7d7dbafefbe74f5a25efc4807af093b857a7612e ]
+[ Upstream commit c84fcb79e5dbde0b8d5aeeaf04282d2149aebcf6 ]
 
-The SR9700 chip sends more than one packet in a USB transaction,
-like the DM962x chips can optionally do, but the dm9601 driver does not
-support this mode, and the hardware does not have the DM962x
-MODE_CTL register to disable it, so this driver drops packets on SR9700
-devices. The sr9700 driver correctly handles receiving more than one
-packet per transaction.
+BOND_MODE_8023AD makes sense for ARPHRD_ETHER only.
 
-While the dm9601 driver could be improved to handle this, the easiest
-way to fix this issue in the short term is to remove the SR9700 device
-ID from the dm9601 driver so the sr9700 driver is always used. This
-device ID should not have been in more than one driver to begin with.
+syzbot reported:
 
-The "Fixes" commit was chosen so that the patch is automatically
-included in all kernels that have the sr9700 driver, even though the
-issue affects dm9601.
+ BUG: KASAN: global-out-of-bounds in __hw_addr_create net/core/dev_addr_lists.c:63 [inline]
+ BUG: KASAN: global-out-of-bounds in __hw_addr_add_ex+0x25d/0x760 net/core/dev_addr_lists.c:118
+Read of size 16 at addr ffffffff8bf94040 by task syz.1.3580/19497
 
-Fixes: c9b37458e956 ("USB2NET : SR9700 : One chip USB 1.1 USB2NET SR9700Device Driver Support")
-Signed-off-by: Ethan Nelson-Moore <enelsonmoore@gmail.com>
-Acked-by: Peter Korsgaard <peter@korsgaard.com>
-Link: https://patch.msgid.link/20260113063924.74464-1-enelsonmoore@gmail.com
+CPU: 1 UID: 0 PID: 19497 Comm: syz.1.3580 Tainted: G             L      syzkaller #0 PREEMPT(full)
+Tainted: [L]=SOFTLOCKUP
+Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 10/25/2025
+Call Trace:
+ <TASK>
+  dump_stack_lvl+0xe8/0x150 lib/dump_stack.c:120
+  print_address_description mm/kasan/report.c:378 [inline]
+  print_report+0xca/0x240 mm/kasan/report.c:482
+  kasan_report+0x118/0x150 mm/kasan/report.c:595
+ check_region_inline mm/kasan/generic.c:-1 [inline]
+  kasan_check_range+0x2b0/0x2c0 mm/kasan/generic.c:200
+  __asan_memcpy+0x29/0x70 mm/kasan/shadow.c:105
+  __hw_addr_create net/core/dev_addr_lists.c:63 [inline]
+  __hw_addr_add_ex+0x25d/0x760 net/core/dev_addr_lists.c:118
+  __dev_mc_add net/core/dev_addr_lists.c:868 [inline]
+  dev_mc_add+0xa1/0x120 net/core/dev_addr_lists.c:886
+  bond_enslave+0x2b8b/0x3ac0 drivers/net/bonding/bond_main.c:2180
+  do_set_master+0x533/0x6d0 net/core/rtnetlink.c:2963
+  do_setlink+0xcf0/0x41c0 net/core/rtnetlink.c:3165
+  rtnl_changelink net/core/rtnetlink.c:3776 [inline]
+  __rtnl_newlink net/core/rtnetlink.c:3935 [inline]
+  rtnl_newlink+0x161c/0x1c90 net/core/rtnetlink.c:4072
+  rtnetlink_rcv_msg+0x7cf/0xb70 net/core/rtnetlink.c:6958
+  netlink_rcv_skb+0x208/0x470 net/netlink/af_netlink.c:2550
+  netlink_unicast_kernel net/netlink/af_netlink.c:1318 [inline]
+  netlink_unicast+0x82f/0x9e0 net/netlink/af_netlink.c:1344
+  netlink_sendmsg+0x805/0xb30 net/netlink/af_netlink.c:1894
+  sock_sendmsg_nosec net/socket.c:727 [inline]
+  __sock_sendmsg+0x21c/0x270 net/socket.c:742
+  ____sys_sendmsg+0x505/0x820 net/socket.c:2592
+  ___sys_sendmsg+0x21f/0x2a0 net/socket.c:2646
+  __sys_sendmsg+0x164/0x220 net/socket.c:2678
+  do_syscall_32_irqs_on arch/x86/entry/syscall_32.c:83 [inline]
+  __do_fast_syscall_32+0x1dc/0x560 arch/x86/entry/syscall_32.c:307
+  do_fast_syscall_32+0x34/0x80 arch/x86/entry/syscall_32.c:332
+ entry_SYSENTER_compat_after_hwframe+0x84/0x8e
+ </TASK>
+
+The buggy address belongs to the variable:
+ lacpdu_mcast_addr+0x0/0x40
+
+Fixes: 872254dd6b1f ("net/bonding: Enable bonding to enslave non ARPHRD_ETHER")
+Reported-by: syzbot+9c081b17773615f24672@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/netdev/6966946b.a70a0220.245e30.0002.GAE@google.com/T/#u
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Cc: Andrew Lunn <andrew+netdev@lunn.ch>
+Acked-by: Jay Vosburgh <jv@jvosburgh.net>
+Link: https://patch.msgid.link/20260113191201.3970737-1-edumazet@google.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/usb/dm9601.c | 4 ----
- 1 file changed, 4 deletions(-)
+ drivers/net/bonding/bond_main.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/drivers/net/usb/dm9601.c b/drivers/net/usb/dm9601.c
-index 8b6d6a1b3c2ec..2b4716ccf0c5b 100644
---- a/drivers/net/usb/dm9601.c
-+++ b/drivers/net/usb/dm9601.c
-@@ -603,10 +603,6 @@ static const struct usb_device_id products[] = {
- 	USB_DEVICE(0x0fe6, 0x8101),	/* DM9601 USB to Fast Ethernet Adapter */
- 	.driver_info = (unsigned long)&dm9601_info,
- 	 },
--	{
--	 USB_DEVICE(0x0fe6, 0x9700),	/* DM9601 USB to Fast Ethernet Adapter */
--	 .driver_info = (unsigned long)&dm9601_info,
--	 },
- 	{
- 	 USB_DEVICE(0x0a46, 0x9000),	/* DM9000E */
- 	 .driver_info = (unsigned long)&dm9601_info,
+diff --git a/drivers/net/bonding/bond_main.c b/drivers/net/bonding/bond_main.c
+index cefe37c447a26..dd0ea86d7934a 100644
+--- a/drivers/net/bonding/bond_main.c
++++ b/drivers/net/bonding/bond_main.c
+@@ -1906,6 +1906,12 @@ int bond_enslave(struct net_device *bond_dev, struct net_device *slave_dev,
+ 	 */
+ 	if (!bond_has_slaves(bond)) {
+ 		if (bond_dev->type != slave_dev->type) {
++			if (slave_dev->type != ARPHRD_ETHER &&
++			    BOND_MODE(bond) == BOND_MODE_8023AD) {
++				SLAVE_NL_ERR(bond_dev, slave_dev, extack,
++					     "8023AD mode requires Ethernet devices");
++				return -EINVAL;
++			}
+ 			slave_dbg(bond_dev, slave_dev, "change device type from %d to %d\n",
+ 				  bond_dev->type, slave_dev->type);
+ 
 -- 
 2.51.0
 
