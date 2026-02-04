@@ -1,41 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B629285404;
-	Wed,  4 Feb 2026 15:01:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C85492D3725;
+	Wed,  4 Feb 2026 15:01:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770217306; cv=none; b=eHNlSVJo8v8GVoPvfuHskQgXY5EP3uryl3iD1+GD94IPnCejgFtHx+/8gSMyEW+lqQQWhXZkVoIfEv48WaRQKRZs9OkyX4Re/WKtrz6jlV85D2+LFe12ZtNn+hl6TySCvQFbANbXLZ9aH8TSOh1TWSRM0VI5S/qy5t8EvlutFgc=
+	t=1770217309; cv=none; b=u+MRuBi/9BpOk3w4aqnQIwoOcVnIgSwigBxd665Czw3hc2ovDaNImLj2F7BWpkO5qZhWvPlqrXAODKOphmv1By++N3cT3+k57Q8Mml3GKvrz0zayex6B2AYbGWpQ89jXk+bZScVdsodGKpzGslZyaQA3echjy6fA8A516H9JmFE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770217306; c=relaxed/simple;
-	bh=3eH3b+7SpAlptolUusIKF2DTJLpKEuhIrj792+06gGM=;
+	s=arc-20240116; t=1770217309; c=relaxed/simple;
+	bh=Yx1phB4U/9BH6PiuGKsmGQKIrLVPu4N8AkAWjiU/5J0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gcaKbSovH8rr/nUpkGefCi3K/GiO5kdjFAICSRcGQWJvl1tah9MtIzG19/q4CHzdguxfGD2+4StDgqVAidoM8FOarMFmEL2ZhG3GgSX07u3U2UlD3VgHLZwyjFe5QWM5MSXePbGXXx5VLLJXvcnBandi0oU52LrqRRnOgg6O2X8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dFWqZFiV; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=GTCmO1grtUFX+AMnISWuq4bXOD1Co5KSB3p22DEkQ7wCUkWjI+vXom3NAM+PQi1Wf01dYb3n39ZCE8wWrYP1lAcyKJsW14EcMfax9m3Az0QneHEzz0pp7XuaSJgnNLtcAdR4zRK85UZtio35ZKxBUMh7k9czjfljpg7IQQTI7PQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0hrVl61S; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dFWqZFiV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA29EC19423;
-	Wed,  4 Feb 2026 15:01:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0hrVl61S"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4DE9DC2BC86;
+	Wed,  4 Feb 2026 15:01:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770217306;
-	bh=3eH3b+7SpAlptolUusIKF2DTJLpKEuhIrj792+06gGM=;
+	s=korg; t=1770217309;
+	bh=Yx1phB4U/9BH6PiuGKsmGQKIrLVPu4N8AkAWjiU/5J0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dFWqZFiVlhEtwMxYFkPjKXKAhUq5nTkYP3QlW+ApPhRWlsxulYR3G+vuxsMCWZYkG
-	 MKCloPJnU+qY9/vmGN3oZ+/p5QozcQWub2rhe0iESdOWt+vFD1n3AEmmGRHHBUTEev
-	 H5HTivIjqiqUA7NjIL6SEhrXIX2+kZcYZNNyMxO4=
+	b=0hrVl61SjmRB6OjGg2HblvdzA0/B9bnXM3B430IKBRR/ZXvNk10Hfddh0DWKsXuJZ
+	 TXsJUcMW0Vc6N91cH6kaEgItlEti+1SKXm1fmNFQZQXoYcyuDSDKIGyGEouBUIx5nt
+	 lr2YGb5srLMIOSPqDUS7KS7LV8u3puSygBq363Ok=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christoph Hellwig <hch@lst.de>,
-	Sagi Grimberg <sagi@grimberg.me>,
-	Hannes Reinecke <hare@suse.de>,
-	Daniel Wagner <dwagner@suse.de>,
-	Keith Busch <kbusch@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 167/206] nvme-fc: rename free_ctrl callback to match name pattern
-Date: Wed,  4 Feb 2026 15:39:58 +0100
-Message-ID: <20260204143904.222519167@linuxfoundation.org>
+	Johannes Berg <johannes.berg@intel.com>,
+	=?UTF-8?q?Hanne-Lotta=20M=C3=A4enp=C3=A4=C3=A4?= <hannelotta@gmail.com>
+Subject: [PATCH 5.15 185/206] wifi: cfg80211: add a work abstraction with special semantics
+Date: Wed,  4 Feb 2026 15:40:16 +0100
+Message-ID: <20260204143904.884229614@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260204143858.193781818@linuxfoundation.org>
 References: <20260204143858.193781818@linuxfoundation.org>
@@ -48,50 +44,372 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Daniel Wagner <dwagner@suse.de>
+From: Johannes Berg <johannes.berg@intel.com>
 
-[ Upstream commit 205fb5fa6fde1b5b426015eb1ff69f2ff25ef5bb ]
+[ Upstream commit a3ee4dc84c4e9d14cb34dad095fd678127aca5b6 ]
 
-Rename nvme_fc_nvme_ctrl_freed to nvme_fc_free_ctrl to match the name
-pattern for the callback.
+Add a work abstraction at the cfg80211 level that will always
+hold the wiphy_lock() for any work executed and therefore also
+can be canceled safely (without waiting) while holding that.
+This improves on what we do now as with the new wiphy works we
+don't have to worry about locking while cancelling them safely.
 
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Reviewed-by: Sagi Grimberg <sagi@grimberg.me>
-Reviewed-by: Hannes Reinecke <hare@suse.de>
-Signed-off-by: Daniel Wagner <dwagner@suse.de>
-Signed-off-by: Keith Busch <kbusch@kernel.org>
-Stable-dep-of: 0edb475ac0a7 ("nvme: fix PCIe subsystem reset controller state transition")
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Also, don't let such works run while the device is suspended,
+since they'll likely need to interact with the device. Flush
+them before suspend though.
+
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Signed-off-by: Hanne-Lotta Mäenpää <hannelotta@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/nvme/host/fc.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ include/net/cfg80211.h |   95 ++++++++++++++++++++++++++++++++++++--
+ net/wireless/core.c    |  121 +++++++++++++++++++++++++++++++++++++++++++++++++
+ net/wireless/core.h    |    7 ++
+ net/wireless/sysfs.c   |    8 ++-
+ 4 files changed, 226 insertions(+), 5 deletions(-)
 
---- a/drivers/nvme/host/fc.c
-+++ b/drivers/nvme/host/fc.c
-@@ -2410,7 +2410,7 @@ nvme_fc_ctrl_get(struct nvme_fc_ctrl *ct
-  * controller. Called after last nvme_put_ctrl() call
+--- a/include/net/cfg80211.h
++++ b/include/net/cfg80211.h
+@@ -5301,12 +5301,17 @@ struct cfg80211_cqm_config;
+  * wiphy_lock - lock the wiphy
+  * @wiphy: the wiphy to lock
+  *
+- * This is mostly exposed so it can be done around registering and
+- * unregistering netdevs that aren't created through cfg80211 calls,
+- * since that requires locking in cfg80211 when the notifiers is
+- * called, but that cannot differentiate which way it's called.
++ * This is needed around registering and unregistering netdevs that
++ * aren't created through cfg80211 calls, since that requires locking
++ * in cfg80211 when the notifiers is called, but that cannot
++ * differentiate which way it's called.
++ *
++ * It can also be used by drivers for their own purposes.
+  *
+  * When cfg80211 ops are called, the wiphy is already locked.
++ *
++ * Note that this makes sure that no workers that have been queued
++ * with wiphy_queue_work() are running.
   */
- static void
--nvme_fc_nvme_ctrl_freed(struct nvme_ctrl *nctrl)
-+nvme_fc_free_ctrl(struct nvme_ctrl *nctrl)
- {
- 	struct nvme_fc_ctrl *ctrl = to_fc_ctrl(nctrl);
+ static inline void wiphy_lock(struct wiphy *wiphy)
+ 	__acquires(&wiphy->mtx)
+@@ -5326,6 +5331,88 @@ static inline void wiphy_unlock(struct w
+ 	mutex_unlock(&wiphy->mtx);
+ }
  
-@@ -3361,7 +3361,7 @@ static const struct nvme_ctrl_ops nvme_f
- 	.reg_read32		= nvmf_reg_read32,
- 	.reg_read64		= nvmf_reg_read64,
- 	.reg_write32		= nvmf_reg_write32,
--	.free_ctrl		= nvme_fc_nvme_ctrl_freed,
-+	.free_ctrl		= nvme_fc_free_ctrl,
- 	.submit_async_event	= nvme_fc_submit_async_event,
- 	.delete_ctrl		= nvme_fc_delete_ctrl,
- 	.get_address		= nvmf_get_address,
++struct wiphy_work;
++typedef void (*wiphy_work_func_t)(struct wiphy *, struct wiphy_work *);
++
++struct wiphy_work {
++	struct list_head entry;
++	wiphy_work_func_t func;
++};
++
++static inline void wiphy_work_init(struct wiphy_work *work,
++				   wiphy_work_func_t func)
++{
++	INIT_LIST_HEAD(&work->entry);
++	work->func = func;
++}
++
++/**
++ * wiphy_work_queue - queue work for the wiphy
++ * @wiphy: the wiphy to queue for
++ * @work: the work item
++ *
++ * This is useful for work that must be done asynchronously, and work
++ * queued here has the special property that the wiphy mutex will be
++ * held as if wiphy_lock() was called, and that it cannot be running
++ * after wiphy_lock() was called. Therefore, wiphy_cancel_work() can
++ * use just cancel_work() instead of cancel_work_sync(), it requires
++ * being in a section protected by wiphy_lock().
++ */
++void wiphy_work_queue(struct wiphy *wiphy, struct wiphy_work *work);
++
++/**
++ * wiphy_work_cancel - cancel previously queued work
++ * @wiphy: the wiphy, for debug purposes
++ * @work: the work to cancel
++ *
++ * Cancel the work *without* waiting for it, this assumes being
++ * called under the wiphy mutex acquired by wiphy_lock().
++ */
++void wiphy_work_cancel(struct wiphy *wiphy, struct wiphy_work *work);
++
++struct wiphy_delayed_work {
++	struct wiphy_work work;
++	struct wiphy *wiphy;
++	struct timer_list timer;
++};
++
++void wiphy_delayed_work_timer(struct timer_list *t);
++
++static inline void wiphy_delayed_work_init(struct wiphy_delayed_work *dwork,
++					   wiphy_work_func_t func)
++{
++	timer_setup(&dwork->timer, wiphy_delayed_work_timer, 0);
++	wiphy_work_init(&dwork->work, func);
++}
++
++/**
++ * wiphy_delayed_work_queue - queue delayed work for the wiphy
++ * @wiphy: the wiphy to queue for
++ * @dwork: the delayable worker
++ * @delay: number of jiffies to wait before queueing
++ *
++ * This is useful for work that must be done asynchronously, and work
++ * queued here has the special property that the wiphy mutex will be
++ * held as if wiphy_lock() was called, and that it cannot be running
++ * after wiphy_lock() was called. Therefore, wiphy_cancel_work() can
++ * use just cancel_work() instead of cancel_work_sync(), it requires
++ * being in a section protected by wiphy_lock().
++ */
++void wiphy_delayed_work_queue(struct wiphy *wiphy,
++			      struct wiphy_delayed_work *dwork,
++			      unsigned long delay);
++
++/**
++ * wiphy_delayed_work_cancel - cancel previously queued delayed work
++ * @wiphy: the wiphy, for debug purposes
++ * @dwork: the delayed work to cancel
++ *
++ * Cancel the work *without* waiting for it, this assumes being
++ * called under the wiphy mutex acquired by wiphy_lock().
++ */
++void wiphy_delayed_work_cancel(struct wiphy *wiphy,
++			       struct wiphy_delayed_work *dwork);
++
+ /**
+  * struct wireless_dev - wireless device state
+  *
+--- a/net/wireless/core.c
++++ b/net/wireless/core.c
+@@ -410,6 +410,34 @@ static void cfg80211_propagate_cac_done_
+ 	rtnl_unlock();
+ }
+ 
++static void cfg80211_wiphy_work(struct work_struct *work)
++{
++	struct cfg80211_registered_device *rdev;
++	struct wiphy_work *wk;
++
++	rdev = container_of(work, struct cfg80211_registered_device, wiphy_work);
++
++	wiphy_lock(&rdev->wiphy);
++	if (rdev->suspended)
++		goto out;
++
++	spin_lock_irq(&rdev->wiphy_work_lock);
++	wk = list_first_entry_or_null(&rdev->wiphy_work_list,
++				      struct wiphy_work, entry);
++	if (wk) {
++		list_del_init(&wk->entry);
++		if (!list_empty(&rdev->wiphy_work_list))
++			schedule_work(work);
++		spin_unlock_irq(&rdev->wiphy_work_lock);
++
++		wk->func(&rdev->wiphy, wk);
++	} else {
++		spin_unlock_irq(&rdev->wiphy_work_lock);
++	}
++out:
++	wiphy_unlock(&rdev->wiphy);
++}
++
+ /* exported functions */
+ 
+ struct wiphy *wiphy_new_nm(const struct cfg80211_ops *ops, int sizeof_priv,
+@@ -535,6 +563,9 @@ use_default_name:
+ 		return NULL;
+ 	}
+ 
++	INIT_WORK(&rdev->wiphy_work, cfg80211_wiphy_work);
++	INIT_LIST_HEAD(&rdev->wiphy_work_list);
++	spin_lock_init(&rdev->wiphy_work_lock);
+ 	INIT_WORK(&rdev->rfkill_block, cfg80211_rfkill_block_work);
+ 	INIT_WORK(&rdev->conn_work, cfg80211_conn_work);
+ 	INIT_WORK(&rdev->event_work, cfg80211_event_work);
+@@ -1002,6 +1033,31 @@ void wiphy_rfkill_start_polling(struct w
+ }
+ EXPORT_SYMBOL(wiphy_rfkill_start_polling);
+ 
++void cfg80211_process_wiphy_works(struct cfg80211_registered_device *rdev)
++{
++	unsigned int runaway_limit = 100;
++	unsigned long flags;
++
++	lockdep_assert_held(&rdev->wiphy.mtx);
++
++	spin_lock_irqsave(&rdev->wiphy_work_lock, flags);
++	while (!list_empty(&rdev->wiphy_work_list)) {
++		struct wiphy_work *wk;
++
++		wk = list_first_entry(&rdev->wiphy_work_list,
++				      struct wiphy_work, entry);
++		list_del_init(&wk->entry);
++		spin_unlock_irqrestore(&rdev->wiphy_work_lock, flags);
++
++		wk->func(&rdev->wiphy, wk);
++
++		spin_lock_irqsave(&rdev->wiphy_work_lock, flags);
++		if (WARN_ON(--runaway_limit == 0))
++			INIT_LIST_HEAD(&rdev->wiphy_work_list);
++	}
++	spin_unlock_irqrestore(&rdev->wiphy_work_lock, flags);
++}
++
+ void wiphy_unregister(struct wiphy *wiphy)
+ {
+ 	struct cfg80211_registered_device *rdev = wiphy_to_rdev(wiphy);
+@@ -1040,9 +1096,14 @@ void wiphy_unregister(struct wiphy *wiph
+ 	cfg80211_rdev_list_generation++;
+ 	device_del(&rdev->wiphy.dev);
+ 
++	/* surely nothing is reachable now, clean up work */
++	cfg80211_process_wiphy_works(rdev);
+ 	wiphy_unlock(&rdev->wiphy);
+ 	rtnl_unlock();
+ 
++	/* this has nothing to do now but make sure it's gone */
++	cancel_work_sync(&rdev->wiphy_work);
++
+ 	flush_work(&rdev->scan_done_wk);
+ 	cancel_work_sync(&rdev->conn_work);
+ 	flush_work(&rdev->event_work);
+@@ -1522,6 +1583,66 @@ static struct pernet_operations cfg80211
+ 	.exit = cfg80211_pernet_exit,
+ };
+ 
++void wiphy_work_queue(struct wiphy *wiphy, struct wiphy_work *work)
++{
++	struct cfg80211_registered_device *rdev = wiphy_to_rdev(wiphy);
++	unsigned long flags;
++
++	spin_lock_irqsave(&rdev->wiphy_work_lock, flags);
++	if (list_empty(&work->entry))
++		list_add_tail(&work->entry, &rdev->wiphy_work_list);
++	spin_unlock_irqrestore(&rdev->wiphy_work_lock, flags);
++
++	schedule_work(&rdev->wiphy_work);
++}
++EXPORT_SYMBOL_GPL(wiphy_work_queue);
++
++void wiphy_work_cancel(struct wiphy *wiphy, struct wiphy_work *work)
++{
++	struct cfg80211_registered_device *rdev = wiphy_to_rdev(wiphy);
++	unsigned long flags;
++
++	lockdep_assert_held(&wiphy->mtx);
++
++	spin_lock_irqsave(&rdev->wiphy_work_lock, flags);
++	if (!list_empty(&work->entry))
++		list_del_init(&work->entry);
++	spin_unlock_irqrestore(&rdev->wiphy_work_lock, flags);
++}
++EXPORT_SYMBOL_GPL(wiphy_work_cancel);
++
++void wiphy_delayed_work_timer(struct timer_list *t)
++{
++	struct wiphy_delayed_work *dwork = from_timer(dwork, t, timer);
++
++	wiphy_work_queue(dwork->wiphy, &dwork->work);
++}
++EXPORT_SYMBOL(wiphy_delayed_work_timer);
++
++void wiphy_delayed_work_queue(struct wiphy *wiphy,
++			      struct wiphy_delayed_work *dwork,
++			      unsigned long delay)
++{
++	if (!delay) {
++		wiphy_work_queue(wiphy, &dwork->work);
++		return;
++	}
++
++	dwork->wiphy = wiphy;
++	mod_timer(&dwork->timer, jiffies + delay);
++}
++EXPORT_SYMBOL_GPL(wiphy_delayed_work_queue);
++
++void wiphy_delayed_work_cancel(struct wiphy *wiphy,
++			       struct wiphy_delayed_work *dwork)
++{
++	lockdep_assert_held(&wiphy->mtx);
++
++	del_timer_sync(&dwork->timer);
++	wiphy_work_cancel(wiphy, &dwork->work);
++}
++EXPORT_SYMBOL_GPL(wiphy_delayed_work_cancel);
++
+ static int __init cfg80211_init(void)
+ {
+ 	int err;
+--- a/net/wireless/core.h
++++ b/net/wireless/core.h
+@@ -103,6 +103,12 @@ struct cfg80211_registered_device {
+ 	/* lock for all wdev lists */
+ 	spinlock_t mgmt_registrations_lock;
+ 
++	struct work_struct wiphy_work;
++	struct list_head wiphy_work_list;
++	/* protects the list above */
++	spinlock_t wiphy_work_lock;
++	bool suspended;
++
+ 	/* must be last because of the way we do wiphy_priv(),
+ 	 * and it should at least be aligned to NETDEV_ALIGN */
+ 	struct wiphy wiphy __aligned(NETDEV_ALIGN);
+@@ -457,6 +463,7 @@ int cfg80211_change_iface(struct cfg8021
+ 			  struct net_device *dev, enum nl80211_iftype ntype,
+ 			  struct vif_params *params);
+ void cfg80211_process_rdev_events(struct cfg80211_registered_device *rdev);
++void cfg80211_process_wiphy_works(struct cfg80211_registered_device *rdev);
+ void cfg80211_process_wdev_events(struct wireless_dev *wdev);
+ 
+ bool cfg80211_does_bw_fit_range(const struct ieee80211_freq_range *freq_range,
+--- a/net/wireless/sysfs.c
++++ b/net/wireless/sysfs.c
+@@ -5,7 +5,7 @@
+  *
+  * Copyright 2005-2006	Jiri Benc <jbenc@suse.cz>
+  * Copyright 2006	Johannes Berg <johannes@sipsolutions.net>
+- * Copyright (C) 2020-2021 Intel Corporation
++ * Copyright (C) 2020-2021, 2023 Intel Corporation
+  */
+ 
+ #include <linux/device.h>
+@@ -105,14 +105,18 @@ static int wiphy_suspend(struct device *
+ 			cfg80211_leave_all(rdev);
+ 			cfg80211_process_rdev_events(rdev);
+ 		}
++		cfg80211_process_wiphy_works(rdev);
+ 		if (rdev->ops->suspend)
+ 			ret = rdev_suspend(rdev, rdev->wiphy.wowlan_config);
+ 		if (ret == 1) {
+ 			/* Driver refuse to configure wowlan */
+ 			cfg80211_leave_all(rdev);
+ 			cfg80211_process_rdev_events(rdev);
++			cfg80211_process_wiphy_works(rdev);
+ 			ret = rdev_suspend(rdev, NULL);
+ 		}
++		if (ret == 0)
++			rdev->suspended = true;
+ 	}
+ 	wiphy_unlock(&rdev->wiphy);
+ 	rtnl_unlock();
+@@ -132,6 +136,8 @@ static int wiphy_resume(struct device *d
+ 	wiphy_lock(&rdev->wiphy);
+ 	if (rdev->wiphy.registered && rdev->ops->resume)
+ 		ret = rdev_resume(rdev);
++	rdev->suspended = false;
++	schedule_work(&rdev->wiphy_work);
+ 	wiphy_unlock(&rdev->wiphy);
+ 
+ 	if (ret)
 
 
