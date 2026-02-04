@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29B9D3D3CEB;
-	Wed,  4 Feb 2026 14:59:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B4D12BE035;
+	Wed,  4 Feb 2026 15:00:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770217197; cv=none; b=o8wqKCLQoyjQM70DSOCe03Fw0S768syRoYgZQnrf0OJEM+HTZWqh70e2XSFrssHr7uyzZRKPJLhdG58bOZaHJdJj+zs5vTC5COebYPYNiYmuGn94kdjG03bmlVrgCjJShkzCAv9P3XZctxwRVtP2/AUPcd4VteXAhN2hApTlH3Q=
+	t=1770217200; cv=none; b=MOm/FxqtgI0ylPm2LRK4la15ZE7di44FGXZ4W+wk0WhCT2gUJDACbqB49K/QS86GPWdk1nYeucNqL0SnIAIKkmee/Ttn5+MHGnIekIhz/RUqu8NBknG2r0xMlFeIjUBvNjDvrUUAY4E5eX2r17e7t9aYagA1fjnO7Z2YKUIWX7g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770217197; c=relaxed/simple;
-	bh=l/O2jpFVYUYOfYNW5LVNO2DEbzrHB+bTgb/TC6WS4wk=;
+	s=arc-20240116; t=1770217200; c=relaxed/simple;
+	bh=6gbXmXe6diIBsJhpeYlh2vfoAq9vCfhwZJeav5dHGi8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=n0nVStf1A275uY68RIXJ5W8MMrlvOojluyIZAVz3cd6ZloFHImAfSPh4SUeEdC8wSTR248Hj+5WrtQke93TOyTtLlkqY7TgRfu3qm09hl6IoN6gZtgGJHryfVDuVx6oontZV+8ZiJLb11XYjOxA5BNB1ALOsLT35EUNRRBN5sVA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gEoFQ4bo; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=abfkYbhCKAEAmm3S/TP6kZry0QNrnzUX7UhzPI2HLhJMmF+xZarPbLzE6dPPMIEjrAPhHmEexpAHTOFqR+ZXgjvt5Ga+erBnF+IyCCv6D3OeHiX1PGtu6rhXz3vCwDlTGQi5j1epXmvgeYE/UgL97Si9gdx2g0sENFk9eynViQU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hhhp27bU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gEoFQ4bo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45077C4CEF7;
-	Wed,  4 Feb 2026 14:59:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hhhp27bU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9B9AC4CEF7;
+	Wed,  4 Feb 2026 14:59:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770217196;
-	bh=l/O2jpFVYUYOfYNW5LVNO2DEbzrHB+bTgb/TC6WS4wk=;
+	s=korg; t=1770217200;
+	bh=6gbXmXe6diIBsJhpeYlh2vfoAq9vCfhwZJeav5dHGi8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gEoFQ4bomlm2LXFdh9IzsGmVzHfbOyyzGmXL0yU5P+lWZh/0VMwm17LO7oT7uK1ZR
-	 r0WmJpLbnvb+cHiFtOYbjzQ7TDpehZGjPZme30OV1eQFCtBJeziQa9ltSENBL2JP+F
-	 bLiO6O2rwEzA5wJC0v1cQGBN0Jlk2/P9a/wZs89U=
+	b=hhhp27bUotuDCPGsbnrgX5mQnFnDnHLzE5xGRcxhZjtxDQ5O4h22kD/4ubegj+Kio
+	 kXG40VvrZBiqs9jN3nswZH06Kwj5GbBaEbBaqeOKp5rrDl/C8ocbgbLXlvhU8wfG6H
+	 Bwi2gQJqhgolSAs+iLI0Y5YM5GOjgp8rzofWTxDU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Haoxiang Li <lihaoxiang@isrc.iscas.ac.cn>,
+	Thomas Fourier <fourier.thomas@gmail.com>,
 	"Martin K. Petersen" <martin.petersen@oracle.com>
-Subject: [PATCH 5.15 152/206] scsi: be2iscsi: Fix a memory leak in beiscsi_boot_get_sinfo()
-Date: Wed,  4 Feb 2026 15:39:43 +0100
-Message-ID: <20260204143903.677770387@linuxfoundation.org>
+Subject: [PATCH 5.15 153/206] scsi: qla2xxx: edif: Fix dma_free_coherent() size
+Date: Wed,  4 Feb 2026 15:39:44 +0100
+Message-ID: <20260204143903.712913133@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260204143858.193781818@linuxfoundation.org>
 References: <20260204143858.193781818@linuxfoundation.org>
@@ -50,32 +50,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Haoxiang Li <lihaoxiang@isrc.iscas.ac.cn>
+From: Thomas Fourier <fourier.thomas@gmail.com>
 
-commit 4747bafaa50115d9667ece446b1d2d4aba83dc7f upstream.
+commit 56bd3c0f749f45793d1eae1d0ddde4255c749bf6 upstream.
 
-If nonemb_cmd->va fails to be allocated, free the allocation previously
-made by alloc_mcc_wrb().
+Earlier in the function, the ha->flt buffer is allocated with size
+sizeof(struct qla_flt_header) + FLT_REGIONS_SIZE but freed in the error
+path with size SFP_DEV_SIZE.
 
-Fixes: 50a4b824be9e ("scsi: be2iscsi: Fix to make boot discovery non-blocking")
+Fixes: 84318a9f01ce ("scsi: qla2xxx: edif: Add send, receive, and accept for auth_els")
 Cc: stable@vger.kernel.org
-Signed-off-by: Haoxiang Li <lihaoxiang@isrc.iscas.ac.cn>
-Link: https://patch.msgid.link/20251213083643.301240-1-lihaoxiang@isrc.iscas.ac.cn
+Signed-off-by: Thomas Fourier <fourier.thomas@gmail.com>
+Link: https://patch.msgid.link/20260112134326.55466-2-fourier.thomas@gmail.com
 Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/scsi/be2iscsi/be_mgmt.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/scsi/qla2xxx/qla_os.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/scsi/be2iscsi/be_mgmt.c
-+++ b/drivers/scsi/be2iscsi/be_mgmt.c
-@@ -1025,6 +1025,7 @@ unsigned int beiscsi_boot_get_sinfo(stru
- 					      &nonemb_cmd->dma,
- 					      GFP_KERNEL);
- 	if (!nonemb_cmd->va) {
-+		free_mcc_wrb(ctrl, tag);
- 		mutex_unlock(&ctrl->mbox_lock);
- 		return 0;
- 	}
+--- a/drivers/scsi/qla2xxx/qla_os.c
++++ b/drivers/scsi/qla2xxx/qla_os.c
+@@ -4431,7 +4431,7 @@ qla2x00_mem_alloc(struct qla_hw_data *ha
+ fail_elsrej:
+ 	dma_pool_destroy(ha->purex_dma_pool);
+ fail_flt:
+-	dma_free_coherent(&ha->pdev->dev, SFP_DEV_SIZE,
++	dma_free_coherent(&ha->pdev->dev, sizeof(struct qla_flt_header) + FLT_REGIONS_SIZE,
+ 	    ha->flt, ha->flt_dma);
+ 
+ fail_flt_buffer:
 
 
