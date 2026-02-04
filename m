@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55CBA2D0292;
-	Wed,  4 Feb 2026 15:33:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E50DD2D5C91;
+	Wed,  4 Feb 2026 15:33:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770219222; cv=none; b=foirUrFTG3so2FN2atM7Pu3mUvmpWP+moAUwHcPDoUP3R0ziPuUXkPmgUEe+LprDqPlnC66F0Od2NwU6uQjpZ5JboARR1txqeCc3gWeuvmINAUBR/ObbeXH8dGlvrU5/Zf8Pmwcjw4K+i1dLEJKpyEb8WEUB/D1PxKuHqbpPZoE=
+	t=1770219226; cv=none; b=HdeZO8Se15Tjmb6NZ7xmHTBxC9pOxKvCSMH3DpNim2xbmN/6ZuW3ZbTtCf2n75PTx0aC4rlyY2RH74puEPwLjsFfzq8YSwTmTtqEcXwSBFT1n6zts/K64KXpyCeJWDmcpO3fY8lBRqXFCg13ZV7K8ezFnFhLYr0xZYyTHTbEwMU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770219222; c=relaxed/simple;
-	bh=Hfj1WIUDoeSm5Z1Czk8Xim8Bd3ybmU8J/zs/m4X7A+4=;
+	s=arc-20240116; t=1770219226; c=relaxed/simple;
+	bh=zzaNYIGKO5JeOtOVL1vQTeKoVJnpFPAwVRoyUV72nNU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=H+LnMyog0WHbQf7K1h5eUHF4otUWPRY29MaMYIFfKnuOhXJY8TuCGrj4yl2815BS6xj73TMRh/S5rZk2q/2uA0QSA/soeUkFFEKLf44jIKrr35Wh/mVaEI+JcZSciO3Yhi8jcOiMwUPbAdYadb4+pBmS8oSbAybJ9GuzfITkd5w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RrIAPm79; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Zjsaefwl+Vj6yRJluy/t71nf7ZfuD3HvKgQd5Vfpn+HtaqJUZjkEyBDnaxHyj1P5ypMHEl0o4zB4PzYHVJTBpZ/UPDEJ4BKu6BolI/i7LAl6pmze7CJFwsRZkLMSdkxeBmqt20CIU6lKvtoeXPke5cbgyN4x85yZXOiGJw9iPFk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DGbd58o0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RrIAPm79"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BECE5C19424;
-	Wed,  4 Feb 2026 15:33:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DGbd58o0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 24C7CC4CEF7;
+	Wed,  4 Feb 2026 15:33:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770219222;
-	bh=Hfj1WIUDoeSm5Z1Czk8Xim8Bd3ybmU8J/zs/m4X7A+4=;
+	s=korg; t=1770219225;
+	bh=zzaNYIGKO5JeOtOVL1vQTeKoVJnpFPAwVRoyUV72nNU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RrIAPm79UZeQ5MTBlRRxy0lbF3juf3OjWSP1yZuOAOyo/nFk8VPdUv/4DPt5eF1bP
-	 MF67epUYCuuwd1Yul/cP/9zEpCBtFoGy9jhA3axFraba7dDoEB3YEMFN3oEc1X0KA+
-	 IsMyFMzTLNBhP6q0CVJaqXdAgNP8fZLsCJ86xOVI=
+	b=DGbd58o0YAONmW6nOJbXUO9/CtYImdhhT1w0mShzYnUCKOp7GqPG5ODOnA7T+0y/2
+	 r2gdR1ppmbIK8XH/gUzt/p3rseu4F6xFXfNjtuny1QEpVVJOpPiI+7XSE9Wfrk94NE
+	 H5M98rI+qiyd8XZMVohen4KNO0XhEWl2eyC01iSw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Philipp Zabel <p.zabel@pengutronix.de>,
-	Frank Li <Frank.Li@nxp.com>,
-	Johan Hovold <johan@kernel.org>,
-	Maxime Ripard <mripard@kernel.org>
-Subject: [PATCH 6.18 104/122] drm/imx/tve: fix probe device leak
-Date: Wed,  4 Feb 2026 15:41:26 +0100
-Message-ID: <20260204143855.594124524@linuxfoundation.org>
+	Yang Wang <kevinyang.wang@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 6.18 105/122] drm/amd/pm: fix smu v13 soft clock frequency setting issue
+Date: Wed,  4 Feb 2026 15:41:27 +0100
+Message-ID: <20260204143855.630597080@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260204143851.857060534@linuxfoundation.org>
 References: <20260204143851.857060534@linuxfoundation.org>
@@ -52,53 +50,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johan Hovold <johan@kernel.org>
+From: Yang Wang <kevinyang.wang@amd.com>
 
-commit e535c23513c63f02f67e3e09e0787907029efeaf upstream.
+commit c764b7af15289051718b4859a67f9a3bc69d3fb2 upstream.
 
-Make sure to drop the reference taken to the DDC device during probe on
-probe failure (e.g. probe deferral) and on driver unbind.
+v1:
+resolve the issue where some freq frequencies cannot be set correctly
+due to insufficient floating-point precision.
 
-Fixes: fcbc51e54d2a ("staging: drm/imx: Add support for Television Encoder (TVEv2)")
-Cc: stable@vger.kernel.org	# 3.10
-Cc: Philipp Zabel <p.zabel@pengutronix.de>
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Signed-off-by: Johan Hovold <johan@kernel.org>
-Link: https://patch.msgid.link/20251030163456.15807-1-johan@kernel.org
-Signed-off-by: Maxime Ripard <mripard@kernel.org>
+v2:
+patch this convert on 'max' value only.
+
+Signed-off-by: Yang Wang <kevinyang.wang@amd.com>
+Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit 6194f60c707e3878e120adeb36997075664d8429)
+Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/imx/ipuv3/imx-tve.c |   13 +++++++++++++
- 1 file changed, 13 insertions(+)
+ drivers/gpu/drm/amd/pm/swsmu/inc/smu_v13_0.h   |    1 +
+ drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0.c |    1 +
+ 2 files changed, 2 insertions(+)
 
---- a/drivers/gpu/drm/imx/ipuv3/imx-tve.c
-+++ b/drivers/gpu/drm/imx/ipuv3/imx-tve.c
-@@ -525,6 +525,13 @@ static const struct component_ops imx_tv
- 	.bind	= imx_tve_bind,
- };
+--- a/drivers/gpu/drm/amd/pm/swsmu/inc/smu_v13_0.h
++++ b/drivers/gpu/drm/amd/pm/swsmu/inc/smu_v13_0.h
+@@ -56,6 +56,7 @@
+ #define SMUQ10_TO_UINT(x) ((x) >> 10)
+ #define SMUQ10_FRAC(x) ((x) & 0x3ff)
+ #define SMUQ10_ROUND(x) ((SMUQ10_TO_UINT(x)) + ((SMUQ10_FRAC(x)) >= 0x200))
++#define SMU_V13_SOFT_FREQ_ROUND(x)	((x) + 1)
  
-+static void imx_tve_put_device(void *_dev)
-+{
-+	struct device *dev = _dev;
-+
-+	put_device(dev);
-+}
-+
- static int imx_tve_probe(struct platform_device *pdev)
- {
- 	struct device *dev = &pdev->dev;
-@@ -546,6 +553,12 @@ static int imx_tve_probe(struct platform
- 	if (ddc_node) {
- 		tve->ddc = of_find_i2c_adapter_by_node(ddc_node);
- 		of_node_put(ddc_node);
-+		if (tve->ddc) {
-+			ret = devm_add_action_or_reset(dev, imx_tve_put_device,
-+						       &tve->ddc->dev);
-+			if (ret)
-+				return ret;
-+		}
- 	}
+ extern const int pmfw_decoded_link_speed[5];
+ extern const int pmfw_decoded_link_width[7];
+--- a/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0.c
++++ b/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0.c
+@@ -1555,6 +1555,7 @@ int smu_v13_0_set_soft_freq_limited_rang
+ 		return clk_id;
  
- 	tve->mode = of_get_tve_mode(np);
+ 	if (max > 0) {
++		max = SMU_V13_SOFT_FREQ_ROUND(max);
+ 		if (automatic)
+ 			param = (uint32_t)((clk_id << 16) | 0xffff);
+ 		else
 
 
