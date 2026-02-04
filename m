@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68D322DCF72;
-	Wed,  4 Feb 2026 15:14:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD75D22E3F0;
+	Wed,  4 Feb 2026 15:14:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770218045; cv=none; b=ik/6w19w2lO34lQOwysmSMBEBfOMMHrzgxsEIbZDorCauQEOFiAzeePqFFZSrOF2qRA2o/mzgTkK6OAPs/5oENCqanh9ToAb3buBa7c1SxY4ja/KpmNxjj9HKOHCBaYtNUToAhYLtNmnunUEuQodj/g+4J6k5kytS94HxJgPuxo=
+	t=1770218048; cv=none; b=hrdisCWk+k3RNtClzT8iog5YnnxfvGEDQkIq1JTFB3J+RY7fd8qrtX6O6TFKb+IR0deDWectiUZGgl5J8OdIRdH9lyzE0RGaxWHESR/DmCjFzwBel5yoUE8K3I+XjiFlN9tjD+J5afL8q3Smo+BlSMl5631cHzcVxvR8wRoF6NQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770218045; c=relaxed/simple;
-	bh=nd09PhpY6yZO5Vjn0+KlSgODzbEbvFwS5TeJiDkkB8E=;
+	s=arc-20240116; t=1770218048; c=relaxed/simple;
+	bh=6yeP29O5oNGR+/BPfnViedQC/21epzAEt7nRlJRmMU0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cAlGrpNPQ4wnDHGs+fi2rjyM6xCy2oPUGBnG3JH5568zA8zu3vWGBQfBGAQ9CIlAfi0huzzDkZYurlSkkWtxHcYiIAI8hvC+q0f88EjZPPpc9dKo4C2Kqc6vyNhv3W5FE0xNkxKIuqfj3aHIrr2ejnEnub6zavt9MFnD+Kq7hyA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KZktWSPU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uhuzA+7/Ro2mYLGg3v8ipJkqAPWb2WqVDWNZvH2CrDuwJTtdxiRiLjR6D0/p5WdzHUNzCiQ6FJ18aoF9CoaxI66+SzCsyqCaFbtanPTxccbcKGDrkAvot75WzdAd2MX9i0Gsx1i+e29Qw8f+w1aD7kdm4NPQh3ZzKF1zJM1Atfk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EvPlhnhR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KZktWSPU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C8AFAC4CEF7;
-	Wed,  4 Feb 2026 15:14:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EvPlhnhR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2779AC4CEF7;
+	Wed,  4 Feb 2026 15:14:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770218045;
-	bh=nd09PhpY6yZO5Vjn0+KlSgODzbEbvFwS5TeJiDkkB8E=;
+	s=korg; t=1770218048;
+	bh=6yeP29O5oNGR+/BPfnViedQC/21epzAEt7nRlJRmMU0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KZktWSPUcK2gLfkierEiPZhgBdSj1Ucx407M/dzJyChbVuq32r/bB39h9VKzSzyKW
-	 ptXZbCeQ9P+kgXBATyp0wGLvaEgD40mQjXFrWrHp6HIcsWXwPOfG0KnKaj45NyxsUS
-	 L4pT9J1s3N17wMVU8oJsMwo9UeDCc81ctLEV7bGM=
+	b=EvPlhnhRh0P5JeXDMQNlJooIkWR3YFkkGXz8fGoKMhm5NCzYAXAQLInaHJ9ugGHXt
+	 LpuODWHLOvMZAP8cUQHEaMn8IRxy21+3A3i+LPVHgM9fser6LgD32RQxpyJP7gaf6V
+	 sMaP2hgrdU/iyE8gh8CwjrZgNaOr4kiE/Wf4EhdA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kery Qi <qikeyu2017@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 194/280] net: wwan: t7xx: fix potential skb->frags overflow in RX path
-Date: Wed,  4 Feb 2026 15:39:28 +0100
-Message-ID: <20260204143916.588082296@linuxfoundation.org>
+	Andrey Konovalov <andreyknvl@gmail.com>,
+	Berk Cem Goksel <berkcgoksel@gmail.com>,
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 6.1 162/280] ALSA: usb-audio: Fix use-after-free in snd_usb_mixer_free()
+Date: Wed,  4 Feb 2026 15:38:56 +0100
+Message-ID: <20260204143915.456279589@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260204143909.614719725@linuxfoundation.org>
 References: <20260204143909.614719725@linuxfoundation.org>
@@ -51,83 +51,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kery Qi <qikeyu2017@gmail.com>
+From: Berk Cem Goksel <berkcgoksel@gmail.com>
 
-[ Upstream commit f0813bcd2d9d97fdbdf2efb9532ab03ae92e99e6 ]
+commit 930e69757b74c3ae083b0c3c7419bfe7f0edc7b2 upstream.
 
-When receiving data in the DPMAIF RX path,
-the t7xx_dpmaif_set_frag_to_skb() function adds
-page fragments to an skb without checking if the number of
-fragments has exceeded MAX_SKB_FRAGS. This could lead to a buffer overflow
-in skb_shinfo(skb)->frags[] array, corrupting adjacent memory and
-potentially causing kernel crashes or other undefined behavior.
+When snd_usb_create_mixer() fails, snd_usb_mixer_free() frees
+mixer->id_elems but the controls already added to the card still
+reference the freed memory. Later when snd_card_register() runs,
+the OSS mixer layer calls their callbacks and hits a use-after-free read.
 
-This issue was identified through static code analysis by comparing with a
-similar vulnerability fixed in the mt76 driver commit b102f0c522cf ("mt76:
-fix array overflow on receiving too many fragments for a packet").
+Call trace:
+  get_ctl_value+0x63f/0x820 sound/usb/mixer.c:411
+  get_min_max_with_quirks.isra.0+0x240/0x1f40 sound/usb/mixer.c:1241
+  mixer_ctl_feature_info+0x26b/0x490 sound/usb/mixer.c:1381
+  snd_mixer_oss_build_test+0x174/0x3a0 sound/core/oss/mixer_oss.c:887
+  ...
+  snd_card_register+0x4ed/0x6d0 sound/core/init.c:923
+  usb_audio_probe+0x5ef/0x2a90 sound/usb/card.c:1025
 
-The vulnerability could be triggered if the modem firmware sends packets
-with excessive fragments. While under normal protocol conditions (MTU 3080
-bytes, BAT buffer 3584 bytes),
-a single packet should not require additional
-fragments, the kernel should not blindly trust firmware behavior.
-Malicious, buggy, or compromised firmware could potentially craft packets
-with more fragments than the kernel expects.
+Fix by calling snd_ctl_remove() for all mixer controls before freeing
+id_elems. We save the next pointer first because snd_ctl_remove()
+frees the current element.
 
-Fix this by adding a bounds check before calling skb_add_rx_frag() to
-ensure nr_frags does not exceed MAX_SKB_FRAGS.
-
-The check must be performed before unmapping to avoid a page leak
-and double DMA unmap during device teardown.
-
-Fixes: d642b012df70a ("net: wwan: t7xx: Add data path interface")
-Signed-off-by: Kery Qi <qikeyu2017@gmail.com>
-Link: https://patch.msgid.link/20260122170401.1986-2-qikeyu2017@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 6639b6c2367f ("[ALSA] usb-audio - add mixer control notifications")
+Cc: stable@vger.kernel.org
+Cc: Andrey Konovalov <andreyknvl@gmail.com>
+Signed-off-by: Berk Cem Goksel <berkcgoksel@gmail.com>
+Link: https://patch.msgid.link/20260120102855.7300-1-berkcgoksel@gmail.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wwan/t7xx/t7xx_hif_dpmaif_rx.c | 9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
+ sound/usb/mixer.c |   15 ++++++++++++++-
+ 1 file changed, 14 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/wwan/t7xx/t7xx_hif_dpmaif_rx.c b/drivers/net/wwan/t7xx/t7xx_hif_dpmaif_rx.c
-index f4f924d75103a..bdf1451fbc87d 100644
---- a/drivers/net/wwan/t7xx/t7xx_hif_dpmaif_rx.c
-+++ b/drivers/net/wwan/t7xx/t7xx_hif_dpmaif_rx.c
-@@ -430,6 +430,7 @@ static int t7xx_dpmaif_set_frag_to_skb(const struct dpmaif_rx_queue *rxq,
- 				       struct sk_buff *skb)
+--- a/sound/usb/mixer.c
++++ b/sound/usb/mixer.c
+@@ -2940,10 +2940,23 @@ static int parse_audio_unit(struct mixer
+ 
+ static void snd_usb_mixer_free(struct usb_mixer_interface *mixer)
  {
- 	unsigned long long data_bus_addr, data_base_addr;
-+	struct skb_shared_info *shinfo = skb_shinfo(skb);
- 	struct device *dev = rxq->dpmaif_ctrl->dev;
- 	struct dpmaif_bat_page *page_info;
- 	unsigned int data_len;
-@@ -437,18 +438,22 @@ static int t7xx_dpmaif_set_frag_to_skb(const struct dpmaif_rx_queue *rxq,
- 
- 	page_info = rxq->bat_frag->bat_skb;
- 	page_info += t7xx_normal_pit_bid(pkt_info);
--	dma_unmap_page(dev, page_info->data_bus_addr, page_info->data_len, DMA_FROM_DEVICE);
- 
- 	if (!page_info->page)
- 		return -EINVAL;
- 
-+	if (shinfo->nr_frags >= MAX_SKB_FRAGS)
-+		return -EINVAL;
++	struct usb_mixer_elem_list *list, *next;
++	int id;
 +
-+	dma_unmap_page(dev, page_info->data_bus_addr, page_info->data_len, DMA_FROM_DEVICE);
-+
- 	data_bus_addr = le32_to_cpu(pkt_info->pd.data_addr_h);
- 	data_bus_addr = (data_bus_addr << 32) + le32_to_cpu(pkt_info->pd.data_addr_l);
- 	data_base_addr = page_info->data_bus_addr;
- 	data_offset = data_bus_addr - data_base_addr;
- 	data_offset += page_info->offset;
- 	data_len = FIELD_GET(PD_PIT_DATA_LEN, le32_to_cpu(pkt_info->header));
--	skb_add_rx_frag(skb, skb_shinfo(skb)->nr_frags, page_info->page,
-+	skb_add_rx_frag(skb, shinfo->nr_frags, page_info->page,
- 			data_offset, data_len, page_info->data_len);
+ 	/* kill pending URBs */
+ 	snd_usb_mixer_disconnect(mixer);
  
- 	page_info->page = NULL;
--- 
-2.51.0
-
+-	kfree(mixer->id_elems);
++	/* Unregister controls first, snd_ctl_remove() frees the element */
++	if (mixer->id_elems) {
++		for (id = 0; id < MAX_ID_ELEMS; id++) {
++			for (list = mixer->id_elems[id]; list; list = next) {
++				next = list->next_id_elem;
++				if (list->kctl)
++					snd_ctl_remove(mixer->chip->card, list->kctl);
++			}
++		}
++		kfree(mixer->id_elems);
++	}
+ 	if (mixer->urb) {
+ 		kfree(mixer->urb->transfer_buffer);
+ 		usb_free_urb(mixer->urb);
 
 
