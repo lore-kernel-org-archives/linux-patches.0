@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC58E27F749;
-	Wed,  4 Feb 2026 14:57:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C21641B37D;
+	Wed,  4 Feb 2026 14:57:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770217032; cv=none; b=nsy9C/L2zqvV5ygJ5oEBTiGlRU4obiTyjJUeOp63K70tkb9uIM5CLcnV8F7qumFwd9xPi4PurqMoDinajGzKokuu2FasdDuSenpV+qIOUjhMhpGHyqK6fUv89e2G/7G1HN0OnTyKtnSquFDkj4K0WuJzoRZia8rwUAEDaxSAE28=
+	t=1770217036; cv=none; b=t68YnHYK1+YdTMeVQCyN6cGkGBSx6UNBgvsQwwJBV50el8pYweN+V4PV2dxCV2XxrEaM1CnkizVlDkkWYeDmmTQezND2eJVTnH0h/LMaQ68zAp0WInWkPka0zIGfT91KneQjrexrti5TzmYtFvti6qEeC3hnF7pffaNPkNe4AdY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770217032; c=relaxed/simple;
-	bh=aTyaG2fkwmVGwuALI7F3s5TUBPvSRw1LXp4Jl6g4pbk=;
+	s=arc-20240116; t=1770217036; c=relaxed/simple;
+	bh=FF4XH8oKnXLIuKl06TcE8M5xMdAXgX2CFNjSRsNAOWg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VBDPA1/nbvUlK5PKaABWfOM7XI+D7Ii/iBWa8+uZP0QfLNLylH8trXTbe3Wg4IixmcRRcQnmgV9G81dqdeQGqcoB4Hm1Y42vB0wE/TB5bR1BNaIx5yp+W8Uucq/EQYskAEsnHpwI5mE0mmyc7eOuAi4L/mhcYG6oSMBHh0A5Rpg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iNPppQb9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VCno6HjfmlYiCeSzGGgbHr2EQBELvxdim4QsYnAStIvrYq3/n4CMCY5JmLAAUY1wpBDDhCuH6r3phx9wb2RygM1q0nCbso/FM6QvTVsZpRgGYJLUve4K08GYAibzu9NWn9AMp0kaZ+6SkxUVmdtnQwJLdVZKtba96GkzAJuGbpI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Y/dPyXRH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iNPppQb9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 537D7C4CEF7;
-	Wed,  4 Feb 2026 14:57:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Y/dPyXRH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E182BC116C6;
+	Wed,  4 Feb 2026 14:57:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770217032;
-	bh=aTyaG2fkwmVGwuALI7F3s5TUBPvSRw1LXp4Jl6g4pbk=;
+	s=korg; t=1770217036;
+	bh=FF4XH8oKnXLIuKl06TcE8M5xMdAXgX2CFNjSRsNAOWg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iNPppQb97DdYqGiCTwppaVsnfY6FHcyh73EhX2P6hu2kwnKRkMgRlistN4iWldxwm
-	 l130mBbg3ewVc0rtwNWAEfZKqDvXSHUOqsIC7yBme81HvnRc21NZapHL+bIdnfsiHu
-	 0JusxtxqCQQKXGeIg7wlCPrRFM+lzJnOaF6Of1yU=
+	b=Y/dPyXRHtKjShTo/tpgmEbABCX3n4aLszVSaa9szG8XF6ItaQQ7Yt0UKAN54JSigl
+	 LsCSW3BsgKOkNmkJQWobikgxtilolUHLc+Wgu8y0mwHlMZSqQn9Pr0vfhVVGHw7rNG
+	 jaC7HEOs0oimzAdjID6vAxxzkMvhWWCPQiTV09ws=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+5cf914f193dffde3bd3c@syzkaller.appspotmail.com,
-	Eric Dumazet <edumazet@google.com>,
-	Yotam Gigi <yotam.gi@gmail.com>,
-	Jamal Hadi Salim <jhs@mojatatu.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Cedric Xing <cedric.xing@intel.com>,
+	Dave Hansen <dave.hansen@linux.intel.com>,
+	Peter Zijlstra <peterz@infradead.org>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 104/206] net/sched: act_ife: avoid possible NULL deref
-Date: Wed,  4 Feb 2026 15:38:55 +0100
-Message-ID: <20260204143901.955954580@linuxfoundation.org>
+Subject: [PATCH 5.15 105/206] x86: make page fault handling disable interrupts properly
+Date: Wed,  4 Feb 2026 15:38:56 +0100
+Message-ID: <20260204143901.990998366@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260204143858.193781818@linuxfoundation.org>
 References: <20260204143858.193781818@linuxfoundation.org>
@@ -54,80 +54,94 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Cedric Xing <cedric.xing@intel.com>
 
-[ Upstream commit 27880b0b0d35ad1c98863d09788254e36f874968 ]
+[ Upstream commit 614da1d3d4cdbd6e41aea06bc97ec15aacff6daf ]
 
-tcf_ife_encode() must make sure ife_encode() does not return NULL.
+There's a big comment in the x86 do_page_fault() about our interrupt
+disabling code:
 
-syzbot reported:
+    * User address page fault handling might have reenabled
+    * interrupts. Fixing up all potential exit points of
+    * do_user_addr_fault() and its leaf functions is just not
+    * doable w/o creating an unholy mess or turning the code
+    * upside down.
 
-Oops: general protection fault, probably for non-canonical address 0xdffffc0000000000: 0000 [#1] SMP KASAN NOPTI
-KASAN: null-ptr-deref in range [0x0000000000000000-0x0000000000000007]
- RIP: 0010:ife_tlv_meta_encode+0x41/0xa0 net/ife/ife.c:166
-CPU: 3 UID: 0 PID: 8990 Comm: syz.0.696 Not tainted syzkaller #0 PREEMPT(full)
-Call Trace:
- <TASK>
-  ife_encode_meta_u32+0x153/0x180 net/sched/act_ife.c:101
-  tcf_ife_encode net/sched/act_ife.c:841 [inline]
-  tcf_ife_act+0x1022/0x1de0 net/sched/act_ife.c:877
-  tc_act include/net/tc_wrapper.h:130 [inline]
-  tcf_action_exec+0x1c0/0xa20 net/sched/act_api.c:1152
-  tcf_exts_exec include/net/pkt_cls.h:349 [inline]
-  mall_classify+0x1a0/0x2a0 net/sched/cls_matchall.c:42
-  tc_classify include/net/tc_wrapper.h:197 [inline]
-  __tcf_classify net/sched/cls_api.c:1764 [inline]
-  tcf_classify+0x7f2/0x1380 net/sched/cls_api.c:1860
-  multiq_classify net/sched/sch_multiq.c:39 [inline]
-  multiq_enqueue+0xe0/0x510 net/sched/sch_multiq.c:66
-  dev_qdisc_enqueue+0x45/0x250 net/core/dev.c:4147
-  __dev_xmit_skb net/core/dev.c:4262 [inline]
-  __dev_queue_xmit+0x2998/0x46c0 net/core/dev.c:4798
+but it turns out that comment is subtly wrong, and the code as a result
+is also wrong.
 
-Fixes: 295a6e06d21e ("net/sched: act_ife: Change to use ife module")
-Reported-by: syzbot+5cf914f193dffde3bd3c@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/netdev/6970d61d.050a0220.706b.0010.GAE@google.com/T/#u
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Cc: Yotam Gigi <yotam.gi@gmail.com>
-Reviewed-by: Jamal Hadi Salim <jhs@mojatatu.com>
-Link: https://patch.msgid.link/20260121133724.3400020-1-edumazet@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Because it's certainly true that we may have re-enabled interrupts when
+handling user page faults.  And it's most certainly true that we don't
+want to bother fixing up all the cases.
+
+But what isn't true is that it's limited to user address page faults.
+
+The confusion stems from the fact that we have logic here that depends
+on the address range of the access, but other code then depends on the
+_context_ the access was done in.  The two are not related, even though
+both of them are about user-vs-kernel.
+
+In other words, both user and kernel addresses can cause interrupts to
+have been enabled (eg when __bad_area_nosemaphore() gets called for user
+accesses to kernel addresses).  As a result we should make sure to
+disable interrupts again regardless of the address range before
+returning to the low-level fault handling code.
+
+The __bad_area_nosemaphore() code actually did disable interrupts again
+after enabling them, just not consistently.  Ironically, as noted in the
+original comment, fixing up all the cases is just not worth it, when the
+simple solution is to just do it unconditionally in one single place.
+
+So remove the incomplete case that unsuccessfully tried to do what the
+comment said was "not doable" in commit ca4c6a9858c2 ("x86/traps: Make
+interrupt enable/disable symmetric in C code"), and just make it do the
+simple and straightforward thing.
+
+Signed-off-by: Cedric Xing <cedric.xing@intel.com>
+Reviewed-by: Dave Hansen <dave.hansen@linux.intel.com>
+Fixes: ca4c6a9858c2 ("x86/traps: Make interrupt enable/disable symmetric in C code")
+Cc: Peter Zijlstra <peterz@infradead.org>
+Cc: Thomas Gleixner <tglx@linutronix.de>
+Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sched/act_ife.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ arch/x86/mm/fault.c | 15 +++++----------
+ 1 file changed, 5 insertions(+), 10 deletions(-)
 
-diff --git a/net/sched/act_ife.c b/net/sched/act_ife.c
-index a8a5dbd7221b0..1e29e9ec228e5 100644
---- a/net/sched/act_ife.c
-+++ b/net/sched/act_ife.c
-@@ -820,6 +820,7 @@ static int tcf_ife_encode(struct sk_buff *skb, const struct tc_action *a,
- 	/* could be stupid policy setup or mtu config
- 	 * so lets be conservative.. */
- 	if ((action == TC_ACT_SHOT) || exceed_mtu) {
-+drop:
- 		qstats_drop_inc(this_cpu_ptr(ife->common.cpu_qstats));
- 		return TC_ACT_SHOT;
+diff --git a/arch/x86/mm/fault.c b/arch/x86/mm/fault.c
+index 31afd82b95245..7215e74076ec9 100644
+--- a/arch/x86/mm/fault.c
++++ b/arch/x86/mm/fault.c
+@@ -804,8 +804,6 @@ __bad_area_nosemaphore(struct pt_regs *regs, unsigned long error_code,
+ 		force_sig_pkuerr((void __user *)address, pkey);
+ 	else
+ 		force_sig_fault(SIGSEGV, si_code, (void __user *)address);
+-
+-	local_irq_disable();
+ }
+ 
+ static noinline void
+@@ -1443,15 +1441,12 @@ handle_page_fault(struct pt_regs *regs, unsigned long error_code,
+ 		do_kern_addr_fault(regs, error_code, address);
+ 	} else {
+ 		do_user_addr_fault(regs, error_code, address);
+-		/*
+-		 * User address page fault handling might have reenabled
+-		 * interrupts. Fixing up all potential exit points of
+-		 * do_user_addr_fault() and its leaf functions is just not
+-		 * doable w/o creating an unholy mess or turning the code
+-		 * upside down.
+-		 */
+-		local_irq_disable();
  	}
-@@ -828,6 +829,8 @@ static int tcf_ife_encode(struct sk_buff *skb, const struct tc_action *a,
- 		skb_push(skb, skb->dev->hard_header_len);
++	/*
++	 * page fault handling might have reenabled interrupts,
++	 * make sure to disable them again.
++	 */
++	local_irq_disable();
+ }
  
- 	ife_meta = ife_encode(skb, metalen);
-+	if (!ife_meta)
-+		goto drop;
- 
- 	spin_lock(&ife->tcf_lock);
- 
-@@ -843,8 +846,7 @@ static int tcf_ife_encode(struct sk_buff *skb, const struct tc_action *a,
- 		if (err < 0) {
- 			/* too corrupt to keep around if overwritten */
- 			spin_unlock(&ife->tcf_lock);
--			qstats_drop_inc(this_cpu_ptr(ife->common.cpu_qstats));
--			return TC_ACT_SHOT;
-+			goto drop;
- 		}
- 		skboff += err;
- 	}
+ DEFINE_IDTENTRY_RAW_ERRORCODE(exc_page_fault)
 -- 
 2.51.0
 
