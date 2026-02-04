@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6AE59280A3B;
-	Wed,  4 Feb 2026 14:43:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C00C280A3B;
+	Wed,  4 Feb 2026 14:43:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770216202; cv=none; b=bGH1D4okaE6gk/O+OxtRJWuxiU7jThsc5VKGzzC0ljgZpuLD0jNQIFeIn/lCS4Xdylbx1RxhfSPJdMCfCerkCAx1lCAtwkfsucKpkYliD6fYP41NDq1se6qHxuoo+rtWcvE4V7ELCHRRXc2+aFl6WTHY4S1YfNw63JFuUeNHEwQ=
+	t=1770216205; cv=none; b=IM952eXcS+7Speo7ZwmjLhmFED6bZwEMLX4aadMjIZWusaotOJDDfPbNVf4qYwpntAeMhfVBpk7TXlJ2ZYr914UIGUlCFZ4SGP+2cuYi3fbP21w6rex3J2THepyLbBLQi6ithdMYyZgpl5U+SFbrvQAlck9vV0nIHl9Akm4u8+w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770216202; c=relaxed/simple;
-	bh=04t4UzSMDHRoWrv21fmiH6JWSuMM984bS4f6LXajl3Y=;
+	s=arc-20240116; t=1770216205; c=relaxed/simple;
+	bh=KQScA0WwwFdVH5i3prfIJaZY/Uay5WbGnkxYJqERFdI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cdMD4JzTKA11zrr+9w3EfLDQoB8V4RQoGGEDDcLXY+z996DaR9mm+07JLZP9/abAEqyOCEzAS/89QZmzsvCaj54bboClIhN6uhgh4X8pNKxN7LcAjxd6YfkiW5EiYnx65Qp7gQsmdq0DOER6nb0qeDTTb7aSEwqpXJX+BjzA5vs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PwlDC5jE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=a9XexUDyffTQ2CeuMzwah2YJCji+pU+x5ye1nud6y+7P/wasTA3GoCkvHMtsNFgqgGkWmbrK4Ry4OVYaVVeYEFFA3i08OpAx8GLHuc7QU69XseVXN7smur2ezI07vV1plnh6D+K/eUbegOqrxxF7FaDuhNTRZPlO3R8fVL8SNQ0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=C3zoHHBY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PwlDC5jE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 841E5C4CEF7;
-	Wed,  4 Feb 2026 14:43:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="C3zoHHBY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE86CC4CEF7;
+	Wed,  4 Feb 2026 14:43:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770216202;
-	bh=04t4UzSMDHRoWrv21fmiH6JWSuMM984bS4f6LXajl3Y=;
+	s=korg; t=1770216205;
+	bh=KQScA0WwwFdVH5i3prfIJaZY/Uay5WbGnkxYJqERFdI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PwlDC5jEpluKWhP51MQsXVpY6DrhksChPZ4WE8ia07W5EFXzIRXl01s3kDkabPnsn
-	 XmJWApbF8J6nXW8UCZT302N4XrZsb1SO8Eo68rLVhexTXXmwNZW2LfbmCRbXIUrKr6
-	 xBkdnRsqbCM766iazLA31mi9B+D1k3SEpU+YFNPM=
+	b=C3zoHHBYXqlWxDb5ff6jB4IF338+R9igfwHOaRlDcY3d4UKA3wyi41nRY3Mmr7FOK
+	 sumi+6nEXZ+TOxyYxCmQsBCDQO+p7QI8BHOto/BJfZqIoTDziynbB9vumT4hElZBFQ
+	 ypAeuNGKnY6sz194WvkWb3smiy/6xJK9SJ0kei74=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Haotian Zhang <vulab@iscas.ac.cn>,
-	Vinod Koul <vkoul@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 018/161] dmaengine: omap-dma: fix dma_pool resource leak in error paths
-Date: Wed,  4 Feb 2026 15:38:01 +0100
-Message-ID: <20260204143852.420325645@linuxfoundation.org>
+	Benjamin Tissoires <bentiss@kernel.org>,
+	Salvatore Bonaccorso <carnil@debian.org>
+Subject: [PATCH 5.10 019/161] HID: usbhid: paper over wrong bNumDescriptor field
+Date: Wed,  4 Feb 2026 15:38:02 +0100
+Message-ID: <20260204143852.455385080@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260204143851.755002596@linuxfoundation.org>
 References: <20260204143851.755002596@linuxfoundation.org>
@@ -51,50 +50,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Haotian Zhang <vulab@iscas.ac.cn>
+From: Benjamin Tissoires <bentiss@kernel.org>
 
-[ Upstream commit 2e1136acf8a8887c29f52e35a77b537309af321f ]
+commit f28beb69c51517aec7067dfb2074e7c751542384 upstream.
 
-The dma_pool created by dma_pool_create() is not destroyed when
-dma_async_device_register() or of_dma_controller_register() fails,
-causing a resource leak in the probe error paths.
+Some faulty devices (ZWO EFWmini) have a wrong optional HID class
+descriptor count compared to the provided length.
 
-Add dma_pool_destroy() in both error paths to properly release the
-allocated dma_pool resource.
+Given that we plainly ignore those optional descriptor, we can attempt
+to fix the provided number so we do not lock out those devices.
 
-Fixes: 7bedaa553760 ("dmaengine: add OMAP DMA engine driver")
-Signed-off-by: Haotian Zhang <vulab@iscas.ac.cn>
-Link: https://patch.msgid.link/20251103073018.643-1-vulab@iscas.ac.cn
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Benjamin Tissoires <bentiss@kernel.org>
+Cc: Salvatore Bonaccorso <carnil@debian.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/dma/ti/omap-dma.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/hid/usbhid/hid-core.c |   17 ++++++++++++++++-
+ 1 file changed, 16 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/dma/ti/omap-dma.c b/drivers/dma/ti/omap-dma.c
-index 268a080587149..6c6a34265b063 100644
---- a/drivers/dma/ti/omap-dma.c
-+++ b/drivers/dma/ti/omap-dma.c
-@@ -1803,6 +1803,8 @@ static int omap_dma_probe(struct platform_device *pdev)
- 	if (rc) {
- 		pr_warn("OMAP-DMA: failed to register slave DMA engine device: %d\n",
- 			rc);
-+		if (od->ll123_supported)
-+			dma_pool_destroy(od->desc_pool);
- 		omap_dma_free(od);
- 		return rc;
+--- a/drivers/hid/usbhid/hid-core.c
++++ b/drivers/hid/usbhid/hid-core.c
+@@ -985,6 +985,7 @@ static int usbhid_parse(struct hid_devic
+ 	struct usb_device *dev = interface_to_usbdev (intf);
+ 	struct hid_descriptor *hdesc;
+ 	struct hid_class_descriptor *hcdesc;
++	__u8 fixed_opt_descriptors_size;
+ 	u32 quirks = 0;
+ 	unsigned int rsize = 0;
+ 	char *rdesc;
+@@ -1015,7 +1016,21 @@ static int usbhid_parse(struct hid_devic
+ 			      (hdesc->bNumDescriptors - 1) * sizeof(*hcdesc)) {
+ 		dbg_hid("hid descriptor invalid, bLen=%hhu bNum=%hhu\n",
+ 			hdesc->bLength, hdesc->bNumDescriptors);
+-		return -EINVAL;
++
++		/*
++		 * Some devices may expose a wrong number of descriptors compared
++		 * to the provided length.
++		 * However, we ignore the optional hid class descriptors entirely
++		 * so we can safely recompute the proper field.
++		 */
++		if (hdesc->bLength >= sizeof(*hdesc)) {
++			fixed_opt_descriptors_size = hdesc->bLength - sizeof(*hdesc);
++
++			hid_warn(intf, "fixing wrong optional hid class descriptors count\n");
++			hdesc->bNumDescriptors = fixed_opt_descriptors_size / sizeof(*hcdesc) + 1;
++		} else {
++			return -EINVAL;
++		}
  	}
-@@ -1818,6 +1820,8 @@ static int omap_dma_probe(struct platform_device *pdev)
- 		if (rc) {
- 			pr_warn("OMAP-DMA: failed to register DMA controller\n");
- 			dma_async_device_unregister(&od->ddev);
-+			if (od->ll123_supported)
-+				dma_pool_destroy(od->desc_pool);
- 			omap_dma_free(od);
- 		}
- 	}
--- 
-2.51.0
-
+ 
+ 	hid->version = le16_to_cpu(hdesc->bcdHID);
 
 
