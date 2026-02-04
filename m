@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE4E92C08AC;
-	Wed,  4 Feb 2026 14:49:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91A9228CF49;
+	Wed,  4 Feb 2026 14:49:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770216541; cv=none; b=my8ZTxCZlg3M0FVeY9tDqw2Ps5yPTJFTQxFM5i25o2DI1Xz+8A8fq4qSsF54z/LaDx5Woj2klx3OypBDSfaG1yBnvxOiN8pm9JXc8f/KKyWl8aFn6Nqrg+s/QmNEj0eLkXpzzqQZmLvAwHmA5CmotbZ00GXNhlK94tcqv10e2nI=
+	t=1770216545; cv=none; b=O0TH8YpA4suBcgXNClVLX+flkj4KTX0QgLIHSh4F45Gy03qEgAEhD3wje6V0y9VwpnfrP45wUCr8/za8n923GalcjCLFRZHnjSZ02EYNG/rQfRorxgFHcGgmZwpE4N3GgU7D7A35NtRXgyZQIpLQ05kthlf2VqdI1wcpvVsi/kc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770216541; c=relaxed/simple;
-	bh=i77LEJQcugac6NGynHcYc0q5IFrTRWi/xcgU6J2nsn4=;
+	s=arc-20240116; t=1770216545; c=relaxed/simple;
+	bh=ti7yJwUqYAC/+4Ul8IfCrS3zTtM7nf690GxLXC9zxXY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=d95JVmsg0RGWV3qk24yTAuGLx11Hyey7QQc+xx5p3rvbhnfMBALruuSrns0Wx49GAi5+pmhqUp42y1Ij0hH+BIFQcElNF6kB50CbZzfC/7CnErgaQBC2rrKurruSUFYgmqw5KB74vn2WbXmRMjIAjZ3EfJlxlzFSYzh0xUUy2Dc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Pb+sO1vi; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YlO/1FWVjACWHv8LCiUIACzIdRyn7wkntR1FJT7q/rw/9xYlOTR8HbhVR+r9tmw5T2MYDdEBak9LMdatl/D8373qcI/jw8dDgyxiCCjbZKKkcwB6/tZjzMBLsnZb1R+MzQPp/S7nzvRAYZQI57CChlRN2pQsoCdb1CodqYIklSc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=r62/5/Jn; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Pb+sO1vi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C3A1C4CEF7;
-	Wed,  4 Feb 2026 14:49:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="r62/5/Jn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C0D39C116C6;
+	Wed,  4 Feb 2026 14:49:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770216541;
-	bh=i77LEJQcugac6NGynHcYc0q5IFrTRWi/xcgU6J2nsn4=;
+	s=korg; t=1770216545;
+	bh=ti7yJwUqYAC/+4Ul8IfCrS3zTtM7nf690GxLXC9zxXY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Pb+sO1vi7Wiq8PIq4kVWFLoSqfPre7fIyjgqtpzkkMNekKNwWB2Syc6mM563B9EZo
-	 esXSGjQzbgzlGi/0svoZH1E+WJPkXcVro438uHzI1IrytJWz7jkQw+uorlPnPyR/jy
-	 SKKwivbhZYKb0RUGjUEHCq0+KJwDrZ8UfG/y+d6k=
+	b=r62/5/JnpJjKx+dCuX7S/igddweefI+IJ2ikP7JpUTE8ICH22dqeH7P9pZnwnTtS2
+	 Rt/ZHFbJ2Vl72B4GIGpdD7sreAR27S3DHEqOou5eJYKY0FxbRk3I3H+oyIl76Uce1n
+	 BQU6YjTzco9W8JZ1ukPEpkw126vxTFglL2fYE2OQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jia-Hong Su <s11242586@gmail.com>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Zilin Guan <zilin@seu.edu.cn>,
+	Tariq Toukan <tariqt@nvidia.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 118/161] Bluetooth: hci_uart: fix null-ptr-deref in hci_uart_write_work
-Date: Wed,  4 Feb 2026 15:39:41 +0100
-Message-ID: <20260204143855.993027063@linuxfoundation.org>
+Subject: [PATCH 5.10 119/161] net/mlx5: Fix memory leak in esw_acl_ingress_lgcy_setup()
+Date: Wed,  4 Feb 2026 15:39:42 +0100
+Message-ID: <20260204143856.028898923@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260204143851.755002596@linuxfoundation.org>
 References: <20260204143851.755002596@linuxfoundation.org>
@@ -51,71 +52,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jia-Hong Su <s11242586@gmail.com>
+From: Zilin Guan <zilin@seu.edu.cn>
 
-[ Upstream commit 0c3cd7a0b862c37acbee6d9502107146cc944398 ]
+[ Upstream commit 108948f723b13874b7ebf6b3f1cc598a7de38622 ]
 
-hci_uart_set_proto() sets HCI_UART_PROTO_INIT before calling
-hci_uart_register_dev(), which calls proto->open() to initialize
-hu->priv. However, if a TTY write wakeup occurs during this window,
-hci_uart_tx_wakeup() may schedule write_work before hu->priv is
-initialized, leading to a NULL pointer dereference in
-hci_uart_write_work() when proto->dequeue() accesses hu->priv.
+In esw_acl_ingress_lgcy_setup(), if esw_acl_table_create() fails,
+the function returns directly without releasing the previously
+created counter, leading to a memory leak.
 
-The race condition is:
+Fix this by jumping to the out label instead of returning directly,
+which aligns with the error handling logic of other paths in this
+function.
 
-  CPU0                              CPU1
-  ----                              ----
-  hci_uart_set_proto()
-    set_bit(HCI_UART_PROTO_INIT)
-    hci_uart_register_dev()
-                                    tty write wakeup
-                                      hci_uart_tty_wakeup()
-                                        hci_uart_tx_wakeup()
-                                          schedule_work(&hu->write_work)
-      proto->open(hu)
-        // initializes hu->priv
-                                    hci_uart_write_work()
-                                      hci_uart_dequeue()
-                                        proto->dequeue(hu)
-                                          // accesses hu->priv (NULL!)
+Compile tested only. Issue found using a prototype static analysis tool
+and code review.
 
-Fix this by moving set_bit(HCI_UART_PROTO_INIT) after proto->open()
-succeeds, ensuring hu->priv is initialized before any work can be
-scheduled.
-
-Fixes: 5df5dafc171b ("Bluetooth: hci_uart: Fix another race during initialization")
-Link: https://lore.kernel.org/linux-bluetooth/6969764f.170a0220.2b9fc4.35a7@mx.google.com/
-
-Signed-off-by: Jia-Hong Su <s11242586@gmail.com>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Fixes: 07bab9502641 ("net/mlx5: E-Switch, Refactor eswitch ingress acl codes")
+Signed-off-by: Zilin Guan <zilin@seu.edu.cn>
+Reviewed-by: Tariq Toukan <tariqt@nvidia.com>
+Link: https://patch.msgid.link/20260120134640.2717808-1-zilin@seu.edu.cn
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/bluetooth/hci_ldisc.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/net/ethernet/mellanox/mlx5/core/esw/acl/ingress_lgcy.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/bluetooth/hci_ldisc.c b/drivers/bluetooth/hci_ldisc.c
-index 93bb58971dbe6..436d82a7f5871 100644
---- a/drivers/bluetooth/hci_ldisc.c
-+++ b/drivers/bluetooth/hci_ldisc.c
-@@ -684,6 +684,8 @@ static int hci_uart_register_dev(struct hci_uart *hu)
- 		return err;
- 	}
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/esw/acl/ingress_lgcy.c b/drivers/net/ethernet/mellanox/mlx5/core/esw/acl/ingress_lgcy.c
+index 45570d0a58d2f..02b2ab7958543 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/esw/acl/ingress_lgcy.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/esw/acl/ingress_lgcy.c
+@@ -185,7 +185,7 @@ int esw_acl_ingress_lgcy_setup(struct mlx5_eswitch *esw,
+ 		if (IS_ERR(vport->ingress.acl)) {
+ 			err = PTR_ERR(vport->ingress.acl);
+ 			vport->ingress.acl = NULL;
+-			return err;
++			goto out;
+ 		}
  
-+	set_bit(HCI_UART_PROTO_INIT, &hu->flags);
-+
- 	if (test_bit(HCI_UART_INIT_PENDING, &hu->hdev_flags))
- 		return 0;
- 
-@@ -711,8 +713,6 @@ static int hci_uart_set_proto(struct hci_uart *hu, int id)
- 
- 	hu->proto = p;
- 
--	set_bit(HCI_UART_PROTO_INIT, &hu->flags);
--
- 	err = hci_uart_register_dev(hu);
- 	if (err) {
- 		return err;
+ 		err = esw_acl_ingress_lgcy_groups_create(esw, vport);
 -- 
 2.51.0
 
