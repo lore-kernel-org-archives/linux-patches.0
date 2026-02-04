@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7D8B41C2E7;
-	Wed,  4 Feb 2026 14:57:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D3A8421885;
+	Wed,  4 Feb 2026 14:57:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770217077; cv=none; b=UoW9/ZFzvQFHAocN/g9K1iA0YxHwLTNgZWQMlTOHcL6159IqQY4pZVsJqL05RJypT45tdxyzwEIknJ/Nl5aDXc5FYzPmTD7kH72NjOvwFlFeIxEnqJj6LZlztSGQiHPm1/qTV6hr6UMlNhCMi1nwLtzImlKJby3s9ZTyurfLwnE=
+	t=1770217080; cv=none; b=p3gLPWG8tjLY9QW4uwgTbger9nLEfuo6iMroRqfgYpbwKEacK1kjLsF/+HwSwhuUXAoXdbw0mtwd0JMH/q0oudP1gxq9IBmT4v0OD3z6APh4NdPWkFgrDU4VdKdB45MOgeEIA9YsNrdhqYW9pZgcEHsJ6em5S8oa/2znkzUj8nY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770217077; c=relaxed/simple;
-	bh=BiUpwFIv6xnex3N189Hz7fteiN7tF5jbCc3eJEhWI6Q=;
+	s=arc-20240116; t=1770217080; c=relaxed/simple;
+	bh=NMOLQbFgEEe+yJnpDSrfvEbhFaahpHD8rVQdbnwMLcc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VKMLGxwKO8LrBaChiaO/wzUli8U4zNM8nIo3QBBpraSvO6B2jwVSRqi+snnObsKDbu7PUZA2u/kSY+ELpVjpVAbOxRB22scAiCaj1ZMZENXGoOL/o01hbaUwC7CRaNYjUiQOvjF5sbZkF6aXhCgJTzsp8VxVWQqBlxYxp0OdPOc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fKo1Poka; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uNqYRMMaFQGqF2w6dOa+bz0crDwS4QMH1MAmnz4Gw54VJyKUvBlk4v2A/kTHxxvVSg94nwr/dHXk3owMKGFE+PsZvzbpOTKv2RU6taHGyAFiuhyWPKIde0+qeibO3MhvKxA5e/yjxxRz06eTmN13Y18pfcifG6GqmwV+vLZHAjw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GpAxOiG2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fKo1Poka"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 258A6C4CEF7;
-	Wed,  4 Feb 2026 14:57:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GpAxOiG2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 50A20C4CEF7;
+	Wed,  4 Feb 2026 14:57:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770217076;
-	bh=BiUpwFIv6xnex3N189Hz7fteiN7tF5jbCc3eJEhWI6Q=;
+	s=korg; t=1770217079;
+	bh=NMOLQbFgEEe+yJnpDSrfvEbhFaahpHD8rVQdbnwMLcc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fKo1PokaanTgoC5qAY0tnWIHJLcjO7Eq0eznu33Zk0V1DAzRGt4Z/SaOJ8QCh/f0C
-	 /I2lRaGZiW4LIShzlTq0xiPPzUslkD2+Pelmpuk/ZKS83ZBUrqVBF++VA+vv0y0GhB
-	 fwR5kmDbfi0D1yeny5kbOhGgiScZhWQCHHb6qfu8=
+	b=GpAxOiG2iLG7hrczcE+8iLzgTfRSE/ravO/Cf9SwRcexyAMhFmdwoYM0rrJ+/CujS
+	 ZIg1d+r6ro8+YKyWeNihOzbYtmbCH120lEp1gzJK6qh7yPtGhTaMZyF8DugHZ7jODb
+	 fTBESLQ6ixsBjNABVucUBRpwsMUHpnjiSdbhFTxM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marek Vasut <marex@nabladev.com>,
-	Johannes Berg <johannes.berg@intel.com>
-Subject: [PATCH 5.15 116/206] wifi: rsi: Fix memory corruption due to not set vif driver data size
-Date: Wed,  4 Feb 2026 15:39:07 +0100
-Message-ID: <20260204143902.380377456@linuxfoundation.org>
+	Jeson Gao <jeson.gao@unisoc.com>,
+	Zhaoyang Huang <zhaoyang.huang@unisoc.com>,
+	Will Deacon <will@kernel.org>,
+	Mark Rutland <mark.rutland@arm.com>,
+	Catalin Marinas <catalin.marinas@arm.com>
+Subject: [PATCH 5.15 117/206] arm64: Set __nocfi on swsusp_arch_resume()
+Date: Wed,  4 Feb 2026 15:39:08 +0100
+Message-ID: <20260204143902.415114074@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260204143858.193781818@linuxfoundation.org>
 References: <20260204143858.193781818@linuxfoundation.org>
@@ -50,57 +53,94 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Marek Vasut <marex@nabladev.com>
+From: Zhaoyang Huang <zhaoyang.huang@unisoc.com>
 
-commit 4f431d88ea8093afc7ba55edf4652978c5a68f33 upstream.
+commit e2f8216ca2d8e61a23cb6ec355616339667e0ba6 upstream.
 
-The struct ieee80211_vif contains trailing space for vif driver data,
-when struct ieee80211_vif is allocated, the total memory size that is
-allocated is sizeof(struct ieee80211_vif) + size of vif driver data.
-The size of vif driver data is set by each WiFi driver as needed.
+A DABT is reported[1] on an android based system when resume from hiberate.
+This happens because swsusp_arch_suspend_exit() is marked with SYM_CODE_*()
+and does not have a CFI hash, but swsusp_arch_resume() will attempt to
+verify the CFI hash when calling a copy of swsusp_arch_suspend_exit().
 
-The RSI911x driver does not set vif driver data size, no trailing space
-for vif driver data is therefore allocated past struct ieee80211_vif .
-The RSI911x driver does however use the vif driver data to store its
-vif driver data structure "struct vif_priv". An access to vif->drv_priv
-leads to access out of struct ieee80211_vif bounds and corruption of
-some memory.
+Given that there's an existing requirement that the entrypoint to
+swsusp_arch_suspend_exit() is the first byte of the .hibernate_exit.text
+section, we cannot fix this by marking swsusp_arch_suspend_exit() with
+SYM_FUNC_*(). The simplest fix for now is to disable the CFI check in
+swsusp_arch_resume().
 
-In case of the failure observed locally, rsi_mac80211_add_interface()
-would write struct vif_priv *vif_info = (struct vif_priv *)vif->drv_priv;
-vif_info->vap_id = vap_idx. This write corrupts struct fq_tin member
-struct list_head new_flows . The flow = list_first_entry(head, struct
-fq_flow, flowchain); in fq_tin_reset() then reports non-NULL bogus
-address, which when accessed causes a crash.
+Mark swsusp_arch_resume() as __nocfi to disable the CFI check.
 
-The trigger is very simple, boot the machine with init=/bin/sh , mount
-devtmpfs, sysfs, procfs, and then do "ip link set wlan0 up", "sleep 1",
-"ip link set wlan0 down" and the crash occurs.
+[1]
+[   22.991934][    T1] Unable to handle kernel paging request at virtual address 0000000109170ffc
+[   22.991934][    T1] Mem abort info:
+[   22.991934][    T1]   ESR = 0x0000000096000007
+[   22.991934][    T1]   EC = 0x25: DABT (current EL), IL = 32 bits
+[   22.991934][    T1]   SET = 0, FnV = 0
+[   22.991934][    T1]   EA = 0, S1PTW = 0
+[   22.991934][    T1]   FSC = 0x07: level 3 translation fault
+[   22.991934][    T1] Data abort info:
+[   22.991934][    T1]   ISV = 0, ISS = 0x00000007, ISS2 = 0x00000000
+[   22.991934][    T1]   CM = 0, WnR = 0, TnD = 0, TagAccess = 0
+[   22.991934][    T1]   GCS = 0, Overlay = 0, DirtyBit = 0, Xs = 0
+[   22.991934][    T1] [0000000109170ffc] user address but active_mm is swapper
+[   22.991934][    T1] Internal error: Oops: 0000000096000007 [#1] PREEMPT SMP
+[   22.991934][    T1] Dumping ftrace buffer:
+[   22.991934][    T1]    (ftrace buffer empty)
+[   22.991934][    T1] Modules linked in:
+[   22.991934][    T1] CPU: 0 PID: 1 Comm: swapper/0 Not tainted 6.6.98-android15-8-g0b1d2aee7fc3-dirty-4k #1 688c7060a825a3ac418fe53881730b355915a419
+[   22.991934][    T1] Hardware name: Unisoc UMS9360-base Board (DT)
+[   22.991934][    T1] pstate: 804000c5 (Nzcv daIF +PAN -UAO -TCO -DIT -SSBS BTYPE=--)
+[   22.991934][    T1] pc : swsusp_arch_resume+0x2ac/0x344
+[   22.991934][    T1] lr : swsusp_arch_resume+0x294/0x344
+[   22.991934][    T1] sp : ffffffc08006b960
+[   22.991934][    T1] x29: ffffffc08006b9c0 x28: 0000000000000000 x27: 0000000000000000
+[   22.991934][    T1] x26: 0000000000000000 x25: 0000000000000000 x24: 0000000000000820
+[   22.991934][    T1] x23: ffffffd0817e3000 x22: ffffffd0817e3000 x21: 0000000000000000
+[   22.991934][    T1] x20: ffffff8089171000 x19: ffffffd08252c8c8 x18: ffffffc080061058
+[   22.991934][    T1] x17: 00000000529c6ef0 x16: 00000000529c6ef0 x15: 0000000000000004
+[   22.991934][    T1] x14: ffffff8178c88000 x13: 0000000000000006 x12: 0000000000000000
+[   22.991934][    T1] x11: 0000000000000015 x10: 0000000000000001 x9 : ffffffd082533000
+[   22.991934][    T1] x8 : 0000000109171000 x7 : 205b5d3433393139 x6 : 392e32322020205b
+[   22.991934][    T1] x5 : 000000010916f000 x4 : 000000008164b000 x3 : ffffff808a4e0530
+[   22.991934][    T1] x2 : ffffffd08058e784 x1 : 0000000082326000 x0 : 000000010a283000
+[   22.991934][    T1] Call trace:
+[   22.991934][    T1]  swsusp_arch_resume+0x2ac/0x344
+[   22.991934][    T1]  hibernation_restore+0x158/0x18c
+[   22.991934][    T1]  load_image_and_restore+0xb0/0xec
+[   22.991934][    T1]  software_resume+0xf4/0x19c
+[   22.991934][    T1]  software_resume_initcall+0x34/0x78
+[   22.991934][    T1]  do_one_initcall+0xe8/0x370
+[   22.991934][    T1]  do_initcall_level+0xc8/0x19c
+[   22.991934][    T1]  do_initcalls+0x70/0xc0
+[   22.991934][    T1]  do_basic_setup+0x1c/0x28
+[   22.991934][    T1]  kernel_init_freeable+0xe0/0x148
+[   22.991934][    T1]  kernel_init+0x20/0x1a8
+[   22.991934][    T1]  ret_from_fork+0x10/0x20
+[   22.991934][    T1] Code: a9400a61 f94013e0 f9438923 f9400a64 (b85fc110)
 
-Fix this by setting the correct size of vif driver data, which is the
-size of "struct vif_priv", so that memory is allocated and the driver
-can store its driver data in it, instead of corrupting memory around
-it.
-
-Cc: stable@vger.kernel.org
-Fixes: dad0d04fa7ba ("rsi: Add RS9113 wireless driver")
-Signed-off-by: Marek Vasut <marex@nabladev.com>
-Link: https://patch.msgid.link/20260109235817.150330-1-marex@nabladev.com
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Co-developed-by: Jeson Gao <jeson.gao@unisoc.com>
+Signed-off-by: Jeson Gao <jeson.gao@unisoc.com>
+Signed-off-by: Zhaoyang Huang <zhaoyang.huang@unisoc.com>
+Acked-by: Will Deacon <will@kernel.org>
+Acked-by: Mark Rutland <mark.rutland@arm.com>
+Cc: <stable@vger.kernel.org>
+[catalin.marinas@arm.com: commit log updated by Mark Rutland]
+Signed-off-by: Catalin Marinas <catalin.marinas@arm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wireless/rsi/rsi_91x_mac80211.c |    1 +
- 1 file changed, 1 insertion(+)
+ arch/arm64/kernel/hibernate.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/net/wireless/rsi/rsi_91x_mac80211.c
-+++ b/drivers/net/wireless/rsi/rsi_91x_mac80211.c
-@@ -2022,6 +2022,7 @@ int rsi_mac80211_attach(struct rsi_commo
- 
- 	hw->queues = MAX_HW_QUEUES;
- 	hw->extra_tx_headroom = RSI_NEEDED_HEADROOM;
-+	hw->vif_data_size = sizeof(struct vif_priv);
- 
- 	hw->max_rates = 1;
- 	hw->max_rate_tries = MAX_RETRIES;
+--- a/arch/arm64/kernel/hibernate.c
++++ b/arch/arm64/kernel/hibernate.c
+@@ -428,7 +428,7 @@ int swsusp_arch_suspend(void)
+  * Memory allocated by get_safe_page() will be dealt with by the hibernate code,
+  * we don't need to free it here.
+  */
+-int swsusp_arch_resume(void)
++int __nocfi swsusp_arch_resume(void)
+ {
+ 	int rc;
+ 	void *zero_page;
 
 
