@@ -1,43 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C687741B37D;
-	Wed,  4 Feb 2026 14:53:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F39D4223323;
+	Wed,  4 Feb 2026 14:53:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770216819; cv=none; b=lDQ8qH4sGci8IwtBr9qrmdmRgLlvKgkDf1E8FdNeYn5Im0SHXouW/TlymlZWUexLCXEQXbGAgAsR0ydyQa9DNRsCOVOv0dCj16eZzwgWdJ7eTMUe7Ryi2hwO7gzRZpSwP0v5gwa1NhTqPe47lBod8PxUgDRCJ0Wfqb7UYy/qy/Q=
+	t=1770216823; cv=none; b=iPhOZK3CVyLneHBBLXDMhyjD67S6XfhITlm4/M4zkAl4PhfvH3OvQ3gl5vTIMH0JMRf6V38PZwoDupBJEGFUo/ybKd6k/vL63ktMjrkT1rVDQTjT+daCoHNR+6GXJNxnS9RjS+m11aH2KNtNxJO4rOTPNYakPi6TxYDdsAcuO10=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770216819; c=relaxed/simple;
-	bh=I+o0vftEQaFbL6S8I852RiKbbQOYeOBI0IuWq0FLiCU=;
+	s=arc-20240116; t=1770216823; c=relaxed/simple;
+	bh=RaWDu2BHUtigv1V6wdi5qocO/zwieVbCTiglU0ZSG1M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OEkqGc9whatY6pCn2afHT4RqZUlcVDmisFU7j83tNxvui8eS8DiJinPhORnbLOwbj3q8/yzaZlszhSwvbiq9ydLf9t0jzPmzam7FwMG6rKkbEnYgYtT9Z0s832O640U1b+DZ5w26OnWg1L7DyQcttIbW8sKjWLeUKP4QP9L9Nd8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wGOaSFpm; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BD5gaT8n/PM6MuL6lUnYlfGVaFrpT7fz+nriFfOzU/qfAXUsyB3zSs+7WBwp0QZ8t191Ulc1kD00A2/oGdgP0ZwccSgqpyBsz6msW/dpwsoonUpi0T+4IZm0Fn5J3uZesr03e2PZNuISop440DFf2RyVLfykqFstWYwz4rYcoGk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UISTYtxr; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wGOaSFpm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 47713C4CEF7;
-	Wed,  4 Feb 2026 14:53:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UISTYtxr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6186EC4CEF7;
+	Wed,  4 Feb 2026 14:53:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770216819;
-	bh=I+o0vftEQaFbL6S8I852RiKbbQOYeOBI0IuWq0FLiCU=;
+	s=korg; t=1770216822;
+	bh=RaWDu2BHUtigv1V6wdi5qocO/zwieVbCTiglU0ZSG1M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wGOaSFpmGlr3jqUbEixeVXIHZBskXLZjNoD7GQLpUlRhZ7AN3c2dxzELW1dzjlQ5u
-	 igzM0vdPmX6UCI+UYl4ZElYDVlySvXUaGEYkJvtuxz9c+u+E/115N0Zb24HBy2KSyR
-	 RaqFj1b4OHKz9jVLU9eTNNOuSaQne++/vppTSIk8=
+	b=UISTYtxrICM9npqB1pKasL7t2K7VLXvX7/53nmHYKUPuMEDg3fLI/Jv2NbTdHLlUV
+	 SXV0M2mztd2RQ5+6MslE2BJHeRVb3Zjk8so3XvUXkb0e33wu5jd18V7I9cGbF5IJnF
+	 6xDIUAS1/QiepCy1eduvxW82Nk/iYwq4Jdc1cRbw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aboorva Devarajan <aboorvad@linux.ibm.com>,
-	Michal Hocko <mhocko@suse.com>,
-	Brendan Jackman <jackmanb@google.com>,
-	Johannes Weiner <hannes@cmpxchg.org>,
-	Suren Baghdasaryan <surenb@google.com>,
-	Vlastimil Babka <vbabka@suse.cz>,
-	Zi Yan <ziy@nvidia.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 5.15 040/206] mm/page_alloc: make percpu_pagelist_high_fraction reads lock-free
-Date: Wed,  4 Feb 2026 15:37:51 +0100
-Message-ID: <20260204143859.655562836@linuxfoundation.org>
+	kent.russell@amd.com,
+	"Mario Limonciello (AMD)" <superm1@kernel.org>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 5.15 041/206] drm/amd: Clean up kfd node on surprise disconnect
+Date: Wed,  4 Feb 2026 15:37:52 +0100
+Message-ID: <20260204143859.691255047@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260204143858.193781818@linuxfoundation.org>
 References: <20260204143858.193781818@linuxfoundation.org>
@@ -56,60 +51,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Aboorva Devarajan <aboorvad@linux.ibm.com>
+From: Mario Limonciello (AMD) <superm1@kernel.org>
 
-commit b9efe36b5e3eb2e91aa3d706066428648af034fc upstream.
+commit 28695ca09d326461f8078332aa01db516983e8a2 upstream.
 
-When page isolation loops indefinitely during memory offline, reading
-/proc/sys/vm/percpu_pagelist_high_fraction blocks on pcp_batch_high_lock,
-causing hung task warnings.
+When an eGPU is unplugged the KFD topology should also be destroyed
+for that GPU. This never happens because the fini_sw callbacks never
+get to run. Run them manually before calling amdgpu_device_ip_fini_early()
+when a device has already been disconnected.
 
-Make procfs reads lock-free since percpu_pagelist_high_fraction is a
-simple integer with naturally atomic reads, writers still serialize via
-the mutex.
+This location is intentionally chosen to make sure that the kfd locking
+refcount doesn't get incremented unintentionally.
 
-This prevents hung task warnings when reading the procfs file during
-long-running memory offline operations.
-
-[akpm@linux-foundation.org: add comment, per Michal]
-  Link: https://lkml.kernel.org/r/aS_y9AuJQFydLEXo@tiehlicka
-Link: https://lkml.kernel.org/r/20251201060009.1420792-1-aboorvad@linux.ibm.com
-Signed-off-by: Aboorva Devarajan <aboorvad@linux.ibm.com>
-Acked-by: Michal Hocko <mhocko@suse.com>
-Cc: Brendan Jackman <jackmanb@google.com>
-Cc: Johannes Weiner <hannes@cmpxchg.org>
-Cc: Suren Baghdasaryan <surenb@google.com>
-Cc: Vlastimil Babka <vbabka@suse.cz>
-Cc: Zi Yan <ziy@nvidia.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Cc: kent.russell@amd.com
+Closes: https://community.frame.work/t/amd-egpu-on-linux/8691/33
+Signed-off-by: Mario Limonciello (AMD) <superm1@kernel.org>
+Reviewed-by: Kent Russell <kent.russell@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit 6a23e7b4332c10f8b56c33a9c5431b52ecff9aab)
+Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/page_alloc.c |   10 +++++++++-
- 1 file changed, 9 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_device.c |    8 ++++++++
+ 1 file changed, 8 insertions(+)
 
---- a/mm/page_alloc.c
-+++ b/mm/page_alloc.c
-@@ -8764,11 +8764,19 @@ int percpu_pagelist_high_fraction_sysctl
- 	int old_percpu_pagelist_high_fraction;
- 	int ret;
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
+@@ -3999,6 +3999,14 @@ void amdgpu_device_fini_hw(struct amdgpu
+ 
+ 	amdgpu_irq_fini_hw(adev);
  
 +	/*
-+	 * Avoid using pcp_batch_high_lock for reads as the value is read
-+	 * atomically and a race with offlining is harmless.
++	 * device went through surprise hotplug; we need to destroy topology
++	 * before ip_fini_early to prevent kfd locking refcount issues by calling
++	 * amdgpu_amdkfd_suspend()
 +	 */
++	if (drm_dev_is_unplugged(adev_to_drm(adev)))
++		amdgpu_amdkfd_device_fini_sw(adev);
 +
-+	if (!write)
-+		return proc_dointvec_minmax(table, write, buffer, length, ppos);
-+
- 	mutex_lock(&pcp_batch_high_lock);
- 	old_percpu_pagelist_high_fraction = percpu_pagelist_high_fraction;
+ 	amdgpu_device_ip_fini_early(adev);
  
- 	ret = proc_dointvec_minmax(table, write, buffer, length, ppos);
--	if (!write || ret < 0)
-+	if (ret < 0)
- 		goto out;
- 
- 	/* Sanity checking to avoid pcp imbalance */
+ 	amdgpu_gart_dummy_page_fini(adev);
 
 
