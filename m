@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C51692D9484;
-	Wed,  4 Feb 2026 15:34:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7DD942DBF75;
+	Wed,  4 Feb 2026 15:34:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770219245; cv=none; b=olotm5bokLqT3sI4p6OJQg9whEwmg/YXJ3SMFjUeixVHjRx41Tuq6jsF6tfP0GBvtsKHMdj2MM/r/mXbCV5KJ670ZXnb16QA3wK7go7fO4ftUjElDxXFuGxTx6yCYbsbTp/zVPWVhEXI2R93dbOmqRvPPkL2VSrPCUyhT5j103Y=
+	t=1770219249; cv=none; b=LvhdsJuhD2Jr/8XuVou3czV+78KusVZPMwvG5Y3ilG8RK/Xr/mxEwUxyIGvT4Os8wYgGvP7U9t3guYsSMXmvkCzRYJ8vtsSoxV2CtcJTTZzZc1VMLEDxymKhVSunZR2Ei7w9dAFtRB993xmTz+D69mNJ5xkoiaFqW4FcmLxhEiw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770219245; c=relaxed/simple;
-	bh=06/TSD7vddic14o+UZK5cuNjSt2us3kw+iUwzuXajNA=;
+	s=arc-20240116; t=1770219249; c=relaxed/simple;
+	bh=G72Npa8tZEWy3UthssYqi1JErU2CWWC7B3NvXsEW71g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Yu0FQalQQI8y9DzITRvjoCD9gaqSvNAG8lLHFn9ci+ClzqmVZzTq1TYjtK7vanZ8gzJLIdLwYDKB0H9sgrRzDIUDw9vcAiWkoTP4ZgWvMNT1LjHq1KxRwUeRSr81GeHsBPxmXTNBrSsf9Il6t0bMQ7U615YpS9gUbU1TlC2a0Og=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iXPlCMEZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=U5iLwRjFcXnTLDDzdSMqZEn+iPAzrI4TMMPLnOLa7hTFRlTN7F9NE940Vh0/mCqNgPT6UddbRZgeFWJujziGt0Hdz6jp3JsBYWHxRkCFyhug98saEserjL6YgWXZeK5sF2vS4M4xst16vUwDcYAuE2uWqTVexDp4F12uwr0E7t8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=u1HnbfSx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iXPlCMEZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D8A3C4CEF7;
-	Wed,  4 Feb 2026 15:34:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="u1HnbfSx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E0BA3C116C6;
+	Wed,  4 Feb 2026 15:34:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770219245;
-	bh=06/TSD7vddic14o+UZK5cuNjSt2us3kw+iUwzuXajNA=;
+	s=korg; t=1770219249;
+	bh=G72Npa8tZEWy3UthssYqi1JErU2CWWC7B3NvXsEW71g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iXPlCMEZBIVd9F0wERwoiKikGtu5m+4MY+JPs37F7Owm7z7vcV0wPrXdcvj91Jcwo
-	 3qeO2rICEIUvHK53YoWXJ5oXP9gRmq4xZojHXkU3ygu0mpyXtaQ0QppuMg5ZB9p98v
-	 2Rxic7MCHkCrR9eLVgRHps/nDKKrQM0RSITrlwLI=
+	b=u1HnbfSxzvYAVYluCm4pp9Lb3yShruvtneIvoKz+aZXG0XbFppn7gsqfcrAefktpg
+	 x2G6W52tFTFXUXezUYjHO27erU8Wu9p7PO8xwCC0pvQbwKjq7VaBoN03InEh//jUwg
+	 2EYH48ma5oTI4qDqNilsWx4xkGyczQSeK5lLXC84=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	=?UTF-8?q?Timur=20Krist=C3=B3f?= <timur.kristof@gmail.com>,
-	Jesse Zhang <jesse.zhang@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.18 111/122] drm/amdgpu/gfx12: fix wptr reset in KGQ init
-Date: Wed,  4 Feb 2026 15:41:33 +0100
-Message-ID: <20260204143855.846939152@linuxfoundation.org>
+Subject: [PATCH 6.18 112/122] drm/amdgpu/gfx12: adjust KGQ reset sequence
+Date: Wed,  4 Feb 2026 15:41:34 +0100
+Message-ID: <20260204143855.883049930@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260204143851.857060534@linuxfoundation.org>
 References: <20260204143851.857060534@linuxfoundation.org>
@@ -54,32 +53,65 @@ Content-Transfer-Encoding: 8bit
 
 From: Alex Deucher <alexander.deucher@amd.com>
 
-commit 9077d32a4b570fa20500aa26e149981c366c965d upstream.
+commit dfd64f6e8cd7b59238cdaf8af7a55711f13a89db upstream.
 
-wptr is a 64 bit value and we need to update the
-full value, not just 32 bits. Align with what we
-already do for KCQs.
+Kernel gfx queues do not need to be reinitialized or
+remapped after a reset.  Align with gfx11.
+
+v2: preserve init and remap for MMIO case.
 
 Reviewed-by: Timur Kristóf <timur.kristof@gmail.com>
-Reviewed-by: Jesse Zhang <jesse.zhang@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit a2918f958d3f677ea93c0ac257cb6ba69b7abb7c)
+(cherry picked from commit 0a6d6ed694d72b66b0ed7a483d5effa01acd3951)
 Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/gfx_v12_0.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/amd/amdgpu/gfx_v12_0.c |   23 +++++++++++++----------
+ 1 file changed, 13 insertions(+), 10 deletions(-)
 
 --- a/drivers/gpu/drm/amd/amdgpu/gfx_v12_0.c
 +++ b/drivers/gpu/drm/amd/amdgpu/gfx_v12_0.c
-@@ -3078,7 +3078,7 @@ static int gfx_v12_0_kgq_init_queue(stru
- 			memcpy_toio(mqd, adev->gfx.me.mqd_backup[mqd_idx], sizeof(*mqd));
- 		/* reset the ring */
- 		ring->wptr = 0;
--		*ring->wptr_cpu_addr = 0;
-+		atomic64_set((atomic64_t *)ring->wptr_cpu_addr, 0);
- 		amdgpu_ring_clear_ring(ring);
+@@ -5296,11 +5296,12 @@ static int gfx_v12_0_reset_kgq(struct am
+ 			       struct amdgpu_fence *timedout_fence)
+ {
+ 	struct amdgpu_device *adev = ring->adev;
++	bool use_mmio = false;
+ 	int r;
+ 
+ 	amdgpu_ring_reset_helper_begin(ring, timedout_fence);
+ 
+-	r = amdgpu_mes_reset_legacy_queue(ring->adev, ring, vmid, false);
++	r = amdgpu_mes_reset_legacy_queue(ring->adev, ring, vmid, use_mmio);
+ 	if (r) {
+ 		dev_warn(adev->dev, "reset via MES failed and try pipe reset %d\n", r);
+ 		r = gfx_v12_reset_gfx_pipe(ring);
+@@ -5308,16 +5309,18 @@ static int gfx_v12_0_reset_kgq(struct am
+ 			return r;
  	}
  
+-	r = gfx_v12_0_kgq_init_queue(ring, true);
+-	if (r) {
+-		dev_err(adev->dev, "failed to init kgq\n");
+-		return r;
+-	}
++	if (use_mmio) {
++		r = gfx_v12_0_kgq_init_queue(ring, true);
++		if (r) {
++			dev_err(adev->dev, "failed to init kgq\n");
++			return r;
++		}
+ 
+-	r = amdgpu_mes_map_legacy_queue(adev, ring);
+-	if (r) {
+-		dev_err(adev->dev, "failed to remap kgq\n");
+-		return r;
++		r = amdgpu_mes_map_legacy_queue(adev, ring);
++		if (r) {
++			dev_err(adev->dev, "failed to remap kgq\n");
++			return r;
++		}
+ 	}
+ 
+ 	return amdgpu_ring_reset_helper_end(ring, timedout_fence);
 
 
