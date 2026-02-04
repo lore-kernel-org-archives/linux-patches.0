@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B2BA27B359;
-	Wed,  4 Feb 2026 14:51:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0CDB741B360;
+	Wed,  4 Feb 2026 14:51:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770216688; cv=none; b=L5TstP1s8WL4HEcy+LVeqkSSH4gj84RDtrxTpQR2BdsF5hEuvRr8MvQZQ7zFPGhCAuy490GVwjwxshGRcE+ldN/AE1v4Qk859iAkEefa88NmTSLJYzAoBWZb8NTZhwfvX5lFGEXEIC5mLP/v5RkAbwl1TkjxG5xdfHl1lNaAK5c=
+	t=1770216692; cv=none; b=nEctkdbx2Q05olFPSJEJJhixGIeDqxKjpTfwE1ZTRgGe3UZjxB3/GS3ekZ7n9KEW7gADnvkYDHFSu7XHiI1f+27TDuAleQ++d1ImTZxmEkDvTW5bDzY9vPoOxcpoathSS4XiY9L0CIQOy0OHtS+Y96uFz9XKlhK5k/iU/G7ZUmw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770216688; c=relaxed/simple;
-	bh=bPxqgzMdn0p/I1bboGOhNm2Xbm96j8agk4F1bda10DY=;
+	s=arc-20240116; t=1770216692; c=relaxed/simple;
+	bh=4ip7iBz+0QWHzWmSpaeeP5bQJED4fkdjugrLj+0Ohb8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DU3kOgDK9KXqhxkCVa0xjcY4S5KyipQhBO4sC30pqOeLaS9HRXj6EquQnUUe6tv9QPIDpFNbcTvsCTcYpfoiMBJrQ6h0fufWTtbL64Yh8ezzOZijBUuxDBHCrWmeayFxYfu8HRJP5eHHwGs2BDt8nAanWXaASQuXVyrNKnmwqrE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gnFyKIRN; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rA4KJSO3ZowWOXuGdUd3P+6DXnuuAj1fuz6mPIk97vlZoYEvhy+Ic2He90fYLxAdTjmOWqRCyvWBc6CsmBaN91hHjzpMg/ulJf/DTXQE7a7/J7MTB+3bfZU020zZeQ9/Ta5IPfY5hFhJ0YJ6yX+4h0+KyM6jn86hyLdeBoR7QkI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FwTxQoNP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gnFyKIRN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CEC11C4CEF7;
-	Wed,  4 Feb 2026 14:51:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FwTxQoNP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 287DDC4CEF7;
+	Wed,  4 Feb 2026 14:51:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770216688;
-	bh=bPxqgzMdn0p/I1bboGOhNm2Xbm96j8agk4F1bda10DY=;
+	s=korg; t=1770216691;
+	bh=4ip7iBz+0QWHzWmSpaeeP5bQJED4fkdjugrLj+0Ohb8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gnFyKIRNHr1aIqLb+ALxDepbPNRcw7sbJ7IjEONm9i+FhoTw7doL2V+bXm4VgZiiP
-	 3k1GH187zfd19PDNDwlPtAfgkV7ST00Vez3/sfD2G5RQ0ZMC3CZX4wBxiatq4AvPk2
-	 Ihmoz1rvQHdi2OiT121ZQ+VOF6abGBcvKmjrLuqc=
+	b=FwTxQoNPKssqfxg0F+m2eAJpvLiW79cVV9kL9aa1WGP6VclzEpawOtXdXGPppLWsG
+	 yiPNtMojg1pKB9ME69Ej28darBjVagc2m9iAYnq/53tWPyw8ikloldiVuBhzFU9Zk9
+	 jtE4L9LRjLnQK6o3PaSpfXkRazxkQzbdzxeAkkLE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -32,9 +32,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Amelie Delaunay <amelie.delaunay@foss.st.com>,
 	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 138/161] dmaengine: stm32: dmamux: fix OF node leak on route allocation failure
-Date: Wed,  4 Feb 2026 15:40:01 +0100
-Message-ID: <20260204143856.710309604@linuxfoundation.org>
+Subject: [PATCH 5.10 139/161] dmaengine: stm32: dmamux: fix device leak on route allocation
+Date: Wed,  4 Feb 2026 15:40:02 +0100
+Message-ID: <20260204143856.747235407@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260204143851.755002596@linuxfoundation.org>
 References: <20260204143851.755002596@linuxfoundation.org>
@@ -55,43 +55,86 @@ Content-Transfer-Encoding: 8bit
 
 From: Johan Hovold <johan@kernel.org>
 
-[ Upstream commit b1b590a590af13ded598e70f0b72bc1e515787a1 ]
+[ Upstream commit dd6e4943889fb354efa3f700e42739da9bddb6ef ]
 
-Make sure to drop the reference taken to the DMA master OF node also on
-late route allocation failures.
+Make sure to drop the reference taken when looking up the DMA mux
+platform device during route allocation.
+
+Note that holding a reference to a device does not prevent its driver
+data from going away so there is no point in keeping the reference.
 
 Fixes: df7e762db5f6 ("dmaengine: Add STM32 DMAMUX driver")
-Cc: stable@vger.kernel.org      # 4.15
+Cc: stable@vger.kernel.org	# 4.15
 Cc: Pierre-Yves MORDRET <pierre-yves.mordret@foss.st.com>
 Signed-off-by: Johan Hovold <johan@kernel.org>
 Reviewed-by: Amelie Delaunay <amelie.delaunay@foss.st.com>
-Link: https://patch.msgid.link/20251117161258.10679-12-johan@kernel.org
+Link: https://patch.msgid.link/20251117161258.10679-11-johan@kernel.org
 Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/dma/stm32-dmamux.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/dma/stm32-dmamux.c |   18 ++++++++++++------
+ 1 file changed, 12 insertions(+), 6 deletions(-)
 
 --- a/drivers/dma/stm32-dmamux.c
 +++ b/drivers/dma/stm32-dmamux.c
-@@ -140,7 +140,7 @@ static void *stm32_dmamux_route_allocate
- 	ret = pm_runtime_resume_and_get(&pdev->dev);
- 	if (ret < 0) {
- 		spin_unlock_irqrestore(&dmamux->lock, flags);
--		goto error;
-+		goto err_put_dma_spec_np;
+@@ -88,23 +88,25 @@ static void *stm32_dmamux_route_allocate
+ 	struct stm32_dmamux_data *dmamux = platform_get_drvdata(pdev);
+ 	struct stm32_dmamux *mux;
+ 	u32 i, min, max;
+-	int ret;
++	int ret = -EINVAL;
+ 	unsigned long flags;
+ 
+ 	if (dma_spec->args_count != 3) {
+ 		dev_err(&pdev->dev, "invalid number of dma mux args\n");
+-		return ERR_PTR(-EINVAL);
++		goto err_put_pdev;
  	}
- 	spin_unlock_irqrestore(&dmamux->lock, flags);
  
-@@ -160,6 +160,8 @@ static void *stm32_dmamux_route_allocate
+ 	if (dma_spec->args[0] > dmamux->dmamux_requests) {
+ 		dev_err(&pdev->dev, "invalid mux request number: %d\n",
+ 			dma_spec->args[0]);
+-		return ERR_PTR(-EINVAL);
++		goto err_put_pdev;
+ 	}
  
+ 	mux = kzalloc(sizeof(*mux), GFP_KERNEL);
+-	if (!mux)
+-		return ERR_PTR(-ENOMEM);
++	if (!mux) {
++		ret = -ENOMEM;
++		goto err_put_pdev;
++	}
+ 
+ 	spin_lock_irqsave(&dmamux->lock, flags);
+ 	mux->chan_id = find_first_zero_bit(dmamux->dma_inuse,
+@@ -131,7 +133,6 @@ static void *stm32_dmamux_route_allocate
+ 	dma_spec->np = of_parse_phandle(ofdma->of_node, "dma-masters", i - 1);
+ 	if (!dma_spec->np) {
+ 		dev_err(&pdev->dev, "can't get dma master\n");
+-		ret = -EINVAL;
+ 		goto error;
+ 	}
+ 
+@@ -158,6 +159,8 @@ static void *stm32_dmamux_route_allocate
+ 	dev_dbg(&pdev->dev, "Mapping DMAMUX(%u) to DMA%u(%u)\n",
+ 		mux->request, mux->master, mux->chan_id);
+ 
++	put_device(&pdev->dev);
++
  	return mux;
  
-+err_put_dma_spec_np:
-+	of_node_put(dma_spec->np);
- error:
- 	clear_bit(mux->chan_id, dmamux->dma_inuse);
+ err_put_dma_spec_np:
+@@ -167,6 +170,9 @@ error:
+ 
+ error_chan_id:
+ 	kfree(mux);
++err_put_pdev:
++	put_device(&pdev->dev);
++
+ 	return ERR_PTR(ret);
+ }
  
 
 
