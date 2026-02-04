@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5035941C2E3;
-	Wed,  4 Feb 2026 14:53:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BDE6941B345;
+	Wed,  4 Feb 2026 14:54:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770216839; cv=none; b=pIb9QhxjEcPEs5yR/CDUHRxZT2G2t7ynKFGAJPORkEyNE5fmck+9IcE+Y3lXu38+ggKompIq6ubrXd4HwIoMWDidm1tmxSZUG5Q+Cs6y3k9P9aYJfQtwAOVCM/hwMabrs9hXSQnNRHCOLHZkcIUbuHdsjEZ94JfFRdIw3FeLMyQ=
+	t=1770216842; cv=none; b=mkMgEqd+TJ8eXrXe9Y3rDrarufHEvRgrRpw8aCoeUUJGHddo7TkuevgNXgX2SuZmryOKOKZeWTKQhK0aYG4jQ0IenWcxM3f1JlmBH3VmBJ4uGmoFHhGdG/JHCWgZxRubtKiGx1paxelZxMfyb7HGNRdDliX7XSD8hYj6IE/CdFo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770216839; c=relaxed/simple;
-	bh=ZUsHFXNKPUZm3+mTay4giV24c/CwqjM5foQ1GzZaRXc=;
+	s=arc-20240116; t=1770216842; c=relaxed/simple;
+	bh=2uEIjqAqyC5Evmxw5bZYi+aavdD+QIGCjB9FPz/i8bI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=W4WUYLoU8J6Pc3fhkriNgjVdkpcvtV2R+urAzWa35VgiZGtnwLznH3HWuyu61Wf59sP399RjM1RiV76CAjXJnEjvP8Vc++hTws9gDqAiWj/Y9kAAGkzDOGwyovbdLeDNRGaQ6c+oVk1srdmbW1iVoRWPodhTbMPd3oGRY2l7ZAY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fFXu6f5t; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ogSGruLQIgVN1kqkvmyZYkQZWE4snUGblIpcKw338J/YeCDP+mhNbgGvBN59OVYthjwxLYpciKyPD8rtBvj0Mnx62vjvmk+ryl+/qPLYXi6dTFoS3gzvn4ouBdvTp0ZD2V7SOrEASGk/RgDZKQ5yoM/TsjHI0tN0gFGXIWxZJig=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Kna2uWql; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fFXu6f5t"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7EDBCC116C6;
-	Wed,  4 Feb 2026 14:53:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Kna2uWql"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4AACCC4CEF7;
+	Wed,  4 Feb 2026 14:54:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770216839;
-	bh=ZUsHFXNKPUZm3+mTay4giV24c/CwqjM5foQ1GzZaRXc=;
+	s=korg; t=1770216842;
+	bh=2uEIjqAqyC5Evmxw5bZYi+aavdD+QIGCjB9FPz/i8bI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fFXu6f5tkfwlvnWaXrA0Zfe9jk41mJAnlt73cFUT68VhYH7HvdEqvZOnf02VqHSi2
-	 WD+eVRXeW2sAXIWLXrveTMAXaGMNQFvZzMyCTPeYuKynCq9VqNzx5f+mA8BcF7JZ6G
-	 wdnR1lA1+EWglZzsaJWPPhyCxKcZNWq+h4J9slZc=
+	b=Kna2uWqlXEClNoefF4xtfwj/xbLvK0vhCykuwJ6YtdVemcpr0aZgEwskOPS/72LzB
+	 f97/GR/hJF+8jCremeytPE8Iq2bMjloy/I+jrkO+H3FDJH7Nh7oq2dnekcyPa5w2mW
+	 1QG/WBRdWDMZBCoqTJshG5hd1HXS3GsnyHwBKcKs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Dave Jiang <dave.jiang@intel.com>,
 	Johan Hovold <johan@kernel.org>,
 	Vinod Koul <vkoul@kernel.org>
-Subject: [PATCH 5.15 046/206] dmaengine: bcm-sba-raid: fix device leak on probe
-Date: Wed,  4 Feb 2026 15:37:57 +0100
-Message-ID: <20260204143859.872384416@linuxfoundation.org>
+Subject: [PATCH 5.15 047/206] dmaengine: idxd: fix device leaks on compat bind and unbind
+Date: Wed,  4 Feb 2026 15:37:58 +0100
+Message-ID: <20260204143859.909262519@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260204143858.193781818@linuxfoundation.org>
 References: <20260204143858.193781818@linuxfoundation.org>
@@ -52,49 +53,78 @@ Content-Transfer-Encoding: 8bit
 
 From: Johan Hovold <johan@kernel.org>
 
-commit 7c3a46ebf15a9796b763a54272407fdbf945bed8 upstream.
+commit 799900f01792cf8b525a44764f065f83fcafd468 upstream.
 
-Make sure to drop the reference taken when looking up the mailbox device
-during probe on probe failures and on driver unbind.
+Make sure to drop the reference taken when looking up the idxd device as
+part of the compat bind and unbind sysfs interface.
 
-Fixes: 743e1c8ffe4e ("dmaengine: Add Broadcom SBA RAID driver")
-Cc: stable@vger.kernel.org	# 4.13
+Fixes: 6e7f3ee97bbe ("dmaengine: idxd: move dsa_drv support to compatible mode")
+Cc: stable@vger.kernel.org	# 5.15
+Cc: Dave Jiang <dave.jiang@intel.com>
 Signed-off-by: Johan Hovold <johan@kernel.org>
-Link: https://patch.msgid.link/20251117161258.10679-4-johan@kernel.org
+Link: https://patch.msgid.link/20251117161258.10679-7-johan@kernel.org
 Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/dma/bcm-sba-raid.c |    6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ drivers/dma/idxd/compat.c |   23 +++++++++++++++++++----
+ 1 file changed, 19 insertions(+), 4 deletions(-)
 
---- a/drivers/dma/bcm-sba-raid.c
-+++ b/drivers/dma/bcm-sba-raid.c
-@@ -1707,7 +1707,7 @@ static int sba_probe(struct platform_dev
- 	/* Prealloc channel resource */
- 	ret = sba_prealloc_channel_resources(sba);
- 	if (ret)
--		goto fail_free_mchan;
-+		goto fail_put_mbox;
+--- a/drivers/dma/idxd/compat.c
++++ b/drivers/dma/idxd/compat.c
+@@ -21,11 +21,16 @@ static ssize_t unbind_store(struct devic
+ 	int rc = -ENODEV;
  
- 	/* Check availability of debugfs */
- 	if (!debugfs_initialized())
-@@ -1737,6 +1737,8 @@ skip_debugfs:
- fail_free_resources:
- 	debugfs_remove_recursive(sba->root);
- 	sba_freeup_channel_resources(sba);
-+fail_put_mbox:
-+	put_device(sba->mbox_dev);
- fail_free_mchan:
- 	mbox_free_channel(sba->mchan);
- 	return ret;
-@@ -1752,6 +1754,8 @@ static int sba_remove(struct platform_de
- 
- 	sba_freeup_channel_resources(sba);
- 
-+	put_device(sba->mbox_dev);
+ 	dev = bus_find_device_by_name(bus, NULL, buf);
+-	if (dev && dev->driver) {
++	if (!dev)
++		return -ENODEV;
 +
- 	mbox_free_channel(sba->mchan);
++	if (dev->driver) {
+ 		device_driver_detach(dev);
+ 		rc = count;
+ 	}
  
- 	return 0;
++	put_device(dev);
++
+ 	return rc;
+ }
+ static DRIVER_ATTR_IGNORE_LOCKDEP(unbind, 0200, NULL, unbind_store);
+@@ -39,9 +44,12 @@ static ssize_t bind_store(struct device_
+ 	struct idxd_dev *idxd_dev;
+ 
+ 	dev = bus_find_device_by_name(bus, NULL, buf);
+-	if (!dev || dev->driver || drv != &dsa_drv.drv)
++	if (!dev)
+ 		return -ENODEV;
+ 
++	if (dev->driver || drv != &dsa_drv.drv)
++		goto err_put_dev;
++
+ 	idxd_dev = confdev_to_idxd_dev(dev);
+ 	if (is_idxd_dev(idxd_dev)) {
+ 		alt_drv = driver_find("idxd", bus);
+@@ -54,13 +62,20 @@ static ssize_t bind_store(struct device_
+ 			alt_drv = driver_find("user", bus);
+ 	}
+ 	if (!alt_drv)
+-		return -ENODEV;
++		goto err_put_dev;
+ 
+ 	rc = device_driver_attach(alt_drv, dev);
+ 	if (rc < 0)
+-		return rc;
++		goto err_put_dev;
++
++	put_device(dev);
+ 
+ 	return count;
++
++err_put_dev:
++	put_device(dev);
++
++	return rc;
+ }
+ static DRIVER_ATTR_IGNORE_LOCKDEP(bind, 0200, NULL, bind_store);
+ 
 
 
