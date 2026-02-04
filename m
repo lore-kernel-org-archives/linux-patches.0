@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B11E1423A6A;
-	Wed,  4 Feb 2026 15:23:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 69154421892;
+	Wed,  4 Feb 2026 15:23:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770218598; cv=none; b=InZ/apKD/lk+GJPsp+8QWs9vpp1Q4M56Uf8Nt1PTwMzQR7gQACKRQ+rbKU8yeZwZO/er963cwnQn5N6zv2WX84xNIHfbisZFMxi9CBoPiWdVxW+VYx35APGk0k50JjpVCoqfKzsbzGP4bSMSw+5TmMK7iGWvKb8QNcTKHMPH86A=
+	t=1770218602; cv=none; b=P68++t4TYN927eEKclXID8XFcD2jDRCDx8BNS24slNov2s+Csj88OgeQK4lOkjmtoe7ROsZLpsslxNVX1A8yqHDR6IEEIl2e1cEHi4UCjzAoWjaidjxWGCOY3uIUo6vR160WXHF8Yk2V1SIZ+2VHQO+3iJ04Xd+MoFGKovmP9GQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770218598; c=relaxed/simple;
-	bh=tBGjWp9KZwqfSR4OF+DmFQHQbG+EMJVuxLRJ6OZhZLw=;
+	s=arc-20240116; t=1770218602; c=relaxed/simple;
+	bh=LtsJuvJdnoEns1EE6w8DaaEjDRK44CBL3VRl8m+NT2k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=q4G0Cnl1v7KhRIdgOE6X2w/Te4Ylsuq1B4lXUBXi3U9v2OkxZiTILNiy+1Iqig0BSaIVe0ahDwIVAVmOnC9FEOJYSLjLx88BQ+5ZH35yKjKDF3FgrjkxkfVMQqr7My4dipKZgK+RUzfs5uE+Fm2KCxJKrTAMoK7Ko7toncEmpyo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nw209SOI; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=H+bLh59cg/zpDiv484bCHGT53gU6M1HkqbYBSTU83Jy1ZTCoHvx8DETNcNg05p2PMgeavN0Q/qmVIyqnH2lQN+VbwSxCZPl9kE+4XOaT0vs6hpTXhYesW3Gz9fUTlQt4aS3NxpH7TTgY8cOb4Kv2/8YPRgW4A64naXYUtRR9D/Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=j0u9HIrT; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nw209SOI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 26D5FC4CEF7;
-	Wed,  4 Feb 2026 15:23:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="j0u9HIrT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CFD5EC4CEF7;
+	Wed,  4 Feb 2026 15:23:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770218598;
-	bh=tBGjWp9KZwqfSR4OF+DmFQHQbG+EMJVuxLRJ6OZhZLw=;
+	s=korg; t=1770218602;
+	bh=LtsJuvJdnoEns1EE6w8DaaEjDRK44CBL3VRl8m+NT2k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nw209SOI308lXQ6NuY2AakBWZ27WYfEKtvx1ZyLI2q4EiGseYI9DnFV0KIhvkufYT
-	 r5zIFpebxw3QeBrYEtuWUtP0uAr2yupRtK3CVaFJIj0KemBI96O+CR6iKslgHkUhmv
-	 MJWlF0pbqytfnpFqCaijUq1z9cjGI796r7Uh8ibM=
+	b=j0u9HIrTkb0xW7xHeiw+hwtqSwo5IP4oS2oOGUPduz5HC9AjnMQMhNlceBT7xI+7d
+	 5+9dQAYji0IvaWql/zoW/oJxMqt0OStHu5RPmrn+H4DtTp0NpCrZog6kCuHzT9zj50
+	 h+zxZOzrz7p8WlFgcjND3uNv97bMzEnceE8btVZg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexander Usyskin <alexander.usyskin@intel.com>,
+	Thomas Fourier <fourier.thomas@gmail.com>,
+	Namjae Jeon <linkinjeon@kernel.org>,
+	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 47/72] mei: trace: treat reg parameter as string
-Date: Wed,  4 Feb 2026 15:40:50 +0100
-Message-ID: <20260204143847.334283103@linuxfoundation.org>
+Subject: [PATCH 6.6 48/72] ksmbd: smbd: fix dma_unmap_sg() nents
+Date: Wed,  4 Feb 2026 15:40:51 +0100
+Message-ID: <20260204143847.370358220@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260204143845.603454952@linuxfoundation.org>
 References: <20260204143845.603454952@linuxfoundation.org>
@@ -50,101 +52,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexander Usyskin <alexander.usyskin@intel.com>
+From: Thomas Fourier <fourier.thomas@gmail.com>
 
-[ Upstream commit 06d5a7afe1d0b47102936d8fba568572c2b4b941 ]
+[ Upstream commit 98e3e2b561bc88f4dd218d1c05890672874692f6 ]
 
-The commit
-afd2627f727b ("tracing: Check "%s" dereference via the field and not the TP_printk format")
-forbids to emit event with a plain char* without a wrapper.
+The dma_unmap_sg() functions should be called with the same nents as the
+dma_map_sg(), not the value the map function returned.
 
-The reg parameter always passed as static string and wrapper
-is not strictly required, contrary to dev parameter.
-Use the string wrapper anyway to check sanity of the reg parameters,
-store it value independently and prevent internal kernel data leaks.
-
-Since some code refactoring has taken place, explicit backporting may
-be needed for kernels older than 6.10.
-
-Cc: stable@vger.kernel.org  # v6.11+
-Fixes: a0a927d06d79 ("mei: me: add io register tracing")
-Signed-off-by: Alexander Usyskin <alexander.usyskin@intel.com>
-Link: https://patch.msgid.link/20260111145125.1754912-1-alexander.usyskin@intel.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-[ adapted __assign_str() calls to use two arguments ]
+Fixes: 0626e6641f6b ("cifsd: add server handler for central processing and tranport layers")
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Thomas Fourier <fourier.thomas@gmail.com>
+Acked-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Steve French <stfrench@microsoft.com>
+[ Context ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/misc/mei/mei-trace.h |   18 +++++++++---------
- 1 file changed, 9 insertions(+), 9 deletions(-)
+ fs/smb/server/transport_rdma.c |   15 +++++++--------
+ 1 file changed, 7 insertions(+), 8 deletions(-)
 
---- a/drivers/misc/mei/mei-trace.h
-+++ b/drivers/misc/mei/mei-trace.h
-@@ -21,18 +21,18 @@ TRACE_EVENT(mei_reg_read,
- 	TP_ARGS(dev, reg, offs, val),
- 	TP_STRUCT__entry(
- 		__string(dev, dev_name(dev))
--		__field(const char *, reg)
-+		__string(reg, reg)
- 		__field(u32, offs)
- 		__field(u32, val)
- 	),
- 	TP_fast_assign(
- 		__assign_str(dev, dev_name(dev));
--		__entry->reg  = reg;
-+		__assign_str(reg, reg);
- 		__entry->offs = offs;
- 		__entry->val = val;
- 	),
- 	TP_printk("[%s] read %s:[%#x] = %#x",
--		  __get_str(dev), __entry->reg, __entry->offs, __entry->val)
-+		  __get_str(dev), __get_str(reg), __entry->offs, __entry->val)
- );
+--- a/fs/smb/server/transport_rdma.c
++++ b/fs/smb/server/transport_rdma.c
+@@ -1108,14 +1108,12 @@ static int get_sg_list(void *buf, int si
  
- TRACE_EVENT(mei_reg_write,
-@@ -40,18 +40,18 @@ TRACE_EVENT(mei_reg_write,
- 	TP_ARGS(dev, reg, offs, val),
- 	TP_STRUCT__entry(
- 		__string(dev, dev_name(dev))
--		__field(const char *, reg)
-+		__string(reg, reg)
- 		__field(u32, offs)
- 		__field(u32, val)
- 	),
- 	TP_fast_assign(
- 		__assign_str(dev, dev_name(dev));
--		__entry->reg = reg;
-+		__assign_str(reg, reg);
- 		__entry->offs = offs;
- 		__entry->val = val;
- 	),
- 	TP_printk("[%s] write %s[%#x] = %#x",
--		  __get_str(dev), __entry->reg,  __entry->offs, __entry->val)
-+		  __get_str(dev), __get_str(reg),  __entry->offs, __entry->val)
- );
+ static int get_mapped_sg_list(struct ib_device *device, void *buf, int size,
+ 			      struct scatterlist *sg_list, int nentries,
+-			      enum dma_data_direction dir)
++			      enum dma_data_direction dir, int *npages)
+ {
+-	int npages;
+-
+-	npages = get_sg_list(buf, size, sg_list, nentries);
+-	if (npages < 0)
++	*npages = get_sg_list(buf, size, sg_list, nentries);
++	if (*npages < 0)
+ 		return -EINVAL;
+-	return ib_dma_map_sg(device, sg_list, npages, dir);
++	return ib_dma_map_sg(device, sg_list, *npages, dir);
+ }
  
- TRACE_EVENT(mei_pci_cfg_read,
-@@ -59,18 +59,18 @@ TRACE_EVENT(mei_pci_cfg_read,
- 	TP_ARGS(dev, reg, offs, val),
- 	TP_STRUCT__entry(
- 		__string(dev, dev_name(dev))
--		__field(const char *, reg)
-+		__string(reg, reg)
- 		__field(u32, offs)
- 		__field(u32, val)
- 	),
- 	TP_fast_assign(
- 		__assign_str(dev, dev_name(dev));
--		__entry->reg  = reg;
-+		__assign_str(reg, reg);
- 		__entry->offs = offs;
- 		__entry->val = val;
- 	),
- 	TP_printk("[%s] pci cfg read %s:[%#x] = %#x",
--		  __get_str(dev), __entry->reg, __entry->offs, __entry->val)
-+		  __get_str(dev), __get_str(reg), __entry->offs, __entry->val)
- );
+ static int post_sendmsg(struct smb_direct_transport *t,
+@@ -1184,12 +1182,13 @@ static int smb_direct_post_send_data(str
+ 	for (i = 0; i < niov; i++) {
+ 		struct ib_sge *sge;
+ 		int sg_cnt;
++		int npages;
  
- #endif /* _MEI_TRACE_H_ */
+ 		sg_init_table(sg, SMB_DIRECT_MAX_SEND_SGES - 1);
+ 		sg_cnt = get_mapped_sg_list(t->cm_id->device,
+ 					    iov[i].iov_base, iov[i].iov_len,
+ 					    sg, SMB_DIRECT_MAX_SEND_SGES - 1,
+-					    DMA_TO_DEVICE);
++					    DMA_TO_DEVICE, &npages);
+ 		if (sg_cnt <= 0) {
+ 			pr_err("failed to map buffer\n");
+ 			ret = -ENOMEM;
+@@ -1197,7 +1196,7 @@ static int smb_direct_post_send_data(str
+ 		} else if (sg_cnt + msg->num_sge > SMB_DIRECT_MAX_SEND_SGES) {
+ 			pr_err("buffer not fitted into sges\n");
+ 			ret = -E2BIG;
+-			ib_dma_unmap_sg(t->cm_id->device, sg, sg_cnt,
++			ib_dma_unmap_sg(t->cm_id->device, sg, npages,
+ 					DMA_TO_DEVICE);
+ 			goto err;
+ 		}
 
 
