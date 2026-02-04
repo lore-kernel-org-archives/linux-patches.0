@@ -1,52 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 419CE2D7D42;
-	Wed,  4 Feb 2026 15:32:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C1DA3EDAD7;
+	Wed,  4 Feb 2026 15:32:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770219164; cv=none; b=PnMz4LRpI38sxmfVmq96a0o3ox3IYus4ELP3wGhOIty16rnVmc5w3maSyOgAHLr/RyN79SO58DlLKXDRvPkD1wLazYa6ZgblIyYIGcS3YFSCvvyy0bmm1wxDvlH8JyIfX4S06h4Ew1cm1eDfD1hIde3uBbZBFYc4R1BDcZptH1U=
+	t=1770219167; cv=none; b=GWKIzW1RglkFioL6wj+JMCPjWeQ/vxtxWWqPDBresGOytcYsp5wHczYG3/IzJ3DaOW8RYBTBue9BAkMbDsTuASj7TcNJ5SQdzVykKJUSUTiksEkAO9K1IiLvrFbMe4cDhWSc1dYDdECj0bvJP8mtXGajO4fK9uinkHqCKAwgHsc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770219164; c=relaxed/simple;
-	bh=qnq1VHcs+DmEqQrwBBSAhPEAxUkRA+5AyOMTeeiHmsQ=;
+	s=arc-20240116; t=1770219167; c=relaxed/simple;
+	bh=E5YaBkwbENCg2m/Xx+nZ6Na90+fq9lDkjVSQE94MCFY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sYGG3eV/16rTp0g20u0x/7+nYkRteiaFL9pDYSMqTLmD4aJYcgoaad1xeNF1wrmhxyb4SJI8Mj17JZvkQHrU3NTf7I2i9JXGNnzqnPh506kdoWEb78I23qJhFUVBa2ih7ZlE5gXorAuKqn6w+o3r4ihBhK3nU/7cWmFBPJ1mpRE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HJiK7Vyb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mptLve0F75Nq8p2T8gcM8Qi9Q7yC9DgfFoX4i1MM9d6tUe+kpDEaCdhHgG7gcULI9SDMuW1OUdRSaQLhkuvdU2xZrddFCc21jLs6UDfDKNJYUcojfbd4jbsPcGiPMJ26DIuCWWRCctj4HEW94xMA5ePkd9NLAcNK500HwjWEqr8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZdjYOY0T; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HJiK7Vyb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 94D15C4CEF7;
-	Wed,  4 Feb 2026 15:32:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZdjYOY0T"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F11E1C4CEF7;
+	Wed,  4 Feb 2026 15:32:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770219164;
-	bh=qnq1VHcs+DmEqQrwBBSAhPEAxUkRA+5AyOMTeeiHmsQ=;
+	s=korg; t=1770219167;
+	bh=E5YaBkwbENCg2m/Xx+nZ6Na90+fq9lDkjVSQE94MCFY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HJiK7VybZbdTVCQgUUKMK/hz41pd6Zuw5eGz75tZJtj6b0yV1TyMEC9C4ajVkt7kI
-	 Nr81UeQejIQXKvpljV2hvOA6EMXdJLnY+RJ+FMXQNDKrFjnXNJWOSckr2RnUkDLkgB
-	 lufFV/AFlwsrpVisCy7oTNurGNeDK3oPJRIcj1QE=
+	b=ZdjYOY0TSlCHelft+BBxQG9X/imrMRVDr9XdL+GEDMu+mKrFlzhGjCAL/uyuGIhwl
+	 X8DiRmXRIpTJ0E2wYhKQUcjJhKhkPk4v486MAwnRO/gzQeoNrLooqPDKXCxPRC2VqR
+	 XhwFe42Y+Bm9NBbbAGFhAZb+anbgBrcuiq4ThSFM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jane Chu <jane.chu@oracle.com>,
-	Miaohe Lin <linmiaohe@huawei.com>,
-	Chris Mason <clm@meta.com>,
-	David Hildenbrand <david@kernel.org>,
-	David Rientjes <rientjes@google.com>,
-	Jiaqi Yan <jiaqiyan@google.com>,
-	"Liam R. Howlett" <Liam.Howlett@oracle.com>,
-	Lorenzo Stoakes <lorenzo.stoakes@oracle.com>,
-	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
-	Michal Hocko <mhocko@suse.com>,
-	Mike Rapoport <rppt@kernel.org>,
-	Muchun Song <muchun.song@linux.dev>,
-	Naoya Horiguchi <nao.horiguchi@gmail.com>,
-	Oscar Salvador <osalvador@suse.de>,
-	Suren Baghdasaryan <surenb@google.com>,
-	William Roche <william.roche@oracle.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.18 086/122] mm/memory-failure: fix missing ->mf_stats count in hugetlb poison
-Date: Wed,  4 Feb 2026 15:41:08 +0100
-Message-ID: <20260204143854.945461075@linuxfoundation.org>
+	Abel Vesa <abelvesa@kernel.org>,
+	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Abel Vesa <abel.vesa@oss.qualcomm.com>,
+	Linus Walleij <linusw@kernel.org>
+Subject: [PATCH 6.18 060/122] pinctrl: lpass-lpi: implement .get_direction() for the GPIO driver
+Date: Wed,  4 Feb 2026 15:40:42 +0100
+Message-ID: <20260204143854.015111532@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260204143851.857060534@linuxfoundation.org>
 References: <20260204143851.857060534@linuxfoundation.org>
@@ -65,230 +53,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jane Chu <jane.chu@oracle.com>
+From: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
 
-commit a148a2040191b12b45b82cb29c281cb3036baf90 upstream.
+commit 4f0d22ec60cee420125f4055af76caa0f373a3fe upstream.
 
-When a newly poisoned subpage ends up in an already poisoned hugetlb
-folio, 'num_poisoned_pages' is incremented, but the per node ->mf_stats is
-not.  Fix the inconsistency by designating action_result() to update them
-both.
+GPIO controller driver should typically implement the .get_direction()
+callback as GPIOLIB internals may try to use it to determine the state
+of a pin. Add it for the LPASS LPI driver.
 
-While at it, define __get_huge_page_for_hwpoison() return values in terms
-of symbol names for better readibility.  Also rename
-folio_set_hugetlb_hwpoison() to hugetlb_update_hwpoison() since the
-function does more than the conventional bit setting and the fact three
-possible return values are expected.
-
-Link: https://lkml.kernel.org/r/20260120232234.3462258-1-jane.chu@oracle.com
-Fixes: 18f41fa616ee ("mm: memory-failure: bump memory failure stats to pglist_data")
-Signed-off-by: Jane Chu <jane.chu@oracle.com>
-Acked-by: Miaohe Lin <linmiaohe@huawei.com>
-Cc: Chris Mason <clm@meta.com>
-Cc: David Hildenbrand <david@kernel.org>
-Cc: David Rientjes <rientjes@google.com>
-Cc: Jiaqi Yan <jiaqiyan@google.com>
-Cc: Liam R. Howlett <Liam.Howlett@oracle.com>
-Cc: Lorenzo Stoakes <lorenzo.stoakes@oracle.com>
-Cc: Matthew Wilcox (Oracle) <willy@infradead.org>
-Cc: Michal Hocko <mhocko@suse.com>
-Cc: Mike Rapoport <rppt@kernel.org>
-Cc: Muchun Song <muchun.song@linux.dev>
-Cc: Naoya Horiguchi <nao.horiguchi@gmail.com>
-Cc: Oscar Salvador <osalvador@suse.de>
-Cc: Suren Baghdasaryan <surenb@google.com>
-Cc: William Roche <william.roche@oracle.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Reported-by: Abel Vesa <abelvesa@kernel.org>
+Cc: stable@vger.kernel.org
+Fixes: 6e261d1090d6 ("pinctrl: qcom: Add sm8250 lpass lpi pinctrl driver")
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Tested-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com> # X1E CRD
+Tested-by: Abel Vesa <abel.vesa@oss.qualcomm.com>
+Signed-off-by: Linus Walleij <linusw@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/memory-failure.c |   93 +++++++++++++++++++++++++++++++---------------------
- 1 file changed, 56 insertions(+), 37 deletions(-)
+ drivers/pinctrl/qcom/pinctrl-lpass-lpi.c |   17 +++++++++++++++++
+ 1 file changed, 17 insertions(+)
 
---- a/mm/memory-failure.c
-+++ b/mm/memory-failure.c
-@@ -1873,12 +1873,22 @@ static unsigned long __folio_free_raw_hw
- 	return count;
- }
+--- a/drivers/pinctrl/qcom/pinctrl-lpass-lpi.c
++++ b/drivers/pinctrl/qcom/pinctrl-lpass-lpi.c
+@@ -312,6 +312,22 @@ static const struct pinconf_ops lpi_gpio
+ 	.pin_config_group_set		= lpi_config_set,
+ };
  
--static int folio_set_hugetlb_hwpoison(struct folio *folio, struct page *page)
-+#define	MF_HUGETLB_FREED		0	/* freed hugepage */
-+#define	MF_HUGETLB_IN_USED		1	/* in-use hugepage */
-+#define	MF_HUGETLB_NON_HUGEPAGE		2	/* not a hugepage */
-+#define	MF_HUGETLB_FOLIO_PRE_POISONED	3	/* folio already poisoned */
-+#define	MF_HUGETLB_PAGE_PRE_POISONED	4	/* exact page already poisoned */
-+#define	MF_HUGETLB_RETRY		5	/* hugepage is busy, retry */
-+/*
-+ * Set hugetlb folio as hwpoisoned, update folio private raw hwpoison list
-+ * to keep track of the poisoned pages.
-+ */
-+static int hugetlb_update_hwpoison(struct folio *folio, struct page *page)
++static int lpi_gpio_get_direction(struct gpio_chip *chip, unsigned int pin)
++{
++	unsigned long config = pinconf_to_config_packed(PIN_CONFIG_LEVEL, 0);
++	struct lpi_pinctrl *state = gpiochip_get_data(chip);
++	unsigned long arg;
++	int ret;
++
++	ret = lpi_config_get(state->ctrl, pin, &config);
++	if (ret)
++		return ret;
++
++	arg = pinconf_to_config_argument(config);
++
++	return arg ? GPIO_LINE_DIRECTION_OUT : GPIO_LINE_DIRECTION_IN;
++}
++
+ static int lpi_gpio_direction_input(struct gpio_chip *chip, unsigned int pin)
  {
- 	struct llist_head *head;
- 	struct raw_hwp_page *raw_hwp;
- 	struct raw_hwp_page *p;
--	int ret = folio_test_set_hwpoison(folio) ? -EHWPOISON : 0;
-+	int ret = folio_test_set_hwpoison(folio) ? MF_HUGETLB_FOLIO_PRE_POISONED : 0;
+ 	struct lpi_pinctrl *state = gpiochip_get_data(chip);
+@@ -409,6 +425,7 @@ static void lpi_gpio_dbg_show(struct seq
+ #endif
  
- 	/*
- 	 * Once the hwpoison hugepage has lost reliable raw error info,
-@@ -1886,20 +1896,17 @@ static int folio_set_hugetlb_hwpoison(st
- 	 * so skip to add additional raw error info.
- 	 */
- 	if (folio_test_hugetlb_raw_hwp_unreliable(folio))
--		return -EHWPOISON;
-+		return MF_HUGETLB_FOLIO_PRE_POISONED;
- 	head = raw_hwp_list_head(folio);
- 	llist_for_each_entry(p, head->first, node) {
- 		if (p->page == page)
--			return -EHWPOISON;
-+			return MF_HUGETLB_PAGE_PRE_POISONED;
- 	}
- 
- 	raw_hwp = kmalloc(sizeof(struct raw_hwp_page), GFP_ATOMIC);
- 	if (raw_hwp) {
- 		raw_hwp->page = page;
- 		llist_add(&raw_hwp->node, head);
--		/* the first error event will be counted in action_result(). */
--		if (ret)
--			num_poisoned_pages_inc(page_to_pfn(page));
- 	} else {
- 		/*
- 		 * Failed to save raw error info.  We no longer trace all
-@@ -1947,42 +1954,39 @@ void folio_clear_hugetlb_hwpoison(struct
- 
- /*
-  * Called from hugetlb code with hugetlb_lock held.
-- *
-- * Return values:
-- *   0             - free hugepage
-- *   1             - in-use hugepage
-- *   2             - not a hugepage
-- *   -EBUSY        - the hugepage is busy (try to retry)
-- *   -EHWPOISON    - the hugepage is already hwpoisoned
-  */
- int __get_huge_page_for_hwpoison(unsigned long pfn, int flags,
- 				 bool *migratable_cleared)
- {
- 	struct page *page = pfn_to_page(pfn);
- 	struct folio *folio = page_folio(page);
--	int ret = 2;	/* fallback to normal page handling */
- 	bool count_increased = false;
-+	int ret, rc;
- 
--	if (!folio_test_hugetlb(folio))
-+	if (!folio_test_hugetlb(folio)) {
-+		ret = MF_HUGETLB_NON_HUGEPAGE;
- 		goto out;
--
--	if (flags & MF_COUNT_INCREASED) {
--		ret = 1;
-+	} else if (flags & MF_COUNT_INCREASED) {
-+		ret = MF_HUGETLB_IN_USED;
- 		count_increased = true;
- 	} else if (folio_test_hugetlb_freed(folio)) {
--		ret = 0;
-+		ret = MF_HUGETLB_FREED;
- 	} else if (folio_test_hugetlb_migratable(folio)) {
--		ret = folio_try_get(folio);
--		if (ret)
-+		if (folio_try_get(folio)) {
-+			ret = MF_HUGETLB_IN_USED;
- 			count_increased = true;
-+		} else {
-+			ret = MF_HUGETLB_FREED;
-+		}
- 	} else {
--		ret = -EBUSY;
-+		ret = MF_HUGETLB_RETRY;
- 		if (!(flags & MF_NO_RETRY))
- 			goto out;
- 	}
- 
--	if (folio_set_hugetlb_hwpoison(folio, page)) {
--		ret = -EHWPOISON;
-+	rc = hugetlb_update_hwpoison(folio, page);
-+	if (rc >= MF_HUGETLB_FOLIO_PRE_POISONED) {
-+		ret = rc;
- 		goto out;
- 	}
- 
-@@ -2007,10 +2011,16 @@ out:
-  * with basic operations like hugepage allocation/free/demotion.
-  * So some of prechecks for hwpoison (pinning, and testing/setting
-  * PageHWPoison) should be done in single hugetlb_lock range.
-+ * Returns:
-+ *	0		- not hugetlb, or recovered
-+ *	-EBUSY		- not recovered
-+ *	-EOPNOTSUPP	- hwpoison_filter'ed
-+ *	-EHWPOISON	- folio or exact page already poisoned
-+ *	-EFAULT		- kill_accessing_process finds current->mm null
-  */
- static int try_memory_failure_hugetlb(unsigned long pfn, int flags, int *hugetlb)
- {
--	int res;
-+	int res, rv;
- 	struct page *p = pfn_to_page(pfn);
- 	struct folio *folio;
- 	unsigned long page_flags;
-@@ -2019,22 +2029,31 @@ static int try_memory_failure_hugetlb(un
- 	*hugetlb = 1;
- retry:
- 	res = get_huge_page_for_hwpoison(pfn, flags, &migratable_cleared);
--	if (res == 2) { /* fallback to normal page handling */
-+	switch (res) {
-+	case MF_HUGETLB_NON_HUGEPAGE:	/* fallback to normal page handling */
- 		*hugetlb = 0;
- 		return 0;
--	} else if (res == -EHWPOISON) {
--		if (flags & MF_ACTION_REQUIRED) {
--			folio = page_folio(p);
--			res = kill_accessing_process(current, folio_pfn(folio), flags);
--		}
--		action_result(pfn, MF_MSG_ALREADY_POISONED, MF_FAILED);
--		return res;
--	} else if (res == -EBUSY) {
-+	case MF_HUGETLB_RETRY:
- 		if (!(flags & MF_NO_RETRY)) {
- 			flags |= MF_NO_RETRY;
- 			goto retry;
- 		}
- 		return action_result(pfn, MF_MSG_GET_HWPOISON, MF_IGNORED);
-+	case MF_HUGETLB_FOLIO_PRE_POISONED:
-+	case MF_HUGETLB_PAGE_PRE_POISONED:
-+		rv = -EHWPOISON;
-+		if (flags & MF_ACTION_REQUIRED) {
-+			folio = page_folio(p);
-+			rv = kill_accessing_process(current, folio_pfn(folio), flags);
-+		}
-+		if (res == MF_HUGETLB_PAGE_PRE_POISONED)
-+			action_result(pfn, MF_MSG_ALREADY_POISONED, MF_FAILED);
-+		else
-+			action_result(pfn, MF_MSG_HUGE, MF_FAILED);
-+		return rv;
-+	default:
-+		WARN_ON((res != MF_HUGETLB_FREED) && (res != MF_HUGETLB_IN_USED));
-+		break;
- 	}
- 
- 	folio = page_folio(p);
-@@ -2045,7 +2064,7 @@ retry:
- 		if (migratable_cleared)
- 			folio_set_hugetlb_migratable(folio);
- 		folio_unlock(folio);
--		if (res == 1)
-+		if (res == MF_HUGETLB_IN_USED)
- 			folio_put(folio);
- 		return -EOPNOTSUPP;
- 	}
-@@ -2054,7 +2073,7 @@ retry:
- 	 * Handling free hugepage.  The possible race with hugepage allocation
- 	 * or demotion can be prevented by PageHWPoison flag.
- 	 */
--	if (res == 0) {
-+	if (res == MF_HUGETLB_FREED) {
- 		folio_unlock(folio);
- 		if (__page_handle_poison(p) > 0) {
- 			page_ref_inc(p);
+ static const struct gpio_chip lpi_gpio_template = {
++	.get_direction		= lpi_gpio_get_direction,
+ 	.direction_input	= lpi_gpio_direction_input,
+ 	.direction_output	= lpi_gpio_direction_output,
+ 	.get			= lpi_gpio_get,
 
 
