@@ -1,36 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 304262D8768;
-	Wed,  4 Feb 2026 15:01:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A72112BEFED;
+	Wed,  4 Feb 2026 15:01:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770217265; cv=none; b=eydKAa8V1K/g01ZMC0pJCFv4t7jQhGJQXgYelwGj4QBr5jZ4BZlwUsImBfXSxvj9QkKjAsJnpOYI5f7E1psXlVDZuOcyOz1ftZZ16/PwJAfXJ4M8zEWAoeP8waz589djU4x6UiduYgaAJymphsJwAxwo57WggOkJRdLl1ovmWRo=
+	t=1770217268; cv=none; b=I68ONfiayHPT9+yvis9Waw7N/H2UScdzZr+Rz1YPpOv9UKTQDpHRL9/FaKIhmlC838tgcTZBN/yxcP3EcWa5NrgF7RfCn8BONbBYA1xZsEnj92cOLKYHLNY3fcCuN+av5ZJMggCm4l/NrbJSjFsp+nns6lxGUiM23pXJ0aIQm5A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770217265; c=relaxed/simple;
-	bh=tKOIPt0fRqQFmPAB6BqU4BkdXqtj9oXNUAGzcZVJqHc=;
+	s=arc-20240116; t=1770217268; c=relaxed/simple;
+	bh=KtAw6q3QLq/OYT80MH3/uDcZs0wyhsf1XiQ+lmN7MAQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mMJM9UKeCgx9dZHZlFZ12XDCKO2/kmj+ztfTCbl6aqNI7OSNH8yeNKZZA+A6a/AyhyhsGTGyzFpce+2aouxC6GfOfQF+LjTgjsMhZolSrj5iPcAIcxyQ07cuHFYdNIgHyPWz5+9r43oLSNIOFQQKHqTm7aqYX5UN3tECuJ1ATiM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TjpYyPnz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VSSBaxYja4smHs9LZtrPPJFpGz5ntCjavtWK2EGmSvGENGRjdoJbHU5dTjSyXS7GJU65pzTviy0igB4Lqe9PtnWzPkiN34T0UWaAFuU/MpnImODZmw3vU2aIDKd/HEf/sLTnK47xUGbcE0B13NzWD/AWiW3bGmYgiLKXbhXpOUA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=w8XHsQnf; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TjpYyPnz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 902E4C4CEF7;
-	Wed,  4 Feb 2026 15:01:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="w8XHsQnf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0BEC4C19423;
+	Wed,  4 Feb 2026 15:01:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770217265;
-	bh=tKOIPt0fRqQFmPAB6BqU4BkdXqtj9oXNUAGzcZVJqHc=;
+	s=korg; t=1770217268;
+	bh=KtAw6q3QLq/OYT80MH3/uDcZs0wyhsf1XiQ+lmN7MAQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TjpYyPnzBTuZJzX45LRdW1uoe/4lDhVj8XSO/jip5mRuB61PO23+PqXp7impO+lw6
-	 9ztlOatsS/av+KhfQqeUuYOHOqEwX72JUrBtbX7GEzXRkZsXmRfKvuhrG0uwcLEzHj
-	 j5j34/XAAJiNzjv5ijKUaeJa8blAoap/ttXcxR2k=
+	b=w8XHsQnfJKol70B+HNoDAtmICgn0eni9T37noZ/6PNf9FHgpL2Kj7hGqr1NOQsUGt
+	 lvd5GciUZjtdhtmPj0XFXST6brMOiLKkrSuAE4/Qfad3F5BcZi44QknVheoSIz/rV+
+	 WdFFOUAy9j2Lh/s5xys36p+fXJlbOE29QkzjYqUc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marc Kleine-Budde <mkl@pengutronix.de>
-Subject: [PATCH 5.15 128/206] can: ems_usb: ems_usb_read_bulk_callback(): fix URB memory leak
-Date: Wed,  4 Feb 2026 15:39:19 +0100
-Message-ID: <20260204143902.810349434@linuxfoundation.org>
+	Brian Foster <bfoster@redhat.com>,
+	"Darrick J. Wong" <djwong@kernel.org>,
+	Carlos Maiolino <cem@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 166/206] xfs: set max_agbno to allow sparse alloc of last full inode chunk
+Date: Wed,  4 Feb 2026 15:39:57 +0100
+Message-ID: <20260204143904.185503995@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260204143858.193781818@linuxfoundation.org>
 References: <20260204143858.193781818@linuxfoundation.org>
@@ -49,56 +52,82 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Marc Kleine-Budde <mkl@pengutronix.de>
+From: Brian Foster <bfoster@redhat.com>
 
-commit 0ce73a0eb5a27070957b67fd74059b6da89cc516 upstream.
+[ Upstream commit c360004c0160dbe345870f59f24595519008926f ]
 
-Fix similar memory leak as in commit 7352e1d5932a ("can: gs_usb:
-gs_usb_receive_bulk_callback(): fix URB memory leak").
+Sparse inode cluster allocation sets min/max agbno values to avoid
+allocating an inode cluster that might map to an invalid inode
+chunk. For example, we can't have an inode record mapped to agbno 0
+or that extends past the end of a runt AG of misaligned size.
 
-In ems_usb_open(), the URBs for USB-in transfers are allocated, added to
-the dev->rx_submitted anchor and submitted. In the complete callback
-ems_usb_read_bulk_callback(), the URBs are processed and resubmitted. In
-ems_usb_close() the URBs are freed by calling
-usb_kill_anchored_urbs(&dev->rx_submitted).
+The initial calculation of max_agbno is unnecessarily conservative,
+however. This has triggered a corner case allocation failure where a
+small runt AG (i.e. 2063 blocks) is mostly full save for an extent
+to the EOFS boundary: [2050,13]. max_agbno is set to 2048 in this
+case, which happens to be the offset of the last possible valid
+inode chunk in the AG. In practice, we should be able to allocate
+the 4-block cluster at agbno 2052 to map to the parent inode record
+at agbno 2048, but the max_agbno value precludes it.
 
-However, this does not take into account that the USB framework unanchors
-the URB before the complete function is called. This means that once an
-in-URB has been completed, it is no longer anchored and is ultimately not
-released in ems_usb_close().
+Note that this can result in filesystem shutdown via dirty trans
+cancel on stable kernels prior to commit 9eb775968b68 ("xfs: walk
+all AGs if TRYLOCK passed to xfs_alloc_vextent_iterate_ags") because
+the tail AG selection by the allocator sets t_highest_agno on the
+transaction. If the inode allocator spins around and finds an inode
+chunk with free inodes in an earlier AG, the subsequent dir name
+creation path may still fail to allocate due to the AG restriction
+and cancel.
 
-Fix the memory leak by anchoring the URB in the
-ems_usb_read_bulk_callback() to the dev->rx_submitted anchor.
+To avoid this problem, update the max_agbno calculation to the agbno
+prior to the last chunk aligned agbno in the AG. This is not
+necessarily the last valid allocation target for a sparse chunk, but
+since inode chunks (i.e. records) are chunk aligned and sparse
+allocs are cluster sized/aligned, this allows the sb_spino_align
+alignment restriction to take over and round down the max effective
+agbno to within the last valid inode chunk in the AG.
 
-Fixes: 702171adeed3 ("ems_usb: Added support for EMS CPC-USB/ARM7 CAN/USB interface")
-Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20260116-can_usb-fix-memory-leak-v2-1-4b8cb2915571@pengutronix.de
-Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
+Note that even though the allocator improvements in the
+aforementioned commit seem to avoid this particular dirty trans
+cancel situation, the max_agbno logic improvement still applies as
+we should be able to allocate from an AG that has been appropriately
+selected. The more important target for this patch however are
+older/stable kernels prior to this allocator rework/improvement.
+
+Cc: stable@vger.kernel.org # v4.2
+Fixes: 56d1115c9bc7 ("xfs: allocate sparse inode chunks on full chunk allocation failure")
+Signed-off-by: Brian Foster <bfoster@redhat.com>
+Reviewed-by: Darrick J. Wong <djwong@kernel.org>
+Signed-off-by: Carlos Maiolino <cem@kernel.org>
+[ xfs_ag_block_count(args.mp, pag_agno(pag)) => args.mp->m_sb.sb_agblocks ]
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/can/usb/ems_usb.c |    8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ fs/xfs/libxfs/xfs_ialloc.c |   11 ++++++-----
+ 1 file changed, 6 insertions(+), 5 deletions(-)
 
---- a/drivers/net/can/usb/ems_usb.c
-+++ b/drivers/net/can/usb/ems_usb.c
-@@ -485,11 +485,17 @@ resubmit_urb:
- 			  urb->transfer_buffer, RX_BUFFER_SIZE,
- 			  ems_usb_read_bulk_callback, dev);
+--- a/fs/xfs/libxfs/xfs_ialloc.c
++++ b/fs/xfs/libxfs/xfs_ialloc.c
+@@ -772,14 +772,15 @@ sparse_alloc:
+ 		 * invalid inode records, such as records that start at agbno 0
+ 		 * or extend beyond the AG.
+ 		 *
+-		 * Set min agbno to the first aligned, non-zero agbno and max to
+-		 * the last aligned agbno that is at least one full chunk from
+-		 * the end of the AG.
++		 * Set min agbno to the first chunk aligned, non-zero agbno and
++		 * max to one less than the last chunk aligned agbno from the
++		 * end of the AG. We subtract 1 from max so that the cluster
++		 * allocation alignment takes over and allows allocation within
++		 * the last full inode chunk in the AG.
+ 		 */
+ 		args.min_agbno = args.mp->m_sb.sb_inoalignmt;
+ 		args.max_agbno = round_down(args.mp->m_sb.sb_agblocks,
+-					    args.mp->m_sb.sb_inoalignmt) -
+-				 igeo->ialloc_blks;
++					    args.mp->m_sb.sb_inoalignmt) - 1;
  
-+	usb_anchor_urb(urb, &dev->rx_submitted);
-+
- 	retval = usb_submit_urb(urb, GFP_ATOMIC);
-+	if (!retval)
-+		return;
-+
-+	usb_unanchor_urb(urb);
- 
- 	if (retval == -ENODEV)
- 		netif_device_detach(netdev);
--	else if (retval)
-+	else
- 		netdev_err(netdev,
- 			   "failed resubmitting read bulk urb: %d\n", retval);
- }
+ 		error = xfs_alloc_vextent(&args);
+ 		if (error)
 
 
