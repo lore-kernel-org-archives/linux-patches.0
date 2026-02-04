@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4619425CDB;
-	Wed,  4 Feb 2026 15:06:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1DA29426685;
+	Wed,  4 Feb 2026 15:06:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770217575; cv=none; b=ri7xmbsjPrpcPKpX1wp9RmMS1PUqM9/S9qgavwdVLmVcMPkeTKxAIlx6oRRlP4CotFdjZkVGHW/UupOrkdUZrG4MORGk3c8+asPyvaI7puK15I3ZszqEjVPowCZiTiLcAZstv1uEFKVrjrRmPoGn+PDwJOhxMCtd+e0oMbSu5bk=
+	t=1770217579; cv=none; b=SrXi2J4c9ZnjJw1cnS5/KGOPeMyfK93W5bTy9WQ6p7lE8h3XkOsNQZPZVkFq4OB5iu+ZU7t3pgTM2c97BKAqIicWuHNbYwFUWi6ii0UVFjWYE8go8fDGPZRQ32YM64hnVlH7c0gEvBpjcwp94j6deLNVAlvKm7EwIXb+rMpjW5k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770217575; c=relaxed/simple;
-	bh=vIwPzEau/rTd/gX+3vH1d44tmWY8qyC7QIrnlYxaPQ4=;
+	s=arc-20240116; t=1770217579; c=relaxed/simple;
+	bh=2KAQxQXv8mKjhKuSPrBhwb552ugkjJvwZs0kg8X6urE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SLSNGiRPtz0WyxAC1A9AlhABYo9tWffLZn7ih058cBcIUYKkwXG7KRQeOlw5AWXNoJEiHyPf8oDXmxjHEWwe6GXM1zrerCzozSPDKHGL+xhC427n5bwsoINjsywBcB+ROCFFwdfK+uzJzYMm7WltI6IQokb4m4WY8FxXARH/wpk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kkrpIEwJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KAOCzPA69f/iTkpOJZS6peXcbA6/Gmxf15QKq8S3vZi9mM69rOdofZpiqDsMG8lgeMP8NCiY8V0movCtw4Qjos+o3LitCREDXhDGPQsJOuPl4lIrxUiLnCncAeeT6i/GFhg4En7VxyquWjwIS39u1z/rHykCxj+JGnrigRDr3Mo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BxO1ifb2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kkrpIEwJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 37C9AC19423;
-	Wed,  4 Feb 2026 15:06:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BxO1ifb2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 856C5C4CEF7;
+	Wed,  4 Feb 2026 15:06:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770217575;
-	bh=vIwPzEau/rTd/gX+3vH1d44tmWY8qyC7QIrnlYxaPQ4=;
+	s=korg; t=1770217579;
+	bh=2KAQxQXv8mKjhKuSPrBhwb552ugkjJvwZs0kg8X6urE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kkrpIEwJLP2Ur8G2t2/zrLcZZv5Gd3tM44W2q8RmP9KdVM/OwxL5e3p4bgkK6jira
-	 tFSDQuAZrufgPK1SMlfRMBBk2jtvh5+wRaoOatF4+eoO+5FtCzb6mr7A+GoeXNo73i
-	 ABczieiBXjF9lGjh4q6mwLeis2hxyQnUhiBXDqXU=
+	b=BxO1ifb2rkFssHgK85NUfpKerdc67bIYpUlzHtnp0BMNllpInLz7AYG1GhpCmNMA9
+	 dlAWy1NUGQ6Vsc4SSFTCPQTQnjUs4I5PCEFRzQySSLRtg/TNXgQmIisvPqLAzl2wuP
+	 Ya3+MtOjkBL32Y3HsmDqxdwJVMFZIvUTK3QwmwMI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+7182fbe91e58602ec1fe@syzkaller.appspotmail.com,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 012/280] macvlan: fix possible UAF in macvlan_forward_source()
-Date: Wed,  4 Feb 2026 15:36:26 +0100
-Message-ID: <20260204143910.069738713@linuxfoundation.org>
+	Ulrich Mohr <u.mohr@semex-engcon.com>,
+	Johan Hovold <johan@kernel.org>
+Subject: [PATCH 6.1 050/280] USB: serial: option: add Telit LE910 MBIM composition
+Date: Wed,  4 Feb 2026 15:37:04 +0100
+Message-ID: <20260204143911.436746077@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260204143909.614719725@linuxfoundation.org>
 References: <20260204143909.614719725@linuxfoundation.org>
@@ -52,108 +50,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Ulrich Mohr <u.mohr@semex-engcon.com>
 
-[ Upstream commit 7470a7a63dc162f07c26dbf960e41ee1e248d80e ]
+commit 8af4274ab5999831f4757dfd5bd11665ba3b1569 upstream.
 
-Add RCU protection on (struct macvlan_source_entry)->vlan.
+Add support for Telit LE910 module when operating in MBIM composition
+with additional ttys. This USB product ID is used by the module
+when AT#USBCFG is set to 7.
 
-Whenever macvlan_hash_del_source() is called, we must clear
-entry->vlan pointer before RCU grace period starts.
+0x1252: MBIM + tty(NMEA) + tty(MODEM) + tty(MODEM) + SAP
 
-This allows macvlan_forward_source() to skip over
-entries queued for freeing.
+T:  Bus=01 Lev=01 Prnt=01 Port=01 Cnt=01 Dev#=  2 Spd=480  MxCh= 0
+D:  Ver= 2.00 Cls=ef(misc ) Sub=02 Prot=01 MxPS=64 #Cfgs=  1
+P:  Vendor=1bc7 ProdID=1252 Rev=03.18
+S:  Manufacturer=Android
+S:  Product=LE910C1-EU
+S:  SerialNumber=0123456789ABCDEF
+C:  #Ifs= 6 Cfg#= 1 Atr=a0 MxPwr=500mA
+I:  If#= 0 Alt= 0 #EPs= 1 Cls=02(commc) Sub=0e Prot=00 Driver=cdc_mbim
+E:  Ad=82(I) Atr=03(Int.) MxPS=  64 Ivl=32ms
+I:  If#= 1 Alt= 1 #EPs= 2 Cls=0a(data ) Sub=00 Prot=02 Driver=cdc_mbim
+E:  Ad=01(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=81(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:  If#= 2 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
+E:  Ad=02(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=83(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=84(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
+I:  If#= 3 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
+E:  Ad=03(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=85(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=86(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
+I:  If#= 4 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
+E:  Ad=04(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=87(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=88(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
+I:  If#= 5 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
+E:  Ad=05(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=89(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=8a(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
 
-Note that macvlan_dev are already RCU protected, as they
-are embedded in a standard netdev (netdev_priv(ndev)).
-
-Fixes: 79cf79abce71 ("macvlan: add source mode")
-Reported-by: syzbot+7182fbe91e58602ec1fe@syzkaller.appspotmail.com
-https: //lore.kernel.org/netdev/695fb1e8.050a0220.1c677c.039f.GAE@google.com/T/#u
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Link: https://patch.msgid.link/20260108133651.1130486-1-edumazet@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Ulrich Mohr <u.mohr@semex-engcon.com>
+Cc: stable@vger.kernel.org
+Signed-off-by: Johan Hovold <johan@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/macvlan.c | 20 +++++++++++++-------
- 1 file changed, 13 insertions(+), 7 deletions(-)
+ drivers/usb/serial/option.c |    1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/net/macvlan.c b/drivers/net/macvlan.c
-index 012830d12fde6..428b139822cf6 100644
---- a/drivers/net/macvlan.c
-+++ b/drivers/net/macvlan.c
-@@ -56,7 +56,7 @@ struct macvlan_port {
- 
- struct macvlan_source_entry {
- 	struct hlist_node	hlist;
--	struct macvlan_dev	*vlan;
-+	struct macvlan_dev __rcu *vlan;
- 	unsigned char		addr[6+2] __aligned(sizeof(u16));
- 	struct rcu_head		rcu;
- };
-@@ -143,7 +143,7 @@ static struct macvlan_source_entry *macvlan_hash_lookup_source(
- 
- 	hlist_for_each_entry_rcu(entry, h, hlist, lockdep_rtnl_is_held()) {
- 		if (ether_addr_equal_64bits(entry->addr, addr) &&
--		    entry->vlan == vlan)
-+		    rcu_access_pointer(entry->vlan) == vlan)
- 			return entry;
- 	}
- 	return NULL;
-@@ -165,7 +165,7 @@ static int macvlan_hash_add_source(struct macvlan_dev *vlan,
- 		return -ENOMEM;
- 
- 	ether_addr_copy(entry->addr, addr);
--	entry->vlan = vlan;
-+	RCU_INIT_POINTER(entry->vlan, vlan);
- 	h = &port->vlan_source_hash[macvlan_eth_hash(addr)];
- 	hlist_add_head_rcu(&entry->hlist, h);
- 	vlan->macaddr_count++;
-@@ -184,6 +184,7 @@ static void macvlan_hash_add(struct macvlan_dev *vlan)
- 
- static void macvlan_hash_del_source(struct macvlan_source_entry *entry)
- {
-+	RCU_INIT_POINTER(entry->vlan, NULL);
- 	hlist_del_rcu(&entry->hlist);
- 	kfree_rcu(entry, rcu);
- }
-@@ -382,7 +383,7 @@ static void macvlan_flush_sources(struct macvlan_port *port,
- 	int i;
- 
- 	hash_for_each_safe(port->vlan_source_hash, i, next, entry, hlist)
--		if (entry->vlan == vlan)
-+		if (rcu_access_pointer(entry->vlan) == vlan)
- 			macvlan_hash_del_source(entry);
- 
- 	vlan->macaddr_count = 0;
-@@ -425,9 +426,14 @@ static bool macvlan_forward_source(struct sk_buff *skb,
- 
- 	hlist_for_each_entry_rcu(entry, h, hlist) {
- 		if (ether_addr_equal_64bits(entry->addr, addr)) {
--			if (entry->vlan->flags & MACVLAN_FLAG_NODST)
-+			struct macvlan_dev *vlan = rcu_dereference(entry->vlan);
-+
-+			if (!vlan)
-+				continue;
-+
-+			if (vlan->flags & MACVLAN_FLAG_NODST)
- 				consume = true;
--			macvlan_forward_source_one(skb, entry->vlan);
-+			macvlan_forward_source_one(skb, vlan);
- 		}
- 	}
- 
-@@ -1648,7 +1654,7 @@ static int macvlan_fill_info_macaddr(struct sk_buff *skb,
- 	struct macvlan_source_entry *entry;
- 
- 	hlist_for_each_entry_rcu(entry, h, hlist, lockdep_rtnl_is_held()) {
--		if (entry->vlan != vlan)
-+		if (rcu_access_pointer(entry->vlan) != vlan)
- 			continue;
- 		if (nla_put(skb, IFLA_MACVLAN_MACADDR, ETH_ALEN, entry->addr))
- 			return 1;
--- 
-2.51.0
-
+--- a/drivers/usb/serial/option.c
++++ b/drivers/usb/serial/option.c
+@@ -1505,6 +1505,7 @@ static const struct usb_device_id option
+ 	{ USB_DEVICE_INTERFACE_CLASS(TELIT_VENDOR_ID, 0x1231, 0xff),	/* Telit LE910Cx (RNDIS) */
+ 	  .driver_info = NCTRL(2) | RSVD(3) },
+ 	{ USB_DEVICE_AND_INTERFACE_INFO(TELIT_VENDOR_ID, 0x1250, 0xff, 0x00, 0x00) },	/* Telit LE910Cx (rmnet) */
++	{ USB_DEVICE_INTERFACE_CLASS(TELIT_VENDOR_ID, 0x1252, 0xff) },	/* Telit LE910Cx (MBIM) */
+ 	{ USB_DEVICE(TELIT_VENDOR_ID, 0x1260),
+ 	  .driver_info = NCTRL(0) | RSVD(1) | RSVD(2) },
+ 	{ USB_DEVICE(TELIT_VENDOR_ID, 0x1261),
 
 
