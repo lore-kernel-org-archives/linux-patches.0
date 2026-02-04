@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36A21421A0C;
-	Wed,  4 Feb 2026 15:25:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC4E93D994;
+	Wed,  4 Feb 2026 15:25:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770218744; cv=none; b=ow22HJzL5sMk3p1ZR7MWv2LqRDAur6W1MUa09X9/agFR73cKDUFieZTpUmxYSAD2k+qlZaBLnvEzAyZz5yVku/wXxSIKjcdBHKozIwBpz5ff55bYbk0alB5HNIMU0dsqF7CArLMsTbgPWKd34lKyuvzg5VvaUnfuCd9v7rKbkWg=
+	t=1770218747; cv=none; b=oOgIGdRQYwaUrlGprh1kf2axLuvcXYmAAMhSD+EjrvEd22NIa9GT3awSnNAQHEWB5mPEjtj1NGWv4kbPLkTRoHmm3MSzswjSiHyEuLn64nFHvTsktQrYSPCBv3Mc2G8roXtFXuBD9eK9eX9xrVJDe4LyMUFpfP5/2lga16H6aSE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770218744; c=relaxed/simple;
-	bh=iwsaed9YNr+7+Nc+9uXTaNSvoeCTFuFhYTtcx/rcEhk=;
+	s=arc-20240116; t=1770218747; c=relaxed/simple;
+	bh=Y8dx4TTYe9f3RKcrPlOoknyS+yoEesq62nlJg10eSjc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rWAvhsJ2Xj6u9CjcErrHvPXGEwTBxYfsOKZ0qEK5ST6PGPxkZaADOGZZx5iHMOqh5jaeqddGaiMYDmCX57vaufEtjAz8xnEm8VO1kNGpbxcn9I37MaqSuvemM6uZho2U9ce6amJIU1XOgqZ4dvaih1ML5ZCGW8rX75nI1Xn9fAM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=B48Dkvqs; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=nSXCtFIz+/ivZsnZfbVLyoNjAZDE/h9JT+6LcnIawWffWvmJ/KwKcZnYMpOvuV+3ZeHt6BEG6YZRtDbU0+xnqDzlAoMpDbBuBo4VfT5CXGwZAomSJUGgWglJGe5zK4RORQ28LnpEWlIjuGQJk4DifGJrWLggw7lnRtiEsUc7zgg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RviolJZ8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="B48Dkvqs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BBD8FC4CEF7;
-	Wed,  4 Feb 2026 15:25:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RviolJZ8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 08DEBC4CEF7;
+	Wed,  4 Feb 2026 15:25:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770218744;
-	bh=iwsaed9YNr+7+Nc+9uXTaNSvoeCTFuFhYTtcx/rcEhk=;
+	s=korg; t=1770218747;
+	bh=Y8dx4TTYe9f3RKcrPlOoknyS+yoEesq62nlJg10eSjc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=B48DkvqsntzHwkZPwaPSoyrGv3Kvfc40whDxtjBj7ZM7Gdz4S7fUe4I+u9CTv9hbD
-	 L30PRUaEa86lP4RNd1L5AoyLWF5Tq9lAvN9QweXnMWDjqZlLuPcjQf8dohgGeIutAH
-	 Wbaxag4RPbRPvamgf1DvBJ7hDsq7MB4UUsP4JfyM=
+	b=RviolJZ8E0YnhJzJvZ38bDN9M5RmTOpxDSIvbhnc22ZUjitnf0RHB4LQ8nIFoq2rS
+	 AUY7ssJHTKrWeSBJTmtgttVKaXN2qJ4w5jXFyV5lbaEzwu+t4G45mHnZgP4X+YAYlT
+	 29+L7NVaIpM8p4ds7ZO2Lc1R8kE1NI1s1XPmhB7g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Geliang Tang <geliang@kernel.org>,
-	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.12 47/87] mptcp: only reset subflow errors when propagated
-Date: Wed,  4 Feb 2026 15:40:45 +0100
-Message-ID: <20260204143848.608686515@linuxfoundation.org>
+	Mark Bloch <mbloch@nvidia.com>,
+	Shay Drori <shayd@nvidia.com>,
+	Tariq Toukan <tariqt@nvidia.com>,
+	Simon Horman <horms@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.12 16/87] net/mlx5e: TC, delete flows only for existing peers
+Date: Wed,  4 Feb 2026 15:40:14 +0100
+Message-ID: <20260204143847.495879355@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260204143846.906385641@linuxfoundation.org>
 References: <20260204143846.906385641@linuxfoundation.org>
@@ -51,57 +54,132 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+From: Mark Bloch <mbloch@nvidia.com>
 
-commit dccf46179ddd6c04c14be8ed584dc54665f53f0e upstream.
+[ Upstream commit f67666938ae626cbda63fbf5176b3583c07e7124 ]
 
-Some subflow socket errors need to be reported to the MPTCP socket: the
-initial subflow connect (MP_CAPABLE), and the ones from the fallback
-sockets. The others are not propagated.
+When deleting TC steering flows, iterate only over actual devcom
+peers instead of assuming all possible ports exist. This avoids
+touching non-existent peers and ensures cleanup is limited to
+devices the driver is currently connected to.
 
-The issue is that sock_error() was used to retrieve the error, which was
-also resetting the sk_err field. Because of that, when notifying the
-userspace about subflow close events later on from the MPTCP worker, the
-ssk->sk_err field was always 0.
+ BUG: kernel NULL pointer dereference, address: 0000000000000008
+ #PF: supervisor write access in kernel mode
+ #PF: error_code(0x0002) - not-present page
+ PGD 133c8a067 P4D 0
+ Oops: Oops: 0002 [#1] SMP
+ CPU: 19 UID: 0 PID: 2169 Comm: tc Not tainted 6.18.0+ #156 NONE
+ Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS rel-1.16.0-0-gd239552ce722-prebuilt.qemu.org 04/01/2014
+ RIP: 0010:mlx5e_tc_del_fdb_peers_flow+0xbe/0x200 [mlx5_core]
+ Code: 00 00 a8 08 74 a8 49 8b 46 18 f6 c4 02 74 9f 4c 8d bf a0 12 00 00 4c 89 ff e8 0e e7 96 e1 49 8b 44 24 08 49 8b 0c 24 4c 89 ff <48> 89 41 08 48 89 08 49 89 2c 24 49 89 5c 24 08 e8 7d ce 96 e1 49
+ RSP: 0018:ff11000143867528 EFLAGS: 00010246
+ RAX: 0000000000000000 RBX: dead000000000122 RCX: 0000000000000000
+ RDX: ff11000143691580 RSI: ff110001026e5000 RDI: ff11000106f3d2a0
+ RBP: dead000000000100 R08: 00000000000003fd R09: 0000000000000002
+ R10: ff11000101c75690 R11: ff1100085faea178 R12: ff11000115f0ae78
+ R13: 0000000000000000 R14: ff11000115f0a800 R15: ff11000106f3d2a0
+ FS:  00007f35236bf740(0000) GS:ff110008dc809000(0000) knlGS:0000000000000000
+ CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+ CR2: 0000000000000008 CR3: 0000000157a01001 CR4: 0000000000373eb0
+ Call Trace:
+  <TASK>
+  mlx5e_tc_del_flow+0x46/0x270 [mlx5_core]
+  mlx5e_flow_put+0x25/0x50 [mlx5_core]
+  mlx5e_delete_flower+0x2a6/0x3e0 [mlx5_core]
+  tc_setup_cb_reoffload+0x20/0x80
+  fl_reoffload+0x26f/0x2f0 [cls_flower]
+  ? mlx5e_tc_reoffload_flows_work+0xc0/0xc0 [mlx5_core]
+  ? mlx5e_tc_reoffload_flows_work+0xc0/0xc0 [mlx5_core]
+  tcf_block_playback_offloads+0x9e/0x1c0
+  tcf_block_unbind+0x7b/0xd0
+  tcf_block_setup+0x186/0x1d0
+  tcf_block_offload_cmd.isra.0+0xef/0x130
+  tcf_block_offload_unbind+0x43/0x70
+  __tcf_block_put+0x85/0x160
+  ingress_destroy+0x32/0x110 [sch_ingress]
+  __qdisc_destroy+0x44/0x100
+  qdisc_graft+0x22b/0x610
+  tc_get_qdisc+0x183/0x4d0
+  rtnetlink_rcv_msg+0x2d7/0x3d0
+  ? rtnl_calcit.isra.0+0x100/0x100
+  netlink_rcv_skb+0x53/0x100
+  netlink_unicast+0x249/0x320
+  ? __alloc_skb+0x102/0x1f0
+  netlink_sendmsg+0x1e3/0x420
+  __sock_sendmsg+0x38/0x60
+  ____sys_sendmsg+0x1ef/0x230
+  ? copy_msghdr_from_user+0x6c/0xa0
+  ___sys_sendmsg+0x7f/0xc0
+  ? ___sys_recvmsg+0x8a/0xc0
+  ? __sys_sendto+0x119/0x180
+  __sys_sendmsg+0x61/0xb0
+  do_syscall_64+0x55/0x640
+  entry_SYSCALL_64_after_hwframe+0x4b/0x53
+ RIP: 0033:0x7f35238bb764
+ Code: 15 b9 86 0c 00 f7 d8 64 89 02 b8 ff ff ff ff eb bf 0f 1f 44 00 00 f3 0f 1e fa 80 3d e5 08 0d 00 00 74 13 b8 2e 00 00 00 0f 05 <48> 3d 00 f0 ff ff 77 4c c3 0f 1f 00 55 48 89 e5 48 83 ec 20 89 55
+ RSP: 002b:00007ffed4c35638 EFLAGS: 00000202 ORIG_RAX: 000000000000002e
+ RAX: ffffffffffffffda RBX: 000055a2efcc75e0 RCX: 00007f35238bb764
+ RDX: 0000000000000000 RSI: 00007ffed4c356a0 RDI: 0000000000000003
+ RBP: 00007ffed4c35710 R08: 0000000000000010 R09: 00007f3523984b20
+ R10: 0000000000000004 R11: 0000000000000202 R12: 00007ffed4c35790
+ R13: 000000006947df8f R14: 000055a2efcc75e0 R15: 00007ffed4c35780
 
-Now, the error (sk_err) is only reset when propagating it to the msk.
-
-Fixes: 15cc10453398 ("mptcp: deliver ssk errors to msk")
-Cc: stable@vger.kernel.org
-Reviewed-by: Geliang Tang <geliang@kernel.org>
-Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Link: https://patch.msgid.link/20260127-net-mptcp-dup-nl-events-v1-3-7f71e1bc4feb@kernel.org
+Fixes: 9be6c21fdcf8 ("net/mlx5e: Handle offloads flows per peer")
+Signed-off-by: Mark Bloch <mbloch@nvidia.com>
+Reviewed-by: Shay Drori <shayd@nvidia.com>
+Signed-off-by: Tariq Toukan <tariqt@nvidia.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/1769411695-18820-3-git-send-email-tariqt@nvidia.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/mptcp/protocol.c |    9 +++++----
- 1 file changed, 5 insertions(+), 4 deletions(-)
+ .../net/ethernet/mellanox/mlx5/core/en_tc.c   | 19 +++++++++++++------
+ 1 file changed, 13 insertions(+), 6 deletions(-)
 
---- a/net/mptcp/protocol.c
-+++ b/net/mptcp/protocol.c
-@@ -798,11 +798,8 @@ static bool __mptcp_ofo_queue(struct mpt
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en_tc.c b/drivers/net/ethernet/mellanox/mlx5/core/en_tc.c
+index 4d766eea32a37..8878990254f46 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/en_tc.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/en_tc.c
+@@ -2143,11 +2143,14 @@ static void mlx5e_tc_del_fdb_peer_flow(struct mlx5e_tc_flow *flow,
  
- static bool __mptcp_subflow_error_report(struct sock *sk, struct sock *ssk)
+ static void mlx5e_tc_del_fdb_peers_flow(struct mlx5e_tc_flow *flow)
  {
--	int err = sock_error(ssk);
- 	int ssk_state;
--
--	if (!err)
--		return false;
-+	int err;
++	struct mlx5_devcom_comp_dev *devcom;
++	struct mlx5_devcom_comp_dev *pos;
++	struct mlx5_eswitch *peer_esw;
+ 	int i;
  
- 	/* only propagate errors on fallen-back sockets or
- 	 * on MPC connect
-@@ -810,6 +807,10 @@ static bool __mptcp_subflow_error_report
- 	if (sk->sk_state != TCP_SYN_SENT && !__mptcp_check_fallback(mptcp_sk(sk)))
- 		return false;
+-	for (i = 0; i < MLX5_MAX_PORTS; i++) {
+-		if (i == mlx5_get_dev_index(flow->priv->mdev))
+-			continue;
++	devcom = flow->priv->mdev->priv.eswitch->devcom;
++	mlx5_devcom_for_each_peer_entry(devcom, peer_esw, pos) {
++		i = mlx5_get_dev_index(peer_esw->dev);
+ 		mlx5e_tc_del_fdb_peer_flow(flow, i);
+ 	}
+ }
+@@ -5504,12 +5507,16 @@ int mlx5e_tc_num_filters(struct mlx5e_priv *priv, unsigned long flags)
  
-+	err = sock_error(ssk);
-+	if (!err)
-+		return false;
+ void mlx5e_tc_clean_fdb_peer_flows(struct mlx5_eswitch *esw)
+ {
++	struct mlx5_devcom_comp_dev *devcom;
++	struct mlx5_devcom_comp_dev *pos;
+ 	struct mlx5e_tc_flow *flow, *tmp;
++	struct mlx5_eswitch *peer_esw;
+ 	int i;
+ 
+-	for (i = 0; i < MLX5_MAX_PORTS; i++) {
+-		if (i == mlx5_get_dev_index(esw->dev))
+-			continue;
++	devcom = esw->devcom;
 +
- 	/* We need to propagate only transition to CLOSE state.
- 	 * Orphaned socket will see such state change via
- 	 * subflow_sched_work_if_closed() and that path will properly
++	mlx5_devcom_for_each_peer_entry(devcom, peer_esw, pos) {
++		i = mlx5_get_dev_index(peer_esw->dev);
+ 		list_for_each_entry_safe(flow, tmp, &esw->offloads.peer_flows[i], peer[i])
+ 			mlx5e_tc_del_fdb_peers_flow(flow);
+ 	}
+-- 
+2.51.0
+
 
 
