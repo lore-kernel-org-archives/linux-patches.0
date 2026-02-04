@@ -1,43 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B5DA2BE621;
-	Wed,  4 Feb 2026 15:18:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB72D28853A;
+	Wed,  4 Feb 2026 15:18:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770218289; cv=none; b=Skb255YFmCQ2nb1VJdiMiOdsEO8kHq8IOmqkmfl9tZ6SrKkx8qx7DBwXlc54yfxqtVa+CfaxzsAKT2gARz3ligOzMGe7Wg0pYqxg6DSjikfBG96BO6JZZRkPjEqxPnYw9ibHBLX5eK9eRWjGMqtyWZ7FznYQf5dn1CQKA0XbeIw=
+	t=1770218293; cv=none; b=h5iVV2MmIms/4wlgqnPqIRLt+L7o2u56CMVL78GzEf9DP0/a0OJP7Q/cB8YXv5hp/e9Dt35/PpGUmFzUwSKlS1eRti+us50/P/07Ac5Rk/lIvMzCo5HbfGBUEtsLcw2fTH8xn/ZJR+8Ho+C4daEroRtJk0YSOZ/9U64lBBEXMxM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770218289; c=relaxed/simple;
-	bh=j2eFubwiZCmp5h98OMYBcMli4rZ9hPR+EIlRjxYEtSc=;
+	s=arc-20240116; t=1770218293; c=relaxed/simple;
+	bh=xj3UgVhfs5P5wp6YFfk7tkG2otdHxzyWVXE6KHb/AXE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Nr5vTk58hgYxzTwsbw3bmOs7Pzb+HCxTlhiPmk0TlbFPlmZCR5UJzakU0ZBtGugv7Dj4O1J6434ZpPdiRC4rGKusKxrM7Ij3VNzKr0JQ5tOq2Lc4o4ISxy0WfTFtIjquFIlxQkqhFtzTtKCyiyyg3ZLThqcfaV9vMW+y7adQyzI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=B9PU6Pv5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=BWeCGORWzd5MVzkBS2tv0MTl5ubA76cHfyJ2awQcO+XJOTTPQy/IjIwo7+f6+zWEmfchZVoqGJdFmEo3jT1OAx7n3c6He5FnP85yCOgFGgc+NCe6Rsmu18EeUXrCGFCjuPTS8E2X+1ZFbfY2daACAbuO3yzVICEwSHg/jgMr6yo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=f2QFVkJL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="B9PU6Pv5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F2E9AC116C6;
-	Wed,  4 Feb 2026 15:18:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="f2QFVkJL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 450AEC4CEF7;
+	Wed,  4 Feb 2026 15:18:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770218289;
-	bh=j2eFubwiZCmp5h98OMYBcMli4rZ9hPR+EIlRjxYEtSc=;
+	s=korg; t=1770218292;
+	bh=xj3UgVhfs5P5wp6YFfk7tkG2otdHxzyWVXE6KHb/AXE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=B9PU6Pv5UJZWdcww8O0iBdSr700Ll6eTdHtcJOd3RQtxS7TZTlYokSXROHEDFjX/z
-	 5Y3vX54G9YOMcaw86ulfTP974SFwHDVB47QdLZepUXTftZ9gGmyWfT59oVNYjYPQbs
-	 UWm7DM3sSojcmSIq+dxMNMq8eVkX7eKREEO6egPg=
+	b=f2QFVkJLOYzYmhcvfxE2+NiuXwfRPqU7tGgH6sKbUVRc9456ti+O++6srgmRk4BkF
+	 HBTnS1+vnqft/qChWs2Q0bkgu42nhjAW0UfPpEJS773YWOgVqxisD6R4R1toH5tDYW
+	 imoAGQUkVyCpSFJaCWIr9uQ8+Ft7bbXPN18fH9ac=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	lin cao <lin.cao@amd.com>,
-	Jingwen Chen <Jingwen.Chen2@amd.com>,
-	Victor Skvortsov <victor.skvortsov@amd.com>,
-	Zhigang Luo <zhigang.luo@amd.com>,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
-	Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>,
-	Li hongliang <1468888505@139.com>
-Subject: [PATCH 6.1 266/280] drm/amdgpu: Replace Mutex with Spinlock for RLCG register access to avoid Priority Inversion in SRIOV
-Date: Wed,  4 Feb 2026 15:40:40 +0100
-Message-ID: <20260204143919.271443423@linuxfoundation.org>
+	Maxime Chevallier <maxime.chevallier@bootlin.com>,
+	=?UTF-8?q?Alexis=20Lothor=C3=A9?= <alexis.lothore@bootlin.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Rahul Sharma <black.hawk@163.com>
+Subject: [PATCH 6.1 267/280] net: stmmac: make sure that ptp_rate is not 0 before configuring EST
+Date: Wed,  4 Feb 2026 15:40:41 +0100
+Message-ID: <20260204143919.307733721@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260204143909.614719725@linuxfoundation.org>
 References: <20260204143909.614719725@linuxfoundation.org>
@@ -57,169 +53,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>
+From: Alexis Lothoré <alexis.lothore@bootlin.com>
 
-[ Upstream commit dc0297f3198bd60108ccbd167ee5d9fa4af31ed0 ]
+[ Upstream commit cbefe2ffa7784525ec5d008ba87c7add19ec631a ]
 
-RLCG Register Access is a way for virtual functions to safely access GPU
-registers in a virtualized environment., including TLB flushes and
-register reads. When multiple threads or VFs try to access the same
-registers simultaneously, it can lead to race conditions. By using the
-RLCG interface, the driver can serialize access to the registers. This
-means that only one thread can access the registers at a time,
-preventing conflicts and ensuring that operations are performed
-correctly. Additionally, when a low-priority task holds a mutex that a
-high-priority task needs, ie., If a thread holding a spinlock tries to
-acquire a mutex, it can lead to priority inversion. register access in
-amdgpu_virt_rlcg_reg_rw especially in a fast code path is critical.
+If the ptp_rate recorded earlier in the driver happens to be 0, this
+bogus value will propagate up to EST configuration, where it will
+trigger a division by 0.
 
-The call stack shows that the function amdgpu_virt_rlcg_reg_rw is being
-called, which attempts to acquire the mutex. This function is invoked
-from amdgpu_sriov_wreg, which in turn is called from
-gmc_v11_0_flush_gpu_tlb.
+Prevent this division by 0 by adding the corresponding check and error
+code.
 
-The [ BUG: Invalid wait context ] indicates that a thread is trying to
-acquire a mutex while it is in a context that does not allow it to sleep
-(like holding a spinlock).
-
-Fixes the below:
-
-[  253.013423] =============================
-[  253.013434] [ BUG: Invalid wait context ]
-[  253.013446] 6.12.0-amdstaging-drm-next-lol-050225 #14 Tainted: G     U     OE
-[  253.013464] -----------------------------
-[  253.013475] kworker/0:1/10 is trying to lock:
-[  253.013487] ffff9f30542e3cf8 (&adev->virt.rlcg_reg_lock){+.+.}-{3:3}, at: amdgpu_virt_rlcg_reg_rw+0xf6/0x330 [amdgpu]
-[  253.013815] other info that might help us debug this:
-[  253.013827] context-{4:4}
-[  253.013835] 3 locks held by kworker/0:1/10:
-[  253.013847]  #0: ffff9f3040050f58 ((wq_completion)events){+.+.}-{0:0}, at: process_one_work+0x3f5/0x680
-[  253.013877]  #1: ffffb789c008be40 ((work_completion)(&wfc.work)){+.+.}-{0:0}, at: process_one_work+0x1d6/0x680
-[  253.013905]  #2: ffff9f3054281838 (&adev->gmc.invalidate_lock){+.+.}-{2:2}, at: gmc_v11_0_flush_gpu_tlb+0x198/0x4f0 [amdgpu]
-[  253.014154] stack backtrace:
-[  253.014164] CPU: 0 UID: 0 PID: 10 Comm: kworker/0:1 Tainted: G     U     OE      6.12.0-amdstaging-drm-next-lol-050225 #14
-[  253.014189] Tainted: [U]=USER, [O]=OOT_MODULE, [E]=UNSIGNED_MODULE
-[  253.014203] Hardware name: Microsoft Corporation Virtual Machine/Virtual Machine, BIOS Hyper-V UEFI Release v4.1 11/18/2024
-[  253.014224] Workqueue: events work_for_cpu_fn
-[  253.014241] Call Trace:
-[  253.014250]  <TASK>
-[  253.014260]  dump_stack_lvl+0x9b/0xf0
-[  253.014275]  dump_stack+0x10/0x20
-[  253.014287]  __lock_acquire+0xa47/0x2810
-[  253.014303]  ? srso_alias_return_thunk+0x5/0xfbef5
-[  253.014321]  lock_acquire+0xd1/0x300
-[  253.014333]  ? amdgpu_virt_rlcg_reg_rw+0xf6/0x330 [amdgpu]
-[  253.014562]  ? __lock_acquire+0xa6b/0x2810
-[  253.014578]  __mutex_lock+0x85/0xe20
-[  253.014591]  ? amdgpu_virt_rlcg_reg_rw+0xf6/0x330 [amdgpu]
-[  253.014782]  ? sched_clock_noinstr+0x9/0x10
-[  253.014795]  ? srso_alias_return_thunk+0x5/0xfbef5
-[  253.014808]  ? local_clock_noinstr+0xe/0xc0
-[  253.014822]  ? amdgpu_virt_rlcg_reg_rw+0xf6/0x330 [amdgpu]
-[  253.015012]  ? srso_alias_return_thunk+0x5/0xfbef5
-[  253.015029]  mutex_lock_nested+0x1b/0x30
-[  253.015044]  ? mutex_lock_nested+0x1b/0x30
-[  253.015057]  amdgpu_virt_rlcg_reg_rw+0xf6/0x330 [amdgpu]
-[  253.015249]  amdgpu_sriov_wreg+0xc5/0xd0 [amdgpu]
-[  253.015435]  gmc_v11_0_flush_gpu_tlb+0x44b/0x4f0 [amdgpu]
-[  253.015667]  gfx_v11_0_hw_init+0x499/0x29c0 [amdgpu]
-[  253.015901]  ? __pfx_smu_v13_0_update_pcie_parameters+0x10/0x10 [amdgpu]
-[  253.016159]  ? srso_alias_return_thunk+0x5/0xfbef5
-[  253.016173]  ? smu_hw_init+0x18d/0x300 [amdgpu]
-[  253.016403]  amdgpu_device_init+0x29ad/0x36a0 [amdgpu]
-[  253.016614]  amdgpu_driver_load_kms+0x1a/0xc0 [amdgpu]
-[  253.017057]  amdgpu_pci_probe+0x1c2/0x660 [amdgpu]
-[  253.017493]  local_pci_probe+0x4b/0xb0
-[  253.017746]  work_for_cpu_fn+0x1a/0x30
-[  253.017995]  process_one_work+0x21e/0x680
-[  253.018248]  worker_thread+0x190/0x330
-[  253.018500]  ? __pfx_worker_thread+0x10/0x10
-[  253.018746]  kthread+0xe7/0x120
-[  253.018988]  ? __pfx_kthread+0x10/0x10
-[  253.019231]  ret_from_fork+0x3c/0x60
-[  253.019468]  ? __pfx_kthread+0x10/0x10
-[  253.019701]  ret_from_fork_asm+0x1a/0x30
-[  253.019939]  </TASK>
-
-v2: s/spin_trylock/spin_lock_irqsave to be safe (Christian).
-
-Fixes: e864180ee49b ("drm/amdgpu: Add lock around VF RLCG interface")
-Cc: lin cao <lin.cao@amd.com>
-Cc: Jingwen Chen <Jingwen.Chen2@amd.com>
-Cc: Victor Skvortsov <victor.skvortsov@amd.com>
-Cc: Zhigang Luo <zhigang.luo@amd.com>
-Cc: Christian König <christian.koenig@amd.com>
-Cc: Alex Deucher <alexander.deucher@amd.com>
-Signed-off-by: Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>
-Suggested-by: Alex Deucher <alexander.deucher@amd.com>
-Reviewed-by: Christian König <christian.koenig@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-[ Minor conflict resolved. ]
-Signed-off-by: Li hongliang <1468888505@139.com>
+Suggested-by: Maxime Chevallier <maxime.chevallier@bootlin.com>
+Signed-off-by: Alexis Lothoré <alexis.lothore@bootlin.com>
+Fixes: 8572aec3d0dc ("net: stmmac: Add basic EST support for XGMAC")
+Link: https://patch.msgid.link/20250529-stmmac_tstamp_div-v4-2-d73340a794d5@bootlin.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+[ The context change is due to the commit c3f3b97238f6
+("net: stmmac: Refactor EST implementation")
+and the proper adoption is done. ]
+Signed-off-by: Rahul Sharma <black.hawk@163.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_device.c |    2 +-
- drivers/gpu/drm/amd/amdgpu/amdgpu_virt.c   |    5 +++--
- drivers/gpu/drm/amd/amdgpu/amdgpu_virt.h   |    3 ++-
- 3 files changed, 6 insertions(+), 4 deletions(-)
+ drivers/net/ethernet/stmicro/stmmac/dwmac5.c        |    5 +++++
+ drivers/net/ethernet/stmicro/stmmac/dwxgmac2_core.c |    5 +++++
+ 2 files changed, 10 insertions(+)
 
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
-@@ -3652,7 +3652,6 @@ int amdgpu_device_init(struct amdgpu_dev
- 	mutex_init(&adev->grbm_idx_mutex);
- 	mutex_init(&adev->mn_lock);
- 	mutex_init(&adev->virt.vf_errors.lock);
--	mutex_init(&adev->virt.rlcg_reg_lock);
- 	hash_init(adev->mn_hash);
- 	mutex_init(&adev->psp.mutex);
- 	mutex_init(&adev->notifier_lock);
-@@ -3674,6 +3673,7 @@ int amdgpu_device_init(struct amdgpu_dev
- 	spin_lock_init(&adev->se_cac_idx_lock);
- 	spin_lock_init(&adev->audio_endpt_idx_lock);
- 	spin_lock_init(&adev->mm_stats.lock);
-+	spin_lock_init(&adev->virt.rlcg_reg_lock);
+--- a/drivers/net/ethernet/stmicro/stmmac/dwmac5.c
++++ b/drivers/net/ethernet/stmicro/stmmac/dwmac5.c
+@@ -597,6 +597,11 @@ int dwmac5_est_configure(void __iomem *i
+ 	int i, ret = 0x0;
+ 	u32 ctrl;
  
- 	INIT_LIST_HEAD(&adev->shadow_list);
- 	mutex_init(&adev->shadow_list_lock);
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_virt.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_virt.c
-@@ -965,6 +965,7 @@ static u32 amdgpu_virt_rlcg_reg_rw(struc
- 	void *scratch_reg2;
- 	void *scratch_reg3;
- 	void *spare_int;
-+	unsigned long flags;
++	if (!ptp_rate) {
++		pr_warn("Dwmac5: Invalid PTP rate");
++		return -EINVAL;
++	}
++
+ 	ret |= dwmac5_est_write(ioaddr, BTR_LOW, cfg->btr[0], false);
+ 	ret |= dwmac5_est_write(ioaddr, BTR_HIGH, cfg->btr[1], false);
+ 	ret |= dwmac5_est_write(ioaddr, TER, cfg->ter, false);
+--- a/drivers/net/ethernet/stmicro/stmmac/dwxgmac2_core.c
++++ b/drivers/net/ethernet/stmicro/stmmac/dwxgmac2_core.c
+@@ -1497,6 +1497,11 @@ static int dwxgmac3_est_configure(void _
+ 	int i, ret = 0x0;
+ 	u32 ctrl;
  
- 	if (!adev->gfx.rlc.rlcg_reg_access_supported) {
- 		dev_err(adev->dev,
-@@ -978,7 +979,7 @@ static u32 amdgpu_virt_rlcg_reg_rw(struc
- 	scratch_reg2 = (void __iomem *)adev->rmmio + 4 * reg_access_ctrl->scratch_reg2;
- 	scratch_reg3 = (void __iomem *)adev->rmmio + 4 * reg_access_ctrl->scratch_reg3;
- 
--	mutex_lock(&adev->virt.rlcg_reg_lock);
-+	spin_lock_irqsave(&adev->virt.rlcg_reg_lock, flags);
- 
- 	if (reg_access_ctrl->spare_int)
- 		spare_int = (void __iomem *)adev->rmmio + 4 * reg_access_ctrl->spare_int;
-@@ -1034,7 +1035,7 @@ static u32 amdgpu_virt_rlcg_reg_rw(struc
- 
- 	ret = readl(scratch_reg0);
- 
--	mutex_unlock(&adev->virt.rlcg_reg_lock);
-+	spin_unlock_irqrestore(&adev->virt.rlcg_reg_lock, flags);
- 
- 	return ret;
- }
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_virt.h
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_virt.h
-@@ -264,7 +264,8 @@ struct amdgpu_virt {
- 	/* the ucode id to signal the autoload */
- 	uint32_t autoload_ucode_id;
- 
--	struct mutex rlcg_reg_lock;
-+	/* Spinlock to protect access to the RLCG register interface */
-+	spinlock_t rlcg_reg_lock;
- };
- 
- struct amdgpu_video_codec_info;
++	if (!ptp_rate) {
++		pr_warn("Dwxgmac2: Invalid PTP rate");
++		return -EINVAL;
++	}
++
+ 	ret |= dwxgmac3_est_write(ioaddr, XGMAC_BTR_LOW, cfg->btr[0], false);
+ 	ret |= dwxgmac3_est_write(ioaddr, XGMAC_BTR_HIGH, cfg->btr[1], false);
+ 	ret |= dwxgmac3_est_write(ioaddr, XGMAC_TER, cfg->ter, false);
 
 
