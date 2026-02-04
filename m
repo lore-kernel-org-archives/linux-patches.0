@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B82927702D;
-	Wed,  4 Feb 2026 15:30:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD9352BD012;
+	Wed,  4 Feb 2026 15:30:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770219047; cv=none; b=AAgLeSXaMoE6JwmLyvRbcoaq+h2aQS4sOMaIWehdixpvkwXWH/NZPZVnxJQq1paP8xNUzm0mhrzGh5XGolTJrCUH52qq5K5EueXKKBuBNtZMYZ1Phv3u6YVnemlEFewAS9++0CaLWiMimHUR+UMTa9ULhK7Qs2QpN1bkY0oY2jI=
+	t=1770219050; cv=none; b=mOkakpOSwOhK+/0IOID1S5HIrs6fuE8T3gXkTLpDAaY4n7OY1hsbc7NvI10P1w8Vr3vJDwu2Uh4N1moM89CjI/nsg9n1f0Bvy+p7R7IXes0CWnPg1hRPac30Db7sDZt7PtXKbnrH1/3gygO29/h5um1CgXTwRKcFI9SVuellqVI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770219047; c=relaxed/simple;
-	bh=ncWHsbe55fScPBoRp/erwYQt5J0YUH+Z5gwLVy/iP+I=;
+	s=arc-20240116; t=1770219050; c=relaxed/simple;
+	bh=vOZk9XFidI8jn2Y5SNPY/yXhF+gEhxjn9MH1g4rkemQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TX8orrGZ1svhLDsQjI0SbOtzshvtuYR+oTsvzSeZf0psynVfoD/We4ZgcmrCbschRXDJY1Ximp0Z/LsrvWsrNyaBfr67P/tV5fqlT5BfMpcjy8G1vulNdni5NeYO0BS73jiFzromZFMa1HcZIHzJWek7319TIxlsizIuDUBioLs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wVrixGAB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XWxiNE0VTEfIgXIZjTTD+hfIEY8UBx9BMqWMemqZ9pikRjFJqEpHDi+S9PiJD0GK9e6KXOBgqKtAA1H4FVByS3gdJsAYvKuS/wZARnJ+LuJ5xhBcB1i/E0D8ndFjVa6omMT9hrBVHEzY/ftHtanr9IqwSdGW7+h9Hh++8Opt26s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bqzzyYmT; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wVrixGAB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D6C30C19423;
-	Wed,  4 Feb 2026 15:30:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bqzzyYmT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D14CC4CEF7;
+	Wed,  4 Feb 2026 15:30:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770219047;
-	bh=ncWHsbe55fScPBoRp/erwYQt5J0YUH+Z5gwLVy/iP+I=;
+	s=korg; t=1770219050;
+	bh=vOZk9XFidI8jn2Y5SNPY/yXhF+gEhxjn9MH1g4rkemQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wVrixGAB5qTV2Ann1ZklrFxLu2LtvVuo7SWXWBpAf+u6s9Y44t5doUSBYlz2AFTle
-	 ZhBCqpmNoKEi9whkef9PgTRUawzSW27xut8aoIUWqEa/Sk97HtBHYnYEFMqvEo2P08
-	 sukDlijLJO5yVp2XBnfEigdjCTT26gW0Pb02h+MU=
+	b=bqzzyYmTVyLVvjJkZnNYc4QmYi/z5+y+4fMtm9RhJMnQMWBExlHjDOBiWJ0a9O/Cr
+	 x9VWv4kmLxA017n6uOmrsKe89EjjzrRfDLRWyjMp98C8+4+S8eNmacE1h9Vl+orqke
+	 oczshNGf7g5VoXvFV5arDuE5rh3cimxwuymxfAr0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tony Nguyen <anthony.l.nguyen@intel.com>,
-	Jake Keller <jacob.e.keller@intel.com>,
-	IWL <intel-wired-lan@lists.osuosl.org>,
-	Jesse Brandeburg <jbrandeburg@cloudflare.com>,
+	Christoph Hellwig <hch@lst.de>,
+	Shida Zhang <zhangshida@kylinos.cn>,
+	Coly Li <colyli@fnnas.com>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 024/122] ice: stop counting UDP csum mismatch as rx_errors
-Date: Wed,  4 Feb 2026 15:40:06 +0100
-Message-ID: <20260204143852.734559013@linuxfoundation.org>
+Subject: [PATCH 6.18 051/122] bcache: use bio cloning for detached device requests
+Date: Wed,  4 Feb 2026 15:40:33 +0100
+Message-ID: <20260204143853.692314234@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260204143851.857060534@linuxfoundation.org>
 References: <20260204143851.857060534@linuxfoundation.org>
@@ -53,60 +53,232 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jesse Brandeburg <jbrandeburg@cloudflare.com>
+From: Shida Zhang <zhangshida@kylinos.cn>
 
-[ Upstream commit 05faf2c0a76581d0a7fdbb8ec46477ba183df95b ]
+[ Upstream commit 3ef825dfd4e487d6f92b23ee2df2455814583ef4 ]
 
-Since the beginning, the Intel ice driver has counted receive checksum
-offload mismatches into the rx_errors member of the rtnl_link_stats64
-struct. In ethtool -S these show up as rx_csum_bad.nic.
+Previously, bcache hijacked the bi_end_io and bi_private fields of
+the incoming bio when the backing device was in a detached state.
+This is fragile and breaks if the bio is needed to be processed by
+other layers.
 
-I believe counting these in rx_errors is fundamentally wrong, as it's
-pretty clear from the comments in if_link.h and from every other statistic
-the driver is summing into rx_errors, that all of them would cause a
-"hardware drop" except for the UDP checksum mismatch, as well as the fact
-that all the other causes for rx_errors are L2 reasons, and this L4 UDP
-"mismatch" is an outlier.
+This patch transitions to using a cloned bio embedded within a private
+structure. This ensures the original bio's metadata remains untouched.
 
-A last nail in the coffin is that rx_errors is monitored in production and
-can indicate a bad NIC/cable/Switch port, but instead some random series of
-UDP packets with bad checksums will now trigger this alert. This false
-positive makes the alert useless and affects us as well as other companies.
-
-This packet with presumably a bad UDP checksum is *already* passed to the
-stack, just not marked as offloaded by the hardware/driver. If it is
-dropped by the stack it will show up as UDP_MIB_CSUMERRORS.
-
-And one more thing, none of the other Intel drivers, and at least bnxt_en
-and mlx5 both don't appear to count UDP offload mismatches as rx_errors.
-
-Here is a related customer complaint:
-https://community.intel.com/t5/Ethernet-Products/ice-rx-errros-is-too-sensitive-to-IP-TCP-attack-packets-Intel/td-p/1662125
-
-Fixes: 4f1fe43c920b ("ice: Add more Rx errors to netdev's rx_error counter")
-Cc: Tony Nguyen <anthony.l.nguyen@intel.com>
-Cc: Jake Keller <jacob.e.keller@intel.com>
-Cc: IWL <intel-wired-lan@lists.osuosl.org>
-Signed-off-by: Jesse Brandeburg <jbrandeburg@cloudflare.com>
-Acked-by: Jacob Keller <jacob.e.keller@intel.com>
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+Fixes: 53280e398471 ("bcache: fix improper use of bi_end_io")
+Co-developed-by: Christoph Hellwig <hch@lst.de>
+Signed-off-by: Christoph Hellwig <hch@lst.de>
+Signed-off-by: Shida Zhang <zhangshida@kylinos.cn>
+Acked-by: Coly Li <colyli@fnnas.com>
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Stable-dep-of: 4da7c5c3ec34 ("bcache: fix I/O accounting leak in detached_dev_do_request")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/ice/ice_main.c | 1 -
- 1 file changed, 1 deletion(-)
+ drivers/md/bcache/bcache.h  |  9 +++++
+ drivers/md/bcache/request.c | 79 ++++++++++++++++---------------------
+ drivers/md/bcache/super.c   | 12 +++++-
+ 3 files changed, 54 insertions(+), 46 deletions(-)
 
-diff --git a/drivers/net/ethernet/intel/ice/ice_main.c b/drivers/net/ethernet/intel/ice/ice_main.c
-index fc284802e2bcd..b5ebfcdc9d434 100644
---- a/drivers/net/ethernet/intel/ice/ice_main.c
-+++ b/drivers/net/ethernet/intel/ice/ice_main.c
-@@ -6993,7 +6993,6 @@ void ice_update_vsi_stats(struct ice_vsi *vsi)
- 		cur_ns->rx_errors = pf->stats.crc_errors +
- 				    pf->stats.illegal_bytes +
- 				    pf->stats.rx_undersize +
--				    pf->hw_csum_rx_error +
- 				    pf->stats.rx_jabber +
- 				    pf->stats.rx_fragments +
- 				    pf->stats.rx_oversize;
+diff --git a/drivers/md/bcache/bcache.h b/drivers/md/bcache/bcache.h
+index 1d33e40d26ea5..cca5756030d71 100644
+--- a/drivers/md/bcache/bcache.h
++++ b/drivers/md/bcache/bcache.h
+@@ -273,6 +273,8 @@ struct bcache_device {
+ 
+ 	struct bio_set		bio_split;
+ 
++	struct bio_set		bio_detached;
++
+ 	unsigned int		data_csum:1;
+ 
+ 	int (*cache_miss)(struct btree *b, struct search *s,
+@@ -755,6 +757,13 @@ struct bbio {
+ 	struct bio		bio;
+ };
+ 
++struct detached_dev_io_private {
++	struct bcache_device	*d;
++	unsigned long		start_time;
++	struct bio		*orig_bio;
++	struct bio              bio;
++};
++
+ #define BTREE_PRIO		USHRT_MAX
+ #define INITIAL_PRIO		32768U
+ 
+diff --git a/drivers/md/bcache/request.c b/drivers/md/bcache/request.c
+index 82fdea7dea7aa..a02aecac05cdf 100644
+--- a/drivers/md/bcache/request.c
++++ b/drivers/md/bcache/request.c
+@@ -1077,68 +1077,58 @@ static CLOSURE_CALLBACK(cached_dev_nodata)
+ 	continue_at(cl, cached_dev_bio_complete, NULL);
+ }
+ 
+-struct detached_dev_io_private {
+-	struct bcache_device	*d;
+-	unsigned long		start_time;
+-	bio_end_io_t		*bi_end_io;
+-	void			*bi_private;
+-	struct block_device	*orig_bdev;
+-};
+-
+ static void detached_dev_end_io(struct bio *bio)
+ {
+-	struct detached_dev_io_private *ddip;
+-
+-	ddip = bio->bi_private;
+-	bio->bi_end_io = ddip->bi_end_io;
+-	bio->bi_private = ddip->bi_private;
++	struct detached_dev_io_private *ddip =
++		container_of(bio, struct detached_dev_io_private, bio);
++	struct bio *orig_bio = ddip->orig_bio;
+ 
+ 	/* Count on the bcache device */
+-	bio_end_io_acct_remapped(bio, ddip->start_time, ddip->orig_bdev);
++	bio_end_io_acct(orig_bio, ddip->start_time);
+ 
+ 	if (bio->bi_status) {
+-		struct cached_dev *dc = container_of(ddip->d,
+-						     struct cached_dev, disk);
++		struct cached_dev *dc = bio->bi_private;
++
+ 		/* should count I/O error for backing device here */
+ 		bch_count_backing_io_errors(dc, bio);
++		orig_bio->bi_status = bio->bi_status;
+ 	}
+ 
+-	kfree(ddip);
+-	bio_endio(bio);
++	bio_put(bio);
++	bio_endio(orig_bio);
+ }
+ 
+-static void detached_dev_do_request(struct bcache_device *d, struct bio *bio,
+-		struct block_device *orig_bdev, unsigned long start_time)
++static void detached_dev_do_request(struct bcache_device *d,
++		struct bio *orig_bio, unsigned long start_time)
+ {
+ 	struct detached_dev_io_private *ddip;
+ 	struct cached_dev *dc = container_of(d, struct cached_dev, disk);
++	struct bio *clone_bio;
+ 
+-	/*
+-	 * no need to call closure_get(&dc->disk.cl),
+-	 * because upper layer had already opened bcache device,
+-	 * which would call closure_get(&dc->disk.cl)
+-	 */
+-	ddip = kzalloc(sizeof(struct detached_dev_io_private), GFP_NOIO);
+-	if (!ddip) {
+-		bio->bi_status = BLK_STS_RESOURCE;
+-		bio_endio(bio);
++	if (bio_op(orig_bio) == REQ_OP_DISCARD &&
++	    !bdev_max_discard_sectors(dc->bdev)) {
++		bio_endio(orig_bio);
+ 		return;
+ 	}
+ 
+-	ddip->d = d;
++	clone_bio = bio_alloc_clone(dc->bdev, orig_bio, GFP_NOIO,
++				    &d->bio_detached);
++	if (!clone_bio) {
++		orig_bio->bi_status = BLK_STS_RESOURCE;
++		bio_endio(orig_bio);
++		return;
++	}
++
++	ddip = container_of(clone_bio, struct detached_dev_io_private, bio);
+ 	/* Count on the bcache device */
+-	ddip->orig_bdev = orig_bdev;
++	ddip->d = d;
+ 	ddip->start_time = start_time;
+-	ddip->bi_end_io = bio->bi_end_io;
+-	ddip->bi_private = bio->bi_private;
+-	bio->bi_end_io = detached_dev_end_io;
+-	bio->bi_private = ddip;
+-
+-	if ((bio_op(bio) == REQ_OP_DISCARD) &&
+-	    !bdev_max_discard_sectors(dc->bdev))
+-		detached_dev_end_io(bio);
+-	else
+-		submit_bio_noacct(bio);
++	ddip->orig_bio = orig_bio;
++
++	clone_bio->bi_end_io = detached_dev_end_io;
++	clone_bio->bi_private = dc;
++
++	submit_bio_noacct(clone_bio);
+ }
+ 
+ static void quit_max_writeback_rate(struct cache_set *c,
+@@ -1214,10 +1204,10 @@ void cached_dev_submit_bio(struct bio *bio)
+ 
+ 	start_time = bio_start_io_acct(bio);
+ 
+-	bio_set_dev(bio, dc->bdev);
+ 	bio->bi_iter.bi_sector += dc->sb.data_offset;
+ 
+ 	if (cached_dev_get(dc)) {
++		bio_set_dev(bio, dc->bdev);
+ 		s = search_alloc(bio, d, orig_bdev, start_time);
+ 		trace_bcache_request_start(s->d, bio);
+ 
+@@ -1237,9 +1227,10 @@ void cached_dev_submit_bio(struct bio *bio)
+ 			else
+ 				cached_dev_read(dc, s);
+ 		}
+-	} else
++	} else {
+ 		/* I/O request sent to backing device */
+-		detached_dev_do_request(d, bio, orig_bdev, start_time);
++		detached_dev_do_request(d, bio, start_time);
++	}
+ }
+ 
+ static int cached_dev_ioctl(struct bcache_device *d, blk_mode_t mode,
+diff --git a/drivers/md/bcache/super.c b/drivers/md/bcache/super.c
+index 6d250e366412c..9218b9dbd4af2 100644
+--- a/drivers/md/bcache/super.c
++++ b/drivers/md/bcache/super.c
+@@ -887,6 +887,7 @@ static void bcache_device_free(struct bcache_device *d)
+ 	}
+ 
+ 	bioset_exit(&d->bio_split);
++	bioset_exit(&d->bio_detached);
+ 	kvfree(d->full_dirty_stripes);
+ 	kvfree(d->stripe_sectors_dirty);
+ 
+@@ -949,6 +950,11 @@ static int bcache_device_init(struct bcache_device *d, unsigned int block_size,
+ 			BIOSET_NEED_BVECS|BIOSET_NEED_RESCUER))
+ 		goto out_ida_remove;
+ 
++	if (bioset_init(&d->bio_detached, 4,
++			offsetof(struct detached_dev_io_private, bio),
++			BIOSET_NEED_BVECS|BIOSET_NEED_RESCUER))
++		goto out_bioset_split_exit;
++
+ 	if (lim.logical_block_size > PAGE_SIZE && cached_bdev) {
+ 		/*
+ 		 * This should only happen with BCACHE_SB_VERSION_BDEV.
+@@ -964,7 +970,7 @@ static int bcache_device_init(struct bcache_device *d, unsigned int block_size,
+ 
+ 	d->disk = blk_alloc_disk(&lim, NUMA_NO_NODE);
+ 	if (IS_ERR(d->disk))
+-		goto out_bioset_exit;
++		goto out_bioset_detach_exit;
+ 
+ 	set_capacity(d->disk, sectors);
+ 	snprintf(d->disk->disk_name, DISK_NAME_LEN, "bcache%i", idx);
+@@ -976,7 +982,9 @@ static int bcache_device_init(struct bcache_device *d, unsigned int block_size,
+ 	d->disk->private_data	= d;
+ 	return 0;
+ 
+-out_bioset_exit:
++out_bioset_detach_exit:
++	bioset_exit(&d->bio_detached);
++out_bioset_split_exit:
+ 	bioset_exit(&d->bio_split);
+ out_ida_remove:
+ 	ida_free(&bcache_device_idx, idx);
 -- 
 2.51.0
 
