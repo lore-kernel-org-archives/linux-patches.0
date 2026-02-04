@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E744B413234;
-	Wed,  4 Feb 2026 14:45:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7E9641B362;
+	Wed,  4 Feb 2026 14:45:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770216305; cv=none; b=fw3Cf57oXbxrzrUwOHwAV3S2QXC0QdPlavI4fIQIEuKPtE9VN+xTn9fYLlj+ZtUEBux41vpSalmesSpi1ZHqF8Z6WkG8H+3KHMG8JNk/iB115E695Qp1izOx02PrFIj1/tc1xJ3fYfS2p3lB5FZNoHW8ud9Z6AgSY7NkWTLNZY4=
+	t=1770216309; cv=none; b=ObSeqPH7rOV1/AH9LEyZsoNQfdxBK6jK7Up2NMjDK94wyM+mFrzrkLrUZE6Chuz5TTvCmLnnPOicWJ3eAfDOSjfFz5xQ10dsdX2AdBOGlUYuWkV1AKEs2i+5LgJ6eduIWnl/HCIlJQiOZ11R4Fz8tbZ8+fnDL7a+RcZxMPAKdVc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770216305; c=relaxed/simple;
-	bh=FQ7aSkec96K2XkA3iTfK9gHtnjZvpGCQtrKGQozIh/o=;
+	s=arc-20240116; t=1770216309; c=relaxed/simple;
+	bh=aU+hIMb8NXnRaOec12XuAajdroonDr8DyPOLIYh7VEs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=ndXMi767Ok8teR1EmfmIYJKh7bKhtgEdwCHHnCm8iYXRP9GB3xu6ELs6QUaym4kIfNyyosLYlqFMNG3mV+NeChf1Oijjx+yUpG5NjQWFUpOStJfCPiRX5L/CMKRMi/IEJ6wH8b//QOAIs8jGxouhxP1pmwEOdD9YMBRhHOg7L74=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yeh/eOhw; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=UwEeH9k/B5ne75/MfIQzXUYZmVKrFl8RG3hvhqA942GRoCEdpQ3SvX4iOXH536xr4xeIC3G/HAtCSD9uN74gyrZOt7i4bZJGbkJsiecqIADLImzXmADfWhCaimPWEebER+/MI9rUzss5FiWctapWmEwutFUMqI4q8TAsg3ztM3w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qHh1pAKs; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yeh/eOhw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C41DC4CEF7;
-	Wed,  4 Feb 2026 14:45:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qHh1pAKs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1075FC4CEF7;
+	Wed,  4 Feb 2026 14:45:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770216304;
-	bh=FQ7aSkec96K2XkA3iTfK9gHtnjZvpGCQtrKGQozIh/o=;
+	s=korg; t=1770216308;
+	bh=aU+hIMb8NXnRaOec12XuAajdroonDr8DyPOLIYh7VEs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yeh/eOhw7RfBpNnzaQUf7SYic4YE7HzUdDyu9EP2FhNVOoKZwMhjBvEdRvWkbXds1
-	 LaLakTt0k20eDNuIdyXoe6PocpfmNIl0u4AfJuLvPZ7L2hSL2SOmvXJHhyAtl2YTmf
-	 4/OLRkoDQWTqMzKM+DVS2quF61DksFleYM9AffXI=
+	b=qHh1pAKsUs4sJCIFmosz/mYK+3pbl0Wb3R7KcFViFJTWSZjR6TGL60rBrHfP4RNVk
+	 kVE5RzcWRe7+fLCiRUIxO2ioMVm8lc3MojxYwjz5ky+uu3vgDH4MyUh9/G/o+CNgDS
+	 a84gmEMWNkLwXl1W0+rnjJK3tgp4Yc66D9nU/fWM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Richard Cochran <richardcochran@gmail.com>,
-	Vadim Fedorenko <vadim.fedorenko@linux.dev>,
-	Wojtek Wasko <wwasko@nvidia.com>,
-	Thomas Gleixner <tglx@linutronix.de>,
-	"David S. Miller" <davem@davemloft.net>,
+	Ethan Nelson-Moore <enelsonmoore@gmail.com>,
+	Peter Korsgaard <peter@korsgaard.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 048/161] ptp: Add PHC file mode checks. Allow RO adjtime() without FMODE_WRITE.
-Date: Wed,  4 Feb 2026 15:38:31 +0100
-Message-ID: <20260204143853.490930578@linuxfoundation.org>
+Subject: [PATCH 5.10 049/161] net: usb: dm9601: remove broken SR9700 support
+Date: Wed,  4 Feb 2026 15:38:32 +0100
+Message-ID: <20260204143853.526525720@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260204143851.755002596@linuxfoundation.org>
 References: <20260204143851.755002596@linuxfoundation.org>
@@ -48,116 +46,57 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Wojtek Wasko <wwasko@nvidia.com>
+From: Ethan Nelson-Moore <enelsonmoore@gmail.com>
 
-[ Upstream commit b4e53b15c04e3852949003752f48f7a14ae39e86 ]
+[ Upstream commit 7d7dbafefbe74f5a25efc4807af093b857a7612e ]
 
-Many devices implement highly accurate clocks, which the kernel manages
-as PTP Hardware Clocks (PHCs). Userspace applications rely on these
-clocks to timestamp events, trace workload execution, correlate
-timescales across devices, and keep various clocks in sync.
+The SR9700 chip sends more than one packet in a USB transaction,
+like the DM962x chips can optionally do, but the dm9601 driver does not
+support this mode, and the hardware does not have the DM962x
+MODE_CTL register to disable it, so this driver drops packets on SR9700
+devices. The sr9700 driver correctly handles receiving more than one
+packet per transaction.
 
-The kernel’s current implementation of PTP clocks does not enforce file
-permissions checks for most device operations except for POSIX clock
-operations, where file mode is verified in the POSIX layer before
-forwarding the call to the PTP subsystem. Consequently, it is common
-practice to not give unprivileged userspace applications any access to
-PTP clocks whatsoever by giving the PTP chardevs 600 permissions. An
-example of users running into this limitation is documented in [1].
-Additionally, POSIX layer requires WRITE permission even for readonly
-adjtime() calls which are used in PTP layer to return current frequency
-offset applied to the PHC.
+While the dm9601 driver could be improved to handle this, the easiest
+way to fix this issue in the short term is to remove the SR9700 device
+ID from the dm9601 driver so the sr9700 driver is always used. This
+device ID should not have been in more than one driver to begin with.
 
-Add permission checks for functions that modify the state of a PTP
-device. Continue enforcing permission checks for POSIX clock operations
-(settime, adjtime) in the POSIX layer. Only require WRITE access for
-dynamic clocks adjtime() if any flags are set in the modes field.
+The "Fixes" commit was chosen so that the patch is automatically
+included in all kernels that have the sr9700 driver, even though the
+issue affects dm9601.
 
-[1] https://lists.nwtime.org/sympa/arc/linuxptp-users/2024-01/msg00036.html
-
-Changes in v4:
-- Require FMODE_WRITE in ajtime() only for calls modifying the clock in
-  any way.
-
-Acked-by: Richard Cochran <richardcochran@gmail.com>
-Reviewed-by: Vadim Fedorenko <vadim.fedorenko@linux.dev>
-Signed-off-by: Wojtek Wasko <wwasko@nvidia.com>
-Reviewed-by: Thomas Gleixner <tglx@linutronix.de>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Fixes: c9b37458e956 ("USB2NET : SR9700 : One chip USB 1.1 USB2NET SR9700Device Driver Support")
+Signed-off-by: Ethan Nelson-Moore <enelsonmoore@gmail.com>
+Acked-by: Peter Korsgaard <peter@korsgaard.com>
+Link: https://patch.msgid.link/20260113063924.74464-1-enelsonmoore@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/ptp/ptp_chardev.c | 16 ++++++++++++++++
- kernel/time/posix-clock.c |  2 +-
- 2 files changed, 17 insertions(+), 1 deletion(-)
+ drivers/net/usb/dm9601.c | 4 ----
+ 1 file changed, 4 deletions(-)
 
-diff --git a/drivers/ptp/ptp_chardev.c b/drivers/ptp/ptp_chardev.c
-index 2776f37713123..1d6ce1c6c877b 100644
---- a/drivers/ptp/ptp_chardev.c
-+++ b/drivers/ptp/ptp_chardev.c
-@@ -146,6 +146,10 @@ long ptp_ioctl(struct posix_clock_context *pccontext, unsigned int cmd,
- 
- 	case PTP_EXTTS_REQUEST:
- 	case PTP_EXTTS_REQUEST2:
-+		if ((pccontext->fp->f_mode & FMODE_WRITE) == 0) {
-+			err = -EACCES;
-+			break;
-+		}
- 		memset(&req, 0, sizeof(req));
- 
- 		if (copy_from_user(&req.extts, (void __user *)arg,
-@@ -187,6 +191,10 @@ long ptp_ioctl(struct posix_clock_context *pccontext, unsigned int cmd,
- 
- 	case PTP_PEROUT_REQUEST:
- 	case PTP_PEROUT_REQUEST2:
-+		if ((pccontext->fp->f_mode & FMODE_WRITE) == 0) {
-+			err = -EACCES;
-+			break;
-+		}
- 		memset(&req, 0, sizeof(req));
- 
- 		if (copy_from_user(&req.perout, (void __user *)arg,
-@@ -255,6 +263,10 @@ long ptp_ioctl(struct posix_clock_context *pccontext, unsigned int cmd,
- 
- 	case PTP_ENABLE_PPS:
- 	case PTP_ENABLE_PPS2:
-+		if ((pccontext->fp->f_mode & FMODE_WRITE) == 0) {
-+			err = -EACCES;
-+			break;
-+		}
- 		memset(&req, 0, sizeof(req));
- 
- 		if (!capable(CAP_SYS_TIME))
-@@ -393,6 +405,10 @@ long ptp_ioctl(struct posix_clock_context *pccontext, unsigned int cmd,
- 
- 	case PTP_PIN_SETFUNC:
- 	case PTP_PIN_SETFUNC2:
-+		if ((pccontext->fp->f_mode & FMODE_WRITE) == 0) {
-+			err = -EACCES;
-+			break;
-+		}
- 		if (copy_from_user(&pd, (void __user *)arg, sizeof(pd))) {
- 			err = -EFAULT;
- 			break;
-diff --git a/kernel/time/posix-clock.c b/kernel/time/posix-clock.c
-index b130bb56cc4e0..827abede72745 100644
---- a/kernel/time/posix-clock.c
-+++ b/kernel/time/posix-clock.c
-@@ -253,7 +253,7 @@ static int pc_clock_adjtime(clockid_t id, struct __kernel_timex *tx)
- 	if (err)
- 		return err;
- 
--	if ((cd.fp->f_mode & FMODE_WRITE) == 0) {
-+	if (tx->modes && (cd.fp->f_mode & FMODE_WRITE) == 0) {
- 		err = -EACCES;
- 		goto out;
- 	}
+diff --git a/drivers/net/usb/dm9601.c b/drivers/net/usb/dm9601.c
+index 9b7db5fd9e08f..287d54ada4714 100644
+--- a/drivers/net/usb/dm9601.c
++++ b/drivers/net/usb/dm9601.c
+@@ -602,10 +602,6 @@ static const struct usb_device_id products[] = {
+ 	USB_DEVICE(0x0fe6, 0x8101),	/* DM9601 USB to Fast Ethernet Adapter */
+ 	.driver_info = (unsigned long)&dm9601_info,
+ 	 },
+-	{
+-	 USB_DEVICE(0x0fe6, 0x9700),	/* DM9601 USB to Fast Ethernet Adapter */
+-	 .driver_info = (unsigned long)&dm9601_info,
+-	 },
+ 	{
+ 	 USB_DEVICE(0x0a46, 0x9000),	/* DM9000E */
+ 	 .driver_info = (unsigned long)&dm9601_info,
 -- 
 2.51.0
 
