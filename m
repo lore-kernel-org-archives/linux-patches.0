@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7E9641B362;
-	Wed,  4 Feb 2026 14:45:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 002B41C5D77;
+	Wed,  4 Feb 2026 14:45:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770216309; cv=none; b=ObSeqPH7rOV1/AH9LEyZsoNQfdxBK6jK7Up2NMjDK94wyM+mFrzrkLrUZE6Chuz5TTvCmLnnPOicWJ3eAfDOSjfFz5xQ10dsdX2AdBOGlUYuWkV1AKEs2i+5LgJ6eduIWnl/HCIlJQiOZ11R4Fz8tbZ8+fnDL7a+RcZxMPAKdVc=
+	t=1770216312; cv=none; b=UHhoKLirKdIPO2/78hbANMsYuKZWHLnrbekWfCEEcNZETCColHJaDmHZyTpxLzZzbpNlS4VQgRuh6fVfs8h+/UyEKwl+s1zWgsfGS8pVYknI7o0sm8QwDy4j2SJLowaZFuwpPsK5j4LsHUlwxh4ytJZ7u/tigCyVt0AAOrH7sOY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770216309; c=relaxed/simple;
-	bh=aU+hIMb8NXnRaOec12XuAajdroonDr8DyPOLIYh7VEs=;
+	s=arc-20240116; t=1770216312; c=relaxed/simple;
+	bh=6nyCOtm2l09SfmiZT4NUk8JFQfZqFoFMPWYk6O3IZv8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UwEeH9k/B5ne75/MfIQzXUYZmVKrFl8RG3hvhqA942GRoCEdpQ3SvX4iOXH536xr4xeIC3G/HAtCSD9uN74gyrZOt7i4bZJGbkJsiecqIADLImzXmADfWhCaimPWEebER+/MI9rUzss5FiWctapWmEwutFUMqI4q8TAsg3ztM3w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qHh1pAKs; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=AOywt4aLdSXC9ar5v+AyIQ+Yt5I6/S1Z50RKSIV1uN9z385UIw7WCkv7T9LJ0mJzx/9DoDCJ+JxqjDKSr29yGkW9MIlgFQp8L1osH8NRVZ+I1EuQ1MbzRTQEu3HDY23+SxwMcVUTZazKVtwO8dzRu4ZV3qA+ADpM5YC/j/8bRZ0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1B7xjgC/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qHh1pAKs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1075FC4CEF7;
-	Wed,  4 Feb 2026 14:45:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1B7xjgC/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E0CFC4CEF7;
+	Wed,  4 Feb 2026 14:45:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770216308;
-	bh=aU+hIMb8NXnRaOec12XuAajdroonDr8DyPOLIYh7VEs=;
+	s=korg; t=1770216311;
+	bh=6nyCOtm2l09SfmiZT4NUk8JFQfZqFoFMPWYk6O3IZv8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qHh1pAKsUs4sJCIFmosz/mYK+3pbl0Wb3R7KcFViFJTWSZjR6TGL60rBrHfP4RNVk
-	 kVE5RzcWRe7+fLCiRUIxO2ioMVm8lc3MojxYwjz5ky+uu3vgDH4MyUh9/G/o+CNgDS
-	 a84gmEMWNkLwXl1W0+rnjJK3tgp4Yc66D9nU/fWM=
+	b=1B7xjgC/jY+lCHBLfHXoK9SGRwPi21ftitp+t0PlN8aC3HXh+E0KM/kx+EzkWOrOV
+	 CvMKoybSEGeMTtG3BgH+fkM4iACf2GlyCjQbWLbx2g2Ocp3CLtVf06GAHMxNtVDwI4
+	 AFSkbzOKK4NOU972xjmOwRagZo0dNLgeB51SEXo0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ethan Nelson-Moore <enelsonmoore@gmail.com>,
-	Peter Korsgaard <peter@korsgaard.com>,
+	David Ahern <dsahern@kernel.org>,
+	Hangbin Liu <liuhangbin@gmail.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 049/161] net: usb: dm9601: remove broken SR9700 support
-Date: Wed,  4 Feb 2026 15:38:32 +0100
-Message-ID: <20260204143853.526525720@linuxfoundation.org>
+Subject: [PATCH 5.10 050/161] selftests/net: convert fib-onlink-tests.sh to run it in unique namespace
+Date: Wed,  4 Feb 2026 15:38:33 +0100
+Message-ID: <20260204143853.562371909@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260204143851.755002596@linuxfoundation.org>
 References: <20260204143851.755002596@linuxfoundation.org>
@@ -52,51 +52,81 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ethan Nelson-Moore <enelsonmoore@gmail.com>
+From: Hangbin Liu <liuhangbin@gmail.com>
 
-[ Upstream commit 7d7dbafefbe74f5a25efc4807af093b857a7612e ]
+[ Upstream commit 3a06833b2adc0a902f2469ad4ce41ccd64f1f3ab ]
 
-The SR9700 chip sends more than one packet in a USB transaction,
-like the DM962x chips can optionally do, but the dm9601 driver does not
-support this mode, and the hardware does not have the DM962x
-MODE_CTL register to disable it, so this driver drops packets on SR9700
-devices. The sr9700 driver correctly handles receiving more than one
-packet per transaction.
+Remove PEER_CMD, which is not used in this test
 
-While the dm9601 driver could be improved to handle this, the easiest
-way to fix this issue in the short term is to remove the SR9700 device
-ID from the dm9601 driver so the sr9700 driver is always used. This
-device ID should not have been in more than one driver to begin with.
+Here is the test result after conversion.
 
-The "Fixes" commit was chosen so that the patch is automatically
-included in all kernels that have the sr9700 driver, even though the
-issue affects dm9601.
+ ]# ./fib-onlink-tests.sh
+ Error: ipv4: FIB table does not exist.
+ Flush terminated
+ Error: ipv6: FIB table does not exist.
+ Flush terminated
 
-Fixes: c9b37458e956 ("USB2NET : SR9700 : One chip USB 1.1 USB2NET SR9700Device Driver Support")
-Signed-off-by: Ethan Nelson-Moore <enelsonmoore@gmail.com>
-Acked-by: Peter Korsgaard <peter@korsgaard.com>
-Link: https://patch.msgid.link/20260113063924.74464-1-enelsonmoore@gmail.com
+ ########################################
+ Configuring interfaces
+
+   ...
+
+     TEST: Gateway resolves to wrong nexthop device - VRF      [ OK ]
+
+ Tests passed:  38
+ Tests failed:   0
+
+Acked-by: David Ahern <dsahern@kernel.org>
+Signed-off-by: Hangbin Liu <liuhangbin@gmail.com>
+Link: https://lore.kernel.org/r/20231213060856.4030084-11-liuhangbin@gmail.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Stable-dep-of: 4f5f148dd7c0 ("selftests: net: fib-onlink-tests: Convert to use namespaces by default")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/usb/dm9601.c | 4 ----
- 1 file changed, 4 deletions(-)
+ tools/testing/selftests/net/fib-onlink-tests.sh | 9 +++------
+ 1 file changed, 3 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/net/usb/dm9601.c b/drivers/net/usb/dm9601.c
-index 9b7db5fd9e08f..287d54ada4714 100644
---- a/drivers/net/usb/dm9601.c
-+++ b/drivers/net/usb/dm9601.c
-@@ -602,10 +602,6 @@ static const struct usb_device_id products[] = {
- 	USB_DEVICE(0x0fe6, 0x8101),	/* DM9601 USB to Fast Ethernet Adapter */
- 	.driver_info = (unsigned long)&dm9601_info,
- 	 },
--	{
--	 USB_DEVICE(0x0fe6, 0x9700),	/* DM9601 USB to Fast Ethernet Adapter */
--	 .driver_info = (unsigned long)&dm9601_info,
--	 },
- 	{
- 	 USB_DEVICE(0x0a46, 0x9000),	/* DM9000E */
- 	 .driver_info = (unsigned long)&dm9601_info,
+diff --git a/tools/testing/selftests/net/fib-onlink-tests.sh b/tools/testing/selftests/net/fib-onlink-tests.sh
+index c287b90b8af80..ec2d6ceb1f08d 100755
+--- a/tools/testing/selftests/net/fib-onlink-tests.sh
++++ b/tools/testing/selftests/net/fib-onlink-tests.sh
+@@ -3,6 +3,7 @@
+ 
+ # IPv4 and IPv6 onlink tests
+ 
++source lib.sh
+ PAUSE_ON_FAIL=${PAUSE_ON_FAIL:=no}
+ VERBOSE=0
+ 
+@@ -74,9 +75,6 @@ TEST_NET4IN6[2]=10.2.1.254
+ # mcast address
+ MCAST6=ff02::1
+ 
+-
+-PEER_NS=bart
+-PEER_CMD="ip netns exec ${PEER_NS}"
+ VRF=lisa
+ VRF_TABLE=1101
+ PBR_TABLE=101
+@@ -176,8 +174,7 @@ setup()
+ 	set -e
+ 
+ 	# create namespace
+-	ip netns add ${PEER_NS}
+-	ip -netns ${PEER_NS} li set lo up
++	setup_ns PEER_NS
+ 
+ 	# add vrf table
+ 	ip li add ${VRF} type vrf table ${VRF_TABLE}
+@@ -219,7 +216,7 @@ setup()
+ cleanup()
+ {
+ 	# make sure we start from a clean slate
+-	ip netns del ${PEER_NS} 2>/dev/null
++	cleanup_ns ${PEER_NS} 2>/dev/null
+ 	for n in 1 3 5 7; do
+ 		ip link del ${NETIFS[p${n}]} 2>/dev/null
+ 	done
 -- 
 2.51.0
 
