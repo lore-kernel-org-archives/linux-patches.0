@@ -1,38 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7723241C309;
-	Wed,  4 Feb 2026 15:25:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1295A3D994;
+	Wed,  4 Feb 2026 15:25:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770218737; cv=none; b=WfLi3h1FopTFRiQDDEwN11HQ81rzt2n6rmknrfA66iVR9e4KeHO7eeu7K5IDa/DD6zgpONh3HWAv/zZ78Kx2t6N4RYm0jR0KVoWKw4jPXeQ4nuGqolAf9Qa3JQZe0D99JmK4rz9hGnT6iu8xipGrv0AyiJ+7R0fNP70vzLD7b5g=
+	t=1770218741; cv=none; b=F/EMg5x3ItQM+kP2/YzZ8z8mZuZ9M+Wbsh3E+80grmKRO73XQJ5X6Z7czoaU7w2IE5ISNmoKhUPHlojmXorkopFdRCQocvzM/V4tw8agmnaRtlPa4V1nzPoqMgoMMXeAmRspNNVH5N+XkaJ+P27DqlvsSF51iQybMlMdonfcBds=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770218737; c=relaxed/simple;
-	bh=IbopASy/KkGpKHzXtlkKLg/cTtQEkEQSkAO4oETwdeM=;
+	s=arc-20240116; t=1770218741; c=relaxed/simple;
+	bh=OXoCMu3ON9hTMBJcXPwdnsBoTa4GrppF81mVktQFAEg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Hp5LM0GRwBi3CjbKY8QK/MZnDh/85kkGELLCiKaiKTFaY20klNAyM6NqrgE3t8aArflzBMr06OY4j5nAsZJEDjdlNDMX1jt0ZuuH05/XKublaakGPI/wKzj1nJtqTY6Cvy/rjroKsXGivmu9ncRPF6QP2LkhM0QIiiF00QXbDgQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Eh/Gaa5R; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=JXfaPj13vUArz5sQUr771UtwXTWqZflXNvq/1Y+3JKMYKv7fOCHJXUNXcNqJu6FI7hzYo9h+Rtt6O08UjOTNiKmeJU6Opdt8cT0d4Y2P7tsX2quMemjaMwPLlND3PTxuNeibwOHxJ5WaAN4gcPcbylGzF1tovRZL7ajCANKtkOE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hxqKrwr2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Eh/Gaa5R"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DDE3AC4CEF7;
-	Wed,  4 Feb 2026 15:25:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hxqKrwr2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45F70C4CEF7;
+	Wed,  4 Feb 2026 15:25:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770218737;
-	bh=IbopASy/KkGpKHzXtlkKLg/cTtQEkEQSkAO4oETwdeM=;
+	s=korg; t=1770218741;
+	bh=OXoCMu3ON9hTMBJcXPwdnsBoTa4GrppF81mVktQFAEg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Eh/Gaa5R57b4o7TCCL4630cHF2bnG3ayYlBzP79jpBKDq+3tmX34R56fZfUNVQwvl
-	 tSalG9ahgFKPCoN0nSjhUaO0wsvolyjH/VK/dK6J/tkXNvQwYbo+At2c9ywnOAoiwo
-	 w6YaPUXXEB0MoNmlBvHX4hGCW5jrLxENrl5UqXcQ=
+	b=hxqKrwr2mF3m05pWa9uWAuIxePt3rf6aZMuhn0erDcFxLM37aP6TK1ep4gKx+rFmP
+	 034zoy7i7QsE8Yh+AHWer7YVcS1+pcovi5/LzirBTBooaIcelS9KkbrQ687S7Nw3/e
+	 tuhQhNZ4q7b+RPJkOaKS9E4YWn+URZGCNSAVeGxM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Heiko Stuebner <heiko@sntech.de>,
-	Robin Murphy <robin.murphy@arm.com>,
-	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
-Subject: [PATCH 6.12 45/87] gpio: rockchip: Stop calling pinctrl for set_direction
-Date: Wed,  4 Feb 2026 15:40:43 +0100
-Message-ID: <20260204143848.536194801@linuxfoundation.org>
+	Andrey Ryabinin <ryabinin.a.a@gmail.com>,
+	=?UTF-8?q?Maciej=20=C5=BBenczykowski?= <maze@google.com>,
+	joonki.min@samsung-slsi.corp-partner.google.com,
+	Andrey Konovalov <andreyknvl@gmail.com>,
+	Maciej Wieczor-Retman <maciej.wieczor-retman@intel.com>,
+	Alexander Potapenko <glider@google.com>,
+	Dmitriy Vyukov <dvyukov@google.com>,
+	Uladzislau Rezki <urezki@gmail.com>,
+	Vincenzo Frascino <vincenzo.frascino@arm.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.12 46/87] mm/kasan: fix KASAN poisoning in vrealloc()
+Date: Wed,  4 Feb 2026 15:40:44 +0100
+Message-ID: <20260204143848.572525337@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260204143846.906385641@linuxfoundation.org>
 References: <20260204143846.906385641@linuxfoundation.org>
@@ -45,95 +52,153 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Robin Murphy <robin.murphy@arm.com>
+From: Andrey Ryabinin <ryabinin.a.a@gmail.com>
 
-commit 7ca497be00163610afb663867db24ac408752f13 upstream.
+commit 9b47d4eea3f7c1f620e95bda1d6221660bde7d7b upstream.
 
-Marking the whole controller as sleeping due to the pinctrl calls in the
-.direction_{input,output} callbacks has the unfortunate side effect that
-legitimate invocations of .get and .set, which cannot themselves sleep,
-in atomic context now spew WARN()s from gpiolib.
+A KASAN warning can be triggered when vrealloc() changes the requested
+size to a value that is not aligned to KASAN_GRANULE_SIZE.
 
-However, as Heiko points out, the driver doing this is a bit silly to
-begin with, as the pinctrl .gpio_set_direction hook doesn't even care
-about the direction, the hook is only used to claim the mux. And sure
-enough, the .gpio_request_enable hook exists to serve this very purpose,
-so switch to that and remove the problematic business entirely.
+    ------------[ cut here ]------------
+    WARNING: CPU: 2 PID: 1 at mm/kasan/shadow.c:174 kasan_unpoison+0x40/0x48
+    ...
+    pc : kasan_unpoison+0x40/0x48
+    lr : __kasan_unpoison_vmalloc+0x40/0x68
+    Call trace:
+     kasan_unpoison+0x40/0x48 (P)
+     vrealloc_node_align_noprof+0x200/0x320
+     bpf_patch_insn_data+0x90/0x2f0
+     convert_ctx_accesses+0x8c0/0x1158
+     bpf_check+0x1488/0x1900
+     bpf_prog_load+0xd20/0x1258
+     __sys_bpf+0x96c/0xdf0
+     __arm64_sys_bpf+0x50/0xa0
+     invoke_syscall+0x90/0x160
 
-Cc: stable@vger.kernel.org
-Fixes: 20cf2aed89ac ("gpio: rockchip: mark the GPIO controller as sleeping")
-Suggested-by: Heiko Stuebner <heiko@sntech.de>
-Signed-off-by: Robin Murphy <robin.murphy@arm.com>
-Reviewed-by: Heiko Stuebner <heiko@sntech.de>
-Link: https://lore.kernel.org/r/bddc0469f25843ca5ae0cf578ab3671435ae98a7.1769429546.git.robin.murphy@arm.com
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+Introduce a dedicated kasan_vrealloc() helper that centralizes KASAN
+handling for vmalloc reallocations.  The helper accounts for KASAN granule
+alignment when growing or shrinking an allocation and ensures that partial
+granules are handled correctly.
+
+Use this helper from vrealloc_node_align_noprof() to fix poisoning logic.
+
+[ryabinin.a.a@gmail.com: move kasan_enabled() check, fix build]
+  Link: https://lkml.kernel.org/r/20260119144509.32767-1-ryabinin.a.a@gmail.com
+Link: https://lkml.kernel.org/r/20260113191516.31015-1-ryabinin.a.a@gmail.com
+Fixes: d699440f58ce ("mm: fix vrealloc()'s KASAN poisoning logic")
+Signed-off-by: Andrey Ryabinin <ryabinin.a.a@gmail.com>
+Reported-by: Maciej Żenczykowski <maze@google.com>
+Reported-by: <joonki.min@samsung-slsi.corp-partner.google.com>
+Closes: https://lkml.kernel.org/r/CANP3RGeuRW53vukDy7WDO3FiVgu34-xVJYkfpm08oLO3odYFrA@mail.gmail.com
+Reviewed-by: Andrey Konovalov <andreyknvl@gmail.com>
+Tested-by: Maciej Wieczor-Retman <maciej.wieczor-retman@intel.com>
+Cc: Alexander Potapenko <glider@google.com>
+Cc: Dmitriy Vyukov <dvyukov@google.com>
+Cc: Dmitry Vyukov <dvyukov@google.com>
+Cc: Uladzislau Rezki <urezki@gmail.com>
+Cc: Vincenzo Frascino <vincenzo.frascino@arm.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpio/gpio-rockchip.c       |    8 --------
- drivers/pinctrl/pinctrl-rockchip.c |    9 ++++-----
- 2 files changed, 4 insertions(+), 13 deletions(-)
+ include/linux/kasan.h |   14 ++++++++++++++
+ mm/kasan/common.c     |   21 +++++++++++++++++++++
+ mm/vmalloc.c          |    7 ++-----
+ 3 files changed, 37 insertions(+), 5 deletions(-)
 
---- a/drivers/gpio/gpio-rockchip.c
-+++ b/drivers/gpio/gpio-rockchip.c
-@@ -18,7 +18,6 @@
- #include <linux/of.h>
- #include <linux/of_address.h>
- #include <linux/of_irq.h>
--#include <linux/pinctrl/consumer.h>
- #include <linux/pinctrl/pinconf-generic.h>
- #include <linux/platform_device.h>
- #include <linux/regmap.h>
-@@ -157,12 +156,6 @@ static int rockchip_gpio_set_direction(s
- 	unsigned long flags;
- 	u32 data = input ? 0 : 1;
- 
--
--	if (input)
--		pinctrl_gpio_direction_input(chip, offset);
--	else
--		pinctrl_gpio_direction_output(chip, offset);
--
- 	raw_spin_lock_irqsave(&bank->slock, flags);
- 	rockchip_gpio_writel_bit(bank, offset, data, bank->gpio_regs->port_ddr);
- 	raw_spin_unlock_irqrestore(&bank->slock, flags);
-@@ -584,7 +577,6 @@ static int rockchip_gpiolib_register(str
- 	gc->ngpio = bank->nr_pins;
- 	gc->label = bank->name;
- 	gc->parent = bank->dev;
--	gc->can_sleep = true;
- 
- 	ret = gpiochip_add_data(gc, bank);
- 	if (ret) {
---- a/drivers/pinctrl/pinctrl-rockchip.c
-+++ b/drivers/pinctrl/pinctrl-rockchip.c
-@@ -2922,10 +2922,9 @@ static int rockchip_pmx_set(struct pinct
- 	return 0;
+--- a/include/linux/kasan.h
++++ b/include/linux/kasan.h
+@@ -618,6 +618,17 @@ kasan_unpoison_vmap_areas(struct vm_stru
+ 		__kasan_unpoison_vmap_areas(vms, nr_vms, flags);
  }
  
--static int rockchip_pmx_gpio_set_direction(struct pinctrl_dev *pctldev,
--					   struct pinctrl_gpio_range *range,
--					   unsigned offset,
--					   bool input)
-+static int rockchip_pmx_gpio_request_enable(struct pinctrl_dev *pctldev,
-+					    struct pinctrl_gpio_range *range,
-+					    unsigned int offset)
- {
- 	struct rockchip_pinctrl *info = pinctrl_dev_get_drvdata(pctldev);
- 	struct rockchip_pin_bank *bank;
-@@ -2939,7 +2938,7 @@ static const struct pinmux_ops rockchip_
- 	.get_function_name	= rockchip_pmx_get_func_name,
- 	.get_function_groups	= rockchip_pmx_get_groups,
- 	.set_mux		= rockchip_pmx_set,
--	.gpio_set_direction	= rockchip_pmx_gpio_set_direction,
-+	.gpio_request_enable	= rockchip_pmx_gpio_request_enable,
- };
++void __kasan_vrealloc(const void *start, unsigned long old_size,
++		unsigned long new_size);
++
++static __always_inline void kasan_vrealloc(const void *start,
++					unsigned long old_size,
++					unsigned long new_size)
++{
++	if (kasan_enabled())
++		__kasan_vrealloc(start, old_size, new_size);
++}
++
+ #else /* CONFIG_KASAN_VMALLOC */
  
- /*
+ static inline void kasan_populate_early_vm_area_shadow(void *start,
+@@ -647,6 +658,9 @@ kasan_unpoison_vmap_areas(struct vm_stru
+ 			  kasan_vmalloc_flags_t flags)
+ { }
+ 
++static inline void kasan_vrealloc(const void *start, unsigned long old_size,
++				unsigned long new_size) { }
++
+ #endif /* CONFIG_KASAN_VMALLOC */
+ 
+ #if (defined(CONFIG_KASAN_GENERIC) || defined(CONFIG_KASAN_SW_TAGS)) && \
+--- a/mm/kasan/common.c
++++ b/mm/kasan/common.c
+@@ -590,4 +590,25 @@ void __kasan_unpoison_vmap_areas(struct
+ 			__kasan_unpoison_vmalloc(addr, size, flags | KASAN_VMALLOC_KEEP_TAG);
+ 	}
+ }
++
++void __kasan_vrealloc(const void *addr, unsigned long old_size,
++		unsigned long new_size)
++{
++	if (new_size < old_size) {
++		kasan_poison_last_granule(addr, new_size);
++
++		new_size = round_up(new_size, KASAN_GRANULE_SIZE);
++		old_size = round_up(old_size, KASAN_GRANULE_SIZE);
++		if (new_size < old_size)
++			__kasan_poison_vmalloc(addr + new_size,
++					old_size - new_size);
++	} else if (new_size > old_size) {
++		old_size = round_down(old_size, KASAN_GRANULE_SIZE);
++		__kasan_unpoison_vmalloc(addr + old_size,
++					new_size - old_size,
++					KASAN_VMALLOC_PROT_NORMAL |
++					KASAN_VMALLOC_VM_ALLOC |
++					KASAN_VMALLOC_KEEP_TAG);
++	}
++}
+ #endif
+--- a/mm/vmalloc.c
++++ b/mm/vmalloc.c
+@@ -4109,7 +4109,7 @@ void *vrealloc_noprof(const void *p, siz
+ 		if (want_init_on_free() || want_init_on_alloc(flags))
+ 			memset((void *)p + size, 0, old_size - size);
+ 		vm->requested_size = size;
+-		kasan_poison_vmalloc(p + size, old_size - size);
++		kasan_vrealloc(p, old_size, size);
+ 		return (void *)p;
+ 	}
+ 
+@@ -4117,16 +4117,13 @@ void *vrealloc_noprof(const void *p, siz
+ 	 * We already have the bytes available in the allocation; use them.
+ 	 */
+ 	if (size <= alloced_size) {
+-		kasan_unpoison_vmalloc(p + old_size, size - old_size,
+-				       KASAN_VMALLOC_PROT_NORMAL |
+-				       KASAN_VMALLOC_VM_ALLOC |
+-				       KASAN_VMALLOC_KEEP_TAG);
+ 		/*
+ 		 * No need to zero memory here, as unused memory will have
+ 		 * already been zeroed at initial allocation time or during
+ 		 * realloc shrink time.
+ 		 */
+ 		vm->requested_size = size;
++		kasan_vrealloc(p, old_size, size);
+ 		return (void *)p;
+ 	}
+ 
 
 
