@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF4B219E96D;
-	Wed,  4 Feb 2026 15:31:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C22119E96D;
+	Wed,  4 Feb 2026 15:31:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770219091; cv=none; b=pfjJJZzClFZvH0xxvu+w2GatYcGAnwygtZqxtQYViVz9HlSlT2hh8rpST/Gtn7nMUfl2O8Y9j+h4NYjz6Gj0LdHOPugxQae+HotCMjuQo0EuckcLnqIULjmES9Qck3frxqyU6In1EzkUhnGLA8bhqPTnoar7L4wTTAVQ4DucTOQ=
+	t=1770219094; cv=none; b=XmwIL+uChTzNiq0pWgr+bKbAcckmefpe7Xo6IiGXmgZn2utevAi9EKGkVdbIvEk/z6/5YxLhWNe/jU0qCD1TrLp1skUTmRNup9A1W+vHC3KE8B40sXSPlkmvJTL53Q8a+m1NzG8F6xjJGvMTnlsT73Bn3/EwnHu9T5oAfxtBVFU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770219091; c=relaxed/simple;
-	bh=L9YCclQGQmuLi2eND9meB35oRSCLXh9bd4iPVwpTrls=;
+	s=arc-20240116; t=1770219094; c=relaxed/simple;
+	bh=c/rGjpTeNjUHdADV+hkSZga5aYWwIfmFnVCsykUceBs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WuE34ZutcakfX4eArnn4tNuHVc+E4HKcmzTnUO23mUmj6OyjSfdVdT9QXe67miRCOQ1a1pcXDoFHVRSLC4kq+WM43xQ0jlyXRWIvvgruj93ysXmvMw0wUAqIa6zIFwQ3S1rwy0ZUCN8D6qbn7tPPAQtnupGuNuZ85DD+hG95WGw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WNVjGdzW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VF2Umb+EOEZ91ZZOzxL2U856gv/+/G1PCxXNm4rEuLReNfe5xlQW4rpx/eTuJ59IVBcMLwSANsMxd+Cc/oprStAZ6/9Zdoi2E5WOCsg0CSHgBYpGbBnRt+RQ8UOr/ejBgSJS4HiebzrkZi7UPb/YF1XySA86jYGNej5kHsQMeFo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1RB7Rh0C; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WNVjGdzW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E4C3C4CEF7;
-	Wed,  4 Feb 2026 15:31:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1RB7Rh0C"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A54FCC4CEF7;
+	Wed,  4 Feb 2026 15:31:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770219090;
-	bh=L9YCclQGQmuLi2eND9meB35oRSCLXh9bd4iPVwpTrls=;
+	s=korg; t=1770219094;
+	bh=c/rGjpTeNjUHdADV+hkSZga5aYWwIfmFnVCsykUceBs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WNVjGdzWJOpu9Bvg6aBqPMacsox/wOitBNW03VtLheSEoIbVRCkakNXO319n++lB0
-	 z9LE4+0T8vm8ji+JFoMZ0OSqPh7Whsn71Ob0hPF9Pl8UDueE84HmITm8XTYSKinyxY
-	 9WJI6cXgb6MN1oECbUx1YpN3xuphPck4XJtDuqaQ=
+	b=1RB7Rh0Cb22crWgebC+VB0uZya4bhApjxgOFjeh0F44RFWL8yLfxbyMy5sFCSfoSU
+	 Ejv7sGw2HAdC9vbZU0fKPYo44IlUpCGeEdeAHwRjREdn2NBY7Itzhn4d82JZw8F7Ck
+	 Qivd3z4exsOvMT4mge9ws30TkoxwLABV7inTxFUY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kohei Enju <enjuk@amazon.com>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Juri Lelli <juri.lelli@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 021/122] ixgbe: fix memory leaks in the ixgbe_recovery_probe() path
-Date: Wed,  4 Feb 2026 15:40:03 +0100
-Message-ID: <20260204143852.628766341@linuxfoundation.org>
+Subject: [PATCH 6.18 058/122] sched/deadline: Fix stuck dl_server
+Date: Wed,  4 Feb 2026 15:40:40 +0100
+Message-ID: <20260204143853.943285093@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260204143851.857060534@linuxfoundation.org>
 References: <20260204143851.857060534@linuxfoundation.org>
@@ -51,85 +51,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kohei Enju <enjuk@amazon.com>
+From: Peter Zijlstra <peterz@infradead.org>
 
-[ Upstream commit 638344712aefeba97b6e0d90f560815fd88abd0f ]
+[ Upstream commit 115135422562e2f791e98a6f55ec57b2da3b3a95 ]
 
-When ixgbe_recovery_probe() is invoked and this function fails,
-allocated resources in advance are not completely freed, because
-ixgbe_probe() returns ixgbe_recovery_probe() directly and
-ixgbe_recovery_probe() only frees partial resources, resulting in memory
-leaks including:
-- adapter->io_addr
-- adapter->jump_tables[0]
-- adapter->mac_table
-- adapter->rss_key
-- adapter->af_xdp_zc_qps
+Andrea reported the dl_server getting stuck for him. He tracked it
+down to a state where dl_server_start() saw dl_defer_running==1, but
+the dl_server's job is no longer valid at the time of
+dl_server_start().
 
-The leaked MMIO region can be observed in /proc/vmallocinfo, and the
-remaining leaks are reported by kmemleak.
+In the state diagram this corresponds to [4] D->A (or dl_server_stop()
+due to no more runnable tasks) followed by [1], which in case of a
+lapsed deadline must then be A->B.
 
-Don't return ixgbe_recovery_probe() directly, and instead let
-ixgbe_probe() to clean up resources on failures.
+Now our A has dl_defer_running==1, while B demands
+dl_defer_running==0, therefore it must get cleared when the CBS wakeup
+rules demand a replenish.
 
-Fixes: 29cb3b8d95c7 ("ixgbe: add E610 implementation of FW recovery mode")
-Signed-off-by: Kohei Enju <enjuk@amazon.com>
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+Fixes: a110a81c52a9 ("sched/deadline: Deferrable dl server")
+Reported-by: Andrea Righi arighi@nvidia.com
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Acked-by: Juri Lelli <juri.lelli@redhat.com>
+Tested-by: Andrea Righi arighi@nvidia.com
+Link: https://lkml.kernel.org/r/20260123161645.2181752-1-arighi@nvidia.com
+Link: https://patch.msgid.link/20260130124100.GC1079264@noisy.programming.kicks-ass.net
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/ixgbe/ixgbe_main.c | 20 ++++++++-----------
- 1 file changed, 8 insertions(+), 12 deletions(-)
+ kernel/sched/deadline.c | 12 ++++++++++++
+ 1 file changed, 12 insertions(+)
 
-diff --git a/drivers/net/ethernet/intel/ixgbe/ixgbe_main.c b/drivers/net/ethernet/intel/ixgbe/ixgbe_main.c
-index 3190ce7e44c74..ee1007e9b6355 100644
---- a/drivers/net/ethernet/intel/ixgbe/ixgbe_main.c
-+++ b/drivers/net/ethernet/intel/ixgbe/ixgbe_main.c
-@@ -11468,14 +11468,12 @@ static void ixgbe_set_fw_version(struct ixgbe_adapter *adapter)
-  */
- static int ixgbe_recovery_probe(struct ixgbe_adapter *adapter)
- {
--	struct net_device *netdev = adapter->netdev;
- 	struct pci_dev *pdev = adapter->pdev;
- 	struct ixgbe_hw *hw = &adapter->hw;
--	bool disable_dev;
- 	int err = -EIO;
+diff --git a/kernel/sched/deadline.c b/kernel/sched/deadline.c
+index 6bfffb244162f..c7a8717e837dd 100644
+--- a/kernel/sched/deadline.c
++++ b/kernel/sched/deadline.c
+@@ -1043,6 +1043,12 @@ static void update_dl_entity(struct sched_dl_entity *dl_se)
+ 			return;
+ 		}
  
- 	if (hw->mac.type != ixgbe_mac_e610)
--		goto clean_up_probe;
-+		return err;
- 
- 	ixgbe_get_hw_control(adapter);
- 	mutex_init(&hw->aci.lock);
-@@ -11507,13 +11505,6 @@ static int ixgbe_recovery_probe(struct ixgbe_adapter *adapter)
- shutdown_aci:
- 	mutex_destroy(&adapter->hw.aci.lock);
- 	ixgbe_release_hw_control(adapter);
--clean_up_probe:
--	disable_dev = !test_and_set_bit(__IXGBE_DISABLED, &adapter->state);
--	free_netdev(netdev);
--	devlink_free(adapter->devlink);
--	pci_release_mem_regions(pdev);
--	if (disable_dev)
--		pci_disable_device(pdev);
- 	return err;
- }
- 
-@@ -11655,8 +11646,13 @@ static int ixgbe_probe(struct pci_dev *pdev, const struct pci_device_id *ent)
- 	if (err)
- 		goto err_sw_init;
- 
--	if (ixgbe_check_fw_error(adapter))
--		return ixgbe_recovery_probe(adapter);
-+	if (ixgbe_check_fw_error(adapter)) {
-+		err = ixgbe_recovery_probe(adapter);
-+		if (err)
-+			goto err_sw_init;
-+
-+		return 0;
-+	}
- 
- 	if (adapter->hw.mac.type == ixgbe_mac_e610) {
- 		err = ixgbe_get_caps(&adapter->hw);
++		/*
++		 * When [4] D->A is followed by [1] A->B, dl_defer_running
++		 * needs to be cleared, otherwise it will fail to properly
++		 * start the zero-laxity timer.
++		 */
++		dl_se->dl_defer_running = 0;
+ 		replenish_dl_new_period(dl_se, rq);
+ 	} else if (dl_server(dl_se) && dl_se->dl_defer) {
+ 		/*
+@@ -1641,6 +1647,12 @@ void dl_server_update(struct sched_dl_entity *dl_se, s64 delta_exec)
+  *   dl_server_active = 1;
+  *   enqueue_dl_entity()
+  *     update_dl_entity(WAKEUP)
++ *       if (dl_time_before() || dl_entity_overflow())
++ *         dl_defer_running = 0;
++ *         replenish_dl_new_period();
++ *           // fwd period
++ *           dl_throttled = 1;
++ *           dl_defer_armed = 1;
+  *       if (!dl_defer_running)
+  *         dl_defer_armed = 1;
+  *         dl_throttled = 1;
 -- 
 2.51.0
 
