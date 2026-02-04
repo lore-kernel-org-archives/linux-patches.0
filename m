@@ -1,42 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8CEB6421EFB;
-	Wed,  4 Feb 2026 15:22:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBC2F421EFB;
+	Wed,  4 Feb 2026 15:22:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770218532; cv=none; b=jFtjdhWCE03lprpEBMtfzm6rciT0nLZK0QwR+E6cG9wbUODaCg2MNkdtLYE2CcGS+sVV1WN7PvnAWdkUraJ2OtSNdYU/L/L3rWAHFDoSrDre6zdy+hJqSrkbQuO9fFyf3vGmqobhNMT2fg5R7+avbsTpux4dgcNeQwSofJYt3F0=
+	t=1770218535; cv=none; b=pUR/goO1Nrg1KLVVQUgFsfQOm9ItCNYlP7sUSIh+iNI1g5k3vY6vhmORM8s3QsXZVyClkpD36EGMEysK+FBLIIeilqW3CPQB22g4mVDpmqltPAC89F8a/gHIzuzqUjBhbeg6O8qsU3obhEjqS31aMbt//P4a5nXcM1bcvLmRepk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770218532; c=relaxed/simple;
-	bh=T6el6Uq49yMETOc3raVfkylQSQUVWULO5Ael7Nq03BY=;
+	s=arc-20240116; t=1770218535; c=relaxed/simple;
+	bh=4Qd9XWTPnhfXz4LNinZy70SKUiJwXABqZMlfbjNEewo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qEch4eJgKuzYhn+LhtiSJhCtcdkVfb7R2Vs22dtrmi/LlG/nOyz+hFjlSgBxxXmB1PCV8DqOEtl4k2JVio+s3vYhX996DtKfIHgOXaRk6Ncb/ZWshSEkrpagh4KFlOcuHSvGycWlXamDwp0I5Kuz3WgWcwA9hri67U3z1MSbLCQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iQWGTLfX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SIg+8Zr92fQLNjVgkyqH14tvQ1thVWJJqxSWlvAkSlouHj9M7zg4ZgEML1V+7Sdbrio6K1i8N8n/8p00cqc/g0wJ+ycP2H5l/8ht/+4BPnX8zPHPsEuzdlaeAVfi5DqiTK9HqNtlZLQRnyvWGuKXgezjAZ+nVunTtzs6uOlRFLA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UoiNkBDl; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iQWGTLfX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 19E8CC4CEF7;
-	Wed,  4 Feb 2026 15:22:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UoiNkBDl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 43431C4CEF7;
+	Wed,  4 Feb 2026 15:22:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770218532;
-	bh=T6el6Uq49yMETOc3raVfkylQSQUVWULO5Ael7Nq03BY=;
+	s=korg; t=1770218535;
+	bh=4Qd9XWTPnhfXz4LNinZy70SKUiJwXABqZMlfbjNEewo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iQWGTLfXuV1m/9+IbPHzy6aRMh7ZmTMzgZeye+kRBxagQeKWQQOMomJNgKHNs65QB
-	 hAWn+0sqsHi746R4OT91DIAijkFc+iSJnVUe5NauvyQa8BqA76t3swBgjSbsk/+SX1
-	 JpS6cojlIoNW/E/rUy7804h98F6jzyQJvDCx714M=
+	b=UoiNkBDldcT75pFOkJtIzbF4wwjXnwI/yDO8zfQ2XzSnb6oh29OcaexR4UmUBcF2z
+	 qV+1tC2QS6k+f+InBbDJ9qo7IV9gQQR+ofP7GIYLz6YwODZszkvH0nEwLnaS7n5cW6
+	 AeCEZUld891oZLL0r85nFb6VB8g0m4Bg0u4IxF24=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konradybcio@kernel.org>,
-	Johan Hovold <johan@kernel.org>,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	Akhil P Oommen <akhilpo@oss.qualcomm.com>,
-	Rob Clark <robin.clark@oss.qualcomm.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 59/72] drm/msm/a6xx: fix bogus hwcg register updates
-Date: Wed,  4 Feb 2026 15:41:02 +0100
-Message-ID: <20260204143847.772497993@linuxfoundation.org>
+	Heiko Stuebner <heiko@sntech.de>,
+	Robin Murphy <robin.murphy@arm.com>,
+	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+Subject: [PATCH 6.6 42/72] gpio: rockchip: Stop calling pinctrl for set_direction
+Date: Wed,  4 Feb 2026 15:40:45 +0100
+Message-ID: <20260204143847.153630105@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260204143845.603454952@linuxfoundation.org>
 References: <20260204143845.603454952@linuxfoundation.org>
@@ -55,53 +51,91 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johan Hovold <johan@kernel.org>
+From: Robin Murphy <robin.murphy@arm.com>
 
-[ Upstream commit dedb897f11c5d7e32c0e0a0eff7cec23a8047167 ]
+commit 7ca497be00163610afb663867db24ac408752f13 upstream.
 
-The hw clock gating register sequence consists of register value pairs
-that are written to the GPU during initialisation.
+Marking the whole controller as sleeping due to the pinctrl calls in the
+.direction_{input,output} callbacks has the unfortunate side effect that
+legitimate invocations of .get and .set, which cannot themselves sleep,
+in atomic context now spew WARN()s from gpiolib.
 
-The a690 hwcg sequence has two GMU registers in it that used to amount
-to random writes in the GPU mapping, but since commit 188db3d7fe66
-("drm/msm/a6xx: Rebase GMU register offsets") they trigger a fault as
-the updated offsets now lie outside the mapping. This in turn breaks
-boot of machines like the Lenovo ThinkPad X13s.
+However, as Heiko points out, the driver doing this is a bit silly to
+begin with, as the pinctrl .gpio_set_direction hook doesn't even care
+about the direction, the hook is only used to claim the mux. And sure
+enough, the .gpio_request_enable hook exists to serve this very purpose,
+so switch to that and remove the problematic business entirely.
 
-Note that the updates of these GMU registers is already taken care of
-properly since commit 40c297eb245b ("drm/msm/a6xx: Set GMU CGC
-properties on a6xx too"), but for some reason these two entries were
-left in the table.
-
-Fixes: 5e7665b5e484 ("drm/msm/adreno: Add Adreno A690 support")
-Cc: stable@vger.kernel.org	# 6.5
-Cc: Bjorn Andersson <andersson@kernel.org>
-Cc: Konrad Dybcio <konradybcio@kernel.org>
-Signed-off-by: Johan Hovold <johan@kernel.org>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Reviewed-by: Akhil P Oommen <akhilpo@oss.qualcomm.com>
-Fixes: 188db3d7fe66 ("drm/msm/a6xx: Rebase GMU register offsets")
-Patchwork: https://patchwork.freedesktop.org/patch/695778/
-Message-ID: <20251221164552.19990-1-johan@kernel.org>
-Signed-off-by: Rob Clark <robin.clark@oss.qualcomm.com>
-(cherry picked from commit dcbd2f8280eea2c965453ed8c3c69d6f121e950b)
-[ Applied fix to a6xx_gpu.c instead of a6xx_catalog.c ]
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Cc: stable@vger.kernel.org
+Fixes: 20cf2aed89ac ("gpio: rockchip: mark the GPIO controller as sleeping")
+Suggested-by: Heiko Stuebner <heiko@sntech.de>
+Signed-off-by: Robin Murphy <robin.murphy@arm.com>
+Reviewed-by: Heiko Stuebner <heiko@sntech.de>
+Link: https://lore.kernel.org/r/bddc0469f25843ca5ae0cf578ab3671435ae98a7.1769429546.git.robin.murphy@arm.com
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+[ Backport past pinctrl API change for the deleted calls ]
+Signed-off-by: Robin Murphy <robin.murphy@arm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/msm/adreno/a6xx_gpu.c |    2 --
- 1 file changed, 2 deletions(-)
+ drivers/gpio/gpio-rockchip.c       |    8 --------
+ drivers/pinctrl/pinctrl-rockchip.c |    9 ++++-----
+ 2 files changed, 4 insertions(+), 13 deletions(-)
 
---- a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-+++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-@@ -690,8 +690,6 @@ const struct adreno_reglist a690_hwcg[]
- 	{REG_A6XX_RBBM_CLOCK_DELAY_GMU_GX, 0x00000111},
- 	{REG_A6XX_RBBM_CLOCK_HYST_GMU_GX, 0x00000555},
- 	{REG_A6XX_GPU_GMU_AO_GMU_CGC_MODE_CNTL, 0x20200},
--	{REG_A6XX_GPU_GMU_AO_GMU_CGC_DELAY_CNTL, 0x10111},
--	{REG_A6XX_GPU_GMU_AO_GMU_CGC_HYST_CNTL, 0x5555},
- 	{}
+--- a/drivers/gpio/gpio-rockchip.c
++++ b/drivers/gpio/gpio-rockchip.c
+@@ -18,7 +18,6 @@
+ #include <linux/of.h>
+ #include <linux/of_address.h>
+ #include <linux/of_irq.h>
+-#include <linux/pinctrl/consumer.h>
+ #include <linux/pinctrl/pinconf-generic.h>
+ #include <linux/platform_device.h>
+ #include <linux/regmap.h>
+@@ -157,12 +156,6 @@ static int rockchip_gpio_set_direction(s
+ 	unsigned long flags;
+ 	u32 data = input ? 0 : 1;
+ 
+-
+-	if (input)
+-		pinctrl_gpio_direction_input(bank->pin_base + offset);
+-	else
+-		pinctrl_gpio_direction_output(bank->pin_base + offset);
+-
+ 	raw_spin_lock_irqsave(&bank->slock, flags);
+ 	rockchip_gpio_writel_bit(bank, offset, data, bank->gpio_regs->port_ddr);
+ 	raw_spin_unlock_irqrestore(&bank->slock, flags);
+@@ -584,7 +577,6 @@ static int rockchip_gpiolib_register(str
+ 	gc->ngpio = bank->nr_pins;
+ 	gc->label = bank->name;
+ 	gc->parent = bank->dev;
+-	gc->can_sleep = true;
+ 
+ 	ret = gpiochip_add_data(gc, bank);
+ 	if (ret) {
+--- a/drivers/pinctrl/pinctrl-rockchip.c
++++ b/drivers/pinctrl/pinctrl-rockchip.c
+@@ -2749,10 +2749,9 @@ static int rockchip_pmx_set(struct pinct
+ 	return 0;
+ }
+ 
+-static int rockchip_pmx_gpio_set_direction(struct pinctrl_dev *pctldev,
+-					   struct pinctrl_gpio_range *range,
+-					   unsigned offset,
+-					   bool input)
++static int rockchip_pmx_gpio_request_enable(struct pinctrl_dev *pctldev,
++					    struct pinctrl_gpio_range *range,
++					    unsigned int offset)
+ {
+ 	struct rockchip_pinctrl *info = pinctrl_dev_get_drvdata(pctldev);
+ 	struct rockchip_pin_bank *bank;
+@@ -2766,7 +2765,7 @@ static const struct pinmux_ops rockchip_
+ 	.get_function_name	= rockchip_pmx_get_func_name,
+ 	.get_function_groups	= rockchip_pmx_get_groups,
+ 	.set_mux		= rockchip_pmx_set,
+-	.gpio_set_direction	= rockchip_pmx_gpio_set_direction,
++	.gpio_request_enable	= rockchip_pmx_gpio_request_enable,
  };
  
+ /*
 
 
