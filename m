@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11B27421890;
-	Wed,  4 Feb 2026 14:59:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55BC7421886;
+	Wed,  4 Feb 2026 14:59:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770217158; cv=none; b=E/GJWZgznbE4CdXcOIqqevf+7W451taLt9ZhsHiZ1+sOk19ttmJNmIMQlUIJTLMQVff4j7b8oXh7N8DH2hdm5SCyUebeINsOg6rq9M9VzcDgBmC4qkc2e0bMfvDt75ys2H6EF4J/kcJYv0Nul/Aky5fCx05o00oLE4SJjuhZqEg=
+	t=1770217161; cv=none; b=Q4b6bL+3NJFBglNyCOZOrDtztsn8xFDGisInmWN75cFKtjYvUXKfXb0UJhcwX0reAqKIoaNIsG8Nvan/yJtTN+R2b8JbY32JNal7oU6eCxl3GgUqG/H3+ZQG6MkQu3VN7lOGzWirsW0+Vl/MlxfKa+ebwyDtFUDqf26V3Dfh3fQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770217158; c=relaxed/simple;
-	bh=VMpboJwLIRmyD2GV3kNW3P+AIycb951z1/sueT8vRWs=;
+	s=arc-20240116; t=1770217161; c=relaxed/simple;
+	bh=T7r6a31771H4JaGSJYIENeOr8Y5cyDYEl7BGrBMXx+g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HQ8/qQhNhyZRLHRn9+9OJeAMelhXWkKRwLFQPxizTSN+AE/7X+jPHpJNxcdu4jKJ17KRvu/x57gerJ8UKt24w3VwdLVvisfK6cffUTq7dEDWUrlTPSb3YPyCnWgU9Oo47Mz2FYtLybidWnaiYxC6eFGL5QrWd2nKsxvCDWt828g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=n/U6Ply1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pUn4eJsx439n0/BYKrsOB7xBRtmzG1h51JgDpxCVv2NKsvaKN8UErsG+vh2UlNxo7yOp/1CivOxFRTO2uJBqb1QHRKIxRwMH8gSdsQMPUdLiN08Bx9Q6tkaakjpE46OtsQ8FNI+tjUpZ3ol6vYeOpe6n+HK6X38LmVbDseP8pF0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RqR5qkT1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="n/U6Ply1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 278D1C4CEF7;
-	Wed,  4 Feb 2026 14:59:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RqR5qkT1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 981A5C4CEF7;
+	Wed,  4 Feb 2026 14:59:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770217157;
-	bh=VMpboJwLIRmyD2GV3kNW3P+AIycb951z1/sueT8vRWs=;
+	s=korg; t=1770217161;
+	bh=T7r6a31771H4JaGSJYIENeOr8Y5cyDYEl7BGrBMXx+g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=n/U6Ply1FqwQYnmtAohNhj5vAOvgHfH7JIJGmTRiBrDIjuSBDsQDQ9izTE4fqQFr7
-	 3yOvjHRKuCv708LQqIWWEtFvuefeYVzWghNRmrgSe2XpSf/baeb0qWk36/cMzCO2hh
-	 E60vQAE0RJzj98Q6kZew68ioOJu5/EagzywRFtko=
+	b=RqR5qkT1EPkmSXQZ2HlJsuSDoFmbyggPBgX2II2xSoC++7+KNmlzyIkcLr6DWYJxC
+	 iH4Xfx6RbjxBcodX+TOjJhka7uzdztVRl6IVSGtVqu7TaBQoIvHEI892z7u66i0wCk
+	 QoCkHqjykWwXzUotSKcZRa4O19szmZZn4ovM3BoE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tony Nguyen <anthony.l.nguyen@intel.com>,
-	Jake Keller <jacob.e.keller@intel.com>,
-	IWL <intel-wired-lan@lists.osuosl.org>,
-	Jesse Brandeburg <jbrandeburg@cloudflare.com>,
+	Saeed Mahameed <saeedm@nvidia.com>,
+	Michael Guralnik <michaelgur@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 141/206] ice: stop counting UDP csum mismatch as rx_errors
-Date: Wed,  4 Feb 2026 15:39:32 +0100
-Message-ID: <20260204143903.284706192@linuxfoundation.org>
+Subject: [PATCH 5.15 142/206] net/mlx5: Add HW definitions of vport debug counters
+Date: Wed,  4 Feb 2026 15:39:33 +0100
+Message-ID: <20260204143903.319940898@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260204143858.193781818@linuxfoundation.org>
 References: <20260204143858.193781818@linuxfoundation.org>
@@ -53,60 +51,91 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jesse Brandeburg <jbrandeburg@cloudflare.com>
+From: Saeed Mahameed <saeedm@nvidia.com>
 
-[ Upstream commit 05faf2c0a76581d0a7fdbb8ec46477ba183df95b ]
+[ Upstream commit 3e94e61bd44d90070dcda53b647fdc826097ef26 ]
 
-Since the beginning, the Intel ice driver has counted receive checksum
-offload mismatches into the rx_errors member of the rtnl_link_stats64
-struct. In ethtool -S these show up as rx_csum_bad.nic.
+total_q_under_processor_handle - number of queues in error state due to an
+async error or errored command.
 
-I believe counting these in rx_errors is fundamentally wrong, as it's
-pretty clear from the comments in if_link.h and from every other statistic
-the driver is summing into rx_errors, that all of them would cause a
-"hardware drop" except for the UDP checksum mismatch, as well as the fact
-that all the other causes for rx_errors are L2 reasons, and this L4 UDP
-"mismatch" is an outlier.
+send_queue_priority_update_flow - number of QP/SQ priority/SL update
+events.
 
-A last nail in the coffin is that rx_errors is monitored in production and
-can indicate a bad NIC/cable/Switch port, but instead some random series of
-UDP packets with bad checksums will now trigger this alert. This false
-positive makes the alert useless and affects us as well as other companies.
+cq_overrun - number of times CQ entered an error state due to an
+overflow.
 
-This packet with presumably a bad UDP checksum is *already* passed to the
-stack, just not marked as offloaded by the hardware/driver. If it is
-dropped by the stack it will show up as UDP_MIB_CSUMERRORS.
+async_eq_overrun -number of time an EQ mapped to async events was
+overrun.
 
-And one more thing, none of the other Intel drivers, and at least bnxt_en
-and mlx5 both don't appear to count UDP offload mismatches as rx_errors.
+comp_eq_overrun - number of time an EQ mapped to completion events was
+overrun.
 
-Here is a related customer complaint:
-https://community.intel.com/t5/Ethernet-Products/ice-rx-errros-is-too-sensitive-to-IP-TCP-attack-packets-Intel/td-p/1662125
+quota_exceeded_command - number of commands issued and failed due to quota
+exceeded.
 
-Fixes: 4f1fe43c920b ("ice: Add more Rx errors to netdev's rx_error counter")
-Cc: Tony Nguyen <anthony.l.nguyen@intel.com>
-Cc: Jake Keller <jacob.e.keller@intel.com>
-Cc: IWL <intel-wired-lan@lists.osuosl.org>
-Signed-off-by: Jesse Brandeburg <jbrandeburg@cloudflare.com>
-Acked-by: Jacob Keller <jacob.e.keller@intel.com>
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+invalid_command - number of commands issued and failed dues to any reason
+other than quota exceeded.
+
+Signed-off-by: Saeed Mahameed <saeedm@nvidia.com>
+Signed-off-by: Michael Guralnik <michaelgur@nvidia.com>
+Signed-off-by: Saeed Mahameed <saeedm@nvidia.com>
+Stable-dep-of: 476681f10cc1 ("net/mlx5e: Account for netdev stats in ndo_get_stats64")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/ice/ice_main.c | 1 -
- 1 file changed, 1 deletion(-)
+ include/linux/mlx5/mlx5_ifc.h | 23 +++++++++++++++++++----
+ 1 file changed, 19 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/net/ethernet/intel/ice/ice_main.c b/drivers/net/ethernet/intel/ice/ice_main.c
-index 04e3f6c424c0c..db5319a8eb241 100644
---- a/drivers/net/ethernet/intel/ice/ice_main.c
-+++ b/drivers/net/ethernet/intel/ice/ice_main.c
-@@ -5841,7 +5841,6 @@ void ice_update_vsi_stats(struct ice_vsi *vsi)
- 				    pf->stats.illegal_bytes +
- 				    pf->stats.rx_len_errors +
- 				    pf->stats.rx_undersize +
--				    pf->hw_csum_rx_error +
- 				    pf->stats.rx_jabber +
- 				    pf->stats.rx_fragments +
- 				    pf->stats.rx_oversize;
+diff --git a/include/linux/mlx5/mlx5_ifc.h b/include/linux/mlx5/mlx5_ifc.h
+index d974c235ad8ee..c8489aeb74f7e 100644
+--- a/include/linux/mlx5/mlx5_ifc.h
++++ b/include/linux/mlx5/mlx5_ifc.h
+@@ -1384,7 +1384,8 @@ struct mlx5_ifc_cmd_hca_cap_bits {
+ 
+ 	u8         reserved_at_120[0xa];
+ 	u8         log_max_ra_req_dc[0x6];
+-	u8         reserved_at_130[0xa];
++	u8         reserved_at_130[0x9];
++	u8         vnic_env_cq_overrun[0x1];
+ 	u8         log_max_ra_res_dc[0x6];
+ 
+ 	u8         reserved_at_140[0x6];
+@@ -1579,7 +1580,11 @@ struct mlx5_ifc_cmd_hca_cap_bits {
+ 	u8         nic_receive_steering_discard[0x1];
+ 	u8         receive_discard_vport_down[0x1];
+ 	u8         transmit_discard_vport_down[0x1];
+-	u8         reserved_at_343[0x5];
++	u8         eq_overrun_count[0x1];
++	u8         reserved_at_344[0x1];
++	u8         invalid_command_count[0x1];
++	u8         quota_exceeded_count[0x1];
++	u8         reserved_at_347[0x1];
+ 	u8         log_max_flow_counter_bulk[0x8];
+ 	u8         max_flow_counter_15_0[0x10];
+ 
+@@ -3318,11 +3323,21 @@ struct mlx5_ifc_vnic_diagnostic_statistics_bits {
+ 
+ 	u8         transmit_discard_vport_down[0x40];
+ 
+-	u8         reserved_at_140[0xa0];
++	u8         async_eq_overrun[0x20];
++
++	u8         comp_eq_overrun[0x20];
++
++	u8         reserved_at_180[0x20];
++
++	u8         invalid_command[0x20];
++
++	u8         quota_exceeded_command[0x20];
+ 
+ 	u8         internal_rq_out_of_buffer[0x20];
+ 
+-	u8         reserved_at_200[0xe00];
++	u8         cq_overrun[0x20];
++
++	u8         reserved_at_220[0xde0];
+ };
+ 
+ struct mlx5_ifc_traffic_counter_bits {
 -- 
 2.51.0
 
