@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7E1E40FD81;
-	Wed,  4 Feb 2026 15:28:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4331841B362;
+	Wed,  4 Feb 2026 15:28:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770218898; cv=none; b=YQji5zGCIfKtaS6UvKs3+t9IeE5APRDavcbatTajGq6yDDZlX2tUPFKcSBaZx3KqjpIW/vqXgKv8jqEIpDwOTC+E2pTiqJF2ftI4iJKiqrjy3CFuGhfQ6CLQRI6fzxBW5nYl1hIHT/heDQoRqOFv00Vu92pr8bJw7c62xEjPePk=
+	t=1770218902; cv=none; b=aukOHEY84s9i6EzShFggWdGsIGLSLzKheAY3O8sf+P/OBYRcD3YJcGNNBEKxzUALf0VNpn8w5mO3y+OYGHeDjF8fFB7D7M7yfXtR1CN1ZRGpqtfzVEHKCKnlWz8+Bf8asTLo8CurkhIBS9lYtxEf7OY4w/v/k5yULpufwjGOdso=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770218898; c=relaxed/simple;
-	bh=5eJLNObIloBjI8rjHIphd9xQ29JcGenpLuGDcLRXN7E=;
+	s=arc-20240116; t=1770218902; c=relaxed/simple;
+	bh=5Vo3VWFELlX3R3k6aO+cb4sXMbFw1GxGmQyuE3pCy+8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=tGwe3gEZ94tiy02Poe6yg7pDL8yvpb0UwXtPux8mQjfc3tdYZnAg4TQVTLcPq3tGYnntCWYakT1x7EGHarxPNZ3gPgjgtJEsfP5mzGZ6IoQXYz9nBdeXaemrGOnKCa0bn2RK/hy/XS0FXogpPgcVdxU/1H8jQXpuq6zKRZQJW/0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CpGw2eio; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=iH4gKKCpHoxVlQoDsf5p7WAKqULzRSGQjjTwqM21QAvagMxqCiTCaCPA5b42fPoajOd0pPWVp2qLRaPKuaAFc6rf5MK6vsAwoBhwy/jM4tSx1hAFlaBNwhsNpdhISwvgGnlfY5rhw8GW5bCYNl1anm/qKzVD3J8dvrlYgYJxTfE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GRgLTYGn; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CpGw2eio"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F31CFC116C6;
-	Wed,  4 Feb 2026 15:28:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GRgLTYGn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 73377C116C6;
+	Wed,  4 Feb 2026 15:28:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770218898;
-	bh=5eJLNObIloBjI8rjHIphd9xQ29JcGenpLuGDcLRXN7E=;
+	s=korg; t=1770218901;
+	bh=5Vo3VWFELlX3R3k6aO+cb4sXMbFw1GxGmQyuE3pCy+8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CpGw2eioHvKY9oWju/28ruF7TRW5jNdKQ+VWhYq8lD3KTNdRS+Y2b57Oe+rObuRrQ
-	 qRahVS579UhtixU6coH7vksNXIpTmLjEhnp7UZlNIZt4M9t+V/pmk8q5Rj3cbDdF2S
-	 Parz8JpxAPoyLjjzlymk9ivgnSx1whpPmJS18uUk=
+	b=GRgLTYGn3BsfoGJ8niQDJ/n6/MOdrrHAlA9Z0MRWVp8jnvXvioR6wQAnNjric54wD
+	 WYyXMk2pgSJ9bWQyrOlU7U6nUMje0BkAYnT3k+iUargYog6+8iZGe4MzyDHNGHSkLI
+	 6CUSXVJ+egqahSn6lJq4kfma/eNx1qO08Of9PBak=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Alexis=20Lothor=C3=A9=20 ?= <alexis.lothore@bootlin.com>,
-	Martin KaFai Lau <martin.lau@kernel.org>,
-	Alexei Starovoitov <ast@kernel.org>,
-	Shung-Hsi Yu <shung-hsi.yu@suse.com>
-Subject: [PATCH 6.12 87/87] bpf/selftests: test_select_reuseport_kern: Remove unused header
-Date: Wed,  4 Feb 2026 15:41:25 +0100
-Message-ID: <20260204143850.061076726@linuxfoundation.org>
+	Abel Vesa <abelvesa@kernel.org>,
+	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Abel Vesa <abel.vesa@oss.qualcomm.com>,
+	Linus Walleij <linusw@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.12 84/87] pinctrl: lpass-lpi: implement .get_direction() for the GPIO driver
+Date: Wed,  4 Feb 2026 15:41:22 +0100
+Message-ID: <20260204143849.951045744@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260204143846.906385641@linuxfoundation.org>
 References: <20260204143846.906385641@linuxfoundation.org>
@@ -46,59 +48,67 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Alexis Lothoré (eBPF Foundation) <alexis.lothore@bootlin.com>
+From: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
 
-commit 93cf4e537ed0c5bd9ba6cbdb2c33864547c1442f upstream.
+[ Upstream commit 4f0d22ec60cee420125f4055af76caa0f373a3fe ]
 
-test_select_reuseport_kern.c is currently including <stdlib.h>, but it
-does not use any definition from there.
+GPIO controller driver should typically implement the .get_direction()
+callback as GPIOLIB internals may try to use it to determine the state
+of a pin. Add it for the LPASS LPI driver.
 
-Remove stdlib.h inclusion from test_select_reuseport_kern.c
-
-Signed-off-by: Alexis Lothoré (eBPF Foundation) <alexis.lothore@bootlin.com>
-Signed-off-by: Martin KaFai Lau <martin.lau@kernel.org>
-Link: https://patch.msgid.link/20250227-remove_wrong_header-v1-1-bc94eb4e2f73@bootlin.com
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
-[shung-hsi.yu: Fix compilation error mentioned in footer of Alexis'
-patch with newer glibc header:
-
-  [...]
-    CLNG-BPF [test_progs-cpuv4] test_select_reuseport_kern.bpf.o
-  In file included from progs/test_select_reuseport_kern.c:4:
-  /usr/include/bits/floatn.h:83:52: error: unsupported machine mode
-  '__TC__'
-     83 | typedef _Complex float __cfloat128 __attribute__ ((__mode__
-  (__TC__)));
-        |                                                    ^
-  /usr/include/bits/floatn.h:97:9: error: __float128 is not supported on
-  this target
-     97 | typedef __float128 _Float128;
-
-I'm not certain when the problem starts to occur, but I'm quite sure
-test_select_reuseport_kern.c were not meant to be using the C standard
-library in the first place.]
-Signed-off-by: Shung-Hsi Yu <shung-hsi.yu@suse.com>
+Reported-by: Abel Vesa <abelvesa@kernel.org>
+Cc: stable@vger.kernel.org
+Fixes: 6e261d1090d6 ("pinctrl: qcom: Add sm8250 lpass lpi pinctrl driver")
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Tested-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com> # X1E CRD
+Tested-by: Abel Vesa <abel.vesa@oss.qualcomm.com>
+Signed-off-by: Linus Walleij <linusw@kernel.org>
+[ PIN_CONFIG_LEVEL => PIN_CONFIG_OUTPUT ]
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/testing/selftests/bpf/progs/test_select_reuseport_kern.c |    1 -
- 1 file changed, 1 deletion(-)
+ drivers/pinctrl/qcom/pinctrl-lpass-lpi.c |   17 +++++++++++++++++
+ 1 file changed, 17 insertions(+)
 
---- a/tools/testing/selftests/bpf/progs/test_select_reuseport_kern.c
-+++ b/tools/testing/selftests/bpf/progs/test_select_reuseport_kern.c
-@@ -1,7 +1,6 @@
- // SPDX-License-Identifier: GPL-2.0
- /* Copyright (c) 2018 Facebook */
+--- a/drivers/pinctrl/qcom/pinctrl-lpass-lpi.c
++++ b/drivers/pinctrl/qcom/pinctrl-lpass-lpi.c
+@@ -298,6 +298,22 @@ static const struct pinconf_ops lpi_gpio
+ 	.pin_config_group_set		= lpi_config_set,
+ };
  
--#include <stdlib.h>
- #include <linux/in.h>
- #include <linux/ip.h>
- #include <linux/ipv6.h>
++static int lpi_gpio_get_direction(struct gpio_chip *chip, unsigned int pin)
++{
++	unsigned long config = pinconf_to_config_packed(PIN_CONFIG_OUTPUT, 0);
++	struct lpi_pinctrl *state = gpiochip_get_data(chip);
++	unsigned long arg;
++	int ret;
++
++	ret = lpi_config_get(state->ctrl, pin, &config);
++	if (ret)
++		return ret;
++
++	arg = pinconf_to_config_argument(config);
++
++	return arg ? GPIO_LINE_DIRECTION_OUT : GPIO_LINE_DIRECTION_IN;
++}
++
+ static int lpi_gpio_direction_input(struct gpio_chip *chip, unsigned int pin)
+ {
+ 	struct lpi_pinctrl *state = gpiochip_get_data(chip);
+@@ -395,6 +411,7 @@ static void lpi_gpio_dbg_show(struct seq
+ #endif
+ 
+ static const struct gpio_chip lpi_gpio_template = {
++	.get_direction		= lpi_gpio_get_direction,
+ 	.direction_input	= lpi_gpio_direction_input,
+ 	.direction_output	= lpi_gpio_direction_output,
+ 	.get			= lpi_gpio_get,
 
 
