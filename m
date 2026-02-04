@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 342A51C5D77;
-	Wed,  4 Feb 2026 14:46:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0C671C5D77;
+	Wed,  4 Feb 2026 14:46:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770216392; cv=none; b=aVdMG6J8DxVzvGdxzDU1ZyTLjL2LacQu3m6YNAKVIIsIv8bzGLLUtYbsBTpS7EowTrx+D2JuUljiBFl5xuxfQ5A3HTXTwNvppJC+xfyQgbt6JJmEsNBGQdedR+azretWaHAM+R1+4dw0et5JdQ+lDQ2NS94DkDKyg8jbbCxzXo8=
+	t=1770216395; cv=none; b=LGecWe4/0f9RfGjqeamSFNxbKOPZhuzAvHEo5RL8OuJ3sxLhwicERpDBNWv7kwXCV6G/Gzege7zZcNs4KYIzhivlV2sHqKIE0VM0DdKOYi08e5pExnIAP2TtKx0pwuQapcc2j+x+qw/tFByjHaHdfOO5wWGRDmCGelhG6TpH+Xo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770216392; c=relaxed/simple;
-	bh=aLi24bvb0exwi/7BzgDyMdCEkLERUaD3zq9UNswit14=;
+	s=arc-20240116; t=1770216395; c=relaxed/simple;
+	bh=jAxogVbj8OTNZn64WzlIVxnB/Q9FGa13ZbQy5Wx9h9c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=o1mL9uAt2SveMiXAcAsF9bJiuZ7wYe70CyT4R7qsMpdmBPlhziGu7ykPuo6/xUilFSnMyB74Xviee/p1oQ1CfSC58ARgrPxNp5yGZ0EnAhD2bo8+v81MOAIf5s/5b38VL1c/oo4Gbln1mEo6GlOKeQqbPKytgOZ67CKWvA+hgfY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LXsgEmh3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kTyAQWpcsZlyUcrY7kw62zCgaYoko+uRP47ua1/bL73agHsFqQ6jFVGcu1oQUHy48NncWpTUWQG9zB8npZ3inGAAyRY+Nxbtfx/qedyD8odcViApOdlYslgq/JfBeSDvMNWTiO9NkCIGzivSNqnWjGHKVBpmnbWVWPRWfniJL1E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cfZliqle; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LXsgEmh3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 60E09C4CEF7;
-	Wed,  4 Feb 2026 14:46:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cfZliqle"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2FAEEC4CEF7;
+	Wed,  4 Feb 2026 14:46:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770216391;
-	bh=aLi24bvb0exwi/7BzgDyMdCEkLERUaD3zq9UNswit14=;
+	s=korg; t=1770216395;
+	bh=jAxogVbj8OTNZn64WzlIVxnB/Q9FGa13ZbQy5Wx9h9c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LXsgEmh36EbTx91XBrp+hxfo9MfcAnF21cdXGmzTtumXW3Bc5AmMmH4tjbh2r59WO
-	 ondRU0gJZ77KsmkbNu4wnkFBvxJYYblaFSQeoKZ23XngXkfcPzatrKtsfmhv9PmOGo
-	 ySdbLJf63b1bG2PzDu5eWJbf9qnWcE7xxR/KzAi8=
+	b=cfZliqlefofykA8JJz5VR6tcAmla1PuHUMFTBXEQda06ObDeIvFajs7hU5zKLVkiG
+	 gssuAuZ1YUvVkG9U0rbYh19s5DocgYjhS3Kw1FSHYKAkhxMMH4pFVhUZ7r7PuICBVi
+	 30Z1D8drihgryX6Rs+J3jvCX92n8cDougnFELl8o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jaroslav Kysela <perex@perex.cz>,
-	Takashi Iwai <tiwai@suse.com>,
-	linux-sound@vger.kernel.org,
-	Arun Raghavan <arunr@valvesoftware.com>,
-	Takashi Iwai <tiwai@suse.de>,
+	Jijie Shao <shaojijie@huawei.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 075/161] ALSA: usb: Increase volume range that triggers a warning
-Date: Wed,  4 Feb 2026 15:38:58 +0100
-Message-ID: <20260204143854.452265274@linuxfoundation.org>
+Subject: [PATCH 5.10 076/161] net: hns3: fix wrong GENMASK() for HCLGE_FD_AD_COUNTER_NUM_M
+Date: Wed,  4 Feb 2026 15:38:59 +0100
+Message-ID: <20260204143854.487656748@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260204143851.755002596@linuxfoundation.org>
 References: <20260204143851.755002596@linuxfoundation.org>
@@ -54,45 +51,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Arun Raghavan <arunr@valvesoftware.com>
+From: Jijie Shao <shaojijie@huawei.com>
 
-[ Upstream commit 6b971191fcfc9e3c2c0143eea22534f1f48dbb62 ]
+[ Upstream commit d57c67c956a1bad15115eba6e59d77a6dfeba01d ]
 
-On at least the HyperX Cloud III, the range is 18944 (-18944 -> 0 in
-steps of 1), so the original check for 255 steps is definitely obsolete.
-Let's give ourselves a little more headroom before we emit a warning.
+HCLGE_FD_AD_COUNTER_NUM_M should be at GENMASK(19, 13),
+rather than at GENMASK(20, 13), because bit 20 is
+HCLGE_FD_AD_NXT_STEP_B.
 
-Fixes: 80acefff3bc7 ("ALSA: usb-audio - Add volume range check and warn if it too big")
-Cc: Jaroslav Kysela <perex@perex.cz>
-Cc: Takashi Iwai <tiwai@suse.com>
-Cc: linux-sound@vger.kernel.org
-Signed-off-by: Arun Raghavan <arunr@valvesoftware.com>
-Link: https://patch.msgid.link/20260116225804.3845935-1-arunr@valvesoftware.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+This patch corrects the wrong definition.
+
+Fixes: 117328680288 ("net: hns3: Add input key and action config support for flow director")
+Signed-off-by: Jijie Shao <shaojijie@huawei.com>
+Link: https://patch.msgid.link/20260119132840.410513-2-shaojijie@huawei.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/usb/mixer.c | 7 +++----
- 1 file changed, 3 insertions(+), 4 deletions(-)
+ drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_cmd.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/sound/usb/mixer.c b/sound/usb/mixer.c
-index 949b171377267..b5baf9d609333 100644
---- a/sound/usb/mixer.c
-+++ b/sound/usb/mixer.c
-@@ -1741,11 +1741,10 @@ static void __build_feature_ctl(struct usb_mixer_interface *mixer,
- 
- 	range = (cval->max - cval->min) / cval->res;
- 	/*
--	 * Are there devices with volume range more than 255? I use a bit more
--	 * to be sure. 384 is a resolution magic number found on Logitech
--	 * devices. It will definitively catch all buggy Logitech devices.
-+	 * There are definitely devices with a range of ~20,000, so let's be
-+	 * conservative and allow for a bit more.
- 	 */
--	if (range > 384) {
-+	if (range > 65535) {
- 		usb_audio_warn(mixer->chip,
- 			       "Warning! Unlikely big volume range (=%u), cval->res is probably wrong.",
- 			       range);
+diff --git a/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_cmd.h b/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_cmd.h
+index 3d70c3a47d631..67d878eb8a7d6 100644
+--- a/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_cmd.h
++++ b/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_cmd.h
+@@ -1038,7 +1038,7 @@ struct hclge_fd_tcam_config_3_cmd {
+ #define HCLGE_FD_AD_QID_M		GENMASK(11, 2)
+ #define HCLGE_FD_AD_USE_COUNTER_B	12
+ #define HCLGE_FD_AD_COUNTER_NUM_S	13
+-#define HCLGE_FD_AD_COUNTER_NUM_M	GENMASK(20, 13)
++#define HCLGE_FD_AD_COUNTER_NUM_M	GENMASK(19, 13)
+ #define HCLGE_FD_AD_NXT_STEP_B		20
+ #define HCLGE_FD_AD_NXT_KEY_S		21
+ #define HCLGE_FD_AD_NXT_KEY_M		GENMASK(25, 21)
 -- 
 2.51.0
 
