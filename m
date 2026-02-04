@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67D9F2D5950;
-	Wed,  4 Feb 2026 15:29:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD70E2DBF75;
+	Wed,  4 Feb 2026 15:29:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770218993; cv=none; b=lVldJqa6Hmsf2sH1b4bQT3SlaQ2vELSZ23tMr9baoDmgW7AWGf+8ukCkS2XLg923bjq2utvgspYPY+eSgH9JCW44HgAVtiy5yZc6qosLvGVMfA0CPHIXfAzSD+lmGevr0GiX0DJFUZA6i48VADUUO9lgYPQQUvU/kb91F55/NG0=
+	t=1770218996; cv=none; b=dnvjLCfrpB7ag1yG1eStv7l9p5HwSktcJbDwJfajjj1A24+xFXYFkAHo7p6fcb/QjT8NIUpfzfCMcoIAwpgOQgRll0tEi/7ywxOpMqLzappCz1RXgKXyvw+I4H+EfS54kvF+WRBlVX5E7CKOK1IpK1lbRw7QVMWdCMYhpzrGpU8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770218993; c=relaxed/simple;
-	bh=iuks9tEdsIt0NEPZkvpQ/KKbjx0eoLS/Db85tekHcB0=;
+	s=arc-20240116; t=1770218996; c=relaxed/simple;
+	bh=4rXIjqdgeBh9pYF036l2UQaA1Ma3ZFh6mTKgfyGexIA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=X5S+kmGThfBSXQepP0aPW4POjslIO34eR1UAC89dQ6K6GiQmGeTjms7w4h9cSqDbW+neQV9bZh2m+wSnRMyyryzW1KXv+upP75xLYZdc9LhX5emQWUREC3Bkc6oEhY1oJx5rpaYMG3HNo+nLDkzFbFuEAyA94ZNCNMm3mf55Ixg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QLUZ8hVr; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dJ70ATf71One0Xr8L09oN6QdBOCraLvPY30qNFwN65SllelYO0DH1OWUC3wE086hR8BWOzyKmzLfgfc5+0CbHwk32Yt/Ri9DnGJ/MTerBBSKrPBAz/lCTufIf8tO3h+lbX/leAdLifD7gfNIRyGw8xP+Kgkcwr1f867BE6BBdrM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=a4V0th/S; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QLUZ8hVr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED6EFC19423;
-	Wed,  4 Feb 2026 15:29:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="a4V0th/S"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E320C19424;
+	Wed,  4 Feb 2026 15:29:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770218993;
-	bh=iuks9tEdsIt0NEPZkvpQ/KKbjx0eoLS/Db85tekHcB0=;
+	s=korg; t=1770218996;
+	bh=4rXIjqdgeBh9pYF036l2UQaA1Ma3ZFh6mTKgfyGexIA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QLUZ8hVrSnowYemePyzxOS5avtQnVFMy/bIZ+zlLwsqgi2h1GLecRL/xHjETIF014
-	 bO5U/6yk1NBiEdu+WJegtraFgPhpqPfbuNlke36lXVtUAR2K722b21qg7zLfgcDBd6
-	 JF7hHIW0IOXmmjHd6vqfcNz5TdsfNo0EB8oKOKqo=
+	b=a4V0th/SRPWtJyQa7ftNMR/grrVQ8ZhW6Ta+WTVv1ejUAV1QFcKZnaqXLM8FOjx5p
+	 qblggd6xo4BrrYM21Lw+2oIkJBMpEL7h2i4r3spUykVRq9fN38Pgg2rZzVHIB6QD30
+	 7VDHeX3mbheDp0cLpbCPPMWpiSWV2gEdmDyHWw/Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Ruikai Peng <ruikai@pwno.io>,
 	Benjamin Berg <benjamin.berg@intel.com>,
-	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
 	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 036/122] wifi: mac80211: apply advertised TTLM from association response
-Date: Wed,  4 Feb 2026 15:40:18 +0100
-Message-ID: <20260204143853.160652211@linuxfoundation.org>
+Subject: [PATCH 6.18 037/122] wifi: mac80211: correctly decode TTLM with default link map
+Date: Wed,  4 Feb 2026 15:40:19 +0100
+Message-ID: <20260204143853.195982515@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260204143851.857060534@linuxfoundation.org>
 References: <20260204143851.857060534@linuxfoundation.org>
@@ -54,311 +54,55 @@ Content-Transfer-Encoding: 8bit
 
 From: Benjamin Berg <benjamin.berg@intel.com>
 
-[ Upstream commit aebc29dec67aa998a9ea6d34aacba7b5c6a74d33 ]
+[ Upstream commit 1eab33aa63c993685dd341e03bd5b267dd7403fa ]
 
-When the AP has a disabled link that the station can include in the
-association, the fact that the link is dormant needs to be advertised
-in the TID to Link Mapping (TTLM). Section 35.3.7.2.3 ("Negotiation of
-TTLM") of Draft P802.11REVmf_D1.0 also states that the mapping needs to
-be included in the association response frame.
+TID-To-Link Mapping (TTLM) elements do not contain any link mapping
+presence indicator if a default mapping is used and parsing needs to be
+skipped.
 
-As such, we can simply rely on the TTLM from the association response.
-Before this change mac80211 would not properly track that an advertised
-TTLM was effectively active, resulting in it not enabling the link once
-it became available again.
+Note that access points should not explicitly report an advertised TTLM
+with a default mapping as that is the implied mapping if the element is
+not included, this is even the case when switching back to the default
+mapping. However, mac80211 would incorrectly parse the frame and would
+also read one byte beyond the end of the element.
 
-For the link reconfiguration case, the data was not used at all. This
-behaviour is actually correct because Draft P802.11REVmf_D1.0 states in
-section 35.3.6.4 that we "shall operate with all the TIDs mapped to the
-newly added links ..."
-
-Fixes: 6d543b34dbcf ("wifi: mac80211: Support disabled links during association")
+Reported-by: Ruikai Peng <ruikai@pwno.io>
+Closes: https://lore.kernel.org/linux-wireless/CAFD3drMqc9YWvTCSHLyP89AOpBZsHdZ+pak6zVftYoZcUyF7gw@mail.gmail.com
+Fixes: 702e80470a33 ("wifi: mac80211: support handling of advertised TID-to-link mapping")
 Signed-off-by: Benjamin Berg <benjamin.berg@intel.com>
-Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
-Link: https://patch.msgid.link/20260118093904.43c861424543.I067f702ac46b84ac3f8b4ea16fb0db9cbbfae7e2@changeid
+Link: https://patch.msgid.link/20260129113349.d6b96f12c732.I69212a50f0f70db185edd3abefb6f04d3cb3e5ff@changeid
 Signed-off-by: Johannes Berg <johannes.berg@intel.com>
-Stable-dep-of: 1eab33aa63c9 ("wifi: mac80211: correctly decode TTLM with default link map")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/mac80211/ieee80211_i.h |   2 -
- net/mac80211/mlme.c        | 216 ++++++++++++++++++++-----------------
- 2 files changed, 119 insertions(+), 99 deletions(-)
+ net/mac80211/mlme.c | 8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
-diff --git a/net/mac80211/ieee80211_i.h b/net/mac80211/ieee80211_i.h
-index 878c3b14aeb80..5c0c833fcf7a9 100644
---- a/net/mac80211/ieee80211_i.h
-+++ b/net/mac80211/ieee80211_i.h
-@@ -451,8 +451,6 @@ struct ieee80211_mgd_assoc_data {
- 		struct ieee80211_conn_settings conn;
- 
- 		u16 status;
--
--		bool disabled;
- 	} link[IEEE80211_MLD_MAX_NUM_LINKS];
- 
- 	u8 ap_addr[ETH_ALEN] __aligned(2);
 diff --git a/net/mac80211/mlme.c b/net/mac80211/mlme.c
-index d70163c0b9e32..21c73a65f73f9 100644
+index 21c73a65f73f9..dca47a533392a 100644
 --- a/net/mac80211/mlme.c
 +++ b/net/mac80211/mlme.c
-@@ -6161,6 +6161,98 @@ static bool ieee80211_get_dtim(const struct cfg80211_bss_ies *ies,
- 	return true;
- }
+@@ -8,7 +8,7 @@
+  * Copyright 2007, Michael Wu <flamingice@sourmilk.net>
+  * Copyright 2013-2014  Intel Mobile Communications GmbH
+  * Copyright (C) 2015 - 2017 Intel Deutschland GmbH
+- * Copyright (C) 2018 - 2025 Intel Corporation
++ * Copyright (C) 2018 - 2026 Intel Corporation
+  */
  
-+static u16 ieee80211_get_ttlm(u8 bm_size, u8 *data)
-+{
-+	if (bm_size == 1)
-+		return *data;
-+
-+	return get_unaligned_le16(data);
-+}
-+
-+static int
-+ieee80211_parse_adv_t2l(struct ieee80211_sub_if_data *sdata,
-+			const struct ieee80211_ttlm_elem *ttlm,
-+			struct ieee80211_adv_ttlm_info *ttlm_info)
-+{
-+	/* The element size was already validated in
-+	 * ieee80211_tid_to_link_map_size_ok()
-+	 */
-+	u8 control, link_map_presence, map_size, tid;
-+	u8 *pos;
-+
-+	memset(ttlm_info, 0, sizeof(*ttlm_info));
-+	pos = (void *)ttlm->optional;
-+	control	= ttlm->control;
-+
-+	if ((control & IEEE80211_TTLM_CONTROL_DIRECTION) !=
-+	    IEEE80211_TTLM_DIRECTION_BOTH) {
-+		sdata_info(sdata, "Invalid advertised T2L map direction\n");
-+		return -EINVAL;
-+	}
-+
-+	link_map_presence = *pos;
-+	pos++;
-+
-+	if (control & IEEE80211_TTLM_CONTROL_SWITCH_TIME_PRESENT) {
-+		ttlm_info->switch_time = get_unaligned_le16(pos);
-+
-+		/* Since ttlm_info->switch_time == 0 means no switch time, bump
-+		 * it by 1.
-+		 */
-+		if (!ttlm_info->switch_time)
-+			ttlm_info->switch_time = 1;
-+
-+		pos += 2;
-+	}
-+
-+	if (control & IEEE80211_TTLM_CONTROL_EXPECTED_DUR_PRESENT) {
-+		ttlm_info->duration = pos[0] | pos[1] << 8 | pos[2] << 16;
-+		pos += 3;
-+	}
-+
-+	if (control & IEEE80211_TTLM_CONTROL_DEF_LINK_MAP) {
-+		ttlm_info->map = 0xffff;
-+		return 0;
-+	}
-+
-+	if (control & IEEE80211_TTLM_CONTROL_LINK_MAP_SIZE)
-+		map_size = 1;
-+	else
-+		map_size = 2;
-+
-+	/* According to Draft P802.11be_D3.0 clause 35.3.7.1.7, an AP MLD shall
-+	 * not advertise a TID-to-link mapping that does not map all TIDs to the
-+	 * same link set, reject frame if not all links have mapping
-+	 */
-+	if (link_map_presence != 0xff) {
-+		sdata_info(sdata,
-+			   "Invalid advertised T2L mapping presence indicator\n");
-+		return -EINVAL;
-+	}
-+
-+	ttlm_info->map = ieee80211_get_ttlm(map_size, pos);
-+	if (!ttlm_info->map) {
-+		sdata_info(sdata,
-+			   "Invalid advertised T2L map for TID 0\n");
-+		return -EINVAL;
-+	}
-+
-+	pos += map_size;
-+
-+	for (tid = 1; tid < 8; tid++) {
-+		u16 map = ieee80211_get_ttlm(map_size, pos);
-+
-+		if (map != ttlm_info->map) {
-+			sdata_info(sdata, "Invalid advertised T2L map for tid %d\n",
-+				   tid);
-+			return -EINVAL;
-+		}
-+
-+		pos += map_size;
-+	}
-+	return 0;
-+}
-+
- static bool ieee80211_assoc_success(struct ieee80211_sub_if_data *sdata,
- 				    struct ieee80211_mgmt *mgmt,
- 				    struct ieee802_11_elems *elems,
-@@ -6192,8 +6284,6 @@ static bool ieee80211_assoc_success(struct ieee80211_sub_if_data *sdata,
- 				continue;
- 
- 			valid_links |= BIT(link_id);
--			if (assoc_data->link[link_id].disabled)
--				dormant_links |= BIT(link_id);
- 
- 			if (link_id != assoc_data->assoc_link_id) {
- 				err = ieee80211_sta_allocate_link(sta, link_id);
-@@ -6202,6 +6292,33 @@ static bool ieee80211_assoc_success(struct ieee80211_sub_if_data *sdata,
- 			}
- 		}
- 
-+		/*
-+		 * We do not support setting a negotiated TTLM during
-+		 * association. As such, we can assume that if there is a TTLM,
-+		 * then it is the currently active advertised TTLM.
-+		 * In that case, there must be exactly one TTLM that does not
-+		 * have a switch time set. This mapping should also leave us
-+		 * with at least one usable link.
-+		 */
-+		if (elems->ttlm_num > 1) {
-+			sdata_info(sdata,
-+				   "More than one advertised TTLM in association response\n");
-+			goto out_err;
-+		} else if (elems->ttlm_num == 1) {
-+			if (ieee80211_parse_adv_t2l(sdata, elems->ttlm[0],
-+						    &sdata->u.mgd.ttlm_info) ||
-+			    sdata->u.mgd.ttlm_info.switch_time != 0 ||
-+			    !(valid_links & sdata->u.mgd.ttlm_info.map)) {
-+				sdata_info(sdata,
-+					   "Invalid advertised TTLM in association response\n");
-+				goto out_err;
-+			}
-+
-+			sdata->u.mgd.ttlm_info.active = true;
-+			dormant_links =
-+				valid_links & ~sdata->u.mgd.ttlm_info.map;
-+		}
-+
- 		ieee80211_vif_set_links(sdata, valid_links, dormant_links);
+ #include <linux/delay.h>
+@@ -6190,8 +6190,10 @@ ieee80211_parse_adv_t2l(struct ieee80211_sub_if_data *sdata,
+ 		return -EINVAL;
  	}
  
-@@ -6991,98 +7108,6 @@ static void ieee80211_tid_to_link_map_work(struct wiphy *wiphy,
- 	sdata->u.mgd.ttlm_info.switch_time = 0;
- }
- 
--static u16 ieee80211_get_ttlm(u8 bm_size, u8 *data)
--{
--	if (bm_size == 1)
--		return *data;
--	else
--		return get_unaligned_le16(data);
--}
--
--static int
--ieee80211_parse_adv_t2l(struct ieee80211_sub_if_data *sdata,
--			const struct ieee80211_ttlm_elem *ttlm,
--			struct ieee80211_adv_ttlm_info *ttlm_info)
--{
--	/* The element size was already validated in
--	 * ieee80211_tid_to_link_map_size_ok()
--	 */
--	u8 control, link_map_presence, map_size, tid;
--	u8 *pos;
--
--	memset(ttlm_info, 0, sizeof(*ttlm_info));
--	pos = (void *)ttlm->optional;
--	control	= ttlm->control;
--
--	if ((control & IEEE80211_TTLM_CONTROL_DIRECTION) !=
--	    IEEE80211_TTLM_DIRECTION_BOTH) {
--		sdata_info(sdata, "Invalid advertised T2L map direction\n");
--		return -EINVAL;
--	}
--
 -	link_map_presence = *pos;
 -	pos++;
--
--	if (control & IEEE80211_TTLM_CONTROL_SWITCH_TIME_PRESENT) {
--		ttlm_info->switch_time = get_unaligned_le16(pos);
--
--		/* Since ttlm_info->switch_time == 0 means no switch time, bump
--		 * it by 1.
--		 */
--		if (!ttlm_info->switch_time)
--			ttlm_info->switch_time = 1;
--
--		pos += 2;
--	}
--
--	if (control & IEEE80211_TTLM_CONTROL_EXPECTED_DUR_PRESENT) {
--		ttlm_info->duration = pos[0] | pos[1] << 8 | pos[2] << 16;
--		pos += 3;
--	}
--
--	if (control & IEEE80211_TTLM_CONTROL_DEF_LINK_MAP) {
--		ttlm_info->map = 0xffff;
--		return 0;
--	}
--
--	if (control & IEEE80211_TTLM_CONTROL_LINK_MAP_SIZE)
--		map_size = 1;
--	else
--		map_size = 2;
--
--	/* According to Draft P802.11be_D3.0 clause 35.3.7.1.7, an AP MLD shall
--	 * not advertise a TID-to-link mapping that does not map all TIDs to the
--	 * same link set, reject frame if not all links have mapping
--	 */
--	if (link_map_presence != 0xff) {
--		sdata_info(sdata,
--			   "Invalid advertised T2L mapping presence indicator\n");
--		return -EINVAL;
--	}
--
--	ttlm_info->map = ieee80211_get_ttlm(map_size, pos);
--	if (!ttlm_info->map) {
--		sdata_info(sdata,
--			   "Invalid advertised T2L map for TID 0\n");
--		return -EINVAL;
--	}
--
--	pos += map_size;
--
--	for (tid = 1; tid < 8; tid++) {
--		u16 map = ieee80211_get_ttlm(map_size, pos);
--
--		if (map != ttlm_info->map) {
--			sdata_info(sdata, "Invalid advertised T2L map for tid %d\n",
--				   tid);
--			return -EINVAL;
--		}
--
--		pos += map_size;
--	}
--	return 0;
--}
--
- static void ieee80211_process_adv_ttlm(struct ieee80211_sub_if_data *sdata,
- 					  struct ieee802_11_elems *elems,
- 					  u64 beacon_ts)
-@@ -9729,7 +9754,6 @@ int ieee80211_mgd_assoc(struct ieee80211_sub_if_data *sdata,
- 							       req, true, i,
- 							       &assoc_data->link[i].conn);
- 			assoc_data->link[i].bss = link_cbss;
--			assoc_data->link[i].disabled = req->links[i].disabled;
++	if (!(control & IEEE80211_TTLM_CONTROL_DEF_LINK_MAP)) {
++		link_map_presence = *pos;
++		pos++;
++	}
  
- 			if (!bss->uapsd_supported)
- 				uapsd_supported = false;
-@@ -10711,8 +10735,6 @@ int ieee80211_mgd_assoc_ml_reconf(struct ieee80211_sub_if_data *sdata,
- 							 &data->link[link_id].conn);
- 
- 			data->link[link_id].bss = link_cbss;
--			data->link[link_id].disabled =
--				req->add_links[link_id].disabled;
- 			data->link[link_id].elems =
- 				(u8 *)req->add_links[link_id].elems;
- 			data->link[link_id].elems_len =
+ 	if (control & IEEE80211_TTLM_CONTROL_SWITCH_TIME_PRESENT) {
+ 		ttlm_info->switch_time = get_unaligned_le16(pos);
 -- 
 2.51.0
 
