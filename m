@@ -1,38 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92AF13D413D;
-	Wed,  4 Feb 2026 14:52:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14E8741B352;
+	Wed,  4 Feb 2026 14:52:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770216775; cv=none; b=WjnUbhCwEvNbidVe/eQGFCNX5XjqQDyEpqUq1fKddXBMPKfvOxRzA/kY8wIMBF4s6fCS4DuGiDUNTV0Gj0DkI5hlhTP8xW+68CUcSQx4x4Lm0O9Zmnb30NTh6bdTf+j0FKzGoI6L85bChk54clveTavRFmvRsFgm9a/hTKhB/yM=
+	t=1770216779; cv=none; b=n3HpE50CJW+KhKymaxP8ctOvBQ5Z67dkolJ3vV8dS3kIS09dxJtTkqCeIDDS4bb+3EdO/ZQWdJpmV57kR1LG8kTsd7bLs0iau6j22yqYVpiGrIZq2xVSd5B4oBS7cw4aM/0fqtTMXiLWkd86Sp0G5BYoTjdG0RtW+IgnmskKH+A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770216775; c=relaxed/simple;
-	bh=8JIygqq4Gm8ggZgslAo09DH2i9p/VzJ4l0Xnsi/J+Wc=;
+	s=arc-20240116; t=1770216779; c=relaxed/simple;
+	bh=i9rWIN9PrW4jTm+L4u59riP8NQAVaoFtYZkYC50shgE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WAbFCnCWxh6h95jb6tNUqduDjdXZrZgdCR3/Qee4Ywma/EyoFjteVNM9UcqHYlhykPg9prkUkDdyOPwpt6N61GhKjSiUyHJilZQPnHToF1z2T0/KRuGucrtmPBbDAGEAFaoCrGSpk/ZgHgjhVkoA4AtH85OZ3IiPwIA2pmoSyO8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xCNfat60; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=H9gvXl86FdROYWdl4qday1JhD8cYHSs47xe6KIeM2XlUhXAtNxtD5Q9NOnCnF0jkFYoFBn6D5Om5N2XV11v2Ch39SpmIum02dkq/Fly/lNPUwy8+PiShyu+sCiCckdJCYiduS7/iL3z4Z5OHOZgMkzNAz0QtS30kaDFW0I8g77k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BWdq+nin; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xCNfat60"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15F61C4CEF7;
-	Wed,  4 Feb 2026 14:52:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BWdq+nin"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 40AD5C4CEF7;
+	Wed,  4 Feb 2026 14:52:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770216775;
-	bh=8JIygqq4Gm8ggZgslAo09DH2i9p/VzJ4l0Xnsi/J+Wc=;
+	s=korg; t=1770216778;
+	bh=i9rWIN9PrW4jTm+L4u59riP8NQAVaoFtYZkYC50shgE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xCNfat60crNzymGLkCDauecikDXBljR4xwe0EQvrKXbegpymh2X3mw1UN4nuONMqm
-	 jxvtFrsSjF3OEuXuI9EFXdodgNNiuz2CcrPBD+nau9/U1bkcvbIcKsYwDQF+lo4rcQ
-	 gXIpsZI061shP+6lc+ebXwozOeIF6Mge9S8SJXZw=
+	b=BWdq+ninEiLNXc03jw/BVzcGzhO/j9jKwYfDd75L2TeZ2W2Wh/7RMa6wiJyQoxtJs
+	 C/WgukEomaCPDigXMcHf8k4zRugYGkjObsw2huOJWG2HUDc5GjHA6YCvjAQdheDG5o
+	 R4l8HiebCZZCmU+rFQd8fj+NDpLDGe6F1o7fB+Fw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>,
-	Vinod Koul <vkoul@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 020/206] phy: broadcom: ns-usb3: Fix Wvoid-pointer-to-enum-cast warning (again)
-Date: Wed,  4 Feb 2026 15:37:31 +0100
-Message-ID: <20260204143858.931207651@linuxfoundation.org>
+	Thinh Nguyen <Thinh.Nguyen@synopsys.com>
+Subject: [PATCH 5.15 029/206] usb: dwc3: Check for USB4 IP_NAME
+Date: Wed,  4 Feb 2026 15:37:40 +0100
+Message-ID: <20260204143859.252990160@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260204143858.193781818@linuxfoundation.org>
 References: <20260204143858.193781818@linuxfoundation.org>
@@ -51,46 +49,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
+From: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
 
-[ Upstream commit fb21116099bbea1fc59efa9207e63c4be390ab72 ]
+commit 0ed91d47959cb7573c17e06487f0fb891d59dfb3 upstream.
 
-"family" is an enum, thus cast of pointer on 64-bit compile test with
-clang W=1 causes:
+Synopsys renamed DWC_usb32 IP to DWC_usb4 as of IP version 1.30. No
+functional change except checking for the IP_NAME here. The driver will
+treat the new IP_NAME as if it's DWC_usb32. Additional features for USB4
+will be introduced and checked separately.
 
-  phy-bcm-ns-usb3.c:206:17: error: cast to smaller integer type 'enum bcm_ns_family' from 'const void *' [-Werror,-Wvoid-pointer-to-enum-cast]
-
-This was already fixed in commit bd6e74a2f0a0 ("phy: broadcom: ns-usb3:
-fix Wvoid-pointer-to-enum-cast warning") but then got bad in commit
-21bf6fc47a1e ("phy: Use device_get_match_data()").
-
-Note that after various discussions the preferred cast is via "unsigned
-long", not "uintptr_t".
-
-Fixes: 21bf6fc47a1e ("phy: Use device_get_match_data()")
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
-Link: https://patch.msgid.link/20251224115533.154162-2-krzysztof.kozlowski@oss.qualcomm.com
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Cc: stable@vger.kernel.org
+Signed-off-by: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
+Link: https://patch.msgid.link/e6f1827754c7a7ddc5eb7382add20bfe3a9b312f.1767390747.git.Thinh.Nguyen@synopsys.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/phy/broadcom/phy-bcm-ns-usb3.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/usb/dwc3/core.c |    2 ++
+ drivers/usb/dwc3/core.h |    1 +
+ 2 files changed, 3 insertions(+)
 
-diff --git a/drivers/phy/broadcom/phy-bcm-ns-usb3.c b/drivers/phy/broadcom/phy-bcm-ns-usb3.c
-index a6c5985051b14..c19953ecfee66 100644
---- a/drivers/phy/broadcom/phy-bcm-ns-usb3.c
-+++ b/drivers/phy/broadcom/phy-bcm-ns-usb3.c
-@@ -203,7 +203,7 @@ static int bcm_ns_usb3_mdio_probe(struct mdio_device *mdiodev)
- 	usb3->dev = dev;
- 	usb3->mdiodev = mdiodev;
+--- a/drivers/usb/dwc3/core.c
++++ b/drivers/usb/dwc3/core.c
+@@ -778,6 +778,8 @@ static bool dwc3_core_is_valid(struct dw
  
--	usb3->family = (enum bcm_ns_family)device_get_match_data(dev);
-+	usb3->family = (unsigned long)device_get_match_data(dev);
+ 	reg = dwc3_readl(dwc->regs, DWC3_GSNPSID);
+ 	dwc->ip = DWC3_GSNPS_ID(reg);
++	if (dwc->ip == DWC4_IP)
++		dwc->ip = DWC32_IP;
  
- 	syscon_np = of_parse_phandle(dev->of_node, "usb3-dmp-syscon", 0);
- 	err = of_address_to_resource(syscon_np, 0, &res);
--- 
-2.51.0
-
+ 	/* This should read as U3 followed by revision number */
+ 	if (DWC3_IP_IS(DWC3)) {
+--- a/drivers/usb/dwc3/core.h
++++ b/drivers/usb/dwc3/core.h
+@@ -1175,6 +1175,7 @@ struct dwc3 {
+ #define DWC3_IP			0x5533
+ #define DWC31_IP		0x3331
+ #define DWC32_IP		0x3332
++#define DWC4_IP			0x3430
+ 
+ 	u32			revision;
+ 
 
 
