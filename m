@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9DEF3C1963;
-	Wed,  4 Feb 2026 15:14:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D4752BE03C;
+	Wed,  4 Feb 2026 15:14:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770218091; cv=none; b=n/hVR644zNEbNQmkBh37bjNa7tuo1myeDNZIG6qwlRme+F1xENw/LAjy/Lx0lkphG7+Sc0LWYJ8ytqqWMF2PMfEn+Uy+Xt6x2HfpIWge+9DDS5njbtaUYABa6sc4ik87y5OmjzkeOqgmpsvW3IQfy56OOIUp9YpgDheJ0D6SoDc=
+	t=1770218095; cv=none; b=huowH9VwsBn5SnOfSU0gr7aEAU9LbAaJ+ubGbuQegYt9A4Iv3HEKN0gBGKIQm54RyHQNV6tOVHG2up3DPeuRgsuPx0bF9f1+Uf0B2VXHx9Awz233kNXqeySOrBqJjBiii+s2XU/KjW6EymqAa2MMd93yUHI9g4kCIfI2jQTmcRA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770218091; c=relaxed/simple;
-	bh=+B3/AypqNsgDwFMjdMQLbi9U4FG+BjbJFuyfG0J7qcU=;
+	s=arc-20240116; t=1770218095; c=relaxed/simple;
+	bh=SpdkXzDYlluzvK3CPYDmncll7P16Y/5XXqF1JVMgel0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GOp8drYeHr7bmd0GxhWiesR+Y1TK3h3UFwEh2uwlQj74KLegBoPs1FIhJdfPG7uqJ9sVC/EgyL1GfTH2vn9zn7DLfG4gdG8PR6sNOFutFECFrhgp/X668vfbV2ex75DELki4BZaLILKGC9SmPl6QCCCBMMjLQ3lQ2pNtrFGhzXI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kOkvV0Pd; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gHa6J2CkSo6kKsWDVqSv3Cd5R5mW1ZBMnha3bZTrrVElo5zZM7a0Fq5N/NGqnYxmItGeSkvZZS6mWO5teJ1/j0YqCcpf0W92isCc3gUTP/kBmLzZ4RJKlbMTrwuBApqsBHbbOkwsCXJiinErfnjCP4BTEg24dmc/0QzyZ/uhQuE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SqPwuaGt; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kOkvV0Pd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32EC4C4CEF7;
-	Wed,  4 Feb 2026 15:14:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SqPwuaGt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9DC84C4CEF7;
+	Wed,  4 Feb 2026 15:14:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770218091;
-	bh=+B3/AypqNsgDwFMjdMQLbi9U4FG+BjbJFuyfG0J7qcU=;
+	s=korg; t=1770218095;
+	bh=SpdkXzDYlluzvK3CPYDmncll7P16Y/5XXqF1JVMgel0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kOkvV0PdnuRjKSqOYlsUWc/KsOIQNGKsvILUR5cFmwJerjX6za/6QFlIFSr2jeJ/x
-	 0AB0UbmMUaBgi1WXw/oF5TG5XvCpqSRwso7enx9iqleQomaTCU4STaLw5o2qdlwyAA
-	 6w81X2+pp9SvZ5kZsYada6yCcVaocWD5WASGw9ug=
+	b=SqPwuaGtTrWz/63fFaDK3EBgs7bCHjWsBrn1Uk1zUffURGSpVnb94E3Uoef3en3D0
+	 Sj+jWiO9nZ8ve7b2uXcu56gh+imbdd0B6xdt9edJRJaTuxWLDMDt7DuKqw4WcSIig7
+	 I4kuyb28baKfX142VZ3WHGQnhYDo+4UCXxuGquT8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhang Heng <zhangheng@kylinos.cn>,
-	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 6.1 210/280] ASoC: amd: yc: Add DMI quirk for Acer TravelMate P216-41-TCO
-Date: Wed,  4 Feb 2026 15:39:44 +0100
-Message-ID: <20260204143917.155915196@linuxfoundation.org>
+	Thomas Fourier <fourier.thomas@gmail.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>
+Subject: [PATCH 6.1 211/280] scsi: qla2xxx: edif: Fix dma_free_coherent() size
+Date: Wed,  4 Feb 2026 15:39:45 +0100
+Message-ID: <20260204143917.195152044@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260204143909.614719725@linuxfoundation.org>
 References: <20260204143909.614719725@linuxfoundation.org>
@@ -50,39 +50,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhang Heng <zhangheng@kylinos.cn>
+From: Thomas Fourier <fourier.thomas@gmail.com>
 
-commit 9502b7df5a3c7e174f74f20324ac1fe781fc5c2d upstream.
+commit 56bd3c0f749f45793d1eae1d0ddde4255c749bf6 upstream.
 
-Add a DMI quirk for the Acer TravelMate P216-41-TCO fixing the
-issue where the internal microphone was not detected.
+Earlier in the function, the ha->flt buffer is allocated with size
+sizeof(struct qla_flt_header) + FLT_REGIONS_SIZE but freed in the error
+path with size SFP_DEV_SIZE.
 
-Link: https://bugzilla.kernel.org/show_bug.cgi?id=220983
+Fixes: 84318a9f01ce ("scsi: qla2xxx: edif: Add send, receive, and accept for auth_els")
 Cc: stable@vger.kernel.org
-Signed-off-by: Zhang Heng <zhangheng@kylinos.cn>
-Link: https://patch.msgid.link/20260126014952.3674450-1-zhangheng@kylinos.cn
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Thomas Fourier <fourier.thomas@gmail.com>
+Link: https://patch.msgid.link/20260112134326.55466-2-fourier.thomas@gmail.com
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/soc/amd/yc/acp6x-mach.c |    8 ++++++++
- 1 file changed, 8 insertions(+)
+ drivers/scsi/qla2xxx/qla_os.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/sound/soc/amd/yc/acp6x-mach.c
-+++ b/sound/soc/amd/yc/acp6x-mach.c
-@@ -528,6 +528,14 @@ static const struct dmi_system_id yc_acp
- 			DMI_MATCH(DMI_PRODUCT_NAME, "GOH-X"),
- 		}
- 	},
-+	{
-+		.driver_data = &acp6x_card,
-+		.matches = {
-+			DMI_MATCH(DMI_BOARD_VENDOR, "RB"),
-+			DMI_MATCH(DMI_BOARD_NAME, "XyloD5_RBU"),
-+		}
-+	},
-+
- 	{}
- };
+--- a/drivers/scsi/qla2xxx/qla_os.c
++++ b/drivers/scsi/qla2xxx/qla_os.c
+@@ -4464,7 +4464,7 @@ qla2x00_mem_alloc(struct qla_hw_data *ha
+ fail_elsrej:
+ 	dma_pool_destroy(ha->purex_dma_pool);
+ fail_flt:
+-	dma_free_coherent(&ha->pdev->dev, SFP_DEV_SIZE,
++	dma_free_coherent(&ha->pdev->dev, sizeof(struct qla_flt_header) + FLT_REGIONS_SIZE,
+ 	    ha->flt, ha->flt_dma);
  
+ fail_flt_buffer:
 
 
