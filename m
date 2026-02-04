@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D9ED280A3B;
-	Wed,  4 Feb 2026 14:44:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19F2F280A3B;
+	Wed,  4 Feb 2026 14:44:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770216241; cv=none; b=W5pEU/T30Dw2EM4ake1nTjc5bqlPqS2dyJzR/U+LmJgqNXbksrVoMm9vFu2x7zDYm6rs2up6sYm9r+MEFuk1l4qrayMF9jyY8+6Xg5AY2PQ6hc4JYUPO3dzqymVOputtuKJJaQGzDAx7AZfZHfmhGtkAqZZttHdvMQfcfpuzatY=
+	t=1770216244; cv=none; b=nu6JFxS9lYOfdv9XxtGKQC8Ql2d8xtxx8bwU6t6wV4NZTPmXa2ca3C3fo6P7qCJW2Fm032PyCeEX5H28/bKHoaSVGElO13t+/sEqAUbWmosEMVIMAY6D43ZOVU2k63VRaqn6vhVebMkT+uhuLIRe+St1PuScHAkOPF7tVzzWRGw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770216241; c=relaxed/simple;
-	bh=n4Act0LanljibOQaJa70HEfjdiwzF+oE1wibn9tPl3c=;
+	s=arc-20240116; t=1770216244; c=relaxed/simple;
+	bh=L29BDY4vsYn0h8ZxwJFLVZK1eRwLCICwvJtCCblp7Ns=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DmgDQstgBpthS2g9N2ZspMHtUIZTbfK35eeW4pXVpj/qUEqu5kgzUblbzw83vPKS/SUgz9ud75CN8W4/XURhAr+5EIO2KA15QY/OPf7ZHD1SwYKSbOeB0Y5B2jqA/HxQCkIJklV0ZEI3dQDvc5FdOLLMurYS+4trutgIaHYaJDA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Yf4jrpaw; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TuMBNzfA/ivRYhpfD51XULweLItrMyryKWI6z7DezpO5rEJ3okkV3nCEiFihkgHi2nucqazS/0for5xjJFYvhpuU0EpOy3+Se3ZVCq2sWVRML1UAikkmPX3eZsXXIiJtTh6uRJBGq1ECkMZcHkyl8JLsmL9jr2lk+CFg66fVtu4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Teuz+8/S; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Yf4jrpaw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F2359C4CEF7;
-	Wed,  4 Feb 2026 14:43:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Teuz+8/S"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C73EC4CEF7;
+	Wed,  4 Feb 2026 14:44:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770216240;
-	bh=n4Act0LanljibOQaJa70HEfjdiwzF+oE1wibn9tPl3c=;
+	s=korg; t=1770216244;
+	bh=L29BDY4vsYn0h8ZxwJFLVZK1eRwLCICwvJtCCblp7Ns=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Yf4jrpawd3bDy1sDicEo7kewFY2E1RrJvivA5NFM63klTZYJ1wayxN0BDm1Uda2VD
-	 NVFGpVCLQ05NJ0BNK/DCjORznn2J61K2AR5aIPNDHbcGo1Bs3sR+hkl0o7MMt0TdbB
-	 POI70RDdO9v8nV3YJXxZtpS3lA/1S4PqpaPxt5pc=
+	b=Teuz+8/SZonDDQRV48038BeTrs8UYCAuvP2M22C/w8/7PGONVFuZdVytoKwhgxopH
+	 61WRfdfHWtCAiofXcapLByH/mXIAjSnhqeeQQfWnuR4nAixqn2yjCnDCqW16BtDsaw
+	 NPdI5FBZjgqXtjzmYPGrIfL/XKMDnjvmrd4fmDP8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+7182fbe91e58602ec1fe@syzkaller.appspotmail.com,
+	syzbot+7c134e1c3aa3283790b9@syzkaller.appspotmail.com,
 	Eric Dumazet <edumazet@google.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 008/161] macvlan: fix possible UAF in macvlan_forward_source()
-Date: Wed,  4 Feb 2026 15:37:51 +0100
-Message-ID: <20260204143852.064217608@linuxfoundation.org>
+Subject: [PATCH 5.10 009/161] ipv4: ip_gre: make ipgre_header() robust
+Date: Wed,  4 Feb 2026 15:37:52 +0100
+Message-ID: <20260204143852.099808600@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260204143851.755002596@linuxfoundation.org>
 References: <20260204143851.755002596@linuxfoundation.org>
@@ -54,104 +54,83 @@ Content-Transfer-Encoding: 8bit
 
 From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 7470a7a63dc162f07c26dbf960e41ee1e248d80e ]
+[ Upstream commit e67c577d89894811ce4dcd1a9ed29d8b63476667 ]
 
-Add RCU protection on (struct macvlan_source_entry)->vlan.
+Analog to commit db5b4e39c4e6 ("ip6_gre: make ip6gre_header() robust")
 
-Whenever macvlan_hash_del_source() is called, we must clear
-entry->vlan pointer before RCU grace period starts.
+Over the years, syzbot found many ways to crash the kernel
+in ipgre_header() [1].
 
-This allows macvlan_forward_source() to skip over
-entries queued for freeing.
+This involves team or bonding drivers ability to dynamically
+change their dev->needed_headroom and/or dev->hard_header_len
 
-Note that macvlan_dev are already RCU protected, as they
-are embedded in a standard netdev (netdev_priv(ndev)).
+In this particular crash mld_newpack() allocated an skb
+with a too small reserve/headroom, and by the time mld_sendpack()
+was called, syzbot managed to attach an ipgre device.
 
-Fixes: 79cf79abce71 ("macvlan: add source mode")
-Reported-by: syzbot+7182fbe91e58602ec1fe@syzkaller.appspotmail.com
-https: //lore.kernel.org/netdev/695fb1e8.050a0220.1c677c.039f.GAE@google.com/T/#u
+[1]
+skbuff: skb_under_panic: text:ffffffff89ea3cb7 len:2030915468 put:2030915372 head:ffff888058b43000 data:ffff887fdfa6e194 tail:0x120 end:0x6c0 dev:team0
+ kernel BUG at net/core/skbuff.c:213 !
+Oops: invalid opcode: 0000 [#1] SMP KASAN PTI
+CPU: 1 UID: 0 PID: 1322 Comm: kworker/1:9 Not tainted syzkaller #0 PREEMPT(full)
+Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 10/25/2025
+Workqueue: mld mld_ifc_work
+ RIP: 0010:skb_panic+0x157/0x160 net/core/skbuff.c:213
+Call Trace:
+ <TASK>
+  skb_under_panic net/core/skbuff.c:223 [inline]
+  skb_push+0xc3/0xe0 net/core/skbuff.c:2641
+  ipgre_header+0x67/0x290 net/ipv4/ip_gre.c:897
+  dev_hard_header include/linux/netdevice.h:3436 [inline]
+  neigh_connected_output+0x286/0x460 net/core/neighbour.c:1618
+  NF_HOOK_COND include/linux/netfilter.h:307 [inline]
+  ip6_output+0x340/0x550 net/ipv6/ip6_output.c:247
+  NF_HOOK+0x9e/0x380 include/linux/netfilter.h:318
+  mld_sendpack+0x8d4/0xe60 net/ipv6/mcast.c:1855
+  mld_send_cr net/ipv6/mcast.c:2154 [inline]
+  mld_ifc_work+0x83e/0xd60 net/ipv6/mcast.c:2693
+  process_one_work kernel/workqueue.c:3257 [inline]
+  process_scheduled_works+0xad1/0x1770 kernel/workqueue.c:3340
+  worker_thread+0x8a0/0xda0 kernel/workqueue.c:3421
+  kthread+0x711/0x8a0 kernel/kthread.c:463
+  ret_from_fork+0x510/0xa50 arch/x86/kernel/process.c:158
+  ret_from_fork_asm+0x1a/0x30 arch/x86/entry/entry_64.S:246
+
+Fixes: c54419321455 ("GRE: Refactor GRE tunneling code.")
+Reported-by: syzbot+7c134e1c3aa3283790b9@syzkaller.appspotmail.com
+Closes: https://www.spinics.net/lists/netdev/msg1147302.html
 Signed-off-by: Eric Dumazet <edumazet@google.com>
-Link: https://patch.msgid.link/20260108133651.1130486-1-edumazet@google.com
+Link: https://patch.msgid.link/20260108190214.1667040-1-edumazet@google.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/macvlan.c | 20 +++++++++++++-------
- 1 file changed, 13 insertions(+), 7 deletions(-)
+ net/ipv4/ip_gre.c | 11 +++++++++--
+ 1 file changed, 9 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/macvlan.c b/drivers/net/macvlan.c
-index a0d5d0c41b611..ed02451051aee 100644
---- a/drivers/net/macvlan.c
-+++ b/drivers/net/macvlan.c
-@@ -55,7 +55,7 @@ struct macvlan_port {
- 
- struct macvlan_source_entry {
- 	struct hlist_node	hlist;
--	struct macvlan_dev	*vlan;
-+	struct macvlan_dev __rcu *vlan;
- 	unsigned char		addr[6+2] __aligned(sizeof(u16));
- 	struct rcu_head		rcu;
- };
-@@ -141,7 +141,7 @@ static struct macvlan_source_entry *macvlan_hash_lookup_source(
- 
- 	hlist_for_each_entry_rcu(entry, h, hlist, lockdep_rtnl_is_held()) {
- 		if (ether_addr_equal_64bits(entry->addr, addr) &&
--		    entry->vlan == vlan)
-+		    rcu_access_pointer(entry->vlan) == vlan)
- 			return entry;
- 	}
- 	return NULL;
-@@ -163,7 +163,7 @@ static int macvlan_hash_add_source(struct macvlan_dev *vlan,
- 		return -ENOMEM;
- 
- 	ether_addr_copy(entry->addr, addr);
--	entry->vlan = vlan;
-+	RCU_INIT_POINTER(entry->vlan, vlan);
- 	h = &port->vlan_source_hash[macvlan_eth_hash(addr)];
- 	hlist_add_head_rcu(&entry->hlist, h);
- 	vlan->macaddr_count++;
-@@ -182,6 +182,7 @@ static void macvlan_hash_add(struct macvlan_dev *vlan)
- 
- static void macvlan_hash_del_source(struct macvlan_source_entry *entry)
+diff --git a/net/ipv4/ip_gre.c b/net/ipv4/ip_gre.c
+index ae0189828aa92..c56848f36298d 100644
+--- a/net/ipv4/ip_gre.c
++++ b/net/ipv4/ip_gre.c
+@@ -852,10 +852,17 @@ static int ipgre_header(struct sk_buff *skb, struct net_device *dev,
+ 			const void *daddr, const void *saddr, unsigned int len)
  {
-+	RCU_INIT_POINTER(entry->vlan, NULL);
- 	hlist_del_rcu(&entry->hlist);
- 	kfree_rcu(entry, rcu);
- }
-@@ -380,7 +381,7 @@ static void macvlan_flush_sources(struct macvlan_port *port,
- 	int i;
- 
- 	hash_for_each_safe(port->vlan_source_hash, i, next, entry, hlist)
--		if (entry->vlan == vlan)
-+		if (rcu_access_pointer(entry->vlan) == vlan)
- 			macvlan_hash_del_source(entry);
- 
- 	vlan->macaddr_count = 0;
-@@ -423,9 +424,14 @@ static bool macvlan_forward_source(struct sk_buff *skb,
- 
- 	hlist_for_each_entry_rcu(entry, h, hlist) {
- 		if (ether_addr_equal_64bits(entry->addr, addr)) {
--			if (entry->vlan->flags & MACVLAN_FLAG_NODST)
-+			struct macvlan_dev *vlan = rcu_dereference(entry->vlan);
+ 	struct ip_tunnel *t = netdev_priv(dev);
+-	struct iphdr *iph;
+ 	struct gre_base_hdr *greh;
++	struct iphdr *iph;
++	int needed;
 +
-+			if (!vlan)
-+				continue;
-+
-+			if (vlan->flags & MACVLAN_FLAG_NODST)
- 				consume = true;
--			macvlan_forward_source_one(skb, entry->vlan);
-+			macvlan_forward_source_one(skb, vlan);
- 		}
- 	}
++	needed = t->hlen + sizeof(*iph);
++	if (skb_headroom(skb) < needed &&
++	    pskb_expand_head(skb, HH_DATA_ALIGN(needed - skb_headroom(skb)),
++			     0, GFP_ATOMIC))
++		return -needed;
  
-@@ -1615,7 +1621,7 @@ static int macvlan_fill_info_macaddr(struct sk_buff *skb,
- 	struct macvlan_source_entry *entry;
- 
- 	hlist_for_each_entry_rcu(entry, h, hlist, lockdep_rtnl_is_held()) {
--		if (entry->vlan != vlan)
-+		if (rcu_access_pointer(entry->vlan) != vlan)
- 			continue;
- 		if (nla_put(skb, IFLA_MACVLAN_MACADDR, ETH_ALEN, entry->addr))
- 			return 1;
+-	iph = skb_push(skb, t->hlen + sizeof(*iph));
++	iph = skb_push(skb, needed);
+ 	greh = (struct gre_base_hdr *)(iph+1);
+ 	greh->flags = gre_tnl_flags_to_gre_flags(t->parms.o_flags);
+ 	greh->protocol = htons(type);
 -- 
 2.51.0
 
