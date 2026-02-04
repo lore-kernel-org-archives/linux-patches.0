@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C50E42189C;
-	Wed,  4 Feb 2026 15:10:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D20E34218A0;
+	Wed,  4 Feb 2026 15:10:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770217852; cv=none; b=udFG7Rxh9GeJ7zZsviDvzzGmtKBPgsr/I2qX77byDO1ZA4uoGhMFuEMv7fCTnwjPDhWvDzBs7Fj5ejXpmMQF2FPjH+hDmt5VUTViK+sJl6L26zVT28rzNzoCF+E62OMUB/vkwzpcTAKm6nyhydoTuICpJa3yyNJU2yHBOP2W5AE=
+	t=1770217855; cv=none; b=smsf8T0kZuytX4Dy+qg0otIumHaJDyK61moIeTdGpIi1lEf+/YW5ejAN0nYKedSwWUZ3q8W0KFvhfEH+2+lxCoHk/fB3U4FxSC4vVTKC03RDj3uCmcHGLspcpAFFa7hvP2Rp006uD2zF57ieDIM7E+a5MXy88TCbsicTsPJac3s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770217852; c=relaxed/simple;
-	bh=8+EvkxdFxvCvVsszn7JgMOXJSCG3TF9eW9EFmbxX79w=;
+	s=arc-20240116; t=1770217855; c=relaxed/simple;
+	bh=+KOEUkanwSW0gfoMak+z5SnyI0udYqrH+cDKa5+KPn4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=p0dNX68IFRYSv2s1TogGBsJfs0na1Iot85WLRzv7SBUqYpIkU5vYJmYHnRCgVWBggl5ESsMMLJZwZWs+loLcjdntyaLcjMJm8B4wjFPn4TnC1O0Hs2EUFXrP/psD7v8DWom+NRxJgTIiwbtftHtriCkcQ42a/63Di+Ja0tEPjoI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lJ3KoHdH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=EO0h05RyVr1Em4WsildE3UagicZwRYkVXyjfACGUZlMnvK6diiAmsJAc7ixrGB8DP0mDEMTaVT1f/doEmCnRnwVTeO0cP0GUuDsQ8SaDQ4vUv08/ga6rhpo1BaOP1az6/3URvOcNAFw7QxDPEl59XUrZUrWBbfUhKW1j5l956qg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cyjQqBB1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lJ3KoHdH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8252EC4CEF7;
-	Wed,  4 Feb 2026 15:10:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cyjQqBB1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0AC96C4CEF7;
+	Wed,  4 Feb 2026 15:10:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770217852;
-	bh=8+EvkxdFxvCvVsszn7JgMOXJSCG3TF9eW9EFmbxX79w=;
+	s=korg; t=1770217855;
+	bh=+KOEUkanwSW0gfoMak+z5SnyI0udYqrH+cDKa5+KPn4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lJ3KoHdH2JxJb/YpoqzVNWKI4Oni8eEzYRoBd32+vjwDWfwPj3ruayFu/uBP0+WOH
-	 Juwh0voiNqgBW5BTgs5M97zescvXVF8f8owb8RvOc8BtxqQ+u68YXoovcFrpfEDzbJ
-	 3Z1U2KhhsZdpI+S/dh7+rjQmB0JQnXMnDHpMF4vk=
+	b=cyjQqBB1PS63Vz9ZDWlDKAOtiYhKFM/1hAzLk1iRJQNTOstV+ADOXYEPZEpFuSF+j
+	 Gku7qKXAEXUqfD76NvOmnCFde5Irog519kDfS5woKv3srN7INiyAS5OlSp+05NNipX
+	 wCfEP7bSa/FzXms4VeOmFCEMYZUnv2CW5Y18s7xE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yinhao Hu <dddddd@hust.edu.cn>,
-	Kaiyan Mei <M202472210@hust.edu.cn>,
-	Yun Lu <luyun@kylinos.cn>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Jijie Shao <shaojijie@huawei.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 139/280] netdevsim: fix a race issue related to the operation on bpf_bound_progs list
-Date: Wed,  4 Feb 2026 15:38:33 +0100
-Message-ID: <20260204143914.639636047@linuxfoundation.org>
+Subject: [PATCH 6.1 140/280] net: hns3: fix wrong GENMASK() for HCLGE_FD_AD_COUNTER_NUM_M
+Date: Wed,  4 Feb 2026 15:38:34 +0100
+Message-ID: <20260204143914.674559765@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260204143909.614719725@linuxfoundation.org>
 References: <20260204143909.614719725@linuxfoundation.org>
@@ -53,128 +51,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yun Lu <luyun@kylinos.cn>
+From: Jijie Shao <shaojijie@huawei.com>
 
-[ Upstream commit b97d5eedf4976cc94321243be83b39efe81a0e15 ]
+[ Upstream commit d57c67c956a1bad15115eba6e59d77a6dfeba01d ]
 
-The netdevsim driver lacks a protection mechanism for operations on the
-bpf_bound_progs list. When the nsim_bpf_create_prog() performs
-list_add_tail, it is possible that nsim_bpf_destroy_prog() is
-simultaneously performs list_del. Concurrent operations on the list may
-lead to list corruption and trigger a kernel crash as follows:
+HCLGE_FD_AD_COUNTER_NUM_M should be at GENMASK(19, 13),
+rather than at GENMASK(20, 13), because bit 20 is
+HCLGE_FD_AD_NXT_STEP_B.
 
-[  417.290971] kernel BUG at lib/list_debug.c:62!
-[  417.290983] invalid opcode: 0000 [#1] PREEMPT SMP NOPTI
-[  417.290992] CPU: 10 PID: 168 Comm: kworker/10:1 Kdump: loaded Not tainted 6.19.0-rc5 #1
-[  417.291003] Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS 1.16.3-debian-1.16.3-2 04/01/2014
-[  417.291007] Workqueue: events bpf_prog_free_deferred
-[  417.291021] RIP: 0010:__list_del_entry_valid_or_report+0xa7/0xc0
-[  417.291034] Code: a8 ff 0f 0b 48 89 fe 48 89 ca 48 c7 c7 48 a1 eb ae e8 ed fb a8 ff 0f 0b 48 89 fe 48 89 c2 48 c7 c7 80 a1 eb ae e8 d9 fb a8 ff <0f> 0b 48 89 d1 48 c7 c7 d0 a1 eb ae 48 89 f2 48 89 c6 e8 c2 fb a8
-[  417.291040] RSP: 0018:ffffb16a40807df8 EFLAGS: 00010246
-[  417.291046] RAX: 000000000000006d RBX: ffff8e589866f500 RCX: 0000000000000000
-[  417.291051] RDX: 0000000000000000 RSI: ffff8e59f7b23180 RDI: ffff8e59f7b23180
-[  417.291055] RBP: ffffb16a412c9000 R08: 0000000000000000 R09: 0000000000000003
-[  417.291059] R10: ffffb16a40807c80 R11: ffffffffaf9edce8 R12: ffff8e594427ac20
-[  417.291063] R13: ffff8e59f7b44780 R14: ffff8e58800b7a05 R15: 0000000000000000
-[  417.291074] FS:  0000000000000000(0000) GS:ffff8e59f7b00000(0000) knlGS:0000000000000000
-[  417.291079] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-[  417.291083] CR2: 00007fc4083efe08 CR3: 00000001c3626006 CR4: 0000000000770ee0
-[  417.291088] PKRU: 55555554
-[  417.291091] Call Trace:
-[  417.291096]  <TASK>
-[  417.291103]  nsim_bpf_destroy_prog+0x31/0x80 [netdevsim]
-[  417.291154]  __bpf_prog_offload_destroy+0x2a/0x80
-[  417.291163]  bpf_prog_dev_bound_destroy+0x6f/0xb0
-[  417.291171]  bpf_prog_free_deferred+0x18e/0x1a0
-[  417.291178]  process_one_work+0x18a/0x3a0
-[  417.291188]  worker_thread+0x27b/0x3a0
-[  417.291197]  ? __pfx_worker_thread+0x10/0x10
-[  417.291207]  kthread+0xe5/0x120
-[  417.291214]  ? __pfx_kthread+0x10/0x10
-[  417.291221]  ret_from_fork+0x31/0x50
-[  417.291230]  ? __pfx_kthread+0x10/0x10
-[  417.291236]  ret_from_fork_asm+0x1a/0x30
-[  417.291246]  </TASK>
+This patch corrects the wrong definition.
 
-Add a mutex lock, to prevent simultaneous addition and deletion operations
-on the list.
-
-Fixes: 31d3ad832948 ("netdevsim: add bpf offload support")
-Reported-by: Yinhao Hu <dddddd@hust.edu.cn>
-Reported-by: Kaiyan Mei <M202472210@hust.edu.cn>
-Signed-off-by: Yun Lu <luyun@kylinos.cn>
-Link: https://patch.msgid.link/20260116095308.11441-1-luyun_611@163.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: 117328680288 ("net: hns3: Add input key and action config support for flow director")
+Signed-off-by: Jijie Shao <shaojijie@huawei.com>
+Link: https://patch.msgid.link/20260119132840.410513-2-shaojijie@huawei.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/netdevsim/bpf.c       | 6 ++++++
- drivers/net/netdevsim/dev.c       | 2 ++
- drivers/net/netdevsim/netdevsim.h | 1 +
- 3 files changed, 9 insertions(+)
+ drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_cmd.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/netdevsim/bpf.c b/drivers/net/netdevsim/bpf.c
-index 50854265864d1..7064a3397be23 100644
---- a/drivers/net/netdevsim/bpf.c
-+++ b/drivers/net/netdevsim/bpf.c
-@@ -244,7 +244,9 @@ static int nsim_bpf_create_prog(struct nsim_dev *nsim_dev,
- 			    &state->state, &nsim_bpf_string_fops);
- 	debugfs_create_bool("loaded", 0400, state->ddir, &state->is_loaded);
- 
-+	mutex_lock(&nsim_dev->progs_list_lock);
- 	list_add_tail(&state->l, &nsim_dev->bpf_bound_progs);
-+	mutex_unlock(&nsim_dev->progs_list_lock);
- 
- 	prog->aux->offload->dev_priv = state;
- 
-@@ -273,12 +275,16 @@ static int nsim_bpf_translate(struct bpf_prog *prog)
- static void nsim_bpf_destroy_prog(struct bpf_prog *prog)
- {
- 	struct nsim_bpf_bound_prog *state;
-+	struct nsim_dev *nsim_dev;
- 
- 	state = prog->aux->offload->dev_priv;
-+	nsim_dev = state->nsim_dev;
- 	WARN(state->is_loaded,
- 	     "offload state destroyed while program still bound");
- 	debugfs_remove_recursive(state->ddir);
-+	mutex_lock(&nsim_dev->progs_list_lock);
- 	list_del(&state->l);
-+	mutex_unlock(&nsim_dev->progs_list_lock);
- 	kfree(state);
- }
- 
-diff --git a/drivers/net/netdevsim/dev.c b/drivers/net/netdevsim/dev.c
-index cdf7a70d66591..971796b30605a 100644
---- a/drivers/net/netdevsim/dev.c
-+++ b/drivers/net/netdevsim/dev.c
-@@ -1550,6 +1550,7 @@ int nsim_drv_probe(struct nsim_bus_dev *nsim_bus_dev)
- 	nsim_dev->max_macs = NSIM_DEV_MAX_MACS_DEFAULT;
- 	nsim_dev->test1 = NSIM_DEV_TEST1_DEFAULT;
- 	spin_lock_init(&nsim_dev->fa_cookie_lock);
-+	mutex_init(&nsim_dev->progs_list_lock);
- 
- 	dev_set_drvdata(&nsim_bus_dev->dev, nsim_dev);
- 
-@@ -1684,6 +1685,7 @@ void nsim_drv_remove(struct nsim_bus_dev *nsim_bus_dev)
- 	devl_resources_unregister(devlink);
- 	kfree(nsim_dev->vfconfigs);
- 	kfree(nsim_dev->fa_cookie);
-+	mutex_destroy(&nsim_dev->progs_list_lock);
- 	devl_unlock(devlink);
- 	devlink_free(devlink);
- 	dev_set_drvdata(&nsim_bus_dev->dev, NULL);
-diff --git a/drivers/net/netdevsim/netdevsim.h b/drivers/net/netdevsim/netdevsim.h
-index 02e3518e9a7e2..c28f5a9f92302 100644
---- a/drivers/net/netdevsim/netdevsim.h
-+++ b/drivers/net/netdevsim/netdevsim.h
-@@ -272,6 +272,7 @@ struct nsim_dev {
- 	u32 prog_id_gen;
- 	struct list_head bpf_bound_progs;
- 	struct list_head bpf_bound_maps;
-+	struct mutex progs_list_lock;
- 	struct netdev_phys_item_id switch_id;
- 	struct list_head port_list;
- 	bool fw_update_status;
+diff --git a/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_cmd.h b/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_cmd.h
+index 43cada51d8cb3..0b9d3fc749b95 100644
+--- a/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_cmd.h
++++ b/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_cmd.h
+@@ -731,7 +731,7 @@ struct hclge_fd_tcam_config_3_cmd {
+ #define HCLGE_FD_AD_QID_M		GENMASK(11, 2)
+ #define HCLGE_FD_AD_USE_COUNTER_B	12
+ #define HCLGE_FD_AD_COUNTER_NUM_S	13
+-#define HCLGE_FD_AD_COUNTER_NUM_M	GENMASK(20, 13)
++#define HCLGE_FD_AD_COUNTER_NUM_M	GENMASK(19, 13)
+ #define HCLGE_FD_AD_NXT_STEP_B		20
+ #define HCLGE_FD_AD_NXT_KEY_S		21
+ #define HCLGE_FD_AD_NXT_KEY_M		GENMASK(25, 21)
 -- 
 2.51.0
 
