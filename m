@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5BEC542189D;
-	Wed,  4 Feb 2026 15:17:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE8692D8771;
+	Wed,  4 Feb 2026 15:17:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770218224; cv=none; b=N0l+X4Pp6tplo2oB8lu1kKSlPtJBl17TS5fZ/O40rsyuW96dfsD5Xp9e4m0WPs9U6LIzIH/IDNxmny5mtj8Eqa4n0//En1SvH8b/bQuFcgxQeK76S4Wo63D3maguNFg+0PKehFTKhZZDG+jJH6p6aZ+SCysQbgC0UhtkeCiZVBI=
+	t=1770218227; cv=none; b=jIbHA/Q2zGoX80wA5kgxzl++C9t1RYLMs/r+VcTX04wUaTiUzKjToa4SrzhWHE2jK4sY5zlot3z8z5fRc+rQoS+fnevatdGknnFipel8rCjjuDfEH7IlJVwUpx/X7SUjFZizo7PYT/mflpNF8qjdN7GhSYB2EMArLDKNScJkVwM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770218224; c=relaxed/simple;
-	bh=QZTtrCH7eOfewMMPzN4wdk3udTVOWKlO3FW9C3L9B1U=;
+	s=arc-20240116; t=1770218227; c=relaxed/simple;
+	bh=aufQK/0S0DItPvrarucWs4rZm/lSM3pi67uy2P0oGTM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=laTgY2CUD6vWarDPV03buN5k3xWmC3pfNbZgn2yj3XfK9W8Z/8Q/qyUlyURGV0tLw5CIWSKSHAl6AU2HsIHJdkmAe64m1LE3Je1ex/DKTuEa//Z0Lbc0hWNntVZNjImNu3C94dQo275VgZ4F1s8Vinj89wgt8/5bPQL0DWxM27Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=u8V7wpZw; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=EFQ44c+t5+du+GmbkSAuKRrBqAEG8YeR4kw5F143fa68CZ3rLzwfAGVjt/1saXDnD+tNysaLPUbggmw4wB4RClmcCUR4/wopHCoawwEnv3YeGSwYRxPD/cyQUiMnV1FFBm2UhcQljvSCsvUw/+35V5lp97MtE7y+VQjhHyziQxU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=f4Ptpt9S; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="u8V7wpZw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A7DECC4CEF7;
-	Wed,  4 Feb 2026 15:17:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="f4Ptpt9S"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22FC8C4CEF7;
+	Wed,  4 Feb 2026 15:17:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770218224;
-	bh=QZTtrCH7eOfewMMPzN4wdk3udTVOWKlO3FW9C3L9B1U=;
+	s=korg; t=1770218227;
+	bh=aufQK/0S0DItPvrarucWs4rZm/lSM3pi67uy2P0oGTM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=u8V7wpZwrklRbxN/sXnDIYlijDgMhoc7ZNV2Rm3dJzKPCu+UPDmoh++4uOinpkeVn
-	 jr/sYnmaQ6mhAxpWgvpd6y4BMtnX8qadluVVIYPeASFaPhaL76Ot7UxFLlVcjo2RiM
-	 s1B0V6K3Mz5oeFfisErUV6CmRK0LmbxEFNONDIbg=
+	b=f4Ptpt9SBA5lyEcbVfzbEgQY+yHEqRW1ib7K1JbRpoHLBoi0RnSKmDB+UCW3V2IxJ
+	 r+6E9OHE5g9PPT2pYxIqekL2h4wwpAtJH22doXHwXMjbUDyGf+HipX9URRJ3Azk9H2
+	 qMgOOUPjuaYK6i7Qsafr1FKa+PtQBPjdShsufvW4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Paolo Bonzini <pbonzini@redhat.com>,
-	Sean Christopherson <seanjc@google.com>,
-	Binbin Wu <binbin.wu@linux.intel.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 249/280] x86/fpu: Clear XSTATE_BV[i] in guest XSAVE state whenever XFD[i]=1
-Date: Wed,  4 Feb 2026 15:40:23 +0100
-Message-ID: <20260204143918.600342327@linuxfoundation.org>
+	syzbot+a2a3b519de727b0f7903@syzkaller.appspotmail.com,
+	"Nikola Z. Ivanov" <zlatistiv@gmail.com>,
+	Jiri Pirko <jiri@nvidia.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Rahul Sharma <black.hawk@163.com>
+Subject: [PATCH 6.1 250/280] team: Move team device type change at the end of team_port_add
+Date: Wed,  4 Feb 2026 15:40:24 +0100
+Message-ID: <20260204143918.636203919@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260204143909.614719725@linuxfoundation.org>
 References: <20260204143909.614719725@linuxfoundation.org>
@@ -52,174 +53,114 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sean Christopherson <seanjc@google.com>
+From: "Nikola Z. Ivanov" <zlatistiv@gmail.com>
 
-[ Upstream commit b45f721775947a84996deb5c661602254ce25ce6 ]
+[ Upstream commit 0ae9cfc454ea5ead5f3ddbdfe2e70270d8e2c8ef ]
 
-When loading guest XSAVE state via KVM_SET_XSAVE, and when updating XFD in
-response to a guest WRMSR, clear XFD-disabled features in the saved (or to
-be restored) XSTATE_BV to ensure KVM doesn't attempt to load state for
-features that are disabled via the guest's XFD.  Because the kernel
-executes XRSTOR with the guest's XFD, saving XSTATE_BV[i]=1 with XFD[i]=1
-will cause XRSTOR to #NM and panic the kernel.
+Attempting to add a port device that is already up will expectedly fail,
+but not before modifying the team device header_ops.
 
-E.g. if fpu_update_guest_xfd() sets XFD without clearing XSTATE_BV:
+In the case of the syzbot reproducer the gre0 device is
+already in state UP when it attempts to add it as a
+port device of team0, this fails but before that
+header_ops->create of team0 is changed from eth_header to ipgre_header
+in the call to team_dev_type_check_change.
 
-  ------------[ cut here ]------------
-  WARNING: arch/x86/kernel/traps.c:1524 at exc_device_not_available+0x101/0x110, CPU#29: amx_test/848
-  Modules linked in: kvm_intel kvm irqbypass
-  CPU: 29 UID: 1000 PID: 848 Comm: amx_test Not tainted 6.19.0-rc2-ffa07f7fd437-x86_amx_nm_xfd_non_init-vm #171 NONE
-  Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS 0.0.0 02/06/2015
-  RIP: 0010:exc_device_not_available+0x101/0x110
-  Call Trace:
-   <TASK>
-   asm_exc_device_not_available+0x1a/0x20
-  RIP: 0010:restore_fpregs_from_fpstate+0x36/0x90
-   switch_fpu_return+0x4a/0xb0
-   kvm_arch_vcpu_ioctl_run+0x1245/0x1e40 [kvm]
-   kvm_vcpu_ioctl+0x2c3/0x8f0 [kvm]
-   __x64_sys_ioctl+0x8f/0xd0
-   do_syscall_64+0x62/0x940
-   entry_SYSCALL_64_after_hwframe+0x4b/0x53
-   </TASK>
-  ---[ end trace 0000000000000000 ]---
+Later when we end up in ipgre_header() struct ip_tunnel* points to nonsense
+as the private data of the device still holds a struct team.
 
-This can happen if the guest executes WRMSR(MSR_IA32_XFD) to set XFD[18] = 1,
-and a host IRQ triggers kernel_fpu_begin() prior to the vmexit handler's
-call to fpu_update_guest_xfd().
+Example sequence of iproute2 commands to reproduce the hang/BUG():
+ip link add dev team0 type team
+ip link add dev gre0 type gre
+ip link set dev gre0 up
+ip link set dev gre0 master team0
+ip link set dev team0 up
+ping -I team0 1.1.1.1
 
-and if userspace stuffs XSTATE_BV[i]=1 via KVM_SET_XSAVE:
+Move team_dev_type_check_change down where all other checks have passed
+as it changes the dev type with no way to restore it in case
+one of the checks that follow it fail.
 
-  ------------[ cut here ]------------
-  WARNING: arch/x86/kernel/traps.c:1524 at exc_device_not_available+0x101/0x110, CPU#14: amx_test/867
-  Modules linked in: kvm_intel kvm irqbypass
-  CPU: 14 UID: 1000 PID: 867 Comm: amx_test Not tainted 6.19.0-rc2-2dace9faccd6-x86_amx_nm_xfd_non_init-vm #168 NONE
-  Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS 0.0.0 02/06/2015
-  RIP: 0010:exc_device_not_available+0x101/0x110
-  Call Trace:
-   <TASK>
-   asm_exc_device_not_available+0x1a/0x20
-  RIP: 0010:restore_fpregs_from_fpstate+0x36/0x90
-   fpu_swap_kvm_fpstate+0x6b/0x120
-   kvm_load_guest_fpu+0x30/0x80 [kvm]
-   kvm_arch_vcpu_ioctl_run+0x85/0x1e40 [kvm]
-   kvm_vcpu_ioctl+0x2c3/0x8f0 [kvm]
-   __x64_sys_ioctl+0x8f/0xd0
-   do_syscall_64+0x62/0x940
-   entry_SYSCALL_64_after_hwframe+0x4b/0x53
-   </TASK>
-  ---[ end trace 0000000000000000 ]---
+Also make sure to preserve the origial mtu assignment:
+  - If port_dev is not the same type as dev, dev takes mtu from port_dev
+  - If port_dev is the same type as dev, port_dev takes mtu from dev
 
-The new behavior is consistent with the AMX architecture.  Per Intel's SDM,
-XSAVE saves XSTATE_BV as '0' for components that are disabled via XFD
-(and non-compacted XSAVE saves the initial configuration of the state
-component):
+This is done by adding a conditional before the call to dev_set_mtu
+to prevent it from assigning port_dev->mtu = dev->mtu and instead
+letting team_dev_type_check_change assign dev->mtu = port_dev->mtu.
+The conditional is needed because the patch moves the call to
+team_dev_type_check_change past dev_set_mtu.
 
-  If XSAVE, XSAVEC, XSAVEOPT, or XSAVES is saving the state component i,
-  the instruction does not generate #NM when XCR0[i] = IA32_XFD[i] = 1;
-  instead, it operates as if XINUSE[i] = 0 (and the state component was
-  in its initial state): it saves bit i of XSTATE_BV field of the XSAVE
-  header as 0; in addition, XSAVE saves the initial configuration of the
-  state component (the other instructions do not save state component i).
+Testing:
+  - team device driver in-tree selftests
+  - Add/remove various devices as slaves of team device
+  - syzbot
 
-Alternatively, KVM could always do XRSTOR with XFD=0, e.g. by using
-a constant XFD based on the set of enabled features when XSAVEing for
-a struct fpu_guest.  However, having XSTATE_BV[i]=1 for XFD-disabled
-features can only happen in the above interrupt case, or in similar
-scenarios involving preemption on preemptible kernels, because
-fpu_swap_kvm_fpstate()'s call to save_fpregs_to_fpstate() saves the
-outgoing FPU state with the current XFD; and that is (on all but the
-first WRMSR to XFD) the guest XFD.
-
-Therefore, XFD can only go out of sync with XSTATE_BV in the above
-interrupt case, or in similar scenarios involving preemption on
-preemptible kernels, and it we can consider it (de facto) part of KVM
-ABI that KVM_GET_XSAVE returns XSTATE_BV[i]=0 for XFD-disabled features.
-
-Reported-by: Paolo Bonzini <pbonzini@redhat.com>
-Cc: stable@vger.kernel.org
-Fixes: 820a6ee944e7 ("kvm: x86: Add emulation for IA32_XFD", 2022-01-14)
-Signed-off-by: Sean Christopherson <seanjc@google.com>
-[Move clearing of XSTATE_BV from fpu_copy_uabi_to_guest_fpstate
- to kvm_vcpu_ioctl_x86_set_xsave. - Paolo]
-Reviewed-by: Binbin Wu <binbin.wu@linux.intel.com>
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Reported-by: syzbot+a2a3b519de727b0f7903@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=a2a3b519de727b0f7903
+Fixes: 1d76efe1577b ("team: add support for non-ethernet devices")
+Signed-off-by: Nikola Z. Ivanov <zlatistiv@gmail.com>
+Reviewed-by: Jiri Pirko <jiri@nvidia.com>
+Link: https://patch.msgid.link/20251122002027.695151-1-zlatistiv@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Rahul Sharma <black.hawk@163.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kernel/fpu/core.c |   32 +++++++++++++++++++++++++++++---
- arch/x86/kvm/x86.c         |    9 +++++++++
- 2 files changed, 38 insertions(+), 3 deletions(-)
+ drivers/net/team/team.c |   23 +++++++++++++++--------
+ 1 file changed, 15 insertions(+), 8 deletions(-)
 
---- a/arch/x86/kernel/fpu/core.c
-+++ b/arch/x86/kernel/fpu/core.c
-@@ -294,10 +294,29 @@ EXPORT_SYMBOL_GPL(fpu_enable_guest_xfd_f
- #ifdef CONFIG_X86_64
- void fpu_update_guest_xfd(struct fpu_guest *guest_fpu, u64 xfd)
- {
-+	struct fpstate *fpstate = guest_fpu->fpstate;
-+
- 	fpregs_lock();
--	guest_fpu->fpstate->xfd = xfd;
--	if (guest_fpu->fpstate->in_use)
--		xfd_update_state(guest_fpu->fpstate);
-+
-+	/*
-+	 * KVM's guest ABI is that setting XFD[i]=1 *can* immediately revert the
-+	 * save state to its initial configuration.  Likewise, KVM_GET_XSAVE does
-+	 * the same as XSAVE and returns XSTATE_BV[i]=0 whenever XFD[i]=1.
-+	 *
-+	 * If the guest's FPU state is in hardware, just update XFD: the XSAVE
-+	 * in fpu_swap_kvm_fpstate will clear XSTATE_BV[i] whenever XFD[i]=1.
-+	 *
-+	 * If however the guest's FPU state is NOT resident in hardware, clear
-+	 * disabled components in XSTATE_BV now, or a subsequent XRSTOR will
-+	 * attempt to load disabled components and generate #NM _in the host_.
-+	 */
-+	if (xfd && test_thread_flag(TIF_NEED_FPU_LOAD))
-+		fpstate->regs.xsave.header.xfeatures &= ~xfd;
-+
-+	fpstate->xfd = xfd;
-+	if (fpstate->in_use)
-+		xfd_update_state(fpstate);
-+
- 	fpregs_unlock();
- }
- EXPORT_SYMBOL_GPL(fpu_update_guest_xfd);
-@@ -406,6 +425,13 @@ int fpu_copy_uabi_to_guest_fpstate(struc
- 		return -EINVAL;
+--- a/drivers/net/team/team.c
++++ b/drivers/net/team/team.c
+@@ -1186,10 +1186,6 @@ static int team_port_add(struct team *te
+ 		return -EPERM;
+ 	}
  
- 	/*
-+	 * Disabled features must be in their initial state, otherwise XRSTOR
-+	 * causes an exception.
-+	 */
-+	if (WARN_ON_ONCE(ustate->xsave.header.xfeatures & kstate->xfd))
-+		return -EINVAL;
-+
-+	/*
- 	 * Nullify @vpkru to preserve its current value if PKRU's bit isn't set
- 	 * in the header.  KVM's odd ABI is to leave PKRU untouched in this
- 	 * case (all other components are eventually re-initialized).
---- a/arch/x86/kvm/x86.c
-+++ b/arch/x86/kvm/x86.c
-@@ -5341,9 +5341,18 @@ static void kvm_vcpu_ioctl_x86_get_xsave
- static int kvm_vcpu_ioctl_x86_set_xsave(struct kvm_vcpu *vcpu,
- 					struct kvm_xsave *guest_xsave)
- {
-+	union fpregs_state *xstate = (union fpregs_state *)guest_xsave->region;
-+
- 	if (fpstate_is_confidential(&vcpu->arch.guest_fpu))
- 		return 0;
+-	err = team_dev_type_check_change(dev, port_dev);
+-	if (err)
+-		return err;
+-
+ 	if (port_dev->flags & IFF_UP) {
+ 		NL_SET_ERR_MSG(extack, "Device is up. Set it down before adding it as a team port");
+ 		netdev_err(dev, "Device %s is up. Set it down before adding it as a team port\n",
+@@ -1207,10 +1203,16 @@ static int team_port_add(struct team *te
+ 	INIT_LIST_HEAD(&port->qom_list);
  
+ 	port->orig.mtu = port_dev->mtu;
+-	err = dev_set_mtu(port_dev, dev->mtu);
+-	if (err) {
+-		netdev_dbg(dev, "Error %d calling dev_set_mtu\n", err);
+-		goto err_set_mtu;
 +	/*
-+	 * For backwards compatibility, do not expect disabled features to be in
-+	 * their initial state.  XSTATE_BV[i] must still be cleared whenever
-+	 * XFD[i]=1, or XRSTOR would cause a #NM.
++	 * MTU assignment will be handled in team_dev_type_check_change
++	 * if dev and port_dev are of different types
 +	 */
-+	xstate->xsave.header.xfeatures &= ~vcpu->arch.guest_fpu.fpstate->xfd;
++	if (dev->type == port_dev->type) {
++		err = dev_set_mtu(port_dev, dev->mtu);
++		if (err) {
++			netdev_dbg(dev, "Error %d calling dev_set_mtu\n", err);
++			goto err_set_mtu;
++		}
+ 	}
+ 
+ 	memcpy(port->orig.dev_addr, port_dev->dev_addr, port_dev->addr_len);
+@@ -1285,6 +1287,10 @@ static int team_port_add(struct team *te
+ 		}
+ 	}
+ 
++	err = team_dev_type_check_change(dev, port_dev);
++	if (err)
++		goto err_set_dev_type;
 +
- 	return fpu_copy_uabi_to_guest_fpstate(&vcpu->arch.guest_fpu,
- 					      guest_xsave->region,
- 					      kvm_caps.supported_xcr0,
+ 	if (dev->flags & IFF_UP) {
+ 		netif_addr_lock_bh(dev);
+ 		dev_uc_sync_multiple(port_dev, dev);
+@@ -1303,6 +1309,7 @@ static int team_port_add(struct team *te
+ 
+ 	return 0;
+ 
++err_set_dev_type:
+ err_set_slave_promisc:
+ 	__team_option_inst_del_port(team, port);
+ 
 
 
