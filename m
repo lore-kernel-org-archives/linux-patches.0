@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ACBAD41B346;
-	Wed,  4 Feb 2026 15:26:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0FA082D978A;
+	Wed,  4 Feb 2026 15:26:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770218808; cv=none; b=LAYALTLQRJ91TKsjQ15mKWi/QEH/JA+PphzPWMr4kFAoVqxLoJctpfu8b2+ZHQ+v06O/XEZYhnTAIX2K8Un2H6x76k92dRQIrCxHR3cYn/TlC8qYEU+1ofy3oAGL2CShZdk+9Pw7Kx5m49mMZ19ZBMR8k2336OIdRpuxkU90vy0=
+	t=1770218812; cv=none; b=ssfhnmFuVkd392taLEV2oSUG+C1/g5TqOHa7OmNe8aOpSK94okjX67ipH8yMyUe1K1qGhhWAVMv33u/gYuADtUwJRP31dKZdzXWuw4ydl+niCeflNEYhK9wJx7NoAKv95ZKT2CQEtUKnTfV2aejPjTqdOhvV8CmPDgPQ6FsG02M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770218808; c=relaxed/simple;
-	bh=wQdqw75pf1v6ZDmvmBhp1KCksCOBjppiGC9cIAbJJzo=;
+	s=arc-20240116; t=1770218812; c=relaxed/simple;
+	bh=uynJEcHdUC2SlE8AcJnfPvOxWKUrA5tIlZ58XKOsxBQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pm9d6I1Ac3x/DCSCfVMVnzTSAB5C3ROdNc3hlV/vz7U6RatooSXg061P6EsVrWOq7VWiCPCHbpmQ/Y4CvQUV3Lsvf3XkKm1RsK1AegvDnn5hsFshGdHlj2xI3tsmAzdyEA0SSKeIm3IRjho9DD0Duiv4iMufNJAfcfQ4utjvUa8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=U6RjPZzv; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PrjS4Ok1mOglPrc0GIhpHTb5/H+sYT3SOk+hVmnXn+ZavWxMla8nqpKhfLHXZLveTmN8+0xnh+f11fp7iK0Vq0NIBKRnJbmai4QcETXBBdK13C+q0mynQ3kJPj0JklHpij04v3Jfn0F8wJQp7f084vaFMCg9jn5xZfiwPqcd12o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NLMc8SVQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="U6RjPZzv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E8B26C4CEF7;
-	Wed,  4 Feb 2026 15:26:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NLMc8SVQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D422C4CEF7;
+	Wed,  4 Feb 2026 15:26:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770218808;
-	bh=wQdqw75pf1v6ZDmvmBhp1KCksCOBjppiGC9cIAbJJzo=;
+	s=korg; t=1770218811;
+	bh=uynJEcHdUC2SlE8AcJnfPvOxWKUrA5tIlZ58XKOsxBQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=U6RjPZzv3CJakTrbm+y+VaH+Kqnkeo/TtFSgETFvmWQl5x/TXDykPkpFAZ2oYQoJJ
-	 Jm8TCZm2VTG3xtRp6t1hMaUTGk373eroGm6/oksRmT8oqlpHipCNiR95mEuERn3v9i
-	 SasF5K0I8UDMJ1iJxkkIhTQ5vXcHQCJzNJdVkOWg=
+	b=NLMc8SVQN/jpiF1wWcEtL6G/w/ArQgRMKHzvYPOjb8P0NupLqLKBZwQ8p21MRE4L8
+	 h42dWIeOh+3pXFkVictngXf+pUEsXMVbiOcVGqM5pVvkhayK8AmqWVfP34mlyir0iL
+	 W9Nil0LBdof6qM7KzEJndUpEYWCb7r5hriWp0kOQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mat Martineau <martineau@kernel.org>,
-	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.12 50/87] selftests: mptcp: join: fix local endp not being tracked
-Date: Wed,  4 Feb 2026 15:40:48 +0100
-Message-ID: <20260204143848.716705450@linuxfoundation.org>
+	Alice Ryhl <aliceryhl@google.com>,
+	Trevor Gross <tmgross@umich.edu>,
+	Nicolas Schier <nsc@kernel.org>,
+	Miguel Ojeda <ojeda@kernel.org>,
+	Alyssa Ross <hi@alyssa.is>
+Subject: [PATCH 6.12 68/87] rust: kbuild: support `-Cjump-tables=n` for Rust 1.93.0
+Date: Wed,  4 Feb 2026 15:41:06 +0100
+Message-ID: <20260204143849.364553828@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260204143846.906385641@linuxfoundation.org>
 References: <20260204143846.906385641@linuxfoundation.org>
@@ -51,60 +53,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+From: Miguel Ojeda <ojeda@kernel.org>
 
-commit c5d5ecf21fdd9ce91e6116feb3aa83cee73352cc upstream.
+commit 789521b4717fd6bd85164ba5c131f621a79c9736 upstream.
 
-When running this mptcp_join.sh selftest on older kernel versions not
-supporting local endpoints tracking, this test fails because 3 MP_JOIN
-ACKs have been received, while only 2 were expected.
+Rust 1.93.0 (expected 2026-01-22) is stabilizing `-Zno-jump-tables`
+[1][2] as `-Cjump-tables=n` [3].
 
-It is not clear why only 2 MP_JOIN ACKs were expected on old kernel
-versions, while 3 MP_JOIN SYN and SYN+ACK were expected. When testing on
-the v5.15.197 kernel, 3 MP_JOIN ACKs are seen, which is also what is
-expected in the selftests included in this kernel version, see commit
-f4480eaad489 ("selftests: mptcp: add missing join check").
+Without this change, one would eventually see:
 
-Switch the expected MP_JOIN ACKs to 3. While at it, move this
-chk_join_nr helper out of the special condition for older kernel
-versions as it is now the same as with more recent ones. Also, invert
-the condition to be more logical: what's expected on newer kernel
-versions having such helper first.
+      RUSTC L rust/core.o
+    error: unknown unstable option: `no-jump-tables`
 
-Fixes: d4c81bbb8600 ("selftests: mptcp: join: support local endpoint being tracked or not")
-Cc: stable@vger.kernel.org
-Reviewed-by: Mat Martineau <martineau@kernel.org>
-Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Link: https://patch.msgid.link/20260127-net-mptcp-dup-nl-events-v1-5-7f71e1bc4feb@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Thus support the upcoming version.
+
+Link: https://github.com/rust-lang/rust/issues/116592 [1]
+Link: https://github.com/rust-lang/rust/pull/105812 [2]
+Link: https://github.com/rust-lang/rust/pull/145974 [3]
+Reviewed-by: Alice Ryhl <aliceryhl@google.com>
+Reviewed-by: Trevor Gross <tmgross@umich.edu>
+Acked-by: Nicolas Schier <nsc@kernel.org>
+Link: https://patch.msgid.link/20251101094011.1024534-1-ojeda@kernel.org
+Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
+Signed-off-by: Alyssa Ross <hi@alyssa.is>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/testing/selftests/net/mptcp/mptcp_join.sh |    9 ++++-----
- 1 file changed, 4 insertions(+), 5 deletions(-)
+ arch/x86/Makefile |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/tools/testing/selftests/net/mptcp/mptcp_join.sh
-+++ b/tools/testing/selftests/net/mptcp/mptcp_join.sh
-@@ -2162,17 +2162,16 @@ signal_address_tests()
- 		ip netns exec $ns1 sysctl -q net.mptcp.add_addr_timeout=1
- 		speed=slow \
- 			run_tests $ns1 $ns2 10.0.1.1
-+		chk_join_nr 3 3 3
- 
- 		# It is not directly linked to the commit introducing this
- 		# symbol but for the parent one which is linked anyway.
--		if ! mptcp_lib_kallsyms_has "mptcp_pm_subflow_check_next$"; then
--			chk_join_nr 3 3 2
--			chk_add_nr 4 4
--		else
--			chk_join_nr 3 3 3
-+		if mptcp_lib_kallsyms_has "mptcp_pm_subflow_check_next$"; then
- 			# the server will not signal the address terminating
- 			# the MPC subflow
- 			chk_add_nr 3 3
-+		else
-+			chk_add_nr 4 4
- 		fi
- 	fi
- }
+--- a/arch/x86/Makefile
++++ b/arch/x86/Makefile
+@@ -109,7 +109,7 @@ ifeq ($(CONFIG_X86_KERNEL_IBT),y)
+ #   https://gcc.gnu.org/bugzilla/show_bug.cgi?id=104816
+ #
+ KBUILD_CFLAGS += $(call cc-option,-fcf-protection=branch -fno-jump-tables)
+-KBUILD_RUSTFLAGS += -Zcf-protection=branch -Zno-jump-tables
++KBUILD_RUSTFLAGS += -Zcf-protection=branch $(if $(call rustc-min-version,109300),-Cjump-tables=n,-Zno-jump-tables)
+ else
+ KBUILD_CFLAGS += $(call cc-option,-fcf-protection=none)
+ endif
 
 
