@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 486FC41B34E;
-	Wed,  4 Feb 2026 15:26:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B224541B34E;
+	Wed,  4 Feb 2026 15:26:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770218798; cv=none; b=rd2imMj3jZUK5P/RAzv4uYosPTOHCKcoeUb4MWe8be3cs1EydNh+vMgr0O+NAtvIyiao2+9/Ca29FUVOw6ejQPFmVeoBSGarxPqnhZhTZO0q6bUCCiIW+jobPUIo2cBk0WF20hoyMt/pnbs1ASadJXAmgc64ANkW8K+qW8V8aF4=
+	t=1770218801; cv=none; b=HMDQ720xIEUThYDOAAu8gfFbcC730UlIP7ehNnx07HM2V54+PckMnIcGGjBDjLwQnXN4iUQvHLXlYHRXW+3mnTMy5E4/HOlYWx+XFUefmGtX4nSiyKOBmTRNR+A2AWDUeK03O9ikUlFONl6/yu6YX1Ztm3InQTeJhR1KdD6nifY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770218798; c=relaxed/simple;
-	bh=ACKFHEHl59J70hgg9WRw/R1XHL9eg8NdFzZZw9E85wA=;
+	s=arc-20240116; t=1770218801; c=relaxed/simple;
+	bh=kSKJiO9svrg/HDpYMg5XNtQvCyV0Ld2qH6ShONhGK1E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=nqo3idEbFX9sa1AWzD79axkjPmXvcSAp239G24Yd3ldiNr9KtTInE1l65gStdhyWRNJFbFfmylTZer0YIeDmEvNraNpWeCGO6w/Hg9GQTGxYOVa0xXEY5wCRgREJ+SMzWyj0v8TlHOcmd4jLhgaLOs79cLCJ6ASJ7LfrRLk/hiA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=C5UXa2Qg; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Zr4WNTKIXnEKFavGjqFcYvMZ8stZvSdh7MQLcu2taCcSTC+zpOqE4WjdFRhKjGYR8r41gQ5HQyIvOMagqhNHnodUYcVhRA6AQD8pasxndo0kdw5Bh3PLr16P7eyfEcG1e+TTaeunqRCdd3w/VJwJfkltZPdJ7plWbegp7w2OPo0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SaBPR1NF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="C5UXa2Qg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 98A8BC4CEF7;
-	Wed,  4 Feb 2026 15:26:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SaBPR1NF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A71BC4CEF7;
+	Wed,  4 Feb 2026 15:26:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770218798;
-	bh=ACKFHEHl59J70hgg9WRw/R1XHL9eg8NdFzZZw9E85wA=;
+	s=korg; t=1770218801;
+	bh=kSKJiO9svrg/HDpYMg5XNtQvCyV0Ld2qH6ShONhGK1E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=C5UXa2Qg4p2PLBchLu7kkv99tza2sgJWGXMSgBBTMngsrwWsIEPQlZclaox4JAHBI
-	 40r9y2X56nGxquxDzxfGCOMhYYKht2rZ5wJAi4+jCsw/UXUeIPU3N9tnmkDZ7d63GW
-	 2Qcy7T2WsChqVkYlwffqhfMxsdwmb5k35zV+fTTk=
+	b=SaBPR1NFkEnHN5hOZ4GC1c7OApBkK04WxYSIgN8JaoDUsDJqJj8LcJVt26rgxqtaW
+	 CFn41RtQY7t+C8WBKAjNexzR7v3/wTuBGsmHIZcjQApP6pGDnwhWEUXckFYUco3+dA
+	 GmJatZonNoYfoY3AIq5BW81PSvQXJG8XcFI/9x3I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Timur=20Krist=C3=B3f?= <timur.kristof@gmail.com>,
-	Philip Yang <Philip.Yang@amd.com>,
-	Jon Doron <jond@wiz.io>,
+	Jesse Zhang <Jesse.Zhang@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.12 65/87] drm/amdgpu: fix NULL pointer dereference in amdgpu_gmc_filter_faults_remove
-Date: Wed,  4 Feb 2026 15:41:03 +0100
-Message-ID: <20260204143849.257666274@linuxfoundation.org>
+Subject: [PATCH 6.12 66/87] drm/amdgpu: Fix cond_exec handling in amdgpu_ib_schedule()
+Date: Wed,  4 Feb 2026 15:41:04 +0100
+Message-ID: <20260204143849.293416525@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260204143846.906385641@linuxfoundation.org>
 References: <20260204143846.906385641@linuxfoundation.org>
@@ -46,82 +44,52 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jon Doron <jond@wiz.io>
+From: Alex Deucher <alexander.deucher@amd.com>
 
-commit 8b1ecc9377bc641533cd9e76dfa3aee3cd04a007 upstream.
+commit b1defcdc4457649db236415ee618a7151e28788c upstream.
 
-On APUs such as Raven and Renoir (GC 9.1.0, 9.2.2, 9.3.0), the ih1 and
-ih2 interrupt ring buffers are not initialized. This is by design, as
-these secondary IH rings are only available on discrete GPUs. See
-vega10_ih_sw_init() which explicitly skips ih1/ih2 initialization when
-AMD_IS_APU is set.
+The EXEC_COUNT field must be > 0.  In the gfx shadow
+handling we always emit a cond_exec packet after the gfx_shadow
+packet, but the EXEC_COUNT never gets patched.  This leads
+to a hang when we try and reset queues on gfx11 APUs.
 
-However, amdgpu_gmc_filter_faults_remove() unconditionally uses ih1 to
-get the timestamp of the last interrupt entry. When retry faults are
-enabled on APUs (noretry=0), this function is called from the SVM page
-fault recovery path, resulting in a NULL pointer dereference when
-amdgpu_ih_decode_iv_ts_helper() attempts to access ih->ring[].
-
-The crash manifests as:
-
-  BUG: kernel NULL pointer dereference, address: 0000000000000004
-  RIP: 0010:amdgpu_ih_decode_iv_ts_helper+0x22/0x40 [amdgpu]
-  Call Trace:
-   amdgpu_gmc_filter_faults_remove+0x60/0x130 [amdgpu]
-   svm_range_restore_pages+0xae5/0x11c0 [amdgpu]
-   amdgpu_vm_handle_fault+0xc8/0x340 [amdgpu]
-   gmc_v9_0_process_interrupt+0x191/0x220 [amdgpu]
-   amdgpu_irq_dispatch+0xed/0x2c0 [amdgpu]
-   amdgpu_ih_process+0x84/0x100 [amdgpu]
-
-This issue was exposed by commit 1446226d32a4 ("drm/amdgpu: Remove GC HW
-IP 9.3.0 from noretry=1") which changed the default for Renoir APU from
-noretry=1 to noretry=0, enabling retry fault handling and thus
-exercising the buggy code path.
-
-Fix this by adding a check for ih1.ring_size before attempting to use
-it. Also restore the soft_ih support from commit dd299441654f ("drm/amdgpu:
-Rework retry fault removal").  This is needed if the hardware doesn't
-support secondary HW IH rings.
-
-v2: additional updates (Alex)
-
-Closes: https://gitlab.freedesktop.org/drm/amd/-/issues/3814
-Fixes: dd299441654f ("drm/amdgpu: Rework retry fault removal")
-Reviewed-by: Timur Kristóf <timur.kristof@gmail.com>
-Reviewed-by: Philip Yang <Philip.Yang@amd.com>
-Signed-off-by: Jon Doron <jond@wiz.io>
+Fixes: c68cbbfd54c6 ("drm/amdgpu: cleanup conditional execution")
+Closes: https://gitlab.freedesktop.org/drm/amd/-/issues/4789
+Reviewed-by: Jesse Zhang <Jesse.Zhang@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 6ce8d536c80aa1f059e82184f0d1994436b1d526)
+(cherry picked from commit ba205ac3d6e83f56c4f824f23f1b4522cb844ff3)
 Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_gmc.c |    7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_ib.c |    5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_gmc.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_gmc.c
-@@ -482,8 +482,13 @@ void amdgpu_gmc_filter_faults_remove(str
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_ib.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_ib.c
+@@ -223,7 +223,7 @@ int amdgpu_ib_schedule(struct amdgpu_rin
  
- 	if (adev->irq.retry_cam_enabled)
- 		return;
-+	else if (adev->irq.ih1.ring_size)
-+		ih = &adev->irq.ih1;
-+	else if (adev->irq.ih_soft.enabled)
-+		ih = &adev->irq.ih_soft;
-+	else
-+		return;
+ 	amdgpu_ring_ib_begin(ring);
  
--	ih = &adev->irq.ih1;
- 	/* Get the WPTR of the last entry in IH ring */
- 	last_wptr = amdgpu_ih_get_wptr(adev, ih);
- 	/* Order wptr with ring data. */
+-	if (ring->funcs->emit_gfx_shadow)
++	if (ring->funcs->emit_gfx_shadow && adev->gfx.cp_gfx_shadow)
+ 		amdgpu_ring_emit_gfx_shadow(ring, shadow_va, csa_va, gds_va,
+ 					    init_shadow, vmid);
+ 
+@@ -279,7 +279,8 @@ int amdgpu_ib_schedule(struct amdgpu_rin
+ 				       fence_flags | AMDGPU_FENCE_FLAG_64BIT);
+ 	}
+ 
+-	if (ring->funcs->emit_gfx_shadow && ring->funcs->init_cond_exec) {
++	if (ring->funcs->emit_gfx_shadow && ring->funcs->init_cond_exec &&
++	    adev->gfx.cp_gfx_shadow) {
+ 		amdgpu_ring_emit_gfx_shadow(ring, 0, 0, 0, false, 0);
+ 		amdgpu_ring_init_cond_exec(ring, ring->cond_exe_gpu_addr);
+ 	}
 
 
