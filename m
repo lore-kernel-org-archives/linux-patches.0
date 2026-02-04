@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32B4D27B359;
-	Wed,  4 Feb 2026 14:50:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1E7E410D3A;
+	Wed,  4 Feb 2026 14:50:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770216649; cv=none; b=OLudgxpmNOVXP31m4B6nodwHHSSRE9LXd+RFXOj0umS03dah97eiwUc75x1PevVJVRf8M41sNS2WlCny7tmZCP37Z8zwA7VwypRhpPtDM3+ZaH3nFwdJX8EG0UhsivQlpC7zNP6a/mdQjjDUrWV65KJb/AtSR0/Cxg3G2QvwKsM=
+	t=1770216652; cv=none; b=qKL+N6ojp2sH1lTvJMJXq/OglYOvZtvYr35dAQHom3KQoQzh59mpamO9gWSBpDv8F3bKA2rFBJcPZ8UlrZlH7frSvWbmHVDT6ezCS3wW9gXU3WzSWZKNIgZOIqAqk1x/ZQ7jKH+UMW+A4RlMCSGR73IlZRzxypduKzTjSKcZi5Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770216649; c=relaxed/simple;
-	bh=hZEmJ90tDCHW8m/TB82OUIUczNQ8MeBK50EmQ2rCg3w=;
+	s=arc-20240116; t=1770216652; c=relaxed/simple;
+	bh=goE80yCC5tYzIs0VTgl5oO3w+uJ58B5CXFmQuc+DpyI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qcXwpGui5xFDMG9EwyWwMto6jhbY+x0ia9hsKeTdNKEcKgpUIch0qP0BhaW6k8fU7viuuNxhRrStzenlmZD8QtK2sXOqkYlS0nMla5mi6k30lrmrUeeN3ieBGPpQ+7YGxcI9nYYjdrdqSeWcEr3mBzlBQduVlHy4W+kJ3bCNfnU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NCPc6gvq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=W3tlaUGbr1uz4EBQbMiOn6j8zM7m/ZXwBjMrpA64GgAcIzT8yD/z1joLSaOZLnoSD05k28xvisaLokNjyNmG9t3b0WVmKuxamUvgmyF23XqVch6QbPv9Rxv8D8iLu9+H7zQ5cxq7ZQKaHc5B/n84H8Jef1RRY1miMvC80iqDtFE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bVu3TriM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NCPc6gvq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 50C08C4CEF7;
-	Wed,  4 Feb 2026 14:50:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bVu3TriM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7DDF0C4CEF7;
+	Wed,  4 Feb 2026 14:50:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770216648;
-	bh=hZEmJ90tDCHW8m/TB82OUIUczNQ8MeBK50EmQ2rCg3w=;
+	s=korg; t=1770216651;
+	bh=goE80yCC5tYzIs0VTgl5oO3w+uJ58B5CXFmQuc+DpyI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NCPc6gvqAriw+kWpp2hDn+FrbcmgSzJWM/LlkPBRuVC69v6azslLSZyFptQSRgVqc
-	 9jGGTqmHXHJSZ0o+2SzP4TpP+zvbiRuLO3piHi8ywZ9sylzT+FxoRHixE24tTIDxMl
-	 pam3fR3kzBoPc8PvqPXj02/9AHpYIZF0JIDkXg68=
+	b=bVu3TriMJx9fJV1F159rTIeMdJCMHi3Y8TEiirdPTO935CcXFrUZ6MwnEQ6pnKmX2
+	 pszAYlE8JeFyH1qZxUlHsux6lkWHulARqAqKamqwiR5bCwQUhZrpWVzOIXPisfBqFh
+	 Q85tEZJC4cy4GzC/Hhi2+HLOw/HnxeyxzWIo87xU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Biggers <ebiggers@kernel.org>,
-	Andrea Mayer <andrea.mayer@uniroma2.it>,
+	Julian Wiedmann <jwiedmann.dev@gmail.com>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Jakub Kicinski <kuba@kernel.org>,
-	Alva Lan <alvalan9@foxmail.com>
-Subject: [PATCH 5.10 152/161] ipv6: sr: Fix MAC comparison to be constant-time
-Date: Wed,  4 Feb 2026 15:40:15 +0100
-Message-ID: <20260204143857.217232162@linuxfoundation.org>
+	Ben Hutchings <ben@decadent.org.uk>
+Subject: [PATCH 5.10 153/161] netfilter: nf_tables: typo NULL check in _clone() function
+Date: Wed,  4 Feb 2026 15:40:16 +0100
+Message-ID: <20260204143857.252508136@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260204143851.755002596@linuxfoundation.org>
 References: <20260204143851.755002596@linuxfoundation.org>
@@ -52,44 +52,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Biggers <ebiggers@kernel.org>
+From: Pablo Neira Ayuso <pablo@netfilter.org>
 
-commit a458b2902115b26a25d67393b12ddd57d1216aaa upstream.
+commit 51edb2ff1c6fc27d3fa73f0773a31597ecd8e230 upstream.
 
-To prevent timing attacks, MACs need to be compared in constant time.
-Use the appropriate helper function for this.
+This should check for NULL in case memory allocation fails.
 
-Fixes: bf355b8d2c30 ("ipv6: sr: add core files for SR HMAC support")
-Cc: stable@vger.kernel.org
-Signed-off-by: Eric Biggers <ebiggers@kernel.org>
-Reviewed-by: Andrea Mayer <andrea.mayer@uniroma2.it>
-Link: https://patch.msgid.link/20250818202724.15713-1-ebiggers@kernel.org
+Reported-by: Julian Wiedmann <jwiedmann.dev@gmail.com>
+Fixes: 3b9e2ea6c11b ("netfilter: nft_limit: move stateful fields out of expression data")
+Fixes: 37f319f37d90 ("netfilter: nft_connlimit: move stateful fields out of expression data")
+Fixes: 33a24de37e81 ("netfilter: nft_last: move stateful fields out of expression data")
+Fixes: ed0a0c60f0e5 ("netfilter: nft_quota: move stateful fields out of expression data")
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Link: https://lore.kernel.org/r/20220110194817.53481-1-pablo@netfilter.org
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-[ Include crypto/algapi.h instead of crypto/utils.h in v5.10.y. ]
-Signed-off-by: Alva Lan <alvalan9@foxmail.com>
+Cc: Ben Hutchings <ben@decadent.org.uk>
+[ Portion of this patch applied - gregkh ]
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ipv6/seg6_hmac.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ net/netfilter/nft_connlimit.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/net/ipv6/seg6_hmac.c
-+++ b/net/ipv6/seg6_hmac.c
-@@ -36,6 +36,7 @@
+--- a/net/netfilter/nft_connlimit.c
++++ b/net/netfilter/nft_connlimit.c
+@@ -209,7 +209,7 @@ static int nft_connlimit_clone(struct nf
+ 	struct nft_connlimit *priv_src = nft_expr_priv(src);
  
- #include <crypto/hash.h>
- #include <crypto/sha.h>
-+#include <crypto/algapi.h>
- #include <net/seg6.h>
- #include <net/genetlink.h>
- #include <net/seg6_hmac.h>
-@@ -270,7 +271,7 @@ bool seg6_hmac_validate_skb(struct sk_bu
- 	if (seg6_hmac_compute(hinfo, srh, &ipv6_hdr(skb)->saddr, hmac_output))
- 		return false;
+ 	priv_dst->list = kmalloc(sizeof(*priv_dst->list), GFP_ATOMIC);
+-	if (priv_dst->list)
++	if (!priv_dst->list)
+ 		return -ENOMEM;
  
--	if (memcmp(hmac_output, tlv->hmac, SEG6_HMAC_FIELD_LEN) != 0)
-+	if (crypto_memneq(hmac_output, tlv->hmac, SEG6_HMAC_FIELD_LEN))
- 		return false;
- 
- 	return true;
+ 	nf_conncount_list_init(priv_dst->list);
 
 
