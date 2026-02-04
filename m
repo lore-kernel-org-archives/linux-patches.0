@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B7CE21ABC9;
-	Wed,  4 Feb 2026 15:28:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E6512417E0;
+	Wed,  4 Feb 2026 15:28:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770218915; cv=none; b=mRNvVVasn2K6A8Td8qDS35NU8rf0Cg75mSUxO7cs/HdQ3idqdDr9A1mh/0dshFU46Vhb6mTq2gBQ3hGDcbLLqgkg61nBv9MZFJ55VtfKG6ncjQCc864dmMdQedR61dan/SJ+6ZgORWMezn8oKCOiuXlKz6APAecYn+w3vUBdf/Q=
+	t=1770218918; cv=none; b=orhaPcAKYTRTgqMl3cI/bk+DfpXtMz8hHvClwQkO63AKVnclccYNs/H9Gxdz3wAO8xbh3XsvsHQzfSjrcuXTnGswEK5I0q1bLmloGJzMF7Mfh5b8oWPXWtKEHG8fy3U0XimgximvsxTsrPDI3LWxePBeLBSbbey3E2tcvm7I3fg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770218915; c=relaxed/simple;
-	bh=XoLUPuxdqvQBujiO85AWCdloFpZI8FqDFbJH4jtr3ig=;
+	s=arc-20240116; t=1770218918; c=relaxed/simple;
+	bh=hdwNh2IyksMmIanPVv3/QFEdud8amIcfkiJiwTmX9gk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AUN1r1UNviEi/Afutw2a2+ZsWQVouRBaLAe+4REIa2iG8N5ZkP8IE7xeaZgSD1ZjrgV5IRkoJQ4MSR5CZ4wTZnw26bDdmYGBSdvVE+akkmlO4ZboUXIjo2DcuI6vR/ZePugJ5rRJp8t/qaHSQsQ3qeK+a11dBXVkX3bE75ZvkHc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yJEqaYEV; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GiznAxgYwo7mAc8rDE41CKmVfgRTmU66YuC73Ys/L87UMISrzE033M+Zgy9+eVPfMQx6i9DognuGI7PhC8N5awwQ08urrtgBdigwL9iMOlSaemyJguEEdqCGzdIobycn6NCDp2Ra7QcQfWaPlKLQeScY8PNOKGg4vNAxQXYJCtY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=J6kfhnG1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yJEqaYEV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E6433C4CEF7;
-	Wed,  4 Feb 2026 15:28:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="J6kfhnG1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0BA25C4CEF7;
+	Wed,  4 Feb 2026 15:28:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770218915;
-	bh=XoLUPuxdqvQBujiO85AWCdloFpZI8FqDFbJH4jtr3ig=;
+	s=korg; t=1770218918;
+	bh=hdwNh2IyksMmIanPVv3/QFEdud8amIcfkiJiwTmX9gk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yJEqaYEVHiGu3fbPuJ6jedD7Vh2XylOpbdBzodxBjbc50XubVbLonyDfvaXbcjlul
-	 PM6AcnqmjIRdARvs/GIUsnkNJ5PihPsXZkG/VbnBgQ4uFUyKThcLtrxqyT3LM1VDRI
-	 zOzA3jMFQHQ42c8C/O+6avweq+CKKBzJL7fmZJRU=
+	b=J6kfhnG1cXy08Q+Hd40tpSgL5TrEHgTTbVlyjpdyVAj8xd21HDuE9DtU25j3qEUih
+	 pFUvDY/WrEdal1V2QUvz9sFCoTAl/bRmuzQmizt8t7wyLqVzqmCGj8yn79A/2L7H6a
+	 sjaFvT2H2rW7UMkgZaiO0t39/zKRsqaXYGWAoz1c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zilin Guan <zilin@seu.edu.cn>,
-	Maxime Chevallier <maxime.chevallier@bootlin.com>,
+	Fernando Fernandez Mancera <fmancera@suse.de>,
+	David Ahern <dsahern@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 012/122] net: mvpp2: cls: Fix memory leak in mvpp2_ethtool_cls_rule_ins()
-Date: Wed,  4 Feb 2026 15:39:54 +0100
-Message-ID: <20260204143852.307584881@linuxfoundation.org>
+Subject: [PATCH 6.18 013/122] ipv6: use the right ifindex when replying to icmpv6 from localhost
+Date: Wed,  4 Feb 2026 15:39:55 +0100
+Message-ID: <20260204143852.344134366@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260204143851.857060534@linuxfoundation.org>
 References: <20260204143851.857060534@linuxfoundation.org>
@@ -52,46 +52,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zilin Guan <zilin@seu.edu.cn>
+From: Fernando Fernandez Mancera <fmancera@suse.de>
 
-[ Upstream commit 09f979d1f312627b31d2ee1e46f9692e442610cd ]
+[ Upstream commit 03cbcdf93866e61beb0063392e6dbb701f03aea2 ]
 
-In mvpp2_ethtool_cls_rule_ins(), the ethtool_rule is allocated by
-ethtool_rx_flow_rule_create(). If the subsequent conversion to flow
-type fails, the function jumps to the clean_rule label.
+When replying to a ICMPv6 echo request that comes from localhost address
+the right output ifindex is 1 (lo) and not rt6i_idev dev index. Use the
+skb device ifindex instead. This fixes pinging to a local address from
+localhost source address.
 
-However, the clean_rule label only frees efs, skipping the cleanup
-of ethtool_rule, which leads to a memory leak.
+$ ping6 -I ::1 2001:1:1::2 -c 3
+PING 2001:1:1::2 (2001:1:1::2) from ::1 : 56 data bytes
+64 bytes from 2001:1:1::2: icmp_seq=1 ttl=64 time=0.037 ms
+64 bytes from 2001:1:1::2: icmp_seq=2 ttl=64 time=0.069 ms
+64 bytes from 2001:1:1::2: icmp_seq=3 ttl=64 time=0.122 ms
 
-Fix this by jumping to the clean_eth_rule label, which properly calls
-ethtool_rx_flow_rule_destroy() before freeing efs.
+2001:1:1::2 ping statistics
+3 packets transmitted, 3 received, 0% packet loss, time 2032ms
+rtt min/avg/max/mdev = 0.037/0.076/0.122/0.035 ms
 
-Compile tested only. Issue found using a prototype static analysis tool
-and code review.
-
-Fixes: f4f1ba18195d ("net: mvpp2: cls: Report an error for unsupported flow types")
-Signed-off-by: Zilin Guan <zilin@seu.edu.cn>
-Reviewed-by: Maxime Chevallier <maxime.chevallier@bootlin.com>
-Link: https://patch.msgid.link/20260123065716.2248324-1-zilin@seu.edu.cn
+Fixes: 1b70d792cf67 ("ipv6: Use rt6i_idev index for echo replies to a local address")
+Signed-off-by: Fernando Fernandez Mancera <fmancera@suse.de>
+Reviewed-by: David Ahern <dsahern@kernel.org>
+Link: https://patch.msgid.link/20260121194409.6749-1-fmancera@suse.de
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/marvell/mvpp2/mvpp2_cls.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/ipv6/icmp.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/marvell/mvpp2/mvpp2_cls.c b/drivers/net/ethernet/marvell/mvpp2/mvpp2_cls.c
-index 44b201817d94c..c116da7d7f18c 100644
---- a/drivers/net/ethernet/marvell/mvpp2/mvpp2_cls.c
-+++ b/drivers/net/ethernet/marvell/mvpp2/mvpp2_cls.c
-@@ -1389,7 +1389,7 @@ int mvpp2_ethtool_cls_rule_ins(struct mvpp2_port *port,
- 	efs->rule.flow_type = mvpp2_cls_ethtool_flow_to_type(info->fs.flow_type);
- 	if (efs->rule.flow_type < 0) {
- 		ret = efs->rule.flow_type;
--		goto clean_rule;
-+		goto clean_eth_rule;
- 	}
- 
- 	ret = mvpp2_cls_rfs_parse_rule(&efs->rule);
+diff --git a/net/ipv6/icmp.c b/net/ipv6/icmp.c
+index 56c974cf75d15..cf6455cbe2cc9 100644
+--- a/net/ipv6/icmp.c
++++ b/net/ipv6/icmp.c
+@@ -769,7 +769,9 @@ static enum skb_drop_reason icmpv6_echo_reply(struct sk_buff *skb)
+ 	fl6.daddr = ipv6_hdr(skb)->saddr;
+ 	if (saddr)
+ 		fl6.saddr = *saddr;
+-	fl6.flowi6_oif = icmp6_iif(skb);
++	fl6.flowi6_oif = ipv6_addr_loopback(&fl6.daddr) ?
++			 skb->dev->ifindex :
++			 icmp6_iif(skb);
+ 	fl6.fl6_icmp_type = type;
+ 	fl6.flowi6_mark = mark;
+ 	fl6.flowi6_uid = sock_net_uid(net, NULL);
 -- 
 2.51.0
 
