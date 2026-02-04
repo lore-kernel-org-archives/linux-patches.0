@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E81923C1963;
-	Wed,  4 Feb 2026 15:08:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64FDF34FF72;
+	Wed,  4 Feb 2026 15:08:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770217733; cv=none; b=fOrxc1NBL18f+tURecI/LVSziIClB2DQo4omUJzonqJRGvkdpgXmxkGoN4RC4ojUZurScDLqmlzcuKf7LoBz/AnlvYxc0tfFcKupKAixxOqal5ihzrHOyTYTcH83pKRzPZ+YHL+5Igi0yWHDbwThM6VBxpvz3Z/+4BH9uvuiP9g=
+	t=1770217736; cv=none; b=FDO661Ym9uUZZrq4aPmQ6fxy/Uw6TeeFFomxrjw8iXuwvbmJL52fqyhEngfj5wS3ba6WIlAUDAL1LQIHb1VB7Mpeua1U5M+gUzxsq4ddZCkzdMPrZvfmzpRV5KceC2bMv3M+UKPjo2ZfYuYMoF5GKiDBmvNVizoslZCnJOmprT0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770217733; c=relaxed/simple;
-	bh=uxX/E2Dz8Js0dEwv/ktNsUQkENcElyRNsHgfW2w2IFc=;
+	s=arc-20240116; t=1770217736; c=relaxed/simple;
+	bh=qABCUZryAYqF/PeaH6sj9P2ciodGQMGPHjCgOZpN60s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=POHaHxGOLeopB+ITy8f+HVW24h+QGw0EInruevLV0BV+R2EuVzTeYPrb9GoUm4QO3HMmfwIh+99hO3/yeVPvhWikjRavNPuCixlzkCdGvQmoGYmMvLHJZLy+Rk+VKM8k2OWIxCIiFgDeMfkTU16SvAXc3/HY3AQnLmNIH+YEuVk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=C9S5twRl; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=AXrvcMtPMTHnAw3etPvot+8Of8RewjuejvmB/oaAsra7zNR9ijHPdAMeimwKCM6FJcywN/JISABTJ5SvFtPfrekgC5AcFsAatUYZWBFNq1oMIAVj+9R59f7l+jN1bYzM+yj9TW0pHxeTwUZLZ1W/5ioNQ4QioC4fE4+MXtpAwDo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uircSreV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="C9S5twRl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 325BAC116C6;
-	Wed,  4 Feb 2026 15:08:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uircSreV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E77E9C19423;
+	Wed,  4 Feb 2026 15:08:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770217732;
-	bh=uxX/E2Dz8Js0dEwv/ktNsUQkENcElyRNsHgfW2w2IFc=;
+	s=korg; t=1770217736;
+	bh=qABCUZryAYqF/PeaH6sj9P2ciodGQMGPHjCgOZpN60s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=C9S5twRloIptaKa9em5DTVW7fbvHxaluhyWZr3EStjzvNrrfDdG1RIw41cj933IHl
-	 Kr9CxDVfk1csiwnlv9elTbS4tb8Ao69IKiHbAesyhYwB4FczHeS7PQdbXS6iMZmljc
-	 MbD2/kZg+vpY1qVAL32wD4a9Bv+4+pGnUzoM5kwc=
+	b=uircSreVIhMFKq42BE4UG5KO6tA3VaLvRuvUDYRqMtTzMD30xG65JD8kCok7SKXtc
+	 OnRcCH5s21dRcGDReQT5N7CIS6792svwgRgFr9yAShZcKNjqG73MaABMJPdVdcaD99
+	 ICRLxKn247AdEIwWAGbDeGv3mDjfmlaZEE2K5Nd4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Raju Rangoju <Raju.Rangoju@amd.com>,
+	syzbot+4d8c7d16b0e95c0d0f0d@syzkaller.appspotmail.com,
+	Kuniyuki Iwashima <kuniyu@google.com>,
+	Eric Dumazet <edumazet@google.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 103/280] amd-xgbe: avoid misleading per-packet error log
-Date: Wed,  4 Feb 2026 15:37:57 +0100
-Message-ID: <20260204143913.356046438@linuxfoundation.org>
+Subject: [PATCH 6.1 104/280] gue: Fix skb memleak with inner IP protocol 0.
+Date: Wed,  4 Feb 2026 15:37:58 +0100
+Message-ID: <20260204143913.391824440@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260204143909.614719725@linuxfoundation.org>
 References: <20260204143909.614719725@linuxfoundation.org>
@@ -51,47 +53,80 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Raju Rangoju <Raju.Rangoju@amd.com>
+From: Kuniyuki Iwashima <kuniyu@google.com>
 
-[ Upstream commit c158f985cf6c2c36c99c4f67af2ff3f5ebe09f8f ]
+[ Upstream commit 9a56796ad258786d3624eef5aefba394fc9bdded ]
 
-On the receive path, packet can be damaged because of buffer
-overflow in Rx FIFO. Avoid misleading per-packet error log when
-packet->errors is set, this can flood the log. Instead, rely on the
-standard rtnl_link_stats64 stats.
+syzbot reported skb memleak below. [0]
 
-Fixes: c5aa9e3b8156 ("amd-xgbe: Initial AMD 10GbE platform driver")
-Signed-off-by: Raju Rangoju <Raju.Rangoju@amd.com>
-Link: https://patch.msgid.link/20260114163037.2062606-1-Raju.Rangoju@amd.com
+The repro generated a GUE packet with its inner protocol 0.
+
+gue_udp_recv() returns -guehdr->proto_ctype for "resubmit"
+in ip_protocol_deliver_rcu(), but this only works with
+non-zero protocol number.
+
+Let's drop such packets.
+
+Note that 0 is a valid number (IPv6 Hop-by-Hop Option).
+
+I think it is not practical to encap HOPOPT in GUE, so once
+someone starts to complain, we could pass down a resubmit
+flag pointer to distinguish two zeros from the upper layer:
+
+  * no error
+  * resubmit HOPOPT
+
+[0]
+BUG: memory leak
+unreferenced object 0xffff888109695a00 (size 240):
+  comm "syz.0.17", pid 6088, jiffies 4294943096
+  hex dump (first 32 bytes):
+    00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
+    00 40 c2 10 81 88 ff ff 00 00 00 00 00 00 00 00  .@..............
+  backtrace (crc a84b336f):
+    kmemleak_alloc_recursive include/linux/kmemleak.h:44 [inline]
+    slab_post_alloc_hook mm/slub.c:4958 [inline]
+    slab_alloc_node mm/slub.c:5263 [inline]
+    kmem_cache_alloc_noprof+0x3b4/0x590 mm/slub.c:5270
+    __build_skb+0x23/0x60 net/core/skbuff.c:474
+    build_skb+0x20/0x190 net/core/skbuff.c:490
+    __tun_build_skb drivers/net/tun.c:1541 [inline]
+    tun_build_skb+0x4a1/0xa40 drivers/net/tun.c:1636
+    tun_get_user+0xc12/0x2030 drivers/net/tun.c:1770
+    tun_chr_write_iter+0x71/0x120 drivers/net/tun.c:1999
+    new_sync_write fs/read_write.c:593 [inline]
+    vfs_write+0x45d/0x710 fs/read_write.c:686
+    ksys_write+0xa7/0x170 fs/read_write.c:738
+    do_syscall_x64 arch/x86/entry/syscall_64.c:63 [inline]
+    do_syscall_64+0xa4/0xf80 arch/x86/entry/syscall_64.c:94
+    entry_SYSCALL_64_after_hwframe+0x77/0x7f
+
+Fixes: 37dd0247797b1 ("gue: Receive side for Generic UDP Encapsulation")
+Reported-by: syzbot+4d8c7d16b0e95c0d0f0d@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/netdev/6965534b.050a0220.38aacd.0001.GAE@google.com/
+Signed-off-by: Kuniyuki Iwashima <kuniyu@google.com>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Link: https://patch.msgid.link/20260115172533.693652-2-kuniyu@google.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/amd/xgbe/xgbe-drv.c | 5 +----
- 1 file changed, 1 insertion(+), 4 deletions(-)
+ net/ipv4/fou.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/net/ethernet/amd/xgbe/xgbe-drv.c b/drivers/net/ethernet/amd/xgbe/xgbe-drv.c
-index b4d57da71de2a..3d6f8f3a83366 100644
---- a/drivers/net/ethernet/amd/xgbe/xgbe-drv.c
-+++ b/drivers/net/ethernet/amd/xgbe/xgbe-drv.c
-@@ -2105,7 +2105,7 @@ static void xgbe_get_stats64(struct net_device *netdev,
- 	s->multicast = pstats->rxmulticastframes_g;
- 	s->rx_length_errors = pstats->rxlengtherror;
- 	s->rx_crc_errors = pstats->rxcrcerror;
--	s->rx_fifo_errors = pstats->rxfifooverflow;
-+	s->rx_over_errors = pstats->rxfifooverflow;
+diff --git a/net/ipv4/fou.c b/net/ipv4/fou.c
+index c29c976a25965..9d4ae723d2e7d 100644
+--- a/net/ipv4/fou.c
++++ b/net/ipv4/fou.c
+@@ -213,6 +213,9 @@ static int gue_udp_recv(struct sock *sk, struct sk_buff *skb)
+ 		return gue_control_message(skb, guehdr);
  
- 	s->tx_packets = pstats->txframecount_gb;
- 	s->tx_bytes = pstats->txoctetcount_gb;
-@@ -2559,9 +2559,6 @@ static int xgbe_rx_poll(struct xgbe_channel *channel, int budget)
- 			goto read_again;
+ 	proto_ctype = guehdr->proto_ctype;
++	if (unlikely(!proto_ctype))
++		goto drop;
++
+ 	__skb_pull(skb, sizeof(struct udphdr) + hdrlen);
+ 	skb_reset_transport_header(skb);
  
- 		if (error || packet->errors) {
--			if (packet->errors)
--				netif_err(pdata, rx_err, netdev,
--					  "error in received packet\n");
- 			dev_kfree_skb(skb);
- 			goto next_packet;
- 		}
 -- 
 2.51.0
 
