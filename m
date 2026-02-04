@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56B48413234;
-	Wed,  4 Feb 2026 14:50:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 818E527B359;
+	Wed,  4 Feb 2026 14:50:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770216655; cv=none; b=in57EdkL7YYmdaYOg/va+0EZfp1VIdrH3BAGl+iQK5lV1n4wXi3Nt35hTAeM1HcWNPo4FtCK/yAV4FtmSEm+yhwPDFR4Fux07mLnIawGEv/oNKkOvSvloqqlDh5cpUPXUzVCnwBepvEhvPMiYboOVicsTZ39d4bDJjZyz5hvIk0=
+	t=1770216658; cv=none; b=lJwNPuua4GOBBwKcJ4HPyzpcYi53HnfljBnlsXP66SYVTdzfn5YN1utysCBPAycXrftpt1lwL+/Qe3ulG/FYSX9azLCbevLLRPvuc920ZqiySFdNjOJg4HRsI2eM2A9sSDjR2RL1iv9Smslu12frBwircHsPYCcwcirP+jHltj0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770216655; c=relaxed/simple;
-	bh=/Dhc+jdNJC0d1oCe8ssNAk+IiXnGJLvHdr+fpSsreVM=;
+	s=arc-20240116; t=1770216658; c=relaxed/simple;
+	bh=h/fWJaeif3ukjKRBlvHats0uq2CT7HlPVLaMIRLqgXM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=OMGAl4REY4CwG8CDy/dvGzrT3iGS6gDwb2zsj3V5A/Z7AKCBi3aNLlSj0pnoorDHfIdrROXEUrqJ7shegAm41rJUhgHnUJgRREiLM7cU0ay6qFb+C4uNNfmiymZSiXXZ5WtVIAJQGktah3jE5yCQYo2PVTCuHVJWKFWQjdVmuyw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=i6WYE2+z; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WAnrYBOMbKWimPj82m1C+LnqI22wNP3vTIeevTQWDVWHjrFbb9l7fJHek2yGZLv1cVH6VPYOO0H2/lveQApnlm5Hi+28IfCp50xmd1GrNjZx124fkqFJ2XeNaiDGo8QvEGY2j1hx8noOTiBu42Lgw4PYVJ27FubRfmRRkG8jQYY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=060mv8/f; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="i6WYE2+z"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D7AC0C4CEF7;
-	Wed,  4 Feb 2026 14:50:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="060mv8/f"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C104C4CEF7;
+	Wed,  4 Feb 2026 14:50:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770216655;
-	bh=/Dhc+jdNJC0d1oCe8ssNAk+IiXnGJLvHdr+fpSsreVM=;
+	s=korg; t=1770216658;
+	bh=h/fWJaeif3ukjKRBlvHats0uq2CT7HlPVLaMIRLqgXM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=i6WYE2+zZsIokQHBC9BP7H480S42buvH5yi1YS8QFP/fiX6Pdd3DgYb5rGcAGqye8
-	 EwgBIO1yCN/rKQpngqkDaaDlRZnT9pvOaaHPvn8IEx68b++EStauTOM13MeI9txNVO
-	 vuSDdnBT7NEjlznVnPryUtHyh6jxipHM37tJ5sCY=
+	b=060mv8/fJl0s9nlhcAUkDsEnS5NnPPy1edTDyIJtOkouJ+SSv0QXrI5wbuD5pfzHA
+	 1PCtKyBGZneD86TnlWgdEIrk5jkqXmTVJZjAUH05samN2jxPCGD5SKBxGBuRjQXBop
+	 r7NJalQyg9JgZUX5yT0uwQBRBHOivcU1Ja0rvVX8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daniel Wagner <dwagner@suse.de>,
-	Nilay Shroff <nilay@linux.ibm.com>,
-	Keith Busch <kbusch@kernel.org>,
+	Ben Hutchings <ben@decadent.org.uk>,
+	David Ahern <dsahern@kernel.org>,
+	Simon Horman <horms@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 136/161] nvme: fix PCIe subsystem reset controller state transition
-Date: Wed,  4 Feb 2026 15:39:59 +0100
-Message-ID: <20260204143856.637290173@linuxfoundation.org>
+Subject: [PATCH 5.10 154/161] Revert "selftests: Replace sleep with slowwait"
+Date: Wed,  4 Feb 2026 15:40:17 +0100
+Message-ID: <20260204143857.288131968@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260204143851.755002596@linuxfoundation.org>
 References: <20260204143851.755002596@linuxfoundation.org>
@@ -46,62 +47,42 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Nilay Shroff <nilay@linux.ibm.com>
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 
-[ Upstream commit 0edb475ac0a7d153318a24d4dca175a270a5cc4f ]
+This reverts commit 780095c51e34ec7cdf6f651b4c4f2b35680779e4 which is
+commit 2f186dd5585c3afb415df80e52f71af16c9d3655 upstream.
 
-The commit d2fe192348f9 (“nvme: only allow entering LIVE from CONNECTING
-state”) disallows controller state transitions directly from RESETTING
-to LIVE. However, the NVMe PCIe subsystem reset path relies on this
-transition to recover the controller on PowerPC (PPC) systems.
+To quote Ben:
+	The slowwait function isn't defined in 5.10 (or any stable
+	branch older than 6.9).
 
-On PPC systems, issuing a subsystem reset causes a temporary loss of
-communication with the NVMe adapter. A subsequent PCIe MMIO read then
-triggers EEH recovery, which restores the PCIe link and brings the
-controller back online. For EEH recovery to proceed correctly, the
-controller must transition back to the LIVE state.
-
-Due to the changes introduced by commit d2fe192348f9 (“nvme: only allow
-entering LIVE from CONNECTING state”), the controller can no longer
-transition directly from RESETTING to LIVE. As a result, EEH recovery
-exits prematurely, leaving the controller stuck in the RESETTING state.
-
-Fix this by explicitly transitioning the controller state from RESETTING
-to CONNECTING and then to LIVE. This satisfies the updated state
-transition rules and allows the controller to be successfully recovered
-on PPC systems following a PCIe subsystem reset.
-
-Cc: stable@vger.kernel.org
-Fixes: d2fe192348f9 ("nvme: only allow entering LIVE from CONNECTING state")
-Reviewed-by: Daniel Wagner <dwagner@suse.de>
-Signed-off-by: Nilay Shroff <nilay@linux.ibm.com>
-Signed-off-by: Keith Busch <kbusch@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Link: https://lore.kernel.org/r/b052b71589bb576dcad441eba38c20da81443a46.camel@decadent.org.uk
+Reported-by: Ben Hutchings <ben@decadent.org.uk>
+Cc: David Ahern <dsahern@kernel.org>
+Cc: Simon Horman <horms@kernel.org>
+Cc: Jakub Kicinski <kuba@kernel.org>
+Cc: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/nvme/host/pci.c |    5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ tools/testing/selftests/net/fcnal-test.sh |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/nvme/host/pci.c
-+++ b/drivers/nvme/host/pci.c
-@@ -1146,7 +1146,10 @@ static int nvme_pci_subsystem_reset(stru
- 	}
+--- a/tools/testing/selftests/net/fcnal-test.sh
++++ b/tools/testing/selftests/net/fcnal-test.sh
+@@ -183,7 +183,7 @@ show_hint()
+ kill_procs()
+ {
+ 	killall nettest ping ping6 >/dev/null 2>&1
+-	slowwait 2 sh -c 'test -z "$(pgrep '"'^(nettest|ping|ping6)$'"')"'
++	sleep 1
+ }
  
- 	writel(NVME_SUBSYS_RESET, dev->bar + NVME_REG_NSSR);
--	nvme_change_ctrl_state(ctrl, NVME_CTRL_LIVE);
-+
-+	if (!nvme_change_ctrl_state(ctrl, NVME_CTRL_CONNECTING) ||
-+	    !nvme_change_ctrl_state(ctrl, NVME_CTRL_LIVE))
-+		goto unlock;
- 
- 	/*
- 	 * Read controller status to flush the previous write and trigger a
+ do_run_cmd()
 
 
