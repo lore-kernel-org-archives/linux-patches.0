@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23BB742AA9;
-	Wed,  4 Feb 2026 15:27:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29CE342AA9;
+	Wed,  4 Feb 2026 15:27:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770218832; cv=none; b=KCA6QFGttPIPV8RRExM7NA5CqHNZTykhsxwA8EXy58OTFycYwHXDwUAzDPRG+jdbG1ywVHMAtSPVHBEWKHUOPEzB2kX1AzY+g22zGD3bTnOM9gfZm2nFwcoXtwuK/7NfD8qwYHXbVIXwYNGzuGmSaebWXvqyt2PtvLsoZrtQ9wA=
+	t=1770218835; cv=none; b=InQi55AoQMH/Bd0Et1RPXpGyCF1ajZ3VejDgE22uaD3F1ako29ONMUQBqxu1D3IFXizbFBX1WSzQ/x5CBZfuuXoWg90SqvsiQtPMRaNYV9CqBt6v1wKmYvk66bREToT0KJqeQP7FX5j4xyU1zrM/RnTbZZWt43yvtC6fn77shdU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770218832; c=relaxed/simple;
-	bh=dablZuk6fpVxFzFWO4B6e0agK8fmDjSHzPrblNQ1NaA=;
+	s=arc-20240116; t=1770218835; c=relaxed/simple;
+	bh=guqac5h2FSWXx5QGEhH9x8Pw6dl64OC9kvrJzxxGZLc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EKLpKXK+MU45fSvv7EwcTUdR8CBAoWOd9y8KoQx0kyASjiJWjVjUSQxCzRfFWT1+kCzsB+1sXoKNJLN2m7zyfSzJBkb9ubqggRTfCgfW270It1uOcemckYUt77Atl06gtqWvseS61x8khYf+i/Gk8NoODh3d2KerKu/27A9lyiU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XlS/IVls; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=sBrH+lpVpwBuO1aENUKskYzdi+BCMbGPAqFlnDbCOLYNZEdYTGCffO8GDZ2eQJ1gaMC3Soi8NSQDAoBdDHECYxCmv3DVChkVWtuZQ7XQBZljAh9A/nz8CXbsTCSN2qsXbcNQGc0FObYV2zC42Wcs/MtiHvNQF13u5RsHENoLk18=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=stR/He7D; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XlS/IVls"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F027C4CEF7;
-	Wed,  4 Feb 2026 15:27:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="stR/He7D"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A039BC4CEF7;
+	Wed,  4 Feb 2026 15:27:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770218832;
-	bh=dablZuk6fpVxFzFWO4B6e0agK8fmDjSHzPrblNQ1NaA=;
+	s=korg; t=1770218835;
+	bh=guqac5h2FSWXx5QGEhH9x8Pw6dl64OC9kvrJzxxGZLc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XlS/IVlstZ70wfXTPmFJ5t+V3XiWnd8X6X1KifUTvSaSoJhGvnVJQRoFTyy9EDCzP
-	 UtuKupCJapj/O4hzamK0Q/tanxW+IWvbgwVf46IsINSthk04mKMceBz8JX0AkLIOvY
-	 n333+sqnenLvnQgKTA2tGNIlUrEMrHhQbG+sBnus=
+	b=stR/He7D/pm0tBgavktefrWVJkXZpjnRB2FZSO9TGEGT1MORZ1pRA+AkpKAHInPvl
+	 2wbY3CtYCsSjFgJsBEHvB6+Nsf7blKkgi+EYCwz1VgjIc+wp0s3vs1sjByfGOgCOZ7
+	 +83YN4gXJJx/9IMFpwSYx1ELHxxMFxi83+rt3UwM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kang Yang <quic_kangyang@quicinc.com>,
-	Jeff Johnson <quic_jjohnson@quicinc.com>,
-	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
-	Li hongliang <1468888505@139.com>
-Subject: [PATCH 6.12 74/87] wifi: ath11k: add srng->lock for ath11k_hal_srng_* in monitor mode
-Date: Wed,  4 Feb 2026 15:41:12 +0100
-Message-ID: <20260204143849.582422397@linuxfoundation.org>
+	John Ogness <john.ogness@linutronix.de>,
+	Daniel Palmer <daniel@thingy.jp>,
+	Danilo Krummrich <dakr@kernel.org>
+Subject: [PATCH 6.12 75/87] Revert "drm/nouveau/disp: Set drm_mode_config_funcs.atomic_(check|commit)"
+Date: Wed,  4 Feb 2026 15:41:13 +0100
+Message-ID: <20260204143849.619741696@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260204143846.906385641@linuxfoundation.org>
 References: <20260204143846.906385641@linuxfoundation.org>
@@ -52,102 +51,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kang Yang <quic_kangyang@quicinc.com>
+From: John Ogness <john.ogness@linutronix.de>
 
-[ Upstream commit 63b7af49496d0e32f7a748b6af3361ec138b1bd3 ]
+commit 6c65db809796717f0a96cf22f80405dbc1a31a4b upstream.
 
-ath11k_hal_srng_* should be used with srng->lock to protect srng data.
+This reverts commit 604826acb3f53c6648a7ee99a3914ead680ab7fb.
 
-For ath11k_dp_rx_mon_dest_process() and ath11k_dp_full_mon_process_rx(),
-they use ath11k_hal_srng_* for many times but never call srng->lock.
+Apparently there is more to supporting atomic modesetting than
+providing atomic_(check|commit) callbacks. Before this revert:
 
-So when running (full) monitor mode, warning will occur:
-RIP: 0010:ath11k_hal_srng_dst_peek+0x18/0x30 [ath11k]
-Call Trace:
- ? ath11k_hal_srng_dst_peek+0x18/0x30 [ath11k]
- ath11k_dp_rx_process_mon_status+0xc45/0x1190 [ath11k]
- ? idr_alloc_u32+0x97/0xd0
- ath11k_dp_rx_process_mon_rings+0x32a/0x550 [ath11k]
- ath11k_dp_service_srng+0x289/0x5a0 [ath11k]
- ath11k_pcic_ext_grp_napi_poll+0x30/0xd0 [ath11k]
- __napi_poll+0x30/0x1f0
- net_rx_action+0x198/0x320
- __do_softirq+0xdd/0x319
+WARNING: [] drivers/gpu/drm/drm_plane.c:389 at .__drm_universal_plane_init+0x13c/0x794 [drm], CPU#1: modprobe/1790
+BUG: Kernel NULL pointer dereference on read at 0x00000000
+.drm_atomic_get_plane_state+0xd4/0x210 [drm] (unreliable)
+.drm_client_modeset_commit_atomic+0xf8/0x338 [drm]
+.drm_client_modeset_commit_locked+0x80/0x260 [drm]
+.drm_client_modeset_commit+0x40/0x7c [drm]
+.__drm_fb_helper_restore_fbdev_mode_unlocked.part.0+0xfc/0x108 [drm_kms_helper]
+.drm_fb_helper_set_par+0x8c/0xb8 [drm_kms_helper]
+.fbcon_init+0x31c/0x618
+[...]
+.__drm_fb_helper_initial_config_and_unlock+0x474/0x7f4 [drm_kms_helper]
+.drm_fbdev_client_hotplug+0xb0/0x120 [drm_client_lib]
+.drm_client_register+0x88/0xe4 [drm]
+.drm_fbdev_client_setup+0x12c/0x19b4 [drm_client_lib]
+.drm_client_setup+0x15c/0x18c [drm_client_lib]
+.nouveau_drm_probe+0x19c/0x268 [nouveau]
 
-So add srng->lock for them to avoid such warnings.
-
-Inorder to fetch the srng->lock, should change srng's definition from
-'void' to 'struct hal_srng'. And initialize them elsewhere to prevent
-one line of code from being too long. This is consistent with other ring
-process functions, such as ath11k_dp_process_rx().
-
-Tested-on: WCN6855 hw2.0 PCI WLAN.HSP.1.1-03125-QCAHSPSWPL_V1_V2_SILICONZ_LITE-3.6510.30
-Tested-on: QCN9074 hw1.0 PCI WLAN.HK.2.7.0.1-01744-QCAHKSWPL_SILICONZ-1
-
-Fixes: d5c65159f289 ("ath11k: driver for Qualcomm IEEE 802.11ax devices")
-Signed-off-by: Kang Yang <quic_kangyang@quicinc.com>
-Acked-by: Jeff Johnson <quic_jjohnson@quicinc.com>
-Link: https://patch.msgid.link/20241219110531.2096-3-quic_kangyang@quicinc.com
-Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
-Signed-off-by: Li hongliang <1468888505@139.com>
+Fixes: 604826acb3f5 ("drm/nouveau/disp: Set drm_mode_config_funcs.atomic_(check|commit)")
+Reported-by: John Ogness <john.ogness@linutronix.de>
+Closes: https://lore.kernel.org/lkml/87ldhf1prw.fsf@jogness.linutronix.de
+Signed-off-by: John Ogness <john.ogness@linutronix.de>
+Tested-by: Daniel Palmer <daniel@thingy.jp>
+Link: https://patch.msgid.link/20260130113230.2311221-1-john.ogness@linutronix.de
+Signed-off-by: Danilo Krummrich <dakr@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wireless/ath/ath11k/dp_rx.c |   10 ++++++++--
- 1 file changed, 8 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/nouveau/nouveau_display.c |    2 --
+ 1 file changed, 2 deletions(-)
 
---- a/drivers/net/wireless/ath/ath11k/dp_rx.c
-+++ b/drivers/net/wireless/ath/ath11k/dp_rx.c
-@@ -5142,7 +5142,7 @@ static void ath11k_dp_rx_mon_dest_proces
- 	struct ath11k_mon_data *pmon = (struct ath11k_mon_data *)&dp->mon_data;
- 	const struct ath11k_hw_hal_params *hal_params;
- 	void *ring_entry;
--	void *mon_dst_srng;
-+	struct hal_srng *mon_dst_srng;
- 	u32 ppdu_id;
- 	u32 rx_bufs_used;
- 	u32 ring_id;
-@@ -5159,6 +5159,7 @@ static void ath11k_dp_rx_mon_dest_proces
+--- a/drivers/gpu/drm/nouveau/nouveau_display.c
++++ b/drivers/gpu/drm/nouveau/nouveau_display.c
+@@ -391,8 +391,6 @@ nouveau_user_framebuffer_create(struct d
  
- 	spin_lock_bh(&pmon->mon_lock);
+ static const struct drm_mode_config_funcs nouveau_mode_config_funcs = {
+ 	.fb_create = nouveau_user_framebuffer_create,
+-	.atomic_commit = drm_atomic_helper_commit,
+-	.atomic_check = drm_atomic_helper_check,
+ };
  
-+	spin_lock_bh(&mon_dst_srng->lock);
- 	ath11k_hal_srng_access_begin(ar->ab, mon_dst_srng);
  
- 	ppdu_id = pmon->mon_ppdu_info.ppdu_id;
-@@ -5217,6 +5218,7 @@ static void ath11k_dp_rx_mon_dest_proces
- 								mon_dst_srng);
- 	}
- 	ath11k_hal_srng_access_end(ar->ab, mon_dst_srng);
-+	spin_unlock_bh(&mon_dst_srng->lock);
- 
- 	spin_unlock_bh(&pmon->mon_lock);
- 
-@@ -5606,7 +5608,7 @@ static int ath11k_dp_full_mon_process_rx
- 	struct hal_sw_mon_ring_entries *sw_mon_entries;
- 	struct ath11k_pdev_mon_stats *rx_mon_stats;
- 	struct sk_buff *head_msdu, *tail_msdu;
--	void *mon_dst_srng = &ar->ab->hal.srng_list[dp->rxdma_mon_dst_ring.ring_id];
-+	struct hal_srng *mon_dst_srng;
- 	void *ring_entry;
- 	u32 rx_bufs_used = 0, mpdu_rx_bufs_used;
- 	int quota = 0, ret;
-@@ -5622,6 +5624,9 @@ static int ath11k_dp_full_mon_process_rx
- 		goto reap_status_ring;
- 	}
- 
-+	mon_dst_srng = &ar->ab->hal.srng_list[dp->rxdma_mon_dst_ring.ring_id];
-+	spin_lock_bh(&mon_dst_srng->lock);
-+
- 	ath11k_hal_srng_access_begin(ar->ab, mon_dst_srng);
- 	while ((ring_entry = ath11k_hal_srng_dst_peek(ar->ab, mon_dst_srng))) {
- 		head_msdu = NULL;
-@@ -5665,6 +5670,7 @@ next_entry:
- 	}
- 
- 	ath11k_hal_srng_access_end(ar->ab, mon_dst_srng);
-+	spin_unlock_bh(&mon_dst_srng->lock);
- 	spin_unlock_bh(&pmon->mon_lock);
- 
- 	if (rx_bufs_used) {
 
 
