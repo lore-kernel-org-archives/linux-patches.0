@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 809BE33344B;
-	Wed,  4 Feb 2026 14:44:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E04BB3ACEF6;
+	Wed,  4 Feb 2026 14:44:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770216287; cv=none; b=uVf+Hp8DzJIu4x3B/c0EIwfz62YsGKngKrGVYoYmFqfqexX0pqXZKiph8TWPjh0mXK5ZT3ldV/cVzYEchC/D43nFamsHjGm253SdJXKLlopyo6w7BIokmeFu4UQp/5etq/7c0J5wQ3yR8J5uqEdM+nfw5J+m+lCKC4h048+bbJ8=
+	t=1770216290; cv=none; b=ZfMyMembgo3ucFJCezL7GeKleFF07TS914BZ4l/P0W8Jgcs3uN4EHM2tt/6XACsnWsWCRaPaSSvAqOMCr2z5lE+ZHbs/UtkYZH32jz5HPx0tZ8vWDMOkDbnY4hdubxn5AjChgbplv6gzOwcljV0pii2ON1FtBHo/2gFmvoKi3h0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770216287; c=relaxed/simple;
-	bh=J4VfdgJ5rBjhuYjOyNP8pLJpvMjRWAQGppUKThdcV6Y=;
+	s=arc-20240116; t=1770216290; c=relaxed/simple;
+	bh=3jSGnVMyvzomy/uZZ2H/p1kd6PJIJj6TTZuLWZBrV5w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ijQu0SbHeqfPxFJa7sKKPthV82JQI4s8T0M9KHPHNn+G7q/1VVdepfGfC6BqzbhH9WhnJuTCr/B8sPYbPJAPmcojP9Vx1ES/E091SuMu+iIBl0qRVYFkVt/dW7YH69+Ez45I4FLnkAy6Xg6Xf53xQMMB204yG6muta2DEi/jrSc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=g+JcxjQu; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=V+ClSxF47s+cXEltCHbjpqhLGGqm5r+7CXRgxI6XIVtpmBTCJKt/nPR4k19L7c5wnt22uVod3DOQURjWTPYVYECS16tVaV0pkKXjyC8lueEPJmOmoZsz9wk89Jm6rYWXEB8M3JKaGKFBUn2hhn1RDyNI/wA9m6gwDKyf115kZPY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hO4caiIh; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="g+JcxjQu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9C62C4CEF7;
-	Wed,  4 Feb 2026 14:44:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hO4caiIh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 68E5BC4CEF7;
+	Wed,  4 Feb 2026 14:44:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770216287;
-	bh=J4VfdgJ5rBjhuYjOyNP8pLJpvMjRWAQGppUKThdcV6Y=;
+	s=korg; t=1770216290;
+	bh=3jSGnVMyvzomy/uZZ2H/p1kd6PJIJj6TTZuLWZBrV5w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=g+JcxjQu+krqRuGw7CX2pzdRRCflZ8ygq+RcsvHpue4zMcuHnrgmdeJ149mJgkUmi
-	 ttO4U31AavKoBF+RDeSc4brX1862065nziYGwdphSOcUD7dxtXAhYmhUKm14bYfqVZ
-	 5J7dDWHPYOK8SUbtZ0di4U10ken5hdsH7SzqlHtU=
+	b=hO4caiIhqhF7EjXaKE/1kAyO1Ei4Pqy1giTmWY39Jv91NTaUoyugGpGNkqCixnpFL
+	 r2T6TmauM0rXhBTQCOWt3rIrFa+foYlYcipLCXpANpNHbL7lxoRZkdTzhUmz7cZAg5
+	 rE4k9USN0/Ybe3n18XKRwnWCf2sUa0yGW14pU1VQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Shengwen Xiao <atzlinux@sina.com>,
-	Huacai Chen <chenhuacai@loongson.cn>,
-	Alan Stern <stern@rowland.harvard.edu>
-Subject: [PATCH 5.10 026/161] USB: OHCI/UHCI: Add soft dependencies on ehci_platform
-Date: Wed,  4 Feb 2026 15:38:09 +0100
-Message-ID: <20260204143852.703924076@linuxfoundation.org>
+	Martin Willi <martin@strongswan.org>,
+	"David S. Miller" <davem@davemloft.net>
+Subject: [PATCH 5.10 044/161] macvlan: Fix leaking skb in source mode with nodst option
+Date: Wed,  4 Feb 2026 15:38:27 +0100
+Message-ID: <20260204143853.349829292@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260204143851.755002596@linuxfoundation.org>
 References: <20260204143851.755002596@linuxfoundation.org>
@@ -52,89 +50,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Huacai Chen <chenhuacai@loongson.cn>
+From: Martin Willi <martin@strongswan.org>
 
-commit 01ef7f1b8713a78ab1a9512cf8096d2474c70633 upstream.
+commit e16b859872b87650bb55b12cca5a5fcdc49c1442 upstream.
 
-Commit 9beeee6584b9aa4f ("USB: EHCI: log a warning if ehci-hcd is not
-loaded first") said that ehci-hcd should be loaded before ohci-hcd and
-uhci-hcd. However, commit 05c92da0c52494ca ("usb: ohci/uhci - add soft
-dependencies on ehci_pci") only makes ohci-pci/uhci-pci depend on ehci-
-pci, which is not enough and we may still see the warnings in boot log.
+The MACVLAN receive handler clones skbs to all matching source MACVLAN
+interfaces, before it passes the packet along to match on destination
+based MACVLANs.
 
-To eliminate the warnings we should make ohci-hcd/uhci-hcd depend on
-ehci-hcd. But Alan said that the warning introduced by 9beeee6584b9aa4f
-is bogus, we only need the soft dependencies in the PCI level rather
-than the HCD level.
+When using the MACVLAN nodst mode, passing the packet to destination based
+MACVLANs is omitted and the handler returns with RX_HANDLER_CONSUMED.
+However, the passed skb is not freed, leaking for any packet processed
+with the nodst option.
 
-However, there is really another neccessary soft dependencies between
-ohci-platform/uhci-platform and ehci-platform, which is added by this
-patch. The boot logs are below.
+Properly free the skb when consuming packets to fix that leak.
 
-1. ohci-platform loaded before ehci-platform:
-
- ohci-platform 1f058000.usb: Generic Platform OHCI controller
- ohci-platform 1f058000.usb: new USB bus registered, assigned bus number 1
- ohci-platform 1f058000.usb: irq 28, io mem 0x1f058000
- hub 1-0:1.0: USB hub found
- hub 1-0:1.0: 4 ports detected
- Warning! ehci_hcd should always be loaded before uhci_hcd and ohci_hcd, not after
- usb 1-4: new low-speed USB device number 2 using ohci-platform
- ehci-platform 1f050000.usb: EHCI Host Controller
- ehci-platform 1f050000.usb: new USB bus registered, assigned bus number 2
- ehci-platform 1f050000.usb: irq 29, io mem 0x1f050000
- ehci-platform 1f050000.usb: USB 2.0 started, EHCI 1.00
- usb 1-4: device descriptor read/all, error -62
- hub 2-0:1.0: USB hub found
- hub 2-0:1.0: 4 ports detected
- usb 1-4: new low-speed USB device number 3 using ohci-platform
- input: YSPRINGTECH USB OPTICAL MOUSE as /devices/platform/bus@10000000/1f058000.usb/usb1/1-4/1-4:1.0/0003:10C4:8105.0001/input/input0
- hid-generic 0003:10C4:8105.0001: input,hidraw0: USB HID v1.11 Mouse [YSPRINGTECH USB OPTICAL MOUSE] on usb-1f058000.usb-4/input0
-
-2. ehci-platform loaded before ohci-platform:
-
- ehci-platform 1f050000.usb: EHCI Host Controller
- ehci-platform 1f050000.usb: new USB bus registered, assigned bus number 1
- ehci-platform 1f050000.usb: irq 28, io mem 0x1f050000
- ehci-platform 1f050000.usb: USB 2.0 started, EHCI 1.00
- hub 1-0:1.0: USB hub found
- hub 1-0:1.0: 4 ports detected
- ohci-platform 1f058000.usb: Generic Platform OHCI controller
- ohci-platform 1f058000.usb: new USB bus registered, assigned bus number 2
- ohci-platform 1f058000.usb: irq 29, io mem 0x1f058000
- hub 2-0:1.0: USB hub found
- hub 2-0:1.0: 4 ports detected
- usb 2-4: new low-speed USB device number 2 using ohci-platform
- input: YSPRINGTECH USB OPTICAL MOUSE as /devices/platform/bus@10000000/1f058000.usb/usb2/2-4/2-4:1.0/0003:10C4:8105.0001/input/input0
- hid-generic 0003:10C4:8105.0001: input,hidraw0: USB HID v1.11 Mouse [YSPRINGTECH USB OPTICAL MOUSE] on usb-1f058000.usb-4/input0
-
-In the later case, there is no re-connection for USB-1.0/1.1 devices,
-which is expected.
-
-Cc: stable <stable@kernel.org>
-Reported-by: Shengwen Xiao <atzlinux@sina.com>
-Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
-Reviewed-by: Alan Stern <stern@rowland.harvard.edu>
-Link: https://patch.msgid.link/20260112084802.1995923-1-chenhuacai@loongson.cn
+Fixes: 427f0c8c194b ("macvlan: Add nodst option to macvlan type source")
+Signed-off-by: Martin Willi <martin@strongswan.org>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/host/ohci-platform.c |    1 +
- drivers/usb/host/uhci-platform.c |    1 +
- 2 files changed, 2 insertions(+)
+ drivers/net/macvlan.c |    8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
---- a/drivers/usb/host/ohci-platform.c
-+++ b/drivers/usb/host/ohci-platform.c
-@@ -359,3 +359,4 @@ MODULE_DESCRIPTION(DRIVER_DESC);
- MODULE_AUTHOR("Hauke Mehrtens");
- MODULE_AUTHOR("Alan Stern");
- MODULE_LICENSE("GPL");
-+MODULE_SOFTDEP("pre: ehci_platform");
---- a/drivers/usb/host/uhci-platform.c
-+++ b/drivers/usb/host/uhci-platform.c
-@@ -190,3 +190,4 @@ static struct platform_driver uhci_platf
- 		.of_match_table = platform_uhci_ids,
- 	},
- };
-+MODULE_SOFTDEP("pre: ehci_platform");
+--- a/drivers/net/macvlan.c
++++ b/drivers/net/macvlan.c
+@@ -464,8 +464,10 @@ static rx_handler_result_t macvlan_handl
+ 			return RX_HANDLER_CONSUMED;
+ 		*pskb = skb;
+ 		eth = eth_hdr(skb);
+-		if (macvlan_forward_source(skb, port, eth->h_source))
++		if (macvlan_forward_source(skb, port, eth->h_source)) {
++			kfree_skb(skb);
+ 			return RX_HANDLER_CONSUMED;
++		}
+ 		src = macvlan_hash_lookup(port, eth->h_source);
+ 		if (src && src->mode != MACVLAN_MODE_VEPA &&
+ 		    src->mode != MACVLAN_MODE_BRIDGE) {
+@@ -484,8 +486,10 @@ static rx_handler_result_t macvlan_handl
+ 		return RX_HANDLER_PASS;
+ 	}
+ 
+-	if (macvlan_forward_source(skb, port, eth->h_source))
++	if (macvlan_forward_source(skb, port, eth->h_source)) {
++		kfree_skb(skb);
+ 		return RX_HANDLER_CONSUMED;
++	}
+ 	if (macvlan_passthru(port))
+ 		vlan = list_first_or_null_rcu(&port->vlans,
+ 					      struct macvlan_dev, list);
 
 
