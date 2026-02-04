@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64FDF34FF72;
-	Wed,  4 Feb 2026 15:08:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F36D442884B;
+	Wed,  4 Feb 2026 15:08:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770217736; cv=none; b=FDO661Ym9uUZZrq4aPmQ6fxy/Uw6TeeFFomxrjw8iXuwvbmJL52fqyhEngfj5wS3ba6WIlAUDAL1LQIHb1VB7Mpeua1U5M+gUzxsq4ddZCkzdMPrZvfmzpRV5KceC2bMv3M+UKPjo2ZfYuYMoF5GKiDBmvNVizoslZCnJOmprT0=
+	t=1770217740; cv=none; b=lJ1nxEihswFPdAB4kvdzPrzSXVOdiJAtXFG69RKxOTE9sDaLGfQLNRd8SVSsYuLHUop5BODACoBqVNCkoRzTkWt/GYxdsMR9g8AOkSTbpb0J/H9BnwDyFHUV7NRqlA6hlAqgr+oCLEPCcKCoWvw9wbgFaL7MKsFQd/6GUKJefRw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770217736; c=relaxed/simple;
-	bh=qABCUZryAYqF/PeaH6sj9P2ciodGQMGPHjCgOZpN60s=;
+	s=arc-20240116; t=1770217740; c=relaxed/simple;
+	bh=bjxRVlM19aB2RZf5V5zaXk8DPYNQt6f+SsDiK7mcVns=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AXrvcMtPMTHnAw3etPvot+8Of8RewjuejvmB/oaAsra7zNR9ijHPdAMeimwKCM6FJcywN/JISABTJ5SvFtPfrekgC5AcFsAatUYZWBFNq1oMIAVj+9R59f7l+jN1bYzM+yj9TW0pHxeTwUZLZ1W/5ioNQ4QioC4fE4+MXtpAwDo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uircSreV; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=AEmSXJpu+i+zd9K9U1+Z/5MHX+5zDQtr2ClK0Xpo3aY/WDzdWjJ1PJHeEErI6ovuUn1cdkfVJuCeCLy6ZWopoNByF9odKXlv43Vm7pO5j6naXiCKANYq6DoxDPVd7PmI5uLDLhpO0zNRQ1wZRVq0xWsrMNEyGz27QoZeOmieeTw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Lujtk9dk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uircSreV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E77E9C19423;
-	Wed,  4 Feb 2026 15:08:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Lujtk9dk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 53F47C19423;
+	Wed,  4 Feb 2026 15:08:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770217736;
-	bh=qABCUZryAYqF/PeaH6sj9P2ciodGQMGPHjCgOZpN60s=;
+	s=korg; t=1770217739;
+	bh=bjxRVlM19aB2RZf5V5zaXk8DPYNQt6f+SsDiK7mcVns=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uircSreVIhMFKq42BE4UG5KO6tA3VaLvRuvUDYRqMtTzMD30xG65JD8kCok7SKXtc
-	 OnRcCH5s21dRcGDReQT5N7CIS6792svwgRgFr9yAShZcKNjqG73MaABMJPdVdcaD99
-	 ICRLxKn247AdEIwWAGbDeGv3mDjfmlaZEE2K5Nd4=
+	b=Lujtk9dkd9VrXPfZ0f/AloApN8EdLG/FJZnFEYcGRg82QoJWS4wpejsnfyJjBG4er
+	 v82c2oD/9dO/nCmY7FLL4VGj3vyu/GPNm9Col1QASgEoAZCStcDH/zq1F/mMJTgih/
+	 mEN0u8f6/L/pfKwB5SKW+a+LJQENfX78SrI5ihg4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+4d8c7d16b0e95c0d0f0d@syzkaller.appspotmail.com,
-	Kuniyuki Iwashima <kuniyu@google.com>,
-	Eric Dumazet <edumazet@google.com>,
+	Mahesh Bandewar <maheshb@google.com>,
+	Shuah Khan <shuah@kernel.org>,
+	Richard Cochran <richardcochran@gmail.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 104/280] gue: Fix skb memleak with inner IP protocol 0.
-Date: Wed,  4 Feb 2026 15:37:58 +0100
-Message-ID: <20260204143913.391824440@linuxfoundation.org>
+Subject: [PATCH 6.1 087/280] selftest/ptp: update ptp selftest to exercise the gettimex options
+Date: Wed,  4 Feb 2026 15:37:41 +0100
+Message-ID: <20260204143912.789320824@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260204143909.614719725@linuxfoundation.org>
 References: <20260204143909.614719725@linuxfoundation.org>
@@ -53,79 +53,140 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kuniyuki Iwashima <kuniyu@google.com>
+From: Mahesh Bandewar <maheshb@google.com>
 
-[ Upstream commit 9a56796ad258786d3624eef5aefba394fc9bdded ]
+[ Upstream commit 3d07b691ee707c00afaf365440975e81bb96cd9b ]
 
-syzbot reported skb memleak below. [0]
+With the inclusion of commit c259acab839e ("ptp/ioctl: support
+MONOTONIC{,_RAW} timestamps for PTP_SYS_OFFSET_EXTENDED") clock_gettime()
+now allows retrieval of pre/post timestamps for CLOCK_MONOTONIC and
+CLOCK_MONOTONIC_RAW timebases along with the previously supported
+CLOCK_REALTIME.
 
-The repro generated a GUE packet with its inner protocol 0.
+This patch adds a command line option 'y' to the testptp program to
+choose one of the allowed timebases [realtime aka system, monotonic,
+and monotonic-raw).
 
-gue_udp_recv() returns -guehdr->proto_ctype for "resubmit"
-in ip_protocol_deliver_rcu(), but this only works with
-non-zero protocol number.
-
-Let's drop such packets.
-
-Note that 0 is a valid number (IPv6 Hop-by-Hop Option).
-
-I think it is not practical to encap HOPOPT in GUE, so once
-someone starts to complain, we could pass down a resubmit
-flag pointer to distinguish two zeros from the upper layer:
-
-  * no error
-  * resubmit HOPOPT
-
-[0]
-BUG: memory leak
-unreferenced object 0xffff888109695a00 (size 240):
-  comm "syz.0.17", pid 6088, jiffies 4294943096
-  hex dump (first 32 bytes):
-    00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
-    00 40 c2 10 81 88 ff ff 00 00 00 00 00 00 00 00  .@..............
-  backtrace (crc a84b336f):
-    kmemleak_alloc_recursive include/linux/kmemleak.h:44 [inline]
-    slab_post_alloc_hook mm/slub.c:4958 [inline]
-    slab_alloc_node mm/slub.c:5263 [inline]
-    kmem_cache_alloc_noprof+0x3b4/0x590 mm/slub.c:5270
-    __build_skb+0x23/0x60 net/core/skbuff.c:474
-    build_skb+0x20/0x190 net/core/skbuff.c:490
-    __tun_build_skb drivers/net/tun.c:1541 [inline]
-    tun_build_skb+0x4a1/0xa40 drivers/net/tun.c:1636
-    tun_get_user+0xc12/0x2030 drivers/net/tun.c:1770
-    tun_chr_write_iter+0x71/0x120 drivers/net/tun.c:1999
-    new_sync_write fs/read_write.c:593 [inline]
-    vfs_write+0x45d/0x710 fs/read_write.c:686
-    ksys_write+0xa7/0x170 fs/read_write.c:738
-    do_syscall_x64 arch/x86/entry/syscall_64.c:63 [inline]
-    do_syscall_64+0xa4/0xf80 arch/x86/entry/syscall_64.c:94
-    entry_SYSCALL_64_after_hwframe+0x77/0x7f
-
-Fixes: 37dd0247797b1 ("gue: Receive side for Generic UDP Encapsulation")
-Reported-by: syzbot+4d8c7d16b0e95c0d0f0d@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/netdev/6965534b.050a0220.38aacd.0001.GAE@google.com/
-Signed-off-by: Kuniyuki Iwashima <kuniyu@google.com>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Link: https://patch.msgid.link/20260115172533.693652-2-kuniyu@google.com
+Signed-off-by: Mahesh Bandewar <maheshb@google.com>
+Cc: Shuah Khan <shuah@kernel.org>
+Acked-by: Richard Cochran <richardcochran@gmail.com>
+Link: https://patch.msgid.link/20241003101506.769418-1-maheshb@google.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Stable-dep-of: 76868642e427 ("testptp: Add option to open PHC in readonly mode")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/fou.c | 3 +++
- 1 file changed, 3 insertions(+)
+ tools/testing/selftests/ptp/testptp.c | 62 ++++++++++++++++++++++++---
+ 1 file changed, 57 insertions(+), 5 deletions(-)
 
-diff --git a/net/ipv4/fou.c b/net/ipv4/fou.c
-index c29c976a25965..9d4ae723d2e7d 100644
---- a/net/ipv4/fou.c
-+++ b/net/ipv4/fou.c
-@@ -213,6 +213,9 @@ static int gue_udp_recv(struct sock *sk, struct sk_buff *skb)
- 		return gue_control_message(skb, guehdr);
+diff --git a/tools/testing/selftests/ptp/testptp.c b/tools/testing/selftests/ptp/testptp.c
+index b609efbdea55d..2323a3329b298 100644
+--- a/tools/testing/selftests/ptp/testptp.c
++++ b/tools/testing/selftests/ptp/testptp.c
+@@ -146,6 +146,7 @@ static void usage(char *progname)
+ 		" -T val     set the ptp clock time to 'val' seconds\n"
+ 		" -x val     get an extended ptp clock time with the desired number of samples (up to %d)\n"
+ 		" -X         get a ptp clock cross timestamp\n"
++		" -y val     pre/post tstamp timebase to use {realtime|monotonic|monotonic-raw}\n"
+ 		" -z         test combinations of rising/falling external time stamp flags\n",
+ 		progname, PTP_MAX_SAMPLES);
+ }
+@@ -189,6 +190,7 @@ int main(int argc, char *argv[])
+ 	int seconds = 0;
+ 	int settime = 0;
+ 	int channel = -1;
++	clockid_t ext_clockid = CLOCK_REALTIME;
  
- 	proto_ctype = guehdr->proto_ctype;
-+	if (unlikely(!proto_ctype))
-+		goto drop;
+ 	int64_t t1, t2, tp;
+ 	int64_t interval, offset;
+@@ -198,7 +200,7 @@ int main(int argc, char *argv[])
+ 
+ 	progname = strrchr(argv[0], '/');
+ 	progname = progname ? 1+progname : argv[0];
+-	while (EOF != (c = getopt(argc, argv, "cd:e:f:F:ghH:i:k:lL:n:o:p:P:sSt:T:w:x:Xz"))) {
++	while (EOF != (c = getopt(argc, argv, "cd:e:f:F:ghH:i:k:lL:n:o:p:P:sSt:T:w:x:Xy:z"))) {
+ 		switch (c) {
+ 		case 'c':
+ 			capabilities = 1;
+@@ -278,6 +280,21 @@ int main(int argc, char *argv[])
+ 		case 'X':
+ 			getcross = 1;
+ 			break;
++		case 'y':
++			if (!strcasecmp(optarg, "realtime"))
++				ext_clockid = CLOCK_REALTIME;
++			else if (!strcasecmp(optarg, "monotonic"))
++				ext_clockid = CLOCK_MONOTONIC;
++			else if (!strcasecmp(optarg, "monotonic-raw"))
++				ext_clockid = CLOCK_MONOTONIC_RAW;
++			else {
++				fprintf(stderr,
++					"type needs to be realtime, monotonic or monotonic-raw; was given %s\n",
++					optarg);
++				return -1;
++			}
++			break;
 +
- 	__skb_pull(skb, sizeof(struct udphdr) + hdrlen);
- 	skb_reset_transport_header(skb);
+ 		case 'z':
+ 			flagtest = 1;
+ 			break;
+@@ -564,6 +581,7 @@ int main(int argc, char *argv[])
+ 		}
+ 
+ 		soe->n_samples = getextended;
++		soe->clockid = ext_clockid;
+ 
+ 		if (ioctl(fd, PTP_SYS_OFFSET_EXTENDED, soe)) {
+ 			perror("PTP_SYS_OFFSET_EXTENDED");
+@@ -572,12 +590,46 @@ int main(int argc, char *argv[])
+ 			       getextended);
+ 
+ 			for (i = 0; i < getextended; i++) {
+-				printf("sample #%2d: system time before: %lld.%09u\n",
+-				       i, soe->ts[i][0].sec, soe->ts[i][0].nsec);
++				switch (ext_clockid) {
++				case CLOCK_REALTIME:
++					printf("sample #%2d: real time before: %lld.%09u\n",
++					       i, soe->ts[i][0].sec,
++					       soe->ts[i][0].nsec);
++					break;
++				case CLOCK_MONOTONIC:
++					printf("sample #%2d: monotonic time before: %lld.%09u\n",
++					       i, soe->ts[i][0].sec,
++					       soe->ts[i][0].nsec);
++					break;
++				case CLOCK_MONOTONIC_RAW:
++					printf("sample #%2d: monotonic-raw time before: %lld.%09u\n",
++					       i, soe->ts[i][0].sec,
++					       soe->ts[i][0].nsec);
++					break;
++				default:
++					break;
++				}
+ 				printf("            phc time: %lld.%09u\n",
+ 				       soe->ts[i][1].sec, soe->ts[i][1].nsec);
+-				printf("            system time after: %lld.%09u\n",
+-				       soe->ts[i][2].sec, soe->ts[i][2].nsec);
++				switch (ext_clockid) {
++				case CLOCK_REALTIME:
++					printf("            real time after: %lld.%09u\n",
++					       soe->ts[i][2].sec,
++					       soe->ts[i][2].nsec);
++					break;
++				case CLOCK_MONOTONIC:
++					printf("            monotonic time after: %lld.%09u\n",
++					       soe->ts[i][2].sec,
++					       soe->ts[i][2].nsec);
++					break;
++				case CLOCK_MONOTONIC_RAW:
++					printf("            monotonic-raw time after: %lld.%09u\n",
++					       soe->ts[i][2].sec,
++					       soe->ts[i][2].nsec);
++					break;
++				default:
++					break;
++				}
+ 			}
+ 		}
  
 -- 
 2.51.0
