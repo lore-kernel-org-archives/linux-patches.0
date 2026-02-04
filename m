@@ -1,37 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06B082D594F;
-	Wed,  4 Feb 2026 15:05:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F6552D594F;
+	Wed,  4 Feb 2026 15:05:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770217516; cv=none; b=k8hefyF3Shb8Wvd8qFAgQ4ZaFW5Mj+yiSwIbrKaKwNLw8gq3523AUYI72GLpQLmE9R5aogtB3qHtKLXQrWRJzP4rsQqMpRACYIdffMsUehZezOfPBSMChPH74BvtJ9uy2UGDDqcHxSB89x4R7g0AHK92zDWJ1n8Z8wInumehJ6Q=
+	t=1770217519; cv=none; b=Qq9vbF47rc6BCNF6PsKqJQ8oSOGSfNT4kRye1+0Vf1QpNUhVVpzPL+xrlAAaTl4Xr6bEaEhxS9B8iAHUajFejwfhc7Regi3rPj2tp5fIEd65UAKIl3+GdB2NvVBwDdHXSt/qGBCYi3Lyg9nv6+RBA+PlLDheHV9tjZ0DVPCOD9c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770217516; c=relaxed/simple;
-	bh=+dTkgWPjBiulsSWsa7zrzS2KqRfUyEHk6xKjaHvdHUI=;
+	s=arc-20240116; t=1770217519; c=relaxed/simple;
+	bh=R19eOapXvUdWai2gyOvPPseFNF+triCAehx5o4/u/vg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ilTHn/tNIJK+PKK3rEFkq1sSFYofRaIX7dZtU9gLbhSGDI/jXgHYzHZx1z+VswjEvee7FGYnkKbdwXfMO7neo79IajVmKdQUfHL9vLsuFo/IQlo9tstKRVuc/gpCCZs9H7QlvA6Hl4eSfDkszUn9Y/FbndsrZOnlUM1CUV4T5eU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WnoaUlTx; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=o/JJkrZiL8o2x+wNlPOZyNuBn13Qiar/0pcgQFf0ZvVucRTw3Gog9Y/HSWd7SjEUaBnDyLfZbxPsux1Qp8KDafSHimyOrqYOZP4hrpz/n5IKQgnGaSbr5TJPOi8SbISzjOP3ESVamIwRSbXVKc9m8ioHs4jqM12eKkODzwIMdH4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BQeqEW41; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WnoaUlTx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E795C4CEF7;
-	Wed,  4 Feb 2026 15:05:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BQeqEW41"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9BEDDC116C6;
+	Wed,  4 Feb 2026 15:05:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770217515;
-	bh=+dTkgWPjBiulsSWsa7zrzS2KqRfUyEHk6xKjaHvdHUI=;
+	s=korg; t=1770217519;
+	bh=R19eOapXvUdWai2gyOvPPseFNF+triCAehx5o4/u/vg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WnoaUlTx9Wp0k1c0xB63NzUYPGNSTb9ks8BZOXr66Xxj4me3Ebfb3fON+2MrSF0fZ
-	 ULITE+E/w8wsykxpu8y+HKaA7HL97g21emJcxfB7zni7vDUoyJuKe1MsKL8XbQzUts
-	 nZniIwUFQao7LuKkrRCUVgb9Vm5hAEsdNySve2xo=
+	b=BQeqEW41zSD1rArBQgtQndtcxcaABei4x3QU8VJ4yNTvM3A7cMFChkHZO5vyL4Tl4
+	 o+XPPxR3aMxqigUALgC2NwDXgriKo9QIECxMai7mHrfWoQN+DHX4bOkdUrWgvxvnaQ
+	 dz0b15dG9NpD2E37y54dC4oygjypmQfIqwbZeqwY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jaroslav Kysela <perex@perex.cz>,
-	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 6.1 038/280] ALSA: pcm: Improve the fix for race of buffer access at PCM OSS layer
-Date: Wed,  4 Feb 2026 15:36:52 +0100
-Message-ID: <20260204143911.009056468@linuxfoundation.org>
+	Marc Kleine-Budde <mkl@pengutronix.de>
+Subject: [PATCH 6.1 039/280] can: gs_usb: gs_usb_receive_bulk_callback(): fix URB memory leak
+Date: Wed,  4 Feb 2026 15:36:53 +0100
+Message-ID: <20260204143911.045332726@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260204143909.614719725@linuxfoundation.org>
 References: <20260204143909.614719725@linuxfoundation.org>
@@ -50,73 +49,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jaroslav Kysela <perex@perex.cz>
+From: Marc Kleine-Budde <mkl@pengutronix.de>
 
-commit 47c27c9c9c720bc93fdc69605d0ecd9382e99047 upstream.
+commit 7352e1d5932a0e777e39fa4b619801191f57e603 upstream.
 
-Handle the error code from snd_pcm_buffer_access_lock() in
-snd_pcm_runtime_buffer_set_silence() function.
+In gs_can_open(), the URBs for USB-in transfers are allocated, added to the
+parent->rx_submitted anchor and submitted. In the complete callback
+gs_usb_receive_bulk_callback(), the URB is processed and resubmitted. In
+gs_can_close() the URBs are freed by calling
+usb_kill_anchored_urbs(parent->rx_submitted).
 
-Found by Alexandros Panagiotou <apanagio@redhat.com>
+However, this does not take into account that the USB framework unanchors
+the URB before the complete function is called. This means that once an
+in-URB has been completed, it is no longer anchored and is ultimately not
+released in gs_can_close().
 
-Fixes: 93a81ca06577 ("ALSA: pcm: Fix race of buffer access at PCM OSS layer")
-Cc: stable@vger.kernel.org # 6.15
-Signed-off-by: Jaroslav Kysela <perex@perex.cz>
-Link: https://patch.msgid.link/20260107213642.332954-1-perex@perex.cz
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Fix the memory leak by anchoring the URB in the
+gs_usb_receive_bulk_callback() to the parent->rx_submitted anchor.
+
+Fixes: d08e973a77d1 ("can: gs_usb: Added support for the GS_USB CAN devices")
+Cc: stable@vger.kernel.org
+Link: https://patch.msgid.link/20260105-gs_usb-fix-memory-leak-v2-1-cc6ed6438034@pengutronix.de
+Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/sound/pcm.h      |    2 +-
- sound/core/oss/pcm_oss.c |    4 +++-
- sound/core/pcm_native.c  |    9 +++++++--
- 3 files changed, 11 insertions(+), 4 deletions(-)
+ drivers/net/can/usb/gs_usb.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/include/sound/pcm.h
-+++ b/include/sound/pcm.h
-@@ -1429,7 +1429,7 @@ int snd_pcm_lib_mmap_iomem(struct snd_pc
- #define snd_pcm_lib_mmap_iomem	NULL
- #endif
+--- a/drivers/net/can/usb/gs_usb.c
++++ b/drivers/net/can/usb/gs_usb.c
+@@ -657,6 +657,8 @@ resubmit_urb:
+ 			  hf, parent->hf_size_rx,
+ 			  gs_usb_receive_bulk_callback, parent);
  
--void snd_pcm_runtime_buffer_set_silence(struct snd_pcm_runtime *runtime);
-+int snd_pcm_runtime_buffer_set_silence(struct snd_pcm_runtime *runtime);
- 
- /**
-  * snd_pcm_limit_isa_dma_size - Get the max size fitting with ISA DMA transfer
---- a/sound/core/oss/pcm_oss.c
-+++ b/sound/core/oss/pcm_oss.c
-@@ -1085,7 +1085,9 @@ static int snd_pcm_oss_change_params_loc
- 	runtime->oss.params = 0;
- 	runtime->oss.prepare = 1;
- 	runtime->oss.buffer_used = 0;
--	snd_pcm_runtime_buffer_set_silence(runtime);
-+	err = snd_pcm_runtime_buffer_set_silence(runtime);
-+	if (err < 0)
-+		goto failure;
- 
- 	runtime->oss.period_frames = snd_pcm_alsa_frames(substream, oss_period_size);
- 
---- a/sound/core/pcm_native.c
-+++ b/sound/core/pcm_native.c
-@@ -705,13 +705,18 @@ static void snd_pcm_buffer_access_unlock
- }
- 
- /* fill the PCM buffer with the current silence format; called from pcm_oss.c */
--void snd_pcm_runtime_buffer_set_silence(struct snd_pcm_runtime *runtime)
-+int snd_pcm_runtime_buffer_set_silence(struct snd_pcm_runtime *runtime)
- {
--	snd_pcm_buffer_access_lock(runtime);
-+	int err;
++	usb_anchor_urb(urb, &parent->rx_submitted);
 +
-+	err = snd_pcm_buffer_access_lock(runtime);
-+	if (err < 0)
-+		return err;
- 	if (runtime->dma_area)
- 		snd_pcm_format_set_silence(runtime->format, runtime->dma_area,
- 					   bytes_to_samples(runtime, runtime->dma_bytes));
- 	snd_pcm_buffer_access_unlock(runtime);
-+	return 0;
- }
- EXPORT_SYMBOL_GPL(snd_pcm_runtime_buffer_set_silence);
+ 	rc = usb_submit_urb(urb, GFP_ATOMIC);
  
+ 	/* USB failure take down all interfaces */
 
 
