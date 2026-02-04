@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A3682D8798;
-	Wed,  4 Feb 2026 15:16:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BAB57284B37;
+	Wed,  4 Feb 2026 15:16:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770218183; cv=none; b=eT4++JDRY1e8bUttlTJRbqPYfuMRlWt8vpGlXgTOrORjWejKaI+SVhya14nov0p5WPu0bBNYtiFerDhxToGn4q+mbMSWoP6yU6r7ZKRTyzLzOEWBJBfpi8LBcsTe9QMXa8fzlLLr48OPBiZGUk3XnaeXOeGKb2H8GE51gp5lUQM=
+	t=1770218186; cv=none; b=UVI3hIrmEBf2e0eLfgXU6APon8aXweo6JknX4RPDwt/2CvU1bY0finizgbUB+MStS/U03/c0GSdvz15kyil8tDutT5pa68NkSj5D2AryHMs2HozAzteKqRB7Pe8mOF095FJnUbb3jnlw1UOXvpijBbVKLkKkq5B2KN5vmpWNOwc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770218183; c=relaxed/simple;
-	bh=wNMa3y/Dm8dHnF/GSh8kei7z6goi3uYGgyTzpPvnok0=;
+	s=arc-20240116; t=1770218186; c=relaxed/simple;
+	bh=d/sg6Oz+wt6PM8Q2mWu5IkoFRWH/ZLG70y4xCefDom8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=K6RuD18BJ75YBXwm4t45ix88hW0LyRk6GcK5pydXIAara2h4brQmbKQwklorxLLeDV1fYw3FMh4I2s++W/ZomBAsc2UkLAvReLqko5SaSTizvfn75+Fw2Pb6eiIg5WrWLn7ylaq+fOjcaib7Xlo6rOdGoQxxSjQWcENnBkIQVcY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pO+Tiii5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tX72/qP0UMfRf6V4ny1D5RGqiK9KnOvyqqjz1rlZYO/3cNfB5yfx/NvLkQAvJSUT7B9xkdXvDDOTVSOJkuupVWz8m/VP1HE6TL9JYCQyUExLVy+KmI9ZWApd0egSdGkCwSEvNdBVtNk1tUbqJt1E6stpGi+2AaVrZ3/LEvPnzDQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ot8kw1nq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pO+Tiii5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 76391C4CEF7;
-	Wed,  4 Feb 2026 15:16:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ot8kw1nq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F35DC4CEF7;
+	Wed,  4 Feb 2026 15:16:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770218183;
-	bh=wNMa3y/Dm8dHnF/GSh8kei7z6goi3uYGgyTzpPvnok0=;
+	s=korg; t=1770218186;
+	bh=d/sg6Oz+wt6PM8Q2mWu5IkoFRWH/ZLG70y4xCefDom8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pO+Tiii5YqoLZAvvpjooUEg6HN8wMYOmfYJQXUcA/E7pQbEZac2A9GBMBUMWqtV2g
-	 nYpNaQ+d+vTMBEifSH+2oCSObT027+8LOJTCJkG8lH4QK37VbgQ/WKnRiBfrvg/DGS
-	 jhy5xuYT3lD5EvdN94w9DcJbpQYZif7Z41Vn1mGI=
+	b=ot8kw1nqs7IczaQjNIw3eUCuDH+v+T34l3CDrhBTY9DsKZsooU6/nbVZjXmqrw97z
+	 rPNOh99EFrvoUVcHkG6RUdAwjeUdsBkyyEuB0HxwwF1KcATHa+rza2X++5TsPBWt6T
+	 WDSSefsOhizzVOlAsu5//d7WxwPfCGXhxuMVacWk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tagir Garaev <tgaraev653@gmail.com>,
-	Mark Brown <broonie@kernel.org>,
+	Denis Sergeev <denserg.edu@gmail.com>,
+	Mika Westerberg <westeri@kernel.org>,
+	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 203/280] ASoC: Intel: sof_es8336: fix headphone GPIO logic inversion
-Date: Wed,  4 Feb 2026 15:39:37 +0100
-Message-ID: <20260204143916.907073892@linuxfoundation.org>
+Subject: [PATCH 6.1 204/280] gpiolib: acpi: use BIT_ULL() for u64 mask in address space handler
+Date: Wed,  4 Feb 2026 15:39:38 +0100
+Message-ID: <20260204143916.942018489@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260204143909.614719725@linuxfoundation.org>
 References: <20260204143909.614719725@linuxfoundation.org>
@@ -51,41 +52,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tagir Garaev <tgaraev653@gmail.com>
+From: Denis Sergeev <denserg.edu@gmail.com>
 
-[ Upstream commit 213c4e51267fd825cd21a08a055450cac7e0b7fb ]
+[ Upstream commit c0ae43d303e45764918fa8c1dc13d6a5db59c479 ]
 
-The headphone GPIO should be set to the inverse of speaker_en.
-When speakers are enabled, headphones should be disabled and vice versa.
+The BIT() macro uses unsigned long, which is 32 bits on 32-bit
+architectures. When iterating over GPIO pins with index >= 32,
+the expression (*value & BIT(i)) causes undefined behavior due
+to shifting by a value >= type width.
 
-Currently both GPIOs are set to the same value (speaker_en), causing
-audio to play through both speakers and headphones simultaneously
-when headphones are plugged in.
+Since 'value' is a pointer to u64, use BIT_ULL() to ensure correct
+64-bit mask on all architectures.
 
-Tested on Huawei Matebook (BOD-WXX9) with ES8336 codec.
+Found by Linux Verification Center (linuxtesting.org) with Svace.
 
-Fixes: 6e1ff1459e00 ("ASoC: Intel: sof_es8336: support a separate gpio to control headphone")
-Signed-off-by: Tagir Garaev <tgaraev653@gmail.com>
-Link: https://patch.msgid.link/20260121152435.101698-1-tgaraev653@gmail.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: 2c4d00cb8fc5 ("gpiolib: acpi: Use BIT() macro to increase readability")
+Signed-off-by: Denis Sergeev <denserg.edu@gmail.com>
+Reviewed-by: Mika Westerberg <westeri@kernel.org>
+Link: https://lore.kernel.org/r/20260126035914.16586-1-denserg.edu@gmail.com
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/intel/boards/sof_es8336.c | 2 +-
+ drivers/gpio/gpiolib-acpi.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/sound/soc/intel/boards/sof_es8336.c b/sound/soc/intel/boards/sof_es8336.c
-index e22d767b6e97a..41dab5dcf79a3 100644
---- a/sound/soc/intel/boards/sof_es8336.c
-+++ b/sound/soc/intel/boards/sof_es8336.c
-@@ -120,7 +120,7 @@ static void pcm_pop_work_events(struct work_struct *work)
- 	gpiod_set_value_cansleep(priv->gpio_speakers, priv->speaker_en);
+diff --git a/drivers/gpio/gpiolib-acpi.c b/drivers/gpio/gpiolib-acpi.c
+index baa77a8e83652..11338f47d884d 100644
+--- a/drivers/gpio/gpiolib-acpi.c
++++ b/drivers/gpio/gpiolib-acpi.c
+@@ -1184,7 +1184,7 @@ acpi_gpio_adr_space_handler(u32 function, acpi_physical_address address,
+ 		mutex_unlock(&achip->conn_lock);
  
- 	if (quirk & SOF_ES8336_HEADPHONE_GPIO)
--		gpiod_set_value_cansleep(priv->gpio_headphone, priv->speaker_en);
-+		gpiod_set_value_cansleep(priv->gpio_headphone, !priv->speaker_en);
- 
- }
- 
+ 		if (function == ACPI_WRITE)
+-			gpiod_set_raw_value_cansleep(desc, !!(*value & BIT(i)));
++			gpiod_set_raw_value_cansleep(desc, !!(*value & BIT_ULL(i)));
+ 		else
+ 			*value |= (u64)gpiod_get_raw_value_cansleep(desc) << i;
+ 	}
 -- 
 2.51.0
 
