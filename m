@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 608733AEF30;
-	Wed,  4 Feb 2026 14:50:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59C153AEF30;
+	Wed,  4 Feb 2026 14:50:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770216614; cv=none; b=oOJcDFYNfU7gkn3CgqBl+F9EGBfy0Vi4pCMDyforv//tv2aKZnBimeb4BXsvvnnj6oQbMPOj0pekclar9vdQ9WoZ6VFHB4t3yA3WNaaHbi/9ZxMP8eX2N5Dfosz4KqlzMUjJp7+4Uk9xOguwai8N3aGodzl/Iem5eeYcWSBG110=
+	t=1770216617; cv=none; b=ncTd4eeI9Gl0h1uH4FTUafUK4/sTuFdyysz0/4DFcpu2nmHqZIsjFrS+9/5HKPUnwjnImInk/UYZk0k8TDU8RtHrl/dbJWIU/oo6wvDlNyh3dtXybibE9vnS2owTBH6Tz3350ny91P9nNmjN0vy4MTcEFC2tsOMXw6inkaAHUzE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770216614; c=relaxed/simple;
-	bh=gKIfTL5ICpg1zMTN0GWEnlYUST1qHFsm5u+xji+MBb8=;
+	s=arc-20240116; t=1770216617; c=relaxed/simple;
+	bh=BPLrvK+JeSAvScJ067qQXKqskXGXYwQTs2bNKxRL7AM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=KIjnktQDdqwZu9rfd6BbAM8ElQpRpplPerJ4KeF0KydEhbwS1SlNbcDNQwjEunWbr/4cZQ2+L34+E+ZiGRh8PmZE5yXSzHw4bZKWDwMYyHPR+7wAHvXAdRezR/iF75DRTU/xAErXk/c8lPxMRoHG92lo1vtlxWpU6IC0efF9lt8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NNN9q76+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=N8knThegqdFk/ZWOv9DacUiP2u3KrHdzWqemQFi5orsEcsBFq9kZbDTcV/SnePEI9dxe8rR2Nb1LRf8nDs3QM90vRUdXlOgdnix0ZNVTFPW3f57DHAWKaW6frfbjo7PZMOJtztHdfLKuxlZzZWl+cjj932xRixtLRSVY8uK/LZE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EzjPD9nq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NNN9q76+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7CF3EC4CEF7;
-	Wed,  4 Feb 2026 14:50:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EzjPD9nq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D747CC4CEF7;
+	Wed,  4 Feb 2026 14:50:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770216614;
-	bh=gKIfTL5ICpg1zMTN0GWEnlYUST1qHFsm5u+xji+MBb8=;
+	s=korg; t=1770216617;
+	bh=BPLrvK+JeSAvScJ067qQXKqskXGXYwQTs2bNKxRL7AM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NNN9q76+TJMtV/o7acdikQYOxy7EUyjQkGhkmbhRoTZWzhOk3NGbSN0DdYqE8dj3V
-	 fov+DIaCWdLdxeCnQnJadZgayYxgvxfy3AX6gmBUmoRSV2fMPWrvWER4Wgu9+W+keN
-	 /ttiGhjdjtt8h4z1IdzqbhdkNsXptZvKkvC1VWRg=
+	b=EzjPD9nq3s3BSZ8ES0ELIXIKfqXqle/dBs6t37fLTpwbAf1mkHUrEQhWAes8z9Jp7
+	 cVrCPWx/e6CFrTSOXEn3kkmmyASC2xXTr1I4WpcmMEZo6qxFXwvG0WOL6PCkZDffb/
+	 YAEKWTEWKoLpZ/0mNimeqQw3Xb/cxKLaYKlyaJfw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"=?UTF-8?q?Jan=20H . =20Sch=C3=B6nherr?=" <jschoenh@amazon.de>,
-	Peter Zijlstra <peterz@infradead.org>,
-	Fernand Sieber <sieberf@amazon.com>
-Subject: [PATCH 5.10 106/161] perf/x86/intel: Do not enable BTS for guests
-Date: Wed,  4 Feb 2026 15:39:29 +0100
-Message-ID: <20260204143855.559808924@linuxfoundation.org>
+	Marek Vasut <marex@nabladev.com>,
+	Johannes Berg <johannes.berg@intel.com>
+Subject: [PATCH 5.10 097/161] wifi: rsi: Fix memory corruption due to not set vif driver data size
+Date: Wed,  4 Feb 2026 15:39:20 +0100
+Message-ID: <20260204143855.233392898@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260204143851.755002596@linuxfoundation.org>
 References: <20260204143851.755002596@linuxfoundation.org>
@@ -45,63 +44,63 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Fernand Sieber <sieberf@amazon.com>
+From: Marek Vasut <marex@nabladev.com>
 
-commit 91dcfae0ff2b9b9ab03c1ec95babaceefbffb9f4 upstream.
+commit 4f431d88ea8093afc7ba55edf4652978c5a68f33 upstream.
 
-By default when users program perf to sample branch instructions
-(PERF_COUNT_HW_BRANCH_INSTRUCTIONS) with a sample period of 1, perf
-interprets this as a special case and enables BTS (Branch Trace Store)
-as an optimization to avoid taking an interrupt on every branch.
+The struct ieee80211_vif contains trailing space for vif driver data,
+when struct ieee80211_vif is allocated, the total memory size that is
+allocated is sizeof(struct ieee80211_vif) + size of vif driver data.
+The size of vif driver data is set by each WiFi driver as needed.
 
-Since BTS doesn't virtualize, this optimization doesn't make sense when
-the request originates from a guest. Add an additional check that
-prevents this optimization for virtualized events (exclude_host).
+The RSI911x driver does not set vif driver data size, no trailing space
+for vif driver data is therefore allocated past struct ieee80211_vif .
+The RSI911x driver does however use the vif driver data to store its
+vif driver data structure "struct vif_priv". An access to vif->drv_priv
+leads to access out of struct ieee80211_vif bounds and corruption of
+some memory.
 
-Reported-by: Jan H. Schönherr <jschoenh@amazon.de>
-Suggested-by: Peter Zijlstra <peterz@infradead.org>
-Signed-off-by: Fernand Sieber <sieberf@amazon.com>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Cc: <stable@vger.kernel.org>
-Link: https://patch.msgid.link/20251211183604.868641-1-sieberf@amazon.com
+In case of the failure observed locally, rsi_mac80211_add_interface()
+would write struct vif_priv *vif_info = (struct vif_priv *)vif->drv_priv;
+vif_info->vap_id = vap_idx. This write corrupts struct fq_tin member
+struct list_head new_flows . The flow = list_first_entry(head, struct
+fq_flow, flowchain); in fq_tin_reset() then reports non-NULL bogus
+address, which when accessed causes a crash.
+
+The trigger is very simple, boot the machine with init=/bin/sh , mount
+devtmpfs, sysfs, procfs, and then do "ip link set wlan0 up", "sleep 1",
+"ip link set wlan0 down" and the crash occurs.
+
+Fix this by setting the correct size of vif driver data, which is the
+size of "struct vif_priv", so that memory is allocated and the driver
+can store its driver data in it, instead of corrupting memory around
+it.
+
+Cc: stable@vger.kernel.org
+Fixes: dad0d04fa7ba ("rsi: Add RS9113 wireless driver")
+Signed-off-by: Marek Vasut <marex@nabladev.com>
+Link: https://patch.msgid.link/20260109235817.150330-1-marex@nabladev.com
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/events/perf_event.h |   13 +++++++++++--
- 1 file changed, 11 insertions(+), 2 deletions(-)
+ drivers/net/wireless/rsi/rsi_91x_mac80211.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/arch/x86/events/perf_event.h
-+++ b/arch/x86/events/perf_event.h
-@@ -1088,13 +1088,22 @@ static inline bool intel_pmu_has_bts_per
- 	struct hw_perf_event *hwc = &event->hw;
- 	unsigned int hw_event, bts_event;
+--- a/drivers/net/wireless/rsi/rsi_91x_mac80211.c
++++ b/drivers/net/wireless/rsi/rsi_91x_mac80211.c
+@@ -2005,6 +2005,7 @@ int rsi_mac80211_attach(struct rsi_commo
  
--	if (event->attr.freq)
-+	/*
-+	 * Only use BTS for fixed rate period==1 events.
-+	 */
-+	if (event->attr.freq || period != 1)
-+		return false;
-+
-+	/*
-+	 * BTS doesn't virtualize.
-+	 */
-+	if (event->attr.exclude_host)
- 		return false;
+ 	hw->queues = MAX_HW_QUEUES;
+ 	hw->extra_tx_headroom = RSI_NEEDED_HEADROOM;
++	hw->vif_data_size = sizeof(struct vif_priv);
  
- 	hw_event = hwc->config & INTEL_ARCH_EVENT_MASK;
- 	bts_event = x86_pmu.event_map(PERF_COUNT_HW_BRANCH_INSTRUCTIONS);
- 
--	return hw_event == bts_event && period == 1;
-+	return hw_event == bts_event;
- }
- 
- static inline bool intel_pmu_has_bts(struct perf_event *event)
+ 	hw->max_rates = 1;
+ 	hw->max_rate_tries = MAX_RETRIES;
 
 
