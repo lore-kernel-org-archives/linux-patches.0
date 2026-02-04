@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7183228853A;
-	Wed,  4 Feb 2026 15:02:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 046E82BE03C;
+	Wed,  4 Feb 2026 15:02:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770217346; cv=none; b=CTaC7mTbaX34gVoptfbHkxzLgwmBRqrJzcamPDzyIRHACce7r71W9TuVnTqRQ/a768UX8yEBWGXJIWVHp0aDIjI1+SUGFShAyPyrScX/jQPpm4PqsntMzdOzGBno/KHed+VktmIgEC1+ccmiIiRlDMB8RQILpWjBW2TYSbddRDQ=
+	t=1770217350; cv=none; b=Ue9M6ecdREvHlU5UI14SP8DIpvx3zN4iSCFaYoDUQe3VNrzGO0Dpk0Z44GBzkYiTLZPbRAj/dgN2BxvDQvUbi7ugD6j3dL+10pSm7LkXGWRssG1V0c9YgOjtaM82Hms0uni1bWFqt1CijLHB8AiaA2wKis4Y03hqprJ2EEHvFN8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770217346; c=relaxed/simple;
-	bh=kEkPiNE+AixBrHdwwHh70fsQk+okmkuwAnzPb6v5yf0=;
+	s=arc-20240116; t=1770217350; c=relaxed/simple;
+	bh=uuKpyF77GyDERDuIIuaeWYB959SaWgDt751+wITbuY0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FXNBuDoyIAYnfOgtLC/xmYB9lg41cKMvdlMilqM1Zo/iAxiz1U+IH+vTjHvRLTSyagYOVJ6F+UHAF6xduZOq8mmtAv/of06UzD2sKH+5eKLUq74r0UKf1ePPJX5l9y5LWj9m49FobVy8HBhISjpReg+W/7W8FkAT8uRmhqIdoig=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WyW+66lT; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rT6hdW6meaPiCJq0EM9/aizwzPaB32NBefep2ouwr+KfDDstZE5hxFjhB4SMde5sGN8DeGOXlGxSEOuOohyi1amxj9Nq37re72o6takrtTJa2+o3HCk5iBnX/jn/EScXkiKxUAkDXD6tkd4EgQ+0rpPOIg3cM8//18VlQY2WD0A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oB7305LG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WyW+66lT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D8B39C19423;
-	Wed,  4 Feb 2026 15:02:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oB7305LG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3DFE2C19423;
+	Wed,  4 Feb 2026 15:02:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770217346;
-	bh=kEkPiNE+AixBrHdwwHh70fsQk+okmkuwAnzPb6v5yf0=;
+	s=korg; t=1770217349;
+	bh=uuKpyF77GyDERDuIIuaeWYB959SaWgDt751+wITbuY0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WyW+66lTcLQO+W1SMNKFgWinIRioxOYFy70FgzKXsU1lzFP9PBhqcQDxqkCWrNbmB
-	 SF+qK3wfqSvP8v4gDqaucLJkRYn0V+phf4uZLWpztIfQxP+gs8DWaenIOSrZmv13df
-	 uFWEkuFKOzuOUGN1csIa1zfnA873RG6992CQfjys=
+	b=oB7305LG+f5cHnCkfAPNhwdnDfTcX4LChevslIxVEmJrEq5iEKnty0ac+ElsHiYT7
+	 SdtxCT8iovSzqOCK7t/s/imYLpdg46l6o2tBNavLKhi6GdO1Ao8TeposliBnlYueec
+	 MNrJJFG5gSnEQMPKnfBDzDu2J2gCdAqI+onXfg04=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pimyn Girgis <pimyn@google.com>,
-	Alexander Potapenko <glider@google.com>,
-	Dmitry Vyukov <dvyukov@google.com>,
-	Marco Elver <elver@google.com>,
-	Ernesto Martnez Garca <ernesto.martinezgarcia@tugraz.at>,
-	Kees Cook <kees@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 5.15 195/206] mm/kfence: randomize the freelist on initialization
-Date: Wed,  4 Feb 2026 15:40:26 +0100
-Message-ID: <20260204143905.245830999@linuxfoundation.org>
+	Abel Vesa <abelvesa@kernel.org>,
+	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Abel Vesa <abel.vesa@oss.qualcomm.com>,
+	Linus Walleij <linusw@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 196/206] pinctrl: lpass-lpi: implement .get_direction() for the GPIO driver
+Date: Wed,  4 Feb 2026 15:40:27 +0100
+Message-ID: <20260204143905.284742319@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260204143858.193781818@linuxfoundation.org>
 References: <20260204143858.193781818@linuxfoundation.org>
@@ -55,86 +54,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pimyn Girgis <pimyn@google.com>
+From: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
 
-commit 870ff19251bf3910dda7a7245da826924045fedd upstream.
+[ Upstream commit 4f0d22ec60cee420125f4055af76caa0f373a3fe ]
 
-Randomize the KFENCE freelist during pool initialization to make
-allocation patterns less predictable.  This is achieved by shuffling the
-order in which metadata objects are added to the freelist using
-get_random_u32_below().
+GPIO controller driver should typically implement the .get_direction()
+callback as GPIOLIB internals may try to use it to determine the state
+of a pin. Add it for the LPASS LPI driver.
 
-Additionally, ensure the error path correctly calculates the address range
-to be reset if initialization fails, as the address increment logic has
-been moved to a separate loop.
-
-Link: https://lkml.kernel.org/r/20260120161510.3289089-1-pimyn@google.com
-Fixes: 0ce20dd84089 ("mm: add Kernel Electric-Fence infrastructure")
-Signed-off-by: Pimyn Girgis <pimyn@google.com>
-Reviewed-by: Alexander Potapenko <glider@google.com>
-Cc: Dmitry Vyukov <dvyukov@google.com>
-Cc: Marco Elver <elver@google.com>
-Cc: Ernesto Martnez Garca <ernesto.martinezgarcia@tugraz.at>
-Cc: Greg KH <gregkh@linuxfoundation.org>
-Cc: Kees Cook <kees@kernel.org>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Signed-off-by: Pimyn Girgis <pimyn@google.com>
+Reported-by: Abel Vesa <abelvesa@kernel.org>
+Cc: stable@vger.kernel.org
+Fixes: 6e261d1090d6 ("pinctrl: qcom: Add sm8250 lpass lpi pinctrl driver")
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Tested-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com> # X1E CRD
+Tested-by: Abel Vesa <abel.vesa@oss.qualcomm.com>
+Signed-off-by: Linus Walleij <linusw@kernel.org>
+[ PIN_CONFIG_LEVEL => PIN_CONFIG_OUTPUT ]
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/kfence/core.c |   24 ++++++++++++++++++++----
- 1 file changed, 20 insertions(+), 4 deletions(-)
+ drivers/pinctrl/qcom/pinctrl-lpass-lpi.c |   17 +++++++++++++++++
+ 1 file changed, 17 insertions(+)
 
---- a/mm/kfence/core.c
-+++ b/mm/kfence/core.c
-@@ -520,7 +520,7 @@ static bool __init kfence_init_pool(void
+--- a/drivers/pinctrl/qcom/pinctrl-lpass-lpi.c
++++ b/drivers/pinctrl/qcom/pinctrl-lpass-lpi.c
+@@ -484,6 +484,22 @@ static const struct pinconf_ops lpi_gpio
+ 	.pin_config_group_set		= lpi_config_set,
+ };
+ 
++static int lpi_gpio_get_direction(struct gpio_chip *chip, unsigned int pin)
++{
++	unsigned long config = pinconf_to_config_packed(PIN_CONFIG_OUTPUT, 0);
++	struct lpi_pinctrl *state = gpiochip_get_data(chip);
++	unsigned long arg;
++	int ret;
++
++	ret = lpi_config_get(state->ctrl, pin, &config);
++	if (ret)
++		return ret;
++
++	arg = pinconf_to_config_argument(config);
++
++	return arg ? GPIO_LINE_DIRECTION_OUT : GPIO_LINE_DIRECTION_IN;
++}
++
+ static int lpi_gpio_direction_input(struct gpio_chip *chip, unsigned int pin)
  {
- 	unsigned long addr = (unsigned long)__kfence_pool;
- 	struct page *pages;
--	int i;
-+	int i, rand;
- 	char *p;
+ 	struct lpi_pinctrl *state = gpiochip_get_data(chip);
+@@ -582,6 +598,7 @@ static void lpi_gpio_dbg_show(struct seq
+ #endif
  
- 	if (!__kfence_pool)
-@@ -576,13 +576,28 @@ static bool __init kfence_init_pool(void
- 		INIT_LIST_HEAD(&meta->list);
- 		raw_spin_lock_init(&meta->lock);
- 		meta->state = KFENCE_OBJECT_UNUSED;
--		meta->addr = addr; /* Initialize for validation in metadata_to_pageaddr(). */
--		list_add_tail(&meta->list, &kfence_freelist);
-+		/* Use addr to randomize the freelist. */
-+		meta->addr = i;
- 
- 		/* Protect the right redzone. */
--		if (unlikely(!kfence_protect(addr + PAGE_SIZE)))
-+		if (unlikely(!kfence_protect(addr + 2 * i * PAGE_SIZE + PAGE_SIZE)))
- 			goto err;
-+	}
-+
-+	for (i = CONFIG_KFENCE_NUM_OBJECTS; i > 0; i--) {
-+		rand = get_random_u32() % i;
-+		swap(kfence_metadata[i - 1].addr, kfence_metadata[rand].addr);
-+	}
-+
-+	for (i = 0; i < CONFIG_KFENCE_NUM_OBJECTS; i++) {
-+		struct kfence_metadata *meta_1 = &kfence_metadata[i];
-+		struct kfence_metadata *meta_2 = &kfence_metadata[meta_1->addr];
-+
-+		list_add_tail(&meta_2->list, &kfence_freelist);
-+	}
- 
-+	for (i = 0; i < CONFIG_KFENCE_NUM_OBJECTS; i++) {
-+		kfence_metadata[i].addr = addr;
- 		addr += 2 * PAGE_SIZE;
- 	}
- 
-@@ -597,6 +612,7 @@ static bool __init kfence_init_pool(void
- 	return true;
- 
- err:
-+	addr += 2 * i * PAGE_SIZE;
- 	/*
- 	 * Only release unprotected pages, and do not try to go back and change
- 	 * page attributes due to risk of failing to do so as well. If changing
+ static const struct gpio_chip lpi_gpio_template = {
++	.get_direction		= lpi_gpio_get_direction,
+ 	.direction_input	= lpi_gpio_direction_input,
+ 	.direction_output	= lpi_gpio_direction_output,
+ 	.get			= lpi_gpio_get,
 
 
