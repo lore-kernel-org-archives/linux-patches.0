@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54AEE2D8768;
-	Wed,  4 Feb 2026 15:30:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B82927702D;
+	Wed,  4 Feb 2026 15:30:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770219044; cv=none; b=X96bnKtbzBRFmDejIDZvwENwlvRTnKdRP1EmAfBIVtsFB4WVWfHJCH659/XJDqqOo9/4wJTAd8/I4d3FPIxAwaNIR4FpFwUWqWt5g1LbWlkzR8yQd7jqq5NMkEvFJBwxROwA1C7ya11MgnAiSde73+ISfG40NGY9NleWmmIWPg0=
+	t=1770219047; cv=none; b=AAgLeSXaMoE6JwmLyvRbcoaq+h2aQS4sOMaIWehdixpvkwXWH/NZPZVnxJQq1paP8xNUzm0mhrzGh5XGolTJrCUH52qq5K5EueXKKBuBNtZMYZ1Phv3u6YVnemlEFewAS9++0CaLWiMimHUR+UMTa9ULhK7Qs2QpN1bkY0oY2jI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770219044; c=relaxed/simple;
-	bh=MLZAk5Xtr51M9d0fjWomJ67di+I1lGWYEiZx2rX5xoI=;
+	s=arc-20240116; t=1770219047; c=relaxed/simple;
+	bh=ncWHsbe55fScPBoRp/erwYQt5J0YUH+Z5gwLVy/iP+I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dzSabKwRCpSTOtb51DyZtw5RuUD8gw5LpNDjghC3dPzMooJSFY4DVMMcWX2Z6c45XjaRXVFxxRFV7ywPY6sOr7/0CIKA1PFY50msh72q6F0bjvtyavCOLArtRfIme3vWNpHt0rDe6NdA0a7rULifmvRoRu0NnM0ksDpCqtVUvvs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DX3qZHml; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TX8orrGZ1svhLDsQjI0SbOtzshvtuYR+oTsvzSeZf0psynVfoD/We4ZgcmrCbschRXDJY1Ximp0Z/LsrvWsrNyaBfr67P/tV5fqlT5BfMpcjy8G1vulNdni5NeYO0BS73jiFzromZFMa1HcZIHzJWek7319TIxlsizIuDUBioLs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wVrixGAB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DX3qZHml"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 937FDC116C6;
-	Wed,  4 Feb 2026 15:30:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wVrixGAB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D6C30C19423;
+	Wed,  4 Feb 2026 15:30:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770219044;
-	bh=MLZAk5Xtr51M9d0fjWomJ67di+I1lGWYEiZx2rX5xoI=;
+	s=korg; t=1770219047;
+	bh=ncWHsbe55fScPBoRp/erwYQt5J0YUH+Z5gwLVy/iP+I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DX3qZHmlyVYHjV/xmZ2hG9Bc+GXpp5BMX1v53gUU3SDZ7lwzVemau68NlLd/Chjva
-	 pCTpcEDDgkasadhYQqM3rcpSEhDCekB/hDLpMnmQ7dHLUUJa/G5efuG7ZBomCr5ZFr
-	 T9S2X53Z1KBTaSPv94YcwvSg2xDuqCVWxu0NKjWM=
+	b=wVrixGAB5qTV2Ann1ZklrFxLu2LtvVuo7SWXWBpAf+u6s9Y44t5doUSBYlz2AFTle
+	 ZhBCqpmNoKEi9whkef9PgTRUawzSW27xut8aoIUWqEa/Sk97HtBHYnYEFMqvEo2P08
+	 sukDlijLJO5yVp2XBnfEigdjCTT26gW0Pb02h+MU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christoph Hellwig <hch@infradead.org>,
-	Christoph Hellwig <hch@lst.de>,
-	Shida Zhang <zhangshida@kylinos.cn>,
-	Jens Axboe <axboe@kernel.dk>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>,
+	Jake Keller <jacob.e.keller@intel.com>,
+	IWL <intel-wired-lan@lists.osuosl.org>,
+	Jesse Brandeburg <jbrandeburg@cloudflare.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 050/122] bcache: fix improper use of bi_end_io
-Date: Wed,  4 Feb 2026 15:40:32 +0100
-Message-ID: <20260204143853.657011920@linuxfoundation.org>
+Subject: [PATCH 6.18 024/122] ice: stop counting UDP csum mismatch as rx_errors
+Date: Wed,  4 Feb 2026 15:40:06 +0100
+Message-ID: <20260204143852.734559013@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260204143851.857060534@linuxfoundation.org>
 References: <20260204143851.857060534@linuxfoundation.org>
@@ -53,54 +53,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shida Zhang <zhangshida@kylinos.cn>
+From: Jesse Brandeburg <jbrandeburg@cloudflare.com>
 
-[ Upstream commit 53280e398471f0bddbb17b798a63d41264651325 ]
+[ Upstream commit 05faf2c0a76581d0a7fdbb8ec46477ba183df95b ]
 
-Don't call bio->bi_end_io() directly. Use the bio_endio() helper
-function instead, which handles completion more safely and uniformly.
+Since the beginning, the Intel ice driver has counted receive checksum
+offload mismatches into the rx_errors member of the rtnl_link_stats64
+struct. In ethtool -S these show up as rx_csum_bad.nic.
 
-Suggested-by: Christoph Hellwig <hch@infradead.org>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Signed-off-by: Shida Zhang <zhangshida@kylinos.cn>
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
-Stable-dep-of: 4da7c5c3ec34 ("bcache: fix I/O accounting leak in detached_dev_do_request")
+I believe counting these in rx_errors is fundamentally wrong, as it's
+pretty clear from the comments in if_link.h and from every other statistic
+the driver is summing into rx_errors, that all of them would cause a
+"hardware drop" except for the UDP checksum mismatch, as well as the fact
+that all the other causes for rx_errors are L2 reasons, and this L4 UDP
+"mismatch" is an outlier.
+
+A last nail in the coffin is that rx_errors is monitored in production and
+can indicate a bad NIC/cable/Switch port, but instead some random series of
+UDP packets with bad checksums will now trigger this alert. This false
+positive makes the alert useless and affects us as well as other companies.
+
+This packet with presumably a bad UDP checksum is *already* passed to the
+stack, just not marked as offloaded by the hardware/driver. If it is
+dropped by the stack it will show up as UDP_MIB_CSUMERRORS.
+
+And one more thing, none of the other Intel drivers, and at least bnxt_en
+and mlx5 both don't appear to count UDP offload mismatches as rx_errors.
+
+Here is a related customer complaint:
+https://community.intel.com/t5/Ethernet-Products/ice-rx-errros-is-too-sensitive-to-IP-TCP-attack-packets-Intel/td-p/1662125
+
+Fixes: 4f1fe43c920b ("ice: Add more Rx errors to netdev's rx_error counter")
+Cc: Tony Nguyen <anthony.l.nguyen@intel.com>
+Cc: Jake Keller <jacob.e.keller@intel.com>
+Cc: IWL <intel-wired-lan@lists.osuosl.org>
+Signed-off-by: Jesse Brandeburg <jbrandeburg@cloudflare.com>
+Acked-by: Jacob Keller <jacob.e.keller@intel.com>
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/md/bcache/request.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/net/ethernet/intel/ice/ice_main.c | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/drivers/md/bcache/request.c b/drivers/md/bcache/request.c
-index af345dc6fde14..82fdea7dea7aa 100644
---- a/drivers/md/bcache/request.c
-+++ b/drivers/md/bcache/request.c
-@@ -1104,7 +1104,7 @@ static void detached_dev_end_io(struct bio *bio)
- 	}
- 
- 	kfree(ddip);
--	bio->bi_end_io(bio);
-+	bio_endio(bio);
- }
- 
- static void detached_dev_do_request(struct bcache_device *d, struct bio *bio,
-@@ -1121,7 +1121,7 @@ static void detached_dev_do_request(struct bcache_device *d, struct bio *bio,
- 	ddip = kzalloc(sizeof(struct detached_dev_io_private), GFP_NOIO);
- 	if (!ddip) {
- 		bio->bi_status = BLK_STS_RESOURCE;
--		bio->bi_end_io(bio);
-+		bio_endio(bio);
- 		return;
- 	}
- 
-@@ -1136,7 +1136,7 @@ static void detached_dev_do_request(struct bcache_device *d, struct bio *bio,
- 
- 	if ((bio_op(bio) == REQ_OP_DISCARD) &&
- 	    !bdev_max_discard_sectors(dc->bdev))
--		bio->bi_end_io(bio);
-+		detached_dev_end_io(bio);
- 	else
- 		submit_bio_noacct(bio);
- }
+diff --git a/drivers/net/ethernet/intel/ice/ice_main.c b/drivers/net/ethernet/intel/ice/ice_main.c
+index fc284802e2bcd..b5ebfcdc9d434 100644
+--- a/drivers/net/ethernet/intel/ice/ice_main.c
++++ b/drivers/net/ethernet/intel/ice/ice_main.c
+@@ -6993,7 +6993,6 @@ void ice_update_vsi_stats(struct ice_vsi *vsi)
+ 		cur_ns->rx_errors = pf->stats.crc_errors +
+ 				    pf->stats.illegal_bytes +
+ 				    pf->stats.rx_undersize +
+-				    pf->hw_csum_rx_error +
+ 				    pf->stats.rx_jabber +
+ 				    pf->stats.rx_fragments +
+ 				    pf->stats.rx_oversize;
 -- 
 2.51.0
 
