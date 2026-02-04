@@ -1,40 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FF912561AE;
-	Wed,  4 Feb 2026 15:00:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3D1841B346;
+	Wed,  4 Feb 2026 15:00:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770217210; cv=none; b=GYEGYcFlLBvn+SLFkZi0TydegqVZoVunZkX12jzbhgJglW6VPBRaTHgIRrV3Q9iTEjKDVpBE65/iusNIn10jMGfOV4nDbN5fpZO22lvkKPqVDazlLQLCl8LhmdtR03loe8a1bxLxXfpUOm47rYXYXGQWa3htSMgJfWrYmlQFK3g=
+	t=1770217213; cv=none; b=W00t3PIhdMlJM/5M/4fwdD18BbEfh8GeHLplx7OkdvfIiEC1a9SmVXa3X0RFkITiqSQ74BAzpu+KYCThqgUzYbJvTb5XPqCXwfx8VoBTlIBAG2rfDY9YWCm2HtzWETEru23bwRF2QS4wTuBEjtpSTySp0RA5cLX3bdIzi04mQk4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770217210; c=relaxed/simple;
-	bh=BySPZRRF/RIHcnnaMgXRbAgj4ps+PJEDR9+JV37F0/A=;
+	s=arc-20240116; t=1770217213; c=relaxed/simple;
+	bh=xZxmhMX+obuW7dtBuU5zP4hR2OoJCw1+t+xc6cHdNrU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oKnbX5Bx9GZzR2ijQ35NeUU41zAUdRzBQmixarQyMWRwP90jH3RzNuDU+eppHE2085ijiyu7vyN7q7c4/UwcQWmfN0WlvNeyANXCt3ex81m1JyiXxxtnN+wtvOUpoOf74QgFeYL83QD6G8fegIX7KfNKzx+yvYQ8fqnMoU9O1/o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sFL7G565; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Wy6BaQrIYd6rjVowKeq/9rvy1RI0JUdr8hdc8k5gXQjyY1StARNoGi23tPnY2UASgFuc+zRFOq9c2wLenV5k/uwFtbUTWFdhW7S07O8hnftTx+sM820t+HPUf7Pn+5MO45ATtPHbM03LNTV61w1A33A6jrP2+ZMvz2Ci6JwHhjs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1BRqgYbs; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sFL7G565"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1EC57C116C6;
-	Wed,  4 Feb 2026 15:00:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1BRqgYbs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5DF82C4CEF7;
+	Wed,  4 Feb 2026 15:00:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770217210;
-	bh=BySPZRRF/RIHcnnaMgXRbAgj4ps+PJEDR9+JV37F0/A=;
+	s=korg; t=1770217213;
+	bh=xZxmhMX+obuW7dtBuU5zP4hR2OoJCw1+t+xc6cHdNrU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sFL7G565mvszKX0OOlEiZz6W0QrQdYDIuUB+GnuNZqzX3hrfhWlD8aRLZ1fUkRiII
-	 jegmCnDW6AZbMzw34WvxO+B3kc9kaOfS9la54xam+n4VhBg2WyjSdQXpu/AYxyhP8T
-	 JLbv697EdxQujlCSgJuwjRv/zmoQxxDyxZPpB1E8=
+	b=1BRqgYbsCvF8RQXxx7LJkn2jqxcbo3gqRa4ovYdMXzZZ/KGDdpo/2Dpilq7Inkl0k
+	 WAfr++hOx/10dFFMc6IDSQzReOUTuV7rJC7NhBtv/5fDTclGTb+iVaBrRm8PUrIWf8
+	 ET/pSPfZkfAid/8yRauCPdoDoUYNGcy8UvxEd0WM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kuniyuki Iwashima <kuniyu@google.com>,
-	Eric Dumazet <edumazet@google.com>,
-	Sabrina Dubroca <sd@queasysnail.net>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Keerthana K <keerthana.kalyanasundaram@broadcom.com>
-Subject: [PATCH 5.15 156/206] tls: Use __sk_dst_get() and dst_dev_rcu() in get_netdev_for_sock().
-Date: Wed,  4 Feb 2026 15:39:47 +0100
-Message-ID: <20260204143903.823926861@linuxfoundation.org>
+	Ian Abbott <abbotti@mev.co.uk>
+Subject: [PATCH 5.15 157/206] comedi: Fix getting range information for subdevices 16 to 255
+Date: Wed,  4 Feb 2026 15:39:48 +0100
+Message-ID: <20260204143903.858360310@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260204143858.193781818@linuxfoundation.org>
 References: <20260204143858.193781818@linuxfoundation.org>
@@ -53,62 +49,100 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kuniyuki Iwashima <kuniyu@google.com>
+From: Ian Abbott <abbotti@mev.co.uk>
 
-commit c65f27b9c3be2269918e1cbad6d8884741f835c5 upstream.
+commit 10d28cffb3f6ec7ad67f0a4cd32c2afa92909452 upstream.
 
-get_netdev_for_sock() is called during setsockopt(),
-so not under RCU.
+The `COMEDI_RANGEINFO` ioctl does not work properly for subdevice
+indices above 15.  Currently, the only in-tree COMEDI drivers that
+support more than 16 subdevices are the "8255" driver and the
+"comedi_bond" driver.  Making the ioctl work for subdevice indices up to
+255 is achievable.  It needs minor changes to the handling of the
+`COMEDI_RANGEINFO` and `COMEDI_CHANINFO` ioctls that should be mostly
+harmless to user-space, apart from making them less broken.  Details
+follow...
 
-Using sk_dst_get(sk)->dev could trigger UAF.
+The `COMEDI_RANGEINFO` ioctl command gets the list of supported ranges
+(usually with units of volts or milliamps) for a COMEDI subdevice or
+channel.  (Only some subdevices have per-channel range tables, indicated
+by the `SDF_RANGETYPE` flag in the subdevice information.)  It uses a
+`range_type` value and a user-space pointer, both supplied by
+user-space, but the `range_type` value should match what was obtained
+using the `COMEDI_CHANINFO` ioctl (if the subdevice has per-channel
+range tables)  or `COMEDI_SUBDINFO` ioctl (if the subdevice uses a
+single range table for all channels).  Bits 15 to 0 of the `range_type`
+value contain the length of the range table, which is the only part that
+user-space should care about (so it can use a suitably sized buffer to
+fetch the range table).  Bits 23 to 16 store the channel index, which is
+assumed to be no more than 255 if the subdevice has per-channel range
+tables, and is set to 0 if the subdevice has a single range table.  For
+`range_type` values produced by the `COMEDI_SUBDINFO` ioctl, bits 31 to
+24 contain the subdevice index, which is assumed to be no more than 255.
+But for `range_type` values produced by the `COMEDI_CHANINFO` ioctl,
+bits 27 to 24 contain the subdevice index, which is assumed to be no
+more than 15, and bits 31 to 28 contain the COMEDI device's minor device
+number for some unknown reason lost in the mists of time.  The
+`COMEDI_RANGEINFO` ioctl extract the length from bits 15 to 0 of the
+user-supplied `range_type` value, extracts the channel index from bits
+23 to 16 (only used if the subdevice has per-channel range tables),
+extracts the subdevice index from bits 27 to 24, and ignores bits 31 to
+28.  So for subdevice indices 16 to 255, the `COMEDI_SUBDINFO` or
+`COMEDI_CHANINFO` ioctl will report a `range_type` value that doesn't
+work with the `COMEDI_RANGEINFO` ioctl.  It will either get the range
+table for the subdevice index modulo 16, or will fail with `-EINVAL`.
 
-Let's use __sk_dst_get() and dst_dev_rcu().
+To fix this, always use bits 31 to 24 of the `range_type` value to hold
+the subdevice index (assumed to be no more than 255).  This affects the
+`COMEDI_CHANINFO` and `COMEDI_RANGEINFO` ioctls.  There should not be
+anything in user-space that depends on the old, broken usage, although
+it may now see different values in bits 31 to 28 of the `range_type`
+values reported by the `COMEDI_CHANINFO` ioctl for subdevices that have
+per-channel subdevices.  User-space should not be trying to decode bits
+31 to 16 of the `range_type` values anyway.
 
-Note that the only ->ndo_sk_get_lower_dev() user is
-bond_sk_get_lower_dev(), which uses RCU.
-
-Fixes: e8f69799810c ("net/tls: Add generic NIC offload infrastructure")
-Signed-off-by: Kuniyuki Iwashima <kuniyu@google.com>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Reviewed-by: Sabrina Dubroca <sd@queasysnail.net>
-Link: https://patch.msgid.link/20250916214758.650211-6-kuniyu@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-[ Keerthana: Backport to v5.15-v6.1 ]
-Signed-off-by: Keerthana K <keerthana.kalyanasundaram@broadcom.com>
+Fixes: ed9eccbe8970 ("Staging: add comedi core")
+Cc: stable@vger.kernel.org #5.17+
+Signed-off-by: Ian Abbott <abbotti@mev.co.uk>
+Link: https://patch.msgid.link/20251203162438.176841-1-abbotti@mev.co.uk
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/tls/tls_device.c |   18 ++++++++++--------
- 1 file changed, 10 insertions(+), 8 deletions(-)
+ drivers/comedi/comedi.h      |    2 +-
+ drivers/comedi/comedi_fops.c |    2 +-
+ drivers/comedi/range.c       |    2 +-
+ 3 files changed, 3 insertions(+), 3 deletions(-)
 
---- a/net/tls/tls_device.c
-+++ b/net/tls/tls_device.c
-@@ -110,17 +110,19 @@ static void tls_device_queue_ctx_destruc
- /* We assume that the socket is already connected */
- static struct net_device *get_netdev_for_sock(struct sock *sk)
- {
--	struct dst_entry *dst = sk_dst_get(sk);
--	struct net_device *netdev = NULL;
-+	struct net_device *dev, *lowest_dev = NULL;
-+	struct dst_entry *dst;
+--- a/drivers/comedi/comedi.h
++++ b/drivers/comedi/comedi.h
+@@ -640,7 +640,7 @@ struct comedi_chaninfo {
  
--	if (likely(dst)) {
--		netdev = netdev_sk_get_lowest_dev(dst->dev, sk);
--		dev_hold(netdev);
-+	rcu_read_lock();
-+	dst = __sk_dst_get(sk);
-+	dev = dst ? dst_dev_rcu(dst) : NULL;
-+	if (likely(dev)) {
-+		lowest_dev = netdev_sk_get_lowest_dev(dev, sk);
-+		dev_hold(lowest_dev);
- 	}
-+	rcu_read_unlock();
+ /**
+  * struct comedi_rangeinfo - used to retrieve the range table for a channel
+- * @range_type:		Encodes subdevice index (bits 27:24), channel index
++ * @range_type:		Encodes subdevice index (bits 31:24), channel index
+  *			(bits 23:16) and range table length (bits 15:0).
+  * @range_ptr:		Pointer to array of @struct comedi_krange to be filled
+  *			in with the range table for the channel or subdevice.
+--- a/drivers/comedi/comedi_fops.c
++++ b/drivers/comedi/comedi_fops.c
+@@ -1095,7 +1095,7 @@ static int do_chaninfo_ioctl(struct come
+ 		for (i = 0; i < s->n_chan; i++) {
+ 			int x;
  
--	dst_release(dst);
--
--	return netdev;
-+	return lowest_dev;
- }
+-			x = (dev->minor << 28) | (it->subdev << 24) | (i << 16) |
++			x = (it->subdev << 24) | (i << 16) |
+ 			    (s->range_table_list[i]->length);
+ 			if (put_user(x, it->rangelist + i))
+ 				return -EFAULT;
+--- a/drivers/comedi/range.c
++++ b/drivers/comedi/range.c
+@@ -52,7 +52,7 @@ int do_rangeinfo_ioctl(struct comedi_dev
+ 	const struct comedi_lrange *lr;
+ 	struct comedi_subdevice *s;
  
- static void destroy_record(struct tls_record_info *record)
+-	subd = (it->range_type >> 24) & 0xf;
++	subd = (it->range_type >> 24) & 0xff;
+ 	chan = (it->range_type >> 16) & 0xff;
+ 
+ 	if (!dev->attached)
 
 
