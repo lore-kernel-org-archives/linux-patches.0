@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A01FB29AB1D;
-	Wed,  4 Feb 2026 15:19:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C66E413226;
+	Wed,  4 Feb 2026 15:19:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770218357; cv=none; b=fdMzSRkyLN4Wvyx8W3X415xNB7b6X1HJLxg+s1Nxg4+p/wMpSBzbRyYGxMHPck7GAVBLGhZWfh4wHccO0r7C/QwwwrzDDwSOa9Eym4HFS07VIH/xxSj6QzulLF8VZvou/KsFwjPcRFbA2q8z7/ABWDNpLP9980KI8GDESWEt1YI=
+	t=1770218361; cv=none; b=AlbZnGF5ovCIbkCOzDlyt08KP8cTrQrCDt/Oqd1SLFIBgu/J5lQmcqmafgnkAaddIElPV3KeQ/krLvtJnfkr0bA1NPhZTRKIQZBNTnP/iIMwwDv0427cpulRyPfYIGAlPtlA/igkbUPmUgX1QBIJMwlD0gfCgHxWBSjAjDCKOY8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770218357; c=relaxed/simple;
-	bh=sAsxKTxKPfun+eUmNbL+7JJpMtrx528E2vH36nHw8II=;
+	s=arc-20240116; t=1770218361; c=relaxed/simple;
+	bh=ywUa9SDy6i6ohExiB70iSc66XKMEVF18uLxCitNbetc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=o7afco+V00s6oMJryhm1vn02bszoH6XiqjbJ51Hr1bFMK+iPp/uhvRrXP6EYZzDOc1WdpJ0OH82xSCZc3ZDP9XG4tIp+FbSqZ/eHAFgyb4bV/bmKhZoIYiUVuHMag4VwDfLWeq6B+8PIhHSF8qVIJoAzWNqVEibtl3HhFQF5V74=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=i99zJ1Us; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bT+UM8r26uVSzV5+1xnf0Jm6x2NuIop9ivqKfLcJnc3A3KfseClNb1ZFNe+itfqvFgvU+KzhYqgSnaDye0YLF81ZFD0EgHLvpNfzErr3StXw6UP+EyDWtq1Pc6trGyyBzHIw6awFjcUIeHwIYxK3oiF2sbYmHQgwQfHaAzB1+bg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fh5eEOwA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="i99zJ1Us"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB94FC4CEF7;
-	Wed,  4 Feb 2026 15:19:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fh5eEOwA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4160FC2BCB0;
+	Wed,  4 Feb 2026 15:19:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770218357;
-	bh=sAsxKTxKPfun+eUmNbL+7JJpMtrx528E2vH36nHw8II=;
+	s=korg; t=1770218360;
+	bh=ywUa9SDy6i6ohExiB70iSc66XKMEVF18uLxCitNbetc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=i99zJ1UsSk64p9DTXnlxssB9bLvipkWJQtCcqvZGJoWS9AJyniHjKV+ezAxtuacBU
-	 KF/Y+oqOKBWGwyZRJHVX//FtoMDLcwJqgfB5JsV0vAvTlM6MpS4/5gYwRfPEghWCpw
-	 /DCoN6gJr7OZtPjX6d9EVzgI2GobALy1OYcf+U1k=
+	b=fh5eEOwAPScdhxZV2mtxYF46dKzW3Xff/nhCz/ml8omIktccxNjeavksLybfhs5hc
+	 a142Ed341OZifTdXyH6wpmRqwr4r86bdaPu/2jcQIqKZ90x85Mle7nJezPnV+Sjm5z
+	 D665mLd8fSRK6sQkmiWS2Hs5TdeFs9TUA4SBYgIo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Laveesh Bansal <laveeshb@laveeshbansal.com>,
-	Jan Kara <jack@suse.cz>,
-	Christian Brauner <brauner@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 277/280] writeback: fix 100% CPU usage when dirtytime_expire_interval is 0
-Date: Wed,  4 Feb 2026 15:40:51 +0100
-Message-ID: <20260204143919.672252584@linuxfoundation.org>
+	syzbot+773e51afe420baaf0e2b@syzkaller.appspotmail.com,
+	syzbot+70a42f45e76bede082be@syzkaller.appspotmail.com,
+	Xin Long <lucien.xin@gmail.com>,
+	Marcelo Ricardo Leitner <marcelo.leitner@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Li hongliang <1468888505@139.com>
+Subject: [PATCH 6.1 268/280] sctp: linearize cloned gso packets in sctp_rcv
+Date: Wed,  4 Feb 2026 15:40:42 +0100
+Message-ID: <20260204143919.343512003@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260204143909.614719725@linuxfoundation.org>
 References: <20260204143909.614719725@linuxfoundation.org>
@@ -52,74 +54,77 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Laveesh Bansal <laveeshb@laveeshbansal.com>
+From: Xin Long <lucien.xin@gmail.com>
 
-[ Upstream commit 543467d6fe97e27e22a26e367fda972dbefebbff ]
+[ Upstream commit fd60d8a086191fe33c2d719732d2482052fa6805 ]
 
-When vm.dirtytime_expire_seconds is set to 0, wakeup_dirtytime_writeback()
-schedules delayed work with a delay of 0, causing immediate execution.
-The function then reschedules itself with 0 delay again, creating an
-infinite busy loop that causes 100% kworker CPU usage.
+A cloned head skb still shares these frag skbs in fraglist with the
+original head skb. It's not safe to access these frag skbs.
 
-Fix by:
-- Only scheduling delayed work in wakeup_dirtytime_writeback() when
-  dirtytime_expire_interval is non-zero
-- Cancelling the delayed work in dirtytime_interval_handler() when
-  the interval is set to 0
-- Adding a guard in start_dirtytime_writeback() for defensive coding
+syzbot reported two use-of-uninitialized-memory bugs caused by this:
 
-Tested by booting kernel in QEMU with virtme-ng:
-- Before fix: kworker CPU spikes to ~73%
-- After fix: CPU remains at normal levels
-- Setting interval back to non-zero correctly resumes writeback
+  BUG: KMSAN: uninit-value in sctp_inq_pop+0x15b7/0x1920 net/sctp/inqueue.c:211
+   sctp_inq_pop+0x15b7/0x1920 net/sctp/inqueue.c:211
+   sctp_assoc_bh_rcv+0x1a7/0xc50 net/sctp/associola.c:998
+   sctp_inq_push+0x2ef/0x380 net/sctp/inqueue.c:88
+   sctp_backlog_rcv+0x397/0xdb0 net/sctp/input.c:331
+   sk_backlog_rcv+0x13b/0x420 include/net/sock.h:1122
+   __release_sock+0x1da/0x330 net/core/sock.c:3106
+   release_sock+0x6b/0x250 net/core/sock.c:3660
+   sctp_wait_for_connect+0x487/0x820 net/sctp/socket.c:9360
+   sctp_sendmsg_to_asoc+0x1ec1/0x1f00 net/sctp/socket.c:1885
+   sctp_sendmsg+0x32b9/0x4a80 net/sctp/socket.c:2031
+   inet_sendmsg+0x25a/0x280 net/ipv4/af_inet.c:851
+   sock_sendmsg_nosec net/socket.c:718 [inline]
 
-Fixes: a2f4870697a5 ("fs: make sure the timestamps for lazytime inodes eventually get written")
-Cc: stable@vger.kernel.org
-Closes: https://bugzilla.kernel.org/show_bug.cgi?id=220227
-Signed-off-by: Laveesh Bansal <laveeshb@laveeshbansal.com>
-Link: https://patch.msgid.link/20260106145059.543282-2-laveeshb@laveeshbansal.com
-Reviewed-by: Jan Kara <jack@suse.cz>
-Signed-off-by: Christian Brauner <brauner@kernel.org>
-[ adapted system_percpu_wq to system_wq for the workqueue used in dirtytime_interval_handler() ]
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+and
+
+  BUG: KMSAN: uninit-value in sctp_assoc_bh_rcv+0x34e/0xbc0 net/sctp/associola.c:987
+   sctp_assoc_bh_rcv+0x34e/0xbc0 net/sctp/associola.c:987
+   sctp_inq_push+0x2a3/0x350 net/sctp/inqueue.c:88
+   sctp_backlog_rcv+0x3c7/0xda0 net/sctp/input.c:331
+   sk_backlog_rcv+0x142/0x420 include/net/sock.h:1148
+   __release_sock+0x1d3/0x330 net/core/sock.c:3213
+   release_sock+0x6b/0x270 net/core/sock.c:3767
+   sctp_wait_for_connect+0x458/0x820 net/sctp/socket.c:9367
+   sctp_sendmsg_to_asoc+0x223a/0x2260 net/sctp/socket.c:1886
+   sctp_sendmsg+0x3910/0x49f0 net/sctp/socket.c:2032
+   inet_sendmsg+0x269/0x2a0 net/ipv4/af_inet.c:851
+   sock_sendmsg_nosec net/socket.c:712 [inline]
+
+This patch fixes it by linearizing cloned gso packets in sctp_rcv().
+
+Fixes: 90017accff61 ("sctp: Add GSO support")
+Reported-by: syzbot+773e51afe420baaf0e2b@syzkaller.appspotmail.com
+Reported-by: syzbot+70a42f45e76bede082be@syzkaller.appspotmail.com
+Signed-off-by: Xin Long <lucien.xin@gmail.com>
+Reviewed-by: Marcelo Ricardo Leitner <marcelo.leitner@gmail.com>
+Link: https://patch.msgid.link/dd7dc337b99876d4132d0961f776913719f7d225.1754595611.git.lucien.xin@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Li hongliang <1468888505@139.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/fs-writeback.c |   14 ++++++++++----
- 1 file changed, 10 insertions(+), 4 deletions(-)
+This patch is lost/missing, as it has already been added
+into stable branches less than and greater than 6.1. Previous patch in
+https://lore.kernel.org/stable/20251022075549.195012-1-kovalev@altlinux.org/ is still not added.
+So I resent it again.
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+---
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+---
+ net/sctp/input.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/fs/fs-writeback.c
-+++ b/fs/fs-writeback.c
-@@ -2360,12 +2360,14 @@ static void wakeup_dirtytime_writeback(s
- 				wb_wakeup(wb);
- 	}
- 	rcu_read_unlock();
--	schedule_delayed_work(&dirtytime_work, dirtytime_expire_interval * HZ);
-+	if (dirtytime_expire_interval)
-+		schedule_delayed_work(&dirtytime_work, dirtytime_expire_interval * HZ);
- }
- 
- static int __init start_dirtytime_writeback(void)
- {
--	schedule_delayed_work(&dirtytime_work, dirtytime_expire_interval * HZ);
-+	if (dirtytime_expire_interval)
-+		schedule_delayed_work(&dirtytime_work, dirtytime_expire_interval * HZ);
- 	return 0;
- }
- __initcall(start_dirtytime_writeback);
-@@ -2376,8 +2378,12 @@ int dirtytime_interval_handler(struct ct
- 	int ret;
- 
- 	ret = proc_dointvec_minmax(table, write, buffer, lenp, ppos);
--	if (ret == 0 && write)
--		mod_delayed_work(system_wq, &dirtytime_work, 0);
-+	if (ret == 0 && write) {
-+		if (dirtytime_expire_interval)
-+			mod_delayed_work(system_wq, &dirtytime_work, 0);
-+		else
-+			cancel_delayed_work_sync(&dirtytime_work);
-+	}
- 	return ret;
- }
+--- a/net/sctp/input.c
++++ b/net/sctp/input.c
+@@ -114,7 +114,7 @@ int sctp_rcv(struct sk_buff *skb)
+ 	 * it's better to just linearize it otherwise crc computing
+ 	 * takes longer.
+ 	 */
+-	if ((!is_gso && skb_linearize(skb)) ||
++	if (((!is_gso || skb_cloned(skb)) && skb_linearize(skb)) ||
+ 	    !pskb_may_pull(skb, sizeof(struct sctphdr)))
+ 		goto discard_it;
  
 
 
