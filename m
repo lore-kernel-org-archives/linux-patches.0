@@ -1,46 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 618264218A1;
-	Wed,  4 Feb 2026 15:11:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97A9E2C026F;
+	Wed,  4 Feb 2026 15:11:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770217862; cv=none; b=eNc0RTxs+xW3GxeFikAJ2qhy58pVN3c/COVc5dx6I+C87fUlPeTgqtBDXcY/rWJovakNrvuirnhxNdhOXFxGXfDwk4iaJWYoB6WIKxg7Ub1esCUyFNjapMkmhwKjQkQBpZ63VtoG9Ar1tJov8pK7wzSGEIu0c9pXE0twkB8XyeI=
+	t=1770217865; cv=none; b=laZXsx/j9TOxlhkrTIjhuqIPEJ2c2Emi2zNw0mClOM0TwBpQSaJzGy55oN+8+ipk6E23NclCewoytAa8XUKnEZ/t48UjaidcleIBN/in0ytCPtDnSalT7h0XhPdb2D59Jlu8deVDr+ksBH/qORS1nxb2xxmAgtkPD63ZPTKpvKo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770217862; c=relaxed/simple;
-	bh=fncLKvsPJvDPxhOcq3XxYfD4LGtbKRlHsLRIVz9+oMY=;
+	s=arc-20240116; t=1770217865; c=relaxed/simple;
+	bh=+AMiyjSY2D0KV6tPwVQyUESI9mB1ew+K6GPAWIqA/qI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=doQBcukyNGQnvblsNSxt/xcRFnPuHwekK6FGlNb3IVdytqSmeAoH8Ij8nEqkLZInhLUyY0nhUZCDxCYCnMe67jTC6o3R6pzLfdRKPITKR4tZIRqJvmHJfywIyCLUQG7X3IGOgHZxuiSdGPjJ02KO9EU5p77KZ/b5zV6itEdDHw8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kvJ3V5JE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=X4FKET4vz6Ih1txMaV4Yjg3Q4VQdR/+/d2WcBrVOwd/5aIHPU+UXRgkmz7lp+ZLlUKhANFyoQIdSG81++ID579r0r9uR6RO3tTvSwI+d5xcDwqAzLmgKB8UuobLH2OlcSsLUcTA0JqWXgTHze3H3YBZqAtZ6DzQAkqtK0dx0yAo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Bi3hRy4h; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kvJ3V5JE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C18FC4CEF7;
-	Wed,  4 Feb 2026 15:11:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Bi3hRy4h"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0DB33C4CEF7;
+	Wed,  4 Feb 2026 15:11:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770217862;
-	bh=fncLKvsPJvDPxhOcq3XxYfD4LGtbKRlHsLRIVz9+oMY=;
+	s=korg; t=1770217865;
+	bh=+AMiyjSY2D0KV6tPwVQyUESI9mB1ew+K6GPAWIqA/qI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kvJ3V5JEN3b/sEzft8WYvMdX4aWG7CViYi/osYmI3niehHv+pZf1yMsLGskerF17b
-	 ozp4DiXKFByIzOn/N7GIn8hmTUmjjx5k5yDmU8MbXn/dYCC1wu8oGzu6sOedyhgy3C
-	 vEV766gLNX3t9DyubIuOP1wtuuNjUCN6wzrFbrEY=
+	b=Bi3hRy4hWmNSsarXU46wBseofCIEV8pI8acwSmvy3xADXz0PgG1lPc686vQOwBGnN
+	 APTpgADQFbfDLaBN4oM5rIpq/+EoMRlZxUdKyoyXpeY1FXPrQhBJF+pHzLevDqtoym
+	 2T1vZR0rPrv/mdKdQ3ucpUcNwBBIwGEV5bb73CHk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrew Cooper <andrew.cooper3@citrix.com>,
-	Marco Elver <elver@google.com>,
-	Alexander Potapenko <glider@google.com>,
-	Dmitry Vyukov <dvyukov@google.com>,
-	Thomas Gleixner <tglx@linutronix.de>,
-	Ingo Molnar <mingo@redhat.com>,
-	Borislav Petkov <bp@alien8.de>,
-	Dave Hansen <dave.hansen@linux.intel.com>,
-	"H. Peter Anvin" <hpa@zytor.com>,
-	Jann Horn <jannh@google.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.1 124/280] x86/kfence: avoid writing L1TF-vulnerable PTEs
-Date: Wed,  4 Feb 2026 15:38:18 +0100
-Message-ID: <20260204143914.098291755@linuxfoundation.org>
+	syzbot <syzkaller@googlegroups.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 142/280] mISDN: annotate data-race around dev->work
+Date: Wed,  4 Feb 2026 15:38:36 +0100
+Message-ID: <20260204143914.746772904@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260204143909.614719725@linuxfoundation.org>
 References: <20260204143909.614719725@linuxfoundation.org>
@@ -59,114 +52,103 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andrew Cooper <andrew.cooper3@citrix.com>
+From: Eric Dumazet <edumazet@google.com>
 
-commit b505f1944535f83d369ae68813e7634d11b990d3 upstream.
+[ Upstream commit 8175dbf174d487afab81e936a862a8d9b8a1ccb6 ]
 
-For native, the choice of PTE is fine.  There's real memory backing the
-non-present PTE.  However, for XenPV, Xen complains:
+dev->work can re read locklessly in mISDN_read()
+and mISDN_poll(). Add READ_ONCE()/WRITE_ONCE() annotations.
 
-  (XEN) d1 L1TF-vulnerable L1e 8010000018200066 - Shadowing
+BUG: KCSAN: data-race in mISDN_ioctl / mISDN_read
 
-To explain, some background on XenPV pagetables:
+write to 0xffff88812d848280 of 4 bytes by task 10864 on cpu 1:
+  misdn_add_timer drivers/isdn/mISDN/timerdev.c:175 [inline]
+  mISDN_ioctl+0x2fb/0x550 drivers/isdn/mISDN/timerdev.c:233
+  vfs_ioctl fs/ioctl.c:51 [inline]
+  __do_sys_ioctl fs/ioctl.c:597 [inline]
+  __se_sys_ioctl+0xce/0x140 fs/ioctl.c:583
+  __x64_sys_ioctl+0x43/0x50 fs/ioctl.c:583
+  x64_sys_call+0x14b0/0x3000 arch/x86/include/generated/asm/syscalls_64.h:17
+  do_syscall_x64 arch/x86/entry/syscall_64.c:63 [inline]
+  do_syscall_64+0xd8/0x2c0 arch/x86/entry/syscall_64.c:94
+ entry_SYSCALL_64_after_hwframe+0x77/0x7f
 
-  Xen PV guests are control their own pagetables; they choose the new
-  PTE value, and use hypercalls to make changes so Xen can audit for
-  safety.
+read to 0xffff88812d848280 of 4 bytes by task 10857 on cpu 0:
+  mISDN_read+0x1f2/0x470 drivers/isdn/mISDN/timerdev.c:112
+  do_loop_readv_writev fs/read_write.c:847 [inline]
+  vfs_readv+0x3fb/0x690 fs/read_write.c:1020
+  do_readv+0xe7/0x210 fs/read_write.c:1080
+  __do_sys_readv fs/read_write.c:1165 [inline]
+  __se_sys_readv fs/read_write.c:1162 [inline]
+  __x64_sys_readv+0x45/0x50 fs/read_write.c:1162
+  x64_sys_call+0x2831/0x3000 arch/x86/include/generated/asm/syscalls_64.h:20
+  do_syscall_x64 arch/x86/entry/syscall_64.c:63 [inline]
+  do_syscall_64+0xd8/0x2c0 arch/x86/entry/syscall_64.c:94
+ entry_SYSCALL_64_after_hwframe+0x77/0x7f
 
-  In addition to a regular reference count, Xen also maintains a type
-  reference count.  e.g.  SegDesc (referenced by vGDT/vLDT), Writable
-  (referenced with _PAGE_RW) or L{1..4} (referenced by vCR3 or a lower
-  pagetable level).  This is in order to prevent e.g.  a page being
-  inserted into the pagetables for which the guest has a writable mapping.
+value changed: 0x00000000 -> 0x00000001
 
-  For non-present mappings, all other bits become software accessible,
-  and typically contain metadata rather a real frame address.  There is
-  nothing that a reference count could sensibly be tied to.  As such, even
-  if Xen could recognise the address as currently safe, nothing would
-  prevent that frame from changing owner to another VM in the future.
-
-  When Xen detects a PV guest writing a L1TF-PTE, it responds by
-  activating shadow paging.  This is normally only used for the live phase
-  of migration, and comes with a reasonable overhead.
-
-KFENCE only cares about getting #PF to catch wild accesses; it doesn't
-care about the value for non-present mappings.  Use a fully inverted PTE,
-to avoid hitting the slow path when running under Xen.
-
-While adjusting the logic, take the opportunity to skip all actions if the
-PTE is already in the right state, half the number PVOps callouts, and
-skip TLB maintenance on a !P -> P transition which benefits non-Xen cases
-too.
-
-Link: https://lkml.kernel.org/r/20260106180426.710013-1-andrew.cooper3@citrix.com
-Fixes: 1dc0da6e9ec0 ("x86, kfence: enable KFENCE for x86")
-Signed-off-by: Andrew Cooper <andrew.cooper3@citrix.com>
-Tested-by: Marco Elver <elver@google.com>
-Cc: Alexander Potapenko <glider@google.com>
-Cc: Marco Elver <elver@google.com>
-Cc: Dmitry Vyukov <dvyukov@google.com>
-Cc: Thomas Gleixner <tglx@linutronix.de>
-Cc: Ingo Molnar <mingo@redhat.com>
-Cc: Borislav Petkov <bp@alien8.de>
-Cc: Dave Hansen <dave.hansen@linux.intel.com>
-Cc: "H. Peter Anvin" <hpa@zytor.com>
-Cc: Jann Horn <jannh@google.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 1b2b03f8e514 ("Add mISDN core files")
+Reported-by: syzbot <syzkaller@googlegroups.com>
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Link: https://patch.msgid.link/20260118132528.2349573-1-edumazet@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/include/asm/kfence.h |   29 ++++++++++++++++++++++++-----
- 1 file changed, 24 insertions(+), 5 deletions(-)
+ drivers/isdn/mISDN/timerdev.c | 13 ++++++++-----
+ 1 file changed, 8 insertions(+), 5 deletions(-)
 
---- a/arch/x86/include/asm/kfence.h
-+++ b/arch/x86/include/asm/kfence.h
-@@ -42,10 +42,34 @@ static inline bool kfence_protect_page(u
- {
- 	unsigned int level;
- 	pte_t *pte = lookup_address(addr, &level);
-+	pteval_t val;
+diff --git a/drivers/isdn/mISDN/timerdev.c b/drivers/isdn/mISDN/timerdev.c
+index abdf36ac3bee5..74d6ed49dc368 100644
+--- a/drivers/isdn/mISDN/timerdev.c
++++ b/drivers/isdn/mISDN/timerdev.c
+@@ -109,14 +109,14 @@ mISDN_read(struct file *filep, char __user *buf, size_t count, loff_t *off)
+ 		spin_unlock_irq(&dev->lock);
+ 		if (filep->f_flags & O_NONBLOCK)
+ 			return -EAGAIN;
+-		wait_event_interruptible(dev->wait, (dev->work ||
++		wait_event_interruptible(dev->wait, (READ_ONCE(dev->work) ||
+ 						     !list_empty(list)));
+ 		if (signal_pending(current))
+ 			return -ERESTARTSYS;
+ 		spin_lock_irq(&dev->lock);
+ 	}
+ 	if (dev->work)
+-		dev->work = 0;
++		WRITE_ONCE(dev->work, 0);
+ 	if (!list_empty(list)) {
+ 		timer = list_first_entry(list, struct mISDNtimer, list);
+ 		list_del(&timer->list);
+@@ -141,13 +141,16 @@ mISDN_poll(struct file *filep, poll_table *wait)
+ 	if (*debug & DEBUG_TIMER)
+ 		printk(KERN_DEBUG "%s(%p, %p)\n", __func__, filep, wait);
+ 	if (dev) {
++		u32 work;
++
+ 		poll_wait(filep, &dev->wait, wait);
+ 		mask = 0;
+-		if (dev->work || !list_empty(&dev->expired))
++		work = READ_ONCE(dev->work);
++		if (work || !list_empty(&dev->expired))
+ 			mask |= (EPOLLIN | EPOLLRDNORM);
+ 		if (*debug & DEBUG_TIMER)
+ 			printk(KERN_DEBUG "%s work(%d) empty(%d)\n", __func__,
+-			       dev->work, list_empty(&dev->expired));
++			       work, list_empty(&dev->expired));
+ 	}
+ 	return mask;
+ }
+@@ -172,7 +175,7 @@ misdn_add_timer(struct mISDNtimerdev *dev, int timeout)
+ 	struct mISDNtimer	*timer;
  
- 	if (WARN_ON(!pte || level != PG_LEVEL_4K))
- 		return false;
- 
-+	val = pte_val(*pte);
-+
-+	/*
-+	 * protect requires making the page not-present.  If the PTE is
-+	 * already in the right state, there's nothing to do.
-+	 */
-+	if (protect != !!(val & _PAGE_PRESENT))
-+		return true;
-+
-+	/*
-+	 * Otherwise, invert the entire PTE.  This avoids writing out an
-+	 * L1TF-vulnerable PTE (not present, without the high address bits
-+	 * set).
-+	 */
-+	set_pte(pte, __pte(~val));
-+
-+	/*
-+	 * If the page was protected (non-present) and we're making it
-+	 * present, there is no need to flush the TLB at all.
-+	 */
-+	if (!protect)
-+		return true;
-+
- 	/*
- 	 * We need to avoid IPIs, as we may get KFENCE allocations or faults
- 	 * with interrupts disabled. Therefore, the below is best-effort, and
-@@ -53,11 +77,6 @@ static inline bool kfence_protect_page(u
- 	 * lazy fault handling takes care of faults after the page is PRESENT.
- 	 */
- 
--	if (protect)
--		set_pte(pte, __pte(pte_val(*pte) & ~_PAGE_PRESENT));
--	else
--		set_pte(pte, __pte(pte_val(*pte) | _PAGE_PRESENT));
--
- 	/*
- 	 * Flush this CPU's TLB, assuming whoever did the allocation/free is
- 	 * likely to continue running on this CPU.
+ 	if (!timeout) {
+-		dev->work = 1;
++		WRITE_ONCE(dev->work, 1);
+ 		wake_up_interruptible(&dev->wait);
+ 		id = 0;
+ 	} else {
+-- 
+2.51.0
+
 
 
