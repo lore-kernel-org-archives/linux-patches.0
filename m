@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0FDC64218B9;
-	Wed,  4 Feb 2026 15:26:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ACBAD41B346;
+	Wed,  4 Feb 2026 15:26:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770218805; cv=none; b=kKgRgOQS23c+UTFKoMlHNlEMBN+CHjqx9zCsO49FQm5ietgvs4iigc6FU2svykZvJDBtXPIkVHvxUiCSsFJmKA4DDnk5bGO7bB7CuDrb/7Q9I+lbDVZTLiks6pQyVZgFaZBz+8idvTEcaN8SlVyKT9qlQgUGW7N9HsdYYkxOZ9g=
+	t=1770218808; cv=none; b=LAYALTLQRJ91TKsjQ15mKWi/QEH/JA+PphzPWMr4kFAoVqxLoJctpfu8b2+ZHQ+v06O/XEZYhnTAIX2K8Un2H6x76k92dRQIrCxHR3cYn/TlC8qYEU+1ofy3oAGL2CShZdk+9Pw7Kx5m49mMZ19ZBMR8k2336OIdRpuxkU90vy0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770218805; c=relaxed/simple;
-	bh=BoWSnHqmT5gBLGL3qGJf4EknfETrYJWlCx5T/LoFjhM=;
+	s=arc-20240116; t=1770218808; c=relaxed/simple;
+	bh=wQdqw75pf1v6ZDmvmBhp1KCksCOBjppiGC9cIAbJJzo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ifBZKuN4BtS1+AdtFvGogbprIwVtk6de29sryTTY1VzqkWCmo3LGiug2VFa9yI2GZ/fqmzLPhaUQg14u+rEUKDwsjiWiBqCM/tCeZS/Lb7Y8aPBbF7UGsSUXfEwxIF1lz6ogpIS0W3FLvLZQkNSWhAAH15sUVf/PVwCi8kII97o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kBO/Fs9N; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pm9d6I1Ac3x/DCSCfVMVnzTSAB5C3ROdNc3hlV/vz7U6RatooSXg061P6EsVrWOq7VWiCPCHbpmQ/Y4CvQUV3Lsvf3XkKm1RsK1AegvDnn5hsFshGdHlj2xI3tsmAzdyEA0SSKeIm3IRjho9DD0Duiv4iMufNJAfcfQ4utjvUa8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=U6RjPZzv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kBO/Fs9N"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 75118C4CEF7;
-	Wed,  4 Feb 2026 15:26:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="U6RjPZzv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E8B26C4CEF7;
+	Wed,  4 Feb 2026 15:26:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770218804;
-	bh=BoWSnHqmT5gBLGL3qGJf4EknfETrYJWlCx5T/LoFjhM=;
+	s=korg; t=1770218808;
+	bh=wQdqw75pf1v6ZDmvmBhp1KCksCOBjppiGC9cIAbJJzo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kBO/Fs9NM3sZWiCspXMsgPtWVliNjwlUMTKujnbHrH5JrQL2VUzJGp1ws5YVDvfuF
-	 vibZGcAtx/IZPHDCj+GsiGMoGnP/fT1waiO/J+IryePMV3a1IJNOzorAKr3DXIhzi1
-	 K5Cg9esG1uKSkh+ceEQbvPHyRWHLcB11R9nINACQ=
+	b=U6RjPZzv3CJakTrbm+y+VaH+Kqnkeo/TtFSgETFvmWQl5x/TXDykPkpFAZ2oYQoJJ
+	 Jm8TCZm2VTG3xtRp6t1hMaUTGk373eroGm6/oksRmT8oqlpHipCNiR95mEuERn3v9i
+	 SasF5K0I8UDMJ1iJxkkIhTQ5vXcHQCJzNJdVkOWg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mika Westerberg <mika.westerberg@linux.intel.com>,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
-Subject: [PATCH 6.12 67/87] gpiolib: acpi: Fix potential out-of-boundary left shift
-Date: Wed,  4 Feb 2026 15:41:05 +0100
-Message-ID: <20260204143849.329825570@linuxfoundation.org>
+	Mat Martineau <martineau@kernel.org>,
+	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.12 50/87] selftests: mptcp: join: fix local endp not being tracked
+Date: Wed,  4 Feb 2026 15:40:48 +0100
+Message-ID: <20260204143848.716705450@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260204143846.906385641@linuxfoundation.org>
 References: <20260204143846.906385641@linuxfoundation.org>
@@ -51,72 +51,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+From: Matthieu Baerts (NGI0) <matttbe@kernel.org>
 
-commit e64d1cb21a1c6ecd51bc1c94c83f6fc656f7c94d upstream.
+commit c5d5ecf21fdd9ce91e6116feb3aa83cee73352cc upstream.
 
-GPIO Address Space handler gets a pointer to the in or out value.
-This value is supposed to be at least 64-bit, but it's not limited
-to be exactly 64-bit. When ACPI tables are being parsed, for
-the bigger Connection():s ACPICA creates a Buffer instead of regular
-Integer object. The Buffer exists as long as Namespace holds
-the certain Connection(). Hence we can access the necessary bits
-without worrying. On the other hand, the left shift, used in
-the code, is limited by 31 (on 32-bit platforms) and otherwise
-considered to be Undefined Behaviour. Also the code uses only
-the first 64-bit word for the value, and anything bigger than 63
-will be also subject to UB. Fix all this by modifying the code
-to correctly set or clear the respective bit in the bitmap constructed
-of 64-bit words.
+When running this mptcp_join.sh selftest on older kernel versions not
+supporting local endpoints tracking, this test fails because 3 MP_JOIN
+ACKs have been received, while only 2 were expected.
 
-Fixes: 59084c564c41 ("gpiolib: acpi: use BIT_ULL() for u64 mask in address space handler")
-Fixes: 2c4d00cb8fc5 ("gpiolib: acpi: Use BIT() macro to increase readability")
+It is not clear why only 2 MP_JOIN ACKs were expected on old kernel
+versions, while 3 MP_JOIN SYN and SYN+ACK were expected. When testing on
+the v5.15.197 kernel, 3 MP_JOIN ACKs are seen, which is also what is
+expected in the selftests included in this kernel version, see commit
+f4480eaad489 ("selftests: mptcp: add missing join check").
+
+Switch the expected MP_JOIN ACKs to 3. While at it, move this
+chk_join_nr helper out of the special condition for older kernel
+versions as it is now the same as with more recent ones. Also, invert
+the condition to be more logical: what's expected on newer kernel
+versions having such helper first.
+
+Fixes: d4c81bbb8600 ("selftests: mptcp: join: support local endpoint being tracked or not")
 Cc: stable@vger.kernel.org
-Reviewed-by: Mika Westerberg <mika.westerberg@linux.intel.com>
-Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Link: https://patch.msgid.link/20260128095918.4157491-1-andriy.shevchenko@linux.intel.com
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+Reviewed-by: Mat Martineau <martineau@kernel.org>
+Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Link: https://patch.msgid.link/20260127-net-mptcp-dup-nl-events-v1-5-7f71e1bc4feb@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpio/gpiolib-acpi-core.c |   21 +++++++++++++++++----
- 1 file changed, 17 insertions(+), 4 deletions(-)
+ tools/testing/selftests/net/mptcp/mptcp_join.sh |    9 ++++-----
+ 1 file changed, 4 insertions(+), 5 deletions(-)
 
---- a/drivers/gpio/gpiolib-acpi-core.c
-+++ b/drivers/gpio/gpiolib-acpi-core.c
-@@ -1094,6 +1094,7 @@ acpi_gpio_adr_space_handler(u32 function
- 		unsigned int pin = agpio->pin_table[i];
- 		struct acpi_gpio_connection *conn;
- 		struct gpio_desc *desc;
-+		u16 word, shift;
- 		bool found;
+--- a/tools/testing/selftests/net/mptcp/mptcp_join.sh
++++ b/tools/testing/selftests/net/mptcp/mptcp_join.sh
+@@ -2162,17 +2162,16 @@ signal_address_tests()
+ 		ip netns exec $ns1 sysctl -q net.mptcp.add_addr_timeout=1
+ 		speed=slow \
+ 			run_tests $ns1 $ns2 10.0.1.1
++		chk_join_nr 3 3 3
  
- 		mutex_lock(&achip->conn_lock);
-@@ -1148,10 +1149,22 @@ acpi_gpio_adr_space_handler(u32 function
- 
- 		mutex_unlock(&achip->conn_lock);
- 
--		if (function == ACPI_WRITE)
--			gpiod_set_raw_value_cansleep(desc, !!(*value & BIT_ULL(i)));
+ 		# It is not directly linked to the commit introducing this
+ 		# symbol but for the parent one which is linked anyway.
+-		if ! mptcp_lib_kallsyms_has "mptcp_pm_subflow_check_next$"; then
+-			chk_join_nr 3 3 2
+-			chk_add_nr 4 4
 -		else
--			*value |= (u64)gpiod_get_raw_value_cansleep(desc) << i;
-+		/*
-+		 * For the cases when OperationRegion() consists of more than
-+		 * 64 bits calculate the word and bit shift to use that one to
-+		 * access the value.
-+		 */
-+		word = i / 64;
-+		shift = i % 64;
-+
-+		if (function == ACPI_WRITE) {
-+			gpiod_set_raw_value_cansleep(desc, value[word] & BIT_ULL(shift));
-+		} else {
-+			if (gpiod_get_raw_value_cansleep(desc))
-+				value[word] |= BIT_ULL(shift);
-+			else
-+				value[word] &= ~BIT_ULL(shift);
-+		}
- 	}
- 
- out:
+-			chk_join_nr 3 3 3
++		if mptcp_lib_kallsyms_has "mptcp_pm_subflow_check_next$"; then
+ 			# the server will not signal the address terminating
+ 			# the MPC subflow
+ 			chk_add_nr 3 3
++		else
++			chk_add_nr 4 4
+ 		fi
+ 	fi
+ }
 
 
