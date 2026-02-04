@@ -1,41 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED0824219E8;
-	Wed,  4 Feb 2026 15:11:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67DF74219E7;
+	Wed,  4 Feb 2026 15:11:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770217896; cv=none; b=Nhtjs1hbZ4lNOH0w+gT6rMvwBuscycGs8W1GKQgQb5Lysk6IGT934yhaRcexnytkiMeF2op25gBq02nTKqKvcc45Kjcr9mHS70z+cTsAWJ4wL3m5fBj+GsY0PGoej8DkZTRmQ4+ojE6IMHgrPv6Mk6TVcICCUK4w7Smff8wfqng=
+	t=1770217899; cv=none; b=nATYyhfbozR3o3gi1nzUaJB+iXGsPdY3zYZPIucfJUuatAiPH9B14mLtS7hfrDoO4l4+kmBLmdLDtujYlTeloRzFqthGZxRupfzGlgSGNMTvmFOifi6bolyPkz7j0BIJT9e/uvj20HSKGt6oyg44L8svtv6as7Ob5TdS7pRfZhE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770217896; c=relaxed/simple;
-	bh=sTlER3dHcH53KTxw/3KZAkqUpL2eA+H7ntg9vN7F+Ag=;
+	s=arc-20240116; t=1770217899; c=relaxed/simple;
+	bh=WmyF9lBX9u7oqLNVleGLJr7DwR6Bdjs67YBKaw0XN9U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EmplkjBPjY2B2IkIkBoO/I4yvXtFxVtniyyRABMyRvhIpU0u7IRr7g6gdQZHFO+hAIRSBhVm31SG7VbOwZJbotJqikLwtQ/aSs5DeS0KInPja94tl+9CywiLesLXrOSZeT+6+lBnVjHB7GL3X2cKcMl8vuHmtbB+ste1rn2SRKU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WFn4z5Vg; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=T/2O8qk1XpMky+vJB3MmpqFGyuQcJkgTGHp/HRkpef6P7xtJT3v4NyJD6k3Ph9qnkQP/k03dI9kU6Lw+ydO5sX050GvXn8dQ1WoCpo2+T/f/lVRDeUz+JZvfQGbKMJZCwa1sO8uTbUIEoITEhUl0Q4DD8jcLdAs6Qpm7/0yM8lw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CtXxxhTx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WFn4z5Vg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 467C6C4CEF7;
-	Wed,  4 Feb 2026 15:11:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CtXxxhTx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CEE32C4CEF7;
+	Wed,  4 Feb 2026 15:11:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770217895;
-	bh=sTlER3dHcH53KTxw/3KZAkqUpL2eA+H7ntg9vN7F+Ag=;
+	s=korg; t=1770217899;
+	bh=WmyF9lBX9u7oqLNVleGLJr7DwR6Bdjs67YBKaw0XN9U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WFn4z5VglHIj1WobEzGeNJK86kK7NI3R5ZI4ElmrVRve/IfQdt7irRdtr7LqOdjAc
-	 SoYvIHZFWGDP9JZIifiWEUEQFe/mvBE/wZNV4jXciWDHedyaPi04pClkeiRV7uj8s3
-	 lc91i84FcQMIAgQ5gm3kBkrfUioSfFH1vVbER0xA=
+	b=CtXxxhTxrdWxlDarVyCi2CkyNnJj6cAOdueQHPey1GGRElr6iLW67kWgCsEy9FvfH
+	 +W5MI7bck6hKSQIKNVSkmZlLOEAearz+bbqs7/0cc4BwVIBbXxAZYXs+njL72d2oGs
+	 ePrRw5kQ+thjKFgYA+dab+sJYvRIcGpApTfWcH5Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stefano Garzarella <sgarzare@redhat.com>,
-	Melbin K Mathew <mlbnkm1@gmail.com>,
-	Luigi Leonardi <leonardi@redhat.com>,
-	"Michael S. Tsirkin" <mst@redhat.com>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 151/280] vsock/virtio: fix potential underflow in virtio_transport_get_credit()
-Date: Wed,  4 Feb 2026 15:38:45 +0100
-Message-ID: <20260204143915.064489249@linuxfoundation.org>
+	Ian Abbott <abbotti@mev.co.uk>
+Subject: [PATCH 6.1 125/280] comedi: Fix getting range information for subdevices 16 to 255
+Date: Wed,  4 Feb 2026 15:38:19 +0100
+Message-ID: <20260204143914.133453651@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260204143909.614719725@linuxfoundation.org>
 References: <20260204143909.614719725@linuxfoundation.org>
@@ -54,98 +49,101 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Melbin K Mathew <mlbnkm1@gmail.com>
+From: Ian Abbott <abbotti@mev.co.uk>
 
-[ Upstream commit 3ef3d52a1a9860d094395c7a3e593f3aa26ff012 ]
+commit 10d28cffb3f6ec7ad67f0a4cd32c2afa92909452 upstream.
 
-The credit calculation in virtio_transport_get_credit() uses unsigned
-arithmetic:
+The `COMEDI_RANGEINFO` ioctl does not work properly for subdevice
+indices above 15.  Currently, the only in-tree COMEDI drivers that
+support more than 16 subdevices are the "8255" driver and the
+"comedi_bond" driver.  Making the ioctl work for subdevice indices up to
+255 is achievable.  It needs minor changes to the handling of the
+`COMEDI_RANGEINFO` and `COMEDI_CHANINFO` ioctls that should be mostly
+harmless to user-space, apart from making them less broken.  Details
+follow...
 
-  ret = vvs->peer_buf_alloc - (vvs->tx_cnt - vvs->peer_fwd_cnt);
+The `COMEDI_RANGEINFO` ioctl command gets the list of supported ranges
+(usually with units of volts or milliamps) for a COMEDI subdevice or
+channel.  (Only some subdevices have per-channel range tables, indicated
+by the `SDF_RANGETYPE` flag in the subdevice information.)  It uses a
+`range_type` value and a user-space pointer, both supplied by
+user-space, but the `range_type` value should match what was obtained
+using the `COMEDI_CHANINFO` ioctl (if the subdevice has per-channel
+range tables)  or `COMEDI_SUBDINFO` ioctl (if the subdevice uses a
+single range table for all channels).  Bits 15 to 0 of the `range_type`
+value contain the length of the range table, which is the only part that
+user-space should care about (so it can use a suitably sized buffer to
+fetch the range table).  Bits 23 to 16 store the channel index, which is
+assumed to be no more than 255 if the subdevice has per-channel range
+tables, and is set to 0 if the subdevice has a single range table.  For
+`range_type` values produced by the `COMEDI_SUBDINFO` ioctl, bits 31 to
+24 contain the subdevice index, which is assumed to be no more than 255.
+But for `range_type` values produced by the `COMEDI_CHANINFO` ioctl,
+bits 27 to 24 contain the subdevice index, which is assumed to be no
+more than 15, and bits 31 to 28 contain the COMEDI device's minor device
+number for some unknown reason lost in the mists of time.  The
+`COMEDI_RANGEINFO` ioctl extract the length from bits 15 to 0 of the
+user-supplied `range_type` value, extracts the channel index from bits
+23 to 16 (only used if the subdevice has per-channel range tables),
+extracts the subdevice index from bits 27 to 24, and ignores bits 31 to
+28.  So for subdevice indices 16 to 255, the `COMEDI_SUBDINFO` or
+`COMEDI_CHANINFO` ioctl will report a `range_type` value that doesn't
+work with the `COMEDI_RANGEINFO` ioctl.  It will either get the range
+table for the subdevice index modulo 16, or will fail with `-EINVAL`.
 
-If the peer shrinks its advertised buffer (peer_buf_alloc) while bytes
-are in flight, the subtraction can underflow and produce a large
-positive value, potentially allowing more data to be queued than the
-peer can handle.
+To fix this, always use bits 31 to 24 of the `range_type` value to hold
+the subdevice index (assumed to be no more than 255).  This affects the
+`COMEDI_CHANINFO` and `COMEDI_RANGEINFO` ioctls.  There should not be
+anything in user-space that depends on the old, broken usage, although
+it may now see different values in bits 31 to 28 of the `range_type`
+values reported by the `COMEDI_CHANINFO` ioctl for subdevices that have
+per-channel subdevices.  User-space should not be trying to decode bits
+31 to 16 of the `range_type` values anyway.
 
-Reuse virtio_transport_has_space() which already handles this case and
-add a comment to make it clear why we are doing that.
-
-Fixes: 06a8fc78367d ("VSOCK: Introduce virtio_vsock_common.ko")
-Suggested-by: Stefano Garzarella <sgarzare@redhat.com>
-Signed-off-by: Melbin K Mathew <mlbnkm1@gmail.com>
-[Stefano: use virtio_transport_has_space() instead of duplicating the code]
-[Stefano: tweak the commit message]
-Signed-off-by: Stefano Garzarella <sgarzare@redhat.com>
-Reviewed-by: Luigi Leonardi <leonardi@redhat.com>
-Link: https://patch.msgid.link/20260121093628.9941-2-sgarzare@redhat.com
-Acked-by: Michael S. Tsirkin <mst@redhat.com>
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: ed9eccbe8970 ("Staging: add comedi core")
+Cc: stable@vger.kernel.org #5.17+
+Signed-off-by: Ian Abbott <abbotti@mev.co.uk>
+Link: https://patch.msgid.link/20251203162438.176841-1-abbotti@mev.co.uk
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/vmw_vsock/virtio_transport_common.c | 16 +++++++++-------
- 1 file changed, 9 insertions(+), 7 deletions(-)
+ drivers/comedi/comedi_fops.c |    2 +-
+ drivers/comedi/range.c       |    2 +-
+ include/uapi/linux/comedi.h  |    2 +-
+ 3 files changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/net/vmw_vsock/virtio_transport_common.c b/net/vmw_vsock/virtio_transport_common.c
-index a65da57fe26fd..76329191102a0 100644
---- a/net/vmw_vsock/virtio_transport_common.c
-+++ b/net/vmw_vsock/virtio_transport_common.c
-@@ -28,6 +28,7 @@
+--- a/drivers/comedi/comedi_fops.c
++++ b/drivers/comedi/comedi_fops.c
+@@ -1095,7 +1095,7 @@ static int do_chaninfo_ioctl(struct come
+ 		for (i = 0; i < s->n_chan; i++) {
+ 			int x;
  
- static void virtio_transport_cancel_close_work(struct vsock_sock *vsk,
- 					       bool cancel_timeout);
-+static s64 virtio_transport_has_space(struct virtio_vsock_sock *vvs);
+-			x = (dev->minor << 28) | (it->subdev << 24) | (i << 16) |
++			x = (it->subdev << 24) | (i << 16) |
+ 			    (s->range_table_list[i]->length);
+ 			if (put_user(x, it->rangelist + i))
+ 				return -EFAULT;
+--- a/drivers/comedi/range.c
++++ b/drivers/comedi/range.c
+@@ -52,7 +52,7 @@ int do_rangeinfo_ioctl(struct comedi_dev
+ 	const struct comedi_lrange *lr;
+ 	struct comedi_subdevice *s;
  
- static const struct virtio_transport *
- virtio_transport_get_ops(struct vsock_sock *vsk)
-@@ -284,9 +285,7 @@ u32 virtio_transport_get_credit(struct virtio_vsock_sock *vvs, u32 credit)
- 	u32 ret;
+-	subd = (it->range_type >> 24) & 0xf;
++	subd = (it->range_type >> 24) & 0xff;
+ 	chan = (it->range_type >> 16) & 0xff;
  
- 	spin_lock_bh(&vvs->tx_lock);
--	ret = vvs->peer_buf_alloc - (vvs->tx_cnt - vvs->peer_fwd_cnt);
--	if (ret > credit)
--		ret = credit;
-+	ret = min_t(u32, credit, virtio_transport_has_space(vvs));
- 	vvs->tx_cnt += ret;
- 	spin_unlock_bh(&vvs->tx_lock);
+ 	if (!dev->attached)
+--- a/include/uapi/linux/comedi.h
++++ b/include/uapi/linux/comedi.h
+@@ -640,7 +640,7 @@ struct comedi_chaninfo {
  
-@@ -588,11 +587,14 @@ u32 virtio_transport_seqpacket_has_data(struct vsock_sock *vsk)
- }
- EXPORT_SYMBOL_GPL(virtio_transport_seqpacket_has_data);
- 
--static s64 virtio_transport_has_space(struct vsock_sock *vsk)
-+static s64 virtio_transport_has_space(struct virtio_vsock_sock *vvs)
- {
--	struct virtio_vsock_sock *vvs = vsk->trans;
- 	s64 bytes;
- 
-+	/* Use s64 arithmetic so if the peer shrinks peer_buf_alloc while
-+	 * we have bytes in flight (tx_cnt - peer_fwd_cnt), the subtraction
-+	 * does not underflow.
-+	 */
- 	bytes = (s64)vvs->peer_buf_alloc - (vvs->tx_cnt - vvs->peer_fwd_cnt);
- 	if (bytes < 0)
- 		bytes = 0;
-@@ -606,7 +608,7 @@ s64 virtio_transport_stream_has_space(struct vsock_sock *vsk)
- 	s64 bytes;
- 
- 	spin_lock_bh(&vvs->tx_lock);
--	bytes = virtio_transport_has_space(vsk);
-+	bytes = virtio_transport_has_space(vvs);
- 	spin_unlock_bh(&vvs->tx_lock);
- 
- 	return bytes;
-@@ -1207,7 +1209,7 @@ static bool virtio_transport_space_update(struct sock *sk,
- 	spin_lock_bh(&vvs->tx_lock);
- 	vvs->peer_buf_alloc = le32_to_cpu(hdr->buf_alloc);
- 	vvs->peer_fwd_cnt = le32_to_cpu(hdr->fwd_cnt);
--	space_available = virtio_transport_has_space(vsk);
-+	space_available = virtio_transport_has_space(vvs);
- 	spin_unlock_bh(&vvs->tx_lock);
- 	return space_available;
- }
--- 
-2.51.0
-
+ /**
+  * struct comedi_rangeinfo - used to retrieve the range table for a channel
+- * @range_type:		Encodes subdevice index (bits 27:24), channel index
++ * @range_type:		Encodes subdevice index (bits 31:24), channel index
+  *			(bits 23:16) and range table length (bits 15:0).
+  * @range_ptr:		Pointer to array of @struct comedi_krange to be filled
+  *			in with the range table for the channel or subdevice.
 
 
