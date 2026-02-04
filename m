@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0CBF14266B9;
-	Wed,  4 Feb 2026 15:06:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39B5D4218BB;
+	Wed,  4 Feb 2026 15:06:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770217589; cv=none; b=IJg2z86KEDkKGyBL9TfoyHlQmyQt3axbjSX52YT9FV8ai+pRYflveYhTE9iWdaVfQD/40JEYUccYWE6W+JsEqln/+l0YQRS110CHwaYesBvoDiss4mcUTLXF0N/v2nJTkDS6dBZgVI1DVFrBfQDXMZwPb83TZZ1UOiGLenRFHy0=
+	t=1770217592; cv=none; b=EWCYRpdFintNGO1rvdLKRn+04DHLOv1805q7cSpGiqlFjhRRu998mxUw5f07WOusLOB/ljYINIc892exKt2yVrycJSoQOzy7BSF9TW7d79CuEj1cTZD0Ikp6aPl6c9VhoU1EZRI6WGKZzvTpeRE/uYTwtAER1F3BrMdRUX5tgyY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770217589; c=relaxed/simple;
-	bh=csmMKQ38m+olNH35FS+Xe1x4dpAUWJpovZIz1nxlmlw=;
+	s=arc-20240116; t=1770217592; c=relaxed/simple;
+	bh=x7TOoUErqBmSKduDvgLK4Xwc9Vmk3fKT053BGx28rDI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ss4coHq+yYbR3NXPR6hsjsYr2yuKbSv39TSz/qEqNDLLt4dF0306enSQxr6xsNhHhWeiJnZTaAhAjCCvyGAJxYlyBD1BaaYL7vB9VEH0IB9M+jaYr/QOwff7kc6WLLbVf/DD0J8TfsVJvWbMr80cE6PAVOT535JVSpiXyMNap9Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FiOjw0cA; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=V5gQewaiYPY2j7B3l2zON0G8fRbi9glN87hJk/1C/ZB1B9jzMIZk4e2RZrJLGy+Mn94RD8X6yKuHzZ92jFqh/yAOUEFiqHzJ4FtmW09GOB7ilJXMLuXnZmrnXyTENV61K5fVO3x+49eTo8tkVWQby1tgGdDtUvTCFwUhLvwamuo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=X7cULtHT; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FiOjw0cA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35337C4CEF7;
-	Wed,  4 Feb 2026 15:06:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="X7cULtHT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9FBB2C4CEF7;
+	Wed,  4 Feb 2026 15:06:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770217588;
-	bh=csmMKQ38m+olNH35FS+Xe1x4dpAUWJpovZIz1nxlmlw=;
+	s=korg; t=1770217592;
+	bh=x7TOoUErqBmSKduDvgLK4Xwc9Vmk3fKT053BGx28rDI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FiOjw0cA5Copyl1GgPsEWKmVD3HkXJ0mubO8wJhYbPiROeDJJKHuT8JZEn/t+Yidc
-	 jvquoYpRWz1XHaw92gHNWNUKTEzh7GSOcjEqpCITRjH2R5d3d6tPB6lMMKJqD2p/sj
-	 +xoAXsEXrrM9XzUU+xUE9YcSboDcQNJnL234dcBg=
+	b=X7cULtHTUmmOqUqptjWZcdTbYH1sS6CL2jG6TpsuX1JYFk1zvGOv0tUHLx8i8N/Hi
+	 iOMEyD+HcLCsPsMHlWCN8TptPnbXUCX5vY0WCKbKsYOLczvfsUhT3AuQSMZHcSR8e1
+	 LU4LjdS41ulpxnXVY1YtbIAeQXaIC5CPeS7Mowpo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lisa Robinson <lisa@bytefly.space>,
-	Huacai Chen <chenhuacai@loongson.cn>
-Subject: [PATCH 6.1 061/280] LoongArch: Fix PMU counter allocation for mixed-type event groups
-Date: Wed,  4 Feb 2026 15:37:15 +0100
-Message-ID: <20260204143911.851598266@linuxfoundation.org>
+	kent.russell@amd.com,
+	"Mario Limonciello (AMD)" <superm1@kernel.org>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 6.1 062/280] drm/amd: Clean up kfd node on surprise disconnect
+Date: Wed,  4 Feb 2026 15:37:16 +0100
+Message-ID: <20260204143911.886376244@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260204143909.614719725@linuxfoundation.org>
 References: <20260204143909.614719725@linuxfoundation.org>
@@ -50,124 +51,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lisa Robinson <lisa@bytefly.space>
+From: Mario Limonciello (AMD) <superm1@kernel.org>
 
-commit a91f86e27087f250a5d9c89bb4a427b9c30fd815 upstream.
+commit 28695ca09d326461f8078332aa01db516983e8a2 upstream.
 
-When validating a perf event group, validate_group() unconditionally
-attempts to allocate hardware PMU counters for the leader, sibling
-events and the new event being added.
+When an eGPU is unplugged the KFD topology should also be destroyed
+for that GPU. This never happens because the fini_sw callbacks never
+get to run. Run them manually before calling amdgpu_device_ip_fini_early()
+when a device has already been disconnected.
 
-This is incorrect for mixed-type groups. If a PERF_TYPE_SOFTWARE event
-is part of the group, the current code still tries to allocate a hardware
-PMU counter for it, which can wrongly consume hardware PMU resources and
-cause spurious allocation failures.
+This location is intentionally chosen to make sure that the kfd locking
+refcount doesn't get incremented unintentionally.
 
-Fix this by only allocating PMU counters for hardware events during group
-validation, and skipping software events.
-
-A trimmed down reproducer is as simple as this:
-
-  #include <stdio.h>
-  #include <assert.h>
-  #include <unistd.h>
-  #include <string.h>
-  #include <sys/syscall.h>
-  #include <linux/perf_event.h>
-
-  int main (int argc, char *argv[])
-  {
-  	struct perf_event_attr attr = { 0 };
-  	int fds[5];
-
-  	attr.disabled = 1;
-  	attr.exclude_kernel = 1;
-  	attr.exclude_hv = 1;
-  	attr.read_format = PERF_FORMAT_TOTAL_TIME_ENABLED |
-  		PERF_FORMAT_TOTAL_TIME_RUNNING | PERF_FORMAT_ID | PERF_FORMAT_GROUP;
-  	attr.size = sizeof (attr);
-
-  	attr.type = PERF_TYPE_SOFTWARE;
-  	attr.config = PERF_COUNT_SW_DUMMY;
-  	fds[0] = syscall (SYS_perf_event_open, &attr, 0, -1, -1, 0);
-  	assert (fds[0] >= 0);
-
-  	attr.type = PERF_TYPE_HARDWARE;
-  	attr.config = PERF_COUNT_HW_CPU_CYCLES;
-  	fds[1] = syscall (SYS_perf_event_open, &attr, 0, -1, fds[0], 0);
-  	assert (fds[1] >= 0);
-
-  	attr.type = PERF_TYPE_HARDWARE;
-  	attr.config = PERF_COUNT_HW_INSTRUCTIONS;
-  	fds[2] = syscall (SYS_perf_event_open, &attr, 0, -1, fds[0], 0);
-  	assert (fds[2] >= 0);
-
-  	attr.type = PERF_TYPE_HARDWARE;
-  	attr.config = PERF_COUNT_HW_BRANCH_MISSES;
-  	fds[3] = syscall (SYS_perf_event_open, &attr, 0, -1, fds[0], 0);
-  	assert (fds[3] >= 0);
-
-  	attr.type = PERF_TYPE_HARDWARE;
-  	attr.config = PERF_COUNT_HW_CACHE_REFERENCES;
-  	fds[4] = syscall (SYS_perf_event_open, &attr, 0, -1, fds[0], 0);
-  	assert (fds[4] >= 0);
-
-  	printf ("PASSED\n");
-
-  	return 0;
-  }
-
+Cc: kent.russell@amd.com
+Closes: https://community.frame.work/t/amd-egpu-on-linux/8691/33
+Signed-off-by: Mario Limonciello (AMD) <superm1@kernel.org>
+Reviewed-by: Kent Russell <kent.russell@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit 6a23e7b4332c10f8b56c33a9c5431b52ecff9aab)
 Cc: stable@vger.kernel.org
-Fixes: b37042b2bb7c ("LoongArch: Add perf events support")
-Signed-off-by: Lisa Robinson <lisa@bytefly.space>
-Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/loongarch/kernel/perf_event.c |   21 ++++++++++++++++++---
- 1 file changed, 18 insertions(+), 3 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_device.c |    8 ++++++++
+ 1 file changed, 8 insertions(+)
 
---- a/arch/loongarch/kernel/perf_event.c
-+++ b/arch/loongarch/kernel/perf_event.c
-@@ -637,6 +637,18 @@ static const struct loongarch_perf_event
- 	return pev;
- }
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
+@@ -4102,6 +4102,14 @@ void amdgpu_device_fini_hw(struct amdgpu
+ 	/* disable ras feature must before hw fini */
+ 	amdgpu_ras_pre_fini(adev);
  
-+static inline bool loongarch_pmu_event_requires_counter(const struct perf_event *event)
-+{
-+	switch (event->attr.type) {
-+	case PERF_TYPE_HARDWARE:
-+	case PERF_TYPE_HW_CACHE:
-+	case PERF_TYPE_RAW:
-+		return true;
-+	default:
-+		return false;
-+	}
-+}
++	/*
++	 * device went through surprise hotplug; we need to destroy topology
++	 * before ip_fini_early to prevent kfd locking refcount issues by calling
++	 * amdgpu_amdkfd_suspend()
++	 */
++	if (drm_dev_is_unplugged(adev_to_drm(adev)))
++		amdgpu_amdkfd_device_fini_sw(adev);
 +
- static int validate_group(struct perf_event *event)
- {
- 	struct cpu_hw_events fake_cpuc;
-@@ -644,15 +656,18 @@ static int validate_group(struct perf_ev
+ 	amdgpu_device_ip_fini_early(adev);
  
- 	memset(&fake_cpuc, 0, sizeof(fake_cpuc));
- 
--	if (loongarch_pmu_alloc_counter(&fake_cpuc, &leader->hw) < 0)
-+	if (loongarch_pmu_event_requires_counter(leader) &&
-+	    loongarch_pmu_alloc_counter(&fake_cpuc, &leader->hw) < 0)
- 		return -EINVAL;
- 
- 	for_each_sibling_event(sibling, leader) {
--		if (loongarch_pmu_alloc_counter(&fake_cpuc, &sibling->hw) < 0)
-+		if (loongarch_pmu_event_requires_counter(sibling) &&
-+		    loongarch_pmu_alloc_counter(&fake_cpuc, &sibling->hw) < 0)
- 			return -EINVAL;
- 	}
- 
--	if (loongarch_pmu_alloc_counter(&fake_cpuc, &event->hw) < 0)
-+	if (loongarch_pmu_event_requires_counter(event) &&
-+	    loongarch_pmu_alloc_counter(&fake_cpuc, &event->hw) < 0)
- 		return -EINVAL;
- 
- 	return 0;
+ 	amdgpu_irq_fini_hw(adev);
 
 
