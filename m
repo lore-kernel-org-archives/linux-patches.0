@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B09A22D5A14;
-	Wed,  4 Feb 2026 15:05:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 164B22D738F;
+	Wed,  4 Feb 2026 15:05:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770217522; cv=none; b=oR8KxxZAz9+MigULdQ1CKk/8V94Zr68rN7cT+JMBb5WSjTit5cY4KwGLqfbXuaAzwpGACx7ltdzg0OMzTTbGMx4H2TVOLpA5ZyiqzilA/CrQ+PuKLQMa0IxeGBvO+8nklTj58c7+jlvk66aRMLaeQ1RHd2t7FeOOHRuyD8q+lpA=
+	t=1770217526; cv=none; b=M3Emrv8+lLRAKWsAWMMIY5k3ljgSA10NzO2AJ4AYgkRMaKJ5C+QamDTpSngm8Ut66JA6iVztoRHwDBDzFSZFs0NTVX73cSJ2TBgwaVtQ8Sv7BKRvgnZI2eGbiULLsGcU/qu2DwfPPJ0pdEN34ApPEi7wHi15s4ViC3nzPJ/mqIc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770217522; c=relaxed/simple;
-	bh=vBVPaHbcFKY573+cF7MHtSRVLDhBcTx+q4lvUoIb+Y8=;
+	s=arc-20240116; t=1770217526; c=relaxed/simple;
+	bh=Pfl9TIzKhGSFcjeCjGJuAqHmqXAq2E2c/Ed1Egke+U4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=V11sJd5Uh2G89/mLFtvnn+8t1KFPitYWfVQ8hKnK6HnwUXq9Iw/PYYndoSV7FdXDFldR+iTgSLsqcN/ua/gYjOj3E1onwLXXLHaj7bjJGKa9pacLJhb9rH98sBzsNYOx5BpLNHJfhuP4igvgWTLFoPZcQHjkxcl7mVJvC64TNsI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tydtrdhS; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kQFEKYxEr5xJs6FTWsYoAAgi02tbtpViin3aVlgzKHfJwF43gLeFcBrjO/UTXkHlDqq1m181gosMYw5xVnB0iEEdVnGbB11F1ToWOsfKU4gSAA6ODPInTXa8zmDgLb1capaWDPqRXSvuaO8ttUjQ7kEm+MR2y6x6M3Z0zv6ka5I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eE3nZWuw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tydtrdhS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D036C4CEF7;
-	Wed,  4 Feb 2026 15:05:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eE3nZWuw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7CDF0C4CEF7;
+	Wed,  4 Feb 2026 15:05:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770217522;
-	bh=vBVPaHbcFKY573+cF7MHtSRVLDhBcTx+q4lvUoIb+Y8=;
+	s=korg; t=1770217526;
+	bh=Pfl9TIzKhGSFcjeCjGJuAqHmqXAq2E2c/Ed1Egke+U4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tydtrdhSlgeYyH/SqvgMN0w7aj/E4wL+I7rHca60P+MdmGhRtxrLFQ7cwLyuGVMN8
-	 ZBP38CEIYhmOG/tKy7yPuekN/w+rS7dd7q6wJrxUbMwv2damxM47vpGZeUgk+b68P3
-	 3PiDK9Q04aX4HWyPGn/tryv9LeCDecjXhIo85CEE=
+	b=eE3nZWuwRYaPCHXLW+ldES1475fV8Ctr3KUt6MIa20C2UDoZCqKxUa9HG/COHcLGg
+	 /NBg3GUSaYWt68q5m4Aqi8nWcXQ/3fKKC9qtJgms30HLp11MKbMU6N9jbqGmoNNgKi
+	 fbpCHEKnyJhbIwMo/noFpx/3iBUDHDY170nslH+4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ondrej Ille <ondrej.ille@gmail.com>,
-	Pavel Pisa <pisa@fel.cvut.cz>,
+	syzbot <syzbot+881d65229ca4f9ae8c84@syzkaller.appspotmail.com>,
+	Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>,
+	Oleksij Rempel <o.rempel@pengutronix.de>,
 	Marc Kleine-Budde <mkl@pengutronix.de>
-Subject: [PATCH 6.1 040/280] can: ctucanfd: fix SSP_SRC in cases when bit-rate is higher than 1 MBit.
-Date: Wed,  4 Feb 2026 15:36:54 +0100
-Message-ID: <20260204143911.080819889@linuxfoundation.org>
+Subject: [PATCH 6.1 041/280] net: can: j1939: j1939_xtp_rx_rts_session_active(): deactivate session upon receiving the second rts
+Date: Wed,  4 Feb 2026 15:36:55 +0100
+Message-ID: <20260204143911.115950855@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260204143909.614719725@linuxfoundation.org>
 References: <20260204143909.614719725@linuxfoundation.org>
@@ -51,66 +52,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ondrej Ille <ondrej.ille@gmail.com>
+From: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
 
-commit e707c591a139d1bfa4ddc83036fc820ca006a140 upstream.
+commit 1809c82aa073a11b7d335ae932d81ce51a588a4a upstream.
 
-The Secondary Sample Point Source field has been
-set to an incorrect value by some mistake in the
-past
+Since j1939_session_deactivate_activate_next() in j1939_tp_rxtimer() is
+called only when the timer is enabled, we need to call
+j1939_session_deactivate_activate_next() if we cancelled the timer.
+Otherwise, refcount for j1939_session leaks, which will later appear as
 
-  0b01 - SSP_SRC_NO_SSP - SSP is not used.
+| unregister_netdevice: waiting for vcan0 to become free. Usage count = 2.
 
-for data bitrates above 1 MBit/s. The correct/default
-value already used for lower bitrates is
+problem.
 
-  0b00 - SSP_SRC_MEAS_N_OFFSET - SSP position = TRV_DELAY
-         (Measured Transmitter delay) + SSP_OFFSET.
-
-The related configuration register structure is described
-in section 3.1.46 SSP_CFG of the CTU CAN FD
-IP CORE Datasheet.
-
-The analysis leading to the proper configuration
-is described in section 2.8.3 Secondary sampling point
-of the datasheet.
-
-The change has been tested on AMD/Xilinx Zynq
-with the next CTU CN FD IP core versions:
-
- - 2.6 aka master in the "integration with Zynq-7000 system" test
-   6.12.43-rt12+ #1 SMP PREEMPT_RT kernel with CTU CAN FD git
-   driver (change already included in the driver repo)
- - older 2.5 snapshot with mainline kernels with this patch
-   applied locally in the multiple CAN latency tester nightly runs
-   6.18.0-rc4-rt3-dut #1 SMP PREEMPT_RT
-   6.19.0-rc3-dut
-
-The logs, the datasheet and sources are available at
-
- https://canbus.pages.fel.cvut.cz/
-
-Signed-off-by: Ondrej Ille <ondrej.ille@gmail.com>
-Signed-off-by: Pavel Pisa <pisa@fel.cvut.cz>
-Link: https://patch.msgid.link/20260105111620.16580-1-pisa@fel.cvut.cz
-Fixes: 2dcb8e8782d8 ("can: ctucanfd: add support for CTU CAN FD open-source IP core - bus independent part.")
+Reported-by: syzbot <syzbot+881d65229ca4f9ae8c84@syzkaller.appspotmail.com>
+Closes: https://syzkaller.appspot.com/bug?extid=881d65229ca4f9ae8c84
+Signed-off-by: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
+Tested-by: Oleksij Rempel <o.rempel@pengutronix.de>
+Acked-by: Oleksij Rempel <o.rempel@pengutronix.de>
+Fixes: 9d71dd0c7009 ("can: add support of SAE J1939 protocol")
+Link: https://patch.msgid.link/b1212653-8fa1-44e1-be9d-12f950fb3a07@I-love.SAKURA.ne.jp
 Cc: stable@vger.kernel.org
 Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/can/ctucanfd/ctucanfd_base.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/can/j1939/transport.c |   10 +++++++++-
+ 1 file changed, 9 insertions(+), 1 deletion(-)
 
---- a/drivers/net/can/ctucanfd/ctucanfd_base.c
-+++ b/drivers/net/can/ctucanfd/ctucanfd_base.c
-@@ -310,7 +310,7 @@ static int ctucan_set_secondary_sample_p
- 		}
+--- a/net/can/j1939/transport.c
++++ b/net/can/j1939/transport.c
+@@ -1699,8 +1699,16 @@ static int j1939_xtp_rx_rts_session_acti
  
- 		ssp_cfg = FIELD_PREP(REG_TRV_DELAY_SSP_OFFSET, ssp_offset);
--		ssp_cfg |= FIELD_PREP(REG_TRV_DELAY_SSP_SRC, 0x1);
-+		ssp_cfg |= FIELD_PREP(REG_TRV_DELAY_SSP_SRC, 0x0);
+ 		j1939_session_timers_cancel(session);
+ 		j1939_session_cancel(session, J1939_XTP_ABORT_BUSY);
+-		if (session->transmission)
++		if (session->transmission) {
+ 			j1939_session_deactivate_activate_next(session);
++		} else if (session->state == J1939_SESSION_WAITING_ABORT) {
++			/* Force deactivation for the receiver.
++			 * If we rely on the timer starting in j1939_session_cancel,
++			 * a second RTS call here will cancel that timer and fail
++			 * to restart it because the state is already WAITING_ABORT.
++			 */
++			j1939_session_deactivate_activate_next(session);
++		}
+ 
+ 		return -EBUSY;
  	}
- 
- 	ctucan_write32(priv, CTUCANFD_TRV_DELAY, ssp_cfg);
 
 
