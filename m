@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B640F22332E;
-	Wed,  4 Feb 2026 15:30:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33BC9273D77;
+	Wed,  4 Feb 2026 15:30:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770219020; cv=none; b=fYCnddZkMxDKCeQ5P7JbzWyuCTGfsJEUFurzBfMQas1//wXqp5/jldflUmRQab3I4/D90+EFs8nyVIy/gUzluIfH9AyY2Rnif31cGmRBS8E/+Pqt8W43oik1VsIV7QkaF2OpzKoSaPB71iSLzPJyUu4THxXH36/9rPG/LHGfS/8=
+	t=1770219024; cv=none; b=LL7sIUgo7xi5SYpLfPeWdrW0cvsOvKOPqrUlC08i2mkYWnkOC7nyGKoYVR6UOK8cG7b+N61zGYRmBnvbTwSngomwaCEgbajtezfryG4VUkCS6zlhiAalKlmWa9WCbvK4go5SN2T9FDr4uOQCqOHKISFkWtVjSIgsaUEww5tAL8k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770219020; c=relaxed/simple;
-	bh=ov2x2BH/FnRnPHf3hprwiZxvYJVlsGyRWHoehAEqtMw=;
+	s=arc-20240116; t=1770219024; c=relaxed/simple;
+	bh=+5UhERIv2JRpCJV3K0CRepvp8IgnZGaSnxdcQkkfNag=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GNFZ5x4oJ2Lu3udwN//IfPJUOkz834N6cPANIAu++rMmX60Vmb9npUjQsdmq6d7r8R/rG+/9Ngfp5TiDnr8VeAkaD3JbOTMTfXM8N/9MvjAncZVeMLI3xsqida5E6zqklMmx0bY5yvrCQUWDqd/3JNKSd4uwIrl+hbaN9VUiQhE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yTzo/1QR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NHIKfyUY+IfHPjy1o/xfVE7y+zfe4MuITCLK7IBTY/cdCtIHgh7I6XSRNPW+ghqRIIcPYSI8o6t84XPJWIwkPM8AwMnpFhl/i9oOm73iFqSI1i4N+n22WmG3AmlS08r7PokPOwb9LC0NqxSOQvjsU+KUQEWq8aAFHFb+c/++yzM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mNIVX6Gx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yTzo/1QR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 26793C4CEF7;
-	Wed,  4 Feb 2026 15:30:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mNIVX6Gx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 99DD5C4CEF7;
+	Wed,  4 Feb 2026 15:30:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770219020;
-	bh=ov2x2BH/FnRnPHf3hprwiZxvYJVlsGyRWHoehAEqtMw=;
+	s=korg; t=1770219024;
+	bh=+5UhERIv2JRpCJV3K0CRepvp8IgnZGaSnxdcQkkfNag=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yTzo/1QRCCRZ9KsvOxT8VvD4yfbOfx5a7gmMVJ2TA6NYfW5h3GjajiH+2FZDRtlVt
-	 mFhdnxTiBJS2tqJuRPdReYZCcG+dfx1c6gT67uGV8Qb0o9tcWaZWN0UnavA8HNUDuZ
-	 H/uChWgYDrQ/UOcQzbO3krwRGiqiY/SS2a61aGys=
+	b=mNIVX6GxqSoK+kRv9uobbNdpV6FahLBHuSS/9dHIUNuaLQtc29AsHSlxikL6n9QWm
+	 8Q4Pf9g4a2rqPtw/12RJLCE+E4p+tKSbi3IQVfTK6GXI7jAllDZ7M7PTwAeYdTMO6r
+	 YR42+CU/v+RC4CrK19HASsNJG5NFF9DTONub7jig=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuhao Huang <nekowong743@gmail.com>,
-	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
+	Yang Wang <kevinyang.wang@amd.com>,
+	Kenneth Feng <kenneth.feng@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 043/122] gpio: virtuser: fix UAF in configfs release path
-Date: Wed,  4 Feb 2026 15:40:25 +0100
-Message-ID: <20260204143853.408755861@linuxfoundation.org>
+Subject: [PATCH 6.18 044/122] drm/amd/pm: fix race in power state check before mutex lock
+Date: Wed,  4 Feb 2026 15:40:26 +0100
+Message-ID: <20260204143853.443947825@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260204143851.857060534@linuxfoundation.org>
 References: <20260204143851.857060534@linuxfoundation.org>
@@ -51,51 +52,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yuhao Huang <nekowong743@gmail.com>
+From: Yang Wang <kevinyang.wang@amd.com>
 
-[ Upstream commit 53ad4a948a4586359b841d607c08fb16c5503230 ]
+[ Upstream commit ee8d07cd5730038e33bf5e551448190bbd480eb8 ]
 
-The gpio-virtuser configfs release path uses guard(mutex) to protect
-the device structure. However, the device is freed before the guard
-cleanup runs, causing mutex_unlock() to operate on freed memory.
+The power state check in amdgpu_dpm_set_powergating_by_smu() is done
+before acquiring the pm mutex, leading to a race condition where:
+1. Thread A checks state and thinks no change is needed
+2. Thread B acquires mutex and modifies the state
+3. Thread A returns without updating state, causing inconsistency
 
-Specifically, gpio_virtuser_device_config_group_release() destroys
-the mutex and frees the device while still inside the guard(mutex)
-scope. When the function returns, the guard cleanup invokes
-mutex_unlock(&dev->lock), resulting in a slab use-after-free.
+Fix this by moving the mutex lock before the power state check,
+ensuring atomicity of the state check and modification.
 
-Limit the mutex lifetime by using a scoped_guard() only around the
-activation check, so that the lock is released before mutex_destroy()
-and kfree() are called.
-
-Fixes: 91581c4b3f29 ("gpio: virtuser: new virtual testing driver for the GPIO API")
-Signed-off-by: Yuhao Huang <nekowong743@gmail.com>
-Link: https://lore.kernel.org/r/20260126040348.11167-1-yuhaohuang@YuhaodeMacBook-Pro.local
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+Fixes: 6ee27ee27ba8 ("drm/amd/pm: avoid duplicate powergate/ungate setting")
+Signed-off-by: Yang Wang <kevinyang.wang@amd.com>
+Reviewed-by: Kenneth Feng <kenneth.feng@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit 7a3fbdfd19ec5992c0fc2d0bd83888644f5f2f38)
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpio/gpio-virtuser.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/gpu/drm/amd/pm/amdgpu_dpm.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/gpio/gpio-virtuser.c b/drivers/gpio/gpio-virtuser.c
-index a10eab7d2617e..252fec5ea3835 100644
---- a/drivers/gpio/gpio-virtuser.c
-+++ b/drivers/gpio/gpio-virtuser.c
-@@ -1684,10 +1684,10 @@ static void gpio_virtuser_device_config_group_release(struct config_item *item)
- {
- 	struct gpio_virtuser_device *dev = to_gpio_virtuser_device(item);
+diff --git a/drivers/gpu/drm/amd/pm/amdgpu_dpm.c b/drivers/gpu/drm/amd/pm/amdgpu_dpm.c
+index bc29a923fa6e5..8253d2977408d 100644
+--- a/drivers/gpu/drm/amd/pm/amdgpu_dpm.c
++++ b/drivers/gpu/drm/amd/pm/amdgpu_dpm.c
+@@ -80,15 +80,15 @@ int amdgpu_dpm_set_powergating_by_smu(struct amdgpu_device *adev,
+ 	enum ip_power_state pwr_state = gate ? POWER_STATE_OFF : POWER_STATE_ON;
+ 	bool is_vcn = block_type == AMD_IP_BLOCK_TYPE_VCN;
  
--	guard(mutex)(&dev->lock);
++	mutex_lock(&adev->pm.mutex);
++
+ 	if (atomic_read(&adev->pm.pwr_state[block_type]) == pwr_state &&
+ 			(!is_vcn || adev->vcn.num_vcn_inst == 1)) {
+ 		dev_dbg(adev->dev, "IP block%d already in the target %s state!",
+ 				block_type, gate ? "gate" : "ungate");
+-		return 0;
++		goto out_unlock;
+ 	}
+ 
+-	mutex_lock(&adev->pm.mutex);
 -
--	if (gpio_virtuser_device_is_live(dev))
--		gpio_virtuser_device_deactivate(dev);
-+	scoped_guard(mutex, &dev->lock) {
-+		if (gpio_virtuser_device_is_live(dev))
-+			gpio_virtuser_device_deactivate(dev);
-+	}
+ 	switch (block_type) {
+ 	case AMD_IP_BLOCK_TYPE_UVD:
+ 	case AMD_IP_BLOCK_TYPE_VCE:
+@@ -115,6 +115,7 @@ int amdgpu_dpm_set_powergating_by_smu(struct amdgpu_device *adev,
+ 	if (!ret)
+ 		atomic_set(&adev->pm.pwr_state[block_type], pwr_state);
  
- 	mutex_destroy(&dev->lock);
- 	ida_free(&gpio_virtuser_ida, dev->id);
++out_unlock:
+ 	mutex_unlock(&adev->pm.mutex);
+ 
+ 	return ret;
 -- 
 2.51.0
 
