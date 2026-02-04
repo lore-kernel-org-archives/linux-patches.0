@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2F1B286890;
-	Wed,  4 Feb 2026 15:34:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8AA7410D23;
+	Wed,  4 Feb 2026 15:34:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770219262; cv=none; b=MxFLOfivmQYVIJTbi1vMaawDbm9CWWwOplerbHdEA95s95Xsm/K4w3WoTirK/GYsXWOASMy2PELQGuClfyAO7n2spjiSya2tkQH8FDxeQXDoNuly6ZV2hkT1bPxVgD0o76kx59UPxfuEqaDEwY+YcDBca6Byqy7eFE5R0zvXdnw=
+	t=1770219266; cv=none; b=CK5sqtAogoRD3WtFYu0PU38buO7+jfRlJVKSZw+edAgf52ZNMdU32dfAbYX9of7V1JHgPLuJq0VC4x989hjQacRAqmruDARMrJQ0oLwgUydATVcie6mQ6i5NfzaeW+WayDWwccIfItBtL0pj8/+vrLhacuIpztB+4n6vpfhWHG0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770219262; c=relaxed/simple;
-	bh=Jk5F99hdFj1AHGyCrjPvlUv+AB6gSLY/6Zasx67o43s=;
+	s=arc-20240116; t=1770219266; c=relaxed/simple;
+	bh=2zlSTorgqcCupppnNrST0yYGxMsXrGFJjcXYrT5qZJ0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=APGXGSonGs46btutoF5AwCgV8qRUV6hNp1hnMLb1tTeYlZKFHKgrG6AfTAbRiIM98JvWTbyzo3lPS05bKte6N6Q80X9+CBazr5MkcGTgN1jz0aD4HDeJHT3kh0ZL+fv4mSbC4Njvh2sZAp7C7p9Gr34YMETl5O0+/1JQCt5+jD4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vanqRl9u; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Qoosq8SMPdp2Xq1A1NNrR8xDPNNYw8guzg5TSdWcO7Ioj6QvQmW0RKqJsKF/YxEbLNPpcWuhxsksMYU4RExY2I3z4kz5yTOg+xY4h5z3i6yK3uvFLGByTLWgixuTds+HTzjt4/dIUGoqU8wWzmxr4iSZfPXqoLkfZg8Wh8mBX2k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Y9HFB+oh; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vanqRl9u"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3046BC4CEF7;
-	Wed,  4 Feb 2026 15:34:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Y9HFB+oh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 08F3CC2BCB1;
+	Wed,  4 Feb 2026 15:34:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770219262;
-	bh=Jk5F99hdFj1AHGyCrjPvlUv+AB6gSLY/6Zasx67o43s=;
+	s=korg; t=1770219266;
+	bh=2zlSTorgqcCupppnNrST0yYGxMsXrGFJjcXYrT5qZJ0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vanqRl9uMHTpLjUrVIty0whztduA3rA8/puz24WDKnS2PzbIxZCF86kXzGK/cGR0k
-	 E4Fxp8tvIUrgEfIHn8O/jRoB9E6YtG20oToFczr9l3OF6bJVYBaz6RsOPyaUML/pmd
-	 e2ocx8Abl4wzM8APpFPPwWMTsgmukLs9UNP5FQds=
+	b=Y9HFB+ohWY4saElGuBVqKlb+Iczlr1w9c73npigUxFkMiitvPbquaxAVbgolUXY4y
+	 c+mowVgRZQ3mABOVkF7DPUxbtz3U3vEiuuTEbVVBwNUkb+7wMbNkjOeGIBPGSx0173
+	 Ol0wcbIFMkuRp2l8yjj/vrU/Ioogx+6sPLk1Wh3c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bao Nguyen <ncqb@google.com>,
-	Nicolin Chen <nicolinc@nvidia.com>,
-	Joerg Roedel <joerg.roedel@amd.com>
-Subject: [PATCH 6.18 115/122] iommu/tegra241-cmdqv: Reset VCMDQ in tegra241_vcmdq_hw_init_user()
-Date: Wed,  4 Feb 2026 15:41:37 +0100
-Message-ID: <20260204143855.990041224@linuxfoundation.org>
+	Mika Westerberg <mika.westerberg@linux.intel.com>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+Subject: [PATCH 6.18 116/122] gpiolib: acpi: Fix potential out-of-boundary left shift
+Date: Wed,  4 Feb 2026 15:41:38 +0100
+Message-ID: <20260204143856.025721955@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260204143851.857060534@linuxfoundation.org>
 References: <20260204143851.857060534@linuxfoundation.org>
@@ -51,52 +51,72 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nicolin Chen <nicolinc@nvidia.com>
+From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
 
-commit 80f1a2c2332fee0edccd006fe87fc8a6db94bab3 upstream.
+commit e64d1cb21a1c6ecd51bc1c94c83f6fc656f7c94d upstream.
 
-The Enable bits in CMDQV/VINTF/VCMDQ_CONFIG registers do not actually reset
-the HW registers. So, the driver explicitly clears all the registers when a
-VINTF or VCMDQ is being initialized calling its hw_deinit() function.
+GPIO Address Space handler gets a pointer to the in or out value.
+This value is supposed to be at least 64-bit, but it's not limited
+to be exactly 64-bit. When ACPI tables are being parsed, for
+the bigger Connection():s ACPICA creates a Buffer instead of regular
+Integer object. The Buffer exists as long as Namespace holds
+the certain Connection(). Hence we can access the necessary bits
+without worrying. On the other hand, the left shift, used in
+the code, is limited by 31 (on 32-bit platforms) and otherwise
+considered to be Undefined Behaviour. Also the code uses only
+the first 64-bit word for the value, and anything bigger than 63
+will be also subject to UB. Fix all this by modifying the code
+to correctly set or clear the respective bit in the bitmap constructed
+of 64-bit words.
 
-However, a userspace VCMDQ is not properly reset, unlike an in-kernel VCMDQ
-getting reset in tegra241_vcmdq_hw_init().
-
-Meanwhile, tegra241_vintf_hw_init() calling tegra241_vintf_hw_deinit() will
-not deinit any VCMDQ, since there is no userspace VCMDQ mapped to the VINTF
-at that stage.
-
-Then, this may result in dirty VCMDQ registers, which can fail the VM.
-
-Like tegra241_vcmdq_hw_init(), reset a VCMDQ in tegra241_vcmdq_hw_init() to
-fix this bug. This is required by a host kernel.
-
-Fixes: 6717f26ab1e7 ("iommu/tegra241-cmdqv: Add user-space use support")
+Fixes: 59084c564c41 ("gpiolib: acpi: use BIT_ULL() for u64 mask in address space handler")
+Fixes: 2c4d00cb8fc5 ("gpiolib: acpi: Use BIT() macro to increase readability")
 Cc: stable@vger.kernel.org
-Reported-by: Bao Nguyen <ncqb@google.com>
-Signed-off-by: Nicolin Chen <nicolinc@nvidia.com>
-Signed-off-by: Joerg Roedel <joerg.roedel@amd.com>
+Reviewed-by: Mika Westerberg <mika.westerberg@linux.intel.com>
+Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Link: https://patch.msgid.link/20260128095918.4157491-1-andriy.shevchenko@linux.intel.com
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iommu/arm/arm-smmu-v3/tegra241-cmdqv.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/gpio/gpiolib-acpi-core.c |   21 +++++++++++++++++----
+ 1 file changed, 17 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/iommu/arm/arm-smmu-v3/tegra241-cmdqv.c b/drivers/iommu/arm/arm-smmu-v3/tegra241-cmdqv.c
-index 378104cd395e..04cc7a9036e4 100644
---- a/drivers/iommu/arm/arm-smmu-v3/tegra241-cmdqv.c
-+++ b/drivers/iommu/arm/arm-smmu-v3/tegra241-cmdqv.c
-@@ -1078,6 +1078,9 @@ static int tegra241_vcmdq_hw_init_user(struct tegra241_vcmdq *vcmdq)
- {
- 	char header[64];
+--- a/drivers/gpio/gpiolib-acpi-core.c
++++ b/drivers/gpio/gpiolib-acpi-core.c
+@@ -1104,6 +1104,7 @@ acpi_gpio_adr_space_handler(u32 function
+ 		unsigned int pin = agpio->pin_table[i];
+ 		struct acpi_gpio_connection *conn;
+ 		struct gpio_desc *desc;
++		u16 word, shift;
+ 		bool found;
  
-+	/* Reset VCMDQ */
-+	tegra241_vcmdq_hw_deinit(vcmdq);
+ 		mutex_lock(&achip->conn_lock);
+@@ -1158,10 +1159,22 @@ acpi_gpio_adr_space_handler(u32 function
+ 
+ 		mutex_unlock(&achip->conn_lock);
+ 
+-		if (function == ACPI_WRITE)
+-			gpiod_set_raw_value_cansleep(desc, !!(*value & BIT_ULL(i)));
+-		else
+-			*value |= (u64)gpiod_get_raw_value_cansleep(desc) << i;
++		/*
++		 * For the cases when OperationRegion() consists of more than
++		 * 64 bits calculate the word and bit shift to use that one to
++		 * access the value.
++		 */
++		word = i / 64;
++		shift = i % 64;
 +
- 	/* Configure the vcmdq only; User space does the enabling */
- 	writeq_relaxed(vcmdq->cmdq.q.q_base, REG_VCMDQ_PAGE1(vcmdq, BASE));
++		if (function == ACPI_WRITE) {
++			gpiod_set_raw_value_cansleep(desc, value[word] & BIT_ULL(shift));
++		} else {
++			if (gpiod_get_raw_value_cansleep(desc))
++				value[word] |= BIT_ULL(shift);
++			else
++				value[word] &= ~BIT_ULL(shift);
++		}
+ 	}
  
--- 
-2.53.0
-
+ out:
 
 
