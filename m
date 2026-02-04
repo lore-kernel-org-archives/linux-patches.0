@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0A102D6611;
-	Wed,  4 Feb 2026 15:34:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 405D22D6611;
+	Wed,  4 Feb 2026 15:34:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770219253; cv=none; b=jdVXn903vghU5ihnQxWDrqaJXVET3ictFU4FmKoCObC48biQ/7XKT0kflNsTmDOabq62OG01xm7MCZmh8tTUM6ZtCnIMYe7Yrnm30BD+icMasGz5ocsy2nSlEnHGmRX8k1dQ5Jq8eRPrX7rVqwNmdfwEk+zhT4apF9WbcAG2e4w=
+	t=1770219256; cv=none; b=VgzGCFxRBWR7t9eMxfsTsITvUfxSl7mFBaoXutl6Oy2U3EIGAfE5WcxzBs5QoWbBPTIFy0gFX9q4WzGcTk+ew7fEUEbdLcIYhftO30HA26OicVb/WFb4u29+7JmSYPvbV85jcZ/nJ5Hc8BBsw6HGStfIvJbIqfbJ+bewgmysdwQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770219253; c=relaxed/simple;
-	bh=algKnUc2p23iKeoz5aKi+d3+gcxxxDAKkmqQccYCwYw=;
+	s=arc-20240116; t=1770219256; c=relaxed/simple;
+	bh=tC0/JykFEAq1hp6fU3CHCCNH9dRe+uuLy1cgQEZiALk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=TisIul37t4BA2+Q8eeQxl+eRyAGXDJ6N3HCe42FHHQZbJ2wahDh8kpsh9cvWZaGJkCKqIJ59xoi/tNIlGe2TlXienxyvnvKHnEnaiGPROzfklV+EOMHXKwIHlywd4WEb617Qtj7HyaJKXW52I2Xd1WS5J7Y9Bm/Ud+vSe6G+MAg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Me0CZRfc; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=WgLSZIZRiZjFYsMwsrQrhtTX7+oB/4cNP68OxlaBaydRO9B75cRruYX7VwrOnmAcQhDFdMRzs10uWeujA/LtzABlM+4nACU5BEU4LGX+nStRFG5GP6zeF8O2uIf2tZUffJT63Fc/qiBH4YObySo6xYRTDABcnAo2yK37CHYUiCo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MJPRyNBm; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Me0CZRfc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D49DC4CEF7;
-	Wed,  4 Feb 2026 15:34:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MJPRyNBm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A352FC4CEF7;
+	Wed,  4 Feb 2026 15:34:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770219252;
-	bh=algKnUc2p23iKeoz5aKi+d3+gcxxxDAKkmqQccYCwYw=;
+	s=korg; t=1770219256;
+	bh=tC0/JykFEAq1hp6fU3CHCCNH9dRe+uuLy1cgQEZiALk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Me0CZRfc3GigKt9+G+S4sRs5BBwImSsIaDbv4F1kZwv+fNotKahSfT6o06Mhklt9i
-	 lAjKdo+1bKIT9NJSSlUIjKakFC6tji4xoLMheDYSBwi2N1pmwYhVOGdJV4ymUReGAr
-	 N66pHWnh61RI7uxfnwSAANhyHWln7QGJA8qtpKSE=
+	b=MJPRyNBmZ3crtLSFcg0EdeooztETeccxVaKHaBMLWxsR5heuBwJTvVjZOGJx9+PkC
+	 EuPF/GVZRAsqy70Ww20nRnQk2DBbMXTUwTRW0jYtmV8gqm+yVwc2Q94YxRUk+k+trb
+	 foysa67AluSjURelsqQj4qtnsalUMqlFUUKozMbk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Timur=20Krist=C3=B3f?= <timur.kristof@gmail.com>,
-	Philip Yang <Philip.Yang@amd.com>,
-	Jon Doron <jond@wiz.io>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.18 113/122] drm/amdgpu: fix NULL pointer dereference in amdgpu_gmc_filter_faults_remove
-Date: Wed,  4 Feb 2026 15:41:35 +0100
-Message-ID: <20260204143855.919264468@linuxfoundation.org>
+	=?UTF-8?q?Onur=20=C3=96zkan?= <work@onurozkan.dev>,
+	Gary Guo <gary@garyguo.net>,
+	Miguel Ojeda <ojeda@kernel.org>
+Subject: [PATCH 6.18 096/122] scripts: generate_rust_analyzer: remove sysroot assertion
+Date: Wed,  4 Feb 2026 15:41:18 +0100
+Message-ID: <20260204143855.304969699@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260204143851.857060534@linuxfoundation.org>
 References: <20260204143851.857060534@linuxfoundation.org>
@@ -53,75 +52,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jon Doron <jond@wiz.io>
+From: Onur Özkan <work@onurozkan.dev>
 
-commit 8b1ecc9377bc641533cd9e76dfa3aee3cd04a007 upstream.
+commit 1b83ef9f7ad4635c913b80ef5e718f95f48e85af upstream.
 
-On APUs such as Raven and Renoir (GC 9.1.0, 9.2.2, 9.3.0), the ih1 and
-ih2 interrupt ring buffers are not initialized. This is by design, as
-these secondary IH rings are only available on discrete GPUs. See
-vega10_ih_sw_init() which explicitly skips ih1/ih2 initialization when
-AMD_IS_APU is set.
+With nixpkgs's rustc, rust-src component is not bundled
+with the compiler by default and is instead provided from
+a separate store path, so this assumption does not hold.
 
-However, amdgpu_gmc_filter_faults_remove() unconditionally uses ih1 to
-get the timestamp of the last interrupt entry. When retry faults are
-enabled on APUs (noretry=0), this function is called from the SVM page
-fault recovery path, resulting in a NULL pointer dereference when
-amdgpu_ih_decode_iv_ts_helper() attempts to access ih->ring[].
+The assertion assumes these paths are in the same location
+which causes `make LLVM=1 rust-analyzer` to fail on NixOS.
 
-The crash manifests as:
-
-  BUG: kernel NULL pointer dereference, address: 0000000000000004
-  RIP: 0010:amdgpu_ih_decode_iv_ts_helper+0x22/0x40 [amdgpu]
-  Call Trace:
-   amdgpu_gmc_filter_faults_remove+0x60/0x130 [amdgpu]
-   svm_range_restore_pages+0xae5/0x11c0 [amdgpu]
-   amdgpu_vm_handle_fault+0xc8/0x340 [amdgpu]
-   gmc_v9_0_process_interrupt+0x191/0x220 [amdgpu]
-   amdgpu_irq_dispatch+0xed/0x2c0 [amdgpu]
-   amdgpu_ih_process+0x84/0x100 [amdgpu]
-
-This issue was exposed by commit 1446226d32a4 ("drm/amdgpu: Remove GC HW
-IP 9.3.0 from noretry=1") which changed the default for Renoir APU from
-noretry=1 to noretry=0, enabling retry fault handling and thus
-exercising the buggy code path.
-
-Fix this by adding a check for ih1.ring_size before attempting to use
-it. Also restore the soft_ih support from commit dd299441654f ("drm/amdgpu:
-Rework retry fault removal").  This is needed if the hardware doesn't
-support secondary HW IH rings.
-
-v2: additional updates (Alex)
-
-Closes: https://gitlab.freedesktop.org/drm/amd/-/issues/3814
-Fixes: dd299441654f ("drm/amdgpu: Rework retry fault removal")
-Reviewed-by: Timur Kristóf <timur.kristof@gmail.com>
-Reviewed-by: Philip Yang <Philip.Yang@amd.com>
-Signed-off-by: Jon Doron <jond@wiz.io>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 6ce8d536c80aa1f059e82184f0d1994436b1d526)
+Link: https://rust-for-linux.zulipchat.com/#narrow/stream/x/topic/x/near/565284250
+Signed-off-by: Onur Özkan <work@onurozkan.dev>
+Reviewed-by: Gary Guo <gary@garyguo.net>
+Fixes: fe992163575b ("rust: Support latest version of `rust-analyzer`")
 Cc: stable@vger.kernel.org
+Link: https://patch.msgid.link/20251224135343.32476-1-work@onurozkan.dev
+[ Reworded title. - Miguel ]
+Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_gmc.c |    7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ scripts/generate_rust_analyzer.py |    3 ---
+ 1 file changed, 3 deletions(-)
 
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_gmc.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_gmc.c
-@@ -498,8 +498,13 @@ void amdgpu_gmc_filter_faults_remove(str
+--- a/scripts/generate_rust_analyzer.py
++++ b/scripts/generate_rust_analyzer.py
+@@ -192,9 +192,6 @@ def main():
+         level=logging.INFO if args.verbose else logging.WARNING
+     )
  
- 	if (adev->irq.retry_cam_enabled)
- 		return;
-+	else if (adev->irq.ih1.ring_size)
-+		ih = &adev->irq.ih1;
-+	else if (adev->irq.ih_soft.enabled)
-+		ih = &adev->irq.ih_soft;
-+	else
-+		return;
- 
--	ih = &adev->irq.ih1;
- 	/* Get the WPTR of the last entry in IH ring */
- 	last_wptr = amdgpu_ih_get_wptr(adev, ih);
- 	/* Order wptr with ring data. */
+-    # Making sure that the `sysroot` and `sysroot_src` belong to the same toolchain.
+-    assert args.sysroot in args.sysroot_src.parents
+-
+     rust_project = {
+         "crates": generate_crates(args.srctree, args.objtree, args.sysroot_src, args.exttree, args.cfgs, args.core_edition),
+         "sysroot": str(args.sysroot),
 
 
