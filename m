@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3BFFD1C5D77;
-	Wed,  4 Feb 2026 14:45:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC500271A9A;
+	Wed,  4 Feb 2026 14:45:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770216352; cv=none; b=X3Cshhk+Q/m2k13nrw6yaQuZX+fsHl+ZYL86Tgib3hVL+W2Zjjsski0COqPy0d4c16j2eqhS7YVAX5MMzgBd/wm2PLvJh1LrHJhDbNiz0SsMcrGg/Y5iROHoxSFoc3ordzOGJABFWlEvD4JyNK+7rjsJVEMs/QBEtvfswvvZz3w=
+	t=1770216356; cv=none; b=PBtCmNwIjwML4ssB/QvqOzys+4iUp9XlGYbo7i6DpvoD0i6aGBDPlDzKxPFZ8TnkByjIntMryQlQ4NUSmY9koulMaE+bKdEbt+VUqUfJOGAaWphl17RcVrSGw6TRfCav/Cbf9qiKVlf3Ot3U9kLE3TJoNEyadGGK1x3c6hzFS9Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770216352; c=relaxed/simple;
-	bh=Qnr6/aQaIL6gxjR2B7P+vYmM0jYScfiyLaLtixsjOko=;
+	s=arc-20240116; t=1770216356; c=relaxed/simple;
+	bh=OVYMUJsWl0iKhMAQFPNBg7IT5PHkF4tjhhoGLT2fAXY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EUwhZlX9qAv99YGuFeQugd/vlE5nlBrVYPbhXRZoc5vxoQndi9Hseqix7x0qqaVWFM2G/FDkbloMId8AFKnA9dD0CgWrGe9/NVR4QD8wklZk7T4W0s6q0J7MbTeoXbi4hKOVdBieAMikd9vS6Ego1lE3lazOlfPUn5g719tRzOo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EO5O6dSY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fIIruT07tmFPLcVmVJaCo2ZpG91Ad1/CdAuR7WmeMI5g5L7FaHSYa5t5nYnQrDjLuq+SmeCGMmK9CqLPWdVfFoWrd7iAMyM+bnBZuXHWynNEUpssK0DZtmPvi9GjsRz3typRYRYQNWKxDfP+0cxTEKveJ2EOvByZGWnwfE9IsGQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rChSv89m; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EO5O6dSY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 884BFC4CEF7;
-	Wed,  4 Feb 2026 14:45:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rChSv89m"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1114EC4CEF7;
+	Wed,  4 Feb 2026 14:45:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770216352;
-	bh=Qnr6/aQaIL6gxjR2B7P+vYmM0jYScfiyLaLtixsjOko=;
+	s=korg; t=1770216355;
+	bh=OVYMUJsWl0iKhMAQFPNBg7IT5PHkF4tjhhoGLT2fAXY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EO5O6dSYDbtTmGc3SGLFhOUO9OEw5zYwZtkrUcH+ZGBLIAjDbiaTD+5bivhf5c6Ba
-	 aN2pCpB/7b6amxH5aHDqPkbk5jlJEyPpA0O/EG3mPOW+HvmuDNiQJDJj4vTuwE8zO/
-	 Cg7Nio9DJbHd/a2rUjH6cPOA+KZJrSoLRKb7jz+k=
+	b=rChSv89mBvyMHy0NjT9dYLqbvqC2h2mOK2EELRz/FJdZ0U4JUmHo6eFKQNr+krwiQ
+	 4IHL9Kr0/MWBfvzBhHjsJn382IwmpcK/ZbM2CqJdDi/yIDY3gdoOJyo6tfvy6SrlvF
+	 Q8wX40gpWb0xFbEVDXg1QUPaF0x5euwSWoseMRZE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ethan Nelson-Moore <enelsonmoore@gmail.com>,
-	Johan Hovold <johan@kernel.org>
-Subject: [PATCH 5.10 028/161] USB: serial: ftdi_sio: add support for PICAXE AXE027 cable
-Date: Wed,  4 Feb 2026 15:38:11 +0100
-Message-ID: <20260204143852.774363816@linuxfoundation.org>
+	Yang Erkun <yangerkun@huawei.com>,
+	Baokun Li <libaokun1@huawei.com>,
+	Zhang Yi <yi.zhang@huawei.com>,
+	Theodore Tso <tytso@mit.edu>,
+	stable@kernel.org
+Subject: [PATCH 5.10 029/161] ext4: fix iloc.bh leak in ext4_xattr_inode_update_ref
+Date: Wed,  4 Feb 2026 15:38:12 +0100
+Message-ID: <20260204143852.809345602@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260204143851.755002596@linuxfoundation.org>
 References: <20260204143851.755002596@linuxfoundation.org>
@@ -50,43 +53,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ethan Nelson-Moore <enelsonmoore@gmail.com>
+From: Yang Erkun <yangerkun@huawei.com>
 
-commit c0afe95e62984ceea171c3ea319beaf84a21181c upstream.
+commit d250bdf531d9cd4096fedbb9f172bb2ca660c868 upstream.
 
-The vendor provides instructions to write "0403 bd90" to
-/sys/bus/usb-serial/drivers/ftdi_sio/new_id; see:
-https://picaxe.com/docs/picaxe_linux_instructions.pdf
+The error branch for ext4_xattr_inode_update_ref forget to release the
+refcount for iloc.bh. Find this when review code.
 
-Cc: stable@vger.kernel.org
-Signed-off-by: Ethan Nelson-Moore <enelsonmoore@gmail.com>
-Signed-off-by: Johan Hovold <johan@kernel.org>
+Fixes: 57295e835408 ("ext4: guard against EA inode refcount underflow in xattr update")
+Signed-off-by: Yang Erkun <yangerkun@huawei.com>
+Reviewed-by: Baokun Li <libaokun1@huawei.com>
+Reviewed-by: Zhang Yi <yi.zhang@huawei.com>
+Link: https://patch.msgid.link/20251213055706.3417529-1-yangerkun@huawei.com
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Cc: stable@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/serial/ftdi_sio.c     |    1 +
- drivers/usb/serial/ftdi_sio_ids.h |    2 ++
- 2 files changed, 3 insertions(+)
+ fs/ext4/xattr.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/usb/serial/ftdi_sio.c
-+++ b/drivers/usb/serial/ftdi_sio.c
-@@ -828,6 +828,7 @@ static const struct usb_device_id id_tab
- 	{ USB_DEVICE_INTERFACE_NUMBER(FTDI_VID, LMI_LM3S_DEVEL_BOARD_PID, 1) },
- 	{ USB_DEVICE_INTERFACE_NUMBER(FTDI_VID, LMI_LM3S_EVAL_BOARD_PID, 1) },
- 	{ USB_DEVICE_INTERFACE_NUMBER(FTDI_VID, LMI_LM3S_ICDI_BOARD_PID, 1) },
-+	{ USB_DEVICE(FTDI_VID, FTDI_AXE027_PID) },
- 	{ USB_DEVICE_INTERFACE_NUMBER(FTDI_VID, FTDI_TURTELIZER_PID, 1) },
- 	{ USB_DEVICE(RATOC_VENDOR_ID, RATOC_PRODUCT_ID_USB60F) },
- 	{ USB_DEVICE(RATOC_VENDOR_ID, RATOC_PRODUCT_ID_SCU18) },
---- a/drivers/usb/serial/ftdi_sio_ids.h
-+++ b/drivers/usb/serial/ftdi_sio_ids.h
-@@ -89,6 +89,8 @@
- #define LMI_LM3S_EVAL_BOARD_PID		0xbcd9
- #define LMI_LM3S_ICDI_BOARD_PID		0xbcda
- 
-+#define FTDI_AXE027_PID		0xBD90 /* PICAXE AXE027 USB download cable */
-+
- #define FTDI_TURTELIZER_PID	0xBDC8 /* JTAG/RS-232 adapter by egnite GmbH */
- 
- /* OpenDCC (www.opendcc.de) product id */
+--- a/fs/ext4/xattr.c
++++ b/fs/ext4/xattr.c
+@@ -980,6 +980,7 @@ static int ext4_xattr_inode_update_ref(h
+ 		ext4_error_inode(ea_inode, __func__, __LINE__, 0,
+ 			"EA inode %lu ref wraparound: ref_count=%lld ref_change=%d",
+ 			ea_inode->i_ino, ref_count, ref_change);
++		brelse(iloc.bh);
+ 		ret = -EFSCORRUPTED;
+ 		goto out;
+ 	}
 
 
