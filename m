@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 600BB280A3B;
-	Wed,  4 Feb 2026 14:43:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9FEAD280A3B;
+	Wed,  4 Feb 2026 14:43:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770216208; cv=none; b=UmzsXFPlFbYPUGPkFvgGD/DoczbAriAsj/zRXE1o292+dq6v31bgMSYuJ5e+uO8BlErOZvc/MquHY06ik0h7N3ovD6/3SwWHB2pUjMQ8mBQOp5we6QySPtUw74RowPxZ35LkriZfHp7CHKJe/+gKWxzmUrzSi1NyjUmrrVbZ8WE=
+	t=1770216211; cv=none; b=Qtuvf5EaJQVoSTqTLbpgq4pLKKT8zG7a15EUic2dP00xIMUS6kD86iLihZ9Kc7s6mmInTkvYEPthEwoA71kKt2h8lv65717KuEYwYY+QuXkZLwo79cx5qe+NOn5bE5Bo75qhZm5UwMlifNG0TpMhpi50uFmgXUrlobhQIAlP2XE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770216208; c=relaxed/simple;
-	bh=VvtFOLHLJiRka/Xbo7FwGM2NZiLUilW1M40IUJ3+6UA=;
+	s=arc-20240116; t=1770216211; c=relaxed/simple;
+	bh=n/IofHLET7tWCRFZURGzjoRNvXzpnPeGTp3+xZFfjEk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=D7cRqup5iyPDc0mJYJGDsfe5EYWMNjzHZvqMsgYc5GcOa78yalMwLLG0aYMBDtf7YLTsGLhqGgUlNendNtNhhBqC0+iRJa0tPhZgAmhplQ97O7AjlePn0bq5i2cxk6hI913Rz3+CnmEuyXnwgqIvtviK+Trx0ITsG/t4A3dGEqc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wF76QtGo; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=sFJL0wFTr7vquAggwFb5Sqs50CkfkvmDl1VfEN/9CAnC5d7s0M7ceRb79iBGGjNXI9aoaseSCPgpdIiw7ZaUS94NVKkF5CG9ZGpFLUXMCoPijkgR1nuyleqQsIZ0pvaAKoPOe6XixRAM1w4sZWPn4UCWs0rD2bB/XqCsCwoOx6k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xMt/jgYM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wF76QtGo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C2EADC4CEF7;
-	Wed,  4 Feb 2026 14:43:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xMt/jgYM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D16BBC4CEF7;
+	Wed,  4 Feb 2026 14:43:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770216208;
-	bh=VvtFOLHLJiRka/Xbo7FwGM2NZiLUilW1M40IUJ3+6UA=;
+	s=korg; t=1770216211;
+	bh=n/IofHLET7tWCRFZURGzjoRNvXzpnPeGTp3+xZFfjEk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wF76QtGo1D6rgi8U+7dAJcXlrcOHVvkv2pJZUBQQg51C7pbaAUQYj/EQ+Bi3yDfev
-	 76UXztVY0bWLEYQpP8fYy/u0k+l3BQHDZR+MLInUDlsu+ptiAPG5jSF4wKVmrC53DO
-	 l/0QX41Xns/HX7dOQZwh61Ek8fUOmElf+hKDHuc8=
+	b=xMt/jgYMiSQkWrPOnBh7BPfbVtUK0N9E4KqhzU8zG7cRe6Z04Aw5KNf38TMPjCP+P
+	 lFWhS4qpLjExZJs1fRA5OHRqwc9Ru69eUCK3iVbp+igmPNCyZEgbzN8qG3CEQ9OXZl
+	 LuJB+WJCfRPYRJdqQ8EfcCMGuI+m6z9nmgpAhxkM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Maurizio Lombardi <mlombard@redhat.com>,
-	Sagi Grimberg <sagi@grimberg.me>,
-	Keith Busch <kbusch@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 002/161] nvmet-tcp: remove boilerplate code
-Date: Wed,  4 Feb 2026 15:37:45 +0100
-Message-ID: <20260204143851.848546164@linuxfoundation.org>
+	Jaroslav Kysela <perex@perex.cz>,
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 5.10 020/161] ALSA: pcm: Improve the fix for race of buffer access at PCM OSS layer
+Date: Wed,  4 Feb 2026 15:38:03 +0100
+Message-ID: <20260204143852.490754804@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260204143851.755002596@linuxfoundation.org>
 References: <20260204143851.755002596@linuxfoundation.org>
@@ -52,72 +50,73 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Maurizio Lombardi <mlombard@redhat.com>
+From: Jaroslav Kysela <perex@perex.cz>
 
-[ Upstream commit 75011bd0f9c55db523242f9f9a0b0b826165f14b ]
+commit 47c27c9c9c720bc93fdc69605d0ecd9382e99047 upstream.
 
-Simplify the nvmet_tcp_handle_h2c_data_pdu() function by removing
-boilerplate code.
+Handle the error code from snd_pcm_buffer_access_lock() in
+snd_pcm_runtime_buffer_set_silence() function.
 
-Signed-off-by: Maurizio Lombardi <mlombard@redhat.com>
-Reviewed-by: Sagi Grimberg <sagi@grimberg.me>
-Signed-off-by: Keith Busch <kbusch@kernel.org>
-Stable-dep-of: 32b63acd78f5 ("nvme-tcp: fix NULL pointer dereferences in nvmet_tcp_build_pdu_iovec")
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Found by Alexandros Panagiotou <apanagio@redhat.com>
+
+Fixes: 93a81ca06577 ("ALSA: pcm: Fix race of buffer access at PCM OSS layer")
+Cc: stable@vger.kernel.org # 6.15
+Signed-off-by: Jaroslav Kysela <perex@perex.cz>
+Link: https://patch.msgid.link/20260107213642.332954-1-perex@perex.cz
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/nvme/target/tcp.c | 16 ++++++++--------
- 1 file changed, 8 insertions(+), 8 deletions(-)
+ include/sound/pcm.h      |    2 +-
+ sound/core/oss/pcm_oss.c |    4 +++-
+ sound/core/pcm_native.c  |    9 +++++++--
+ 3 files changed, 11 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/nvme/target/tcp.c b/drivers/nvme/target/tcp.c
-index 6019eee1f9bdf..d7b368102ad9a 100644
---- a/drivers/nvme/target/tcp.c
-+++ b/drivers/nvme/target/tcp.c
-@@ -933,8 +933,7 @@ static int nvmet_tcp_handle_h2c_data_pdu(struct nvmet_tcp_queue *queue)
- 		if (unlikely(data->ttag >= queue->nr_cmds)) {
- 			pr_err("queue %d: received out of bound ttag %u, nr_cmds %u\n",
- 				queue->idx, data->ttag, queue->nr_cmds);
--			nvmet_tcp_fatal_error(queue);
--			return -EPROTO;
-+			goto err_proto;
- 		}
- 		cmd = &queue->cmds[data->ttag];
- 	} else {
-@@ -945,9 +944,7 @@ static int nvmet_tcp_handle_h2c_data_pdu(struct nvmet_tcp_queue *queue)
- 		pr_err("ttag %u unexpected data offset %u (expected %u)\n",
- 			data->ttag, le32_to_cpu(data->data_offset),
- 			cmd->rbytes_done);
--		/* FIXME: use path and transport errors */
--		nvmet_tcp_fatal_error(queue);
--		return -EPROTO;
-+		goto err_proto;
- 	}
+--- a/include/sound/pcm.h
++++ b/include/sound/pcm.h
+@@ -1334,7 +1334,7 @@ int snd_pcm_lib_mmap_iomem(struct snd_pc
+ #define snd_pcm_lib_mmap_iomem	NULL
+ #endif
  
- 	exp_data_len = le32_to_cpu(data->hdr.plen) -
-@@ -960,9 +957,7 @@ static int nvmet_tcp_handle_h2c_data_pdu(struct nvmet_tcp_queue *queue)
- 		     cmd->pdu_len == 0 ||
- 		     cmd->pdu_len > NVMET_TCP_MAXH2CDATA)) {
- 		pr_err("H2CData PDU len %u is invalid\n", cmd->pdu_len);
--		/* FIXME: use proper transport errors */
--		nvmet_tcp_fatal_error(queue);
--		return -EPROTO;
-+		goto err_proto;
- 	}
- 	cmd->pdu_recv = 0;
- 	nvmet_tcp_map_pdu_iovec(cmd);
-@@ -970,6 +965,11 @@ static int nvmet_tcp_handle_h2c_data_pdu(struct nvmet_tcp_queue *queue)
- 	queue->rcv_state = NVMET_TCP_RECV_DATA;
+-void snd_pcm_runtime_buffer_set_silence(struct snd_pcm_runtime *runtime);
++int snd_pcm_runtime_buffer_set_silence(struct snd_pcm_runtime *runtime);
  
- 	return 0;
-+
-+err_proto:
-+	/* FIXME: use proper transport errors */
-+	nvmet_tcp_fatal_error(queue);
-+	return -EPROTO;
+ /**
+  * snd_pcm_limit_isa_dma_size - Get the max size fitting with ISA DMA transfer
+--- a/sound/core/oss/pcm_oss.c
++++ b/sound/core/oss/pcm_oss.c
+@@ -1078,7 +1078,9 @@ static int snd_pcm_oss_change_params_loc
+ 	runtime->oss.params = 0;
+ 	runtime->oss.prepare = 1;
+ 	runtime->oss.buffer_used = 0;
+-	snd_pcm_runtime_buffer_set_silence(runtime);
++	err = snd_pcm_runtime_buffer_set_silence(runtime);
++	if (err < 0)
++		goto failure;
+ 
+ 	runtime->oss.period_frames = snd_pcm_alsa_frames(substream, oss_period_size);
+ 
+--- a/sound/core/pcm_native.c
++++ b/sound/core/pcm_native.c
+@@ -687,13 +687,18 @@ static void snd_pcm_buffer_access_unlock
  }
  
- static int nvmet_tcp_done_recv_pdu(struct nvmet_tcp_queue *queue)
--- 
-2.51.0
-
+ /* fill the PCM buffer with the current silence format; called from pcm_oss.c */
+-void snd_pcm_runtime_buffer_set_silence(struct snd_pcm_runtime *runtime)
++int snd_pcm_runtime_buffer_set_silence(struct snd_pcm_runtime *runtime)
+ {
+-	snd_pcm_buffer_access_lock(runtime);
++	int err;
++
++	err = snd_pcm_buffer_access_lock(runtime);
++	if (err < 0)
++		return err;
+ 	if (runtime->dma_area)
+ 		snd_pcm_format_set_silence(runtime->format, runtime->dma_area,
+ 					   bytes_to_samples(runtime, runtime->dma_bytes));
+ 	snd_pcm_buffer_access_unlock(runtime);
++	return 0;
+ }
+ EXPORT_SYMBOL_GPL(snd_pcm_runtime_buffer_set_silence);
+ 
 
 
