@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EACAF41C30A;
-	Wed,  4 Feb 2026 15:22:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A571B421A06;
+	Wed,  4 Feb 2026 15:22:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770218523; cv=none; b=GXAxxH8XVwYt/qAex4wIOW3L4io5ePX5/g/yZ2RIAeNjZ8BcO30KF3Epm9yYhR54kF2xL6Ic4viBlg2XgTDUhXi8BQKrgBmBeeRgI3UKqfjJGmQDYYRBtVD6sLfByGWrNWv7u84wT2hEaucd5lY4gZjln4rAsHLd42OTv0q6v6w=
+	t=1770218526; cv=none; b=Wil8wFzVvLHLSG+m+RgxJIuMnS6dIb+RZrwnD8BzH/5Fx9bJyW1S7Ow6/DnvCqlnfSl6tQnJiUgjy8dDdkmlPp1NtvOTU62dFhJgUcL+WEZ2p8rAwDeFc4tF1GuHK9D2/qvGCQEPg1HNf4WksHBxE/AGsqOYIfla7yH/qmB9qWM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770218523; c=relaxed/simple;
-	bh=5uFWj0fTWfZaBnCHvARBhoc0wmO6Piuw9LxrCzf+1Mw=;
+	s=arc-20240116; t=1770218526; c=relaxed/simple;
+	bh=kgM2oe8L6Dta0MRHJ+Ahk12m3yT4X8o60zIXJ8P8z78=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lCtpsXfdzErz5INCe5CIygWXLKikWvrikvqGKGw0a8aCs4PXawvmT5pPMBAClE52Q9kCDcM26M2NpbdrjOaz3w04BI7eGA6RCkOfyxXem21HA/jhtDXdiAug9o/kxSyx2WpYoq8Y0P7Mr1s9qLo+razNyXyCmr1NXhuLYY4FKHE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=X4PYkt1h; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Qcd8p4J/Jr/60FyJWYBKD7rEBVOhPjTzLf9wQhWmLFqtFwAtjTlVdKi3PSUy7+rDKMpzajGxr+isYcmmIefax8NrN65Y5BeZcJ9bZPyIkyqrNAkY8kdrsnDEvj8ZuwpR0kUh8r2Mv76w08LZY86vsj1Zu4HaCkQqQbu8ZG3Nhfo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=F2q5hyiK; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="X4PYkt1h"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 453A4C2BC9E;
-	Wed,  4 Feb 2026 15:22:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="F2q5hyiK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B74E2C116C6;
+	Wed,  4 Feb 2026 15:22:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770218522;
-	bh=5uFWj0fTWfZaBnCHvARBhoc0wmO6Piuw9LxrCzf+1Mw=;
+	s=korg; t=1770218526;
+	bh=kgM2oe8L6Dta0MRHJ+Ahk12m3yT4X8o60zIXJ8P8z78=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=X4PYkt1hhqyUcqQx6Vki+YkTWb4viy8MaNUCnEsG2jGJ9kK2WtzNRO7+FEmzWw2pQ
-	 X8o074B39axybKvUT98v1YWjz5IK/lTDde1zsADQOWjhV8nperThTLyAQEPgfZof5L
-	 zifvrtfpX2hMdFgR8PomjGXLeKtHEd+2iTc5DVhE=
+	b=F2q5hyiKkfmbP2DC8uGIZCGTKs+OvVtJXB3nJQI+i2HThrxS2/HG9B4RCjrKDHBzQ
+	 oad6StTbHf7iZp8jSe2TqsmQ10BW5FyVXz5TVlPnINHO5okZZFDlyACqLwGRMgZ6I3
+	 UX9N3b4oOEobpLGBt9HTXFyoTTByFb6Tqv7lxJgs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chen Ni <nichen@iscas.ac.cn>,
-	Jamal Hadi Salim <jhs@mojatatu.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Ben Hutchings <ben@decadent.org.uk>
-Subject: [PATCH 6.6 56/72] net/sched: act_ife: convert comma to semicolon
-Date: Wed,  4 Feb 2026 15:40:59 +0100
-Message-ID: <20260204143847.664463647@linuxfoundation.org>
+	Pavel Machek <pavel@denx.de>,
+	Takashi Iwai <tiwai@suse.de>,
+	Sasha Levin <sashal@kernel.org>,
+	Wentao Guan <guanwentao@uniontech.com>
+Subject: [PATCH 6.6 57/72] ALSA: usb-audio: Fix missing unlock at error path of maxpacksize check
+Date: Wed,  4 Feb 2026 15:41:00 +0100
+Message-ID: <20260204143847.700383707@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260204143845.603454952@linuxfoundation.org>
 References: <20260204143845.603454952@linuxfoundation.org>
@@ -52,44 +52,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chen Ni <nichen@iscas.ac.cn>
+From: Takashi Iwai <tiwai@suse.de>
 
-commit 205305c028ad986d0649b8b100bab6032dcd1bb5 upstream.
+commit fdf0dc82eb60091772ecea73cbc5a8fb7562fc45 upstream.
 
-Replace comma between expressions with semicolons.
+The recent backport of the upstream commit 05a1fc5efdd8 ("ALSA:
+usb-audio: Fix potential overflow of PCM transfer buffer") on the
+older stable kernels like 6.12.y was broken since it doesn't consider
+the mutex unlock, where the upstream code manages with guard().
+In the older code, we still need an explicit unlock.
 
-Using a ',' in place of a ';' can have unintended side effects.
-Although that is not the case here, it is seems best to use ';'
-unless ',' is intended.
+This is a fix that corrects the error path, applied only on old stable
+trees.
 
-Found by inspection.
-No functional change intended.
-Compile tested only.
-
-Signed-off-by: Chen Ni <nichen@iscas.ac.cn>
-Reviewed-by: Jamal Hadi Salim <jhs@mojatatu.com>
-Link: https://patch.msgid.link/20251112072709.73755-1-nichen@iscas.ac.cn
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Cc: Ben Hutchings <ben@decadent.org.uk>
+Reported-by: Pavel Machek <pavel@denx.de>
+Closes: https://lore.kernel.org/aSWtH0AZH5+aeb+a@duo.ucw.cz
+Fixes: 98e9d5e33bda ("ALSA: usb-audio: Fix potential overflow of PCM transfer buffer")
+Reviewed-by: Pavel Machek <pavel@denx.de>
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Wentao Guan <guanwentao@uniontech.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/sched/act_ife.c |    6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ sound/usb/endpoint.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/net/sched/act_ife.c
-+++ b/net/sched/act_ife.c
-@@ -649,9 +649,9 @@ static int tcf_ife_dump(struct sk_buff *
+--- a/sound/usb/endpoint.c
++++ b/sound/usb/endpoint.c
+@@ -1386,7 +1386,8 @@ int snd_usb_endpoint_set_params(struct s
+ 	if (ep->packsize[1] > ep->maxpacksize) {
+ 		usb_audio_dbg(chip, "Too small maxpacksize %u for rate %u / pps %u\n",
+ 			      ep->maxpacksize, ep->cur_rate, ep->pps);
+-		return -EINVAL;
++		err = -EINVAL;
++		goto unlock;
+ 	}
  
- 	memset(&opt, 0, sizeof(opt));
- 
--	opt.index = ife->tcf_index,
--	opt.refcnt = refcount_read(&ife->tcf_refcnt) - ref,
--	opt.bindcnt = atomic_read(&ife->tcf_bindcnt) - bind,
-+	opt.index = ife->tcf_index;
-+	opt.refcnt = refcount_read(&ife->tcf_refcnt) - ref;
-+	opt.bindcnt = atomic_read(&ife->tcf_bindcnt) - bind;
- 
- 	spin_lock_bh(&ife->tcf_lock);
- 	opt.action = ife->tcf_action;
+ 	/* calculate the frequency in 16.16 format */
 
 
