@@ -1,36 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2189421899;
-	Wed,  4 Feb 2026 14:58:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1033342189E;
+	Wed,  4 Feb 2026 14:58:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770217089; cv=none; b=J69FmRSO6COV8so/0iVokInIas2ADJpCcrm9WJeUQAqQ8WWnYLGaAFIjf/qH03aA2vfB3i+gEzk+aGZJJa2hHWG3N7096/iBQKJIvmTFTAVCYPlEmKkoaoPX7yvVvVS9i0s2Yo4YKICJ1hfLcyvYF0+0JlLYCktveb7Ed04GlUE=
+	t=1770217093; cv=none; b=Et4t2Mrw/CARhmljFViKgd+XoYo/1obHIV99RLsUOrphADyOCCXKW/r5l+YEhpjIIb22YegZ2Smb4z6Rn6gH4kY94YhMpHKW0FqyygNud8NAmCkUuTfSDfn9A8Xz7BZn96/3ePmW45DyDsBz15JVcrHh1wD0Kzg9KMWCSsZSQk0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770217089; c=relaxed/simple;
-	bh=jIGp2jBsRzN1cAo5ciQrFBbIRBzMgQpPm51sNu9f2X8=;
+	s=arc-20240116; t=1770217093; c=relaxed/simple;
+	bh=cFUWboxcQWUu2I1/fbBFGI1MRO+A11JOtvwLJPaHiOw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dwHNDeNIBqLNPIChlzrOfULw658kQA+n/1RD10SEwcMaDV2EvsOhQhCE2A9r67WjncHoz4Skbp/7BqgMEzZEhbEARYgQm5FV+q2l4RNrfOEmBXgwp7eI6Yo6b/lYLKQWvYJTmZQp3kwxgk8eNirQ14OYHBCozBPdbYcXA8p/Vfg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=u49YACvn; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=iqQvRdjKQQ1HyvZCh1LJ1pEBUujcrwSqzhXUvCaaxiTRzA4jkrKoBjUf156nvi3kpKxUdp1/zRf5ApWLJYDFV86A1Hg/Q2KigwItqmvE/lOJ10YM6zMCTyASs6nUMurWvve94dfb5g7lHYrmKN7OamafJmJ1hJKZdMPGC5w+muY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lFchV/kW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="u49YACvn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 28D8EC4CEF7;
-	Wed,  4 Feb 2026 14:58:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lFchV/kW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C6EEC4CEF7;
+	Wed,  4 Feb 2026 14:58:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770217089;
-	bh=jIGp2jBsRzN1cAo5ciQrFBbIRBzMgQpPm51sNu9f2X8=;
+	s=korg; t=1770217092;
+	bh=cFUWboxcQWUu2I1/fbBFGI1MRO+A11JOtvwLJPaHiOw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=u49YACvnFB1ArWLUeqC6XeUdUs9ejXpIql3Sop6IW5x1aIxkE06GGfGZi9lUacw3B
-	 ogc6+7N9vVXRLgMS3Xk6cBwhlwl4ROLwN5uVJSb+Ks8YhWBuse7qfKoFRO7xzEQEP1
-	 1H+Ufdu1cKTtMMJlz0RaMZS6rscocaWYb5vyJ4QY=
+	b=lFchV/kWdWeEANTYUdOnkGgJ/pJXvVxXx1Y8yrRMFl2/wfuFJ2bHHTRa8FZVq+QEh
+	 MwIyIIqoA/K/PvaPMfdWg3P7V5YIZ65A+YH/1ZWEE3Ug9vGYlyP1aegmfmGyrBxjqI
+	 CEAJ4d95AfY+bblwZrYoOfoWT9cMvClA+6UzpaRA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
+	Ma Ke <make24@iscas.ac.cn>,
 	Johan Hovold <johan@kernel.org>
-Subject: [PATCH 5.15 120/206] slimbus: core: fix device reference leak on report present
-Date: Wed,  4 Feb 2026 15:39:11 +0100
-Message-ID: <20260204143902.523504300@linuxfoundation.org>
+Subject: [PATCH 5.15 121/206] intel_th: fix device leak on output open()
+Date: Wed,  4 Feb 2026 15:39:12 +0100
+Message-ID: <20260204143902.559841597@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260204143858.193781818@linuxfoundation.org>
 References: <20260204143858.193781818@linuxfoundation.org>
@@ -51,44 +53,67 @@ Content-Transfer-Encoding: 8bit
 
 From: Johan Hovold <johan@kernel.org>
 
-commit 9391380eb91ea5ac792aae9273535c8da5b9aa01 upstream.
+commit 95fc36a234da24bbc5f476f8104a5a15f99ed3e3 upstream.
 
-Slimbus devices can be allocated dynamically upon reception of
-report-present messages.
+Make sure to drop the reference taken when looking up the th device
+during output device open() on errors and on close().
 
-Make sure to drop the reference taken when looking up already registered
-devices.
+Note that a recent commit fixed the leak in a couple of open() error
+paths but not all of them, and the reference is still leaking on
+successful open().
 
-Note that this requires taking an extra reference in case the device has
-not yet been registered and has to be allocated.
-
-Fixes: 46a2bb5a7f7e ("slimbus: core: Add slim controllers support")
-Cc: stable@vger.kernel.org	# 4.16
+Fixes: 39f4034693b7 ("intel_th: Add driver infrastructure for Intel(R) Trace Hub devices")
+Fixes: 6d5925b667e4 ("intel_th: Fix error handling in intel_th_output_open")
+Cc: stable@vger.kernel.org	# 4.4: 6d5925b667e4
+Cc: Alexander Shishkin <alexander.shishkin@linux.intel.com>
+Cc: Ma Ke <make24@iscas.ac.cn>
 Signed-off-by: Johan Hovold <johan@kernel.org>
-Link: https://patch.msgid.link/20251126145329.5022-4-johan@kernel.org
+Link: https://patch.msgid.link/20251208153524.68637-2-johan@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/slimbus/core.c |    3 +++
- 1 file changed, 3 insertions(+)
+ drivers/hwtracing/intel_th/core.c |   19 ++++++++++++++++---
+ 1 file changed, 16 insertions(+), 3 deletions(-)
 
---- a/drivers/slimbus/core.c
-+++ b/drivers/slimbus/core.c
-@@ -378,6 +378,8 @@ struct slim_device *slim_get_device(stru
- 		sbdev = slim_alloc_device(ctrl, e_addr, NULL);
- 		if (!sbdev)
- 			return ERR_PTR(-ENOMEM);
+--- a/drivers/hwtracing/intel_th/core.c
++++ b/drivers/hwtracing/intel_th/core.c
+@@ -810,9 +810,12 @@ static int intel_th_output_open(struct i
+ 	int err;
+ 
+ 	dev = bus_find_device_by_devt(&intel_th_bus, inode->i_rdev);
+-	if (!dev || !dev->driver) {
++	if (!dev)
++		return -ENODEV;
 +
-+		get_device(&sbdev->dev);
++	if (!dev->driver) {
+ 		err = -ENODEV;
+-		goto out_no_device;
++		goto out_put_device;
  	}
  
- 	return sbdev;
-@@ -512,6 +514,7 @@ int slim_device_report_present(struct sl
- 		ret = slim_device_alloc_laddr(sbdev, true);
- 	}
+ 	thdrv = to_intel_th_driver(dev->driver);
+@@ -836,12 +839,22 @@ static int intel_th_output_open(struct i
  
-+	put_device(&sbdev->dev);
- out_put_rpm:
- 	pm_runtime_mark_last_busy(ctrl->dev);
- 	pm_runtime_put_autosuspend(ctrl->dev);
+ out_put_device:
+ 	put_device(dev);
+-out_no_device:
++
+ 	return err;
+ }
+ 
++static int intel_th_output_release(struct inode *inode, struct file *file)
++{
++	struct intel_th_device *thdev = file->private_data;
++
++	put_device(&thdev->dev);
++
++	return 0;
++}
++
+ static const struct file_operations intel_th_output_fops = {
+ 	.open	= intel_th_output_open,
++	.release = intel_th_output_release,
+ 	.llseek	= noop_llseek,
+ };
+ 
 
 
