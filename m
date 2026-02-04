@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B531273D77;
-	Wed,  4 Feb 2026 15:30:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B640F22332E;
+	Wed,  4 Feb 2026 15:30:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770219017; cv=none; b=GlddHXt3PYQeSOPdb+dFT5iJMzHGWr3CIuAZAfEyJl32FR6Vg7EjI9kY5vQsoGn1/+y2a80ZY2QMEtGbLbEzfcXlzxteCiHvLf+WTJj4rPsgOaUTwaxk4+qQvZxj0ZWelBLwDfWmbzwq38Fb6Rctp5g7/gLILAd2oP5SOuc2vqQ=
+	t=1770219020; cv=none; b=fYCnddZkMxDKCeQ5P7JbzWyuCTGfsJEUFurzBfMQas1//wXqp5/jldflUmRQab3I4/D90+EFs8nyVIy/gUzluIfH9AyY2Rnif31cGmRBS8E/+Pqt8W43oik1VsIV7QkaF2OpzKoSaPB71iSLzPJyUu4THxXH36/9rPG/LHGfS/8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770219017; c=relaxed/simple;
-	bh=DiAbA63cqEiVTrctA1VxBNvvdKPsT/cvTL3i+NTqdQ0=;
+	s=arc-20240116; t=1770219020; c=relaxed/simple;
+	bh=ov2x2BH/FnRnPHf3hprwiZxvYJVlsGyRWHoehAEqtMw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lTBSu9arIGn0yaRZ0rVFZ+5/sUqjfKx6SP23Fv/rwqce8CITgdNxGuL/RWvO0asLjnGLiUOtmjMBYstNJjefMEPYzaMLI829GGEWvqyQxG71s/OOof56xpbgvyWjA+kMvAgaUxarMD8uA3zp+U8tIrtdkLVdvaLUkMth4GIR7GU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WY/8gVTT; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GNFZ5x4oJ2Lu3udwN//IfPJUOkz834N6cPANIAu++rMmX60Vmb9npUjQsdmq6d7r8R/rG+/9Ngfp5TiDnr8VeAkaD3JbOTMTfXM8N/9MvjAncZVeMLI3xsqida5E6zqklMmx0bY5yvrCQUWDqd/3JNKSd4uwIrl+hbaN9VUiQhE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yTzo/1QR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WY/8gVTT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 841C5C4CEF7;
-	Wed,  4 Feb 2026 15:30:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yTzo/1QR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 26793C4CEF7;
+	Wed,  4 Feb 2026 15:30:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770219016;
-	bh=DiAbA63cqEiVTrctA1VxBNvvdKPsT/cvTL3i+NTqdQ0=;
+	s=korg; t=1770219020;
+	bh=ov2x2BH/FnRnPHf3hprwiZxvYJVlsGyRWHoehAEqtMw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WY/8gVTTHSiEa3T04Ob4PuusHYavO53XA5FB2xOAJXKFDBs9SeEi0+/e0hJkPGr8h
-	 Mu8glAlHnF1T0pifVuiWYy/ffeBqorsuXA9o4g1J+n/dJ+krylYP/JTPpDAD8yPcFv
-	 zQQa54FAINzlAnXCvT/iSBL+4W5RJTTQ0Wdu6Sqs=
+	b=yTzo/1QRCCRZ9KsvOxT8VvD4yfbOfx5a7gmMVJ2TA6NYfW5h3GjajiH+2FZDRtlVt
+	 mFhdnxTiBJS2tqJuRPdReYZCcG+dfx1c6gT67uGV8Qb0o9tcWaZWN0UnavA8HNUDuZ
+	 H/uChWgYDrQ/UOcQzbO3krwRGiqiY/SS2a61aGys=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Denis Sergeev <denserg.edu@gmail.com>,
-	Mika Westerberg <westeri@kernel.org>,
+	Yuhao Huang <nekowong743@gmail.com>,
 	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 042/122] gpiolib: acpi: use BIT_ULL() for u64 mask in address space handler
-Date: Wed,  4 Feb 2026 15:40:24 +0100
-Message-ID: <20260204143853.372986370@linuxfoundation.org>
+Subject: [PATCH 6.18 043/122] gpio: virtuser: fix UAF in configfs release path
+Date: Wed,  4 Feb 2026 15:40:25 +0100
+Message-ID: <20260204143853.408755861@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260204143851.857060534@linuxfoundation.org>
 References: <20260204143851.857060534@linuxfoundation.org>
@@ -52,43 +51,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Denis Sergeev <denserg.edu@gmail.com>
+From: Yuhao Huang <nekowong743@gmail.com>
 
-[ Upstream commit c0ae43d303e45764918fa8c1dc13d6a5db59c479 ]
+[ Upstream commit 53ad4a948a4586359b841d607c08fb16c5503230 ]
 
-The BIT() macro uses unsigned long, which is 32 bits on 32-bit
-architectures. When iterating over GPIO pins with index >= 32,
-the expression (*value & BIT(i)) causes undefined behavior due
-to shifting by a value >= type width.
+The gpio-virtuser configfs release path uses guard(mutex) to protect
+the device structure. However, the device is freed before the guard
+cleanup runs, causing mutex_unlock() to operate on freed memory.
 
-Since 'value' is a pointer to u64, use BIT_ULL() to ensure correct
-64-bit mask on all architectures.
+Specifically, gpio_virtuser_device_config_group_release() destroys
+the mutex and frees the device while still inside the guard(mutex)
+scope. When the function returns, the guard cleanup invokes
+mutex_unlock(&dev->lock), resulting in a slab use-after-free.
 
-Found by Linux Verification Center (linuxtesting.org) with Svace.
+Limit the mutex lifetime by using a scoped_guard() only around the
+activation check, so that the lock is released before mutex_destroy()
+and kfree() are called.
 
-Fixes: 2c4d00cb8fc5 ("gpiolib: acpi: Use BIT() macro to increase readability")
-Signed-off-by: Denis Sergeev <denserg.edu@gmail.com>
-Reviewed-by: Mika Westerberg <westeri@kernel.org>
-Link: https://lore.kernel.org/r/20260126035914.16586-1-denserg.edu@gmail.com
+Fixes: 91581c4b3f29 ("gpio: virtuser: new virtual testing driver for the GPIO API")
+Signed-off-by: Yuhao Huang <nekowong743@gmail.com>
+Link: https://lore.kernel.org/r/20260126040348.11167-1-yuhaohuang@YuhaodeMacBook-Pro.local
 Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpio/gpiolib-acpi-core.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpio/gpio-virtuser.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/gpio/gpiolib-acpi-core.c b/drivers/gpio/gpiolib-acpi-core.c
-index d441c1236d8ca..2ac6c708d927a 100644
---- a/drivers/gpio/gpiolib-acpi-core.c
-+++ b/drivers/gpio/gpiolib-acpi-core.c
-@@ -1159,7 +1159,7 @@ acpi_gpio_adr_space_handler(u32 function, acpi_physical_address address,
- 		mutex_unlock(&achip->conn_lock);
+diff --git a/drivers/gpio/gpio-virtuser.c b/drivers/gpio/gpio-virtuser.c
+index a10eab7d2617e..252fec5ea3835 100644
+--- a/drivers/gpio/gpio-virtuser.c
++++ b/drivers/gpio/gpio-virtuser.c
+@@ -1684,10 +1684,10 @@ static void gpio_virtuser_device_config_group_release(struct config_item *item)
+ {
+ 	struct gpio_virtuser_device *dev = to_gpio_virtuser_device(item);
  
- 		if (function == ACPI_WRITE)
--			gpiod_set_raw_value_cansleep(desc, !!(*value & BIT(i)));
-+			gpiod_set_raw_value_cansleep(desc, !!(*value & BIT_ULL(i)));
- 		else
- 			*value |= (u64)gpiod_get_raw_value_cansleep(desc) << i;
- 	}
+-	guard(mutex)(&dev->lock);
+-
+-	if (gpio_virtuser_device_is_live(dev))
+-		gpio_virtuser_device_deactivate(dev);
++	scoped_guard(mutex, &dev->lock) {
++		if (gpio_virtuser_device_is_live(dev))
++			gpio_virtuser_device_deactivate(dev);
++	}
+ 
+ 	mutex_destroy(&dev->lock);
+ 	ida_free(&gpio_virtuser_ida, dev->id);
 -- 
 2.51.0
 
