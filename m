@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9EEA3410D10;
-	Wed,  4 Feb 2026 14:53:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C5BC410D10;
+	Wed,  4 Feb 2026 14:53:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770216782; cv=none; b=pboO12P0gVtTh+W5IhXczPHEnrQDzciha3NOaMKM4HhUxMvswT3/lkegEuYznBTaisWtpq0s7cjzbZ7febCEH4mJLy5Afw/CoEtF+DlkNJmts5rDqfqLNVlSaMpXwBqySA4wyGTT/d+pif7BEXdEmm9BHi4DCIduamKtmFxBc20=
+	t=1770216786; cv=none; b=IRqqWhIxMenxAVOpnDbhUNSf9Y88nu8OX6FQIBxBex7y6vtlylvHxas5CsbzuSKmpoR3tknKac9d/yiAqnO3JmQ54ZCg0aCCYCGFcMhOvAbKD0mUPfSUaze0AJrlDz0unCfGROunEdD8l9zNB8bTCO5APVgbPMth1+alfYEx3pc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770216782; c=relaxed/simple;
-	bh=A7jFytY3VROcsRnMmWsw6WKvKdd6KChKtW+hG6mwVYQ=;
+	s=arc-20240116; t=1770216786; c=relaxed/simple;
+	bh=L5lhawl9WqxnJpXdHcpR0gc4Oo69zTp27cO4O++RJNE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=az0UZ/hIfvkTVoNsY0fqfPY52bOnwLQ75FI1n67ofoP4On5aSYIZM+jCrLmydlUGEC+T//8DSSsp+nBnG5Ig2vyM2qD2Vz7J612I+ig00JMG0GZoUNQQe68Ffu4gadhCJhjWoH46HxeERZhJXzhXwFCG4/kLb4j2TUWjaB+B7Jg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0bSdjK6s; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=k9cikYKPgyGzYHzSwLIthzqzLO3HFXt6b3Ln1q7AYdQ6NmLA39OoCzLUwKciXkRYmpovajj+IVo0bJZ90yx9KJ9rIdU8I4KLXjb6KiM8t1VXHm3IIq5C2tn7BBPu+iq8Pa5NzR07PgisknSXdA9LOoummb6gJtTn8EyvjYWFZG4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hSyyXJNu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0bSdjK6s"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB56DC19423;
-	Wed,  4 Feb 2026 14:53:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hSyyXJNu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F7D8C4CEF7;
+	Wed,  4 Feb 2026 14:53:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770216782;
-	bh=A7jFytY3VROcsRnMmWsw6WKvKdd6KChKtW+hG6mwVYQ=;
+	s=korg; t=1770216786;
+	bh=L5lhawl9WqxnJpXdHcpR0gc4Oo69zTp27cO4O++RJNE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0bSdjK6sI6fIRtthu3uuL2p3ewJDDGdyBOhrtOf3yO5U50jPghaj8az7CvIq4AswJ
-	 0JQoyR+8MX/sV8/9hbopAR59FQTeM4BNgMYxE1X7mzmYHW5YspHMPV1JPJld1w6Jv+
-	 VgtoYFs/TxvrceUbQYuRczG9mE17zIzZnkLRma3o=
+	b=hSyyXJNuEO8w+1llhroUbqqqWpLObG7nSI5OtsKFLnfi0/1O++L9jIUnxTE3lVege
+	 ZgpUaA4z2LK/bhuz2aT/B4jbAWsA8Dw9nYCJW79ibBBiiwolliniRXelR68FReoFwQ
+	 gpNXRop9s73kulv3tp32ccbOe4F+8bZIdj//SzCI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Shengwen Xiao <atzlinux@sina.com>,
-	Huacai Chen <chenhuacai@loongson.cn>,
-	Alan Stern <stern@rowland.harvard.edu>
-Subject: [PATCH 5.15 030/206] USB: OHCI/UHCI: Add soft dependencies on ehci_platform
-Date: Wed,  4 Feb 2026 15:37:41 +0100
-Message-ID: <20260204143859.288510302@linuxfoundation.org>
+	Ulrich Mohr <u.mohr@semex-engcon.com>,
+	Johan Hovold <johan@kernel.org>
+Subject: [PATCH 5.15 031/206] USB: serial: option: add Telit LE910 MBIM composition
+Date: Wed,  4 Feb 2026 15:37:42 +0100
+Message-ID: <20260204143859.323726908@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260204143858.193781818@linuxfoundation.org>
 References: <20260204143858.193781818@linuxfoundation.org>
@@ -52,89 +50,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Huacai Chen <chenhuacai@loongson.cn>
+From: Ulrich Mohr <u.mohr@semex-engcon.com>
 
-commit 01ef7f1b8713a78ab1a9512cf8096d2474c70633 upstream.
+commit 8af4274ab5999831f4757dfd5bd11665ba3b1569 upstream.
 
-Commit 9beeee6584b9aa4f ("USB: EHCI: log a warning if ehci-hcd is not
-loaded first") said that ehci-hcd should be loaded before ohci-hcd and
-uhci-hcd. However, commit 05c92da0c52494ca ("usb: ohci/uhci - add soft
-dependencies on ehci_pci") only makes ohci-pci/uhci-pci depend on ehci-
-pci, which is not enough and we may still see the warnings in boot log.
+Add support for Telit LE910 module when operating in MBIM composition
+with additional ttys. This USB product ID is used by the module
+when AT#USBCFG is set to 7.
 
-To eliminate the warnings we should make ohci-hcd/uhci-hcd depend on
-ehci-hcd. But Alan said that the warning introduced by 9beeee6584b9aa4f
-is bogus, we only need the soft dependencies in the PCI level rather
-than the HCD level.
+0x1252: MBIM + tty(NMEA) + tty(MODEM) + tty(MODEM) + SAP
 
-However, there is really another neccessary soft dependencies between
-ohci-platform/uhci-platform and ehci-platform, which is added by this
-patch. The boot logs are below.
+T:  Bus=01 Lev=01 Prnt=01 Port=01 Cnt=01 Dev#=  2 Spd=480  MxCh= 0
+D:  Ver= 2.00 Cls=ef(misc ) Sub=02 Prot=01 MxPS=64 #Cfgs=  1
+P:  Vendor=1bc7 ProdID=1252 Rev=03.18
+S:  Manufacturer=Android
+S:  Product=LE910C1-EU
+S:  SerialNumber=0123456789ABCDEF
+C:  #Ifs= 6 Cfg#= 1 Atr=a0 MxPwr=500mA
+I:  If#= 0 Alt= 0 #EPs= 1 Cls=02(commc) Sub=0e Prot=00 Driver=cdc_mbim
+E:  Ad=82(I) Atr=03(Int.) MxPS=  64 Ivl=32ms
+I:  If#= 1 Alt= 1 #EPs= 2 Cls=0a(data ) Sub=00 Prot=02 Driver=cdc_mbim
+E:  Ad=01(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=81(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:  If#= 2 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
+E:  Ad=02(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=83(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=84(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
+I:  If#= 3 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
+E:  Ad=03(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=85(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=86(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
+I:  If#= 4 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
+E:  Ad=04(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=87(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=88(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
+I:  If#= 5 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
+E:  Ad=05(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=89(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=8a(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
 
-1. ohci-platform loaded before ehci-platform:
-
- ohci-platform 1f058000.usb: Generic Platform OHCI controller
- ohci-platform 1f058000.usb: new USB bus registered, assigned bus number 1
- ohci-platform 1f058000.usb: irq 28, io mem 0x1f058000
- hub 1-0:1.0: USB hub found
- hub 1-0:1.0: 4 ports detected
- Warning! ehci_hcd should always be loaded before uhci_hcd and ohci_hcd, not after
- usb 1-4: new low-speed USB device number 2 using ohci-platform
- ehci-platform 1f050000.usb: EHCI Host Controller
- ehci-platform 1f050000.usb: new USB bus registered, assigned bus number 2
- ehci-platform 1f050000.usb: irq 29, io mem 0x1f050000
- ehci-platform 1f050000.usb: USB 2.0 started, EHCI 1.00
- usb 1-4: device descriptor read/all, error -62
- hub 2-0:1.0: USB hub found
- hub 2-0:1.0: 4 ports detected
- usb 1-4: new low-speed USB device number 3 using ohci-platform
- input: YSPRINGTECH USB OPTICAL MOUSE as /devices/platform/bus@10000000/1f058000.usb/usb1/1-4/1-4:1.0/0003:10C4:8105.0001/input/input0
- hid-generic 0003:10C4:8105.0001: input,hidraw0: USB HID v1.11 Mouse [YSPRINGTECH USB OPTICAL MOUSE] on usb-1f058000.usb-4/input0
-
-2. ehci-platform loaded before ohci-platform:
-
- ehci-platform 1f050000.usb: EHCI Host Controller
- ehci-platform 1f050000.usb: new USB bus registered, assigned bus number 1
- ehci-platform 1f050000.usb: irq 28, io mem 0x1f050000
- ehci-platform 1f050000.usb: USB 2.0 started, EHCI 1.00
- hub 1-0:1.0: USB hub found
- hub 1-0:1.0: 4 ports detected
- ohci-platform 1f058000.usb: Generic Platform OHCI controller
- ohci-platform 1f058000.usb: new USB bus registered, assigned bus number 2
- ohci-platform 1f058000.usb: irq 29, io mem 0x1f058000
- hub 2-0:1.0: USB hub found
- hub 2-0:1.0: 4 ports detected
- usb 2-4: new low-speed USB device number 2 using ohci-platform
- input: YSPRINGTECH USB OPTICAL MOUSE as /devices/platform/bus@10000000/1f058000.usb/usb2/2-4/2-4:1.0/0003:10C4:8105.0001/input/input0
- hid-generic 0003:10C4:8105.0001: input,hidraw0: USB HID v1.11 Mouse [YSPRINGTECH USB OPTICAL MOUSE] on usb-1f058000.usb-4/input0
-
-In the later case, there is no re-connection for USB-1.0/1.1 devices,
-which is expected.
-
-Cc: stable <stable@kernel.org>
-Reported-by: Shengwen Xiao <atzlinux@sina.com>
-Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
-Reviewed-by: Alan Stern <stern@rowland.harvard.edu>
-Link: https://patch.msgid.link/20260112084802.1995923-1-chenhuacai@loongson.cn
+Signed-off-by: Ulrich Mohr <u.mohr@semex-engcon.com>
+Cc: stable@vger.kernel.org
+Signed-off-by: Johan Hovold <johan@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/host/ohci-platform.c |    1 +
- drivers/usb/host/uhci-platform.c |    1 +
- 2 files changed, 2 insertions(+)
+ drivers/usb/serial/option.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/usb/host/ohci-platform.c
-+++ b/drivers/usb/host/ohci-platform.c
-@@ -359,3 +359,4 @@ MODULE_DESCRIPTION(DRIVER_DESC);
- MODULE_AUTHOR("Hauke Mehrtens");
- MODULE_AUTHOR("Alan Stern");
- MODULE_LICENSE("GPL");
-+MODULE_SOFTDEP("pre: ehci_platform");
---- a/drivers/usb/host/uhci-platform.c
-+++ b/drivers/usb/host/uhci-platform.c
-@@ -190,3 +190,4 @@ static struct platform_driver uhci_platf
- 		.of_match_table = platform_uhci_ids,
- 	},
- };
-+MODULE_SOFTDEP("pre: ehci_platform");
+--- a/drivers/usb/serial/option.c
++++ b/drivers/usb/serial/option.c
+@@ -1505,6 +1505,7 @@ static const struct usb_device_id option
+ 	{ USB_DEVICE_INTERFACE_CLASS(TELIT_VENDOR_ID, 0x1231, 0xff),	/* Telit LE910Cx (RNDIS) */
+ 	  .driver_info = NCTRL(2) | RSVD(3) },
+ 	{ USB_DEVICE_AND_INTERFACE_INFO(TELIT_VENDOR_ID, 0x1250, 0xff, 0x00, 0x00) },	/* Telit LE910Cx (rmnet) */
++	{ USB_DEVICE_INTERFACE_CLASS(TELIT_VENDOR_ID, 0x1252, 0xff) },	/* Telit LE910Cx (MBIM) */
+ 	{ USB_DEVICE(TELIT_VENDOR_ID, 0x1260),
+ 	  .driver_info = NCTRL(0) | RSVD(1) | RSVD(2) },
+ 	{ USB_DEVICE(TELIT_VENDOR_ID, 0x1261),
 
 
