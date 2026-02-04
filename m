@@ -1,42 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 156A142AA9;
-	Wed,  4 Feb 2026 15:27:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23BB742AA9;
+	Wed,  4 Feb 2026 15:27:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770218829; cv=none; b=sU00IdLv0UeGYXHvdp8U4swdizoYaN2VWw0lRhPdtShs4992wEMrtOw08LBNXs3ubkmL+ZraqKsakf7rsOGZLg1ajTFiX6w3SovbRNwuLZjx3nGSqMR5Or8U/M5ypqtrI6dl2gsFlzkEiYc5wKmfqRE3h62WJphM0pI6jaj1xaI=
+	t=1770218832; cv=none; b=KCA6QFGttPIPV8RRExM7NA5CqHNZTykhsxwA8EXy58OTFycYwHXDwUAzDPRG+jdbG1ywVHMAtSPVHBEWKHUOPEzB2kX1AzY+g22zGD3bTnOM9gfZm2nFwcoXtwuK/7NfD8qwYHXbVIXwYNGzuGmSaebWXvqyt2PtvLsoZrtQ9wA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770218829; c=relaxed/simple;
-	bh=CV+NGFmnddkliklHT1sRpLNsGowXYsEot06rchwf2CA=;
+	s=arc-20240116; t=1770218832; c=relaxed/simple;
+	bh=dablZuk6fpVxFzFWO4B6e0agK8fmDjSHzPrblNQ1NaA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ABFreDhTqGh2Q28inyNzCjg62XOL0vQNxzQI/5tzmOMbQ5XiWtinDvaCg9EL5Pg1fwghNlTJsQDqA5rYRWxp/LRIPAFKU4qyJuQ6rg5zNze6Jv8aTHTsgIp8l2VOnj7apXJIC5CG7hy07J79wXGVxHRfqC0NPlD+4MgITeQajhM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=j3U3Zb/E; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=EKLpKXK+MU45fSvv7EwcTUdR8CBAoWOd9y8KoQx0kyASjiJWjVjUSQxCzRfFWT1+kCzsB+1sXoKNJLN2m7zyfSzJBkb9ubqggRTfCgfW270It1uOcemckYUt77Atl06gtqWvseS61x8khYf+i/Gk8NoODh3d2KerKu/27A9lyiU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XlS/IVls; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="j3U3Zb/E"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E954C4CEF7;
-	Wed,  4 Feb 2026 15:27:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XlS/IVls"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F027C4CEF7;
+	Wed,  4 Feb 2026 15:27:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770218828;
-	bh=CV+NGFmnddkliklHT1sRpLNsGowXYsEot06rchwf2CA=;
+	s=korg; t=1770218832;
+	bh=dablZuk6fpVxFzFWO4B6e0agK8fmDjSHzPrblNQ1NaA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=j3U3Zb/ELZDnwu2oSDW17Nb42yoPj0wZ6SHm3t7JCNI5El70c8krohmKRuGo2b/FG
-	 p9Ae+gEZwZEN6+oUjJJpevRvLTruLNU2XC8RwlI+w4c3WYAjuw4cMefAspszdVAvhJ
-	 RYAMJ1MmrS+s+I56zPT+KcpllPstNzS8fppwQ0mc=
+	b=XlS/IVlstZ70wfXTPmFJ5t+V3XiWnd8X6X1KifUTvSaSoJhGvnVJQRoFTyy9EDCzP
+	 UtuKupCJapj/O4hzamK0Q/tanxW+IWvbgwVf46IsINSthk04mKMceBz8JX0AkLIOvY
+	 n333+sqnenLvnQgKTA2tGNIlUrEMrHhQbG+sBnus=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pimyn Girgis <pimyn@google.com>,
-	Alexander Potapenko <glider@google.com>,
-	Dmitry Vyukov <dvyukov@google.com>,
-	Marco Elver <elver@google.com>,
-	Ernesto Martnez Garca <ernesto.martinezgarcia@tugraz.at>,
-	Kees Cook <kees@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.12 73/87] mm/kfence: randomize the freelist on initialization
-Date: Wed,  4 Feb 2026 15:41:11 +0100
-Message-ID: <20260204143849.546505288@linuxfoundation.org>
+	Kang Yang <quic_kangyang@quicinc.com>,
+	Jeff Johnson <quic_jjohnson@quicinc.com>,
+	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
+	Li hongliang <1468888505@139.com>
+Subject: [PATCH 6.12 74/87] wifi: ath11k: add srng->lock for ath11k_hal_srng_* in monitor mode
+Date: Wed,  4 Feb 2026 15:41:12 +0100
+Message-ID: <20260204143849.582422397@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260204143846.906385641@linuxfoundation.org>
 References: <20260204143846.906385641@linuxfoundation.org>
@@ -55,85 +52,102 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pimyn Girgis <pimyn@google.com>
+From: Kang Yang <quic_kangyang@quicinc.com>
 
-commit 870ff19251bf3910dda7a7245da826924045fedd upstream.
+[ Upstream commit 63b7af49496d0e32f7a748b6af3361ec138b1bd3 ]
 
-Randomize the KFENCE freelist during pool initialization to make
-allocation patterns less predictable.  This is achieved by shuffling the
-order in which metadata objects are added to the freelist using
-get_random_u32_below().
+ath11k_hal_srng_* should be used with srng->lock to protect srng data.
 
-Additionally, ensure the error path correctly calculates the address range
-to be reset if initialization fails, as the address increment logic has
-been moved to a separate loop.
+For ath11k_dp_rx_mon_dest_process() and ath11k_dp_full_mon_process_rx(),
+they use ath11k_hal_srng_* for many times but never call srng->lock.
 
-Link: https://lkml.kernel.org/r/20260120161510.3289089-1-pimyn@google.com
-Fixes: 0ce20dd84089 ("mm: add Kernel Electric-Fence infrastructure")
-Signed-off-by: Pimyn Girgis <pimyn@google.com>
-Reviewed-by: Alexander Potapenko <glider@google.com>
-Cc: Dmitry Vyukov <dvyukov@google.com>
-Cc: Marco Elver <elver@google.com>
-Cc: Ernesto Martnez Garca <ernesto.martinezgarcia@tugraz.at>
-Cc: Greg KH <gregkh@linuxfoundation.org>
-Cc: Kees Cook <kees@kernel.org>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Signed-off-by: Pimyn Girgis <pimyn@google.com>
+So when running (full) monitor mode, warning will occur:
+RIP: 0010:ath11k_hal_srng_dst_peek+0x18/0x30 [ath11k]
+Call Trace:
+ ? ath11k_hal_srng_dst_peek+0x18/0x30 [ath11k]
+ ath11k_dp_rx_process_mon_status+0xc45/0x1190 [ath11k]
+ ? idr_alloc_u32+0x97/0xd0
+ ath11k_dp_rx_process_mon_rings+0x32a/0x550 [ath11k]
+ ath11k_dp_service_srng+0x289/0x5a0 [ath11k]
+ ath11k_pcic_ext_grp_napi_poll+0x30/0xd0 [ath11k]
+ __napi_poll+0x30/0x1f0
+ net_rx_action+0x198/0x320
+ __do_softirq+0xdd/0x319
+
+So add srng->lock for them to avoid such warnings.
+
+Inorder to fetch the srng->lock, should change srng's definition from
+'void' to 'struct hal_srng'. And initialize them elsewhere to prevent
+one line of code from being too long. This is consistent with other ring
+process functions, such as ath11k_dp_process_rx().
+
+Tested-on: WCN6855 hw2.0 PCI WLAN.HSP.1.1-03125-QCAHSPSWPL_V1_V2_SILICONZ_LITE-3.6510.30
+Tested-on: QCN9074 hw1.0 PCI WLAN.HK.2.7.0.1-01744-QCAHKSWPL_SILICONZ-1
+
+Fixes: d5c65159f289 ("ath11k: driver for Qualcomm IEEE 802.11ax devices")
+Signed-off-by: Kang Yang <quic_kangyang@quicinc.com>
+Acked-by: Jeff Johnson <quic_jjohnson@quicinc.com>
+Link: https://patch.msgid.link/20241219110531.2096-3-quic_kangyang@quicinc.com
+Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
+Signed-off-by: Li hongliang <1468888505@139.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/kfence/core.c |   23 +++++++++++++++++++----
- 1 file changed, 19 insertions(+), 4 deletions(-)
+ drivers/net/wireless/ath/ath11k/dp_rx.c |   10 ++++++++--
+ 1 file changed, 8 insertions(+), 2 deletions(-)
 
---- a/mm/kfence/core.c
-+++ b/mm/kfence/core.c
-@@ -596,7 +596,7 @@ static unsigned long kfence_init_pool(vo
- {
- 	unsigned long addr;
- 	struct page *pages;
--	int i;
-+	int i, rand;
+--- a/drivers/net/wireless/ath/ath11k/dp_rx.c
++++ b/drivers/net/wireless/ath/ath11k/dp_rx.c
+@@ -5142,7 +5142,7 @@ static void ath11k_dp_rx_mon_dest_proces
+ 	struct ath11k_mon_data *pmon = (struct ath11k_mon_data *)&dp->mon_data;
+ 	const struct ath11k_hw_hal_params *hal_params;
+ 	void *ring_entry;
+-	void *mon_dst_srng;
++	struct hal_srng *mon_dst_srng;
+ 	u32 ppdu_id;
+ 	u32 rx_bufs_used;
+ 	u32 ring_id;
+@@ -5159,6 +5159,7 @@ static void ath11k_dp_rx_mon_dest_proces
  
- 	if (!arch_kfence_init_pool())
- 		return (unsigned long)__kfence_pool;
-@@ -645,13 +645,27 @@ static unsigned long kfence_init_pool(vo
- 		INIT_LIST_HEAD(&meta->list);
- 		raw_spin_lock_init(&meta->lock);
- 		meta->state = KFENCE_OBJECT_UNUSED;
--		meta->addr = addr; /* Initialize for validation in metadata_to_pageaddr(). */
--		list_add_tail(&meta->list, &kfence_freelist);
-+		/* Use addr to randomize the freelist. */
-+		meta->addr = i;
+ 	spin_lock_bh(&pmon->mon_lock);
  
- 		/* Protect the right redzone. */
--		if (unlikely(!kfence_protect(addr + PAGE_SIZE)))
-+		if (unlikely(!kfence_protect(addr + 2 * i * PAGE_SIZE + PAGE_SIZE)))
- 			goto reset_slab;
-+	}
-+
-+	for (i = CONFIG_KFENCE_NUM_OBJECTS; i > 0; i--) {
-+		rand = get_random_u32_below(i);
-+		swap(kfence_metadata_init[i - 1].addr, kfence_metadata_init[rand].addr);
-+	}
++	spin_lock_bh(&mon_dst_srng->lock);
+ 	ath11k_hal_srng_access_begin(ar->ab, mon_dst_srng);
  
-+	for (i = 0; i < CONFIG_KFENCE_NUM_OBJECTS; i++) {
-+		struct kfence_metadata *meta_1 = &kfence_metadata_init[i];
-+		struct kfence_metadata *meta_2 = &kfence_metadata_init[meta_1->addr];
-+
-+		list_add_tail(&meta_2->list, &kfence_freelist);
-+	}
-+	for (i = 0; i < CONFIG_KFENCE_NUM_OBJECTS; i++) {
-+		kfence_metadata_init[i].addr = addr;
- 		addr += 2 * PAGE_SIZE;
+ 	ppdu_id = pmon->mon_ppdu_info.ppdu_id;
+@@ -5217,6 +5218,7 @@ static void ath11k_dp_rx_mon_dest_proces
+ 								mon_dst_srng);
+ 	}
+ 	ath11k_hal_srng_access_end(ar->ab, mon_dst_srng);
++	spin_unlock_bh(&mon_dst_srng->lock);
+ 
+ 	spin_unlock_bh(&pmon->mon_lock);
+ 
+@@ -5606,7 +5608,7 @@ static int ath11k_dp_full_mon_process_rx
+ 	struct hal_sw_mon_ring_entries *sw_mon_entries;
+ 	struct ath11k_pdev_mon_stats *rx_mon_stats;
+ 	struct sk_buff *head_msdu, *tail_msdu;
+-	void *mon_dst_srng = &ar->ab->hal.srng_list[dp->rxdma_mon_dst_ring.ring_id];
++	struct hal_srng *mon_dst_srng;
+ 	void *ring_entry;
+ 	u32 rx_bufs_used = 0, mpdu_rx_bufs_used;
+ 	int quota = 0, ret;
+@@ -5622,6 +5624,9 @@ static int ath11k_dp_full_mon_process_rx
+ 		goto reap_status_ring;
  	}
  
-@@ -664,6 +678,7 @@ static unsigned long kfence_init_pool(vo
- 	return 0;
++	mon_dst_srng = &ar->ab->hal.srng_list[dp->rxdma_mon_dst_ring.ring_id];
++	spin_lock_bh(&mon_dst_srng->lock);
++
+ 	ath11k_hal_srng_access_begin(ar->ab, mon_dst_srng);
+ 	while ((ring_entry = ath11k_hal_srng_dst_peek(ar->ab, mon_dst_srng))) {
+ 		head_msdu = NULL;
+@@ -5665,6 +5670,7 @@ next_entry:
+ 	}
  
- reset_slab:
-+	addr += 2 * i * PAGE_SIZE;
- 	for (i = 0; i < KFENCE_POOL_SIZE / PAGE_SIZE; i++) {
- 		struct slab *slab = page_slab(nth_page(pages, i));
+ 	ath11k_hal_srng_access_end(ar->ab, mon_dst_srng);
++	spin_unlock_bh(&mon_dst_srng->lock);
+ 	spin_unlock_bh(&pmon->mon_lock);
  
+ 	if (rx_bufs_used) {
 
 
