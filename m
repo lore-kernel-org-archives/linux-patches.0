@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3DBD8426D20;
-	Wed,  4 Feb 2026 15:07:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BEB98426D20;
+	Wed,  4 Feb 2026 15:07:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770217623; cv=none; b=UNajEtmhy05EvrAeHYhL77aLSSbcGgWPBVbpNwxxCbhlQRdiM2ccZLrUufH0INQipE+G8Xg7HFsmnGzZeb419oazjMU9244DLdoCJPIhtKS8x4JRhb40vhjgc5lUgNEg+Q26XhBYM5RZ/Ax4xsEzrHab+ab8R1X0uYzpADX1PzU=
+	t=1770217626; cv=none; b=JOOPa6Z8NIPdT/xzIMw9T7JRLgSmXZJYy1OI2ljdBhF61vZpiooMeiIjDT+gRo08FdFM3LfguGPHJz3nszjUYdScsqy30AIDDjEWW+Fml27xA0Au2NM0mEA3YkQ80PUoZCLYW6Fn6/tcEc0EdHX7JbJ+UBWvC5lUcYpyw1NHaJ0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770217623; c=relaxed/simple;
-	bh=X4RTwn3WY09oq4jTP5WnGLOW270x7qqkiwIoxrQNhvQ=;
+	s=arc-20240116; t=1770217626; c=relaxed/simple;
+	bh=FB9BblkcWaDJWPV3LLcbZ9/QcbztOl1uKSdHIPK/JNg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bNpL1iI18DbBHnL9hwgtu44cmmsA2pNarS1SdAPt1aK+Htd74lamg0kuTdau+mu/cCbSZa1Y0RI7J241m03HcHzHPJvQU7mWHkjVA8UN+w0jBBmWdJ1DjEENTiydKfejHNYeE8yMZTZGuVdQzOyt7AdZH0MYikAwjKD1zzWOvgY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UjN9djDc; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rFd6g7u8xmTCAM6ib7s7bP9Ph8DsTAWIUIZHvPrQS0SXAaoPaBFLYq40IIn6y6N4BKwxoxopdO27QskTmR96UHzmvb7L7x/0Gkv4lywYrJ8ut0BmeEI6RyMF+3TS7EIHkJUpUXPjISlPUQte7HsM4y/PXxvmdc2NQTqaxV9HE4o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2OAj8Mzx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UjN9djDc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A72CEC4CEF7;
-	Wed,  4 Feb 2026 15:07:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2OAj8Mzx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E7C17C4CEF7;
+	Wed,  4 Feb 2026 15:07:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770217623;
-	bh=X4RTwn3WY09oq4jTP5WnGLOW270x7qqkiwIoxrQNhvQ=;
+	s=korg; t=1770217626;
+	bh=FB9BblkcWaDJWPV3LLcbZ9/QcbztOl1uKSdHIPK/JNg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UjN9djDcgl+PN84+a2od8uKjwbL0F+SdZLXbBeAYUpvDVNs6am33Vx3lKJiba8Wrs
-	 Ej6Sy2KZrUJFbzwdrA4VLM7sYqhwRHSAR79oQVx//OFuyoZgmQ24JhsOVMwAjBXhgr
-	 rUEL0Jio2AhnAuhujV9diTXtYzRSfwxI4qVK5biI=
+	b=2OAj8Mzx1YHN0GwXX667jqECafABmMtuL8brHhUrxgM480+DZH2UJxf3c7imgGvZC
+	 ZadshH1gIw+UiC3lBS27s0FTB+T1tSisKLL2dPfvqyxt+PEET537JPXvrCr1AwpM+z
+	 9yk5rvcNX19WoHDhKcnqi2OuKShwJ9HkbeVE0EDk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dave Jiang <dave.jiang@intel.com>,
 	Johan Hovold <johan@kernel.org>,
+	Vladimir Zapolskiy <vz@mleia.com>,
 	Vinod Koul <vkoul@kernel.org>
-Subject: [PATCH 6.1 070/280] dmaengine: idxd: fix device leaks on compat bind and unbind
-Date: Wed,  4 Feb 2026 15:37:24 +0100
-Message-ID: <20260204143912.176150891@linuxfoundation.org>
+Subject: [PATCH 6.1 071/280] dmaengine: lpc18xx-dmamux: fix device leak on route allocation
+Date: Wed,  4 Feb 2026 15:37:25 +0100
+Message-ID: <20260204143912.211578956@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260204143909.614719725@linuxfoundation.org>
 References: <20260204143909.614719725@linuxfoundation.org>
@@ -53,78 +53,87 @@ Content-Transfer-Encoding: 8bit
 
 From: Johan Hovold <johan@kernel.org>
 
-commit 799900f01792cf8b525a44764f065f83fcafd468 upstream.
+commit d4d63059dee7e7cae0c4d9a532ed558bc90efb55 upstream.
 
-Make sure to drop the reference taken when looking up the idxd device as
-part of the compat bind and unbind sysfs interface.
+Make sure to drop the reference taken when looking up the DMA mux
+platform device during route allocation.
 
-Fixes: 6e7f3ee97bbe ("dmaengine: idxd: move dsa_drv support to compatible mode")
-Cc: stable@vger.kernel.org	# 5.15
-Cc: Dave Jiang <dave.jiang@intel.com>
+Note that holding a reference to a device does not prevent its driver
+data from going away so there is no point in keeping the reference.
+
+Fixes: e5f4ae84be74 ("dmaengine: add driver for lpc18xx dmamux")
+Cc: stable@vger.kernel.org	# 4.3
 Signed-off-by: Johan Hovold <johan@kernel.org>
-Link: https://patch.msgid.link/20251117161258.10679-7-johan@kernel.org
+Reviewed-by: Vladimir Zapolskiy <vz@mleia.com>
+Link: https://patch.msgid.link/20251117161258.10679-8-johan@kernel.org
 Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/dma/idxd/compat.c |   23 +++++++++++++++++++----
- 1 file changed, 19 insertions(+), 4 deletions(-)
+ drivers/dma/lpc18xx-dmamux.c |   19 ++++++++++++++-----
+ 1 file changed, 14 insertions(+), 5 deletions(-)
 
---- a/drivers/dma/idxd/compat.c
-+++ b/drivers/dma/idxd/compat.c
-@@ -21,11 +21,16 @@ static ssize_t unbind_store(struct devic
- 	int rc = -ENODEV;
+--- a/drivers/dma/lpc18xx-dmamux.c
++++ b/drivers/dma/lpc18xx-dmamux.c
+@@ -55,30 +55,31 @@ static void *lpc18xx_dmamux_reserve(stru
+ 	struct lpc18xx_dmamux_data *dmamux = platform_get_drvdata(pdev);
+ 	unsigned long flags;
+ 	unsigned mux;
++	int ret = -EINVAL;
  
- 	dev = bus_find_device_by_name(bus, NULL, buf);
--	if (dev && dev->driver) {
-+	if (!dev)
-+		return -ENODEV;
-+
-+	if (dev->driver) {
- 		device_driver_detach(dev);
- 		rc = count;
+ 	if (dma_spec->args_count != 3) {
+ 		dev_err(&pdev->dev, "invalid number of dma mux args\n");
+-		return ERR_PTR(-EINVAL);
++		goto err_put_pdev;
  	}
  
-+	put_device(dev);
-+
- 	return rc;
- }
- static DRIVER_ATTR_IGNORE_LOCKDEP(unbind, 0200, NULL, unbind_store);
-@@ -39,9 +44,12 @@ static ssize_t bind_store(struct device_
- 	struct idxd_dev *idxd_dev;
- 
- 	dev = bus_find_device_by_name(bus, NULL, buf);
--	if (!dev || dev->driver || drv != &dsa_drv.drv)
-+	if (!dev)
- 		return -ENODEV;
- 
-+	if (dev->driver || drv != &dsa_drv.drv)
-+		goto err_put_dev;
-+
- 	idxd_dev = confdev_to_idxd_dev(dev);
- 	if (is_idxd_dev(idxd_dev)) {
- 		alt_drv = driver_find("idxd", bus);
-@@ -54,13 +62,20 @@ static ssize_t bind_store(struct device_
- 			alt_drv = driver_find("user", bus);
+ 	mux = dma_spec->args[0];
+ 	if (mux >= dmamux->dma_master_requests) {
+ 		dev_err(&pdev->dev, "invalid mux number: %d\n",
+ 			dma_spec->args[0]);
+-		return ERR_PTR(-EINVAL);
++		goto err_put_pdev;
  	}
- 	if (!alt_drv)
--		return -ENODEV;
-+		goto err_put_dev;
  
- 	rc = device_driver_attach(alt_drv, dev);
- 	if (rc < 0)
--		return rc;
-+		goto err_put_dev;
-+
-+	put_device(dev);
+ 	if (dma_spec->args[1] > LPC18XX_DMAMUX_MAX_VAL) {
+ 		dev_err(&pdev->dev, "invalid dma mux value: %d\n",
+ 			dma_spec->args[1]);
+-		return ERR_PTR(-EINVAL);
++		goto err_put_pdev;
+ 	}
  
- 	return count;
+ 	/* The of_node_put() will be done in the core for the node */
+ 	dma_spec->np = of_parse_phandle(ofdma->of_node, "dma-masters", 0);
+ 	if (!dma_spec->np) {
+ 		dev_err(&pdev->dev, "can't get dma master\n");
+-		return ERR_PTR(-EINVAL);
++		goto err_put_pdev;
+ 	}
+ 
+ 	spin_lock_irqsave(&dmamux->lock, flags);
+@@ -87,7 +88,8 @@ static void *lpc18xx_dmamux_reserve(stru
+ 		dev_err(&pdev->dev, "dma request %u busy with %u.%u\n",
+ 			mux, mux, dmamux->muxes[mux].value);
+ 		of_node_put(dma_spec->np);
+-		return ERR_PTR(-EBUSY);
++		ret = -EBUSY;
++		goto err_put_pdev;
+ 	}
+ 
+ 	dmamux->muxes[mux].busy = true;
+@@ -104,7 +106,14 @@ static void *lpc18xx_dmamux_reserve(stru
+ 	dev_dbg(&pdev->dev, "mapping dmamux %u.%u to dma request %u\n", mux,
+ 		dmamux->muxes[mux].value, mux);
+ 
++	put_device(&pdev->dev);
 +
-+err_put_dev:
-+	put_device(dev);
+ 	return &dmamux->muxes[mux];
 +
-+	return rc;
++err_put_pdev:
++	put_device(&pdev->dev);
++
++	return ERR_PTR(ret);
  }
- static DRIVER_ATTR_IGNORE_LOCKDEP(bind, 0200, NULL, bind_store);
  
+ static int lpc18xx_dmamux_probe(struct platform_device *pdev)
 
 
