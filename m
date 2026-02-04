@@ -1,39 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77B5E41B362;
-	Wed,  4 Feb 2026 15:18:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B5DA2BE621;
+	Wed,  4 Feb 2026 15:18:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770218286; cv=none; b=MjXqB9etWn3NQBpwmgW8lsniIkns4NSj2RqBKwwo0tpN4M8qDPiZF5AY2OzEJ3cCwygXM0tjgOLDx0BthUNcK6gdpetzVEQsHMhBKps+QjcGWu6sEFVEic9psdOdZ2qYYo/NV3xGTEMx6Z4Dv44z3DDJ095oBR9Cgrqsh8gRRE8=
+	t=1770218289; cv=none; b=Skb255YFmCQ2nb1VJdiMiOdsEO8kHq8IOmqkmfl9tZ6SrKkx8qx7DBwXlc54yfxqtVa+CfaxzsAKT2gARz3ligOzMGe7Wg0pYqxg6DSjikfBG96BO6JZZRkPjEqxPnYw9ibHBLX5eK9eRWjGMqtyWZ7FznYQf5dn1CQKA0XbeIw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770218286; c=relaxed/simple;
-	bh=rCRHCOttSsxRTvHt0DAc8tzvh0zsoaGW/v8gueAmleY=;
+	s=arc-20240116; t=1770218289; c=relaxed/simple;
+	bh=j2eFubwiZCmp5h98OMYBcMli4rZ9hPR+EIlRjxYEtSc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XMs0wqpKduZMFRI45aLzx8gEwA4mgtMPSb2+qdvXRml/Wh06EMXz02KduIdH+XI4Egm1ZDmr9XSeYJnPFCON725PON0rxopWq3hiFSPSly4hAKvdYzrLhpEkRdkoL+gGB3hshNayMXHxxd8JyhDqkDuKPbmo2jnNqmvMc4GGy08=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XTWkoQo+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=Nr5vTk58hgYxzTwsbw3bmOs7Pzb+HCxTlhiPmk0TlbFPlmZCR5UJzakU0ZBtGugv7Dj4O1J6434ZpPdiRC4rGKusKxrM7Ij3VNzKr0JQ5tOq2Lc4o4ISxy0WfTFtIjquFIlxQkqhFtzTtKCyiyyg3ZLThqcfaV9vMW+y7adQyzI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=B9PU6Pv5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XTWkoQo+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 99024C4CEF7;
-	Wed,  4 Feb 2026 15:18:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="B9PU6Pv5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F2E9AC116C6;
+	Wed,  4 Feb 2026 15:18:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770218286;
-	bh=rCRHCOttSsxRTvHt0DAc8tzvh0zsoaGW/v8gueAmleY=;
+	s=korg; t=1770218289;
+	bh=j2eFubwiZCmp5h98OMYBcMli4rZ9hPR+EIlRjxYEtSc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XTWkoQo+S0Fw8LGcS21FWVYMMwcrfxxaxu2mySPu412KLyMzYCVwFM1Wo48HrDNOT
-	 6vT0jjnMvPqCW4EAYHfamtjURYCBp8WlbAELEgEzRWUgygt0rXrUiJfAxqRXPVwDm/
-	 kpYV5pBMRWPYCDcRmShXir9VhqJD+4gRJjV6PEig=
+	b=B9PU6Pv5UJZWdcww8O0iBdSr700Ll6eTdHtcJOd3RQtxS7TZTlYokSXROHEDFjX/z
+	 5Y3vX54G9YOMcaw86ulfTP974SFwHDVB47QdLZepUXTftZ9gGmyWfT59oVNYjYPQbs
+	 UWm7DM3sSojcmSIq+dxMNMq8eVkX7eKREEO6egPg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jakub Kicinski <kuba@kernel.org>,
-	Zqiang <qiang.zhang@linux.dev>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Rahul Sharma <black.hawk@163.com>
-Subject: [PATCH 6.1 265/280] usbnet: Fix using smp_processor_id() in preemptible code warnings
-Date: Wed,  4 Feb 2026 15:40:39 +0100
-Message-ID: <20260204143919.234889816@linuxfoundation.org>
+	lin cao <lin.cao@amd.com>,
+	Jingwen Chen <Jingwen.Chen2@amd.com>,
+	Victor Skvortsov <victor.skvortsov@amd.com>,
+	Zhigang Luo <zhigang.luo@amd.com>,
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>,
+	Li hongliang <1468888505@139.com>
+Subject: [PATCH 6.1 266/280] drm/amdgpu: Replace Mutex with Spinlock for RLCG register access to avoid Priority Inversion in SRIOV
+Date: Wed,  4 Feb 2026 15:40:40 +0100
+Message-ID: <20260204143919.271443423@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260204143909.614719725@linuxfoundation.org>
 References: <20260204143909.614719725@linuxfoundation.org>
@@ -46,81 +50,176 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Zqiang <qiang.zhang@linux.dev>
+From: Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>
 
-[ Upstream commit 327cd4b68b4398b6c24f10eb2b2533ffbfc10185 ]
+[ Upstream commit dc0297f3198bd60108ccbd167ee5d9fa4af31ed0 ]
 
-Syzbot reported the following warning:
+RLCG Register Access is a way for virtual functions to safely access GPU
+registers in a virtualized environment., including TLB flushes and
+register reads. When multiple threads or VFs try to access the same
+registers simultaneously, it can lead to race conditions. By using the
+RLCG interface, the driver can serialize access to the registers. This
+means that only one thread can access the registers at a time,
+preventing conflicts and ensuring that operations are performed
+correctly. Additionally, when a low-priority task holds a mutex that a
+high-priority task needs, ie., If a thread holding a spinlock tries to
+acquire a mutex, it can lead to priority inversion. register access in
+amdgpu_virt_rlcg_reg_rw especially in a fast code path is critical.
 
-BUG: using smp_processor_id() in preemptible [00000000] code: dhcpcd/2879
-caller is usbnet_skb_return+0x74/0x490 drivers/net/usb/usbnet.c:331
-CPU: 1 UID: 0 PID: 2879 Comm: dhcpcd Not tainted 6.15.0-rc4-syzkaller-00098-g615dca38c2ea #0 PREEMPT(voluntary)
-Call Trace:
- <TASK>
- __dump_stack lib/dump_stack.c:94 [inline]
- dump_stack_lvl+0x16c/0x1f0 lib/dump_stack.c:120
- check_preemption_disabled+0xd0/0xe0 lib/smp_processor_id.c:49
- usbnet_skb_return+0x74/0x490 drivers/net/usb/usbnet.c:331
- usbnet_resume_rx+0x4b/0x170 drivers/net/usb/usbnet.c:708
- usbnet_change_mtu+0x1be/0x220 drivers/net/usb/usbnet.c:417
- __dev_set_mtu net/core/dev.c:9443 [inline]
- netif_set_mtu_ext+0x369/0x5c0 net/core/dev.c:9496
- netif_set_mtu+0xb0/0x160 net/core/dev.c:9520
- dev_set_mtu+0xae/0x170 net/core/dev_api.c:247
- dev_ifsioc+0xa31/0x18d0 net/core/dev_ioctl.c:572
- dev_ioctl+0x223/0x10e0 net/core/dev_ioctl.c:821
- sock_do_ioctl+0x19d/0x280 net/socket.c:1204
- sock_ioctl+0x42f/0x6a0 net/socket.c:1311
- vfs_ioctl fs/ioctl.c:51 [inline]
- __do_sys_ioctl fs/ioctl.c:906 [inline]
- __se_sys_ioctl fs/ioctl.c:892 [inline]
- __x64_sys_ioctl+0x190/0x200 fs/ioctl.c:892
- do_syscall_x64 arch/x86/entry/syscall_64.c:63 [inline]
- do_syscall_64+0xcd/0x260 arch/x86/entry/syscall_64.c:94
- entry_SYSCALL_64_after_hwframe+0x77/0x7f
+The call stack shows that the function amdgpu_virt_rlcg_reg_rw is being
+called, which attempts to acquire the mutex. This function is invoked
+from amdgpu_sriov_wreg, which in turn is called from
+gmc_v11_0_flush_gpu_tlb.
 
-For historical and portability reasons, the netif_rx() is usually
-run in the softirq or interrupt context, this commit therefore add
-local_bh_disable/enable() protection in the usbnet_resume_rx().
+The [ BUG: Invalid wait context ] indicates that a thread is trying to
+acquire a mutex while it is in a context that does not allow it to sleep
+(like holding a spinlock).
 
-Fixes: 43daa96b166c ("usbnet: Stop RX Q on MTU change")
-Link: https://syzkaller.appspot.com/bug?id=81f55dfa587ee544baaaa5a359a060512228c1e1
-Suggested-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Zqiang <qiang.zhang@linux.dev>
-Link: https://patch.msgid.link/20251011070518.7095-1-qiang.zhang@linux.dev
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-[ The context change is due to the commit 2c04d279e857
-("net: usb: Convert tasklet API to new bottom half workqueue mechanism")
-in v6.17 which is irrelevant to the logic of this patch.]
-Signed-off-by: Rahul Sharma <black.hawk@163.com>
+Fixes the below:
+
+[  253.013423] =============================
+[  253.013434] [ BUG: Invalid wait context ]
+[  253.013446] 6.12.0-amdstaging-drm-next-lol-050225 #14 Tainted: G     U     OE
+[  253.013464] -----------------------------
+[  253.013475] kworker/0:1/10 is trying to lock:
+[  253.013487] ffff9f30542e3cf8 (&adev->virt.rlcg_reg_lock){+.+.}-{3:3}, at: amdgpu_virt_rlcg_reg_rw+0xf6/0x330 [amdgpu]
+[  253.013815] other info that might help us debug this:
+[  253.013827] context-{4:4}
+[  253.013835] 3 locks held by kworker/0:1/10:
+[  253.013847]  #0: ffff9f3040050f58 ((wq_completion)events){+.+.}-{0:0}, at: process_one_work+0x3f5/0x680
+[  253.013877]  #1: ffffb789c008be40 ((work_completion)(&wfc.work)){+.+.}-{0:0}, at: process_one_work+0x1d6/0x680
+[  253.013905]  #2: ffff9f3054281838 (&adev->gmc.invalidate_lock){+.+.}-{2:2}, at: gmc_v11_0_flush_gpu_tlb+0x198/0x4f0 [amdgpu]
+[  253.014154] stack backtrace:
+[  253.014164] CPU: 0 UID: 0 PID: 10 Comm: kworker/0:1 Tainted: G     U     OE      6.12.0-amdstaging-drm-next-lol-050225 #14
+[  253.014189] Tainted: [U]=USER, [O]=OOT_MODULE, [E]=UNSIGNED_MODULE
+[  253.014203] Hardware name: Microsoft Corporation Virtual Machine/Virtual Machine, BIOS Hyper-V UEFI Release v4.1 11/18/2024
+[  253.014224] Workqueue: events work_for_cpu_fn
+[  253.014241] Call Trace:
+[  253.014250]  <TASK>
+[  253.014260]  dump_stack_lvl+0x9b/0xf0
+[  253.014275]  dump_stack+0x10/0x20
+[  253.014287]  __lock_acquire+0xa47/0x2810
+[  253.014303]  ? srso_alias_return_thunk+0x5/0xfbef5
+[  253.014321]  lock_acquire+0xd1/0x300
+[  253.014333]  ? amdgpu_virt_rlcg_reg_rw+0xf6/0x330 [amdgpu]
+[  253.014562]  ? __lock_acquire+0xa6b/0x2810
+[  253.014578]  __mutex_lock+0x85/0xe20
+[  253.014591]  ? amdgpu_virt_rlcg_reg_rw+0xf6/0x330 [amdgpu]
+[  253.014782]  ? sched_clock_noinstr+0x9/0x10
+[  253.014795]  ? srso_alias_return_thunk+0x5/0xfbef5
+[  253.014808]  ? local_clock_noinstr+0xe/0xc0
+[  253.014822]  ? amdgpu_virt_rlcg_reg_rw+0xf6/0x330 [amdgpu]
+[  253.015012]  ? srso_alias_return_thunk+0x5/0xfbef5
+[  253.015029]  mutex_lock_nested+0x1b/0x30
+[  253.015044]  ? mutex_lock_nested+0x1b/0x30
+[  253.015057]  amdgpu_virt_rlcg_reg_rw+0xf6/0x330 [amdgpu]
+[  253.015249]  amdgpu_sriov_wreg+0xc5/0xd0 [amdgpu]
+[  253.015435]  gmc_v11_0_flush_gpu_tlb+0x44b/0x4f0 [amdgpu]
+[  253.015667]  gfx_v11_0_hw_init+0x499/0x29c0 [amdgpu]
+[  253.015901]  ? __pfx_smu_v13_0_update_pcie_parameters+0x10/0x10 [amdgpu]
+[  253.016159]  ? srso_alias_return_thunk+0x5/0xfbef5
+[  253.016173]  ? smu_hw_init+0x18d/0x300 [amdgpu]
+[  253.016403]  amdgpu_device_init+0x29ad/0x36a0 [amdgpu]
+[  253.016614]  amdgpu_driver_load_kms+0x1a/0xc0 [amdgpu]
+[  253.017057]  amdgpu_pci_probe+0x1c2/0x660 [amdgpu]
+[  253.017493]  local_pci_probe+0x4b/0xb0
+[  253.017746]  work_for_cpu_fn+0x1a/0x30
+[  253.017995]  process_one_work+0x21e/0x680
+[  253.018248]  worker_thread+0x190/0x330
+[  253.018500]  ? __pfx_worker_thread+0x10/0x10
+[  253.018746]  kthread+0xe7/0x120
+[  253.018988]  ? __pfx_kthread+0x10/0x10
+[  253.019231]  ret_from_fork+0x3c/0x60
+[  253.019468]  ? __pfx_kthread+0x10/0x10
+[  253.019701]  ret_from_fork_asm+0x1a/0x30
+[  253.019939]  </TASK>
+
+v2: s/spin_trylock/spin_lock_irqsave to be safe (Christian).
+
+Fixes: e864180ee49b ("drm/amdgpu: Add lock around VF RLCG interface")
+Cc: lin cao <lin.cao@amd.com>
+Cc: Jingwen Chen <Jingwen.Chen2@amd.com>
+Cc: Victor Skvortsov <victor.skvortsov@amd.com>
+Cc: Zhigang Luo <zhigang.luo@amd.com>
+Cc: Christian König <christian.koenig@amd.com>
+Cc: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>
+Suggested-by: Alex Deucher <alexander.deucher@amd.com>
+Reviewed-by: Christian König <christian.koenig@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+[ Minor conflict resolved. ]
+Signed-off-by: Li hongliang <1468888505@139.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/usb/usbnet.c |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_device.c |    2 +-
+ drivers/gpu/drm/amd/amdgpu/amdgpu_virt.c   |    5 +++--
+ drivers/gpu/drm/amd/amdgpu/amdgpu_virt.h   |    3 ++-
+ 3 files changed, 6 insertions(+), 4 deletions(-)
 
---- a/drivers/net/usb/usbnet.c
-+++ b/drivers/net/usb/usbnet.c
-@@ -704,6 +704,7 @@ void usbnet_resume_rx(struct usbnet *dev
- 	struct sk_buff *skb;
- 	int num = 0;
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
+@@ -3652,7 +3652,6 @@ int amdgpu_device_init(struct amdgpu_dev
+ 	mutex_init(&adev->grbm_idx_mutex);
+ 	mutex_init(&adev->mn_lock);
+ 	mutex_init(&adev->virt.vf_errors.lock);
+-	mutex_init(&adev->virt.rlcg_reg_lock);
+ 	hash_init(adev->mn_hash);
+ 	mutex_init(&adev->psp.mutex);
+ 	mutex_init(&adev->notifier_lock);
+@@ -3674,6 +3673,7 @@ int amdgpu_device_init(struct amdgpu_dev
+ 	spin_lock_init(&adev->se_cac_idx_lock);
+ 	spin_lock_init(&adev->audio_endpt_idx_lock);
+ 	spin_lock_init(&adev->mm_stats.lock);
++	spin_lock_init(&adev->virt.rlcg_reg_lock);
  
-+	local_bh_disable();
- 	clear_bit(EVENT_RX_PAUSED, &dev->flags);
+ 	INIT_LIST_HEAD(&adev->shadow_list);
+ 	mutex_init(&adev->shadow_list_lock);
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_virt.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_virt.c
+@@ -965,6 +965,7 @@ static u32 amdgpu_virt_rlcg_reg_rw(struc
+ 	void *scratch_reg2;
+ 	void *scratch_reg3;
+ 	void *spare_int;
++	unsigned long flags;
  
- 	while ((skb = skb_dequeue(&dev->rxq_pause)) != NULL) {
-@@ -712,6 +713,7 @@ void usbnet_resume_rx(struct usbnet *dev
- 	}
+ 	if (!adev->gfx.rlc.rlcg_reg_access_supported) {
+ 		dev_err(adev->dev,
+@@ -978,7 +979,7 @@ static u32 amdgpu_virt_rlcg_reg_rw(struc
+ 	scratch_reg2 = (void __iomem *)adev->rmmio + 4 * reg_access_ctrl->scratch_reg2;
+ 	scratch_reg3 = (void __iomem *)adev->rmmio + 4 * reg_access_ctrl->scratch_reg3;
  
- 	tasklet_schedule(&dev->bh);
-+	local_bh_enable();
+-	mutex_lock(&adev->virt.rlcg_reg_lock);
++	spin_lock_irqsave(&adev->virt.rlcg_reg_lock, flags);
  
- 	netif_dbg(dev, rx_status, dev->net,
- 		  "paused rx queue disabled, %d skbs requeued\n", num);
+ 	if (reg_access_ctrl->spare_int)
+ 		spare_int = (void __iomem *)adev->rmmio + 4 * reg_access_ctrl->spare_int;
+@@ -1034,7 +1035,7 @@ static u32 amdgpu_virt_rlcg_reg_rw(struc
+ 
+ 	ret = readl(scratch_reg0);
+ 
+-	mutex_unlock(&adev->virt.rlcg_reg_lock);
++	spin_unlock_irqrestore(&adev->virt.rlcg_reg_lock, flags);
+ 
+ 	return ret;
+ }
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_virt.h
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_virt.h
+@@ -264,7 +264,8 @@ struct amdgpu_virt {
+ 	/* the ucode id to signal the autoload */
+ 	uint32_t autoload_ucode_id;
+ 
+-	struct mutex rlcg_reg_lock;
++	/* Spinlock to protect access to the RLCG register interface */
++	spinlock_t rlcg_reg_lock;
+ };
+ 
+ struct amdgpu_video_codec_info;
 
 
