@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B18627F749;
-	Wed,  4 Feb 2026 14:53:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0DD78410D10;
+	Wed,  4 Feb 2026 14:53:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770216809; cv=none; b=bD1VzZr7QTkLOG6X9Lx3xfWHGnAjvORSSREIAEiP3Hgwfg5k3At3Az36J9oCBjbbb3cxyNtpqSC/zAp+gPz3cLiHHRd7LTLy4QVC7t7xQgihhkAnW/KAZXKuDiB3pMmlW8ipMcPZCyLZROIBuBcyHDbSiIvWuG+txnfNeIAsUCc=
+	t=1770216813; cv=none; b=hd2X00sSQ1FTkD8V5m0oRnacC3ikTdxsgITGeGArcWLhKIDu3rVuz2waU5Mlw5dJtS3oXHBt5uh5BGZ9icg3qA9WcIVv03h/N46N1aZaQwuqalknAFkkdzq2MmAVCrTrjFO8sKGGb4Sa+ql2OyKJ0hqYxwk22l8AUJhFa+fD3V0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770216809; c=relaxed/simple;
-	bh=VsJ1PxU+c6a4ksC/+U1y4JWeFKBfIZXcnYxGy12Lv+A=;
+	s=arc-20240116; t=1770216813; c=relaxed/simple;
+	bh=I158yrltoyUFMgsfptMA/xQ4y6uY9eahrj2GqnRBES0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EYCPEocF7RdW+n1Yz7GfxpKUxS4VT6RCoS/eDH4vMNtLNVZvDs0x/CxTfmQ9CvnW3pD/ukeTsGLt6caFFrC3t3DOGYLXkJwKXOg3DTI6/szgb2JcXO3EIrr2HV6Q+BttGYnUIw717vRtgAsU/cLSNQd51tcxEbvvQioIZszCIC4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WgKgCbDZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MwDMmI5FshWgVVppRngBykTEmxRW/dzUcVG6U/9dqdupBD1bhJaVpTV6aJr5tQFkolofGmLioQTm9s8tOQDfFO910yozOLo2qBucVaIisMSypEawALCBTHfJKt/xJM/K+0y2V7OlE6loDOVhN/QVc9FtMFC+S5CVNubZNlZ5s8I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GZ3vyIGh; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WgKgCbDZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1BC7BC4CEF7;
-	Wed,  4 Feb 2026 14:53:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GZ3vyIGh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77949C4CEF7;
+	Wed,  4 Feb 2026 14:53:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770216809;
-	bh=VsJ1PxU+c6a4ksC/+U1y4JWeFKBfIZXcnYxGy12Lv+A=;
+	s=korg; t=1770216812;
+	bh=I158yrltoyUFMgsfptMA/xQ4y6uY9eahrj2GqnRBES0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WgKgCbDZVVmKnEh15LEzcU0EFR4KsyE7Bezwa/1P4q5+Dimhy561AQDcr1T3fpKD7
-	 jUvrMWGBISJ1NgM7oZBWwgTXOnpVFiXOLRxAGXA9ilteMt3lZC467I1HWH5CoYK3SL
-	 oiLxrHbgIhuIoA8dissTdcPz50KTSGnX8arBo+Vk=
+	b=GZ3vyIGhWXl5Xyaz3CUnnqhP7fcwO1p+/axpMi0X9y/OtIyFVoc193HUFwDSRTF0m
+	 +DGVwbo29UQY7u5xIUFS+9b0M3P9ijtfPZzBw4fI5s8VPf/wlSDo1WMstr1Attou5u
+	 WkEWwr4xvSAwhn8VvPEJUn/iMshrIYsgTSzab290=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xiaochen Shen <shenxiaochen@open-hieco.net>,
-	"Borislav Petkov (AMD)" <bp@alien8.de>,
-	Reinette Chatre <reinette.chatre@intel.com>
-Subject: [PATCH 5.15 038/206] x86/resctrl: Add missing resctrl initialization for Hygon
-Date: Wed,  4 Feb 2026 15:37:49 +0100
-Message-ID: <20260204143859.584350952@linuxfoundation.org>
+	Haotian Zhang <vulab@iscas.ac.cn>,
+	Vinod Koul <vkoul@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 021/206] dmaengine: omap-dma: fix dma_pool resource leak in error paths
+Date: Wed,  4 Feb 2026 15:37:32 +0100
+Message-ID: <20260204143858.966974741@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260204143858.193781818@linuxfoundation.org>
 References: <20260204143858.193781818@linuxfoundation.org>
@@ -51,58 +51,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xiaochen Shen <shenxiaochen@open-hieco.net>
+From: Haotian Zhang <vulab@iscas.ac.cn>
 
-commit 6ee98aabdc700b5705e4f1833e2edc82a826b53b upstream.
+[ Upstream commit 2e1136acf8a8887c29f52e35a77b537309af321f ]
 
-Hygon CPUs supporting Platform QoS features currently undergo partial resctrl
-initialization through resctrl_cpu_detect() in the Hygon BSP init helper and
-AMD/Hygon common initialization code. However, several critical data
-structures remain uninitialized for Hygon CPUs in the following paths:
+The dma_pool created by dma_pool_create() is not destroyed when
+dma_async_device_register() or of_dma_controller_register() fails,
+causing a resource leak in the probe error paths.
 
- - get_mem_config()-> __rdt_get_mem_config_amd():
-     rdt_resource::membw,alloc_capable
-     hw_res::num_closid
+Add dma_pool_destroy() in both error paths to properly release the
+allocated dma_pool resource.
 
- - rdt_init_res_defs()->rdt_init_res_defs_amd():
-     rdt_resource::cache
-     hw_res::msr_base,msr_update
-
-Add the missing AMD/Hygon common initialization to ensure proper Platform QoS
-functionality on Hygon CPUs.
-
-Fixes: d8df126349da ("x86/cpu/hygon: Add missing resctrl_cpu_detect() in bsp_init helper")
-Signed-off-by: Xiaochen Shen <shenxiaochen@open-hieco.net>
-Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Reviewed-by: Reinette Chatre <reinette.chatre@intel.com>
-Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20251209062650.1536952-2-shenxiaochen@open-hieco.net
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 7bedaa553760 ("dmaengine: add OMAP DMA engine driver")
+Signed-off-by: Haotian Zhang <vulab@iscas.ac.cn>
+Link: https://patch.msgid.link/20251103073018.643-1-vulab@iscas.ac.cn
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/kernel/cpu/resctrl/core.c |    6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/dma/ti/omap-dma.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/arch/x86/kernel/cpu/resctrl/core.c
-+++ b/arch/x86/kernel/cpu/resctrl/core.c
-@@ -769,7 +769,8 @@ static __init bool get_mem_config(void)
- 
- 	if (boot_cpu_data.x86_vendor == X86_VENDOR_INTEL)
- 		return __get_mem_config_intel(&hw_res->r_resctrl);
--	else if (boot_cpu_data.x86_vendor == X86_VENDOR_AMD)
-+	else if (boot_cpu_data.x86_vendor == X86_VENDOR_AMD ||
-+		 boot_cpu_data.x86_vendor == X86_VENDOR_HYGON)
- 		return __rdt_get_mem_config_amd(&hw_res->r_resctrl);
- 
- 	return false;
-@@ -904,7 +905,8 @@ static __init void rdt_init_res_defs(voi
- {
- 	if (boot_cpu_data.x86_vendor == X86_VENDOR_INTEL)
- 		rdt_init_res_defs_intel();
--	else if (boot_cpu_data.x86_vendor == X86_VENDOR_AMD)
-+	else if (boot_cpu_data.x86_vendor == X86_VENDOR_AMD ||
-+		 boot_cpu_data.x86_vendor == X86_VENDOR_HYGON)
- 		rdt_init_res_defs_amd();
- }
- 
+diff --git a/drivers/dma/ti/omap-dma.c b/drivers/dma/ti/omap-dma.c
+index 7cb577e6587b1..be47a9b8ac96e 100644
+--- a/drivers/dma/ti/omap-dma.c
++++ b/drivers/dma/ti/omap-dma.c
+@@ -1804,6 +1804,8 @@ static int omap_dma_probe(struct platform_device *pdev)
+ 	if (rc) {
+ 		pr_warn("OMAP-DMA: failed to register slave DMA engine device: %d\n",
+ 			rc);
++		if (od->ll123_supported)
++			dma_pool_destroy(od->desc_pool);
+ 		omap_dma_free(od);
+ 		return rc;
+ 	}
+@@ -1819,6 +1821,8 @@ static int omap_dma_probe(struct platform_device *pdev)
+ 		if (rc) {
+ 			pr_warn("OMAP-DMA: failed to register DMA controller\n");
+ 			dma_async_device_unregister(&od->ddev);
++			if (od->ll123_supported)
++				dma_pool_destroy(od->desc_pool);
+ 			omap_dma_free(od);
+ 		}
+ 	}
+-- 
+2.51.0
+
 
 
