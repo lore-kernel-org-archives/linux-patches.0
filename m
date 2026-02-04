@@ -1,39 +1,46 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18D3528853A;
-	Wed,  4 Feb 2026 15:02:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 571442BD012;
+	Wed,  4 Feb 2026 15:03:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770217377; cv=none; b=f4phyd1mjUOMRh5TN7FPi0t5ZhtoqWh0tC0qdqI3SGIWOXhGw8q59iXU7aw1jtpwqvLCzPOJhimm9UwBFGvAEwUiJd1XRAY8hK8fFgkftEJWv/XPClHZem9EeqqOvoasZv63x1hFa63wcghHyklgda1cP55Mkq80g61Pbo0IU+E=
+	t=1770217380; cv=none; b=tElrR2tiqWbWm/oR3cMUGHTJ1XAZMBUU/i5wYznzm38gv8da8xOfo+aRwRj0awb24V06XjBn3Agd3umsEscc+R9mOIu17JK9PmylGi12jlB3FUaRKNupNI6pKVG8ckZJQmEenOR/k+d5JjW2kZNP5vj3ucStAn0Do6wqS0eGao0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770217377; c=relaxed/simple;
-	bh=TBNXBYeMQ7wYNs5aoxKryPyll6zJfA7GpJ5KWTOF90o=;
+	s=arc-20240116; t=1770217380; c=relaxed/simple;
+	bh=eHekBpUMHq2C12u3S6HYIDQNPKIGXh5MvSfBikR3S2E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oQK1kqix73f9+Yz+XJXlWkyuIcZ4cvus/3/NEYgE3czF5PPUDxBCCJ70cLMNnscm1J1SldG1xGAVkLorbjWcluOBTRDtAYc4cqhaWH0IrfptGJQTfcBzjQeFt5xkBuhOOKZSXGrr0q8f6Id3HvAnlSf8u1XrftE7FH0RTALVmlA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Dg10JrmW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KfiG/2U+J36be4avRxKpEDLR3d0fWlwh3XH+1rn43k2e3ySdqGJQ/6Cie6qelDws5M8+AjoaGK5wBrDC+UYdzSkEc2G2LBPe02/FqTXDmr+Vl9cR9TffGKqwZPQYwo9RZN1siWDMxUM2xXuh4VWM/GKd8UflSqYM2l5Q2SFxnmk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2MJHCXhu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Dg10JrmW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B7C9C4CEF7;
-	Wed,  4 Feb 2026 15:02:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2MJHCXhu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A43FCC4CEF7;
+	Wed,  4 Feb 2026 15:02:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770217377;
-	bh=TBNXBYeMQ7wYNs5aoxKryPyll6zJfA7GpJ5KWTOF90o=;
+	s=korg; t=1770217380;
+	bh=eHekBpUMHq2C12u3S6HYIDQNPKIGXh5MvSfBikR3S2E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Dg10JrmWEKdcBUhlysUDJ89VHa9Glxs8SXmJHI2UMb0ojqYK4lTJuta3R4a+B5MDv
-	 D8HmPtt8+LiiPMUvU0dYGwtxpboFx3md+jqx/UyKDpPkUYqrxrGUZbTepuX/WuVyTg
-	 dreY9XdTJIsZlgpmPX5RL+hV+WEUpYW9yWDVhjag=
+	b=2MJHCXhuPl1wQx/o6nPI4q8xhvA6wXgKolKNF7uLkQMRpMGaOD3TVOgrtj6h2Qs+h
+	 RA0HFea6szHH8R80y52ajZgBWx5M4yJ/UeBoJOJNwsWrQVYf2+SDDp/181ICcHO/Oc
+	 HtPHL3CdP6j22Jie9ZsiNBBl4axjqPJp1Xa7S9bg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thomas Fourier <fourier.thomas@gmail.com>,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Steve French <stfrench@microsoft.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 172/206] ksmbd: smbd: fix dma_unmap_sg() nents
-Date: Wed,  4 Feb 2026 15:40:03 +0100
-Message-ID: <20260204143904.404092534@linuxfoundation.org>
+	David Hildenbrand <david@redhat.com>,
+	Andrea Arcangeli <aarcange@redhat.com>,
+	Hugh Dickins <hughd@google.com>,
+	Jason Gunthorpe <jgg@nvidia.com>,
+	John Hubbard <jhubbard@nvidia.com>,
+	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
+	Peter Xu <peterx@redhat.com>,
+	Shuah Khan <shuah@kernel.org>,
+	Vlastimil Babka <vbabka@suse.cz>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Pedro Demarchi Gomes <pedrodemargomes@gmail.com>
+Subject: [PATCH 5.15 173/206] mm/pagewalk: add walk_page_range_vma()
+Date: Wed,  4 Feb 2026 15:40:04 +0100
+Message-ID: <20260204143904.441025908@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260204143858.193781818@linuxfoundation.org>
 References: <20260204143858.193781818@linuxfoundation.org>
@@ -52,69 +59,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thomas Fourier <fourier.thomas@gmail.com>
+From: David Hildenbrand <david@redhat.com>
 
-[ Upstream commit 98e3e2b561bc88f4dd218d1c05890672874692f6 ]
+[ Upstream commit e07cda5f232fac4de0925d8a4c92e51e41fa2f6e ]
 
-The dma_unmap_sg() functions should be called with the same nents as the
-dma_map_sg(), not the value the map function returned.
+Let's add walk_page_range_vma(), which is similar to walk_page_vma(),
+however, is only interested in a subset of the VMA range.
 
-Fixes: 0626e6641f6b ("cifsd: add server handler for central processing and tranport layers")
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Thomas Fourier <fourier.thomas@gmail.com>
-Acked-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Steve French <stfrench@microsoft.com>
-[ Context ]
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+To be used in KSM code to stop using follow_page() next.
+
+Link: https://lkml.kernel.org/r/20221021101141.84170-8-david@redhat.com
+Signed-off-by: David Hildenbrand <david@redhat.com>
+Cc: Andrea Arcangeli <aarcange@redhat.com>
+Cc: Hugh Dickins <hughd@google.com>
+Cc: Jason Gunthorpe <jgg@nvidia.com>
+Cc: John Hubbard <jhubbard@nvidia.com>
+Cc: Matthew Wilcox (Oracle) <willy@infradead.org>
+Cc: Peter Xu <peterx@redhat.com>
+Cc: Shuah Khan <shuah@kernel.org>
+Cc: Vlastimil Babka <vbabka@suse.cz>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Stable-dep-of: f5548c318d6 ("ksm: use range-walk function to jump over holes in scan_get_next_rmap_item")
+Signed-off-by: Pedro Demarchi Gomes <pedrodemargomes@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ksmbd/transport_rdma.c |   15 +++++++--------
- 1 file changed, 7 insertions(+), 8 deletions(-)
+ include/linux/pagewalk.h |    3 +++
+ mm/pagewalk.c            |   20 ++++++++++++++++++++
+ 2 files changed, 23 insertions(+)
 
---- a/fs/ksmbd/transport_rdma.c
-+++ b/fs/ksmbd/transport_rdma.c
-@@ -1086,14 +1086,12 @@ static int get_sg_list(void *buf, int si
- 
- static int get_mapped_sg_list(struct ib_device *device, void *buf, int size,
- 			      struct scatterlist *sg_list, int nentries,
--			      enum dma_data_direction dir)
-+			      enum dma_data_direction dir, int *npages)
- {
--	int npages;
--
--	npages = get_sg_list(buf, size, sg_list, nentries);
--	if (npages < 0)
-+	*npages = get_sg_list(buf, size, sg_list, nentries);
-+	if (*npages < 0)
- 		return -EINVAL;
--	return ib_dma_map_sg(device, sg_list, npages, dir);
-+	return ib_dma_map_sg(device, sg_list, *npages, dir);
+--- a/include/linux/pagewalk.h
++++ b/include/linux/pagewalk.h
+@@ -99,6 +99,9 @@ int walk_page_range_novma(struct mm_stru
+ 			  unsigned long end, const struct mm_walk_ops *ops,
+ 			  pgd_t *pgd,
+ 			  void *private);
++int walk_page_range_vma(struct vm_area_struct *vma, unsigned long start,
++			unsigned long end, const struct mm_walk_ops *ops,
++			void *private);
+ int walk_page_vma(struct vm_area_struct *vma, const struct mm_walk_ops *ops,
+ 		void *private);
+ int walk_page_mapping(struct address_space *mapping, pgoff_t first_index,
+--- a/mm/pagewalk.c
++++ b/mm/pagewalk.c
+@@ -509,6 +509,26 @@ int walk_page_range_novma(struct mm_stru
+ 	return walk_pgd_range(start, end, &walk);
  }
  
- static int post_sendmsg(struct smb_direct_transport *t,
-@@ -1162,12 +1160,13 @@ static int smb_direct_post_send_data(str
- 	for (i = 0; i < niov; i++) {
- 		struct ib_sge *sge;
- 		int sg_cnt;
-+		int npages;
- 
- 		sg_init_table(sg, SMB_DIRECT_MAX_SEND_SGES - 1);
- 		sg_cnt = get_mapped_sg_list(t->cm_id->device,
- 					    iov[i].iov_base, iov[i].iov_len,
- 					    sg, SMB_DIRECT_MAX_SEND_SGES - 1,
--					    DMA_TO_DEVICE);
-+					    DMA_TO_DEVICE, &npages);
- 		if (sg_cnt <= 0) {
- 			pr_err("failed to map buffer\n");
- 			ret = -ENOMEM;
-@@ -1175,7 +1174,7 @@ static int smb_direct_post_send_data(str
- 		} else if (sg_cnt + msg->num_sge > SMB_DIRECT_MAX_SEND_SGES) {
- 			pr_err("buffer not fitted into sges\n");
- 			ret = -E2BIG;
--			ib_dma_unmap_sg(t->cm_id->device, sg, sg_cnt,
-+			ib_dma_unmap_sg(t->cm_id->device, sg, npages,
- 					DMA_TO_DEVICE);
- 			goto err;
- 		}
++int walk_page_range_vma(struct vm_area_struct *vma, unsigned long start,
++			unsigned long end, const struct mm_walk_ops *ops,
++			void *private)
++{
++	struct mm_walk walk = {
++		.ops		= ops,
++		.mm		= vma->vm_mm,
++		.vma		= vma,
++		.private	= private,
++	};
++
++	if (start >= end || !walk.mm)
++		return -EINVAL;
++	if (start < vma->vm_start || end > vma->vm_end)
++		return -EINVAL;
++
++	mmap_assert_locked(walk.mm);
++	return __walk_page_range(start, end, &walk);
++}
++
+ int walk_page_vma(struct vm_area_struct *vma, const struct mm_walk_ops *ops,
+ 		void *private)
+ {
 
 
