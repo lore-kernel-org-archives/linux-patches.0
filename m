@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E72F2BE7C0;
-	Wed,  4 Feb 2026 15:33:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD5E72D6611;
+	Wed,  4 Feb 2026 15:33:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770219195; cv=none; b=Cs7OuRbHsoTm2jkRYhSuiZqP/3IVQrL1D/0H2Vm+34NrFgtfFvROxImYRArpUMSKG/dy3735FaCPugEjNqPRcMzb8IECg6edZmJOsKQ73egdoOFR4DFSbfisx2g0q7NZimQwcTxrEe+ygjNt3tNpyF5FxVJysAx/WleNuR//rAU=
+	t=1770219198; cv=none; b=cz2M2rNmylTbgTiD/YaqurwgYMvRbyVILTqMcrLpK6O0jhEC0RAensXg3b9wovoNRt46w7OcogrYikg1aiKFQMPkzfWCp3HmaXH5VTRSThY5MCjofSkxcr6/Pj/hGVSm3g6FT0vtOYLZsOU68uWXa24qDfbxXPliPFqi1d9cqyA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770219195; c=relaxed/simple;
-	bh=Kot8Y0JpYrn5doUgO5WreQNJnN5CM7Mn+gmYooUaL+w=;
+	s=arc-20240116; t=1770219198; c=relaxed/simple;
+	bh=HgJZKqxSBzN4OHVUvWwRBAbIfPhJl+gltfEP2xT1Uhw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ArhhpAadIkFHX70L5P6wfLQOGwr/3bNw4/FWkhcj51jMmp5enM/EUE/NyHUw2bm38BL0+EpY6QLY74QwA5bpXVl8RmuAkty+ArjJJdKo2OTmzFO7m5IbuNQe2BpQYVi26l3+lWAVWuwLUDw9uwcd/eFzxezjbge0707HMhYvP0A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dxZ+BF3z; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tbYTAqvhbYaTTcxLIbpOOalCVBUj5DGiYM3qdZ5pW+mgVW09W46ycmTozlogXRWU7fraCkn/i5pnaaYwWYw74hKOeKumRblFwxzSls+T02lxl5Pwa5gj+DJL87HsyAn4qNWocFWK9on0Tg6fr3c/LvUpi2HVyBge0IEhXaqMz+s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aPtUJiFZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dxZ+BF3z"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A4A6C4CEF7;
-	Wed,  4 Feb 2026 15:33:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aPtUJiFZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 215FFC4CEF7;
+	Wed,  4 Feb 2026 15:33:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770219195;
-	bh=Kot8Y0JpYrn5doUgO5WreQNJnN5CM7Mn+gmYooUaL+w=;
+	s=korg; t=1770219198;
+	bh=HgJZKqxSBzN4OHVUvWwRBAbIfPhJl+gltfEP2xT1Uhw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dxZ+BF3zoY2c8KGOOwBaIfuPwcYsNKK1edMMGd03oLR8h99lwhqRkX6Ji/P4Rjhea
-	 EduadnLaziRqr+ppmihRau58UDYUwB/El6axTJ09TFrWC+nRmBfuRQTGgDht6HVz3q
-	 u3l489KWCb3WlmtweN3xK7Em9OO+Q3BrahASZ2Rk=
+	b=aPtUJiFZzbwKodPz4bciOcc6rH53xH1C1hBYTdzR9x+ZcbxsY0O306bWXCEU/HuaF
+	 1dFd9iVSCyYz/Zvz7jKSh2ZIT0MygHD33QLbne61gZiI8fkdP13APtOmnDt7vENTqP
+	 y47hf8/joCzpwfr1OvcI/qX+JHLnx9IghmCdI+g0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marek Szyprowski <m.szyprowski@samsung.com>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>,
 	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
-	Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
 	Linus Walleij <linusw@kernel.org>
-Subject: [PATCH 6.18 061/122] pinctrl: meson: mark the GPIO controller as sleeping
-Date: Wed,  4 Feb 2026 15:40:43 +0100
-Message-ID: <20260204143854.051521838@linuxfoundation.org>
+Subject: [PATCH 6.18 062/122] pinctrl: qcom: sm8350-lpass-lpi: Merge with SC7280 to fix I2S2 and SWR TX pins
+Date: Wed,  4 Feb 2026 15:40:44 +0100
+Message-ID: <20260204143854.087600226@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260204143851.857060534@linuxfoundation.org>
 References: <20260204143851.857060534@linuxfoundation.org>
@@ -53,90 +52,260 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
 
-commit 28f24068387169722b508bba6b5257cb68b86e74 upstream.
+commit 1fbe3abb449c5ef2178e1c3e3e8b9a43a7a410ac upstream.
 
-The GPIO controller is configured as non-sleeping but it uses generic
-pinctrl helpers which use a mutex for synchronization.
+Qualcomm SC7280 and SM8350 SoCs have slightly different LPASS audio
+blocks (v9.4.5 and v9.2), however the LPASS LPI pin controllers are
+exactly the same.  The driver for SM8350 has two issues, which can be
+fixed by simply moving over to SC7280 driver which has them correct:
 
-This can cause the following lockdep splat with shared GPIOs enabled on
-boards which have multiple devices using the same GPIO:
+1. "i2s2_data_groups" listed twice GPIO12, but should have both GPIO12
+   and GPIO13,
 
-BUG: sleeping function called from invalid context at
-kernel/locking/mutex.c:591
-in_atomic(): 1, irqs_disabled(): 1, non_block: 0, pid: 142, name:
-kworker/u25:3
-preempt_count: 1, expected: 0
-RCU nest depth: 0, expected: 0
-INFO: lockdep is turned off.
-irq event stamp: 46379
-hardirqs last  enabled at (46379): [<ffff8000813acb24>]
-_raw_spin_unlock_irqrestore+0x74/0x78
-hardirqs last disabled at (46378): [<ffff8000813abf38>]
-_raw_spin_lock_irqsave+0x84/0x88
-softirqs last  enabled at (46330): [<ffff8000800c71b4>]
-handle_softirqs+0x4c4/0x4dc
-softirqs last disabled at (46295): [<ffff800080010674>]
-__do_softirq+0x14/0x20
-CPU: 1 UID: 0 PID: 142 Comm: kworker/u25:3 Tainted: G C
-6.19.0-rc4-next-20260105+ #11963 PREEMPT
-Tainted: [C]=CRAP
-Hardware name: Khadas VIM3 (DT)
-Workqueue: events_unbound deferred_probe_work_func
-Call trace:
-  show_stack+0x18/0x24 (C)
-  dump_stack_lvl+0x90/0xd0
-  dump_stack+0x18/0x24
-  __might_resched+0x144/0x248
-  __might_sleep+0x48/0x98
-  __mutex_lock+0x5c/0x894
-  mutex_lock_nested+0x24/0x30
-  pinctrl_get_device_gpio_range+0x44/0x128
-  pinctrl_gpio_set_config+0x40/0xdc
-  gpiochip_generic_config+0x28/0x3c
-  gpio_do_set_config+0xa8/0x194
-  gpiod_set_config+0x34/0xfc
-  gpio_shared_proxy_set_config+0x6c/0xfc [gpio_shared_proxy]
-  gpio_do_set_config+0xa8/0x194
-  gpiod_set_transitory+0x4c/0xf0
-  gpiod_configure_flags+0xa4/0x480
-  gpiod_find_and_request+0x1a0/0x574
-  gpiod_get_index+0x58/0x84
-  devm_gpiod_get_index+0x20/0xb4
-  devm_gpiod_get+0x18/0x24
-  mmc_pwrseq_emmc_probe+0x40/0xb8
-  platform_probe+0x5c/0xac
-  really_probe+0xbc/0x298
-  __driver_probe_device+0x78/0x12c
-  driver_probe_device+0xdc/0x164
-  __device_attach_driver+0xb8/0x138
-  bus_for_each_drv+0x80/0xdc
-  __device_attach+0xa8/0x1b0
+2. "swr_tx_data_groups" contained GPIO5 for "swr_tx_data2" function, but
+   that function is also available on GPIO14, thus listing it twice is
+   not necessary.  OTOH, GPIO5 has also "swr_rx_data1", so selecting
+   swr_rx_data function should not block  the TX one.
 
-Fixes: 6ac730951104 ("pinctrl: add driver for Amlogic Meson SoCs")
+Fixes: be9f6d56381d ("pinctrl: qcom: sm8350-lpass-lpi: add SM8350 LPASS TLMM")
 Cc: stable@vger.kernel.org
-Reported-by: Marek Szyprowski <m.szyprowski@samsung.com>
-Closes: https://lore.kernel.org/all/00107523-7737-4b92-a785-14ce4e93b8cb@samsung.com/
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
-Reviewed-by: Martin Blumenstingl <martin.blumenstingl@googlemail.com>
-Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
+Reviewed-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
 Signed-off-by: Linus Walleij <linusw@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pinctrl/meson/pinctrl-meson.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/arm64/configs/defconfig                    |    1 
+ drivers/pinctrl/qcom/Kconfig                    |   15 --
+ drivers/pinctrl/qcom/Makefile                   |    1 
+ drivers/pinctrl/qcom/pinctrl-sc7280-lpass-lpi.c |    3 
+ drivers/pinctrl/qcom/pinctrl-sm8350-lpass-lpi.c |  151 ------------------------
+ 5 files changed, 6 insertions(+), 165 deletions(-)
+ delete mode 100644 drivers/pinctrl/qcom/pinctrl-sm8350-lpass-lpi.c
 
---- a/drivers/pinctrl/meson/pinctrl-meson.c
-+++ b/drivers/pinctrl/meson/pinctrl-meson.c
-@@ -619,7 +619,7 @@ static int meson_gpiolib_register(struct
- 	pc->chip.set = meson_gpio_set;
- 	pc->chip.base = -1;
- 	pc->chip.ngpio = pc->data->num_pins;
--	pc->chip.can_sleep = false;
-+	pc->chip.can_sleep = true;
+--- a/arch/arm64/configs/defconfig
++++ b/arch/arm64/configs/defconfig
+@@ -662,7 +662,6 @@ CONFIG_PINCTRL_LPASS_LPI=m
+ CONFIG_PINCTRL_SC7280_LPASS_LPI=m
+ CONFIG_PINCTRL_SM6115_LPASS_LPI=m
+ CONFIG_PINCTRL_SM8250_LPASS_LPI=m
+-CONFIG_PINCTRL_SM8350_LPASS_LPI=m
+ CONFIG_PINCTRL_SM8450_LPASS_LPI=m
+ CONFIG_PINCTRL_SC8280XP_LPASS_LPI=m
+ CONFIG_PINCTRL_SM8550_LPASS_LPI=m
+--- a/drivers/pinctrl/qcom/Kconfig
++++ b/drivers/pinctrl/qcom/Kconfig
+@@ -61,13 +61,14 @@ config PINCTRL_LPASS_LPI
+ 	  (Low Power Island) found on the Qualcomm Technologies Inc SoCs.
  
- 	ret = gpiochip_add_data(&pc->chip, pc);
- 	if (ret) {
+ config PINCTRL_SC7280_LPASS_LPI
+-	tristate "Qualcomm Technologies Inc SC7280 LPASS LPI pin controller driver"
++	tristate "Qualcomm Technologies Inc SC7280 and SM8350 LPASS LPI pin controller driver"
+ 	depends on ARM64 || COMPILE_TEST
+ 	depends on PINCTRL_LPASS_LPI
+ 	help
+ 	  This is the pinctrl, pinmux, pinconf and gpiolib driver for the
+ 	  Qualcomm Technologies Inc LPASS (Low Power Audio SubSystem) LPI
+-	  (Low Power Island) found on the Qualcomm Technologies Inc SC7280 platform.
++	  (Low Power Island) found on the Qualcomm Technologies Inc SC7280
++	  and SM8350 platforms.
+ 
+ config PINCTRL_SDM660_LPASS_LPI
+ 	tristate "Qualcomm Technologies Inc SDM660 LPASS LPI pin controller driver"
+@@ -106,16 +107,6 @@ config PINCTRL_SM8250_LPASS_LPI
+ 	  Qualcomm Technologies Inc LPASS (Low Power Audio SubSystem) LPI
+ 	  (Low Power Island) found on the Qualcomm Technologies Inc SM8250 platform.
+ 
+-config PINCTRL_SM8350_LPASS_LPI
+-	tristate "Qualcomm Technologies Inc SM8350 LPASS LPI pin controller driver"
+-	depends on ARM64 || COMPILE_TEST
+-	depends on PINCTRL_LPASS_LPI
+-	help
+-	  This is the pinctrl, pinmux, pinconf and gpiolib driver for the
+-	  Qualcomm Technologies Inc LPASS (Low Power Audio SubSystem) LPI
+-	  (Low Power Island) found on the Qualcomm Technologies Inc SM8350
+-	  platform.
+-
+ config PINCTRL_SM8450_LPASS_LPI
+ 	tristate "Qualcomm Technologies Inc SM8450 LPASS LPI pin controller driver"
+ 	depends on ARM64 || COMPILE_TEST
+--- a/drivers/pinctrl/qcom/Makefile
++++ b/drivers/pinctrl/qcom/Makefile
+@@ -63,7 +63,6 @@ obj-$(CONFIG_PINCTRL_SM8150) += pinctrl-
+ obj-$(CONFIG_PINCTRL_SM8250) += pinctrl-sm8250.o
+ obj-$(CONFIG_PINCTRL_SM8250_LPASS_LPI) += pinctrl-sm8250-lpass-lpi.o
+ obj-$(CONFIG_PINCTRL_SM8350) += pinctrl-sm8350.o
+-obj-$(CONFIG_PINCTRL_SM8350_LPASS_LPI) += pinctrl-sm8350-lpass-lpi.o
+ obj-$(CONFIG_PINCTRL_SM8450) += pinctrl-sm8450.o
+ obj-$(CONFIG_PINCTRL_SM8450_LPASS_LPI) += pinctrl-sm8450-lpass-lpi.o
+ obj-$(CONFIG_PINCTRL_SM8550) += pinctrl-sm8550.o
+--- a/drivers/pinctrl/qcom/pinctrl-sc7280-lpass-lpi.c
++++ b/drivers/pinctrl/qcom/pinctrl-sc7280-lpass-lpi.c
+@@ -131,6 +131,9 @@ static const struct of_device_id lpi_pin
+ 	{
+ 	       .compatible = "qcom,sc7280-lpass-lpi-pinctrl",
+ 	       .data = &sc7280_lpi_data,
++	}, {
++	       .compatible = "qcom,sm8350-lpass-lpi-pinctrl",
++	       .data = &sc7280_lpi_data,
+ 	},
+ 	{ }
+ };
+--- a/drivers/pinctrl/qcom/pinctrl-sm8350-lpass-lpi.c
++++ /dev/null
+@@ -1,151 +0,0 @@
+-// SPDX-License-Identifier: GPL-2.0-only
+-/*
+- * Copyright (c) 2016-2019, The Linux Foundation. All rights reserved.
+- * Copyright (c) 2020-2023 Linaro Ltd.
+- */
+-
+-#include <linux/gpio/driver.h>
+-#include <linux/module.h>
+-#include <linux/platform_device.h>
+-
+-#include "pinctrl-lpass-lpi.h"
+-
+-enum lpass_lpi_functions {
+-	LPI_MUX_dmic1_clk,
+-	LPI_MUX_dmic1_data,
+-	LPI_MUX_dmic2_clk,
+-	LPI_MUX_dmic2_data,
+-	LPI_MUX_dmic3_clk,
+-	LPI_MUX_dmic3_data,
+-	LPI_MUX_i2s1_clk,
+-	LPI_MUX_i2s1_data,
+-	LPI_MUX_i2s1_ws,
+-	LPI_MUX_i2s2_clk,
+-	LPI_MUX_i2s2_data,
+-	LPI_MUX_i2s2_ws,
+-	LPI_MUX_qua_mi2s_data,
+-	LPI_MUX_qua_mi2s_sclk,
+-	LPI_MUX_qua_mi2s_ws,
+-	LPI_MUX_swr_rx_clk,
+-	LPI_MUX_swr_rx_data,
+-	LPI_MUX_swr_tx_clk,
+-	LPI_MUX_swr_tx_data,
+-	LPI_MUX_wsa_swr_clk,
+-	LPI_MUX_wsa_swr_data,
+-	LPI_MUX_gpio,
+-	LPI_MUX__,
+-};
+-
+-static const struct pinctrl_pin_desc sm8350_lpi_pins[] = {
+-	PINCTRL_PIN(0, "gpio0"),
+-	PINCTRL_PIN(1, "gpio1"),
+-	PINCTRL_PIN(2, "gpio2"),
+-	PINCTRL_PIN(3, "gpio3"),
+-	PINCTRL_PIN(4, "gpio4"),
+-	PINCTRL_PIN(5, "gpio5"),
+-	PINCTRL_PIN(6, "gpio6"),
+-	PINCTRL_PIN(7, "gpio7"),
+-	PINCTRL_PIN(8, "gpio8"),
+-	PINCTRL_PIN(9, "gpio9"),
+-	PINCTRL_PIN(10, "gpio10"),
+-	PINCTRL_PIN(11, "gpio11"),
+-	PINCTRL_PIN(12, "gpio12"),
+-	PINCTRL_PIN(13, "gpio13"),
+-	PINCTRL_PIN(14, "gpio14"),
+-};
+-
+-static const char * const swr_tx_clk_groups[] = { "gpio0" };
+-static const char * const swr_tx_data_groups[] = { "gpio1", "gpio2", "gpio5", "gpio14" };
+-static const char * const swr_rx_clk_groups[] = { "gpio3" };
+-static const char * const swr_rx_data_groups[] = { "gpio4", "gpio5" };
+-static const char * const dmic1_clk_groups[] = { "gpio6" };
+-static const char * const dmic1_data_groups[] = { "gpio7" };
+-static const char * const dmic2_clk_groups[] = { "gpio8" };
+-static const char * const dmic2_data_groups[] = { "gpio9" };
+-static const char * const i2s2_clk_groups[] = { "gpio10" };
+-static const char * const i2s2_ws_groups[] = { "gpio11" };
+-static const char * const dmic3_clk_groups[] = { "gpio12" };
+-static const char * const dmic3_data_groups[] = { "gpio13" };
+-static const char * const qua_mi2s_sclk_groups[] = { "gpio0" };
+-static const char * const qua_mi2s_ws_groups[] = { "gpio1" };
+-static const char * const qua_mi2s_data_groups[] = { "gpio2", "gpio3", "gpio4" };
+-static const char * const i2s1_clk_groups[] = { "gpio6" };
+-static const char * const i2s1_ws_groups[] = { "gpio7" };
+-static const char * const i2s1_data_groups[] = { "gpio8", "gpio9" };
+-static const char * const wsa_swr_clk_groups[] = { "gpio10" };
+-static const char * const wsa_swr_data_groups[] = { "gpio11" };
+-static const char * const i2s2_data_groups[] = { "gpio12", "gpio12" };
+-
+-static const struct lpi_pingroup sm8350_groups[] = {
+-	LPI_PINGROUP(0, 0, swr_tx_clk, qua_mi2s_sclk, _, _),
+-	LPI_PINGROUP(1, 2, swr_tx_data, qua_mi2s_ws, _, _),
+-	LPI_PINGROUP(2, 4, swr_tx_data, qua_mi2s_data, _, _),
+-	LPI_PINGROUP(3, 8, swr_rx_clk, qua_mi2s_data, _, _),
+-	LPI_PINGROUP(4, 10, swr_rx_data, qua_mi2s_data, _, _),
+-	LPI_PINGROUP(5, 12, swr_tx_data, swr_rx_data, _, _),
+-	LPI_PINGROUP(6, LPI_NO_SLEW, dmic1_clk, i2s1_clk, _,  _),
+-	LPI_PINGROUP(7, LPI_NO_SLEW, dmic1_data, i2s1_ws, _, _),
+-	LPI_PINGROUP(8, LPI_NO_SLEW, dmic2_clk, i2s1_data, _, _),
+-	LPI_PINGROUP(9, LPI_NO_SLEW, dmic2_data, i2s1_data, _, _),
+-	LPI_PINGROUP(10, 16, i2s2_clk, wsa_swr_clk, _, _),
+-	LPI_PINGROUP(11, 18, i2s2_ws, wsa_swr_data, _, _),
+-	LPI_PINGROUP(12, LPI_NO_SLEW, dmic3_clk, i2s2_data, _, _),
+-	LPI_PINGROUP(13, LPI_NO_SLEW, dmic3_data, i2s2_data, _, _),
+-	LPI_PINGROUP(14, 6, swr_tx_data, _, _, _),
+-};
+-
+-static const struct lpi_function sm8350_functions[] = {
+-	LPI_FUNCTION(dmic1_clk),
+-	LPI_FUNCTION(dmic1_data),
+-	LPI_FUNCTION(dmic2_clk),
+-	LPI_FUNCTION(dmic2_data),
+-	LPI_FUNCTION(dmic3_clk),
+-	LPI_FUNCTION(dmic3_data),
+-	LPI_FUNCTION(i2s1_clk),
+-	LPI_FUNCTION(i2s1_data),
+-	LPI_FUNCTION(i2s1_ws),
+-	LPI_FUNCTION(i2s2_clk),
+-	LPI_FUNCTION(i2s2_data),
+-	LPI_FUNCTION(i2s2_ws),
+-	LPI_FUNCTION(qua_mi2s_data),
+-	LPI_FUNCTION(qua_mi2s_sclk),
+-	LPI_FUNCTION(qua_mi2s_ws),
+-	LPI_FUNCTION(swr_rx_clk),
+-	LPI_FUNCTION(swr_rx_data),
+-	LPI_FUNCTION(swr_tx_clk),
+-	LPI_FUNCTION(swr_tx_data),
+-	LPI_FUNCTION(wsa_swr_clk),
+-	LPI_FUNCTION(wsa_swr_data),
+-};
+-
+-static const struct lpi_pinctrl_variant_data sm8350_lpi_data = {
+-	.pins = sm8350_lpi_pins,
+-	.npins = ARRAY_SIZE(sm8350_lpi_pins),
+-	.groups = sm8350_groups,
+-	.ngroups = ARRAY_SIZE(sm8350_groups),
+-	.functions = sm8350_functions,
+-	.nfunctions = ARRAY_SIZE(sm8350_functions),
+-};
+-
+-static const struct of_device_id lpi_pinctrl_of_match[] = {
+-	{
+-	       .compatible = "qcom,sm8350-lpass-lpi-pinctrl",
+-	       .data = &sm8350_lpi_data,
+-	},
+-	{ }
+-};
+-MODULE_DEVICE_TABLE(of, lpi_pinctrl_of_match);
+-
+-static struct platform_driver lpi_pinctrl_driver = {
+-	.driver = {
+-		   .name = "qcom-sm8350-lpass-lpi-pinctrl",
+-		   .of_match_table = lpi_pinctrl_of_match,
+-	},
+-	.probe = lpi_pinctrl_probe,
+-	.remove = lpi_pinctrl_remove,
+-};
+-module_platform_driver(lpi_pinctrl_driver);
+-
+-MODULE_AUTHOR("Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>");
+-MODULE_DESCRIPTION("QTI SM8350 LPI GPIO pin control driver");
+-MODULE_LICENSE("GPL");
 
 
