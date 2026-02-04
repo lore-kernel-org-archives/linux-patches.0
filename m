@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB3C327702D;
-	Wed,  4 Feb 2026 15:23:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3FA8E1C84D0;
+	Wed,  4 Feb 2026 15:23:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770218629; cv=none; b=gpynd0XoOFV9shciSWVqf+MyHHH0G7ciIYqR7yMxBNofW6LHM5V2PXNnkfM3qK/0uD9FFNLxYtf2Bq1UrnlOZefhg5TMGE2M5sT0Wg1VcphXFnjwyOZlZLkbCfGzgkNhpjpgiepqJsFRSYrFUsjFY96k1q3BxWJf0/vMUuLqsbY=
+	t=1770218633; cv=none; b=AOTQDiihYiTyt8QEzyWikiRF9Ibg91kXII2fsMOQnoJ/reVPtT5q4A8gBU7G8e7RxcfAbQtRzSvrCsssIunsTENPqXmLW0/QJpegVfJaDx5hgSF7tFsldae/I2rZhnPGW3KxMs/EzIGDnn6z9UwfabhCVTGrf8QGMsDw00bu7FY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770218629; c=relaxed/simple;
-	bh=PKWooBT24uPT0vLhDDDfVtKrxLF21t+v7/7g5RqtlIg=;
+	s=arc-20240116; t=1770218633; c=relaxed/simple;
+	bh=nJK95Jq+ikcFUbshmCNV8Gn6WQGqejlYitt2RKH5RVg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OTNAojGtkgtHRdADRjfvl7jbMvIfNFq/kvKIqsgIbT4qK9+pOs49yYh/a5FIHVVsQlbsdVvUHphQ/3Hb33QbicaYqM4U6BJT+4IpimX5k06pfGMlZUi8tk3vXwqhJmS3uZtAe2eZ/P1u4vIotn6IHDejcEbiMCahu4wP9yO1HKk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=C+oCj5of; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=P5e2cmKtu5zzQzrqSXNuGKwiHD0DNWr9A4zTNNCv9VgNJf8aZ3zduGTovxhG2LT5nUsr/HXuu/0Ji6VlivhiUIIdLpjZu+Y8tMtgQGlUSqTZp7MCjlvXfsyHvN4N3OKG3vPsMMLdE+Sn+fPkadH67A6PUU8zGIZCPClxG92MOAI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=khxaShv0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="C+oCj5of"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D9F44C4CEF7;
-	Wed,  4 Feb 2026 15:23:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="khxaShv0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A2EB9C4CEF7;
+	Wed,  4 Feb 2026 15:23:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770218629;
-	bh=PKWooBT24uPT0vLhDDDfVtKrxLF21t+v7/7g5RqtlIg=;
+	s=korg; t=1770218633;
+	bh=nJK95Jq+ikcFUbshmCNV8Gn6WQGqejlYitt2RKH5RVg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=C+oCj5ofbYP2oBxrdW7C2rOzbU5lxzam+w1HEhZlhwi1nEQEZZoytopSwSRbYvNZg
-	 IjbO1EoQvJzSZaUEU1MMhX+94kenmWPIA8bU6/uwsKuuXNwGuPtDVRa6/ot6lOdsCW
-	 EZGQMV2ElnSYQchZoZ/Qi4qBSMm/r1yhTFG0+Uto=
+	b=khxaShv0C7/FjjcC4TbQCGaIcNd1uXTZ9PI1gsSMj47JpolZ+QkOnmVn6AkAKEoGT
+	 0/v4DmQJMMOU21U6MLiK3T6A1Dp/inKLkzj36o/+e9eEzeb0qvpCypRtCUsgMzkeLh
+	 AGjdqqK0BqLWFKnFQ0oLrZhlq3ONCqoF5VSFoBuc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zilin Guan <zilin@seu.edu.cn>,
-	Tariq Toukan <tariqt@nvidia.com>,
 	Jakub Kicinski <kuba@kernel.org>,
+	Marc Kleine-Budde <mkl@pengutronix.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 04/87] net/mlx5: Fix memory leak in esw_acl_ingress_lgcy_setup()
-Date: Wed,  4 Feb 2026 15:40:02 +0100
-Message-ID: <20260204143847.071006252@linuxfoundation.org>
+Subject: [PATCH 6.12 05/87] can: gs_usb: gs_usb_receive_bulk_callback(): fix error message
+Date: Wed,  4 Feb 2026 15:40:03 +0100
+Message-ID: <20260204143847.106248105@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260204143846.906385641@linuxfoundation.org>
 References: <20260204143846.906385641@linuxfoundation.org>
@@ -52,44 +51,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zilin Guan <zilin@seu.edu.cn>
+From: Marc Kleine-Budde <mkl@pengutronix.de>
 
-[ Upstream commit 108948f723b13874b7ebf6b3f1cc598a7de38622 ]
+[ Upstream commit 494fc029f662c331e06b7c2031deff3c64200eed ]
 
-In esw_acl_ingress_lgcy_setup(), if esw_acl_table_create() fails,
-the function returns directly without releasing the previously
-created counter, leading to a memory leak.
+Sinc commit 79a6d1bfe114 ("can: gs_usb: gs_usb_receive_bulk_callback():
+unanchor URL on usb_submit_urb() error") a failing resubmit URB will print
+an info message.
 
-Fix this by jumping to the out label instead of returning directly,
-which aligns with the error handling logic of other paths in this
-function.
+In the case of a short read where netdev has not yet been assigned,
+initialize as NULL to avoid dereferencing an undefined value. Also report
+the error value of the failed resubmit.
 
-Compile tested only. Issue found using a prototype static analysis tool
-and code review.
-
-Fixes: 07bab9502641 ("net/mlx5: E-Switch, Refactor eswitch ingress acl codes")
-Signed-off-by: Zilin Guan <zilin@seu.edu.cn>
-Reviewed-by: Tariq Toukan <tariqt@nvidia.com>
-Link: https://patch.msgid.link/20260120134640.2717808-1-zilin@seu.edu.cn
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 79a6d1bfe114 ("can: gs_usb: gs_usb_receive_bulk_callback(): unanchor URL on usb_submit_urb() error")
+Reported-by: Jakub Kicinski <kuba@kernel.org>
+Closes: https://lore.kernel.org/all/20260119181904.1209979-1-kuba@kernel.org/
+Link: https://patch.msgid.link/20260120-gs_usb-fix-error-message-v1-1-6be04de572bc@pengutronix.de
+Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mellanox/mlx5/core/esw/acl/ingress_lgcy.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/can/usb/gs_usb.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/esw/acl/ingress_lgcy.c b/drivers/net/ethernet/mellanox/mlx5/core/esw/acl/ingress_lgcy.c
-index 093ed86a0acd8..db51c500ed359 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/esw/acl/ingress_lgcy.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/esw/acl/ingress_lgcy.c
-@@ -188,7 +188,7 @@ int esw_acl_ingress_lgcy_setup(struct mlx5_eswitch *esw,
- 		if (IS_ERR(vport->ingress.acl)) {
- 			err = PTR_ERR(vport->ingress.acl);
- 			vport->ingress.acl = NULL;
--			return err;
-+			goto out;
+diff --git a/drivers/net/can/usb/gs_usb.c b/drivers/net/can/usb/gs_usb.c
+index e63e77f21801c..d1d1412c65659 100644
+--- a/drivers/net/can/usb/gs_usb.c
++++ b/drivers/net/can/usb/gs_usb.c
+@@ -607,7 +607,7 @@ static void gs_usb_receive_bulk_callback(struct urb *urb)
+ {
+ 	struct gs_usb *parent = urb->context;
+ 	struct gs_can *dev;
+-	struct net_device *netdev;
++	struct net_device *netdev = NULL;
+ 	int rc;
+ 	struct net_device_stats *stats;
+ 	struct gs_host_frame *hf = urb->transfer_buffer;
+@@ -765,7 +765,7 @@ static void gs_usb_receive_bulk_callback(struct urb *urb)
  		}
+ 	} else if (rc != -ESHUTDOWN && net_ratelimit()) {
+ 		netdev_info(netdev, "failed to re-submit IN URB: %pe\n",
+-			    ERR_PTR(urb->status));
++			    ERR_PTR(rc));
+ 	}
+ }
  
- 		err = esw_acl_ingress_lgcy_groups_create(esw, vport);
 -- 
 2.51.0
 
