@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 454782E92BC;
-	Wed,  4 Feb 2026 14:51:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BABC640FDAE;
+	Wed,  4 Feb 2026 14:51:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770216703; cv=none; b=cvuXUeVDikcRnbHYxKikpTEjJyQt40VCtKVFJN/i/TxxB52P3KQ0VcwbxcLXtnd5ewo0m6lf5VCccF1uPJbdXblC6LQq4SrVAq6tuqCBXS4eVqlrTVOYsy5ow9/Xn6MuKf/p7SeYLeC3JjutA781aymjXPp+KngtVKjPnyUn5Wo=
+	t=1770216706; cv=none; b=mOc7A3RlEk8Bm0pr0MNkTid+iWT1kZy8LrolLgJYouhJHgXXhHnvkitvM7Ews6aXro5f3AW2bAFHP+BHcexzMgkSxFSNalBl57f26yLSwMuYY7U5BLmfy+oDN3eppILUHpQP5hz4ngtfcGvEPmXP4MH9BlFaNVNvV6iiF/AkqSM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770216703; c=relaxed/simple;
-	bh=OsOT9Wn++I1j9hJx254LcokUMqp/d1moUB2kYcpmayE=;
+	s=arc-20240116; t=1770216706; c=relaxed/simple;
+	bh=8m7GuHDMpbGjehG3ps+dL6yG55CTW5bM9RT0yq4aElo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RgS6e3P8AGSBLE/RgRWRQ1mTR09j8lLbQi4Vw8Jkg0U2rRUUpb5l/ZlGWD8Nsn6hW2gzN/05r6rdK7yb6foQPwf2LLNHm8FkeUZqslQWXvpfUOF77CHEl1b8GbQW6o9e9q1QNLXr7vJa2elizwd+Brl+HY+TV0jW7FvNMeoQRhM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aaOBwJYH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZCKx+h9WKOwxshqDyi3S/cntWybY2Zq8xtBBa5XX9BYf8H0pU+lpQVGcEXe8zO3NcmXGoZABB61WmjNTC7sGvmZi3AIVdpRCsJt04SGSWV5d+n7trjnKH+JPaQXdSEd1TIDW6gxnGYLQK37Ign5+C4Qk5oFSBotsTN3anfEn5GA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ogWu4ntr; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aaOBwJYH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F578C4CEF7;
-	Wed,  4 Feb 2026 14:51:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ogWu4ntr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EFC7EC4CEF7;
+	Wed,  4 Feb 2026 14:51:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770216702;
-	bh=OsOT9Wn++I1j9hJx254LcokUMqp/d1moUB2kYcpmayE=;
+	s=korg; t=1770216706;
+	bh=8m7GuHDMpbGjehG3ps+dL6yG55CTW5bM9RT0yq4aElo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aaOBwJYHMNqMdyIzqp1orRkEOcS2asvbuV9P6cRea8OGjVMrF34k+ketfVId/vGXJ
-	 hOle2AxZ5LCJrL/r7etdhKdPWQmV9Gmkbii3aZ1q7RM6zsDo/x0IR6mlwzl+kkUWS2
-	 6DGdMv7dU2ua/7R2ErwFTBVLxhG7f/yrsS90i5sg=
+	b=ogWu4ntrnStERoyqn0Qex7dFLUwk99KAINjHTHwVj0323F+FvhAh4tmRgBtoTryQa
+	 yIEQzfXnke6ADwegBGaQag2oI2yHB7cpBmHy/dSRgmJ61nqJC1HRMICR65dK7TOVGQ
+	 zVChRIIO7LTkI2SJUkQlMaleMDE2fNAklMNUUzfg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thorsten Blum <thorsten.blum@linux.dev>,
-	Krzysztof Kozlowski <krzk@kernel.org>,
+	Johan Hovold <johan@kernel.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 142/161] w1: therm: Fix off-by-one buffer overflow in alarms_store
-Date: Wed,  4 Feb 2026 15:40:05 +0100
-Message-ID: <20260204143856.856228777@linuxfoundation.org>
+Subject: [PATCH 5.10 143/161] iio: adc: exynos_adc: fix OF populate on driver rebind
+Date: Wed,  4 Feb 2026 15:40:06 +0100
+Message-ID: <20260204143856.892888522@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260204143851.755002596@linuxfoundation.org>
 References: <20260204143851.755002596@linuxfoundation.org>
@@ -51,133 +52,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thorsten Blum <thorsten.blum@linux.dev>
+From: Johan Hovold <johan@kernel.org>
 
-[ Upstream commit 761fcf46a1bd797bd32d23f3ea0141ffd437668a ]
+[ Upstream commit ea6b4feba85e996e840e0b661bc42793df6eb701 ]
 
-The sysfs buffer passed to alarms_store() is allocated with 'size + 1'
-bytes and a NUL terminator is appended. However, the 'size' argument
-does not account for this extra byte. The original code then allocated
-'size' bytes and used strcpy() to copy 'buf', which always writes one
-byte past the allocated buffer since strcpy() copies until the NUL
-terminator at index 'size'.
+Since commit c6e126de43e7 ("of: Keep track of populated platform
+devices") child devices will not be created by of_platform_populate()
+if the devices had previously been deregistered individually so that the
+OF_POPULATED flag is still set in the corresponding OF nodes.
 
-Fix this by parsing the 'buf' parameter directly using simple_strtoll()
-without allocating any intermediate memory or string copying. This
-removes the overflow while simplifying the code.
+Switch to using of_platform_depopulate() instead of open coding so that
+the child devices are created if the driver is rebound.
 
-Cc: stable@vger.kernel.org
-Fixes: e2c94d6f5720 ("w1_therm: adding alarm sysfs entry")
-Signed-off-by: Thorsten Blum <thorsten.blum@linux.dev>
-Link: https://patch.msgid.link/20251216145007.44328-2-thorsten.blum@linux.dev
-Signed-off-by: Krzysztof Kozlowski <krzk@kernel.org>
+Fixes: c6e126de43e7 ("of: Keep track of populated platform devices")
+Cc: stable@vger.kernel.org	# 3.16
+Signed-off-by: Johan Hovold <johan@kernel.org>
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+[ Adjust context ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/w1/slaves/w1_therm.c |   60 +++++++++++++------------------------------
- 1 file changed, 19 insertions(+), 41 deletions(-)
+ drivers/iio/adc/exynos_adc.c |   13 ++-----------
+ 1 file changed, 2 insertions(+), 11 deletions(-)
 
---- a/drivers/w1/slaves/w1_therm.c
-+++ b/drivers/w1/slaves/w1_therm.c
-@@ -1781,53 +1781,35 @@ static ssize_t alarms_store(struct devic
- 	struct w1_slave *sl = dev_to_w1_slave(device);
- 	struct therm_info info;
- 	u8 new_config_register[3];	/* array of data to be written */
--	int temp, ret;
--	char *token = NULL;
-+	long long temp;
-+	int ret = 0;
- 	s8 tl, th;	/* 1 byte per value + temp ring order */
--	char *p_args, *orig;
-+	const char *p = buf;
-+	char *endp;
+--- a/drivers/iio/adc/exynos_adc.c
++++ b/drivers/iio/adc/exynos_adc.c
+@@ -718,14 +718,7 @@ static const struct iio_chan_spec exynos
+ 	ADC_CHANNEL(9, "adc9"),
+ };
  
--	p_args = orig = kmalloc(size, GFP_KERNEL);
--	/* Safe string copys as buf is const */
--	if (!p_args) {
--		dev_warn(device,
--			"%s: error unable to allocate memory %d\n",
--			__func__, -ENOMEM);
--		return size;
--	}
--	strcpy(p_args, buf);
+-static int exynos_adc_remove_devices(struct device *dev, void *c)
+-{
+-	struct platform_device *pdev = to_platform_device(dev);
 -
--	/* Split string using space char */
--	token = strsep(&p_args, " ");
--
--	if (!token)	{
--		dev_info(device,
--			"%s: error parsing args %d\n", __func__, -EINVAL);
--		goto free_m;
--	}
--
--	/* Convert 1st entry to int */
--	ret = kstrtoint (token, 10, &temp);
-+	temp = simple_strtoll(p, &endp, 10);
-+	if (p == endp || *endp != ' ')
-+		ret = -EINVAL;
-+	else if (temp < INT_MIN || temp > INT_MAX)
-+		ret = -ERANGE;
- 	if (ret) {
- 		dev_info(device,
- 			"%s: error parsing args %d\n", __func__, ret);
--		goto free_m;
-+		return size;
+-	platform_device_unregister(pdev);
+ 
+-	return 0;
+-}
+ 
+ static int exynos_adc_ts_open(struct input_dev *dev)
+ {
+@@ -924,8 +917,7 @@ static int exynos_adc_probe(struct platf
+ 	return 0;
+ 
+ err_of_populate:
+-	device_for_each_child(&indio_dev->dev, NULL,
+-				exynos_adc_remove_devices);
++	of_platform_depopulate(&indio_dev->dev);
+ 	if (has_ts) {
+ 		input_unregister_device(info->input);
+ 		free_irq(info->tsirq, info);
+@@ -954,8 +946,7 @@ static int exynos_adc_remove(struct plat
+ 		free_irq(info->tsirq, info);
+ 		input_unregister_device(info->input);
  	}
- 
- 	tl = int_to_short(temp);
- 
--	/* Split string using space char */
--	token = strsep(&p_args, " ");
--	if (!token)	{
--		dev_info(device,
--			"%s: error parsing args %d\n", __func__, -EINVAL);
--		goto free_m;
--	}
--	/* Convert 2nd entry to int */
--	ret = kstrtoint (token, 10, &temp);
-+	p = endp + 1;
-+	temp = simple_strtoll(p, &endp, 10);
-+	if (p == endp)
-+		ret = -EINVAL;
-+	else if (temp < INT_MIN || temp > INT_MAX)
-+		ret = -ERANGE;
- 	if (ret) {
- 		dev_info(device,
- 			"%s: error parsing args %d\n", __func__, ret);
--		goto free_m;
-+		return size;
- 	}
- 
- 	/* Prepare to cast to short by eliminating out of range values */
-@@ -1850,7 +1832,7 @@ static ssize_t alarms_store(struct devic
- 		dev_info(device,
- 			"%s: error reading from the slave device %d\n",
- 			__func__, ret);
--		goto free_m;
-+		return size;
- 	}
- 
- 	/* Write data in the device RAM */
-@@ -1858,7 +1840,7 @@ static ssize_t alarms_store(struct devic
- 		dev_info(device,
- 			"%s: Device not supported by the driver %d\n",
- 			__func__, -ENODEV);
--		goto free_m;
-+		return size;
- 	}
- 
- 	ret = SLAVE_SPECIFIC_FUNC(sl)->write_data(sl, new_config_register);
-@@ -1867,10 +1849,6 @@ static ssize_t alarms_store(struct devic
- 			"%s: error writing to the slave device %d\n",
- 			__func__, ret);
- 
--free_m:
--	/* free allocated memory */
--	kfree(orig);
--
- 	return size;
- }
- 
+-	device_for_each_child(&indio_dev->dev, NULL,
+-				exynos_adc_remove_devices);
++	of_platform_depopulate(&indio_dev->dev);
+ 	iio_device_unregister(indio_dev);
+ 	free_irq(info->irq, info);
+ 	if (info->data->exit_hw)
 
 
