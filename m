@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67A2A18859B;
-	Wed,  4 Feb 2026 15:24:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 677712D5A14;
+	Wed,  4 Feb 2026 15:24:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770218688; cv=none; b=CsPPSE8ziTB0kLbUPOzO8ThAgSopAt+t9p0G9fY25UtCPjqq0Mq9FvNofxda5//ZDMD6KicOG0bQINTighu5rRhSAJjJfxWw3k2bas8AgrVPDIHnQsz5SKCrweMvFDyYPP15DzhhZHPahZQ2VGmOi/g0FCXA1zXpugAJwPGW6fU=
+	t=1770218691; cv=none; b=IxiGeTwwHZ93mHT75AvgUq4aQtBgU6oKBVYypCpnVb1TGbi3InMCJzZdMMHK+HF8gg9AsjY17k/VVbF4T8SbfxV5If/5vp707uM4Bko15ZMLTTTybbf/irPyRTKsbjLMA1gyj6On6otS4/XXE1cxmqbJwUpokc6wfYYFRzAzpJ8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770218688; c=relaxed/simple;
-	bh=E3T0erTom1gXfdo3Bjokg8CqcFiaMirtzDurCmdnOqM=;
+	s=arc-20240116; t=1770218691; c=relaxed/simple;
+	bh=nhE0nCeExAqjVXQNBX/Mh2nfqkmw0qFaN5UNmBXryXM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mtTn7tIrxsovrmRLwtHBSp6C194KxBYJ9FRF+FpGobEuZZOhE8VxCtJfe0d7u4rfAqI8li52NCv6zXpatVReoxgAdBEOQYkULehfEQvNZoz5tUnax7pBGqLLgSbqKJUY5SB+0F5pCeJ3v3mdm9gBm7L4XT+xiEPEKVuxMVPHP2k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pKpzxyOD; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=B1F0+fXc7dWb02Jj2u40ie5fuNRVBbknLV3269MV4ged3N7GF81/VVn6PJyxUqTnXOrnAbtlAx0ObkBsV827RVI+wWvL1Xyk8EtxjDYZ3S1WijrVomtZkSkZJ3cXzLkFnew7Q03uGKgWkN/R4F4O6aj6H2VJzf/jNWZtorifMps=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ROOULLKU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pKpzxyOD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E13DC4CEF7;
-	Wed,  4 Feb 2026 15:24:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ROOULLKU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E66F4C4CEF7;
+	Wed,  4 Feb 2026 15:24:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770218688;
-	bh=E3T0erTom1gXfdo3Bjokg8CqcFiaMirtzDurCmdnOqM=;
+	s=korg; t=1770218691;
+	bh=nhE0nCeExAqjVXQNBX/Mh2nfqkmw0qFaN5UNmBXryXM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pKpzxyODex66FUFDPw+D/nTzTRDFtQEqkwWVN1nn+6StMR39Bs2HzvzM8CkUJiNG4
-	 7gXshOCrTT8l6x0Rzz2xUC34/KVoUvFKhwBIRjw9iD8yqSlE5AKMlcIKqd0d7D3u8o
-	 4T0Wtr07nIqeFfHd9lDG6Zsse5/voKpUXw1MxDrE=
+	b=ROOULLKURMlMzoPO1LnT8w2VXFlugeZW9s8gJniWYclG3Xf1OUHhmUx8pt/96fU5P
+	 Ya4TYztIKRP4akWsBPGanXRhdkpCsQe+Rr/SN5zx6WaRrkx8379smGNBAJB+rc10DD
+	 25zE8cIqQVLAAsDOgWl6iK/LkJY9rQhKdHcR4YTE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aleksandr Loktionov <aleksandr.loktionov@intel.com>,
-	Aaron Ma <aaron.ma@canonical.com>,
-	Paul Menzel <pmenzel@molgen.mpg.de>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 14/87] ice: Fix NULL pointer dereference in ice_vsi_set_napi_queues
-Date: Wed,  4 Feb 2026 15:40:12 +0100
-Message-ID: <20260204143847.425894413@linuxfoundation.org>
+Subject: [PATCH 6.12 32/87] sched/deadline: Document dl_server
+Date: Wed,  4 Feb 2026 15:40:30 +0100
+Message-ID: <20260204143848.068025999@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260204143846.906385641@linuxfoundation.org>
 References: <20260204143846.906385641@linuxfoundation.org>
@@ -53,94 +50,225 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Aaron Ma <aaron.ma@canonical.com>
+From: Peter Zijlstra <peterz@infradead.org>
 
-[ Upstream commit 9bb30be4d89ff9a8d7ab1aa0eb2edaca83431f85 ]
+[ Upstream commit 2614069c5912e9d6f1f57c262face1b368fb8c93 ]
 
-Add NULL pointer checks in ice_vsi_set_napi_queues() to prevent crashes
-during resume from suspend when rings[q_idx]->q_vector is NULL.
+Place the notes that resulted from going through the dl_server code in a
+comment.
 
-Tested adaptor:
-60:00.0 Ethernet controller [0200]: Intel Corporation Ethernet Controller E810-XXV for SFP [8086:159b] (rev 02)
-        Subsystem: Intel Corporation Ethernet Network Adapter E810-XXV-2 [8086:4003]
-
-SR-IOV state: both disabled and enabled can reproduce this issue.
-
-kernel version: v6.18
-
-Reproduce steps:
-Boot up and execute suspend like systemctl suspend or rtcwake.
-
-Log:
-<1>[  231.443607] BUG: kernel NULL pointer dereference, address: 0000000000000040
-<1>[  231.444052] #PF: supervisor read access in kernel mode
-<1>[  231.444484] #PF: error_code(0x0000) - not-present page
-<6>[  231.444913] PGD 0 P4D 0
-<4>[  231.445342] Oops: Oops: 0000 [#1] SMP NOPTI
-<4>[  231.446635] RIP: 0010:netif_queue_set_napi+0xa/0x170
-<4>[  231.447067] Code: 31 f6 31 ff c3 cc cc cc cc 0f 1f 80 00 00 00 00 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 0f 1f 44 00 00 48 85 c9 74 0b <48> 83 79 30 00 0f 84 39 01 00 00 55 41 89 d1 49 89 f8 89 f2 48 89
-<4>[  231.447513] RSP: 0018:ffffcc780fc078c0 EFLAGS: 00010202
-<4>[  231.447961] RAX: ffff8b848ca30400 RBX: ffff8b848caf2028 RCX: 0000000000000010
-<4>[  231.448443] RDX: 0000000000000000 RSI: 0000000000000000 RDI: ffff8b848dbd4000
-<4>[  231.448896] RBP: ffffcc780fc078e8 R08: 0000000000000000 R09: 0000000000000000
-<4>[  231.449345] R10: 0000000000000000 R11: 0000000000000000 R12: 0000000000000001
-<4>[  231.449817] R13: ffff8b848dbd4000 R14: ffff8b84833390c8 R15: 0000000000000000
-<4>[  231.450265] FS:  00007c7b29e9d740(0000) GS:ffff8b8c068e2000(0000) knlGS:0000000000000000
-<4>[  231.450715] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-<4>[  231.451179] CR2: 0000000000000040 CR3: 000000030626f004 CR4: 0000000000f72ef0
-<4>[  231.451629] PKRU: 55555554
-<4>[  231.452076] Call Trace:
-<4>[  231.452549]  <TASK>
-<4>[  231.452996]  ? ice_vsi_set_napi_queues+0x4d/0x110 [ice]
-<4>[  231.453482]  ice_resume+0xfd/0x220 [ice]
-<4>[  231.453977]  ? __pfx_pci_pm_resume+0x10/0x10
-<4>[  231.454425]  pci_pm_resume+0x8c/0x140
-<4>[  231.454872]  ? __pfx_pci_pm_resume+0x10/0x10
-<4>[  231.455347]  dpm_run_callback+0x5f/0x160
-<4>[  231.455796]  ? dpm_wait_for_superior+0x107/0x170
-<4>[  231.456244]  device_resume+0x177/0x270
-<4>[  231.456708]  dpm_resume+0x209/0x2f0
-<4>[  231.457151]  dpm_resume_end+0x15/0x30
-<4>[  231.457596]  suspend_devices_and_enter+0x1da/0x2b0
-<4>[  231.458054]  enter_state+0x10e/0x570
-
-Add defensive checks for both the ring pointer and its q_vector
-before dereferencing, allowing the system to resume successfully even when
-q_vectors are unmapped.
-
-Fixes: 2a5dc090b92cf ("ice: move netif_queue_set_napi to rtnl-protected sections")
-Reviewed-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
-Signed-off-by: Aaron Ma <aaron.ma@canonical.com>
-Reviewed-by: Paul Menzel <pmenzel@molgen.mpg.de>
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Stable-dep-of: 115135422562 ("sched/deadline: Fix 'stuck' dl_server")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/ice/ice_lib.c | 10 ++++++----
- 1 file changed, 6 insertions(+), 4 deletions(-)
+ kernel/sched/deadline.c | 194 ++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 194 insertions(+)
 
-diff --git a/drivers/net/ethernet/intel/ice/ice_lib.c b/drivers/net/ethernet/intel/ice/ice_lib.c
-index 4e022de9e4bbd..4ad21c21c5c57 100644
---- a/drivers/net/ethernet/intel/ice/ice_lib.c
-+++ b/drivers/net/ethernet/intel/ice/ice_lib.c
-@@ -2731,12 +2731,14 @@ void ice_vsi_set_napi_queues(struct ice_vsi *vsi)
- 		return;
+diff --git a/kernel/sched/deadline.c b/kernel/sched/deadline.c
+index abd0fb2d839c1..a860d77062395 100644
+--- a/kernel/sched/deadline.c
++++ b/kernel/sched/deadline.c
+@@ -1624,6 +1624,200 @@ void dl_server_update(struct sched_dl_entity *dl_se, s64 delta_exec)
+ 		update_curr_dl_se(dl_se->rq, dl_se, delta_exec);
+ }
  
- 	ice_for_each_rxq(vsi, q_idx)
--		netif_queue_set_napi(netdev, q_idx, NETDEV_QUEUE_TYPE_RX,
--				     &vsi->rx_rings[q_idx]->q_vector->napi);
-+		if (vsi->rx_rings[q_idx] && vsi->rx_rings[q_idx]->q_vector)
-+			netif_queue_set_napi(netdev, q_idx, NETDEV_QUEUE_TYPE_RX,
-+					     &vsi->rx_rings[q_idx]->q_vector->napi);
- 
- 	ice_for_each_txq(vsi, q_idx)
--		netif_queue_set_napi(netdev, q_idx, NETDEV_QUEUE_TYPE_TX,
--				     &vsi->tx_rings[q_idx]->q_vector->napi);
-+		if (vsi->tx_rings[q_idx] && vsi->tx_rings[q_idx]->q_vector)
-+			netif_queue_set_napi(netdev, q_idx, NETDEV_QUEUE_TYPE_TX,
-+					     &vsi->tx_rings[q_idx]->q_vector->napi);
- 	/* Also set the interrupt number for the NAPI */
- 	ice_for_each_q_vector(vsi, v_idx) {
- 		struct ice_q_vector *q_vector = vsi->q_vectors[v_idx];
++/*
++ * dl_server && dl_defer:
++ *
++ *                                        6
++ *                            +--------------------+
++ *                            v                    |
++ *     +-------------+  4   +-----------+  5     +------------------+
++ * +-> |   A:init    | <--- | D:running | -----> | E:replenish-wait |
++ * |   +-------------+      +-----------+        +------------------+
++ * |     |         |    1     ^    ^               |
++ * |     | 1       +----------+    | 3             |
++ * |     v                         |               |
++ * |   +--------------------------------+   2      |
++ * |   |                                | ----+    |
++ * | 8 |       B:zero_laxity-wait       |     |    |
++ * |   |                                | <---+    |
++ * |   +--------------------------------+          |
++ * |     |              ^     ^           2        |
++ * |     | 7            | 2   +--------------------+
++ * |     v              |
++ * |   +-------------+  |
++ * +-- | C:idle-wait | -+
++ *     +-------------+
++ *       ^ 7       |
++ *       +---------+
++ *
++ *
++ * [A] - init
++ *   dl_server_active = 0
++ *   dl_throttled = 0
++ *   dl_defer_armed = 0
++ *   dl_defer_running = 0/1
++ *   dl_defer_idle = 0
++ *
++ * [B] - zero_laxity-wait
++ *   dl_server_active = 1
++ *   dl_throttled = 1
++ *   dl_defer_armed = 1
++ *   dl_defer_running = 0
++ *   dl_defer_idle = 0
++ *
++ * [C] - idle-wait
++ *   dl_server_active = 1
++ *   dl_throttled = 1
++ *   dl_defer_armed = 1
++ *   dl_defer_running = 0
++ *   dl_defer_idle = 1
++ *
++ * [D] - running
++ *   dl_server_active = 1
++ *   dl_throttled = 0
++ *   dl_defer_armed = 0
++ *   dl_defer_running = 1
++ *   dl_defer_idle = 0
++ *
++ * [E] - replenish-wait
++ *   dl_server_active = 1
++ *   dl_throttled = 1
++ *   dl_defer_armed = 0
++ *   dl_defer_running = 1
++ *   dl_defer_idle = 0
++ *
++ *
++ * [1] A->B, A->D
++ * dl_server_start()
++ *   dl_server_active = 1;
++ *   enqueue_dl_entity()
++ *     update_dl_entity(WAKEUP)
++ *       if (!dl_defer_running)
++ *         dl_defer_armed = 1;
++ *         dl_throttled = 1;
++ *     if (dl_throttled && start_dl_timer())
++ *       return; // [B]
++ *     __enqueue_dl_entity();
++ *     // [D]
++ *
++ * // deplete server runtime from client-class
++ * [2] B->B, C->B, E->B
++ * dl_server_update()
++ *   update_curr_dl_se() // idle = false
++ *     if (dl_defer_idle)
++ *       dl_defer_idle = 0;
++ *     if (dl_defer && dl_throttled && dl_runtime_exceeded())
++ *       dl_defer_running = 0;
++ *       hrtimer_try_to_cancel();   // stop timer
++ *       replenish_dl_new_period()
++ *         // fwd period
++ *         dl_throttled = 1;
++ *         dl_defer_armed = 1;
++ *       start_dl_timer();        // restart timer
++ *       // [B]
++ *
++ * // timer actually fires means we have runtime
++ * [3] B->D
++ * dl_server_timer()
++ *   if (dl_defer_armed)
++ *     dl_defer_running = 1;
++ *   enqueue_dl_entity(REPLENISH)
++ *     replenish_dl_entity()
++ *       // fwd period
++ *       if (dl_throttled)
++ *         dl_throttled = 0;
++ *       if (dl_defer_armed)
++ *         dl_defer_armed = 0;
++ *     __enqueue_dl_entity();
++ *     // [D]
++ *
++ * // schedule server
++ * [4] D->A
++ * pick_task_dl()
++ *   p = server_pick_task();
++ *   if (!p)
++ *     dl_server_stop()
++ *       dequeue_dl_entity();
++ *       hrtimer_try_to_cancel();
++ *       dl_defer_armed = 0;
++ *       dl_throttled = 0;
++ *       dl_server_active = 0;
++ *       // [A]
++ *   return p;
++ *
++ * // server running
++ * [5] D->E
++ * update_curr_dl_se()
++ *   if (dl_runtime_exceeded())
++ *     dl_throttled = 1;
++ *     dequeue_dl_entity();
++ *     start_dl_timer();
++ *     // [E]
++ *
++ * // server replenished
++ * [6] E->D
++ * dl_server_timer()
++ *   enqueue_dl_entity(REPLENISH)
++ *     replenish_dl_entity()
++ *       fwd-period
++ *       if (dl_throttled)
++ *         dl_throttled = 0;
++ *     __enqueue_dl_entity();
++ *     // [D]
++ *
++ * // deplete server runtime from idle
++ * [7] B->C, C->C
++ * dl_server_update_idle()
++ *   update_curr_dl_se() // idle = true
++ *     if (dl_defer && dl_throttled && dl_runtime_exceeded())
++ *       if (dl_defer_idle)
++ *         return;
++ *       dl_defer_running = 0;
++ *       hrtimer_try_to_cancel();
++ *       replenish_dl_new_period()
++ *         // fwd period
++ *         dl_throttled = 1;
++ *         dl_defer_armed = 1;
++ *       dl_defer_idle = 1;
++ *       start_dl_timer();        // restart timer
++ *       // [C]
++ *
++ * // stop idle server
++ * [8] C->A
++ * dl_server_timer()
++ *   if (dl_defer_idle)
++ *     dl_server_stop();
++ *     // [A]
++ *
++ *
++ * digraph dl_server {
++ *   "A:init" -> "B:zero_laxity-wait"             [label="1:dl_server_start"]
++ *   "A:init" -> "D:running"                      [label="1:dl_server_start"]
++ *   "B:zero_laxity-wait" -> "B:zero_laxity-wait" [label="2:dl_server_update"]
++ *   "B:zero_laxity-wait" -> "C:idle-wait"        [label="7:dl_server_update_idle"]
++ *   "B:zero_laxity-wait" -> "D:running"          [label="3:dl_server_timer"]
++ *   "C:idle-wait" -> "A:init"                    [label="8:dl_server_timer"]
++ *   "C:idle-wait" -> "B:zero_laxity-wait"        [label="2:dl_server_update"]
++ *   "C:idle-wait" -> "C:idle-wait"               [label="7:dl_server_update_idle"]
++ *   "D:running" -> "A:init"                      [label="4:pick_task_dl"]
++ *   "D:running" -> "E:replenish-wait"            [label="5:update_curr_dl_se"]
++ *   "E:replenish-wait" -> "B:zero_laxity-wait"   [label="2:dl_server_update"]
++ *   "E:replenish-wait" -> "D:running"            [label="6:dl_server_timer"]
++ * }
++ *
++ *
++ * Notes:
++ *
++ *  - When there are fair tasks running the most likely loop is [2]->[2].
++ *    the dl_server never actually runs, the timer never fires.
++ *
++ *  - When there is actual fair starvation; the timer fires and starts the
++ *    dl_server. This will then throttle and replenish like a normal DL
++ *    task. Notably it will not 'defer' again.
++ *
++ *  - When idle it will push the actication forward once, and then wait
++ *    for the timer to hit or a non-idle update to restart things.
++ */
+ void dl_server_start(struct sched_dl_entity *dl_se)
+ {
+ 	struct rq *rq = dl_se->rq;
 -- 
 2.51.0
 
