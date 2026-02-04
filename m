@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C111C18859B;
-	Wed,  4 Feb 2026 15:24:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7BAC2D4B68;
+	Wed,  4 Feb 2026 15:24:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770218681; cv=none; b=XbFy3vWwp4x0snEWFWvqWyidUjlF3t3QFmsI0bUaPonaFmoXAZZbUCnC9xGL2elKG0mgjxJSjCpaQv6u1KhzLvCBe463Jlczq1qDCfwVmQtKVCKgHZljOkAdZHpZlIFz96vE0/ezFoXbHZ5v4tyF2d+s2WV+VDTuB2ld342ncKU=
+	t=1770218685; cv=none; b=BsH7bzEDA+QJOKZnmpLt+hWYLHrvdrf0PuSP+E6iPfO1qAWmrG3eyfM3/GksHVFQMZJpBpNYpDwftdHDGZ5xf7KI5FEjjqQr1dyzroxtvNADxX3dFtS6zAMhl/BYTQIlCxERN7iUEy0wREQBqSs0aPV+ni4QbwVo/UFeedbbL2U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770218681; c=relaxed/simple;
-	bh=W+Jw5Q/paeESKLSoTUf6FZRHAoSqvqEGo+m9bln4XqM=;
+	s=arc-20240116; t=1770218685; c=relaxed/simple;
+	bh=pePw0sSoeCPYLQoHy1kL9oGGjZN2EpxB90iG8KUTZ2Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aB0LqRi3KP47yPHwY8KxbnbJ3f8YRILVIzg1nGAErnObHOu4cuXvugy+CxZuXZpt23reWxmeuqU2i7+jvVEe5bK9tcyxg8LZGS5jnwZGAcErGlQ0RPeURhyNQ0mKozhopcqTzDANrHzayFe6EQXo0bKS1sK30zZPdg16k6GywCk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jD5NAota; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=piOJvv508XkknLtpHAItl6pSNCtdSRpIT0xCtcPypZq0vhas01kDc4XJgsS/BNe6DhD59SB8i4OtFOmTs+Xz4/hB5Z5NHmUUXkgFJX3zwRncMq5b3BFx05JQLH1mLAFE1zSWqN/+norZRkvHl9aE+rpzAAFGNEFt18FjMZw5TQs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=d1TkFmHl; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jD5NAota"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E220C4CEF7;
-	Wed,  4 Feb 2026 15:24:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="d1TkFmHl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 743D3C4CEF7;
+	Wed,  4 Feb 2026 15:24:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770218681;
-	bh=W+Jw5Q/paeESKLSoTUf6FZRHAoSqvqEGo+m9bln4XqM=;
+	s=korg; t=1770218684;
+	bh=pePw0sSoeCPYLQoHy1kL9oGGjZN2EpxB90iG8KUTZ2Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jD5NAotaBmvIiXzux4aQtMKfQ/HWR+p6mkshoVqqYIwMcjZsN7fhA/gkmJWW4AcS/
-	 XnRPab5z+i13TeQr5BCVHuy/cmy2pJffaFk9aX74SSA/+soqeDaQfu26qevPRHd63L
-	 I683iZdJ4yZhdadIOecFgwwVlGC8+dUzh5Hh/gCo=
+	b=d1TkFmHlVE3xj7RmR0rCzC7T1tK6Q/FAv6WpOg6lQryjwqJGl/5takbI2TDM/dB+r
+	 Su0FvfGfZPKYj4ysNB/iLk7eQHleRYSx6ne/Z4bZuW3BwUGmffVxQU4NOzBNGWFaA4
+	 g/mcAHWqV1txUFfm/f7XLdVi4Lc/I4RK1rLeAwgc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shida Zhang <zhangshida@kylinos.cn>,
-	Coly Li <colyli@fnnas.com>,
-	Christoph Hellwig <hch@lst.de>,
-	Jens Axboe <axboe@kernel.dk>,
+	Sai Sree Kartheek Adivi <s-adivi@ti.com>,
+	Robin Murphy <robin.murphy@arm.com>,
+	Marek Szyprowski <m.szyprowski@samsung.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 30/87] bcache: fix I/O accounting leak in detached_dev_do_request
-Date: Wed,  4 Feb 2026 15:40:28 +0100
-Message-ID: <20260204143847.995871393@linuxfoundation.org>
+Subject: [PATCH 6.12 31/87] dma/pool: distinguish between missing and exhausted atomic pools
+Date: Wed,  4 Feb 2026 15:40:29 +0100
+Message-ID: <20260204143848.032521157@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260204143846.906385641@linuxfoundation.org>
 References: <20260204143846.906385641@linuxfoundation.org>
@@ -53,37 +52,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shida Zhang <zhangshida@kylinos.cn>
+From: Sai Sree Kartheek Adivi <s-adivi@ti.com>
 
-[ Upstream commit 4da7c5c3ec34d839bba6e035c3d05c447a2f9d4f ]
+[ Upstream commit 56c430c7f06d838fe3b2077dbbc4cc0bf992312b ]
 
-When a bcache device is detached, discard requests are completed
-immediately. However, the I/O accounting started in
-cached_dev_make_request() is not ended, leading to 100% disk
-utilization reports in iostat. Add the missing bio_end_io_acct() call.
+Currently, dma_alloc_from_pool() unconditionally warns and dumps a stack
+trace when an allocation fails, with the message "Failed to get suitable
+pool".
 
-Fixes: cafe56359144 ("bcache: A block layer cache")
-Signed-off-by: Shida Zhang <zhangshida@kylinos.cn>
-Acked-by: Coly Li <colyli@fnnas.com>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+This conflates two distinct failure modes:
+1. Configuration error: No atomic pool is available for the requested
+   DMA mask (a fundamental system setup issue)
+2. Resource Exhaustion: A suitable pool exists but is currently full (a
+   recoverable runtime state)
+
+This lack of distinction prevents drivers from using __GFP_NOWARN to
+suppress error messages during temporary pressure spikes, such as when
+awaiting synchronous reclaim of descriptors.
+
+Refactor the error handling to distinguish these cases:
+- If no suitable pool is found, keep the unconditional WARN regarding
+  the missing pool.
+- If a pool was found but is exhausted, respect __GFP_NOWARN and update
+  the warning message to explicitly state "DMA pool exhausted".
+
+Fixes: 9420139f516d ("dma-pool: fix coherent pool allocations for IOMMU mappings")
+Signed-off-by: Sai Sree Kartheek Adivi <s-adivi@ti.com>
+Reviewed-by: Robin Murphy <robin.murphy@arm.com>
+Signed-off-by: Marek Szyprowski <m.szyprowski@samsung.com>
+Link: https://lore.kernel.org/r/20260128133554.3056582-1-s-adivi@ti.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/md/bcache/request.c | 1 +
- 1 file changed, 1 insertion(+)
+ kernel/dma/pool.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/md/bcache/request.c b/drivers/md/bcache/request.c
-index a02aecac05cdf..6cba1180be8aa 100644
---- a/drivers/md/bcache/request.c
-+++ b/drivers/md/bcache/request.c
-@@ -1107,6 +1107,7 @@ static void detached_dev_do_request(struct bcache_device *d,
+diff --git a/kernel/dma/pool.c b/kernel/dma/pool.c
+index 26392badc36b0..985d6aa102b67 100644
+--- a/kernel/dma/pool.c
++++ b/kernel/dma/pool.c
+@@ -268,15 +268,20 @@ struct page *dma_alloc_from_pool(struct device *dev, size_t size,
+ {
+ 	struct gen_pool *pool = NULL;
+ 	struct page *page;
++	bool pool_found = false;
  
- 	if (bio_op(orig_bio) == REQ_OP_DISCARD &&
- 	    !bdev_max_discard_sectors(dc->bdev)) {
-+		bio_end_io_acct(orig_bio, start_time);
- 		bio_endio(orig_bio);
- 		return;
+ 	while ((pool = dma_guess_pool(pool, gfp))) {
++		pool_found = true;
+ 		page = __dma_alloc_from_pool(dev, size, pool, cpu_addr,
+ 					     phys_addr_ok);
+ 		if (page)
+ 			return page;
  	}
+ 
+-	WARN(1, "Failed to get suitable pool for %s\n", dev_name(dev));
++	if (pool_found)
++		WARN(!(gfp & __GFP_NOWARN), "DMA pool exhausted for %s\n", dev_name(dev));
++	else
++		WARN(1, "Failed to get suitable pool for %s\n", dev_name(dev));
+ 	return NULL;
+ }
+ 
 -- 
 2.51.0
 
