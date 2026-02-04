@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB02B1C5D77;
-	Wed,  4 Feb 2026 14:45:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0985E270575;
+	Wed,  4 Feb 2026 14:45:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770216318; cv=none; b=Z0cNwV4WZNjIOb/5+kTclKeQ8PTjZnuxs5UkLW+tq1P8MwIyO3gggyaK5quD2V+Uv8Q7Vwk3gfIeqF0iH/PEbV2QDyv/qDyyZimVP2sWoAGoWBCJakTDhl+q8OYUr0bzu7jAz3PD3UuRzazEAKUvYtaegVAfV0BwMv/eEWogkAE=
+	t=1770216322; cv=none; b=X4cok4L16F0jYbeP2WBwkYvWfj+q3j+o4O0mcT8t002asm7l3upgMsfmbhD23u8kJlxtJu5u5VuhBPC5nXQLn12FVqetuFiE6Ruo6KFPqHqSYSA5cD18jYdQMA3EJ42Xbug1R7SE9nZkyoNU1F0M5AEKwX1CAbMHHoWYrMi77VM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770216318; c=relaxed/simple;
-	bh=ty+5+Tbtmoq+6UWgJDSLK1U7/eGMR0XEGOV4A5DEEes=;
+	s=arc-20240116; t=1770216322; c=relaxed/simple;
+	bh=rTMd2lckVmvL75oht8O2G40JlcGKZTqtVDiAukDOUns=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=s510V3VqDAlbpX9Jk0ShU39KF4HoaCQnsz89OzhUWOexj2/Ub9SrHFamtJWrIzav44WM101m732qtyqkDdB3Itm486Em4/XYfJsmnea1Ok/XtJtKWGPbhAhTqSk/p7/HY1DHe+9AxeiYvTDi2OCzr8RPsx5HrJUySA/b7Dy+oXM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fWruGlno; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VQJO/SxKYHqUXkRqaF70dA7uCZImqQWgV8W3Cs6aIDMbzDEzWCsHyW0tJ/oUbp+5Xn0DamHPJE/R9XjQAf6KB/5ecr+oNS2n2TDsNEmRF+3zEdIm0j0O1U0NQG539SuwYWTiz332EUsHnCK0/11a1mxiFOuzedeb4u8LcXSgFyw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fPYYk5Lo; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fWruGlno"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C8B0C4CEF7;
-	Wed,  4 Feb 2026 14:45:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fPYYk5Lo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6FBE3C4CEF7;
+	Wed,  4 Feb 2026 14:45:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770216318;
-	bh=ty+5+Tbtmoq+6UWgJDSLK1U7/eGMR0XEGOV4A5DEEes=;
+	s=korg; t=1770216321;
+	bh=rTMd2lckVmvL75oht8O2G40JlcGKZTqtVDiAukDOUns=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fWruGlnocApSrtaj3DzQvANLhrTBtSsDU5SJUrAKwhRKs3wJjsn2zvmKk1IyXHM7a
-	 Lrl4TqKBN153QJuP3xQlMSneDWVXzjDCKvntpTj3gMV3+6s0KDfT7dgSowQaS7uhkh
-	 r95y+m4MJ9mfHo3BaSEyJqah4k22iOTzNENOGdu4=
+	b=fPYYk5LoOVljys2y/XJJcaXWF+H2Xe0qZga7YiDur9bpZwZR+o6UR+gJvDO3HACLj
+	 2tFXlzY4CJuN92rxgwlxc0r4h2vxtf9F/0d5RBRtBWtm7MWOnpE9Yck4BDRV6qE9iA
+	 VFT3rxltIU8jAXy7a9a6e+iynmXTUebMuY/FbRp8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zheng Yongjun <zhengyongjun3@huawei.com>,
+	Zhen Chen <chenzhen126@huawei.com>,
+	Xin Long <lucien.xin@gmail.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 052/161] sctp: sm_statefuns: Fix spelling mistakes
-Date: Wed,  4 Feb 2026 15:38:35 +0100
-Message-ID: <20260204143853.634032070@linuxfoundation.org>
+Subject: [PATCH 5.10 053/161] sctp: move SCTP_CMD_ASSOC_SHKEY right after SCTP_CMD_PEER_INIT
+Date: Wed,  4 Feb 2026 15:38:36 +0100
+Message-ID: <20260204143853.669662191@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260204143851.755002596@linuxfoundation.org>
 References: <20260204143851.755002596@linuxfoundation.org>
@@ -51,170 +52,99 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zheng Yongjun <zhengyongjun3@huawei.com>
+From: Xin Long <lucien.xin@gmail.com>
 
-[ Upstream commit 0c2c366e0ec55533decb00d0f1ea1cbc42247e7b ]
+[ Upstream commit a80c9d945aef55b23b54838334345f20251dad83 ]
 
-Fix some spelling mistakes in comments:
-genereate ==> generate
-correclty ==> correctly
-boundries ==> boundaries
-failes ==> fails
-isses ==> issues
-assocition ==> association
-signe ==> sign
-assocaition ==> association
-managemement ==> management
-restransmissions ==> retransmission
-sideffect ==> sideeffect
-bomming ==> booming
-chukns ==> chunks
-SHUDOWN ==> SHUTDOWN
-violationg ==> violating
-explcitly ==> explicitly
-CHunk ==> Chunk
+A null-ptr-deref was reported in the SCTP transmit path when SCTP-AUTH key
+initialization fails:
 
-Signed-off-by: Zheng Yongjun <zhengyongjun3@huawei.com>
-Link: https://lore.kernel.org/r/20210601020801.3625358-1-zhengyongjun3@huawei.com
+  ==================================================================
+  KASAN: null-ptr-deref in range [0x0000000000000018-0x000000000000001f]
+  CPU: 0 PID: 16 Comm: ksoftirqd/0 Tainted: G W 6.6.0 #2
+  RIP: 0010:sctp_packet_bundle_auth net/sctp/output.c:264 [inline]
+  RIP: 0010:sctp_packet_append_chunk+0xb36/0x1260 net/sctp/output.c:401
+  Call Trace:
+
+  sctp_packet_transmit_chunk+0x31/0x250 net/sctp/output.c:189
+  sctp_outq_flush_data+0xa29/0x26d0 net/sctp/outqueue.c:1111
+  sctp_outq_flush+0xc80/0x1240 net/sctp/outqueue.c:1217
+  sctp_cmd_interpreter.isra.0+0x19a5/0x62c0 net/sctp/sm_sideeffect.c:1787
+  sctp_side_effects net/sctp/sm_sideeffect.c:1198 [inline]
+  sctp_do_sm+0x1a3/0x670 net/sctp/sm_sideeffect.c:1169
+  sctp_assoc_bh_rcv+0x33e/0x640 net/sctp/associola.c:1052
+  sctp_inq_push+0x1dd/0x280 net/sctp/inqueue.c:88
+  sctp_rcv+0x11ae/0x3100 net/sctp/input.c:243
+  sctp6_rcv+0x3d/0x60 net/sctp/ipv6.c:1127
+
+The issue is triggered when sctp_auth_asoc_init_active_key() fails in
+sctp_sf_do_5_1C_ack() while processing an INIT_ACK. In this case, the
+command sequence is currently:
+
+- SCTP_CMD_PEER_INIT
+- SCTP_CMD_TIMER_STOP (T1_INIT)
+- SCTP_CMD_TIMER_START (T1_COOKIE)
+- SCTP_CMD_NEW_STATE (COOKIE_ECHOED)
+- SCTP_CMD_ASSOC_SHKEY
+- SCTP_CMD_GEN_COOKIE_ECHO
+
+If SCTP_CMD_ASSOC_SHKEY fails, asoc->shkey remains NULL, while
+asoc->peer.auth_capable and asoc->peer.peer_chunks have already been set by
+SCTP_CMD_PEER_INIT. This allows a DATA chunk with auth = 1 and shkey = NULL
+to be queued by sctp_datamsg_from_user().
+
+Since command interpretation stops on failure, no COOKIE_ECHO should been
+sent via SCTP_CMD_GEN_COOKIE_ECHO. However, the T1_COOKIE timer has already
+been started, and it may enqueue a COOKIE_ECHO into the outqueue later. As
+a result, the DATA chunk can be transmitted together with the COOKIE_ECHO
+in sctp_outq_flush_data(), leading to the observed issue.
+
+Similar to the other places where it calls sctp_auth_asoc_init_active_key()
+right after sctp_process_init(), this patch moves the SCTP_CMD_ASSOC_SHKEY
+immediately after SCTP_CMD_PEER_INIT, before stopping T1_INIT and starting
+T1_COOKIE. This ensures that if shared key generation fails, authenticated
+DATA cannot be sent. It also allows the T1_INIT timer to retransmit INIT,
+giving the client another chance to process INIT_ACK and retry key setup.
+
+Fixes: 730fc3d05cd4 ("[SCTP]: Implete SCTP-AUTH parameter processing")
+Reported-by: Zhen Chen <chenzhen126@huawei.com>
+Tested-by: Zhen Chen <chenzhen126@huawei.com>
+Signed-off-by: Xin Long <lucien.xin@gmail.com>
+Link: https://patch.msgid.link/44881224b375aa8853f5e19b4055a1a56d895813.1768324226.git.lucien.xin@gmail.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Stable-dep-of: a80c9d945aef ("sctp: move SCTP_CMD_ASSOC_SHKEY right after SCTP_CMD_PEER_INIT")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sctp/sm_statefuns.c | 30 +++++++++++++++---------------
- 1 file changed, 15 insertions(+), 15 deletions(-)
+ net/sctp/sm_statefuns.c | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
 diff --git a/net/sctp/sm_statefuns.c b/net/sctp/sm_statefuns.c
-index 29b879bf86975..9a0ba3747711c 100644
+index 9a0ba3747711c..c91f712ce1fab 100644
 --- a/net/sctp/sm_statefuns.c
 +++ b/net/sctp/sm_statefuns.c
-@@ -361,7 +361,7 @@ enum sctp_disposition sctp_sf_do_5_1B_init(struct net *net,
+@@ -594,6 +594,11 @@ enum sctp_disposition sctp_sf_do_5_1C_ack(struct net *net,
+ 	sctp_add_cmd_sf(commands, SCTP_CMD_PEER_INIT,
+ 			SCTP_PEER_INIT(initchunk));
  
- 	/* If the INIT is coming toward a closing socket, we'll send back
- 	 * and ABORT.  Essentially, this catches the race of INIT being
--	 * backloged to the socket at the same time as the user isses close().
-+	 * backloged to the socket at the same time as the user issues close().
- 	 * Since the socket and all its associations are going away, we
- 	 * can treat this OOTB
- 	 */
-@@ -608,8 +608,8 @@ enum sctp_disposition sctp_sf_do_5_1C_ack(struct net *net,
++	/* SCTP-AUTH: generate the association shared keys so that
++	 * we can potentially sign the COOKIE-ECHO.
++	 */
++	sctp_add_cmd_sf(commands, SCTP_CMD_ASSOC_SHKEY, SCTP_NULL());
++
+ 	/* Reset init error count upon receipt of INIT-ACK.  */
+ 	sctp_add_cmd_sf(commands, SCTP_CMD_INIT_COUNTER_RESET, SCTP_NULL());
+ 
+@@ -608,11 +613,6 @@ enum sctp_disposition sctp_sf_do_5_1C_ack(struct net *net,
  	sctp_add_cmd_sf(commands, SCTP_CMD_NEW_STATE,
  			SCTP_STATE(SCTP_STATE_COOKIE_ECHOED));
  
--	/* SCTP-AUTH: genereate the assocition shared keys so that
--	 * we can potentially signe the COOKIE-ECHO.
-+	/* SCTP-AUTH: generate the association shared keys so that
-+	 * we can potentially sign the COOKIE-ECHO.
+-	/* SCTP-AUTH: generate the association shared keys so that
+-	 * we can potentially sign the COOKIE-ECHO.
+-	 */
+-	sctp_add_cmd_sf(commands, SCTP_CMD_ASSOC_SHKEY, SCTP_NULL());
+-
+ 	/* 5.1 C) "A" shall then send the State Cookie received in the
+ 	 * INIT ACK chunk in a COOKIE ECHO chunk, ...
  	 */
- 	sctp_add_cmd_sf(commands, SCTP_CMD_ASSOC_SHKEY, SCTP_NULL());
- 
-@@ -791,7 +791,7 @@ enum sctp_disposition sctp_sf_do_5_1D_ce(struct net *net,
- 		goto nomem_init;
- 
- 	/* SCTP-AUTH:  Now that we've populate required fields in
--	 * sctp_process_init, set up the assocaition shared keys as
-+	 * sctp_process_init, set up the association shared keys as
- 	 * necessary so that we can potentially authenticate the ACK
- 	 */
- 	error = sctp_auth_asoc_init_active_key(new_asoc, GFP_ATOMIC);
-@@ -842,7 +842,7 @@ enum sctp_disposition sctp_sf_do_5_1D_ce(struct net *net,
- 
- 	/* Add all the state machine commands now since we've created
- 	 * everything.  This way we don't introduce memory corruptions
--	 * during side-effect processing and correclty count established
-+	 * during side-effect processing and correctly count established
- 	 * associations.
- 	 */
- 	sctp_add_cmd_sf(commands, SCTP_CMD_NEW_ASOC, SCTP_ASOC(new_asoc));
-@@ -928,7 +928,7 @@ enum sctp_disposition sctp_sf_do_5_1E_ca(struct net *net,
- 						  commands);
- 
- 	/* Reset init error count upon receipt of COOKIE-ACK,
--	 * to avoid problems with the managemement of this
-+	 * to avoid problems with the management of this
- 	 * counter in stale cookie situations when a transition back
- 	 * from the COOKIE-ECHOED state to the COOKIE-WAIT
- 	 * state is performed.
-@@ -2935,7 +2935,7 @@ __sctp_sf_do_9_2_reshutack(struct net *net, const struct sctp_endpoint *ep,
- 						  commands);
- 
- 	/* Since we are not going to really process this INIT, there
--	 * is no point in verifying chunk boundries.  Just generate
-+	 * is no point in verifying chunk boundaries.  Just generate
- 	 * the SHUTDOWN ACK.
- 	 */
- 	reply = sctp_make_shutdown_ack(asoc, chunk);
-@@ -3526,7 +3526,7 @@ enum sctp_disposition sctp_sf_do_9_2_final(struct net *net,
- 		goto nomem_chunk;
- 
- 	/* Do all the commands now (after allocation), so that we
--	 * have consistent state if memory allocation failes
-+	 * have consistent state if memory allocation fails
- 	 */
- 	sctp_add_cmd_sf(commands, SCTP_CMD_EVENT_ULP, SCTP_ULPEVENT(ev));
- 
-@@ -3710,7 +3710,7 @@ static enum sctp_disposition sctp_sf_shut_8_4_5(
- 	SCTP_INC_STATS(net, SCTP_MIB_OUTCTRLCHUNKS);
- 
- 	/* We need to discard the rest of the packet to prevent
--	 * potential bomming attacks from additional bundled chunks.
-+	 * potential boomming attacks from additional bundled chunks.
- 	 * This is documented in SCTP Threats ID.
- 	 */
- 	return sctp_sf_pdiscard(net, ep, asoc, type, arg, commands);
-@@ -4221,7 +4221,7 @@ enum sctp_disposition sctp_sf_eat_fwd_tsn_fast(
- }
- 
- /*
-- * SCTP-AUTH Section 6.3 Receiving authenticated chukns
-+ * SCTP-AUTH Section 6.3 Receiving authenticated chunks
-  *
-  *    The receiver MUST use the HMAC algorithm indicated in the HMAC
-  *    Identifier field.  If this algorithm was not specified by the
-@@ -4782,7 +4782,7 @@ static enum sctp_disposition sctp_sf_violation_ctsn(
- 
- /* Handle protocol violation of an invalid chunk bundling.  For example,
-  * when we have an association and we receive bundled INIT-ACK, or
-- * SHUDOWN-COMPLETE, our peer is clearly violationg the "MUST NOT bundle"
-+ * SHUTDOWN-COMPLETE, our peer is clearly violating the "MUST NOT bundle"
-  * statement from the specs.  Additionally, there might be an attacker
-  * on the path and we may not want to continue this communication.
-  */
-@@ -5178,7 +5178,7 @@ enum sctp_disposition sctp_sf_cookie_wait_prm_shutdown(
-  * Inputs
-  * (endpoint, asoc)
-  *
-- * The RFC does not explcitly address this issue, but is the route through the
-+ * The RFC does not explicitly address this issue, but is the route through the
-  * state table when someone issues a shutdown while in COOKIE_ECHOED state.
-  *
-  * Outputs
-@@ -5902,7 +5902,7 @@ enum sctp_disposition sctp_sf_t1_cookie_timer_expire(
- /* RFC2960 9.2 If the timer expires, the endpoint must re-send the SHUTDOWN
-  * with the updated last sequential TSN received from its peer.
-  *
-- * An endpoint should limit the number of retransmissions of the
-+ * An endpoint should limit the number of retransmission of the
-  * SHUTDOWN chunk to the protocol parameter 'Association.Max.Retrans'.
-  * If this threshold is exceeded the endpoint should destroy the TCB and
-  * MUST report the peer endpoint unreachable to the upper layer (and
-@@ -5980,7 +5980,7 @@ enum sctp_disposition sctp_sf_t2_timer_expire(
- }
- 
- /*
-- * ADDIP Section 4.1 ASCONF CHunk Procedures
-+ * ADDIP Section 4.1 ASCONF Chunk Procedures
-  * If the T4 RTO timer expires the endpoint should do B1 to B5
-  */
- enum sctp_disposition sctp_sf_t4_timer_expire(
-@@ -6410,7 +6410,7 @@ static int sctp_eat_data(const struct sctp_association *asoc,
- 		chunk->ecn_ce_done = 1;
- 
- 		if (af->is_ce(sctp_gso_headskb(chunk->skb))) {
--			/* Do real work as sideffect. */
-+			/* Do real work as side effect. */
- 			sctp_add_cmd_sf(commands, SCTP_CMD_ECN_CE,
- 					SCTP_U32(tsn));
- 		}
 -- 
 2.51.0
 
