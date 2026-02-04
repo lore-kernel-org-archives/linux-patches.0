@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63EF92C026F;
-	Wed,  4 Feb 2026 15:27:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ACFB821FF4C;
+	Wed,  4 Feb 2026 15:27:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770218845; cv=none; b=OFgT1551NXR/RaBJBjSUD1rejuxyg9J8uTKfF40kS/yUzkTq5m5zPzXZLwUf04SrS2PjPelcoxpgaCyRoT5tWOX1JBzE4xz4XdaAS25gN6GTeDJ23hJGJwKcRbMKQ+VDnQV3FkpGadZfStoRPRyQCNvHfiNjCwWKHYcC9a5zmp0=
+	t=1770218848; cv=none; b=uo7lq2hJw8LGYL5CghA1r7n7gHHzGf+Jv1nMgNF2FlIk1G6YL0rL4ltCsxCCmtIumI/japVO//3op1xrw4zFux7Lrj0qwry9lT2Y2x1AK2QZMiECdj2+M9GMAX3fzrSrFndWQeieueeZMOe6MQtUTbVPPhqI6DH5/2YSxl+hvyk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770218845; c=relaxed/simple;
-	bh=ykUMaf4sew9MiioIIcOuKMakV9/j2ED3Kp1pJ7SNDKc=;
+	s=arc-20240116; t=1770218848; c=relaxed/simple;
+	bh=LMVC9lF35vJer8LFB1tJz9FH3oZKPc5Ku8s+0ff8jdI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=P0VUigi4u767omAwU4fmKfVhk3+RboA6OEB7PzV+nOeqD6e3U0OCnG+7pmAehT2fFKtCY3asm8NoRYNpCuQLKuz34njaDkJpswG610v/orlhAI97Jf2BhLnkZ/5pzYCEJkTCLJBkSdhbQs8vIKNgrxRwJkFg72dj2QslyZVMzk4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UCPvLRkV; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Fw9ULNIQqeTIq6eNaVcfYn+i+sa+q/8vPWreJk2A1RxU1E/k43jlhl9wONROOVUOeRYOONLZ7R1jKpj9T0arz8VFnAN4/ZllXVKZiDRr2wpP2jtnawD/xieRIvB+fiDdrwRS7yNZiyA0cL//1R2eTs0PUIBpQ5iGYCjph/yFGRo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TmtFcGp0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UCPvLRkV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3121C4CEF7;
-	Wed,  4 Feb 2026 15:27:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TmtFcGp0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2AB69C4CEF7;
+	Wed,  4 Feb 2026 15:27:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770218845;
-	bh=ykUMaf4sew9MiioIIcOuKMakV9/j2ED3Kp1pJ7SNDKc=;
+	s=korg; t=1770218848;
+	bh=LMVC9lF35vJer8LFB1tJz9FH3oZKPc5Ku8s+0ff8jdI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UCPvLRkV6/1ED79yX986LF/R8rO22leOrmdGh9PgDobKMtufVHIVXjvT2vlEqLuAT
-	 Iboia+KDbcIKY3bBh1SCvSo3O76HyMS+AulHB5QQhW7xGUabOS6a02hKmQGwVzLSuC
-	 AbeaWj2FFXwhPv2wzMOyXxsI4OqQfRRBnd4shsdA=
+	b=TmtFcGp053AramdpgO+iKIzzbe1K+t0y7nFZskOZK65u79ONoh1yYWvOH0zin0i5V
+	 Syh57AeAjIc1wufrRz8m3BXvBfqzyXYf0RH3PLr5xERzVHgTcVtWZYPRBOxpMSwCCP
+	 awT1TeNmlfu1XLL0TM8s4TK/R9QUIKTBGxkZ2kws=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jan Kara <jack@suse.cz>,
-	Bernd Schubert <bernd@bsbernd.com>,
-	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
-	Joanne Koong <joannelkoong@gmail.com>,
-	Miklos Szeredi <miklos@szeredi.hu>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.12 51/87] flex_proportions: make fprop_new_period() hardirq safe
-Date: Wed,  4 Feb 2026 15:40:49 +0100
-Message-ID: <20260204143848.753202836@linuxfoundation.org>
+	Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>,
+	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Linus Walleij <linusw@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.12 78/87] pinctrl: qcom: sm8350-lpass-lpi: Merge with SC7280 to fix I2S2 and SWR TX pins
+Date: Wed,  4 Feb 2026 15:41:16 +0100
+Message-ID: <20260204143849.728519467@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260204143846.906385641@linuxfoundation.org>
 References: <20260204143846.906385641@linuxfoundation.org>
@@ -54,79 +53,262 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jan Kara <jack@suse.cz>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
 
-commit dd9e2f5b38f1fdd49b1ab6d3a85f81c14369eacc upstream.
+[ Upstream commit 1fbe3abb449c5ef2178e1c3e3e8b9a43a7a410ac ]
 
-Bernd has reported a lockdep splat from flexible proportions code that is
-essentially complaining about the following race:
+Qualcomm SC7280 and SM8350 SoCs have slightly different LPASS audio
+blocks (v9.4.5 and v9.2), however the LPASS LPI pin controllers are
+exactly the same.  The driver for SM8350 has two issues, which can be
+fixed by simply moving over to SC7280 driver which has them correct:
 
-<timer fires>
-run_timer_softirq - we are in softirq context
-  call_timer_fn
-    writeout_period
-      fprop_new_period
-        write_seqcount_begin(&p->sequence);
+1. "i2s2_data_groups" listed twice GPIO12, but should have both GPIO12
+   and GPIO13,
 
-        <hardirq is raised>
-        ...
-        blk_mq_end_request()
-	  blk_update_request()
-	    ext4_end_bio()
-	      folio_end_writeback()
-		__wb_writeout_add()
-		  __fprop_add_percpu_max()
-		    if (unlikely(max_frac < FPROP_FRAC_BASE)) {
-		      fprop_fraction_percpu()
-			seq = read_seqcount_begin(&p->sequence);
-			  - sees odd sequence so loops indefinitely
+2. "swr_tx_data_groups" contained GPIO5 for "swr_tx_data2" function, but
+   that function is also available on GPIO14, thus listing it twice is
+   not necessary.  OTOH, GPIO5 has also "swr_rx_data1", so selecting
+   swr_rx_data function should not block  the TX one.
 
-Note that a deadlock like this is only possible if the bdi has configured
-maximum fraction of writeout throughput which is very rare in general but
-frequent for example for FUSE bdis.  To fix this problem we have to make
-sure write section of the sequence counter is irqsafe.
-
-Link: https://lkml.kernel.org/r/20260121112729.24463-2-jack@suse.cz
-Fixes: a91befde3503 ("lib/flex_proportions.c: remove local_irq_ops in fprop_new_period()")
-Signed-off-by: Jan Kara <jack@suse.cz>
-Reported-by: Bernd Schubert <bernd@bsbernd.com>
-Link: https://lore.kernel.org/all/9b845a47-9aee-43dd-99bc-1a82bea00442@bsbernd.com/
-Reviewed-by: Matthew Wilcox (Oracle) <willy@infradead.org>
-Cc: Joanne Koong <joannelkoong@gmail.com>
-Cc: Miklos Szeredi <miklos@szeredi.hu>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Fixes: be9f6d56381d ("pinctrl: qcom: sm8350-lpass-lpi: add SM8350 LPASS TLMM")
+Cc: stable@vger.kernel.org
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
+Reviewed-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Signed-off-by: Linus Walleij <linusw@kernel.org>
+[ .remove_new vs .remove ]
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- lib/flex_proportions.c |    5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ arch/arm64/configs/defconfig                    |    1 
+ drivers/pinctrl/qcom/Kconfig                    |   15 --
+ drivers/pinctrl/qcom/Makefile                   |    1 
+ drivers/pinctrl/qcom/pinctrl-sc7280-lpass-lpi.c |    3 
+ drivers/pinctrl/qcom/pinctrl-sm8350-lpass-lpi.c |  151 ------------------------
+ 5 files changed, 6 insertions(+), 165 deletions(-)
+ delete mode 100644 drivers/pinctrl/qcom/pinctrl-sm8350-lpass-lpi.c
 
---- a/lib/flex_proportions.c
-+++ b/lib/flex_proportions.c
-@@ -64,13 +64,14 @@ void fprop_global_destroy(struct fprop_g
- bool fprop_new_period(struct fprop_global *p, int periods)
- {
- 	s64 events = percpu_counter_sum(&p->events);
-+	unsigned long flags;
+--- a/arch/arm64/configs/defconfig
++++ b/arch/arm64/configs/defconfig
+@@ -635,7 +635,6 @@ CONFIG_PINCTRL_LPASS_LPI=m
+ CONFIG_PINCTRL_SC7280_LPASS_LPI=m
+ CONFIG_PINCTRL_SM6115_LPASS_LPI=m
+ CONFIG_PINCTRL_SM8250_LPASS_LPI=m
+-CONFIG_PINCTRL_SM8350_LPASS_LPI=m
+ CONFIG_PINCTRL_SM8450_LPASS_LPI=m
+ CONFIG_PINCTRL_SC8280XP_LPASS_LPI=m
+ CONFIG_PINCTRL_SM8550_LPASS_LPI=m
+--- a/drivers/pinctrl/qcom/Kconfig
++++ b/drivers/pinctrl/qcom/Kconfig
+@@ -60,13 +60,14 @@ config PINCTRL_LPASS_LPI
+ 	  (Low Power Island) found on the Qualcomm Technologies Inc SoCs.
  
- 	/*
- 	 * Don't do anything if there are no events.
- 	 */
- 	if (events <= 1)
- 		return false;
--	preempt_disable_nested();
-+	local_irq_save(flags);
- 	write_seqcount_begin(&p->sequence);
- 	if (periods < 64)
- 		events -= events >> periods;
-@@ -78,7 +79,7 @@ bool fprop_new_period(struct fprop_globa
- 	percpu_counter_add(&p->events, -events);
- 	p->period += periods;
- 	write_seqcount_end(&p->sequence);
--	preempt_enable_nested();
-+	local_irq_restore(flags);
+ config PINCTRL_SC7280_LPASS_LPI
+-	tristate "Qualcomm Technologies Inc SC7280 LPASS LPI pin controller driver"
++	tristate "Qualcomm Technologies Inc SC7280 and SM8350 LPASS LPI pin controller driver"
+ 	depends on ARM64 || COMPILE_TEST
+ 	depends on PINCTRL_LPASS_LPI
+ 	help
+ 	  This is the pinctrl, pinmux, pinconf and gpiolib driver for the
+ 	  Qualcomm Technologies Inc LPASS (Low Power Audio SubSystem) LPI
+-	  (Low Power Island) found on the Qualcomm Technologies Inc SC7280 platform.
++	  (Low Power Island) found on the Qualcomm Technologies Inc SC7280
++	  and SM8350 platforms.
  
- 	return true;
- }
+ config PINCTRL_SM4250_LPASS_LPI
+ 	tristate "Qualcomm Technologies Inc SM4250 LPASS LPI pin controller driver"
+@@ -95,16 +96,6 @@ config PINCTRL_SM8250_LPASS_LPI
+ 	  Qualcomm Technologies Inc LPASS (Low Power Audio SubSystem) LPI
+ 	  (Low Power Island) found on the Qualcomm Technologies Inc SM8250 platform.
+ 
+-config PINCTRL_SM8350_LPASS_LPI
+-	tristate "Qualcomm Technologies Inc SM8350 LPASS LPI pin controller driver"
+-	depends on ARM64 || COMPILE_TEST
+-	depends on PINCTRL_LPASS_LPI
+-	help
+-	  This is the pinctrl, pinmux, pinconf and gpiolib driver for the
+-	  Qualcomm Technologies Inc LPASS (Low Power Audio SubSystem) LPI
+-	  (Low Power Island) found on the Qualcomm Technologies Inc SM8350
+-	  platform.
+-
+ config PINCTRL_SM8450_LPASS_LPI
+ 	tristate "Qualcomm Technologies Inc SM8450 LPASS LPI pin controller driver"
+ 	depends on ARM64 || COMPILE_TEST
+--- a/drivers/pinctrl/qcom/Makefile
++++ b/drivers/pinctrl/qcom/Makefile
+@@ -55,7 +55,6 @@ obj-$(CONFIG_PINCTRL_SM8150) += pinctrl-
+ obj-$(CONFIG_PINCTRL_SM8250) += pinctrl-sm8250.o
+ obj-$(CONFIG_PINCTRL_SM8250_LPASS_LPI) += pinctrl-sm8250-lpass-lpi.o
+ obj-$(CONFIG_PINCTRL_SM8350) += pinctrl-sm8350.o
+-obj-$(CONFIG_PINCTRL_SM8350_LPASS_LPI) += pinctrl-sm8350-lpass-lpi.o
+ obj-$(CONFIG_PINCTRL_SM8450) += pinctrl-sm8450.o
+ obj-$(CONFIG_PINCTRL_SM8450_LPASS_LPI) += pinctrl-sm8450-lpass-lpi.o
+ obj-$(CONFIG_PINCTRL_SM8550) += pinctrl-sm8550.o
+--- a/drivers/pinctrl/qcom/pinctrl-sc7280-lpass-lpi.c
++++ b/drivers/pinctrl/qcom/pinctrl-sc7280-lpass-lpi.c
+@@ -131,6 +131,9 @@ static const struct of_device_id lpi_pin
+ 	{
+ 	       .compatible = "qcom,sc7280-lpass-lpi-pinctrl",
+ 	       .data = &sc7280_lpi_data,
++	}, {
++	       .compatible = "qcom,sm8350-lpass-lpi-pinctrl",
++	       .data = &sc7280_lpi_data,
+ 	},
+ 	{ }
+ };
+--- a/drivers/pinctrl/qcom/pinctrl-sm8350-lpass-lpi.c
++++ /dev/null
+@@ -1,151 +0,0 @@
+-// SPDX-License-Identifier: GPL-2.0-only
+-/*
+- * Copyright (c) 2016-2019, The Linux Foundation. All rights reserved.
+- * Copyright (c) 2020-2023 Linaro Ltd.
+- */
+-
+-#include <linux/gpio/driver.h>
+-#include <linux/module.h>
+-#include <linux/platform_device.h>
+-
+-#include "pinctrl-lpass-lpi.h"
+-
+-enum lpass_lpi_functions {
+-	LPI_MUX_dmic1_clk,
+-	LPI_MUX_dmic1_data,
+-	LPI_MUX_dmic2_clk,
+-	LPI_MUX_dmic2_data,
+-	LPI_MUX_dmic3_clk,
+-	LPI_MUX_dmic3_data,
+-	LPI_MUX_i2s1_clk,
+-	LPI_MUX_i2s1_data,
+-	LPI_MUX_i2s1_ws,
+-	LPI_MUX_i2s2_clk,
+-	LPI_MUX_i2s2_data,
+-	LPI_MUX_i2s2_ws,
+-	LPI_MUX_qua_mi2s_data,
+-	LPI_MUX_qua_mi2s_sclk,
+-	LPI_MUX_qua_mi2s_ws,
+-	LPI_MUX_swr_rx_clk,
+-	LPI_MUX_swr_rx_data,
+-	LPI_MUX_swr_tx_clk,
+-	LPI_MUX_swr_tx_data,
+-	LPI_MUX_wsa_swr_clk,
+-	LPI_MUX_wsa_swr_data,
+-	LPI_MUX_gpio,
+-	LPI_MUX__,
+-};
+-
+-static const struct pinctrl_pin_desc sm8350_lpi_pins[] = {
+-	PINCTRL_PIN(0, "gpio0"),
+-	PINCTRL_PIN(1, "gpio1"),
+-	PINCTRL_PIN(2, "gpio2"),
+-	PINCTRL_PIN(3, "gpio3"),
+-	PINCTRL_PIN(4, "gpio4"),
+-	PINCTRL_PIN(5, "gpio5"),
+-	PINCTRL_PIN(6, "gpio6"),
+-	PINCTRL_PIN(7, "gpio7"),
+-	PINCTRL_PIN(8, "gpio8"),
+-	PINCTRL_PIN(9, "gpio9"),
+-	PINCTRL_PIN(10, "gpio10"),
+-	PINCTRL_PIN(11, "gpio11"),
+-	PINCTRL_PIN(12, "gpio12"),
+-	PINCTRL_PIN(13, "gpio13"),
+-	PINCTRL_PIN(14, "gpio14"),
+-};
+-
+-static const char * const swr_tx_clk_groups[] = { "gpio0" };
+-static const char * const swr_tx_data_groups[] = { "gpio1", "gpio2", "gpio5", "gpio14" };
+-static const char * const swr_rx_clk_groups[] = { "gpio3" };
+-static const char * const swr_rx_data_groups[] = { "gpio4", "gpio5" };
+-static const char * const dmic1_clk_groups[] = { "gpio6" };
+-static const char * const dmic1_data_groups[] = { "gpio7" };
+-static const char * const dmic2_clk_groups[] = { "gpio8" };
+-static const char * const dmic2_data_groups[] = { "gpio9" };
+-static const char * const i2s2_clk_groups[] = { "gpio10" };
+-static const char * const i2s2_ws_groups[] = { "gpio11" };
+-static const char * const dmic3_clk_groups[] = { "gpio12" };
+-static const char * const dmic3_data_groups[] = { "gpio13" };
+-static const char * const qua_mi2s_sclk_groups[] = { "gpio0" };
+-static const char * const qua_mi2s_ws_groups[] = { "gpio1" };
+-static const char * const qua_mi2s_data_groups[] = { "gpio2", "gpio3", "gpio4" };
+-static const char * const i2s1_clk_groups[] = { "gpio6" };
+-static const char * const i2s1_ws_groups[] = { "gpio7" };
+-static const char * const i2s1_data_groups[] = { "gpio8", "gpio9" };
+-static const char * const wsa_swr_clk_groups[] = { "gpio10" };
+-static const char * const wsa_swr_data_groups[] = { "gpio11" };
+-static const char * const i2s2_data_groups[] = { "gpio12", "gpio12" };
+-
+-static const struct lpi_pingroup sm8350_groups[] = {
+-	LPI_PINGROUP(0, 0, swr_tx_clk, qua_mi2s_sclk, _, _),
+-	LPI_PINGROUP(1, 2, swr_tx_data, qua_mi2s_ws, _, _),
+-	LPI_PINGROUP(2, 4, swr_tx_data, qua_mi2s_data, _, _),
+-	LPI_PINGROUP(3, 8, swr_rx_clk, qua_mi2s_data, _, _),
+-	LPI_PINGROUP(4, 10, swr_rx_data, qua_mi2s_data, _, _),
+-	LPI_PINGROUP(5, 12, swr_tx_data, swr_rx_data, _, _),
+-	LPI_PINGROUP(6, LPI_NO_SLEW, dmic1_clk, i2s1_clk, _,  _),
+-	LPI_PINGROUP(7, LPI_NO_SLEW, dmic1_data, i2s1_ws, _, _),
+-	LPI_PINGROUP(8, LPI_NO_SLEW, dmic2_clk, i2s1_data, _, _),
+-	LPI_PINGROUP(9, LPI_NO_SLEW, dmic2_data, i2s1_data, _, _),
+-	LPI_PINGROUP(10, 16, i2s2_clk, wsa_swr_clk, _, _),
+-	LPI_PINGROUP(11, 18, i2s2_ws, wsa_swr_data, _, _),
+-	LPI_PINGROUP(12, LPI_NO_SLEW, dmic3_clk, i2s2_data, _, _),
+-	LPI_PINGROUP(13, LPI_NO_SLEW, dmic3_data, i2s2_data, _, _),
+-	LPI_PINGROUP(14, 6, swr_tx_data, _, _, _),
+-};
+-
+-static const struct lpi_function sm8350_functions[] = {
+-	LPI_FUNCTION(dmic1_clk),
+-	LPI_FUNCTION(dmic1_data),
+-	LPI_FUNCTION(dmic2_clk),
+-	LPI_FUNCTION(dmic2_data),
+-	LPI_FUNCTION(dmic3_clk),
+-	LPI_FUNCTION(dmic3_data),
+-	LPI_FUNCTION(i2s1_clk),
+-	LPI_FUNCTION(i2s1_data),
+-	LPI_FUNCTION(i2s1_ws),
+-	LPI_FUNCTION(i2s2_clk),
+-	LPI_FUNCTION(i2s2_data),
+-	LPI_FUNCTION(i2s2_ws),
+-	LPI_FUNCTION(qua_mi2s_data),
+-	LPI_FUNCTION(qua_mi2s_sclk),
+-	LPI_FUNCTION(qua_mi2s_ws),
+-	LPI_FUNCTION(swr_rx_clk),
+-	LPI_FUNCTION(swr_rx_data),
+-	LPI_FUNCTION(swr_tx_clk),
+-	LPI_FUNCTION(swr_tx_data),
+-	LPI_FUNCTION(wsa_swr_clk),
+-	LPI_FUNCTION(wsa_swr_data),
+-};
+-
+-static const struct lpi_pinctrl_variant_data sm8350_lpi_data = {
+-	.pins = sm8350_lpi_pins,
+-	.npins = ARRAY_SIZE(sm8350_lpi_pins),
+-	.groups = sm8350_groups,
+-	.ngroups = ARRAY_SIZE(sm8350_groups),
+-	.functions = sm8350_functions,
+-	.nfunctions = ARRAY_SIZE(sm8350_functions),
+-};
+-
+-static const struct of_device_id lpi_pinctrl_of_match[] = {
+-	{
+-	       .compatible = "qcom,sm8350-lpass-lpi-pinctrl",
+-	       .data = &sm8350_lpi_data,
+-	},
+-	{ }
+-};
+-MODULE_DEVICE_TABLE(of, lpi_pinctrl_of_match);
+-
+-static struct platform_driver lpi_pinctrl_driver = {
+-	.driver = {
+-		   .name = "qcom-sm8350-lpass-lpi-pinctrl",
+-		   .of_match_table = lpi_pinctrl_of_match,
+-	},
+-	.probe = lpi_pinctrl_probe,
+-	.remove_new = lpi_pinctrl_remove,
+-};
+-module_platform_driver(lpi_pinctrl_driver);
+-
+-MODULE_AUTHOR("Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>");
+-MODULE_DESCRIPTION("QTI SM8350 LPI GPIO pin control driver");
+-MODULE_LICENSE("GPL");
 
 
