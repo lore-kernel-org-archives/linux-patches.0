@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 875D341B37C;
-	Wed,  4 Feb 2026 15:25:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B291A41B37C;
+	Wed,  4 Feb 2026 15:25:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770218714; cv=none; b=sDTYkOLx5MzQQs+OvK6hy0HC2SPQwM2XKg9hEw+ig5oCHaUHsUZTT3NCeKLQYzqiX4kcNaMRlqyHEXZzeqtu8KCSzXO8pACundxv102ybEEdowa1HfZw2CFH1m+bEeOWzUDF6W1UqpvHdy+QLLfEq4kWEe2ncAhNFo9F4B1FzhM=
+	t=1770218717; cv=none; b=Ogvs7NQzNVcQaXfd1ngj9kjNKE5rccmaltHu9CVLoFmYeXRbo5Nxu2FEQ1H2CxFlMHhhhBDELUPdfn2f6t3EbAQTGSkNU58WmK1ivorsssgE+kLss8pMmDFBxX8w07KRDskGMbyGWYcy2mUEFT7mF6fjzXlU3LnFwUee/n6Tr8c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770218714; c=relaxed/simple;
-	bh=2WB49iVBKYJyh1VUsQEa0nEI7PNqyZAUW4GcK/WEcHs=;
+	s=arc-20240116; t=1770218717; c=relaxed/simple;
+	bh=yaj6SVW2TOqwY25CcoJny2s//fkarfMgmyrjbFP4OZM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Qc+Uog+7ZxAYSg0zkvnOthEaw3tkJnFOOEq6QaJvL/PgwZ+iopoBn+vQDEfn1J4MF7lCnxWDPdHgdIbJRW/beM//RxKfsJJJC8rNubrIXtlvI4g428hgrld8m1ihiPAkEP6MoyhZzSPotmuBHKt09rASn2w4d2Baw/TueEB9TrY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Yon4PdKu; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Cf5VvQHjhv/yvVf6dpNgV39VsqaQzICb7lCxT8yUpLX1sSOpFeII04197HDWD0TG+U1ss6+laIUeOvyKWKLg07IlTZx356r0Bv1Md5LGNBj7btChFm5UTOncqJnAEWwOy/FCuXOUhdskC3RolO0ttSgPeSFGZkPcDdvErXl34pQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HvZ60MLD; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Yon4PdKu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED3E7C4CEF7;
-	Wed,  4 Feb 2026 15:25:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HvZ60MLD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22268C4CEF7;
+	Wed,  4 Feb 2026 15:25:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770218714;
-	bh=2WB49iVBKYJyh1VUsQEa0nEI7PNqyZAUW4GcK/WEcHs=;
+	s=korg; t=1770218717;
+	bh=yaj6SVW2TOqwY25CcoJny2s//fkarfMgmyrjbFP4OZM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Yon4PdKuKGjTX47zBjJVVOHt5us29Rtg/tg4sTr8Km6VvCfKyoF1fwF7PrxSO1m32
-	 DnE3ncW+iHuSLPafJzNgAlTfLxrcSxH31ft1ZFZch1OzLAddBKf9/EaxJDFR34fUhd
-	 PFnXGDI4ftnPyqkY/Po/fUhy+AdN2n4ZLXyTtF8w=
+	b=HvZ60MLDqRvqLEchCA9VV2FwECi70JsJOIKEWPjTcLLOnCbRdRZhkssJGEEatue0m
+	 EpeT244GYJbSTKvoY2Gu06339TnirDxpPs7pcGnI646cur15K6MfdxDJbRmulA0jHO
+	 3fHuKvSM2ug6zp2q3JaA4NEzocjKtLASkCFna6WA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Haoxiang Li <lihaoxiang@isrc.iscas.ac.cn>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>
-Subject: [PATCH 6.12 39/87] scsi: be2iscsi: Fix a memory leak in beiscsi_boot_get_sinfo()
-Date: Wed,  4 Feb 2026 15:40:37 +0100
-Message-ID: <20260204143848.320332758@linuxfoundation.org>
+	Zhang Heng <zhangheng@kylinos.cn>,
+	Mark Brown <broonie@kernel.org>
+Subject: [PATCH 6.12 40/87] ASoC: amd: yc: Add DMI quirk for Acer TravelMate P216-41-TCO
+Date: Wed,  4 Feb 2026 15:40:38 +0100
+Message-ID: <20260204143848.356310716@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260204143846.906385641@linuxfoundation.org>
 References: <20260204143846.906385641@linuxfoundation.org>
@@ -50,32 +50,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Haoxiang Li <lihaoxiang@isrc.iscas.ac.cn>
+From: Zhang Heng <zhangheng@kylinos.cn>
 
-commit 4747bafaa50115d9667ece446b1d2d4aba83dc7f upstream.
+commit 9502b7df5a3c7e174f74f20324ac1fe781fc5c2d upstream.
 
-If nonemb_cmd->va fails to be allocated, free the allocation previously
-made by alloc_mcc_wrb().
+Add a DMI quirk for the Acer TravelMate P216-41-TCO fixing the
+issue where the internal microphone was not detected.
 
-Fixes: 50a4b824be9e ("scsi: be2iscsi: Fix to make boot discovery non-blocking")
+Link: https://bugzilla.kernel.org/show_bug.cgi?id=220983
 Cc: stable@vger.kernel.org
-Signed-off-by: Haoxiang Li <lihaoxiang@isrc.iscas.ac.cn>
-Link: https://patch.msgid.link/20251213083643.301240-1-lihaoxiang@isrc.iscas.ac.cn
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Signed-off-by: Zhang Heng <zhangheng@kylinos.cn>
+Link: https://patch.msgid.link/20260126014952.3674450-1-zhangheng@kylinos.cn
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/scsi/be2iscsi/be_mgmt.c |    1 +
- 1 file changed, 1 insertion(+)
+ sound/soc/amd/yc/acp6x-mach.c |    8 ++++++++
+ 1 file changed, 8 insertions(+)
 
---- a/drivers/scsi/be2iscsi/be_mgmt.c
-+++ b/drivers/scsi/be2iscsi/be_mgmt.c
-@@ -1025,6 +1025,7 @@ unsigned int beiscsi_boot_get_sinfo(stru
- 					      &nonemb_cmd->dma,
- 					      GFP_KERNEL);
- 	if (!nonemb_cmd->va) {
-+		free_mcc_wrb(ctrl, tag);
- 		mutex_unlock(&ctrl->mbox_lock);
- 		return 0;
- 	}
+--- a/sound/soc/amd/yc/acp6x-mach.c
++++ b/sound/soc/amd/yc/acp6x-mach.c
+@@ -661,6 +661,14 @@ static const struct dmi_system_id yc_acp
+ 			DMI_MATCH(DMI_PRODUCT_NAME, "GOH-X"),
+ 		}
+ 	},
++	{
++		.driver_data = &acp6x_card,
++		.matches = {
++			DMI_MATCH(DMI_BOARD_VENDOR, "RB"),
++			DMI_MATCH(DMI_BOARD_NAME, "XyloD5_RBU"),
++		}
++	},
++
+ 	{}
+ };
+ 
 
 
