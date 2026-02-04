@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 553172417E0;
-	Wed,  4 Feb 2026 14:50:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A3882417E0;
+	Wed,  4 Feb 2026 14:50:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770216633; cv=none; b=kM9WipkRBUSHaXUG/s/C8xq6C17S5Y1hx0RzOLKzv8QK5ZVZ8rnst7n6jDtfZPvJ0PMr9prkyfg3iK3UcZMewuLRPtsno7tUC71xd4QoX77TvHXdhVK5hp57hrljB4+QSbXt7YXfLgturKtaM5UXtmoK7cAke3usZxebmeldUsY=
+	t=1770216636; cv=none; b=bw/CSvF/4a/sculQ/7E79bKQXVsODaCacbdISOAZV5Hct0uweNO5RYxZJjXX0sO1mc2D0H1pXyyPmKWNgTsvuDg1o1HVA4LeDPeztGE/sCANwFvJomOgN0x2Rc38lvdJotApcpnNyLFgoJBB84zBvu1OSRTu+Gx6UgAbAwe7NPw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770216633; c=relaxed/simple;
-	bh=Z8gwROcuNwMK26ERewrsrqalstEH4wAoxra+OwinaEQ=;
+	s=arc-20240116; t=1770216636; c=relaxed/simple;
+	bh=XhHjm0NlmIrH9b13AqHte93VMTBlBrjYujX8r0HUSS8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LtefON7MVwnRXIFNl4xxGnEHxO1hfWYaXJmDZJNVXOn3iG8BhX/VD1T6Q3jccJN7x6D1P3D1bHf6IPvVOMuZ/IwnDfuESWgm6yK3HMTdS6NQ28oGpjziM6IBwRBC+By4BBlUZ0OVGikSHjyd/s2XPt8wFTi3lXajBIw5TX076xM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SBjwA27e; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OEdLUBW/CK8ewUOPtQfS6mRLbB6wOp8XtOM3EFW73xoQ6hDTP83JOTSqcR5IM9AVXJvH26R9bgkvh9hzYmGuJGUI4oYMUpUe1YSKA+7k0gdq4y4kqUXjIwwYGAfzW5/td+JgsmFB681JuezqhNWXO0M5Pw41urdIAwyL3etgodQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=efKlT4E8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SBjwA27e"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6FDEDC116C6;
-	Wed,  4 Feb 2026 14:50:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="efKlT4E8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 98F0DC116C6;
+	Wed,  4 Feb 2026 14:50:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770216632;
-	bh=Z8gwROcuNwMK26ERewrsrqalstEH4wAoxra+OwinaEQ=;
+	s=korg; t=1770216636;
+	bh=XhHjm0NlmIrH9b13AqHte93VMTBlBrjYujX8r0HUSS8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SBjwA27e7Nw7nTOBlhD71avNi85amK0w/FdeK46UFHF9/lj1l7Hugeaw8RwYUye47
-	 Fv36zR0hucEv4/eY+VQ79N7Mo0/ekwlbG8I1Xe1gqGww8ILF7/pW82NAvRx9vVkfVL
-	 2fB27dqBHNDrg2xX32Rfvl56XCYtL+Ah8dgnZajE=
+	b=efKlT4E8LEm2m8BWzH5a9xDFOHVTsmcaaBa2bN/DM+EaBY7ghBwYpak7MX72PUBa4
+	 W9pLnXoQMDEwQ7C2KN8396QtyfPKLQJSo+OCLY/yGxodm/bXHGF9Kelb9315t9LO7c
+	 MViQ+KrwhPfOKRFZzgBOblI91CpwQxZkqe+sXUUc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pedro Demarchi Gomes <pedrodemargomes@gmail.com>,
-	David Hildenbrand <david@redhat.com>,
-	craftfever <craftfever@airmail.cc>,
-	Chengming Zhou <chengming.zhou@linux.dev>,
-	xu xin <xu.xin16@zte.com.cn>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 5.10 147/161] ksm: use range-walk function to jump over holes in scan_get_next_rmap_item
-Date: Wed,  4 Feb 2026 15:40:10 +0100
-Message-ID: <20260204143857.037871981@linuxfoundation.org>
+	Haoxiang Li <lihaoxiang@isrc.iscas.ac.cn>,
+	Felix Kuehling <felix.kuehling@amd.com>,
+	Oak Zeng <Oak.Zeng@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 5.10 148/161] drm/amdkfd: fix a memory leak in device_queue_manager_init()
+Date: Wed,  4 Feb 2026 15:40:11 +0100
+Message-ID: <20260204143857.074979003@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260204143851.755002596@linuxfoundation.org>
 References: <20260204143851.755002596@linuxfoundation.org>
@@ -54,227 +52,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pedro Demarchi Gomes <pedrodemargomes@gmail.com>
+From: Haoxiang Li <lihaoxiang@isrc.iscas.ac.cn>
 
-[ Upstream commit f5548c318d6520d4fa3c5ed6003eeb710763cbc5 ]
+commit 80614c509810fc051312d1a7ccac8d0012d6b8d0 upstream.
 
-Currently, scan_get_next_rmap_item() walks every page address in a VMA to
-locate mergeable pages.  This becomes highly inefficient when scanning
-large virtual memory areas that contain mostly unmapped regions, causing
-ksmd to use large amount of cpu without deduplicating much pages.
+If dqm->ops.initialize() fails, add deallocate_hiq_sdma_mqd()
+to release the memory allocated by allocate_hiq_sdma_mqd().
+Move deallocate_hiq_sdma_mqd() up to ensure proper function
+visibility at the point of use.
 
-This patch replaces the per-address lookup with a range walk using
-walk_page_range().  The range walker allows KSM to skip over entire
-unmapped holes in a VMA, avoiding unnecessary lookups.  This problem was
-previously discussed in [1].
-
-Consider the following test program which creates a 32 TiB mapping in the
-virtual address space but only populates a single page:
-
-/* 32 TiB */
-const size_t size = 32ul * 1024 * 1024 * 1024 * 1024;
-
-int main() {
-        char *area = mmap(NULL, size, PROT_READ | PROT_WRITE,
-                          MAP_NORESERVE | MAP_PRIVATE | MAP_ANON, -1, 0);
-
-        if (area == MAP_FAILED) {
-                perror("mmap() failed\n");
-                return -1;
-        }
-
-        /* Populate a single page such that we get an anon_vma. */
-        *area = 0;
-
-        /* Enable KSM. */
-        madvise(area, size, MADV_MERGEABLE);
-        pause();
-        return 0;
-}
-
-$ ./ksm-sparse  &
-$ echo 1 > /sys/kernel/mm/ksm/run
-
-Without this patch ksmd uses 100% of the cpu for a long time (more then 1
-hour in my test machine) scanning all the 32 TiB virtual address space
-that contain only one mapped page.  This makes ksmd essentially deadlocked
-not able to deduplicate anything of value.  With this patch ksmd walks
-only the one mapped page and skips the rest of the 32 TiB virtual address
-space, making the scan fast using little cpu.
-
-Link: https://lkml.kernel.org/r/20251023035841.41406-1-pedrodemargomes@gmail.com
-Link: https://lkml.kernel.org/r/20251022153059.22763-1-pedrodemargomes@gmail.com
-Link: https://lore.kernel.org/linux-mm/423de7a3-1c62-4e72-8e79-19a6413e420c@redhat.com/ [1]
-Fixes: 31dbd01f3143 ("ksm: Kernel SamePage Merging")
-Signed-off-by: Pedro Demarchi Gomes <pedrodemargomes@gmail.com>
-Co-developed-by: David Hildenbrand <david@redhat.com>
-Signed-off-by: David Hildenbrand <david@redhat.com>
-Reported-by: craftfever <craftfever@airmail.cc>
-Closes: https://lkml.kernel.org/r/020cf8de6e773bb78ba7614ef250129f11a63781@murena.io
-Suggested-by: David Hildenbrand <david@redhat.com>
-Acked-by: David Hildenbrand <david@redhat.com>
-Cc: Chengming Zhou <chengming.zhou@linux.dev>
-Cc: xu xin <xu.xin16@zte.com.cn>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-[ change folio to page, replace pmdp_get_lockless with pmd_read_atomic and pmdp_get with
- READ_ONCE(*pmdp) ]
-Signed-off-by: Pedro Demarchi Gomes <pedrodemargomes@gmail.com>
+Fixes: 11614c36bc8f ("drm/amdkfd: Allocate MQD trunk for HIQ and SDMA")
+Signed-off-by: Haoxiang Li <lihaoxiang@isrc.iscas.ac.cn>
+Signed-off-by: Felix Kuehling <felix.kuehling@amd.com>
+Reviewed-by: Oak Zeng <Oak.Zeng@amd.com>
+Reviewed-by: Felix Kuehling <felix.kuehling@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit b7cccc8286bb9919a0952c812872da1dcfe9d390)
+Cc: stable@vger.kernel.org
+Signed-off-by: Felix Kuehling <felix.kuehling@amd.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/ksm.c |  115 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++------
- 1 file changed, 105 insertions(+), 10 deletions(-)
+ drivers/gpu/drm/amd/amdkfd/kfd_device_queue_manager.c |   18 ++++++++++--------
+ 1 file changed, 10 insertions(+), 8 deletions(-)
 
---- a/mm/ksm.c
-+++ b/mm/ksm.c
-@@ -38,6 +38,7 @@
- #include <linux/freezer.h>
- #include <linux/oom.h>
- #include <linux/numa.h>
-+#include <linux/pagewalk.h>
- 
- #include <asm/tlbflush.h>
- #include "internal.h"
-@@ -2223,6 +2224,89 @@ static struct rmap_item *get_next_rmap_i
- 	return rmap_item;
+--- a/drivers/gpu/drm/amd/amdkfd/kfd_device_queue_manager.c
++++ b/drivers/gpu/drm/amd/amdkfd/kfd_device_queue_manager.c
+@@ -1832,6 +1832,14 @@ static int allocate_hiq_sdma_mqd(struct
+ 	return retval;
  }
  
-+struct ksm_next_page_arg {
-+	struct page *page;
-+	unsigned long addr;
-+};
-+
-+static int ksm_next_page_pmd_entry(pmd_t *pmdp, unsigned long addr, unsigned long end,
-+		struct mm_walk *walk)
++static void deallocate_hiq_sdma_mqd(struct kfd_dev *dev,
++				    struct kfd_mem_obj *mqd)
 +{
-+	struct ksm_next_page_arg *private = walk->private;
-+	struct vm_area_struct *vma = walk->vma;
-+	pte_t *start_ptep = NULL, *ptep, pte;
-+	struct mm_struct *mm = walk->mm;
-+	struct page *page;
-+	spinlock_t *ptl;
-+	pmd_t pmd;
++	WARN(!mqd, "No hiq sdma mqd trunk to free");
 +
-+	if (ksm_test_exit(mm))
-+		return 0;
-+
-+	cond_resched();
-+
-+	pmd = pmd_read_atomic(pmdp);
-+	if (!pmd_present(pmd))
-+		return 0;
-+
-+	if (IS_ENABLED(CONFIG_TRANSPARENT_HUGEPAGE) && pmd_leaf(pmd)) {
-+		ptl = pmd_lock(mm, pmdp);
-+		pmd = READ_ONCE(*pmdp);
-+
-+		if (!pmd_present(pmd)) {
-+			goto not_found_unlock;
-+		} else if (pmd_leaf(pmd)) {
-+			page = vm_normal_page_pmd(vma, addr, pmd);
-+			if (!page)
-+				goto not_found_unlock;
-+
-+			if (is_zone_device_page(page) || !PageAnon(page))
-+				goto not_found_unlock;
-+
-+			page += ((addr & (PMD_SIZE - 1)) >> PAGE_SHIFT);
-+			goto found_unlock;
-+		}
-+		spin_unlock(ptl);
-+	}
-+
-+	start_ptep = pte_offset_map_lock(mm, pmdp, addr, &ptl);
-+	if (!start_ptep)
-+		return 0;
-+
-+	for (ptep = start_ptep; addr < end; ptep++, addr += PAGE_SIZE) {
-+		pte = ptep_get(ptep);
-+
-+		if (!pte_present(pte))
-+			continue;
-+
-+		page = vm_normal_page(vma, addr, pte);
-+		if (!page)
-+			continue;
-+
-+		if (is_zone_device_page(page) || !PageAnon(page))
-+			continue;
-+		goto found_unlock;
-+	}
-+
-+not_found_unlock:
-+	spin_unlock(ptl);
-+	if (start_ptep)
-+		pte_unmap(start_ptep);
-+	return 0;
-+found_unlock:
-+	get_page(page);
-+	spin_unlock(ptl);
-+	if (start_ptep)
-+		pte_unmap(start_ptep);
-+	private->page = page;
-+	private->addr = addr;
-+	return 1;
++	amdgpu_amdkfd_free_gtt_mem(dev->kgd, mqd->gtt_mem);
 +}
 +
-+static struct mm_walk_ops ksm_next_page_ops = {
-+	.pmd_entry = ksm_next_page_pmd_entry,
-+};
-+
- static struct rmap_item *scan_get_next_rmap_item(struct page **page)
+ struct device_queue_manager *device_queue_manager_init(struct kfd_dev *dev)
  {
- 	struct mm_struct *mm;
-@@ -2302,29 +2386,40 @@ next_mm:
- 			ksm_scan.address = vma->vm_end;
+ 	struct device_queue_manager *dqm;
+@@ -1961,19 +1969,13 @@ struct device_queue_manager *device_queu
+ 	if (!dqm->ops.initialize(dqm))
+ 		return dqm;
  
- 		while (ksm_scan.address < vma->vm_end) {
-+			struct ksm_next_page_arg ksm_next_page_arg;
-+			struct page *tmp_page = NULL;
-+			int found;
++	deallocate_hiq_sdma_mqd(dev, &dqm->hiq_sdma_mqd);
 +
- 			if (ksm_test_exit(mm))
- 				break;
--			*page = follow_page(vma, ksm_scan.address, FOLL_GET);
--			if (IS_ERR_OR_NULL(*page)) {
--				ksm_scan.address += PAGE_SIZE;
--				cond_resched();
--				continue;
-+
-+			found = walk_page_range_vma(vma, ksm_scan.address,
-+						    vma->vm_end,
-+						    &ksm_next_page_ops,
-+						    &ksm_next_page_arg);
-+
-+			if (found > 0) {
-+				tmp_page = ksm_next_page_arg.page;
-+				ksm_scan.address = ksm_next_page_arg.addr;
-+			} else {
-+				VM_WARN_ON_ONCE(found < 0);
-+				ksm_scan.address = vma->vm_end - PAGE_SIZE;
- 			}
--			if (PageAnon(*page)) {
--				flush_anon_page(vma, *page, ksm_scan.address);
--				flush_dcache_page(*page);
-+			if (tmp_page) {
-+				flush_anon_page(vma, tmp_page, ksm_scan.address);
-+				flush_dcache_page(tmp_page);
- 				rmap_item = get_next_rmap_item(slot,
- 					ksm_scan.rmap_list, ksm_scan.address);
- 				if (rmap_item) {
- 					ksm_scan.rmap_list =
- 							&rmap_item->rmap_list;
- 					ksm_scan.address += PAGE_SIZE;
-+					*page = tmp_page;
- 				} else
--					put_page(*page);
-+					put_page(tmp_page);
- 				mmap_read_unlock(mm);
- 				return rmap_item;
- 			}
--			put_page(*page);
- 			ksm_scan.address += PAGE_SIZE;
- 			cond_resched();
- 		}
+ out_free:
+ 	kfree(dqm);
+ 	return NULL;
+ }
+ 
+-static void deallocate_hiq_sdma_mqd(struct kfd_dev *dev,
+-				    struct kfd_mem_obj *mqd)
+-{
+-	WARN(!mqd, "No hiq sdma mqd trunk to free");
+-
+-	amdgpu_amdkfd_free_gtt_mem(dev->kgd, mqd->gtt_mem);
+-}
+-
+ void device_queue_manager_uninit(struct device_queue_manager *dqm)
+ {
+ 	dqm->ops.uninitialize(dqm);
 
 
