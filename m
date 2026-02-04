@@ -1,37 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7332E41B34E;
-	Wed,  4 Feb 2026 14:57:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA97941B34E;
+	Wed,  4 Feb 2026 14:57:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770217043; cv=none; b=X69rbwFCSgntIYEEdQj60Wy8c44/vLBO5ruh3jhazz+0rBzN5AaiINg7TL5lgC04/1V/ga0Ub+82L3oNdhDmmCcocoeHSgmM5pbLRJB+dhXwzoug4Vb320RqjbGsWZihot3pLoEMjN6y+SSgaYfJr30pq+WfJ14hfLMGjsw8/NI=
+	t=1770217047; cv=none; b=mRZH2OhbwET4sqZCTZYwefT7RmCoVApUrnJUmMOpkFWWOoqLd8dvhA5vwWEZR8Or7XzvxHrFmZOq4xSBalTkn15r+GhDziw/ri7nAJOdU0pYqLikYuk9jPZMw+/iRpSyxxLJU4UVnsfJPdKHhAMCMQE1wjvtXDD4rbEBreA1NsM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770217043; c=relaxed/simple;
-	bh=+U753IKr8Ucm76H0tiazudaWcSAAklV0ggiJEVMZ/Qo=;
+	s=arc-20240116; t=1770217047; c=relaxed/simple;
+	bh=SltRR6u2RYLJRVn9ycnQol71FaojWUVzKbCd2ikfEoY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GkdprGdyc3b+ec6fZGTxWiT/fiSg1lEZaRuHmF8hy+vuTXbuNYscq/q3QDAnLdcBY+IhYDnGreHNvE4lcQVh25B1g0m9K2W2uTxLypJrXENS9emr5pgr7bxiL9yIKhXPPZSym1cKxj+Z5IUMTJSuAUt8cQ4INRDvmNKav4bi4Lk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Re5KxcRO; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=lyDyQHi5yEOV4nKceWTdw4zsR0VnziaMzjdeXpThuTC4+XmWlUu7O3F3wa1hVyAx7djgIbmk16KVQHW5aY0F4lk2cQ3zgnL0apv89PK/1KsQLQ91DC93nR9CGTWytmzAYNOBLOX6p+ZQ92Jq+DEINgOW3T9v7DWPiV3BAxspOLM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nm92qH7B; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Re5KxcRO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3CB1C4CEF7;
-	Wed,  4 Feb 2026 14:57:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nm92qH7B"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5AC88C4CEF7;
+	Wed,  4 Feb 2026 14:57:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770217043;
-	bh=+U753IKr8Ucm76H0tiazudaWcSAAklV0ggiJEVMZ/Qo=;
+	s=korg; t=1770217046;
+	bh=SltRR6u2RYLJRVn9ycnQol71FaojWUVzKbCd2ikfEoY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Re5KxcROrAODl/7ipqbE5le4kA1fIwCo3sIBfxUd2mI51Ssb4MddMDLtq/N01iE+p
-	 nOCz+TZ0Q6bqoDtBwC0ff080A1O7ME10DYeFB9F5kkSD0yme2xP4gwjpAeLEWZj6Qb
-	 vLewMYBCzRD5DwAyUkrUBOcEtGDq+brqfqGLPs00=
+	b=nm92qH7Bwat66z8vP/xkaD5C5bu3ZSNSVMefdD9ALbAwAhrIs8a2mEbIgmFI5ZAA4
+	 6g9MGLo2iGJ920sU/nqszF8sHFtIH3EA/tpk4totoHaFVT342KzrMErTqNFnp74af9
+	 9HyAwd3IHznhdyFA+SHZZU5rFEbpfSvirC/nMAVg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Weigang He <geoffreyhe2@gmail.com>,
-	"Rob Herring (Arm)" <robh@kernel.org>
-Subject: [PATCH 5.15 107/206] of: fix reference count leak in of_alias_scan()
-Date: Wed,  4 Feb 2026 15:38:58 +0100
-Message-ID: <20260204143902.062765487@linuxfoundation.org>
+	Andy Shevchenko <andriy.shevchenko@intel.com>,
+	=?UTF-8?q?Nuno=20S=C3=A1?= <nuno.sa@analog.com>,
+	David Lechner <dlechner@baylibre.com>,
+	Tomas Melin <tomas.melin@vaisala.com>,
+	Stable@vger.kernel.org,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Subject: [PATCH 5.15 108/206] iio: adc: ad9467: fix ad9434 vref mask
+Date: Wed,  4 Feb 2026 15:38:59 +0100
+Message-ID: <20260204143902.098235609@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260204143858.193781818@linuxfoundation.org>
 References: <20260204143858.193781818@linuxfoundation.org>
@@ -44,55 +48,44 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Weigang He <geoffreyhe2@gmail.com>
+From: Tomas Melin <tomas.melin@vaisala.com>
 
-commit 81122fba08fa3ccafab6ed272a5c6f2203923a7e upstream.
+commit 92452b1760ff2d1d411414965d4d06f75e1bda9a upstream.
 
-of_find_node_by_path() returns a device_node with its refcount
-incremented. When kstrtoint() fails or dt_alloc() fails, the function
-continues to the next iteration without calling of_node_put(), causing
-a reference count leak.
+The mask setting is 5 bits wide for the ad9434
+(ref. data sheet register 0x18 FLEX_VREF). Apparently the settings
+from ad9265 were copied by mistake when support for the device was added
+to the driver.
 
-Add of_node_put(np) before continue on both error paths to properly
-release the device_node reference.
-
-Fixes: 611cad720148 ("dt: add of_alias_scan and of_alias_get_id")
-Cc: stable@vger.kernel.org
-Signed-off-by: Weigang He <geoffreyhe2@gmail.com>
-Link: https://patch.msgid.link/20260117091238.481243-1-geoffreyhe2@gmail.com
-Signed-off-by: Rob Herring (Arm) <robh@kernel.org>
+Fixes: 4606d0f4b05f ("iio: adc: ad9467: add support for AD9434 high-speed ADC")
+Reviewed-by: Andy Shevchenko <andriy.shevchenko@intel.com>
+Reviewed-by: Nuno Sá <nuno.sa@analog.com>
+Reviewed-by: David Lechner <dlechner@baylibre.com>
+Signed-off-by: Tomas Melin <tomas.melin@vaisala.com>
+Cc: <Stable@vger.kernel.org>
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/of/base.c |    8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ drivers/iio/adc/ad9467.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/of/base.c
-+++ b/drivers/of/base.c
-@@ -2018,13 +2018,17 @@ void of_alias_scan(void * (*dt_alloc)(u6
- 			end--;
- 		len = end - start;
+--- a/drivers/iio/adc/ad9467.c
++++ b/drivers/iio/adc/ad9467.c
+@@ -90,7 +90,7 @@
  
--		if (kstrtoint(end, 10, &id) < 0)
-+		if (kstrtoint(end, 10, &id) < 0) {
-+			of_node_put(np);
- 			continue;
-+		}
+ #define CHIPID_AD9434			0x6A
+ #define AD9434_DEF_OUTPUT_MODE		0x00
+-#define AD9434_REG_VREF_MASK		0xC0
++#define AD9434_REG_VREF_MASK		GENMASK(4, 0)
  
- 		/* Allocate an alias_prop with enough space for the stem */
- 		ap = dt_alloc(sizeof(*ap) + len + 1, __alignof__(*ap));
--		if (!ap)
-+		if (!ap) {
-+			of_node_put(np);
- 			continue;
-+		}
- 		memset(ap, 0, sizeof(*ap) + len + 1);
- 		ap->alias = start;
- 		of_alias_add(ap, np, id, start, len);
+ /*
+  * Analog Devices AD9467 16-Bit, 200/250 MSPS ADC
 
 
