@@ -1,37 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1DA29426685;
-	Wed,  4 Feb 2026 15:06:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48966426689;
+	Wed,  4 Feb 2026 15:06:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770217579; cv=none; b=SrXi2J4c9ZnjJw1cnS5/KGOPeMyfK93W5bTy9WQ6p7lE8h3XkOsNQZPZVkFq4OB5iu+ZU7t3pgTM2c97BKAqIicWuHNbYwFUWi6ii0UVFjWYE8go8fDGPZRQ32YM64hnVlH7c0gEvBpjcwp94j6deLNVAlvKm7EwIXb+rMpjW5k=
+	t=1770217582; cv=none; b=Lm974L90Ny5IxekvvTt2wcphW0RvIFAFrYgcklVn3tPuz3dHQiaFuYHaGMrTkrA9eTDx1wRH0Q2MNu7OaEjE24b923oJ2yAknu/iNjt3CN1ISrhrf8E7eTor4ka19j35MDgrydK8m3DBVfLZUJAMxCGKWgPrk61fnWGSNWv/kvE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770217579; c=relaxed/simple;
-	bh=2KAQxQXv8mKjhKuSPrBhwb552ugkjJvwZs0kg8X6urE=;
+	s=arc-20240116; t=1770217582; c=relaxed/simple;
+	bh=XLNhqVR+lsN8C92JfVxzTP+gF/pr7uQoxWmMkwVq/pU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KAOCzPA69f/iTkpOJZS6peXcbA6/Gmxf15QKq8S3vZi9mM69rOdofZpiqDsMG8lgeMP8NCiY8V0movCtw4Qjos+o3LitCREDXhDGPQsJOuPl4lIrxUiLnCncAeeT6i/GFhg4En7VxyquWjwIS39u1z/rHykCxj+JGnrigRDr3Mo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BxO1ifb2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=smB7G7/mSBg5xu5Ng7wCGOBR1N2Asls059tjCdu9L6MkL9Da6l6PMZ8oJSL9/BIKOIUiZjMOPPw9Gu7fleYKxsKJNu1QBeA3rrBmTHaihYaJPg5R2gvpsQLmuYjzamIhoa4yzVEZkQrFjzpayAYFdujEZqDpg+JTNAOraB6kl8c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=udEMXEhY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BxO1ifb2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 856C5C4CEF7;
-	Wed,  4 Feb 2026 15:06:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="udEMXEhY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ABE4FC4CEF7;
+	Wed,  4 Feb 2026 15:06:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770217579;
-	bh=2KAQxQXv8mKjhKuSPrBhwb552ugkjJvwZs0kg8X6urE=;
+	s=korg; t=1770217582;
+	bh=XLNhqVR+lsN8C92JfVxzTP+gF/pr7uQoxWmMkwVq/pU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BxO1ifb2rkFssHgK85NUfpKerdc67bIYpUlzHtnp0BMNllpInLz7AYG1GhpCmNMA9
-	 dlAWy1NUGQ6Vsc4SSFTCPQTQnjUs4I5PCEFRzQySSLRtg/TNXgQmIisvPqLAzl2wuP
-	 Ya3+MtOjkBL32Y3HsmDqxdwJVMFZIvUTK3QwmwMI=
+	b=udEMXEhY6sBAbqsGsPTKAIyshpSDQ0qNDuraKi6FYeQ/RcwTLvpIpFsQ36PE8ODaf
+	 Wk2ZudP2muVgbsbxv1blMWughpbO90iQEnu0SgREOi+XdsnVKhRNIOHGKAF+mWG5Rp
+	 aCnauDC/3DiaEtwUpeTxSyqY5UD9tuYO499m0t64=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ulrich Mohr <u.mohr@semex-engcon.com>,
-	Johan Hovold <johan@kernel.org>
-Subject: [PATCH 6.1 050/280] USB: serial: option: add Telit LE910 MBIM composition
-Date: Wed,  4 Feb 2026 15:37:04 +0100
-Message-ID: <20260204143911.436746077@linuxfoundation.org>
+	Aboorva Devarajan <aboorvad@linux.ibm.com>,
+	Michal Hocko <mhocko@suse.com>,
+	Brendan Jackman <jackmanb@google.com>,
+	Johannes Weiner <hannes@cmpxchg.org>,
+	Suren Baghdasaryan <surenb@google.com>,
+	Vlastimil Babka <vbabka@suse.cz>,
+	Zi Yan <ziy@nvidia.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.1 059/280] mm/page_alloc: make percpu_pagelist_high_fraction reads lock-free
+Date: Wed,  4 Feb 2026 15:37:13 +0100
+Message-ID: <20260204143911.776218429@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260204143909.614719725@linuxfoundation.org>
 References: <20260204143909.614719725@linuxfoundation.org>
@@ -50,62 +56,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ulrich Mohr <u.mohr@semex-engcon.com>
+From: Aboorva Devarajan <aboorvad@linux.ibm.com>
 
-commit 8af4274ab5999831f4757dfd5bd11665ba3b1569 upstream.
+commit b9efe36b5e3eb2e91aa3d706066428648af034fc upstream.
 
-Add support for Telit LE910 module when operating in MBIM composition
-with additional ttys. This USB product ID is used by the module
-when AT#USBCFG is set to 7.
+When page isolation loops indefinitely during memory offline, reading
+/proc/sys/vm/percpu_pagelist_high_fraction blocks on pcp_batch_high_lock,
+causing hung task warnings.
 
-0x1252: MBIM + tty(NMEA) + tty(MODEM) + tty(MODEM) + SAP
+Make procfs reads lock-free since percpu_pagelist_high_fraction is a
+simple integer with naturally atomic reads, writers still serialize via
+the mutex.
 
-T:  Bus=01 Lev=01 Prnt=01 Port=01 Cnt=01 Dev#=  2 Spd=480  MxCh= 0
-D:  Ver= 2.00 Cls=ef(misc ) Sub=02 Prot=01 MxPS=64 #Cfgs=  1
-P:  Vendor=1bc7 ProdID=1252 Rev=03.18
-S:  Manufacturer=Android
-S:  Product=LE910C1-EU
-S:  SerialNumber=0123456789ABCDEF
-C:  #Ifs= 6 Cfg#= 1 Atr=a0 MxPwr=500mA
-I:  If#= 0 Alt= 0 #EPs= 1 Cls=02(commc) Sub=0e Prot=00 Driver=cdc_mbim
-E:  Ad=82(I) Atr=03(Int.) MxPS=  64 Ivl=32ms
-I:  If#= 1 Alt= 1 #EPs= 2 Cls=0a(data ) Sub=00 Prot=02 Driver=cdc_mbim
-E:  Ad=01(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=81(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-I:  If#= 2 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
-E:  Ad=02(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=83(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=84(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
-I:  If#= 3 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
-E:  Ad=03(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=85(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=86(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
-I:  If#= 4 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
-E:  Ad=04(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=87(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=88(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
-I:  If#= 5 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
-E:  Ad=05(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=89(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=8a(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
+This prevents hung task warnings when reading the procfs file during
+long-running memory offline operations.
 
-Signed-off-by: Ulrich Mohr <u.mohr@semex-engcon.com>
-Cc: stable@vger.kernel.org
-Signed-off-by: Johan Hovold <johan@kernel.org>
+[akpm@linux-foundation.org: add comment, per Michal]
+  Link: https://lkml.kernel.org/r/aS_y9AuJQFydLEXo@tiehlicka
+Link: https://lkml.kernel.org/r/20251201060009.1420792-1-aboorvad@linux.ibm.com
+Signed-off-by: Aboorva Devarajan <aboorvad@linux.ibm.com>
+Acked-by: Michal Hocko <mhocko@suse.com>
+Cc: Brendan Jackman <jackmanb@google.com>
+Cc: Johannes Weiner <hannes@cmpxchg.org>
+Cc: Suren Baghdasaryan <surenb@google.com>
+Cc: Vlastimil Babka <vbabka@suse.cz>
+Cc: Zi Yan <ziy@nvidia.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/serial/option.c |    1 +
- 1 file changed, 1 insertion(+)
+ mm/page_alloc.c |   10 +++++++++-
+ 1 file changed, 9 insertions(+), 1 deletion(-)
 
---- a/drivers/usb/serial/option.c
-+++ b/drivers/usb/serial/option.c
-@@ -1505,6 +1505,7 @@ static const struct usb_device_id option
- 	{ USB_DEVICE_INTERFACE_CLASS(TELIT_VENDOR_ID, 0x1231, 0xff),	/* Telit LE910Cx (RNDIS) */
- 	  .driver_info = NCTRL(2) | RSVD(3) },
- 	{ USB_DEVICE_AND_INTERFACE_INFO(TELIT_VENDOR_ID, 0x1250, 0xff, 0x00, 0x00) },	/* Telit LE910Cx (rmnet) */
-+	{ USB_DEVICE_INTERFACE_CLASS(TELIT_VENDOR_ID, 0x1252, 0xff) },	/* Telit LE910Cx (MBIM) */
- 	{ USB_DEVICE(TELIT_VENDOR_ID, 0x1260),
- 	  .driver_info = NCTRL(0) | RSVD(1) | RSVD(2) },
- 	{ USB_DEVICE(TELIT_VENDOR_ID, 0x1261),
+--- a/mm/page_alloc.c
++++ b/mm/page_alloc.c
+@@ -9067,11 +9067,19 @@ int percpu_pagelist_high_fraction_sysctl
+ 	int old_percpu_pagelist_high_fraction;
+ 	int ret;
+ 
++	/*
++	 * Avoid using pcp_batch_high_lock for reads as the value is read
++	 * atomically and a race with offlining is harmless.
++	 */
++
++	if (!write)
++		return proc_dointvec_minmax(table, write, buffer, length, ppos);
++
+ 	mutex_lock(&pcp_batch_high_lock);
+ 	old_percpu_pagelist_high_fraction = percpu_pagelist_high_fraction;
+ 
+ 	ret = proc_dointvec_minmax(table, write, buffer, length, ppos);
+-	if (!write || ret < 0)
++	if (ret < 0)
+ 		goto out;
+ 
+ 	/* Sanity checking to avoid pcp imbalance */
 
 
