@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C398B421A1E;
-	Wed,  4 Feb 2026 15:12:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08782421EE1;
+	Wed,  4 Feb 2026 15:12:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770217963; cv=none; b=W7fEFEQin9/bPbAQ8pvve03A3UPkLlcIQ/0qQxt3jRzYUhgWyr9/25fGaMA2kCfAQIFfUjZAByGVem2XDjTOQp7298jZ81Ukr1B0jdY/EfqE0urQFKRsGmPh1l8D2w+naBR8wG6O20Yp9NI6OeAX2lG6lLwc5jW1rXx2IQ7YO3w=
+	t=1770217967; cv=none; b=AIXzv/5S12ROy6XeYJux2puEvP60N7+/jScYbxWZMR3+eUegzJbVkvy4d1boHfvhED6uov23r9XqDdC9kU9vWFb5w2AWI8OsCbU9LHGeCwDSp3+t44IM3svt1hCX25AxJyijdVTz1IxbJSRRv7Aa4JwQCoA/1ZT/4AP9iqXZVaQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770217963; c=relaxed/simple;
-	bh=dwDOluOPZTbvkshn0yxunMWc4Fb37gvnVbEiWFZUxrQ=;
+	s=arc-20240116; t=1770217967; c=relaxed/simple;
+	bh=Sj2ajQLaN/5SAwaPBIXc1zmTAm0w0XHdrb8NUCHIizE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZlPAiy9iSntTk0m6w4fApUc+r4WM4v8IfV+fcVtMb2LC3qqFzlROFG/ebmEDE9nhPacOsw2z3NVieaMckKCjY3kf19Jdd72/7g28MeRZ4K6FqS+OGRxMxJLeYRjxKb03POyzErSYC8iwL/EAXbk95sCZOwYDv3zJB79RqETPV8c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NF9jUmiB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pAlMs3BfyKO3urmDHNjaDmEzM5MZnmoz5tHOeuD/bB5fKgrAGbfHJP7KpwssiyAkK0vuYJnMAgFORCjV6ZuhPxvRk3NvEcmSDspkItS8ClskBCkSgq/4c+7+tOMlk3kaTjQRyFsDebyxSQu9eiiFOIKMOH3xGxtMhZW62oLLt7c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xG1Ow7Ai; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NF9jUmiB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E1FBC4CEF7;
-	Wed,  4 Feb 2026 15:12:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xG1Ow7Ai"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6DD3CC4CEF7;
+	Wed,  4 Feb 2026 15:12:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770217963;
-	bh=dwDOluOPZTbvkshn0yxunMWc4Fb37gvnVbEiWFZUxrQ=;
+	s=korg; t=1770217966;
+	bh=Sj2ajQLaN/5SAwaPBIXc1zmTAm0w0XHdrb8NUCHIizE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NF9jUmiB6uPScnlqKPEt5UdwozxqR8VBj5mSfKMoN8gFoJY+0o7nwMbBj19F/CAxW
-	 uIrUABEuLpdZh2DlDfoMd7faAL/8Nen7NpL7bwrFWKhsnH2vWKnpJHVPzmLK9l+pK2
-	 4KwFnYDapCHtqmblEqiiCtzYlwXhSAUaxOPl0HXY=
+	b=xG1Ow7Ai1MTKDOULc+xUXnP9EvuW3qZCLAPTYXghwNAcqCwBRN2TKugnO2ScmgTsi
+	 xtTsFN0vt1Go2RI73ixWLXXMsuuyJN8NY90PYRUuqzkh3FmBNbFMdYVVpPvkw/MTr1
+	 gICSs12HHPZB+z1cOcJZo3qsTh6xGgmL2ffXR5sI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
-	Ma Ke <make24@iscas.ac.cn>,
-	Johan Hovold <johan@kernel.org>
-Subject: [PATCH 6.1 172/280] intel_th: fix device leak on output open()
-Date: Wed,  4 Feb 2026 15:39:06 +0100
-Message-ID: <20260204143915.810855198@linuxfoundation.org>
+	Wenkai Lin <linwenkai6@hisilicon.com>,
+	Chenghai Huang <huangchenghai2@huawei.com>,
+	Zhangfei Gao <zhangfei.gao@linaro.org>
+Subject: [PATCH 6.1 173/280] uacce: fix cdev handling in the cleanup path
+Date: Wed,  4 Feb 2026 15:39:07 +0100
+Message-ID: <20260204143915.847359425@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260204143909.614719725@linuxfoundation.org>
 References: <20260204143909.614719725@linuxfoundation.org>
@@ -51,69 +51,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johan Hovold <johan@kernel.org>
+From: Wenkai Lin <linwenkai6@hisilicon.com>
 
-commit 95fc36a234da24bbc5f476f8104a5a15f99ed3e3 upstream.
+commit a3bece3678f6c88db1f44c602b2a63e84b4040ac upstream.
 
-Make sure to drop the reference taken when looking up the th device
-during output device open() on errors and on close().
+When cdev_device_add fails, it internally releases the cdev memory,
+and if cdev_device_del is then executed, it will cause a hang error.
+To fix it, we check the return value of cdev_device_add() and clear
+uacce->cdev to avoid calling cdev_device_del in the uacce_remove.
 
-Note that a recent commit fixed the leak in a couple of open() error
-paths but not all of them, and the reference is still leaking on
-successful open().
-
-Fixes: 39f4034693b7 ("intel_th: Add driver infrastructure for Intel(R) Trace Hub devices")
-Fixes: 6d5925b667e4 ("intel_th: Fix error handling in intel_th_output_open")
-Cc: stable@vger.kernel.org	# 4.4: 6d5925b667e4
-Cc: Alexander Shishkin <alexander.shishkin@linux.intel.com>
-Cc: Ma Ke <make24@iscas.ac.cn>
-Signed-off-by: Johan Hovold <johan@kernel.org>
-Link: https://patch.msgid.link/20251208153524.68637-2-johan@kernel.org
+Fixes: 015d239ac014 ("uacce: add uacce driver")
+Cc: stable@vger.kernel.org
+Signed-off-by: Wenkai Lin <linwenkai6@hisilicon.com>
+Signed-off-by: Chenghai Huang <huangchenghai2@huawei.com>
+Acked-by: Zhangfei Gao <zhangfei.gao@linaro.org>
+Link: https://patch.msgid.link/20251202061256.4158641-2-huangchenghai2@huawei.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hwtracing/intel_th/core.c |   19 ++++++++++++++++---
- 1 file changed, 16 insertions(+), 3 deletions(-)
+ drivers/misc/uacce/uacce.c |    8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
---- a/drivers/hwtracing/intel_th/core.c
-+++ b/drivers/hwtracing/intel_th/core.c
-@@ -810,9 +810,12 @@ static int intel_th_output_open(struct i
- 	int err;
- 
- 	dev = bus_find_device_by_devt(&intel_th_bus, inode->i_rdev);
--	if (!dev || !dev->driver) {
-+	if (!dev)
-+		return -ENODEV;
+--- a/drivers/misc/uacce/uacce.c
++++ b/drivers/misc/uacce/uacce.c
+@@ -500,6 +500,8 @@ EXPORT_SYMBOL_GPL(uacce_alloc);
+  */
+ int uacce_register(struct uacce_device *uacce)
+ {
++	int ret;
 +
-+	if (!dev->driver) {
- 		err = -ENODEV;
--		goto out_no_device;
-+		goto out_put_device;
- 	}
+ 	if (!uacce)
+ 		return -ENODEV;
  
- 	thdrv = to_intel_th_driver(dev->driver);
-@@ -836,12 +839,22 @@ static int intel_th_output_open(struct i
+@@ -510,7 +512,11 @@ int uacce_register(struct uacce_device *
+ 	uacce->cdev->ops = &uacce_fops;
+ 	uacce->cdev->owner = THIS_MODULE;
  
- out_put_device:
- 	put_device(dev);
--out_no_device:
+-	return cdev_device_add(uacce->cdev, &uacce->dev);
++	ret = cdev_device_add(uacce->cdev, &uacce->dev);
++	if (ret)
++		uacce->cdev = NULL;
 +
- 	return err;
++	return ret;
  }
- 
-+static int intel_th_output_release(struct inode *inode, struct file *file)
-+{
-+	struct intel_th_device *thdev = file->private_data;
-+
-+	put_device(&thdev->dev);
-+
-+	return 0;
-+}
-+
- static const struct file_operations intel_th_output_fops = {
- 	.open	= intel_th_output_open,
-+	.release = intel_th_output_release,
- 	.llseek	= noop_llseek,
- };
+ EXPORT_SYMBOL_GPL(uacce_register);
  
 
 
