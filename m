@@ -1,103 +1,68 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54B633EF0C3;
-	Thu,  5 Feb 2026 14:06:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5267F3DA7C5;
+	Thu,  5 Feb 2026 14:07:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770300389; cv=none; b=HCHjElV/rYhBCnmKsQMG9sHnHJaxKezz6paGCAI9d/7bS3a+sys5ehnu4bHgBUoOClsxvaq5MDeohN7NlZ2uSUlwJytSy767bi7YW6nyn+tOZ5eOOpwXy61nG6iR1olPCeTBmoXvcsvacG3Fw7CeYbvXf/gPO1BjvMeAtL+qBjc=
+	t=1770300426; cv=none; b=FsXeoja+qBOSKZBSJK81Ss13K/3vkfNzH/Tc1aw2F4vKcHXh1X4J4lhQ2C7rD/7gnX8N0auv7HcfeW/hW3IQLzziSdEH2iUNFAtxtwv/HiqDdHBziFkFRh5Yxwk8gy5O0c3N/h4/uvI46YYaMUak77OGK4rfDB4g3VxGxpuKCck=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770300389; c=relaxed/simple;
-	bh=Kp1IlxE0CR1DcVOJJSGnomgR9IVWBXNDq5XKUGX23MA=;
+	s=arc-20240116; t=1770300426; c=relaxed/simple;
+	bh=7NEGpyQ6Lj6yAwCqq7FQ98oePxaVTsZ4DvuAMrCgyRE=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=HMPd5BWDvE6JRR0/sRtbhviSb3/bG614eqCSY8538CIZ4S/ELKpx/01PCQbJTNm5NmZoShgu3FJMwknUDckpv169isPgUYulwqPRJeULaNoOjeH/VdJ35Eeo7Zz7GsXmcsaaCWK/J6wHkUA/c3mF/Lqf4pnokf5Zid1hKk509AA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=d8WJek5O; arc=none smtp.client-ip=10.30.226.201
+	 Content-Type:Content-Disposition:In-Reply-To; b=ChalNScbbJ1U8z9BYzYoaaZgKLhFYXWFozsTWCDAh1Yeq+Sm7+nlGu1sykSppyFJ5FX8CxAU3IqrpQNBCCE2Yyu/DA8muHg9Wt52RlIYYdKO5rauLY5NDo7S49iXC6AVSVRCTRdrHtosaHv9R4Dqggq6adhjBlvkxM4GLgNsdUc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RBHW7shd; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="d8WJek5O"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9AF59C4CEF7;
-	Thu,  5 Feb 2026 14:06:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RBHW7shd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F2BBC4CEF7;
+	Thu,  5 Feb 2026 14:07:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770300389;
-	bh=Kp1IlxE0CR1DcVOJJSGnomgR9IVWBXNDq5XKUGX23MA=;
+	s=korg; t=1770300425;
+	bh=7NEGpyQ6Lj6yAwCqq7FQ98oePxaVTsZ4DvuAMrCgyRE=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=d8WJek5OMLLHzWN5sihBk/O6od7+gwX8l3k4yPi5pMre7v227U4kjqr49CIigINPw
-	 vfBGuvEvdvlWlOCeUs7iNB3LAluAtyDAX2t7m23cvDCenrMalXg6kjGYCn+UZ46eC3
-	 gzcKZhJDZNS/cYcXMXk3KT2RcDcfaFgEWnr5BeVs=
-Date: Thu, 5 Feb 2026 15:06:26 +0100
+	b=RBHW7shdL89cRWK+mvuq2qmzyeuAK2Uz2iWMXVacfwszvjgaTXHWdwZE1xIrVfFk8
+	 lECSKLEwjOsIjuq8x0bTpWbePK+4FjliqL13U1XAOzakVhaU0jgPRff5erki0Om37e
+	 MgDM7IzL5091nveqJWna4IpAbM3n2LtybFHjS8/E=
+Date: Thu, 5 Feb 2026 15:07:02 +0100
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: David Sterba <dsterba@suse.cz>
-Cc: Ben Hutchings <ben@decadent.org.uk>, stable@vger.kernel.org,
-	patches@lists.linux.dev, Filipe Manana <fdmanana@suse.com>,
-	Qu Wenruo <wqu@suse.com>, David Sterba <dsterba@suse.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: Re: [PATCH 5.10 004/161] btrfs: send: check for inline extents in
- range_is_hole_in_parent()
-Message-ID: <2026020514-oat-plant-b273@gregkh>
-References: <20260204143851.755002596@linuxfoundation.org>
- <20260204143851.919366239@linuxfoundation.org>
- <03a74299797f4864d0e563cd9517276f690a4bf0.camel@decadent.org.uk>
- <20260205135118.GX26902@suse.cz>
+To: Pimyn Girgis <pimyn@google.com>
+Cc: Nathan Chancellor <nathan@kernel.org>, stable@vger.kernel.org,
+	patches@lists.linux.dev, Alexander Potapenko <glider@google.com>,
+	Dmitry Vyukov <dvyukov@google.com>, Marco Elver <elver@google.com>,
+	Ernesto Martnez Garca <ernesto.martinezgarcia@tugraz.at>,
+	Kees Cook <kees@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: Re: [PATCH 5.15 195/206] mm/kfence: randomize the freelist on
+ initialization
+Message-ID: <2026020547-synergy-till-6a1f@gregkh>
+References: <20260204143858.193781818@linuxfoundation.org>
+ <20260204143905.245830999@linuxfoundation.org>
+ <20260204184810.GA2715873@ax162>
+ <CAJWNTGz0Yd4W3piDT5RFzmmKPhcUaNu0pSEgMOF3U0FmfsyzVA@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20260205135118.GX26902@suse.cz>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CAJWNTGz0Yd4W3piDT5RFzmmKPhcUaNu0pSEgMOF3U0FmfsyzVA@mail.gmail.com>
 
-On Thu, Feb 05, 2026 at 02:51:18PM +0100, David Sterba wrote:
-> On Wed, Feb 04, 2026 at 07:28:42PM +0100, Ben Hutchings wrote:
-> > On Wed, 2026-02-04 at 15:37 +0100, Greg Kroah-Hartman wrote:
-> > > 5.10-stable review patch.  If anyone has any objections, please let me know.
-> > > 
-> > > ------------------
-> > > 
-> > > From: Qu Wenruo <wqu@suse.com>
-> > > 
-> > > [ Upstream commit 08b096c1372cd69627f4f559fb47c9fb67a52b39 ]
-> > > 
-> > > Before accessing the disk_bytenr field of a file extent item we need
-> > > to check if we are dealing with an inline extent.
-> > > This is because for inline extents their data starts at the offset of
-> > > the disk_bytenr field. So accessing the disk_bytenr
-> > > means we are accessing inline data or in case the inline data is less
-> > > than 8 bytes we can actually cause an invalid
-> > > memory access if this inline extent item is the first item in the leaf
-> > > or access metadata from other items.
-> > > 
-> > > Fixes: 82bfb2e7b645 ("Btrfs: incremental send, fix unnecessary hole writes for sparse files")
-> > > Reviewed-by: Filipe Manana <fdmanana@suse.com>
-> > > Signed-off-by: Qu Wenruo <wqu@suse.com>
-> > > Reviewed-by: David Sterba <dsterba@suse.com>
-> > > Signed-off-by: David Sterba <dsterba@suse.com>
-> > > Signed-off-by: Sasha Levin <sashal@kernel.org>
-> > > ---
-> > >  fs/btrfs/send.c | 2 ++
-> > >  1 file changed, 2 insertions(+)
-> > > 
-> > > diff --git a/fs/btrfs/send.c b/fs/btrfs/send.c
-> > > index d86b4d13cae48..f144171ed6b7e 100644
-> > > --- a/fs/btrfs/send.c
-> > > +++ b/fs/btrfs/send.c
-> > > @@ -5892,6 +5892,8 @@ static int range_is_hole_in_parent(struct send_ctx *sctx,
-> > >  		extent_end = btrfs_file_extent_end(path);
-> > >  		if (extent_end <= start)
-> > >  			goto next;
-> > > +		if (btrfs_file_extent_type(leaf, fi) == BTRFS_FILE_EXTENT_INLINE)
-> > > +			return 0;
-> > 
-> > This will leak path, unless (at least) commits 4c74a32ad323 "btrfs:
-> > DEFINE_FREE for struct btrfs_path" and 4ca6f24a52c4 "btrfs: more trivial
-> > BTRFS_PATH_AUTO_FREE conversions" are also backported.
-> > 
-> > That could be avoided by using { ret = 0; goto out; } here instead of
-> > simply returning.
+On Thu, Feb 05, 2026 at 10:13:48AM +0100, Pimyn Girgis wrote:
+> On Wed, Feb 4, 2026 at 7:48 PM Nathan Chancellor <nathan@kernel.org> wrote:
+> > This introduces a new instance of -Wsometimes-uninitialized, as pointed
+> > out by this KernelCI report:
+> >
+> > https://lore.kernel.org/177022794292.7001.3716577555750776270@22d5995788c3/
 > 
-> Right, the original patch assumes the automatic cleanup of btrfs_path, so
-> for anything below it needs to be updated as you say.
+> Thanks! I'll be sending a V2 shortly.
+> 
 
-Thanks for the review, I'll go drop this from all of the queues now.
+Ok, will drop this one for now and wait for the new one for the next -rc
+cycle.
+
+thanks,
 
 greg k-h
