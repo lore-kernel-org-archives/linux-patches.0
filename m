@@ -1,106 +1,103 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A4293ECBF7;
-	Thu,  5 Feb 2026 14:01:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54B633EF0C3;
+	Thu,  5 Feb 2026 14:06:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770300086; cv=none; b=rprCGFFwxLGFClf9N1VOYlQBbWmeTdLmIOPAm48WeXhn+RKX9pVA9IacJ9KM5m4SKWNu0fdwsi+UKVCNMPMiuViO0laBUjR/EUlgkSvfeQm5SS7TPxB3tdwj1NM+6W4M33AZ8dFOsi0XjqyQjwvukqegkvF4k1H2Y3kHFNIBYXg=
+	t=1770300389; cv=none; b=HCHjElV/rYhBCnmKsQMG9sHnHJaxKezz6paGCAI9d/7bS3a+sys5ehnu4bHgBUoOClsxvaq5MDeohN7NlZ2uSUlwJytSy767bi7YW6nyn+tOZ5eOOpwXy61nG6iR1olPCeTBmoXvcsvacG3Fw7CeYbvXf/gPO1BjvMeAtL+qBjc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770300086; c=relaxed/simple;
-	bh=zQqDDHO3edTEQV6rHB9E0a7k1wOd322d2OJc0Fxsd0U=;
+	s=arc-20240116; t=1770300389; c=relaxed/simple;
+	bh=Kp1IlxE0CR1DcVOJJSGnomgR9IVWBXNDq5XKUGX23MA=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=R+ErEJE76S3gEOYfI+L086d+7lRq6jYAvzMOmx993Is2lRLnl5Zspcf0taSyPHrx7jCfHFFO0B6VenHUl+LIc9TdDQxVdLOhpp3O/X0IGjRJLay5nmiVdfaaq4GnrXP6csPnbLHk/yAMAvGRnyquLpaRw8G0Uj8+NexKnkqpcyQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bmQprvlr; arc=none smtp.client-ip=10.30.226.201
+	 Content-Type:Content-Disposition:In-Reply-To; b=HMPd5BWDvE6JRR0/sRtbhviSb3/bG614eqCSY8538CIZ4S/ELKpx/01PCQbJTNm5NmZoShgu3FJMwknUDckpv169isPgUYulwqPRJeULaNoOjeH/VdJ35Eeo7Zz7GsXmcsaaCWK/J6wHkUA/c3mF/Lqf4pnokf5Zid1hKk509AA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=d8WJek5O; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bmQprvlr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 67341C4CEF7;
-	Thu,  5 Feb 2026 14:01:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="d8WJek5O"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9AF59C4CEF7;
+	Thu,  5 Feb 2026 14:06:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770300086;
-	bh=zQqDDHO3edTEQV6rHB9E0a7k1wOd322d2OJc0Fxsd0U=;
+	s=korg; t=1770300389;
+	bh=Kp1IlxE0CR1DcVOJJSGnomgR9IVWBXNDq5XKUGX23MA=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=bmQprvlrTF0WrZej/9Hn2XF/OmZ/Gsuf1bzLoyPuCLrNeM8w2ITACvf2PislTnQQK
-	 f/9S5WqwfSktzFzzvCs+/ost5iaHuYhg7gGfRikZw/1WRvrPkA35bb6EUKDGtsTIKi
-	 6RudoavmxCweBPH4Hn3DE05G32SygvlSYCJmQ1j8=
-Date: Thu, 5 Feb 2026 15:01:23 +0100
+	b=d8WJek5OMLLHzWN5sihBk/O6od7+gwX8l3k4yPi5pMre7v227U4kjqr49CIigINPw
+	 vfBGuvEvdvlWlOCeUs7iNB3LAluAtyDAX2t7m23cvDCenrMalXg6kjGYCn+UZ46eC3
+	 gzcKZhJDZNS/cYcXMXk3KT2RcDcfaFgEWnr5BeVs=
+Date: Thu, 5 Feb 2026 15:06:26 +0100
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: Jon Hunter <jonathanh@nvidia.com>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
-	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
-	f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, rwarsow@gmx.de,
-	conor@kernel.org, hargar@microsoft.com, broonie@kernel.org,
-	achill@achill.org, sr@sladewatkins.com,
-	"linux-tegra@vger.kernel.org" <linux-tegra@vger.kernel.org>
-Subject: Re: [PATCH 5.10 000/161] 5.10.249-rc1 review
-Message-ID: <2026020553-dazzling-quack-dd44@gregkh>
+To: David Sterba <dsterba@suse.cz>
+Cc: Ben Hutchings <ben@decadent.org.uk>, stable@vger.kernel.org,
+	patches@lists.linux.dev, Filipe Manana <fdmanana@suse.com>,
+	Qu Wenruo <wqu@suse.com>, David Sterba <dsterba@suse.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: Re: [PATCH 5.10 004/161] btrfs: send: check for inline extents in
+ range_is_hole_in_parent()
+Message-ID: <2026020514-oat-plant-b273@gregkh>
 References: <20260204143851.755002596@linuxfoundation.org>
- <f6280336-4e59-47ed-876a-bfb62252ae52@nvidia.com>
+ <20260204143851.919366239@linuxfoundation.org>
+ <03a74299797f4864d0e563cd9517276f690a4bf0.camel@decadent.org.uk>
+ <20260205135118.GX26902@suse.cz>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <f6280336-4e59-47ed-876a-bfb62252ae52@nvidia.com>
+In-Reply-To: <20260205135118.GX26902@suse.cz>
 
-On Wed, Feb 04, 2026 at 07:54:47PM +0000, Jon Hunter wrote:
-> Hi Greg,
-> 
-> On 04/02/2026 14:37, Greg Kroah-Hartman wrote:
-> > This is the start of the stable review cycle for the 5.10.249 release.
-> > There are 161 patches in this series, all will be posted as a response
-> > to this one.  If anyone has any issues with these being applied, please
-> > let me know.
+On Thu, Feb 05, 2026 at 02:51:18PM +0100, David Sterba wrote:
+> On Wed, Feb 04, 2026 at 07:28:42PM +0100, Ben Hutchings wrote:
+> > On Wed, 2026-02-04 at 15:37 +0100, Greg Kroah-Hartman wrote:
+> > > 5.10-stable review patch.  If anyone has any objections, please let me know.
+> > > 
+> > > ------------------
+> > > 
+> > > From: Qu Wenruo <wqu@suse.com>
+> > > 
+> > > [ Upstream commit 08b096c1372cd69627f4f559fb47c9fb67a52b39 ]
+> > > 
+> > > Before accessing the disk_bytenr field of a file extent item we need
+> > > to check if we are dealing with an inline extent.
+> > > This is because for inline extents their data starts at the offset of
+> > > the disk_bytenr field. So accessing the disk_bytenr
+> > > means we are accessing inline data or in case the inline data is less
+> > > than 8 bytes we can actually cause an invalid
+> > > memory access if this inline extent item is the first item in the leaf
+> > > or access metadata from other items.
+> > > 
+> > > Fixes: 82bfb2e7b645 ("Btrfs: incremental send, fix unnecessary hole writes for sparse files")
+> > > Reviewed-by: Filipe Manana <fdmanana@suse.com>
+> > > Signed-off-by: Qu Wenruo <wqu@suse.com>
+> > > Reviewed-by: David Sterba <dsterba@suse.com>
+> > > Signed-off-by: David Sterba <dsterba@suse.com>
+> > > Signed-off-by: Sasha Levin <sashal@kernel.org>
+> > > ---
+> > >  fs/btrfs/send.c | 2 ++
+> > >  1 file changed, 2 insertions(+)
+> > > 
+> > > diff --git a/fs/btrfs/send.c b/fs/btrfs/send.c
+> > > index d86b4d13cae48..f144171ed6b7e 100644
+> > > --- a/fs/btrfs/send.c
+> > > +++ b/fs/btrfs/send.c
+> > > @@ -5892,6 +5892,8 @@ static int range_is_hole_in_parent(struct send_ctx *sctx,
+> > >  		extent_end = btrfs_file_extent_end(path);
+> > >  		if (extent_end <= start)
+> > >  			goto next;
+> > > +		if (btrfs_file_extent_type(leaf, fi) == BTRFS_FILE_EXTENT_INLINE)
+> > > +			return 0;
 > > 
-> > Responses should be made by Fri, 06 Feb 2026 14:38:23 +0000.
-> > Anything received after that time might be too late.
+> > This will leak path, unless (at least) commits 4c74a32ad323 "btrfs:
+> > DEFINE_FREE for struct btrfs_path" and 4ca6f24a52c4 "btrfs: more trivial
+> > BTRFS_PATH_AUTO_FREE conversions" are also backported.
 > > 
-> > The whole patch series can be found in one patch at:
-> > 	https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.10.249-rc1.gz
-> > or in the git tree and branch at:
-> > 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.10.y
-> > and the diffstat can be found below.
-> > 
-> > thanks,
-> > 
-> > greg k-h
-> > 
-> > -------------
-> > Pseudo-Shortlog of commits:
+> > That could be avoided by using { ret = 0; goto out; } here instead of
+> > simply returning.
 > 
-> ...
-> 
-> > 
-> > Johan Hovold <johan@kernel.org>
-> >      dmaengine: at_hdmac: fix device leak on of_dma_xlate()
-> 
-> The above commit is causing the following build error for 32-bit ARM with
-> multi_v7_defconfig ...
-> 
-> drivers/dma/at_hdmac.c: In function ‘atc_config’:
-> drivers/dma/at_hdmac.c:1323:34: warning: unused variable ‘atslave’
-> [-Wunused-variable]
->  1323 |         struct at_dma_slave     *atslave;
->       |                                  ^~~~~~~
-> drivers/dma/at_hdmac.c: In function ‘atc_free_chan_resources’:
-> drivers/dma/at_hdmac.c:1583:9: error: ‘atslave’ undeclared (first use in
-> this function)
->  1583 |         atslave = chan->private;
->       |         ^~~~~~~
-> 
-> 
-> This is also seen with linux-5.15.y and linux-6.1.y branches. Linux-6.6.y
-> and newer are building fine.
+> Right, the original patch assumes the automatic cleanup of btrfs_path, so
+> for anything below it needs to be updated as you say.
 
-Ah, looks like the patch fuzz caused the variable to be declared in the
-wrong function, let me go fix that up...
-
-thanks,
+Thanks for the review, I'll go drop this from all of the queues now.
 
 greg k-h
