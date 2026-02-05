@@ -1,110 +1,82 @@
-Received: from mail-oo1-f45.google.com (mail-oo1-f45.google.com [209.85.161.45])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B47630BB83
-	for <patches@lists.linux.dev>; Thu,  5 Feb 2026 20:23:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.161.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F194F32D0C4;
+	Thu,  5 Feb 2026 21:09:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770322992; cv=none; b=EraaIrer4zrwu9R7SuavWqK78U0tgLqpOyX/wxkZ830rI7aMcju9e6sclr2PieU7vN8tZOzTju46ieeYAhxbiPpxmyRY+o5SPmX0qbF57TjRK1TKWamMD2+1hriHlcpWaEV2DE/nRBr3FVtLCBDpOhRVXt7HHi5Br0KKA1rxVZo=
+	t=1770325784; cv=none; b=hk7cfAZW9eclV88pw1sjn6VQlrVe1UY34yj2GkO+yUYapTq5B8euCyfZ+EVt0cj9eAWKFoDKR8YX8pPTX5t8kJZA4G4Y2B/+mJlmDthZdd7B7qZuono6zcRd7mw99RxEKPGYLfLHVyLda9AAuO4GKu+FxqAM6szh95Acvd+7YQw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770322992; c=relaxed/simple;
-	bh=1H6yOvlkgfRdhfiB8b4StbElJFSjTj0AYv822Df4Usg=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=mTGbNB/BP/RRjFk7ByjzaGdTX/Gfi885KOr+V/BL7YFAaJKklVg37wLGTb32BhaZ/LIy5xm+o2rwRWUZkl2YF30HcGHiukNs7HvBrgU3SMjrzHak8UzM8oHx44bZMPxhJgu2svRnGIpud9Odg4sOjmZV5342oqw76I/FfiD2oBg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=JK07cBqx; arc=none smtp.client-ip=209.85.161.45
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1770325784; c=relaxed/simple;
+	bh=ozSFKEI79GoTdl4Ai30BuX7ki/qCvNy6lAkaQXc0be8=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=gx1QYZ3+DnT3XszNIi79dy3xBWuhtnGe4RkKi7QwFyH7PQ/nszV4idnHzqKb/pPiVJkuD6bV6YhD9WcnPEwGjgMNHB69iPan2m/QZ7K9kHJjveB2AQ0bONeuQdngYHsCjIAMneaBm3onadpRBJWBbO1BOI1taqEsUIQLi4E41NI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=BOo6omMN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="JK07cBqx"
-Received: by mail-oo1-f45.google.com with SMTP id 006d021491bc7-662f91bba0fso1531999eaf.0
-        for <patches@lists.linux.dev>; Thu, 05 Feb 2026 12:23:12 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1770322991; x=1770927791; darn=lists.linux.dev;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=aQDPSDXDektpkBXEs0zQ+AUHNiEaUoVGQ6uI5fG7CkA=;
-        b=JK07cBqxJQi+mz+VZQXKUIM+jepel7YdQHCwV0EbnrTjm2x+//XZP2+8jTG2/1j9VV
-         TZaG6ozL1/o4mDYiOcDXUYrAz7/PYHcc08srhy16rNSt6q68W3b7ZeNKsQhgAhleVWg/
-         CxiJFwy5HVOHXUWHO9Rinii8UvKTYIZK77ojS4As1s56GPEx18qHkNduYycZZ9VT7FTe
-         rg531HJG251KD92Mo50ucwf51CFf/ojKaGSD+iRz84GB64axdbvz97iRn9Vemjw7rig6
-         jVqqspKReYVHgYhIzHYrq9iD5uvsC39/OQ0zvn2kat9kFjYPLAov7wv9E8oTbq9lXoWi
-         xrKA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1770322991; x=1770927791;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=aQDPSDXDektpkBXEs0zQ+AUHNiEaUoVGQ6uI5fG7CkA=;
-        b=htLG2chKxf2/u0IT7IJN68VKApo8np9OjBZOil2yJWiqIzfmlMWWP31X3601BSqtwW
-         97sQKy/jwYjLkjJ9MLwNNY3wPMGTRr9C5sEos98oXfepuHUfocGgxZInlX5cP87s9Xhp
-         xTbgUF7PhSIudp2h2QOHmmppP3eC3Etr1udmo7wxOgoT+659vgSbVpu9dHjgzmF7KiJw
-         K6282zX+kwoZZdoeYPueINQzo9vIgw1dBTG1OX0mffsCJmqCGNpxmrYLq7N0yvA4winX
-         L0DrSMpPkJ4BfWsHjMA43CI7hrCyVJN33Yk4yrXTrMeDUWlTW6q9kvPfVPDZz7qfZg+W
-         /IDg==
-X-Gm-Message-State: AOJu0YygW/wAP8DGjA8v6t8IScjYFEMXdDhLN1pJip3b/vtiswFdJ9OL
-	4PFVnxkk1kT+FsLHSfwpspkkNwVLxio1fEVG+oVphpX9g17I5c4KHYTX
-X-Gm-Gg: AZuq6aKUWviUt0a3oxHty0+sxJ1IlopssoE87tL2ZRSjEbrM4aqoGmQJCsjUHPazavD
-	oCIAvJQfY1s5/pvNRnDbaN1HTsabXhh7D5dCM0gfC5yFmbyVqKJASbE3dyR1mXcAlynXjkOApFF
-	UQGTMRuY0C17+UxgUDuotP86OnVzZj0IWt9q8LqKZjjv9KBYbBaNIKkm5u81D8dPp3C54NixmG9
-	gKOe0QZAhNC9zzlCVUeShTJx88MGi6wuGZH3z+z4KNvtREbWT9mhSbuEhU9TzTip4PMNhwcnmfe
-	MIdcxrjYS5kUgNnYeEhUDmVkFIuYU6A1ZJvNrbYIkAGJ+mcCZhfblgQIemh8aaKhncMyWccJ/Pq
-	W4oUMQAVOIrZVR92hGVtL/aQkSL3yefP1QOvGWVgYpWKP3whrnyiZuvoK4k8cua9BGZZeSIR4PH
-	yf2PWCeya8VBdG2tiFaJ7zaZ+EjvLw5RM1dQNaag==
-X-Received: by 2002:a05:6820:160e:b0:661:154a:c289 with SMTP id 006d021491bc7-66d1534f706mr274351eaf.31.1770322991028;
-        Thu, 05 Feb 2026 12:23:11 -0800 (PST)
-Received: from [10.67.48.245] ([192.19.223.252])
-        by smtp.gmail.com with ESMTPSA id 586e51a60fabf-40a992ede02sm157502fac.4.2026.02.05.12.23.09
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 05 Feb 2026 12:23:10 -0800 (PST)
-Message-ID: <bb053dff-cf88-4750-b678-09c215579e20@gmail.com>
-Date: Thu, 5 Feb 2026 12:23:08 -0800
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="BOo6omMN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 196E1C4CEF7;
+	Thu,  5 Feb 2026 21:09:39 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1770325783;
+	bh=ozSFKEI79GoTdl4Ai30BuX7ki/qCvNy6lAkaQXc0be8=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=BOo6omMNOU/V7Y3wvJqieGrGTh7T7mPJ/Y7tCghO376ClRhel8CFZDM6qmtTPTiPR
+	 x4l2PZgz/0PHUtpqZrIGY229PLfMIMHRYER67BfSspL+WIgOzSDk7/lIqC4DAg09q3
+	 f1YD3QfRScn0J78jsm2ZbAZrS2auy/mBRabCCjque5965zP4WuyUcxpaC6keEPXtrI
+	 6ot1iyRuQbWMjwTq9SARqPSJjRlCT45VV8gy3O4yDoi2haB26gPl91o7yrC6NbmMDB
+	 XyUl11y1rwG8LA2gNe+We9e1kI7f/ublc8dEQV1nP9OpT2p0sNAvmJFNbsfS9gb2w/
+	 LAVrEeXyLVI7A==
+Date: Thu, 5 Feb 2026 21:09:37 +0000
+From: Mark Brown <broonie@kernel.org>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev,
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
+	patches@kernelci.org, lkft-triage@lists.linaro.org,
+	pavel@nabladev.com, jonathanh@nvidia.com, f.fainelli@gmail.com,
+	sudipm.mukherjee@gmail.com, rwarsow@gmx.de, conor@kernel.org,
+	hargar@microsoft.com, achill@achill.org, sr@sladewatkins.com
+Subject: Re: [PATCH 6.1 000/276] 6.1.162-rc2 review
+Message-ID: <cc9f247e-6114-4551-84a9-db465fdf4a36@sirena.org.uk>
+References: <20260205143450.492803005@linuxfoundation.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 6.1 000/276] 6.1.162-rc2 review
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
- torvalds@linux-foundation.org, akpm@linux-foundation.org,
- linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
- lkft-triage@lists.linaro.org, pavel@nabladev.com, jonathanh@nvidia.com,
- sudipm.mukherjee@gmail.com, rwarsow@gmx.de, conor@kernel.org,
- hargar@microsoft.com, broonie@kernel.org, achill@achill.org,
- sr@sladewatkins.com
-References: <20260205143450.492803005@linuxfoundation.org>
-Content-Language: en-US, fr-FR
-From: Florian Fainelli <f.fainelli@gmail.com>
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="V8TIBEyu2wGfbch6"
+Content-Disposition: inline
 In-Reply-To: <20260205143450.492803005@linuxfoundation.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+X-Cookie: Non-sequiturs make me eat lampshades.
 
-On 2/5/26 06:44, Greg Kroah-Hartman wrote:
+
+--V8TIBEyu2wGfbch6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+
+On Thu, Feb 05, 2026 at 03:44:40PM +0100, Greg Kroah-Hartman wrote:
 > This is the start of the stable review cycle for the 6.1.162 release.
 > There are 276 patches in this series, all will be posted as a response
 > to this one.  If anyone has any issues with these being applied, please
 > let me know.
-> 
-> Responses should be made by Sat, 07 Feb 2026 14:34:05 +0000.
-> Anything received after that time might be too late.
-> 
-> The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.1.162-rc2.gz
-> or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.1.y
-> and the diffstat can be found below.
-> 
-> thanks,
-> 
-> greg k-h
 
-On ARCH_BRCMSTB using 32-bit and 64-bit ARM kernels, build tested on 
-BMIPS_GENERIC:
+Tested-by: Mark Brown <broonie@kernel.org>
 
-Tested-by: Florian Fainelli <florian.fainelli@broadcom.com>
--- 
-Florian
+--V8TIBEyu2wGfbch6
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmmFBxAACgkQJNaLcl1U
+h9CJrwf9EYlVag8HvfadlHgRLZo52PMDPFcNdhUrM6x0APXb1GfwJQOsMVrx7KU0
+lDU/K6N+MGBQa7aVm4rfZryCMuN3f1Z12uxQCBKtfvImxhbOzvuvgNDbfaxS2kem
+FKGIRQjhQtBXDpWOIJ1zOlw2bfTbIir1Eeer5vFraFQNvZ1nwsbYiaH9BGBXcvV+
+WDD4lYnMA8sGhX9bFEw/L6m6of+xg/PdVMVFdddP8RyoAV7Cu2NXqVA9bDgcHymU
+FCxXg3Zn3KPE43CrS9TQwCYzGdAJO9MxiD4j7+0zK/pxSuonSX8wcii75pCxGZha
+g+2rnLN6dsePxR7HgFRM9PQekcw4jw==
+=zspQ
+-----END PGP SIGNATURE-----
+
+--V8TIBEyu2wGfbch6--
