@@ -1,68 +1,102 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from maynard.decadent.org.uk (maynard.decadent.org.uk [65.21.191.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5267F3DA7C5;
-	Thu,  5 Feb 2026 14:07:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 313AF3921EB;
+	Thu,  5 Feb 2026 14:09:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=65.21.191.19
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770300426; cv=none; b=FsXeoja+qBOSKZBSJK81Ss13K/3vkfNzH/Tc1aw2F4vKcHXh1X4J4lhQ2C7rD/7gnX8N0auv7HcfeW/hW3IQLzziSdEH2iUNFAtxtwv/HiqDdHBziFkFRh5Yxwk8gy5O0c3N/h4/uvI46YYaMUak77OGK4rfDB4g3VxGxpuKCck=
+	t=1770300588; cv=none; b=qkhBQas1NJJZeS/rta+b39VtRqU3XBweka7E0VBupstUM793pNtXXjjSPmlmUJ1OqXyUa4Sv6Vmm7IcNMaTqiQUz+aKhrb0qIeJOrBWnR20AR0X6MJq4fp25a7HzOqa0xqh1iAJlPRb8lUtg0U5l3G39kmaASS25i0CPpY95rd8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770300426; c=relaxed/simple;
-	bh=7NEGpyQ6Lj6yAwCqq7FQ98oePxaVTsZ4DvuAMrCgyRE=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ChalNScbbJ1U8z9BYzYoaaZgKLhFYXWFozsTWCDAh1Yeq+Sm7+nlGu1sykSppyFJ5FX8CxAU3IqrpQNBCCE2Yyu/DA8muHg9Wt52RlIYYdKO5rauLY5NDo7S49iXC6AVSVRCTRdrHtosaHv9R4Dqggq6adhjBlvkxM4GLgNsdUc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RBHW7shd; arc=none smtp.client-ip=10.30.226.201
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RBHW7shd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F2BBC4CEF7;
-	Thu,  5 Feb 2026 14:07:05 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770300425;
-	bh=7NEGpyQ6Lj6yAwCqq7FQ98oePxaVTsZ4DvuAMrCgyRE=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=RBHW7shdL89cRWK+mvuq2qmzyeuAK2Uz2iWMXVacfwszvjgaTXHWdwZE1xIrVfFk8
-	 lECSKLEwjOsIjuq8x0bTpWbePK+4FjliqL13U1XAOzakVhaU0jgPRff5erki0Om37e
-	 MgDM7IzL5091nveqJWna4IpAbM3n2LtybFHjS8/E=
-Date: Thu, 5 Feb 2026 15:07:02 +0100
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: Pimyn Girgis <pimyn@google.com>
-Cc: Nathan Chancellor <nathan@kernel.org>, stable@vger.kernel.org,
-	patches@lists.linux.dev, Alexander Potapenko <glider@google.com>,
-	Dmitry Vyukov <dvyukov@google.com>, Marco Elver <elver@google.com>,
-	Ernesto Martnez Garca <ernesto.martinezgarcia@tugraz.at>,
-	Kees Cook <kees@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: Re: [PATCH 5.15 195/206] mm/kfence: randomize the freelist on
- initialization
-Message-ID: <2026020547-synergy-till-6a1f@gregkh>
-References: <20260204143858.193781818@linuxfoundation.org>
- <20260204143905.245830999@linuxfoundation.org>
- <20260204184810.GA2715873@ax162>
- <CAJWNTGz0Yd4W3piDT5RFzmmKPhcUaNu0pSEgMOF3U0FmfsyzVA@mail.gmail.com>
+	s=arc-20240116; t=1770300588; c=relaxed/simple;
+	bh=CJrBrXEWDBjn3BNARERX7EAaLp98ZACll3ncO8sR6pk=;
+	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
+	 Content-Type:MIME-Version; b=MHRNtxmnh5Rg1uA1AIL7YULNpuzr63wGii4wRpbKCHrNNDcAgaFfRGI4KSr6x0GLNBFurc9zCG+zMPLBCMAE3vMEpnIv3HFRjNW7Q39jAtBWm/AWxNx1fVUSHacCX3LrQOHnEoWQe7rZLseAf79/yzeFnlGh2d+xRQX3V8Xx+cI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=decadent.org.uk; spf=pass smtp.mailfrom=decadent.org.uk; arc=none smtp.client-ip=65.21.191.19
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=decadent.org.uk
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=decadent.org.uk
+Received: from [2a02:578:851f:1502:391e:c5f5:10e2:b9a3] (helo=deadeye)
+	by maynard with esmtps  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+	(Exim 4.96)
+	(envelope-from <ben@decadent.org.uk>)
+	id 1vo03G-003u2t-00;
+	Thu, 05 Feb 2026 14:09:45 +0000
+Received: from ben by deadeye with local (Exim 4.99.1)
+	(envelope-from <ben@decadent.org.uk>)
+	id 1vo03E-00000001efO-0VoL;
+	Thu, 05 Feb 2026 15:09:44 +0100
+Message-ID: <5cee4d2e571b3132a95cca6f6230c769b8618836.camel@decadent.org.uk>
+Subject: Re: [PATCH 5.10 022/161] phy: rockchip: inno-usb2: fix
+ communication disruption in gadget mode
+From: Ben Hutchings <ben@decadent.org.uk>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, Luca Ceresoli <luca.ceresoli@bootlin.com>, 
+ =?ISO-8859-1?Q?Th=E9o?= Lebrun
+	 <theo.lebrun@bootlin.com>, Vinod Koul <vkoul@kernel.org>
+Date: Thu, 05 Feb 2026 15:09:39 +0100
+In-Reply-To: <20260204143852.563376077@linuxfoundation.org>
+References: <20260204143851.755002596@linuxfoundation.org>
+	 <20260204143852.563376077@linuxfoundation.org>
+Content-Type: multipart/signed; micalg="pgp-sha512";
+	protocol="application/pgp-signature"; boundary="=-MtUg/Q64zhTFrT8RX1G/"
+User-Agent: Evolution 3.56.2-8 
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAJWNTGz0Yd4W3piDT5RFzmmKPhcUaNu0pSEgMOF3U0FmfsyzVA@mail.gmail.com>
+X-SA-Exim-Connect-IP: 2a02:578:851f:1502:391e:c5f5:10e2:b9a3
+X-SA-Exim-Mail-From: ben@decadent.org.uk
+X-SA-Exim-Scanned: No (on maynard); SAEximRunCond expanded to false
 
-On Thu, Feb 05, 2026 at 10:13:48AM +0100, Pimyn Girgis wrote:
-> On Wed, Feb 4, 2026 at 7:48 PM Nathan Chancellor <nathan@kernel.org> wrote:
-> > This introduces a new instance of -Wsometimes-uninitialized, as pointed
-> > out by this KernelCI report:
-> >
-> > https://lore.kernel.org/177022794292.7001.3716577555750776270@22d5995788c3/
-> 
-> Thanks! I'll be sending a V2 shortly.
-> 
 
-Ok, will drop this one for now and wait for the new one for the next -rc
-cycle.
+--=-MtUg/Q64zhTFrT8RX1G/
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-thanks,
+On Wed, 2026-02-04 at 15:38 +0100, Greg Kroah-Hartman wrote:
+> 5.10-stable review patch.  If anyone has any objections, please let me kn=
+ow.
+>=20
+> ------------------
+>=20
+> From: Luca Ceresoli <luca.ceresoli@bootlin.com>
+>=20
+> commit 7d8f725b79e35fa47e42c88716aad8711e1168d8 upstream.
+[...]
 
-greg k-h
+This one and the next one (phy-rockchip-inno-usb2-fix-communication-
+disruption-in-gadget-mode.patch and phy-rockchip-inno-usb2-fix-
+disconnection-in-gadget-mode.patch) have been swapped from their
+original order in mainline.  Please swap them back to avoid a potential
+build failure during bisection.
+
+Ben.
+
+--=20
+Ben Hutchings
+Horngren's Observation:
+              Among economists, the real world is often a special case.
+
+--=-MtUg/Q64zhTFrT8RX1G/
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: This is a digitally signed message part
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCgAdFiEErCspvTSmr92z9o8157/I7JWGEQkFAmmEpKMACgkQ57/I7JWG
+EQnrDhAAyfv44b9vw6v4re4fIDGj0lJ9dT65iix3J0y6pIdJLxBZ7QcwgzQHQm38
+O3K6vmSlS15AYDTa6DEfN5jiP/p4niGJJxvE4N0WNp+oAK6cR5scsclqGd62X48z
+s0HBFr2Gl5n2MlY2Z6blcy7Y0jmznD4sQmkOVzfbVL2KK7ROKyQHZBpmVR9freCw
+PBiNi9x64O8h9xzaFsgq5kjo12WKUJsnfEknujkghaa9OUtNyB2YXkzGli/JIDYy
+D/c1x2zG6qWH/I4HHk+toDcb2TXEQZka39N+lxBKjvkWJfvw+ZAeqfVpY16dBOL/
+rIJt8O+hfe498i8ovpoupljTJHYb5vgV9YhOGj7cghYdgwyQVwwDpVAXHdb+LKnR
+rp8n/UiUj8aOEOHqNjQeL6ZfM/aR4J+LgMrrBNt47lMOasgGpquplQp1b+KwDgxQ
+6wj6qL5jsd8SZDt7uUYrGRkj5vxzaPQB8ra7RPwFvA6wa83yzJ4E95BiYTrpBinc
+9QH1RqHyOKBZAwY4FwpbU67iRpbAFCdb/24By4BqB5k1aVihMvX03IHHNH8TpDUq
+2a0rWtoNXZnNXRJY31np2PadjK4IyjOsxlLEsoQvxR8isSFFphdPr6Ke380YNMx3
+WjfBObSF969jhCzWz27SXfkV/ZBDPBNJVXjyqJrPjfv1bMMjSew=
+=qQXK
+-----END PGP SIGNATURE-----
+
+--=-MtUg/Q64zhTFrT8RX1G/--
