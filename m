@@ -1,82 +1,108 @@
-Received: from submarine.notk.org (submarine.notk.org [62.210.214.84])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f43.google.com (mail-ej1-f43.google.com [209.85.218.43])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9DF039C636
-	for <patches@lists.linux.dev>; Wed,  4 Feb 2026 23:42:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=62.210.214.84
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59158469D
+	for <patches@lists.linux.dev>; Thu,  5 Feb 2026 00:14:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770248566; cv=none; b=MtlUXTZk4ofr6xWb3XiRLkNbwv2iqXIZ3g/y/bEiYbyR1toBikh2ETz96cykeA7SWr02cBPmDb4FeRbJuHgiT2KX6j1tJqU82FKePNu4HKmLC2XIIGP4uhOA9Ub6t9/9M5SxUHRIuBGp87duBvz5kXZj2rqFPsedjl4jBdOj8Xc=
+	t=1770250480; cv=none; b=ezFzUvxKVhP1OaeNh9wYYBIR9TuQOaCaaTnwcFfPoge5OLWZCQRndeakrY+OjJZ3sDCiCma5WRBtGYplv4fonYZ8S53Veow3fzuHta8KXSCBibD0ubTN26BJuIyKXBYZVVG3oz1Ef4/M6EkdDVG546lXNgUhnCLUYPcZ4tlCJkE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770248566; c=relaxed/simple;
-	bh=Qwazp5Cs4dVAaK0qgQlMepUlLhPieSj1I4Vq/fplswQ=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=PaAKlTjQvNtSlf9vAfQgU4Sg4zLrUyPwG6lTuZNsCX/0ia1wGrAnvft+MtpYPFUidPPCuy5Fir0+HLofwnJzNz6uc2xu2TXbDFgXtbZdUe7dhHDlU4BigwQK68H0+8s/UyYGVN1Uhtko55MiI3qeX2kjvq2oTA6JQFumkdFnIfw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=codewreck.org; spf=pass smtp.mailfrom=codewreck.org; dkim=pass (2048-bit key) header.d=codewreck.org header.i=@codewreck.org header.b=vrgt/Ny1; arc=none smtp.client-ip=62.210.214.84
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=codewreck.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=codewreck.org
+	s=arc-20240116; t=1770250480; c=relaxed/simple;
+	bh=uFO4zVF/Hoko0cv5qb6/oBheywm979vzS+61mnbUN/I=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=k3JoGx55+eOJpLIoOdSl1fCMP48wib6sTrV+PU2Vt51UNRakIutZIWSjG6Kr0ijkHPENOxaTSXnKhyg6K9dOuKaN83fGbmE3RguPdycK4ddMuQJyh89Sj2ZMjHwZCfponUhEMthmqtL6Y1MOCwp7vs/i5IS8eb4oMhzruNgQiNY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=googlemail.com; spf=pass smtp.mailfrom=googlemail.com; dkim=pass (2048-bit key) header.d=googlemail.com header.i=@googlemail.com header.b=RrNp6br1; arc=none smtp.client-ip=209.85.218.43
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=googlemail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=googlemail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=codewreck.org header.i=@codewreck.org header.b="vrgt/Ny1"
-Received: from gaia.codewreck.org (localhost [127.0.0.1])
-	by submarine.notk.org (Postfix) with ESMTPS id 34AAA14C2D6;
-	Thu,  5 Feb 2026 00:42:31 +0100 (CET)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=codewreck.org;
-	s=2; t=1770248557;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=0olO9sdR7JDrd6zGdsxOW/+16C/AiHUzSiECz9CkJCY=;
-	b=vrgt/Ny17qM0KixSktv1bcYgGcx23+h9qT+UFHy72dk3pLCLmzn09kPGFjmVHEFl4BNtuy
-	65Es0LDQSaEsU1YgORDjD/dvyuHHrEej4z/0dECroFQ8nWB4McKaTIWOe9WulkYRA6q+2M
-	aArUeGHA551y3nHuWmbA/2W0jBA7GI0SIBr4e2IYlMg80cFAwK3DQjiEFheeIfya/oxvch
-	3YQHIC0F8/TbjNTH03enMLqZYV7hfV4YBI9xno4NLhfZCYiIXPUVWoxwtshDGaAtG+2RVv
-	Gd/CCHJewfTb5zUtELC0MHxiyq5Q8T1LDbAkuV+6yYZ5gRe2PhurnZlKFE14/A==
-Received: from localhost (gaia.codewreck.org [local])
-	by gaia.codewreck.org (OpenSMTPD) with ESMTPA id 960cdf1f;
-	Wed, 4 Feb 2026 23:42:30 +0000 (UTC)
-Date: Thu, 5 Feb 2026 08:42:15 +0900
-From: Dominique Martinet <asmadeus@codewreck.org>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
-	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
-	jonathanh@nvidia.com, f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com, rwarsow@gmx.de, conor@kernel.org,
-	hargar@microsoft.com, broonie@kernel.org, achill@achill.org,
-	sr@sladewatkins.com
-Subject: Re: [PATCH 5.10 000/161] 5.10.249-rc1 review
-Message-ID: <aYPZV4pbnNGPrqqA@codewreck.org>
-References: <20260204143851.755002596@linuxfoundation.org>
+	dkim=pass (2048-bit key) header.d=googlemail.com header.i=@googlemail.com header.b="RrNp6br1"
+Received: by mail-ej1-f43.google.com with SMTP id a640c23a62f3a-b8842e5a2a1so40557766b.2
+        for <patches@lists.linux.dev>; Wed, 04 Feb 2026 16:14:40 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlemail.com; s=20230601; t=1770250479; x=1770855279; darn=lists.linux.dev;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=XqowFhkd9Numzoj9YJVWPlTlwbbzoHzVE/LJNEUfcK4=;
+        b=RrNp6br1aAnSb0rn0qvx+heC/sJvOkSlaILCj+K4ZzRH5lON8lQO/5D9rNt3AlOM1r
+         1b+Na5QFPaq14tu7L9EFdtG2UKx1p+MCLOIRO67+zBsYxiQtYN0cJJwSZ479ak6mV05P
+         QtftL8yaJW/y3IM93qnc821BzWN2dkvh04XhXzPQj0zSSwB0NII5vA5EqnrGKSA6NR42
+         Shvvd7Vy22Xv3sI2fDbguejpR9NtiXGfJ14Z3lBDxhokrPGJW5lB0XcGK2/c43S8xZC8
+         t1jsXj+VVJmKywPc/4ZmN2pM60ppHTU9fTbWC1GPKIef6j05hSDCeMxeLBqwIbIdc1J1
+         tfIQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1770250479; x=1770855279;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=XqowFhkd9Numzoj9YJVWPlTlwbbzoHzVE/LJNEUfcK4=;
+        b=Egk+3Y65NPPBqnsVmcFa9HCa9amBXdsUkmY5SUefM0JvfR8P2U7u2fai5W4ZtT1cDS
+         CfeH5IG7lMzOcGLvsdwlEwl8yxHdh59zBCYPY7DSLeGQJJWbK6uvX4IEAc9gt3odsmtT
+         vDivsv6O0wA18CALfrfqOMBd7J9nA0Zp3qurSeUaCTHs4lPpykjvYj/xfBGQt/5NpAfo
+         5QtGhMMtcX9py2vfOv/Pazv2bsss614HCGVZQoWRrdQWFc5RqS9AJP1bwB706vhZnToK
+         up314mkpBH5cAfFoVzKaQYitajzPx41MredMQw8A5W4+cRJOFd0D9FmGoB6x5X8n1FV1
+         reGQ==
+X-Gm-Message-State: AOJu0YxuqV0hiGjeSGt8XKV1+NNvKIrjsEC+kFvghyVu6iwa4QOJvG7G
+	dBRfyFaO0ijCTUtxOOBe6N1yPr1+d7rUbj93HCalKwOf0NGUSQEP/OI=
+X-Gm-Gg: AZuq6aKFFsvl36r7vmzX2pX0/T46gxSUOUv63DPEnxJKJMm78NtlrPaIIZCgzRQm+BN
+	vFAoBIjDwdTEeCmjP2e2QrSM1kk2csohW9LC9TAdyBncKY4FCFszWIMrLUIiS8s0Y0eKcGrzqg3
+	i1uiM93iZAz+bvD64NjgjruPuoFIO7IjBIKfwyQd2NPbsJsASJ2DpemmuBPkuqwqGpvvYF+84tq
+	8IHlgE1ExaRy96ZdYXv0FpQKiWUZsOgojKENuL5/BFsIqEvxJ3ePacEzWfrhDEGDveBVnnNUPSY
+	QSoNzV3QYxkO4vKMVznr4P0i3R3BQulNssLNT8VaYU+RFfyW+a82nVOcvNDYE6/9sLm2+gTHjLs
+	O2hEdU7o7aUrurAweM+wVUOlcGAzk7Cn/KIEsPD0O6KjKVLbl4y84Fx+YgtXyUfBNO3PtmT8q2p
+	eLInI2AmYqQ5mQnGeuTDV3lBSliCabcMXA2CjhYFs5Lff1juEtaNozy8sbQaBA1vojc/fPz+cu
+X-Received: by 2002:a17:907:3e25:b0:b73:667e:bb29 with SMTP id a640c23a62f3a-b8e9ef30c03mr308075866b.8.1770250478447;
+        Wed, 04 Feb 2026 16:14:38 -0800 (PST)
+Received: from [192.168.1.3] (p5b2b4d5e.dip0.t-ipconnect.de. [91.43.77.94])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-b8ea001eba8sm169483766b.48.2026.02.04.16.14.37
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 04 Feb 2026 16:14:38 -0800 (PST)
+Message-ID: <c19e958d-baec-4c42-ad04-03e163b39363@googlemail.com>
+Date: Thu, 5 Feb 2026 01:14:37 +0100
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20260204143851.755002596@linuxfoundation.org>
+User-Agent: Betterbird (Windows)
+Subject: Re: [PATCH 6.18 000/122] 6.18.9-rc1 review
+Content-Language: de-DE
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+ torvalds@linux-foundation.org, akpm@linux-foundation.org,
+ linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+ lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
+ f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, rwarsow@gmx.de,
+ conor@kernel.org, hargar@microsoft.com, broonie@kernel.org,
+ achill@achill.org, sr@sladewatkins.com
+References: <20260204143851.857060534@linuxfoundation.org>
+From: Peter Schneider <pschneider1968@googlemail.com>
+In-Reply-To: <20260204143851.857060534@linuxfoundation.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
-Greg Kroah-Hartman wrote on Wed, Feb 04, 2026 at 03:37:43PM +0100:
-> This is the start of the stable review cycle for the 5.10.249 release.
-> There are 161 patches in this series, all will be posted as a response
+Am 04.02.2026 um 15:39 schrieb Greg Kroah-Hartman:
+> This is the start of the stable review cycle for the 6.18.9 release.
+> There are 122 patches in this series, all will be posted as a response
 > to this one.  If anyone has any issues with these being applied, please
 > let me know.
-> 
-> Responses should be made by Fri, 06 Feb 2026 14:38:23 +0000.
-> Anything received after that time might be too late.
-> 
-> The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.10.249-rc1.gz
-> or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.10.y
-> and the diffstat can be found below.
 
-Tested be6be3cfdcdb ("Linux 5.10.249-rc1") on:
-- arm i.MX6ULL (Armadillo 640)
-- arm64 i.MX8MP (Armadillo G4)
+Builds, boots and works on my 2-socket Ivy Bridge Xeon E5-2697 v2 server. No dmesg oddities or regressions found.
 
-No obvious regression in dmesg or basic tests:
-Tested-by: Dominique Martinet <dominique.martinet@atmark-techno.com>
+Tested-by: Peter Schneider <pschneider1968@googlemail.com>
+
+
+Beste Grüße,
+Peter Schneider
+
 -- 
-Dominique Martinet
+Climb the mountain not to plant your flag, but to embrace the challenge,
+enjoy the air and behold the view. Climb it so you can see the world,
+not so the world can see you.                    -- David McCullough Jr.
+
+OpenPGP:  0xA3828BD796CCE11A8CADE8866E3A92C92C3FF244
+Download: https://www.peters-netzplatz.de/download/pschneider1968_pub.asc
+https://keys.mailvelope.com/pks/lookup?op=get&search=pschneider1968@googlemail.com
+https://keys.mailvelope.com/pks/lookup?op=get&search=pschneider1968@gmail.com
