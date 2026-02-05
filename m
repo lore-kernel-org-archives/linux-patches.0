@@ -1,82 +1,103 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from bali.collaboradmins.com (bali.collaboradmins.com [148.251.105.195])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70E793AEF25;
-	Thu,  5 Feb 2026 11:39:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F34E70810
+	for <patches@lists.linux.dev>; Thu,  5 Feb 2026 11:43:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=148.251.105.195
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770291547; cv=none; b=Vh9+USHjFlOny5Vkq0jZOM6MHozDNvU2FLV/HjnD6NMeu2FJE8Zdzu3SUCnbzcv/I2PEoxe6Gp9PmhCZmnRykPGyS2hRe0jwYS/c14plLfhbC9stgOsYozDzdyDQsv5ioOtjX56iSe3cEjFURx/zRPTRK9hk1tre6Ub5QoyJT9c=
+	t=1770291827; cv=none; b=LCau7vTNqY9tqP5aaZcNQvwPMyUBaAePKX3kTGF4V6WZOt76COhanpdokrRMQsMymiz8WhCOBAt0VdepUGqK7XvXOsb3NsrKdCKg/pcMkWS2oOoHZAfdWRL7sQr173p/b/gQNhEin4Atl+/N6lp5b0Mh5KljI6jTm7iHGF3uMno=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770291547; c=relaxed/simple;
-	bh=Bzuu/OEdA+6OKeUhf4P8qNDtactIHkJnwfQJ1suD4fI=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ZZFrfne+MEi+Fe9zWUvGRgc+7NWxd4Yh8HwFnwtYTntGSBlDZDpP4cvYuIcKYC7mBHZuO7PfWohwRVYEraqDMHUl2HKriM7RihYpfzVdL+iOUqYfBaD0L75rgczcH1G2mPrmhnHw3JQAhKXR+60C6RjSIc/TYzqMFS9gaqb5o+0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=lsi1oZy6; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1770291827; c=relaxed/simple;
+	bh=vjEXTaSTawfH1ca3LhmSc8JEfQI/Je7hHvUf3p5l+5c=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=PWve4I8GIUW6PQ8Qit8f7UcCAxB7WiBoTbD+cF75+PjO92BRxpP92u2IUNCT/p4z6anA9fgB8Lppp42NYUww+ULvIQ33gcN2W7oG25NZ7MXgjg1o7MQBih3f6Wc4HILhSSXJSYsEiLLl9lpQGOR6uTB+h2uadZnJVP+YbEQ15Ug=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b=k7B4+b7g; arc=none smtp.client-ip=148.251.105.195
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="lsi1oZy6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84B5DC4CEF7;
-	Thu,  5 Feb 2026 11:39:03 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1770291547;
-	bh=Bzuu/OEdA+6OKeUhf4P8qNDtactIHkJnwfQJ1suD4fI=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=lsi1oZy6B+KKWaznQ72Vu3URKMR4OlvCs9/5vuG8+AmF5cFkvCVI20cfSJa/tk6xb
-	 98sPGVcMzNufytwSWHMj7I54fvU7nfqXaNcfMNiIKFhRwgFz7ZW3qDBgIK3ELfanlP
-	 HDMpZJjV2x5QatpyQbU4UBkV4dAALrUsL4jMXM7wo1gc0Cl/GCd73DiaGAuFNu/0iU
-	 a2Gs9JMgD6jLHOO8AK4aTK9BJ4fbkSdPmtNIsh0ukXH4ZmX5dyPzDmxT/q4y+fDLH2
-	 TFvJesl8CU0Otyz5sLsa+jf7s3LvYhCbMKEPWxWhppCXNYlMFwERHtgRJduXIwHV3N
-	 45xY4T8pDSCZg==
-Date: Thu, 5 Feb 2026 11:39:00 +0000
-From: Mark Brown <broonie@kernel.org>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
-	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
-	jonathanh@nvidia.com, f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com, rwarsow@gmx.de, conor@kernel.org,
-	hargar@microsoft.com, achill@achill.org, sr@sladewatkins.com
-Subject: Re: [PATCH 6.6 00/72] 6.6.123-rc1 review
-Message-ID: <04a88611-de7f-45fd-8767-4752c1f53d0a@sirena.org.uk>
-References: <20260204143845.603454952@linuxfoundation.org>
+	dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b="k7B4+b7g"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
+	s=mail; t=1770291825;
+	bh=vjEXTaSTawfH1ca3LhmSc8JEfQI/Je7hHvUf3p5l+5c=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=k7B4+b7gCE10wBWECw7ovibE2MBwyVS9iT6BI4EpMMTm8WSCXWMUZVY3PT1oOrNct
+	 gN37xSvFotB2ZJN6HlN5BuzNBTFQYJP9dfkRdeS7UD5jZh+uQh78TOUA3VzRq+2bIh
+	 p8UDrUHiAgdRtPl3DnmkQ1xiwmiXg1vEH/YL8qtEhUMPoXY6eWNclZznM3RMwEbDRe
+	 bc6R8bJG/qV3zO5SzJZtIUpuGZHo1UisTDbeU4Vu8f3vzYBOqtzuqCcejZGq4gXevK
+	 +nWl4fDATiZ9KwkDhoBo6C4XpTAJmTjbXF/7ZvZlekKWAtKaVct3ipHiWEu4zoQhTm
+	 g6eHXBsLaXJiQ==
+Received: from [192.168.1.100] (2-237-20-237.ip236.fastwebnet.it [2.237.20.237])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	(Authenticated sender: kholk11)
+	by bali.collaboradmins.com (Postfix) with ESMTPSA id 7F81917E06C3;
+	Thu,  5 Feb 2026 12:43:45 +0100 (CET)
+Message-ID: <4171d9d6-1f2c-44d3-b908-3ca11ffa9d96@collabora.com>
+Date: Thu, 5 Feb 2026 12:43:44 +0100
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="Rt+pOEgIJYS5xE1u"
-Content-Disposition: inline
-In-Reply-To: <20260204143845.603454952@linuxfoundation.org>
-X-Cookie: Non-sequiturs make me eat lampshades.
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] Revert "clk: Respect CLK_OPS_PARENT_ENABLE during recalc"
+To: Stephen Boyd <sboyd@kernel.org>,
+ Michael Turquette <mturquette@baylibre.com>
+Cc: linux-kernel@vger.kernel.org, linux-clk@vger.kernel.org,
+ patches@lists.linux.dev, Alexander Stein <alexander.stein@ew.tq-group.com>,
+ Mark Brown <broonie@kernel.org>,
+ Nicolas Frattaroli <nicolas.frattaroli@collabora.com>,
+ Brian Masney <bmasney@redhat.com>, Chen-Yu Tsai <wenst@chromium.org>
+References: <20260203002439.1223213-1-sboyd@kernel.org>
+From: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Content-Language: en-US
+In-Reply-To: <20260203002439.1223213-1-sboyd@kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+
+Il 03/02/26 01:24, Stephen Boyd ha scritto:
+> This reverts commit 669917676e93fca5ea3c66fc9539830312bec58e.
+> It's been shown to cause problems on i.MX and STM32 platforms
+> where the board doesn't boot. In one case, a clk with
+> CLK_IS_CRITICAL and CLK_OPS_PARENT_ENABLE is being registered
+> causing the parent to be enabled, the rate recalculated, and then
+> the parent is disabled causing the critical clk being registered
+> to stop clocking.
+> 
+> A fix for that would be to calculate the rate of the clk after
+> enabling the critical clk itself, but that wouldn't fix another
+> problem where a clk with CLK_OPS_PARENT_ENABLE is registered
+> before the parent is registered. In this case the hardware access
+> in the clk_ops::recalc_rate() function would fail if the parent
+> is disabled.
+> 
+> There are even more problems exposed by this patch because it
+> introduces logic that disables clks earlier in system boot than
+> has existed previously. Historically we've not disabled clks
+> until late init (clk_disable_unused) under the assumption that
+> clks have been registered enough to have a consistent view of the
+> clk tree. The clk_disable_unused logic doesn't work very well
+> though, leading to quite a few devices booting with
+> clk_ignore_unused on the kernel command line.
+> 
+> Long story short, disabling clks during clk registration is full
+> of pitfalls. Revert this commit until a proper solution can be
+> found.
+> 
+> Reported-by: Alexander Stein <alexander.stein@ew.tq-group.com>
+> Closes: https://lore.kernel.org/r/6239343.lOV4Wx5bFT@steina-w
+> Reported-by: Mark Brown <broonie@kernel.org>
+> Closes: https://lore.kernel.org/r/036da7ce-6487-4a6e-9b15-97c6d3bcdcec@sirena.org.uk
+> Cc: Nicolas Frattaroli <nicolas.frattaroli@collabora.com>
+> Cc: Brian Masney <bmasney@redhat.com>
+> Cc: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+> Cc: Chen-Yu Tsai <wenst@chromium.org>
+> Signed-off-by: Stephen Boyd <sboyd@kernel.org>
+
+Makes sense, and I agree.
+
+Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
 
 
---Rt+pOEgIJYS5xE1u
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-
-On Wed, Feb 04, 2026 at 03:40:03PM +0100, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 6.6.123 release.
-> There are 72 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
-
-Tested-by: Mark Brown <broonie@kernel.org>
-
---Rt+pOEgIJYS5xE1u
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmmEgVQACgkQJNaLcl1U
-h9CU+gf+LNQLTFala0els2idtfpmbrRw9ADZppxsSwte9zydBSj2kCvYYhzkCL/N
-cUapnPtcYGat2vylYcNW7dsP8X+QhxGpmpvpLpKarkUW7DU1syaQJXA3q+D82fG0
-PhOyCxhNTIxTe6xRHCeFFvXP86W7BYmECr9GwYrAzBAMcA82WRK92ToKe4VDo58D
-ZUdwj+kHA6zXdie0DnK/yZyV9rEZ6W1COXqrshWKKYWvZf3Al0QLxfqhyiAodnJV
-stBP3Gr/DTPUyQBd2Kf79pI/FfLc5ajeYl/dAq1tcCgK7LusnKKj0HX2j5NlZgsz
-dTaOrZheIcIkEwQpzDbEfO7lHQurlw==
-=nv31
------END PGP SIGNATURE-----
-
---Rt+pOEgIJYS5xE1u--
