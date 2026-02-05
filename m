@@ -1,36 +1,31 @@
-Received: from mail11.truemail.it (mail11.truemail.it [217.194.8.81])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D0C226E719
-	for <patches@lists.linux.dev>; Thu,  5 Feb 2026 08:28:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.194.8.81
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9475733E344;
+	Thu,  5 Feb 2026 08:31:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770280100; cv=none; b=iIgVQqHdBaongnM2h1AJtwtCF9qrIsZF2U0eOOHVBC6K4MIsLag3c2XxOkHUM1rj3KqzEYXrG/ClSICvxo4E29LzLbTrA096qvfAUeQGwB39I56lrz9dtYqxdCLDfB+EeYRFuVYBRMf0i+mqHxqkWOe/3u+R4wyMK4+bi2YaDbY=
+	t=1770280293; cv=none; b=UL0hv/jFUJJ6FYMduzqkhIiYDUS18xMjLPGtgfnySrRTXHzBnQa1tQ9uKgQslTfjrKiPhACS+F1crzB5Z38sCe2dAbq+NdbDp0NmLME7JDvrKf5dmFJ/yiYKUOhE8+q3zfxr1y3BdDnZsXwvbUiQWI1DViVdNJwxziCgSI8/dgM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770280100; c=relaxed/simple;
-	bh=A3awokezcYpQ/7ZWlgrcbLyfe5jVoyACpijvArVvveg=;
+	s=arc-20240116; t=1770280293; c=relaxed/simple;
+	bh=LzE2CbGQ44rF/dPgWkFwHyWZ14a31tKrIJ7EQ0lk/x4=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=l3F3crbxhke8SjqYqKIPl24rGUmtDptJV8VUbAH/8o4DDXXYKfolrR3eDe+8RK7eVophHYTpdCXMsPOCW9jaYBgM8JykxmDhhZeviEEbqv4gkfRlNiDnfA/x4GtGfzqwgA5RhiPWbSOswbY3DRzw0XFlYwWAl4zsmu5/RQK96gs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=dolcini.it; spf=pass smtp.mailfrom=dolcini.it; dkim=pass (2048-bit key) header.d=dolcini.it header.i=@dolcini.it header.b=Gp+MXe+O; arc=none smtp.client-ip=217.194.8.81
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=dolcini.it
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=dolcini.it
+	 Content-Type:Content-Disposition:In-Reply-To; b=hBquAPWELc9ro4XBq4PbVCp99VOwnS1IYPyyOTGPNMhur/S1wohmpyF1eTTZNO3UnnHENR605CLpBUox5UihKFE1dCkXHjIuE2wosKVXnSvO/5kqKFLhOKHqTGrFqjNSV/Coa5PdtqUoBqX/jGskRtc36n0XxmjAt407BZ2jHCU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HdT4LJjI; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=dolcini.it header.i=@dolcini.it header.b="Gp+MXe+O"
-Received: from francesco-nb (93-49-2-63.ip317.fastwebnet.it [93.49.2.63])
-	by mail11.truemail.it (Postfix) with ESMTPA id 208861FA94;
-	Thu,  5 Feb 2026 09:28:18 +0100 (CET)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=dolcini.it;
-	s=default; t=1770280098;
-	bh=6xeO6HF+8wKyfdj5hCH5AaPvV0doI5eKSqCsZeyclX8=; h=From:To:Subject;
-	b=Gp+MXe+OeXr/iTBnZRm69fTJnmvdmgQ/LD1tNEfsML00HQEKfXEQnfspIl7usP0DL
-	 DWt5NH6jR+IajAxN6ShVIU+RP2wcIBL1kX48Pc4reTht1vYQEBJ4ksSVowa8dcLIGY
-	 XXd+94hSTgezNuZK016E/qc08KQGegdSG1cTNhaiJGwxJe3/6e1rYAgu67qWVeVqdd
-	 nQQl2mY91cNVYAdzeZLATFww0S7TOEVWDiZ11Z/nTU1Xjskvp1PeRgbipJMuy6QOmX
-	 PfbAIlZtrTKd/zvXXUW5l+4m8TL20vqGhT/Ss7IcEc9Uvp9zhosqJFqsO3RyLGwDLI
-	 qKJbwOZCoOcNA==
-Date: Thu, 5 Feb 2026 09:28:14 +0100
-From: Francesco Dolcini <francesco@dolcini.it>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HdT4LJjI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 897F8C4CEF7;
+	Thu,  5 Feb 2026 08:31:32 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1770280293;
+	bh=LzE2CbGQ44rF/dPgWkFwHyWZ14a31tKrIJ7EQ0lk/x4=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=HdT4LJjIVBY334YkFNpE8DHcCeDxmruVrnC7GWGahzYIzd0DDTr0COi66jel7CDvU
+	 Jh5ealm9QqQomh7wFdH7bsIcCvOsYAPaAlb82S7k5zCALjhcJWnCVc/7Q0+zfd69fz
+	 axzx/uOR529WfQOTstAzUcA41euWPseO3pa0g//Y=
+Date: Thu, 5 Feb 2026 09:31:30 +0100
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: Peter Schneider <pschneider1968@googlemail.com>
 Cc: stable@vger.kernel.org, patches@lists.linux.dev,
 	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
 	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
@@ -39,32 +34,61 @@ Cc: stable@vger.kernel.org, patches@lists.linux.dev,
 	sudipm.mukherjee@gmail.com, rwarsow@gmx.de, conor@kernel.org,
 	hargar@microsoft.com, broonie@kernel.org, achill@achill.org,
 	sr@sladewatkins.com
-Subject: Re: [PATCH 6.6 00/72] 6.6.123-rc1 review
-Message-ID: <20260205082814.GA16405@francesco-nb>
-References: <20260204143845.603454952@linuxfoundation.org>
+Subject: Re: [PATCH 6.1 000/280] 6.1.162-rc1 review
+Message-ID: <2026020510-ember-darkroom-37f6@gregkh>
+References: <20260204143909.614719725@linuxfoundation.org>
+ <25910fd9-ecc8-4119-9abc-2ab6baf5ce77@googlemail.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20260204143845.603454952@linuxfoundation.org>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <25910fd9-ecc8-4119-9abc-2ab6baf5ce77@googlemail.com>
 
-On Wed, Feb 04, 2026 at 03:40:03PM +0100, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 6.6.123 release.
-> There are 72 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
+On Wed, Feb 04, 2026 at 11:17:38PM +0100, Peter Schneider wrote:
+> Hi Greg,
+> 
+> Am 04.02.2026 um 15:36 schrieb Greg Kroah-Hartman:
+> > This is the start of the stable review cycle for the 6.1.162 release.
+> > There are 280 patches in this series, all will be posted as a response
+> > to this one.  If anyone has any issues with these being applied, please
+> > let me know.
+> > 
+> > Responses should be made by Fri, 06 Feb 2026 14:38:23 +0000.
+> > Anything received after that time might be too late.
+> 
+> It seems that this time, I cannot even build this RC. When I run "make
+> menuconfig" I get a big serious of warning and error messages; something
+> seems to be really messed up here...
+> 
+> 
+> root@linus:/usr/src/linux-stable-rc# vim .config
+> root@linus:/usr/src/linux-stable-rc# make menuconfig
+> scripts/kconfig/Makefile:215: Warnung: Das Musterrezept hat das Peer-Ziel „scripts/kconfig/mconf-bin“ nicht aktualisiert.
+>   HOSTCC  scripts/kconfig/mconf.o
+>   HOSTCC  scripts/kconfig/lxdialog/checklist.o
+>   HOSTCC  scripts/kconfig/lxdialog/inputbox.o
+>   HOSTCC  scripts/kconfig/lxdialog/menubox.o
+>   HOSTCC  scripts/kconfig/lxdialog/textbox.o
+>   HOSTCC  scripts/kconfig/lxdialog/util.o
+>   HOSTCC  scripts/kconfig/lxdialog/yesno.o
+>   HOSTLD  scripts/kconfig/mconf
+> /usr/bin/ld: scripts/kconfig/lxdialog/yesno.o: warning: relocation against `acs_map' in read-only section `.text'
+> /usr/bin/ld: scripts/kconfig/mconf.o: in function `show_help':
+> mconf.c:(.text+0xa1b): undefined reference to `stdscr'
+> /usr/bin/ld: mconf.c:(.text+0xa20): undefined reference to `getmaxx'
+> /usr/bin/ld: scripts/kconfig/lxdialog/checklist.o: in function `print_arrows':
+> checklist.c:(.text+0x2c): undefined reference to `wmove'
 
-Compiled and tested on
+<snip>
 
- - Verdin iMX8MM
- - Colibri iMX6
- - Apalis iMX6
- - Colibri iMX6ULL
- - Colibri iMX7
+Ick, yes, I can reproduce this myself here, something is odd.  Let me
+track it down...
 
-Tested-by: Francesco Dolcini <francesco.dolcini@toradex.com>
+thanks,
 
+greg k-h
