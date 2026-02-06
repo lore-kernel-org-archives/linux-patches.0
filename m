@@ -1,38 +1,38 @@
-Received: from mail115-79.sinamail.sina.com.cn (mail115-79.sinamail.sina.com.cn [218.30.115.79])
+Received: from mail115-95.sinamail.sina.com.cn (mail115-95.sinamail.sina.com.cn [218.30.115.95])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 755FF221F39
-	for <patches@lists.linux.dev>; Fri,  6 Feb 2026 00:39:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=218.30.115.79
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F11B81D61B7
+	for <patches@lists.linux.dev>; Fri,  6 Feb 2026 00:59:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=218.30.115.95
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770338347; cv=none; b=jFW7YDtW0nLA7ttXBThanBZbWo7GZvSqpsXFHNQFtsFQwi2ltQ9spb6P5KM+8+Z2OFEBsQ9VOEMwM62vJU04WBSEnoX9u3R87OKiemscBAZjn0cDbjAYHkl5zBTzKkFXQ9AIiRrqNGrs3PtdADeaccXCubt2NJfcD5Z1YC9FNFo=
+	t=1770339544; cv=none; b=jmctywj7p7cF1+2gcbUH1oNY1yG3eoFdL4zfO3aTb+v63ZYUfKoPm7xpRQ3YpuNHq2KUBLtJgTLXuwbEHcibfV2oxzV/aS//Gz3eU62o64iZ21ohXDYLv8z4ewvYZbZJGBqunqXToO6Oy4BXfNLLLOwrIfve3rqx9jqdP6vU3Ic=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770338347; c=relaxed/simple;
-	bh=7Lr+Jd+p0CxGH3iyACVEtBsrDP/7GtYhBytNr+mvc/k=;
-	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=UJhr2Mr6rPs3IsRN3XmyZv2tKS0Wocmo4b0zBuZzfQ4JrViAs8UfW2HYZ2BpaUh9He6ZR74oCMTx6JXHkIobF5Iry9KonyeEmAfKTxECjkFF/clzhC12G/2q8uB7ZvUEEs+sQY3AQvIu+4lIEzUU96vnsgcdHsVD0pjLkktKqLM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=sina.cn; spf=pass smtp.mailfrom=sina.cn; dkim=pass (1024-bit key) header.d=sina.cn header.i=@sina.cn header.b=YQS3CFIU; arc=none smtp.client-ip=218.30.115.79
+	s=arc-20240116; t=1770339544; c=relaxed/simple;
+	bh=ZDU317g5GAq9kvSjDMk+t7qlAB0oXms+LdA1thglsAg=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=c5ntomY9vjIdplGHB/DeDSwUXefHXDYrs8fQD+DhJ5QgTVz7YRmvlAPI2GLObyfWGYdZLrXqJmhl7U0FUwCZmAwWeeKtyZbnOwlZL/9XfxoSG6WarwkBiXV9bYgbqmiAib1fUXMWrx5S9o0Ob5tXTk1ctTyGD4VgNFETBrL1VVo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=sina.cn; spf=pass smtp.mailfrom=sina.cn; dkim=pass (1024-bit key) header.d=sina.cn header.i=@sina.cn header.b=F31i4m9O; arc=none smtp.client-ip=218.30.115.95
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=sina.cn
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=sina.cn
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=sina.cn header.i=@sina.cn header.b="YQS3CFIU"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=sina.cn; s=201208; t=1770338346;
-	bh=+LRgbuKOSQBYe2jv0v2SWhrEsGoDWBAq3E9lcsPmO6M=;
+	dkim=pass (1024-bit key) header.d=sina.cn header.i=@sina.cn header.b="F31i4m9O"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=sina.cn; s=201208; t=1770339543;
+	bh=vJ2S4n+s94Fr7zM4B1DDMY6JoytNxiHt7LqmMoL4wI4=;
 	h=From:Subject:Date:Message-Id;
-	b=YQS3CFIUj56W/5tqJdwN0GDxBghcfniGE3VtRibcJIqEP/pLj1bgHq2Vbcc6oAtYf
-	 fZEWZJ2EFMcH/Kqege17a2S713VUc9xE2gmBh0erUrECUNqbQji00weHViXS1cv1ET
-	 sm9QxjzqBTqgaB6+34kWCDbU1Eco8uvrO21F99Sc=
+	b=F31i4m9O4WTB7/uXPREDYbjrwGKxVScP/+7BrcCvjTxYmUKI9lWXW2Kqy9IO/LHRC
+	 w+Fr8Am6Glc/XSkHQOm6vLRDY58hKgMkmUXXFYUL0mI1MzFU+Ivkrn3EVSeoYpNZBc
+	 /4bWFIWDlcmxAH3hb2AV8/S2QYa7Dxg/bypFjGhQ=
 X-SMAIL-HELO: NTT-kernel-dev
 Received: from unknown (HELO NTT-kernel-dev)([60.247.85.88])
-	by sina.cn (10.185.250.22) with ESMTP
-	id 6985381E000037B3; Fri, 6 Feb 2026 08:38:56 +0800 (CST)
+	by sina.cn (10.185.250.23) with ESMTP
+	id 69853C4200004A9D; Fri, 6 Feb 2026 08:56:36 +0800 (CST)
 X-Sender: jianqkang@sina.cn
 X-Auth-ID: jianqkang@sina.cn
 Authentication-Results: sina.cn;
 	 spf=none smtp.mailfrom=jianqkang@sina.cn;
 	 dkim=none header.i=none;
 	 dmarc=none action=none header.from=jianqkang@sina.cn
-X-SMAIL-MID: 2669537602233
-X-SMAIL-UIID: 6751CB90589A44F0BCEEFE54E2FE4451-20260206-083856-1
+X-SMAIL-MID: 2469458912931
+X-SMAIL-UIID: 4BF725AD640D4F4FB0FE55EF7AB45E6A-20260206-085636-1
 From: Jianqiang kang <jianqkang@sina.cn>
 To: gregkh@linuxfoundation.org,
 	stable@vger.kernel.org,
@@ -46,9 +46,9 @@ Cc: patches@lists.linux.dev,
 	penguin-kernel@I-love.SAKURA.ne.jp,
 	liushixin2@huawei.com,
 	linux-fsdevel@vger.kernel.org
-Subject: [PATCH 6.1.y] hfsplus: fix slab-out-of-bounds read in hfsplus_uni2asc()
-Date: Fri,  6 Feb 2026 08:38:53 +0800
-Message-Id: <20260206003853.3162465-1-jianqkang@sina.cn>
+Subject: [PATCH 5.15.y] hfsplus: fix slab-out-of-bounds read in hfsplus_uni2asc()
+Date: Fri,  6 Feb 2026 08:56:33 +0800
+Message-Id: <20260206005633.3165225-1-jianqkang@sina.cn>
 X-Mailer: git-send-email 2.34.1
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -152,10 +152,10 @@ index 98a30ca6354c..17e651bd04ad 100644
  			goto out;
  		if (type == HFSPLUS_FOLDER) {
 diff --git a/fs/hfsplus/hfsplus_fs.h b/fs/hfsplus/hfsplus_fs.h
-index e13da1fe2c2a..3d324e4465d0 100644
+index 8396964b056f..610ba01f19c3 100644
 --- a/fs/hfsplus/hfsplus_fs.h
 +++ b/fs/hfsplus/hfsplus_fs.h
-@@ -518,8 +518,12 @@ int hfsplus_strcasecmp(const struct hfsplus_unistr *s1,
+@@ -516,8 +516,12 @@ int hfsplus_strcasecmp(const struct hfsplus_unistr *s1,
  		       const struct hfsplus_unistr *s2);
  int hfsplus_strcmp(const struct hfsplus_unistr *s1,
  		   const struct hfsplus_unistr *s2);
@@ -220,7 +220,7 @@ index ebd326799f35..11e08a4a18b2 100644
   * Convert one or more ASCII characters into a single unicode character.
   * Returns the number of ASCII characters corresponding to the unicode char.
 diff --git a/fs/hfsplus/xattr.c b/fs/hfsplus/xattr.c
-index beedc1a2237a..5af9992a2e57 100644
+index 7ad3071debd6..53c8e3c0b8c1 100644
 --- a/fs/hfsplus/xattr.c
 +++ b/fs/hfsplus/xattr.c
 @@ -737,9 +737,9 @@ ssize_t hfsplus_listxattr(struct dentry *dentry, char *buffer, size_t size)
