@@ -1,115 +1,241 @@
-Received: from maynard.decadent.org.uk (maynard.decadent.org.uk [65.21.191.19])
+Received: from mail115-79.sinamail.sina.com.cn (mail115-79.sinamail.sina.com.cn [218.30.115.79])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7625D1DFD96;
-	Thu,  5 Feb 2026 23:09:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=65.21.191.19
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 755FF221F39
+	for <patches@lists.linux.dev>; Fri,  6 Feb 2026 00:39:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=218.30.115.79
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770332980; cv=none; b=ggWYcj0ksHcNmSjcfeCLZ4+EgANMCuE+qBDDzjmhEllbC3ljJrwlYc7kguS4AuQa3PmniqbR151fNStTaFpadIYZ7DY6baqClUSo/GzcGsDafWahg2XeLGJqcCC4XENpGr007rx5Ajx6lMr+UshMV+UcEt0jMyJl4FcalHtMYRM=
+	t=1770338347; cv=none; b=jFW7YDtW0nLA7ttXBThanBZbWo7GZvSqpsXFHNQFtsFQwi2ltQ9spb6P5KM+8+Z2OFEBsQ9VOEMwM62vJU04WBSEnoX9u3R87OKiemscBAZjn0cDbjAYHkl5zBTzKkFXQ9AIiRrqNGrs3PtdADeaccXCubt2NJfcD5Z1YC9FNFo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770332980; c=relaxed/simple;
-	bh=JP426iVcaWPvib54cYM5aAiRZN1e/AgyY2xQnBo4wxk=;
-	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
-	 Content-Type:MIME-Version; b=c7iKivhcojJf4U7KDlM088BA0vD1/UOMphkc9I4PdhFRCHByg8iGPpSlctQWBgvVJt/K3baGJc3yx2y38JnFkUDj8s2sm8SYE6yrzA9PcdWw1WkHs3VgvW55HV8tDGuUKRUoWKAbXSFvl2coaw9q+NcMIa8wH3eQ2LK0AVVWyEg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=decadent.org.uk; spf=pass smtp.mailfrom=decadent.org.uk; arc=none smtp.client-ip=65.21.191.19
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=decadent.org.uk
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=decadent.org.uk
-Received: from [2a02:578:851f:1502:391e:c5f5:10e2:b9a3] (helo=deadeye)
-	by maynard with esmtps  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-	(Exim 4.96)
-	(envelope-from <ben@decadent.org.uk>)
-	id 1vo8Tg-003wtu-0V;
-	Thu, 05 Feb 2026 23:09:35 +0000
-Received: from ben by deadeye with local (Exim 4.99.1)
-	(envelope-from <ben@decadent.org.uk>)
-	id 1vo8Te-00000001ipL-0vCq;
-	Fri, 06 Feb 2026 00:09:34 +0100
-Message-ID: <bce38fd1f10ecc0ae3ec3ccf95da89f58ca3e623.camel@decadent.org.uk>
-Subject: Re: [PATCH 5.10 080/161] scsi: hisi_sas: Use managed PCI functions
-From: Ben Hutchings <ben@decadent.org.uk>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, Xiang Chen <chenxiang66@hisilicon.com>, John
- Garry	 <john.garry@huawei.com>, "Martin K. Petersen"
- <martin.petersen@oracle.com>,  Sasha Levin <sashal@kernel.org>
-Date: Fri, 06 Feb 2026 00:09:29 +0100
-In-Reply-To: <20260204143854.629264200@linuxfoundation.org>
-References: <20260204143851.755002596@linuxfoundation.org>
-	 <20260204143854.629264200@linuxfoundation.org>
-Content-Type: multipart/signed; micalg="pgp-sha512";
-	protocol="application/pgp-signature"; boundary="=-PtuHCLC74femXQ59onCA"
-User-Agent: Evolution 3.56.2-8 
+	s=arc-20240116; t=1770338347; c=relaxed/simple;
+	bh=7Lr+Jd+p0CxGH3iyACVEtBsrDP/7GtYhBytNr+mvc/k=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=UJhr2Mr6rPs3IsRN3XmyZv2tKS0Wocmo4b0zBuZzfQ4JrViAs8UfW2HYZ2BpaUh9He6ZR74oCMTx6JXHkIobF5Iry9KonyeEmAfKTxECjkFF/clzhC12G/2q8uB7ZvUEEs+sQY3AQvIu+4lIEzUU96vnsgcdHsVD0pjLkktKqLM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=sina.cn; spf=pass smtp.mailfrom=sina.cn; dkim=pass (1024-bit key) header.d=sina.cn header.i=@sina.cn header.b=YQS3CFIU; arc=none smtp.client-ip=218.30.115.79
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=sina.cn
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=sina.cn
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (1024-bit key) header.d=sina.cn header.i=@sina.cn header.b="YQS3CFIU"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=sina.cn; s=201208; t=1770338346;
+	bh=+LRgbuKOSQBYe2jv0v2SWhrEsGoDWBAq3E9lcsPmO6M=;
+	h=From:Subject:Date:Message-Id;
+	b=YQS3CFIUj56W/5tqJdwN0GDxBghcfniGE3VtRibcJIqEP/pLj1bgHq2Vbcc6oAtYf
+	 fZEWZJ2EFMcH/Kqege17a2S713VUc9xE2gmBh0erUrECUNqbQji00weHViXS1cv1ET
+	 sm9QxjzqBTqgaB6+34kWCDbU1Eco8uvrO21F99Sc=
+X-SMAIL-HELO: NTT-kernel-dev
+Received: from unknown (HELO NTT-kernel-dev)([60.247.85.88])
+	by sina.cn (10.185.250.22) with ESMTP
+	id 6985381E000037B3; Fri, 6 Feb 2026 08:38:56 +0800 (CST)
+X-Sender: jianqkang@sina.cn
+X-Auth-ID: jianqkang@sina.cn
+Authentication-Results: sina.cn;
+	 spf=none smtp.mailfrom=jianqkang@sina.cn;
+	 dkim=none header.i=none;
+	 dmarc=none action=none header.from=jianqkang@sina.cn
+X-SMAIL-MID: 2669537602233
+X-SMAIL-UIID: 6751CB90589A44F0BCEEFE54E2FE4451-20260206-083856-1
+From: Jianqiang kang <jianqkang@sina.cn>
+To: gregkh@linuxfoundation.org,
+	stable@vger.kernel.org,
+	k.chen@smail.nju.edu.cn
+Cc: patches@lists.linux.dev,
+	linux-kernel@vger.kernel.org,
+	slava@dubeyko.com,
+	sashal@kernel.org,
+	yang.chenzhi@vivo.com,
+	frank.li@vivo.com,
+	penguin-kernel@I-love.SAKURA.ne.jp,
+	liushixin2@huawei.com,
+	linux-fsdevel@vger.kernel.org
+Subject: [PATCH 6.1.y] hfsplus: fix slab-out-of-bounds read in hfsplus_uni2asc()
+Date: Fri,  6 Feb 2026 08:38:53 +0800
+Message-Id: <20260206003853.3162465-1-jianqkang@sina.cn>
+X-Mailer: git-send-email 2.34.1
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-SA-Exim-Connect-IP: 2a02:578:851f:1502:391e:c5f5:10e2:b9a3
-X-SA-Exim-Mail-From: ben@decadent.org.uk
-X-SA-Exim-Scanned: No (on maynard); SAEximRunCond expanded to false
+Content-Transfer-Encoding: 8bit
 
+From: Kang Chen <k.chen@smail.nju.edu.cn>
 
---=-PtuHCLC74femXQ59onCA
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+[ Upstream commit bea3e1d4467bcf292c8e54f080353d556d355e26 ]
 
-On Wed, 2026-02-04 at 15:39 +0100, Greg Kroah-Hartman wrote:
-> 5.10-stable review patch.  If anyone has any objections, please let me kn=
-ow.
->=20
-> ------------------
->=20
-> From: Xiang Chen <chenxiang66@hisilicon.com>
->=20
-> [ Upstream commit 4f6094f1663e2ed26a940f1842cdaa15c1dd649a ]
->=20
-> Use managed PCI functions such as pcim_enable_device() and
-> pcim_iomap_regions() to simplify exception handling code.
->=20
-> Link: https://lore.kernel.org/r/1629799260-120116-2-git-send-email-john.g=
-arry@huawei.com
-> Signed-off-by: Xiang Chen <chenxiang66@hisilicon.com>
-> Signed-off-by: John Garry <john.garry@huawei.com>
-> Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
-> Stable-dep-of: d5077426e1a7 ("drm/amd/pm: Don't clear SI SMC table when s=
-etting power limit")
+BUG: KASAN: slab-out-of-bounds in hfsplus_uni2asc+0xa71/0xb90 fs/hfsplus/unicode.c:186
+Read of size 2 at addr ffff8880289ef218 by task syz.6.248/14290
 
-WTF?  That's a totally unrelated driver.
+CPU: 0 UID: 0 PID: 14290 Comm: syz.6.248 Not tainted 6.16.4 #1 PREEMPT(full)
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.15.0-1 04/01/2014
+Call Trace:
+ <TASK>
+ __dump_stack lib/dump_stack.c:94 [inline]
+ dump_stack_lvl+0x116/0x1b0 lib/dump_stack.c:120
+ print_address_description mm/kasan/report.c:378 [inline]
+ print_report+0xca/0x5f0 mm/kasan/report.c:482
+ kasan_report+0xca/0x100 mm/kasan/report.c:595
+ hfsplus_uni2asc+0xa71/0xb90 fs/hfsplus/unicode.c:186
+ hfsplus_listxattr+0x5b6/0xbd0 fs/hfsplus/xattr.c:738
+ vfs_listxattr+0xbe/0x140 fs/xattr.c:493
+ listxattr+0xee/0x190 fs/xattr.c:924
+ filename_listxattr fs/xattr.c:958 [inline]
+ path_listxattrat+0x143/0x360 fs/xattr.c:988
+ do_syscall_x64 arch/x86/entry/syscall_64.c:63 [inline]
+ do_syscall_64+0xcb/0x4c0 arch/x86/entry/syscall_64.c:94
+ entry_SYSCALL_64_after_hwframe+0x77/0x7f
+RIP: 0033:0x7fe0e9fae16d
+Code: 02 b8 ff ff ff ff c3 66 0f 1f 44 00 00 f3 0f 1e fa 48 89 f8 48 89 f7 48 89 d6 48 89 ca 4d 89 c2 4d 89 c8 4c 8b 4c 24 08 0f 05 <48> 3d 01 f0 ff ff 73 01 c3 48 c7 c1 a8 ff ff ff f7 d8 64 89 01 48
+RSP: 002b:00007fe0eae67f98 EFLAGS: 00000246 ORIG_RAX: 00000000000000c3
+RAX: ffffffffffffffda RBX: 00007fe0ea205fa0 RCX: 00007fe0e9fae16d
+RDX: 0000000000000000 RSI: 0000000000000000 RDI: 0000200000000000
+RBP: 00007fe0ea0480f0 R08: 0000000000000000 R09: 0000000000000000
+R10: 0000000000000000 R11: 0000000000000246 R12: 0000000000000000
+R13: 00007fe0ea206038 R14: 00007fe0ea205fa0 R15: 00007fe0eae48000
+ </TASK>
 
-Unless this is actually fixing something I think it can be dropped,
-since there are no other patches to hisi_sas in this series.
+Allocated by task 14290:
+ kasan_save_stack+0x24/0x50 mm/kasan/common.c:47
+ kasan_save_track+0x14/0x30 mm/kasan/common.c:68
+ poison_kmalloc_redzone mm/kasan/common.c:377 [inline]
+ __kasan_kmalloc+0xaa/0xb0 mm/kasan/common.c:394
+ kasan_kmalloc include/linux/kasan.h:260 [inline]
+ __do_kmalloc_node mm/slub.c:4333 [inline]
+ __kmalloc_noprof+0x219/0x540 mm/slub.c:4345
+ kmalloc_noprof include/linux/slab.h:909 [inline]
+ hfsplus_find_init+0x95/0x1f0 fs/hfsplus/bfind.c:21
+ hfsplus_listxattr+0x331/0xbd0 fs/hfsplus/xattr.c:697
+ vfs_listxattr+0xbe/0x140 fs/xattr.c:493
+ listxattr+0xee/0x190 fs/xattr.c:924
+ filename_listxattr fs/xattr.c:958 [inline]
+ path_listxattrat+0x143/0x360 fs/xattr.c:988
+ do_syscall_x64 arch/x86/entry/syscall_64.c:63 [inline]
+ do_syscall_64+0xcb/0x4c0 arch/x86/entry/syscall_64.c:94
+ entry_SYSCALL_64_after_hwframe+0x77/0x7f
 
-Ben.
+When hfsplus_uni2asc is called from hfsplus_listxattr,
+it actually passes in a struct hfsplus_attr_unistr*.
+The size of the corresponding structure is different from that of hfsplus_unistr,
+so the previous fix (94458781aee6) is insufficient.
+The pointer on the unicode buffer is still going beyond the allocated memory.
 
-> Signed-off-by: Sasha Levin <sashal@kernel.org>
-> ---
->  drivers/scsi/hisi_sas/hisi_sas_v3_hw.c | 20 ++++++++------------
->  1 file changed, 8 insertions(+), 12 deletions(-)
-[...]
+This patch introduces two warpper functions hfsplus_uni2asc_xattr_str and
+hfsplus_uni2asc_str to process two unicode buffers,
+struct hfsplus_attr_unistr* and struct hfsplus_unistr* respectively.
+When ustrlen value is bigger than the allocated memory size,
+the ustrlen value is limited to an safe size.
 
---=20
-Ben Hutchings
-Beware of programmers who carry screwdrivers. - Leonard Brandwein
+Fixes: 94458781aee6 ("hfsplus: fix slab-out-of-bounds read in hfsplus_uni2asc()")
+Signed-off-by: Kang Chen <k.chen@smail.nju.edu.cn>
+Reviewed-by: Viacheslav Dubeyko <slava@dubeyko.com>
+Signed-off-by: Viacheslav Dubeyko <slava@dubeyko.com>
+Link: https://lore.kernel.org/r/20250909031316.1647094-1-k.chen@smail.nju.edu.cn
+Signed-off-by: Viacheslav Dubeyko <slava@dubeyko.com>
+Signed-off-by: Jianqiang kang <jianqkang@sina.cn>
+---
+ fs/hfsplus/dir.c        |  2 +-
+ fs/hfsplus/hfsplus_fs.h |  8 ++++++--
+ fs/hfsplus/unicode.c    | 24 +++++++++++++++++++-----
+ fs/hfsplus/xattr.c      |  6 +++---
+ 4 files changed, 29 insertions(+), 11 deletions(-)
 
---=-PtuHCLC74femXQ59onCA
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: This is a digitally signed message part
+diff --git a/fs/hfsplus/dir.c b/fs/hfsplus/dir.c
+index 98a30ca6354c..17e651bd04ad 100644
+--- a/fs/hfsplus/dir.c
++++ b/fs/hfsplus/dir.c
+@@ -204,7 +204,7 @@ static int hfsplus_readdir(struct file *file, struct dir_context *ctx)
+ 			fd.entrylength);
+ 		type = be16_to_cpu(entry.type);
+ 		len = NLS_MAX_CHARSET_SIZE * HFSPLUS_MAX_STRLEN;
+-		err = hfsplus_uni2asc(sb, &fd.key->cat.name, strbuf, &len);
++		err = hfsplus_uni2asc_str(sb, &fd.key->cat.name, strbuf, &len);
+ 		if (err)
+ 			goto out;
+ 		if (type == HFSPLUS_FOLDER) {
+diff --git a/fs/hfsplus/hfsplus_fs.h b/fs/hfsplus/hfsplus_fs.h
+index e13da1fe2c2a..3d324e4465d0 100644
+--- a/fs/hfsplus/hfsplus_fs.h
++++ b/fs/hfsplus/hfsplus_fs.h
+@@ -518,8 +518,12 @@ int hfsplus_strcasecmp(const struct hfsplus_unistr *s1,
+ 		       const struct hfsplus_unistr *s2);
+ int hfsplus_strcmp(const struct hfsplus_unistr *s1,
+ 		   const struct hfsplus_unistr *s2);
+-int hfsplus_uni2asc(struct super_block *sb, const struct hfsplus_unistr *ustr,
+-		    char *astr, int *len_p);
++int hfsplus_uni2asc_str(struct super_block *sb,
++			const struct hfsplus_unistr *ustr, char *astr,
++			int *len_p);
++int hfsplus_uni2asc_xattr_str(struct super_block *sb,
++			      const struct hfsplus_attr_unistr *ustr,
++			      char *astr, int *len_p);
+ int hfsplus_asc2uni(struct super_block *sb, struct hfsplus_unistr *ustr,
+ 		    int max_unistr_len, const char *astr, int len);
+ int hfsplus_hash_dentry(const struct dentry *dentry, struct qstr *str);
+diff --git a/fs/hfsplus/unicode.c b/fs/hfsplus/unicode.c
+index ebd326799f35..11e08a4a18b2 100644
+--- a/fs/hfsplus/unicode.c
++++ b/fs/hfsplus/unicode.c
+@@ -143,9 +143,8 @@ static u16 *hfsplus_compose_lookup(u16 *p, u16 cc)
+ 	return NULL;
+ }
+ 
+-int hfsplus_uni2asc(struct super_block *sb,
+-		const struct hfsplus_unistr *ustr,
+-		char *astr, int *len_p)
++static int hfsplus_uni2asc(struct super_block *sb, const struct hfsplus_unistr *ustr,
++		    int max_len, char *astr, int *len_p)
+ {
+ 	const hfsplus_unichr *ip;
+ 	struct nls_table *nls = HFSPLUS_SB(sb)->nls;
+@@ -158,8 +157,8 @@ int hfsplus_uni2asc(struct super_block *sb,
+ 	ip = ustr->unicode;
+ 
+ 	ustrlen = be16_to_cpu(ustr->length);
+-	if (ustrlen > HFSPLUS_MAX_STRLEN) {
+-		ustrlen = HFSPLUS_MAX_STRLEN;
++	if (ustrlen > max_len) {
++		ustrlen = max_len;
+ 		pr_err("invalid length %u has been corrected to %d\n",
+ 			be16_to_cpu(ustr->length), ustrlen);
+ 	}
+@@ -280,6 +279,21 @@ int hfsplus_uni2asc(struct super_block *sb,
+ 	return res;
+ }
+ 
++inline int hfsplus_uni2asc_str(struct super_block *sb,
++			       const struct hfsplus_unistr *ustr, char *astr,
++			       int *len_p)
++{
++	return hfsplus_uni2asc(sb, ustr, HFSPLUS_MAX_STRLEN, astr, len_p);
++}
++
++inline int hfsplus_uni2asc_xattr_str(struct super_block *sb,
++				     const struct hfsplus_attr_unistr *ustr,
++				     char *astr, int *len_p)
++{
++	return hfsplus_uni2asc(sb, (const struct hfsplus_unistr *)ustr,
++			       HFSPLUS_ATTR_MAX_STRLEN, astr, len_p);
++}
++
+ /*
+  * Convert one or more ASCII characters into a single unicode character.
+  * Returns the number of ASCII characters corresponding to the unicode char.
+diff --git a/fs/hfsplus/xattr.c b/fs/hfsplus/xattr.c
+index beedc1a2237a..5af9992a2e57 100644
+--- a/fs/hfsplus/xattr.c
++++ b/fs/hfsplus/xattr.c
+@@ -737,9 +737,9 @@ ssize_t hfsplus_listxattr(struct dentry *dentry, char *buffer, size_t size)
+ 			goto end_listxattr;
+ 
+ 		xattr_name_len = NLS_MAX_CHARSET_SIZE * HFSPLUS_ATTR_MAX_STRLEN;
+-		if (hfsplus_uni2asc(inode->i_sb,
+-			(const struct hfsplus_unistr *)&fd.key->attr.key_name,
+-					strbuf, &xattr_name_len)) {
++		if (hfsplus_uni2asc_xattr_str(inode->i_sb,
++					      &fd.key->attr.key_name, strbuf,
++					      &xattr_name_len)) {
+ 			pr_err("unicode conversion failed\n");
+ 			res = -EIO;
+ 			goto end_listxattr;
+-- 
+2.34.1
 
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCgAdFiEErCspvTSmr92z9o8157/I7JWGEQkFAmmFIykACgkQ57/I7JWG
-EQmuVxAAte9Mu/VmC4t4tlomg1By2jg5j2dbeTJVuJ2IBOAagHHkgHHoTWJRGds+
-4ATXRJxO3GI51Hy9A37ka5WK583gISSgZW0yVMvsT4cVkYIdKsJULesencDL27tJ
-yq5B9z79JmALvEdDDWa0pvUFG5g/1li8+HyRqDwS91IWVo7mSB9FX3C56NpqEcFl
-aBSAfdmFfiRqNpLjZ3FkSE1mFGQP9hISEuJTPOecGUZE/pjYJ+ymU1NzDLpI67ZC
-Ky9idrrx9eGQIdxtUZR3A/ol4iln2Lk1N3kC59fWTFnDt93RYLYDNahFTAb5JxdR
-8x8KOsF9SiWK9cJUJ1gjay6yWPVR6FL/SOgjnWxClEo+822RkoumAth2L4xVYQN8
-JF6XjyYt4t0BwUmk8T7hn0oOFnXRrfG1TQbo3chG87ooWYv8oYeRrW2dpFYVEcBr
-ZwaM5AXYEMPRbTmxeffasgoMXBUWgxZ4mIOlAZaI0EyBceEfVUcQpzHVERZtw9pE
-npel2HG1HLSa3/aA2Ab3wXXpU183GLG5j3889g8/RQVuifAXE5yMnMSLjxQhXqeq
-A8/foKOnYBzPfDgLusgMvrsisWHO+jomdr0HI04FgnePVr564tJY3zmlkkGdKvmj
-HpzaJlenbHjzFN7Csgl4i+q6JawZ+HW8kkBDGVlpTER8d0FC8Io=
-=poYT
------END PGP SIGNATURE-----
-
---=-PtuHCLC74femXQ59onCA--
