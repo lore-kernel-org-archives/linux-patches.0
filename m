@@ -1,117 +1,131 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed1-f53.google.com (mail-ed1-f53.google.com [209.85.208.53])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7EC89393DEA;
-	Fri,  6 Feb 2026 11:22:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770376967; cv=none; b=V7LXdIaLl7YSX1Psd96HEdNwJirEFSjEhtOrqblfYjoO509q56K2HJjI0AuSAgHxUTzXIMZwPg60QWldboluuN1+07HVzUtiqlPCeuPdmm6gwnX4q48wdGiMXCwiZVMArKrhMJ105WTGCuZkEGDrD5FI/hd49N7Fe7j3o/iITeU=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770376967; c=relaxed/simple;
-	bh=tipjZIAm+it3Cad0XHp1wNZYWgsdThdoedCXDuCJoeY=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=IvozneCSvV2sWgxyUAKDxhzSZCIHnzXmi1hrx79ErBvYUp/CgnwtvZQF2zK8cc0XtXn2g/GgUgWIsElBAH1RhN0oKvZfFxxbtx7Nna2Q5u29Fllh73GKgiXfW/ys5p5YhAjA4/g6kT8TgbeImsfM0tH5TBEimOQua6oOcWtVmoo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FUP71Pqm; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32C372EE5FD
+	for <patches@lists.linux.dev>; Fri,  6 Feb 2026 12:00:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.208.53
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1770379237; cv=pass; b=B9P1wgd5KWYay6Iwpci+MjUG1/JNMi/XHicRlWsmZDVRz+1noA5owYVTuSVafhw8mX3SFPhVoZ1dNgBCnSOKzMcN++assUMYfXddoY83SC6dX6lCGf/i+0Rp+pun6vcswQBvLcg7TLAaGLS5uZiPbs7oVjm/dG3ATJZCx6gYTIU=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1770379237; c=relaxed/simple;
+	bh=g20uevV4tVvJLv/9bgO5Hh+jgvBQc0njCfo+a67kzcI=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=d1pxaVJGtQYgFg7mgX3Q+Z2bId2FxRqKUoF/Lvs/+LxGXlNYwJpsvALZr0fLEgpG8IN0CCBOIM2vmlln0HzAWSqPy78SrLlyDoR34TIfsiVETITGFEZyQq6RyBcl8+LVeYERCtMwe8oFNeCP14gEazIu2H0UYGQQYwHErGOMRpA=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=rajagiritech.edu.in; spf=none smtp.mailfrom=rajagiritech.edu.in; dkim=pass (2048-bit key) header.d=rajagiritech-edu-in.20230601.gappssmtp.com header.i=@rajagiritech-edu-in.20230601.gappssmtp.com header.b=ud8VSDxT; arc=pass smtp.client-ip=209.85.208.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=rajagiritech.edu.in
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=rajagiritech.edu.in
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FUP71Pqm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D18EC116C6;
-	Fri,  6 Feb 2026 11:22:46 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770376967;
-	bh=tipjZIAm+it3Cad0XHp1wNZYWgsdThdoedCXDuCJoeY=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=FUP71PqmjYMqOIT6aVR6NhHUb9yE0NLLUYqJz3VrL7UkmNG9F1iA6JMHf5n/u3Vd4
-	 LbpCUBRmzObzvFMsOEDTH9z4hD/f6xabQ92DrY562VqdYOHEVRvY7FHT6bWtuTbu0i
-	 3f8I+jlK1hCX/LQhzt25kL6XJXlKPJr54lfP0Mzo=
-Date: Fri, 6 Feb 2026 12:22:43 +0100
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: Francesco Lavra <flavra@baylibre.com>
-Cc: Ben Hutchings <ben@decadent.org.uk>, stable@vger.kernel.org,
-	patches@lists.linux.dev,
-	Andy Shevchenko <andriy.shevchenko@intel.com>,
-	Lorenzo Bianconi <lorenzo@kernel.org>,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Subject: Re: [PATCH 5.10 070/161] iio: imu: st_lsm6dsx: fix iio_chan_spec for
- sensors without event detection
-Message-ID: <2026020630-theater-transform-c228@gregkh>
-References: <20260204143851.755002596@linuxfoundation.org>
- <20260204143854.274769162@linuxfoundation.org>
- <eb892614c9cd28aa03922567f8a6d75ed2f594bc.camel@decadent.org.uk>
- <b5f8757ebd48c3a11591a68e8b97017f7b9d7e31.camel@baylibre.com>
+	dkim=pass (2048-bit key) header.d=rajagiritech-edu-in.20230601.gappssmtp.com header.i=@rajagiritech-edu-in.20230601.gappssmtp.com header.b="ud8VSDxT"
+Received: by mail-ed1-f53.google.com with SMTP id 4fb4d7f45d1cf-6581234d208so936694a12.3
+        for <patches@lists.linux.dev>; Fri, 06 Feb 2026 04:00:37 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1770379236; cv=none;
+        d=google.com; s=arc-20240605;
+        b=EXErsf4TXdYtTOiGAcEP7NXr/Ny99fEi+lxR9umSJGsDdHwHUUZWYpWMAxWRseNEu+
+         w2wdm2JcaWNE1mGeDQmMagJjqvIOMcUv+ZDmpEs3labs/3XmrlATgVQLCjBajrPrVqnb
+         Dskq/xUpySKHQe3KsgnjU3SPfHe6UcwlPdLcLstzxNG7yx0CW7FEPF/x60GUoSCcUgOo
+         D3N8GxgCJ5oIpVf1ykVi9LpOzM7C4vQhWCRQEKlasUdFqadAzpOtRXpRPsLcY+iOM46R
+         8JZvwdW9F8utO6PtyvHasfCVoM+c/QRsxAKkCJ3xeQt2o8rP4pS24T1RWyD4fHysLwHF
+         xpaw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:dkim-signature;
+        bh=6I/x/WRhEO+daalBrvU8SHSRaTRx4bAG6z/mD8JVCJ8=;
+        fh=u3tUhqh1H4uErRHY2UOdL6czK1XBk3ZFNIotQ7st1l4=;
+        b=DUo7mICxeMzP0kSAs0BzWHcMXeWP5TYTuI1/o84BsX37rQMEz1B7yxddBwx7Tinbhv
+         RhJNGziWRqSD19ydZcXUf32jQWoRcqzCD5LcvQ4jf/AXvgYWcKsW11dVcc2vDIYlucGq
+         TdlSVlguyvTdiBVPb1wJbA599Xz8qWhorSlO1jAYOuN0vzMJH3i9nK1ZydDjKxy2INBb
+         x1h4ijxDBU1ldARCFjpRsVqx49aC3zyxQBrmo6cFG44zRNS3vMeXVAbVSqya1paXouh8
+         3sDlq8F+Cbz0orOgcEBkaQoc/XtooUBwK7TfopTTb1BLCtomiAFur37T4Zrupv/1yVvw
+         8ZQQ==;
+        darn=lists.linux.dev
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=rajagiritech-edu-in.20230601.gappssmtp.com; s=20230601; t=1770379236; x=1770984036; darn=lists.linux.dev;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=6I/x/WRhEO+daalBrvU8SHSRaTRx4bAG6z/mD8JVCJ8=;
+        b=ud8VSDxThoH6/dgqIdiauGBXPZqLkSbfIYgRgi4uozxHcjGUKLbFLHdfjbOaOZauts
+         IZTc9yIRi7mUQgk2jkwxReigDyA9bpeKJ/YgjAK0OFLaMe9CDCIF58t3QIwOLKMlRIhL
+         b7pg3Qe6G+pBUACOcky2M/0kYPuP2/pueSwdRc5NaZqkKBLmpHb/0e7cRCme5O0+YRa6
+         D/NcYzyBw3jmcJ+L1QG6Ono01j3qt3zQPKK3Ub+D9sC1eZMxsbcZCtElFVwF/obWGq6w
+         9TVVZm09srNcAr7DnRnhDs5ztqguPbkFfxXFHw3F0fwppS6oBzRVL7eU0lonw9tPR6yp
+         nY6Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1770379236; x=1770984036;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=6I/x/WRhEO+daalBrvU8SHSRaTRx4bAG6z/mD8JVCJ8=;
+        b=baVshfa4ylk+b0DX5YG+oIJifMh0qD8lZCMozKqsf2urxt1PxUv+/NUnFZeVtq6OZ2
+         IUGDtU/0exGL4kZ20t9K/djFrvmPL7m5fRbfnHShjFn1n0BU+jlLLYk3Ob/6p3EsnVpT
+         SPaHbVGr2lfO623M6S0Te9n7A2UoBoBDsUZ/oMUwzg45O6P7AAsE+KP46XSGd0VTdavV
+         wDWzQ4jNrPQqxKQ7Rlg5Dj67N6bNiz9a/9OB/3gvmqg8l9xP0UuCujSgRSikMvwlikhA
+         XUPIzk8edW2VmLUdWpmCzlmIN6VV9hMLoklhS6uTdAiKkve8lShTSSyZ8foeMa/rhJd1
+         DglA==
+X-Forwarded-Encrypted: i=1; AJvYcCXvQ4bR274i2lj6vLaQvvD4CtUffpxct54XiM4Yjx2/VWSPCEFSBz8X54S4KjuBp0LZ5TUzbXTe@lists.linux.dev
+X-Gm-Message-State: AOJu0YxqrRTgWaOk9f4uUgzRUVEjlb7aGK87to2XzceZMXtpZezLB9+6
+	Wn/uOA2+NQE9H9WluwhszMfzobbKar6W8Gqm18zSJTzzoBEoHrdSkXeDv0hxKa6ljDmWcY4iVLh
+	18PVpXoOycIlT/FyZfPV84ar/GEiIK1Bk5IT33WsMUA==
+X-Gm-Gg: AZuq6aIR86eysXNycz6fgOHeiZ5+IvJSYhBiYdv6+gYFFQdYQn2R7T5wnPyUpd55eN2
+	0dFCaPyuY2L49ewDudgkmra2AHk91MHokRSivxHKKRyI4zyV46Y3VVJ/wP2RlWPkWSbwn8sDoa+
+	iEnYSWO8b3S15zAgv5lyeAwzDj8J97SppFwEZdZbdNhKdwF9TuJSyvsUQQpUGbzZlYUrftzAzWz
+	dZHDFrJ4zsE62/V99k5By2z2DvoUmFP3hg/8PzvqrM9ga2naUehvugaJ7JzvUKbW+ZlFv/T
+X-Received: by 2002:a17:907:7f8a:b0:b86:fca7:3dc2 with SMTP id
+ a640c23a62f3a-b8edf15ce6cmr149172366b.10.1770379234954; Fri, 06 Feb 2026
+ 04:00:34 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <b5f8757ebd48c3a11591a68e8b97017f7b9d7e31.camel@baylibre.com>
+References: <20260204143851.857060534@linuxfoundation.org>
+In-Reply-To: <20260204143851.857060534@linuxfoundation.org>
+From: Jeffrin Thalakkottoor <jeffrin@rajagiritech.edu.in>
+Date: Fri, 6 Feb 2026 17:29:58 +0530
+X-Gm-Features: AZwV_QjOvgjK9NEvluJj9yu0cCeB3pX9VAK9jLAhSJ1LBGv7_CJIl-nLLopraP0
+Message-ID: <CAG=yYwnSJCp6W6+0MGG_aaj+Ao7Qhiza0FKvrP-4wf6f9x1SQQ@mail.gmail.com>
+Subject: Re: [PATCH 6.18 000/122] 6.18.9-rc1 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, 
+	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de, 
+	jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, 
+	rwarsow@gmx.de, conor@kernel.org, hargar@microsoft.com, broonie@kernel.org, 
+	achill@achill.org, sr@sladewatkins.com
+Content-Type: text/plain; charset="UTF-8"
 
-On Fri, Feb 06, 2026 at 09:17:38AM +0100, Francesco Lavra wrote:
-> On Thu, 2026-02-05 at 23:44 +0100, Ben Hutchings wrote:
-> > On Wed, 2026-02-04 at 15:38 +0100, Greg Kroah-Hartman wrote:
-> > > 5.10-stable review patch.  If anyone has any objections, please let me
-> > > know.
-> > > 
-> > > ------------------
-> > > 
-> > > From: Francesco Lavra <flavra@baylibre.com>
-> > > 
-> > > commit c34e2e2d67b3bb8d5a6d09b0d6dac845cdd13fb3 upstream.
-> > > 
-> > > The st_lsm6dsx_acc_channels array of struct iio_chan_spec has a non-
-> > > NULL
-> > > event_spec field, indicating support for IIO events. However, event
-> > > detection is not supported for all sensors, and if userspace tries to
-> > > configure accelerometer wakeup events on a sensor device that does not
-> > > support them (e.g. LSM6DS0), st_lsm6dsx_write_event() dereferences a
-> > > NULL
-> > > pointer when trying to write to the wakeup register.
-> > > Define an additional struct iio_chan_spec array whose members have a
-> > > NULL
-> > > event_spec field, and use this array instead of st_lsm6dsx_acc_channels
-> > > for
-> > > sensors without event detection capability.
-> > [...]
-> > > @@ -1170,8 +1177,8 @@ static const struct st_lsm6dsx_settings
-> > >                 },
-> > >                 .channels = {
-> > >                         [ST_LSM6DSX_ID_ACC] = {
-> > > -                               .chan = st_lsm6dsx_acc_channels,
-> > > -                               .len =
-> > > ARRAY_SIZE(st_lsm6dsx_acc_channels),
-> > > +                               .chan = st_lsm6ds0_acc_channels,
-> > > +                               .len =
-> > > ARRAY_SIZE(st_lsm6ds0_acc_channels),
-> > >                         },
-> > >                         [ST_LSM6DSX_ID_GYRO] = {
-> > >                                 .chan = st_lsm6dsx_gyro_channels,
-> > 
-> > In the upstream commit the 3rd hunk changed the entry for hardware IDs
-> > ST_LSM6DSO16IS_ID and ST_ISM330IS_ID.
-> > 
-> > That entry was added by commit f35e1ee9cb5d "iio: imu: st_lsm6dsx: add
-> > support to LSM6DSO16IS" in 6.2.  So in this backport the 3rd hunk is
-> > changing configuration for other devices.
-> > 
-> > I think the right thing to do for the 5.10-6.1 branches is to only apply
-> > the first 2 hunks.
-> 
-> Good catch. In the 5.10 branch, the third hunk is changing configuration
-> for ST_LSM6DSR_ID, ST_ISM330DHCX_ID, and ST_LSM6DSRX_ID, none of which
-> should have their configuration changed; so only the first two hunks should
-> be applied.
+ Build error related
+screenshot  below.
 
-Oh that's crazy.  I stared at this for a long time as the patches really
-look "identical" when it comes to the original one.  You have no context
-for what entry is associated with what "configuration" as these
-structures are huge!
+--------------------<screenshot>-----------------------
 
-I'll just drop this patch entirely from all of these queues and wait for
-someone to send me a version that they "know" is correct.
+$make -j 4
+  DESCEND objtool
+  DESCEND bpf/resolve_btfids
+  INSTALL libsubcmd_headers
+  INSTALL libbpf_headers
+  INSTALL libsubcmd_headers
+make[5]: *** No rule to make target 'str_error.h', needed by
+'/home/jeffrin/kernel/linux-stable-rc/tools/bpf/resolve_btfids/libbpf/staticobjs/libbpf.o'.
+Stop.
+make[4]: *** [Makefile:152:
+/home/jeffrin/kernel/linux-stable-rc/tools/bpf/resolve_btfids/libbpf/staticobjs/libbpf-in.o]
+Error 2
+make[3]: *** [Makefile:61:
+/home/jeffrin/kernel/linux-stable-rc/tools/bpf/resolve_btfids//libbpf/libbpf.a]
+Error 2
+make[2]: *** [Makefile:76: bpf/resolve_btfids] Error 2
+make[1]: *** [/home/jeffrin/kernel/linux-stable-rc/Makefile:1449:
+tools/bpf/resolve_btfids] Error 2
+make[1]: *** Waiting for unfinished jobs....
+  CALL    scripts/checksyscalls.sh
+make: *** [Makefile:248: __sub-make] Error 2
+-----------------------<screenshot>---------------------------
 
-thanks,
+Tested-by: Jeffrin Jose T <jeffrin@rajagiritech.edu.in>
 
-greg k-h
+--
+software engineer
+rajagiri school of engineering and technology
