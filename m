@@ -1,43 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86CDC27CCF2;
-	Mon,  9 Feb 2026 14:45:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC1D025DB1C;
+	Mon,  9 Feb 2026 14:45:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770648337; cv=none; b=o5D9dEaArNXKxRz7G4UAvN667X6d7B4dR1KJ/S68YqY90IBJC/Kd5BV/8SgD10zjcSO2my/Xf6ohXlKhkhqcymEBlQZ8uuRx8MJF+yEZxAEAw+iQS8amuipzWG5dByAqf9ttAEaOV7X5JO1AtwMRoXNYWTk21tbktibgT5ItLdA=
+	t=1770648340; cv=none; b=HmGRtZwGCkDVA0fP7swpX5vtH1Sf2/EU2KUHTCk6Tdwd/7A1eCZXgj6Eqx+edT3tXVLLdrn0goiG+gG8xOfqpstmNNnY3G04HVxz3mKUwsYzbdkso9xWlJbWSbST+FJDktHOh1wn8+V1L+JjnQmbm8CZ2kUUv9KrVscf8+/44nA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770648337; c=relaxed/simple;
-	bh=gnqSY1hI/RrQmBh2Qfx8BFNECFAeCQOmbVAiIi4+vJ4=;
+	s=arc-20240116; t=1770648340; c=relaxed/simple;
+	bh=zfjYcFS+nJTc24UET3E3aVIR0A1yqIU1cb1EUN7eRlk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RcOhZSa60aNii5vthQmQx0aXb7LfJocIb7W6I9sq9aXKRqDZ74M2XyjXbRuP0SlIDzJ9itFlxEoA6Bag3J2mOUi9rdt++ChqGDMu+i49zPC6p7R0a9MFdZ6iZ9a7tSRLoX5Bu/DgTU1Ct/Po6Qnz4lGv4Ta6JU/nDkwFO/ESvZQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IX6QXbu/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BTCa57wKlPJEeQvFrbtIRSctstpHte0mRd45/MoQxZuDYAjD5uhCqmTWXJZHyab3c9WLDusapoQJQCP1nt8DysgOKROThX4HvoKbbeVsyG6pzArb4rgbqMO2b7RS3nGuVuzGLW0ZzvHROQ8+QbMQ3kpC21kh+yeQ5SDBZkm7BJg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aJmNv0JW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IX6QXbu/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 06670C116C6;
-	Mon,  9 Feb 2026 14:45:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aJmNv0JW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A0C3C116C6;
+	Mon,  9 Feb 2026 14:45:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770648337;
-	bh=gnqSY1hI/RrQmBh2Qfx8BFNECFAeCQOmbVAiIi4+vJ4=;
+	s=korg; t=1770648340;
+	bh=zfjYcFS+nJTc24UET3E3aVIR0A1yqIU1cb1EUN7eRlk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IX6QXbu/I8az6LeITMkhd8gMjxaidFENomH8FbJroWeKg207JpGBk1hY27JzyAiza
-	 0fRJNcNfT5xZOMMSIDGjJw7Wyv/Y1yVGfgbzn6nxKpBskWQNCybpjcpCDro5hF2TS6
-	 g06JTLVI+RKQwY+TUAH4uloD+nfv7Ke1hAu2FjMw=
+	b=aJmNv0JWzxtQ3LQA9awwCtbjCuduxbhCuvbO3AwX7IIl5kMQELrECNM9cRwXBWRPq
+	 Vazajnf0Fig0Dj1EumJ7K4PKjMHm/iQt0Gu8RfLBdnzj1Cg/gVNmo2ofoVScwnbtN7
+	 W2NcBiG/DSrsgKKaKSGsgiENADSHwvBLSyk604QE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	mathieu.desnoyers@efficios.com,
-	Wupeng Ma <mawupeng1@huawei.com>,
-	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 35/69] ring-buffer: Avoid softlockup in ring_buffer_resize() during memory free
-Date: Mon,  9 Feb 2026 15:24:03 +0100
-Message-ID: <20260209142303.189797447@linuxfoundation.org>
+	YunJe Shin <ioerts@kookmin.ac.kr>,
+	Sagi Grimberg <sagi@grimberg.me>,
+	Joonkyo Jung <joonkyoj@yonsei.ac.kr>,
+	Keith Busch <kbusch@kernel.org>
+Subject: [PATCH 6.6 01/86] nvmet-tcp: add bounds checks in nvmet_tcp_build_pdu_iovec
+Date: Mon,  9 Feb 2026 15:23:24 +0100
+Message-ID: <20260209142304.827291594@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260209142301.913348974@linuxfoundation.org>
-References: <20260209142301.913348974@linuxfoundation.org>
+In-Reply-To: <20260209142304.770150175@linuxfoundation.org>
+References: <20260209142304.770150175@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,72 +48,76 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Wupeng Ma <mawupeng1@huawei.com>
+From: YunJe Shin <yjshin0438@gmail.com>
 
-[ Upstream commit 6435ffd6c7fcba330dfa91c58dc30aed2df3d0bf ]
+commit 52a0a98549344ca20ad81a4176d68d28e3c05a5c upstream.
 
-When user resize all trace ring buffer through file 'buffer_size_kb',
-then in ring_buffer_resize(), kernel allocates buffer pages for each
-cpu in a loop.
+nvmet_tcp_build_pdu_iovec() could walk past cmd->req.sg when a PDU
+length or offset exceeds sg_cnt and then use bogus sg->length/offset
+values, leading to _copy_to_iter() GPF/KASAN. Guard sg_idx, remaining
+entries, and sg->length/offset before building the bvec.
 
-If the kernel preemption model is PREEMPT_NONE and there are many cpus
-and there are many buffer pages to be freed, it may not give up cpu
-for a long time and finally cause a softlockup.
-
-To avoid it, call cond_resched() after each cpu buffer free as Commit
-f6bd2c92488c ("ring-buffer: Avoid softlockup in ring_buffer_resize()")
-does.
-
-Detailed call trace as follow:
-
-  rcu: INFO: rcu_sched self-detected stall on CPU
-  rcu: 	24-....: (14837 ticks this GP) idle=521c/1/0x4000000000000000 softirq=230597/230597 fqs=5329
-  rcu: 	(t=15004 jiffies g=26003221 q=211022 ncpus=96)
-  CPU: 24 UID: 0 PID: 11253 Comm: bash Kdump: loaded Tainted: G            EL      6.18.2+ #278 NONE
-  pc : arch_local_irq_restore+0x8/0x20
-   arch_local_irq_restore+0x8/0x20 (P)
-   free_frozen_page_commit+0x28c/0x3b0
-   __free_frozen_pages+0x1c0/0x678
-   ___free_pages+0xc0/0xe0
-   free_pages+0x3c/0x50
-   ring_buffer_resize.part.0+0x6a8/0x880
-   ring_buffer_resize+0x3c/0x58
-   __tracing_resize_ring_buffer.part.0+0x34/0xd8
-   tracing_resize_ring_buffer+0x8c/0xd0
-   tracing_entries_write+0x74/0xd8
-   vfs_write+0xcc/0x288
-   ksys_write+0x74/0x118
-   __arm64_sys_write+0x24/0x38
-
-Cc: <mathieu.desnoyers@efficios.com>
-Link: https://patch.msgid.link/20251228065008.2396573-1-mawupeng1@huawei.com
-Signed-off-by: Wupeng Ma <mawupeng1@huawei.com>
-Acked-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
-Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 872d26a391da ("nvmet-tcp: add NVMe over TCP target driver")
+Signed-off-by: YunJe Shin <ioerts@kookmin.ac.kr>
+Reviewed-by: Sagi Grimberg <sagi@grimberg.me>
+Reviewed-by: Joonkyo Jung <joonkyoj@yonsei.ac.kr>
+Signed-off-by: Keith Busch <kbusch@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/trace/ring_buffer.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/nvme/target/tcp.c |   17 +++++++++++++++++
+ 1 file changed, 17 insertions(+)
 
-diff --git a/kernel/trace/ring_buffer.c b/kernel/trace/ring_buffer.c
-index 21b7d044797e3..b141486801b14 100644
---- a/kernel/trace/ring_buffer.c
-+++ b/kernel/trace/ring_buffer.c
-@@ -2356,6 +2356,8 @@ int ring_buffer_resize(struct trace_buffer *buffer, unsigned long size,
- 					list) {
- 			list_del_init(&bpage->list);
- 			free_buffer_page(bpage);
+--- a/drivers/nvme/target/tcp.c
++++ b/drivers/nvme/target/tcp.c
+@@ -333,11 +333,14 @@ static void nvmet_tcp_free_cmd_buffers(s
+ 	cmd->req.sg = NULL;
+ }
+ 
++static void nvmet_tcp_fatal_error(struct nvmet_tcp_queue *queue);
 +
-+			cond_resched();
- 		}
+ static void nvmet_tcp_build_pdu_iovec(struct nvmet_tcp_cmd *cmd)
+ {
+ 	struct bio_vec *iov = cmd->iov;
+ 	struct scatterlist *sg;
+ 	u32 length, offset, sg_offset;
++	unsigned int sg_remaining;
+ 	int nr_pages;
+ 
+ 	length = cmd->pdu_len;
+@@ -345,9 +348,22 @@ static void nvmet_tcp_build_pdu_iovec(st
+ 	offset = cmd->rbytes_done;
+ 	cmd->sg_idx = offset / PAGE_SIZE;
+ 	sg_offset = offset % PAGE_SIZE;
++	if (!cmd->req.sg_cnt || cmd->sg_idx >= cmd->req.sg_cnt) {
++		nvmet_tcp_fatal_error(cmd->queue);
++		return;
++	}
+ 	sg = &cmd->req.sg[cmd->sg_idx];
++	sg_remaining = cmd->req.sg_cnt - cmd->sg_idx;
+ 
+ 	while (length) {
++		if (!sg_remaining) {
++			nvmet_tcp_fatal_error(cmd->queue);
++			return;
++		}
++		if (!sg->length || sg->length <= sg_offset) {
++			nvmet_tcp_fatal_error(cmd->queue);
++			return;
++		}
+ 		u32 iov_len = min_t(u32, length, sg->length - sg_offset);
+ 
+ 		bvec_set_page(iov, sg_page(sg), iov_len,
+@@ -355,6 +371,7 @@ static void nvmet_tcp_build_pdu_iovec(st
+ 
+ 		length -= iov_len;
+ 		sg = sg_next(sg);
++		sg_remaining--;
+ 		iov++;
+ 		sg_offset = 0;
  	}
-  out_err_unlock:
--- 
-2.51.0
-
 
 
