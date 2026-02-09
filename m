@@ -1,41 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7BB428312F;
-	Mon,  9 Feb 2026 14:53:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 442A329A9C3;
+	Mon,  9 Feb 2026 14:53:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770648809; cv=none; b=XndvF2v30K6oSBaY/vEnmswqLUz9+kGzvZ5qVXwVdKzkeq5ULnBHN9d88X6oYy3aeUQRqAtJWgN4mmD4cSZx/DIgKa8Mm/VdiiiD7UaND5j2qbecKzLV/YqCPquHrcXMn7H0Er6hobDQXDSbd0CfXgSw6aChEhLu9o/lO9HUiSo=
+	t=1770648813; cv=none; b=P1ffKj3hBcqHRaj0nQJkdSRaJLvg21QyEy1AWRoBGvVuBfvUXg+4HQw1DS1hkStkee/9YpO6Y651hBOGGKZcNrMtibNcW8ulE8cyTZRAt7y4zxil+Bov5N4GgeN0bpPmJu4a8CFrov8FwX1ctpEvW4MU3/pP/d36MPc+TxXKkR0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770648809; c=relaxed/simple;
-	bh=mIQSlTHSTxR8xsntSXUXbOMNmNYVq2sHnDw7MlvuqHg=;
+	s=arc-20240116; t=1770648813; c=relaxed/simple;
+	bh=RZeqr1MAme5LRykLI9qL06TWLTBkJmxeW1UWAhL9hak=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ORP8fl3jDa6OGIsPK6gTDpYPhZCkS6c4IMM3IEt6fMfGp79bOGAD/CatJFAMK/dv+mriYh9l4Cd43jslDVgrCLMqkmxl1YoJATn6EdvcRd80sznZYlinRc86vbW92RKOmmcf/uTbq40eJOgR5HRJE+fkwIaMWwEmZ+XG5XALWQ4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lyBznleI; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=oSn6xlk4awu2EmGEPSPQthNIIGwdvqT4+PNz1OGs5tMsB3jj3uAZt4narn1hHGJsgPVhPA5t/Hey3UpmWE6tSJF+puTfFDiy5qGtqDi8GcdRcDQccMe2BoqTpF3DWOn5dK94N/b5aSYecorL4aWsO1gzT/z5CuvSWZRdRSICzSU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=m/tgzOWR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lyBznleI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 66D18C116C6;
-	Mon,  9 Feb 2026 14:53:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="m/tgzOWR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B5EE4C116C6;
+	Mon,  9 Feb 2026 14:53:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770648809;
-	bh=mIQSlTHSTxR8xsntSXUXbOMNmNYVq2sHnDw7MlvuqHg=;
+	s=korg; t=1770648813;
+	bh=RZeqr1MAme5LRykLI9qL06TWLTBkJmxeW1UWAhL9hak=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lyBznleIyXXo4AAnb24bInYVSE8V/bw8SqPBYxrjTSTzxlgyCD1qdgSQ6dgghdDzJ
-	 ceiRvnyZkKwGAtV2ct4St2bZAKerwZwGb6aERaE7/WB7y/wCIbQ7J0uCdu3axvRX26
-	 J4H/lZJnkMczDNsw0vrO/GDI3G+qeVcwnSuk+vGg=
+	b=m/tgzOWR1zKEXD1BLkPfr5c7y++ybsb1JyDfqcMpnAmXygh/a0f3oMdG/JATfH6rm
+	 qKg7mSeDDpAG9iWtF4JnBB1VXyVxK+xjgXGalnhPnWNIJ71OJagwqI2xhPwYhdW8yU
+	 7cwNscCgUgs5SORO93B+AhzTgnzSAQByeSXUgQ3A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thomas Gleixner <tglx@linutronix.de>,
-	Guenter Roeck <linux@roeck-us.net>,
-	Jacob Keller <jacob.e.keller@intel.com>,
-	Anna-Maria Behnsen <anna-maria@linutronix.de>,
-	Luiz Augusto von Dentz <luiz.dentz@gmail.com>,
-	Jeongjun Park <aha310510@gmail.com>
-Subject: [PATCH 5.15 21/75] Bluetooth: hci_qca: Fix the teardown problem for real
-Date: Mon,  9 Feb 2026 15:24:18 +0100
-Message-ID: <20260209142302.608904593@linuxfoundation.org>
+	Ilya Dryomov <idryomov@gmail.com>,
+	Dongsheng Yang <dongsheng.yang@linux.dev>
+Subject: [PATCH 5.15 03/75] rbd: check for EOD after exclusive lock is ensured to be held
+Date: Mon,  9 Feb 2026 15:24:00 +0100
+Message-ID: <20260209142301.960766231@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260209142301.830618238@linuxfoundation.org>
 References: <20260209142301.830618238@linuxfoundation.org>
@@ -54,75 +50,94 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thomas Gleixner <tglx@linutronix.de>
+From: Ilya Dryomov <idryomov@gmail.com>
 
-[ Upstream commit e0d3da982c96aeddc1bbf1cf9469dbb9ebdca657 ]
+commit bd3884a204c3b507e6baa9a4091aa927f9af5404 upstream.
 
-While discussing solutions for the teardown problem which results from
-circular dependencies between timers and workqueues, where timers schedule
-work from their timer callback and workqueues arm the timers from work
-items, it was discovered that the recent fix to the QCA code is incorrect.
+Similar to commit 870611e4877e ("rbd: get snapshot context after
+exclusive lock is ensured to be held"), move the "beyond EOD" check
+into the image request state machine so that it's performed after
+exclusive lock is ensured to be held.  This avoids various race
+conditions which can arise when the image is shrunk under I/O (in
+practice, mostly readahead).  In one such scenario
 
-That commit fixes the obvious problem of using del_timer() instead of
-del_timer_sync() and reorders the teardown calls to
+    rbd_assert(objno < rbd_dev->object_map_size);
 
-   destroy_workqueue(wq);
-   del_timer_sync(t);
+can be triggered if a close-to-EOD read gets queued right before the
+shrink is initiated and the EOD check is performed against an outdated
+mapping_size.  After the resize is done on the server side and exclusive
+lock is (re)acquired bringing along the new (now shrunk) object map, the
+read starts going through the state machine and rbd_obj_may_exist() gets
+invoked on an object that is out of bounds of rbd_dev->object_map array.
 
-This makes it less likely to explode, but it's still broken:
-
-   destroy_workqueue(wq);
-   /* After this point @wq cannot be touched anymore */
-
-   ---> timer expires
-         queue_work(wq) <---- Results in a NULL pointer dereference
-			      deep in the work queue core code.
-   del_timer_sync(t);
-
-Use the new timer_shutdown_sync() function to ensure that the timers are
-disarmed, no timer callbacks are running and the timers cannot be armed
-again. This restores the original teardown sequence:
-
-   timer_shutdown_sync(t);
-   destroy_workqueue(wq);
-
-which is now correct because the timer core silently ignores potential
-rearming attempts which can happen when destroy_workqueue() drains pending
-work before mopping up the workqueue.
-
-Fixes: 72ef98445aca ("Bluetooth: hci_qca: Use del_timer_sync() before freeing")
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Tested-by: Guenter Roeck <linux@roeck-us.net>
-Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
-Reviewed-by: Anna-Maria Behnsen <anna-maria@linutronix.de>
-Acked-by: Luiz Augusto von Dentz <luiz.dentz@gmail.com>
-Link: https://lore.kernel.org/all/87iljhsftt.ffs@tglx
-Link: https://lore.kernel.org/r/20221123201625.435907114@linutronix.de
-Signed-off-by: Jeongjun Park <aha310510@gmail.com>
+Cc: stable@vger.kernel.org
+Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
+Reviewed-by: Dongsheng Yang <dongsheng.yang@linux.dev>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/bluetooth/hci_qca.c |   10 ++++++++--
- 1 file changed, 8 insertions(+), 2 deletions(-)
+ drivers/block/rbd.c |   33 +++++++++++++++++++++------------
+ 1 file changed, 21 insertions(+), 12 deletions(-)
 
---- a/drivers/bluetooth/hci_qca.c
-+++ b/drivers/bluetooth/hci_qca.c
-@@ -709,9 +709,15 @@ static int qca_close(struct hci_uart *hu
- 	skb_queue_purge(&qca->tx_wait_q);
- 	skb_queue_purge(&qca->txq);
- 	skb_queue_purge(&qca->rx_memdump_q);
-+	/*
-+	 * Shut the timers down so they can't be rearmed when
-+	 * destroy_workqueue() drains pending work which in turn might try
-+	 * to arm a timer.  After shutdown rearm attempts are silently
-+	 * ignored by the timer core code.
-+	 */
-+	timer_shutdown_sync(&qca->tx_idle_timer);
-+	timer_shutdown_sync(&qca->wake_retrans_timer);
- 	destroy_workqueue(qca->workqueue);
--	del_timer_sync(&qca->tx_idle_timer);
--	del_timer_sync(&qca->wake_retrans_timer);
- 	qca->hu = NULL;
+--- a/drivers/block/rbd.c
++++ b/drivers/block/rbd.c
+@@ -3497,11 +3497,29 @@ static void rbd_img_object_requests(stru
+ 	rbd_assert(!need_exclusive_lock(img_req) ||
+ 		   __rbd_is_lock_owner(rbd_dev));
  
- 	kfree_skb(qca->rx_skb);
+-	if (rbd_img_is_write(img_req)) {
+-		rbd_assert(!img_req->snapc);
++	if (test_bit(IMG_REQ_CHILD, &img_req->flags)) {
++		rbd_assert(!rbd_img_is_write(img_req));
++	} else {
++		struct request *rq = blk_mq_rq_from_pdu(img_req);
++		u64 off = (u64)blk_rq_pos(rq) << SECTOR_SHIFT;
++		u64 len = blk_rq_bytes(rq);
++		u64 mapping_size;
++
+ 		down_read(&rbd_dev->header_rwsem);
+-		img_req->snapc = ceph_get_snap_context(rbd_dev->header.snapc);
++		mapping_size = rbd_dev->mapping.size;
++		if (rbd_img_is_write(img_req)) {
++			rbd_assert(!img_req->snapc);
++			img_req->snapc =
++			    ceph_get_snap_context(rbd_dev->header.snapc);
++		}
+ 		up_read(&rbd_dev->header_rwsem);
++
++		if (unlikely(off + len > mapping_size)) {
++			rbd_warn(rbd_dev, "beyond EOD (%llu~%llu > %llu)",
++				 off, len, mapping_size);
++			img_req->pending.result = -EIO;
++			return;
++		}
+ 	}
+ 
+ 	for_each_obj_request(img_req, obj_req) {
+@@ -4727,7 +4745,6 @@ static void rbd_queue_workfn(struct work
+ 	struct request *rq = blk_mq_rq_from_pdu(img_request);
+ 	u64 offset = (u64)blk_rq_pos(rq) << SECTOR_SHIFT;
+ 	u64 length = blk_rq_bytes(rq);
+-	u64 mapping_size;
+ 	int result;
+ 
+ 	/* Ignore/skip any zero-length requests */
+@@ -4740,17 +4757,9 @@ static void rbd_queue_workfn(struct work
+ 	blk_mq_start_request(rq);
+ 
+ 	down_read(&rbd_dev->header_rwsem);
+-	mapping_size = rbd_dev->mapping.size;
+ 	rbd_img_capture_header(img_request);
+ 	up_read(&rbd_dev->header_rwsem);
+ 
+-	if (offset + length > mapping_size) {
+-		rbd_warn(rbd_dev, "beyond EOD (%llu~%llu > %llu)", offset,
+-			 length, mapping_size);
+-		result = -EIO;
+-		goto err_img_request;
+-	}
+-
+ 	dout("%s rbd_dev %p img_req %p %s %llu~%llu\n", __func__, rbd_dev,
+ 	     img_request, obj_op_name(op_type), offset, length);
+ 
 
 
