@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F5FB37AA87;
-	Mon,  9 Feb 2026 14:41:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0808136828A;
+	Mon,  9 Feb 2026 14:41:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770648079; cv=none; b=kbz3Rk7mZSJ/2JAp2QNn564tlGifFcu2yIoB2wXf8EPdDyipo3PsDu5tmZpRckYDZ/fsXEeSrdtf7N2qwMLND5m8kYomGcKWv0eERFThOB3ayaNxJmSFHuH95e46CTcczqNWt968yZsKY7BXbYfha9Udp384JzNlpnnKZw+NsZA=
+	t=1770648083; cv=none; b=l4Ogp7S5lvrhNjgGcPZUGRwjrO69BTSEW2OLNHaUKnhwkHAFRCn0HieQcOS7AA5KR+xkHBnp5hcGaaAA3amm3SR0ZQKo7BBShXsg1skB1ZNVgVwRvoXreRX+KqKUKpjwWkIVPMAZsP/GFI/Jj+BDNazGh2YyjmZe1QsAqz+AqKY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770648079; c=relaxed/simple;
-	bh=/tvTzSdIwdz3PNWom4gQE698ApXHGteI0kEPTWrZclg=;
+	s=arc-20240116; t=1770648083; c=relaxed/simple;
+	bh=jZrVqw25Xi3U3MKC0KYEEt9r2ezjhbIHinJ0gBWH49o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=YlPWlRynhODe7T3GFe6hivT65pH2Ed9fSJ5EFEGi5tWFc35cQxsEcbziWP7xsSRuKwX7Y5CDojEAHrb9EVelet0fUHC/6ImJEAXdgOv75xWGNsk9a/toEQZqpArsBCalN1qSf+hqjtgseWG33s8JoMVh6ojxnvM9jdru8p+mCio=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=riLsew9L; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BU9TgZnNspBz6X0UEFSk7GS8QP1L7NAUCcTQayhqnxU/Cy3gsmxlRGaxEdmNhNREiLDcddUeDGDqrzDSFb/TOMfHyHsGmnac0LVA1oJMMXPRFoq9kN1cEQxPBGKiTNOeGENe8Qpm9DkQ1iBBcZJu0DD3B5o4PiO/Ed1qgLz/ByM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=v7NvS9dr; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="riLsew9L"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A317EC19423;
-	Mon,  9 Feb 2026 14:41:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="v7NvS9dr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 28371C116C6;
+	Mon,  9 Feb 2026 14:41:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770648079;
-	bh=/tvTzSdIwdz3PNWom4gQE698ApXHGteI0kEPTWrZclg=;
+	s=korg; t=1770648082;
+	bh=jZrVqw25Xi3U3MKC0KYEEt9r2ezjhbIHinJ0gBWH49o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=riLsew9LS3GNIWmQd/YMIA0rBP1bJl/S3bvIIiQ02fm9tPnvuw2iPWUhRWodlBYiK
-	 cJAffYYR62yFxS7MZolclRcyArsNpgZoITf/8heI5/QiILkmyFFmd8wpoApLdSFZ8K
-	 GUDthdJmgHLdDZmSSLzqbzP3YQ7rWB41KKXt2D8I=
+	b=v7NvS9drTLmKikIScNrCcNCm86/9fcCWaQHgMxx1I81yRtcsxby+Ew5F8hK7hk+is
+	 im/fafWjQO4iPhx0rn5Vwa28GAIxCnUIRzKQvAgRD2C2+OuHgLGM9/H/tGc222fMSM
+	 mIoEuUeNZrtzHu5sjQ8xDf5ZLP3rvpIwVmQUjBi4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Karthik Poosa <karthik.poosa@intel.com>,
-	Rodrigo Vivi <rodrigo.vivi@intel.com>,
-	=?UTF-8?q?Thomas=20Hellstr=C3=B6m?= <thomas.hellstrom@linux.intel.com>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Guenter Roeck <linux@roeck-us.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 100/113] drm/xe/pm: Disable D3Cold for BMG only on specific platforms
-Date: Mon,  9 Feb 2026 15:24:09 +0100
-Message-ID: <20260209142313.769998932@linuxfoundation.org>
+Subject: [PATCH 6.12 101/113] hwmon: (occ) Mark occ_init_attribute() as __printf
+Date: Mon,  9 Feb 2026 15:24:10 +0100
+Message-ID: <20260209142313.805698199@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260209142310.204833231@linuxfoundation.org>
 References: <20260209142310.204833231@linuxfoundation.org>
@@ -46,63 +45,46 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Karthik Poosa <karthik.poosa@intel.com>
+From: Arnd Bergmann <arnd@arndb.de>
 
-[ Upstream commit bb36170d959fad7f663f91eb9c32a84dd86bef2b ]
+[ Upstream commit 831a2b27914cc880130ffe8fb8d1e65a5324d07f ]
 
-Restrict D3Cold disablement for BMG to unsupported NUC platforms,
-instead of disabling it on all platforms.
+This is a printf-style function, which gcc -Werror=suggest-attribute=format
+correctly points out:
 
-Signed-off-by: Karthik Poosa <karthik.poosa@intel.com>
-Fixes: 3e331a6715ee ("drm/xe/pm: Temporarily disable D3Cold on BMG")
-Link: https://patch.msgid.link/20260123173238.1642383-1-karthik.poosa@intel.com
-Reviewed-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
-Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
-(cherry picked from commit 39125eaf8863ab09d70c4b493f58639b08d5a897)
-Signed-off-by: Thomas Hellström <thomas.hellstrom@linux.intel.com>
+drivers/hwmon/occ/common.c: In function 'occ_init_attribute':
+drivers/hwmon/occ/common.c:761:9: error: function 'occ_init_attribute' might be a candidate for 'gnu_printf' format attribute [-Werror=suggest-attribute=format]
+
+Add the attribute to avoid this warning and ensure any incorrect
+format strings are detected here.
+
+Fixes: 744c2fe950e9 ("hwmon: (occ) Rework attribute registration for stack usage")
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Link: https://lore.kernel.org/r/20260203163440.2674340-1-arnd@kernel.org
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/xe/xe_pm.c | 13 ++++++++++---
- 1 file changed, 10 insertions(+), 3 deletions(-)
+ drivers/hwmon/occ/common.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/gpu/drm/xe/xe_pm.c b/drivers/gpu/drm/xe/xe_pm.c
-index 1012925aa4816..cab80b947c755 100644
---- a/drivers/gpu/drm/xe/xe_pm.c
-+++ b/drivers/gpu/drm/xe/xe_pm.c
-@@ -7,6 +7,7 @@
- 
- #include <linux/pm_runtime.h>
- #include <linux/suspend.h>
-+#include <linux/dmi.h>
- 
- #include <drm/drm_managed.h>
- #include <drm/ttm/ttm_placement.h>
-@@ -270,9 +271,15 @@ int xe_pm_init_early(struct xe_device *xe)
- 
- static u32 vram_threshold_value(struct xe_device *xe)
- {
--	/* FIXME: D3Cold temporarily disabled by default on BMG */
--	if (xe->info.platform == XE_BATTLEMAGE)
--		return 0;
-+	if (xe->info.platform == XE_BATTLEMAGE) {
-+		const char *product_name;
-+
-+		product_name = dmi_get_system_info(DMI_PRODUCT_NAME);
-+		if (product_name && strstr(product_name, "NUC13RNG")) {
-+			drm_warn(&xe->drm, "BMG + D3Cold not supported on this platform\n");
-+			return 0;
-+		}
-+	}
- 
- 	return DEFAULT_VRAM_THRESHOLD;
- }
+diff --git a/drivers/hwmon/occ/common.c b/drivers/hwmon/occ/common.c
+index b3694a4209b97..89928d38831b6 100644
+--- a/drivers/hwmon/occ/common.c
++++ b/drivers/hwmon/occ/common.c
+@@ -749,6 +749,7 @@ static ssize_t occ_show_extended(struct device *dev,
+  * are dynamically allocated, we cannot use the existing kernel macros which
+  * stringify the name argument.
+  */
++__printf(7, 8)
+ static void occ_init_attribute(struct occ_attribute *attr, int mode,
+ 	ssize_t (*show)(struct device *dev, struct device_attribute *attr, char *buf),
+ 	ssize_t (*store)(struct device *dev, struct device_attribute *attr,
 -- 
 2.51.0
 
