@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F05E6276028;
-	Mon,  9 Feb 2026 14:37:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72D7328150F;
+	Mon,  9 Feb 2026 14:37:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770647867; cv=none; b=saZZ/0M/nhuqHqKgbqqVvRdDUVbsfYXP+koRjNI1XR9jdO0uqqjfSmNmkuyNSddqoZ+FPh7CWgPYfsrJ6AE3INrRJY01qaN/l4OJi2G66P+BlSAb6Ub/NrH+/Sm3KOYK35dPJBi5EerbA0248CksuERHUPzQXZwYljk+gwJ55I0=
+	t=1770647870; cv=none; b=uF6jxFCEWKULU9xZm7Z88Lm5dWcwc4f+FFz6rnyWM5GY6Jv5GkTqoYV0NLUCrQ4bdaghMArycup2a9qLT4RbOC2jdBCNgIL4BCul484UNcxxUHEX6lMbjPwLiVWCPOJm/8586/APKoq20/kAB6saztb84msoF0K6vDieTBYAQ28=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770647867; c=relaxed/simple;
-	bh=lruZDmNWZ1G957l/avSKA+otWkcAGlVvSqJDNqaBXTk=;
+	s=arc-20240116; t=1770647870; c=relaxed/simple;
+	bh=wLIoe6F7DJuo3+1Jo8v4zQzpSo3VI6bnD/6f5KUMUvY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JNeQSnykd2lJ8x1L6c7yHXtrDQgXQw/uBrvF2HmDO0Fc9QCnZqarWtb8Wy8xNgCL8oM7Jk8Ils4jT2BD8DcpfOAisKzwH83arg05vzxrflnlW3Kd4X6RLgwsqN/CFa7Wx5YNGZ3Hx2Fp+VFCwySdgkbpe7RsVOIY1SLaExEGxyk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Nagg5brN; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=Yva/7xpo5aGDNGraYDYZNhuWb6ybvhwvZbKPtkrEKg207Kd5WMC5rHJ4ssnKTZiQ9H+N3J1SBlJ/K1y77CX4gINiXULMtnX3D8bHQOmW1Icr5kstSTzI+9CF2ubUzpv2ox+NROtINZQzEDiWD6RruHf0pDjhbWSg8yDOrhhFLwc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rp2RYNZT; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Nagg5brN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F078C116C6;
-	Mon,  9 Feb 2026 14:37:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rp2RYNZT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE257C116C6;
+	Mon,  9 Feb 2026 14:37:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770647866;
-	bh=lruZDmNWZ1G957l/avSKA+otWkcAGlVvSqJDNqaBXTk=;
+	s=korg; t=1770647870;
+	bh=wLIoe6F7DJuo3+1Jo8v4zQzpSo3VI6bnD/6f5KUMUvY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Nagg5brNlsHD6zSD1xx0e5enQk16BCbcQEWTumWHjCLIC2op6CiOOQHj54apqrCw6
-	 4oReHhi5IupXAWAAxxBuJ2uwgV6gM5rtvSkJ9t64Oayk5HM+BXqOxLuIXMY4ZxJ+V4
-	 w4nvMphlsIBfLLBGXeyGCUYGPlqgzqaYbmFI8BtA=
+	b=rp2RYNZTUKcwpRN/77y9NY1002nFg9/Ps4Dd9tZW8pOfBoGbD4BH1YpbPLE7w8WkE
+	 EmSAaSwIKoFhDPlY51pWOAo9kWj1bjmZgkWmiJRs0ZEygcT6dKD9xudXoYlqC8Khp2
+	 D2qHnhkPV8m78E1jO6p1E66CHp77mD4oxZSgdqEA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kwok Kin Ming <kenkinming2002@gmail.com>,
-	Benjamin Tissoires <bentiss@kernel.org>,
+	=?UTF-8?q?Rodrigo=20Lugathe=20da=20Concei=C3=A7=C3=A3o=20Alves?= <lugathe2@gmail.com>,
+	Terry Junge <linuxhid@cosmicgizmosystems.com>,
+	Jiri Kosina <jkosina@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 051/113] HID: i2c-hid: fix potential buffer overflow in i2c_hid_get_report()
-Date: Mon,  9 Feb 2026 15:23:20 +0100
-Message-ID: <20260209142312.036855067@linuxfoundation.org>
+Subject: [PATCH 6.12 052/113] HID: Apply quirk HID_QUIRK_ALWAYS_POLL to Edifier QR30 (2d99:a101)
+Date: Mon,  9 Feb 2026 15:23:21 +0100
+Message-ID: <20260209142312.072298955@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260209142310.204833231@linuxfoundation.org>
 References: <20260209142310.204833231@linuxfoundation.org>
@@ -45,50 +46,58 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Kwok Kin Ming <kenkinming2002@gmail.com>
+From: Rodrigo Lugathe da Conceição Alves <lugathe2@gmail.com>
 
-[ Upstream commit 2497ff38c530b1af0df5130ca9f5ab22c5e92f29 ]
+[ Upstream commit 85a866809333cd2bf8ddac93d9a3e3ba8e4f807d ]
 
-`i2c_hid_xfer` is used to read `recv_len + sizeof(__le16)` bytes of data
-into `ihid->rawbuf`.
+The USB speaker has a bug that causes it to reboot when changing the
+brightness using the physical knob.
 
-The former can come from the userspace in the hidraw driver and is only
-bounded by HID_MAX_BUFFER_SIZE(16384) by default (unless we also set
-`max_buffer_size` field of `struct hid_ll_driver` which we do not).
+Add a new vendor and product ID entry in hid-ids.h, and register
+the corresponding device in hid-quirks.c with the required quirk.
 
-The latter has size determined at runtime by the maximum size of
-different report types you could receive on any particular device and
-can be a much smaller value.
-
-Fix this by truncating `recv_len` to `ihid->bufsize - sizeof(__le16)`.
-
-The impact is low since access to hidraw devices requires root.
-
-Signed-off-by: Kwok Kin Ming <kenkinming2002@gmail.com>
-Signed-off-by: Benjamin Tissoires <bentiss@kernel.org>
+Signed-off-by: Rodrigo Lugathe da Conceição Alves <lugathe2@gmail.com>
+Reviewed-by: Terry Junge <linuxhid@cosmicgizmosystems.com>
+Signed-off-by: Jiri Kosina <jkosina@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hid/i2c-hid/i2c-hid-core.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/hid/hid-ids.h    | 3 +++
+ drivers/hid/hid-quirks.c | 1 +
+ 2 files changed, 4 insertions(+)
 
-diff --git a/drivers/hid/i2c-hid/i2c-hid-core.c b/drivers/hid/i2c-hid/i2c-hid-core.c
-index 276490547378d..cf8ae0df0cda9 100644
---- a/drivers/hid/i2c-hid/i2c-hid-core.c
-+++ b/drivers/hid/i2c-hid/i2c-hid-core.c
-@@ -280,6 +280,7 @@ static int i2c_hid_get_report(struct i2c_hid *ihid,
- 	 * In addition to report data device will supply data length
- 	 * in the first 2 bytes of the response, so adjust .
- 	 */
-+	recv_len = min(recv_len, ihid->bufsize - sizeof(__le16));
- 	error = i2c_hid_xfer(ihid, ihid->cmdbuf, length,
- 			     ihid->rawbuf, recv_len + sizeof(__le16));
- 	if (error) {
+diff --git a/drivers/hid/hid-ids.h b/drivers/hid/hid-ids.h
+index c34d4ce211e34..9d0a97a3b06a2 100644
+--- a/drivers/hid/hid-ids.h
++++ b/drivers/hid/hid-ids.h
+@@ -435,6 +435,9 @@
+ #define USB_DEVICE_ID_DWAV_EGALAX_MULTITOUCH_A001	0xa001
+ #define USB_DEVICE_ID_DWAV_EGALAX_MULTITOUCH_C002	0xc002
+ 
++#define USB_VENDOR_ID_EDIFIER		0x2d99
++#define USB_DEVICE_ID_EDIFIER_QR30	0xa101	/* EDIFIER Hal0 2.0 SE */
++
+ #define USB_VENDOR_ID_ELAN		0x04f3
+ #define USB_DEVICE_ID_TOSHIBA_CLICK_L9W	0x0401
+ #define USB_DEVICE_ID_HP_X2		0x074d
+diff --git a/drivers/hid/hid-quirks.c b/drivers/hid/hid-quirks.c
+index b2a3ce7bfb6b6..1f531626192cd 100644
+--- a/drivers/hid/hid-quirks.c
++++ b/drivers/hid/hid-quirks.c
+@@ -81,6 +81,7 @@ static const struct hid_device_id hid_quirks[] = {
+ 	{ HID_USB_DEVICE(USB_VENDOR_ID_DRAGONRISE, USB_DEVICE_ID_DRAGONRISE_PS3), HID_QUIRK_MULTI_INPUT },
+ 	{ HID_USB_DEVICE(USB_VENDOR_ID_DRAGONRISE, USB_DEVICE_ID_DRAGONRISE_WIIU), HID_QUIRK_MULTI_INPUT },
+ 	{ HID_USB_DEVICE(USB_VENDOR_ID_DWAV, USB_DEVICE_ID_EGALAX_TOUCHCONTROLLER), HID_QUIRK_MULTI_INPUT | HID_QUIRK_NOGET },
++	{ HID_USB_DEVICE(USB_VENDOR_ID_EDIFIER, USB_DEVICE_ID_EDIFIER_QR30), HID_QUIRK_ALWAYS_POLL },
+ 	{ HID_USB_DEVICE(USB_VENDOR_ID_ELAN, HID_ANY_ID), HID_QUIRK_ALWAYS_POLL },
+ 	{ HID_USB_DEVICE(USB_VENDOR_ID_ELO, USB_DEVICE_ID_ELO_TS2700), HID_QUIRK_NOGET },
+ 	{ HID_USB_DEVICE(USB_VENDOR_ID_EMS, USB_DEVICE_ID_EMS_TRIO_LINKER_PLUS_II), HID_QUIRK_MULTI_INPUT },
 -- 
 2.51.0
 
