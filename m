@@ -1,36 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4956237BE88;
-	Mon,  9 Feb 2026 14:53:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2EC228312F;
+	Mon,  9 Feb 2026 14:54:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770648839; cv=none; b=Iw1ePbR4tO1kZPXkF8wQViLgaFWlAfMp98MRzK8n02J2p8FgbsjeeLrG6RG7rjwJiuI4skxA/xN4zGG50dwcHm7YCyes1FnJ+6FKIkOe444XXjm7JD0XJeMkwNoPIo53hO3dQ7adRCOI4YRY8WeJr/s/SvtGagBWT7uvbwTLNFA=
+	t=1770648842; cv=none; b=Oe+R/Q1dzrBsmHsSIo1+/rXYjFCWxbIt5SieeMefaiTk77w+Iv+y17Us8zMR8ukyXqcctIVLSomO6Dg4nTfspOsQ4BoS/cOSTJ6dC3dEZ7Qsz4fWuHJrL39lwY8vc0kbVN4C/0patsPk81jJqOlFZhv3fPtLklTpGu6RAGdl+zE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770648839; c=relaxed/simple;
-	bh=Wf+3Q/j2cavQAC6U8wUoDgz6af/YtEq85rAL97thHSw=;
+	s=arc-20240116; t=1770648842; c=relaxed/simple;
+	bh=iMqgfUkkBspvbZ9+YXZz0hmlOjFX1VtwM7DM5Onjv74=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=A6tfmidd1fFx3MP+LvgkJbe/3C1uPvX7ZJf/0oe7TP5gQ7esk816RF8k+W/RMv19Dz1xbxnTNTncWTjaaA2ZUThnCrU8xzseGvsjQ+pt8EhL+IeFWi0h/AX+CzT8UFFTXUUclpcQkxI8v2NEfEn993thnMe8cXJdsf2777f+T8U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JVSzMCvr; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=askhnY89fvr0uG/pHY8J9Dw4KYC9oEXgHWwADNRL1T97Ai33aF7p4zhF0SxZRbi9i7owcc1IaSJaJZhn3SsqViuVc0UgLYapjWUmCDSfZhSUxZLbHoWdyHVppMJydPEcPCqaH15RBsLGItnULMpPAxy3Q/ab1Uq3uQ9lHWUorHE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jCqN6jTP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JVSzMCvr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ABA4BC116C6;
-	Mon,  9 Feb 2026 14:53:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jCqN6jTP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B3B3C16AAE;
+	Mon,  9 Feb 2026 14:54:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770648839;
-	bh=Wf+3Q/j2cavQAC6U8wUoDgz6af/YtEq85rAL97thHSw=;
+	s=korg; t=1770648842;
+	bh=iMqgfUkkBspvbZ9+YXZz0hmlOjFX1VtwM7DM5Onjv74=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JVSzMCvrqznQbRa8KAe5SiJCbYywLAckHNXIu5G4thcgQf1EKLyxvpNVL5AUyTqpQ
-	 x7quwCNJ9MgqOXvVWwRvKwZ/4PX1WiDiOt99RRHFhMeAiqts05rlp0X72zpj6BFCiO
-	 G2Rb4YmnFpUTsbl3tbfaoxvwxpyDuDag4Xv8R0SA=
+	b=jCqN6jTPtmGuCi2VsIY0hOnnIWqN2mmF74EVVIG4gGN1+ts3Bo7BCDoi7OfHjBdi9
+	 0/OOkJ7MlA0OXlUVXN9Z0nnZ5LIdk1D/rLcfSSq5PjtIMDAODCWhmCxqBs1JB6CMj+
+	 8nlwCf1SC1aseug5mCfSKrzGEBKizdRgc5EFLN4U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Carlos Llamas <cmllamas@google.com>
-Subject: [PATCH 5.15 23/75] binderfs: fix ida_alloc_max() upper bound
-Date: Mon,  9 Feb 2026 15:24:20 +0100
-Message-ID: <20260209142302.680991783@linuxfoundation.org>
+	Ruslan Krupitsa <krupitsarus@outlook.com>,
+	Takashi Iwai <tiwai@suse.de>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 32/75] ALSA: hda/realtek: add HP Laptop 15s-eq1xxx mute LED quirk
+Date: Mon,  9 Feb 2026 15:24:29 +0100
+Message-ID: <20260209142303.003820587@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260209142301.830618238@linuxfoundation.org>
 References: <20260209142301.830618238@linuxfoundation.org>
@@ -49,47 +51,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Carlos Llamas <cmllamas@google.com>
+From: Ruslan Krupitsa <krupitsarus@outlook.com>
 
-commit ec4ddc90d201d09ef4e4bef8a2c6d9624525ad68 upstream.
+[ Upstream commit 9ed7a28225af02b74f61e7880d460db49db83758 ]
 
-The 'max' argument of ida_alloc_max() takes the maximum valid ID and not
-the "count". Using an ID of BINDERFS_MAX_MINOR (1 << 20) for dev->minor
-would exceed the limits of minor numbers (20-bits). Fix this off-by-one
-error by subtracting 1 from the 'max'.
+HP Laptop 15s-eq1xxx with ALC236 codec does not enable the
+mute LED automatically. This patch adds a quirk entry for
+subsystem ID 0x8706 using the ALC236_FIXUP_HP_MUTE_LED_COEFBIT2
+fixup, enabling correct mute LED behavior.
 
-Cc: stable@vger.kernel.org
-Fixes: 3ad20fe393b3 ("binder: implement binderfs")
-Signed-off-by: Carlos Llamas <cmllamas@google.com>
-Link: https://patch.msgid.link/20260127235545.2307876-2-cmllamas@google.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Ruslan Krupitsa <krupitsarus@outlook.com>
+Link: https://patch.msgid.link/AS8P194MB112895B8EC2D87D53A876085BBBAA@AS8P194MB1128.EURP194.PROD.OUTLOOK.COM
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/android/binderfs.c |    8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ sound/pci/hda/patch_realtek.c | 1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/android/binderfs.c
-+++ b/drivers/android/binderfs.c
-@@ -130,8 +130,8 @@ static int binderfs_binder_device_create
- 	mutex_lock(&binderfs_minors_mutex);
- 	if (++info->device_count <= info->mount_opts.max)
- 		minor = ida_alloc_max(&binderfs_minors,
--				      use_reserve ? BINDERFS_MAX_MINOR :
--						    BINDERFS_MAX_MINOR_CAPPED,
-+				      use_reserve ? BINDERFS_MAX_MINOR - 1 :
-+						    BINDERFS_MAX_MINOR_CAPPED - 1,
- 				      GFP_KERNEL);
- 	else
- 		minor = -ENOSPC;
-@@ -433,8 +433,8 @@ static int binderfs_binder_ctl_create(st
- 	/* Reserve a new minor number for the new device. */
- 	mutex_lock(&binderfs_minors_mutex);
- 	minor = ida_alloc_max(&binderfs_minors,
--			      use_reserve ? BINDERFS_MAX_MINOR :
--					    BINDERFS_MAX_MINOR_CAPPED,
-+			      use_reserve ? BINDERFS_MAX_MINOR - 1 :
-+					    BINDERFS_MAX_MINOR_CAPPED - 1,
- 			      GFP_KERNEL);
- 	mutex_unlock(&binderfs_minors_mutex);
- 	if (minor < 0) {
+diff --git a/sound/pci/hda/patch_realtek.c b/sound/pci/hda/patch_realtek.c
+index 10f7f807e706e..839a7e957d42a 100644
+--- a/sound/pci/hda/patch_realtek.c
++++ b/sound/pci/hda/patch_realtek.c
+@@ -9333,6 +9333,7 @@ static const struct snd_pci_quirk alc269_fixup_tbl[] = {
+ 	SND_PCI_QUIRK(0x103c, 0x863e, "HP Spectre x360 15-df1xxx", ALC285_FIXUP_HP_SPECTRE_X360_DF1),
+ 	SND_PCI_QUIRK(0x103c, 0x86e8, "HP Spectre x360 15-eb0xxx", ALC285_FIXUP_HP_SPECTRE_X360_EB1),
+ 	SND_PCI_QUIRK(0x103c, 0x86f9, "HP Spectre x360 13-aw0xxx", ALC285_FIXUP_HP_SPECTRE_X360_MUTE_LED),
++	SND_PCI_QUIRK(0x103c, 0x8706, "HP Laptop 15s-eq1xxx", ALC236_FIXUP_HP_MUTE_LED_COEFBIT2),
+ 	SND_PCI_QUIRK(0x103c, 0x8716, "HP Elite Dragonfly G2 Notebook PC", ALC285_FIXUP_HP_GPIO_AMP_INIT),
+ 	SND_PCI_QUIRK(0x103c, 0x8720, "HP EliteBook x360 1040 G8 Notebook PC", ALC285_FIXUP_HP_GPIO_AMP_INIT),
+ 	SND_PCI_QUIRK(0x103c, 0x8724, "HP EliteBook 850 G7", ALC285_FIXUP_HP_GPIO_LED),
+-- 
+2.51.0
+
 
 
