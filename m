@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D34C3446C7;
-	Mon,  9 Feb 2026 14:56:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C857637C103;
+	Mon,  9 Feb 2026 14:56:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770648986; cv=none; b=tzSdFOGyuwjjo0dEqiBzeerYZsiKn5TkRCWl+sUMGYMFfC4kmigiH7OamotJtHXf5m+nwQlMvGsb4kZuPF4CJFI70NeRUo70ANfrjicP8pDj9fJ5Kroba0Q/VwM6hDqiKEspx2ihqa6UqDzH9cl8Hddz6ecNqBsV25O3/pe2eIM=
+	t=1770648989; cv=none; b=ABtpEMWIWHwrR+N09H1nlwtQdUWUEKrZGBNye+vcbTMXa0/MhivE8DHc3tsM75ilHp8zN0nS6CdsX9kdnxxqCh1gbK2KPAE03cvK5A5yxWIJc/YjqcGKK8fCxajwxPXfy8YXgH1Ek7TqVwpgNOBCoRDg8ZRWo5uhQsj2fysr+v8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770648986; c=relaxed/simple;
-	bh=YjJ07m9XOJ6pt8cHeECRYasaHIzgpDUllDuzz2lAWGg=;
+	s=arc-20240116; t=1770648989; c=relaxed/simple;
+	bh=EEiYSYwZOqF5oegiXhhuSdB9P3veA+S0CGIV+78zbs8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WgBdhfPz8rNZEi69cQ9WpJ85RgiMhRNqC4cHK+XOrl+O3zdcp1UCHmxwdiY8xQyTmlGY+rCLyc6xXduiOo5P1GiWrHt4TCt1l1slFahVCC56c5jUEpVvQ8ASgG5ELsVP1DBYYRXlw9xoPnUTQ9L8ZgmwX5TRxMiPck43Dv615io=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=b/4Fwjs0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=IjJ+rU1zNgzishhGbj87z4jt5tR1b3gymDV4s0Cwvqnfjg9tuCBcPoP0V8vPgnv1ohyMunlup6LgcZuvPNNt6/UnqMNdmtzzRySFCc2dK+Ii6UUOfM4bCBrHDQEhixvnYNfX6XqGlGjiUMXLCa+wuA6xqiEguVfCbZRo6uyhJW8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1LrUaaB3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="b/4Fwjs0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 16F18C116C6;
-	Mon,  9 Feb 2026 14:56:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1LrUaaB3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F38BC16AAE;
+	Mon,  9 Feb 2026 14:56:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770648986;
-	bh=YjJ07m9XOJ6pt8cHeECRYasaHIzgpDUllDuzz2lAWGg=;
+	s=korg; t=1770648989;
+	bh=EEiYSYwZOqF5oegiXhhuSdB9P3veA+S0CGIV+78zbs8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=b/4Fwjs0e8Vf1K7VoGL1GRDfNTgGJc//CzCzMY2uJaXl5l+VXaNRM2s9dqqwWQ5sz
-	 AtD5VPQ9uxxc2wS/3ka0/28p0hR2585guz1ov/4jeHR+nWG6KDI3oIvi9Ufn8S/cBq
-	 FW72D+/AOz3skZK0vRZz/Hfkv/XzwENioZdTbOn0=
+	b=1LrUaaB3gW+jagTmaCKlBhN55Vz4yXTe4TmlclQqOuJx7C6swT8z4Oif/brNbdVIP
+	 nptao6qWuUuDRnWwk0J+W9eZDihdFzTbs/vIAU7PEAHvemYhxAI/rab6+deKdOGWWB
+	 ERmmenyKAYZm5rxKG/ySt/mGw+8jz8XTX2CLX+Ys=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rakshana Sridhar <rakshanas@chelsio.com>,
-	Varun Prakash <varun@chelsio.com>,
-	Sagi Grimberg <sagi@grimberg.me>,
-	Christoph Hellwig <hch@lst.de>,
-	Keith Busch <kbusch@kernel.org>
-Subject: [PATCH 5.15 75/75] nvmet-tcp: pass iov_len instead of sg->length to bvec_set_page()
-Date: Mon,  9 Feb 2026 15:25:12 +0100
-Message-ID: <20260209142304.557339475@linuxfoundation.org>
+	Chris Bainbridge <chris.bainbridge@gmail.com>,
+	Mark Brown <broonie@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 60/75] ASoC: amd: fix memory leak in acp3x pdm dma ops
+Date: Mon,  9 Feb 2026 15:24:57 +0100
+Message-ID: <20260209142304.004534874@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260209142301.830618238@linuxfoundation.org>
 References: <20260209142301.830618238@linuxfoundation.org>
@@ -53,34 +51,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Varun Prakash <varun@chelsio.com>
+From: Chris Bainbridge <chris.bainbridge@gmail.com>
 
-commit 1f0bbf28940cf5edad90ab57b62aa8197bf5e836 upstream.
+[ Upstream commit 7f67ba5413f98d93116a756e7f17cd2c1d6c2bd6 ]
 
-iov_len is the valid data length, so pass iov_len instead of sg->length to
-bvec_set_page().
-
-Fixes: 5bfaba275ae6 ("nvmet-tcp: don't map pages which can't come from HIGHMEM")
-Signed-off-by: Rakshana Sridhar <rakshanas@chelsio.com>
-Signed-off-by: Varun Prakash <varun@chelsio.com>
-Reviewed-by: Sagi Grimberg <sagi@grimberg.me>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Signed-off-by: Keith Busch <kbusch@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 4a767b1d039a8 ("ASoC: amd: add acp3x pdm driver dma ops")
+Signed-off-by: Chris Bainbridge <chris.bainbridge@gmail.com>
+Link: https://patch.msgid.link/20260202205034.7697-1-chris.bainbridge@gmail.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/target/tcp.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ sound/soc/amd/renoir/acp3x-pdm-dma.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/nvme/target/tcp.c
-+++ b/drivers/nvme/target/tcp.c
-@@ -341,7 +341,7 @@ static void nvmet_tcp_build_pdu_iovec(st
- 		}
+diff --git a/sound/soc/amd/renoir/acp3x-pdm-dma.c b/sound/soc/amd/renoir/acp3x-pdm-dma.c
+index 9dd22a2fa2e5c..6b0f90e88a926 100644
+--- a/sound/soc/amd/renoir/acp3x-pdm-dma.c
++++ b/sound/soc/amd/renoir/acp3x-pdm-dma.c
+@@ -295,9 +295,11 @@ static int acp_pdm_dma_close(struct snd_soc_component *component,
+ 			     struct snd_pcm_substream *substream)
+ {
+ 	struct pdm_dev_data *adata = dev_get_drvdata(component->dev);
++	struct pdm_stream_instance *rtd = substream->runtime->private_data;
  
- 		iov->bv_page = sg_page(sg);
--		iov->bv_len = sg->length;
-+		iov->bv_len = iov_len;
- 		iov->bv_offset = sg->offset + sg_offset;
+ 	disable_pdm_interrupts(adata->acp_base);
+ 	adata->capture_stream = NULL;
++	kfree(rtd);
+ 	return 0;
+ }
  
- 		length -= iov_len;
+-- 
+2.51.0
+
 
 
