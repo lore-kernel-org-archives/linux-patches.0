@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17ED51DE8AD;
-	Mon,  9 Feb 2026 14:32:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B27EC1DE8AD;
+	Mon,  9 Feb 2026 14:32:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770647547; cv=none; b=e4ky4bRmMSUGxB/I1RlwoA4orSNPzipZlAiXDawhKZh/U9xyZ0r/2xYpKp9B4Nq1+YZrb71rWtTx9CwRQ3u39RvzK0a250BDDUWgWW9JKbZ2utvUmW9Z1S/L5FdZTkPSZPojiaApqHrGe92c6M0M5Hg/qox3svT9kwOqs0zgIwI=
+	t=1770647550; cv=none; b=j4mybQ852QhuEdQlWT8aqAMdnZ2xON1TvjvdOTqPDEalHnt6QyhDCG3qHZ/vyOg7cbE6TNS56IFJD/IaYRvENd2LQXNbWYOFJq2ItgYXu1JwgVZpzH3I051u8v4tHz+gdvchj6eTFyzYw9065ECJLGpGxzOCbru2fcsM8aS8IB0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770647547; c=relaxed/simple;
-	bh=E4/B0VzoVv+TM0pw198q3XqKNUx1bNCaDa8v9J7QBYU=;
+	s=arc-20240116; t=1770647550; c=relaxed/simple;
+	bh=J5iEPcKk3I0zpgdGEeM1/ZR4zS+STCC2iK1wYmvM3nI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AbuKxLhDeIZyDTQJPZLLX7ir33ujCKQuOAz9uEpmB5XoA/g5Ojzm+W5ilAXH4rQ40AkRCXzNsHd99YLLLyO4tXOW8rekih2FEYZnBlDZhtjYtEbeVo8Qf+xS8sqL1PJXDx1EJjycqcbB4QaRW40RmBpxx+EpngV3yNZfd9j2m24=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zhmSmVMu; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=DH6Mj+0A1tSoMSlB0IrcBOe8qdNnQVdkfz1x7i3S5t1ep0hwAFKOIG9ruZ33hzW67QS+nw1depHJqB2L9kZ1Zv3vovKSH15A7VmgtkruABbpgso8gkRgZAChVxgHRUN8/wOj88306H+XwZRVVXzJoZR9NoPuGx7WUsiTp5esC3g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zSQpZ17U; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zhmSmVMu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 986C6C116C6;
-	Mon,  9 Feb 2026 14:32:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zSQpZ17U"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D75D0C116C6;
+	Mon,  9 Feb 2026 14:32:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770647547;
-	bh=E4/B0VzoVv+TM0pw198q3XqKNUx1bNCaDa8v9J7QBYU=;
+	s=korg; t=1770647550;
+	bh=J5iEPcKk3I0zpgdGEeM1/ZR4zS+STCC2iK1wYmvM3nI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zhmSmVMuzdQZkVge83LOcGZO7y412c8W45e2YMZQHJVK/YvDFQzdyE8XrYeHEPEzV
-	 z1zqjn4LuDhJ2065zX1QNzkwS7Qgf+dbDrk+JcBeG41eflujNcUNIQXoosd1j+iVV7
-	 N4321JidWCC7R6+YBM8pgHXXCAKcvHuMejwwR1g8=
+	b=zSQpZ17U/ja+w8KpG5uVfDERa2OKCz9GYCxhR31nlnw5vgHN+MrbCgr+sF5Ry6JWq
+	 x9GrdXbMvEo3mMF5NWsf3SlV2yF1einjTA+9XmotDSCRFDIXAyvbH+ji6uedH3zxa1
+	 lyMhBrgyq+UM257L7/6l58mXpKCSH3jFm2md9ESw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Douglas Anderson <dianders@chromium.org>,
-	Sergey Senozhatsky <senozhatsky@chromium.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Jaroslav Pulchart <jaroslav.pulchart@gooddata.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Guenter Roeck <linux@roeck-us.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 133/175] net: usb: r8152: fix resume reset deadlock
-Date: Mon,  9 Feb 2026 15:23:26 +0100
-Message-ID: <20260209142325.295763761@linuxfoundation.org>
+Subject: [PATCH 6.18 134/175] hwmon: (acpi_power_meter) Fix deadlocks related to acpi_power_meter_notify()
+Date: Mon,  9 Feb 2026 15:23:27 +0100
+Message-ID: <20260209142325.330634333@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260209142320.474120190@linuxfoundation.org>
 References: <20260209142320.474120190@linuxfoundation.org>
@@ -52,105 +52,111 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sergey Senozhatsky <senozhatsky@chromium.org>
+From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 
-[ Upstream commit 6d06bc83a5ae8777a5f7a81c32dd75b8d9b2fe04 ]
+[ Upstream commit 615901b57b7ef8eb655f71358f7e956e42bcd16b ]
 
-rtl8152 can trigger device reset during reset which
-potentially can result in a deadlock:
+The acpi_power_meter driver's .notify() callback function,
+acpi_power_meter_notify(), calls hwmon_device_unregister() under a lock
+that is also acquired by callbacks in sysfs attributes of the device
+being unregistered which is prone to deadlocks between sysfs access and
+device removal.
 
- **** DPM device timeout after 10 seconds; 15 seconds until panic ****
- Call Trace:
- <TASK>
- schedule+0x483/0x1370
- schedule_preempt_disabled+0x15/0x30
- __mutex_lock_common+0x1fd/0x470
- __rtl8152_set_mac_address+0x80/0x1f0
- dev_set_mac_address+0x7f/0x150
- rtl8152_post_reset+0x72/0x150
- usb_reset_device+0x1d0/0x220
- rtl8152_resume+0x99/0xc0
- usb_resume_interface+0x3e/0xc0
- usb_resume_both+0x104/0x150
- usb_resume+0x22/0x110
+Address this by moving the hwmon device removal in
+acpi_power_meter_notify() outside the lock in question, but notice
+that doing it alone is not sufficient because two concurrent
+METER_NOTIFY_CONFIG notifications may be attempting to remove the
+same device at the same time.  To prevent that from happening, add a
+new lock serializing the execution of the switch () statement in
+acpi_power_meter_notify().  For simplicity, it is a static mutex
+which should not be a problem from the performance perspective.
 
-The problem is that rtl8152 resume calls reset under
-tp->control mutex while reset basically re-enters rtl8152
-and attempts to acquire the same tp->control lock once
-again.
+The new lock also allows the hwmon_device_register_with_info()
+in acpi_power_meter_notify() to be called outside the inner lock
+because it prevents the other notifications handled by that function
+from manipulating the "resource" object while the hwmon device based
+on it is being registered.  The sending of ACPI netlink messages from
+acpi_power_meter_notify() is serialized by the new lock too which
+generally helps to ensure that the order of handling firmware
+notifications is the same as the order of sending netlink messages
+related to them.
 
-Reset INACCESSIBLE device outside of tp->control mutex
-scope to avoid recursive mutex_lock() deadlock.
+In addition, notice that hwmon_device_register_with_info() may fail
+in which case resource->hwmon_dev will become an error pointer,
+so add checks to avoid attempting to unregister the hwmon device
+pointer to by it in that case to acpi_power_meter_notify() and
+acpi_power_meter_remove().
 
-Fixes: 4933b066fefb ("r8152: If inaccessible at resume time, issue a reset")
-Reviewed-by: Douglas Anderson <dianders@chromium.org>
-Signed-off-by: Sergey Senozhatsky <senozhatsky@chromium.org>
-Link: https://patch.msgid.link/20260129031106.3805887-1-senozhatsky@chromium.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 16746ce8adfe ("hwmon: (acpi_power_meter) Replace the deprecated hwmon_device_register")
+Closes: https://lore.kernel.org/linux-hwmon/CAK8fFZ58fidGUCHi5WFX0uoTPzveUUDzT=k=AAm4yWo3bAuCFg@mail.gmail.com/
+Reported-by: Jaroslav Pulchart <jaroslav.pulchart@gooddata.com>
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/usb/r8152.c | 29 +++++++++++++++--------------
- 1 file changed, 15 insertions(+), 14 deletions(-)
+ drivers/hwmon/acpi_power_meter.c | 17 ++++++++++++++---
+ 1 file changed, 14 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/usb/r8152.c b/drivers/net/usb/r8152.c
-index a22d4bb2cf3b5..6a43054d5171f 100644
---- a/drivers/net/usb/r8152.c
-+++ b/drivers/net/usb/r8152.c
-@@ -8535,19 +8535,6 @@ static int rtl8152_system_resume(struct r8152 *tp)
- 		usb_submit_urb(tp->intr_urb, GFP_NOIO);
- 	}
+diff --git a/drivers/hwmon/acpi_power_meter.c b/drivers/hwmon/acpi_power_meter.c
+index 29ccdc2fb7ff8..de408df0c4d78 100644
+--- a/drivers/hwmon/acpi_power_meter.c
++++ b/drivers/hwmon/acpi_power_meter.c
+@@ -47,6 +47,8 @@
+ static int cap_in_hardware;
+ static bool force_cap_on;
  
--	/* If the device is RTL8152_INACCESSIBLE here then we should do a
--	 * reset. This is important because the usb_lock_device_for_reset()
--	 * that happens as a result of usb_queue_reset_device() will silently
--	 * fail if the device was suspended or if too much time passed.
--	 *
--	 * NOTE: The device is locked here so we can directly do the reset.
--	 * We don't need usb_lock_device_for_reset() because that's just a
--	 * wrapper over device_lock() and device_resume() (which calls us)
--	 * does that for us.
--	 */
--	if (test_bit(RTL8152_INACCESSIBLE, &tp->flags))
--		usb_reset_device(tp->udev);
--
- 	return 0;
- }
- 
-@@ -8658,19 +8645,33 @@ static int rtl8152_suspend(struct usb_interface *intf, pm_message_t message)
- static int rtl8152_resume(struct usb_interface *intf)
- {
- 	struct r8152 *tp = usb_get_intfdata(intf);
-+	bool runtime_resume = test_bit(SELECTIVE_SUSPEND, &tp->flags);
- 	int ret;
- 
- 	mutex_lock(&tp->control);
- 
- 	rtl_reset_ocp_base(tp);
- 
--	if (test_bit(SELECTIVE_SUSPEND, &tp->flags))
-+	if (runtime_resume)
- 		ret = rtl8152_runtime_resume(tp);
- 	else
- 		ret = rtl8152_system_resume(tp);
- 
- 	mutex_unlock(&tp->control);
- 
-+	/* If the device is RTL8152_INACCESSIBLE here then we should do a
-+	 * reset. This is important because the usb_lock_device_for_reset()
-+	 * that happens as a result of usb_queue_reset_device() will silently
-+	 * fail if the device was suspended or if too much time passed.
-+	 *
-+	 * NOTE: The device is locked here so we can directly do the reset.
-+	 * We don't need usb_lock_device_for_reset() because that's just a
-+	 * wrapper over device_lock() and device_resume() (which calls us)
-+	 * does that for us.
-+	 */
-+	if (!runtime_resume && test_bit(RTL8152_INACCESSIBLE, &tp->flags))
-+		usb_reset_device(tp->udev);
++static DEFINE_MUTEX(acpi_notify_lock);
 +
- 	return ret;
- }
+ static int can_cap_in_hardware(void)
+ {
+ 	return force_cap_on || cap_in_hardware;
+@@ -823,18 +825,26 @@ static void acpi_power_meter_notify(struct acpi_device *device, u32 event)
  
+ 	resource = acpi_driver_data(device);
+ 
++	guard(mutex)(&acpi_notify_lock);
++
+ 	switch (event) {
+ 	case METER_NOTIFY_CONFIG:
++		if (!IS_ERR(resource->hwmon_dev))
++			hwmon_device_unregister(resource->hwmon_dev);
++
+ 		mutex_lock(&resource->lock);
++
+ 		free_capabilities(resource);
+ 		remove_domain_devices(resource);
+-		hwmon_device_unregister(resource->hwmon_dev);
+ 		res = read_capabilities(resource);
+ 		if (res)
+ 			dev_err_once(&device->dev, "read capabilities failed.\n");
+ 		res = read_domain_devices(resource);
+ 		if (res && res != -ENODEV)
+ 			dev_err_once(&device->dev, "read domain devices failed.\n");
++
++		mutex_unlock(&resource->lock);
++
+ 		resource->hwmon_dev =
+ 			hwmon_device_register_with_info(&device->dev,
+ 							ACPI_POWER_METER_NAME,
+@@ -843,7 +853,7 @@ static void acpi_power_meter_notify(struct acpi_device *device, u32 event)
+ 							power_extra_groups);
+ 		if (IS_ERR(resource->hwmon_dev))
+ 			dev_err_once(&device->dev, "register hwmon device failed.\n");
+-		mutex_unlock(&resource->lock);
++
+ 		break;
+ 	case METER_NOTIFY_TRIP:
+ 		sysfs_notify(&device->dev.kobj, NULL, POWER_AVERAGE_NAME);
+@@ -953,7 +963,8 @@ static void acpi_power_meter_remove(struct acpi_device *device)
+ 		return;
+ 
+ 	resource = acpi_driver_data(device);
+-	hwmon_device_unregister(resource->hwmon_dev);
++	if (!IS_ERR(resource->hwmon_dev))
++		hwmon_device_unregister(resource->hwmon_dev);
+ 
+ 	remove_domain_devices(resource);
+ 	free_capabilities(resource);
 -- 
 2.51.0
 
