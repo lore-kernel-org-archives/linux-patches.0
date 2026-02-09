@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38CE31AF0AF;
-	Mon,  9 Feb 2026 14:34:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74EA823D291;
+	Mon,  9 Feb 2026 14:34:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770647672; cv=none; b=RlEAEPSMLn4zN89gardanKpjzsJEKMLocqJZCO5VJlHTb6EGPouGnx6RoTKXk1izhtCLVtt3TJ4o5qh9YYsNG6kBZRYGkPXGKhHQZHK/U0OW4LzCakENrnUWO1MSkGKobc/MQ9pGYAQn1N6Tnh0IllWdHY9cv7nlo39YL0qDPfA=
+	t=1770647675; cv=none; b=etC9aOqP+JyTkbOrqir2kGYI48Zo52PPXkBSJ43ELn986Tl75W1y/4wdTkb/fb0NgocdHNcCHus/atQ/6ZrK3QBmiYNanfkSdoO21yuEuKEhlVUxjqdKP4VsXO4y278C+9W/cCSv0p5r0CV7NgI9huSp6tp4C70Bp3ctbLr23j8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770647672; c=relaxed/simple;
-	bh=to7FSvaBX4amYQGL81IFT+YzNQ+oZL4Cv11e5Y1Zkxg=;
+	s=arc-20240116; t=1770647675; c=relaxed/simple;
+	bh=BkoxUA2/Nyk4ESAGRNuCqWdBUVoXRNVa6sN44R1LIs8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WG0t/AmXC9xCwaOO9lAL/kUjiQk/okyK9K2fZzyg+U53Z0jxhKn3SSnEIBkXSijKx/QjFRBAFlNFAU/B4KkGNNvZfKdecz2i9YPUVTN8fs5+wuz167gGeDgOjLWRiNb3mly1q/Bc/Ep8ch3iMH7TwiXQNUUEgLMF9WIQJNTFpxw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=z+4ma1kd; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=IBXefdStFQ2aqEIyGzwiMJVO+nXfbovayR1x2gVWDvo5Ft3WUUQCYEiIlxIfROOc0JACu69fZims28n0+zOFuszTwf/gXVF7vEaSznBk0Cu4i3+PGB80SvALIfyxRU5XSQ1KSXbn0fwYP9Bto3JQMPSy6UfSAiFItMTPwkJvQwo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PxELFWsa; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="z+4ma1kd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4617C116C6;
-	Mon,  9 Feb 2026 14:34:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PxELFWsa"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E5396C116C6;
+	Mon,  9 Feb 2026 14:34:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770647672;
-	bh=to7FSvaBX4amYQGL81IFT+YzNQ+oZL4Cv11e5Y1Zkxg=;
+	s=korg; t=1770647675;
+	bh=BkoxUA2/Nyk4ESAGRNuCqWdBUVoXRNVa6sN44R1LIs8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=z+4ma1kd8kMoG83Mk26yPNiFmenYPdCDGIa7cJiNWUWMWpEOAISzEI8ddfbtIMFBt
-	 4BDGZl1KhyfE4+8oN4jmPLQiimigMC/Exg1l/suzORdKetMXKaHQc0G4+gJgWQ3HZ8
-	 ms1tIxzjqlPHd9d21QKUnhGC6s3BL+PbhLbE43Sg=
+	b=PxELFWsaZzouBHDhZpGt2NWgZM1eUgEKMHcGMzj84pz7fTQ9V4ViZK0ib3wE5Y6Hp
+	 GGp/YHxW5EWxcDj7OJFt5gpOtBrJ4AcR3qMt3jx1HhQ+vKzE7VklFZPCdf3v5A9bXA
+	 cWdcKbeGEzmIE1FjSntENImKb2IyT6CAAw58Phds=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Breno Leitao <leitao@debian.org>,
+	Felix Gu <ustc.gu@gmail.com>,
 	Jon Hunter <jonathanh@nvidia.com>,
-	Thierry Reding <treding@nvidia.com>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 170/175] spi: tegra210-quad: Protect curr_xfer check in IRQ handler
-Date: Mon,  9 Feb 2026 15:24:03 +0100
-Message-ID: <20260209142326.597230493@linuxfoundation.org>
+Subject: [PATCH 6.18 171/175] spi: tegra: Fix a memory leak in tegra_slink_probe()
+Date: Mon,  9 Feb 2026 15:24:04 +0100
+Message-ID: <20260209142326.632140054@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260209142320.474120190@linuxfoundation.org>
 References: <20260209142320.474120190@linuxfoundation.org>
@@ -53,112 +52,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Breno Leitao <leitao@debian.org>
+From: Felix Gu <ustc.gu@gmail.com>
 
-[ Upstream commit edf9088b6e1d6d88982db7eb5e736a0e4fbcc09e ]
+[ Upstream commit 41d9a6795b95d6ea28439ac1e9ce8c95bbca20fc ]
 
-Now that all other accesses to curr_xfer are done under the lock,
-protect the curr_xfer NULL check in tegra_qspi_isr_thread() with the
-spinlock. Without this protection, the following race can occur:
+In tegra_slink_probe(), when platform_get_irq() fails, it directly
+returns from the function with an error code, which causes a memory leak.
 
-  CPU0 (ISR thread)              CPU1 (timeout path)
-  ----------------               -------------------
-  if (!tqspi->curr_xfer)
-    // sees non-NULL
-                                 spin_lock()
-                                 tqspi->curr_xfer = NULL
-                                 spin_unlock()
-  handle_*_xfer()
-    spin_lock()
-    t = tqspi->curr_xfer  // NULL!
-    ... t->len ...        // NULL dereference!
+Replace it with a goto label to ensure proper cleanup.
 
-With this patch, all curr_xfer accesses are now properly synchronized.
-
-Although all accesses to curr_xfer are done under the lock, in
-tegra_qspi_isr_thread() it checks for NULL, releases the lock and
-reacquires it later in handle_cpu_based_xfer()/handle_dma_based_xfer().
-There is a potential for an update in between, which could cause a NULL
-pointer dereference.
-
-To handle this, add a NULL check inside the handlers after acquiring
-the lock. This ensures that if the timeout path has already cleared
-curr_xfer, the handler will safely return without dereferencing the
-NULL pointer.
-
-Fixes: b4e002d8a7ce ("spi: tegra210-quad: Fix timeout handling")
-Signed-off-by: Breno Leitao <leitao@debian.org>
-Tested-by: Jon Hunter <jonathanh@nvidia.com>
-Acked-by: Jon Hunter <jonathanh@nvidia.com>
-Acked-by: Thierry Reding <treding@nvidia.com>
-Link: https://patch.msgid.link/20260126-tegra_xfer-v2-6-6d2115e4f387@debian.org
+Fixes: eb9913b511f1 ("spi: tegra: Fix missing IRQ check in tegra_slink_probe()")
+Signed-off-by: Felix Gu <ustc.gu@gmail.com>
+Reviewed-by: Jon Hunter <jonathanh@nvidia.com>
+Link: https://patch.msgid.link/20260202-slink-v1-1-eac50433a6f9@gmail.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/spi/spi-tegra210-quad.c | 20 ++++++++++++++++++++
- 1 file changed, 20 insertions(+)
+ drivers/spi/spi-tegra20-slink.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/spi/spi-tegra210-quad.c b/drivers/spi/spi-tegra210-quad.c
-index 7fe16ed7e84bd..83def82fe48c1 100644
---- a/drivers/spi/spi-tegra210-quad.c
-+++ b/drivers/spi/spi-tegra210-quad.c
-@@ -1393,6 +1393,11 @@ static irqreturn_t handle_cpu_based_xfer(struct tegra_qspi *tqspi)
- 	spin_lock_irqsave(&tqspi->lock, flags);
- 	t = tqspi->curr_xfer;
+diff --git a/drivers/spi/spi-tegra20-slink.c b/drivers/spi/spi-tegra20-slink.c
+index fe452d03c1ee4..709669610840b 100644
+--- a/drivers/spi/spi-tegra20-slink.c
++++ b/drivers/spi/spi-tegra20-slink.c
+@@ -1086,8 +1086,10 @@ static int tegra_slink_probe(struct platform_device *pdev)
+ 	reset_control_deassert(tspi->rst);
  
-+	if (!t) {
-+		spin_unlock_irqrestore(&tqspi->lock, flags);
-+		return IRQ_HANDLED;
+ 	spi_irq = platform_get_irq(pdev, 0);
+-	if (spi_irq < 0)
+-		return spi_irq;
++	if (spi_irq < 0) {
++		ret = spi_irq;
++		goto exit_pm_put;
 +	}
-+
- 	if (tqspi->tx_status ||  tqspi->rx_status) {
- 		tegra_qspi_handle_error(tqspi);
- 		complete(&tqspi->xfer_completion);
-@@ -1463,6 +1468,11 @@ static irqreturn_t handle_dma_based_xfer(struct tegra_qspi *tqspi)
- 	spin_lock_irqsave(&tqspi->lock, flags);
- 	t = tqspi->curr_xfer;
- 
-+	if (!t) {
-+		spin_unlock_irqrestore(&tqspi->lock, flags);
-+		return IRQ_HANDLED;
-+	}
-+
- 	if (num_errors) {
- 		tegra_qspi_dma_unmap_xfer(tqspi, t);
- 		tegra_qspi_handle_error(tqspi);
-@@ -1501,6 +1511,7 @@ static irqreturn_t handle_dma_based_xfer(struct tegra_qspi *tqspi)
- static irqreturn_t tegra_qspi_isr_thread(int irq, void *context_data)
- {
- 	struct tegra_qspi *tqspi = context_data;
-+	unsigned long flags;
- 	u32 status;
- 
- 	/*
-@@ -1518,7 +1529,9 @@ static irqreturn_t tegra_qspi_isr_thread(int irq, void *context_data)
- 	 * If no transfer is in progress, check if this was a real interrupt
- 	 * that the timeout handler already processed, or a spurious one.
- 	 */
-+	spin_lock_irqsave(&tqspi->lock, flags);
- 	if (!tqspi->curr_xfer) {
-+		spin_unlock_irqrestore(&tqspi->lock, flags);
- 		/* Spurious interrupt - transfer not ready */
- 		if (!(status & QSPI_RDY))
- 			return IRQ_NONE;
-@@ -1535,7 +1548,14 @@ static irqreturn_t tegra_qspi_isr_thread(int irq, void *context_data)
- 		tqspi->rx_status = tqspi->status_reg & (QSPI_RX_FIFO_OVF | QSPI_RX_FIFO_UNF);
- 
- 	tegra_qspi_mask_clear_irq(tqspi);
-+	spin_unlock_irqrestore(&tqspi->lock, flags);
- 
-+	/*
-+	 * Lock is released here but handlers safely re-check curr_xfer under
-+	 * lock before dereferencing.
-+	 * DMA handler also needs to sleep in wait_for_completion_*(), which
-+	 * cannot be done while holding spinlock.
-+	 */
- 	if (!tqspi->is_curr_dma_xfer)
- 		return handle_cpu_based_xfer(tqspi);
- 
+ 	tspi->irq = spi_irq;
+ 	ret = request_threaded_irq(tspi->irq, tegra_slink_isr,
+ 				   tegra_slink_isr_thread, IRQF_ONESHOT,
 -- 
 2.51.0
 
