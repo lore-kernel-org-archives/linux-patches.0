@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 500B3276028;
-	Mon,  9 Feb 2026 14:40:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C50CA37AA71;
+	Mon,  9 Feb 2026 14:40:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770648052; cv=none; b=JrUiDSZlte0ZoHhlKrfay3VjUPiTVRK/vKfwFSRbMSKHguAtsvtEzqj23HqfRf676dhAkpOIaaEWi6hO1oIiz9rW6qkqEr65ccZDYPsBazbWiKKYXZuE6xwUeU3ITZBza3vY0nCb2Ao+zOcCaKu49yVMAvwDZH5VXHN01VJHMB8=
+	t=1770648055; cv=none; b=DVD5N4KLuinKVYLE5ib5HzYsORMB2D1RcRIB2SFm/6AVxrvEp2xnRihbm0nz+hhT2hlLLB0XuDXRhKugByyDgPgoO8jKea2UER8dHCg5kUEi+sxbGBg6Tkmkf5rxogroHmlbdM3y5mGA7viKqQ2PWUkM7sWXc9RL+424hHexT2o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770648052; c=relaxed/simple;
-	bh=3uJIpRAAXqRwDVv4+i+AZsv7BoDBE3KaflSm/LFc7Zs=;
+	s=arc-20240116; t=1770648055; c=relaxed/simple;
+	bh=mZnKbw3jlwWJSZLygo8I/aKGfqQJiAmE3MMy2lWxPpA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Baq6iLcM+ww6w/N3M1NmWmaAUPZAzg+GlGsjjOAGljXHiWNxBGjf6t7yhVVZ8qmVTR7TsU48CqcQJOCbAjBHalr9lmu9/K7KzXhVJr1DNRWuFWU6x4jPnIc6rmdAQub6t0/FMb4Mnvi580p/jZm82LDyJ2NANq+flxOwvbFDy18=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=l27+tYyt; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZdWpLy0K2T9ST2biKidTN85ca7gm75azNQMVw9P+oTPDN6Kb6xsqQKj3fItVguKUz+gwXQprGC9iVolCT9F3jeGwTk/fyI7fuC5jvSs5oqj9L1YOvHgb4QcYW3ttW833QRkYd/qpN9r7HmaLfM1gXaKVbps0iR5tc0iCIwe2ViA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=q9EYoihH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="l27+tYyt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B75FBC116C6;
-	Mon,  9 Feb 2026 14:40:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="q9EYoihH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 38B0BC116C6;
+	Mon,  9 Feb 2026 14:40:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770648052;
-	bh=3uJIpRAAXqRwDVv4+i+AZsv7BoDBE3KaflSm/LFc7Zs=;
+	s=korg; t=1770648055;
+	bh=mZnKbw3jlwWJSZLygo8I/aKGfqQJiAmE3MMy2lWxPpA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=l27+tYytqDP0slLT3cICz/3K1kAZB76hW2HHc72uLDgsnfNG0kyCv027386+GGS/3
-	 x0vXZtwJTUL/alFCG5HVdI+IWQ4/lNl6RIKYYzBOeNjqjgmyXK55DM6VkeleFyeIIY
-	 6ZY2xkRRNkWtf7Htrx1UnQAzL+Ooi8oHbZYf45ks=
+	b=q9EYoihHheuQIpOQpm/wfSW1c9hcytG6CCfgij4qRrRRANbNME8l8C1VH0cVP15Kv
+	 lATd4RTbo6pY46rVFi503+uWHUSCfoMAclLOFRZve7GvjJYuRFVr6Ska7/IdCWUryd
+	 W53j/Mg+LmZirkwkMJRlilS/J95jRMDnSkiwG5Ow=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Breno Leitao <leitao@debian.org>,
-	Thierry Reding <treding@nvidia.com>,
 	Jon Hunter <jonathanh@nvidia.com>,
+	Thierry Reding <treding@nvidia.com>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 107/113] spi: tegra210-quad: Move curr_xfer read inside spinlock
-Date: Mon,  9 Feb 2026 15:24:16 +0100
-Message-ID: <20260209142314.017988603@linuxfoundation.org>
+Subject: [PATCH 6.12 108/113] spi: tegra210-quad: Protect curr_xfer assignment in tegra_qspi_setup_transfer_one
+Date: Mon,  9 Feb 2026 15:24:17 +0100
+Message-ID: <20260209142314.053316142@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260209142310.204833231@linuxfoundation.org>
 References: <20260209142310.204833231@linuxfoundation.org>
@@ -55,64 +55,59 @@ Content-Transfer-Encoding: 8bit
 
 From: Breno Leitao <leitao@debian.org>
 
-[ Upstream commit ef13ba357656451d6371940d8414e3e271df97e3 ]
+[ Upstream commit f5a4d7f5e32ba163cff893493ec1cbb0fd2fb0d5 ]
 
-Move the assignment of the transfer pointer from curr_xfer inside the
-spinlock critical section in both handle_cpu_based_xfer() and
-handle_dma_based_xfer().
+When the timeout handler processes a completed transfer and signals
+completion, the transfer thread can immediately set up the next transfer
+and assign curr_xfer to point to it.
 
-Previously, curr_xfer was read before acquiring the lock, creating a
-window where the timeout path could clear curr_xfer between reading it
-and using it. By moving the read inside the lock, the handlers are
-guaranteed to see a consistent value that cannot be modified by the
-timeout path.
+If a delayed ISR from the previous transfer then runs, it checks if
+(!tqspi->curr_xfer) (currently without the lock also -- to be fixed
+soon) to detect stale interrupts, but this check passes because
+curr_xfer now points to the new transfer. The ISR then incorrectly
+processes the new transfer's context.
+
+Protect the curr_xfer assignment with the spinlock to ensure the ISR
+either sees NULL (and bails out) or sees the new value only after the
+assignment is complete.
 
 Fixes: 921fc1838fb0 ("spi: tegra210-quad: Add support for Tegra210 QSPI controller")
 Signed-off-by: Breno Leitao <leitao@debian.org>
-Acked-by: Thierry Reding <treding@nvidia.com>
 Tested-by: Jon Hunter <jonathanh@nvidia.com>
 Acked-by: Jon Hunter <jonathanh@nvidia.com>
-Link: https://patch.msgid.link/20260126-tegra_xfer-v2-2-6d2115e4f387@debian.org
+Acked-by: Thierry Reding <treding@nvidia.com>
+Link: https://patch.msgid.link/20260126-tegra_xfer-v2-3-6d2115e4f387@debian.org
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/spi/spi-tegra210-quad.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/spi/spi-tegra210-quad.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
 diff --git a/drivers/spi/spi-tegra210-quad.c b/drivers/spi/spi-tegra210-quad.c
-index 24f92af780188..226993cf32669 100644
+index 226993cf32669..0c25d9c303bba 100644
 --- a/drivers/spi/spi-tegra210-quad.c
 +++ b/drivers/spi/spi-tegra210-quad.c
-@@ -1334,10 +1334,11 @@ static int tegra_qspi_transfer_one_message(struct spi_controller *host,
+@@ -814,6 +814,7 @@ static u32 tegra_qspi_setup_transfer_one(struct spi_device *spi, struct spi_tran
+ 	u32 command1, command2, speed = t->speed_hz;
+ 	u8 bits_per_word = t->bits_per_word;
+ 	u32 tx_tap = 0, rx_tap = 0;
++	unsigned long flags;
+ 	int req_mode;
  
- static irqreturn_t handle_cpu_based_xfer(struct tegra_qspi *tqspi)
- {
--	struct spi_transfer *t = tqspi->curr_xfer;
-+	struct spi_transfer *t;
- 	unsigned long flags;
- 
- 	spin_lock_irqsave(&tqspi->lock, flags);
-+	t = tqspi->curr_xfer;
- 
- 	if (tqspi->tx_status ||  tqspi->rx_status) {
- 		tegra_qspi_handle_error(tqspi);
-@@ -1368,7 +1369,7 @@ static irqreturn_t handle_cpu_based_xfer(struct tegra_qspi *tqspi)
- 
- static irqreturn_t handle_dma_based_xfer(struct tegra_qspi *tqspi)
- {
--	struct spi_transfer *t = tqspi->curr_xfer;
-+	struct spi_transfer *t;
- 	unsigned int total_fifo_words;
- 	unsigned long flags;
- 	long wait_status;
-@@ -1405,6 +1406,7 @@ static irqreturn_t handle_dma_based_xfer(struct tegra_qspi *tqspi)
+ 	if (!has_acpi_companion(tqspi->dev) && speed != tqspi->cur_speed) {
+@@ -821,10 +822,12 @@ static u32 tegra_qspi_setup_transfer_one(struct spi_device *spi, struct spi_tran
+ 		tqspi->cur_speed = speed;
  	}
  
- 	spin_lock_irqsave(&tqspi->lock, flags);
-+	t = tqspi->curr_xfer;
++	spin_lock_irqsave(&tqspi->lock, flags);
+ 	tqspi->cur_pos = 0;
+ 	tqspi->cur_rx_pos = 0;
+ 	tqspi->cur_tx_pos = 0;
+ 	tqspi->curr_xfer = t;
++	spin_unlock_irqrestore(&tqspi->lock, flags);
  
- 	if (err) {
- 		tegra_qspi_dma_unmap_xfer(tqspi, t);
+ 	if (is_first_of_msg) {
+ 		tegra_qspi_mask_clear_irq(tqspi);
 -- 
 2.51.0
 
