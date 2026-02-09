@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48CE837BE65;
-	Mon,  9 Feb 2026 14:43:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BCE8D36828A;
+	Mon,  9 Feb 2026 14:43:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770648224; cv=none; b=suAAeSHO+imRijFTZudxGzefEAERrgVOI4NIDGWXJnHbs2NZmzliL9U6SB1enBQ5U00ftS+bGBqmoNG3WTH88PtDYSzIVI/xNHXq4WWuyT3x13+A6PijMiwyoopbILjqF1kEjdByh7etEgGnS7dgClZSmcNskQ+3c8O1h8i7dR0=
+	t=1770648227; cv=none; b=ecmkYG7gqfHnXtGVZEVI7yx8bKyTxZ2EwP3sDtDQ1uNDVFcoID4uphPMi3QQMmS7EGB+EHFJ/AsnkWoLZnzuIzP6bWIFSgdzTzJ7OGOSvVHewVr9idh8UgP58vvIQ6f/P66yW7B4Fd1TQ8INv+pze/dkipxkit5SyqaX/m9k/UI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770648224; c=relaxed/simple;
-	bh=1V8MT4z4QXCyUe3oSGLbL08p3w5d+FPLZWOTiLI/Wy8=;
+	s=arc-20240116; t=1770648227; c=relaxed/simple;
+	bh=g1gErmHZf4fr7WkRMrBVLkp5zxVIdS2OoTUKWAPCe0M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lbIpPulyB00QEpnIfCgVQTLhxH0RQRajL4eOxyBbCW/TD0OcKS1ZkFZ89awGhpHDKZJyK24WyNM3apMXn952pcrBLZuEWo51kIiwurkeryaOxwr7Ha40t3lWr3vdNmpsGQSzGEbbaXEumPqFnAes169YWzcoW+dWyV9X3Qykq18=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0Quk//NS; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fWnJZRFKrZFbryFpUF2wzpakqGrIsa+vATbM2av5ba3m6Qp0MZN4m3Xpwect5ti+LGnAsi3xeYgcuSDkcn00ioyGTd4Ao5/mTQn6d8LnA9onbywHEWQ4yjcLOLMymj+rOYWvz0xfCRwbg1V8RZeFRBrLoee0472LxRiJhjtnof8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=E/5B1LGr; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0Quk//NS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C7E9C16AAE;
-	Mon,  9 Feb 2026 14:43:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="E/5B1LGr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE6DEC116C6;
+	Mon,  9 Feb 2026 14:43:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770648223;
-	bh=1V8MT4z4QXCyUe3oSGLbL08p3w5d+FPLZWOTiLI/Wy8=;
+	s=korg; t=1770648227;
+	bh=g1gErmHZf4fr7WkRMrBVLkp5zxVIdS2OoTUKWAPCe0M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0Quk//NSIEnxOfQGPT9KKG4sFGc7GW/n8RmKpwr7NlY+PJeyUOaJ4hYDQhJNkpwgn
-	 F04PxEG1gE/KQdfAXNMi7M5FC/pj5lfzCJ/g6fVBVOv5orzzhZuKMBu3sGx3Pzmb+V
-	 8gwP9dhppCiYrZWdPWvjfoYcObN9lGzzBYav+xWs=
+	b=E/5B1LGrFxa9DuRAuK0tx5DVYdxAJ2iawPZV22y9EjqlLqTDoEYYk10fZ/kTgorcE
+	 YTjDK/+hXP9do3Zspzl4//EUpvaMq3s06H2uTrFi3ncTiF7z1tMVZF9hEoNNiQ7RyI
+	 Wfp+g+jc7vi3VzZFFdl+eNbk6UJBQFGn/oVtERXY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Baochen Qiang <baochen.qiang@oss.qualcomm.com>,
-	Johannes Berg <johannes.berg@intel.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 36/69] wifi: mac80211: collect station statistics earlier when disconnect
-Date: Mon,  9 Feb 2026 15:24:04 +0100
-Message-ID: <20260209142303.225510223@linuxfoundation.org>
+Subject: [PATCH 6.1 45/69] platform/x86: toshiba_haps: Fix memory leaks in add/remove routines
+Date: Mon,  9 Feb 2026 15:24:13 +0100
+Message-ID: <20260209142303.544995907@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260209142301.913348974@linuxfoundation.org>
 References: <20260209142301.913348974@linuxfoundation.org>
@@ -51,51 +50,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Baochen Qiang <baochen.qiang@oss.qualcomm.com>
+From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 
-[ Upstream commit a203dbeeca15a9b924f0d51f510921f4bae96801 ]
+[ Upstream commit 128497456756e1b952bd5a912cd073836465109d ]
 
-In __sta_info_destroy_part2(), station statistics are requested after the
-IEEE80211_STA_NONE -> IEEE80211_STA_NOTEXIST transition. This is
-problematic because the driver may be unable to handle the request due to
-the STA being in the NOTEXIST state (i.e. if the driver destroys the
-underlying data when transitioning to NOTEXIST).
+toshiba_haps_add() leaks the haps object allocated by it if it returns
+an error after allocating that object successfully.
 
-Move the statistics collection to before the state transition to avoid
-this issue.
+toshiba_haps_remove() does not free the object pointed to by
+toshiba_haps before clearing that pointer, so it becomes unreachable
+allocated memory.
 
-Signed-off-by: Baochen Qiang <baochen.qiang@oss.qualcomm.com>
-Link: https://patch.msgid.link/20251222-mac80211-move-station-stats-collection-earlier-v1-1-12cd4e42c633@oss.qualcomm.com
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Address these memory leaks by using devm_kzalloc() for allocating
+the memory in question.
+
+Fixes: 23d0ba0c908a ("platform/x86: Toshiba HDD Active Protection Sensor")
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/mac80211/sta_info.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ drivers/platform/x86/toshiba_haps.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/mac80211/sta_info.c b/net/mac80211/sta_info.c
-index e9ae920947944..8a92077da1536 100644
---- a/net/mac80211/sta_info.c
-+++ b/net/mac80211/sta_info.c
-@@ -1314,6 +1314,10 @@ static void __sta_info_destroy_part2(struct sta_info *sta)
- 		}
- 	}
+diff --git a/drivers/platform/x86/toshiba_haps.c b/drivers/platform/x86/toshiba_haps.c
+index 49e84095bb010..8a53f6119fed1 100644
+--- a/drivers/platform/x86/toshiba_haps.c
++++ b/drivers/platform/x86/toshiba_haps.c
+@@ -185,7 +185,7 @@ static int toshiba_haps_add(struct acpi_device *acpi_dev)
  
-+	sinfo = kzalloc(sizeof(*sinfo), GFP_KERNEL);
-+	if (sinfo)
-+		sta_set_sinfo(sta, sinfo, true);
-+
- 	if (sta->uploaded) {
- 		ret = drv_sta_state(local, sdata, sta, IEEE80211_STA_NONE,
- 				    IEEE80211_STA_NOTEXIST);
-@@ -1322,9 +1326,6 @@ static void __sta_info_destroy_part2(struct sta_info *sta)
+ 	pr_info("Toshiba HDD Active Protection Sensor device\n");
  
- 	sta_dbg(sdata, "Removed STA %pM\n", sta->sta.addr);
- 
--	sinfo = kzalloc(sizeof(*sinfo), GFP_KERNEL);
--	if (sinfo)
--		sta_set_sinfo(sta, sinfo, true);
- 	cfg80211_del_sta_sinfo(sdata->dev, sta->sta.addr, sinfo, GFP_KERNEL);
- 	kfree(sinfo);
+-	haps = kzalloc(sizeof(struct toshiba_haps_dev), GFP_KERNEL);
++	haps = devm_kzalloc(&acpi_dev->dev, sizeof(*haps), GFP_KERNEL);
+ 	if (!haps)
+ 		return -ENOMEM;
  
 -- 
 2.51.0
