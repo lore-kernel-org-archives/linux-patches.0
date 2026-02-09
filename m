@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B8CF2750E6;
-	Mon,  9 Feb 2026 14:55:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 219822750E6;
+	Mon,  9 Feb 2026 14:55:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770648954; cv=none; b=aGawM7rNGdjqnDZiXk4PfjGm5Q0pYvY1Vxq8Q6sNcWfu3cvpTOkF/mWOeDr1mYDScgTg+5J3JI20WvfkPX41QSrxdkzpU9E1UEehrlAot5JPZzEmf7DNp546xGCQFwltZqcLgmf/R6w8+kZLpilVAouaNFyz/EDN405Kwn0lDFk=
+	t=1770648957; cv=none; b=oCMuADVuq2EBVk/sfb+CseNmDU5cj8qpInxJBDRAOVbMeHaRbzQG1udFTUJIAdnllbJ2npaZoONYyZorc6EwDRbwr+6oa+16yl+ETNXsXTWdlcv3saGAcICZp5uM5kuEToETs+4R9zY1Y0RXMru9TQI4R7XyzV4BvOvCiGFOxdQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770648954; c=relaxed/simple;
-	bh=9xcwIQoA5RPPoDj7+us9BKQQFz5dx0GqP2fx9jN1yN0=;
+	s=arc-20240116; t=1770648957; c=relaxed/simple;
+	bh=wuBAl2f9TKQqvrogeJTNyTTDXFS0hrVPxjJ4qhUJjUE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SucYl1qWVRaFDdWZHWBKeysgYHaLXwpNQr/oVpyLD7hVxMQRAOWWmU6GF4vkq5cjuh85QLif3sRjxDDj98ODIPswekM+UvzfFqn60+JwqCGUzeC0VelgX7abmNRTwtSq4FuxrTZmxhULCk4VCuO1qXo6tWRRNiA1ew9H9tOEvaM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=V83xmRkQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=iJsdp55dmZAsEi5jULDorq8x/4sNO8DYktugr4MjgadoZ0KS+LngXh7MSzt8ONXwSeNFjuaksfmsaHBHD1xlqj3MqfGp9LGomIZmudOMZDJ4uccKxf8c2X+46XTrIGx/OZ968a6gZMZZ/Wqk613QgybGJ6/0QyOXsSwmADbhY+I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2QgvcZaq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="V83xmRkQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 78D7CC116C6;
-	Mon,  9 Feb 2026 14:55:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2QgvcZaq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 89F47C19422;
+	Mon,  9 Feb 2026 14:55:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770648953;
-	bh=9xcwIQoA5RPPoDj7+us9BKQQFz5dx0GqP2fx9jN1yN0=;
+	s=korg; t=1770648957;
+	bh=wuBAl2f9TKQqvrogeJTNyTTDXFS0hrVPxjJ4qhUJjUE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=V83xmRkQVW9LsuOhFbI/XrOS+2gVoAjQbnDAClWnBagVBs1e/VCKty4FxTfzjo4kC
-	 8HRLqBEF71Bnm2zgq1ijQ8UumFcYdJ+U3vix4toymvLWswUkJlnoms+ohOq8qLcZCj
-	 zWen4R2mH5G0M572y6fSPAklsc/83j1gtcAR2md4=
+	b=2QgvcZaqNM2EJcdKZpTO6BmxjMM5nlBCWbreMgNAKskeTjq+BQ5V0TIMY40uC3u9Q
+	 4WavficKpdwAAf2YRSBgqhf+axkMQcEHGnwiKMStxsHXMvFnjMzZfIt3mA9o9QK+bP
+	 47OGxmpV3FkK2Ibw9/hX1MqPuevHjnqS0lOWljpI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Siarhei Vishniakou <svv@google.com>,
-	Benjamin Tissoires <bentiss@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 31/75] HID: playstation: Center initial joystick axes to prevent spurious events
-Date: Mon,  9 Feb 2026 15:24:28 +0100
-Message-ID: <20260209142302.968275689@linuxfoundation.org>
+	Yipeng Zou <zouyipeng@huawei.com>,
+	Thomas Gleixner <tglx@linutronix.de>
+Subject: [PATCH 5.15 22/75] timers: Fix NULL function pointer race in timer_shutdown_sync()
+Date: Mon,  9 Feb 2026 15:24:19 +0100
+Message-ID: <20260209142302.644935298@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260209142301.830618238@linuxfoundation.org>
 References: <20260209142301.830618238@linuxfoundation.org>
@@ -51,65 +50,88 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Siarhei Vishniakou <svv@google.com>
+From: Yipeng Zou <zouyipeng@huawei.com>
 
-[ Upstream commit e9143268d259d98e111a649affa061acb8e13c5b ]
+commit 20739af07383e6eb1ec59dcd70b72ebfa9ac362c upstream.
 
-When a new PlayStation gamepad (DualShock 4 or DualSense) is initialized,
-the input subsystem sets the default value for its absolute axes (e.g.,
-ABS_X, ABS_Y) to 0.
+There is a race condition between timer_shutdown_sync() and timer
+expiration that can lead to hitting a WARN_ON in expire_timers().
 
-However, the hardware's actual neutral/resting state for these joysticks
-is 128 (0x80). This creates a mismatch.
+The issue occurs when timer_shutdown_sync() clears the timer function
+to NULL while the timer is still running on another CPU. The race
+scenario looks like this:
 
-When the first HID report arrives from the device, the driver sees the
-resting value of 128. The kernel compares this to its initial state of 0
-and incorrectly interprets this as a delta (0 -> 128). Consequently, it
-generates EV_ABS events for this initial, non-existent movement.
+CPU0					CPU1
+					<SOFTIRQ>
+					lock_timer_base()
+					expire_timers()
+					base->running_timer = timer;
+					unlock_timer_base()
+					[call_timer_fn enter]
+					mod_timer()
+					...
+timer_shutdown_sync()
+lock_timer_base()
+// For now, will not detach the timer but only clear its function to NULL
+if (base->running_timer != timer)
+	ret = detach_if_pending(timer, base, true);
+if (shutdown)
+	timer->function = NULL;
+unlock_timer_base()
+					[call_timer_fn exit]
+					lock_timer_base()
+					base->running_timer = NULL;
+					unlock_timer_base()
+					...
+					// Now timer is pending while its function set to NULL.
+					// next timer trigger
+					<SOFTIRQ>
+					expire_timers()
+					WARN_ON_ONCE(!fn) // hit
+					...
+lock_timer_base()
+// Now timer will detach
+if (base->running_timer != timer)
+	ret = detach_if_pending(timer, base, true);
+if (shutdown)
+	timer->function = NULL;
+unlock_timer_base()
 
-This behavior can fail userspace 'sanity check' tests (e.g., in
-Android CTS) that correctly assert no motion events should be generated
-from a device that is already at rest.
+The problem is that timer_shutdown_sync() clears the timer function
+regardless of whether the timer is currently running. This can leave a
+pending timer with a NULL function pointer, which triggers the
+WARN_ON_ONCE(!fn) check in expire_timers().
 
-This patch fixes the issue by explicitly setting the initial value of the
-main joystick axes (e.g., ABS_X, ABS_Y, ABS_RX, ABS_RY) to 128 (0x80)
-in the common ps_gamepad_create() function.
+Fix this by only clearing the timer function when actually detaching the
+timer. If the timer is running, leave the function pointer intact, which is
+safe because the timer will be properly detached when it finishes running.
 
-This aligns the kernel's initial state with the hardware's expected
-neutral state, ensuring that the first report (at 128) produces no
-delta and thus, no spurious event.
-
-Signed-off-by: Siarhei Vishniakou <svv@google.com>
-Reviewed-by: Benjamin Tissoires <bentiss@kernel.org>
-Signed-off-by: Benjamin Tissoires <bentiss@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 0cc04e80458a ("timers: Add shutdown mechanism to the internal functions")
+Signed-off-by: Yipeng Zou <zouyipeng@huawei.com>
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Cc: stable@vger.kernel.org
+Link: https://patch.msgid.link/20251122093942.301559-1-zouyipeng@huawei.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hid/hid-playstation.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ kernel/time/timer.c |    7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/hid/hid-playstation.c b/drivers/hid/hid-playstation.c
-index 944e5e5ff1348..69c16c9b8c5c9 100644
---- a/drivers/hid/hid-playstation.c
-+++ b/drivers/hid/hid-playstation.c
-@@ -463,11 +463,16 @@ static struct input_dev *ps_gamepad_create(struct hid_device *hdev,
- 	if (IS_ERR(gamepad))
- 		return ERR_CAST(gamepad);
+--- a/kernel/time/timer.c
++++ b/kernel/time/timer.c
+@@ -1360,10 +1360,11 @@ static int __try_to_del_timer_sync(struc
  
-+	/* Set initial resting state for joysticks to 128 (center) */
- 	input_set_abs_params(gamepad, ABS_X, 0, 255, 0, 0);
-+	gamepad->absinfo[ABS_X].value = 128;
- 	input_set_abs_params(gamepad, ABS_Y, 0, 255, 0, 0);
-+	gamepad->absinfo[ABS_Y].value = 128;
- 	input_set_abs_params(gamepad, ABS_Z, 0, 255, 0, 0);
- 	input_set_abs_params(gamepad, ABS_RX, 0, 255, 0, 0);
-+	gamepad->absinfo[ABS_RX].value = 128;
- 	input_set_abs_params(gamepad, ABS_RY, 0, 255, 0, 0);
-+	gamepad->absinfo[ABS_RY].value = 128;
- 	input_set_abs_params(gamepad, ABS_RZ, 0, 255, 0, 0);
+ 	base = lock_timer_base(timer, &flags);
  
- 	input_set_abs_params(gamepad, ABS_HAT0X, -1, 1, 0, 0);
--- 
-2.51.0
-
+-	if (base->running_timer != timer)
++	if (base->running_timer != timer) {
+ 		ret = detach_if_pending(timer, base, true);
+-	if (shutdown)
+-		timer->function = NULL;
++		if (shutdown)
++			timer->function = NULL;
++	}
+ 
+ 	raw_spin_unlock_irqrestore(&base->lock, flags);
+ 
 
 
