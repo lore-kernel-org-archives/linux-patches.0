@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2BA0835CB6B;
-	Mon,  9 Feb 2026 14:28:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 580E435CB6B;
+	Mon,  9 Feb 2026 14:28:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770647300; cv=none; b=dnRhKHRJLEr9y5YO2TXay1wFApun7JY8kTtYH4Idf03Z7ZCQXqSa8GTQZEk6jGBzp2daKwDB3nZeVhBVYgdlUu5ZyJRdWKGDtMgQ8EAswyy1w4bwTyT81NVmsscZQr2Wn1ZpP6LiBSATR8wAF61ezJU/QYinr1WGqTVbCNFjZP4=
+	t=1770647303; cv=none; b=PzX0lWqoC4oM7h4YTAxwAUhKDAASIfpEDJ3c9JWiTmUmR4bE2WPv9qfB1SVHDyCQieYtKW+bKSsSDPTf900fSHQTA4/KHmE6tyMzOyhB/2mj55jxjY+4Ggy4kHBzbw3RK+syakSTgLON0PoqcfOjiIaYvFYhvEzPF19cpxNilzc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770647300; c=relaxed/simple;
-	bh=G4T9tvOqAG4t1PSTeldRA2Ea7k8wgIsCVczuGOye3+s=;
+	s=arc-20240116; t=1770647303; c=relaxed/simple;
+	bh=ZgDGoU+pecc5Wu7d06sSyzZx5oxmllz7B7ujO0A1Hy0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UdnXEZWwlEF+kck/Nw/sJu1PC5Jg3Vnexf7kRREfaGEAHoRTnAo15WbhzQ9PX+g8Z8AytoX/0fnuhvE/JcV3midG1whymMIfYcxnhw3vZxXtP/mZGS/4P9Yeoc5rZ/VnI7FW/X4MmmRNht4mdM+Bxp18t0xxcUvaR3dnWV44UFk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZNM8ybil; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=eKYPE/mkerUrURUwJfR9p64MN3QLLhDW64H7D+mURyojwnNEno5bEbmmagS3tTk8vqGjE8cUghiISLXxL9/cjpHbaZOgQxa5F0SrE3EZv70cFQzWJwSTTZ2cYNBzHtkbtlf5ZlBF98hRrP7iqQDhgWdQvl02iz/4zVsVLwvyD9Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=B+VCyuVp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZNM8ybil"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB035C116C6;
-	Mon,  9 Feb 2026 14:28:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="B+VCyuVp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BCE03C116C6;
+	Mon,  9 Feb 2026 14:28:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770647300;
-	bh=G4T9tvOqAG4t1PSTeldRA2Ea7k8wgIsCVczuGOye3+s=;
+	s=korg; t=1770647303;
+	bh=ZgDGoU+pecc5Wu7d06sSyzZx5oxmllz7B7ujO0A1Hy0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZNM8ybilgLGQSml0K2PnzfOw1iqTRCreKuZHfVpqVNgpKccECp+jGaIDhvNbXPxZN
-	 kp3BJtdSSRXOjOerIp1wi2Kx+Kn3d/o9DaqcsosiMHNE//WYFt9QeZqIGq6l++2+en
-	 PT//7WjBWwPRlA6rqAPLfQkk6ag+G1evvzyRlIzU=
+	b=B+VCyuVpzpprvDL0tNVtb2/0V3H3A1dsA4NL25zatrr81vTIno6heA31+n6eNi1xG
+	 Qmfs0dXSE8+3YgofSslSLKrdN0nPPiEwV91oB0MtqHnxgVSm+QDWx9fcEQY9ZP1Qn1
+	 ZjgdOPTk7EVrlhxrrVQW3rQ9wIJrO8Nprq/P5GIM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexandre Negrel <alexandre@negrel.dev>,
-	Jens Axboe <axboe@kernel.dk>,
+	Chenghao Duan <duanchenghao@kylinos.cn>,
+	Huacai Chen <chenhuacai@loongson.cn>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 059/175] io_uring: use GFP_NOWAIT for overflow CQEs on legacy rings
-Date: Mon,  9 Feb 2026 15:22:12 +0100
-Message-ID: <20260209142322.587056328@linuxfoundation.org>
+Subject: [PATCH 6.18 060/175] LoongArch: Enable exception fixup for specific ADE subcode
+Date: Mon,  9 Feb 2026 15:22:13 +0100
+Message-ID: <20260209142322.621867220@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260209142320.474120190@linuxfoundation.org>
 References: <20260209142320.474120190@linuxfoundation.org>
@@ -45,41 +45,58 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Alexandre Negrel <alexandre@negrel.dev>
+From: Chenghao Duan <duanchenghao@kylinos.cn>
 
-[ Upstream commit fc5ff2500976cd2710a7acecffd12d95ee4f98fc ]
+[ Upstream commit 9bdc1ab5e4ce6f066119018d8f69631a46f9c5a0 ]
 
-Allocate the overflowing CQE with GFP_NOWAIT instead of GFP_ATOMIC. This
-changes causes allocations to fail earlier in out-of-memory situations,
-rather than being deferred. Using GFP_ATOMIC allows a process to exceed
-memory limits.
+This patch allows the LoongArch BPF JIT to handle recoverable memory
+access errors generated by BPF_PROBE_MEM* instructions.
 
-Closes: https://bugzilla.kernel.org/show_bug.cgi?id=220794
-Signed-off-by: Alexandre Negrel <alexandre@negrel.dev>
-Link: https://lore.kernel.org/io-uring/20251229201933.515797-1-alexandre@negrel.dev/
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+When a BPF program performs memory access operations, the instructions
+it executes may trigger ADEM exceptions. The kernel’s built-in BPF
+exception table mechanism (EX_TYPE_BPF) will generate corresponding
+exception fixup entries in the JIT compilation phase; however, the
+architecture-specific trap handling function needs to proactively call
+the common fixup routine to achieve exception recovery.
+
+do_ade(): fix EX_TYPE_BPF memory access exceptions for BPF programs,
+ensure safe execution.
+
+Relevant test cases: illegal address access tests in module_attach and
+subprogs_extable of selftests/bpf.
+
+Signed-off-by: Chenghao Duan <duanchenghao@kylinos.cn>
+Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- io_uring/io_uring.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/loongarch/kernel/traps.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/io_uring/io_uring.c b/io_uring/io_uring.c
-index e97c495c18065..104192bcc8e4b 100644
---- a/io_uring/io_uring.c
-+++ b/io_uring/io_uring.c
-@@ -897,7 +897,7 @@ static __cold bool io_cqe_overflow_locked(struct io_ring_ctx *ctx,
+diff --git a/arch/loongarch/kernel/traps.c b/arch/loongarch/kernel/traps.c
+index da5926fead4af..8e51ce004572c 100644
+--- a/arch/loongarch/kernel/traps.c
++++ b/arch/loongarch/kernel/traps.c
+@@ -535,10 +535,15 @@ asmlinkage void noinstr do_fpe(struct pt_regs *regs, unsigned long fcsr)
+ asmlinkage void noinstr do_ade(struct pt_regs *regs)
  {
- 	struct io_overflow_cqe *ocqe;
+ 	irqentry_state_t state = irqentry_enter(regs);
++	unsigned int esubcode = FIELD_GET(CSR_ESTAT_ESUBCODE, regs->csr_estat);
++
++	if ((esubcode == EXSUBCODE_ADEM) && fixup_exception(regs))
++		goto out;
  
--	ocqe = io_alloc_ocqe(ctx, cqe, big_cqe, GFP_ATOMIC);
-+	ocqe = io_alloc_ocqe(ctx, cqe, big_cqe, GFP_NOWAIT);
- 	return io_cqring_add_overflow(ctx, ocqe);
+ 	die_if_kernel("Kernel ade access", regs);
+ 	force_sig_fault(SIGBUS, BUS_ADRERR, (void __user *)regs->csr_badvaddr);
+ 
++out:
+ 	irqentry_exit(regs, state);
  }
  
 -- 
