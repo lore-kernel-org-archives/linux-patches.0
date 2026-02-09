@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D0D936EA81;
-	Mon,  9 Feb 2026 14:31:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AEDC723B604;
+	Mon,  9 Feb 2026 14:31:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770647460; cv=none; b=OiaE7ZiiHlX8FGEUsBHrnpJLSTDm5/Wv+QxSKJbI+sk3Ri3uBOZmdaE24KVysG+vkW7rySdQgH/+FLE8vyjn7p47Zi/00sl8v7kg/PqAr4A95u+bfO58VBhRU5q1Wzqnm3IGlfQyw/wCKEapkGnHIKJqxPRQKZXo/FqPoG0vCCM=
+	t=1770647463; cv=none; b=nMx2RPE9CUkBLP5dcmMgKUjPCdJadS41TSTvvbNpdhImqn3Xnk9guxuZClWnpP+sKy3MVowy0lD8QOdUDDrRPQqRaLtS+sINEOvW/hI4iBnLER8uLWw4RV6CK39tXdtHW4O8zOwQriVnG9FFekcuxh0xvtOp0dkQ+pAnMWlfiyI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770647460; c=relaxed/simple;
-	bh=XzVZKsykTpA5r3L4Xhy43+9CCY8ve65roVgWBGQ/GS0=;
+	s=arc-20240116; t=1770647463; c=relaxed/simple;
+	bh=GTzgn0wvH6nElVwADZlotCtQR4wWo/DvUC0jPC8FJVQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gFDZh9XOC8eBvA3fBrl1XbJ7Z7jP5h/9P0fWiWxehmOnQ4b/WM0JMFA0e7zuqVNYsWO62JLqg8paXLPK5TJuTaDjobsnhQzTqSXvvry5YWpwqGBAOS9ftosdy8gBn49qFjuqjn3V8UO2htD2qu0ewooWuKfB56pXD+Ix41cT0Sw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=S9zA9ZSm; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Bix/1nug+s2+QKMinutvtYH2cLk9kT8+j3NlX00DLwEN50JMxOUzDiKxkeCAlhVb0qm/sI8FPqMMUrNeF1tQAoMAR1Vlw8F0ZcOtEKPVukO0gFDC7naZErosWf6YxMlZaBav+TUbIdKh2/yQSEMyBgCXEV4xwfIHve6LPuhq8Ns=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fPFMYwTs; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="S9zA9ZSm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A2D16C116C6;
-	Mon,  9 Feb 2026 14:30:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fPFMYwTs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 221D4C116C6;
+	Mon,  9 Feb 2026 14:31:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770647460;
-	bh=XzVZKsykTpA5r3L4Xhy43+9CCY8ve65roVgWBGQ/GS0=;
+	s=korg; t=1770647463;
+	bh=GTzgn0wvH6nElVwADZlotCtQR4wWo/DvUC0jPC8FJVQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=S9zA9ZSmMWMKftyh+GswgMHPpvEi7mb7EH88e9yiQjLx7hgFpgb1CLFtxPjksrfyA
-	 ZJ9JCWlKCfi+9n0e6lSdUJdh9veIPd3adln0euqlO5VG4cP4NM3titUL446v8UpyL6
-	 joOELn7yCnw0bqmIv/hzoLnw8DsbPXOhquOK8ttg=
+	b=fPFMYwTshi6EoyxhfLnIjCqSXrmyKeqsQzJEpLIFscawh/SVG/p56IjlHuwb7WWS0
+	 KkbeRDzvTv7eZUEoE/+VUZ9Rnubiqx0SELWTKBCmswRekIKk7d5PI7gAtim9z42gbm
+	 CrCMrTZ5EY3wbJFtb1ORYSPTvBJ1CXlPpUqzuUB0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johannes Berg <johannes.berg@intel.com>,
-	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
+	syzbot+b4a2af3000eaa84d95d5@syzkaller.appspotmail.com,
+	Edward Adam Davis <eadavis@qq.com>,
+	Filipe Manana <fdmanana@suse.com>,
+	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 106/175] wifi: mac80211: correctly check if CSA is active
-Date: Mon,  9 Feb 2026 15:22:59 +0100
-Message-ID: <20260209142324.236960920@linuxfoundation.org>
+Subject: [PATCH 6.18 107/175] btrfs: sync read disk super and set block size
+Date: Mon,  9 Feb 2026 15:23:00 +0100
+Message-ID: <20260209142324.271437324@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260209142320.474120190@linuxfoundation.org>
 References: <20260209142320.474120190@linuxfoundation.org>
@@ -51,50 +53,78 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Miri Korenblit <miriam.rachel.korenblit@intel.com>
+From: Edward Adam Davis <eadavis@qq.com>
 
-[ Upstream commit db1d0b6ab11f612ea8a327663a578c8946efeee9 ]
+[ Upstream commit 3f29d661e5686f3aa14e6f11537ff5c49846f2e2 ]
 
-We are not adding an interface if an existing one is doing CSA.
-But the check won't work for MLO station interfaces, since for those,
-vif->bss_conf is zeroed out.
-Fix this by checking if any link of the vif has an active CSA.
+When the user performs a btrfs mount, the block device is not set
+correctly. The user sets the block size of the block device to 0x4000
+by executing the BLKBSZSET command.
+Since the block size change also changes the mapping->flags value, this
+further affects the result of the mapping_min_folio_order() calculation.
 
-Reviewed-by: Johannes Berg <johannes.berg@intel.com>
-Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
-Link: https://patch.msgid.link/20260111191912.7ceff62fc561.Ia38d27f42684d1cfd82d930d232bd5dea6ab9282@changeid
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Let's analyze the following two scenarios:
+
+Scenario 1: Without executing the BLKBSZSET command, the block size is
+0x1000, and mapping_min_folio_order() returns 0;
+
+Scenario 2: After executing the BLKBSZSET command, the block size is
+0x4000, and mapping_min_folio_order() returns 2.
+
+do_read_cache_folio() allocates a folio before the BLKBSZSET command
+is executed. This results in the allocated folio having an order value
+of 0. Later, after BLKBSZSET is executed, the block size increases to
+0x4000, and the mapping_min_folio_order() calculation result becomes 2.
+
+This leads to two undesirable consequences:
+
+1. filemap_add_folio() triggers a VM_BUG_ON_FOLIO(folio_order(folio) <
+mapping_min_folio_order(mapping)) assertion.
+
+2. The syzbot report [1] shows a null pointer dereference in
+create_empty_buffers() due to a buffer head allocation failure.
+
+Synchronization should be established based on the inode between the
+BLKBSZSET command and read cache page to prevent inconsistencies in
+block size or mapping flags before and after folio allocation.
+
+[1]
+KASAN: null-ptr-deref in range [0x0000000000000000-0x0000000000000007]
+RIP: 0010:create_empty_buffers+0x4d/0x480 fs/buffer.c:1694
+Call Trace:
+ folio_create_buffers+0x109/0x150 fs/buffer.c:1802
+ block_read_full_folio+0x14c/0x850 fs/buffer.c:2403
+ filemap_read_folio+0xc8/0x2a0 mm/filemap.c:2496
+ do_read_cache_folio+0x266/0x5c0 mm/filemap.c:4096
+ do_read_cache_page mm/filemap.c:4162 [inline]
+ read_cache_page_gfp+0x29/0x120 mm/filemap.c:4195
+ btrfs_read_disk_super+0x192/0x500 fs/btrfs/volumes.c:1367
+
+Reported-by: syzbot+b4a2af3000eaa84d95d5@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=b4a2af3000eaa84d95d5
+Signed-off-by: Edward Adam Davis <eadavis@qq.com>
+Reviewed-by: Filipe Manana <fdmanana@suse.com>
+Signed-off-by: Filipe Manana <fdmanana@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/mac80211/iface.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ fs/btrfs/volumes.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/net/mac80211/iface.c b/net/mac80211/iface.c
-index 0ca55b9655a7f..72c129478da08 100644
---- a/net/mac80211/iface.c
-+++ b/net/mac80211/iface.c
-@@ -350,6 +350,8 @@ static int ieee80211_check_concurrent_iface(struct ieee80211_sub_if_data *sdata,
- 	/* we hold the RTNL here so can safely walk the list */
- 	list_for_each_entry(nsdata, &local->interfaces, list) {
- 		if (nsdata != sdata && ieee80211_sdata_running(nsdata)) {
-+			struct ieee80211_link_data *link;
-+
- 			/*
- 			 * Only OCB and monitor mode may coexist
- 			 */
-@@ -376,8 +378,10 @@ static int ieee80211_check_concurrent_iface(struct ieee80211_sub_if_data *sdata,
- 			 * will not add another interface while any channel
- 			 * switch is active.
- 			 */
--			if (nsdata->vif.bss_conf.csa_active)
--				return -EBUSY;
-+			for_each_link_data(nsdata, link) {
-+				if (link->conf->csa_active)
-+					return -EBUSY;
-+			}
+diff --git a/fs/btrfs/volumes.c b/fs/btrfs/volumes.c
+index 48e717c105c35..8e7dcb12af4c4 100644
+--- a/fs/btrfs/volumes.c
++++ b/fs/btrfs/volumes.c
+@@ -1365,7 +1365,9 @@ struct btrfs_super_block *btrfs_read_disk_super(struct block_device *bdev,
+ 				      (bytenr + BTRFS_SUPER_INFO_SIZE) >> PAGE_SHIFT);
+ 	}
  
- 			/*
- 			 * The remaining checks are only performed for interfaces
++	filemap_invalidate_lock(mapping);
+ 	page = read_cache_page_gfp(mapping, bytenr >> PAGE_SHIFT, GFP_NOFS);
++	filemap_invalidate_unlock(mapping);
+ 	if (IS_ERR(page))
+ 		return ERR_CAST(page);
+ 
 -- 
 2.51.0
 
