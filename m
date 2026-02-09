@@ -1,36 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58A6728725B;
-	Mon,  9 Feb 2026 14:51:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E88F128725B;
+	Mon,  9 Feb 2026 14:51:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770648693; cv=none; b=tcXK7aK+fuVA8rxCC70ix7lbIx2a8Zxw+5Xu0iD1+l2X3t3HpQSBcFvfL6H+3EvSXdyF66dGEGKtD1ZxqVxwhdj2udTWbTawdjXh3hIHqjTgllh2+j8hMSjQ3c1RQ5zgy3Set2vmiyHpcbGq61nBGotdLpCYLK8xJLMc0gGBpQ4=
+	t=1770648697; cv=none; b=rohMz8MVO0/Q0h9Vu6yjmr+5ayCv/gz7809iGCStXrr2PecRUs1zxa4nRsBtObsn5TzGwf1At5NXQpe1XAff+mdwdgh3LrrTueG0dXbadZqT69nPyIS/xP4iiaxqD343/oaI5bJ/uBR2ToJL5yrX5JrhzYoRPy0oo34hs0QnYaA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770648693; c=relaxed/simple;
-	bh=mVDqGz1Y5Q+30CjnnzsZ8i81TeW474Rh9OYdGYVKVyY=;
+	s=arc-20240116; t=1770648697; c=relaxed/simple;
+	bh=m9ij1h0klxQ20PH6Zvirq264jqm63C7fpwGhFR+6imQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KOaouwKB05O2i7l4RZw9hhB3f4pRHRPC3K6+VjmLUL7Bffc/VpGsiYdjN8H2Knsv7gWU4KTmmydTL2ZR2NyNGsJ+00qXsuab/ELfildoeTyWkCTHSGtWQKwSnd56KnhlqGSsFSv1QpJDq066rrTND+/EY39Bu7QNLFpIg6s9/k8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=U/LFQeDG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=E2UUsYQYhCOV/3TcFWq3XBMKov1/ILqSOtLT6vrVt2zfRphabicPC3vSvy003V9mBvQVrlQDL0LVEKtty2YqR+QMygd5CSrjzP3CMRQr4hM+rkYb9Eh2x4ZNd72DCWbb7lk8r7V6DppMidwv2+f1NS8q/BLaA3Z6jsPcFDBQyEU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jl8QVE8R; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="U/LFQeDG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BCA37C116C6;
-	Mon,  9 Feb 2026 14:51:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jl8QVE8R"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D36CC116C6;
+	Mon,  9 Feb 2026 14:51:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770648693;
-	bh=mVDqGz1Y5Q+30CjnnzsZ8i81TeW474Rh9OYdGYVKVyY=;
+	s=korg; t=1770648696;
+	bh=m9ij1h0klxQ20PH6Zvirq264jqm63C7fpwGhFR+6imQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=U/LFQeDGG7acuPH7bBKB2ftdR53t5LTU/dWjVsLzBTW0dDTqcwARNJq8oPsG2I/8S
-	 LIAFnUqaRhrvkVNlnKXSNDUZJtaBY6u01FY6dFkV8WX+dX1hGOXNbKT/F3LpDd+yl2
-	 0HGUtrpcUDFzywq5RGZhaBCvpaNKnQO7ZPPiNvS8=
+	b=jl8QVE8R0KP40v8wtxW6BwpZAoE6KV30lj+EX47Fq1k8Tc5PTc5gHqdaYBqzmsbul
+	 5Voc/pjnZws6lRhr8hf/ueBeo0wcBLkJac8Sg1MYKADWonrXWnj4iiZYnTNX+lZhQ1
+	 BIomh2oqVpwEP7VpciUCbYJGQvtz5XnR7/TwkK/s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Carlos Llamas <cmllamas@google.com>
-Subject: [PATCH 5.10 05/41] binderfs: fix ida_alloc_max() upper bound
-Date: Mon,  9 Feb 2026 15:24:26 +0100
-Message-ID: <20260209142256.996652546@linuxfoundation.org>
+	syzbot+b364457b2d1d4e4a3054@syzkaller.appspotmail.com,
+	Moon Hee Lee <moonhee.lee.ca@gmail.com>,
+	Johannes Berg <johannes.berg@intel.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 06/41] wifi: mac80211: ocb: skip rx_no_sta when interface is not joined
+Date: Mon,  9 Feb 2026 15:24:27 +0100
+Message-ID: <20260209142257.032781620@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260209142256.797267956@linuxfoundation.org>
 References: <20260209142256.797267956@linuxfoundation.org>
@@ -49,47 +52,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Carlos Llamas <cmllamas@google.com>
+From: Moon Hee Lee <moonhee.lee.ca@gmail.com>
 
-commit ec4ddc90d201d09ef4e4bef8a2c6d9624525ad68 upstream.
+[ Upstream commit ff4071c60018a668249dc6a2df7d16330543540e ]
 
-The 'max' argument of ida_alloc_max() takes the maximum valid ID and not
-the "count". Using an ID of BINDERFS_MAX_MINOR (1 << 20) for dev->minor
-would exceed the limits of minor numbers (20-bits). Fix this off-by-one
-error by subtracting 1 from the 'max'.
+ieee80211_ocb_rx_no_sta() assumes a valid channel context, which is only
+present after JOIN_OCB.
 
-Cc: stable@vger.kernel.org
-Fixes: 3ad20fe393b3 ("binder: implement binderfs")
-Signed-off-by: Carlos Llamas <cmllamas@google.com>
-Link: https://patch.msgid.link/20260127235545.2307876-2-cmllamas@google.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+RX may run before JOIN_OCB is executed, in which case the OCB interface
+is not operational. Skip RX peer handling when the interface is not
+joined to avoid warnings in the RX path.
+
+Reported-by: syzbot+b364457b2d1d4e4a3054@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=b364457b2d1d4e4a3054
+Tested-by: syzbot+b364457b2d1d4e4a3054@syzkaller.appspotmail.com
+Signed-off-by: Moon Hee Lee <moonhee.lee.ca@gmail.com>
+Link: https://patch.msgid.link/20251216035932.18332-1-moonhee.lee.ca@gmail.com
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/android/binderfs.c |    8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ net/mac80211/ocb.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/drivers/android/binderfs.c
-+++ b/drivers/android/binderfs.c
-@@ -122,8 +122,8 @@ static int binderfs_binder_device_create
- 	mutex_lock(&binderfs_minors_mutex);
- 	if (++info->device_count <= info->mount_opts.max)
- 		minor = ida_alloc_max(&binderfs_minors,
--				      use_reserve ? BINDERFS_MAX_MINOR :
--						    BINDERFS_MAX_MINOR_CAPPED,
-+				      use_reserve ? BINDERFS_MAX_MINOR - 1 :
-+						    BINDERFS_MAX_MINOR_CAPPED - 1,
- 				      GFP_KERNEL);
- 	else
- 		minor = -ENOSPC;
-@@ -423,8 +423,8 @@ static int binderfs_binder_ctl_create(st
- 	/* Reserve a new minor number for the new device. */
- 	mutex_lock(&binderfs_minors_mutex);
- 	minor = ida_alloc_max(&binderfs_minors,
--			      use_reserve ? BINDERFS_MAX_MINOR :
--					    BINDERFS_MAX_MINOR_CAPPED,
-+			      use_reserve ? BINDERFS_MAX_MINOR - 1 :
-+					    BINDERFS_MAX_MINOR_CAPPED - 1,
- 			      GFP_KERNEL);
- 	mutex_unlock(&binderfs_minors_mutex);
- 	if (minor < 0) {
+diff --git a/net/mac80211/ocb.c b/net/mac80211/ocb.c
+index 7c1a735b9eee3..736e5c08bfd7b 100644
+--- a/net/mac80211/ocb.c
++++ b/net/mac80211/ocb.c
+@@ -47,6 +47,9 @@ void ieee80211_ocb_rx_no_sta(struct ieee80211_sub_if_data *sdata,
+ 	struct sta_info *sta;
+ 	int band;
+ 
++	if (!ifocb->joined)
++		return;
++
+ 	/* XXX: Consider removing the least recently used entry and
+ 	 *      allow new one to be added.
+ 	 */
+-- 
+2.51.0
+
 
 
