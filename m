@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5600637AA87;
-	Mon,  9 Feb 2026 14:38:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42CF637BE65;
+	Mon,  9 Feb 2026 14:38:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770647927; cv=none; b=EvZgRnLdboDVLT+QKgL4BEak2cmNATac6aAJEpB8OjhkfDVfjsIKdkVXl/7TfX+u+Dfsadm2S6FCrLkc7EJjYiHqv1owCvnpRBThe7gtC2m+m+xJ4M9wehivVhafW/+rFzPL77t6KyR6sklelvE8kePnCAcwFmlV2g02Tz1H6Dw=
+	t=1770647930; cv=none; b=EiX7umeM3qVEvxi3UxCRRz4WDFUVHid7e4NDRUprEFdctVBN4uvOtD2I0OxiTbaBmsNqhIKD5GyIAlXat7o4XjtR5AN+4e1aJjgk4TzHSUituIanFHjJWmUvFgJWmAIrprVTizAL4iGKr3KfWsYDgb1+1qJwGdWuT2YnUj7obOA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770647927; c=relaxed/simple;
-	bh=fE+hrgmduEs6xX5A8WW5C5bXS3DiaNQ7GSsLi2AFx8Y=;
+	s=arc-20240116; t=1770647930; c=relaxed/simple;
+	bh=l3xreFmhANUDV1hMDWl6EObZ7U42lIP+RKKHCW+PTQo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Jj4/7GlPUtX3HLjY3ysd6XU6m8izLAQNHHV1vfguWIDYHAdNnvGtZA5WHEMAy6X5H1VwIEbxghf2hfaZELNyiC1rX7AvbkFa3pYRhJRAzqHSyMh0fpC+6F/q7OuocTR1z1kQWvxxl7hf9EXcwlSPqFaGvOIFPBD02DL6LFflavI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KvngpgOz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CRu+sGBab7m9GBdA5koFNqR2QtizYtKGNt0kuzVX373exMEy3i1o1bnjTxBkVgIwdx0i1cEomKFHYywYYsKP4EcYELVVY6UWhZ32rPa9VEdzhoX8nCQJT9OhOPNrpUabGcuo+yTI00wY6Z4P+vSctoSEC/KNNjDCc1Bc3aMYWt8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=orSSY9ph; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KvngpgOz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 60826C16AAE;
-	Mon,  9 Feb 2026 14:38:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="orSSY9ph"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A4FBDC16AAE;
+	Mon,  9 Feb 2026 14:38:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770647926;
-	bh=fE+hrgmduEs6xX5A8WW5C5bXS3DiaNQ7GSsLi2AFx8Y=;
+	s=korg; t=1770647930;
+	bh=l3xreFmhANUDV1hMDWl6EObZ7U42lIP+RKKHCW+PTQo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KvngpgOz3vc+MMeSNHUKtunvN5wEdABoHWjpV6IoDZ2uuTXs75kXvtxrw/zzUES7i
-	 IcbiHxQ0eZl3tRabsXG+G/pmXCkXBuf3mFzwzRjuxMf3uaThZ7iJZa1HhgnGeE0Pu1
-	 zbmZELzP6b7VCU7p5wcqBUllfM2pkrv3HeLApI+c=
+	b=orSSY9phHfE62QKDRMYz5tL3dCvMu5sRjr2YSzE+1qfzzXpXFIPbVlEhcX2PW3wAg
+	 f7/vr0U5unDWQC0YA/LwdMUX2WUkRa5ryRvVSQYQsvvUq1TWGEL78eMTzAhR1D1OAX
+	 WCSgcK5w75UsUsMDyWhvsADicHJewklrG6eV6IJU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dimitrios Katsaros <patcherwork@gmail.com>,
-	Sascha Hauer <s.hauer@pengutronix.de>,
-	Mark Brown <broonie@kernel.org>,
+	Jiaming Zhang <r772577952@gmail.com>,
+	Boris Burkov <boris@bur.io>,
+	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
+	Qu Wenruo <wqu@suse.com>,
+	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 062/113] ASoC: tlv320adcx140: Propagate error codes during probe
-Date: Mon,  9 Feb 2026 15:23:31 +0100
-Message-ID: <20260209142312.425318318@linuxfoundation.org>
+Subject: [PATCH 6.12 071/113] btrfs: reject new transactions if the fs is fully read-only
+Date: Mon,  9 Feb 2026 15:23:40 +0100
+Message-ID: <20260209142312.740102770@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260209142310.204833231@linuxfoundation.org>
 References: <20260209142310.204833231@linuxfoundation.org>
@@ -52,41 +54,142 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dimitrios Katsaros <patcherwork@gmail.com>
+From: Qu Wenruo <wqu@suse.com>
 
-[ Upstream commit d89aad92cfd15edbd704746f44c98fe687f9366f ]
+[ Upstream commit 1972f44c189c8aacde308fa9284e474c1a5cbd9f ]
 
-When scanning for the reset pin, we could get an -EPROBE_DEFER.
-The driver would assume that no reset pin had been defined,
-which would mean that the chip would never be powered.
+[BUG]
+There is a bug report where a heavily fuzzed fs is mounted with all
+rescue mount options, which leads to the following warnings during
+unmount:
 
-Now we both respect any error we get from devm_gpiod_get_optional.
-We also now properly report the missing GPIO definition when
-'gpio_reset' is NULL.
+  BTRFS: Transaction aborted (error -22)
+  Modules linked in:
+  CPU: 0 UID: 0 PID: 9758 Comm: repro.out Not tainted
+  6.19.0-rc5-00002-gb71e635feefc #7 PREEMPT(full)
+  Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.15.0-1 04/01/2014
+  RIP: 0010:find_free_extent_update_loop fs/btrfs/extent-tree.c:4208 [inline]
+  RIP: 0010:find_free_extent+0x52f0/0x5d20 fs/btrfs/extent-tree.c:4611
+  Call Trace:
+   <TASK>
+   btrfs_reserve_extent+0x2cd/0x790 fs/btrfs/extent-tree.c:4705
+   btrfs_alloc_tree_block+0x1e1/0x10e0 fs/btrfs/extent-tree.c:5157
+   btrfs_force_cow_block+0x578/0x2410 fs/btrfs/ctree.c:517
+   btrfs_cow_block+0x3c4/0xa80 fs/btrfs/ctree.c:708
+   btrfs_search_slot+0xcad/0x2b50 fs/btrfs/ctree.c:2130
+   btrfs_truncate_inode_items+0x45d/0x2350 fs/btrfs/inode-item.c:499
+   btrfs_evict_inode+0x923/0xe70 fs/btrfs/inode.c:5628
+   evict+0x5f4/0xae0 fs/inode.c:837
+   __dentry_kill+0x209/0x660 fs/dcache.c:670
+   finish_dput+0xc9/0x480 fs/dcache.c:879
+   shrink_dcache_for_umount+0xa0/0x170 fs/dcache.c:1661
+   generic_shutdown_super+0x67/0x2c0 fs/super.c:621
+   kill_anon_super+0x3b/0x70 fs/super.c:1289
+   btrfs_kill_super+0x41/0x50 fs/btrfs/super.c:2127
+   deactivate_locked_super+0xbc/0x130 fs/super.c:474
+   cleanup_mnt+0x425/0x4c0 fs/namespace.c:1318
+   task_work_run+0x1d4/0x260 kernel/task_work.c:233
+   exit_task_work include/linux/task_work.h:40 [inline]
+   do_exit+0x694/0x22f0 kernel/exit.c:971
+   do_group_exit+0x21c/0x2d0 kernel/exit.c:1112
+   __do_sys_exit_group kernel/exit.c:1123 [inline]
+   __se_sys_exit_group kernel/exit.c:1121 [inline]
+   __x64_sys_exit_group+0x3f/0x40 kernel/exit.c:1121
+   x64_sys_call+0x2210/0x2210 arch/x86/include/generated/asm/syscalls_64.h:232
+   do_syscall_x64 arch/x86/entry/syscall_64.c:63 [inline]
+   do_syscall_64+0xe8/0xf80 arch/x86/entry/syscall_64.c:94
+   entry_SYSCALL_64_after_hwframe+0x77/0x7f
+  RIP: 0033:0x44f639
+  Code: Unable to access opcode bytes at 0x44f60f.
+  RSP: 002b:00007ffc15c4e088 EFLAGS: 00000246 ORIG_RAX: 00000000000000e7
+  RAX: ffffffffffffffda RBX: 00000000004c32f0 RCX: 000000000044f639
+  RDX: 000000000000003c RSI: 00000000000000e7 RDI: 0000000000000001
+  RBP: 0000000000000001 R08: ffffffffffffffc0 R09: 0000000000000000
+  R10: 0000000000000000 R11: 0000000000000246 R12: 00000000004c32f0
+  R13: 0000000000000001 R14: 0000000000000000 R15: 0000000000000001
+   </TASK>
 
-Signed-off-by: Dimitrios Katsaros <patcherwork@gmail.com>
-Signed-off-by: Sascha Hauer <s.hauer@pengutronix.de>
-Link: https://patch.msgid.link/20260113-sound-soc-codecs-tvl320adcx140-v4-3-8f7ecec525c8@pengutronix.de
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Since rescue mount options will mark the full fs read-only, there should
+be no new transaction triggered.
+
+But during unmount we will evict all inodes, which can trigger a new
+transaction, and triggers warnings on a heavily corrupted fs.
+
+[CAUSE]
+Btrfs allows new transaction even on a read-only fs, this is to allow
+log replay happen even on read-only mounts, just like what ext4/xfs do.
+
+However with rescue mount options, the fs is fully read-only and cannot
+be remounted read-write, thus in that case we should also reject any new
+transactions.
+
+[FIX]
+If we find the fs has rescue mount options, we should treat the fs as
+error, so that no new transaction can be started.
+
+Reported-by: Jiaming Zhang <r772577952@gmail.com>
+Link: https://lore.kernel.org/linux-btrfs/CANypQFYw8Nt8stgbhoycFojOoUmt+BoZ-z8WJOZVxcogDdwm=Q@mail.gmail.com/
+Reviewed-by: Boris Burkov <boris@bur.io>
+Reviewed-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
+Signed-off-by: Qu Wenruo <wqu@suse.com>
+Reviewed-by: David Sterba <dsterba@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/tlv320adcx140.c | 3 +++
- 1 file changed, 3 insertions(+)
+ fs/btrfs/disk-io.c | 13 +++++++++++++
+ fs/btrfs/fs.h      |  8 ++++++++
+ 2 files changed, 21 insertions(+)
 
-diff --git a/sound/soc/codecs/tlv320adcx140.c b/sound/soc/codecs/tlv320adcx140.c
-index 62d936c2838c9..1565727ca2f3d 100644
---- a/sound/soc/codecs/tlv320adcx140.c
-+++ b/sound/soc/codecs/tlv320adcx140.c
-@@ -1156,6 +1156,9 @@ static int adcx140_i2c_probe(struct i2c_client *i2c)
- 	adcx140->gpio_reset = devm_gpiod_get_optional(adcx140->dev,
- 						      "reset", GPIOD_OUT_LOW);
- 	if (IS_ERR(adcx140->gpio_reset))
-+		return dev_err_probe(&i2c->dev, PTR_ERR(adcx140->gpio_reset),
-+				     "Failed to get Reset GPIO\n");
-+	if (!adcx140->gpio_reset)
- 		dev_info(&i2c->dev, "Reset GPIO not defined\n");
+diff --git a/fs/btrfs/disk-io.c b/fs/btrfs/disk-io.c
+index 93300c3fe0cab..034cd7b1d0f5f 100644
+--- a/fs/btrfs/disk-io.c
++++ b/fs/btrfs/disk-io.c
+@@ -3202,6 +3202,15 @@ int btrfs_check_features(struct btrfs_fs_info *fs_info, bool is_rw_mount)
+ 	return 0;
+ }
  
- 	adcx140->supply_areg = devm_regulator_get_optional(adcx140->dev,
++static bool fs_is_full_ro(const struct btrfs_fs_info *fs_info)
++{
++	if (!sb_rdonly(fs_info->sb))
++		return false;
++	if (unlikely(fs_info->mount_opt & BTRFS_MOUNT_FULL_RO_MASK))
++		return true;
++	return false;
++}
++
+ int __cold open_ctree(struct super_block *sb, struct btrfs_fs_devices *fs_devices)
+ {
+ 	u32 sectorsize;
+@@ -3310,6 +3319,10 @@ int __cold open_ctree(struct super_block *sb, struct btrfs_fs_devices *fs_device
+ 	if (btrfs_super_flags(disk_super) & BTRFS_SUPER_FLAG_ERROR)
+ 		WRITE_ONCE(fs_info->fs_error, -EUCLEAN);
+ 
++	/* If the fs has any rescue options, no transaction is allowed. */
++	if (fs_is_full_ro(fs_info))
++		WRITE_ONCE(fs_info->fs_error, -EROFS);
++
+ 	/* Set up fs_info before parsing mount options */
+ 	nodesize = btrfs_super_nodesize(disk_super);
+ 	sectorsize = btrfs_super_sectorsize(disk_super);
+diff --git a/fs/btrfs/fs.h b/fs/btrfs/fs.h
+index 5c8d6149e1421..93ff1db75af48 100644
+--- a/fs/btrfs/fs.h
++++ b/fs/btrfs/fs.h
+@@ -230,6 +230,14 @@ enum {
+ 	BTRFS_MOUNT_IGNORESUPERFLAGS		= (1ULL << 32),
+ };
+ 
++/* These mount options require a full read-only fs, no new transaction is allowed. */
++#define BTRFS_MOUNT_FULL_RO_MASK		\
++	(BTRFS_MOUNT_NOLOGREPLAY |		\
++	 BTRFS_MOUNT_IGNOREBADROOTS |		\
++	 BTRFS_MOUNT_IGNOREDATACSUMS |		\
++	 BTRFS_MOUNT_IGNOREMETACSUMS |		\
++	 BTRFS_MOUNT_IGNORESUPERFLAGS)
++
+ /*
+  * Compat flags that we support.  If any incompat flags are set other than the
+  * ones specified below then we will fail to mount
 -- 
 2.51.0
 
