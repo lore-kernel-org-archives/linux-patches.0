@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7321137B3F2;
-	Mon,  9 Feb 2026 14:29:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A399D37B40A;
+	Mon,  9 Feb 2026 14:29:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770647358; cv=none; b=pV55329Ct1J7u4bEC4FE8NVg2kdz8n1ALhjF+EK6/m3P8shYWVHKHFK0Q6Ra+JDFOLPtX8RfVcfvNmeI4ywwL2RIcamIdqtkpw6N6kuOy/nzxaVF90dMK9yhHiIaroMHNAM60P/mV2kXY6P2Igp23wUELeRsKLhwvpXWWZdX1pA=
+	t=1770647361; cv=none; b=CoYYUYAsptZ7VgqewdqJFip03+QvDuBGiEBNtCm+zR3E/xEefBJmBuJPOqjMVfNYYZDvZw/5FlTl9LuKKngLcSlhBIYEbypQsbbvevwWhocKfvWBuTzMn2lknix4fleoHysahky20ZCed8pF9GuyrYvNxxz7YBOtf+AHgqmzXsc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770647358; c=relaxed/simple;
-	bh=SYovAvvgYinzaZ3y0kXZDYc7VSBQ20M4LT0x02+cKMI=;
+	s=arc-20240116; t=1770647361; c=relaxed/simple;
+	bh=nRIHrOgYVnusXRl4m4vu9dtuOxbXoAjWzRH2ol0JrsQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QQZW2Vu3LqzUQSuJvphZ+ToXby9WgWAn/VjJag4lGNCMA7JtXa7q4E4vmiF61vfHrzVbtKSViwl4f0lQmr/NPlKE3MI67lHtogvqnWoM2rUd17h15yzzK0H0Q0aKRL0/Cf7jUkqQ07r4lda+trYkvQ6wVYJxEqFfwBhIoLsLtxk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RcBaNlg+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=c6Elz3dUkSHGJ1kVwX3xC0efqqtDdSOVadS9VqUANW8RyVmOJ39MHbphCmCp53AYOVR12FXL2ziYS5NCiN2WiOGxVO2Vc/thLMOh/WwA1Lxnceb94EPiCNwLR4pCMhQuoXMnv2xGz0DD1lzbpYhMKhYmejCBkVlzgicckkYby9g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mrM84TfY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RcBaNlg+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA0EEC19423;
-	Mon,  9 Feb 2026 14:29:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mrM84TfY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC5A2C116C6;
+	Mon,  9 Feb 2026 14:29:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770647358;
-	bh=SYovAvvgYinzaZ3y0kXZDYc7VSBQ20M4LT0x02+cKMI=;
+	s=korg; t=1770647361;
+	bh=nRIHrOgYVnusXRl4m4vu9dtuOxbXoAjWzRH2ol0JrsQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RcBaNlg+RwIFSTOQziM7Xps1o7kVNJnX65MNDXIvdlXWypQmBz7AyT8Hpt34gpeUM
-	 1Ewr2lJZ35qWNFcF6krKF98iDoRuea+AfLpd2TWssjsyiTGgVXiYHqJPIKscro8M/F
-	 clayiRb2KcwA3g9bR+AeFAi42KssuOe3ZDSzTCDo=
+	b=mrM84TfYjXv1/X55Oz305eMplAXtPKV+tG5b7L+mzJcZpFMNc9ViG8VKPuIZubkAw
+	 yYU/7RwKW9Qfu5MZajY0Vdb69895IhQygBtcy9TzT5Ukj9kwtzY91RYKFzi29tiK2S
+	 PUd3Y4hwQzTD+ztGz2WXvfi6GBeKNmUzrStMNhyk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kwok Kin Ming <kenkinming2002@gmail.com>,
+	Even Xu <even.xu@intel.com>,
+	Rui Zhang <rui1.zhang@intel.com>,
 	Benjamin Tissoires <bentiss@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 076/175] HID: i2c-hid: fix potential buffer overflow in i2c_hid_get_report()
-Date: Mon,  9 Feb 2026 15:22:29 +0100
-Message-ID: <20260209142323.181554029@linuxfoundation.org>
+Subject: [PATCH 6.18 077/175] HID: Intel-thc-hid: Intel-thc: Add safety check for reading DMA buffer
+Date: Mon,  9 Feb 2026 15:22:30 +0100
+Message-ID: <20260209142323.216006334@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260209142320.474120190@linuxfoundation.org>
 References: <20260209142320.474120190@linuxfoundation.org>
@@ -51,44 +52,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kwok Kin Ming <kenkinming2002@gmail.com>
+From: Even Xu <even.xu@intel.com>
 
-[ Upstream commit 2497ff38c530b1af0df5130ca9f5ab22c5e92f29 ]
+[ Upstream commit a9a917998d172ec117f9e9de1919174153c0ace4 ]
 
-`i2c_hid_xfer` is used to read `recv_len + sizeof(__le16)` bytes of data
-into `ihid->rawbuf`.
+Add DMA buffer readiness check before reading DMA buffer to avoid
+unexpected NULL pointer accessing.
 
-The former can come from the userspace in the hidraw driver and is only
-bounded by HID_MAX_BUFFER_SIZE(16384) by default (unless we also set
-`max_buffer_size` field of `struct hid_ll_driver` which we do not).
-
-The latter has size determined at runtime by the maximum size of
-different report types you could receive on any particular device and
-can be a much smaller value.
-
-Fix this by truncating `recv_len` to `ihid->bufsize - sizeof(__le16)`.
-
-The impact is low since access to hidraw devices requires root.
-
-Signed-off-by: Kwok Kin Ming <kenkinming2002@gmail.com>
+Signed-off-by: Even Xu <even.xu@intel.com>
+Tested-by: Rui Zhang <rui1.zhang@intel.com>
 Signed-off-by: Benjamin Tissoires <bentiss@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hid/i2c-hid/i2c-hid-core.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/hid/intel-thc-hid/intel-thc/intel-thc-dma.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/drivers/hid/i2c-hid/i2c-hid-core.c b/drivers/hid/i2c-hid/i2c-hid-core.c
-index 63f46a2e57882..5a183af3d5c6a 100644
---- a/drivers/hid/i2c-hid/i2c-hid-core.c
-+++ b/drivers/hid/i2c-hid/i2c-hid-core.c
-@@ -286,6 +286,7 @@ static int i2c_hid_get_report(struct i2c_hid *ihid,
- 	 * In addition to report data device will supply data length
- 	 * in the first 2 bytes of the response, so adjust .
- 	 */
-+	recv_len = min(recv_len, ihid->bufsize - sizeof(__le16));
- 	error = i2c_hid_xfer(ihid, ihid->cmdbuf, length,
- 			     ihid->rawbuf, recv_len + sizeof(__le16));
- 	if (error) {
+diff --git a/drivers/hid/intel-thc-hid/intel-thc/intel-thc-dma.c b/drivers/hid/intel-thc-hid/intel-thc/intel-thc-dma.c
+index a0c368aa7979c..6ee675e0a7384 100644
+--- a/drivers/hid/intel-thc-hid/intel-thc/intel-thc-dma.c
++++ b/drivers/hid/intel-thc-hid/intel-thc/intel-thc-dma.c
+@@ -575,6 +575,11 @@ static int read_dma_buffer(struct thc_device *dev,
+ 		return -EINVAL;
+ 	}
+ 
++	if (!read_config->prd_tbls || !read_config->sgls[prd_table_index]) {
++		dev_err_once(dev->dev, "PRD tables are not ready yet\n");
++		return -EINVAL;
++	}
++
+ 	prd_tbl = &read_config->prd_tbls[prd_table_index];
+ 	mes_len = calc_message_len(prd_tbl, &nent);
+ 	if (mes_len > read_config->max_packet_size) {
 -- 
 2.51.0
 
