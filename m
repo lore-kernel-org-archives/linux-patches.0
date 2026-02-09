@@ -1,38 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB48023D291;
-	Mon,  9 Feb 2026 14:34:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4893F1AF0AF;
+	Mon,  9 Feb 2026 14:34:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770647681; cv=none; b=SRcXXggnRDA+N025B4SY4lv/ykOG8iIM94t9G2fBZ6lYIZk21buOQE0mpP96J4v7rpVcdzcU8A7/lq+jJyOWWjgvDY1i89/ULk5ZlniLqLNgJMFptojDm4juWNYb/fzipaSYh7vKqDnbc1MSQ7w8kDpWpoLCocYLy+Q9iVgyykQ=
+	t=1770647685; cv=none; b=H6DLq3iOfPdlgUKV3MLz62j+aMqUOe/7hG6TLbUIcpYZV9/ORo4qcZjhQBt4SSi62ctb87CTRhheZnV60di9GjJUFWPvVXbLY9z5gu/Y6g2e2qGsYuuI8wJGnEta5RIKrrejUlV5UyxqBF23N77eVyBmH2lCujDrEOJszB/R9gw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770647681; c=relaxed/simple;
-	bh=RPnyOV/+fimNFF/sn0kVX85AEnRptWW+hQwEFzN3nrE=;
+	s=arc-20240116; t=1770647685; c=relaxed/simple;
+	bh=hR29LyBVHcxXF/YwHgakP61LjpU9vTn5lRiHVDIy3sQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hJJIYn4TNqYrJchWl+gb5xngg5YAiHiiigCjA/EgaXPtBg2Y7v7U4w0eDEEFhiyPF4ENljq22id+mF4J/FP4/3FTaydx/HGsennGu1qlAYdZuZh3J0AyPBabvpNguqoN+ZP0gT+tfyg3qMhUNHbG3p2jWEDT0O2hfYNKosbwEqY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OpgTzjBi; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tE4ImZoaKPOgEKU8e5WekhUjgMl4FDFagFgtjS55WWng7JwtO8Lx64mh6eRsl9ezI0hZbLdWYjXrQFDFLDMtN0HIftWiRQ+j9Xym/iFZp/uCeUct4QMEf+BgF0iJP+lQ+cW9qy4TwOwORGTdODYbvBwZc1JLKQgDfwzWN1F1V/0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ms3+G8Ew; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OpgTzjBi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 58B30C116C6;
-	Mon,  9 Feb 2026 14:34:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ms3+G8Ew"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8083BC116C6;
+	Mon,  9 Feb 2026 14:34:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770647681;
-	bh=RPnyOV/+fimNFF/sn0kVX85AEnRptWW+hQwEFzN3nrE=;
+	s=korg; t=1770647684;
+	bh=hR29LyBVHcxXF/YwHgakP61LjpU9vTn5lRiHVDIy3sQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OpgTzjBiYQ5cTGui+4OqnxzA0kRtwOEe1lc+V/IlhenxaM1Uqdv+0Uq5EKN4ktWVL
-	 sC6shpLaSEuGKgbVasPZi4+qai4Yug7ccrqh8NDkyVux05hTpXFGQaxSR9F1A7gXFR
-	 11JqYjTy4O++I27tlrSA1SoQDM5lMpnofKjPEJd0=
+	b=ms3+G8EwZIccLNkvGXnFSco784Qv/T1FShKSZypht6dD3StueT+CWyXDRkUC79saD
+	 uqXDK0BvXmb6H3VX1nMfSuDvFX8sJI8ljZcmgIDl7SE3ex3T3Kj/960YRoqInXQP93
+	 4+eLR6pmDNuzJvE+gm8JnAyXt6cA4i4t3zMVjqPc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tim Guttzeit <t.guttzeit@tuxedocomputers.com>,
-	Werner Sembach <wse@tuxedocomputers.com>,
 	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 6.18 173/175] ALSA: hda/realtek: Really fix headset mic for TongFang X6AR55xU.
-Date: Mon,  9 Feb 2026 15:24:06 +0100
-Message-ID: <20260209142326.701123862@linuxfoundation.org>
+Subject: [PATCH 6.18 174/175] ALSA: usb-audio: Use the right limit for PCM OOB check
+Date: Mon,  9 Feb 2026 15:24:07 +0100
+Message-ID: <20260209142326.735964474@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260209142320.474120190@linuxfoundation.org>
 References: <20260209142320.474120190@linuxfoundation.org>
@@ -51,45 +49,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Werner Sembach <wse@tuxedocomputers.com>
+From: Takashi Iwai <tiwai@suse.de>
 
-commit 1aaedafb21f38cb872d44f7608b4828a1e14e795 upstream.
+commit 70b4db7d258118a7464f039112a74ddb49a95b06 upstream.
 
-Add a PCI quirk to enable microphone detection on the headphone jack of
-TongFang X6AR55xU devices.
+The recent fix commit for addressing the OOB access of PCM URB data
+buffer caused a regression on Behringer UMC2020HD device, resulting in
+choppy sound.  The fix used ep->max_urb_frames for the upper limit
+check, and this is no right value to be referred.
 
-The former quirk entry did not acomplish this and is removed.
+Use the actual buffer size (ctx->buffer_size) as the upper limit
+instead, which also avoids the regression on the device above.
 
-Fixes: b48fe9af1e60 ("ALSA: hda/realtek: Fix headset mic for TongFang X6AR55xU")
-Signed-off-by: Tim Guttzeit <t.guttzeit@tuxedocomputers.com>
-Signed-off-by: Werner Sembach <wse@tuxedocomputers.com>
-Link: https://patch.msgid.link/20260123221233.28273-1-wse@tuxedocomputers.com
+Fixes: ef5749ef8b30 ("ALSA: usb-audio: Prevent excessive number of frames")
+Link: https://bugzilla.kernel.org/show_bug.cgi?id=220997
+Link: https://patch.msgid.link/20260121082025.718748-1-tiwai@suse.de
 Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/hda/codecs/realtek/alc269.c |    5 +----
- 1 file changed, 1 insertion(+), 4 deletions(-)
+ sound/usb/pcm.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/sound/hda/codecs/realtek/alc269.c
-+++ b/sound/hda/codecs/realtek/alc269.c
-@@ -7232,6 +7232,7 @@ static const struct hda_quirk alc269_fix
- 	SND_PCI_QUIRK(0x1d05, 0x1409, "TongFang GMxIXxx", ALC2XX_FIXUP_HEADSET_MIC),
- 	SND_PCI_QUIRK(0x1d05, 0x300f, "TongFang X6AR5xxY", ALC2XX_FIXUP_HEADSET_MIC),
- 	SND_PCI_QUIRK(0x1d05, 0x3019, "TongFang X6FR5xxY", ALC2XX_FIXUP_HEADSET_MIC),
-+	SND_PCI_QUIRK(0x1d05, 0x3031, "TongFang X6AR55xU", ALC2XX_FIXUP_HEADSET_MIC),
- 	SND_PCI_QUIRK(0x1d17, 0x3288, "Haier Boyue G42", ALC269VC_FIXUP_ACER_VCOPPERBOX_PINS),
- 	SND_PCI_QUIRK(0x1d72, 0x1602, "RedmiBook", ALC255_FIXUP_XIAOMI_HEADSET_MIC),
- 	SND_PCI_QUIRK(0x1d72, 0x1701, "XiaomiNotebook Pro", ALC298_FIXUP_DELL1_MIC_NO_PRESENCE),
-@@ -7701,10 +7702,6 @@ static const struct snd_hda_pin_quirk al
- 		{0x12, 0x90a60140},
- 		{0x19, 0x04a11030},
- 		{0x21, 0x04211020}),
--	SND_HDA_PIN_QUIRK(0x10ec0274, 0x1d05, "TongFang", ALC274_FIXUP_HP_HEADSET_MIC,
--		{0x17, 0x90170110},
--		{0x19, 0x03a11030},
--		{0x21, 0x03211020}),
- 	SND_HDA_PIN_QUIRK(0x10ec0282, 0x1025, "Acer", ALC282_FIXUP_ACER_DISABLE_LINEOUT,
- 		ALC282_STANDARD_PINS,
- 		{0x12, 0x90a609c0},
+--- a/sound/usb/pcm.c
++++ b/sound/usb/pcm.c
+@@ -1553,7 +1553,8 @@ static int prepare_playback_urb(struct s
+ 
+ 		for (i = 0; i < ctx->packets; i++) {
+ 			counts = snd_usb_endpoint_next_packet_size(ep, ctx, i, avail);
+-			if (counts < 0 || frames + counts >= ep->max_urb_frames)
++			if (counts < 0 ||
++			    (frames + counts) * stride > ctx->buffer_size)
+ 				break;
+ 			/* set up descriptor */
+ 			urb->iso_frame_desc[i].offset = frames * stride;
 
 
