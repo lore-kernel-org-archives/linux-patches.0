@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD0782750E6;
-	Mon,  9 Feb 2026 14:55:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ABA5A2750E6;
+	Mon,  9 Feb 2026 14:55:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770648923; cv=none; b=rF4MbZrLftfeadDpte5yMWNj5hPhToYdf37+JdcYy+YX3eO+VvrXv6pqQ/UOLNJ4vtUgYMaX+gigN1AJcQsVif9itqvbdLtmTHTJQym4AcmGImBlob/rwffdFRBEz662X9vZ8jreXqVsItYZhQq+TkQfNOuv1r3ho6ColXfXVGA=
+	t=1770648927; cv=none; b=hgYV6Q1ZsGTNu80J8qh3TwiBvkm2P0lIpM3hIRP7mHZQ9qnjMD/rhLWZlU2CdQmp6PYz63TbbhI0u1Htl6Rpaxg0sKnjR/keoGg2tWa6YuIkV7YpKZNCLEAHH/h0RytUzmfpxTh38beScnRMHhC2gQgYXb87xTIpV3Dm1oW5qFY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770648923; c=relaxed/simple;
-	bh=iLnX3oiOPXvSCZhkCyr/GPOvvUeaTteS5RCoK/YAQxk=;
+	s=arc-20240116; t=1770648927; c=relaxed/simple;
+	bh=rskuROnKO+tMq1E5vqDHl9hktV50UEw0B+Jz2kjeKec=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lOSZYdrqrrn0HTFNGHoDyxdfsI3Du4u4YAfezF2uOYHOex+FYn0QwLCaAglo1ebQEMiK64di+aLUmfIiw7udlL1vKx8SLNSKW4VTlz5z+dKqOcHUFx9rpEen9H6icq/Frh+kuYPBXgqTwhSdiG+si6ipEGPQLc+StRdxPxiFZlc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=R3YpyudK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=j4lK4eMZ2jz4ObVZ++zPM33cKR3wXXtsl2rRzFSf2ERAascUJ1UTbaz9U/ivZXVDIoOwVFG0ksbvNXF6qhsGCAataItDD71Ld4G5EX+G7Jy6WhE+YCdP2ventGZAlsAmm6uP3sHBxUQMnH5CqdGY63FXqB7ig1q/eqYLYH+P2D4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gZc4klya; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="R3YpyudK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 07F56C116C6;
-	Mon,  9 Feb 2026 14:55:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gZc4klya"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 560BDC116C6;
+	Mon,  9 Feb 2026 14:55:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770648923;
-	bh=iLnX3oiOPXvSCZhkCyr/GPOvvUeaTteS5RCoK/YAQxk=;
+	s=korg; t=1770648927;
+	bh=rskuROnKO+tMq1E5vqDHl9hktV50UEw0B+Jz2kjeKec=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=R3YpyudKM02XlhXzDNGRIa183sYZbvMJ7VHUcbdw9gayw/zFv00cW7BMZkx6ZHAd8
-	 IV3TT5m+402r9DQ8iSTndWgxwO4b1Aun4SY7uA5MxJFnZ09TR3ArIbV06PVZbIyZt8
-	 F51YcBKPaFX2TFal7/s0lJ1QxU3XEwZD95ufW90I=
+	b=gZc4klya1QTFZ7lTmhOKusC3XqnPjpUS3R6eh8CvMOaiN3uI1HjfGMi+ryIlPmBb+
+	 3YJb1AdXH/9T8GN9xdx0gDUmNQaP6V+ou0LHek+Jryetmgn/AiVaafskVqwl5B76NH
+	 I7y0yAkqb0bkg1foowFDTa11E7i7Gsgs7bQ94iNM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrew Fasano <andrew.fasano@nist.gov>,
-	Florian Westphal <fw@strlen.de>,
+	Maurizio Lombardi <mlombard@redhat.com>,
+	Keith Busch <kbusch@kernel.org>,
+	Sagi Grimberg <sagi@grimberg.me>,
+	John Meneghini <jmeneghi@redhat.com>,
+	Christoph Hellwig <hch@lst.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 54/75] netfilter: nf_tables: fix inverted genmask check in nft_map_catchall_activate()
-Date: Mon,  9 Feb 2026 15:24:51 +0100
-Message-ID: <20260209142303.790939039@linuxfoundation.org>
+Subject: [PATCH 5.15 55/75] nvmet-tcp: add an helper to free the cmd buffers
+Date: Mon,  9 Feb 2026 15:24:52 +0100
+Message-ID: <20260209142303.826334918@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260209142301.830618238@linuxfoundation.org>
 References: <20260209142301.830618238@linuxfoundation.org>
@@ -51,69 +54,108 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andrew Fasano <andrew.fasano@nist.gov>
+From: Maurizio Lombardi <mlombard@redhat.com>
 
-[ Upstream commit f41c5d151078c5348271ffaf8e7410d96f2d82f8 ]
+[ Upstream commit 69b85e1f1d1d1e49601ec3e85d2031188657cca2 ]
 
-nft_map_catchall_activate() has an inverted element activity check
-compared to its non-catchall counterpart nft_mapelem_activate() and
-compared to what is logically required.
+Makes the code easier to read and to debug.
 
-nft_map_catchall_activate() is called from the abort path to re-activate
-catchall map elements that were deactivated during a failed transaction.
-It should skip elements that are already active (they don't need
-re-activation) and process elements that are inactive (they need to be
-restored). Instead, the current code does the opposite: it skips inactive
-elements and processes active ones.
+Sets the freed pointers to NULL, it will be useful
+when destroying the queues to understand if the commands'
+buffers have been released already or not.
 
-Compare the non-catchall activate callback, which is correct:
-
-  nft_mapelem_activate():
-    if (nft_set_elem_active(ext, iter->genmask))
-        return 0;   /* skip active, process inactive */
-
-With the buggy catchall version:
-
-  nft_map_catchall_activate():
-    if (!nft_set_elem_active(ext, genmask))
-        continue;   /* skip inactive, process active */
-
-The consequence is that when a DELSET operation is aborted,
-nft_setelem_data_activate() is never called for the catchall element.
-For NFT_GOTO verdict elements, this means nft_data_hold() is never
-called to restore the chain->use reference count. Each abort cycle
-permanently decrements chain->use. Once chain->use reaches zero,
-DELCHAIN succeeds and frees the chain while catchall verdict elements
-still reference it, resulting in a use-after-free.
-
-This is exploitable for local privilege escalation from an unprivileged
-user via user namespaces + nftables on distributions that enable
-CONFIG_USER_NS and CONFIG_NF_TABLES.
-
-Fix by removing the negation so the check matches nft_mapelem_activate():
-skip active elements, process inactive ones.
-
-Fixes: 628bd3e49cba ("netfilter: nf_tables: drop map element references from preparation phase")
-Signed-off-by: Andrew Fasano <andrew.fasano@nist.gov>
-Signed-off-by: Florian Westphal <fw@strlen.de>
+Signed-off-by: Maurizio Lombardi <mlombard@redhat.com>
+Reviewed-by: Keith Busch <kbusch@kernel.org>
+Reviewed-by: Sagi Grimberg <sagi@grimberg.me>
+Reviewed-by: John Meneghini <jmeneghi@redhat.com>
+Signed-off-by: Christoph Hellwig <hch@lst.de>
+Stable-dep-of: 52a0a9854934 ("nvmet-tcp: add bounds checks in nvmet_tcp_build_pdu_iovec")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nf_tables_api.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/nvme/target/tcp.c | 28 +++++++++++++++++++---------
+ 1 file changed, 19 insertions(+), 9 deletions(-)
 
-diff --git a/net/netfilter/nf_tables_api.c b/net/netfilter/nf_tables_api.c
-index e37d2ef9538e5..cbec5fc23719f 100644
---- a/net/netfilter/nf_tables_api.c
-+++ b/net/netfilter/nf_tables_api.c
-@@ -5141,7 +5141,7 @@ static void nft_map_catchall_activate(const struct nft_ctx *ctx,
+diff --git a/drivers/nvme/target/tcp.c b/drivers/nvme/target/tcp.c
+index 051798ef7431c..7eb4d06f12294 100644
+--- a/drivers/nvme/target/tcp.c
++++ b/drivers/nvme/target/tcp.c
+@@ -167,6 +167,8 @@ static struct workqueue_struct *nvmet_tcp_wq;
+ static const struct nvmet_fabrics_ops nvmet_tcp_ops;
+ static void nvmet_tcp_free_cmd(struct nvmet_tcp_cmd *c);
+ static void nvmet_tcp_finish_cmd(struct nvmet_tcp_cmd *cmd);
++static void nvmet_tcp_free_cmd_buffers(struct nvmet_tcp_cmd *cmd);
++static void nvmet_tcp_unmap_pdu_iovec(struct nvmet_tcp_cmd *cmd);
  
- 	list_for_each_entry(catchall, &set->catchall_list, list) {
- 		ext = nft_set_elem_ext(set, catchall->elem);
--		if (!nft_set_elem_active(ext, genmask))
-+		if (nft_set_elem_active(ext, genmask))
- 			continue;
+ static inline u16 nvmet_tcp_cmd_tag(struct nvmet_tcp_queue *queue,
+ 		struct nvmet_tcp_cmd *cmd)
+@@ -298,6 +300,16 @@ static int nvmet_tcp_check_ddgst(struct nvmet_tcp_queue *queue, void *pdu)
+ 	return 0;
+ }
  
- 		elem.priv = catchall->elem;
++static void nvmet_tcp_free_cmd_buffers(struct nvmet_tcp_cmd *cmd)
++{
++	WARN_ON(unlikely(cmd->nr_mapped > 0));
++
++	kfree(cmd->iov);
++	sgl_free(cmd->req.sg);
++	cmd->iov = NULL;
++	cmd->req.sg = NULL;
++}
++
+ static void nvmet_tcp_unmap_pdu_iovec(struct nvmet_tcp_cmd *cmd)
+ {
+ 	struct scatterlist *sg;
+@@ -307,6 +319,8 @@ static void nvmet_tcp_unmap_pdu_iovec(struct nvmet_tcp_cmd *cmd)
+ 
+ 	for (i = 0; i < cmd->nr_mapped; i++)
+ 		kunmap(sg_page(&sg[i]));
++
++	cmd->nr_mapped = 0;
+ }
+ 
+ static void nvmet_tcp_map_pdu_iovec(struct nvmet_tcp_cmd *cmd)
+@@ -389,7 +403,7 @@ static int nvmet_tcp_map_data(struct nvmet_tcp_cmd *cmd)
+ 
+ 	return 0;
+ err:
+-	sgl_free(cmd->req.sg);
++	nvmet_tcp_free_cmd_buffers(cmd);
+ 	return NVME_SC_INTERNAL;
+ }
+ 
+@@ -640,10 +654,8 @@ static int nvmet_try_send_data(struct nvmet_tcp_cmd *cmd, bool last_in_batch)
+ 		}
+ 	}
+ 
+-	if (queue->nvme_sq.sqhd_disabled) {
+-		kfree(cmd->iov);
+-		sgl_free(cmd->req.sg);
+-	}
++	if (queue->nvme_sq.sqhd_disabled)
++		nvmet_tcp_free_cmd_buffers(cmd);
+ 
+ 	return 1;
+ 
+@@ -672,8 +684,7 @@ static int nvmet_try_send_response(struct nvmet_tcp_cmd *cmd,
+ 	if (left)
+ 		return -EAGAIN;
+ 
+-	kfree(cmd->iov);
+-	sgl_free(cmd->req.sg);
++	nvmet_tcp_free_cmd_buffers(cmd);
+ 	cmd->queue->snd_cmd = NULL;
+ 	nvmet_tcp_put_cmd(cmd);
+ 	return 1;
+@@ -1452,8 +1463,7 @@ static void nvmet_tcp_finish_cmd(struct nvmet_tcp_cmd *cmd)
+ {
+ 	nvmet_req_uninit(&cmd->req);
+ 	nvmet_tcp_unmap_pdu_iovec(cmd);
+-	kfree(cmd->iov);
+-	sgl_free(cmd->req.sg);
++	nvmet_tcp_free_cmd_buffers(cmd);
+ }
+ 
+ static void nvmet_tcp_uninit_data_in_cmds(struct nvmet_tcp_queue *queue)
 -- 
 2.51.0
 
