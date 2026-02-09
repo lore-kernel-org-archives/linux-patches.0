@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E53023793BF;
-	Mon,  9 Feb 2026 14:41:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0FDF83793BF;
+	Mon,  9 Feb 2026 14:41:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770648063; cv=none; b=J/vxpq/bbrUVaMQiSXD1Eva2TL6Bhe+IVqDIzPhYDpeAMUWQWhnrIJGPCImQLSTMVDEGyERyRN/VbauJAv93aUigDZaZwshF94eRjvI60sagw56TB5T80sSpr1gYBxpW+SFxk7fOPg5QAQbSLzEcegYNArycS4ytIpJZ7tmgW10=
+	t=1770648066; cv=none; b=pOX83ozkVgO4d9i2FD8KL+Kch9H353NtKZH2qRdDOSPAYekPX3QCmRSzj9N4T66OomOpRN6PCEwD6NJCTxorJY/R0QahKPwzEdisumo6F0lKGdPb8Bl/e7Tr/VBVpZiykAG6SBcXZyPp5cQ+BKdkCYmkhNE1KevC4kawD8oTvzM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770648063; c=relaxed/simple;
-	bh=xJsx0CLiG5GPzhzKjoYx2b8ulVioLB7bQ0v8pgNvDU8=;
+	s=arc-20240116; t=1770648066; c=relaxed/simple;
+	bh=cgiFjmCEoRb1GALlEJw1MSaR4QzciyAsO/QEjKobHfg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CPRu2+q1DElFClpvlFCLNPJcr02Kh3rjBVDR7Kkf3IXbOYc8zeeWoJmNXo1KnWAGXBi76voi9xJU10rmYE7TR4QJ13su0O5wSQorYmWmwukbvNwcq8BaolJGzUb/HsxPJg6FxFlKsLl99rwzevnQEGTz9IqnCfE3pjibApn+Owc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dAancYoX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=srE0KcsWDIOyFpBVC0f3fgD2WfdJyR0nbl+2kNaKHmRzKI8qB1/otpUp1bk5dRGyVo5bv7N4M3AsV+Cu73iKeOq8UXPgJEnFoiFAaoIdsNpqgn1YGRfWK3uYz2CcCHFbj7srrPdWlGMai3jUTebrjU+XWHofyjShqIsMkIe2w8s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bKVIs9+/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dAancYoX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E8A97C116C6;
-	Mon,  9 Feb 2026 14:41:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bKVIs9+/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5BDB2C116C6;
+	Mon,  9 Feb 2026 14:41:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770648062;
-	bh=xJsx0CLiG5GPzhzKjoYx2b8ulVioLB7bQ0v8pgNvDU8=;
+	s=korg; t=1770648065;
+	bh=cgiFjmCEoRb1GALlEJw1MSaR4QzciyAsO/QEjKobHfg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dAancYoX5y8H+cAr9J44UNDV8X3SgpZstWeRiqNI7vIiMnHssLDkKUdVPO5M5LHUx
-	 neXZnD9CV4wAszrGYTcMI1xUXf49hnuU3LM1cqPk/GhRVysKOcKPoe7A7H5Ywtc+Nu
-	 7hQE7ty5BuvY4fQtR0FdwoTQ4r1yvYPAN4h88boI=
+	b=bKVIs9+/FQU8OCyljvAHEp+rdeUVFS/ivBZK4OVHZNL3FSJ/TTIegK5gqQj9/DVNi
+	 yD4d+8xwi/m+PNfEwl7VXAEzOLavIp7Hm5VBKk7hkquRhEY9BLYNnHG/GI6LovXe/H
+	 aKXy90PoV62P2F11x/EfLd/66oUybfuJyB53MBb0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Breno Leitao <leitao@debian.org>,
+	Felix Gu <ustc.gu@gmail.com>,
 	Jon Hunter <jonathanh@nvidia.com>,
-	Thierry Reding <treding@nvidia.com>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 110/113] spi: tegra210-quad: Protect curr_xfer clearing in tegra_qspi_non_combined_seq_xfer
-Date: Mon,  9 Feb 2026 15:24:19 +0100
-Message-ID: <20260209142314.123101925@linuxfoundation.org>
+Subject: [PATCH 6.12 111/113] spi: tegra: Fix a memory leak in tegra_slink_probe()
+Date: Mon,  9 Feb 2026 15:24:20 +0100
+Message-ID: <20260209142314.159100160@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260209142310.204833231@linuxfoundation.org>
 References: <20260209142310.204833231@linuxfoundation.org>
@@ -53,48 +52,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Breno Leitao <leitao@debian.org>
+From: Felix Gu <ustc.gu@gmail.com>
 
-[ Upstream commit 6d7723e8161f3c3f14125557e19dd080e9d882be ]
+[ Upstream commit 41d9a6795b95d6ea28439ac1e9ce8c95bbca20fc ]
 
-Protect the curr_xfer clearing in tegra_qspi_non_combined_seq_xfer()
-with the spinlock to prevent a race with the interrupt handler that
-reads this field to check if a transfer is in progress.
+In tegra_slink_probe(), when platform_get_irq() fails, it directly
+returns from the function with an error code, which causes a memory leak.
 
-Fixes: b4e002d8a7ce ("spi: tegra210-quad: Fix timeout handling")
-Signed-off-by: Breno Leitao <leitao@debian.org>
-Tested-by: Jon Hunter <jonathanh@nvidia.com>
-Acked-by: Jon Hunter <jonathanh@nvidia.com>
-Acked-by: Thierry Reding <treding@nvidia.com>
-Link: https://patch.msgid.link/20260126-tegra_xfer-v2-5-6d2115e4f387@debian.org
+Replace it with a goto label to ensure proper cleanup.
+
+Fixes: eb9913b511f1 ("spi: tegra: Fix missing IRQ check in tegra_slink_probe()")
+Signed-off-by: Felix Gu <ustc.gu@gmail.com>
+Reviewed-by: Jon Hunter <jonathanh@nvidia.com>
+Link: https://patch.msgid.link/20260202-slink-v1-1-eac50433a6f9@gmail.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/spi/spi-tegra210-quad.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/spi/spi-tegra20-slink.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/spi/spi-tegra210-quad.c b/drivers/spi/spi-tegra210-quad.c
-index 28552a8f27c14..edc9d400728a1 100644
---- a/drivers/spi/spi-tegra210-quad.c
-+++ b/drivers/spi/spi-tegra210-quad.c
-@@ -1200,6 +1200,7 @@ static int tegra_qspi_non_combined_seq_xfer(struct tegra_qspi *tqspi,
- 	struct spi_transfer *transfer;
- 	bool is_first_msg = true;
- 	int ret = 0, val = 0;
-+	unsigned long flags;
+diff --git a/drivers/spi/spi-tegra20-slink.c b/drivers/spi/spi-tegra20-slink.c
+index ed1393d159aee..6ea5135915884 100644
+--- a/drivers/spi/spi-tegra20-slink.c
++++ b/drivers/spi/spi-tegra20-slink.c
+@@ -1086,8 +1086,10 @@ static int tegra_slink_probe(struct platform_device *pdev)
+ 	reset_control_deassert(tspi->rst);
  
- 	msg->status = 0;
- 	msg->actual_length = 0;
-@@ -1271,7 +1272,9 @@ static int tegra_qspi_non_combined_seq_xfer(struct tegra_qspi *tqspi,
- 		msg->actual_length += xfer->len + dummy_bytes;
- 
- complete_xfer:
-+		spin_lock_irqsave(&tqspi->lock, flags);
- 		tqspi->curr_xfer = NULL;
-+		spin_unlock_irqrestore(&tqspi->lock, flags);
- 
- 		if (ret < 0) {
- 			tegra_qspi_transfer_end(spi);
+ 	spi_irq = platform_get_irq(pdev, 0);
+-	if (spi_irq < 0)
+-		return spi_irq;
++	if (spi_irq < 0) {
++		ret = spi_irq;
++		goto exit_pm_put;
++	}
+ 	tspi->irq = spi_irq;
+ 	ret = request_threaded_irq(tspi->irq, tegra_slink_isr,
+ 				   tegra_slink_isr_thread, IRQF_ONESHOT,
 -- 
 2.51.0
 
