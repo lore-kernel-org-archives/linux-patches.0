@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24DB3378D84;
-	Mon,  9 Feb 2026 14:44:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC1343793BF;
+	Mon,  9 Feb 2026 14:44:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770648241; cv=none; b=FQGZIwjBtALvA7qToiyG900piRw40w97dZ+tgJLoLO9Miafza5/WfiCVNoWJ1FnPCC4YsfZ2VEXuitvsnTlQPxZQ44J1L//Q8trdXuwHawD7KM4/+Oe56Bp7Hd2fmCrntvLa+37/86iBUjyOIPvP5KqI6iGvp9mLSuGpHrC18bE=
+	t=1770648244; cv=none; b=Vpm1HmnczZwZYKg5lRV4FV2thCTpyzlkSfN75tGDaebRFTaecO7Bmeu0aK4Yc3KePWs1guchhXDiqCUtrxvraWJH2+lUH+bo+Lg1Wfru3fGV17Vdn5OUidNQDDX3vXnAOS+lep7o/CNTE2KERMpLfV4NmLiFTzbQJnc2GY/2n9o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770648241; c=relaxed/simple;
-	bh=TLaVPZADpkoJXlKoDkpRhoJuXAyZzGSxePLmrb45pCU=;
+	s=arc-20240116; t=1770648244; c=relaxed/simple;
+	bh=ZbryV2NngdVfJo7fMO/Suo1yi4Sn4SVEDz4moKcb8d8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=G5cXVHLb7vrghQtPrnkquEgqul7oJvYp7S9zFHbUcL3mJqE0AGETxvhB9Ck208wpZ8DuNsTml01hN8s4Nv3ghWyK1J1JpmFEExNtropNpTa/ZQVrQdQZC6qQq9zUrW84MpLj0dIsNfo7dMpGP+i/lwE9AqLUAU+Npcc0bl8x40A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hrok/WqO; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HmZFewT7rSHgUBA1zV7pMEFcOybHDgAxLeYRh7o6upbSMZSpTUZYl2oooJolmmRsjc/hKRjAeFY3Wt4kGKmQEOJ4bUAMVqPuavS1bV+jSLF81v5l/gIlTKdd4Bn4UeI3EcFHADTzLJjDP30X7904ip49UIRUq+RP+/JC9VbGsG4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=x5jGHdT3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hrok/WqO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 57CCBC116C6;
-	Mon,  9 Feb 2026 14:44:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="x5jGHdT3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0BFDAC116C6;
+	Mon,  9 Feb 2026 14:44:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770648241;
-	bh=TLaVPZADpkoJXlKoDkpRhoJuXAyZzGSxePLmrb45pCU=;
+	s=korg; t=1770648244;
+	bh=ZbryV2NngdVfJo7fMO/Suo1yi4Sn4SVEDz4moKcb8d8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hrok/WqObPy2YFTOBUZ5UZpZanB1xvQ2pdYbjIyXK9HNG32wviF6TEoahiW5xnDHY
-	 mPvkpO/ZdSw4RdxYz+snteQsinD1uXpjW6pOtXSxeaPMvU54MtolpfflKFoBXBTYmc
-	 CryMtpODDcz6ePewcP+yMcgnPsxdNJuvsECxalII=
+	b=x5jGHdT3bkD8wUE0hBeQpo3YKI1jZa3oEaKcq05j8XllH40kA10mFwn07BRMyy9gu
+	 y6L4fOK4Zb8qZRyz9FKxfRYc7yuAT112GInax5dyGDOU2EOei023ZT8dYBXBNMDffD
+	 23anpWb0rDzfIzU8JgrRtVW/7H2N9tPocyUuw/aw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Simon Horman <horms@kernel.org>,
 	Zilin Guan <zilin@seu.edu.cn>,
 	Kory Maincent <kory.maincent@bootlin.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 49/69] net: liquidio: Initialize netdev pointer before queue setup
-Date: Mon,  9 Feb 2026 15:24:17 +0100
-Message-ID: <20260209142303.688223412@linuxfoundation.org>
+Subject: [PATCH 6.1 50/69] net: liquidio: Fix off-by-one error in PF setup_nic_devices() cleanup
+Date: Mon,  9 Feb 2026 15:24:18 +0100
+Message-ID: <20260209142303.723611050@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260209142301.913348974@linuxfoundation.org>
 References: <20260209142301.913348974@linuxfoundation.org>
@@ -54,94 +55,57 @@ Content-Transfer-Encoding: 8bit
 
 From: Zilin Guan <zilin@seu.edu.cn>
 
-[ Upstream commit 926ede0c85e1e57c97d64d9612455267d597bb2c ]
+[ Upstream commit 8558aef4e8a1a83049ab906d21d391093cfa7e7f ]
 
-In setup_nic_devices(), the netdev is allocated using alloc_etherdev_mq().
-However, the pointer to this structure is stored in oct->props[i].netdev
-only after the calls to netif_set_real_num_rx_queues() and
-netif_set_real_num_tx_queues().
+In setup_nic_devices(), the initialization loop jumps to the label
+setup_nic_dev_free on failure. The current cleanup loop while(i--)
+skip the failing index i, causing a memory leak.
 
-If either of these functions fails, setup_nic_devices() returns an error
-without freeing the allocated netdev. Since oct->props[i].netdev is still
-NULL at this point, the cleanup function liquidio_destroy_nic_device()
-will fail to find and free the netdev, resulting in a memory leak.
+Fix this by changing the loop to iterate from the current index i
+down to 0.
 
-Fix this by initializing oct->props[i].netdev before calling the queue
-setup functions. This ensures that the netdev is properly accessible for
-cleanup in case of errors.
+Also, decrement i in the devlink_alloc failure path to point to the
+last successfully allocated index.
 
-Compile tested only. Issue found using a prototype static analysis tool
-and code review.
+Compile tested only. Issue found using code review.
 
-Fixes: c33c997346c3 ("liquidio: enhanced ethtool --set-channels feature")
+Fixes: f21fb3ed364b ("Add support of Cavium Liquidio ethernet adapters")
+Suggested-by: Simon Horman <horms@kernel.org>
 Signed-off-by: Zilin Guan <zilin@seu.edu.cn>
 Reviewed-by: Kory Maincent <kory.maincent@bootlin.com>
-Link: https://patch.msgid.link/20260128154440.278369-2-zilin@seu.edu.cn
+Link: https://patch.msgid.link/20260128154440.278369-3-zilin@seu.edu.cn
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../net/ethernet/cavium/liquidio/lio_main.c   | 34 +++++++++----------
- 1 file changed, 17 insertions(+), 17 deletions(-)
+ drivers/net/ethernet/cavium/liquidio/lio_main.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
 diff --git a/drivers/net/ethernet/cavium/liquidio/lio_main.c b/drivers/net/ethernet/cavium/liquidio/lio_main.c
-index fd7c80edb6e8a..f27393c84ba48 100644
+index f27393c84ba48..131996fd5406f 100644
 --- a/drivers/net/ethernet/cavium/liquidio/lio_main.c
 +++ b/drivers/net/ethernet/cavium/liquidio/lio_main.c
-@@ -3525,6 +3525,23 @@ static int setup_nic_devices(struct octeon_device *octeon_dev)
- 		 */
- 		netdev->netdev_ops = &lionetdevops;
+@@ -3770,6 +3770,7 @@ static int setup_nic_devices(struct octeon_device *octeon_dev)
+ 	if (!devlink) {
+ 		device_unlock(&octeon_dev->pci_dev->dev);
+ 		dev_err(&octeon_dev->pci_dev->dev, "devlink alloc failed\n");
++		i--;
+ 		goto setup_nic_dev_free;
+ 	}
  
-+		lio = GET_LIO(netdev);
-+
-+		memset(lio, 0, sizeof(struct lio));
-+
-+		lio->ifidx = ifidx_or_pfnum;
-+
-+		props = &octeon_dev->props[i];
-+		props->gmxport = resp->cfg_info.linfo.gmxport;
-+		props->netdev = netdev;
-+
-+		/* Point to the  properties for octeon device to which this
-+		 * interface belongs.
-+		 */
-+		lio->oct_dev = octeon_dev;
-+		lio->octprops = props;
-+		lio->netdev = netdev;
-+
- 		retval = netif_set_real_num_rx_queues(netdev, num_oqueues);
- 		if (retval) {
- 			dev_err(&octeon_dev->pci_dev->dev,
-@@ -3541,16 +3558,6 @@ static int setup_nic_devices(struct octeon_device *octeon_dev)
- 			goto setup_nic_dev_free;
- 		}
+@@ -3785,11 +3786,11 @@ static int setup_nic_devices(struct octeon_device *octeon_dev)
  
--		lio = GET_LIO(netdev);
--
--		memset(lio, 0, sizeof(struct lio));
--
--		lio->ifidx = ifidx_or_pfnum;
--
--		props = &octeon_dev->props[i];
--		props->gmxport = resp->cfg_info.linfo.gmxport;
--		props->netdev = netdev;
--
- 		lio->linfo.num_rxpciq = num_oqueues;
- 		lio->linfo.num_txpciq = num_iqueues;
- 		for (j = 0; j < num_oqueues; j++) {
-@@ -3616,13 +3623,6 @@ static int setup_nic_devices(struct octeon_device *octeon_dev)
- 		netdev->min_mtu = LIO_MIN_MTU_SIZE;
- 		netdev->max_mtu = LIO_MAX_MTU_SIZE;
+ setup_nic_dev_free:
  
--		/* Point to the  properties for octeon device to which this
--		 * interface belongs.
--		 */
--		lio->oct_dev = octeon_dev;
--		lio->octprops = props;
--		lio->netdev = netdev;
--
- 		dev_dbg(&octeon_dev->pci_dev->dev,
- 			"if%d gmx: %d hw_addr: 0x%llx\n", i,
- 			lio->linfo.gmxport, CVM_CAST64(lio->linfo.hw_addr));
+-	while (i--) {
++	do {
+ 		dev_err(&octeon_dev->pci_dev->dev,
+ 			"NIC ifidx:%d Setup failed\n", i);
+ 		liquidio_destroy_nic_device(octeon_dev, i);
+-	}
++	} while (i--);
+ 
+ setup_nic_dev_done:
+ 
 -- 
 2.51.0
 
