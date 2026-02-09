@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 148391AF0AF;
-	Mon,  9 Feb 2026 14:33:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8621E1AF0AF;
+	Mon,  9 Feb 2026 14:33:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770647632; cv=none; b=mFfto+B8uSwnblIkCvLWjq3sRHrv5ATaBSpHIzcledM9IvgDCRU2CHgQeqTJBU0mkNbFKESd96hiVRCLGhbK+k0qkOAHePzbKit9iIyYdDSSn9gR6O9/1TBJJyn6HfCXsEplDK9ocDNSewohTo+vkiRJKX4Ptj+nzgkZgmzwqPA=
+	t=1770647635; cv=none; b=WIaLVmy22Qb4vpoxPJ1x7Qxck0lYMzpztW96ieBbou8oLCiBQcUeh766jRwg1bmMbjYldAG58Kf5MtaqkR+v0b1y6goUggP5/A684AC3D0f1TtbKcp8uI9dGYYSmJAlD/m9TJbZFxqFNb4koxtswoeBJtEQyPfQ4u1HgXlV2r7w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770647632; c=relaxed/simple;
-	bh=5oNqdpxw1khcCzu8MmUnwSzgd2rGu54I7EdKP5uYO7Q=;
+	s=arc-20240116; t=1770647635; c=relaxed/simple;
+	bh=MqN7gF7ODpxYtvkd8zR1lJ5wzwAnwb3Wwrfcyp6oH3s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rQANdAV+MUIibh3/47rxpkZzoMRufInU8tQR4wFLcBExCp/suSwE+0H4VWhq7bsKn6Lv9SGJsxyYspbSdKl83Tj8iH9ah+BbBcq4LOo3qLwC/zvch7I2NtSETUGFMhU3bmYpJb5t3bH5M53R12qj1GX715F5703MoGn/5oSts6U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=M2xLKR8E; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=V/0ZiK1wr/4eljs3c3kLzrzujgThrCtvY1s+11fCfF2/5qq68/W8Rv14/utwePANjWvh2+XwPPcMCSejONznCReBMvMR/1P69qPRVz/hG1ABnY64XaiRoWVb1qsMHbrgZgAJQxtOpLN0f8M46bHVfs62At+LOi39t1SNkzYELtI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JxudLwuo; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="M2xLKR8E"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 829EFC116C6;
-	Mon,  9 Feb 2026 14:33:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JxudLwuo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED6D3C116C6;
+	Mon,  9 Feb 2026 14:33:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770647632;
-	bh=5oNqdpxw1khcCzu8MmUnwSzgd2rGu54I7EdKP5uYO7Q=;
+	s=korg; t=1770647635;
+	bh=MqN7gF7ODpxYtvkd8zR1lJ5wzwAnwb3Wwrfcyp6oH3s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=M2xLKR8EdshDVzi1A1V0wDb0p8g9KiG2ebCzK398NUK+Sh5H90qZhvy8rJUHv4Wqt
-	 Fo8bQ3mfhE9WVzaIasgf2wZhkJx8g5FNVRtmwbYWojSEJRyfMQnb1QewSjNpw6DI+1
-	 yL7ZDljMNdOV4dJpawu9FlPRb1ZSMzptHXv9gILM=
+	b=JxudLwuoVhXXKUMPXJlLnt/lQVbsE3HB8RNlM9JeQ2ZjrMJvQMmO+V4QL2w/aol16
+	 VvLQOlvTyJcf0VkVyt2zXQoa7Ve+it1MjXiB9P9w3OLvbwvz3/+ApRlSJa00RLv/YC
+	 rhX4BlmXozppP7jIzpSjLVQ5RIRdMuqJWCkjLj+0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pradeep P V K <pradeep.pragallapati@oss.qualcomm.com>,
-	Christoph Hellwig <hch@lst.de>,
-	Keith Busch <kbusch@kernel.org>,
+	syzbot+cb809def1baaac68ab92@syzkaller.appspotmail.com,
+	Shigeru Yoshida <syoshida@redhat.com>,
+	Fernando Fernandez Mancera <fmancera@suse.de>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 156/175] nvme-pci: handle changing device dma map requirements
-Date: Mon,  9 Feb 2026 15:23:49 +0100
-Message-ID: <20260209142326.106854609@linuxfoundation.org>
+Subject: [PATCH 6.18 157/175] ipv6: Fix ECMP sibling count mismatch when clearing RTF_ADDRCONF
+Date: Mon,  9 Feb 2026 15:23:50 +0100
+Message-ID: <20260209142326.143435291@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260209142320.474120190@linuxfoundation.org>
 References: <20260209142320.474120190@linuxfoundation.org>
@@ -52,105 +53,91 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Keith Busch <kbusch@kernel.org>
+From: Shigeru Yoshida <syoshida@redhat.com>
 
-[ Upstream commit 071be3b0b6575d45be9df9c5b612f5882bfc5e88 ]
+[ Upstream commit bbf4a17ad9ffc4e3d7ec13d73ecd59dea149ed25 ]
 
-The initial state of dma_needs_unmap may be false, but change to true
-while mapping the data iterator. Enabling swiotlb is one such case that
-can change the result. The nvme driver needs to save the mapped dma
-vectors to be unmapped later, so allocate as needed during iteration
-rather than assume it was always allocated at the beginning. This fixes
-a NULL dereference from accessing an uninitialized dma_vecs when the
-device dma unmapping requirements change mid-iteration.
+syzbot reported a kernel BUG in fib6_add_rt2node() when adding an IPv6
+route. [0]
 
-Fixes: b8b7570a7ec8 ("nvme-pci: fix dma unmapping when using PRPs and not using the IOVA mapping")
-Link: https://lore.kernel.org/linux-nvme/20260202125738.1194899-1-pradeep.pragallapati@oss.qualcomm.com/
-Reported-by: Pradeep P V K <pradeep.pragallapati@oss.qualcomm.com>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Signed-off-by: Keith Busch <kbusch@kernel.org>
+Commit f72514b3c569 ("ipv6: clear RA flags when adding a static
+route") introduced logic to clear RTF_ADDRCONF from existing routes
+when a static route with the same nexthop is added. However, this
+causes a problem when the existing route has a gateway.
+
+When RTF_ADDRCONF is cleared from a route that has a gateway, that
+route becomes eligible for ECMP, i.e. rt6_qualify_for_ecmp() returns
+true. The issue is that this route was never added to the
+fib6_siblings list.
+
+This leads to a mismatch between the following counts:
+
+- The sibling count computed by iterating fib6_next chain, which
+  includes the newly ECMP-eligible route
+
+- The actual siblings in fib6_siblings list, which does not include
+  that route
+
+When a subsequent ECMP route is added, fib6_add_rt2node() hits
+BUG_ON(sibling->fib6_nsiblings != rt->fib6_nsiblings) because the
+counts don't match.
+
+Fix this by only clearing RTF_ADDRCONF when the existing route does
+not have a gateway. Routes without a gateway cannot qualify for ECMP
+anyway (rt6_qualify_for_ecmp() requires fib_nh_gw_family), so clearing
+RTF_ADDRCONF on them is safe and matches the original intent of the
+commit.
+
+[0]:
+kernel BUG at net/ipv6/ip6_fib.c:1217!
+Oops: invalid opcode: 0000 [#1] SMP KASAN PTI
+CPU: 0 UID: 0 PID: 6010 Comm: syz.0.17 Not tainted syzkaller #0 PREEMPT(full)
+Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 10/25/2025
+RIP: 0010:fib6_add_rt2node+0x3433/0x3470 net/ipv6/ip6_fib.c:1217
+[...]
+Call Trace:
+ <TASK>
+ fib6_add+0x8da/0x18a0 net/ipv6/ip6_fib.c:1532
+ __ip6_ins_rt net/ipv6/route.c:1351 [inline]
+ ip6_route_add+0xde/0x1b0 net/ipv6/route.c:3946
+ ipv6_route_ioctl+0x35c/0x480 net/ipv6/route.c:4571
+ inet6_ioctl+0x219/0x280 net/ipv6/af_inet6.c:577
+ sock_do_ioctl+0xdc/0x300 net/socket.c:1245
+ sock_ioctl+0x576/0x790 net/socket.c:1366
+ vfs_ioctl fs/ioctl.c:51 [inline]
+ __do_sys_ioctl fs/ioctl.c:597 [inline]
+ __se_sys_ioctl+0xfc/0x170 fs/ioctl.c:583
+ do_syscall_x64 arch/x86/entry/syscall_64.c:63 [inline]
+ do_syscall_64+0xfa/0xf80 arch/x86/entry/syscall_64.c:94
+ entry_SYSCALL_64_after_hwframe+0x77/0x7f
+
+Fixes: f72514b3c569 ("ipv6: clear RA flags when adding a static route")
+Reported-by: syzbot+cb809def1baaac68ab92@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=cb809def1baaac68ab92
+Tested-by: syzbot+cb809def1baaac68ab92@syzkaller.appspotmail.com
+Signed-off-by: Shigeru Yoshida <syoshida@redhat.com>
+Reviewed-by: Fernando Fernandez Mancera <fmancera@suse.de>
+Link: https://patch.msgid.link/20260204095837.1285552-1-syoshida@redhat.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/host/pci.c | 45 +++++++++++++++++++++++++++--------------
- 1 file changed, 30 insertions(+), 15 deletions(-)
+ net/ipv6/ip6_fib.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/nvme/host/pci.c b/drivers/nvme/host/pci.c
-index 28f638413e122..391c854428d3e 100644
---- a/drivers/nvme/host/pci.c
-+++ b/drivers/nvme/host/pci.c
-@@ -771,6 +771,32 @@ static void nvme_unmap_data(struct request *req)
- 		nvme_free_descriptors(req);
- }
- 
-+static bool nvme_pci_prp_save_mapping(struct request *req,
-+				      struct device *dma_dev,
-+				      struct blk_dma_iter *iter)
-+{
-+	struct nvme_iod *iod = blk_mq_rq_to_pdu(req);
-+
-+	if (dma_use_iova(&iod->dma_state) || !dma_need_unmap(dma_dev))
-+		return true;
-+
-+	if (!iod->nr_dma_vecs) {
-+		struct nvme_queue *nvmeq = req->mq_hctx->driver_data;
-+
-+		iod->dma_vecs = mempool_alloc(nvmeq->dev->dmavec_mempool,
-+				GFP_ATOMIC);
-+		if (!iod->dma_vecs) {
-+			iter->status = BLK_STS_RESOURCE;
-+			return false;
-+		}
-+	}
-+
-+	iod->dma_vecs[iod->nr_dma_vecs].addr = iter->addr;
-+	iod->dma_vecs[iod->nr_dma_vecs].len = iter->len;
-+	iod->nr_dma_vecs++;
-+	return true;
-+}
-+
- static bool nvme_pci_prp_iter_next(struct request *req, struct device *dma_dev,
- 		struct blk_dma_iter *iter)
- {
-@@ -780,12 +806,7 @@ static bool nvme_pci_prp_iter_next(struct request *req, struct device *dma_dev,
- 		return true;
- 	if (!blk_rq_dma_map_iter_next(req, dma_dev, &iod->dma_state, iter))
- 		return false;
--	if (!dma_use_iova(&iod->dma_state) && dma_need_unmap(dma_dev)) {
--		iod->dma_vecs[iod->nr_dma_vecs].addr = iter->addr;
--		iod->dma_vecs[iod->nr_dma_vecs].len = iter->len;
--		iod->nr_dma_vecs++;
--	}
--	return true;
-+	return nvme_pci_prp_save_mapping(req, dma_dev, iter);
- }
- 
- static blk_status_t nvme_pci_setup_data_prp(struct request *req,
-@@ -798,15 +819,8 @@ static blk_status_t nvme_pci_setup_data_prp(struct request *req,
- 	unsigned int prp_len, i;
- 	__le64 *prp_list;
- 
--	if (!dma_use_iova(&iod->dma_state) && dma_need_unmap(nvmeq->dev->dev)) {
--		iod->dma_vecs = mempool_alloc(nvmeq->dev->dmavec_mempool,
--				GFP_ATOMIC);
--		if (!iod->dma_vecs)
--			return BLK_STS_RESOURCE;
--		iod->dma_vecs[0].addr = iter->addr;
--		iod->dma_vecs[0].len = iter->len;
--		iod->nr_dma_vecs = 1;
--	}
-+	if (!nvme_pci_prp_save_mapping(req, nvmeq->dev->dev, iter))
-+		return iter->status;
- 
- 	/*
- 	 * PRP1 always points to the start of the DMA transfers.
-@@ -1148,6 +1162,7 @@ static blk_status_t nvme_prep_rq(struct request *req)
- 	iod->nr_descriptors = 0;
- 	iod->total_len = 0;
- 	iod->meta_total_len = 0;
-+	iod->nr_dma_vecs = 0;
- 
- 	ret = nvme_setup_cmd(req->q->queuedata, req);
- 	if (ret)
+diff --git a/net/ipv6/ip6_fib.c b/net/ipv6/ip6_fib.c
+index 2111af022d946..c6439e30e892a 100644
+--- a/net/ipv6/ip6_fib.c
++++ b/net/ipv6/ip6_fib.c
+@@ -1138,7 +1138,8 @@ static int fib6_add_rt2node(struct fib6_node *fn, struct fib6_info *rt,
+ 					fib6_set_expires(iter, rt->expires);
+ 					fib6_add_gc_list(iter);
+ 				}
+-				if (!(rt->fib6_flags & (RTF_ADDRCONF | RTF_PREFIX_RT))) {
++				if (!(rt->fib6_flags & (RTF_ADDRCONF | RTF_PREFIX_RT)) &&
++				    !iter->fib6_nh->fib_nh_gw_family) {
+ 					iter->fib6_flags &= ~RTF_ADDRCONF;
+ 					iter->fib6_flags &= ~RTF_PREFIX_RT;
+ 				}
 -- 
 2.51.0
 
