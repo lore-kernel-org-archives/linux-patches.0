@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6BD5E22301;
-	Mon,  9 Feb 2026 14:44:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9452C22301;
+	Mon,  9 Feb 2026 14:44:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770648295; cv=none; b=L3yNcLjlSXUGcjMkP7YIp0B/xA5bsiUlcJcMwUWOX4gYCj73SNZ/ddGsleQon1avvI7k5e7Uvo2X2T+9rtgVJ+CEphOesKRzc10l6q+dTEG5msnUploIMOnKLZr7WP+Vk/daG2w6wj3qpafxQUJ81DtJzWxs6ZA2huTlS+W5IuU=
+	t=1770648298; cv=none; b=ZPW0/nixB/ZN7d5ZSyDJXsbNjxiP0jvrjlY6YdDLfeK9IC+YLQ/yCssy64SwIKrsM9ePKrFVhxIay4YiKnMfe9sJDBaqMgmLsNTynrY7CkpXcPf7a+jcUgb5iUPDwncRGNakH9wl82XZGZEm7T+Wehdp3JzXpcNze0jpfMRYOX8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770648295; c=relaxed/simple;
-	bh=jfAFQcpx38XfaG2uxWfhq41+eTXbrAl8bPwt/kgxgrM=;
+	s=arc-20240116; t=1770648298; c=relaxed/simple;
+	bh=BIG8sZnZYpQBN8KLtk8TYUsJysYVJIcz7XdWRyIFVHQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Kf13BZAe9XpMAvZhzxW6HqVH0IGfG0Cd4q3sSFc08rUT5LjCsqpPJe4I4Zo6X9Z1Lwxxg47xH3qsWMB7Y3JBvUuBeoqc9la0Mq7MVXlwPngWMJXce8wNDyCv9uev+x58wMDSwANfVXtlW+kgyjPnsXKtPaNImeXLfn9y6DKLFP8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LpWb5mNg; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=J+GXHv2yTlC/2/fAGLVSPzt2nD1NeRUL4QAb8+N7jGZYbofRsZvYQYIywYj6NUekmHUeEs58nuJUzsfb7l/az3WRJ274s//l5qWBhG/i5vTCUkb4OZNH0lT1rOHuU7CEG7PrMVEiSksEgMQaoyLc9bzrnnqCjQ99B49XAJC4tzY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wSdEMEGh; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LpWb5mNg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E7EECC19422;
-	Mon,  9 Feb 2026 14:44:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wSdEMEGh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15FC9C19422;
+	Mon,  9 Feb 2026 14:44:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770648295;
-	bh=jfAFQcpx38XfaG2uxWfhq41+eTXbrAl8bPwt/kgxgrM=;
+	s=korg; t=1770648298;
+	bh=BIG8sZnZYpQBN8KLtk8TYUsJysYVJIcz7XdWRyIFVHQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LpWb5mNgen3OoakMSPHSk1rnf8rMYq7iBvo99JIRLf5tNRjrpBiWZ7kRsCH1W/60b
-	 tyRnP+dEDKqNhY2aER6rvS6vhMS6JwYb+5z7lNEiZlGYs8luHTcU7z1VDsYdLRDPXG
-	 FppovZfFXLYcDPDx9zrZZZL0KHbesIfdGse78sLY=
+	b=wSdEMEGhbaGDBZcCdfrGpGGl68Q7k02ds8Gexh9K9Bck0jXxgpvqMPg5bh87fcf12
+	 7n8B2Qrxo0VxVuesfAA00GnLY1aUqmy2NElDcrDg0fuf+ncZ6bkC1brEStBXs3JTdY
+	 9N8H6OStSsdhdQCQkJUwIaNnq13uOsSO2BJjyL0g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Breno Leitao <leitao@debian.org>,
-	Thierry Reding <treding@nvidia.com>,
-	Jon Hunter <jonathanh@nvidia.com>,
-	Mark Brown <broonie@kernel.org>,
+	Yi Zhang <yi.zhang@redhat.com>,
+	Justin Tee <justin.tee@broadcom.com>,
+	Chaitanya Kulkarni <ckulkarnilinux@gmail.com>,
+	Keith Busch <kbusch@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 64/69] spi: tegra210-quad: Move curr_xfer read inside spinlock
-Date: Mon,  9 Feb 2026 15:24:32 +0100
-Message-ID: <20260209142304.228535887@linuxfoundation.org>
+Subject: [PATCH 6.1 38/69] nvme-fc: release admin tagset if init fails
+Date: Mon,  9 Feb 2026 15:24:06 +0100
+Message-ID: <20260209142303.296273241@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260209142301.913348974@linuxfoundation.org>
 References: <20260209142301.913348974@linuxfoundation.org>
@@ -53,66 +53,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Breno Leitao <leitao@debian.org>
+From: Chaitanya Kulkarni <ckulkarnilinux@gmail.com>
 
-[ Upstream commit ef13ba357656451d6371940d8414e3e271df97e3 ]
+[ Upstream commit d1877cc7270302081a315a81a0ee8331f19f95c8 ]
 
-Move the assignment of the transfer pointer from curr_xfer inside the
-spinlock critical section in both handle_cpu_based_xfer() and
-handle_dma_based_xfer().
+nvme_fabrics creates an NVMe/FC controller in following path:
 
-Previously, curr_xfer was read before acquiring the lock, creating a
-window where the timeout path could clear curr_xfer between reading it
-and using it. By moving the read inside the lock, the handlers are
-guaranteed to see a consistent value that cannot be modified by the
-timeout path.
+    nvmf_dev_write()
+      -> nvmf_create_ctrl()
+        -> nvme_fc_create_ctrl()
+          -> nvme_fc_init_ctrl()
 
-Fixes: 921fc1838fb0 ("spi: tegra210-quad: Add support for Tegra210 QSPI controller")
-Signed-off-by: Breno Leitao <leitao@debian.org>
-Acked-by: Thierry Reding <treding@nvidia.com>
-Tested-by: Jon Hunter <jonathanh@nvidia.com>
-Acked-by: Jon Hunter <jonathanh@nvidia.com>
-Link: https://patch.msgid.link/20260126-tegra_xfer-v2-2-6d2115e4f387@debian.org
-Signed-off-by: Mark Brown <broonie@kernel.org>
+nvme_fc_init_ctrl() allocates the admin blk-mq resources right after
+nvme_add_ctrl() succeeds.  If any of the subsequent steps fail (changing
+the controller state, scheduling connect work, etc.), we jump to the
+fail_ctrl path, which tears down the controller references but never
+frees the admin queue/tag set.  The leaked blk-mq allocations match the
+kmemleak report seen during blktests nvme/fc.
+
+Check ctrl->ctrl.admin_tagset in the fail_ctrl path and call
+nvme_remove_admin_tag_set() when it is set so that all admin queue
+allocations are reclaimed whenever controller setup aborts.
+
+Reported-by: Yi Zhang <yi.zhang@redhat.com>
+Reviewed-by: Justin Tee <justin.tee@broadcom.com>
+Signed-off-by: Chaitanya Kulkarni <ckulkarnilinux@gmail.com>
+Signed-off-by: Keith Busch <kbusch@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/spi/spi-tegra210-quad.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/nvme/host/fc.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/spi/spi-tegra210-quad.c b/drivers/spi/spi-tegra210-quad.c
-index 024e1468eee8d..c0cc5bd7e6d2f 100644
---- a/drivers/spi/spi-tegra210-quad.c
-+++ b/drivers/spi/spi-tegra210-quad.c
-@@ -1325,10 +1325,11 @@ static int tegra_qspi_transfer_one_message(struct spi_master *master,
+diff --git a/drivers/nvme/host/fc.c b/drivers/nvme/host/fc.c
+index dc84cade703db..63bef22095b41 100644
+--- a/drivers/nvme/host/fc.c
++++ b/drivers/nvme/host/fc.c
+@@ -3563,6 +3563,8 @@ nvme_fc_init_ctrl(struct device *dev, struct nvmf_ctrl_options *opts,
  
- static irqreturn_t handle_cpu_based_xfer(struct tegra_qspi *tqspi)
- {
--	struct spi_transfer *t = tqspi->curr_xfer;
-+	struct spi_transfer *t;
- 	unsigned long flags;
+ 	ctrl->ctrl.opts = NULL;
  
- 	spin_lock_irqsave(&tqspi->lock, flags);
-+	t = tqspi->curr_xfer;
++	if (ctrl->ctrl.admin_tagset)
++		nvme_remove_admin_tag_set(&ctrl->ctrl);
+ 	/* initiate nvme ctrl ref counting teardown */
+ 	nvme_uninit_ctrl(&ctrl->ctrl);
  
- 	if (tqspi->tx_status ||  tqspi->rx_status) {
- 		tegra_qspi_handle_error(tqspi);
-@@ -1359,7 +1360,7 @@ static irqreturn_t handle_cpu_based_xfer(struct tegra_qspi *tqspi)
- 
- static irqreturn_t handle_dma_based_xfer(struct tegra_qspi *tqspi)
- {
--	struct spi_transfer *t = tqspi->curr_xfer;
-+	struct spi_transfer *t;
- 	unsigned int total_fifo_words;
- 	unsigned long flags;
- 	long wait_status;
-@@ -1396,6 +1397,7 @@ static irqreturn_t handle_dma_based_xfer(struct tegra_qspi *tqspi)
- 	}
- 
- 	spin_lock_irqsave(&tqspi->lock, flags);
-+	t = tqspi->curr_xfer;
- 
- 	if (err) {
- 		tegra_qspi_dma_unmap_xfer(tqspi, t);
 -- 
 2.51.0
 
