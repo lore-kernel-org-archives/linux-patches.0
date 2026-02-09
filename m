@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F05F1DE8AD;
-	Mon,  9 Feb 2026 14:32:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17ED51DE8AD;
+	Mon,  9 Feb 2026 14:32:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770647544; cv=none; b=VXqPtcFyIkCsCOFasI0b06yzHw5mvaG5tQAZNmmz/AHoAKBFp0KA7DGoLX8XVflwJw6HaLSCLH5hrYB+YzwTTZe0z+O0Q0c++fwrcAXh/l5/Kdfr3q3Ef21ayA8VTPY+h6KMaxNRG5eEDNnbsATNQo5huG4mmUimrTw9XersZ1Q=
+	t=1770647547; cv=none; b=e4ky4bRmMSUGxB/I1RlwoA4orSNPzipZlAiXDawhKZh/U9xyZ0r/2xYpKp9B4Nq1+YZrb71rWtTx9CwRQ3u39RvzK0a250BDDUWgWW9JKbZ2utvUmW9Z1S/L5FdZTkPSZPojiaApqHrGe92c6M0M5Hg/qox3svT9kwOqs0zgIwI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770647544; c=relaxed/simple;
-	bh=Dj8u71Jnv5jR2bFb0q4K+XjOZZXP1K0poFyLSB5IKb8=;
+	s=arc-20240116; t=1770647547; c=relaxed/simple;
+	bh=E4/B0VzoVv+TM0pw198q3XqKNUx1bNCaDa8v9J7QBYU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GxABrZe7k4/nVtALe1z0mbI4QR72wwbiapjFacL6mIKcyZE1Jr86Ce4gzHBtYEA0mxLoNNpddVMUopYra3Z/vC6kxUFhtF1nzACIfGoHD+rtWnCsitPi5lHYy4LRY3dxLENu4P2GdCZ5V/08Si6Feqjvh12cNfldhU56ppQYGiU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Axb31G3Q; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=AbuKxLhDeIZyDTQJPZLLX7ir33ujCKQuOAz9uEpmB5XoA/g5Ojzm+W5ilAXH4rQ40AkRCXzNsHd99YLLLyO4tXOW8rekih2FEYZnBlDZhtjYtEbeVo8Qf+xS8sqL1PJXDx1EJjycqcbB4QaRW40RmBpxx+EpngV3yNZfd9j2m24=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zhmSmVMu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Axb31G3Q"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6BA80C116C6;
-	Mon,  9 Feb 2026 14:32:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zhmSmVMu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 986C6C116C6;
+	Mon,  9 Feb 2026 14:32:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770647543;
-	bh=Dj8u71Jnv5jR2bFb0q4K+XjOZZXP1K0poFyLSB5IKb8=;
+	s=korg; t=1770647547;
+	bh=E4/B0VzoVv+TM0pw198q3XqKNUx1bNCaDa8v9J7QBYU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Axb31G3Qk0G8FS2e6WEw3YXHwHgW5uhdHeXfJWMZudYGDKnBxeAXU34dHoUPETCR7
-	 H4+TBiV1Z5C4NNYstxgXUoZdjNcQyhbOkSeoYW62lablLNA4QpijbzMDSHa+US2OeZ
-	 QOy6rncu0dJct4SWo4iOxgEh6l9e+3GEFenIh4gc=
+	b=zhmSmVMuzdQZkVge83LOcGZO7y412c8W45e2YMZQHJVK/YvDFQzdyE8XrYeHEPEzV
+	 z1zqjn4LuDhJ2065zX1QNzkwS7Qgf+dbDrk+JcBeG41eflujNcUNIQXoosd1j+iVV7
+	 N4321JidWCC7R6+YBM8pgHXXCAKcvHuMejwwR1g8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Simon Horman <horms@kernel.org>,
-	Zilin Guan <zilin@seu.edu.cn>,
-	Kory Maincent <kory.maincent@bootlin.com>,
+	Douglas Anderson <dianders@chromium.org>,
+	Sergey Senozhatsky <senozhatsky@chromium.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 124/175] net: liquidio: Fix off-by-one error in VF setup_nic_devices() cleanup
-Date: Mon,  9 Feb 2026 15:23:17 +0100
-Message-ID: <20260209142324.971657455@linuxfoundation.org>
+Subject: [PATCH 6.18 133/175] net: usb: r8152: fix resume reset deadlock
+Date: Mon,  9 Feb 2026 15:23:26 +0100
+Message-ID: <20260209142325.295763761@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260209142320.474120190@linuxfoundation.org>
 References: <20260209142320.474120190@linuxfoundation.org>
@@ -53,47 +52,104 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zilin Guan <zilin@seu.edu.cn>
+From: Sergey Senozhatsky <senozhatsky@chromium.org>
 
-[ Upstream commit 6cbba46934aefdfb5d171e0a95aec06c24f7ca30 ]
+[ Upstream commit 6d06bc83a5ae8777a5f7a81c32dd75b8d9b2fe04 ]
 
-In setup_nic_devices(), the initialization loop jumps to the label
-setup_nic_dev_free on failure. The current cleanup loop while(i--)
-skip the failing index i, causing a memory leak.
+rtl8152 can trigger device reset during reset which
+potentially can result in a deadlock:
 
-Fix this by changing the loop to iterate from the current index i
-down to 0.
+ **** DPM device timeout after 10 seconds; 15 seconds until panic ****
+ Call Trace:
+ <TASK>
+ schedule+0x483/0x1370
+ schedule_preempt_disabled+0x15/0x30
+ __mutex_lock_common+0x1fd/0x470
+ __rtl8152_set_mac_address+0x80/0x1f0
+ dev_set_mac_address+0x7f/0x150
+ rtl8152_post_reset+0x72/0x150
+ usb_reset_device+0x1d0/0x220
+ rtl8152_resume+0x99/0xc0
+ usb_resume_interface+0x3e/0xc0
+ usb_resume_both+0x104/0x150
+ usb_resume+0x22/0x110
 
-Compile tested only. Issue found using code review.
+The problem is that rtl8152 resume calls reset under
+tp->control mutex while reset basically re-enters rtl8152
+and attempts to acquire the same tp->control lock once
+again.
 
-Fixes: 846b46873eeb ("liquidio CN23XX: VF offload features")
-Suggested-by: Simon Horman <horms@kernel.org>
-Signed-off-by: Zilin Guan <zilin@seu.edu.cn>
-Reviewed-by: Kory Maincent <kory.maincent@bootlin.com>
-Link: https://patch.msgid.link/20260128154440.278369-4-zilin@seu.edu.cn
+Reset INACCESSIBLE device outside of tp->control mutex
+scope to avoid recursive mutex_lock() deadlock.
+
+Fixes: 4933b066fefb ("r8152: If inaccessible at resume time, issue a reset")
+Reviewed-by: Douglas Anderson <dianders@chromium.org>
+Signed-off-by: Sergey Senozhatsky <senozhatsky@chromium.org>
+Link: https://patch.msgid.link/20260129031106.3805887-1-senozhatsky@chromium.org
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/cavium/liquidio/lio_vf_main.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/net/usb/r8152.c | 29 +++++++++++++++--------------
+ 1 file changed, 15 insertions(+), 14 deletions(-)
 
-diff --git a/drivers/net/ethernet/cavium/liquidio/lio_vf_main.c b/drivers/net/ethernet/cavium/liquidio/lio_vf_main.c
-index 3230dff5ba056..5c177146b35b1 100644
---- a/drivers/net/ethernet/cavium/liquidio/lio_vf_main.c
-+++ b/drivers/net/ethernet/cavium/liquidio/lio_vf_main.c
-@@ -2222,11 +2222,11 @@ static int setup_nic_devices(struct octeon_device *octeon_dev)
+diff --git a/drivers/net/usb/r8152.c b/drivers/net/usb/r8152.c
+index a22d4bb2cf3b5..6a43054d5171f 100644
+--- a/drivers/net/usb/r8152.c
++++ b/drivers/net/usb/r8152.c
+@@ -8535,19 +8535,6 @@ static int rtl8152_system_resume(struct r8152 *tp)
+ 		usb_submit_urb(tp->intr_urb, GFP_NOIO);
+ 	}
  
- setup_nic_dev_free:
+-	/* If the device is RTL8152_INACCESSIBLE here then we should do a
+-	 * reset. This is important because the usb_lock_device_for_reset()
+-	 * that happens as a result of usb_queue_reset_device() will silently
+-	 * fail if the device was suspended or if too much time passed.
+-	 *
+-	 * NOTE: The device is locked here so we can directly do the reset.
+-	 * We don't need usb_lock_device_for_reset() because that's just a
+-	 * wrapper over device_lock() and device_resume() (which calls us)
+-	 * does that for us.
+-	 */
+-	if (test_bit(RTL8152_INACCESSIBLE, &tp->flags))
+-		usb_reset_device(tp->udev);
+-
+ 	return 0;
+ }
  
--	while (i--) {
-+	do {
- 		dev_err(&octeon_dev->pci_dev->dev,
- 			"NIC ifidx:%d Setup failed\n", i);
- 		liquidio_destroy_nic_device(octeon_dev, i);
--	}
-+	} while (i--);
+@@ -8658,19 +8645,33 @@ static int rtl8152_suspend(struct usb_interface *intf, pm_message_t message)
+ static int rtl8152_resume(struct usb_interface *intf)
+ {
+ 	struct r8152 *tp = usb_get_intfdata(intf);
++	bool runtime_resume = test_bit(SELECTIVE_SUSPEND, &tp->flags);
+ 	int ret;
  
- setup_nic_dev_done:
+ 	mutex_lock(&tp->control);
+ 
+ 	rtl_reset_ocp_base(tp);
+ 
+-	if (test_bit(SELECTIVE_SUSPEND, &tp->flags))
++	if (runtime_resume)
+ 		ret = rtl8152_runtime_resume(tp);
+ 	else
+ 		ret = rtl8152_system_resume(tp);
+ 
+ 	mutex_unlock(&tp->control);
+ 
++	/* If the device is RTL8152_INACCESSIBLE here then we should do a
++	 * reset. This is important because the usb_lock_device_for_reset()
++	 * that happens as a result of usb_queue_reset_device() will silently
++	 * fail if the device was suspended or if too much time passed.
++	 *
++	 * NOTE: The device is locked here so we can directly do the reset.
++	 * We don't need usb_lock_device_for_reset() because that's just a
++	 * wrapper over device_lock() and device_resume() (which calls us)
++	 * does that for us.
++	 */
++	if (!runtime_resume && test_bit(RTL8152_INACCESSIBLE, &tp->flags))
++		usb_reset_device(tp->udev);
++
+ 	return ret;
+ }
  
 -- 
 2.51.0
