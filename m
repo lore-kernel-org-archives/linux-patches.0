@@ -1,47 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D52637AA87;
-	Mon,  9 Feb 2026 14:42:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 503E92222B2;
+	Mon,  9 Feb 2026 14:42:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770648143; cv=none; b=VHAlAEDAIRBOjYMS6vbydqjGhAusTbVB+JyNVFwTXdfYEiWeyH2wiiu1t91J6Tx9A1pmVSJyyeF5hkrKzz+Txsyze+WtLEuYfPMeSxTvRT45UzogI6/hCneS+7GZ8WpMbLnKQNhFjsXGPE9md7/ueaJuwEHsxY3WEz264PDM5oY=
+	t=1770648146; cv=none; b=aUW4TD1Dd3+6jRPily8QICoE9jD5/uaQSFN6c4rmmR4xcadzvojVaoIEwCVTanXe+FuMfQtPd+bmLcgOJH24hD3Kc67qdIhIEDGVcrvvW0dnggWtXEPnu/tIgmfDZavVnFYKuQSvSc81dyQVIfboRnRxh9CHIZ9oL6IxYrx6PLk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770648143; c=relaxed/simple;
-	bh=3owlrt+jV2hGatJRHQl/zQgd4SbLLwsUCX1LXAfVIfc=;
+	s=arc-20240116; t=1770648146; c=relaxed/simple;
+	bh=n8TDFrI6FMBXguhr3CiUl28ukJ7P1EnRKFeT3+QY+Q0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=muXc7aBMKBG7B8t+G+IWA3/NiUql6oh9y+Uzu1TpFP4j93dblntiLNuj1X1eP1d9gnPdxo3xqwVvjdLIk+0MyHk2GhjMmsTfKo7tALgahIiUAXydkQzedC1x+OBJEN8h3+chpMOykYCy2/eb/35H80ej1lEE1fJrO1f6mUOT7Yw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RqQkBaOj; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=oJwv3ZmCTbbrPD5tdq+4GIC09S9XowcCRatMhRAe6vPNCa6oYtjQhX+RGGfropI/WSw4P5k7GUhcUS1RYiXL8bhFDniSe4k61DpGVq+RehrakU+5F2uuG/rDhAPjt3FWR+B83dqmiGCuT7umvDb4ddlzPfGOZHVb83pma1Agwlg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=urODWAFh; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RqQkBaOj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A41AC16AAE;
-	Mon,  9 Feb 2026 14:42:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="urODWAFh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC8E8C116C6;
+	Mon,  9 Feb 2026 14:42:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770648142;
-	bh=3owlrt+jV2hGatJRHQl/zQgd4SbLLwsUCX1LXAfVIfc=;
+	s=korg; t=1770648146;
+	bh=n8TDFrI6FMBXguhr3CiUl28ukJ7P1EnRKFeT3+QY+Q0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RqQkBaOjQ7puaJH02yWZ5j4vqC3rjepPiLd0DP9ULEINAAYCaAjF3SdIAgkcDjf3r
-	 7yf60CJ4ZGp8e9f75MJMlfezrEF1WbYxkhqYh5wp6bb/JaZC4nPdJ/DRQCpLs1yoNk
-	 zX01CPNgWSRx/NnHuLOibPtUYPwtgDl146X3St9Y=
+	b=urODWAFhZWDEulVVbov/1u41cAcnapceBkAvTniSjUq+axu403xp0P+kptJ/Q0Be4
+	 NPjrUAaXZR9esNTUfrdEzA3O50Fqpmiln0QM/g9UPPS6NxJJKD4FjOSSWwnxfKJLyi
+	 q2f5i1TyvwNNlh9+ZsrDpvJPd1wH86VTUGokOhDk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ryusuke Konishi <konishi.ryusuke@gmail.com>,
-	Andrew Cooper <andrew.cooper3@citrix.com>,
-	"Borislav Petkov (AMD)" <bp@alien8.de>,
-	Alexander Potapenko <glider@google.com>,
-	Marco Elver <elver@google.com>,
-	Dmitry Vyukov <dvyukov@google.com>,
-	Thomas Gleixner <tglx@linutronix.de>,
-	Ingo Molnar <mingo@redhat.com>,
-	Dave Hansen <dave.hansen@linux.intel.com>,
-	"H. Peter Anvin" <hpa@zytor.com>,
-	Jann Horn <jannh@google.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.1 02/69] x86/kfence: fix booting on 32bit non-PAE systems
-Date: Mon,  9 Feb 2026 15:23:30 +0100
-Message-ID: <20260209142302.004567999@linuxfoundation.org>
+	Ethan Nelson-Moore <enelsonmoore@gmail.com>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 20/69] net: usb: sr9700: support devices with virtual driver CD
+Date: Mon,  9 Feb 2026 15:23:48 +0100
+Message-ID: <20260209142302.655509515@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260209142301.913348974@linuxfoundation.org>
 References: <20260209142301.913348974@linuxfoundation.org>
@@ -60,68 +51,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andrew Cooper <andrew.cooper3@citrix.com>
+From: Ethan Nelson-Moore <enelsonmoore@gmail.com>
 
-commit 16459fe7e0ca6520a6e8f603de4ccd52b90fd765 upstream.
+[ Upstream commit bf4172bd870c3a34d3065cbb39192c22cbd7b18d ]
 
-The original patch inverted the PTE unconditionally to avoid
-L1TF-vulnerable PTEs, but Linux doesn't make this adjustment in 2-level
-paging.
+Some SR9700 devices have an SPI flash chip containing a virtual driver
+CD, in which case they appear as a device with two interfaces and
+product ID 0x9702. Interface 0 is the driver CD and interface 1 is the
+Ethernet device.
 
-Adjust the logic to use the flip_protnone_guard() helper, which is a nop
-on 2-level paging but inverts the address bits in all other paging modes.
-
-This doesn't matter for the Xen aspect of the original change.  Linux no
-longer supports running 32bit PV under Xen, and Xen doesn't support
-running any 32bit PV guests without using PAE paging.
-
-Link: https://lkml.kernel.org/r/20260126211046.2096622-1-andrew.cooper3@citrix.com
-Fixes: b505f1944535 ("x86/kfence: avoid writing L1TF-vulnerable PTEs")
-Reported-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
-Closes: https://lore.kernel.org/lkml/CAKFNMokwjw68ubYQM9WkzOuH51wLznHpEOMSqtMoV1Rn9JV_gw@mail.gmail.com/
-Signed-off-by: Andrew Cooper <andrew.cooper3@citrix.com>
-Tested-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
-Tested-by: Borislav Petkov (AMD) <bp@alien8.de>
-Cc: Alexander Potapenko <glider@google.com>
-Cc: Marco Elver <elver@google.com>
-Cc: Dmitry Vyukov <dvyukov@google.com>
-Cc: Thomas Gleixner <tglx@linutronix.de>
-Cc: Ingo Molnar <mingo@redhat.com>
-Cc: Dave Hansen <dave.hansen@linux.intel.com>
-Cc: "H. Peter Anvin" <hpa@zytor.com>
-Cc: Jann Horn <jannh@google.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Link: https://github.com/name-kurniawan/usb-lan
+Link: https://www.draisberghof.de/usb_modeswitch/bb/viewtopic.php?t=2185
+Signed-off-by: Ethan Nelson-Moore <enelsonmoore@gmail.com>
+Link: https://patch.msgid.link/20251211062451.139036-1-enelsonmoore@gmail.com
+[pabeni@redhat.com: fixes link tags]
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/include/asm/kfence.h |    7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ drivers/net/usb/sr9700.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
---- a/arch/x86/include/asm/kfence.h
-+++ b/arch/x86/include/asm/kfence.h
-@@ -42,7 +42,7 @@ static inline bool kfence_protect_page(u
- {
- 	unsigned int level;
- 	pte_t *pte = lookup_address(addr, &level);
--	pteval_t val;
-+	pteval_t val, new;
+diff --git a/drivers/net/usb/sr9700.c b/drivers/net/usb/sr9700.c
+index 9587eb98cdb3b..213b4817cfdf6 100644
+--- a/drivers/net/usb/sr9700.c
++++ b/drivers/net/usb/sr9700.c
+@@ -539,6 +539,11 @@ static const struct usb_device_id products[] = {
+ 		USB_DEVICE(0x0fe6, 0x9700),	/* SR9700 device */
+ 		.driver_info = (unsigned long)&sr9700_driver_info,
+ 	},
++	{
++		/* SR9700 with virtual driver CD-ROM - interface 0 is the CD-ROM device */
++		USB_DEVICE_INTERFACE_NUMBER(0x0fe6, 0x9702, 1),
++		.driver_info = (unsigned long)&sr9700_driver_info,
++	},
+ 	{},			/* END */
+ };
  
- 	if (WARN_ON(!pte || level != PG_LEVEL_4K))
- 		return false;
-@@ -57,11 +57,12 @@ static inline bool kfence_protect_page(u
- 		return true;
- 
- 	/*
--	 * Otherwise, invert the entire PTE.  This avoids writing out an
-+	 * Otherwise, flip the Present bit, taking care to avoid writing an
- 	 * L1TF-vulnerable PTE (not present, without the high address bits
- 	 * set).
- 	 */
--	set_pte(pte, __pte(~val));
-+	new = val ^ _PAGE_PRESENT;
-+	set_pte(pte, __pte(flip_protnone_guard(val, new, PTE_PFN_MASK)));
- 
- 	/*
- 	 * If the page was protected (non-present) and we're making it
+-- 
+2.51.0
+
 
 
