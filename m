@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3DF929D265;
-	Mon,  9 Feb 2026 14:30:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05B8D37A48A;
+	Mon,  9 Feb 2026 14:30:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770647443; cv=none; b=MutfkODnDPt/E2ebt73UscQwI3E2HH3+c7UP6VZwrSxFiwxo9TSJyaKoBuUsjUFRgwQ4wYiYbvDSrEnSdDx1t8zZ+aIWUMqdCZCIHEsyzoIIPKD1iPa1SJieo3luwlsHeiC5ifHtN6jCXkJ1mbl6i7SB11MTWVu6A0RH+jvq2NI=
+	t=1770647447; cv=none; b=ip3J0KpQj1uh/w1frHsYJDwChCkcrqbkKa/S6fjqmXSVQb/dSyXqfNuNaBFy3XmhWT+kj8oy2OiFLrd80VFLzOYuaoBDQ/g6fswjV37gosE5CNacG3vvz5fl3mT4MjeKGDIJsga1qS9AQ1rK9VwZ4r9Es/5zNOpn/XAo/690cOY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770647443; c=relaxed/simple;
-	bh=QGUIGlO5GeI+r/itJCYvhbN5Kscmk9VE1WNWMXD1SYw=;
+	s=arc-20240116; t=1770647447; c=relaxed/simple;
+	bh=5l8WVaqnf1DjWiusG2wi1SA3Q2Uo4g8K7cb6hogHrSU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FhiCU0FJLUFALBElUQMwP37lyvEvE2Z9Mw8nI8AKwjfBJMN7LuC7kjhHONzuX59rVIlYZNgFeGrGfycqJZOch71xFzikHq4wBlhi29CvVN5mGYB32VEXO/LbK6zW+KuPyuj5ICpdMEYBSYoTiJ9O4lWDWwCW7Y9e/uo90wx8SPE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BzQDzReu; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ox/X7b/3tQC89mCG5icK/7BrKYJu4bZyZoHM0wW4luWzftWBvkDz8gAhoriSY1L2/D6JG1+PVHWp5rmxA/95e9F35dN7yEw/cTTH1Ycm1hknYEraoy4nZdb8ejkNbEYfWLyYxMT1BjqkgBBpqIIMB/MOxG7Yd9l6ASKS9iPPVZE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=O66Svi+9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BzQDzReu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F1254C116C6;
-	Mon,  9 Feb 2026 14:30:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="O66Svi+9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 840A0C19424;
+	Mon,  9 Feb 2026 14:30:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770647443;
-	bh=QGUIGlO5GeI+r/itJCYvhbN5Kscmk9VE1WNWMXD1SYw=;
+	s=korg; t=1770647446;
+	bh=5l8WVaqnf1DjWiusG2wi1SA3Q2Uo4g8K7cb6hogHrSU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BzQDzReuL+iIF1d3mpT3fpWyikH/GUUR2mJOaUrgVZ192/1scrTiX2OH4sJopffvO
-	 DI6PUA07TPRRXNQ0pHg/efifv0sLSq6/ZpqozviPuP683LWTjIaqSAjYG9sXNS+2rZ
-	 aDCVHKOWE++sjRzVgR6IGGWlRJYcyw07JMa47eUw=
+	b=O66Svi+9Mv+uTHc1bnuVhVfE99S5LzbNF1Ju8X11lGLkL3JTbaT8jbMuYx8o+tu/E
+	 IhcX05daAkbdLp1oke1AoECAteeT8dyYOS1cM1TaMwAQ9Uf3f3xV1Z0V38Oh8AW6zY
+	 Gg46/iBPbWobZ8R0T93OnJSu1JG9ZhMEc+KFlw2A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nitesh Shetty <nj.shetty@samsung.com>,
-	Jens Axboe <axboe@kernel.dk>,
+	Tim Guttzeit <t.guttzeit@tuxedocomputers.com>,
+	Werner Sembach <wse@tuxedocomputers.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 102/175] io_uring/rw: free potentially allocated iovec on cache put failure
-Date: Mon,  9 Feb 2026 15:22:55 +0100
-Message-ID: <20260209142324.087348673@linuxfoundation.org>
+Subject: [PATCH 6.18 103/175] ALSA: hda/realtek: Fix headset mic for TongFang X6AR55xU
+Date: Mon,  9 Feb 2026 15:22:56 +0100
+Message-ID: <20260209142324.122718862@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260209142320.474120190@linuxfoundation.org>
 References: <20260209142320.474120190@linuxfoundation.org>
@@ -51,66 +52,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jens Axboe <axboe@kernel.dk>
+From: Tim Guttzeit <t.guttzeit@tuxedocomputers.com>
 
-[ Upstream commit 4b9748055457ac3a0710bf210c229d01ea1b01b9 ]
+[ Upstream commit b48fe9af1e60360baf09ca6b7a3cd6541f16e611 ]
 
-If a read/write request goes through io_req_rw_cleanup() and has an
-allocated iovec attached and fails to put to the rw_cache, then it may
-end up with an unaccounted iovec pointer. Have io_rw_recycle() return
-whether it recycled the request or not, and use that to gauge whether to
-free a potential iovec or not.
+Add a PCI quirk to enable microphone detection on the headphone jack of
+TongFang X6AR55xU devices.
 
-Reviewed-by: Nitesh Shetty <nj.shetty@samsung.com>
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Signed-off-by: Tim Guttzeit <t.guttzeit@tuxedocomputers.com>
+Signed-off-by: Werner Sembach <wse@tuxedocomputers.com>
+Link: https://patch.msgid.link/20260119151626.35481-1-wse@tuxedocomputers.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- io_uring/rw.c | 15 +++++++++++----
- 1 file changed, 11 insertions(+), 4 deletions(-)
+ sound/hda/codecs/realtek/alc269.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/io_uring/rw.c b/io_uring/rw.c
-index abe68ba9c9dc8..d7388a4a3ea5e 100644
---- a/io_uring/rw.c
-+++ b/io_uring/rw.c
-@@ -144,19 +144,22 @@ static inline int io_import_rw_buffer(int rw, struct io_kiocb *req,
- 	return 0;
- }
- 
--static void io_rw_recycle(struct io_kiocb *req, unsigned int issue_flags)
-+static bool io_rw_recycle(struct io_kiocb *req, unsigned int issue_flags)
- {
- 	struct io_async_rw *rw = req->async_data;
- 
- 	if (unlikely(issue_flags & IO_URING_F_UNLOCKED))
--		return;
-+		return false;
- 
- 	io_alloc_cache_vec_kasan(&rw->vec);
- 	if (rw->vec.nr > IO_VEC_CACHE_SOFT_CAP)
- 		io_vec_free(&rw->vec);
- 
--	if (io_alloc_cache_put(&req->ctx->rw_cache, rw))
-+	if (io_alloc_cache_put(&req->ctx->rw_cache, rw)) {
- 		io_req_async_data_clear(req, 0);
-+		return true;
-+	}
-+	return false;
- }
- 
- static void io_req_rw_cleanup(struct io_kiocb *req, unsigned int issue_flags)
-@@ -190,7 +193,11 @@ static void io_req_rw_cleanup(struct io_kiocb *req, unsigned int issue_flags)
- 	 */
- 	if (!(req->flags & (REQ_F_REISSUE | REQ_F_REFCOUNT))) {
- 		req->flags &= ~REQ_F_NEED_CLEANUP;
--		io_rw_recycle(req, issue_flags);
-+		if (!io_rw_recycle(req, issue_flags)) {
-+			struct io_async_rw *rw = req->async_data;
-+
-+			io_vec_free(&rw->vec);
-+		}
- 	}
- }
- 
+diff --git a/sound/hda/codecs/realtek/alc269.c b/sound/hda/codecs/realtek/alc269.c
+index dc2e3ede7a23b..e9022f751c959 100644
+--- a/sound/hda/codecs/realtek/alc269.c
++++ b/sound/hda/codecs/realtek/alc269.c
+@@ -7679,6 +7679,10 @@ static const struct snd_hda_pin_quirk alc269_pin_fixup_tbl[] = {
+ 		{0x12, 0x90a60140},
+ 		{0x19, 0x04a11030},
+ 		{0x21, 0x04211020}),
++	SND_HDA_PIN_QUIRK(0x10ec0274, 0x1d05, "TongFang", ALC274_FIXUP_HP_HEADSET_MIC,
++		{0x17, 0x90170110},
++		{0x19, 0x03a11030},
++		{0x21, 0x03211020}),
+ 	SND_HDA_PIN_QUIRK(0x10ec0282, 0x1025, "Acer", ALC282_FIXUP_ACER_DISABLE_LINEOUT,
+ 		ALC282_STANDARD_PINS,
+ 		{0x12, 0x90a609c0},
 -- 
 2.51.0
 
