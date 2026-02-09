@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1698437997D;
-	Mon,  9 Feb 2026 14:26:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E51853793AC;
+	Mon,  9 Feb 2026 14:26:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770647189; cv=none; b=AT+Hal3DtnjGbL2Nirp82faH+mrawkLS44hq7X6Jx8EEGeAjXcd//IksiQO5w1h0mkIHWa6sTolmIaypoCFfmIFPQqB8GLzkkO/uMYGoP3+BihX1pts56y/NVQ+j8mTvL818a3j5R3MH3JGs1eU4w8XqYSDsnQikwxOhZSiUgIs=
+	t=1770647192; cv=none; b=JiYUux23sPjWaujE9nRRl3qpYILlctAPh8FjN0UOgCl0SSuAJwhpnA84FEsn3KwnZiSUzhfeII1u9nH3pNwHWc2fFbLANOWvkBQ90aJ9EMP6RNlWcEgZvTSmm1oM8P29gkrlWYCv6QtYKOlNGuXjh2QDkgGjx05NzszBLeiq1VU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770647189; c=relaxed/simple;
-	bh=DkUtESTWfzfT06P0HAe20+knpCdvYOIHVnMQIOfYa7k=;
+	s=arc-20240116; t=1770647192; c=relaxed/simple;
+	bh=n5kdZVP2NGOOHWbVUWWDkAYB+nkJwCm505/7C+LUAcw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uS1z+jMYDVcCpJHzIMWWqg27fDa64A47SNU+tiwiQrB2ZUuqjTjeli3zRI1N6JAV7QrRbXWg9CYFYf/w00RSCH94mVzNdY051BT5JP6ND+mlt4T+wlJK3qWcxfJkVjrwyDxis743+KJG7dMUAn5hYnmSkpktCWgcyKO4H2CF/8c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jeiHAsmH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=M/cYCwuws9zSP5e98LfshbiwZuVy+YRRhSJqp6AB8CpFrU1OpSYOphfzWcHtaUgv6RNtwEf/nSaGbgMb/izgDpUxdCbNWi8kNVw/QZtWeK5sk+b23CJ9i4Kh/fahrFW0pP49oDIYamJXaAGPMYBeNccTcClbjVhXpnoOjOCtf1I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bYFYDCDg; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jeiHAsmH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F2D35C116C6;
-	Mon,  9 Feb 2026 14:26:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bYFYDCDg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A9DBC116C6;
+	Mon,  9 Feb 2026 14:26:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770647188;
-	bh=DkUtESTWfzfT06P0HAe20+knpCdvYOIHVnMQIOfYa7k=;
+	s=korg; t=1770647191;
+	bh=n5kdZVP2NGOOHWbVUWWDkAYB+nkJwCm505/7C+LUAcw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jeiHAsmHSD4Gx6avSTURuVnSdndXP6wNA0+FMaXm2C1nL0BK/l/dBimmFbDQaarOF
-	 y6Oe2Q1wp5PneTW8soOujO9SIRSuO6Yz+MtKiO3/zJNXgrTRspnuY7XFSx+SsBjmbH
-	 5uZlAqdpQJQy2+c4YeWCQNik47XSfRuBPPWgmtlo=
+	b=bYFYDCDgJ9l5wXcjQ6mKUfibbzKJU8Mz+gHEI8eikn7lfwoZQAAV2OtePVlag651f
+	 EwE8uTl1iaKPa5zeR7yKG/SWPfLxAzJq/oQT4lILHEkcrTp4ClYJDuLKLkPrPeCVRj
+	 wiisffCRm3l1W0sa+d/YqPNbPU7FQG9BDkjbIRNg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lyude Paul <lyude@redhat.com>,
-	Dave Airlie <airlied@redhat.com>
-Subject: [PATCH 6.18 026/175] nouveau: add a third state to the fini handler.
-Date: Mon,  9 Feb 2026 15:21:39 +0100
-Message-ID: <20260209142321.420697190@linuxfoundation.org>
+	Dave Airlie <airlied@redhat.com>,
+	Lyude Paul <lyude@redhat.com>
+Subject: [PATCH 6.18 027/175] nouveau/gsp: use rpc sequence numbers properly.
+Date: Mon,  9 Feb 2026 15:21:40 +0100
+Message-ID: <20260209142321.456136359@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260209142320.474120190@linuxfoundation.org>
 References: <20260209142320.474120190@linuxfoundation.org>
@@ -52,961 +52,112 @@ Content-Transfer-Encoding: 8bit
 
 From: Dave Airlie <airlied@redhat.com>
 
-commit 8f8a4dce64013737701d13565cf6107f42b725ea upstream.
+commit 90caca3b7264cc3e92e347b2004fff4e386fc26e upstream.
 
-This is just refactoring to allow the lower layers to distinguish
-between suspend and runtime suspend.
+There are two layers of sequence numbers, one at the msg level
+and one at the rpc level.
 
-GSP 570 needs to set a flag with the GPU is going into GCOFF,
-this flag taken from the opengpu driver is set whenever runtime
-suspend is enterning GCOFF but not for normal suspend paths.
+570 firmware started asserting on the sequence numbers being
+in the right order, and we would see nocat records with asserts
+in them.
 
-This just refactors the code, a subsequent patch use the information.
+Add the rpc level sequence number support.
 
 Fixes: 53dac0623853 ("drm/nouveau/gsp: add support for 570.144")
 Cc: <stable@vger.kernel.org>
+Signed-off-by: Dave Airlie <airlied@redhat.com>
 Reviewed-by: Lyude Paul <lyude@redhat.com>
 Tested-by: Lyude Paul <lyude@redhat.com>
-Signed-off-by: Dave Airlie <airlied@redhat.com>
-Link: https://patch.msgid.link/20260203052431.2219998-3-airlied@gmail.com
+Link: https://patch.msgid.link/20260203052431.2219998-2-airlied@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/nouveau/include/nvif/client.h             |    2 -
- drivers/gpu/drm/nouveau/include/nvif/driver.h             |    2 -
- drivers/gpu/drm/nouveau/include/nvkm/core/device.h        |    3 +
- drivers/gpu/drm/nouveau/include/nvkm/core/engine.h        |    2 -
- drivers/gpu/drm/nouveau/include/nvkm/core/object.h        |    5 +--
- drivers/gpu/drm/nouveau/include/nvkm/core/oproxy.h        |    2 -
- drivers/gpu/drm/nouveau/include/nvkm/core/subdev.h        |    4 +-
- drivers/gpu/drm/nouveau/include/nvkm/core/suspend_state.h |   11 +++++++
- drivers/gpu/drm/nouveau/nouveau_drm.c                     |    2 -
- drivers/gpu/drm/nouveau/nouveau_nvif.c                    |   10 +++++-
- drivers/gpu/drm/nouveau/nvif/client.c                     |    4 +-
- drivers/gpu/drm/nouveau/nvkm/core/engine.c                |    4 +-
- drivers/gpu/drm/nouveau/nvkm/core/ioctl.c                 |    4 +-
- drivers/gpu/drm/nouveau/nvkm/core/object.c                |   20 ++++++++++--
- drivers/gpu/drm/nouveau/nvkm/core/oproxy.c                |    2 -
- drivers/gpu/drm/nouveau/nvkm/core/subdev.c                |   18 +++++++++--
- drivers/gpu/drm/nouveau/nvkm/core/uevent.c                |    2 -
- drivers/gpu/drm/nouveau/nvkm/engine/ce/ga100.c            |    2 -
- drivers/gpu/drm/nouveau/nvkm/engine/ce/priv.h             |    2 -
- drivers/gpu/drm/nouveau/nvkm/engine/device/base.c         |   22 ++++++++++----
- drivers/gpu/drm/nouveau/nvkm/engine/device/pci.c          |    4 +-
- drivers/gpu/drm/nouveau/nvkm/engine/device/priv.h         |    2 -
- drivers/gpu/drm/nouveau/nvkm/engine/device/user.c         |    2 -
- drivers/gpu/drm/nouveau/nvkm/engine/disp/base.c           |    4 +-
- drivers/gpu/drm/nouveau/nvkm/engine/disp/chan.c           |    2 -
- drivers/gpu/drm/nouveau/nvkm/engine/falcon.c              |    4 +-
- drivers/gpu/drm/nouveau/nvkm/engine/fifo/base.c           |    2 -
- drivers/gpu/drm/nouveau/nvkm/engine/fifo/uchan.c          |    6 +--
- drivers/gpu/drm/nouveau/nvkm/engine/gr/base.c             |    4 +-
- drivers/gpu/drm/nouveau/nvkm/engine/gr/gf100.c            |    2 -
- drivers/gpu/drm/nouveau/nvkm/engine/gr/nv04.c             |    2 -
- drivers/gpu/drm/nouveau/nvkm/engine/gr/nv10.c             |    2 -
- drivers/gpu/drm/nouveau/nvkm/engine/gr/nv20.c             |    2 -
- drivers/gpu/drm/nouveau/nvkm/engine/gr/nv20.h             |    2 -
- drivers/gpu/drm/nouveau/nvkm/engine/gr/nv40.c             |    4 +-
- drivers/gpu/drm/nouveau/nvkm/engine/mpeg/nv44.c           |    2 -
- drivers/gpu/drm/nouveau/nvkm/engine/sec2/base.c           |    2 -
- drivers/gpu/drm/nouveau/nvkm/engine/xtensa.c              |    4 +-
- drivers/gpu/drm/nouveau/nvkm/subdev/acr/base.c            |    2 -
- drivers/gpu/drm/nouveau/nvkm/subdev/bar/base.c            |    2 -
- drivers/gpu/drm/nouveau/nvkm/subdev/clk/base.c            |    2 -
- drivers/gpu/drm/nouveau/nvkm/subdev/devinit/base.c        |    4 +-
- drivers/gpu/drm/nouveau/nvkm/subdev/fault/base.c          |    2 -
- drivers/gpu/drm/nouveau/nvkm/subdev/fault/user.c          |    2 -
- drivers/gpu/drm/nouveau/nvkm/subdev/gpio/base.c           |    2 -
- drivers/gpu/drm/nouveau/nvkm/subdev/gsp/base.c            |    2 -
- drivers/gpu/drm/nouveau/nvkm/subdev/gsp/gh100.c           |    2 -
- drivers/gpu/drm/nouveau/nvkm/subdev/gsp/priv.h            |    8 ++---
- drivers/gpu/drm/nouveau/nvkm/subdev/gsp/rm/r535/gsp.c     |    2 -
- drivers/gpu/drm/nouveau/nvkm/subdev/gsp/tu102.c           |    2 -
- drivers/gpu/drm/nouveau/nvkm/subdev/i2c/base.c            |    2 -
- drivers/gpu/drm/nouveau/nvkm/subdev/instmem/base.c        |    2 -
- drivers/gpu/drm/nouveau/nvkm/subdev/pci/base.c            |    2 -
- drivers/gpu/drm/nouveau/nvkm/subdev/pmu/base.c            |    2 -
- drivers/gpu/drm/nouveau/nvkm/subdev/therm/base.c          |    6 +--
- drivers/gpu/drm/nouveau/nvkm/subdev/timer/base.c          |    2 -
- 56 files changed, 139 insertions(+), 84 deletions(-)
- create mode 100644 drivers/gpu/drm/nouveau/include/nvkm/core/suspend_state.h
+ drivers/gpu/drm/nouveau/include/nvkm/subdev/gsp.h     |    6 ++++++
+ drivers/gpu/drm/nouveau/nvkm/subdev/gsp/rm/r535/gsp.c |    4 ++--
+ drivers/gpu/drm/nouveau/nvkm/subdev/gsp/rm/r535/rpc.c |    6 ++++++
+ drivers/gpu/drm/nouveau/nvkm/subdev/gsp/rm/r570/gsp.c |    2 +-
+ 4 files changed, 15 insertions(+), 3 deletions(-)
 
---- a/drivers/gpu/drm/nouveau/include/nvif/client.h
-+++ b/drivers/gpu/drm/nouveau/include/nvif/client.h
-@@ -11,7 +11,7 @@ struct nvif_client {
- 
- int  nvif_client_ctor(struct nvif_client *parent, const char *name, struct nvif_client *);
- void nvif_client_dtor(struct nvif_client *);
--int  nvif_client_suspend(struct nvif_client *);
-+int  nvif_client_suspend(struct nvif_client *, bool);
- int  nvif_client_resume(struct nvif_client *);
- 
- /*XXX*/
---- a/drivers/gpu/drm/nouveau/include/nvif/driver.h
-+++ b/drivers/gpu/drm/nouveau/include/nvif/driver.h
-@@ -8,7 +8,7 @@ struct nvif_driver {
- 	const char *name;
- 	int (*init)(const char *name, u64 device, const char *cfg,
- 		    const char *dbg, void **priv);
--	int (*suspend)(void *priv);
-+	int (*suspend)(void *priv, bool runtime);
- 	int (*resume)(void *priv);
- 	int (*ioctl)(void *priv, void *data, u32 size, void **hack);
- 	void __iomem *(*map)(void *priv, u64 handle, u32 size);
---- a/drivers/gpu/drm/nouveau/include/nvkm/core/device.h
-+++ b/drivers/gpu/drm/nouveau/include/nvkm/core/device.h
-@@ -2,6 +2,7 @@
- #ifndef __NVKM_DEVICE_H__
- #define __NVKM_DEVICE_H__
- #include <core/oclass.h>
-+#include <core/suspend_state.h>
- #include <core/intr.h>
- enum nvkm_subdev_type;
- 
-@@ -93,7 +94,7 @@ struct nvkm_device_func {
- 	void *(*dtor)(struct nvkm_device *);
- 	int (*preinit)(struct nvkm_device *);
- 	int (*init)(struct nvkm_device *);
--	void (*fini)(struct nvkm_device *, bool suspend);
-+	void (*fini)(struct nvkm_device *, enum nvkm_suspend_state suspend);
- 	int (*irq)(struct nvkm_device *);
- 	resource_size_t (*resource_addr)(struct nvkm_device *, enum nvkm_bar_id);
- 	resource_size_t (*resource_size)(struct nvkm_device *, enum nvkm_bar_id);
---- a/drivers/gpu/drm/nouveau/include/nvkm/core/engine.h
-+++ b/drivers/gpu/drm/nouveau/include/nvkm/core/engine.h
-@@ -20,7 +20,7 @@ struct nvkm_engine_func {
- 	int (*oneinit)(struct nvkm_engine *);
- 	int (*info)(struct nvkm_engine *, u64 mthd, u64 *data);
- 	int (*init)(struct nvkm_engine *);
--	int (*fini)(struct nvkm_engine *, bool suspend);
-+	int (*fini)(struct nvkm_engine *, enum nvkm_suspend_state suspend);
- 	int (*reset)(struct nvkm_engine *);
- 	int (*nonstall)(struct nvkm_engine *);
- 	void (*intr)(struct nvkm_engine *);
---- a/drivers/gpu/drm/nouveau/include/nvkm/core/object.h
-+++ b/drivers/gpu/drm/nouveau/include/nvkm/core/object.h
-@@ -2,6 +2,7 @@
- #ifndef __NVKM_OBJECT_H__
- #define __NVKM_OBJECT_H__
- #include <core/oclass.h>
-+#include <core/suspend_state.h>
- struct nvkm_event;
- struct nvkm_gpuobj;
- struct nvkm_uevent;
-@@ -27,7 +28,7 @@ enum nvkm_object_map {
- struct nvkm_object_func {
- 	void *(*dtor)(struct nvkm_object *);
- 	int (*init)(struct nvkm_object *);
--	int (*fini)(struct nvkm_object *, bool suspend);
-+	int (*fini)(struct nvkm_object *, enum nvkm_suspend_state suspend);
- 	int (*mthd)(struct nvkm_object *, u32 mthd, void *data, u32 size);
- 	int (*ntfy)(struct nvkm_object *, u32 mthd, struct nvkm_event **);
- 	int (*map)(struct nvkm_object *, void *argv, u32 argc,
-@@ -49,7 +50,7 @@ int nvkm_object_new(const struct nvkm_oc
- void nvkm_object_del(struct nvkm_object **);
- void *nvkm_object_dtor(struct nvkm_object *);
- int nvkm_object_init(struct nvkm_object *);
--int nvkm_object_fini(struct nvkm_object *, bool suspend);
-+int nvkm_object_fini(struct nvkm_object *, enum nvkm_suspend_state);
- int nvkm_object_mthd(struct nvkm_object *, u32 mthd, void *data, u32 size);
- int nvkm_object_ntfy(struct nvkm_object *, u32 mthd, struct nvkm_event **);
- int nvkm_object_map(struct nvkm_object *, void *argv, u32 argc,
---- a/drivers/gpu/drm/nouveau/include/nvkm/core/oproxy.h
-+++ b/drivers/gpu/drm/nouveau/include/nvkm/core/oproxy.h
-@@ -13,7 +13,7 @@ struct nvkm_oproxy {
- struct nvkm_oproxy_func {
- 	void (*dtor[2])(struct nvkm_oproxy *);
- 	int  (*init[2])(struct nvkm_oproxy *);
--	int  (*fini[2])(struct nvkm_oproxy *, bool suspend);
-+	int  (*fini[2])(struct nvkm_oproxy *, enum nvkm_suspend_state suspend);
+--- a/drivers/gpu/drm/nouveau/include/nvkm/subdev/gsp.h
++++ b/drivers/gpu/drm/nouveau/include/nvkm/subdev/gsp.h
+@@ -44,6 +44,9 @@ typedef void (*nvkm_gsp_event_func)(stru
+  * NVKM_GSP_RPC_REPLY_NOWAIT - If specified, immediately return to the
+  * caller after the GSP RPC command is issued.
+  *
++ * NVKM_GSP_RPC_REPLY_NOSEQ - If specified, exactly like NOWAIT
++ * but don't emit RPC sequence number.
++ *
+  * NVKM_GSP_RPC_REPLY_RECV - If specified, wait and receive the entire GSP
+  * RPC message after the GSP RPC command is issued.
+  *
+@@ -53,6 +56,7 @@ typedef void (*nvkm_gsp_event_func)(stru
+  */
+ enum nvkm_gsp_rpc_reply_policy {
+ 	NVKM_GSP_RPC_REPLY_NOWAIT = 0,
++	NVKM_GSP_RPC_REPLY_NOSEQ,
+ 	NVKM_GSP_RPC_REPLY_RECV,
+ 	NVKM_GSP_RPC_REPLY_POLL,
  };
+@@ -242,6 +246,8 @@ struct nvkm_gsp {
+ 	/* The size of the registry RPC */
+ 	size_t registry_rpc_size;
  
- void nvkm_oproxy_ctor(const struct nvkm_oproxy_func *,
---- a/drivers/gpu/drm/nouveau/include/nvkm/core/subdev.h
-+++ b/drivers/gpu/drm/nouveau/include/nvkm/core/subdev.h
-@@ -40,7 +40,7 @@ struct nvkm_subdev_func {
- 	int (*oneinit)(struct nvkm_subdev *);
- 	int (*info)(struct nvkm_subdev *, u64 mthd, u64 *data);
- 	int (*init)(struct nvkm_subdev *);
--	int (*fini)(struct nvkm_subdev *, bool suspend);
-+	int (*fini)(struct nvkm_subdev *, enum nvkm_suspend_state suspend);
- 	void (*intr)(struct nvkm_subdev *);
- };
- 
-@@ -65,7 +65,7 @@ void nvkm_subdev_unref(struct nvkm_subde
- int  nvkm_subdev_preinit(struct nvkm_subdev *);
- int  nvkm_subdev_oneinit(struct nvkm_subdev *);
- int  nvkm_subdev_init(struct nvkm_subdev *);
--int  nvkm_subdev_fini(struct nvkm_subdev *, bool suspend);
-+int  nvkm_subdev_fini(struct nvkm_subdev *, enum nvkm_suspend_state suspend);
- int  nvkm_subdev_info(struct nvkm_subdev *, u64, u64 *);
- void nvkm_subdev_intr(struct nvkm_subdev *);
- 
---- /dev/null
-+++ b/drivers/gpu/drm/nouveau/include/nvkm/core/suspend_state.h
-@@ -0,0 +1,11 @@
-+/* SPDX-License-Identifier: MIT */
-+#ifndef __NVKM_SUSPEND_STATE_H__
-+#define __NVKM_SUSPEND_STATE_H__
++	u32 rpc_seq;
 +
-+enum nvkm_suspend_state {
-+	NVKM_POWEROFF,
-+	NVKM_SUSPEND,
-+	NVKM_RUNTIME_SUSPEND,
-+};
-+
-+#endif
---- a/drivers/gpu/drm/nouveau/nouveau_drm.c
-+++ b/drivers/gpu/drm/nouveau/nouveau_drm.c
-@@ -983,7 +983,7 @@ nouveau_do_suspend(struct nouveau_drm *d
- 	}
+ #ifdef CONFIG_DEBUG_FS
+ 	/*
+ 	 * Logging buffers in debugfs. The wrapper objects need to remain
+--- a/drivers/gpu/drm/nouveau/nvkm/subdev/gsp/rm/r535/gsp.c
++++ b/drivers/gpu/drm/nouveau/nvkm/subdev/gsp/rm/r535/gsp.c
+@@ -704,7 +704,7 @@ r535_gsp_rpc_set_registry(struct nvkm_gs
  
- 	NV_DEBUG(drm, "suspending object tree...\n");
--	ret = nvif_client_suspend(&drm->_client);
-+	ret = nvif_client_suspend(&drm->_client, runtime);
- 	if (ret)
- 		goto fail_client;
+ 	build_registry(gsp, rpc);
  
---- a/drivers/gpu/drm/nouveau/nouveau_nvif.c
-+++ b/drivers/gpu/drm/nouveau/nouveau_nvif.c
-@@ -62,10 +62,16 @@ nvkm_client_resume(void *priv)
+-	return nvkm_gsp_rpc_wr(gsp, rpc, NVKM_GSP_RPC_REPLY_NOWAIT);
++	return nvkm_gsp_rpc_wr(gsp, rpc, NVKM_GSP_RPC_REPLY_NOSEQ);
+ 
+ fail:
+ 	clean_registry(gsp);
+@@ -921,7 +921,7 @@ r535_gsp_set_system_info(struct nvkm_gsp
+ 	info->pciConfigMirrorSize = device->pci->func->cfg.size;
+ 	r535_gsp_acpi_info(gsp, &info->acpiMethodData);
+ 
+-	return nvkm_gsp_rpc_wr(gsp, info, NVKM_GSP_RPC_REPLY_NOWAIT);
++	return nvkm_gsp_rpc_wr(gsp, info, NVKM_GSP_RPC_REPLY_NOSEQ);
  }
  
  static int
--nvkm_client_suspend(void *priv)
-+nvkm_client_suspend(void *priv, bool runtime)
- {
- 	struct nvkm_client *client = priv;
--	return nvkm_object_fini(&client->object, true);
-+	enum nvkm_suspend_state state;
-+
-+	if (runtime)
-+		state = NVKM_RUNTIME_SUSPEND;
+--- a/drivers/gpu/drm/nouveau/nvkm/subdev/gsp/rm/r535/rpc.c
++++ b/drivers/gpu/drm/nouveau/nvkm/subdev/gsp/rm/r535/rpc.c
+@@ -557,6 +557,7 @@ r535_gsp_rpc_handle_reply(struct nvkm_gs
+ 
+ 	switch (policy) {
+ 	case NVKM_GSP_RPC_REPLY_NOWAIT:
++	case NVKM_GSP_RPC_REPLY_NOSEQ:
+ 		break;
+ 	case NVKM_GSP_RPC_REPLY_RECV:
+ 		reply = r535_gsp_msg_recv(gsp, fn, gsp_rpc_len);
+@@ -588,6 +589,11 @@ r535_gsp_rpc_send(struct nvkm_gsp *gsp,
+ 			       rpc->data, rpc->length - sizeof(*rpc), true);
+ 	}
+ 
++	if (policy == NVKM_GSP_RPC_REPLY_NOSEQ)
++		rpc->sequence = 0;
 +	else
-+		state = NVKM_SUSPEND;
-+	return nvkm_object_fini(&client->object, state);
- }
- 
- static int
---- a/drivers/gpu/drm/nouveau/nvif/client.c
-+++ b/drivers/gpu/drm/nouveau/nvif/client.c
-@@ -30,9 +30,9 @@
- #include <nvif/if0000.h>
- 
- int
--nvif_client_suspend(struct nvif_client *client)
-+nvif_client_suspend(struct nvif_client *client, bool runtime)
- {
--	return client->driver->suspend(client->object.priv);
-+	return client->driver->suspend(client->object.priv, runtime);
- }
- 
- int
---- a/drivers/gpu/drm/nouveau/nvkm/core/engine.c
-+++ b/drivers/gpu/drm/nouveau/nvkm/core/engine.c
-@@ -41,7 +41,7 @@ nvkm_engine_reset(struct nvkm_engine *en
- 	if (engine->func->reset)
- 		return engine->func->reset(engine);
- 
--	nvkm_subdev_fini(&engine->subdev, false);
-+	nvkm_subdev_fini(&engine->subdev, NVKM_POWEROFF);
- 	return nvkm_subdev_init(&engine->subdev);
- }
- 
-@@ -98,7 +98,7 @@ nvkm_engine_info(struct nvkm_subdev *sub
- }
- 
- static int
--nvkm_engine_fini(struct nvkm_subdev *subdev, bool suspend)
-+nvkm_engine_fini(struct nvkm_subdev *subdev, enum nvkm_suspend_state suspend)
- {
- 	struct nvkm_engine *engine = nvkm_engine(subdev);
- 	if (engine->func->fini)
---- a/drivers/gpu/drm/nouveau/nvkm/core/ioctl.c
-+++ b/drivers/gpu/drm/nouveau/nvkm/core/ioctl.c
-@@ -141,7 +141,7 @@ nvkm_ioctl_new(struct nvkm_client *clien
- 			}
- 			ret = -EEXIST;
- 		}
--		nvkm_object_fini(object, false);
-+		nvkm_object_fini(object, NVKM_POWEROFF);
- 	}
- 
- 	nvkm_object_del(&object);
-@@ -160,7 +160,7 @@ nvkm_ioctl_del(struct nvkm_client *clien
- 	nvif_ioctl(object, "delete size %d\n", size);
- 	if (!(ret = nvif_unvers(ret, &data, &size, args->none))) {
- 		nvif_ioctl(object, "delete\n");
--		nvkm_object_fini(object, false);
-+		nvkm_object_fini(object, NVKM_POWEROFF);
- 		nvkm_object_del(&object);
- 	}
- 
---- a/drivers/gpu/drm/nouveau/nvkm/core/object.c
-+++ b/drivers/gpu/drm/nouveau/nvkm/core/object.c
-@@ -142,13 +142,25 @@ nvkm_object_bind(struct nvkm_object *obj
- }
- 
- int
--nvkm_object_fini(struct nvkm_object *object, bool suspend)
-+nvkm_object_fini(struct nvkm_object *object, enum nvkm_suspend_state suspend)
- {
--	const char *action = suspend ? "suspend" : "fini";
-+	const char *action;
- 	struct nvkm_object *child;
- 	s64 time;
- 	int ret;
- 
-+	switch (suspend) {
-+	case NVKM_POWEROFF:
-+	default:
-+		action = "fini";
-+		break;
-+	case NVKM_SUSPEND:
-+		action = "suspend";
-+		break;
-+	case NVKM_RUNTIME_SUSPEND:
-+		action = "runtime";
-+		break;
-+	}
- 	nvif_debug(object, "%s children...\n", action);
- 	time = ktime_to_us(ktime_get());
- 	list_for_each_entry_reverse(child, &object->tree, head) {
-@@ -212,11 +224,11 @@ nvkm_object_init(struct nvkm_object *obj
- 
- fail_child:
- 	list_for_each_entry_continue_reverse(child, &object->tree, head)
--		nvkm_object_fini(child, false);
-+		nvkm_object_fini(child, NVKM_POWEROFF);
- fail:
- 	nvif_error(object, "init failed with %d\n", ret);
- 	if (object->func->fini)
--		object->func->fini(object, false);
-+		object->func->fini(object, NVKM_POWEROFF);
- 	return ret;
- }
- 
---- a/drivers/gpu/drm/nouveau/nvkm/core/oproxy.c
-+++ b/drivers/gpu/drm/nouveau/nvkm/core/oproxy.c
-@@ -87,7 +87,7 @@ nvkm_oproxy_uevent(struct nvkm_object *o
- }
- 
- static int
--nvkm_oproxy_fini(struct nvkm_object *object, bool suspend)
-+nvkm_oproxy_fini(struct nvkm_object *object, enum nvkm_suspend_state suspend)
- {
- 	struct nvkm_oproxy *oproxy = nvkm_oproxy(object);
- 	int ret;
---- a/drivers/gpu/drm/nouveau/nvkm/core/subdev.c
-+++ b/drivers/gpu/drm/nouveau/nvkm/core/subdev.c
-@@ -51,12 +51,24 @@ nvkm_subdev_info(struct nvkm_subdev *sub
- }
- 
- int
--nvkm_subdev_fini(struct nvkm_subdev *subdev, bool suspend)
-+nvkm_subdev_fini(struct nvkm_subdev *subdev, enum nvkm_suspend_state suspend)
- {
- 	struct nvkm_device *device = subdev->device;
--	const char *action = suspend ? "suspend" : subdev->use.enabled ? "fini" : "reset";
-+	const char *action;
- 	s64 time;
- 
-+	switch (suspend) {
-+	case NVKM_POWEROFF:
-+	default:
-+		action = subdev->use.enabled ? "fini" : "reset";
-+		break;
-+	case NVKM_SUSPEND:
-+		action = "suspend";
-+		break;
-+	case NVKM_RUNTIME_SUSPEND:
-+		action = "runtime";
-+		break;
-+	}
- 	nvkm_trace(subdev, "%s running...\n", action);
- 	time = ktime_to_us(ktime_get());
- 
-@@ -186,7 +198,7 @@ void
- nvkm_subdev_unref(struct nvkm_subdev *subdev)
- {
- 	if (refcount_dec_and_mutex_lock(&subdev->use.refcount, &subdev->use.mutex)) {
--		nvkm_subdev_fini(subdev, false);
-+		nvkm_subdev_fini(subdev, NVKM_POWEROFF);
- 		mutex_unlock(&subdev->use.mutex);
- 	}
- }
---- a/drivers/gpu/drm/nouveau/nvkm/core/uevent.c
-+++ b/drivers/gpu/drm/nouveau/nvkm/core/uevent.c
-@@ -73,7 +73,7 @@ nvkm_uevent_mthd(struct nvkm_object *obj
- }
- 
- static int
--nvkm_uevent_fini(struct nvkm_object *object, bool suspend)
-+nvkm_uevent_fini(struct nvkm_object *object, enum nvkm_suspend_state suspend)
- {
- 	struct nvkm_uevent *uevent = nvkm_uevent(object);
- 
---- a/drivers/gpu/drm/nouveau/nvkm/engine/ce/ga100.c
-+++ b/drivers/gpu/drm/nouveau/nvkm/engine/ce/ga100.c
-@@ -46,7 +46,7 @@ ga100_ce_nonstall(struct nvkm_engine *en
- }
- 
- int
--ga100_ce_fini(struct nvkm_engine *engine, bool suspend)
-+ga100_ce_fini(struct nvkm_engine *engine, enum nvkm_suspend_state suspend)
- {
- 	nvkm_inth_block(&engine->subdev.inth);
- 	return 0;
---- a/drivers/gpu/drm/nouveau/nvkm/engine/ce/priv.h
-+++ b/drivers/gpu/drm/nouveau/nvkm/engine/ce/priv.h
-@@ -14,7 +14,7 @@ extern const struct nvkm_object_func gv1
- 
- int ga100_ce_oneinit(struct nvkm_engine *);
- int ga100_ce_init(struct nvkm_engine *);
--int ga100_ce_fini(struct nvkm_engine *, bool);
-+int ga100_ce_fini(struct nvkm_engine *, enum nvkm_suspend_state);
- int ga100_ce_nonstall(struct nvkm_engine *);
- 
- u32 gb202_ce_grce_mask(struct nvkm_device *);
---- a/drivers/gpu/drm/nouveau/nvkm/engine/device/base.c
-+++ b/drivers/gpu/drm/nouveau/nvkm/engine/device/base.c
-@@ -2935,13 +2935,25 @@ nvkm_device_engine(struct nvkm_device *d
- }
- 
- int
--nvkm_device_fini(struct nvkm_device *device, bool suspend)
-+nvkm_device_fini(struct nvkm_device *device, enum nvkm_suspend_state suspend)
- {
--	const char *action = suspend ? "suspend" : "fini";
-+	const char *action;
- 	struct nvkm_subdev *subdev;
- 	int ret;
- 	s64 time;
- 
-+	switch (suspend) {
-+	case NVKM_POWEROFF:
-+	default:
-+		action = "fini";
-+		break;
-+	case NVKM_SUSPEND:
-+		action = "suspend";
-+		break;
-+	case NVKM_RUNTIME_SUSPEND:
-+		action = "runtime";
-+		break;
-+	}
- 	nvdev_trace(device, "%s running...\n", action);
- 	time = ktime_to_us(ktime_get());
- 
-@@ -3031,7 +3043,7 @@ nvkm_device_init(struct nvkm_device *dev
++		rpc->sequence = gsp->rpc_seq++;
++
+ 	ret = r535_gsp_cmdq_push(gsp, rpc);
  	if (ret)
- 		return ret;
+ 		return ERR_PTR(ret);
+--- a/drivers/gpu/drm/nouveau/nvkm/subdev/gsp/rm/r570/gsp.c
++++ b/drivers/gpu/drm/nouveau/nvkm/subdev/gsp/rm/r570/gsp.c
+@@ -176,7 +176,7 @@ r570_gsp_set_system_info(struct nvkm_gsp
+ 	info->bIsPrimary = video_is_primary_device(device->dev);
+ 	info->bPreserveVideoMemoryAllocations = false;
  
--	nvkm_device_fini(device, false);
-+	nvkm_device_fini(device, NVKM_POWEROFF);
- 
- 	nvdev_trace(device, "init running...\n");
- 	time = ktime_to_us(ktime_get());
-@@ -3059,9 +3071,9 @@ nvkm_device_init(struct nvkm_device *dev
- 
- fail_subdev:
- 	list_for_each_entry_from(subdev, &device->subdev, head)
--		nvkm_subdev_fini(subdev, false);
-+		nvkm_subdev_fini(subdev, NVKM_POWEROFF);
- fail:
--	nvkm_device_fini(device, false);
-+	nvkm_device_fini(device, NVKM_POWEROFF);
- 
- 	nvdev_error(device, "init failed with %d\n", ret);
- 	return ret;
---- a/drivers/gpu/drm/nouveau/nvkm/engine/device/pci.c
-+++ b/drivers/gpu/drm/nouveau/nvkm/engine/device/pci.c
-@@ -1605,10 +1605,10 @@ nvkm_device_pci_irq(struct nvkm_device *
+-	return nvkm_gsp_rpc_wr(gsp, info, NVKM_GSP_RPC_REPLY_NOWAIT);
++	return nvkm_gsp_rpc_wr(gsp, info, NVKM_GSP_RPC_REPLY_NOSEQ);
  }
  
  static void
--nvkm_device_pci_fini(struct nvkm_device *device, bool suspend)
-+nvkm_device_pci_fini(struct nvkm_device *device, enum nvkm_suspend_state suspend)
- {
- 	struct nvkm_device_pci *pdev = nvkm_device_pci(device);
--	if (suspend) {
-+	if (suspend != NVKM_POWEROFF) {
- 		pci_disable_device(pdev->pdev);
- 		pdev->suspend = true;
- 	}
---- a/drivers/gpu/drm/nouveau/nvkm/engine/device/priv.h
-+++ b/drivers/gpu/drm/nouveau/nvkm/engine/device/priv.h
-@@ -56,5 +56,5 @@ int  nvkm_device_ctor(const struct nvkm_
- 		      const char *name, const char *cfg, const char *dbg,
- 		      struct nvkm_device *);
- int  nvkm_device_init(struct nvkm_device *);
--int  nvkm_device_fini(struct nvkm_device *, bool suspend);
-+int  nvkm_device_fini(struct nvkm_device *, enum nvkm_suspend_state suspend);
- #endif
---- a/drivers/gpu/drm/nouveau/nvkm/engine/device/user.c
-+++ b/drivers/gpu/drm/nouveau/nvkm/engine/device/user.c
-@@ -218,7 +218,7 @@ nvkm_udevice_map(struct nvkm_object *obj
- }
- 
- static int
--nvkm_udevice_fini(struct nvkm_object *object, bool suspend)
-+nvkm_udevice_fini(struct nvkm_object *object, enum nvkm_suspend_state suspend)
- {
- 	struct nvkm_udevice *udev = nvkm_udevice(object);
- 	struct nvkm_device *device = udev->device;
---- a/drivers/gpu/drm/nouveau/nvkm/engine/disp/base.c
-+++ b/drivers/gpu/drm/nouveau/nvkm/engine/disp/base.c
-@@ -99,13 +99,13 @@ nvkm_disp_intr(struct nvkm_engine *engin
- }
- 
- static int
--nvkm_disp_fini(struct nvkm_engine *engine, bool suspend)
-+nvkm_disp_fini(struct nvkm_engine *engine, enum nvkm_suspend_state suspend)
- {
- 	struct nvkm_disp *disp = nvkm_disp(engine);
- 	struct nvkm_outp *outp;
- 
- 	if (disp->func->fini)
--		disp->func->fini(disp, suspend);
-+		disp->func->fini(disp, suspend != NVKM_POWEROFF);
- 
- 	list_for_each_entry(outp, &disp->outps, head) {
- 		if (outp->func->fini)
---- a/drivers/gpu/drm/nouveau/nvkm/engine/disp/chan.c
-+++ b/drivers/gpu/drm/nouveau/nvkm/engine/disp/chan.c
-@@ -128,7 +128,7 @@ nvkm_disp_chan_child_get(struct nvkm_obj
- }
- 
- static int
--nvkm_disp_chan_fini(struct nvkm_object *object, bool suspend)
-+nvkm_disp_chan_fini(struct nvkm_object *object, enum nvkm_suspend_state suspend)
- {
- 	struct nvkm_disp_chan *chan = nvkm_disp_chan(object);
- 
---- a/drivers/gpu/drm/nouveau/nvkm/engine/falcon.c
-+++ b/drivers/gpu/drm/nouveau/nvkm/engine/falcon.c
-@@ -93,13 +93,13 @@ nvkm_falcon_intr(struct nvkm_engine *eng
- }
- 
- static int
--nvkm_falcon_fini(struct nvkm_engine *engine, bool suspend)
-+nvkm_falcon_fini(struct nvkm_engine *engine, enum nvkm_suspend_state suspend)
- {
- 	struct nvkm_falcon *falcon = nvkm_falcon(engine);
- 	struct nvkm_device *device = falcon->engine.subdev.device;
- 	const u32 base = falcon->addr;
- 
--	if (!suspend) {
-+	if (suspend == NVKM_POWEROFF) {
- 		nvkm_memory_unref(&falcon->core);
- 		if (falcon->external) {
- 			vfree(falcon->data.data);
---- a/drivers/gpu/drm/nouveau/nvkm/engine/fifo/base.c
-+++ b/drivers/gpu/drm/nouveau/nvkm/engine/fifo/base.c
-@@ -122,7 +122,7 @@ nvkm_fifo_class_get(struct nvkm_oclass *
- }
- 
- static int
--nvkm_fifo_fini(struct nvkm_engine *engine, bool suspend)
-+nvkm_fifo_fini(struct nvkm_engine *engine, enum nvkm_suspend_state suspend)
- {
- 	struct nvkm_fifo *fifo = nvkm_fifo(engine);
- 	struct nvkm_runl *runl;
---- a/drivers/gpu/drm/nouveau/nvkm/engine/fifo/uchan.c
-+++ b/drivers/gpu/drm/nouveau/nvkm/engine/fifo/uchan.c
-@@ -72,7 +72,7 @@ struct nvkm_uobj {
- };
- 
- static int
--nvkm_uchan_object_fini_1(struct nvkm_oproxy *oproxy, bool suspend)
-+nvkm_uchan_object_fini_1(struct nvkm_oproxy *oproxy, enum nvkm_suspend_state suspend)
- {
- 	struct nvkm_uobj *uobj = container_of(oproxy, typeof(*uobj), oproxy);
- 	struct nvkm_chan *chan = uobj->chan;
-@@ -87,7 +87,7 @@ nvkm_uchan_object_fini_1(struct nvkm_opr
- 		nvkm_chan_cctx_bind(chan, ectx->engn, NULL);
- 
- 		if (refcount_dec_and_test(&ectx->uses))
--			nvkm_object_fini(ectx->object, false);
-+			nvkm_object_fini(ectx->object, NVKM_POWEROFF);
- 		mutex_unlock(&chan->cgrp->mutex);
- 	}
- 
-@@ -269,7 +269,7 @@ nvkm_uchan_map(struct nvkm_object *objec
- }
- 
- static int
--nvkm_uchan_fini(struct nvkm_object *object, bool suspend)
-+nvkm_uchan_fini(struct nvkm_object *object, enum nvkm_suspend_state suspend)
- {
- 	struct nvkm_chan *chan = nvkm_uchan(object)->chan;
- 
---- a/drivers/gpu/drm/nouveau/nvkm/engine/gr/base.c
-+++ b/drivers/gpu/drm/nouveau/nvkm/engine/gr/base.c
-@@ -168,11 +168,11 @@ nvkm_gr_init(struct nvkm_engine *engine)
- }
- 
- static int
--nvkm_gr_fini(struct nvkm_engine *engine, bool suspend)
-+nvkm_gr_fini(struct nvkm_engine *engine, enum nvkm_suspend_state suspend)
- {
- 	struct nvkm_gr *gr = nvkm_gr(engine);
- 	if (gr->func->fini)
--		return gr->func->fini(gr, suspend);
-+		return gr->func->fini(gr, suspend != NVKM_POWEROFF);
- 	return 0;
- }
- 
---- a/drivers/gpu/drm/nouveau/nvkm/engine/gr/gf100.c
-+++ b/drivers/gpu/drm/nouveau/nvkm/engine/gr/gf100.c
-@@ -2330,7 +2330,7 @@ gf100_gr_reset(struct nvkm_gr *base)
- 
- 	WARN_ON(gf100_gr_fecs_halt_pipeline(gr));
- 
--	subdev->func->fini(subdev, false);
-+	subdev->func->fini(subdev, NVKM_POWEROFF);
- 	nvkm_mc_disable(device, subdev->type, subdev->inst);
- 	if (gr->func->gpccs.reset)
- 		gr->func->gpccs.reset(gr);
---- a/drivers/gpu/drm/nouveau/nvkm/engine/gr/nv04.c
-+++ b/drivers/gpu/drm/nouveau/nvkm/engine/gr/nv04.c
-@@ -1158,7 +1158,7 @@ nv04_gr_chan_dtor(struct nvkm_object *ob
- }
- 
- static int
--nv04_gr_chan_fini(struct nvkm_object *object, bool suspend)
-+nv04_gr_chan_fini(struct nvkm_object *object, enum nvkm_suspend_state suspend)
- {
- 	struct nv04_gr_chan *chan = nv04_gr_chan(object);
- 	struct nv04_gr *gr = chan->gr;
---- a/drivers/gpu/drm/nouveau/nvkm/engine/gr/nv10.c
-+++ b/drivers/gpu/drm/nouveau/nvkm/engine/gr/nv10.c
-@@ -951,7 +951,7 @@ nv10_gr_context_switch(struct nv10_gr *g
- }
- 
- static int
--nv10_gr_chan_fini(struct nvkm_object *object, bool suspend)
-+nv10_gr_chan_fini(struct nvkm_object *object, enum nvkm_suspend_state suspend)
- {
- 	struct nv10_gr_chan *chan = nv10_gr_chan(object);
- 	struct nv10_gr *gr = chan->gr;
---- a/drivers/gpu/drm/nouveau/nvkm/engine/gr/nv20.c
-+++ b/drivers/gpu/drm/nouveau/nvkm/engine/gr/nv20.c
-@@ -27,7 +27,7 @@ nv20_gr_chan_init(struct nvkm_object *ob
- }
- 
- int
--nv20_gr_chan_fini(struct nvkm_object *object, bool suspend)
-+nv20_gr_chan_fini(struct nvkm_object *object, enum nvkm_suspend_state suspend)
- {
- 	struct nv20_gr_chan *chan = nv20_gr_chan(object);
- 	struct nv20_gr *gr = chan->gr;
---- a/drivers/gpu/drm/nouveau/nvkm/engine/gr/nv20.h
-+++ b/drivers/gpu/drm/nouveau/nvkm/engine/gr/nv20.h
-@@ -31,5 +31,5 @@ struct nv20_gr_chan {
- 
- void *nv20_gr_chan_dtor(struct nvkm_object *);
- int nv20_gr_chan_init(struct nvkm_object *);
--int nv20_gr_chan_fini(struct nvkm_object *, bool);
-+int nv20_gr_chan_fini(struct nvkm_object *, enum nvkm_suspend_state);
- #endif
---- a/drivers/gpu/drm/nouveau/nvkm/engine/gr/nv40.c
-+++ b/drivers/gpu/drm/nouveau/nvkm/engine/gr/nv40.c
-@@ -89,7 +89,7 @@ nv40_gr_chan_bind(struct nvkm_object *ob
- }
- 
- static int
--nv40_gr_chan_fini(struct nvkm_object *object, bool suspend)
-+nv40_gr_chan_fini(struct nvkm_object *object, enum nvkm_suspend_state suspend)
- {
- 	struct nv40_gr_chan *chan = nv40_gr_chan(object);
- 	struct nv40_gr *gr = chan->gr;
-@@ -101,7 +101,7 @@ nv40_gr_chan_fini(struct nvkm_object *ob
- 	nvkm_mask(device, 0x400720, 0x00000001, 0x00000000);
- 
- 	if (nvkm_rd32(device, 0x40032c) == inst) {
--		if (suspend) {
-+		if (suspend != NVKM_POWEROFF) {
- 			nvkm_wr32(device, 0x400720, 0x00000000);
- 			nvkm_wr32(device, 0x400784, inst);
- 			nvkm_mask(device, 0x400310, 0x00000020, 0x00000020);
---- a/drivers/gpu/drm/nouveau/nvkm/engine/mpeg/nv44.c
-+++ b/drivers/gpu/drm/nouveau/nvkm/engine/mpeg/nv44.c
-@@ -65,7 +65,7 @@ nv44_mpeg_chan_bind(struct nvkm_object *
- }
- 
- static int
--nv44_mpeg_chan_fini(struct nvkm_object *object, bool suspend)
-+nv44_mpeg_chan_fini(struct nvkm_object *object, enum nvkm_suspend_state suspend)
- {
- 
- 	struct nv44_mpeg_chan *chan = nv44_mpeg_chan(object);
---- a/drivers/gpu/drm/nouveau/nvkm/engine/sec2/base.c
-+++ b/drivers/gpu/drm/nouveau/nvkm/engine/sec2/base.c
-@@ -37,7 +37,7 @@ nvkm_sec2_finimsg(void *priv, struct nvf
- }
- 
- static int
--nvkm_sec2_fini(struct nvkm_engine *engine, bool suspend)
-+nvkm_sec2_fini(struct nvkm_engine *engine, enum nvkm_suspend_state suspend)
- {
- 	struct nvkm_sec2 *sec2 = nvkm_sec2(engine);
- 	struct nvkm_subdev *subdev = &sec2->engine.subdev;
---- a/drivers/gpu/drm/nouveau/nvkm/engine/xtensa.c
-+++ b/drivers/gpu/drm/nouveau/nvkm/engine/xtensa.c
-@@ -76,7 +76,7 @@ nvkm_xtensa_intr(struct nvkm_engine *eng
- }
- 
- static int
--nvkm_xtensa_fini(struct nvkm_engine *engine, bool suspend)
-+nvkm_xtensa_fini(struct nvkm_engine *engine, enum nvkm_suspend_state suspend)
- {
- 	struct nvkm_xtensa *xtensa = nvkm_xtensa(engine);
- 	struct nvkm_device *device = xtensa->engine.subdev.device;
-@@ -85,7 +85,7 @@ nvkm_xtensa_fini(struct nvkm_engine *eng
- 	nvkm_wr32(device, base + 0xd84, 0); /* INTR_EN */
- 	nvkm_wr32(device, base + 0xd94, 0); /* FIFO_CTRL */
- 
--	if (!suspend)
-+	if (suspend == NVKM_POWEROFF)
- 		nvkm_memory_unref(&xtensa->gpu_fw);
- 	return 0;
- }
---- a/drivers/gpu/drm/nouveau/nvkm/subdev/acr/base.c
-+++ b/drivers/gpu/drm/nouveau/nvkm/subdev/acr/base.c
-@@ -182,7 +182,7 @@ nvkm_acr_managed_falcon(struct nvkm_devi
- }
- 
- static int
--nvkm_acr_fini(struct nvkm_subdev *subdev, bool suspend)
-+nvkm_acr_fini(struct nvkm_subdev *subdev, enum nvkm_suspend_state suspend)
- {
- 	if (!subdev->use.enabled)
- 		return 0;
---- a/drivers/gpu/drm/nouveau/nvkm/subdev/bar/base.c
-+++ b/drivers/gpu/drm/nouveau/nvkm/subdev/bar/base.c
-@@ -90,7 +90,7 @@ nvkm_bar_bar2_init(struct nvkm_device *d
- }
- 
- static int
--nvkm_bar_fini(struct nvkm_subdev *subdev, bool suspend)
-+nvkm_bar_fini(struct nvkm_subdev *subdev, enum nvkm_suspend_state suspend)
- {
- 	struct nvkm_bar *bar = nvkm_bar(subdev);
- 
---- a/drivers/gpu/drm/nouveau/nvkm/subdev/clk/base.c
-+++ b/drivers/gpu/drm/nouveau/nvkm/subdev/clk/base.c
-@@ -577,7 +577,7 @@ nvkm_clk_read(struct nvkm_clk *clk, enum
- }
- 
- static int
--nvkm_clk_fini(struct nvkm_subdev *subdev, bool suspend)
-+nvkm_clk_fini(struct nvkm_subdev *subdev, enum nvkm_suspend_state suspend)
- {
- 	struct nvkm_clk *clk = nvkm_clk(subdev);
- 	flush_work(&clk->work);
---- a/drivers/gpu/drm/nouveau/nvkm/subdev/devinit/base.c
-+++ b/drivers/gpu/drm/nouveau/nvkm/subdev/devinit/base.c
-@@ -67,11 +67,11 @@ nvkm_devinit_post(struct nvkm_devinit *i
- }
- 
- static int
--nvkm_devinit_fini(struct nvkm_subdev *subdev, bool suspend)
-+nvkm_devinit_fini(struct nvkm_subdev *subdev, enum nvkm_suspend_state suspend)
- {
- 	struct nvkm_devinit *init = nvkm_devinit(subdev);
- 	/* force full reinit on resume */
--	if (suspend)
-+	if (suspend != NVKM_POWEROFF)
- 		init->post = true;
- 	return 0;
- }
---- a/drivers/gpu/drm/nouveau/nvkm/subdev/fault/base.c
-+++ b/drivers/gpu/drm/nouveau/nvkm/subdev/fault/base.c
-@@ -51,7 +51,7 @@ nvkm_fault_intr(struct nvkm_subdev *subd
- }
- 
- static int
--nvkm_fault_fini(struct nvkm_subdev *subdev, bool suspend)
-+nvkm_fault_fini(struct nvkm_subdev *subdev, enum nvkm_suspend_state suspend)
- {
- 	struct nvkm_fault *fault = nvkm_fault(subdev);
- 	if (fault->func->fini)
---- a/drivers/gpu/drm/nouveau/nvkm/subdev/fault/user.c
-+++ b/drivers/gpu/drm/nouveau/nvkm/subdev/fault/user.c
-@@ -56,7 +56,7 @@ nvkm_ufault_map(struct nvkm_object *obje
- }
- 
- static int
--nvkm_ufault_fini(struct nvkm_object *object, bool suspend)
-+nvkm_ufault_fini(struct nvkm_object *object, enum nvkm_suspend_state suspend)
- {
- 	struct nvkm_fault_buffer *buffer = nvkm_fault_buffer(object);
- 	buffer->fault->func->buffer.fini(buffer);
---- a/drivers/gpu/drm/nouveau/nvkm/subdev/gpio/base.c
-+++ b/drivers/gpu/drm/nouveau/nvkm/subdev/gpio/base.c
-@@ -144,7 +144,7 @@ nvkm_gpio_intr(struct nvkm_subdev *subde
- }
- 
- static int
--nvkm_gpio_fini(struct nvkm_subdev *subdev, bool suspend)
-+nvkm_gpio_fini(struct nvkm_subdev *subdev, enum nvkm_suspend_state suspend)
- {
- 	struct nvkm_gpio *gpio = nvkm_gpio(subdev);
- 	u32 mask = (1ULL << gpio->func->lines) - 1;
---- a/drivers/gpu/drm/nouveau/nvkm/subdev/gsp/base.c
-+++ b/drivers/gpu/drm/nouveau/nvkm/subdev/gsp/base.c
-@@ -48,7 +48,7 @@ nvkm_gsp_intr_stall(struct nvkm_gsp *gsp
- }
- 
- static int
--nvkm_gsp_fini(struct nvkm_subdev *subdev, bool suspend)
-+nvkm_gsp_fini(struct nvkm_subdev *subdev, enum nvkm_suspend_state suspend)
- {
- 	struct nvkm_gsp *gsp = nvkm_gsp(subdev);
- 
---- a/drivers/gpu/drm/nouveau/nvkm/subdev/gsp/gh100.c
-+++ b/drivers/gpu/drm/nouveau/nvkm/subdev/gsp/gh100.c
-@@ -17,7 +17,7 @@
- #include <nvhw/ref/gh100/dev_riscv_pri.h>
- 
- int
--gh100_gsp_fini(struct nvkm_gsp *gsp, bool suspend)
-+gh100_gsp_fini(struct nvkm_gsp *gsp, enum nvkm_suspend_state suspend)
- {
- 	struct nvkm_falcon *falcon = &gsp->falcon;
- 	int ret, time = 4000;
---- a/drivers/gpu/drm/nouveau/nvkm/subdev/gsp/priv.h
-+++ b/drivers/gpu/drm/nouveau/nvkm/subdev/gsp/priv.h
-@@ -59,7 +59,7 @@ struct nvkm_gsp_func {
- 	void (*dtor)(struct nvkm_gsp *);
- 	int (*oneinit)(struct nvkm_gsp *);
- 	int (*init)(struct nvkm_gsp *);
--	int (*fini)(struct nvkm_gsp *, bool suspend);
-+	int (*fini)(struct nvkm_gsp *, enum nvkm_suspend_state suspend);
- 	int (*reset)(struct nvkm_gsp *);
- 
- 	struct {
-@@ -75,7 +75,7 @@ int tu102_gsp_fwsec_sb_ctor(struct nvkm_
- void tu102_gsp_fwsec_sb_dtor(struct nvkm_gsp *);
- int tu102_gsp_oneinit(struct nvkm_gsp *);
- int tu102_gsp_init(struct nvkm_gsp *);
--int tu102_gsp_fini(struct nvkm_gsp *, bool suspend);
-+int tu102_gsp_fini(struct nvkm_gsp *, enum nvkm_suspend_state suspend);
- int tu102_gsp_reset(struct nvkm_gsp *);
- u64 tu102_gsp_wpr_heap_size(struct nvkm_gsp *);
- 
-@@ -87,12 +87,12 @@ int ga102_gsp_reset(struct nvkm_gsp *);
- 
- int gh100_gsp_oneinit(struct nvkm_gsp *);
- int gh100_gsp_init(struct nvkm_gsp *);
--int gh100_gsp_fini(struct nvkm_gsp *, bool suspend);
-+int gh100_gsp_fini(struct nvkm_gsp *, enum nvkm_suspend_state suspend);
- 
- void r535_gsp_dtor(struct nvkm_gsp *);
- int r535_gsp_oneinit(struct nvkm_gsp *);
- int r535_gsp_init(struct nvkm_gsp *);
--int r535_gsp_fini(struct nvkm_gsp *, bool suspend);
-+int r535_gsp_fini(struct nvkm_gsp *, enum nvkm_suspend_state suspend);
- 
- int nvkm_gsp_new_(const struct nvkm_gsp_fwif *, struct nvkm_device *, enum nvkm_subdev_type, int,
- 		  struct nvkm_gsp **);
---- a/drivers/gpu/drm/nouveau/nvkm/subdev/gsp/rm/r535/gsp.c
-+++ b/drivers/gpu/drm/nouveau/nvkm/subdev/gsp/rm/r535/gsp.c
-@@ -1721,7 +1721,7 @@ r535_gsp_sr_data_size(struct nvkm_gsp *g
- }
- 
- int
--r535_gsp_fini(struct nvkm_gsp *gsp, bool suspend)
-+r535_gsp_fini(struct nvkm_gsp *gsp, enum nvkm_suspend_state suspend)
- {
- 	struct nvkm_rm *rm = gsp->rm;
- 	int ret;
---- a/drivers/gpu/drm/nouveau/nvkm/subdev/gsp/tu102.c
-+++ b/drivers/gpu/drm/nouveau/nvkm/subdev/gsp/tu102.c
-@@ -161,7 +161,7 @@ tu102_gsp_reset(struct nvkm_gsp *gsp)
- }
- 
- int
--tu102_gsp_fini(struct nvkm_gsp *gsp, bool suspend)
-+tu102_gsp_fini(struct nvkm_gsp *gsp, enum nvkm_suspend_state suspend)
- {
- 	u32 mbox0 = 0xff, mbox1 = 0xff;
- 	int ret;
---- a/drivers/gpu/drm/nouveau/nvkm/subdev/i2c/base.c
-+++ b/drivers/gpu/drm/nouveau/nvkm/subdev/i2c/base.c
-@@ -135,7 +135,7 @@ nvkm_i2c_intr(struct nvkm_subdev *subdev
- }
- 
- static int
--nvkm_i2c_fini(struct nvkm_subdev *subdev, bool suspend)
-+nvkm_i2c_fini(struct nvkm_subdev *subdev, enum nvkm_suspend_state suspend)
- {
- 	struct nvkm_i2c *i2c = nvkm_i2c(subdev);
- 	struct nvkm_i2c_pad *pad;
---- a/drivers/gpu/drm/nouveau/nvkm/subdev/instmem/base.c
-+++ b/drivers/gpu/drm/nouveau/nvkm/subdev/instmem/base.c
-@@ -176,7 +176,7 @@ nvkm_instmem_boot(struct nvkm_instmem *i
- }
- 
- static int
--nvkm_instmem_fini(struct nvkm_subdev *subdev, bool suspend)
-+nvkm_instmem_fini(struct nvkm_subdev *subdev, enum nvkm_suspend_state suspend)
- {
- 	struct nvkm_instmem *imem = nvkm_instmem(subdev);
- 	int ret;
---- a/drivers/gpu/drm/nouveau/nvkm/subdev/pci/base.c
-+++ b/drivers/gpu/drm/nouveau/nvkm/subdev/pci/base.c
-@@ -74,7 +74,7 @@ nvkm_pci_rom_shadow(struct nvkm_pci *pci
- }
- 
- static int
--nvkm_pci_fini(struct nvkm_subdev *subdev, bool suspend)
-+nvkm_pci_fini(struct nvkm_subdev *subdev, enum nvkm_suspend_state suspend)
- {
- 	struct nvkm_pci *pci = nvkm_pci(subdev);
- 
---- a/drivers/gpu/drm/nouveau/nvkm/subdev/pmu/base.c
-+++ b/drivers/gpu/drm/nouveau/nvkm/subdev/pmu/base.c
-@@ -77,7 +77,7 @@ nvkm_pmu_intr(struct nvkm_subdev *subdev
- }
- 
- static int
--nvkm_pmu_fini(struct nvkm_subdev *subdev, bool suspend)
-+nvkm_pmu_fini(struct nvkm_subdev *subdev, enum nvkm_suspend_state suspend)
- {
- 	struct nvkm_pmu *pmu = nvkm_pmu(subdev);
- 
---- a/drivers/gpu/drm/nouveau/nvkm/subdev/therm/base.c
-+++ b/drivers/gpu/drm/nouveau/nvkm/subdev/therm/base.c
-@@ -341,15 +341,15 @@ nvkm_therm_intr(struct nvkm_subdev *subd
- }
- 
- static int
--nvkm_therm_fini(struct nvkm_subdev *subdev, bool suspend)
-+nvkm_therm_fini(struct nvkm_subdev *subdev, enum nvkm_suspend_state suspend)
- {
- 	struct nvkm_therm *therm = nvkm_therm(subdev);
- 
- 	if (therm->func->fini)
- 		therm->func->fini(therm);
- 
--	nvkm_therm_fan_fini(therm, suspend);
--	nvkm_therm_sensor_fini(therm, suspend);
-+	nvkm_therm_fan_fini(therm, suspend != NVKM_POWEROFF);
-+	nvkm_therm_sensor_fini(therm, suspend != NVKM_POWEROFF);
- 
- 	if (suspend) {
- 		therm->suspend = therm->mode;
---- a/drivers/gpu/drm/nouveau/nvkm/subdev/timer/base.c
-+++ b/drivers/gpu/drm/nouveau/nvkm/subdev/timer/base.c
-@@ -149,7 +149,7 @@ nvkm_timer_intr(struct nvkm_subdev *subd
- }
- 
- static int
--nvkm_timer_fini(struct nvkm_subdev *subdev, bool suspend)
-+nvkm_timer_fini(struct nvkm_subdev *subdev, enum nvkm_suspend_state suspend)
- {
- 	struct nvkm_timer *tmr = nvkm_timer(subdev);
- 	tmr->func->alarm_fini(tmr);
 
 
