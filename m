@@ -1,43 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9F762690EC;
-	Mon,  9 Feb 2026 14:49:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67D41285073;
+	Mon,  9 Feb 2026 14:49:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770648573; cv=none; b=A5vqXDeDAaj8utn37v+o5TL9yQ74wZBxlW1SqhDhxh7Ano/WNaKQ/L4Fm9RzcJ48wv1BJbf9NL9vzD/UatK7tx9VTE68tqcj+NhQjw/WyKD6SazSMd1Vz3K5wBj6Su2A5tB9EVKqGH4bsP+RLi/J4kmHRJTMfkTCxvvK/mUP/I4=
+	t=1770648576; cv=none; b=kkDDENWm2CMkiZJbAkPpL0cx8JfF7t+X+9cObTsLU7yqrfgiZEgLuSJSGUFIHFDacSn7IghCLX668GwNHcZEFfctp6nEyTWh1Gy2BpjbV0BxuRkScFNIad/Ko7gJFcPOS+dSAARKKgiyz/JTivyL83Tn2qpD5dsfhulJwWw6JOk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770648573; c=relaxed/simple;
-	bh=S7mg6I4wk2ujloylxxaYa3v09PrnPzyc8prx9qmJNCQ=;
+	s=arc-20240116; t=1770648576; c=relaxed/simple;
+	bh=nSJlGaBzd/GQTIQcjsjTJttIiRymJGvW/T/G7ewoTFU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AArDMyBq/j+m/jbunF3sB/SdehQps5MGbOF6PBpwzVxGyCesLZ0PDgueYEFGNVyBD36I+6yla3XWHby1K8+VENWl0aYiEmHObYfttekGTb4ZrWq5GxxD5u50semT3Ehl6brG76pJM2v/gM7IPS6lhc926JknQn+wJZCy+Yn25NQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=E3gG5Unm; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=DKkW1QT//uzcrwzfu7JR+i3tB0GPwiVJtVUYYIsK05dM7MBlQ+iK25CpOshVAYxCrlp86KynW4vzh9mCgz4fGZMujUiCPobX2zFiF6ydDpPN1vNT1JiLVnHB8PW3+RulV+T4s67Zahs6HLOX9m9AkK+l4nBgslzruSR8mHzNySM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bjCYx7FB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="E3gG5Unm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 63206C116C6;
-	Mon,  9 Feb 2026 14:49:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bjCYx7FB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC83AC116C6;
+	Mon,  9 Feb 2026 14:49:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770648572;
-	bh=S7mg6I4wk2ujloylxxaYa3v09PrnPzyc8prx9qmJNCQ=;
+	s=korg; t=1770648576;
+	bh=nSJlGaBzd/GQTIQcjsjTJttIiRymJGvW/T/G7ewoTFU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=E3gG5UnmCjUPV9L5RzPk7tIQvmvZhG+OTIzO3Yjj/uI6aKErczwfQQAf8h/zIbJJv
-	 JpyUib59J2F/bo4LTuYPeKaa3cMYQqMivha/vtg6Ndy1xAYx1bb+l8GuYl/SrNKATX
-	 r2x3q3JLP37i6qgYYJrla8mhsMZALRaDMaGe77Pg=
+	b=bjCYx7FBg0UCF2lqhXIn3HSTUN/3nzKRpP6a/asMtzk65YhQ33jEz+sk2F5CWrxFA
+	 INE6/IVXkwX09rNF4SuX7UQ6qI+Y/2AwR3ZBOzdulONUNj5SXB8UWevQtE/OYQAxDS
+	 ZrAq1fSGcl4k2GToD+aWyfehb00GCPC5aSxQ0OUA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Max Yuan <maxyuan@google.com>,
-	Jordan Rhee <jordanrhee@google.com>,
-	Joshua Washington <joshwash@google.com>,
-	Matt Olson <maolson@google.com>,
-	Harshitha Ramamurthy <hramamurthy@google.com>,
-	Jacob Keller <jacob.e.keller@intel.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Breno Leitao <leitao@debian.org>,
+	Usama Arif <usamaarif642@gmail.com>,
+	Jon Hunter <jonathanh@nvidia.com>,
+	Thierry Reding <treding@nvidia.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 78/86] gve: Correct ethtool rx_dropped calculation
-Date: Mon,  9 Feb 2026 15:24:41 +0100
-Message-ID: <20260209142307.593172527@linuxfoundation.org>
+Subject: [PATCH 6.6 79/86] spi: tegra210-quad: Return IRQ_HANDLED when timeout already processed transfer
+Date: Mon,  9 Feb 2026 15:24:42 +0100
+Message-ID: <20260209142307.628652715@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260209142304.770150175@linuxfoundation.org>
 References: <20260209142304.770150175@linuxfoundation.org>
@@ -56,117 +54,73 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Max Yuan <maxyuan@google.com>
+From: Breno Leitao <leitao@debian.org>
 
-[ Upstream commit c7db85d579a1dccb624235534508c75fbf2dfe46 ]
+[ Upstream commit aabd8ea0aa253d40cf5f20a609fc3d6f61e38299 ]
 
-The gve driver's "rx_dropped" statistic, exposed via `ethtool -S`,
-incorrectly includes `rx_buf_alloc_fail` counts. These failures
-represent an inability to allocate receive buffers, not true packet
-drops where a received packet is discarded. This misrepresentation can
-lead to inaccurate diagnostics.
+When the ISR thread wakes up late and finds that the timeout handler
+has already processed the transfer (curr_xfer is NULL), return
+IRQ_HANDLED instead of IRQ_NONE.
 
-This patch rectifies the ethtool "rx_dropped" calculation. It removes
-`rx_buf_alloc_fail` from the total and adds `xdp_tx_errors` and
-`xdp_redirect_errors`, which represent legitimate packet drops within
-the XDP path.
+Use a similar approach to tegra_qspi_handle_timeout() by reading
+QSPI_TRANS_STATUS and checking the QSPI_RDY bit to determine if the
+hardware actually completed the transfer. If QSPI_RDY is set, the
+interrupt was legitimate and triggered by real hardware activity.
+The fact that the timeout path handled it first doesn't make it
+spurious. Returning IRQ_NONE incorrectly suggests the interrupt
+wasn't for this device, which can cause issues with shared interrupt
+lines and interrupt accounting.
 
-Cc: stable@vger.kernel.org
-Fixes: 433e274b8f7b ("gve: Add stats for gve.")
-Signed-off-by: Max Yuan <maxyuan@google.com>
-Reviewed-by: Jordan Rhee <jordanrhee@google.com>
-Reviewed-by: Joshua Washington <joshwash@google.com>
-Reviewed-by: Matt Olson <maolson@google.com>
-Signed-off-by: Harshitha Ramamurthy <hramamurthy@google.com>
-Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
-Link: https://patch.msgid.link/20260202193925.3106272-3-hramamurthy@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: b4e002d8a7ce ("spi: tegra210-quad: Fix timeout handling")
+Signed-off-by: Breno Leitao <leitao@debian.org>
+Signed-off-by: Usama Arif <usamaarif642@gmail.com>
+Tested-by: Jon Hunter <jonathanh@nvidia.com>
+Acked-by: Jon Hunter <jonathanh@nvidia.com>
+Acked-by: Thierry Reding <treding@nvidia.com>
+Link: https://patch.msgid.link/20260126-tegra_xfer-v2-1-6d2115e4f387@debian.org
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/google/gve/gve_ethtool.c | 27 ++++++++++++++-----
- 1 file changed, 20 insertions(+), 7 deletions(-)
+ drivers/spi/spi-tegra210-quad.c | 19 +++++++++++++++++--
+ 1 file changed, 17 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/ethernet/google/gve/gve_ethtool.c b/drivers/net/ethernet/google/gve/gve_ethtool.c
-index 59c509ade2625..b1c4df3bab292 100644
---- a/drivers/net/ethernet/google/gve/gve_ethtool.c
-+++ b/drivers/net/ethernet/google/gve/gve_ethtool.c
-@@ -156,9 +156,11 @@ gve_get_ethtool_stats(struct net_device *netdev,
+diff --git a/drivers/spi/spi-tegra210-quad.c b/drivers/spi/spi-tegra210-quad.c
+index d9a487274b530..1fffb1ab30af6 100644
+--- a/drivers/spi/spi-tegra210-quad.c
++++ b/drivers/spi/spi-tegra210-quad.c
+@@ -1444,15 +1444,30 @@ static irqreturn_t handle_dma_based_xfer(struct tegra_qspi *tqspi)
+ static irqreturn_t tegra_qspi_isr_thread(int irq, void *context_data)
  {
- 	u64 tmp_rx_pkts, tmp_rx_bytes, tmp_rx_skb_alloc_fail,
- 		tmp_rx_buf_alloc_fail, tmp_rx_desc_err_dropped_pkt,
--		tmp_tx_pkts, tmp_tx_bytes;
-+		tmp_tx_pkts, tmp_tx_bytes,
-+		tmp_xdp_tx_errors, tmp_xdp_redirect_errors;
- 	u64 rx_buf_alloc_fail, rx_desc_err_dropped_pkt, rx_pkts,
--		rx_skb_alloc_fail, rx_bytes, tx_pkts, tx_bytes, tx_dropped;
-+		rx_skb_alloc_fail, rx_bytes, tx_pkts, tx_bytes, tx_dropped,
-+		xdp_tx_errors, xdp_redirect_errors;
- 	int rx_base_stats_idx, max_rx_stats_idx, max_tx_stats_idx;
- 	int stats_idx, stats_region_len, nic_stats_len;
- 	struct stats *report_stats;
-@@ -187,7 +189,9 @@ gve_get_ethtool_stats(struct net_device *netdev,
- 		return;
- 	}
- 	for (rx_pkts = 0, rx_bytes = 0, rx_skb_alloc_fail = 0,
--	     rx_buf_alloc_fail = 0, rx_desc_err_dropped_pkt = 0, ring = 0;
-+	     rx_buf_alloc_fail = 0, rx_desc_err_dropped_pkt = 0,
-+	     xdp_tx_errors = 0, xdp_redirect_errors = 0,
-+	     ring = 0;
- 	     ring < priv->rx_cfg.num_queues; ring++) {
- 		if (priv->rx) {
- 			do {
-@@ -201,6 +205,9 @@ gve_get_ethtool_stats(struct net_device *netdev,
- 				tmp_rx_buf_alloc_fail = rx->rx_buf_alloc_fail;
- 				tmp_rx_desc_err_dropped_pkt =
- 					rx->rx_desc_err_dropped_pkt;
-+				tmp_xdp_tx_errors = rx->xdp_tx_errors;
-+				tmp_xdp_redirect_errors =
-+					rx->xdp_redirect_errors;
- 			} while (u64_stats_fetch_retry(&priv->rx[ring].statss,
- 						       start));
- 			rx_pkts += tmp_rx_pkts;
-@@ -208,6 +215,8 @@ gve_get_ethtool_stats(struct net_device *netdev,
- 			rx_skb_alloc_fail += tmp_rx_skb_alloc_fail;
- 			rx_buf_alloc_fail += tmp_rx_buf_alloc_fail;
- 			rx_desc_err_dropped_pkt += tmp_rx_desc_err_dropped_pkt;
-+			xdp_tx_errors += tmp_xdp_tx_errors;
-+			xdp_redirect_errors += tmp_xdp_redirect_errors;
- 		}
- 	}
- 	for (tx_pkts = 0, tx_bytes = 0, tx_dropped = 0, ring = 0;
-@@ -232,8 +241,8 @@ gve_get_ethtool_stats(struct net_device *netdev,
- 	data[i++] = rx_bytes;
- 	data[i++] = tx_bytes;
- 	/* total rx dropped packets */
--	data[i++] = rx_skb_alloc_fail + rx_buf_alloc_fail +
--		    rx_desc_err_dropped_pkt;
-+	data[i++] = rx_skb_alloc_fail + rx_desc_err_dropped_pkt +
-+		    xdp_tx_errors + xdp_redirect_errors;
- 	data[i++] = tx_dropped;
- 	data[i++] = priv->tx_timeo_cnt;
- 	data[i++] = rx_skb_alloc_fail;
-@@ -300,6 +309,9 @@ gve_get_ethtool_stats(struct net_device *netdev,
- 				tmp_rx_buf_alloc_fail = rx->rx_buf_alloc_fail;
- 				tmp_rx_desc_err_dropped_pkt =
- 					rx->rx_desc_err_dropped_pkt;
-+				tmp_xdp_tx_errors = rx->xdp_tx_errors;
-+				tmp_xdp_redirect_errors =
-+					rx->xdp_redirect_errors;
- 			} while (u64_stats_fetch_retry(&priv->rx[ring].statss,
- 						       start));
- 			data[i++] = tmp_rx_bytes;
-@@ -309,8 +321,9 @@ gve_get_ethtool_stats(struct net_device *netdev,
- 			data[i++] = rx->rx_frag_alloc_cnt;
- 			/* rx dropped packets */
- 			data[i++] = tmp_rx_skb_alloc_fail +
--				tmp_rx_buf_alloc_fail +
--				tmp_rx_desc_err_dropped_pkt;
-+				    tmp_rx_desc_err_dropped_pkt +
-+				    tmp_xdp_tx_errors +
-+				    tmp_xdp_redirect_errors;
- 			data[i++] = rx->rx_copybreak_pkt;
- 			data[i++] = rx->rx_copied_pkt;
- 			/* stats from NIC */
+ 	struct tegra_qspi *tqspi = context_data;
++	u32 status;
++
++	/*
++	 * Read transfer status to check if interrupt was triggered by transfer
++	 * completion
++	 */
++	status = tegra_qspi_readl(tqspi, QSPI_TRANS_STATUS);
+ 
+ 	/*
+ 	 * Occasionally the IRQ thread takes a long time to wake up (usually
+ 	 * when the CPU that it's running on is excessively busy) and we have
+ 	 * already reached the timeout before and cleaned up the timed out
+ 	 * transfer. Avoid any processing in that case and bail out early.
++	 *
++	 * If no transfer is in progress, check if this was a real interrupt
++	 * that the timeout handler already processed, or a spurious one.
+ 	 */
+-	if (!tqspi->curr_xfer)
+-		return IRQ_NONE;
++	if (!tqspi->curr_xfer) {
++		/* Spurious interrupt - transfer not ready */
++		if (!(status & QSPI_RDY))
++			return IRQ_NONE;
++		/* Real interrupt, already handled by timeout path */
++		return IRQ_HANDLED;
++	}
+ 
+ 	tqspi->status_reg = tegra_qspi_readl(tqspi, QSPI_FIFO_STATUS);
+ 
 -- 
 2.51.0
 
