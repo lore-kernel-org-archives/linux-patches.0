@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38A76125B2;
-	Mon,  9 Feb 2026 14:35:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21F75125B2;
+	Mon,  9 Feb 2026 14:35:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770647720; cv=none; b=Z/xcwzSEl+hXmdqOrdaKCgSSLx1Z6BwQIBWwIAt1Na+QdmUqvIIW+csjb+SivKuuh3MxmmvFh+OhBX04/D1jfFZMxZGiHFWQwxj5ZYKyAeBgjfi6fcIj+GCQK/uSbmF1xsI9ns2NLq3wvN9NP4tQZ5iJaa/1kOdUAAg9j8AvKp8=
+	t=1770647723; cv=none; b=k2dbrIVHm/VCT4ohnvvNC9omza3xM32p0VmALEMZaoLrBR78gyM+HAchGlhKjOdSKxh5nHnyUlJMQB0qSzkIMIcVt5A9VB8ffSeRncwknps3Yh+z7GpeDYsvKbi7sF3Ur7P4ZSMMXiHmVHdFIax558eWd9LC40eji6cgy9i1GHg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770647720; c=relaxed/simple;
-	bh=P9qjqQepGQSrDQ1xeF33gzppMVYazTlERF0VR1ijPtg=;
+	s=arc-20240116; t=1770647723; c=relaxed/simple;
+	bh=DMVLfy3nDHjOj4MkPAXE+7JTarYbrme8CuDxvjcNHaA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ROhO86fDPY/74N7DPVaJf5Gwts9Z36qgCMBejPz3LCTzWD1wJer6CxDPEjgoAcGtejYv3JUQPF2HX4RGpuTG6mauhN2Ul/tJlh8JDW8pqmKuJFqzvDvsX2f2WpLk5tt+WARn6xJivXFHgX0/tTDZjSLjzz5M2xM8VcpZr8M6d0U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dMYStsH1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=m9Xawt5MWuYZ11YdQEDOlCFlMdXfK818FQ5qwJrh4IJZVkUkXDFP7QdisNaHV/6OjgBoCUzbP1HsAQG7lXWMwfS8y14iLh6NvaLjMjYt8Q+PvHKeDe873kNmY7OQX8uhqjCvyLubhKscYDbmNt9n8pJ3AnqBQMHeIx6pfXPovQ8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QZhqZdu/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dMYStsH1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 60B9AC116C6;
-	Mon,  9 Feb 2026 14:35:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QZhqZdu/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 978D4C116C6;
+	Mon,  9 Feb 2026 14:35:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770647719;
-	bh=P9qjqQepGQSrDQ1xeF33gzppMVYazTlERF0VR1ijPtg=;
+	s=korg; t=1770647723;
+	bh=DMVLfy3nDHjOj4MkPAXE+7JTarYbrme8CuDxvjcNHaA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dMYStsH1EnfI0Ro0GvW0B6pg2erYwp8X0rpqjDZE3hfFKpa2bNezs4PIuzm7hHV6Z
-	 tXlbR65mrKytabS3ha9WnKzj87wdV7D1Vh9W3sf7s9LSX4yUKCDqWXkiN2GXoyBjaY
-	 IyRCCHqtx2zFVBO3Dg+YE7xpcdvNQZyDLR0NZQOg=
+	b=QZhqZdu/L0ow1E6ULcpTFuCb9A2R6Qqq3gP8hfnw4caboT0o6XT3y8VJoGIW9+l1S
+	 fT4TkB0naWGpq61we1YQZjyJF3UHpLQaHbwOhM77cCpKsLPXf/a/3TiG629Vr/WwYN
+	 vt0gvw5/aeVEppSTmb8lczhQvrVpx9vsFghy0zho=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	YunJe Shin <ioerts@kookmin.ac.kr>,
-	Sagi Grimberg <sagi@grimberg.me>,
-	Joonkyo Jung <joonkyoj@yonsei.ac.kr>,
-	Keith Busch <kbusch@kernel.org>
-Subject: [PATCH 6.12 001/113] nvmet-tcp: add bounds checks in nvmet_tcp_build_pdu_iovec
-Date: Mon,  9 Feb 2026 15:22:30 +0100
-Message-ID: <20260209142310.260541459@linuxfoundation.org>
+	stable@kernel.org,
+	Xu Yang <xu.yang_2@nxp.com>,
+	Daniel Baluta <daniel.baluta@nxp.com>,
+	Ulf Hansson <ulf.hansson@linaro.org>
+Subject: [PATCH 6.12 010/113] pmdomain: imx8m-blk-ctrl: fix out-of-range access of bc->domains
+Date: Mon,  9 Feb 2026 15:22:39 +0100
+Message-ID: <20260209142310.582949893@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260209142310.204833231@linuxfoundation.org>
 References: <20260209142310.204833231@linuxfoundation.org>
@@ -52,72 +52,32 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: YunJe Shin <yjshin0438@gmail.com>
+From: Xu Yang <xu.yang_2@nxp.com>
 
-commit 52a0a98549344ca20ad81a4176d68d28e3c05a5c upstream.
+commit 6bd8b4a92a901fae1a422e6f914801063c345e8d upstream.
 
-nvmet_tcp_build_pdu_iovec() could walk past cmd->req.sg when a PDU
-length or offset exceeds sg_cnt and then use bogus sg->length/offset
-values, leading to _copy_to_iter() GPF/KASAN. Guard sg_idx, remaining
-entries, and sg->length/offset before building the bvec.
+Fix out-of-range access of bc->domains in imx8m_blk_ctrl_remove().
 
-Fixes: 872d26a391da ("nvmet-tcp: add NVMe over TCP target driver")
-Signed-off-by: YunJe Shin <ioerts@kookmin.ac.kr>
-Reviewed-by: Sagi Grimberg <sagi@grimberg.me>
-Reviewed-by: Joonkyo Jung <joonkyoj@yonsei.ac.kr>
-Signed-off-by: Keith Busch <kbusch@kernel.org>
+Fixes: 2684ac05a8c4 ("soc: imx: add i.MX8M blk-ctrl driver")
+Cc: stable@kernel.org
+Signed-off-by: Xu Yang <xu.yang_2@nxp.com>
+Reviewed-by: Daniel Baluta <daniel.baluta@nxp.com>
+Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/nvme/target/tcp.c |   17 +++++++++++++++++
- 1 file changed, 17 insertions(+)
+ drivers/pmdomain/imx/imx8m-blk-ctrl.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/nvme/target/tcp.c
-+++ b/drivers/nvme/target/tcp.c
-@@ -357,11 +357,14 @@ static void nvmet_tcp_free_cmd_buffers(s
- 	cmd->req.sg = NULL;
- }
+--- a/drivers/pmdomain/imx/imx8m-blk-ctrl.c
++++ b/drivers/pmdomain/imx/imx8m-blk-ctrl.c
+@@ -340,7 +340,7 @@ static void imx8m_blk_ctrl_remove(struct
  
-+static void nvmet_tcp_fatal_error(struct nvmet_tcp_queue *queue);
-+
- static void nvmet_tcp_build_pdu_iovec(struct nvmet_tcp_cmd *cmd)
- {
- 	struct bio_vec *iov = cmd->iov;
- 	struct scatterlist *sg;
- 	u32 length, offset, sg_offset;
-+	unsigned int sg_remaining;
- 	int nr_pages;
+ 	of_genpd_del_provider(pdev->dev.of_node);
  
- 	length = cmd->pdu_len;
-@@ -369,9 +372,22 @@ static void nvmet_tcp_build_pdu_iovec(st
- 	offset = cmd->rbytes_done;
- 	cmd->sg_idx = offset / PAGE_SIZE;
- 	sg_offset = offset % PAGE_SIZE;
-+	if (!cmd->req.sg_cnt || cmd->sg_idx >= cmd->req.sg_cnt) {
-+		nvmet_tcp_fatal_error(cmd->queue);
-+		return;
-+	}
- 	sg = &cmd->req.sg[cmd->sg_idx];
-+	sg_remaining = cmd->req.sg_cnt - cmd->sg_idx;
+-	for (i = 0; bc->onecell_data.num_domains; i++) {
++	for (i = 0; i < bc->onecell_data.num_domains; i++) {
+ 		struct imx8m_blk_ctrl_domain *domain = &bc->domains[i];
  
- 	while (length) {
-+		if (!sg_remaining) {
-+			nvmet_tcp_fatal_error(cmd->queue);
-+			return;
-+		}
-+		if (!sg->length || sg->length <= sg_offset) {
-+			nvmet_tcp_fatal_error(cmd->queue);
-+			return;
-+		}
- 		u32 iov_len = min_t(u32, length, sg->length - sg_offset);
- 
- 		bvec_set_page(iov, sg_page(sg), iov_len,
-@@ -379,6 +395,7 @@ static void nvmet_tcp_build_pdu_iovec(st
- 
- 		length -= iov_len;
- 		sg = sg_next(sg);
-+		sg_remaining--;
- 		iov++;
- 		sg_offset = 0;
- 	}
+ 		pm_genpd_remove(&domain->genpd);
 
 
