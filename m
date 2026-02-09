@@ -1,47 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9531528312F;
-	Mon,  9 Feb 2026 14:52:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89F8628312F;
+	Mon,  9 Feb 2026 14:52:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770648765; cv=none; b=QndiOtKzunbmQOx+VsL/6zLJAylcGXGzrAZydVEEB49W6fBeVWWVBOXJsJuwaJl0XRekRK7zyM0n52A2fdOD/R6moMHu4HOc3Twvf0JF3CDQCm3ERvSNJN10SkIFfOko61qPP5TqOMI1kMmvzKL2x+4HP2jKQ5lFVDQNj2WbdEI=
+	t=1770648769; cv=none; b=VXd9/BYMgQd89ZqGVuBOp68vNORVqaWdPDpioPQRKTIZUmpyM+IUBbqqFCUePbzGguQ26MmHwcaRaKmBV0QIRBfwydJardty/P58ui4CvR3RcecEfehZY1IkE4nCrwt02rPLjjwZjBKIFk9AyO17TP2lY/ZTxccXpHJmxtxxOz0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770648765; c=relaxed/simple;
-	bh=XTX59P6UsPnSKh/pY5slsi6eIpVh6ZE7x5nzecPpZ4k=;
+	s=arc-20240116; t=1770648769; c=relaxed/simple;
+	bh=pKGFHG889NcL66GsqmwvL57QGx+X9jO1HuU33NEoUXk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kdQTY+1kXdgr/JMRgovrBn0KMgKbqVCA7wjKD30C8Y7M2Vr8qcnxR8voPBdqq13/bKnmt6cRpXdn6GsYfRtslxLvy8TeyFRgdUyO/0nxpdAXBH/Iz2NxW5uKO50bM5Ax1DO2+yWgK0Fckog6lNj3WQkd1e7kcLrPh9N1PAOO0mQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GVfLjk3j; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=T2y466O5y22bmS00W+dMCKzmfYKfJX70dKM18KxECgMHKyINRsJtzXZEUjP/GegL3WFk3CiIXfxgS6wKpgxxVBKZ3mn3MHSiyTrIK6lLPVCtzW6Ck93BiG0OVIb4c4sZO83yr1+Kmdz19N96dyF1a4DolX/OmhGp9DLe5XtidsE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NuIHFX+K; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GVfLjk3j"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BBF8AC116C6;
-	Mon,  9 Feb 2026 14:52:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NuIHFX+K"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D448BC116C6;
+	Mon,  9 Feb 2026 14:52:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770648765;
-	bh=XTX59P6UsPnSKh/pY5slsi6eIpVh6ZE7x5nzecPpZ4k=;
+	s=korg; t=1770648769;
+	bh=pKGFHG889NcL66GsqmwvL57QGx+X9jO1HuU33NEoUXk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GVfLjk3jl+4iqxAeqBBtglBbBVDNDNCUmcLj5o5QXK10g1OYof7jXG7TiGMHs4TSZ
-	 /3Ysm7//gONMrq/a+4A6+Bh53VvlDjbk2fqNST0W7jAGKkZwPrLZttxSiHJk5BuJTd
-	 gLvrq6J/w4D8iUEOa99iH98MROvEIFaX/oHpn38g=
+	b=NuIHFX+K5M/ox3ScGkIrF+iv6NEgGsTvsrNCWIKWOJUfghlduAUmUFgcuk04DfEF3
+	 vploKkcr+8J8SEkCG4e3LZVAL7WWsbK5qAm72d6QOYCojJ1kppDp1U17XzxTe/gGmQ
+	 x4aWyHhHXY9fTvltgTuN02veZNUZpE80/vs6hLM4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ryusuke Konishi <konishi.ryusuke@gmail.com>,
-	Andrew Cooper <andrew.cooper3@citrix.com>,
-	"Borislav Petkov (AMD)" <bp@alien8.de>,
-	Alexander Potapenko <glider@google.com>,
-	Marco Elver <elver@google.com>,
-	Dmitry Vyukov <dvyukov@google.com>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
 	Thomas Gleixner <tglx@linutronix.de>,
-	Ingo Molnar <mingo@redhat.com>,
-	Dave Hansen <dave.hansen@linux.intel.com>,
-	"H. Peter Anvin" <hpa@zytor.com>,
-	Jann Horn <jannh@google.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 5.15 01/75] x86/kfence: fix booting on 32bit non-PAE systems
-Date: Mon,  9 Feb 2026 15:23:58 +0100
-Message-ID: <20260209142301.887390229@linuxfoundation.org>
+	Guenter Roeck <linux@roeck-us.net>,
+	Jacob Keller <jacob.e.keller@intel.com>,
+	Anna-Maria Behnsen <anna-maria@linutronix.de>,
+	Marc Zyngier <maz@kernel.org>,
+	Jeongjun Park <aha310510@gmail.com>
+Subject: [PATCH 5.15 10/75] clocksource/drivers/arm_arch_timer: Do not use timer namespace for timer_shutdown() function
+Date: Mon,  9 Feb 2026 15:24:07 +0100
+Message-ID: <20260209142302.212268660@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260209142301.830618238@linuxfoundation.org>
 References: <20260209142301.830618238@linuxfoundation.org>
@@ -60,68 +55,73 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andrew Cooper <andrew.cooper3@citrix.com>
+From: "Steven Rostedt (Google)" <rostedt@goodmis.org>
 
-commit 16459fe7e0ca6520a6e8f603de4ccd52b90fd765 upstream.
+[ Upstream commit 73737a5833ace25a8408b0d3b783637cb6bf29d1 ]
 
-The original patch inverted the PTE unconditionally to avoid
-L1TF-vulnerable PTEs, but Linux doesn't make this adjustment in 2-level
-paging.
+A new "shutdown" timer state is being added to the generic timer code. One
+of the functions to change the timer into the state is called
+"timer_shutdown()". This means that there can not be other functions
+called "timer_shutdown()" as the timer code owns the "timer_*" name space.
 
-Adjust the logic to use the flip_protnone_guard() helper, which is a nop
-on 2-level paging but inverts the address bits in all other paging modes.
+Rename timer_shutdown() to arch_timer_shutdown() to avoid this conflict.
 
-This doesn't matter for the Xen aspect of the original change.  Linux no
-longer supports running 32bit PV under Xen, and Xen doesn't support
-running any 32bit PV guests without using PAE paging.
-
-Link: https://lkml.kernel.org/r/20260126211046.2096622-1-andrew.cooper3@citrix.com
-Fixes: b505f1944535 ("x86/kfence: avoid writing L1TF-vulnerable PTEs")
-Reported-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
-Closes: https://lore.kernel.org/lkml/CAKFNMokwjw68ubYQM9WkzOuH51wLznHpEOMSqtMoV1Rn9JV_gw@mail.gmail.com/
-Signed-off-by: Andrew Cooper <andrew.cooper3@citrix.com>
-Tested-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
-Tested-by: Borislav Petkov (AMD) <bp@alien8.de>
-Cc: Alexander Potapenko <glider@google.com>
-Cc: Marco Elver <elver@google.com>
-Cc: Dmitry Vyukov <dvyukov@google.com>
-Cc: Thomas Gleixner <tglx@linutronix.de>
-Cc: Ingo Molnar <mingo@redhat.com>
-Cc: Dave Hansen <dave.hansen@linux.intel.com>
-Cc: "H. Peter Anvin" <hpa@zytor.com>
-Cc: Jann Horn <jannh@google.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Tested-by: Guenter Roeck <linux@roeck-us.net>
+Reviewed-by: Guenter Roeck <linux@roeck-us.net>
+Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
+Reviewed-by: Anna-Maria Behnsen <anna-maria@linutronix.de>
+Acked-by: Marc Zyngier <maz@kernel.org>
+Link: https://lkml.kernel.org/r/20221106212702.002251651@goodmis.org
+Link: https://lore.kernel.org/all/20221105060155.409832154@goodmis.org/
+Link: https://lore.kernel.org/r/20221110064146.981725531@goodmis.org
+Link: https://lore.kernel.org/r/20221123201624.574672568@linutronix.de
+Signed-off-by: Jeongjun Park <aha310510@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/include/asm/kfence.h |    7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ drivers/clocksource/arm_arch_timer.c |   12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
---- a/arch/x86/include/asm/kfence.h
-+++ b/arch/x86/include/asm/kfence.h
-@@ -42,7 +42,7 @@ static inline bool kfence_protect_page(u
+--- a/drivers/clocksource/arm_arch_timer.c
++++ b/drivers/clocksource/arm_arch_timer.c
+@@ -691,8 +691,8 @@ static irqreturn_t arch_timer_handler_vi
+ 	return timer_handler(ARCH_TIMER_MEM_VIRT_ACCESS, evt);
+ }
+ 
+-static __always_inline int timer_shutdown(const int access,
+-					  struct clock_event_device *clk)
++static __always_inline int arch_timer_shutdown(const int access,
++					       struct clock_event_device *clk)
  {
- 	unsigned int level;
- 	pte_t *pte = lookup_address(addr, &level);
--	pteval_t val;
-+	pteval_t val, new;
+ 	unsigned long ctrl;
  
- 	if (WARN_ON(!pte || level != PG_LEVEL_4K))
- 		return false;
-@@ -57,11 +57,12 @@ static inline bool kfence_protect_page(u
- 		return true;
+@@ -705,22 +705,22 @@ static __always_inline int timer_shutdow
  
- 	/*
--	 * Otherwise, invert the entire PTE.  This avoids writing out an
-+	 * Otherwise, flip the Present bit, taking care to avoid writing an
- 	 * L1TF-vulnerable PTE (not present, without the high address bits
- 	 * set).
- 	 */
--	set_pte(pte, __pte(~val));
-+	new = val ^ _PAGE_PRESENT;
-+	set_pte(pte, __pte(flip_protnone_guard(val, new, PTE_PFN_MASK)));
+ static int arch_timer_shutdown_virt(struct clock_event_device *clk)
+ {
+-	return timer_shutdown(ARCH_TIMER_VIRT_ACCESS, clk);
++	return arch_timer_shutdown(ARCH_TIMER_VIRT_ACCESS, clk);
+ }
  
- 	/*
- 	 * If the page was protected (non-present) and we're making it
+ static int arch_timer_shutdown_phys(struct clock_event_device *clk)
+ {
+-	return timer_shutdown(ARCH_TIMER_PHYS_ACCESS, clk);
++	return arch_timer_shutdown(ARCH_TIMER_PHYS_ACCESS, clk);
+ }
+ 
+ static int arch_timer_shutdown_virt_mem(struct clock_event_device *clk)
+ {
+-	return timer_shutdown(ARCH_TIMER_MEM_VIRT_ACCESS, clk);
++	return arch_timer_shutdown(ARCH_TIMER_MEM_VIRT_ACCESS, clk);
+ }
+ 
+ static int arch_timer_shutdown_phys_mem(struct clock_event_device *clk)
+ {
+-	return timer_shutdown(ARCH_TIMER_MEM_PHYS_ACCESS, clk);
++	return arch_timer_shutdown(ARCH_TIMER_MEM_PHYS_ACCESS, clk);
+ }
+ 
+ static __always_inline void set_next_event(const int access, unsigned long evt,
 
 
