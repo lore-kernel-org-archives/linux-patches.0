@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1D0027FB05;
-	Mon,  9 Feb 2026 14:46:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F73027CCF2;
+	Mon,  9 Feb 2026 14:46:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770648391; cv=none; b=mAkKYmhWY54D9MmSBhZPcMsvkxsEj5P3Vd8uSXFQk+4yZ6d5dhd0qrHymBRVkvpctl3RmyZEjAbgxBxAEdFLyTzfVM+cJmWv+uCrqqPsUfkZqtyfu+zzzywYKp23ql1VUFEFtnJqR3yoii/ijIyR0ZQYAFRoVNr6wnvTut/lCf8=
+	t=1770648395; cv=none; b=UJoeU6K7bhB1lUtQpS2iErh5ha4cbseCtEPaa1Sry0EaX2Fb8eqrRzhId5y7bW7BFNhXd/s5ZN6fLP3qqQ69ux8qwNSJizTyFXC2JbDpD5562aPidJfrc5L3XJMFQTGzSDR7JDnWMayZwkG9y9Yv8vEY1ZPDrK3YXFbaTFFvkG0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770648391; c=relaxed/simple;
-	bh=pdqfLCOUp2nIMtOYk2yEWepQbZk340x98seJZAtck0c=;
+	s=arc-20240116; t=1770648395; c=relaxed/simple;
+	bh=12KsIPKWdV6QLhyJOYyPvXihxALZuWn/7FK0q7yLqrs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HNONkjZqXOfAKOtyAbIgoGYutIdtoXVXzOmrbvjTdvvxNJxhIYMQf4DMnG7WnpiA8N1I1bLTgFtATm4Tm0nSYC15bbpwgN+kNy6EhwRWIgwCP+7n/uQ0zGNkz6e8jdmdTZp5I2FNbEB29Ij7BrCzxGXnKXf7RrsyeoDQxuBuOuU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=D4OT1YQW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XOYPvnobAqIsNXDh2z5tSXxouxbIfKj6aXaObVMePnoc512sA9Dggx9d6QrBUlOkS3VAdYxafOAAXxTg4lgnRxmNegEDO6/Epirta0jVXnkCAGGIsyVRJFw9xsRNx7rd1b6O66r6iDaj/y9F6ZjVT2HOwChhlwBJTFmnnEsKbsM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IkxMekSH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="D4OT1YQW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 454CAC16AAE;
-	Mon,  9 Feb 2026 14:46:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IkxMekSH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A8636C116C6;
+	Mon,  9 Feb 2026 14:46:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770648391;
-	bh=pdqfLCOUp2nIMtOYk2yEWepQbZk340x98seJZAtck0c=;
+	s=korg; t=1770648395;
+	bh=12KsIPKWdV6QLhyJOYyPvXihxALZuWn/7FK0q7yLqrs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=D4OT1YQWWZXJOuuyM5aSBYhnOmfOuEi3DTqUI5P9hQbxNcf5dWUQwPFq630x0Ig3B
-	 z2FNEi3BLdA8/9+GnEU8aEMzDOrY5lAMdbrbfhYCPgKyHVA1IKdeiKJg9JXbNBxta1
-	 gr/pClxaSmJXpETjd2AK567QxIU6mtlDarD5eWBU=
+	b=IkxMekSHOh+cOjqSI/f9XK0NI0RIxBk6vwKU98pCgfcdPovNokVUybLzKMuVt19t+
+	 bdSnpnsEkvwbXOE93txU3UIxIP4Q0D2GRANn7VqtrghIy47b9VNig9bL6ZgBZ+HIky
+	 C+VwQwE3W8Tnai2/BT4AL1TdlYhHKOE3wG52So/M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	stable@kernel.org,
 	Xu Yang <xu.yang_2@nxp.com>,
+	Daniel Baluta <daniel.baluta@nxp.com>,
 	Ulf Hansson <ulf.hansson@linaro.org>
-Subject: [PATCH 6.6 07/86] pmdomain: imx8mp-blk-ctrl: Keep usb phy power domain on for system wakeup
-Date: Mon,  9 Feb 2026 15:23:30 +0100
-Message-ID: <20260209142305.041974972@linuxfoundation.org>
+Subject: [PATCH 6.6 08/86] pmdomain: imx8m-blk-ctrl: fix out-of-range access of bc->domains
+Date: Mon,  9 Feb 2026 15:23:31 +0100
+Message-ID: <20260209142305.077476660@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260209142304.770150175@linuxfoundation.org>
 References: <20260209142304.770150175@linuxfoundation.org>
@@ -52,50 +54,30 @@ Content-Transfer-Encoding: 8bit
 
 From: Xu Yang <xu.yang_2@nxp.com>
 
-commit e2c4c5b2bbd4f688a0f9f6da26cdf6d723c53478 upstream.
+commit 6bd8b4a92a901fae1a422e6f914801063c345e8d upstream.
 
-USB system wakeup need its PHY on, so add the GENPD_FLAG_ACTIVE_WAKEUP
-flags to USB PHY genpd configuration.
+Fix out-of-range access of bc->domains in imx8m_blk_ctrl_remove().
 
+Fixes: 2684ac05a8c4 ("soc: imx: add i.MX8M blk-ctrl driver")
+Cc: stable@kernel.org
 Signed-off-by: Xu Yang <xu.yang_2@nxp.com>
-Fixes: 556f5cf9568a ("soc: imx: add i.MX8MP HSIO blk-ctrl")
-Cc: stable@vger.kernel.org
+Reviewed-by: Daniel Baluta <daniel.baluta@nxp.com>
 Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pmdomain/imx/imx8mp-blk-ctrl.c |    4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/pmdomain/imx/imx8m-blk-ctrl.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/pmdomain/imx/imx8mp-blk-ctrl.c
-+++ b/drivers/pmdomain/imx/imx8mp-blk-ctrl.c
-@@ -53,6 +53,7 @@ struct imx8mp_blk_ctrl_domain_data {
- 	const char * const *path_names;
- 	int num_paths;
- 	const char *gpc_name;
-+	const unsigned int flags;
- };
+--- a/drivers/pmdomain/imx/imx8m-blk-ctrl.c
++++ b/drivers/pmdomain/imx/imx8m-blk-ctrl.c
+@@ -337,7 +337,7 @@ static int imx8m_blk_ctrl_remove(struct
  
- #define DOMAIN_MAX_CLKS 3
-@@ -265,10 +266,12 @@ static const struct imx8mp_blk_ctrl_doma
- 	[IMX8MP_HSIOBLK_PD_USB_PHY1] = {
- 		.name = "hsioblk-usb-phy1",
- 		.gpc_name = "usb-phy1",
-+		.flags = GENPD_FLAG_ACTIVE_WAKEUP,
- 	},
- 	[IMX8MP_HSIOBLK_PD_USB_PHY2] = {
- 		.name = "hsioblk-usb-phy2",
- 		.gpc_name = "usb-phy2",
-+		.flags = GENPD_FLAG_ACTIVE_WAKEUP,
- 	},
- 	[IMX8MP_HSIOBLK_PD_PCIE] = {
- 		.name = "hsioblk-pcie",
-@@ -721,6 +724,7 @@ static int imx8mp_blk_ctrl_probe(struct
- 		domain->genpd.name = data->name;
- 		domain->genpd.power_on = imx8mp_blk_ctrl_power_on;
- 		domain->genpd.power_off = imx8mp_blk_ctrl_power_off;
-+		domain->genpd.flags = data->flags;
- 		domain->bc = bc;
- 		domain->id = i;
+ 	of_genpd_del_provider(pdev->dev.of_node);
  
+-	for (i = 0; bc->onecell_data.num_domains; i++) {
++	for (i = 0; i < bc->onecell_data.num_domains; i++) {
+ 		struct imx8m_blk_ctrl_domain *domain = &bc->domains[i];
+ 
+ 		pm_genpd_remove(&domain->genpd);
 
 
