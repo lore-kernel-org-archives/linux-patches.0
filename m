@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7A4137AA9E;
-	Mon,  9 Feb 2026 14:29:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6BD537AA7E;
+	Mon,  9 Feb 2026 14:29:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770647371; cv=none; b=dmm9VFAZnihABeKKY+qtuRsLoIImDc26XNC3GwFAunPs5a1JtLX2aVbHlBlpSVyvF21r83yHY+3jHca5w3ZQKULbOosq3B+/JwTW3gZiGF2QoVqRqd5zCK6Bvzt/jgtWgae4Sc4YITyHJvmcK0dh+yVzykrGfPRwqdrnDYau9fs=
+	t=1770647375; cv=none; b=Ktb8rpI/vWVLd9j8YWQe0Fwz2oXxXenqLRd95Db+QsXn6LK1g9LHYtGhsjN8svKOlzU6PVraxRFiVaIBySD9trT1xv0W+YPZ8yjfNqTjuwkJEHjxOLn7Yq/zWhQWjGDjbqskEaYANoW+HCfRURnERYUBpZdz/z0bpMmXmrencYs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770647371; c=relaxed/simple;
-	bh=R6Q19zLV1ugv2sqlB8VtbkDUfPtYITxD/QL9qoFtP7g=;
+	s=arc-20240116; t=1770647375; c=relaxed/simple;
+	bh=aP0yRorMjgTUk3cB7A3XcL3nVrVmbGSsUhJMfb9HkxY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iUfFLgHX91gOOdyxCKDMU4ARnItd045mx91lVG/PctRpBDIJV3yRNEJ2A8IID8bYg15Yh+Inz1XVMUqs+GfOMnJs/71h799ygs77JVFyW5Jw3nllS4tACZyshdmGwhp9JKbCFQ6N0sDCL5r4sXpD882Qc/1Xu5v0pXkHmsbgzfk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=h0F0rVzF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=sqG+spRiidNW9Io3yYAFLNoIQd0x0xebtl+aeqEcFkHm3BdicRtgglftOAsNH7xFjH+k+VxilNVhQ08dGuLuv7xwvWr8BX3U97hA4e36qJGznNXxDVAa1DW1qe0QuaYgKWkT5q2VukbP8GTEKjTaOgHTvfXrW8X3lJXyCNZpeBg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZypcMCV8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="h0F0rVzF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 19657C116C6;
-	Mon,  9 Feb 2026 14:29:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZypcMCV8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5668BC116C6;
+	Mon,  9 Feb 2026 14:29:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770647371;
-	bh=R6Q19zLV1ugv2sqlB8VtbkDUfPtYITxD/QL9qoFtP7g=;
+	s=korg; t=1770647374;
+	bh=aP0yRorMjgTUk3cB7A3XcL3nVrVmbGSsUhJMfb9HkxY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=h0F0rVzFdgwNoe/3cw8smVomsv1+P66flYN6woWUkVeH7eDBbSPVIDefDtUDrrBVo
-	 1mit1nmcJai3iK9LuF4UaejhXer3/G1uBtM0LfC56Rb1bABlBZbk9pOyRu4jq1CamK
-	 d72EwAH3bQkmAmWGy9MgJZWhZficQVc/AuE1Iin4=
+	b=ZypcMCV82ZyfZctgSx5pqh90hRnMGz8DllURvTa4Mx7ROjSrI5Dqr4ZEm2213GC5F
+	 2Be2NZcSLiTsPrQHVrMEhOhfElGXh7ejt7DPg6GKjCUjp/cbu41GtAI0tOfWR8cpP3
+	 mdsQMiveaUu+N5t2Q2DBVWvjLGM0Rpm4IGsXU18A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Perry Yuan <perry.yuan@amd.com>,
-	Yifan Zhang <yifan1.zhang@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	mathieu.desnoyers@efficios.com,
+	Wupeng Ma <mawupeng1@huawei.com>,
+	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 079/175] drm/amd/pm: Disable MMIO access during SMU Mode 1 reset
-Date: Mon,  9 Feb 2026 15:22:32 +0100
-Message-ID: <20260209142323.285461750@linuxfoundation.org>
+Subject: [PATCH 6.18 080/175] ring-buffer: Avoid softlockup in ring_buffer_resize() during memory free
+Date: Mon,  9 Feb 2026 15:22:33 +0100
+Message-ID: <20260209142323.320649920@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260209142320.474120190@linuxfoundation.org>
 References: <20260209142320.474120190@linuxfoundation.org>
@@ -52,90 +53,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Perry Yuan <perry.yuan@amd.com>
+From: Wupeng Ma <mawupeng1@huawei.com>
 
-[ Upstream commit 0de604d0357d0d22cbf03af1077d174b641707b6 ]
+[ Upstream commit 6435ffd6c7fcba330dfa91c58dc30aed2df3d0bf ]
 
-During Mode 1 reset, the ASIC undergoes a reset cycle and becomes
-temporarily inaccessible via PCIe. Any attempt to access MMIO registers
-during this window (e.g., from interrupt handlers or other driver threads)
-can result in uncompleted PCIe transactions, leading to NMI panics or
-system hangs.
+When user resize all trace ring buffer through file 'buffer_size_kb',
+then in ring_buffer_resize(), kernel allocates buffer pages for each
+cpu in a loop.
 
-To prevent this, set the `no_hw_access` flag to true immediately after
-triggering the reset. This signals other driver components to skip
-register accesses while the device is offline.
+If the kernel preemption model is PREEMPT_NONE and there are many cpus
+and there are many buffer pages to be freed, it may not give up cpu
+for a long time and finally cause a softlockup.
 
-A memory barrier `smp_mb()` is added to ensure the flag update is
-globally visible to all cores before the driver enters the sleep/wait
-state.
+To avoid it, call cond_resched() after each cpu buffer free as Commit
+f6bd2c92488c ("ring-buffer: Avoid softlockup in ring_buffer_resize()")
+does.
 
-Signed-off-by: Perry Yuan <perry.yuan@amd.com>
-Reviewed-by: Yifan Zhang <yifan1.zhang@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 7edb503fe4b6d67f47d8bb0dfafb8e699bb0f8a4)
+Detailed call trace as follow:
+
+  rcu: INFO: rcu_sched self-detected stall on CPU
+  rcu: 	24-....: (14837 ticks this GP) idle=521c/1/0x4000000000000000 softirq=230597/230597 fqs=5329
+  rcu: 	(t=15004 jiffies g=26003221 q=211022 ncpus=96)
+  CPU: 24 UID: 0 PID: 11253 Comm: bash Kdump: loaded Tainted: G            EL      6.18.2+ #278 NONE
+  pc : arch_local_irq_restore+0x8/0x20
+   arch_local_irq_restore+0x8/0x20 (P)
+   free_frozen_page_commit+0x28c/0x3b0
+   __free_frozen_pages+0x1c0/0x678
+   ___free_pages+0xc0/0xe0
+   free_pages+0x3c/0x50
+   ring_buffer_resize.part.0+0x6a8/0x880
+   ring_buffer_resize+0x3c/0x58
+   __tracing_resize_ring_buffer.part.0+0x34/0xd8
+   tracing_resize_ring_buffer+0x8c/0xd0
+   tracing_entries_write+0x74/0xd8
+   vfs_write+0xcc/0x288
+   ksys_write+0x74/0x118
+   __arm64_sys_write+0x24/0x38
+
+Cc: <mathieu.desnoyers@efficios.com>
+Link: https://patch.msgid.link/20251228065008.2396573-1-mawupeng1@huawei.com
+Signed-off-by: Wupeng Ma <mawupeng1@huawei.com>
+Acked-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_device.c           | 3 +++
- drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_0_ppt.c | 7 ++++++-
- drivers/gpu/drm/amd/pm/swsmu/smu14/smu_v14_0_2_ppt.c | 9 +++++++--
- 3 files changed, 16 insertions(+), 3 deletions(-)
+ kernel/trace/ring_buffer.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
-index 49107475af619..53b33a636971a 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
-@@ -5739,6 +5739,9 @@ int amdgpu_device_mode1_reset(struct amdgpu_device *adev)
- 	if (ret)
- 		goto mode1_reset_failed;
- 
-+	/* enable mmio access after mode 1 reset completed */
-+	adev->no_hw_access = false;
+diff --git a/kernel/trace/ring_buffer.c b/kernel/trace/ring_buffer.c
+index afcd3747264d2..3ba08fc1b7d05 100644
+--- a/kernel/trace/ring_buffer.c
++++ b/kernel/trace/ring_buffer.c
+@@ -3121,6 +3121,8 @@ int ring_buffer_resize(struct trace_buffer *buffer, unsigned long size,
+ 					list) {
+ 			list_del_init(&bpage->list);
+ 			free_buffer_page(bpage);
 +
- 	amdgpu_device_load_pci_state(adev->pdev);
- 	ret = amdgpu_psp_wait_for_bootloader(adev);
- 	if (ret)
-diff --git a/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_0_ppt.c b/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_0_ppt.c
-index c1062e5f03936..8d070a9ea2c10 100644
---- a/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_0_ppt.c
-+++ b/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_0_ppt.c
-@@ -2922,8 +2922,13 @@ static int smu_v13_0_0_mode1_reset(struct smu_context *smu)
- 		break;
++			cond_resched();
+ 		}
  	}
- 
--	if (!ret)
-+	if (!ret) {
-+		/* disable mmio access while doing mode 1 reset*/
-+		smu->adev->no_hw_access = true;
-+		/* ensure no_hw_access is globally visible before any MMIO */
-+		smp_mb();
- 		msleep(SMU13_MODE1_RESET_WAIT_TIME_IN_MS);
-+	}
- 
- 	return ret;
- }
-diff --git a/drivers/gpu/drm/amd/pm/swsmu/smu14/smu_v14_0_2_ppt.c b/drivers/gpu/drm/amd/pm/swsmu/smu14/smu_v14_0_2_ppt.c
-index e735da7ab6126..bad8dd786bff2 100644
---- a/drivers/gpu/drm/amd/pm/swsmu/smu14/smu_v14_0_2_ppt.c
-+++ b/drivers/gpu/drm/amd/pm/swsmu/smu14/smu_v14_0_2_ppt.c
-@@ -2143,10 +2143,15 @@ static int smu_v14_0_2_mode1_reset(struct smu_context *smu)
- 
- 	ret = smu_cmn_send_debug_smc_msg(smu, DEBUGSMC_MSG_Mode1Reset);
- 	if (!ret) {
--		if (amdgpu_emu_mode == 1)
-+		if (amdgpu_emu_mode == 1) {
- 			msleep(50000);
--		else
-+		} else {
-+			/* disable mmio access while doing mode 1 reset*/
-+			smu->adev->no_hw_access = true;
-+			/* ensure no_hw_access is globally visible before any MMIO */
-+			smp_mb();
- 			msleep(1000);
-+		}
- 	}
- 
- 	return ret;
+  out_err_unlock:
 -- 
 2.51.0
 
