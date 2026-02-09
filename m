@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B27EC1DE8AD;
-	Mon,  9 Feb 2026 14:32:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D09DB1DE8AD;
+	Mon,  9 Feb 2026 14:32:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770647550; cv=none; b=j4mybQ852QhuEdQlWT8aqAMdnZ2xON1TvjvdOTqPDEalHnt6QyhDCG3qHZ/vyOg7cbE6TNS56IFJD/IaYRvENd2LQXNbWYOFJq2ItgYXu1JwgVZpzH3I051u8v4tHz+gdvchj6eTFyzYw9065ECJLGpGxzOCbru2fcsM8aS8IB0=
+	t=1770647553; cv=none; b=hXjxZjlrBfHd3AbyxDJ9VIS0DYVNGYIbdL+L65Kv0wrrUVXWfcPBW47MhV+Bqvu22NFfoS4Ncw+LjxP9GArVBSbQGZnawyqvtbHPhh3rl+Gnk8keZ2vInR/j0IBrJFYqVo+ne58r/U1nF7XeOS49jz5rdlfspNCNkKAstuRwg2w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770647550; c=relaxed/simple;
-	bh=J5iEPcKk3I0zpgdGEeM1/ZR4zS+STCC2iK1wYmvM3nI=;
+	s=arc-20240116; t=1770647553; c=relaxed/simple;
+	bh=tDBentILjiT29K/mQ5ywcRsdqs+ciHKFMuxagRebWV0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DH6Mj+0A1tSoMSlB0IrcBOe8qdNnQVdkfz1x7i3S5t1ep0hwAFKOIG9ruZ33hzW67QS+nw1depHJqB2L9kZ1Zv3vovKSH15A7VmgtkruABbpgso8gkRgZAChVxgHRUN8/wOj88306H+XwZRVVXzJoZR9NoPuGx7WUsiTp5esC3g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zSQpZ17U; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bbToj+044Rrnk0LBLhje04UpwwCN/Yo84WB1qKlwu6oXX4Y/WbfMoGLCiDi3hQwO1THyj7pc1VYqq+4aSuhmmrjJ0ngySM14l/0aQ//21YP+6Mel3bP1VJjrr3vaY6FDawwTlD6+w4VWgq/YSytBozAKmuUw54PUTv6Qyk8CJrg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=temW2p7k; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zSQpZ17U"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D75D0C116C6;
-	Mon,  9 Feb 2026 14:32:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="temW2p7k"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4168CC116C6;
+	Mon,  9 Feb 2026 14:32:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770647550;
-	bh=J5iEPcKk3I0zpgdGEeM1/ZR4zS+STCC2iK1wYmvM3nI=;
+	s=korg; t=1770647553;
+	bh=tDBentILjiT29K/mQ5ywcRsdqs+ciHKFMuxagRebWV0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zSQpZ17U/ja+w8KpG5uVfDERa2OKCz9GYCxhR31nlnw5vgHN+MrbCgr+sF5Ry6JWq
-	 x9GrdXbMvEo3mMF5NWsf3SlV2yF1einjTA+9XmotDSCRFDIXAyvbH+ji6uedH3zxa1
-	 lyMhBrgyq+UM257L7/6l58mXpKCSH3jFm2md9ESw=
+	b=temW2p7kH3H7iHuLiyYFW6Y/iYT8DwkvFnJM3jUFiH2gI2U2JmC+tmuYOZO93R1r5
+	 YYfMMKPt6XcR02cD73iHHYbNBe5Lj6jMPzT6TU/Mq+MzQwhN9fhW5UuQEDEhukNEm3
+	 utqaOqioiRK6e6Lb0dIrbx18LysUcGkkRqhzh5/g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jaroslav Pulchart <jaroslav.pulchart@gooddata.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
-	Guenter Roeck <linux@roeck-us.net>,
+	Gal Pressman <gal@nvidia.com>,
+	Martin KaFai Lau <martin.lau@kernel.org>,
+	Daniel Borkmann <daniel@iogearbox.net>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 134/175] hwmon: (acpi_power_meter) Fix deadlocks related to acpi_power_meter_notify()
-Date: Mon,  9 Feb 2026 15:23:27 +0100
-Message-ID: <20260209142325.330634333@linuxfoundation.org>
+Subject: [PATCH 6.18 135/175] net: dont touch dev->stats in BPF redirect paths
+Date: Mon,  9 Feb 2026 15:23:28 +0100
+Message-ID: <20260209142325.367873461@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260209142320.474120190@linuxfoundation.org>
 References: <20260209142320.474120190@linuxfoundation.org>
@@ -52,111 +54,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+From: Jakub Kicinski <kuba@kernel.org>
 
-[ Upstream commit 615901b57b7ef8eb655f71358f7e956e42bcd16b ]
+[ Upstream commit fdf3f6800be36377e045e2448087f12132b88d2f ]
 
-The acpi_power_meter driver's .notify() callback function,
-acpi_power_meter_notify(), calls hwmon_device_unregister() under a lock
-that is also acquired by callbacks in sysfs attributes of the device
-being unregistered which is prone to deadlocks between sysfs access and
-device removal.
+Gal reports that BPF redirect increments dev->stats.tx_errors
+on failure. This is not correct, most modern drivers completely
+ignore dev->stats so these drops will be invisible to the user.
+Core code should use the dedicated core stats which are folded
+into device stats in dev_get_stats().
 
-Address this by moving the hwmon device removal in
-acpi_power_meter_notify() outside the lock in question, but notice
-that doing it alone is not sufficient because two concurrent
-METER_NOTIFY_CONFIG notifications may be attempting to remove the
-same device at the same time.  To prevent that from happening, add a
-new lock serializing the execution of the switch () statement in
-acpi_power_meter_notify().  For simplicity, it is a static mutex
-which should not be a problem from the performance perspective.
+Note that we're switching from tx_errors to tx_dropped.
+Core only has tx_dropped, hence presumably users already expect
+that counter to increment for "stack" Tx issues.
 
-The new lock also allows the hwmon_device_register_with_info()
-in acpi_power_meter_notify() to be called outside the inner lock
-because it prevents the other notifications handled by that function
-from manipulating the "resource" object while the hwmon device based
-on it is being registered.  The sending of ACPI netlink messages from
-acpi_power_meter_notify() is serialized by the new lock too which
-generally helps to ensure that the order of handling firmware
-notifications is the same as the order of sending netlink messages
-related to them.
-
-In addition, notice that hwmon_device_register_with_info() may fail
-in which case resource->hwmon_dev will become an error pointer,
-so add checks to avoid attempting to unregister the hwmon device
-pointer to by it in that case to acpi_power_meter_notify() and
-acpi_power_meter_remove().
-
-Fixes: 16746ce8adfe ("hwmon: (acpi_power_meter) Replace the deprecated hwmon_device_register")
-Closes: https://lore.kernel.org/linux-hwmon/CAK8fFZ58fidGUCHi5WFX0uoTPzveUUDzT=k=AAm4yWo3bAuCFg@mail.gmail.com/
-Reported-by: Jaroslav Pulchart <jaroslav.pulchart@gooddata.com>
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Reported-by: Gal Pressman <gal@nvidia.com>
+Link: https://lore.kernel.org/c5df3b60-246a-4030-9c9a-0a35cd1ca924@nvidia.com
+Fixes: b4ab31414970 ("bpf: Add redirect_neigh helper as redirect drop-in")
+Acked-by: Martin KaFai Lau <martin.lau@kernel.org>
+Acked-by: Daniel Borkmann <daniel@iogearbox.net>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Link: https://patch.msgid.link/20260130033827.698841-1-kuba@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwmon/acpi_power_meter.c | 17 ++++++++++++++---
- 1 file changed, 14 insertions(+), 3 deletions(-)
+ net/core/filter.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/hwmon/acpi_power_meter.c b/drivers/hwmon/acpi_power_meter.c
-index 29ccdc2fb7ff8..de408df0c4d78 100644
---- a/drivers/hwmon/acpi_power_meter.c
-+++ b/drivers/hwmon/acpi_power_meter.c
-@@ -47,6 +47,8 @@
- static int cap_in_hardware;
- static bool force_cap_on;
+diff --git a/net/core/filter.c b/net/core/filter.c
+index 6431ef3e9f7dd..88b265f6ccf89 100644
+--- a/net/core/filter.c
++++ b/net/core/filter.c
+@@ -2289,12 +2289,12 @@ static int __bpf_redirect_neigh_v6(struct sk_buff *skb, struct net_device *dev,
  
-+static DEFINE_MUTEX(acpi_notify_lock);
-+
- static int can_cap_in_hardware(void)
- {
- 	return force_cap_on || cap_in_hardware;
-@@ -823,18 +825,26 @@ static void acpi_power_meter_notify(struct acpi_device *device, u32 event)
+ 	err = bpf_out_neigh_v6(net, skb, dev, nh);
+ 	if (unlikely(net_xmit_eval(err)))
+-		DEV_STATS_INC(dev, tx_errors);
++		dev_core_stats_tx_dropped_inc(dev);
+ 	else
+ 		ret = NET_XMIT_SUCCESS;
+ 	goto out_xmit;
+ out_drop:
+-	DEV_STATS_INC(dev, tx_errors);
++	dev_core_stats_tx_dropped_inc(dev);
+ 	kfree_skb(skb);
+ out_xmit:
+ 	return ret;
+@@ -2396,12 +2396,12 @@ static int __bpf_redirect_neigh_v4(struct sk_buff *skb, struct net_device *dev,
  
- 	resource = acpi_driver_data(device);
- 
-+	guard(mutex)(&acpi_notify_lock);
-+
- 	switch (event) {
- 	case METER_NOTIFY_CONFIG:
-+		if (!IS_ERR(resource->hwmon_dev))
-+			hwmon_device_unregister(resource->hwmon_dev);
-+
- 		mutex_lock(&resource->lock);
-+
- 		free_capabilities(resource);
- 		remove_domain_devices(resource);
--		hwmon_device_unregister(resource->hwmon_dev);
- 		res = read_capabilities(resource);
- 		if (res)
- 			dev_err_once(&device->dev, "read capabilities failed.\n");
- 		res = read_domain_devices(resource);
- 		if (res && res != -ENODEV)
- 			dev_err_once(&device->dev, "read domain devices failed.\n");
-+
-+		mutex_unlock(&resource->lock);
-+
- 		resource->hwmon_dev =
- 			hwmon_device_register_with_info(&device->dev,
- 							ACPI_POWER_METER_NAME,
-@@ -843,7 +853,7 @@ static void acpi_power_meter_notify(struct acpi_device *device, u32 event)
- 							power_extra_groups);
- 		if (IS_ERR(resource->hwmon_dev))
- 			dev_err_once(&device->dev, "register hwmon device failed.\n");
--		mutex_unlock(&resource->lock);
-+
- 		break;
- 	case METER_NOTIFY_TRIP:
- 		sysfs_notify(&device->dev.kobj, NULL, POWER_AVERAGE_NAME);
-@@ -953,7 +963,8 @@ static void acpi_power_meter_remove(struct acpi_device *device)
- 		return;
- 
- 	resource = acpi_driver_data(device);
--	hwmon_device_unregister(resource->hwmon_dev);
-+	if (!IS_ERR(resource->hwmon_dev))
-+		hwmon_device_unregister(resource->hwmon_dev);
- 
- 	remove_domain_devices(resource);
- 	free_capabilities(resource);
+ 	err = bpf_out_neigh_v4(net, skb, dev, nh);
+ 	if (unlikely(net_xmit_eval(err)))
+-		DEV_STATS_INC(dev, tx_errors);
++		dev_core_stats_tx_dropped_inc(dev);
+ 	else
+ 		ret = NET_XMIT_SUCCESS;
+ 	goto out_xmit;
+ out_drop:
+-	DEV_STATS_INC(dev, tx_errors);
++	dev_core_stats_tx_dropped_inc(dev);
+ 	kfree_skb(skb);
+ out_xmit:
+ 	return ret;
 -- 
 2.51.0
 
