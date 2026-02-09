@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 023FC2750E6;
-	Mon,  9 Feb 2026 14:55:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 242B43446C7;
+	Mon,  9 Feb 2026 14:55:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770648938; cv=none; b=C0PD3/hK5bebXOkDLPl2BPmJ/+AM42uXEgYavl52x9fhe88X95hM8Ei4V1J/V/cM/BUuZAX1cNxqGSL55HoJZa6SVojyelYCxphGYn4efWYAYB7nogMpwpUlPet+PMDZoCAi2LjAfvEMb64O5lvMW3q751VxbpOhjTgg96HUMfU=
+	t=1770648941; cv=none; b=AoZt9wnRfvSVA7PjMn4cKY8r2MveJ/OsGIO5l1bFGvCDXBYJsSvXriyJargBWXYxs17AZw88dfAcWmOZPipMJWqtbl3q27QdQSP6oqFFDAekKYF+MmdwnxThzXUFz2lOHmTxDEuHES5QsyEPhMRMJ1ywA6mQJJLL3wjYp3Ilk+Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770648938; c=relaxed/simple;
-	bh=I52PfU2p+grNN19pjdQh+jzoQbsiuXh7ZABQE7u2YCU=;
+	s=arc-20240116; t=1770648941; c=relaxed/simple;
+	bh=/mFVqkGjseDAnDJGxs5kxyp14cERzyXISRQzQpJxqis=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VRQWUmIV0eKuoqCite2CK8M4dWajZpYAtFRQXdGbFDlt3DtKpweASX5lZinpq1gXP9sHJn6fgKUF2WypMM9MU07hb6jlkpWqaSXUwFdSUJPSepLrt3iz8GLdy5IEEOx91C2HpCDt1XsEGM8bp3/K77Uf8yQuac2CFPDWPc5lgWA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=b+7dPQ5S; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=RsRBCufPUtCfyAshfxK3+hPexwU+GFQ3ASM4rqLeyDwFHM2TBBsoaAWj9m46ueTKbHqsYBXF4BerHvG33ZlBde22dBTToZizIiGrvbCC7hhzD8wShfSe/wnqho+lbWxDSN2vqU6WlFHdoF5bKszu9eQDeelG3eVgqYYCXPUPQXg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Jf9inf3D; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="b+7dPQ5S"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35959C116C6;
-	Mon,  9 Feb 2026 14:55:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Jf9inf3D"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6DD2BC116C6;
+	Mon,  9 Feb 2026 14:55:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770648937;
-	bh=I52PfU2p+grNN19pjdQh+jzoQbsiuXh7ZABQE7u2YCU=;
+	s=korg; t=1770648940;
+	bh=/mFVqkGjseDAnDJGxs5kxyp14cERzyXISRQzQpJxqis=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=b+7dPQ5SRV3Xdii3krtZd4DuPGYehqY+HrUmBAIDgdhZQqWoEHZrkfj1mLXnfmmjw
-	 mAHI3ZFkdt+meTPsjCZKhdARCr2BRs1g9MnoOu3CwIucg0NXTtEeMeCOSIVYrvNl04
-	 Ycs4JR4NknIpxINR/9bdLK0oSqLcnbcdPWAcy0hw=
+	b=Jf9inf3DYG09RfzLqysyyHI5acdjFWBNqIJlle8CtRMJmB/C4qcCDsoflx0F0qw6j
+	 2uqsBaVlVbFgtbF10CxgcvzbhV3pVxNaWsQiAJlK0Y71c16MQbgmMzo7m7bp/7YsoL
+	 6fh5VHn1c9s6BJyo2C7319JQ8BAnbdHlcuqHrUBY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ethan Nelson-Moore <enelsonmoore@gmail.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Yu Kuai <yukuai@fnnas.com>,
+	shechenglong <shechenglong@xfusion.com>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 26/75] net: usb: sr9700: support devices with virtual driver CD
-Date: Mon,  9 Feb 2026 15:24:23 +0100
-Message-ID: <20260209142302.789074717@linuxfoundation.org>
+Subject: [PATCH 5.15 27/75] block,bfq: fix aux stat accumulation destination
+Date: Mon,  9 Feb 2026 15:24:24 +0100
+Message-ID: <20260209142302.825497850@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260209142301.830618238@linuxfoundation.org>
 References: <20260209142301.830618238@linuxfoundation.org>
@@ -51,42 +52,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ethan Nelson-Moore <enelsonmoore@gmail.com>
+From: shechenglong <shechenglong@xfusion.com>
 
-[ Upstream commit bf4172bd870c3a34d3065cbb39192c22cbd7b18d ]
+[ Upstream commit 04bdb1a04d8a2a89df504c1e34250cd3c6e31a1c ]
 
-Some SR9700 devices have an SPI flash chip containing a virtual driver
-CD, in which case they appear as a device with two interfaces and
-product ID 0x9702. Interface 0 is the driver CD and interface 1 is the
-Ethernet device.
+Route bfqg_stats_add_aux() time accumulation into the destination
+stats object instead of the source, aligning with other stat fields.
 
-Link: https://github.com/name-kurniawan/usb-lan
-Link: https://www.draisberghof.de/usb_modeswitch/bb/viewtopic.php?t=2185
-Signed-off-by: Ethan Nelson-Moore <enelsonmoore@gmail.com>
-Link: https://patch.msgid.link/20251211062451.139036-1-enelsonmoore@gmail.com
-[pabeni@redhat.com: fixes link tags]
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Reviewed-by: Yu Kuai <yukuai@fnnas.com>
+Signed-off-by: shechenglong <shechenglong@xfusion.com>
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/usb/sr9700.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ block/bfq-cgroup.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/usb/sr9700.c b/drivers/net/usb/sr9700.c
-index 90aed52ce9372..86d14fad318c3 100644
---- a/drivers/net/usb/sr9700.c
-+++ b/drivers/net/usb/sr9700.c
-@@ -539,6 +539,11 @@ static const struct usb_device_id products[] = {
- 		USB_DEVICE(0x0fe6, 0x9700),	/* SR9700 device */
- 		.driver_info = (unsigned long)&sr9700_driver_info,
- 	},
-+	{
-+		/* SR9700 with virtual driver CD-ROM - interface 0 is the CD-ROM device */
-+		USB_DEVICE_INTERFACE_NUMBER(0x0fe6, 0x9702, 1),
-+		.driver_info = (unsigned long)&sr9700_driver_info,
-+	},
- 	{},			/* END */
- };
- 
+diff --git a/block/bfq-cgroup.c b/block/bfq-cgroup.c
+index 53e275e377a73..2d804ab595dcb 100644
+--- a/block/bfq-cgroup.c
++++ b/block/bfq-cgroup.c
+@@ -387,7 +387,7 @@ static void bfqg_stats_add_aux(struct bfqg_stats *to, struct bfqg_stats *from)
+ 	blkg_rwstat_add_aux(&to->merged, &from->merged);
+ 	blkg_rwstat_add_aux(&to->service_time, &from->service_time);
+ 	blkg_rwstat_add_aux(&to->wait_time, &from->wait_time);
+-	bfq_stat_add_aux(&from->time, &from->time);
++	bfq_stat_add_aux(&to->time, &from->time);
+ 	bfq_stat_add_aux(&to->avg_queue_size_sum, &from->avg_queue_size_sum);
+ 	bfq_stat_add_aux(&to->avg_queue_size_samples,
+ 			  &from->avg_queue_size_samples);
 -- 
 2.51.0
 
