@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F21C325F7A9;
-	Mon,  9 Feb 2026 14:30:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 108A627CCF2;
+	Mon,  9 Feb 2026 14:30:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770647403; cv=none; b=S4ywXSa3WGKmA2oMUMtaqYxl9OSxQSsI/Lc7oQfe4VKPOfU46V33lw0qc0iAIxGraugYITeIRuwhkF0Q1A39/cgp2b5DkDpDDVrXkr7vTo4xcsOvRoeSB0ZD2BDoTVj8cOEcF/+8Ad/b0MRKWFwi+bZXzGLIQi7mXeCS8OfceZY=
+	t=1770647406; cv=none; b=Ztx5//hiSzGYk6J8N4OySHLnHmyPRbkC08NWiBx20IZIXDSmlQ/6mlPu3Fd8Rt+Kqnb1Ca3Tk+0Yf4On330Hdm7KC/1VmxGyWKn43xrHxZpSVjbpN9mRW6oZUQssuw2B7cP7dxXj0F3CGfrvdZpkigc/ml7nJg/baSNQZHlskUE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770647403; c=relaxed/simple;
-	bh=VhJnIhVlT/t3Q9YcrfYwt4XF2xzLMg8dcGmp6FbI668=;
+	s=arc-20240116; t=1770647406; c=relaxed/simple;
+	bh=Je/14fp4lNk3pniclcHEsIfzR/CUQXKFnE7yBIe+zG4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PCfTmhGO86n3exPs3Nylc03SOYl4YlN3Gnaaa6BiyKq1gLzgRUekWBssICgcv+3KBxr0cVAaRISMb0BdbwKP4k/3nVOcYRSU3cWJ09FSdC+bycHCSOi+C09H9RJOAN7Is2WZO/t3ReBOtqa/PrnvmVqo6E5/GWSIrQdVyvvE3V4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eFFaSx+O; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=DubE+aJnGem2DBzuDeXfjW0OrouegxVx5Wr+3iMXwYK08hDOZXTw8v2a/McgeNBeiVh2C2XgUCJKDDieM65flRBdXqcv7lwbObcydmjfHNJp830N2TaqwpoOUNcdxJ0zFdf4gQw5PekwppXXXK1MLt7MkNzBFAU6IlDk3AeE8bQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=a5MTAzEN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eFFaSx+O"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5962AC116C6;
-	Mon,  9 Feb 2026 14:30:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="a5MTAzEN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8DB78C116C6;
+	Mon,  9 Feb 2026 14:30:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770647402;
-	bh=VhJnIhVlT/t3Q9YcrfYwt4XF2xzLMg8dcGmp6FbI668=;
+	s=korg; t=1770647405;
+	bh=Je/14fp4lNk3pniclcHEsIfzR/CUQXKFnE7yBIe+zG4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eFFaSx+OVqaE5JIxqv1Ugr9jY0Mdu4mlu7DQacMFDPU7NPu/wwupm00T9ZrmwZVTG
-	 VhXD2CZPdPGB7LNVyNeSrd+BhxU4nhyZ2DLwMekWbO6E/UYMpU1ExDhetvldKx9cA6
-	 k2Kfoq3EbF2AsOf3KtnlsY7QfHOKd2AhVJQh1JmA=
+	b=a5MTAzENpjBwcIBN1e6aPHB+PqUpUCd4swdGCty9zuuikbFbwmIYUfGaSQ69wPiiM
+	 cTt0rrKmHWzp1I2L44CPfZTJKzs0qCZY4/GFjNOcAsaQyzeKSWTIprc7VNfa2CWI2W
+	 UymNngjsPSJWdkbIpfjqDbv3cN5nfV1Mk74VW6iM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	ZhangGuoDong <zhangguodong@kylinos.cn>,
-	ChenXiaoSong <chenxiaosong@kylinos.cn>,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Steve French <stfrench@microsoft.com>,
+	Huacai Chen <chenhuacai@loongson.cn>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 055/175] smb/server: call ksmbd_session_rpc_close() on error path in create_smb2_pipe()
-Date: Mon,  9 Feb 2026 15:22:08 +0100
-Message-ID: <20260209142322.447717750@linuxfoundation.org>
+Subject: [PATCH 6.18 056/175] LoongArch: Set correct protection_map[] for VM_NONE/VM_SHARED
+Date: Mon,  9 Feb 2026 15:22:09 +0100
+Message-ID: <20260209142322.482877980@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260209142320.474120190@linuxfoundation.org>
 References: <20260209142320.474120190@linuxfoundation.org>
@@ -53,44 +50,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: ZhangGuoDong <zhangguodong@kylinos.cn>
+From: Huacai Chen <chenhuacai@loongson.cn>
 
-[ Upstream commit 7c28f8eef5ac5312794d8a52918076dcd787e53b ]
+[ Upstream commit d5be446948b379f1d1a8e7bc6656d13f44c5c7b1 ]
 
-When ksmbd_iov_pin_rsp() fails, we should call ksmbd_session_rpc_close().
+For 32BIT platform _PAGE_PROTNONE is 0, so set a VMA to be VM_NONE or
+VM_SHARED will make pages non-present, then cause Oops with kernel page
+fault.
 
-Signed-off-by: ZhangGuoDong <zhangguodong@kylinos.cn>
-Signed-off-by: ChenXiaoSong <chenxiaosong@kylinos.cn>
-Acked-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Fix it by set correct protection_map[] for VM_NONE/VM_SHARED, replacing
+_PAGE_PROTNONE with _PAGE_PRESENT.
+
+Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/server/smb2pdu.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ arch/loongarch/mm/cache.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/fs/smb/server/smb2pdu.c b/fs/smb/server/smb2pdu.c
-index 2b59c282cda59..10d58e3094423 100644
---- a/fs/smb/server/smb2pdu.c
-+++ b/fs/smb/server/smb2pdu.c
-@@ -2291,7 +2291,7 @@ static noinline int create_smb2_pipe(struct ksmbd_work *work)
- {
- 	struct smb2_create_rsp *rsp;
- 	struct smb2_create_req *req;
--	int id;
-+	int id = -1;
- 	int err;
- 	char *name;
+diff --git a/arch/loongarch/mm/cache.c b/arch/loongarch/mm/cache.c
+index 6be04d36ca076..496916845ff76 100644
+--- a/arch/loongarch/mm/cache.c
++++ b/arch/loongarch/mm/cache.c
+@@ -160,8 +160,8 @@ void cpu_cache_init(void)
  
-@@ -2348,6 +2348,9 @@ static noinline int create_smb2_pipe(struct ksmbd_work *work)
- 		break;
- 	}
- 
-+	if (id >= 0)
-+		ksmbd_session_rpc_close(work->sess, id);
-+
- 	if (!IS_ERR(name))
- 		kfree(name);
- 
+ static const pgprot_t protection_map[16] = {
+ 	[VM_NONE]					= __pgprot(_CACHE_CC | _PAGE_USER |
+-								   _PAGE_PROTNONE | _PAGE_NO_EXEC |
+-								   _PAGE_NO_READ),
++								   _PAGE_NO_EXEC | _PAGE_NO_READ |
++								   (_PAGE_PROTNONE ? : _PAGE_PRESENT)),
+ 	[VM_READ]					= __pgprot(_CACHE_CC | _PAGE_VALID |
+ 								   _PAGE_USER | _PAGE_PRESENT |
+ 								   _PAGE_NO_EXEC),
+@@ -180,8 +180,8 @@ static const pgprot_t protection_map[16] = {
+ 	[VM_EXEC | VM_WRITE | VM_READ]			= __pgprot(_CACHE_CC | _PAGE_VALID |
+ 								   _PAGE_USER | _PAGE_PRESENT),
+ 	[VM_SHARED]					= __pgprot(_CACHE_CC | _PAGE_USER |
+-								   _PAGE_PROTNONE | _PAGE_NO_EXEC |
+-								   _PAGE_NO_READ),
++								   _PAGE_NO_EXEC | _PAGE_NO_READ |
++								   (_PAGE_PROTNONE ? : _PAGE_PRESENT)),
+ 	[VM_SHARED | VM_READ]				= __pgprot(_CACHE_CC | _PAGE_VALID |
+ 								   _PAGE_USER | _PAGE_PRESENT |
+ 								   _PAGE_NO_EXEC),
 -- 
 2.51.0
 
