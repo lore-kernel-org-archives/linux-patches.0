@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2C7A2222B2;
-	Mon,  9 Feb 2026 14:30:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A58F23B604;
+	Mon,  9 Feb 2026 14:30:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770647426; cv=none; b=btNtoafdgI93/Vah8QfbSLy/XNDrAj9fekkokz6VGjE66g9foqJYu2O0Y1jYjW+Im39MGdk+80Recrp4hvrpYTXDzp77fGjREcaOccs9wtcOgFArmcmyNGE+HZUZT1ncpvoDB91YJdXHmm7US8oVWUD6hJP7HpUd1vdB1mGleu0=
+	t=1770647429; cv=none; b=WJPM6G4v82lZ2RaofCNrNwNwnMnIaEnHxgT00rpStsnFy+cAm8PvIew2AR4j80LyGLNXM9pPnFQLReTR2T0uNaWjKwHH52azLkAcSDljvHrkNoRloJu38B3pQgegiYm5ukRgD3oE2pQy8Gp+x3/WLbSJiyclj6eEm/dnXeR7ZOA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770647426; c=relaxed/simple;
-	bh=apiU+6927U09mwqtQA0FeLB+FJu51pNcImVSmTkztaQ=;
+	s=arc-20240116; t=1770647429; c=relaxed/simple;
+	bh=DyZa6X5/jh+1YahfAJRmvHPVmPx4J6LE+0Wzr0VpDkE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EZZzvMeS0qdKF55ThZQ7zcXwtNBGy9s9pxmxLVpN4VpbX60WUdmo/U64sC3SX/wIdpsNPmjD648pQrgE8QtJTiKzCcAhYlJL8kyR9mQyUSm/OOqdYNp+/Kfh6j5Uf/Vd8EnGDbSNr7nifT/oeJDnEziecHyU+rRrJXEIz0wljzo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uZ8O6LdK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=aigIWRL6+QWLQobF0tNqpmzPGfO+QfKMCF2QYw8W848zE6Peo8mMOcJcvJ8kmm155ix6zZ6SerL2WgJ/65EhDUKGsOx6FKxW9cLi7GP4CcFUVU90IsFlv1eM+DRKEFpuRkvt+2EbVdx0h0UGh0Fgd1sVc0cjqxCHaWwqDu992gw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=b4U4iDxK; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uZ8O6LdK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29946C116C6;
-	Mon,  9 Feb 2026 14:30:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="b4U4iDxK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 668EBC116C6;
+	Mon,  9 Feb 2026 14:30:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770647425;
-	bh=apiU+6927U09mwqtQA0FeLB+FJu51pNcImVSmTkztaQ=;
+	s=korg; t=1770647428;
+	bh=DyZa6X5/jh+1YahfAJRmvHPVmPx4J6LE+0Wzr0VpDkE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uZ8O6LdKDM+ZekEECBYstgnmZdy10rlJsUa9YPt0jfFy8g7YzlAMkwLZNxs/+RvKn
-	 NincmSoPhm8wnk6i+x7xcCOrUiCdekmDoenGAt6OlQQ/QEWAicP1/h+qn/5yzmdQeN
-	 ESmwOe8T21qSUU3RnJPNwBJndqL0l16E4TwlWfew=
+	b=b4U4iDxK+QACgEvk9A1F8cq2YzdVWGdXF+0cYgXHGW1nIeVXluruC7jVHykqiMJdK
+	 obDS/b0UiuHkwtX5tcy9n5vG2k39Pwn2SK1QlaKFOTrijD5FgXV23upg1vSPB3rnru
+	 4SiRaIwpd4aawh8AN+J941twXwrSoeIscHV0SJFQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lianqin Hu <hulianqin@vivo.com>,
-	Cryolitia PukNgae <cryolitia@uniontech.com>,
-	Takashi Iwai <tiwai@suse.de>,
+	Alan Borzeszkowski <alan.borzeszkowski@linux.intel.com>,
+	Mika Westerberg <mika.westerberg@linux.intel.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 097/175] ALSA: usb-audio: Add delay quirk for MOONDROP Moonriver2 Ti
-Date: Mon,  9 Feb 2026 15:22:50 +0100
-Message-ID: <20260209142323.913610650@linuxfoundation.org>
+Subject: [PATCH 6.18 098/175] spi: intel-pci: Add support for Nova Lake SPI serial flash
+Date: Mon,  9 Feb 2026 15:22:51 +0100
+Message-ID: <20260209142323.948360933@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260209142320.474120190@linuxfoundation.org>
 References: <20260209142320.474120190@linuxfoundation.org>
@@ -52,41 +52,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lianqin Hu <hulianqin@vivo.com>
+From: Alan Borzeszkowski <alan.borzeszkowski@linux.intel.com>
 
-[ Upstream commit 49985bc466b51af88d534485631c8cd8c9c65f43 ]
+[ Upstream commit caa329649259d0f90c0056c9860ca659d4ba3211 ]
 
-Audio control requests that sets sampling frequency sometimes fail on
-this card. Adding delay between control messages eliminates that problem.
+Add Intel Nova Lake PCH-S SPI serial flash PCI ID to the list of
+supported devices. This is the same controller found in previous
+generations.
 
-usb 1-1: New USB device found, idVendor=2fc6, idProduct=f06b
-usb 1-1: New USB device strings: Mfr=1, Product=2, SerialNumber=3
-usb 1-1: Product: MOONDROP Moonriver2 Ti
-usb 1-1: Manufacturer: MOONDROP
-usb 1-1: SerialNumber: MOONDROP Moonriver2 Ti
-
-Signed-off-by: Lianqin Hu <hulianqin@vivo.com>
-Reviewed-by: Cryolitia PukNgae <cryolitia@uniontech.com>
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Link: https://patch.msgid.link/TYUPR06MB6217911EFC7E9224935FA507D28DA@TYUPR06MB6217.apcprd06.prod.outlook.com
+Signed-off-by: Alan Borzeszkowski <alan.borzeszkowski@linux.intel.com>
+Acked-by: Mika Westerberg <mika.westerberg@linux.intel.com>
+Link: https://patch.msgid.link/20260115120305.10080-1-alan.borzeszkowski@linux.intel.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/usb/quirks.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/spi/spi-intel-pci.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/sound/usb/quirks.c b/sound/usb/quirks.c
-index 94a8fdc9c6d3c..8a646891ebb44 100644
---- a/sound/usb/quirks.c
-+++ b/sound/usb/quirks.c
-@@ -2390,6 +2390,8 @@ static const struct usb_audio_quirk_flags_table quirk_flags_table[] = {
- 		   QUIRK_FLAG_CTL_MSG_DELAY_1M),
- 	DEVICE_FLG(0x2d99, 0x0026, /* HECATE G2 GAMING HEADSET */
- 		   QUIRK_FLAG_MIXER_PLAYBACK_MIN_MUTE),
-+	DEVICE_FLG(0x2fc6, 0xf06b, /* MOONDROP Moonriver2 Ti */
-+		   QUIRK_FLAG_CTL_MSG_DELAY),
- 	DEVICE_FLG(0x2fc6, 0xf0b7, /* iBasso DC07 Pro */
- 		   QUIRK_FLAG_CTL_MSG_DELAY_1M),
- 	DEVICE_FLG(0x30be, 0x0101, /* Schiit Hel */
+diff --git a/drivers/spi/spi-intel-pci.c b/drivers/spi/spi-intel-pci.c
+index b8c572394aac2..bce3d149bea18 100644
+--- a/drivers/spi/spi-intel-pci.c
++++ b/drivers/spi/spi-intel-pci.c
+@@ -81,6 +81,7 @@ static const struct pci_device_id intel_spi_pci_ids[] = {
+ 	{ PCI_VDEVICE(INTEL, 0x54a4), (unsigned long)&cnl_info },
+ 	{ PCI_VDEVICE(INTEL, 0x5794), (unsigned long)&cnl_info },
+ 	{ PCI_VDEVICE(INTEL, 0x5825), (unsigned long)&cnl_info },
++	{ PCI_VDEVICE(INTEL, 0x6e24), (unsigned long)&cnl_info },
+ 	{ PCI_VDEVICE(INTEL, 0x7723), (unsigned long)&cnl_info },
+ 	{ PCI_VDEVICE(INTEL, 0x7a24), (unsigned long)&cnl_info },
+ 	{ PCI_VDEVICE(INTEL, 0x7aa4), (unsigned long)&cnl_info },
 -- 
 2.51.0
 
