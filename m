@@ -1,51 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 491023793AC;
-	Mon,  9 Feb 2026 14:25:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C74037997D;
+	Mon,  9 Feb 2026 14:25:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770647143; cv=none; b=JI87WyNVdhuhqaq1B6GZ7L0KuD1XroDJ+yIEqbc4O3ztcyuFky2sHyEe+gxNQ5VqMSdexNMcdXvt28X7Z/FQoUt7x8gmgsmIrIXdzfSUiVR8JLe/Er66UzU8tQbH4J/JSEOAUj1Tb6Vzg332LfuSxNgAiJkJNVmhRQ7vsUelPs0=
+	t=1770647146; cv=none; b=EmG/TDnsPsmIJgT4IbFkiRKwoA5QxZjSOtTYWTjMEDSms5faddfruL0NpW4LJV04t+29j/cbG1hqLrkZc04YYXHHRXc9mByHHXtlgnLI6TnyyfxHma2QPngbzG6b+yAIbNTUjgDz5RsNLPFPeIvVShKomUnuiOmJ2TK7brJA6fA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770647143; c=relaxed/simple;
-	bh=hfT4M6Rh2EpHIVdvOtb5LfnxvKi88BIsMbkfu45Vuho=;
+	s=arc-20240116; t=1770647146; c=relaxed/simple;
+	bh=0L4E/8PinjM3npdbecSzs5x61jH7+D3DzkW3zkKBPSk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Q3rGxf0siOah0vckvIutikPf/2/Yh5HNdbbqxX3o1V1nPDxGA/oLLIyvm/Giqyvsc/vwMUJ6UV7qBcAv1PPuufqXx2C5QH4Ki+xRt0YRu8sTVR4cOJwBFNfuN7jJinGkPQiAGcKWGfUuJzBfBrjV0bbUf5rfZ+3H+WdN6P1u3mQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=w8NlM3RG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lCIxZiDr5dIQqjUAcrFPsTJAyJDuz7q3y8KtFH4KbnzqYluhD64OKOh5BVVmOFGf1ZAb78NzFxHF0GW+DLW8/Az/NxYnCuHzXQuJc8wrXvy/Q5Z//C+96Wh5PuptB7ivxZ9cnwyo0ltAfxYdCl9vlyFfcqTyCJUB4bjtFya2vuo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WhU8MXct; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="w8NlM3RG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 21927C116C6;
-	Mon,  9 Feb 2026 14:25:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WhU8MXct"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BFDA6C116C6;
+	Mon,  9 Feb 2026 14:25:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770647143;
-	bh=hfT4M6Rh2EpHIVdvOtb5LfnxvKi88BIsMbkfu45Vuho=;
+	s=korg; t=1770647146;
+	bh=0L4E/8PinjM3npdbecSzs5x61jH7+D3DzkW3zkKBPSk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=w8NlM3RG9RQq95SiEc71unf2Yaw3ngKGZWHB4IlcwRnrcs9ZBAj1hc6XGVFaOHYwc
-	 jX1XOhT0EsTbrpStQ3g3xWo5brLSoDYmemjVUrQP0mzvCU3Fx+Qmg1RNclQJkjAYro
-	 vtvpo2Y4Cp70j6ZlKTN4YDAVZWP4SlyhsxSHzS78=
+	b=WhU8MXctVDPSrg5wJBcCETy0HNNNG5hXx0kiP5ptiGJ/8qEHlwEDYwDzwIKAeOiG6
+	 5YwgdCZL37df6G15TKipRLdv745JLp0k+BnOKsSvLJqvNsjT6sZ/MofWMpdC1eaK5Y
+	 OqqxTwbOMjrkooxlL5FUaDwMrZRNHX9C7+HB4xOU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrii Nakryiko <andrii@kernel.org>,
-	syzbot+4e70c8e0a2017b432f7a@syzkaller.appspotmail.com,
-	Suren Baghdasaryan <surenb@google.com>,
-	Shakeel Butt <shakeel.butt@linux.dev>,
-	Alexei Starovoitov <ast@kernel.org>,
-	Daniel Borkmann <daniel@iogearbox.net>,
-	Eduard Zingerman <eddyz87@gmail.com>,
-	Hao Luo <haoluo@google.com>,
-	Jiri Olsa <jolsa@kernel.org>,
-	John Fastabend <john.fastabend@gmail.com>,
-	KP Singh <kpsingh@kernel.org>,
-	Martin KaFai Lau <martin.lau@linux.dev>,
-	Song Liu <song@kernel.org>,
-	Stanislav Fomichev <sdf@fomichev.me>,
-	Yonghong Song <yonghong.song@linux.dev>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.18 012/175] procfs: avoid fetching build ID while holding VMA lock
-Date: Mon,  9 Feb 2026 15:21:25 +0100
-Message-ID: <20260209142320.919126774@linuxfoundation.org>
+	Justin Forbes <jforbes@fedoraproject.org>,
+	Josh Poimboeuf <jpoimboe@kernel.org>,
+	stable@kernel.org,
+	Linus Torvalds <torvalds@linux-foundation.org>
+Subject: [PATCH 6.18 002/175] x86/vmware: Fix hypercall clobbers
+Date: Mon,  9 Feb 2026 15:21:15 +0100
+Message-ID: <20260209142320.566288649@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260209142320.474120190@linuxfoundation.org>
 References: <20260209142320.474120190@linuxfoundation.org>
@@ -64,260 +52,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andrii Nakryiko <andrii@kernel.org>
+From: Josh Poimboeuf <jpoimboe@kernel.org>
 
-commit b5cbacd7f86f4f62b8813688c8e73be94e8e1951 upstream.
+commit 2687c848e57820651b9f69d30c4710f4219f7dbf upstream.
 
-Fix PROCMAP_QUERY to fetch optional build ID only after dropping mmap_lock
-or per-VMA lock, whichever was used to lock VMA under question, to avoid
-deadlock reported by syzbot:
+Fedora QA reported the following panic:
 
- -> #1 (&mm->mmap_lock){++++}-{4:4}:
-        __might_fault+0xed/0x170
-        _copy_to_iter+0x118/0x1720
-        copy_page_to_iter+0x12d/0x1e0
-        filemap_read+0x720/0x10a0
-        blkdev_read_iter+0x2b5/0x4e0
-        vfs_read+0x7f4/0xae0
-        ksys_read+0x12a/0x250
-        do_syscall_64+0xcb/0xf80
-        entry_SYSCALL_64_after_hwframe+0x77/0x7f
+  BUG: unable to handle page fault for address: 0000000040003e54
+  #PF: supervisor write access in kernel mode
+  #PF: error_code(0x0002) - not-present page
+  Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS edk2-20251119-3.fc43 11/19/2025
+  RIP: 0010:vmware_hypercall4.constprop.0+0x52/0x90
+  ..
+  Call Trace:
+   vmmouse_report_events+0x13e/0x1b0
+   psmouse_handle_byte+0x15/0x60
+   ps2_interrupt+0x8a/0xd0
+   ...
 
- -> #0 (&sb->s_type->i_mutex_key#8){++++}-{4:4}:
-        __lock_acquire+0x1509/0x26d0
-        lock_acquire+0x185/0x340
-        down_read+0x98/0x490
-        blkdev_read_iter+0x2a7/0x4e0
-        __kernel_read+0x39a/0xa90
-        freader_fetch+0x1d5/0xa80
-        __build_id_parse.isra.0+0xea/0x6a0
-        do_procmap_query+0xd75/0x1050
-        procfs_procmap_ioctl+0x7a/0xb0
-        __x64_sys_ioctl+0x18e/0x210
-        do_syscall_64+0xcb/0xf80
-        entry_SYSCALL_64_after_hwframe+0x77/0x7f
+because the QEMU VMware mouse emulation is buggy, and clears the top 32
+bits of %rdi that the kernel kept a pointer in.
 
- other info that might help us debug this:
+The QEMU vmmouse driver saves and restores the register state in a
+"uint32_t data[6];" and as a result restores the state with the high
+bits all cleared.
 
-  Possible unsafe locking scenario:
+RDI originally contained the value of a valid kernel stack address
+(0xff5eeb3240003e54).  After the vmware hypercall it now contains
+0x40003e54, and we get a page fault as a result when it is dereferenced.
 
-        CPU0                    CPU1
-        ----                    ----
-   rlock(&mm->mmap_lock);
-                                lock(&sb->s_type->i_mutex_key#8);
-                                lock(&mm->mmap_lock);
-   rlock(&sb->s_type->i_mutex_key#8);
+The proper fix would be in QEMU, but this works around the issue in the
+kernel to keep old setups working, when old kernels had not happened to
+keep any state in %rdi over the hypercall.
 
-  *** DEADLOCK ***
+In theory this same issue exists for all the hypercalls in the vmmouse
+driver; in practice it has only been seen with vmware_hypercall3() and
+vmware_hypercall4().  For now, just mark RDI/RSI as clobbered for those
+two calls.  This should have a minimal effect on code generation overall
+as it should be rare for the compiler to want to make RDI/RSI live
+across hypercalls.
 
-This seems to be exacerbated (as we haven't seen these syzbot reports
-before that) by the recent:
-
-	777a8560fd29 ("lib/buildid: use __kernel_read() for sleepable context")
-
-To make this safe, we need to grab file refcount while VMA is still locked, but
-other than that everything is pretty straightforward. Internal build_id_parse()
-API assumes VMA is passed, but it only needs the underlying file reference, so
-just add another variant build_id_parse_file() that expects file passed
-directly.
-
-[akpm@linux-foundation.org: fix up kerneldoc]
-Link: https://lkml.kernel.org/r/20260129215340.3742283-1-andrii@kernel.org
-Fixes: ed5d583a88a9 ("fs/procfs: implement efficient VMA querying API for /proc/<pid>/maps")
-Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
-Reported-by: <syzbot+4e70c8e0a2017b432f7a@syzkaller.appspotmail.com>
-Reviewed-by: Suren Baghdasaryan <surenb@google.com>
-Tested-by: Suren Baghdasaryan <surenb@google.com>
-Reviewed-by: Shakeel Butt <shakeel.butt@linux.dev>
-Cc: Alexei Starovoitov <ast@kernel.org>
-Cc: Daniel Borkmann <daniel@iogearbox.net>
-Cc: Eduard Zingerman <eddyz87@gmail.com>
-Cc: Hao Luo <haoluo@google.com>
-Cc: Jiri Olsa <jolsa@kernel.org>
-Cc: John Fastabend <john.fastabend@gmail.com>
-Cc: KP Singh <kpsingh@kernel.org>
-Cc: Martin KaFai Lau <martin.lau@linux.dev>
-Cc: Song Liu <song@kernel.org>
-Cc: Stanislav Fomichev <sdf@fomichev.me>
-Cc: Yonghong Song <yonghong.song@linux.dev>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Reported-by: Justin Forbes <jforbes@fedoraproject.org>
+Link: https://lore.kernel.org/all/99a9c69a-fc1a-43b7-8d1e-c42d6493b41f@broadcom.com/
+Signed-off-by: Josh Poimboeuf <jpoimboe@kernel.org>
+Cc: stable@kernel.org
+Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/proc/task_mmu.c      |   42 +++++++++++++++++++++++++++---------------
- include/linux/buildid.h |    3 +++
- lib/buildid.c           |   42 ++++++++++++++++++++++++++++++------------
- 3 files changed, 60 insertions(+), 27 deletions(-)
+ arch/x86/include/asm/vmware.h |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/fs/proc/task_mmu.c
-+++ b/fs/proc/task_mmu.c
-@@ -656,6 +656,7 @@ static int do_procmap_query(struct mm_st
- 	struct proc_maps_locking_ctx lock_ctx = { .mm = mm };
- 	struct procmap_query karg;
- 	struct vm_area_struct *vma;
-+	struct file *vm_file = NULL;
- 	const char *name = NULL;
- 	char build_id_buf[BUILD_ID_SIZE_MAX], *name_buf = NULL;
- 	__u64 usize;
-@@ -727,21 +728,6 @@ static int do_procmap_query(struct mm_st
- 		karg.inode = 0;
- 	}
- 
--	if (karg.build_id_size) {
--		__u32 build_id_sz;
--
--		err = build_id_parse(vma, build_id_buf, &build_id_sz);
--		if (err) {
--			karg.build_id_size = 0;
--		} else {
--			if (karg.build_id_size < build_id_sz) {
--				err = -ENAMETOOLONG;
--				goto out;
--			}
--			karg.build_id_size = build_id_sz;
--		}
--	}
--
- 	if (karg.vma_name_size) {
- 		size_t name_buf_sz = min_t(size_t, PATH_MAX, karg.vma_name_size);
- 		const struct path *path;
-@@ -775,10 +761,34 @@ static int do_procmap_query(struct mm_st
- 		karg.vma_name_size = name_sz;
- 	}
- 
-+	if (karg.build_id_size && vma->vm_file)
-+		vm_file = get_file(vma->vm_file);
-+
- 	/* unlock vma or mmap_lock, and put mm_struct before copying data to user */
- 	query_vma_teardown(&lock_ctx);
- 	mmput(mm);
- 
-+	if (karg.build_id_size) {
-+		__u32 build_id_sz;
-+
-+		if (vm_file)
-+			err = build_id_parse_file(vm_file, build_id_buf, &build_id_sz);
-+		else
-+			err = -ENOENT;
-+		if (err) {
-+			karg.build_id_size = 0;
-+		} else {
-+			if (karg.build_id_size < build_id_sz) {
-+				err = -ENAMETOOLONG;
-+				goto out;
-+			}
-+			karg.build_id_size = build_id_sz;
-+		}
-+	}
-+
-+	if (vm_file)
-+		fput(vm_file);
-+
- 	if (karg.vma_name_size && copy_to_user(u64_to_user_ptr(karg.vma_name_addr),
- 					       name, karg.vma_name_size)) {
- 		kfree(name_buf);
-@@ -798,6 +808,8 @@ static int do_procmap_query(struct mm_st
- out:
- 	query_vma_teardown(&lock_ctx);
- 	mmput(mm);
-+	if (vm_file)
-+		fput(vm_file);
- 	kfree(name_buf);
- 	return err;
- }
---- a/include/linux/buildid.h
-+++ b/include/linux/buildid.h
-@@ -7,7 +7,10 @@
- #define BUILD_ID_SIZE_MAX 20
- 
- struct vm_area_struct;
-+struct file;
-+
- int build_id_parse(struct vm_area_struct *vma, unsigned char *build_id, __u32 *size);
-+int build_id_parse_file(struct file *file, unsigned char *build_id, __u32 *size);
- int build_id_parse_nofault(struct vm_area_struct *vma, unsigned char *build_id, __u32 *size);
- int build_id_parse_buf(const void *buf, unsigned char *build_id, u32 buf_size);
- 
---- a/lib/buildid.c
-+++ b/lib/buildid.c
-@@ -295,7 +295,7 @@ static int get_build_id_64(struct freade
- /* enough for Elf64_Ehdr, Elf64_Phdr, and all the smaller requests */
- #define MAX_FREADER_BUF_SZ 64
- 
--static int __build_id_parse(struct vm_area_struct *vma, unsigned char *build_id,
-+static int __build_id_parse(struct file *file, unsigned char *build_id,
- 			    __u32 *size, bool may_fault)
- {
- 	const Elf32_Ehdr *ehdr;
-@@ -303,11 +303,7 @@ static int __build_id_parse(struct vm_ar
- 	char buf[MAX_FREADER_BUF_SZ];
- 	int ret;
- 
--	/* only works for page backed storage  */
--	if (!vma->vm_file)
--		return -EINVAL;
--
--	freader_init_from_file(&r, buf, sizeof(buf), vma->vm_file, may_fault);
-+	freader_init_from_file(&r, buf, sizeof(buf), file, may_fault);
- 
- 	/* fetch first 18 bytes of ELF header for checks */
- 	ehdr = freader_fetch(&r, 0, offsetofend(Elf32_Ehdr, e_type));
-@@ -335,8 +331,8 @@ out:
- 	return ret;
+--- a/arch/x86/include/asm/vmware.h
++++ b/arch/x86/include/asm/vmware.h
+@@ -140,7 +140,7 @@ unsigned long vmware_hypercall3(unsigned
+ 		  "b" (in1),
+ 		  "c" (cmd),
+ 		  "d" (0)
+-		: "cc", "memory");
++		: "di", "si", "cc", "memory");
+ 	return out0;
  }
  
--/*
-- * Parse build ID of ELF file mapped to vma
-+/**
-+ * build_id_parse_nofault() - Parse build ID of ELF file mapped to vma
-  * @vma:      vma object
-  * @build_id: buffer to store build id, at least BUILD_ID_SIZE long
-  * @size:     returns actual build id size in case of success
-@@ -348,11 +344,14 @@ out:
-  */
- int build_id_parse_nofault(struct vm_area_struct *vma, unsigned char *build_id, __u32 *size)
- {
--	return __build_id_parse(vma, build_id, size, false /* !may_fault */);
-+	if (!vma->vm_file)
-+		return -EINVAL;
-+
-+	return __build_id_parse(vma->vm_file, build_id, size, false /* !may_fault */);
+@@ -165,7 +165,7 @@ unsigned long vmware_hypercall4(unsigned
+ 		  "b" (in1),
+ 		  "c" (cmd),
+ 		  "d" (0)
+-		: "cc", "memory");
++		: "di", "si", "cc", "memory");
+ 	return out0;
  }
  
--/*
-- * Parse build ID of ELF file mapped to VMA
-+/**
-+ * build_id_parse() - Parse build ID of ELF file mapped to VMA
-  * @vma:      vma object
-  * @build_id: buffer to store build id, at least BUILD_ID_SIZE long
-  * @size:     returns actual build id size in case of success
-@@ -364,7 +363,26 @@ int build_id_parse_nofault(struct vm_are
-  */
- int build_id_parse(struct vm_area_struct *vma, unsigned char *build_id, __u32 *size)
- {
--	return __build_id_parse(vma, build_id, size, true /* may_fault */);
-+	if (!vma->vm_file)
-+		return -EINVAL;
-+
-+	return __build_id_parse(vma->vm_file, build_id, size, true /* may_fault */);
-+}
-+
-+/**
-+ * build_id_parse_file() - Parse build ID of ELF file
-+ * @file:      file object
-+ * @build_id: buffer to store build id, at least BUILD_ID_SIZE long
-+ * @size:     returns actual build id size in case of success
-+ *
-+ * Assumes faultable context and can cause page faults to bring in file data
-+ * into page cache.
-+ *
-+ * Return: 0 on success; negative error, otherwise
-+ */
-+int build_id_parse_file(struct file *file, unsigned char *build_id, __u32 *size)
-+{
-+	return __build_id_parse(file, build_id, size, true /* may_fault */);
- }
- 
- /**
 
 
