@@ -1,43 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 579BF2222B2;
-	Mon,  9 Feb 2026 14:42:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83A562222B2;
+	Mon,  9 Feb 2026 14:42:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770648130; cv=none; b=HZ2id/Idi+saQrl/b2wv2FNXghqdX1Ov8xAXxGLssJ03LvBQgz3jRShaw6tygegn42opMYNihCDblHmiBy9Luwfcy6eQYDhomnJh5LCfvxC5/aFXGA9f39qEWTg3EpoQ8byCKcdFC3lwBb6+9cvMibjZo0//8/fc6VVVPQCiNj8=
+	t=1770648133; cv=none; b=OfcORgmF7Q07TmfZSDS5ro4/abdGIRRX9DDtoTTBx/89u7IcZrCnhcPAcjPuQW4l/RL3Q0Gdz8LpzE+B+NKcq9wm9PK6H5Cm/hmqCkfAJOwsnQIVo8nelfn1b4z4EpLPIY6Ec/HStPPHYhYQYHsCnuOL6L/MIwasHMkJ3+HSKvU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770648130; c=relaxed/simple;
-	bh=JYbrvE7r7z9RnRrSgQTrCx/mVEYBHarGxo5xJIa7ZAM=;
+	s=arc-20240116; t=1770648133; c=relaxed/simple;
+	bh=+FhbXcZbD0dCFvaquaCg4eiKVqunVk01Vv3W90kHxq8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LQaEyR5YbMVAzQor5RRztAU/5rmCbYuy0VoKVeStKkXKgjE83jLWjMr5YyRk8cI/QUwLd8+nGUD0fzSQ+iuvagsEzrrxEPsYKDnZDgyS6gcB7cAxjhDYCj4JeI5JHxeS7eiaC6WcpurnbcarId7ZegSZk4stmI5GieEDbC3foLg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iX9rWaF3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=By85Fr21I/uRVstWVNfU2Q1rjSnONt8r3uL8Gd+zKktuvP29yBwsUGqJoSVsPW8eGzHlEYXWhIebHd1AA9kLS/DEuO1lMVgWM4kS2D66dEDfhx4CCFw1vf2Blv/AASc83pNBIsTa+RjBF8vuFiU/+oZ/CDgO2ke5P+8G6TNK78E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=F2opifG9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iX9rWaF3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BAB02C116C6;
-	Mon,  9 Feb 2026 14:42:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="F2opifG9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E8FD8C16AAE;
+	Mon,  9 Feb 2026 14:42:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770648130;
-	bh=JYbrvE7r7z9RnRrSgQTrCx/mVEYBHarGxo5xJIa7ZAM=;
+	s=korg; t=1770648133;
+	bh=+FhbXcZbD0dCFvaquaCg4eiKVqunVk01Vv3W90kHxq8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iX9rWaF3bGimz1QNjxQM+PkRQnFIwWnyiS4oAUDWCnUAOiJF9f0Y9kmbISPC8YyQG
-	 dgCKRd3hboPu90gzSt/XAXrFVzRLN/5I34mWrwV0nGt3MQvQzLnoATFFrszMM1sY/H
-	 CPi9r15HaFRbreMhIWpeN9mGD8WsztsuoTSUNX/o=
+	b=F2opifG9UqrTsai/B/NMCR1YTMKlPvcAnYvOGLu0VEnr5TBoSQnGzaTPzar1T7Tw2
+	 2MtckMp4r+16Q0bESP57B8u4yaFTUOgxI7++tztVVsYZ8axs9BBcaSCVmsdqR7nsQ7
+	 siCTOmwWHjZ9fjlBjEgwyuXGoDC60UEB5A9TL2oI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Max Yuan <maxyuan@google.com>,
-	Jordan Rhee <jordanrhee@google.com>,
-	Joshua Washington <joshwash@google.com>,
-	Matt Olson <maolson@google.com>,
-	Harshitha Ramamurthy <hramamurthy@google.com>,
-	Jacob Keller <jacob.e.keller@intel.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Zhiquan Li <zhiquan_li@163.com>,
+	Sean Christopherson <seanjc@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 16/69] gve: Correct ethtool rx_dropped calculation
-Date: Mon,  9 Feb 2026 15:23:44 +0100
-Message-ID: <20260209142302.510101842@linuxfoundation.org>
+Subject: [PATCH 6.1 17/69] KVM: selftests: Add -U_FORTIFY_SOURCE to avoid some unpredictable test failures
+Date: Mon,  9 Feb 2026 15:23:45 +0100
+Message-ID: <20260209142302.546864853@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260209142301.913348974@linuxfoundation.org>
 References: <20260209142301.913348974@linuxfoundation.org>
@@ -56,57 +51,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Max Yuan <maxyuan@google.com>
+From: Zhiquan Li <zhiquan_li@163.com>
 
-[ Upstream commit c7db85d579a1dccb624235534508c75fbf2dfe46 ]
+[ Upstream commit e396a74222654486d6ab45dca5d0c54c408b8b91 ]
 
-The gve driver's "rx_dropped" statistic, exposed via `ethtool -S`,
-incorrectly includes `rx_buf_alloc_fail` counts. These failures
-represent an inability to allocate receive buffers, not true packet
-drops where a received packet is discarded. This misrepresentation can
-lead to inaccurate diagnostics.
+Some distributions (such as Ubuntu) configure GCC so that
+_FORTIFY_SOURCE is automatically enabled at -O1 or above.  This results
+in some fortified version of definitions of standard library functions
+are included.  While linker resolves the symbols, the fortified versions
+might override the definitions in lib/string_override.c and reference to
+those PLT entries in GLIBC.  This is not a problem for the code in host,
+but it is a disaster for the guest code.  E.g., if build and run
+x86/nested_emulation_test on Ubuntu 24.04 will encounter a L1 #PF due to
+memset() reference to __memset_chk@plt.
 
-This patch rectifies the ethtool "rx_dropped" calculation. It removes
-`rx_buf_alloc_fail` from the total and adds `xdp_tx_errors` and
-`xdp_redirect_errors`, which represent legitimate packet drops within
-the XDP path.
+The option -fno-builtin-memset is not helpful here, because those
+fortified versions are not built-in but some definitions which are
+included by header, they are for different intentions.
 
+In order to eliminate the unpredictable behaviors may vary depending on
+the linker and platform, add the "-U_FORTIFY_SOURCE" into CFLAGS to
+prevent from introducing the fortified definitions.
+
+Signed-off-by: Zhiquan Li <zhiquan_li@163.com>
+Link: https://patch.msgid.link/20260122053551.548229-1-zhiquan_li@163.com
+Fixes: 6b6f71484bf4 ("KVM: selftests: Implement memcmp(), memcpy(), and memset() for guest use")
 Cc: stable@vger.kernel.org
-Fixes: 433e274b8f7b ("gve: Add stats for gve.")
-Signed-off-by: Max Yuan <maxyuan@google.com>
-Reviewed-by: Jordan Rhee <jordanrhee@google.com>
-Reviewed-by: Joshua Washington <joshwash@google.com>
-Reviewed-by: Matt Olson <maolson@google.com>
-Signed-off-by: Harshitha Ramamurthy <hramamurthy@google.com>
-Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
-Link: https://patch.msgid.link/20260202193925.3106272-3-hramamurthy@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-[ Context + variable naming ]
+[sean: tag for stable]
+Signed-off-by: Sean Christopherson <seanjc@google.com>
+[ Makefile.kvm -> Makefile ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/google/gve/gve_ethtool.c |    4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
+ tools/testing/selftests/kvm/Makefile |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/net/ethernet/google/gve/gve_ethtool.c
-+++ b/drivers/net/ethernet/google/gve/gve_ethtool.c
-@@ -216,8 +216,7 @@ gve_get_ethtool_stats(struct net_device
- 	data[i++] = rx_bytes;
- 	data[i++] = tx_bytes;
- 	/* total rx dropped packets */
--	data[i++] = rx_skb_alloc_fail + rx_buf_alloc_fail +
--		    rx_desc_err_dropped_pkt;
-+	data[i++] = rx_skb_alloc_fail + rx_desc_err_dropped_pkt;
- 	data[i++] = tx_dropped;
- 	data[i++] = priv->tx_timeo_cnt;
- 	data[i++] = rx_skb_alloc_fail;
-@@ -293,7 +292,6 @@ gve_get_ethtool_stats(struct net_device
- 			data[i++] = rx->rx_frag_copy_cnt;
- 			/* rx dropped packets */
- 			data[i++] = tmp_rx_skb_alloc_fail +
--				tmp_rx_buf_alloc_fail +
- 				tmp_rx_desc_err_dropped_pkt;
- 			data[i++] = rx->rx_copybreak_pkt;
- 			data[i++] = rx->rx_copied_pkt;
+--- a/tools/testing/selftests/kvm/Makefile
++++ b/tools/testing/selftests/kvm/Makefile
+@@ -202,6 +202,7 @@ else
+ LINUX_TOOL_ARCH_INCLUDE = $(top_srcdir)/tools/arch/$(ARCH)/include
+ endif
+ CFLAGS += -Wall -Wstrict-prototypes -Wuninitialized -O2 -g -std=gnu99 \
++	-U_FORTIFY_SOURCE \
+ 	-fno-stack-protector -fno-PIE -I$(LINUX_TOOL_INCLUDE) \
+ 	-I$(LINUX_TOOL_ARCH_INCLUDE) -I$(LINUX_HDR_PATH) -Iinclude \
+ 	-I$(<D) -Iinclude/$(UNAME_M) -I ../rseq -I.. $(EXTRA_CFLAGS) \
 
 
