@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6878E35CB6B;
-	Mon,  9 Feb 2026 14:28:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 924FD35CB6B;
+	Mon,  9 Feb 2026 14:28:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770647306; cv=none; b=UZVB4l0ysIFfk44FHXNMKvAT+fSWbweo1ECIySz66uzP8yaw7a3d6Ji/ZWw2eVQqdhgZ1FL4JT0RR8y/XWJJ/qEORfBTS2Po2COsJPHlcOvJUj1zNJanE919frtArNUsEYgXr1X/kBKUqy8FnM3C3ZJ9k27ysbR8jhBBr9c3qvA=
+	t=1770647309; cv=none; b=UkjBTmaxOcaGTjH7qYvVtQBxpwaRq+/Q3EQ8qOMguQA6BPhq+RIIdip5tGOhDQvzJyaHbyD/f38UezQdrIP6xmm/6QYfHGYHpjo0JU6IqhEi5J3pqbRj7EggNrentx2UnDcLy4OBhHtuXgtw1Bj/+zanaw4HE1DKNK1WSXn319A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770647306; c=relaxed/simple;
-	bh=MeqTtlxnQBkEBSG5iyyl/nPG9FiGTY5L3cy32I/RssI=;
+	s=arc-20240116; t=1770647309; c=relaxed/simple;
+	bh=oDMbmy7q/ORlmHCTBHhrQgxHB2/7rL882S9wt6VIryM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oQWImdKXc8fnWH10FHjjdM9aHyW3x2CkSYm8Q6RHJe4x3X/jpC76ScHOeazRFhMCN0hZ4die/+c2++f6heHubOO3T27YytnVJT2zKDSqohHfTwm4JkXASf7lGP1Mi8nL4yFR8nD3aCFXAiKNcDOwu41lhbDRGfRP7hs1nxptjws=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=E6Sfr7xE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KrIT2GluLGA17AjrqUwnWYhWGP8+WNTI+ZOlEt15YmzLU12qSi0oQ1IPKiGIFJ3s98u3FkTrNitYH+MlOTDj7OKX3XtooPTOySuJG2aJBcn2z6+Apqq2EZn6hcTHFHIozP3sxxV0gbXtVuzoocucaZdIGfeH+kB4PJ7SzP8kHH8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=a/eNKQlc; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="E6Sfr7xE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E801FC116C6;
-	Mon,  9 Feb 2026 14:28:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="a/eNKQlc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 08985C116C6;
+	Mon,  9 Feb 2026 14:28:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770647306;
-	bh=MeqTtlxnQBkEBSG5iyyl/nPG9FiGTY5L3cy32I/RssI=;
+	s=korg; t=1770647309;
+	bh=oDMbmy7q/ORlmHCTBHhrQgxHB2/7rL882S9wt6VIryM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=E6Sfr7xEv4FrrvQxt/Nd9sVecZmI7znwwAh+tS7GVee7EWM8I5xvG6rPuGeMTnB5y
-	 0ddMxb/Jn8fURqw40BHxUIgaIR8egVzdnfhpihQOBiNSxxC3otfSCdZzn9LN4FUGZA
-	 8CDJ/5OupCm5osUlTSxoWzCsL+p+9f9bXj/bELUc=
+	b=a/eNKQlcGUW9Tx3j+56qwKkMHtQngBB/n9cxYZSDqsu4QH088pN2g111uaftXRtk2
+	 YUrjEwW64sUNkk7RDEdU3D2BALU7t/4BrgMoARsm0oZEDLDHMlxXoKPpjJK7KP6EDA
+	 I709YxMJfwcwb6pNSWiN2N3hKdb4VqDZlwjHtdPU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	ZhangGuoDong <zhangguodong@kylinos.cn>,
-	ChenXiaoSong <chenxiaosong@kylinos.cn>,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Steve French <stfrench@microsoft.com>,
+	Qu Wenruo <wqu@suse.com>,
+	Filipe Manana <fdmanana@suse.com>,
+	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 061/175] smb/server: fix refcount leak in parse_durable_handle_context()
-Date: Mon,  9 Feb 2026 15:22:14 +0100
-Message-ID: <20260209142322.656688103@linuxfoundation.org>
+Subject: [PATCH 6.18 062/175] btrfs: do not free data reservation in fallback from inline due to -ENOSPC
+Date: Mon,  9 Feb 2026 15:22:15 +0100
+Message-ID: <20260209142322.691287556@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260209142320.474120190@linuxfoundation.org>
 References: <20260209142320.474120190@linuxfoundation.org>
@@ -53,34 +52,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: ZhangGuoDong <zhangguodong@kylinos.cn>
+From: Filipe Manana <fdmanana@suse.com>
 
-[ Upstream commit 3296c3012a9d9a27e81e34910384e55a6ff3cff0 ]
+[ Upstream commit f8da41de0bff9eb1d774a7253da0c9f637c4470a ]
 
-When the command is a replay operation and -ENOEXEC is returned,
-the refcount of ksmbd_file must be released.
+If we fail to create an inline extent due to -ENOSPC, we will attempt to
+go through the normal COW path, reserve an extent, create an ordered
+extent, etc. However we were always freeing the reserved qgroup data,
+which is wrong since we will use data. Fix this by freeing the reserved
+qgroup data in __cow_file_range_inline() only if we are not doing the
+fallback (ret is <= 0).
 
-Signed-off-by: ZhangGuoDong <zhangguodong@kylinos.cn>
-Signed-off-by: ChenXiaoSong <chenxiaosong@kylinos.cn>
-Acked-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Reviewed-by: Qu Wenruo <wqu@suse.com>
+Signed-off-by: Filipe Manana <fdmanana@suse.com>
+Reviewed-by: David Sterba <dsterba@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/server/smb2pdu.c | 1 +
- 1 file changed, 1 insertion(+)
+ fs/btrfs/inode.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/fs/smb/server/smb2pdu.c b/fs/smb/server/smb2pdu.c
-index 244a5665f26df..470b274f4cc98 100644
---- a/fs/smb/server/smb2pdu.c
-+++ b/fs/smb/server/smb2pdu.c
-@@ -2822,6 +2822,7 @@ static int parse_durable_handle_context(struct ksmbd_work *work,
- 					    SMB2_CLIENT_GUID_SIZE)) {
- 					if (!(req->hdr.Flags & SMB2_FLAGS_REPLAY_OPERATION)) {
- 						err = -ENOEXEC;
-+						ksmbd_put_durable_fd(dh_info->fp);
- 						goto out;
- 					}
- 
+diff --git a/fs/btrfs/inode.c b/fs/btrfs/inode.c
+index 1af9b05328ce8..e72c69f77ce4b 100644
+--- a/fs/btrfs/inode.c
++++ b/fs/btrfs/inode.c
+@@ -670,8 +670,12 @@ static noinline int __cow_file_range_inline(struct btrfs_inode *inode,
+ 	 * it won't count as data extent, free them directly here.
+ 	 * And at reserve time, it's always aligned to page size, so
+ 	 * just free one page here.
++	 *
++	 * If we fallback to non-inline (ret == 1) due to -ENOSPC, then we need
++	 * to keep the data reservation.
+ 	 */
+-	btrfs_qgroup_free_data(inode, NULL, 0, fs_info->sectorsize, NULL);
++	if (ret <= 0)
++		btrfs_qgroup_free_data(inode, NULL, 0, fs_info->sectorsize, NULL);
+ 	btrfs_free_path(path);
+ 	btrfs_end_transaction(trans);
+ 	return ret;
 -- 
 2.51.0
 
