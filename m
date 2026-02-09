@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13F1A285073;
-	Mon,  9 Feb 2026 14:49:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18CFC28725B;
+	Mon,  9 Feb 2026 14:49:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770648557; cv=none; b=BAznsKnPM0L3FZhNzb7L5Eifqu9Q7X1KPw1wjkn21xztVBxbWzrnu7vqzWVQ9T98Qdn8IYe+PFyoyaARzKBSeStldJPk9YWZtgX7xSwTyhc1IOoL5Oxeiw2ZMnW5sVt5zjabKRgEYkASqeq5n8xjQEEx3Yf/5Wimgozt1bB4jKY=
+	t=1770648560; cv=none; b=WLmiOw1CFpAJsD9h3RrZYRD2R8BAEy/ks4kc/kj6BedKgpIqOakru14GZwFFC4OawNlLXrHd5oaSUlmaAIZuzA6TPFEIUBMMT8pWo5mVbuR2csSXVxJ59C9PZ1nkxsKMAXqNTPZk5qQHuXYsg/XDOETTxrD/cx/7SZsdN6/WOxU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770648557; c=relaxed/simple;
-	bh=4LzbW+KNgoUPEGQACXCD4RVMYg654KGLSWmfQfza6FA=;
+	s=arc-20240116; t=1770648560; c=relaxed/simple;
+	bh=+zOdDjMUlugcusDKSQyPB/RkXnSTcrEJlG280bdizWI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mNhFq7FHOvLSfjqI/CypnH8PwEcukk/noxv6MNKVBq8uopBg/k6ZoB604g/yNKG85EGxubRBB7w+4goihal06Q+qSHQl0UCbg0tiPxezUbnwSWxyuzV+kCD1DmkNfYGqA0hNukaIItpZxKQe8tN491m21s5JmHei3Eyb2kE6x4k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YBHsshrn; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mKH/TRHGRUPYmQBDl6W3XGQ/Ur8pH9MIvXfcFCxLy7H/rHUKOBAUZLs/pHxCuThKU6/t1kLUxO792WVylep/KKNsYAEHApV6R/stSmAcpdv0KBwh77EkKn3JSDiQPsrtBoxlAVYcpGdLwFCvTpFV4wyTZsORt3I+/KI+d6oL+Bk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Aqp8FTMj; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YBHsshrn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90E60C116C6;
-	Mon,  9 Feb 2026 14:49:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Aqp8FTMj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 841AAC116C6;
+	Mon,  9 Feb 2026 14:49:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770648557;
-	bh=4LzbW+KNgoUPEGQACXCD4RVMYg654KGLSWmfQfza6FA=;
+	s=korg; t=1770648560;
+	bh=+zOdDjMUlugcusDKSQyPB/RkXnSTcrEJlG280bdizWI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YBHsshrncSSzRy+kovf/mYfXFxPodnLWCnaWSyABIH4L0qtBwauVcZNuQCPIq48Q1
-	 BJqSlkzRYiXKrTUmpSZF5LfZihwPtdtvMNPazwxvTKWwytfa8HWnKIyySsPcOnfpzM
-	 WvpXYsBliRjV9uyHZJM9Fp2c40u6Qx13gGIC/IGo=
+	b=Aqp8FTMj8f8aA8hcn3wQoyIqoFpAKInP/7Ttv0ZcmQ+m3EykH2cGns4HKdzYKwpV7
+	 Ob0pvmkBqS1KaR9UjoSnRyyyzr3XNa41DsS5oyveo/5OhdQCGQ/dcnpbuvkTbJSP7+
+	 h27VDLPePJazpGp0Z9VMUPkmUVAK3RlcRI0vq/zI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrew Fasano <andrew.fasano@nist.gov>,
-	Florian Westphal <fw@strlen.de>,
+	syzbot+cb809def1baaac68ab92@syzkaller.appspotmail.com,
+	Shigeru Yoshida <syoshida@redhat.com>,
+	Fernando Fernandez Mancera <fmancera@suse.de>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 74/86] netfilter: nf_tables: fix inverted genmask check in nft_map_catchall_activate()
-Date: Mon,  9 Feb 2026 15:24:37 +0100
-Message-ID: <20260209142307.438548410@linuxfoundation.org>
+Subject: [PATCH 6.6 75/86] ipv6: Fix ECMP sibling count mismatch when clearing RTF_ADDRCONF
+Date: Mon,  9 Feb 2026 15:24:38 +0100
+Message-ID: <20260209142307.474941853@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260209142304.770150175@linuxfoundation.org>
 References: <20260209142304.770150175@linuxfoundation.org>
@@ -51,69 +53,91 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andrew Fasano <andrew.fasano@nist.gov>
+From: Shigeru Yoshida <syoshida@redhat.com>
 
-[ Upstream commit f41c5d151078c5348271ffaf8e7410d96f2d82f8 ]
+[ Upstream commit bbf4a17ad9ffc4e3d7ec13d73ecd59dea149ed25 ]
 
-nft_map_catchall_activate() has an inverted element activity check
-compared to its non-catchall counterpart nft_mapelem_activate() and
-compared to what is logically required.
+syzbot reported a kernel BUG in fib6_add_rt2node() when adding an IPv6
+route. [0]
 
-nft_map_catchall_activate() is called from the abort path to re-activate
-catchall map elements that were deactivated during a failed transaction.
-It should skip elements that are already active (they don't need
-re-activation) and process elements that are inactive (they need to be
-restored). Instead, the current code does the opposite: it skips inactive
-elements and processes active ones.
+Commit f72514b3c569 ("ipv6: clear RA flags when adding a static
+route") introduced logic to clear RTF_ADDRCONF from existing routes
+when a static route with the same nexthop is added. However, this
+causes a problem when the existing route has a gateway.
 
-Compare the non-catchall activate callback, which is correct:
+When RTF_ADDRCONF is cleared from a route that has a gateway, that
+route becomes eligible for ECMP, i.e. rt6_qualify_for_ecmp() returns
+true. The issue is that this route was never added to the
+fib6_siblings list.
 
-  nft_mapelem_activate():
-    if (nft_set_elem_active(ext, iter->genmask))
-        return 0;   /* skip active, process inactive */
+This leads to a mismatch between the following counts:
 
-With the buggy catchall version:
+- The sibling count computed by iterating fib6_next chain, which
+  includes the newly ECMP-eligible route
 
-  nft_map_catchall_activate():
-    if (!nft_set_elem_active(ext, genmask))
-        continue;   /* skip inactive, process active */
+- The actual siblings in fib6_siblings list, which does not include
+  that route
 
-The consequence is that when a DELSET operation is aborted,
-nft_setelem_data_activate() is never called for the catchall element.
-For NFT_GOTO verdict elements, this means nft_data_hold() is never
-called to restore the chain->use reference count. Each abort cycle
-permanently decrements chain->use. Once chain->use reaches zero,
-DELCHAIN succeeds and frees the chain while catchall verdict elements
-still reference it, resulting in a use-after-free.
+When a subsequent ECMP route is added, fib6_add_rt2node() hits
+BUG_ON(sibling->fib6_nsiblings != rt->fib6_nsiblings) because the
+counts don't match.
 
-This is exploitable for local privilege escalation from an unprivileged
-user via user namespaces + nftables on distributions that enable
-CONFIG_USER_NS and CONFIG_NF_TABLES.
+Fix this by only clearing RTF_ADDRCONF when the existing route does
+not have a gateway. Routes without a gateway cannot qualify for ECMP
+anyway (rt6_qualify_for_ecmp() requires fib_nh_gw_family), so clearing
+RTF_ADDRCONF on them is safe and matches the original intent of the
+commit.
 
-Fix by removing the negation so the check matches nft_mapelem_activate():
-skip active elements, process inactive ones.
+[0]:
+kernel BUG at net/ipv6/ip6_fib.c:1217!
+Oops: invalid opcode: 0000 [#1] SMP KASAN PTI
+CPU: 0 UID: 0 PID: 6010 Comm: syz.0.17 Not tainted syzkaller #0 PREEMPT(full)
+Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 10/25/2025
+RIP: 0010:fib6_add_rt2node+0x3433/0x3470 net/ipv6/ip6_fib.c:1217
+[...]
+Call Trace:
+ <TASK>
+ fib6_add+0x8da/0x18a0 net/ipv6/ip6_fib.c:1532
+ __ip6_ins_rt net/ipv6/route.c:1351 [inline]
+ ip6_route_add+0xde/0x1b0 net/ipv6/route.c:3946
+ ipv6_route_ioctl+0x35c/0x480 net/ipv6/route.c:4571
+ inet6_ioctl+0x219/0x280 net/ipv6/af_inet6.c:577
+ sock_do_ioctl+0xdc/0x300 net/socket.c:1245
+ sock_ioctl+0x576/0x790 net/socket.c:1366
+ vfs_ioctl fs/ioctl.c:51 [inline]
+ __do_sys_ioctl fs/ioctl.c:597 [inline]
+ __se_sys_ioctl+0xfc/0x170 fs/ioctl.c:583
+ do_syscall_x64 arch/x86/entry/syscall_64.c:63 [inline]
+ do_syscall_64+0xfa/0xf80 arch/x86/entry/syscall_64.c:94
+ entry_SYSCALL_64_after_hwframe+0x77/0x7f
 
-Fixes: 628bd3e49cba ("netfilter: nf_tables: drop map element references from preparation phase")
-Signed-off-by: Andrew Fasano <andrew.fasano@nist.gov>
-Signed-off-by: Florian Westphal <fw@strlen.de>
+Fixes: f72514b3c569 ("ipv6: clear RA flags when adding a static route")
+Reported-by: syzbot+cb809def1baaac68ab92@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=cb809def1baaac68ab92
+Tested-by: syzbot+cb809def1baaac68ab92@syzkaller.appspotmail.com
+Signed-off-by: Shigeru Yoshida <syoshida@redhat.com>
+Reviewed-by: Fernando Fernandez Mancera <fmancera@suse.de>
+Link: https://patch.msgid.link/20260204095837.1285552-1-syoshida@redhat.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nf_tables_api.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/ipv6/ip6_fib.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/net/netfilter/nf_tables_api.c b/net/netfilter/nf_tables_api.c
-index c00dd7dae5cb9..120d9bd53321c 100644
---- a/net/netfilter/nf_tables_api.c
-+++ b/net/netfilter/nf_tables_api.c
-@@ -5608,7 +5608,7 @@ static void nft_map_catchall_activate(const struct nft_ctx *ctx,
- 
- 	list_for_each_entry(catchall, &set->catchall_list, list) {
- 		ext = nft_set_elem_ext(set, catchall->elem);
--		if (!nft_set_elem_active(ext, genmask))
-+		if (nft_set_elem_active(ext, genmask))
- 			continue;
- 
- 		nft_clear(ctx->net, ext);
+diff --git a/net/ipv6/ip6_fib.c b/net/ipv6/ip6_fib.c
+index 646ff1276aff2..fe57884ca7238 100644
+--- a/net/ipv6/ip6_fib.c
++++ b/net/ipv6/ip6_fib.c
+@@ -1136,7 +1136,8 @@ static int fib6_add_rt2node(struct fib6_node *fn, struct fib6_info *rt,
+ 					fib6_set_expires(iter, rt->expires);
+ 					fib6_add_gc_list(iter);
+ 				}
+-				if (!(rt->fib6_flags & (RTF_ADDRCONF | RTF_PREFIX_RT))) {
++				if (!(rt->fib6_flags & (RTF_ADDRCONF | RTF_PREFIX_RT)) &&
++				    !iter->fib6_nh->fib_nh_gw_family) {
+ 					iter->fib6_flags &= ~RTF_ADDRCONF;
+ 					iter->fib6_flags &= ~RTF_PREFIX_RT;
+ 				}
 -- 
 2.51.0
 
