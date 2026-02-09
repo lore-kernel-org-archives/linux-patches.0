@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E926285073;
-	Mon,  9 Feb 2026 14:45:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86CDC27CCF2;
+	Mon,  9 Feb 2026 14:45:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770648334; cv=none; b=YaIfCD/bRXh2zkfLnyNKiwdIc6lnfd9v/IG+W/2lG2UFhWqoe4m3SmVPyg/OOAcJ6qCcCpq+aHJdR4y01YBQBEcjwrCOxRRw5ZmMZH+E0lKfCXpuBAr/6R8jWYE9rIqAaBB5XtPCzDnaH8ILgV7xBmXbd+4Ey+3kLy/n7xhOjhM=
+	t=1770648337; cv=none; b=o5D9dEaArNXKxRz7G4UAvN667X6d7B4dR1KJ/S68YqY90IBJC/Kd5BV/8SgD10zjcSO2my/Xf6ohXlKhkhqcymEBlQZ8uuRx8MJF+yEZxAEAw+iQS8amuipzWG5dByAqf9ttAEaOV7X5JO1AtwMRoXNYWTk21tbktibgT5ItLdA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770648334; c=relaxed/simple;
-	bh=HJG0fssy8Cg4ODOFxTmDj1TMvaYm4+IrDjcNMzgFsQw=;
+	s=arc-20240116; t=1770648337; c=relaxed/simple;
+	bh=gnqSY1hI/RrQmBh2Qfx8BFNECFAeCQOmbVAiIi4+vJ4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MeOXghPzgC1VKRPxwesm3hMEwnqxAqAdrtMWC/4M1XwvB8UkfJWOVvt2wEhEM3Swpc0Bmjigsv+G+i6pLBdogBhZkukFebKTY6/++Uf+dipDI7igHlJBfiMaszrjQx3A05DWZj30FOiIBSQOiauEjSw9GYtneixLLisKUpzQjlE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vfEDbnCT; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=RcOhZSa60aNii5vthQmQx0aXb7LfJocIb7W6I9sq9aXKRqDZ74M2XyjXbRuP0SlIDzJ9itFlxEoA6Bag3J2mOUi9rdt++ChqGDMu+i49zPC6p7R0a9MFdZ6iZ9a7tSRLoX5Bu/DgTU1Ct/Po6Qnz4lGv4Ta6JU/nDkwFO/ESvZQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IX6QXbu/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vfEDbnCT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 966DDC116C6;
-	Mon,  9 Feb 2026 14:45:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IX6QXbu/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 06670C116C6;
+	Mon,  9 Feb 2026 14:45:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770648334;
-	bh=HJG0fssy8Cg4ODOFxTmDj1TMvaYm4+IrDjcNMzgFsQw=;
+	s=korg; t=1770648337;
+	bh=gnqSY1hI/RrQmBh2Qfx8BFNECFAeCQOmbVAiIi4+vJ4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vfEDbnCTcBKvpGQGUCuGPvtnEdI6TZaIBxna/cxHa6ir2TGPzHwEGmQ496VpjS+nq
-	 of5Xy7CIiP/KYA7DfAeDULk7hM9YBkpKqHScTC0y74jwOC2/G2a02sFSl9aBCz/atE
-	 wea0j1RN919wr2QJjrtzYB0X+RFamoiR+SVWNpTU=
+	b=IX6QXbu/I8az6LeITMkhd8gMjxaidFENomH8FbJroWeKg207JpGBk1hY27JzyAiza
+	 0fRJNcNfT5xZOMMSIDGjJw7Wyv/Y1yVGfgbzn6nxKpBskWQNCybpjcpCDro5hF2TS6
+	 g06JTLVI+RKQwY+TUAH4uloD+nfv7Ke1hAu2FjMw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johannes Berg <johannes.berg@intel.com>,
-	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
+	mathieu.desnoyers@efficios.com,
+	Wupeng Ma <mawupeng1@huawei.com>,
+	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 44/69] wifi: mac80211: dont increment crypto_tx_tailroom_needed_cnt twice
-Date: Mon,  9 Feb 2026 15:24:12 +0100
-Message-ID: <20260209142303.508607694@linuxfoundation.org>
+Subject: [PATCH 6.1 35/69] ring-buffer: Avoid softlockup in ring_buffer_resize() during memory free
+Date: Mon,  9 Feb 2026 15:24:03 +0100
+Message-ID: <20260209142303.189797447@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260209142301.913348974@linuxfoundation.org>
 References: <20260209142301.913348974@linuxfoundation.org>
@@ -51,47 +53,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Miri Korenblit <miriam.rachel.korenblit@intel.com>
+From: Wupeng Ma <mawupeng1@huawei.com>
 
-[ Upstream commit 3f3d8ff31496874a69b131866f62474eb24ed20a ]
+[ Upstream commit 6435ffd6c7fcba330dfa91c58dc30aed2df3d0bf ]
 
-In reconfig, in case the driver asks to disconnect during the reconfig,
-all the keys of the interface are marked as tainted.
-Then ieee80211_reenable_keys will loop over all the interface keys, and
-for each one it will
-a) increment crypto_tx_tailroom_needed_cnt
-b) call ieee80211_key_enable_hw_accel, which in turn will detect that
-this key is tainted, so it will mark it as "not in hardware", which is
-paired with crypto_tx_tailroom_needed_cnt incrementation, so we get two
-incrementations for each tainted key.
-Then we get a warning in ieee80211_free_keys.
+When user resize all trace ring buffer through file 'buffer_size_kb',
+then in ring_buffer_resize(), kernel allocates buffer pages for each
+cpu in a loop.
 
-To fix it, don't increment the count in ieee80211_reenable_keys for
-tainted keys
+If the kernel preemption model is PREEMPT_NONE and there are many cpus
+and there are many buffer pages to be freed, it may not give up cpu
+for a long time and finally cause a softlockup.
 
-Reviewed-by: Johannes Berg <johannes.berg@intel.com>
-Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
-Link: https://patch.msgid.link/20260118092821.4ca111fddcda.Id6e554f4b1c83760aa02d5a9e4e3080edb197aa2@changeid
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+To avoid it, call cond_resched() after each cpu buffer free as Commit
+f6bd2c92488c ("ring-buffer: Avoid softlockup in ring_buffer_resize()")
+does.
+
+Detailed call trace as follow:
+
+  rcu: INFO: rcu_sched self-detected stall on CPU
+  rcu: 	24-....: (14837 ticks this GP) idle=521c/1/0x4000000000000000 softirq=230597/230597 fqs=5329
+  rcu: 	(t=15004 jiffies g=26003221 q=211022 ncpus=96)
+  CPU: 24 UID: 0 PID: 11253 Comm: bash Kdump: loaded Tainted: G            EL      6.18.2+ #278 NONE
+  pc : arch_local_irq_restore+0x8/0x20
+   arch_local_irq_restore+0x8/0x20 (P)
+   free_frozen_page_commit+0x28c/0x3b0
+   __free_frozen_pages+0x1c0/0x678
+   ___free_pages+0xc0/0xe0
+   free_pages+0x3c/0x50
+   ring_buffer_resize.part.0+0x6a8/0x880
+   ring_buffer_resize+0x3c/0x58
+   __tracing_resize_ring_buffer.part.0+0x34/0xd8
+   tracing_resize_ring_buffer+0x8c/0xd0
+   tracing_entries_write+0x74/0xd8
+   vfs_write+0xcc/0x288
+   ksys_write+0x74/0x118
+   __arm64_sys_write+0x24/0x38
+
+Cc: <mathieu.desnoyers@efficios.com>
+Link: https://patch.msgid.link/20251228065008.2396573-1-mawupeng1@huawei.com
+Signed-off-by: Wupeng Ma <mawupeng1@huawei.com>
+Acked-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/mac80211/key.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ kernel/trace/ring_buffer.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/net/mac80211/key.c b/net/mac80211/key.c
-index 585de86fce840..eb1512f1b0071 100644
---- a/net/mac80211/key.c
-+++ b/net/mac80211/key.c
-@@ -968,7 +968,8 @@ void ieee80211_reenable_keys(struct ieee80211_sub_if_data *sdata)
- 
- 	if (ieee80211_sdata_running(sdata)) {
- 		list_for_each_entry(key, &sdata->key_list, list) {
--			increment_tailroom_need_count(sdata);
-+			if (!(key->flags & KEY_FLAG_TAINTED))
-+				increment_tailroom_need_count(sdata);
- 			ieee80211_key_enable_hw_accel(key);
+diff --git a/kernel/trace/ring_buffer.c b/kernel/trace/ring_buffer.c
+index 21b7d044797e3..b141486801b14 100644
+--- a/kernel/trace/ring_buffer.c
++++ b/kernel/trace/ring_buffer.c
+@@ -2356,6 +2356,8 @@ int ring_buffer_resize(struct trace_buffer *buffer, unsigned long size,
+ 					list) {
+ 			list_del_init(&bpage->list);
+ 			free_buffer_page(bpage);
++
++			cond_resched();
  		}
  	}
+  out_err_unlock:
 -- 
 2.51.0
 
