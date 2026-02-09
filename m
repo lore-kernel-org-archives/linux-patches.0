@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C37D628312F;
-	Mon,  9 Feb 2026 14:52:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7AB8A28312F;
+	Mon,  9 Feb 2026 14:53:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770648779; cv=none; b=Em45xSoHIrslhrdJ3bfFnW7tnXbz2QPxoQQcsHUvp6ZXKYPA3ohEfr9Dz1YhDus3p8CfSgtLQvsV1JVbzc8jVquAc9MZYZUjfkVNd8Xp7RtBoMN2VgTH6O5rOAWhNg+YEtmt/5GhTyyC7Es+AQwpYTU2sdflZfJzEGemT/si/v8=
+	t=1770648783; cv=none; b=Gq25HTgpkDduvJg2S8Nva34sJ/aGVcx1nPtdEcWshJ2SvEXI1VFNBWJkH1G2NTxeB3zQeajY9FrWnG8/zyJ9rYEfijq2aN10L/GnzITgQ0o17RssycshX0vyf54tKzrOS+v6BLyfonkgf9QHhwiTQq9JR4e7J5F/ba3ZH/mhaxQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770648779; c=relaxed/simple;
-	bh=cOYV3aAlT3C7k/RfHEdkF08+5SDG3cED5JVRXUGFZgc=;
+	s=arc-20240116; t=1770648783; c=relaxed/simple;
+	bh=aKONNtVtfFow2W8CiceEHig+Xcr79xjgVc5DNNqgpk8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ukp/FLHnl4EWUGaqWzKWTOJIzAb0clSvcKiBSESCQ9zHuG8HUEvu1WV5mP5aU/izQU8vU3AfN7cyeZGL1rf8cgWu12pVCbKnZtkiqfaI6ekb4E/L4jleaX0gfpDVgBcaqgM/uYK6ODA2SfrKO1JW1PuL4LzwOHZMuNt+6qdrbBM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=r442zhCE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uG/EwQLAoNS/0z4wWjyKkpBnDeyd8/wOdak4JDdoJXlKj9PmX+Mq8F/rpnD0qF6GPNdGnUxZ75RWiosaows8zjqXi33Y/OGxukPhpeDuIf09pGayfqTHIpGWg5Y/YNeZfdZ2FYEsAhjzSbotvBbowWY4ssp6LhnH74MpJ12KiT8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=imMGZWbO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="r442zhCE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31DA5C116C6;
-	Mon,  9 Feb 2026 14:52:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="imMGZWbO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D8EDC116C6;
+	Mon,  9 Feb 2026 14:53:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770648779;
-	bh=cOYV3aAlT3C7k/RfHEdkF08+5SDG3cED5JVRXUGFZgc=;
+	s=korg; t=1770648783;
+	bh=aKONNtVtfFow2W8CiceEHig+Xcr79xjgVc5DNNqgpk8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=r442zhCE8KWjr6I1gTUGtJ/TY90XBoSKIF43LcPnsJZknoZXTkcJRg3MCGX3BQX9O
-	 9Zsd97xJSW/XsjzOjo3dqPeXSWjRhM4BYg+ZbzmKKOxFM4fiX0xGqUNRZTA/FlVAMy
-	 CKHjAo7N50GBZs6z1fN67aJ7q7yFgsezIO8Qlzjw=
+	b=imMGZWbOYaFvrMjymGp1fcp2jzhtMH6K0Byj00UQX0YoEg6PS2GqrHqVByJv+rQpF
+	 TjmOjE4RkKbaBHJZCzcTHkIE2/EqoZz0R43KwdqtJPiWsXuR6feb0kSCNZIcGvjGb+
+	 ZnFBfMMrsmpdI2Ss3Mzz5ClGNZoVzSxaKzXFMWI4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Thomas Gleixner <tglx@linutronix.de>,
 	Guenter Roeck <linux@roeck-us.net>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
 	Jacob Keller <jacob.e.keller@intel.com>,
 	Anna-Maria Behnsen <anna-maria@linutronix.de>,
 	Jeongjun Park <aha310510@gmail.com>
-Subject: [PATCH 5.15 13/75] timers: Replace BUG_ON()s
-Date: Mon,  9 Feb 2026 15:24:10 +0100
-Message-ID: <20260209142302.319876788@linuxfoundation.org>
+Subject: [PATCH 5.15 14/75] timers: Rename del_timer() to timer_delete()
+Date: Mon,  9 Feb 2026 15:24:11 +0100
+Message-ID: <20260209142302.356800088@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260209142301.830618238@linuxfoundation.org>
 References: <20260209142301.830618238@linuxfoundation.org>
@@ -55,70 +56,93 @@ Content-Transfer-Encoding: 8bit
 
 From: Thomas Gleixner <tglx@linutronix.de>
 
-[ Upstream commit 82ed6f7ef58f9634fe4462dd721902c580f01569 ]
+[ Upstream commit bb663f0f3c396c6d05f6c5eeeea96ced20ff112e ]
 
-The timer code still has a few BUG_ON()s left which are crashing the kernel
-in situations where it still can recover or simply refuse to take an
-action.
+The timer related functions do not have a strict timer_ prefixed namespace
+which is really annoying.
 
-Remove the one in the hotplug callback which checks for the CPU being
-offline. If that happens then the whole hotplug machinery will explode in
-colourful ways.
-
-Replace the rest with WARN_ON_ONCE() and conditional returns where
-appropriate.
+Rename del_timer() to timer_delete() and provide del_timer()
+as a wrapper. Document that del_timer() is not for new code.
 
 Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
 Tested-by: Guenter Roeck <linux@roeck-us.net>
+Reviewed-by: Steven Rostedt (Google) <rostedt@goodmis.org>
 Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
 Reviewed-by: Anna-Maria Behnsen <anna-maria@linutronix.de>
-Link: https://lore.kernel.org/r/20221123201624.769128888@linutronix.de
+Link: https://lore.kernel.org/r/20221123201625.015535022@linutronix.de
 Signed-off-by: Jeongjun Park <aha310510@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/time/timer.c |   11 ++++++-----
- 1 file changed, 6 insertions(+), 5 deletions(-)
+ include/linux/timer.h |   15 ++++++++++++++-
+ kernel/time/timer.c   |    6 +++---
+ 2 files changed, 17 insertions(+), 4 deletions(-)
 
+--- a/include/linux/timer.h
++++ b/include/linux/timer.h
+@@ -169,7 +169,6 @@ static inline int timer_pending(const st
+ }
+ 
+ extern void add_timer_on(struct timer_list *timer, int cpu);
+-extern int del_timer(struct timer_list * timer);
+ extern int mod_timer(struct timer_list *timer, unsigned long expires);
+ extern int mod_timer_pending(struct timer_list *timer, unsigned long expires);
+ extern int timer_reduce(struct timer_list *timer, unsigned long expires);
+@@ -184,6 +183,7 @@ extern void add_timer(struct timer_list
+ 
+ extern int try_to_del_timer_sync(struct timer_list *timer);
+ extern int timer_delete_sync(struct timer_list *timer);
++extern int timer_delete(struct timer_list *timer);
+ 
+ /**
+  * del_timer_sync - Delete a pending timer and wait for a running callback
+@@ -198,6 +198,19 @@ static inline int del_timer_sync(struct
+ 	return timer_delete_sync(timer);
+ }
+ 
++/**
++ * del_timer - Delete a pending timer
++ * @timer:	The timer to be deleted
++ *
++ * See timer_delete() for detailed explanation.
++ *
++ * Do not use in new code. Use timer_delete() instead.
++ */
++static inline int del_timer(struct timer_list *timer)
++{
++	return timer_delete(timer);
++}
++
+ extern void init_timers(void);
+ struct hrtimer;
+ extern enum hrtimer_restart it_real_fn(struct hrtimer *);
 --- a/kernel/time/timer.c
 +++ b/kernel/time/timer.c
-@@ -1155,7 +1155,8 @@ EXPORT_SYMBOL(timer_reduce);
+@@ -1204,7 +1204,7 @@ void add_timer_on(struct timer_list *tim
+ EXPORT_SYMBOL_GPL(add_timer_on);
+ 
+ /**
+- * del_timer - Deactivate a timer.
++ * timer_delete - Deactivate a timer
+  * @timer:	The timer to be deactivated
+  *
+  * The function only deactivates a pending timer, but contrary to
+@@ -1217,7 +1217,7 @@ EXPORT_SYMBOL_GPL(add_timer_on);
+  * * %0 - The timer was not pending
+  * * %1 - The timer was pending and deactivated
   */
- void add_timer(struct timer_list *timer)
+-int del_timer(struct timer_list *timer)
++int timer_delete(struct timer_list *timer)
  {
--	BUG_ON(timer_pending(timer));
-+	if (WARN_ON_ONCE(timer_pending(timer)))
-+		return;
- 	__mod_timer(timer, timer->expires, MOD_TIMER_NOTPENDING);
- }
- EXPORT_SYMBOL(add_timer);
-@@ -1174,7 +1175,8 @@ void add_timer_on(struct timer_list *tim
- 	struct timer_base *new_base, *base;
+ 	struct timer_base *base;
  	unsigned long flags;
+@@ -1233,7 +1233,7 @@ int del_timer(struct timer_list *timer)
  
--	BUG_ON(timer_pending(timer) || !timer->function);
-+	if (WARN_ON_ONCE(timer_pending(timer) || !timer->function))
-+		return;
+ 	return ret;
+ }
+-EXPORT_SYMBOL(del_timer);
++EXPORT_SYMBOL(timer_delete);
  
- 	new_base = get_timer_cpu_base(timer->flags, cpu);
- 
-@@ -1995,8 +1997,6 @@ int timers_dead_cpu(unsigned int cpu)
- 	struct timer_base *new_base;
- 	int b, i;
- 
--	BUG_ON(cpu_online(cpu));
--
- 	for (b = 0; b < NR_BASES; b++) {
- 		old_base = per_cpu_ptr(&timer_bases[b], cpu);
- 		new_base = get_cpu_ptr(&timer_bases[b]);
-@@ -2013,7 +2013,8 @@ int timers_dead_cpu(unsigned int cpu)
- 		 */
- 		forward_timer_base(new_base);
- 
--		BUG_ON(old_base->running_timer);
-+		WARN_ON_ONCE(old_base->running_timer);
-+		old_base->running_timer = NULL;
- 
- 		for (i = 0; i < WHEEL_SIZE; i++)
- 			migrate_timer_list(new_base, old_base->vectors + i);
+ /**
+  * try_to_del_timer_sync - Try to deactivate a timer
 
 
