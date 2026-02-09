@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FEEB2222B2;
-	Mon,  9 Feb 2026 14:43:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48F2536828A;
+	Mon,  9 Feb 2026 14:43:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770648180; cv=none; b=QDHKE+F4PgPBKI1sC7Wl12dw/yilB9aqletEGBX4T1xfl7rl6YPnyhAxeeIu64gyMUqVCsdv4MtPo0oRJsnnuPtsSwKxciAt0UrIWRL3joMmC1zN6v4LYrmu3rTQvtDvnrYpDm1XD9S4g9v9VxoGZBpBnY3mxGWVP5KNfkQeTDE=
+	t=1770648183; cv=none; b=nTYMq0E/gLYqzpMzvvGmnw3XHKL4OVw1RwxPIX4MX+38Gz3XF1pA29/OGK2tzBTUPslxQYFjwo4gMGKGK8xVMjwBkWmOh+tYdCmpnZHvWSb5NmwKryz8qxxDa4TO0HIDBnuptzoGEBeNQznim+3ShNmQWvIY6QVMIDBAMavcmz8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770648180; c=relaxed/simple;
-	bh=mc9U4LBgCRAARY9D+ws432OB3o/ZpXLmPtewqFJpb8w=;
+	s=arc-20240116; t=1770648183; c=relaxed/simple;
+	bh=gL79rOlqwjBDq3h17CZ5Nf0MNrPTI5ZdaNO+nWeTWGU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=MiLdBgFf296b4N+8dIROOQwab/GA/v7z63OG8V8WIgOWlfmIZfTJ9QMXx4IBvC2nWtKCdBYxr60nDAsIfiRZh4j0jWQAFSoYiNHSY7ixndKhYGE6TvCMryjrQb5F1o+GCENNqwvE+8QrnZKauGdJM7vdcRPj2OlQSxlr/kwbTGc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gv2sAIl5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SYMx3PAzzxTqc0cQqdyn1Djt2Plx7lZ19eLok87thS0kpPU1LB/X/8gYvax5DdxBiXP5dXJwSHwrzeQgqGDZzCqi4fcHYIxfuijfEHp+Eq1p+crNJ2CT9NAVCF6FbyRkzpY5ZqoeYM+c/HSZtB2FzWk+B0wszo5yCTn/Yem3QcM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wKJ8XmHN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gv2sAIl5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 81DD4C116C6;
-	Mon,  9 Feb 2026 14:42:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wKJ8XmHN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AEE30C116C6;
+	Mon,  9 Feb 2026 14:43:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770648180;
-	bh=mc9U4LBgCRAARY9D+ws432OB3o/ZpXLmPtewqFJpb8w=;
+	s=korg; t=1770648183;
+	bh=gL79rOlqwjBDq3h17CZ5Nf0MNrPTI5ZdaNO+nWeTWGU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gv2sAIl5f6C1Ni0ETs9EYO+spudVqX9LBQ3vm4AslLe5/OKCJXhtzeHiJyd8Idp9W
-	 D6FSfPWMkQE+td5qipL+RYO1pdziIMWjD3IVG+DGFeQMGbvMo788WgypehuIZSMvTC
-	 /eJgYzzvWzsExiOPYZfNnCoovlnDddhZy60ugcx4=
+	b=wKJ8XmHNZHqQSo4C1W7u/wT573gOIMgV0eMwHg6lijhbX8w+N3SvVmL6HvVXbU7fh
+	 kKriHzRINcoweYaHyo+/75nXqts62CZYVtHHA9QRGY9YZ7ijMaC5MRYX9fzFzv3eQu
+	 5zgMaNCWj010l6CAbY7FpxzOyg+nEy9uznrSjT+Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kaushlendra Kumar <kaushlendra.kumar@intel.com>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>
-Subject: [PATCH 6.1 03/69] platform/x86: intel_telemetry: Fix swapped arrays in PSS output
-Date: Mon,  9 Feb 2026 15:23:31 +0100
-Message-ID: <20260209142302.040080979@linuxfoundation.org>
+	Ruslan Krupitsa <krupitsarus@outlook.com>,
+	Takashi Iwai <tiwai@suse.de>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 30/69] ALSA: hda/realtek: add HP Laptop 15s-eq1xxx mute LED quirk
+Date: Mon,  9 Feb 2026 15:23:58 +0100
+Message-ID: <20260209142303.011402291@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260209142301.913348974@linuxfoundation.org>
 References: <20260209142301.913348974@linuxfoundation.org>
@@ -44,58 +45,43 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Kaushlendra Kumar <kaushlendra.kumar@intel.com>
+From: Ruslan Krupitsa <krupitsarus@outlook.com>
 
-commit 25e9e322d2ab5c03602eff4fbf4f7c40019d8de2 upstream.
+[ Upstream commit 9ed7a28225af02b74f61e7880d460db49db83758 ]
 
-The LTR blocking statistics and wakeup event counters are incorrectly
-cross-referenced during debugfs output rendering. The code populates
-pss_ltr_blkd[] with LTR blocking data and pss_s0ix_wakeup[] with wakeup
-data, but the display loops reference the wrong arrays.
+HP Laptop 15s-eq1xxx with ALC236 codec does not enable the
+mute LED automatically. This patch adds a quirk entry for
+subsystem ID 0x8706 using the ALC236_FIXUP_HP_MUTE_LED_COEFBIT2
+fixup, enabling correct mute LED behavior.
 
-This causes the "LTR Blocking Status" section to print wakeup events
-and the "Wakes Status" section to print LTR blockers, misleading power
-management analysis and S0ix residency debugging.
-
-Fix by aligning array usage with the intended output section labels.
-
-Fixes: 87bee290998d ("platform:x86: Add Intel Telemetry Debugfs interfaces")
-Cc: stable@vger.kernel.org
-Signed-off-by: Kaushlendra Kumar <kaushlendra.kumar@intel.com>
-Link: https://patch.msgid.link/20251224032053.3915900-1-kaushlendra.kumar@intel.com
-Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Ruslan Krupitsa <krupitsarus@outlook.com>
+Link: https://patch.msgid.link/AS8P194MB112895B8EC2D87D53A876085BBBAA@AS8P194MB1128.EURP194.PROD.OUTLOOK.COM
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/x86/intel/telemetry/debugfs.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ sound/pci/hda/patch_realtek.c | 1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/platform/x86/intel/telemetry/debugfs.c
-+++ b/drivers/platform/x86/intel/telemetry/debugfs.c
-@@ -449,7 +449,7 @@ static int telem_pss_states_show(struct
- 	for (index = 0; index < debugfs_conf->pss_ltr_evts; index++) {
- 		seq_printf(s, "%-32s\t%u\n",
- 			   debugfs_conf->pss_ltr_data[index].name,
--			   pss_s0ix_wakeup[index]);
-+			   pss_ltr_blkd[index]);
- 	}
- 
- 	seq_puts(s, "\n--------------------------------------\n");
-@@ -459,7 +459,7 @@ static int telem_pss_states_show(struct
- 	for (index = 0; index < debugfs_conf->pss_wakeup_evts; index++) {
- 		seq_printf(s, "%-32s\t%u\n",
- 			   debugfs_conf->pss_wakeup[index].name,
--			   pss_ltr_blkd[index]);
-+			   pss_s0ix_wakeup[index]);
- 	}
- 
- 	return 0;
+diff --git a/sound/pci/hda/patch_realtek.c b/sound/pci/hda/patch_realtek.c
+index ccbdb01ab6ece..4ab3feb5e5929 100644
+--- a/sound/pci/hda/patch_realtek.c
++++ b/sound/pci/hda/patch_realtek.c
+@@ -9929,6 +9929,7 @@ static const struct snd_pci_quirk alc269_fixup_tbl[] = {
+ 	SND_PCI_QUIRK(0x103c, 0x863e, "HP Spectre x360 15-df1xxx", ALC285_FIXUP_HP_SPECTRE_X360_DF1),
+ 	SND_PCI_QUIRK(0x103c, 0x86e8, "HP Spectre x360 15-eb0xxx", ALC285_FIXUP_HP_SPECTRE_X360_EB1),
+ 	SND_PCI_QUIRK(0x103c, 0x86f9, "HP Spectre x360 13-aw0xxx", ALC285_FIXUP_HP_SPECTRE_X360_MUTE_LED),
++	SND_PCI_QUIRK(0x103c, 0x8706, "HP Laptop 15s-eq1xxx", ALC236_FIXUP_HP_MUTE_LED_COEFBIT2),
+ 	SND_PCI_QUIRK(0x103c, 0x8716, "HP Elite Dragonfly G2 Notebook PC", ALC285_FIXUP_HP_GPIO_AMP_INIT),
+ 	SND_PCI_QUIRK(0x103c, 0x8720, "HP EliteBook x360 1040 G8 Notebook PC", ALC285_FIXUP_HP_GPIO_AMP_INIT),
+ 	SND_PCI_QUIRK(0x103c, 0x8724, "HP EliteBook 850 G7", ALC285_FIXUP_HP_GPIO_LED),
+-- 
+2.51.0
+
 
 
