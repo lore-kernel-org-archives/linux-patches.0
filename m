@@ -1,39 +1,51 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A4563793AC;
-	Mon,  9 Feb 2026 14:25:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 491023793AC;
+	Mon,  9 Feb 2026 14:25:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770647139; cv=none; b=OXSB2p4fgKBA+JWnS5rBoKiDukh0F7ZmFXbXioHKq0u3XjAIsn9KoHfLRTOMm7flazku3P4Yz16IVzMeL87RLDnyKdemBum9phga6L3WRehGU6KltkXGAWrpEXAc9b0rCFRy5D1z8BqgAzuWEeFAZ2IrFXS2MPBIYNEKJmBKbF8=
+	t=1770647143; cv=none; b=JI87WyNVdhuhqaq1B6GZ7L0KuD1XroDJ+yIEqbc4O3ztcyuFky2sHyEe+gxNQ5VqMSdexNMcdXvt28X7Z/FQoUt7x8gmgsmIrIXdzfSUiVR8JLe/Er66UzU8tQbH4J/JSEOAUj1Tb6Vzg332LfuSxNgAiJkJNVmhRQ7vsUelPs0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770647139; c=relaxed/simple;
-	bh=Tz+AZBBrpLsaTFDEdieW1iftE3VGrv5gYoEm3VDEZLM=;
+	s=arc-20240116; t=1770647143; c=relaxed/simple;
+	bh=hfT4M6Rh2EpHIVdvOtb5LfnxvKi88BIsMbkfu45Vuho=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=A8NpvDH0moHuUN6+EgF10TfIJtVDvffLYT4OjEk1PU25JmJbgfT4bsVw468E6WxDbvIPB5uYZr9hic1vB10oDYqf75cEep8XJ/Z8aN9+dghhg+FQ1dWoWudIl1xGsmigCdhw2GH25qUyKkkRV+DN0T1MHsDcXfHrzwyy/9FaW4U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RJIWMcXm; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Q3rGxf0siOah0vckvIutikPf/2/Yh5HNdbbqxX3o1V1nPDxGA/oLLIyvm/Giqyvsc/vwMUJ6UV7qBcAv1PPuufqXx2C5QH4Ki+xRt0YRu8sTVR4cOJwBFNfuN7jJinGkPQiAGcKWGfUuJzBfBrjV0bbUf5rfZ+3H+WdN6P1u3mQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=w8NlM3RG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RJIWMcXm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B6160C116C6;
-	Mon,  9 Feb 2026 14:25:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="w8NlM3RG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 21927C116C6;
+	Mon,  9 Feb 2026 14:25:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770647139;
-	bh=Tz+AZBBrpLsaTFDEdieW1iftE3VGrv5gYoEm3VDEZLM=;
+	s=korg; t=1770647143;
+	bh=hfT4M6Rh2EpHIVdvOtb5LfnxvKi88BIsMbkfu45Vuho=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RJIWMcXmwdyvZ/RwyRuUtrptcsmK4Z6mNxnEI2fLqidTAb25JonBwgkoROUa5C6VG
-	 NbLZ4rH6NYxQOO/mildPjgPvl8mCvFCucFNBVH3T8cKmQmdOwiPTzYIUZzzLPmjCsJ
-	 0NKXTRF3hKX+EoA0fKYzpper1EdEt8iOmhquuDCU=
+	b=w8NlM3RG9RQq95SiEc71unf2Yaw3ngKGZWHB4IlcwRnrcs9ZBAj1hc6XGVFaOHYwc
+	 jX1XOhT0EsTbrpStQ3g3xWo5brLSoDYmemjVUrQP0mzvCU3Fx+Qmg1RNclQJkjAYro
+	 vtvpo2Y4Cp70j6ZlKTN4YDAVZWP4SlyhsxSHzS78=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Xu Yang <xu.yang_2@nxp.com>,
-	Daniel Baluta <daniel.baluta@nxp.com>,
-	Ulf Hansson <ulf.hansson@linaro.org>
-Subject: [PATCH 6.18 011/175] pmdomain: imx8m-blk-ctrl: fix out-of-range access of bc->domains
-Date: Mon,  9 Feb 2026 15:21:24 +0100
-Message-ID: <20260209142320.883337517@linuxfoundation.org>
+	Andrii Nakryiko <andrii@kernel.org>,
+	syzbot+4e70c8e0a2017b432f7a@syzkaller.appspotmail.com,
+	Suren Baghdasaryan <surenb@google.com>,
+	Shakeel Butt <shakeel.butt@linux.dev>,
+	Alexei Starovoitov <ast@kernel.org>,
+	Daniel Borkmann <daniel@iogearbox.net>,
+	Eduard Zingerman <eddyz87@gmail.com>,
+	Hao Luo <haoluo@google.com>,
+	Jiri Olsa <jolsa@kernel.org>,
+	John Fastabend <john.fastabend@gmail.com>,
+	KP Singh <kpsingh@kernel.org>,
+	Martin KaFai Lau <martin.lau@linux.dev>,
+	Song Liu <song@kernel.org>,
+	Stanislav Fomichev <sdf@fomichev.me>,
+	Yonghong Song <yonghong.song@linux.dev>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.18 012/175] procfs: avoid fetching build ID while holding VMA lock
+Date: Mon,  9 Feb 2026 15:21:25 +0100
+Message-ID: <20260209142320.919126774@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260209142320.474120190@linuxfoundation.org>
 References: <20260209142320.474120190@linuxfoundation.org>
@@ -52,32 +64,260 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xu Yang <xu.yang_2@nxp.com>
+From: Andrii Nakryiko <andrii@kernel.org>
 
-commit 6bd8b4a92a901fae1a422e6f914801063c345e8d upstream.
+commit b5cbacd7f86f4f62b8813688c8e73be94e8e1951 upstream.
 
-Fix out-of-range access of bc->domains in imx8m_blk_ctrl_remove().
+Fix PROCMAP_QUERY to fetch optional build ID only after dropping mmap_lock
+or per-VMA lock, whichever was used to lock VMA under question, to avoid
+deadlock reported by syzbot:
 
-Fixes: 2684ac05a8c4 ("soc: imx: add i.MX8M blk-ctrl driver")
-Cc: stable@kernel.org
-Signed-off-by: Xu Yang <xu.yang_2@nxp.com>
-Reviewed-by: Daniel Baluta <daniel.baluta@nxp.com>
-Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+ -> #1 (&mm->mmap_lock){++++}-{4:4}:
+        __might_fault+0xed/0x170
+        _copy_to_iter+0x118/0x1720
+        copy_page_to_iter+0x12d/0x1e0
+        filemap_read+0x720/0x10a0
+        blkdev_read_iter+0x2b5/0x4e0
+        vfs_read+0x7f4/0xae0
+        ksys_read+0x12a/0x250
+        do_syscall_64+0xcb/0xf80
+        entry_SYSCALL_64_after_hwframe+0x77/0x7f
+
+ -> #0 (&sb->s_type->i_mutex_key#8){++++}-{4:4}:
+        __lock_acquire+0x1509/0x26d0
+        lock_acquire+0x185/0x340
+        down_read+0x98/0x490
+        blkdev_read_iter+0x2a7/0x4e0
+        __kernel_read+0x39a/0xa90
+        freader_fetch+0x1d5/0xa80
+        __build_id_parse.isra.0+0xea/0x6a0
+        do_procmap_query+0xd75/0x1050
+        procfs_procmap_ioctl+0x7a/0xb0
+        __x64_sys_ioctl+0x18e/0x210
+        do_syscall_64+0xcb/0xf80
+        entry_SYSCALL_64_after_hwframe+0x77/0x7f
+
+ other info that might help us debug this:
+
+  Possible unsafe locking scenario:
+
+        CPU0                    CPU1
+        ----                    ----
+   rlock(&mm->mmap_lock);
+                                lock(&sb->s_type->i_mutex_key#8);
+                                lock(&mm->mmap_lock);
+   rlock(&sb->s_type->i_mutex_key#8);
+
+  *** DEADLOCK ***
+
+This seems to be exacerbated (as we haven't seen these syzbot reports
+before that) by the recent:
+
+	777a8560fd29 ("lib/buildid: use __kernel_read() for sleepable context")
+
+To make this safe, we need to grab file refcount while VMA is still locked, but
+other than that everything is pretty straightforward. Internal build_id_parse()
+API assumes VMA is passed, but it only needs the underlying file reference, so
+just add another variant build_id_parse_file() that expects file passed
+directly.
+
+[akpm@linux-foundation.org: fix up kerneldoc]
+Link: https://lkml.kernel.org/r/20260129215340.3742283-1-andrii@kernel.org
+Fixes: ed5d583a88a9 ("fs/procfs: implement efficient VMA querying API for /proc/<pid>/maps")
+Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
+Reported-by: <syzbot+4e70c8e0a2017b432f7a@syzkaller.appspotmail.com>
+Reviewed-by: Suren Baghdasaryan <surenb@google.com>
+Tested-by: Suren Baghdasaryan <surenb@google.com>
+Reviewed-by: Shakeel Butt <shakeel.butt@linux.dev>
+Cc: Alexei Starovoitov <ast@kernel.org>
+Cc: Daniel Borkmann <daniel@iogearbox.net>
+Cc: Eduard Zingerman <eddyz87@gmail.com>
+Cc: Hao Luo <haoluo@google.com>
+Cc: Jiri Olsa <jolsa@kernel.org>
+Cc: John Fastabend <john.fastabend@gmail.com>
+Cc: KP Singh <kpsingh@kernel.org>
+Cc: Martin KaFai Lau <martin.lau@linux.dev>
+Cc: Song Liu <song@kernel.org>
+Cc: Stanislav Fomichev <sdf@fomichev.me>
+Cc: Yonghong Song <yonghong.song@linux.dev>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pmdomain/imx/imx8m-blk-ctrl.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/proc/task_mmu.c      |   42 +++++++++++++++++++++++++++---------------
+ include/linux/buildid.h |    3 +++
+ lib/buildid.c           |   42 ++++++++++++++++++++++++++++++------------
+ 3 files changed, 60 insertions(+), 27 deletions(-)
 
---- a/drivers/pmdomain/imx/imx8m-blk-ctrl.c
-+++ b/drivers/pmdomain/imx/imx8m-blk-ctrl.c
-@@ -340,7 +340,7 @@ static void imx8m_blk_ctrl_remove(struct
+--- a/fs/proc/task_mmu.c
++++ b/fs/proc/task_mmu.c
+@@ -656,6 +656,7 @@ static int do_procmap_query(struct mm_st
+ 	struct proc_maps_locking_ctx lock_ctx = { .mm = mm };
+ 	struct procmap_query karg;
+ 	struct vm_area_struct *vma;
++	struct file *vm_file = NULL;
+ 	const char *name = NULL;
+ 	char build_id_buf[BUILD_ID_SIZE_MAX], *name_buf = NULL;
+ 	__u64 usize;
+@@ -727,21 +728,6 @@ static int do_procmap_query(struct mm_st
+ 		karg.inode = 0;
+ 	}
  
- 	of_genpd_del_provider(pdev->dev.of_node);
+-	if (karg.build_id_size) {
+-		__u32 build_id_sz;
+-
+-		err = build_id_parse(vma, build_id_buf, &build_id_sz);
+-		if (err) {
+-			karg.build_id_size = 0;
+-		} else {
+-			if (karg.build_id_size < build_id_sz) {
+-				err = -ENAMETOOLONG;
+-				goto out;
+-			}
+-			karg.build_id_size = build_id_sz;
+-		}
+-	}
+-
+ 	if (karg.vma_name_size) {
+ 		size_t name_buf_sz = min_t(size_t, PATH_MAX, karg.vma_name_size);
+ 		const struct path *path;
+@@ -775,10 +761,34 @@ static int do_procmap_query(struct mm_st
+ 		karg.vma_name_size = name_sz;
+ 	}
  
--	for (i = 0; bc->onecell_data.num_domains; i++) {
-+	for (i = 0; i < bc->onecell_data.num_domains; i++) {
- 		struct imx8m_blk_ctrl_domain *domain = &bc->domains[i];
++	if (karg.build_id_size && vma->vm_file)
++		vm_file = get_file(vma->vm_file);
++
+ 	/* unlock vma or mmap_lock, and put mm_struct before copying data to user */
+ 	query_vma_teardown(&lock_ctx);
+ 	mmput(mm);
  
- 		pm_genpd_remove(&domain->genpd);
++	if (karg.build_id_size) {
++		__u32 build_id_sz;
++
++		if (vm_file)
++			err = build_id_parse_file(vm_file, build_id_buf, &build_id_sz);
++		else
++			err = -ENOENT;
++		if (err) {
++			karg.build_id_size = 0;
++		} else {
++			if (karg.build_id_size < build_id_sz) {
++				err = -ENAMETOOLONG;
++				goto out;
++			}
++			karg.build_id_size = build_id_sz;
++		}
++	}
++
++	if (vm_file)
++		fput(vm_file);
++
+ 	if (karg.vma_name_size && copy_to_user(u64_to_user_ptr(karg.vma_name_addr),
+ 					       name, karg.vma_name_size)) {
+ 		kfree(name_buf);
+@@ -798,6 +808,8 @@ static int do_procmap_query(struct mm_st
+ out:
+ 	query_vma_teardown(&lock_ctx);
+ 	mmput(mm);
++	if (vm_file)
++		fput(vm_file);
+ 	kfree(name_buf);
+ 	return err;
+ }
+--- a/include/linux/buildid.h
++++ b/include/linux/buildid.h
+@@ -7,7 +7,10 @@
+ #define BUILD_ID_SIZE_MAX 20
+ 
+ struct vm_area_struct;
++struct file;
++
+ int build_id_parse(struct vm_area_struct *vma, unsigned char *build_id, __u32 *size);
++int build_id_parse_file(struct file *file, unsigned char *build_id, __u32 *size);
+ int build_id_parse_nofault(struct vm_area_struct *vma, unsigned char *build_id, __u32 *size);
+ int build_id_parse_buf(const void *buf, unsigned char *build_id, u32 buf_size);
+ 
+--- a/lib/buildid.c
++++ b/lib/buildid.c
+@@ -295,7 +295,7 @@ static int get_build_id_64(struct freade
+ /* enough for Elf64_Ehdr, Elf64_Phdr, and all the smaller requests */
+ #define MAX_FREADER_BUF_SZ 64
+ 
+-static int __build_id_parse(struct vm_area_struct *vma, unsigned char *build_id,
++static int __build_id_parse(struct file *file, unsigned char *build_id,
+ 			    __u32 *size, bool may_fault)
+ {
+ 	const Elf32_Ehdr *ehdr;
+@@ -303,11 +303,7 @@ static int __build_id_parse(struct vm_ar
+ 	char buf[MAX_FREADER_BUF_SZ];
+ 	int ret;
+ 
+-	/* only works for page backed storage  */
+-	if (!vma->vm_file)
+-		return -EINVAL;
+-
+-	freader_init_from_file(&r, buf, sizeof(buf), vma->vm_file, may_fault);
++	freader_init_from_file(&r, buf, sizeof(buf), file, may_fault);
+ 
+ 	/* fetch first 18 bytes of ELF header for checks */
+ 	ehdr = freader_fetch(&r, 0, offsetofend(Elf32_Ehdr, e_type));
+@@ -335,8 +331,8 @@ out:
+ 	return ret;
+ }
+ 
+-/*
+- * Parse build ID of ELF file mapped to vma
++/**
++ * build_id_parse_nofault() - Parse build ID of ELF file mapped to vma
+  * @vma:      vma object
+  * @build_id: buffer to store build id, at least BUILD_ID_SIZE long
+  * @size:     returns actual build id size in case of success
+@@ -348,11 +344,14 @@ out:
+  */
+ int build_id_parse_nofault(struct vm_area_struct *vma, unsigned char *build_id, __u32 *size)
+ {
+-	return __build_id_parse(vma, build_id, size, false /* !may_fault */);
++	if (!vma->vm_file)
++		return -EINVAL;
++
++	return __build_id_parse(vma->vm_file, build_id, size, false /* !may_fault */);
+ }
+ 
+-/*
+- * Parse build ID of ELF file mapped to VMA
++/**
++ * build_id_parse() - Parse build ID of ELF file mapped to VMA
+  * @vma:      vma object
+  * @build_id: buffer to store build id, at least BUILD_ID_SIZE long
+  * @size:     returns actual build id size in case of success
+@@ -364,7 +363,26 @@ int build_id_parse_nofault(struct vm_are
+  */
+ int build_id_parse(struct vm_area_struct *vma, unsigned char *build_id, __u32 *size)
+ {
+-	return __build_id_parse(vma, build_id, size, true /* may_fault */);
++	if (!vma->vm_file)
++		return -EINVAL;
++
++	return __build_id_parse(vma->vm_file, build_id, size, true /* may_fault */);
++}
++
++/**
++ * build_id_parse_file() - Parse build ID of ELF file
++ * @file:      file object
++ * @build_id: buffer to store build id, at least BUILD_ID_SIZE long
++ * @size:     returns actual build id size in case of success
++ *
++ * Assumes faultable context and can cause page faults to bring in file data
++ * into page cache.
++ *
++ * Return: 0 on success; negative error, otherwise
++ */
++int build_id_parse_file(struct file *file, unsigned char *build_id, __u32 *size)
++{
++	return __build_id_parse(file, build_id, size, true /* may_fault */);
+ }
+ 
+ /**
 
 
