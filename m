@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4922937B3EE;
-	Mon,  9 Feb 2026 14:43:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C238036828A;
+	Mon,  9 Feb 2026 14:43:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770648200; cv=none; b=Fgjo04ozoc1wchYgaqOZ9UofdltCkPRUF50XfWRKj6Y1HHYijMZz/pRM0eK8+RXwjNpRor5Qsb6iHSSVG/oz5j5VTFDuDVxP9lnBiAzD3mUa8aD2mD/mNXE/UGopylipdmx6e3yrOWDY9ziKtYGaNMAJD4PJKaj+H8IVVlT+9Lc=
+	t=1770648203; cv=none; b=lSUoGqBaFAnfBm6mMv9HaNqgz3EPFOfo/I6IxFp7dHQayZZR5bN7id9rdcIKm8qFDpe+944BpQlPiPuDt/yrvs+fBZAKMr7BAEfIMsa04NaieE9LA4K5Ea3n17iklqoCLx0csgX8HYb3PsiaCtur/wZzNRTo6tT5TB5iYWrzZlg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770648200; c=relaxed/simple;
-	bh=bSk85ciRSUGlPak5Gg5+H8X5boCVWIkkTSNxBtBJz6o=;
+	s=arc-20240116; t=1770648203; c=relaxed/simple;
+	bh=FIgOvMkoAWHNU897lNmJoNY0xSV3TcFb0xgJWUYSwhg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UdVTM1Ylhtlk/vPftuWSxC9K1SOOCrtfbsDP4eHJdGdjNVCMZZqXV1tBFxnmeJsWw7Y5LG5QdV/qviBd1LSo5ex5ozh1BI3b3C+x6EyzNo8YcKgehaRulrJe2Z+K3FWgtAemhftWyYVoyMvUsuS323Uisd3FE3yy70kqtjNP0WE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Vl17kVHQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=h5dAkExJVEGZguokdoBSoxZK+Ah2GdNyHPEKeyWxnKDq27AI/VlbZqowyhQfJUqfWSgBIAtCHu5Ivdd7dsf5VDecA1jftw0ZKkJgMvLmd8OSWVx5/75EfKLmxOUYMD00l1xFeX//BbDX/k1DmG9ilzrZac2+PtS2Gk4py2LfS/U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BngZs/ZU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Vl17kVHQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C7973C16AAE;
-	Mon,  9 Feb 2026 14:43:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BngZs/ZU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32E04C19422;
+	Mon,  9 Feb 2026 14:43:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770648200;
-	bh=bSk85ciRSUGlPak5Gg5+H8X5boCVWIkkTSNxBtBJz6o=;
+	s=korg; t=1770648203;
+	bh=FIgOvMkoAWHNU897lNmJoNY0xSV3TcFb0xgJWUYSwhg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Vl17kVHQ0BXguqBVd7onj5lNh32mrwg9N3K7DWlQc5oFz5b8FHTgQb2aRpj9OXWvE
-	 K0YnUcMFbqLUoVku97yxVRIySWLkvpPeqfh42L2zOla9MD5kMYhMDGIYtJmuDJXPOp
-	 3TfPCb34w3xSloqJ+UgOnVIeOQY9nd9eTb92jT8o=
+	b=BngZs/ZUZKrNW3DEaIqTnYI9xF66W2qWpZVXSt4V0KdVhjizmIzG0PrpD7+aC0o5j
+	 aMC2o96vSXVHCYGQypuGIKN5o4ubJAkh0CntFLrmNVEWfQo71nOhGKI2xabUzBoP2q
+	 YooDCxPHHsQL1x03BBUK0JSqxKKYX8ofRkq9ysRw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ilya Dryomov <idryomov@gmail.com>,
-	Dongsheng Yang <dongsheng.yang@linux.dev>
-Subject: [PATCH 6.1 04/69] rbd: check for EOD after exclusive lock is ensured to be held
-Date: Mon,  9 Feb 2026 15:23:32 +0100
-Message-ID: <20260209142302.075400488@linuxfoundation.org>
+	=?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <thomas.weissschuh@linutronix.de>,
+	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
+	Arnd Bergmann <arnd@arndb.de>,
+	"Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>
+Subject: [PATCH 6.1 05/69] ARM: 9468/1: fix memset64() on big-endian
+Date: Mon,  9 Feb 2026 15:23:33 +0100
+Message-ID: <20260209142302.110291679@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260209142301.913348974@linuxfoundation.org>
 References: <20260209142301.913348974@linuxfoundation.org>
@@ -44,100 +46,44 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ilya Dryomov <idryomov@gmail.com>
+From: Thomas Weissschuh <thomas.weissschuh@linutronix.de>
 
-commit bd3884a204c3b507e6baa9a4091aa927f9af5404 upstream.
+commit 23ea2a4c72323feb6e3e025e8a6f18336513d5ad upstream.
 
-Similar to commit 870611e4877e ("rbd: get snapshot context after
-exclusive lock is ensured to be held"), move the "beyond EOD" check
-into the image request state machine so that it's performed after
-exclusive lock is ensured to be held.  This avoids various race
-conditions which can arise when the image is shrunk under I/O (in
-practice, mostly readahead).  In one such scenario
+On big-endian systems the 32-bit low and high halves need to be swapped
+for the underlying assembly implementation to work correctly.
 
-    rbd_assert(objno < rbd_dev->object_map_size);
-
-can be triggered if a close-to-EOD read gets queued right before the
-shrink is initiated and the EOD check is performed against an outdated
-mapping_size.  After the resize is done on the server side and exclusive
-lock is (re)acquired bringing along the new (now shrunk) object map, the
-read starts going through the state machine and rbd_obj_may_exist() gets
-invoked on an object that is out of bounds of rbd_dev->object_map array.
-
+Fixes: fd1d362600e2 ("ARM: implement memset32 & memset64")
 Cc: stable@vger.kernel.org
-Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
-Reviewed-by: Dongsheng Yang <dongsheng.yang@linux.dev>
+Signed-off-by: Thomas Weißschuh <thomas.weissschuh@linutronix.de>
+Reviewed-by: Matthew Wilcox (Oracle) <willy@infradead.org>
+Reviewed-by: Arnd Bergmann <arnd@arndb.de>
+Signed-off-by: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/block/rbd.c |   33 +++++++++++++++++++++------------
- 1 file changed, 21 insertions(+), 12 deletions(-)
+ arch/arm/include/asm/string.h |    5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
---- a/drivers/block/rbd.c
-+++ b/drivers/block/rbd.c
-@@ -3496,11 +3496,29 @@ static void rbd_img_object_requests(stru
- 	rbd_assert(!need_exclusive_lock(img_req) ||
- 		   __rbd_is_lock_owner(rbd_dev));
+--- a/arch/arm/include/asm/string.h
++++ b/arch/arm/include/asm/string.h
+@@ -42,7 +42,10 @@ static inline void *memset32(uint32_t *p
+ extern void *__memset64(uint64_t *, uint32_t low, __kernel_size_t, uint32_t hi);
+ static inline void *memset64(uint64_t *p, uint64_t v, __kernel_size_t n)
+ {
+-	return __memset64(p, v, n * 8, v >> 32);
++	if (IS_ENABLED(CONFIG_CPU_LITTLE_ENDIAN))
++		return __memset64(p, v, n * 8, v >> 32);
++	else
++		return __memset64(p, v >> 32, n * 8, v);
+ }
  
--	if (rbd_img_is_write(img_req)) {
--		rbd_assert(!img_req->snapc);
-+	if (test_bit(IMG_REQ_CHILD, &img_req->flags)) {
-+		rbd_assert(!rbd_img_is_write(img_req));
-+	} else {
-+		struct request *rq = blk_mq_rq_from_pdu(img_req);
-+		u64 off = (u64)blk_rq_pos(rq) << SECTOR_SHIFT;
-+		u64 len = blk_rq_bytes(rq);
-+		u64 mapping_size;
-+
- 		down_read(&rbd_dev->header_rwsem);
--		img_req->snapc = ceph_get_snap_context(rbd_dev->header.snapc);
-+		mapping_size = rbd_dev->mapping.size;
-+		if (rbd_img_is_write(img_req)) {
-+			rbd_assert(!img_req->snapc);
-+			img_req->snapc =
-+			    ceph_get_snap_context(rbd_dev->header.snapc);
-+		}
- 		up_read(&rbd_dev->header_rwsem);
-+
-+		if (unlikely(off + len > mapping_size)) {
-+			rbd_warn(rbd_dev, "beyond EOD (%llu~%llu > %llu)",
-+				 off, len, mapping_size);
-+			img_req->pending.result = -EIO;
-+			return;
-+		}
- 	}
- 
- 	for_each_obj_request(img_req, obj_req) {
-@@ -4726,7 +4744,6 @@ static void rbd_queue_workfn(struct work
- 	struct request *rq = blk_mq_rq_from_pdu(img_request);
- 	u64 offset = (u64)blk_rq_pos(rq) << SECTOR_SHIFT;
- 	u64 length = blk_rq_bytes(rq);
--	u64 mapping_size;
- 	int result;
- 
- 	/* Ignore/skip any zero-length requests */
-@@ -4739,17 +4756,9 @@ static void rbd_queue_workfn(struct work
- 	blk_mq_start_request(rq);
- 
- 	down_read(&rbd_dev->header_rwsem);
--	mapping_size = rbd_dev->mapping.size;
- 	rbd_img_capture_header(img_request);
- 	up_read(&rbd_dev->header_rwsem);
- 
--	if (offset + length > mapping_size) {
--		rbd_warn(rbd_dev, "beyond EOD (%llu~%llu > %llu)", offset,
--			 length, mapping_size);
--		result = -EIO;
--		goto err_img_request;
--	}
--
- 	dout("%s rbd_dev %p img_req %p %s %llu~%llu\n", __func__, rbd_dev,
- 	     img_request, obj_op_name(op_type), offset, length);
- 
+ /*
 
 
