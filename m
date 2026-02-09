@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4263B2222B2;
-	Mon,  9 Feb 2026 14:31:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6BB91DE8AD;
+	Mon,  9 Feb 2026 14:31:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770647511; cv=none; b=uvP/tlWXhLJfxSbq3BTLTRlIZ7jEBAp2uCchddvQH4XJVG0B0djXbROWLljb4EJZsb0FS465hLCVDKvtaQaY43r3WWoc4FRM1FMsCoVmbSeNUyCcqyebzj98MjHYuKBF9NlLaHx/u6BU//0CCMxVaXk5qWgv/TwVQ6n6oiAFe/4=
+	t=1770647514; cv=none; b=YIS8He1IJ1tqLMTneGuExa5op1fgGrGqHKeZ6MUmfIeZgQ7AXzn1bF61DyrjVYbipbIlBqm0XX8RXySmhk/H5mw9L5+Fxtm7k8PwQ0z3JyXEbyhLwyHKWCNgNBfBo7pCNSDaDCzv3v0yxV96qlFFmKIOFMvIZ2hppi7ws+It/vY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770647511; c=relaxed/simple;
-	bh=74WxjnJqDOG+CFXpFmxmevkcQvTIL525d0jGpCDZJSQ=;
+	s=arc-20240116; t=1770647514; c=relaxed/simple;
+	bh=fjE8gxNxF+guJcgwhTEB7asbD8AhSm9dpzgT4mbulvQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SwJVkUPtOOWttlXnX5S2mRI614NL8DAyybwWt35wquqyCABUUSwH9adX2WFFO0mdkKiFtJ9AaTXY1QxF1P2xx2zM7oRJjjtcTeaqt0bQtD+yzZJuroJUeoRAK2TJYpkZTA41u6Fy6CFEWC0pFdrennyu6l0PT2CYowviyxVbXXk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UFODzsBG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fTRKiLfpfYIeHM0bvE72agOD7Kt8r0SgBW6K/70+g6YfFd6H3o5EcMYOPmoIoQaR1jb3anw9WRxZqkY7xmJrqnrts3VGAI3oB7uvsN42YdOmBT/fc/Vrbt76PjjfFzK4zOAoFy6Ok1ton/2w7RnrZtSSe7cytAQpno5tyvsySOg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=C/VL+AJY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UFODzsBG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9DEBCC116C6;
-	Mon,  9 Feb 2026 14:31:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="C/VL+AJY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A1D4C19424;
+	Mon,  9 Feb 2026 14:31:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770647511;
-	bh=74WxjnJqDOG+CFXpFmxmevkcQvTIL525d0jGpCDZJSQ=;
+	s=korg; t=1770647514;
+	bh=fjE8gxNxF+guJcgwhTEB7asbD8AhSm9dpzgT4mbulvQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UFODzsBGxPN3+UkqcEKxgZMWLymVdxUPrJl/8+T4mDorP3HHYSAuPTuGS4vH67ABX
-	 k0RN3tHCq0hDGgUbfRKs3ps+E0/jYjmku6Z1i4AdwoqQ395dAdBywaaXESPmS+b+8q
-	 LdnYIDnU6MiNTVCYYvFJxa/efN/+fEus6EOTRnRU=
+	b=C/VL+AJYgNL5AEgPM1i9Bqa/CuboWfKDSahPWztbIfHrO5SG2zOgftH2imrbEpyYP
+	 zwuD0kOOrZ3tM+NxKaaqv+72wRqMsj7vpOMI7w5F2F+jCb2iEkQqlS4vEmc5b9UK5Y
+	 omCZEtnBpysDB36PvZlkBaTmg+3A0Ns1tN52duhE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	GangMin Kim <km.kim1503@gmail.com>,
-	Eric Dumazet <edumazet@google.com>,
+	Yuhao Jiang <danisjiang@gmail.com>,
+	Junrui Luo <moonafterrain@outlook.com>,
+	Andrew Lunn <andrew@lunn.ch>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 120/175] net/sched: cls_u32: use skb_header_pointer_careful()
-Date: Mon,  9 Feb 2026 15:23:13 +0100
-Message-ID: <20260209142324.728777444@linuxfoundation.org>
+Subject: [PATCH 6.18 121/175] dpaa2-switch: prevent ZERO_SIZE_PTR dereference when num_ifs is zero
+Date: Mon,  9 Feb 2026 15:23:14 +0100
+Message-ID: <20260209142324.763899665@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260209142320.474120190@linuxfoundation.org>
 References: <20260209142320.474120190@linuxfoundation.org>
@@ -52,68 +53,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Junrui Luo <moonafterrain@outlook.com>
 
-[ Upstream commit cabd1a976375780dabab888784e356f574bbaed8 ]
+[ Upstream commit ed48a84a72fefb20a82dd90a7caa7807e90c6f66 ]
 
-skb_header_pointer() does not fully validate negative @offset values.
+The driver allocates arrays for ports, FDBs, and filter blocks using
+kcalloc() with ethsw->sw_attr.num_ifs as the element count. When the
+device reports zero interfaces (either due to hardware configuration
+or firmware issues), kcalloc(0, ...) returns ZERO_SIZE_PTR (0x10)
+instead of NULL.
 
-Use skb_header_pointer_careful() instead.
+Later in dpaa2_switch_probe(), the NAPI initialization unconditionally
+accesses ethsw->ports[0]->netdev, which attempts to dereference
+ZERO_SIZE_PTR (address 0x10), resulting in a kernel panic.
 
-GangMin Kim provided a report and a repro fooling u32_classify():
+Add a check to ensure num_ifs is greater than zero after retrieving
+device attributes. This prevents the zero-sized allocations and
+subsequent invalid pointer dereference.
 
-BUG: KASAN: slab-out-of-bounds in u32_classify+0x1180/0x11b0
-net/sched/cls_u32.c:221
-
-Fixes: fbc2e7d9cf49 ("cls_u32: use skb_header_pointer() to dereference data safely")
-Reported-by: GangMin Kim <km.kim1503@gmail.com>
-Closes: https://lore.kernel.org/netdev/CANn89iJkyUZ=mAzLzC4GdcAgLuPnUoivdLaOs6B9rq5_erj76w@mail.gmail.com/T/
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Link: https://patch.msgid.link/20260128141539.3404400-3-edumazet@google.com
+Reported-by: Yuhao Jiang <danisjiang@gmail.com>
+Reported-by: Junrui Luo <moonafterrain@outlook.com>
+Fixes: 0b1b71370458 ("staging: dpaa2-switch: handle Rx path on control interface")
+Signed-off-by: Junrui Luo <moonafterrain@outlook.com>
+Reviewed-by: Andrew Lunn <andrew@lunn.ch>
+Link: https://patch.msgid.link/SYBPR01MB7881BEABA8DA896947962470AF91A@SYBPR01MB7881.ausprd01.prod.outlook.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sched/cls_u32.c | 13 ++++++-------
- 1 file changed, 6 insertions(+), 7 deletions(-)
+ drivers/net/ethernet/freescale/dpaa2/dpaa2-switch.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/net/sched/cls_u32.c b/net/sched/cls_u32.c
-index 2a1c00048fd6f..58e849c0acf41 100644
---- a/net/sched/cls_u32.c
-+++ b/net/sched/cls_u32.c
-@@ -161,10 +161,8 @@ TC_INDIRECT_SCOPE int u32_classify(struct sk_buff *skb,
- 			int toff = off + key->off + (off2 & key->offmask);
- 			__be32 *data, hdata;
+diff --git a/drivers/net/ethernet/freescale/dpaa2/dpaa2-switch.c b/drivers/net/ethernet/freescale/dpaa2/dpaa2-switch.c
+index b1e1ad9e4b48e..0ff234f6a3ed9 100644
+--- a/drivers/net/ethernet/freescale/dpaa2/dpaa2-switch.c
++++ b/drivers/net/ethernet/freescale/dpaa2/dpaa2-switch.c
+@@ -3024,6 +3024,12 @@ static int dpaa2_switch_init(struct fsl_mc_device *sw_dev)
+ 		goto err_close;
+ 	}
  
--			if (skb_headroom(skb) + toff > INT_MAX)
--				goto out;
--
--			data = skb_header_pointer(skb, toff, 4, &hdata);
-+			data = skb_header_pointer_careful(skb, toff, 4,
-+							  &hdata);
- 			if (!data)
- 				goto out;
- 			if ((*data ^ key->val) & key->mask) {
-@@ -214,8 +212,9 @@ TC_INDIRECT_SCOPE int u32_classify(struct sk_buff *skb,
- 		if (ht->divisor) {
- 			__be32 *data, hdata;
- 
--			data = skb_header_pointer(skb, off + n->sel.hoff, 4,
--						  &hdata);
-+			data = skb_header_pointer_careful(skb,
-+							  off + n->sel.hoff,
-+							  4, &hdata);
- 			if (!data)
- 				goto out;
- 			sel = ht->divisor & u32_hash_fold(*data, &n->sel,
-@@ -229,7 +228,7 @@ TC_INDIRECT_SCOPE int u32_classify(struct sk_buff *skb,
- 			if (n->sel.flags & TC_U32_VAROFFSET) {
- 				__be16 *data, hdata;
- 
--				data = skb_header_pointer(skb,
-+				data = skb_header_pointer_careful(skb,
- 							  off + n->sel.offoff,
- 							  2, &hdata);
- 				if (!data)
++	if (!ethsw->sw_attr.num_ifs) {
++		dev_err(dev, "DPSW device has no interfaces\n");
++		err = -ENODEV;
++		goto err_close;
++	}
++
+ 	err = dpsw_get_api_version(ethsw->mc_io, 0,
+ 				   &ethsw->major,
+ 				   &ethsw->minor);
 -- 
 2.51.0
 
