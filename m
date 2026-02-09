@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE58437B3E4;
-	Mon,  9 Feb 2026 14:28:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F002437756C;
+	Mon,  9 Feb 2026 14:28:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770647293; cv=none; b=FLLcyHI57pGb36wYXZ9+9P9eC6aJKYdTnmLjeKRUOgnzKcqhagWsj6X9iDZM0Kq344FBhjCTgR0sg7v4l/4CHpTq2ssdfJpqsrNG6WhaNHhO99BIrktaI0xiraIS0+lQV6oowD9fQ5vNBWH14xahBdZB+i6dwIplZpqK7BeqqSo=
+	t=1770647297; cv=none; b=C9OR/Pvi2P1RkVyAhR3sbWPD5w+Sv9ElMOVREQH3PGZkrnXtgG4nDoeVdv+ucxd90TkSRKT2lyc/f5r8ptEX9k4TY9Qfl1XctKb6woUx6ZzGRlD36xp7qseKLSpi4le8lX/tdMd+v6vfwvDOQqH8xY4FzAjUIl7Owwk651IVq3s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770647293; c=relaxed/simple;
-	bh=EUNt2eqBdk1lxelHgSF7MIHarKUZoC0fYqc1IH/HnxQ=;
+	s=arc-20240116; t=1770647297; c=relaxed/simple;
+	bh=bEsXjFMbW5d0ZLNy88vDGfayerq5iDQNsFbyEzW882o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=L+gIq1x/18k5n7k1xkEhSeoJb+x7x/m9plB12ihxWR/GIRlqUknd9Jauq9u4SOGzHCeCDs/GolYTw9HulvFcLcxOlPeuO5/YVU1oO5NLe/MBIiCZtvzPvnE2fq0k2b0g2ZAkqnqA4gMpXbPUfatjTEmd/wi9JsjR8/2MdfYTb0k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZsvcS9bT; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QBQ0kbukTRR15joKqQ/eF/nfPRmc2h/Fqs7Z5WDKQevR7dnF5qcik/Qe8ltxOksPl+suWbs0F4xCRFFzSyQkbtwJSriCIyu4kA1Yo4C2qdCMemJtUebdfV17raG4ROIyowQ6+RI9Aqy7Rx497r0kVP8tk76zTBSH8EFD93B09G4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=P3uDX/IY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZsvcS9bT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 402F9C116C6;
-	Mon,  9 Feb 2026 14:28:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="P3uDX/IY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 78C3AC116C6;
+	Mon,  9 Feb 2026 14:28:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770647293;
-	bh=EUNt2eqBdk1lxelHgSF7MIHarKUZoC0fYqc1IH/HnxQ=;
+	s=korg; t=1770647296;
+	bh=bEsXjFMbW5d0ZLNy88vDGfayerq5iDQNsFbyEzW882o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZsvcS9bT60bi6L1GO9Yctpunf3+A2aJ/Ovm+2SyQWmL3Hx0+FyVqFihFiRrtllQfD
-	 Y6xmjksxUL0BkAuYloyCyORStJo4yEsdGm09Da1jTfqmCQ6apaYZBTEtyHm1S0b051
-	 wJ+3ZtnF+FRTsnYPbXf0wbaKNTlhn8SAVvaTKe3Q=
+	b=P3uDX/IYQXxuRTG2DxcqDeQ5yIlcWkizvjecu3MS3mS24737ovrj+XmDRI+/llaai
+	 VZj3kywrwwiFbIUJJO6zhOtuKeCYYX/3WiOGVMYJJPfz+R7o+QpErRjnPk0WymW3xz
+	 iYTw04ASFn6T2PCLzcEFmuwFlHSyp5wutO3Oywn0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hao Li <hao.li@linux.dev>,
-	Hao Ge <hao.ge@linux.dev>,
-	Suren Baghdasaryan <surenb@google.com>,
-	Harry Yoo <harry.yoo@oracle.com>,
-	Vlastimil Babka <vbabka@suse.cz>
-Subject: [PATCH 6.18 013/175] mm/slab: Add alloc_tagging_slab_free_hook for memcg_alloc_abort_single
-Date: Mon,  9 Feb 2026 15:21:26 +0100
-Message-ID: <20260209142320.954502232@linuxfoundation.org>
+	syzbot+639af5aa411f2581ad38@syzkaller.appspotmail.com,
+	Johannes Berg <johannes.berg@intel.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.18 050/175] wifi: mac80211: dont WARN for connections on invalid channels
+Date: Mon,  9 Feb 2026 15:22:03 +0100
+Message-ID: <20260209142322.270651867@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260209142320.474120190@linuxfoundation.org>
 References: <20260209142320.474120190@linuxfoundation.org>
@@ -53,99 +51,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hao Ge <hao.ge@linux.dev>
+From: Johannes Berg <johannes.berg@intel.com>
 
-commit e6c53ead2d8fa73206e0a63e9cd9aea6bc929837 upstream.
+[ Upstream commit 99067b58a408a384d2a45c105eb3dce980a862ce ]
 
-When CONFIG_MEM_ALLOC_PROFILING_DEBUG is enabled, the following warning
-may be noticed:
+It's not clear (to me) how exactly syzbot managed to hit this,
+but it seems conceivable that e.g. regulatory changed and has
+disabled a channel between scanning (channel is checked to be
+usable by cfg80211_get_ies_channel_number) and connecting on
+the channel later.
 
-[ 3959.023862] ------------[ cut here ]------------
-[ 3959.023891] alloc_tag was not cleared (got tag for lib/xarray.c:378)
-[ 3959.023947] WARNING: ./include/linux/alloc_tag.h:155 at alloc_tag_add+0x128/0x178, CPU#6: mkfs.ntfs/113998
-[ 3959.023978] Modules linked in: dns_resolver tun brd overlay exfat btrfs blake2b libblake2b xor xor_neon raid6_pq loop sctp ip6_udp_tunnel udp_tunnel ext4 crc16 mbcache jbd2 rfkill sunrpc vfat fat sg fuse nfnetlink sr_mod virtio_gpu cdrom drm_client_lib virtio_dma_buf drm_shmem_helper drm_kms_helper ghash_ce drm sm4 backlight virtio_net net_failover virtio_scsi failover virtio_console virtio_blk virtio_mmio dm_mirror dm_region_hash dm_log dm_multipath dm_mod i2c_dev aes_neon_bs aes_ce_blk [last unloaded: hwpoison_inject]
-[ 3959.024170] CPU: 6 UID: 0 PID: 113998 Comm: mkfs.ntfs Kdump: loaded Tainted: G        W           6.19.0-rc7+ #7 PREEMPT(voluntary)
-[ 3959.024182] Tainted: [W]=WARN
-[ 3959.024186] Hardware name: QEMU KVM Virtual Machine, BIOS unknown 2/2/2022
-[ 3959.024192] pstate: 604000c5 (nZCv daIF +PAN -UAO -TCO -DIT -SSBS BTYPE=--)
-[ 3959.024199] pc : alloc_tag_add+0x128/0x178
-[ 3959.024207] lr : alloc_tag_add+0x128/0x178
-[ 3959.024214] sp : ffff80008b696d60
-[ 3959.024219] x29: ffff80008b696d60 x28: 0000000000000000 x27: 0000000000000240
-[ 3959.024232] x26: 0000000000000000 x25: 0000000000000240 x24: ffff800085d17860
-[ 3959.024245] x23: 0000000000402800 x22: ffff0000c0012dc0 x21: 00000000000002d0
-[ 3959.024257] x20: ffff0000e6ef3318 x19: ffff800085ae0410 x18: 0000000000000000
-[ 3959.024269] x17: 0000000000000000 x16: 0000000000000000 x15: 0000000000000000
-[ 3959.024281] x14: 0000000000000000 x13: 0000000000000001 x12: ffff600064101293
-[ 3959.024292] x11: 1fffe00064101292 x10: ffff600064101292 x9 : dfff800000000000
-[ 3959.024305] x8 : 00009fff9befed6e x7 : ffff000320809493 x6 : 0000000000000001
-[ 3959.024316] x5 : ffff000320809490 x4 : ffff600064101293 x3 : ffff800080691838
-[ 3959.024328] x2 : 0000000000000000 x1 : 0000000000000000 x0 : ffff0000d5bcd640
-[ 3959.024340] Call trace:
-[ 3959.024346]  alloc_tag_add+0x128/0x178 (P)
-[ 3959.024355]  __alloc_tagging_slab_alloc_hook+0x11c/0x1a8
-[ 3959.024362]  kmem_cache_alloc_lru_noprof+0x1b8/0x5e8
-[ 3959.024369]  xas_alloc+0x304/0x4f0
-[ 3959.024381]  xas_create+0x1e0/0x4a0
-[ 3959.024388]  xas_store+0x68/0xda8
-[ 3959.024395]  __filemap_add_folio+0x5b0/0xbd8
-[ 3959.024409]  filemap_add_folio+0x16c/0x7e0
-[ 3959.024416]  __filemap_get_folio_mpol+0x2dc/0x9e8
-[ 3959.024424]  iomap_get_folio+0xfc/0x180
-[ 3959.024435]  __iomap_get_folio+0x2f8/0x4b8
-[ 3959.024441]  iomap_write_begin+0x198/0xc18
-[ 3959.024448]  iomap_write_iter+0x2ec/0x8f8
-[ 3959.024454]  iomap_file_buffered_write+0x19c/0x290
-[ 3959.024461]  blkdev_write_iter+0x38c/0x978
-[ 3959.024470]  vfs_write+0x4d4/0x928
-[ 3959.024482]  ksys_write+0xfc/0x1f8
-[ 3959.024489]  __arm64_sys_write+0x74/0xb0
-[ 3959.024496]  invoke_syscall+0xd4/0x258
-[ 3959.024507]  el0_svc_common.constprop.0+0xb4/0x240
-[ 3959.024514]  do_el0_svc+0x48/0x68
-[ 3959.024520]  el0_svc+0x40/0xf8
-[ 3959.024526]  el0t_64_sync_handler+0xa0/0xe8
-[ 3959.024533]  el0t_64_sync+0x1ac/0x1b0
-[ 3959.024540] ---[ end trace 0000000000000000 ]---
+With one scenario that isn't covered elsewhere described above,
+the warning isn't good, replace it with a (more informative)
+error message.
 
-When __memcg_slab_post_alloc_hook() fails, there are two different
-free paths depending on whether size == 1 or size != 1. In the
-kmem_cache_free_bulk() path, we do call alloc_tagging_slab_free_hook().
-However, in memcg_alloc_abort_single() we don't, the above warning will be
-triggered on the next allocation.
-
-Therefore, add alloc_tagging_slab_free_hook() to the
-memcg_alloc_abort_single() path.
-
-Fixes: 9f9796b413d3 ("mm, slab: move memcg charging to post-alloc hook")
-Cc: stable@vger.kernel.org
-Suggested-by: Hao Li <hao.li@linux.dev>
-Signed-off-by: Hao Ge <hao.ge@linux.dev>
-Reviewed-by: Hao Li <hao.li@linux.dev>
-Reviewed-by: Suren Baghdasaryan <surenb@google.com>
-Reviewed-by: Harry Yoo <harry.yoo@oracle.com>
-Link: https://patch.msgid.link/20260204101401.202762-1-hao.ge@linux.dev
-Signed-off-by: Vlastimil Babka <vbabka@suse.cz>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Reported-by: syzbot+639af5aa411f2581ad38@syzkaller.appspotmail.com
+Link: https://patch.msgid.link/20251202102511.5a8fb5184fa3.I961ee41b8f10538a54b8565dbf03ec1696e80e03@changeid
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/slub.c |    6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ net/mac80211/mlme.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
---- a/mm/slub.c
-+++ b/mm/slub.c
-@@ -6667,8 +6667,12 @@ void slab_free(struct kmem_cache *s, str
- static noinline
- void memcg_alloc_abort_single(struct kmem_cache *s, void *object)
- {
-+	struct slab *slab = virt_to_slab(object);
-+
-+	alloc_tagging_slab_free_hook(s, slab, &object, 1);
-+
- 	if (likely(slab_free_hook(s, object, slab_want_init_on_free(s), false)))
--		do_slab_free(s, virt_to_slab(object), object, object, 1, _RET_IP_);
-+		do_slab_free(s, slab, object, object, 1, _RET_IP_);
- }
- #endif
+diff --git a/net/mac80211/mlme.c b/net/mac80211/mlme.c
+index dca47a533392a..8ba199cd38c0f 100644
+--- a/net/mac80211/mlme.c
++++ b/net/mac80211/mlme.c
+@@ -1126,7 +1126,10 @@ ieee80211_determine_chan_mode(struct ieee80211_sub_if_data *sdata,
  
+ 	while (!ieee80211_chandef_usable(sdata, &chanreq->oper,
+ 					 IEEE80211_CHAN_DISABLED)) {
+-		if (WARN_ON(chanreq->oper.width == NL80211_CHAN_WIDTH_20_NOHT)) {
++		if (chanreq->oper.width == NL80211_CHAN_WIDTH_20_NOHT) {
++			link_id_info(sdata, link_id,
++				     "unusable channel (%d MHz) for connection\n",
++				     chanreq->oper.chan->center_freq);
+ 			ret = -EINVAL;
+ 			goto free;
+ 		}
+-- 
+2.51.0
+
 
 
