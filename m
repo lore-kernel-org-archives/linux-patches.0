@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7313037AA9D;
-	Mon,  9 Feb 2026 14:26:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BBA5237997D;
+	Mon,  9 Feb 2026 14:26:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770647195; cv=none; b=gHfBnN+UdS2c1fS0yMxzz+gvamefFk+QPQMtwyYKWmbrgS27fvePGP89S3nPFD30v2+b/uUL60ZFIXOs0yPa3qV/kbqCm/qfRa/EKy3cV+w+IA1gscYmOh2JZT9VFClnF3AKkHP59Mf4ZpG5rMCbwkj9yn+VlelGub1xYI0b7mY=
+	t=1770647198; cv=none; b=M4a2Jh5BVOCCDtNe9jjRI5mR0XOk63PoErEc8cfZEEsf8CezZ6tC9WY6xSEoJLsuQxpfD51bf50AxB21fRPmDi1s92+Y1LGMqElWkuhOJhM4PWnfPUDsLZ5r62HdT8eYP4IU1Z3jeg8hOBdyUnv9Citv4/xgm2xg4IreMkBT3DU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770647195; c=relaxed/simple;
-	bh=6GdsVP4leBbmGW7RgVliUSBmrCd5UmkFDe+rFsROclw=;
+	s=arc-20240116; t=1770647198; c=relaxed/simple;
+	bh=ucGZbD296IsTj5rrNVzwhVnKfku7ohoGmsCLkM5/MB0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CiBMgh8ll2Pn0ZCIDE5wfOeKANY093braH4FIPVOTSav5VRVc/H6j/4uwV5K7FCK+ZfZPMsoUGMRjbHc7KIeqJiu1i9wmIZdsJUHPzFtT3hgcMFac7D0dX3I5eoYBLNyIUfCXs8GLv2xBR7d6x7SeubQKGwaGN1VHL6WtqVz7Hc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Cv/ETpjJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tV9TPHw35ECp7jlZTSy/2zYtMHFYOGh03Mv0fTgWS/XBt5uXduk8PtgPw5U7l9nZofyI9yOc7vwQO7kRjhJUcvSWHmkuNjeYYLKQyJAFqopwqfrx2lLfK6Ce6SAiF8HfhJq1y9IkKONtUaHcga1vkaxzJiwc8k0aC8BfKQx4cn4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DuNOqOkN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Cv/ETpjJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C348C19424;
-	Mon,  9 Feb 2026 14:26:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DuNOqOkN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DEFB4C116C6;
+	Mon,  9 Feb 2026 14:26:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770647195;
-	bh=6GdsVP4leBbmGW7RgVliUSBmrCd5UmkFDe+rFsROclw=;
+	s=korg; t=1770647198;
+	bh=ucGZbD296IsTj5rrNVzwhVnKfku7ohoGmsCLkM5/MB0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Cv/ETpjJxMACidfFyLhAznH7Mg+9iMhf5adxYkbS/9X8bl5JhKuEBDvFePwoTVduX
-	 EAKUOjX9PSqr+hczE15xvnAVyLzsy/TOvU+5Uj+9m40e/CN1oekoCorLOx9YJ4pw06
-	 /7m+mvfXr6kSEWAosEcwvN/sPIkklUQk/zZ21gdk=
+	b=DuNOqOkNUWOYs60CjdOfU9HAAPm0Sy7NE6AMKY9CgzlR30CMc964prvynn4XZ/2Wk
+	 AvxEQzuh2DbPQ1ABGIYR5lG4izMW+dkjEeXPVxAaa1IefRe4yc3ssNC6iyKIsbliVg
+	 kBms1PTfOSJXK35RJznv2zZRbL2S7RAd/LVB1944=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lyude Paul <lyude@redhat.com>,
-	Dave Airlie <airlied@redhat.com>
-Subject: [PATCH 6.18 028/175] nouveau/gsp: fix suspend/resume regression on r570 firmware
-Date: Mon,  9 Feb 2026 15:21:41 +0100
-Message-ID: <20260209142321.491671846@linuxfoundation.org>
+	Kevin Hao <haokexin@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.18 029/175] net: cpsw: Execute ndo_set_rx_mode callback in a work queue
+Date: Mon,  9 Feb 2026 15:21:42 +0100
+Message-ID: <20260209142321.526261090@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260209142320.474120190@linuxfoundation.org>
 References: <20260209142320.474120190@linuxfoundation.org>
@@ -50,102 +50,162 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dave Airlie <airlied@redhat.com>
+From: Kevin Hao <haokexin@gmail.com>
 
-commit 8302d0afeaec0bc57d951dd085e0cffe997d4d18 upstream.
+commit 0b8c878d117319f2be34c8391a77e0f4d5c94d79 upstream.
 
-The r570 firmware with certain GPUs (at least RTX6000) needs this
-flag to reflect the suspend vs runtime PM state of the driver.
+Commit 1767bb2d47b7 ("ipv6: mcast: Don't hold RTNL for
+IPV6_ADD_MEMBERSHIP and MCAST_JOIN_GROUP.") removed the RTNL lock for
+IPV6_ADD_MEMBERSHIP and MCAST_JOIN_GROUP operations. However, this
+change triggered the following call trace on my BeagleBone Black board:
+  WARNING: net/8021q/vlan_core.c:236 at vlan_for_each+0x120/0x124, CPU#0: rpcbind/481
+  RTNL: assertion failed at net/8021q/vlan_core.c (236)
+  Modules linked in:
+  CPU: 0 UID: 997 PID: 481 Comm: rpcbind Not tainted 6.19.0-rc7-next-20260130-yocto-standard+ #35 PREEMPT
+  Hardware name: Generic AM33XX (Flattened Device Tree)
+  Call trace:
+   unwind_backtrace from show_stack+0x28/0x2c
+   show_stack from dump_stack_lvl+0x30/0x38
+   dump_stack_lvl from __warn+0xb8/0x11c
+   __warn from warn_slowpath_fmt+0x130/0x194
+   warn_slowpath_fmt from vlan_for_each+0x120/0x124
+   vlan_for_each from cpsw_add_mc_addr+0x54/0x98
+   cpsw_add_mc_addr from __hw_addr_ref_sync_dev+0xc4/0xec
+   __hw_addr_ref_sync_dev from __dev_mc_add+0x78/0x88
+   __dev_mc_add from igmp6_group_added+0x84/0xec
+   igmp6_group_added from __ipv6_dev_mc_inc+0x1fc/0x2f0
+   __ipv6_dev_mc_inc from __ipv6_sock_mc_join+0x124/0x1b4
+   __ipv6_sock_mc_join from do_ipv6_setsockopt+0x84c/0x1168
+   do_ipv6_setsockopt from ipv6_setsockopt+0x88/0xc8
+   ipv6_setsockopt from do_sock_setsockopt+0xe8/0x19c
+   do_sock_setsockopt from __sys_setsockopt+0x84/0xac
+   __sys_setsockopt from ret_fast_syscall+0x0/0x54
 
-This uses that info to set the correct flags to the firmware.
+This trace occurs because vlan_for_each() is called within
+cpsw_ndo_set_rx_mode(), which expects the RTNL lock to be held.
+Since modifying vlan_for_each() to operate without the RTNL lock is not
+straightforward, and because ndo_set_rx_mode() is invoked both with and
+without the RTNL lock across different code paths, simply adding
+rtnl_lock() in cpsw_ndo_set_rx_mode() is not a viable solution.
 
-This fixes a regression on RTX6000 and other GPUs since r570 firmware
-was enabled.
+To resolve this issue, we opt to execute the actual processing within
+a work queue, following the approach used by the icssg-prueth driver.
 
-Fixes: 53dac0623853 ("drm/nouveau/gsp: add support for 570.144")
-Cc: <stable@vger.kernel.org>
-Reviewed-by: Lyude Paul <lyude@redhat.com>
-Tested-by: Lyude Paul <lyude@redhat.com>
-Signed-off-by: Dave Airlie <airlied@redhat.com>
-Link: https://patch.msgid.link/20260203052431.2219998-4-airlied@gmail.com
+Please note: To reproduce this issue, I manually reverted the changes to
+am335x-bone-common.dtsi from commit c477358e66a3 ("ARM: dts: am335x-bone:
+switch to new cpsw switch drv") in order to revert to the legacy cpsw
+driver.
+
+Fixes: 1767bb2d47b7 ("ipv6: mcast: Don't hold RTNL for IPV6_ADD_MEMBERSHIP and MCAST_JOIN_GROUP.")
+Signed-off-by: Kevin Hao <haokexin@gmail.com>
+Cc: stable@vger.kernel.org
+Link: https://patch.msgid.link/20260203-bbb-v5-2-ea0ea217a85c@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/nouveau/nvkm/subdev/gsp/rm/r535/fbsr.c |    2 +-
- drivers/gpu/drm/nouveau/nvkm/subdev/gsp/rm/r535/gsp.c  |    2 +-
- drivers/gpu/drm/nouveau/nvkm/subdev/gsp/rm/r570/fbsr.c |    8 ++++----
- drivers/gpu/drm/nouveau/nvkm/subdev/gsp/rm/rm.h        |    2 +-
- 4 files changed, 7 insertions(+), 7 deletions(-)
+ drivers/net/ethernet/ti/cpsw.c | 41 +++++++++++++++++++++++++++++-----
+ 1 file changed, 35 insertions(+), 6 deletions(-)
 
---- a/drivers/gpu/drm/nouveau/nvkm/subdev/gsp/rm/r535/fbsr.c
-+++ b/drivers/gpu/drm/nouveau/nvkm/subdev/gsp/rm/r535/fbsr.c
-@@ -208,7 +208,7 @@ r535_fbsr_resume(struct nvkm_gsp *gsp)
+diff --git a/drivers/net/ethernet/ti/cpsw.c b/drivers/net/ethernet/ti/cpsw.c
+index 54c24cd3d3be..b0e18bdc2c85 100644
+--- a/drivers/net/ethernet/ti/cpsw.c
++++ b/drivers/net/ethernet/ti/cpsw.c
+@@ -305,12 +305,19 @@ static int cpsw_purge_all_mc(struct net_device *ndev, const u8 *addr, int num)
+ 	return 0;
  }
  
- static int
--r535_fbsr_suspend(struct nvkm_gsp *gsp)
-+r535_fbsr_suspend(struct nvkm_gsp *gsp, bool runtime)
+-static void cpsw_ndo_set_rx_mode(struct net_device *ndev)
++static void cpsw_ndo_set_rx_mode_work(struct work_struct *work)
  {
- 	struct nvkm_subdev *subdev = &gsp->subdev;
- 	struct nvkm_device *device = subdev->device;
---- a/drivers/gpu/drm/nouveau/nvkm/subdev/gsp/rm/r535/gsp.c
-+++ b/drivers/gpu/drm/nouveau/nvkm/subdev/gsp/rm/r535/gsp.c
-@@ -1748,7 +1748,7 @@ r535_gsp_fini(struct nvkm_gsp *gsp, enum
- 		sr->sysmemAddrOfSuspendResumeData = gsp->sr.radix3.lvl0.addr;
- 		sr->sizeOfSuspendResumeData = len;
+-	struct cpsw_priv *priv = netdev_priv(ndev);
++	struct cpsw_priv *priv = container_of(work, struct cpsw_priv, rx_mode_work);
+ 	struct cpsw_common *cpsw = priv->cpsw;
++	struct net_device *ndev = priv->ndev;
+ 	int slave_port = -1;
  
--		ret = rm->api->fbsr->suspend(gsp);
-+		ret = rm->api->fbsr->suspend(gsp, suspend == NVKM_RUNTIME_SUSPEND);
- 		if (ret) {
- 			nvkm_gsp_mem_dtor(&gsp->sr.meta);
- 			nvkm_gsp_radix3_dtor(gsp, &gsp->sr.radix3);
---- a/drivers/gpu/drm/nouveau/nvkm/subdev/gsp/rm/r570/fbsr.c
-+++ b/drivers/gpu/drm/nouveau/nvkm/subdev/gsp/rm/r570/fbsr.c
-@@ -62,7 +62,7 @@ r570_fbsr_resume(struct nvkm_gsp *gsp)
++	rtnl_lock();
++	if (!netif_running(ndev))
++		goto unlock_rtnl;
++
++	netif_addr_lock_bh(ndev);
++
+ 	if (cpsw->data.dual_emac)
+ 		slave_port = priv->emac_port + 1;
+ 
+@@ -318,7 +325,7 @@ static void cpsw_ndo_set_rx_mode(struct net_device *ndev)
+ 		/* Enable promiscuous mode */
+ 		cpsw_set_promiscious(ndev, true);
+ 		cpsw_ale_set_allmulti(cpsw->ale, IFF_ALLMULTI, slave_port);
+-		return;
++		goto unlock_addr;
+ 	} else {
+ 		/* Disable promiscuous mode */
+ 		cpsw_set_promiscious(ndev, false);
+@@ -331,6 +338,18 @@ static void cpsw_ndo_set_rx_mode(struct net_device *ndev)
+ 	/* add/remove mcast address either for real netdev or for vlan */
+ 	__hw_addr_ref_sync_dev(&ndev->mc, ndev, cpsw_add_mc_addr,
+ 			       cpsw_del_mc_addr);
++
++unlock_addr:
++	netif_addr_unlock_bh(ndev);
++unlock_rtnl:
++	rtnl_unlock();
++}
++
++static void cpsw_ndo_set_rx_mode(struct net_device *ndev)
++{
++	struct cpsw_priv *priv = netdev_priv(ndev);
++
++	schedule_work(&priv->rx_mode_work);
  }
  
- static int
--r570_fbsr_init(struct nvkm_gsp *gsp, struct sg_table *sgt, u64 size)
-+r570_fbsr_init(struct nvkm_gsp *gsp, struct sg_table *sgt, u64 size, bool runtime)
+ static unsigned int cpsw_rxbuf_total_len(unsigned int len)
+@@ -1472,6 +1491,7 @@ static int cpsw_probe_dual_emac(struct cpsw_priv *priv)
+ 	priv_sl2->ndev = ndev;
+ 	priv_sl2->dev  = &ndev->dev;
+ 	priv_sl2->msg_enable = netif_msg_init(debug_level, CPSW_DEBUG);
++	INIT_WORK(&priv_sl2->rx_mode_work, cpsw_ndo_set_rx_mode_work);
+ 
+ 	if (is_valid_ether_addr(data->slave_data[1].mac_addr)) {
+ 		memcpy(priv_sl2->mac_addr, data->slave_data[1].mac_addr,
+@@ -1653,6 +1673,7 @@ static int cpsw_probe(struct platform_device *pdev)
+ 	priv->dev  = dev;
+ 	priv->msg_enable = netif_msg_init(debug_level, CPSW_DEBUG);
+ 	priv->emac_port = 0;
++	INIT_WORK(&priv->rx_mode_work, cpsw_ndo_set_rx_mode_work);
+ 
+ 	if (is_valid_ether_addr(data->slave_data[0].mac_addr)) {
+ 		memcpy(priv->mac_addr, data->slave_data[0].mac_addr, ETH_ALEN);
+@@ -1758,6 +1779,8 @@ static int cpsw_probe(struct platform_device *pdev)
+ static void cpsw_remove(struct platform_device *pdev)
  {
- 	NV2080_CTRL_INTERNAL_FBSR_INIT_PARAMS *ctrl;
- 	struct nvkm_gsp_object memlist;
-@@ -81,7 +81,7 @@ r570_fbsr_init(struct nvkm_gsp *gsp, str
- 	ctrl->hClient = gsp->internal.client.object.handle;
- 	ctrl->hSysMem = memlist.handle;
- 	ctrl->sysmemAddrOfSuspendResumeData = gsp->sr.meta.addr;
--	ctrl->bEnteringGcoffState = 1;
-+	ctrl->bEnteringGcoffState = runtime ? 1 : 0;
+ 	struct cpsw_common *cpsw = platform_get_drvdata(pdev);
++	struct net_device *ndev;
++	struct cpsw_priv *priv;
+ 	int i, ret;
  
- 	ret = nvkm_gsp_rm_ctrl_wr(&gsp->internal.device.subdevice, ctrl);
- 	if (ret)
-@@ -92,7 +92,7 @@ r570_fbsr_init(struct nvkm_gsp *gsp, str
- }
+ 	ret = pm_runtime_resume_and_get(&pdev->dev);
+@@ -1770,9 +1793,15 @@ static void cpsw_remove(struct platform_device *pdev)
+ 		return;
+ 	}
  
- static int
--r570_fbsr_suspend(struct nvkm_gsp *gsp)
-+r570_fbsr_suspend(struct nvkm_gsp *gsp, bool runtime)
- {
- 	struct nvkm_subdev *subdev = &gsp->subdev;
- 	struct nvkm_device *device = subdev->device;
-@@ -133,7 +133,7 @@ r570_fbsr_suspend(struct nvkm_gsp *gsp)
- 		return ret;
+-	for (i = 0; i < cpsw->data.slaves; i++)
+-		if (cpsw->slaves[i].ndev)
+-			unregister_netdev(cpsw->slaves[i].ndev);
++	for (i = 0; i < cpsw->data.slaves; i++) {
++		ndev = cpsw->slaves[i].ndev;
++		if (!ndev)
++			continue;
++
++		priv = netdev_priv(ndev);
++		unregister_netdev(ndev);
++		disable_work_sync(&priv->rx_mode_work);
++	}
  
- 	/* Initialise FBSR on RM. */
--	ret = r570_fbsr_init(gsp, &gsp->sr.fbsr, size);
-+	ret = r570_fbsr_init(gsp, &gsp->sr.fbsr, size, runtime);
- 	if (ret) {
- 		nvkm_gsp_sg_free(device, &gsp->sr.fbsr);
- 		return ret;
---- a/drivers/gpu/drm/nouveau/nvkm/subdev/gsp/rm/rm.h
-+++ b/drivers/gpu/drm/nouveau/nvkm/subdev/gsp/rm/rm.h
-@@ -78,7 +78,7 @@ struct nvkm_rm_api {
- 	} *device;
- 
- 	const struct nvkm_rm_api_fbsr {
--		int (*suspend)(struct nvkm_gsp *);
-+		int (*suspend)(struct nvkm_gsp *, bool runtime);
- 		void (*resume)(struct nvkm_gsp *);
- 	} *fbsr;
- 
+ 	cpts_release(cpsw->cpts);
+ 	cpdma_ctlr_destroy(cpsw->dma);
+-- 
+2.53.0
+
 
 
