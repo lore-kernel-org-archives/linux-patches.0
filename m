@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43D7235CB6B;
-	Mon,  9 Feb 2026 14:28:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8BFDB35CB6B;
+	Mon,  9 Feb 2026 14:28:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770647329; cv=none; b=M39VspAbJh6r5TgmjTtkfjVtu0x2t2onbdxcPSJxckEsKlOokciP1PtsGww3z4C/NNVb810+8w8D/Li7X/NbxW2QLU1i7kjbe4uU6XjxeM57LWyruXWM7k61nXxFx6IEzppsc56R/c3WLttU4BFZLsD8nKeWm0E2VapYrHXPe2I=
+	t=1770647332; cv=none; b=quTqRJAzBFYXt2UzW6NXwjJB5y1667L+Drg3uoNQju/NLjTvqIe7xIlog5CURdONxkf53p4qQm2noHU7W62dALBQMNUYAC5o3nbuE33VD+tfIlA0oI7p3sgiWdBE9QRI9MCqBQj5pTtPt0b0TFSPfPIfxggtqWE1xnf3dFdNunM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770647329; c=relaxed/simple;
-	bh=mh+A+kjbtG+Mqyi7OOfAed0JA64Ky1JV5c4IM5OEo8Y=;
+	s=arc-20240116; t=1770647332; c=relaxed/simple;
+	bh=sA9HfWFUCi+tyRUkHairOC5ho7tmTVGK0z6MYKqVKnQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eqNkq6YENxYA4NpOKuTRTIy78RHFYnZILb6/DFb6n4bioq48Aav14jMS66jRCyPexgLNVfWsLOHv+ZHG9ngb0LvxXcsEAnCoy4AltEk0Pc23A6eCfI2u/KqRPvMGzvuofpJy32FQusVds3rGUAwQF+GMbt8mOFwEkatZyVVpDSU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=x9lVQ8Vi; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CM6DEQCPZq3ezj9DbUEwzFmX0efwscIXhMegKxoLFlB1BNSDujuhwE6nvDFkrDLbPv7i5UzSZU0naCGbVZ4O6UhrUkB4UERXF3WU2pyf/qtANjBL/5abpEBcpPT4DXUNUlNVjS+yD4S9qrsZE6q8v2n9vfn7pnw/4cQ8WurWcO8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DmRJipiQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="x9lVQ8Vi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A8C4EC116C6;
-	Mon,  9 Feb 2026 14:28:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DmRJipiQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA12AC16AAE;
+	Mon,  9 Feb 2026 14:28:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770647329;
-	bh=mh+A+kjbtG+Mqyi7OOfAed0JA64Ky1JV5c4IM5OEo8Y=;
+	s=korg; t=1770647332;
+	bh=sA9HfWFUCi+tyRUkHairOC5ho7tmTVGK0z6MYKqVKnQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=x9lVQ8ViPHvdZdfw8cB33FLAa9cCWt63M8c/fsUReD9xIZQ8Q5Ap69x8LEX58toFQ
-	 Aa7MD46poZtA6o3Gq5gu/bAH76PsEpTncZDVSc2QU2YTQHqR3w9yxv1smzibrWPaNQ
-	 2wc8cw9CtxB8EqwlZc4o9MKN5kenLqb17wwEvInI=
+	b=DmRJipiQXg7Q2wmdTdQJTa0Nx2fmTWSh35QM0JI2VrgspjSJ3OHlKcfcjvIIyMvWS
+	 R4EefVzIg4HBe8j+yA5K13l472lQEheqqqZ0IxNHDZAL4oCk5EBEGYTscAvaYy36Lr
+	 s1QhRwRZ+B9Skn53QoychenFQ9/btm4cGyKoRmKA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Siarhei Vishniakou <svv@google.com>,
-	Benjamin Tissoires <bentiss@kernel.org>,
+	Ethan Nelson-Moore <enelsonmoore@gmail.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 068/175] HID: playstation: Center initial joystick axes to prevent spurious events
-Date: Mon,  9 Feb 2026 15:22:21 +0100
-Message-ID: <20260209142322.900975934@linuxfoundation.org>
+Subject: [PATCH 6.18 051/175] net: usb: sr9700: support devices with virtual driver CD
+Date: Mon,  9 Feb 2026 15:22:04 +0100
+Message-ID: <20260209142322.305549989@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260209142320.474120190@linuxfoundation.org>
 References: <20260209142320.474120190@linuxfoundation.org>
@@ -51,63 +51,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Siarhei Vishniakou <svv@google.com>
+From: Ethan Nelson-Moore <enelsonmoore@gmail.com>
 
-[ Upstream commit e9143268d259d98e111a649affa061acb8e13c5b ]
+[ Upstream commit bf4172bd870c3a34d3065cbb39192c22cbd7b18d ]
 
-When a new PlayStation gamepad (DualShock 4 or DualSense) is initialized,
-the input subsystem sets the default value for its absolute axes (e.g.,
-ABS_X, ABS_Y) to 0.
+Some SR9700 devices have an SPI flash chip containing a virtual driver
+CD, in which case they appear as a device with two interfaces and
+product ID 0x9702. Interface 0 is the driver CD and interface 1 is the
+Ethernet device.
 
-However, the hardware's actual neutral/resting state for these joysticks
-is 128 (0x80). This creates a mismatch.
-
-When the first HID report arrives from the device, the driver sees the
-resting value of 128. The kernel compares this to its initial state of 0
-and incorrectly interprets this as a delta (0 -> 128). Consequently, it
-generates EV_ABS events for this initial, non-existent movement.
-
-This behavior can fail userspace 'sanity check' tests (e.g., in
-Android CTS) that correctly assert no motion events should be generated
-from a device that is already at rest.
-
-This patch fixes the issue by explicitly setting the initial value of the
-main joystick axes (e.g., ABS_X, ABS_Y, ABS_RX, ABS_RY) to 128 (0x80)
-in the common ps_gamepad_create() function.
-
-This aligns the kernel's initial state with the hardware's expected
-neutral state, ensuring that the first report (at 128) produces no
-delta and thus, no spurious event.
-
-Signed-off-by: Siarhei Vishniakou <svv@google.com>
-Reviewed-by: Benjamin Tissoires <bentiss@kernel.org>
-Signed-off-by: Benjamin Tissoires <bentiss@kernel.org>
+Link: https://github.com/name-kurniawan/usb-lan
+Link: https://www.draisberghof.de/usb_modeswitch/bb/viewtopic.php?t=2185
+Signed-off-by: Ethan Nelson-Moore <enelsonmoore@gmail.com>
+Link: https://patch.msgid.link/20251211062451.139036-1-enelsonmoore@gmail.com
+[pabeni@redhat.com: fixes link tags]
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hid/hid-playstation.c | 5 +++++
+ drivers/net/usb/sr9700.c | 5 +++++
  1 file changed, 5 insertions(+)
 
-diff --git a/drivers/hid/hid-playstation.c b/drivers/hid/hid-playstation.c
-index 128aa6abd10be..e4dfcf26b04e7 100644
---- a/drivers/hid/hid-playstation.c
-+++ b/drivers/hid/hid-playstation.c
-@@ -753,11 +753,16 @@ ps_gamepad_create(struct hid_device *hdev,
- 	if (IS_ERR(gamepad))
- 		return ERR_CAST(gamepad);
+diff --git a/drivers/net/usb/sr9700.c b/drivers/net/usb/sr9700.c
+index 5d97e95a17b0d..820c4c5069792 100644
+--- a/drivers/net/usb/sr9700.c
++++ b/drivers/net/usb/sr9700.c
+@@ -539,6 +539,11 @@ static const struct usb_device_id products[] = {
+ 		USB_DEVICE(0x0fe6, 0x9700),	/* SR9700 device */
+ 		.driver_info = (unsigned long)&sr9700_driver_info,
+ 	},
++	{
++		/* SR9700 with virtual driver CD-ROM - interface 0 is the CD-ROM device */
++		USB_DEVICE_INTERFACE_NUMBER(0x0fe6, 0x9702, 1),
++		.driver_info = (unsigned long)&sr9700_driver_info,
++	},
+ 	{},			/* END */
+ };
  
-+	/* Set initial resting state for joysticks to 128 (center) */
- 	input_set_abs_params(gamepad, ABS_X, 0, 255, 0, 0);
-+	gamepad->absinfo[ABS_X].value = 128;
- 	input_set_abs_params(gamepad, ABS_Y, 0, 255, 0, 0);
-+	gamepad->absinfo[ABS_Y].value = 128;
- 	input_set_abs_params(gamepad, ABS_Z, 0, 255, 0, 0);
- 	input_set_abs_params(gamepad, ABS_RX, 0, 255, 0, 0);
-+	gamepad->absinfo[ABS_RX].value = 128;
- 	input_set_abs_params(gamepad, ABS_RY, 0, 255, 0, 0);
-+	gamepad->absinfo[ABS_RY].value = 128;
- 	input_set_abs_params(gamepad, ABS_RZ, 0, 255, 0, 0);
- 
- 	input_set_abs_params(gamepad, ABS_HAT0X, -1, 1, 0, 0);
 -- 
 2.51.0
 
