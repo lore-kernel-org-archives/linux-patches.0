@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8BF9137997A;
-	Mon,  9 Feb 2026 14:52:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B33B928725B;
+	Mon,  9 Feb 2026 14:52:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770648723; cv=none; b=G9aD3UPnx/q7E+HaGg7JyoR1KKDjRDe2t43Sk5Q5Wq2XDBP7s66b/uNshOqZXQvnGU3cePCHKHyhVC6SXO95yUFrpKd8X3ii4zHtqeu/RmToBCAMZmnmO8Jvgao8Ufunbg9NPv1+V7csDm/8x22Fj6C8Ya8vIpuBEN/JPI/aI6Y=
+	t=1770648726; cv=none; b=i++JfoOa1NGGYJCWYp4gWCmsqjAoGEXuqerzNUJKIjndGzpxpM+hFpkwUqQvCJDPPzykcYje5GmBXpVkrrNVWvu5MXNfkF3uk9VBcuZ7ew4v2LbfO+hgk6gZ9HB/It4U7D4Tv/tYx2MCmyF1u3nq47tYfGwHYNS9JiOqb5yFpVI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770648723; c=relaxed/simple;
-	bh=Q0VPcTWBsdmzMxNexktaLoAViUMz4wWc/fs94gcf/4M=;
+	s=arc-20240116; t=1770648726; c=relaxed/simple;
+	bh=MtTAn2EoQf7sEijZIp+3zapdAbaYBYcOHxGmU8lSJ5o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eEH6wj2m2hFvdIxSN0jToKU8tzzj93bfBc4hKQi6cZUDubemEVsic6Z40NJBGqT2DjbTWiFuWoUrdEOWEnJjBLLDGBcbsyW0apDQ8J+U1MTK5+kDRgMsOLPybfyF1PwDVjOMd74U8S2cRz0lw1y/D1XHYr2QLqRrBzrk3UXV46E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KALLc2GU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=RKhgOS6ut4iCpCA7S5TaCHFi6fQ5W/Tffb03CoG2YoVlrw11lTT1/wo79AdzXYDmJ8m3BrhA3X8/9/vKXxUMIZ6TOgqb8JoQX4CIdtiG75fxkSmIkL2581VkLTK21Yp9FGq0zs98Yht0P8ZIFCTXMSnc32G9Jn6vmoQRl4BdyAI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IsM2xCNp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KALLc2GU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A3F3FC116C6;
-	Mon,  9 Feb 2026 14:52:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IsM2xCNp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4E35C116C6;
+	Mon,  9 Feb 2026 14:52:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770648723;
-	bh=Q0VPcTWBsdmzMxNexktaLoAViUMz4wWc/fs94gcf/4M=;
+	s=korg; t=1770648726;
+	bh=MtTAn2EoQf7sEijZIp+3zapdAbaYBYcOHxGmU8lSJ5o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KALLc2GU9gJVEUCJfdDo43Xmc392WutufKTr9wbnVbUfcqTHaS6iN9Au/5FuUIvII
-	 Zs0DFJ7HrnO21K0jG/E+dYKinTs1C4dpj35Le2wZLykBz4CfjrkBSBCximL81ihXCm
-	 JO3btqYNOavev2GIOXVorkkBrJ8/eMsnWKS/Yegg=
+	b=IsM2xCNp0wa1JaPetJVqCtqZKUrCySFs0r+Bt/SlSbipAEzQi+Osv1I9gFDGiEyH7
+	 F11q9zUkbxQsnvwl7IcYfaf6EpV/xxTTFfbJFsVXBZPXplpQFMo8OYY1wDUC6uWZFD
+	 fxab/p670VBgEQkIeAuDsKnAAlqEdZb3hUD7C7/U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Debarghya Kundu <debarghyak@google.com>,
-	Joshua Washington <joshwash@google.com>,
-	Harshitha Ramamurthy <hramamurthy@google.com>,
-	Jacob Keller <jacob.e.keller@intel.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
+	Mark Rutland <mark.rutland@arm.com>,
+	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
+	"jempty.liang" <imntjempty@163.com>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 38/41] gve: Fix stats report corruption on queue count change
-Date: Mon,  9 Feb 2026 15:24:59 +0100
-Message-ID: <20260209142258.191326277@linuxfoundation.org>
+Subject: [PATCH 5.10 39/41] tracing: Fix ftrace event field alignments
+Date: Mon,  9 Feb 2026 15:25:00 +0100
+Message-ID: <20260209142258.227320862@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260209142256.797267956@linuxfoundation.org>
 References: <20260209142256.797267956@linuxfoundation.org>
@@ -54,121 +54,185 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Debarghya Kundu <debarghyak@google.com>
+From: Steven Rostedt <rostedt@goodmis.org>
 
-[ Upstream commit 7b9ebcce0296e104a0d82a6b09d68564806158ff ]
+[ Upstream commit 033c55fe2e326bea022c3cc5178ecf3e0e459b82 ]
 
-The driver and the NIC share a region in memory for stats reporting.
-The NIC calculates its offset into this region based on the total size
-of the stats region and the size of the NIC's stats.
+The fields of ftrace specific events (events used to save ftrace internal
+events like function traces and trace_printk) are generated similarly to
+how normal trace event fields are generated. That is, the fields are added
+to a trace_events_fields array that saves the name, offset, size,
+alignment and signness of the field. It is used to produce the output in
+the format file in tracefs so that tooling knows how to parse the binary
+data of the trace events.
 
-When the number of queues is changed, the driver's stats region is
-resized. If the queue count is increased, the NIC can write past
-the end of the allocated stats region, causing memory corruption.
-If the queue count is decreased, there is a gap between the driver
-and NIC stats, leading to incorrect stats reporting.
+The issue is that some of the ftrace event structures are packed. The
+function graph exit event structures are one of them. The 64 bit calltime
+and rettime fields end up 4 byte aligned, but the algorithm to show to
+userspace shows them as 8 byte aligned.
 
-This change fixes the issue by allocating stats region with maximum
-size, and the offset calculation for NIC stats is changed to match
-with the calculation of the NIC.
+The macros that create the ftrace events has one for embedded structure
+fields. There's two macros for theses fields:
+
+  __field_desc() and __field_packed()
+
+The difference of the latter macro is that it treats the field as packed.
+
+Rename that field to __field_desc_packed() and create replace the
+__field_packed() to be a normal field that is packed and have the calltime
+and rettime use those.
+
+This showed up on 32bit architectures for function graph time fields. It
+had:
+
+ ~# cat /sys/kernel/tracing/events/ftrace/funcgraph_exit/format
+[..]
+        field:unsigned long func;       offset:8;       size:4; signed:0;
+        field:unsigned int depth;       offset:12;      size:4; signed:0;
+        field:unsigned int overrun;     offset:16;      size:4; signed:0;
+        field:unsigned long long calltime;      offset:24;      size:8; signed:0;
+        field:unsigned long long rettime;       offset:32;      size:8; signed:0;
+
+Notice that overrun is at offset 16 with size 4, where in the structure
+calltime is at offset 20 (16 + 4), but it shows the offset at 24. That's
+because it used the alignment of unsigned long long when used as a
+declaration and not as a member of a structure where it would be aligned
+by word size (in this case 4).
+
+By using the proper structure alignment, the format has it at the correct
+offset:
+
+ ~# cat /sys/kernel/tracing/events/ftrace/funcgraph_exit/format
+[..]
+        field:unsigned long func;       offset:8;       size:4; signed:0;
+        field:unsigned int depth;       offset:12;      size:4; signed:0;
+        field:unsigned int overrun;     offset:16;      size:4; signed:0;
+        field:unsigned long long calltime;      offset:20;      size:8; signed:0;
+        field:unsigned long long rettime;       offset:28;      size:8; signed:0;
 
 Cc: stable@vger.kernel.org
-Fixes: 24aeb56f2d38 ("gve: Add Gvnic stats AQ command and ethtool show/set-priv-flags.")
-Signed-off-by: Debarghya Kundu <debarghyak@google.com>
-Reviewed-by: Joshua Washington <joshwash@google.com>
-Signed-off-by: Harshitha Ramamurthy <hramamurthy@google.com>
-Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
-Link: https://patch.msgid.link/20260202193925.3106272-2-hramamurthy@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-[ Same changes as 6.1 + context ]
+Cc: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
+Cc: Mark Rutland <mark.rutland@arm.com>
+Acked-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+Reported-by: "jempty.liang" <imntjempty@163.com>
+Link: https://patch.msgid.link/20260204113628.53faec78@gandalf.local.home
+Fixes: 04ae87a52074e ("ftrace: Rework event_create_dir()")
+Closes: https://lore.kernel.org/all/20260130015740.212343-1-imntjempty@163.com/
+Closes: https://lore.kernel.org/all/20260202123342.2544795-1-imntjempty@163.com/
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+[ Renames + context ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/google/gve/gve_ethtool.c |   42 +++++++++++++++++---------
- drivers/net/ethernet/google/gve/gve_main.c    |    4 +-
- 2 files changed, 31 insertions(+), 15 deletions(-)
+ kernel/trace/trace.h         |    7 +++++--
+ kernel/trace/trace_entries.h |   14 +++++++-------
+ kernel/trace/trace_export.c  |   21 +++++++++++++++------
+ 3 files changed, 27 insertions(+), 15 deletions(-)
 
---- a/drivers/net/ethernet/google/gve/gve_ethtool.c
-+++ b/drivers/net/ethernet/google/gve/gve_ethtool.c
-@@ -140,7 +140,8 @@ gve_get_ethtool_stats(struct net_device
- 		tmp_rx_desc_err_dropped_pkt, tmp_tx_pkts, tmp_tx_bytes;
- 	u64 rx_buf_alloc_fail, rx_desc_err_dropped_pkt, rx_pkts,
- 		rx_skb_alloc_fail, rx_bytes, tx_pkts, tx_bytes;
--	int stats_idx, base_stats_idx, max_stats_idx;
-+	int rx_base_stats_idx, max_rx_stats_idx, max_tx_stats_idx;
-+	int stats_idx, stats_region_len, nic_stats_len;
- 	struct stats *report_stats;
- 	int *rx_qid_to_stats_idx;
- 	int *tx_qid_to_stats_idx;
-@@ -226,14 +227,33 @@ gve_get_ethtool_stats(struct net_device
- 	data[i++] = priv->stats_report_trigger_cnt;
- 	i = GVE_MAIN_STATS_LEN;
+--- a/kernel/trace/trace.h
++++ b/kernel/trace/trace.h
+@@ -56,14 +56,17 @@ enum trace_type {
+ #undef __field_fn
+ #define __field_fn(type, item)		type	item;
  
--	/* For rx cross-reporting stats, start from nic rx stats in report */
--	base_stats_idx = GVE_TX_STATS_REPORT_NUM * priv->tx_cfg.num_queues +
--		GVE_RX_STATS_REPORT_NUM * priv->rx_cfg.num_queues;
--	max_stats_idx = NIC_RX_STATS_REPORT_NUM * priv->rx_cfg.num_queues +
--		base_stats_idx;
-+	rx_base_stats_idx = 0;
-+	max_rx_stats_idx = 0;
-+	max_tx_stats_idx = 0;
-+	stats_region_len = priv->stats_report_len -
-+				sizeof(struct gve_stats_report);
-+	nic_stats_len = (NIC_RX_STATS_REPORT_NUM * priv->rx_cfg.num_queues +
-+		NIC_TX_STATS_REPORT_NUM * priv->tx_cfg.num_queues) *
-+		sizeof(struct stats);
-+	if (unlikely((stats_region_len -
-+				nic_stats_len) % sizeof(struct stats))) {
-+		net_err_ratelimited("Starting index of NIC stats should be multiple of stats size");
-+	} else {
-+		/* For rx cross-reporting stats,
-+		 * start from nic rx stats in report
-+		 */
-+		rx_base_stats_idx = (stats_region_len - nic_stats_len) /
-+							sizeof(struct stats);
-+		max_rx_stats_idx = NIC_RX_STATS_REPORT_NUM *
-+			priv->rx_cfg.num_queues +
-+			rx_base_stats_idx;
-+		max_tx_stats_idx = NIC_TX_STATS_REPORT_NUM *
-+			priv->tx_cfg.num_queues +
-+			max_rx_stats_idx;
-+	}
- 	/* Preprocess the stats report for rx, map queue id to start index */
- 	skip_nic_stats = false;
--	for (stats_idx = base_stats_idx; stats_idx < max_stats_idx;
-+	for (stats_idx = rx_base_stats_idx; stats_idx < max_rx_stats_idx;
- 		stats_idx += NIC_RX_STATS_REPORT_NUM) {
- 		u32 stat_name = be32_to_cpu(report_stats[stats_idx].stat_name);
- 		u32 queue_id = be32_to_cpu(report_stats[stats_idx].queue_id);
-@@ -286,13 +306,9 @@ gve_get_ethtool_stats(struct net_device
- 		i += priv->rx_cfg.num_queues * NUM_GVE_RX_CNTS;
- 	}
++#undef __field_packed
++#define __field_packed(type, item)	type	item;
++
+ #undef __field_struct
+ #define __field_struct(type, item)	__field(type, item)
  
--	/* For tx cross-reporting stats, start from nic tx stats in report */
--	base_stats_idx = max_stats_idx;
--	max_stats_idx = NIC_TX_STATS_REPORT_NUM * priv->tx_cfg.num_queues +
--		max_stats_idx;
--	/* Preprocess the stats report for tx, map queue id to start index */
- 	skip_nic_stats = false;
--	for (stats_idx = base_stats_idx; stats_idx < max_stats_idx;
-+	/* NIC TX stats start right after NIC RX stats */
-+	for (stats_idx = max_rx_stats_idx; stats_idx < max_tx_stats_idx;
- 		stats_idx += NIC_TX_STATS_REPORT_NUM) {
- 		u32 stat_name = be32_to_cpu(report_stats[stats_idx].stat_name);
- 		u32 queue_id = be32_to_cpu(report_stats[stats_idx].queue_id);
---- a/drivers/net/ethernet/google/gve/gve_main.c
-+++ b/drivers/net/ethernet/google/gve/gve_main.c
-@@ -124,9 +124,9 @@ static int gve_alloc_stats_report(struct
- 	int tx_stats_num, rx_stats_num;
+ #undef __field_desc
+ #define __field_desc(type, container, item)
  
- 	tx_stats_num = (GVE_TX_STATS_REPORT_NUM + NIC_TX_STATS_REPORT_NUM) *
--		       priv->tx_cfg.num_queues;
-+				priv->tx_cfg.max_queues;
- 	rx_stats_num = (GVE_RX_STATS_REPORT_NUM + NIC_RX_STATS_REPORT_NUM) *
--		       priv->rx_cfg.num_queues;
-+				priv->rx_cfg.max_queues;
- 	priv->stats_report_len = struct_size(priv->stats_report, stats,
- 					     size_add(tx_stats_num, rx_stats_num));
- 	priv->stats_report =
+-#undef __field_packed
+-#define __field_packed(type, container, item)
++#undef __field_desc_packed
++#define __field_desc_packed(type, container, item)
+ 
+ #undef __array
+ #define __array(type, item, size)	type	item[size];
+--- a/kernel/trace/trace_entries.h
++++ b/kernel/trace/trace_entries.h
+@@ -78,8 +78,8 @@ FTRACE_ENTRY_PACKED(funcgraph_entry, ftr
+ 
+ 	F_STRUCT(
+ 		__field_struct(	struct ftrace_graph_ent,	graph_ent	)
+-		__field_packed(	unsigned long,	graph_ent,	func		)
+-		__field_packed(	int,		graph_ent,	depth		)
++		__field_desc_packed(	unsigned long,	graph_ent,	func	)
++		__field_desc_packed(	int,		graph_ent,	depth	)
+ 	),
+ 
+ 	F_printk("--> %ps (%d)", (void *)__entry->func, __entry->depth)
+@@ -92,11 +92,11 @@ FTRACE_ENTRY_PACKED(funcgraph_exit, ftra
+ 
+ 	F_STRUCT(
+ 		__field_struct(	struct ftrace_graph_ret,	ret	)
+-		__field_packed(	unsigned long,	ret,		func	)
+-		__field_packed(	unsigned long,	ret,		overrun	)
+-		__field_packed(	unsigned long long, ret,	calltime)
+-		__field_packed(	unsigned long long, ret,	rettime	)
+-		__field_packed(	int,		ret,		depth	)
++		__field_desc_packed(	unsigned long,		ret,	func	)
++		__field_desc_packed(	unsigned long,		ret,	overrun	)
++		__field_desc_packed(	unsigned long long,	ret,	calltime)
++		__field_desc_packed(	unsigned long long,	ret,	rettime	)
++		__field_desc_packed(	int,			ret,	depth	)
+ 	),
+ 
+ 	F_printk("<-- %ps (%d) (start: %llx  end: %llx) over: %d",
+--- a/kernel/trace/trace_export.c
++++ b/kernel/trace/trace_export.c
+@@ -42,11 +42,14 @@ static int ftrace_event_register(struct
+ #undef __field_fn
+ #define __field_fn(type, item)				type item;
+ 
++#undef __field_packed
++#define __field_packed(type, item)			type item;
++
+ #undef __field_desc
+ #define __field_desc(type, container, item)		type item;
+ 
+-#undef __field_packed
+-#define __field_packed(type, container, item)		type item;
++#undef __field_desc_packed
++#define __field_desc_packed(type, container, item)	type item;
+ 
+ #undef __array
+ #define __array(type, item, size)			type item[size];
+@@ -101,11 +104,14 @@ static void __always_unused ____ftrace_c
+ #undef __field_fn
+ #define __field_fn(_type, _item) __field_ext(_type, _item, FILTER_TRACE_FN)
+ 
++#undef __field_packed
++#define __field_packed(_type, _item) __field_ext_packed(_type, _item, FILTER_OTHER)
++
+ #undef __field_desc
+ #define __field_desc(_type, _container, _item) __field_ext(_type, _item, FILTER_OTHER)
+ 
+-#undef __field_packed
+-#define __field_packed(_type, _container, _item) __field_ext_packed(_type, _item, FILTER_OTHER)
++#undef __field_desc_packed
++#define __field_desc_packed(_type, _container, _item) __field_ext_packed(_type, _item, FILTER_OTHER)
+ 
+ #undef __array
+ #define __array(_type, _item, _len) {					\
+@@ -139,11 +145,14 @@ static struct trace_event_fields ftrace_
+ #undef __field_fn
+ #define __field_fn(type, item)
+ 
++#undef __field_packed
++#define __field_packed(type, item)
++
+ #undef __field_desc
+ #define __field_desc(type, container, item)
+ 
+-#undef __field_packed
+-#define __field_packed(type, container, item)
++#undef __field_desc_packed
++#define __field_desc_packed(type, container, item)
+ 
+ #undef __array
+ #define __array(type, item, len)
 
 
