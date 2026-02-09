@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D89C3033D2;
-	Mon,  9 Feb 2026 14:55:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 023FC2750E6;
+	Mon,  9 Feb 2026 14:55:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770648934; cv=none; b=gYCmJ5pn50XykSJsa4aKcciSTgJM+BSxIbRmJt0r3Alsft+8aoR3TFw5TCOlCiWBW1Xm0V/Y8VeoHnCXUEbl3qpziZCZ7FYVaSFQfJ6A3bOVV5ugUs2itN8M8KUyu/I9urW74quOdVZ+Dn/SVCHChPOaE2H/q55WqsNHTxwDSSI=
+	t=1770648938; cv=none; b=C0PD3/hK5bebXOkDLPl2BPmJ/+AM42uXEgYavl52x9fhe88X95hM8Ei4V1J/V/cM/BUuZAX1cNxqGSL55HoJZa6SVojyelYCxphGYn4efWYAYB7nogMpwpUlPet+PMDZoCAi2LjAfvEMb64O5lvMW3q751VxbpOhjTgg96HUMfU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770648934; c=relaxed/simple;
-	bh=2G6F38IwnfjCO7Q/nTdod5R+g41RCtacPV9GvVbcPss=;
+	s=arc-20240116; t=1770648938; c=relaxed/simple;
+	bh=I52PfU2p+grNN19pjdQh+jzoQbsiuXh7ZABQE7u2YCU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Kq+xGxR9Q/0LJS8HXUihjclXt7buF09np/3x+R2IFM96mvCjVIZPEvgaqEaAAWMmssrwJme26eMPEV5SeiIOHNBVwfkVndpIcEspN3EGfYk3W08BGZvLrxVSfM3R5vH/gqBx06aYZ8dDpn8oo0yfKgJFw5paqTsexzshVC53jdw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GWNtm6mA; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VRQWUmIV0eKuoqCite2CK8M4dWajZpYAtFRQXdGbFDlt3DtKpweASX5lZinpq1gXP9sHJn6fgKUF2WypMM9MU07hb6jlkpWqaSXUwFdSUJPSepLrt3iz8GLdy5IEEOx91C2HpCDt1XsEGM8bp3/K77Uf8yQuac2CFPDWPc5lgWA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=b+7dPQ5S; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GWNtm6mA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC241C116C6;
-	Mon,  9 Feb 2026 14:55:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="b+7dPQ5S"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35959C116C6;
+	Mon,  9 Feb 2026 14:55:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770648934;
-	bh=2G6F38IwnfjCO7Q/nTdod5R+g41RCtacPV9GvVbcPss=;
+	s=korg; t=1770648937;
+	bh=I52PfU2p+grNN19pjdQh+jzoQbsiuXh7ZABQE7u2YCU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GWNtm6mAC7zMnaFgnhw//S6yZ7rVVsQ+K21Lw6Zk/VRb4Q7HC88rWb8ZfxYVnzB9t
-	 /evZghxwXdRI5eTeA3EOOpwRvxQHOd3vaWyy91n8foL0CKEXgvm7OrcvPmNBtgSvQ5
-	 EDGgdjF+IDqMepY3KswTJkrHdNN3onxC50FPyBYE=
+	b=b+7dPQ5SRV3Xdii3krtZd4DuPGYehqY+HrUmBAIDgdhZQqWoEHZrkfj1mLXnfmmjw
+	 mAHI3ZFkdt+meTPsjCZKhdARCr2BRs1g9MnoOu3CwIucg0NXTtEeMeCOSIVYrvNl04
+	 Ycs4JR4NknIpxINR/9bdLK0oSqLcnbcdPWAcy0hw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sagi Grimberg <sagi@grimberg.me>,
-	Christoph Hellwig <hch@lst.de>,
+	Ethan Nelson-Moore <enelsonmoore@gmail.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 57/75] nvmet-tcp: fix regression in data_digest calculation
-Date: Mon,  9 Feb 2026 15:24:54 +0100
-Message-ID: <20260209142303.896431549@linuxfoundation.org>
+Subject: [PATCH 5.15 26/75] net: usb: sr9700: support devices with virtual driver CD
+Date: Mon,  9 Feb 2026 15:24:23 +0100
+Message-ID: <20260209142302.789074717@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260209142301.830618238@linuxfoundation.org>
 References: <20260209142301.830618238@linuxfoundation.org>
@@ -51,85 +51,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sagi Grimberg <sagi@grimberg.me>
+From: Ethan Nelson-Moore <enelsonmoore@gmail.com>
 
-[ Upstream commit ed0691cf55140ce0f3fb100225645d902cce904b ]
+[ Upstream commit bf4172bd870c3a34d3065cbb39192c22cbd7b18d ]
 
-Data digest calculation iterates over command mapped iovec. However
-since commit bac04454ef9f we unmap the iovec before we handle the data
-digest, and since commit 69b85e1f1d1d we clear nr_mapped when we unmap
-the iov.
+Some SR9700 devices have an SPI flash chip containing a virtual driver
+CD, in which case they appear as a device with two interfaces and
+product ID 0x9702. Interface 0 is the driver CD and interface 1 is the
+Ethernet device.
 
-Instead of open-coding the command iov traversal, simply call
-crypto_ahash_digest with the command sg that is already allocated (we
-already do that for the send path). Rename nvmet_tcp_send_ddgst to
-nvmet_tcp_calc_ddgst and call it from send and recv paths.
-
-Fixes: 69b85e1f1d1d ("nvmet-tcp: add an helper to free the cmd buffers")
-Fixes: bac04454ef9f ("nvmet-tcp: fix kmap leak when data digest in use")
-Signed-off-by: Sagi Grimberg <sagi@grimberg.me>
-Signed-off-by: Christoph Hellwig <hch@lst.de>
-Stable-dep-of: 52a0a9854934 ("nvmet-tcp: add bounds checks in nvmet_tcp_build_pdu_iovec")
+Link: https://github.com/name-kurniawan/usb-lan
+Link: https://www.draisberghof.de/usb_modeswitch/bb/viewtopic.php?t=2185
+Signed-off-by: Ethan Nelson-Moore <enelsonmoore@gmail.com>
+Link: https://patch.msgid.link/20251211062451.139036-1-enelsonmoore@gmail.com
+[pabeni@redhat.com: fixes link tags]
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/target/tcp.c | 23 +++--------------------
- 1 file changed, 3 insertions(+), 20 deletions(-)
+ drivers/net/usb/sr9700.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/drivers/nvme/target/tcp.c b/drivers/nvme/target/tcp.c
-index bf3585652c681..3b32f1e9c18c6 100644
---- a/drivers/nvme/target/tcp.c
-+++ b/drivers/nvme/target/tcp.c
-@@ -407,7 +407,7 @@ static int nvmet_tcp_map_data(struct nvmet_tcp_cmd *cmd)
- 	return NVME_SC_INTERNAL;
- }
+diff --git a/drivers/net/usb/sr9700.c b/drivers/net/usb/sr9700.c
+index 90aed52ce9372..86d14fad318c3 100644
+--- a/drivers/net/usb/sr9700.c
++++ b/drivers/net/usb/sr9700.c
+@@ -539,6 +539,11 @@ static const struct usb_device_id products[] = {
+ 		USB_DEVICE(0x0fe6, 0x9700),	/* SR9700 device */
+ 		.driver_info = (unsigned long)&sr9700_driver_info,
+ 	},
++	{
++		/* SR9700 with virtual driver CD-ROM - interface 0 is the CD-ROM device */
++		USB_DEVICE_INTERFACE_NUMBER(0x0fe6, 0x9702, 1),
++		.driver_info = (unsigned long)&sr9700_driver_info,
++	},
+ 	{},			/* END */
+ };
  
--static void nvmet_tcp_send_ddgst(struct ahash_request *hash,
-+static void nvmet_tcp_calc_ddgst(struct ahash_request *hash,
- 		struct nvmet_tcp_cmd *cmd)
- {
- 	ahash_request_set_crypt(hash, cmd->req.sg,
-@@ -415,23 +415,6 @@ static void nvmet_tcp_send_ddgst(struct ahash_request *hash,
- 	crypto_ahash_digest(hash);
- }
- 
--static void nvmet_tcp_recv_ddgst(struct ahash_request *hash,
--		struct nvmet_tcp_cmd *cmd)
--{
--	struct scatterlist sg;
--	struct kvec *iov;
--	int i;
--
--	crypto_ahash_init(hash);
--	for (i = 0, iov = cmd->iov; i < cmd->nr_mapped; i++, iov++) {
--		sg_init_one(&sg, iov->iov_base, iov->iov_len);
--		ahash_request_set_crypt(hash, &sg, NULL, iov->iov_len);
--		crypto_ahash_update(hash);
--	}
--	ahash_request_set_crypt(hash, NULL, (void *)&cmd->exp_ddgst, 0);
--	crypto_ahash_final(hash);
--}
--
- static void nvmet_setup_c2h_data_pdu(struct nvmet_tcp_cmd *cmd)
- {
- 	struct nvme_tcp_data_pdu *pdu = cmd->data_pdu;
-@@ -456,7 +439,7 @@ static void nvmet_setup_c2h_data_pdu(struct nvmet_tcp_cmd *cmd)
- 
- 	if (queue->data_digest) {
- 		pdu->hdr.flags |= NVME_TCP_F_DDGST;
--		nvmet_tcp_send_ddgst(queue->snd_hash, cmd);
-+		nvmet_tcp_calc_ddgst(queue->snd_hash, cmd);
- 	}
- 
- 	if (cmd->queue->hdr_digest) {
-@@ -1168,7 +1151,7 @@ static void nvmet_tcp_prep_recv_ddgst(struct nvmet_tcp_cmd *cmd)
- {
- 	struct nvmet_tcp_queue *queue = cmd->queue;
- 
--	nvmet_tcp_recv_ddgst(queue->rcv_hash, cmd);
-+	nvmet_tcp_calc_ddgst(queue->rcv_hash, cmd);
- 	queue->offset = 0;
- 	queue->left = NVME_TCP_DIGEST_LENGTH;
- 	queue->rcv_state = NVMET_TCP_RECV_DDGST;
 -- 
 2.51.0
 
