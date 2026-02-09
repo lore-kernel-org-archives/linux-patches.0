@@ -1,44 +1,49 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FBEA3019CB;
-	Mon,  9 Feb 2026 12:27:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D67273019CB;
+	Mon,  9 Feb 2026 12:27:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770640061; cv=none; b=FoUODheWiRCR8+dAIBnvn51Bxtgz/2z71wSAGoWMGegMZFE4675JHP4Pbrykb2jEtifCcp4UYBR85SQvMNc4CcORTqWzOgksjNSG5nmoq12AonRE+YhkJWTzQthXWZ4TNcK25uzSZGIp/Wn2AVuyXrloOrWpspxVo4+8TY0W+5k=
+	t=1770640063; cv=none; b=HH6ABLah+BipP113siqEuOTi5/dBgw+FzXWGCTLrgD121pAOPNgFL8YLj47FDI5zlYyU8AGDGwSwvbc4pYWqmnwFZrbo7SUX95XWsp0uHL06j0ApLr4K4PbVl7iYQB2dWU4RW3ck/HpjTNN2lo3IYrM/kQbYjXlQJg9RgHfmVgg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770640061; c=relaxed/simple;
-	bh=hLs9OLJDEPbxFuGB2sd94CU5PFLTgqmQPHiFlsGsbP4=;
+	s=arc-20240116; t=1770640063; c=relaxed/simple;
+	bh=yjsInlWsYi3VkMVyz/gi+v1jwKCKoWQACBdeqlLvQRI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Ec4tFW/PARR/5TWtdLF0tCPa6DbNWGtOT5fXkxBUIQEX5ogBAVnXEyJluN14oMSTrKFkftJyUWbGaTRkC7idXH45Qc0I7PjxQyriquVKyOrJfVCe0XoTMnv8K4TeqTaE6Z1DTRTrcwswrL5C3A/gtEEyRH1MhHwwt81OdgVR9Wc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ng6MLnKf; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=oFJ3LkKUeWWbzCcq8OD+aOVUD2xoVVWlY6yEZ2kTQa2V7KMH8wHrfZTDaDCvQuAahp7i4af4EAIC8GApKtpnjvhnRh0a78FWBLwcA6QoJsEUQbIJGHPUMwMiqnHpcsdefXmUBOqnFd5qELWHbZYCNwhTzbeIOReLW1clsCdK8fQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=mynDKjuX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ng6MLnKf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 18F4CC16AAE;
-	Mon,  9 Feb 2026 12:27:40 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="mynDKjuX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C225C16AAE;
+	Mon,  9 Feb 2026 12:27:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1770640061;
-	bh=hLs9OLJDEPbxFuGB2sd94CU5PFLTgqmQPHiFlsGsbP4=;
+	s=k20201202; t=1770640063;
+	bh=yjsInlWsYi3VkMVyz/gi+v1jwKCKoWQACBdeqlLvQRI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ng6MLnKfIUJt+mBp7jKM23KrSiyN/CJ8XKdmSpPZLGMi/uB/BA8cCeg+Nd5MOu2IY
-	 moMu47aypn1MPJoWPPPQGKEFYegTWAilEahQ0qIeIjomaniUIV6HqgwYqKuvn94TCR
-	 dy5mZwYuA6MlNg9XQdyvxtsxgb7/0YPgu73O4PwzQRAjrkANve68TQrRnH867fMWfD
-	 ep/Y9Qtb4+JVoT6kWGCHBtOIj1BQ5JxpXxrkJ7mKDYAv/HI7PadjGhltu2N9AUB7cE
-	 Qqw1exuGuo4umB+GOKdWcKs9SD64FIRw+GJ9Im2IinY0zLmzdv4DygTTvWPdWF3D/8
-	 b3rmh4b8O8egA==
+	b=mynDKjuXYPqWn0+9IaezlAvsjdOJSDP8zS6Cy6UEBb0WCBDc5arKh3/5ye1uQ3qEz
+	 I9XB3UsNBT4Kv5fjyAP8NYdRF1lNd/5Ffmbt0itirH1stIWjdpz5o6oXwshck1LVZM
+	 KjxCOGLUEYEleO12WmmnQPk8CfFb4KfXm27dutnl3sqlqXxi8R7hYHNigcjLvi54RN
+	 +yR1fyWpgZgiuEV3oaRmGsX6z7CMlKmWDxUUUgd4CMwfulMz5yTn/3GhCWNqUBbViY
+	 Hpi5+Ig5ENBEiwc8QKbzDBK9wXWONJHHqsqjxWY69coEmTmB/1jWpgXoGpFqWCp+vv
+	 WZByF1G2xJbIA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Charles Keepax <ckeepax@opensource.cirrus.com>,
-	Mark Brown <broonie@kernel.org>,
+Cc: Melissa Wen <mwen@igalia.com>,
+	Alex Hung <alex.hung@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>,
-	david.rhodes@cirrus.com,
-	rf@opensource.cirrus.com,
-	linux-sound@vger.kernel.org,
-	patches@opensource.cirrus.com
-Subject: [PATCH AUTOSEL 6.18-6.6] ASoC: cs42l43: Correct handling of 3-pole jack load detection
-Date: Mon,  9 Feb 2026 07:26:53 -0500
-Message-ID: <20260209122714.1037915-14-sashal@kernel.org>
+	ray.wu@amd.com,
+	wenjing.liu@amd.com,
+	rvojvodi@amd.com,
+	Wesley.Chalmers@amd.com,
+	Ilya.Bakoulin@amd.com,
+	aurabindo.pillai@amd.com,
+	meenakshikumar.somasundaram@amd.com,
+	dmytro.laktyushkin@amd.com
+Subject: [PATCH AUTOSEL 6.18-6.12] drm/amd/display: remove assert around dpp_base replacement
+Date: Mon,  9 Feb 2026 07:26:54 -0500
+Message-ID: <20260209122714.1037915-15-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260209122714.1037915-1-sashal@kernel.org>
 References: <20260209122714.1037915-1-sashal@kernel.org>
@@ -54,136 +59,81 @@ X-stable-base: Linux 6.18.9
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Charles Keepax <ckeepax@opensource.cirrus.com>
+From: Melissa Wen <mwen@igalia.com>
 
-[ Upstream commit e77a4081d7e324dfa876a9560b2a78969446ba82 ]
+[ Upstream commit 84962445cd8a83dc5bed4c8ad5bbb2c1cdb249a0 ]
 
-The load detection process for 3-pole jacks requires slightly
-updated reference values to ensure an accurate result. Update
-the code to apply different tunings for the 3-pole and 4-pole
-cases. This also updates the thresholds overall so update the
-relevant comments to match.
+There is nothing wrong if in_shaper_func type is DISTRIBUTED POINTS.
+Remove the assert placed for a TODO to avoid misinterpretations.
 
-Signed-off-by: Charles Keepax <ckeepax@opensource.cirrus.com>
-Link: https://patch.msgid.link/20260130150927.2964664-1-ckeepax@opensource.cirrus.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Melissa Wen <mwen@igalia.com>
+Reviewed-by: Alex Hung <alex.hung@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit 1714dcc4c2c53e41190896eba263ed6328bcf415)
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-The driver was added in August 2023 (likely kernel 6.6 or 6.7
-timeframe), so it exists in recent stable trees.
+### Critical Finding
 
-### User Impact Assessment
+`ASSERT(false)` expands to `WARN_ON_ONCE(!(false))` which is
+`WARN_ON_ONCE(true)`. This means **every time** this code path is hit on
+a production kernel, it will generate a `WARN_ON_ONCE` — producing a
+full stack trace in the kernel log and potentially triggering panic-on-
+warn configurations.
 
-- **Who is affected**: Users with CS42L43 audio codec hardware (Cirrus
-  Logic codec, likely found in laptops/tablets)
-- **Symptom**: Headphones could be misdetected as line-out, resulting in
-  incorrect audio output behavior
-- **Severity**: MEDIUM — not a crash, but audio malfunction that
-  directly impacts user experience
-- **Vendor fix**: From Cirrus Logic themselves, high confidence in
-  correctness
+This is a real bug for users who:
+1. Have DCN 3.2 hardware (AMD display controllers)
+2. Use color management features where `in_shaper_func.type ==
+   TF_TYPE_DISTRIBUTED_POINTS`
+3. Run kernels with `panic_on_warn=1` (some hardened configurations) —
+   this would **crash** the system
 
-### Risk vs. Benefit
+### Classification
 
-- **Benefit**: Correct headphone/line-out detection for CS42L43 users,
-  especially for 3-pole jacks
-- **Risk**: Very low — codec-specific, vendor-provided values, only
-  affects this hardware
-- **Backport complexity**: The patch is self-contained;
-  `regmap_multi_reg_write_bypassed()` already exists in stable trees
+This is a **bug fix** — removing a false assertion that incorrectly
+triggers a kernel warning on a valid code path. It's not a cleanup or
+feature addition.
 
-### Conclusion
+### Risk Assessment
 
-This is a vendor-provided hardware tuning fix from Cirrus Logic that
-corrects jack detection behavior on their CS42L43 codec. It fixes real-
-world audio misdetection where headphones are wrongly classified as
-line-out. The fix is contained to a single codec driver, uses existing
-kernel APIs, and comes directly from the hardware vendor with
-authoritative knowledge of the correct register values. It's analogous
-to a hardware quirk — different tuning values needed for different jack
-types.
+- **Scope**: One line removal in a single file
+- **Risk**: Essentially zero — removing a bogus `ASSERT(false)` cannot
+  introduce regressions
+- **Benefit**: Prevents spurious WARN_ON_ONCE on valid code paths;
+  prevents crashes on panic-on-warn configurations
+- **Subsystem**: AMD display driver (DCN 3.2) — widely used on modern
+  AMD GPUs
 
-The change is small, well-scoped, low-risk, and fixes a user-visible bug
-(incorrect jack type detection).
+### Stable Criteria Check
+
+1. **Obviously correct and tested**: Yes — removing a known-false assert
+   is obviously correct. Reviewed-by and cherry-picked.
+2. **Fixes a real bug**: Yes — spurious WARN_ON triggering on a valid
+   code path is a real bug.
+3. **Important issue**: Moderate — causes kernel warnings and potential
+   crashes on panic-on-warn systems.
+4. **Small and contained**: Yes — single line removal.
+5. **No new features**: Correct — no new functionality added.
 
 **YES**
 
- sound/soc/codecs/cs42l43-jack.c | 37 +++++++++++++++++++++++++++------
- 1 file changed, 31 insertions(+), 6 deletions(-)
+ drivers/gpu/drm/amd/display/dc/hwss/dcn32/dcn32_hwseq.c | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/sound/soc/codecs/cs42l43-jack.c b/sound/soc/codecs/cs42l43-jack.c
-index 867e23d4fb8d8..744488f371ea4 100644
---- a/sound/soc/codecs/cs42l43-jack.c
-+++ b/sound/soc/codecs/cs42l43-jack.c
-@@ -496,7 +496,23 @@ void cs42l43_bias_sense_timeout(struct work_struct *work)
- 	pm_runtime_put_autosuspend(priv->dev);
- }
- 
--static void cs42l43_start_load_detect(struct cs42l43_codec *priv)
-+static const struct reg_sequence cs42l43_3pole_patch[] = {
-+	{ 0x4000,	0x00000055 },
-+	{ 0x4000,	0x000000AA },
-+	{ 0x17420,	0x8500F300 },
-+	{ 0x17424,	0x36003E00 },
-+	{ 0x4000,	0x00000000 },
-+};
-+
-+static const struct reg_sequence cs42l43_4pole_patch[] = {
-+	{ 0x4000,	0x00000055 },
-+	{ 0x4000,	0x000000AA },
-+	{ 0x17420,	0x7800E600 },
-+	{ 0x17424,	0x36003800 },
-+	{ 0x4000,	0x00000000 },
-+};
-+
-+static void cs42l43_start_load_detect(struct cs42l43_codec *priv, bool mic)
- {
- 	struct cs42l43 *cs42l43 = priv->core;
- 
-@@ -520,6 +536,15 @@ static void cs42l43_start_load_detect(struct cs42l43_codec *priv)
- 			dev_err(priv->dev, "Load detect HP power down timed out\n");
- 	}
- 
-+	if (mic)
-+		regmap_multi_reg_write_bypassed(cs42l43->regmap,
-+						cs42l43_4pole_patch,
-+						ARRAY_SIZE(cs42l43_4pole_patch));
-+	else
-+		regmap_multi_reg_write_bypassed(cs42l43->regmap,
-+						cs42l43_3pole_patch,
-+						ARRAY_SIZE(cs42l43_3pole_patch));
-+
- 	regmap_update_bits(cs42l43->regmap, CS42L43_BLOCK_EN3,
- 			   CS42L43_ADC1_EN_MASK | CS42L43_ADC2_EN_MASK, 0);
- 	regmap_update_bits(cs42l43->regmap, CS42L43_DACCNFG2, CS42L43_HP_HPF_EN_MASK, 0);
-@@ -598,7 +623,7 @@ static int cs42l43_run_load_detect(struct cs42l43_codec *priv, bool mic)
- 
- 	reinit_completion(&priv->load_detect);
- 
--	cs42l43_start_load_detect(priv);
-+	cs42l43_start_load_detect(priv, mic);
- 	time_left = wait_for_completion_timeout(&priv->load_detect,
- 						msecs_to_jiffies(CS42L43_LOAD_TIMEOUT_MS));
- 	cs42l43_stop_load_detect(priv);
-@@ -622,11 +647,11 @@ static int cs42l43_run_load_detect(struct cs42l43_codec *priv, bool mic)
- 	}
- 
- 	switch (val & CS42L43_AMP3_RES_DET_MASK) {
--	case 0x0: // low impedance
--	case 0x1: // high impedance
-+	case 0x0: // < 22 Ohm impedance
-+	case 0x1: // < 150 Ohm impedance
-+	case 0x2: // < 1000 Ohm impedance
- 		return CS42L43_JACK_HEADPHONE;
--	case 0x2: // lineout
--	case 0x3: // Open circuit
-+	case 0x3: // > 1000 Ohm impedance
- 		return CS42L43_JACK_LINEOUT;
- 	default:
- 		return -EINVAL;
+diff --git a/drivers/gpu/drm/amd/display/dc/hwss/dcn32/dcn32_hwseq.c b/drivers/gpu/drm/amd/display/dc/hwss/dcn32/dcn32_hwseq.c
+index 30bb5d8d85dc2..c6fde355ac823 100644
+--- a/drivers/gpu/drm/amd/display/dc/hwss/dcn32/dcn32_hwseq.c
++++ b/drivers/gpu/drm/amd/display/dc/hwss/dcn32/dcn32_hwseq.c
+@@ -502,7 +502,6 @@ bool dcn32_set_mcm_luts(
+ 		lut_params = &plane_state->in_shaper_func.pwl;
+ 	else if (plane_state->in_shaper_func.type == TF_TYPE_DISTRIBUTED_POINTS) {
+ 		// TODO: dpp_base replace
+-		ASSERT(false);
+ 		cm3_helper_translate_curve_to_hw_format(plane_state->ctx,
+ 							&plane_state->in_shaper_func,
+ 							&dpp_base->shaper_params, true);
 -- 
 2.51.0
 
