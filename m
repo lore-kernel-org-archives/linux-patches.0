@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBA4F29C321;
-	Mon,  9 Feb 2026 14:30:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E4AE29D265;
+	Mon,  9 Feb 2026 14:30:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770647415; cv=none; b=BRHu09Srg64YL7axMwq+JUx8n0fDYMc8eNzPJ9alh+/yQtWtO2ILFM6nTxnHU3F5dwykKTMPeSWmgg6Qh0HYXflFxFXydi6yNlEQzhOUWeutgluw1B1sjvlOL02KZfUIqPBrTtMzjJanZ9BjPShxvbm6nwSbLA2ZF0LcdCLp9s0=
+	t=1770647419; cv=none; b=eq3E7YDC30zckW5he7+qQpq0eS4r7NdwAd16mRQF+JIl2z6+essg4dQDU8pJ/wkio8Lrki1CX/ZIEeqCONcidiTEagUFzjdtRsFCSQbE92aNq6iayazu+gMcpuN2IhHcs6TVcoS0egLHRyCCVmRBLRnld+rh4lJ3fYR+D2cDaWU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770647415; c=relaxed/simple;
-	bh=2wB+TbDSNYosdC+MJ0q1ayaR0FBAur6fjDw0DOL03mk=;
+	s=arc-20240116; t=1770647419; c=relaxed/simple;
+	bh=fs6uKhuBTtk3W8jIF8FkwSBsax7jCgdYwb9j6q5YMUU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=DKno4jMo0ktxez8EfZUeWWwMUCZLeWnaZH5fJ9eKlXhwAygfEQKHzDfiW98PgtZCDzGNrxBFGafxY+IFXAddN3FNqB0XlqEbyMWm9xz9BUgX8mUYDAHVq4ObxPi/IhsSlCtwudrFKj0xqh7ZvHjLv5YV1+sy9QuGOjK6bJ9idoU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WwG4XYzZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Xwmptjb+lzSAYJ5amvjHjs2kMFWZ4F2bYlQOnn1ka7s/VMTJRQVZc/HoHtVwJNhqVXjT+VYcPjA64Fh7gQwRBQsH651vpXXrhu52hHTnqPA6nY1eTiWKHOZBl8eKWnfRjhyDP2pbOxoS57RjflgZXscokoZnbDKO2wNqWZchiyI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=o2Yd8A5z; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WwG4XYzZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 47C0FC116C6;
-	Mon,  9 Feb 2026 14:30:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="o2Yd8A5z"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9EEB2C116C6;
+	Mon,  9 Feb 2026 14:30:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770647415;
-	bh=2wB+TbDSNYosdC+MJ0q1ayaR0FBAur6fjDw0DOL03mk=;
+	s=korg; t=1770647419;
+	bh=fs6uKhuBTtk3W8jIF8FkwSBsax7jCgdYwb9j6q5YMUU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WwG4XYzZzjA4yC25GrqnjZ7E6pvs0ARnnTwW0PpArmkC0opFbZfybJAjBeWbEftS6
-	 h6qkbUncN+2WHNrbA2fHaYm9URCFDuwAoTAA4NT1cbxJ9YefqLfIaefS/0O36colbn
-	 +SM+/7PwBYmTyRrSHYofpdB3tvZL1hXLqehQBqKA=
+	b=o2Yd8A5zJQ+ifgt1RQfuoSvSJNil401G4bkWN5QeLIhuhZYmq64SppsewAIxyKr20
+	 dJz/QKDUugL72AWCPuwwbNSUMiR7MqfKETwbUWF5mg+Z0teXCfv+/6Y7+eqMnTVAhX
+	 r/5PaQd05WWWOORBEhl9QXRcMPdWuyOhaDvICCio=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Peter Astrand <astrand@lysator.liu.se>,
-	Johannes Berg <johannes.berg@intel.com>,
+	Kery Qi <qikeyu2017@gmail.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 049/175] wifi: wlcore: ensure skb headroom before skb_push
-Date: Mon,  9 Feb 2026 15:22:02 +0100
-Message-ID: <20260209142322.235668305@linuxfoundation.org>
+Subject: [PATCH 6.18 087/175] ASoC: davinci-evm: Fix reference leak in davinci_evm_probe
+Date: Mon,  9 Feb 2026 15:22:40 +0100
+Message-ID: <20260209142323.564739282@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260209142320.474120190@linuxfoundation.org>
 References: <20260209142320.474120190@linuxfoundation.org>
@@ -45,44 +45,117 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Peter Åstrand <astrand@lysator.liu.se>
+From: Kery Qi <qikeyu2017@gmail.com>
 
-[ Upstream commit e75665dd096819b1184087ba5718bd93beafff51 ]
+[ Upstream commit 5b577d214fcc109707bcb77b4ae72a31cfd86798 ]
 
-This avoids occasional skb_under_panic Oops from wl1271_tx_work. In this case, headroom is
-less than needed (typically 110 - 94 = 16 bytes).
+The davinci_evm_probe() function calls of_parse_phandle() to acquire
+device nodes for "ti,audio-codec" and "ti,mcasp-controller". These
+functions return device nodes with incremented reference counts.
 
-Signed-off-by: Peter Astrand <astrand@lysator.liu.se>
-Link: https://patch.msgid.link/097bd417-e1d7-acd4-be05-47b199075013@lysator.liu.se
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+However, in several error paths (e.g., when the second of_parse_phandle(),
+snd_soc_of_parse_card_name(), or devm_snd_soc_register_card() fails),
+the function returns directly without releasing the acquired nodes,
+leading to reference leaks.
+
+This patch adds an error handling path 'err_put' to properly release
+the device nodes using of_node_put() and clean up the pointers when
+an error occurs.
+
+Signed-off-by: Kery Qi <qikeyu2017@gmail.com>
+Link: https://patch.msgid.link/20260107154836.1521-2-qikeyu2017@gmail.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ti/wlcore/tx.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ sound/soc/ti/davinci-evm.c | 39 ++++++++++++++++++++++++++++++--------
+ 1 file changed, 31 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/net/wireless/ti/wlcore/tx.c b/drivers/net/wireless/ti/wlcore/tx.c
-index 464587d16ab20..f251627c24c6e 100644
---- a/drivers/net/wireless/ti/wlcore/tx.c
-+++ b/drivers/net/wireless/ti/wlcore/tx.c
-@@ -207,6 +207,11 @@ static int wl1271_tx_allocate(struct wl1271 *wl, struct wl12xx_vif *wlvif,
- 	total_blocks = wlcore_hw_calc_tx_blocks(wl, total_len, spare_blocks);
+diff --git a/sound/soc/ti/davinci-evm.c b/sound/soc/ti/davinci-evm.c
+index 2a2f5bc95576e..a55a369ce71c2 100644
+--- a/sound/soc/ti/davinci-evm.c
++++ b/sound/soc/ti/davinci-evm.c
+@@ -193,27 +193,32 @@ static int davinci_evm_probe(struct platform_device *pdev)
+ 		return -EINVAL;
  
- 	if (total_blocks <= wl->tx_blocks_available) {
-+		if (skb_headroom(skb) < (total_len - skb->len) &&
-+		    pskb_expand_head(skb, (total_len - skb->len), 0, GFP_ATOMIC)) {
-+			wl1271_free_tx_id(wl, id);
-+			return -EAGAIN;
-+		}
- 		desc = skb_push(skb, total_len - skb->len);
+ 	dai->cpus->of_node = of_parse_phandle(np, "ti,mcasp-controller", 0);
+-	if (!dai->cpus->of_node)
+-		return -EINVAL;
++	if (!dai->cpus->of_node) {
++		ret = -EINVAL;
++		goto err_put;
++	}
  
- 		wlcore_hw_set_tx_desc_blocks(wl, desc, total_blocks,
+ 	dai->platforms->of_node = dai->cpus->of_node;
+ 
+ 	evm_soc_card.dev = &pdev->dev;
+ 	ret = snd_soc_of_parse_card_name(&evm_soc_card, "ti,model");
+ 	if (ret)
+-		return ret;
++		goto err_put;
+ 
+ 	mclk = devm_clk_get(&pdev->dev, "mclk");
+ 	if (PTR_ERR(mclk) == -EPROBE_DEFER) {
+-		return -EPROBE_DEFER;
++		ret = -EPROBE_DEFER;
++		goto err_put;
+ 	} else if (IS_ERR(mclk)) {
+ 		dev_dbg(&pdev->dev, "mclk not found.\n");
+ 		mclk = NULL;
+ 	}
+ 
+ 	drvdata = devm_kzalloc(&pdev->dev, sizeof(*drvdata), GFP_KERNEL);
+-	if (!drvdata)
+-		return -ENOMEM;
++	if (!drvdata) {
++		ret = -ENOMEM;
++		goto err_put;
++	}
+ 
+ 	drvdata->mclk = mclk;
+ 
+@@ -223,7 +228,8 @@ static int davinci_evm_probe(struct platform_device *pdev)
+ 		if (!drvdata->mclk) {
+ 			dev_err(&pdev->dev,
+ 				"No clock or clock rate defined.\n");
+-			return -EINVAL;
++			ret = -EINVAL;
++			goto err_put;
+ 		}
+ 		drvdata->sysclk = clk_get_rate(drvdata->mclk);
+ 	} else if (drvdata->mclk) {
+@@ -239,8 +245,25 @@ static int davinci_evm_probe(struct platform_device *pdev)
+ 	snd_soc_card_set_drvdata(&evm_soc_card, drvdata);
+ 	ret = devm_snd_soc_register_card(&pdev->dev, &evm_soc_card);
+ 
+-	if (ret)
++	if (ret) {
+ 		dev_err(&pdev->dev, "snd_soc_register_card failed (%d)\n", ret);
++		goto err_put;
++	}
++
++	return ret;
++
++err_put:
++	dai->platforms->of_node = NULL;
++
++	if (dai->cpus->of_node) {
++		of_node_put(dai->cpus->of_node);
++		dai->cpus->of_node = NULL;
++	}
++
++	if (dai->codecs->of_node) {
++		of_node_put(dai->codecs->of_node);
++		dai->codecs->of_node = NULL;
++	}
+ 
+ 	return ret;
+ }
 -- 
 2.51.0
 
