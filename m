@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91AF037C0F8;
-	Mon,  9 Feb 2026 14:40:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B587436828A;
+	Mon,  9 Feb 2026 14:40:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770648011; cv=none; b=Q4u5oNy/FTgEQhxoSmUiuctuyCUYJs7AOOTYuG4b9n7+3cBjOnydGf4TFmYzVyE93BSQ/lLXmKZFFMClS2hRRnYTFsVAuXdRx1xWj+xZFtwXXACqDBmAE7H3emvQDR6JevcckBIb8U1H4v2Alxc8BzGq8jxdKZsLkWWKS6ZkdHs=
+	t=1770648014; cv=none; b=R3tfsVSKGmVmyIPpiJwnl2hTLDpAL5HjvVf1MVTn2CdPAGgUasw6hCxUyRhjYuQkHwzqlYCkLIGor843UkhFVmPcsK5EHRE2Znlcjbfc/sFIUF2wlULYsxA30vywBsFttUSaA8JdevpmKQbsVu2nTR42kqyQSzVL9kau2mWJheY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770648011; c=relaxed/simple;
-	bh=3vuKwk64qI4phz5u+NaVZtaQh8hfWjwOzmzitSUesZw=;
+	s=arc-20240116; t=1770648014; c=relaxed/simple;
+	bh=t+9v2Tz9f3NZi05N0MWlUVzXiF9shXAzdrzIv0yFNz4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hPDDFXqxiVHY+ZHkAx/iSb20lFAPcd8cRNOUr7H7IoK7TD5TMajIXxy7n6067CVFoJThZ8Eb9PJ8lw0wbx0iz2G0qH86whHEAlJih4UiJ8zfSaeC7CxTSsk8s0RXyux0vbGDfHZVq/huQbDCtwmjc7XJ10pUOGDMh28NdQqmcvE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HrwOrEcq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YQG4w9Z7jnovAdk50NYKdjiJ2vMh8ioZmArzn3vIt2Yabx4i6z8Y1A/X3BdSrGaMFt1Yg3ktMonSoMGSp0M7yiJn3sMb9apTXCf8bh55Lk3bpyZJ3p+UxgleGxJjC6RJPs/bBprOWb50V4lseDp7tfJ+UJxsFQ2qWQKaV2vtlP4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hm/ufwLS; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HrwOrEcq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A96E2C116C6;
-	Mon,  9 Feb 2026 14:40:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hm/ufwLS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2972EC116C6;
+	Mon,  9 Feb 2026 14:40:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770648011;
-	bh=3vuKwk64qI4phz5u+NaVZtaQh8hfWjwOzmzitSUesZw=;
+	s=korg; t=1770648014;
+	bh=t+9v2Tz9f3NZi05N0MWlUVzXiF9shXAzdrzIv0yFNz4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HrwOrEcqqu8hTApnBKbpskwn5QzgNdTPqUHi2kDkNzJXgje4Vo5e072A7jkLrlEuj
-	 RpRBZ64jlSj7Al59wsrL8NOGigHFmhH04mUe4nnWnTOQ7zybItiuobk5W3q97HX2aQ
-	 ZywXjVeeTS2DOFEJBbKAML5CIzpR3t8KBIv6WHfk=
+	b=hm/ufwLSIzv4qt7s84yXAuLnBSeY+GqVQ1vPB7i808NllevD7n/EiHUkQLZoMb07H
+	 YHntQ3WsCTQajXe4sTYI39ARP1wBhJYWEi6A89/EC4NvwfBAxZSuWcEVoXbe67Tdhr
+	 QUTILHO0TNJkaVnGd+XmdpAE5ZPGJ18QpK5PJj/Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daniel Hodges <hodgesd@meta.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Krunoslav Kovac <Krunoslav.Kovac@amd.com>,
+	Melissa Wen <mwen@igalia.com>,
+	Alex Hung <alex.hung@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 093/113] tipc: use kfree_sensitive() for session key material
-Date: Mon,  9 Feb 2026 15:24:02 +0100
-Message-ID: <20260209142313.523608764@linuxfoundation.org>
+Subject: [PATCH 6.12 094/113] drm/amd/display: fix wrong color value mapping on MCM shaper LUT
+Date: Mon,  9 Feb 2026 15:24:03 +0100
+Message-ID: <20260209142313.559012092@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260209142310.204833231@linuxfoundation.org>
 References: <20260209142310.204833231@linuxfoundation.org>
@@ -51,49 +53,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Daniel Hodges <hodgesd@meta.com>
+From: Melissa Wen <mwen@igalia.com>
 
-[ Upstream commit 74d9391e8849e70ded5309222d09b0ed0edbd039 ]
+[ Upstream commit 8f959d37c1f2efec6dac55915ee82302e98101fb ]
 
-The rx->skey field contains a struct tipc_aead_key with GCM-AES
-encryption keys used for TIPC cluster communication. Using plain
-kfree() leaves this sensitive key material in freed memory pages
-where it could potentially be recovered.
+Some shimmer/colorful points appears when using the steamOS color
+pipeline for HDR on gaming with DCN32. These points look like black
+values being wrongly mapped to red/blue/green values. It was caused
+because the number of hw points in regular LUTs and in a shaper LUT was
+treated as the same.
 
-Switch to kfree_sensitive() to ensure the key material is zeroed
-before the memory is freed.
+DCN3+ regular LUTs have 257 bases and implicit deltas (i.e. HW
+calculates them), but shaper LUT is a special case: it has 256 bases and
+256 deltas, as in DCN1-2 regular LUTs, and outputs 14-bit values.
 
-Fixes: 1ef6f7c9390f ("tipc: add automatic session key exchange")
-Signed-off-by: Daniel Hodges <hodgesd@meta.com>
-Link: https://patch.msgid.link/20260131180114.2121438-1-hodgesd@meta.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fix that by setting by decreasing in 1 the number of HW points computed
+in the LUT segmentation so that shaper LUT (i.e. fixpoint == true) keeps
+the same DCN10 CM logic and regular LUTs go with `hw_points + 1`.
+
+CC: Krunoslav Kovac <Krunoslav.Kovac@amd.com>
+Fixes: 4d5fd3d08ea9 ("drm/amd/display: PQ tail accuracy")
+Signed-off-by: Melissa Wen <mwen@igalia.com>
+Reviewed-by: Alex Hung <alex.hung@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit 5006505b19a2119e71c008044d59f6d753c858b9)
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/tipc/crypto.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/amd/display/dc/dcn30/dcn30_cm_common.c | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
-diff --git a/net/tipc/crypto.c b/net/tipc/crypto.c
-index ea5bb131ebd06..2721baf9fd2b3 100644
---- a/net/tipc/crypto.c
-+++ b/net/tipc/crypto.c
-@@ -1219,7 +1219,7 @@ void tipc_crypto_key_flush(struct tipc_crypto *c)
- 		rx = c;
- 		tx = tipc_net(rx->net)->crypto_tx;
- 		if (cancel_delayed_work(&rx->work)) {
--			kfree(rx->skey);
-+			kfree_sensitive(rx->skey);
- 			rx->skey = NULL;
- 			atomic_xchg(&rx->key_distr, 0);
- 			tipc_node_put(rx->node);
-@@ -2394,7 +2394,7 @@ static void tipc_crypto_work_rx(struct work_struct *work)
- 			break;
- 		default:
- 			synchronize_rcu();
--			kfree(rx->skey);
-+			kfree_sensitive(rx->skey);
- 			rx->skey = NULL;
- 			break;
- 		}
+diff --git a/drivers/gpu/drm/amd/display/dc/dcn30/dcn30_cm_common.c b/drivers/gpu/drm/amd/display/dc/dcn30/dcn30_cm_common.c
+index f31f0e3abfc0f..f299d9455f510 100644
+--- a/drivers/gpu/drm/amd/display/dc/dcn30/dcn30_cm_common.c
++++ b/drivers/gpu/drm/amd/display/dc/dcn30/dcn30_cm_common.c
+@@ -168,6 +168,11 @@ bool cm3_helper_translate_curve_to_hw_format(
+ 			hw_points += (1 << seg_distr[k]);
+ 	}
+ 
++	// DCN3+ have 257 pts in lieu of no separate slope registers
++	// Prior HW had 256 base+slope pairs
++	// Shaper LUT (i.e. fixpoint == true) is still 256 bases and 256 deltas
++	hw_points = fixpoint ? (hw_points - 1) : hw_points;
++
+ 	j = 0;
+ 	for (k = 0; k < (region_end - region_start); k++) {
+ 		increment = NUMBER_SW_SEGMENTS / (1 << seg_distr[k]);
+@@ -228,8 +233,6 @@ bool cm3_helper_translate_curve_to_hw_format(
+ 	corner_points[1].green.slope = dc_fixpt_zero;
+ 	corner_points[1].blue.slope = dc_fixpt_zero;
+ 
+-	// DCN3+ have 257 pts in lieu of no separate slope registers
+-	// Prior HW had 256 base+slope pairs
+ 	lut_params->hw_points_num = hw_points + 1;
+ 
+ 	k = 0;
 -- 
 2.51.0
 
