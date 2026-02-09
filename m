@@ -1,36 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30CA2125B2;
-	Mon,  9 Feb 2026 14:37:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15733125B2;
+	Mon,  9 Feb 2026 14:37:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770647840; cv=none; b=A+8bekiqMmRxJI5U2n2WNU3lWAHDlLdXAk3RxtxlE2/V48w00U4VATXS4bTBOPYW4mJHdBeq5/91P1k1Rux6XEGnW86spbjM5NjlwPB/PsdEqEWvuiR8e77l95SQxa88v4hvhPOjV6vQ0HPJ6sWvsw32ETfuBSpUw6XJj5IRtAc=
+	t=1770647843; cv=none; b=QLCBxqLF7M7p4j4E3U/cDofxt0Vl78pH8S76yGak63iaDaY9kD7SalgaBrqn7GfzrEGDH2GEPWzyt9HXH0J+jxfbqDUZotVTbW2zp2Kj7n1+IL3Y7K3HyJawcBY+A2t56VbE88ue9aPykqcNaHwV4wa+5K+tbeOvW0f2irr7CY0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770647840; c=relaxed/simple;
-	bh=evVXKXIavpMybFyxWvQVgwY12wlIPUhsvXznhn6+7l8=;
+	s=arc-20240116; t=1770647843; c=relaxed/simple;
+	bh=AqMttXY68TOA53ZZV5mckEBwjkf7iK7EIrs4qX2aXnE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uYt89ozfpxea+coN7Cx9O72sAmc1WTH7kkLNO7ShmWE6WBe85VqY1JssEXTEZj8JhMb1zqDtu1MbEfHmH5ycim0+aPI/Jp4vw49uTovgtRXvAUZdeMCeA3qGTjkP3UP2F9vAGDy+kSecqEZweR2PWpSR4SdVRxb5K1pmY7+AlcY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aTCr8iX7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=UZSp7vltMfSx52wdlpOgecJGzH4mtWneocYADilyT0fyan/DQUTgr3o4dml4zXzSTL13PaYmchKIHV6I9e09FUmiJDyCOpXxeqz/Cx0/e7nL2wQJ7+GkK1Or8DtwXJ+28YH73RcRKc4xVQ9iF2U9Wnj4FzZ8djq9mBa8Uiy3/Hg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AQ9FCaFz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aTCr8iX7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 59B39C116C6;
-	Mon,  9 Feb 2026 14:37:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AQ9FCaFz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 81239C116C6;
+	Mon,  9 Feb 2026 14:37:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770647839;
-	bh=evVXKXIavpMybFyxWvQVgwY12wlIPUhsvXznhn6+7l8=;
+	s=korg; t=1770647843;
+	bh=AqMttXY68TOA53ZZV5mckEBwjkf7iK7EIrs4qX2aXnE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aTCr8iX7Ugsay1hQLrJB22jrhw7RpzveIJUCKrbRPExZcbxUiAwOMu9v40D9GusaA
-	 ZjPS3BJzGlWsgBIj3GQvvbwrNksmWHPnOIDmxZhRvic93w4fWkfkG+/dD9I8c4/AF5
-	 Ib5CRPK2vbIYUW81oKnVZyn/qHzAb4cd9QIp15lU=
+	b=AQ9FCaFzbvc0jlJVjPreyq45XOY7vV/da4MoTQa0WVVj7dm+PZXbG7HDxxWFM9bPS
+	 WunJTEXEcuJzMuHrvm+YUibvLO5s5Sw8xJnN8OfbNM5TZwby98hWLybjmoY2nguaCJ
+	 EaMpIgm8CYDuvrLheNu7aeQulbKwMEoJPW1Fsnwo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Carlos Llamas <cmllamas@google.com>
-Subject: [PATCH 6.12 026/113] binderfs: fix ida_alloc_max() upper bound
-Date: Mon,  9 Feb 2026 15:22:55 +0100
-Message-ID: <20260209142311.147065167@linuxfoundation.org>
+	Zhang Lixu <lixu.zhang@intel.com>,
+	Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>,
+	Benjamin Tissoires <bentiss@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.12 044/113] HID: intel-ish-hid: Reset enum_devices_done before enumeration
+Date: Mon,  9 Feb 2026 15:23:13 +0100
+Message-ID: <20260209142311.788980896@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260209142310.204833231@linuxfoundation.org>
 References: <20260209142310.204833231@linuxfoundation.org>
@@ -49,47 +52,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Carlos Llamas <cmllamas@google.com>
+From: Zhang Lixu <lixu.zhang@intel.com>
 
-commit ec4ddc90d201d09ef4e4bef8a2c6d9624525ad68 upstream.
+[ Upstream commit 56e230723e3a818373bd62331bccb1c6d2b3881b ]
 
-The 'max' argument of ida_alloc_max() takes the maximum valid ID and not
-the "count". Using an ID of BINDERFS_MAX_MINOR (1 << 20) for dev->minor
-would exceed the limits of minor numbers (20-bits). Fix this off-by-one
-error by subtracting 1 from the 'max'.
+Some systems have enabled ISH without any sensors. In this case sending
+HOSTIF_DM_ENUM_DEVICES results in 0 sensors. This triggers ISH hardware
+reset on subsequent enumeration after S3/S4 resume.
 
-Cc: stable@vger.kernel.org
-Fixes: 3ad20fe393b3 ("binder: implement binderfs")
-Signed-off-by: Carlos Llamas <cmllamas@google.com>
-Link: https://patch.msgid.link/20260127235545.2307876-2-cmllamas@google.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+The enum_devices_done flag was not reset before sending the
+HOSTIF_DM_ENUM_DEVICES command. On subsequent enumeration calls (such as
+after S3/S4 resume), this flag retains its previous true value, causing the
+wait loop to be skipped and returning prematurely to hid_ishtp_cl_init().
+If 0 HID devices are found, hid_ishtp_cl_init() skips getting HID device
+descriptors and sets init_done to true. When the delayed enumeration
+response arrives with init_done already true, the driver treats it as a bad
+packet and triggers an ISH hardware reset.
+
+Set enum_devices_done to false before sending the enumeration command,
+consistent with similar functions like ishtp_get_hid_descriptor() and
+ishtp_get_report_descriptor() which reset their respective flags.
+
+Signed-off-by: Zhang Lixu <lixu.zhang@intel.com>
+Acked-by: Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>
+Signed-off-by: Benjamin Tissoires <bentiss@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/android/binderfs.c |    8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/hid/intel-ish-hid/ishtp-hid-client.c | 1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/android/binderfs.c
-+++ b/drivers/android/binderfs.c
-@@ -131,8 +131,8 @@ static int binderfs_binder_device_create
- 	mutex_lock(&binderfs_minors_mutex);
- 	if (++info->device_count <= info->mount_opts.max)
- 		minor = ida_alloc_max(&binderfs_minors,
--				      use_reserve ? BINDERFS_MAX_MINOR :
--						    BINDERFS_MAX_MINOR_CAPPED,
-+				      use_reserve ? BINDERFS_MAX_MINOR - 1 :
-+						    BINDERFS_MAX_MINOR_CAPPED - 1,
- 				      GFP_KERNEL);
- 	else
- 		minor = -ENOSPC;
-@@ -422,8 +422,8 @@ static int binderfs_binder_ctl_create(st
- 	/* Reserve a new minor number for the new device. */
- 	mutex_lock(&binderfs_minors_mutex);
- 	minor = ida_alloc_max(&binderfs_minors,
--			      use_reserve ? BINDERFS_MAX_MINOR :
--					    BINDERFS_MAX_MINOR_CAPPED,
-+			      use_reserve ? BINDERFS_MAX_MINOR - 1 :
-+					    BINDERFS_MAX_MINOR_CAPPED - 1,
- 			      GFP_KERNEL);
- 	mutex_unlock(&binderfs_minors_mutex);
- 	if (minor < 0) {
+diff --git a/drivers/hid/intel-ish-hid/ishtp-hid-client.c b/drivers/hid/intel-ish-hid/ishtp-hid-client.c
+index 89b954a195343..afc8d9bbd8866 100644
+--- a/drivers/hid/intel-ish-hid/ishtp-hid-client.c
++++ b/drivers/hid/intel-ish-hid/ishtp-hid-client.c
+@@ -496,6 +496,7 @@ static int ishtp_enum_enum_devices(struct ishtp_cl *hid_ishtp_cl)
+ 	int rv;
+ 
+ 	/* Send HOSTIF_DM_ENUM_DEVICES */
++	client_data->enum_devices_done = false;
+ 	memset(&msg, 0, sizeof(struct hostif_msg));
+ 	msg.hdr.command = HOSTIF_DM_ENUM_DEVICES;
+ 	rv = ishtp_cl_send(hid_ishtp_cl, (unsigned char *)&msg,
+-- 
+2.51.0
+
 
 
