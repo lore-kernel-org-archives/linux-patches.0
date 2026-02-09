@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67D46276028;
-	Mon,  9 Feb 2026 14:35:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB3542BEC45;
+	Mon,  9 Feb 2026 14:35:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770647736; cv=none; b=FrLtSMqN79tTfA8G1nWR625uHj5XCmEmPD8AGgbegneI75+4zq2+CyMeWAK8Xq522ddt0UCwLJvfu5Uv1Sm50uEJI1fAP0DfDPmTtRycVeQkoOfmsaXSE/wpFBCjPpzyyZxBkPctj5gsWB3L7qvK/3TYobl5J1GKj8F8sv1axy4=
+	t=1770647739; cv=none; b=RW9TxeJE4JHiqaAlnDHEc7yA1G79EeKV4fnNvB5PrNoEelMDWvFbRiX3ScppL/LLTQy6hU4z46IrXSJ0+2xhGwGUYakJEP8h39WkY0dpRerDevg51dK4/3i2h4XrMxE2JAH8efAwexWf/Bn6YZjVKuUuQbXWX84DAyiVDqJOTp0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770647736; c=relaxed/simple;
-	bh=3HW+NYXzhmw5Z+Yoj0W/Qq1qMk824RTzlVrjZdsC1mo=;
+	s=arc-20240116; t=1770647739; c=relaxed/simple;
+	bh=BDiMgXNRNlkWtM1ye9S2LpXCKoGoNXnYwyUG7yRX3Tw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Uwa57I0N5+rdsaBbXj7mjkvSIEnuT8LQa9vDcY0TkS0O+CQ5B8ZeUrLf2eOGGLnxgMPZRuv9k4i0q4AGEQ6E6GoT8o3pzOGym+ogv5hZdzqdTODqGGHIb77kolQur+9QPmYtrWm/bWFx1+L3HysaCms2RI/VHTgYGTehFGy9vbM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AYbgqCkk; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=c6fsAorOD4PUHJhU+RVmXTHQ98ulCToOogWMXYg0IuiaaTG1EchW8A+qN8jlHiM7BpG48WpqcEvD2p/x5gp1bH81wpyIlODl1vtgNSFltD3pWRLWv7BEB0varbiviOZ9vixVqIVFIuWYe1kb8rNtiRd9Py5yTuRBADC6CmXhOtQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=u5pvu48z; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AYbgqCkk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B5D88C116C6;
-	Mon,  9 Feb 2026 14:35:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="u5pvu48z"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C302C16AAE;
+	Mon,  9 Feb 2026 14:35:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770647736;
-	bh=3HW+NYXzhmw5Z+Yoj0W/Qq1qMk824RTzlVrjZdsC1mo=;
+	s=korg; t=1770647739;
+	bh=BDiMgXNRNlkWtM1ye9S2LpXCKoGoNXnYwyUG7yRX3Tw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AYbgqCkku80j7UqBPdt+ON408FmwKNoYFKmeD9IwiQ65ns1ndaACTIThop0O0zfjq
-	 bGyj1iYdhzrbVgn7kS1iMAY/BKtD+kw0hagiCbls8JTr57Fvue/YrE46LhlT6PTzYo
-	 ZHE0kt1oovd1BT2ZVzHReUiZbp8McYkGpu2dyXQo=
+	b=u5pvu48zBuznpH8uEqzw8JRj/1yZlayZCmYMJ14pm1EOydpm94ENWc104juLfbolr
+	 ChYYIQx5D87fSkAI/nZH80aN3drAlmQKYjp6XR5Wl65CM/R2TCtfQ1Kvwz0yS/IaZ4
+	 cxvbQDc4j9/gLZK+n8fcSWSAp5+APYnXZPvh2/5k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <thomas.weissschuh@linutronix.de>,
-	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
-	Arnd Bergmann <arnd@arndb.de>,
-	"Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>
-Subject: [PATCH 6.12 014/113] ARM: 9468/1: fix memset64() on big-endian
-Date: Mon,  9 Feb 2026 15:22:43 +0100
-Message-ID: <20260209142310.723515825@linuxfoundation.org>
+	Helge Deller <deller@gmx.de>,
+	Daniel Vogelbacher <daniel@chaospixel.com>,
+	Viacheslav Dubeyko <Slava.Dubeyko@ibm.com>,
+	Ilya Dryomov <idryomov@gmail.com>
+Subject: [PATCH 6.12 015/113] ceph: fix oops due to invalid pointer for kfree() in parse_longname()
+Date: Mon,  9 Feb 2026 15:22:44 +0100
+Message-ID: <20260209142310.758340647@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260209142310.204833231@linuxfoundation.org>
 References: <20260209142310.204833231@linuxfoundation.org>
@@ -46,44 +46,73 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Thomas Weissschuh <thomas.weissschuh@linutronix.de>
+From: Daniel Vogelbacher <daniel@chaospixel.com>
 
-commit 23ea2a4c72323feb6e3e025e8a6f18336513d5ad upstream.
+commit bc8dedae022ce3058659c3addef3ec4b41d15e00 upstream.
 
-On big-endian systems the 32-bit low and high halves need to be swapped
-for the underlying assembly implementation to work correctly.
+This fixes a kernel oops when reading ceph snapshot directories (.snap),
+for example by simply running `ls /mnt/my_ceph/.snap`.
 
-Fixes: fd1d362600e2 ("ARM: implement memset32 & memset64")
+The variable str is guarded by __free(kfree), but advanced by one for
+skipping the initial '_' in snapshot names. Thus, kfree() is called
+with an invalid pointer.  This patch removes the need for advancing the
+pointer so kfree() is called with correct memory pointer.
+
+Steps to reproduce:
+
+1. Create snapshots on a cephfs volume (I've 63 snaps in my testcase)
+
+2. Add cephfs mount to fstab
+$ echo "samba-fileserver@.files=/volumes/datapool/stuff/3461082b-ecc9-4e82-8549-3fd2590d3fb6      /mnt/test/stuff   ceph     acl,noatime,_netdev    0       0" >> /etc/fstab
+
+3. Reboot the system
+$ systemctl reboot
+
+4. Check if it's really mounted
+$ mount | grep stuff
+
+5. List snapshots (expected 63 snapshots on my system)
+$ ls /mnt/test/stuff/.snap
+
+Now ls hangs forever and the kernel log shows the oops.
+
 Cc: stable@vger.kernel.org
-Signed-off-by: Thomas Weißschuh <thomas.weissschuh@linutronix.de>
-Reviewed-by: Matthew Wilcox (Oracle) <willy@infradead.org>
-Reviewed-by: Arnd Bergmann <arnd@arndb.de>
-Signed-off-by: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
+Fixes: 101841c38346 ("[ceph] parse_longname(): strrchr() expects NUL-terminated string")
+Closes: https://bugzilla.kernel.org/show_bug.cgi?id=220807
+Suggested-by: Helge Deller <deller@gmx.de>
+Signed-off-by: Daniel Vogelbacher <daniel@chaospixel.com>
+Reviewed-by: Viacheslav Dubeyko <Slava.Dubeyko@ibm.com>
+Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm/include/asm/string.h |    5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ fs/ceph/crypto.c |    9 +++++----
+ 1 file changed, 5 insertions(+), 4 deletions(-)
 
---- a/arch/arm/include/asm/string.h
-+++ b/arch/arm/include/asm/string.h
-@@ -42,7 +42,10 @@ static inline void *memset32(uint32_t *p
- extern void *__memset64(uint64_t *, uint32_t low, __kernel_size_t, uint32_t hi);
- static inline void *memset64(uint64_t *p, uint64_t v, __kernel_size_t n)
- {
--	return __memset64(p, v, n * 8, v >> 32);
-+	if (IS_ENABLED(CONFIG_CPU_LITTLE_ENDIAN))
-+		return __memset64(p, v, n * 8, v >> 32);
-+	else
-+		return __memset64(p, v >> 32, n * 8, v);
- }
- 
- /*
+--- a/fs/ceph/crypto.c
++++ b/fs/ceph/crypto.c
+@@ -217,12 +217,13 @@ static struct inode *parse_longname(cons
+ 	struct ceph_vino vino = { .snap = CEPH_NOSNAP };
+ 	char *name_end, *inode_number;
+ 	int ret = -EIO;
+-	/* NUL-terminate */
+-	char *str __free(kfree) = kmemdup_nul(name, *name_len, GFP_KERNEL);
++	/* Snapshot name must start with an underscore */
++	if (*name_len <= 0 || name[0] != '_')
++		return ERR_PTR(-EIO);
++	/* Skip initial '_' and NUL-terminate */
++	char *str __free(kfree) = kmemdup_nul(name + 1, *name_len - 1, GFP_KERNEL);
+ 	if (!str)
+ 		return ERR_PTR(-ENOMEM);
+-	/* Skip initial '_' */
+-	str++;
+ 	name_end = strrchr(str, '_');
+ 	if (!name_end) {
+ 		doutc(cl, "failed to parse long snapshot name: %s\n", str);
 
 
