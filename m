@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4C3E36828A;
-	Mon,  9 Feb 2026 14:32:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F05F1DE8AD;
+	Mon,  9 Feb 2026 14:32:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770647540; cv=none; b=uwpaJKKqWscwE8wbfpZb678NsTR9oiKAEcsVMDertuZwY08wnJqurwU2P+fj+zgGfS4AxoFv0RhqEqojfRruwxI8bCBKeYuLhkjl4G/qU+RdFQeC5g2c6KkhkMeaAE7ECo8eg1QqfvR2ukr7HSHRr2GIL7FNmslMderCG/GofeI=
+	t=1770647544; cv=none; b=VXqPtcFyIkCsCOFasI0b06yzHw5mvaG5tQAZNmmz/AHoAKBFp0KA7DGoLX8XVflwJw6HaLSCLH5hrYB+YzwTTZe0z+O0Q0c++fwrcAXh/l5/Kdfr3q3Ef21ayA8VTPY+h6KMaxNRG5eEDNnbsATNQo5huG4mmUimrTw9XersZ1Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770647540; c=relaxed/simple;
-	bh=5MHmeI9PFF2lcJn0TnYmiDY3AxbC30OL+nNnodYuMmI=;
+	s=arc-20240116; t=1770647544; c=relaxed/simple;
+	bh=Dj8u71Jnv5jR2bFb0q4K+XjOZZXP1K0poFyLSB5IKb8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FCe2+qAbdiNzQQ6sM3o3/TjBB3uBWzDyTtp1bg0ZLyU7q4EJpCbsfGB1OXl9fkAi2c67t/rS/TgmGe+w/EZiugdm1mZIyN8HpKQJTrf4Wja/vCTCM/XJIPk2BbNB3ye+iwQbmeLExOfl5maCm36JTpewgYJTryKgtbNIf/7lZig=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aZuMgB2p; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GxABrZe7k4/nVtALe1z0mbI4QR72wwbiapjFacL6mIKcyZE1Jr86Ce4gzHBtYEA0mxLoNNpddVMUopYra3Z/vC6kxUFhtF1nzACIfGoHD+rtWnCsitPi5lHYy4LRY3dxLENu4P2GdCZ5V/08Si6Feqjvh12cNfldhU56ppQYGiU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Axb31G3Q; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aZuMgB2p"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35231C116C6;
-	Mon,  9 Feb 2026 14:32:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Axb31G3Q"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6BA80C116C6;
+	Mon,  9 Feb 2026 14:32:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770647540;
-	bh=5MHmeI9PFF2lcJn0TnYmiDY3AxbC30OL+nNnodYuMmI=;
+	s=korg; t=1770647543;
+	bh=Dj8u71Jnv5jR2bFb0q4K+XjOZZXP1K0poFyLSB5IKb8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aZuMgB2piP7T7skl1l2RIlthybTk0DsEHbtGoFrYSUYBjyDhcXkma0x+uhWEOKiO7
-	 wYlc9RieRvq4Sx+mcXY3OWPUyCsb8cyNyRLmLkM9zUALJWr1rHhLhb+hAyQ7Q8DBoI
-	 slptGFFZt1/urhm2okO+CgnhyD/KIn/j0dVzQTMc=
+	b=Axb31G3Qk0G8FS2e6WEw3YXHwHgW5uhdHeXfJWMZudYGDKnBxeAXU34dHoUPETCR7
+	 H4+TBiV1Z5C4NNYstxgXUoZdjNcQyhbOkSeoYW62lablLNA4QpijbzMDSHa+US2OeZ
+	 QOy6rncu0dJct4SWo4iOxgEh6l9e+3GEFenIh4gc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Juan Li <lijuan@linux.spacemit.com>,
-	Guodong Xu <guodong@riscstar.com>,
-	Vinod Koul <vkoul@kernel.org>,
+	Simon Horman <horms@kernel.org>,
+	Zilin Guan <zilin@seu.edu.cn>,
+	Kory Maincent <kory.maincent@bootlin.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 086/175] dmaengine: mmp_pdma: Fix race condition in mmp_pdma_residue()
-Date: Mon,  9 Feb 2026 15:22:39 +0100
-Message-ID: <20260209142323.529897400@linuxfoundation.org>
+Subject: [PATCH 6.18 124/175] net: liquidio: Fix off-by-one error in VF setup_nic_devices() cleanup
+Date: Mon,  9 Feb 2026 15:23:17 +0100
+Message-ID: <20260209142324.971657455@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260209142320.474120190@linuxfoundation.org>
 References: <20260209142320.474120190@linuxfoundation.org>
@@ -52,83 +53,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guodong Xu <guodong@riscstar.com>
+From: Zilin Guan <zilin@seu.edu.cn>
 
-[ Upstream commit a143545855bc2c6e1330f6f57ae375ac44af00a7 ]
+[ Upstream commit 6cbba46934aefdfb5d171e0a95aec06c24f7ca30 ]
 
-Add proper locking in mmp_pdma_residue() to prevent use-after-free when
-accessing descriptor list and descriptor contents.
+In setup_nic_devices(), the initialization loop jumps to the label
+setup_nic_dev_free on failure. The current cleanup loop while(i--)
+skip the failing index i, causing a memory leak.
 
-The race occurs when multiple threads call tx_status() while the tasklet
-on another CPU is freeing completed descriptors:
+Fix this by changing the loop to iterate from the current index i
+down to 0.
 
-CPU 0                              CPU 1
------                              -----
-mmp_pdma_tx_status()
-mmp_pdma_residue()
-  -> NO LOCK held
-     list_for_each_entry(sw, ..)
-                                   DMA interrupt
-                                   dma_do_tasklet()
-                                     -> spin_lock(&desc_lock)
-                                        list_move(sw->node, ...)
-                                        spin_unlock(&desc_lock)
-  |                                     dma_pool_free(sw) <- FREED!
-  -> access sw->desc <- UAF!
+Compile tested only. Issue found using code review.
 
-This issue can be reproduced when running dmatest on the same channel with
-multiple threads (threads_per_chan > 1).
-
-Fix by protecting the chain_running list iteration and descriptor access
-with the chan->desc_lock spinlock.
-
-Signed-off-by: Juan Li <lijuan@linux.spacemit.com>
-Signed-off-by: Guodong Xu <guodong@riscstar.com>
-Link: https://patch.msgid.link/20251216-mmp-pdma-race-v1-1-976a224bb622@riscstar.com
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Fixes: 846b46873eeb ("liquidio CN23XX: VF offload features")
+Suggested-by: Simon Horman <horms@kernel.org>
+Signed-off-by: Zilin Guan <zilin@seu.edu.cn>
+Reviewed-by: Kory Maincent <kory.maincent@bootlin.com>
+Link: https://patch.msgid.link/20260128154440.278369-4-zilin@seu.edu.cn
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dma/mmp_pdma.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/net/ethernet/cavium/liquidio/lio_vf_main.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/dma/mmp_pdma.c b/drivers/dma/mmp_pdma.c
-index 86661eb3cde1f..d12e729ee12c5 100644
---- a/drivers/dma/mmp_pdma.c
-+++ b/drivers/dma/mmp_pdma.c
-@@ -928,6 +928,7 @@ static unsigned int mmp_pdma_residue(struct mmp_pdma_chan *chan,
- {
- 	struct mmp_pdma_desc_sw *sw;
- 	struct mmp_pdma_device *pdev = to_mmp_pdma_dev(chan->chan.device);
-+	unsigned long flags;
- 	u64 curr;
- 	u32 residue = 0;
- 	bool passed = false;
-@@ -945,6 +946,8 @@ static unsigned int mmp_pdma_residue(struct mmp_pdma_chan *chan,
- 	else
- 		curr = pdev->ops->read_src_addr(chan->phy);
+diff --git a/drivers/net/ethernet/cavium/liquidio/lio_vf_main.c b/drivers/net/ethernet/cavium/liquidio/lio_vf_main.c
+index 3230dff5ba056..5c177146b35b1 100644
+--- a/drivers/net/ethernet/cavium/liquidio/lio_vf_main.c
++++ b/drivers/net/ethernet/cavium/liquidio/lio_vf_main.c
+@@ -2222,11 +2222,11 @@ static int setup_nic_devices(struct octeon_device *octeon_dev)
  
-+	spin_lock_irqsave(&chan->desc_lock, flags);
-+
- 	list_for_each_entry(sw, &chan->chain_running, node) {
- 		u64 start, end;
- 		u32 len;
-@@ -989,6 +992,7 @@ static unsigned int mmp_pdma_residue(struct mmp_pdma_chan *chan,
- 			continue;
+ setup_nic_dev_free:
  
- 		if (sw->async_tx.cookie == cookie) {
-+			spin_unlock_irqrestore(&chan->desc_lock, flags);
- 			return residue;
- 		} else {
- 			residue = 0;
-@@ -996,6 +1000,8 @@ static unsigned int mmp_pdma_residue(struct mmp_pdma_chan *chan,
- 		}
- 	}
+-	while (i--) {
++	do {
+ 		dev_err(&octeon_dev->pci_dev->dev,
+ 			"NIC ifidx:%d Setup failed\n", i);
+ 		liquidio_destroy_nic_device(octeon_dev, i);
+-	}
++	} while (i--);
  
-+	spin_unlock_irqrestore(&chan->desc_lock, flags);
-+
- 	/* We should only get here in case of cyclic transactions */
- 	return residue;
- }
+ setup_nic_dev_done:
+ 
 -- 
 2.51.0
 
