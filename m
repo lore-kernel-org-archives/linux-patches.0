@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 504EB29A9C3;
-	Mon,  9 Feb 2026 14:54:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85C7A28312F;
+	Mon,  9 Feb 2026 14:54:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770648867; cv=none; b=VVmsCYwmNAKC3gRjFWI0ZGznHcQLa13oUZeR1JAeGbrmTNky6dLs0DbZKMu6lQpdg5v2bSSc6jDy0/xVnIGR43LWzMEkmc6IgUPFL7PLemP9kkHDEJXe0MksOVGQX/UCo8q21WkLUQx0K9aBbRhpD7nYe8d2axPwvjV82kTvyS4=
+	t=1770648870; cv=none; b=iyNfioFLqTSyoWthgsTJaqKaPlhiCNnVvc17I6D0Ph+OXagdmx8sf+4FMTcgZTxA0l5eCXXsqDrzz/y+ZtiJfAJSnXl/dJrZ8p+8aPcIiWa1RxbbopH0xtTZAGJtljpEwVcgpTyuPXIDPi8ccWnZpx72UgFPINVqIvUR5qvE9fI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770648867; c=relaxed/simple;
-	bh=d/aOVj8vY7VlUhWFsPnPMLufiwN9ztxji9R5jndi+JQ=;
+	s=arc-20240116; t=1770648870; c=relaxed/simple;
+	bh=RHzXHmN9Dji3BPAVO5zt03Ifhn3+L0JzAbjSAS1CgPo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=E2bzXlvHt4a7oRoN3hd6c6fFXV+HyjaD1MUVQLaWAPz6E5jX6PtyhOOUx4l7OoMxmkjHOylrm798ZAP7a9KytpXkrQ54Ovl9MRov9QtyfvXeMyXTRWsPXxCbrMW3cmrRPwGVPleEwRIBGxrREr9/eHA8Lj8b/+rCH4KTNiffpKg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JvfbPc2a; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kcQxh6ZWBpPrOtHgLCUnxAbjLUA52qkz1ybbHtP5cI6CXB9KUjjbtpQcH7SRp0Fb+arK891SuHh1uFHZJh+TB9v0LOtASop0t6h96hzo48qhf0U9huIRDqC78U5KmntSImYqSI9gTAP2SdhzyuOuAonAN+q6k/CuiPqGERTgFOs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vNSilHGw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JvfbPc2a"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B824DC116C6;
-	Mon,  9 Feb 2026 14:54:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vNSilHGw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0BBF5C116C6;
+	Mon,  9 Feb 2026 14:54:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770648867;
-	bh=d/aOVj8vY7VlUhWFsPnPMLufiwN9ztxji9R5jndi+JQ=;
+	s=korg; t=1770648870;
+	bh=RHzXHmN9Dji3BPAVO5zt03Ifhn3+L0JzAbjSAS1CgPo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JvfbPc2aBEWTqLgC9H9CGTeFXVWq3P2NUfE+gRqslrB4x+Z5dFPdIoM2aChZGrf7m
-	 qIBXuKkoO/inDZzTSpMDMsJLQtCX/+vojO3YmG70/cd6QV1lQUyoHbyqlZFLDjic3t
-	 GQHezV/wQwMASU7/83GgGzCK5xlh6Ugd7FDB2HZ4=
+	b=vNSilHGwLUIWAp7+Cap5uS3zWDlNkRUjnYBQPOsKN73vFe3A6Zfva04fvx8lDYE2z
+	 0cxnI4F/cfpeGNOFy4kKuwqz/xkinLFJX2bPu14gEpnYVcTeQemBfC5ENAYa1F+UIU
+	 ehPYCWhUyXvIdHxYRWgLVF5/qE5NQcYTSMwxd+r8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dimitrios Katsaros <patcherwork@gmail.com>,
-	Sascha Hauer <s.hauer@pengutronix.de>,
-	Mark Brown <broonie@kernel.org>,
+	Veerendranath Jakkam <veerendranath.jakkam@oss.qualcomm.com>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 39/75] ASoC: tlv320adcx140: Propagate error codes during probe
-Date: Mon,  9 Feb 2026 15:24:36 +0100
-Message-ID: <20260209142303.254311871@linuxfoundation.org>
+Subject: [PATCH 5.15 40/75] wifi: cfg80211: Fix bitrate calculation overflow for HE rates
+Date: Mon,  9 Feb 2026 15:24:37 +0100
+Message-ID: <20260209142303.290569035@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260209142301.830618238@linuxfoundation.org>
 References: <20260209142301.830618238@linuxfoundation.org>
@@ -52,41 +51,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dimitrios Katsaros <patcherwork@gmail.com>
+From: Veerendranath Jakkam <veerendranath.jakkam@oss.qualcomm.com>
 
-[ Upstream commit d89aad92cfd15edbd704746f44c98fe687f9366f ]
+[ Upstream commit a3034bf0746d88a00cceda9541534a5721445a24 ]
 
-When scanning for the reset pin, we could get an -EPROBE_DEFER.
-The driver would assume that no reset pin had been defined,
-which would mean that the chip would never be powered.
+An integer overflow occurs in cfg80211_calculate_bitrate_he() when
+calculating bitrates for high throughput HE configurations.
+For example, with 160 MHz bandwidth, HE-MCS 13, HE-NSS 4, and HE-GI 0,
+the multiplication (result * rate->nss) overflows the 32-bit 'result'
+variable before division by 8, leading to significantly underestimated
+bitrate values.
 
-Now we both respect any error we get from devm_gpiod_get_optional.
-We also now properly report the missing GPIO definition when
-'gpio_reset' is NULL.
+The overflow occurs because the NSS multiplication operates on a 32-bit
+integer that cannot accommodate intermediate values exceeding
+4,294,967,295. When overflow happens, the value wraps around, producing
+incorrect bitrates for high MCS and NSS combinations.
 
-Signed-off-by: Dimitrios Katsaros <patcherwork@gmail.com>
-Signed-off-by: Sascha Hauer <s.hauer@pengutronix.de>
-Link: https://patch.msgid.link/20260113-sound-soc-codecs-tvl320adcx140-v4-3-8f7ecec525c8@pengutronix.de
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fix this by utilizing the 64-bit 'tmp' variable for the NSS
+multiplication and subsequent divisions via do_div(). This approach
+preserves full precision throughout the entire calculation, with the
+final value assigned to 'result' only after completing all operations.
+
+Signed-off-by: Veerendranath Jakkam <veerendranath.jakkam@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260109-he_bitrate_overflow-v1-1-95575e466b6e@oss.qualcomm.com
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/tlv320adcx140.c | 3 +++
- 1 file changed, 3 insertions(+)
+ net/wireless/util.c | 8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
-diff --git a/sound/soc/codecs/tlv320adcx140.c b/sound/soc/codecs/tlv320adcx140.c
-index f7fbe3795f98a..46560d5eb4b1d 100644
---- a/sound/soc/codecs/tlv320adcx140.c
-+++ b/sound/soc/codecs/tlv320adcx140.c
-@@ -1098,6 +1098,9 @@ static int adcx140_i2c_probe(struct i2c_client *i2c,
- 	adcx140->gpio_reset = devm_gpiod_get_optional(adcx140->dev,
- 						      "reset", GPIOD_OUT_LOW);
- 	if (IS_ERR(adcx140->gpio_reset))
-+		return dev_err_probe(&i2c->dev, PTR_ERR(adcx140->gpio_reset),
-+				     "Failed to get Reset GPIO\n");
-+	if (!adcx140->gpio_reset)
- 		dev_info(&i2c->dev, "Reset GPIO not defined\n");
+diff --git a/net/wireless/util.c b/net/wireless/util.c
+index 6ebc6567b2875..40548fe7e2635 100644
+--- a/net/wireless/util.c
++++ b/net/wireless/util.c
+@@ -1418,12 +1418,14 @@ static u32 cfg80211_calculate_bitrate_he(struct rate_info *rate)
+ 	tmp = result;
+ 	tmp *= SCALE;
+ 	do_div(tmp, mcs_divisors[rate->mcs]);
+-	result = tmp;
  
- 	adcx140->supply_areg = devm_regulator_get_optional(adcx140->dev,
+ 	/* and take NSS, DCM into account */
+-	result = (result * rate->nss) / 8;
++	tmp *= rate->nss;
++	do_div(tmp, 8);
+ 	if (rate->he_dcm)
+-		result /= 2;
++		do_div(tmp, 2);
++
++	result = tmp;
+ 
+ 	return result / 10000;
+ }
 -- 
 2.51.0
 
