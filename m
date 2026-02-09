@@ -1,46 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ADD3A3019CB;
-	Mon,  9 Feb 2026 12:27:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D66CA3019CB;
+	Mon,  9 Feb 2026 12:27:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770640052; cv=none; b=XyQMn6yqOwVus0/muqsBSwoxoJ5eulbWVtOXr+A9EkMUY3szN50QyLVw5KLHvRsQH5Z+vf+7FULATo25bAGf+NAcjGjhyo4227AzxcMl9tb9HxJY4uowhF+8hgr1vAQYmLMfLNRtNEpc2ygAV3Mn/j7IfTFz79iGhIYcVHF2q2Q=
+	t=1770640053; cv=none; b=D/+KjX5eA3n1k/M6h2umKUG9IksszrMn2BNLvv7fnQ3EMtwKyeDPNKQ7Dvi5TLHFnmQ2e8CMMAKCcUrxY3ljgzl3FceJ6Y4/aaKqW9vSCJ0mhgSaa+8Bq7cCNtXlEpMnUpPI/3FN72IKpQtdDeNDc1T0DjvX1SlKx8FI0Miu9RI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770640052; c=relaxed/simple;
-	bh=c8y5npcOeFLfMTDfcC3Bza36cf7Jj0zWNxOT1sTRPa8=;
+	s=arc-20240116; t=1770640053; c=relaxed/simple;
+	bh=WgqiWVoHlPsT7FIc5ByMzq7REt3FLkvnK/cYU1bi2ZE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=mSshQY1vfVwU+dweRSPjT2LUDL1FpAmIJUy5NnwWECwE0rK5YkKoUuWxaakKOzQhOXbGvp7icJ1ZPKrcyWxfer3WfYDziSi0YErLbTMen+oc8ZjAWPCctm4elZWP/nBocgoqknS/kgVS+jVs2g9up9Qo5Fjt37+QcrdukDfEf9U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=lNFJlEj4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=tfWV3HXM46dRujXmF/mMdO/rXRMqAguQ+rdK2jXD2Bqu04XtaQ7sia4uBcg6tN44sXDn0AVn24QpsHW1VGRxkzobWfCw/4EWp1Hkxcwu7R2NIDrG3S2ROeJ46PlZ0Fqev3N8biAlhNQpT1LfIebVjsGkUlYmh0gEAntQHy2f3X0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Uuh1ROzG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="lNFJlEj4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 353A0C116C6;
-	Mon,  9 Feb 2026 12:27:31 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Uuh1ROzG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B735CC16AAE;
+	Mon,  9 Feb 2026 12:27:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1770640052;
-	bh=c8y5npcOeFLfMTDfcC3Bza36cf7Jj0zWNxOT1sTRPa8=;
+	s=k20201202; t=1770640053;
+	bh=WgqiWVoHlPsT7FIc5ByMzq7REt3FLkvnK/cYU1bi2ZE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lNFJlEj4sJEuu/IY6v/jmvqyXkqPJ8cL48j6Jak/pCEjE6NBG1PvzeKX+VZqANjVF
-	 qDys7O4cpf5Di0mP9ntSdXpH2bUOgfpAgznKAJITAiCnFzxDvGJ/2UCt2UqNLBvkaC
-	 R1wRH9as53W44ff3avd0mOCFBUwZV2VP/8o137VuZ2zQVUfZDta8suo2GWqMlHTwpE
-	 VOVKETmaCoyU6Y1qWQTHfgdjoytOLAPOpbP1ZA/MyIFmZlYWP7ufGnEF5oIuvWnQpj
-	 kPK5gUuQwGYQl9zkXhJcC3Be5enGnfcvRECg/VO8eCcXIoMH3mRIeOXAf7ES3CQRPu
-	 O64jhFs6u0h/g==
+	b=Uuh1ROzGRhjFu/DtTNevjfcQTG7ztxPCh1nYFv6eQnfhlP23WhZM88SNX1u3IbLwR
+	 rs2ftY8dNWGjlIcJMoo+a0yqduWhIfC12Kym8JTyMPLlQBksUwnwOntVxqQCJklanx
+	 s+ftOJ+YxAsZVzQiZaqB9TXU0G4WxgRN25PnwoRo62F38nSotrvuSHUfxeHNZWBOUk
+	 N9hPFk86drUz54TihgqcYUjSUOAgk4pSlembHJzeOiw6/290k5CYFTzLGdYv9+sANR
+	 PFVoJOasZrF64wTJlMPpdonp6AUXVIDkzKMgWSBIM9dVGgafCF1Fe20EYwndHPZ5Vh
+	 P5pcAh8+O693A==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Deepanshu Kartikey <kartikey406@gmail.com>,
-	syzbot+28cea38c382fd15e751a@syzkaller.appspotmail.com,
-	Deepanshu Kartikey <Kartikey406@gmail.com>,
-	Sean Anderson <sean.anderson@linux.dev>,
-	Marek Szyprowski <m.szyprowski@samsung.com>,
+Cc: Brahmajit Das <listout@listout.xyz>,
+	Thierry Reding <treding@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>,
-	jgg@ziepe.ca,
-	leon@kernel.org,
-	ptesarik@suse.com
-Subject: [PATCH AUTOSEL 6.18-6.12] tracing/dma: Cap dma_map_sg tracepoint arrays to prevent buffer overflow
-Date: Mon,  9 Feb 2026 07:26:48 -0500
-Message-ID: <20260209122714.1037915-9-sashal@kernel.org>
+	thierry.reding@gmail.com,
+	mperttunen@nvidia.com,
+	jonathanh@nvidia.com,
+	dri-devel@lists.freedesktop.org,
+	linux-tegra@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.18-5.10] =?UTF-8?q?drm/tegra:=20hdmi:=20sor:=20F?= =?UTF-8?q?ix=20error:=20variable=20=E2=80=98j=E2=80=99=20set=20but=20not?= =?UTF-8?q?=20used?=
+Date: Mon,  9 Feb 2026 07:26:49 -0500
+Message-ID: <20260209122714.1037915-10-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260209122714.1037915-1-sashal@kernel.org>
 References: <20260209122714.1037915-1-sashal@kernel.org>
@@ -50,227 +49,186 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.18.9
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Deepanshu Kartikey <kartikey406@gmail.com>
+From: Brahmajit Das <listout@listout.xyz>
 
-[ Upstream commit daafcc0ef0b358d9d622b6e3b7c43767aa3814ee ]
+[ Upstream commit 1beee8d0c263b3e239c8d6616e4f8bb700bed658 ]
 
-The dma_map_sg tracepoint can trigger a perf buffer overflow when
-tracing large scatter-gather lists. With devices like virtio-gpu
-creating large DRM buffers, nents can exceed 1000 entries, resulting
-in:
+The variable j is set, however never used in or outside the loop, thus
+resulting in dead code.
+Building with GCC 16 results in a build error due to
+-Werror=unused-but-set-variable= enabled by default.
+This patch clean up the dead code and fixes the build error.
 
-  phys_addrs: 1000 * 8 bytes = 8,000 bytes
-  dma_addrs:  1000 * 8 bytes = 8,000 bytes
-  lengths:    1000 * 4 bytes = 4,000 bytes
-  Total: ~20,000 bytes
+Example build log:
+drivers/gpu/drm/tegra/sor.c:1867:19: error: variable ‘j’ set but not used [-Werror=unused-but-set-variable=]
+ 1867 |         size_t i, j;
+      |                   ^
 
-This exceeds PERF_MAX_TRACE_SIZE (8192 bytes), causing:
-
-  WARNING: CPU: 0 PID: 5497 at kernel/trace/trace_event_perf.c:405
-  perf buffer not large enough, wanted 24620, have 8192
-
-Cap all three dynamic arrays at 128 entries using min() in the array
-size calculation. This ensures arrays are only as large as needed
-(up to the cap), avoiding unnecessary memory allocation for small
-operations while preventing overflow for large ones.
-
-The tracepoint now records the full nents/ents counts and a truncated
-flag so users can see when data has been capped.
-
-Changes in v2:
-- Use min(nents, DMA_TRACE_MAX_ENTRIES) for dynamic array sizing
-  instead of fixed DMA_TRACE_MAX_ENTRIES allocation (feedback from
-  Steven Rostedt)
-- This allocates only what's needed up to the cap, avoiding waste
-  for small operations
-
-Reported-by: syzbot+28cea38c382fd15e751a@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=28cea38c382fd15e751a
-Tested-by: syzbot+28cea38c382fd15e751a@syzkaller.appspotmail.com
-Signed-off-by: Deepanshu Kartikey <Kartikey406@gmail.com>
-Reviwed-by: Sean Anderson <sean.anderson@linux.dev>
-Signed-off-by: Marek Szyprowski <m.szyprowski@samsung.com>
-Link: https://lore.kernel.org/r/20260130155215.69737-1-kartikey406@gmail.com
+Signed-off-by: Brahmajit Das <listout@listout.xyz>
+Signed-off-by: Thierry Reding <treding@nvidia.com>
+Link: https://lore.kernel.org/r/20250901212020.3757519-1-listout@listout.xyz
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-This confirms the bug. At line 405, `WARN_ONCE` fires when `size >
-PERF_MAX_TRACE_SIZE` (8192 bytes), and the function returns NULL,
-causing the tracepoint to fail. The original `dma_map_sg` tracepoint
-uses unbounded dynamic arrays (`__dynamic_array(u64, phys_addrs,
-nents)`) which with large scatter-gather lists (nents > ~340 for a
-single array of u64, or combined arrays > 8192 bytes total) will exceed
-this limit.
+## Analysis of Commit: drm/tegra: hdmi: sor: Fix error: variable 'j' set
+but not used
 
-### 3. CLASSIFICATION
+### 1. Commit Message Analysis
 
-**This is a clear bug fix.** It fixes:
-1. A **buffer overflow** (trace data exceeding `PERF_MAX_TRACE_SIZE`)
-2. A **kernel WARNING** triggered at runtime
-3. A **functional failure** — the tracepoint becomes non-functional when
-   the warning fires (returns NULL)
+The commit message explicitly states this is a **build fix** for GCC 16,
+which enables `-Werror=unused-but-set-variable=` by default. The commit
+removes dead code (an unused variable `j`) to fix a compilation error.
 
-The bug is **syzbot-reported and reproducible**, with a concrete trigger
-(virtio-gpu creating large DRM buffers).
+Key indicators:
+- "Fix error" - indicates a build failure
+- "Building with GCC 16 results in a build error" - explicit mention of
+  build breakage
+- Provides concrete build log showing the error
 
-### 4. SCOPE AND RISK ASSESSMENT
+### 2. Code Change Analysis
 
-**Scope:**
-- Single file changed: `include/trace/events/dma.h`
-- Only the `dma_map_sg` TRACE_EVENT definition is modified
-- Changes are contained within the tracepoint macro infrastructure
+The changes are minimal and purely mechanical:
 
-**Changes made:**
-1. Define `DMA_TRACE_MAX_ENTRIES` (128) — a reasonable cap
-2. Cap `__dynamic_array` sizes with `min(nents, DMA_TRACE_MAX_ENTRIES)`
-3. Cap the `for_each_sg` iteration to traced_nents/traced_ents
-4. Add `full_nents`, `full_ents`, and `truncated` fields for
-   observability
-5. Update `TP_printk` to show actual vs capped counts and a
-   `[TRUNCATED]` marker
+**In `drivers/gpu/drm/tegra/hdmi.c`:**
+- Line 660: Changes `size_t i, j;` to `size_t i;`
+- Line 693: Changes `for (i = 3, j = 0; i < size; i += 7, j += 8)` to
+  `for (i = 3; i < size; i += 7)`
 
-**Risk:**
-- LOW risk. The change only affects the tracing subsystem, not the DMA
-  mapping itself.
-- The DMA operations proceed identically — only the trace output
-  changes.
-- Worst case: trace data is truncated (by design), but users are clearly
-  informed via the `[TRUNCATED]` flag.
-- The new fields (`full_nents`, `full_ents`, `truncated`) do change the
-  tracepoint ABI slightly, but tracepoint ABIs are explicitly not stable
-  (they can change between kernel versions).
+**In `drivers/gpu/drm/tegra/sor.c`:**
+- Line 1866: Changes `size_t i, j;` to `size_t i;`
+- Line 1899: Changes `for (i = 3, j = 0; i < size; i += 7, j += 8)` to
+  `for (i = 3; i < size; i += 7)`
 
-### 5. USER IMPACT
+The variable `j` was:
+1. Declared but never used anywhere
+2. Incremented in the loop (`j += 8`) but the value was never read
+3. Pure dead code that has no functional impact
 
-- **Who is affected**: Anyone tracing DMA operations with perf on
-  systems that create large scatter-gather lists (virtio-gpu, any GPU
-  driver with large DRM buffers, potentially NVMe or other high-
-  throughput I/O drivers).
-- **Severity without fix**: Kernel WARNING on every affected tracepoint
-  hit, plus the trace data is lost entirely (perf_trace_buf_alloc
-  returns NULL). The WARNING can also trigger panic-on-warn
-  configurations.
-- **With the fix**: Trace data is properly capped and recorded, no
-  WARNING.
+### 3. Classification
 
-### 6. STABILITY INDICATORS
+This is a **build fix** - one of the explicit exception categories that
+ARE allowed in stable:
 
-- Reported by syzbot with a reproducer
-- Tested by syzbot (confirmed fix)
-- Reviewed by Sean Anderson
-- Accepted by DMA subsystem maintainer Marek Szyprowski
-- Iterated based on Steven Rostedt (tracing maintainer) feedback
-- V2 of the patch — showing refinement
+> **BUILD FIXES:**
+> - Fixes for compilation errors or warnings, Kconfig dependency fixes,
+include file fixes
+> - These are critical for users who need to build the kernel
 
-### 7. DEPENDENCY CHECK
+### 4. Scope and Risk Assessment
 
-- The `dma_map_sg` tracepoint was introduced in v6.12 (commit
-  038eb433dc147). This fix only applies to 6.12+ stable trees.
-- The patch modifies only the existing tracepoint definition and is
-  self-contained.
-- No dependencies on other patches.
+- **Lines changed:** ~4 lines total (2 per file)
+- **Files affected:** 2 files in the same subsystem (Tegra DRM driver)
+- **Risk level:** Extremely low
+- **Complexity:** None - purely removes unused code
+- **Behavioral change:** None - the variable was never used
 
-### 8. CONCERNS
+This is one of the lowest-risk changes possible:
+- No logic changes
+- No control flow changes
+- No memory management changes
+- Simply removing dead code that was never executed meaningfully
 
-- **Note about `dma_alloc_sgt` and `dma_free_sgt` and other similar
-  tracepoints**: These also have unbounded `__dynamic_array` based on
-  `sgt->orig_nents` but are NOT fixed in this commit. This could mean
-  those are less commonly hit or a separate fix is needed. However, this
-  doesn't diminish the value of fixing the `dma_map_sg` case.
-- **ABI change to tracepoint format**: The tracepoint output format
-  changes (new fields added, format modified). While tracepoint ABIs are
-  not considered stable, any perf scripts parsing the exact format of
-  `dma_map_sg` would need updating. This is minor since tracepoint
-  formats are expected to change.
-- The patch should apply cleanly to 6.12.y since the file hasn't had
-  many changes in this area since v6.12.
+### 5. User Impact
 
-### SUMMARY
+**Who is affected:**
+- Anyone trying to build the kernel with GCC 16
+- Tegra (NVIDIA) platform users who need HDMI output
 
-This is a well-crafted, syzbot-reported, tested-and-reviewed fix for a
-real buffer overflow in the DMA tracing subsystem. The bug causes kernel
-WARNINGs and complete failure of DMA scatter-gather tracing with large
-buffers. The fix is small, contained to a single file, affects only the
-tracing path (not actual DMA operations), and is low-risk. It has strong
-trust indicators: syzbot-tested, maintainer-reviewed, and iterated based
-on subsystem maintainer feedback. The only limitation is that it applies
-only to stable trees 6.12+ where the tracepoint exists.
+**Severity:**
+- Without this fix, the kernel fails to compile with newer GCC versions
+- This blocks users from building the kernel entirely
+
+### 6. Stability Indicators
+
+- Signed-off by the subsystem maintainer (Thierry Reding from NVIDIA)
+- Link to the mailing list discussion provided
+- The change is trivial and obviously correct
+
+### 7. Dependency Check
+
+- No dependencies on other commits
+- The affected code (Tegra DRM HDMI/SOR drivers) exists in stable trees
+- The fix is self-contained
+
+### Conclusion
+
+This commit meets all stable kernel criteria for a **build fix**:
+
+1. **Obviously correct:** The variable `j` was declared, incremented,
+   but never read - pure dead code
+2. **Fixes a real bug:** Build failure with GCC 16
+3. **Small and contained:** Only 4 lines changed across 2 related files
+4. **No new features:** Removes unused code
+5. **No risk of regression:** Cannot change behavior since the removed
+   code was never used
+
+Build fixes are explicitly allowed in stable trees because they are
+critical for users who need to build the kernel. As GCC 16 becomes more
+widely used (and is now the default compiler in some distributions),
+this fix will become essential for anyone building the kernel.
+
+The fix is trivial, obviously correct, and fixes a real build failure.
+It has zero risk of causing runtime regressions since it only removes
+dead code.
 
 **YES**
 
- include/trace/events/dma.h | 25 +++++++++++++++++++------
- 1 file changed, 19 insertions(+), 6 deletions(-)
+ drivers/gpu/drm/tegra/hdmi.c | 4 ++--
+ drivers/gpu/drm/tegra/sor.c  | 4 ++--
+ 2 files changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/include/trace/events/dma.h b/include/trace/events/dma.h
-index b3fef140ae155..33e99e792f1aa 100644
---- a/include/trace/events/dma.h
-+++ b/include/trace/events/dma.h
-@@ -275,6 +275,8 @@ TRACE_EVENT(dma_free_sgt,
- 				sizeof(u64), sizeof(u64)))
- );
+diff --git a/drivers/gpu/drm/tegra/hdmi.c b/drivers/gpu/drm/tegra/hdmi.c
+index 8cd2969e7d4bf..c4820f5e76581 100644
+--- a/drivers/gpu/drm/tegra/hdmi.c
++++ b/drivers/gpu/drm/tegra/hdmi.c
+@@ -658,7 +658,7 @@ static void tegra_hdmi_write_infopack(struct tegra_hdmi *hdmi, const void *data,
+ {
+ 	const u8 *ptr = data;
+ 	unsigned long offset;
+-	size_t i, j;
++	size_t i;
+ 	u32 value;
  
-+#define DMA_TRACE_MAX_ENTRIES 128
-+
- TRACE_EVENT(dma_map_sg,
- 	TP_PROTO(struct device *dev, struct scatterlist *sgl, int nents,
- 		 int ents, enum dma_data_direction dir, unsigned long attrs),
-@@ -282,9 +284,12 @@ TRACE_EVENT(dma_map_sg,
+ 	switch (ptr[0]) {
+@@ -691,7 +691,7 @@ static void tegra_hdmi_write_infopack(struct tegra_hdmi *hdmi, const void *data,
+ 	 * - subpack_low: bytes 0 - 3
+ 	 * - subpack_high: bytes 4 - 6 (with byte 7 padded to 0x00)
+ 	 */
+-	for (i = 3, j = 0; i < size; i += 7, j += 8) {
++	for (i = 3; i < size; i += 7) {
+ 		size_t rem = size - i, num = min_t(size_t, rem, 4);
  
- 	TP_STRUCT__entry(
- 		__string(device, dev_name(dev))
--		__dynamic_array(u64, phys_addrs, nents)
--		__dynamic_array(u64, dma_addrs, ents)
--		__dynamic_array(unsigned int, lengths, ents)
-+		__field(int, full_nents)
-+		__field(int, full_ents)
-+		__field(bool, truncated)
-+		__dynamic_array(u64, phys_addrs,  min(nents, DMA_TRACE_MAX_ENTRIES))
-+		__dynamic_array(u64, dma_addrs, min(ents, DMA_TRACE_MAX_ENTRIES))
-+		__dynamic_array(unsigned int, lengths, min(ents, DMA_TRACE_MAX_ENTRIES))
- 		__field(enum dma_data_direction, dir)
- 		__field(unsigned long, attrs)
- 	),
-@@ -292,11 +297,16 @@ TRACE_EVENT(dma_map_sg,
- 	TP_fast_assign(
- 		struct scatterlist *sg;
- 		int i;
-+		int traced_nents = min_t(int, nents, DMA_TRACE_MAX_ENTRIES);
-+		int traced_ents = min_t(int, ents, DMA_TRACE_MAX_ENTRIES);
+ 		value = tegra_hdmi_subpack(&ptr[i], num);
+diff --git a/drivers/gpu/drm/tegra/sor.c b/drivers/gpu/drm/tegra/sor.c
+index 21f3dfdcc5c95..bc7dd562cf6b6 100644
+--- a/drivers/gpu/drm/tegra/sor.c
++++ b/drivers/gpu/drm/tegra/sor.c
+@@ -1864,7 +1864,7 @@ static void tegra_sor_hdmi_write_infopack(struct tegra_sor *sor,
+ {
+ 	const u8 *ptr = data;
+ 	unsigned long offset;
+-	size_t i, j;
++	size_t i;
+ 	u32 value;
  
- 		__assign_str(device);
--		for_each_sg(sgl, sg, nents, i)
-+		__entry->full_nents = nents;
-+		__entry->full_ents = ents;
-+		__entry->truncated = (nents > DMA_TRACE_MAX_ENTRIES) || (ents > DMA_TRACE_MAX_ENTRIES);
-+		for_each_sg(sgl, sg, traced_nents, i)
- 			((u64 *)__get_dynamic_array(phys_addrs))[i] = sg_phys(sg);
--		for_each_sg(sgl, sg, ents, i) {
-+		for_each_sg(sgl, sg, traced_ents, i) {
- 			((u64 *)__get_dynamic_array(dma_addrs))[i] =
- 				sg_dma_address(sg);
- 			((unsigned int *)__get_dynamic_array(lengths))[i] =
-@@ -306,9 +316,12 @@ TRACE_EVENT(dma_map_sg,
- 		__entry->attrs = attrs;
- 	),
+ 	switch (ptr[0]) {
+@@ -1897,7 +1897,7 @@ static void tegra_sor_hdmi_write_infopack(struct tegra_sor *sor,
+ 	 * - subpack_low: bytes 0 - 3
+ 	 * - subpack_high: bytes 4 - 6 (with byte 7 padded to 0x00)
+ 	 */
+-	for (i = 3, j = 0; i < size; i += 7, j += 8) {
++	for (i = 3; i < size; i += 7) {
+ 		size_t rem = size - i, num = min_t(size_t, rem, 4);
  
--	TP_printk("%s dir=%s dma_addrs=%s sizes=%s phys_addrs=%s attrs=%s",
-+	TP_printk("%s dir=%s nents=%d/%d ents=%d/%d%s dma_addrs=%s sizes=%s phys_addrs=%s attrs=%s",
- 		__get_str(device),
- 		decode_dma_data_direction(__entry->dir),
-+		min_t(int, __entry->full_nents, DMA_TRACE_MAX_ENTRIES), __entry->full_nents,
-+		min_t(int, __entry->full_ents, DMA_TRACE_MAX_ENTRIES), __entry->full_ents,
-+		__entry->truncated ? " [TRUNCATED]" : "",
- 		__print_array(__get_dynamic_array(dma_addrs),
- 			      __get_dynamic_array_len(dma_addrs) /
- 				sizeof(u64), sizeof(u64)),
+ 		value = tegra_sor_hdmi_subpack(&ptr[i], num);
 -- 
 2.51.0
 
