@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A78A2222B2;
-	Mon,  9 Feb 2026 14:32:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8F821DE8AD;
+	Mon,  9 Feb 2026 14:32:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770647521; cv=none; b=jyuUjHICaNBA67jYEOSX9LlKUbgdGAJSqDhjndP5ACC8QsN9Us9zEe3fxZnIxVQXSF3ZGBCm+VIFzeYiDRuDK3bvp5V1TBIp1q8F8fzns8glZ3aJUFppX+XCAuK8DBbLF0tv1W6Za81KPdT8gDQ2UUAX1VSGh5etiWObEJN8ATc=
+	t=1770647524; cv=none; b=mkdBYdB0NS5MHs9p599uv9rdtOpDmFe+yshf6IJsXdaqQpvyepGqoN/CAMxTpBVygbaOynXqOBV9ihiXp09XJ8lPMnikV4LhBph3TJcTugqcaYnc9+UyF5kgJatnHwOLz6SHubKSonQ8rmXHOYPYUor6+f6hxiXA+FekesDU9VQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770647521; c=relaxed/simple;
-	bh=R0V81tf7cke0ClPtU+8LOVnnlOnIaTtFUiLRO02Fl/k=;
+	s=arc-20240116; t=1770647524; c=relaxed/simple;
+	bh=tKW9vAHtfcJ4pSXSPdmPV34xhkGR6OSBYatUmq3DAB4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=H4q41/lllM0gSNIwBatfqLFaBddEl9MN5zAuxXZCmd0IEZu1dH5Tjqd9NfrRcK4N1nOj5k5tc0s6F3WZNae+my6v+5DCPOPfBD23AJ8p0+A3NFAlZDoRaWoDj8hHrHaJajuwnp7jL5HUA+2sOLxH1E244qgPhduG5iiP+2HoF0Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=I5SSXfBX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QJVnPZxVfgKBjfwYDfb6rvRmD3cYGCIKn+Gyq3dGom7yC8u72AMILYJcltz25t+7xq43DqDTuBihn3w4W7d7Ge1H/oVgEkumKKsxyxdXbWSPKg31u1RiTL/d1eymBV6r21pzbrFXHZTxmLS1Se6tcMIMetliyeiGf4eSyXZvFGY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lGCU7Cj8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="I5SSXfBX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC194C19423;
-	Mon,  9 Feb 2026 14:32:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lGCU7Cj8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 27F7FC116C6;
+	Mon,  9 Feb 2026 14:32:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770647521;
-	bh=R0V81tf7cke0ClPtU+8LOVnnlOnIaTtFUiLRO02Fl/k=;
+	s=korg; t=1770647524;
+	bh=tKW9vAHtfcJ4pSXSPdmPV34xhkGR6OSBYatUmq3DAB4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=I5SSXfBXYcXpr2XSHyI8DNNEYRRSZ0sfDQRsUZksDWyO8VxAX08JxT6dJS8RTxJy9
-	 S60FG5WIOWH+aFqztVPSqpNRUQObBQBayomiz3QcBAmTw6+UQSnDpElHdJMwKP6Mex
-	 5DFe+lbMLrnyrcaVTBMLT+LqNk7+y/73hk8B5oL0=
+	b=lGCU7Cj8ksrIpwUarwQ/3pm8sDBQc9R1e6GdMdCktnyJKN4EW/k5GnNEmHNkORufK
+	 ihvZHB3MokoN3GEQ3JUMeQf2TpWksewGPCEWsFGlqxXbyTY/plUMbZAjGDTBv/reDX
+	 ZBjy7VGFF4NwPDT0ZeJKEABJf/kVm/F4L1lwaHXo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+6db0415d6d5c635f72cb@syzkaller.appspotmail.com,
-	Edward Adam Davis <eadavis@qq.com>,
-	Takashi Iwai <tiwai@suse.de>,
+	Yi Zhang <yi.zhang@redhat.com>,
+	Sagi Grimberg <sagi@grimberg.me>,
+	Hannes Reinecke <hare@kernel.org>,
+	Keith Busch <kbusch@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 090/175] ALSA: usb-audio: Prevent excessive number of frames
-Date: Mon,  9 Feb 2026 15:22:43 +0100
-Message-ID: <20260209142323.669977815@linuxfoundation.org>
+Subject: [PATCH 6.18 091/175] nvmet-tcp: fixup hang in nvmet_tcp_listen_data_ready()
+Date: Mon,  9 Feb 2026 15:22:44 +0100
+Message-ID: <20260209142323.705112155@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260209142320.474120190@linuxfoundation.org>
 References: <20260209142320.474120190@linuxfoundation.org>
@@ -52,53 +53,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Edward Adam Davis <eadavis@qq.com>
+From: Hannes Reinecke <hare@kernel.org>
 
-[ Upstream commit ef5749ef8b307bf8717945701b1b79d036af0a15 ]
+[ Upstream commit 2fa8961d3a6a1c2395d8d560ffed2c782681bade ]
 
-In this case, the user constructed the parameters with maxpacksize 40
-for rate 22050 / pps 1000, and packsize[0] 22 packsize[1] 23. The buffer
-size for each data URB is maxpacksize * packets, which in this example
-is 40 * 6 = 240; When the user performs a write operation to send audio
-data into the ALSA PCM playback stream, the calculated number of frames
-is packsize[0] * packets = 264, which exceeds the allocated URB buffer
-size, triggering the out-of-bounds (OOB) issue reported by syzbot [1].
+When the socket is closed while in TCP_LISTEN a callback is run to
+flush all outstanding packets, which in turns calls
+nvmet_tcp_listen_data_ready() with the sk_callback_lock held.
+So we need to check if we are in TCP_LISTEN before attempting
+to get the sk_callback_lock() to avoid a deadlock.
 
-Added a check for the number of single data URB frames when calculating
-the number of frames to prevent [1].
-
-[1]
-BUG: KASAN: slab-out-of-bounds in copy_to_urb+0x261/0x460 sound/usb/pcm.c:1487
-Write of size 264 at addr ffff88804337e800 by task syz.0.17/5506
-Call Trace:
- copy_to_urb+0x261/0x460 sound/usb/pcm.c:1487
- prepare_playback_urb+0x953/0x13d0 sound/usb/pcm.c:1611
- prepare_outbound_urb+0x377/0xc50 sound/usb/endpoint.c:333
-
-Reported-by: syzbot+6db0415d6d5c635f72cb@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=6db0415d6d5c635f72cb
-Tested-by: syzbot+6db0415d6d5c635f72cb@syzkaller.appspotmail.com
-Signed-off-by: Edward Adam Davis <eadavis@qq.com>
-Link: https://patch.msgid.link/tencent_9AECE6CD2C7A826D902D696C289724E8120A@qq.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Link: https://lore.kernel.org/linux-nvme/CAHj4cs-zu7eVB78yUpFjVe2UqMWFkLk8p+DaS3qj+uiGCXBAoA@mail.gmail.com/
+Tested-by:  Yi Zhang <yi.zhang@redhat.com>
+Reviewed-by: Sagi Grimberg <sagi@grimberg.me>
+Signed-off-by: Hannes Reinecke <hare@kernel.org>
+Signed-off-by: Keith Busch <kbusch@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/usb/pcm.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/nvme/target/tcp.c | 9 ++++-----
+ 1 file changed, 4 insertions(+), 5 deletions(-)
 
-diff --git a/sound/usb/pcm.c b/sound/usb/pcm.c
-index 54d01dfd820fa..263abb36bb2d1 100644
---- a/sound/usb/pcm.c
-+++ b/sound/usb/pcm.c
-@@ -1553,7 +1553,7 @@ static int prepare_playback_urb(struct snd_usb_substream *subs,
+diff --git a/drivers/nvme/target/tcp.c b/drivers/nvme/target/tcp.c
+index f0572fc0b6598..5c8d17bcc49bd 100644
+--- a/drivers/nvme/target/tcp.c
++++ b/drivers/nvme/target/tcp.c
+@@ -2021,14 +2021,13 @@ static void nvmet_tcp_listen_data_ready(struct sock *sk)
  
- 		for (i = 0; i < ctx->packets; i++) {
- 			counts = snd_usb_endpoint_next_packet_size(ep, ctx, i, avail);
--			if (counts < 0)
-+			if (counts < 0 || frames + counts >= ep->max_urb_frames)
- 				break;
- 			/* set up descriptor */
- 			urb->iso_frame_desc[i].offset = frames * stride;
+ 	trace_sk_data_ready(sk);
+ 
++	if (sk->sk_state != TCP_LISTEN)
++		return;
++
+ 	read_lock_bh(&sk->sk_callback_lock);
+ 	port = sk->sk_user_data;
+-	if (!port)
+-		goto out;
+-
+-	if (sk->sk_state == TCP_LISTEN)
++	if (port)
+ 		queue_work(nvmet_wq, &port->accept_work);
+-out:
+ 	read_unlock_bh(&sk->sk_callback_lock);
+ }
+ 
 -- 
 2.51.0
 
