@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32D811AF0AF;
-	Mon,  9 Feb 2026 14:34:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 375C01AF0AF;
+	Mon,  9 Feb 2026 14:34:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770647655; cv=none; b=GcSNiGgxf8cOWBecv7sDrDxv/PQ897yAWKYN9t3qSPy5yaRjZBwmdMUGRIf4nvk+rhISefPqzVr768upqmDJ0zhX7jTPFnZxOw3thSTpKr/cvAlvxyce7sMAmsZezeVDEegw90VxaAfgxK4feL8iBZPKNwPwB9fFa/VsBn0PmdI=
+	t=1770647658; cv=none; b=MO98ykcfYZXSDsoGucXZ66D+fjdJtCuVb1T3HaWJLvtpeIQzS/hYboJGf8+b0DFgBk3DYS1cjCONEZCk0QFZw2IgFOKQsfJSsdUnIOYriBNDBMLVKPSCxtnK2Yke4M5oIo8o+mYnCLmYw3B26K9i1qFxirsK81IGlY8Hl/x03qc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770647655; c=relaxed/simple;
-	bh=pgkdTqdUvC2ENs9i27WKqRz3mDTkEsW/KC70GD40QXo=;
+	s=arc-20240116; t=1770647658; c=relaxed/simple;
+	bh=R6X/OJx+M/qsMrNvDN/5Ahrjtfks7w8+zPb2S6i2Ep4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=gqlqk+5bFbKKm9r5zQbwUKGoL3cFG0TLye3iqSOFo8EubVCEjIO4WUAyJOS5Z9/P/+ld9uc/1/W65g2fjcYY8AtfuQPIv5Znm62RJxBb/Jgo0rQ1pY772yAC06J1IdT5+nUMz2/R1boygJzyiwtkUTZs3ZCn3rviYoMfZWrUrec=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=j+juyfJe; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HEgRs2Uyb9eDUaPk1WlX1G/sGIsc4hcfM1bW9ir7gGL2iq7d9wjWkEa1p01k/baXrffjdoZsl9IiqsybvTjaMJzmK25Zwrxu+RVZVTfpEqbPH+sUChLQmmyse2+olFM+TaANei58SnCiR99W9IOvwz7GQECPxFO7JfNjYMk3quE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BdZYsZZ+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="j+juyfJe"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B20CC116C6;
-	Mon,  9 Feb 2026 14:34:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BdZYsZZ+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B84CAC116C6;
+	Mon,  9 Feb 2026 14:34:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770647655;
-	bh=pgkdTqdUvC2ENs9i27WKqRz3mDTkEsW/KC70GD40QXo=;
+	s=korg; t=1770647658;
+	bh=R6X/OJx+M/qsMrNvDN/5Ahrjtfks7w8+zPb2S6i2Ep4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=j+juyfJei95JeiBJ1DGqwFq4vbyAXjuCZowghM9BV1u2xPb109b3HKZZQchYs7msL
-	 Svy24EvZqftfQO4Q8OZWerW7ECggsrq0eHzQukhyJB4zqGMrDItJHizCS2i1Q94Par
-	 2wxOOo99DeUHSTBCTvSPP4K77qYctz07mTyrFXvk=
+	b=BdZYsZZ+ebrQMHCEH0GpV0IhKGJvEmoxEesk/bIdpFZ5xxME2E5bLPdiYc/izkwBa
+	 UARv2PnsCIQVC2fPtxOLWlpcmRek4hF/SEKiBAkdEXFF7i+T9MfvqGtx7+cpStOpyP
+	 AloLpxGuqTU0WFbQfqiVtO0g7PCxZJh3VccJymws=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Marek=20Beh=C3=BAn?= <kabel@kernel.org>,
-	Maxime Chevallier <maxime.chevallier@bootlin.com>,
-	"Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>,
+	Eric Dumazet <edumazet@google.com>,
+	valis <sec@valis.email>,
+	syzbot+7182fbe91e58602ec1fe@syzkaller.appspotmail.com,
+	Boudewijn van der Heide <boudewijn@delta-utec.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 131/175] net: sfp: Fix quirk for Ubiquiti U-Fiber Instant SFP module
-Date: Mon,  9 Feb 2026 15:23:24 +0100
-Message-ID: <20260209142325.224427566@linuxfoundation.org>
+Subject: [PATCH 6.18 132/175] macvlan: fix error recovery in macvlan_common_newlink()
+Date: Mon,  9 Feb 2026 15:23:25 +0100
+Message-ID: <20260209142325.259909044@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260209142320.474120190@linuxfoundation.org>
 References: <20260209142320.474120190@linuxfoundation.org>
@@ -47,57 +48,103 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Marek Behún <kabel@kernel.org>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit adcbadfd8e05d3558c9cfaa783f17c645181165f ]
+[ Upstream commit f8db6475a83649689c087a8f52486fcc53e627e9 ]
 
-Commit fd580c9830316eda ("net: sfp: augment SFP parsing with
-phy_interface_t bitmap") did not add augumentation for the interface
-bitmap in the quirk for Ubiquiti U-Fiber Instant.
+valis provided a nice repro to crash the kernel:
 
-The subsequent commit f81fa96d8a6c7a77 ("net: phylink: use
-phy_interface_t bitmaps for optical modules") then changed phylink code
-for selection of SFP interface: instead of using link mode bitmap, the
-interface bitmap is used, and the fastest interface mode supported by
-both SFP module and MAC is chosen.
+ip link add p1 type veth peer p2
+ip link set address 00:00:00:00:00:20 dev p1
+ip link set up dev p1
+ip link set up dev p2
 
-Since the interface bitmap contains also modes faster than 1000base-x,
-this caused a regression wherein this module stopped working
-out-of-the-box.
+ip link add mv0 link p2 type macvlan mode source
+ip link add invalid% link p2 type macvlan mode source macaddr add 00:00:00:00:00:20
 
-Fix this.
+ping -c1 -I p1 1.2.3.4
 
-Fixes: fd580c9830316eda ("net: sfp: augment SFP parsing with phy_interface_t bitmap")
-Signed-off-by: Marek Behún <kabel@kernel.org>
-Reviewed-by: Maxime Chevallier <maxime.chevallier@bootlin.com>
-Reviewed-by: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
-Link: https://patch.msgid.link/20260129082227.17443-1-kabel@kernel.org
+He also gave a very detailed analysis:
+
+<quote valis>
+
+The issue is triggered when a new macvlan link is created  with
+MACVLAN_MODE_SOURCE mode and MACVLAN_MACADDR_ADD (or
+MACVLAN_MACADDR_SET) parameter, lower device already has a macvlan
+port and register_netdevice() called from macvlan_common_newlink()
+fails (e.g. because of the invalid link name).
+
+In this case macvlan_hash_add_source is called from
+macvlan_change_sources() / macvlan_common_newlink():
+
+This adds a reference to vlan to the port's vlan_source_hash using
+macvlan_source_entry.
+
+vlan is a pointer to the priv data of the link that is being created.
+
+When register_netdevice() fails, the error is returned from
+macvlan_newlink() to rtnl_newlink_create():
+
+        if (ops->newlink)
+                err = ops->newlink(dev, &params, extack);
+        else
+                err = register_netdevice(dev);
+        if (err < 0) {
+                free_netdev(dev);
+                goto out;
+        }
+
+and free_netdev() is called, causing a kvfree() on the struct
+net_device that is still referenced in the source entry attached to
+the lower device's macvlan port.
+
+Now all packets sent on the macvlan port with a matching source mac
+address will trigger a use-after-free in macvlan_forward_source().
+
+</quote valis>
+
+With all that, my fix is to make sure we call macvlan_flush_sources()
+regardless of @create value whenever "goto destroy_macvlan_port;"
+path is taken.
+
+Many thanks to valis for following up on this issue.
+
+Fixes: aa5fd0fb7748 ("driver: macvlan: Destroy new macvlan port if macvlan_common_newlink failed.")
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Reported-by: valis <sec@valis.email>
+Reported-by: syzbot+7182fbe91e58602ec1fe@syzkaller.appspotmail.com
+Closes: https: //lore.kernel.org/netdev/695fb1e8.050a0220.1c677c.039f.GAE@google.com/T/#u
+Cc: Boudewijn van der Heide <boudewijn@delta-utec.com>
+Link: https://patch.msgid.link/20260129204359.632556-1-edumazet@google.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/phy/sfp.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/net/macvlan.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/phy/sfp.c b/drivers/net/phy/sfp.c
-index 47f095bd91cea..3e023723887c4 100644
---- a/drivers/net/phy/sfp.c
-+++ b/drivers/net/phy/sfp.c
-@@ -479,6 +479,8 @@ static void sfp_quirk_ubnt_uf_instant(const struct sfp_eeprom_id *id,
- 	linkmode_zero(caps->link_modes);
- 	linkmode_set_bit(ETHTOOL_LINK_MODE_1000baseX_Full_BIT,
- 			 caps->link_modes);
-+	phy_interface_zero(caps->interfaces);
-+	__set_bit(PHY_INTERFACE_MODE_1000BASEX, caps->interfaces);
+diff --git a/drivers/net/macvlan.c b/drivers/net/macvlan.c
+index b4df7e184791d..c509228be84d1 100644
+--- a/drivers/net/macvlan.c
++++ b/drivers/net/macvlan.c
+@@ -1567,9 +1567,10 @@ int macvlan_common_newlink(struct net_device *dev,
+ 	/* the macvlan port may be freed by macvlan_uninit when fail to register.
+ 	 * so we destroy the macvlan port only when it's valid.
+ 	 */
+-	if (create && macvlan_port_get_rtnl(lowerdev)) {
++	if (macvlan_port_get_rtnl(lowerdev)) {
+ 		macvlan_flush_sources(port, vlan);
+-		macvlan_port_destroy(port->dev);
++		if (create)
++			macvlan_port_destroy(port->dev);
+ 	}
+ 	return err;
  }
- 
- #define SFP_QUIRK(_v, _p, _s, _f) \
 -- 
 2.51.0
 
