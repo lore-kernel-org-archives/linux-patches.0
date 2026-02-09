@@ -1,39 +1,47 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA2F137AA6B;
-	Mon,  9 Feb 2026 14:36:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C479125B2;
+	Mon,  9 Feb 2026 14:36:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770647770; cv=none; b=IsjCRkm+0aACagIcNGNtH3O6UiPoIplcdS9fqmvTgcJzGrZ3ZWyjdqMWY4Aj3LXGotd2vK+l5LAmQ1xfjtPzn1agP1LxTLwn12p+7LoTY1lGrq65C950mo1yO5oM9ft8NZGem6ahdCk/sL5o+Q3JYRZLnaEeMvqta7bMm5aRtcQ=
+	t=1770647774; cv=none; b=H16fZTqayO5A9Ickc+5P52tLlq4SHIxMmRqRr94ikjmwiL3ygMFyLgKNzT7DyJ8lnjWcXCMQ/t7Ww1U515Hb8KBf3AMAyXFUQsplaFO7MAOBkpzXqbzPLzeei9RHJTr8mSVvtI5F/EtAEGyGuVGXdK6gRMV/Q5ZekGsUxkQWwWA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770647770; c=relaxed/simple;
-	bh=Y8bTsl91ZMoRE0Y2dGskOww6PvcjW5bDWyIyt1xq/WY=;
+	s=arc-20240116; t=1770647774; c=relaxed/simple;
+	bh=iQQyQeccomaOLttv2iYnyx4rtnpAl+8/eMgATNtWw0s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bmEQJmAdg5DNUAj1wqogJe7o+Y1irCke/Y6GQF9lACLctWYy9e4b65xkoBOJi7PU4p5wSmk6qlSvY9HPX/ebWzgfYLcCRr7TeIlmsqaTbgZtePMhK103twIEQBVQpziEo2saGPBK3O+xzThfbugqAROAuK1jj0dMILMQPr0Ct1c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xT6ifQ8B; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=c6sjiCzbzV/zj/NmB/Nq6NWfcTiQEnmHtp2LKv6vqgU4xC18m23eU76zOGi/KpZHH6KkH/6pvzUJvmBKn86XLX/rkenNoYLrNTQqojiqksAhJiZMAnyXSLK3MbvLIz0+G9vx5pyD2hkefxaiX5zpoZ+JsTMjTRr8BS8mDIFACIE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pUy2wXXg; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xT6ifQ8B"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B559C116C6;
-	Mon,  9 Feb 2026 14:36:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pUy2wXXg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B7B5C116C6;
+	Mon,  9 Feb 2026 14:36:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770647770;
-	bh=Y8bTsl91ZMoRE0Y2dGskOww6PvcjW5bDWyIyt1xq/WY=;
+	s=korg; t=1770647774;
+	bh=iQQyQeccomaOLttv2iYnyx4rtnpAl+8/eMgATNtWw0s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xT6ifQ8BNH5zWKBJfnA4OMUwEsaZHqpLv7WFk4/vlpAu9g2e0IbdQjERqGKcYfLu9
-	 csJLznhfuPDI9+Wfu9XU6CtphIHdt5mGL26B+XCraSCVtGDrGzXguBNNXFDgQdxNYl
-	 ppf2BqmyJg90IOvJm8JoH1DTOO6CyDPvfuuycV48=
+	b=pUy2wXXgQ7TscITkmbuERCwkHWNRvJdxzyaNUk6UpEE5kTz6NXYyckY3+v7iFrHzB
+	 eenpkP91csAce7Q3B1o1g0JYfw9alcKiFmgRFPuWTHxOnt81+ioGVj1m6Vf7BfhzNh
+	 9c84BMsSpzwuTw4ZelyJZWmUSX8QvV1e25WZIkAY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ming Lei <ming.lei@redhat.com>,
-	Caleb Sander Mateos <csander@purestorage.com>,
-	Jens Axboe <axboe@kernel.dk>,
-	Alva Lan <alvalan9@foxmail.com>
-Subject: [PATCH 6.12 023/113] ublk: fix deadlock when reading partition table
-Date: Mon,  9 Feb 2026 15:22:52 +0100
-Message-ID: <20260209142311.042505770@linuxfoundation.org>
+	Ryusuke Konishi <konishi.ryusuke@gmail.com>,
+	Andrew Cooper <andrew.cooper3@citrix.com>,
+	"Borislav Petkov (AMD)" <bp@alien8.de>,
+	Alexander Potapenko <glider@google.com>,
+	Marco Elver <elver@google.com>,
+	Dmitry Vyukov <dvyukov@google.com>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	Ingo Molnar <mingo@redhat.com>,
+	Dave Hansen <dave.hansen@linux.intel.com>,
+	"H. Peter Anvin" <hpa@zytor.com>,
+	Jann Horn <jannh@google.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.12 003/113] x86/kfence: fix booting on 32bit non-PAE systems
+Date: Mon,  9 Feb 2026 15:22:32 +0100
+Message-ID: <20260209142310.331300876@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260209142310.204833231@linuxfoundation.org>
 References: <20260209142310.204833231@linuxfoundation.org>
@@ -52,107 +60,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ming Lei <ming.lei@redhat.com>
+From: Andrew Cooper <andrew.cooper3@citrix.com>
 
-commit c258f5c4502c9667bccf5d76fa731ab9c96687c1 upstream.
+commit 16459fe7e0ca6520a6e8f603de4ccd52b90fd765 upstream.
 
-When one process(such as udev) opens ublk block device (e.g., to read
-the partition table via bdev_open()), a deadlock[1] can occur:
+The original patch inverted the PTE unconditionally to avoid
+L1TF-vulnerable PTEs, but Linux doesn't make this adjustment in 2-level
+paging.
 
-1. bdev_open() grabs disk->open_mutex
-2. The process issues read I/O to ublk backend to read partition table
-3. In __ublk_complete_rq(), blk_update_request() or blk_mq_end_request()
-   runs bio->bi_end_io() callbacks
-4. If this triggers fput() on file descriptor of ublk block device, the
-   work may be deferred to current task's task work (see fput() implementation)
-5. This eventually calls blkdev_release() from the same context
-6. blkdev_release() tries to grab disk->open_mutex again
-7. Deadlock: same task waiting for a mutex it already holds
+Adjust the logic to use the flip_protnone_guard() helper, which is a nop
+on 2-level paging but inverts the address bits in all other paging modes.
 
-The fix is to run blk_update_request() and blk_mq_end_request() with bottom
-halves disabled. This forces blkdev_release() to run in kernel work-queue
-context instead of current task work context, and allows ublk server to make
-forward progress, and avoids the deadlock.
+This doesn't matter for the Xen aspect of the original change.  Linux no
+longer supports running 32bit PV under Xen, and Xen doesn't support
+running any 32bit PV guests without using PAE paging.
 
-Fixes: 71f28f3136af ("ublk_drv: add io_uring based userspace block driver")
-Link: https://github.com/ublk-org/ublksrv/issues/170 [1]
-Signed-off-by: Ming Lei <ming.lei@redhat.com>
-Reviewed-by: Caleb Sander Mateos <csander@purestorage.com>
-[axboe: rewrite comment in ublk]
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
-[ The fix omits the change in __ublk_do_auto_buf_reg() since this function
-  doesn't exist in Linux 6.12. ]
-Signed-off-by: Alva Lan <alvalan9@foxmail.com>
+Link: https://lkml.kernel.org/r/20260126211046.2096622-1-andrew.cooper3@citrix.com
+Fixes: b505f1944535 ("x86/kfence: avoid writing L1TF-vulnerable PTEs")
+Reported-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
+Closes: https://lore.kernel.org/lkml/CAKFNMokwjw68ubYQM9WkzOuH51wLznHpEOMSqtMoV1Rn9JV_gw@mail.gmail.com/
+Signed-off-by: Andrew Cooper <andrew.cooper3@citrix.com>
+Tested-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
+Tested-by: Borislav Petkov (AMD) <bp@alien8.de>
+Cc: Alexander Potapenko <glider@google.com>
+Cc: Marco Elver <elver@google.com>
+Cc: Dmitry Vyukov <dvyukov@google.com>
+Cc: Thomas Gleixner <tglx@linutronix.de>
+Cc: Ingo Molnar <mingo@redhat.com>
+Cc: Dave Hansen <dave.hansen@linux.intel.com>
+Cc: "H. Peter Anvin" <hpa@zytor.com>
+Cc: Jann Horn <jannh@google.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/block/ublk_drv.c |   30 +++++++++++++++++++++++++++---
- 1 file changed, 27 insertions(+), 3 deletions(-)
+ arch/x86/include/asm/kfence.h |    7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
---- a/drivers/block/ublk_drv.c
-+++ b/drivers/block/ublk_drv.c
-@@ -1020,6 +1020,13 @@ static inline bool ubq_daemon_is_dying(s
- 	return ubq->ubq_daemon->flags & PF_EXITING;
- }
- 
-+static void ublk_end_request(struct request *req, blk_status_t error)
-+{
-+	local_bh_disable();
-+	blk_mq_end_request(req, error);
-+	local_bh_enable();
-+}
-+
- /* todo: handle partial completion */
- static inline void __ublk_complete_rq(struct request *req)
+--- a/arch/x86/include/asm/kfence.h
++++ b/arch/x86/include/asm/kfence.h
+@@ -42,7 +42,7 @@ static inline bool kfence_protect_page(u
  {
-@@ -1027,6 +1034,7 @@ static inline void __ublk_complete_rq(st
- 	struct ublk_io *io = &ubq->ios[req->tag];
- 	unsigned int unmapped_bytes;
- 	blk_status_t res = BLK_STS_OK;
-+	bool requeue;
+ 	unsigned int level;
+ 	pte_t *pte = lookup_address(addr, &level);
+-	pteval_t val;
++	pteval_t val, new;
  
- 	/* called from ublk_abort_queue() code path */
- 	if (io->flags & UBLK_IO_FLAG_ABORTED) {
-@@ -1064,14 +1072,30 @@ static inline void __ublk_complete_rq(st
- 	if (unlikely(unmapped_bytes < io->res))
- 		io->res = unmapped_bytes;
+ 	if (WARN_ON(!pte || level != PG_LEVEL_4K))
+ 		return false;
+@@ -57,11 +57,12 @@ static inline bool kfence_protect_page(u
+ 		return true;
  
--	if (blk_update_request(req, BLK_STS_OK, io->res))
-+	/*
-+	 * Run bio->bi_end_io() with softirqs disabled. If the final fput
-+	 * happens off this path, then that will prevent ublk's blkdev_release()
-+	 * from being called on current's task work, see fput() implementation.
-+	 *
-+	 * Otherwise, ublk server may not provide forward progress in case of
-+	 * reading the partition table from bdev_open() with disk->open_mutex
-+	 * held, and causes dead lock as we could already be holding
-+	 * disk->open_mutex here.
-+	 *
-+	 * Preferably we would not be doing IO with a mutex held that is also
-+	 * used for release, but this work-around will suffice for now.
-+	 */
-+	local_bh_disable();
-+	requeue = blk_update_request(req, BLK_STS_OK, io->res);
-+	local_bh_enable();
-+	if (requeue)
- 		blk_mq_requeue_request(req, true);
- 	else
- 		__blk_mq_end_request(req, BLK_STS_OK);
+ 	/*
+-	 * Otherwise, invert the entire PTE.  This avoids writing out an
++	 * Otherwise, flip the Present bit, taking care to avoid writing an
+ 	 * L1TF-vulnerable PTE (not present, without the high address bits
+ 	 * set).
+ 	 */
+-	set_pte(pte, __pte(~val));
++	new = val ^ _PAGE_PRESENT;
++	set_pte(pte, __pte(flip_protnone_guard(val, new, PTE_PFN_MASK)));
  
- 	return;
- exit:
--	blk_mq_end_request(req, res);
-+	ublk_end_request(req, res);
- }
- 
- static void ublk_complete_rq(struct kref *ref)
-@@ -1149,7 +1173,7 @@ static inline void __ublk_abort_rq(struc
- 	if (ublk_nosrv_dev_should_queue_io(ubq->dev))
- 		blk_mq_requeue_request(rq, false);
- 	else
--		blk_mq_end_request(rq, BLK_STS_IOERR);
-+		ublk_end_request(rq, BLK_STS_IOERR);
- }
- 
- static inline void __ublk_rq_task_work(struct request *req,
+ 	/*
+ 	 * If the page was protected (non-present) and we're making it
 
 
