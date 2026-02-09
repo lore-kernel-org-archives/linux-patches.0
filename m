@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3BEEE37A496;
-	Mon,  9 Feb 2026 14:28:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9AB8E35CB6B;
+	Mon,  9 Feb 2026 14:28:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770647319; cv=none; b=Lq24TyiRcEKyxhQREAUSwvWe1qTHSi6Fkkv5PDlYlAagRnw0twrQU1UN+jNQRAKJrWEAKyo6NiKZDRBzu8gweK4q1LJ3Ud/ufvgdfMnZtaEqK1gPUXpbY/H5pgCbcQ1VZACB1fgRu2VTRbV3w4I7I4qV33yjhQuk42sAVn7loXg=
+	t=1770647322; cv=none; b=dPrghRHW9Uw0oGTOrLPapdCr155UJ6FoYzp7+xypY0CJuFiFGjSkk9LqpOTqNe5nP8j1nIh5WxawFLrwvBSFzQTM6rO0syh42bLrM0H5YqCNohB9z+nVOwOn3XRoHwnWrN8PcSkTBfHOicLcZMrwB4b0RT2Uegh1gRTEZNRV5HA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770647319; c=relaxed/simple;
-	bh=8OokoZKhEEDt69wrdUswp54WQnDdHW4YxBRRdRG26w4=;
+	s=arc-20240116; t=1770647322; c=relaxed/simple;
+	bh=YHDpjUuelhQn3IOp1rdzjb3Fi56xr1OKShgED866lPw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HF5IgQ5irORqCP3MTRyDm7hVXqI/IBWRGqj1267jthWX7b06OHWoZv0/OUlpoZ9makg8R95H+sGhL3VBma+xoZH+O7UUJuTG45oC2xG9Dyj55fuRTSjBoPWX1A6Gs+dP7B+RQDd5R6CGk65WcrumAQWzORyqzSap+ACMxrkkBpk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=e1IaUKir; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bXFCXG9Zw3i81B224hC/JccEnMNKKuu68PoFKjzWAMRMQic2XWe5kHWe+fMDbU0QQvjonjehQdZeFxAXbH0vMcrTjnt05PSLeoUmgX7ywvYj+eYzGRKSS1zAQnnn4n/sImbgsGBlr2RyaKzW6El/DHWmia/io7HEXirUnsNKPXI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kyl3aoJE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="e1IaUKir"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B7476C116C6;
-	Mon,  9 Feb 2026 14:28:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kyl3aoJE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 090F7C116C6;
+	Mon,  9 Feb 2026 14:28:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770647319;
-	bh=8OokoZKhEEDt69wrdUswp54WQnDdHW4YxBRRdRG26w4=;
+	s=korg; t=1770647322;
+	bh=YHDpjUuelhQn3IOp1rdzjb3Fi56xr1OKShgED866lPw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=e1IaUKirxTK7lrXmqt2AQwQ6Z9Sx2OV+7sdK5qymqQzo008h13gD7Y21HQSSz0sta
-	 KJ0zN7zeG6T4bfgdwjs3PXPO84ZFj/tIaNpPvJZxpF8ineqVzPQOH936Adao2sBWcx
-	 f1i4pRTDiVQBXGerBolOowfOjOUUm5lla+DoMXaU=
+	b=kyl3aoJENoOISjNknISsYs0JyQvBwivc+IuJZa7lD8UP6hFbah13eTkWRIy12dIqD
+	 R18qg5sFX2qtzuXczQKsoOKu/Ok2ztM6gptlrl3X4a5e9Pgj3sz6eob5oIqwBw9qo8
+	 1n6xGU89JSMvm/eI04KaYXy/8TkcX8PJafhafFy0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Filipe Manana <fdmanana@suse.com>,
-	David Sterba <dsterba@suse.com>,
+	Lukas Gerlach <lukas.gerlach@cispa.de>,
+	Paul Walmsley <pjw@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 065/175] btrfs: fix reservation leak in some error paths when inserting inline extent
-Date: Mon,  9 Feb 2026 15:22:18 +0100
-Message-ID: <20260209142322.796102600@linuxfoundation.org>
+Subject: [PATCH 6.18 066/175] riscv: Sanitize syscall table indexing under speculation
+Date: Mon,  9 Feb 2026 15:22:19 +0100
+Message-ID: <20260209142322.831507209@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260209142320.474120190@linuxfoundation.org>
 References: <20260209142320.474120190@linuxfoundation.org>
@@ -51,65 +51,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Filipe Manana <fdmanana@suse.com>
+From: Lukas Gerlach <lukas.gerlach@cispa.de>
 
-[ Upstream commit c1c050f92d8f6aac4e17f7f2230160794fceef0c ]
+[ Upstream commit 25fd7ee7bf58ac3ec7be3c9f82ceff153451946c ]
 
-If we fail to allocate a path or join a transaction, we return from
-__cow_file_range_inline() without freeing the reserved qgroup data,
-resulting in a leak. Fix this by ensuring we call btrfs_qgroup_free_data()
-in such cases.
+The syscall number is a user-controlled value used to index into the
+syscall table. Use array_index_nospec() to clamp this value after the
+bounds check to prevent speculative out-of-bounds access and subsequent
+data leakage via cache side channels.
 
-Signed-off-by: Filipe Manana <fdmanana@suse.com>
-Reviewed-by: David Sterba <dsterba@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Signed-off-by: Lukas Gerlach <lukas.gerlach@cispa.de>
+Link: https://patch.msgid.link/20251218191332.35849-3-lukas.gerlach@cispa.de
+Signed-off-by: Paul Walmsley <pjw@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/inode.c | 16 ++++++++++------
- 1 file changed, 10 insertions(+), 6 deletions(-)
+ arch/riscv/kernel/traps.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/fs/btrfs/inode.c b/fs/btrfs/inode.c
-index e72c69f77ce4b..76a66c74249a2 100644
---- a/fs/btrfs/inode.c
-+++ b/fs/btrfs/inode.c
-@@ -614,19 +614,22 @@ static noinline int __cow_file_range_inline(struct btrfs_inode *inode,
- 	struct btrfs_drop_extents_args drop_args = { 0 };
- 	struct btrfs_root *root = inode->root;
- 	struct btrfs_fs_info *fs_info = root->fs_info;
--	struct btrfs_trans_handle *trans;
-+	struct btrfs_trans_handle *trans = NULL;
- 	u64 data_len = (compressed_size ?: size);
- 	int ret;
- 	struct btrfs_path *path;
+diff --git a/arch/riscv/kernel/traps.c b/arch/riscv/kernel/traps.c
+index 80230de167def..47afea4ff1a8d 100644
+--- a/arch/riscv/kernel/traps.c
++++ b/arch/riscv/kernel/traps.c
+@@ -339,8 +339,10 @@ void do_trap_ecall_u(struct pt_regs *regs)
  
- 	path = btrfs_alloc_path();
--	if (!path)
--		return -ENOMEM;
-+	if (!path) {
-+		ret = -ENOMEM;
-+		goto out;
-+	}
+ 		add_random_kstack_offset();
  
- 	trans = btrfs_join_transaction(root);
- 	if (IS_ERR(trans)) {
--		btrfs_free_path(path);
--		return PTR_ERR(trans);
-+		ret = PTR_ERR(trans);
-+		trans = NULL;
-+		goto out;
- 	}
- 	trans->block_rsv = &inode->block_rsv;
+-		if (syscall >= 0 && syscall < NR_syscalls)
++		if (syscall >= 0 && syscall < NR_syscalls) {
++			syscall = array_index_nospec(syscall, NR_syscalls);
+ 			syscall_handler(regs, syscall);
++		}
  
-@@ -677,7 +680,8 @@ static noinline int __cow_file_range_inline(struct btrfs_inode *inode,
- 	if (ret <= 0)
- 		btrfs_qgroup_free_data(inode, NULL, 0, fs_info->sectorsize, NULL);
- 	btrfs_free_path(path);
--	btrfs_end_transaction(trans);
-+	if (trans)
-+		btrfs_end_transaction(trans);
- 	return ret;
- }
- 
+ 		/*
+ 		 * Ultimately, this value will get limited by KSTACK_OFFSET_MAX(),
 -- 
 2.51.0
 
