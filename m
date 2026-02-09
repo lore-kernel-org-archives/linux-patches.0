@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6491285073;
-	Mon,  9 Feb 2026 14:48:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31D73285073;
+	Mon,  9 Feb 2026 14:48:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770648481; cv=none; b=WGFMhEv/8x06FAH5NQu5Lc9dREZl6KMtc22hlWZHtC90bL7k4AQQ47d1vVjwB6Mx42NIIZHQpmQ26r131beCwaO8QbyPwxhrsER3x+Yg9IQh9oMxS2ejyh1uBe05XMbzzyWjJBlh8Xq9gxuAKcuki87Q07Xq8zDkCuxvWAhrOMY=
+	t=1770648485; cv=none; b=sJdzMZZcFITt959Q3NxY4j60tby4+6C6/xRMdxd3rbT7OxbJ373A007unMPmkEpBrbPvRIPRQkQSE07j4JmMUzJlNQMDJy+Ve+C2a3Pd7b6tXXxW8GB1Pp3m/oTCTH5+gwCI8HMtlSYcjt2CnO8Eq12nht1ytEnTT7pkBVmPeaE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770648481; c=relaxed/simple;
-	bh=P6N9AuBPWZnTfQBCmtGOgOiPo+vrD/AZ7cH6YyCXUO4=;
+	s=arc-20240116; t=1770648485; c=relaxed/simple;
+	bh=wD9vljkyS1tgRWZhVreH4F2X7QQasQyh9pjFIBfJdus=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZgKnpoSDJxzp+cqP5fr4q2tefo/MbzsBQ2FLzoYpf3ACd7QpFCdKlfz5Nc2OGZwvcJLhdpvkCKnKUUO93IukqaiyuD04Ab7GAXwkVq5o6Cs79VT2I61gjFpdWjEzNfsUGdMxtwSLTF5PE4koFg2s4gjj7M1pz9mwTNMd6Zp/3Ns=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TEhY/EVA; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LwnHphYOjQgrKw1fvShDIvMdM/Y8f2pRUZZuU+tzIv7+tIzQCBSmQr5D1PEFf9DFga2s3iel5zO/Aq8MpBL5P/EAsUlISfnu/382F8Cuk9SULAFQbWQ3UTdPatW5HszZ1F5Sl+U9fSib8SfkG9VBGDkQ3J4n6G+U+hpU+wM65G4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HnuKXvv+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TEhY/EVA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DABABC19422;
-	Mon,  9 Feb 2026 14:48:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HnuKXvv+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 41DE8C116C6;
+	Mon,  9 Feb 2026 14:48:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770648481;
-	bh=P6N9AuBPWZnTfQBCmtGOgOiPo+vrD/AZ7cH6YyCXUO4=;
+	s=korg; t=1770648484;
+	bh=wD9vljkyS1tgRWZhVreH4F2X7QQasQyh9pjFIBfJdus=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TEhY/EVA+QMFjq0+ovFofwsSGsM1bINisQdntmwsv7qH4RW71T3WZVH/9q/AZhR1f
-	 e9B5i5gt7rgF4cWRSnietH+K+mdtMhVMKBuevxmuurvciwTkXzQI7eksZsxGR4/Orj
-	 GUAx5LAQLh2TVEAStAJH5CHFqWnPvJleh2L4ps08=
+	b=HnuKXvv+CaJdWvy9yZ3QzG52+0jJbuC6pCmPmb02WF+ToEhFJYMF5+HhXGwYDr0HJ
+	 xjVAyUcmpOIsLKQqVA6+5b6q7AXv+SQKnQS8PX2ZTyuN9UbcqqMyhXcc7emoAqY5Fm
+	 vf0/0oAhAaQ7CgmOO0moO2CyUhPlGC/2dY2ioXFs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kaushlendra Kumar <kaushlendra.kumar@intel.com>,
-	Mark Brown <broonie@kernel.org>,
+	Veerendranath Jakkam <veerendranath.jakkam@oss.qualcomm.com>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 49/86] regmap: maple: free entry on mas_store_gfp() failure
-Date: Mon,  9 Feb 2026 15:24:12 +0100
-Message-ID: <20260209142306.546010997@linuxfoundation.org>
+Subject: [PATCH 6.6 50/86] wifi: cfg80211: Fix bitrate calculation overflow for HE rates
+Date: Mon,  9 Feb 2026 15:24:13 +0100
+Message-ID: <20260209142306.582605108@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260209142304.770150175@linuxfoundation.org>
 References: <20260209142304.770150175@linuxfoundation.org>
@@ -51,49 +51,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kaushlendra Kumar <kaushlendra.kumar@intel.com>
+From: Veerendranath Jakkam <veerendranath.jakkam@oss.qualcomm.com>
 
-[ Upstream commit f3f380ce6b3d5c9805c7e0b3d5bc28d9ec41e2e8 ]
+[ Upstream commit a3034bf0746d88a00cceda9541534a5721445a24 ]
 
-regcache_maple_write() allocates a new block ('entry') to merge
-adjacent ranges and then stores it with mas_store_gfp().
-When mas_store_gfp() fails, the new 'entry' remains allocated and
-is never freed, leaking memory.
+An integer overflow occurs in cfg80211_calculate_bitrate_he() when
+calculating bitrates for high throughput HE configurations.
+For example, with 160 MHz bandwidth, HE-MCS 13, HE-NSS 4, and HE-GI 0,
+the multiplication (result * rate->nss) overflows the 32-bit 'result'
+variable before division by 8, leading to significantly underestimated
+bitrate values.
 
-Free 'entry' on the failure path; on success continue freeing the
-replaced neighbor blocks ('lower', 'upper').
+The overflow occurs because the NSS multiplication operates on a 32-bit
+integer that cannot accommodate intermediate values exceeding
+4,294,967,295. When overflow happens, the value wraps around, producing
+incorrect bitrates for high MCS and NSS combinations.
 
-Signed-off-by: Kaushlendra Kumar <kaushlendra.kumar@intel.com>
-Link: https://patch.msgid.link/20260105031820.260119-1-kaushlendra.kumar@intel.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fix this by utilizing the 64-bit 'tmp' variable for the NSS
+multiplication and subsequent divisions via do_div(). This approach
+preserves full precision throughout the entire calculation, with the
+final value assigned to 'result' only after completing all operations.
+
+Signed-off-by: Veerendranath Jakkam <veerendranath.jakkam@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260109-he_bitrate_overflow-v1-1-95575e466b6e@oss.qualcomm.com
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/base/regmap/regcache-maple.c | 11 ++++++-----
- 1 file changed, 6 insertions(+), 5 deletions(-)
+ net/wireless/util.c | 8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/base/regmap/regcache-maple.c b/drivers/base/regmap/regcache-maple.c
-index fb5761a5ef6ee..86de71ce2c191 100644
---- a/drivers/base/regmap/regcache-maple.c
-+++ b/drivers/base/regmap/regcache-maple.c
-@@ -96,12 +96,13 @@ static int regcache_maple_write(struct regmap *map, unsigned int reg,
+diff --git a/net/wireless/util.c b/net/wireless/util.c
+index 24e5af65da58e..640ec502e82d2 100644
+--- a/net/wireless/util.c
++++ b/net/wireless/util.c
+@@ -1563,12 +1563,14 @@ static u32 cfg80211_calculate_bitrate_he(struct rate_info *rate)
+ 	tmp = result;
+ 	tmp *= SCALE;
+ 	do_div(tmp, mcs_divisors[rate->mcs]);
+-	result = tmp;
  
- 	mas_unlock(&mas);
+ 	/* and take NSS, DCM into account */
+-	result = (result * rate->nss) / 8;
++	tmp *= rate->nss;
++	do_div(tmp, 8);
+ 	if (rate->he_dcm)
+-		result /= 2;
++		do_div(tmp, 2);
++
++	result = tmp;
  
--	if (ret == 0) {
--		kfree(lower);
--		kfree(upper);
-+	if (ret) {
-+		kfree(entry);
-+		return ret;
- 	}
--	
--	return ret;
-+	kfree(lower);
-+	kfree(upper);
-+	return 0;
+ 	return result / 10000;
  }
- 
- static int regcache_maple_drop(struct regmap *map, unsigned int min,
 -- 
 2.51.0
 
