@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E089D285060;
-	Mon,  9 Feb 2026 14:32:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 456D41DE8AD;
+	Mon,  9 Feb 2026 14:32:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770647528; cv=none; b=ZzrlUFByMp2vprGqU+3ItFcrEbmt0NSrNjBb4bNllRg7jDXqTZ1nFKLDn54QcBsOMVfUPakvwnLUTNAqZ62X6UmW7ALSufn4hhkaIaSEi/4t0Px0gcxKjDYO4Ru3+I9DpcFSGbFiGEjdxYYbkhQw3rnF2I4VLyRWn/HRupW14Qo=
+	t=1770647531; cv=none; b=FIssGUPgA4bjz5kCJ5eg4H59bEVk0B3udloHCP0UixwMSi3xQVdEWIciIVlZgQmBqz6k8GnZ1pUL6gJU5w9gt4As2fzu12FOyTfirNSrlRLZe1H5DRCoK24FTSe1VwtFDR8oPrcX17LI1N5LzMUT2bfoekMR8LJBoC1cVdfPvho=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770647528; c=relaxed/simple;
-	bh=07mAElcJ9tyawnf/mkYp+AaPpYvofoidVPv3T5RDf7Y=;
+	s=arc-20240116; t=1770647531; c=relaxed/simple;
+	bh=QMo9yoC42RnsChsb7cvgQdxAMrxxpv9YKtofBSpH7D0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=inz64DVlCnkG6F6TEjk7fybUo85BEBIk3A6nnSU/DXnKioCFLNoLdFjl+GWkqjpi6tjG104juMyX33dATQp8ghQ0SFVbEwnje28k8mucNnZIlbRMU7FM/lFCsvFqfZf9yjwbRjVOoPALHtf7KkfK5OlBbAZP0sb3HEnFbV3lP/k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EBJd9iH5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jg+++yn8435h+QsPJwedhNV4MJofnE5MYKEnCNJys4Tp0jtNq9mCgLrI3r3UsS+bhfLBb1WErwG6fJpNjOVsyTAWu5pOudPp+iD2v4JC3lNPQ6U5WJTHw6jPSnV7+nmK24bfuxvbhAlPL7YY3USwouMA8Eva/4g5zu2nVh/C7iI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ERHiVYQA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EBJd9iH5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 54213C16AAE;
-	Mon,  9 Feb 2026 14:32:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ERHiVYQA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 82066C116C6;
+	Mon,  9 Feb 2026 14:32:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770647527;
-	bh=07mAElcJ9tyawnf/mkYp+AaPpYvofoidVPv3T5RDf7Y=;
+	s=korg; t=1770647530;
+	bh=QMo9yoC42RnsChsb7cvgQdxAMrxxpv9YKtofBSpH7D0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EBJd9iH5kamYrTyWihmg2sgT74Amdgi0yDnBzPS67NEJtD3BnK1LuH6x+58AZLIh+
-	 HtRIypc3OYS44tlx9viE0slU+ACqLTv5yZq05DqqX7Vb5zHXzagPfSg2uUgPwVYezk
-	 AuiACbDw8ad6eH94RYJNi3mruk487iVJFx1A/5hw=
+	b=ERHiVYQA0ydr1Jr/ARpsf13+twhCS/LqqqGg5APb9WZjSNUJj2v5TOZFW3geavJ6d
+	 UvMljB6555EZgPY/3TyGD+9/MNVnZDAXUXl3giPXGMISx12zb4rnqPlfWGuTnsqweE
+	 R0LlsZPjWg3bSFOHrnsjKrGqUR3UfIT02G0wB/yg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Radhi Bajahaw <bajahawradhi@gmail.com>,
+	Dimitrios Katsaros <patcherwork@gmail.com>,
+	Sascha Hauer <s.hauer@pengutronix.de>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 092/175] ASoC: amd: yc: Fix microphone on ASUS M6500RE
-Date: Mon,  9 Feb 2026 15:22:45 +0100
-Message-ID: <20260209142323.739678849@linuxfoundation.org>
+Subject: [PATCH 6.18 093/175] ASoC: tlv320adcx140: Propagate error codes during probe
+Date: Mon,  9 Feb 2026 15:22:46 +0100
+Message-ID: <20260209142323.774269652@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260209142320.474120190@linuxfoundation.org>
 References: <20260209142320.474120190@linuxfoundation.org>
@@ -51,39 +52,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Radhi Bajahaw <bajahawradhi@gmail.com>
+From: Dimitrios Katsaros <patcherwork@gmail.com>
 
-[ Upstream commit 8e29db1b08808f709231e6fd4c79dcdee5b17a17 ]
+[ Upstream commit d89aad92cfd15edbd704746f44c98fe687f9366f ]
 
-Add DMI match for ASUSTeK COMPUTER INC. M6500RE to enable the
-internal microphone.
+When scanning for the reset pin, we could get an -EPROBE_DEFER.
+The driver would assume that no reset pin had been defined,
+which would mean that the chip would never be powered.
 
-Signed-off-by: Radhi Bajahaw <bajahawradhi@gmail.com>
-Link: https://patch.msgid.link/20260112203814.155-1-bajahawradhi@gmail.com
+Now we both respect any error we get from devm_gpiod_get_optional.
+We also now properly report the missing GPIO definition when
+'gpio_reset' is NULL.
+
+Signed-off-by: Dimitrios Katsaros <patcherwork@gmail.com>
+Signed-off-by: Sascha Hauer <s.hauer@pengutronix.de>
+Link: https://patch.msgid.link/20260113-sound-soc-codecs-tvl320adcx140-v4-3-8f7ecec525c8@pengutronix.de
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/amd/yc/acp6x-mach.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ sound/soc/codecs/tlv320adcx140.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/sound/soc/amd/yc/acp6x-mach.c b/sound/soc/amd/yc/acp6x-mach.c
-index c0a8afb42e165..c4a4a06528b45 100644
---- a/sound/soc/amd/yc/acp6x-mach.c
-+++ b/sound/soc/amd/yc/acp6x-mach.c
-@@ -416,6 +416,13 @@ static const struct dmi_system_id yc_acp_quirk_table[] = {
- 			DMI_MATCH(DMI_PRODUCT_NAME, "M6500RC"),
- 		}
- 	},
-+	{
-+		.driver_data = &acp6x_card,
-+		.matches = {
-+			DMI_MATCH(DMI_BOARD_VENDOR, "ASUSTeK COMPUTER INC."),
-+			DMI_MATCH(DMI_PRODUCT_NAME, "M6500RE"),
-+		}
-+	},
- 	{
- 		.driver_data = &acp6x_card,
- 		.matches = {
+diff --git a/sound/soc/codecs/tlv320adcx140.c b/sound/soc/codecs/tlv320adcx140.c
+index 62d936c2838c9..1565727ca2f3d 100644
+--- a/sound/soc/codecs/tlv320adcx140.c
++++ b/sound/soc/codecs/tlv320adcx140.c
+@@ -1156,6 +1156,9 @@ static int adcx140_i2c_probe(struct i2c_client *i2c)
+ 	adcx140->gpio_reset = devm_gpiod_get_optional(adcx140->dev,
+ 						      "reset", GPIOD_OUT_LOW);
+ 	if (IS_ERR(adcx140->gpio_reset))
++		return dev_err_probe(&i2c->dev, PTR_ERR(adcx140->gpio_reset),
++				     "Failed to get Reset GPIO\n");
++	if (!adcx140->gpio_reset)
+ 		dev_info(&i2c->dev, "Reset GPIO not defined\n");
+ 
+ 	adcx140->supply_areg = devm_regulator_get_optional(adcx140->dev,
 -- 
 2.51.0
 
