@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 375C01AF0AF;
-	Mon,  9 Feb 2026 14:34:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD6AA1AF0AF;
+	Mon,  9 Feb 2026 14:34:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770647658; cv=none; b=MO98ykcfYZXSDsoGucXZ66D+fjdJtCuVb1T3HaWJLvtpeIQzS/hYboJGf8+b0DFgBk3DYS1cjCONEZCk0QFZw2IgFOKQsfJSsdUnIOYriBNDBMLVKPSCxtnK2Yke4M5oIo8o+mYnCLmYw3B26K9i1qFxirsK81IGlY8Hl/x03qc=
+	t=1770647661; cv=none; b=KEw9aWSP8EnpalMBnTbPYhWOR7UFG44oRoUyCe5XcvCVZeEj3lx7LKL9NDvK5OBKsOtCJG1fU1TWZdzHmP4O4Gpyv7r2tE/wQ/zdb328fRAiDyLdXlPOKMdhYE2PQ5LTxtlbjxPvzugKHdI8UL3xp1KzrQizGr65Q6wPBrPWtNA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770647658; c=relaxed/simple;
-	bh=R6X/OJx+M/qsMrNvDN/5Ahrjtfks7w8+zPb2S6i2Ep4=;
+	s=arc-20240116; t=1770647661; c=relaxed/simple;
+	bh=InDME7NMCaKRiVIDo+77XkZgybEdtAAKXKbnoWrPG3Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HEgRs2Uyb9eDUaPk1WlX1G/sGIsc4hcfM1bW9ir7gGL2iq7d9wjWkEa1p01k/baXrffjdoZsl9IiqsybvTjaMJzmK25Zwrxu+RVZVTfpEqbPH+sUChLQmmyse2+olFM+TaANei58SnCiR99W9IOvwz7GQECPxFO7JfNjYMk3quE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BdZYsZZ+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=eDbS+uUTgfhL5itNNFUa9DwYdmaFDOhFeOUc5ZUU7VuLPMYdPqbnHrL1OwhWOHo46aZHMy5yef9fMg8Q7jKeQ2oAzLeBzY+yMsc5gqG18K129PZFH4uuCLpuOwozpEkOIfof2HhBHv2kZLxFmJspkrJYvbbKxlnUWRMVBZz2kJY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qKmj4Z2d; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BdZYsZZ+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B84CAC116C6;
-	Mon,  9 Feb 2026 14:34:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qKmj4Z2d"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2EFE8C116C6;
+	Mon,  9 Feb 2026 14:34:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770647658;
-	bh=R6X/OJx+M/qsMrNvDN/5Ahrjtfks7w8+zPb2S6i2Ep4=;
+	s=korg; t=1770647661;
+	bh=InDME7NMCaKRiVIDo+77XkZgybEdtAAKXKbnoWrPG3Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BdZYsZZ+ebrQMHCEH0GpV0IhKGJvEmoxEesk/bIdpFZ5xxME2E5bLPdiYc/izkwBa
-	 UARv2PnsCIQVC2fPtxOLWlpcmRek4hF/SEKiBAkdEXFF7i+T9MfvqGtx7+cpStOpyP
-	 AloLpxGuqTU0WFbQfqiVtO0g7PCxZJh3VccJymws=
+	b=qKmj4Z2dNuwAEyLW3R7dUaHwRv9TJfhAA1p6ZlifBFgozjIRyWgywwujMuyDAiwRJ
+	 NOQ1SfMgYEYvb5R9QV4Q+nit0gojcu0r7iEm3W0Cbwylr/PoabC4WPgOL/u/XQngYM
+	 7ytrMSv3SPSPXn5E129NaKE+wVLhUWMr3KgFUK0M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	valis <sec@valis.email>,
-	syzbot+7182fbe91e58602ec1fe@syzkaller.appspotmail.com,
-	Boudewijn van der Heide <boudewijn@delta-utec.com>,
+	Simon Horman <horms@kernel.org>,
+	Zilin Guan <zilin@seu.edu.cn>,
+	Kory Maincent <kory.maincent@bootlin.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 132/175] macvlan: fix error recovery in macvlan_common_newlink()
-Date: Mon,  9 Feb 2026 15:23:25 +0100
-Message-ID: <20260209142325.259909044@linuxfoundation.org>
+Subject: [PATCH 6.18 123/175] net: liquidio: Fix off-by-one error in PF setup_nic_devices() cleanup
+Date: Mon,  9 Feb 2026 15:23:16 +0100
+Message-ID: <20260209142324.833776889@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260209142320.474120190@linuxfoundation.org>
 References: <20260209142320.474120190@linuxfoundation.org>
@@ -54,97 +53,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Zilin Guan <zilin@seu.edu.cn>
 
-[ Upstream commit f8db6475a83649689c087a8f52486fcc53e627e9 ]
+[ Upstream commit 8558aef4e8a1a83049ab906d21d391093cfa7e7f ]
 
-valis provided a nice repro to crash the kernel:
+In setup_nic_devices(), the initialization loop jumps to the label
+setup_nic_dev_free on failure. The current cleanup loop while(i--)
+skip the failing index i, causing a memory leak.
 
-ip link add p1 type veth peer p2
-ip link set address 00:00:00:00:00:20 dev p1
-ip link set up dev p1
-ip link set up dev p2
+Fix this by changing the loop to iterate from the current index i
+down to 0.
 
-ip link add mv0 link p2 type macvlan mode source
-ip link add invalid% link p2 type macvlan mode source macaddr add 00:00:00:00:00:20
+Also, decrement i in the devlink_alloc failure path to point to the
+last successfully allocated index.
 
-ping -c1 -I p1 1.2.3.4
+Compile tested only. Issue found using code review.
 
-He also gave a very detailed analysis:
-
-<quote valis>
-
-The issue is triggered when a new macvlan link is created  with
-MACVLAN_MODE_SOURCE mode and MACVLAN_MACADDR_ADD (or
-MACVLAN_MACADDR_SET) parameter, lower device already has a macvlan
-port and register_netdevice() called from macvlan_common_newlink()
-fails (e.g. because of the invalid link name).
-
-In this case macvlan_hash_add_source is called from
-macvlan_change_sources() / macvlan_common_newlink():
-
-This adds a reference to vlan to the port's vlan_source_hash using
-macvlan_source_entry.
-
-vlan is a pointer to the priv data of the link that is being created.
-
-When register_netdevice() fails, the error is returned from
-macvlan_newlink() to rtnl_newlink_create():
-
-        if (ops->newlink)
-                err = ops->newlink(dev, &params, extack);
-        else
-                err = register_netdevice(dev);
-        if (err < 0) {
-                free_netdev(dev);
-                goto out;
-        }
-
-and free_netdev() is called, causing a kvfree() on the struct
-net_device that is still referenced in the source entry attached to
-the lower device's macvlan port.
-
-Now all packets sent on the macvlan port with a matching source mac
-address will trigger a use-after-free in macvlan_forward_source().
-
-</quote valis>
-
-With all that, my fix is to make sure we call macvlan_flush_sources()
-regardless of @create value whenever "goto destroy_macvlan_port;"
-path is taken.
-
-Many thanks to valis for following up on this issue.
-
-Fixes: aa5fd0fb7748 ("driver: macvlan: Destroy new macvlan port if macvlan_common_newlink failed.")
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Reported-by: valis <sec@valis.email>
-Reported-by: syzbot+7182fbe91e58602ec1fe@syzkaller.appspotmail.com
-Closes: https: //lore.kernel.org/netdev/695fb1e8.050a0220.1c677c.039f.GAE@google.com/T/#u
-Cc: Boudewijn van der Heide <boudewijn@delta-utec.com>
-Link: https://patch.msgid.link/20260129204359.632556-1-edumazet@google.com
+Fixes: f21fb3ed364b ("Add support of Cavium Liquidio ethernet adapters")
+Suggested-by: Simon Horman <horms@kernel.org>
+Signed-off-by: Zilin Guan <zilin@seu.edu.cn>
+Reviewed-by: Kory Maincent <kory.maincent@bootlin.com>
+Link: https://patch.msgid.link/20260128154440.278369-3-zilin@seu.edu.cn
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/macvlan.c | 5 +++--
+ drivers/net/ethernet/cavium/liquidio/lio_main.c | 5 +++--
  1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/macvlan.c b/drivers/net/macvlan.c
-index b4df7e184791d..c509228be84d1 100644
---- a/drivers/net/macvlan.c
-+++ b/drivers/net/macvlan.c
-@@ -1567,9 +1567,10 @@ int macvlan_common_newlink(struct net_device *dev,
- 	/* the macvlan port may be freed by macvlan_uninit when fail to register.
- 	 * so we destroy the macvlan port only when it's valid.
- 	 */
--	if (create && macvlan_port_get_rtnl(lowerdev)) {
-+	if (macvlan_port_get_rtnl(lowerdev)) {
- 		macvlan_flush_sources(port, vlan);
--		macvlan_port_destroy(port->dev);
-+		if (create)
-+			macvlan_port_destroy(port->dev);
+diff --git a/drivers/net/ethernet/cavium/liquidio/lio_main.c b/drivers/net/ethernet/cavium/liquidio/lio_main.c
+index 925512c077a0c..eb620e8544cf1 100644
+--- a/drivers/net/ethernet/cavium/liquidio/lio_main.c
++++ b/drivers/net/ethernet/cavium/liquidio/lio_main.c
+@@ -3760,6 +3760,7 @@ static int setup_nic_devices(struct octeon_device *octeon_dev)
+ 	if (!devlink) {
+ 		device_unlock(&octeon_dev->pci_dev->dev);
+ 		dev_err(&octeon_dev->pci_dev->dev, "devlink alloc failed\n");
++		i--;
+ 		goto setup_nic_dev_free;
  	}
- 	return err;
- }
+ 
+@@ -3775,11 +3776,11 @@ static int setup_nic_devices(struct octeon_device *octeon_dev)
+ 
+ setup_nic_dev_free:
+ 
+-	while (i--) {
++	do {
+ 		dev_err(&octeon_dev->pci_dev->dev,
+ 			"NIC ifidx:%d Setup failed\n", i);
+ 		liquidio_destroy_nic_device(octeon_dev, i);
+-	}
++	} while (i--);
+ 
+ setup_nic_dev_done:
+ 
 -- 
 2.51.0
 
