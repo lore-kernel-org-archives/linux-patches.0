@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1ACDD28725B;
-	Mon,  9 Feb 2026 14:47:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6491285073;
+	Mon,  9 Feb 2026 14:48:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770648478; cv=none; b=XgHfiJ8x8kuIPIVe9CsLkxUnT7UT+k0HCy6Re6nSbFwABdoYX8r62SZhecSenYLoxJpaNa+jodhj+oOk+qgTrSS17KB1doQxPKeaY35qifxkZOTN3B3EecX1Pqj30FBmA9bT5FKd/7/DqxOPTqbKCKQ5YNE2PukvVQSzOs0945U=
+	t=1770648481; cv=none; b=WGFMhEv/8x06FAH5NQu5Lc9dREZl6KMtc22hlWZHtC90bL7k4AQQ47d1vVjwB6Mx42NIIZHQpmQ26r131beCwaO8QbyPwxhrsER3x+Yg9IQh9oMxS2ejyh1uBe05XMbzzyWjJBlh8Xq9gxuAKcuki87Q07Xq8zDkCuxvWAhrOMY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770648478; c=relaxed/simple;
-	bh=E5B9jzKd5o3Dk/dwf5MrKvDhmdMORT2g+NcbAHCSkM8=;
+	s=arc-20240116; t=1770648481; c=relaxed/simple;
+	bh=P6N9AuBPWZnTfQBCmtGOgOiPo+vrD/AZ7cH6YyCXUO4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ABsClybYmulNOu78AfGQNCNH5Onr/8CBzfahSrA6FuN1OmvtUEP5I3YjqgUaot+bMimVaUl5tRhqpWUabgzRBHIcW1zox515g3mq0CT23c4q30VTaORjsZckH9wK5Ay8nyXP9Yp7HwzvoqV12zqG58LA1uSYGkr/9S53+Qg/2vs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bfnfLUPn; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZgKnpoSDJxzp+cqP5fr4q2tefo/MbzsBQ2FLzoYpf3ACd7QpFCdKlfz5Nc2OGZwvcJLhdpvkCKnKUUO93IukqaiyuD04Ab7GAXwkVq5o6Cs79VT2I61gjFpdWjEzNfsUGdMxtwSLTF5PE4koFg2s4gjj7M1pz9mwTNMd6Zp/3Ns=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TEhY/EVA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bfnfLUPn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7FD01C116C6;
-	Mon,  9 Feb 2026 14:47:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TEhY/EVA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DABABC19422;
+	Mon,  9 Feb 2026 14:48:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770648478;
-	bh=E5B9jzKd5o3Dk/dwf5MrKvDhmdMORT2g+NcbAHCSkM8=;
+	s=korg; t=1770648481;
+	bh=P6N9AuBPWZnTfQBCmtGOgOiPo+vrD/AZ7cH6YyCXUO4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bfnfLUPn8Kzi1/Jgx/KrElZHtL9DCD2fciqOW7YtLHrUwdcdBBPNWH3psF0IvoPUR
-	 xELtonMP41801z+lsnakRkw7dsW3dd55EmUoCkwtU+SpwrGl1gSAKHs6fWYAY1ivA9
-	 QCmY3+MEu/kx0CVlf0j8yfcxj1FQ0C23UukE4/M8=
+	b=TEhY/EVA+QMFjq0+ovFofwsSGsM1bINisQdntmwsv7qH4RW71T3WZVH/9q/AZhR1f
+	 e9B5i5gt7rgF4cWRSnietH+K+mdtMhVMKBuevxmuurvciwTkXzQI7eksZsxGR4/Orj
+	 GUAx5LAQLh2TVEAStAJH5CHFqWnPvJleh2L4ps08=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+b364457b2d1d4e4a3054@syzkaller.appspotmail.com,
-	Moon Hee Lee <moonhee.lee.ca@gmail.com>,
-	Johannes Berg <johannes.berg@intel.com>,
+	Kaushlendra Kumar <kaushlendra.kumar@intel.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 22/86] wifi: mac80211: ocb: skip rx_no_sta when interface is not joined
-Date: Mon,  9 Feb 2026 15:23:45 +0100
-Message-ID: <20260209142305.580178680@linuxfoundation.org>
+Subject: [PATCH 6.6 49/86] regmap: maple: free entry on mas_store_gfp() failure
+Date: Mon,  9 Feb 2026 15:24:12 +0100
+Message-ID: <20260209142306.546010997@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260209142304.770150175@linuxfoundation.org>
 References: <20260209142304.770150175@linuxfoundation.org>
@@ -52,42 +51,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Moon Hee Lee <moonhee.lee.ca@gmail.com>
+From: Kaushlendra Kumar <kaushlendra.kumar@intel.com>
 
-[ Upstream commit ff4071c60018a668249dc6a2df7d16330543540e ]
+[ Upstream commit f3f380ce6b3d5c9805c7e0b3d5bc28d9ec41e2e8 ]
 
-ieee80211_ocb_rx_no_sta() assumes a valid channel context, which is only
-present after JOIN_OCB.
+regcache_maple_write() allocates a new block ('entry') to merge
+adjacent ranges and then stores it with mas_store_gfp().
+When mas_store_gfp() fails, the new 'entry' remains allocated and
+is never freed, leaking memory.
 
-RX may run before JOIN_OCB is executed, in which case the OCB interface
-is not operational. Skip RX peer handling when the interface is not
-joined to avoid warnings in the RX path.
+Free 'entry' on the failure path; on success continue freeing the
+replaced neighbor blocks ('lower', 'upper').
 
-Reported-by: syzbot+b364457b2d1d4e4a3054@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=b364457b2d1d4e4a3054
-Tested-by: syzbot+b364457b2d1d4e4a3054@syzkaller.appspotmail.com
-Signed-off-by: Moon Hee Lee <moonhee.lee.ca@gmail.com>
-Link: https://patch.msgid.link/20251216035932.18332-1-moonhee.lee.ca@gmail.com
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Signed-off-by: Kaushlendra Kumar <kaushlendra.kumar@intel.com>
+Link: https://patch.msgid.link/20260105031820.260119-1-kaushlendra.kumar@intel.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/mac80211/ocb.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/base/regmap/regcache-maple.c | 11 ++++++-----
+ 1 file changed, 6 insertions(+), 5 deletions(-)
 
-diff --git a/net/mac80211/ocb.c b/net/mac80211/ocb.c
-index b44896e145224..1800d59d8b152 100644
---- a/net/mac80211/ocb.c
-+++ b/net/mac80211/ocb.c
-@@ -48,6 +48,9 @@ void ieee80211_ocb_rx_no_sta(struct ieee80211_sub_if_data *sdata,
- 	struct sta_info *sta;
- 	int band;
+diff --git a/drivers/base/regmap/regcache-maple.c b/drivers/base/regmap/regcache-maple.c
+index fb5761a5ef6ee..86de71ce2c191 100644
+--- a/drivers/base/regmap/regcache-maple.c
++++ b/drivers/base/regmap/regcache-maple.c
+@@ -96,12 +96,13 @@ static int regcache_maple_write(struct regmap *map, unsigned int reg,
  
-+	if (!ifocb->joined)
-+		return;
-+
- 	/* XXX: Consider removing the least recently used entry and
- 	 *      allow new one to be added.
- 	 */
+ 	mas_unlock(&mas);
+ 
+-	if (ret == 0) {
+-		kfree(lower);
+-		kfree(upper);
++	if (ret) {
++		kfree(entry);
++		return ret;
+ 	}
+-	
+-	return ret;
++	kfree(lower);
++	kfree(upper);
++	return 0;
+ }
+ 
+ static int regcache_maple_drop(struct regmap *map, unsigned int min,
 -- 
 2.51.0
 
