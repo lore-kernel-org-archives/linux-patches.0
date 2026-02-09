@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72D7328150F;
-	Mon,  9 Feb 2026 14:37:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27F1B125B2;
+	Mon,  9 Feb 2026 14:37:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770647870; cv=none; b=uF6jxFCEWKULU9xZm7Z88Lm5dWcwc4f+FFz6rnyWM5GY6Jv5GkTqoYV0NLUCrQ4bdaghMArycup2a9qLT4RbOC2jdBCNgIL4BCul484UNcxxUHEX6lMbjPwLiVWCPOJm/8586/APKoq20/kAB6saztb84msoF0K6vDieTBYAQ28=
+	t=1770647874; cv=none; b=QPk3uLS4RT5wXkc4fd2tdQPhCcop8utc9jgsaVqHGXS50khRvdWzOnNrF0T4xA4QBr+fGXvWkSQhn6FfGbvjcgHk1iQJCZglYdcqmr4r3CWQWz0+9h95HmlgxzU5AYpjrfbjPbzMGyLdZzpVhe0NsczOLLXp4jAzzuIiMTmnloQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770647870; c=relaxed/simple;
-	bh=wLIoe6F7DJuo3+1Jo8v4zQzpSo3VI6bnD/6f5KUMUvY=;
+	s=arc-20240116; t=1770647874; c=relaxed/simple;
+	bh=CccUSdBbNzAZQUhgcHCeppmOCrUNTRr1RXXviYbuRh8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Yva/7xpo5aGDNGraYDYZNhuWb6ybvhwvZbKPtkrEKg207Kd5WMC5rHJ4ssnKTZiQ9H+N3J1SBlJ/K1y77CX4gINiXULMtnX3D8bHQOmW1Icr5kstSTzI+9CF2ubUzpv2ox+NROtINZQzEDiWD6RruHf0pDjhbWSg8yDOrhhFLwc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rp2RYNZT; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=AOwSeJe02GTK46t9KccYS4/TYhT1QUS5HoOkb148+uX2I7FlKa5CgPml42RupPiMjuDj6IX3iDe3n4P9rkXXJoMhiUiN7t7q69BS6OypWdeGhfMigseez/XSy+MqwRYNrga4hC0J7HkL37w+UD/rxRtYJa0C13NOXjyDYvQ2Emw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KxNzN0lc; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rp2RYNZT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE257C116C6;
-	Mon,  9 Feb 2026 14:37:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KxNzN0lc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D3A4C116C6;
+	Mon,  9 Feb 2026 14:37:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770647870;
-	bh=wLIoe6F7DJuo3+1Jo8v4zQzpSo3VI6bnD/6f5KUMUvY=;
+	s=korg; t=1770647874;
+	bh=CccUSdBbNzAZQUhgcHCeppmOCrUNTRr1RXXviYbuRh8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rp2RYNZTUKcwpRN/77y9NY1002nFg9/Ps4Dd9tZW8pOfBoGbD4BH1YpbPLE7w8WkE
-	 EmSAaSwIKoFhDPlY51pWOAo9kWj1bjmZgkWmiJRs0ZEygcT6dKD9xudXoYlqC8Khp2
-	 D2qHnhkPV8m78E1jO6p1E66CHp77mD4oxZSgdqEA=
+	b=KxNzN0lcTI0R8/55NhW8/YLFVU/6UMUUG0SUL1LbRUZKIWjAcsNAqK0Y75GC30bzv
+	 dHjAGnkzTGQddv9KWro9AtnYyw2l7jwETuHfPMYoVBVq8V1lk83bbJzWkA8eqGuxSL
+	 srAhBS5uG6OVvF+DpyGP4WSqs69dwSxxfflXNQ4k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Rodrigo=20Lugathe=20da=20Concei=C3=A7=C3=A3o=20Alves?= <lugathe2@gmail.com>,
-	Terry Junge <linuxhid@cosmicgizmosystems.com>,
-	Jiri Kosina <jkosina@suse.com>,
+	Perry Yuan <perry.yuan@amd.com>,
+	Yifan Zhang <yifan1.zhang@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 052/113] HID: Apply quirk HID_QUIRK_ALWAYS_POLL to Edifier QR30 (2d99:a101)
-Date: Mon,  9 Feb 2026 15:23:21 +0100
-Message-ID: <20260209142312.072298955@linuxfoundation.org>
+Subject: [PATCH 6.12 053/113] drm/amd/pm: Disable MMIO access during SMU Mode 1 reset
+Date: Mon,  9 Feb 2026 15:23:22 +0100
+Message-ID: <20260209142312.108179491@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260209142310.204833231@linuxfoundation.org>
 References: <20260209142310.204833231@linuxfoundation.org>
@@ -46,58 +46,96 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Rodrigo Lugathe da Conceição Alves <lugathe2@gmail.com>
+From: Perry Yuan <perry.yuan@amd.com>
 
-[ Upstream commit 85a866809333cd2bf8ddac93d9a3e3ba8e4f807d ]
+[ Upstream commit 0de604d0357d0d22cbf03af1077d174b641707b6 ]
 
-The USB speaker has a bug that causes it to reboot when changing the
-brightness using the physical knob.
+During Mode 1 reset, the ASIC undergoes a reset cycle and becomes
+temporarily inaccessible via PCIe. Any attempt to access MMIO registers
+during this window (e.g., from interrupt handlers or other driver threads)
+can result in uncompleted PCIe transactions, leading to NMI panics or
+system hangs.
 
-Add a new vendor and product ID entry in hid-ids.h, and register
-the corresponding device in hid-quirks.c with the required quirk.
+To prevent this, set the `no_hw_access` flag to true immediately after
+triggering the reset. This signals other driver components to skip
+register accesses while the device is offline.
 
-Signed-off-by: Rodrigo Lugathe da Conceição Alves <lugathe2@gmail.com>
-Reviewed-by: Terry Junge <linuxhid@cosmicgizmosystems.com>
-Signed-off-by: Jiri Kosina <jkosina@suse.com>
+A memory barrier `smp_mb()` is added to ensure the flag update is
+globally visible to all cores before the driver enters the sleep/wait
+state.
+
+Signed-off-by: Perry Yuan <perry.yuan@amd.com>
+Reviewed-by: Yifan Zhang <yifan1.zhang@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit 7edb503fe4b6d67f47d8bb0dfafb8e699bb0f8a4)
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hid/hid-ids.h    | 3 +++
- drivers/hid/hid-quirks.c | 1 +
- 2 files changed, 4 insertions(+)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_device.c           | 3 +++
+ drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_0_ppt.c | 7 ++++++-
+ drivers/gpu/drm/amd/pm/swsmu/smu14/smu_v14_0_2_ppt.c | 9 +++++++--
+ 3 files changed, 16 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/hid/hid-ids.h b/drivers/hid/hid-ids.h
-index c34d4ce211e34..9d0a97a3b06a2 100644
---- a/drivers/hid/hid-ids.h
-+++ b/drivers/hid/hid-ids.h
-@@ -435,6 +435,9 @@
- #define USB_DEVICE_ID_DWAV_EGALAX_MULTITOUCH_A001	0xa001
- #define USB_DEVICE_ID_DWAV_EGALAX_MULTITOUCH_C002	0xc002
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
+index fb5d2de035df0..1cf90557b310b 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
+@@ -5325,6 +5325,9 @@ int amdgpu_device_mode1_reset(struct amdgpu_device *adev)
+ 	if (ret)
+ 		goto mode1_reset_failed;
  
-+#define USB_VENDOR_ID_EDIFIER		0x2d99
-+#define USB_DEVICE_ID_EDIFIER_QR30	0xa101	/* EDIFIER Hal0 2.0 SE */
++	/* enable mmio access after mode 1 reset completed */
++	adev->no_hw_access = false;
 +
- #define USB_VENDOR_ID_ELAN		0x04f3
- #define USB_DEVICE_ID_TOSHIBA_CLICK_L9W	0x0401
- #define USB_DEVICE_ID_HP_X2		0x074d
-diff --git a/drivers/hid/hid-quirks.c b/drivers/hid/hid-quirks.c
-index b2a3ce7bfb6b6..1f531626192cd 100644
---- a/drivers/hid/hid-quirks.c
-+++ b/drivers/hid/hid-quirks.c
-@@ -81,6 +81,7 @@ static const struct hid_device_id hid_quirks[] = {
- 	{ HID_USB_DEVICE(USB_VENDOR_ID_DRAGONRISE, USB_DEVICE_ID_DRAGONRISE_PS3), HID_QUIRK_MULTI_INPUT },
- 	{ HID_USB_DEVICE(USB_VENDOR_ID_DRAGONRISE, USB_DEVICE_ID_DRAGONRISE_WIIU), HID_QUIRK_MULTI_INPUT },
- 	{ HID_USB_DEVICE(USB_VENDOR_ID_DWAV, USB_DEVICE_ID_EGALAX_TOUCHCONTROLLER), HID_QUIRK_MULTI_INPUT | HID_QUIRK_NOGET },
-+	{ HID_USB_DEVICE(USB_VENDOR_ID_EDIFIER, USB_DEVICE_ID_EDIFIER_QR30), HID_QUIRK_ALWAYS_POLL },
- 	{ HID_USB_DEVICE(USB_VENDOR_ID_ELAN, HID_ANY_ID), HID_QUIRK_ALWAYS_POLL },
- 	{ HID_USB_DEVICE(USB_VENDOR_ID_ELO, USB_DEVICE_ID_ELO_TS2700), HID_QUIRK_NOGET },
- 	{ HID_USB_DEVICE(USB_VENDOR_ID_EMS, USB_DEVICE_ID_EMS_TRIO_LINKER_PLUS_II), HID_QUIRK_MULTI_INPUT },
+ 	amdgpu_device_load_pci_state(adev->pdev);
+ 	ret = amdgpu_psp_wait_for_bootloader(adev);
+ 	if (ret)
+diff --git a/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_0_ppt.c b/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_0_ppt.c
+index 5a0a10144a73f..d83f04b282534 100644
+--- a/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_0_ppt.c
++++ b/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_0_ppt.c
+@@ -2853,8 +2853,13 @@ static int smu_v13_0_0_mode1_reset(struct smu_context *smu)
+ 		break;
+ 	}
+ 
+-	if (!ret)
++	if (!ret) {
++		/* disable mmio access while doing mode 1 reset*/
++		smu->adev->no_hw_access = true;
++		/* ensure no_hw_access is globally visible before any MMIO */
++		smp_mb();
+ 		msleep(SMU13_MODE1_RESET_WAIT_TIME_IN_MS);
++	}
+ 
+ 	return ret;
+ }
+diff --git a/drivers/gpu/drm/amd/pm/swsmu/smu14/smu_v14_0_2_ppt.c b/drivers/gpu/drm/amd/pm/swsmu/smu14/smu_v14_0_2_ppt.c
+index f34cef26b382c..3bab8269a46aa 100644
+--- a/drivers/gpu/drm/amd/pm/swsmu/smu14/smu_v14_0_2_ppt.c
++++ b/drivers/gpu/drm/amd/pm/swsmu/smu14/smu_v14_0_2_ppt.c
+@@ -2129,10 +2129,15 @@ static int smu_v14_0_2_mode1_reset(struct smu_context *smu)
+ 
+ 	ret = smu_cmn_send_debug_smc_msg(smu, DEBUGSMC_MSG_Mode1Reset);
+ 	if (!ret) {
+-		if (amdgpu_emu_mode == 1)
++		if (amdgpu_emu_mode == 1) {
+ 			msleep(50000);
+-		else
++		} else {
++			/* disable mmio access while doing mode 1 reset*/
++			smu->adev->no_hw_access = true;
++			/* ensure no_hw_access is globally visible before any MMIO */
++			smp_mb();
+ 			msleep(1000);
++		}
+ 	}
+ 
+ 	return ret;
 -- 
 2.51.0
 
