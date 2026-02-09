@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C50CA37AA71;
-	Mon,  9 Feb 2026 14:40:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D52A37AA71;
+	Mon,  9 Feb 2026 14:40:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770648055; cv=none; b=DVD5N4KLuinKVYLE5ib5HzYsORMB2D1RcRIB2SFm/6AVxrvEp2xnRihbm0nz+hhT2hlLLB0XuDXRhKugByyDgPgoO8jKea2UER8dHCg5kUEi+sxbGBg6Tkmkf5rxogroHmlbdM3y5mGA7viKqQ2PWUkM7sWXc9RL+424hHexT2o=
+	t=1770648059; cv=none; b=V3xymX70mI1C/q5DYmOKkVaZdKMjb7sRr/8fFEZYpZJojaxRVJsarhf3oMLdxxAMKevgpb5a6QxSGITi6u0Jp30GsOHxAirie4DrtZxfHswnIlpNLBj14QLzy0rJQiCPmxCEmQ3ke+1rjDubSzmO/JnvI9lXU7TzX6CukDN/rfE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770648055; c=relaxed/simple;
-	bh=mZnKbw3jlwWJSZLygo8I/aKGfqQJiAmE3MMy2lWxPpA=;
+	s=arc-20240116; t=1770648059; c=relaxed/simple;
+	bh=f9RKWNBbLTWcrKXmGuEk+EvfXYVYKjebmrXXHb76o6U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZdWpLy0K2T9ST2biKidTN85ca7gm75azNQMVw9P+oTPDN6Kb6xsqQKj3fItVguKUz+gwXQprGC9iVolCT9F3jeGwTk/fyI7fuC5jvSs5oqj9L1YOvHgb4QcYW3ttW833QRkYd/qpN9r7HmaLfM1gXaKVbps0iR5tc0iCIwe2ViA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=q9EYoihH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QNpVeJkTnleDQMeyKeDyOackuw0TQv3KTwfaY/rKIAfKHg8fBVBK1Px0DBxL/F+HwD+e9LLbjne8mKocmsK4YWEw/lCzE1B09tn+s9uM5hFvRtJ6cYlzqzBoA/SscoO4dXlw9fflL8a1jC1+mZMWR35VBuwQ09tZqvKC7vPWtj0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=v2GfA1i9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="q9EYoihH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 38B0BC116C6;
-	Mon,  9 Feb 2026 14:40:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="v2GfA1i9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 78FECC116C6;
+	Mon,  9 Feb 2026 14:40:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770648055;
-	bh=mZnKbw3jlwWJSZLygo8I/aKGfqQJiAmE3MMy2lWxPpA=;
+	s=korg; t=1770648059;
+	bh=f9RKWNBbLTWcrKXmGuEk+EvfXYVYKjebmrXXHb76o6U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=q9EYoihHheuQIpOQpm/wfSW1c9hcytG6CCfgij4qRrRRANbNME8l8C1VH0cVP15Kv
-	 lATd4RTbo6pY46rVFi503+uWHUSCfoMAclLOFRZve7GvjJYuRFVr6Ska7/IdCWUryd
-	 W53j/Mg+LmZirkwkMJRlilS/J95jRMDnSkiwG5Ow=
+	b=v2GfA1i9N5C8Dptl66qauzIkPVSht+PiWfrQ08+ljIWd8IPZ+KR1VQ8nMwpnreGql
+	 73poecgz02+PWzYi2B3gJbNOVOnxQgSVo71W5q1H7vE+N06LJXZ9fRAiJ6UdMAwOov
+	 F6wBecCJukkRXxfdSB1BZX8XXdHVPU0wE1wzfvdM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -32,9 +32,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Thierry Reding <treding@nvidia.com>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 108/113] spi: tegra210-quad: Protect curr_xfer assignment in tegra_qspi_setup_transfer_one
-Date: Mon,  9 Feb 2026 15:24:17 +0100
-Message-ID: <20260209142314.053316142@linuxfoundation.org>
+Subject: [PATCH 6.12 109/113] spi: tegra210-quad: Protect curr_xfer in tegra_qspi_combined_seq_xfer
+Date: Mon,  9 Feb 2026 15:24:18 +0100
+Message-ID: <20260209142314.088534941@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260209142310.204833231@linuxfoundation.org>
 References: <20260209142310.204833231@linuxfoundation.org>
@@ -55,59 +55,62 @@ Content-Transfer-Encoding: 8bit
 
 From: Breno Leitao <leitao@debian.org>
 
-[ Upstream commit f5a4d7f5e32ba163cff893493ec1cbb0fd2fb0d5 ]
+[ Upstream commit bf4528ab28e2bf112c3a2cdef44fd13f007781cd ]
 
-When the timeout handler processes a completed transfer and signals
-completion, the transfer thread can immediately set up the next transfer
-and assign curr_xfer to point to it.
+The curr_xfer field is read by the IRQ handler without holding the lock
+to check if a transfer is in progress. When clearing curr_xfer in the
+combined sequence transfer loop, protect it with the spinlock to prevent
+a race with the interrupt handler.
 
-If a delayed ISR from the previous transfer then runs, it checks if
-(!tqspi->curr_xfer) (currently without the lock also -- to be fixed
-soon) to detect stale interrupts, but this check passes because
-curr_xfer now points to the new transfer. The ISR then incorrectly
-processes the new transfer's context.
+Protect the curr_xfer clearing at the exit path of
+tegra_qspi_combined_seq_xfer() with the spinlock to prevent a race
+with the interrupt handler that reads this field.
 
-Protect the curr_xfer assignment with the spinlock to ensure the ISR
-either sees NULL (and bails out) or sees the new value only after the
-assignment is complete.
+Without this protection, the IRQ handler could read a partially updated
+curr_xfer value, leading to NULL pointer dereference or use-after-free.
 
-Fixes: 921fc1838fb0 ("spi: tegra210-quad: Add support for Tegra210 QSPI controller")
+Fixes: b4e002d8a7ce ("spi: tegra210-quad: Fix timeout handling")
 Signed-off-by: Breno Leitao <leitao@debian.org>
 Tested-by: Jon Hunter <jonathanh@nvidia.com>
 Acked-by: Jon Hunter <jonathanh@nvidia.com>
 Acked-by: Thierry Reding <treding@nvidia.com>
-Link: https://patch.msgid.link/20260126-tegra_xfer-v2-3-6d2115e4f387@debian.org
+Link: https://patch.msgid.link/20260126-tegra_xfer-v2-4-6d2115e4f387@debian.org
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/spi/spi-tegra210-quad.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/spi/spi-tegra210-quad.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
 diff --git a/drivers/spi/spi-tegra210-quad.c b/drivers/spi/spi-tegra210-quad.c
-index 226993cf32669..0c25d9c303bba 100644
+index 0c25d9c303bba..28552a8f27c14 100644
 --- a/drivers/spi/spi-tegra210-quad.c
 +++ b/drivers/spi/spi-tegra210-quad.c
-@@ -814,6 +814,7 @@ static u32 tegra_qspi_setup_transfer_one(struct spi_device *spi, struct spi_tran
- 	u32 command1, command2, speed = t->speed_hz;
- 	u8 bits_per_word = t->bits_per_word;
- 	u32 tx_tap = 0, rx_tap = 0;
+@@ -1064,6 +1064,7 @@ static int tegra_qspi_combined_seq_xfer(struct tegra_qspi *tqspi,
+ 	u32 address_value = 0;
+ 	u32 cmd_config = 0, addr_config = 0;
+ 	u8 cmd_value = 0, val = 0;
 +	unsigned long flags;
- 	int req_mode;
  
- 	if (!has_acpi_companion(tqspi->dev) && speed != tqspi->cur_speed) {
-@@ -821,10 +822,12 @@ static u32 tegra_qspi_setup_transfer_one(struct spi_device *spi, struct spi_tran
- 		tqspi->cur_speed = speed;
+ 	/* Enable Combined sequence mode */
+ 	val = tegra_qspi_readl(tqspi, QSPI_GLOBAL_CONFIG);
+@@ -1176,13 +1177,17 @@ static int tegra_qspi_combined_seq_xfer(struct tegra_qspi *tqspi,
+ 			tegra_qspi_transfer_end(spi);
+ 			spi_transfer_delay_exec(xfer);
+ 		}
++		spin_lock_irqsave(&tqspi->lock, flags);
+ 		tqspi->curr_xfer = NULL;
++		spin_unlock_irqrestore(&tqspi->lock, flags);
+ 		transfer_phase++;
  	}
+ 	ret = 0;
  
+ exit:
 +	spin_lock_irqsave(&tqspi->lock, flags);
- 	tqspi->cur_pos = 0;
- 	tqspi->cur_rx_pos = 0;
- 	tqspi->cur_tx_pos = 0;
- 	tqspi->curr_xfer = t;
+ 	tqspi->curr_xfer = NULL;
 +	spin_unlock_irqrestore(&tqspi->lock, flags);
+ 	msg->status = ret;
  
- 	if (is_first_of_msg) {
- 		tegra_qspi_mask_clear_irq(tqspi);
+ 	return ret;
 -- 
 2.51.0
 
