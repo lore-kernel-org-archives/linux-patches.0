@@ -1,36 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4893F1AF0AF;
-	Mon,  9 Feb 2026 14:34:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A103259CAF;
+	Mon,  9 Feb 2026 14:34:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770647685; cv=none; b=H6DLq3iOfPdlgUKV3MLz62j+aMqUOe/7hG6TLbUIcpYZV9/ORo4qcZjhQBt4SSi62ctb87CTRhheZnV60di9GjJUFWPvVXbLY9z5gu/Y6g2e2qGsYuuI8wJGnEta5RIKrrejUlV5UyxqBF23N77eVyBmH2lCujDrEOJszB/R9gw=
+	t=1770647688; cv=none; b=PzMZWhtg2uHXF5bLzwUXtUuk4aSBz1l6ROPikVBzte36RUkWm9yn4a3qV80wDnXAblJxqegN4Bfb1cRD3JFY5e+sgBgvJUalPvZl6z7G0m8zP9qAD2ku92NMKTawRO9B0nPIDp8EKA7Hi98tV3zusknMy/t/XDSYuh3YjLoVLWc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770647685; c=relaxed/simple;
-	bh=hR29LyBVHcxXF/YwHgakP61LjpU9vTn5lRiHVDIy3sQ=;
+	s=arc-20240116; t=1770647688; c=relaxed/simple;
+	bh=L3mUKvNgdcmO+I4heI/LFcaqSdoa47UvhbILjjBWi6g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tE4ImZoaKPOgEKU8e5WekhUjgMl4FDFagFgtjS55WWng7JwtO8Lx64mh6eRsl9ezI0hZbLdWYjXrQFDFLDMtN0HIftWiRQ+j9Xym/iFZp/uCeUct4QMEf+BgF0iJP+lQ+cW9qy4TwOwORGTdODYbvBwZc1JLKQgDfwzWN1F1V/0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ms3+G8Ew; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=W1JIdgbmomp/TncR2PXxl0LwQr0aLpmG7uDdvxcL6nkK349i1erO9sni/rwY9ejbdCNZW/NxNL7UsrVMe/2SQDGBwBASvi/vfghT5fOw0DJRVE5K8GCRsTa2svnHzxKpEXSBt5CHtUfH+kUOp4qsMcGzjraYudSWnN8YvT8ouqw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MPh19JBx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ms3+G8Ew"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8083BC116C6;
-	Mon,  9 Feb 2026 14:34:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MPh19JBx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB4CAC16AAE;
+	Mon,  9 Feb 2026 14:34:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770647684;
-	bh=hR29LyBVHcxXF/YwHgakP61LjpU9vTn5lRiHVDIy3sQ=;
+	s=korg; t=1770647688;
+	bh=L3mUKvNgdcmO+I4heI/LFcaqSdoa47UvhbILjjBWi6g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ms3+G8EwZIccLNkvGXnFSco784Qv/T1FShKSZypht6dD3StueT+CWyXDRkUC79saD
-	 uqXDK0BvXmb6H3VX1nMfSuDvFX8sJI8ljZcmgIDl7SE3ex3T3Kj/960YRoqInXQP93
-	 4+eLR6pmDNuzJvE+gm8JnAyXt6cA4i4t3zMVjqPc=
+	b=MPh19JBxYILokCsAc2Fv8lUFWeaEk4oSJu5EQqwL5+cuKKNjEJmdlazuvdY1WKB+W
+	 FKAo3KnywZQamBNHaTdef1W28HLlGcwVWI+6eT8YrS8kMyzsC9DGLYtEL7HVxZIVga
+	 uP4gf00zgtOea4MWGb5KLGunOocQxWWCOje6p4+s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 6.18 174/175] ALSA: usb-audio: Use the right limit for PCM OOB check
-Date: Mon,  9 Feb 2026 15:24:07 +0100
-Message-ID: <20260209142326.735964474@linuxfoundation.org>
+	kernel test robot <lkp@intel.com>,
+	Nathan Chancellor <nathan@kernel.org>,
+	Paul Walmsley <pjw@kernel.org>
+Subject: [PATCH 6.18 175/175] riscv: Add intermediate cast to unsigned long in __get_user_asm
+Date: Mon,  9 Feb 2026 15:24:08 +0100
+Message-ID: <20260209142326.770811236@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260209142320.474120190@linuxfoundation.org>
 References: <20260209142320.474120190@linuxfoundation.org>
@@ -49,38 +51,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Takashi Iwai <tiwai@suse.de>
+From: Nathan Chancellor <nathan@kernel.org>
 
-commit 70b4db7d258118a7464f039112a74ddb49a95b06 upstream.
+commit 841e47d56cef9b96fd2314220e3d0f1d92c719f4 upstream.
 
-The recent fix commit for addressing the OOB access of PCM URB data
-buffer caused a regression on Behringer UMC2020HD device, resulting in
-choppy sound.  The fix used ep->max_urb_frames for the upper limit
-check, and this is no right value to be referred.
+After commit bdce162f2e57 ("riscv: Use 64-bit variable for output in
+__get_user_asm"), there is a warning when building for 32-bit RISC-V:
 
-Use the actual buffer size (ctx->buffer_size) as the upper limit
-instead, which also avoids the regression on the device above.
+  In file included from include/linux/uaccess.h:13,
+                   from include/linux/sched/task.h:13,
+                   from include/linux/sched/signal.h:9,
+                   from include/linux/rcuwait.h:6,
+                   from include/linux/mm.h:36,
+                   from include/linux/migrate.h:5,
+                   from mm/migrate.c:16:
+  mm/migrate.c: In function 'do_pages_move':
+  arch/riscv/include/asm/uaccess.h:115:15: warning: cast to pointer from integer of different size [-Wint-to-pointer-cast]
+    115 |         (x) = (__typeof__(x))__tmp;                             \
+        |               ^
+  arch/riscv/include/asm/uaccess.h:198:17: note: in expansion of macro '__get_user_asm'
+    198 |                 __get_user_asm("lb", (x), __gu_ptr, label);     \
+        |                 ^~~~~~~~~~~~~~
+  arch/riscv/include/asm/uaccess.h:218:9: note: in expansion of macro '__get_user_nocheck'
+    218 |         __get_user_nocheck(x, ptr, __gu_failed);                        \
+        |         ^~~~~~~~~~~~~~~~~~
+  arch/riscv/include/asm/uaccess.h:255:9: note: in expansion of macro '__get_user_error'
+    255 |         __get_user_error(__gu_val, __gu_ptr, __gu_err);         \
+        |         ^~~~~~~~~~~~~~~~
+  arch/riscv/include/asm/uaccess.h:285:17: note: in expansion of macro '__get_user'
+    285 |                 __get_user((x), __p) :                          \
+        |                 ^~~~~~~~~~
+  mm/migrate.c:2358:29: note: in expansion of macro 'get_user'
+   2358 |                         if (get_user(p, pages + i))
+        |                             ^~~~~~~~
 
-Fixes: ef5749ef8b30 ("ALSA: usb-audio: Prevent excessive number of frames")
-Link: https://bugzilla.kernel.org/show_bug.cgi?id=220997
-Link: https://patch.msgid.link/20260121082025.718748-1-tiwai@suse.de
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Add an intermediate cast to 'unsigned long', which is guaranteed to be the same
+width as a pointer, before the cast to the type of the output variable to clear
+up the warning.
+
+Fixes: bdce162f2e57 ("riscv: Use 64-bit variable for output in __get_user_asm")
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: https://lore.kernel.org/oe-kbuild-all/202601210526.OT45dlOZ-lkp@intel.com/
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Link: https://patch.msgid.link/20260121-riscv-fix-int-to-pointer-cast-v1-1-b83eebe57c76@kernel.org
+Signed-off-by: Paul Walmsley <pjw@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/usb/pcm.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ arch/riscv/include/asm/uaccess.h |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/sound/usb/pcm.c
-+++ b/sound/usb/pcm.c
-@@ -1553,7 +1553,8 @@ static int prepare_playback_urb(struct s
- 
- 		for (i = 0; i < ctx->packets; i++) {
- 			counts = snd_usb_endpoint_next_packet_size(ep, ctx, i, avail);
--			if (counts < 0 || frames + counts >= ep->max_urb_frames)
-+			if (counts < 0 ||
-+			    (frames + counts) * stride > ctx->buffer_size)
- 				break;
- 			/* set up descriptor */
- 			urb->iso_frame_desc[i].offset = frames * stride;
+--- a/arch/riscv/include/asm/uaccess.h
++++ b/arch/riscv/include/asm/uaccess.h
+@@ -112,7 +112,7 @@ do {								\
+ 		_ASM_EXTABLE_UACCESS_ERR(1b, %l2, %0)		\
+ 		: "=&r" (__tmp)					\
+ 		: "m" (*(ptr)) : : label);			\
+-	(x) = (__typeof__(x))__tmp;				\
++	(x) = (__typeof__(x))(unsigned long)__tmp;		\
+ } while (0)
+ #else /* !CONFIG_CC_HAS_ASM_GOTO_OUTPUT */
+ #define __get_user_asm(insn, x, ptr, label)			\
 
 
