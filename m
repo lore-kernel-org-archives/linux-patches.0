@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31F0735CB6B;
-	Mon,  9 Feb 2026 14:27:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3ED535CB6B;
+	Mon,  9 Feb 2026 14:27:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770647270; cv=none; b=FBjVVf7S6i2W2hJlIsvCBrU0eKEXCjpkMOqw2mvuZEz2mNQJgwyI3BoeuNcAlxo3QosaRWOjrEieyFB1ONG9o+VLk+VgtRp/0SNFR4rj4ug33+w/NahqJl1JoHLnnvsW7Xa3yTvilowhN+lpMHzbxccHwqVp8l2qcNsrpmNR6s4=
+	t=1770647273; cv=none; b=Y99xTAh20jLXi6MdDGVusD5DP6uddLeWRJLO98GPJU5UzkT7P2UU+WfUZLCUMTTn5t9kuhazl/6tWwDDwYh36BbQjRNZaZYOfT7NRvhxiJXS47kxnm8JEbSWFBnZcmLPB46tUH//uYFSyOkm08Z75oU02x3rmMe/tCgotdHGp18=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770647270; c=relaxed/simple;
-	bh=rUvA6+rav0AaXU0ihG2ftAcR4N9B3Kks2Aky7pwnpkI=;
+	s=arc-20240116; t=1770647273; c=relaxed/simple;
+	bh=PVAj38ZhDD7DrIrbwB1cBQkSwfvr09Li0DfWKi/9Mdg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bzOQ0uKQvBhWv9KoWNhoSjXTt/cOWuh72EiyF4U+tbeiASEkWmxR00snEm8u69dQ9mI3XeLze3fOna+HM9QoGiDFDIuGBc5c+mCjJMEXjjNdptKQgw0ZAC6u0x22Agk1YGu0Tr46dv4fFoScjOBthK97FiacuS2o8j90mtrwbyE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=euLwyfTN; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hfpoIRcfL68mfldDGEl19CHKIFhrP9aOldILdi/yFoAUcERFoAf0fnXfpRehxD2l298LR0XDheMW/XdlNIy8SmblwrBcj1l1uk2+BiNiNgjNep/Fd2cwQId6uf9P1TZ9XGHoFnDS89Fviy2OTy/oH8zdN69vaOH0UHZTU8qbjw8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1BWt+m8z; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="euLwyfTN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B0134C16AAE;
-	Mon,  9 Feb 2026 14:27:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1BWt+m8z"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 18230C116C6;
+	Mon,  9 Feb 2026 14:27:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770647270;
-	bh=rUvA6+rav0AaXU0ihG2ftAcR4N9B3Kks2Aky7pwnpkI=;
+	s=korg; t=1770647273;
+	bh=PVAj38ZhDD7DrIrbwB1cBQkSwfvr09Li0DfWKi/9Mdg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=euLwyfTN49NFJCESZ3x4R2EstuehaGJ4X9cW3/be8WMWOxARE8OTBo5vx+Txv7jb8
-	 YQNBIOVuHl3msBwJMoKKFEcDjhfKaWcGLsGthDkk3wYfdEdOrvHi+EzXUyCk+jfq1P
-	 NLYADwjd50IiVw3uLZ/Vt9k/PZZ/JGySCFoMjgYQ=
+	b=1BWt+m8zj7nVvy5aJnq7k5y0sqweKCld5kG+SZt8FfzhO4Fgazs062KmGCmW9APlv
+	 HSt4o4mJuUP8CQlVikIFg4WLz5jKzbkF8Jv4HB+iqzfCrRkyZxKYpwJd3YgZEqWSNC
+	 1pt5CppT4P83aLgpM+24zajxNKKptwHB6dzWcABA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+b364457b2d1d4e4a3054@syzkaller.appspotmail.com,
-	Moon Hee Lee <moonhee.lee.ca@gmail.com>,
-	Johannes Berg <johannes.berg@intel.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 048/175] wifi: mac80211: ocb: skip rx_no_sta when interface is not joined
-Date: Mon,  9 Feb 2026 15:22:01 +0100
-Message-ID: <20260209142322.200456845@linuxfoundation.org>
+	Helge Deller <deller@gmx.de>,
+	Daniel Vogelbacher <daniel@chaospixel.com>,
+	Viacheslav Dubeyko <Slava.Dubeyko@ibm.com>,
+	Ilya Dryomov <idryomov@gmail.com>
+Subject: [PATCH 6.18 017/175] ceph: fix oops due to invalid pointer for kfree() in parse_longname()
+Date: Mon,  9 Feb 2026 15:21:30 +0100
+Message-ID: <20260209142321.096064117@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260209142320.474120190@linuxfoundation.org>
 References: <20260209142320.474120190@linuxfoundation.org>
@@ -52,44 +52,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Moon Hee Lee <moonhee.lee.ca@gmail.com>
+From: Daniel Vogelbacher <daniel@chaospixel.com>
 
-[ Upstream commit ff4071c60018a668249dc6a2df7d16330543540e ]
+commit bc8dedae022ce3058659c3addef3ec4b41d15e00 upstream.
 
-ieee80211_ocb_rx_no_sta() assumes a valid channel context, which is only
-present after JOIN_OCB.
+This fixes a kernel oops when reading ceph snapshot directories (.snap),
+for example by simply running `ls /mnt/my_ceph/.snap`.
 
-RX may run before JOIN_OCB is executed, in which case the OCB interface
-is not operational. Skip RX peer handling when the interface is not
-joined to avoid warnings in the RX path.
+The variable str is guarded by __free(kfree), but advanced by one for
+skipping the initial '_' in snapshot names. Thus, kfree() is called
+with an invalid pointer.  This patch removes the need for advancing the
+pointer so kfree() is called with correct memory pointer.
 
-Reported-by: syzbot+b364457b2d1d4e4a3054@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=b364457b2d1d4e4a3054
-Tested-by: syzbot+b364457b2d1d4e4a3054@syzkaller.appspotmail.com
-Signed-off-by: Moon Hee Lee <moonhee.lee.ca@gmail.com>
-Link: https://patch.msgid.link/20251216035932.18332-1-moonhee.lee.ca@gmail.com
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Steps to reproduce:
+
+1. Create snapshots on a cephfs volume (I've 63 snaps in my testcase)
+
+2. Add cephfs mount to fstab
+$ echo "samba-fileserver@.files=/volumes/datapool/stuff/3461082b-ecc9-4e82-8549-3fd2590d3fb6      /mnt/test/stuff   ceph     acl,noatime,_netdev    0       0" >> /etc/fstab
+
+3. Reboot the system
+$ systemctl reboot
+
+4. Check if it's really mounted
+$ mount | grep stuff
+
+5. List snapshots (expected 63 snapshots on my system)
+$ ls /mnt/test/stuff/.snap
+
+Now ls hangs forever and the kernel log shows the oops.
+
+Cc: stable@vger.kernel.org
+Fixes: 101841c38346 ("[ceph] parse_longname(): strrchr() expects NUL-terminated string")
+Closes: https://bugzilla.kernel.org/show_bug.cgi?id=220807
+Suggested-by: Helge Deller <deller@gmx.de>
+Signed-off-by: Daniel Vogelbacher <daniel@chaospixel.com>
+Reviewed-by: Viacheslav Dubeyko <Slava.Dubeyko@ibm.com>
+Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/mac80211/ocb.c | 3 +++
- 1 file changed, 3 insertions(+)
+ fs/ceph/crypto.c |    9 +++++----
+ 1 file changed, 5 insertions(+), 4 deletions(-)
 
-diff --git a/net/mac80211/ocb.c b/net/mac80211/ocb.c
-index a5d4358f122ae..ebb4f4d88c237 100644
---- a/net/mac80211/ocb.c
-+++ b/net/mac80211/ocb.c
-@@ -47,6 +47,9 @@ void ieee80211_ocb_rx_no_sta(struct ieee80211_sub_if_data *sdata,
- 	struct sta_info *sta;
- 	int band;
- 
-+	if (!ifocb->joined)
-+		return;
-+
- 	/* XXX: Consider removing the least recently used entry and
- 	 *      allow new one to be added.
- 	 */
--- 
-2.51.0
-
+--- a/fs/ceph/crypto.c
++++ b/fs/ceph/crypto.c
+@@ -219,12 +219,13 @@ static struct inode *parse_longname(cons
+ 	struct ceph_vino vino = { .snap = CEPH_NOSNAP };
+ 	char *name_end, *inode_number;
+ 	int ret = -EIO;
+-	/* NUL-terminate */
+-	char *str __free(kfree) = kmemdup_nul(name, *name_len, GFP_KERNEL);
++	/* Snapshot name must start with an underscore */
++	if (*name_len <= 0 || name[0] != '_')
++		return ERR_PTR(-EIO);
++	/* Skip initial '_' and NUL-terminate */
++	char *str __free(kfree) = kmemdup_nul(name + 1, *name_len - 1, GFP_KERNEL);
+ 	if (!str)
+ 		return ERR_PTR(-ENOMEM);
+-	/* Skip initial '_' */
+-	str++;
+ 	name_end = strrchr(str, '_');
+ 	if (!name_end) {
+ 		doutc(cl, "failed to parse long snapshot name: %s\n", str);
 
 
