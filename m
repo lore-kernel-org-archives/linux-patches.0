@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0FF7F37A48A;
-	Mon,  9 Feb 2026 14:30:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B52B02BDC3D;
+	Mon,  9 Feb 2026 14:30:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770647409; cv=none; b=E4X87/SYU5LmRYZaNunr8p/UrpP1SluTxnoAsx+GEFI17OjTYGRV9K67VUuuQJzXyI2Pm4QTKjhzx2Cz0DnjLYRJLsF/sWe79BYmRif3bKPA/RNo+sbWAa/DGEUdr4Pn2q7oOH2cBvWvb3G7+SNjL6T49/rNbOj4sm0G0G9HAqI=
+	t=1770647412; cv=none; b=ISO5GqVqaCV1OdP0WeOyEkyKLdJ+muqJPBVGYeNQOm9yp9ps3pjXLoZuFXMCAIyaU2pXQcMOsG4OtCfa2DyPvdxbJagOFJvwGNgnFecV5PRmIzBv+gGlgT8+AexhgjgSTGstjiSqXxZMWmzAmobDd8bgYSKUZpixmt7ijHYVQT4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770647409; c=relaxed/simple;
-	bh=ntGZ9pO+yl6ksCtqiQ5Kmolz+2kLnEApSYHgLbCEVLg=;
+	s=arc-20240116; t=1770647412; c=relaxed/simple;
+	bh=GEKP5LqB87WxQpASnc1tnF59Kql6xwqDnzzkz/mHjrk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZIW/bScYA6vogHLvRL+YJQYLRcZq1YhrKLja9Mf9OuhGPaCyMONrPNzeFyUXUF5jFsMUJKOvZgh7b0j+7lZHwgLoo8JhggR0CaXSxCvfkZgYO8l1ouSxq70hfO/nHWSbycgrzz3HRDOd9FFznUWWMS1cboBmFl+jGQbHnEeBDhY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Q2a7VaQu; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lNvri7b2kiM/Cx4cmC6lZakrl7yihsKka38nlyYPqmwYz4ohM2HxP54V5sdlaWgowy/bf4Ru3O9NQcnGUxkvgjGAyrQAPaxAFWyjWpGDHe9MOjVMx/2hYoYICOMYFIezB7m0c/cK7/i47YrJpwoLyXoSGGakvRLLJRgzFFtFuyM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=stgHS7Iq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Q2a7VaQu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7DF3DC116C6;
-	Mon,  9 Feb 2026 14:30:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="stgHS7Iq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 448ADC116C6;
+	Mon,  9 Feb 2026 14:30:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770647408;
-	bh=ntGZ9pO+yl6ksCtqiQ5Kmolz+2kLnEApSYHgLbCEVLg=;
+	s=korg; t=1770647412;
+	bh=GEKP5LqB87WxQpASnc1tnF59Kql6xwqDnzzkz/mHjrk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Q2a7VaQuiPH19yhmqdsLn3ozcOeq4mAneljFshisu/W6R1uR9C/faAyc7hsp7Xa+j
-	 iY46dO2DOpwDMyYmiY+7TmZagVdbjSBfNzxnQk0Et8zDiIr12BPOr8xUnTlA0/IDZg
-	 wOBvOpTOPXlpjCY1AsI2QlBnAUdRruoMJEf6RMIA=
+	b=stgHS7Iqku46xFVJq0M+Od+uH3gnYyufZcutXCvBH/Kl3grRS8uvzc4ZG4r8dZP+v
+	 GC2mbMXEil8UuaXFryKpTvQXj0mc7jN0xubWOre02cx4gC3a6KTg9T7zK36GtVIzTa
+	 LHVVhkhA+26sLkoAltzBL4+8OVL9JKt2iwcZQa2Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	FengWei Shih <dannyshih@synology.com>,
-	Yu Kuai <yukuai@fnnas.com>,
+	Namjae Jeon <linkinjeon@kernel.org>,
+	ZhangGuoDong <zhangguodong@kylinos.cn>,
+	ChenXiaoSong <chenxiaosong@kylinos.cn>,
+	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 057/175] md: suspend array while updating raid_disks via sysfs
-Date: Mon,  9 Feb 2026 15:22:10 +0100
-Message-ID: <20260209142322.517206535@linuxfoundation.org>
+Subject: [PATCH 6.18 058/175] smb/server: fix refcount leak in smb2_open()
+Date: Mon,  9 Feb 2026 15:22:11 +0100
+Message-ID: <20260209142322.552283525@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260209142320.474120190@linuxfoundation.org>
 References: <20260209142320.474120190@linuxfoundation.org>
@@ -51,64 +53,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: FengWei Shih <dannyshih@synology.com>
+From: ZhangGuoDong <zhangguodong@kylinos.cn>
 
-[ Upstream commit 2cc583653bbe050bacd1cadcc9776d39bf449740 ]
+[ Upstream commit f416c556997aa56ec4384c6b6efd6a0e6ac70aa7 ]
 
-In raid1_reshape(), freeze_array() is called before modifying the r1bio
-memory pool (conf->r1bio_pool) and conf->raid_disks, and
-unfreeze_array() is called after the update is completed.
+When ksmbd_vfs_getattr() fails, the reference count of ksmbd_file
+must be released.
 
-However, freeze_array() only waits until nr_sync_pending and
-(nr_pending - nr_queued) of all buckets reaches zero. When an I/O error
-occurs, nr_queued is increased and the corresponding r1bio is queued to
-either retry_list or bio_end_io_list. As a result, freeze_array() may
-unblock before these r1bios are released.
-
-This can lead to a situation where conf->raid_disks and the mempool have
-already been updated while queued r1bios, allocated with the old
-raid_disks value, are later released. Consequently, free_r1bio() may
-access memory out of bounds in put_all_bios() and release r1bios of the
-wrong size to the new mempool, potentially causing issues with the
-mempool as well.
-
-Since only normal I/O might increase nr_queued while an I/O error occurs,
-suspending the array avoids this issue.
-
-Note: Updating raid_disks via ioctl SET_ARRAY_INFO already suspends
-the array. Therefore, we suspend the array when updating raid_disks
-via sysfs to avoid this issue too.
-
-Signed-off-by: FengWei Shih <dannyshih@synology.com>
-Link: https://lore.kernel.org/linux-raid/20251226101816.4506-1-dannyshih@synology.com
-Signed-off-by: Yu Kuai <yukuai@fnnas.com>
+Suggested-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: ZhangGuoDong <zhangguodong@kylinos.cn>
+Signed-off-by: ChenXiaoSong <chenxiaosong@kylinos.cn>
+Acked-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/md/md.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ fs/smb/server/smb2pdu.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/md/md.c b/drivers/md/md.c
-index 7b1365143f58d..e04ddcb03981c 100644
---- a/drivers/md/md.c
-+++ b/drivers/md/md.c
-@@ -4396,7 +4396,7 @@ raid_disks_store(struct mddev *mddev, const char *buf, size_t len)
- 	if (err < 0)
- 		return err;
+diff --git a/fs/smb/server/smb2pdu.c b/fs/smb/server/smb2pdu.c
+index 10d58e3094423..244a5665f26df 100644
+--- a/fs/smb/server/smb2pdu.c
++++ b/fs/smb/server/smb2pdu.c
+@@ -3019,10 +3019,10 @@ int smb2_open(struct ksmbd_work *work)
+ 			file_info = FILE_OPENED;
  
--	err = mddev_lock(mddev);
-+	err = mddev_suspend_and_lock(mddev);
- 	if (err)
- 		return err;
- 	if (mddev->pers)
-@@ -4421,7 +4421,7 @@ raid_disks_store(struct mddev *mddev, const char *buf, size_t len)
- 	} else
- 		mddev->raid_disks = n;
- out_unlock:
--	mddev_unlock(mddev);
-+	mddev_unlock_and_resume(mddev);
- 	return err ? err : len;
- }
- static struct md_sysfs_entry md_raid_disks =
+ 			rc = ksmbd_vfs_getattr(&fp->filp->f_path, &stat);
++			ksmbd_put_durable_fd(fp);
+ 			if (rc)
+ 				goto err_out2;
+ 
+-			ksmbd_put_durable_fd(fp);
+ 			goto reconnected_fp;
+ 		}
+ 	} else if (req_op_level == SMB2_OPLOCK_LEVEL_LEASE)
 -- 
 2.51.0
 
