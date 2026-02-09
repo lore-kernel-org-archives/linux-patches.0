@@ -1,38 +1,47 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EAFD037AA87;
-	Mon,  9 Feb 2026 14:42:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D52637AA87;
+	Mon,  9 Feb 2026 14:42:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770648140; cv=none; b=lvIxLT8+dgD0bGYe1BEpTqt0PAiHWVjXxJ3XaCObZbMulyHbFLC4ZI2fQpluh97z0rfRTVdvlNy6LmYxUSOgkwoCRSEjkMi5Ywf2mGOSDh5//cYzv5khJynBU9yth1fwFgiuFx124foBDBEZBROn+5Ju4YnTPibt1EeSH++G6rg=
+	t=1770648143; cv=none; b=VHAlAEDAIRBOjYMS6vbydqjGhAusTbVB+JyNVFwTXdfYEiWeyH2wiiu1t91J6Tx9A1pmVSJyyeF5hkrKzz+Txsyze+WtLEuYfPMeSxTvRT45UzogI6/hCneS+7GZ8WpMbLnKQNhFjsXGPE9md7/ueaJuwEHsxY3WEz264PDM5oY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770648140; c=relaxed/simple;
-	bh=AMH0PTzntOkVfhfpMUZ+uR32JSWNpZQFSpTQkwdVriM=;
+	s=arc-20240116; t=1770648143; c=relaxed/simple;
+	bh=3owlrt+jV2hGatJRHQl/zQgd4SbLLwsUCX1LXAfVIfc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=dcA+d9Jr8ixkJrypicMb3B/NkF4o/0SYC7saNa9pKBepGrOJYIHWdyDzQrwqXixQ74MyjbT+/gBW0s7WgZv/Ps5/1Z3GCRiK6vaBhgEEjxUUgGeBxV0CBJnf7QA6jG8N5q7yiDU86zTuVLCFcm3VFqRLnrEmF/+TuOKGwKOwl/o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vMNw+6g5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=muXc7aBMKBG7B8t+G+IWA3/NiUql6oh9y+Uzu1TpFP4j93dblntiLNuj1X1eP1d9gnPdxo3xqwVvjdLIk+0MyHk2GhjMmsTfKo7tALgahIiUAXydkQzedC1x+OBJEN8h3+chpMOykYCy2/eb/35H80ej1lEE1fJrO1f6mUOT7Yw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RqQkBaOj; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vMNw+6g5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6416EC19423;
-	Mon,  9 Feb 2026 14:42:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RqQkBaOj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A41AC16AAE;
+	Mon,  9 Feb 2026 14:42:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770648139;
-	bh=AMH0PTzntOkVfhfpMUZ+uR32JSWNpZQFSpTQkwdVriM=;
+	s=korg; t=1770648142;
+	bh=3owlrt+jV2hGatJRHQl/zQgd4SbLLwsUCX1LXAfVIfc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vMNw+6g5YpFlS6gCig13FzagnHrGGiioCrLA5Goh6UyxyNvaY18wgB5Bd/dMc0etR
-	 LH96LPXYnIAUIRblZRiZRXymOMLyZyoXZxk+s7X/pcxVIgkdATHkFWaTA7DPT4mWt0
-	 NOZpNymggdeYm3ezw2OfScaUBLKho3XRBM4Fkj3g=
+	b=RqQkBaOjQ7puaJH02yWZ5j4vqC3rjepPiLd0DP9ULEINAAYCaAjF3SdIAgkcDjf3r
+	 7yf60CJ4ZGp8e9f75MJMlfezrEF1WbYxkhqYh5wp6bb/JaZC4nPdJ/DRQCpLs1yoNk
+	 zX01CPNgWSRx/NnHuLOibPtUYPwtgDl146X3St9Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Peter Astrand <astrand@lysator.liu.se>,
-	Johannes Berg <johannes.berg@intel.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 19/69] wifi: wlcore: ensure skb headroom before skb_push
-Date: Mon,  9 Feb 2026 15:23:47 +0100
-Message-ID: <20260209142302.620834831@linuxfoundation.org>
+	Ryusuke Konishi <konishi.ryusuke@gmail.com>,
+	Andrew Cooper <andrew.cooper3@citrix.com>,
+	"Borislav Petkov (AMD)" <bp@alien8.de>,
+	Alexander Potapenko <glider@google.com>,
+	Marco Elver <elver@google.com>,
+	Dmitry Vyukov <dvyukov@google.com>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	Ingo Molnar <mingo@redhat.com>,
+	Dave Hansen <dave.hansen@linux.intel.com>,
+	"H. Peter Anvin" <hpa@zytor.com>,
+	Jann Horn <jannh@google.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.1 02/69] x86/kfence: fix booting on 32bit non-PAE systems
+Date: Mon,  9 Feb 2026 15:23:30 +0100
+Message-ID: <20260209142302.004567999@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260209142301.913348974@linuxfoundation.org>
 References: <20260209142301.913348974@linuxfoundation.org>
@@ -45,46 +54,74 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Peter Åstrand <astrand@lysator.liu.se>
+From: Andrew Cooper <andrew.cooper3@citrix.com>
 
-[ Upstream commit e75665dd096819b1184087ba5718bd93beafff51 ]
+commit 16459fe7e0ca6520a6e8f603de4ccd52b90fd765 upstream.
 
-This avoids occasional skb_under_panic Oops from wl1271_tx_work. In this case, headroom is
-less than needed (typically 110 - 94 = 16 bytes).
+The original patch inverted the PTE unconditionally to avoid
+L1TF-vulnerable PTEs, but Linux doesn't make this adjustment in 2-level
+paging.
 
-Signed-off-by: Peter Astrand <astrand@lysator.liu.se>
-Link: https://patch.msgid.link/097bd417-e1d7-acd4-be05-47b199075013@lysator.liu.se
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Adjust the logic to use the flip_protnone_guard() helper, which is a nop
+on 2-level paging but inverts the address bits in all other paging modes.
+
+This doesn't matter for the Xen aspect of the original change.  Linux no
+longer supports running 32bit PV under Xen, and Xen doesn't support
+running any 32bit PV guests without using PAE paging.
+
+Link: https://lkml.kernel.org/r/20260126211046.2096622-1-andrew.cooper3@citrix.com
+Fixes: b505f1944535 ("x86/kfence: avoid writing L1TF-vulnerable PTEs")
+Reported-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
+Closes: https://lore.kernel.org/lkml/CAKFNMokwjw68ubYQM9WkzOuH51wLznHpEOMSqtMoV1Rn9JV_gw@mail.gmail.com/
+Signed-off-by: Andrew Cooper <andrew.cooper3@citrix.com>
+Tested-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
+Tested-by: Borislav Petkov (AMD) <bp@alien8.de>
+Cc: Alexander Potapenko <glider@google.com>
+Cc: Marco Elver <elver@google.com>
+Cc: Dmitry Vyukov <dvyukov@google.com>
+Cc: Thomas Gleixner <tglx@linutronix.de>
+Cc: Ingo Molnar <mingo@redhat.com>
+Cc: Dave Hansen <dave.hansen@linux.intel.com>
+Cc: "H. Peter Anvin" <hpa@zytor.com>
+Cc: Jann Horn <jannh@google.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wireless/ti/wlcore/tx.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ arch/x86/include/asm/kfence.h |    7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/wireless/ti/wlcore/tx.c b/drivers/net/wireless/ti/wlcore/tx.c
-index 7bd3ce2f08044..75ad096676561 100644
---- a/drivers/net/wireless/ti/wlcore/tx.c
-+++ b/drivers/net/wireless/ti/wlcore/tx.c
-@@ -210,6 +210,11 @@ static int wl1271_tx_allocate(struct wl1271 *wl, struct wl12xx_vif *wlvif,
- 	total_blocks = wlcore_hw_calc_tx_blocks(wl, total_len, spare_blocks);
+--- a/arch/x86/include/asm/kfence.h
++++ b/arch/x86/include/asm/kfence.h
+@@ -42,7 +42,7 @@ static inline bool kfence_protect_page(u
+ {
+ 	unsigned int level;
+ 	pte_t *pte = lookup_address(addr, &level);
+-	pteval_t val;
++	pteval_t val, new;
  
- 	if (total_blocks <= wl->tx_blocks_available) {
-+		if (skb_headroom(skb) < (total_len - skb->len) &&
-+		    pskb_expand_head(skb, (total_len - skb->len), 0, GFP_ATOMIC)) {
-+			wl1271_free_tx_id(wl, id);
-+			return -EAGAIN;
-+		}
- 		desc = skb_push(skb, total_len - skb->len);
+ 	if (WARN_ON(!pte || level != PG_LEVEL_4K))
+ 		return false;
+@@ -57,11 +57,12 @@ static inline bool kfence_protect_page(u
+ 		return true;
  
- 		wlcore_hw_set_tx_desc_blocks(wl, desc, total_blocks,
--- 
-2.51.0
-
+ 	/*
+-	 * Otherwise, invert the entire PTE.  This avoids writing out an
++	 * Otherwise, flip the Present bit, taking care to avoid writing an
+ 	 * L1TF-vulnerable PTE (not present, without the high address bits
+ 	 * set).
+ 	 */
+-	set_pte(pte, __pte(~val));
++	new = val ^ _PAGE_PRESENT;
++	set_pte(pte, __pte(flip_protnone_guard(val, new, PTE_PFN_MASK)));
+ 
+ 	/*
+ 	 * If the page was protected (non-present) and we're making it
 
 
