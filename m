@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD348125B2;
-	Mon,  9 Feb 2026 14:33:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33779285060;
+	Mon,  9 Feb 2026 14:33:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770647586; cv=none; b=ubPKkpJlp6xGAptJ5RqfZXrgem0VITpL4Ua6qhX3uEwEa9mW8VCILnotZAwua6r6NGCuTtYgfQjQkSf4naezahArRJX6J2EyFEB2hkpbwQ7qSrghDNm/UY4TCGIJXtqXLotC+l421swobVv799GHbg2667+Vx3Qt58AmIBBfeWo=
+	t=1770647590; cv=none; b=lEKCN7T9hr5RAc92D7tyX4VJFYeFo1E/h0Fl2l3dWkusHtM96XWCeORQfG6DhfzSox8wNhN6ojYxJojzDOED7cITSDwV04E2GD4sS2vYm+FAStKtpyn806Lb4wzbPKzSCNkG5M2DGzjY1346LeR+GBK+3/POlg7H8h6JMHkj9J4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770647586; c=relaxed/simple;
-	bh=c5FE1Fxix2YQPtyl75qTCdpdryD+w8RQMlP7BqmuaQw=;
+	s=arc-20240116; t=1770647590; c=relaxed/simple;
+	bh=EyVIv4mTRx8k3fmyEOuMSRAdkeBt/OsnFoY0jazB+lY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QrSaK3MPGFqBvy2F3D3Xdy4CXQMhKyVs/S5S28XNiZl3Mtz5G0558q7vR8mi50MLfJd2KqowviLAOQOxcqKE/IEpYVTBKl1zS7XL8g6F4wYx+IAIZeSW72t71LdlzdF7mXcM7dCHIoaRLBo+dae41JSpXkcCPvZ1PwRwzx6iajg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=t0h3x5bm; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=iw3ydGXN3si/YhhJ8TRiHI8UhykviVF6TahLINivZCjwDta7HBlTP2m47gngTWOuhreRiM2DD46r/zvS7cfg/kJsX0caD/dvirlqHWYwK+Cx+fxzIZ1VmdtLUXyh76qA9Bu3ncuzA2B9DpTD560ON0GRSO5scY02Ycw3M0w05eY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FFUaOqSc; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="t0h3x5bm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35A2CC116C6;
-	Mon,  9 Feb 2026 14:33:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FFUaOqSc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 80FCFC19422;
+	Mon,  9 Feb 2026 14:33:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770647586;
-	bh=c5FE1Fxix2YQPtyl75qTCdpdryD+w8RQMlP7BqmuaQw=;
+	s=korg; t=1770647590;
+	bh=EyVIv4mTRx8k3fmyEOuMSRAdkeBt/OsnFoY0jazB+lY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=t0h3x5bm3JeF8A6jXigy6qAXMyeoTmXrs5kGlz9wOBq4Pv8zjD+f8cZYqaJLcgFpo
-	 CqVf1wR35vgAP/Z50TDSbm2BmLsgodr7f01BFLHOaVxS52sEwMr9Kkr7rk07Z0t7+C
-	 t0Bp7PfOz2oHlBcINWMO6Eg7rQ6f07tSWSoGbq4U=
+	b=FFUaOqScJppSI9KI4nKieAIXfDjUCzM8g7/RKseCCP3RVO0FBNytqqFJ+Suvz9j7n
+	 bl3iTD0fFLKQZM5AuVYdvlQahDY1asqki11/ht7vVorVyeVTCl4S5mIPKM0IxSwM4u
+	 gDeq8mJljazCFZ+dgpiqfuZ9US+jyetubVUq1ulY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Chris Bainbridge <chris.bainbridge@gmail.com>,
 	Johannes Berg <johannes.berg@intel.com>,
 	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 144/175] wifi: iwlwifi: mld: cancel mlo_scan_start_wk
-Date: Mon,  9 Feb 2026 15:23:37 +0100
-Message-ID: <20260209142325.686189110@linuxfoundation.org>
+Subject: [PATCH 6.18 145/175] wifi: iwlwifi: mvm: pause TCM on fast resume
+Date: Mon,  9 Feb 2026 15:23:38 +0100
+Message-ID: <20260209142325.721181901@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260209142320.474120190@linuxfoundation.org>
 References: <20260209142320.474120190@linuxfoundation.org>
@@ -53,54 +54,55 @@ Content-Transfer-Encoding: 8bit
 
 From: Miri Korenblit <miriam.rachel.korenblit@intel.com>
 
-[ Upstream commit 5ff641011ab7fb63ea101251087745d9826e8ef5 ]
+[ Upstream commit fb7f54aa2a99b07945911152c5d3d4a6eb39f797 ]
 
-mlo_scan_start_wk is not canceled on disconnection. In fact, it is not
-canceled anywhere except in the restart cleanup, where we don't really
-have to.
+Not pausing it means that we can have the TCM work queued into a
+non-freezable workqueue, which, in resume, is re-activated before the
+driver's resume is called.
+The TCM work might send commands to the FW before we resumed the device,
+leading to an assert.
 
-This can cause an init-after-queue issue: if, for example, the work was
-queued and then drv_change_interface got executed.
-
-This can also cause use-after-free: if the work is executed after the
-vif is freed.
-
-Fixes: 9748ad82a9d9 ("wifi: iwlwifi: defer MLO scan after link activation")
+Closes: https://lore.kernel.org/linux-wireless/aTDoDiD55qlUZ0pn@debian.local/
+Tested-by: Chris Bainbridge <chris.bainbridge@gmail.com>
+Fixes: e8bb19c1d590 ("wifi: iwlwifi: support fast resume")
 Reviewed-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
-Link: https://patch.msgid.link/20260129212650.a36482a60719.I5bf64a108ca39dacb5ca0dcd8b7258a3ce8db74c@changeid
+Link: https://patch.msgid.link/20260129212650.05621f3faedb.I44df9cf9183b5143df8078131e0d87c0fd7e1763@changeid
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/intel/iwlwifi/mld/iface.c    | 2 --
- drivers/net/wireless/intel/iwlwifi/mld/mac80211.c | 2 ++
- 2 files changed, 2 insertions(+), 2 deletions(-)
+ drivers/net/wireless/intel/iwlwifi/mvm/d3.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/wireless/intel/iwlwifi/mld/iface.c b/drivers/net/wireless/intel/iwlwifi/mld/iface.c
-index ed379825a9236..240ce19996b34 100644
---- a/drivers/net/wireless/intel/iwlwifi/mld/iface.c
-+++ b/drivers/net/wireless/intel/iwlwifi/mld/iface.c
-@@ -55,8 +55,6 @@ void iwl_mld_cleanup_vif(void *data, u8 *mac, struct ieee80211_vif *vif)
+diff --git a/drivers/net/wireless/intel/iwlwifi/mvm/d3.c b/drivers/net/wireless/intel/iwlwifi/mvm/d3.c
+index 07f1a84c274ef..af1a45845999b 100644
+--- a/drivers/net/wireless/intel/iwlwifi/mvm/d3.c
++++ b/drivers/net/wireless/intel/iwlwifi/mvm/d3.c
+@@ -1,6 +1,6 @@
+ // SPDX-License-Identifier: GPL-2.0 OR BSD-3-Clause
+ /*
+- * Copyright (C) 2012-2014, 2018-2025 Intel Corporation
++ * Copyright (C) 2012-2014, 2018-2026 Intel Corporation
+  * Copyright (C) 2013-2015 Intel Mobile Communications GmbH
+  * Copyright (C) 2016-2017 Intel Deutschland GmbH
+  */
+@@ -3239,6 +3239,8 @@ void iwl_mvm_fast_suspend(struct iwl_mvm *mvm)
  
- 	ieee80211_iter_keys(mld->hw, vif, iwl_mld_cleanup_keys_iter, NULL);
+ 	IWL_DEBUG_WOWLAN(mvm, "Starting fast suspend flow\n");
  
--	wiphy_delayed_work_cancel(mld->wiphy, &mld_vif->mlo_scan_start_wk);
--
- 	CLEANUP_STRUCT(mld_vif);
- }
++	iwl_mvm_pause_tcm(mvm, true);
++
+ 	mvm->fast_resume = true;
+ 	set_bit(IWL_MVM_STATUS_IN_D3, &mvm->status);
  
-diff --git a/drivers/net/wireless/intel/iwlwifi/mld/mac80211.c b/drivers/net/wireless/intel/iwlwifi/mld/mac80211.c
-index 5725104a53bf0..2a7e7417d7d84 100644
---- a/drivers/net/wireless/intel/iwlwifi/mld/mac80211.c
-+++ b/drivers/net/wireless/intel/iwlwifi/mld/mac80211.c
-@@ -1755,6 +1755,8 @@ static int iwl_mld_move_sta_state_down(struct iwl_mld *mld,
- 			wiphy_work_cancel(mld->wiphy, &mld_vif->emlsr.unblock_tpt_wk);
- 			wiphy_delayed_work_cancel(mld->wiphy,
- 						  &mld_vif->emlsr.check_tpt_wk);
-+			wiphy_delayed_work_cancel(mld->wiphy,
-+						  &mld_vif->mlo_scan_start_wk);
+@@ -3295,6 +3297,8 @@ int iwl_mvm_fast_resume(struct iwl_mvm *mvm)
+ 		mvm->trans->state = IWL_TRANS_NO_FW;
+ 	}
  
- 			iwl_mld_reset_cca_40mhz_workaround(mld, vif);
- 			iwl_mld_smps_workaround(mld, vif, true);
++	iwl_mvm_resume_tcm(mvm);
++
+ out:
+ 	clear_bit(IWL_MVM_STATUS_IN_D3, &mvm->status);
+ 	mvm->fast_resume = false;
 -- 
 2.51.0
 
