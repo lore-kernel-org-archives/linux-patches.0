@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4786A125B2;
-	Mon,  9 Feb 2026 14:37:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95A30125B2;
+	Mon,  9 Feb 2026 14:37:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770647846; cv=none; b=lPnH7d8ubKtHVfxAm4YNU8SRriYckqnNsBanTJsJZbmNGBdoSqUxSgMg7MkQaKY7F2ILQobwReNma0cFcR+TKuLlkF00ikDikqgK3FtWyZMvFAG741WKI5ay8ddrfadVt86W/FxXX85jF9zfAkSWDD9bjdwAaA+z7By1+RAKdPY=
+	t=1770647849; cv=none; b=iuiTsTMR4CmSvGN2G2iYAYUhbUqnpBp8RXXviop+8V4WTn5TuxgbgLXwDa04LtjKjH9sE3PeF9EJpExlvqBWScMyoQTd1ACsUCZhaACrzGw6CZqA29vxBZ3Cmqe4Hbi8HutVj7QRjIm/5pB6pe/GGcfdL+Qc15H7TxzctQMVhTg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770647846; c=relaxed/simple;
-	bh=qTNYo6dGsWAV3Lkk1EhEcAekzIwy+5Wr9GPiCeceoyU=;
+	s=arc-20240116; t=1770647849; c=relaxed/simple;
+	bh=Yj9y+tN/lev+D9EMTgU0MQMzOqo6me7aAGhKvC3/+8I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NzP8TuIou9OgjWetiHcVz9Uu/n1weGe1+GWnRPzMlaKG7+4+e++vqvIk0yKnAqPgNBI3t+O2koF1FnunqIdL6sF33XwoAb3HJhEIZ+7j//hFEO9CHEFfRUFZmOc1sisVtD9BG1Md7Sh89DbZNABFPlOj+Du9qA3uCWnYYY1keog=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tiWQTdG1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=qLsjIU5ZiPEVTG8AvDWQsDqXbZsm//xPxmL219is24M5BBvClLBpls8bxM0iBECT+1KxDFZl702RM0hK3Q5EU3j8SS4Ha9tmeX2UC5YpjSd1FIz1HlCRIDy9OfujRnBUCcIoI91yiUP6gMGYDNmHoHYGNSTzrxqsztseE6ljozE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YeNHTyGO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tiWQTdG1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BFDDBC116C6;
-	Mon,  9 Feb 2026 14:37:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YeNHTyGO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B81CC116C6;
+	Mon,  9 Feb 2026 14:37:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770647846;
-	bh=qTNYo6dGsWAV3Lkk1EhEcAekzIwy+5Wr9GPiCeceoyU=;
+	s=korg; t=1770647849;
+	bh=Yj9y+tN/lev+D9EMTgU0MQMzOqo6me7aAGhKvC3/+8I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tiWQTdG1mS6FkCKiC+PVUjkjCap+GfEZtMDJ73uT6VF9f7NTmc2tMiooXKZrxPOAf
-	 mLR/haxGMmVGpWSZn6TfK8rlkRqr4tB4Rc6FfObVo22NPCQdDvXqniw4sxyqZdfTsm
-	 5RLA6cSpgn7U8RsUW7i/Ycqy6xGdn8x0y1JzjZvo=
+	b=YeNHTyGOlZvpSdxFVEseTdFuDS4edAMl/0q3CvaWvBqWZNRNhF6LuZ3d+m7svFvsQ
+	 e3Chr5ZF3tkkabGiM7YxcxFuL/itw72ToWvfu6ghRwC94f5xd5zWaZfMCz+1dgsduG
+	 n2yXUVhOGL/M/7WuQyERnNGGkKEPQKgSm+FGhuCM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Siarhei Vishniakou <svv@google.com>,
-	Benjamin Tissoires <bentiss@kernel.org>,
+	=?UTF-8?q?Matou=C5=A1=20L=C3=A1nsk=C3=BD?= <matouslansky@post.cz>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 045/113] HID: playstation: Center initial joystick axes to prevent spurious events
-Date: Mon,  9 Feb 2026 15:23:14 +0100
-Message-ID: <20260209142311.824233485@linuxfoundation.org>
+Subject: [PATCH 6.12 046/113] ALSA: hda/realtek: Add quirk for Acer Nitro AN517-55
+Date: Mon,  9 Feb 2026 15:23:15 +0100
+Message-ID: <20260209142311.858496540@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260209142310.204833231@linuxfoundation.org>
 References: <20260209142310.204833231@linuxfoundation.org>
@@ -45,69 +45,40 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Siarhei Vishniakou <svv@google.com>
+From: Matouš Lánský <matouslansky@post.cz>
 
-[ Upstream commit e9143268d259d98e111a649affa061acb8e13c5b ]
+[ Upstream commit 9be25402d8522e16e5ebe84f2b1b6c5de082a388 ]
 
-When a new PlayStation gamepad (DualShock 4 or DualSense) is initialized,
-the input subsystem sets the default value for its absolute axes (e.g.,
-ABS_X, ABS_Y) to 0.
+Add headset mic quirk for Acer Nitro AN517-55. This laptop uses
+the same audio configuration as the AN515-58 model.
 
-However, the hardware's actual neutral/resting state for these joysticks
-is 128 (0x80). This creates a mismatch.
-
-When the first HID report arrives from the device, the driver sees the
-resting value of 128. The kernel compares this to its initial state of 0
-and incorrectly interprets this as a delta (0 -> 128). Consequently, it
-generates EV_ABS events for this initial, non-existent movement.
-
-This behavior can fail userspace 'sanity check' tests (e.g., in
-Android CTS) that correctly assert no motion events should be generated
-from a device that is already at rest.
-
-This patch fixes the issue by explicitly setting the initial value of the
-main joystick axes (e.g., ABS_X, ABS_Y, ABS_RX, ABS_RY) to 128 (0x80)
-in the common ps_gamepad_create() function.
-
-This aligns the kernel's initial state with the hardware's expected
-neutral state, ensuring that the first report (at 128) produces no
-delta and thus, no spurious event.
-
-Signed-off-by: Siarhei Vishniakou <svv@google.com>
-Reviewed-by: Benjamin Tissoires <bentiss@kernel.org>
-Signed-off-by: Benjamin Tissoires <bentiss@kernel.org>
+Signed-off-by: Matouš Lánský <matouslansky@post.cz>
+Link: https://patch.msgid.link/20251231171207.76943-1-matouslansky@post.cz
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hid/hid-playstation.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ sound/pci/hda/patch_realtek.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/hid/hid-playstation.c b/drivers/hid/hid-playstation.c
-index 657e9ae1be1ee..71a8d4ec9913b 100644
---- a/drivers/hid/hid-playstation.c
-+++ b/drivers/hid/hid-playstation.c
-@@ -718,11 +718,16 @@ static struct input_dev *ps_gamepad_create(struct hid_device *hdev,
- 	if (IS_ERR(gamepad))
- 		return ERR_CAST(gamepad);
- 
-+	/* Set initial resting state for joysticks to 128 (center) */
- 	input_set_abs_params(gamepad, ABS_X, 0, 255, 0, 0);
-+	gamepad->absinfo[ABS_X].value = 128;
- 	input_set_abs_params(gamepad, ABS_Y, 0, 255, 0, 0);
-+	gamepad->absinfo[ABS_Y].value = 128;
- 	input_set_abs_params(gamepad, ABS_Z, 0, 255, 0, 0);
- 	input_set_abs_params(gamepad, ABS_RX, 0, 255, 0, 0);
-+	gamepad->absinfo[ABS_RX].value = 128;
- 	input_set_abs_params(gamepad, ABS_RY, 0, 255, 0, 0);
-+	gamepad->absinfo[ABS_RY].value = 128;
- 	input_set_abs_params(gamepad, ABS_RZ, 0, 255, 0, 0);
- 
- 	input_set_abs_params(gamepad, ABS_HAT0X, -1, 1, 0, 0);
+diff --git a/sound/pci/hda/patch_realtek.c b/sound/pci/hda/patch_realtek.c
+index 7b3658e01c95e..dab42dee93018 100644
+--- a/sound/pci/hda/patch_realtek.c
++++ b/sound/pci/hda/patch_realtek.c
+@@ -10418,6 +10418,7 @@ static const struct hda_quirk alc269_fixup_tbl[] = {
+ 	SND_PCI_QUIRK(0x1025, 0x1466, "Acer Aspire A515-56", ALC255_FIXUP_ACER_HEADPHONE_AND_MIC),
+ 	SND_PCI_QUIRK(0x1025, 0x1534, "Acer Predator PH315-54", ALC255_FIXUP_ACER_MIC_NO_PRESENCE),
+ 	SND_PCI_QUIRK(0x1025, 0x159c, "Acer Nitro 5 AN515-58", ALC2XX_FIXUP_HEADSET_MIC),
++	SND_PCI_QUIRK(0x1025, 0x1597, "Acer Nitro 5 AN517-55", ALC2XX_FIXUP_HEADSET_MIC),
+ 	SND_PCI_QUIRK(0x1025, 0x169a, "Acer Swift SFG16", ALC256_FIXUP_ACER_SFG16_MICMUTE_LED),
+ 	SND_PCI_QUIRK(0x1028, 0x0470, "Dell M101z", ALC269_FIXUP_DELL_M101Z),
+ 	SND_PCI_QUIRK(0x1028, 0x053c, "Dell Latitude E5430", ALC292_FIXUP_DELL_E7X),
 -- 
 2.51.0
 
