@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B863037998B;
-	Mon,  9 Feb 2026 14:41:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29F4537998B;
+	Mon,  9 Feb 2026 14:41:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770648092; cv=none; b=JFyO0ZwDkHOuWDG3EhFckv3WDuGwLyvRVTdibZ01CBwWvTYWmc9ZqM56ly946nit0G9FBs0Q6518W1lS9eknjNTfeo5qGrRx7NIFMeGRiFJzaNsGUKdDebfMPqIWGLCcoShEgZEa+5EfSxX4urVxXVopdzMdJlqFPdKiBJWEV50=
+	t=1770648096; cv=none; b=Uq/1eNeW5Wfm1Wytc4eqY8C6ge+xvOqLZx4M7twpd2Lo8hdX02PJSmgZAUXxSxKXhp5wKh6U2Jp8+qbDtKGVzx35cy0jO0Mj6wZ5j9+m3lSaxLC1V5djDYkS9nY+Qy2rDQVyN7qXEOhJG21/9H/yrmmRSrfvoAi8oOZ/3VL3n/I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770648092; c=relaxed/simple;
-	bh=JeMuVL1zBz7Mv1mPrmdRhquU0ZOVFHF8tcbUIfWRJFM=;
+	s=arc-20240116; t=1770648096; c=relaxed/simple;
+	bh=f9JUuATp1+kRZ4o2+nOltmscZXBm6cSWLM2aXtHPYos=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nM7VbUl419oV8TUL74lyENnnTp1VAA0LxkbTX8jgM+CeZw9xEg6xQpWbmn6VK83XGIuFdKmkwSHJS1YY0Ma1oul4bdfQvTgbtlmhIPr2/AT/FjTZox58hvLfCoBKiKWVUWwx9RlkXIXitiXRNGzW8RUE8OrNWpxVIHD28uZ0jVE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ut98uYSh; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=U6cR8laKq3JuXv15HOZZY+240MMKIazJT2uF3tSvxLeUwQqp9vW6erco2yBPQNFJNLeTPVm8TVCc20aFBYTt6a27iCV0SfRpMfhsDRHWjguvS/PxW4MFW+Ni1rAMa8XQ5E3RjTFhY8zsIe+1PckH0Pou57vYKVRoFwbW2mLg0GA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tPmRDS/r; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ut98uYSh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E29EC16AAE;
-	Mon,  9 Feb 2026 14:41:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tPmRDS/r"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C321C16AAE;
+	Mon,  9 Feb 2026 14:41:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770648092;
-	bh=JeMuVL1zBz7Mv1mPrmdRhquU0ZOVFHF8tcbUIfWRJFM=;
+	s=korg; t=1770648096;
+	bh=f9JUuATp1+kRZ4o2+nOltmscZXBm6cSWLM2aXtHPYos=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ut98uYShpzcDZGEU70nCUZbd3dy6QmcQiMuIvDPhQ4abtjGaeizcnJHyQcZPD0sq+
-	 +kBv8MAxdAA7wrDg7EtQoiS2plKnf1Y7wmm0fSWns5Sgg3EhcUhcgJJAfKFFE2YV3F
-	 s09UqnCZkwSy5ZnrqBtUdehQxVUDNli+muTwkxUk=
+	b=tPmRDS/rnYbi9H6v6jjP2ZX3tQWsQQSMUbBnjKwtQypWRybkHvTx/HmfrAG6fGivI
+	 En4o0PEZsNxu+Gz61rAVLR6nGsUOPdRU43OPCaF+DeZw8rjDMWrZ/+FgFXdMrIW04W
+	 xJ+cNJwkSjMqWJedAK5FoVpI+1HO8Z7mV47JBmOE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sergey Shtylyov <s.shtylyov@auroraos.dev>,
-	Takashi Iwai <tiwai@suse.de>,
+	Chris Bainbridge <chris.bainbridge@gmail.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 104/113] ALSA: usb-audio: fix broken logic in snd_audigy2nx_led_update()
-Date: Mon,  9 Feb 2026 15:24:13 +0100
-Message-ID: <20260209142313.911878886@linuxfoundation.org>
+Subject: [PATCH 6.12 105/113] ASoC: amd: fix memory leak in acp3x pdm dma ops
+Date: Mon,  9 Feb 2026 15:24:14 +0100
+Message-ID: <20260209142313.947430684@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260209142310.204833231@linuxfoundation.org>
 References: <20260209142310.204833231@linuxfoundation.org>
@@ -51,50 +51,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sergey Shtylyov <s.shtylyov@auroraos.dev>
+From: Chris Bainbridge <chris.bainbridge@gmail.com>
 
-[ Upstream commit 124bdc6eccc8c5cba68fee00e01c084c116c4360 ]
+[ Upstream commit 7f67ba5413f98d93116a756e7f17cd2c1d6c2bd6 ]
 
-When the support for the Sound Blaster X-Fi Surround 5.1 Pro was added,
-the existing logic for the X-Fi Surround 5.1 in snd_audigy2nx_led_put()
-was broken due to missing *else* before the added *if*: snd_usb_ctl_msg()
-became incorrectly called twice and an error from first snd_usb_ctl_msg()
-call ignored.  As the added snd_usb_ctl_msg() call was totally identical
-to the existing one for the "plain" X-Fi Surround 5.1, just merge those
-two *if* statements while fixing the broken logic...
-
-Found by Linux Verification Center (linuxtesting.org) with the Svace static
-analysis tool.
-
-Fixes: 7cdd8d73139e ("ALSA: usb-audio - Add support for USB X-Fi S51 Pro")
-Signed-off-by: Sergey Shtylyov <s.shtylyov@auroraos.dev>
-Link: https://patch.msgid.link/20260203161558.18680-1-s.shtylyov@auroraos.dev
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Fixes: 4a767b1d039a8 ("ASoC: amd: add acp3x pdm driver dma ops")
+Signed-off-by: Chris Bainbridge <chris.bainbridge@gmail.com>
+Link: https://patch.msgid.link/20260202205034.7697-1-chris.bainbridge@gmail.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/usb/mixer_quirks.c | 9 ++-------
- 1 file changed, 2 insertions(+), 7 deletions(-)
+ sound/soc/amd/renoir/acp3x-pdm-dma.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/sound/usb/mixer_quirks.c b/sound/usb/mixer_quirks.c
-index b663764644cd8..6d6308ca4fa82 100644
---- a/sound/usb/mixer_quirks.c
-+++ b/sound/usb/mixer_quirks.c
-@@ -310,13 +310,8 @@ static int snd_audigy2nx_led_update(struct usb_mixer_interface *mixer,
- 	if (err < 0)
- 		return err;
+diff --git a/sound/soc/amd/renoir/acp3x-pdm-dma.c b/sound/soc/amd/renoir/acp3x-pdm-dma.c
+index 95ac8c6800375..a560d06097d5e 100644
+--- a/sound/soc/amd/renoir/acp3x-pdm-dma.c
++++ b/sound/soc/amd/renoir/acp3x-pdm-dma.c
+@@ -301,9 +301,11 @@ static int acp_pdm_dma_close(struct snd_soc_component *component,
+ 			     struct snd_pcm_substream *substream)
+ {
+ 	struct pdm_dev_data *adata = dev_get_drvdata(component->dev);
++	struct pdm_stream_instance *rtd = substream->runtime->private_data;
  
--	if (chip->usb_id == USB_ID(0x041e, 0x3042))
--		err = snd_usb_ctl_msg(chip->dev,
--				      usb_sndctrlpipe(chip->dev, 0), 0x24,
--				      USB_DIR_OUT | USB_TYPE_VENDOR | USB_RECIP_OTHER,
--				      !value, 0, NULL, 0);
--	/* USB X-Fi S51 Pro */
--	if (chip->usb_id == USB_ID(0x041e, 0x30df))
-+	if (chip->usb_id == USB_ID(0x041e, 0x3042) ||	/* USB X-Fi S51 */
-+	    chip->usb_id == USB_ID(0x041e, 0x30df))	/* USB X-Fi S51 Pro */
- 		err = snd_usb_ctl_msg(chip->dev,
- 				      usb_sndctrlpipe(chip->dev, 0), 0x24,
- 				      USB_DIR_OUT | USB_TYPE_VENDOR | USB_RECIP_OTHER,
+ 	disable_pdm_interrupts(adata->acp_base);
+ 	adata->capture_stream = NULL;
++	kfree(rtd);
+ 	return 0;
+ }
+ 
 -- 
 2.51.0
 
