@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32DC425DB1C;
-	Mon,  9 Feb 2026 14:47:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2771925DB1C;
+	Mon,  9 Feb 2026 14:47:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770648435; cv=none; b=nSvK6G6MlCOgrj+CetyaEv4dGjwUaO4QCJ6xmIJwz9VZ3L7JP/zyassUq4HNCZID9fbUAAEstdgMLZaUMXNnb6XKa9ZQyYV/ty7nFegkFDdEYIfVuDhDYgEIAkquwU+Oi2Ho38bT0rGB8OsDd2rg879OrM8fNZSSInB630oWlnk=
+	t=1770648438; cv=none; b=lNCD5WaS1PiPuUKuYFd307fNnQq2K9Z6Uab/M6SEOHYnQV8a/yLxWirI5QToj8kVnAyE/6gqQHx0JsLIiwtRuM2c4/zKqjzbMKf2vFQk+uonsC/2Wt11B1DKKfzIxWl1cyWFrYwsU5jqFUnlQO4DiIPZWFJSUv9kSgmU2r2RrbY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770648435; c=relaxed/simple;
-	bh=DbQwUXzhuolyVi8EfA46QNtL8gkJWjrOWiaH7l0hZ84=;
+	s=arc-20240116; t=1770648438; c=relaxed/simple;
+	bh=a9NLvXzXR+bY9o03Qc1M4f4B1WavDPT06nvObqShoz4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=evQEUiU1IBxYl8Dtw4eX7nbPOiuKD9JJ1luOb1669VB/yhID03oTpLKPE1IcMIskLVeYpYYCDXDVD6yiGRUJmUAYm2aD9HdMse7WpTF0TiT4KxlxFiRGzZSrZs2b1Nay9GahXvBK4XLv1Zdgj7wBGOx2YSrFR+FUp1XYDJf7LYw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TtGsbLv9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=H0JrdunAhYCDN9GecF7kIyJOOXvkaGyxrzGbC2a072V5hK48BqyX4wYejXSQwToyRK4M5Og1PqSPkvqQ12Prb12XNF2cMvAkxeAK8OqI9EnT9zuM4einxI3YCANrwUXBo8HktPU0ICNUhYw9rfOTP5McKWHg7EyPHflp4CZmB9c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Rj4j4X4z; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TtGsbLv9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 500B3C19424;
-	Mon,  9 Feb 2026 14:47:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Rj4j4X4z"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8EC2EC116C6;
+	Mon,  9 Feb 2026 14:47:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770648434;
-	bh=DbQwUXzhuolyVi8EfA46QNtL8gkJWjrOWiaH7l0hZ84=;
+	s=korg; t=1770648438;
+	bh=a9NLvXzXR+bY9o03Qc1M4f4B1WavDPT06nvObqShoz4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TtGsbLv9tNpngCnFtjlsAOn/C86r3ToCuJzVyLLWs8+r8ugN8ptt+sNQyFdKIo4cM
-	 bRsDNeo90vWzma1Njtac8Kgt1u8g8d7z/e5P05JuldAAz2J2ZZE4fEfiBK8TIvabto
-	 RCC5qsrVWBPppUZl7eWseGVNe4+8/m6rJElrB/bw=
+	b=Rj4j4X4zBl2GK3IHfnEfSBW9JjXgyyrY/h6fH9U4MN+75gIB4E6VjHQuExYbwUFvE
+	 r5hz9BB2pL7+OwTc++B4lT/CqFxZmF1TeHgOjF1Vsz3S1ZQR1+VeWmrJLZ+9zXrAz4
+	 EIa2Ie9hSpnBotRiHDgUHeC0Qm5Jw6mn7olXNyKc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daniel Gomez <da.gomez@samsung.com>,
-	Florian Westphal <fw@strlen.de>,
+	Chris Chiu <chris.chiu@canonical.com>,
+	Benjamin Tissoires <bentiss@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 37/86] netfilter: replace -EEXIST with -EBUSY
-Date: Mon,  9 Feb 2026 15:24:00 +0100
-Message-ID: <20260209142306.121754828@linuxfoundation.org>
+Subject: [PATCH 6.6 38/86] HID: quirks: Add another Chicony HP 5MP Cameras to hid_ignore_list
+Date: Mon,  9 Feb 2026 15:24:01 +0100
+Message-ID: <20260209142306.157663674@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260209142304.770150175@linuxfoundation.org>
 References: <20260209142304.770150175@linuxfoundation.org>
@@ -51,82 +51,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Daniel Gomez <da.gomez@samsung.com>
+From: Chris Chiu <chris.chiu@canonical.com>
 
-[ Upstream commit 2bafeb8d2f380c3a81d98bd7b78b854b564f9cd4 ]
+[ Upstream commit c06bc3557542307b9658fbd43cc946a14250347b ]
 
-The -EEXIST error code is reserved by the module loading infrastructure
-to indicate that a module is already loaded. When a module's init
-function returns -EEXIST, userspace tools like kmod interpret this as
-"module already loaded" and treat the operation as successful, returning
-0 to the user even though the module initialization actually failed.
+Another Chicony Electronics HP 5MP Camera with USB ID 04F2:B882
+reports a HID sensor interface that is not actually implemented.
 
-Replace -EEXIST with -EBUSY to ensure correct error reporting in the module
-initialization path.
+Add the device to the HID ignore list so the bogus sensor is never
+exposed to userspace. Then the system won't hang when runtime PM
+tries to wake the unresponsive device.
 
-Affected modules:
-  * ebtable_broute ebtable_filter ebtable_nat arptable_filter
-  * ip6table_filter ip6table_mangle ip6table_nat ip6table_raw
-  * ip6table_security iptable_filter iptable_mangle iptable_nat
-  * iptable_raw iptable_security
-
-Signed-off-by: Daniel Gomez <da.gomez@samsung.com>
-Signed-off-by: Florian Westphal <fw@strlen.de>
+Signed-off-by: Chris Chiu <chris.chiu@canonical.com>
+Signed-off-by: Benjamin Tissoires <bentiss@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bridge/netfilter/ebtables.c | 2 +-
- net/netfilter/nf_log.c          | 4 ++--
- net/netfilter/x_tables.c        | 2 +-
- 3 files changed, 4 insertions(+), 4 deletions(-)
+ drivers/hid/hid-ids.h    | 1 +
+ drivers/hid/hid-quirks.c | 1 +
+ 2 files changed, 2 insertions(+)
 
-diff --git a/net/bridge/netfilter/ebtables.c b/net/bridge/netfilter/ebtables.c
-index ed62c1026fe93..f99e348c8f37f 100644
---- a/net/bridge/netfilter/ebtables.c
-+++ b/net/bridge/netfilter/ebtables.c
-@@ -1299,7 +1299,7 @@ int ebt_register_template(const struct ebt_table *t, int (*table_init)(struct ne
- 	list_for_each_entry(tmpl, &template_tables, list) {
- 		if (WARN_ON_ONCE(strcmp(t->name, tmpl->name) == 0)) {
- 			mutex_unlock(&ebt_mutex);
--			return -EEXIST;
-+			return -EBUSY;
- 		}
- 	}
+diff --git a/drivers/hid/hid-ids.h b/drivers/hid/hid-ids.h
+index ca9c70c8f3cf1..fbbd1dc5582eb 100644
+--- a/drivers/hid/hid-ids.h
++++ b/drivers/hid/hid-ids.h
+@@ -307,6 +307,7 @@
+ #define USB_DEVICE_ID_CHICONY_ACER_SWITCH12	0x1421
+ #define USB_DEVICE_ID_CHICONY_HP_5MP_CAMERA	0xb824
+ #define USB_DEVICE_ID_CHICONY_HP_5MP_CAMERA2	0xb82c
++#define USB_DEVICE_ID_CHICONY_HP_5MP_CAMERA3	0xb882
  
-diff --git a/net/netfilter/nf_log.c b/net/netfilter/nf_log.c
-index e16f158388bbe..75c812f157e20 100644
---- a/net/netfilter/nf_log.c
-+++ b/net/netfilter/nf_log.c
-@@ -89,7 +89,7 @@ int nf_log_register(u_int8_t pf, struct nf_logger *logger)
- 	if (pf == NFPROTO_UNSPEC) {
- 		for (i = NFPROTO_UNSPEC; i < NFPROTO_NUMPROTO; i++) {
- 			if (rcu_access_pointer(loggers[i][logger->type])) {
--				ret = -EEXIST;
-+				ret = -EBUSY;
- 				goto unlock;
- 			}
- 		}
-@@ -97,7 +97,7 @@ int nf_log_register(u_int8_t pf, struct nf_logger *logger)
- 			rcu_assign_pointer(loggers[i][logger->type], logger);
- 	} else {
- 		if (rcu_access_pointer(loggers[pf][logger->type])) {
--			ret = -EEXIST;
-+			ret = -EBUSY;
- 			goto unlock;
- 		}
- 		rcu_assign_pointer(loggers[pf][logger->type], logger);
-diff --git a/net/netfilter/x_tables.c b/net/netfilter/x_tables.c
-index e50c23b9c9c41..d892afc9a1acc 100644
---- a/net/netfilter/x_tables.c
-+++ b/net/netfilter/x_tables.c
-@@ -1761,7 +1761,7 @@ EXPORT_SYMBOL_GPL(xt_hook_ops_alloc);
- int xt_register_template(const struct xt_table *table,
- 			 int (*table_init)(struct net *net))
- {
--	int ret = -EEXIST, af = table->af;
-+	int ret = -EBUSY, af = table->af;
- 	struct xt_template *t;
- 
- 	mutex_lock(&xt[af].mutex);
+ #define USB_VENDOR_ID_CHUNGHWAT		0x2247
+ #define USB_DEVICE_ID_CHUNGHWAT_MULTITOUCH	0x0001
+diff --git a/drivers/hid/hid-quirks.c b/drivers/hid/hid-quirks.c
+index 192b8f63baaab..b2a3ce7bfb6b6 100644
+--- a/drivers/hid/hid-quirks.c
++++ b/drivers/hid/hid-quirks.c
+@@ -763,6 +763,7 @@ static const struct hid_device_id hid_ignore_list[] = {
+ 	{ HID_USB_DEVICE(USB_VENDOR_ID_BERKSHIRE, USB_DEVICE_ID_BERKSHIRE_PCWD) },
+ 	{ HID_USB_DEVICE(USB_VENDOR_ID_CHICONY, USB_DEVICE_ID_CHICONY_HP_5MP_CAMERA) },
+ 	{ HID_USB_DEVICE(USB_VENDOR_ID_CHICONY, USB_DEVICE_ID_CHICONY_HP_5MP_CAMERA2) },
++	{ HID_USB_DEVICE(USB_VENDOR_ID_CHICONY, USB_DEVICE_ID_CHICONY_HP_5MP_CAMERA3) },
+ 	{ HID_USB_DEVICE(USB_VENDOR_ID_CIDC, 0x0103) },
+ 	{ HID_USB_DEVICE(USB_VENDOR_ID_CYGNAL, USB_DEVICE_ID_CYGNAL_RADIO_SI470X) },
+ 	{ HID_USB_DEVICE(USB_VENDOR_ID_CYGNAL, USB_DEVICE_ID_CYGNAL_RADIO_SI4713) },
 -- 
 2.51.0
 
