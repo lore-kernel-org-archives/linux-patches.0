@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 553E228312F;
-	Mon,  9 Feb 2026 14:53:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6CEC428312F;
+	Mon,  9 Feb 2026 14:53:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770648826; cv=none; b=OjyMFmJY5Qcg7sfGA885tHCMnxs91JAoPd8WyH3PgQDqdQfckxeEp3zsSn/0t2+YYm5/bOFSHPjDgHj+YEEARJn7VpmDfORi8fFxB6fk7PjrUcUJWONvFdcKSA23IWpgQ539D59jO4k74dbyh6pF9L3hdBRoEc6g7rGGWMJB6iI=
+	t=1770648829; cv=none; b=gG7KDJIg7wDixwxdBH174yYMYnRFreIMJwsamUpRypfL547tLSDXWtVBQlAmeaQKlw92MyKyX3Alp35W/9Y6e9Sl+Mcvvt48G1KfFSNX71dyJbB7GmYzKIbNmZCpiZw4QUVeYVE/t6GQaErRhNFNCdeESzli9n6tIGrwGlKdggg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770648826; c=relaxed/simple;
-	bh=O7IxVPvVrwyb0KuKybMeTdhkDNNp2xQ4SM6+pDcBarw=;
+	s=arc-20240116; t=1770648829; c=relaxed/simple;
+	bh=flxGXVby2knBeD8zHmgd+vBB5im3F/fXvyO3WLULiug=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IH+USopjng2mhelQ/p3S3hAFFXMiGAaH8t2sqUrSlmfgAYCr9H5xdHmkAQs8x1MuEmJ8qT5jlJT5DTJpRCmyq0G+U6oIfjj+CnxSbn9PQ2D+YLYdziK2Fvm1KTJ6NOj1ZlX/y3nRoKXbwtopzrqqXDuwWur2BI3L3ne7sDesgMk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Tx485DBy; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=KxbQ7be5H/UjwLVz1+84Zj344JDpXAdj8A/Nyc7Z6pfwtO7wG9/j/b+Sd0FhAt6AFDQDvGVjunjE+AodbV4Dtfh4/xzsEudq8d6zE5PUConkO8gL5pAa/I2gfPogEuKYjkvRb3G+HXNZ0rQiJSd9Ja5kifLKlbMgXrZV4Ca+9ms=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OFluciBv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Tx485DBy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C07C6C116C6;
-	Mon,  9 Feb 2026 14:53:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OFluciBv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EDCF9C116C6;
+	Mon,  9 Feb 2026 14:53:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770648826;
-	bh=O7IxVPvVrwyb0KuKybMeTdhkDNNp2xQ4SM6+pDcBarw=;
+	s=korg; t=1770648829;
+	bh=flxGXVby2knBeD8zHmgd+vBB5im3F/fXvyO3WLULiug=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Tx485DByy4C1UJKD91zdVnk3mq8EFW4NV3Ez1kExsXhH0jJFQ3C1oVTaaSxoBZxy+
-	 JdPT+6WQD/EvPqDOA4p5B1YdgkLWwV++s14uBCP94luNqIBxbFwqP9Q/f44TLeXslK
-	 vV7oA5XfbnkLj4bDisglS1uNZMbVOlbKt/nv+ZgA=
+	b=OFluciBvwOwbhPAruYioya9XGolmPTXldHcEFeAgjqSebWRZMqULXVHJ+ecCe5eGU
+	 q/D4Tg8A9Ex44ObUb/HlhkzpJunhSl9uT5fFqqkq4UoVCpe6Gfpostkn4V+vRHlpH3
+	 e6GBgziilFyqZc2FVHWlX5u+7PjB069t459F0iYs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stefano Brivio <sbrivio@redhat.com>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
-	Keerthana K <keerthana.kalyanasundaram@broadcom.com>
-Subject: [PATCH 5.15 07/75] netfilter: nft_set_pipapo: clamp maximum map bucket size to INT_MAX
-Date: Mon,  9 Feb 2026 15:24:04 +0100
-Message-ID: <20260209142302.104585833@linuxfoundation.org>
+	Thomas Gleixner <tglx@linutronix.de>,
+	Jacob Keller <jacob.e.keller@intel.com>,
+	Anna-Maria Behnsen <anna-maria@linutronix.de>,
+	Jeongjun Park <aha310510@gmail.com>
+Subject: [PATCH 5.15 08/75] Documentation: Remove bogus claim about del_timer_sync()
+Date: Mon,  9 Feb 2026 15:24:05 +0100
+Message-ID: <20260209142302.140104441@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260209142301.830618238@linuxfoundation.org>
 References: <20260209142301.830618238@linuxfoundation.org>
@@ -45,55 +46,61 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Pablo Neira Ayuso <pablo@netfilter.org>
+From: Thomas Gleixner <tglx@linutronix.de>
 
-commit b85e3367a5716ed3662a4fe266525190d2af76df upstream.
+[ Upstream commit b0b0aa5d858d4d2fe39a5e4486e0550e858108f6 ]
 
-Otherwise, it is possible to hit WARN_ON_ONCE in __kvmalloc_node_noprof()
-when resizing hashtable because __GFP_NOWARN is unset.
+del_timer_sync() does not return the number of times it tried to delete the
+timer which rearms itself. It's clearly documented:
 
-Similar to:
+ The function returns whether it has deactivated a pending timer or not.
 
-  b541ba7d1f5a ("netfilter: conntrack: clamp maximum hashtable size to INT_MAX")
+This part of the documentation is from 2003 where del_timer_sync() really
+returned the number of deletion attempts for unknown reasons. The code
+was rewritten in 2005, but the documentation was not updated.
 
-Reviewed-by: Stefano Brivio <sbrivio@redhat.com>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
-[ Keerthana: Handle freeing new_lt ]
-Signed-off-by: Keerthana K <keerthana.kalyanasundaram@broadcom.com>
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
+Reviewed-by: Anna-Maria Behnsen <anna-maria@linutronix.de>
+Link: https://lore.kernel.org/r/20221123201624.452282769@linutronix.de
+Signed-off-by: Jeongjun Park <aha310510@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/netfilter/nft_set_pipapo.c |    8 ++++++++
- 1 file changed, 8 insertions(+)
+ Documentation/kernel-hacking/locking.rst                    |    3 +--
+ Documentation/translations/it_IT/kernel-hacking/locking.rst |    4 +---
+ 2 files changed, 2 insertions(+), 5 deletions(-)
 
---- a/net/netfilter/nft_set_pipapo.c
-+++ b/net/netfilter/nft_set_pipapo.c
-@@ -667,6 +667,11 @@ static int pipapo_resize(struct nft_pipa
- 	}
+--- a/Documentation/kernel-hacking/locking.rst
++++ b/Documentation/kernel-hacking/locking.rst
+@@ -1009,8 +1009,7 @@ Another common problem is deleting timer
+ calling add_timer() at the end of their timer function).
+ Because this is a fairly common case which is prone to races, you should
+ use del_timer_sync() (``include/linux/timer.h``) to
+-handle this case. It returns the number of times the timer had to be
+-deleted before we finally stopped it from adding itself back in.
++handle this case.
  
- mt:
-+	if (rules > (INT_MAX / sizeof(*new_mt))) {
-+		kvfree(new_lt);
-+		return -ENOMEM;
-+	}
-+
- 	new_mt = kvmalloc(rules * sizeof(*new_mt), GFP_KERNEL);
- 	if (!new_mt) {
- 		kvfree(new_lt);
-@@ -1360,6 +1365,9 @@ static struct nft_pipapo_match *pipapo_c
- 		       src->bsize * sizeof(*dst->lt) *
- 		       src->groups * NFT_PIPAPO_BUCKETS(src->bb));
+ Locking Speed
+ =============
+--- a/Documentation/translations/it_IT/kernel-hacking/locking.rst
++++ b/Documentation/translations/it_IT/kernel-hacking/locking.rst
+@@ -1035,9 +1035,7 @@ Un altro problema è l'eliminazione dei
+ da soli (chiamando add_timer() alla fine della loro esecuzione).
+ Dato che questo è un problema abbastanza comune con una propensione
+ alle corse critiche, dovreste usare del_timer_sync()
+-(``include/linux/timer.h``) per gestire questo caso. Questa ritorna il
+-numero di volte che il temporizzatore è stato interrotto prima che
+-fosse in grado di fermarlo senza che si riavviasse.
++(``include/linux/timer.h``) per gestire questo caso.
  
-+		if (src->rules > (INT_MAX / sizeof(*src->mt)))
-+			goto out_mt;
-+
- 		dst->mt = kvmalloc(src->rules * sizeof(*src->mt), GFP_KERNEL);
- 		if (!dst->mt)
- 			goto out_mt;
+ Velocità della sincronizzazione
+ ===============================
 
 
