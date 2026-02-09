@@ -1,42 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25F0537A4AE;
-	Mon,  9 Feb 2026 14:26:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C99A37997D;
+	Mon,  9 Feb 2026 14:26:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770647179; cv=none; b=YI/Q38NEWU5Hefbn19kxsFgoeKCG6VFPwUl56BaFBrlIqxW1Adpp9g+KDPPtkyPwPkfePwuCDHSgBtnHaI8AQk71qmTEZ9RWd9Nf8ZNhTzAJ/2RLkrGoe8vcnxN+PggNVD+jlmqbcn47Ovt1ql4E/3OcWHbv8tJlsxgPnvGFcAE=
+	t=1770647182; cv=none; b=ZG3uIdSjShunkbBrELEYzSpwhDZ2sQl8KRxEMHcahX3obEPDYj/j1h32wTgwRpdDapIdM8nkc9GGPwgUn4Vo9T0XTewdeemFbkq1lx0DALRzFkmn+eOPQ5OmymWF3JbGJUzqFeNfg07JuSR+fMC6U/Te6wEGa8w9wJIuD1jKy9U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770647179; c=relaxed/simple;
-	bh=cak0nTH1+eq2xZq9xZRq//pCnrOA7ayXqreKzhVOFpg=;
+	s=arc-20240116; t=1770647182; c=relaxed/simple;
+	bh=L1ajPb3YaHTnOZtHHGum1ITzDaetJVTK1un6QqNFiVs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mdelbtoDh5jV2SI7kfD7b+aixAAhT+m0rKhcSi13umNW4c13KFLidarUVic0mt/b+/43yNV9a5+ktMECHTVuKnu3G1zN+1wF2pQxfCLK6dWsHflUB9Rn79kQj9qFjnYyfGWbz7vDaKUW7VUyi6mPkD/ZLRmYyEtQT9NfKd9x8Ts=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=h6MX1HvI; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=L+AGu40O12bg/RsakQxV1LBfZ9FsL0g+AhM7GBn9ee9DAZwn/7fRH9Jppv43nY3pTbuf1aLCVEcU13mrBcDr5LLPhcL0fLHyR5VcT16LUm/bUrQSOvOlYTcT7aMpcWLX8YFTh/g5zpJt2bAUNRtW7oiiMHjHTMPLlOyDgKhaWY8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WHZ43Kcd; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="h6MX1HvI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2DB6FC16AAE;
-	Mon,  9 Feb 2026 14:26:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WHZ43Kcd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 81B8CC116C6;
+	Mon,  9 Feb 2026 14:26:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770647178;
-	bh=cak0nTH1+eq2xZq9xZRq//pCnrOA7ayXqreKzhVOFpg=;
+	s=korg; t=1770647182;
+	bh=L1ajPb3YaHTnOZtHHGum1ITzDaetJVTK1un6QqNFiVs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=h6MX1HvIWTwxaB99HN3tpfDupCygH8wRVtmKK7fJB0xaDm1tqWiQakzxw6w0vZR2r
-	 PfXLDvHkbDnHIGmHIbFfxf9EFTdC6cSjj/WzM1ep+OenBPuVV2awJv+wDh42OOCgiV
-	 jQ1/JxuPheFd0GWSbtrN16B11RZ4L34yLsqRsByA=
+	b=WHZ43KcdCDA8rODwz2QF/zlgQiAaZ0QSkN0fWkHo4u3RPa1mrnPwyVij9oZYLmOrN
+	 jkDjARAZ6dQcXrkgyGEGT6p8wWje0X9lcjHl1O9InUBhVX3WdP4VdFY8avwXds+cWe
+	 J273cEoSgdnwaMORWW++Ug7La5RWmaekAS3Tv7L4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Max Yuan <maxyuan@google.com>,
-	Jordan Rhee <jordanrhee@google.com>,
-	Joshua Washington <joshwash@google.com>,
-	Matt Olson <maolson@google.com>,
-	Harshitha Ramamurthy <hramamurthy@google.com>,
-	Jacob Keller <jacob.e.keller@intel.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.18 023/175] gve: Correct ethtool rx_dropped calculation
-Date: Mon,  9 Feb 2026 15:21:36 +0100
-Message-ID: <20260209142321.313627118@linuxfoundation.org>
+	Kairui Song <kasong@tencent.com>,
+	Chris Mason <clm@meta.com>,
+	Baolin Wang <baolin.wang@linux.alibaba.com>,
+	Baoquan He <bhe@redhat.com>,
+	Barry Song <baohua@kernel.org>,
+	Chris Li <chrisl@kernel.org>,
+	Hugh Dickins <hughd@google.com>,
+	Kemeng Shi <shikemeng@huaweicloud.com>,
+	Nhat Pham <nphamcs@gmail.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.18 024/175] mm, shmem: prevent infinite loop on truncate race
+Date: Mon,  9 Feb 2026 15:21:37 +0100
+Message-ID: <20260209142321.349534204@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260209142320.474120190@linuxfoundation.org>
 References: <20260209142320.474120190@linuxfoundation.org>
@@ -55,111 +58,84 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Max Yuan <maxyuan@google.com>
+From: Kairui Song <kasong@tencent.com>
 
-commit c7db85d579a1dccb624235534508c75fbf2dfe46 upstream.
+commit 2030dddf95451b4e7a389f052091e7c4b7b274c6 upstream.
 
-The gve driver's "rx_dropped" statistic, exposed via `ethtool -S`,
-incorrectly includes `rx_buf_alloc_fail` counts. These failures
-represent an inability to allocate receive buffers, not true packet
-drops where a received packet is discarded. This misrepresentation can
-lead to inaccurate diagnostics.
+When truncating a large swap entry, shmem_free_swap() returns 0 when the
+entry's index doesn't match the given index due to lookup alignment.  The
+failure fallback path checks if the entry crosses the end border and
+aborts when it happens, so truncate won't erase an unexpected entry or
+range.  But one scenario was ignored.
 
-This patch rectifies the ethtool "rx_dropped" calculation. It removes
-`rx_buf_alloc_fail` from the total and adds `xdp_tx_errors` and
-`xdp_redirect_errors`, which represent legitimate packet drops within
-the XDP path.
+When `index` points to the middle of a large swap entry, and the large
+swap entry doesn't go across the end border, find_get_entries() will
+return that large swap entry as the first item in the batch with
+`indices[0]` equal to `index`.  The entry's base index will be smaller
+than `indices[0]`, so shmem_free_swap() will fail and return 0 due to the
+"base < index" check.  The code will then call shmem_confirm_swap(), get
+the order, check if it crosses the END boundary (which it doesn't), and
+retry with the same index.
 
-Cc: stable@vger.kernel.org
-Fixes: 433e274b8f7b ("gve: Add stats for gve.")
-Signed-off-by: Max Yuan <maxyuan@google.com>
-Reviewed-by: Jordan Rhee <jordanrhee@google.com>
-Reviewed-by: Joshua Washington <joshwash@google.com>
-Reviewed-by: Matt Olson <maolson@google.com>
-Signed-off-by: Harshitha Ramamurthy <hramamurthy@google.com>
-Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
-Link: https://patch.msgid.link/20260202193925.3106272-3-hramamurthy@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+The next iteration will find the same entry again at the same index with
+same indices, leading to an infinite loop.
+
+Fix this by retrying with a round-down index, and abort if the index is
+smaller than the truncate range.
+
+Link: https://lkml.kernel.org/r/aXo6ltB5iqAKJzY8@KASONG-MC4
+Fixes: 809bc86517cc ("mm: shmem: support large folio swap out")
+Fixes: 8a1968bd997f ("mm/shmem, swap: fix race of truncate and swap entry split")
+Signed-off-by: Kairui Song <kasong@tencent.com>
+Reported-by: Chris Mason <clm@meta.com>
+Closes: https://lore.kernel.org/linux-mm/20260128130336.727049-1-clm@meta.com/
+Reviewed-by: Baolin Wang <baolin.wang@linux.alibaba.com>
+Cc: Baoquan He <bhe@redhat.com>
+Cc: Barry Song <baohua@kernel.org>
+Cc: Chris Li <chrisl@kernel.org>
+Cc: Hugh Dickins <hughd@google.com>
+Cc: Kemeng Shi <shikemeng@huaweicloud.com>
+Cc: Nhat Pham <nphamcs@gmail.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/google/gve/gve_ethtool.c |   23 +++++++++++++++++------
- 1 file changed, 17 insertions(+), 6 deletions(-)
+ mm/shmem.c |   23 ++++++++++++++---------
+ 1 file changed, 14 insertions(+), 9 deletions(-)
 
---- a/drivers/net/ethernet/google/gve/gve_ethtool.c
-+++ b/drivers/net/ethernet/google/gve/gve_ethtool.c
-@@ -152,10 +152,11 @@ gve_get_ethtool_stats(struct net_device
- 	u64 tmp_rx_pkts, tmp_rx_hsplit_pkt, tmp_rx_bytes, tmp_rx_hsplit_bytes,
- 		tmp_rx_skb_alloc_fail, tmp_rx_buf_alloc_fail,
- 		tmp_rx_desc_err_dropped_pkt, tmp_rx_hsplit_unsplit_pkt,
--		tmp_tx_pkts, tmp_tx_bytes;
-+		tmp_tx_pkts, tmp_tx_bytes,
-+		tmp_xdp_tx_errors, tmp_xdp_redirect_errors;
- 	u64 rx_buf_alloc_fail, rx_desc_err_dropped_pkt, rx_hsplit_unsplit_pkt,
- 		rx_pkts, rx_hsplit_pkt, rx_skb_alloc_fail, rx_bytes, tx_pkts, tx_bytes,
--		tx_dropped;
-+		tx_dropped, xdp_tx_errors, xdp_redirect_errors;
- 	int rx_base_stats_idx, max_rx_stats_idx, max_tx_stats_idx;
- 	int stats_idx, stats_region_len, nic_stats_len;
- 	struct stats *report_stats;
-@@ -199,6 +200,7 @@ gve_get_ethtool_stats(struct net_device
- 	for (rx_pkts = 0, rx_bytes = 0, rx_hsplit_pkt = 0,
- 	     rx_skb_alloc_fail = 0, rx_buf_alloc_fail = 0,
- 	     rx_desc_err_dropped_pkt = 0, rx_hsplit_unsplit_pkt = 0,
-+	     xdp_tx_errors = 0, xdp_redirect_errors = 0,
- 	     ring = 0;
- 	     ring < priv->rx_cfg.num_queues; ring++) {
- 		if (priv->rx) {
-@@ -216,6 +218,9 @@ gve_get_ethtool_stats(struct net_device
- 					rx->rx_desc_err_dropped_pkt;
- 				tmp_rx_hsplit_unsplit_pkt =
- 					rx->rx_hsplit_unsplit_pkt;
-+				tmp_xdp_tx_errors = rx->xdp_tx_errors;
-+				tmp_xdp_redirect_errors =
-+					rx->xdp_redirect_errors;
- 			} while (u64_stats_fetch_retry(&priv->rx[ring].statss,
- 						       start));
- 			rx_pkts += tmp_rx_pkts;
-@@ -225,6 +230,8 @@ gve_get_ethtool_stats(struct net_device
- 			rx_buf_alloc_fail += tmp_rx_buf_alloc_fail;
- 			rx_desc_err_dropped_pkt += tmp_rx_desc_err_dropped_pkt;
- 			rx_hsplit_unsplit_pkt += tmp_rx_hsplit_unsplit_pkt;
-+			xdp_tx_errors += tmp_xdp_tx_errors;
-+			xdp_redirect_errors += tmp_xdp_redirect_errors;
- 		}
- 	}
- 	for (tx_pkts = 0, tx_bytes = 0, tx_dropped = 0, ring = 0;
-@@ -250,8 +257,8 @@ gve_get_ethtool_stats(struct net_device
- 	data[i++] = rx_bytes;
- 	data[i++] = tx_bytes;
- 	/* total rx dropped packets */
--	data[i++] = rx_skb_alloc_fail + rx_buf_alloc_fail +
--		    rx_desc_err_dropped_pkt;
-+	data[i++] = rx_skb_alloc_fail + rx_desc_err_dropped_pkt +
-+		    xdp_tx_errors + xdp_redirect_errors;
- 	data[i++] = tx_dropped;
- 	data[i++] = priv->tx_timeo_cnt;
- 	data[i++] = rx_skb_alloc_fail;
-@@ -330,6 +337,9 @@ gve_get_ethtool_stats(struct net_device
- 				tmp_rx_buf_alloc_fail = rx->rx_buf_alloc_fail;
- 				tmp_rx_desc_err_dropped_pkt =
- 					rx->rx_desc_err_dropped_pkt;
-+				tmp_xdp_tx_errors = rx->xdp_tx_errors;
-+				tmp_xdp_redirect_errors =
-+					rx->xdp_redirect_errors;
- 			} while (u64_stats_fetch_retry(&priv->rx[ring].statss,
- 						       start));
- 			data[i++] = tmp_rx_bytes;
-@@ -340,8 +350,9 @@ gve_get_ethtool_stats(struct net_device
- 			data[i++] = rx->rx_frag_alloc_cnt;
- 			/* rx dropped packets */
- 			data[i++] = tmp_rx_skb_alloc_fail +
--				tmp_rx_buf_alloc_fail +
--				tmp_rx_desc_err_dropped_pkt;
-+				    tmp_rx_desc_err_dropped_pkt +
-+				    tmp_xdp_tx_errors +
-+				    tmp_xdp_redirect_errors;
- 			data[i++] = rx->rx_copybreak_pkt;
- 			data[i++] = rx->rx_copied_pkt;
- 			/* stats from NIC */
+--- a/mm/shmem.c
++++ b/mm/shmem.c
+@@ -1193,17 +1193,22 @@ whole_folios:
+ 				swaps_freed = shmem_free_swap(mapping, indices[i],
+ 							      end - 1, folio);
+ 				if (!swaps_freed) {
+-					/*
+-					 * If found a large swap entry cross the end border,
+-					 * skip it as the truncate_inode_partial_folio above
+-					 * should have at least zerod its content once.
+-					 */
++					pgoff_t base = indices[i];
++
+ 					order = shmem_confirm_swap(mapping, indices[i],
+ 								   radix_to_swp_entry(folio));
+-					if (order > 0 && indices[i] + (1 << order) > end)
+-						continue;
+-					/* Swap was replaced by page: retry */
+-					index = indices[i];
++					/*
++					 * If found a large swap entry cross the end or start
++					 * border, skip it as the truncate_inode_partial_folio
++					 * above should have at least zerod its content once.
++					 */
++					if (order > 0) {
++						base = round_down(base, 1 << order);
++						if (base < start || base + (1 << order) > end)
++							continue;
++					}
++					/* Swap was replaced by page or extended, retry */
++					index = base;
+ 					break;
+ 				}
+ 				nr_swaps_freed += swaps_freed;
 
 
