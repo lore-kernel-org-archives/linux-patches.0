@@ -1,38 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C0FD3793AC;
-	Mon,  9 Feb 2026 14:26:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25F0537A4AE;
+	Mon,  9 Feb 2026 14:26:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770647175; cv=none; b=s9t1dolcFJcyMiZ7QPGSUn/CYKdF3trn1B1Nr/uxStJVIF8gG37eX7/yn6GtrFdioYxsNAi40fvfQu73SQDu2cYuZ0JfwBV1pgHVP7FLfINbUWBK/7BDe1UfcDssLDJqp/5b0KY5rAdX3Q4dTWNZBCMls+g4gi6MtKDAi3H6zeE=
+	t=1770647179; cv=none; b=YI/Q38NEWU5Hefbn19kxsFgoeKCG6VFPwUl56BaFBrlIqxW1Adpp9g+KDPPtkyPwPkfePwuCDHSgBtnHaI8AQk71qmTEZ9RWd9Nf8ZNhTzAJ/2RLkrGoe8vcnxN+PggNVD+jlmqbcn47Ovt1ql4E/3OcWHbv8tJlsxgPnvGFcAE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770647175; c=relaxed/simple;
-	bh=o9qB46M3PH8gLn1dwqZaIv9vVjEWNqwGIXR82S1qKLY=;
+	s=arc-20240116; t=1770647179; c=relaxed/simple;
+	bh=cak0nTH1+eq2xZq9xZRq//pCnrOA7ayXqreKzhVOFpg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UcwPskJfktlFGarMRg8ZH9FnXqB0PgdZTtFFpqf0sPCJMmWml3V2oJsNMMBbjGEJYd7o6SmuqbQ9m3KUP5pzR2z6rSeut/g12WD7HQL5H2/WjYYYBwhdcMGr0ZGUId89wG16jke+at0rznRPIHibRz3OAZGbpCx7vR9HyebYeeo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ClLvu7m0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mdelbtoDh5jV2SI7kfD7b+aixAAhT+m0rKhcSi13umNW4c13KFLidarUVic0mt/b+/43yNV9a5+ktMECHTVuKnu3G1zN+1wF2pQxfCLK6dWsHflUB9Rn79kQj9qFjnYyfGWbz7vDaKUW7VUyi6mPkD/ZLRmYyEtQT9NfKd9x8Ts=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=h6MX1HvI; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ClLvu7m0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A62FFC16AAE;
-	Mon,  9 Feb 2026 14:26:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="h6MX1HvI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2DB6FC16AAE;
+	Mon,  9 Feb 2026 14:26:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770647175;
-	bh=o9qB46M3PH8gLn1dwqZaIv9vVjEWNqwGIXR82S1qKLY=;
+	s=korg; t=1770647178;
+	bh=cak0nTH1+eq2xZq9xZRq//pCnrOA7ayXqreKzhVOFpg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ClLvu7m0ZGBGS50YbJToVgVGjBSO0yekwWthdZqmKQD7e3OevOczjZo8bLj8spAyg
-	 qPXNB6jhBTEkHXXs8YR+9OEVfJHT3hOH//YfQzGZ1ewm3MTxmLBySWdqb0/KjwH1D5
-	 yAxEskWC0LIgboU874h0cPluIeyNo+miWRa94QlE=
+	b=h6MX1HvIWTwxaB99HN3tpfDupCygH8wRVtmKK7fJB0xaDm1tqWiQakzxw6w0vZR2r
+	 PfXLDvHkbDnHIGmHIbFfxf9EFTdC6cSjj/WzM1ep+OenBPuVV2awJv+wDh42OOCgiV
+	 jQ1/JxuPheFd0GWSbtrN16B11RZ4L34yLsqRsByA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Viacheslav Dubeyko <Slava.Dubeyko@ibm.com>,
-	Patrick Donnelly <pdonnell@ibm.com>,
-	Ilya Dryomov <idryomov@gmail.com>
-Subject: [PATCH 6.18 014/175] ceph: fix NULL pointer dereference in ceph_mds_auth_match()
-Date: Mon,  9 Feb 2026 15:21:27 +0100
-Message-ID: <20260209142320.989265945@linuxfoundation.org>
+	Max Yuan <maxyuan@google.com>,
+	Jordan Rhee <jordanrhee@google.com>,
+	Joshua Washington <joshwash@google.com>,
+	Matt Olson <maolson@google.com>,
+	Harshitha Ramamurthy <hramamurthy@google.com>,
+	Jacob Keller <jacob.e.keller@intel.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.18 023/175] gve: Correct ethtool rx_dropped calculation
+Date: Mon,  9 Feb 2026 15:21:36 +0100
+Message-ID: <20260209142321.313627118@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260209142320.474120190@linuxfoundation.org>
 References: <20260209142320.474120190@linuxfoundation.org>
@@ -51,182 +55,111 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Viacheslav Dubeyko <Slava.Dubeyko@ibm.com>
+From: Max Yuan <maxyuan@google.com>
 
-commit 7987cce375ac8ce98e170a77aa2399f2cf6eb99f upstream.
+commit c7db85d579a1dccb624235534508c75fbf2dfe46 upstream.
 
-The CephFS kernel client has regression starting from 6.18-rc1.
-We have issue in ceph_mds_auth_match() if fs_name == NULL:
+The gve driver's "rx_dropped" statistic, exposed via `ethtool -S`,
+incorrectly includes `rx_buf_alloc_fail` counts. These failures
+represent an inability to allocate receive buffers, not true packet
+drops where a received packet is discarded. This misrepresentation can
+lead to inaccurate diagnostics.
 
-    const char fs_name = mdsc->fsc->mount_options->mds_namespace;
-    ...
-    if (auth->match.fs_name && strcmp(auth->match.fs_name, fs_name)) {
-            / fsname mismatch, try next one */
-            return 0;
-    }
-
-Patrick Donnelly suggested that: In summary, we should definitely start
-decoding `fs_name` from the MDSMap and do strict authorizations checks
-against it. Note that the `-o mds_namespace=foo` should only be used for
-selecting the file system to mount and nothing else. It's possible
-no mds_namespace is specified but the kernel will mount the only
-file system that exists which may have name "foo".
-
-This patch reworks ceph_mdsmap_decode() and namespace_equals() with
-the goal of supporting the suggested concept. Now struct ceph_mdsmap
-contains m_fs_name field that receives copy of extracted FS name
-by ceph_extract_encoded_string(). For the case of "old" CephFS file
-systems, it is used "cephfs" name.
-
-[ idryomov: replace redundant %*pE with %s in ceph_mdsmap_decode(),
-  get rid of a series of strlen() calls in ceph_namespace_match(),
-  drop changes to namespace_equals() body to avoid treating empty
-  mds_namespace as equal, drop changes to ceph_mdsc_handle_fsmap()
-  as namespace_equals() isn't an equivalent substitution there ]
+This patch rectifies the ethtool "rx_dropped" calculation. It removes
+`rx_buf_alloc_fail` from the total and adds `xdp_tx_errors` and
+`xdp_redirect_errors`, which represent legitimate packet drops within
+the XDP path.
 
 Cc: stable@vger.kernel.org
-Fixes: 22c73d52a6d0 ("ceph: fix multifs mds auth caps issue")
-Link: https://tracker.ceph.com/issues/73886
-Signed-off-by: Viacheslav Dubeyko <Slava.Dubeyko@ibm.com>
-Reviewed-by: Patrick Donnelly <pdonnell@ibm.com>
-Tested-by: Patrick Donnelly <pdonnell@ibm.com>
-Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
+Fixes: 433e274b8f7b ("gve: Add stats for gve.")
+Signed-off-by: Max Yuan <maxyuan@google.com>
+Reviewed-by: Jordan Rhee <jordanrhee@google.com>
+Reviewed-by: Joshua Washington <joshwash@google.com>
+Reviewed-by: Matt Olson <maolson@google.com>
+Signed-off-by: Harshitha Ramamurthy <hramamurthy@google.com>
+Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
+Link: https://patch.msgid.link/20260202193925.3106272-3-hramamurthy@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ceph/mds_client.c         |    5 +++--
- fs/ceph/mdsmap.c             |   26 +++++++++++++++++++-------
- fs/ceph/mdsmap.h             |    1 +
- fs/ceph/super.h              |   16 ++++++++++++++--
- include/linux/ceph/ceph_fs.h |    6 ++++++
- 5 files changed, 43 insertions(+), 11 deletions(-)
+ drivers/net/ethernet/google/gve/gve_ethtool.c |   23 +++++++++++++++++------
+ 1 file changed, 17 insertions(+), 6 deletions(-)
 
---- a/fs/ceph/mds_client.c
-+++ b/fs/ceph/mds_client.c
-@@ -5655,7 +5655,7 @@ static int ceph_mds_auth_match(struct ce
- 	u32 caller_uid = from_kuid(&init_user_ns, cred->fsuid);
- 	u32 caller_gid = from_kgid(&init_user_ns, cred->fsgid);
- 	struct ceph_client *cl = mdsc->fsc->client;
--	const char *fs_name = mdsc->fsc->mount_options->mds_namespace;
-+	const char *fs_name = mdsc->mdsmap->m_fs_name;
- 	const char *spath = mdsc->fsc->mount_options->server_path;
- 	bool gid_matched = false;
- 	u32 gid, tlen, len;
-@@ -5663,7 +5663,8 @@ static int ceph_mds_auth_match(struct ce
- 
- 	doutc(cl, "fsname check fs_name=%s  match.fs_name=%s\n",
- 	      fs_name, auth->match.fs_name ? auth->match.fs_name : "");
--	if (auth->match.fs_name && strcmp(auth->match.fs_name, fs_name)) {
-+
-+	if (!ceph_namespace_match(auth->match.fs_name, fs_name)) {
- 		/* fsname mismatch, try next one */
- 		return 0;
- 	}
---- a/fs/ceph/mdsmap.c
-+++ b/fs/ceph/mdsmap.c
-@@ -353,22 +353,33 @@ struct ceph_mdsmap *ceph_mdsmap_decode(s
- 		__decode_and_drop_type(p, end, u8, bad_ext);
- 	}
- 	if (mdsmap_ev >= 8) {
--		u32 fsname_len;
-+		size_t fsname_len;
-+
- 		/* enabled */
- 		ceph_decode_8_safe(p, end, m->m_enabled, bad_ext);
-+
- 		/* fs_name */
--		ceph_decode_32_safe(p, end, fsname_len, bad_ext);
-+		m->m_fs_name = ceph_extract_encoded_string(p, end,
-+							   &fsname_len,
-+							   GFP_NOFS);
-+		if (IS_ERR(m->m_fs_name)) {
-+			m->m_fs_name = NULL;
-+			goto nomem;
-+		}
- 
- 		/* validate fsname against mds_namespace */
--		if (!namespace_equals(mdsc->fsc->mount_options, *p,
-+		if (!namespace_equals(mdsc->fsc->mount_options, m->m_fs_name,
- 				      fsname_len)) {
--			pr_warn_client(cl, "fsname %*pE doesn't match mds_namespace %s\n",
--				       (int)fsname_len, (char *)*p,
-+			pr_warn_client(cl, "fsname %s doesn't match mds_namespace %s\n",
-+				       m->m_fs_name,
- 				       mdsc->fsc->mount_options->mds_namespace);
- 			goto bad;
+--- a/drivers/net/ethernet/google/gve/gve_ethtool.c
++++ b/drivers/net/ethernet/google/gve/gve_ethtool.c
+@@ -152,10 +152,11 @@ gve_get_ethtool_stats(struct net_device
+ 	u64 tmp_rx_pkts, tmp_rx_hsplit_pkt, tmp_rx_bytes, tmp_rx_hsplit_bytes,
+ 		tmp_rx_skb_alloc_fail, tmp_rx_buf_alloc_fail,
+ 		tmp_rx_desc_err_dropped_pkt, tmp_rx_hsplit_unsplit_pkt,
+-		tmp_tx_pkts, tmp_tx_bytes;
++		tmp_tx_pkts, tmp_tx_bytes,
++		tmp_xdp_tx_errors, tmp_xdp_redirect_errors;
+ 	u64 rx_buf_alloc_fail, rx_desc_err_dropped_pkt, rx_hsplit_unsplit_pkt,
+ 		rx_pkts, rx_hsplit_pkt, rx_skb_alloc_fail, rx_bytes, tx_pkts, tx_bytes,
+-		tx_dropped;
++		tx_dropped, xdp_tx_errors, xdp_redirect_errors;
+ 	int rx_base_stats_idx, max_rx_stats_idx, max_tx_stats_idx;
+ 	int stats_idx, stats_region_len, nic_stats_len;
+ 	struct stats *report_stats;
+@@ -199,6 +200,7 @@ gve_get_ethtool_stats(struct net_device
+ 	for (rx_pkts = 0, rx_bytes = 0, rx_hsplit_pkt = 0,
+ 	     rx_skb_alloc_fail = 0, rx_buf_alloc_fail = 0,
+ 	     rx_desc_err_dropped_pkt = 0, rx_hsplit_unsplit_pkt = 0,
++	     xdp_tx_errors = 0, xdp_redirect_errors = 0,
+ 	     ring = 0;
+ 	     ring < priv->rx_cfg.num_queues; ring++) {
+ 		if (priv->rx) {
+@@ -216,6 +218,9 @@ gve_get_ethtool_stats(struct net_device
+ 					rx->rx_desc_err_dropped_pkt;
+ 				tmp_rx_hsplit_unsplit_pkt =
+ 					rx->rx_hsplit_unsplit_pkt;
++				tmp_xdp_tx_errors = rx->xdp_tx_errors;
++				tmp_xdp_redirect_errors =
++					rx->xdp_redirect_errors;
+ 			} while (u64_stats_fetch_retry(&priv->rx[ring].statss,
+ 						       start));
+ 			rx_pkts += tmp_rx_pkts;
+@@ -225,6 +230,8 @@ gve_get_ethtool_stats(struct net_device
+ 			rx_buf_alloc_fail += tmp_rx_buf_alloc_fail;
+ 			rx_desc_err_dropped_pkt += tmp_rx_desc_err_dropped_pkt;
+ 			rx_hsplit_unsplit_pkt += tmp_rx_hsplit_unsplit_pkt;
++			xdp_tx_errors += tmp_xdp_tx_errors;
++			xdp_redirect_errors += tmp_xdp_redirect_errors;
  		}
--		/* skip fsname after validation */
--		ceph_decode_skip_n(p, end, fsname_len, bad);
-+	} else {
-+		m->m_enabled = false;
-+		m->m_fs_name = kstrdup(CEPH_OLD_FS_NAME, GFP_NOFS);
-+		if (!m->m_fs_name)
-+			goto nomem;
  	}
- 	/* damaged */
- 	if (mdsmap_ev >= 9) {
-@@ -430,6 +441,7 @@ void ceph_mdsmap_destroy(struct ceph_mds
- 		kfree(m->m_info);
- 	}
- 	kfree(m->m_data_pg_pools);
-+	kfree(m->m_fs_name);
- 	kfree(m);
- }
- 
---- a/fs/ceph/mdsmap.h
-+++ b/fs/ceph/mdsmap.h
-@@ -45,6 +45,7 @@ struct ceph_mdsmap {
- 	bool m_enabled;
- 	bool m_damaged;
- 	int m_num_laggy;
-+	char *m_fs_name;
- };
- 
- static inline struct ceph_entity_addr *
---- a/fs/ceph/super.h
-+++ b/fs/ceph/super.h
-@@ -104,14 +104,26 @@ struct ceph_mount_options {
- 	struct fscrypt_dummy_policy dummy_enc_policy;
- };
- 
-+#define CEPH_NAMESPACE_WILDCARD		"*"
-+
-+static inline bool ceph_namespace_match(const char *pattern,
-+					const char *target)
-+{
-+	if (!pattern || !pattern[0] ||
-+	    !strcmp(pattern, CEPH_NAMESPACE_WILDCARD))
-+		return true;
-+
-+	return !strcmp(pattern, target);
-+}
-+
- /*
-  * Check if the mds namespace in ceph_mount_options matches
-  * the passed in namespace string. First time match (when
-  * ->mds_namespace is NULL) is treated specially, since
-  * ->mds_namespace needs to be initialized by the caller.
-  */
--static inline int namespace_equals(struct ceph_mount_options *fsopt,
--				   const char *namespace, size_t len)
-+static inline bool namespace_equals(struct ceph_mount_options *fsopt,
-+				    const char *namespace, size_t len)
- {
- 	return !(fsopt->mds_namespace &&
- 		 (strlen(fsopt->mds_namespace) != len ||
---- a/include/linux/ceph/ceph_fs.h
-+++ b/include/linux/ceph/ceph_fs.h
-@@ -31,6 +31,12 @@
- #define CEPH_INO_CEPH   2            /* hidden .ceph dir */
- #define CEPH_INO_GLOBAL_SNAPREALM  3 /* global dummy snaprealm */
- 
-+/*
-+ * name for "old" CephFS file systems,
-+ * see ceph.git e2b151d009640114b2565c901d6f41f6cd5ec652
-+ */
-+#define CEPH_OLD_FS_NAME	"cephfs"
-+
- /* arbitrary limit on max # of monitors (cluster of 3 is typical) */
- #define CEPH_MAX_MON   31
- 
+ 	for (tx_pkts = 0, tx_bytes = 0, tx_dropped = 0, ring = 0;
+@@ -250,8 +257,8 @@ gve_get_ethtool_stats(struct net_device
+ 	data[i++] = rx_bytes;
+ 	data[i++] = tx_bytes;
+ 	/* total rx dropped packets */
+-	data[i++] = rx_skb_alloc_fail + rx_buf_alloc_fail +
+-		    rx_desc_err_dropped_pkt;
++	data[i++] = rx_skb_alloc_fail + rx_desc_err_dropped_pkt +
++		    xdp_tx_errors + xdp_redirect_errors;
+ 	data[i++] = tx_dropped;
+ 	data[i++] = priv->tx_timeo_cnt;
+ 	data[i++] = rx_skb_alloc_fail;
+@@ -330,6 +337,9 @@ gve_get_ethtool_stats(struct net_device
+ 				tmp_rx_buf_alloc_fail = rx->rx_buf_alloc_fail;
+ 				tmp_rx_desc_err_dropped_pkt =
+ 					rx->rx_desc_err_dropped_pkt;
++				tmp_xdp_tx_errors = rx->xdp_tx_errors;
++				tmp_xdp_redirect_errors =
++					rx->xdp_redirect_errors;
+ 			} while (u64_stats_fetch_retry(&priv->rx[ring].statss,
+ 						       start));
+ 			data[i++] = tmp_rx_bytes;
+@@ -340,8 +350,9 @@ gve_get_ethtool_stats(struct net_device
+ 			data[i++] = rx->rx_frag_alloc_cnt;
+ 			/* rx dropped packets */
+ 			data[i++] = tmp_rx_skb_alloc_fail +
+-				tmp_rx_buf_alloc_fail +
+-				tmp_rx_desc_err_dropped_pkt;
++				    tmp_rx_desc_err_dropped_pkt +
++				    tmp_xdp_tx_errors +
++				    tmp_xdp_redirect_errors;
+ 			data[i++] = rx->rx_copybreak_pkt;
+ 			data[i++] = rx->rx_copied_pkt;
+ 			/* stats from NIC */
 
 
