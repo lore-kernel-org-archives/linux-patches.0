@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42989285060;
-	Mon,  9 Feb 2026 14:33:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E51E285060;
+	Mon,  9 Feb 2026 14:33:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770647593; cv=none; b=YIFvztWc9PD+AbV2VTo7M7WSu6WN/sJYLZIj374eRgS37ZUJrehlKxw5hHimDPI5jqGTcShOk4dbqyTEYq8yexfOSMl8h5Stj+mFLTUmigIAA+XLAnsKcyZ01G8QBuz7IdsO5CWtAOJFFlPOOPsTtROMKfgkhX1fsWATS2hEs7I=
+	t=1770647596; cv=none; b=orL7pi1vccJA6e+u7WZjY/tVbrdvsItz27MUgQxpAB6lHDz35KmhvbPm5+H2f8aaIkZwPkVKUXGxfbAKPkDa2H8Z11YInrHytD+kKzv5x4i3biMOvWMRQTzSVehlqBkZJBdhSTuQHYQR+LiM3L/X/Kh5PohVSDvAMVAofvqwqYc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770647593; c=relaxed/simple;
-	bh=NZmr/9qI4fD1TMr9R3rjqnmxjQuRF25GoYuKqmxlYV4=;
+	s=arc-20240116; t=1770647596; c=relaxed/simple;
+	bh=jiaKetmqMkW3sklFtmhEhf/EQDkEA4l3OdLA+zdNRyU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=omXjl8hlcliHDp0O+oq9SZ5a3ZU9FpQi5jDPp2AtBhmtI0DecApihFOCFLZ1kjuMTnq9Tr8fCKv9MYZZp3j1g9lJnUpdr4I+j1mDATORJMrcp2I88mGOhF7Cj1N5p4Pt4nUTXfSoKhLXoydz7XZF0+JB8w3wVYlHuCgzufS0ax8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AXYuJ2UX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=cC+Xx6Nw10VSt3xF9s5QULBGmIaO6ADOB+Zr5Tr+fTY8E4WPPxa2XfaQWcOJ4Jc3wFydLm7/cL+s2qb3aFDwah2qP3G+NZwJW5OtDXuSZPPYjSpRFU7kh1Ayk1KdvRaBGtSdogrm6IlQCHr8uZihKRx1X9yoN6ZRvfNG0UR5H4k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=F9Lz5+2X; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AXYuJ2UX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BCA6CC116C6;
-	Mon,  9 Feb 2026 14:33:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="F9Lz5+2X"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0CEDEC116C6;
+	Mon,  9 Feb 2026 14:33:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770647593;
-	bh=NZmr/9qI4fD1TMr9R3rjqnmxjQuRF25GoYuKqmxlYV4=;
+	s=korg; t=1770647596;
+	bh=jiaKetmqMkW3sklFtmhEhf/EQDkEA4l3OdLA+zdNRyU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AXYuJ2UXo1H4w+hwySshmPHX/xUNK2YNh7vL2M3ClyRd1IkH1ncDHrHA4e9fvQAWt
-	 yag/ds4XRxAgH2bk51d8Km7N+Qie2R1nE7z7pztGasG7cKXjsbcdWHagTxDle26GdW
-	 s6pS4rOwNMLfBdXMjCB7Vdy/b5ePy/C6woeAGymE=
+	b=F9Lz5+2XMxygeSmepZpa71k/nEVSSDUU8PV0sO8AR81HxLP+sseCHl5b0VMDzOaau
+	 aOwiFh0RiNCj47sEvdoh9BCYURyafov5PUC9imspnD3b9DwttUfMjE6yhBUsmiS8FL
+	 YYCyLzik4ZR38R7rwz5ZByKzRWH4+md9oIkRLInI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Krunoslav Kovac <Krunoslav.Kovac@amd.com>,
-	Melissa Wen <mwen@igalia.com>,
-	Alex Hung <alex.hung@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Chen Ni <nichen@iscas.ac.cn>,
+	=?UTF-8?q?Nuno=20S=C3=A1?= <nuno.sa@analog.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 146/175] drm/amd/display: fix wrong color value mapping on MCM shaper LUT
-Date: Mon,  9 Feb 2026 15:23:39 +0100
-Message-ID: <20260209142325.756539270@linuxfoundation.org>
+Subject: [PATCH 6.18 147/175] net: ethernet: adi: adin1110: Check return value of devm_gpiod_get_optional() in adin1110_check_spi()
+Date: Mon,  9 Feb 2026 15:23:40 +0100
+Message-ID: <20260209142325.791894729@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260209142320.474120190@linuxfoundation.org>
 References: <20260209142320.474120190@linuxfoundation.org>
@@ -47,66 +46,49 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Melissa Wen <mwen@igalia.com>
+From: Chen Ni <nichen@iscas.ac.cn>
 
-[ Upstream commit 8f959d37c1f2efec6dac55915ee82302e98101fb ]
+[ Upstream commit 78211543d2e44f84093049b4ef5f5bfa535f4645 ]
 
-Some shimmer/colorful points appears when using the steamOS color
-pipeline for HDR on gaming with DCN32. These points look like black
-values being wrongly mapped to red/blue/green values. It was caused
-because the number of hw points in regular LUTs and in a shaper LUT was
-treated as the same.
+The devm_gpiod_get_optional() function may return an ERR_PTR in case of
+genuine GPIO acquisition errors, not just NULL which indicates the
+legitimate absence of an optional GPIO.
 
-DCN3+ regular LUTs have 257 bases and implicit deltas (i.e. HW
-calculates them), but shaper LUT is a special case: it has 256 bases and
-256 deltas, as in DCN1-2 regular LUTs, and outputs 14-bit values.
+Add an IS_ERR() check after the call in adin1110_check_spi(). On error,
+return the error code to ensure proper failure handling rather than
+proceeding with invalid pointers.
 
-Fix that by setting by decreasing in 1 the number of HW points computed
-in the LUT segmentation so that shaper LUT (i.e. fixpoint == true) keeps
-the same DCN10 CM logic and regular LUTs go with `hw_points + 1`.
-
-CC: Krunoslav Kovac <Krunoslav.Kovac@amd.com>
-Fixes: 4d5fd3d08ea9 ("drm/amd/display: PQ tail accuracy")
-Signed-off-by: Melissa Wen <mwen@igalia.com>
-Reviewed-by: Alex Hung <alex.hung@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 5006505b19a2119e71c008044d59f6d753c858b9)
+Fixes: 36934cac7aaf ("net: ethernet: adi: adin1110: add reset GPIO")
+Signed-off-by: Chen Ni <nichen@iscas.ac.cn>
+Reviewed-by: Nuno Sá <nuno.sa@analog.com>
+Link: https://patch.msgid.link/20260202040228.4129097-1-nichen@iscas.ac.cn
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/display/dc/dcn30/dcn30_cm_common.c | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ drivers/net/ethernet/adi/adin1110.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/gpu/drm/amd/display/dc/dcn30/dcn30_cm_common.c b/drivers/gpu/drm/amd/display/dc/dcn30/dcn30_cm_common.c
-index 0690c346f2c52..a4f14b16564c2 100644
---- a/drivers/gpu/drm/amd/display/dc/dcn30/dcn30_cm_common.c
-+++ b/drivers/gpu/drm/amd/display/dc/dcn30/dcn30_cm_common.c
-@@ -163,6 +163,11 @@ bool cm3_helper_translate_curve_to_hw_format(
- 			hw_points += (1 << seg_distr[k]);
- 	}
+diff --git a/drivers/net/ethernet/adi/adin1110.c b/drivers/net/ethernet/adi/adin1110.c
+index 30f9d271e5953..71a2397edf2bb 100644
+--- a/drivers/net/ethernet/adi/adin1110.c
++++ b/drivers/net/ethernet/adi/adin1110.c
+@@ -1089,6 +1089,9 @@ static int adin1110_check_spi(struct adin1110_priv *priv)
  
-+	// DCN3+ have 257 pts in lieu of no separate slope registers
-+	// Prior HW had 256 base+slope pairs
-+	// Shaper LUT (i.e. fixpoint == true) is still 256 bases and 256 deltas
-+	hw_points = fixpoint ? (hw_points - 1) : hw_points;
-+
- 	j = 0;
- 	for (k = 0; k < (region_end - region_start); k++) {
- 		increment = NUMBER_SW_SEGMENTS / (1 << seg_distr[k]);
-@@ -223,8 +228,6 @@ bool cm3_helper_translate_curve_to_hw_format(
- 	corner_points[1].green.slope = dc_fixpt_zero;
- 	corner_points[1].blue.slope = dc_fixpt_zero;
- 
--	// DCN3+ have 257 pts in lieu of no separate slope registers
--	// Prior HW had 256 base+slope pairs
- 	lut_params->hw_points_num = hw_points + 1;
- 
- 	k = 0;
+ 	reset_gpio = devm_gpiod_get_optional(&priv->spidev->dev, "reset",
+ 					     GPIOD_OUT_LOW);
++	if (IS_ERR(reset_gpio))
++		return dev_err_probe(&priv->spidev->dev, PTR_ERR(reset_gpio),
++				     "failed to get reset gpio\n");
+ 	if (reset_gpio) {
+ 		/* MISO pin is used for internal configuration, can't have
+ 		 * anyone else disturbing the SDO line.
 -- 
 2.51.0
 
