@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C29E1AF0AF;
-	Mon,  9 Feb 2026 14:35:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBEA523D291;
+	Mon,  9 Feb 2026 14:35:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770647701; cv=none; b=i+BQ1vTcjX9/JOZVPv2TDOhjocBmE4/aofYkMYP0zjfDcX1bWL+NqGBqxh/mtQqPFCMA0WjCKYuvoooT+G79QDua3WwYDV4EFH41AuaDkZH//13kq37e5fc7JMw+RocVPavwWenUMttOU8zHY9Cx+160zvk/mKfyuuxkzbz1rxE=
+	t=1770647704; cv=none; b=tFUCPxq4cMK5YRYtmseTqQ7iE/ZZnm09gLggoy5cZqAg88LiGRMgKfq4Uul54JTgyQlCeNT7hscT1cDAwRoK7r5hTHaK69fweU2MVCSgpGlSIURP6DYYvhnlJ2Ah6YdnLUFMG6CnfzGc5vxiBMk/dPOnlRPf95SmdxN95bGcuxk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770647701; c=relaxed/simple;
-	bh=2ijRq9n+dFpHMSFBJSqbWZ0S3ah7aZYFfiVERQDk4GQ=;
+	s=arc-20240116; t=1770647704; c=relaxed/simple;
+	bh=q/rulri0cBWMGM74d+0cS51dhnskfpzsmI8Vky/vsY8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mnZTD+qco5V1gmBPahPffZ8CQguzCauVO8HBfk0+uKcWIa217uXlccbpusRio+tV+K5Gl6wN5NLLJEEvLITf6E+Kz2BEqPUOsyz854PgGylOCN/pgU7eNV1DsOh8oEhZuU+dEvGVvy2RxsRP3SwixlDnAemwvb0Ct5b+QP8fwsU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WJVnMB2z; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Aa4LqEAuuy2viNDbjTNp8jJZHAI7hq+deokhNA/4tKGyCiJbOTHTYo3eFl8bZ3nqnVoRSoteh1EDwFSgGYYfTav7jFIw0i/nxLJdhPIhQIcef4GV1o8AhyF2ElDxnkkFeiIrub9MyfToC4rSpzJDoLbvzZ6rTfW1XGCW55O4aJ4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vDgZNneN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WJVnMB2z"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C3833C116C6;
-	Mon,  9 Feb 2026 14:35:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vDgZNneN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F0F14C116C6;
+	Mon,  9 Feb 2026 14:35:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770647701;
-	bh=2ijRq9n+dFpHMSFBJSqbWZ0S3ah7aZYFfiVERQDk4GQ=;
+	s=korg; t=1770647704;
+	bh=q/rulri0cBWMGM74d+0cS51dhnskfpzsmI8Vky/vsY8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WJVnMB2zSGq7N5Iky4ion3hxcyR2g7CmRom+o1kpZEVrrO1c8J0LGsrxVUmWwZFsc
-	 xhYHYC9hkoD5x6SC1QvJPucXkuy9r7NSQqkH3rssXFValYmO7LCl5yS2dK5iia1Js+
-	 ScsebW0VwIQnBaq0JI5rs/BhyqyefGVyIYD8bHnI=
+	b=vDgZNneN2ef6UU2Na1ir/1jXRs0fUSVATJpEZrnU2809UAaeHDSFavinhV5kGGW1w
+	 PN09d2mPG7kOWRc1vtBkUEJ6U+suH3nlg/CPqswJFeF95AU8vddQFLns0T8s7NscOz
+	 qlS3ztA94g6ftB7O/9ZiLLJjH2CodtUIkcrmL500=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guodong Xu <guodong@riscstar.com>,
+	Breno Leitao <leitao@debian.org>,
+	Usama Arif <usamaarif642@gmail.com>,
+	Jon Hunter <jonathanh@nvidia.com>,
+	Thierry Reding <treding@nvidia.com>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 164/175] regulator: spacemit-p1: Fix n_voltages for BUCK and LDO regulators
-Date: Mon,  9 Feb 2026 15:23:57 +0100
-Message-ID: <20260209142326.388102600@linuxfoundation.org>
+Subject: [PATCH 6.18 165/175] spi: tegra210-quad: Return IRQ_HANDLED when timeout already processed transfer
+Date: Mon,  9 Feb 2026 15:23:58 +0100
+Message-ID: <20260209142326.423174431@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260209142320.474120190@linuxfoundation.org>
 References: <20260209142320.474120190@linuxfoundation.org>
@@ -51,54 +54,73 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guodong Xu <guodong@riscstar.com>
+From: Breno Leitao <leitao@debian.org>
 
-[ Upstream commit 41399c5d476156635c9a58de870d39318e22fa09 ]
+[ Upstream commit aabd8ea0aa253d40cf5f20a609fc3d6f61e38299 ]
 
-Higher voltage settings were unusable due to incorrect n_voltages values
-causing registration failures. For example, setting aldo4 to 3.3V failed
-with -EINVAL because the required selector (123) exceeded the allowed
-range (n_voltages=117).
+When the ISR thread wakes up late and finds that the timeout handler
+has already processed the transfer (curr_xfer is NULL), return
+IRQ_HANDLED instead of IRQ_NONE.
 
-Fix by aligning n_voltages with the hardware register widths per the P1
-datasheet [1]:
-- BUCK: 255 (was 254), allows selectors 0-254, selector 255 is reserved
-- LDO: 128 (was 117), allows selectors 0-127, selectors 0-10 are for
-  suspend mode, valid operational range is 11-127
+Use a similar approach to tegra_qspi_handle_timeout() by reading
+QSPI_TRANS_STATUS and checking the QSPI_RDY bit to determine if the
+hardware actually completed the transfer. If QSPI_RDY is set, the
+interrupt was legitimate and triggered by real hardware activity.
+The fact that the timeout path handled it first doesn't make it
+spurious. Returning IRQ_NONE incorrectly suggests the interrupt
+wasn't for this device, which can cause issues with shared interrupt
+lines and interrupt accounting.
 
-This enables the full voltage range supported by the hardware.
-
-Fixes: 8b84d712ad84 ("regulator: spacemit: support SpacemiT P1 regulators")
-Link: https://developer.spacemit.com/documentation [1]
-Signed-off-by: Guodong Xu <guodong@riscstar.com>
-Link: https://patch.msgid.link/20260122-spacemit-p1-v1-1-309be27fbff9@riscstar.com
+Fixes: b4e002d8a7ce ("spi: tegra210-quad: Fix timeout handling")
+Signed-off-by: Breno Leitao <leitao@debian.org>
+Signed-off-by: Usama Arif <usamaarif642@gmail.com>
+Tested-by: Jon Hunter <jonathanh@nvidia.com>
+Acked-by: Jon Hunter <jonathanh@nvidia.com>
+Acked-by: Thierry Reding <treding@nvidia.com>
+Link: https://patch.msgid.link/20260126-tegra_xfer-v2-1-6d2115e4f387@debian.org
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/regulator/spacemit-p1.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/spi/spi-tegra210-quad.c | 19 +++++++++++++++++--
+ 1 file changed, 17 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/regulator/spacemit-p1.c b/drivers/regulator/spacemit-p1.c
-index 2bf9137e12b1d..2b585ba01a93d 100644
---- a/drivers/regulator/spacemit-p1.c
-+++ b/drivers/regulator/spacemit-p1.c
-@@ -87,13 +87,13 @@ static const struct linear_range p1_ldo_ranges[] = {
- 	}
+diff --git a/drivers/spi/spi-tegra210-quad.c b/drivers/spi/spi-tegra210-quad.c
+index d9ca3d7b082f2..c6c05e6f48994 100644
+--- a/drivers/spi/spi-tegra210-quad.c
++++ b/drivers/spi/spi-tegra210-quad.c
+@@ -1488,15 +1488,30 @@ static irqreturn_t handle_dma_based_xfer(struct tegra_qspi *tqspi)
+ static irqreturn_t tegra_qspi_isr_thread(int irq, void *context_data)
+ {
+ 	struct tegra_qspi *tqspi = context_data;
++	u32 status;
++
++	/*
++	 * Read transfer status to check if interrupt was triggered by transfer
++	 * completion
++	 */
++	status = tegra_qspi_readl(tqspi, QSPI_TRANS_STATUS);
  
- #define P1_BUCK_DESC(_n) \
--	P1_REG_DESC(BUCK, buck, _n, "vin", 0x47, BUCK_MASK, 254, p1_buck_ranges)
-+	P1_REG_DESC(BUCK, buck, _n, "vin", 0x47, BUCK_MASK, 255, p1_buck_ranges)
+ 	/*
+ 	 * Occasionally the IRQ thread takes a long time to wake up (usually
+ 	 * when the CPU that it's running on is excessively busy) and we have
+ 	 * already reached the timeout before and cleaned up the timed out
+ 	 * transfer. Avoid any processing in that case and bail out early.
++	 *
++	 * If no transfer is in progress, check if this was a real interrupt
++	 * that the timeout handler already processed, or a spurious one.
+ 	 */
+-	if (!tqspi->curr_xfer)
+-		return IRQ_NONE;
++	if (!tqspi->curr_xfer) {
++		/* Spurious interrupt - transfer not ready */
++		if (!(status & QSPI_RDY))
++			return IRQ_NONE;
++		/* Real interrupt, already handled by timeout path */
++		return IRQ_HANDLED;
++	}
  
- #define P1_ALDO_DESC(_n) \
--	P1_REG_DESC(ALDO, aldo, _n, "vin", 0x5b, LDO_MASK, 117, p1_ldo_ranges)
-+	P1_REG_DESC(ALDO, aldo, _n, "vin", 0x5b, LDO_MASK, 128, p1_ldo_ranges)
+ 	tqspi->status_reg = tegra_qspi_readl(tqspi, QSPI_FIFO_STATUS);
  
- #define P1_DLDO_DESC(_n) \
--	P1_REG_DESC(DLDO, dldo, _n, "buck5", 0x67, LDO_MASK, 117, p1_ldo_ranges)
-+	P1_REG_DESC(DLDO, dldo, _n, "buck5", 0x67, LDO_MASK, 128, p1_ldo_ranges)
- 
- static const struct regulator_desc p1_regulator_desc[] = {
- 	P1_BUCK_DESC(1),
 -- 
 2.51.0
 
