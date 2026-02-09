@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6EED637756C;
-	Mon,  9 Feb 2026 14:28:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE58437B3E4;
+	Mon,  9 Feb 2026 14:28:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770647290; cv=none; b=ohhyZV6y4LvdlrjQ1NzlN2Q5BRuDtUJ4ltPONGmFG4IR0ZvwhxKs8OZ5h2RF6utX2CvCq0CS35Ad1uxkH41WQXesBxTNIJPqkCCFXRMTP7KsYeFXiIsrLw60J1bsx4jpwpVXIZomecWduE/BLAaPALHrWCne8/yRtPdXvgkE5Ho=
+	t=1770647293; cv=none; b=FLLcyHI57pGb36wYXZ9+9P9eC6aJKYdTnmLjeKRUOgnzKcqhagWsj6X9iDZM0Kq344FBhjCTgR0sg7v4l/4CHpTq2ssdfJpqsrNG6WhaNHhO99BIrktaI0xiraIS0+lQV6oowD9fQ5vNBWH14xahBdZB+i6dwIplZpqK7BeqqSo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770647290; c=relaxed/simple;
-	bh=0rni/7jpQkWxuAlBoHfVDah4YWHFv/0KEFfxot1ZUaE=;
+	s=arc-20240116; t=1770647293; c=relaxed/simple;
+	bh=EUNt2eqBdk1lxelHgSF7MIHarKUZoC0fYqc1IH/HnxQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qI1HLjaG1rpnyjcN2PzlMdtCMgC98lt/vwTeOEsJ9D1M3hXFmgblYp2cLAf9E/QmhxWdSchs5HMD5qCdyLFMxMubcjhcqexe4B3C/ye4SNlDWwxy1Qilji8N8PziVAy8zhAp/0GTeVbHlT06KIl2SKJ7Mf88zrzSxyqg1RxpqG8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=g5Gz35Bt; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=L+gIq1x/18k5n7k1xkEhSeoJb+x7x/m9plB12ihxWR/GIRlqUknd9Jauq9u4SOGzHCeCDs/GolYTw9HulvFcLcxOlPeuO5/YVU1oO5NLe/MBIiCZtvzPvnE2fq0k2b0g2ZAkqnqA4gMpXbPUfatjTEmd/wi9JsjR8/2MdfYTb0k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZsvcS9bT; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="g5Gz35Bt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D4497C116C6;
-	Mon,  9 Feb 2026 14:28:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZsvcS9bT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 402F9C116C6;
+	Mon,  9 Feb 2026 14:28:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770647290;
-	bh=0rni/7jpQkWxuAlBoHfVDah4YWHFv/0KEFfxot1ZUaE=;
+	s=korg; t=1770647293;
+	bh=EUNt2eqBdk1lxelHgSF7MIHarKUZoC0fYqc1IH/HnxQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=g5Gz35BtJ2zx+gGHecoloXL7cN61LPjHNnbBeMdMOh9KHDz7y8AGzyAOwjzhj3dTx
-	 GFu0neKkhfg1aNU8tp7f5B7NX8F6yFXw2o3GhX6myrV+AVRil2j7Ld79cvt6NY8b51
-	 RGAz1T1+B957WWoHmy4+eNI7brNyvdDlXR8JH+2M=
+	b=ZsvcS9bT60bi6L1GO9Yctpunf3+A2aJ/Ovm+2SyQWmL3Hx0+FyVqFihFiRrtllQfD
+	 Y6xmjksxUL0BkAuYloyCyORStJo4yEsdGm09Da1jTfqmCQ6apaYZBTEtyHm1S0b051
+	 wJ+3ZtnF+FRTsnYPbXf0wbaKNTlhn8SAVvaTKe3Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Debarghya Kundu <debarghyak@google.com>,
-	Joshua Washington <joshwash@google.com>,
-	Harshitha Ramamurthy <hramamurthy@google.com>,
-	Jacob Keller <jacob.e.keller@intel.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.18 022/175] gve: Fix stats report corruption on queue count change
-Date: Mon,  9 Feb 2026 15:21:35 +0100
-Message-ID: <20260209142321.277832132@linuxfoundation.org>
+	Hao Li <hao.li@linux.dev>,
+	Hao Ge <hao.ge@linux.dev>,
+	Suren Baghdasaryan <surenb@google.com>,
+	Harry Yoo <harry.yoo@oracle.com>,
+	Vlastimil Babka <vbabka@suse.cz>
+Subject: [PATCH 6.18 013/175] mm/slab: Add alloc_tagging_slab_free_hook for memcg_alloc_abort_single
+Date: Mon,  9 Feb 2026 15:21:26 +0100
+Message-ID: <20260209142320.954502232@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260209142320.474120190@linuxfoundation.org>
 References: <20260209142320.474120190@linuxfoundation.org>
@@ -53,131 +53,99 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Debarghya Kundu <debarghyak@google.com>
+From: Hao Ge <hao.ge@linux.dev>
 
-commit 7b9ebcce0296e104a0d82a6b09d68564806158ff upstream.
+commit e6c53ead2d8fa73206e0a63e9cd9aea6bc929837 upstream.
 
-The driver and the NIC share a region in memory for stats reporting.
-The NIC calculates its offset into this region based on the total size
-of the stats region and the size of the NIC's stats.
+When CONFIG_MEM_ALLOC_PROFILING_DEBUG is enabled, the following warning
+may be noticed:
 
-When the number of queues is changed, the driver's stats region is
-resized. If the queue count is increased, the NIC can write past
-the end of the allocated stats region, causing memory corruption.
-If the queue count is decreased, there is a gap between the driver
-and NIC stats, leading to incorrect stats reporting.
+[ 3959.023862] ------------[ cut here ]------------
+[ 3959.023891] alloc_tag was not cleared (got tag for lib/xarray.c:378)
+[ 3959.023947] WARNING: ./include/linux/alloc_tag.h:155 at alloc_tag_add+0x128/0x178, CPU#6: mkfs.ntfs/113998
+[ 3959.023978] Modules linked in: dns_resolver tun brd overlay exfat btrfs blake2b libblake2b xor xor_neon raid6_pq loop sctp ip6_udp_tunnel udp_tunnel ext4 crc16 mbcache jbd2 rfkill sunrpc vfat fat sg fuse nfnetlink sr_mod virtio_gpu cdrom drm_client_lib virtio_dma_buf drm_shmem_helper drm_kms_helper ghash_ce drm sm4 backlight virtio_net net_failover virtio_scsi failover virtio_console virtio_blk virtio_mmio dm_mirror dm_region_hash dm_log dm_multipath dm_mod i2c_dev aes_neon_bs aes_ce_blk [last unloaded: hwpoison_inject]
+[ 3959.024170] CPU: 6 UID: 0 PID: 113998 Comm: mkfs.ntfs Kdump: loaded Tainted: G        W           6.19.0-rc7+ #7 PREEMPT(voluntary)
+[ 3959.024182] Tainted: [W]=WARN
+[ 3959.024186] Hardware name: QEMU KVM Virtual Machine, BIOS unknown 2/2/2022
+[ 3959.024192] pstate: 604000c5 (nZCv daIF +PAN -UAO -TCO -DIT -SSBS BTYPE=--)
+[ 3959.024199] pc : alloc_tag_add+0x128/0x178
+[ 3959.024207] lr : alloc_tag_add+0x128/0x178
+[ 3959.024214] sp : ffff80008b696d60
+[ 3959.024219] x29: ffff80008b696d60 x28: 0000000000000000 x27: 0000000000000240
+[ 3959.024232] x26: 0000000000000000 x25: 0000000000000240 x24: ffff800085d17860
+[ 3959.024245] x23: 0000000000402800 x22: ffff0000c0012dc0 x21: 00000000000002d0
+[ 3959.024257] x20: ffff0000e6ef3318 x19: ffff800085ae0410 x18: 0000000000000000
+[ 3959.024269] x17: 0000000000000000 x16: 0000000000000000 x15: 0000000000000000
+[ 3959.024281] x14: 0000000000000000 x13: 0000000000000001 x12: ffff600064101293
+[ 3959.024292] x11: 1fffe00064101292 x10: ffff600064101292 x9 : dfff800000000000
+[ 3959.024305] x8 : 00009fff9befed6e x7 : ffff000320809493 x6 : 0000000000000001
+[ 3959.024316] x5 : ffff000320809490 x4 : ffff600064101293 x3 : ffff800080691838
+[ 3959.024328] x2 : 0000000000000000 x1 : 0000000000000000 x0 : ffff0000d5bcd640
+[ 3959.024340] Call trace:
+[ 3959.024346]  alloc_tag_add+0x128/0x178 (P)
+[ 3959.024355]  __alloc_tagging_slab_alloc_hook+0x11c/0x1a8
+[ 3959.024362]  kmem_cache_alloc_lru_noprof+0x1b8/0x5e8
+[ 3959.024369]  xas_alloc+0x304/0x4f0
+[ 3959.024381]  xas_create+0x1e0/0x4a0
+[ 3959.024388]  xas_store+0x68/0xda8
+[ 3959.024395]  __filemap_add_folio+0x5b0/0xbd8
+[ 3959.024409]  filemap_add_folio+0x16c/0x7e0
+[ 3959.024416]  __filemap_get_folio_mpol+0x2dc/0x9e8
+[ 3959.024424]  iomap_get_folio+0xfc/0x180
+[ 3959.024435]  __iomap_get_folio+0x2f8/0x4b8
+[ 3959.024441]  iomap_write_begin+0x198/0xc18
+[ 3959.024448]  iomap_write_iter+0x2ec/0x8f8
+[ 3959.024454]  iomap_file_buffered_write+0x19c/0x290
+[ 3959.024461]  blkdev_write_iter+0x38c/0x978
+[ 3959.024470]  vfs_write+0x4d4/0x928
+[ 3959.024482]  ksys_write+0xfc/0x1f8
+[ 3959.024489]  __arm64_sys_write+0x74/0xb0
+[ 3959.024496]  invoke_syscall+0xd4/0x258
+[ 3959.024507]  el0_svc_common.constprop.0+0xb4/0x240
+[ 3959.024514]  do_el0_svc+0x48/0x68
+[ 3959.024520]  el0_svc+0x40/0xf8
+[ 3959.024526]  el0t_64_sync_handler+0xa0/0xe8
+[ 3959.024533]  el0t_64_sync+0x1ac/0x1b0
+[ 3959.024540] ---[ end trace 0000000000000000 ]---
 
-This change fixes the issue by allocating stats region with maximum
-size, and the offset calculation for NIC stats is changed to match
-with the calculation of the NIC.
+When __memcg_slab_post_alloc_hook() fails, there are two different
+free paths depending on whether size == 1 or size != 1. In the
+kmem_cache_free_bulk() path, we do call alloc_tagging_slab_free_hook().
+However, in memcg_alloc_abort_single() we don't, the above warning will be
+triggered on the next allocation.
 
+Therefore, add alloc_tagging_slab_free_hook() to the
+memcg_alloc_abort_single() path.
+
+Fixes: 9f9796b413d3 ("mm, slab: move memcg charging to post-alloc hook")
 Cc: stable@vger.kernel.org
-Fixes: 24aeb56f2d38 ("gve: Add Gvnic stats AQ command and ethtool show/set-priv-flags.")
-Signed-off-by: Debarghya Kundu <debarghyak@google.com>
-Reviewed-by: Joshua Washington <joshwash@google.com>
-Signed-off-by: Harshitha Ramamurthy <hramamurthy@google.com>
-Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
-Link: https://patch.msgid.link/20260202193925.3106272-2-hramamurthy@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Suggested-by: Hao Li <hao.li@linux.dev>
+Signed-off-by: Hao Ge <hao.ge@linux.dev>
+Reviewed-by: Hao Li <hao.li@linux.dev>
+Reviewed-by: Suren Baghdasaryan <surenb@google.com>
+Reviewed-by: Harry Yoo <harry.yoo@oracle.com>
+Link: https://patch.msgid.link/20260204101401.202762-1-hao.ge@linux.dev
+Signed-off-by: Vlastimil Babka <vbabka@suse.cz>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/google/gve/gve_ethtool.c |   54 ++++++++++++++++----------
- drivers/net/ethernet/google/gve/gve_main.c    |    4 -
- 2 files changed, 36 insertions(+), 22 deletions(-)
+ mm/slub.c |    6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
---- a/drivers/net/ethernet/google/gve/gve_ethtool.c
-+++ b/drivers/net/ethernet/google/gve/gve_ethtool.c
-@@ -156,7 +156,8 @@ gve_get_ethtool_stats(struct net_device
- 	u64 rx_buf_alloc_fail, rx_desc_err_dropped_pkt, rx_hsplit_unsplit_pkt,
- 		rx_pkts, rx_hsplit_pkt, rx_skb_alloc_fail, rx_bytes, tx_pkts, tx_bytes,
- 		tx_dropped;
--	int stats_idx, base_stats_idx, max_stats_idx;
-+	int rx_base_stats_idx, max_rx_stats_idx, max_tx_stats_idx;
-+	int stats_idx, stats_region_len, nic_stats_len;
- 	struct stats *report_stats;
- 	int *rx_qid_to_stats_idx;
- 	int *tx_qid_to_stats_idx;
-@@ -265,20 +266,38 @@ gve_get_ethtool_stats(struct net_device
- 	data[i++] = priv->stats_report_trigger_cnt;
- 	i = GVE_MAIN_STATS_LEN;
+--- a/mm/slub.c
++++ b/mm/slub.c
+@@ -6667,8 +6667,12 @@ void slab_free(struct kmem_cache *s, str
+ static noinline
+ void memcg_alloc_abort_single(struct kmem_cache *s, void *object)
+ {
++	struct slab *slab = virt_to_slab(object);
++
++	alloc_tagging_slab_free_hook(s, slab, &object, 1);
++
+ 	if (likely(slab_free_hook(s, object, slab_want_init_on_free(s), false)))
+-		do_slab_free(s, virt_to_slab(object), object, object, 1, _RET_IP_);
++		do_slab_free(s, slab, object, object, 1, _RET_IP_);
+ }
+ #endif
  
--	/* For rx cross-reporting stats, start from nic rx stats in report */
--	base_stats_idx = GVE_TX_STATS_REPORT_NUM * num_tx_queues +
--		GVE_RX_STATS_REPORT_NUM * priv->rx_cfg.num_queues;
--	/* The boundary between driver stats and NIC stats shifts if there are
--	 * stopped queues.
--	 */
--	base_stats_idx += NIC_RX_STATS_REPORT_NUM * num_stopped_rxqs +
--		NIC_TX_STATS_REPORT_NUM * num_stopped_txqs;
--	max_stats_idx = NIC_RX_STATS_REPORT_NUM *
--		(priv->rx_cfg.num_queues - num_stopped_rxqs) +
--		base_stats_idx;
-+	rx_base_stats_idx = 0;
-+	max_rx_stats_idx = 0;
-+	max_tx_stats_idx = 0;
-+	stats_region_len = priv->stats_report_len -
-+				sizeof(struct gve_stats_report);
-+	nic_stats_len = (NIC_RX_STATS_REPORT_NUM * priv->rx_cfg.num_queues +
-+		NIC_TX_STATS_REPORT_NUM * num_tx_queues) * sizeof(struct stats);
-+	if (unlikely((stats_region_len -
-+				nic_stats_len) % sizeof(struct stats))) {
-+		net_err_ratelimited("Starting index of NIC stats should be multiple of stats size");
-+	} else {
-+		/* For rx cross-reporting stats,
-+		 * start from nic rx stats in report
-+		 */
-+		rx_base_stats_idx = (stats_region_len - nic_stats_len) /
-+							sizeof(struct stats);
-+		/* The boundary between driver stats and NIC stats
-+		 * shifts if there are stopped queues
-+		 */
-+		rx_base_stats_idx += NIC_RX_STATS_REPORT_NUM *
-+			num_stopped_rxqs + NIC_TX_STATS_REPORT_NUM *
-+			num_stopped_txqs;
-+		max_rx_stats_idx = NIC_RX_STATS_REPORT_NUM *
-+			(priv->rx_cfg.num_queues - num_stopped_rxqs) +
-+			rx_base_stats_idx;
-+		max_tx_stats_idx = NIC_TX_STATS_REPORT_NUM *
-+			(num_tx_queues - num_stopped_txqs) +
-+			max_rx_stats_idx;
-+	}
- 	/* Preprocess the stats report for rx, map queue id to start index */
- 	skip_nic_stats = false;
--	for (stats_idx = base_stats_idx; stats_idx < max_stats_idx;
-+	for (stats_idx = rx_base_stats_idx; stats_idx < max_rx_stats_idx;
- 		stats_idx += NIC_RX_STATS_REPORT_NUM) {
- 		u32 stat_name = be32_to_cpu(report_stats[stats_idx].stat_name);
- 		u32 queue_id = be32_to_cpu(report_stats[stats_idx].queue_id);
-@@ -354,14 +373,9 @@ gve_get_ethtool_stats(struct net_device
- 		i += priv->rx_cfg.num_queues * NUM_GVE_RX_CNTS;
- 	}
- 
--	/* For tx cross-reporting stats, start from nic tx stats in report */
--	base_stats_idx = max_stats_idx;
--	max_stats_idx = NIC_TX_STATS_REPORT_NUM *
--		(num_tx_queues - num_stopped_txqs) +
--		max_stats_idx;
--	/* Preprocess the stats report for tx, map queue id to start index */
- 	skip_nic_stats = false;
--	for (stats_idx = base_stats_idx; stats_idx < max_stats_idx;
-+	/* NIC TX stats start right after NIC RX stats */
-+	for (stats_idx = max_rx_stats_idx; stats_idx < max_tx_stats_idx;
- 		stats_idx += NIC_TX_STATS_REPORT_NUM) {
- 		u32 stat_name = be32_to_cpu(report_stats[stats_idx].stat_name);
- 		u32 queue_id = be32_to_cpu(report_stats[stats_idx].queue_id);
---- a/drivers/net/ethernet/google/gve/gve_main.c
-+++ b/drivers/net/ethernet/google/gve/gve_main.c
-@@ -283,9 +283,9 @@ static int gve_alloc_stats_report(struct
- 	int tx_stats_num, rx_stats_num;
- 
- 	tx_stats_num = (GVE_TX_STATS_REPORT_NUM + NIC_TX_STATS_REPORT_NUM) *
--		       gve_num_tx_queues(priv);
-+				priv->tx_cfg.max_queues;
- 	rx_stats_num = (GVE_RX_STATS_REPORT_NUM + NIC_RX_STATS_REPORT_NUM) *
--		       priv->rx_cfg.num_queues;
-+				priv->rx_cfg.max_queues;
- 	priv->stats_report_len = struct_size(priv->stats_report, stats,
- 					     size_add(tx_stats_num, rx_stats_num));
- 	priv->stats_report =
 
 
