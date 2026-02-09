@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F6533783C9;
-	Mon,  9 Feb 2026 14:52:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8F8528312F;
+	Mon,  9 Feb 2026 14:52:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770648745; cv=none; b=HAkmqBh1C5aEdVNPEvhhPtDHtJMu1zwbCIvImiOv5mSAtH91V4xjdFL+J5spPSzgSqzskvKghXFgsX4MCjTXeuchLcp38NsVHuB47pGrt4vZeJeIXrorZxx8Ms51nVkGXtDSIeXmAeUxd1MKvRCw09i3vHOoRjQ0eJ4HKAL/hdI=
+	t=1770648748; cv=none; b=J9ZvR3ZXs+j8SWz/3vcu3KtA398lcKi36qZ8ZI7iRg+OT8vzyqKoCDLc6nUqPFbPWzEwpKmJi2cXT0JpzaEHduNA4/NqgF7buaE8AO3mG6l5YJItkEXxfMpKvomKP9MYrG667Dr6stIWunSVjt0rmvYkJwhJ1v7bSfEOQlqwfE8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770648745; c=relaxed/simple;
-	bh=ocjstGQSstHHkYQgj5NMBPCv+TJHP1IbfeuETyfRw9Y=;
+	s=arc-20240116; t=1770648748; c=relaxed/simple;
+	bh=Nj4C/vLAOt1uuYPi0+84+X4EJokTWPcxVnegf+2Esfg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ipmguuOgwfkMkbDgkFgCqHQmFkHydgJFJeQ7r7KEPRkRhWBsQf0Sn8vEB5fxgUijZTipA6pjgr/pGNYT17QQ46slJyLo4O5uOHstZjrp1hNkv1+2U1C5Y9W4z5qjgKHwd1NnWbu/lubttidEWX3rCfQ1nrGwAbAfWsXnx94RZM4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WT/q+/PG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TRsfoArE45WBE+Qa4oM2mcC/+3eDDTrJbJ8DR8kyt1vN+mPqJNsvfygeNYf9BGZH7OiYnh0F4RtP5axLB9SG7D17OSiEE0yS0qUmKVM+1YbTblPEsxskNVC76L/wP/EDm4iW3KG7N+QiSqYo/cBYrDTPMVft3qrOfEfWMt+A7Y4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LZ46lLPH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WT/q+/PG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F22CFC116C6;
-	Mon,  9 Feb 2026 14:52:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LZ46lLPH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2AEB7C116C6;
+	Mon,  9 Feb 2026 14:52:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770648745;
-	bh=ocjstGQSstHHkYQgj5NMBPCv+TJHP1IbfeuETyfRw9Y=;
+	s=korg; t=1770648748;
+	bh=Nj4C/vLAOt1uuYPi0+84+X4EJokTWPcxVnegf+2Esfg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WT/q+/PG9C7fWeJ2JdCq/W9EaNXMRFomyRoR4caHyZpjPDJHLqjNyoZJo7T51ggef
-	 xYh0EztqZLeyB+qxW4xhGiyeI2Oiiv1j0SwvMdGc00YgAkGhTtnjaZUqvlCw47Y9kt
-	 GfQIct0b+7wtWlz3a6Y7HJ5flV3w8ykgORwvU1rw=
+	b=LZ46lLPHNrP3vpLOCQB7FAnKnJrTT7PUGTjpuFCroArehWkJmDPaWv8ZYArvsHIzJ
+	 FgAxMTOHvZiq3rsdPYyPUFYXuFOj5qLo1kd555RGcza1Eg5fk+uUtNF1eK0mPX7fws
+	 2XkWJAMltSDNU0PfqUYaZdiiW0zv7Dw5kYFfKhxQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -33,9 +33,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	John Meneghini <jmeneghi@redhat.com>,
 	Christoph Hellwig <hch@lst.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 31/41] nvmet-tcp: add an helper to free the cmd buffers
-Date: Mon,  9 Feb 2026 15:24:52 +0100
-Message-ID: <20260209142257.936718725@linuxfoundation.org>
+Subject: [PATCH 5.10 32/41] nvmet-tcp: fix memory leak when performing a controller reset
+Date: Mon,  9 Feb 2026 15:24:53 +0100
+Message-ID: <20260209142257.972960310@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260209142256.797267956@linuxfoundation.org>
 References: <20260209142256.797267956@linuxfoundation.org>
@@ -56,13 +56,14 @@ Content-Transfer-Encoding: 8bit
 
 From: Maurizio Lombardi <mlombard@redhat.com>
 
-[ Upstream commit 69b85e1f1d1d1e49601ec3e85d2031188657cca2 ]
+[ Upstream commit af21250bb503a02e705b461886321e394b300524 ]
 
-Makes the code easier to read and to debug.
+If a reset controller is executed while the initiator
+is performing some I/O the driver may leak the memory allocated
+for the commands' iovec.
 
-Sets the freed pointers to NULL, it will be useful
-when destroying the queues to understand if the commands'
-buffers have been released already or not.
+Make sure that nvmet_tcp_uninit_data_in_cmds() releases
+all the memory.
 
 Signed-off-by: Maurizio Lombardi <mlombard@redhat.com>
 Reviewed-by: Keith Busch <kbusch@kernel.org>
@@ -72,90 +73,25 @@ Signed-off-by: Christoph Hellwig <hch@lst.de>
 Stable-dep-of: 52a0a9854934 ("nvmet-tcp: add bounds checks in nvmet_tcp_build_pdu_iovec")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/target/tcp.c | 28 +++++++++++++++++++---------
- 1 file changed, 19 insertions(+), 9 deletions(-)
+ drivers/nvme/target/tcp.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
 diff --git a/drivers/nvme/target/tcp.c b/drivers/nvme/target/tcp.c
-index 94ed4b5b725c7..3c0769d40edd3 100644
+index 3c0769d40edd3..bf34849c15a20 100644
 --- a/drivers/nvme/target/tcp.c
 +++ b/drivers/nvme/target/tcp.c
-@@ -155,6 +155,8 @@ static struct workqueue_struct *nvmet_tcp_wq;
- static const struct nvmet_fabrics_ops nvmet_tcp_ops;
- static void nvmet_tcp_free_cmd(struct nvmet_tcp_cmd *c);
- static void nvmet_tcp_finish_cmd(struct nvmet_tcp_cmd *cmd);
-+static void nvmet_tcp_free_cmd_buffers(struct nvmet_tcp_cmd *cmd);
-+static void nvmet_tcp_unmap_pdu_iovec(struct nvmet_tcp_cmd *cmd);
+@@ -1443,7 +1443,10 @@ static void nvmet_tcp_uninit_data_in_cmds(struct nvmet_tcp_queue *queue)
  
- static inline u16 nvmet_tcp_cmd_tag(struct nvmet_tcp_queue *queue,
- 		struct nvmet_tcp_cmd *cmd)
-@@ -286,6 +288,16 @@ static int nvmet_tcp_check_ddgst(struct nvmet_tcp_queue *queue, void *pdu)
- 	return 0;
- }
- 
-+static void nvmet_tcp_free_cmd_buffers(struct nvmet_tcp_cmd *cmd)
-+{
-+	WARN_ON(unlikely(cmd->nr_mapped > 0));
+ 	for (i = 0; i < queue->nr_cmds; i++, cmd++) {
+ 		if (nvmet_tcp_need_data_in(cmd))
+-			nvmet_tcp_finish_cmd(cmd);
++			nvmet_req_uninit(&cmd->req);
 +
-+	kfree(cmd->iov);
-+	sgl_free(cmd->req.sg);
-+	cmd->iov = NULL;
-+	cmd->req.sg = NULL;
-+}
-+
- static void nvmet_tcp_unmap_pdu_iovec(struct nvmet_tcp_cmd *cmd)
- {
- 	struct scatterlist *sg;
-@@ -295,6 +307,8 @@ static void nvmet_tcp_unmap_pdu_iovec(struct nvmet_tcp_cmd *cmd)
- 
- 	for (i = 0; i < cmd->nr_mapped; i++)
- 		kunmap(sg_page(&sg[i]));
-+
-+	cmd->nr_mapped = 0;
- }
- 
- static void nvmet_tcp_map_pdu_iovec(struct nvmet_tcp_cmd *cmd)
-@@ -377,7 +391,7 @@ static int nvmet_tcp_map_data(struct nvmet_tcp_cmd *cmd)
- 
- 	return 0;
- err:
--	sgl_free(cmd->req.sg);
-+	nvmet_tcp_free_cmd_buffers(cmd);
- 	return NVME_SC_INTERNAL;
- }
- 
-@@ -628,10 +642,8 @@ static int nvmet_try_send_data(struct nvmet_tcp_cmd *cmd, bool last_in_batch)
- 		}
++		nvmet_tcp_unmap_pdu_iovec(cmd);
++		nvmet_tcp_free_cmd_buffers(cmd);
  	}
  
--	if (queue->nvme_sq.sqhd_disabled) {
--		kfree(cmd->iov);
--		sgl_free(cmd->req.sg);
--	}
-+	if (queue->nvme_sq.sqhd_disabled)
-+		nvmet_tcp_free_cmd_buffers(cmd);
- 
- 	return 1;
- 
-@@ -660,8 +672,7 @@ static int nvmet_try_send_response(struct nvmet_tcp_cmd *cmd,
- 	if (left)
- 		return -EAGAIN;
- 
--	kfree(cmd->iov);
--	sgl_free(cmd->req.sg);
-+	nvmet_tcp_free_cmd_buffers(cmd);
- 	cmd->queue->snd_cmd = NULL;
- 	nvmet_tcp_put_cmd(cmd);
- 	return 1;
-@@ -1422,8 +1433,7 @@ static void nvmet_tcp_finish_cmd(struct nvmet_tcp_cmd *cmd)
- {
- 	nvmet_req_uninit(&cmd->req);
- 	nvmet_tcp_unmap_pdu_iovec(cmd);
--	kfree(cmd->iov);
--	sgl_free(cmd->req.sg);
-+	nvmet_tcp_free_cmd_buffers(cmd);
- }
- 
- static void nvmet_tcp_uninit_data_in_cmds(struct nvmet_tcp_queue *queue)
+ 	if (!queue->nr_cmds && nvmet_tcp_need_data_in(&queue->connect)) {
 -- 
 2.51.0
 
