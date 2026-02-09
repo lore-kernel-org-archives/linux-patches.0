@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5F5C28312F;
-	Mon,  9 Feb 2026 14:54:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 228A628312F;
+	Mon,  9 Feb 2026 14:54:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770648877; cv=none; b=YaRR6sLDc17/8XonKJJhWDXQp4Kw8rOY3KdeDAYyMzFpjOITtd0lqvbbdyLWt43qF7fevB72mxpBTZ9l1P1A/fN/STBxp4unLmd5nQZaB89b5FGaJ42pVCzPScJfkOfI4DDx8dMZ8wCVDO2g0UkEYLCBPxfmkBCpt4kARHvPZFM=
+	t=1770648880; cv=none; b=JwQWHGVGu3vSs+ncyVpkE3k74h0mjdfYjzbVowQ7nOG0cz7ZuirjlP1Q67qEkwXx0dkyvkKJsPhFupu0mdTB+reKA0YgEpenDRi4EVuwSz4TdHuJqQfcSm13ZOuBASJIQEVmUohIqPYWX4xmciCj3mlF53wR/uRfZ/pgLDZ+eOg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770648877; c=relaxed/simple;
-	bh=KMfzxeXmoOJiaFFl/0BQ8evQWorhxDuceZqe4Vw7KNQ=;
+	s=arc-20240116; t=1770648880; c=relaxed/simple;
+	bh=vCu3UAV7XnSJJFDwPcxO1pt1VUJw20QRgUyvUbk00jM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GgCpqB/ULtbZ8obwapIKfxGHZkQ6s4kaNbLn8o5XDKpsISdA3IU8LyZmZY3p8PxYBIK0buW5p9makLRpVjzRPP50Gg2dywT+GtZcL963cjsPuLepXUA6eBGT/N2XYRFfNGeNvngE5gkZcCK2Ib4Na329sffoM1sjy1nLListsJA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Yf/yA9Uc; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=faWABkyR8LclXfh5wSiWvbJemZhCdA5TWuETMS+i87NXNZhOTLKHtTnK8KfloawFoy9pqJXXFvQP9Xd8w8o5B5ngNUduy60B0gy2j2fJ+5ViDpSR9+SrAB51j0QZyxuJ+XI7i/xaoX0o26hXRKsHFAqHXuxxVdDihP3cJz1/P40=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tYe9o4d+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Yf/yA9Uc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D387C116C6;
-	Mon,  9 Feb 2026 14:54:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tYe9o4d+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A573C116C6;
+	Mon,  9 Feb 2026 14:54:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770648876;
-	bh=KMfzxeXmoOJiaFFl/0BQ8evQWorhxDuceZqe4Vw7KNQ=;
+	s=korg; t=1770648880;
+	bh=vCu3UAV7XnSJJFDwPcxO1pt1VUJw20QRgUyvUbk00jM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Yf/yA9UcARNBLofXkqQvGKlJrd+OEUtUK7k33ATjmjSw82Ypbhmq7w7gcRVeJwE6e
-	 GnEKkqub12UmhT9zjWs/gMojA/8TmyqMie49tENXQ0tatJHKUSyY/RlAxSPt551pEL
-	 kDQTWS17DYyD9YYhMZoNB6UfKVEL/4jZeQm1+3fI=
+	b=tYe9o4d+3YQpi9Wkd7/HW1y4AplJqhKoi7D+gBj1JP6vU3K1wrXNgFhbaQ/9M+wGW
+	 otN/4QNzgL5z82ouzwNS5cDryRNqdqwrGQFdDdF6J3yuosjHR5qrXBnr+CfPqEmgQm
+	 BxUoG31dFYgS4sw+Lzc1S4/GYb+ks5VVYSBM4v8Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+b364457b2d1d4e4a3054@syzkaller.appspotmail.com,
-	Moon Hee Lee <moonhee.lee.ca@gmail.com>,
-	Johannes Berg <johannes.berg@intel.com>,
+	Maurizio Lombardi <mlombard@redhat.com>,
+	Zhaojuan Guo <zguo@redhat.com>,
+	Mike Christie <michael.christie@oracle.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 24/75] wifi: mac80211: ocb: skip rx_no_sta when interface is not joined
-Date: Mon,  9 Feb 2026 15:24:21 +0100
-Message-ID: <20260209142302.716570300@linuxfoundation.org>
+Subject: [PATCH 5.15 42/75] scsi: target: iscsi: Fix use-after-free in iscsit_dec_conn_usage_count()
+Date: Mon,  9 Feb 2026 15:24:39 +0100
+Message-ID: <20260209142303.360644317@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260209142301.830618238@linuxfoundation.org>
 References: <20260209142301.830618238@linuxfoundation.org>
@@ -52,42 +53,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Moon Hee Lee <moonhee.lee.ca@gmail.com>
+From: Maurizio Lombardi <mlombard@redhat.com>
 
-[ Upstream commit ff4071c60018a668249dc6a2df7d16330543540e ]
+[ Upstream commit 9411a89e9e7135cc459178fa77a3f1d6191ae903 ]
 
-ieee80211_ocb_rx_no_sta() assumes a valid channel context, which is only
-present after JOIN_OCB.
+In iscsit_dec_conn_usage_count(), the function calls complete() while
+holding the conn->conn_usage_lock. As soon as complete() is invoked, the
+waiter (such as iscsit_close_connection()) may wake up and proceed to free
+the iscsit_conn structure.
 
-RX may run before JOIN_OCB is executed, in which case the OCB interface
-is not operational. Skip RX peer handling when the interface is not
-joined to avoid warnings in the RX path.
+If the waiter frees the memory before the current thread reaches
+spin_unlock_bh(), it results in a KASAN slab-use-after-free as the function
+attempts to release a lock within the already-freed connection structure.
 
-Reported-by: syzbot+b364457b2d1d4e4a3054@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=b364457b2d1d4e4a3054
-Tested-by: syzbot+b364457b2d1d4e4a3054@syzkaller.appspotmail.com
-Signed-off-by: Moon Hee Lee <moonhee.lee.ca@gmail.com>
-Link: https://patch.msgid.link/20251216035932.18332-1-moonhee.lee.ca@gmail.com
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Fix this by releasing the spinlock before calling complete().
+
+Signed-off-by: Maurizio Lombardi <mlombard@redhat.com>
+Reported-by: Zhaojuan Guo <zguo@redhat.com>
+Reviewed-by: Mike Christie <michael.christie@oracle.com>
+Link: https://patch.msgid.link/20260112165352.138606-2-mlombard@redhat.com
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/mac80211/ocb.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/target/iscsi/iscsi_target_util.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/net/mac80211/ocb.c b/net/mac80211/ocb.c
-index 9713e53f11b1b..6688b1dd8aaa4 100644
---- a/net/mac80211/ocb.c
-+++ b/net/mac80211/ocb.c
-@@ -47,6 +47,9 @@ void ieee80211_ocb_rx_no_sta(struct ieee80211_sub_if_data *sdata,
- 	struct sta_info *sta;
- 	int band;
+diff --git a/drivers/target/iscsi/iscsi_target_util.c b/drivers/target/iscsi/iscsi_target_util.c
+index 78aeaf67018f7..6998c0eec3d40 100644
+--- a/drivers/target/iscsi/iscsi_target_util.c
++++ b/drivers/target/iscsi/iscsi_target_util.c
+@@ -857,8 +857,11 @@ void iscsit_dec_conn_usage_count(struct iscsi_conn *conn)
+ 	spin_lock_bh(&conn->conn_usage_lock);
+ 	conn->conn_usage_count--;
  
-+	if (!ifocb->joined)
+-	if (!conn->conn_usage_count && conn->conn_waiting_on_uc)
++	if (!conn->conn_usage_count && conn->conn_waiting_on_uc) {
++		spin_unlock_bh(&conn->conn_usage_lock);
+ 		complete(&conn->conn_waiting_on_uc_comp);
 +		return;
-+
- 	/* XXX: Consider removing the least recently used entry and
- 	 *      allow new one to be added.
- 	 */
++	}
+ 
+ 	spin_unlock_bh(&conn->conn_usage_lock);
+ }
 -- 
 2.51.0
 
