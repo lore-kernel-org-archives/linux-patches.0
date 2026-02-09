@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1065136EA81;
-	Mon,  9 Feb 2026 14:31:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3891423B604;
+	Mon,  9 Feb 2026 14:31:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770647474; cv=none; b=k0607dMO+hPizgnxuz0r0xO001Rk2CjAzEhM0lOI1XalB0cAqX7BgOgGtenkNAoMVFh0tPcJjdWmtCKvFnV/45/vByyzw+PyrZb350E7O7qo4DaOF3ejD7YzMSVE+vz1lxxYrnAGpZ3T7PTWpDey/doCXOUzkSXNTaCKdZq+Aog=
+	t=1770647477; cv=none; b=lSPmF+i9BSirs/EJZL3AkqdfcNULrnenirAPalhlEHQH+WB9yPTh2/2TwiVS4tlArNIgO51b4wsQpOXYd+tznjSNRBWOGPCgGAEKFUOh5VQZtDVa3GDT5ZMk4x+QddJozQTEO5NgcorzQWINXIoV6mXvEQEonooC7x2Hds2rth0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770647474; c=relaxed/simple;
-	bh=E8YxwSN+6LsXV2YzVyXRNeb6CNce2eBqp6GWqSc2GpM=;
+	s=arc-20240116; t=1770647477; c=relaxed/simple;
+	bh=2PL94hpQS6vf+UisD1u2/+Wc79PJOoIJRM3a4gJoD+g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=l0AgEhrVRkFEnyEFgy1KO5pcHvD0JMuoB2f0pGxhc38NzYDuWcJjdkeN8z+Dn4WUUuGQ9Ira3Agw5lhDSN4D2MYGjiO6xnf78+21+wUZWDwUkN/qAbqDmQ9wQdllFYz9pT63/g8j1PTm3q137YBtpWo4qrrQruz6HFv5/zzqfeI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=obns8Xq3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=K1BfNzgzb+9aPBle8+KHlLQ4ayxPsaJnNJFl+J79M3RmzxLvzJrbVARP6uN3PCchqQ0v7el0d3HwX/DIp9YFvp2uBpBEUXsJCF/xxh/g8fQHOnXuifczpHMrvCsioYu4Rt2f2X963uWclzTRm9+ThpPB2h7EhhPTUx6IQkuUDS8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=D2CFAkW/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="obns8Xq3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 74BFEC116C6;
-	Mon,  9 Feb 2026 14:31:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="D2CFAkW/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB673C116C6;
+	Mon,  9 Feb 2026 14:31:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770647474;
-	bh=E8YxwSN+6LsXV2YzVyXRNeb6CNce2eBqp6GWqSc2GpM=;
+	s=korg; t=1770647477;
+	bh=2PL94hpQS6vf+UisD1u2/+Wc79PJOoIJRM3a4gJoD+g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=obns8Xq3bHEc59Jhq+05/enA/YJmsJC0S5bg4gdretmYhc7/oLXlD7la0CKGjpX59
-	 WcFJG+JkI4dXRFzZkay6VqQG3uzesXRLcguRIGaZSP61dK4FtsCPwrY57GCeddqET1
-	 HZKIBGplfRYYeqflwKZ9Plr2Pa9xOh6pyoStjssM=
+	b=D2CFAkW/xlssdKTSFpmVEChQaObz7XgVzB8x0BYbT8mxKPQbuUSpymfWBWTS/128M
+	 L0R0Jzs/RykXk/3kcOGp+FQu5MZxkeaauVMHrGo4lMC1VnzpgvL2TJPLlLQD+jH9+v
+	 kKfzKTG9O+DkUBRJe60Tf/OTkbNW8EPqbHPVnilk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Martin Hamilton <m@martinh.net>,
-	Takashi Iwai <tiwai@suse.de>,
+	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
+	Ian Rogers <irogers@google.com>,
+	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 110/175] ALSA: hda/realtek: ALC269 fixup for Lenovo Yoga Book 9i 13IRU8 audio
-Date: Mon,  9 Feb 2026 15:23:03 +0100
-Message-ID: <20260209142324.376722056@linuxfoundation.org>
+Subject: [PATCH 6.18 111/175] tracing: Avoid possible signed 64-bit truncation
+Date: Mon,  9 Feb 2026 15:23:04 +0100
+Message-ID: <20260209142324.411334819@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260209142320.474120190@linuxfoundation.org>
 References: <20260209142320.474120190@linuxfoundation.org>
@@ -51,99 +53,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Martin Hamilton <m@martinh.net>
+From: Ian Rogers <irogers@google.com>
 
-[ Upstream commit 64e0924ed3b446fdd758dfab582e0e961863a116 ]
+[ Upstream commit 00f13e28a9c3acd40f0551cde7e9d2d1a41585bf ]
 
-The amp/speakers on the Lenovo Yoga Book 9i 13IRU8 laptop aren't
-fully powered up, resulting in horrible tinny sound by default.
+64-bit truncation to 32-bit can result in the sign of the truncated
+value changing. The cmp_mod_entry is used in bsearch and so the
+truncation could result in an invalid search order. This would only
+happen were the addresses more than 2GB apart and so unlikely, but
+let's fix the potentially broken compare anyway.
 
-The kernel has an existing quirk for PCI SSID 0x17aa3843 which
-matches this machine and several others. The quirk applies the
-ALC287_FIXUP_IDEAPAD_BASS_SPK_AMP fixup, however the fixup does not
-work on this machine.
-
-This patch modifies the existing quirk by adding a check for the
-subsystem ID 0x17aa3881. If present, ALC287_FIXUP_TAS2781_I2C will
-be applied instead of ALC287_FIXUP_IDEAPAD_BASS_SPK_AMP. With this
-change the TAS2781 amp is powered up, firmware is downloaded and
-recognised by HDA/SOF - i.e. all is good, and we can boogie.
-
-Code is re-used from alc298_fixup_lenovo_c940_duet7(), which fixes a
-similar problem with two other Lenovo laptops.
-
-Cross checked against ALSA cardinfo database for potential clashes.
-Tested against 6.18.5 kernel built with Arch Linux default options.
-Tested in HDA mode and SOF mode.
-
-Note: Possible further work required to address quality of life issues
-caused by the firmware's agressive power saving, and to improve ALSA
-control mappings.
-
-Signed-off-by: Martin Hamilton <m@martinh.net>
-Link: https://patch.msgid.link/20260122-alc269-yogabook9i-fixup-v1-1-a6883429400f@martinh.net
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Cc: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
+Link: https://patch.msgid.link/20260108002625.333331-1-irogers@google.com
+Signed-off-by: Ian Rogers <irogers@google.com>
+Acked-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/hda/codecs/realtek/alc269.c | 24 +++++++++++++++++++++++-
- 1 file changed, 23 insertions(+), 1 deletion(-)
+ kernel/trace/trace.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/sound/hda/codecs/realtek/alc269.c b/sound/hda/codecs/realtek/alc269.c
-index e9022f751c959..ddfad56b30af5 100644
---- a/sound/hda/codecs/realtek/alc269.c
-+++ b/sound/hda/codecs/realtek/alc269.c
-@@ -3674,6 +3674,7 @@ enum {
- 	ALC287_FIXUP_LEGION_15IMHG05_AUTOMUTE,
- 	ALC287_FIXUP_YOGA7_14ITL_SPEAKERS,
- 	ALC298_FIXUP_LENOVO_C940_DUET7,
-+	ALC287_FIXUP_LENOVO_YOGA_BOOK_9I,
- 	ALC287_FIXUP_13S_GEN2_SPEAKERS,
- 	ALC256_FIXUP_SET_COEF_DEFAULTS,
- 	ALC256_FIXUP_SYSTEM76_MIC_NO_PRESENCE,
-@@ -3757,6 +3758,23 @@ static void alc298_fixup_lenovo_c940_duet7(struct hda_codec *codec,
- 	__snd_hda_apply_fixup(codec, id, action, 0);
+diff --git a/kernel/trace/trace.c b/kernel/trace/trace.c
+index 142e3b737f0bc..907923d5f8bbb 100644
+--- a/kernel/trace/trace.c
++++ b/kernel/trace/trace.c
+@@ -6061,10 +6061,10 @@ static int cmp_mod_entry(const void *key, const void *pivot)
+ 	unsigned long addr = (unsigned long)key;
+ 	const struct trace_mod_entry *ent = pivot;
+ 
+-	if (addr >= ent[0].mod_addr && addr < ent[1].mod_addr)
+-		return 0;
+-	else
+-		return addr - ent->mod_addr;
++	if (addr < ent[0].mod_addr)
++		return -1;
++
++	return addr >= ent[1].mod_addr;
  }
  
-+/* A special fixup for Lenovo Yoga 9i and Yoga Book 9i 13IRU8
-+ * both have the very same PCI SSID and vendor ID, so we need
-+ * to apply different fixups depending on the subsystem ID
-+ */
-+static void alc287_fixup_lenovo_yoga_book_9i(struct hda_codec *codec,
-+					   const struct hda_fixup *fix,
-+					   int action)
-+{
-+	int id;
-+
-+	if (codec->core.subsystem_id == 0x17aa3881)
-+		id = ALC287_FIXUP_TAS2781_I2C; /* Yoga Book 9i 13IRU8 */
-+	else
-+		id = ALC287_FIXUP_IDEAPAD_BASS_SPK_AMP; /* Yoga 9i */
-+	__snd_hda_apply_fixup(codec, id, action, 0);
-+}
-+
- static const struct hda_fixup alc269_fixups[] = {
- 	[ALC269_FIXUP_GPIO2] = {
- 		.type = HDA_FIXUP_FUNC,
-@@ -5764,6 +5782,10 @@ static const struct hda_fixup alc269_fixups[] = {
- 		.type = HDA_FIXUP_FUNC,
- 		.v.func = alc298_fixup_lenovo_c940_duet7,
- 	},
-+	[ALC287_FIXUP_LENOVO_YOGA_BOOK_9I] = {
-+		.type = HDA_FIXUP_FUNC,
-+		.v.func = alc287_fixup_lenovo_yoga_book_9i,
-+	},
- 	[ALC287_FIXUP_13S_GEN2_SPEAKERS] = {
- 		.type = HDA_FIXUP_VERBS,
- 		.v.verbs = (const struct hda_verb[]) {
-@@ -7088,7 +7110,7 @@ static const struct hda_quirk alc269_fixup_tbl[] = {
- 	SND_PCI_QUIRK(0x17aa, 0x3827, "Ideapad S740", ALC285_FIXUP_IDEAPAD_S740_COEF),
- 	SND_PCI_QUIRK(0x17aa, 0x3834, "Lenovo IdeaPad Slim 9i 14ITL5", ALC287_FIXUP_YOGA7_14ITL_SPEAKERS),
- 	SND_PCI_QUIRK(0x17aa, 0x383d, "Legion Y9000X 2019", ALC285_FIXUP_LEGION_Y9000X_SPEAKERS),
--	SND_PCI_QUIRK(0x17aa, 0x3843, "Yoga 9i", ALC287_FIXUP_IDEAPAD_BASS_SPK_AMP),
-+	SND_PCI_QUIRK(0x17aa, 0x3843, "Lenovo Yoga 9i / Yoga Book 9i", ALC287_FIXUP_LENOVO_YOGA_BOOK_9I),
- 	SND_PCI_QUIRK(0x17aa, 0x3847, "Legion 7 16ACHG6", ALC287_FIXUP_LEGION_16ACHG6),
- 	SND_PCI_QUIRK(0x17aa, 0x384a, "Lenovo Yoga 7 15ITL5", ALC287_FIXUP_YOGA7_14ITL_SPEAKERS),
- 	SND_PCI_QUIRK(0x17aa, 0x3852, "Lenovo Yoga 7 14ITL5", ALC287_FIXUP_YOGA7_14ITL_SPEAKERS),
+ /**
 -- 
 2.51.0
 
