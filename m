@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF3BE2222B2;
-	Mon,  9 Feb 2026 14:42:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7D9536828A;
+	Mon,  9 Feb 2026 14:42:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770648149; cv=none; b=jhfAFVrTt0OPbFuFJll1kioQzyB6GB/AGWtjBaahpCVcYIZF1KOL5znBVyvUJX0+2UW8rkaP1s1bJMs/nnUbfwTbqsVMAdtJkMnUyxDKbvxek+qZHfGWx+hOrrDDDA9QHWkVyb6JD9Agl0PnlYLY+L3JP0RNiIgYMBzp40/TZc4=
+	t=1770648152; cv=none; b=GSTlQaZUde467OmK7YB9N3wJMpkhRAnHxqajboT2yCqJZ4+5erWsF1xK28MpXDfDuzKA/VqX5JUQxNikwZnBK8BlflwhsigtwSHzkSwFyUUcL5B1sIEGrov1ygVDO6kmdlZoTUfQwP2KezLhlOvr2iu0Mf4UuYK8s4NJmkaVnzM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770648149; c=relaxed/simple;
-	bh=IXN/nawYpygkbdkJec2Wlhv1lBIkSoVVDpN0mTrwEqY=;
+	s=arc-20240116; t=1770648152; c=relaxed/simple;
+	bh=PHetEdZMsRVC8WD6vOTFslKzdF0+BW7RUJ6SPhw2iyQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NB4Ur+tUg/Dlkvpqf1pIZxTEybD9vFXRWytc3VuKXU5E1TPrLBN9PGInhlxgJI3ncSYHP/MTviQV39a3atguAQcWq8vCIVwZwif0M6DVS3WTq9VfM5FpQy3MzOwpFtLJE8Y6BYXZgj04DDHeKKHyPoEQjq4eg2H4gfUuD8wdRxo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0T+HQKyF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dtjUEP0DB5HmLTxjDUFD26eEd16vh0ocwjONNUFOXYge++atVcQfKcoRjXxeXTWNxsAOOzmo/tUS08y3Cz/R2bgux94nBhc6Zb+xdKbo05WAQljoblMWcH5BtHzqqHYwilsVdfQFkvfy/XJZ0uNRFiYpog2UE2V3A9cQ/4GanY4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CaFsbaER; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0T+HQKyF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF873C116C6;
-	Mon,  9 Feb 2026 14:42:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CaFsbaER"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1EE24C16AAE;
+	Mon,  9 Feb 2026 14:42:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770648149;
-	bh=IXN/nawYpygkbdkJec2Wlhv1lBIkSoVVDpN0mTrwEqY=;
+	s=korg; t=1770648152;
+	bh=PHetEdZMsRVC8WD6vOTFslKzdF0+BW7RUJ6SPhw2iyQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0T+HQKyF0FvwmtLTcouDpEAOslXooZyWmeiPaU8J2rkx5k1v/vD0XTyDza+V/uZvm
-	 /49rS/3+5s4WGFm/RJT1ERzW6fp+LuGfXxuriZSjWs/ZEV98RR3juG8YkN6m2/wc1Q
-	 TleOKornSFSlP26cEIPg54BDR85jC9AAnosqz0mg=
+	b=CaFsbaERxjZsczVgywpP0z/1QFdCjITLyI8GZ9EDKrF2Xf+MQBjqASFtBOl2q4OX7
+	 E9FrJxd/oiWmUfP9ZkJ6zbbhEyryRJtR1V2cG/e2IwhX87jA7Nc/PgPflcKSUbx+Jl
+	 RtB3D60HM4/38aTfM6z71LClYZehzhFHgNpLvQmM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yu Kuai <yukuai@fnnas.com>,
-	shechenglong <shechenglong@xfusion.com>,
-	Jens Axboe <axboe@kernel.dk>,
+	ZhangGuoDong <zhangguodong@kylinos.cn>,
+	ChenXiaoSong <chenxiaosong@kylinos.cn>,
+	Namjae Jeon <linkinjeon@kernel.org>,
+	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 21/69] block,bfq: fix aux stat accumulation destination
-Date: Mon,  9 Feb 2026 15:23:49 +0100
-Message-ID: <20260209142302.691084083@linuxfoundation.org>
+Subject: [PATCH 6.1 22/69] smb/server: call ksmbd_session_rpc_close() on error path in create_smb2_pipe()
+Date: Mon,  9 Feb 2026 15:23:50 +0100
+Message-ID: <20260209142302.726011545@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260209142301.913348974@linuxfoundation.org>
 References: <20260209142301.913348974@linuxfoundation.org>
@@ -52,34 +53,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: shechenglong <shechenglong@xfusion.com>
+From: ZhangGuoDong <zhangguodong@kylinos.cn>
 
-[ Upstream commit 04bdb1a04d8a2a89df504c1e34250cd3c6e31a1c ]
+[ Upstream commit 7c28f8eef5ac5312794d8a52918076dcd787e53b ]
 
-Route bfqg_stats_add_aux() time accumulation into the destination
-stats object instead of the source, aligning with other stat fields.
+When ksmbd_iov_pin_rsp() fails, we should call ksmbd_session_rpc_close().
 
-Reviewed-by: Yu Kuai <yukuai@fnnas.com>
-Signed-off-by: shechenglong <shechenglong@xfusion.com>
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Signed-off-by: ZhangGuoDong <zhangguodong@kylinos.cn>
+Signed-off-by: ChenXiaoSong <chenxiaosong@kylinos.cn>
+Acked-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- block/bfq-cgroup.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/smb/server/smb2pdu.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/block/bfq-cgroup.c b/block/bfq-cgroup.c
-index c202e2527d053..8e2478efd6695 100644
---- a/block/bfq-cgroup.c
-+++ b/block/bfq-cgroup.c
-@@ -382,7 +382,7 @@ static void bfqg_stats_add_aux(struct bfqg_stats *to, struct bfqg_stats *from)
- 	blkg_rwstat_add_aux(&to->merged, &from->merged);
- 	blkg_rwstat_add_aux(&to->service_time, &from->service_time);
- 	blkg_rwstat_add_aux(&to->wait_time, &from->wait_time);
--	bfq_stat_add_aux(&from->time, &from->time);
-+	bfq_stat_add_aux(&to->time, &from->time);
- 	bfq_stat_add_aux(&to->avg_queue_size_sum, &from->avg_queue_size_sum);
- 	bfq_stat_add_aux(&to->avg_queue_size_samples,
- 			  &from->avg_queue_size_samples);
+diff --git a/fs/smb/server/smb2pdu.c b/fs/smb/server/smb2pdu.c
+index 100016298f87e..14d46c52ee748 100644
+--- a/fs/smb/server/smb2pdu.c
++++ b/fs/smb/server/smb2pdu.c
+@@ -2272,7 +2272,7 @@ static noinline int create_smb2_pipe(struct ksmbd_work *work)
+ {
+ 	struct smb2_create_rsp *rsp;
+ 	struct smb2_create_req *req;
+-	int id;
++	int id = -1;
+ 	int err;
+ 	char *name;
+ 
+@@ -2329,6 +2329,9 @@ static noinline int create_smb2_pipe(struct ksmbd_work *work)
+ 		break;
+ 	}
+ 
++	if (id >= 0)
++		ksmbd_session_rpc_close(work->sess, id);
++
+ 	if (!IS_ERR(name))
+ 		kfree(name);
+ 
 -- 
 2.51.0
 
