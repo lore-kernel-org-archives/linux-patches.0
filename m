@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 219822750E6;
-	Mon,  9 Feb 2026 14:55:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB8DD3446C7;
+	Mon,  9 Feb 2026 14:56:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770648957; cv=none; b=oCMuADVuq2EBVk/sfb+CseNmDU5cj8qpInxJBDRAOVbMeHaRbzQG1udFTUJIAdnllbJ2npaZoONYyZorc6EwDRbwr+6oa+16yl+ETNXsXTWdlcv3saGAcICZp5uM5kuEToETs+4R9zY1Y0RXMru9TQI4R7XyzV4BvOvCiGFOxdQ=
+	t=1770648961; cv=none; b=gL9SFbCvY/zSydWozKE9pXH+Y35NjvCpJatfuLj7YVsWnNmhqSWiIrkkq3vrdC90BEl9aMXbEwK5aabUcQ0ntoeANPCXg5Qs7tYeN6jpSKm+L6nrfnCjuXwBfmdFqsN8FySa/+CzmZSedpKphRgd0oBbrSdNFyGGNnbQ/54lXZM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770648957; c=relaxed/simple;
-	bh=wuBAl2f9TKQqvrogeJTNyTTDXFS0hrVPxjJ4qhUJjUE=;
+	s=arc-20240116; t=1770648961; c=relaxed/simple;
+	bh=32l25ycSUhPAQMeFDU+qQrErkrp+cHvGQBUIqZbCqak=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iJsdp55dmZAsEi5jULDorq8x/4sNO8DYktugr4MjgadoZ0KS+LngXh7MSzt8ONXwSeNFjuaksfmsaHBHD1xlqj3MqfGp9LGomIZmudOMZDJ4uccKxf8c2X+46XTrIGx/OZ968a6gZMZZ/Wqk613QgybGJ6/0QyOXsSwmADbhY+I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2QgvcZaq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uu8z2AhPTDZ1HBCoA8XJfYUmIc2Xb5WUJPYMOsBGtAtTpcVFzSc0DTL8iFWLZpCczdw3MGEByaTtMh7Uw4O5NETGLelJS5SnFaUxyyjLqeO3iBqKPRLOMKlPG1t3rh/6qtt+x6KJcswkXPvYd0yx6tptfp4U0uPMHUogVZhwTGk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pYXUg6TY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2QgvcZaq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 89F47C19422;
-	Mon,  9 Feb 2026 14:55:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pYXUg6TY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E94CDC116C6;
+	Mon,  9 Feb 2026 14:55:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770648957;
-	bh=wuBAl2f9TKQqvrogeJTNyTTDXFS0hrVPxjJ4qhUJjUE=;
+	s=korg; t=1770648960;
+	bh=32l25ycSUhPAQMeFDU+qQrErkrp+cHvGQBUIqZbCqak=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2QgvcZaqNM2EJcdKZpTO6BmxjMM5nlBCWbreMgNAKskeTjq+BQ5V0TIMY40uC3u9Q
-	 4WavficKpdwAAf2YRSBgqhf+axkMQcEHGnwiKMStxsHXMvFnjMzZfIt3mA9o9QK+bP
-	 47OGxmpV3FkK2Ibw9/hX1MqPuevHjnqS0lOWljpI=
+	b=pYXUg6TYXXDTYFVL0JXkDP7KRGznVLw6YayDZkFJtgEH2nbPT97DcMmTgZ6Rs6V6r
+	 OYGnvHusKXbLCvFPrftomPUwVSCX4ckCMDJsYO/8bv58aJtydTUoWwPfHfIjzUKlZZ
+	 Q7K5vrSCV1loIpHTGK1pSKZY0NwA/zaGHGOyVCd4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yipeng Zou <zouyipeng@huawei.com>,
-	Thomas Gleixner <tglx@linutronix.de>
-Subject: [PATCH 5.15 22/75] timers: Fix NULL function pointer race in timer_shutdown_sync()
-Date: Mon,  9 Feb 2026 15:24:19 +0100
-Message-ID: <20260209142302.644935298@linuxfoundation.org>
+	YunJe Shin <ioerts@kookmin.ac.kr>,
+	Sagi Grimberg <sagi@grimberg.me>,
+	Joonkyo Jung <joonkyoj@yonsei.ac.kr>,
+	Keith Busch <kbusch@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 59/75] nvmet-tcp: add bounds checks in nvmet_tcp_build_pdu_iovec
+Date: Mon,  9 Feb 2026 15:24:56 +0100
+Message-ID: <20260209142303.969454504@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260209142301.830618238@linuxfoundation.org>
 References: <20260209142301.830618238@linuxfoundation.org>
@@ -50,88 +53,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yipeng Zou <zouyipeng@huawei.com>
+From: YunJe Shin <yjshin0438@gmail.com>
 
-commit 20739af07383e6eb1ec59dcd70b72ebfa9ac362c upstream.
+[ Upstream commit 52a0a98549344ca20ad81a4176d68d28e3c05a5c ]
 
-There is a race condition between timer_shutdown_sync() and timer
-expiration that can lead to hitting a WARN_ON in expire_timers().
+nvmet_tcp_build_pdu_iovec() could walk past cmd->req.sg when a PDU
+length or offset exceeds sg_cnt and then use bogus sg->length/offset
+values, leading to _copy_to_iter() GPF/KASAN. Guard sg_idx, remaining
+entries, and sg->length/offset before building the bvec.
 
-The issue occurs when timer_shutdown_sync() clears the timer function
-to NULL while the timer is still running on another CPU. The race
-scenario looks like this:
-
-CPU0					CPU1
-					<SOFTIRQ>
-					lock_timer_base()
-					expire_timers()
-					base->running_timer = timer;
-					unlock_timer_base()
-					[call_timer_fn enter]
-					mod_timer()
-					...
-timer_shutdown_sync()
-lock_timer_base()
-// For now, will not detach the timer but only clear its function to NULL
-if (base->running_timer != timer)
-	ret = detach_if_pending(timer, base, true);
-if (shutdown)
-	timer->function = NULL;
-unlock_timer_base()
-					[call_timer_fn exit]
-					lock_timer_base()
-					base->running_timer = NULL;
-					unlock_timer_base()
-					...
-					// Now timer is pending while its function set to NULL.
-					// next timer trigger
-					<SOFTIRQ>
-					expire_timers()
-					WARN_ON_ONCE(!fn) // hit
-					...
-lock_timer_base()
-// Now timer will detach
-if (base->running_timer != timer)
-	ret = detach_if_pending(timer, base, true);
-if (shutdown)
-	timer->function = NULL;
-unlock_timer_base()
-
-The problem is that timer_shutdown_sync() clears the timer function
-regardless of whether the timer is currently running. This can leave a
-pending timer with a NULL function pointer, which triggers the
-WARN_ON_ONCE(!fn) check in expire_timers().
-
-Fix this by only clearing the timer function when actually detaching the
-timer. If the timer is running, leave the function pointer intact, which is
-safe because the timer will be properly detached when it finishes running.
-
-Fixes: 0cc04e80458a ("timers: Add shutdown mechanism to the internal functions")
-Signed-off-by: Yipeng Zou <zouyipeng@huawei.com>
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20251122093942.301559-1-zouyipeng@huawei.com
+Fixes: 872d26a391da ("nvmet-tcp: add NVMe over TCP target driver")
+Signed-off-by: YunJe Shin <ioerts@kookmin.ac.kr>
+Reviewed-by: Sagi Grimberg <sagi@grimberg.me>
+Reviewed-by: Joonkyo Jung <joonkyoj@yonsei.ac.kr>
+Signed-off-by: Keith Busch <kbusch@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/time/timer.c |    7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ drivers/nvme/target/tcp.c |   18 ++++++++++++++++++
+ 1 file changed, 18 insertions(+)
 
---- a/kernel/time/timer.c
-+++ b/kernel/time/timer.c
-@@ -1360,10 +1360,11 @@ static int __try_to_del_timer_sync(struc
+--- a/drivers/nvme/target/tcp.c
++++ b/drivers/nvme/target/tcp.c
+@@ -306,11 +306,14 @@ static void nvmet_tcp_free_cmd_buffers(s
+ 	cmd->req.sg = NULL;
+ }
  
- 	base = lock_timer_base(timer, &flags);
++static void nvmet_tcp_fatal_error(struct nvmet_tcp_queue *queue);
++
+ static void nvmet_tcp_build_pdu_iovec(struct nvmet_tcp_cmd *cmd)
+ {
+ 	struct bio_vec *iov = cmd->iov;
+ 	struct scatterlist *sg;
+ 	u32 length, offset, sg_offset;
++	unsigned int sg_remaining;
+ 	int nr_pages;
  
--	if (base->running_timer != timer)
-+	if (base->running_timer != timer) {
- 		ret = detach_if_pending(timer, base, true);
--	if (shutdown)
--		timer->function = NULL;
-+		if (shutdown)
-+			timer->function = NULL;
+ 	length = cmd->pdu_len;
+@@ -318,17 +321,32 @@ static void nvmet_tcp_build_pdu_iovec(st
+ 	offset = cmd->rbytes_done;
+ 	cmd->sg_idx = offset / PAGE_SIZE;
+ 	sg_offset = offset % PAGE_SIZE;
++	if (!cmd->req.sg_cnt || cmd->sg_idx >= cmd->req.sg_cnt) {
++		nvmet_tcp_fatal_error(cmd->queue);
++		return;
 +	}
+ 	sg = &cmd->req.sg[cmd->sg_idx];
++	sg_remaining = cmd->req.sg_cnt - cmd->sg_idx;
  
- 	raw_spin_unlock_irqrestore(&base->lock, flags);
+ 	while (length) {
+ 		u32 iov_len = min_t(u32, length, sg->length - sg_offset);
  
++		if (!sg_remaining) {
++			nvmet_tcp_fatal_error(cmd->queue);
++			return;
++		}
++		if (!sg->length || sg->length <= sg_offset) {
++			nvmet_tcp_fatal_error(cmd->queue);
++			return;
++		}
++
+ 		iov->bv_page = sg_page(sg);
+ 		iov->bv_len = sg->length;
+ 		iov->bv_offset = sg->offset + sg_offset;
+ 
+ 		length -= iov_len;
+ 		sg = sg_next(sg);
++		sg_remaining--;
+ 		iov++;
+ 		sg_offset = 0;
+ 	}
 
 
