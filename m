@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0C2123B604;
-	Mon,  9 Feb 2026 14:30:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F004723B604;
+	Mon,  9 Feb 2026 14:30:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770647436; cv=none; b=r4XvR100k1qTdJYfumELkewImwNQ+g6bUiIlUpNk7tgeyrQzXn/oncQwFkRI0f3b42c2/wsIvjy/0QUKwiJ18lMpD5i7xVAATdtaMXk8T/7wUqN7T1U3QIWfRonImbUJ54ZRciUwEMIzA2JhoWvFPCL563Z10CYjDE5l8LV3vNA=
+	t=1770647440; cv=none; b=qviMLAcVh8gxU8BOj9tvOqVuxAQtPyzj7Ak//lPU+C/fJ1fwjTioyNh5ZVOKUX7Gj99uaAvolNngoktF95Hghd1boedyCF3f9pf+pNGc1FrIrG19WQe5HwRcwv5dE2UGmJo7TAkLlNWicSpzsEzemH7xYTM4+uC6SgomUqBT01E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770647436; c=relaxed/simple;
-	bh=z+dfw7qW3j4PP0sbWhWt2eHFJxNL+WrEdi/s/PmqW+U=;
+	s=arc-20240116; t=1770647440; c=relaxed/simple;
+	bh=HOfTNb44as9xUM+fBNMFpZaEWK5N+vjmeMY0r+Zxx54=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pr/6MWXLn60C66JKSbZNYDfQjw8+Uf7jynediSBcdy7XIrikXlPRto/Y2WmAMfLfdO33zHabcBrpwKdRUeBumaH710RKM6fe/IhnPLFU+6cM2pzuEKClyuwbnC3NJX8g5v5dfWO79WbanjGTJOJK0eaPM36Grtx+dxHePMwqBh8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LTNIEjp3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pI1kucwCxnOs/TCs7aBrcnJ93g0UkzNHiWx5SJPvJ1ILaf+zMOv1GjCYjRVy37RoZFBEMhfB9OrUyi5of1aVIL5MoabTJSMhAVDUAbKn3dS8eI4aIznvhdglYdI3B/RZiIrJFnRD2uE+TnuCM006DFrqvOIEvM0yBK4NWLBAQv8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TIK4wXUo; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LTNIEjp3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 20E38C116C6;
-	Mon,  9 Feb 2026 14:30:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TIK4wXUo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 53117C116C6;
+	Mon,  9 Feb 2026 14:30:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770647436;
-	bh=z+dfw7qW3j4PP0sbWhWt2eHFJxNL+WrEdi/s/PmqW+U=;
+	s=korg; t=1770647439;
+	bh=HOfTNb44as9xUM+fBNMFpZaEWK5N+vjmeMY0r+Zxx54=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LTNIEjp3EwhnQT7gUvWNZMnt7vDNgQVDcRHC2qcQOsjjn28OT1jd8NYh4rbDSoQXs
-	 MMkzDFuef2GUcb9UatJ1pdQYWsONwiOVPABkn9JTGChNwEIuu1nGb3TEz+QY5P8GPL
-	 6hxV40jpcuzNwRcl6X9qvj6INWrpPLMBrrltvj8Y=
+	b=TIK4wXUoxEJePbceWRkXNCqH3KlqZCT1KuI9ZJOc/V8BJLwfB0WiYOpUbFixDJAkG
+	 02xW6vvUl2ryDgKXcgWdC2ayyfmOXeTPNRZ7sjLgLGeiZhOrx/RT2fcaynWwnANdXp
+	 yXQWsMqacW8BNQko1CB9A1nUGFxYbkISosruPkcY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Maurizio Lombardi <mlombard@redhat.com>,
-	Zhaojuan Guo <zguo@redhat.com>,
-	Mike Christie <michael.christie@oracle.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Nathan Chancellor <nathan@kernel.org>,
+	Paul Walmsley <pjw@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 100/175] scsi: target: iscsi: Fix use-after-free in iscsit_dec_session_usage_count()
-Date: Mon,  9 Feb 2026 15:22:53 +0100
-Message-ID: <20260209142324.018595544@linuxfoundation.org>
+Subject: [PATCH 6.18 101/175] riscv: Use 64-bit variable for output in __get_user_asm
+Date: Mon,  9 Feb 2026 15:22:54 +0100
+Message-ID: <20260209142324.052847419@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260209142320.474120190@linuxfoundation.org>
 References: <20260209142320.474120190@linuxfoundation.org>
@@ -53,50 +51,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Maurizio Lombardi <mlombard@redhat.com>
+From: Nathan Chancellor <nathan@kernel.org>
 
-[ Upstream commit 84dc6037390b8607c5551047d3970336cb51ba9a ]
+[ Upstream commit bdce162f2e57a969803e5e9375999a3e0546905f ]
 
-In iscsit_dec_session_usage_count(), the function calls complete() while
-holding the sess->session_usage_lock. Similar to the connection usage count
-logic, the waiter signaled by complete() (e.g., in the session release
-path) may wake up and free the iscsit_session structure immediately.
+After commit f6bff7827a48 ("riscv: uaccess: use 'asm_goto_output' for
+get_user()"), which was the first commit that started using asm goto
+with outputs on RISC-V, builds of clang built with assertions enabled
+start crashing in certain files that use get_user() with:
 
-This creates a race condition where the current thread may attempt to
-execute spin_unlock_bh() on a session structure that has already been
-deallocated, resulting in a KASAN slab-use-after-free.
+  clang: llvm/lib/CodeGen/SelectionDAG/SelectionDAGBuilder.cpp:12743: Register FollowCopyChain(MachineRegisterInfo &, Register): Assertion `MI->getOpcode() == TargetOpcode::COPY && "start of copy chain MUST be COPY"' failed.
 
-To resolve this, release the session_usage_lock before calling complete()
-to ensure all dereferences of the sess pointer are finished before the
-waiter is allowed to proceed with deallocation.
+Internally, LLVM generates an addiw instruction when the output of the
+inline asm (which may be any scalar type) needs to be sign extended for
+ABI reasons, such as a later function call, so that basic block does not
+have to do it.
 
-Signed-off-by: Maurizio Lombardi <mlombard@redhat.com>
-Reported-by: Zhaojuan Guo <zguo@redhat.com>
-Reviewed-by: Mike Christie <michael.christie@oracle.com>
-Link: https://patch.msgid.link/20260112165352.138606-3-mlombard@redhat.com
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Use a temporary 64-bit variable as the output of the inline assembly in
+__get_user_asm() and explicitly cast it to truncate it if necessary,
+avoiding the addiw that triggers the assertion.
+
+Link: https://github.com/ClangBuiltLinux/linux/issues/2092
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Link: https://patch.msgid.link/20260116-riscv-wa-llvm-asm-goto-outputs-assertion-failure-v3-1-55b5775f989b@kernel.org
+Signed-off-by: Paul Walmsley <pjw@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/target/iscsi/iscsi_target_util.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ arch/riscv/include/asm/uaccess.h | 14 ++++++++++++--
+ 1 file changed, 12 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/target/iscsi/iscsi_target_util.c b/drivers/target/iscsi/iscsi_target_util.c
-index 5e6cf34929b55..262a3e76b4b1c 100644
---- a/drivers/target/iscsi/iscsi_target_util.c
-+++ b/drivers/target/iscsi/iscsi_target_util.c
-@@ -741,8 +741,11 @@ void iscsit_dec_session_usage_count(struct iscsit_session *sess)
- 	spin_lock_bh(&sess->session_usage_lock);
- 	sess->session_usage_count--;
+diff --git a/arch/riscv/include/asm/uaccess.h b/arch/riscv/include/asm/uaccess.h
+index f5f4f7f85543f..1029c31026dcf 100644
+--- a/arch/riscv/include/asm/uaccess.h
++++ b/arch/riscv/include/asm/uaccess.h
+@@ -97,13 +97,23 @@ static inline unsigned long __untagged_addr_remote(struct mm_struct *mm, unsigne
+  */
  
--	if (!sess->session_usage_count && sess->session_waiting_on_uc)
-+	if (!sess->session_usage_count && sess->session_waiting_on_uc) {
-+		spin_unlock_bh(&sess->session_usage_lock);
- 		complete(&sess->session_waiting_on_uc_comp);
-+		return;
-+	}
- 
- 	spin_unlock_bh(&sess->session_usage_lock);
- }
+ #ifdef CONFIG_CC_HAS_ASM_GOTO_OUTPUT
++/*
++ * Use a temporary variable for the output of the asm goto to avoid a
++ * triggering an LLVM assertion due to sign extending the output when
++ * it is used in later function calls:
++ * https://github.com/llvm/llvm-project/issues/143795
++ */
+ #define __get_user_asm(insn, x, ptr, label)			\
++do {								\
++	u64 __tmp;						\
+ 	asm_goto_output(					\
+ 		"1:\n"						\
+ 		"	" insn " %0, %1\n"			\
+ 		_ASM_EXTABLE_UACCESS_ERR(1b, %l2, %0)		\
+-		: "=&r" (x)					\
+-		: "m" (*(ptr)) : : label)
++		: "=&r" (__tmp)					\
++		: "m" (*(ptr)) : : label);			\
++	(x) = (__typeof__(x))__tmp;				\
++} while (0)
+ #else /* !CONFIG_CC_HAS_ASM_GOTO_OUTPUT */
+ #define __get_user_asm(insn, x, ptr, label)			\
+ do {								\
 -- 
 2.51.0
 
