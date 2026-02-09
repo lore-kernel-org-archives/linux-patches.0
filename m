@@ -1,42 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ADBF13019CB;
-	Mon,  9 Feb 2026 12:27:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E00AA3019CB;
+	Mon,  9 Feb 2026 12:27:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770640038; cv=none; b=EHMF7bypyB9K4DZtVogMaM7M7c1TQ8jWixCFxIhueIc3KLUYF6LsaD0IINzsKN1azWMCAkgltmCS58nAVVPJCtG5tylFdV6N8+1CaUpzmhULHmO2OkbecxCBZM1wwX6i0sltWWwjG9qkuyObhXwWrkBxor80zm1DqCGCIhI7ZG8=
+	t=1770640042; cv=none; b=aJmLl9SPWNgrgeXD3Lll/DVS6jImqABYkv8BLYiSh5J9qRuxGAangN3rWh8rDI1RKtRTqycYGDOamcPUxFefStU8JPGE4VhmBXr/TU00BG4PJWqLWI3sctZ4C8H92FPoSbL4KXMzo6T54ZjCa8qyn328iZKIyB9RWDx5z67P61M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770640038; c=relaxed/simple;
-	bh=R0XvhfAKYcHs6dgpGEsQSG2TtxcA5rekL46uOWLHTDE=;
+	s=arc-20240116; t=1770640042; c=relaxed/simple;
+	bh=M3B2pZjyCkXe641TaQ0o94DpnZZS/K++m7V7Zkyr98w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=kIIxCC0yldXbukdm801vLTb1smJsU7+Ib/fzQEhUrl4ZrLva5M2MnGYdqM/57Xbb7Ix3pyg6fiGNhrEu31//dzoLmzxkRWx3nAw0CiN33kkbSEN8ILhjq/seLEXsy48S/NVCjpHYtOtlk7kKhxpd6cG+ceLs4fV//3HfXTWw9X4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=LgnGedJE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=b3cteqnJ9zb0w0ASCNKMVNcsH/7RiX51sWnQ93dD7IaR0cvkZyDCX+dz2u5CiZNurIC5Z4/dQJcAP9MVn/LhDKqhCpPLYPNMxcT3hBjnVmALmOg7xtTNS2GcWPbfNHF6wQfxC/UyhHmc+Kxt8ogE+JVzMqkO5VD9nKF4MZyi7XY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=CdiORnV7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="LgnGedJE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AD7AAC19423;
-	Mon,  9 Feb 2026 12:27:17 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="CdiORnV7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90963C16AAE;
+	Mon,  9 Feb 2026 12:27:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1770640038;
-	bh=R0XvhfAKYcHs6dgpGEsQSG2TtxcA5rekL46uOWLHTDE=;
+	s=k20201202; t=1770640042;
+	bh=M3B2pZjyCkXe641TaQ0o94DpnZZS/K++m7V7Zkyr98w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LgnGedJEzrhkCRPt+1A6nopaMstDnvhF4qPHZyy8BEYeiK1oi5gkemiDXb5Scv09E
-	 kSGKv+0pYcJVNoMvqVhQ1+V7IuOnzlLX0xxIUwJB1u3DNiM8IjwWBKNraHFCOFbYrR
-	 ZVz95E2ASGJ1Ipwwovct2eQ+g4VjuYJ0PVVOJQ1oaWFdsEa7VyvkVDnpfLYtXdChy4
-	 tNoKVH3hs9rd+MUUKLcMNjX2vRYwpiOCBLnz4UyQCViMOh40nxdVcLSjVpCI0QwE8q
-	 jGb35pMSaA+vwa3TFMxXnMbe5xCtzTEE6yxU8NRZw6rcp586+mPcjfn6stT6GJu+W4
-	 oo+AaxKjd04XA==
+	b=CdiORnV76WfPl6HVPcO1ZOr2DsoQD2tqOqw+oY07eRaPryjx4X9jtusq/2DgYPT23
+	 flRWIru/Ro7LmD7UK3M6mEgzhpUFb3jKFVc3xXez63joh1py9oKJ3NlQwu2QsI9yzh
+	 XQu6ZoPEah6fa7uH05IbRi0VtVa5V6V0M81iwHzZSjY+MLXCgKlUM5jEDmIqy1GLrG
+	 hnFIahfAVj6mk0O5pSzbQbfyfTfqotWOF50z7YxZ95UCQvVmlf1nUNjDeN2C2VnIq3
+	 OtLr2UFnvVXMlV3oQsg5964k+Xrz5u6vTXUp9NPBwNHm3iPp59ptd2iCy9430177Em
+	 DFf20yeLFYlOQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Jens Axboe <axboe@kernel.dk>,
-	=?UTF-8?q?=E6=98=AF=E5=8F=82=E5=B7=AE?= <shicenci@gmail.com>,
-	Keith Busch <kbusch@kernel.org>,
+Cc: Breno Baptista <brenomb07@gmail.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>,
-	io-uring@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18] io_uring/fdinfo: be a bit nicer when looping a lot of SQEs/CQEs
-Date: Mon,  9 Feb 2026 07:26:41 -0500
-Message-ID: <20260209122714.1037915-2-sashal@kernel.org>
+	sbinding@opensource.cirrus.com,
+	kailang@realtek.com,
+	chris.chiu@canonical.com,
+	edip@medip.dev
+Subject: [PATCH AUTOSEL 6.18-6.12] ALSA: hda/realtek: Enable headset mic for Acer Nitro 5
+Date: Mon,  9 Feb 2026 07:26:42 -0500
+Message-ID: <20260209122714.1037915-3-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260209122714.1037915-1-sashal@kernel.org>
 References: <20260209122714.1037915-1-sashal@kernel.org>
@@ -46,178 +48,124 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.18.9
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jens Axboe <axboe@kernel.dk>
+From: Breno Baptista <brenomb07@gmail.com>
 
-[ Upstream commit 38cfdd9dd279473a73814df9fd7e6e716951d361 ]
+[ Upstream commit 51db05283f7c9c95a3e6853a3044cd04226551bf ]
 
-Add cond_resched() in those dump loops, just in case a lot of entries
-are being dumped. And detect invalid CQ ring head/tail entries, to avoid
-iterating more than what is necessary. Generally not an issue, but can be
-if things like KASAN or other debugging metrics are enabled.
+Add quirk to support microphone input through headphone jack on Acer Nitro 5 AN515-57 (ALC295).
 
-Reported-by: 是参差 <shicenci@gmail.com>
-Link: https://lore.kernel.org/all/PS1PPF7E1D7501FE5631002D242DD89403FAB9BA@PS1PPF7E1D7501F.apcprd02.prod.outlook.com/
-Reviewed-by: Keith Busch <kbusch@kernel.org>
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Signed-off-by: Breno Baptista <brenomb07@gmail.com>
+Link: https://patch.msgid.link/20260205024341.26694-1-brenomb07@gmail.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-## Analysis of io_uring/fdinfo: cond_resched() and CQ bounds fix
+## Analysis: ALSA: hda/realtek: Enable headset mic for Acer Nitro 5
 
 ### Commit Message Analysis
 
-The commit addresses two issues in `io_uring/fdinfo.c`:
-
-1. **Adding `cond_resched()` calls** in SQE/CQE dump loops to avoid
-   holding the CPU for too long when dumping many entries, particularly
-   with debugging tools like KASAN enabled.
-2. **Detecting invalid CQ ring head/tail entries** to avoid iterating
-   more than necessary — this bounds the CQE loop to `ctx->cq_entries`
-   maximum iterations.
-
-There's a `Reported-by:` tag indicating a real user hit this issue, and
-a `Link:` to the mailing list discussion. The patch is `Reviewed-by:
-Keith Busch` and authored by `Jens Axboe` (io_uring maintainer).
+This commit adds a hardware quirk entry (`SND_PCI_QUIRK`) for the Acer
+Nitro 5 AN515-57 laptop to enable headset microphone input through the
+headphone jack. The codec is ALC295, and the fixup applied is
+`ALC2XX_FIXUP_HEADSET_MIC`.
 
 ### Code Change Analysis
 
-Let me examine the changes in detail:
+The change is a **single line addition** in the `alc269_fixup_tbl[]`
+quirk table:
 
-**Change 1: `cond_resched()` in SQE loop** (line after `seq_printf(m,
-"\n")` in the SQE loop)
-- This is a straightforward addition to yield the CPU during potentially
-  long loops. The SQE loop already had bounded iteration (`sq_entries`
-  was calculated earlier), but with KASAN or heavy debugging, each
-  iteration can be slow. This prevents soft lockups.
+```c
+SND_PCI_QUIRK(0x1025, 0x1539, "Acer Nitro 5 AN515-57",
+ALC2XX_FIXUP_HEADSET_MIC),
+```
 
-**Change 2: Bounded CQE loop**
-- Old code: `while (cq_head < cq_tail)` — this depends on userspace-
-  controlled `cq_head` and `cq_tail` values (read with `READ_ONCE`). If
-  these values are corrupted or malicious, `cq_tail - cq_head` could be
-  enormous (up to `UINT_MAX`), causing an extremely long loop.
-- New code: `cq_entries = min(cq_tail - cq_head, ctx->cq_entries)` and
-  `for (i = 0; i < cq_entries; i++)` — this bounds the iteration to at
-  most `ctx->cq_entries`, which is the actual ring size. This is a
-  defensive bounds check.
-- Also adds `cond_resched()` in the CQE loop.
+- **Vendor ID 0x1025** = Acer
+- **Subsystem ID 0x1539** = Acer Nitro 5 AN515-57
+- **Fixup: ALC2XX_FIXUP_HEADSET_MIC** = an existing, well-tested fixup
+  already used by similar Acer Nitro models
 
-**Change 3: CQE32 accounting fix**
-- When CQE32 is detected (`cqe32 = true`), both `cq_head` and `i` are
-  incremented, properly accounting for the double-sized CQE entry in the
-  bounded loop.
+The entry is inserted in the correct sorted position (between 0x1534 and
+0x159c), and notably, the adjacent entries for Acer Nitro 5 AN515-58
+(0x159c) and AN517-55 (0x1597) already use the exact same
+`ALC2XX_FIXUP_HEADSET_MIC` fixup. This is simply extending an existing
+working quirk to another model in the same product family.
 
-### Bug Classification
+### Classification
 
-This fixes two real problems:
+This is a **hardware quirk addition** — one of the explicitly allowed
+exception categories for stable backports. It:
 
-1. **Soft lockup / scheduling latency issue**: Without `cond_resched()`,
-   dumping many SQEs/CQEs (especially with KASAN) can cause the kernel
-   to not schedule for a long time, triggering soft lockup warnings or
-   causing system unresponsiveness. This is a **real bug** — reported by
-   a user.
-
-2. **Unbounded loop from userspace-controlled values**: The original CQE
-   loop was bounded only by `cq_tail - cq_head`, which are userspace-
-   written values. While in the normal case these are reasonable,
-   corrupted or malicious values could cause an extremely long
-   (potentially billions of iterations) loop in kernel context. This is
-   both a **robustness fix** and a **potential DoS vector** (any process
-   can read `/proc/<pid>/fdinfo/<fd>` for its own io_uring fds,
-   triggering this loop).
+1. Fixes a real user-facing problem: the headset microphone doesn't work
+   without this quirk on the Acer Nitro 5 AN515-57
+2. Uses an existing, proven fixup mechanism (`ALC2XX_FIXUP_HEADSET_MIC`)
+3. Only affects the specific hardware identified by the PCI subsystem ID
+4. Has zero risk of regression for any other hardware
 
 ### Scope and Risk Assessment
 
-- **Size**: Very small — ~10 lines changed in a single file
-- **Subsystem**: io_uring fdinfo (diagnostic/debug path, not hot path)
-- **Risk**: Extremely low
-  - `cond_resched()` is a standard kernel practice in long loops — zero
-    regression risk
-  - Bounding the CQE loop to `ctx->cq_entries` is obviously correct —
-    the ring can't have more entries than its size
-  - The CQE32 `i++` accounting is straightforward
-- **Dependencies**: None apparent — this is a self-contained change to a
-  single function
+- **Lines changed**: 1 (addition only)
+- **Files changed**: 1
+- **Risk**: Essentially zero — the quirk is matched by PCI
+  vendor/subsystem ID and only applies to the specific Acer laptop model
+- **Subsystem maturity**: The HDA Realtek quirk table is one of the most
+  stable and well-understood mechanisms in the kernel; hundreds of
+  similar entries exist
 
 ### User Impact
 
-- **Who is affected**: Anyone using io_uring who reads fdinfo
-  (monitoring tools, debuggers, diagnostic scripts)
-- **Severity**: Soft lockups and system unresponsiveness — moderate to
-  high severity
-- **Reproducibility**: Reported by a real user with a concrete scenario
-  (KASAN-enabled kernel with many ring entries)
+Without this quirk, users of the Acer Nitro 5 AN515-57 cannot use the
+headset microphone through the headphone jack. This is a common laptop
+(gaming line) and headset mic support is essential for many users
+(calls, gaming, etc.). The commit was submitted by an end user (Breno
+Baptista) who presumably experienced the problem.
 
 ### Stability Indicators
 
-- Written by Jens Axboe (io_uring maintainer)
-- Reviewed by Keith Busch (known kernel developer)
-- Small, obviously correct change
-- Fixes a user-reported issue
+- Accepted by Takashi Iwai (ALSA maintainer)
+- Follows the exact same pattern as dozens of other quirk entries in the
+  same table
+- The same fixup (`ALC2XX_FIXUP_HEADSET_MIC`) is already proven on
+  sibling models (AN515-58, AN517-55)
+
+### Dependencies
+
+None. This is a self-contained single-line quirk table entry addition.
+The `ALC2XX_FIXUP_HEADSET_MIC` fixup and the quirk infrastructure
+already exist in all stable trees that support this driver.
 
 ### Conclusion
 
-This commit fixes:
-1. A real soft lockup / scheduling latency bug (cond_resched in loops)
-2. A potential unbounded loop from userspace-controlled values (CQE
-   bounds check)
-
-Both are genuine bugs that affect real users. The fix is small,
-obviously correct, self-contained, and carries virtually zero regression
-risk. It meets all stable kernel criteria: it fixes a real bug, is small
-and contained, is obviously correct, and doesn't introduce new features.
+This is a textbook example of a hardware quirk addition that belongs in
+stable trees. It's a single-line addition to an existing quirk table,
+using an already-proven fixup, fixing a real hardware issue (non-
+functional headset mic) on a specific laptop model, with zero risk to
+any other hardware or code path.
 
 **YES**
 
- io_uring/fdinfo.c | 11 ++++++++---
- 1 file changed, 8 insertions(+), 3 deletions(-)
+ sound/hda/codecs/realtek/alc269.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/io_uring/fdinfo.c b/io_uring/fdinfo.c
-index 294c75a8a3bdb..3585ad8308504 100644
---- a/io_uring/fdinfo.c
-+++ b/io_uring/fdinfo.c
-@@ -65,7 +65,7 @@ static void __io_uring_show_fdinfo(struct io_ring_ctx *ctx, struct seq_file *m)
- 	unsigned int cq_head = READ_ONCE(r->cq.head);
- 	unsigned int cq_tail = READ_ONCE(r->cq.tail);
- 	unsigned int sq_shift = 0;
--	unsigned int sq_entries;
-+	unsigned int cq_entries, sq_entries;
- 	int sq_pid = -1, sq_cpu = -1;
- 	u64 sq_total_time = 0, sq_work_time = 0;
- 	unsigned int i;
-@@ -119,9 +119,11 @@ static void __io_uring_show_fdinfo(struct io_ring_ctx *ctx, struct seq_file *m)
- 			}
- 		}
- 		seq_printf(m, "\n");
-+		cond_resched();
- 	}
- 	seq_printf(m, "CQEs:\t%u\n", cq_tail - cq_head);
--	while (cq_head < cq_tail) {
-+	cq_entries = min(cq_tail - cq_head, ctx->cq_entries);
-+	for (i = 0; i < cq_entries; i++) {
- 		struct io_uring_cqe *cqe;
- 		bool cqe32 = false;
- 
-@@ -136,8 +138,11 @@ static void __io_uring_show_fdinfo(struct io_ring_ctx *ctx, struct seq_file *m)
- 					cqe->big_cqe[0], cqe->big_cqe[1]);
- 		seq_printf(m, "\n");
- 		cq_head++;
--		if (cqe32)
-+		if (cqe32) {
- 			cq_head++;
-+			i++;
-+		}
-+		cond_resched();
- 	}
- 
- 	if (ctx->flags & IORING_SETUP_SQPOLL) {
+diff --git a/sound/hda/codecs/realtek/alc269.c b/sound/hda/codecs/realtek/alc269.c
+index 9097de7d2e3d7..7604851d53b2f 100644
+--- a/sound/hda/codecs/realtek/alc269.c
++++ b/sound/hda/codecs/realtek/alc269.c
+@@ -6238,6 +6238,7 @@ static const struct hda_quirk alc269_fixup_tbl[] = {
+ 	SND_PCI_QUIRK(0x1025, 0x1430, "Acer TravelMate B311R-31", ALC256_FIXUP_ACER_MIC_NO_PRESENCE),
+ 	SND_PCI_QUIRK(0x1025, 0x1466, "Acer Aspire A515-56", ALC255_FIXUP_ACER_HEADPHONE_AND_MIC),
+ 	SND_PCI_QUIRK(0x1025, 0x1534, "Acer Predator PH315-54", ALC255_FIXUP_ACER_MIC_NO_PRESENCE),
++	SND_PCI_QUIRK(0x1025, 0x1539, "Acer Nitro 5 AN515-57", ALC2XX_FIXUP_HEADSET_MIC),
+ 	SND_PCI_QUIRK(0x1025, 0x159c, "Acer Nitro 5 AN515-58", ALC2XX_FIXUP_HEADSET_MIC),
+ 	SND_PCI_QUIRK(0x1025, 0x169a, "Acer Swift SFG16", ALC256_FIXUP_ACER_SFG16_MICMUTE_LED),
+ 	SND_PCI_QUIRK(0x1025, 0x1826, "Acer Helios ZPC", ALC287_FIXUP_PREDATOR_SPK_CS35L41_I2C_2),
 -- 
 2.51.0
 
