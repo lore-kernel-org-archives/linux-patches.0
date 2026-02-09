@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7638F37BE88;
-	Mon,  9 Feb 2026 14:40:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91AF037C0F8;
+	Mon,  9 Feb 2026 14:40:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770648008; cv=none; b=bGsYieEvp67J9FB0RhuaKMR8bOki3RAVOgNBGF6zslGhgx1GBTgPzvxK5wbb+KGCwOaKn3FNDNS8VFkVkJC/PHy1Bqs/EYSW4PwraiOekO1XFWmpLKGoaWKj38bgs8kdSq6RAN93gsS0f7s/gfKfJh3b+2rCVzeEOxj7JtUhbuE=
+	t=1770648011; cv=none; b=Q4u5oNy/FTgEQhxoSmUiuctuyCUYJs7AOOTYuG4b9n7+3cBjOnydGf4TFmYzVyE93BSQ/lLXmKZFFMClS2hRRnYTFsVAuXdRx1xWj+xZFtwXXACqDBmAE7H3emvQDR6JevcckBIb8U1H4v2Alxc8BzGq8jxdKZsLkWWKS6ZkdHs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770648008; c=relaxed/simple;
-	bh=Q+GQ6p+bzAih5sjZsnsdu5xbQBsSOab34CA6MsW/V+E=;
+	s=arc-20240116; t=1770648011; c=relaxed/simple;
+	bh=3vuKwk64qI4phz5u+NaVZtaQh8hfWjwOzmzitSUesZw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bPVgxYvmGcP98pMPlo5ma8mkSxr4YvZO8ZTsK/uogzDvH0LqYEs0dZcmIYYPgoOo9/aIpVwyFs0Dq4AAHzWVsGNMqs0BKtWowluy6/dOFcgbYF7nnt1OQtooUBG+9mJP5KkCwuvmQLK5n+/TdIvzFZpTEMzjbMUnfusGFjG9ENA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bZo4yThJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hPDDFXqxiVHY+ZHkAx/iSb20lFAPcd8cRNOUr7H7IoK7TD5TMajIXxy7n6067CVFoJThZ8Eb9PJ8lw0wbx0iz2G0qH86whHEAlJih4UiJ8zfSaeC7CxTSsk8s0RXyux0vbGDfHZVq/huQbDCtwmjc7XJ10pUOGDMh28NdQqmcvE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HrwOrEcq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bZo4yThJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 60B05C116C6;
-	Mon,  9 Feb 2026 14:40:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HrwOrEcq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A96E2C116C6;
+	Mon,  9 Feb 2026 14:40:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770648007;
-	bh=Q+GQ6p+bzAih5sjZsnsdu5xbQBsSOab34CA6MsW/V+E=;
+	s=korg; t=1770648011;
+	bh=3vuKwk64qI4phz5u+NaVZtaQh8hfWjwOzmzitSUesZw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bZo4yThJ9ufiPjhIHPw5siLmQ6wIbjYd+92ZiRzfhfULuevaTaoIoSyY/GFMr2SAz
-	 pNg3txQF7s2grjZLdnsVfZDRze+rkY7L8bsTiwEsKS2RxWjygnnAfWjf0Odi+wZS6L
-	 KzeGZLCfbvxoyTj5p1uTOkWfZ4byZ4duWzj2jJDk=
+	b=HrwOrEcqqu8hTApnBKbpskwn5QzgNdTPqUHi2kDkNzJXgje4Vo5e072A7jkLrlEuj
+	 RpRBZ64jlSj7Al59wsrL8NOGigHFmhH04mUe4nnWnTOQ7zybItiuobk5W3q97HX2aQ
+	 ZywXjVeeTS2DOFEJBbKAML5CIzpR3t8KBIv6WHfk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gal Pressman <gal@nvidia.com>,
-	Martin KaFai Lau <martin.lau@kernel.org>,
-	Daniel Borkmann <daniel@iogearbox.net>,
-	Eric Dumazet <edumazet@google.com>,
+	Daniel Hodges <hodgesd@meta.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 092/113] net: dont touch dev->stats in BPF redirect paths
-Date: Mon,  9 Feb 2026 15:24:01 +0100
-Message-ID: <20260209142313.487820267@linuxfoundation.org>
+Subject: [PATCH 6.12 093/113] tipc: use kfree_sensitive() for session key material
+Date: Mon,  9 Feb 2026 15:24:02 +0100
+Message-ID: <20260209142313.523608764@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260209142310.204833231@linuxfoundation.org>
 References: <20260209142310.204833231@linuxfoundation.org>
@@ -54,67 +51,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jakub Kicinski <kuba@kernel.org>
+From: Daniel Hodges <hodgesd@meta.com>
 
-[ Upstream commit fdf3f6800be36377e045e2448087f12132b88d2f ]
+[ Upstream commit 74d9391e8849e70ded5309222d09b0ed0edbd039 ]
 
-Gal reports that BPF redirect increments dev->stats.tx_errors
-on failure. This is not correct, most modern drivers completely
-ignore dev->stats so these drops will be invisible to the user.
-Core code should use the dedicated core stats which are folded
-into device stats in dev_get_stats().
+The rx->skey field contains a struct tipc_aead_key with GCM-AES
+encryption keys used for TIPC cluster communication. Using plain
+kfree() leaves this sensitive key material in freed memory pages
+where it could potentially be recovered.
 
-Note that we're switching from tx_errors to tx_dropped.
-Core only has tx_dropped, hence presumably users already expect
-that counter to increment for "stack" Tx issues.
+Switch to kfree_sensitive() to ensure the key material is zeroed
+before the memory is freed.
 
-Reported-by: Gal Pressman <gal@nvidia.com>
-Link: https://lore.kernel.org/c5df3b60-246a-4030-9c9a-0a35cd1ca924@nvidia.com
-Fixes: b4ab31414970 ("bpf: Add redirect_neigh helper as redirect drop-in")
-Acked-by: Martin KaFai Lau <martin.lau@kernel.org>
-Acked-by: Daniel Borkmann <daniel@iogearbox.net>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Link: https://patch.msgid.link/20260130033827.698841-1-kuba@kernel.org
+Fixes: 1ef6f7c9390f ("tipc: add automatic session key exchange")
+Signed-off-by: Daniel Hodges <hodgesd@meta.com>
+Link: https://patch.msgid.link/20260131180114.2121438-1-hodgesd@meta.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/filter.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ net/tipc/crypto.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/net/core/filter.c b/net/core/filter.c
-index bc61ad5f4e054..06e179865a21b 100644
---- a/net/core/filter.c
-+++ b/net/core/filter.c
-@@ -2297,12 +2297,12 @@ static int __bpf_redirect_neigh_v6(struct sk_buff *skb, struct net_device *dev,
- 
- 	err = bpf_out_neigh_v6(net, skb, dev, nh);
- 	if (unlikely(net_xmit_eval(err)))
--		DEV_STATS_INC(dev, tx_errors);
-+		dev_core_stats_tx_dropped_inc(dev);
- 	else
- 		ret = NET_XMIT_SUCCESS;
- 	goto out_xmit;
- out_drop:
--	DEV_STATS_INC(dev, tx_errors);
-+	dev_core_stats_tx_dropped_inc(dev);
- 	kfree_skb(skb);
- out_xmit:
- 	return ret;
-@@ -2404,12 +2404,12 @@ static int __bpf_redirect_neigh_v4(struct sk_buff *skb, struct net_device *dev,
- 
- 	err = bpf_out_neigh_v4(net, skb, dev, nh);
- 	if (unlikely(net_xmit_eval(err)))
--		DEV_STATS_INC(dev, tx_errors);
-+		dev_core_stats_tx_dropped_inc(dev);
- 	else
- 		ret = NET_XMIT_SUCCESS;
- 	goto out_xmit;
- out_drop:
--	DEV_STATS_INC(dev, tx_errors);
-+	dev_core_stats_tx_dropped_inc(dev);
- 	kfree_skb(skb);
- out_xmit:
- 	return ret;
+diff --git a/net/tipc/crypto.c b/net/tipc/crypto.c
+index ea5bb131ebd06..2721baf9fd2b3 100644
+--- a/net/tipc/crypto.c
++++ b/net/tipc/crypto.c
+@@ -1219,7 +1219,7 @@ void tipc_crypto_key_flush(struct tipc_crypto *c)
+ 		rx = c;
+ 		tx = tipc_net(rx->net)->crypto_tx;
+ 		if (cancel_delayed_work(&rx->work)) {
+-			kfree(rx->skey);
++			kfree_sensitive(rx->skey);
+ 			rx->skey = NULL;
+ 			atomic_xchg(&rx->key_distr, 0);
+ 			tipc_node_put(rx->node);
+@@ -2394,7 +2394,7 @@ static void tipc_crypto_work_rx(struct work_struct *work)
+ 			break;
+ 		default:
+ 			synchronize_rcu();
+-			kfree(rx->skey);
++			kfree_sensitive(rx->skey);
+ 			rx->skey = NULL;
+ 			break;
+ 		}
 -- 
 2.51.0
 
