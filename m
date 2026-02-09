@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B774A23B604;
-	Mon,  9 Feb 2026 14:30:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DBC3A23B604;
+	Mon,  9 Feb 2026 14:30:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770647453; cv=none; b=duQ4m/LJPPkZS1zslsfUSkk4oaGrDcWuRZ22/lWpcbhtHTBQZUrEUKPqVhnJGowLu4PIIhTAFqRZaAR1BrpypBLwoywyTpO9XwdjoUySqjjR+OMRMhBb5t6CCAuFaNZDDRsRqMYam4U+b8Nrovn6XS5yZpQYar42iEtVaU1yd+c=
+	t=1770647456; cv=none; b=D9R24R0Ui42PI8wWeWlpzz292SoVl1HEYP+FfNstGV7jMcyxvz57n7mB7Xosf0Vi/Fv7BmPq2FWjtAZcErtgrQ3QHABHiff2iFaABupYdP91Sax4srfB5zBQLKiUtphDtzbH0B9deAQDTg73234e1v8OPCDZw8rZZZ+jXLim3DY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770647453; c=relaxed/simple;
-	bh=R9XJBQnDP4SAoojy/oZJSJeNzLZB8yqZRy9tluVapfU=;
+	s=arc-20240116; t=1770647456; c=relaxed/simple;
+	bh=xoYEupr1HnHHePBjeEZRWVPqua/eEW0Jmpza8r8wFQQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UtSlqpdd0bpmT5nmI3zDWciB6QXS3zNQAof4g9bf+tJn+QytGj1iNXWw+Ii2mKTLDFBv0e1Fv3TdNrDzD5c6hWi/ZM/k1qkLxbsH80aK+vqPW7rmROLUrT6Jw8/S4/Zq7j7ZwEQgMVi3WtzkmxYP38f0ir2EwrwJBpF5vdobyWE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=o8VaDcft; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hwY2KNhjGf5eEH7lgrMge5WMwNd50QyWsQ7QS/sq3EFWqv5VNoGDsh7nwoaRgOh63ueIxWIgr4x4DBP4YM/37p7U8vhKgwgw5BgukFdia4o59X+pK1cFi1YL22+giUOCp/SFjqTr2/mlVZnr1FUZW8DnGzKgJp/RKUIeIY3LARM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LWdYvLW3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="o8VaDcft"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 349FEC116C6;
-	Mon,  9 Feb 2026 14:30:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LWdYvLW3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A818C116C6;
+	Mon,  9 Feb 2026 14:30:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770647453;
-	bh=R9XJBQnDP4SAoojy/oZJSJeNzLZB8yqZRy9tluVapfU=;
+	s=korg; t=1770647456;
+	bh=xoYEupr1HnHHePBjeEZRWVPqua/eEW0Jmpza8r8wFQQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=o8VaDcfteirD6Dftn7a9YhHaDck+mXsaP4t3ZbIADdhfvLism3cP7qvdqamobV5WI
-	 6+sTjhln8/UrRKsW1K3bJHOa/oHCbsKLWF5jlOPfS0wFzftq34R26CKYYxrNosbsXn
-	 IJG1gvcSHh37bYAZP2yuVaXKR6I8X58ea4rxSixw=
+	b=LWdYvLW39QmmTGIslBvHJSeytkLtmzf30GHhxQyEm5Y785DKmAEfLGVvkgryKn3vb
+	 dhdI8QlWhbFv/16S34oJUsn7awGTJVEjdShXLfsqiFJgOZSYABVKSIHpl72P3xxM09
+	 cMwNl4c84DiedKvls4CPKdEsF7r6/sFZJ/8IuJtA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qiang Ma <maqianga@uniontech.com>,
-	David Sterba <dsterba@suse.com>,
+	Shengjiu Wang <shengjiu.wang@nxp.com>,
+	Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 105/175] btrfs: fix Wmaybe-uninitialized warning in replay_one_buffer()
-Date: Mon,  9 Feb 2026 15:22:58 +0100
-Message-ID: <20260209142324.191895639@linuxfoundation.org>
+Subject: [PATCH 6.18 088/175] ASoC: simple-card-utils: Check device node before overwrite direction
+Date: Mon,  9 Feb 2026 15:22:41 +0100
+Message-ID: <20260209142323.599780943@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260209142320.474120190@linuxfoundation.org>
 References: <20260209142320.474120190@linuxfoundation.org>
@@ -51,49 +52,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Qiang Ma <maqianga@uniontech.com>
+From: Shengjiu Wang <shengjiu.wang@nxp.com>
 
-[ Upstream commit 9c7e71c97c8cd086b148d0d3d1cd84a1deab023c ]
+[ Upstream commit 22a507d7680f2c3499c133f6384349f62f916176 ]
 
-Warning was found when compiling using loongarch64-gcc 12.3.1:
+Even the device node don't exist, the graph_util_parse_link_direction()
+will overwrite the playback_only and capture_only to be zero. Which
+cause the playback_only and capture_only are not correct, so check device
+node exist or not before update the value.
 
-  $ make CFLAGS_tree-log.o=-Wmaybe-uninitialized
-
-  In file included from fs/btrfs/ctree.h:21,
-		   from fs/btrfs/tree-log.c:12:
-  fs/btrfs/accessors.h: In function 'replay_one_buffer':
-  fs/btrfs/accessors.h:66:16: warning: 'inode_item' may be used uninitialized [-Wmaybe-uninitialized]
-     66 |         return btrfs_get_##bits(eb, s, offsetof(type, member));         \
-	|                ^~~~~~~~~~
-  fs/btrfs/tree-log.c:2803:42: note: 'inode_item' declared here
-   2803 |                 struct btrfs_inode_item *inode_item;
-	|                                          ^~~~~~~~~~
-
-Initialize the inode_item to NULL, the compiler does not seem to see the
-relation between the first 'wc->log_key.type == BTRFS_INODE_ITEM_KEY'
-check and the other one that also checks the replay phase.
-
-Signed-off-by: Qiang Ma <maqianga@uniontech.com>
-Reviewed-by: David Sterba <dsterba@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Signed-off-by: Shengjiu Wang <shengjiu.wang@nxp.com>
+Acked-by: Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>
+Link: https://patch.msgid.link/20251229090432.3964848-1-shengjiu.wang@nxp.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/tree-log.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ sound/soc/generic/simple-card-utils.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/fs/btrfs/tree-log.c b/fs/btrfs/tree-log.c
-index 1444857de9fe8..ae2e035d013e2 100644
---- a/fs/btrfs/tree-log.c
-+++ b/fs/btrfs/tree-log.c
-@@ -2800,7 +2800,7 @@ static int replay_one_buffer(struct extent_buffer *eb,
+diff --git a/sound/soc/generic/simple-card-utils.c b/sound/soc/generic/simple-card-utils.c
+index 355f7ec8943c2..bdc02e85b089f 100644
+--- a/sound/soc/generic/simple-card-utils.c
++++ b/sound/soc/generic/simple-card-utils.c
+@@ -1179,9 +1179,9 @@ void graph_util_parse_link_direction(struct device_node *np,
+ 	bool is_playback_only = of_property_read_bool(np, "playback-only");
+ 	bool is_capture_only  = of_property_read_bool(np, "capture-only");
  
- 	nritems = btrfs_header_nritems(eb);
- 	for (wc->log_slot = 0; wc->log_slot < nritems; wc->log_slot++) {
--		struct btrfs_inode_item *inode_item;
-+		struct btrfs_inode_item *inode_item = NULL;
- 
- 		btrfs_item_key_to_cpu(eb, &wc->log_key, wc->log_slot);
- 
+-	if (playback_only)
++	if (np && playback_only)
+ 		*playback_only = is_playback_only;
+-	if (capture_only)
++	if (np && capture_only)
+ 		*capture_only = is_capture_only;
+ }
+ EXPORT_SYMBOL_GPL(graph_util_parse_link_direction);
 -- 
 2.51.0
 
