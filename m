@@ -1,47 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E7A227CCF2;
-	Mon,  9 Feb 2026 14:46:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EBE4B27CCF2;
+	Mon,  9 Feb 2026 14:46:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770648375; cv=none; b=r67vy8a0tuDi4j36kGyyQ5qxkldfSvrR73MlMT0yxRxXGNCvZSpzGsktor9aZ+er08q2METbhonTUIJqjUzgMBtUUNxSbhuid5JjFURrQ6Y4wmcpZSGhkhT23XcuVkvuIZK2tUhBVv0+wnK/OB//mIeXXDFB5oD/GTmrcmfz7IE=
+	t=1770648379; cv=none; b=fY7/t6kcj9ON0lb0rBQZ3AS5J+S+Zwhv3Vxp2VYgkLgeadND9FKo155NJFW10fowQRae11A56b/Su4FDi6+NoMzXIrIC9paT51OGKbXkOamUPGOOU3v5tpMG3K/5Xv/Y3EeuVf0pjllxeyDlUiXB2BHS4S494ymq+pS1yFcag+k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770648375; c=relaxed/simple;
-	bh=EbTPmO+iM1Sxpy/lQzv77wVBIgrwX0tiTJIgXAC6e8U=;
+	s=arc-20240116; t=1770648379; c=relaxed/simple;
+	bh=9ioA0RbT24eTdIIzyX5p9mFn51sRQMTQH4AB6e0qgR4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=He8mEGaTgHC8cKz3LzSIouHHGYYK/cxQBZe+oVOoe8OtMDC4fRpsZ+wnbTckAwPfWBbXEB7yynqmr3+Dgi4/nfyD5cTfbpw7IEkwIPprUjHWErQ3EUZFBJ7UvTZI+qdq47eVhDd4+EVl8AVXVAxsFNQF45ZAHnsOcEeF+Xb932g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RuKifsrH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=OspE7W+mynlUWdzZbbZOrhRRlqXLWHn7rDaX5AiRpBIWlKvX1aP8zL4nG0E3XGT2ujR1GFjAJQto5XlR7TjPbdM7VRlvvdUUywUUuTq/SkqO/Jf+v8Xq6Qm7M/1scOdku0sIikNzgRuJqxVra+Y0QhDoAAQXHWPdV0edvpDLxkA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RCLDpPdf; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RuKifsrH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C5EF5C116C6;
-	Mon,  9 Feb 2026 14:46:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RCLDpPdf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 649E8C116C6;
+	Mon,  9 Feb 2026 14:46:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770648375;
-	bh=EbTPmO+iM1Sxpy/lQzv77wVBIgrwX0tiTJIgXAC6e8U=;
+	s=korg; t=1770648378;
+	bh=9ioA0RbT24eTdIIzyX5p9mFn51sRQMTQH4AB6e0qgR4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RuKifsrHtiPZssV9YTiApIG4XbU+lCgleRKCApvITzgtBEbpwozHkE1xV+RbCZQ2S
-	 XDK3mriIRMo9LUKfYNCiGsG2djgqbJBaCtQe1AlGgTmBaFXU8ZTSLhh5SqIp4J25zb
-	 QiucikVFDCjgJdZLnkdyZSzr5a6zhh0ALzjVnp/g=
+	b=RCLDpPdfTu59a/t27TkXiziIzWuqPGUFQrr8rJJ23MVgZUPqkVwpEB93UAqnL1ZvK
+	 CzsgH6z5KGYSgMBYJ+Cdrg5nM8yWXdHNtt19SrAVnOsGfss75aKR9JfBgebp3v0rt7
+	 yD+JAPFGWoH+6NjAa38yCCtIwUjNXcOsgfuF7MVI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ryusuke Konishi <konishi.ryusuke@gmail.com>,
-	Andrew Cooper <andrew.cooper3@citrix.com>,
-	"Borislav Petkov (AMD)" <bp@alien8.de>,
-	Alexander Potapenko <glider@google.com>,
-	Marco Elver <elver@google.com>,
-	Dmitry Vyukov <dvyukov@google.com>,
-	Thomas Gleixner <tglx@linutronix.de>,
-	Ingo Molnar <mingo@redhat.com>,
-	Dave Hansen <dave.hansen@linux.intel.com>,
-	"H. Peter Anvin" <hpa@zytor.com>,
-	Jann Horn <jannh@google.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.6 02/86] x86/kfence: fix booting on 32bit non-PAE systems
-Date: Mon,  9 Feb 2026 15:23:25 +0100
-Message-ID: <20260209142304.864049675@linuxfoundation.org>
+	Kaushlendra Kumar <kaushlendra.kumar@intel.com>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>
+Subject: [PATCH 6.6 03/86] platform/x86: intel_telemetry: Fix swapped arrays in PSS output
+Date: Mon,  9 Feb 2026 15:23:26 +0100
+Message-ID: <20260209142304.899820561@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260209142304.770150175@linuxfoundation.org>
 References: <20260209142304.770150175@linuxfoundation.org>
@@ -54,74 +44,58 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Andrew Cooper <andrew.cooper3@citrix.com>
+From: Kaushlendra Kumar <kaushlendra.kumar@intel.com>
 
-commit 16459fe7e0ca6520a6e8f603de4ccd52b90fd765 upstream.
+commit 25e9e322d2ab5c03602eff4fbf4f7c40019d8de2 upstream.
 
-The original patch inverted the PTE unconditionally to avoid
-L1TF-vulnerable PTEs, but Linux doesn't make this adjustment in 2-level
-paging.
+The LTR blocking statistics and wakeup event counters are incorrectly
+cross-referenced during debugfs output rendering. The code populates
+pss_ltr_blkd[] with LTR blocking data and pss_s0ix_wakeup[] with wakeup
+data, but the display loops reference the wrong arrays.
 
-Adjust the logic to use the flip_protnone_guard() helper, which is a nop
-on 2-level paging but inverts the address bits in all other paging modes.
+This causes the "LTR Blocking Status" section to print wakeup events
+and the "Wakes Status" section to print LTR blockers, misleading power
+management analysis and S0ix residency debugging.
 
-This doesn't matter for the Xen aspect of the original change.  Linux no
-longer supports running 32bit PV under Xen, and Xen doesn't support
-running any 32bit PV guests without using PAE paging.
+Fix by aligning array usage with the intended output section labels.
 
-Link: https://lkml.kernel.org/r/20260126211046.2096622-1-andrew.cooper3@citrix.com
-Fixes: b505f1944535 ("x86/kfence: avoid writing L1TF-vulnerable PTEs")
-Reported-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
-Closes: https://lore.kernel.org/lkml/CAKFNMokwjw68ubYQM9WkzOuH51wLznHpEOMSqtMoV1Rn9JV_gw@mail.gmail.com/
-Signed-off-by: Andrew Cooper <andrew.cooper3@citrix.com>
-Tested-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
-Tested-by: Borislav Petkov (AMD) <bp@alien8.de>
-Cc: Alexander Potapenko <glider@google.com>
-Cc: Marco Elver <elver@google.com>
-Cc: Dmitry Vyukov <dvyukov@google.com>
-Cc: Thomas Gleixner <tglx@linutronix.de>
-Cc: Ingo Molnar <mingo@redhat.com>
-Cc: Dave Hansen <dave.hansen@linux.intel.com>
-Cc: "H. Peter Anvin" <hpa@zytor.com>
-Cc: Jann Horn <jannh@google.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Fixes: 87bee290998d ("platform:x86: Add Intel Telemetry Debugfs interfaces")
+Cc: stable@vger.kernel.org
+Signed-off-by: Kaushlendra Kumar <kaushlendra.kumar@intel.com>
+Link: https://patch.msgid.link/20251224032053.3915900-1-kaushlendra.kumar@intel.com
+Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/include/asm/kfence.h |    7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ drivers/platform/x86/intel/telemetry/debugfs.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/arch/x86/include/asm/kfence.h
-+++ b/arch/x86/include/asm/kfence.h
-@@ -42,7 +42,7 @@ static inline bool kfence_protect_page(u
- {
- 	unsigned int level;
- 	pte_t *pte = lookup_address(addr, &level);
--	pteval_t val;
-+	pteval_t val, new;
+--- a/drivers/platform/x86/intel/telemetry/debugfs.c
++++ b/drivers/platform/x86/intel/telemetry/debugfs.c
+@@ -449,7 +449,7 @@ static int telem_pss_states_show(struct
+ 	for (index = 0; index < debugfs_conf->pss_ltr_evts; index++) {
+ 		seq_printf(s, "%-32s\t%u\n",
+ 			   debugfs_conf->pss_ltr_data[index].name,
+-			   pss_s0ix_wakeup[index]);
++			   pss_ltr_blkd[index]);
+ 	}
  
- 	if (WARN_ON(!pte || level != PG_LEVEL_4K))
- 		return false;
-@@ -57,11 +57,12 @@ static inline bool kfence_protect_page(u
- 		return true;
+ 	seq_puts(s, "\n--------------------------------------\n");
+@@ -459,7 +459,7 @@ static int telem_pss_states_show(struct
+ 	for (index = 0; index < debugfs_conf->pss_wakeup_evts; index++) {
+ 		seq_printf(s, "%-32s\t%u\n",
+ 			   debugfs_conf->pss_wakeup[index].name,
+-			   pss_ltr_blkd[index]);
++			   pss_s0ix_wakeup[index]);
+ 	}
  
- 	/*
--	 * Otherwise, invert the entire PTE.  This avoids writing out an
-+	 * Otherwise, flip the Present bit, taking care to avoid writing an
- 	 * L1TF-vulnerable PTE (not present, without the high address bits
- 	 * set).
- 	 */
--	set_pte(pte, __pte(~val));
-+	new = val ^ _PAGE_PRESENT;
-+	set_pte(pte, __pte(flip_protnone_guard(val, new, PTE_PFN_MASK)));
- 
- 	/*
- 	 * If the page was protected (non-present) and we're making it
+ 	return 0;
 
 
