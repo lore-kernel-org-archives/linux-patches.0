@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31DA625DB1C;
-	Mon,  9 Feb 2026 14:47:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6285A25DB1C;
+	Mon,  9 Feb 2026 14:47:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770648428; cv=none; b=aJlREUA9rK67afP0oD0FMMzRQBfk+FwGPOb5cypxyY8hsa0v0yQTquCQjZ0EQvBYF24C0TxOr5hHk0uL0azy7V06ps91QWWqLzAt4ZVBIX2ofaF4TtCcsJY7iIBj7DM9lW+SLvAMWPm9jmlaHIO3IfXoF5viRkoNcZei5F/kVhE=
+	t=1770648431; cv=none; b=Q9sV9tHLMskhAioobl87Ep25E8D+g0WzQnMIuElCM4pRXQyXXe0vxhsmjk8CdvwvuJZfQeYtRzeFH8McDLtGROnPnMFQnYQq+C15422WpFRtYBGe15aLuvCeM6c/ADxWYr1wkPM24opGuYdesmQJlHtZiyLLy+H0zlAqyEaFIf0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770648428; c=relaxed/simple;
-	bh=Fchb066GxMkftZrhFcSYvJAPMVcOoYd20EHXtMNFoKg=;
+	s=arc-20240116; t=1770648431; c=relaxed/simple;
+	bh=MLOpLsTb9sFKNlcpi+3vldTxNNzPVHYBZbfGL2WSM4M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Jo89krxotxcIZ7wTAqFvuYpxyiS5AQCOgx2LwkENhS50sqZgxGtkFpojoMAS2/O3ez2W9wA5Hr+sR53hSZhoPnhUtnRKPTzLYu/udXWXsVwz6gfjVBchCJekkRRV0j0mvvgUJm6/sTA/r9PyJ+I7tDQEBPQFut3SLthDHPeV/No=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Pirb/+cU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dvYpi4WoRckB9BpeRBX0gc9yD7JRzGPMIyOAs92Zi99zj9HrJEq9FruNSjAVqmHEBuO8vDVBd8BjFZACjJEV2lfTUBJhKtm7NMfcj3axDc54WzbZCQK9+Z9FewJU5bSsOYT6RiPiwEQ9TXpahKCneLisReXEKZlrYeBuECSPReM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yZxKGvwg; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Pirb/+cU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8CCE0C19423;
-	Mon,  9 Feb 2026 14:47:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yZxKGvwg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E45C6C116C6;
+	Mon,  9 Feb 2026 14:47:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770648428;
-	bh=Fchb066GxMkftZrhFcSYvJAPMVcOoYd20EHXtMNFoKg=;
+	s=korg; t=1770648431;
+	bh=MLOpLsTb9sFKNlcpi+3vldTxNNzPVHYBZbfGL2WSM4M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Pirb/+cUZkGKkf7xfSE2vB5e2G3uqKgc2/ce2aVuFSyeE8fRi05YQDcAAqZQw3V57
-	 tW8dyd3nTvliRUEn4YGBS7xkeOuVHM0SmgZq17BP0Ng10sislndN/jHOu9kHfMIoLX
-	 egx2TS989aUG+5VhwRX39MT03vqr8e+g/FYm9mBM=
+	b=yZxKGvwgzlDZRJe7mgnRN66cm8S6kqzJSYUQG2CfArY9afxbXkBWjRgzCNknmVxHf
+	 +0dkapYsXzX7V8USRmFPmzn7G6M2yb94Iz0WpNx0LN6ppo5Z3LAn3SrNoyJSyCmQf1
+	 BD3796yCuyWY/kVkJcxhx4QeJKr7VZgWQ8CDvgtg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Siarhei Vishniakou <svv@google.com>,
-	Benjamin Tissoires <bentiss@kernel.org>,
+	Ruslan Krupitsa <krupitsarus@outlook.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 35/86] HID: playstation: Center initial joystick axes to prevent spurious events
-Date: Mon,  9 Feb 2026 15:23:58 +0100
-Message-ID: <20260209142306.050575473@linuxfoundation.org>
+Subject: [PATCH 6.6 36/86] ALSA: hda/realtek: add HP Laptop 15s-eq1xxx mute LED quirk
+Date: Mon,  9 Feb 2026 15:23:59 +0100
+Message-ID: <20260209142306.086365820@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260209142304.770150175@linuxfoundation.org>
 References: <20260209142304.770150175@linuxfoundation.org>
@@ -51,63 +51,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Siarhei Vishniakou <svv@google.com>
+From: Ruslan Krupitsa <krupitsarus@outlook.com>
 
-[ Upstream commit e9143268d259d98e111a649affa061acb8e13c5b ]
+[ Upstream commit 9ed7a28225af02b74f61e7880d460db49db83758 ]
 
-When a new PlayStation gamepad (DualShock 4 or DualSense) is initialized,
-the input subsystem sets the default value for its absolute axes (e.g.,
-ABS_X, ABS_Y) to 0.
+HP Laptop 15s-eq1xxx with ALC236 codec does not enable the
+mute LED automatically. This patch adds a quirk entry for
+subsystem ID 0x8706 using the ALC236_FIXUP_HP_MUTE_LED_COEFBIT2
+fixup, enabling correct mute LED behavior.
 
-However, the hardware's actual neutral/resting state for these joysticks
-is 128 (0x80). This creates a mismatch.
-
-When the first HID report arrives from the device, the driver sees the
-resting value of 128. The kernel compares this to its initial state of 0
-and incorrectly interprets this as a delta (0 -> 128). Consequently, it
-generates EV_ABS events for this initial, non-existent movement.
-
-This behavior can fail userspace 'sanity check' tests (e.g., in
-Android CTS) that correctly assert no motion events should be generated
-from a device that is already at rest.
-
-This patch fixes the issue by explicitly setting the initial value of the
-main joystick axes (e.g., ABS_X, ABS_Y, ABS_RX, ABS_RY) to 128 (0x80)
-in the common ps_gamepad_create() function.
-
-This aligns the kernel's initial state with the hardware's expected
-neutral state, ensuring that the first report (at 128) produces no
-delta and thus, no spurious event.
-
-Signed-off-by: Siarhei Vishniakou <svv@google.com>
-Reviewed-by: Benjamin Tissoires <bentiss@kernel.org>
-Signed-off-by: Benjamin Tissoires <bentiss@kernel.org>
+Signed-off-by: Ruslan Krupitsa <krupitsarus@outlook.com>
+Link: https://patch.msgid.link/AS8P194MB112895B8EC2D87D53A876085BBBAA@AS8P194MB1128.EURP194.PROD.OUTLOOK.COM
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hid/hid-playstation.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ sound/pci/hda/patch_realtek.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/hid/hid-playstation.c b/drivers/hid/hid-playstation.c
-index 8ac8f7b8e3173..32f65c45fdc8a 100644
---- a/drivers/hid/hid-playstation.c
-+++ b/drivers/hid/hid-playstation.c
-@@ -711,11 +711,16 @@ static struct input_dev *ps_gamepad_create(struct hid_device *hdev,
- 	if (IS_ERR(gamepad))
- 		return ERR_CAST(gamepad);
- 
-+	/* Set initial resting state for joysticks to 128 (center) */
- 	input_set_abs_params(gamepad, ABS_X, 0, 255, 0, 0);
-+	gamepad->absinfo[ABS_X].value = 128;
- 	input_set_abs_params(gamepad, ABS_Y, 0, 255, 0, 0);
-+	gamepad->absinfo[ABS_Y].value = 128;
- 	input_set_abs_params(gamepad, ABS_Z, 0, 255, 0, 0);
- 	input_set_abs_params(gamepad, ABS_RX, 0, 255, 0, 0);
-+	gamepad->absinfo[ABS_RX].value = 128;
- 	input_set_abs_params(gamepad, ABS_RY, 0, 255, 0, 0);
-+	gamepad->absinfo[ABS_RY].value = 128;
- 	input_set_abs_params(gamepad, ABS_RZ, 0, 255, 0, 0);
- 
- 	input_set_abs_params(gamepad, ABS_HAT0X, -1, 1, 0, 0);
+diff --git a/sound/pci/hda/patch_realtek.c b/sound/pci/hda/patch_realtek.c
+index 65c9d47f03af5..e7f6bba3e02b3 100644
+--- a/sound/pci/hda/patch_realtek.c
++++ b/sound/pci/hda/patch_realtek.c
+@@ -10085,6 +10085,7 @@ static const struct hda_quirk alc269_fixup_tbl[] = {
+ 	SND_PCI_QUIRK(0x103c, 0x863e, "HP Spectre x360 15-df1xxx", ALC285_FIXUP_HP_SPECTRE_X360_DF1),
+ 	SND_PCI_QUIRK(0x103c, 0x86e8, "HP Spectre x360 15-eb0xxx", ALC285_FIXUP_HP_SPECTRE_X360_EB1),
+ 	SND_PCI_QUIRK(0x103c, 0x86f9, "HP Spectre x360 13-aw0xxx", ALC285_FIXUP_HP_SPECTRE_X360_MUTE_LED),
++	SND_PCI_QUIRK(0x103c, 0x8706, "HP Laptop 15s-eq1xxx", ALC236_FIXUP_HP_MUTE_LED_COEFBIT2),
+ 	SND_PCI_QUIRK(0x103c, 0x8716, "HP Elite Dragonfly G2 Notebook PC", ALC285_FIXUP_HP_GPIO_AMP_INIT),
+ 	SND_PCI_QUIRK(0x103c, 0x8720, "HP EliteBook x360 1040 G8 Notebook PC", ALC285_FIXUP_HP_GPIO_AMP_INIT),
+ 	SND_PCI_QUIRK(0x103c, 0x8724, "HP EliteBook 850 G7", ALC285_FIXUP_HP_GPIO_LED),
 -- 
 2.51.0
 
