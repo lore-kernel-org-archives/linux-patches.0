@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F004723B604;
-	Mon,  9 Feb 2026 14:30:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3DF929D265;
+	Mon,  9 Feb 2026 14:30:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770647440; cv=none; b=qviMLAcVh8gxU8BOj9tvOqVuxAQtPyzj7Ak//lPU+C/fJ1fwjTioyNh5ZVOKUX7Gj99uaAvolNngoktF95Hghd1boedyCF3f9pf+pNGc1FrIrG19WQe5HwRcwv5dE2UGmJo7TAkLlNWicSpzsEzemH7xYTM4+uC6SgomUqBT01E=
+	t=1770647443; cv=none; b=MutfkODnDPt/E2ebt73UscQwI3E2HH3+c7UP6VZwrSxFiwxo9TSJyaKoBuUsjUFRgwQ4wYiYbvDSrEnSdDx1t8zZ+aIWUMqdCZCIHEsyzoIIPKD1iPa1SJieo3luwlsHeiC5ifHtN6jCXkJ1mbl6i7SB11MTWVu6A0RH+jvq2NI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770647440; c=relaxed/simple;
-	bh=HOfTNb44as9xUM+fBNMFpZaEWK5N+vjmeMY0r+Zxx54=;
+	s=arc-20240116; t=1770647443; c=relaxed/simple;
+	bh=QGUIGlO5GeI+r/itJCYvhbN5Kscmk9VE1WNWMXD1SYw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pI1kucwCxnOs/TCs7aBrcnJ93g0UkzNHiWx5SJPvJ1ILaf+zMOv1GjCYjRVy37RoZFBEMhfB9OrUyi5of1aVIL5MoabTJSMhAVDUAbKn3dS8eI4aIznvhdglYdI3B/RZiIrJFnRD2uE+TnuCM006DFrqvOIEvM0yBK4NWLBAQv8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TIK4wXUo; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=FhiCU0FJLUFALBElUQMwP37lyvEvE2Z9Mw8nI8AKwjfBJMN7LuC7kjhHONzuX59rVIlYZNgFeGrGfycqJZOch71xFzikHq4wBlhi29CvVN5mGYB32VEXO/LbK6zW+KuPyuj5ICpdMEYBSYoTiJ9O4lWDWwCW7Y9e/uo90wx8SPE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BzQDzReu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TIK4wXUo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 53117C116C6;
-	Mon,  9 Feb 2026 14:30:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BzQDzReu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F1254C116C6;
+	Mon,  9 Feb 2026 14:30:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770647439;
-	bh=HOfTNb44as9xUM+fBNMFpZaEWK5N+vjmeMY0r+Zxx54=;
+	s=korg; t=1770647443;
+	bh=QGUIGlO5GeI+r/itJCYvhbN5Kscmk9VE1WNWMXD1SYw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TIK4wXUoxEJePbceWRkXNCqH3KlqZCT1KuI9ZJOc/V8BJLwfB0WiYOpUbFixDJAkG
-	 02xW6vvUl2ryDgKXcgWdC2ayyfmOXeTPNRZ7sjLgLGeiZhOrx/RT2fcaynWwnANdXp
-	 yXQWsMqacW8BNQko1CB9A1nUGFxYbkISosruPkcY=
+	b=BzQDzReuL+iIF1d3mpT3fpWyikH/GUUR2mJOaUrgVZ192/1scrTiX2OH4sJopffvO
+	 DI6PUA07TPRRXNQ0pHg/efifv0sLSq6/ZpqozviPuP683LWTjIaqSAjYG9sXNS+2rZ
+	 aDCVHKOWE++sjRzVgR6IGGWlRJYcyw07JMa47eUw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nathan Chancellor <nathan@kernel.org>,
-	Paul Walmsley <pjw@kernel.org>,
+	Nitesh Shetty <nj.shetty@samsung.com>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 101/175] riscv: Use 64-bit variable for output in __get_user_asm
-Date: Mon,  9 Feb 2026 15:22:54 +0100
-Message-ID: <20260209142324.052847419@linuxfoundation.org>
+Subject: [PATCH 6.18 102/175] io_uring/rw: free potentially allocated iovec on cache put failure
+Date: Mon,  9 Feb 2026 15:22:55 +0100
+Message-ID: <20260209142324.087348673@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260209142320.474120190@linuxfoundation.org>
 References: <20260209142320.474120190@linuxfoundation.org>
@@ -51,65 +51,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nathan Chancellor <nathan@kernel.org>
+From: Jens Axboe <axboe@kernel.dk>
 
-[ Upstream commit bdce162f2e57a969803e5e9375999a3e0546905f ]
+[ Upstream commit 4b9748055457ac3a0710bf210c229d01ea1b01b9 ]
 
-After commit f6bff7827a48 ("riscv: uaccess: use 'asm_goto_output' for
-get_user()"), which was the first commit that started using asm goto
-with outputs on RISC-V, builds of clang built with assertions enabled
-start crashing in certain files that use get_user() with:
+If a read/write request goes through io_req_rw_cleanup() and has an
+allocated iovec attached and fails to put to the rw_cache, then it may
+end up with an unaccounted iovec pointer. Have io_rw_recycle() return
+whether it recycled the request or not, and use that to gauge whether to
+free a potential iovec or not.
 
-  clang: llvm/lib/CodeGen/SelectionDAG/SelectionDAGBuilder.cpp:12743: Register FollowCopyChain(MachineRegisterInfo &, Register): Assertion `MI->getOpcode() == TargetOpcode::COPY && "start of copy chain MUST be COPY"' failed.
-
-Internally, LLVM generates an addiw instruction when the output of the
-inline asm (which may be any scalar type) needs to be sign extended for
-ABI reasons, such as a later function call, so that basic block does not
-have to do it.
-
-Use a temporary 64-bit variable as the output of the inline assembly in
-__get_user_asm() and explicitly cast it to truncate it if necessary,
-avoiding the addiw that triggers the assertion.
-
-Link: https://github.com/ClangBuiltLinux/linux/issues/2092
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
-Link: https://patch.msgid.link/20260116-riscv-wa-llvm-asm-goto-outputs-assertion-failure-v3-1-55b5775f989b@kernel.org
-Signed-off-by: Paul Walmsley <pjw@kernel.org>
+Reviewed-by: Nitesh Shetty <nj.shetty@samsung.com>
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/riscv/include/asm/uaccess.h | 14 ++++++++++++--
- 1 file changed, 12 insertions(+), 2 deletions(-)
+ io_uring/rw.c | 15 +++++++++++----
+ 1 file changed, 11 insertions(+), 4 deletions(-)
 
-diff --git a/arch/riscv/include/asm/uaccess.h b/arch/riscv/include/asm/uaccess.h
-index f5f4f7f85543f..1029c31026dcf 100644
---- a/arch/riscv/include/asm/uaccess.h
-+++ b/arch/riscv/include/asm/uaccess.h
-@@ -97,13 +97,23 @@ static inline unsigned long __untagged_addr_remote(struct mm_struct *mm, unsigne
-  */
+diff --git a/io_uring/rw.c b/io_uring/rw.c
+index abe68ba9c9dc8..d7388a4a3ea5e 100644
+--- a/io_uring/rw.c
++++ b/io_uring/rw.c
+@@ -144,19 +144,22 @@ static inline int io_import_rw_buffer(int rw, struct io_kiocb *req,
+ 	return 0;
+ }
  
- #ifdef CONFIG_CC_HAS_ASM_GOTO_OUTPUT
-+/*
-+ * Use a temporary variable for the output of the asm goto to avoid a
-+ * triggering an LLVM assertion due to sign extending the output when
-+ * it is used in later function calls:
-+ * https://github.com/llvm/llvm-project/issues/143795
-+ */
- #define __get_user_asm(insn, x, ptr, label)			\
-+do {								\
-+	u64 __tmp;						\
- 	asm_goto_output(					\
- 		"1:\n"						\
- 		"	" insn " %0, %1\n"			\
- 		_ASM_EXTABLE_UACCESS_ERR(1b, %l2, %0)		\
--		: "=&r" (x)					\
--		: "m" (*(ptr)) : : label)
-+		: "=&r" (__tmp)					\
-+		: "m" (*(ptr)) : : label);			\
-+	(x) = (__typeof__(x))__tmp;				\
-+} while (0)
- #else /* !CONFIG_CC_HAS_ASM_GOTO_OUTPUT */
- #define __get_user_asm(insn, x, ptr, label)			\
- do {								\
+-static void io_rw_recycle(struct io_kiocb *req, unsigned int issue_flags)
++static bool io_rw_recycle(struct io_kiocb *req, unsigned int issue_flags)
+ {
+ 	struct io_async_rw *rw = req->async_data;
+ 
+ 	if (unlikely(issue_flags & IO_URING_F_UNLOCKED))
+-		return;
++		return false;
+ 
+ 	io_alloc_cache_vec_kasan(&rw->vec);
+ 	if (rw->vec.nr > IO_VEC_CACHE_SOFT_CAP)
+ 		io_vec_free(&rw->vec);
+ 
+-	if (io_alloc_cache_put(&req->ctx->rw_cache, rw))
++	if (io_alloc_cache_put(&req->ctx->rw_cache, rw)) {
+ 		io_req_async_data_clear(req, 0);
++		return true;
++	}
++	return false;
+ }
+ 
+ static void io_req_rw_cleanup(struct io_kiocb *req, unsigned int issue_flags)
+@@ -190,7 +193,11 @@ static void io_req_rw_cleanup(struct io_kiocb *req, unsigned int issue_flags)
+ 	 */
+ 	if (!(req->flags & (REQ_F_REISSUE | REQ_F_REFCOUNT))) {
+ 		req->flags &= ~REQ_F_NEED_CLEANUP;
+-		io_rw_recycle(req, issue_flags);
++		if (!io_rw_recycle(req, issue_flags)) {
++			struct io_async_rw *rw = req->async_data;
++
++			io_vec_free(&rw->vec);
++		}
+ 	}
+ }
+ 
 -- 
 2.51.0
 
