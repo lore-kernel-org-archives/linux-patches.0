@@ -1,43 +1,50 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5DBE53783C9;
-	Mon,  9 Feb 2026 14:52:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9531528312F;
+	Mon,  9 Feb 2026 14:52:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770648762; cv=none; b=r/mTd2cSqIU+l9XHH7YFlHOsHQN7nJPzl8VjPxIdLNvERMMZOTCmi+GDE9uoj9OBsw+FWjH4AzqWIcfM5KX3ooLWz4zDni7Zyt8K0rLow5xTrCkhQmMESnWw4lIJRpmgDP6CVvSO62nLbhL4FpRsumgIr/Ab0EyaQWYcNUkEpug=
+	t=1770648765; cv=none; b=QndiOtKzunbmQOx+VsL/6zLJAylcGXGzrAZydVEEB49W6fBeVWWVBOXJsJuwaJl0XRekRK7zyM0n52A2fdOD/R6moMHu4HOc3Twvf0JF3CDQCm3ERvSNJN10SkIFfOko61qPP5TqOMI1kMmvzKL2x+4HP2jKQ5lFVDQNj2WbdEI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770648762; c=relaxed/simple;
-	bh=LUFJjE1gOBOgYT4By1hdLp0hXDM52mW4Wb/Qp7zCVWc=;
+	s=arc-20240116; t=1770648765; c=relaxed/simple;
+	bh=XTX59P6UsPnSKh/pY5slsi6eIpVh6ZE7x5nzecPpZ4k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SJK3dY7Xl92K7twXMI/ki+WcqUcQxe3hTbHeCFeM2Vh7sXAy8iYczrxxfCH1ink40guulXyBpZsqdDzShoZL+78/FKgqnAxD1kYMaPtcUMZXD2J3glM4AZFxCe0pnwYR7QzNktB0ZDWhnpn/Dnil1VIa050e2/caQJypYv5qnbE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GdI0y6Fd; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kdQTY+1kXdgr/JMRgovrBn0KMgKbqVCA7wjKD30C8Y7M2Vr8qcnxR8voPBdqq13/bKnmt6cRpXdn6GsYfRtslxLvy8TeyFRgdUyO/0nxpdAXBH/Iz2NxW5uKO50bM5Ax1DO2+yWgK0Fckog6lNj3WQkd1e7kcLrPh9N1PAOO0mQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GVfLjk3j; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GdI0y6Fd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C58FBC116C6;
-	Mon,  9 Feb 2026 14:52:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GVfLjk3j"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BBF8AC116C6;
+	Mon,  9 Feb 2026 14:52:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770648762;
-	bh=LUFJjE1gOBOgYT4By1hdLp0hXDM52mW4Wb/Qp7zCVWc=;
+	s=korg; t=1770648765;
+	bh=XTX59P6UsPnSKh/pY5slsi6eIpVh6ZE7x5nzecPpZ4k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GdI0y6Fdg3ef0CmY0e6l4lPI8nbHnmo+CwgpbV+b1HX5+D852M/chbp5j9p2Bx8vO
-	 5W4wEGWYqy1/VFRnfvr7K4hg1MrXgzUuch0Axlm/X3dvvtYRcU77PF2lLXjUpQ/W7b
-	 HRrBZrc8fCY4frs9O8HU8yhdCJ4vExQzECzTePdE=
+	b=GVfLjk3jl+4iqxAeqBBtglBbBVDNDNCUmcLj5o5QXK10g1OYof7jXG7TiGMHs4TSZ
+	 /3Ysm7//gONMrq/a+4A6+Bh53VvlDjbk2fqNST0W7jAGKkZwPrLZttxSiHJk5BuJTd
+	 gLvrq6J/w4D8iUEOa99iH98MROvEIFaX/oHpn38g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Simon Horman <horms@kernel.org>,
-	Zilin Guan <zilin@seu.edu.cn>,
-	Kory Maincent <kory.maincent@bootlin.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 26/41] net: liquidio: Fix off-by-one error in PF setup_nic_devices() cleanup
-Date: Mon,  9 Feb 2026 15:24:47 +0100
-Message-ID: <20260209142257.755189989@linuxfoundation.org>
+	Ryusuke Konishi <konishi.ryusuke@gmail.com>,
+	Andrew Cooper <andrew.cooper3@citrix.com>,
+	"Borislav Petkov (AMD)" <bp@alien8.de>,
+	Alexander Potapenko <glider@google.com>,
+	Marco Elver <elver@google.com>,
+	Dmitry Vyukov <dvyukov@google.com>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	Ingo Molnar <mingo@redhat.com>,
+	Dave Hansen <dave.hansen@linux.intel.com>,
+	"H. Peter Anvin" <hpa@zytor.com>,
+	Jann Horn <jannh@google.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 5.15 01/75] x86/kfence: fix booting on 32bit non-PAE systems
+Date: Mon,  9 Feb 2026 15:23:58 +0100
+Message-ID: <20260209142301.887390229@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260209142256.797267956@linuxfoundation.org>
-References: <20260209142256.797267956@linuxfoundation.org>
+In-Reply-To: <20260209142301.830618238@linuxfoundation.org>
+References: <20260209142301.830618238@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,65 +56,72 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.10-stable review patch.  If anyone has any objections, please let me know.
+5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Zilin Guan <zilin@seu.edu.cn>
+From: Andrew Cooper <andrew.cooper3@citrix.com>
 
-[ Upstream commit 8558aef4e8a1a83049ab906d21d391093cfa7e7f ]
+commit 16459fe7e0ca6520a6e8f603de4ccd52b90fd765 upstream.
 
-In setup_nic_devices(), the initialization loop jumps to the label
-setup_nic_dev_free on failure. The current cleanup loop while(i--)
-skip the failing index i, causing a memory leak.
+The original patch inverted the PTE unconditionally to avoid
+L1TF-vulnerable PTEs, but Linux doesn't make this adjustment in 2-level
+paging.
 
-Fix this by changing the loop to iterate from the current index i
-down to 0.
+Adjust the logic to use the flip_protnone_guard() helper, which is a nop
+on 2-level paging but inverts the address bits in all other paging modes.
 
-Also, decrement i in the devlink_alloc failure path to point to the
-last successfully allocated index.
+This doesn't matter for the Xen aspect of the original change.  Linux no
+longer supports running 32bit PV under Xen, and Xen doesn't support
+running any 32bit PV guests without using PAE paging.
 
-Compile tested only. Issue found using code review.
-
-Fixes: f21fb3ed364b ("Add support of Cavium Liquidio ethernet adapters")
-Suggested-by: Simon Horman <horms@kernel.org>
-Signed-off-by: Zilin Guan <zilin@seu.edu.cn>
-Reviewed-by: Kory Maincent <kory.maincent@bootlin.com>
-Link: https://patch.msgid.link/20260128154440.278369-3-zilin@seu.edu.cn
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Link: https://lkml.kernel.org/r/20260126211046.2096622-1-andrew.cooper3@citrix.com
+Fixes: b505f1944535 ("x86/kfence: avoid writing L1TF-vulnerable PTEs")
+Reported-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
+Closes: https://lore.kernel.org/lkml/CAKFNMokwjw68ubYQM9WkzOuH51wLznHpEOMSqtMoV1Rn9JV_gw@mail.gmail.com/
+Signed-off-by: Andrew Cooper <andrew.cooper3@citrix.com>
+Tested-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
+Tested-by: Borislav Petkov (AMD) <bp@alien8.de>
+Cc: Alexander Potapenko <glider@google.com>
+Cc: Marco Elver <elver@google.com>
+Cc: Dmitry Vyukov <dvyukov@google.com>
+Cc: Thomas Gleixner <tglx@linutronix.de>
+Cc: Ingo Molnar <mingo@redhat.com>
+Cc: Dave Hansen <dave.hansen@linux.intel.com>
+Cc: "H. Peter Anvin" <hpa@zytor.com>
+Cc: Jann Horn <jannh@google.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/cavium/liquidio/lio_main.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ arch/x86/include/asm/kfence.h |    7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/ethernet/cavium/liquidio/lio_main.c b/drivers/net/ethernet/cavium/liquidio/lio_main.c
-index 35e46245f1638..c72dbc7252f96 100644
---- a/drivers/net/ethernet/cavium/liquidio/lio_main.c
-+++ b/drivers/net/ethernet/cavium/liquidio/lio_main.c
-@@ -3773,6 +3773,7 @@ static int setup_nic_devices(struct octeon_device *octeon_dev)
- 				sizeof(struct lio_devlink_priv));
- 	if (!devlink) {
- 		dev_err(&octeon_dev->pci_dev->dev, "devlink alloc failed\n");
-+		i--;
- 		goto setup_nic_dev_free;
- 	}
+--- a/arch/x86/include/asm/kfence.h
++++ b/arch/x86/include/asm/kfence.h
+@@ -42,7 +42,7 @@ static inline bool kfence_protect_page(u
+ {
+ 	unsigned int level;
+ 	pte_t *pte = lookup_address(addr, &level);
+-	pteval_t val;
++	pteval_t val, new;
  
-@@ -3793,11 +3794,11 @@ static int setup_nic_devices(struct octeon_device *octeon_dev)
+ 	if (WARN_ON(!pte || level != PG_LEVEL_4K))
+ 		return false;
+@@ -57,11 +57,12 @@ static inline bool kfence_protect_page(u
+ 		return true;
  
- setup_nic_dev_free:
+ 	/*
+-	 * Otherwise, invert the entire PTE.  This avoids writing out an
++	 * Otherwise, flip the Present bit, taking care to avoid writing an
+ 	 * L1TF-vulnerable PTE (not present, without the high address bits
+ 	 * set).
+ 	 */
+-	set_pte(pte, __pte(~val));
++	new = val ^ _PAGE_PRESENT;
++	set_pte(pte, __pte(flip_protnone_guard(val, new, PTE_PFN_MASK)));
  
--	while (i--) {
-+	do {
- 		dev_err(&octeon_dev->pci_dev->dev,
- 			"NIC ifidx:%d Setup failed\n", i);
- 		liquidio_destroy_nic_device(octeon_dev, i);
--	}
-+	} while (i--);
- 
- setup_nic_dev_done:
- 
--- 
-2.51.0
-
+ 	/*
+ 	 * If the page was protected (non-present) and we're making it
 
 
