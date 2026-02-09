@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9452C22301;
-	Mon,  9 Feb 2026 14:44:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D294137AA8A;
+	Mon,  9 Feb 2026 14:45:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770648298; cv=none; b=ZPW0/nixB/ZN7d5ZSyDJXsbNjxiP0jvrjlY6YdDLfeK9IC+YLQ/yCssy64SwIKrsM9ePKrFVhxIay4YiKnMfe9sJDBaqMgmLsNTynrY7CkpXcPf7a+jcUgb5iUPDwncRGNakH9wl82XZGZEm7T+Wehdp3JzXpcNze0jpfMRYOX8=
+	t=1770648301; cv=none; b=sq66FsQPMqUGPLaEZMepRaSUGxO0CmhnFrgOqqXJm4KeFaXUOBbXaIxnaNoeyxXpYQl6z1eTMmZ2YAu1mDMOj34RbDvklXSIt8dNaGdFWY0PQVBnWWcNUOF4fZRqn+CCl2eAhojni/+jQpBNm7jl5CY9b8Xgen6o1byUGmxTGcI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770648298; c=relaxed/simple;
-	bh=BIG8sZnZYpQBN8KLtk8TYUsJysYVJIcz7XdWRyIFVHQ=;
+	s=arc-20240116; t=1770648301; c=relaxed/simple;
+	bh=demjFFJYLBABCcZb/G45LLfBH6zZUfHSqof0znAs0ZA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=J+GXHv2yTlC/2/fAGLVSPzt2nD1NeRUL4QAb8+N7jGZYbofRsZvYQYIywYj6NUekmHUeEs58nuJUzsfb7l/az3WRJ274s//l5qWBhG/i5vTCUkb4OZNH0lT1rOHuU7CEG7PrMVEiSksEgMQaoyLc9bzrnnqCjQ99B49XAJC4tzY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wSdEMEGh; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KPDzVjnEHlsCMYlbQXqqd294eEO4Xtvv1KWuaFWLz1r15WLzetKTUosJpT0LkzxDw8kn0KTrUNw0lc/IOADN3wzSTe43BFr5KrAgqyt1hssEZTs5b5PU5Ab3CFwcQ8aj3udhxo9ejii/hRY/z9FZzs/0MC+RTkmloa1b1kuKhuU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KmhWdXhh; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wSdEMEGh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15FC9C19422;
-	Mon,  9 Feb 2026 14:44:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KmhWdXhh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5738CC116C6;
+	Mon,  9 Feb 2026 14:45:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770648298;
-	bh=BIG8sZnZYpQBN8KLtk8TYUsJysYVJIcz7XdWRyIFVHQ=;
+	s=korg; t=1770648301;
+	bh=demjFFJYLBABCcZb/G45LLfBH6zZUfHSqof0znAs0ZA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wSdEMEGhbaGDBZcCdfrGpGGl68Q7k02ds8Gexh9K9Bck0jXxgpvqMPg5bh87fcf12
-	 7n8B2Qrxo0VxVuesfAA00GnLY1aUqmy2NElDcrDg0fuf+ncZ6bkC1brEStBXs3JTdY
-	 9N8H6OStSsdhdQCQkJUwIaNnq13uOsSO2BJjyL0g=
+	b=KmhWdXhhErtfX6MLeXPrvHYrMU4Czp9ksNZ1L87imzotDWlr0OVi/7Mzq0Tws2xli
+	 uxTcVpWfG037ZKeqS7prur9HAfzTf0Xff4wi00Fo5TbMq+Fo10dLU7I75f6u4tHHnh
+	 k1OdOxGSk8hcEbhKQ7gxp8lTdTWZHHLHAKPfGQaI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yi Zhang <yi.zhang@redhat.com>,
-	Justin Tee <justin.tee@broadcom.com>,
-	Chaitanya Kulkarni <ckulkarnilinux@gmail.com>,
-	Keith Busch <kbusch@kernel.org>,
+	Breno Leitao <leitao@debian.org>,
+	Jon Hunter <jonathanh@nvidia.com>,
+	Thierry Reding <treding@nvidia.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 38/69] nvme-fc: release admin tagset if init fails
-Date: Mon,  9 Feb 2026 15:24:06 +0100
-Message-ID: <20260209142303.296273241@linuxfoundation.org>
+Subject: [PATCH 6.1 65/69] spi: tegra210-quad: Protect curr_xfer assignment in tegra_qspi_setup_transfer_one
+Date: Mon,  9 Feb 2026 15:24:33 +0100
+Message-ID: <20260209142304.264326474@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260209142301.913348974@linuxfoundation.org>
 References: <20260209142301.913348974@linuxfoundation.org>
@@ -53,50 +53,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chaitanya Kulkarni <ckulkarnilinux@gmail.com>
+From: Breno Leitao <leitao@debian.org>
 
-[ Upstream commit d1877cc7270302081a315a81a0ee8331f19f95c8 ]
+[ Upstream commit f5a4d7f5e32ba163cff893493ec1cbb0fd2fb0d5 ]
 
-nvme_fabrics creates an NVMe/FC controller in following path:
+When the timeout handler processes a completed transfer and signals
+completion, the transfer thread can immediately set up the next transfer
+and assign curr_xfer to point to it.
 
-    nvmf_dev_write()
-      -> nvmf_create_ctrl()
-        -> nvme_fc_create_ctrl()
-          -> nvme_fc_init_ctrl()
+If a delayed ISR from the previous transfer then runs, it checks if
+(!tqspi->curr_xfer) (currently without the lock also -- to be fixed
+soon) to detect stale interrupts, but this check passes because
+curr_xfer now points to the new transfer. The ISR then incorrectly
+processes the new transfer's context.
 
-nvme_fc_init_ctrl() allocates the admin blk-mq resources right after
-nvme_add_ctrl() succeeds.  If any of the subsequent steps fail (changing
-the controller state, scheduling connect work, etc.), we jump to the
-fail_ctrl path, which tears down the controller references but never
-frees the admin queue/tag set.  The leaked blk-mq allocations match the
-kmemleak report seen during blktests nvme/fc.
+Protect the curr_xfer assignment with the spinlock to ensure the ISR
+either sees NULL (and bails out) or sees the new value only after the
+assignment is complete.
 
-Check ctrl->ctrl.admin_tagset in the fail_ctrl path and call
-nvme_remove_admin_tag_set() when it is set so that all admin queue
-allocations are reclaimed whenever controller setup aborts.
-
-Reported-by: Yi Zhang <yi.zhang@redhat.com>
-Reviewed-by: Justin Tee <justin.tee@broadcom.com>
-Signed-off-by: Chaitanya Kulkarni <ckulkarnilinux@gmail.com>
-Signed-off-by: Keith Busch <kbusch@kernel.org>
+Fixes: 921fc1838fb0 ("spi: tegra210-quad: Add support for Tegra210 QSPI controller")
+Signed-off-by: Breno Leitao <leitao@debian.org>
+Tested-by: Jon Hunter <jonathanh@nvidia.com>
+Acked-by: Jon Hunter <jonathanh@nvidia.com>
+Acked-by: Thierry Reding <treding@nvidia.com>
+Link: https://patch.msgid.link/20260126-tegra_xfer-v2-3-6d2115e4f387@debian.org
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/host/fc.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/spi/spi-tegra210-quad.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/nvme/host/fc.c b/drivers/nvme/host/fc.c
-index dc84cade703db..63bef22095b41 100644
---- a/drivers/nvme/host/fc.c
-+++ b/drivers/nvme/host/fc.c
-@@ -3563,6 +3563,8 @@ nvme_fc_init_ctrl(struct device *dev, struct nvmf_ctrl_options *opts,
+diff --git a/drivers/spi/spi-tegra210-quad.c b/drivers/spi/spi-tegra210-quad.c
+index c0cc5bd7e6d2f..d3d3e698bffa1 100644
+--- a/drivers/spi/spi-tegra210-quad.c
++++ b/drivers/spi/spi-tegra210-quad.c
+@@ -813,6 +813,7 @@ static u32 tegra_qspi_setup_transfer_one(struct spi_device *spi, struct spi_tran
+ 	u32 command1, command2, speed = t->speed_hz;
+ 	u8 bits_per_word = t->bits_per_word;
+ 	u32 tx_tap = 0, rx_tap = 0;
++	unsigned long flags;
+ 	int req_mode;
  
- 	ctrl->ctrl.opts = NULL;
+ 	if (!has_acpi_companion(tqspi->dev) && speed != tqspi->cur_speed) {
+@@ -820,10 +821,12 @@ static u32 tegra_qspi_setup_transfer_one(struct spi_device *spi, struct spi_tran
+ 		tqspi->cur_speed = speed;
+ 	}
  
-+	if (ctrl->ctrl.admin_tagset)
-+		nvme_remove_admin_tag_set(&ctrl->ctrl);
- 	/* initiate nvme ctrl ref counting teardown */
- 	nvme_uninit_ctrl(&ctrl->ctrl);
++	spin_lock_irqsave(&tqspi->lock, flags);
+ 	tqspi->cur_pos = 0;
+ 	tqspi->cur_rx_pos = 0;
+ 	tqspi->cur_tx_pos = 0;
+ 	tqspi->curr_xfer = t;
++	spin_unlock_irqrestore(&tqspi->lock, flags);
  
+ 	if (is_first_of_msg) {
+ 		tegra_qspi_mask_clear_irq(tqspi);
 -- 
 2.51.0
 
