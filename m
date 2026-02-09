@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18CFC28725B;
-	Mon,  9 Feb 2026 14:49:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A29B2BCF4C;
+	Mon,  9 Feb 2026 14:49:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770648560; cv=none; b=WLmiOw1CFpAJsD9h3RrZYRD2R8BAEy/ks4kc/kj6BedKgpIqOakru14GZwFFC4OawNlLXrHd5oaSUlmaAIZuzA6TPFEIUBMMT8pWo5mVbuR2csSXVxJ59C9PZ1nkxsKMAXqNTPZk5qQHuXYsg/XDOETTxrD/cx/7SZsdN6/WOxU=
+	t=1770648563; cv=none; b=sIB+PnaReUzbU1tAZolmrGydI/1m8KL/OjdruD2kO1hfmsmhkJn2/THA+KpkWm9BIZz5tUvzT+9taP/3YOabIPGTIngFVoXG3hGWHQYBbzM0LAFGL5E4tIKVnbdNTSDjuUpkPgUcUV+50Tkj0IqcFb8LWUBFzkf/KnZt/ytfwe0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770648560; c=relaxed/simple;
-	bh=+zOdDjMUlugcusDKSQyPB/RkXnSTcrEJlG280bdizWI=;
+	s=arc-20240116; t=1770648563; c=relaxed/simple;
+	bh=m0xnBI7pmWDRuhnh2KQ7J+5f/+FS3fET22UNnKPugbY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mKH/TRHGRUPYmQBDl6W3XGQ/Ur8pH9MIvXfcFCxLy7H/rHUKOBAUZLs/pHxCuThKU6/t1kLUxO792WVylep/KKNsYAEHApV6R/stSmAcpdv0KBwh77EkKn3JSDiQPsrtBoxlAVYcpGdLwFCvTpFV4wyTZsORt3I+/KI+d6oL+Bk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Aqp8FTMj; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=kBuOVfZ4bQjMyDGgcas9SqQL7iRAUkXuRclaOzhIJMCcmM72P+ctY+6gRDtBhV0z6ATdoHWbBynvtTD2z56N8au1TSlhujEnixCP01RgXl5WGD7sqXtSxwKEoSed73tUnqO103bhIJLBE3k2NTDp8cmeNWSuohP3D0G0KOdhRXU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UODiQzx9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Aqp8FTMj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 841AAC116C6;
-	Mon,  9 Feb 2026 14:49:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UODiQzx9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B0791C19422;
+	Mon,  9 Feb 2026 14:49:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770648560;
-	bh=+zOdDjMUlugcusDKSQyPB/RkXnSTcrEJlG280bdizWI=;
+	s=korg; t=1770648563;
+	bh=m0xnBI7pmWDRuhnh2KQ7J+5f/+FS3fET22UNnKPugbY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Aqp8FTMj8f8aA8hcn3wQoyIqoFpAKInP/7Ttv0ZcmQ+m3EykH2cGns4HKdzYKwpV7
-	 Ob0pvmkBqS1KaR9UjoSnRyyyzr3XNa41DsS5oyveo/5OhdQCGQ/dcnpbuvkTbJSP7+
-	 h27VDLPePJazpGp0Z9VMUPkmUVAK3RlcRI0vq/zI=
+	b=UODiQzx93cJVsBsMNOJuhRUvg31kSHtbfI3kYsKfg61enXpoAcKkjWJcrSJaJkfkl
+	 Y40kPQmTVmDOC6ELQ2TUSF0o6GksjpBXTIs2NjW+CBPniKZ/porh1bMGc7QUMIx66o
+	 8Fwv3kmStgAU8b/MconWI3gZ3QOb8I/JEu6MMplk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+cb809def1baaac68ab92@syzkaller.appspotmail.com,
-	Shigeru Yoshida <syoshida@redhat.com>,
-	Fernando Fernandez Mancera <fmancera@suse.de>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Alain Cousinie <alain.cousinie@laposte.net>,
+	Mario Limonciello <mario.limonciello@amd.com>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 75/86] ipv6: Fix ECMP sibling count mismatch when clearing RTF_ADDRCONF
-Date: Mon,  9 Feb 2026 15:24:38 +0100
-Message-ID: <20260209142307.474941853@linuxfoundation.org>
+Subject: [PATCH 6.6 58/86] platform/x86: hp-bioscfg: Skip empty attribute names
+Date: Mon,  9 Feb 2026 15:24:21 +0100
+Message-ID: <20260209142306.866358404@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260209142304.770150175@linuxfoundation.org>
 References: <20260209142304.770150175@linuxfoundation.org>
@@ -47,97 +46,48 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Shigeru Yoshida <syoshida@redhat.com>
+From: Mario Limonciello <mario.limonciello@amd.com>
 
-[ Upstream commit bbf4a17ad9ffc4e3d7ec13d73ecd59dea149ed25 ]
+[ Upstream commit 6222883af286e2feb3c9ff2bf9fd8fdf4220c55a ]
 
-syzbot reported a kernel BUG in fib6_add_rt2node() when adding an IPv6
-route. [0]
+Avoid registering kobjects with empty names when a BIOS attribute
+name decodes to an empty string.
 
-Commit f72514b3c569 ("ipv6: clear RA flags when adding a static
-route") introduced logic to clear RTF_ADDRCONF from existing routes
-when a static route with the same nexthop is added. However, this
-causes a problem when the existing route has a gateway.
-
-When RTF_ADDRCONF is cleared from a route that has a gateway, that
-route becomes eligible for ECMP, i.e. rt6_qualify_for_ecmp() returns
-true. The issue is that this route was never added to the
-fib6_siblings list.
-
-This leads to a mismatch between the following counts:
-
-- The sibling count computed by iterating fib6_next chain, which
-  includes the newly ECMP-eligible route
-
-- The actual siblings in fib6_siblings list, which does not include
-  that route
-
-When a subsequent ECMP route is added, fib6_add_rt2node() hits
-BUG_ON(sibling->fib6_nsiblings != rt->fib6_nsiblings) because the
-counts don't match.
-
-Fix this by only clearing RTF_ADDRCONF when the existing route does
-not have a gateway. Routes without a gateway cannot qualify for ECMP
-anyway (rt6_qualify_for_ecmp() requires fib_nh_gw_family), so clearing
-RTF_ADDRCONF on them is safe and matches the original intent of the
-commit.
-
-[0]:
-kernel BUG at net/ipv6/ip6_fib.c:1217!
-Oops: invalid opcode: 0000 [#1] SMP KASAN PTI
-CPU: 0 UID: 0 PID: 6010 Comm: syz.0.17 Not tainted syzkaller #0 PREEMPT(full)
-Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 10/25/2025
-RIP: 0010:fib6_add_rt2node+0x3433/0x3470 net/ipv6/ip6_fib.c:1217
-[...]
-Call Trace:
- <TASK>
- fib6_add+0x8da/0x18a0 net/ipv6/ip6_fib.c:1532
- __ip6_ins_rt net/ipv6/route.c:1351 [inline]
- ip6_route_add+0xde/0x1b0 net/ipv6/route.c:3946
- ipv6_route_ioctl+0x35c/0x480 net/ipv6/route.c:4571
- inet6_ioctl+0x219/0x280 net/ipv6/af_inet6.c:577
- sock_do_ioctl+0xdc/0x300 net/socket.c:1245
- sock_ioctl+0x576/0x790 net/socket.c:1366
- vfs_ioctl fs/ioctl.c:51 [inline]
- __do_sys_ioctl fs/ioctl.c:597 [inline]
- __se_sys_ioctl+0xfc/0x170 fs/ioctl.c:583
- do_syscall_x64 arch/x86/entry/syscall_64.c:63 [inline]
- do_syscall_64+0xfa/0xf80 arch/x86/entry/syscall_64.c:94
- entry_SYSCALL_64_after_hwframe+0x77/0x7f
-
-Fixes: f72514b3c569 ("ipv6: clear RA flags when adding a static route")
-Reported-by: syzbot+cb809def1baaac68ab92@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=cb809def1baaac68ab92
-Tested-by: syzbot+cb809def1baaac68ab92@syzkaller.appspotmail.com
-Signed-off-by: Shigeru Yoshida <syoshida@redhat.com>
-Reviewed-by: Fernando Fernandez Mancera <fmancera@suse.de>
-Link: https://patch.msgid.link/20260204095837.1285552-1-syoshida@redhat.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: a34fc329b1895 ("platform/x86: hp-bioscfg: bioscfg")
+Reported-by: Alain Cousinie <alain.cousinie@laposte.net>
+Closes: https://lore.kernel.org/platform-driver-x86/22ed5f78-c8bf-4ab4-8c38-420cc0201e7e@laposte.net/
+Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
+Link: https://patch.msgid.link/20260128190501.2170068-1-mario.limonciello@amd.com
+Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv6/ip6_fib.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/platform/x86/hp/hp-bioscfg/bioscfg.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/net/ipv6/ip6_fib.c b/net/ipv6/ip6_fib.c
-index 646ff1276aff2..fe57884ca7238 100644
---- a/net/ipv6/ip6_fib.c
-+++ b/net/ipv6/ip6_fib.c
-@@ -1136,7 +1136,8 @@ static int fib6_add_rt2node(struct fib6_node *fn, struct fib6_info *rt,
- 					fib6_set_expires(iter, rt->expires);
- 					fib6_add_gc_list(iter);
- 				}
--				if (!(rt->fib6_flags & (RTF_ADDRCONF | RTF_PREFIX_RT))) {
-+				if (!(rt->fib6_flags & (RTF_ADDRCONF | RTF_PREFIX_RT)) &&
-+				    !iter->fib6_nh->fib_nh_gw_family) {
- 					iter->fib6_flags &= ~RTF_ADDRCONF;
- 					iter->fib6_flags &= ~RTF_PREFIX_RT;
- 				}
+diff --git a/drivers/platform/x86/hp/hp-bioscfg/bioscfg.c b/drivers/platform/x86/hp/hp-bioscfg/bioscfg.c
+index e9bade74997bf..ec7a74bee803a 100644
+--- a/drivers/platform/x86/hp/hp-bioscfg/bioscfg.c
++++ b/drivers/platform/x86/hp/hp-bioscfg/bioscfg.c
+@@ -701,6 +701,11 @@ static int hp_init_bios_package_attribute(enum hp_wmi_data_type attr_type,
+ 		return ret;
+ 	}
+ 
++	if (!str_value || !str_value[0]) {
++		pr_debug("Ignoring attribute with empty name\n");
++		goto pack_attr_exit;
++	}
++
+ 	/* All duplicate attributes found are ignored */
+ 	duplicate = kset_find_obj(temp_kset, str_value);
+ 	if (duplicate) {
 -- 
 2.51.0
 
