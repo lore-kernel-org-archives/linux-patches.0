@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B991B1AF0AF;
-	Mon,  9 Feb 2026 14:34:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32D811AF0AF;
+	Mon,  9 Feb 2026 14:34:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770647651; cv=none; b=JKTSYz2UNbJ1S8U+Hldv44EtSYc/9iPqkLgPEEiSMP4YgTSy4+TdIG7qgWzpsqFqNzPU2KFWAdDK0Lk0/dZu5ArAyEAS7i9PDhghnrfviPeL6S20Z4xKWCTu2lPKBXtsWqYjYdyQJzSuk8NYlEIqT0zZDt12zCFgeUoZ3OiVyTQ=
+	t=1770647655; cv=none; b=GcSNiGgxf8cOWBecv7sDrDxv/PQ897yAWKYN9t3qSPy5yaRjZBwmdMUGRIf4nvk+rhISefPqzVr768upqmDJ0zhX7jTPFnZxOw3thSTpKr/cvAlvxyce7sMAmsZezeVDEegw90VxaAfgxK4feL8iBZPKNwPwB9fFa/VsBn0PmdI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770647651; c=relaxed/simple;
-	bh=uks4yrUnYFU2qGNWe2UqdyLeghhPIq1Y3q234jE88f0=;
+	s=arc-20240116; t=1770647655; c=relaxed/simple;
+	bh=pgkdTqdUvC2ENs9i27WKqRz3mDTkEsW/KC70GD40QXo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=STKL3N/bAcMSeTSU37WVSm/Ig5/n7K0orszEp9iuZVsygEiTcMo3oRwmCH3ZIPFUx8yrLJkn3RDCJCeM+7UGCrHJoOi+8udLwEJ2pX8Eg/24ZYk8SRoD1dJdYcDwPf1dAhTxcRD1D338ybh/arUWAJM0H4pUzazu/kA079lPFt0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vygJpKiM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=gqlqk+5bFbKKm9r5zQbwUKGoL3cFG0TLye3iqSOFo8EubVCEjIO4WUAyJOS5Z9/P/+ld9uc/1/W65g2fjcYY8AtfuQPIv5Znm62RJxBb/Jgo0rQ1pY772yAC06J1IdT5+nUMz2/R1boygJzyiwtkUTZs3ZCn3rviYoMfZWrUrec=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=j+juyfJe; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vygJpKiM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 41B73C116C6;
-	Mon,  9 Feb 2026 14:34:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="j+juyfJe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B20CC116C6;
+	Mon,  9 Feb 2026 14:34:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770647651;
-	bh=uks4yrUnYFU2qGNWe2UqdyLeghhPIq1Y3q234jE88f0=;
+	s=korg; t=1770647655;
+	bh=pgkdTqdUvC2ENs9i27WKqRz3mDTkEsW/KC70GD40QXo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vygJpKiMOyqmjEG1sxunCJeAkj3ghm6xDdXOPeWWD8WbEA+G240bJP5qOwo/zTwMO
-	 z5p73oR9OCUg2Hvt9+jBRV41C1qTgWx+BYy8J3H72uLubEvy8uuv5snA4Lhr12IjlS
-	 A9IqLiWTv58lK0LK+tMqmwTGTTKl6h/UYJqz9Hzc=
+	b=j+juyfJei95JeiBJ1DGqwFq4vbyAXjuCZowghM9BV1u2xPb109b3HKZZQchYs7msL
+	 Svy24EvZqftfQO4Q8OZWerW7ECggsrq0eHzQukhyJB4zqGMrDItJHizCS2i1Q94Par
+	 2wxOOo99DeUHSTBCTvSPP4K77qYctz07mTyrFXvk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mohammad Heib <mheib@redhat.com>,
-	Aleksandr Loktionov <aleksandr.loktionov@intel.com>,
-	Paul Menzel <pmenzel@molgen.mpg.de>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>,
-	Sasha Levin <sashal@kernel.org>,
-	Rinitha S <sx.rinitha@intel.com>
-Subject: [PATCH 6.18 130/175] i40e: drop udp_tunnel_get_rx_info() call from i40e_open()
-Date: Mon,  9 Feb 2026 15:23:23 +0100
-Message-ID: <20260209142325.188150212@linuxfoundation.org>
+	=?UTF-8?q?Marek=20Beh=C3=BAn?= <kabel@kernel.org>,
+	Maxime Chevallier <maxime.chevallier@bootlin.com>,
+	"Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.18 131/175] net: sfp: Fix quirk for Ubiquiti U-Fiber Instant SFP module
+Date: Mon,  9 Feb 2026 15:23:24 +0100
+Message-ID: <20260209142325.224427566@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260209142320.474120190@linuxfoundation.org>
 References: <20260209142320.474120190@linuxfoundation.org>
@@ -48,66 +47,57 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Mohammad Heib <mheib@redhat.com>
+From: Marek Behún <kabel@kernel.org>
 
-[ Upstream commit 40857194956dcaf3d2b66d6bd113d844c93bef54 ]
+[ Upstream commit adcbadfd8e05d3558c9cfaa783f17c645181165f ]
 
-The i40e driver calls udp_tunnel_get_rx_info() during i40e_open().
-This is redundant because UDP tunnel RX offload state is preserved
-across device down/up cycles. The udp_tunnel core handles
-synchronization automatically when required.
+Commit fd580c9830316eda ("net: sfp: augment SFP parsing with
+phy_interface_t bitmap") did not add augumentation for the interface
+bitmap in the quirk for Ubiquiti U-Fiber Instant.
 
-Furthermore, recent changes in the udp_tunnel infrastructure require
-querying RX info while holding the udp_tunnel lock. Calling it
-directly from the ndo_open path violates this requirement,
-triggering the following lockdep warning:
+The subsequent commit f81fa96d8a6c7a77 ("net: phylink: use
+phy_interface_t bitmaps for optical modules") then changed phylink code
+for selection of SFP interface: instead of using link mode bitmap, the
+interface bitmap is used, and the fastest interface mode supported by
+both SFP module and MAC is chosen.
 
-  Call Trace:
-   <TASK>
-   ? __udp_tunnel_nic_assert_locked+0x39/0x40 [udp_tunnel]
-   i40e_open+0x135/0x14f [i40e]
-   __dev_open+0x121/0x2e0
-   __dev_change_flags+0x227/0x270
-   dev_change_flags+0x3d/0xb0
-   devinet_ioctl+0x56f/0x860
-   sock_do_ioctl+0x7b/0x130
-   __x64_sys_ioctl+0x91/0xd0
-   do_syscall_64+0x90/0x170
-   ...
-   </TASK>
+Since the interface bitmap contains also modes faster than 1000base-x,
+this caused a regression wherein this module stopped working
+out-of-the-box.
 
-Remove the redundant and unsafe call to udp_tunnel_get_rx_info() from
-i40e_open() resolve the locking violation.
+Fix this.
 
-Fixes: 1ead7501094c ("udp_tunnel: remove rtnl_lock dependency")
-Signed-off-by: Mohammad Heib <mheib@redhat.com>
-Reviewed-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
-Reviewed-by: Paul Menzel <pmenzel@molgen.mpg.de>
-Tested-by: Rinitha S <sx.rinitha@intel.com> (A Contingent worker at Intel)
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+Fixes: fd580c9830316eda ("net: sfp: augment SFP parsing with phy_interface_t bitmap")
+Signed-off-by: Marek Behún <kabel@kernel.org>
+Reviewed-by: Maxime Chevallier <maxime.chevallier@bootlin.com>
+Reviewed-by: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
+Link: https://patch.msgid.link/20260129082227.17443-1-kabel@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/i40e/i40e_main.c | 1 -
- 1 file changed, 1 deletion(-)
+ drivers/net/phy/sfp.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/net/ethernet/intel/i40e/i40e_main.c b/drivers/net/ethernet/intel/i40e/i40e_main.c
-index 0b1cc0481027a..d3bc3207054f9 100644
---- a/drivers/net/ethernet/intel/i40e/i40e_main.c
-+++ b/drivers/net/ethernet/intel/i40e/i40e_main.c
-@@ -9030,7 +9030,6 @@ int i40e_open(struct net_device *netdev)
- 						       TCP_FLAG_FIN |
- 						       TCP_FLAG_CWR) >> 16);
- 	wr32(&pf->hw, I40E_GLLAN_TSOMSK_L, be32_to_cpu(TCP_FLAG_CWR) >> 16);
--	udp_tunnel_get_rx_info(netdev);
- 
- 	return 0;
+diff --git a/drivers/net/phy/sfp.c b/drivers/net/phy/sfp.c
+index 47f095bd91cea..3e023723887c4 100644
+--- a/drivers/net/phy/sfp.c
++++ b/drivers/net/phy/sfp.c
+@@ -479,6 +479,8 @@ static void sfp_quirk_ubnt_uf_instant(const struct sfp_eeprom_id *id,
+ 	linkmode_zero(caps->link_modes);
+ 	linkmode_set_bit(ETHTOOL_LINK_MODE_1000baseX_Full_BIT,
+ 			 caps->link_modes);
++	phy_interface_zero(caps->interfaces);
++	__set_bit(PHY_INTERFACE_MODE_1000BASEX, caps->interfaces);
  }
+ 
+ #define SFP_QUIRK(_v, _p, _s, _f) \
 -- 
 2.51.0
 
