@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57E4428312F;
-	Mon,  9 Feb 2026 14:54:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9346428312F;
+	Mon,  9 Feb 2026 14:54:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770648883; cv=none; b=GuWohZHk2vT4HCKiqCvqwh/B43pc1j/om/iVt8/XZsSiNNUmIZMu+sxH/lSLGi7lMe/TkTYPg3+ceUD3a1P3aIMUl6HI2SgYzrB9BwiXfn07XqO9mCuwv2txqRZCFBieuJluZAbdtWm/qdSGkXsm5afwTrVYJUEAWBVYI75Rbis=
+	t=1770648886; cv=none; b=pE+3pRgEP7jHED82/IZFPrzWILvgK9UfGfu5jkn7fOn4oZT462kawbNngTdVg/vwmey0LRcz8of/Jbj2ds5TUoA16TCgrnI0PB1aQ7w49u4ScWXSkgIT4nupihSG8yzmdi2fbEOxGmrg9TLNHQMMUPx/hQspKso/Tc5pbS+8Ey8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770648883; c=relaxed/simple;
-	bh=vnVqSDCGN2ZWWl3N0uKW0TWJ1LhWvR2mI2IFU/hm+6k=;
+	s=arc-20240116; t=1770648886; c=relaxed/simple;
+	bh=X0qpP40U0Ahb1+kTxIbYuD8P5mRh34l8TYmUJnHLfVs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=do/hkPyec3zNDLLZt9ogWIwBK9LmjnTbBZKefdfCE2oKSwpXx/OiRIUWpkK2ZLHaeVVAV3dsr2SdCBeNbHz3T3YnI24TirTqC5uQpC2MR3m9aAIJ62lqSmt4JMGZITtpip3e5Yowg21yaKAdNGBUaQkoAtSYfSJke4VnckcK3kM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=k5UdBTKK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=i9xi7yXw3LoEcvnnHE0sspU2jvKwdrraRGboAQ2rqy4vOlsT9UsOt1LChxH9uhvpmh2wlOrxCDcxhQXMapAAnT6jp705vZ63eiT0M39Z9oYrpgJAdKZfDQhXDeTttSV4gFp7PIQ+PhnR2FgpFUVOL2cOLAhSOsSJDmrt+Wh9Koo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=urF+MjdP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="k5UdBTKK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B48E2C116C6;
-	Mon,  9 Feb 2026 14:54:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="urF+MjdP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 028FAC116C6;
+	Mon,  9 Feb 2026 14:54:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770648883;
-	bh=vnVqSDCGN2ZWWl3N0uKW0TWJ1LhWvR2mI2IFU/hm+6k=;
+	s=korg; t=1770648886;
+	bh=X0qpP40U0Ahb1+kTxIbYuD8P5mRh34l8TYmUJnHLfVs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=k5UdBTKKwXD5xz6F06zzNg4F7mbqsmixyoJTMJbspeGx5sLZNHRTIpS74fdF3hhDW
-	 MHKjcR/GbMDKivwJJcNSYIuzpAEVn3MdxmNpjOSOY3HtTzA0ejOLqf4PCUi5eMKenf
-	 clUHyki1mQ003L1T37be9V3HZfEXzr4XDMTga2Ss=
+	b=urF+MjdPo5vevtQmRZl2zIrB+oNlUaUzH+0PaMD+VPElSZlngBmiE72H2IEPa10MC
+	 ldh4z6wIgg/jFyZN87qvp9pj8bBiYKjp6neOUVMGUgvCCgsbzxiPWgw1SqkBj1+KAq
+	 +jD4ZzUVMLdMfYM0sB8EL/5fHpI5MzsuLjFUECck=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johannes Berg <johannes.berg@intel.com>,
-	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 43/75] wifi: mac80211: dont increment crypto_tx_tailroom_needed_cnt twice
-Date: Mon,  9 Feb 2026 15:24:40 +0100
-Message-ID: <20260209142303.396275185@linuxfoundation.org>
+Subject: [PATCH 5.15 44/75] platform/x86: toshiba_haps: Fix memory leaks in add/remove routines
+Date: Mon,  9 Feb 2026 15:24:41 +0100
+Message-ID: <20260209142303.431977231@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260209142301.830618238@linuxfoundation.org>
 References: <20260209142301.830618238@linuxfoundation.org>
@@ -51,47 +50,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Miri Korenblit <miriam.rachel.korenblit@intel.com>
+From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 
-[ Upstream commit 3f3d8ff31496874a69b131866f62474eb24ed20a ]
+[ Upstream commit 128497456756e1b952bd5a912cd073836465109d ]
 
-In reconfig, in case the driver asks to disconnect during the reconfig,
-all the keys of the interface are marked as tainted.
-Then ieee80211_reenable_keys will loop over all the interface keys, and
-for each one it will
-a) increment crypto_tx_tailroom_needed_cnt
-b) call ieee80211_key_enable_hw_accel, which in turn will detect that
-this key is tainted, so it will mark it as "not in hardware", which is
-paired with crypto_tx_tailroom_needed_cnt incrementation, so we get two
-incrementations for each tainted key.
-Then we get a warning in ieee80211_free_keys.
+toshiba_haps_add() leaks the haps object allocated by it if it returns
+an error after allocating that object successfully.
 
-To fix it, don't increment the count in ieee80211_reenable_keys for
-tainted keys
+toshiba_haps_remove() does not free the object pointed to by
+toshiba_haps before clearing that pointer, so it becomes unreachable
+allocated memory.
 
-Reviewed-by: Johannes Berg <johannes.berg@intel.com>
-Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
-Link: https://patch.msgid.link/20260118092821.4ca111fddcda.Id6e554f4b1c83760aa02d5a9e4e3080edb197aa2@changeid
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Address these memory leaks by using devm_kzalloc() for allocating
+the memory in question.
+
+Fixes: 23d0ba0c908a ("platform/x86: Toshiba HDD Active Protection Sensor")
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/mac80211/key.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/platform/x86/toshiba_haps.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/mac80211/key.c b/net/mac80211/key.c
-index c755e3b332de0..88cf9e63dffe2 100644
---- a/net/mac80211/key.c
-+++ b/net/mac80211/key.c
-@@ -910,7 +910,8 @@ void ieee80211_reenable_keys(struct ieee80211_sub_if_data *sdata)
+diff --git a/drivers/platform/x86/toshiba_haps.c b/drivers/platform/x86/toshiba_haps.c
+index 49e84095bb010..8a53f6119fed1 100644
+--- a/drivers/platform/x86/toshiba_haps.c
++++ b/drivers/platform/x86/toshiba_haps.c
+@@ -185,7 +185,7 @@ static int toshiba_haps_add(struct acpi_device *acpi_dev)
  
- 	if (ieee80211_sdata_running(sdata)) {
- 		list_for_each_entry(key, &sdata->key_list, list) {
--			increment_tailroom_need_count(sdata);
-+			if (!(key->flags & KEY_FLAG_TAINTED))
-+				increment_tailroom_need_count(sdata);
- 			ieee80211_key_enable_hw_accel(key);
- 		}
- 	}
+ 	pr_info("Toshiba HDD Active Protection Sensor device\n");
+ 
+-	haps = kzalloc(sizeof(struct toshiba_haps_dev), GFP_KERNEL);
++	haps = devm_kzalloc(&acpi_dev->dev, sizeof(*haps), GFP_KERNEL);
+ 	if (!haps)
+ 		return -ENOMEM;
+ 
 -- 
 2.51.0
 
