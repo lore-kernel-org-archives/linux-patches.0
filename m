@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5494323B604;
-	Mon,  9 Feb 2026 14:30:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2C7A2222B2;
+	Mon,  9 Feb 2026 14:30:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770647422; cv=none; b=igwdmWGnq9nnDiCommNiB/7ClRWtpLlgsUSZUsTQcBnsGMh5Q6+dKwkJeuN+Oy+nqtzDl80QJ0Q/OkuVI5UDcTY4m5ebhzZGNZSJn604yhL4M9T0rysYq+ezIkk1/Iy27lgerlthDsuWO8kxhR2xMucnK+DLNJgw5i6s602Yt8A=
+	t=1770647426; cv=none; b=btNtoafdgI93/Vah8QfbSLy/XNDrAj9fekkokz6VGjE66g9foqJYu2O0Y1jYjW+Im39MGdk+80Recrp4hvrpYTXDzp77fGjREcaOccs9wtcOgFArmcmyNGE+HZUZT1ncpvoDB91YJdXHmm7US8oVWUD6hJP7HpUd1vdB1mGleu0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770647422; c=relaxed/simple;
-	bh=3P0RuQSWcTdJzF5vSGYHOpy69VZPIyhOgPm3cfVFHMA=;
+	s=arc-20240116; t=1770647426; c=relaxed/simple;
+	bh=apiU+6927U09mwqtQA0FeLB+FJu51pNcImVSmTkztaQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fGxwWGNP25s2u6nXTqAUU5T1lRk4Ppe0fo5DsFfHozFpsL4yjGuA8SX/qUNSxpVnljWvI7uvCUr7v1DKgAXjCZHuTj2ax1jQLibTCqFu2RcIz+NLwemWymMLW1FIaM6Ls9A46zMUPZDZBrRFCNGzTzb4Qjkfag9dqk1V5MND8Sc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wCduCSUI; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=EZZzvMeS0qdKF55ThZQ7zcXwtNBGy9s9pxmxLVpN4VpbX60WUdmo/U64sC3SX/wIdpsNPmjD648pQrgE8QtJTiKzCcAhYlJL8kyR9mQyUSm/OOqdYNp+/Kfh6j5Uf/Vd8EnGDbSNr7nifT/oeJDnEziecHyU+rRrJXEIz0wljzo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uZ8O6LdK; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wCduCSUI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A690C116C6;
-	Mon,  9 Feb 2026 14:30:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uZ8O6LdK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29946C116C6;
+	Mon,  9 Feb 2026 14:30:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770647422;
-	bh=3P0RuQSWcTdJzF5vSGYHOpy69VZPIyhOgPm3cfVFHMA=;
+	s=korg; t=1770647425;
+	bh=apiU+6927U09mwqtQA0FeLB+FJu51pNcImVSmTkztaQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wCduCSUItZBvU5OjM/UknGawRVeqj0q+k+mGCjJjTKpAkqk9/Id0JwqD3w5jZnG/A
-	 60CR13kCpYJg2IEavxX2pL2bS+cbyF+rdruruJvNeBq2eHLkPGql2+EgGjN4vsfKNO
-	 +NwevbOTEfrs6qcTFdZ2TNtag3l5phaDzT9frDXo=
+	b=uZ8O6LdKDM+ZekEECBYstgnmZdy10rlJsUa9YPt0jfFy8g7YzlAMkwLZNxs/+RvKn
+	 NincmSoPhm8wnk6i+x7xcCOrUiCdekmDoenGAt6OlQQ/QEWAicP1/h+qn/5yzmdQeN
+	 ESmwOe8T21qSUU3RnJPNwBJndqL0l16E4TwlWfew=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kaushlendra Kumar <kaushlendra.kumar@intel.com>,
-	Mark Brown <broonie@kernel.org>,
+	Lianqin Hu <hulianqin@vivo.com>,
+	Cryolitia PukNgae <cryolitia@uniontech.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 096/175] regmap: maple: free entry on mas_store_gfp() failure
-Date: Mon,  9 Feb 2026 15:22:49 +0100
-Message-ID: <20260209142323.878289471@linuxfoundation.org>
+Subject: [PATCH 6.18 097/175] ALSA: usb-audio: Add delay quirk for MOONDROP Moonriver2 Ti
+Date: Mon,  9 Feb 2026 15:22:50 +0100
+Message-ID: <20260209142323.913610650@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260209142320.474120190@linuxfoundation.org>
 References: <20260209142320.474120190@linuxfoundation.org>
@@ -51,49 +52,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kaushlendra Kumar <kaushlendra.kumar@intel.com>
+From: Lianqin Hu <hulianqin@vivo.com>
 
-[ Upstream commit f3f380ce6b3d5c9805c7e0b3d5bc28d9ec41e2e8 ]
+[ Upstream commit 49985bc466b51af88d534485631c8cd8c9c65f43 ]
 
-regcache_maple_write() allocates a new block ('entry') to merge
-adjacent ranges and then stores it with mas_store_gfp().
-When mas_store_gfp() fails, the new 'entry' remains allocated and
-is never freed, leaking memory.
+Audio control requests that sets sampling frequency sometimes fail on
+this card. Adding delay between control messages eliminates that problem.
 
-Free 'entry' on the failure path; on success continue freeing the
-replaced neighbor blocks ('lower', 'upper').
+usb 1-1: New USB device found, idVendor=2fc6, idProduct=f06b
+usb 1-1: New USB device strings: Mfr=1, Product=2, SerialNumber=3
+usb 1-1: Product: MOONDROP Moonriver2 Ti
+usb 1-1: Manufacturer: MOONDROP
+usb 1-1: SerialNumber: MOONDROP Moonriver2 Ti
 
-Signed-off-by: Kaushlendra Kumar <kaushlendra.kumar@intel.com>
-Link: https://patch.msgid.link/20260105031820.260119-1-kaushlendra.kumar@intel.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Lianqin Hu <hulianqin@vivo.com>
+Reviewed-by: Cryolitia PukNgae <cryolitia@uniontech.com>
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Link: https://patch.msgid.link/TYUPR06MB6217911EFC7E9224935FA507D28DA@TYUPR06MB6217.apcprd06.prod.outlook.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/base/regmap/regcache-maple.c | 11 ++++++-----
- 1 file changed, 6 insertions(+), 5 deletions(-)
+ sound/usb/quirks.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/base/regmap/regcache-maple.c b/drivers/base/regmap/regcache-maple.c
-index 2319c30283a6d..9cf0384ce7b95 100644
---- a/drivers/base/regmap/regcache-maple.c
-+++ b/drivers/base/regmap/regcache-maple.c
-@@ -95,12 +95,13 @@ static int regcache_maple_write(struct regmap *map, unsigned int reg,
- 
- 	mas_unlock(&mas);
- 
--	if (ret == 0) {
--		kfree(lower);
--		kfree(upper);
-+	if (ret) {
-+		kfree(entry);
-+		return ret;
- 	}
--	
--	return ret;
-+	kfree(lower);
-+	kfree(upper);
-+	return 0;
- }
- 
- static int regcache_maple_drop(struct regmap *map, unsigned int min,
+diff --git a/sound/usb/quirks.c b/sound/usb/quirks.c
+index 94a8fdc9c6d3c..8a646891ebb44 100644
+--- a/sound/usb/quirks.c
++++ b/sound/usb/quirks.c
+@@ -2390,6 +2390,8 @@ static const struct usb_audio_quirk_flags_table quirk_flags_table[] = {
+ 		   QUIRK_FLAG_CTL_MSG_DELAY_1M),
+ 	DEVICE_FLG(0x2d99, 0x0026, /* HECATE G2 GAMING HEADSET */
+ 		   QUIRK_FLAG_MIXER_PLAYBACK_MIN_MUTE),
++	DEVICE_FLG(0x2fc6, 0xf06b, /* MOONDROP Moonriver2 Ti */
++		   QUIRK_FLAG_CTL_MSG_DELAY),
+ 	DEVICE_FLG(0x2fc6, 0xf0b7, /* iBasso DC07 Pro */
+ 		   QUIRK_FLAG_CTL_MSG_DELAY_1M),
+ 	DEVICE_FLG(0x30be, 0x0101, /* Schiit Hel */
 -- 
 2.51.0
 
