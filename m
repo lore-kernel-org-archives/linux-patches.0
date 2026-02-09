@@ -1,40 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9F252BEC45;
-	Mon,  9 Feb 2026 14:35:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EBF6637BE75;
+	Mon,  9 Feb 2026 14:35:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770647743; cv=none; b=JjrvDgeD9pMqFTDKaxLASlnBpaS8g1s9EeUxRvRmUyd8ISnsupTdphizDNbdyjogURkWIAPIZoK2HRy55zBPnaNVdO864DL3gQXp+Np/NFviNMTzl+9e9Bez0Iun4bwzdkbykke3Js8Ol810GEGO6GzuEyjVGKJkQO6oLXiCRzQ=
+	t=1770647747; cv=none; b=IaPicqi9dErhEQEJgFQfUvO4AiWgFoXDv66PdxO2orZcynE3LQtFNxOKApws23TeFL/woVx0TrKQ4l5Dog9+AzbxqbgxqWzEJCnNHjj6FPAfpyQhX3b4IH3vW8gfyetkGIZV+qzKXzgucl8TITG1SFl1NLxI73LYRb7CX08R3VE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770647743; c=relaxed/simple;
-	bh=l02qEcrTxm5xJh/5wGRhbtgjEPtUpdCnzkFw74E9P/Q=;
+	s=arc-20240116; t=1770647747; c=relaxed/simple;
+	bh=UR2nm0vEZXE7iQmQA6sSI9tS/llx9SS5kYdyJwShAEM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZhCOyh4iLhAaOrxXKm2t9ujrVf7rOE9fhTCX9khT1rMtoupy1BTrG1U0wvVDlcWOyBt4cJp454Pr2swPuocB8/ureZWq1z+yHzg93vQFZH1nnHDMY0JIDhPyz3a5peHAFa+8JmWYvtT1iJA3lxsJNr4Z3xDZlyXWKEvkMxxeJ7A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UlLOyYaF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=d2KwyfiC383xN6bNxS82uXO8ToJ7IO1Evr+ARZ1rp5ay1rsduy4FGYHIb4ot56d7cCR3FKz4lDxnqUutLyeY8Ek4mVv79gInfbRmszXMQ8XSBXNBewDRpb4NGdlV2IAWeGTgTKGTB82QLHGzD8jGPdD7v9g9jTIPNLBmFPpZbm0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sR4G/n3e; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UlLOyYaF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D39FC116C6;
-	Mon,  9 Feb 2026 14:35:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sR4G/n3e"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 63636C116C6;
+	Mon,  9 Feb 2026 14:35:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770647742;
-	bh=l02qEcrTxm5xJh/5wGRhbtgjEPtUpdCnzkFw74E9P/Q=;
+	s=korg; t=1770647746;
+	bh=UR2nm0vEZXE7iQmQA6sSI9tS/llx9SS5kYdyJwShAEM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UlLOyYaFwvHluIECaNnNXsKWIAN1rtOMLKBjwru+QxoaPd/iiaqFACWCKPANjJzW5
-	 MrzMOx2/toIHTYu9GJLra2zeLTsWiryA5+KD4aaj1TWMTzodwt66H4TOrH3t8jw5xm
-	 byM4QMIMzp8IF7z0Gn7O+jaULGyq2v+0qTu1YxzM=
+	b=sR4G/n3ekX4etQ54QeCkVPNHe9H/ipbPQKLi4/BUw4QDXxuQf/9rkO42tAAup1N9B
+	 y4U4R4D9WQRW878Fu0mr+grWu4kc8pCjsqXTdzf77pTWJfDXEPDUou0I+ChdLhsOE+
+	 k/FZSu63Hh3j/IiNfb0JgvEB6m0NDQgI6iwNhUU8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Debarghya Kundu <debarghyak@google.com>,
+	Max Yuan <maxyuan@google.com>,
+	Jordan Rhee <jordanrhee@google.com>,
 	Joshua Washington <joshwash@google.com>,
+	Matt Olson <maolson@google.com>,
 	Harshitha Ramamurthy <hramamurthy@google.com>,
 	Jacob Keller <jacob.e.keller@intel.com>,
 	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.12 016/113] gve: Fix stats report corruption on queue count change
-Date: Mon,  9 Feb 2026 15:22:45 +0100
-Message-ID: <20260209142310.794393292@linuxfoundation.org>
+Subject: [PATCH 6.12 017/113] gve: Correct ethtool rx_dropped calculation
+Date: Mon,  9 Feb 2026 15:22:46 +0100
+Message-ID: <20260209142310.830329838@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260209142310.204833231@linuxfoundation.org>
 References: <20260209142310.204833231@linuxfoundation.org>
@@ -53,131 +55,111 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Debarghya Kundu <debarghyak@google.com>
+From: Max Yuan <maxyuan@google.com>
 
-commit 7b9ebcce0296e104a0d82a6b09d68564806158ff upstream.
+commit c7db85d579a1dccb624235534508c75fbf2dfe46 upstream.
 
-The driver and the NIC share a region in memory for stats reporting.
-The NIC calculates its offset into this region based on the total size
-of the stats region and the size of the NIC's stats.
+The gve driver's "rx_dropped" statistic, exposed via `ethtool -S`,
+incorrectly includes `rx_buf_alloc_fail` counts. These failures
+represent an inability to allocate receive buffers, not true packet
+drops where a received packet is discarded. This misrepresentation can
+lead to inaccurate diagnostics.
 
-When the number of queues is changed, the driver's stats region is
-resized. If the queue count is increased, the NIC can write past
-the end of the allocated stats region, causing memory corruption.
-If the queue count is decreased, there is a gap between the driver
-and NIC stats, leading to incorrect stats reporting.
-
-This change fixes the issue by allocating stats region with maximum
-size, and the offset calculation for NIC stats is changed to match
-with the calculation of the NIC.
+This patch rectifies the ethtool "rx_dropped" calculation. It removes
+`rx_buf_alloc_fail` from the total and adds `xdp_tx_errors` and
+`xdp_redirect_errors`, which represent legitimate packet drops within
+the XDP path.
 
 Cc: stable@vger.kernel.org
-Fixes: 24aeb56f2d38 ("gve: Add Gvnic stats AQ command and ethtool show/set-priv-flags.")
-Signed-off-by: Debarghya Kundu <debarghyak@google.com>
+Fixes: 433e274b8f7b ("gve: Add stats for gve.")
+Signed-off-by: Max Yuan <maxyuan@google.com>
+Reviewed-by: Jordan Rhee <jordanrhee@google.com>
 Reviewed-by: Joshua Washington <joshwash@google.com>
+Reviewed-by: Matt Olson <maolson@google.com>
 Signed-off-by: Harshitha Ramamurthy <hramamurthy@google.com>
 Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
-Link: https://patch.msgid.link/20260202193925.3106272-2-hramamurthy@google.com
+Link: https://patch.msgid.link/20260202193925.3106272-3-hramamurthy@google.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/google/gve/gve_ethtool.c |   54 ++++++++++++++++----------
- drivers/net/ethernet/google/gve/gve_main.c    |    4 -
- 2 files changed, 36 insertions(+), 22 deletions(-)
+ drivers/net/ethernet/google/gve/gve_ethtool.c |   23 +++++++++++++++++------
+ 1 file changed, 17 insertions(+), 6 deletions(-)
 
 --- a/drivers/net/ethernet/google/gve/gve_ethtool.c
 +++ b/drivers/net/ethernet/google/gve/gve_ethtool.c
-@@ -156,7 +156,8 @@ gve_get_ethtool_stats(struct net_device
+@@ -152,10 +152,11 @@ gve_get_ethtool_stats(struct net_device
+ 	u64 tmp_rx_pkts, tmp_rx_hsplit_pkt, tmp_rx_bytes, tmp_rx_hsplit_bytes,
+ 		tmp_rx_skb_alloc_fail, tmp_rx_buf_alloc_fail,
+ 		tmp_rx_desc_err_dropped_pkt, tmp_rx_hsplit_unsplit_pkt,
+-		tmp_tx_pkts, tmp_tx_bytes;
++		tmp_tx_pkts, tmp_tx_bytes,
++		tmp_xdp_tx_errors, tmp_xdp_redirect_errors;
  	u64 rx_buf_alloc_fail, rx_desc_err_dropped_pkt, rx_hsplit_unsplit_pkt,
  		rx_pkts, rx_hsplit_pkt, rx_skb_alloc_fail, rx_bytes, tx_pkts, tx_bytes,
- 		tx_dropped;
--	int stats_idx, base_stats_idx, max_stats_idx;
-+	int rx_base_stats_idx, max_rx_stats_idx, max_tx_stats_idx;
-+	int stats_idx, stats_region_len, nic_stats_len;
+-		tx_dropped;
++		tx_dropped, xdp_tx_errors, xdp_redirect_errors;
+ 	int rx_base_stats_idx, max_rx_stats_idx, max_tx_stats_idx;
+ 	int stats_idx, stats_region_len, nic_stats_len;
  	struct stats *report_stats;
- 	int *rx_qid_to_stats_idx;
- 	int *tx_qid_to_stats_idx;
-@@ -265,20 +266,38 @@ gve_get_ethtool_stats(struct net_device
- 	data[i++] = priv->stats_report_trigger_cnt;
- 	i = GVE_MAIN_STATS_LEN;
- 
--	/* For rx cross-reporting stats, start from nic rx stats in report */
--	base_stats_idx = GVE_TX_STATS_REPORT_NUM * num_tx_queues +
--		GVE_RX_STATS_REPORT_NUM * priv->rx_cfg.num_queues;
--	/* The boundary between driver stats and NIC stats shifts if there are
--	 * stopped queues.
--	 */
--	base_stats_idx += NIC_RX_STATS_REPORT_NUM * num_stopped_rxqs +
--		NIC_TX_STATS_REPORT_NUM * num_stopped_txqs;
--	max_stats_idx = NIC_RX_STATS_REPORT_NUM *
--		(priv->rx_cfg.num_queues - num_stopped_rxqs) +
--		base_stats_idx;
-+	rx_base_stats_idx = 0;
-+	max_rx_stats_idx = 0;
-+	max_tx_stats_idx = 0;
-+	stats_region_len = priv->stats_report_len -
-+				sizeof(struct gve_stats_report);
-+	nic_stats_len = (NIC_RX_STATS_REPORT_NUM * priv->rx_cfg.num_queues +
-+		NIC_TX_STATS_REPORT_NUM * num_tx_queues) * sizeof(struct stats);
-+	if (unlikely((stats_region_len -
-+				nic_stats_len) % sizeof(struct stats))) {
-+		net_err_ratelimited("Starting index of NIC stats should be multiple of stats size");
-+	} else {
-+		/* For rx cross-reporting stats,
-+		 * start from nic rx stats in report
-+		 */
-+		rx_base_stats_idx = (stats_region_len - nic_stats_len) /
-+							sizeof(struct stats);
-+		/* The boundary between driver stats and NIC stats
-+		 * shifts if there are stopped queues
-+		 */
-+		rx_base_stats_idx += NIC_RX_STATS_REPORT_NUM *
-+			num_stopped_rxqs + NIC_TX_STATS_REPORT_NUM *
-+			num_stopped_txqs;
-+		max_rx_stats_idx = NIC_RX_STATS_REPORT_NUM *
-+			(priv->rx_cfg.num_queues - num_stopped_rxqs) +
-+			rx_base_stats_idx;
-+		max_tx_stats_idx = NIC_TX_STATS_REPORT_NUM *
-+			(num_tx_queues - num_stopped_txqs) +
-+			max_rx_stats_idx;
-+	}
- 	/* Preprocess the stats report for rx, map queue id to start index */
- 	skip_nic_stats = false;
--	for (stats_idx = base_stats_idx; stats_idx < max_stats_idx;
-+	for (stats_idx = rx_base_stats_idx; stats_idx < max_rx_stats_idx;
- 		stats_idx += NIC_RX_STATS_REPORT_NUM) {
- 		u32 stat_name = be32_to_cpu(report_stats[stats_idx].stat_name);
- 		u32 queue_id = be32_to_cpu(report_stats[stats_idx].queue_id);
-@@ -354,14 +373,9 @@ gve_get_ethtool_stats(struct net_device
- 		i += priv->rx_cfg.num_queues * NUM_GVE_RX_CNTS;
+@@ -199,6 +200,7 @@ gve_get_ethtool_stats(struct net_device
+ 	for (rx_pkts = 0, rx_bytes = 0, rx_hsplit_pkt = 0,
+ 	     rx_skb_alloc_fail = 0, rx_buf_alloc_fail = 0,
+ 	     rx_desc_err_dropped_pkt = 0, rx_hsplit_unsplit_pkt = 0,
++	     xdp_tx_errors = 0, xdp_redirect_errors = 0,
+ 	     ring = 0;
+ 	     ring < priv->rx_cfg.num_queues; ring++) {
+ 		if (priv->rx) {
+@@ -216,6 +218,9 @@ gve_get_ethtool_stats(struct net_device
+ 					rx->rx_desc_err_dropped_pkt;
+ 				tmp_rx_hsplit_unsplit_pkt =
+ 					rx->rx_hsplit_unsplit_pkt;
++				tmp_xdp_tx_errors = rx->xdp_tx_errors;
++				tmp_xdp_redirect_errors =
++					rx->xdp_redirect_errors;
+ 			} while (u64_stats_fetch_retry(&priv->rx[ring].statss,
+ 						       start));
+ 			rx_pkts += tmp_rx_pkts;
+@@ -225,6 +230,8 @@ gve_get_ethtool_stats(struct net_device
+ 			rx_buf_alloc_fail += tmp_rx_buf_alloc_fail;
+ 			rx_desc_err_dropped_pkt += tmp_rx_desc_err_dropped_pkt;
+ 			rx_hsplit_unsplit_pkt += tmp_rx_hsplit_unsplit_pkt;
++			xdp_tx_errors += tmp_xdp_tx_errors;
++			xdp_redirect_errors += tmp_xdp_redirect_errors;
+ 		}
  	}
- 
--	/* For tx cross-reporting stats, start from nic tx stats in report */
--	base_stats_idx = max_stats_idx;
--	max_stats_idx = NIC_TX_STATS_REPORT_NUM *
--		(num_tx_queues - num_stopped_txqs) +
--		max_stats_idx;
--	/* Preprocess the stats report for tx, map queue id to start index */
- 	skip_nic_stats = false;
--	for (stats_idx = base_stats_idx; stats_idx < max_stats_idx;
-+	/* NIC TX stats start right after NIC RX stats */
-+	for (stats_idx = max_rx_stats_idx; stats_idx < max_tx_stats_idx;
- 		stats_idx += NIC_TX_STATS_REPORT_NUM) {
- 		u32 stat_name = be32_to_cpu(report_stats[stats_idx].stat_name);
- 		u32 queue_id = be32_to_cpu(report_stats[stats_idx].queue_id);
---- a/drivers/net/ethernet/google/gve/gve_main.c
-+++ b/drivers/net/ethernet/google/gve/gve_main.c
-@@ -244,9 +244,9 @@ static int gve_alloc_stats_report(struct
- 	int tx_stats_num, rx_stats_num;
- 
- 	tx_stats_num = (GVE_TX_STATS_REPORT_NUM + NIC_TX_STATS_REPORT_NUM) *
--		       gve_num_tx_queues(priv);
-+				priv->tx_cfg.max_queues;
- 	rx_stats_num = (GVE_RX_STATS_REPORT_NUM + NIC_RX_STATS_REPORT_NUM) *
--		       priv->rx_cfg.num_queues;
-+				priv->rx_cfg.max_queues;
- 	priv->stats_report_len = struct_size(priv->stats_report, stats,
- 					     size_add(tx_stats_num, rx_stats_num));
- 	priv->stats_report =
+ 	for (tx_pkts = 0, tx_bytes = 0, tx_dropped = 0, ring = 0;
+@@ -250,8 +257,8 @@ gve_get_ethtool_stats(struct net_device
+ 	data[i++] = rx_bytes;
+ 	data[i++] = tx_bytes;
+ 	/* total rx dropped packets */
+-	data[i++] = rx_skb_alloc_fail + rx_buf_alloc_fail +
+-		    rx_desc_err_dropped_pkt;
++	data[i++] = rx_skb_alloc_fail + rx_desc_err_dropped_pkt +
++		    xdp_tx_errors + xdp_redirect_errors;
+ 	data[i++] = tx_dropped;
+ 	data[i++] = priv->tx_timeo_cnt;
+ 	data[i++] = rx_skb_alloc_fail;
+@@ -330,6 +337,9 @@ gve_get_ethtool_stats(struct net_device
+ 				tmp_rx_buf_alloc_fail = rx->rx_buf_alloc_fail;
+ 				tmp_rx_desc_err_dropped_pkt =
+ 					rx->rx_desc_err_dropped_pkt;
++				tmp_xdp_tx_errors = rx->xdp_tx_errors;
++				tmp_xdp_redirect_errors =
++					rx->xdp_redirect_errors;
+ 			} while (u64_stats_fetch_retry(&priv->rx[ring].statss,
+ 						       start));
+ 			data[i++] = tmp_rx_bytes;
+@@ -340,8 +350,9 @@ gve_get_ethtool_stats(struct net_device
+ 			data[i++] = rx->rx_frag_alloc_cnt;
+ 			/* rx dropped packets */
+ 			data[i++] = tmp_rx_skb_alloc_fail +
+-				tmp_rx_buf_alloc_fail +
+-				tmp_rx_desc_err_dropped_pkt;
++				    tmp_rx_desc_err_dropped_pkt +
++				    tmp_xdp_tx_errors +
++				    tmp_xdp_redirect_errors;
+ 			data[i++] = rx->rx_copybreak_pkt;
+ 			data[i++] = rx->rx_copied_pkt;
+ 			/* stats from NIC */
 
 
