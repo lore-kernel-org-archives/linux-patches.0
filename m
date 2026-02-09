@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4C8C28725B;
-	Mon,  9 Feb 2026 14:51:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0EAD737A488;
+	Mon,  9 Feb 2026 14:51:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770648669; cv=none; b=tn4GhRVwXfqAy48E8nuJ4E5hzAFrEzJXZTc21iGWGz5aXyJ+u1n/hg/z6/QcYF/PX7ggluczrlJLlDqrU7r6OlJSv8RQ4kx+VV7E/I+KW2mZrbPkNpf9KZhxNNOvX6s7kz3mR8/baBsKr3bZQ9qoBUpdhIgmsRqaG6+NJBfeYKU=
+	t=1770648673; cv=none; b=pK+Sk5ESvhdYOXECIeE6kliZ/+x5w+Zt1Mj+oTCxVSw1E8Ah6au9ko5gYydNEKdMFS3FjaE9X6yqdKIXe9kGngBWJBgwZpWw2liGWINjcw3sahL5Ya2DbiomrvSHHMF3Io881L/HW7YmP8THRG4Tw3RnvcjZy7SUSSTmaAHX/5g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770648669; c=relaxed/simple;
-	bh=c3LcmWLfPYEecp6xMea+yBJAv9xT9oeJmmfpoiuh59A=;
+	s=arc-20240116; t=1770648673; c=relaxed/simple;
+	bh=1IseCWoVRocKjHrX09qiVXTfQC4rr4oZvBMkaZZ6xcQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZJ/TwEzmEUMpr1HWUKYl7s+0MvUbBafSA9a0n+0yoSAol8RF/gDWsVh2m5jk/8wuUeaC0pnp02Q9UOi43Xwh8RkY/G45kbfxePP/JLqdgWwLujR4gMK71pjQ5/OpyGqhKosaL+hWhwX0Zo+pMhKix/BPaOpW2SkMR4YIXrgZUl8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wFScAUIk; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Ehsvnn9NmDr3D6jl7Nz62Rqv9zQgJXI9tAgiqHc8PGpYWe2x4BjmbqkugTuuWzmj/v/PEnndN2KwNdHAHJNwHKusS2TQ2ap8QbbfRwpYgLMJkL5M2FEf79EaWYXk9A0K2Yvwt3MpCu4wb6TnhYXvHw24QNY9b22vujxfBUvrHwI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=g3eVyoas; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wFScAUIk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F107C116C6;
-	Mon,  9 Feb 2026 14:51:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="g3eVyoas"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 79C37C116C6;
+	Mon,  9 Feb 2026 14:51:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770648669;
-	bh=c3LcmWLfPYEecp6xMea+yBJAv9xT9oeJmmfpoiuh59A=;
+	s=korg; t=1770648672;
+	bh=1IseCWoVRocKjHrX09qiVXTfQC4rr4oZvBMkaZZ6xcQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wFScAUIkinZuOqc8lKiFLW9vHiUmICxVuBEm5cnxGye1tTOr6/LqklJ8bs6yii8tQ
-	 nOWnIEQ5PGUYn5cQab9QnKjrLSp/paUQlp960z8VKmgAZmjTSlp8PsRkN17XK4JJSR
-	 1B7hF7hgsZWxYPGb2HPGOj4rjKWxRZt/pCwoASg4=
+	b=g3eVyoasJkQ9jj+MPNBZ3gIWsyjcPx6OtIK/LzNqpD9Xq4CNSWXTwC61N0UKVO0nJ
+	 L4in/vtYnIebZqJoIpydb/38pbFTdPi9Q8ANaMwXU0Trcn8KgmewRId9viIc315okC
+	 nf97lOx8OaIkX6tMYdT3lYSLzOs1nhx8OmEYgQTQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Maurizio Lombardi <mlombard@redhat.com>,
-	Zhaojuan Guo <zguo@redhat.com>,
-	Mike Christie <michael.christie@oracle.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Johannes Berg <johannes.berg@intel.com>,
+	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 21/41] scsi: target: iscsi: Fix use-after-free in iscsit_dec_conn_usage_count()
-Date: Mon,  9 Feb 2026 15:24:42 +0100
-Message-ID: <20260209142257.576369347@linuxfoundation.org>
+Subject: [PATCH 5.10 22/41] wifi: mac80211: dont increment crypto_tx_tailroom_needed_cnt twice
+Date: Mon,  9 Feb 2026 15:24:43 +0100
+Message-ID: <20260209142257.612591090@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260209142256.797267956@linuxfoundation.org>
 References: <20260209142256.797267956@linuxfoundation.org>
@@ -53,48 +51,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Maurizio Lombardi <mlombard@redhat.com>
+From: Miri Korenblit <miriam.rachel.korenblit@intel.com>
 
-[ Upstream commit 9411a89e9e7135cc459178fa77a3f1d6191ae903 ]
+[ Upstream commit 3f3d8ff31496874a69b131866f62474eb24ed20a ]
 
-In iscsit_dec_conn_usage_count(), the function calls complete() while
-holding the conn->conn_usage_lock. As soon as complete() is invoked, the
-waiter (such as iscsit_close_connection()) may wake up and proceed to free
-the iscsit_conn structure.
+In reconfig, in case the driver asks to disconnect during the reconfig,
+all the keys of the interface are marked as tainted.
+Then ieee80211_reenable_keys will loop over all the interface keys, and
+for each one it will
+a) increment crypto_tx_tailroom_needed_cnt
+b) call ieee80211_key_enable_hw_accel, which in turn will detect that
+this key is tainted, so it will mark it as "not in hardware", which is
+paired with crypto_tx_tailroom_needed_cnt incrementation, so we get two
+incrementations for each tainted key.
+Then we get a warning in ieee80211_free_keys.
 
-If the waiter frees the memory before the current thread reaches
-spin_unlock_bh(), it results in a KASAN slab-use-after-free as the function
-attempts to release a lock within the already-freed connection structure.
+To fix it, don't increment the count in ieee80211_reenable_keys for
+tainted keys
 
-Fix this by releasing the spinlock before calling complete().
-
-Signed-off-by: Maurizio Lombardi <mlombard@redhat.com>
-Reported-by: Zhaojuan Guo <zguo@redhat.com>
-Reviewed-by: Mike Christie <michael.christie@oracle.com>
-Link: https://patch.msgid.link/20260112165352.138606-2-mlombard@redhat.com
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Reviewed-by: Johannes Berg <johannes.berg@intel.com>
+Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
+Link: https://patch.msgid.link/20260118092821.4ca111fddcda.Id6e554f4b1c83760aa02d5a9e4e3080edb197aa2@changeid
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/target/iscsi/iscsi_target_util.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ net/mac80211/key.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/target/iscsi/iscsi_target_util.c b/drivers/target/iscsi/iscsi_target_util.c
-index 58b3eb589bc77..29ad78fcdd5f8 100644
---- a/drivers/target/iscsi/iscsi_target_util.c
-+++ b/drivers/target/iscsi/iscsi_target_util.c
-@@ -873,8 +873,11 @@ void iscsit_dec_conn_usage_count(struct iscsi_conn *conn)
- 	spin_lock_bh(&conn->conn_usage_lock);
- 	conn->conn_usage_count--;
+diff --git a/net/mac80211/key.c b/net/mac80211/key.c
+index 3df4695caef6c..d5b697701cff6 100644
+--- a/net/mac80211/key.c
++++ b/net/mac80211/key.c
+@@ -910,7 +910,8 @@ void ieee80211_reenable_keys(struct ieee80211_sub_if_data *sdata)
  
--	if (!conn->conn_usage_count && conn->conn_waiting_on_uc)
-+	if (!conn->conn_usage_count && conn->conn_waiting_on_uc) {
-+		spin_unlock_bh(&conn->conn_usage_lock);
- 		complete(&conn->conn_waiting_on_uc_comp);
-+		return;
-+	}
- 
- 	spin_unlock_bh(&conn->conn_usage_lock);
- }
+ 	if (ieee80211_sdata_running(sdata)) {
+ 		list_for_each_entry(key, &sdata->key_list, list) {
+-			increment_tailroom_need_count(sdata);
++			if (!(key->flags & KEY_FLAG_TAINTED))
++				increment_tailroom_need_count(sdata);
+ 			ieee80211_key_enable_hw_accel(key);
+ 		}
+ 	}
 -- 
 2.51.0
 
