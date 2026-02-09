@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8679B36828A;
-	Mon,  9 Feb 2026 14:40:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8BF7E36828A;
+	Mon,  9 Feb 2026 14:40:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770648034; cv=none; b=aJe7FM3MsnW9mWRvAoGDxiMXpVJPFt9Em45OPkAhE631PQXBxdzRhUGc+DJNjewyzNKMrmSKSJgdomyrwzc0fIoV0I013X6NUlyOSqoygwDE9uJg5Dfj+IjZWPZkHpG7UxdR9aSsrWSMQZnhsZEtKjUIWfZl7j/6xFpF+2m80bA=
+	t=1770648037; cv=none; b=Ee6H3U4yMD4pb1+jGL3fVkTb4NyQ0t4Z4oZRwf40y+H2uscxHMxpvO/of97dtsgVhx/IHPcnJhCvlHP62IeSHC09W9llYEtAsOploJMNpk+Zv5Q793pnwVgrb7o1JuDvzsVu0uM2K3PPEMEx8Ta62jgrYklPg5ifyHK+0Hqr8iA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770648034; c=relaxed/simple;
-	bh=PQ0dRKe7PfcTtWI6Jr+Vr1BtigUZeRqwyk19s44KZL8=;
+	s=arc-20240116; t=1770648037; c=relaxed/simple;
+	bh=ROvzAGDc4x7NUpYAOZa7V9TkV5UwtCZpHMnNjcbnA80=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EddKGMKCRNzckJy/RB71dApUSByGj4rRfRCm89Z47Hzfx5lOKMVEREfI+kuf9gmqDYvZMZjzhdnJy7dM6K4xVGc1A64KN6SKMcHdrL+clG/O4bqK80OEArk4e+YzNCGQBrvz/Zi9k6A1elUWywrpQZLrXxlWzJgwQw0I08ft0Uk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uJV7yd9o; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Ajhu7pKAsL9RI1dJzJJUsaIhK2xIRr9dxgmzMf80+3vrxDewewoKc0Kde74NIVG7krfMD1OZ4uFvYJsYxJ1SfJD8qOEABXkdrNlL/R+I4csv+Dio0CA4x0Lwbn/hRxgrGNZAIA/oPREfOAWpSsneTg+jAnVK/2hwEH2FSOiQQsk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oKb84hxg; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uJV7yd9o"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BBA7CC116C6;
-	Mon,  9 Feb 2026 14:40:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oKb84hxg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F11B3C116C6;
+	Mon,  9 Feb 2026 14:40:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770648034;
-	bh=PQ0dRKe7PfcTtWI6Jr+Vr1BtigUZeRqwyk19s44KZL8=;
+	s=korg; t=1770648037;
+	bh=ROvzAGDc4x7NUpYAOZa7V9TkV5UwtCZpHMnNjcbnA80=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uJV7yd9oqJUs1bVr9GehxIJeIs7mV6SnX6A6sdqqAjUgA7RkPn+ieHBDzJ7QW2pdE
-	 PBpeMzQBz3tdsNVvWTTeI1n3xdijNoJYYCKXLI+vlfamzJN4K6p/X6KrlNSz7aHMIu
-	 BODgPyPVVWRv9mN7NP72pjr5FvfVjckWlXepCLns=
+	b=oKb84hxgexo0DB4mLu3MajnebXyzwstqdd3Z1mkROqHIopmT74EMvaiFd1UZCpCGU
+	 WGLbkZEny8Cg8qSLFP7YSQSf6zYVLu+xbHizYNZPTCi6Q661z1ZYDDvP/dYh9gQEtZ
+	 WJW4EngSX9013n8lhb0gTRD+GWxvMTd1QKvWCdBk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Maurizio Lombardi <mlombard@redhat.com>,
-	Zhaojuan Guo <zguo@redhat.com>,
-	Mike Christie <michael.christie@oracle.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Johannes Berg <johannes.berg@intel.com>,
+	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 068/113] scsi: target: iscsi: Fix use-after-free in iscsit_dec_conn_usage_count()
-Date: Mon,  9 Feb 2026 15:23:37 +0100
-Message-ID: <20260209142312.633894474@linuxfoundation.org>
+Subject: [PATCH 6.12 069/113] wifi: mac80211: correctly check if CSA is active
+Date: Mon,  9 Feb 2026 15:23:38 +0100
+Message-ID: <20260209142312.669235643@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260209142310.204833231@linuxfoundation.org>
 References: <20260209142310.204833231@linuxfoundation.org>
@@ -53,48 +51,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Maurizio Lombardi <mlombard@redhat.com>
+From: Miri Korenblit <miriam.rachel.korenblit@intel.com>
 
-[ Upstream commit 9411a89e9e7135cc459178fa77a3f1d6191ae903 ]
+[ Upstream commit db1d0b6ab11f612ea8a327663a578c8946efeee9 ]
 
-In iscsit_dec_conn_usage_count(), the function calls complete() while
-holding the conn->conn_usage_lock. As soon as complete() is invoked, the
-waiter (such as iscsit_close_connection()) may wake up and proceed to free
-the iscsit_conn structure.
+We are not adding an interface if an existing one is doing CSA.
+But the check won't work for MLO station interfaces, since for those,
+vif->bss_conf is zeroed out.
+Fix this by checking if any link of the vif has an active CSA.
 
-If the waiter frees the memory before the current thread reaches
-spin_unlock_bh(), it results in a KASAN slab-use-after-free as the function
-attempts to release a lock within the already-freed connection structure.
-
-Fix this by releasing the spinlock before calling complete().
-
-Signed-off-by: Maurizio Lombardi <mlombard@redhat.com>
-Reported-by: Zhaojuan Guo <zguo@redhat.com>
-Reviewed-by: Mike Christie <michael.christie@oracle.com>
-Link: https://patch.msgid.link/20260112165352.138606-2-mlombard@redhat.com
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Reviewed-by: Johannes Berg <johannes.berg@intel.com>
+Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
+Link: https://patch.msgid.link/20260111191912.7ceff62fc561.Ia38d27f42684d1cfd82d930d232bd5dea6ab9282@changeid
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/target/iscsi/iscsi_target_util.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ net/mac80211/iface.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/target/iscsi/iscsi_target_util.c b/drivers/target/iscsi/iscsi_target_util.c
-index ee0cf2c74952a..b7fa8eed213bb 100644
---- a/drivers/target/iscsi/iscsi_target_util.c
-+++ b/drivers/target/iscsi/iscsi_target_util.c
-@@ -857,8 +857,11 @@ void iscsit_dec_conn_usage_count(struct iscsit_conn *conn)
- 	spin_lock_bh(&conn->conn_usage_lock);
- 	conn->conn_usage_count--;
+diff --git a/net/mac80211/iface.c b/net/mac80211/iface.c
+index 50108fdb9361d..7e1b6a9d9f3ad 100644
+--- a/net/mac80211/iface.c
++++ b/net/mac80211/iface.c
+@@ -354,6 +354,8 @@ static int ieee80211_check_concurrent_iface(struct ieee80211_sub_if_data *sdata,
+ 	/* we hold the RTNL here so can safely walk the list */
+ 	list_for_each_entry(nsdata, &local->interfaces, list) {
+ 		if (nsdata != sdata && ieee80211_sdata_running(nsdata)) {
++			struct ieee80211_link_data *link;
++
+ 			/*
+ 			 * Only OCB and monitor mode may coexist
+ 			 */
+@@ -380,8 +382,10 @@ static int ieee80211_check_concurrent_iface(struct ieee80211_sub_if_data *sdata,
+ 			 * will not add another interface while any channel
+ 			 * switch is active.
+ 			 */
+-			if (nsdata->vif.bss_conf.csa_active)
+-				return -EBUSY;
++			for_each_link_data(nsdata, link) {
++				if (link->conf->csa_active)
++					return -EBUSY;
++			}
  
--	if (!conn->conn_usage_count && conn->conn_waiting_on_uc)
-+	if (!conn->conn_usage_count && conn->conn_waiting_on_uc) {
-+		spin_unlock_bh(&conn->conn_usage_lock);
- 		complete(&conn->conn_waiting_on_uc_comp);
-+		return;
-+	}
- 
- 	spin_unlock_bh(&conn->conn_usage_lock);
- }
+ 			/*
+ 			 * The remaining checks are only performed for interfaces
 -- 
 2.51.0
 
