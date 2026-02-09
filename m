@@ -1,52 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B43162222B2;
-	Mon,  9 Feb 2026 14:38:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 067AF2222B2;
+	Mon,  9 Feb 2026 14:38:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770647903; cv=none; b=D1rb+KpDtG8FZNegzWVpJT8sh4n/tgqDNlo/4BYRgDFY+ee0nTUuwYginsdlCjMm/nf/d33KQUpyA4OpXY8BUEx2huoZaalp5WmnTBCI5ttvma8o/UBNeWiFQ/nscY2r8OQ2icwKzenAS9+3Y/lnqpv1kwfcjWjce7PrhQiiCBg=
+	t=1770647907; cv=none; b=d8X4IPFMjYehE1r1lcVwHXeYJfmKZ2JcCDv/lnX3IMi7zktoCLd3zJn7lDNeG4CbxtoihTe1VrBvc+nhZEl+dZAkqn0FW14OIOPdWUTAF7Oq8w1BsCB7QhY8W2CY+yziiUyjPNzT4wCseKQOxlZLesuhPdmxAJ4veWXuAHxRmnE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770647903; c=relaxed/simple;
-	bh=BZ1ecmWIFZzTvqB56rlzCeKHHsRYKtNBJrrJhRTO3zU=;
+	s=arc-20240116; t=1770647907; c=relaxed/simple;
+	bh=yvsnnbTYx9LX8CejgNFz+RBkAZJtmzi9uPETSOlM274=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lKcWVgweCwpn/khsSlFeeUu0ClcT6pQt70l0pyMYs/GzDtVUPBoV8G4MSEOgypWngl9nLaMf53kN2rn4FpSvdInYFUUmELNFaVJSr30lx4FfjHdfRXDL7oy9knusDFJ4Kb1/gJX/fgAC6cnXLunWGJkPoIxiVnBpCO6sa7d70OA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YDFgRG1V; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pa0Y6wYGmKeeCGo9VivW5Vfr436MJ8LUYlC/0GA3V0gRVVHNhHo7tfloUmULkmzqNz9snrOckfm59dgUE4g0LZcILGObukWEL4LICj8Rc2qqMXjROJOxPDcJOLuzKerxXyE7BZ8ewAMTXbFncbdAbz1wVK6E1G7nuZk2Sn1yoAw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jMicMCBe; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YDFgRG1V"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 12FF3C116C6;
-	Mon,  9 Feb 2026 14:38:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jMicMCBe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 69872C116C6;
+	Mon,  9 Feb 2026 14:38:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770647903;
-	bh=BZ1ecmWIFZzTvqB56rlzCeKHHsRYKtNBJrrJhRTO3zU=;
+	s=korg; t=1770647906;
+	bh=yvsnnbTYx9LX8CejgNFz+RBkAZJtmzi9uPETSOlM274=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YDFgRG1Vh2Jk6OKEnss+pBN6ZZ8fqfZe8Rm+FjPktoceKFpQRukvqEOLUP7xgSenE
-	 cnMfiXu4tBIlQuYyKhXPVzgY3FQHt7RNdMOUgTKo4n7BYhKIpwPjiulBj8kf/6cUqA
-	 mB6HKVLvcywyVVV3gVMEK3pb/LWaxBhLLlc5v1OY=
+	b=jMicMCBetiuzUy/59YcxVMx3M24hfoePYeXo5VydCxBqedYg0RDPLYZ2r35lAo13p
+	 pN9TsRk9dNVlwEMvyBYNE76U2lQSYDfPHzhFvdATMqeXz2ypA4yvG/ra0/lTdhUf0m
+	 yo5UbXNAfRAQ9JzNhexKx8YBBc22lpo57nz9Qbus=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrii Nakryiko <andrii@kernel.org>,
-	syzbot+4e70c8e0a2017b432f7a@syzkaller.appspotmail.com,
-	Suren Baghdasaryan <surenb@google.com>,
-	Shakeel Butt <shakeel.butt@linux.dev>,
-	Alexei Starovoitov <ast@kernel.org>,
-	Daniel Borkmann <daniel@iogearbox.net>,
-	Eduard Zingerman <eddyz87@gmail.com>,
-	Hao Luo <haoluo@google.com>,
-	Jiri Olsa <jolsa@kernel.org>,
-	John Fastabend <john.fastabend@gmail.com>,
-	KP Singh <kpsingh@kernel.org>,
-	Martin KaFai Lau <martin.lau@linux.dev>,
-	Song Liu <song@kernel.org>,
-	Stanislav Fomichev <sdf@fomichev.me>,
-	Yonghong Song <yonghong.song@linux.dev>,
-	Andrew Morton <akpm@linux-foundation.org>,
+	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
+	Mark Rutland <mark.rutland@arm.com>,
+	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
+	"jempty.liang" <imntjempty@163.com>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 028/113] procfs: avoid fetching build ID while holding VMA lock
-Date: Mon,  9 Feb 2026 15:22:57 +0100
-Message-ID: <20260209142311.218497461@linuxfoundation.org>
+Subject: [PATCH 6.12 029/113] tracing: Fix ftrace event field alignments
+Date: Mon,  9 Feb 2026 15:22:58 +0100
+Message-ID: <20260209142311.256369835@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260209142310.204833231@linuxfoundation.org>
 References: <20260209142310.204833231@linuxfoundation.org>
@@ -65,262 +54,204 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andrii Nakryiko <andrii@kernel.org>
+From: Steven Rostedt <rostedt@goodmis.org>
 
-[ Upstream commit b5cbacd7f86f4f62b8813688c8e73be94e8e1951 ]
+[ Upstream commit 033c55fe2e326bea022c3cc5178ecf3e0e459b82 ]
 
-Fix PROCMAP_QUERY to fetch optional build ID only after dropping mmap_lock
-or per-VMA lock, whichever was used to lock VMA under question, to avoid
-deadlock reported by syzbot:
+The fields of ftrace specific events (events used to save ftrace internal
+events like function traces and trace_printk) are generated similarly to
+how normal trace event fields are generated. That is, the fields are added
+to a trace_events_fields array that saves the name, offset, size,
+alignment and signness of the field. It is used to produce the output in
+the format file in tracefs so that tooling knows how to parse the binary
+data of the trace events.
 
- -> #1 (&mm->mmap_lock){++++}-{4:4}:
-        __might_fault+0xed/0x170
-        _copy_to_iter+0x118/0x1720
-        copy_page_to_iter+0x12d/0x1e0
-        filemap_read+0x720/0x10a0
-        blkdev_read_iter+0x2b5/0x4e0
-        vfs_read+0x7f4/0xae0
-        ksys_read+0x12a/0x250
-        do_syscall_64+0xcb/0xf80
-        entry_SYSCALL_64_after_hwframe+0x77/0x7f
+The issue is that some of the ftrace event structures are packed. The
+function graph exit event structures are one of them. The 64 bit calltime
+and rettime fields end up 4 byte aligned, but the algorithm to show to
+userspace shows them as 8 byte aligned.
 
- -> #0 (&sb->s_type->i_mutex_key#8){++++}-{4:4}:
-        __lock_acquire+0x1509/0x26d0
-        lock_acquire+0x185/0x340
-        down_read+0x98/0x490
-        blkdev_read_iter+0x2a7/0x4e0
-        __kernel_read+0x39a/0xa90
-        freader_fetch+0x1d5/0xa80
-        __build_id_parse.isra.0+0xea/0x6a0
-        do_procmap_query+0xd75/0x1050
-        procfs_procmap_ioctl+0x7a/0xb0
-        __x64_sys_ioctl+0x18e/0x210
-        do_syscall_64+0xcb/0xf80
-        entry_SYSCALL_64_after_hwframe+0x77/0x7f
+The macros that create the ftrace events has one for embedded structure
+fields. There's two macros for theses fields:
 
- other info that might help us debug this:
+  __field_desc() and __field_packed()
 
-  Possible unsafe locking scenario:
+The difference of the latter macro is that it treats the field as packed.
 
-        CPU0                    CPU1
-        ----                    ----
-   rlock(&mm->mmap_lock);
-                                lock(&sb->s_type->i_mutex_key#8);
-                                lock(&mm->mmap_lock);
-   rlock(&sb->s_type->i_mutex_key#8);
+Rename that field to __field_desc_packed() and create replace the
+__field_packed() to be a normal field that is packed and have the calltime
+and rettime use those.
 
-  *** DEADLOCK ***
+This showed up on 32bit architectures for function graph time fields. It
+had:
 
-This seems to be exacerbated (as we haven't seen these syzbot reports
-before that) by the recent:
+ ~# cat /sys/kernel/tracing/events/ftrace/funcgraph_exit/format
+[..]
+        field:unsigned long func;       offset:8;       size:4; signed:0;
+        field:unsigned int depth;       offset:12;      size:4; signed:0;
+        field:unsigned int overrun;     offset:16;      size:4; signed:0;
+        field:unsigned long long calltime;      offset:24;      size:8; signed:0;
+        field:unsigned long long rettime;       offset:32;      size:8; signed:0;
 
-	777a8560fd29 ("lib/buildid: use __kernel_read() for sleepable context")
+Notice that overrun is at offset 16 with size 4, where in the structure
+calltime is at offset 20 (16 + 4), but it shows the offset at 24. That's
+because it used the alignment of unsigned long long when used as a
+declaration and not as a member of a structure where it would be aligned
+by word size (in this case 4).
 
-To make this safe, we need to grab file refcount while VMA is still locked, but
-other than that everything is pretty straightforward. Internal build_id_parse()
-API assumes VMA is passed, but it only needs the underlying file reference, so
-just add another variant build_id_parse_file() that expects file passed
-directly.
+By using the proper structure alignment, the format has it at the correct
+offset:
 
-[akpm@linux-foundation.org: fix up kerneldoc]
-Link: https://lkml.kernel.org/r/20260129215340.3742283-1-andrii@kernel.org
-Fixes: ed5d583a88a9 ("fs/procfs: implement efficient VMA querying API for /proc/<pid>/maps")
-Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
-Reported-by: <syzbot+4e70c8e0a2017b432f7a@syzkaller.appspotmail.com>
-Reviewed-by: Suren Baghdasaryan <surenb@google.com>
-Tested-by: Suren Baghdasaryan <surenb@google.com>
-Reviewed-by: Shakeel Butt <shakeel.butt@linux.dev>
-Cc: Alexei Starovoitov <ast@kernel.org>
-Cc: Daniel Borkmann <daniel@iogearbox.net>
-Cc: Eduard Zingerman <eddyz87@gmail.com>
-Cc: Hao Luo <haoluo@google.com>
-Cc: Jiri Olsa <jolsa@kernel.org>
-Cc: John Fastabend <john.fastabend@gmail.com>
-Cc: KP Singh <kpsingh@kernel.org>
-Cc: Martin KaFai Lau <martin.lau@linux.dev>
-Cc: Song Liu <song@kernel.org>
-Cc: Stanislav Fomichev <sdf@fomichev.me>
-Cc: Yonghong Song <yonghong.song@linux.dev>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-[ mm is local var instead of function param ]
+ ~# cat /sys/kernel/tracing/events/ftrace/funcgraph_exit/format
+[..]
+        field:unsigned long func;       offset:8;       size:4; signed:0;
+        field:unsigned int depth;       offset:12;      size:4; signed:0;
+        field:unsigned int overrun;     offset:16;      size:4; signed:0;
+        field:unsigned long long calltime;      offset:20;      size:8; signed:0;
+        field:unsigned long long rettime;       offset:28;      size:8; signed:0;
+
+Cc: stable@vger.kernel.org
+Cc: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
+Cc: Mark Rutland <mark.rutland@arm.com>
+Acked-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+Reported-by: "jempty.liang" <imntjempty@163.com>
+Link: https://patch.msgid.link/20260204113628.53faec78@gandalf.local.home
+Fixes: 04ae87a52074e ("ftrace: Rework event_create_dir()")
+Closes: https://lore.kernel.org/all/20260130015740.212343-1-imntjempty@163.com/
+Closes: https://lore.kernel.org/all/20260202123342.2544795-1-imntjempty@163.com/
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+[ adapted field types and macro arguments ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/proc/task_mmu.c      |   42 +++++++++++++++++++++++++++---------------
- include/linux/buildid.h |    3 +++
- lib/buildid.c           |   42 ++++++++++++++++++++++++++++++------------
- 3 files changed, 60 insertions(+), 27 deletions(-)
+ kernel/trace/trace.h         |    7 +++++--
+ kernel/trace/trace_entries.h |   26 +++++++++++++-------------
+ kernel/trace/trace_export.c  |   21 +++++++++++++++------
+ 3 files changed, 33 insertions(+), 21 deletions(-)
 
---- a/fs/proc/task_mmu.c
-+++ b/fs/proc/task_mmu.c
-@@ -456,6 +456,7 @@ static int do_procmap_query(struct proc_
- 	struct procmap_query karg;
- 	struct vm_area_struct *vma;
- 	struct mm_struct *mm;
-+	struct file *vm_file = NULL;
- 	const char *name = NULL;
- 	char build_id_buf[BUILD_ID_SIZE_MAX], *name_buf = NULL;
- 	__u64 usize;
-@@ -528,21 +529,6 @@ static int do_procmap_query(struct proc_
- 		karg.inode = 0;
- 	}
+--- a/kernel/trace/trace.h
++++ b/kernel/trace/trace.h
+@@ -65,14 +65,17 @@ enum trace_type {
+ #undef __field_fn
+ #define __field_fn(type, item)		type	item;
  
--	if (karg.build_id_size) {
--		__u32 build_id_sz;
--
--		err = build_id_parse(vma, build_id_buf, &build_id_sz);
--		if (err) {
--			karg.build_id_size = 0;
--		} else {
--			if (karg.build_id_size < build_id_sz) {
--				err = -ENAMETOOLONG;
--				goto out;
--			}
--			karg.build_id_size = build_id_sz;
--		}
--	}
--
- 	if (karg.vma_name_size) {
- 		size_t name_buf_sz = min_t(size_t, PATH_MAX, karg.vma_name_size);
- 		const struct path *path;
-@@ -576,10 +562,34 @@ static int do_procmap_query(struct proc_
- 		karg.vma_name_size = name_sz;
- 	}
- 
-+	if (karg.build_id_size && vma->vm_file)
-+		vm_file = get_file(vma->vm_file);
++#undef __field_packed
++#define __field_packed(type, item)	type	item;
 +
- 	/* unlock vma or mmap_lock, and put mm_struct before copying data to user */
- 	query_vma_teardown(mm, vma);
- 	mmput(mm);
+ #undef __field_struct
+ #define __field_struct(type, item)	__field(type, item)
  
-+	if (karg.build_id_size) {
-+		__u32 build_id_sz;
+ #undef __field_desc
+ #define __field_desc(type, container, item)
+ 
+-#undef __field_packed
+-#define __field_packed(type, container, item)
++#undef __field_desc_packed
++#define __field_desc_packed(type, container, item)
+ 
+ #undef __array
+ #define __array(type, item, size)	type	item[size];
+--- a/kernel/trace/trace_entries.h
++++ b/kernel/trace/trace_entries.h
+@@ -78,8 +78,8 @@ FTRACE_ENTRY_PACKED(funcgraph_entry, ftr
+ 
+ 	F_STRUCT(
+ 		__field_struct(	struct ftrace_graph_ent,	graph_ent	)
+-		__field_packed(	unsigned long,	graph_ent,	func		)
+-		__field_packed(	int,		graph_ent,	depth		)
++		__field_desc_packed(	unsigned long,	graph_ent,	func	)
++		__field_desc_packed(	int,		graph_ent,	depth	)
+ 	),
+ 
+ 	F_printk("--> %ps (%d)", (void *)__entry->func, __entry->depth)
+@@ -94,12 +94,12 @@ FTRACE_ENTRY_PACKED(funcgraph_exit, ftra
+ 
+ 	F_STRUCT(
+ 		__field_struct(	struct ftrace_graph_ret,	ret	)
+-		__field_packed(	unsigned long,	ret,		func	)
+-		__field_packed(	unsigned long,	ret,		retval	)
+-		__field_packed(	int,		ret,		depth	)
+-		__field_packed(	unsigned int,	ret,		overrun	)
+-		__field_packed(	unsigned long long, ret,	calltime)
+-		__field_packed(	unsigned long long, ret,	rettime	)
++		__field_desc_packed(	unsigned long,	ret,	func	)
++		__field_desc_packed(	unsigned long,	ret,	retval	)
++		__field_desc_packed(	int,		ret,	depth	)
++		__field_desc_packed(	unsigned int,	ret,	overrun	)
++		__field_packed(unsigned long long,	calltime)
++		__field_packed(unsigned long long,	rettime	)
+ 	),
+ 
+ 	F_printk("<-- %ps (%d) (start: %llx  end: %llx) over: %d retval: %lx",
+@@ -116,11 +116,11 @@ FTRACE_ENTRY_PACKED(funcgraph_exit, ftra
+ 
+ 	F_STRUCT(
+ 		__field_struct(	struct ftrace_graph_ret,	ret	)
+-		__field_packed(	unsigned long,	ret,		func	)
+-		__field_packed(	int,		ret,		depth	)
+-		__field_packed(	unsigned int,	ret,		overrun	)
+-		__field_packed(	unsigned long long, ret,	calltime)
+-		__field_packed(	unsigned long long, ret,	rettime	)
++		__field_desc_packed(	unsigned long,	ret,	func	)
++		__field_desc_packed(	int,		ret,	depth	)
++		__field_desc_packed(	unsigned int,	ret,	overrun	)
++		__field_packed(unsigned long long,	calltime)
++		__field_packed(unsigned long long,	rettime	)
+ 	),
+ 
+ 	F_printk("<-- %ps (%d) (start: %llx  end: %llx) over: %d",
+--- a/kernel/trace/trace_export.c
++++ b/kernel/trace/trace_export.c
+@@ -42,11 +42,14 @@ static int ftrace_event_register(struct
+ #undef __field_fn
+ #define __field_fn(type, item)				type item;
+ 
++#undef __field_packed
++#define __field_packed(type, item)			type item;
 +
-+		if (vm_file)
-+			err = build_id_parse_file(vm_file, build_id_buf, &build_id_sz);
-+		else
-+			err = -ENOENT;
-+		if (err) {
-+			karg.build_id_size = 0;
-+		} else {
-+			if (karg.build_id_size < build_id_sz) {
-+				err = -ENAMETOOLONG;
-+				goto out;
-+			}
-+			karg.build_id_size = build_id_sz;
-+		}
-+	}
+ #undef __field_desc
+ #define __field_desc(type, container, item)		type item;
+ 
+-#undef __field_packed
+-#define __field_packed(type, container, item)		type item;
++#undef __field_desc_packed
++#define __field_desc_packed(type, container, item)	type item;
+ 
+ #undef __array
+ #define __array(type, item, size)			type item[size];
+@@ -104,11 +107,14 @@ static void __always_unused ____ftrace_c
+ #undef __field_fn
+ #define __field_fn(_type, _item) __field_ext(_type, _item, FILTER_TRACE_FN)
+ 
++#undef __field_packed
++#define __field_packed(_type, _item) __field_ext_packed(_type, _item, FILTER_OTHER)
 +
-+	if (vm_file)
-+		fput(vm_file);
+ #undef __field_desc
+ #define __field_desc(_type, _container, _item) __field_ext(_type, _item, FILTER_OTHER)
+ 
+-#undef __field_packed
+-#define __field_packed(_type, _container, _item) __field_ext_packed(_type, _item, FILTER_OTHER)
++#undef __field_desc_packed
++#define __field_desc_packed(_type, _container, _item) __field_ext_packed(_type, _item, FILTER_OTHER)
+ 
+ #undef __array
+ #define __array(_type, _item, _len) {					\
+@@ -146,11 +152,14 @@ static struct trace_event_fields ftrace_
+ #undef __field_fn
+ #define __field_fn(type, item)
+ 
++#undef __field_packed
++#define __field_packed(type, item)
 +
- 	if (karg.vma_name_size && copy_to_user(u64_to_user_ptr(karg.vma_name_addr),
- 					       name, karg.vma_name_size)) {
- 		kfree(name_buf);
-@@ -599,6 +609,8 @@ static int do_procmap_query(struct proc_
- out:
- 	query_vma_teardown(mm, vma);
- 	mmput(mm);
-+	if (vm_file)
-+		fput(vm_file);
- 	kfree(name_buf);
- 	return err;
- }
---- a/include/linux/buildid.h
-+++ b/include/linux/buildid.h
-@@ -7,7 +7,10 @@
- #define BUILD_ID_SIZE_MAX 20
+ #undef __field_desc
+ #define __field_desc(type, container, item)
  
- struct vm_area_struct;
-+struct file;
-+
- int build_id_parse(struct vm_area_struct *vma, unsigned char *build_id, __u32 *size);
-+int build_id_parse_file(struct file *file, unsigned char *build_id, __u32 *size);
- int build_id_parse_nofault(struct vm_area_struct *vma, unsigned char *build_id, __u32 *size);
- int build_id_parse_buf(const void *buf, unsigned char *build_id, u32 buf_size);
+-#undef __field_packed
+-#define __field_packed(type, container, item)
++#undef __field_desc_packed
++#define __field_desc_packed(type, container, item)
  
---- a/lib/buildid.c
-+++ b/lib/buildid.c
-@@ -295,7 +295,7 @@ static int get_build_id_64(struct freade
- /* enough for Elf64_Ehdr, Elf64_Phdr, and all the smaller requests */
- #define MAX_FREADER_BUF_SZ 64
- 
--static int __build_id_parse(struct vm_area_struct *vma, unsigned char *build_id,
-+static int __build_id_parse(struct file *file, unsigned char *build_id,
- 			    __u32 *size, bool may_fault)
- {
- 	const Elf32_Ehdr *ehdr;
-@@ -303,11 +303,7 @@ static int __build_id_parse(struct vm_ar
- 	char buf[MAX_FREADER_BUF_SZ];
- 	int ret;
- 
--	/* only works for page backed storage  */
--	if (!vma->vm_file)
--		return -EINVAL;
--
--	freader_init_from_file(&r, buf, sizeof(buf), vma->vm_file, may_fault);
-+	freader_init_from_file(&r, buf, sizeof(buf), file, may_fault);
- 
- 	/* fetch first 18 bytes of ELF header for checks */
- 	ehdr = freader_fetch(&r, 0, offsetofend(Elf32_Ehdr, e_type));
-@@ -335,8 +331,8 @@ out:
- 	return ret;
- }
- 
--/*
-- * Parse build ID of ELF file mapped to vma
-+/**
-+ * build_id_parse_nofault() - Parse build ID of ELF file mapped to vma
-  * @vma:      vma object
-  * @build_id: buffer to store build id, at least BUILD_ID_SIZE long
-  * @size:     returns actual build id size in case of success
-@@ -348,11 +344,14 @@ out:
-  */
- int build_id_parse_nofault(struct vm_area_struct *vma, unsigned char *build_id, __u32 *size)
- {
--	return __build_id_parse(vma, build_id, size, false /* !may_fault */);
-+	if (!vma->vm_file)
-+		return -EINVAL;
-+
-+	return __build_id_parse(vma->vm_file, build_id, size, false /* !may_fault */);
- }
- 
--/*
-- * Parse build ID of ELF file mapped to VMA
-+/**
-+ * build_id_parse() - Parse build ID of ELF file mapped to VMA
-  * @vma:      vma object
-  * @build_id: buffer to store build id, at least BUILD_ID_SIZE long
-  * @size:     returns actual build id size in case of success
-@@ -364,7 +363,26 @@ int build_id_parse_nofault(struct vm_are
-  */
- int build_id_parse(struct vm_area_struct *vma, unsigned char *build_id, __u32 *size)
- {
--	return __build_id_parse(vma, build_id, size, true /* may_fault */);
-+	if (!vma->vm_file)
-+		return -EINVAL;
-+
-+	return __build_id_parse(vma->vm_file, build_id, size, true /* may_fault */);
-+}
-+
-+/**
-+ * build_id_parse_file() - Parse build ID of ELF file
-+ * @file:      file object
-+ * @build_id: buffer to store build id, at least BUILD_ID_SIZE long
-+ * @size:     returns actual build id size in case of success
-+ *
-+ * Assumes faultable context and can cause page faults to bring in file data
-+ * into page cache.
-+ *
-+ * Return: 0 on success; negative error, otherwise
-+ */
-+int build_id_parse_file(struct file *file, unsigned char *build_id, __u32 *size)
-+{
-+	return __build_id_parse(file, build_id, size, true /* may_fault */);
- }
- 
- /**
+ #undef __array
+ #define __array(type, item, len)
 
 
