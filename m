@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E069F28725B;
-	Mon,  9 Feb 2026 14:47:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E15F828725B;
+	Mon,  9 Feb 2026 14:47:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770648442; cv=none; b=Ilta+GI7Q1O3qAZlImBfx5mAi+jaKkWs0+qQPdO85+c/bZnKzUBwP4l5gSuBaVyyD7FnWQaSolDoUWODcls96MgBI/4M+DnXKYZ9S7Z1E4RqSHdNmtQKnK50IVPYdUYEjeBUdyaEkc86kmEC3zxrz4ceIqFNzf4yqEZU5MNzfY4=
+	t=1770648445; cv=none; b=F6VUq5ZT/MB1k2IeM6p7MraAa++IBPI5zBm0uCTh3UJ4TrBaJwm3lxfSFDBBdBgat7a0yBCAvwIxmZaT3Y5k1TIakdPy+Y5p8pBEvpyXWNoGKelUcB9F0ZLrN09uYZaZ04bP+jymetQSwiKkqBBjWj4BrrVZYY4m9uTlcJcFHa4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770648442; c=relaxed/simple;
-	bh=iHQ0tzBGVASYPqc84rf/rRBwA5I1Y7/2D8i2v0nUDe8=;
+	s=arc-20240116; t=1770648445; c=relaxed/simple;
+	bh=fEwHkBjfMS9RDG1BDO56JyJhdJMCUBOTJ07YYe+fqtM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lOGEuwmpY8YQVFIT57bSbPSBb9mq/bKQ4eLvQ/G9ICdWuiiKxKUhCefuBtvhEM+TVcOGv94ANvq0XOo9pRiZgcgOMODdYxBR4+Jkud7UKNdZyoIcY7us2L0cAqp/QklTd+65iY4K4xtTcgdrkyNLrGPitfyPdmQelfa7lY0uuBg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=npO485O/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=vAQWLayqlwUMTFOvdADw9IQLlfSchdoZGclRk6e0/4Ji3Tw/B97/qsr/7SUwSGsBcVd9yrN2siz2Y/4aHfoJW98LUUYOFrWWJqBQ70+z1X9VZq7Y94OVbUG/LKhFl8i6IaX2JA6nxnO76KvT1UewT4IWHUetnbhZ64juvS+Leyk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XrPjciKV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="npO485O/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EBB26C116C6;
-	Mon,  9 Feb 2026 14:47:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XrPjciKV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 541A0C116C6;
+	Mon,  9 Feb 2026 14:47:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770648441;
-	bh=iHQ0tzBGVASYPqc84rf/rRBwA5I1Y7/2D8i2v0nUDe8=;
+	s=korg; t=1770648444;
+	bh=fEwHkBjfMS9RDG1BDO56JyJhdJMCUBOTJ07YYe+fqtM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=npO485O/eT6KdN7WtVfevna0KXtlmamYuXg6MmYux0MwcWldezq58sjX5DXwLyNLh
-	 W+EbEkx3DN09wes63xK4iy3njB6f/ViPhJxl1vuwv+LfKcgrqTH4gHMMpjuwRVgknh
-	 TShenbBnCWg9q0pS4lTTVp96CWxOT0Mbemli/CCI=
+	b=XrPjciKVggPUI7oB9wvgIX3ztygwZ/wltpIsp4qra/rAUlWnaUWI3EX86PY5MHh4t
+	 Koipomgos16yaquD9K7AvuWC7HX6DqRB7sqZ4ODrIHbA8/xRHC0epqDrmBB9Vn2ZnO
+	 PXlMQnyNqsQToTKpMiaHC+uE9YV5pEyYkkJdOvvg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
-	Mark Rutland <mark.rutland@arm.com>,
-	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
-	"jempty.liang" <imntjempty@163.com>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
+	Kwok Kin Ming <kenkinming2002@gmail.com>,
+	Benjamin Tissoires <bentiss@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 21/86] tracing: Fix ftrace event field alignments
-Date: Mon,  9 Feb 2026 15:23:44 +0100
-Message-ID: <20260209142305.543742558@linuxfoundation.org>
+Subject: [PATCH 6.6 39/86] HID: i2c-hid: fix potential buffer overflow in i2c_hid_get_report()
+Date: Mon,  9 Feb 2026 15:24:02 +0100
+Message-ID: <20260209142306.192610616@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260209142304.770150175@linuxfoundation.org>
 References: <20260209142304.770150175@linuxfoundation.org>
@@ -54,204 +51,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Steven Rostedt <rostedt@goodmis.org>
+From: Kwok Kin Ming <kenkinming2002@gmail.com>
 
-[ Upstream commit 033c55fe2e326bea022c3cc5178ecf3e0e459b82 ]
+[ Upstream commit 2497ff38c530b1af0df5130ca9f5ab22c5e92f29 ]
 
-The fields of ftrace specific events (events used to save ftrace internal
-events like function traces and trace_printk) are generated similarly to
-how normal trace event fields are generated. That is, the fields are added
-to a trace_events_fields array that saves the name, offset, size,
-alignment and signness of the field. It is used to produce the output in
-the format file in tracefs so that tooling knows how to parse the binary
-data of the trace events.
+`i2c_hid_xfer` is used to read `recv_len + sizeof(__le16)` bytes of data
+into `ihid->rawbuf`.
 
-The issue is that some of the ftrace event structures are packed. The
-function graph exit event structures are one of them. The 64 bit calltime
-and rettime fields end up 4 byte aligned, but the algorithm to show to
-userspace shows them as 8 byte aligned.
+The former can come from the userspace in the hidraw driver and is only
+bounded by HID_MAX_BUFFER_SIZE(16384) by default (unless we also set
+`max_buffer_size` field of `struct hid_ll_driver` which we do not).
 
-The macros that create the ftrace events has one for embedded structure
-fields. There's two macros for theses fields:
+The latter has size determined at runtime by the maximum size of
+different report types you could receive on any particular device and
+can be a much smaller value.
 
-  __field_desc() and __field_packed()
+Fix this by truncating `recv_len` to `ihid->bufsize - sizeof(__le16)`.
 
-The difference of the latter macro is that it treats the field as packed.
+The impact is low since access to hidraw devices requires root.
 
-Rename that field to __field_desc_packed() and create replace the
-__field_packed() to be a normal field that is packed and have the calltime
-and rettime use those.
-
-This showed up on 32bit architectures for function graph time fields. It
-had:
-
- ~# cat /sys/kernel/tracing/events/ftrace/funcgraph_exit/format
-[..]
-        field:unsigned long func;       offset:8;       size:4; signed:0;
-        field:unsigned int depth;       offset:12;      size:4; signed:0;
-        field:unsigned int overrun;     offset:16;      size:4; signed:0;
-        field:unsigned long long calltime;      offset:24;      size:8; signed:0;
-        field:unsigned long long rettime;       offset:32;      size:8; signed:0;
-
-Notice that overrun is at offset 16 with size 4, where in the structure
-calltime is at offset 20 (16 + 4), but it shows the offset at 24. That's
-because it used the alignment of unsigned long long when used as a
-declaration and not as a member of a structure where it would be aligned
-by word size (in this case 4).
-
-By using the proper structure alignment, the format has it at the correct
-offset:
-
- ~# cat /sys/kernel/tracing/events/ftrace/funcgraph_exit/format
-[..]
-        field:unsigned long func;       offset:8;       size:4; signed:0;
-        field:unsigned int depth;       offset:12;      size:4; signed:0;
-        field:unsigned int overrun;     offset:16;      size:4; signed:0;
-        field:unsigned long long calltime;      offset:20;      size:8; signed:0;
-        field:unsigned long long rettime;       offset:28;      size:8; signed:0;
-
-Cc: stable@vger.kernel.org
-Cc: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
-Cc: Mark Rutland <mark.rutland@arm.com>
-Acked-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
-Reported-by: "jempty.liang" <imntjempty@163.com>
-Link: https://patch.msgid.link/20260204113628.53faec78@gandalf.local.home
-Fixes: 04ae87a52074e ("ftrace: Rework event_create_dir()")
-Closes: https://lore.kernel.org/all/20260130015740.212343-1-imntjempty@163.com/
-Closes: https://lore.kernel.org/all/20260202123342.2544795-1-imntjempty@163.com/
-Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
-[ adapted field types and macro arguments ]
+Signed-off-by: Kwok Kin Ming <kenkinming2002@gmail.com>
+Signed-off-by: Benjamin Tissoires <bentiss@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/trace/trace.h         |    7 +++++--
- kernel/trace/trace_entries.h |   26 +++++++++++++-------------
- kernel/trace/trace_export.c  |   21 +++++++++++++++------
- 3 files changed, 33 insertions(+), 21 deletions(-)
+ drivers/hid/i2c-hid/i2c-hid-core.c | 1 +
+ 1 file changed, 1 insertion(+)
 
---- a/kernel/trace/trace.h
-+++ b/kernel/trace/trace.h
-@@ -65,14 +65,17 @@ enum trace_type {
- #undef __field_fn
- #define __field_fn(type, item)		type	item;
- 
-+#undef __field_packed
-+#define __field_packed(type, item)	type	item;
-+
- #undef __field_struct
- #define __field_struct(type, item)	__field(type, item)
- 
- #undef __field_desc
- #define __field_desc(type, container, item)
- 
--#undef __field_packed
--#define __field_packed(type, container, item)
-+#undef __field_desc_packed
-+#define __field_desc_packed(type, container, item)
- 
- #undef __array
- #define __array(type, item, size)	type	item[size];
---- a/kernel/trace/trace_entries.h
-+++ b/kernel/trace/trace_entries.h
-@@ -78,8 +78,8 @@ FTRACE_ENTRY_PACKED(funcgraph_entry, ftr
- 
- 	F_STRUCT(
- 		__field_struct(	struct ftrace_graph_ent,	graph_ent	)
--		__field_packed(	unsigned long,	graph_ent,	func		)
--		__field_packed(	int,		graph_ent,	depth		)
-+		__field_desc_packed(	unsigned long,	graph_ent,	func	)
-+		__field_desc_packed(	int,		graph_ent,	depth	)
- 	),
- 
- 	F_printk("--> %ps (%d)", (void *)__entry->func, __entry->depth)
-@@ -94,12 +94,12 @@ FTRACE_ENTRY_PACKED(funcgraph_exit, ftra
- 
- 	F_STRUCT(
- 		__field_struct(	struct ftrace_graph_ret,	ret	)
--		__field_packed(	unsigned long,	ret,		func	)
--		__field_packed(	unsigned long,	ret,		retval	)
--		__field_packed(	int,		ret,		depth	)
--		__field_packed(	unsigned int,	ret,		overrun	)
--		__field_packed(	unsigned long long, ret,	calltime)
--		__field_packed(	unsigned long long, ret,	rettime	)
-+		__field_desc_packed(	unsigned long,	ret,	func	)
-+		__field_desc_packed(	unsigned long,	ret,	retval	)
-+		__field_desc_packed(	int,		ret,	depth	)
-+		__field_desc_packed(	unsigned int,	ret,	overrun	)
-+		__field_packed(unsigned long long,	calltime)
-+		__field_packed(unsigned long long,	rettime	)
- 	),
- 
- 	F_printk("<-- %ps (%d) (start: %llx  end: %llx) over: %d retval: %lx",
-@@ -116,11 +116,11 @@ FTRACE_ENTRY_PACKED(funcgraph_exit, ftra
- 
- 	F_STRUCT(
- 		__field_struct(	struct ftrace_graph_ret,	ret	)
--		__field_packed(	unsigned long,	ret,		func	)
--		__field_packed(	int,		ret,		depth	)
--		__field_packed(	unsigned int,	ret,		overrun	)
--		__field_packed(	unsigned long long, ret,	calltime)
--		__field_packed(	unsigned long long, ret,	rettime	)
-+		__field_desc_packed(	unsigned long,	ret,	func	)
-+		__field_desc_packed(	int,		ret,	depth	)
-+		__field_desc_packed(	unsigned int,	ret,	overrun	)
-+		__field_packed(unsigned long long,	calltime)
-+		__field_packed(unsigned long long,	rettime	)
- 	),
- 
- 	F_printk("<-- %ps (%d) (start: %llx  end: %llx) over: %d",
---- a/kernel/trace/trace_export.c
-+++ b/kernel/trace/trace_export.c
-@@ -42,11 +42,14 @@ static int ftrace_event_register(struct
- #undef __field_fn
- #define __field_fn(type, item)				type item;
- 
-+#undef __field_packed
-+#define __field_packed(type, item)			type item;
-+
- #undef __field_desc
- #define __field_desc(type, container, item)		type item;
- 
--#undef __field_packed
--#define __field_packed(type, container, item)		type item;
-+#undef __field_desc_packed
-+#define __field_desc_packed(type, container, item)	type item;
- 
- #undef __array
- #define __array(type, item, size)			type item[size];
-@@ -104,11 +107,14 @@ static void __always_unused ____ftrace_c
- #undef __field_fn
- #define __field_fn(_type, _item) __field_ext(_type, _item, FILTER_TRACE_FN)
- 
-+#undef __field_packed
-+#define __field_packed(_type, _item) __field_ext_packed(_type, _item, FILTER_OTHER)
-+
- #undef __field_desc
- #define __field_desc(_type, _container, _item) __field_ext(_type, _item, FILTER_OTHER)
- 
--#undef __field_packed
--#define __field_packed(_type, _container, _item) __field_ext_packed(_type, _item, FILTER_OTHER)
-+#undef __field_desc_packed
-+#define __field_desc_packed(_type, _container, _item) __field_ext_packed(_type, _item, FILTER_OTHER)
- 
- #undef __array
- #define __array(_type, _item, _len) {					\
-@@ -146,11 +152,14 @@ static struct trace_event_fields ftrace_
- #undef __field_fn
- #define __field_fn(type, item)
- 
-+#undef __field_packed
-+#define __field_packed(type, item)
-+
- #undef __field_desc
- #define __field_desc(type, container, item)
- 
--#undef __field_packed
--#define __field_packed(type, container, item)
-+#undef __field_desc_packed
-+#define __field_desc_packed(type, container, item)
- 
- #undef __array
- #define __array(type, item, len)
+diff --git a/drivers/hid/i2c-hid/i2c-hid-core.c b/drivers/hid/i2c-hid/i2c-hid-core.c
+index 172b783274201..0a350780407ec 100644
+--- a/drivers/hid/i2c-hid/i2c-hid-core.c
++++ b/drivers/hid/i2c-hid/i2c-hid-core.c
+@@ -254,6 +254,7 @@ static int i2c_hid_get_report(struct i2c_hid *ihid,
+ 	 * In addition to report data device will supply data length
+ 	 * in the first 2 bytes of the response, so adjust .
+ 	 */
++	recv_len = min(recv_len, ihid->bufsize - sizeof(__le16));
+ 	error = i2c_hid_xfer(ihid, ihid->cmdbuf, length,
+ 			     ihid->rawbuf, recv_len + sizeof(__le16));
+ 	if (error) {
+-- 
+2.51.0
+
 
 
