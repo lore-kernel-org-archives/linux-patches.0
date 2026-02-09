@@ -1,41 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2CC828312F;
-	Mon,  9 Feb 2026 14:53:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CAF9B3783C9;
+	Mon,  9 Feb 2026 14:53:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770648799; cv=none; b=RgSNrtfHAQI0G6/++4tXdDp3IKWe4DNUc8sc725HN2b6xEPhwrEeNWdgDDX595R0DePS2pIoK/SpoQBDfZ6Crh6E2Jp4SVQG3Q0Uy2w0Nkn6kDAWpuDQWwYMKc0hboc2lK3Yu2HZCQpGLNU3HH/BmXOWsTKoJUmyOwcrSMHTURE=
+	t=1770648802; cv=none; b=cCCOGwvmMz0zJIL7zDBq7ze+eDERh7gWFDRYgYp1EYd51mkftUuPj8uId8sVjrhZZBoYOGg0o+ow8H3j53RzxLDFPswP+lKWpmvrN2AhvOdAOmg/wzBTunUyqQI+fzNrBxi/FxF+Y94LD7aN3MXTHoNbgpv3NXxD55Ypxwu5zng=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770648799; c=relaxed/simple;
-	bh=t/vWMxUcuoETOopdqw1QLL9d4niSxDFVLvY6hU7w7s0=;
+	s=arc-20240116; t=1770648802; c=relaxed/simple;
+	bh=J46Q+OFATO5Cq93QWjg9pbyptAnUGiDgSJN/dfNu8Q0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ViB7tOsF9AO/31mWri2T6d/r2c7k9mWJ1ZVRSrcHOEAyQj01NFP/h4yD3Dpi+60F/+R5WsM78ZQnNFBqVcQygnHO4boPS4nWxL4MdqB6ABeS5VaUhEuCyP6M8B5SJj5mGLrhUGzzBX5GWDEY+h9CUWegCn6VM/ONIaVl1lfs4Bg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LiLByD0H; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=JGzbBaaxUEjHkSMx+1EugnFn0GbCAHkh9rzYcPlmtbL6r/sxvOJL4xbOTB/ORJzjTYKXumyJbtbcJlJ+eaA9F+mEy6ltei3y8v+cve15hoVLiJct03PsQKzdWiD0t/eahSVS3UJeT5NENJtdnNWldSPEdAaKftJxL7kmt9mME+8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rcSnr7C8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LiLByD0H"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D197DC116C6;
-	Mon,  9 Feb 2026 14:53:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rcSnr7C8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3BF93C116C6;
+	Mon,  9 Feb 2026 14:53:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770648799;
-	bh=t/vWMxUcuoETOopdqw1QLL9d4niSxDFVLvY6hU7w7s0=;
+	s=korg; t=1770648802;
+	bh=J46Q+OFATO5Cq93QWjg9pbyptAnUGiDgSJN/dfNu8Q0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LiLByD0HceM6b6/Tt9V0xj6xS4bcAQ3uE1HxqCtb3AhbA6CbnhMFUxb1pxcqcEKvU
-	 26d9L+c98duS384d8j9wWOV7XfJ19hxnfhYKyJOEA6BhQQc4LZDzzimRQXm0LI09TD
-	 zea1iyqQRaqF56AvF/3Iv4jH5Y0ZXqctUNb0u1eQ=
+	b=rcSnr7C82mu4XUf9d1QL4VjFhkI0CGgXB+WBiYlU9AY5UKpgc/IRb389ExtKmW3dL
+	 0MupJYQqwFOJFhpWVpNIXAJOSWLWAqxA5DM5ojDxSJyESmcqawU7Jt57wDZxVD0A/h
+	 HzxTsr7W6cD+uTMEtlg0pMlUD/mCU4qVcSK0Lea8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Steven Rostedt <rostedt@goodmis.org>,
-	Thomas Gleixner <tglx@linutronix.de>,
-	Guenter Roeck <linux@roeck-us.net>,
-	Jacob Keller <jacob.e.keller@intel.com>,
-	Anna-Maria Behnsen <anna-maria@linutronix.de>,
-	Jeongjun Park <aha310510@gmail.com>
-Subject: [PATCH 5.15 19/75] timers: Provide timer_shutdown[_sync]()
-Date: Mon,  9 Feb 2026 15:24:16 +0100
-Message-ID: <20260209142302.537225371@linuxfoundation.org>
+	Kaushlendra Kumar <kaushlendra.kumar@intel.com>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>
+Subject: [PATCH 5.15 02/75] platform/x86: intel_telemetry: Fix swapped arrays in PSS output
+Date: Mon,  9 Feb 2026 15:23:59 +0100
+Message-ID: <20260209142301.924556698@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260209142301.830618238@linuxfoundation.org>
 References: <20260209142301.830618238@linuxfoundation.org>
@@ -48,151 +44,58 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Thomas Gleixner <tglx@linutronix.de>
+From: Kaushlendra Kumar <kaushlendra.kumar@intel.com>
 
-[ Upstream commit f571faf6e443b6011ccb585d57866177af1f643c ]
+commit 25e9e322d2ab5c03602eff4fbf4f7c40019d8de2 upstream.
 
-Tearing down timers which have circular dependencies to other
-functionality, e.g. workqueues, where the timer can schedule work and work
-can arm timers, is not trivial.
+The LTR blocking statistics and wakeup event counters are incorrectly
+cross-referenced during debugfs output rendering. The code populates
+pss_ltr_blkd[] with LTR blocking data and pss_s0ix_wakeup[] with wakeup
+data, but the display loops reference the wrong arrays.
 
-In those cases it is desired to shutdown the timer in a way which prevents
-rearming of the timer. The mechanism to do so is to set timer->function to
-NULL and use this as an indicator for the timer arming functions to ignore
-the (re)arm request.
+This causes the "LTR Blocking Status" section to print wakeup events
+and the "Wakes Status" section to print LTR blockers, misleading power
+management analysis and S0ix residency debugging.
 
-Expose new interfaces for this: timer_shutdown_sync() and timer_shutdown().
+Fix by aligning array usage with the intended output section labels.
 
-timer_shutdown_sync() has the same functionality as timer_delete_sync()
-plus the NULL-ification of the timer function.
-
-timer_shutdown() has the same functionality as timer_delete() plus the
-NULL-ification of the timer function.
-
-In both cases the rearming of the timer is prevented by silently discarding
-rearm attempts due to timer->function being NULL.
-
-Co-developed-by: Steven Rostedt <rostedt@goodmis.org>
-Signed-off-by: Steven Rostedt <rostedt@goodmis.org>
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Tested-by: Guenter Roeck <linux@roeck-us.net>
-Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
-Reviewed-by: Anna-Maria Behnsen <anna-maria@linutronix.de>
-Link: https://lore.kernel.org/all/20220407161745.7d6754b3@gandalf.local.home
-Link: https://lore.kernel.org/all/20221110064101.429013735@goodmis.org
-Link: https://lore.kernel.org/r/20221123201625.314230270@linutronix.de
-Signed-off-by: Jeongjun Park <aha310510@gmail.com>
+Fixes: 87bee290998d ("platform:x86: Add Intel Telemetry Debugfs interfaces")
+Cc: stable@vger.kernel.org
+Signed-off-by: Kaushlendra Kumar <kaushlendra.kumar@intel.com>
+Link: https://patch.msgid.link/20251224032053.3915900-1-kaushlendra.kumar@intel.com
+Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/timer.h |    2 +
- kernel/time/timer.c   |   66 ++++++++++++++++++++++++++++++++++++++++++++++++++
- 2 files changed, 68 insertions(+)
+ drivers/platform/x86/intel/telemetry/debugfs.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/include/linux/timer.h
-+++ b/include/linux/timer.h
-@@ -184,6 +184,8 @@ extern void add_timer(struct timer_list
- extern int try_to_del_timer_sync(struct timer_list *timer);
- extern int timer_delete_sync(struct timer_list *timer);
- extern int timer_delete(struct timer_list *timer);
-+extern int timer_shutdown_sync(struct timer_list *timer);
-+extern int timer_shutdown(struct timer_list *timer);
+--- a/drivers/platform/x86/intel/telemetry/debugfs.c
++++ b/drivers/platform/x86/intel/telemetry/debugfs.c
+@@ -449,7 +449,7 @@ static int telem_pss_states_show(struct
+ 	for (index = 0; index < debugfs_conf->pss_ltr_evts; index++) {
+ 		seq_printf(s, "%-32s\t%u\n",
+ 			   debugfs_conf->pss_ltr_data[index].name,
+-			   pss_s0ix_wakeup[index]);
++			   pss_ltr_blkd[index]);
+ 	}
  
- /**
-  * del_timer_sync - Delete a pending timer and wait for a running callback
---- a/kernel/time/timer.c
-+++ b/kernel/time/timer.c
-@@ -1310,6 +1310,27 @@ int timer_delete(struct timer_list *time
- EXPORT_SYMBOL(timer_delete);
+ 	seq_puts(s, "\n--------------------------------------\n");
+@@ -459,7 +459,7 @@ static int telem_pss_states_show(struct
+ 	for (index = 0; index < debugfs_conf->pss_wakeup_evts; index++) {
+ 		seq_printf(s, "%-32s\t%u\n",
+ 			   debugfs_conf->pss_wakeup[index].name,
+-			   pss_ltr_blkd[index]);
++			   pss_s0ix_wakeup[index]);
+ 	}
  
- /**
-+ * timer_shutdown - Deactivate a timer and prevent rearming
-+ * @timer:	The timer to be deactivated
-+ *
-+ * The function does not wait for an eventually running timer callback on a
-+ * different CPU but it prevents rearming of the timer. Any attempt to arm
-+ * @timer after this function returns will be silently ignored.
-+ *
-+ * This function is useful for teardown code and should only be used when
-+ * timer_shutdown_sync() cannot be invoked due to locking or context constraints.
-+ *
-+ * Return:
-+ * * %0 - The timer was not pending
-+ * * %1 - The timer was pending
-+ */
-+int timer_shutdown(struct timer_list *timer)
-+{
-+	return __timer_delete(timer, true);
-+}
-+EXPORT_SYMBOL_GPL(timer_shutdown);
-+
-+/**
-  * __try_to_del_timer_sync - Internal function: Try to deactivate a timer
-  * @timer:	Timer to deactivate
-  * @shutdown:	If true, this indicates that the timer is about to be
-@@ -1542,6 +1563,9 @@ static int __timer_delete_sync(struct ti
-  * lock. If there is the possibility of a concurrent rearm then the return
-  * value of the function is meaningless.
-  *
-+ * If such a guarantee is needed, e.g. for teardown situations then use
-+ * timer_shutdown_sync() instead.
-+ *
-  * Return:
-  * * %0	- The timer was not pending
-  * * %1	- The timer was pending and deactivated
-@@ -1552,6 +1576,48 @@ int timer_delete_sync(struct timer_list
- }
- EXPORT_SYMBOL(timer_delete_sync);
- 
-+/**
-+ * timer_shutdown_sync - Shutdown a timer and prevent rearming
-+ * @timer: The timer to be shutdown
-+ *
-+ * When the function returns it is guaranteed that:
-+ *   - @timer is not queued
-+ *   - The callback function of @timer is not running
-+ *   - @timer cannot be enqueued again. Any attempt to rearm
-+ *     @timer is silently ignored.
-+ *
-+ * See timer_delete_sync() for synchronization rules.
-+ *
-+ * This function is useful for final teardown of an infrastructure where
-+ * the timer is subject to a circular dependency problem.
-+ *
-+ * A common pattern for this is a timer and a workqueue where the timer can
-+ * schedule work and work can arm the timer. On shutdown the workqueue must
-+ * be destroyed and the timer must be prevented from rearming. Unless the
-+ * code has conditionals like 'if (mything->in_shutdown)' to prevent that
-+ * there is no way to get this correct with timer_delete_sync().
-+ *
-+ * timer_shutdown_sync() is solving the problem. The correct ordering of
-+ * calls in this case is:
-+ *
-+ *	timer_shutdown_sync(&mything->timer);
-+ *	workqueue_destroy(&mything->workqueue);
-+ *
-+ * After this 'mything' can be safely freed.
-+ *
-+ * This obviously implies that the timer is not required to be functional
-+ * for the rest of the shutdown operation.
-+ *
-+ * Return:
-+ * * %0 - The timer was not pending
-+ * * %1 - The timer was pending
-+ */
-+int timer_shutdown_sync(struct timer_list *timer)
-+{
-+	return __timer_delete_sync(timer, true);
-+}
-+EXPORT_SYMBOL_GPL(timer_shutdown_sync);
-+
- static void call_timer_fn(struct timer_list *timer,
- 			  void (*fn)(struct timer_list *),
- 			  unsigned long baseclk)
+ 	return 0;
 
 
