@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E51E285060;
-	Mon,  9 Feb 2026 14:33:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5DC662C2360;
+	Mon,  9 Feb 2026 14:33:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770647596; cv=none; b=orL7pi1vccJA6e+u7WZjY/tVbrdvsItz27MUgQxpAB6lHDz35KmhvbPm5+H2f8aaIkZwPkVKUXGxfbAKPkDa2H8Z11YInrHytD+kKzv5x4i3biMOvWMRQTzSVehlqBkZJBdhSTuQHYQR+LiM3L/X/Kh5PohVSDvAMVAofvqwqYc=
+	t=1770647600; cv=none; b=SYCd9u/LgQI56urfUKiXZpeXlDXFYidoT2ynfPSUrvnXh5AlOzavdTpgJ5cT5zYUK9ijC0cKe7cAQdzTqbtxUT5Vkh4XLnYSM589ZDK/UisQZivSrQikVAOfewdt8gSM9TFX5cs9BavyTZR6xKLyBtki14yEt0FJvGLT4JRikIs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770647596; c=relaxed/simple;
-	bh=jiaKetmqMkW3sklFtmhEhf/EQDkEA4l3OdLA+zdNRyU=;
+	s=arc-20240116; t=1770647600; c=relaxed/simple;
+	bh=Lll92XrFepvGXe7sNsQw3sQqn0sgLM6fTN+/MKuW+n0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=cC+Xx6Nw10VSt3xF9s5QULBGmIaO6ADOB+Zr5Tr+fTY8E4WPPxa2XfaQWcOJ4Jc3wFydLm7/cL+s2qb3aFDwah2qP3G+NZwJW5OtDXuSZPPYjSpRFU7kh1Ayk1KdvRaBGtSdogrm6IlQCHr8uZihKRx1X9yoN6ZRvfNG0UR5H4k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=F9Lz5+2X; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=f5FyFdTluydxlnIdoIHY2bcmhPEWXfGP/a4w+YN0SOy/1fG169gRBZ3tleHF5jAjEP/ef9KXKCgnf1/BSH3R+/4PmYmfVZIoOvTo1jk7iw6hJrnEWmxqCTkBsf0drqb+2OUBcLzPTLwNC8z2O0a1ZBZXZBhxIJopY1gAQlDnGYw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=j3UR8pa1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="F9Lz5+2X"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0CEDEC116C6;
-	Mon,  9 Feb 2026 14:33:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="j3UR8pa1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0267C116C6;
+	Mon,  9 Feb 2026 14:33:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770647596;
-	bh=jiaKetmqMkW3sklFtmhEhf/EQDkEA4l3OdLA+zdNRyU=;
+	s=korg; t=1770647600;
+	bh=Lll92XrFepvGXe7sNsQw3sQqn0sgLM6fTN+/MKuW+n0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=F9Lz5+2XMxygeSmepZpa71k/nEVSSDUU8PV0sO8AR81HxLP+sseCHl5b0VMDzOaau
-	 aOwiFh0RiNCj47sEvdoh9BCYURyafov5PUC9imspnD3b9DwttUfMjE6yhBUsmiS8FL
-	 YYCyLzik4ZR38R7rwz5ZByKzRWH4+md9oIkRLInI=
+	b=j3UR8pa1/JNN/RAPVFyVvNhC6d4FVULpoYJS0WE7dpj69EYlCSPI0hZeybO8KG0fZ
+	 VAMGgZ3BdHRRKET4FbzcsLLGTvS4lVSA2ecaBCmOvqk+IVfR5jiWCOFcsU1GRlbJWR
+	 L/7NHaRbPf9sZaz7+BLZF3PwMd3+/i4PkG0Pjntk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chen Ni <nichen@iscas.ac.cn>,
-	=?UTF-8?q?Nuno=20S=C3=A1?= <nuno.sa@analog.com>,
+	Yin Fengwei <fengwei_yin@linux.alibaba.com>,
+	Dong Chenchen <dongchenchen2@huawei.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Willem de Bruijn <willemb@google.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 147/175] net: ethernet: adi: adin1110: Check return value of devm_gpiod_get_optional() in adin1110_check_spi()
-Date: Mon,  9 Feb 2026 15:23:40 +0100
-Message-ID: <20260209142325.791894729@linuxfoundation.org>
+Subject: [PATCH 6.18 148/175] net: add proper RCU protection to /proc/net/ptype
+Date: Mon,  9 Feb 2026 15:23:41 +0100
+Message-ID: <20260209142325.827039090@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260209142320.474120190@linuxfoundation.org>
 References: <20260209142320.474120190@linuxfoundation.org>
@@ -46,49 +48,198 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Chen Ni <nichen@iscas.ac.cn>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 78211543d2e44f84093049b4ef5f5bfa535f4645 ]
+[ Upstream commit f613e8b4afea0cd17c7168e8b00e25bc8d33175d ]
 
-The devm_gpiod_get_optional() function may return an ERR_PTR in case of
-genuine GPIO acquisition errors, not just NULL which indicates the
-legitimate absence of an optional GPIO.
+Yin Fengwei reported an RCU stall in ptype_seq_show() and provided
+a patch.
 
-Add an IS_ERR() check after the call in adin1110_check_spi(). On error,
-return the error code to ensure proper failure handling rather than
-proceeding with invalid pointers.
+Real issue is that ptype_seq_next() and ptype_seq_show() violate
+RCU rules.
 
-Fixes: 36934cac7aaf ("net: ethernet: adi: adin1110: add reset GPIO")
-Signed-off-by: Chen Ni <nichen@iscas.ac.cn>
-Reviewed-by: Nuno Sá <nuno.sa@analog.com>
-Link: https://patch.msgid.link/20260202040228.4129097-1-nichen@iscas.ac.cn
+ptype_seq_show() runs under rcu_read_lock(), and reads pt->dev
+to get device name without any barrier.
+
+At the same time, concurrent writers can remove a packet_type structure
+(which is correctly freed after an RCU grace period) and clear pt->dev
+without an RCU grace period.
+
+Define ptype_iter_state to carry a dev pointer along seq_net_private:
+
+struct ptype_iter_state {
+	struct seq_net_private	p;
+	struct net_device	*dev; // added in this patch
+};
+
+We need to record the device pointer in ptype_get_idx() and
+ptype_seq_next() so that ptype_seq_show() is safe against
+concurrent pt->dev changes.
+
+We also need to add full RCU protection in ptype_seq_next().
+(Missing READ_ONCE() when reading list.next values)
+
+Many thanks to Dong Chenchen for providing a repro.
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Fixes: 1d10f8a1f40b ("net-procfs: show net devices bound packet types")
+Fixes: c353e8983e0d ("net: introduce per netns packet chains")
+Reported-by: Yin Fengwei <fengwei_yin@linux.alibaba.com>
+Reported-by: Dong Chenchen <dongchenchen2@huawei.com>
+Closes: https://lore.kernel.org/netdev/CANn89iKRRKPnWjJmb-_3a=sq+9h6DvTQM4DBZHT5ZRGPMzQaiA@mail.gmail.com/T/#m7b80b9fc9b9267f90e0b7aad557595f686f9c50d
+
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: Willem de Bruijn <willemb@google.com>
+Tested-by: Yin Fengwei <fengwei_yin@linux.alibaba.com>
+Link: https://patch.msgid.link/20260202205217.2881198-1-edumazet@google.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/adi/adin1110.c | 3 +++
- 1 file changed, 3 insertions(+)
+ net/core/net-procfs.c | 50 +++++++++++++++++++++++++++++--------------
+ 1 file changed, 34 insertions(+), 16 deletions(-)
 
-diff --git a/drivers/net/ethernet/adi/adin1110.c b/drivers/net/ethernet/adi/adin1110.c
-index 30f9d271e5953..71a2397edf2bb 100644
---- a/drivers/net/ethernet/adi/adin1110.c
-+++ b/drivers/net/ethernet/adi/adin1110.c
-@@ -1089,6 +1089,9 @@ static int adin1110_check_spi(struct adin1110_priv *priv)
+diff --git a/net/core/net-procfs.c b/net/core/net-procfs.c
+index 70e0e9a3b650c..7dbfa6109f0b8 100644
+--- a/net/core/net-procfs.c
++++ b/net/core/net-procfs.c
+@@ -170,8 +170,14 @@ static const struct seq_operations softnet_seq_ops = {
+ 	.show  = softnet_seq_show,
+ };
  
- 	reset_gpio = devm_gpiod_get_optional(&priv->spidev->dev, "reset",
- 					     GPIOD_OUT_LOW);
-+	if (IS_ERR(reset_gpio))
-+		return dev_err_probe(&priv->spidev->dev, PTR_ERR(reset_gpio),
-+				     "failed to get reset gpio\n");
- 	if (reset_gpio) {
- 		/* MISO pin is used for internal configuration, can't have
- 		 * anyone else disturbing the SDO line.
++struct ptype_iter_state {
++	struct seq_net_private	p;
++	struct net_device	*dev;
++};
++
+ static void *ptype_get_idx(struct seq_file *seq, loff_t pos)
+ {
++	struct ptype_iter_state *iter = seq->private;
+ 	struct list_head *ptype_list = NULL;
+ 	struct packet_type *pt = NULL;
+ 	struct net_device *dev;
+@@ -181,12 +187,16 @@ static void *ptype_get_idx(struct seq_file *seq, loff_t pos)
+ 	for_each_netdev_rcu(seq_file_net(seq), dev) {
+ 		ptype_list = &dev->ptype_all;
+ 		list_for_each_entry_rcu(pt, ptype_list, list) {
+-			if (i == pos)
++			if (i == pos) {
++				iter->dev = dev;
+ 				return pt;
++			}
+ 			++i;
+ 		}
+ 	}
+ 
++	iter->dev = NULL;
++
+ 	list_for_each_entry_rcu(pt, &seq_file_net(seq)->ptype_all, list) {
+ 		if (i == pos)
+ 			return pt;
+@@ -218,6 +228,7 @@ static void *ptype_seq_start(struct seq_file *seq, loff_t *pos)
+ 
+ static void *ptype_seq_next(struct seq_file *seq, void *v, loff_t *pos)
+ {
++	struct ptype_iter_state *iter = seq->private;
+ 	struct net *net = seq_file_net(seq);
+ 	struct net_device *dev;
+ 	struct packet_type *pt;
+@@ -229,19 +240,21 @@ static void *ptype_seq_next(struct seq_file *seq, void *v, loff_t *pos)
+ 		return ptype_get_idx(seq, 0);
+ 
+ 	pt = v;
+-	nxt = pt->list.next;
+-	if (pt->dev) {
+-		if (nxt != &pt->dev->ptype_all)
++	nxt = READ_ONCE(pt->list.next);
++	dev = iter->dev;
++	if (dev) {
++		if (nxt != &dev->ptype_all)
+ 			goto found;
+ 
+-		dev = pt->dev;
+ 		for_each_netdev_continue_rcu(seq_file_net(seq), dev) {
+-			if (!list_empty(&dev->ptype_all)) {
+-				nxt = dev->ptype_all.next;
++			nxt = READ_ONCE(dev->ptype_all.next);
++			if (nxt != &dev->ptype_all) {
++				iter->dev = dev;
+ 				goto found;
+ 			}
+ 		}
+-		nxt = net->ptype_all.next;
++		iter->dev = NULL;
++		nxt = READ_ONCE(net->ptype_all.next);
+ 		goto net_ptype_all;
+ 	}
+ 
+@@ -252,20 +265,20 @@ static void *ptype_seq_next(struct seq_file *seq, void *v, loff_t *pos)
+ 
+ 		if (nxt == &net->ptype_all) {
+ 			/* continue with ->ptype_specific if it's not empty */
+-			nxt = net->ptype_specific.next;
++			nxt = READ_ONCE(net->ptype_specific.next);
+ 			if (nxt != &net->ptype_specific)
+ 				goto found;
+ 		}
+ 
+ 		hash = 0;
+-		nxt = ptype_base[0].next;
++		nxt = READ_ONCE(ptype_base[0].next);
+ 	} else
+ 		hash = ntohs(pt->type) & PTYPE_HASH_MASK;
+ 
+ 	while (nxt == &ptype_base[hash]) {
+ 		if (++hash >= PTYPE_HASH_SIZE)
+ 			return NULL;
+-		nxt = ptype_base[hash].next;
++		nxt = READ_ONCE(ptype_base[hash].next);
+ 	}
+ found:
+ 	return list_entry(nxt, struct packet_type, list);
+@@ -279,19 +292,24 @@ static void ptype_seq_stop(struct seq_file *seq, void *v)
+ 
+ static int ptype_seq_show(struct seq_file *seq, void *v)
+ {
++	struct ptype_iter_state *iter = seq->private;
+ 	struct packet_type *pt = v;
++	struct net_device *dev;
+ 
+-	if (v == SEQ_START_TOKEN)
++	if (v == SEQ_START_TOKEN) {
+ 		seq_puts(seq, "Type Device      Function\n");
+-	else if ((!pt->af_packet_net || net_eq(pt->af_packet_net, seq_file_net(seq))) &&
+-		 (!pt->dev || net_eq(dev_net(pt->dev), seq_file_net(seq)))) {
++		return 0;
++	}
++	dev = iter->dev;
++	if ((!pt->af_packet_net || net_eq(pt->af_packet_net, seq_file_net(seq))) &&
++		 (!dev || net_eq(dev_net(dev), seq_file_net(seq)))) {
+ 		if (pt->type == htons(ETH_P_ALL))
+ 			seq_puts(seq, "ALL ");
+ 		else
+ 			seq_printf(seq, "%04x", ntohs(pt->type));
+ 
+ 		seq_printf(seq, " %-8s %ps\n",
+-			   pt->dev ? pt->dev->name : "", pt->func);
++			   dev ? dev->name : "", pt->func);
+ 	}
+ 
+ 	return 0;
+@@ -315,7 +333,7 @@ static int __net_init dev_proc_net_init(struct net *net)
+ 			 &softnet_seq_ops))
+ 		goto out_dev;
+ 	if (!proc_create_net("ptype", 0444, net->proc_net, &ptype_seq_ops,
+-			sizeof(struct seq_net_private)))
++			sizeof(struct ptype_iter_state)))
+ 		goto out_softnet;
+ 
+ 	if (wext_proc_init(net))
 -- 
 2.51.0
 
