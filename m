@@ -1,39 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EAB3425DB1C;
-	Mon,  9 Feb 2026 14:46:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5DF6237BE8C;
+	Mon,  9 Feb 2026 14:46:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770648362; cv=none; b=k7dKe8wTAllqny4iFdaUQuMQmakIJYerJDMooAewHkLLXq8SaVQ+gtD/YMhdH3mdm2MR1eFF6ze4uf7cdlErHl/NCK90ZEVsfYt/6jsXscfYI2aInT1Zt/wMNN+MRhqatI3otwGjUcW48ekGRB41jk5o4Mxy8wlIlDF4VzbclC0=
+	t=1770648365; cv=none; b=qgkjhZpvhyVmpy28UlAhZ3wXrwhmvZw7oMxZ73IZB14VTA54tJQrSH7/e4401a8vF36/6hkMdCfUmB6MjB7Fhk3Bqttk3m7bYSLJODtwq4Zskp8fJ4XRhs5uX2YpcNeMy6ObGT9HqRk/wJiFkR2l5NkHKHlX/CDxX/GSwAWN9TE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770648362; c=relaxed/simple;
-	bh=0NQ11y3Z39pde/rbwZphjcrPBQgrgTYuKGqbLWRocBY=;
+	s=arc-20240116; t=1770648365; c=relaxed/simple;
+	bh=SDb6YwbuhHekVKBwlYmSToyZ/Zk++eMKtemWYMigdZY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gB+duIMABSqnGzLi4+hUQKwXkFMLoG2k0AUEegDgyLmvXvLDIjgXqVzBaeJjQdBLRU+jQ/6e5jQ1WwJRhJ9uZ3HJZYw+XZXWHVtzH4MJnASNG70TtGF2PtWYdTyfyA3FnJPYq5ktpaQrXOs49brYwbJI6u8djUeX7+7AqIfwfrY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jBPOfp8t; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=pb0ojakgPye0Yy35J1QT7ywY0RlhI3RvckE8yW8FquplC10Qiq2UDsYIC3l82gRAgAmXt4zs0XtVTYck8CNDNUIpdipu7VDNnkwDkccOUL272ohaQKiMm3L/OPNNDx3cSj+DrtmEj/molcP1XIiGm2vMwpuZUdV7+Ljtx1qiRMk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yAW6518F; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jBPOfp8t"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B1DBC116C6;
-	Mon,  9 Feb 2026 14:46:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yAW6518F"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C27D3C19422;
+	Mon,  9 Feb 2026 14:46:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770648361;
-	bh=0NQ11y3Z39pde/rbwZphjcrPBQgrgTYuKGqbLWRocBY=;
+	s=korg; t=1770648365;
+	bh=SDb6YwbuhHekVKBwlYmSToyZ/Zk++eMKtemWYMigdZY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jBPOfp8tIhSAFtuR83dE5P5jWbM2fmLroQQtSL+8xCr2fdJEjxpxblT9ZN+DBiUpn
-	 V5yhRNcfjzZ1r1ZmStsJmkUaIvHdMOiImkY/50ajM+baI66pTxO/5+DHjSFvzFo6Ih
-	 3HetKjecpCFBbqdpPONJgIAKtzP1DvMkEmoYlmN0=
+	b=yAW6518FrhBFnWMZvaXMqs7exuXSihpo1xInO/rlTp8hXVu6SUGLDaULsfIt+rmOS
+	 3monvWXAV2Tw97v6smJRTP9m0SP+el/GCZjIgkNqHIFfqMATtJq8GSlz4Naqgjy9GI
+	 oM4Kr12bUW9VlSElgROsbiQ4mIAL2+aDQO6RHZNI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ming Lei <ming.lei@redhat.com>,
-	Caleb Sander Mateos <csander@purestorage.com>,
-	Jens Axboe <axboe@kernel.dk>,
-	Alva Lan <alvalan9@foxmail.com>
-Subject: [PATCH 6.6 15/86] ublk: fix deadlock when reading partition table
-Date: Mon,  9 Feb 2026 15:23:38 +0100
-Message-ID: <20260209142305.326528634@linuxfoundation.org>
+	Jon Kohler <jon@nutanix.com>,
+	Gauri Patwardhan <gauri.patwardhan@nutanix.com>,
+	Rahul Chunduru <rahul.chunduru@nutanix.com>,
+	Harshit Agarwal <harshit@nutanix.com>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
+	Phil Auld <pauld@redhat.com>,
+	Will Ton <william.ton@nutanix.com>,
+	Rajani Kantha <681739313@139.com>
+Subject: [PATCH 6.6 16/86] sched/rt: Fix race in push_rt_task
+Date: Mon,  9 Feb 2026 15:23:39 +0100
+Message-ID: <20260209142305.361957813@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260209142304.770150175@linuxfoundation.org>
 References: <20260209142304.770150175@linuxfoundation.org>
@@ -46,113 +51,296 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ming Lei <ming.lei@redhat.com>
+From: Harshit Agarwal <harshit@nutanix.com>
 
-commit c258f5c4502c9667bccf5d76fa731ab9c96687c1 upstream.
+commit 690e47d1403e90b7f2366f03b52ed3304194c793 upstream.
 
-When one process(such as udev) opens ublk block device (e.g., to read
-the partition table via bdev_open()), a deadlock[1] can occur:
+Overview
+========
+When a CPU chooses to call push_rt_task and picks a task to push to
+another CPU's runqueue then it will call find_lock_lowest_rq method
+which would take a double lock on both CPUs' runqueues. If one of the
+locks aren't readily available, it may lead to dropping the current
+runqueue lock and reacquiring both the locks at once. During this window
+it is possible that the task is already migrated and is running on some
+other CPU. These cases are already handled. However, if the task is
+migrated and has already been executed and another CPU is now trying to
+wake it up (ttwu) such that it is queued again on the runqeue
+(on_rq is 1) and also if the task was run by the same CPU, then the
+current checks will pass even though the task was migrated out and is no
+longer in the pushable tasks list.
 
-1. bdev_open() grabs disk->open_mutex
-2. The process issues read I/O to ublk backend to read partition table
-3. In __ublk_complete_rq(), blk_update_request() or blk_mq_end_request()
-   runs bio->bi_end_io() callbacks
-4. If this triggers fput() on file descriptor of ublk block device, the
-   work may be deferred to current task's task work (see fput() implementation)
-5. This eventually calls blkdev_release() from the same context
-6. blkdev_release() tries to grab disk->open_mutex again
-7. Deadlock: same task waiting for a mutex it already holds
+Crashes
+=======
+This bug resulted in quite a few flavors of crashes triggering kernel
+panics with various crash signatures such as assert failures, page
+faults, null pointer dereferences, and queue corruption errors all
+coming from scheduler itself.
 
-The fix is to run blk_update_request() and blk_mq_end_request() with bottom
-halves disabled. This forces blkdev_release() to run in kernel work-queue
-context instead of current task work context, and allows ublk server to make
-forward progress, and avoids the deadlock.
+Some of the crashes:
+-> kernel BUG at kernel/sched/rt.c:1616! BUG_ON(idx >= MAX_RT_PRIO)
+   Call Trace:
+   ? __die_body+0x1a/0x60
+   ? die+0x2a/0x50
+   ? do_trap+0x85/0x100
+   ? pick_next_task_rt+0x6e/0x1d0
+   ? do_error_trap+0x64/0xa0
+   ? pick_next_task_rt+0x6e/0x1d0
+   ? exc_invalid_op+0x4c/0x60
+   ? pick_next_task_rt+0x6e/0x1d0
+   ? asm_exc_invalid_op+0x12/0x20
+   ? pick_next_task_rt+0x6e/0x1d0
+   __schedule+0x5cb/0x790
+   ? update_ts_time_stats+0x55/0x70
+   schedule_idle+0x1e/0x40
+   do_idle+0x15e/0x200
+   cpu_startup_entry+0x19/0x20
+   start_secondary+0x117/0x160
+   secondary_startup_64_no_verify+0xb0/0xbb
 
-Fixes: 71f28f3136af ("ublk_drv: add io_uring based userspace block driver")
-Link: https://github.com/ublk-org/ublksrv/issues/170 [1]
-Signed-off-by: Ming Lei <ming.lei@redhat.com>
-Reviewed-by: Caleb Sander Mateos <csander@purestorage.com>
-[axboe: rewrite comment in ublk]
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
-[ The fix omits the change in __ublk_do_auto_buf_reg() since this function
-  doesn't exist in Linux 6.6. ]
-Signed-off-by: Alva Lan <alvalan9@foxmail.com>
+-> BUG: kernel NULL pointer dereference, address: 00000000000000c0
+   Call Trace:
+   ? __die_body+0x1a/0x60
+   ? no_context+0x183/0x350
+   ? __warn+0x8a/0xe0
+   ? exc_page_fault+0x3d6/0x520
+   ? asm_exc_page_fault+0x1e/0x30
+   ? pick_next_task_rt+0xb5/0x1d0
+   ? pick_next_task_rt+0x8c/0x1d0
+   __schedule+0x583/0x7e0
+   ? update_ts_time_stats+0x55/0x70
+   schedule_idle+0x1e/0x40
+   do_idle+0x15e/0x200
+   cpu_startup_entry+0x19/0x20
+   start_secondary+0x117/0x160
+   secondary_startup_64_no_verify+0xb0/0xbb
+
+-> BUG: unable to handle page fault for address: ffff9464daea5900
+   kernel BUG at kernel/sched/rt.c:1861! BUG_ON(rq->cpu != task_cpu(p))
+
+-> kernel BUG at kernel/sched/rt.c:1055! BUG_ON(!rq->nr_running)
+   Call Trace:
+   ? __die_body+0x1a/0x60
+   ? die+0x2a/0x50
+   ? do_trap+0x85/0x100
+   ? dequeue_top_rt_rq+0xa2/0xb0
+   ? do_error_trap+0x64/0xa0
+   ? dequeue_top_rt_rq+0xa2/0xb0
+   ? exc_invalid_op+0x4c/0x60
+   ? dequeue_top_rt_rq+0xa2/0xb0
+   ? asm_exc_invalid_op+0x12/0x20
+   ? dequeue_top_rt_rq+0xa2/0xb0
+   dequeue_rt_entity+0x1f/0x70
+   dequeue_task_rt+0x2d/0x70
+   __schedule+0x1a8/0x7e0
+   ? blk_finish_plug+0x25/0x40
+   schedule+0x3c/0xb0
+   futex_wait_queue_me+0xb6/0x120
+   futex_wait+0xd9/0x240
+   do_futex+0x344/0xa90
+   ? get_mm_exe_file+0x30/0x60
+   ? audit_exe_compare+0x58/0x70
+   ? audit_filter_rules.constprop.26+0x65e/0x1220
+   __x64_sys_futex+0x148/0x1f0
+   do_syscall_64+0x30/0x80
+   entry_SYSCALL_64_after_hwframe+0x62/0xc7
+
+-> BUG: unable to handle page fault for address: ffff8cf3608bc2c0
+   Call Trace:
+   ? __die_body+0x1a/0x60
+   ? no_context+0x183/0x350
+   ? spurious_kernel_fault+0x171/0x1c0
+   ? exc_page_fault+0x3b6/0x520
+   ? plist_check_list+0x15/0x40
+   ? plist_check_list+0x2e/0x40
+   ? asm_exc_page_fault+0x1e/0x30
+   ? _cond_resched+0x15/0x30
+   ? futex_wait_queue_me+0xc8/0x120
+   ? futex_wait+0xd9/0x240
+   ? try_to_wake_up+0x1b8/0x490
+   ? futex_wake+0x78/0x160
+   ? do_futex+0xcd/0xa90
+   ? plist_check_list+0x15/0x40
+   ? plist_check_list+0x2e/0x40
+   ? plist_del+0x6a/0xd0
+   ? plist_check_list+0x15/0x40
+   ? plist_check_list+0x2e/0x40
+   ? dequeue_pushable_task+0x20/0x70
+   ? __schedule+0x382/0x7e0
+   ? asm_sysvec_reschedule_ipi+0xa/0x20
+   ? schedule+0x3c/0xb0
+   ? exit_to_user_mode_prepare+0x9e/0x150
+   ? irqentry_exit_to_user_mode+0x5/0x30
+   ? asm_sysvec_reschedule_ipi+0x12/0x20
+
+Above are some of the common examples of the crashes that were observed
+due to this issue.
+
+Details
+=======
+Let's look at the following scenario to understand this race.
+
+1) CPU A enters push_rt_task
+  a) CPU A has chosen next_task = task p.
+  b) CPU A calls find_lock_lowest_rq(Task p, CPU Z’s rq).
+  c) CPU A identifies CPU X as a destination CPU (X < Z).
+  d) CPU A enters double_lock_balance(CPU Z’s rq, CPU X’s rq).
+  e) Since X is lower than Z, CPU A unlocks CPU Z’s rq. Someone else has
+     locked CPU X’s rq, and thus, CPU A must wait.
+
+2) At CPU Z
+  a) Previous task has completed execution and thus, CPU Z enters
+     schedule, locks its own rq after CPU A releases it.
+  b) CPU Z dequeues previous task and begins executing task p.
+  c) CPU Z unlocks its rq.
+  d) Task p yields the CPU (ex. by doing IO or waiting to acquire a
+     lock) which triggers the schedule function on CPU Z.
+  e) CPU Z enters schedule again, locks its own rq, and dequeues task p.
+  f) As part of dequeue, it sets p.on_rq = 0 and unlocks its rq.
+
+3) At CPU B
+  a) CPU B enters try_to_wake_up with input task p.
+  b) Since CPU Z dequeued task p, p.on_rq = 0, and CPU B updates
+     B.state = WAKING.
+  c) CPU B via select_task_rq determines CPU Y as the target CPU.
+
+4) The race
+  a) CPU A acquires CPU X’s lock and relocks CPU Z.
+  b) CPU A reads task p.cpu = Z and incorrectly concludes task p is
+     still on CPU Z.
+  c) CPU A failed to notice task p had been dequeued from CPU Z while
+     CPU A was waiting for locks in double_lock_balance. If CPU A knew
+     that task p had been dequeued, it would return NULL forcing
+     push_rt_task to give up the task p's migration.
+  d) CPU B updates task p.cpu = Y and calls ttwu_queue.
+  e) CPU B locks Ys rq. CPU B enqueues task p onto Y and sets task
+     p.on_rq = 1.
+  f) CPU B unlocks CPU Y, triggering memory synchronization.
+  g) CPU A reads task p.on_rq = 1, cementing its assumption that task p
+     has not migrated.
+  h) CPU A decides to migrate p to CPU X.
+
+This leads to A dequeuing p from Y's queue and various crashes down the
+line.
+
+Solution
+========
+The solution here is fairly simple. After obtaining the lock (at 4a),
+the check is enhanced to make sure that the task is still at the head of
+the pushable tasks list. If not, then it is anyway not suitable for
+being pushed out.
+
+Testing
+=======
+The fix is tested on a cluster of 3 nodes, where the panics due to this
+are hit every couple of days. A fix similar to this was deployed on such
+cluster and was stable for more than 30 days.
+
+Co-developed-by: Jon Kohler <jon@nutanix.com>
+Signed-off-by: Jon Kohler <jon@nutanix.com>
+Co-developed-by: Gauri Patwardhan <gauri.patwardhan@nutanix.com>
+Signed-off-by: Gauri Patwardhan <gauri.patwardhan@nutanix.com>
+Co-developed-by: Rahul Chunduru <rahul.chunduru@nutanix.com>
+Signed-off-by: Rahul Chunduru <rahul.chunduru@nutanix.com>
+Signed-off-by: Harshit Agarwal <harshit@nutanix.com>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Reviewed-by: "Steven Rostedt (Google)" <rostedt@goodmis.org>
+Reviewed-by: Phil Auld <pauld@redhat.com>
+Tested-by: Will Ton <william.ton@nutanix.com>
+Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/r/20250225180553.167995-1-harshit@nutanix.com
+Signed-off-by: Rajani Kantha <681739313@139.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/block/ublk_drv.c |   30 +++++++++++++++++++++++++++---
- 1 file changed, 27 insertions(+), 3 deletions(-)
+ kernel/sched/rt.c |   52 +++++++++++++++++++++++++---------------------------
+ 1 file changed, 25 insertions(+), 27 deletions(-)
 
---- a/drivers/block/ublk_drv.c
-+++ b/drivers/block/ublk_drv.c
-@@ -1050,6 +1050,13 @@ static inline bool ubq_daemon_is_dying(s
- 	return ubq->ubq_daemon->flags & PF_EXITING;
+--- a/kernel/sched/rt.c
++++ b/kernel/sched/rt.c
+@@ -1963,6 +1963,26 @@ static int find_lowest_rq(struct task_st
+ 	return -1;
  }
  
-+static void ublk_end_request(struct request *req, blk_status_t error)
++static struct task_struct *pick_next_pushable_task(struct rq *rq)
 +{
-+	local_bh_disable();
-+	blk_mq_end_request(req, error);
-+	local_bh_enable();
++	struct task_struct *p;
++
++	if (!has_pushable_tasks(rq))
++		return NULL;
++
++	p = plist_first_entry(&rq->rt.pushable_tasks,
++			      struct task_struct, pushable_tasks);
++
++	BUG_ON(rq->cpu != task_cpu(p));
++	BUG_ON(task_current(rq, p));
++	BUG_ON(p->nr_cpus_allowed <= 1);
++
++	BUG_ON(!task_on_rq_queued(p));
++	BUG_ON(!rt_task(p));
++
++	return p;
 +}
 +
- /* todo: handle partial completion */
- static inline void __ublk_complete_rq(struct request *req)
+ /* Will lock the rq it finds */
+ static struct rq *find_lock_lowest_rq(struct task_struct *task, struct rq *rq)
  {
-@@ -1057,6 +1064,7 @@ static inline void __ublk_complete_rq(st
- 	struct ublk_io *io = &ubq->ios[req->tag];
- 	unsigned int unmapped_bytes;
- 	blk_status_t res = BLK_STS_OK;
-+	bool requeue;
+@@ -1993,18 +2013,16 @@ static struct rq *find_lock_lowest_rq(st
+ 			/*
+ 			 * We had to unlock the run queue. In
+ 			 * the mean time, task could have
+-			 * migrated already or had its affinity changed.
+-			 * Also make sure that it wasn't scheduled on its rq.
++			 * migrated already or had its affinity changed,
++			 * therefore check if the task is still at the
++			 * head of the pushable tasks list.
+ 			 * It is possible the task was scheduled, set
+ 			 * "migrate_disabled" and then got preempted, so we must
+ 			 * check the task migration disable flag here too.
+ 			 */
+-			if (unlikely(task_rq(task) != rq ||
++			if (unlikely(is_migration_disabled(task) ||
+ 				     !cpumask_test_cpu(lowest_rq->cpu, &task->cpus_mask) ||
+-				     task_on_cpu(rq, task) ||
+-				     !rt_task(task) ||
+-				     is_migration_disabled(task) ||
+-				     !task_on_rq_queued(task))) {
++				     task != pick_next_pushable_task(rq))) {
  
- 	/* called from ublk_abort_queue() code path */
- 	if (io->flags & UBLK_IO_FLAG_ABORTED) {
-@@ -1094,14 +1102,30 @@ static inline void __ublk_complete_rq(st
- 	if (unlikely(unmapped_bytes < io->res))
- 		io->res = unmapped_bytes;
- 
--	if (blk_update_request(req, BLK_STS_OK, io->res))
-+	/*
-+	 * Run bio->bi_end_io() with softirqs disabled. If the final fput
-+	 * happens off this path, then that will prevent ublk's blkdev_release()
-+	 * from being called on current's task work, see fput() implementation.
-+	 *
-+	 * Otherwise, ublk server may not provide forward progress in case of
-+	 * reading the partition table from bdev_open() with disk->open_mutex
-+	 * held, and causes dead lock as we could already be holding
-+	 * disk->open_mutex here.
-+	 *
-+	 * Preferably we would not be doing IO with a mutex held that is also
-+	 * used for release, but this work-around will suffice for now.
-+	 */
-+	local_bh_disable();
-+	requeue = blk_update_request(req, BLK_STS_OK, io->res);
-+	local_bh_enable();
-+	if (requeue)
- 		blk_mq_requeue_request(req, true);
- 	else
- 		__blk_mq_end_request(req, BLK_STS_OK);
- 
- 	return;
- exit:
--	blk_mq_end_request(req, res);
-+	ublk_end_request(req, res);
+ 				double_unlock_balance(rq, lowest_rq);
+ 				lowest_rq = NULL;
+@@ -2024,26 +2042,6 @@ static struct rq *find_lock_lowest_rq(st
+ 	return lowest_rq;
  }
  
- static void ublk_complete_rq(struct kref *ref)
-@@ -1160,7 +1184,7 @@ static inline void __ublk_abort_rq(struc
- 	if (ublk_queue_can_use_recovery(ubq))
- 		blk_mq_requeue_request(rq, false);
- 	else
--		blk_mq_end_request(rq, BLK_STS_IOERR);
-+		ublk_end_request(rq, BLK_STS_IOERR);
- 
- 	mod_delayed_work(system_wq, &ubq->dev->monitor_work, 0);
- }
+-static struct task_struct *pick_next_pushable_task(struct rq *rq)
+-{
+-	struct task_struct *p;
+-
+-	if (!has_pushable_tasks(rq))
+-		return NULL;
+-
+-	p = plist_first_entry(&rq->rt.pushable_tasks,
+-			      struct task_struct, pushable_tasks);
+-
+-	BUG_ON(rq->cpu != task_cpu(p));
+-	BUG_ON(task_current(rq, p));
+-	BUG_ON(p->nr_cpus_allowed <= 1);
+-
+-	BUG_ON(!task_on_rq_queued(p));
+-	BUG_ON(!rt_task(p));
+-
+-	return p;
+-}
+-
+ /*
+  * If the current CPU has more than one RT task, see if the non
+  * running task can migrate over to a CPU that is running a task
 
 
