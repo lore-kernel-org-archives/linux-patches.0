@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 828FF37AA91;
-	Mon,  9 Feb 2026 14:27:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DDAB437756C;
+	Mon,  9 Feb 2026 14:27:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770647242; cv=none; b=c5DhICiItey8fUkmRLUF/BXhA/eVUzGtbTilW0sMQrNHF1Iz+QjzBYZgFhlW/RUB3ZZ71MJWvqzDzQsvCbAHuPbmfrEJUWcKrE5ZKXgyAozJBZv3JjyZ+6qZ4UbcxVFonzxhpho1w1C0UwVL+SS4qfXQePyVpybErQrY3m6XhbQ=
+	t=1770647245; cv=none; b=qwuwHq8SBuuny3fegXA4vriEwmDZX9/X4o2mrIZsrA6bvDt6rmSK1NcQ0rmt31r6FrOiXeXtqIK25Em3kqYahADecj+wQQLjDn8Awz9IE5a3C+NeW7vUojMu5JVr9vOZ0x2pcp17WIdNwWSPmu2FfzNVbtpLscjkgVi+j3COW+E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770647242; c=relaxed/simple;
-	bh=lcSnlT+gq5hAqYXBHXo3cqsNhNIc4+HsiHjwGKSBFjY=;
+	s=arc-20240116; t=1770647245; c=relaxed/simple;
+	bh=TLeBPhf7QvJsH1x73cFKJAWruDfxHeIyWENWyHAJmgM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sEgWcQyasm30gFaWM5ADeYQJvm9VuzHUsE6w6jmUySHutuiHSPKCyTnva0Er0iSYHMDp+F6ov0R5PC/ZekCGzf2NjkOxa2beR+T1eFrVSp7XG8lX45iMjC0UUh2t1nerQ+ExhV9w/FQcNvTHwvz5v47tQhppDlTHqMjJGiEL+uI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vsSk7CoM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TQmGSMjJ73TTd20cuhSBYZTKC2OlptlLm05roI5rw7idQP6GnJu85zVE/rIIhuEXC2B5fRWsWIuSjS9GYKGuzL+2H63xl/LWIoLjAVwvF+7OeAwQGMT9e9IeKSBUw90PdyBO82ErW21u08iSGCaILB5HbCtAQochXi+wNd1kf9U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=U2g5Z3SV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vsSk7CoM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA5AFC116C6;
-	Mon,  9 Feb 2026 14:27:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="U2g5Z3SV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 606F1C116C6;
+	Mon,  9 Feb 2026 14:27:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770647242;
-	bh=lcSnlT+gq5hAqYXBHXo3cqsNhNIc4+HsiHjwGKSBFjY=;
+	s=korg; t=1770647245;
+	bh=TLeBPhf7QvJsH1x73cFKJAWruDfxHeIyWENWyHAJmgM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vsSk7CoMsTdub4c9kff19U7MT0C4ies4LvtLryJqN6fVF/EQwCwjn7OEC9IMA+qGv
-	 Oz+3onlQz+4wvAn9rTibKOdEbtvTaGO1mPKTV73Rcyo4ILIst7ax6os+t61Z+LUTnj
-	 BNCOoxrCOC+GfDXIgdnmE+RLZwrDW12OvB+5bCWY=
+	b=U2g5Z3SVGfOAyVqAfHAZPgudwgZ+qr2OxTLh9eoIX+iIX/MVmMskE4XmYPYpmBNQa
+	 99VEWhKyvWsqQvA4dSNofQt5jhAUjtNxjUQ2jCSdK4HTNfxF8DvnkGUaZ7S5ODPNiJ
+	 wA1I4UhxlckBoSnsVL+XNNntLyIgqaKpFZEUbq/Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	DeepChirp <DeepChirp@outlook.com>,
 	Alice Ryhl <aliceryhl@google.com>,
 	Carlos Llamas <cmllamas@google.com>
-Subject: [PATCH 6.18 041/175] rust_binder: correctly handle FDA objects of length zero
-Date: Mon,  9 Feb 2026 15:21:54 +0100
-Message-ID: <20260209142321.953029853@linuxfoundation.org>
+Subject: [PATCH 6.18 042/175] rust_binder: add additional alignment checks
+Date: Mon,  9 Feb 2026 15:21:55 +0100
+Message-ID: <20260209142321.988610430@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260209142320.474120190@linuxfoundation.org>
 References: <20260209142320.474120190@linuxfoundation.org>
@@ -53,153 +52,155 @@ Content-Transfer-Encoding: 8bit
 
 From: Alice Ryhl <aliceryhl@google.com>
 
-commit 8f589c9c3be539d6c2b393c82940c3783831082f upstream.
+commit d047248190d86a52164656d47bec9bfba61dc71e upstream.
 
-Fix a bug where an empty FDA (fd array) object with 0 fds would cause an
-out-of-bounds error. The previous implementation used `skip == 0` to
-mean "this is a pointer fixup", but 0 is also the correct skip length
-for an empty FDA. If the FDA is at the end of the buffer, then this
-results in an attempt to write 8-bytes out of bounds. This is caught and
-results in an EINVAL error being returned to userspace.
+This adds some alignment checks to match C Binder more closely. This
+causes the driver to reject more transactions. I don't think any of the
+transactions in question are harmful, but it's still a bug because it's
+the wrong uapi to accept them.
 
-The pattern of using `skip == 0` as a special value originates from the
-C-implementation of Binder. As part of fixing this bug, this pattern is
-replaced with a Rust enum.
-
-I considered the alternate option of not pushing a fixup when the length
-is zero, but I think it's cleaner to just get rid of the zero-is-special
-stuff.
-
-The root cause of this bug was diagnosed by Gemini CLI on first try. I
-used the following prompt:
-
-> There appears to be a bug in @drivers/android/binder/thread.rs where
-> the Fixups oob bug is triggered with 316 304 316 324. This implies
-> that we somehow ended up with a fixup where buffer A has a pointer to
-> buffer B, but the pointer is located at an index in buffer A that is
-> out of bounds. Please investigate the code to find the bug. You may
-> compare with @drivers/android/binder.c that implements this correctly.
+The cases where usize is changed for u64, it will affect only 32-bit
+kernels.
 
 Cc: stable@vger.kernel.org
-Reported-by: DeepChirp <DeepChirp@outlook.com>
-Closes: https://github.com/waydroid/waydroid/issues/2157
 Fixes: eafedbc7c050 ("rust_binder: add Rust Binder driver")
-Tested-by: DeepChirp <DeepChirp@outlook.com>
 Signed-off-by: Alice Ryhl <aliceryhl@google.com>
 Acked-by: Carlos Llamas <cmllamas@google.com>
-Link: https://patch.msgid.link/20251229-fda-zero-v1-1-58a41cb0e7ec@google.com
+Link: https://patch.msgid.link/20260123-binder-alignment-more-checks-v1-1-7e1cea77411d@google.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/android/binder/thread.rs | 59 ++++++++++++++++++--------------
- 1 file changed, 34 insertions(+), 25 deletions(-)
+ drivers/android/binder/thread.rs | 50 +++++++++++++++++++++++---------
+ 1 file changed, 36 insertions(+), 14 deletions(-)
 
 diff --git a/drivers/android/binder/thread.rs b/drivers/android/binder/thread.rs
-index 1a8e6fdc0dc4..dcd47e10aeb8 100644
+index dcd47e10aeb8..e0ea33ccfe58 100644
 --- a/drivers/android/binder/thread.rs
 +++ b/drivers/android/binder/thread.rs
-@@ -69,17 +69,24 @@ struct ScatterGatherEntry {
- }
+@@ -39,6 +39,10 @@
+     sync::atomic::{AtomicU32, Ordering},
+ };
  
- /// This entry specifies that a fixup should happen at `target_offset` of the
--/// buffer. If `skip` is nonzero, then the fixup is a `binder_fd_array_object`
--/// and is applied later. Otherwise if `skip` is zero, then the size of the
--/// fixup is `sizeof::<u64>()` and `pointer_value` is written to the buffer.
--struct PointerFixupEntry {
--    /// The number of bytes to skip, or zero for a `binder_buffer_object` fixup.
--    skip: usize,
--    /// The translated pointer to write when `skip` is zero.
--    pointer_value: u64,
--    /// The offset at which the value should be written. The offset is relative
--    /// to the original buffer.
--    target_offset: usize,
-+/// buffer.
-+enum PointerFixupEntry {
-+    /// A fixup for a `binder_buffer_object`.
-+    Fixup {
-+        /// The translated pointer to write.
-+        pointer_value: u64,
-+        /// The offset at which the value should be written. The offset is relative
-+        /// to the original buffer.
-+        target_offset: usize,
-+    },
-+    /// A skip for a `binder_fd_array_object`.
-+    Skip {
-+        /// The number of bytes to skip.
-+        skip: usize,
-+        /// The offset at which the skip should happen. The offset is relative
-+        /// to the original buffer.
-+        target_offset: usize,
-+    },
- }
++fn is_aligned(value: usize, to: usize) -> bool {
++    value % to == 0
++}
++
+ /// Stores the layout of the scatter-gather entries. This is used during the `translate_objects`
+ /// call and is discarded when it returns.
+ struct ScatterGatherState {
+@@ -795,6 +799,10 @@ fn translate_object(
+                 let num_fds = usize::try_from(obj.num_fds).map_err(|_| EINVAL)?;
+                 let fds_len = num_fds.checked_mul(size_of::<u32>()).ok_or(EINVAL)?;
  
- /// Return type of `apply_and_validate_fixup_in_parent`.
-@@ -762,8 +769,7 @@ fn translate_object(
++                if !is_aligned(parent_offset, size_of::<u32>()) {
++                    return Err(EINVAL.into());
++                }
++
+                 let info = sg_state.validate_parent_fixup(parent_index, parent_offset, fds_len)?;
+                 view.alloc.info_add_fd_reserve(num_fds)?;
  
-                     parent_entry.fixup_min_offset = info.new_min_offset;
-                     parent_entry.pointer_fixups.push(
--                        PointerFixupEntry {
--                            skip: 0,
-+                        PointerFixupEntry::Fixup {
-                             pointer_value: buffer_ptr_in_user_space,
-                             target_offset: info.target_offset,
-                         },
-@@ -807,9 +813,8 @@ fn translate_object(
-                 parent_entry
-                     .pointer_fixups
-                     .push(
--                        PointerFixupEntry {
-+                        PointerFixupEntry::Skip {
-                             skip: fds_len,
--                            pointer_value: 0,
-                             target_offset: info.target_offset,
-                         },
-                         GFP_KERNEL,
-@@ -871,17 +876,21 @@ fn apply_sg(&self, alloc: &mut Allocation, sg_state: &mut ScatterGatherState) ->
-             let mut reader =
-                 UserSlice::new(UserPtr::from_addr(sg_entry.sender_uaddr), sg_entry.length).reader();
-             for fixup in &mut sg_entry.pointer_fixups {
--                let fixup_len = if fixup.skip == 0 {
--                    size_of::<u64>()
--                } else {
--                    fixup.skip
-+                let (fixup_len, fixup_offset) = match fixup {
-+                    PointerFixupEntry::Fixup { target_offset, .. } => {
-+                        (size_of::<u64>(), *target_offset)
-+                    }
-+                    PointerFixupEntry::Skip {
-+                        skip,
-+                        target_offset,
-+                    } => (*skip, *target_offset),
+@@ -809,6 +817,10 @@ fn translate_object(
+                     }
                  };
  
--                let target_offset_end = fixup.target_offset.checked_add(fixup_len).ok_or(EINVAL)?;
--                if fixup.target_offset < end_of_previous_fixup || offset_end < target_offset_end {
-+                let target_offset_end = fixup_offset.checked_add(fixup_len).ok_or(EINVAL)?;
-+                if fixup_offset < end_of_previous_fixup || offset_end < target_offset_end {
-                     pr_warn!(
-                         "Fixups oob {} {} {} {}",
--                        fixup.target_offset,
-+                        fixup_offset,
-                         end_of_previous_fixup,
-                         offset_end,
-                         target_offset_end
-@@ -890,13 +899,13 @@ fn apply_sg(&self, alloc: &mut Allocation, sg_state: &mut ScatterGatherState) ->
++                if !is_aligned(parent_entry.sender_uaddr, size_of::<u32>()) {
++                    return Err(EINVAL.into());
++                }
++
+                 parent_entry.fixup_min_offset = info.new_min_offset;
+                 parent_entry
+                     .pointer_fixups
+@@ -825,6 +837,7 @@ fn translate_object(
+                     .sender_uaddr
+                     .checked_add(parent_offset)
+                     .ok_or(EINVAL)?;
++
+                 let mut fda_bytes = KVec::new();
+                 UserSlice::new(UserPtr::from_addr(fda_uaddr as _), fds_len)
+                     .read_all(&mut fda_bytes, GFP_KERNEL)?;
+@@ -958,25 +971,30 @@ pub(crate) fn copy_transaction_data(
+ 
+         let data_size = trd.data_size.try_into().map_err(|_| EINVAL)?;
+         let aligned_data_size = ptr_align(data_size).ok_or(EINVAL)?;
+-        let offsets_size = trd.offsets_size.try_into().map_err(|_| EINVAL)?;
+-        let aligned_offsets_size = ptr_align(offsets_size).ok_or(EINVAL)?;
+-        let buffers_size = tr.buffers_size.try_into().map_err(|_| EINVAL)?;
+-        let aligned_buffers_size = ptr_align(buffers_size).ok_or(EINVAL)?;
++        let offsets_size: usize = trd.offsets_size.try_into().map_err(|_| EINVAL)?;
++        let buffers_size: usize = tr.buffers_size.try_into().map_err(|_| EINVAL)?;
+         let aligned_secctx_size = match secctx.as_ref() {
+             Some((_offset, ctx)) => ptr_align(ctx.len()).ok_or(EINVAL)?,
+             None => 0,
+         };
+ 
++        if !is_aligned(offsets_size, size_of::<u64>()) {
++            return Err(EINVAL.into());
++        }
++        if !is_aligned(buffers_size, size_of::<u64>()) {
++            return Err(EINVAL.into());
++        }
++
+         // This guarantees that at least `sizeof(usize)` bytes will be allocated.
+         let len = usize::max(
+             aligned_data_size
+-                .checked_add(aligned_offsets_size)
+-                .and_then(|sum| sum.checked_add(aligned_buffers_size))
++                .checked_add(offsets_size)
++                .and_then(|sum| sum.checked_add(buffers_size))
+                 .and_then(|sum| sum.checked_add(aligned_secctx_size))
+                 .ok_or(ENOMEM)?,
+-            size_of::<usize>(),
++            size_of::<u64>(),
+         );
+-        let secctx_off = aligned_data_size + aligned_offsets_size + aligned_buffers_size;
++        let secctx_off = aligned_data_size + offsets_size + buffers_size;
+         let mut alloc =
+             match to_process.buffer_alloc(debug_id, len, is_oneway, self.process.task.pid()) {
+                 Ok(alloc) => alloc,
+@@ -1008,13 +1026,13 @@ pub(crate) fn copy_transaction_data(
+             }
+ 
+             let offsets_start = aligned_data_size;
+-            let offsets_end = aligned_data_size + aligned_offsets_size;
++            let offsets_end = aligned_data_size + offsets_size;
+ 
+             // This state is used for BINDER_TYPE_PTR objects.
+             let sg_state = sg_state.insert(ScatterGatherState {
+                 unused_buffer_space: UnusedBufferSpace {
+                     offset: offsets_end,
+-                    limit: len,
++                    limit: offsets_end + buffers_size,
+                 },
+                 sg_entries: KVec::new(),
+                 ancestors: KVec::new(),
+@@ -1023,12 +1041,16 @@ pub(crate) fn copy_transaction_data(
+             // Traverse the objects specified.
+             let mut view = AllocationView::new(&mut alloc, data_size);
+             for (index, index_offset) in (offsets_start..offsets_end)
+-                .step_by(size_of::<usize>())
++                .step_by(size_of::<u64>())
+                 .enumerate()
+             {
+-                let offset = view.alloc.read(index_offset)?;
++                let offset: usize = view
++                    .alloc
++                    .read::<u64>(index_offset)?
++                    .try_into()
++                    .map_err(|_| EINVAL)?;
+ 
+-                if offset < end_of_previous_object {
++                if offset < end_of_previous_object || !is_aligned(offset, size_of::<u32>()) {
+                     pr_warn!("Got transaction with invalid offset.");
+                     return Err(EINVAL.into());
+                 }
+@@ -1060,7 +1082,7 @@ pub(crate) fn copy_transaction_data(
                  }
  
-                 let copy_off = end_of_previous_fixup;
--                let copy_len = fixup.target_offset - end_of_previous_fixup;
-+                let copy_len = fixup_offset - end_of_previous_fixup;
-                 if let Err(err) = alloc.copy_into(&mut reader, copy_off, copy_len) {
-                     pr_warn!("Failed copying into alloc: {:?}", err);
-                     return Err(err.into());
-                 }
--                if fixup.skip == 0 {
--                    let res = alloc.write::<u64>(fixup.target_offset, &fixup.pointer_value);
-+                if let PointerFixupEntry::Fixup { pointer_value, .. } = fixup {
-+                    let res = alloc.write::<u64>(fixup_offset, pointer_value);
-                     if let Err(err) = res {
-                         pr_warn!("Failed copying ptr into alloc: {:?}", err);
-                         return Err(err.into());
+                 // Update the indexes containing objects to clean up.
+-                let offset_after_object = index_offset + size_of::<usize>();
++                let offset_after_object = index_offset + size_of::<u64>();
+                 view.alloc
+                     .set_info_offsets(offsets_start..offset_after_object);
+             }
 -- 
 2.53.0
 
