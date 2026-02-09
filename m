@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A05C72690EC;
-	Mon,  9 Feb 2026 14:48:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 665F137BE88;
+	Mon,  9 Feb 2026 14:48:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770648497; cv=none; b=VhMkMwLdY1sPnBGA2cxVF89Vzcd4hE04cBST0IMwn/x6b2aHh66A17btMJdNL2G0ajlQ+ToT8W43IDrVoypxOoNqXVwJWUHYBc0ar7gfav1jxDRCJYS5riYPgKRnLFkbP1SYwj03v1kFioZdA16tZDopZnTVfzSKWZ4qFPtFS1M=
+	t=1770648501; cv=none; b=pV4GDEbY6FT9LWwZeTZvZPS0SGc2hdvitcaZZA3BD+mhrn9T4oOby9AThwBNL4KGzUAhffH+BxafjyHKhPlVE765Mi5vFOcG3ocmDmQn4famU52SFDMp1/n+xnBNP+XiqzM7eCyfZ8jy97KYNMV6EOhFt1WUD8+Y4FsKTsLLXGQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770648497; c=relaxed/simple;
-	bh=Uzf6xprqbLu4bTDYGkJLBKYzOtOwkZmfkwSvrpgCC7M=;
+	s=arc-20240116; t=1770648501; c=relaxed/simple;
+	bh=+GWyBkwlprg9tAakZyiA+A7YuojhDRYV3+ATB70YNqY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bRJHJjG724JjU5PWzaGjgQe9Epv8gtpbMGQEvPSOmhynY4JPYS6PP2evaXovYkssPH8JdYCG9EWmBuLK/GeQNl3GHHEr09EceoAi0iyQSBXzIPJM8SKGpgdNJbVa3IO/Fe2708RY5rVj7dhSBRVCpIeV9zLCVS6sHpXHd7VujFg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=G2S1XXfe; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LBn+0pjtmVud6tBocmyEehsp2EImOLf9S5b4smrJMXyK5qPzlrLXPLAv7fQZA57+grS+mk/Xc+fSg0l3hMFyqvfQfmrlW0FlOHgytKLZkCzVUtcn7Fg+/jzhw4FgRAAJS1i7ChzPl8vMxGNqr/cn8f/JFbK5bvpZrGsGWB+C5a4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ty9tZh0z; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="G2S1XXfe"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2CEEBC116C6;
-	Mon,  9 Feb 2026 14:48:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ty9tZh0z"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B91AC116C6;
+	Mon,  9 Feb 2026 14:48:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770648497;
-	bh=Uzf6xprqbLu4bTDYGkJLBKYzOtOwkZmfkwSvrpgCC7M=;
+	s=korg; t=1770648501;
+	bh=+GWyBkwlprg9tAakZyiA+A7YuojhDRYV3+ATB70YNqY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=G2S1XXfe1ylrJBj+ywDgD5GV9GVUyDvk0C8Ic6g8VndiMJuYsCs1+R3HfA1Or0VRA
-	 pcbVj5BgPi2hL3bXlJP3H4ajfIBM0AXPhvdUUqJ1JEzoQQIARvNQ8NawV2/+easkni
-	 qnBFWCyClbUK990yyHZuHPcmKDpiCiuQ9Dxp2Kvo=
+	b=ty9tZh0z5qWpxsHOknOWCQxJ5WQ0AQ8kW+CsMu04gYTSuO9LYejwCP1qBgRLjrkm8
+	 atlrQpuqsiCXXdfDkcqDGLbdoEqIcEtLTYartwkelnzVH4bD1XroV2SdUZXmY0uGub
+	 /pjS7/YK2AwqKze4F65/VoNvSZ2+cP9VDRRHIgfk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Johannes Berg <johannes.berg@intel.com>,
 	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 54/86] wifi: mac80211: correctly check if CSA is active
-Date: Mon,  9 Feb 2026 15:24:17 +0100
-Message-ID: <20260209142306.724796390@linuxfoundation.org>
+Subject: [PATCH 6.6 55/86] wifi: mac80211: dont increment crypto_tx_tailroom_needed_cnt twice
+Date: Mon,  9 Feb 2026 15:24:18 +0100
+Message-ID: <20260209142306.760480777@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260209142304.770150175@linuxfoundation.org>
 References: <20260209142304.770150175@linuxfoundation.org>
@@ -53,48 +53,45 @@ Content-Transfer-Encoding: 8bit
 
 From: Miri Korenblit <miriam.rachel.korenblit@intel.com>
 
-[ Upstream commit db1d0b6ab11f612ea8a327663a578c8946efeee9 ]
+[ Upstream commit 3f3d8ff31496874a69b131866f62474eb24ed20a ]
 
-We are not adding an interface if an existing one is doing CSA.
-But the check won't work for MLO station interfaces, since for those,
-vif->bss_conf is zeroed out.
-Fix this by checking if any link of the vif has an active CSA.
+In reconfig, in case the driver asks to disconnect during the reconfig,
+all the keys of the interface are marked as tainted.
+Then ieee80211_reenable_keys will loop over all the interface keys, and
+for each one it will
+a) increment crypto_tx_tailroom_needed_cnt
+b) call ieee80211_key_enable_hw_accel, which in turn will detect that
+this key is tainted, so it will mark it as "not in hardware", which is
+paired with crypto_tx_tailroom_needed_cnt incrementation, so we get two
+incrementations for each tainted key.
+Then we get a warning in ieee80211_free_keys.
+
+To fix it, don't increment the count in ieee80211_reenable_keys for
+tainted keys
 
 Reviewed-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
-Link: https://patch.msgid.link/20260111191912.7ceff62fc561.Ia38d27f42684d1cfd82d930d232bd5dea6ab9282@changeid
+Link: https://patch.msgid.link/20260118092821.4ca111fddcda.Id6e554f4b1c83760aa02d5a9e4e3080edb197aa2@changeid
 Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/mac80211/iface.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ net/mac80211/key.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/net/mac80211/iface.c b/net/mac80211/iface.c
-index a531fb2b14dee..c8c53f4d1bdbf 100644
---- a/net/mac80211/iface.c
-+++ b/net/mac80211/iface.c
-@@ -347,6 +347,8 @@ static int ieee80211_check_concurrent_iface(struct ieee80211_sub_if_data *sdata,
- 	/* we hold the RTNL here so can safely walk the list */
- 	list_for_each_entry(nsdata, &local->interfaces, list) {
- 		if (nsdata != sdata && ieee80211_sdata_running(nsdata)) {
-+			struct ieee80211_link_data *link;
-+
- 			/*
- 			 * Only OCB and monitor mode may coexist
- 			 */
-@@ -373,8 +375,10 @@ static int ieee80211_check_concurrent_iface(struct ieee80211_sub_if_data *sdata,
- 			 * will not add another interface while any channel
- 			 * switch is active.
- 			 */
--			if (nsdata->vif.bss_conf.csa_active)
--				return -EBUSY;
-+			for_each_link_data(nsdata, link) {
-+				if (link->conf->csa_active)
-+					return -EBUSY;
-+			}
+diff --git a/net/mac80211/key.c b/net/mac80211/key.c
+index f5f1eb87797a4..327ae73434517 100644
+--- a/net/mac80211/key.c
++++ b/net/mac80211/key.c
+@@ -981,7 +981,8 @@ void ieee80211_reenable_keys(struct ieee80211_sub_if_data *sdata)
  
- 			/*
- 			 * The remaining checks are only performed for interfaces
+ 	if (ieee80211_sdata_running(sdata)) {
+ 		list_for_each_entry(key, &sdata->key_list, list) {
+-			increment_tailroom_need_count(sdata);
++			if (!(key->flags & KEY_FLAG_TAINTED))
++				increment_tailroom_need_count(sdata);
+ 			ieee80211_key_enable_hw_accel(key);
+ 		}
+ 	}
 -- 
 2.51.0
 
