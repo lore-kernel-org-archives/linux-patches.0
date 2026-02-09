@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 459C435CB6B;
-	Mon,  9 Feb 2026 14:27:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 828FF37AA91;
+	Mon,  9 Feb 2026 14:27:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770647239; cv=none; b=WRbXWCreQpkXfZf2w4JFioIW/JtZ61PKrLNEZzYeduK+58s04tHuRMfzRzpD3U9H+LtddWtMhE7lkiChMfBZXlxU2JPtGv5p3TR52HkGb8SrAjb3ANCiN07ypzAOPF27hY/KZxS3F5IIDPYuvND5i5mLScNAZwWNTTVVxMIJtio=
+	t=1770647242; cv=none; b=c5DhICiItey8fUkmRLUF/BXhA/eVUzGtbTilW0sMQrNHF1Iz+QjzBYZgFhlW/RUB3ZZ71MJWvqzDzQsvCbAHuPbmfrEJUWcKrE5ZKXgyAozJBZv3JjyZ+6qZ4UbcxVFonzxhpho1w1C0UwVL+SS4qfXQePyVpybErQrY3m6XhbQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770647239; c=relaxed/simple;
-	bh=SwYR0yOiEYF9+utkLVP0QbJnRRb/kleqIkL4gxy5NIc=;
+	s=arc-20240116; t=1770647242; c=relaxed/simple;
+	bh=lcSnlT+gq5hAqYXBHXo3cqsNhNIc4+HsiHjwGKSBFjY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qYlgS/pyTKU7SWgZ2qKe0/8fTKQofx3K/4gukvU/r2r/mHsEGsvnCOUGVYraDl3HmYPd6tYOCkCEsgSwzw1pqvjLXPVcGse1ER/08GSc6FE6/xr0hyGHJ3QqPbTWkWdD+a2zVfZMfu+ymWpIL/RHSoB0NJtrX4MSaO4px2O+lJw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=A6EGEsQK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=sEgWcQyasm30gFaWM5ADeYQJvm9VuzHUsE6w6jmUySHutuiHSPKCyTnva0Er0iSYHMDp+F6ov0R5PC/ZekCGzf2NjkOxa2beR+T1eFrVSp7XG8lX45iMjC0UUh2t1nerQ+ExhV9w/FQcNvTHwvz5v47tQhppDlTHqMjJGiEL+uI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vsSk7CoM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="A6EGEsQK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A61E8C116C6;
-	Mon,  9 Feb 2026 14:27:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vsSk7CoM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA5AFC116C6;
+	Mon,  9 Feb 2026 14:27:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770647239;
-	bh=SwYR0yOiEYF9+utkLVP0QbJnRRb/kleqIkL4gxy5NIc=;
+	s=korg; t=1770647242;
+	bh=lcSnlT+gq5hAqYXBHXo3cqsNhNIc4+HsiHjwGKSBFjY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=A6EGEsQKFBlBGxOXvbNNYRIfKivztujpXuAG1iwWJJPlmrVfSksXXdCjJ12OfILIW
-	 bOcrdaBTVYKkgj1UCux/dXzDa5RVoyDEOdavArBecV2NjgBB0NjPFRt6ZmFhLCBqKF
-	 STWpUMlg3i+kmzWd/+8eSoiZvn7cyxIXq4/0rY5M=
+	b=vsSk7CoMsTdub4c9kff19U7MT0C4ies4LvtLryJqN6fVF/EQwCwjn7OEC9IMA+qGv
+	 Oz+3onlQz+4wvAn9rTibKOdEbtvTaGO1mPKTV73Rcyo4ILIst7ax6os+t61Z+LUTnj
+	 BNCOoxrCOC+GfDXIgdnmE+RLZwrDW12OvB+5bCWY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shrikanth Hegde <sshegde@linux.ibm.com>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
-	Tim Chen <tim.c.chen@linux.intel.com>,
-	K Prateek Nayak <kprateek.nayak@amd.com>
-Subject: [PATCH 6.18 040/175] sched/fair: Have SD_SERIALIZE affect newidle balancing
-Date: Mon,  9 Feb 2026 15:21:53 +0100
-Message-ID: <20260209142321.917660634@linuxfoundation.org>
+	DeepChirp <DeepChirp@outlook.com>,
+	Alice Ryhl <aliceryhl@google.com>,
+	Carlos Llamas <cmllamas@google.com>
+Subject: [PATCH 6.18 041/175] rust_binder: correctly handle FDA objects of length zero
+Date: Mon,  9 Feb 2026 15:21:54 +0100
+Message-ID: <20260209142321.953029853@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260209142320.474120190@linuxfoundation.org>
 References: <20260209142320.474120190@linuxfoundation.org>
@@ -52,39 +51,157 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Peter Zijlstra <peterz@infradead.org>
+From: Alice Ryhl <aliceryhl@google.com>
 
-commit 522fb20fbdbe48ed98f587d628637ff38ececd2d upstream.
+commit 8f589c9c3be539d6c2b393c82940c3783831082f upstream.
 
-Also serialize the possiblty much more frequent newidle balancing for
-the 'expensive' domains that have SD_BALANCE set.
+Fix a bug where an empty FDA (fd array) object with 0 fds would cause an
+out-of-bounds error. The previous implementation used `skip == 0` to
+mean "this is a pointer fixup", but 0 is also the correct skip length
+for an empty FDA. If the FDA is at the end of the buffer, then this
+results in an attempt to write 8-bytes out of bounds. This is caught and
+results in an EINVAL error being returned to userspace.
 
-Initial benchmarking by K Prateek and Tim showed no negative effect.
+The pattern of using `skip == 0` as a special value originates from the
+C-implementation of Binder. As part of fixing this bug, this pattern is
+replaced with a Rust enum.
 
-Split out from the larger patch moving sched_balance_running around
-for ease of bisect and such.
+I considered the alternate option of not pushing a fixup when the length
+is zero, but I think it's cleaner to just get rid of the zero-is-special
+stuff.
 
-Suggested-by: Shrikanth Hegde <sshegde@linux.ibm.com>
-Seconded-by: K Prateek Nayak <kprateek.nayak@amd.com>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Link: https://lkml.kernel.org/r/df068896-82f9-458d-8fff-5a2f654e8ffd@amd.com
-Link: https://patch.msgid.link/6fed119b723c71552943bfe5798c93851b30a361.1762800251.git.tim.c.chen@linux.intel.com
-Signed-off-by: Tim Chen <tim.c.chen@linux.intel.com>
+The root cause of this bug was diagnosed by Gemini CLI on first try. I
+used the following prompt:
+
+> There appears to be a bug in @drivers/android/binder/thread.rs where
+> the Fixups oob bug is triggered with 316 304 316 324. This implies
+> that we somehow ended up with a fixup where buffer A has a pointer to
+> buffer B, but the pointer is located at an index in buffer A that is
+> out of bounds. Please investigate the code to find the bug. You may
+> compare with @drivers/android/binder.c that implements this correctly.
+
+Cc: stable@vger.kernel.org
+Reported-by: DeepChirp <DeepChirp@outlook.com>
+Closes: https://github.com/waydroid/waydroid/issues/2157
+Fixes: eafedbc7c050 ("rust_binder: add Rust Binder driver")
+Tested-by: DeepChirp <DeepChirp@outlook.com>
+Signed-off-by: Alice Ryhl <aliceryhl@google.com>
+Acked-by: Carlos Llamas <cmllamas@google.com>
+Link: https://patch.msgid.link/20251229-fda-zero-v1-1-58a41cb0e7ec@google.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/sched/fair.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/android/binder/thread.rs | 59 ++++++++++++++++++--------------
+ 1 file changed, 34 insertions(+), 25 deletions(-)
 
---- a/kernel/sched/fair.c
-+++ b/kernel/sched/fair.c
-@@ -11744,7 +11744,7 @@ redo:
- 		goto out_balanced;
- 	}
+diff --git a/drivers/android/binder/thread.rs b/drivers/android/binder/thread.rs
+index 1a8e6fdc0dc4..dcd47e10aeb8 100644
+--- a/drivers/android/binder/thread.rs
++++ b/drivers/android/binder/thread.rs
+@@ -69,17 +69,24 @@ struct ScatterGatherEntry {
+ }
  
--	if (!need_unlock && (sd->flags & SD_SERIALIZE) && idle != CPU_NEWLY_IDLE) {
-+	if (!need_unlock && (sd->flags & SD_SERIALIZE)) {
- 		int zero = 0;
- 		if (!atomic_try_cmpxchg_acquire(&sched_balance_running, &zero, 1))
- 			goto out_balanced;
+ /// This entry specifies that a fixup should happen at `target_offset` of the
+-/// buffer. If `skip` is nonzero, then the fixup is a `binder_fd_array_object`
+-/// and is applied later. Otherwise if `skip` is zero, then the size of the
+-/// fixup is `sizeof::<u64>()` and `pointer_value` is written to the buffer.
+-struct PointerFixupEntry {
+-    /// The number of bytes to skip, or zero for a `binder_buffer_object` fixup.
+-    skip: usize,
+-    /// The translated pointer to write when `skip` is zero.
+-    pointer_value: u64,
+-    /// The offset at which the value should be written. The offset is relative
+-    /// to the original buffer.
+-    target_offset: usize,
++/// buffer.
++enum PointerFixupEntry {
++    /// A fixup for a `binder_buffer_object`.
++    Fixup {
++        /// The translated pointer to write.
++        pointer_value: u64,
++        /// The offset at which the value should be written. The offset is relative
++        /// to the original buffer.
++        target_offset: usize,
++    },
++    /// A skip for a `binder_fd_array_object`.
++    Skip {
++        /// The number of bytes to skip.
++        skip: usize,
++        /// The offset at which the skip should happen. The offset is relative
++        /// to the original buffer.
++        target_offset: usize,
++    },
+ }
+ 
+ /// Return type of `apply_and_validate_fixup_in_parent`.
+@@ -762,8 +769,7 @@ fn translate_object(
+ 
+                     parent_entry.fixup_min_offset = info.new_min_offset;
+                     parent_entry.pointer_fixups.push(
+-                        PointerFixupEntry {
+-                            skip: 0,
++                        PointerFixupEntry::Fixup {
+                             pointer_value: buffer_ptr_in_user_space,
+                             target_offset: info.target_offset,
+                         },
+@@ -807,9 +813,8 @@ fn translate_object(
+                 parent_entry
+                     .pointer_fixups
+                     .push(
+-                        PointerFixupEntry {
++                        PointerFixupEntry::Skip {
+                             skip: fds_len,
+-                            pointer_value: 0,
+                             target_offset: info.target_offset,
+                         },
+                         GFP_KERNEL,
+@@ -871,17 +876,21 @@ fn apply_sg(&self, alloc: &mut Allocation, sg_state: &mut ScatterGatherState) ->
+             let mut reader =
+                 UserSlice::new(UserPtr::from_addr(sg_entry.sender_uaddr), sg_entry.length).reader();
+             for fixup in &mut sg_entry.pointer_fixups {
+-                let fixup_len = if fixup.skip == 0 {
+-                    size_of::<u64>()
+-                } else {
+-                    fixup.skip
++                let (fixup_len, fixup_offset) = match fixup {
++                    PointerFixupEntry::Fixup { target_offset, .. } => {
++                        (size_of::<u64>(), *target_offset)
++                    }
++                    PointerFixupEntry::Skip {
++                        skip,
++                        target_offset,
++                    } => (*skip, *target_offset),
+                 };
+ 
+-                let target_offset_end = fixup.target_offset.checked_add(fixup_len).ok_or(EINVAL)?;
+-                if fixup.target_offset < end_of_previous_fixup || offset_end < target_offset_end {
++                let target_offset_end = fixup_offset.checked_add(fixup_len).ok_or(EINVAL)?;
++                if fixup_offset < end_of_previous_fixup || offset_end < target_offset_end {
+                     pr_warn!(
+                         "Fixups oob {} {} {} {}",
+-                        fixup.target_offset,
++                        fixup_offset,
+                         end_of_previous_fixup,
+                         offset_end,
+                         target_offset_end
+@@ -890,13 +899,13 @@ fn apply_sg(&self, alloc: &mut Allocation, sg_state: &mut ScatterGatherState) ->
+                 }
+ 
+                 let copy_off = end_of_previous_fixup;
+-                let copy_len = fixup.target_offset - end_of_previous_fixup;
++                let copy_len = fixup_offset - end_of_previous_fixup;
+                 if let Err(err) = alloc.copy_into(&mut reader, copy_off, copy_len) {
+                     pr_warn!("Failed copying into alloc: {:?}", err);
+                     return Err(err.into());
+                 }
+-                if fixup.skip == 0 {
+-                    let res = alloc.write::<u64>(fixup.target_offset, &fixup.pointer_value);
++                if let PointerFixupEntry::Fixup { pointer_value, .. } = fixup {
++                    let res = alloc.write::<u64>(fixup_offset, pointer_value);
+                     if let Err(err) = res {
+                         pr_warn!("Failed copying ptr into alloc: {:?}", err);
+                         return Err(err.into());
+-- 
+2.53.0
+
 
 
