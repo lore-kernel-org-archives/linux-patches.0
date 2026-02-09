@@ -1,45 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C99A37997D;
-	Mon,  9 Feb 2026 14:26:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 947DF3793AC;
+	Mon,  9 Feb 2026 14:26:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770647182; cv=none; b=ZG3uIdSjShunkbBrELEYzSpwhDZ2sQl8KRxEMHcahX3obEPDYj/j1h32wTgwRpdDapIdM8nkc9GGPwgUn4Vo9T0XTewdeemFbkq1lx0DALRzFkmn+eOPQ5OmymWF3JbGJUzqFeNfg07JuSR+fMC6U/Te6wEGa8w9wJIuD1jKy9U=
+	t=1770647185; cv=none; b=foZO5Y4iXs7QtR14CotTVbeRDHSzumJPJQjZEUfDwDm4ipkWDcdm20dCPueJGeza8avluU6xs4MoVQKnTqTw2Bjpm+Dce4TvcNoHjqheLyz/wP+KtBsXkUb7ktZbNhmwENf7u4nQvcosCNaybVDlDQKnG4JEFQo3GsI8Caim4ko=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770647182; c=relaxed/simple;
-	bh=L1ajPb3YaHTnOZtHHGum1ITzDaetJVTK1un6QqNFiVs=;
+	s=arc-20240116; t=1770647185; c=relaxed/simple;
+	bh=RDRmghd8owoHJeBXLyBBHNg6uRYEpiwxi//mRNVPddg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=L+AGu40O12bg/RsakQxV1LBfZ9FsL0g+AhM7GBn9ee9DAZwn/7fRH9Jppv43nY3pTbuf1aLCVEcU13mrBcDr5LLPhcL0fLHyR5VcT16LUm/bUrQSOvOlYTcT7aMpcWLX8YFTh/g5zpJt2bAUNRtW7oiiMHjHTMPLlOyDgKhaWY8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WHZ43Kcd; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=tJPfsFLYMrEuJ5PQqJ36p9IXK+3h719HW2NErpd8uVS78Aw9IcpB5823KtadvwWwuz7ndB7kGNnyRkln/2hhDxD+CoBxGxQyXRPvZUEizfp06eQFmoLLZ2pcmma7YtzoLSIg1qxJmZkxQ22JHJnSyE69+4/O9QkARrk7D4VwmdI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qxpH3u9k; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WHZ43Kcd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 81B8CC116C6;
-	Mon,  9 Feb 2026 14:26:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qxpH3u9k"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C397DC19423;
+	Mon,  9 Feb 2026 14:26:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770647182;
-	bh=L1ajPb3YaHTnOZtHHGum1ITzDaetJVTK1un6QqNFiVs=;
+	s=korg; t=1770647185;
+	bh=RDRmghd8owoHJeBXLyBBHNg6uRYEpiwxi//mRNVPddg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WHZ43KcdCDA8rODwz2QF/zlgQiAaZ0QSkN0fWkHo4u3RPa1mrnPwyVij9oZYLmOrN
-	 jkDjARAZ6dQcXrkgyGEGT6p8wWje0X9lcjHl1O9InUBhVX3WdP4VdFY8avwXds+cWe
-	 J273cEoSgdnwaMORWW++Ug7La5RWmaekAS3Tv7L4=
+	b=qxpH3u9kJ0HJZxLyrzTy+zHZYM5Po5drxUcU6SA5fVqeW3hHdE+f222YjAmYtAjeG
+	 Yzmw6or5T4Su9pO1WgXwvbYtfbGX9/OeE99jTLhFYN4egqgVOcxTG2HwtVMAEbAcNr
+	 MCRAOYsfGtAvS5FwkqhMuOhYRn+v/VUq9IzzSf0A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kairui Song <kasong@tencent.com>,
-	Chris Mason <clm@meta.com>,
-	Baolin Wang <baolin.wang@linux.alibaba.com>,
-	Baoquan He <bhe@redhat.com>,
-	Barry Song <baohua@kernel.org>,
-	Chris Li <chrisl@kernel.org>,
-	Hugh Dickins <hughd@google.com>,
-	Kemeng Shi <shikemeng@huaweicloud.com>,
-	Nhat Pham <nphamcs@gmail.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.18 024/175] mm, shmem: prevent infinite loop on truncate race
-Date: Mon,  9 Feb 2026 15:21:37 +0100
-Message-ID: <20260209142321.349534204@linuxfoundation.org>
+	Bert Karwatzki <spasswolf@web.de>,
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+	"Mario Limonciello (AMD)" <superm1@kernel.org>,
+	Mario Limonciello <mario.limonciello@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 6.18 025/175] Revert "drm/amd: Check if ASPM is enabled from PCIe subsystem"
+Date: Mon,  9 Feb 2026 15:21:38 +0100
+Message-ID: <20260209142321.385269001@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260209142320.474120190@linuxfoundation.org>
 References: <20260209142320.474120190@linuxfoundation.org>
@@ -52,90 +47,50 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Kairui Song <kasong@tencent.com>
+From: Bert Karwatzki <spasswolf@web.de>
 
-commit 2030dddf95451b4e7a389f052091e7c4b7b274c6 upstream.
+commit 243b467dea1735fed904c2e54d248a46fa417a2d upstream.
 
-When truncating a large swap entry, shmem_free_swap() returns 0 when the
-entry's index doesn't match the given index due to lookup alignment.  The
-failure fallback path checks if the entry crosses the end border and
-aborts when it happens, so truncate won't erase an unexpected entry or
-range.  But one scenario was ignored.
+This reverts commit 7294863a6f01248d72b61d38478978d638641bee.
 
-When `index` points to the middle of a large swap entry, and the large
-swap entry doesn't go across the end border, find_get_entries() will
-return that large swap entry as the first item in the batch with
-`indices[0]` equal to `index`.  The entry's base index will be smaller
-than `indices[0]`, so shmem_free_swap() will fail and return 0 due to the
-"base < index" check.  The code will then call shmem_confirm_swap(), get
-the order, check if it crosses the END boundary (which it doesn't), and
-retry with the same index.
+This commit was erroneously applied again after commit 0ab5d711ec74
+("drm/amd: Refactor `amdgpu_aspm` to be evaluated per device")
+removed it, leading to very hard to debug crashes, when used with a system with two
+AMD GPUs of which only one supports ASPM.
 
-The next iteration will find the same entry again at the same index with
-same indices, leading to an infinite loop.
-
-Fix this by retrying with a round-down index, and abort if the index is
-smaller than the truncate range.
-
-Link: https://lkml.kernel.org/r/aXo6ltB5iqAKJzY8@KASONG-MC4
-Fixes: 809bc86517cc ("mm: shmem: support large folio swap out")
-Fixes: 8a1968bd997f ("mm/shmem, swap: fix race of truncate and swap entry split")
-Signed-off-by: Kairui Song <kasong@tencent.com>
-Reported-by: Chris Mason <clm@meta.com>
-Closes: https://lore.kernel.org/linux-mm/20260128130336.727049-1-clm@meta.com/
-Reviewed-by: Baolin Wang <baolin.wang@linux.alibaba.com>
-Cc: Baoquan He <bhe@redhat.com>
-Cc: Barry Song <baohua@kernel.org>
-Cc: Chris Li <chrisl@kernel.org>
-Cc: Hugh Dickins <hughd@google.com>
-Cc: Kemeng Shi <shikemeng@huaweicloud.com>
-Cc: Nhat Pham <nphamcs@gmail.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Link: https://lore.kernel.org/linux-acpi/20251006120944.7880-1-spasswolf@web.de/
+Link: https://github.com/acpica/acpica/issues/1060
+Fixes: 0ab5d711ec74 ("drm/amd: Refactor `amdgpu_aspm` to be evaluated per device")
+Signed-off-by: Bert Karwatzki <spasswolf@web.de>
+Reviewed-by: Christian König <christian.koenig@amd.com>
+Reviewed-by: Mario Limonciello (AMD) <superm1@kernel.org>
+Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit 97a9689300eb2b393ba5efc17c8e5db835917080)
+Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/shmem.c |   23 ++++++++++++++---------
- 1 file changed, 14 insertions(+), 9 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_drv.c |    3 ---
+ 1 file changed, 3 deletions(-)
 
---- a/mm/shmem.c
-+++ b/mm/shmem.c
-@@ -1193,17 +1193,22 @@ whole_folios:
- 				swaps_freed = shmem_free_swap(mapping, indices[i],
- 							      end - 1, folio);
- 				if (!swaps_freed) {
--					/*
--					 * If found a large swap entry cross the end border,
--					 * skip it as the truncate_inode_partial_folio above
--					 * should have at least zerod its content once.
--					 */
-+					pgoff_t base = indices[i];
-+
- 					order = shmem_confirm_swap(mapping, indices[i],
- 								   radix_to_swp_entry(folio));
--					if (order > 0 && indices[i] + (1 << order) > end)
--						continue;
--					/* Swap was replaced by page: retry */
--					index = indices[i];
-+					/*
-+					 * If found a large swap entry cross the end or start
-+					 * border, skip it as the truncate_inode_partial_folio
-+					 * above should have at least zerod its content once.
-+					 */
-+					if (order > 0) {
-+						base = round_down(base, 1 << order);
-+						if (base < start || base + (1 << order) > end)
-+							continue;
-+					}
-+					/* Swap was replaced by page or extended, retry */
-+					index = base;
- 					break;
- 				}
- 				nr_swaps_freed += swaps_freed;
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_drv.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_drv.c
+@@ -2334,9 +2334,6 @@ static int amdgpu_pci_probe(struct pci_d
+ 			return -ENODEV;
+ 	}
+ 
+-	if (amdgpu_aspm == -1 && !pcie_aspm_enabled(pdev))
+-		amdgpu_aspm = 0;
+-
+ 	if (amdgpu_virtual_display ||
+ 	    amdgpu_device_asic_has_dc_support(pdev, flags & AMD_ASIC_MASK))
+ 		supports_atomic = true;
 
 
