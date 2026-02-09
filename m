@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64E9737BE76;
-	Mon,  9 Feb 2026 14:45:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3BB92D738A;
+	Mon,  9 Feb 2026 14:45:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770648311; cv=none; b=qwMSOpI+Fv59r3IEL8LIOHiD9RTt96p0ht4uMRMj56MDi55F3r8P+tt0C8zZwiD/P0H6bxQAR6pJFLNK9WIIixD8h1Jk7P1vLsctuSaQxdmyf+BeBEyIvcS0I4HFXF97+Bf4BmVaxKYBMkxmuEyLbxMk51/HnKRvajra+6SwDg4=
+	t=1770648314; cv=none; b=mJsmqyei+IzwiNqp5bY8FDKIy1zzowCxuPPN0sEmCHRniQgYr9X0tom/QFmRLOGDoxqK9H+UClroHxXRpXEZUBqHfaonxZqoEIsbRsb0Tn4piaE+H5NbRWiRjowwSmeBi7JW1el69Nx+BHa/0cGem+Y9BwnkibN8wJaDk0M5ahw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770648311; c=relaxed/simple;
-	bh=D3RzoeiJCxL/mS/Fl+7XEeq2Dmz0MNQsCebr35PhDeM=;
+	s=arc-20240116; t=1770648314; c=relaxed/simple;
+	bh=917xZQN3kZohW9mTQZ3yY1wOOrBckQe0IiAp4ggPgME=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KWedShm6z73DwEYOpkDkkq44BY322E/BTYo2zBSh80/+8taz+UZal5MbK5CUtBW6yQWUN/CHFxJhxzBpoZ8mhHt/seKf12w9XB4VPqYKcDWKuYICpokf4GuLNJrS7lrhzApdNq5eI8QoIpvmm/oiUnrnt6BDgaQJv4JKOlecArs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OIA6ebWw; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kFSKZS1Zp9j1Y7H9wh657gsimt+otKOQf36fjCjB5rh2il+ve+thF9dYeY6/uUm711O24tpRJFrASC2jXtRJQPlVItx8cmkTR9h/X/vuGdf9vRsWYDsp5C1V+iDBMdimhiOxcjcMYW+sXfFtQolk5hX8hK6apSTGq/Y+eYUCQjY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=krAA+u07; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OIA6ebWw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE8C8C116C6;
-	Mon,  9 Feb 2026 14:45:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="krAA+u07"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15D89C16AAE;
+	Mon,  9 Feb 2026 14:45:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770648311;
-	bh=D3RzoeiJCxL/mS/Fl+7XEeq2Dmz0MNQsCebr35PhDeM=;
+	s=korg; t=1770648314;
+	bh=917xZQN3kZohW9mTQZ3yY1wOOrBckQe0IiAp4ggPgME=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OIA6ebWwciylzcAtOlFhmAofrNq6GwWsialKwBE+3SlA4MgjACeCy6TSoWNXnTUg2
-	 Kjz6v0VhIr3DuGy6RlmRPH5T/YREdRK4SwsKYmVRw7sTZ7mCkxnIgGePlIclpvLQkU
-	 WyL3YaSM6s3qO4NiOEmM3V1fjpivYmSPOFvg7IuI=
+	b=krAA+u07nJkrcZYFORxElfwIUZIofRd44NSZwDw0KAfFozWMFJQP/g3xLpQe6fiMg
+	 lXQVdF8oT6Q4RgZIcw1/+OieyWxTCPw9KFAfFffqjbbuHVumcekyoEeSPsy0ZynrXY
+	 acEzbjN16EDP152wRpfKjIIBTDKpO9TGyI1lEELg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Felix Gu <ustc.gu@gmail.com>,
-	Jon Hunter <jonathanh@nvidia.com>,
-	Mark Brown <broonie@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 68/69] spi: tegra: Fix a memory leak in tegra_slink_probe()
-Date: Mon,  9 Feb 2026 15:24:36 +0100
-Message-ID: <20260209142304.373454412@linuxfoundation.org>
+	Tim Guttzeit <t.guttzeit@tuxedocomputers.com>,
+	Werner Sembach <wse@tuxedocomputers.com>,
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 6.1 69/69] ALSA: hda/realtek: Really fix headset mic for TongFang X6AR55xU.
+Date: Mon,  9 Feb 2026 15:24:37 +0100
+Message-ID: <20260209142304.409209439@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260209142301.913348974@linuxfoundation.org>
 References: <20260209142301.913348974@linuxfoundation.org>
@@ -52,44 +51,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Felix Gu <ustc.gu@gmail.com>
+From: Werner Sembach <wse@tuxedocomputers.com>
 
-[ Upstream commit 41d9a6795b95d6ea28439ac1e9ce8c95bbca20fc ]
+commit 1aaedafb21f38cb872d44f7608b4828a1e14e795 upstream.
 
-In tegra_slink_probe(), when platform_get_irq() fails, it directly
-returns from the function with an error code, which causes a memory leak.
+Add a PCI quirk to enable microphone detection on the headphone jack of
+TongFang X6AR55xU devices.
 
-Replace it with a goto label to ensure proper cleanup.
+The former quirk entry did not acomplish this and is removed.
 
-Fixes: eb9913b511f1 ("spi: tegra: Fix missing IRQ check in tegra_slink_probe()")
-Signed-off-by: Felix Gu <ustc.gu@gmail.com>
-Reviewed-by: Jon Hunter <jonathanh@nvidia.com>
-Link: https://patch.msgid.link/20260202-slink-v1-1-eac50433a6f9@gmail.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: b48fe9af1e60 ("ALSA: hda/realtek: Fix headset mic for TongFang X6AR55xU")
+Signed-off-by: Tim Guttzeit <t.guttzeit@tuxedocomputers.com>
+Signed-off-by: Werner Sembach <wse@tuxedocomputers.com>
+Link: https://patch.msgid.link/20260123221233.28273-1-wse@tuxedocomputers.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/spi/spi-tegra20-slink.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ sound/pci/hda/patch_realtek.c |    5 +----
+ 1 file changed, 1 insertion(+), 4 deletions(-)
 
-diff --git a/drivers/spi/spi-tegra20-slink.c b/drivers/spi/spi-tegra20-slink.c
-index 24cab56ecb7fd..5002c9f897c79 100644
---- a/drivers/spi/spi-tegra20-slink.c
-+++ b/drivers/spi/spi-tegra20-slink.c
-@@ -1093,8 +1093,10 @@ static int tegra_slink_probe(struct platform_device *pdev)
- 	reset_control_deassert(tspi->rst);
- 
- 	spi_irq = platform_get_irq(pdev, 0);
--	if (spi_irq < 0)
--		return spi_irq;
-+	if (spi_irq < 0) {
-+		ret = spi_irq;
-+		goto exit_pm_put;
-+	}
- 	tspi->irq = spi_irq;
- 	ret = request_threaded_irq(tspi->irq, tegra_slink_isr,
- 				   tegra_slink_isr_thread, IRQF_ONESHOT,
--- 
-2.51.0
-
+--- a/sound/pci/hda/patch_realtek.c
++++ b/sound/pci/hda/patch_realtek.c
+@@ -10444,6 +10444,7 @@ static const struct snd_pci_quirk alc269
+ 	SND_PCI_QUIRK(0x1d05, 0x1409, "TongFang GMxIXxx", ALC2XX_FIXUP_HEADSET_MIC),
+ 	SND_PCI_QUIRK(0x1d05, 0x300f, "TongFang X6AR5xxY", ALC2XX_FIXUP_HEADSET_MIC),
+ 	SND_PCI_QUIRK(0x1d05, 0x3019, "TongFang X6FR5xxY", ALC2XX_FIXUP_HEADSET_MIC),
++	SND_PCI_QUIRK(0x1d05, 0x3031, "TongFang X6AR55xU", ALC2XX_FIXUP_HEADSET_MIC),
+ 	SND_PCI_QUIRK(0x1d17, 0x3288, "Haier Boyue G42", ALC269VC_FIXUP_ACER_VCOPPERBOX_PINS),
+ 	SND_PCI_QUIRK(0x1d72, 0x1602, "RedmiBook", ALC255_FIXUP_XIAOMI_HEADSET_MIC),
+ 	SND_PCI_QUIRK(0x1d72, 0x1701, "XiaomiNotebook Pro", ALC298_FIXUP_DELL1_MIC_NO_PRESENCE),
+@@ -10905,10 +10906,6 @@ static const struct snd_hda_pin_quirk al
+ 		{0x12, 0x90a60140},
+ 		{0x19, 0x04a11030},
+ 		{0x21, 0x04211020}),
+-	SND_HDA_PIN_QUIRK(0x10ec0274, 0x1d05, "TongFang", ALC274_FIXUP_HP_HEADSET_MIC,
+-		{0x17, 0x90170110},
+-		{0x19, 0x03a11030},
+-		{0x21, 0x03211020}),
+ 	SND_HDA_PIN_QUIRK(0x10ec0282, 0x1025, "Acer", ALC282_FIXUP_ACER_DISABLE_LINEOUT,
+ 		ALC282_STANDARD_PINS,
+ 		{0x12, 0x90a609c0},
 
 
