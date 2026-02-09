@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 542AD1AF0AF;
-	Mon,  9 Feb 2026 14:34:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06BFD1AF0AF;
+	Mon,  9 Feb 2026 14:34:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770647665; cv=none; b=PhLFUHGRLvwkQn8YcKmfW+InqrgLs/FPuizuWb/Y4udFCNIrCZRYo2gbZcg89gSKawOcsMd1+mDNYDs55/ZltlxwqXmwNomJRM8aOP/f053icU8rEJpO9pUTUytYKNIRtmZIjbtkOiPsTCQdEIOukBkJBuL3ho0sOElnJ5WO4Uw=
+	t=1770647669; cv=none; b=intbiV/iV1L81ib/rh2MKDW+kyTFRQOkAS5eKKHbjI4yKyX9HBETgpgJFAktVkE76l1jKzYnIqROc4GJ+tL0VY4Zs9cc1GWVpk+/UcEJv4XOgrEXGJ+bbAG7kQeRHMqLobNrjfGGMN49Lw0ziZV5ffM/DFMtgKbj3CzSWeb2zno=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770647665; c=relaxed/simple;
-	bh=cF3Y8aGhCUKnvEXLr+5EgPquFON1X3n0VeFsfhtEcNw=;
+	s=arc-20240116; t=1770647669; c=relaxed/simple;
+	bh=Kcl0TNqpGP+wrYTIEPs+JixyBBWzZnkfl+ygfXhl9Wg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gdHIMRbEbFEdTDGf3uo2zb9fgCZK20wuEg4BdSFXyepmcmnZtSfltaQY/6+OE/VX7qM3AtpvNuXqEA8Vpu/YIkroFMp/GdUHtV74WV6OUKea+SbvTmSgiD8zeRELSwlppJCo41K3qW0VhOyoCLMDXsY06ahfp+tcDhEQJb+Pfz8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=m/JY2bBq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=JzRG2I3+iSGNysG5XX6FZQmALMfiSNaRPJW521njZAfKrAUjSGkNNghaHs7Vf1FV5lnBP+2+7nq2oAw4664iJdq55IuvJbKIOMd07XyqtRQn3X8DB0v+jRItMu9RLsOU29KInxo+GL8ZgscokbEhXjmuh4WHUu3hReRe7biiBBQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nP6HW51z; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="m/JY2bBq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A8E44C116C6;
-	Mon,  9 Feb 2026 14:34:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nP6HW51z"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E421C116C6;
+	Mon,  9 Feb 2026 14:34:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770647665;
-	bh=cF3Y8aGhCUKnvEXLr+5EgPquFON1X3n0VeFsfhtEcNw=;
+	s=korg; t=1770647668;
+	bh=Kcl0TNqpGP+wrYTIEPs+JixyBBWzZnkfl+ygfXhl9Wg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=m/JY2bBqVowUdmYmHI6O+3ZuoiM485JJmH33HmrswCZXUewciVHDt0tjiP3ovR5Mo
-	 b/A5LlfMtx91PMWCSKEOQjkVGzJmg1HbknJzAdLL56qnFzlDDk1PhWg5ug43y3VnOO
-	 dRqyuBqrKiVSQdazJP1przKwCWlVBY1YBvVJ67Zo=
+	b=nP6HW51zl2Dc02Tz2VafmIxx9WcqKZOzhlIAPrVFQb9p6p4YyNIo9qW3mcSC8ORS2
+	 DS0Np26SWiY6hxVoRP0SiYT3J87VViBZO7o+fA6FoUhcMR+0I22Bvik12+nDOgXLUc
+	 XyiLiusJNoIbOkMVJRtG9h7C+edieZfYsut/TfEg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sergey Shtylyov <s.shtylyov@auroraos.dev>,
-	Takashi Iwai <tiwai@suse.de>,
+	Breno Leitao <leitao@debian.org>,
+	Jon Hunter <jonathanh@nvidia.com>,
+	Thierry Reding <treding@nvidia.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 160/175] ALSA: usb-audio: fix broken logic in snd_audigy2nx_led_update()
-Date: Mon,  9 Feb 2026 15:23:53 +0100
-Message-ID: <20260209142326.247749379@linuxfoundation.org>
+Subject: [PATCH 6.18 169/175] spi: tegra210-quad: Protect curr_xfer clearing in tegra_qspi_non_combined_seq_xfer
+Date: Mon,  9 Feb 2026 15:24:02 +0100
+Message-ID: <20260209142326.562361981@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260209142320.474120190@linuxfoundation.org>
 References: <20260209142320.474120190@linuxfoundation.org>
@@ -51,50 +53,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sergey Shtylyov <s.shtylyov@auroraos.dev>
+From: Breno Leitao <leitao@debian.org>
 
-[ Upstream commit 124bdc6eccc8c5cba68fee00e01c084c116c4360 ]
+[ Upstream commit 6d7723e8161f3c3f14125557e19dd080e9d882be ]
 
-When the support for the Sound Blaster X-Fi Surround 5.1 Pro was added,
-the existing logic for the X-Fi Surround 5.1 in snd_audigy2nx_led_put()
-was broken due to missing *else* before the added *if*: snd_usb_ctl_msg()
-became incorrectly called twice and an error from first snd_usb_ctl_msg()
-call ignored.  As the added snd_usb_ctl_msg() call was totally identical
-to the existing one for the "plain" X-Fi Surround 5.1, just merge those
-two *if* statements while fixing the broken logic...
+Protect the curr_xfer clearing in tegra_qspi_non_combined_seq_xfer()
+with the spinlock to prevent a race with the interrupt handler that
+reads this field to check if a transfer is in progress.
 
-Found by Linux Verification Center (linuxtesting.org) with the Svace static
-analysis tool.
-
-Fixes: 7cdd8d73139e ("ALSA: usb-audio - Add support for USB X-Fi S51 Pro")
-Signed-off-by: Sergey Shtylyov <s.shtylyov@auroraos.dev>
-Link: https://patch.msgid.link/20260203161558.18680-1-s.shtylyov@auroraos.dev
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Fixes: b4e002d8a7ce ("spi: tegra210-quad: Fix timeout handling")
+Signed-off-by: Breno Leitao <leitao@debian.org>
+Tested-by: Jon Hunter <jonathanh@nvidia.com>
+Acked-by: Jon Hunter <jonathanh@nvidia.com>
+Acked-by: Thierry Reding <treding@nvidia.com>
+Link: https://patch.msgid.link/20260126-tegra_xfer-v2-5-6d2115e4f387@debian.org
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/usb/mixer_quirks.c | 9 ++-------
- 1 file changed, 2 insertions(+), 7 deletions(-)
+ drivers/spi/spi-tegra210-quad.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/sound/usb/mixer_quirks.c b/sound/usb/mixer_quirks.c
-index 828af3095b86e..4873b5e748016 100644
---- a/sound/usb/mixer_quirks.c
-+++ b/sound/usb/mixer_quirks.c
-@@ -311,13 +311,8 @@ static int snd_audigy2nx_led_update(struct usb_mixer_interface *mixer,
- 	if (pm.err < 0)
- 		return pm.err;
+diff --git a/drivers/spi/spi-tegra210-quad.c b/drivers/spi/spi-tegra210-quad.c
+index 78e26c25a7b35..7fe16ed7e84bd 100644
+--- a/drivers/spi/spi-tegra210-quad.c
++++ b/drivers/spi/spi-tegra210-quad.c
+@@ -1231,6 +1231,7 @@ static int tegra_qspi_non_combined_seq_xfer(struct tegra_qspi *tqspi,
+ 	struct spi_transfer *transfer;
+ 	bool is_first_msg = true;
+ 	int ret = 0, val = 0;
++	unsigned long flags;
  
--	if (chip->usb_id == USB_ID(0x041e, 0x3042))
--		err = snd_usb_ctl_msg(chip->dev,
--				      usb_sndctrlpipe(chip->dev, 0), 0x24,
--				      USB_DIR_OUT | USB_TYPE_VENDOR | USB_RECIP_OTHER,
--				      !value, 0, NULL, 0);
--	/* USB X-Fi S51 Pro */
--	if (chip->usb_id == USB_ID(0x041e, 0x30df))
-+	if (chip->usb_id == USB_ID(0x041e, 0x3042) ||	/* USB X-Fi S51 */
-+	    chip->usb_id == USB_ID(0x041e, 0x30df))	/* USB X-Fi S51 Pro */
- 		err = snd_usb_ctl_msg(chip->dev,
- 				      usb_sndctrlpipe(chip->dev, 0), 0x24,
- 				      USB_DIR_OUT | USB_TYPE_VENDOR | USB_RECIP_OTHER,
+ 	msg->status = 0;
+ 	msg->actual_length = 0;
+@@ -1304,7 +1305,9 @@ static int tegra_qspi_non_combined_seq_xfer(struct tegra_qspi *tqspi,
+ 		msg->actual_length += xfer->len + dummy_bytes;
+ 
+ complete_xfer:
++		spin_lock_irqsave(&tqspi->lock, flags);
+ 		tqspi->curr_xfer = NULL;
++		spin_unlock_irqrestore(&tqspi->lock, flags);
+ 
+ 		if (ret < 0) {
+ 			tegra_qspi_transfer_end(spi);
 -- 
 2.51.0
 
