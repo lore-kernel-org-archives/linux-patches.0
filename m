@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 924FD35CB6B;
-	Mon,  9 Feb 2026 14:28:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0255135CB6B;
+	Mon,  9 Feb 2026 14:28:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770647309; cv=none; b=UkjBTmaxOcaGTjH7qYvVtQBxpwaRq+/Q3EQ8qOMguQA6BPhq+RIIdip5tGOhDQvzJyaHbyD/f38UezQdrIP6xmm/6QYfHGYHpjo0JU6IqhEi5J3pqbRj7EggNrentx2UnDcLy4OBhHtuXgtw1Bj/+zanaw4HE1DKNK1WSXn319A=
+	t=1770647313; cv=none; b=O6Uom2gh3zFcJMWtqsS454NroR2Vq5rblwPdcebKRSuip5xo5FRfXPg75dv6lVr3DS/BXNHJCCjV1DdZJ2NuAk4+HExk5qLKLm8CeTGm8TNG3ZHx/NvonoliiD88J7EHkbSpfz46DPAi6L58/ZPjljvn9OTSor2e4zTbsMqdtm8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770647309; c=relaxed/simple;
-	bh=oDMbmy7q/ORlmHCTBHhrQgxHB2/7rL882S9wt6VIryM=;
+	s=arc-20240116; t=1770647313; c=relaxed/simple;
+	bh=w5znTUlbeBpOFh1a+btqhFtuxDRooZ2VWvbvS17cM84=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KrIT2GluLGA17AjrqUwnWYhWGP8+WNTI+ZOlEt15YmzLU12qSi0oQ1IPKiGIFJ3s98u3FkTrNitYH+MlOTDj7OKX3XtooPTOySuJG2aJBcn2z6+Apqq2EZn6hcTHFHIozP3sxxV0gbXtVuzoocucaZdIGfeH+kB4PJ7SzP8kHH8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=a/eNKQlc; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lL924Kru+j1adMRwqoD/guMBPXJ6D98vywQvWorMmajNldMA7tYwQ35gZvRLks6bzOO5KYf0YtajvlBCe03E7f/NiqOUFAhbGpeohfG23RZf7lydHGRJrFKwzuBG2qe7oPyB6rKdQVgYnTJ67DjHtoIHcSxgRFOL4WASQvrrgGc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0sSYvHOf; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="a/eNKQlc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 08985C116C6;
-	Mon,  9 Feb 2026 14:28:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0sSYvHOf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D4F6C116C6;
+	Mon,  9 Feb 2026 14:28:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770647309;
-	bh=oDMbmy7q/ORlmHCTBHhrQgxHB2/7rL882S9wt6VIryM=;
+	s=korg; t=1770647312;
+	bh=w5znTUlbeBpOFh1a+btqhFtuxDRooZ2VWvbvS17cM84=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=a/eNKQlcGUW9Tx3j+56qwKkMHtQngBB/n9cxYZSDqsu4QH088pN2g111uaftXRtk2
-	 YUrjEwW64sUNkk7RDEdU3D2BALU7t/4BrgMoARsm0oZEDLDHMlxXoKPpjJK7KP6EDA
-	 I709YxMJfwcwb6pNSWiN2N3hKdb4VqDZlwjHtdPU=
+	b=0sSYvHOf5ByxSMKFTU+DFQvmA+IwE/ijbKHL+HiQJyi2XfHD85x3VKVKVe649oWur
+	 cJ4f2qXxigQTvTB1lGxyezVBekdPK0JRZ2797YYbjXEaHHipyK+gAwjzjY4V4TS+Ww
+	 JHugnC/DUbZqyUwtZzfe1tOxgyxzLHmZW7pZphg8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qu Wenruo <wqu@suse.com>,
-	Filipe Manana <fdmanana@suse.com>,
-	David Sterba <dsterba@suse.com>,
+	Zhang Lixu <lixu.zhang@intel.com>,
+	Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>,
+	Benjamin Tissoires <bentiss@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 062/175] btrfs: do not free data reservation in fallback from inline due to -ENOSPC
-Date: Mon,  9 Feb 2026 15:22:15 +0100
-Message-ID: <20260209142322.691287556@linuxfoundation.org>
+Subject: [PATCH 6.18 063/175] HID: intel-ish-hid: Update ishtp bus match to support device ID table
+Date: Mon,  9 Feb 2026 15:22:16 +0100
+Message-ID: <20260209142322.726757514@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260209142320.474120190@linuxfoundation.org>
 References: <20260209142320.474120190@linuxfoundation.org>
@@ -52,44 +52,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Filipe Manana <fdmanana@suse.com>
+From: Zhang Lixu <lixu.zhang@intel.com>
 
-[ Upstream commit f8da41de0bff9eb1d774a7253da0c9f637c4470a ]
+[ Upstream commit daeed86b686855adda79f13729e0c9b0530990be ]
 
-If we fail to create an inline extent due to -ENOSPC, we will attempt to
-go through the normal COW path, reserve an extent, create an ordered
-extent, etc. However we were always freeing the reserved qgroup data,
-which is wrong since we will use data. Fix this by freeing the reserved
-qgroup data in __cow_file_range_inline() only if we are not doing the
-fallback (ret is <= 0).
+The ishtp_cl_bus_match() function previously only checked the first entry
+in the driver's device ID table. Update it to iterate over the entire
+table, allowing proper matching for drivers with multiple supported
+protocol GUIDs.
 
-Reviewed-by: Qu Wenruo <wqu@suse.com>
-Signed-off-by: Filipe Manana <fdmanana@suse.com>
-Reviewed-by: David Sterba <dsterba@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Signed-off-by: Zhang Lixu <lixu.zhang@intel.com>
+Acked-by: Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>
+Signed-off-by: Benjamin Tissoires <bentiss@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/inode.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ drivers/hid/intel-ish-hid/ishtp/bus.c | 12 ++++++++++--
+ 1 file changed, 10 insertions(+), 2 deletions(-)
 
-diff --git a/fs/btrfs/inode.c b/fs/btrfs/inode.c
-index 1af9b05328ce8..e72c69f77ce4b 100644
---- a/fs/btrfs/inode.c
-+++ b/fs/btrfs/inode.c
-@@ -670,8 +670,12 @@ static noinline int __cow_file_range_inline(struct btrfs_inode *inode,
- 	 * it won't count as data extent, free them directly here.
- 	 * And at reserve time, it's always aligned to page size, so
- 	 * just free one page here.
-+	 *
-+	 * If we fallback to non-inline (ret == 1) due to -ENOSPC, then we need
-+	 * to keep the data reservation.
- 	 */
--	btrfs_qgroup_free_data(inode, NULL, 0, fs_info->sectorsize, NULL);
-+	if (ret <= 0)
-+		btrfs_qgroup_free_data(inode, NULL, 0, fs_info->sectorsize, NULL);
- 	btrfs_free_path(path);
- 	btrfs_end_transaction(trans);
- 	return ret;
+diff --git a/drivers/hid/intel-ish-hid/ishtp/bus.c b/drivers/hid/intel-ish-hid/ishtp/bus.c
+index c6ce37244e497..c3915f3a060ea 100644
+--- a/drivers/hid/intel-ish-hid/ishtp/bus.c
++++ b/drivers/hid/intel-ish-hid/ishtp/bus.c
+@@ -240,9 +240,17 @@ static int ishtp_cl_bus_match(struct device *dev, const struct device_driver *dr
+ {
+ 	struct ishtp_cl_device *device = to_ishtp_cl_device(dev);
+ 	struct ishtp_cl_driver *driver = to_ishtp_cl_driver(drv);
++	struct ishtp_fw_client *client = device->fw_client;
++	const struct ishtp_device_id *id;
+ 
+-	return(device->fw_client ? guid_equal(&driver->id[0].guid,
+-	       &device->fw_client->props.protocol_name) : 0);
++	if (client) {
++		for (id = driver->id; !guid_is_null(&id->guid); id++) {
++			if (guid_equal(&id->guid, &client->props.protocol_name))
++				return 1;
++		}
++	}
++
++	return 0;
+ }
+ 
+ /**
 -- 
 2.51.0
 
