@@ -1,42 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77B4037AA91;
-	Mon,  9 Feb 2026 14:29:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7A4137AA9E;
+	Mon,  9 Feb 2026 14:29:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770647368; cv=none; b=GvalsCAbo7UUooemGKIJQtXk41YAkU1n6pMWRRXFQpYp6REKdRXBaQe7amGBtdCnEcZhs+CwRXGU8v2/89IDUhmL6QnkfzN2JtCiOWTaHS5w6H0WfxvjcpkSQVddXisjo6Xxl2vZKslKk06hbh1IQ7dxG8bTnwvebG3Gl6QtVrs=
+	t=1770647371; cv=none; b=dmm9VFAZnihABeKKY+qtuRsLoIImDc26XNC3GwFAunPs5a1JtLX2aVbHlBlpSVyvF21r83yHY+3jHca5w3ZQKULbOosq3B+/JwTW3gZiGF2QoVqRqd5zCK6Bvzt/jgtWgae4Sc4YITyHJvmcK0dh+yVzykrGfPRwqdrnDYau9fs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770647368; c=relaxed/simple;
-	bh=ZDrPqthF83bbNwtv//zZGZ2Qsm6ulrAJ9DSZmKB1czk=;
+	s=arc-20240116; t=1770647371; c=relaxed/simple;
+	bh=R6Q19zLV1ugv2sqlB8VtbkDUfPtYITxD/QL9qoFtP7g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RL6c4pGA9epf2Ue8K0uLVEfCpHGJiFWe5+UnUBeVL33V99FG3wMPdVc5Q02xi+0pudP2yuqGchxLTc/VboXPh2pHktIgVK2XHKmlj48fqZZlVkVpRIZ08ZLeo/gFAzuNfsYtbVzOynwXXyhK0VhLa65SadEG0+O6RpoYqU66sqY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ojEEHfMK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=iUfFLgHX91gOOdyxCKDMU4ARnItd045mx91lVG/PctRpBDIJV3yRNEJ2A8IID8bYg15Yh+Inz1XVMUqs+GfOMnJs/71h799ygs77JVFyW5Jw3nllS4tACZyshdmGwhp9JKbCFQ6N0sDCL5r4sXpD882Qc/1Xu5v0pXkHmsbgzfk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=h0F0rVzF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ojEEHfMK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 94C54C16AAE;
-	Mon,  9 Feb 2026 14:29:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="h0F0rVzF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 19657C116C6;
+	Mon,  9 Feb 2026 14:29:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770647368;
-	bh=ZDrPqthF83bbNwtv//zZGZ2Qsm6ulrAJ9DSZmKB1czk=;
+	s=korg; t=1770647371;
+	bh=R6Q19zLV1ugv2sqlB8VtbkDUfPtYITxD/QL9qoFtP7g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ojEEHfMKqy9g2A3oBd7rVCifz90HjC2739BC9mshEEhvV+y/yqolKUAVsHPCx3mQW
-	 cAHeLcZdDahukUR+PKUKjIX/k5VZgzSH04NnFC8iM9H3bCKpFYX+8vYwIuB/8rn6lL
-	 R3uu7KtZuA7KGHLg7eMVDi4ei1PpIGQq7XYqbK8k=
+	b=h0F0rVzFdgwNoe/3cw8smVomsv1+P66flYN6woWUkVeH7eDBbSPVIDefDtUDrrBVo
+	 1mit1nmcJai3iK9LuF4UaejhXer3/G1uBtM0LfC56Rb1bABlBZbk9pOyRu4jq1CamK
+	 d72EwAH3bQkmAmWGy9MgJZWhZficQVc/AuE1Iin4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nathan Chancellor <nathan@kernel.org>,
-	Yao Zi <ziyao@disroot.org>,
-	Simon Horman <horms@kernel.org>,
-	Oliver Hartkopp <socketcan@hartkopp.net>,
-	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
-	Johannes Berg <johannes.berg@intel.com>,
+	Perry Yuan <perry.yuan@amd.com>,
+	Yifan Zhang <yifan1.zhang@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 052/175] wifi: iwlwifi: Implement settime64 as stub for MVM/MLD PTP
-Date: Mon,  9 Feb 2026 15:22:05 +0100
-Message-ID: <20260209142322.340906918@linuxfoundation.org>
+Subject: [PATCH 6.18 079/175] drm/amd/pm: Disable MMIO access during SMU Mode 1 reset
+Date: Mon,  9 Feb 2026 15:22:32 +0100
+Message-ID: <20260209142323.285461750@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260209142320.474120190@linuxfoundation.org>
 References: <20260209142320.474120190@linuxfoundation.org>
@@ -55,93 +52,90 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yao Zi <ziyao@disroot.org>
+From: Perry Yuan <perry.yuan@amd.com>
 
-[ Upstream commit 81d90d93d22ca4f61833cba921dce9a0bd82218f ]
+[ Upstream commit 0de604d0357d0d22cbf03af1077d174b641707b6 ]
 
-Since commit dfb073d32cac ("ptp: Return -EINVAL on ptp_clock_register if
-required ops are NULL"), PTP clock registered through ptp_clock_register
-is required to have ptp_clock_info.settime64 set, however, neither MVM
-nor MLD's PTP clock implementation sets it, resulting in warnings when
-the interface starts up, like
+During Mode 1 reset, the ASIC undergoes a reset cycle and becomes
+temporarily inaccessible via PCIe. Any attempt to access MMIO registers
+during this window (e.g., from interrupt handlers or other driver threads)
+can result in uncompleted PCIe transactions, leading to NMI panics or
+system hangs.
 
-WARNING: drivers/ptp/ptp_clock.c:325 at ptp_clock_register+0x2c8/0x6b8, CPU#1: wpa_supplicant/469
-CPU: 1 UID: 0 PID: 469 Comm: wpa_supplicant Not tainted 6.18.0+ #101 PREEMPT(full)
-ra: ffff800002732cd4 iwl_mvm_ptp_init+0x114/0x188 [iwlmvm]
-ERA: 9000000002fdc468 ptp_clock_register+0x2c8/0x6b8
-iwlwifi 0000:01:00.0: Failed to register PHC clock (-22)
+To prevent this, set the `no_hw_access` flag to true immediately after
+triggering the reset. This signals other driver components to skip
+register accesses while the device is offline.
 
-I don't find an appropriate firmware interface to implement settime64()
-for iwlwifi MLD/MVM, thus instead create a stub that returns
--EOPTNOTSUPP only, suppressing the warning and allowing the PTP clock to
-be registered.
+A memory barrier `smp_mb()` is added to ensure the flag update is
+globally visible to all cores before the driver enters the sleep/wait
+state.
 
-Reported-by: Nathan Chancellor <nathan@kernel.org>
-Closes: https://lore.kernel.org/all/20251108044822.GA3262936@ax162/
-Signed-off-by: Yao Zi <ziyao@disroot.org>
-Tested-by: Nathan Chancellor <nathan@kernel.org>
-Reviewed-by: Simon Horman <horms@kernel.org>
-tested-by: damian Tometzki damian@riscv-rocks.de
-Tested-by: Oliver Hartkopp <socketcan@hartkopp.net>
-Acked-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
-Link: https://patch.msgid.link/20251204123204.9316-1-ziyao@disroot.org
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Signed-off-by: Perry Yuan <perry.yuan@amd.com>
+Reviewed-by: Yifan Zhang <yifan1.zhang@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit 7edb503fe4b6d67f47d8bb0dfafb8e699bb0f8a4)
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/intel/iwlwifi/mld/ptp.c | 7 +++++++
- drivers/net/wireless/intel/iwlwifi/mvm/ptp.c | 7 +++++++
- 2 files changed, 14 insertions(+)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_device.c           | 3 +++
+ drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_0_ppt.c | 7 ++++++-
+ drivers/gpu/drm/amd/pm/swsmu/smu14/smu_v14_0_2_ppt.c | 9 +++++++--
+ 3 files changed, 16 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/wireless/intel/iwlwifi/mld/ptp.c b/drivers/net/wireless/intel/iwlwifi/mld/ptp.c
-index ffeb37a7f830e..231920425c066 100644
---- a/drivers/net/wireless/intel/iwlwifi/mld/ptp.c
-+++ b/drivers/net/wireless/intel/iwlwifi/mld/ptp.c
-@@ -121,6 +121,12 @@ static int iwl_mld_ptp_gettime(struct ptp_clock_info *ptp,
- 	return 0;
- }
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
+index 49107475af619..53b33a636971a 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
+@@ -5739,6 +5739,9 @@ int amdgpu_device_mode1_reset(struct amdgpu_device *adev)
+ 	if (ret)
+ 		goto mode1_reset_failed;
  
-+static int iwl_mld_ptp_settime(struct ptp_clock_info *ptp,
-+			       const struct timespec64 *ts)
-+{
-+	return -EOPNOTSUPP;
-+}
++	/* enable mmio access after mode 1 reset completed */
++	adev->no_hw_access = false;
 +
- static int iwl_mld_ptp_adjtime(struct ptp_clock_info *ptp, s64 delta)
- {
- 	struct iwl_mld *mld = container_of(ptp, struct iwl_mld,
-@@ -279,6 +285,7 @@ void iwl_mld_ptp_init(struct iwl_mld *mld)
+ 	amdgpu_device_load_pci_state(adev->pdev);
+ 	ret = amdgpu_psp_wait_for_bootloader(adev);
+ 	if (ret)
+diff --git a/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_0_ppt.c b/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_0_ppt.c
+index c1062e5f03936..8d070a9ea2c10 100644
+--- a/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_0_ppt.c
++++ b/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_0_ppt.c
+@@ -2922,8 +2922,13 @@ static int smu_v13_0_0_mode1_reset(struct smu_context *smu)
+ 		break;
+ 	}
  
- 	mld->ptp_data.ptp_clock_info.owner = THIS_MODULE;
- 	mld->ptp_data.ptp_clock_info.gettime64 = iwl_mld_ptp_gettime;
-+	mld->ptp_data.ptp_clock_info.settime64 = iwl_mld_ptp_settime;
- 	mld->ptp_data.ptp_clock_info.max_adj = 0x7fffffff;
- 	mld->ptp_data.ptp_clock_info.adjtime = iwl_mld_ptp_adjtime;
- 	mld->ptp_data.ptp_clock_info.adjfine = iwl_mld_ptp_adjfine;
-diff --git a/drivers/net/wireless/intel/iwlwifi/mvm/ptp.c b/drivers/net/wireless/intel/iwlwifi/mvm/ptp.c
-index 06a4c9f74797a..ad156b82eaa94 100644
---- a/drivers/net/wireless/intel/iwlwifi/mvm/ptp.c
-+++ b/drivers/net/wireless/intel/iwlwifi/mvm/ptp.c
-@@ -220,6 +220,12 @@ static int iwl_mvm_ptp_gettime(struct ptp_clock_info *ptp,
- 	return 0;
+-	if (!ret)
++	if (!ret) {
++		/* disable mmio access while doing mode 1 reset*/
++		smu->adev->no_hw_access = true;
++		/* ensure no_hw_access is globally visible before any MMIO */
++		smp_mb();
+ 		msleep(SMU13_MODE1_RESET_WAIT_TIME_IN_MS);
++	}
+ 
+ 	return ret;
  }
+diff --git a/drivers/gpu/drm/amd/pm/swsmu/smu14/smu_v14_0_2_ppt.c b/drivers/gpu/drm/amd/pm/swsmu/smu14/smu_v14_0_2_ppt.c
+index e735da7ab6126..bad8dd786bff2 100644
+--- a/drivers/gpu/drm/amd/pm/swsmu/smu14/smu_v14_0_2_ppt.c
++++ b/drivers/gpu/drm/amd/pm/swsmu/smu14/smu_v14_0_2_ppt.c
+@@ -2143,10 +2143,15 @@ static int smu_v14_0_2_mode1_reset(struct smu_context *smu)
  
-+static int iwl_mvm_ptp_settime(struct ptp_clock_info *ptp,
-+			       const struct timespec64 *ts)
-+{
-+	return -EOPNOTSUPP;
-+}
-+
- static int iwl_mvm_ptp_adjtime(struct ptp_clock_info *ptp, s64 delta)
- {
- 	struct iwl_mvm *mvm = container_of(ptp, struct iwl_mvm,
-@@ -281,6 +287,7 @@ void iwl_mvm_ptp_init(struct iwl_mvm *mvm)
- 	mvm->ptp_data.ptp_clock_info.adjfine = iwl_mvm_ptp_adjfine;
- 	mvm->ptp_data.ptp_clock_info.adjtime = iwl_mvm_ptp_adjtime;
- 	mvm->ptp_data.ptp_clock_info.gettime64 = iwl_mvm_ptp_gettime;
-+	mvm->ptp_data.ptp_clock_info.settime64 = iwl_mvm_ptp_settime;
- 	mvm->ptp_data.scaled_freq = SCALE_FACTOR;
+ 	ret = smu_cmn_send_debug_smc_msg(smu, DEBUGSMC_MSG_Mode1Reset);
+ 	if (!ret) {
+-		if (amdgpu_emu_mode == 1)
++		if (amdgpu_emu_mode == 1) {
+ 			msleep(50000);
+-		else
++		} else {
++			/* disable mmio access while doing mode 1 reset*/
++			smu->adev->no_hw_access = true;
++			/* ensure no_hw_access is globally visible before any MMIO */
++			smp_mb();
+ 			msleep(1000);
++		}
+ 	}
  
- 	/* Give a short 'friendly name' to identify the PHC clock */
+ 	return ret;
 -- 
 2.51.0
 
