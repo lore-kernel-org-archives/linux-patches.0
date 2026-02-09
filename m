@@ -1,44 +1,48 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB0183019CB;
-	Mon,  9 Feb 2026 12:27:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 895F43019CB;
+	Mon,  9 Feb 2026 12:27:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770640055; cv=none; b=lpGWjHoqaZWJVKqfY1iux85fDCaod28c2Z6ctatzDDB/3VwoZNVrcGKFRXZKZeEl9pbZfC9NXUiAiqPjrCId1a+BbyfjrqHFHySOEgFJoWEVEGVTMPqTEsKvEziWn9/SI+tgWERbgIvQcRt095UCWJjWOOKJJEIETOU3hI0PbEo=
+	t=1770640058; cv=none; b=b+E0IBcZTH0pXCE77d6BPsk6TmMFmDJ2XWpCqSzPzAGaoG6hN6t+GOLW+vSGvsaYKTc0NK5cTY8FUz6jxxJWcfaqixZe0AL7m07utBckgBCP0iox3BiHIcVO6EnDokvPxCv57N7QcyWwtFgD9NOWZO6o92w+Tu6n9SBENkiqaf4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770640055; c=relaxed/simple;
-	bh=lRtg476s14l1t1W7R1QDOyJJ0+/3DLw1jJMaeSb5CvU=;
+	s=arc-20240116; t=1770640058; c=relaxed/simple;
+	bh=XcI7n4Wun9l/AsF7vieNILQzEDRMWZ0MUZ9JBnzsG+8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ubB2YFwN8BaKgpfjjII7NCA2sJuRAuPXE+q0Yshc+HTRDgR2A5OP+1L7VqdV1SwSzhOhf7cuS/aJLROu1gfMRAmQQ7N7+OQ+vIz2JmiinFuS8MjXO+0XIm3SvHwIIOrtekZQD9IsIy9e+bFy2VbWrbZP2OR1axPcllE2/3Bfr84=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ivdOfdpq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=Ihpu3TusjrJgxle0XCDbZ39Ibv6BUYYNwb3qe/0YcucR7h2ySir9hDnyhu8rIL064BeczZNBqeUe6o1oSxM5ER5MHSwqLg/6IugQGKcBGvYwk1PSHOtqcRg4i2HqrTaRn10yDJ+PyoJ3ctKjRpU1HQ+5KUwlWARQvhwuoTZgP8c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=FNYmJ6oR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ivdOfdpq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E5503C19423;
-	Mon,  9 Feb 2026 12:27:34 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="FNYmJ6oR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC4CFC16AAE;
+	Mon,  9 Feb 2026 12:27:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1770640055;
-	bh=lRtg476s14l1t1W7R1QDOyJJ0+/3DLw1jJMaeSb5CvU=;
+	s=k20201202; t=1770640058;
+	bh=XcI7n4Wun9l/AsF7vieNILQzEDRMWZ0MUZ9JBnzsG+8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ivdOfdpq9Z4xIBAkXE/9/X7MZzQkVWhEJM4Hs33agTTIWG9JgjNrnkcZRhLBCXOGy
-	 HPvVkdZ60U4H89QfErYYY4q21YtOwPjQcHnRF8b+zz8vIubGK6HbPhr8f1lUqJXzqP
-	 RrBh9WDKfDLE2oXNCExgJ6dGzoSLxQ/pqwiA9MZzD+QjV2Q6efCDcsTEPUsvLgidiQ
-	 QvgMUWGnzR4vyhUs6mL7UaKURKoIlBC9/CX/dz1S3Z5dFFUgt9C0euN61EQKvOJYa2
-	 WhydIfIoGL5XDWHF1OjuQLO7ddtqWK5IxIV0WxSG0+nyNOZUqHMpKyikGY2TYh3t5F
-	 4WpJHK3k40Caw==
+	b=FNYmJ6oRJFRmSkUxUKpQNXyFcmrV5C9mAKkUzIUlJSl3k9HTtuh5ziJLoz6g0If9S
+	 8JCDew/fjHaUOFRNHU3g6pTVD+VCCVzeZ+F6FIZbZ/KbxigViPdNMfAjbBBCY8BY9c
+	 Io5Xz29Dz2DG/WcjiWx5SyPDUjwE/1gRi+yU+u8pV8VRTbnZUcxauXCA1Tja7+ixS9
+	 qTXRGIAD9kqNQDt5mndSRc8UYgw+7OyaEO0/L+DOriMPg57tV5NNDmNkc1bKNuRXyO
+	 Pfks33E5WOJOJCBdbyi1sKY/IpZQNT5dm6+rcQbuwkNwAuQeiwEPkmi1eDZfQKYPxW
+	 OkCVW8tB7wOQQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Tagir Garaev <tgaraev653@gmail.com>,
+Cc: Maciej Strozek <mstrozek@opensource.cirrus.com>,
+	Cezary Rojewski <cezary.rojewski@intel.com>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	kuninori.morimoto.gx@renesas.com,
-	balamurugan.c@intel.com,
-	liam.r.girdwood@intel.com,
-	marco.crivellari@suse.com
-Subject: [PATCH AUTOSEL 6.18-6.1] ASoC: Intel: sof_es8336: Add DMI quirk for Huawei BOD-WXX9
-Date: Mon,  9 Feb 2026 07:26:50 -0500
-Message-ID: <20260209122714.1037915-11-sashal@kernel.org>
+	yung-chuan.liao@linux.intel.com,
+	peter.ujfalusi@linux.intel.com,
+	ranjani.sridharan@linux.intel.com,
+	kai.vehmanen@linux.intel.com,
+	ckeepax@opensource.cirrus.com,
+	mac.chiang@intel.com,
+	naveen.m@intel.com
+Subject: [PATCH AUTOSEL 6.18] ASoC: sof_sdw: Add a quirk for Lenovo laptop using sidecar amps with cs42l43
+Date: Mon,  9 Feb 2026 07:26:51 -0500
+Message-ID: <20260209122714.1037915-12-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260209122714.1037915-1-sashal@kernel.org>
 References: <20260209122714.1037915-1-sashal@kernel.org>
@@ -51,172 +55,108 @@ MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.18.9
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Tagir Garaev <tgaraev653@gmail.com>
+From: Maciej Strozek <mstrozek@opensource.cirrus.com>
 
-[ Upstream commit 6b641122d31f9d33e7d60047ee0586d1659f3f54 ]
+[ Upstream commit 1425900231372acf870dd89e8d3bb4935f7f0c81 ]
 
-Add DMI entry for Huawei Matebook D (BOD-WXX9) with HEADPHONE_GPIO
-and DMIC quirks.
+Add a quirk for a Lenovo laptop (SSID: 0x17aa3821) to allow using sidecar
+CS35L57 amps with CS42L43 codec.
 
-This device has ES8336 codec with:
-- GPIO 16 (headphone-enable) for headphone amplifier control
-- GPIO 17 (speakers-enable) for speaker amplifier control
-- GPIO 269 for jack detection IRQ
-- 2-channel DMIC
-
-Hardware investigation shows that both GPIO 16 and 17 are required
-for proper audio routing, as headphones and speakers share the same
-physical output (HPOL/HPOR) and are separated only via amplifier
-enable signals.
-
-RFC: Seeking advice on GPIO control issue:
-
-GPIO values change in driver (gpiod_get_value() shows logical value
-changes) but not physically (debugfs gpio shows no change). The same
-gpiod_set_value_cansleep() calls work correctly in probe context with
-msleep(), but fail when called from DAPM event callbacks.
-
-Context information from diagnostics:
-- in_atomic=0, in_interrupt=0, irqs_disabled=0
-- Process context: pipewire
-- GPIO 17 (speakers): changes in driver, no physical change
-- GPIO 16 (headphone): changes in driver, no physical change
-
-In Windows, audio switching works without visible GPIO changes,
-suggesting possible ACPI/firmware involvement.
-
-Any suggestions on how to properly control these GPIOs from DAPM
-events would be appreciated.
-
-Signed-off-by: Tagir Garaev <tgaraev653@gmail.com>
-Link: https://patch.msgid.link/20260201121728.16597-1-tgaraev653@gmail.com
+Signed-off-by: Maciej Strozek <mstrozek@opensource.cirrus.com>
+Reviewed-by: Cezary Rojewski <cezary.rojewski@intel.com>
+Link: https://patch.msgid.link/20260128092410.1540583-1-mstrozek@opensource.cirrus.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-## Analysis of ASoC: Intel: sof_es8336: Add DMI quirk for Huawei BOD-
-WXX9
+## Analysis
 
-### 1. Commit Message Analysis
+### Commit Message Analysis
+This commit adds a hardware quirk (PCI SSID entry) for a specific Lenovo
+laptop (SSID: 0x17aa3821) to enable sidecar CS35L57 amplifiers with the
+CS42L43 codec. The commit message is straightforward and describes a
+device-specific quirk addition.
 
-The commit adds a DMI quirk entry for the Huawei Matebook D (BOD-WXX9)
-laptop to the `sof_es8336` audio driver. The quirk enables
-`SOF_ES8336_HEADPHONE_GPIO` and `SOF_ES8336_ENABLE_DMIC` flags for this
-specific hardware.
+### Code Change Analysis
+The change is a **single line addition**:
+```c
+SND_PCI_QUIRK(0x17aa, 0x3821, "Lenovo 0x3821", SOC_SDW_SIDECAR_AMPS),
+```
 
-Notably, the commit message contains an RFC section describing an
-**unresolved GPIO control issue** - the GPIOs change logically but not
-physically when called from DAPM event callbacks. This means the quirk
-entry is being added, but the author acknowledges that audio switching
-(headphone/speaker) may not fully work yet.
+This adds an entry to the `sof_sdw_ssid_quirk_table[]` array, which is a
+table of PCI subsystem ID quirks. The entry maps a specific Lenovo
+laptop's subsystem ID (vendor 0x17aa, device 0x3821) to the
+`SOC_SDW_SIDECAR_AMPS` quirk flag.
 
-### 2. Code Change Analysis
+### Classification: Hardware Quirk / Device ID Addition
 
-The change is a pure **DMI quirk table addition**:
-- Adds a single new entry to the `sof_es8336_quirk_table[]` array
-- Matches `DMI_SYS_VENDOR = "HUAWEI"` and `DMI_PRODUCT_NAME = "BOD-
-  WXX9"`
-- Sets `SOF_ES8336_HEADPHONE_GPIO | SOF_ES8336_ENABLE_DMIC` as driver
-  data
-- No code logic changes, no new functions, no structural modifications
+This falls squarely into the **QUIRKS and WORKAROUNDS** exception
+category for stable backports:
+- It's a hardware-specific quirk for a specific laptop model
+- It uses an existing mechanism (`SND_PCI_QUIRK` macro,
+  `sof_sdw_ssid_quirk_table`)
+- It adds to an existing table with similar entries already present
+- The quirk flag `SOC_SDW_SIDECAR_AMPS` already exists and is used by
+  the driver
 
-The pattern is identical to the existing HUAWEI entry (BOHB-WAX9-PCB-B2)
-just below it, which uses `SOF_ES8336_HEADPHONE_GPIO |
-SOC_ES8336_HEADSET_MIC1`.
+### Risk Assessment
+- **Scope**: Single line, single file change
+- **Risk**: Extremely low — only affects the specific Lenovo laptop with
+  SSID 0x17aa:0x3821
+- **Side effects**: None for any other hardware; the quirk is matched by
+  PCI subsystem ID
+- **Dependencies**: The `SOC_SDW_SIDECAR_AMPS` flag and the quirk
+  infrastructure must exist in the stable tree
 
-### 3. Classification
+### User Impact
+Without this quirk, owners of this specific Lenovo laptop would have
+non-functional or incorrectly configured audio (the sidecar amplifiers
+wouldn't be recognized/used). This is a real hardware enablement issue —
+the laptop's speakers likely don't work properly without this quirk.
 
-This falls squarely into the **hardware quirk/workaround** exception
-category for stable backports. DMI quirk entries for audio codecs are
-one of the most common types of stable-appropriate additions. They:
-- Enable audio functionality on specific hardware
-- Are trivially small (data-only addition to an existing table)
-- Cannot affect any other hardware (DMI matching is device-specific)
-- Follow an established pattern already in the driver
+### Stability Indicators
+- **Reviewed-by**: Cezary Rojewski (Intel audio maintainer)
+- **Signed-off-by**: Mark Brown (ASoC subsystem maintainer)
+- This is a well-understood, minimal pattern used extensively in audio
+  drivers
 
-### 4. Scope and Risk Assessment
+### Concerns
+- The `SOC_SDW_SIDECAR_AMPS` quirk flag must exist in the target stable
+  tree. This flag and the cs42l43 sidecar amp support may be relatively
+  new, so it may only apply to recent stable branches (e.g., 6.12.y or
+  later). If the flag doesn't exist in older stable trees, the patch
+  simply won't apply, which is safe.
+- No other dependencies — this is a self-contained table entry addition.
 
-- **Lines changed**: ~9 lines of new code (one table entry)
-- **Files touched**: 1 file (`sound/soc/intel/boards/sof_es8336.c`)
-- **Risk**: Extremely low - the DMI match ensures this code path only
-  activates on the specific Huawei BOD-WXX9 laptop. No other systems are
-  affected.
-- **Regression potential**: Near zero for any system other than the
-  target device.
-
-### 5. User Impact
-
-- **Who benefits**: Users of Huawei Matebook D (BOD-WXX9) laptops
-  running Linux
-- **Without this quirk**: The DMIC (internal microphone) and headphone
-  GPIO configuration won't be properly set, potentially resulting in no
-  audio or broken audio routing
-- **Severity**: Audio not working is a significant usability issue for
-  laptop users
-
-### 6. Concerns
-
-- The RFC section in the commit message is notable - the author reports
-  that GPIO control from DAPM callbacks doesn't work as expected
-  (physical GPIO state doesn't change). This suggests the quirk may
-  provide partial functionality (DMIC works, but headphone/speaker
-  switching may not work fully).
-- However, even partial functionality (enabling DMIC) is better than no
-  quirk entry at all.
-- The commit was accepted by the subsystem maintainer (Mark Brown)
-  despite the RFC, suggesting the base quirk entry is valid.
-
-### 7. Dependency Check
-
-No dependencies on other commits. The quirk flags
-(`SOF_ES8336_HEADPHONE_GPIO`, `SOF_ES8336_ENABLE_DMIC`) and the quirk
-table infrastructure already exist in stable trees where this driver is
-present.
-
-### 8. Stability Indicators
-
-- Accepted via the standard ASoC maintainer path (Mark Brown)
-- Follows the exact same pattern as existing entries in the same table
-- Data-only change with zero logic modifications
-
-### Decision
-
-This is a textbook hardware quirk addition - a small, safe, data-only
-change to an existing DMI quirk table that enables audio functionality
-on a specific laptop model. It matches the "QUIRKS and WORKAROUNDS"
-exception category perfectly. The risk is essentially zero (only affects
-one specific hardware model), and the benefit is real (audio support for
-Huawei Matebook D users on stable kernels).
+### Verdict
+This is a textbook stable-worthy hardware quirk addition: a single-line
+entry in an existing quirk table, enabling audio hardware on a specific
+laptop model. It has zero risk to other hardware, is reviewed by
+subsystem maintainers, and fixes a real user-facing problem (broken
+audio).
 
 **YES**
 
- sound/soc/intel/boards/sof_es8336.c | 9 +++++++++
- 1 file changed, 9 insertions(+)
+ sound/soc/intel/boards/sof_sdw.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/sound/soc/intel/boards/sof_es8336.c b/sound/soc/intel/boards/sof_es8336.c
-index 09acd80d23e0f..cf50de5c2edd8 100644
---- a/sound/soc/intel/boards/sof_es8336.c
-+++ b/sound/soc/intel/boards/sof_es8336.c
-@@ -332,6 +332,15 @@ static int sof_es8336_quirk_cb(const struct dmi_system_id *id)
-  * if the topology file is modified as well.
-  */
- static const struct dmi_system_id sof_es8336_quirk_table[] = {
-+	{
-+		.callback = sof_es8336_quirk_cb,
-+		.matches = {
-+			DMI_MATCH(DMI_SYS_VENDOR, "HUAWEI"),
-+			DMI_MATCH(DMI_PRODUCT_NAME, "BOD-WXX9"),
-+		},
-+		.driver_data = (void *)(SOF_ES8336_HEADPHONE_GPIO |
-+					SOF_ES8336_ENABLE_DMIC)
-+	},
- 	{
- 		.callback = sof_es8336_quirk_cb,
- 		.matches = {
+diff --git a/sound/soc/intel/boards/sof_sdw.c b/sound/soc/intel/boards/sof_sdw.c
+index c013e31d098e7..198858b57d9f5 100644
+--- a/sound/soc/intel/boards/sof_sdw.c
++++ b/sound/soc/intel/boards/sof_sdw.c
+@@ -794,6 +794,7 @@ static const struct snd_pci_quirk sof_sdw_ssid_quirk_table[] = {
+ 	SND_PCI_QUIRK(0x17aa, 0x2347, "Lenovo P16", SOC_SDW_CODEC_MIC),
+ 	SND_PCI_QUIRK(0x17aa, 0x2348, "Lenovo P16", SOC_SDW_CODEC_MIC),
+ 	SND_PCI_QUIRK(0x17aa, 0x2349, "Lenovo P1", SOC_SDW_CODEC_MIC),
++	SND_PCI_QUIRK(0x17aa, 0x3821, "Lenovo 0x3821", SOC_SDW_SIDECAR_AMPS),
+ 	{}
+ };
+ 
 -- 
 2.51.0
 
