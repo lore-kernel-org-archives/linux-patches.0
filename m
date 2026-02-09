@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7409A37E312;
-	Mon,  9 Feb 2026 14:39:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74D6D37F0EE;
+	Mon,  9 Feb 2026 14:39:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770647961; cv=none; b=IDAIs50eOjXB0EuKYE643LOw3hfvfSHo9P6e3Pk0FbOt8XDJ/6yA/nXEXsOmN8p9jXi+hjx9QDU073tI/V/9QhjJWEqh3mF+8jOYcbf+vs7aFw0bqtCcpGd+Jkuif9ZrDUwvRpk0OmK7rXqtbaRGtbXfyHBfC4DYSa/lj5JtccU=
+	t=1770647964; cv=none; b=iWNMaxen1KxJNWnHf+OFSZVp0r47hd/8pDRd6pzsNKZgcekFuKj4IiVlE0mA/9AP8ndeIAyaTjLQCZ1Nmh0CbKRIi1l9S/npxAQ7gpYu9INQIrs5NrKoDTit5LSm7vZejBoNvopUyPDhk0nqAj2r2/GeY+09xVDm1dCyOC8nV2M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770647961; c=relaxed/simple;
-	bh=BVA/10uZBGkXQwm5cUsYaGNXU09jcatQipEKC83M+q8=;
+	s=arc-20240116; t=1770647964; c=relaxed/simple;
+	bh=aDN04zmxXcP9MmAe2dcXP2Pit6+gUam0llvmPyrGqGI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=j/kAnV8ALNZ26UGp3z3hKKx6KUmBtEZ7cG+TSqf41pyZ5VGy+kofJzDMN0R66cnJhzNaSV8sTKLSh2Bcbttg8UF2AixF+iPfygiMv9js2sjcjQyHy0z1dtOUJd/FKqJghnRS2+Tss7AME0IliWHjsRGq0xjp0ueStvTf+msUTmk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GxLSMiED; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=RdKyaM7CMgssma6MBV43YbZmoEgh0/G1/KqY+EhafVfX1KcypcUDxOIOkrIXOHJ1cqkSAAmj3s7ub/EmCYlmso1z5h9pA7+CGHpkxokZomRTeuaC4Cq+NFJXyreOniXpXbnVBrT/QZYpyRjp3Yakd7Cf2pAuGnx0xj0H1kzHRl0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MXpPSMIY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GxLSMiED"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AFAB6C116C6;
-	Mon,  9 Feb 2026 14:39:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MXpPSMIY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5807C19422;
+	Mon,  9 Feb 2026 14:39:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770647961;
-	bh=BVA/10uZBGkXQwm5cUsYaGNXU09jcatQipEKC83M+q8=;
+	s=korg; t=1770647964;
+	bh=aDN04zmxXcP9MmAe2dcXP2Pit6+gUam0llvmPyrGqGI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GxLSMiEDpK+h5uLvNXflrZjbL5wMyThzvgqhs45VmLRjxr/tL+7S1bobjhHv22ZqH
-	 OZ2x3mw/d0nLEsBmxE3E2jgasCu7Cpw3mZtL+Px5LkDcr2JJiPBAQXmTAz3ujv3CSf
-	 t1MjIaYHYfYuoSBwIdag+/k/n0G4xEeXNoLOB6Fc=
+	b=MXpPSMIYI2pT12+Kgc7gkGOae/UnJmMsLWahFYqlkBerr9anEKjtJdl+fNHHuCNMd
+	 m1ue7TQnPoiAa9trHKm6uj7dHDfv2AGQlWWuC84hopX0BZOT9EDx6WYx7XRDLLr0BP
+	 ICdLCIjWDkaI6IVVAIKogKN5MLM1pQudgmMj8AJ0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuhao Jiang <danisjiang@gmail.com>,
-	Junrui Luo <moonafterrain@outlook.com>,
-	Andrew Lunn <andrew@lunn.ch>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Devyn Liu <liudingyuan@h-partners.com>,
+	Yang Shen <shenyang39@huawei.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 080/113] dpaa2-switch: prevent ZERO_SIZE_PTR dereference when num_ifs is zero
-Date: Mon,  9 Feb 2026 15:23:49 +0100
-Message-ID: <20260209142313.059125406@linuxfoundation.org>
+Subject: [PATCH 6.12 063/113] spi: hisi-kunpeng: Fixed the wrong debugfs node name in hisi_spi debugfs initialization
+Date: Mon,  9 Feb 2026 15:23:32 +0100
+Message-ID: <20260209142312.460061851@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260209142310.204833231@linuxfoundation.org>
 References: <20260209142310.204833231@linuxfoundation.org>
@@ -53,53 +52,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Junrui Luo <moonafterrain@outlook.com>
+From: Devyn Liu <liudingyuan@h-partners.com>
 
-[ Upstream commit ed48a84a72fefb20a82dd90a7caa7807e90c6f66 ]
+[ Upstream commit b062a899c997df7b9ce29c62164888baa7a85833 ]
 
-The driver allocates arrays for ports, FDBs, and filter blocks using
-kcalloc() with ethsw->sw_attr.num_ifs as the element count. When the
-device reports zero interfaces (either due to hardware configuration
-or firmware issues), kcalloc(0, ...) returns ZERO_SIZE_PTR (0x10)
-instead of NULL.
+In hisi_spi_debugfs_init, spi controller pointer is calculated
+by container_of macro, and the member is hs->dev. But the host
+cannot be calculated offset directly by this. (hs->dev) points
+to (pdev->dev), and it is the (host->dev.parent) rather than
+(host->dev) points to the (pdev->dev), which is set in
+__spi_alloc_controller.
 
-Later in dpaa2_switch_probe(), the NAPI initialization unconditionally
-accesses ethsw->ports[0]->netdev, which attempts to dereference
-ZERO_SIZE_PTR (address 0x10), resulting in a kernel panic.
+In this patch, this issues is fixed by getting the spi_controller
+data from pdev->dev by dev_get_drvdata() directly. (dev->driver_data)
+points to the spi controller data in the probe stage.
 
-Add a check to ensure num_ifs is greater than zero after retrieving
-device attributes. This prevents the zero-sized allocations and
-subsequent invalid pointer dereference.
-
-Reported-by: Yuhao Jiang <danisjiang@gmail.com>
-Reported-by: Junrui Luo <moonafterrain@outlook.com>
-Fixes: 0b1b71370458 ("staging: dpaa2-switch: handle Rx path on control interface")
-Signed-off-by: Junrui Luo <moonafterrain@outlook.com>
-Reviewed-by: Andrew Lunn <andrew@lunn.ch>
-Link: https://patch.msgid.link/SYBPR01MB7881BEABA8DA896947962470AF91A@SYBPR01MB7881.ausprd01.prod.outlook.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Devyn Liu <liudingyuan@h-partners.com>
+Reviewed-by: Yang Shen <shenyang39@huawei.com>
+Link: https://patch.msgid.link/20260108075323.3831574-1-liudingyuan@h-partners.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/freescale/dpaa2/dpaa2-switch.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/spi/spi-hisi-kunpeng.c | 4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
-diff --git a/drivers/net/ethernet/freescale/dpaa2/dpaa2-switch.c b/drivers/net/ethernet/freescale/dpaa2/dpaa2-switch.c
-index 980daecab8ea3..84c7079d8672d 100644
---- a/drivers/net/ethernet/freescale/dpaa2/dpaa2-switch.c
-+++ b/drivers/net/ethernet/freescale/dpaa2/dpaa2-switch.c
-@@ -3023,6 +3023,12 @@ static int dpaa2_switch_init(struct fsl_mc_device *sw_dev)
- 		goto err_close;
- 	}
+diff --git a/drivers/spi/spi-hisi-kunpeng.c b/drivers/spi/spi-hisi-kunpeng.c
+index 16054695bdb04..f0a50f40a3ba1 100644
+--- a/drivers/spi/spi-hisi-kunpeng.c
++++ b/drivers/spi/spi-hisi-kunpeng.c
+@@ -161,10 +161,8 @@ static const struct debugfs_reg32 hisi_spi_regs[] = {
+ static int hisi_spi_debugfs_init(struct hisi_spi *hs)
+ {
+ 	char name[32];
++	struct spi_controller *host = dev_get_drvdata(hs->dev);
  
-+	if (!ethsw->sw_attr.num_ifs) {
-+		dev_err(dev, "DPSW device has no interfaces\n");
-+		err = -ENODEV;
-+		goto err_close;
-+	}
-+
- 	err = dpsw_get_api_version(ethsw->mc_io, 0,
- 				   &ethsw->major,
- 				   &ethsw->minor);
+-	struct spi_controller *host;
+-
+-	host = container_of(hs->dev, struct spi_controller, dev);
+ 	snprintf(name, 32, "hisi_spi%d", host->bus_num);
+ 	hs->debugfs = debugfs_create_dir(name, NULL);
+ 	if (IS_ERR(hs->debugfs))
 -- 
 2.51.0
 
