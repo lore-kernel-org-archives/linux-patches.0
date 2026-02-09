@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8621E1AF0AF;
-	Mon,  9 Feb 2026 14:33:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63C911AF0AF;
+	Mon,  9 Feb 2026 14:33:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770647635; cv=none; b=WIaLVmy22Qb4vpoxPJ1x7Qxck0lYMzpztW96ieBbou8oLCiBQcUeh766jRwg1bmMbjYldAG58Kf5MtaqkR+v0b1y6goUggP5/A684AC3D0f1TtbKcp8uI9dGYYSmJAlD/m9TJbZFxqFNb4koxtswoeBJtEQyPfQ4u1HgXlV2r7w=
+	t=1770647639; cv=none; b=toVKoocTJPMO0IAowA9/zxELWAWfEEfC4M5dJHqd8+6zptIoK5Tk5HYHxuJHRNTCWFK+rkRPTwyQ9+2YGGRQxtQUOtT32xHImkTwbQQrlwCCACOgoIk95oFc3b1JtJsFr9djuLQRiIH4fqcnsc2TLQbk92CrtibD30WVB8Fh/GY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770647635; c=relaxed/simple;
-	bh=MqN7gF7ODpxYtvkd8zR1lJ5wzwAnwb3Wwrfcyp6oH3s=;
+	s=arc-20240116; t=1770647639; c=relaxed/simple;
+	bh=ePq5dkMqrF6EMbNJryRhyCA4CAWNNMTlUoIgYsWFTGY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=V/0ZiK1wr/4eljs3c3kLzrzujgThrCtvY1s+11fCfF2/5qq68/W8Rv14/utwePANjWvh2+XwPPcMCSejONznCReBMvMR/1P69qPRVz/hG1ABnY64XaiRoWVb1qsMHbrgZgAJQxtOpLN0f8M46bHVfs62At+LOi39t1SNkzYELtI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JxudLwuo; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Hg++qcYXmrOV8LzbyCjNTESf7KLfJbZYuNzN7qyJ/HLY2aREQEBhOH6AxjtY2J43a15kVE7UtvvMdD5rdMy91EhgE8ddm/pB5g4oQ61h6mengwbbaaR9VMx2uzSfLa4y+jKOAvtsgWcP/inSFnkGWksh21vDZ/o6l8UXvOYcSjM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bHsjMeIm; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JxudLwuo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED6D3C116C6;
-	Mon,  9 Feb 2026 14:33:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bHsjMeIm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 565D3C116C6;
+	Mon,  9 Feb 2026 14:33:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770647635;
-	bh=MqN7gF7ODpxYtvkd8zR1lJ5wzwAnwb3Wwrfcyp6oH3s=;
+	s=korg; t=1770647639;
+	bh=ePq5dkMqrF6EMbNJryRhyCA4CAWNNMTlUoIgYsWFTGY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JxudLwuoVhXXKUMPXJlLnt/lQVbsE3HB8RNlM9JeQ2ZjrMJvQMmO+V4QL2w/aol16
-	 VvLQOlvTyJcf0VkVyt2zXQoa7Ve+it1MjXiB9P9w3OLvbwvz3/+ApRlSJa00RLv/YC
-	 rhX4BlmXozppP7jIzpSjLVQ5RIRdMuqJWCkjLj+0=
+	b=bHsjMeImn30j4KOttVIYQLTJ9GMvici7qav6byMtfkZ2iHpbj7QyQMV7xnnjMwJ+4
+	 vI8++C8y6nW6mehAo0zt67xssPPFPlj/0wEU/rNSjXrIux1jIZeB7YhAnm0IQZxrEC
+	 1c1NSF8JbY+48sQ/C2m0Sbk6ubK82bS5yStvy1yA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+cb809def1baaac68ab92@syzkaller.appspotmail.com,
-	Shigeru Yoshida <syoshida@redhat.com>,
-	Fernando Fernandez Mancera <fmancera@suse.de>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Richard Fitzgerald <rf@opensource.cirrus.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 157/175] ipv6: Fix ECMP sibling count mismatch when clearing RTF_ADDRCONF
-Date: Mon,  9 Feb 2026 15:23:50 +0100
-Message-ID: <20260209142326.143435291@linuxfoundation.org>
+Subject: [PATCH 6.18 158/175] firmware: cs_dsp: Factor out common debugfs string read
+Date: Mon,  9 Feb 2026 15:23:51 +0100
+Message-ID: <20260209142326.177995005@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260209142320.474120190@linuxfoundation.org>
 References: <20260209142320.474120190@linuxfoundation.org>
@@ -53,91 +51,129 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shigeru Yoshida <syoshida@redhat.com>
+From: Richard Fitzgerald <rf@opensource.cirrus.com>
 
-[ Upstream commit bbf4a17ad9ffc4e3d7ec13d73ecd59dea149ed25 ]
+[ Upstream commit 78cfd833bc04c0398ca4cfc64704350aebe4d4c2 ]
 
-syzbot reported a kernel BUG in fib6_add_rt2node() when adding an IPv6
-route. [0]
+cs_dsp_debugfs_wmfw_read() and cs_dsp_debugfs_bin_read() were identical
+except for which struct member they printed. Move all this duplicated
+code into a common function cs_dsp_debugfs_string_read().
 
-Commit f72514b3c569 ("ipv6: clear RA flags when adding a static
-route") introduced logic to clear RTF_ADDRCONF from existing routes
-when a static route with the same nexthop is added. However, this
-causes a problem when the existing route has a gateway.
+The check for dsp->booted has been removed because this is redundant.
+The two strings are set when the DSP is booted and cleared when the
+DSP is powered-down.
 
-When RTF_ADDRCONF is cleared from a route that has a gateway, that
-route becomes eligible for ECMP, i.e. rt6_qualify_for_ecmp() returns
-true. The issue is that this route was never added to the
-fib6_siblings list.
+Access to the string char * must be protected by the pwr_lock mutex. The
+string is passed into cs_dsp_debugfs_string_read() as a pointer to the
+char * so that the mutex lock can also be factored out into
+cs_dsp_debugfs_string_read().
 
-This leads to a mismatch between the following counts:
+wmfw_file_name and bin_file_name members of struct cs_dsp have been
+changed to const char *. It makes for a better API to pass a const
+pointer into cs_dsp_debugfs_string_read().
 
-- The sibling count computed by iterating fib6_next chain, which
-  includes the newly ECMP-eligible route
-
-- The actual siblings in fib6_siblings list, which does not include
-  that route
-
-When a subsequent ECMP route is added, fib6_add_rt2node() hits
-BUG_ON(sibling->fib6_nsiblings != rt->fib6_nsiblings) because the
-counts don't match.
-
-Fix this by only clearing RTF_ADDRCONF when the existing route does
-not have a gateway. Routes without a gateway cannot qualify for ECMP
-anyway (rt6_qualify_for_ecmp() requires fib_nh_gw_family), so clearing
-RTF_ADDRCONF on them is safe and matches the original intent of the
-commit.
-
-[0]:
-kernel BUG at net/ipv6/ip6_fib.c:1217!
-Oops: invalid opcode: 0000 [#1] SMP KASAN PTI
-CPU: 0 UID: 0 PID: 6010 Comm: syz.0.17 Not tainted syzkaller #0 PREEMPT(full)
-Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 10/25/2025
-RIP: 0010:fib6_add_rt2node+0x3433/0x3470 net/ipv6/ip6_fib.c:1217
-[...]
-Call Trace:
- <TASK>
- fib6_add+0x8da/0x18a0 net/ipv6/ip6_fib.c:1532
- __ip6_ins_rt net/ipv6/route.c:1351 [inline]
- ip6_route_add+0xde/0x1b0 net/ipv6/route.c:3946
- ipv6_route_ioctl+0x35c/0x480 net/ipv6/route.c:4571
- inet6_ioctl+0x219/0x280 net/ipv6/af_inet6.c:577
- sock_do_ioctl+0xdc/0x300 net/socket.c:1245
- sock_ioctl+0x576/0x790 net/socket.c:1366
- vfs_ioctl fs/ioctl.c:51 [inline]
- __do_sys_ioctl fs/ioctl.c:597 [inline]
- __se_sys_ioctl+0xfc/0x170 fs/ioctl.c:583
- do_syscall_x64 arch/x86/entry/syscall_64.c:63 [inline]
- do_syscall_64+0xfa/0xf80 arch/x86/entry/syscall_64.c:94
- entry_SYSCALL_64_after_hwframe+0x77/0x7f
-
-Fixes: f72514b3c569 ("ipv6: clear RA flags when adding a static route")
-Reported-by: syzbot+cb809def1baaac68ab92@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=cb809def1baaac68ab92
-Tested-by: syzbot+cb809def1baaac68ab92@syzkaller.appspotmail.com
-Signed-off-by: Shigeru Yoshida <syoshida@redhat.com>
-Reviewed-by: Fernando Fernandez Mancera <fmancera@suse.de>
-Link: https://patch.msgid.link/20260204095837.1285552-1-syoshida@redhat.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Richard Fitzgerald <rf@opensource.cirrus.com>
+Link: https://patch.msgid.link/20251120130640.1169780-2-rf@opensource.cirrus.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Stable-dep-of: 10db9f6899dd ("firmware: cs_dsp: rate-limit log messages in KUnit builds")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv6/ip6_fib.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/firmware/cirrus/cs_dsp.c       | 45 ++++++++++++--------------
+ include/linux/firmware/cirrus/cs_dsp.h |  4 +--
+ 2 files changed, 23 insertions(+), 26 deletions(-)
 
-diff --git a/net/ipv6/ip6_fib.c b/net/ipv6/ip6_fib.c
-index 2111af022d946..c6439e30e892a 100644
---- a/net/ipv6/ip6_fib.c
-+++ b/net/ipv6/ip6_fib.c
-@@ -1138,7 +1138,8 @@ static int fib6_add_rt2node(struct fib6_node *fn, struct fib6_info *rt,
- 					fib6_set_expires(iter, rt->expires);
- 					fib6_add_gc_list(iter);
- 				}
--				if (!(rt->fib6_flags & (RTF_ADDRCONF | RTF_PREFIX_RT))) {
-+				if (!(rt->fib6_flags & (RTF_ADDRCONF | RTF_PREFIX_RT)) &&
-+				    !iter->fib6_nh->fib_nh_gw_family) {
- 					iter->fib6_flags &= ~RTF_ADDRCONF;
- 					iter->fib6_flags &= ~RTF_PREFIX_RT;
- 				}
+diff --git a/drivers/firmware/cirrus/cs_dsp.c b/drivers/firmware/cirrus/cs_dsp.c
+index f51047d8ea64f..58e41751dbc19 100644
+--- a/drivers/firmware/cirrus/cs_dsp.c
++++ b/drivers/firmware/cirrus/cs_dsp.c
+@@ -9,6 +9,7 @@
+  *                         Cirrus Logic International Semiconductor Ltd.
+  */
+ 
++#include <linux/cleanup.h>
+ #include <linux/ctype.h>
+ #include <linux/debugfs.h>
+ #include <linux/delay.h>
+@@ -410,24 +411,30 @@ static void cs_dsp_debugfs_clear(struct cs_dsp *dsp)
+ 	dsp->bin_file_name = NULL;
+ }
+ 
++static ssize_t cs_dsp_debugfs_string_read(struct cs_dsp *dsp,
++					  char __user *user_buf,
++					  size_t count, loff_t *ppos,
++					  const char **pstr)
++{
++	const char *str;
++
++	scoped_guard(mutex, &dsp->pwr_lock) {
++		str = *pstr;
++		if (!str)
++			return 0;
++
++		return simple_read_from_buffer(user_buf, count, ppos, str, strlen(str));
++	}
++}
++
+ static ssize_t cs_dsp_debugfs_wmfw_read(struct file *file,
+ 					char __user *user_buf,
+ 					size_t count, loff_t *ppos)
+ {
+ 	struct cs_dsp *dsp = file->private_data;
+-	ssize_t ret;
+ 
+-	mutex_lock(&dsp->pwr_lock);
+-
+-	if (!dsp->wmfw_file_name || !dsp->booted)
+-		ret = 0;
+-	else
+-		ret = simple_read_from_buffer(user_buf, count, ppos,
+-					      dsp->wmfw_file_name,
+-					      strlen(dsp->wmfw_file_name));
+-
+-	mutex_unlock(&dsp->pwr_lock);
+-	return ret;
++	return cs_dsp_debugfs_string_read(dsp, user_buf, count, ppos,
++					  &dsp->wmfw_file_name);
+ }
+ 
+ static ssize_t cs_dsp_debugfs_bin_read(struct file *file,
+@@ -435,19 +442,9 @@ static ssize_t cs_dsp_debugfs_bin_read(struct file *file,
+ 				       size_t count, loff_t *ppos)
+ {
+ 	struct cs_dsp *dsp = file->private_data;
+-	ssize_t ret;
+-
+-	mutex_lock(&dsp->pwr_lock);
+ 
+-	if (!dsp->bin_file_name || !dsp->booted)
+-		ret = 0;
+-	else
+-		ret = simple_read_from_buffer(user_buf, count, ppos,
+-					      dsp->bin_file_name,
+-					      strlen(dsp->bin_file_name));
+-
+-	mutex_unlock(&dsp->pwr_lock);
+-	return ret;
++	return cs_dsp_debugfs_string_read(dsp, user_buf, count, ppos,
++					  &dsp->bin_file_name);
+ }
+ 
+ static const struct {
+diff --git a/include/linux/firmware/cirrus/cs_dsp.h b/include/linux/firmware/cirrus/cs_dsp.h
+index a66eb7624730c..69959032f8f51 100644
+--- a/include/linux/firmware/cirrus/cs_dsp.h
++++ b/include/linux/firmware/cirrus/cs_dsp.h
+@@ -188,8 +188,8 @@ struct cs_dsp {
+ 
+ #ifdef CONFIG_DEBUG_FS
+ 	struct dentry *debugfs_root;
+-	char *wmfw_file_name;
+-	char *bin_file_name;
++	const char *wmfw_file_name;
++	const char *bin_file_name;
+ #endif
+ };
+ 
 -- 
 2.51.0
 
