@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3BB92D738A;
-	Mon,  9 Feb 2026 14:45:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25F4330BF79;
+	Mon,  9 Feb 2026 14:45:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770648314; cv=none; b=mJsmqyei+IzwiNqp5bY8FDKIy1zzowCxuPPN0sEmCHRniQgYr9X0tom/QFmRLOGDoxqK9H+UClroHxXRpXEZUBqHfaonxZqoEIsbRsb0Tn4piaE+H5NbRWiRjowwSmeBi7JW1el69Nx+BHa/0cGem+Y9BwnkibN8wJaDk0M5ahw=
+	t=1770648318; cv=none; b=lhwYXlsV2CuyWPa87GF6z9wwGlhhdU/RG3+sErVM6XuO0gMMmD17+p/x+aTMuX3FmiUfAXM3mgbX6U+pFchPS8BEvjpf5QplP6tIroQwMSPBe3Mn+7Q4VHECE/vb1WEXaYmAwL4l+xZuu9MWoIoVlWNYfa3uyEvvxe4RYFJNwlM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770648314; c=relaxed/simple;
-	bh=917xZQN3kZohW9mTQZ3yY1wOOrBckQe0IiAp4ggPgME=;
+	s=arc-20240116; t=1770648318; c=relaxed/simple;
+	bh=6QQvXM12SctIbaRcjRwi+yHzT13vCb8VSXlwHe8aN1o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kFSKZS1Zp9j1Y7H9wh657gsimt+otKOQf36fjCjB5rh2il+ve+thF9dYeY6/uUm711O24tpRJFrASC2jXtRJQPlVItx8cmkTR9h/X/vuGdf9vRsWYDsp5C1V+iDBMdimhiOxcjcMYW+sXfFtQolk5hX8hK6apSTGq/Y+eYUCQjY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=krAA+u07; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KEtJrp0/vKeXLkAvJNx48jrNKbqc8yvonsw89UfP/8sfSJgZ85LN85hnYWDDqX+2ZMMUyDHWNIlycHVAk/qUDhJH+bzYecIEvgK+nIZjgBWqpX9CaXO+oVbuFyYGJ66sNNRyKQN8WpL8jDjrE1b4memHpcOI4QIk2gnyRgeQx+E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LQTeuIrx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="krAA+u07"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15D89C16AAE;
-	Mon,  9 Feb 2026 14:45:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LQTeuIrx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42FBFC116C6;
+	Mon,  9 Feb 2026 14:45:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770648314;
-	bh=917xZQN3kZohW9mTQZ3yY1wOOrBckQe0IiAp4ggPgME=;
+	s=korg; t=1770648317;
+	bh=6QQvXM12SctIbaRcjRwi+yHzT13vCb8VSXlwHe8aN1o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=krAA+u07nJkrcZYFORxElfwIUZIofRd44NSZwDw0KAfFozWMFJQP/g3xLpQe6fiMg
-	 lXQVdF8oT6Q4RgZIcw1/+OieyWxTCPw9KFAfFffqjbbuHVumcekyoEeSPsy0ZynrXY
-	 acEzbjN16EDP152wRpfKjIIBTDKpO9TGyI1lEELg=
+	b=LQTeuIrxw5KnpWmQM3uXITI9R5y2nFGDq9XyuWabVNBbYGRV9tgkAUOeDDppOHbcR
+	 tbriduHaF5diXeykDOUj6p95iuF2DGT9mM5Tjd5d/MhhaTWgiALWMlW01KKTzAp7W8
+	 ukZ6NBD1dMUVKobJ3w3nyCRQDB6CeckYlRTaDZdo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tim Guttzeit <t.guttzeit@tuxedocomputers.com>,
-	Werner Sembach <wse@tuxedocomputers.com>,
-	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 6.1 69/69] ALSA: hda/realtek: Really fix headset mic for TongFang X6AR55xU.
-Date: Mon,  9 Feb 2026 15:24:37 +0100
-Message-ID: <20260209142304.409209439@linuxfoundation.org>
+	Dimitrios Katsaros <patcherwork@gmail.com>,
+	Sascha Hauer <s.hauer@pengutronix.de>,
+	Mark Brown <broonie@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 39/69] ASoC: tlv320adcx140: Propagate error codes during probe
+Date: Mon,  9 Feb 2026 15:24:07 +0100
+Message-ID: <20260209142303.331325691@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260209142301.913348974@linuxfoundation.org>
 References: <20260209142301.913348974@linuxfoundation.org>
@@ -51,45 +52,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Werner Sembach <wse@tuxedocomputers.com>
+From: Dimitrios Katsaros <patcherwork@gmail.com>
 
-commit 1aaedafb21f38cb872d44f7608b4828a1e14e795 upstream.
+[ Upstream commit d89aad92cfd15edbd704746f44c98fe687f9366f ]
 
-Add a PCI quirk to enable microphone detection on the headphone jack of
-TongFang X6AR55xU devices.
+When scanning for the reset pin, we could get an -EPROBE_DEFER.
+The driver would assume that no reset pin had been defined,
+which would mean that the chip would never be powered.
 
-The former quirk entry did not acomplish this and is removed.
+Now we both respect any error we get from devm_gpiod_get_optional.
+We also now properly report the missing GPIO definition when
+'gpio_reset' is NULL.
 
-Fixes: b48fe9af1e60 ("ALSA: hda/realtek: Fix headset mic for TongFang X6AR55xU")
-Signed-off-by: Tim Guttzeit <t.guttzeit@tuxedocomputers.com>
-Signed-off-by: Werner Sembach <wse@tuxedocomputers.com>
-Link: https://patch.msgid.link/20260123221233.28273-1-wse@tuxedocomputers.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Dimitrios Katsaros <patcherwork@gmail.com>
+Signed-off-by: Sascha Hauer <s.hauer@pengutronix.de>
+Link: https://patch.msgid.link/20260113-sound-soc-codecs-tvl320adcx140-v4-3-8f7ecec525c8@pengutronix.de
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/pci/hda/patch_realtek.c |    5 +----
- 1 file changed, 1 insertion(+), 4 deletions(-)
+ sound/soc/codecs/tlv320adcx140.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/sound/pci/hda/patch_realtek.c
-+++ b/sound/pci/hda/patch_realtek.c
-@@ -10444,6 +10444,7 @@ static const struct snd_pci_quirk alc269
- 	SND_PCI_QUIRK(0x1d05, 0x1409, "TongFang GMxIXxx", ALC2XX_FIXUP_HEADSET_MIC),
- 	SND_PCI_QUIRK(0x1d05, 0x300f, "TongFang X6AR5xxY", ALC2XX_FIXUP_HEADSET_MIC),
- 	SND_PCI_QUIRK(0x1d05, 0x3019, "TongFang X6FR5xxY", ALC2XX_FIXUP_HEADSET_MIC),
-+	SND_PCI_QUIRK(0x1d05, 0x3031, "TongFang X6AR55xU", ALC2XX_FIXUP_HEADSET_MIC),
- 	SND_PCI_QUIRK(0x1d17, 0x3288, "Haier Boyue G42", ALC269VC_FIXUP_ACER_VCOPPERBOX_PINS),
- 	SND_PCI_QUIRK(0x1d72, 0x1602, "RedmiBook", ALC255_FIXUP_XIAOMI_HEADSET_MIC),
- 	SND_PCI_QUIRK(0x1d72, 0x1701, "XiaomiNotebook Pro", ALC298_FIXUP_DELL1_MIC_NO_PRESENCE),
-@@ -10905,10 +10906,6 @@ static const struct snd_hda_pin_quirk al
- 		{0x12, 0x90a60140},
- 		{0x19, 0x04a11030},
- 		{0x21, 0x04211020}),
--	SND_HDA_PIN_QUIRK(0x10ec0274, 0x1d05, "TongFang", ALC274_FIXUP_HP_HEADSET_MIC,
--		{0x17, 0x90170110},
--		{0x19, 0x03a11030},
--		{0x21, 0x03211020}),
- 	SND_HDA_PIN_QUIRK(0x10ec0282, 0x1025, "Acer", ALC282_FIXUP_ACER_DISABLE_LINEOUT,
- 		ALC282_STANDARD_PINS,
- 		{0x12, 0x90a609c0},
+diff --git a/sound/soc/codecs/tlv320adcx140.c b/sound/soc/codecs/tlv320adcx140.c
+index 67eef894d0c2d..0323d6341c9ae 100644
+--- a/sound/soc/codecs/tlv320adcx140.c
++++ b/sound/soc/codecs/tlv320adcx140.c
+@@ -1157,6 +1157,9 @@ static int adcx140_i2c_probe(struct i2c_client *i2c)
+ 	adcx140->gpio_reset = devm_gpiod_get_optional(adcx140->dev,
+ 						      "reset", GPIOD_OUT_LOW);
+ 	if (IS_ERR(adcx140->gpio_reset))
++		return dev_err_probe(&i2c->dev, PTR_ERR(adcx140->gpio_reset),
++				     "Failed to get Reset GPIO\n");
++	if (!adcx140->gpio_reset)
+ 		dev_info(&i2c->dev, "Reset GPIO not defined\n");
+ 
+ 	adcx140->supply_areg = devm_regulator_get_optional(adcx140->dev,
+-- 
+2.51.0
+
 
 
