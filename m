@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56C942750E6;
-	Mon,  9 Feb 2026 14:55:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 880B83033D2;
+	Mon,  9 Feb 2026 14:55:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770648944; cv=none; b=Av8h9HtMnFAWWtz/tehOOXJUBALv+wuANTXWCXiJM+gbdaIkgruQLKNneX4n5QiTxjLu8Ue5Q5rGJQZ5IYOHT7HKarXNcXSKaJHzV7X8zvm4ZJX3RtarytHuocaMVQTC/ffLRJiv9J8zlkk+jE8i9EKVC+XFlqs4OdWxlminq0Y=
+	t=1770648947; cv=none; b=bhQhg8aGFvbsP7R8N+vyR9Qk5q1wtSO9W2ElatbIQ1FGJVoAfsFZ77e1H4EyqVbuQHAxlLclsrqLzLPHxwMZl+ejy5Nm0BwaIOxPaZO/owMKBdjyGhpc94NUMm21MRVGA4e0yZEaRog7wqvg2zdiBZ9G4yDFXHo/c+LWBETI2GA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770648944; c=relaxed/simple;
-	bh=OMH3BbXo8v1s/gAQb/TIfAUVv7ugjE+H0uO89hRGVnw=;
+	s=arc-20240116; t=1770648947; c=relaxed/simple;
+	bh=Im2ScG66KNKrMWAR76NUnHpZAMcl22c9VR3u+siaoes=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cUKy6b/uPwhF4uGIH526Y7ZUroL/9RiAaq6EcXN/APM7Sy6R6Ujf9x5MXP1FYLXoDeTpF/M+eGpssyny8mfpwNqnpHMuZPrZxdSuQM1eg3J3yXvxAKVzAN+CJT5jbq6ncJ4vY5jyRri4KJvKWHCB0N9A6QoyWXKdqeqPQW/bfWI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Pted09/w; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Sr+oT76v7n0/n2IUcRuOT1qhtd8eecBdlUz56S1UMGp/aYjv1a/7F3EYEnxxG18MlaFsVcotFElbBA9zwMdrRb6DV/ynEIDqVfNrXxX/hUtCRp1gfx5bGwftebyHIhpRXsu3IpEFTYIFsnybjgDsFTq/IqwTMhK8FeWipXL72iw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QcNKtXEI; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Pted09/w"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B8A97C16AAE;
-	Mon,  9 Feb 2026 14:55:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QcNKtXEI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2ECCC116C6;
+	Mon,  9 Feb 2026 14:55:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770648944;
-	bh=OMH3BbXo8v1s/gAQb/TIfAUVv7ugjE+H0uO89hRGVnw=;
+	s=korg; t=1770648947;
+	bh=Im2ScG66KNKrMWAR76NUnHpZAMcl22c9VR3u+siaoes=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Pted09/wqKaBPWnqZRX/gT57Ge+G+iq/yrJZIJD5OdTH9/3m1SVE/M9M2kqf6n0CR
-	 udRiwR6ih7FD2Ol9E3LfT6QWGp1de808e29JHWsVuUqi4o0duVcl8ormUiTnUZI70i
-	 19ntTbRDs1fdtygj/m28uOj4JDi0aj7yNwr7hYxw=
+	b=QcNKtXEIfF0kNFr4d7/Y3ga5sFeQ7s9Mhdrtn7vWTOD2Wb8dmLCUnKKaHq6DGYTTh
+	 mTonQic4qkziOm68RAKgghZ5E6y+uo8hHgUVkd5WO++gLEKxgpb1b3cgqLnK7kJZLb
+	 O1aikibj4FV297JM7GckzO+y7CynIkqZ/8j6k7KU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	ZhangGuoDong <zhangguodong@kylinos.cn>,
-	ChenXiaoSong <chenxiaosong@kylinos.cn>,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Steve French <stfrench@microsoft.com>,
+	Benjamin Tissoires <benjamin.tissoires@redhat.com>,
+	DaytonCL <artem749507@gmail.com>,
+	Benjamin Tissoires <bentiss@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 28/75] smb/server: call ksmbd_session_rpc_close() on error path in create_smb2_pipe()
-Date: Mon,  9 Feb 2026 15:24:25 +0100
-Message-ID: <20260209142302.860995029@linuxfoundation.org>
+Subject: [PATCH 5.15 29/75] HID: multitouch: add MT_QUIRK_STICKY_FINGERS to MT_CLS_VTL
+Date: Mon,  9 Feb 2026 15:24:26 +0100
+Message-ID: <20260209142302.897119734@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260209142301.830618238@linuxfoundation.org>
 References: <20260209142301.830618238@linuxfoundation.org>
@@ -53,44 +52,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: ZhangGuoDong <zhangguodong@kylinos.cn>
+From: DaytonCL <artem749507@gmail.com>
 
-[ Upstream commit 7c28f8eef5ac5312794d8a52918076dcd787e53b ]
+[ Upstream commit ff3f234ff1dcd6d626a989151db067a1b7f0f215 ]
 
-When ksmbd_iov_pin_rsp() fails, we should call ksmbd_session_rpc_close().
+Some VTL-class touchpads (e.g. TOPS0102:00 35CC:0104) intermittently
+fail to release a finger contact. A previous slot remains logically
+active, accompanied by stale BTN_TOOL_DOUBLETAP state, causing
+gestures to stay latched and resulting in stuck two-finger
+scrolling and false right-clicks.
 
-Signed-off-by: ZhangGuoDong <zhangguodong@kylinos.cn>
-Signed-off-by: ChenXiaoSong <chenxiaosong@kylinos.cn>
-Acked-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Apply MT_QUIRK_STICKY_FINGERS to handle the unreleased contact correctly.
+
+Link: https://gitlab.freedesktop.org/libinput/libinput/-/issues/1225
+Suggested-by: Benjamin Tissoires <benjamin.tissoires@redhat.com>
+Tested-by: DaytonCL <artem749507@gmail.com>
+Signed-off-by: DaytonCL <artem749507@gmail.com>
+Signed-off-by: Benjamin Tissoires <bentiss@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ksmbd/smb2pdu.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/hid/hid-multitouch.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/fs/ksmbd/smb2pdu.c b/fs/ksmbd/smb2pdu.c
-index b4a1aa1bc960c..b5ff4c855f9cb 100644
---- a/fs/ksmbd/smb2pdu.c
-+++ b/fs/ksmbd/smb2pdu.c
-@@ -2263,7 +2263,7 @@ static noinline int create_smb2_pipe(struct ksmbd_work *work)
- {
- 	struct smb2_create_rsp *rsp;
- 	struct smb2_create_req *req;
--	int id;
-+	int id = -1;
- 	int err;
- 	char *name;
- 
-@@ -2320,6 +2320,9 @@ static noinline int create_smb2_pipe(struct ksmbd_work *work)
- 		break;
- 	}
- 
-+	if (id >= 0)
-+		ksmbd_session_rpc_close(work->sess, id);
-+
- 	if (!IS_ERR(name))
- 		kfree(name);
- 
+diff --git a/drivers/hid/hid-multitouch.c b/drivers/hid/hid-multitouch.c
+index 5dec035c5c1d3..5c40790b977ee 100644
+--- a/drivers/hid/hid-multitouch.c
++++ b/drivers/hid/hid-multitouch.c
+@@ -379,6 +379,7 @@ static const struct mt_class mt_classes[] = {
+ 	{ .name = MT_CLS_VTL,
+ 		.quirks = MT_QUIRK_ALWAYS_VALID |
+ 			MT_QUIRK_CONTACT_CNT_ACCURATE |
++			MT_QUIRK_STICKY_FINGERS |
+ 			MT_QUIRK_FORCE_GET_FEATURE,
+ 	},
+ 	{ .name = MT_CLS_GOOGLE,
 -- 
 2.51.0
 
