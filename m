@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49FD43033D2;
-	Mon,  9 Feb 2026 14:55:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D89C3033D2;
+	Mon,  9 Feb 2026 14:55:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770648931; cv=none; b=BMRgwh2uas6RgblhnEsip0k5im4go2sg6nwvtSQuVmz16jc3YUI+iaoem9hSs2BW09aDi8iomc2WZtweZuDYgR+T007JBpctrN8C2EGiGB1pQnsXfIlTb5bPgoDDB6gp8nWIMKHokFVyIEt73OE/JP39k5dOgM6TuGT0kVei6H4=
+	t=1770648934; cv=none; b=gYCmJ5pn50XykSJsa4aKcciSTgJM+BSxIbRmJt0r3Alsft+8aoR3TFw5TCOlCiWBW1Xm0V/Y8VeoHnCXUEbl3qpziZCZ7FYVaSFQfJ6A3bOVV5ugUs2itN8M8KUyu/I9urW74quOdVZ+Dn/SVCHChPOaE2H/q55WqsNHTxwDSSI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770648931; c=relaxed/simple;
-	bh=ErxkjptpVbJYG9CPrZIya3cbs9giXLJJ9HXp+sS8Fw0=;
+	s=arc-20240116; t=1770648934; c=relaxed/simple;
+	bh=2G6F38IwnfjCO7Q/nTdod5R+g41RCtacPV9GvVbcPss=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LM67yRaD7Ao9VsTZ9/z/gdAqmYJ+BxSwAfDAH1lziAgJEYceK/ys3jXwvXSTz1XBZK+z1gmWHXiiSPDNjVnSeEx8pjv+j4y8lDUN3BBjMOiiG+Dqkq2kZYs/NsN50hv/DhPp33fr+jj8l+iY96RDYgspNPw3DGF/JXGPlWypwYo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eT/ilJ7q; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Kq+xGxR9Q/0LJS8HXUihjclXt7buF09np/3x+R2IFM96mvCjVIZPEvgaqEaAAWMmssrwJme26eMPEV5SeiIOHNBVwfkVndpIcEspN3EGfYk3W08BGZvLrxVSfM3R5vH/gqBx06aYZ8dDpn8oo0yfKgJFw5paqTsexzshVC53jdw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GWNtm6mA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eT/ilJ7q"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5694FC116C6;
-	Mon,  9 Feb 2026 14:55:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GWNtm6mA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC241C116C6;
+	Mon,  9 Feb 2026 14:55:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770648930;
-	bh=ErxkjptpVbJYG9CPrZIya3cbs9giXLJJ9HXp+sS8Fw0=;
+	s=korg; t=1770648934;
+	bh=2G6F38IwnfjCO7Q/nTdod5R+g41RCtacPV9GvVbcPss=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eT/ilJ7qyHNDS9L7cFt1VkxUl8lxLOXmgzKSKflqCBVYwEsbMKK810JUdx9OO36h0
-	 NTS+FS3gCAqyy0N6Yh0EIEMdqensw4F80rtgSaoaWclm7wTgqx3HAEN1GV7MPtgdwC
-	 q8US0fX9UyyKggXzIG2zAbbNizfxb1q+qayVrEbk=
+	b=GWNtm6mAC7zMnaFgnhw//S6yZ7rVVsQ+K21Lw6Zk/VRb4Q7HC88rWb8ZfxYVnzB9t
+	 /evZghxwXdRI5eTeA3EOOpwRvxQHOd3vaWyy91n8foL0CKEXgvm7OrcvPmNBtgSvQ5
+	 EDGgdjF+IDqMepY3KswTJkrHdNN3onxC50FPyBYE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Maurizio Lombardi <mlombard@redhat.com>,
-	Keith Busch <kbusch@kernel.org>,
 	Sagi Grimberg <sagi@grimberg.me>,
-	John Meneghini <jmeneghi@redhat.com>,
 	Christoph Hellwig <hch@lst.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 56/75] nvmet-tcp: fix memory leak when performing a controller reset
-Date: Mon,  9 Feb 2026 15:24:53 +0100
-Message-ID: <20260209142303.861450978@linuxfoundation.org>
+Subject: [PATCH 5.15 57/75] nvmet-tcp: fix regression in data_digest calculation
+Date: Mon,  9 Feb 2026 15:24:54 +0100
+Message-ID: <20260209142303.896431549@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260209142301.830618238@linuxfoundation.org>
 References: <20260209142301.830618238@linuxfoundation.org>
@@ -54,44 +51,85 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Maurizio Lombardi <mlombard@redhat.com>
+From: Sagi Grimberg <sagi@grimberg.me>
 
-[ Upstream commit af21250bb503a02e705b461886321e394b300524 ]
+[ Upstream commit ed0691cf55140ce0f3fb100225645d902cce904b ]
 
-If a reset controller is executed while the initiator
-is performing some I/O the driver may leak the memory allocated
-for the commands' iovec.
+Data digest calculation iterates over command mapped iovec. However
+since commit bac04454ef9f we unmap the iovec before we handle the data
+digest, and since commit 69b85e1f1d1d we clear nr_mapped when we unmap
+the iov.
 
-Make sure that nvmet_tcp_uninit_data_in_cmds() releases
-all the memory.
+Instead of open-coding the command iov traversal, simply call
+crypto_ahash_digest with the command sg that is already allocated (we
+already do that for the send path). Rename nvmet_tcp_send_ddgst to
+nvmet_tcp_calc_ddgst and call it from send and recv paths.
 
-Signed-off-by: Maurizio Lombardi <mlombard@redhat.com>
-Reviewed-by: Keith Busch <kbusch@kernel.org>
-Reviewed-by: Sagi Grimberg <sagi@grimberg.me>
-Reviewed-by: John Meneghini <jmeneghi@redhat.com>
+Fixes: 69b85e1f1d1d ("nvmet-tcp: add an helper to free the cmd buffers")
+Fixes: bac04454ef9f ("nvmet-tcp: fix kmap leak when data digest in use")
+Signed-off-by: Sagi Grimberg <sagi@grimberg.me>
 Signed-off-by: Christoph Hellwig <hch@lst.de>
 Stable-dep-of: 52a0a9854934 ("nvmet-tcp: add bounds checks in nvmet_tcp_build_pdu_iovec")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/target/tcp.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/nvme/target/tcp.c | 23 +++--------------------
+ 1 file changed, 3 insertions(+), 20 deletions(-)
 
 diff --git a/drivers/nvme/target/tcp.c b/drivers/nvme/target/tcp.c
-index 7eb4d06f12294..bf3585652c681 100644
+index bf3585652c681..3b32f1e9c18c6 100644
 --- a/drivers/nvme/target/tcp.c
 +++ b/drivers/nvme/target/tcp.c
-@@ -1473,7 +1473,10 @@ static void nvmet_tcp_uninit_data_in_cmds(struct nvmet_tcp_queue *queue)
+@@ -407,7 +407,7 @@ static int nvmet_tcp_map_data(struct nvmet_tcp_cmd *cmd)
+ 	return NVME_SC_INTERNAL;
+ }
  
- 	for (i = 0; i < queue->nr_cmds; i++, cmd++) {
- 		if (nvmet_tcp_need_data_in(cmd))
--			nvmet_tcp_finish_cmd(cmd);
-+			nvmet_req_uninit(&cmd->req);
-+
-+		nvmet_tcp_unmap_pdu_iovec(cmd);
-+		nvmet_tcp_free_cmd_buffers(cmd);
+-static void nvmet_tcp_send_ddgst(struct ahash_request *hash,
++static void nvmet_tcp_calc_ddgst(struct ahash_request *hash,
+ 		struct nvmet_tcp_cmd *cmd)
+ {
+ 	ahash_request_set_crypt(hash, cmd->req.sg,
+@@ -415,23 +415,6 @@ static void nvmet_tcp_send_ddgst(struct ahash_request *hash,
+ 	crypto_ahash_digest(hash);
+ }
+ 
+-static void nvmet_tcp_recv_ddgst(struct ahash_request *hash,
+-		struct nvmet_tcp_cmd *cmd)
+-{
+-	struct scatterlist sg;
+-	struct kvec *iov;
+-	int i;
+-
+-	crypto_ahash_init(hash);
+-	for (i = 0, iov = cmd->iov; i < cmd->nr_mapped; i++, iov++) {
+-		sg_init_one(&sg, iov->iov_base, iov->iov_len);
+-		ahash_request_set_crypt(hash, &sg, NULL, iov->iov_len);
+-		crypto_ahash_update(hash);
+-	}
+-	ahash_request_set_crypt(hash, NULL, (void *)&cmd->exp_ddgst, 0);
+-	crypto_ahash_final(hash);
+-}
+-
+ static void nvmet_setup_c2h_data_pdu(struct nvmet_tcp_cmd *cmd)
+ {
+ 	struct nvme_tcp_data_pdu *pdu = cmd->data_pdu;
+@@ -456,7 +439,7 @@ static void nvmet_setup_c2h_data_pdu(struct nvmet_tcp_cmd *cmd)
+ 
+ 	if (queue->data_digest) {
+ 		pdu->hdr.flags |= NVME_TCP_F_DDGST;
+-		nvmet_tcp_send_ddgst(queue->snd_hash, cmd);
++		nvmet_tcp_calc_ddgst(queue->snd_hash, cmd);
  	}
  
- 	if (!queue->nr_cmds && nvmet_tcp_need_data_in(&queue->connect)) {
+ 	if (cmd->queue->hdr_digest) {
+@@ -1168,7 +1151,7 @@ static void nvmet_tcp_prep_recv_ddgst(struct nvmet_tcp_cmd *cmd)
+ {
+ 	struct nvmet_tcp_queue *queue = cmd->queue;
+ 
+-	nvmet_tcp_recv_ddgst(queue->rcv_hash, cmd);
++	nvmet_tcp_calc_ddgst(queue->rcv_hash, cmd);
+ 	queue->offset = 0;
+ 	queue->left = NVME_TCP_DIGEST_LENGTH;
+ 	queue->rcv_state = NVMET_TCP_RECV_DDGST;
 -- 
 2.51.0
 
