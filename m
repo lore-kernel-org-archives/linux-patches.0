@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E5001DE8AD;
-	Mon,  9 Feb 2026 14:31:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A78A2222B2;
+	Mon,  9 Feb 2026 14:32:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770647518; cv=none; b=o0Un/9yZUaQ13+l+leiMFVOgAUzc6ovaNuptE4vUiJ04yVIBCyNrzW/2WtiZNLn3eK7TsUCdsq3bN8EbGI2Ba307ldYTXNlD3/DBHDRwTyiiW3/UUR5NLGofShRTtaP0JXbTyK2UDZGnjmOk+Px5jJKUwQy4TuyR5L/+/OnXgmc=
+	t=1770647521; cv=none; b=jyuUjHICaNBA67jYEOSX9LlKUbgdGAJSqDhjndP5ACC8QsN9Us9zEe3fxZnIxVQXSF3ZGBCm+VIFzeYiDRuDK3bvp5V1TBIp1q8F8fzns8glZ3aJUFppX+XCAuK8DBbLF0tv1W6Za81KPdT8gDQ2UUAX1VSGh5etiWObEJN8ATc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770647518; c=relaxed/simple;
-	bh=qQu60G/5QArEys7qXH6RbU2wLj0lYaAx03eXgp2yI8I=;
+	s=arc-20240116; t=1770647521; c=relaxed/simple;
+	bh=R0V81tf7cke0ClPtU+8LOVnnlOnIaTtFUiLRO02Fl/k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RnwCKbNCK+ip8bUXlPu3X1CK0DP9X5xltXd5ksX0MMMw+C4KKIoGh/qOMbF0f30IHOlSAktgFQsuRY5aLiwZ+0q7yQxYiE+IYnePZEwdPMZa3HTbiQQRB5ZBYjaF71mjLGa/Nqip6bNUsWKYtm8Ox+wgxf6kH/kmHnO+9m/+tGo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dgYmNpMJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=H4q41/lllM0gSNIwBatfqLFaBddEl9MN5zAuxXZCmd0IEZu1dH5Tjqd9NfrRcK4N1nOj5k5tc0s6F3WZNae+my6v+5DCPOPfBD23AJ8p0+A3NFAlZDoRaWoDj8hHrHaJajuwnp7jL5HUA+2sOLxH1E244qgPhduG5iiP+2HoF0Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=I5SSXfBX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dgYmNpMJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C843C116C6;
-	Mon,  9 Feb 2026 14:31:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="I5SSXfBX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC194C19423;
+	Mon,  9 Feb 2026 14:32:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770647517;
-	bh=qQu60G/5QArEys7qXH6RbU2wLj0lYaAx03eXgp2yI8I=;
+	s=korg; t=1770647521;
+	bh=R0V81tf7cke0ClPtU+8LOVnnlOnIaTtFUiLRO02Fl/k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dgYmNpMJDJufPJQCjRm4ZGYHOgUpsld5R2UvDn8RtTewDqoWAABO3ECyey5HnNGa1
-	 Yr6DU+UtxyTTKrsoQ8s/vgkDBxSvM0QU4X2WgQ23IHEvUUHw8HboBfKk5ngWWxgdiy
-	 TqmsfgTP8kMRhT/JO2c0x79A3JgaxNlEfic7seFE=
+	b=I5SSXfBXYcXpr2XSHyI8DNNEYRRSZ0sfDQRsUZksDWyO8VxAX08JxT6dJS8RTxJy9
+	 S60FG5WIOWH+aFqztVPSqpNRUQObBQBayomiz3QcBAmTw6+UQSnDpElHdJMwKP6Mex
+	 5DFe+lbMLrnyrcaVTBMLT+LqNk7+y/73hk8B5oL0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zilin Guan <zilin@seu.edu.cn>,
-	Kory Maincent <kory.maincent@bootlin.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	syzbot+6db0415d6d5c635f72cb@syzkaller.appspotmail.com,
+	Edward Adam Davis <eadavis@qq.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 122/175] net: liquidio: Initialize netdev pointer before queue setup
-Date: Mon,  9 Feb 2026 15:23:15 +0100
-Message-ID: <20260209142324.799186045@linuxfoundation.org>
+Subject: [PATCH 6.18 090/175] ALSA: usb-audio: Prevent excessive number of frames
+Date: Mon,  9 Feb 2026 15:22:43 +0100
+Message-ID: <20260209142323.669977815@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260209142320.474120190@linuxfoundation.org>
 References: <20260209142320.474120190@linuxfoundation.org>
@@ -52,96 +52,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zilin Guan <zilin@seu.edu.cn>
+From: Edward Adam Davis <eadavis@qq.com>
 
-[ Upstream commit 926ede0c85e1e57c97d64d9612455267d597bb2c ]
+[ Upstream commit ef5749ef8b307bf8717945701b1b79d036af0a15 ]
 
-In setup_nic_devices(), the netdev is allocated using alloc_etherdev_mq().
-However, the pointer to this structure is stored in oct->props[i].netdev
-only after the calls to netif_set_real_num_rx_queues() and
-netif_set_real_num_tx_queues().
+In this case, the user constructed the parameters with maxpacksize 40
+for rate 22050 / pps 1000, and packsize[0] 22 packsize[1] 23. The buffer
+size for each data URB is maxpacksize * packets, which in this example
+is 40 * 6 = 240; When the user performs a write operation to send audio
+data into the ALSA PCM playback stream, the calculated number of frames
+is packsize[0] * packets = 264, which exceeds the allocated URB buffer
+size, triggering the out-of-bounds (OOB) issue reported by syzbot [1].
 
-If either of these functions fails, setup_nic_devices() returns an error
-without freeing the allocated netdev. Since oct->props[i].netdev is still
-NULL at this point, the cleanup function liquidio_destroy_nic_device()
-will fail to find and free the netdev, resulting in a memory leak.
+Added a check for the number of single data URB frames when calculating
+the number of frames to prevent [1].
 
-Fix this by initializing oct->props[i].netdev before calling the queue
-setup functions. This ensures that the netdev is properly accessible for
-cleanup in case of errors.
+[1]
+BUG: KASAN: slab-out-of-bounds in copy_to_urb+0x261/0x460 sound/usb/pcm.c:1487
+Write of size 264 at addr ffff88804337e800 by task syz.0.17/5506
+Call Trace:
+ copy_to_urb+0x261/0x460 sound/usb/pcm.c:1487
+ prepare_playback_urb+0x953/0x13d0 sound/usb/pcm.c:1611
+ prepare_outbound_urb+0x377/0xc50 sound/usb/endpoint.c:333
 
-Compile tested only. Issue found using a prototype static analysis tool
-and code review.
-
-Fixes: c33c997346c3 ("liquidio: enhanced ethtool --set-channels feature")
-Signed-off-by: Zilin Guan <zilin@seu.edu.cn>
-Reviewed-by: Kory Maincent <kory.maincent@bootlin.com>
-Link: https://patch.msgid.link/20260128154440.278369-2-zilin@seu.edu.cn
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Reported-by: syzbot+6db0415d6d5c635f72cb@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=6db0415d6d5c635f72cb
+Tested-by: syzbot+6db0415d6d5c635f72cb@syzkaller.appspotmail.com
+Signed-off-by: Edward Adam Davis <eadavis@qq.com>
+Link: https://patch.msgid.link/tencent_9AECE6CD2C7A826D902D696C289724E8120A@qq.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../net/ethernet/cavium/liquidio/lio_main.c   | 34 +++++++++----------
- 1 file changed, 17 insertions(+), 17 deletions(-)
+ sound/usb/pcm.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/cavium/liquidio/lio_main.c b/drivers/net/ethernet/cavium/liquidio/lio_main.c
-index 8e2fcec26ea13..925512c077a0c 100644
---- a/drivers/net/ethernet/cavium/liquidio/lio_main.c
-+++ b/drivers/net/ethernet/cavium/liquidio/lio_main.c
-@@ -3515,6 +3515,23 @@ static int setup_nic_devices(struct octeon_device *octeon_dev)
- 		 */
- 		netdev->netdev_ops = &lionetdevops;
+diff --git a/sound/usb/pcm.c b/sound/usb/pcm.c
+index 54d01dfd820fa..263abb36bb2d1 100644
+--- a/sound/usb/pcm.c
++++ b/sound/usb/pcm.c
+@@ -1553,7 +1553,7 @@ static int prepare_playback_urb(struct snd_usb_substream *subs,
  
-+		lio = GET_LIO(netdev);
-+
-+		memset(lio, 0, sizeof(struct lio));
-+
-+		lio->ifidx = ifidx_or_pfnum;
-+
-+		props = &octeon_dev->props[i];
-+		props->gmxport = resp->cfg_info.linfo.gmxport;
-+		props->netdev = netdev;
-+
-+		/* Point to the  properties for octeon device to which this
-+		 * interface belongs.
-+		 */
-+		lio->oct_dev = octeon_dev;
-+		lio->octprops = props;
-+		lio->netdev = netdev;
-+
- 		retval = netif_set_real_num_rx_queues(netdev, num_oqueues);
- 		if (retval) {
- 			dev_err(&octeon_dev->pci_dev->dev,
-@@ -3531,16 +3548,6 @@ static int setup_nic_devices(struct octeon_device *octeon_dev)
- 			goto setup_nic_dev_free;
- 		}
- 
--		lio = GET_LIO(netdev);
--
--		memset(lio, 0, sizeof(struct lio));
--
--		lio->ifidx = ifidx_or_pfnum;
--
--		props = &octeon_dev->props[i];
--		props->gmxport = resp->cfg_info.linfo.gmxport;
--		props->netdev = netdev;
--
- 		lio->linfo.num_rxpciq = num_oqueues;
- 		lio->linfo.num_txpciq = num_iqueues;
- 		for (j = 0; j < num_oqueues; j++) {
-@@ -3606,13 +3613,6 @@ static int setup_nic_devices(struct octeon_device *octeon_dev)
- 		netdev->min_mtu = LIO_MIN_MTU_SIZE;
- 		netdev->max_mtu = LIO_MAX_MTU_SIZE;
- 
--		/* Point to the  properties for octeon device to which this
--		 * interface belongs.
--		 */
--		lio->oct_dev = octeon_dev;
--		lio->octprops = props;
--		lio->netdev = netdev;
--
- 		dev_dbg(&octeon_dev->pci_dev->dev,
- 			"if%d gmx: %d hw_addr: 0x%llx\n", i,
- 			lio->linfo.gmxport, CVM_CAST64(lio->linfo.hw_addr));
+ 		for (i = 0; i < ctx->packets; i++) {
+ 			counts = snd_usb_endpoint_next_packet_size(ep, ctx, i, avail);
+-			if (counts < 0)
++			if (counts < 0 || frames + counts >= ep->max_urb_frames)
+ 				break;
+ 			/* set up descriptor */
+ 			urb->iso_frame_desc[i].offset = frames * stride;
 -- 
 2.51.0
 
