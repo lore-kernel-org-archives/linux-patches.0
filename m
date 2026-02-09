@@ -1,41 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6071E1DE8AD;
-	Mon,  9 Feb 2026 14:32:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83760285060;
+	Mon,  9 Feb 2026 14:32:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770647560; cv=none; b=Ncwwzn4Be3lhuy1/xjW/fIbFD5xFwPsjCVl01584sxbacJ4gUTML7a5TMg8Ydtwt4YTXOMxGTHz70mlM6S563KkVT70ZRwE8QKH30x2fd9I8iT+KkS2a/mmLiMZjiHHtJRVgrShhmo5LKgyvnBsw35ledUs3fK8BnbVGi5qgRqs=
+	t=1770647563; cv=none; b=Vn7UJ4K7NrrjK0RTsKVQ4GgxyovOP8Wo5EtucA0rHfwe6bVluy6jAlmukMS0/yNBJ87AbZxo1GirHEQGq2Z/CK85ulVnmcgshnZk420PLrWiSZRIB/Pu+ClGWc8JWs0sW7Dhq3Qp38mo53fB8yvJuIiKgC9Pnl4g9AF69zjuomo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770647560; c=relaxed/simple;
-	bh=i1DhAwhKNbK+GqI6aVPUprt3yirxYtM2xitYHNw5sn4=;
+	s=arc-20240116; t=1770647563; c=relaxed/simple;
+	bh=WP2bIag5LYqg3polU6G0/Z1CsoETWZ1CXk//5VK+caU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dLIbZhbrwgRUcvdXXyy0eQVH9Ll56NDpbAbgyY2Egz/uNxNHb+DbGOG1HgPoTZHbuj8iU/g0TrHj3w1N7ExrCbRqqSAwz3vO2v+UDkL+BOgSRMFe75itYt/R6wIFkoC6AbwvU8EO8ro7Tbo/39lbD6XbEFWZ+d2SD8e+xMFyP/M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AVdPKsXp; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gqqSCfDeDULr177B4W0E5K7XFQHtE/FVrQv0PtQ2YSRD9nQp0ZsZ2IT1aNYBrI9u9HvsWgRodXXGwM06csCAj0/0Zr9DeMWdQSCB2YLxuGNXQgXYfmVGcj4+mPC2RWOT5j0Uod2VRIm96XdWZ57WR0tgLxVRBMA+eY09Sx1CAMs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jTnp8GlT; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AVdPKsXp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C3117C116C6;
-	Mon,  9 Feb 2026 14:32:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jTnp8GlT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EEB15C116C6;
+	Mon,  9 Feb 2026 14:32:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770647560;
-	bh=i1DhAwhKNbK+GqI6aVPUprt3yirxYtM2xitYHNw5sn4=;
+	s=korg; t=1770647563;
+	bh=WP2bIag5LYqg3polU6G0/Z1CsoETWZ1CXk//5VK+caU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AVdPKsXpFWxZIWUB3fUwTBKtxzB7CVwxQ1VDUQSc4fBwINzVvJz5mSqD/7ucUdBW5
-	 MEI32QhOYDDTZ0QDUVmeJMMxSm34a/MQ/GXqhpVc8TxKuOraDU4dINsm+s113oOnN/
-	 Xmp+VFVBMkujge3Byla6IQry85dGtuj9TvhZzLx0=
+	b=jTnp8GlTh+o4uH1m8Vw5/tJ9OxdFdQ9mQ3x98j4oJ3WEUL35PZzGLIdy8E8Ve+KLM
+	 /qjwzZ6wtRTNh5yyl37HvTLS0/lqDNLQjsgV1YX7JayP4z9sDyv9WPuG/3+zXJJhoV
+	 6Pdnk/SlShB79VjZQfrrXUqXU2x5U9X2UBj7VyXs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+1ec2f6a450f0b54af8c8@syzkaller.appspotmail.com,
-	Jiayuan Chen <jiayuan.chen@shopee.com>,
-	Jiayuan Chen <jiayuan.chen@linux.dev>,
-	Eric Dumazet <edumazet@google.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 137/175] linkwatch: use __dev_put() in callers to prevent UAF
-Date: Mon,  9 Feb 2026 15:23:30 +0100
-Message-ID: <20260209142325.437673074@linuxfoundation.org>
+Subject: [PATCH 6.18 138/175] net: rss: fix reporting RXH_XFRM_NO_CHANGE as input_xfrm for contexts
+Date: Mon,  9 Feb 2026 15:23:31 +0100
+Message-ID: <20260209142325.472490406@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260209142320.474120190@linuxfoundation.org>
 References: <20260209142320.474120190@linuxfoundation.org>
@@ -54,139 +50,85 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiayuan Chen <jiayuan.chen@shopee.com>
+From: Jakub Kicinski <kuba@kernel.org>
 
-[ Upstream commit 83b67cc9be9223183caf91826d9c194d7fb128fa ]
+[ Upstream commit 1c172febdf065375359b2b95156e476bfee30b60 ]
 
-After linkwatch_do_dev() calls __dev_put() to release the linkwatch
-reference, the device refcount may drop to 1. At this point,
-netdev_run_todo() can proceed (since linkwatch_sync_dev() sees an
-empty list and returns without blocking), wait for the refcount to
-become 1 via netdev_wait_allrefs_any(), and then free the device
-via kobject_put().
+Initializing input_xfrm to RXH_XFRM_NO_CHANGE in RSS contexts is
+problematic. I think I did this to make it clear that the context
+does not have its own settings applied. But unlike ETH_RSS_HASH_NO_CHANGE
+which is zero, RXH_XFRM_NO_CHANGE is 0xff. We need to be careful
+when reading the value back, and remember to treat 0xff as 0.
 
-This creates a use-after-free when __linkwatch_run_queue() tries to
-call netdev_unlock_ops() on the already-freed device.
+Remove the initialization and switch to storing 0. This lets us
+also remove the workaround in ethnl_rss_set(). Get side does not
+need any adjustments and context get no longer reports:
 
-Note that adding netdev_lock_ops()/netdev_unlock_ops() pair in
-netdev_run_todo() before kobject_put() would not work, because
-netdev_lock_ops() is conditional - it only locks when
-netdev_need_ops_lock() returns true. If the device doesn't require
-ops_lock, linkwatch won't hold any lock, and netdev_run_todo()
-acquiring the lock won't provide synchronization.
+  RSS input transformation:
+    symmetric-xor: on
+    symmetric-or-xor: on
+    Unknown bits in RSS input transformation: 0xfc
 
-Fix this by moving __dev_put() from linkwatch_do_dev() to its
-callers. The device reference logically pairs with de-listing the
-device, so it's reasonable for the caller that did the de-listing
-to release it. This allows placing __dev_put() after all device
-accesses are complete, preventing UAF.
+for NICs which don't support input_xfrm.
 
-The bug can be reproduced by adding mdelay(2000) after
-linkwatch_do_dev() in __linkwatch_run_queue(), then running:
+Remove the init of hfunc to ETH_RSS_HASH_NO_CHANGE while at it.
+As already mentioned this is a noop since ETH_RSS_HASH_NO_CHANGE
+is 0 and struct is zalloc'd. But as this fix exemplifies storing
+NO_CHANGE as state is fragile.
 
-  ip tuntap add mode tun name tun_test
-  ip link set tun_test up
-  ip link set tun_test carrier off
-  ip link set tun_test carrier on
-  sleep 0.5
-  ip tuntap del mode tun name tun_test
+This issue is implicitly caught by running our selftests because
+YNL in selftests errors out on unknown bits.
 
-KASAN report:
-
- ==================================================================
- BUG: KASAN: use-after-free in netdev_need_ops_lock include/net/netdev_lock.h:33 [inline]
- BUG: KASAN: use-after-free in netdev_unlock_ops include/net/netdev_lock.h:47 [inline]
- BUG: KASAN: use-after-free in __linkwatch_run_queue+0x865/0x8a0 net/core/link_watch.c:245
- Read of size 8 at addr ffff88804de5c008 by task kworker/u32:10/8123
-
- CPU: 0 UID: 0 PID: 8123 Comm: kworker/u32:10 Not tainted syzkaller #0 PREEMPT(full)
- Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS 1.16.3-debian-1.16.3-2 04/01/2014
- Workqueue: events_unbound linkwatch_event
- Call Trace:
-  <TASK>
-  __dump_stack lib/dump_stack.c:94 [inline]
-  dump_stack_lvl+0x100/0x190 lib/dump_stack.c:120
-  print_address_description mm/kasan/report.c:378 [inline]
-  print_report+0x156/0x4c9 mm/kasan/report.c:482
-  kasan_report+0xdf/0x1a0 mm/kasan/report.c:595
-  netdev_need_ops_lock include/net/netdev_lock.h:33 [inline]
-  netdev_unlock_ops include/net/netdev_lock.h:47 [inline]
-  __linkwatch_run_queue+0x865/0x8a0 net/core/link_watch.c:245
-  linkwatch_event+0x8f/0xc0 net/core/link_watch.c:304
-  process_one_work+0x9c2/0x1840 kernel/workqueue.c:3257
-  process_scheduled_works kernel/workqueue.c:3340 [inline]
-  worker_thread+0x5da/0xe40 kernel/workqueue.c:3421
-  kthread+0x3b3/0x730 kernel/kthread.c:463
-  ret_from_fork+0x754/0xaf0 arch/x86/kernel/process.c:158
-  ret_from_fork_asm+0x1a/0x30 arch/x86/entry/entry_64.S:246
-  </TASK>
- ==================================================================
-
-Fixes: 04efcee6ef8d ("net: hold instance lock during NETDEV_CHANGE")
-Reported-by: syzbot+1ec2f6a450f0b54af8c8@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/all/6824d064.a70a0220.3e9d8.001a.GAE@google.com/T/
-Signed-off-by: Jiayuan Chen <jiayuan.chen@shopee.com>
-Signed-off-by: Jiayuan Chen <jiayuan.chen@linux.dev>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Link: https://patch.msgid.link/20260201135915.393451-1-jiayuan.chen@linux.dev
+Fixes: d3e2c7bab124 ("ethtool: rss: support setting input-xfrm via Netlink")
+Link: https://patch.msgid.link/20260130190311.811129-1-kuba@kernel.org
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/link_watch.c | 20 +++++++++++++++-----
- 1 file changed, 15 insertions(+), 5 deletions(-)
+ net/ethtool/common.c | 3 ---
+ net/ethtool/rss.c    | 9 ++-------
+ 2 files changed, 2 insertions(+), 10 deletions(-)
 
-diff --git a/net/core/link_watch.c b/net/core/link_watch.c
-index 212cde35affa7..25c455c10a01c 100644
---- a/net/core/link_watch.c
-+++ b/net/core/link_watch.c
-@@ -185,10 +185,6 @@ static void linkwatch_do_dev(struct net_device *dev)
+diff --git a/net/ethtool/common.c b/net/ethtool/common.c
+index 55223ebc2a7e6..146c7eaedc5ac 100644
+--- a/net/ethtool/common.c
++++ b/net/ethtool/common.c
+@@ -854,9 +854,6 @@ ethtool_rxfh_ctx_alloc(const struct ethtool_ops *ops,
+ 	ctx->key_off = key_off;
+ 	ctx->priv_size = ops->rxfh_priv_size;
  
- 		netif_state_change(dev);
- 	}
--	/* Note: our callers are responsible for calling netdev_tracker_free().
--	 * This is the reason we use __dev_put() instead of dev_put().
--	 */
--	__dev_put(dev);
+-	ctx->hfunc = ETH_RSS_HASH_NO_CHANGE;
+-	ctx->input_xfrm = RXH_XFRM_NO_CHANGE;
+-
+ 	return ctx;
  }
  
- static void __linkwatch_run_queue(int urgent_only)
-@@ -243,6 +239,11 @@ static void __linkwatch_run_queue(int urgent_only)
- 		netdev_lock_ops(dev);
- 		linkwatch_do_dev(dev);
- 		netdev_unlock_ops(dev);
-+		/* Use __dev_put() because netdev_tracker_free() was already
-+		 * called above. Must be after netdev_unlock_ops() to prevent
-+		 * netdev_run_todo() from freeing the device while still in use.
-+		 */
-+		__dev_put(dev);
- 		do_dev--;
- 		spin_lock_irq(&lweventlist_lock);
- 	}
-@@ -278,8 +279,13 @@ void __linkwatch_sync_dev(struct net_device *dev)
+diff --git a/net/ethtool/rss.c b/net/ethtool/rss.c
+index 4dced53be4b3b..da5934cceb075 100644
+--- a/net/ethtool/rss.c
++++ b/net/ethtool/rss.c
+@@ -824,8 +824,8 @@ rss_set_ctx_update(struct ethtool_rxfh_context *ctx, struct nlattr **tb,
+ static int
+ ethnl_rss_set(struct ethnl_req_info *req_info, struct genl_info *info)
  {
- 	netdev_ops_assert_locked(dev);
+-	bool indir_reset = false, indir_mod, xfrm_sym = false;
+ 	struct rss_req_info *request = RSS_REQINFO(req_info);
++	bool indir_reset = false, indir_mod, xfrm_sym;
+ 	struct ethtool_rxfh_context *ctx = NULL;
+ 	struct net_device *dev = req_info->dev;
+ 	bool mod = false, fields_mod = false;
+@@ -860,12 +860,7 @@ ethnl_rss_set(struct ethnl_req_info *req_info, struct genl_info *info)
  
--	if (linkwatch_clean_dev(dev))
-+	if (linkwatch_clean_dev(dev)) {
- 		linkwatch_do_dev(dev);
-+		/* Use __dev_put() because netdev_tracker_free() was already
-+		 * called inside linkwatch_clean_dev().
-+		 */
-+		__dev_put(dev);
-+	}
- }
- 
- void linkwatch_sync_dev(struct net_device *dev)
-@@ -288,6 +294,10 @@ void linkwatch_sync_dev(struct net_device *dev)
- 		netdev_lock_ops(dev);
- 		linkwatch_do_dev(dev);
- 		netdev_unlock_ops(dev);
-+		/* Use __dev_put() because netdev_tracker_free() was already
-+		 * called inside linkwatch_clean_dev().
-+		 */
-+		__dev_put(dev);
- 	}
- }
+ 	rxfh.input_xfrm = data.input_xfrm;
+ 	ethnl_update_u8(&rxfh.input_xfrm, tb[ETHTOOL_A_RSS_INPUT_XFRM], &mod);
+-	/* For drivers which don't support input_xfrm it will be set to 0xff
+-	 * in the RSS context info. In all other case input_xfrm != 0 means
+-	 * symmetric hashing is requested.
+-	 */
+-	if (!request->rss_context || ops->rxfh_per_ctx_key)
+-		xfrm_sym = rxfh.input_xfrm || data.input_xfrm;
++	xfrm_sym = rxfh.input_xfrm || data.input_xfrm;
+ 	if (rxfh.input_xfrm == data.input_xfrm)
+ 		rxfh.input_xfrm = RXH_XFRM_NO_CHANGE;
  
 -- 
 2.51.0
