@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36CD128725B;
-	Mon,  9 Feb 2026 14:49:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9110D2690EC;
+	Mon,  9 Feb 2026 14:50:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770648598; cv=none; b=HrYCeT8jK6v2wkq0MMuaaLDhoCF5w8EGk3DOq0KhbhQBtvVaYHXiEFC0wZvGqcVaaGfKNc9xT/RCrJ9SPQTbqpaP7Yf457HNfXsVGqSnWdrDjTNXs5RGCc4XwIt3HsMcrAUvw+0hoV5z/UER0nrU8lcrB4D7m6t9cVcOpf0khLE=
+	t=1770648601; cv=none; b=DYM8WaSJ55Qkwtpp4ZQBGn04PFDe5vPyKUx6bDvfH0UCUwbsWAgPGCjLUyr3tiQ8NtioP8LY8CHui36SGn6IljIiTb03QEDlkiKxOlaVOYbYLWHTee0ouPmjaIn1rqMTTGWlzeDcD+oWDAy8hQIKSHT1I1/kTwz+EnuoYJKdK+4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770648598; c=relaxed/simple;
-	bh=Y2brvEyrDBaJjJOwQmpuMIhEccPzF4e1ttKpxZJ65rY=;
+	s=arc-20240116; t=1770648601; c=relaxed/simple;
+	bh=9YADlvufmrrPKIkpZkR03A/LSyVlI0FOCK8+wtuh34s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=lJqMvvEwGtvZ7u+FpVMs1W/9Sv8Kj+eybMc+WyPZkAjTiwG2nqw/xRFLtl0sNy7yLq8eP3Fwvde0lXA9z2kQz8OkfYg/0aYGugaVHJBho1OgNXjGX5RkgHd+iAdsQGdjHU/P1uV18213yUEzBlddxz0yC8tl5GFPnp9IUeRILa8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QN3r+ell; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qdNzTNjEAzQXwXAmVz/l26oSI0A2NIqzEm2n/1kJtmHKR579YrWUrLxCBTp9tN4BZ4pwDckJENMVAsOO59614voarA0hQ87q8uEMmzKVc3ii0KQMb7AF2Mt4UHvhMOVhVTvhpFBh3nsY5+gUZDPZAH/0ZfqDBwxjmt5Ek19C8do=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NJL6/Yes; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QN3r+ell"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C7C0C116C6;
-	Mon,  9 Feb 2026 14:49:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NJL6/Yes"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 05CBAC116C6;
+	Mon,  9 Feb 2026 14:50:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770648598;
-	bh=Y2brvEyrDBaJjJOwQmpuMIhEccPzF4e1ttKpxZJ65rY=;
+	s=korg; t=1770648601;
+	bh=9YADlvufmrrPKIkpZkR03A/LSyVlI0FOCK8+wtuh34s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QN3r+elle9IzItKqhcWhZFxPtaMp8OLq2eWLys/oDyskhB0+UMHNud34hl1hMc106
-	 OUdtrQFhdqp8+DAsuISs7+IQbUJAt8jAdBywLVY3Btn0MsVgRqdGO9YeNqhS7Gr/pB
-	 oqKugUjt2XgJMENdoIYcSEWx5Pu+MXzWnJ+mxBu0=
+	b=NJL6/YesChq4aUL7UG5pleXgFSMWupXW0ew5WEEMAuPPMJx1glAraNyV4OpRIE/+J
+	 nv17NW/69YYCrNYzr7bU7ULIpYW25IL1vX9cngzZUapbtSVMUcD9WfBIgjg+bao3P1
+	 3f9PPdcH1+gj8Z4yfLzA9WQxnEQxjv4SUPCflqM4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Paulo Alcantara <pc@manguebit.org>,
-	ChenXiaoSong <chenxiaosong@kylinos.cn>,
-	=?UTF-8?q?Pali=20Roh=C3=A1r?= <pali@kernel.org>,
-	Steve French <stfrench@microsoft.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 59/86] smb/client: fix memory leak in smb2_open_file()
-Date: Mon,  9 Feb 2026 15:24:22 +0100
-Message-ID: <20260209142306.902278010@linuxfoundation.org>
+	Tim Guttzeit <t.guttzeit@tuxedocomputers.com>,
+	Werner Sembach <wse@tuxedocomputers.com>,
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 6.6 86/86] ALSA: hda/realtek: Really fix headset mic for TongFang X6AR55xU.
+Date: Mon,  9 Feb 2026 15:24:49 +0100
+Message-ID: <20260209142307.880784421@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260209142304.770150175@linuxfoundation.org>
 References: <20260209142304.770150175@linuxfoundation.org>
@@ -47,76 +45,51 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: ChenXiaoSong <chenxiaosong@kylinos.cn>
+From: Werner Sembach <wse@tuxedocomputers.com>
 
-[ Upstream commit e3a43633023e3cacaca60d4b8972d084a2b06236 ]
+commit 1aaedafb21f38cb872d44f7608b4828a1e14e795 upstream.
 
-Reproducer:
+Add a PCI quirk to enable microphone detection on the headphone jack of
+TongFang X6AR55xU devices.
 
-  1. server: directories are exported read-only
-  2. client: mount -t cifs //${server_ip}/export /mnt
-  3. client: dd if=/dev/zero of=/mnt/file bs=512 count=1000 oflag=direct
-  4. client: umount /mnt
-  5. client: sleep 1
-  6. client: modprobe -r cifs
+The former quirk entry did not acomplish this and is removed.
 
-The error message is as follows:
-
-  =============================================================================
-  BUG cifs_small_rq (Not tainted): Objects remaining on __kmem_cache_shutdown()
-  -----------------------------------------------------------------------------
-
-  Object 0x00000000d47521be @offset=14336
-  ...
-  WARNING: mm/slub.c:1251 at __kmem_cache_shutdown+0x34e/0x440, CPU#0: modprobe/1577
-  ...
-  Call Trace:
-   <TASK>
-   kmem_cache_destroy+0x94/0x190
-   cifs_destroy_request_bufs+0x3e/0x50 [cifs]
-   cleanup_module+0x4e/0x540 [cifs]
-   __se_sys_delete_module+0x278/0x400
-   __x64_sys_delete_module+0x5f/0x70
-   x64_sys_call+0x2299/0x2ff0
-   do_syscall_64+0x89/0x350
-   entry_SYSCALL_64_after_hwframe+0x76/0x7e
-  ...
-  kmem_cache_destroy cifs_small_rq: Slab cache still has objects when called from cifs_destroy_request_bufs+0x3e/0x50 [cifs]
-  WARNING: mm/slab_common.c:532 at kmem_cache_destroy+0x16b/0x190, CPU#0: modprobe/1577
-
-Link: https://lore.kernel.org/linux-cifs/9751f02d-d1df-4265-a7d6-b19761b21834@linux.dev/T/#mf14808c144448b715f711ce5f0477a071f08eaf6
-Fixes: e255612b5ed9 ("cifs: Add fallback for SMB2 CREATE without FILE_READ_ATTRIBUTES")
-Reported-by: Paulo Alcantara <pc@manguebit.org>
-Reviewed-by: Paulo Alcantara (Red Hat) <pc@manguebit.org>
-Signed-off-by: ChenXiaoSong <chenxiaosong@kylinos.cn>
-Reviewed-by: Pali Rohár <pali@kernel.org>
-Signed-off-by: Steve French <stfrench@microsoft.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: b48fe9af1e60 ("ALSA: hda/realtek: Fix headset mic for TongFang X6AR55xU")
+Signed-off-by: Tim Guttzeit <t.guttzeit@tuxedocomputers.com>
+Signed-off-by: Werner Sembach <wse@tuxedocomputers.com>
+Link: https://patch.msgid.link/20260123221233.28273-1-wse@tuxedocomputers.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/client/smb2file.c | 1 +
- 1 file changed, 1 insertion(+)
+ sound/pci/hda/patch_realtek.c |    5 +----
+ 1 file changed, 1 insertion(+), 4 deletions(-)
 
-diff --git a/fs/smb/client/smb2file.c b/fs/smb/client/smb2file.c
-index d7f2835e0b1cc..d436057ed77e3 100644
---- a/fs/smb/client/smb2file.c
-+++ b/fs/smb/client/smb2file.c
-@@ -122,6 +122,7 @@ int smb2_open_file(const unsigned int xid, struct cifs_open_parms *oparms, __u32
- 	rc = SMB2_open(xid, oparms, smb2_path, &smb2_oplock, smb2_data, NULL, &err_iov,
- 		       &err_buftype);
- 	if (rc == -EACCES && retry_without_read_attributes) {
-+		free_rsp_buf(err_buftype, err_iov.iov_base);
- 		oparms->desired_access &= ~FILE_READ_ATTRIBUTES;
- 		rc = SMB2_open(xid, oparms, smb2_path, &smb2_oplock, smb2_data, NULL, &err_iov,
- 			       &err_buftype);
--- 
-2.51.0
-
+--- a/sound/pci/hda/patch_realtek.c
++++ b/sound/pci/hda/patch_realtek.c
+@@ -10640,6 +10640,7 @@ static const struct hda_quirk alc269_fix
+ 	SND_PCI_QUIRK(0x1d05, 0x1409, "TongFang GMxIXxx", ALC2XX_FIXUP_HEADSET_MIC),
+ 	SND_PCI_QUIRK(0x1d05, 0x300f, "TongFang X6AR5xxY", ALC2XX_FIXUP_HEADSET_MIC),
+ 	SND_PCI_QUIRK(0x1d05, 0x3019, "TongFang X6FR5xxY", ALC2XX_FIXUP_HEADSET_MIC),
++	SND_PCI_QUIRK(0x1d05, 0x3031, "TongFang X6AR55xU", ALC2XX_FIXUP_HEADSET_MIC),
+ 	SND_PCI_QUIRK(0x1d17, 0x3288, "Haier Boyue G42", ALC269VC_FIXUP_ACER_VCOPPERBOX_PINS),
+ 	SND_PCI_QUIRK(0x1d72, 0x1602, "RedmiBook", ALC255_FIXUP_XIAOMI_HEADSET_MIC),
+ 	SND_PCI_QUIRK(0x1d72, 0x1701, "XiaomiNotebook Pro", ALC298_FIXUP_DELL1_MIC_NO_PRESENCE),
+@@ -11101,10 +11102,6 @@ static const struct snd_hda_pin_quirk al
+ 		{0x12, 0x90a60140},
+ 		{0x19, 0x04a11030},
+ 		{0x21, 0x04211020}),
+-	SND_HDA_PIN_QUIRK(0x10ec0274, 0x1d05, "TongFang", ALC274_FIXUP_HP_HEADSET_MIC,
+-		{0x17, 0x90170110},
+-		{0x19, 0x03a11030},
+-		{0x21, 0x03211020}),
+ 	SND_HDA_PIN_QUIRK(0x10ec0282, 0x1025, "Acer", ALC282_FIXUP_ACER_DISABLE_LINEOUT,
+ 		ALC282_STANDARD_PINS,
+ 		{0x12, 0x90a609c0},
 
 
