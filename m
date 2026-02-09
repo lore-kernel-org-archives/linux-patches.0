@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6106428725B;
-	Mon,  9 Feb 2026 14:51:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8094228725B;
+	Mon,  9 Feb 2026 14:51:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770648663; cv=none; b=L6/7FWWno+iwR/ZR5TJVjJgyOmZz3lY/7pVT3enh5wPRdWUsH2yFxOG9RPh1BZcCHjrG94ZYXCqq0wjnyRp07kTTHgy6mgvewXWwb/VnpSgseV6yszTkwWmAX0nNEmlopIZeLIctfj72jVe6YkUZ1feqMoAj/wX2OhRscyUT+0A=
+	t=1770648666; cv=none; b=ewwGD/LBidNrv2/scmKH/nHKRlp01zOrDQP6O8XRk9IgNqGKx/rL9YuuhCIzsfsKmYusmzjGtFgJbd3GC5lrQtiGAephji4BkUJsB2+9vsL2y2STkfgiH4opfL6FP+36WFF5jMlcXWm8X0gA2NYLaq629k6i0PnhmnJu6fQEwrI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770648663; c=relaxed/simple;
-	bh=uAAqR/oAqdrIgqVbpNrfW9SLTG3GtjU2iiDc23l8ORY=;
+	s=arc-20240116; t=1770648666; c=relaxed/simple;
+	bh=7p9bGbrPLB1sq0kL6kmmD/Lpi4axe+wjyr2Yildm3p0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=IkW7klC6km8XJYB+qwShnJgsmRUPaWD/d0r2r5FO7NWF/VAV8Lq5LdOrf5zeQU7dp1SOdyZxIG22N011nlFfEXPmV2nqWHusVQl/9ca7U/J1zzZPEzkFwlnwCwNL8gDqlI9aDT3Ptrp64r4l4oQra7XXEIMLZoM6LcgPKBOiSws=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mpmCQy1c; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=JkZazMWoFZssOswhcR/gQzv3v5PVb8g0aRqOfzJ8aHHcUvbpHFKhCF0WCDUGi1oVAgWqQ14EUPY99yAbnOLIRYrABADtfu8mOT6cEScFWSKRLfLH4zEaJa9Ghkux55xwtUB0XrwTlo7zg+I6a3RauZZ7XWgDIQ1/9PwbnejB1SU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Hjt5D3cL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mpmCQy1c"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF160C116C6;
-	Mon,  9 Feb 2026 14:51:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Hjt5D3cL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE1EDC116C6;
+	Mon,  9 Feb 2026 14:51:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770648663;
-	bh=uAAqR/oAqdrIgqVbpNrfW9SLTG3GtjU2iiDc23l8ORY=;
+	s=korg; t=1770648666;
+	bh=7p9bGbrPLB1sq0kL6kmmD/Lpi4axe+wjyr2Yildm3p0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mpmCQy1cM6uH6fsPV8Upu/IHJGKl28PtsQkScAEZK4EuAOGz/JqFbLsmhaFkm9Q23
-	 7zi/0rdF9YIO5sXhHxmLb9D8MXBuDBUDhiqPedVJ6UAeyD33u1qjdV8UOU2pTL0UrW
-	 q2zMfombwYZf7RXaSL/V1hFkSc+vMOWmOTmlZgbs=
+	b=Hjt5D3cLO7y7954G92vFIxCvgQmAXECa+OZDWATxEqo+Rx3J9tcDeU4Bm+iYPXllF
+	 rvuxyfHDCqLH8c8CIF33RpOJmDKXtvHo48kKylveOOudqqUFu9CoIc3dPztfDmYll0
+	 TpFUtHbC01h8GlD0hcxavmgCpv+J5sK9rd8Scw3Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <thomas.weissschuh@linutronix.de>,
-	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
-	Arnd Bergmann <arnd@arndb.de>,
-	"Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>
-Subject: [PATCH 5.10 02/41] ARM: 9468/1: fix memset64() on big-endian
-Date: Mon,  9 Feb 2026 15:24:23 +0100
-Message-ID: <20260209142256.889650945@linuxfoundation.org>
+	Maurizio Lombardi <mlombard@redhat.com>,
+	Zhaojuan Guo <zguo@redhat.com>,
+	Mike Christie <michael.christie@oracle.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 20/41] scsi: target: iscsi: Fix use-after-free in iscsit_dec_session_usage_count()
+Date: Mon,  9 Feb 2026 15:24:41 +0100
+Message-ID: <20260209142257.539928844@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260209142256.797267956@linuxfoundation.org>
 References: <20260209142256.797267956@linuxfoundation.org>
@@ -46,44 +47,58 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Thomas Weissschuh <thomas.weissschuh@linutronix.de>
+From: Maurizio Lombardi <mlombard@redhat.com>
 
-commit 23ea2a4c72323feb6e3e025e8a6f18336513d5ad upstream.
+[ Upstream commit 84dc6037390b8607c5551047d3970336cb51ba9a ]
 
-On big-endian systems the 32-bit low and high halves need to be swapped
-for the underlying assembly implementation to work correctly.
+In iscsit_dec_session_usage_count(), the function calls complete() while
+holding the sess->session_usage_lock. Similar to the connection usage count
+logic, the waiter signaled by complete() (e.g., in the session release
+path) may wake up and free the iscsit_session structure immediately.
 
-Fixes: fd1d362600e2 ("ARM: implement memset32 & memset64")
-Cc: stable@vger.kernel.org
-Signed-off-by: Thomas Weißschuh <thomas.weissschuh@linutronix.de>
-Reviewed-by: Matthew Wilcox (Oracle) <willy@infradead.org>
-Reviewed-by: Arnd Bergmann <arnd@arndb.de>
-Signed-off-by: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+This creates a race condition where the current thread may attempt to
+execute spin_unlock_bh() on a session structure that has already been
+deallocated, resulting in a KASAN slab-use-after-free.
+
+To resolve this, release the session_usage_lock before calling complete()
+to ensure all dereferences of the sess pointer are finished before the
+waiter is allowed to proceed with deallocation.
+
+Signed-off-by: Maurizio Lombardi <mlombard@redhat.com>
+Reported-by: Zhaojuan Guo <zguo@redhat.com>
+Reviewed-by: Mike Christie <michael.christie@oracle.com>
+Link: https://patch.msgid.link/20260112165352.138606-3-mlombard@redhat.com
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/include/asm/string.h |    5 ++++-
+ drivers/target/iscsi/iscsi_target_util.c | 5 ++++-
  1 file changed, 4 insertions(+), 1 deletion(-)
 
---- a/arch/arm/include/asm/string.h
-+++ b/arch/arm/include/asm/string.h
-@@ -36,7 +36,10 @@ static inline void *memset32(uint32_t *p
- extern void *__memset64(uint64_t *, uint32_t low, __kernel_size_t, uint32_t hi);
- static inline void *memset64(uint64_t *p, uint64_t v, __kernel_size_t n)
- {
--	return __memset64(p, v, n * 8, v >> 32);
-+	if (IS_ENABLED(CONFIG_CPU_LITTLE_ENDIAN))
-+		return __memset64(p, v, n * 8, v >> 32);
-+	else
-+		return __memset64(p, v >> 32, n * 8, v);
- }
+diff --git a/drivers/target/iscsi/iscsi_target_util.c b/drivers/target/iscsi/iscsi_target_util.c
+index 45ba07c6ec270..58b3eb589bc77 100644
+--- a/drivers/target/iscsi/iscsi_target_util.c
++++ b/drivers/target/iscsi/iscsi_target_util.c
+@@ -801,8 +801,11 @@ void iscsit_dec_session_usage_count(struct iscsi_session *sess)
+ 	spin_lock_bh(&sess->session_usage_lock);
+ 	sess->session_usage_count--;
  
- #endif
+-	if (!sess->session_usage_count && sess->session_waiting_on_uc)
++	if (!sess->session_usage_count && sess->session_waiting_on_uc) {
++		spin_unlock_bh(&sess->session_usage_lock);
+ 		complete(&sess->session_waiting_on_uc_comp);
++		return;
++	}
+ 
+ 	spin_unlock_bh(&sess->session_usage_lock);
+ }
+-- 
+2.51.0
+
 
 
