@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8AF237997D;
-	Mon,  9 Feb 2026 14:26:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14ADB37756C;
+	Mon,  9 Feb 2026 14:26:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770647208; cv=none; b=lPpHHWmeToYJBQ0wrJP2FUbSOze2Nw8gZPUNmb6wRzQz5Rq7qiJ2JhuE6061Jxyo8uhHcyiZZTeSXGatr09NcE5hF8xjlo9nlKebrq9Tmhgvvxt2WIMQDZZ0fdTTWpFjhhVfgiZRSH+ajUXbiK1fYy2taixOeloG2z8K3TlHy/U=
+	t=1770647212; cv=none; b=pYB7MA6zkj4TnjYyq7ww7WMEgYpeal9RRbWkHnAvfyfQXxsHZStQ0pqUA23btwBOLJYgweJr86E9WmHcIBKKi5Yoof1DkobSXE2dFPqDKLD1+fN2jLThT6hiWvzo35JlJBlWE1LmGnvprJXVFa0L2JLvFo81FWVrU+4wOk1udAs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770647208; c=relaxed/simple;
-	bh=tQMAY3LqY7ovZ5Ikb3TXG1xQozyQe0bRquQ3JxFSpq0=;
+	s=arc-20240116; t=1770647212; c=relaxed/simple;
+	bh=TzSKviIfkuPnrqjDxguw9syUkTUIO7uDu83exmnDYAQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WWjt6rVJiOjdstMnuH/CQorq7mu78dJ7yajTJKWMCN81jTP6dGy/uYEkSvagm3XzjHsH9YJC8GVLHTZWNsuStjADw7TqswWU8Rn72nG6yHB3DnKPhSHlyuJPjyvFN8ulOrq0tMd+F+ZxYe6cwfvKAJQRrYnq1Qn6eA7m3He53oA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aNp8tA9T; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tuG/iDVZxkKk+b742ra6tnxYiZajzqecRHU+6KpiZnnish8u+bpku8vbMRG2BwvN8C08do01nmZTYfRpu02EWvVS3lTQJxKMlBbaAFaCiL/YySMPoGjCp6Rv3XEx203kao688KisM5rUKqmVrxxU67fqnuRya/thEEcxd4p4Kt0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Em2Ng2/q; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aNp8tA9T"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3391C116C6;
-	Mon,  9 Feb 2026 14:26:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Em2Ng2/q"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3AF24C116C6;
+	Mon,  9 Feb 2026 14:26:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770647208;
-	bh=tQMAY3LqY7ovZ5Ikb3TXG1xQozyQe0bRquQ3JxFSpq0=;
+	s=korg; t=1770647211;
+	bh=TzSKviIfkuPnrqjDxguw9syUkTUIO7uDu83exmnDYAQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aNp8tA9T863/eCzp7FSmokxdIWxdLVuzmjAKfYwKRz9o7ZnfdDMN5L/k5JBD6bOIP
-	 RQgZts6FcNiCViUwiCW73yNygre4DkFL94/JbwTnQ2LIxVgq4YM5bW4HVuSBUWG+t2
-	 RdP15yoI7ht+wLvmoFu5ASyxOV3FP4xlyzxdm/DE=
+	b=Em2Ng2/q/pUKGu4rHB8XsPER7k1WZZA7+gX0TS5gBmCGHUIjmLBnHIHaLUUm3259S
+	 oLrn+RO1gLRwNPr8s+a64SFVKZ3UYKxEAo3fo5u6+x+1Zoc+qsFTpLgsuIPUL2hG1A
+	 33vRhARqrDzICXmtXSjmnfXGAb6K4ONV1iz/kDvY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhiquan Li <zhiquan_li@163.com>,
-	Sean Christopherson <seanjc@google.com>
-Subject: [PATCH 6.18 032/175] KVM: selftests: Add -U_FORTIFY_SOURCE to avoid some unpredictable test failures
-Date: Mon,  9 Feb 2026 15:21:45 +0100
-Message-ID: <20260209142321.630936614@linuxfoundation.org>
+	Ilya Dryomov <idryomov@gmail.com>,
+	Dongsheng Yang <dongsheng.yang@linux.dev>
+Subject: [PATCH 6.18 015/175] rbd: check for EOD after exclusive lock is ensured to be held
+Date: Mon,  9 Feb 2026 15:21:28 +0100
+Message-ID: <20260209142321.024890762@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260209142320.474120190@linuxfoundation.org>
 References: <20260209142320.474120190@linuxfoundation.org>
@@ -50,48 +50,94 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhiquan Li <zhiquan_li@163.com>
+From: Ilya Dryomov <idryomov@gmail.com>
 
-commit e396a74222654486d6ab45dca5d0c54c408b8b91 upstream.
+commit bd3884a204c3b507e6baa9a4091aa927f9af5404 upstream.
 
-Some distributions (such as Ubuntu) configure GCC so that
-_FORTIFY_SOURCE is automatically enabled at -O1 or above.  This results
-in some fortified version of definitions of standard library functions
-are included.  While linker resolves the symbols, the fortified versions
-might override the definitions in lib/string_override.c and reference to
-those PLT entries in GLIBC.  This is not a problem for the code in host,
-but it is a disaster for the guest code.  E.g., if build and run
-x86/nested_emulation_test on Ubuntu 24.04 will encounter a L1 #PF due to
-memset() reference to __memset_chk@plt.
+Similar to commit 870611e4877e ("rbd: get snapshot context after
+exclusive lock is ensured to be held"), move the "beyond EOD" check
+into the image request state machine so that it's performed after
+exclusive lock is ensured to be held.  This avoids various race
+conditions which can arise when the image is shrunk under I/O (in
+practice, mostly readahead).  In one such scenario
 
-The option -fno-builtin-memset is not helpful here, because those
-fortified versions are not built-in but some definitions which are
-included by header, they are for different intentions.
+    rbd_assert(objno < rbd_dev->object_map_size);
 
-In order to eliminate the unpredictable behaviors may vary depending on
-the linker and platform, add the "-U_FORTIFY_SOURCE" into CFLAGS to
-prevent from introducing the fortified definitions.
+can be triggered if a close-to-EOD read gets queued right before the
+shrink is initiated and the EOD check is performed against an outdated
+mapping_size.  After the resize is done on the server side and exclusive
+lock is (re)acquired bringing along the new (now shrunk) object map, the
+read starts going through the state machine and rbd_obj_may_exist() gets
+invoked on an object that is out of bounds of rbd_dev->object_map array.
 
-Signed-off-by: Zhiquan Li <zhiquan_li@163.com>
-Link: https://patch.msgid.link/20260122053551.548229-1-zhiquan_li@163.com
-Fixes: 6b6f71484bf4 ("KVM: selftests: Implement memcmp(), memcpy(), and memset() for guest use")
 Cc: stable@vger.kernel.org
-[sean: tag for stable]
-Signed-off-by: Sean Christopherson <seanjc@google.com>
+Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
+Reviewed-by: Dongsheng Yang <dongsheng.yang@linux.dev>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/testing/selftests/kvm/Makefile.kvm |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/block/rbd.c |   33 +++++++++++++++++++++------------
+ 1 file changed, 21 insertions(+), 12 deletions(-)
 
---- a/tools/testing/selftests/kvm/Makefile.kvm
-+++ b/tools/testing/selftests/kvm/Makefile.kvm
-@@ -245,6 +245,7 @@ LINUX_TOOL_INCLUDE = $(top_srcdir)/tools
- LINUX_TOOL_ARCH_INCLUDE = $(top_srcdir)/tools/arch/$(ARCH)/include
- CFLAGS += -Wall -Wstrict-prototypes -Wuninitialized -O2 -g -std=gnu99 \
- 	-Wno-gnu-variable-sized-type-not-at-end -MD -MP -DCONFIG_64BIT \
-+	-U_FORTIFY_SOURCE \
- 	-fno-builtin-memcmp -fno-builtin-memcpy \
- 	-fno-builtin-memset -fno-builtin-strnlen \
- 	-fno-stack-protector -fno-PIE -fno-strict-aliasing \
+--- a/drivers/block/rbd.c
++++ b/drivers/block/rbd.c
+@@ -3495,11 +3495,29 @@ static void rbd_img_object_requests(stru
+ 	rbd_assert(!need_exclusive_lock(img_req) ||
+ 		   __rbd_is_lock_owner(rbd_dev));
+ 
+-	if (rbd_img_is_write(img_req)) {
+-		rbd_assert(!img_req->snapc);
++	if (test_bit(IMG_REQ_CHILD, &img_req->flags)) {
++		rbd_assert(!rbd_img_is_write(img_req));
++	} else {
++		struct request *rq = blk_mq_rq_from_pdu(img_req);
++		u64 off = (u64)blk_rq_pos(rq) << SECTOR_SHIFT;
++		u64 len = blk_rq_bytes(rq);
++		u64 mapping_size;
++
+ 		down_read(&rbd_dev->header_rwsem);
+-		img_req->snapc = ceph_get_snap_context(rbd_dev->header.snapc);
++		mapping_size = rbd_dev->mapping.size;
++		if (rbd_img_is_write(img_req)) {
++			rbd_assert(!img_req->snapc);
++			img_req->snapc =
++			    ceph_get_snap_context(rbd_dev->header.snapc);
++		}
+ 		up_read(&rbd_dev->header_rwsem);
++
++		if (unlikely(off + len > mapping_size)) {
++			rbd_warn(rbd_dev, "beyond EOD (%llu~%llu > %llu)",
++				 off, len, mapping_size);
++			img_req->pending.result = -EIO;
++			return;
++		}
+ 	}
+ 
+ 	for_each_obj_request(img_req, obj_req) {
+@@ -4725,7 +4743,6 @@ static void rbd_queue_workfn(struct work
+ 	struct request *rq = blk_mq_rq_from_pdu(img_request);
+ 	u64 offset = (u64)blk_rq_pos(rq) << SECTOR_SHIFT;
+ 	u64 length = blk_rq_bytes(rq);
+-	u64 mapping_size;
+ 	int result;
+ 
+ 	/* Ignore/skip any zero-length requests */
+@@ -4738,17 +4755,9 @@ static void rbd_queue_workfn(struct work
+ 	blk_mq_start_request(rq);
+ 
+ 	down_read(&rbd_dev->header_rwsem);
+-	mapping_size = rbd_dev->mapping.size;
+ 	rbd_img_capture_header(img_request);
+ 	up_read(&rbd_dev->header_rwsem);
+ 
+-	if (offset + length > mapping_size) {
+-		rbd_warn(rbd_dev, "beyond EOD (%llu~%llu > %llu)", offset,
+-			 length, mapping_size);
+-		result = -EIO;
+-		goto err_img_request;
+-	}
+-
+ 	dout("%s rbd_dev %p img_req %p %s %llu~%llu\n", __func__, rbd_dev,
+ 	     img_request, obj_op_name(op_type), offset, length);
+ 
 
 
