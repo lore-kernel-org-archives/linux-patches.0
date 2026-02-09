@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37B7828312F;
-	Mon,  9 Feb 2026 14:53:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98F7128312F;
+	Mon,  9 Feb 2026 14:53:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770648786; cv=none; b=nEWmPVMOFyG4DbveUeRSyzSNyjaqcMgONBJhxW3d5r+nTr/HsK2VMTBEZuJ4zDXaPBJRPAc/jAlA0xX818N/bOz8+o2wI08PHRMO0ahGlcns2VjXShB5DdXbf73nUSZZeF568GxkG4LjBoOuODbD6D73m2HAx3NKCJh+3TSlRVg=
+	t=1770648789; cv=none; b=EWZX/JjaTk7AXTjm2j94+gAruAV81pO+zO36L3OPbcda4nGRrjAOOM14hXvT9uDvcvjmrUGFD4GrDAbQ+pJcdYpgWD2Ojh6JI0hTn/KTWzqtm+7Iq0TRCb3Nx+/LJIMmvbYpkHmEUpHv2M/NV69ujcz1Jhp7wWTU7Cvd1y7o0RQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770648786; c=relaxed/simple;
-	bh=Vd3WtmNhiVsPlFLtKjXyh2QIuDmJRxrC/oSIPckFLaM=;
+	s=arc-20240116; t=1770648789; c=relaxed/simple;
+	bh=Bir9FChIjviexzRaB8A+SZKt/T8txJKq5p2yHplAAjo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=a3jO2kbQF+GSn6qd3w7GQDNKEqp/bHZRb/0bsA4q+JB/VmrN1QI6JR21S788IjhXE02nTEo1iz/PiW351MJ2PkmAQU3HJZKGmkTO5uw9dAWKMWxwucJzvOL6S/cNXQ54D8k6na6GFRsdB7YXSmJQZh7A64PluIlfMX80BmwxUl0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=X65gCf1/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TShnbcpPr9Wl8ALHBMxgpPkVcUrp9dyz3A5rMGrAiIVwIdcW1LtgacsOnAgIYJ0SyrLoxRqOhLIVg0R6slri7sYltw3myAsiWPr9luXdktdnRTm2rir1LALb3TpBHjRHguLwgxmUrOSB1R+iyD6KK4qRg66Pv+yO2jk8jJde2Ts=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AVZh6lWf; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="X65gCf1/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9CCE1C116C6;
-	Mon,  9 Feb 2026 14:53:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AVZh6lWf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09540C116C6;
+	Mon,  9 Feb 2026 14:53:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770648786;
-	bh=Vd3WtmNhiVsPlFLtKjXyh2QIuDmJRxrC/oSIPckFLaM=;
+	s=korg; t=1770648789;
+	bh=Bir9FChIjviexzRaB8A+SZKt/T8txJKq5p2yHplAAjo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=X65gCf1/ZJQkxnA/cOGMVcgUOxbSLpTdJWPANSrcaPbBs7Yus77yO5tPyZcsKSGiE
-	 834Zy6UluF2+lPS/iM7cWG9w/h7VgklC1UvmPpD4nTgz09JcsZU+OHiUNxOl0zsriG
-	 XYeb9VEadaSLlFFlENP39bPum6tN2yGIRnShJcnQ=
+	b=AVZh6lWfQq3Nybd05fq1pm96/ukFz60XefPI5bglCME3yr8Wsl9TWtVaH4/3KLXkS
+	 kY+u4wwhjNWZ/VeHL5waRh7sp/xPqehre1GseiQoKi5GTRI4yYgOtXgp2AsD3TY8y2
+	 MVs7A1MjHupGxxGjZS3De8b/c29IWCeQS5IjStU0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Steven Rostedt <rostedt@goodmis.org>,
 	Thomas Gleixner <tglx@linutronix.de>,
+	Guenter Roeck <linux@roeck-us.net>,
 	Jacob Keller <jacob.e.keller@intel.com>,
 	Anna-Maria Behnsen <anna-maria@linutronix.de>,
 	Jeongjun Park <aha310510@gmail.com>
-Subject: [PATCH 5.15 15/75] Documentation: Replace del_timer/del_timer_sync()
-Date: Mon,  9 Feb 2026 15:24:12 +0100
-Message-ID: <20260209142302.393321610@linuxfoundation.org>
+Subject: [PATCH 5.15 16/75] timers: Silently ignore timers with a NULL function
+Date: Mon,  9 Feb 2026 15:24:13 +0100
+Message-ID: <20260209142302.428829118@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260209142301.830618238@linuxfoundation.org>
 References: <20260209142301.830618238@linuxfoundation.org>
@@ -47,7 +48,6 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
@@ -56,164 +56,183 @@ Content-Transfer-Encoding: 8bit
 
 From: Thomas Gleixner <tglx@linutronix.de>
 
-[ Upstream commit 87bdd932e85881895d4720255b40ac28749c4e32 ]
+[ Upstream commit d02e382cef06cc73561dd32dfdc171c00dcc416d ]
 
-Adjust to the new preferred function names.
+Tearing down timers which have circular dependencies to other
+functionality, e.g. workqueues, where the timer can schedule work and work
+can arm timers, is not trivial.
 
-Suggested-by: Steven Rostedt <rostedt@goodmis.org>
+In those cases it is desired to shutdown the timer in a way which prevents
+rearming of the timer. The mechanism to do so is to set timer->function to
+NULL and use this as an indicator for the timer arming functions to ignore
+the (re)arm request.
+
+In preparation for that replace the warnings in the relevant code paths
+with checks for timer->function == NULL. If the pointer is NULL, then
+discard the rearm request silently.
+
+Add debug_assert_init() instead of the WARN_ON_ONCE(!timer->function)
+checks so that debug objects can warn about non-initialized timers.
+
+The warning of debug objects does not warn if timer->function == NULL.  It
+warns when timer was not initialized using timer_setup[_on_stack]() or via
+DEFINE_TIMER(). If developers fail to enable debug objects and then waste
+lots of time to figure out why their non-initialized timer is not firing,
+they deserve it. Same for initializing a timer with a NULL function.
+
+Co-developed-by: Steven Rostedt <rostedt@goodmis.org>
+Signed-off-by: Steven Rostedt <rostedt@goodmis.org>
 Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Tested-by: Guenter Roeck <linux@roeck-us.net>
 Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
 Reviewed-by: Anna-Maria Behnsen <anna-maria@linutronix.de>
-Link: https://lore.kernel.org/r/20221123201625.075320635@linutronix.de
+Link: https://lore.kernel.org/all/20220407161745.7d6754b3@gandalf.local.home
+Link: https://lore.kernel.org/all/20221110064101.429013735@goodmis.org
+Link: https://lore.kernel.org/r/87wn7kdann.ffs@tglx
 Signed-off-by: Jeongjun Park <aha310510@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- Documentation/RCU/Design/Requirements/Requirements.rst      |    2 +-
- Documentation/core-api/local_ops.rst                        |    2 +-
- Documentation/kernel-hacking/locking.rst                    |   11 +++++------
- Documentation/timers/hrtimers.rst                           |    2 +-
- Documentation/translations/it_IT/kernel-hacking/locking.rst |   10 +++++-----
- Documentation/translations/zh_CN/core-api/local_ops.rst     |    2 +-
- 6 files changed, 14 insertions(+), 15 deletions(-)
+ kernel/time/timer.c |   57 +++++++++++++++++++++++++++++++++++++++++++++++-----
+ 1 file changed, 52 insertions(+), 5 deletions(-)
 
---- a/Documentation/RCU/Design/Requirements/Requirements.rst
-+++ b/Documentation/RCU/Design/Requirements/Requirements.rst
-@@ -1858,7 +1858,7 @@ unloaded. After a given module has been
- one of its functions results in a segmentation fault. The module-unload
- functions must therefore cancel any delayed calls to loadable-module
- functions, for example, any outstanding mod_timer() must be dealt
--with via del_timer_sync() or similar.
-+with via timer_delete_sync() or similar.
+--- a/kernel/time/timer.c
++++ b/kernel/time/timer.c
+@@ -964,7 +964,7 @@ __mod_timer(struct timer_list *timer, un
+ 	unsigned int idx = UINT_MAX;
+ 	int ret = 0;
  
- Unfortunately, there is no way to cancel an RCU callback; once you
- invoke call_rcu(), the callback function is eventually going to be
---- a/Documentation/core-api/local_ops.rst
-+++ b/Documentation/core-api/local_ops.rst
-@@ -191,7 +191,7 @@ Here is a sample module which implements
+-	BUG_ON(!timer->function);
++	debug_assert_init(timer);
  
-     static void __exit test_exit(void)
-     {
--            del_timer_sync(&test_timer);
-+            timer_delete_sync(&test_timer);
-     }
+ 	/*
+ 	 * This is a common optimization triggered by the networking code - if
+@@ -991,6 +991,14 @@ __mod_timer(struct timer_list *timer, un
+ 		 * dequeue/enqueue dance.
+ 		 */
+ 		base = lock_timer_base(timer, &flags);
++		/*
++		 * Has @timer been shutdown? This needs to be evaluated
++		 * while holding base lock to prevent a race against the
++		 * shutdown code.
++		 */
++		if (!timer->function)
++			goto out_unlock;
++
+ 		forward_timer_base(base);
  
-     module_init(test_init);
---- a/Documentation/kernel-hacking/locking.rst
-+++ b/Documentation/kernel-hacking/locking.rst
-@@ -970,7 +970,7 @@ you might do the following::
+ 		if (timer_pending(timer) && (options & MOD_TIMER_REDUCE) &&
+@@ -1017,6 +1025,14 @@ __mod_timer(struct timer_list *timer, un
+ 		}
+ 	} else {
+ 		base = lock_timer_base(timer, &flags);
++		/*
++		 * Has @timer been shutdown? This needs to be evaluated
++		 * while holding base lock to prevent a race against the
++		 * shutdown code.
++		 */
++		if (!timer->function)
++			goto out_unlock;
++
+ 		forward_timer_base(base);
+ 	}
  
-             while (list) {
-                     struct foo *next = list->next;
--                    del_timer(&list->timer);
-+                    timer_delete(&list->timer);
-                     kfree(list);
-                     list = next;
-             }
-@@ -984,7 +984,7 @@ the lock after we spin_unlock_bh(), and
- the element (which has already been freed!).
+@@ -1075,8 +1091,12 @@ out_unlock:
+  * mod_timer_pending() is the same for pending timers as mod_timer(), but
+  * will not activate inactive timers.
+  *
++ * If @timer->function == NULL then the start operation is silently
++ * discarded.
++ *
+  * Return:
+- * * %0 - The timer was inactive and not modified
++ * * %0 - The timer was inactive and not modified or was in
++ *	  shutdown state and the operation was discarded
+  * * %1 - The timer was active and requeued to expire at @expires
+  */
+ int mod_timer_pending(struct timer_list *timer, unsigned long expires)
+@@ -1102,8 +1122,12 @@ EXPORT_SYMBOL(mod_timer_pending);
+  * same timer, then mod_timer() is the only safe way to modify the timeout,
+  * since add_timer() cannot modify an already running timer.
+  *
++ * If @timer->function == NULL then the start operation is silently
++ * discarded. In this case the return value is 0 and meaningless.
++ *
+  * Return:
+- * * %0 - The timer was inactive and started
++ * * %0 - The timer was inactive and started or was in shutdown
++ *	  state and the operation was discarded
+  * * %1 - The timer was active and requeued to expire at @expires or
+  *	  the timer was active and not modified because @expires did
+  *	  not change the effective expiry time
+@@ -1123,8 +1147,12 @@ EXPORT_SYMBOL(mod_timer);
+  * modify an enqueued timer if that would reduce the expiration time. If
+  * @timer is not enqueued it starts the timer.
+  *
++ * If @timer->function == NULL then the start operation is silently
++ * discarded.
++ *
+  * Return:
+- * * %0 - The timer was inactive and started
++ * * %0 - The timer was inactive and started or was in shutdown
++ *	  state and the operation was discarded
+  * * %1 - The timer was active and requeued to expire at @expires or
+  *	  the timer was active and not modified because @expires
+  *	  did not change the effective expiry time such that the
+@@ -1147,6 +1175,9 @@ EXPORT_SYMBOL(timer_reduce);
+  * The @timer->expires and @timer->function fields must be set prior
+  * to calling this function.
+  *
++ * If @timer->function == NULL then the start operation is silently
++ * discarded.
++ *
+  * If @timer->expires is already in the past @timer will be queued to
+  * expire at the next timer tick.
+  *
+@@ -1175,7 +1206,9 @@ void add_timer_on(struct timer_list *tim
+ 	struct timer_base *new_base, *base;
+ 	unsigned long flags;
  
- This can be avoided by checking the result of
--del_timer(): if it returns 1, the timer has been deleted.
-+timer_delete(): if it returns 1, the timer has been deleted.
- If 0, it means (in this case) that it is currently running, so we can
- do::
+-	if (WARN_ON_ONCE(timer_pending(timer) || !timer->function))
++	debug_assert_init(timer);
++
++	if (WARN_ON_ONCE(timer_pending(timer)))
+ 		return;
  
-@@ -993,7 +993,7 @@ do::
+ 	new_base = get_timer_cpu_base(timer->flags, cpu);
+@@ -1186,6 +1219,13 @@ void add_timer_on(struct timer_list *tim
+ 	 * wrong base locked.  See lock_timer_base().
+ 	 */
+ 	base = lock_timer_base(timer, &flags);
++	/*
++	 * Has @timer been shutdown? This needs to be evaluated while
++	 * holding base lock to prevent a race against the shutdown code.
++	 */
++	if (!timer->function)
++		goto out_unlock;
++
+ 	if (base != new_base) {
+ 		timer->flags |= TIMER_MIGRATING;
  
-                     while (list) {
-                             struct foo *next = list->next;
--                            if (!del_timer(&list->timer)) {
-+                            if (!timer_delete(&list->timer)) {
-                                     /* Give timer a chance to delete this */
-                                     spin_unlock_bh(&list_lock);
-                                     goto retry;
-@@ -1008,8 +1008,7 @@ do::
- Another common problem is deleting timers which restart themselves (by
- calling add_timer() at the end of their timer function).
- Because this is a fairly common case which is prone to races, you should
--use del_timer_sync() (``include/linux/timer.h``) to
--handle this case.
-+use timer_delete_sync() (``include/linux/timer.h``) to
+@@ -1199,6 +1239,7 @@ void add_timer_on(struct timer_list *tim
  
- Locking Speed
- =============
-@@ -1337,7 +1336,7 @@ lock.
+ 	debug_timer_activate(timer);
+ 	internal_add_timer(base, timer);
++out_unlock:
+ 	raw_spin_unlock_irqrestore(&base->lock, flags);
+ }
+ EXPORT_SYMBOL_GPL(add_timer_on);
+@@ -1488,6 +1529,12 @@ static void expire_timers(struct timer_b
  
- -  kfree()
+ 		fn = timer->function;
  
---  add_timer() and del_timer()
-+-  add_timer() and timer_delete()
- 
- Mutex API reference
- ===================
---- a/Documentation/timers/hrtimers.rst
-+++ b/Documentation/timers/hrtimers.rst
-@@ -118,7 +118,7 @@ existing timer wheel code, as it is matu
- was not really a win, due to the different data structures. Also, the
- hrtimer functions now have clearer behavior and clearer names - such as
- hrtimer_try_to_cancel() and hrtimer_cancel() [which are roughly
--equivalent to del_timer() and del_timer_sync()] - so there's no direct
-+equivalent to timer_delete() and timer_delete_sync()] - so there's no direct
- 1:1 mapping between them on the algorithmic level, and thus no real
- potential for code sharing either.
- 
---- a/Documentation/translations/it_IT/kernel-hacking/locking.rst
-+++ b/Documentation/translations/it_IT/kernel-hacking/locking.rst
-@@ -998,7 +998,7 @@ potreste fare come segue::
- 
-             while (list) {
-                     struct foo *next = list->next;
--                    del_timer(&list->timer);
-+                    timer_delete(&list->timer);
-                     kfree(list);
-                     list = next;
-             }
-@@ -1011,7 +1011,7 @@ e prenderà il *lock* solo dopo spin_unl
- di eliminare il suo oggetto (che però è già stato eliminato).
- 
- Questo può essere evitato controllando il valore di ritorno di
--del_timer(): se ritorna 1, il temporizzatore è stato già
-+timer_delete(): se ritorna 1, il temporizzatore è stato già
- rimosso. Se 0, significa (in questo caso) che il temporizzatore è in
- esecuzione, quindi possiamo fare come segue::
- 
-@@ -1020,7 +1020,7 @@ esecuzione, quindi possiamo fare come se
- 
-                     while (list) {
-                             struct foo *next = list->next;
--                            if (!del_timer(&list->timer)) {
-+                            if (!timer_delete(&list->timer)) {
-                                     /* Give timer a chance to delete this */
-                                     spin_unlock_bh(&list_lock);
-                                     goto retry;
-@@ -1034,7 +1034,7 @@ esecuzione, quindi possiamo fare come se
- Un altro problema è l'eliminazione dei temporizzatori che si riavviano
- da soli (chiamando add_timer() alla fine della loro esecuzione).
- Dato che questo è un problema abbastanza comune con una propensione
--alle corse critiche, dovreste usare del_timer_sync()
-+alle corse critiche, dovreste usare timer_delete_sync()
- (``include/linux/timer.h``) per gestire questo caso.
- 
- Velocità della sincronizzazione
-@@ -1380,7 +1380,7 @@ contesto, o trattenendo un qualsiasi *lo
- 
- -  kfree()
- 
---  add_timer() e del_timer()
-+-  add_timer() e timer_delete()
- 
- Riferimento per l'API dei Mutex
- ===============================
---- a/Documentation/translations/zh_CN/core-api/local_ops.rst
-+++ b/Documentation/translations/zh_CN/core-api/local_ops.rst
-@@ -185,7 +185,7 @@ UP之间没有不同的行为，在你�
- 
-     static void __exit test_exit(void)
-     {
--            del_timer_sync(&test_timer);
-+            timer_delete_sync(&test_timer);
-     }
- 
-     module_init(test_init);
++		if (WARN_ON_ONCE(!fn)) {
++			/* Should never happen. Emphasis on should! */
++			base->running_timer = NULL;
++			continue;
++		}
++
+ 		if (timer->flags & TIMER_IRQSAFE) {
+ 			raw_spin_unlock(&base->lock);
+ 			call_timer_fn(timer, fn, baseclk);
 
 
