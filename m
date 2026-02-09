@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E6DA125B2;
-	Mon,  9 Feb 2026 14:36:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C9A7125B2;
+	Mon,  9 Feb 2026 14:36:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770647765; cv=none; b=R+I68OGMQQ9QSV5x9aqMBGSzGZppMKQYxO9KA7uV95Pn+03rhvnSs94+fc/ImZl7DZMSXsSPgKri8Wo8oKbHcuRCPBKgGPeREOVAt9u/1YOkDnmUpsewNuauzhQkElS+LNanteWp0jZxiO3lI42taMlnsIOB0IOtMr5XD+Quihk=
+	t=1770647767; cv=none; b=QITvdtrO60jY+lnDU2b8PLZWa5Tu5zxLS2TslzOhHUgn65NcedRROgV3wIrdv/F/khqalTMGeqTi9Q+LPn2awftkwmcFZNceXAdB6IjXzycMqt54TfkIVHUlYL3WE3g+A8QflY7J2FLV7dQrX4WxZrysEqE/5n69iaGkPILK13E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770647765; c=relaxed/simple;
-	bh=gg68BC5YUt+6hUYfH/K8+2//7lBEU2RT7RzoT4MVHTM=;
+	s=arc-20240116; t=1770647767; c=relaxed/simple;
+	bh=fbCV7HOeR3O4BpCEcCes4Q5ST6K9Ia1cDYlxfTj51N8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=P7w24WC9OLDLcnENVpJhQGuhecwtd80Yfl4IMtcHtL8rLmJfQfQSNazBAWKTFJtCZSjv2A6Pxod1Outy8exE3xME2LmOK8rZTkmzk4ojRtvECUc5hiNMz2aTFrob6YwsgC7jHl/GQ9oZ9s95HgfL+7DwNgBFqz1QMDuHGnY2Ck8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=T5VDuK3d; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=P0mDE0qDRs30SA//PbhuRvCmrUnlYHFGohjyMsurSbTUHWLPPueGAO4XLEtXf32nUxP92nzjuzG8o/oGPZP2HzfEopTYfheVWKo2/tet1Ep9BdTAxLHBicsAV3U2igh6oX0vMCW1PIxJ2qI4q+OwIPkVVLKkf2ECxW/eWCMn0GQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kohKeVsC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="T5VDuK3d"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F042C16AAE;
-	Mon,  9 Feb 2026 14:36:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kohKeVsC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1CF06C116C6;
+	Mon,  9 Feb 2026 14:36:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770647764;
-	bh=gg68BC5YUt+6hUYfH/K8+2//7lBEU2RT7RzoT4MVHTM=;
+	s=korg; t=1770647767;
+	bh=fbCV7HOeR3O4BpCEcCes4Q5ST6K9Ia1cDYlxfTj51N8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=T5VDuK3dR1VQInlug2qizIUFhxiacrZ+ccaKT3bq2XmJU1k6o0cqBDwMDqnWQwb5N
-	 kEpddlOlgaVKDAr3Z2daXluiSf6ueO7x6J3JhDK5rx/ItKpVNkHL1KNEXB0cwrOQBa
-	 ZyeVx+yVt1tyz7WCouHnkIliOdktZSgJeshTjt4s=
+	b=kohKeVsCYe263N4E0yNIElYG8C6tvpOw6mXcEXcZzPmxBhT1/9Nj81lXP18eHZT0b
+	 b/FcuAloMNpJPqOWhs/KH4nUYM0KMjxDKc4+kcotrslASyaDqxXRf7jaOPVw4lAFFP
+	 zO5jb/GMEQR0MPOiFd43Fr2VGigBZkIoYfV94X5g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lukas Wunner <lukas@wunner.de>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	Riana Tauro <riana.tauro@intel.com>,
-	"Rafael J. Wysocki (Intel)" <rafael@kernel.org>,
-	Mario Limonciello <mario.limonciello@amd.com>
-Subject: [PATCH 6.12 021/113] PCI/ERR: Ensure error recoverability at all times
-Date: Mon,  9 Feb 2026 15:22:50 +0100
-Message-ID: <20260209142310.971573344@linuxfoundation.org>
+	Todd Brandt <todd.e.brandt@intel.com>,
+	Chen Yu <yu.c.chen@intel.com>,
+	Len Brown <len.brown@intel.com>,
+	Nikolay Kuratov <kniv@yandex-team.ru>
+Subject: [PATCH 6.12 022/113] tools/power turbostat: fix GCC9 build regression
+Date: Mon,  9 Feb 2026 15:22:51 +0100
+Message-ID: <20260209142311.007633179@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260209142310.204833231@linuxfoundation.org>
 References: <20260209142310.204833231@linuxfoundation.org>
@@ -53,92 +52,79 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lukas Wunner <lukas@wunner.de>
+From: Todd Brandt <todd.e.brandt@intel.com>
 
-commit a2f1e22390ac2ca7ac8d77aa0f78c068b6dd2208 upstream.
+commit d4a058762f3d931aa1159b64ba94a09a04024f8c upstream.
 
-When the PCI core gained power management support in 2002, it introduced
-pci_save_state() and pci_restore_state() helpers to restore Config Space
-after a D3hot or D3cold transition, which implies a Soft or Fundamental
-Reset (PCIe r7.0 sec 5.8):
+Fix build regression seen when using old gcc-9 compiler.
 
-  https://git.kernel.org/tglx/history/c/a5287abe398b
-
-In 2006, EEH and AER were introduced to recover from errors by performing
-a reset.  Because errors can occur at any time, drivers began calling
-pci_save_state() on probe to ensure recoverability.
-
-In 2009, recoverability was foiled by commit c82f63e411f1 ("PCI: check
-saved state before restore"):  It amended pci_restore_state() to bail out
-if the "state_saved" flag has been cleared.  The flag is cleared by
-pci_restore_state() itself, hence a saved state is now allowed to be
-restored only once and is then invalidated.  That doesn't seem to make
-sense because the saved state should be good enough to be reused.
-
-Soon after, drivers began to work around this behavior by calling
-pci_save_state() immediately after pci_restore_state(), see e.g. commit
-b94f2d775a71 ("igb: call pci_save_state after pci_restore_state").
-Hilariously, two drivers even set the "saved_state" flag to true before
-invoking pci_restore_state(), see ipr_reset_restore_cfg_space() and
-e1000_io_slot_reset().
-
-Despite these workarounds, recoverability at all times is not guaranteed:
-E.g. when a PCIe port goes through a runtime suspend and resume cycle,
-the "saved_state" flag is cleared by:
-
-  pci_pm_runtime_resume()
-    pci_pm_default_resume_early()
-      pci_restore_state()
-
-... and hence on a subsequent AER event, the port's Config Space cannot be
-restored.  Riana reports a recovery failure of a GPU-integrated PCIe
-switch and has root-caused it to the behavior of pci_restore_state().
-Another workaround would be necessary, namely calling pci_save_state() in
-pcie_port_device_runtime_resume().
-
-The motivation of commit c82f63e411f1 was to prevent restoring state if
-pci_save_state() hasn't been called before.  But that can be achieved by
-saving state already on device addition, after Config Space has been
-initialized.  A desirable side effect is that devices become recoverable
-even if no driver gets bound.  This renders the commit unnecessary, so
-revert it.
-
-Reported-by: Riana Tauro <riana.tauro@intel.com> # off-list
-Signed-off-by: Lukas Wunner <lukas@wunner.de>
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Tested-by: Riana Tauro <riana.tauro@intel.com>
-Reviewed-by: Rafael J. Wysocki (Intel) <rafael@kernel.org>
-Link: https://patch.msgid.link/9e34ce61c5404e99ffdd29205122c6fb334b38aa.1763483367.git.lukas@wunner.de
-Cc: Mario Limonciello <mario.limonciello@amd.com>
+Signed-off-by: Todd Brandt <todd.e.brandt@intel.com>
+Reviewed-by: Chen Yu <yu.c.chen@intel.com>
+Signed-off-by: Len Brown <len.brown@intel.com>
+Signed-off-by: Nikolay Kuratov <kniv@yandex-team.ru>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pci/bus.c |    3 +++
- drivers/pci/pci.c |    3 ---
- 2 files changed, 3 insertions(+), 3 deletions(-)
+ tools/power/x86/turbostat/turbostat.c |   15 ++++++---------
+ 1 file changed, 6 insertions(+), 9 deletions(-)
 
---- a/drivers/pci/bus.c
-+++ b/drivers/pci/bus.c
-@@ -331,6 +331,9 @@ void pci_bus_add_device(struct pci_dev *
- 	struct device_node *dn = dev->dev.of_node;
- 	int retval;
+--- a/tools/power/x86/turbostat/turbostat.c
++++ b/tools/power/x86/turbostat/turbostat.c
+@@ -2798,6 +2798,8 @@ int format_counters(struct thread_data *
+ 	}
  
-+	/* Save config space for error recoverability */
-+	pci_save_state(dev);
-+
- 	/*
- 	 * Can not put in pci_device_add yet because resources
- 	 * are not assigned yet for some devices.
---- a/drivers/pci/pci.c
-+++ b/drivers/pci/pci.c
-@@ -1939,9 +1939,6 @@ static void pci_restore_rebar_state(stru
-  */
- void pci_restore_state(struct pci_dev *dev)
- {
--	if (!dev->state_saved)
--		return;
+ 	for (i = 0, ppmt = sys.pmt_tp; ppmt; i++, ppmt = ppmt->next) {
++		const unsigned long value_raw = t->pmt_counter[i];
++		const double value_converted = 100.0 * value_raw / crystal_hz / interval_float;
+ 		switch (ppmt->type) {
+ 		case PMT_TYPE_RAW:
+ 			if (pmt_counter_get_width(ppmt) <= 32)
+@@ -2809,9 +2811,6 @@ int format_counters(struct thread_data *
+ 			break;
+ 
+ 		case PMT_TYPE_XTAL_TIME:
+-			const unsigned long value_raw = t->pmt_counter[i];
+-			const double value_converted = 100.0 * value_raw / crystal_hz / interval_float;
 -
- 	pci_restore_pcie_state(dev);
- 	pci_restore_pasid_state(dev);
- 	pci_restore_pri_state(dev);
+ 			outp += sprintf(outp, "%s%.2f", (printed++ ? delim : ""), value_converted);
+ 			break;
+ 		}
+@@ -2879,6 +2878,8 @@ int format_counters(struct thread_data *
+ 	}
+ 
+ 	for (i = 0, ppmt = sys.pmt_cp; ppmt; i++, ppmt = ppmt->next) {
++		const unsigned long value_raw = c->pmt_counter[i];
++		const double value_converted = 100.0 * value_raw / crystal_hz / interval_float;
+ 		switch (ppmt->type) {
+ 		case PMT_TYPE_RAW:
+ 			if (pmt_counter_get_width(ppmt) <= 32)
+@@ -2890,9 +2891,6 @@ int format_counters(struct thread_data *
+ 			break;
+ 
+ 		case PMT_TYPE_XTAL_TIME:
+-			const unsigned long value_raw = c->pmt_counter[i];
+-			const double value_converted = 100.0 * value_raw / crystal_hz / interval_float;
+-
+ 			outp += sprintf(outp, "%s%.2f", (printed++ ? delim : ""), value_converted);
+ 			break;
+ 		}
+@@ -3078,6 +3076,8 @@ int format_counters(struct thread_data *
+ 	}
+ 
+ 	for (i = 0, ppmt = sys.pmt_pp; ppmt; i++, ppmt = ppmt->next) {
++		const unsigned long value_raw = p->pmt_counter[i];
++		const double value_converted = 100.0 * value_raw / crystal_hz / interval_float;
+ 		switch (ppmt->type) {
+ 		case PMT_TYPE_RAW:
+ 			if (pmt_counter_get_width(ppmt) <= 32)
+@@ -3089,9 +3089,6 @@ int format_counters(struct thread_data *
+ 			break;
+ 
+ 		case PMT_TYPE_XTAL_TIME:
+-			const unsigned long value_raw = p->pmt_counter[i];
+-			const double value_converted = 100.0 * value_raw / crystal_hz / interval_float;
+-
+ 			outp += sprintf(outp, "%s%.2f", (printed++ ? delim : ""), value_converted);
+ 			break;
+ 		}
 
 
