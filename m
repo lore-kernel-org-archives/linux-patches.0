@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0DCB37BE93;
-	Mon,  9 Feb 2026 14:41:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F5FB37AA87;
+	Mon,  9 Feb 2026 14:41:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770648076; cv=none; b=KC4ofO0IQ5IOD8XMrHS49wkeqht1cfGfvMX8Y2eHL3LpyhUZ8hH3VmIMedLGpImsC15xA/d68MkmkJKqun5fcM0Eu1yS2/WBPl/b2KyCLWfQIBFfecIoWzTHsoynfTnECFzegqOxgYv8OLHte/a2XcG4wOB2ujsuic54caL/BiI=
+	t=1770648079; cv=none; b=kbz3Rk7mZSJ/2JAp2QNn564tlGifFcu2yIoB2wXf8EPdDyipo3PsDu5tmZpRckYDZ/fsXEeSrdtf7N2qwMLND5m8kYomGcKWv0eERFThOB3ayaNxJmSFHuH95e46CTcczqNWt968yZsKY7BXbYfha9Udp384JzNlpnnKZw+NsZA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770648076; c=relaxed/simple;
-	bh=uUhrn2mDrsAUCUToxNJ2NMlP2ntT4Zl9XN8hifueheY=;
+	s=arc-20240116; t=1770648079; c=relaxed/simple;
+	bh=/tvTzSdIwdz3PNWom4gQE698ApXHGteI0kEPTWrZclg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=t8FR0psRdJuWTeCH6sGMNru6cqazcCz6gMta4GRg/FgpsGdqgckLxMRG8YJ7gjpOj7DowOTVUQUa1msTvnVhgQVLCioTlSYdZxOVzVr55er+zWFm8xjnYyWSSWM49lshSXK2GJznSna4xkikWfUrPc/IH3QwuDTYbbSzaWNtJ0c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=04lNDkx2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=YlPWlRynhODe7T3GFe6hivT65pH2Ed9fSJ5EFEGi5tWFc35cQxsEcbziWP7xsSRuKwX7Y5CDojEAHrb9EVelet0fUHC/6ImJEAXdgOv75xWGNsk9a/toEQZqpArsBCalN1qSf+hqjtgseWG33s8JoMVh6ojxnvM9jdru8p+mCio=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=riLsew9L; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="04lNDkx2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 33417C19422;
-	Mon,  9 Feb 2026 14:41:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="riLsew9L"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A317EC19423;
+	Mon,  9 Feb 2026 14:41:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770648075;
-	bh=uUhrn2mDrsAUCUToxNJ2NMlP2ntT4Zl9XN8hifueheY=;
+	s=korg; t=1770648079;
+	bh=/tvTzSdIwdz3PNWom4gQE698ApXHGteI0kEPTWrZclg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=04lNDkx243lS8liT2lkYMYuqKcmsj+AiXRkor7rDWekQKRlwy2ZSryUYsiAAHGxk0
-	 Wg8tz9nwBtrkrcO8NHzXYUO6I5qLP+UPaGnsvFC42ownEFDzwA9Xj8OijxIoXLwGZw
-	 ttFHK0DvEbY67QMm79BN2myNdEZwbsyLz32T91+8=
+	b=riLsew9LS3GNIWmQd/YMIA0rBP1bJl/S3bvIIiQ02fm9tPnvuw2iPWUhRWodlBYiK
+	 cJAffYYR62yFxS7MZolclRcyArsNpgZoITf/8heI5/QiILkmyFFmd8wpoApLdSFZ8K
+	 GUDthdJmgHLdDZmSSLzqbzP3YQ7rWB41KKXt2D8I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Imre Deak <imre.deak@intel.com>,
+	Karthik Poosa <karthik.poosa@intel.com>,
 	Rodrigo Vivi <rodrigo.vivi@intel.com>,
+	=?UTF-8?q?Thomas=20Hellstr=C3=B6m?= <thomas.hellstrom@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 099/113] drm/xe/pm: Also avoid missing outer rpm warning on system suspend
-Date: Mon,  9 Feb 2026 15:24:08 +0100
-Message-ID: <20260209142313.734377105@linuxfoundation.org>
+Subject: [PATCH 6.12 100/113] drm/xe/pm: Disable D3Cold for BMG only on specific platforms
+Date: Mon,  9 Feb 2026 15:24:09 +0100
+Message-ID: <20260209142313.769998932@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260209142310.204833231@linuxfoundation.org>
 References: <20260209142310.204833231@linuxfoundation.org>
@@ -45,63 +46,63 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Rodrigo Vivi <rodrigo.vivi@intel.com>
+From: Karthik Poosa <karthik.poosa@intel.com>
 
-[ Upstream commit f2eedadf19979109415928f5ea9ba9a73262aa8f ]
+[ Upstream commit bb36170d959fad7f663f91eb9c32a84dd86bef2b ]
 
-Fix the false-positive "Missing outer runtime PM protection" warning
-triggered by
-release_async_domains() -> intel_runtime_pm_get_noresume() ->
-xe_pm_runtime_get_noresume()
-during system suspend.
+Restrict D3Cold disablement for BMG to unsupported NUC platforms,
+instead of disabling it on all platforms.
 
-xe_pm_runtime_get_noresume() is supposed to warn if the device is not in
-the runtime resumed state, using xe_pm_runtime_get_if_in_use() for this.
-However the latter function will fail if called during runtime or system
-suspend/resume, regardless of whether the device is runtime resumed or
-not.
-
-Based on the above suppress the warning during system suspend/resume,
-similarly to how this is done during runtime suspend/resume.
-
-Suggested-by: Imre Deak <imre.deak@intel.com>
-Reviewed-by: Imre Deak <imre.deak@intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20241217230547.1667561-1-rodrigo.vivi@intel.com
+Signed-off-by: Karthik Poosa <karthik.poosa@intel.com>
+Fixes: 3e331a6715ee ("drm/xe/pm: Temporarily disable D3Cold on BMG")
+Link: https://patch.msgid.link/20260123173238.1642383-1-karthik.poosa@intel.com
+Reviewed-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
 Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
-Stable-dep-of: bb36170d959f ("drm/xe/pm: Disable D3Cold for BMG only on specific platforms")
+(cherry picked from commit 39125eaf8863ab09d70c4b493f58639b08d5a897)
+Signed-off-by: Thomas Hellström <thomas.hellstrom@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/xe/xe_pm.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/xe/xe_pm.c | 13 ++++++++++---
+ 1 file changed, 10 insertions(+), 3 deletions(-)
 
 diff --git a/drivers/gpu/drm/xe/xe_pm.c b/drivers/gpu/drm/xe/xe_pm.c
-index f8fad9e56805b..1012925aa4816 100644
+index 1012925aa4816..cab80b947c755 100644
 --- a/drivers/gpu/drm/xe/xe_pm.c
 +++ b/drivers/gpu/drm/xe/xe_pm.c
-@@ -6,6 +6,7 @@
- #include "xe_pm.h"
+@@ -7,6 +7,7 @@
  
  #include <linux/pm_runtime.h>
-+#include <linux/suspend.h>
+ #include <linux/suspend.h>
++#include <linux/dmi.h>
  
  #include <drm/drm_managed.h>
  #include <drm/ttm/ttm_placement.h>
-@@ -622,7 +623,8 @@ static bool xe_pm_suspending_or_resuming(struct xe_device *xe)
- 	struct device *dev = xe->drm.dev;
+@@ -270,9 +271,15 @@ int xe_pm_init_early(struct xe_device *xe)
  
- 	return dev->power.runtime_status == RPM_SUSPENDING ||
--		dev->power.runtime_status == RPM_RESUMING;
-+		dev->power.runtime_status == RPM_RESUMING ||
-+		pm_suspend_target_state != PM_SUSPEND_ON;
- #else
- 	return false;
- #endif
+ static u32 vram_threshold_value(struct xe_device *xe)
+ {
+-	/* FIXME: D3Cold temporarily disabled by default on BMG */
+-	if (xe->info.platform == XE_BATTLEMAGE)
+-		return 0;
++	if (xe->info.platform == XE_BATTLEMAGE) {
++		const char *product_name;
++
++		product_name = dmi_get_system_info(DMI_PRODUCT_NAME);
++		if (product_name && strstr(product_name, "NUC13RNG")) {
++			drm_warn(&xe->drm, "BMG + D3Cold not supported on this platform\n");
++			return 0;
++		}
++	}
+ 
+ 	return DEFAULT_VRAM_THRESHOLD;
+ }
 -- 
 2.51.0
 
