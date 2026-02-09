@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2771925DB1C;
-	Mon,  9 Feb 2026 14:47:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E069F28725B;
+	Mon,  9 Feb 2026 14:47:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770648438; cv=none; b=lNCD5WaS1PiPuUKuYFd307fNnQq2K9Z6Uab/M6SEOHYnQV8a/yLxWirI5QToj8kVnAyE/6gqQHx0JsLIiwtRuM2c4/zKqjzbMKf2vFQk+uonsC/2Wt11B1DKKfzIxWl1cyWFrYwsU5jqFUnlQO4DiIPZWFJSUv9kSgmU2r2RrbY=
+	t=1770648442; cv=none; b=Ilta+GI7Q1O3qAZlImBfx5mAi+jaKkWs0+qQPdO85+c/bZnKzUBwP4l5gSuBaVyyD7FnWQaSolDoUWODcls96MgBI/4M+DnXKYZ9S7Z1E4RqSHdNmtQKnK50IVPYdUYEjeBUdyaEkc86kmEC3zxrz4ceIqFNzf4yqEZU5MNzfY4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770648438; c=relaxed/simple;
-	bh=a9NLvXzXR+bY9o03Qc1M4f4B1WavDPT06nvObqShoz4=;
+	s=arc-20240116; t=1770648442; c=relaxed/simple;
+	bh=iHQ0tzBGVASYPqc84rf/rRBwA5I1Y7/2D8i2v0nUDe8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=H0JrdunAhYCDN9GecF7kIyJOOXvkaGyxrzGbC2a072V5hK48BqyX4wYejXSQwToyRK4M5Og1PqSPkvqQ12Prb12XNF2cMvAkxeAK8OqI9EnT9zuM4einxI3YCANrwUXBo8HktPU0ICNUhYw9rfOTP5McKWHg7EyPHflp4CZmB9c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Rj4j4X4z; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lOGEuwmpY8YQVFIT57bSbPSBb9mq/bKQ4eLvQ/G9ICdWuiiKxKUhCefuBtvhEM+TVcOGv94ANvq0XOo9pRiZgcgOMODdYxBR4+Jkud7UKNdZyoIcY7us2L0cAqp/QklTd+65iY4K4xtTcgdrkyNLrGPitfyPdmQelfa7lY0uuBg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=npO485O/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Rj4j4X4z"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8EC2EC116C6;
-	Mon,  9 Feb 2026 14:47:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="npO485O/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EBB26C116C6;
+	Mon,  9 Feb 2026 14:47:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770648438;
-	bh=a9NLvXzXR+bY9o03Qc1M4f4B1WavDPT06nvObqShoz4=;
+	s=korg; t=1770648441;
+	bh=iHQ0tzBGVASYPqc84rf/rRBwA5I1Y7/2D8i2v0nUDe8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Rj4j4X4zBl2GK3IHfnEfSBW9JjXgyyrY/h6fH9U4MN+75gIB4E6VjHQuExYbwUFvE
-	 r5hz9BB2pL7+OwTc++B4lT/CqFxZmF1TeHgOjF1Vsz3S1ZQR1+VeWmrJLZ+9zXrAz4
-	 EIa2Ie9hSpnBotRiHDgUHeC0Qm5Jw6mn7olXNyKc=
+	b=npO485O/eT6KdN7WtVfevna0KXtlmamYuXg6MmYux0MwcWldezq58sjX5DXwLyNLh
+	 W+EbEkx3DN09wes63xK4iy3njB6f/ViPhJxl1vuwv+LfKcgrqTH4gHMMpjuwRVgknh
+	 TShenbBnCWg9q0pS4lTTVp96CWxOT0Mbemli/CCI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chris Chiu <chris.chiu@canonical.com>,
-	Benjamin Tissoires <bentiss@kernel.org>,
+	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
+	Mark Rutland <mark.rutland@arm.com>,
+	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
+	"jempty.liang" <imntjempty@163.com>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 38/86] HID: quirks: Add another Chicony HP 5MP Cameras to hid_ignore_list
-Date: Mon,  9 Feb 2026 15:24:01 +0100
-Message-ID: <20260209142306.157663674@linuxfoundation.org>
+Subject: [PATCH 6.6 21/86] tracing: Fix ftrace event field alignments
+Date: Mon,  9 Feb 2026 15:23:44 +0100
+Message-ID: <20260209142305.543742558@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260209142304.770150175@linuxfoundation.org>
 References: <20260209142304.770150175@linuxfoundation.org>
@@ -51,51 +54,204 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chris Chiu <chris.chiu@canonical.com>
+From: Steven Rostedt <rostedt@goodmis.org>
 
-[ Upstream commit c06bc3557542307b9658fbd43cc946a14250347b ]
+[ Upstream commit 033c55fe2e326bea022c3cc5178ecf3e0e459b82 ]
 
-Another Chicony Electronics HP 5MP Camera with USB ID 04F2:B882
-reports a HID sensor interface that is not actually implemented.
+The fields of ftrace specific events (events used to save ftrace internal
+events like function traces and trace_printk) are generated similarly to
+how normal trace event fields are generated. That is, the fields are added
+to a trace_events_fields array that saves the name, offset, size,
+alignment and signness of the field. It is used to produce the output in
+the format file in tracefs so that tooling knows how to parse the binary
+data of the trace events.
 
-Add the device to the HID ignore list so the bogus sensor is never
-exposed to userspace. Then the system won't hang when runtime PM
-tries to wake the unresponsive device.
+The issue is that some of the ftrace event structures are packed. The
+function graph exit event structures are one of them. The 64 bit calltime
+and rettime fields end up 4 byte aligned, but the algorithm to show to
+userspace shows them as 8 byte aligned.
 
-Signed-off-by: Chris Chiu <chris.chiu@canonical.com>
-Signed-off-by: Benjamin Tissoires <bentiss@kernel.org>
+The macros that create the ftrace events has one for embedded structure
+fields. There's two macros for theses fields:
+
+  __field_desc() and __field_packed()
+
+The difference of the latter macro is that it treats the field as packed.
+
+Rename that field to __field_desc_packed() and create replace the
+__field_packed() to be a normal field that is packed and have the calltime
+and rettime use those.
+
+This showed up on 32bit architectures for function graph time fields. It
+had:
+
+ ~# cat /sys/kernel/tracing/events/ftrace/funcgraph_exit/format
+[..]
+        field:unsigned long func;       offset:8;       size:4; signed:0;
+        field:unsigned int depth;       offset:12;      size:4; signed:0;
+        field:unsigned int overrun;     offset:16;      size:4; signed:0;
+        field:unsigned long long calltime;      offset:24;      size:8; signed:0;
+        field:unsigned long long rettime;       offset:32;      size:8; signed:0;
+
+Notice that overrun is at offset 16 with size 4, where in the structure
+calltime is at offset 20 (16 + 4), but it shows the offset at 24. That's
+because it used the alignment of unsigned long long when used as a
+declaration and not as a member of a structure where it would be aligned
+by word size (in this case 4).
+
+By using the proper structure alignment, the format has it at the correct
+offset:
+
+ ~# cat /sys/kernel/tracing/events/ftrace/funcgraph_exit/format
+[..]
+        field:unsigned long func;       offset:8;       size:4; signed:0;
+        field:unsigned int depth;       offset:12;      size:4; signed:0;
+        field:unsigned int overrun;     offset:16;      size:4; signed:0;
+        field:unsigned long long calltime;      offset:20;      size:8; signed:0;
+        field:unsigned long long rettime;       offset:28;      size:8; signed:0;
+
+Cc: stable@vger.kernel.org
+Cc: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
+Cc: Mark Rutland <mark.rutland@arm.com>
+Acked-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+Reported-by: "jempty.liang" <imntjempty@163.com>
+Link: https://patch.msgid.link/20260204113628.53faec78@gandalf.local.home
+Fixes: 04ae87a52074e ("ftrace: Rework event_create_dir()")
+Closes: https://lore.kernel.org/all/20260130015740.212343-1-imntjempty@163.com/
+Closes: https://lore.kernel.org/all/20260202123342.2544795-1-imntjempty@163.com/
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+[ adapted field types and macro arguments ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hid/hid-ids.h    | 1 +
- drivers/hid/hid-quirks.c | 1 +
- 2 files changed, 2 insertions(+)
+ kernel/trace/trace.h         |    7 +++++--
+ kernel/trace/trace_entries.h |   26 +++++++++++++-------------
+ kernel/trace/trace_export.c  |   21 +++++++++++++++------
+ 3 files changed, 33 insertions(+), 21 deletions(-)
 
-diff --git a/drivers/hid/hid-ids.h b/drivers/hid/hid-ids.h
-index ca9c70c8f3cf1..fbbd1dc5582eb 100644
---- a/drivers/hid/hid-ids.h
-+++ b/drivers/hid/hid-ids.h
-@@ -307,6 +307,7 @@
- #define USB_DEVICE_ID_CHICONY_ACER_SWITCH12	0x1421
- #define USB_DEVICE_ID_CHICONY_HP_5MP_CAMERA	0xb824
- #define USB_DEVICE_ID_CHICONY_HP_5MP_CAMERA2	0xb82c
-+#define USB_DEVICE_ID_CHICONY_HP_5MP_CAMERA3	0xb882
+--- a/kernel/trace/trace.h
++++ b/kernel/trace/trace.h
+@@ -65,14 +65,17 @@ enum trace_type {
+ #undef __field_fn
+ #define __field_fn(type, item)		type	item;
  
- #define USB_VENDOR_ID_CHUNGHWAT		0x2247
- #define USB_DEVICE_ID_CHUNGHWAT_MULTITOUCH	0x0001
-diff --git a/drivers/hid/hid-quirks.c b/drivers/hid/hid-quirks.c
-index 192b8f63baaab..b2a3ce7bfb6b6 100644
---- a/drivers/hid/hid-quirks.c
-+++ b/drivers/hid/hid-quirks.c
-@@ -763,6 +763,7 @@ static const struct hid_device_id hid_ignore_list[] = {
- 	{ HID_USB_DEVICE(USB_VENDOR_ID_BERKSHIRE, USB_DEVICE_ID_BERKSHIRE_PCWD) },
- 	{ HID_USB_DEVICE(USB_VENDOR_ID_CHICONY, USB_DEVICE_ID_CHICONY_HP_5MP_CAMERA) },
- 	{ HID_USB_DEVICE(USB_VENDOR_ID_CHICONY, USB_DEVICE_ID_CHICONY_HP_5MP_CAMERA2) },
-+	{ HID_USB_DEVICE(USB_VENDOR_ID_CHICONY, USB_DEVICE_ID_CHICONY_HP_5MP_CAMERA3) },
- 	{ HID_USB_DEVICE(USB_VENDOR_ID_CIDC, 0x0103) },
- 	{ HID_USB_DEVICE(USB_VENDOR_ID_CYGNAL, USB_DEVICE_ID_CYGNAL_RADIO_SI470X) },
- 	{ HID_USB_DEVICE(USB_VENDOR_ID_CYGNAL, USB_DEVICE_ID_CYGNAL_RADIO_SI4713) },
--- 
-2.51.0
-
++#undef __field_packed
++#define __field_packed(type, item)	type	item;
++
+ #undef __field_struct
+ #define __field_struct(type, item)	__field(type, item)
+ 
+ #undef __field_desc
+ #define __field_desc(type, container, item)
+ 
+-#undef __field_packed
+-#define __field_packed(type, container, item)
++#undef __field_desc_packed
++#define __field_desc_packed(type, container, item)
+ 
+ #undef __array
+ #define __array(type, item, size)	type	item[size];
+--- a/kernel/trace/trace_entries.h
++++ b/kernel/trace/trace_entries.h
+@@ -78,8 +78,8 @@ FTRACE_ENTRY_PACKED(funcgraph_entry, ftr
+ 
+ 	F_STRUCT(
+ 		__field_struct(	struct ftrace_graph_ent,	graph_ent	)
+-		__field_packed(	unsigned long,	graph_ent,	func		)
+-		__field_packed(	int,		graph_ent,	depth		)
++		__field_desc_packed(	unsigned long,	graph_ent,	func	)
++		__field_desc_packed(	int,		graph_ent,	depth	)
+ 	),
+ 
+ 	F_printk("--> %ps (%d)", (void *)__entry->func, __entry->depth)
+@@ -94,12 +94,12 @@ FTRACE_ENTRY_PACKED(funcgraph_exit, ftra
+ 
+ 	F_STRUCT(
+ 		__field_struct(	struct ftrace_graph_ret,	ret	)
+-		__field_packed(	unsigned long,	ret,		func	)
+-		__field_packed(	unsigned long,	ret,		retval	)
+-		__field_packed(	int,		ret,		depth	)
+-		__field_packed(	unsigned int,	ret,		overrun	)
+-		__field_packed(	unsigned long long, ret,	calltime)
+-		__field_packed(	unsigned long long, ret,	rettime	)
++		__field_desc_packed(	unsigned long,	ret,	func	)
++		__field_desc_packed(	unsigned long,	ret,	retval	)
++		__field_desc_packed(	int,		ret,	depth	)
++		__field_desc_packed(	unsigned int,	ret,	overrun	)
++		__field_packed(unsigned long long,	calltime)
++		__field_packed(unsigned long long,	rettime	)
+ 	),
+ 
+ 	F_printk("<-- %ps (%d) (start: %llx  end: %llx) over: %d retval: %lx",
+@@ -116,11 +116,11 @@ FTRACE_ENTRY_PACKED(funcgraph_exit, ftra
+ 
+ 	F_STRUCT(
+ 		__field_struct(	struct ftrace_graph_ret,	ret	)
+-		__field_packed(	unsigned long,	ret,		func	)
+-		__field_packed(	int,		ret,		depth	)
+-		__field_packed(	unsigned int,	ret,		overrun	)
+-		__field_packed(	unsigned long long, ret,	calltime)
+-		__field_packed(	unsigned long long, ret,	rettime	)
++		__field_desc_packed(	unsigned long,	ret,	func	)
++		__field_desc_packed(	int,		ret,	depth	)
++		__field_desc_packed(	unsigned int,	ret,	overrun	)
++		__field_packed(unsigned long long,	calltime)
++		__field_packed(unsigned long long,	rettime	)
+ 	),
+ 
+ 	F_printk("<-- %ps (%d) (start: %llx  end: %llx) over: %d",
+--- a/kernel/trace/trace_export.c
++++ b/kernel/trace/trace_export.c
+@@ -42,11 +42,14 @@ static int ftrace_event_register(struct
+ #undef __field_fn
+ #define __field_fn(type, item)				type item;
+ 
++#undef __field_packed
++#define __field_packed(type, item)			type item;
++
+ #undef __field_desc
+ #define __field_desc(type, container, item)		type item;
+ 
+-#undef __field_packed
+-#define __field_packed(type, container, item)		type item;
++#undef __field_desc_packed
++#define __field_desc_packed(type, container, item)	type item;
+ 
+ #undef __array
+ #define __array(type, item, size)			type item[size];
+@@ -104,11 +107,14 @@ static void __always_unused ____ftrace_c
+ #undef __field_fn
+ #define __field_fn(_type, _item) __field_ext(_type, _item, FILTER_TRACE_FN)
+ 
++#undef __field_packed
++#define __field_packed(_type, _item) __field_ext_packed(_type, _item, FILTER_OTHER)
++
+ #undef __field_desc
+ #define __field_desc(_type, _container, _item) __field_ext(_type, _item, FILTER_OTHER)
+ 
+-#undef __field_packed
+-#define __field_packed(_type, _container, _item) __field_ext_packed(_type, _item, FILTER_OTHER)
++#undef __field_desc_packed
++#define __field_desc_packed(_type, _container, _item) __field_ext_packed(_type, _item, FILTER_OTHER)
+ 
+ #undef __array
+ #define __array(_type, _item, _len) {					\
+@@ -146,11 +152,14 @@ static struct trace_event_fields ftrace_
+ #undef __field_fn
+ #define __field_fn(type, item)
+ 
++#undef __field_packed
++#define __field_packed(type, item)
++
+ #undef __field_desc
+ #define __field_desc(type, container, item)
+ 
+-#undef __field_packed
+-#define __field_packed(type, container, item)
++#undef __field_desc_packed
++#define __field_desc_packed(type, container, item)
+ 
+ #undef __array
+ #define __array(type, item, len)
 
 
