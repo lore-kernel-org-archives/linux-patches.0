@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7BA181DE8AD;
-	Mon,  9 Feb 2026 14:33:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 975AC1AF0AF;
+	Mon,  9 Feb 2026 14:33:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770647614; cv=none; b=cKPyLIq1tJPB4sTqM8i4O1KtnxffKkv+RHpbRQdGCYHbOeLHIfl2QMW1ID1GmQ+cjIGh92MG2zktBZteT045AH8mvGNzfzQEu/lg3fCv3dXO2na+/heMkzouZJ26IVWas9pW4ajC5P9yaEQeDF0GWRSO/IsfSZQs8dGNhmocoqY=
+	t=1770647617; cv=none; b=OkiOxD5ES6vVcBlQTQz6GqkrJ0rt13Hz6PbeJ8Ciccm4GGnKlUXTPzejozL63rKXP2dWVYSbAblFY+B0H+gVTeDEAz11Vut7MeHmRZKlmObRJMdfdAmQMuye3dpLtNakooT/gfZ2Q7DxrSz9p7/mCR+EpiCKzNVc/6yHCRTWSrE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770647614; c=relaxed/simple;
-	bh=y6uxW/vUGNfwjTEa11b5H+ma4GoNJvuIH7EDtFSkedo=;
+	s=arc-20240116; t=1770647617; c=relaxed/simple;
+	bh=OsYAwkVl7Y7/Apo1j10G4G1IWOnObAyAq1pRjEqP1J8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=K9spyOX0/eT7YAMZKwzP5EZX8WAKfsueZNE8Yv6BGEvXq7vJNCHq7I8a54cZ5yMIWB9FjSChq3p/4Wm/s1wMdc6sC6OJAnNJm1bWuxl055ZW7v9ToLnSa3nr9n4uRInmHeJlx4KC2nr4WjvzJkyXTdDaSILmCtr4FuvrABp0YP4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=A9fhsJnT; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fachg3RNKF5mEF3AwfrHDeUWlAyCOWRMErHtR7OoYQuMpsoFNv7j7d4mZ7L9pjxLHNVMqQif95o59bwAVhds5+c+wkdzjSRt1TLX74LaSxBqukGmcp9WiY2jTjkVzGH9+ECeWYAgR8Dcr3ZhVcE2Cnn6mB9PKvf4qq81DsfTPeQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rtaBFY6Q; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="A9fhsJnT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D531DC116C6;
-	Mon,  9 Feb 2026 14:33:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rtaBFY6Q"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C7B4C116C6;
+	Mon,  9 Feb 2026 14:33:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770647614;
-	bh=y6uxW/vUGNfwjTEa11b5H+ma4GoNJvuIH7EDtFSkedo=;
+	s=korg; t=1770647617;
+	bh=OsYAwkVl7Y7/Apo1j10G4G1IWOnObAyAq1pRjEqP1J8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=A9fhsJnTLQ0lwYh8+ZE2+h1VHW9Nrh2NzhGYl5fNZ5TPeA1LvZ0xbQT9YNs5wWtLK
-	 Nyym/8GLz8nDYvAgcIMYlCmaynzuix+JjytYZFJVvpBN4eGLKfkKYxAv1ER1XIR82V
-	 KSvXrlspVf/4VRfVq2K+7SxPmpbzAa+EQhL34oIk=
+	b=rtaBFY6QTKiDN4sYHTFngj1QyOI/u7i4/TQeCjbzdj6n8ZD6yvu1h7dnSHLUcccL4
+	 V4P8/WhlJrlxccijrmrIshdbTDuX24mxOW/qFn1fnStDVV01vI5Pz3fYqHh07aHUHU
+	 IJaf+Tte+gS3UPOHOCFbJ4zTOwGw2w/A1RoMxzEg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Karthik Poosa <karthik.poosa@intel.com>,
-	Rodrigo Vivi <rodrigo.vivi@intel.com>,
-	=?UTF-8?q?Thomas=20Hellstr=C3=B6m?= <thomas.hellstrom@linux.intel.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 152/175] drm/xe/pm: Disable D3Cold for BMG only on specific platforms
-Date: Mon,  9 Feb 2026 15:23:45 +0100
-Message-ID: <20260209142325.966570427@linuxfoundation.org>
+	Aleksandr Loktionov <aleksandr.loktionov@intel.com>,
+	Grzegorz Nitka <grzegorz.nitka@intel.com>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>,
+	Sasha Levin <sashal@kernel.org>,
+	Sunitha Mekala <sunithax.d.mekala@intel.com>
+Subject: [PATCH 6.18 126/175] ice: fix missing TX timestamps interrupts on E825 devices
+Date: Mon,  9 Feb 2026 15:23:19 +0100
+Message-ID: <20260209142325.043609755@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260209142320.474120190@linuxfoundation.org>
 References: <20260209142320.474120190@linuxfoundation.org>
@@ -46,63 +47,78 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Karthik Poosa <karthik.poosa@intel.com>
+From: Grzegorz Nitka <grzegorz.nitka@intel.com>
 
-[ Upstream commit bb36170d959fad7f663f91eb9c32a84dd86bef2b ]
+[ Upstream commit 99854c167cfc113ad863832b1601c4ca1a639cfe ]
 
-Restrict D3Cold disablement for BMG to unsupported NUC platforms,
-instead of disabling it on all platforms.
+Modify PTP (Precision Time Protocol) configuration on link down flow.
+Previously, PHY_REG_TX_OFFSET_READY register was cleared in such case.
+This register is used to determine if the timestamp is valid or not on
+the hardware side.
+However, there is a possibility that there is still the packet in the
+HW queue which originally was supposed to be timestamped but the link
+is already down and given register is cleared.
+This potentially might lead to the situation in which that 'delayed'
+packet's timestamp is treated as invalid one when the link is up
+again.
+This in turn leads to the situation in which the driver is not able to
+effectively clean timestamp memory and interrupt configuration.
+>From the hardware perspective, that 'old' interrupt was not handled
+properly and even if new timestamp packets are processed, no new
+interrupts is generated. As a result, providing timestamps to the user
+applications (like ptp4l) is not possible.
+The solution for this problem is implemented at the driver level rather
+than the firmware, and maintains the tx_ready bit high, even during
+link down events. This avoids entering a potential inconsistent state
+between the driver and the timestamp hardware.
 
-Signed-off-by: Karthik Poosa <karthik.poosa@intel.com>
-Fixes: 3e331a6715ee ("drm/xe/pm: Temporarily disable D3Cold on BMG")
-Link: https://patch.msgid.link/20260123173238.1642383-1-karthik.poosa@intel.com
-Reviewed-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
-Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
-(cherry picked from commit 39125eaf8863ab09d70c4b493f58639b08d5a897)
-Signed-off-by: Thomas Hellström <thomas.hellstrom@linux.intel.com>
+Testing hints:
+- run PTP traffic at higher rate (like 16 PTP messages per second)
+- observe ptp4l behaviour at the client side in the following
+  conditions:
+	a) trigger link toggle events. It needs to be physiscal
+           link down/up events
+	b) link speed change
+In all above cases, PTP processing at ptp4l application should resume
+always. In failure case, the following permanent error message in ptp4l
+log was observed:
+controller-0 ptp4l: err [6175.116] ptp4l-legacy timed out while polling
+	for tx timestamp
+
+Fixes: 7cab44f1c35f ("ice: Introduce ETH56G PHY model for E825C products")
+Reviewed-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
+Signed-off-by: Grzegorz Nitka <grzegorz.nitka@intel.com>
+Tested-by: Sunitha Mekala <sunithax.d.mekala@intel.com> (A Contingent worker at Intel)
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/xe/xe_pm.c | 13 ++++++++++---
- 1 file changed, 10 insertions(+), 3 deletions(-)
+ drivers/net/ethernet/intel/ice/ice_ptp.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/xe/xe_pm.c b/drivers/gpu/drm/xe/xe_pm.c
-index a58bf004aee73..a74e800846ffa 100644
---- a/drivers/gpu/drm/xe/xe_pm.c
-+++ b/drivers/gpu/drm/xe/xe_pm.c
-@@ -8,6 +8,7 @@
- #include <linux/fault-inject.h>
- #include <linux/pm_runtime.h>
- #include <linux/suspend.h>
-+#include <linux/dmi.h>
- 
- #include <drm/drm_managed.h>
- #include <drm/ttm/ttm_placement.h>
-@@ -300,9 +301,15 @@ ALLOW_ERROR_INJECTION(xe_pm_init_early, ERRNO); /* See xe_pci_probe() */
- 
- static u32 vram_threshold_value(struct xe_device *xe)
- {
--	/* FIXME: D3Cold temporarily disabled by default on BMG */
--	if (xe->info.platform == XE_BATTLEMAGE)
--		return 0;
-+	if (xe->info.platform == XE_BATTLEMAGE) {
-+		const char *product_name;
-+
-+		product_name = dmi_get_system_info(DMI_PRODUCT_NAME);
-+		if (product_name && strstr(product_name, "NUC13RNG")) {
-+			drm_warn(&xe->drm, "BMG + D3Cold not supported on this platform\n");
-+			return 0;
-+		}
-+	}
- 
- 	return DEFAULT_VRAM_THRESHOLD;
- }
+diff --git a/drivers/net/ethernet/intel/ice/ice_ptp.c b/drivers/net/ethernet/intel/ice/ice_ptp.c
+index 8ec0f7d0fcebd..4aa88bac759f8 100644
+--- a/drivers/net/ethernet/intel/ice/ice_ptp.c
++++ b/drivers/net/ethernet/intel/ice/ice_ptp.c
+@@ -1338,9 +1338,12 @@ void ice_ptp_link_change(struct ice_pf *pf, bool linkup)
+ 		/* Do not reconfigure E810 or E830 PHY */
+ 		return;
+ 	case ICE_MAC_GENERIC:
+-	case ICE_MAC_GENERIC_3K_E825:
+ 		ice_ptp_port_phy_restart(ptp_port);
+ 		return;
++	case ICE_MAC_GENERIC_3K_E825:
++		if (linkup)
++			ice_ptp_port_phy_restart(ptp_port);
++		return;
+ 	default:
+ 		dev_warn(ice_pf_to_dev(pf), "%s: Unknown PHY type\n", __func__);
+ 	}
 -- 
 2.51.0
 
