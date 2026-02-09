@@ -1,39 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6CEC428312F;
-	Mon,  9 Feb 2026 14:53:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8021229A9C3;
+	Mon,  9 Feb 2026 14:53:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770648829; cv=none; b=gG7KDJIg7wDixwxdBH174yYMYnRFreIMJwsamUpRypfL547tLSDXWtVBQlAmeaQKlw92MyKyX3Alp35W/9Y6e9Sl+Mcvvt48G1KfFSNX71dyJbB7GmYzKIbNmZCpiZw4QUVeYVE/t6GQaErRhNFNCdeESzli9n6tIGrwGlKdggg=
+	t=1770648832; cv=none; b=X8z8FCP9RXnto4kzVyDJturs/2FieOqkgcisbMSGpFDFbGNqA9qIGXgo+cZ+qo05/lLDyEnaPy3RGCqpCLpikhcTDqWxlqxdOOTc8Z38qWDGUSsdR4NEFsdcJQ+k/J+xJvFj1gNIAy1UdKc6JeoEjyEGgNrYeuGIMNtVp23cpU0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770648829; c=relaxed/simple;
-	bh=flxGXVby2knBeD8zHmgd+vBB5im3F/fXvyO3WLULiug=;
+	s=arc-20240116; t=1770648832; c=relaxed/simple;
+	bh=7+2Jf1+1vE4IBlU1PbGZy8WsczJ8XF1jIzgwcbEYlkQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=KxbQ7be5H/UjwLVz1+84Zj344JDpXAdj8A/Nyc7Z6pfwtO7wG9/j/b+Sd0FhAt6AFDQDvGVjunjE+AodbV4Dtfh4/xzsEudq8d6zE5PUConkO8gL5pAa/I2gfPogEuKYjkvRb3G+HXNZ0rQiJSd9Ja5kifLKlbMgXrZV4Ca+9ms=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OFluciBv; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HWkWXQ8h57Q11OHOHqGK/sOmTZfQ1yBxQjc/8m1uEtuHFeQdA/RoWsNEFExtj097jYhn/x0hD0l+oR4PYVqTpO2fPXRbIMyCXE2R0QQbS9B+yNwUTRUfchNvoiDxFajOjsfHBfgqYnRZrFIpSpvv83nmiISIDxjNViFrElFvpa0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kKw+XI8n; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OFluciBv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EDCF9C116C6;
-	Mon,  9 Feb 2026 14:53:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kKw+XI8n"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 08290C116C6;
+	Mon,  9 Feb 2026 14:53:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770648829;
-	bh=flxGXVby2knBeD8zHmgd+vBB5im3F/fXvyO3WLULiug=;
+	s=korg; t=1770648832;
+	bh=7+2Jf1+1vE4IBlU1PbGZy8WsczJ8XF1jIzgwcbEYlkQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OFluciBvwOwbhPAruYioya9XGolmPTXldHcEFeAgjqSebWRZMqULXVHJ+ecCe5eGU
-	 q/D4Tg8A9Ex44ObUb/HlhkzpJunhSl9uT5fFqqkq4UoVCpe6Gfpostkn4V+vRHlpH3
-	 e6GBgziilFyqZc2FVHWlX5u+7PjB069t459F0iYs=
+	b=kKw+XI8n6oOSu6nnShUp7tSUeBRnzfDEEK7fSvyz8J6Ljy/j7VzJelMcwPihVFXZ1
+	 5T1RI1zC6gJcCzIYGap6BbaEBFW0qHbTTJx51XIr0sqckhFPIP6YjvJV1ptfcviVeX
+	 uwtl/yAcTfPwppPh3BAZA5BxlymhyaREgwOhlCK4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
 	Thomas Gleixner <tglx@linutronix.de>,
+	Guenter Roeck <linux@roeck-us.net>,
 	Jacob Keller <jacob.e.keller@intel.com>,
 	Anna-Maria Behnsen <anna-maria@linutronix.de>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Viresh Kumar <viresh.kumar@linaro.org>,
 	Jeongjun Park <aha310510@gmail.com>
-Subject: [PATCH 5.15 08/75] Documentation: Remove bogus claim about del_timer_sync()
-Date: Mon,  9 Feb 2026 15:24:05 +0100
-Message-ID: <20260209142302.140104441@linuxfoundation.org>
+Subject: [PATCH 5.15 09/75] ARM: spear: Do not use timer namespace for timer_shutdown() function
+Date: Mon,  9 Feb 2026 15:24:06 +0100
+Message-ID: <20260209142302.176272645@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260209142301.830618238@linuxfoundation.org>
 References: <20260209142301.830618238@linuxfoundation.org>
@@ -46,61 +50,78 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Thomas Gleixner <tglx@linutronix.de>
+From: "Steven Rostedt (Google)" <rostedt@goodmis.org>
 
-[ Upstream commit b0b0aa5d858d4d2fe39a5e4486e0550e858108f6 ]
+[ Upstream commit 80b55772d41d8afec68dbc4ff0368a9fe5d1f390 ]
 
-del_timer_sync() does not return the number of times it tried to delete the
-timer which rearms itself. It's clearly documented:
+A new "shutdown" timer state is being added to the generic timer code. One
+of the functions to change the timer into the state is called
+"timer_shutdown()". This means that there can not be other functions called
+"timer_shutdown()" as the timer code owns the "timer_*" name space.
 
- The function returns whether it has deactivated a pending timer or not.
+Rename timer_shutdown() to spear_timer_shutdown() to avoid this conflict.
 
-This part of the documentation is from 2003 where del_timer_sync() really
-returned the number of deletion attempts for unknown reasons. The code
-was rewritten in 2005, but the documentation was not updated.
-
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
 Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Tested-by: Guenter Roeck <linux@roeck-us.net>
+Reviewed-by: Guenter Roeck <linux@roeck-us.net>
 Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
 Reviewed-by: Anna-Maria Behnsen <anna-maria@linutronix.de>
-Link: https://lore.kernel.org/r/20221123201624.452282769@linutronix.de
+Acked-by: Arnd Bergmann <arnd@arndb.de>
+Acked-by: Viresh Kumar <viresh.kumar@linaro.org>
+Link: https://lkml.kernel.org/r/20221106212701.822440504@goodmis.org
+Link: https://lore.kernel.org/all/20221105060155.228348078@goodmis.org/
+Link: https://lore.kernel.org/r/20221110064146.810953418@goodmis.org
+Link: https://lore.kernel.org/r/20221123201624.513863211@linutronix.de
 Signed-off-by: Jeongjun Park <aha310510@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- Documentation/kernel-hacking/locking.rst                    |    3 +--
- Documentation/translations/it_IT/kernel-hacking/locking.rst |    4 +---
- 2 files changed, 2 insertions(+), 5 deletions(-)
+ arch/arm/mach-spear/time.c |    8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
---- a/Documentation/kernel-hacking/locking.rst
-+++ b/Documentation/kernel-hacking/locking.rst
-@@ -1009,8 +1009,7 @@ Another common problem is deleting timer
- calling add_timer() at the end of their timer function).
- Because this is a fairly common case which is prone to races, you should
- use del_timer_sync() (``include/linux/timer.h``) to
--handle this case. It returns the number of times the timer had to be
--deleted before we finally stopped it from adding itself back in.
-+handle this case.
+--- a/arch/arm/mach-spear/time.c
++++ b/arch/arm/mach-spear/time.c
+@@ -90,7 +90,7 @@ static void __init spear_clocksource_ini
+ 		200, 16, clocksource_mmio_readw_up);
+ }
  
- Locking Speed
- =============
---- a/Documentation/translations/it_IT/kernel-hacking/locking.rst
-+++ b/Documentation/translations/it_IT/kernel-hacking/locking.rst
-@@ -1035,9 +1035,7 @@ Un altro problema è l'eliminazione dei
- da soli (chiamando add_timer() alla fine della loro esecuzione).
- Dato che questo è un problema abbastanza comune con una propensione
- alle corse critiche, dovreste usare del_timer_sync()
--(``include/linux/timer.h``) per gestire questo caso. Questa ritorna il
--numero di volte che il temporizzatore è stato interrotto prima che
--fosse in grado di fermarlo senza che si riavviasse.
-+(``include/linux/timer.h``) per gestire questo caso.
+-static inline void timer_shutdown(struct clock_event_device *evt)
++static inline void spear_timer_shutdown(struct clock_event_device *evt)
+ {
+ 	u16 val = readw(gpt_base + CR(CLKEVT));
  
- Velocità della sincronizzazione
- ===============================
+@@ -101,7 +101,7 @@ static inline void timer_shutdown(struct
+ 
+ static int spear_shutdown(struct clock_event_device *evt)
+ {
+-	timer_shutdown(evt);
++	spear_timer_shutdown(evt);
+ 
+ 	return 0;
+ }
+@@ -111,7 +111,7 @@ static int spear_set_oneshot(struct cloc
+ 	u16 val;
+ 
+ 	/* stop the timer */
+-	timer_shutdown(evt);
++	spear_timer_shutdown(evt);
+ 
+ 	val = readw(gpt_base + CR(CLKEVT));
+ 	val |= CTRL_ONE_SHOT;
+@@ -126,7 +126,7 @@ static int spear_set_periodic(struct clo
+ 	u16 val;
+ 
+ 	/* stop the timer */
+-	timer_shutdown(evt);
++	spear_timer_shutdown(evt);
+ 
+ 	period = clk_get_rate(gpt_clk) / HZ;
+ 	period >>= CTRL_PRESCALER16;
 
 
