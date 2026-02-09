@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB3542BEC45;
-	Mon,  9 Feb 2026 14:35:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9F252BEC45;
+	Mon,  9 Feb 2026 14:35:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770647739; cv=none; b=RW9TxeJE4JHiqaAlnDHEc7yA1G79EeKV4fnNvB5PrNoEelMDWvFbRiX3ScppL/LLTQy6hU4z46IrXSJ0+2xhGwGUYakJEP8h39WkY0dpRerDevg51dK4/3i2h4XrMxE2JAH8efAwexWf/Bn6YZjVKuUuQbXWX84DAyiVDqJOTp0=
+	t=1770647743; cv=none; b=JjrvDgeD9pMqFTDKaxLASlnBpaS8g1s9EeUxRvRmUyd8ISnsupTdphizDNbdyjogURkWIAPIZoK2HRy55zBPnaNVdO864DL3gQXp+Np/NFviNMTzl+9e9Bez0Iun4bwzdkbykke3Js8Ol810GEGO6GzuEyjVGKJkQO6oLXiCRzQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770647739; c=relaxed/simple;
-	bh=BDiMgXNRNlkWtM1ye9S2LpXCKoGoNXnYwyUG7yRX3Tw=;
+	s=arc-20240116; t=1770647743; c=relaxed/simple;
+	bh=l02qEcrTxm5xJh/5wGRhbtgjEPtUpdCnzkFw74E9P/Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=c6fsAorOD4PUHJhU+RVmXTHQ98ulCToOogWMXYg0IuiaaTG1EchW8A+qN8jlHiM7BpG48WpqcEvD2p/x5gp1bH81wpyIlODl1vtgNSFltD3pWRLWv7BEB0varbiviOZ9vixVqIVFIuWYe1kb8rNtiRd9Py5yTuRBADC6CmXhOtQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=u5pvu48z; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZhCOyh4iLhAaOrxXKm2t9ujrVf7rOE9fhTCX9khT1rMtoupy1BTrG1U0wvVDlcWOyBt4cJp454Pr2swPuocB8/ureZWq1z+yHzg93vQFZH1nnHDMY0JIDhPyz3a5peHAFa+8JmWYvtT1iJA3lxsJNr4Z3xDZlyXWKEvkMxxeJ7A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UlLOyYaF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="u5pvu48z"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C302C16AAE;
-	Mon,  9 Feb 2026 14:35:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UlLOyYaF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D39FC116C6;
+	Mon,  9 Feb 2026 14:35:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770647739;
-	bh=BDiMgXNRNlkWtM1ye9S2LpXCKoGoNXnYwyUG7yRX3Tw=;
+	s=korg; t=1770647742;
+	bh=l02qEcrTxm5xJh/5wGRhbtgjEPtUpdCnzkFw74E9P/Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=u5pvu48zBuznpH8uEqzw8JRj/1yZlayZCmYMJ14pm1EOydpm94ENWc104juLfbolr
-	 ChYYIQx5D87fSkAI/nZH80aN3drAlmQKYjp6XR5Wl65CM/R2TCtfQ1Kvwz0yS/IaZ4
-	 cxvbQDc4j9/gLZK+n8fcSWSAp5+APYnXZPvh2/5k=
+	b=UlLOyYaFwvHluIECaNnNXsKWIAN1rtOMLKBjwru+QxoaPd/iiaqFACWCKPANjJzW5
+	 MrzMOx2/toIHTYu9GJLra2zeLTsWiryA5+KD4aaj1TWMTzodwt66H4TOrH3t8jw5xm
+	 byM4QMIMzp8IF7z0Gn7O+jaULGyq2v+0qTu1YxzM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Helge Deller <deller@gmx.de>,
-	Daniel Vogelbacher <daniel@chaospixel.com>,
-	Viacheslav Dubeyko <Slava.Dubeyko@ibm.com>,
-	Ilya Dryomov <idryomov@gmail.com>
-Subject: [PATCH 6.12 015/113] ceph: fix oops due to invalid pointer for kfree() in parse_longname()
-Date: Mon,  9 Feb 2026 15:22:44 +0100
-Message-ID: <20260209142310.758340647@linuxfoundation.org>
+	Debarghya Kundu <debarghyak@google.com>,
+	Joshua Washington <joshwash@google.com>,
+	Harshitha Ramamurthy <hramamurthy@google.com>,
+	Jacob Keller <jacob.e.keller@intel.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.12 016/113] gve: Fix stats report corruption on queue count change
+Date: Mon,  9 Feb 2026 15:22:45 +0100
+Message-ID: <20260209142310.794393292@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260209142310.204833231@linuxfoundation.org>
 References: <20260209142310.204833231@linuxfoundation.org>
@@ -52,67 +53,131 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Daniel Vogelbacher <daniel@chaospixel.com>
+From: Debarghya Kundu <debarghyak@google.com>
 
-commit bc8dedae022ce3058659c3addef3ec4b41d15e00 upstream.
+commit 7b9ebcce0296e104a0d82a6b09d68564806158ff upstream.
 
-This fixes a kernel oops when reading ceph snapshot directories (.snap),
-for example by simply running `ls /mnt/my_ceph/.snap`.
+The driver and the NIC share a region in memory for stats reporting.
+The NIC calculates its offset into this region based on the total size
+of the stats region and the size of the NIC's stats.
 
-The variable str is guarded by __free(kfree), but advanced by one for
-skipping the initial '_' in snapshot names. Thus, kfree() is called
-with an invalid pointer.  This patch removes the need for advancing the
-pointer so kfree() is called with correct memory pointer.
+When the number of queues is changed, the driver's stats region is
+resized. If the queue count is increased, the NIC can write past
+the end of the allocated stats region, causing memory corruption.
+If the queue count is decreased, there is a gap between the driver
+and NIC stats, leading to incorrect stats reporting.
 
-Steps to reproduce:
-
-1. Create snapshots on a cephfs volume (I've 63 snaps in my testcase)
-
-2. Add cephfs mount to fstab
-$ echo "samba-fileserver@.files=/volumes/datapool/stuff/3461082b-ecc9-4e82-8549-3fd2590d3fb6      /mnt/test/stuff   ceph     acl,noatime,_netdev    0       0" >> /etc/fstab
-
-3. Reboot the system
-$ systemctl reboot
-
-4. Check if it's really mounted
-$ mount | grep stuff
-
-5. List snapshots (expected 63 snapshots on my system)
-$ ls /mnt/test/stuff/.snap
-
-Now ls hangs forever and the kernel log shows the oops.
+This change fixes the issue by allocating stats region with maximum
+size, and the offset calculation for NIC stats is changed to match
+with the calculation of the NIC.
 
 Cc: stable@vger.kernel.org
-Fixes: 101841c38346 ("[ceph] parse_longname(): strrchr() expects NUL-terminated string")
-Closes: https://bugzilla.kernel.org/show_bug.cgi?id=220807
-Suggested-by: Helge Deller <deller@gmx.de>
-Signed-off-by: Daniel Vogelbacher <daniel@chaospixel.com>
-Reviewed-by: Viacheslav Dubeyko <Slava.Dubeyko@ibm.com>
-Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
+Fixes: 24aeb56f2d38 ("gve: Add Gvnic stats AQ command and ethtool show/set-priv-flags.")
+Signed-off-by: Debarghya Kundu <debarghyak@google.com>
+Reviewed-by: Joshua Washington <joshwash@google.com>
+Signed-off-by: Harshitha Ramamurthy <hramamurthy@google.com>
+Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
+Link: https://patch.msgid.link/20260202193925.3106272-2-hramamurthy@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ceph/crypto.c |    9 +++++----
- 1 file changed, 5 insertions(+), 4 deletions(-)
+ drivers/net/ethernet/google/gve/gve_ethtool.c |   54 ++++++++++++++++----------
+ drivers/net/ethernet/google/gve/gve_main.c    |    4 -
+ 2 files changed, 36 insertions(+), 22 deletions(-)
 
---- a/fs/ceph/crypto.c
-+++ b/fs/ceph/crypto.c
-@@ -217,12 +217,13 @@ static struct inode *parse_longname(cons
- 	struct ceph_vino vino = { .snap = CEPH_NOSNAP };
- 	char *name_end, *inode_number;
- 	int ret = -EIO;
--	/* NUL-terminate */
--	char *str __free(kfree) = kmemdup_nul(name, *name_len, GFP_KERNEL);
-+	/* Snapshot name must start with an underscore */
-+	if (*name_len <= 0 || name[0] != '_')
-+		return ERR_PTR(-EIO);
-+	/* Skip initial '_' and NUL-terminate */
-+	char *str __free(kfree) = kmemdup_nul(name + 1, *name_len - 1, GFP_KERNEL);
- 	if (!str)
- 		return ERR_PTR(-ENOMEM);
--	/* Skip initial '_' */
--	str++;
- 	name_end = strrchr(str, '_');
- 	if (!name_end) {
- 		doutc(cl, "failed to parse long snapshot name: %s\n", str);
+--- a/drivers/net/ethernet/google/gve/gve_ethtool.c
++++ b/drivers/net/ethernet/google/gve/gve_ethtool.c
+@@ -156,7 +156,8 @@ gve_get_ethtool_stats(struct net_device
+ 	u64 rx_buf_alloc_fail, rx_desc_err_dropped_pkt, rx_hsplit_unsplit_pkt,
+ 		rx_pkts, rx_hsplit_pkt, rx_skb_alloc_fail, rx_bytes, tx_pkts, tx_bytes,
+ 		tx_dropped;
+-	int stats_idx, base_stats_idx, max_stats_idx;
++	int rx_base_stats_idx, max_rx_stats_idx, max_tx_stats_idx;
++	int stats_idx, stats_region_len, nic_stats_len;
+ 	struct stats *report_stats;
+ 	int *rx_qid_to_stats_idx;
+ 	int *tx_qid_to_stats_idx;
+@@ -265,20 +266,38 @@ gve_get_ethtool_stats(struct net_device
+ 	data[i++] = priv->stats_report_trigger_cnt;
+ 	i = GVE_MAIN_STATS_LEN;
+ 
+-	/* For rx cross-reporting stats, start from nic rx stats in report */
+-	base_stats_idx = GVE_TX_STATS_REPORT_NUM * num_tx_queues +
+-		GVE_RX_STATS_REPORT_NUM * priv->rx_cfg.num_queues;
+-	/* The boundary between driver stats and NIC stats shifts if there are
+-	 * stopped queues.
+-	 */
+-	base_stats_idx += NIC_RX_STATS_REPORT_NUM * num_stopped_rxqs +
+-		NIC_TX_STATS_REPORT_NUM * num_stopped_txqs;
+-	max_stats_idx = NIC_RX_STATS_REPORT_NUM *
+-		(priv->rx_cfg.num_queues - num_stopped_rxqs) +
+-		base_stats_idx;
++	rx_base_stats_idx = 0;
++	max_rx_stats_idx = 0;
++	max_tx_stats_idx = 0;
++	stats_region_len = priv->stats_report_len -
++				sizeof(struct gve_stats_report);
++	nic_stats_len = (NIC_RX_STATS_REPORT_NUM * priv->rx_cfg.num_queues +
++		NIC_TX_STATS_REPORT_NUM * num_tx_queues) * sizeof(struct stats);
++	if (unlikely((stats_region_len -
++				nic_stats_len) % sizeof(struct stats))) {
++		net_err_ratelimited("Starting index of NIC stats should be multiple of stats size");
++	} else {
++		/* For rx cross-reporting stats,
++		 * start from nic rx stats in report
++		 */
++		rx_base_stats_idx = (stats_region_len - nic_stats_len) /
++							sizeof(struct stats);
++		/* The boundary between driver stats and NIC stats
++		 * shifts if there are stopped queues
++		 */
++		rx_base_stats_idx += NIC_RX_STATS_REPORT_NUM *
++			num_stopped_rxqs + NIC_TX_STATS_REPORT_NUM *
++			num_stopped_txqs;
++		max_rx_stats_idx = NIC_RX_STATS_REPORT_NUM *
++			(priv->rx_cfg.num_queues - num_stopped_rxqs) +
++			rx_base_stats_idx;
++		max_tx_stats_idx = NIC_TX_STATS_REPORT_NUM *
++			(num_tx_queues - num_stopped_txqs) +
++			max_rx_stats_idx;
++	}
+ 	/* Preprocess the stats report for rx, map queue id to start index */
+ 	skip_nic_stats = false;
+-	for (stats_idx = base_stats_idx; stats_idx < max_stats_idx;
++	for (stats_idx = rx_base_stats_idx; stats_idx < max_rx_stats_idx;
+ 		stats_idx += NIC_RX_STATS_REPORT_NUM) {
+ 		u32 stat_name = be32_to_cpu(report_stats[stats_idx].stat_name);
+ 		u32 queue_id = be32_to_cpu(report_stats[stats_idx].queue_id);
+@@ -354,14 +373,9 @@ gve_get_ethtool_stats(struct net_device
+ 		i += priv->rx_cfg.num_queues * NUM_GVE_RX_CNTS;
+ 	}
+ 
+-	/* For tx cross-reporting stats, start from nic tx stats in report */
+-	base_stats_idx = max_stats_idx;
+-	max_stats_idx = NIC_TX_STATS_REPORT_NUM *
+-		(num_tx_queues - num_stopped_txqs) +
+-		max_stats_idx;
+-	/* Preprocess the stats report for tx, map queue id to start index */
+ 	skip_nic_stats = false;
+-	for (stats_idx = base_stats_idx; stats_idx < max_stats_idx;
++	/* NIC TX stats start right after NIC RX stats */
++	for (stats_idx = max_rx_stats_idx; stats_idx < max_tx_stats_idx;
+ 		stats_idx += NIC_TX_STATS_REPORT_NUM) {
+ 		u32 stat_name = be32_to_cpu(report_stats[stats_idx].stat_name);
+ 		u32 queue_id = be32_to_cpu(report_stats[stats_idx].queue_id);
+--- a/drivers/net/ethernet/google/gve/gve_main.c
++++ b/drivers/net/ethernet/google/gve/gve_main.c
+@@ -244,9 +244,9 @@ static int gve_alloc_stats_report(struct
+ 	int tx_stats_num, rx_stats_num;
+ 
+ 	tx_stats_num = (GVE_TX_STATS_REPORT_NUM + NIC_TX_STATS_REPORT_NUM) *
+-		       gve_num_tx_queues(priv);
++				priv->tx_cfg.max_queues;
+ 	rx_stats_num = (GVE_RX_STATS_REPORT_NUM + NIC_RX_STATS_REPORT_NUM) *
+-		       priv->rx_cfg.num_queues;
++				priv->rx_cfg.max_queues;
+ 	priv->stats_report_len = struct_size(priv->stats_report, stats,
+ 					     size_add(tx_stats_num, rx_stats_num));
+ 	priv->stats_report =
 
 
