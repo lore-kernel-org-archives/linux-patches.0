@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9FA2285060;
-	Mon,  9 Feb 2026 14:31:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13D882222B2;
+	Mon,  9 Feb 2026 14:31:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770647504; cv=none; b=KjpCmjjh7jJTihB6+3gOWJdOvhejHukVu/MvSzNXFFImXDyQn49im5Cq1j13QiVmzNtcNxSUBSqI7qF1u/7CNpEOFGups84v/w23t9tS/fyr7G2x6etorxUejsXQXbqib9nwZ7hOMU9fnzgrkLnC3mZa16nm4qtfaWOsjfBCFWE=
+	t=1770647508; cv=none; b=dHylWfb6YupTdthTkCe5xX6SkHszIuOsmasGSjeV0NeaWpKwlKtq7xKhbkzbTB3gyGOtsvL8bfmNmqKtFy/NZ76pj+ib92VzDJxZaJSDtuSwv2N9kwk5bMunDnbMZxoZ2DGXWrq0dyS8srfqMO/GTHxXHk3MtcP0R5zVoUs2Cz0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770647504; c=relaxed/simple;
-	bh=A2n79W7GpKVHsvK+O5dJj0qFggABBHeC0eWmXJNases=;
+	s=arc-20240116; t=1770647508; c=relaxed/simple;
+	bh=EqTyuBmTSMfhQRJ1kCdQCu2V9MKhYBqf8KQsKNGWbl0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qEAU1zx0Br431ipj/UTEaWSA8iMNBT6ibjoyICihIIifOi6Upel+Lg4mhDqUzMSJe1EdwlObef0/QHZlF6KjDajpbFghY7HZZQQOQt4G2kXYiAIHYatooW3O1+Wgn3dNITG5ODiDm+N1OTYJe2QTU/bKFKPgDbgu2R0wLKMNluc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Pj0eoFYD; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=In8uQTzzPTiomm/Gon3IuXA6qcypogGa3ICjtSAM7pbH+JqDJ+H8FRtsmUaRSA8nJBLW4fz/3fUbv28pVspj3wXwOyboZRU+pw93dHGfw+HOYrQvRIxJxIugfXjXUIvr4QKGBTvDFiVgOUNjzZZvq3xrXcXSr1w3/npKxCSPexU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mTBB1HUW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Pj0eoFYD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E027C16AAE;
-	Mon,  9 Feb 2026 14:31:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mTBB1HUW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 764E1C116C6;
+	Mon,  9 Feb 2026 14:31:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770647504;
-	bh=A2n79W7GpKVHsvK+O5dJj0qFggABBHeC0eWmXJNases=;
+	s=korg; t=1770647507;
+	bh=EqTyuBmTSMfhQRJ1kCdQCu2V9MKhYBqf8KQsKNGWbl0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Pj0eoFYDK/c6qlwNNWYj5179qMR4XXWzsDYozZ4hCEadyrEameO3Rpe0O2w2RGPcf
-	 jwtQJml4n0Eyon8Z5uHMF+aYAS3iB+rGXoTkEmjaio8f42ArGn4L9Sik6lYO/btJTD
-	 3cfIbxS0zOjRyX9UpWMkIn7IjR/T02eN7o84BauI=
+	b=mTBB1HUWUzFbTzYvWwu1KdrarYUvoizs2YvbrSf7X5eZLISDKFoZH4NtkHF1YRJfH
+	 OJRgfptAdk5Ux9ybxew+iFBqF29AYv2/NM4B2gK3YtrpJCF9PyzNkFYms8ul5nzQWz
+	 797ydtIWQxYuPihg9bB64yOKBXvYbnnhmTPrxNfQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Leo Banno-Cloutier <leobannocloutier@gmail.com>,
-	Guenter Roeck <linux@roeck-us.net>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 118/175] hwmon: (dell-smm) Add Dell G15 5510 to fan control whitelist
-Date: Mon,  9 Feb 2026 15:23:11 +0100
-Message-ID: <20260209142324.655978229@linuxfoundation.org>
+Subject: [PATCH 6.18 119/175] net: add skb_header_pointer_careful() helper
+Date: Mon,  9 Feb 2026 15:23:12 +0100
+Message-ID: <20260209142324.691794445@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260209142320.474120190@linuxfoundation.org>
 References: <20260209142320.474120190@linuxfoundation.org>
@@ -51,47 +51,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: leobannocloutier@gmail.com <leobannocloutier@gmail.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 830e0bef79aaaea8b1ef426b8032e70c63a58653 ]
+[ Upstream commit 13e00fdc9236bd4d0bff4109d2983171fbcb74c4 ]
 
-On the Dell G15 5510, fans spin at maximum speed when AC power is
-connected. This behavior has been observed as a regression in recent
-kernels (v6.18+).
+This variant of skb_header_pointer() should be used in contexts
+where @offset argument is user-controlled and could be negative.
 
-Add the Dell G15 5510 to the fan control whitelist to enable manual fan
-control and resolve the issue. This model requires the same fan control
-configuration as the Dell G15 5511.
+Negative offsets are supported, as long as the zone starts
+between skb->head and skb->data.
 
-Fixes: 1c1658058c99 ("hwmon: (dell-smm) Add support for automatic fan mode")
-Signed-off-by: Leo Banno-Cloutier <leobannocloutier@gmail.com>
-Link: https://lore.kernel.org/r/20260117015315.214569-2-leobannocloutier@gmail.com
-[groeck: Updated patch description to follow guidance]
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Link: https://patch.msgid.link/20260128141539.3404400-2-edumazet@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Stable-dep-of: cabd1a976375 ("net/sched: cls_u32: use skb_header_pointer_careful()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwmon/dell-smm-hwmon.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ include/linux/skbuff.h | 12 ++++++++++++
+ 1 file changed, 12 insertions(+)
 
-diff --git a/drivers/hwmon/dell-smm-hwmon.c b/drivers/hwmon/dell-smm-hwmon.c
-index 8cf12b9bae2a7..f3d484a9f708b 100644
---- a/drivers/hwmon/dell-smm-hwmon.c
-+++ b/drivers/hwmon/dell-smm-hwmon.c
-@@ -1630,6 +1630,14 @@ static const struct dmi_system_id i8k_whitelist_fan_control[] __initconst = {
- 		},
- 		.driver_data = (void *)&i8k_fan_control_data[I8K_FAN_30A3_31A3],
- 	},
-+	{
-+		.ident = "Dell G15 5510",
-+		.matches = {
-+			DMI_MATCH(DMI_SYS_VENDOR, "Dell Inc."),
-+			DMI_EXACT_MATCH(DMI_PRODUCT_NAME, "Dell G15 5510"),
-+		},
-+		.driver_data = (void *)&i8k_fan_control_data[I8K_FAN_30A3_31A3],
-+	},
- 	{
- 		.ident = "Dell G15 5511",
- 		.matches = {
+diff --git a/include/linux/skbuff.h b/include/linux/skbuff.h
+index a7cc3d1f4fd11..50f127451dc65 100644
+--- a/include/linux/skbuff.h
++++ b/include/linux/skbuff.h
+@@ -4301,6 +4301,18 @@ skb_header_pointer(const struct sk_buff *skb, int offset, int len, void *buffer)
+ 				    skb_headlen(skb), buffer);
+ }
+ 
++/* Variant of skb_header_pointer() where @offset is user-controlled
++ * and potentially negative.
++ */
++static inline void * __must_check
++skb_header_pointer_careful(const struct sk_buff *skb, int offset,
++			   int len, void *buffer)
++{
++	if (unlikely(offset < 0 && -offset > skb_headroom(skb)))
++		return NULL;
++	return skb_header_pointer(skb, offset, len, buffer);
++}
++
+ static inline void * __must_check
+ skb_pointer_if_linear(const struct sk_buff *skb, int offset, int len)
+ {
 -- 
 2.51.0
 
