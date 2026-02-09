@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C70837756C;
-	Mon,  9 Feb 2026 14:28:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3BEEE37A496;
+	Mon,  9 Feb 2026 14:28:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770647316; cv=none; b=HTSTAhWcT2wZxadjgqT0CzjnyrwPjo1yl3XttkYRXH6qcbuZpYU6D8eLGgYR2Sgb16khKXsSOoeAtjwksFR2B+NptvbqEjFDQYbfRPSyuRjYWT3TYOE7EFSFp/BO2FcwfSbjKW6PnJIFoWdHD09fS2fqriJjOjReAACkwTx2e38=
+	t=1770647319; cv=none; b=Lq24TyiRcEKyxhQREAUSwvWe1qTHSi6Fkkv5PDlYlAagRnw0twrQU1UN+jNQRAKJrWEAKyo6NiKZDRBzu8gweK4q1LJ3Ud/ufvgdfMnZtaEqK1gPUXpbY/H5pgCbcQ1VZACB1fgRu2VTRbV3w4I7I4qV33yjhQuk42sAVn7loXg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770647316; c=relaxed/simple;
-	bh=g9NwYOeoX/aCesVi4yDya4LskAd2fY7FUr9hYGJb3CE=;
+	s=arc-20240116; t=1770647319; c=relaxed/simple;
+	bh=8OokoZKhEEDt69wrdUswp54WQnDdHW4YxBRRdRG26w4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=c34eQYTGhKXpAN9NeN4zpyatRTLrS8fmWruHzXZqCPuW8KPvWpl1XyYg0zBWofby5Q8MVql3XFdkjetdVpThtqwzPQwwdnyrfRWNfMqyar/q5m2iFMnR7AWzNToY/NUZEq7csmABIunqYx16fzA6yMnNlFbDgFLw3AX8AQBJksc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xUaPvcpt; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HF5IgQ5irORqCP3MTRyDm7hVXqI/IBWRGqj1267jthWX7b06OHWoZv0/OUlpoZ9makg8R95H+sGhL3VBma+xoZH+O7UUJuTG45oC2xG9Dyj55fuRTSjBoPWX1A6Gs+dP7B+RQDd5R6CGk65WcrumAQWzORyqzSap+ACMxrkkBpk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=e1IaUKir; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xUaPvcpt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E87EC116C6;
-	Mon,  9 Feb 2026 14:28:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="e1IaUKir"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B7476C116C6;
+	Mon,  9 Feb 2026 14:28:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770647315;
-	bh=g9NwYOeoX/aCesVi4yDya4LskAd2fY7FUr9hYGJb3CE=;
+	s=korg; t=1770647319;
+	bh=8OokoZKhEEDt69wrdUswp54WQnDdHW4YxBRRdRG26w4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xUaPvcptePLhPusF4L9fpWTZnYfJ9MHifvzX367TssrLX1Z/EYT5cCoonVKXzGRO8
-	 u/MjffNPqKT4L1Gee4cD3gZHpm46ZymGq44EXpygG7LHbeVHuF1PCGPN7ab4oGSiZL
-	 tQDwJJLuBb5/jMPd9eq9vBeRbIgbJ3lohDcU5Ix4=
+	b=e1IaUKirxTK7lrXmqt2AQwQ6Z9Sx2OV+7sdK5qymqQzo008h13gD7Y21HQSSz0sta
+	 KJ0zN7zeG6T4bfgdwjs3PXPO84ZFj/tIaNpPvJZxpF8ineqVzPQOH936Adao2sBWcx
+	 f1i4pRTDiVQBXGerBolOowfOjOUUm5lla+DoMXaU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Benjamin Tissoires <benjamin.tissoires@redhat.com>,
-	DaytonCL <artem749507@gmail.com>,
-	Benjamin Tissoires <bentiss@kernel.org>,
+	Filipe Manana <fdmanana@suse.com>,
+	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 064/175] HID: multitouch: add MT_QUIRK_STICKY_FINGERS to MT_CLS_VTL
-Date: Mon,  9 Feb 2026 15:22:17 +0100
-Message-ID: <20260209142322.761192979@linuxfoundation.org>
+Subject: [PATCH 6.18 065/175] btrfs: fix reservation leak in some error paths when inserting inline extent
+Date: Mon,  9 Feb 2026 15:22:18 +0100
+Message-ID: <20260209142322.796102600@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260209142320.474120190@linuxfoundation.org>
 References: <20260209142320.474120190@linuxfoundation.org>
@@ -52,40 +51,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: DaytonCL <artem749507@gmail.com>
+From: Filipe Manana <fdmanana@suse.com>
 
-[ Upstream commit ff3f234ff1dcd6d626a989151db067a1b7f0f215 ]
+[ Upstream commit c1c050f92d8f6aac4e17f7f2230160794fceef0c ]
 
-Some VTL-class touchpads (e.g. TOPS0102:00 35CC:0104) intermittently
-fail to release a finger contact. A previous slot remains logically
-active, accompanied by stale BTN_TOOL_DOUBLETAP state, causing
-gestures to stay latched and resulting in stuck two-finger
-scrolling and false right-clicks.
+If we fail to allocate a path or join a transaction, we return from
+__cow_file_range_inline() without freeing the reserved qgroup data,
+resulting in a leak. Fix this by ensuring we call btrfs_qgroup_free_data()
+in such cases.
 
-Apply MT_QUIRK_STICKY_FINGERS to handle the unreleased contact correctly.
-
-Link: https://gitlab.freedesktop.org/libinput/libinput/-/issues/1225
-Suggested-by: Benjamin Tissoires <benjamin.tissoires@redhat.com>
-Tested-by: DaytonCL <artem749507@gmail.com>
-Signed-off-by: DaytonCL <artem749507@gmail.com>
-Signed-off-by: Benjamin Tissoires <bentiss@kernel.org>
+Signed-off-by: Filipe Manana <fdmanana@suse.com>
+Reviewed-by: David Sterba <dsterba@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hid/hid-multitouch.c | 1 +
- 1 file changed, 1 insertion(+)
+ fs/btrfs/inode.c | 16 ++++++++++------
+ 1 file changed, 10 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/hid/hid-multitouch.c b/drivers/hid/hid-multitouch.c
-index 179dc316b4b51..a0c1ad5acb670 100644
---- a/drivers/hid/hid-multitouch.c
-+++ b/drivers/hid/hid-multitouch.c
-@@ -393,6 +393,7 @@ static const struct mt_class mt_classes[] = {
- 	{ .name = MT_CLS_VTL,
- 		.quirks = MT_QUIRK_ALWAYS_VALID |
- 			MT_QUIRK_CONTACT_CNT_ACCURATE |
-+			MT_QUIRK_STICKY_FINGERS |
- 			MT_QUIRK_FORCE_GET_FEATURE,
- 	},
- 	{ .name = MT_CLS_GOOGLE,
+diff --git a/fs/btrfs/inode.c b/fs/btrfs/inode.c
+index e72c69f77ce4b..76a66c74249a2 100644
+--- a/fs/btrfs/inode.c
++++ b/fs/btrfs/inode.c
+@@ -614,19 +614,22 @@ static noinline int __cow_file_range_inline(struct btrfs_inode *inode,
+ 	struct btrfs_drop_extents_args drop_args = { 0 };
+ 	struct btrfs_root *root = inode->root;
+ 	struct btrfs_fs_info *fs_info = root->fs_info;
+-	struct btrfs_trans_handle *trans;
++	struct btrfs_trans_handle *trans = NULL;
+ 	u64 data_len = (compressed_size ?: size);
+ 	int ret;
+ 	struct btrfs_path *path;
+ 
+ 	path = btrfs_alloc_path();
+-	if (!path)
+-		return -ENOMEM;
++	if (!path) {
++		ret = -ENOMEM;
++		goto out;
++	}
+ 
+ 	trans = btrfs_join_transaction(root);
+ 	if (IS_ERR(trans)) {
+-		btrfs_free_path(path);
+-		return PTR_ERR(trans);
++		ret = PTR_ERR(trans);
++		trans = NULL;
++		goto out;
+ 	}
+ 	trans->block_rsv = &inode->block_rsv;
+ 
+@@ -677,7 +680,8 @@ static noinline int __cow_file_range_inline(struct btrfs_inode *inode,
+ 	if (ret <= 0)
+ 		btrfs_qgroup_free_data(inode, NULL, 0, fs_info->sectorsize, NULL);
+ 	btrfs_free_path(path);
+-	btrfs_end_transaction(trans);
++	if (trans)
++		btrfs_end_transaction(trans);
+ 	return ret;
+ }
+ 
 -- 
 2.51.0
 
