@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9AF5A285073;
-	Mon,  9 Feb 2026 14:47:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EFCAC37C107;
+	Mon,  9 Feb 2026 14:47:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770648451; cv=none; b=Cw4cUM9t9dQESjmr/kBZeSweaJKYppF7IRKUnBs4y5fHbUz1HTBcUdn3skVhHKCKwNq/3PHrb2PkHrbqSRn/9e5t6Y+kl04/Yi6ay9pNVg8zbUVaKbJYJdo+tM0a80BPDrwdCrVqVMSmz568ibf3OYu47UlxOaqRSi1g7jfKRjQ=
+	t=1770648455; cv=none; b=aRuELT5ihCyKyeo4NWjguwDCLI5oD9tNdTwA0jQOYYLcCI5ECus3t3huCTbP/9C0wWP46J15leZAclnoHkZvbeJouoFfW8fe5yGt8uQNThcktHol1F5yr8kSudF0mcToTHp8kVcws7xTvSBfgrU+iKJGx9UGEjKRYPKhRwQgE4Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770648451; c=relaxed/simple;
-	bh=3dx4PkTjQxuijZmTmPJjqh+MCx/aMtSzx8ul2Khs0Dc=;
+	s=arc-20240116; t=1770648455; c=relaxed/simple;
+	bh=xqtYwFq3t0VYfQnsdpeWV/ZjrzYmx1HJ6xK+j32CJ5U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SoLkutsrTHhwAT5tbLuOdfRBm74d8TPZS0SvIt+qb0Yav3GRGleDsReXE5KK3KaF9dx66nz+PjlXpyijMFAMFannFXU7xYgw5RcUvYI7ssJ4x9btGOAcWnipsKxYREj/QpxgkPT8f2kwBbg9Vrq0j6ymDX2khMRo6T4lUIIVbu8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GI27x22v; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pOroKSVg9HtnlCbZQnymWUuxxE2YRXBxnFyhBr1qEzEdedVfGPZ7RWFBAyVuavFlxPIjBflslrxt6tH6m+ti3wZL8yvsOnXCAjQ9E68tg5yUpgWWW6WV/1YaV9senIVRvM7Tv86kgp0j4U5eg9/oFWY/i3AVxKXGEtyOn8NV0DI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ycamnzco; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GI27x22v"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29157C116C6;
-	Mon,  9 Feb 2026 14:47:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ycamnzco"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5FA47C16AAE;
+	Mon,  9 Feb 2026 14:47:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770648451;
-	bh=3dx4PkTjQxuijZmTmPJjqh+MCx/aMtSzx8ul2Khs0Dc=;
+	s=korg; t=1770648454;
+	bh=xqtYwFq3t0VYfQnsdpeWV/ZjrzYmx1HJ6xK+j32CJ5U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GI27x22v/67bLQcM44TF5GrPhkCS+wXrl+wfJp157GJ+Rr1jIMugBTRBdP0NHi/6z
-	 5jGCsSOXoXOj1GSgtTU1vnNQT86PsN6Oebp1U6cL/rFCYpgzAYXTfAWqdyPqYJLCv3
-	 rfXm81yJSCbfBoBv/C+m227TEWz2LnvEIqIheRSk=
+	b=YcamnzcosNSAppbx9rY43rBcIjrYEUB+5jM3hzbO058l19OsVCq5UYUVZ1IU/Ivgw
+	 JPzsnPE/REarRF4DwVzxYZLgQSGm5V5QXDIv69JPyssGVhIUFbBJQO9E2+jx30m8UF
+	 +RkNF7czsVtbtDt7tK1EEb/oRq2tlwnPRXH5XZ/4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	mathieu.desnoyers@efficios.com,
-	Wupeng Ma <mawupeng1@huawei.com>,
-	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
+	Baochen Qiang <baochen.qiang@oss.qualcomm.com>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 41/86] ring-buffer: Avoid softlockup in ring_buffer_resize() during memory free
-Date: Mon,  9 Feb 2026 15:24:04 +0100
-Message-ID: <20260209142306.263506943@linuxfoundation.org>
+Subject: [PATCH 6.6 42/86] wifi: mac80211: collect station statistics earlier when disconnect
+Date: Mon,  9 Feb 2026 15:24:05 +0100
+Message-ID: <20260209142306.298780892@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260209142304.770150175@linuxfoundation.org>
 References: <20260209142304.770150175@linuxfoundation.org>
@@ -53,66 +51,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wupeng Ma <mawupeng1@huawei.com>
+From: Baochen Qiang <baochen.qiang@oss.qualcomm.com>
 
-[ Upstream commit 6435ffd6c7fcba330dfa91c58dc30aed2df3d0bf ]
+[ Upstream commit a203dbeeca15a9b924f0d51f510921f4bae96801 ]
 
-When user resize all trace ring buffer through file 'buffer_size_kb',
-then in ring_buffer_resize(), kernel allocates buffer pages for each
-cpu in a loop.
+In __sta_info_destroy_part2(), station statistics are requested after the
+IEEE80211_STA_NONE -> IEEE80211_STA_NOTEXIST transition. This is
+problematic because the driver may be unable to handle the request due to
+the STA being in the NOTEXIST state (i.e. if the driver destroys the
+underlying data when transitioning to NOTEXIST).
 
-If the kernel preemption model is PREEMPT_NONE and there are many cpus
-and there are many buffer pages to be freed, it may not give up cpu
-for a long time and finally cause a softlockup.
+Move the statistics collection to before the state transition to avoid
+this issue.
 
-To avoid it, call cond_resched() after each cpu buffer free as Commit
-f6bd2c92488c ("ring-buffer: Avoid softlockup in ring_buffer_resize()")
-does.
-
-Detailed call trace as follow:
-
-  rcu: INFO: rcu_sched self-detected stall on CPU
-  rcu: 	24-....: (14837 ticks this GP) idle=521c/1/0x4000000000000000 softirq=230597/230597 fqs=5329
-  rcu: 	(t=15004 jiffies g=26003221 q=211022 ncpus=96)
-  CPU: 24 UID: 0 PID: 11253 Comm: bash Kdump: loaded Tainted: G            EL      6.18.2+ #278 NONE
-  pc : arch_local_irq_restore+0x8/0x20
-   arch_local_irq_restore+0x8/0x20 (P)
-   free_frozen_page_commit+0x28c/0x3b0
-   __free_frozen_pages+0x1c0/0x678
-   ___free_pages+0xc0/0xe0
-   free_pages+0x3c/0x50
-   ring_buffer_resize.part.0+0x6a8/0x880
-   ring_buffer_resize+0x3c/0x58
-   __tracing_resize_ring_buffer.part.0+0x34/0xd8
-   tracing_resize_ring_buffer+0x8c/0xd0
-   tracing_entries_write+0x74/0xd8
-   vfs_write+0xcc/0x288
-   ksys_write+0x74/0x118
-   __arm64_sys_write+0x24/0x38
-
-Cc: <mathieu.desnoyers@efficios.com>
-Link: https://patch.msgid.link/20251228065008.2396573-1-mawupeng1@huawei.com
-Signed-off-by: Wupeng Ma <mawupeng1@huawei.com>
-Acked-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
-Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Signed-off-by: Baochen Qiang <baochen.qiang@oss.qualcomm.com>
+Link: https://patch.msgid.link/20251222-mac80211-move-station-stats-collection-earlier-v1-1-12cd4e42c633@oss.qualcomm.com
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/trace/ring_buffer.c | 2 ++
- 1 file changed, 2 insertions(+)
+ net/mac80211/sta_info.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/kernel/trace/ring_buffer.c b/kernel/trace/ring_buffer.c
-index 62d93db72b0a9..a305d1488387c 100644
---- a/kernel/trace/ring_buffer.c
-+++ b/kernel/trace/ring_buffer.c
-@@ -2364,6 +2364,8 @@ int ring_buffer_resize(struct trace_buffer *buffer, unsigned long size,
- 					list) {
- 			list_del_init(&bpage->list);
- 			free_buffer_page(bpage);
-+
-+			cond_resched();
+diff --git a/net/mac80211/sta_info.c b/net/mac80211/sta_info.c
+index 64cf5589989bb..9d7d7ee9d7ce2 100644
+--- a/net/mac80211/sta_info.c
++++ b/net/mac80211/sta_info.c
+@@ -1477,6 +1477,10 @@ static void __sta_info_destroy_part2(struct sta_info *sta, bool recalc)
  		}
  	}
-  out_err_unlock:
+ 
++	sinfo = kzalloc(sizeof(*sinfo), GFP_KERNEL);
++	if (sinfo)
++		sta_set_sinfo(sta, sinfo, true);
++
+ 	if (sta->uploaded) {
+ 		ret = drv_sta_state(local, sdata, sta, IEEE80211_STA_NONE,
+ 				    IEEE80211_STA_NOTEXIST);
+@@ -1485,9 +1489,6 @@ static void __sta_info_destroy_part2(struct sta_info *sta, bool recalc)
+ 
+ 	sta_dbg(sdata, "Removed STA %pM\n", sta->sta.addr);
+ 
+-	sinfo = kzalloc(sizeof(*sinfo), GFP_KERNEL);
+-	if (sinfo)
+-		sta_set_sinfo(sta, sinfo, true);
+ 	cfg80211_del_sta_sinfo(sdata->dev, sta->sta.addr, sinfo, GFP_KERNEL);
+ 	kfree(sinfo);
+ 
 -- 
 2.51.0
 
