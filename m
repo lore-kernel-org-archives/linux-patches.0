@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA419125B2;
-	Mon,  9 Feb 2026 14:35:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8735B125B2;
+	Mon,  9 Feb 2026 14:35:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770647753; cv=none; b=ToCCrJESlPsqNP0aTS+EJsCVHaF9cNDUgD356V+CsfnbFI35n/za6E93BpGiKmQks9CsrDlI5P5N53CBLyRgHyJksEaTd4c4dUO7oUrU2trmvTnVaqKMJYApLRaZhQs9Qw/M3NLOeqYBRSCj50kpUw8JVs8aQMOElZ99yCCMBDU=
+	t=1770647757; cv=none; b=abMf0Qt4izIM8gFf3j05PS3lCZvp6E7kc0JHT1Zw/VZ1GKd2EfoD3L2nSFtnJAloQ9VvJec16SnOKm0hCygakAQwJyE02zIvTA+NXM/ClwHMHT2rFwvZwLtvKKboL9NDCeir8mm/4Fvsh3T9Xak9R8AnIMqWCpkUC+ifF6aIIOs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770647753; c=relaxed/simple;
-	bh=rQuTFfIuV1pnn7WbWTpTIYu1Xivgn2RcqiHybJFzR+c=;
+	s=arc-20240116; t=1770647757; c=relaxed/simple;
+	bh=B7GpzaZdcje1OT88ojl0MbVGckp0cSNoBf2HgoZ0pBk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=EfrW0Kcj7aY6g/62owQvNisy/+Xi1RdY0Bl9K0r5Pf4afIt5ALCnjHTNfJc9PDuEGaiBMolpRcS3PuRi0V4HE8a1PCC29TSjN6xYxUE03lkpfLEgrZ1cb//CudRB2tL7eBvAmrzCiwJZA4DAZxv+J0iunOXRub/6ewhwGFz+lsc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sxLkFSLb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=FvdZRDkDBNltrtORB5StNbnuD8QdkoKZJq1ubvh3H7xVhXD4hhgaYxSVPfWbPgBZjHkKt7+w1EZFsspSub7wysuhI/8mtZvowUpRy1hhAS5+0+FwviEJaxtqqpqkt9C8s74wZAk8MUxsrDG30tEQtMBDaCl8vp3U47CcaC0y574=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AKNMd5FG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sxLkFSLb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3BC7DC19422;
-	Mon,  9 Feb 2026 14:35:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AKNMd5FG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10832C116C6;
+	Mon,  9 Feb 2026 14:35:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770647753;
-	bh=rQuTFfIuV1pnn7WbWTpTIYu1Xivgn2RcqiHybJFzR+c=;
+	s=korg; t=1770647757;
+	bh=B7GpzaZdcje1OT88ojl0MbVGckp0cSNoBf2HgoZ0pBk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sxLkFSLblsUDuehlJvsX+Ezqb26BJf1nC7cSHwHV8JiEJauwp0c2dYVAF1iJWBdkP
-	 Rfx/mC1DAsUzitVDShMcFGOVl8pSBkoFk7OZnA2PDdoXE0/5KAaMfpHo2FpqYs7+e+
-	 srXTkHX/kir/eoElZ0ETod9SxiLIGUbBx5CKIy8g=
+	b=AKNMd5FGKQv4GKAfG5H5WJNRjwsJttiVtxtNUGH3POJxweydbNj+DFutnC0jqiFgx
+	 K32QaoHsVmJ72L03PmJUsl/tM9tGReP5kCC1kwEgvzFGtxzNjFZbUVT2KNVhSUzM+Y
+	 Ttguu0ZhU9YAknLJTfcFC237tEKlqzHoDxUmJSNA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bert Karwatzki <spasswolf@web.de>,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
-	"Mario Limonciello (AMD)" <superm1@kernel.org>,
-	Mario Limonciello <mario.limonciello@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.12 019/113] Revert "drm/amd: Check if ASPM is enabled from PCIe subsystem"
-Date: Mon,  9 Feb 2026 15:22:48 +0100
-Message-ID: <20260209142310.901537622@linuxfoundation.org>
+	Justin Forbes <jforbes@fedoraproject.org>,
+	Josh Poimboeuf <jpoimboe@kernel.org>,
+	stable@kernel.org,
+	Linus Torvalds <torvalds@linux-foundation.org>
+Subject: [PATCH 6.12 002/113] x86/vmware: Fix hypercall clobbers
+Date: Mon,  9 Feb 2026 15:22:31 +0100
+Message-ID: <20260209142310.296046407@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260209142310.204833231@linuxfoundation.org>
 References: <20260209142310.204833231@linuxfoundation.org>
@@ -47,50 +46,81 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Bert Karwatzki <spasswolf@web.de>
+From: Josh Poimboeuf <jpoimboe@kernel.org>
 
-commit 243b467dea1735fed904c2e54d248a46fa417a2d upstream.
+commit 2687c848e57820651b9f69d30c4710f4219f7dbf upstream.
 
-This reverts commit 7294863a6f01248d72b61d38478978d638641bee.
+Fedora QA reported the following panic:
 
-This commit was erroneously applied again after commit 0ab5d711ec74
-("drm/amd: Refactor `amdgpu_aspm` to be evaluated per device")
-removed it, leading to very hard to debug crashes, when used with a system with two
-AMD GPUs of which only one supports ASPM.
+  BUG: unable to handle page fault for address: 0000000040003e54
+  #PF: supervisor write access in kernel mode
+  #PF: error_code(0x0002) - not-present page
+  Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS edk2-20251119-3.fc43 11/19/2025
+  RIP: 0010:vmware_hypercall4.constprop.0+0x52/0x90
+  ..
+  Call Trace:
+   vmmouse_report_events+0x13e/0x1b0
+   psmouse_handle_byte+0x15/0x60
+   ps2_interrupt+0x8a/0xd0
+   ...
 
-Link: https://lore.kernel.org/linux-acpi/20251006120944.7880-1-spasswolf@web.de/
-Link: https://github.com/acpica/acpica/issues/1060
-Fixes: 0ab5d711ec74 ("drm/amd: Refactor `amdgpu_aspm` to be evaluated per device")
-Signed-off-by: Bert Karwatzki <spasswolf@web.de>
-Reviewed-by: Christian König <christian.koenig@amd.com>
-Reviewed-by: Mario Limonciello (AMD) <superm1@kernel.org>
-Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 97a9689300eb2b393ba5efc17c8e5db835917080)
-Cc: stable@vger.kernel.org
+because the QEMU VMware mouse emulation is buggy, and clears the top 32
+bits of %rdi that the kernel kept a pointer in.
+
+The QEMU vmmouse driver saves and restores the register state in a
+"uint32_t data[6];" and as a result restores the state with the high
+bits all cleared.
+
+RDI originally contained the value of a valid kernel stack address
+(0xff5eeb3240003e54).  After the vmware hypercall it now contains
+0x40003e54, and we get a page fault as a result when it is dereferenced.
+
+The proper fix would be in QEMU, but this works around the issue in the
+kernel to keep old setups working, when old kernels had not happened to
+keep any state in %rdi over the hypercall.
+
+In theory this same issue exists for all the hypercalls in the vmmouse
+driver; in practice it has only been seen with vmware_hypercall3() and
+vmware_hypercall4().  For now, just mark RDI/RSI as clobbered for those
+two calls.  This should have a minimal effect on code generation overall
+as it should be rare for the compiler to want to make RDI/RSI live
+across hypercalls.
+
+Reported-by: Justin Forbes <jforbes@fedoraproject.org>
+Link: https://lore.kernel.org/all/99a9c69a-fc1a-43b7-8d1e-c42d6493b41f@broadcom.com/
+Signed-off-by: Josh Poimboeuf <jpoimboe@kernel.org>
+Cc: stable@kernel.org
+Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_drv.c |    3 ---
- 1 file changed, 3 deletions(-)
+ arch/x86/include/asm/vmware.h |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_drv.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_drv.c
-@@ -2273,9 +2273,6 @@ static int amdgpu_pci_probe(struct pci_d
- 			return -ENODEV;
- 	}
+--- a/arch/x86/include/asm/vmware.h
++++ b/arch/x86/include/asm/vmware.h
+@@ -140,7 +140,7 @@ unsigned long vmware_hypercall3(unsigned
+ 		  "b" (in1),
+ 		  "c" (cmd),
+ 		  "d" (0)
+-		: "cc", "memory");
++		: "di", "si", "cc", "memory");
+ 	return out0;
+ }
  
--	if (amdgpu_aspm == -1 && !pcie_aspm_enabled(pdev))
--		amdgpu_aspm = 0;
--
- 	if (amdgpu_virtual_display ||
- 	    amdgpu_device_asic_has_dc_support(flags & AMD_ASIC_MASK))
- 		supports_atomic = true;
+@@ -165,7 +165,7 @@ unsigned long vmware_hypercall4(unsigned
+ 		  "b" (in1),
+ 		  "c" (cmd),
+ 		  "d" (0)
+-		: "cc", "memory");
++		: "di", "si", "cc", "memory");
+ 	return out0;
+ }
+ 
 
 
