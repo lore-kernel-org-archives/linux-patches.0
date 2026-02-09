@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BBA5237997D;
-	Mon,  9 Feb 2026 14:26:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14A7D37756C;
+	Mon,  9 Feb 2026 14:26:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770647198; cv=none; b=M4a2Jh5BVOCCDtNe9jjRI5mR0XOk63PoErEc8cfZEEsf8CezZ6tC9WY6xSEoJLsuQxpfD51bf50AxB21fRPmDi1s92+Y1LGMqElWkuhOJhM4PWnfPUDsLZ5r62HdT8eYP4IU1Z3jeg8hOBdyUnv9Citv4/xgm2xg4IreMkBT3DU=
+	t=1770647202; cv=none; b=A9NX+zr6L3ws99VNyyVfzzwTTEcat3jfKwtwUJgdpkUL7oQr9/IzyOKdLNADTwQV1FsVmBi1MKF57YXWD4m41Wp2VugmQIMix8J/6kLor4tz1dt4IgTIV+sgzf7g5nh5g/kDtJ8PvtHfrFjLvb7uukn/ohmP+1u5Ajcoc+d1cCM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770647198; c=relaxed/simple;
-	bh=ucGZbD296IsTj5rrNVzwhVnKfku7ohoGmsCLkM5/MB0=;
+	s=arc-20240116; t=1770647202; c=relaxed/simple;
+	bh=bOvsph/KI8fEJjU+7FWfsuAwwI919HibakEr2iIvRx0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tV9TPHw35ECp7jlZTSy/2zYtMHFYOGh03Mv0fTgWS/XBt5uXduk8PtgPw5U7l9nZofyI9yOc7vwQO7kRjhJUcvSWHmkuNjeYYLKQyJAFqopwqfrx2lLfK6Ce6SAiF8HfhJq1y9IkKONtUaHcga1vkaxzJiwc8k0aC8BfKQx4cn4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DuNOqOkN; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SW92l5CzcG0W1x2sEyUhgl7vhTmoyCy9C7Kc/iphRFrBBBgwqwa/Y9tEuGZ/6HyHFGfkt8hedawcMhGmoTQsl7b51M97Pri4dzy4cv6OuHj8OtAbUj13bm4vBcovROKMfifYp1/PGxT+yOrhByeN7PerDg8ibLH3o0z1A5ZkayE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aoIAJaZp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DuNOqOkN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DEFB4C116C6;
-	Mon,  9 Feb 2026 14:26:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aoIAJaZp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 49EC5C116C6;
+	Mon,  9 Feb 2026 14:26:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770647198;
-	bh=ucGZbD296IsTj5rrNVzwhVnKfku7ohoGmsCLkM5/MB0=;
+	s=korg; t=1770647201;
+	bh=bOvsph/KI8fEJjU+7FWfsuAwwI919HibakEr2iIvRx0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DuNOqOkNUWOYs60CjdOfU9HAAPm0Sy7NE6AMKY9CgzlR30CMc964prvynn4XZ/2Wk
-	 AvxEQzuh2DbPQ1ABGIYR5lG4izMW+dkjEeXPVxAaa1IefRe4yc3ssNC6iyKIsbliVg
-	 kBms1PTfOSJXK35RJznv2zZRbL2S7RAd/LVB1944=
+	b=aoIAJaZpR+Jubpgwj0Auu8g3u0tTd4ot1oDLvvY4W9ilbuuL6RLecPeZ+IGN0Z4V3
+	 rrkebr5shCWc3dnQowLJuK4pO0GQXnU0XbkdbW29yjzgdy2h40Wd0aU+MGGiHsD5V6
+	 8KD/ayPlFz+0+MiQD2GJiLiR8wFzWwfmXxOREyvQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Kevin Hao <haokexin@gmail.com>,
 	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.18 029/175] net: cpsw: Execute ndo_set_rx_mode callback in a work queue
-Date: Mon,  9 Feb 2026 15:21:42 +0100
-Message-ID: <20260209142321.526261090@linuxfoundation.org>
+Subject: [PATCH 6.18 030/175] net: cpsw_new: Execute ndo_set_rx_mode callback in a work queue
+Date: Mon,  9 Feb 2026 15:21:43 +0100
+Message-ID: <20260209142321.561504339@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260209142320.474120190@linuxfoundation.org>
 References: <20260209142320.474120190@linuxfoundation.org>
@@ -52,16 +52,16 @@ Content-Transfer-Encoding: 8bit
 
 From: Kevin Hao <haokexin@gmail.com>
 
-commit 0b8c878d117319f2be34c8391a77e0f4d5c94d79 upstream.
+commit c0b5dc73a38f954e780f93a549b8fe225235c07a upstream.
 
 Commit 1767bb2d47b7 ("ipv6: mcast: Don't hold RTNL for
 IPV6_ADD_MEMBERSHIP and MCAST_JOIN_GROUP.") removed the RTNL lock for
 IPV6_ADD_MEMBERSHIP and MCAST_JOIN_GROUP operations. However, this
 change triggered the following call trace on my BeagleBone Black board:
-  WARNING: net/8021q/vlan_core.c:236 at vlan_for_each+0x120/0x124, CPU#0: rpcbind/481
+  WARNING: net/8021q/vlan_core.c:236 at vlan_for_each+0x120/0x124, CPU#0: rpcbind/496
   RTNL: assertion failed at net/8021q/vlan_core.c (236)
   Modules linked in:
-  CPU: 0 UID: 997 PID: 481 Comm: rpcbind Not tainted 6.19.0-rc7-next-20260130-yocto-standard+ #35 PREEMPT
+  CPU: 0 UID: 997 PID: 496 Comm: rpcbind Not tainted 6.19.0-rc6-next-20260122-yocto-standard+ #8 PREEMPT
   Hardware name: Generic AM33XX (Flattened Device Tree)
   Call trace:
    unwind_backtrace from show_stack+0x28/0x2c
@@ -69,7 +69,7 @@ change triggered the following call trace on my BeagleBone Black board:
    dump_stack_lvl from __warn+0xb8/0x11c
    __warn from warn_slowpath_fmt+0x130/0x194
    warn_slowpath_fmt from vlan_for_each+0x120/0x124
-   vlan_for_each from cpsw_add_mc_addr+0x54/0x98
+   vlan_for_each from cpsw_add_mc_addr+0x54/0xd8
    cpsw_add_mc_addr from __hw_addr_ref_sync_dev+0xc4/0xec
    __hw_addr_ref_sync_dev from __dev_mc_add+0x78/0x88
    __dev_mc_add from igmp6_group_added+0x84/0xec
@@ -79,7 +79,7 @@ change triggered the following call trace on my BeagleBone Black board:
    do_ipv6_setsockopt from ipv6_setsockopt+0x88/0xc8
    ipv6_setsockopt from do_sock_setsockopt+0xe8/0x19c
    do_sock_setsockopt from __sys_setsockopt+0x84/0xac
-   __sys_setsockopt from ret_fast_syscall+0x0/0x54
+   __sys_setsockopt from ret_fast_syscall+0x0/0x5
 
 This trace occurs because vlan_for_each() is called within
 cpsw_ndo_set_rx_mode(), which expects the RTNL lock to be held.
@@ -91,26 +91,22 @@ rtnl_lock() in cpsw_ndo_set_rx_mode() is not a viable solution.
 To resolve this issue, we opt to execute the actual processing within
 a work queue, following the approach used by the icssg-prueth driver.
 
-Please note: To reproduce this issue, I manually reverted the changes to
-am335x-bone-common.dtsi from commit c477358e66a3 ("ARM: dts: am335x-bone:
-switch to new cpsw switch drv") in order to revert to the legacy cpsw
-driver.
-
 Fixes: 1767bb2d47b7 ("ipv6: mcast: Don't hold RTNL for IPV6_ADD_MEMBERSHIP and MCAST_JOIN_GROUP.")
 Signed-off-by: Kevin Hao <haokexin@gmail.com>
 Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20260203-bbb-v5-2-ea0ea217a85c@gmail.com
+Link: https://patch.msgid.link/20260203-bbb-v5-1-ea0ea217a85c@gmail.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/ti/cpsw.c | 41 +++++++++++++++++++++++++++++-----
- 1 file changed, 35 insertions(+), 6 deletions(-)
+ drivers/net/ethernet/ti/cpsw_new.c  | 34 ++++++++++++++++++++++++-----
+ drivers/net/ethernet/ti/cpsw_priv.h |  1 +
+ 2 files changed, 30 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/net/ethernet/ti/cpsw.c b/drivers/net/ethernet/ti/cpsw.c
-index 54c24cd3d3be..b0e18bdc2c85 100644
---- a/drivers/net/ethernet/ti/cpsw.c
-+++ b/drivers/net/ethernet/ti/cpsw.c
-@@ -305,12 +305,19 @@ static int cpsw_purge_all_mc(struct net_device *ndev, const u8 *addr, int num)
+diff --git a/drivers/net/ethernet/ti/cpsw_new.c b/drivers/net/ethernet/ti/cpsw_new.c
+index ab88d4c02cbd..21af0a10626a 100644
+--- a/drivers/net/ethernet/ti/cpsw_new.c
++++ b/drivers/net/ethernet/ti/cpsw_new.c
+@@ -248,16 +248,22 @@ static int cpsw_purge_all_mc(struct net_device *ndev, const u8 *addr, int num)
  	return 0;
  }
  
@@ -121,27 +117,22 @@ index 54c24cd3d3be..b0e18bdc2c85 100644
 +	struct cpsw_priv *priv = container_of(work, struct cpsw_priv, rx_mode_work);
  	struct cpsw_common *cpsw = priv->cpsw;
 +	struct net_device *ndev = priv->ndev;
- 	int slave_port = -1;
  
 +	rtnl_lock();
 +	if (!netif_running(ndev))
 +		goto unlock_rtnl;
 +
 +	netif_addr_lock_bh(ndev);
-+
- 	if (cpsw->data.dual_emac)
- 		slave_port = priv->emac_port + 1;
- 
-@@ -318,7 +325,7 @@ static void cpsw_ndo_set_rx_mode(struct net_device *ndev)
+ 	if (ndev->flags & IFF_PROMISC) {
  		/* Enable promiscuous mode */
  		cpsw_set_promiscious(ndev, true);
- 		cpsw_ale_set_allmulti(cpsw->ale, IFF_ALLMULTI, slave_port);
+ 		cpsw_ale_set_allmulti(cpsw->ale, IFF_ALLMULTI, priv->emac_port);
 -		return;
 +		goto unlock_addr;
- 	} else {
- 		/* Disable promiscuous mode */
- 		cpsw_set_promiscious(ndev, false);
-@@ -331,6 +338,18 @@ static void cpsw_ndo_set_rx_mode(struct net_device *ndev)
+ 	}
+ 
+ 	/* Disable promiscuous mode */
+@@ -270,6 +276,18 @@ static void cpsw_ndo_set_rx_mode(struct net_device *ndev)
  	/* add/remove mcast address either for real netdev or for vlan */
  	__hw_addr_ref_sync_dev(&ndev->mc, ndev, cpsw_add_mc_addr,
  			       cpsw_del_mc_addr);
@@ -160,50 +151,47 @@ index 54c24cd3d3be..b0e18bdc2c85 100644
  }
  
  static unsigned int cpsw_rxbuf_total_len(unsigned int len)
-@@ -1472,6 +1491,7 @@ static int cpsw_probe_dual_emac(struct cpsw_priv *priv)
- 	priv_sl2->ndev = ndev;
- 	priv_sl2->dev  = &ndev->dev;
- 	priv_sl2->msg_enable = netif_msg_init(debug_level, CPSW_DEBUG);
-+	INIT_WORK(&priv_sl2->rx_mode_work, cpsw_ndo_set_rx_mode_work);
+@@ -1398,6 +1416,7 @@ static int cpsw_create_ports(struct cpsw_common *cpsw)
+ 		priv->msg_enable = netif_msg_init(debug_level, CPSW_DEBUG);
+ 		priv->emac_port = i + 1;
+ 		priv->tx_packet_min = CPSW_MIN_PACKET_SIZE;
++		INIT_WORK(&priv->rx_mode_work, cpsw_ndo_set_rx_mode_work);
  
- 	if (is_valid_ether_addr(data->slave_data[1].mac_addr)) {
- 		memcpy(priv_sl2->mac_addr, data->slave_data[1].mac_addr,
-@@ -1653,6 +1673,7 @@ static int cpsw_probe(struct platform_device *pdev)
- 	priv->dev  = dev;
- 	priv->msg_enable = netif_msg_init(debug_level, CPSW_DEBUG);
- 	priv->emac_port = 0;
-+	INIT_WORK(&priv->rx_mode_work, cpsw_ndo_set_rx_mode_work);
+ 		if (is_valid_ether_addr(slave_data->mac_addr)) {
+ 			ether_addr_copy(priv->mac_addr, slave_data->mac_addr);
+@@ -1447,13 +1466,18 @@ static int cpsw_create_ports(struct cpsw_common *cpsw)
  
- 	if (is_valid_ether_addr(data->slave_data[0].mac_addr)) {
- 		memcpy(priv->mac_addr, data->slave_data[0].mac_addr, ETH_ALEN);
-@@ -1758,6 +1779,8 @@ static int cpsw_probe(struct platform_device *pdev)
- static void cpsw_remove(struct platform_device *pdev)
+ static void cpsw_unregister_ports(struct cpsw_common *cpsw)
  {
- 	struct cpsw_common *cpsw = platform_get_drvdata(pdev);
 +	struct net_device *ndev;
 +	struct cpsw_priv *priv;
- 	int i, ret;
+ 	int i = 0;
  
- 	ret = pm_runtime_resume_and_get(&pdev->dev);
-@@ -1770,9 +1793,15 @@ static void cpsw_remove(struct platform_device *pdev)
- 		return;
- 	}
- 
--	for (i = 0; i < cpsw->data.slaves; i++)
--		if (cpsw->slaves[i].ndev)
--			unregister_netdev(cpsw->slaves[i].ndev);
-+	for (i = 0; i < cpsw->data.slaves; i++) {
+ 	for (i = 0; i < cpsw->data.slaves; i++) {
+-		if (!cpsw->slaves[i].ndev)
 +		ndev = cpsw->slaves[i].ndev;
 +		if (!ndev)
-+			continue;
-+
+ 			continue;
+ 
+-		unregister_netdev(cpsw->slaves[i].ndev);
 +		priv = netdev_priv(ndev);
 +		unregister_netdev(ndev);
 +		disable_work_sync(&priv->rx_mode_work);
-+	}
+ 	}
+ }
  
- 	cpts_release(cpsw->cpts);
- 	cpdma_ctlr_destroy(cpsw->dma);
+diff --git a/drivers/net/ethernet/ti/cpsw_priv.h b/drivers/net/ethernet/ti/cpsw_priv.h
+index 91add8925e23..acb6181c5c9e 100644
+--- a/drivers/net/ethernet/ti/cpsw_priv.h
++++ b/drivers/net/ethernet/ti/cpsw_priv.h
+@@ -391,6 +391,7 @@ struct cpsw_priv {
+ 	u32 tx_packet_min;
+ 	struct cpsw_ale_ratelimit ale_bc_ratelimit;
+ 	struct cpsw_ale_ratelimit ale_mc_ratelimit;
++	struct work_struct rx_mode_work;
+ };
+ 
+ #define ndev_to_cpsw(ndev) (((struct cpsw_priv *)netdev_priv(ndev))->cpsw)
 -- 
 2.53.0
 
