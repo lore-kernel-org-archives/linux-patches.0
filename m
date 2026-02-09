@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EBE4B27CCF2;
-	Mon,  9 Feb 2026 14:46:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 277BE27CCF2;
+	Mon,  9 Feb 2026 14:46:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770648379; cv=none; b=fY7/t6kcj9ON0lb0rBQZ3AS5J+S+Zwhv3Vxp2VYgkLgeadND9FKo155NJFW10fowQRae11A56b/Su4FDi6+NoMzXIrIC9paT51OGKbXkOamUPGOOU3v5tpMG3K/5Xv/Y3EeuVf0pjllxeyDlUiXB2BHS4S494ymq+pS1yFcag+k=
+	t=1770648382; cv=none; b=iR8N9FyYmSCBLsWZYj7Uug8mkUMHfuO3D7/JAkMo8z2dpWQaQDGivoQ8wY/82d8uqQVU39ZyW2ZA0E1m0J6+FOBd8qZ+BvX6XAKMZigPuZxp8oiAI+vrJtASl78Fjgh7BMyMJgZBVXJNHmxyYZ5BHqw3a9+AX/cSur0QFjJ72lE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770648379; c=relaxed/simple;
-	bh=9ioA0RbT24eTdIIzyX5p9mFn51sRQMTQH4AB6e0qgR4=;
+	s=arc-20240116; t=1770648382; c=relaxed/simple;
+	bh=xAXe0nYSDbbkPx9aY56gBAgoAyeUKEh/c+eZIL79wiY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=OspE7W+mynlUWdzZbbZOrhRRlqXLWHn7rDaX5AiRpBIWlKvX1aP8zL4nG0E3XGT2ujR1GFjAJQto5XlR7TjPbdM7VRlvvdUUywUUuTq/SkqO/Jf+v8Xq6Qm7M/1scOdku0sIikNzgRuJqxVra+Y0QhDoAAQXHWPdV0edvpDLxkA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RCLDpPdf; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bEGsBkPzSDXGK6GetpJ+tGBrRHzv/Ns9IyqVbC3PWXqeJ/wWBd3TXDV/weRiLnd/tEc5QMr6/8fESvnqJ9eoYittZChfAoBv6gOrQnkZuXpFLCu3m3zdI3bxnBktVTCyQPzSb56EYKs0KCe9uVXu7M5HVPloQxTacXCaxkdMA3Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=v9II7H8s; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RCLDpPdf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 649E8C116C6;
-	Mon,  9 Feb 2026 14:46:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="v9II7H8s"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90AA8C116C6;
+	Mon,  9 Feb 2026 14:46:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770648378;
-	bh=9ioA0RbT24eTdIIzyX5p9mFn51sRQMTQH4AB6e0qgR4=;
+	s=korg; t=1770648382;
+	bh=xAXe0nYSDbbkPx9aY56gBAgoAyeUKEh/c+eZIL79wiY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RCLDpPdfTu59a/t27TkXiziIzWuqPGUFQrr8rJJ23MVgZUPqkVwpEB93UAqnL1ZvK
-	 CzsgH6z5KGYSgMBYJ+Cdrg5nM8yWXdHNtt19SrAVnOsGfss75aKR9JfBgebp3v0rt7
-	 yD+JAPFGWoH+6NjAa38yCCtIwUjNXcOsgfuF7MVI=
+	b=v9II7H8sHMuViBGOyutkoNRDMi9+V95NRvvEInM3aOU4guFUQgk9Es98tf3ZSKEUp
+	 Fexqabzx7AAqa3/HD8/BK5+gdiJR3l73TB/C+s/KsWqEESJ8yNm7IwFH3IDqtw9aZ8
+	 ehHyuCAySUO2xUVK4lYtt9i9THwx9hi+Ys1AGD/8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kaushlendra Kumar <kaushlendra.kumar@intel.com>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>
-Subject: [PATCH 6.6 03/86] platform/x86: intel_telemetry: Fix swapped arrays in PSS output
-Date: Mon,  9 Feb 2026 15:23:26 +0100
-Message-ID: <20260209142304.899820561@linuxfoundation.org>
+	Gabor Juhos <j4g8y7@gmail.com>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Ulf Hansson <ulf.hansson@linaro.org>
+Subject: [PATCH 6.6 04/86] pmdomain: qcom: rpmpd: fix off-by-one error in clamping to the highest state
+Date: Mon,  9 Feb 2026 15:23:27 +0100
+Message-ID: <20260209142304.935243450@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260209142304.770150175@linuxfoundation.org>
 References: <20260209142304.770150175@linuxfoundation.org>
@@ -44,58 +45,46 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Kaushlendra Kumar <kaushlendra.kumar@intel.com>
+From: Gabor Juhos <j4g8y7@gmail.com>
 
-commit 25e9e322d2ab5c03602eff4fbf4f7c40019d8de2 upstream.
+commit 8aa6f7697f5981d336cac7af6ddd182a03c6da01 upstream.
 
-The LTR blocking statistics and wakeup event counters are incorrectly
-cross-referenced during debugfs output rendering. The code populates
-pss_ltr_blkd[] with LTR blocking data and pss_s0ix_wakeup[] with wakeup
-data, but the display loops reference the wrong arrays.
+As it is indicated by the comment, the rpmpd_aggregate_corner() function
+tries to clamp the state to the highest corner/level supported by the
+given power domain, however the calculation of the highest state contains
+an off-by-one error.
 
-This causes the "LTR Blocking Status" section to print wakeup events
-and the "Wakes Status" section to print LTR blockers, misleading power
-management analysis and S0ix residency debugging.
+The 'max_state' member of the 'rpmpd' structure indicates the highest
+corner/level, and as such it does not needs to be decremented.
 
-Fix by aligning array usage with the intended output section labels.
+Change the code to use the 'max_state' value directly to avoid the error.
 
-Fixes: 87bee290998d ("platform:x86: Add Intel Telemetry Debugfs interfaces")
+Fixes: 98c8b3efacae ("soc: qcom: rpmpd: Add sync_state")
+Signed-off-by: Gabor Juhos <j4g8y7@gmail.com>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
 Cc: stable@vger.kernel.org
-Signed-off-by: Kaushlendra Kumar <kaushlendra.kumar@intel.com>
-Link: https://patch.msgid.link/20251224032053.3915900-1-kaushlendra.kumar@intel.com
-Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/platform/x86/intel/telemetry/debugfs.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/pmdomain/qcom/rpmpd.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/platform/x86/intel/telemetry/debugfs.c
-+++ b/drivers/platform/x86/intel/telemetry/debugfs.c
-@@ -449,7 +449,7 @@ static int telem_pss_states_show(struct
- 	for (index = 0; index < debugfs_conf->pss_ltr_evts; index++) {
- 		seq_printf(s, "%-32s\t%u\n",
- 			   debugfs_conf->pss_ltr_data[index].name,
--			   pss_s0ix_wakeup[index]);
-+			   pss_ltr_blkd[index]);
- 	}
+--- a/drivers/pmdomain/qcom/rpmpd.c
++++ b/drivers/pmdomain/qcom/rpmpd.c
+@@ -825,7 +825,7 @@ static int rpmpd_aggregate_corner(struct
  
- 	seq_puts(s, "\n--------------------------------------\n");
-@@ -459,7 +459,7 @@ static int telem_pss_states_show(struct
- 	for (index = 0; index < debugfs_conf->pss_wakeup_evts; index++) {
- 		seq_printf(s, "%-32s\t%u\n",
- 			   debugfs_conf->pss_wakeup[index].name,
--			   pss_ltr_blkd[index]);
-+			   pss_s0ix_wakeup[index]);
- 	}
+ 	/* Clamp to the highest corner/level if sync_state isn't done yet */
+ 	if (!pd->state_synced)
+-		this_active_corner = this_sleep_corner = pd->max_state - 1;
++		this_active_corner = this_sleep_corner = pd->max_state;
+ 	else
+ 		to_active_sleep(pd, pd->corner, &this_active_corner, &this_sleep_corner);
  
- 	return 0;
 
 
