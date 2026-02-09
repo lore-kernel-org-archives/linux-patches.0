@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81EC5285073;
-	Mon,  9 Feb 2026 14:47:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC31A2DB7B4;
+	Mon,  9 Feb 2026 14:47:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770648471; cv=none; b=uiPSPIJ3CnNYbg8u1fKQCkyrHxxd0+pAvVmkU2PAPZYDMN/5liutO751HLF/FpxIyNmTreNIxN59RxEhxeHxYlBv2FiB768PYoETaZy4oT8RhWxdZaE2IMriuOB8J045kHJf1pShxGuxk1OrjTs7cAnpBQ115ysXiohI80Syl/Q=
+	t=1770648474; cv=none; b=IeY7JVy+eBnUjdhYf2LCHJVWLq5rbSdsGCq7fY312u7nTbex+KYWfMDWF+z83CrnURwxZvsIu0pDgvIFaqmyN1q5nKrcK4dI3nBP8ohjAoseQ6Lw8Gr9FZ0EQPZpmG19wFKkaYTwaEJiDuuHwPiPEnOT12oxyiMNjUyRAqx2Tnk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770648471; c=relaxed/simple;
-	bh=DIqYog7VmhpNlEIsk6veYqFBf8DpCh12RihqyyhqtlE=;
+	s=arc-20240116; t=1770648474; c=relaxed/simple;
+	bh=8Gd92vabpyDf1ZvOAhOcYA/HrArYMvTaqcH8/AMAREE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SLiX5wo+KImk7L954iy0eMuNNb40EV162KaKPv5+IdY1YzsKLYoiT/AXWCoWAuBLPjjpCbYHTr4jaxjuNYbCMOK/kGf+G93mzf04acCLwqlGrE3ZF0sCRGvwv11fug6BtQUwB3xsNVJX5tatl5GZQ7+dmeeBx+sdeguPPwBzS10=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FxWwE6Wk; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Y2IUwk9lfvK7s5qo17h1/m/glwtqtAWo0esnPyG3F+cu1iJkZtBjv3p4AN/uRBtBNRzRenOCWtZVLxzCB1Cxen/yASn14pXB8eXQMCUbOh3nmBIKFTul3a9PGf7WVHgk85Z14wChOY5yu1xzJL3KAtAvJNMwhyiVm+ePvgzn17E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AH3QHZI3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FxWwE6Wk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D4DC4C116C6;
-	Mon,  9 Feb 2026 14:47:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AH3QHZI3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3DBD4C19422;
+	Mon,  9 Feb 2026 14:47:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770648471;
-	bh=DIqYog7VmhpNlEIsk6veYqFBf8DpCh12RihqyyhqtlE=;
+	s=korg; t=1770648474;
+	bh=8Gd92vabpyDf1ZvOAhOcYA/HrArYMvTaqcH8/AMAREE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FxWwE6WkLFGfHgVLABT9j8VUvP6L5pdZxy/puS3nQ9rr7YGpeKunpL7DE93O37dJg
-	 n8XZc7yH5WY3nejLy0n8xwjialzgbqbAcD5dV7KvHJgqvUfwRjmhpv23rFBgBmPo/F
-	 pxI+ayXmVjsGkn06Y+V394yknKMFLAe/EZ/ogpmo=
+	b=AH3QHZI35fgXcl7yGUXZGna/YcKGHa/g5/QeCPsJg0TEncdgnYqyIEBq1RdDUdJP9
+	 if99iNMvUwTg9F45shEcYmush7eKEvNcy+otqPrtp+eLMjI8DzOgprg2ES8KRyBj7Z
+	 1oiF38B7rEFyMLfl07TdzY1varVG0Zwjdk97rl+8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dimitrios Katsaros <patcherwork@gmail.com>,
-	Sascha Hauer <s.hauer@pengutronix.de>,
+	Devyn Liu <liudingyuan@h-partners.com>,
+	Yang Shen <shenyang39@huawei.com>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 47/86] ASoC: tlv320adcx140: Propagate error codes during probe
-Date: Mon,  9 Feb 2026 15:24:10 +0100
-Message-ID: <20260209142306.475711566@linuxfoundation.org>
+Subject: [PATCH 6.6 48/86] spi: hisi-kunpeng: Fixed the wrong debugfs node name in hisi_spi debugfs initialization
+Date: Mon,  9 Feb 2026 15:24:11 +0100
+Message-ID: <20260209142306.511319443@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260209142304.770150175@linuxfoundation.org>
 References: <20260209142304.770150175@linuxfoundation.org>
@@ -52,41 +52,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dimitrios Katsaros <patcherwork@gmail.com>
+From: Devyn Liu <liudingyuan@h-partners.com>
 
-[ Upstream commit d89aad92cfd15edbd704746f44c98fe687f9366f ]
+[ Upstream commit b062a899c997df7b9ce29c62164888baa7a85833 ]
 
-When scanning for the reset pin, we could get an -EPROBE_DEFER.
-The driver would assume that no reset pin had been defined,
-which would mean that the chip would never be powered.
+In hisi_spi_debugfs_init, spi controller pointer is calculated
+by container_of macro, and the member is hs->dev. But the host
+cannot be calculated offset directly by this. (hs->dev) points
+to (pdev->dev), and it is the (host->dev.parent) rather than
+(host->dev) points to the (pdev->dev), which is set in
+__spi_alloc_controller.
 
-Now we both respect any error we get from devm_gpiod_get_optional.
-We also now properly report the missing GPIO definition when
-'gpio_reset' is NULL.
+In this patch, this issues is fixed by getting the spi_controller
+data from pdev->dev by dev_get_drvdata() directly. (dev->driver_data)
+points to the spi controller data in the probe stage.
 
-Signed-off-by: Dimitrios Katsaros <patcherwork@gmail.com>
-Signed-off-by: Sascha Hauer <s.hauer@pengutronix.de>
-Link: https://patch.msgid.link/20260113-sound-soc-codecs-tvl320adcx140-v4-3-8f7ecec525c8@pengutronix.de
+Signed-off-by: Devyn Liu <liudingyuan@h-partners.com>
+Reviewed-by: Yang Shen <shenyang39@huawei.com>
+Link: https://patch.msgid.link/20260108075323.3831574-1-liudingyuan@h-partners.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/tlv320adcx140.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/spi/spi-hisi-kunpeng.c | 4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
-diff --git a/sound/soc/codecs/tlv320adcx140.c b/sound/soc/codecs/tlv320adcx140.c
-index 78d95b8be2f29..c4ffbc573412e 100644
---- a/sound/soc/codecs/tlv320adcx140.c
-+++ b/sound/soc/codecs/tlv320adcx140.c
-@@ -1157,6 +1157,9 @@ static int adcx140_i2c_probe(struct i2c_client *i2c)
- 	adcx140->gpio_reset = devm_gpiod_get_optional(adcx140->dev,
- 						      "reset", GPIOD_OUT_LOW);
- 	if (IS_ERR(adcx140->gpio_reset))
-+		return dev_err_probe(&i2c->dev, PTR_ERR(adcx140->gpio_reset),
-+				     "Failed to get Reset GPIO\n");
-+	if (!adcx140->gpio_reset)
- 		dev_info(&i2c->dev, "Reset GPIO not defined\n");
+diff --git a/drivers/spi/spi-hisi-kunpeng.c b/drivers/spi/spi-hisi-kunpeng.c
+index 16054695bdb04..f0a50f40a3ba1 100644
+--- a/drivers/spi/spi-hisi-kunpeng.c
++++ b/drivers/spi/spi-hisi-kunpeng.c
+@@ -161,10 +161,8 @@ static const struct debugfs_reg32 hisi_spi_regs[] = {
+ static int hisi_spi_debugfs_init(struct hisi_spi *hs)
+ {
+ 	char name[32];
++	struct spi_controller *host = dev_get_drvdata(hs->dev);
  
- 	adcx140->supply_areg = devm_regulator_get_optional(adcx140->dev,
+-	struct spi_controller *host;
+-
+-	host = container_of(hs->dev, struct spi_controller, dev);
+ 	snprintf(name, 32, "hisi_spi%d", host->bus_num);
+ 	hs->debugfs = debugfs_create_dir(name, NULL);
+ 	if (IS_ERR(hs->debugfs))
 -- 
 2.51.0
 
