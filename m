@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 660C128312F;
-	Mon,  9 Feb 2026 14:55:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C215B28312F;
+	Mon,  9 Feb 2026 14:55:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770648904; cv=none; b=Krwz081Mgwh7gIu3f7Ymmgo/+oyVTlV3x0C6D9JjJW6ZSv8mU0bs5TU0PDc3Ld/8IvO9gqSYQtHSg6V6s4DiB1Aw+M8MJkoKePV/eW/TMXVw8BNFKgUIHonKBg+6whvK3Ea/6QT3TvzYff0da1pEnqknkQdId4hoVRQOUI4RO+8=
+	t=1770648907; cv=none; b=CX5ZFpuovZc3/zKaRSEPcFPXeU/r0cEJ56fdpXEoB0hkyaUyzmqA/4QjFQ/3hIj5Gs0Kb97q2u4G6wYUjYzOHXuqWB0aGahyYrzIiHThFm+16ePhzAC8YTVEdSPnaULr74lsxlRUKeY44eHjPbhCz+FG+wav74ALlTGkQsXDTkI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770648904; c=relaxed/simple;
-	bh=DOem/tiqZgCwlxpmoSxpDm2m7PJZeE/yt9UqIyeWFI0=;
+	s=arc-20240116; t=1770648907; c=relaxed/simple;
+	bh=SH+SibIqnc74Rfp9InqRF28zG9b3mNOyWJFZ/1cpycw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Q+f5OrXzCWHRzsIFF5+ePbi/0oZDl62AZNVnYjKeecMktxQXBLJF0AdZvfX51ZFM+r40hvlVmHUrXVeDpqytyihe/uiB+O4HeKjMgNpGfz64NR2HTy7JdErH0IQZTKlLh6gGAQbq1Wcgpni13MG0hDsYGtwyDUPM4gKQSdn8vgo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=o+v7jOAe; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=S2Fp/YJGbqUJ2FqpbXHfQrhgYhEWz0MAndp6x2SdkfqSnlcIuQYWjBlgz/FW0XwFEHXtiitSYJkJURpzNTxOglF0qqacDtMXeSSKxvL5KmUjG6yD562mf7k1N08SMaDt31F7qN1GMInt67zrth59toqaQyDLQiDkOAFHp/sVhY4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pL/7WrT6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="o+v7jOAe"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AFCAFC116C6;
-	Mon,  9 Feb 2026 14:55:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pL/7WrT6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32CB3C116C6;
+	Mon,  9 Feb 2026 14:55:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770648904;
-	bh=DOem/tiqZgCwlxpmoSxpDm2m7PJZeE/yt9UqIyeWFI0=;
+	s=korg; t=1770648907;
+	bh=SH+SibIqnc74Rfp9InqRF28zG9b3mNOyWJFZ/1cpycw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=o+v7jOAePnLoEMA1WB4R6zFfBuSNMyUxZrBDLBpPyZWv+Rl+XNDWMfZXzDW+RBUUF
-	 PU+XCIlfz/hfxcdO47jIWGIBxW6OW8D5nuhqeF6PhBwOLyxemNarzvZ5c2h3kJmNBu
-	 ry8sP0gbjy44J4GtBjc5qr/YWM4GNjRzNWOaFcw8=
+	b=pL/7WrT6/cew2rrnZ0z3IX8ET3TNryusq/nQYy4n93TfG+uV0Qtz+A19S88vn7TPX
+	 rBtN7GwrNUhr1OqQc3Hgpu+OjQspVluHzCVoac7QUWsPYXtKwZAguhbCMzrQOaTzEt
+	 Kg2t6elhz2CIoHR9ZsJmOJVm+mzzPKyIYyvFCjAI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Simon Horman <horms@kernel.org>,
-	Zilin Guan <zilin@seu.edu.cn>,
-	Kory Maincent <kory.maincent@bootlin.com>,
+	Yuhao Jiang <danisjiang@gmail.com>,
+	Junrui Luo <moonafterrain@outlook.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 49/75] net: liquidio: Fix off-by-one error in VF setup_nic_devices() cleanup
-Date: Mon,  9 Feb 2026 15:24:46 +0100
-Message-ID: <20260209142303.610354786@linuxfoundation.org>
+Subject: [PATCH 5.15 50/75] dpaa2-switch: add bounds check for if_id in IRQ handler
+Date: Mon,  9 Feb 2026 15:24:47 +0100
+Message-ID: <20260209142303.645881634@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260209142301.830618238@linuxfoundation.org>
 References: <20260209142301.830618238@linuxfoundation.org>
@@ -53,48 +52,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zilin Guan <zilin@seu.edu.cn>
+From: Junrui Luo <moonafterrain@outlook.com>
 
-[ Upstream commit 6cbba46934aefdfb5d171e0a95aec06c24f7ca30 ]
+[ Upstream commit 31a7a0bbeb006bac2d9c81a2874825025214b6d8 ]
 
-In setup_nic_devices(), the initialization loop jumps to the label
-setup_nic_dev_free on failure. The current cleanup loop while(i--)
-skip the failing index i, causing a memory leak.
+The IRQ handler extracts if_id from the upper 16 bits of the hardware
+status register and uses it to index into ethsw->ports[] without
+validation. Since if_id can be any 16-bit value (0-65535) but the ports
+array is only allocated with sw_attr.num_ifs elements, this can lead to
+an out-of-bounds read potentially.
 
-Fix this by changing the loop to iterate from the current index i
-down to 0.
+Add a bounds check before accessing the array, consistent with the
+existing validation in dpaa2_switch_rx().
 
-Compile tested only. Issue found using code review.
-
-Fixes: 846b46873eeb ("liquidio CN23XX: VF offload features")
-Suggested-by: Simon Horman <horms@kernel.org>
-Signed-off-by: Zilin Guan <zilin@seu.edu.cn>
-Reviewed-by: Kory Maincent <kory.maincent@bootlin.com>
-Link: https://patch.msgid.link/20260128154440.278369-4-zilin@seu.edu.cn
+Reported-by: Yuhao Jiang <danisjiang@gmail.com>
+Reported-by: Junrui Luo <moonafterrain@outlook.com>
+Fixes: 24ab724f8a46 ("dpaa2-switch: use the port index in the IRQ handler")
+Signed-off-by: Junrui Luo <moonafterrain@outlook.com>
+Link: https://patch.msgid.link/SYBPR01MB7881D420AB43FF1A227B84AFAF91A@SYBPR01MB7881.ausprd01.prod.outlook.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/cavium/liquidio/lio_vf_main.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/net/ethernet/freescale/dpaa2/dpaa2-switch.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/net/ethernet/cavium/liquidio/lio_vf_main.c b/drivers/net/ethernet/cavium/liquidio/lio_vf_main.c
-index 8a969a9d4b637..650845b671c60 100644
---- a/drivers/net/ethernet/cavium/liquidio/lio_vf_main.c
-+++ b/drivers/net/ethernet/cavium/liquidio/lio_vf_main.c
-@@ -2230,11 +2230,11 @@ static int setup_nic_devices(struct octeon_device *octeon_dev)
+diff --git a/drivers/net/ethernet/freescale/dpaa2/dpaa2-switch.c b/drivers/net/ethernet/freescale/dpaa2/dpaa2-switch.c
+index dcb96c2b2820a..5c7055a4acc6f 100644
+--- a/drivers/net/ethernet/freescale/dpaa2/dpaa2-switch.c
++++ b/drivers/net/ethernet/freescale/dpaa2/dpaa2-switch.c
+@@ -1509,6 +1509,10 @@ static irqreturn_t dpaa2_switch_irq0_handler_thread(int irq_num, void *arg)
+ 	}
  
- setup_nic_dev_free:
+ 	if_id = (status & 0xFFFF0000) >> 16;
++	if (if_id >= ethsw->sw_attr.num_ifs) {
++		dev_err(dev, "Invalid if_id %d in IRQ status\n", if_id);
++		goto out;
++	}
+ 	port_priv = ethsw->ports[if_id];
  
--	while (i--) {
-+	do {
- 		dev_err(&octeon_dev->pci_dev->dev,
- 			"NIC ifidx:%d Setup failed\n", i);
- 		liquidio_destroy_nic_device(octeon_dev, i);
--	}
-+	} while (i--);
- 
- setup_nic_dev_done:
- 
+ 	if (status & DPSW_IRQ_EVENT_LINK_CHANGED) {
 -- 
 2.51.0
 
