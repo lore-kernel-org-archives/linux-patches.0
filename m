@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05B8D37A48A;
-	Mon,  9 Feb 2026 14:30:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E5EC29D265;
+	Mon,  9 Feb 2026 14:30:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770647447; cv=none; b=ip3J0KpQj1uh/w1frHsYJDwChCkcrqbkKa/S6fjqmXSVQb/dSyXqfNuNaBFy3XmhWT+kj8oy2OiFLrd80VFLzOYuaoBDQ/g6fswjV37gosE5CNacG3vvz5fl3mT4MjeKGDIJsga1qS9AQ1rK9VwZ4r9Es/5zNOpn/XAo/690cOY=
+	t=1770647450; cv=none; b=oVBtNfUEprvtLmU7CwJ92EnySmiswQ7W/s9l4UlqLZmwjeE5O89Ft5JQi/aECffeYUc4T7xXmHNVi14L8S5G7+QE7yRnFh8B2j050aV/1zkwxbVfdxMKTnlACz5QdNxu1ItwfMzkixRlqJRDkbVamEHFWJbfQ6Wn/ASgF6HWyPg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770647447; c=relaxed/simple;
-	bh=5l8WVaqnf1DjWiusG2wi1SA3Q2Uo4g8K7cb6hogHrSU=;
+	s=arc-20240116; t=1770647450; c=relaxed/simple;
+	bh=+YeeuDF4R0zXq/p+6aU3R8R0jb/cUmdjtfFGHo5zprI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ox/X7b/3tQC89mCG5icK/7BrKYJu4bZyZoHM0wW4luWzftWBvkDz8gAhoriSY1L2/D6JG1+PVHWp5rmxA/95e9F35dN7yEw/cTTH1Ycm1hknYEraoy4nZdb8ejkNbEYfWLyYxMT1BjqkgBBpqIIMB/MOxG7Yd9l6ASKS9iPPVZE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=O66Svi+9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Yqeu4TdvxUofkj7e6pz+XvsAl+GE8syVyhwcNR3SIPdHPRgC7Ve8ySfG2x5FsdyKojU4o2tA/EYzts/+tdKlYkpUgWuaSdjHlPcLJV9yZ/sCNFPauU8e6KYvj5RS4JTKliqVeW2iVdib2rd3BnUl9tTyi0aS5+wdkm6R128rFpE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VwR3m0Mk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="O66Svi+9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 840A0C19424;
-	Mon,  9 Feb 2026 14:30:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VwR3m0Mk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E438EC116C6;
+	Mon,  9 Feb 2026 14:30:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770647446;
-	bh=5l8WVaqnf1DjWiusG2wi1SA3Q2Uo4g8K7cb6hogHrSU=;
+	s=korg; t=1770647450;
+	bh=+YeeuDF4R0zXq/p+6aU3R8R0jb/cUmdjtfFGHo5zprI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=O66Svi+9Mv+uTHc1bnuVhVfE99S5LzbNF1Ju8X11lGLkL3JTbaT8jbMuYx8o+tu/E
-	 IhcX05daAkbdLp1oke1AoECAteeT8dyYOS1cM1TaMwAQ9Uf3f3xV1Z0V38Oh8AW6zY
-	 Gg46/iBPbWobZ8R0T93OnJSu1JG9ZhMEc+KFlw2A=
+	b=VwR3m0Mk+CcE28kFmqo04MFuUR7bEMBGj8yCev+EE5GTyZZS//3CgMtxuSOxEuM8m
+	 Rdg17WqhhLe5jydaZFYtT35+zk4meNAAq90Q0SbDOAUKthVTGphSR2zHSrbDwiTjMx
+	 7gjzr9tAHoe2Fn1n1EiEPUsRE9KPGJ/05cD+UtKQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tim Guttzeit <t.guttzeit@tuxedocomputers.com>,
-	Werner Sembach <wse@tuxedocomputers.com>,
-	Takashi Iwai <tiwai@suse.de>,
+	Maurizio Lombardi <mlombard@redhat.com>,
+	Zhaojuan Guo <zguo@redhat.com>,
+	Mike Christie <michael.christie@oracle.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 103/175] ALSA: hda/realtek: Fix headset mic for TongFang X6AR55xU
-Date: Mon,  9 Feb 2026 15:22:56 +0100
-Message-ID: <20260209142324.122718862@linuxfoundation.org>
+Subject: [PATCH 6.18 104/175] scsi: target: iscsi: Fix use-after-free in iscsit_dec_conn_usage_count()
+Date: Mon,  9 Feb 2026 15:22:57 +0100
+Message-ID: <20260209142324.156884268@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260209142320.474120190@linuxfoundation.org>
 References: <20260209142320.474120190@linuxfoundation.org>
@@ -52,37 +53,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tim Guttzeit <t.guttzeit@tuxedocomputers.com>
+From: Maurizio Lombardi <mlombard@redhat.com>
 
-[ Upstream commit b48fe9af1e60360baf09ca6b7a3cd6541f16e611 ]
+[ Upstream commit 9411a89e9e7135cc459178fa77a3f1d6191ae903 ]
 
-Add a PCI quirk to enable microphone detection on the headphone jack of
-TongFang X6AR55xU devices.
+In iscsit_dec_conn_usage_count(), the function calls complete() while
+holding the conn->conn_usage_lock. As soon as complete() is invoked, the
+waiter (such as iscsit_close_connection()) may wake up and proceed to free
+the iscsit_conn structure.
 
-Signed-off-by: Tim Guttzeit <t.guttzeit@tuxedocomputers.com>
-Signed-off-by: Werner Sembach <wse@tuxedocomputers.com>
-Link: https://patch.msgid.link/20260119151626.35481-1-wse@tuxedocomputers.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+If the waiter frees the memory before the current thread reaches
+spin_unlock_bh(), it results in a KASAN slab-use-after-free as the function
+attempts to release a lock within the already-freed connection structure.
+
+Fix this by releasing the spinlock before calling complete().
+
+Signed-off-by: Maurizio Lombardi <mlombard@redhat.com>
+Reported-by: Zhaojuan Guo <zguo@redhat.com>
+Reviewed-by: Mike Christie <michael.christie@oracle.com>
+Link: https://patch.msgid.link/20260112165352.138606-2-mlombard@redhat.com
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/hda/codecs/realtek/alc269.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/target/iscsi/iscsi_target_util.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/sound/hda/codecs/realtek/alc269.c b/sound/hda/codecs/realtek/alc269.c
-index dc2e3ede7a23b..e9022f751c959 100644
---- a/sound/hda/codecs/realtek/alc269.c
-+++ b/sound/hda/codecs/realtek/alc269.c
-@@ -7679,6 +7679,10 @@ static const struct snd_hda_pin_quirk alc269_pin_fixup_tbl[] = {
- 		{0x12, 0x90a60140},
- 		{0x19, 0x04a11030},
- 		{0x21, 0x04211020}),
-+	SND_HDA_PIN_QUIRK(0x10ec0274, 0x1d05, "TongFang", ALC274_FIXUP_HP_HEADSET_MIC,
-+		{0x17, 0x90170110},
-+		{0x19, 0x03a11030},
-+		{0x21, 0x03211020}),
- 	SND_HDA_PIN_QUIRK(0x10ec0282, 0x1025, "Acer", ALC282_FIXUP_ACER_DISABLE_LINEOUT,
- 		ALC282_STANDARD_PINS,
- 		{0x12, 0x90a609c0},
+diff --git a/drivers/target/iscsi/iscsi_target_util.c b/drivers/target/iscsi/iscsi_target_util.c
+index 262a3e76b4b1c..c1888c42afdd5 100644
+--- a/drivers/target/iscsi/iscsi_target_util.c
++++ b/drivers/target/iscsi/iscsi_target_util.c
+@@ -813,8 +813,11 @@ void iscsit_dec_conn_usage_count(struct iscsit_conn *conn)
+ 	spin_lock_bh(&conn->conn_usage_lock);
+ 	conn->conn_usage_count--;
+ 
+-	if (!conn->conn_usage_count && conn->conn_waiting_on_uc)
++	if (!conn->conn_usage_count && conn->conn_waiting_on_uc) {
++		spin_unlock_bh(&conn->conn_usage_lock);
+ 		complete(&conn->conn_waiting_on_uc_comp);
++		return;
++	}
+ 
+ 	spin_unlock_bh(&conn->conn_usage_lock);
+ }
 -- 
 2.51.0
 
