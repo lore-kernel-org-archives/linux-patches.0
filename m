@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51B2337B3F9;
-	Mon,  9 Feb 2026 14:29:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7321137B3F2;
+	Mon,  9 Feb 2026 14:29:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770647355; cv=none; b=s9GuXnpgQX2TUOfZUlHx8lGfDQ8XKaJ1kzoWpf/Pxaa6qgWA+chjknHltS/Iqby+r8ia1IjV7yv8RHoW713fN/ErflFxTYnvt6BWXiiiTGXQQraSmJN0kIyFUNVl+4yPa95K1cEd4z7iq+eIz6OKxigLR8f7TmJtXtSblsp7pHY=
+	t=1770647358; cv=none; b=pV55329Ct1J7u4bEC4FE8NVg2kdz8n1ALhjF+EK6/m3P8shYWVHKHFK0Q6Ra+JDFOLPtX8RfVcfvNmeI4ywwL2RIcamIdqtkpw6N6kuOy/nzxaVF90dMK9yhHiIaroMHNAM60P/mV2kXY6P2Igp23wUELeRsKLhwvpXWWZdX1pA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770647355; c=relaxed/simple;
-	bh=dMVC5u1XNE4vvPYVjjlNCzAP/SEdaXM5AbUZ2HtK56o=;
+	s=arc-20240116; t=1770647358; c=relaxed/simple;
+	bh=SYovAvvgYinzaZ3y0kXZDYc7VSBQ20M4LT0x02+cKMI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=j25tZXWf6nvqbRGrLm2mrNtJroTEJyZ10u0k31V6sMgCtEW44hrxE0ZNhZqBBOuLMfUpNNNn9V2LkxUjy26SQVbMyVL/XVuz43B/PHTLzScNIGibw2vwCiaMIg1wQi61guYjKIMmye7BHKJ9sc/8NoruUR6Myy4xK0PsuZHy4KE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=M+1MVJSq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QQZW2Vu3LqzUQSuJvphZ+ToXby9WgWAn/VjJag4lGNCMA7JtXa7q4E4vmiF61vfHrzVbtKSViwl4f0lQmr/NPlKE3MI67lHtogvqnWoM2rUd17h15yzzK0H0Q0aKRL0/Cf7jUkqQ07r4lda+trYkvQ6wVYJxEqFfwBhIoLsLtxk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RcBaNlg+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="M+1MVJSq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 86995C19424;
-	Mon,  9 Feb 2026 14:29:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RcBaNlg+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA0EEC19423;
+	Mon,  9 Feb 2026 14:29:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770647354;
-	bh=dMVC5u1XNE4vvPYVjjlNCzAP/SEdaXM5AbUZ2HtK56o=;
+	s=korg; t=1770647358;
+	bh=SYovAvvgYinzaZ3y0kXZDYc7VSBQ20M4LT0x02+cKMI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=M+1MVJSqBqbjl10+uC1ZJJJ6TyvlTVFu4kkz519WTUGl/QX1Ibilo44fde/bqdcF5
-	 e5SCCWSLy/ttYOSY28kLcLndIg+AYhfA2SvvS52Xi4AgKrB3qqaZ0nQgb3fVF4blIm
-	 ZxAEa1csHibOULuVuLBzl73/+LdcxadwPJHMcIJk=
+	b=RcBaNlg+RwIFSTOQziM7Xps1o7kVNJnX65MNDXIvdlXWypQmBz7AyT8Hpt34gpeUM
+	 1Ewr2lJZ35qWNFcF6krKF98iDoRuea+AfLpd2TWssjsyiTGgVXiYHqJPIKscro8M/F
+	 clayiRb2KcwA3g9bR+AeFAi42KssuOe3ZDSzTCDo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chris Chiu <chris.chiu@canonical.com>,
+	Kwok Kin Ming <kenkinming2002@gmail.com>,
 	Benjamin Tissoires <bentiss@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 075/175] HID: quirks: Add another Chicony HP 5MP Cameras to hid_ignore_list
-Date: Mon,  9 Feb 2026 15:22:28 +0100
-Message-ID: <20260209142323.146583548@linuxfoundation.org>
+Subject: [PATCH 6.18 076/175] HID: i2c-hid: fix potential buffer overflow in i2c_hid_get_report()
+Date: Mon,  9 Feb 2026 15:22:29 +0100
+Message-ID: <20260209142323.181554029@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260209142320.474120190@linuxfoundation.org>
 References: <20260209142320.474120190@linuxfoundation.org>
@@ -51,49 +51,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chris Chiu <chris.chiu@canonical.com>
+From: Kwok Kin Ming <kenkinming2002@gmail.com>
 
-[ Upstream commit c06bc3557542307b9658fbd43cc946a14250347b ]
+[ Upstream commit 2497ff38c530b1af0df5130ca9f5ab22c5e92f29 ]
 
-Another Chicony Electronics HP 5MP Camera with USB ID 04F2:B882
-reports a HID sensor interface that is not actually implemented.
+`i2c_hid_xfer` is used to read `recv_len + sizeof(__le16)` bytes of data
+into `ihid->rawbuf`.
 
-Add the device to the HID ignore list so the bogus sensor is never
-exposed to userspace. Then the system won't hang when runtime PM
-tries to wake the unresponsive device.
+The former can come from the userspace in the hidraw driver and is only
+bounded by HID_MAX_BUFFER_SIZE(16384) by default (unless we also set
+`max_buffer_size` field of `struct hid_ll_driver` which we do not).
 
-Signed-off-by: Chris Chiu <chris.chiu@canonical.com>
+The latter has size determined at runtime by the maximum size of
+different report types you could receive on any particular device and
+can be a much smaller value.
+
+Fix this by truncating `recv_len` to `ihid->bufsize - sizeof(__le16)`.
+
+The impact is low since access to hidraw devices requires root.
+
+Signed-off-by: Kwok Kin Ming <kenkinming2002@gmail.com>
 Signed-off-by: Benjamin Tissoires <bentiss@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hid/hid-ids.h    | 1 +
- drivers/hid/hid-quirks.c | 1 +
- 2 files changed, 2 insertions(+)
+ drivers/hid/i2c-hid/i2c-hid-core.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/hid/hid-ids.h b/drivers/hid/hid-ids.h
-index c4589075a5ed6..3a22129fb7075 100644
---- a/drivers/hid/hid-ids.h
-+++ b/drivers/hid/hid-ids.h
-@@ -317,6 +317,7 @@
- #define USB_DEVICE_ID_CHICONY_ACER_SWITCH12	0x1421
- #define USB_DEVICE_ID_CHICONY_HP_5MP_CAMERA	0xb824
- #define USB_DEVICE_ID_CHICONY_HP_5MP_CAMERA2	0xb82c
-+#define USB_DEVICE_ID_CHICONY_HP_5MP_CAMERA3	0xb882
- 
- #define USB_VENDOR_ID_CHUNGHWAT		0x2247
- #define USB_DEVICE_ID_CHUNGHWAT_MULTITOUCH	0x0001
-diff --git a/drivers/hid/hid-quirks.c b/drivers/hid/hid-quirks.c
-index 6a8a7ca3d8047..1d5537c0f40d8 100644
---- a/drivers/hid/hid-quirks.c
-+++ b/drivers/hid/hid-quirks.c
-@@ -778,6 +778,7 @@ static const struct hid_device_id hid_ignore_list[] = {
- 	{ HID_USB_DEVICE(USB_VENDOR_ID_BERKSHIRE, USB_DEVICE_ID_BERKSHIRE_PCWD) },
- 	{ HID_USB_DEVICE(USB_VENDOR_ID_CHICONY, USB_DEVICE_ID_CHICONY_HP_5MP_CAMERA) },
- 	{ HID_USB_DEVICE(USB_VENDOR_ID_CHICONY, USB_DEVICE_ID_CHICONY_HP_5MP_CAMERA2) },
-+	{ HID_USB_DEVICE(USB_VENDOR_ID_CHICONY, USB_DEVICE_ID_CHICONY_HP_5MP_CAMERA3) },
- 	{ HID_USB_DEVICE(USB_VENDOR_ID_CIDC, 0x0103) },
- 	{ HID_USB_DEVICE(USB_VENDOR_ID_CYGNAL, USB_DEVICE_ID_CYGNAL_RADIO_SI470X) },
- 	{ HID_USB_DEVICE(USB_VENDOR_ID_CYGNAL, USB_DEVICE_ID_CYGNAL_RADIO_SI4713) },
+diff --git a/drivers/hid/i2c-hid/i2c-hid-core.c b/drivers/hid/i2c-hid/i2c-hid-core.c
+index 63f46a2e57882..5a183af3d5c6a 100644
+--- a/drivers/hid/i2c-hid/i2c-hid-core.c
++++ b/drivers/hid/i2c-hid/i2c-hid-core.c
+@@ -286,6 +286,7 @@ static int i2c_hid_get_report(struct i2c_hid *ihid,
+ 	 * In addition to report data device will supply data length
+ 	 * in the first 2 bytes of the response, so adjust .
+ 	 */
++	recv_len = min(recv_len, ihid->bufsize - sizeof(__le16));
+ 	error = i2c_hid_xfer(ihid, ihid->cmdbuf, length,
+ 			     ihid->rawbuf, recv_len + sizeof(__le16));
+ 	if (error) {
 -- 
 2.51.0
 
