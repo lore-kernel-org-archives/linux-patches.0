@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F71723B604;
-	Mon,  9 Feb 2026 14:30:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0C2123B604;
+	Mon,  9 Feb 2026 14:30:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770647433; cv=none; b=SqkFlMB2kMraxFsWNld1hiWNb1jM8xMjOC1cN4U51Aa8g6klcjTLdAaRihbsrL8rMkWGZL3L7RMkoHRLKjcwsQxN3pKyBdNvo0btpH+8B6kMs3EVgdVFnGJCl669oSAnbXY6zwhTyknjDilBqdxO6QRHp/9HE4PVtLcz0GpDqo8=
+	t=1770647436; cv=none; b=r4XvR100k1qTdJYfumELkewImwNQ+g6bUiIlUpNk7tgeyrQzXn/oncQwFkRI0f3b42c2/wsIvjy/0QUKwiJ18lMpD5i7xVAATdtaMXk8T/7wUqN7T1U3QIWfRonImbUJ54ZRciUwEMIzA2JhoWvFPCL563Z10CYjDE5l8LV3vNA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770647433; c=relaxed/simple;
-	bh=ZWdXkSec91ruftnq+NDvW50KhcxUZVjLW5SufT2osWk=;
+	s=arc-20240116; t=1770647436; c=relaxed/simple;
+	bh=z+dfw7qW3j4PP0sbWhWt2eHFJxNL+WrEdi/s/PmqW+U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WU2DktGsii8D7MtFM8pUHPyNh9Xrt2LStWU+7UQCggSC9zs1RVZvdu30/dLz7WMFBHXfyXa6xcuTS3PHpGVr8dtS3HnAdyiopWuaJQfeDjRMD4Q5C6RAF8BhB1VXa4GbK3w99EJKiqkI722A+pnhdcSS6AfH73m7p2TAW3wda3w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Whv8cbQM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pr/6MWXLn60C66JKSbZNYDfQjw8+Uf7jynediSBcdy7XIrikXlPRto/Y2WmAMfLfdO33zHabcBrpwKdRUeBumaH710RKM6fe/IhnPLFU+6cM2pzuEKClyuwbnC3NJX8g5v5dfWO79WbanjGTJOJK0eaPM36Grtx+dxHePMwqBh8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LTNIEjp3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Whv8cbQM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 80E44C116C6;
-	Mon,  9 Feb 2026 14:30:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LTNIEjp3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 20E38C116C6;
+	Mon,  9 Feb 2026 14:30:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770647433;
-	bh=ZWdXkSec91ruftnq+NDvW50KhcxUZVjLW5SufT2osWk=;
+	s=korg; t=1770647436;
+	bh=z+dfw7qW3j4PP0sbWhWt2eHFJxNL+WrEdi/s/PmqW+U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Whv8cbQM3IscYOo7Tt041eNYl7uGtnVaS/OymDyzV3E4cuVlTXqk+08ohhwbCRPhc
-	 m9JfmXAUOd+utQXnDvlmi5F8zDSg+BqbQRso5tm/DIEDyPOGPalMUACZrvh2ShKe7z
-	 LnMtFylzcSb18Q+raGSTRDmjD8b3lT+OwAnkW6ZA=
+	b=LTNIEjp3EwhnQT7gUvWNZMnt7vDNgQVDcRHC2qcQOsjjn28OT1jd8NYh4rbDSoQXs
+	 MMkzDFuef2GUcb9UatJ1pdQYWsONwiOVPABkn9JTGChNwEIuu1nGb3TEz+QY5P8GPL
+	 6hxV40jpcuzNwRcl6X9qvj6INWrpPLMBrrltvj8Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Veerendranath Jakkam <veerendranath.jakkam@oss.qualcomm.com>,
-	Johannes Berg <johannes.berg@intel.com>,
+	Maurizio Lombardi <mlombard@redhat.com>,
+	Zhaojuan Guo <zguo@redhat.com>,
+	Mike Christie <michael.christie@oracle.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 099/175] wifi: cfg80211: Fix bitrate calculation overflow for HE rates
-Date: Mon,  9 Feb 2026 15:22:52 +0100
-Message-ID: <20260209142323.982826378@linuxfoundation.org>
+Subject: [PATCH 6.18 100/175] scsi: target: iscsi: Fix use-after-free in iscsit_dec_session_usage_count()
+Date: Mon,  9 Feb 2026 15:22:53 +0100
+Message-ID: <20260209142324.018595544@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260209142320.474120190@linuxfoundation.org>
 References: <20260209142320.474120190@linuxfoundation.org>
@@ -51,56 +53,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Veerendranath Jakkam <veerendranath.jakkam@oss.qualcomm.com>
+From: Maurizio Lombardi <mlombard@redhat.com>
 
-[ Upstream commit a3034bf0746d88a00cceda9541534a5721445a24 ]
+[ Upstream commit 84dc6037390b8607c5551047d3970336cb51ba9a ]
 
-An integer overflow occurs in cfg80211_calculate_bitrate_he() when
-calculating bitrates for high throughput HE configurations.
-For example, with 160 MHz bandwidth, HE-MCS 13, HE-NSS 4, and HE-GI 0,
-the multiplication (result * rate->nss) overflows the 32-bit 'result'
-variable before division by 8, leading to significantly underestimated
-bitrate values.
+In iscsit_dec_session_usage_count(), the function calls complete() while
+holding the sess->session_usage_lock. Similar to the connection usage count
+logic, the waiter signaled by complete() (e.g., in the session release
+path) may wake up and free the iscsit_session structure immediately.
 
-The overflow occurs because the NSS multiplication operates on a 32-bit
-integer that cannot accommodate intermediate values exceeding
-4,294,967,295. When overflow happens, the value wraps around, producing
-incorrect bitrates for high MCS and NSS combinations.
+This creates a race condition where the current thread may attempt to
+execute spin_unlock_bh() on a session structure that has already been
+deallocated, resulting in a KASAN slab-use-after-free.
 
-Fix this by utilizing the 64-bit 'tmp' variable for the NSS
-multiplication and subsequent divisions via do_div(). This approach
-preserves full precision throughout the entire calculation, with the
-final value assigned to 'result' only after completing all operations.
+To resolve this, release the session_usage_lock before calling complete()
+to ensure all dereferences of the sess pointer are finished before the
+waiter is allowed to proceed with deallocation.
 
-Signed-off-by: Veerendranath Jakkam <veerendranath.jakkam@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260109-he_bitrate_overflow-v1-1-95575e466b6e@oss.qualcomm.com
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Signed-off-by: Maurizio Lombardi <mlombard@redhat.com>
+Reported-by: Zhaojuan Guo <zguo@redhat.com>
+Reviewed-by: Mike Christie <michael.christie@oracle.com>
+Link: https://patch.msgid.link/20260112165352.138606-3-mlombard@redhat.com
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/wireless/util.c | 8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+ drivers/target/iscsi/iscsi_target_util.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/net/wireless/util.c b/net/wireless/util.c
-index 4eb028ad16836..81d6d27d273cc 100644
---- a/net/wireless/util.c
-+++ b/net/wireless/util.c
-@@ -1561,12 +1561,14 @@ static u32 cfg80211_calculate_bitrate_he(struct rate_info *rate)
- 	tmp = result;
- 	tmp *= SCALE;
- 	do_div(tmp, mcs_divisors[rate->mcs]);
--	result = tmp;
+diff --git a/drivers/target/iscsi/iscsi_target_util.c b/drivers/target/iscsi/iscsi_target_util.c
+index 5e6cf34929b55..262a3e76b4b1c 100644
+--- a/drivers/target/iscsi/iscsi_target_util.c
++++ b/drivers/target/iscsi/iscsi_target_util.c
+@@ -741,8 +741,11 @@ void iscsit_dec_session_usage_count(struct iscsit_session *sess)
+ 	spin_lock_bh(&sess->session_usage_lock);
+ 	sess->session_usage_count--;
  
- 	/* and take NSS, DCM into account */
--	result = (result * rate->nss) / 8;
-+	tmp *= rate->nss;
-+	do_div(tmp, 8);
- 	if (rate->he_dcm)
--		result /= 2;
-+		do_div(tmp, 2);
-+
-+	result = tmp;
+-	if (!sess->session_usage_count && sess->session_waiting_on_uc)
++	if (!sess->session_usage_count && sess->session_waiting_on_uc) {
++		spin_unlock_bh(&sess->session_usage_lock);
+ 		complete(&sess->session_waiting_on_uc_comp);
++		return;
++	}
  
- 	return result / 10000;
+ 	spin_unlock_bh(&sess->session_usage_lock);
  }
 -- 
 2.51.0
