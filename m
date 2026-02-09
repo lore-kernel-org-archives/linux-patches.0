@@ -1,37 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CAF9B3783C9;
-	Mon,  9 Feb 2026 14:53:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A83233793B0;
+	Mon,  9 Feb 2026 14:53:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770648802; cv=none; b=cCCOGwvmMz0zJIL7zDBq7ze+eDERh7gWFDRYgYp1EYd51mkftUuPj8uId8sVjrhZZBoYOGg0o+ow8H3j53RzxLDFPswP+lKWpmvrN2AhvOdAOmg/wzBTunUyqQI+fzNrBxi/FxF+Y94LD7aN3MXTHoNbgpv3NXxD55Ypxwu5zng=
+	t=1770648806; cv=none; b=Xpym/Z1ZFmt1lpaCh00EjC0bmNLpe6SF8uS8QxdNAJ+wwQIx9QzDAsAAuleOKzmk9ReFXv1Brvzs8pVax8LS+KN2vR6Ia+6EOJfGIHTBp3NAHoKB/XpF9/XC/t1WMyqTpL0fyjdVJXj9i9UY6ys7qLo8nhgRLCpuD4trhD8fuGA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770648802; c=relaxed/simple;
-	bh=J46Q+OFATO5Cq93QWjg9pbyptAnUGiDgSJN/dfNu8Q0=;
+	s=arc-20240116; t=1770648806; c=relaxed/simple;
+	bh=dYVpBr4jjdIdteALwrfXTBta3ydDyqYWJhHl0VvdxGA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=JGzbBaaxUEjHkSMx+1EugnFn0GbCAHkh9rzYcPlmtbL6r/sxvOJL4xbOTB/ORJzjTYKXumyJbtbcJlJ+eaA9F+mEy6ltei3y8v+cve15hoVLiJct03PsQKzdWiD0t/eahSVS3UJeT5NENJtdnNWldSPEdAaKftJxL7kmt9mME+8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rcSnr7C8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=MNOuMnNSLKm/Dj1Lav4weBUmOpyN0Q4Wj3r5mRWQ3DT++qw+2QV6x8mgu+aDU+bFQqxF120pfi1u0oZ9n2sGSLGhI6vUWcpH4GFTJP/ePFq6o7tNY0AgCjjscll4ncUBjQJteG04xvsVbIbAF/BrwsaqA+MXKR4PbkQ5Ut6jjUA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jBofDNeF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rcSnr7C8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3BF93C116C6;
-	Mon,  9 Feb 2026 14:53:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jBofDNeF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 956DAC19422;
+	Mon,  9 Feb 2026 14:53:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770648802;
-	bh=J46Q+OFATO5Cq93QWjg9pbyptAnUGiDgSJN/dfNu8Q0=;
+	s=korg; t=1770648806;
+	bh=dYVpBr4jjdIdteALwrfXTBta3ydDyqYWJhHl0VvdxGA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rcSnr7C82mu4XUf9d1QL4VjFhkI0CGgXB+WBiYlU9AY5UKpgc/IRb389ExtKmW3dL
-	 0MupJYQqwFOJFhpWVpNIXAJOSWLWAqxA5DM5ojDxSJyESmcqawU7Jt57wDZxVD0A/h
-	 HzxTsr7W6cD+uTMEtlg0pMlUD/mCU4qVcSK0Lea8=
+	b=jBofDNeFkB8J9hWJvLaFzUbWjcS4rYBrp2WQnfxi7eBjjbC8HozLjpP1YXdrrRRrt
+	 z1JZOE2KMzAt866vnAEKiDg9xvd0brsaPgkEvn5igqi3ZySsD5TsN1buErvS3rj1Gy
+	 4oI362ALDqSSUccMvEc30xL80l4jeThgbMIzgrXs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kaushlendra Kumar <kaushlendra.kumar@intel.com>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>
-Subject: [PATCH 5.15 02/75] platform/x86: intel_telemetry: Fix swapped arrays in PSS output
-Date: Mon,  9 Feb 2026 15:23:59 +0100
-Message-ID: <20260209142301.924556698@linuxfoundation.org>
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	Guenter Roeck <linux@roeck-us.net>,
+	Jacob Keller <jacob.e.keller@intel.com>,
+	Anna-Maria Behnsen <anna-maria@linutronix.de>,
+	Jeongjun Park <aha310510@gmail.com>
+Subject: [PATCH 5.15 20/75] timers: Update the documentation to reflect on the new timer_shutdown() API
+Date: Mon,  9 Feb 2026 15:24:17 +0100
+Message-ID: <20260209142302.572912888@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260209142301.830618238@linuxfoundation.org>
 References: <20260209142301.830618238@linuxfoundation.org>
@@ -51,51 +55,81 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kaushlendra Kumar <kaushlendra.kumar@intel.com>
+From: "Steven Rostedt (Google)" <rostedt@goodmis.org>
 
-commit 25e9e322d2ab5c03602eff4fbf4f7c40019d8de2 upstream.
+[ Upstream commit a31323bef2b66455920d054b160c17d4240f8fd4 ]
 
-The LTR blocking statistics and wakeup event counters are incorrectly
-cross-referenced during debugfs output rendering. The code populates
-pss_ltr_blkd[] with LTR blocking data and pss_s0ix_wakeup[] with wakeup
-data, but the display loops reference the wrong arrays.
+In order to make sure that a timer is not re-armed after it is stopped
+before freeing, a new shutdown state is added to the timer code. The API
+timer_shutdown_sync() and timer_shutdown() must be called before the
+object that holds the timer can be freed.
 
-This causes the "LTR Blocking Status" section to print wakeup events
-and the "Wakes Status" section to print LTR blockers, misleading power
-management analysis and S0ix residency debugging.
+Update the documentation to reflect this new workflow.
 
-Fix by aligning array usage with the intended output section labels.
+[ tglx: Updated to the new semantics and updated the zh_CN version ]
 
-Fixes: 87bee290998d ("platform:x86: Add Intel Telemetry Debugfs interfaces")
-Cc: stable@vger.kernel.org
-Signed-off-by: Kaushlendra Kumar <kaushlendra.kumar@intel.com>
-Link: https://patch.msgid.link/20251224032053.3915900-1-kaushlendra.kumar@intel.com
-Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Tested-by: Guenter Roeck <linux@roeck-us.net>
+Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
+Reviewed-by: Anna-Maria Behnsen <anna-maria@linutronix.de>
+Link: https://lore.kernel.org/r/20221110064147.712934793@goodmis.org
+Link: https://lore.kernel.org/r/20221123201625.375284489@linutronix.de
+Signed-off-by: Jeongjun Park <aha310510@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/platform/x86/intel/telemetry/debugfs.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ Documentation/RCU/Design/Requirements/Requirements.rst  |    2 +-
+ Documentation/core-api/local_ops.rst                    |    2 +-
+ Documentation/kernel-hacking/locking.rst                |    5 +++++
+ Documentation/translations/zh_CN/core-api/local_ops.rst |    2 +-
+ 4 files changed, 8 insertions(+), 3 deletions(-)
 
---- a/drivers/platform/x86/intel/telemetry/debugfs.c
-+++ b/drivers/platform/x86/intel/telemetry/debugfs.c
-@@ -449,7 +449,7 @@ static int telem_pss_states_show(struct
- 	for (index = 0; index < debugfs_conf->pss_ltr_evts; index++) {
- 		seq_printf(s, "%-32s\t%u\n",
- 			   debugfs_conf->pss_ltr_data[index].name,
--			   pss_s0ix_wakeup[index]);
-+			   pss_ltr_blkd[index]);
- 	}
+--- a/Documentation/RCU/Design/Requirements/Requirements.rst
++++ b/Documentation/RCU/Design/Requirements/Requirements.rst
+@@ -1858,7 +1858,7 @@ unloaded. After a given module has been
+ one of its functions results in a segmentation fault. The module-unload
+ functions must therefore cancel any delayed calls to loadable-module
+ functions, for example, any outstanding mod_timer() must be dealt
+-with via timer_delete_sync() or similar.
++with via timer_shutdown_sync() or similar.
  
- 	seq_puts(s, "\n--------------------------------------\n");
-@@ -459,7 +459,7 @@ static int telem_pss_states_show(struct
- 	for (index = 0; index < debugfs_conf->pss_wakeup_evts; index++) {
- 		seq_printf(s, "%-32s\t%u\n",
- 			   debugfs_conf->pss_wakeup[index].name,
--			   pss_ltr_blkd[index]);
-+			   pss_s0ix_wakeup[index]);
- 	}
+ Unfortunately, there is no way to cancel an RCU callback; once you
+ invoke call_rcu(), the callback function is eventually going to be
+--- a/Documentation/core-api/local_ops.rst
++++ b/Documentation/core-api/local_ops.rst
+@@ -191,7 +191,7 @@ Here is a sample module which implements
  
- 	return 0;
+     static void __exit test_exit(void)
+     {
+-            timer_delete_sync(&test_timer);
++            timer_shutdown_sync(&test_timer);
+     }
+ 
+     module_init(test_init);
+--- a/Documentation/kernel-hacking/locking.rst
++++ b/Documentation/kernel-hacking/locking.rst
+@@ -1010,6 +1010,11 @@ calling add_timer() at the end of their
+ Because this is a fairly common case which is prone to races, you should
+ use timer_delete_sync() (``include/linux/timer.h``) to
+ 
++Before freeing a timer, timer_shutdown() or timer_shutdown_sync() should be
++called which will keep it from being rearmed. Any subsequent attempt to
++rearm the timer will be silently ignored by the core code.
++
++
+ Locking Speed
+ =============
+ 
+--- a/Documentation/translations/zh_CN/core-api/local_ops.rst
++++ b/Documentation/translations/zh_CN/core-api/local_ops.rst
+@@ -185,7 +185,7 @@ UP之间没有不同的行为，在你�
+ 
+     static void __exit test_exit(void)
+     {
+-            timer_delete_sync(&test_timer);
++            timer_shutdown_sync(&test_timer);
+     }
+ 
+     module_init(test_init);
 
 
