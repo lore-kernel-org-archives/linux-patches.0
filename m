@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE9DE23B604;
-	Mon,  9 Feb 2026 14:31:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37DFB23B604;
+	Mon,  9 Feb 2026 14:31:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770647480; cv=none; b=JsxIs5ZjCy09bkaDXEx9PQUZ0vaKvuDXzzB9DOvrUhdqKcwZZiQqwq0RZCXE+H9Vc95H/qj9i1dtR4tquIMr9n3HmbW7LlDyknAd5I+9cqbpjzLoSWR/dGcmr5bjsqHJT7xLNMHmTliPZYPzOyYNKEcCF6tQG47z1xayjL2tfds=
+	t=1770647484; cv=none; b=sEpNRdJH0IMiPYWdapPNZLE7yFMJavKqUDjCZECsdrP+pexuZxpSGqU/1BoVruSffDlsN4w+7Nrr5RsixYivr731ke3wIhrYLKzITpo/eZEH9wgNtY5eMo33wA+k8kfQG3scfSI33i5R4Y5o7t/uYhRxbuSmw/l8ojycu9zCckg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770647480; c=relaxed/simple;
-	bh=EZJJf7r5XVRdQmY7XJ+Pml4i7SVQ6yqCHNTpiWzTlHE=;
+	s=arc-20240116; t=1770647484; c=relaxed/simple;
+	bh=Woox1MbkWpl18VcAFzrpkV4p51pP4Mjv5TAMbBsyb3o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Y7kpgIofXNiy1GPuTjAWH2JIFZS78ItAhDXfOO3geTvi7/1X+WycMc9BgXKxfVXWdi1ksRnBey695vYZHfcefW9rGmKNcpJK6r40d1Xocg9uHp5+ckHj1GmKIOJPfxFLrU2U22XHuNMfAt3lrYapCDLQW8IwKzb9WmzvAo2t2AQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZqPwf1HZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=nG0LCy5+rzNFV2QcP8aYhBIyJkXrJd1DqdXzWCB9/OgXXeKUrBWLa2WlpIAKVkGn3MrU4mtsGAGyP4YsoLOckWa8Z1WwU8XLaGFJvPRHPPdXRwRqRyZcvAMadsgOAsmVZPqWuGjXvePySpb2krUjgUNyO78c9b/tDoORB+5uPRs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IrI4x8yn; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZqPwf1HZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 37516C116C6;
-	Mon,  9 Feb 2026 14:31:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IrI4x8yn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A09EC116C6;
+	Mon,  9 Feb 2026 14:31:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770647480;
-	bh=EZJJf7r5XVRdQmY7XJ+Pml4i7SVQ6yqCHNTpiWzTlHE=;
+	s=korg; t=1770647484;
+	bh=Woox1MbkWpl18VcAFzrpkV4p51pP4Mjv5TAMbBsyb3o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZqPwf1HZd/8JEz4rJnEQg/QLr5+75cxOBwTR7eD74EVCjTfHJQaxsAsHNMHlVyTyc
-	 fTJlz1UjjFf79cN971sGkWUKsS91dq3egAmGenvh6rgAri6ZUrBmWBFtvATxXmh2XA
-	 2x4j3ISZ6AEhiUro4FxHMnuNB0x+dz2FgHxNKCfM=
+	b=IrI4x8ynmDdg5SZJb31R2xWIH7rTvauWO0+b2fCLzMSdxwDVmvkLl/+RDx1Zek2sz
+	 hSmfthx1WjAB017XAykfApHgHw3HgHz9xEScjDNq8DG+c22dKWK0S8RevSmMNGfCNm
+	 lPTXX7zbExl8vEqAOYWJxymBCUVxn29R3OQDXDAU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yang Wang <kevinyang.wang@amd.com>,
-	Kenneth Feng <kenneth.feng@amd.com>,
-	Roman Li <Roman.Li@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 112/175] Revert "drm/amd/display: pause the workload setting in dm"
-Date: Mon,  9 Feb 2026 15:23:05 +0100
-Message-ID: <20260209142324.445892323@linuxfoundation.org>
+Subject: [PATCH 6.18 113/175] platform/x86: toshiba_haps: Fix memory leaks in add/remove routines
+Date: Mon,  9 Feb 2026 15:23:06 +0100
+Message-ID: <20260209142324.481243773@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260209142320.474120190@linuxfoundation.org>
 References: <20260209142320.474120190@linuxfoundation.org>
@@ -53,75 +50,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alex Deucher <alexander.deucher@amd.com>
+From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 
-[ Upstream commit f377ea0561c9576cdb7e3890bcf6b8168d455464 ]
+[ Upstream commit 128497456756e1b952bd5a912cd073836465109d ]
 
-This reverts commit bc6d54ac7e7436721a19443265f971f890c13cc5.
+toshiba_haps_add() leaks the haps object allocated by it if it returns
+an error after allocating that object successfully.
 
-The workload profile needs to be in the default state when
-the dc idle optimizaion state is entered.  However, when
-jobs come in for video or GFX or compute, the profile may
-be set to a non-default profile resulting in the dc idle
-optimizations not taking affect and resulting in higher
-power usage.  As such we need to pause the workload profile
-changes during this transition.  When this patch was originally
-committed, it caused a regression with a Dell U3224KB display,
-but no other problems were reported at the time.  When it
-was reapplied (this patch) to address increased power usage, it
-seems to have caused additional regressions.  This change seems
-to have a number of side affects (audio issues, stuttering,
-etc.).  I suspect the pause should only happen when all displays
-are off or in static screen mode, but I think this call site
-gets called more often than that which results in idle state
-entry more often than intended.  For now revert.
+toshiba_haps_remove() does not free the object pointed to by
+toshiba_haps before clearing that pointer, so it becomes unreachable
+allocated memory.
 
-Closes: https://gitlab.freedesktop.org/drm/amd/-/issues/4894
-Closes: https://gitlab.freedesktop.org/drm/amd/-/issues/4717
-Closes: https://gitlab.freedesktop.org/drm/amd/-/issues/4725
-Closes: https://gitlab.freedesktop.org/drm/amd/-/issues/4517
-Closes: https://gitlab.freedesktop.org/drm/amd/-/issues/4806
-Cc: Yang Wang <kevinyang.wang@amd.com>
-Cc: Kenneth Feng <kenneth.feng@amd.com>
-Cc: Roman Li <Roman.Li@amd.com>
-Reviewed-by: Yang Wang <kevinyang.wang@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 1412482b714358ffa30d38fd3dd0b05795163648)
+Address these memory leaks by using devm_kzalloc() for allocating
+the memory in question.
+
+Fixes: 23d0ba0c908a ("platform/x86: Toshiba HDD Active Protection Sensor")
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_crtc.c    | 11 -----------
- 1 file changed, 11 deletions(-)
+ drivers/platform/x86/toshiba_haps.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_crtc.c b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_crtc.c
-index 38f9ea313dcbb..2e7ee77c010e1 100644
---- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_crtc.c
-+++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_crtc.c
-@@ -248,8 +248,6 @@ static void amdgpu_dm_crtc_vblank_control_worker(struct work_struct *work)
- 	struct vblank_control_work *vblank_work =
- 		container_of(work, struct vblank_control_work, work);
- 	struct amdgpu_display_manager *dm = vblank_work->dm;
--	struct amdgpu_device *adev = drm_to_adev(dm->ddev);
--	int r;
+diff --git a/drivers/platform/x86/toshiba_haps.c b/drivers/platform/x86/toshiba_haps.c
+index 03dfddeee0c0a..e9324bf16aea4 100644
+--- a/drivers/platform/x86/toshiba_haps.c
++++ b/drivers/platform/x86/toshiba_haps.c
+@@ -183,7 +183,7 @@ static int toshiba_haps_add(struct acpi_device *acpi_dev)
  
- 	mutex_lock(&dm->dc_lock);
+ 	pr_info("Toshiba HDD Active Protection Sensor device\n");
  
-@@ -279,16 +277,7 @@ static void amdgpu_dm_crtc_vblank_control_worker(struct work_struct *work)
+-	haps = kzalloc(sizeof(struct toshiba_haps_dev), GFP_KERNEL);
++	haps = devm_kzalloc(&acpi_dev->dev, sizeof(*haps), GFP_KERNEL);
+ 	if (!haps)
+ 		return -ENOMEM;
  
- 	if (dm->active_vblank_irq_count == 0) {
- 		dc_post_update_surfaces_to_stream(dm->dc);
--
--		r = amdgpu_dpm_pause_power_profile(adev, true);
--		if (r)
--			dev_warn(adev->dev, "failed to set default power profile mode\n");
--
- 		dc_allow_idle_optimizations(dm->dc, true);
--
--		r = amdgpu_dpm_pause_power_profile(adev, false);
--		if (r)
--			dev_warn(adev->dev, "failed to restore the power profile mode\n");
- 	}
- 
- 	mutex_unlock(&dm->dc_lock);
 -- 
 2.51.0
 
