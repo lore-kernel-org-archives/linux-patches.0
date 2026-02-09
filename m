@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C9A7125B2;
-	Mon,  9 Feb 2026 14:36:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA2F137AA6B;
+	Mon,  9 Feb 2026 14:36:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770647767; cv=none; b=QITvdtrO60jY+lnDU2b8PLZWa5Tu5zxLS2TslzOhHUgn65NcedRROgV3wIrdv/F/khqalTMGeqTi9Q+LPn2awftkwmcFZNceXAdB6IjXzycMqt54TfkIVHUlYL3WE3g+A8QflY7J2FLV7dQrX4WxZrysEqE/5n69iaGkPILK13E=
+	t=1770647770; cv=none; b=IsjCRkm+0aACagIcNGNtH3O6UiPoIplcdS9fqmvTgcJzGrZ3ZWyjdqMWY4Aj3LXGotd2vK+l5LAmQ1xfjtPzn1agP1LxTLwn12p+7LoTY1lGrq65C950mo1yO5oM9ft8NZGem6ahdCk/sL5o+Q3JYRZLnaEeMvqta7bMm5aRtcQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770647767; c=relaxed/simple;
-	bh=fbCV7HOeR3O4BpCEcCes4Q5ST6K9Ia1cDYlxfTj51N8=;
+	s=arc-20240116; t=1770647770; c=relaxed/simple;
+	bh=Y8bTsl91ZMoRE0Y2dGskOww6PvcjW5bDWyIyt1xq/WY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=P0mDE0qDRs30SA//PbhuRvCmrUnlYHFGohjyMsurSbTUHWLPPueGAO4XLEtXf32nUxP92nzjuzG8o/oGPZP2HzfEopTYfheVWKo2/tet1Ep9BdTAxLHBicsAV3U2igh6oX0vMCW1PIxJ2qI4q+OwIPkVVLKkf2ECxW/eWCMn0GQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kohKeVsC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bmEQJmAdg5DNUAj1wqogJe7o+Y1irCke/Y6GQF9lACLctWYy9e4b65xkoBOJi7PU4p5wSmk6qlSvY9HPX/ebWzgfYLcCRr7TeIlmsqaTbgZtePMhK103twIEQBVQpziEo2saGPBK3O+xzThfbugqAROAuK1jj0dMILMQPr0Ct1c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xT6ifQ8B; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kohKeVsC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1CF06C116C6;
-	Mon,  9 Feb 2026 14:36:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xT6ifQ8B"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B559C116C6;
+	Mon,  9 Feb 2026 14:36:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770647767;
-	bh=fbCV7HOeR3O4BpCEcCes4Q5ST6K9Ia1cDYlxfTj51N8=;
+	s=korg; t=1770647770;
+	bh=Y8bTsl91ZMoRE0Y2dGskOww6PvcjW5bDWyIyt1xq/WY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kohKeVsCYe263N4E0yNIElYG8C6tvpOw6mXcEXcZzPmxBhT1/9Nj81lXP18eHZT0b
-	 b/FcuAloMNpJPqOWhs/KH4nUYM0KMjxDKc4+kcotrslASyaDqxXRf7jaOPVw4lAFFP
-	 zO5jb/GMEQR0MPOiFd43Fr2VGigBZkIoYfV94X5g=
+	b=xT6ifQ8BNH5zWKBJfnA4OMUwEsaZHqpLv7WFk4/vlpAu9g2e0IbdQjERqGKcYfLu9
+	 csJLznhfuPDI9+Wfu9XU6CtphIHdt5mGL26B+XCraSCVtGDrGzXguBNNXFDgQdxNYl
+	 ppf2BqmyJg90IOvJm8JoH1DTOO6CyDPvfuuycV48=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Todd Brandt <todd.e.brandt@intel.com>,
-	Chen Yu <yu.c.chen@intel.com>,
-	Len Brown <len.brown@intel.com>,
-	Nikolay Kuratov <kniv@yandex-team.ru>
-Subject: [PATCH 6.12 022/113] tools/power turbostat: fix GCC9 build regression
-Date: Mon,  9 Feb 2026 15:22:51 +0100
-Message-ID: <20260209142311.007633179@linuxfoundation.org>
+	Ming Lei <ming.lei@redhat.com>,
+	Caleb Sander Mateos <csander@purestorage.com>,
+	Jens Axboe <axboe@kernel.dk>,
+	Alva Lan <alvalan9@foxmail.com>
+Subject: [PATCH 6.12 023/113] ublk: fix deadlock when reading partition table
+Date: Mon,  9 Feb 2026 15:22:52 +0100
+Message-ID: <20260209142311.042505770@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260209142310.204833231@linuxfoundation.org>
 References: <20260209142310.204833231@linuxfoundation.org>
@@ -52,79 +52,107 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Todd Brandt <todd.e.brandt@intel.com>
+From: Ming Lei <ming.lei@redhat.com>
 
-commit d4a058762f3d931aa1159b64ba94a09a04024f8c upstream.
+commit c258f5c4502c9667bccf5d76fa731ab9c96687c1 upstream.
 
-Fix build regression seen when using old gcc-9 compiler.
+When one process(such as udev) opens ublk block device (e.g., to read
+the partition table via bdev_open()), a deadlock[1] can occur:
 
-Signed-off-by: Todd Brandt <todd.e.brandt@intel.com>
-Reviewed-by: Chen Yu <yu.c.chen@intel.com>
-Signed-off-by: Len Brown <len.brown@intel.com>
-Signed-off-by: Nikolay Kuratov <kniv@yandex-team.ru>
+1. bdev_open() grabs disk->open_mutex
+2. The process issues read I/O to ublk backend to read partition table
+3. In __ublk_complete_rq(), blk_update_request() or blk_mq_end_request()
+   runs bio->bi_end_io() callbacks
+4. If this triggers fput() on file descriptor of ublk block device, the
+   work may be deferred to current task's task work (see fput() implementation)
+5. This eventually calls blkdev_release() from the same context
+6. blkdev_release() tries to grab disk->open_mutex again
+7. Deadlock: same task waiting for a mutex it already holds
+
+The fix is to run blk_update_request() and blk_mq_end_request() with bottom
+halves disabled. This forces blkdev_release() to run in kernel work-queue
+context instead of current task work context, and allows ublk server to make
+forward progress, and avoids the deadlock.
+
+Fixes: 71f28f3136af ("ublk_drv: add io_uring based userspace block driver")
+Link: https://github.com/ublk-org/ublksrv/issues/170 [1]
+Signed-off-by: Ming Lei <ming.lei@redhat.com>
+Reviewed-by: Caleb Sander Mateos <csander@purestorage.com>
+[axboe: rewrite comment in ublk]
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
+[ The fix omits the change in __ublk_do_auto_buf_reg() since this function
+  doesn't exist in Linux 6.12. ]
+Signed-off-by: Alva Lan <alvalan9@foxmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/power/x86/turbostat/turbostat.c |   15 ++++++---------
- 1 file changed, 6 insertions(+), 9 deletions(-)
+ drivers/block/ublk_drv.c |   30 +++++++++++++++++++++++++++---
+ 1 file changed, 27 insertions(+), 3 deletions(-)
 
---- a/tools/power/x86/turbostat/turbostat.c
-+++ b/tools/power/x86/turbostat/turbostat.c
-@@ -2798,6 +2798,8 @@ int format_counters(struct thread_data *
- 	}
+--- a/drivers/block/ublk_drv.c
++++ b/drivers/block/ublk_drv.c
+@@ -1020,6 +1020,13 @@ static inline bool ubq_daemon_is_dying(s
+ 	return ubq->ubq_daemon->flags & PF_EXITING;
+ }
  
- 	for (i = 0, ppmt = sys.pmt_tp; ppmt; i++, ppmt = ppmt->next) {
-+		const unsigned long value_raw = t->pmt_counter[i];
-+		const double value_converted = 100.0 * value_raw / crystal_hz / interval_float;
- 		switch (ppmt->type) {
- 		case PMT_TYPE_RAW:
- 			if (pmt_counter_get_width(ppmt) <= 32)
-@@ -2809,9 +2811,6 @@ int format_counters(struct thread_data *
- 			break;
++static void ublk_end_request(struct request *req, blk_status_t error)
++{
++	local_bh_disable();
++	blk_mq_end_request(req, error);
++	local_bh_enable();
++}
++
+ /* todo: handle partial completion */
+ static inline void __ublk_complete_rq(struct request *req)
+ {
+@@ -1027,6 +1034,7 @@ static inline void __ublk_complete_rq(st
+ 	struct ublk_io *io = &ubq->ios[req->tag];
+ 	unsigned int unmapped_bytes;
+ 	blk_status_t res = BLK_STS_OK;
++	bool requeue;
  
- 		case PMT_TYPE_XTAL_TIME:
--			const unsigned long value_raw = t->pmt_counter[i];
--			const double value_converted = 100.0 * value_raw / crystal_hz / interval_float;
--
- 			outp += sprintf(outp, "%s%.2f", (printed++ ? delim : ""), value_converted);
- 			break;
- 		}
-@@ -2879,6 +2878,8 @@ int format_counters(struct thread_data *
- 	}
+ 	/* called from ublk_abort_queue() code path */
+ 	if (io->flags & UBLK_IO_FLAG_ABORTED) {
+@@ -1064,14 +1072,30 @@ static inline void __ublk_complete_rq(st
+ 	if (unlikely(unmapped_bytes < io->res))
+ 		io->res = unmapped_bytes;
  
- 	for (i = 0, ppmt = sys.pmt_cp; ppmt; i++, ppmt = ppmt->next) {
-+		const unsigned long value_raw = c->pmt_counter[i];
-+		const double value_converted = 100.0 * value_raw / crystal_hz / interval_float;
- 		switch (ppmt->type) {
- 		case PMT_TYPE_RAW:
- 			if (pmt_counter_get_width(ppmt) <= 32)
-@@ -2890,9 +2891,6 @@ int format_counters(struct thread_data *
- 			break;
+-	if (blk_update_request(req, BLK_STS_OK, io->res))
++	/*
++	 * Run bio->bi_end_io() with softirqs disabled. If the final fput
++	 * happens off this path, then that will prevent ublk's blkdev_release()
++	 * from being called on current's task work, see fput() implementation.
++	 *
++	 * Otherwise, ublk server may not provide forward progress in case of
++	 * reading the partition table from bdev_open() with disk->open_mutex
++	 * held, and causes dead lock as we could already be holding
++	 * disk->open_mutex here.
++	 *
++	 * Preferably we would not be doing IO with a mutex held that is also
++	 * used for release, but this work-around will suffice for now.
++	 */
++	local_bh_disable();
++	requeue = blk_update_request(req, BLK_STS_OK, io->res);
++	local_bh_enable();
++	if (requeue)
+ 		blk_mq_requeue_request(req, true);
+ 	else
+ 		__blk_mq_end_request(req, BLK_STS_OK);
  
- 		case PMT_TYPE_XTAL_TIME:
--			const unsigned long value_raw = c->pmt_counter[i];
--			const double value_converted = 100.0 * value_raw / crystal_hz / interval_float;
--
- 			outp += sprintf(outp, "%s%.2f", (printed++ ? delim : ""), value_converted);
- 			break;
- 		}
-@@ -3078,6 +3076,8 @@ int format_counters(struct thread_data *
- 	}
+ 	return;
+ exit:
+-	blk_mq_end_request(req, res);
++	ublk_end_request(req, res);
+ }
  
- 	for (i = 0, ppmt = sys.pmt_pp; ppmt; i++, ppmt = ppmt->next) {
-+		const unsigned long value_raw = p->pmt_counter[i];
-+		const double value_converted = 100.0 * value_raw / crystal_hz / interval_float;
- 		switch (ppmt->type) {
- 		case PMT_TYPE_RAW:
- 			if (pmt_counter_get_width(ppmt) <= 32)
-@@ -3089,9 +3089,6 @@ int format_counters(struct thread_data *
- 			break;
+ static void ublk_complete_rq(struct kref *ref)
+@@ -1149,7 +1173,7 @@ static inline void __ublk_abort_rq(struc
+ 	if (ublk_nosrv_dev_should_queue_io(ubq->dev))
+ 		blk_mq_requeue_request(rq, false);
+ 	else
+-		blk_mq_end_request(rq, BLK_STS_IOERR);
++		ublk_end_request(rq, BLK_STS_IOERR);
+ }
  
- 		case PMT_TYPE_XTAL_TIME:
--			const unsigned long value_raw = p->pmt_counter[i];
--			const double value_converted = 100.0 * value_raw / crystal_hz / interval_float;
--
- 			outp += sprintf(outp, "%s%.2f", (printed++ ? delim : ""), value_converted);
- 			break;
- 		}
+ static inline void __ublk_rq_task_work(struct request *req,
 
 
