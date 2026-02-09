@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1146125B2;
-	Mon,  9 Feb 2026 14:36:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ADD7A125B2;
+	Mon,  9 Feb 2026 14:36:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770647777; cv=none; b=u6nFvBkHEo2zg9K0hIuur8EgrCbMHqKzlgIM8GKDqErQNGWGizApWqFi8fOUuRUbGLCf3MS+FXUAhNZAjggdRui1qNb11rUnpF3L30OtJL3cjDnxuyDLuFpxCqnytW1FSg37nE5ISLVIQtfs500ci7XEE0rnezrMS5cZ58PnArw=
+	t=1770647781; cv=none; b=F4KRiCknRHyKF1OL4YLMPantgHL5MOPhgsJHHZn2CtbMDl8/BDwtaJakUyJSOpdl9JhDyrXed1Xz39pyyfvG8LA8HBv6B9i1kTPJGXXy48TwDI6t91OLdJD2DvZ0keVNTiNyS+Lr6gfDDYqHNuOSRHlJguaoaENDhhOmW4g/x3E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770647777; c=relaxed/simple;
-	bh=TGUBrBjNBTbs6MY7ZI8EdXS/DkJsYOk0KDTvlaJd6Uo=;
+	s=arc-20240116; t=1770647781; c=relaxed/simple;
+	bh=Lapmb8luxq6rxYFn0SW1tDfX3iqIPoSTjSEKhz72v1c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=hviDIiaspw0bjt4AcVREDBirLVpFl9P+WbLr7wABqIufSUXXDPDnyvuKG1MIB9HIuSpZ+jJbPQOpBA1mkOmzxIl7TuxFy4wcwz0Lp7VWr99gO0qNWKgnAxATOPpz5/4Tv/2yJtTLb+OdZsZnBxgDe3iHiJgJ35CeOYBaSBJ525s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VcWba8aE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Bu+N6JLazmnXXBp7hgm6E2dR/hvlB5UV34zmZC8QfmwEctsPMz9FH6fn2xRwFjveVXJ+4AYD7emUC6nEK9VeiI+AwQ+2U9L+BZpIB+MOx/DJyUi4aTKLI3RqhGhaGj784hw/8fQC597fF6O3Ti4UwRk9Dgyp1Q6rGX2fvdeFzMU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sTjurZNa; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VcWba8aE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 34E56C116C6;
-	Mon,  9 Feb 2026 14:36:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sTjurZNa"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC958C116C6;
+	Mon,  9 Feb 2026 14:36:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770647777;
-	bh=TGUBrBjNBTbs6MY7ZI8EdXS/DkJsYOk0KDTvlaJd6Uo=;
+	s=korg; t=1770647781;
+	bh=Lapmb8luxq6rxYFn0SW1tDfX3iqIPoSTjSEKhz72v1c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VcWba8aExqUWPQMduKpI+yyQKngy6fkfJTgAMg6dxakrkIBvZQFMYA9erTjp4cAYY
-	 lFn5fOdcL/YG7Y3peoqprmfyZFdtETPe7dL0fJt8eC7X7+JMyN8n96qRIubO6cjAlQ
-	 a0uTsPx6cQM/ilNKpaU/5r7Myssv3comOD/Hgj7I=
+	b=sTjurZNal/XnSC3gTbBzOaWyFS+4KZQ+0vEoOPwIkD2k5Oggg2FrenVeidLAuCTEq
+	 A2AQjIrxN6bEuuzPPQqztXcnNJEc+zINpgpYVKqvGNFkFQvwTZMvxHE+FOQCJQOXrR
+	 4IRq0dDHL+mfcmV63Q1RBSwPJOuJ/mNVZaG1lnIE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kaushlendra Kumar <kaushlendra.kumar@intel.com>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>
-Subject: [PATCH 6.12 004/113] platform/x86: intel_telemetry: Fix swapped arrays in PSS output
-Date: Mon,  9 Feb 2026 15:22:33 +0100
-Message-ID: <20260209142310.367203432@linuxfoundation.org>
+	syzbot+5f8f3acdee1ec7a7ef7b@syzkaller.appspotmail.com,
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 6.12 005/113] ALSA: aloop: Fix racy access at PCM trigger
+Date: Mon,  9 Feb 2026 15:22:34 +0100
+Message-ID: <20260209142310.403225837@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260209142310.204833231@linuxfoundation.org>
 References: <20260209142310.204833231@linuxfoundation.org>
@@ -44,58 +44,123 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Kaushlendra Kumar <kaushlendra.kumar@intel.com>
+From: Takashi Iwai <tiwai@suse.de>
 
-commit 25e9e322d2ab5c03602eff4fbf4f7c40019d8de2 upstream.
+commit 826af7fa62e347464b1b4e0ba2fe19a92438084f upstream.
 
-The LTR blocking statistics and wakeup event counters are incorrectly
-cross-referenced during debugfs output rendering. The code populates
-pss_ltr_blkd[] with LTR blocking data and pss_s0ix_wakeup[] with wakeup
-data, but the display loops reference the wrong arrays.
+The PCM trigger callback of aloop driver tries to check the PCM state
+and stop the stream of the tied substream in the corresponding cable.
+Since both check and stop operations are performed outside the cable
+lock, this may result in UAF when a program attempts to trigger
+frequently while opening/closing the tied stream, as spotted by
+fuzzers.
 
-This causes the "LTR Blocking Status" section to print wakeup events
-and the "Wakes Status" section to print LTR blockers, misleading power
-management analysis and S0ix residency debugging.
+For addressing the UAF, this patch changes two things:
+- It covers the most of code in loopback_check_format() with
+  cable->lock spinlock, and add the proper NULL checks.  This avoids
+  already some racy accesses.
+- In addition, now we try to check the state of the capture PCM stream
+  that may be stopped in this function, which was the major pain point
+  leading to UAF.
 
-Fix by aligning array usage with the intended output section labels.
-
-Fixes: 87bee290998d ("platform:x86: Add Intel Telemetry Debugfs interfaces")
-Cc: stable@vger.kernel.org
-Signed-off-by: Kaushlendra Kumar <kaushlendra.kumar@intel.com>
-Link: https://patch.msgid.link/20251224032053.3915900-1-kaushlendra.kumar@intel.com
-Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Reported-by: syzbot+5f8f3acdee1ec7a7ef7b@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/69783ba1.050a0220.c9109.0011.GAE@google.com
+Cc: <stable@vger.kernel.org>
+Link: https://patch.msgid.link/20260203141003.116584-1-tiwai@suse.de
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/platform/x86/intel/telemetry/debugfs.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ sound/drivers/aloop.c |   62 +++++++++++++++++++++++++++++---------------------
+ 1 file changed, 36 insertions(+), 26 deletions(-)
 
---- a/drivers/platform/x86/intel/telemetry/debugfs.c
-+++ b/drivers/platform/x86/intel/telemetry/debugfs.c
-@@ -449,7 +449,7 @@ static int telem_pss_states_show(struct
- 	for (index = 0; index < debugfs_conf->pss_ltr_evts; index++) {
- 		seq_printf(s, "%-32s\t%u\n",
- 			   debugfs_conf->pss_ltr_data[index].name,
--			   pss_s0ix_wakeup[index]);
-+			   pss_ltr_blkd[index]);
- 	}
+--- a/sound/drivers/aloop.c
++++ b/sound/drivers/aloop.c
+@@ -335,37 +335,43 @@ static bool is_access_interleaved(snd_pc
  
- 	seq_puts(s, "\n--------------------------------------\n");
-@@ -459,7 +459,7 @@ static int telem_pss_states_show(struct
- 	for (index = 0; index < debugfs_conf->pss_wakeup_evts; index++) {
- 		seq_printf(s, "%-32s\t%u\n",
- 			   debugfs_conf->pss_wakeup[index].name,
--			   pss_ltr_blkd[index]);
-+			   pss_s0ix_wakeup[index]);
- 	}
+ static int loopback_check_format(struct loopback_cable *cable, int stream)
+ {
++	struct loopback_pcm *dpcm_play, *dpcm_capt;
+ 	struct snd_pcm_runtime *runtime, *cruntime;
+ 	struct loopback_setup *setup;
+ 	struct snd_card *card;
++	bool stop_capture = false;
+ 	int check;
  
+-	if (cable->valid != CABLE_VALID_BOTH) {
+-		if (stream == SNDRV_PCM_STREAM_PLAYBACK)
+-			goto __notify;
+-		return 0;
+-	}
+-	runtime = cable->streams[SNDRV_PCM_STREAM_PLAYBACK]->
+-							substream->runtime;
+-	cruntime = cable->streams[SNDRV_PCM_STREAM_CAPTURE]->
+-							substream->runtime;
+-	check = runtime->format != cruntime->format ||
+-		runtime->rate != cruntime->rate ||
+-		runtime->channels != cruntime->channels ||
+-		is_access_interleaved(runtime->access) !=
+-		is_access_interleaved(cruntime->access);
+-	if (!check)
+-		return 0;
+-	if (stream == SNDRV_PCM_STREAM_CAPTURE) {
+-		return -EIO;
+-	} else {
+-		snd_pcm_stop(cable->streams[SNDRV_PCM_STREAM_CAPTURE]->
+-					substream, SNDRV_PCM_STATE_DRAINING);
+-	      __notify:
+-		runtime = cable->streams[SNDRV_PCM_STREAM_PLAYBACK]->
+-							substream->runtime;
+-		setup = get_setup(cable->streams[SNDRV_PCM_STREAM_PLAYBACK]);
+-		card = cable->streams[SNDRV_PCM_STREAM_PLAYBACK]->loopback->card;
++	scoped_guard(spinlock_irqsave, &cable->lock) {
++		dpcm_play = cable->streams[SNDRV_PCM_STREAM_PLAYBACK];
++		dpcm_capt = cable->streams[SNDRV_PCM_STREAM_CAPTURE];
++
++		if (cable->valid != CABLE_VALID_BOTH) {
++			if (stream == SNDRV_PCM_STREAM_CAPTURE || !dpcm_play)
++				return 0;
++		} else {
++			if (!dpcm_play || !dpcm_capt)
++				return -EIO;
++			runtime = dpcm_play->substream->runtime;
++			cruntime = dpcm_capt->substream->runtime;
++			if (!runtime || !cruntime)
++				return -EIO;
++			check = runtime->format != cruntime->format ||
++			runtime->rate != cruntime->rate ||
++			runtime->channels != cruntime->channels ||
++			is_access_interleaved(runtime->access) !=
++			is_access_interleaved(cruntime->access);
++			if (!check)
++				return 0;
++			if (stream == SNDRV_PCM_STREAM_CAPTURE)
++				return -EIO;
++			else if (cruntime->state == SNDRV_PCM_STATE_RUNNING)
++				stop_capture = true;
++		}
++
++		setup = get_setup(dpcm_play);
++		card = dpcm_play->loopback->card;
++		runtime = dpcm_play->substream->runtime;
+ 		if (setup->format != runtime->format) {
+ 			snd_ctl_notify(card, SNDRV_CTL_EVENT_MASK_VALUE,
+ 							&setup->format_id);
+@@ -388,6 +394,10 @@ static int loopback_check_format(struct
+ 			setup->access = runtime->access;
+ 		}
+ 	}
++
++	if (stop_capture)
++		snd_pcm_stop(dpcm_capt->substream, SNDRV_PCM_STATE_DRAINING);
++
  	return 0;
+ }
+ 
 
 
