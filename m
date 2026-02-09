@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6BD537AA7E;
-	Mon,  9 Feb 2026 14:29:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18CA837AA91;
+	Mon,  9 Feb 2026 14:29:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770647375; cv=none; b=Ktb8rpI/vWVLd9j8YWQe0Fwz2oXxXenqLRd95Db+QsXn6LK1g9LHYtGhsjN8svKOlzU6PVraxRFiVaIBySD9trT1xv0W+YPZ8yjfNqTjuwkJEHjxOLn7Yq/zWhQWjGDjbqskEaYANoW+HCfRURnERYUBpZdz/z0bpMmXmrencYs=
+	t=1770647378; cv=none; b=Q00ySMDBoOsPjBJ/WTOcgCz/7zwHWkzfChuHKEkXaFSNxPDxEfzjqYXqJdqrxJIruBUhnl3O6eEyt7kYTIqO28M69gGgYJrEUxwk9kFY2ugdc6Q1L5gGvqEzr3/7ijfaCqYA96ZDzIfJeAYtmIxGTt/a7mSgFz4R7+XcEB+eTsY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770647375; c=relaxed/simple;
-	bh=aP0yRorMjgTUk3cB7A3XcL3nVrVmbGSsUhJMfb9HkxY=;
+	s=arc-20240116; t=1770647378; c=relaxed/simple;
+	bh=TWz1oOi5JpbK5gewlQcWnyf+aQTNFq+dwXjR+4wQdNY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sqG+spRiidNW9Io3yYAFLNoIQd0x0xebtl+aeqEcFkHm3BdicRtgglftOAsNH7xFjH+k+VxilNVhQ08dGuLuv7xwvWr8BX3U97hA4e36qJGznNXxDVAa1DW1qe0QuaYgKWkT5q2VukbP8GTEKjTaOgHTvfXrW8X3lJXyCNZpeBg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZypcMCV8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=nfMMxIl0MBGS6CjZdsEqEgSKG1RS/JkYN5eiaqHWpurHueEJRH0We7c1IdzMjZMIlIhVxJRG3KGngf8M6AL5cbIEl7kwO8/hHY2pakiCjfIt9Q4235N+LQUMmv0er1y0HGEU6cE3wHtfEt4Jjp9sF2brWugZxEk3PXwGYCvHQyQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=i1NJQNu0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZypcMCV8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5668BC116C6;
-	Mon,  9 Feb 2026 14:29:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="i1NJQNu0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 82BB1C116C6;
+	Mon,  9 Feb 2026 14:29:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770647374;
-	bh=aP0yRorMjgTUk3cB7A3XcL3nVrVmbGSsUhJMfb9HkxY=;
+	s=korg; t=1770647378;
+	bh=TWz1oOi5JpbK5gewlQcWnyf+aQTNFq+dwXjR+4wQdNY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZypcMCV82ZyfZctgSx5pqh90hRnMGz8DllURvTa4Mx7ROjSrI5Dqr4ZEm2213GC5F
-	 2Be2NZcSLiTsPrQHVrMEhOhfElGXh7ejt7DPg6GKjCUjp/cbu41GtAI0tOfWR8cpP3
-	 mdsQMiveaUu+N5t2Q2DBVWvjLGM0Rpm4IGsXU18A=
+	b=i1NJQNu0x18BK/y4Izp6kp3uOUcY8ZXe4Uz6RHPPi+QbItU561elgd6xvSUVB+cYI
+	 KEXIXZyzhhjAki9oAx246g5kP1Na7OvOfWAb+ZMbtcpY70fox+L7iicwAjFuQuk3Vt
+	 +GdXYIWAahZtrCVtgt/LqlOaJDEKcC+fyqaluT+Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	mathieu.desnoyers@efficios.com,
-	Wupeng Ma <mawupeng1@huawei.com>,
-	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
+	Martin Kaiser <martin@kaiser.cx>,
+	Paul Walmsley <pjw@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 080/175] ring-buffer: Avoid softlockup in ring_buffer_resize() during memory free
-Date: Mon,  9 Feb 2026 15:22:33 +0100
-Message-ID: <20260209142323.320649920@linuxfoundation.org>
+Subject: [PATCH 6.18 081/175] riscv: trace: fix snapshot deadlock with sbi ecall
+Date: Mon,  9 Feb 2026 15:22:34 +0100
+Message-ID: <20260209142323.355502602@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260209142320.474120190@linuxfoundation.org>
 References: <20260209142320.474120190@linuxfoundation.org>
@@ -53,66 +51,82 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wupeng Ma <mawupeng1@huawei.com>
+From: Martin Kaiser <martin@kaiser.cx>
 
-[ Upstream commit 6435ffd6c7fcba330dfa91c58dc30aed2df3d0bf ]
+[ Upstream commit b0d7f5f0c9f05f1b6d4ee7110f15bef9c11f9df0 ]
 
-When user resize all trace ring buffer through file 'buffer_size_kb',
-then in ring_buffer_resize(), kernel allocates buffer pages for each
-cpu in a loop.
+If sbi_ecall.c's functions are traceable,
 
-If the kernel preemption model is PREEMPT_NONE and there are many cpus
-and there are many buffer pages to be freed, it may not give up cpu
-for a long time and finally cause a softlockup.
+echo "__sbi_ecall:snapshot" > /sys/kernel/tracing/set_ftrace_filter
 
-To avoid it, call cond_resched() after each cpu buffer free as Commit
-f6bd2c92488c ("ring-buffer: Avoid softlockup in ring_buffer_resize()")
-does.
+may get the kernel into a deadlock.
 
-Detailed call trace as follow:
+(Functions in sbi_ecall.c are excluded from tracing if
+CONFIG_RISCV_ALTERNATIVE_EARLY is set.)
 
-  rcu: INFO: rcu_sched self-detected stall on CPU
-  rcu: 	24-....: (14837 ticks this GP) idle=521c/1/0x4000000000000000 softirq=230597/230597 fqs=5329
-  rcu: 	(t=15004 jiffies g=26003221 q=211022 ncpus=96)
-  CPU: 24 UID: 0 PID: 11253 Comm: bash Kdump: loaded Tainted: G            EL      6.18.2+ #278 NONE
-  pc : arch_local_irq_restore+0x8/0x20
-   arch_local_irq_restore+0x8/0x20 (P)
-   free_frozen_page_commit+0x28c/0x3b0
-   __free_frozen_pages+0x1c0/0x678
-   ___free_pages+0xc0/0xe0
-   free_pages+0x3c/0x50
-   ring_buffer_resize.part.0+0x6a8/0x880
-   ring_buffer_resize+0x3c/0x58
-   __tracing_resize_ring_buffer.part.0+0x34/0xd8
-   tracing_resize_ring_buffer+0x8c/0xd0
-   tracing_entries_write+0x74/0xd8
-   vfs_write+0xcc/0x288
-   ksys_write+0x74/0x118
-   __arm64_sys_write+0x24/0x38
+__sbi_ecall triggers a snapshot of the ringbuffer. The snapshot code
+raises an IPI interrupt, which results in another call to __sbi_ecall
+and another snapshot...
 
-Cc: <mathieu.desnoyers@efficios.com>
-Link: https://patch.msgid.link/20251228065008.2396573-1-mawupeng1@huawei.com
-Signed-off-by: Wupeng Ma <mawupeng1@huawei.com>
-Acked-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
-Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+All it takes to get into this endless loop is one initial __sbi_ecall.
+On RISC-V systems without SSTC extension, the clock events in
+timer-riscv.c issue periodic sbi ecalls, making the problem easy to
+trigger.
+
+Always exclude the sbi_ecall.c functions from tracing to fix the
+potential deadlock.
+
+sbi ecalls can easiliy be logged via trace events, excluding ecall
+functions from function tracing is not a big limitation.
+
+Signed-off-by: Martin Kaiser <martin@kaiser.cx>
+Link: https://patch.msgid.link/20251223135043.1336524-1-martin@kaiser.cx
+Signed-off-by: Paul Walmsley <pjw@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/trace/ring_buffer.c | 2 ++
- 1 file changed, 2 insertions(+)
+ arch/riscv/kernel/Makefile | 15 ++++++++-------
+ 1 file changed, 8 insertions(+), 7 deletions(-)
 
-diff --git a/kernel/trace/ring_buffer.c b/kernel/trace/ring_buffer.c
-index afcd3747264d2..3ba08fc1b7d05 100644
---- a/kernel/trace/ring_buffer.c
-+++ b/kernel/trace/ring_buffer.c
-@@ -3121,6 +3121,8 @@ int ring_buffer_resize(struct trace_buffer *buffer, unsigned long size,
- 					list) {
- 			list_del_init(&bpage->list);
- 			free_buffer_page(bpage);
+diff --git a/arch/riscv/kernel/Makefile b/arch/riscv/kernel/Makefile
+index f60fce69b7259..a01f6439d62b1 100644
+--- a/arch/riscv/kernel/Makefile
++++ b/arch/riscv/kernel/Makefile
+@@ -3,12 +3,6 @@
+ # Makefile for the RISC-V Linux kernel
+ #
+ 
+-ifdef CONFIG_FTRACE
+-CFLAGS_REMOVE_ftrace.o	= $(CC_FLAGS_FTRACE)
+-CFLAGS_REMOVE_patch.o	= $(CC_FLAGS_FTRACE)
+-CFLAGS_REMOVE_sbi.o	= $(CC_FLAGS_FTRACE)
+-CFLAGS_REMOVE_return_address.o	= $(CC_FLAGS_FTRACE)
+-endif
+ CFLAGS_syscall_table.o	+= $(call cc-disable-warning, override-init)
+ CFLAGS_compat_syscall_table.o += $(call cc-disable-warning, override-init)
+ 
+@@ -24,7 +18,6 @@ CFLAGS_sbi_ecall.o := -mcmodel=medany
+ ifdef CONFIG_FTRACE
+ CFLAGS_REMOVE_alternative.o = $(CC_FLAGS_FTRACE)
+ CFLAGS_REMOVE_cpufeature.o = $(CC_FLAGS_FTRACE)
+-CFLAGS_REMOVE_sbi_ecall.o = $(CC_FLAGS_FTRACE)
+ endif
+ ifdef CONFIG_RELOCATABLE
+ CFLAGS_alternative.o += -fno-pie
+@@ -43,6 +36,14 @@ CFLAGS_sbi_ecall.o += -D__NO_FORTIFY
+ endif
+ endif
+ 
++ifdef CONFIG_FTRACE
++CFLAGS_REMOVE_ftrace.o	= $(CC_FLAGS_FTRACE)
++CFLAGS_REMOVE_patch.o	= $(CC_FLAGS_FTRACE)
++CFLAGS_REMOVE_sbi.o	= $(CC_FLAGS_FTRACE)
++CFLAGS_REMOVE_return_address.o	= $(CC_FLAGS_FTRACE)
++CFLAGS_REMOVE_sbi_ecall.o = $(CC_FLAGS_FTRACE)
++endif
 +
-+			cond_resched();
- 		}
- 	}
-  out_err_unlock:
+ always-$(KBUILD_BUILTIN) += vmlinux.lds
+ 
+ obj-y	+= head.o
 -- 
 2.51.0
 
