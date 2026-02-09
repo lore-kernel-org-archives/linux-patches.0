@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07D4537AA87;
-	Mon,  9 Feb 2026 14:38:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 074E337C0F2;
+	Mon,  9 Feb 2026 14:39:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770647937; cv=none; b=Tsecx30qD7auDV9PBgH+OPdSA2PPeOXkB5ZPyNPQWEYqUzzwuT31Qn7HTyCoshjmxVKWYhINmO5GjrlPQvBrhOgY0Z90MpdGnR5QMT+4HW4AVZrkeZEp7fo68Ccpboc2Amlp+xKkHCh1PiG1QD0CPyDsSgOB70EB/KZ9YIRxkRA=
+	t=1770647941; cv=none; b=AornRzXAh20j36lj9Dkw2rB8sHpKOCeS0xAig3i2G0F/+nhVo4LyM3+OWqckq3ueICtj1WlY2N2yGTSVvwCp3KcaXcTSX2XyKb6dpfEaxIhSw8c0y5iMqz1g/Sp20llX3E1+bV93uWHatBSltZulzsitlIGz9aGGwYsnNQ3TkKs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770647937; c=relaxed/simple;
-	bh=UOQnwwOdVvReLMPznh+RFPHfZxHHku9/Cm5JxYm+i1k=;
+	s=arc-20240116; t=1770647941; c=relaxed/simple;
+	bh=LIIEoddAiGKPboJcKmHu7avzmEMTUxQ47Iyk8LMSRX0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RFYIxaU0+ECsgAQcVfK2veHmic/sNuC1Jnv0vyLBWWdbnW9jesbK8OTz/s+oP1xF5vo5xDY86ViyuCen0gsb7xOgV0uGi4MMUV5wuRUu/Lhr84KFeyQ5VqmZnaYL5ZGolRQn+TqLzhdKnyw5dNuodyOm0KLpU5e72/R7qSYde64=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ThfSJlfA; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=SKdbSCdl0iUw16TURn5mwa0AMnLVZA8Ik5pZirvU2vc/M154U6Ck60MtbuaAOyScZoQBfPXnSc2jCm3Xy2wbRUmrCZaTU1nLFCImm1VBeVuhuo2tKMhClGrBU/wG/SbNQxHiPxlLP8IOCJ+yytHSVrbOdf4YrVSYSkEl0Ea3ovo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2I5AGA3J; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ThfSJlfA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 69247C116C6;
-	Mon,  9 Feb 2026 14:38:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2I5AGA3J"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 203C7C16AAE;
+	Mon,  9 Feb 2026 14:38:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770647936;
-	bh=UOQnwwOdVvReLMPznh+RFPHfZxHHku9/Cm5JxYm+i1k=;
+	s=korg; t=1770647940;
+	bh=LIIEoddAiGKPboJcKmHu7avzmEMTUxQ47Iyk8LMSRX0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ThfSJlfALADlwFiyoia6laJ52vC5kOypjdOjWVj6UzfF0CYVFFraTFZpi9pxHGnnB
-	 WQTBf9fVc6et0sVyNub3tMe1CGjQV8wkHTJ9/NWFQWx3+Mdhp5Cz46BNa6x0/o3fIx
-	 JYk77fCrxhOh0gx59NAD5ec9HTZEQ2WE7CztBA2U=
+	b=2I5AGA3JhLXGhJMgc1vfpv8bjffg2OX74ZdG8dUWI9ow8Y7ikayekSNSoJzTbStG5
+	 OT/owTi8blPpExgBaVFKQVjq9oKMexwvXSGq55+xLCqpVRlGa98qlvJ72zrMQrWXP0
+	 Od4MEh+UwDUBt8xZ/zu+5vyPCHqETNqwuUHzLYK0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Kaushlendra Kumar <kaushlendra.kumar@intel.com>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 073/113] platform/x86: toshiba_haps: Fix memory leaks in add/remove routines
-Date: Mon,  9 Feb 2026 15:23:42 +0100
-Message-ID: <20260209142312.810924537@linuxfoundation.org>
+Subject: [PATCH 6.12 074/113] platform/x86: intel_telemetry: Fix PSS event register mask
+Date: Mon,  9 Feb 2026 15:23:43 +0100
+Message-ID: <20260209142312.846153076@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260209142310.204833231@linuxfoundation.org>
 References: <20260209142310.204833231@linuxfoundation.org>
@@ -44,46 +45,50 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+From: Kaushlendra Kumar <kaushlendra.kumar@intel.com>
 
-[ Upstream commit 128497456756e1b952bd5a912cd073836465109d ]
+[ Upstream commit 39e9c376ac42705af4ed4ae39eec028e8bced9b4 ]
 
-toshiba_haps_add() leaks the haps object allocated by it if it returns
-an error after allocating that object successfully.
+The PSS telemetry info parsing incorrectly applies
+TELEM_INFO_SRAMEVTS_MASK when extracting event register
+count from firmware response. This reads bits 15-8 instead
+of the correct bits 7-0, causing misdetection of hardware
+capabilities.
 
-toshiba_haps_remove() does not free the object pointed to by
-toshiba_haps before clearing that pointer, so it becomes unreachable
-allocated memory.
+The IOSS path correctly uses TELEM_INFO_NENABLES_MASK for
+register count. Apply the same mask to PSS parsing for
+consistency.
 
-Address these memory leaks by using devm_kzalloc() for allocating
-the memory in question.
-
-Fixes: 23d0ba0c908a ("platform/x86: Toshiba HDD Active Protection Sensor")
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Fixes: 9d16b482b059 ("platform:x86: Add Intel telemetry platform driver")
+Signed-off-by: Kaushlendra Kumar <kaushlendra.kumar@intel.com>
+Link: https://patch.msgid.link/20251224061144.3925519-1-kaushlendra.kumar@intel.com
+Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/x86/toshiba_haps.c | 2 +-
+ drivers/platform/x86/intel/telemetry/pltdrv.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/platform/x86/toshiba_haps.c b/drivers/platform/x86/toshiba_haps.c
-index 03dfddeee0c0a..e9324bf16aea4 100644
---- a/drivers/platform/x86/toshiba_haps.c
-+++ b/drivers/platform/x86/toshiba_haps.c
-@@ -183,7 +183,7 @@ static int toshiba_haps_add(struct acpi_device *acpi_dev)
- 
- 	pr_info("Toshiba HDD Active Protection Sensor device\n");
- 
--	haps = kzalloc(sizeof(struct toshiba_haps_dev), GFP_KERNEL);
-+	haps = devm_kzalloc(&acpi_dev->dev, sizeof(*haps), GFP_KERNEL);
- 	if (!haps)
- 		return -ENOMEM;
- 
+diff --git a/drivers/platform/x86/intel/telemetry/pltdrv.c b/drivers/platform/x86/intel/telemetry/pltdrv.c
+index 767a0bc6c7ad5..29991bc80dada 100644
+--- a/drivers/platform/x86/intel/telemetry/pltdrv.c
++++ b/drivers/platform/x86/intel/telemetry/pltdrv.c
+@@ -610,7 +610,7 @@ static int telemetry_setup(struct platform_device *pdev)
+ 	/* Get telemetry Info */
+ 	events = (read_buf & TELEM_INFO_SRAMEVTS_MASK) >>
+ 		  TELEM_INFO_SRAMEVTS_SHIFT;
+-	event_regs = read_buf & TELEM_INFO_SRAMEVTS_MASK;
++	event_regs = read_buf & TELEM_INFO_NENABLES_MASK;
+ 	if ((events < TELEM_MAX_EVENTS_SRAM) ||
+ 	    (event_regs < TELEM_MAX_EVENTS_SRAM)) {
+ 		dev_err(&pdev->dev, "PSS:Insufficient Space for SRAM Trace\n");
 -- 
 2.51.0
 
