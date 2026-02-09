@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B63B36BCE2;
-	Mon,  9 Feb 2026 14:55:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 872A43446C7;
+	Mon,  9 Feb 2026 14:55:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770648917; cv=none; b=bM9Fcn0hNgbPnRvX3wXtU2XTh3r2BugwakdlEA+DHfLVzYMlno5CJyF45GBjoMUNLglOZzb7K9mOev6JGaXyOe0Iv185IpK0SsJEn6GUrI4ovoYysoiQIF73ymDSYL+2E9r8YNi/AI1oLzoFarqTTPhgtwqE9nCrYTCH9vp811s=
+	t=1770648920; cv=none; b=UfaLerH0hyLoqkhNipjCPc+dUjGI5NE7XIjQs6EGV3j+WJ0lgTDuTNs/oTxsP6zH67UlAdjVcUrWZpfDmPrr+4dEmpl01miT6maJ3gymoDMr+Hk1aF9KzNO6EvMFvtTQCcoyW7LeTp23TG+6vvFg+BNetTpbQlk+kDfgU1S8gXQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770648917; c=relaxed/simple;
-	bh=KeAgDelqZpzXO6rMgDoxxGqkWpxPTmmXZ3r9D9j+1QE=;
+	s=arc-20240116; t=1770648920; c=relaxed/simple;
+	bh=NATmmrR7q54GYn/JxXPUs4zcNWQihu5OlJht1ewa8Uk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IYg/77Ktu3ZLFxo8xE4UVfWEdRNqM+Xzq5AhqxSUJoO7odQG+jliliuZseOjIMhESgrRo+vlybz8nbk7ew6MXSbntewCuB8M5AWY2LqgfCW2HkGyNGw+DpzdLhnNlhNI7t0pWq/4WPggDk+L6nuVJP8w/TCBoBNVJtUzFAPi4lE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vt6WPUFg; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=faJD2YNpWzN/Xv/wBPEufiZBBeQlTz/LZYyVKLgEDDD8P0WQZqOAksBcBi83J9mJcJc0rWion6czFyTEmqbIHynRu+VOCvLBoUCydEw0XeuMRNycRSYGvOTg0/zbH2j9EYBc+sB4cH/y8rEaKkTvYMmv+ZksmMXjhRBINeOYtIU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LhVD+NGd; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vt6WPUFg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F898C116C6;
-	Mon,  9 Feb 2026 14:55:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LhVD+NGd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB84FC116C6;
+	Mon,  9 Feb 2026 14:55:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770648917;
-	bh=KeAgDelqZpzXO6rMgDoxxGqkWpxPTmmXZ3r9D9j+1QE=;
+	s=korg; t=1770648920;
+	bh=NATmmrR7q54GYn/JxXPUs4zcNWQihu5OlJht1ewa8Uk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vt6WPUFgpaW45SE2RKAVd+eHtUdVAKq+zk9YXjvWmToqyRxSFGhWqpgteDqRtQLgm
-	 mniegbHypsQJxpnRtpq0EbRagHteddDIadSXBAw/eDX1OWdzUOOV5jXze1a93H2TZJ
-	 04v7tLx6Yk4ttVLXOGhul0tytn/SIozVCSc4mUm4=
+	b=LhVD+NGdCAdzQj/8TQSRNg/DSP7HOjN1s1VL+cnJG+lXOasw7MCUlyiRUUq0M2mO/
+	 8nnJXgabLnNnnDQsKPGWic81A5z/ElHp/67m5VrvKQ1EMhzlEHyGBFm4Vb9obTVTdv
+	 OqAVgYovTsGiYFOH/68ShAaIf/6uNstsPs0HEZI4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daniel Hodges <hodgesd@meta.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Guenter Roeck <linux@roeck-us.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 52/75] tipc: use kfree_sensitive() for session key material
-Date: Mon,  9 Feb 2026 15:24:49 +0100
-Message-ID: <20260209142303.719129198@linuxfoundation.org>
+Subject: [PATCH 5.15 53/75] hwmon: (occ) Mark occ_init_attribute() as __printf
+Date: Mon,  9 Feb 2026 15:24:50 +0100
+Message-ID: <20260209142303.754692046@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260209142301.830618238@linuxfoundation.org>
 References: <20260209142301.830618238@linuxfoundation.org>
@@ -51,49 +51,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Daniel Hodges <hodgesd@meta.com>
+From: Arnd Bergmann <arnd@arndb.de>
 
-[ Upstream commit 74d9391e8849e70ded5309222d09b0ed0edbd039 ]
+[ Upstream commit 831a2b27914cc880130ffe8fb8d1e65a5324d07f ]
 
-The rx->skey field contains a struct tipc_aead_key with GCM-AES
-encryption keys used for TIPC cluster communication. Using plain
-kfree() leaves this sensitive key material in freed memory pages
-where it could potentially be recovered.
+This is a printf-style function, which gcc -Werror=suggest-attribute=format
+correctly points out:
 
-Switch to kfree_sensitive() to ensure the key material is zeroed
-before the memory is freed.
+drivers/hwmon/occ/common.c: In function 'occ_init_attribute':
+drivers/hwmon/occ/common.c:761:9: error: function 'occ_init_attribute' might be a candidate for 'gnu_printf' format attribute [-Werror=suggest-attribute=format]
 
-Fixes: 1ef6f7c9390f ("tipc: add automatic session key exchange")
-Signed-off-by: Daniel Hodges <hodgesd@meta.com>
-Link: https://patch.msgid.link/20260131180114.2121438-1-hodgesd@meta.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Add the attribute to avoid this warning and ensure any incorrect
+format strings are detected here.
+
+Fixes: 744c2fe950e9 ("hwmon: (occ) Rework attribute registration for stack usage")
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Link: https://lore.kernel.org/r/20260203163440.2674340-1-arnd@kernel.org
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/tipc/crypto.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/hwmon/occ/common.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/net/tipc/crypto.c b/net/tipc/crypto.c
-index b525e6483881a..22c07a270ed40 100644
---- a/net/tipc/crypto.c
-+++ b/net/tipc/crypto.c
-@@ -1230,7 +1230,7 @@ void tipc_crypto_key_flush(struct tipc_crypto *c)
- 		rx = c;
- 		tx = tipc_net(rx->net)->crypto_tx;
- 		if (cancel_delayed_work(&rx->work)) {
--			kfree(rx->skey);
-+			kfree_sensitive(rx->skey);
- 			rx->skey = NULL;
- 			atomic_xchg(&rx->key_distr, 0);
- 			tipc_node_put(rx->node);
-@@ -2405,7 +2405,7 @@ static void tipc_crypto_work_rx(struct work_struct *work)
- 			break;
- 		default:
- 			synchronize_rcu();
--			kfree(rx->skey);
-+			kfree_sensitive(rx->skey);
- 			rx->skey = NULL;
- 			break;
- 		}
+diff --git a/drivers/hwmon/occ/common.c b/drivers/hwmon/occ/common.c
+index 8b8f50ef36aff..44007858c23fc 100644
+--- a/drivers/hwmon/occ/common.c
++++ b/drivers/hwmon/occ/common.c
+@@ -752,6 +752,7 @@ static ssize_t occ_show_extended(struct device *dev,
+  * are dynamically allocated, we cannot use the existing kernel macros which
+  * stringify the name argument.
+  */
++__printf(7, 8)
+ static void occ_init_attribute(struct occ_attribute *attr, int mode,
+ 	ssize_t (*show)(struct device *dev, struct device_attribute *attr, char *buf),
+ 	ssize_t (*store)(struct device *dev, struct device_attribute *attr,
 -- 
 2.51.0
 
