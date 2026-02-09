@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B48228725B;
-	Mon,  9 Feb 2026 14:51:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5EF9728725B;
+	Mon,  9 Feb 2026 14:51:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770648683; cv=none; b=jA/JdB2i31VdoYq/Qur7ZDypGatvFEhG/MyW37MZ1fnpNxkTYbs4SjaGAEbbhqZGzeezymFhR0lO9zHlFv8ZfUBeYABvjB2DBGX7HjBcmuSj2qPj/zP+QNIVN9qW2M2TN12NtKFpsReZ0Z2lhmipKvcreXZ4I795KfI22YW+y64=
+	t=1770648686; cv=none; b=kEJSEHGQrtRNfe1U3nibKFpx4DLnqi7iztnMfDwQpuQjvACn8exiybIeJItZL4PDQSFTVVfIMGc/a/9AZng+A2f7xiRXPCjnxbY5BJlTcvS+h4kDTTln70FCejSxCnqsRdgALboUNkdORhSO97NrXvUkUEqcQdZdp7hOVBEi9rM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770648683; c=relaxed/simple;
-	bh=X9XF8/jQgsvbhEt8ZgSy36xGDb52a3708WYc2f18XRo=;
+	s=arc-20240116; t=1770648686; c=relaxed/simple;
+	bh=EIVIeX1dpD6LhSOetKDdTXKZqidVtmjDx+UMwdpkThk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=szpFjkFIEX6dreuT4GTSXYYHS09Z3XkbmiX8Eb+cI5MqncV2G4gAngV7o1jBCDqn5xGZq9HGWk55Ky1RQsRGy3vWcOirL7BqEWGfDSlsIY35bTsYrO0D8E3Pmf7SrtjcnUYrfpRxLFpx83b5HNSeYFT6kdHJnl3430o19jz8W9w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=M0SKLggI; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bUVqsSAkPbGzdFxHa69/NQl7/nH2StvnLlGmrA72buGZDUZeEvQSvfnOTm3WGTUd5CkB6sGVvEiAMRK9RiQ+nc1O9QbxCpJo/CtkK3aJYO/tuHOOFDcQ+Qw1MBAXXTyWDvgd/L9aQeD8OJNmVDyvTN9jSOMtlniajS9ohFcEl7c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YdU2yIIp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="M0SKLggI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 89472C116C6;
-	Mon,  9 Feb 2026 14:51:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YdU2yIIp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE8C1C116C6;
+	Mon,  9 Feb 2026 14:51:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770648683;
-	bh=X9XF8/jQgsvbhEt8ZgSy36xGDb52a3708WYc2f18XRo=;
+	s=korg; t=1770648686;
+	bh=EIVIeX1dpD6LhSOetKDdTXKZqidVtmjDx+UMwdpkThk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=M0SKLggIetU0mkrL2+MmlPM122VJHrFE+KCfas/MQU4+5CKYL8d+9uc8KOIIZQxLb
-	 k+VGdwr9ZckOvCwU94xevC7ASkeVwskSccYtRLHnZUIxB8mfIvzSIBZIOXyhV1sxLz
-	 cNHx3sja8czZFn9AFupNuQbfv2Ye29sf/fYpuluc=
+	b=YdU2yIIpLR8jAco9nQYq6AJL7mX08z9DasoynvIu/Ymo1XxFpxRSaKQwefGwMRGjG
+	 OO2msWWpdND12URPDQibYcALN1/eijnNBKaOGFbTQ5SFUvojKdsdJ4gPnWW3sHCQb3
+	 Y/hCU0wxQGIPryLvKNVNUiRqWKxCEHK0jQS/MM0I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zilin Guan <zilin@seu.edu.cn>,
-	Kory Maincent <kory.maincent@bootlin.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 25/41] net: liquidio: Initialize netdev pointer before queue setup
-Date: Mon,  9 Feb 2026 15:24:46 +0100
-Message-ID: <20260209142257.719982279@linuxfoundation.org>
+	Marc Zyngier <maz@kernel.org>,
+	Oliver Upton <oupton@kernel.org>,
+	Sean Christopherson <seanjc@google.com>
+Subject: [PATCH 5.10 03/41] KVM: Dont clobber irqfd routing type when deassigning irqfd
+Date: Mon,  9 Feb 2026 15:24:24 +0100
+Message-ID: <20260209142256.925538451@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260209142256.797267956@linuxfoundation.org>
 References: <20260209142256.797267956@linuxfoundation.org>
@@ -52,98 +51,193 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zilin Guan <zilin@seu.edu.cn>
+From: Sean Christopherson <seanjc@google.com>
 
-[ Upstream commit 926ede0c85e1e57c97d64d9612455267d597bb2c ]
+commit b4d37cdb77a0015f51fee083598fa227cc07aaf1 upstream.
 
-In setup_nic_devices(), the netdev is allocated using alloc_etherdev_mq().
-However, the pointer to this structure is stored in oct->props[i].netdev
-only after the calls to netif_set_real_num_rx_queues() and
-netif_set_real_num_tx_queues().
+When deassigning a KVM_IRQFD, don't clobber the irqfd's copy of the IRQ's
+routing entry as doing so breaks kvm_arch_irq_bypass_del_producer() on x86
+and arm64, which explicitly look for KVM_IRQ_ROUTING_MSI.  Instead, to
+handle a concurrent routing update, verify that the irqfd is still active
+before consuming the routing information.  As evidenced by the x86 and
+arm64 bugs, and another bug in kvm_arch_update_irqfd_routing() (see below),
+clobbering the entry type without notifying arch code is surprising and
+error prone.
 
-If either of these functions fails, setup_nic_devices() returns an error
-without freeing the allocated netdev. Since oct->props[i].netdev is still
-NULL at this point, the cleanup function liquidio_destroy_nic_device()
-will fail to find and free the netdev, resulting in a memory leak.
+As a bonus, checking that the irqfd is active provides a convenient
+location for documenting _why_ KVM must not consume the routing entry for
+an irqfd that is in the process of being deassigned: once the irqfd is
+deleted from the list (which happens *before* the eventfd is detached), it
+will no longer receive updates via kvm_irq_routing_update(), and so KVM
+could deliver an event using stale routing information (relative to
+KVM_SET_GSI_ROUTING returning to userspace).
 
-Fix this by initializing oct->props[i].netdev before calling the queue
-setup functions. This ensures that the netdev is properly accessible for
-cleanup in case of errors.
+As an even better bonus, explicitly checking for the irqfd being active
+fixes a similar bug to the one the clobbering is trying to prevent: if an
+irqfd is deactivated, and then its routing is changed,
+kvm_irq_routing_update() won't invoke kvm_arch_update_irqfd_routing()
+(because the irqfd isn't in the list).  And so if the irqfd is in bypass
+mode, IRQs will continue to be posted using the old routing information.
 
-Compile tested only. Issue found using a prototype static analysis tool
-and code review.
+As for kvm_arch_irq_bypass_del_producer(), clobbering the routing type
+results in KVM incorrectly keeping the IRQ in bypass mode, which is
+especially problematic on AMD as KVM tracks IRQs that are being posted to
+a vCPU in a list whose lifetime is tied to the irqfd.
 
-Fixes: c33c997346c3 ("liquidio: enhanced ethtool --set-channels feature")
-Signed-off-by: Zilin Guan <zilin@seu.edu.cn>
-Reviewed-by: Kory Maincent <kory.maincent@bootlin.com>
-Link: https://patch.msgid.link/20260128154440.278369-2-zilin@seu.edu.cn
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Without the help of KASAN to detect use-after-free, the most common
+sympton on AMD is a NULL pointer deref in amd_iommu_update_ga() due to
+the memory for irqfd structure being re-allocated and zeroed, resulting
+in irqfd->irq_bypass_data being NULL when read by
+avic_update_iommu_vcpu_affinity():
+
+  BUG: kernel NULL pointer dereference, address: 0000000000000018
+  #PF: supervisor read access in kernel mode
+  #PF: error_code(0x0000) - not-present page
+  PGD 40cf2b9067 P4D 40cf2b9067 PUD 408362a067 PMD 0
+  Oops: Oops: 0000 [#1] SMP
+  CPU: 6 UID: 0 PID: 40383 Comm: vfio_irq_test
+  Tainted: G     U  W  O        6.19.0-smp--5dddc257e6b2-irqfd #31 NONE
+  Tainted: [U]=USER, [W]=WARN, [O]=OOT_MODULE
+  Hardware name: Google, Inc. Arcadia_IT_80/Arcadia_IT_80, BIOS 34.78.2-0 09/05/2025
+  RIP: 0010:amd_iommu_update_ga+0x19/0xe0
+  Call Trace:
+   <TASK>
+   avic_update_iommu_vcpu_affinity+0x3d/0x90 [kvm_amd]
+   __avic_vcpu_load+0xf4/0x130 [kvm_amd]
+   kvm_arch_vcpu_load+0x89/0x210 [kvm]
+   vcpu_load+0x30/0x40 [kvm]
+   kvm_arch_vcpu_ioctl_run+0x45/0x620 [kvm]
+   kvm_vcpu_ioctl+0x571/0x6a0 [kvm]
+   __se_sys_ioctl+0x6d/0xb0
+   do_syscall_64+0x6f/0x9d0
+   entry_SYSCALL_64_after_hwframe+0x4b/0x53
+  RIP: 0033:0x46893b
+    </TASK>
+  ---[ end trace 0000000000000000 ]---
+
+If AVIC is inhibited when the irfd is deassigned, the bug will manifest as
+list corruption, e.g. on the next irqfd assignment.
+
+  list_add corruption. next->prev should be prev (ffff8d474d5cd588),
+                       but was 0000000000000000. (next=ffff8d8658f86530).
+  ------------[ cut here ]------------
+  kernel BUG at lib/list_debug.c:31!
+  Oops: invalid opcode: 0000 [#1] SMP
+  CPU: 128 UID: 0 PID: 80818 Comm: vfio_irq_test
+  Tainted: G     U  W  O        6.19.0-smp--f19dc4d680ba-irqfd #28 NONE
+  Tainted: [U]=USER, [W]=WARN, [O]=OOT_MODULE
+  Hardware name: Google, Inc. Arcadia_IT_80/Arcadia_IT_80, BIOS 34.78.2-0 09/05/2025
+  RIP: 0010:__list_add_valid_or_report+0x97/0xc0
+  Call Trace:
+   <TASK>
+   avic_pi_update_irte+0x28e/0x2b0 [kvm_amd]
+   kvm_pi_update_irte+0xbf/0x190 [kvm]
+   kvm_arch_irq_bypass_add_producer+0x72/0x90 [kvm]
+   irq_bypass_register_consumer+0xcd/0x170 [irqbypass]
+   kvm_irqfd+0x4c6/0x540 [kvm]
+   kvm_vm_ioctl+0x118/0x5d0 [kvm]
+   __se_sys_ioctl+0x6d/0xb0
+   do_syscall_64+0x6f/0x9d0
+   entry_SYSCALL_64_after_hwframe+0x4b/0x53
+   </TASK>
+  ---[ end trace 0000000000000000 ]---
+
+On Intel and arm64, the bug is less noisy, as the end result is that the
+device keeps posting IRQs to the vCPU even after it's been deassigned.
+
+Note, the worst of the breakage can be traced back to commit cb210737675e
+("KVM: Pass new routing entries and irqfd when updating IRTEs"), as before
+that commit KVM would pull the routing information from the per-VM routing
+table.  But as above, similar bugs have existed since support for IRQ
+bypass was added.  E.g. if a routing change finished before irq_shutdown()
+invoked kvm_arch_irq_bypass_del_producer(), VMX and SVM would see stale
+routing information and potentially leave the irqfd in bypass mode.
+
+Alternatively, x86 could be fixed by explicitly checking irq_bypass_vcpu
+instead of irq_entry.type in kvm_arch_irq_bypass_del_producer(), and arm64
+could be modified to utilize irq_bypass_vcpu in a similar manner.  But (a)
+that wouldn't fix the routing updates bug, and (b) fixing core code doesn't
+preclude x86 (or arm64) from adding such code as a sanity check (spoiler
+alert).
+
+Fixes: f70c20aaf141 ("KVM: Add an arch specific hooks in 'struct kvm_kernel_irqfd'")
+Fixes: cb210737675e ("KVM: Pass new routing entries and irqfd when updating IRTEs")
+Fixes: a0d7e2fc61ab ("KVM: arm64: vgic-v4: Only attempt vLPI mapping for actual MSIs")
+Cc: stable@vger.kernel.org
+Cc: Marc Zyngier <maz@kernel.org>
+Cc: Oliver Upton <oupton@kernel.org>
+Link: https://patch.msgid.link/20260113174606.104978-2-seanjc@google.com
+Signed-off-by: Sean Christopherson <seanjc@google.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- .../net/ethernet/cavium/liquidio/lio_main.c   | 34 +++++++++----------
- 1 file changed, 17 insertions(+), 17 deletions(-)
+ virt/kvm/eventfd.c |   34 ++++++++++++++--------------------
+ 1 file changed, 14 insertions(+), 20 deletions(-)
 
-diff --git a/drivers/net/ethernet/cavium/liquidio/lio_main.c b/drivers/net/ethernet/cavium/liquidio/lio_main.c
-index eefb25bcf57ff..35e46245f1638 100644
---- a/drivers/net/ethernet/cavium/liquidio/lio_main.c
-+++ b/drivers/net/ethernet/cavium/liquidio/lio_main.c
-@@ -3531,6 +3531,23 @@ static int setup_nic_devices(struct octeon_device *octeon_dev)
- 		 */
- 		netdev->netdev_ops = &lionetdevops;
+--- a/virt/kvm/eventfd.c
++++ b/virt/kvm/eventfd.c
+@@ -147,21 +147,18 @@ irqfd_shutdown(struct work_struct *work)
+ }
  
-+		lio = GET_LIO(netdev);
+ 
+-/* assumes kvm->irqfds.lock is held */
+-static bool
+-irqfd_is_active(struct kvm_kernel_irqfd *irqfd)
++static bool irqfd_is_active(struct kvm_kernel_irqfd *irqfd)
+ {
+ 	return list_empty(&irqfd->list) ? false : true;
+ }
+ 
+ /*
+  * Mark the irqfd as inactive and schedule it for removal
+- *
+- * assumes kvm->irqfds.lock is held
+  */
+-static void
+-irqfd_deactivate(struct kvm_kernel_irqfd *irqfd)
++static void irqfd_deactivate(struct kvm_kernel_irqfd *irqfd)
+ {
++	lockdep_assert_held(&irqfd->kvm->irqfds.lock);
 +
-+		memset(lio, 0, sizeof(struct lio));
+ 	BUG_ON(!irqfd_is_active(irqfd));
+ 
+ 	list_del_init(&irqfd->list);
+@@ -198,8 +195,15 @@ irqfd_wakeup(wait_queue_entry_t *wait, u
+ 			seq = read_seqcount_begin(&irqfd->irq_entry_sc);
+ 			irq = irqfd->irq_entry;
+ 		} while (read_seqcount_retry(&irqfd->irq_entry_sc, seq));
+-		/* An event has been signaled, inject an interrupt */
+-		if (kvm_arch_set_irq_inatomic(&irq, kvm,
 +
-+		lio->ifidx = ifidx_or_pfnum;
-+
-+		props = &octeon_dev->props[i];
-+		props->gmxport = resp->cfg_info.linfo.gmxport;
-+		props->netdev = netdev;
-+
-+		/* Point to the  properties for octeon device to which this
-+		 * interface belongs.
++		/*
++		 * An event has been signaled, inject an interrupt unless the
++		 * irqfd is being deassigned (isn't active), in which case the
++		 * routing information may be stale (once the irqfd is removed
++		 * from the list, it will stop receiving routing updates).
 +		 */
-+		lio->oct_dev = octeon_dev;
-+		lio->octprops = props;
-+		lio->netdev = netdev;
-+
- 		retval = netif_set_real_num_rx_queues(netdev, num_oqueues);
- 		if (retval) {
- 			dev_err(&octeon_dev->pci_dev->dev,
-@@ -3547,16 +3564,6 @@ static int setup_nic_devices(struct octeon_device *octeon_dev)
- 			goto setup_nic_dev_free;
- 		}
++		if (unlikely(!irqfd_is_active(irqfd)) ||
++		    kvm_arch_set_irq_inatomic(&irq, kvm,
+ 					      KVM_USERSPACE_IRQ_SOURCE_ID, 1,
+ 					      false) == -EWOULDBLOCK)
+ 			schedule_work(&irqfd->inject);
+@@ -536,18 +540,8 @@ kvm_irqfd_deassign(struct kvm *kvm, stru
+ 	spin_lock_irq(&kvm->irqfds.lock);
  
--		lio = GET_LIO(netdev);
--
--		memset(lio, 0, sizeof(struct lio));
--
--		lio->ifidx = ifidx_or_pfnum;
--
--		props = &octeon_dev->props[i];
--		props->gmxport = resp->cfg_info.linfo.gmxport;
--		props->netdev = netdev;
--
- 		lio->linfo.num_rxpciq = num_oqueues;
- 		lio->linfo.num_txpciq = num_iqueues;
- 		for (j = 0; j < num_oqueues; j++) {
-@@ -3622,13 +3629,6 @@ static int setup_nic_devices(struct octeon_device *octeon_dev)
- 		netdev->min_mtu = LIO_MIN_MTU_SIZE;
- 		netdev->max_mtu = LIO_MAX_MTU_SIZE;
+ 	list_for_each_entry_safe(irqfd, tmp, &kvm->irqfds.items, list) {
+-		if (irqfd->eventfd == eventfd && irqfd->gsi == args->gsi) {
+-			/*
+-			 * This clearing of irq_entry.type is needed for when
+-			 * another thread calls kvm_irq_routing_update before
+-			 * we flush workqueue below (we synchronize with
+-			 * kvm_irq_routing_update using irqfds.lock).
+-			 */
+-			write_seqcount_begin(&irqfd->irq_entry_sc);
+-			irqfd->irq_entry.type = 0;
+-			write_seqcount_end(&irqfd->irq_entry_sc);
++		if (irqfd->eventfd == eventfd && irqfd->gsi == args->gsi)
+ 			irqfd_deactivate(irqfd);
+-		}
+ 	}
  
--		/* Point to the  properties for octeon device to which this
--		 * interface belongs.
--		 */
--		lio->oct_dev = octeon_dev;
--		lio->octprops = props;
--		lio->netdev = netdev;
--
- 		dev_dbg(&octeon_dev->pci_dev->dev,
- 			"if%d gmx: %d hw_addr: 0x%llx\n", i,
- 			lio->linfo.gmxport, CVM_CAST64(lio->linfo.hw_addr));
--- 
-2.51.0
-
+ 	spin_unlock_irq(&kvm->irqfds.lock);
 
 
