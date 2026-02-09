@@ -1,42 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F8331AF0AF;
-	Mon,  9 Feb 2026 14:34:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E3DC1AF0AF;
+	Mon,  9 Feb 2026 14:34:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770647642; cv=none; b=GlYfFplWAYGhyUzykGWzCcaZ8+ZBmYD57R5uRGMNX4X65AEnZcgeDIN688DiiEEZNxEwHPJlkwUk+wvrRUPXTgqTfmBEz0tpmza6ebodqiyv0MV09BCp6A+gTA669ALRMvA7hgbLdSNh1Pkwy4d0wQR3V0PZAWs9y8hqakeWPeA=
+	t=1770647645; cv=none; b=iQscWw8a4AN3lPdxOGvGEgPd+veI066dZ0jPqfOfpjzhX8Aybhy3j0DRq+XYWnhJgUVWm+8yDnV2tBBwLFs/5+M7O+6f3G/WScmQVJDnoirVAJU6mzT4YgFTsfh1obr8+NblTQvm0BfUiAP7Z254EDwOk2BUXcx7hLVQfW0mqJg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770647642; c=relaxed/simple;
-	bh=uFLM6vgVEQt9XnjSl+ok/0XTwV1HSO7inQ7XUhN6G1Q=;
+	s=arc-20240116; t=1770647645; c=relaxed/simple;
+	bh=+k29YA31CpuoaRsX6bV9sPHXSZj7sNcjz7DSlo0DOQ0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=bcaYgPacAz0YZRBQf9y1/Kucx8UJgpZ4ls2RkkDCk4C4DhkaJv+sxYwtmbKQtpiHKlDZ5XZC9lyMTNu1KJtln+nqAGyuy1nbqIvHzG7WKYNv4ce95/oqttbZZWQdPyNMQy0e2i0U8cGsQ9MfxsVRteQiAH4tK0W72SUrFcWfjd4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=P/Q3sHrY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OTJA8zjeSdQ2YILD8KEbnQkO57uUelbuLg33PZLojY76r+OiZ4tPdfp76L6dW5wmdhwspCrtxVgTcRe7+JBAi43StLsipuK36uoPAWJML2I/h3mRmuiHES6Z6CbLTqxoW3hil2z2Xl/MikYUjBEpgFVq//40AwdZnT52bUpijI8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lIs1cmi7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="P/Q3sHrY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A5F3C116C6;
-	Mon,  9 Feb 2026 14:34:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lIs1cmi7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0AFA0C116C6;
+	Mon,  9 Feb 2026 14:34:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770647642;
-	bh=uFLM6vgVEQt9XnjSl+ok/0XTwV1HSO7inQ7XUhN6G1Q=;
+	s=korg; t=1770647645;
+	bh=+k29YA31CpuoaRsX6bV9sPHXSZj7sNcjz7DSlo0DOQ0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=P/Q3sHrYSX4fvzR69C/hrl2vJDpTazJbfPDI0SIk8lTs8LUTc9y6xd6fsmwKGo6KK
-	 OV5H54yOIp7iNLdi9PkIQcmkw+On6whzh/WBNCv0mGRULVFMSfJ60U1AOiur4oA0n4
-	 e0gXbRRzJk2adHmjTpB+YG/MtPJn3INPcdpUgfMY=
+	b=lIs1cmi7/grSD3bP4XhmF592sN+i+auliF6fT6RUO3/CaVgulsR2vJGByeRRy8UGW
+	 PhLQAeHxGL8B5kj256LEFHqPrcOvVt/4LlY01LTg2HttrmptqGg/0CL0HbaHWbUytA
+	 l+0JduuEgLfJ7E0MGhtw5c1uI+/uV3vIpy8Em5Wc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jacob Keller <jacob.e.keller@intel.com>,
-	Aleksandr Loktionov <aleksandr.loktionov@intel.com>,
-	Przemyslaw Korba <przemyslaw.korba@intel.com>,
-	Vitaly Grinberg <vgrinber@redhat.com>,
+	Aaron Ma <aaron.ma@canonical.com>,
 	Tony Nguyen <anthony.l.nguyen@intel.com>,
 	Sasha Levin <sashal@kernel.org>,
 	Sunitha Mekala <sunithax.d.mekala@intel.com>
-Subject: [PATCH 6.18 127/175] ice: PTP: fix missing timestamps on E825 hardware
-Date: Mon,  9 Feb 2026 15:23:20 +0100
-Message-ID: <20260209142325.079994318@linuxfoundation.org>
+Subject: [PATCH 6.18 128/175] ice: Fix PTP NULL pointer dereference during VSI rebuild
+Date: Mon,  9 Feb 2026 15:23:21 +0100
+Message-ID: <20260209142325.116444281@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260209142320.474120190@linuxfoundation.org>
 References: <20260209142320.474120190@linuxfoundation.org>
@@ -49,438 +46,156 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jacob Keller <jacob.e.keller@intel.com>
+From: Aaron Ma <aaron.ma@canonical.com>
 
-[ Upstream commit 88b68f35eb43ad5ac77ac1107059040b04e6f477 ]
+[ Upstream commit fc6f36eaaedcf4b81af6fe1a568f018ffd530660 ]
 
-The E825 hardware currently has each PF handle the PFINT_TSYN_TX cause of
-the miscellaneous OICR interrupt vector. The actual interrupt cause
-underlying this is shared by all ports on the same quad:
+Fix race condition where PTP periodic work runs while VSI is being
+rebuilt, accessing NULL vsi->rx_rings.
 
-  ┌─────────────────────────────────┐
-  │                                 │
-  │   ┌────┐ ┌────┐ ┌────┐ ┌────┐   │
-  │   │PF 0│ │PF 1│ │PF 2│ │PF 3│   │
-  │   └────┘ └────┘ └────┘ └────┘   │
-  │                                 │
-  └────────────────▲────────────────┘
-                   │
-                   │
-  ┌────────────────┼────────────────┐
-  │             PHY QUAD            │
-  └───▲────────▲────────▲────────▲──┘
-      │        │        │        │
-  ┌───┼──┐ ┌───┴──┐ ┌───┼──┐ ┌───┼──┐
-  │Port 0│ │Port 1│ │Port 2│ │Port 3│
-  └──────┘ └──────┘ └──────┘ └──────┘
+The sequence was:
+1. ice_ptp_prepare_for_reset() cancels PTP work
+2. ice_ptp_rebuild() immediately queues PTP work
+3. VSI rebuild happens AFTER ice_ptp_rebuild()
+4. PTP work runs and accesses NULL vsi->rx_rings
 
-If multiple PFs issue Tx timestamp requests near simultaneously, it is
-possible that the correct PF will not be interrupted and will miss its
-timestamp. Understanding why is somewhat complex.
+Fix: Keep PTP work cancelled during rebuild, only queue it after
+VSI rebuild completes in ice_rebuild().
 
-Consider the following sequence of events:
+Added ice_ptp_queue_work() helper function to encapsulate the logic
+for queuing PTP work, ensuring it's only queued when PTP is supported
+and the state is ICE_PTP_READY.
 
-  CPU 0:
-  Send Tx packet on PF 0
-  ...
-  PF 0 enqueues packet with Tx request          CPU 1, PF1:
-  ...                                           Send Tx packet on PF1
-  ...                                           PF 1 enqueues packet with Tx request
+Error log:
+[  121.392544] ice 0000:60:00.1: PTP reset successful
+[  121.392692] BUG: kernel NULL pointer dereference, address: 0000000000000000
+[  121.392712] #PF: supervisor read access in kernel mode
+[  121.392720] #PF: error_code(0x0000) - not-present page
+[  121.392727] PGD 0
+[  121.392734] Oops: Oops: 0000 [#1] SMP NOPTI
+[  121.392746] CPU: 8 UID: 0 PID: 1005 Comm: ice-ptp-0000:60 Tainted: G S                  6.19.0-rc6+ #4 PREEMPT(voluntary)
+[  121.392761] Tainted: [S]=CPU_OUT_OF_SPEC
+[  121.392773] RIP: 0010:ice_ptp_update_cached_phctime+0xbf/0x150 [ice]
+[  121.393042] Call Trace:
+[  121.393047]  <TASK>
+[  121.393055]  ice_ptp_periodic_work+0x69/0x180 [ice]
+[  121.393202]  kthread_worker_fn+0xa2/0x260
+[  121.393216]  ? __pfx_ice_ptp_periodic_work+0x10/0x10 [ice]
+[  121.393359]  ? __pfx_kthread_worker_fn+0x10/0x10
+[  121.393371]  kthread+0x10d/0x230
+[  121.393382]  ? __pfx_kthread+0x10/0x10
+[  121.393393]  ret_from_fork+0x273/0x2b0
+[  121.393407]  ? __pfx_kthread+0x10/0x10
+[  121.393417]  ret_from_fork_asm+0x1a/0x30
+[  121.393432]  </TASK>
 
-  HW:
-  PHY Port 0 sends packet
-  PHY raises Tx timestamp event interrupt
-  MAC raises each PF interrupt
-
-  CPU 0, PF0:                                   CPU 1, PF1:
-  ice_misc_intr() checks for Tx timestamps      ice_misc_intr() checks for Tx timestamp
-  Sees packet ready bit set                     Sees nothing available
-  ...                                           Exits
-  ...
-  ...
-  HW:
-  PHY port 1 sends packet
-  PHY interrupt ignored because not all packet timestamps read yet.
-  ...
-  Read timestamp, report to stack
-
-Because the interrupt event is shared for all ports on the same quad, the
-PHY will not raise a new interrupt for any PF until all timestamps are
-read.
-
-In the example above, the second timestamp comes in for port 1 before the
-timestamp from port 0 is read. At this point, there is no longer an
-interrupt thread running that will read the timestamps, because each PF has
-checked and found that there was no work to do. Applications such as ptp4l
-will timeout after waiting a few milliseconds. Eventually, the watchdog
-service task will re-check for all quads and notice that there are
-outstanding timestamps, and issue a software interrupt to recover. However,
-by this point it is far too late, and applications have already failed.
-
-All of this occurs because of the underlying hardware behavior. The PHY
-cannot raise a new interrupt signal until all outstanding timestamps have
-been read.
-
-As a first step to fix this, switch the E825C hardware to the
-ICE_PTP_TX_INTERRUPT_ALL mode. In this mode, only the clock owner PF will
-respond to the PFINT_TSYN_TX cause. Other PFs disable this cause and will
-not wake. In this mode, the clock owner will iterate over all ports and
-handle timestamps for each connected port.
-
-This matches the E822 behavior, and is a necessary but insufficient step to
-resolve the missing timestamps.
-
-Even with use of the ICE_PTP_TX_INTERRUPT_ALL mode, we still sometimes miss
-a timestamp event. The ice_ptp_tx_tstamp_owner() does re-check the ready
-bitmap, but does so before re-enabling the OICR interrupt vector. It also
-only checks the ready bitmap, but not the software Tx timestamp tracker.
-
-To avoid risk of losing a timestamp, refactor the logic to check both the
-software Tx timestamp tracker bitmap *and* the hardware ready bitmap.
-Additionally, do this outside of ice_ptp_process_ts() after we have already
-re-enabled the OICR interrupt.
-
-Remove the checks from the ice_ptp_tx_tstamp(), ice_ptp_tx_tstamp_owner(),
-and the ice_ptp_process_ts() functions. This results in ice_ptp_tx_tstamp()
-being nothing more than a wrapper around ice_ptp_process_tx_tstamp() so we
-can remove it.
-
-Add the ice_ptp_tx_tstamps_pending() function which returns a boolean
-indicating if there are any pending Tx timestamps. First, check the
-software timestamp tracker bitmap. In ICE_PTP_TX_INTERRUPT_ALL mode, check
-*all* ports software trackers. If a tracker has outstanding timestamp
-requests, return true. Additionally, check the PHY ready bitmap to confirm
-if the PHY indicates any outstanding timestamps.
-
-In the ice_misc_thread_fn(), call ice_ptp_tx_tstamps_pending() just before
-returning from the IRQ thread handler. If it returns true, write to
-PFINT_OICR to trigger a PFINT_OICR_TSYN_TX_M software interrupt. This will
-force the handler to interrupt again and complete the work even if the PHY
-hardware did not interrupt for any reason.
-
-This results in the following new flow for handling Tx timestamps:
-
-1) send Tx packet
-2) PHY captures timestamp
-3) PHY triggers MAC interrupt
-4) clock owner executes ice_misc_intr() with PFINT_OICR_TSYN_TX flag set
-5) ice_ptp_ts_irq() returns IRQ_WAKE_THREAD
-7) The interrupt thread wakes up and kernel calls ice_misc_intr_thread_fn()
-8) ice_ptp_process_ts() is called to handle any outstanding timestamps
-9) ice_irq_dynamic_ena() is called to re-enable the OICR hardware interrupt
-   cause
-10) ice_ptp_tx_tstamps_pending() is called to check if we missed any more
-    outstanding timestamps, checking both software and hardware indicators.
-
-With this change, it should no longer be possible for new timestamps to
-come in such a way that we lose an interrupt. If a timestamp comes in
-before the ice_ptp_tx_tstamps_pending() call, it will be noticed by at
-least one of the software bitmap check or the hardware bitmap check. If the
-timestamp comes in *after* this check, it should cause a timestamp
-interrupt as we have already read all timestamps from the PHY and the OICR
-vector has been re-enabled.
-
-Fixes: 7cab44f1c35f ("ice: Introduce ETH56G PHY model for E825C products")
-Signed-off-by: Jacob Keller <jacob.e.keller@intel.com>
-Reviewed-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
-Reviewed-by: Przemyslaw Korba <przemyslaw.korba@intel.com>
-Tested-by: Vitaly Grinberg <vgrinber@redhat.com>
+Fixes: 803bef817807d ("ice: factor out ice_ptp_rebuild_owner()")
+Signed-off-by: Aaron Ma <aaron.ma@canonical.com>
 Tested-by: Sunitha Mekala <sunithax.d.mekala@intel.com> (A Contingent worker at Intel)
 Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/ice/ice_main.c |  20 +--
- drivers/net/ethernet/intel/ice/ice_ptp.c  | 148 ++++++++++++----------
- drivers/net/ethernet/intel/ice/ice_ptp.h  |  13 +-
- 3 files changed, 103 insertions(+), 78 deletions(-)
+ drivers/net/ethernet/intel/ice/ice_main.c |  3 +++
+ drivers/net/ethernet/intel/ice/ice_ptp.c  | 26 ++++++++++++++++++-----
+ drivers/net/ethernet/intel/ice/ice_ptp.h  |  5 +++++
+ 3 files changed, 29 insertions(+), 5 deletions(-)
 
 diff --git a/drivers/net/ethernet/intel/ice/ice_main.c b/drivers/net/ethernet/intel/ice/ice_main.c
-index c52324d999eb4..7a59c9dd07cb1 100644
+index 7a59c9dd07cb1..d34a32a09bf87 100644
 --- a/drivers/net/ethernet/intel/ice/ice_main.c
 +++ b/drivers/net/ethernet/intel/ice/ice_main.c
-@@ -3323,18 +3323,20 @@ static irqreturn_t ice_misc_intr_thread_fn(int __always_unused irq, void *data)
- 	if (ice_is_reset_in_progress(pf->state))
- 		goto skip_irq;
+@@ -7815,6 +7815,9 @@ static void ice_rebuild(struct ice_pf *pf, enum ice_reset_req reset_type)
  
--	if (test_and_clear_bit(ICE_MISC_THREAD_TX_TSTAMP, pf->misc_thread)) {
--		/* Process outstanding Tx timestamps. If there is more work,
--		 * re-arm the interrupt to trigger again.
--		 */
--		if (ice_ptp_process_ts(pf) == ICE_TX_TSTAMP_WORK_PENDING) {
--			wr32(hw, PFINT_OICR, PFINT_OICR_TSYN_TX_M);
--			ice_flush(hw);
--		}
--	}
-+	if (test_and_clear_bit(ICE_MISC_THREAD_TX_TSTAMP, pf->misc_thread))
-+		ice_ptp_process_ts(pf);
- 
- skip_irq:
- 	ice_irq_dynamic_ena(hw, NULL, NULL);
-+	ice_flush(hw);
+ 	/* Restore timestamp mode settings after VSI rebuild */
+ 	ice_ptp_restore_timestamp_mode(pf);
 +
-+	if (ice_ptp_tx_tstamps_pending(pf)) {
-+		/* If any new Tx timestamps happened while in interrupt,
-+		 * re-arm the interrupt to trigger it again.
-+		 */
-+		wr32(hw, PFINT_OICR, PFINT_OICR_TSYN_TX_M);
-+		ice_flush(hw);
-+	}
++	/* Start PTP periodic work after VSI is fully rebuilt */
++	ice_ptp_queue_work(pf);
+ 	return;
  
- 	return IRQ_HANDLED;
- }
+ err_vsi_rebuild:
 diff --git a/drivers/net/ethernet/intel/ice/ice_ptp.c b/drivers/net/ethernet/intel/ice/ice_ptp.c
-index 4aa88bac759f8..44c1ca58b8806 100644
+index 44c1ca58b8806..df38345b12d72 100644
 --- a/drivers/net/ethernet/intel/ice/ice_ptp.c
 +++ b/drivers/net/ethernet/intel/ice/ice_ptp.c
-@@ -569,6 +569,9 @@ static void ice_ptp_process_tx_tstamp(struct ice_ptp_tx *tx)
- 	pf = ptp_port_to_pf(ptp_port);
- 	hw = &pf->hw;
+@@ -2832,6 +2832,20 @@ static void ice_ptp_periodic_work(struct kthread_work *work)
+ 				   msecs_to_jiffies(err ? 10 : 500));
+ }
  
-+	if (!tx->init)
-+		return;
++/**
++ * ice_ptp_queue_work - Queue PTP periodic work for a PF
++ * @pf: Board private structure
++ *
++ * Helper function to queue PTP periodic work after VSI rebuild completes.
++ * This ensures that PTP work only runs when VSI structures are ready.
++ */
++void ice_ptp_queue_work(struct ice_pf *pf)
++{
++	if (test_bit(ICE_FLAG_PTP_SUPPORTED, pf->flags) &&
++	    pf->ptp.state == ICE_PTP_READY)
++		kthread_queue_delayed_work(pf->ptp.kworker, &pf->ptp.work, 0);
++}
 +
- 	/* Read the Tx ready status first */
- 	if (tx->has_ready_bitmap) {
- 		err = ice_get_phy_tx_tstamp_ready(hw, tx->block, &tstamp_ready);
-@@ -665,14 +668,9 @@ static void ice_ptp_process_tx_tstamp(struct ice_ptp_tx *tx)
- 	}
- }
- 
--/**
-- * ice_ptp_tx_tstamp_owner - Process Tx timestamps for all ports on the device
-- * @pf: Board private structure
-- */
--static enum ice_tx_tstamp_work ice_ptp_tx_tstamp_owner(struct ice_pf *pf)
-+static void ice_ptp_tx_tstamp_owner(struct ice_pf *pf)
- {
- 	struct ice_ptp_port *port;
--	unsigned int i;
- 
- 	mutex_lock(&pf->adapter->ports.lock);
- 	list_for_each_entry(port, &pf->adapter->ports.ports, list_node) {
-@@ -684,49 +682,6 @@ static enum ice_tx_tstamp_work ice_ptp_tx_tstamp_owner(struct ice_pf *pf)
- 		ice_ptp_process_tx_tstamp(tx);
- 	}
- 	mutex_unlock(&pf->adapter->ports.lock);
--
--	for (i = 0; i < ICE_GET_QUAD_NUM(pf->hw.ptp.num_lports); i++) {
--		u64 tstamp_ready;
--		int err;
--
--		/* Read the Tx ready status first */
--		err = ice_get_phy_tx_tstamp_ready(&pf->hw, i, &tstamp_ready);
--		if (err)
--			break;
--		else if (tstamp_ready)
--			return ICE_TX_TSTAMP_WORK_PENDING;
--	}
--
--	return ICE_TX_TSTAMP_WORK_DONE;
--}
--
--/**
-- * ice_ptp_tx_tstamp - Process Tx timestamps for this function.
-- * @tx: Tx tracking structure to initialize
-- *
-- * Returns: ICE_TX_TSTAMP_WORK_PENDING if there are any outstanding incomplete
-- * Tx timestamps, or ICE_TX_TSTAMP_WORK_DONE otherwise.
-- */
--static enum ice_tx_tstamp_work ice_ptp_tx_tstamp(struct ice_ptp_tx *tx)
--{
--	bool more_timestamps;
--	unsigned long flags;
--
--	if (!tx->init)
--		return ICE_TX_TSTAMP_WORK_DONE;
--
--	/* Process the Tx timestamp tracker */
--	ice_ptp_process_tx_tstamp(tx);
--
--	/* Check if there are outstanding Tx timestamps */
--	spin_lock_irqsave(&tx->lock, flags);
--	more_timestamps = tx->init && !bitmap_empty(tx->in_use, tx->len);
--	spin_unlock_irqrestore(&tx->lock, flags);
--
--	if (more_timestamps)
--		return ICE_TX_TSTAMP_WORK_PENDING;
--
--	return ICE_TX_TSTAMP_WORK_DONE;
- }
- 
  /**
-@@ -2659,30 +2614,92 @@ s8 ice_ptp_request_ts(struct ice_ptp_tx *tx, struct sk_buff *skb)
- 		return idx + tx->offset;
- }
+  * ice_ptp_prepare_rebuild_sec - Prepare second NAC for PTP reset or rebuild
+  * @pf: Board private structure
+@@ -2850,10 +2864,15 @@ static void ice_ptp_prepare_rebuild_sec(struct ice_pf *pf, bool rebuild,
+ 		struct ice_pf *peer_pf = ptp_port_to_pf(port);
  
--/**
-- * ice_ptp_process_ts - Process the PTP Tx timestamps
-- * @pf: Board private structure
-- *
-- * Returns: ICE_TX_TSTAMP_WORK_PENDING if there are any outstanding Tx
-- * timestamps that need processing, and ICE_TX_TSTAMP_WORK_DONE otherwise.
-- */
--enum ice_tx_tstamp_work ice_ptp_process_ts(struct ice_pf *pf)
-+void ice_ptp_process_ts(struct ice_pf *pf)
- {
- 	switch (pf->ptp.tx_interrupt_mode) {
- 	case ICE_PTP_TX_INTERRUPT_NONE:
- 		/* This device has the clock owner handle timestamps for it */
--		return ICE_TX_TSTAMP_WORK_DONE;
-+		return;
- 	case ICE_PTP_TX_INTERRUPT_SELF:
- 		/* This device handles its own timestamps */
--		return ice_ptp_tx_tstamp(&pf->ptp.port.tx);
-+		ice_ptp_process_tx_tstamp(&pf->ptp.port.tx);
-+		return;
- 	case ICE_PTP_TX_INTERRUPT_ALL:
- 		/* This device handles timestamps for all ports */
--		return ice_ptp_tx_tstamp_owner(pf);
-+		ice_ptp_tx_tstamp_owner(pf);
-+		return;
-+	default:
-+		WARN_ONCE(1, "Unexpected Tx timestamp interrupt mode %u\n",
-+			  pf->ptp.tx_interrupt_mode);
-+		return;
-+	}
-+}
-+
-+static bool ice_port_has_timestamps(struct ice_ptp_tx *tx)
-+{
-+	bool more_timestamps;
-+
-+	scoped_guard(spinlock_irqsave, &tx->lock) {
-+		if (!tx->init)
-+			return false;
-+
-+		more_timestamps = !bitmap_empty(tx->in_use, tx->len);
-+	}
-+
-+	return more_timestamps;
-+}
-+
-+static bool ice_any_port_has_timestamps(struct ice_pf *pf)
-+{
-+	struct ice_ptp_port *port;
-+
-+	scoped_guard(mutex, &pf->adapter->ports.lock) {
-+		list_for_each_entry(port, &pf->adapter->ports.ports,
-+				    list_node) {
-+			struct ice_ptp_tx *tx = &port->tx;
-+
-+			if (ice_port_has_timestamps(tx))
-+				return true;
-+		}
-+	}
-+
-+	return false;
-+}
-+
-+bool ice_ptp_tx_tstamps_pending(struct ice_pf *pf)
-+{
-+	struct ice_hw *hw = &pf->hw;
-+	unsigned int i;
-+
-+	/* Check software indicator */
-+	switch (pf->ptp.tx_interrupt_mode) {
-+	case ICE_PTP_TX_INTERRUPT_NONE:
-+		return false;
-+	case ICE_PTP_TX_INTERRUPT_SELF:
-+		if (ice_port_has_timestamps(&pf->ptp.port.tx))
-+			return true;
-+		break;
-+	case ICE_PTP_TX_INTERRUPT_ALL:
-+		if (ice_any_port_has_timestamps(pf))
-+			return true;
-+		break;
- 	default:
- 		WARN_ONCE(1, "Unexpected Tx timestamp interrupt mode %u\n",
- 			  pf->ptp.tx_interrupt_mode);
--		return ICE_TX_TSTAMP_WORK_DONE;
-+		break;
-+	}
-+
-+	/* Check hardware indicator */
-+	for (i = 0; i < ICE_GET_QUAD_NUM(hw->ptp.num_lports); i++) {
-+		u64 tstamp_ready = 0;
-+		int err;
-+
-+		err = ice_get_phy_tx_tstamp_ready(&pf->hw, i, &tstamp_ready);
-+		if (err || tstamp_ready)
-+			return true;
+ 		if (!ice_is_primary(&peer_pf->hw)) {
+-			if (rebuild)
++			if (rebuild) {
++				/* TODO: When implementing rebuild=true:
++				 * 1. Ensure secondary PFs' VSIs are rebuilt
++				 * 2. Call ice_ptp_queue_work(peer_pf) after VSI rebuild
++				 */
+ 				ice_ptp_rebuild(peer_pf, reset_type);
+-			else
++			} else {
+ 				ice_ptp_prepare_for_reset(peer_pf, reset_type);
++			}
+ 		}
  	}
-+
-+	return false;
  }
+@@ -2999,9 +3018,6 @@ void ice_ptp_rebuild(struct ice_pf *pf, enum ice_reset_req reset_type)
  
- /**
-@@ -2734,7 +2751,9 @@ irqreturn_t ice_ptp_ts_irq(struct ice_pf *pf)
- 		return IRQ_WAKE_THREAD;
- 	case ICE_MAC_E830:
- 		/* E830 can read timestamps in the top half using rd32() */
--		if (ice_ptp_process_ts(pf) == ICE_TX_TSTAMP_WORK_PENDING) {
-+		ice_ptp_process_ts(pf);
-+
-+		if (ice_ptp_tx_tstamps_pending(pf)) {
- 			/* Process outstanding Tx timestamps. If there
- 			 * is more work, re-arm the interrupt to trigger again.
- 			 */
-@@ -3187,8 +3206,9 @@ static void ice_ptp_init_tx_interrupt_mode(struct ice_pf *pf)
- {
- 	switch (pf->hw.mac_type) {
- 	case ICE_MAC_GENERIC:
--		/* E822 based PHY has the clock owner process the interrupt
--		 * for all ports.
-+	case ICE_MAC_GENERIC_3K_E825:
-+		/* E82x hardware has the clock owner process timestamps for
-+		 * all ports.
- 		 */
- 		if (ice_pf_src_tmr_owned(pf))
- 			pf->ptp.tx_interrupt_mode = ICE_PTP_TX_INTERRUPT_ALL;
+ 	ptp->state = ICE_PTP_READY;
+ 
+-	/* Start periodic work going */
+-	kthread_queue_delayed_work(ptp->kworker, &ptp->work, 0);
+-
+ 	dev_info(ice_pf_to_dev(pf), "PTP reset successful\n");
+ 	return;
+ 
 diff --git a/drivers/net/ethernet/intel/ice/ice_ptp.h b/drivers/net/ethernet/intel/ice/ice_ptp.h
-index 137f2070a2d99..46005642ef419 100644
+index 46005642ef419..4e02f922c1ff8 100644
 --- a/drivers/net/ethernet/intel/ice/ice_ptp.h
 +++ b/drivers/net/ethernet/intel/ice/ice_ptp.h
-@@ -302,8 +302,9 @@ void ice_ptp_extts_event(struct ice_pf *pf);
- s8 ice_ptp_request_ts(struct ice_ptp_tx *tx, struct sk_buff *skb);
- void ice_ptp_req_tx_single_tstamp(struct ice_ptp_tx *tx, u8 idx);
- void ice_ptp_complete_tx_single_tstamp(struct ice_ptp_tx *tx);
--enum ice_tx_tstamp_work ice_ptp_process_ts(struct ice_pf *pf);
-+void ice_ptp_process_ts(struct ice_pf *pf);
- irqreturn_t ice_ptp_ts_irq(struct ice_pf *pf);
-+bool ice_ptp_tx_tstamps_pending(struct ice_pf *pf);
- u64 ice_ptp_read_src_clk_reg(struct ice_pf *pf,
- 			     struct ptp_system_timestamp *sts);
+@@ -316,6 +316,7 @@ void ice_ptp_prepare_for_reset(struct ice_pf *pf,
+ void ice_ptp_init(struct ice_pf *pf);
+ void ice_ptp_release(struct ice_pf *pf);
+ void ice_ptp_link_change(struct ice_pf *pf, bool linkup);
++void ice_ptp_queue_work(struct ice_pf *pf);
+ #else /* IS_ENABLED(CONFIG_PTP_1588_CLOCK) */
  
-@@ -343,16 +344,18 @@ static inline void ice_ptp_req_tx_single_tstamp(struct ice_ptp_tx *tx, u8 idx)
- 
- static inline void ice_ptp_complete_tx_single_tstamp(struct ice_ptp_tx *tx) { }
- 
--static inline bool ice_ptp_process_ts(struct ice_pf *pf)
--{
--	return true;
--}
-+static inline void ice_ptp_process_ts(struct ice_pf *pf) { }
- 
- static inline irqreturn_t ice_ptp_ts_irq(struct ice_pf *pf)
+ static inline int ice_ptp_hwtstamp_get(struct net_device *netdev,
+@@ -384,6 +385,10 @@ static inline void ice_ptp_link_change(struct ice_pf *pf, bool linkup)
  {
- 	return IRQ_HANDLED;
  }
  
-+static inline bool ice_ptp_tx_tstamps_pending(struct ice_pf *pf)
++static inline void ice_ptp_queue_work(struct ice_pf *pf)
 +{
-+	return false;
 +}
 +
- static inline u64 ice_ptp_read_src_clk_reg(struct ice_pf *pf,
- 					   struct ptp_system_timestamp *sts)
+ static inline int ice_ptp_clock_index(struct ice_pf *pf)
  {
+ 	return -1;
 -- 
 2.51.0
 
