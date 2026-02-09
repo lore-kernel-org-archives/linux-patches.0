@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F9CE2690EC;
-	Mon,  9 Feb 2026 14:50:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC0652BCF4C;
+	Mon,  9 Feb 2026 14:50:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770648620; cv=none; b=VJLHGviv5qj3V+KPIgvSx2x6M/p60kUGLv5ZG+t3qIHtAzSnZU7Rdri/9dPu6SCfVw0cMEt6i+5hik1OMWpof+vIfkMcKRN+rXPNggqOFwW0Q6qs48P1ZokqHNPJsJSsQi4hNgG+ReZCJWQ6jBQOYf6s17SH+r5nvzboQVdRwaI=
+	t=1770648623; cv=none; b=Bxc6fg3F0moOBsbl4UEwTgW+NV2p2RywV7+fFIhGP/gXFJ/2K3QFUkkXBQgB8oZpUoruwUnI+AzcUCSWrhBoaSW+/BEMgZbXpeijz7JMmZHy/mZFDvshvQqG0VI2JMwNKdlWjPccPO+69xAJFoBuN7PlRGxpk9hF4kxygDZSKcI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770648620; c=relaxed/simple;
-	bh=RFwDqJb+yGwj3rGxknsvsAHFPAbdjyGlC17hQ9TnRJA=;
+	s=arc-20240116; t=1770648623; c=relaxed/simple;
+	bh=7SFSWECa8lVF2zhupyQKq+9G4TspcbqB+QUV2DlgRYM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=P3EIPyNoTyjjzZNyc2/b4mHgkV5+0hb3Di7JX/kmq3o9tEs7GezZAUpCa8l99Ac0rt/panV84yWp3+aMd3neH2ABJ6x4bwnBpnDRRl9O2cgN1Hr53ocaq61S4clrw/mEplOnowtJ+gzgT39A82xDVQk6pKm6ynSO7L9ga47dxHw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Gr4WBeCW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kYK6hch+nUEaYG5/OhDfWsY05pCs4gATAZTYlYxXPM+w2gYm2llGd2lvT+4WTN9um+B8WPk4BeiA7ZS/fOdUDv5oMg9MXf1jTsAt223cNCH4MsCnnBKE4L6Q/96EVbvVc1arLgHMXGAfl3bWIhsnf2A2b/pqyy4INT4pNyacr1A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AupUFbyd; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Gr4WBeCW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D198BC116C6;
-	Mon,  9 Feb 2026 14:50:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AupUFbyd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 24E06C116C6;
+	Mon,  9 Feb 2026 14:50:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770648620;
-	bh=RFwDqJb+yGwj3rGxknsvsAHFPAbdjyGlC17hQ9TnRJA=;
+	s=korg; t=1770648623;
+	bh=7SFSWECa8lVF2zhupyQKq+9G4TspcbqB+QUV2DlgRYM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Gr4WBeCW5e1584kC5VIpk+xubKBeT0DLjBXX805RPrfXgyH9RXDx08B2kFpwQ6YuB
-	 1iQH3Ay3QJbRpjc+jP5FEHzW3ftgo5JoqFzGFOou6HMPdCfVusM7j0gi9yj5Ie+R2O
-	 uucHeFdnHIYOz6x5PHFcDuEth7rI+LwtZDzfrDk0=
+	b=AupUFbydQ46xV+XiogOzMimB0/G81NkrSLO0wf9mT5OTY4iICa4WwVuqp+7d2YR/t
+	 JTOAfel0KGoIWYYTx0+C97/CnVtlequkOy3r503pZAhjjvcvYP5SXPfVmjKhpt7lt6
+	 DHhG2K0cuqVr3CsdXmHG0FdD96WyF/gKUREU3XQ4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Simon Horman <horms@kernel.org>,
-	Zilin Guan <zilin@seu.edu.cn>,
-	Kory Maincent <kory.maincent@bootlin.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 65/86] net: liquidio: Fix off-by-one error in VF setup_nic_devices() cleanup
-Date: Mon,  9 Feb 2026 15:24:28 +0100
-Message-ID: <20260209142307.116755651@linuxfoundation.org>
+Subject: [PATCH 6.6 56/86] platform/x86: toshiba_haps: Fix memory leaks in add/remove routines
+Date: Mon,  9 Feb 2026 15:24:19 +0100
+Message-ID: <20260209142306.795564057@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260209142304.770150175@linuxfoundation.org>
 References: <20260209142304.770150175@linuxfoundation.org>
@@ -53,47 +50,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zilin Guan <zilin@seu.edu.cn>
+From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 
-[ Upstream commit 6cbba46934aefdfb5d171e0a95aec06c24f7ca30 ]
+[ Upstream commit 128497456756e1b952bd5a912cd073836465109d ]
 
-In setup_nic_devices(), the initialization loop jumps to the label
-setup_nic_dev_free on failure. The current cleanup loop while(i--)
-skip the failing index i, causing a memory leak.
+toshiba_haps_add() leaks the haps object allocated by it if it returns
+an error after allocating that object successfully.
 
-Fix this by changing the loop to iterate from the current index i
-down to 0.
+toshiba_haps_remove() does not free the object pointed to by
+toshiba_haps before clearing that pointer, so it becomes unreachable
+allocated memory.
 
-Compile tested only. Issue found using code review.
+Address these memory leaks by using devm_kzalloc() for allocating
+the memory in question.
 
-Fixes: 846b46873eeb ("liquidio CN23XX: VF offload features")
-Suggested-by: Simon Horman <horms@kernel.org>
-Signed-off-by: Zilin Guan <zilin@seu.edu.cn>
-Reviewed-by: Kory Maincent <kory.maincent@bootlin.com>
-Link: https://patch.msgid.link/20260128154440.278369-4-zilin@seu.edu.cn
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 23d0ba0c908a ("platform/x86: Toshiba HDD Active Protection Sensor")
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/cavium/liquidio/lio_vf_main.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/platform/x86/toshiba_haps.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/cavium/liquidio/lio_vf_main.c b/drivers/net/ethernet/cavium/liquidio/lio_vf_main.c
-index 62c2eadc33e35..15ef647e8aad3 100644
---- a/drivers/net/ethernet/cavium/liquidio/lio_vf_main.c
-+++ b/drivers/net/ethernet/cavium/liquidio/lio_vf_main.c
-@@ -2221,11 +2221,11 @@ static int setup_nic_devices(struct octeon_device *octeon_dev)
+diff --git a/drivers/platform/x86/toshiba_haps.c b/drivers/platform/x86/toshiba_haps.c
+index 8c9f76286b080..f2292d2412fd1 100644
+--- a/drivers/platform/x86/toshiba_haps.c
++++ b/drivers/platform/x86/toshiba_haps.c
+@@ -183,7 +183,7 @@ static int toshiba_haps_add(struct acpi_device *acpi_dev)
  
- setup_nic_dev_free:
+ 	pr_info("Toshiba HDD Active Protection Sensor device\n");
  
--	while (i--) {
-+	do {
- 		dev_err(&octeon_dev->pci_dev->dev,
- 			"NIC ifidx:%d Setup failed\n", i);
- 		liquidio_destroy_nic_device(octeon_dev, i);
--	}
-+	} while (i--);
- 
- setup_nic_dev_done:
+-	haps = kzalloc(sizeof(struct toshiba_haps_dev), GFP_KERNEL);
++	haps = devm_kzalloc(&acpi_dev->dev, sizeof(*haps), GFP_KERNEL);
+ 	if (!haps)
+ 		return -ENOMEM;
  
 -- 
 2.51.0
