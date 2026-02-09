@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14ADB37756C;
-	Mon,  9 Feb 2026 14:26:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6FA7737997D;
+	Mon,  9 Feb 2026 14:26:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770647212; cv=none; b=pYB7MA6zkj4TnjYyq7ww7WMEgYpeal9RRbWkHnAvfyfQXxsHZStQ0pqUA23btwBOLJYgweJr86E9WmHcIBKKi5Yoof1DkobSXE2dFPqDKLD1+fN2jLThT6hiWvzo35JlJBlWE1LmGnvprJXVFa0L2JLvFo81FWVrU+4wOk1udAs=
+	t=1770647215; cv=none; b=gz6SJcURtAl47yfkzLVY7HXHJjwk0PJQ46oWmALO2l3ADmfktmSFD5+G8vmZIopk+ABdm/7gUvlqmXwFKlJxdogXwltXgpDdtd05lbZq8Fb/LUrh5m8JBcIFHX5eR92/td7CWMAFbVOOUL7rGKL004/2yz33WmWQ4hoO3n8qIkA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770647212; c=relaxed/simple;
-	bh=TzSKviIfkuPnrqjDxguw9syUkTUIO7uDu83exmnDYAQ=;
+	s=arc-20240116; t=1770647215; c=relaxed/simple;
+	bh=2PlcMpfIbZnsRKQJibt6f9WCHKlHfYXweaQMTGd8W/M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tuG/iDVZxkKk+b742ra6tnxYiZajzqecRHU+6KpiZnnish8u+bpku8vbMRG2BwvN8C08do01nmZTYfRpu02EWvVS3lTQJxKMlBbaAFaCiL/YySMPoGjCp6Rv3XEx203kao688KisM5rUKqmVrxxU67fqnuRya/thEEcxd4p4Kt0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Em2Ng2/q; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=oKUm8xcowVhnBl7HnGvlJPgyXZtOrSTIlW4bgpDAAZvP2NPE0gbxhxHNw3Ms0KkUc5JALUlgUTuwamjzDG7bUg2yRPnAFTRXUWoHYfPfu5iA+00iJIuf8cL8AnRDJs7lnk1p3bew2ASulcRmznDkFC1rzNXx1u4/kqyAZHYccnU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iw3kP6SB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Em2Ng2/q"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3AF24C116C6;
-	Mon,  9 Feb 2026 14:26:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iw3kP6SB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 92F91C116C6;
+	Mon,  9 Feb 2026 14:26:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770647211;
-	bh=TzSKviIfkuPnrqjDxguw9syUkTUIO7uDu83exmnDYAQ=;
+	s=korg; t=1770647215;
+	bh=2PlcMpfIbZnsRKQJibt6f9WCHKlHfYXweaQMTGd8W/M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Em2Ng2/q/pUKGu4rHB8XsPER7k1WZZA7+gX0TS5gBmCGHUIjmLBnHIHaLUUm3259S
-	 oLrn+RO1gLRwNPr8s+a64SFVKZ3UYKxEAo3fo5u6+x+1Zoc+qsFTpLgsuIPUL2hG1A
-	 33vRhARqrDzICXmtXSjmnfXGAb6K4ONV1iz/kDvY=
+	b=iw3kP6SBI7C2R3Fxu8PDdPG9KfMfaq4CSyrA5MJQ1CfJwxx7x64SoBL2M9pflxRal
+	 OzfciFkv6tC/+YeTKzeopwv8Aq1yTJEOJwtvGIRAUaJdklpwx/AjpqoX+CsVZ9DmNB
+	 GU6Ohh4XjRcCU4WaWKe0/p1eax0+ZmXTOpjMdgTQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ilya Dryomov <idryomov@gmail.com>,
-	Dongsheng Yang <dongsheng.yang@linux.dev>
-Subject: [PATCH 6.18 015/175] rbd: check for EOD after exclusive lock is ensured to be held
-Date: Mon,  9 Feb 2026 15:21:28 +0100
-Message-ID: <20260209142321.024890762@linuxfoundation.org>
+	Marc Zyngier <maz@kernel.org>,
+	Oliver Upton <oupton@kernel.org>,
+	Sean Christopherson <seanjc@google.com>
+Subject: [PATCH 6.18 033/175] KVM: Dont clobber irqfd routing type when deassigning irqfd
+Date: Mon,  9 Feb 2026 15:21:46 +0100
+Message-ID: <20260209142321.665714257@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260209142320.474120190@linuxfoundation.org>
 References: <20260209142320.474120190@linuxfoundation.org>
@@ -50,94 +51,203 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ilya Dryomov <idryomov@gmail.com>
+From: Sean Christopherson <seanjc@google.com>
 
-commit bd3884a204c3b507e6baa9a4091aa927f9af5404 upstream.
+commit b4d37cdb77a0015f51fee083598fa227cc07aaf1 upstream.
 
-Similar to commit 870611e4877e ("rbd: get snapshot context after
-exclusive lock is ensured to be held"), move the "beyond EOD" check
-into the image request state machine so that it's performed after
-exclusive lock is ensured to be held.  This avoids various race
-conditions which can arise when the image is shrunk under I/O (in
-practice, mostly readahead).  In one such scenario
+When deassigning a KVM_IRQFD, don't clobber the irqfd's copy of the IRQ's
+routing entry as doing so breaks kvm_arch_irq_bypass_del_producer() on x86
+and arm64, which explicitly look for KVM_IRQ_ROUTING_MSI.  Instead, to
+handle a concurrent routing update, verify that the irqfd is still active
+before consuming the routing information.  As evidenced by the x86 and
+arm64 bugs, and another bug in kvm_arch_update_irqfd_routing() (see below),
+clobbering the entry type without notifying arch code is surprising and
+error prone.
 
-    rbd_assert(objno < rbd_dev->object_map_size);
+As a bonus, checking that the irqfd is active provides a convenient
+location for documenting _why_ KVM must not consume the routing entry for
+an irqfd that is in the process of being deassigned: once the irqfd is
+deleted from the list (which happens *before* the eventfd is detached), it
+will no longer receive updates via kvm_irq_routing_update(), and so KVM
+could deliver an event using stale routing information (relative to
+KVM_SET_GSI_ROUTING returning to userspace).
 
-can be triggered if a close-to-EOD read gets queued right before the
-shrink is initiated and the EOD check is performed against an outdated
-mapping_size.  After the resize is done on the server side and exclusive
-lock is (re)acquired bringing along the new (now shrunk) object map, the
-read starts going through the state machine and rbd_obj_may_exist() gets
-invoked on an object that is out of bounds of rbd_dev->object_map array.
+As an even better bonus, explicitly checking for the irqfd being active
+fixes a similar bug to the one the clobbering is trying to prevent: if an
+irqfd is deactivated, and then its routing is changed,
+kvm_irq_routing_update() won't invoke kvm_arch_update_irqfd_routing()
+(because the irqfd isn't in the list).  And so if the irqfd is in bypass
+mode, IRQs will continue to be posted using the old routing information.
 
+As for kvm_arch_irq_bypass_del_producer(), clobbering the routing type
+results in KVM incorrectly keeping the IRQ in bypass mode, which is
+especially problematic on AMD as KVM tracks IRQs that are being posted to
+a vCPU in a list whose lifetime is tied to the irqfd.
+
+Without the help of KASAN to detect use-after-free, the most common
+sympton on AMD is a NULL pointer deref in amd_iommu_update_ga() due to
+the memory for irqfd structure being re-allocated and zeroed, resulting
+in irqfd->irq_bypass_data being NULL when read by
+avic_update_iommu_vcpu_affinity():
+
+  BUG: kernel NULL pointer dereference, address: 0000000000000018
+  #PF: supervisor read access in kernel mode
+  #PF: error_code(0x0000) - not-present page
+  PGD 40cf2b9067 P4D 40cf2b9067 PUD 408362a067 PMD 0
+  Oops: Oops: 0000 [#1] SMP
+  CPU: 6 UID: 0 PID: 40383 Comm: vfio_irq_test
+  Tainted: G     U  W  O        6.19.0-smp--5dddc257e6b2-irqfd #31 NONE
+  Tainted: [U]=USER, [W]=WARN, [O]=OOT_MODULE
+  Hardware name: Google, Inc. Arcadia_IT_80/Arcadia_IT_80, BIOS 34.78.2-0 09/05/2025
+  RIP: 0010:amd_iommu_update_ga+0x19/0xe0
+  Call Trace:
+   <TASK>
+   avic_update_iommu_vcpu_affinity+0x3d/0x90 [kvm_amd]
+   __avic_vcpu_load+0xf4/0x130 [kvm_amd]
+   kvm_arch_vcpu_load+0x89/0x210 [kvm]
+   vcpu_load+0x30/0x40 [kvm]
+   kvm_arch_vcpu_ioctl_run+0x45/0x620 [kvm]
+   kvm_vcpu_ioctl+0x571/0x6a0 [kvm]
+   __se_sys_ioctl+0x6d/0xb0
+   do_syscall_64+0x6f/0x9d0
+   entry_SYSCALL_64_after_hwframe+0x4b/0x53
+  RIP: 0033:0x46893b
+    </TASK>
+  ---[ end trace 0000000000000000 ]---
+
+If AVIC is inhibited when the irfd is deassigned, the bug will manifest as
+list corruption, e.g. on the next irqfd assignment.
+
+  list_add corruption. next->prev should be prev (ffff8d474d5cd588),
+                       but was 0000000000000000. (next=ffff8d8658f86530).
+  ------------[ cut here ]------------
+  kernel BUG at lib/list_debug.c:31!
+  Oops: invalid opcode: 0000 [#1] SMP
+  CPU: 128 UID: 0 PID: 80818 Comm: vfio_irq_test
+  Tainted: G     U  W  O        6.19.0-smp--f19dc4d680ba-irqfd #28 NONE
+  Tainted: [U]=USER, [W]=WARN, [O]=OOT_MODULE
+  Hardware name: Google, Inc. Arcadia_IT_80/Arcadia_IT_80, BIOS 34.78.2-0 09/05/2025
+  RIP: 0010:__list_add_valid_or_report+0x97/0xc0
+  Call Trace:
+   <TASK>
+   avic_pi_update_irte+0x28e/0x2b0 [kvm_amd]
+   kvm_pi_update_irte+0xbf/0x190 [kvm]
+   kvm_arch_irq_bypass_add_producer+0x72/0x90 [kvm]
+   irq_bypass_register_consumer+0xcd/0x170 [irqbypass]
+   kvm_irqfd+0x4c6/0x540 [kvm]
+   kvm_vm_ioctl+0x118/0x5d0 [kvm]
+   __se_sys_ioctl+0x6d/0xb0
+   do_syscall_64+0x6f/0x9d0
+   entry_SYSCALL_64_after_hwframe+0x4b/0x53
+   </TASK>
+  ---[ end trace 0000000000000000 ]---
+
+On Intel and arm64, the bug is less noisy, as the end result is that the
+device keeps posting IRQs to the vCPU even after it's been deassigned.
+
+Note, the worst of the breakage can be traced back to commit cb210737675e
+("KVM: Pass new routing entries and irqfd when updating IRTEs"), as before
+that commit KVM would pull the routing information from the per-VM routing
+table.  But as above, similar bugs have existed since support for IRQ
+bypass was added.  E.g. if a routing change finished before irq_shutdown()
+invoked kvm_arch_irq_bypass_del_producer(), VMX and SVM would see stale
+routing information and potentially leave the irqfd in bypass mode.
+
+Alternatively, x86 could be fixed by explicitly checking irq_bypass_vcpu
+instead of irq_entry.type in kvm_arch_irq_bypass_del_producer(), and arm64
+could be modified to utilize irq_bypass_vcpu in a similar manner.  But (a)
+that wouldn't fix the routing updates bug, and (b) fixing core code doesn't
+preclude x86 (or arm64) from adding such code as a sanity check (spoiler
+alert).
+
+Fixes: f70c20aaf141 ("KVM: Add an arch specific hooks in 'struct kvm_kernel_irqfd'")
+Fixes: cb210737675e ("KVM: Pass new routing entries and irqfd when updating IRTEs")
+Fixes: a0d7e2fc61ab ("KVM: arm64: vgic-v4: Only attempt vLPI mapping for actual MSIs")
 Cc: stable@vger.kernel.org
-Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
-Reviewed-by: Dongsheng Yang <dongsheng.yang@linux.dev>
+Cc: Marc Zyngier <maz@kernel.org>
+Cc: Oliver Upton <oupton@kernel.org>
+Link: https://patch.msgid.link/20260113174606.104978-2-seanjc@google.com
+Signed-off-by: Sean Christopherson <seanjc@google.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/block/rbd.c |   33 +++++++++++++++++++++------------
- 1 file changed, 21 insertions(+), 12 deletions(-)
+ virt/kvm/eventfd.c |   44 ++++++++++++++++++++++++--------------------
+ 1 file changed, 24 insertions(+), 20 deletions(-)
 
---- a/drivers/block/rbd.c
-+++ b/drivers/block/rbd.c
-@@ -3495,11 +3495,29 @@ static void rbd_img_object_requests(stru
- 	rbd_assert(!need_exclusive_lock(img_req) ||
- 		   __rbd_is_lock_owner(rbd_dev));
+--- a/virt/kvm/eventfd.c
++++ b/virt/kvm/eventfd.c
+@@ -157,21 +157,28 @@ irqfd_shutdown(struct work_struct *work)
+ }
  
--	if (rbd_img_is_write(img_req)) {
--		rbd_assert(!img_req->snapc);
-+	if (test_bit(IMG_REQ_CHILD, &img_req->flags)) {
-+		rbd_assert(!rbd_img_is_write(img_req));
-+	} else {
-+		struct request *rq = blk_mq_rq_from_pdu(img_req);
-+		u64 off = (u64)blk_rq_pos(rq) << SECTOR_SHIFT;
-+		u64 len = blk_rq_bytes(rq);
-+		u64 mapping_size;
+ 
+-/* assumes kvm->irqfds.lock is held */
+-static bool
+-irqfd_is_active(struct kvm_kernel_irqfd *irqfd)
++static bool irqfd_is_active(struct kvm_kernel_irqfd *irqfd)
+ {
++	/*
++	 * Assert that either irqfds.lock or SRCU is held, as irqfds.lock must
++	 * be held to prevent false positives (on the irqfd being active), and
++	 * while false negatives are impossible as irqfds are never added back
++	 * to the list once they're deactivated, the caller must at least hold
++	 * SRCU to guard against routing changes if the irqfd is deactivated.
++	 */
++	lockdep_assert_once(lockdep_is_held(&irqfd->kvm->irqfds.lock) ||
++			    srcu_read_lock_held(&irqfd->kvm->irq_srcu));
 +
- 		down_read(&rbd_dev->header_rwsem);
--		img_req->snapc = ceph_get_snap_context(rbd_dev->header.snapc);
-+		mapping_size = rbd_dev->mapping.size;
-+		if (rbd_img_is_write(img_req)) {
-+			rbd_assert(!img_req->snapc);
-+			img_req->snapc =
-+			    ceph_get_snap_context(rbd_dev->header.snapc);
-+		}
- 		up_read(&rbd_dev->header_rwsem);
+ 	return list_empty(&irqfd->list) ? false : true;
+ }
+ 
+ /*
+  * Mark the irqfd as inactive and schedule it for removal
+- *
+- * assumes kvm->irqfds.lock is held
+  */
+-static void
+-irqfd_deactivate(struct kvm_kernel_irqfd *irqfd)
++static void irqfd_deactivate(struct kvm_kernel_irqfd *irqfd)
+ {
++	lockdep_assert_held(&irqfd->kvm->irqfds.lock);
 +
-+		if (unlikely(off + len > mapping_size)) {
-+			rbd_warn(rbd_dev, "beyond EOD (%llu~%llu > %llu)",
-+				 off, len, mapping_size);
-+			img_req->pending.result = -EIO;
-+			return;
-+		}
+ 	BUG_ON(!irqfd_is_active(irqfd));
+ 
+ 	list_del_init(&irqfd->list);
+@@ -217,8 +224,15 @@ irqfd_wakeup(wait_queue_entry_t *wait, u
+ 			seq = read_seqcount_begin(&irqfd->irq_entry_sc);
+ 			irq = irqfd->irq_entry;
+ 		} while (read_seqcount_retry(&irqfd->irq_entry_sc, seq));
+-		/* An event has been signaled, inject an interrupt */
+-		if (kvm_arch_set_irq_inatomic(&irq, kvm,
++
++		/*
++		 * An event has been signaled, inject an interrupt unless the
++		 * irqfd is being deassigned (isn't active), in which case the
++		 * routing information may be stale (once the irqfd is removed
++		 * from the list, it will stop receiving routing updates).
++		 */
++		if (unlikely(!irqfd_is_active(irqfd)) ||
++		    kvm_arch_set_irq_inatomic(&irq, kvm,
+ 					      KVM_USERSPACE_IRQ_SOURCE_ID, 1,
+ 					      false) == -EWOULDBLOCK)
+ 			schedule_work(&irqfd->inject);
+@@ -585,18 +599,8 @@ kvm_irqfd_deassign(struct kvm *kvm, stru
+ 	spin_lock_irq(&kvm->irqfds.lock);
+ 
+ 	list_for_each_entry_safe(irqfd, tmp, &kvm->irqfds.items, list) {
+-		if (irqfd->eventfd == eventfd && irqfd->gsi == args->gsi) {
+-			/*
+-			 * This clearing of irq_entry.type is needed for when
+-			 * another thread calls kvm_irq_routing_update before
+-			 * we flush workqueue below (we synchronize with
+-			 * kvm_irq_routing_update using irqfds.lock).
+-			 */
+-			write_seqcount_begin(&irqfd->irq_entry_sc);
+-			irqfd->irq_entry.type = 0;
+-			write_seqcount_end(&irqfd->irq_entry_sc);
++		if (irqfd->eventfd == eventfd && irqfd->gsi == args->gsi)
+ 			irqfd_deactivate(irqfd);
+-		}
  	}
  
- 	for_each_obj_request(img_req, obj_req) {
-@@ -4725,7 +4743,6 @@ static void rbd_queue_workfn(struct work
- 	struct request *rq = blk_mq_rq_from_pdu(img_request);
- 	u64 offset = (u64)blk_rq_pos(rq) << SECTOR_SHIFT;
- 	u64 length = blk_rq_bytes(rq);
--	u64 mapping_size;
- 	int result;
- 
- 	/* Ignore/skip any zero-length requests */
-@@ -4738,17 +4755,9 @@ static void rbd_queue_workfn(struct work
- 	blk_mq_start_request(rq);
- 
- 	down_read(&rbd_dev->header_rwsem);
--	mapping_size = rbd_dev->mapping.size;
- 	rbd_img_capture_header(img_request);
- 	up_read(&rbd_dev->header_rwsem);
- 
--	if (offset + length > mapping_size) {
--		rbd_warn(rbd_dev, "beyond EOD (%llu~%llu > %llu)", offset,
--			 length, mapping_size);
--		result = -EIO;
--		goto err_img_request;
--	}
--
- 	dout("%s rbd_dev %p img_req %p %s %llu~%llu\n", __func__, rbd_dev,
- 	     img_request, obj_op_name(op_type), offset, length);
- 
+ 	spin_unlock_irq(&kvm->irqfds.lock);
 
 
