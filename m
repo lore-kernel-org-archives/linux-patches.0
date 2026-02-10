@@ -1,41 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D920F311960;
-	Tue, 10 Feb 2026 23:31:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4ED8E2DC76F;
+	Tue, 10 Feb 2026 23:31:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770766287; cv=none; b=FT7l5GwljABsGksvmSlHhjAIhxnUirbI6R+7cOnnBEt5AJuW8hJ5FlE1aOcoDNmG1APEfITIwkEtKx4wqSED1ibp6EkRzXkjjf814t8N8UWiPYIz0hus6lPVZxBeC8zlpeZD1ByuBTez3oMPVHiN0q3qiSMgK5ro4UBH8d+Vhao=
+	t=1770766289; cv=none; b=ec9QGOCw2jBq/7F3cHhfciO4hS/4HDfVTP5Wq3RkDocj/CtoL87g7WKNjbY9AKQkRyu6jGxHJN+146aoaYTz/Wj0u5Xdk1WFZA+PeCpIzLb1hTcov+ElbEku25awZYtYDv/LxO1UPr7bbAZXZbuVArs1wibP+yPakMf6qVhkrqU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770766287; c=relaxed/simple;
-	bh=4Q38nV3N8Ns74G9RFUVss5/YKtfidd3QW6KdbU5LrNI=;
+	s=arc-20240116; t=1770766289; c=relaxed/simple;
+	bh=twtZnGMvMuAVmKcsvTkyEiO062K7s/3OsDbHarnmkCA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=ADsvI65ZIpaTsQh0EZ52VXILDKJ3WCUqaCvwtKTuhyHrZFXfQWyPkExvnR1hAoLj452XxVzYghugIMmsxZMa0a+1mDlMI114YnnSMj7Ze/hy9a1aR69DakemSaZCg0433wVK+OrKlNfZ9/au0hp9YJb6mwdPN95abZeiaba4+sg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=qI9jwf2J; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=gVI1fo7oT+C1zxKpqE46W7T7vZKv15g6+XeueNTZmnpHfJG/6hMZTZcSRnC1+YXoQ/v4+QMAL8ViWJXRlN3APxzRtXUoM89ceg+3c0vmmbgEOUhUgWBsrFnVEN1uI7bNFZPhb0Gr5L2nmu9IwGOWGi+4OZSK5sna8uUEtdPZj7Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=JFpSGYX5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="qI9jwf2J"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0CCB8C19425;
-	Tue, 10 Feb 2026 23:31:26 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="JFpSGYX5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B3D4C19425;
+	Tue, 10 Feb 2026 23:31:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1770766287;
-	bh=4Q38nV3N8Ns74G9RFUVss5/YKtfidd3QW6KdbU5LrNI=;
+	s=k20201202; t=1770766288;
+	bh=twtZnGMvMuAVmKcsvTkyEiO062K7s/3OsDbHarnmkCA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qI9jwf2JJy/mdzwsltCtk3kszlbzNFtRvwkyy3FEzOJ2mhLKNyNK8JJgTKkeIz/f+
-	 qrlfgorez+KIEhftDE1rLZpEhiUbIAj1GzcK9CIO6f36pkUnqllpIZQaZl1WKpHw/v
-	 mQ1EmaYRiBOb+B6MJ+foERZ412eZcy2T3BTQuji1okLl/yBBLcufZ94NX/C4QzhPU0
-	 6Rnx061AllZkUDCLb35NThZkMzSLWN/P5NW3ft+TIV5+VN87m1b2uHPCDz49ar5a8D
-	 VJiA+n157ApQHCqh1l/oe0DHfRglQQYMz0IlET8mRQhwub8puBTEmLmvZn6igAARqG
-	 JObQEP4PBgTfw==
+	b=JFpSGYX5xcANqrYT325bu6atZ1jKv+d/vkdqq/wsY3sBr/Y+DlOWsIcFBdFVH/5+/
+	 8wqYs7bgkYP34vddDCg5oOGjTU4kWGX58y01W0vU9473dSrb2Zo1lbE1y+Qmqj2SlV
+	 cJ7RoKTrvAL/cpMPhUXW+0rouvZk45mPKmBfjZndI2q8zrzjjlDMFLklECdxvfseGO
+	 3D7bk0e7NhwzDRguohFV8Dw11Cs41ni2JFyQoL3bIYE2p1lDcGGCGJvC2a7fMctBWb
+	 0RaVP3Jcyi+fqUc58r6WN8gKPKM4NNx7wivCEYFo3Y7a4xEinDn2EzD5wBSkw6z0Rk
+	 XsCX5A+PRGtxg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Alexander Aring <aahringo@redhat.com>,
-	David Teigland <teigland@redhat.com>,
+Cc: Henrique Carvalho <henrique.carvalho@suse.com>,
+	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>,
-	gfs2@lists.linux.dev
-Subject: [PATCH AUTOSEL 6.19-6.18] dlm: fix recovery pending middle conversion
-Date: Tue, 10 Feb 2026 18:30:48 -0500
-Message-ID: <20260210233123.2905307-3-sashal@kernel.org>
+	sfrench@samba.org,
+	linux-cifs@vger.kernel.org,
+	samba-technical@lists.samba.org
+Subject: [PATCH AUTOSEL 6.19-6.6] smb: client: prevent races in ->query_interfaces()
+Date: Tue, 10 Feb 2026 18:30:49 -0500
+Message-ID: <20260210233123.2905307-4-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260210233123.2905307-1-sashal@kernel.org>
 References: <20260210233123.2905307-1-sashal@kernel.org>
@@ -51,248 +53,238 @@ X-stable-base: Linux 6.19
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Alexander Aring <aahringo@redhat.com>
+From: Henrique Carvalho <henrique.carvalho@suse.com>
 
-[ Upstream commit 1416bd508c78bdfdb9ae0b4511369e5581f348ea ]
+[ Upstream commit c3c06e42e1527716c54f3ad2ced6a034b5f3a489 ]
 
-During a workload involving conversions between lock modes PR and CW,
-lock recovery can create a "conversion deadlock" state between locks
-that have been recovered.  When this occurs, kernel warning messages
-are logged, e.g.
+It was possible for two query interface works to be concurrently trying
+to update the interfaces.
 
-  "dlm: WARN: pending deadlock 1e node 0 2 1bf21"
+Prevent this by checking and updating iface_last_update under
+iface_lock.
 
-  "dlm: receive_rcom_lock_args 2e middle convert gr 3 rq 2 remote 2 1e"
-
-After this occurs, the deadlocked conversions both appear on the convert
-queue of the resource being locked, and the conversion requests do not
-complete.
-
-Outside of recovery, conversions that would produce a deadlock are
-resolved immediately, and return -EDEADLK.  The locks are not placed
-on the convert queue in the deadlocked state.
-
-To fix this problem, an lkb under conversion between PR/CW is rebuilt
-during recovery on a new master's granted queue, with the currently
-granted mode, rather than being rebuilt on the new master's convert
-queue, with the currently granted mode and the newly requested mode.
-The in-progress convert is then resent to the new master after
-recovery, so the conversion deadlock will be processed outside of
-the recovery context and handled as described above.
-
-Signed-off-by: Alexander Aring <aahringo@redhat.com>
-Signed-off-by: David Teigland <teigland@redhat.com>
+Signed-off-by: Henrique Carvalho <henrique.carvalho@suse.com>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-Now I have a complete picture. Let me provide my detailed analysis.
+Now I have a complete picture. Let me summarize my analysis.
 
 ---
 
 ## Detailed Analysis
 
-### 1. COMMIT MESSAGE ANALYSIS
+### 1. Commit Message Analysis
 
-The commit subject clearly says "fix" and the message describes a
-concrete, reproducible bug:
+The commit message clearly describes a **race condition**: "It was
+possible for two query interface works to be concurrently trying to
+update the interfaces." The fix is to check and update
+`iface_last_update` atomically under `iface_lock`. Authored by Henrique
+Carvalho (SUSE) and signed off by Steve French (CIFS maintainer) - both
+trusted SMB subsystem contributors.
 
-- **Symptom**: During a workload involving conversions between lock
-  modes PR (Protected Read) and CW (Concurrent Write), lock recovery
-  creates a "conversion deadlock" state between recovered locks.
-- **Visible effects**: Kernel warning messages (`"dlm: WARN: pending
-  deadlock..."`) and permanently stuck lock conversions on the convert
-  queue that never complete.
-- **This affects clustered filesystem users** (GFS2, OCFS2) running on
-  systems where DLM node recovery occurs during PR/CW conversion
-  workloads.
+### 2. The Bug: TOCTOU Race on `iface_last_update`
 
-The authors are **Alexander Aring** (Red Hat, DLM subsystem developer)
-and **David Teigland** (the DLM maintainer who signs off all DLM
-patches). This is authoritative.
+The `iface_last_update` field is explicitly documented in `cifsglob.h`
+as **protected by `iface_lock`**:
 
-### 2. CODE CHANGE ANALYSIS
-
-The change is in `recover_convert_waiter()` in `fs/dlm/lock.c`. Here's
-what changed:
-
-**Before (buggy code introduced by f74dacb4):**
-
-```5017:5035:fs/dlm/lock.c
-        if (middle_conversion(lkb)) {
-                log_rinfo(ls, "%s %x middle convert in progress",
-__func__,
-                         lkb->lkb_id);
-                /* We sent this lock to the new master. The new master
-will
-   - tell us when it's granted.  We no longer need a reply, so
-   - use a fake reply to put the lkb into the right state.
-                 */
-                hold_lkb(lkb);
-                memset(ms_local, 0, sizeof(struct dlm_message));
-                ms_local->m_type = cpu_to_le32(DLM_MSG_CONVERT_REPLY);
-                ms_local->m_result =
-cpu_to_le32(to_dlm_errno(-EINPROGRESS));
-                ms_local->m_header.h_nodeid =
-cpu_to_le32(lkb->lkb_nodeid);
-                _receive_convert_reply(lkb, ms_local, true);
-                unhold_lkb(lkb);
-        } else if (lkb->lkb_rqmode >= lkb->lkb_grmode) {
-                set_bit(DLM_IFL_RESEND_BIT, &lkb->lkb_iflags);
-        }
+```1119:1123:fs/smb/client/cifsglob.h
+        /* ========= begin: protected by iface_lock ======== */
+        struct list_head iface_list;
+        size_t iface_count;
+        unsigned long iface_last_update; /* jiffies */
+        /* ========= end: protected by iface_lock ======== */
 ```
 
-**After (the fix):**
+And confirmed in the lock ordering documentation:
 
-```c
-        if (middle_conversion(lkb) || lkb->lkb_rqmode >=
-lkb->lkb_grmode)
-                set_bit(DLM_IFL_RESEND_BIT, &lkb->lkb_iflags);
+```2000:2002:fs/smb/client/cifsglob.h
+ - cifs_ses->iface_lock            cifs_ses->iface_list
+   sesInfoAlloc
+ - ->iface_count
+ - ->iface_last_update
 ```
 
-### 3. BUG MECHANISM
+**Before the fix**, the code violated this contract in two ways:
 
-The recovery sequence in `fs/dlm/recoverd.c` runs these steps in order:
+1. **`SMB3_request_interfaces()` (line 828-831)**: Read
+   `iface_last_update` **without any lock**:
+```827:831:fs/smb/client/smb2ops.c
+        /* do not query too frequently */
+        if (ses->iface_last_update &&
+            time_before(jiffies, ses->iface_last_update +
+                        (SMB_INTERFACE_POLL_INTERVAL * HZ)))
+                return 0;
+```
 
-1. **Line 218**: `dlm_recover_waiters_pre()` — handles lkbs waiting for
-   replies from failed nodes
-2. **Line 247**: `dlm_recover_locks()` — sends locks to new masters (via
-   rcom)
-3. **Line 270**: `dlm_recover_rsbs()` — calls `recover_conversion()` on
-   flagged resources
-4. **Line 320**: `dlm_recover_waiters_post()` — resends operations
-   marked with RESEND bit
+2. **`parse_server_interfaces()` (line 798)**: Wrote `iface_last_update
+   = jiffies` **without the lock** at the end of processing.
 
-**The bug in the old code**: When `recover_convert_waiter` faked an
-`-EINPROGRESS` reply for a middle conversion:
-- `_receive_convert_reply()` → `__receive_convert_reply()` would handle
-  the `-EINPROGRESS` case by calling `del_lkb(r, lkb)` + `add_lkb(r,
-  lkb, DLM_LKSTS_CONVERT)`, moving the lkb to the **local convert
-  queue**
-- The lkb was also removed from the waiters list via
-  `remove_from_waiters_ms()`
-- When the lock was subsequently sent to the **new master** via rcom
-  (step 2), it was sent as a converting lock
-- `receive_rcom_lock_args()` on the new master placed it on the convert
-  queue and set `RSB_RECOVER_CONVERT`
-- If **two locks** had middle conversions (e.g., A: PR→CW, B: CW→PR),
-  both ended up on the convert queue of the new master resource in a
-  **deadlocked state**
-- `recover_conversion()` couldn't resolve this; the normal `-EDEADLK`
-  detection doesn't run during recovery
-- Result: permanent deadlock, kernel warnings, stuck I/O
+The second check inside `parse_server_interfaces()` (line 641-646, under
+`iface_lock`) was meant to catch races, but it came **after** the
+expensive `SMB2_ioctl()` network call had already been made.
 
-**How the fix resolves it**: By setting `DLM_IFL_RESEND_BIT` instead of
-faking `-EINPROGRESS`:
-- The lkb stays on the waiters list with its original granted status
-  unchanged
-- When sent to the new master via rcom, it's sent as a **granted lock**
-  (not converting), placed on the **granted queue**
-- No conversion deadlock can form during recovery
-- After recovery, `dlm_recover_waiters_post()` finds the lkb (via
-  `find_resend_waiter`), resets its state, and calls `_convert_lock()`
-  to resend the conversion to the new master through **normal channels**
-- If the conversion would deadlock, the normal code returns `-EDEADLK`
-  immediately, preventing the stuck state
+### 3. Race Scenario
 
-### 4. CLASSIFICATION
+`SMB3_request_interfaces()` can be called from **multiple concurrent
+paths**:
+- `smb2_query_server_interfaces()` - periodic delayed work (every 600s)
+- `smb2_reconnect()` (via `query_server_interfaces` function pointer) -
+  reconnection path
+- `smb3_qfs_tcon()` - during mount
 
-This is a **clear bug fix** — it fixes a conversion deadlock in DLM lock
-recovery. There are no new features, APIs, or behavioral changes. The
-fix actually **removes** complex code and replaces it with the simpler,
-correct approach.
+**Race sequence**:
+1. Thread A reads `iface_last_update` (no lock) → timer expired →
+   proceeds to `SMB2_ioctl()`
+2. Thread B reads `iface_last_update` (no lock) → same stale value →
+   also proceeds to `SMB2_ioctl()`
+3. Both threads enter `parse_server_interfaces()` concurrently
+4. Thread A takes `iface_lock`, marks ALL interfaces as `is_active = 0`,
+   drops lock
+5. Thread B takes `iface_lock`, marks ALL interfaces as `is_active = 0`
+   again, drops lock
+6. Both threads independently iterate the buffer, both try to match/add
+   interfaces
+7. In the cleanup (`out:` label), both threads iterate the list and call
+   `kref_put()` on inactive entries
 
-### 5. SCOPE AND RISK ASSESSMENT
+**Consequences**:
+- **Double `kref_put()` / use-after-free**: Both threads may identify
+  the same interface as inactive and call `kref_put()` on it,
+  potentially dropping the refcount below zero or causing UAF
+- **Corrupted `iface_count`**: Both threads decrement `ses->iface_count`
+  for the same interface
+- **List corruption**: While individual list operations are under
+  `iface_lock`, the mark-inactive → process → cleanup sequence is NOT
+  atomic, leading to incorrect state
+- **Unnecessary duplicate network I/O**: Both threads perform
+  `SMB2_ioctl()` when only one is needed
 
-- **Lines changed**: Net removal of ~17 lines; replaces ~20 lines with 2
-  lines
-- **Files changed**: 1 (`fs/dlm/lock.c`)
-- **Function modified**: Only `recover_convert_waiter()`
-- **Risk**: **Very low** — the fix simplifies the code and uses the same
-  `DLM_IFL_RESEND_BIT` mechanism that is already used for normal up-
-  conversions (REQUEST, LOOKUP, and non-middle CONVERT cases). The
-  RESEND path via `dlm_recover_waiters_post()` → `_convert_lock()` is
-  well-tested existing code.
-- **Subsystem**: DLM (fs/dlm/) — critical for clustered filesystems
+### 4. The Fix
 
-### 6. USER IMPACT
+The fix is elegant and minimal (8 insertions, 11 deletions, net -3
+lines):
 
-- **Who is affected**: Users of DLM-based clustered filesystems (GFS2,
-  OCFS2) in production clusters
-- **Severity**: **High** — when the bug triggers, lock conversions
-  permanently hang, which would block I/O on clustered filesystems
-- **Trigger**: PR↔CW conversions during node recovery (when a cluster
-  node fails). This is a realistic scenario in production clusters.
+1. **In `SMB3_request_interfaces()`**: Wraps the `iface_last_update`
+   check **and** update in a single `spin_lock/spin_unlock` critical
+   section. Crucially, it sets `iface_last_update = jiffies` **before**
+   doing any work (optimistic update), ensuring the second thread will
+   see the updated timestamp and bail out immediately.
 
-### 7. DEPENDENCY CHECK
+2. **In `parse_server_interfaces()`**: Removes the now-redundant
+   duplicate time check and the two `iface_last_update = jiffies`
+   assignments (one in the empty-list error path, one at end of
+   processing).
 
-- **Requires f74dacb4** ("dlm: fix recovery of middle conversions"):
-  This commit introduced the code being modified (the fake -EINPROGRESS
-  approach). f74dacb4 entered mainline in v6.13-rc1 and is present in
-  v6.13+ stable trees.
-- **Does NOT require a8abcff1** ("dlm: move to rinfo for all middle
-  conversion cases"): a8abcff1 only changed `log_limit` → `log_rinfo` in
-  `receive_rcom_lock_args` and `recover_conversion`, not in
-  `recover_convert_waiter`. The code being removed already used
-  `log_rinfo` since f74dacb4.
-- The patch should apply cleanly on any tree containing f74dacb4.
+This converts the race-prone check-then-act sequence into an atomic
+check-and-update.
 
-### 8. STABILITY INDICATORS
+### 5. Scope and Risk Assessment
 
-- Authored and signed-off by the DLM maintainers (Aring + Teigland)
-- The fix simplifies code (reduction in complexity = lower regression
-  risk)
-- Uses existing well-tested RESEND mechanism
-- The commit message thoroughly explains the problem and solution
+- **Files changed**: 1 (`fs/smb/client/smb2ops.c`)
+- **Lines changed**: 8 insertions, 11 deletions (net -3)
+- **Subsystem**: SMB/CIFS client - filesystem, important for enterprise
+  users
+- **Risk**: Very low - the change only adds proper locking around an
+  already-documented protected field
+- **Side effect consideration**: Setting `iface_last_update` before the
+  work means that if `SMB2_ioctl()` fails, the timestamp is still
+  updated. However, this is acceptable because: (a) the old code also
+  set it on error paths (the `-EOPNOTSUPP` case set it), and (b) the
+  600-second polling interval means it will retry relatively soon
 
-### Summary
+### 6. Stable Tree Applicability
 
-This is a clear-cut bug fix for a conversion deadlock in DLM lock
-recovery that causes permanent hangs and kernel warnings. The fix is
-small, surgical (net code removal), contained to a single function in a
-single file, and uses existing well-tested mechanisms. It affects
-production clustered filesystem users. The prerequisite commit
-(f74dacb4) is in v6.13+ stable trees, so this fix is needed in those
-same trees. The risk is very low — the fix actually simplifies the
-recovery path.
+The vulnerable code exists in:
+- **v6.12**: Identical structure to mainline, should apply cleanly
+- **v6.6**: Similar structure but has a slightly different
+  `iface_last_update` placement (inside the while loop, not at end of
+  function - due to commit 78e727e58e54e being a v6.8 era change). The
+  core race (unlocked check in `SMB3_request_interfaces`) exists and the
+  fix concept applies, but minor adaptation may be needed.
+
+### 7. Dependencies
+
+The fix is self-contained. It doesn't depend on any other commits. The
+only context difference for older stable trees (v6.6) is the location of
+`iface_last_update = jiffies` inside `parse_server_interfaces()`, but
+the fix's approach (move checking+setting to the caller under lock,
+remove from callee) works regardless.
+
+### 8. Summary
+
+This is a clear race condition fix in the SMB/CIFS client that:
+- Fixes a documented locking violation (`iface_last_update` accessed
+  without `iface_lock`)
+- Prevents potential use-after-free via double `kref_put()` on
+  interfaces
+- Prevents interface list state corruption affecting SMB multichannel
+- Is small (net -3 lines), surgical, single-file, and self-contained
+- Affects an important subsystem (filesystem client) used widely in
+  enterprise environments
+- Has very low regression risk
 
 **YES**
 
- fs/dlm/lock.c | 19 +------------------
- 1 file changed, 1 insertion(+), 18 deletions(-)
+ fs/smb/client/smb2ops.c | 19 ++++++++-----------
+ 1 file changed, 8 insertions(+), 11 deletions(-)
 
-diff --git a/fs/dlm/lock.c b/fs/dlm/lock.c
-index be938fdf17d96..c01a291db401b 100644
---- a/fs/dlm/lock.c
-+++ b/fs/dlm/lock.c
-@@ -5014,25 +5014,8 @@ void dlm_receive_buffer(const union dlm_packet *p, int nodeid)
- static void recover_convert_waiter(struct dlm_ls *ls, struct dlm_lkb *lkb,
- 				   struct dlm_message *ms_local)
- {
--	if (middle_conversion(lkb)) {
--		log_rinfo(ls, "%s %x middle convert in progress", __func__,
--			 lkb->lkb_id);
--
--		/* We sent this lock to the new master. The new master will
--		 * tell us when it's granted.  We no longer need a reply, so
--		 * use a fake reply to put the lkb into the right state.
--		 */
--		hold_lkb(lkb);
--		memset(ms_local, 0, sizeof(struct dlm_message));
--		ms_local->m_type = cpu_to_le32(DLM_MSG_CONVERT_REPLY);
--		ms_local->m_result = cpu_to_le32(to_dlm_errno(-EINPROGRESS));
--		ms_local->m_header.h_nodeid = cpu_to_le32(lkb->lkb_nodeid);
--		_receive_convert_reply(lkb, ms_local, true);
--		unhold_lkb(lkb);
--
--	} else if (lkb->lkb_rqmode >= lkb->lkb_grmode) {
-+	if (middle_conversion(lkb) || lkb->lkb_rqmode >= lkb->lkb_grmode)
- 		set_bit(DLM_IFL_RESEND_BIT, &lkb->lkb_iflags);
+diff --git a/fs/smb/client/smb2ops.c b/fs/smb/client/smb2ops.c
+index c1aaf77e187b6..edfd6a4e87e8b 100644
+--- a/fs/smb/client/smb2ops.c
++++ b/fs/smb/client/smb2ops.c
+@@ -637,13 +637,6 @@ parse_server_interfaces(struct network_interface_info_ioctl_rsp *buf,
+ 	p = buf;
+ 
+ 	spin_lock(&ses->iface_lock);
+-	/* do not query too frequently, this time with lock held */
+-	if (ses->iface_last_update &&
+-	    time_before(jiffies, ses->iface_last_update +
+-			(SMB_INTERFACE_POLL_INTERVAL * HZ))) {
+-		spin_unlock(&ses->iface_lock);
+-		return 0;
 -	}
  
- 	/* lkb->lkb_rqmode < lkb->lkb_grmode shouldn't happen since down
- 	   conversions are async; there's no reply from the remote master */
+ 	/*
+ 	 * Go through iface_list and mark them as inactive
+@@ -666,7 +659,6 @@ parse_server_interfaces(struct network_interface_info_ioctl_rsp *buf,
+ 				 "Empty network interface list returned by server %s\n",
+ 				 ses->server->hostname);
+ 		rc = -EOPNOTSUPP;
+-		ses->iface_last_update = jiffies;
+ 		goto out;
+ 	}
+ 
+@@ -795,8 +787,6 @@ parse_server_interfaces(struct network_interface_info_ioctl_rsp *buf,
+ 	     + sizeof(p->Next) && p->Next))
+ 		cifs_dbg(VFS, "%s: incomplete interface info\n", __func__);
+ 
+-	ses->iface_last_update = jiffies;
+-
+ out:
+ 	/*
+ 	 * Go through the list again and put the inactive entries
+@@ -825,10 +815,17 @@ SMB3_request_interfaces(const unsigned int xid, struct cifs_tcon *tcon, bool in_
+ 	struct TCP_Server_Info *pserver;
+ 
+ 	/* do not query too frequently */
++	spin_lock(&ses->iface_lock);
+ 	if (ses->iface_last_update &&
+ 	    time_before(jiffies, ses->iface_last_update +
+-			(SMB_INTERFACE_POLL_INTERVAL * HZ)))
++			(SMB_INTERFACE_POLL_INTERVAL * HZ))) {
++		spin_unlock(&ses->iface_lock);
+ 		return 0;
++	}
++
++	ses->iface_last_update = jiffies;
++
++	spin_unlock(&ses->iface_lock);
+ 
+ 	rc = SMB2_ioctl(xid, tcon, NO_FILE_ID, NO_FILE_ID,
+ 			FSCTL_QUERY_NETWORK_INTERFACE_INFO,
 -- 
 2.51.0
 
