@@ -1,43 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11BB919ABD8;
-	Tue, 10 Feb 2026 23:31:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B0AE330320;
+	Tue, 10 Feb 2026 23:31:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770766311; cv=none; b=IN/sVXtZJwf8oSrwMt9J6WqQHXG4/hob6oPoMjA+Bwu/tNeQa7Ww5AERwBDjvKObTR15zs/0T2t4xmAO2qCfcA0y3TWumPvOxyMHpopfpxf13aLcO8ZkTHycsLk/rjjTYhhCNl9XhT3/poQS9WvX2EobwYUJTN5ID7BvPGq8G+4=
+	t=1770766312; cv=none; b=XOIk7CesWLwRaOjbMmKOQuY0wS5diJw6Dk3QQNo1hlBYhGOvyGCPO1wvxobBAbAYVGmdoM5hAe+dYx6pf245D1kdvGxFwtHBKdfG5l0sdpyP21IqTNqhmkwGjUAigdxFbaye8VhPESZERewhozEwCYAHjEI0d9YTqQlJNlXzUOc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770766311; c=relaxed/simple;
-	bh=MgNuV77btrx43G0ydFkyKy6erseXeXfn63J80fZlm0c=;
+	s=arc-20240116; t=1770766312; c=relaxed/simple;
+	bh=pHLQ7g6BAmHX92nJatKDdVeSH8Lk8THTaSmzsP+WyaM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=JgiLdyCsoDsUKIVxCq2Nc4YdejUS5wpM+ul738xotoDmGM0NbKPaP9ST3A39TcJULEJZaBFCMtGLZv8JJWf+g/HbHpfptto9zAU+D4Ej7cnCpzB8WyyANJ0/jYLn/cNrfRgVXFwsWW+stMYlPreyuH1ELza1pNSp8lixcWMMNBQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=EdK65lKd; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=Dggy/QtDxCw8dVFOtdznbWN8hYUyWgi4tqpDTJZmn7GLu0dBBV8ojEt2i7mBJ76nUz0pdGHkCO9mSg9fZzH3/FgfIalm0XibdcFV4f4ISWXUXngUI7RrHX4B21hGHTHBfReuFOHcP8wWUzCocm/rAy//tUPclTd1B4PcM4IsuNg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=lLNNS+Lu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="EdK65lKd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22153C116C6;
-	Tue, 10 Feb 2026 23:31:50 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="lLNNS+Lu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 52490C19423;
+	Tue, 10 Feb 2026 23:31:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1770766310;
-	bh=MgNuV77btrx43G0ydFkyKy6erseXeXfn63J80fZlm0c=;
+	s=k20201202; t=1770766312;
+	bh=pHLQ7g6BAmHX92nJatKDdVeSH8Lk8THTaSmzsP+WyaM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EdK65lKdA5w0yWcd78sq8TdTdZkpxG5ayvDFlAzsvKeN7Y2Mqi0WkuhHrh59H4rYv
-	 pNJcxDuobJxz5bJNkUQG1hvZ3mkVAdL4FwWvX8krSnGc4oFSY1dD2c/n/osyIz4Z+s
-	 uClhHMjuK8HU6N7K1EP67/uUYrpk87IPRq/CJ87H93LIPniTHc2tPFnt0MxwAOVcq5
-	 KRWXeOAa9cDH7XP8juWWNABtULgs2Kr7l7MbQ49OJ7GFjHvRBVb6aS0K5fJ9Cab9zL
-	 60AlHiHsYNKZ3dDR8s8Xew9y4mxzYNbJurQ3sZma9ge3VC/FAWmVrN5vA0bZZoFzJ3
-	 sWIYcmv/xdSRw==
+	b=lLNNS+LukH1IMfX4IRgvriqMpzp+CV/CVzWn2Rr/WmcWvB6jYn/FX4A1GxNE4ISnJ
+	 W6q6e3XsgTnRY17VPh4IH4WmpCSElubUkAngFiFlwbeLKYHcItcIi+GSGELQhrXH43
+	 xXfe6uyBnVfJvMAlV/JqrXfVb7TYOsB8zJjL/CGM8HY68BVsMKaDTJqm1S2qUDVL0M
+	 5BCNHSloLS9LCfRmajw+2DfBMaOUlUrrMPGSO1GeAJncoQ8hn+wFXl4JY62sHGgr9o
+	 ItP6NLjqqlK9QHy1OwTiEyQ0wHlt57Y8cuYQVT6qj6EuH+/qe3XLpgbFj13G1sTkdq
+	 YHLnraSAQwwgA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Jeffrey Bencteux <jeff@bencteux.fr>,
-	Paul Moore <paul@paul-moore.com>,
+Cc: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>,
+	syzbot <syzbot+895c23f6917da440ed0d@syzkaller.appspotmail.com>,
+	Viacheslav Dubeyko <slava@dubeyko.com>,
 	Sasha Levin <sashal@kernel.org>,
-	eparis@redhat.com,
-	audit@vger.kernel.org,
-	linux-arch@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.19-5.10] audit: add missing syscalls to read class
-Date: Tue, 10 Feb 2026 18:31:02 -0500
-Message-ID: <20260210233123.2905307-17-sashal@kernel.org>
+	frank.li@vivo.com,
+	linux-fsdevel@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.19-5.10] hfsplus: pretend special inodes as regular files
+Date: Tue, 10 Feb 2026 18:31:03 -0500
+Message-ID: <20260210233123.2905307-18-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260210233123.2905307-1-sashal@kernel.org>
 References: <20260210233123.2905307-1-sashal@kernel.org>
@@ -53,141 +53,202 @@ X-stable-base: Linux 6.19
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jeffrey Bencteux <jeff@bencteux.fr>
+From: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
 
-[ Upstream commit bcb90a2834c7393c26df9609b889a3097b7700cd ]
+[ Upstream commit ed8889ca21b6ab37bc1435c4009ce37a79acb9e6 ]
 
-The "at" variant of getxattr() and listxattr() are missing from the
-audit read class. Calling getxattrat() or listxattrat() on a file to
-read its extended attributes will bypass audit rules such as:
+Since commit af153bb63a33 ("vfs: catch invalid modes in may_open()")
+requires any inode be one of S_IFDIR/S_IFLNK/S_IFREG/S_IFCHR/S_IFBLK/
+S_IFIFO/S_IFSOCK type, use S_IFREG for special inodes.
 
--w /tmp/test -p rwa -k test_rwa
-
-The current patch adds missing syscalls to the audit read class.
-
-Signed-off-by: Jeffrey Bencteux <jeff@bencteux.fr>
-Signed-off-by: Paul Moore <paul@paul-moore.com>
+Reported-by: syzbot <syzbot+895c23f6917da440ed0d@syzkaller.appspotmail.com>
+Closes: https://syzkaller.appspot.com/bug?extid=895c23f6917da440ed0d
+Signed-off-by: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
+Reviewed-by: Viacheslav Dubeyko <slava@dubeyko.com>
+Signed-off-by: Viacheslav Dubeyko <slava@dubeyko.com>
+Link: https://lore.kernel.org/r/d0a07b1b-8b73-4002-8e29-e2bd56871262@I-love.SAKURA.ne.jp
+Signed-off-by: Viacheslav Dubeyko <slava@dubeyko.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-Now I have a complete understanding. Let me summarize the analysis.
+Now I have a complete picture. Let me compile my analysis.
 
-## Analysis
+---
+
+## Detailed Analysis
 
 ### 1. Commit Message Analysis
 
-The commit is clear: it adds `getxattrat` and `listxattrat` syscalls to
-the audit "read" class. The commit message explains the concrete
-consequence — calling these syscalls will **bypass** audit rules like
-`-w /tmp/test -p rwa -k test_rwa`, which is a security monitoring gap.
+The commit message is clear: HFS+ special/system inodes (catalog, extent
+overflow, allocation bitmap, startup, and attributes files) never have
+`i_mode` set, leaving it at 0 after `iget_locked()`. This violates the
+new VFS requirement (from `af153bb63a33`) that all inodes must have a
+valid `S_IF*` type when opened via `may_open()`.
+
+The commit is reported by syzbot with a concrete reproducer and a link
+to the syzkaller bug tracker. It's reviewed and signed off by the HFS+
+maintainer Viacheslav Dubeyko.
 
 ### 2. Code Change Analysis
 
-The change is only to `include/asm-generic/audit_read.h` — it adds 6
-lines (two `#ifdef`-guarded entries). This file defines the
-`read_class[]` array used by `audit_match_perm()` in `kernel/auditsc.c`
-to determine whether a given syscall matches the "read" permission
-class. The matching code:
+The fix is a single statement added to `hfsplus_system_read_inode()` in
+`fs/hfsplus/super.c`:
 
-```151:170:kernel/auditsc.c
-static int audit_match_perm(struct audit_context *ctx, int mask)
-{
-        unsigned n;
-        // ...
-        if ((mask & AUDIT_PERM_READ) &&
-             audit_match_class(AUDIT_CLASS_READ, n))
-                return 1;
-        // ...
-}
+```c
+inode->i_mode = S_IFREG;
 ```
 
-Without `getxattrat` and `listxattrat` in the read class,
-`audit_match_perm()` returns 0 for these syscalls when checking
-`AUDIT_PERM_READ`, meaning audit watch rules with read (`r`) permission
-never fire for these syscalls.
+This is placed after the switch statement that reads the fork data for
+each special inode type (HFSPLUS_EXT_CNID, HFSPLUS_CAT_CNID,
+HFSPLUS_ALLOC_CNID, HFSPLUS_START_CNID, HFSPLUS_ATTR_CNID).
 
-### 3. Root Cause — Omission in Original Syscall Introduction
+**The bug mechanism**: When `hfsplus_iget()` is called for a system
+inode (inode number < `HFSPLUS_FIRSTUSER_CNID` and !=
+`HFSPLUS_ROOT_CNID`), it calls `hfsplus_system_read_inode()`. This
+function sets up the fork data and address space operations but **never
+sets `i_mode`**. The `i_mode` remains 0 (the default from
+`iget_locked()` → `alloc_inode()`). Zero is not a valid file type - it
+doesn't match any of S_IFDIR, S_IFLNK, S_IFREG, S_IFCHR, S_IFBLK,
+S_IFIFO, or S_IFSOCK.
 
-The original commit `6140be90ec70c` ("fs/xattr: add *at family
-syscalls") introduced all four `*xattrat` syscalls. It correctly added
-`setxattrat` and `removexattrat` to `audit_change_attr.h` (the
-attribute-change class), but **forgot** to add `getxattrat` and
-`listxattrat` to `audit_read.h` (the read class). This is an
-oversight/bug in the original commit.
+When this inode is later opened via a userspace `openat()` syscall
+(triggered by syzbot with a crafted filesystem), `may_open()` is called:
 
-### 4. Affected Stable Trees
+```4175:4232:fs/namei.c
+static int may_open(struct mnt_idmap *idmap, const struct path *path,
+                    int acc_mode, int flag)
+{
+        // ...
+        switch (inode->i_mode & S_IFMT) {
+        case S_IFLNK:
+        // ...
+        case S_IFREG:
+        // ...
+        default:
+                VFS_BUG_ON_INODE(!IS_ANON_FILE(inode), inode);
+        }
+```
 
-- The `*xattrat` syscalls were introduced in **v6.13**.
-- Stable trees **6.13.y through 6.18.y** all have these syscalls defined
-  but are **missing** the audit read class entries.
-- Stable trees **6.12.y and older** do not have the syscalls, so the
-  `#ifdef` guards make this a safe no-op.
-- I verified that 6.14.y has the syscalls AND is missing the audit
-  entries, confirming the bug is present.
+With `i_mode = 0`, the switch falls to the default case, and since HFS+
+special inodes aren't anonymous files, `VFS_BUG_ON_INODE` triggers →
+**kernel BUG** (crash). This is confirmed by the syzbot crash report
+showing `kernel BUG at fs/namei.c:3474` with a full stack trace through
+`may_open` → `do_open` → `path_openat` → `do_filp_open` →
+`do_sys_openat2` → `__x64_sys_openat`.
 
-### 5. Security Impact
+### 3. Relationship to Other Fixes
 
-This is a **security audit bypass**. Linux audit is a critical security
-feature used for:
-- Compliance monitoring (PCI-DSS, HIPAA, SOX)
-- Intrusion detection
-- Forensics
+This is **NOT a duplicate** of `005d4b0d33f6` ("hfsplus: Verify inode
+mode when loading from disk"). That fix addresses a DIFFERENT code path:
 
-The `getxattrat()` syscall can read security-relevant extended
-attributes (like `security.selinux` labels) without triggering audit
-rules. An attacker or unauthorized user could use
-`getxattrat()`/`listxattrat()` instead of `getxattr()`/`listxattr()` to
-enumerate or read extended attributes while evading audit monitoring.
-This is a concrete bypass of security controls.
+- `005d4b0d33f6` fixes `hfsplus_get_perms()` in `fs/hfsplus/inode.c` -
+  validates mode for **user/root inodes** loaded from disk (corrupted
+  on-disk mode)
+- The commit we're analyzing fixes `hfsplus_system_read_inode()` in
+  `fs/hfsplus/super.c` - sets mode for **special/system inodes** that
+  never go through `hfsplus_get_perms()` at all
 
-### 6. Fix Quality
+In `hfsplus_iget()`, the two paths are clearly separated:
+- `inode->i_ino >= HFSPLUS_FIRSTUSER_CNID || inode->i_ino ==
+  HFSPLUS_ROOT_CNID` → `hfsplus_cat_read_inode()` →
+  `hfsplus_get_perms()` (fixed by `005d4b0d33f6`)
+- Otherwise → `hfsplus_system_read_inode()` (fixed by THIS commit)
 
-- **Trivially small**: 6 lines added, no lines removed, no logic changes
-- **Obviously correct**: Follows the exact same `#ifdef __NR_xxx /
-  __NR_xxx, / #endif` pattern used by every other conditional entry in
-  the file
-- **Safe**: The `#ifdef` guards mean it compiles cleanly even if the
-  syscall numbers don't exist
-- **No dependencies**: This is a self-contained fix
-- **Signed off by Paul Moore**: The audit subsystem maintainer
-- **Zero risk of regression**: Adding entries to the read class array
-  cannot break anything; it only makes the audit matching more complete
+Confirmed via grep: there is literally NO `i_mode` reference in
+`fs/hfsplus/super.c` currently.
 
-### 7. Risk vs Benefit
+### 4. CONFIG_DEBUG_VFS Dependency
 
-- **Risk**: Essentially zero. The change is trivially small, obviously
-  correct, guarded by `#ifdef`, and touches only a static array
-  initializer.
-- **Benefit**: Closes a security audit bypass gap for all users of audit
-  on kernels 6.13+.
+The `VFS_BUG_ON_INODE` macro is only active when `CONFIG_DEBUG_VFS` is
+enabled. Without it, it's compiled to `BUILD_BUG_ON_INVALID(cond)` which
+is a no-op at runtime. `CONFIG_DEBUG_VFS` was introduced alongside
+`af153bb63a33` in v6.15 (commit `8b17e540969a`).
+
+So the **crash** only occurs on kernels 6.15+ with `CONFIG_DEBUG_VFS`
+enabled. However, having `i_mode = 0` is technically incorrect on ALL
+kernel versions - any code checking inode type would get wrong results
+for these inodes.
+
+### 5. Scope and Risk Assessment
+
+- **Lines changed**: 6 (including comment) - effectively 1 functional
+  line
+- **Files touched**: 1 (`fs/hfsplus/super.c`)
+- **Risk**: Essentially zero. Setting `S_IFREG` on internal filesystem
+  inodes that previously had no type is strictly an improvement. These
+  inodes are filesystem metadata (btrees, allocation bitmap) - they are
+  file-like data structures, so `S_IFREG` is appropriate.
+- **No behavioral regression**: The fix doesn't change how the
+  filesystem operates; it only ensures the inode has a valid VFS-level
+  type.
+
+### 6. User Impact
+
+- **Who's affected**: Anyone mounting HFS+ filesystems on kernels 6.15+
+  with `CONFIG_DEBUG_VFS`
+- **Severity**: Kernel BUG/crash - system goes down
+- **Trigger**: syzbot demonstrated this with crafted filesystem images,
+  but it could potentially also be triggered with corrupted real HFS+
+  volumes
+- **syzbot confirmed**: 17,716 crashes recorded, reproducible with C
+  reproducer
+
+### 7. Stability Indicators
+
+- Reviewed-by: Viacheslav Dubeyko (HFS+ maintainer)
+- Signed-off-by: Viacheslav Dubeyko (maintainer)
+- syzbot reported with concrete reproducer
+- Part of a series of similar fixes across multiple filesystems (bfs,
+  cramfs, isofs, jfs, minixfs, nilfs2, ntfs3, squashfs) - the ntfs3
+  equivalent `4e8011ffec79` is already merged
+
+### 8. Dependencies
+
+The prerequisite VFS commit `af153bb63a33` exists in 6.15+. For older
+stable trees (6.14 and below), the `VFS_BUG_ON_INODE` doesn't exist, so
+the crash won't happen. However, the fix itself applies cleanly
+regardless of version since `hfsplus_system_read_inode()` has been
+stable for many years. Setting a proper i_mode is correct behavior
+independently of the VFS debug check.
+
+### Conclusion
+
+This is a clear **YES** for stable backporting:
+- Fixes a syzbot-reported kernel BUG (crash) - 17,716 crash instances
+  recorded
+- The fix is one functional line: `inode->i_mode = S_IFREG;`
+- Zero risk of regression
+- Obviously correct - internal inodes should have a valid file type
+- Reviewed and accepted by the subsystem maintainer
+- Complements the already-merged `005d4b0d33f6` by covering a different
+  code path
+- Part of a broader class of fixes across multiple filesystems for the
+  same VFS requirement
 
 **YES**
 
- include/asm-generic/audit_read.h | 6 ++++++
+ fs/hfsplus/super.c | 6 ++++++
  1 file changed, 6 insertions(+)
 
-diff --git a/include/asm-generic/audit_read.h b/include/asm-generic/audit_read.h
-index 7bb7b5a83ae2e..fb9991f53fb6f 100644
---- a/include/asm-generic/audit_read.h
-+++ b/include/asm-generic/audit_read.h
-@@ -4,9 +4,15 @@ __NR_readlink,
- #endif
- __NR_quotactl,
- __NR_listxattr,
-+#ifdef __NR_listxattrat
-+__NR_listxattrat,
-+#endif
- __NR_llistxattr,
- __NR_flistxattr,
- __NR_getxattr,
-+#ifdef __NR_getxattrat
-+__NR_getxattrat,
-+#endif
- __NR_lgetxattr,
- __NR_fgetxattr,
- #ifdef __NR_readlinkat
+diff --git a/fs/hfsplus/super.c b/fs/hfsplus/super.c
+index aaffa9e060a0a..7f327b777ece8 100644
+--- a/fs/hfsplus/super.c
++++ b/fs/hfsplus/super.c
+@@ -53,6 +53,12 @@ static int hfsplus_system_read_inode(struct inode *inode)
+ 		return -EIO;
+ 	}
+ 
++	/*
++	 * Assign a dummy file type, for may_open() requires that
++	 * an inode has a valid file type.
++	 */
++	inode->i_mode = S_IFREG;
++
+ 	return 0;
+ }
+ 
 -- 
 2.51.0
 
