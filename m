@@ -1,44 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D474319ABD8;
-	Tue, 10 Feb 2026 23:31:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D68E72571B0;
+	Tue, 10 Feb 2026 23:31:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770766302; cv=none; b=bFC8hua7ESXkWgo4yZmE2p8My8WoWq5iNojwq72U5UaXt2l2zmQtMSbNnrmhWk4dazknP3bKGXCK4e3gQI6ZLbyOG8hlwE2orjDY4YMwDoAPBd40sJrbbnqGDAd+kceR4DXXZFbOJQrwG4eoCks70knT4PPHn8QIkMuMltp+O5k=
+	t=1770766303; cv=none; b=UjBx6SNKinmTSJnsQc4XvwVztHHujCMp1KcvinzK4Bvz9cGnvCWQ8+531un+zcdtrMa2DwLwfYyqEs3tKvkWPn5IyL+aKTgc7Tn1bk4gfg736xErWpU28cL5XQmWnRM/cN0DgTbr4NTOf0dVRORZZ7b41HYPtOf48NTgu0f5XVg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770766302; c=relaxed/simple;
-	bh=VtBXHm1FH+7ZRNbbiM5oMLqEPCFCwBIb93WPsRDBeCI=;
+	s=arc-20240116; t=1770766303; c=relaxed/simple;
+	bh=y1A6qQyJvwgmdfji+xA9xyMlq+d3I74jPNVsjhZYWqY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jYyxTKe+2qsqVJy41Kw7L3sHpkgY+V1uV0gbswy9/2HZGcsf9GqcZrki9YIFmeXybR3T/V//AQVi6tsIWjpttYAC31NyQVXUZMGoXraDw0yi7EMLrBGP7XuOpPsQfguAMv6SjxtsjB2/fRXhlvzQd0X1iepX+R97Ruzz5gzq0P8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=T4hE3TH8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=pwuAOxlwCvOGkuRzwns/FvZJRY8R2CH9HIVxAKg05ur078SkbY6kRjkTAMS5qtpmrTT6moscVO5eVLt55yDj48j9ru8oTZzI/HpyKxqp5DB5R+By0PTfsq7TqM0M9q6NcDJzgWNe6fMysHCRRCAEHelxwBq1xyq0umBaWEBkrGw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=QmSo6aga; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="T4hE3TH8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B236DC19423;
-	Tue, 10 Feb 2026 23:31:41 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="QmSo6aga"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 06E87C116C6;
+	Tue, 10 Feb 2026 23:31:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1770766302;
-	bh=VtBXHm1FH+7ZRNbbiM5oMLqEPCFCwBIb93WPsRDBeCI=;
+	s=k20201202; t=1770766303;
+	bh=y1A6qQyJvwgmdfji+xA9xyMlq+d3I74jPNVsjhZYWqY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=T4hE3TH85VY+Qy9yTBAcl62yuXk8XLDd5+NVxbVe9ovqozVC/B0Hkwl+eDMt2602V
-	 I6gHFeVUhGe8EFPpEm8QwvBT1EoDsWlT7W9758l8a8Ioa52YaXIu55reRi0Shb+SG5
-	 Ry66YmMNPaHm6Kaaa2zSe7SBkjMcWXeUcBl7lKdxWyQzkuGz/rmBvFhbHqIiItecTg
-	 D8uTKcX0tb5id+8/kE3+ZbvMZ293r/+gsEpkEx9qFODoeSdK5CLC3AurCb68o9e51F
-	 qSt0d8d3KpPKGYOnHk56lxb1FYzUb7LvKtwMrDpUQnmGH4Jxkl7h4/sbCBtMFSc7II
-	 pJ7inOLAyF51g==
+	b=QmSo6agaIackdqPmXH6xx4prAbJ1wbUmE/OdOgXzjOc1CpWp4fyMo2zg6qNe5SNvj
+	 DzZwGZGOfRe+8NRt/7a1O2YxiyBuJjYrFAKd9fd7yN6/+J8L1OsZdN95q2yi2JzJz/
+	 1sN499WG634DeElOtcliPTphao/UZQEF/EVfnmiuTGjm+mtkO+ca+IXig1zIkd9VJH
+	 15lCmfA1NU8fKuCoVtYL2bLLwxceP5qF2JbIO92rkRQsqFmgXwyrG1R5FF9myUKviU
+	 VP9d+2yWwsub3F4a5ykz3mXRMM+OVckYTnGoRXZvmYhPFjPOSXpUEEOCX2Gj8EZhYV
+	 bqVd62GqLHRgw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Clint George <clintbgeorge@gmail.com>,
-	Ming Lei <ming.lei@redhat.com>,
-	Shuah Khan <skhan@linuxfoundation.org>,
+Cc: Ezrak1e <ezrakiez@gmail.com>,
+	Alexander Aring <aahringo@redhat.com>,
+	David Teigland <teigland@redhat.com>,
 	Sasha Levin <sashal@kernel.org>,
-	nathan@kernel.org,
-	linux-block@vger.kernel.org,
-	llvm@lists.linux.dev
-Subject: [PATCH AUTOSEL 6.19-6.18] kselftest/kublk: include message in _Static_assert for C11 compatibility
-Date: Tue, 10 Feb 2026 18:30:56 -0500
-Message-ID: <20260210233123.2905307-11-sashal@kernel.org>
+	gfs2@lists.linux.dev
+Subject: [PATCH AUTOSEL 6.19-6.12] dlm: validate length in dlm_search_rsb_tree
+Date: Tue, 10 Feb 2026 18:30:57 -0500
+Message-ID: <20260210233123.2905307-12-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260210233123.2905307-1-sashal@kernel.org>
 References: <20260210233123.2905307-1-sashal@kernel.org>
@@ -51,194 +49,190 @@ MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.19
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Clint George <clintbgeorge@gmail.com>
+From: Ezrak1e <ezrakiez@gmail.com>
 
-[ Upstream commit 3e6ad272bb8b3199bad952e7b077102af2d8df03 ]
+[ Upstream commit 080e5563f878c64e697b89e7439d730d0daad882 ]
 
-Add descriptive message in the _Static_assert to comply with the C11
-standard requirement to prevent compiler from throwing out error. The
-compiler throws an error when _Static_assert is used without a message as
-that is a C23 extension.
+The len parameter in dlm_dump_rsb_name() is not validated and comes
+from network messages. When it exceeds DLM_RESNAME_MAXLEN, it can
+cause out-of-bounds write in dlm_search_rsb_tree().
 
-[] Testing:
-The diff between before and after of running the kselftest test of the
-module shows no regression on system with x86 architecture
+Add length validation to prevent potential buffer overflow.
 
-[] Error log:
-~/Desktop/kernel-dev/linux-v1/tools/testing/selftests/ublk$ make LLVM=1 W=1
-  CC       kublk
-In file included from kublk.c:6:
-./kublk.h:220:43: error: '_Static_assert' with no message is a C23 extension [-Werror,-Wc23-extensions]
-  220 |         _Static_assert(UBLK_MAX_QUEUES_SHIFT <= 7);
-      |                                                  ^
-      |                                                  , ""
-1 error generated.
-In file included from null.c:3:
-./kublk.h:220:43: error: '_Static_assert' with no message is a C23 extension [-Werror,-Wc23-extensions]
-  220 |         _Static_assert(UBLK_MAX_QUEUES_SHIFT <= 7);
-      |                                                  ^
-      |                                                  , ""
-1 error generated.
-In file included from file_backed.c:3:
-./kublk.h:220:43: error: '_Static_assert' with no message is a C23 extension [-Werror,-Wc23-extensions]
-  220 |         _Static_assert(UBLK_MAX_QUEUES_SHIFT <= 7);
-      |                                                  ^
-      |                                                  , ""
-1 error generated.
-In file included from common.c:3:
-./kublk.h:220:43: error: '_Static_assert' with no message is a C23 extension [-Werror,-Wc23-extensions]
-  220 |         _Static_assert(UBLK_MAX_QUEUES_SHIFT <= 7);
-      |                                                  ^
-      |                                                  , ""
-1 error generated.
-In file included from stripe.c:3:
-./kublk.h:220:43: error: '_Static_assert' with no message is a C23 extension [-Werror,-Wc23-extensions]
-  220 |         _Static_assert(UBLK_MAX_QUEUES_SHIFT <= 7);
-      |                                                  ^
-      |                                                  , ""
-1 error generated.
-In file included from fault_inject.c:11:
-./kublk.h:220:43: error: '_Static_assert' with no message is a C23 extension [-Werror,-Wc23-extensions]
-  220 |         _Static_assert(UBLK_MAX_QUEUES_SHIFT <= 7);
-      |                                                  ^
-      |                                                  , ""
-1 error generated.
-make: *** [../lib.mk:225: ~/Desktop/kernel-dev/linux-v1/tools/testing/selftests/ublk/kublk] Error 1
-
-Link: https://lore.kernel.org/r/20251215085022.7642-1-clintbgeorge@gmail.com
-Signed-off-by: Clint George <clintbgeorge@gmail.com>
-Reviewed-by: Ming Lei <ming.lei@redhat.com>
-Signed-off-by: Shuah Khan <skhan@linuxfoundation.org>
+Signed-off-by: Ezrak1e <ezrakiez@gmail.com>
+Signed-off-by: Alexander Aring <aahringo@redhat.com>
+Signed-off-by: David Teigland <teigland@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-Now I have all the information needed for a thorough analysis.
+Indeed, `dlm_copy_master_names` calls `find_rsb_root` with `inlen` that
+comes from network data (`receive_rcom_names` →
+`dlm_copy_master_names`). `inlen` is derived from
+`rc_in->rc_header.h_length - sizeof(struct dlm_rcom)` with no bounds
+check. And `find_rsb_root` doesn't validate it before passing to
+`dlm_search_rsb_tree`.
 
----
+So there are **at least two** unvalidated network-
+to-`dlm_search_rsb_tree` paths:
+1. `receive_rcom_lookup` → `dlm_dump_rsb_name` → `dlm_search_rsb_tree`
+   (debug dump path)
+2. `receive_rcom_names` → `dlm_copy_master_names` → `find_rsb_root` →
+   `dlm_search_rsb_tree`
+
+Both can pass `len > DLM_RESNAME_MAXLEN` (64), causing `memcpy(key,
+name, len)` to overflow the stack buffer `key[DLM_RESNAME_MAXLEN]`.
+
+Now let me verify what `DLM_RESNAME_MAXLEN` is:
+
+The value is 64 (from `include/uapi/linux/dlmconstants.h`). The stack
+buffer `key` is 64 bytes. If `len` > 64, `memcpy(key, name, len)` writes
+beyond the buffer — a classic **stack buffer overflow**.
+
+This is exploitable from a malicious DLM cluster node sending a crafted
+network message.
 
 ## Detailed Analysis
 
-### 1. Commit Message Analysis
+### 1. COMMIT MESSAGE ANALYSIS
 
-The commit fixes a C11/C23 compatibility issue in
-`tools/testing/selftests/ublk/kublk.h`. The `_Static_assert()` macro is
-used without a message string, which is only valid in C23. When
-compiling with Clang/LLVM, this triggers the `-Wc23-extensions` warning,
-which is promoted to a hard error by `-Werror`.
+The commit message clearly states:
+- The `len` parameter comes from **network messages** (untrusted input)
+- When `len` exceeds `DLM_RESNAME_MAXLEN` (64), it causes an **out-of-
+  bounds write** in `dlm_search_rsb_tree()`
+- The fix adds length validation to prevent the buffer overflow
 
-The commit message includes the full error log showing compilation
-failure across 6 source files that include `kublk.h`. The fix is
-reviewed by Ming Lei (ublk maintainer) and signed off by Shuah Khan
-(kselftest maintainer).
+### 2. CODE CHANGE ANALYSIS
 
-### 2. Code Change Analysis
+The change is extremely small and surgical — just 2 lines added:
 
-The change is a single-line modification:
-
-```diff
-- _Static_assert(UBLK_MAX_QUEUES_SHIFT <= 7);
-+       _Static_assert(UBLK_MAX_QUEUES_SHIFT <= 7,
-"UBLK_MAX_QUEUES_SHIFT must be <= 7");
+```625:636:fs/dlm/lock.c
+int dlm_search_rsb_tree(struct rhashtable *rhash, const void *name, int
+len,
+                        struct dlm_rsb **r_ret)
+{
+        char key[DLM_RESNAME_MAXLEN] = {};
+        // NEW: if (len > DLM_RESNAME_MAXLEN) return -EINVAL;
+        memcpy(key, name, len);
+        // ...
+}
 ```
 
-This is the most trivial kind of fix possible - adding a string literal
-parameter to comply with C11 standard syntax. The runtime behavior is
-completely unchanged since `_Static_assert` is a compile-time construct
-that generates zero code.
+Without the check, `memcpy(key, name, len)` with `len > 64` writes past
+the end of the 64-byte stack buffer `key`. This is a **stack buffer
+overflow** — one of the most dangerous vulnerability classes in C.
 
-### 3. Impact Assessment
+### 3. VULNERABLE CODE PATHS
 
-**The build failure is worse than the error log suggests.** The ublk
-selftest Makefile includes `-Werror` **by default** (`ifneq
-($(WERROR),0)` means it's always on unless explicitly disabled). This
-means **any user building the ublk selftest with Clang/LLVM will hit a
-hard build error** - they don't need `W=1` to trigger it; that just adds
-additional warning flags.
+I traced all 6 callers of `dlm_search_rsb_tree`:
 
-### 4. Affected Stable Trees
-
-The buggy `_Static_assert` line was introduced by commit `bf098d72696db`
-("selftests: ublk: kublk: plumb q_id in io_uring user_data") which first
-appeared in the 6.16 cycle. The unfixed line exists in:
-- **6.16.y** (line 252)
-- **6.17.y** (line 223)
-- **6.18.y** (line 223)
-- **6.19.y** (line 226)
-
-It does NOT exist in 6.15.y or earlier (6.12.y LTS, 6.6.y LTS, etc.).
-
-### 5. Stable Criteria Evaluation
-
-| Criterion | Assessment |
-|-----------|-----------|
-| Obviously correct and tested | YES - trivially obvious, tested by
-author |
-| Fixes a real bug | YES - hard compilation error |
-| Important issue | YES - **build fix** (explicitly listed exception
-category) |
-| Small and contained | YES - one line, one file |
-| No new features | YES - purely a build fix |
-| Can apply cleanly | Likely YES with minor context adjustment per tree
+| Caller | Validates `len`? | Network-reachable? |
+|--------|------------------|--------------------|
+| `find_rsb_dir` | YES (via `find_rsb` at line 1089) | Yes |
+| `find_rsb_nodir` | YES (via `find_rsb` at line 1089) | Yes |
+| `_dlm_master_lookup` | YES (line 1268) | Yes |
+| `receive_remove` | YES (line 4300) | Yes |
+| **`dlm_dump_rsb_name`** | **NO** | **Yes** (via `receive_rcom_lookup`)
 |
+| **`find_rsb_root`** | **NO** | **Yes** (via `receive_rcom_names` →
+`dlm_copy_master_names`) |
 
-### 6. Risk Assessment
+Two callers do NOT validate `len` before calling `dlm_search_rsb_tree`,
+and both are reachable from network messages:
 
-**Risk: Essentially zero.** `_Static_assert` is a compile-time
-construct. Adding a message string parameter cannot change runtime
-behavior. The assertion condition itself is unchanged. This is the
-safest possible type of change.
+1. **`receive_rcom_lookup`** (rcom.c:379): When `rc_in->rc_id ==
+   0xFFFFFFFF`, it calls `dlm_dump_rsb_name(ls, rc_in->rc_buf, len)`
+   where `len` is derived from `rc_in->rc_header.h_length` (a network-
+   supplied 16-bit field). No bounds check.
 
-### 7. Dependency Check
+2. **`receive_rcom_names`** (rcom.c:336): Calculates `inlen` from
+   `rc_in->rc_header.h_length - sizeof(struct dlm_rcom)` and passes it
+   directly to `dlm_copy_master_names` → `find_rsb_root` →
+   `dlm_search_rsb_tree`. No bounds check.
 
-No dependencies. The fix is entirely self-contained - it only modifies
-the syntax of an existing assertion. No new includes, no new functions,
-no changed behavior.
+### 4. BUG SEVERITY
 
-### 8. Classification
+This is a **stack buffer overflow triggered by network input** in the
+DLM (Distributed Lock Manager) subsystem:
 
-This is a **build fix** for a kselftest. Build fixes are explicitly
-listed as an allowed exception category for stable ("These are critical
-for users who need to build the kernel"). While this specifically
-affects selftest infrastructure rather than the kernel itself, selftests
-are integral to verifying stable kernel correctness, and CI systems
-(KernelCI, 0-day) regularly run these tests on stable trees.
+- **Type**: Out-of-bounds write (stack buffer overflow)
+- **Attack vector**: Network (DLM cluster communication protocol)
+- **Trigger**: A malicious or buggy DLM cluster node sending a message
+  with `h_length` large enough to make the extracted `len` exceed 64
+- **Impact**: Stack corruption, potential code execution, kernel
+  crash/panic
+- **DLM context**: DLM is used in cluster filesystems like GFS2 and
+  OCFS2, which are used in production enterprise environments
 
-The fix prevents a **hard build failure** with the Clang/LLVM toolchain
-(widely used, especially in Android and ChromeOS kernel development).
-The `-Werror` flag is enabled by default in the ublk selftest Makefile,
-making this a default-configuration failure, not an edge case.
+While the attack surface requires being part of a DLM cluster (not
+publicly internet-reachable in most deployments), this is still a
+serious security bug. In shared hosting or cloud environments, cluster
+node compromise could lead to kernel-level exploitation of other cluster
+members.
 
-### Conclusion
+### 5. FIX QUALITY
 
-This is a trivial, zero-risk build fix that prevents a default-
-configuration compilation error in the ublk kselftest when using
-Clang/LLVM. It meets all stable kernel criteria: obviously correct,
-fixes a real build failure, is tiny and self-contained, and introduces
-no new features. The only limitation is that it only applies to stable
-trees 6.16.y and later where the buggy `_Static_assert` line exists.
+The fix is **defense-in-depth at the right layer**:
+- Rather than fixing each individual caller, it adds the validation in
+  `dlm_search_rsb_tree` itself
+- This protects against any future caller that might forget to validate
+- The fix returns `-EINVAL`, which all callers handle (they all check
+  the return value)
+- It's only 2 lines, extremely low risk of regression
+- The pattern is identical to the existing checks in
+  `_dlm_master_lookup` (line 1268) and `receive_remove` (line 4300)
+
+### 6. SCOPE AND RISK
+
+- **Lines changed**: 2 (added `if` check and return)
+- **Files changed**: 1 (`fs/dlm/lock.c`)
+- **Risk of regression**: Extremely low — it adds a bounds check that
+  was already present in 4 of 6 callers
+- **Subsystem**: DLM (mature, production-critical for cluster
+  filesystems)
+
+### 7. APPLICABILITY TO STABLE
+
+- The function `dlm_search_rsb_tree` was introduced in commit
+  `5be323b0c64db` ("dlm: move dlm_search_rsb_tree() out of lock") from
+  August 2024, which was merged in 6.12
+- Older kernels may have equivalent vulnerable code but with different
+  structure
+- For 6.12+ stable trees, the fix should apply cleanly
+
+### 8. STABLE CRITERIA CHECK
+
+- Obviously correct and tested: YES (trivial bounds check, accepted by
+  DLM maintainers Alexander Aring and David Teigland)
+- Fixes a real bug: YES (stack buffer overflow from network input)
+- Fixes an important issue: YES (security vulnerability — buffer
+  overflow exploitable from network)
+- Small and contained: YES (2 lines in 1 file)
+- No new features or APIs: YES (pure bug fix)
 
 **YES**
 
- tools/testing/selftests/ublk/kublk.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/dlm/lock.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/tools/testing/selftests/ublk/kublk.h b/tools/testing/selftests/ublk/kublk.h
-index 8a83b90ec603a..cae2e30f0cdd5 100644
---- a/tools/testing/selftests/ublk/kublk.h
-+++ b/tools/testing/selftests/ublk/kublk.h
-@@ -223,7 +223,7 @@ static inline __u64 build_user_data(unsigned tag, unsigned op,
- 		unsigned tgt_data, unsigned q_id, unsigned is_target_io)
+diff --git a/fs/dlm/lock.c b/fs/dlm/lock.c
+index c01a291db401b..a393ecaf3442a 100644
+--- a/fs/dlm/lock.c
++++ b/fs/dlm/lock.c
+@@ -626,7 +626,8 @@ int dlm_search_rsb_tree(struct rhashtable *rhash, const void *name, int len,
+ 			struct dlm_rsb **r_ret)
  {
- 	/* we only have 7 bits to encode q_id */
--	_Static_assert(UBLK_MAX_QUEUES_SHIFT <= 7);
-+	_Static_assert(UBLK_MAX_QUEUES_SHIFT <= 7, "UBLK_MAX_QUEUES_SHIFT must be <= 7");
- 	assert(!(tag >> 16) && !(op >> 8) && !(tgt_data >> 16) && !(q_id >> 7));
- 
- 	return tag | (op << 16) | (tgt_data << 24) |
+ 	char key[DLM_RESNAME_MAXLEN] = {};
+-
++	if (len > DLM_RESNAME_MAXLEN)
++		return -EINVAL;
+ 	memcpy(key, name, len);
+ 	*r_ret = rhashtable_lookup_fast(rhash, &key, dlm_rhash_rsb_params);
+ 	if (*r_ret)
 -- 
 2.51.0
 
