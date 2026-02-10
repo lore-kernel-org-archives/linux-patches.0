@@ -1,43 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D9C6330B2B;
-	Tue, 10 Feb 2026 23:31:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 083C319ABD8;
+	Tue, 10 Feb 2026 23:31:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770766316; cv=none; b=tYcGGJ9RJNE4hh11hk7M8IpfFlox4hF6mFzMykHu/pmVI49XlBeI5DWHkvDorr1jXXEg+YPhSE9/fdrtgc7/sBevUSXQnN6nBQq3Oq6giFBNARdx5KEY9XlNx4239bV0kDNFb3GqZHTDjBRs31rPH0/yPAN0wlTCAncb8yAVCok=
+	t=1770766318; cv=none; b=QtVQuz8VnXxty+Et5fUF/5uRfextLzm26MLHJNiqTgwdXsdWW+4N/SfJJmuOi9LaB7ft5a7SN8t0dMtEuqyeoAyeKeKAVlZ2EjPY6GuJmX2Y6UYcjJg2h0rtO4XviISoR8ElnUe027vJ6lwo4sunlzDeABXSMN/NfUaKYUJ1erA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770766316; c=relaxed/simple;
-	bh=IKps1hgMKY0vItQ90CPLpkMg7cJJgfAbLUAUMpdaEEQ=;
+	s=arc-20240116; t=1770766318; c=relaxed/simple;
+	bh=xrQZpZc1cemHRFxOCyXuTqEhnDLVKayiGat5slvaY4A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eyqdMrnBnFFpYKgww5bWRPCv5Q6ypYRA2EaukFnzbV008AdK73t2R0oaY6LukMdCYFjEv4UKr5Bv/pnteVlrC/j25LZvBf3RJwrFCsMYJl3TlUvlKJ3ZU9doa9V3BIHN23WhZ8n3nwojo1qU6lm94dt2YzQ9kREivwdsaObAW8E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=cbkjvpcI; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=q9ZvEfCVXJYdttsrFeGqwM8Gx8/QvPqQpIfoT+psx+eZvbITOfVELd2QwUkVwLmbCcDtTABmq543Wf3iOGVr81ArMKDXTJqqFrURKm2YquBb0HSVO1hGX14iGRsSxEEhv60lJqwJHatr1DUmIB8xdsxGW7Rd5WFBvE+Q1Bcn4LA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=OWssTH/G; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="cbkjvpcI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8AAF9C4AF09;
-	Tue, 10 Feb 2026 23:31:55 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="OWssTH/G"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B8A77C116C6;
+	Tue, 10 Feb 2026 23:31:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1770766316;
-	bh=IKps1hgMKY0vItQ90CPLpkMg7cJJgfAbLUAUMpdaEEQ=;
+	s=k20201202; t=1770766317;
+	bh=xrQZpZc1cemHRFxOCyXuTqEhnDLVKayiGat5slvaY4A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cbkjvpcIrFPe4Q4bs6G3Gup01WGZdu6QIp3y6hMmPAZYN8KE76JmOPCtTv4Wg3NLH
-	 WUMe5OVVGb17VmeDaziUUSk5teVI7S+Imf5xn86kVeHcKKwRVsXq99V+1aD25DENkV
-	 hBFrCe9GHuMFYrQMnrfQcbwzXMc9g8ed9ouIwPnKS1mqEu6tP6m/SsUjbiGAIXdVr2
-	 kR+EFe80QArc3rKGzwL+Z0bYs+j7wG4FK2+UJb9NLTQkLp0xI5kIZ/RU4oZx/ResqF
-	 JwSqVUfz+8wAzeWcfER6DCLf+0ClgcrZcTIrw5zavNnEvGtSny9wlHEgQxLvICUfA9
-	 TqyQGWQSa7Sdg==
+	b=OWssTH/GqZOR4gRxDexYNvLEJHynn5dhypdx0ZeD7yJUdoBjSOCS891KJMscV8BhL
+	 odVAnPWZcaiMdoAqbSegqxszd/V0YI6w8adjLvJjL1qmxlODKtysWqTn/TzE7L4mgV
+	 bwEXADDs1UlFXbOGGq1zLXrlbWe55GkKIPMRjnbe910IYQoz7bBs4VlP/U9OKmCaBt
+	 Znk2mCN3TiNCLgvKGPOQLBnDTYrAQ+Tck4RkNU7heQ9ZG0CCP/z8A/uyrSRkQ6N313
+	 knaow3zLjSgnsQPT7UKWAuMLTe4ARom+LI4CUlamH0ZcqGYb9TWinOdUZ81E3K2gt9
+	 heKW1M3YR629Q==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Jori Koolstra <jkoolstra@xs4all.nl>,
-	syzbot+17cc9bb6d8d69b4139f0@syzkaller.appspotmail.com,
-	Viacheslav Dubeyko <slava@dubeyko.com>,
+Cc: Henrique Carvalho <henrique.carvalho@suse.com>,
+	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>,
-	frank.li@vivo.com,
-	linux-fsdevel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.19] hfs: Replace BUG_ON with error handling for CNID count checks
-Date: Tue, 10 Feb 2026 18:31:06 -0500
-Message-ID: <20260210233123.2905307-21-sashal@kernel.org>
+	sfrench@samba.org,
+	linux-cifs@vger.kernel.org,
+	samba-technical@lists.samba.org
+Subject: [PATCH AUTOSEL 6.19-6.1] smb: client: add proper locking around ses->iface_last_update
+Date: Tue, 10 Feb 2026 18:31:07 -0500
+Message-ID: <20260210233123.2905307-22-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260210233123.2905307-1-sashal@kernel.org>
 References: <20260210233123.2905307-1-sashal@kernel.org>
@@ -50,415 +50,191 @@ MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.19
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jori Koolstra <jkoolstra@xs4all.nl>
+From: Henrique Carvalho <henrique.carvalho@suse.com>
 
-[ Upstream commit b226804532a875c10276168dc55ce752944096bd ]
+[ Upstream commit e97dcac3dc0bd37e4b56aaa6874b572a3a461102 ]
 
-In a06ec283e125 next_id, folder_count, and file_count in the super block
-info were expanded to 64 bits, and BUG_ONs were added to detect
-overflow. This triggered an error reported by syzbot: if the MDB is
-corrupted, the BUG_ON is triggered. This patch replaces this mechanism
-with proper error handling and resolves the syzbot reported bug.
+There is a missing ses->iface_lock in cifs_setup_session,
+around ses->iface_last_update.
 
-Singed-off-by: Jori Koolstra <jkoolstra@xs4all.nl>
-Reported-by: syzbot+17cc9bb6d8d69b4139f0@syzkaller.appspotmail.com
-Closes: https://syzbot.org/bug?extid=17cc9bb6d8d69b4139f0
-Signed-off-by: Jori Koolstra <jkoolstra@xs4all.nl>
-Reviewed-by: Viacheslav Dubeyko <slava@dubeyko.com>
-Signed-off-by: Viacheslav Dubeyko <slava@dubeyko.com>
-Link: https://lore.kernel.org/r/20251220191006.2465256-1-jkoolstra@xs4all.nl
-Signed-off-by: Viacheslav Dubeyko <slava@dubeyko.com>
+Signed-off-by: Henrique Carvalho <henrique.carvalho@suse.com>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-Now I have the complete picture. Let me write the final analysis.
+The locking infrastructure and documentation are identical in the stable
+branch. Now I have all the information needed for a thorough analysis.
 
 ---
 
-## Comprehensive Analysis
+## Complete Analysis
 
 ### 1. COMMIT MESSAGE ANALYSIS
 
-The commit message clearly states:
-- It fixes BUG_ON() calls introduced by commit `a06ec283e125` ("hfs: add
-  logic of correcting a next unused CNID")
-- The BUG_ON triggers on corrupted MDB (Master Directory Block) data
-- Reported by syzbot with a reproducible crash
-- Reviewed by the HFS subsystem maintainer (Viacheslav Dubeyko)
+The commit subject is "smb: client: add proper locking around
+ses->iface_last_update". The body explains that there is a "missing
+ses->iface_lock in cifs_setup_session, around ses->iface_last_update."
+This is a direct, clear statement of a locking bug fix. The commit is
+authored by Henrique Carvalho (SUSE employee) and accepted by Steve
+French (the SMB/CIFS maintainer).
 
 ### 2. CODE CHANGE ANALYSIS
 
-The patch touches 5 files within `fs/hfs/`:
+The patch is minimal — exactly 2 lines added:
 
-**a) `fs/hfs/inode.c` - `hfs_new_inode()`:** Replaces three
-`BUG_ON(value > U32_MAX)` checks with proper error handling:
-- If `next_id > U32_MAX`: reverses the `atomic64_inc`, prints error,
-  jumps to `out_discard` which calls `iput(inode)` then returns
-  `ERR_PTR(-ERANGE)`
-- If `folder_count > U32_MAX`: same pattern with `atomic64_dec` rollback
-- If `file_count > U32_MAX`: same pattern
-- The function return type changes from `NULL` on error to `ERR_PTR()`
-  on error
+```c
++               spin_lock(&ses->iface_lock);
+                ses->iface_last_update = 0;
++               spin_unlock(&ses->iface_lock);
+```
 
-**b) `fs/hfs/inode.c` - `hfs_delete_inode()`:** Removes two `BUG_ON()`
-calls that checked counts before decrementing. These are safe to remove
-because the increment path now prevents exceeding U32_MAX.
+This wraps the write to `ses->iface_last_update` (which forces an
+interface list refresh) with the `ses->iface_lock` spinlock.
 
-**c) `fs/hfs/dir.c` - `hfs_create()` and `hfs_mkdir()`:** Updated
-callers to check `IS_ERR(inode)` / `PTR_ERR(inode)` instead of `!inode`,
-matching the new return convention.
+### 3. BUG MECHANISM — THE DATA RACE
 
-**d) `fs/hfs/dir.c` - `hfs_remove()`:** Adds a pre-check via
-`is_hfs_cnid_counts_valid()` before removing files/directories to
-prevent operations on a corrupted filesystem.
+**The documentation is unambiguous.** In `fs/smb/client/cifsglob.h`:
 
-**e) `fs/hfs/mdb.c` - `hfs_mdb_commit()`:** Removes three `BUG_ON()`
-calls in the MDB commit path. These were the most dangerous - they could
-trigger during periodic writeback work, causing a panic even without
-user interaction after mount.
+```1111:1123:fs/smb/client/cifsglob.h
+ - iface_lock should be taken when accessing any of these fields
+ */
+spinlock_t iface_lock;
+/* ========= begin: protected by iface_lock ======== */
+struct list_head iface_list;
+size_t iface_count;
+unsigned long iface_last_update; /* jiffies */
+/* ========= end: protected by iface_lock ======== */
+```
 
-**f) `fs/hfs/mdb.c` - `hfs_mdb_get()`:** Adds mount-time validation via
-`is_hfs_cnid_counts_valid()`. If the on-disk values are corrupted (>
-U32_MAX), the filesystem is forced to read-only mode, preventing the
-BUG_ON paths from ever being reached.
+And in the locking documentation at lines 2000-2002:
 
-**g) `fs/hfs/mdb.c` - `is_hfs_cnid_counts_valid()`:** New helper
-function that validates all three CNID-related counters.
+```2000:2002:fs/smb/client/cifsglob.h
+ - cifs_ses->iface_lock            cifs_ses->iface_list
+   sesInfoAlloc
+ - ->iface_count
+ - ->iface_last_update
+```
 
-**h) `fs/hfs/super.c` - `hfs_sync_fs()` and `flush_mdb()`:** Adds
-`is_hfs_cnid_counts_valid()` calls before `hfs_mdb_commit()` as an extra
-safety check.
+`iface_last_update` is explicitly documented as protected by
+`iface_lock`. The buggy code at `connect.c:4273` writes to this field
+without holding the lock.
 
-### 3. THE BUG MECHANISM
+**Concurrent access paths that create the race:**
 
-Commit `a06ec283e125` (merged in v6.18) expanded `next_id`,
-`file_count`, and `folder_count` from `u32` to `atomic64_t` for
-atomicity, and added `BUG_ON()` to detect overflow past `U32_MAX`.
-However, these values are read from the on-disk MDB at mount time via
-`be32_to_cpu()` into `atomic64_t`. If the MDB is corrupted such that
-these 32-bit on-disk values, when interpreted, lead to increments past
-`U32_MAX` (the on-disk `drNxtCNID` could be `0xFFFFFFFF` or similar),
-then creating a new file triggers `BUG_ON(next_id > U32_MAX)` at line
-222 of `inode.c`.
+1. **Writer (buggy, in `cifs_setup_session`):** Sets
+   `ses->iface_last_update = 0` during session reconnect — called from
+   `smb2_reconnect()`, `cifs_reconnect_tcon()`, `cifs_get_smb_ses()`,
+   and `cifs_ses_add_channel()`.
 
-The syzbot crash report confirms this exact scenario:
-- **Crash site:** `kernel BUG at fs/hfs/inode.c:222` in
-  `hfs_new_inode()`
-- **Call path:** `openat() -> path_openat() -> lookup_open() ->
-  hfs_create() -> hfs_new_inode()`
-- **Trigger:** Opening a file for creation on a corrupted HFS filesystem
-  image
-- **Impact:** Instant kernel panic/oops (invalid opcode trap from
-  BUG_ON)
+2. **Reader (in `SMB3_request_interfaces`, smb2ops.c:828):** Reads
+   `iface_last_update` as an optimization check before performing an
+   expensive ioctl. This is called from the
+   `smb2_query_server_interfaces` delayed work that runs periodically
+   every `SMB_INTERFACE_POLL_INTERVAL` seconds.
 
-### 4. DEPENDENCY ANALYSIS
+3. **Reader/Writer (in `parse_server_interfaces`, smb2ops.c:641):**
+   Reads `iface_last_update` with `iface_lock` held, writes
+   `iface_last_update` at lines 669 and 798.
 
-**Critical dependency:** This fix ONLY applies to kernels containing
-`a06ec283e125`, which first appeared in v6.18-rc1. The BUG_ON code does
-not exist in v6.17 or earlier kernels. In those older kernels,
-`next_id`, `file_count`, and `folder_count` are plain `u32` with simple
-`++`/`--` operations and no overflow checks.
+**The concrete race scenario:** Thread A is doing a session reconnect
+and calls `cifs_setup_session()` which writes `iface_last_update = 0`
+without the lock. Concurrently, Thread B (the periodic delayed work
+`smb2_query_server_interfaces`) calls
+`SMB3_request_interfaces`/`parse_server_interfaces` which reads
+`iface_last_update` under `iface_lock`. This is a classic data race
+where a writer and reader access shared data without consistent
+synchronization.
 
-- **v6.18.y stable:** Has the BUG_ON (confirmed in v6.18.5). NEEDS this
-  fix.
-- **v6.12.y and older:** Does NOT have the BUG_ON. Does NOT need this
-  fix.
+On weakly-ordered architectures (ARM64), this can lead to the reader
+seeing a torn or stale value of `iface_last_update`, potentially causing
+the interface list not to be refreshed when it should be (or vice
+versa). Even on x86-64 where `unsigned long` writes are naturally
+atomic, this violates the documented locking discipline and could
+confuse KCSAN (Kernel Concurrency Sanitizer).
 
-### 5. SEVERITY AND IMPACT
+### 4. SCOPE AND RISK ASSESSMENT
 
-- **Severity:** HIGH. This is a kernel BUG/panic triggered by corrupted
-  filesystem data. Any user mounting a damaged or maliciously crafted
-  HFS image can crash the kernel.
-- **Attack surface:** HFS images can come from USB sticks, CD-ROMs, disk
-  images, or network mounts. The crash is reachable from the `openat()`
-  syscall (creating a file on a mounted corrupted HFS).
-- **Security implications:** A crafted HFS image can crash the kernel,
-  constituting a denial-of-service vulnerability. This is especially
-  concerning for systems that auto-mount removable media.
+- **Size:** 2 lines added — the smallest possible fix
+- **Files touched:** 1 (`fs/smb/client/connect.c`)
+- **Risk of regression:** Extremely low. The added
+  `spin_lock/spin_unlock` pair is properly nested inside the already-
+  held `ses_lock`. Looking at the locking hierarchy documented in
+  `cifsglob.h`, `ses_lock` and `iface_lock` are independent spinlocks
+  (no nested ordering requirement documented). The critical section is
+  one `unsigned long` assignment — negligible contention.
+- **Subsystem:** SMB client — a filesystem used by many enterprise users
+  for networked file access
 
-### 6. RISK ASSESSMENT
+### 5. USER IMPACT
 
-- **Size:** ~130 lines changed across 5 files, all within `fs/hfs/`
-- **Scope:** Entirely contained to the HFS filesystem subsystem
-- **Pattern:** Well-understood "replace BUG_ON with error handling"
-  pattern
-- **Quality:** Reviewed by the HFS maintainer, tested by syzbot (patch
-  testing passed), and went through 4 patch revisions (v1 through v4)
-- **Risk:** LOW. The changes are:
-  - Mount-time validation forces corrupted filesystems read-only (safe)
-  - BUG_ON replaced with `return ERR_PTR(-ERANGE)` (graceful failure)
-  - Callers updated to handle the new error convention
-  - Atomic rollbacks on error (correct)
+This affects all users of the SMB/CIFS client who use multichannel
+sessions (Azure files, enterprise NAS). The race occurs during session
+reconnect — a critical recovery path that fires when a server connection
+drops. The race could cause:
+- **Missed interface refresh:** If the write to `iface_last_update = 0`
+  tears or is lost due to the race, the client might not refresh the
+  interface list during reconnect, potentially connecting secondary
+  channels to stale/wrong IP addresses
+- **Incorrect reconnection behavior:** After a server failover (common
+  with Azure files), secondary channels might connect to the wrong
+  server
 
-### 7. MINOR CONCERNS
+### 6. AFFECTED VERSIONS
 
-- There's a minor whitespace issue (spaces vs tabs in `out_discard:`
-  label indentation and `hfs_remove()`) - cosmetic only, no functional
-  impact
-- The `is_hfs_cnid_counts_valid()` calls in `hfs_sync_fs()` and
-  `flush_mdb()` only print warnings but don't prevent `hfs_mdb_commit()`
-  from running - however, the BUG_ONs in `hfs_mdb_commit()` are already
-  removed, so this is a soft warning rather than crash prevention
-- The commit has a typo "Singed-off-by" (should be "Signed-off-by") but
-  this doesn't affect the code
+The buggy commit `d9a6d78096056a3cb5c5f07a730ab92f2f9ac4e6` was
+introduced in v6.7-rc1 and was already backported to stable branches:
+- 6.1.y (as `c9569bfd2868`)
+- 6.6.y (as `aabf4851d160`)
+- 6.12.y (as `d9a6d78096056`)
 
-### 8. CONCLUSION
+The code context is identical in all these branches — the fix applies
+cleanly.
 
-This is a textbook stable backport candidate:
-- Fixes a syzbot-reported, reproducible kernel BUG/panic
-- The bug is triggered from userspace via a common syscall path
-  (`openat()`)
-- Corrupted filesystem images are a well-known attack vector
-- The fix is contained, reviewed, and follows the standard "BUG_ON ->
-  error handling" pattern
-- It applies specifically to v6.18.y stable which contains the buggy
-  BUG_ON code
+### 7. DEPENDENCY CHECK
 
-The fix is small, surgical, and meets all stable kernel criteria.
+This fix is completely self-contained. It requires only:
+- `ses->iface_lock` spinlock to exist (present since the multichannel
+  feature was added)
+- The `iface_last_update` field to be in the `iface_lock`-protected
+  region (documented since its introduction)
+
+No other commits are needed.
+
+### 8. CLASSIFICATION
+
+This is a **race condition fix** (data race on a shared variable
+accessed without proper synchronization). It falls squarely into the
+"synchronization changes" category of stable-worthy fixes. The fix is:
+- Obviously correct (adds documented required locking)
+- Tested (accepted by maintainer)
+- Small (2 lines)
+- Fixes a real bug (data race during reconnect)
+- Contained (no side effects)
+- Does not introduce new features or APIs
 
 **YES**
 
- fs/hfs/dir.c    | 15 +++++++++++----
- fs/hfs/hfs_fs.h |  1 +
- fs/hfs/inode.c  | 30 ++++++++++++++++++++++++------
- fs/hfs/mdb.c    | 31 +++++++++++++++++++++++++++----
- fs/hfs/super.c  |  3 +++
- 5 files changed, 66 insertions(+), 14 deletions(-)
+ fs/smb/client/connect.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/fs/hfs/dir.c b/fs/hfs/dir.c
-index 86a6b317b474a..0c615c078650c 100644
---- a/fs/hfs/dir.c
-+++ b/fs/hfs/dir.c
-@@ -196,8 +196,8 @@ static int hfs_create(struct mnt_idmap *idmap, struct inode *dir,
- 	int res;
+diff --git a/fs/smb/client/connect.c b/fs/smb/client/connect.c
+index ce620503e9f70..60c76375f0f50 100644
+--- a/fs/smb/client/connect.c
++++ b/fs/smb/client/connect.c
+@@ -4270,7 +4270,9 @@ cifs_setup_session(const unsigned int xid, struct cifs_ses *ses,
+ 		ses->ses_status = SES_IN_SETUP;
  
- 	inode = hfs_new_inode(dir, &dentry->d_name, mode);
--	if (!inode)
--		return -ENOMEM;
-+	if (IS_ERR(inode))
-+		return PTR_ERR(inode);
- 
- 	res = hfs_cat_create(inode->i_ino, dir, &dentry->d_name, inode);
- 	if (res) {
-@@ -226,8 +226,8 @@ static struct dentry *hfs_mkdir(struct mnt_idmap *idmap, struct inode *dir,
- 	int res;
- 
- 	inode = hfs_new_inode(dir, &dentry->d_name, S_IFDIR | mode);
--	if (!inode)
--		return ERR_PTR(-ENOMEM);
-+	if (IS_ERR(inode))
-+		return ERR_CAST(inode);
- 
- 	res = hfs_cat_create(inode->i_ino, dir, &dentry->d_name, inode);
- 	if (res) {
-@@ -254,11 +254,18 @@ static struct dentry *hfs_mkdir(struct mnt_idmap *idmap, struct inode *dir,
-  */
- static int hfs_remove(struct inode *dir, struct dentry *dentry)
- {
-+	struct super_block *sb = dir->i_sb;
- 	struct inode *inode = d_inode(dentry);
- 	int res;
- 
- 	if (S_ISDIR(inode->i_mode) && inode->i_size != 2)
- 		return -ENOTEMPTY;
-+
-+	if (unlikely(!is_hfs_cnid_counts_valid(sb))) {
-+	    pr_err("cannot remove file/folder\n");
-+	    return -ERANGE;
-+	}
-+
- 	res = hfs_cat_delete(inode->i_ino, dir, &dentry->d_name);
- 	if (res)
- 		return res;
-diff --git a/fs/hfs/hfs_fs.h b/fs/hfs/hfs_fs.h
-index e94dbc04a1e43..ac0e83f77a0f1 100644
---- a/fs/hfs/hfs_fs.h
-+++ b/fs/hfs/hfs_fs.h
-@@ -199,6 +199,7 @@ extern void hfs_delete_inode(struct inode *inode);
- extern const struct xattr_handler * const hfs_xattr_handlers[];
- 
- /* mdb.c */
-+extern bool is_hfs_cnid_counts_valid(struct super_block *sb);
- extern int hfs_mdb_get(struct super_block *sb);
- extern void hfs_mdb_commit(struct super_block *sb);
- extern void hfs_mdb_close(struct super_block *sb);
-diff --git a/fs/hfs/inode.c b/fs/hfs/inode.c
-index 524db1389737d..878535db64d67 100644
---- a/fs/hfs/inode.c
-+++ b/fs/hfs/inode.c
-@@ -187,16 +187,23 @@ struct inode *hfs_new_inode(struct inode *dir, const struct qstr *name, umode_t
- 	s64 next_id;
- 	s64 file_count;
- 	s64 folder_count;
-+	int err = -ENOMEM;
- 
- 	if (!inode)
--		return NULL;
-+		goto out_err;
-+
-+	err = -ERANGE;
- 
- 	mutex_init(&HFS_I(inode)->extents_lock);
- 	INIT_LIST_HEAD(&HFS_I(inode)->open_dir_list);
- 	spin_lock_init(&HFS_I(inode)->open_dir_lock);
- 	hfs_cat_build_key(sb, (btree_key *)&HFS_I(inode)->cat_key, dir->i_ino, name);
- 	next_id = atomic64_inc_return(&HFS_SB(sb)->next_id);
--	BUG_ON(next_id > U32_MAX);
-+	if (next_id > U32_MAX) {
-+		atomic64_dec(&HFS_SB(sb)->next_id);
-+		pr_err("cannot create new inode: next CNID exceeds limit\n");
-+		goto out_discard;
-+	}
- 	inode->i_ino = (u32)next_id;
- 	inode->i_mode = mode;
- 	inode->i_uid = current_fsuid();
-@@ -210,7 +217,11 @@ struct inode *hfs_new_inode(struct inode *dir, const struct qstr *name, umode_t
- 	if (S_ISDIR(mode)) {
- 		inode->i_size = 2;
- 		folder_count = atomic64_inc_return(&HFS_SB(sb)->folder_count);
--		BUG_ON(folder_count > U32_MAX);
-+		if (folder_count> U32_MAX) {
-+			atomic64_dec(&HFS_SB(sb)->folder_count);
-+			pr_err("cannot create new inode: folder count exceeds limit\n");
-+			goto out_discard;
-+		}
- 		if (dir->i_ino == HFS_ROOT_CNID)
- 			HFS_SB(sb)->root_dirs++;
- 		inode->i_op = &hfs_dir_inode_operations;
-@@ -220,7 +231,11 @@ struct inode *hfs_new_inode(struct inode *dir, const struct qstr *name, umode_t
- 	} else if (S_ISREG(mode)) {
- 		HFS_I(inode)->clump_blocks = HFS_SB(sb)->clumpablks;
- 		file_count = atomic64_inc_return(&HFS_SB(sb)->file_count);
--		BUG_ON(file_count > U32_MAX);
-+		if (file_count > U32_MAX) {
-+			atomic64_dec(&HFS_SB(sb)->file_count);
-+			pr_err("cannot create new inode: file count exceeds limit\n");
-+			goto out_discard;
-+		}
- 		if (dir->i_ino == HFS_ROOT_CNID)
- 			HFS_SB(sb)->root_files++;
- 		inode->i_op = &hfs_file_inode_operations;
-@@ -244,6 +259,11 @@ struct inode *hfs_new_inode(struct inode *dir, const struct qstr *name, umode_t
- 	hfs_mark_mdb_dirty(sb);
- 
- 	return inode;
-+
-+	out_discard:
-+		iput(inode);
-+	out_err:
-+		return ERR_PTR(err);
- }
- 
- void hfs_delete_inode(struct inode *inode)
-@@ -252,7 +272,6 @@ void hfs_delete_inode(struct inode *inode)
- 
- 	hfs_dbg("ino %lu\n", inode->i_ino);
- 	if (S_ISDIR(inode->i_mode)) {
--		BUG_ON(atomic64_read(&HFS_SB(sb)->folder_count) > U32_MAX);
- 		atomic64_dec(&HFS_SB(sb)->folder_count);
- 		if (HFS_I(inode)->cat_key.ParID == cpu_to_be32(HFS_ROOT_CNID))
- 			HFS_SB(sb)->root_dirs--;
-@@ -261,7 +280,6 @@ void hfs_delete_inode(struct inode *inode)
- 		return;
+ 		/* force iface_list refresh */
++		spin_lock(&ses->iface_lock);
+ 		ses->iface_last_update = 0;
++		spin_unlock(&ses->iface_lock);
  	}
- 
--	BUG_ON(atomic64_read(&HFS_SB(sb)->file_count) > U32_MAX);
- 	atomic64_dec(&HFS_SB(sb)->file_count);
- 	if (HFS_I(inode)->cat_key.ParID == cpu_to_be32(HFS_ROOT_CNID))
- 		HFS_SB(sb)->root_files--;
-diff --git a/fs/hfs/mdb.c b/fs/hfs/mdb.c
-index 53f3fae602179..e0150945cf13b 100644
---- a/fs/hfs/mdb.c
-+++ b/fs/hfs/mdb.c
-@@ -64,6 +64,27 @@ static int hfs_get_last_session(struct super_block *sb,
- 	return 0;
- }
- 
-+bool is_hfs_cnid_counts_valid(struct super_block *sb)
-+{
-+	struct hfs_sb_info *sbi = HFS_SB(sb);
-+	bool corrupted = false;
-+
-+	if (unlikely(atomic64_read(&sbi->next_id) > U32_MAX)) {
-+		pr_warn("next CNID exceeds limit\n");
-+		corrupted = true;
-+	}
-+	if (unlikely(atomic64_read(&sbi->file_count) > U32_MAX)) {
-+		pr_warn("file count exceeds limit\n");
-+		corrupted = true;
-+	}
-+	if (unlikely(atomic64_read(&sbi->folder_count) > U32_MAX)) {
-+		pr_warn("folder count exceeds limit\n");
-+		corrupted = true;
-+	}
-+
-+	return !corrupted;
-+}
-+
- /*
-  * hfs_mdb_get()
-  *
-@@ -156,6 +177,11 @@ int hfs_mdb_get(struct super_block *sb)
- 	atomic64_set(&HFS_SB(sb)->file_count, be32_to_cpu(mdb->drFilCnt));
- 	atomic64_set(&HFS_SB(sb)->folder_count, be32_to_cpu(mdb->drDirCnt));
- 
-+	if (!is_hfs_cnid_counts_valid(sb)) {
-+		pr_warn("filesystem possibly corrupted, running fsck.hfs is recommended. Mounting read-only.\n");
-+		sb->s_flags |= SB_RDONLY;
-+	}
-+
- 	/* TRY to get the alternate (backup) MDB. */
- 	sect = part_start + part_size - 2;
- 	bh = sb_bread512(sb, sect, mdb2);
-@@ -209,7 +235,7 @@ int hfs_mdb_get(struct super_block *sb)
- 
- 	attrib = mdb->drAtrb;
- 	if (!(attrib & cpu_to_be16(HFS_SB_ATTRIB_UNMNT))) {
--		pr_warn("filesystem was not cleanly unmounted, running fsck.hfs is recommended.  mounting read-only.\n");
-+		pr_warn("filesystem was not cleanly unmounted, running fsck.hfs is recommended.	Mounting read-only.\n");
- 		sb->s_flags |= SB_RDONLY;
- 	}
- 	if ((attrib & cpu_to_be16(HFS_SB_ATTRIB_SLOCK))) {
-@@ -273,15 +299,12 @@ void hfs_mdb_commit(struct super_block *sb)
- 		/* These parameters may have been modified, so write them back */
- 		mdb->drLsMod = hfs_mtime();
- 		mdb->drFreeBks = cpu_to_be16(HFS_SB(sb)->free_ablocks);
--		BUG_ON(atomic64_read(&HFS_SB(sb)->next_id) > U32_MAX);
- 		mdb->drNxtCNID =
- 			cpu_to_be32((u32)atomic64_read(&HFS_SB(sb)->next_id));
- 		mdb->drNmFls = cpu_to_be16(HFS_SB(sb)->root_files);
- 		mdb->drNmRtDirs = cpu_to_be16(HFS_SB(sb)->root_dirs);
--		BUG_ON(atomic64_read(&HFS_SB(sb)->file_count) > U32_MAX);
- 		mdb->drFilCnt =
- 			cpu_to_be32((u32)atomic64_read(&HFS_SB(sb)->file_count));
--		BUG_ON(atomic64_read(&HFS_SB(sb)->folder_count) > U32_MAX);
- 		mdb->drDirCnt =
- 			cpu_to_be32((u32)atomic64_read(&HFS_SB(sb)->folder_count));
- 
-diff --git a/fs/hfs/super.c b/fs/hfs/super.c
-index 47f50fa555a45..70e118c27e200 100644
---- a/fs/hfs/super.c
-+++ b/fs/hfs/super.c
-@@ -34,6 +34,7 @@ MODULE_LICENSE("GPL");
- 
- static int hfs_sync_fs(struct super_block *sb, int wait)
- {
-+	is_hfs_cnid_counts_valid(sb);
- 	hfs_mdb_commit(sb);
- 	return 0;
- }
-@@ -65,6 +66,8 @@ static void flush_mdb(struct work_struct *work)
- 	sbi->work_queued = 0;
- 	spin_unlock(&sbi->work_lock);
- 
-+	is_hfs_cnid_counts_valid(sb);
-+
- 	hfs_mdb_commit(sb);
- }
+ 	spin_unlock(&ses->ses_lock);
  
 -- 
 2.51.0
