@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 004DA311960;
-	Tue, 10 Feb 2026 23:31:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D920F311960;
+	Tue, 10 Feb 2026 23:31:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770766287; cv=none; b=nP7AFjSQoCUrclKoIjXQ1NHPHz9w/wxzpFnCEueC3B1CdqPpmfHdjbMmyIUDoIhITaKQR0FOygBABUhvRwuXpdlxdibkBEVU0JPymmbiApZTVtF4pVvHrYBqaapHrLltD4PmBLNOlnvF4UoIQX2/0qRcMr+sNA9ufk2NIcFEo9Q=
+	t=1770766287; cv=none; b=FT7l5GwljABsGksvmSlHhjAIhxnUirbI6R+7cOnnBEt5AJuW8hJ5FlE1aOcoDNmG1APEfITIwkEtKx4wqSED1ibp6EkRzXkjjf814t8N8UWiPYIz0hus6lPVZxBeC8zlpeZD1ByuBTez3oMPVHiN0q3qiSMgK5ro4UBH8d+Vhao=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1770766287; c=relaxed/simple;
-	bh=xn4ES4OSZ+j4auWwrEB1CSEtmrh1w8Li9JuVgu7mAkQ=;
+	bh=4Q38nV3N8Ns74G9RFUVss5/YKtfidd3QW6KdbU5LrNI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=QVcc3UTiF3fuVmvuFbZ2DCtfOA/f6wZDiYG/UJ5TMYKiyBFtyUsF7rwmhXZOJw+8SB13UVGKyXf9W4iWl65FR0ZTl3+VrETmEEWM8rvqI7e7kcORurQGSgEvDTu2hP4UOu31elnVI8js5CgR4qIpMdZG1c6dLqIY/boKElueZik=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=T/z7EfNw; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=ADsvI65ZIpaTsQh0EZ52VXILDKJ3WCUqaCvwtKTuhyHrZFXfQWyPkExvnR1hAoLj452XxVzYghugIMmsxZMa0a+1mDlMI114YnnSMj7Ze/hy9a1aR69DakemSaZCg0433wVK+OrKlNfZ9/au0hp9YJb6mwdPN95abZeiaba4+sg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=qI9jwf2J; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="T/z7EfNw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 19B41C19424;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="qI9jwf2J"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0CCB8C19425;
 	Tue, 10 Feb 2026 23:31:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1770766286;
-	bh=xn4ES4OSZ+j4auWwrEB1CSEtmrh1w8Li9JuVgu7mAkQ=;
+	s=k20201202; t=1770766287;
+	bh=4Q38nV3N8Ns74G9RFUVss5/YKtfidd3QW6KdbU5LrNI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=T/z7EfNwu5dwc8BO7eHefUMGav8aEzcR/TwfKoxkCT2CRZ8xMezY+d2PcCq7q5fyY
-	 9/00qgnRu4Cam36AgPhIcGes78o14THulHXEQ3V2+p63urxsISzjvHPX5lhllSkjKa
-	 dZHlyGjBn49XTO3Si94Y3A20403xEsafytnT5wLrP8hwCwDqeasO0xwKfY/QJXgl6U
-	 UYAWO0EEJ+ZE/Ry12bUg+boOPFkrBqMsUGzEygP+cLoocbMygUbm+/l6T9SvS/bq0h
-	 6wpq9o1KZpWRZUXAaU2bii1BIy2+lUdYvZJy5jKbNd2mpeOJZ3DrjvOXBeR/Kxr+ll
-	 D0Fo0MLv4MO2w==
+	b=qI9jwf2JJy/mdzwsltCtk3kszlbzNFtRvwkyy3FEzOJ2mhLKNyNK8JJgTKkeIz/f+
+	 qrlfgorez+KIEhftDE1rLZpEhiUbIAj1GzcK9CIO6f36pkUnqllpIZQaZl1WKpHw/v
+	 mQ1EmaYRiBOb+B6MJ+foERZ412eZcy2T3BTQuji1okLl/yBBLcufZ94NX/C4QzhPU0
+	 6Rnx061AllZkUDCLb35NThZkMzSLWN/P5NW3ft+TIV5+VN87m1b2uHPCDz49ar5a8D
+	 VJiA+n157ApQHCqh1l/oe0DHfRglQQYMz0IlET8mRQhwub8puBTEmLmvZn6igAARqG
+	 JObQEP4PBgTfw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Andreas Gruenbacher <agruenba@redhat.com>,
+Cc: Alexander Aring <aahringo@redhat.com>,
+	David Teigland <teigland@redhat.com>,
 	Sasha Levin <sashal@kernel.org>,
 	gfs2@lists.linux.dev
-Subject: [PATCH AUTOSEL 6.19-5.15] gfs2: fiemap page fault fix
-Date: Tue, 10 Feb 2026 18:30:47 -0500
-Message-ID: <20260210233123.2905307-2-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.19-6.18] dlm: fix recovery pending middle conversion
+Date: Tue, 10 Feb 2026 18:30:48 -0500
+Message-ID: <20260210233123.2905307-3-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260210233123.2905307-1-sashal@kernel.org>
 References: <20260210233123.2905307-1-sashal@kernel.org>
@@ -50,208 +51,248 @@ X-stable-base: Linux 6.19
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Andreas Gruenbacher <agruenba@redhat.com>
+From: Alexander Aring <aahringo@redhat.com>
 
-[ Upstream commit e411d74cc5ba290f85d0dd5e4d1df8f1d6d975d2 ]
+[ Upstream commit 1416bd508c78bdfdb9ae0b4511369e5581f348ea ]
 
-In gfs2_fiemap(), we are calling iomap_fiemap() while holding the inode
-glock.  This can lead to recursive glock taking if the fiemap buffer is
-memory mapped to the same inode and accessing it triggers a page fault.
+During a workload involving conversions between lock modes PR and CW,
+lock recovery can create a "conversion deadlock" state between locks
+that have been recovered.  When this occurs, kernel warning messages
+are logged, e.g.
 
-Fix by disabling page faults for iomap_fiemap() and faulting in the
-buffer by hand if necessary.
+  "dlm: WARN: pending deadlock 1e node 0 2 1bf21"
 
-Fixes xfstest generic/742.
+  "dlm: receive_rcom_lock_args 2e middle convert gr 3 rq 2 remote 2 1e"
 
-Signed-off-by: Andreas Gruenbacher <agruenba@redhat.com>
+After this occurs, the deadlocked conversions both appear on the convert
+queue of the resource being locked, and the conversion requests do not
+complete.
+
+Outside of recovery, conversions that would produce a deadlock are
+resolved immediately, and return -EDEADLK.  The locks are not placed
+on the convert queue in the deadlocked state.
+
+To fix this problem, an lkb under conversion between PR/CW is rebuilt
+during recovery on a new master's granted queue, with the currently
+granted mode, rather than being rebuilt on the new master's convert
+queue, with the currently granted mode and the newly requested mode.
+The in-progress convert is then resent to the new master after
+recovery, so the conversion deadlock will be processed outside of
+the recovery context and handled as described above.
+
+Signed-off-by: Alexander Aring <aahringo@redhat.com>
+Signed-off-by: David Teigland <teigland@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-Now I have the complete picture. Let me write up the full analysis.
+Now I have a complete picture. Let me provide my detailed analysis.
 
 ---
 
 ## Detailed Analysis
 
-### 1. Commit Message Analysis
+### 1. COMMIT MESSAGE ANALYSIS
 
-The commit subject is "gfs2: fiemap page fault fix" — a clear bug fix.
-The body explains a concrete deadlock scenario: calling `iomap_fiemap()`
-while holding the inode glock can lead to **recursive glock taking** if
-the fiemap buffer is memory-mapped to the same inode. It also says it
-"Fixes xfstest generic/742," which is a test specifically designed to
-catch this class of bug.
+The commit subject clearly says "fix" and the message describes a
+concrete, reproducible bug:
 
-The author is Andreas Gruenbacher, the GFS2 maintainer and the same
-person who wrote the original mmap + page fault deadlock fixes for
-GFS2's buffered I/O (commit `00bfe02f47968`) and direct I/O (commit
-`b01b2d72da25c`) paths — both merged in v5.16.
+- **Symptom**: During a workload involving conversions between lock
+  modes PR (Protected Read) and CW (Concurrent Write), lock recovery
+  creates a "conversion deadlock" state between recovered locks.
+- **Visible effects**: Kernel warning messages (`"dlm: WARN: pending
+  deadlock..."`) and permanently stuck lock conversions on the convert
+  queue that never complete.
+- **This affects clustered filesystem users** (GFS2, OCFS2) running on
+  systems where DLM node recovery occurs during PR/CW conversion
+  workloads.
 
-### 2. Code Change Analysis — The Deadlock Mechanism
+The authors are **Alexander Aring** (Red Hat, DLM subsystem developer)
+and **David Teigland** (the DLM maintainer who signs off all DLM
+patches). This is authoritative.
 
-The deadlock path is clear and concrete:
+### 2. CODE CHANGE ANALYSIS
 
-1. **`gfs2_fiemap()`** acquires the inode glock `ip->i_gl` in
-   `LM_ST_SHARED` mode via `gfs2_glock_nq_init()`
-2. **`iomap_fiemap()`** iterates over file extents and calls
-   **`iomap_to_fiemap()`** → **`fiemap_fill_next_extent()`**
-3. `fiemap_fill_next_extent()` uses **`copy_to_user()`** to write extent
-   data to the user-supplied buffer (line 144 of `fs/ioctl.c`)
-4. If that user buffer is **mmap'd to the same file**, `copy_to_user()`
-   triggers a page fault
-5. The page fault enters **`gfs2_page_mkwrite()`** (for write faults) or
-   **`gfs2_fault()`** (for read faults)
-6. **`gfs2_page_mkwrite()`** tries to acquire `ip->i_gl` in
-   `LM_ST_EXCLUSIVE` mode — **deadlock**: it conflicts with the already-
-   held `LM_ST_SHARED`. Even `gfs2_fault()` would attempt another
-   `LM_ST_SHARED`, which in GFS2's distributed locking model can also
-   cause issues (the glock holder tracks are per-process, and in a
-   clustered scenario this can cause distributed deadlocks).
+The change is in `recover_convert_waiter()` in `fs/dlm/lock.c`. Here's
+what changed:
 
-### 3. The Fix — Well-Established Pattern
+**Before (buggy code introduced by f74dacb4):**
 
-The fix follows the **exact same pattern** already used in 4+ locations
-within `fs/gfs2/file.c`:
-
-```2195:2212:fs/gfs2/inode.c
-retry:
-        ret = gfs2_glock_nq_init(ip->i_gl, LM_ST_SHARED, 0, &gh);
-        if (ret)
-                goto out;
-
-        pagefault_disable();
-        ret = iomap_fiemap(inode, fieinfo, start, len, &gfs2_iomap_ops);
-        pagefault_enable();
-
-        gfs2_glock_dq_uninit(&gh);
-
-        if (ret == -EFAULT && fault_in_fiemap(fieinfo)) {
-                fieinfo->fi_extents_mapped = 0;
-                goto retry;
+```5017:5035:fs/dlm/lock.c
+        if (middle_conversion(lkb)) {
+                log_rinfo(ls, "%s %x middle convert in progress",
+__func__,
+                         lkb->lkb_id);
+                /* We sent this lock to the new master. The new master
+will
+   - tell us when it's granted.  We no longer need a reply, so
+   - use a fake reply to put the lkb into the right state.
+                 */
+                hold_lkb(lkb);
+                memset(ms_local, 0, sizeof(struct dlm_message));
+                ms_local->m_type = cpu_to_le32(DLM_MSG_CONVERT_REPLY);
+                ms_local->m_result =
+cpu_to_le32(to_dlm_errno(-EINPROGRESS));
+                ms_local->m_header.h_nodeid =
+cpu_to_le32(lkb->lkb_nodeid);
+                _receive_convert_reply(lkb, ms_local, true);
+                unhold_lkb(lkb);
+        } else if (lkb->lkb_rqmode >= lkb->lkb_grmode) {
+                set_bit(DLM_IFL_RESEND_BIT, &lkb->lkb_iflags);
         }
 ```
 
-The pattern is:
-- **`pagefault_disable()`** before the operation that touches user
-  memory while holding the glock
-- **`pagefault_enable()`** after
-- If `-EFAULT` is returned (page fault was needed but prevented), **drop
-  the glock**, **manually fault in** the user pages, and **retry**
+**After (the fix):**
 
-The helper `fault_in_fiemap()` calls `fault_in_safe_writeable()` on the
-destination buffer, which is a non-destructive way to ensure pages are
-resident without holding any filesystem locks.
+```c
+        if (middle_conversion(lkb) || lkb->lkb_rqmode >=
+lkb->lkb_grmode)
+                set_bit(DLM_IFL_RESEND_BIT, &lkb->lkb_iflags);
+```
 
-### 4. Cross-Subsystem Validation
+### 3. BUG MECHANISM
 
-The **exact same bug class** was found and fixed in OCFS2
-(`04100f775c2ea`), reported by syzbot, and explicitly tagged `Cc:
-stable@vger.kernel.org`. That fix had a stack trace showing the deadlock
-happening during `copy_to_user` in `fiemap_fill_next_extent` → recursive
-semaphore acquisition in `ocfs2_page_mkwrite`. The GFS2 case is
-structurally identical.
+The recovery sequence in `fs/dlm/recoverd.c` runs these steps in order:
 
-### 5. Scope and Risk Assessment
+1. **Line 218**: `dlm_recover_waiters_pre()` — handles lkbs waiting for
+   replies from failed nodes
+2. **Line 247**: `dlm_recover_locks()` — sends locks to new masters (via
+   rcom)
+3. **Line 270**: `dlm_recover_rsbs()` — calls `recover_conversion()` on
+   flagged resources
+4. **Line 320**: `dlm_recover_waiters_post()` — resends operations
+   marked with RESEND bit
 
-- **Lines changed**: +20 lines in a single file (`fs/gfs2/inode.c`)
-- **New helper**: `fault_in_fiemap()` — 6 lines, trivial wrapper around
-  `fault_in_safe_writeable()`
-- **Dependencies**: `fault_in_safe_writeable()` exists in all current
-  LTS trees (v6.1, v6.6, v6.12)
-- **Clean apply**: The `gfs2_fiemap()` function is byte-for-byte
-  identical in v6.1, v6.6, v6.12, and mainline. The patch applies
-  cleanly.
-- **Risk**: Very low. The fix uses a well-established pattern from the
-  same subsystem. The only behavioral change is adding retry logic for
-  the (previously impossible) case where the user buffer is mmap'd to
-  the same file. Normal fiemap calls are unaffected (no page faults, no
-  retry).
+**The bug in the old code**: When `recover_convert_waiter` faked an
+`-EINPROGRESS` reply for a middle conversion:
+- `_receive_convert_reply()` → `__receive_convert_reply()` would handle
+  the `-EINPROGRESS` case by calling `del_lkb(r, lkb)` + `add_lkb(r,
+  lkb, DLM_LKSTS_CONVERT)`, moving the lkb to the **local convert
+  queue**
+- The lkb was also removed from the waiters list via
+  `remove_from_waiters_ms()`
+- When the lock was subsequently sent to the **new master** via rcom
+  (step 2), it was sent as a converting lock
+- `receive_rcom_lock_args()` on the new master placed it on the convert
+  queue and set `RSB_RECOVER_CONVERT`
+- If **two locks** had middle conversions (e.g., A: PR→CW, B: CW→PR),
+  both ended up on the convert queue of the new master resource in a
+  **deadlocked state**
+- `recover_conversion()` couldn't resolve this; the normal `-EDEADLK`
+  detection doesn't run during recovery
+- Result: permanent deadlock, kernel warnings, stuck I/O
 
-### 6. User Impact
+**How the fix resolves it**: By setting `DLM_IFL_RESEND_BIT` instead of
+faking `-EINPROGRESS`:
+- The lkb stays on the waiters list with its original granted status
+  unchanged
+- When sent to the new master via rcom, it's sent as a **granted lock**
+  (not converting), placed on the **granted queue**
+- No conversion deadlock can form during recovery
+- After recovery, `dlm_recover_waiters_post()` finds the lkb (via
+  `find_resend_waiter`), resets its state, and calls `_convert_lock()`
+  to resend the conversion to the new master through **normal channels**
+- If the conversion would deadlock, the normal code returns `-EDEADLK`
+  immediately, preventing the stuck state
 
-- **Severity**: **Deadlock** — system hang for the process, and on
-  clustered GFS2, potential cluster-wide impact
-- **Trigger**: User-space can trigger this by mmap'ing a GFS2 file and
-  passing the mmap'd buffer to `FS_IOC_FIEMAP`
-- **Affected users**: All GFS2 users, especially those running xfstests
-  or using fiemap on clustered filesystems
-- **Test coverage**: xfstest generic/742 specifically tests this
-  scenario
+### 4. CLASSIFICATION
 
-### 7. Stability and Quality Indicators
+This is a **clear bug fix** — it fixes a conversion deadlock in DLM lock
+recovery. There are no new features, APIs, or behavioral changes. The
+fix actually **removes** complex code and replaces it with the simpler,
+correct approach.
 
-- Author is the GFS2 subsystem maintainer (Andreas Gruenbacher)
-- Pattern is proven and battle-tested in the same codebase since v5.16
-- The analogous OCFS2 fix was syzbot-reported and stable-tagged
-- The fix has a dedicated xfstest (generic/742)
+### 5. SCOPE AND RISK ASSESSMENT
 
-### 8. Dependency Check
+- **Lines changed**: Net removal of ~17 lines; replaces ~20 lines with 2
+  lines
+- **Files changed**: 1 (`fs/dlm/lock.c`)
+- **Function modified**: Only `recover_convert_waiter()`
+- **Risk**: **Very low** — the fix simplifies the code and uses the same
+  `DLM_IFL_RESEND_BIT` mechanism that is already used for normal up-
+  conversions (REQUEST, LOOKUP, and non-middle CONVERT cases). The
+  RESEND path via `dlm_recover_waiters_post()` → `_convert_lock()` is
+  well-tested existing code.
+- **Subsystem**: DLM (fs/dlm/) — critical for clustered filesystems
 
-No external dependencies. The fix is self-contained:
-- `pagefault_disable/enable` — core kernel functions, always available
-- `fault_in_safe_writeable` — available since v5.16, present in all
-  current LTS trees
-- The `gfs2_fiemap` function is unchanged across all LTS trees
+### 6. USER IMPACT
 
-### Conclusion
+- **Who is affected**: Users of DLM-based clustered filesystems (GFS2,
+  OCFS2) in production clusters
+- **Severity**: **High** — when the bug triggers, lock conversions
+  permanently hang, which would block I/O on clustered filesystems
+- **Trigger**: PR↔CW conversions during node recovery (when a cluster
+  node fails). This is a realistic scenario in production clusters.
 
-This commit fixes a **real deadlock** in GFS2's fiemap path that can be
-triggered from user space. The fix is small (20 lines), self-contained,
-follows a well-established pattern already used in the same subsystem,
-applies cleanly to all current stable trees, and has a dedicated
-xfstest. The same bug class in OCFS2 was considered important enough for
-syzbot reporting and explicit stable tagging. This is a textbook stable
-backport candidate.
+### 7. DEPENDENCY CHECK
+
+- **Requires f74dacb4** ("dlm: fix recovery of middle conversions"):
+  This commit introduced the code being modified (the fake -EINPROGRESS
+  approach). f74dacb4 entered mainline in v6.13-rc1 and is present in
+  v6.13+ stable trees.
+- **Does NOT require a8abcff1** ("dlm: move to rinfo for all middle
+  conversion cases"): a8abcff1 only changed `log_limit` → `log_rinfo` in
+  `receive_rcom_lock_args` and `recover_conversion`, not in
+  `recover_convert_waiter`. The code being removed already used
+  `log_rinfo` since f74dacb4.
+- The patch should apply cleanly on any tree containing f74dacb4.
+
+### 8. STABILITY INDICATORS
+
+- Authored and signed-off by the DLM maintainers (Aring + Teigland)
+- The fix simplifies code (reduction in complexity = lower regression
+  risk)
+- Uses existing well-tested RESEND mechanism
+- The commit message thoroughly explains the problem and solution
+
+### Summary
+
+This is a clear-cut bug fix for a conversion deadlock in DLM lock
+recovery that causes permanent hangs and kernel warnings. The fix is
+small, surgical (net code removal), contained to a single function in a
+single file, and uses existing well-tested mechanisms. It affects
+production clustered filesystem users. The prerequisite commit
+(f74dacb4) is in v6.13+ stable trees, so this fix is needed in those
+same trees. The risk is very low — the fix actually simplifies the
+recovery path.
 
 **YES**
 
- fs/gfs2/inode.c | 16 ++++++++++++++++
- 1 file changed, 16 insertions(+)
+ fs/dlm/lock.c | 19 +------------------
+ 1 file changed, 1 insertion(+), 18 deletions(-)
 
-diff --git a/fs/gfs2/inode.c b/fs/gfs2/inode.c
-index 36618e3531996..ea03c23bd147b 100644
---- a/fs/gfs2/inode.c
-+++ b/fs/gfs2/inode.c
-@@ -2182,6 +2182,14 @@ static int gfs2_getattr(struct mnt_idmap *idmap,
- 	return 0;
- }
- 
-+static bool fault_in_fiemap(struct fiemap_extent_info *fi)
-+{
-+	struct fiemap_extent __user *dest = fi->fi_extents_start;
-+	size_t size = sizeof(*dest) * fi->fi_extents_max;
-+
-+	return fault_in_safe_writeable((char __user *)dest, size) == 0;
-+}
-+
- static int gfs2_fiemap(struct inode *inode, struct fiemap_extent_info *fieinfo,
- 		       u64 start, u64 len)
+diff --git a/fs/dlm/lock.c b/fs/dlm/lock.c
+index be938fdf17d96..c01a291db401b 100644
+--- a/fs/dlm/lock.c
++++ b/fs/dlm/lock.c
+@@ -5014,25 +5014,8 @@ void dlm_receive_buffer(const union dlm_packet *p, int nodeid)
+ static void recover_convert_waiter(struct dlm_ls *ls, struct dlm_lkb *lkb,
+ 				   struct dlm_message *ms_local)
  {
-@@ -2191,14 +2199,22 @@ static int gfs2_fiemap(struct inode *inode, struct fiemap_extent_info *fieinfo,
+-	if (middle_conversion(lkb)) {
+-		log_rinfo(ls, "%s %x middle convert in progress", __func__,
+-			 lkb->lkb_id);
+-
+-		/* We sent this lock to the new master. The new master will
+-		 * tell us when it's granted.  We no longer need a reply, so
+-		 * use a fake reply to put the lkb into the right state.
+-		 */
+-		hold_lkb(lkb);
+-		memset(ms_local, 0, sizeof(struct dlm_message));
+-		ms_local->m_type = cpu_to_le32(DLM_MSG_CONVERT_REPLY);
+-		ms_local->m_result = cpu_to_le32(to_dlm_errno(-EINPROGRESS));
+-		ms_local->m_header.h_nodeid = cpu_to_le32(lkb->lkb_nodeid);
+-		_receive_convert_reply(lkb, ms_local, true);
+-		unhold_lkb(lkb);
+-
+-	} else if (lkb->lkb_rqmode >= lkb->lkb_grmode) {
++	if (middle_conversion(lkb) || lkb->lkb_rqmode >= lkb->lkb_grmode)
+ 		set_bit(DLM_IFL_RESEND_BIT, &lkb->lkb_iflags);
+-	}
  
- 	inode_lock_shared(inode);
- 
-+retry:
- 	ret = gfs2_glock_nq_init(ip->i_gl, LM_ST_SHARED, 0, &gh);
- 	if (ret)
- 		goto out;
- 
-+	pagefault_disable();
- 	ret = iomap_fiemap(inode, fieinfo, start, len, &gfs2_iomap_ops);
-+	pagefault_enable();
- 
- 	gfs2_glock_dq_uninit(&gh);
- 
-+	if (ret == -EFAULT && fault_in_fiemap(fieinfo)) {
-+		fieinfo->fi_extents_mapped = 0;
-+		goto retry;
-+	}
-+
- out:
- 	inode_unlock_shared(inode);
- 	return ret;
+ 	/* lkb->lkb_rqmode < lkb->lkb_grmode shouldn't happen since down
+ 	   conversions are async; there's no reply from the remote master */
 -- 
 2.51.0
 
