@@ -1,43 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4ED8E2DC76F;
-	Tue, 10 Feb 2026 23:31:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75F5A2DC76F;
+	Tue, 10 Feb 2026 23:31:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770766289; cv=none; b=ec9QGOCw2jBq/7F3cHhfciO4hS/4HDfVTP5Wq3RkDocj/CtoL87g7WKNjbY9AKQkRyu6jGxHJN+146aoaYTz/Wj0u5Xdk1WFZA+PeCpIzLb1hTcov+ElbEku25awZYtYDv/LxO1UPr7bbAZXZbuVArs1wibP+yPakMf6qVhkrqU=
+	t=1770766294; cv=none; b=BPNam+6C3kABXrLzQo70Nanmk6e9Ct+OKcTHgantSyMcMJxeY1rtBNquJkdmccHbkpg6v7GaQDTnNW38mwCuuMran39klNoBS8h7cPoCl0/HsNNVw4DrOj20O9QwqaX7uC4Ir8wY0fFDyjWqXTXCRUPdYHkdwN8cccI1vCCdT+U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770766289; c=relaxed/simple;
-	bh=twtZnGMvMuAVmKcsvTkyEiO062K7s/3OsDbHarnmkCA=;
+	s=arc-20240116; t=1770766294; c=relaxed/simple;
+	bh=g0rIbgAbeYMMUxIF53N6m1pCP8B5aMhZ6y0RYE6CQO8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=gVI1fo7oT+C1zxKpqE46W7T7vZKv15g6+XeueNTZmnpHfJG/6hMZTZcSRnC1+YXoQ/v4+QMAL8ViWJXRlN3APxzRtXUoM89ceg+3c0vmmbgEOUhUgWBsrFnVEN1uI7bNFZPhb0Gr5L2nmu9IwGOWGi+4OZSK5sna8uUEtdPZj7Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=JFpSGYX5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Q3CnCulL6JJjze4BqQc/HZATMK4JJ2RJ4jqOZPnt6rBiRINS6hq0GWWS0UNiNTWpnww273ze9U9K9cYc907Rya5gxxjeMAd7YLBK2CSAIXP8KkpCLjDKf2/tHJtLdiIOmWXVA0BIPr7poPCoRUYDUYcds6yW/20aEvONBcgNPN8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=pdULQm7Y; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="JFpSGYX5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B3D4C19425;
-	Tue, 10 Feb 2026 23:31:28 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="pdULQm7Y"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5EF45C116C6;
+	Tue, 10 Feb 2026 23:31:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1770766288;
-	bh=twtZnGMvMuAVmKcsvTkyEiO062K7s/3OsDbHarnmkCA=;
+	s=k20201202; t=1770766294;
+	bh=g0rIbgAbeYMMUxIF53N6m1pCP8B5aMhZ6y0RYE6CQO8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JFpSGYX5xcANqrYT325bu6atZ1jKv+d/vkdqq/wsY3sBr/Y+DlOWsIcFBdFVH/5+/
-	 8wqYs7bgkYP34vddDCg5oOGjTU4kWGX58y01W0vU9473dSrb2Zo1lbE1y+Qmqj2SlV
-	 cJ7RoKTrvAL/cpMPhUXW+0rouvZk45mPKmBfjZndI2q8zrzjjlDMFLklECdxvfseGO
-	 3D7bk0e7NhwzDRguohFV8Dw11Cs41ni2JFyQoL3bIYE2p1lDcGGCGJvC2a7fMctBWb
-	 0RaVP3Jcyi+fqUc58r6WN8gKPKM4NNx7wivCEYFo3Y7a4xEinDn2EzD5wBSkw6z0Rk
-	 XsCX5A+PRGtxg==
+	b=pdULQm7YlxxLaAMhmj7ja1FCPoby0q0ML59kqr9ZOTWm/h+Px73qf//a23noUAaev
+	 Y/If1Lh2Igjc3IPguQ5wATxR6jYirJLfYezWtPlMC614mC0r0HykkDCZZvgELruHIh
+	 0JRm8Sfbp9je0VLyewOycPLYsVfDlHiF17pfyU9FjOdWBwqe3/ulJIKnnMYaM/TBo8
+	 z++iMj1u1RnhltMtUsJkS0v4lpXDjQJv0qjoyTGXBgX5UyqSGN39tpcDXyGRKGePqQ
+	 J03sbGj03zj0x49vpu4IkP3mwxZGOYL6GMOhBuGfq9dnEV+llOZjw1pOkt8F+P3hTO
+	 CJpldCdMau3bQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Henrique Carvalho <henrique.carvalho@suse.com>,
-	Steve French <stfrench@microsoft.com>,
+Cc: Adrian Hunter <adrian.hunter@intel.com>,
+	Frank Li <Frank.Li@nxp.com>,
+	Alexandre Belloni <alexandre.belloni@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>,
-	sfrench@samba.org,
-	linux-cifs@vger.kernel.org,
-	samba-technical@lists.samba.org
-Subject: [PATCH AUTOSEL 6.19-6.6] smb: client: prevent races in ->query_interfaces()
-Date: Tue, 10 Feb 2026 18:30:49 -0500
-Message-ID: <20260210233123.2905307-4-sashal@kernel.org>
+	jarkko.nikula@linux.intel.com,
+	billy_tsai@aspeedtech.com,
+	quic_msavaliy@quicinc.com,
+	wsa+renesas@sang-engineering.com
+Subject: [PATCH AUTOSEL 6.19-6.12] i3c: mipi-i3c-hci: Ensure proper bus clean-up
+Date: Tue, 10 Feb 2026 18:30:50 -0500
+Message-ID: <20260210233123.2905307-5-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260210233123.2905307-1-sashal@kernel.org>
 References: <20260210233123.2905307-1-sashal@kernel.org>
@@ -50,241 +52,281 @@ MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.19
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Henrique Carvalho <henrique.carvalho@suse.com>
+From: Adrian Hunter <adrian.hunter@intel.com>
 
-[ Upstream commit c3c06e42e1527716c54f3ad2ced6a034b5f3a489 ]
+[ Upstream commit 8bb96575883d3b201ce37046b3903ea1d2d50bbc ]
 
-It was possible for two query interface works to be concurrently trying
-to update the interfaces.
+Wait for the bus to fully disable before proceeding, ensuring that no
+operations are still in progress.  Synchronize the IRQ handler only after
+interrupt signals have been disabled.  This approach also handles cases
+where bus disable might fail, preventing race conditions and ensuring a
+consistent shutdown sequence.
 
-Prevent this by checking and updating iface_last_update under
-iface_lock.
-
-Signed-off-by: Henrique Carvalho <henrique.carvalho@suse.com>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Signed-off-by: Adrian Hunter <adrian.hunter@intel.com>
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Link: https://patch.msgid.link/20260113072702.16268-3-adrian.hunter@intel.com
+Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-Now I have a complete picture. Let me summarize my analysis.
+Good. `readx_poll_timeout` has been used in this file since its
+introduction. The new `i3c_hci_bus_disable()` function uses the same
+pattern. No compatibility issue.
 
 ---
 
 ## Detailed Analysis
 
-### 1. Commit Message Analysis
+### 1. COMMIT MESSAGE ANALYSIS
 
-The commit message clearly describes a **race condition**: "It was
-possible for two query interface works to be concurrently trying to
-update the interfaces." The fix is to check and update
-`iface_last_update` atomically under `iface_lock`. Authored by Henrique
-Carvalho (SUSE) and signed off by Steve French (CIFS maintainer) - both
-trusted SMB subsystem contributors.
+The commit message clearly states the intent: "ensuring that no
+operations are still in progress", "Synchronize the IRQ handler only
+after interrupt signals have been disabled", "preventing race conditions
+and ensuring a consistent shutdown sequence." This is unambiguously a
+race condition and shutdown ordering fix.
 
-### 2. The Bug: TOCTOU Race on `iface_last_update`
+**Author**: Adrian Hunter (Intel), a prolific and trusted kernel
+developer.
+**Reviewer**: Frank Li (NXP), an I3C subsystem reviewer.
+**Maintainer**: Merged by Alexandre Belloni, the I3C subsystem
+maintainer.
 
-The `iface_last_update` field is explicitly documented in `cifsglob.h`
-as **protected by `iface_lock`**:
+### 2. CODE CHANGE ANALYSIS - The Race Conditions
 
-```1119:1123:fs/smb/client/cifsglob.h
-        /* ========= begin: protected by iface_lock ======== */
-        struct list_head iface_list;
-        size_t iface_count;
-        unsigned long iface_last_update; /* jiffies */
-        /* ========= end: protected by iface_lock ======== */
+**Bug 1: Bus not fully disabled before cleanup**
+
+The OLD `i3c_hci_bus_cleanup()` does:
+
+```155:165:/home/sasha/linux-
+autosel/drivers/i3c/master/mipi-i3c-hci/core.c
+static void i3c_hci_bus_cleanup(struct i3c_master_controller *m)
+{
+        struct i3c_hci *hci = to_i3c_hci(m);
+        struct platform_device *pdev =
+to_platform_device(m->dev.parent);
+
+        reg_clear(HC_CONTROL, HC_CONTROL_BUS_ENABLE);
+        synchronize_irq(platform_get_irq(pdev, 0));
+        hci->io->cleanup(hci);
+        if (hci->cmd == &mipi_i3c_hci_cmd_v1)
+                mipi_i3c_hci_dat_v1.cleanup(hci);
+}
 ```
 
-And confirmed in the lock ordering documentation:
+`reg_clear(HC_CONTROL, HC_CONTROL_BUS_ENABLE)` merely writes to the
+register. The hardware may still be mid-operation. Without waiting for
+hardware acknowledgment, the subsequent cleanup proceeds on a bus that
+is still active, which can cause undefined hardware behavior.
 
-```2000:2002:fs/smb/client/cifsglob.h
- - cifs_ses->iface_lock            cifs_ses->iface_list
-   sesInfoAlloc
- - ->iface_count
- - ->iface_last_update
-```
+The new `i3c_hci_bus_disable()` uses `readx_poll_timeout()` with a
+generous 500ms timeout to wait until the `HC_CONTROL_BUS_ENABLE` bit is
+confirmed cleared by the hardware, ensuring the bus has truly stopped.
 
-**Before the fix**, the code violated this contract in two ways:
+**Bug 2: Use-after-free race in DMA cleanup path**
 
-1. **`SMB3_request_interfaces()` (line 828-831)**: Read
-   `iface_last_update` **without any lock**:
-```827:831:fs/smb/client/smb2ops.c
-        /* do not query too frequently */
-        if (ses->iface_last_update &&
-            time_before(jiffies, ses->iface_last_update +
-                        (SMB_INTERFACE_POLL_INTERVAL * HZ)))
-                return 0;
-```
+This is the critical bug. The old flow is:
 
-2. **`parse_server_interfaces()` (line 798)**: Wrote `iface_last_update
-   = jiffies` **without the lock** at the end of processing.
+1. `reg_clear(HC_CONTROL, HC_CONTROL_BUS_ENABLE)` - request bus disable
+2. `synchronize_irq()` - waits for any currently-running IRQ handler to
+   finish
+3. `hci_dma_cleanup()` starts - iterates rings, disabling per-ring
+   interrupt signals and freeing DMA buffers in the **same loop**
 
-The second check inside `parse_server_interfaces()` (line 641-646, under
-`iface_lock`) was meant to catch races, but it came **after** the
-expensive `SMB2_ioctl()` network call had already been made.
+The race: `synchronize_irq()` only guarantees the *currently running*
+handler has finished. It does **not** prevent new interrupts from
+arriving. Since the top-level `INTR_SIGNAL_ENABLE` register is still
+armed (it's only cleared inside `io->cleanup()`), the hardware can
+deliver a new interrupt *after* `synchronize_irq()` returns.
 
-### 3. Race Scenario
+If that happens, `i3c_hci_irq_handler()` runs, calls
+`hci_dma_irq_handler()`, which accesses `rings->headers[i]` (including
+`rh->ibi_status`, `rh->resp`, `rh->xfer`) - DMA memory that
+`hci_dma_cleanup()` may be concurrently freeing with
+`dma_free_coherent()`. This is a **use-after-free**.
 
-`SMB3_request_interfaces()` can be called from **multiple concurrent
-paths**:
-- `smb2_query_server_interfaces()` - periodic delayed work (every 600s)
-- `smb2_reconnect()` (via `query_server_interfaces` function pointer) -
-  reconnection path
-- `smb3_qfs_tcon()` - during mount
+The fix splits the DMA cleanup loop: first loop disables all ring
+interrupt signals and ring control, then calls
+`i3c_hci_sync_irq_inactive()` (which disables top-level interrupt
+signals AND synchronize_irq), and only then the second loop frees DMA
+resources.
 
-**Race sequence**:
-1. Thread A reads `iface_last_update` (no lock) → timer expired →
-   proceeds to `SMB2_ioctl()`
-2. Thread B reads `iface_last_update` (no lock) → same stale value →
-   also proceeds to `SMB2_ioctl()`
-3. Both threads enter `parse_server_interfaces()` concurrently
-4. Thread A takes `iface_lock`, marks ALL interfaces as `is_active = 0`,
-   drops lock
-5. Thread B takes `iface_lock`, marks ALL interfaces as `is_active = 0`
-   again, drops lock
-6. Both threads independently iterate the buffer, both try to match/add
-   interfaces
-7. In the cleanup (`out:` label), both threads iterate the list and call
-   `kref_put()` on inactive entries
+**Bug 3: Same race in PIO cleanup path**
 
-**Consequences**:
-- **Double `kref_put()` / use-after-free**: Both threads may identify
-  the same interface as inactive and call `kref_put()` on it,
-  potentially dropping the refcount below zero or causing UAF
-- **Corrupted `iface_count`**: Both threads decrement `ses->iface_count`
-  for the same interface
-- **List corruption**: While individual list operations are under
-  `iface_lock`, the mark-inactive → process → cleanup sequence is NOT
-  atomic, leading to incorrect state
-- **Unnecessary duplicate network I/O**: Both threads perform
-  `SMB2_ioctl()` when only one is needed
+The `hci_pio_irq_handler()` accesses `pio->lock`, `pio->enabled_irqs`,
+and other `hci_pio_data` fields. If an interrupt fires after
+`synchronize_irq()` but before `hci_pio_cleanup()` disables PIO signals
+and frees `pio`, the handler will access freed memory.
 
-### 4. The Fix
+The fix inserts `i3c_hci_sync_irq_inactive()` after disabling PIO
+interrupt signals and before freeing the `pio` structure.
 
-The fix is elegant and minimal (8 insertions, 11 deletions, net -3
-lines):
+### 3. CLASSIFICATION
 
-1. **In `SMB3_request_interfaces()`**: Wraps the `iface_last_update`
-   check **and** update in a single `spin_lock/spin_unlock` critical
-   section. Crucially, it sets `iface_last_update = jiffies` **before**
-   doing any work (optimistic update), ensuring the second thread will
-   see the updated timestamp and bail out immediately.
+This is a **race condition fix** preventing **use-after-free** during
+driver cleanup/shutdown. It falls squarely in the category of fixes that
+should be backported to stable.
 
-2. **In `parse_server_interfaces()`**: Removes the now-redundant
-   duplicate time check and the two `iface_last_update = jiffies`
-   assignments (one in the empty-list error path, one at end of
-   processing).
+### 4. SCOPE AND RISK ASSESSMENT
 
-This converts the race-prone check-then-act sequence into an atomic
-check-and-update.
+- **Files changed**: 4 files, all within the same driver
+- **Lines added**: ~40 lines of new code (two helper functions + loop
+  restructuring)
+- **Lines removed**: ~5 lines
+- **Complexity**: Moderate but well-contained
+- **Risk**: LOW - changes only affect the cleanup/shutdown path, using
+  established kernel patterns (`readx_poll_timeout`, `synchronize_irq`)
+- **Subsystem**: I3C bus driver used by Intel and AMD hardware (active,
+  maintained)
 
-### 5. Scope and Risk Assessment
+### 5. USER IMPACT
 
-- **Files changed**: 1 (`fs/smb/client/smb2ops.c`)
-- **Lines changed**: 8 insertions, 11 deletions (net -3)
-- **Subsystem**: SMB/CIFS client - filesystem, important for enterprise
-  users
-- **Risk**: Very low - the change only adds proper locking around an
-  already-documented protected field
-- **Side effect consideration**: Setting `iface_last_update` before the
-  work means that if `SMB2_ioctl()` fails, the timestamp is still
-  updated. However, this is acceptable because: (a) the old code also
-  set it on error paths (the `-EOPNOTSUPP` case set it), and (b) the
-  600-second polling interval means it will retry relatively soon
+- Affects users with MIPI I3C HCI hardware (Intel, AMD platforms via
+  ACPI)
+- The bug could trigger during driver removal (module unload), system
+  shutdown, or suspend/resume cycles
+- Consequence if triggered: kernel crash, memory corruption, or
+  undefined behavior from use-after-free
+- The AMD ACPI entry `AMDI5017` shows this driver is used on real
+  production hardware
 
-### 6. Stable Tree Applicability
+### 6. STABILITY INDICATORS
 
-The vulnerable code exists in:
-- **v6.12**: Identical structure to mainline, should apply cleanly
-- **v6.6**: Similar structure but has a slightly different
-  `iface_last_update` placement (inside the while loop, not at end of
-  function - due to commit 78e727e58e54e being a v6.8 era change). The
-  core race (unlocked check in `SMB3_request_interfaces`) exists and the
-  fix concept applies, but minor adaptation may be needed.
+- **Reviewed-by**: Frank Li (NXP) - I3C expert
+- **Merged by**: Alexandre Belloni - I3C maintainer
+- Already in mainline (v6.19)
 
-### 7. Dependencies
+### 7. DEPENDENCY CHECK
 
-The fix is self-contained. It doesn't depend on any other commits. The
-only context difference for older stable trees (v6.6) is the location of
-`iface_last_update = jiffies` inside `parse_server_interfaces()`, but
-the fix's approach (move checking+setting to the caller under lock,
-remove from callee) works regardless.
+The commit is **self-contained**:
+- New functions `i3c_hci_bus_disable()` and
+  `i3c_hci_sync_irq_inactive()` are introduced and used only within this
+  commit
+- Uses `readx_poll_timeout()` and `synchronize_irq()` which exist in all
+  stable kernels
+- `<linux/iopoll.h>` is already included in `core.c`
+- No dependency on other patches from the series (the other patches in
+  the series appear to be PCI-related, not core driver changes)
 
-### 8. Summary
+### 8. BACKPORT CONSIDERATIONS
 
-This is a clear race condition fix in the SMB/CIFS client that:
-- Fixes a documented locking violation (`iface_last_update` accessed
-  without `iface_lock`)
-- Prevents potential use-after-free via double `kref_put()` on
-  interfaces
-- Prevents interface list state corruption affecting SMB multichannel
-- Is small (net -3 lines), surgical, single-file, and self-contained
-- Affects an important subsystem (filesystem client) used widely in
-  enterprise environments
-- Has very low regression risk
+For older stable trees that lack `9e23897bca622` ("Use physical device
+pointer with DMA API"), the `dma_free_coherent` calls in
+`hci_dma_cleanup` use `&hci->master.dev` instead of `rings->sysdev`.
+However, this is in the *unchanged* part of the code (the second loop),
+so it should apply cleanly or with minimal context adjustment.
+
+### Final Assessment
+
+This commit fixes a real race condition that can cause use-after-free
+during driver shutdown/cleanup in the MIPI I3C HCI driver. The bug
+mechanism is clear: interrupt handlers can fire after
+`synchronize_irq()` returns because interrupt signal enable registers
+weren't disabled first, leading to concurrent access of memory being
+freed. The fix is well-structured, properly orders the shutdown sequence
+(disable signals -> synchronize IRQ -> free resources), and is self-
+contained with low regression risk.
 
 **YES**
 
- fs/smb/client/smb2ops.c | 19 ++++++++-----------
- 1 file changed, 8 insertions(+), 11 deletions(-)
+ drivers/i3c/master/mipi-i3c-hci/core.c | 32 +++++++++++++++++++++++---
+ drivers/i3c/master/mipi-i3c-hci/dma.c  |  7 ++++++
+ drivers/i3c/master/mipi-i3c-hci/hci.h  |  1 +
+ drivers/i3c/master/mipi-i3c-hci/pio.c  |  2 ++
+ 4 files changed, 39 insertions(+), 3 deletions(-)
 
-diff --git a/fs/smb/client/smb2ops.c b/fs/smb/client/smb2ops.c
-index c1aaf77e187b6..edfd6a4e87e8b 100644
---- a/fs/smb/client/smb2ops.c
-+++ b/fs/smb/client/smb2ops.c
-@@ -637,13 +637,6 @@ parse_server_interfaces(struct network_interface_info_ioctl_rsp *buf,
- 	p = buf;
+diff --git a/drivers/i3c/master/mipi-i3c-hci/core.c b/drivers/i3c/master/mipi-i3c-hci/core.c
+index 607d77ab0e546..0a4d8c9968c9b 100644
+--- a/drivers/i3c/master/mipi-i3c-hci/core.c
++++ b/drivers/i3c/master/mipi-i3c-hci/core.c
+@@ -152,13 +152,39 @@ static int i3c_hci_bus_init(struct i3c_master_controller *m)
+ 	return 0;
+ }
  
- 	spin_lock(&ses->iface_lock);
--	/* do not query too frequently, this time with lock held */
--	if (ses->iface_last_update &&
--	    time_before(jiffies, ses->iface_last_update +
--			(SMB_INTERFACE_POLL_INTERVAL * HZ))) {
--		spin_unlock(&ses->iface_lock);
--		return 0;
--	}
++/* Bus disable should never fail, so be generous with the timeout */
++#define BUS_DISABLE_TIMEOUT_US (500 * USEC_PER_MSEC)
++
++static int i3c_hci_bus_disable(struct i3c_hci *hci)
++{
++	u32 regval;
++	int ret;
++
++	reg_clear(HC_CONTROL, HC_CONTROL_BUS_ENABLE);
++
++	/* Ensure controller is disabled */
++	ret = readx_poll_timeout(reg_read, HC_CONTROL, regval,
++				 !(regval & HC_CONTROL_BUS_ENABLE), 0, BUS_DISABLE_TIMEOUT_US);
++	if (ret)
++		dev_err(&hci->master.dev, "%s: Failed to disable bus\n", __func__);
++
++	return ret;
++}
++
++void i3c_hci_sync_irq_inactive(struct i3c_hci *hci)
++{
++	struct platform_device *pdev = to_platform_device(hci->master.dev.parent);
++	int irq = platform_get_irq(pdev, 0);
++
++	reg_write(INTR_SIGNAL_ENABLE, 0x0);
++	synchronize_irq(irq);
++}
++
+ static void i3c_hci_bus_cleanup(struct i3c_master_controller *m)
+ {
+ 	struct i3c_hci *hci = to_i3c_hci(m);
+-	struct platform_device *pdev = to_platform_device(m->dev.parent);
  
- 	/*
- 	 * Go through iface_list and mark them as inactive
-@@ -666,7 +659,6 @@ parse_server_interfaces(struct network_interface_info_ioctl_rsp *buf,
- 				 "Empty network interface list returned by server %s\n",
- 				 ses->server->hostname);
- 		rc = -EOPNOTSUPP;
--		ses->iface_last_update = jiffies;
- 		goto out;
- 	}
+-	reg_clear(HC_CONTROL, HC_CONTROL_BUS_ENABLE);
+-	synchronize_irq(platform_get_irq(pdev, 0));
++	i3c_hci_bus_disable(hci);
+ 	hci->io->cleanup(hci);
+ 	if (hci->cmd == &mipi_i3c_hci_cmd_v1)
+ 		mipi_i3c_hci_dat_v1.cleanup(hci);
+diff --git a/drivers/i3c/master/mipi-i3c-hci/dma.c b/drivers/i3c/master/mipi-i3c-hci/dma.c
+index 951abfea5a6fd..7061c44243424 100644
+--- a/drivers/i3c/master/mipi-i3c-hci/dma.c
++++ b/drivers/i3c/master/mipi-i3c-hci/dma.c
+@@ -162,6 +162,13 @@ static void hci_dma_cleanup(struct i3c_hci *hci)
  
-@@ -795,8 +787,6 @@ parse_server_interfaces(struct network_interface_info_ioctl_rsp *buf,
- 	     + sizeof(p->Next) && p->Next))
- 		cifs_dbg(VFS, "%s: incomplete interface info\n", __func__);
- 
--	ses->iface_last_update = jiffies;
--
- out:
- 	/*
- 	 * Go through the list again and put the inactive entries
-@@ -825,10 +815,17 @@ SMB3_request_interfaces(const unsigned int xid, struct cifs_tcon *tcon, bool in_
- 	struct TCP_Server_Info *pserver;
- 
- 	/* do not query too frequently */
-+	spin_lock(&ses->iface_lock);
- 	if (ses->iface_last_update &&
- 	    time_before(jiffies, ses->iface_last_update +
--			(SMB_INTERFACE_POLL_INTERVAL * HZ)))
-+			(SMB_INTERFACE_POLL_INTERVAL * HZ))) {
-+		spin_unlock(&ses->iface_lock);
- 		return 0;
+ 		rh_reg_write(INTR_SIGNAL_ENABLE, 0);
+ 		rh_reg_write(RING_CONTROL, 0);
 +	}
 +
-+	ses->iface_last_update = jiffies;
++	i3c_hci_sync_irq_inactive(hci);
 +
-+	spin_unlock(&ses->iface_lock);
++	for (i = 0; i < rings->total; i++) {
++		rh = &rings->headers[i];
++
+ 		rh_reg_write(CR_SETUP, 0);
+ 		rh_reg_write(IBI_SETUP, 0);
  
- 	rc = SMB2_ioctl(xid, tcon, NO_FILE_ID, NO_FILE_ID,
- 			FSCTL_QUERY_NETWORK_INTERFACE_INFO,
+diff --git a/drivers/i3c/master/mipi-i3c-hci/hci.h b/drivers/i3c/master/mipi-i3c-hci/hci.h
+index 249ccb13c9092..5add9c68434bf 100644
+--- a/drivers/i3c/master/mipi-i3c-hci/hci.h
++++ b/drivers/i3c/master/mipi-i3c-hci/hci.h
+@@ -147,5 +147,6 @@ void mipi_i3c_hci_pio_reset(struct i3c_hci *hci);
+ void mipi_i3c_hci_dct_index_reset(struct i3c_hci *hci);
+ void amd_set_od_pp_timing(struct i3c_hci *hci);
+ void amd_set_resp_buf_thld(struct i3c_hci *hci);
++void i3c_hci_sync_irq_inactive(struct i3c_hci *hci);
+ 
+ #endif
+diff --git a/drivers/i3c/master/mipi-i3c-hci/pio.c b/drivers/i3c/master/mipi-i3c-hci/pio.c
+index 710faa46a00fa..9bf6c3ba6bce9 100644
+--- a/drivers/i3c/master/mipi-i3c-hci/pio.c
++++ b/drivers/i3c/master/mipi-i3c-hci/pio.c
+@@ -212,6 +212,8 @@ static void hci_pio_cleanup(struct i3c_hci *hci)
+ 
+ 	pio_reg_write(INTR_SIGNAL_ENABLE, 0x0);
+ 
++	i3c_hci_sync_irq_inactive(hci);
++
+ 	if (pio) {
+ 		dev_dbg(&hci->master.dev, "status = %#x/%#x",
+ 			pio_reg_read(INTR_STATUS), pio_reg_read(INTR_SIGNAL_ENABLE));
 -- 
 2.51.0
 
