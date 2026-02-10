@@ -1,45 +1,46 @@
 Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.13])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD3B230BF60
-	for <patches@lists.linux.dev>; Tue, 10 Feb 2026 16:36:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A9A630CDB0
+	for <patches@lists.linux.dev>; Tue, 10 Feb 2026 16:36:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.13
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770741389; cv=none; b=s2OGFMIPpG5qP4MsbS7+B0opK1kxWQjs+V8eTC1iNaQPXhWlotOxVEZ04znT3iysy6KaSspMrO6O2fXK+F+ya9fNNLba86I5UhNRYKSDblHX3mXnoAYIl825U6QvOXXSEib9ZlvLA9AvHKchsrctLvCC3qTL9o457fIVjcCTMMI=
+	t=1770741390; cv=none; b=XduniZX7x333vczx2uYHBQFQro+y5zBgAWtYzwoS0E9MPFQsgBsl6BmrG2hgNsFDquzrRB4nvyJ6b6PDSg+7s9fnaFj1zCOUijuXLw79yJk2RgPtcc0DsTt/6j+LqfB9n00wjS0rgs0r4bHoThIJ6rkpYv0qAzj4Bweiwcw2mKM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770741389; c=relaxed/simple;
-	bh=TgZglSRp46OCfBczu3pjtS2ukrSdd2b1m0yiRe83YeQ=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=bYgqOyOluDlCJmhsDcIC3ghGmrK8D2sqdAP2bKY6oPX9Wb11GLtvZ54zlFKSlE3y8GdfXZBTZnl0z5EwjG743tavNiUdO+OrGUrtaPDEA/In0M4wV5ctTbozU6q4OqXXbHY7vpcrJpcI3HIIv6PBpsz4buo2GYRkfzoZfWYl0GM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=lYGRzGKu; arc=none smtp.client-ip=192.198.163.13
+	s=arc-20240116; t=1770741390; c=relaxed/simple;
+	bh=3ef+JIZyk1BCpaoxZjYIa2McjH4xu833l3yMdDsAq/Y=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=LRs7S9p8TjlETw0d/cfe2WcwlWU0YvdxnrVF9gSy6PpqpxgczZTbJSwCvZQz5TBqRbeaO3Azi7LpkwZeAclKqeuJM3PHTweKOhiM82YHHsbStu/KHpkW6a0TEGIHCsz+WP8hfr/dJeYoUHMwQQSAj8nheFD3ej8mQeJ1IJYJlYQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=elfAysvT; arc=none smtp.client-ip=192.198.163.13
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="lYGRzGKu"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="elfAysvT"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1770741388; x=1802277388;
-  h=from:to:cc:subject:date:message-id:mime-version:
-   content-transfer-encoding;
-  bh=TgZglSRp46OCfBczu3pjtS2ukrSdd2b1m0yiRe83YeQ=;
-  b=lYGRzGKuULLTUbxkHHPfKnvuzAHdc/xyGX8campIOKwQ2g84UZJ3OvL4
-   Pap0hqrVI6x78Cjif73YVxIk5yQXD6PWTzhJ49FkBnCQp4uv0IDF7RG7n
-   Nu0WpjSx7eE7lFsmrJa8u8AHkSoy6DUoCv9IyPErwBEZvH2Mlqf0Mb70Q
-   5Bog1tOFw0LjdVPNM5FUStVFifiLCdmU2lZMtULs6l8GwuHiFZ1Icmb+4
-   sn5z7u7aDWcAhAJ+I5JyV+wZGfo3WcWu5qxZ5c6yTi6pyf9wm/IUDo7+7
-   mVvNIRh2DrjrQQLbTxCL1YZIh2TlDY7JEud9RpjBSfw9njiPtaxsgKTOp
-   A==;
-X-CSE-ConnectionGUID: M4AqSjBfR32c77ARtY6/LQ==
-X-CSE-MsgGUID: cIklwp5DQeiOlHACTeNaTg==
-X-IronPort-AV: E=McAfee;i="6800,10657,11697"; a="74476815"
+  t=1770741389; x=1802277389;
+  h=from:to:cc:subject:date:message-id:in-reply-to:
+   references:mime-version:content-transfer-encoding;
+  bh=3ef+JIZyk1BCpaoxZjYIa2McjH4xu833l3yMdDsAq/Y=;
+  b=elfAysvTStnZBuL/pO06nz5ux1rWrs0CmksgG0L6TISAYB8H9dcln3zC
+   fRiIrDyjin1RzrhX5mE1j6+hliDY/ih54FbcgsStRAfe6BScWtox6iIfZ
+   j8Psqk/uQt0mPjxpEXlvNlv0bSitGliusElwTgKjlfsJvbN26oB4NeEYz
+   ixKqQYxxuMq5i7e5Bv0pxrzs3TEFrAltFJna9t3Ed/b36ev0NRRQGz3gA
+   0NIcY6VvVO8oxSFt1vXnAwy2NkJJgT3fxxHX8bq5JfyPNIdJ4iW1D+1kZ
+   aMGUOBUnsAS+5AFc4jsaXt5xWlCdUWDMyVaqqNLQ3st+WZcqWiQDg+LRg
+   g==;
+X-CSE-ConnectionGUID: seEm/m8DSA2xwfDGkVqI5g==
+X-CSE-MsgGUID: hbfRL8kBQ5+hpraqiWVS6g==
+X-IronPort-AV: E=McAfee;i="6800,10657,11697"; a="74476820"
 X-IronPort-AV: E=Sophos;i="6.21,283,1763452800"; 
-   d="scan'208";a="74476815"
+   d="scan'208";a="74476820"
 Received: from orviesa008.jf.intel.com ([10.64.159.148])
   by fmvoesa107.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 10 Feb 2026 08:36:27 -0800
-X-CSE-ConnectionGUID: J9qEF6i2TOmNTQF5N2I1eQ==
-X-CSE-MsgGUID: t2V7xG5OQDyBPp06z9rwjQ==
+X-CSE-ConnectionGUID: YMCSJ/bjSEeqsKMHZ8nHqg==
+X-CSE-MsgGUID: cavmhqYVSBW8yQyiAUPhgQ==
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="6.21,283,1763452800"; 
-   d="scan'208";a="212003451"
+   d="scan'208";a="212003454"
 Received: from rchatre-desk1.jf.intel.com ([10.165.154.99])
   by orviesa008-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 10 Feb 2026 08:36:26 -0800
 From: Reinette Chatre <reinette.chatre@intel.com>
@@ -57,10 +58,12 @@ Cc: zide.chen@intel.com,
 	linux-kselftest@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
 	patches@lists.linux.dev
-Subject: [PATCH 0/8] selftests/resctrl: Fixes and improvements focused on recent Intel platforms
-Date: Tue, 10 Feb 2026 08:50:39 -0800
-Message-ID: <cover.1770406608.git.reinette.chatre@intel.com>
+Subject: [PATCH 1/8] selftests/resctrl: Do not store iMC counter value in counter config structure
+Date: Tue, 10 Feb 2026 08:50:40 -0800
+Message-ID: <c7d581bad963f20ac0d3738939874050d4dcc924.1770406608.git.reinette.chatre@intel.com>
 X-Mailer: git-send-email 2.50.1
+In-Reply-To: <cover.1770406608.git.reinette.chatre@intel.com>
+References: <cover.1770406608.git.reinette.chatre@intel.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -69,69 +72,69 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-This series is not intended to be merged yet since it depends on new perf
-sysfs files that have not yet been merged.
+The MBM and MBA tests compare MBM memory bandwidth measurements against
+the memory bandwidth event values obtained from each memory controller's
+PMU. The memory bandwidth event settings are discovered from the memory
+controller details found in /sys/bus/event_source/devices/uncore_imc_N and
+stored in struct imc_counter_config.
 
-The resctrl selftests fail on recent Intel platforms. Intermittent failures
-in the CAT test and permanent failures of MBM and MBA tests on new platforms
-like Sierra Forest and Granite Rapids.
+In addition to event settings struct imc_counter_config contains
+imc_counter_config::return_value in which the associated event value is
+stored on every read.
 
-The MBM and MBA resctrl selftests both generate memory traffic and compare the
-memory bandwidth measurements between the iMC PMUs and MBM to determine pass or
-fail. Both these tests are failing on recent platforms like Sierra Forest and
-Granite Rapids that have two events that need to be read and combined
-for a total memory bandwidth count instead of the single event available on
-earlier platforms.
+The event value is consumed and immediately recorded at regular intervals.
+The stored value is never consumed afterwards, making its storage as part
+of event configuration unnecessary.
 
-resctrl selftests prefer to obtain event details via sysfs instead of adding
-model specific details on which events to read. Enhancements to perf to expose
-the new event details are in progress:
-      https://lore.kernel.org/lkml/20260210005225.20311-1-zide.chen@intel.com/
-This series demonstrates use of the new proposed sysfs interface to perf to
-obtain to obtain accurate iMC read memory bandwidth measurements.
+Remove the return_value member from struct imc_counter_config. Instead
+just use a local variable for use during event reading.
 
-An additional issue with all the tests is that these selftests are part
-performance tests and determine pass/fail on performance heuristics selected
-after running the tests on a variety of platforms. When new platforms
-arrive the previous heuristics may cause the tests to fail. These failures are
-not because of an issue with the resctrl subsystem the tests intend to test
-but because of the architectural changes in the new platforms.
+Signed-off-by: Reinette Chatre <reinette.chatre@intel.com>
+---
+ tools/testing/selftests/resctrl/resctrl_val.c | 11 +++++------
+ 1 file changed, 5 insertions(+), 6 deletions(-)
 
-Adapt the resctrl tests to not be as sensitive to architectural changes
-while adjusting the remaining heuristics to ensure tests pass on a variety
-of platforms. More details in individual patches.
-
-Tested by running 100 iterations of all tests on Emerald Rapids, Granite
-Rapids, Sapphire Rapids, Ice Lake, Sierra Forest, and Broadwell.
-
-This series is based on:
-https://lore.kernel.org/lkml/20260210005225.20311-1-zide.chen@intel.com/
-and
-https://lore.kernel.org/lkml/084e82b5c29d75f16f24af8768d50d39ba0118a5.1769101788.git.reinette.chatre@intel.com/
-applied to
-next branch of git://git.kernel.org/pub/scm/linux/kernel/git/shuah/linux-kselftest.git
-
-Reinette Chatre (8):
-  selftests/resctrl: Do not store iMC counter value in counter config
-    structure
-  selftests/resctrl: Prepare for parsing multiple events per iMC
-  selftests/resctrl: Support multiple events associated with iMC
-  selftests/resctrl: Increase size of buffer used in MBM and MBA tests
-  selftests/resctrl: Raise threshold at which MBM and PMU values are
-    compared
-  selftests/resctrl: Remove requirement on cache miss rate
-  selftests/resctrl: Simplify perf usage in CAT test
-  selftests/resctrl: Reduce L2 impact on CAT test
-
- tools/testing/selftests/resctrl/cache.c       |  17 +--
- tools/testing/selftests/resctrl/cat_test.c    |  43 ++----
- tools/testing/selftests/resctrl/fill_buf.c    |   4 +-
- tools/testing/selftests/resctrl/mba_test.c    |   2 +-
- tools/testing/selftests/resctrl/mbm_test.c    |   2 +-
- tools/testing/selftests/resctrl/resctrl.h     |  13 +-
- tools/testing/selftests/resctrl/resctrl_val.c | 129 +++++++++++++-----
- 7 files changed, 121 insertions(+), 89 deletions(-)
-
+diff --git a/tools/testing/selftests/resctrl/resctrl_val.c b/tools/testing/selftests/resctrl/resctrl_val.c
+index a5a8badb83d4..2cc22f61a1f8 100644
+--- a/tools/testing/selftests/resctrl/resctrl_val.c
++++ b/tools/testing/selftests/resctrl/resctrl_val.c
+@@ -32,7 +32,6 @@ struct imc_counter_config {
+ 	__u64 event;
+ 	__u64 umask;
+ 	struct perf_event_attr pe;
+-	struct membw_read_format return_value;
+ 	int fd;
+ };
+ 
+@@ -312,23 +311,23 @@ static int get_read_mem_bw_imc(float *bw_imc)
+ 	 * Take overflow into consideration before calculating total bandwidth.
+ 	 */
+ 	for (imc = 0; imc < imcs; imc++) {
++		struct membw_read_format return_value;
+ 		struct imc_counter_config *r =
+ 			&imc_counters_config[imc];
+ 
+-		if (read(r->fd, &r->return_value,
+-			 sizeof(struct membw_read_format)) == -1) {
++		if (read(r->fd, &return_value, sizeof(return_value)) == -1) {
+ 			ksft_perror("Couldn't get read bandwidth through iMC");
+ 			return -1;
+ 		}
+ 
+-		__u64 r_time_enabled = r->return_value.time_enabled;
+-		__u64 r_time_running = r->return_value.time_running;
++		__u64 r_time_enabled = return_value.time_enabled;
++		__u64 r_time_running = return_value.time_running;
+ 
+ 		if (r_time_enabled != r_time_running)
+ 			of_mul_read = (float)r_time_enabled /
+ 					(float)r_time_running;
+ 
+-		reads += r->return_value.value * of_mul_read * SCALE;
++		reads += return_value.value * of_mul_read * SCALE;
+ 	}
+ 
+ 	*bw_imc = reads;
 -- 
 2.50.1
 
