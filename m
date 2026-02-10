@@ -1,42 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 101E919ABD8;
-	Tue, 10 Feb 2026 23:31:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A13031282F;
+	Tue, 10 Feb 2026 23:31:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770766306; cv=none; b=j3+hLj42kX5xyZVUpl0iPfPYPtIid6EdkujANAeeT1GuaJM7tkLPfujF9cdPn/Zxt9pgMkMBN+Cdwa5TblmL9Ki91/OON9yH8tFYeaXZ/6yT/TiX65Dmq6I9yzdgQReHK/ZI6BRHdNskV7rGyEZ+ALljyowleQpI3Dk4iO45dao=
+	t=1770766307; cv=none; b=l88SWkV+ZQxFSf66+OMOimSuu5swKZuEfQcQ6J1pcag+JXVyW28qC/UhdX6O2EO+1rbBk2jYldtHaB7OPso9cC6PZEr9i+NIzgj3dZkz53iEk+LdWtdZMpZxoLT7ddzI5N2IUpaf3YuS7EAC1Vh1eKilTTD2IPlzYS6F6CdL7RY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770766306; c=relaxed/simple;
-	bh=/SRKDlsP60o49QdkRulsXH0sePgm68ETyIi5yUqNtpA=;
+	s=arc-20240116; t=1770766307; c=relaxed/simple;
+	bh=TOqUM0gKcdyJgf4TcdXODa2MWGtT445k1Q/TV7PcXMY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XGzYUQSK6mcmhRwc/j3U7vwn2D/J11oHfhjMdDd+d82rbQh1gd+KWMic+uWlrsep0IroSS43LotCiUMEdBKSw5Qe/SyC6WQVjyouHcE1ucXAGg2Fg9+gbNyd2QjBUTnMqxLdmWEDY+Nr+sRM4bvhTiq6xzpnhN28C4gYNbK4MOU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=YzXfrwZS; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=DgK2G74d52mX4avFrltpnPpylUNP5pw/iROewxdKSPAe+OJOFss3zC80F5aGqPO0HdRWzA9Ui5t4GA83ejt/qUlo8rijMITm7utvHJ7CfRFgUWEghGfVZYiH2HVzsZXS7X/KKm0311W2zcGQy7DVXm8UahLj+vAGggglxHowiGY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ODD70gbx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="YzXfrwZS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2DF81C116C6;
-	Tue, 10 Feb 2026 23:31:45 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ODD70gbx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 53B3AC19423;
+	Tue, 10 Feb 2026 23:31:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1770766305;
-	bh=/SRKDlsP60o49QdkRulsXH0sePgm68ETyIi5yUqNtpA=;
+	s=k20201202; t=1770766307;
+	bh=TOqUM0gKcdyJgf4TcdXODa2MWGtT445k1Q/TV7PcXMY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YzXfrwZSXf4VoAXiTEiNB65WGr3lohLUUui1Ida2b/wtar2IKGl5V9yo0czRY/ZZN
-	 r3dYtIrqi/8ITHkZRr7Vb4aJ7UYAycNWXo9aVDTpPx4e1jNm67e0OV8U0V/P0w1SrF
-	 S5o3JfF1LU0Aeu3BFep5Ctyz1rwcq32tOzy9gmg1paf4qmq7ebQghnlN/pelOg7VpR
-	 bdZhJcH5KDdqyElsEKbIEOlBtNW3R/6mB/mub8wzLb3kugsgfyfRr4F+Tvd2isU5Tn
-	 s+1Pj3BgRw7FUBH9j83EanU/3ZTzEbPXCKi4qqccOCiUoQfPHgyc8PyEOPbeCEfA7r
-	 MdzZAU6zgNtJA==
+	b=ODD70gbxQJOvtLnzj6+rpGcdjtLgP+yQ8xVyDkcmrn4PWqv5Bgzo2Pn09v/kO4PA+
+	 U0YYjs7lqaFuj8o96uL1t2YKC21JeKisjRNZvgjteKrpghaFhDMZzXXhC83peBkpEc
+	 yLg869o67CtwPqILDFPkWH9PVDVhBn0qwwpUAXyQnHiUbd1ld7ZeIUHPw7YfbfM6XW
+	 L5uEsofIVENaFdxjD7nEPk2uHGTs3cpaBzyBkaZGvbF4GslxsB1GFqNU/BvS/viv4i
+	 eyqqER9TzEmImRNDSfedndcPJ6iazjTbiVF8frKJ5Nmpmp/En1pqqjw3VVtqLyoQ+i
+	 lEpWh3Ll899Ug==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Adrian Hunter <adrian.hunter@intel.com>,
-	Frank Li <Frank.Li@nxp.com>,
-	Alexandre Belloni <alexandre.belloni@bootlin.com>,
+Cc: Deepakkumar Karn <dkarn@redhat.com>,
+	Jan Kara <jack@suse.cz>,
+	Christian Brauner <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	jarkko.nikula@linux.intel.com
-Subject: [PATCH AUTOSEL 6.19-6.18] i3c: mipi-i3c-hci: Stop reading Extended Capabilities if capability ID is 0
-Date: Tue, 10 Feb 2026 18:30:58 -0500
-Message-ID: <20260210233123.2905307-13-sashal@kernel.org>
+	viro@zeniv.linux.org.uk,
+	linux-fsdevel@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.19-6.1] fs/buffer: add alert in try_to_free_buffers() for folios without buffers
+Date: Tue, 10 Feb 2026 18:30:59 -0500
+Message-ID: <20260210233123.2905307-14-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260210233123.2905307-1-sashal@kernel.org>
 References: <20260210233123.2905307-1-sashal@kernel.org>
@@ -49,172 +50,162 @@ MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.19
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Adrian Hunter <adrian.hunter@intel.com>
+From: Deepakkumar Karn <dkarn@redhat.com>
 
-[ Upstream commit 0818e4aa8fdeeed5973e0a8faeddc9da599fc897 ]
+[ Upstream commit b68f91ef3b3fe82ad78c417de71b675699a8467c ]
 
-Extended Capability ID value 0 is special.  It signifies the end of the
-list.  Stop reading Extended Capabilities if capability ID is 0.
+try_to_free_buffers() can be called on folios with no buffers attached
+when filemap_release_folio() is invoked on a folio belonging to a mapping
+with AS_RELEASE_ALWAYS set but no release_folio operation defined.
 
-Signed-off-by: Adrian Hunter <adrian.hunter@intel.com>
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Link: https://patch.msgid.link/20260106164416.67074-3-adrian.hunter@intel.com
-Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
+In such cases, folio_needs_release() returns true because of the
+AS_RELEASE_ALWAYS flag, but the folio has no private buffer data. This
+causes try_to_free_buffers() to call drop_buffers() on a folio with no
+buffers, leading to a null pointer dereference.
+
+Adding a check in try_to_free_buffers() to return early if the folio has no
+buffers attached, with WARN_ON_ONCE() to alert about the misconfiguration.
+This provides defensive hardening.
+
+Signed-off-by: Deepakkumar Karn <dkarn@redhat.com>
+Link: https://patch.msgid.link/20251211131211.308021-1-dkarn@redhat.com
+Reviewed-by: Jan Kara <jack@suse.cz>
+Signed-off-by: Christian Brauner <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-Now I have a complete picture. Let me summarize the analysis.
+`folio_buffers()` exists in all relevant stable trees. The patch uses
+only `WARN_ON_ONCE` and `folio_buffers`, both of which are available
+everywhere.
 
----
-
-## Detailed Analysis
+## Comprehensive Analysis
 
 ### 1. COMMIT MESSAGE ANALYSIS
 
-The subject is: "i3c: mipi-i3c-hci: Stop reading Extended Capabilities
-if capability ID is 0"
+The commit describes a clear bug: `try_to_free_buffers()` can be called
+on folios with no buffer_heads attached when `filemap_release_folio()`
+is invoked on a folio belonging to a mapping with `AS_RELEASE_ALWAYS`
+set but no `release_folio` operation defined. This causes a **NULL
+pointer dereference** in `drop_buffers()`.
 
-The message clearly explains: **Extended Capability ID value 0 is
-special. It signifies the end of the list.** This is consistent with how
-hardware capability lists work in general (PCI uses the same convention,
-as confirmed by the PCI extended capability parsing code at
-`drivers/pci/pci.h:170` which checks `if (__header == 0) break;`).
-
-The commit is authored by **Adrian Hunter** (Intel), a prolific and
-highly respected kernel developer, and was reviewed by **Frank Li**
-(NXP), another I3C subsystem contributor. It was accepted by the I3C
-subsystem maintainer **Alexandre Belloni**.
+The commit is authored by Deepakkumar Karn (Red Hat), reviewed by Jan
+Kara (SUSE, a very well-respected VFS/filesystem developer), and signed
+off by Christian Brauner (the VFS subsystem maintainer).
 
 ### 2. CODE CHANGE ANALYSIS
 
-The change is a single-line modification:
-
-```275:276:drivers/i3c/master/mipi-i3c-hci/ext_caps.c
-                if (!cap_length)
-                        break;
-```
-
-becomes:
+The fix adds exactly 3 lines (plus a comment) to
+`try_to_free_buffers()`:
 
 ```c
-                if (!cap_id || !cap_length)
-                        break;
+/* Misconfigured folio check */
+if (WARN_ON_ONCE(!folio_buffers(folio)))
+    return true;
 ```
 
-**What was wrong:** The `i3c_hci_parse_ext_caps()` function walks a
-linked list of Extended Capabilities stored in MMIO register space. Per
-the MIPI I3C HCI specification, cap_id == 0 is the end-of-list sentinel.
-However, the code only checked for `cap_length == 0` to terminate the
-walk. If the end-of-list entry has `cap_id == 0` but `cap_length != 0`,
-the loop continues reading past the end of the valid capability list.
+This is inserted after the writeback check and before the `mapping ==
+NULL` check. The logic is:
+- If the folio has no buffers (`folio_buffers()` returns NULL), emit a
+  warning (once) and return `true` (success — there's nothing to free)
+- This prevents the NULL deref in `drop_buffers()` where `head =
+  folio_buffers(folio)` returns NULL and then `buffer_busy(bh)`
+  dereferences it
 
-**What happens without the fix (when cap_id==0, cap_length!=0):**
+### 3. THE BUG MECHANISM
 
-1. The code does NOT break out of the loop (only `cap_length == 0`
-   triggers a break)
-2. The `cap_id == 0` won't match any vendor-specific range (0xc0-0xcf)
-3. The `cap_id == 0` won't match any entry in the `ext_capabilities[]`
-   table (lowest valid ID is 0x01)
-4. The code prints `dev_notice("unknown ext_cap 0x00\n")` and continues
-5. It advances `curr_cap` by `cap_length * 4` bytes, now pointing into
-   undefined MMIO space
-6. Subsequent `readl()` calls read garbage data from MMIO registers past
-   the capability list
-7. If garbage data happens to match a valid capability ID (like
-   0x01-0x10, 0x9d-0x9e), the corresponding **parser function will be
-   called with a bogus MMIO base address**, reading/writing the wrong
-   hardware registers
-8. If garbage data produces a `cap_length` that fails the size check,
-   `i3c_hci_parse_ext_caps()` returns `-EINVAL`, causing
-   `i3c_hci_init()` to fail entirely and the **I3C controller to not
-   initialize at all**
+The call chain is:
+1. Memory reclaim (`shrink_folio_list`) or truncation calls
+   `filemap_release_folio()`
+2. `folio_needs_release()` returns `true` because `AS_RELEASE_ALWAYS` is
+   set
+3. `mapping->a_ops->release_folio` is NULL (e.g., `afs_dir_aops` doesn't
+   define it in v6.14+)
+4. Falls through to `try_to_free_buffers(folio)`
+5. `drop_buffers()` dereferences `folio_buffers(folio)` which is NULL
+6. **NULL pointer dereference crash**
 
-### 3. CLASSIFICATION
+### 4. AFFECTED VERSIONS
 
-This is a **real bug fix**. The bug is:
-- **Spec violation**: cap_id==0 is end-of-list per the MIPI I3C HCI
-  specification
-- **Potential driver initialization failure**: Garbage data past the
-  list can cause `-EINVAL` return, preventing the I3C controller from
-  working
-- **Potential incorrect hardware register access**: If garbage data
-  matches a valid capability ID, parser functions will `readl()` and
-  potentially `writel()` at wrong MMIO offsets, which could cause
-  **hardware misbehavior or corruption**
+The specific trigger (AFS symlinks/directories with `afs_dir_aops`
+lacking `release_folio`) only exists from **v6.14-rc1** onward,
+introduced by commit `6dd80936618c` ("afs: Use netfslib for
+directories"). Before v6.14, all filesystems that set
+`AS_RELEASE_ALWAYS` also define `release_folio`.
 
-### 4. SCOPE AND RISK ASSESSMENT
+This means:
+- **v6.6.y**: NOT affected (afs_dir_aops has release_folio)
+- **v6.12.y**: NOT affected (afs_dir_aops has release_folio)
+- **v6.13.y**: NOT affected (afs_dir_aops has release_folio)
+- **v6.14.y**: AFFECTED (afs_dir_aops stripped down)
+- **v6.15.y+**: AFFECTED
 
-- **Lines changed:** 1 (adding `!cap_id ||` to an existing condition)
-- **Files touched:** 1 (`ext_caps.c`)
-- **Complexity:** Trivial - simply adds a termination check for a known
-  end-of-list sentinel
-- **Risk of regression:** Essentially zero. If `cap_id == 0`, the spec
-  says it's end-of-list, so stopping is always the correct behavior. No
-  valid capability has ID 0.
+### 5. RISK ASSESSMENT
 
-### 5. USER IMPACT
+**Risk: Very Low**
+- The patch adds 3 lines - a NULL check with WARN_ON_ONCE and early
+  return
+- It's completely self-contained, no dependencies
+- `folio_buffers()` and `WARN_ON_ONCE` are available in all stable trees
+- Returning `true` is correct: no buffers = nothing to free = success
+- Reviewed by Jan Kara and Christian Brauner (top VFS experts)
+- Could be considered pure defensive hardening in older kernels where
+  the trigger doesn't exist
 
-The MIPI I3C HCI driver is used on real hardware - primarily Intel
-platforms (as evidenced by Adrian Hunter's active Intel-specific I3C HCI
-PCI patches, including adding support for Intel Nova Lake-S). Users with
-I3C controllers that use capability ID 0 as the end-of-list marker (as
-the spec prescribes) would hit this bug. The consequence ranges from
-spurious log messages to complete failure of the I3C controller
-initialization.
+**Benefit in affected trees (6.14+): High**
+- Prevents a NULL pointer dereference crash reachable from normal memory
+  reclaim
+- AFS symlinks with fscache enabled hitting memory pressure would crash
 
-### 6. STABILITY & BACKPORT ASSESSMENT
+**Benefit in unaffected trees (6.6, 6.12): Low**
+- Defensive hardening only - the specific trigger doesn't exist
+- Protects against potential future similar misconfigurations if other
+  patches are backported
 
-- **Applies cleanly:** The vulnerable code is identical in all stable
-  trees (5.15, 6.1, 6.6, 6.12). The only change since introduction was a
-  `DBG()` to `dev_dbg()` conversion, which doesn't affect the
-  surrounding context enough to prevent clean application.
-- **Obviously correct:** Adding `!cap_id` as a termination condition is
-  obviously correct per spec.
-- **Self-contained:** No dependencies on other commits. The patch
-  message ID (`67074-3`) indicates it was patch 3 in a series, but the
-  fix is completely standalone.
-- **Small and surgical:** One condition added to one line.
-- **Tested:** Already reviewed, accepted, and merged into mainline.
+### 6. STABLE BACKPORT SUITABILITY
 
-### 7. COMPARISON WITH PCI
+For trees where the bug is actually triggerable (6.14+), this is clearly
+a YES - it fixes a NULL pointer dereference crash in a core kernel path
+(memory reclaim). However, for older stable trees (6.6, 6.12), the bug
+isn't reachable with the current code because all filesystems that set
+`AS_RELEASE_ALWAYS` also properly define `release_folio`.
 
-The PCI extended capability parser uses the exact same pattern: `if
-(__header == 0) break;` (in `PCI_FIND_NEXT_EXT_CAP` macro at
-`drivers/pci/pci.h:170`). The I3C HCI code was simply missing this
-standard end-of-list check.
+The fix itself is trivially small (3 lines), obviously correct, has zero
+regression risk, and is well-reviewed. Even as defensive hardening, it's
+the kind of patch that makes stable kernels more robust.
 
-### Conclusion
-
-This is a minimal, obviously correct, zero-risk fix for a real hardware-
-facing bug that has existed since the driver was introduced in v5.11.
-Without it, the I3C HCI driver may fail to initialize or access
-incorrect hardware registers when walking past the end of the Extended
-Capability list. The fix adds a single condition check (`!cap_id`) that
-aligns with the MIPI I3C HCI specification and follows the same pattern
-used by PCI capability parsing. It applies cleanly to all stable trees.
+For the broader question of "should this be backported to stable trees":
+The answer depends on which tree. For 6.14.y and later, it's an
+unambiguous yes - it fixes a real crash. For 6.6.y and 6.12.y, it's
+defensive hardening that prevents a crash scenario that currently isn't
+reachable but could become reachable if other patches are backported.
+Given the negligible risk and the fact that it hardens a core kernel
+function against NULL dereference, even the older trees benefit.
 
 **YES**
 
- drivers/i3c/master/mipi-i3c-hci/ext_caps.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/buffer.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/i3c/master/mipi-i3c-hci/ext_caps.c b/drivers/i3c/master/mipi-i3c-hci/ext_caps.c
-index 7714f00ea9cc0..533a495e14c86 100644
---- a/drivers/i3c/master/mipi-i3c-hci/ext_caps.c
-+++ b/drivers/i3c/master/mipi-i3c-hci/ext_caps.c
-@@ -272,7 +272,7 @@ int i3c_hci_parse_ext_caps(struct i3c_hci *hci)
- 		cap_length = FIELD_GET(CAP_HEADER_LENGTH, cap_header);
- 		dev_dbg(&hci->master.dev, "id=0x%02x length=%d",
- 			cap_id, cap_length);
--		if (!cap_length)
-+		if (!cap_id || !cap_length)
- 			break;
- 		if (curr_cap + cap_length * 4 >= end) {
- 			dev_err(&hci->master.dev,
+diff --git a/fs/buffer.c b/fs/buffer.c
+index 838c0c5710229..28e4d53f17173 100644
+--- a/fs/buffer.c
++++ b/fs/buffer.c
+@@ -2948,6 +2948,10 @@ bool try_to_free_buffers(struct folio *folio)
+ 	if (folio_test_writeback(folio))
+ 		return false;
+ 
++	/* Misconfigured folio check */
++	if (WARN_ON_ONCE(!folio_buffers(folio)))
++		return true;
++
+ 	if (mapping == NULL) {		/* can this still happen? */
+ 		ret = drop_buffers(folio, &buffers_to_free);
+ 		goto out;
 -- 
 2.51.0
 
