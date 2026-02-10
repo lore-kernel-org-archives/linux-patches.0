@@ -1,45 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13CA419ABD8;
-	Tue, 10 Feb 2026 23:31:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5F252DC76F;
+	Tue, 10 Feb 2026 23:32:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770766319; cv=none; b=pGHOQVBo8PJQ+3zx4i/2UhSMyalfH0tz0+Y81/qX7VP7OVqBGpgeHegAvDhA1DMdrVcc1fT10iSI1Pp31cCOfGtCnL9A7I1gFuQQJenBK+158bQCl2gcYmKL2+L6lIKOMCbUgEBJ0l3uB++jwdtTcHf+KOCXXhpXeVo9s5RgkbI=
+	t=1770766321; cv=none; b=rT+VMZs61ohB1qZjlo4ilPPaU7IMq1c9v72FXuOvwg1+YC3+odR+jWX1LJFn/E98bfcdbUDOqjnYi0kXE9q0kbFV5l2jw5eRhreyh1toVEaJOm6ZDnrxTjRJFJsurOPL5wmXBL3xtZMO0leaUFyc7Pf4eteX0dNgSGMSm4mKZII=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770766319; c=relaxed/simple;
-	bh=/LFcfH13Xvl2PqBIZxM2EkzvYZWWnm+n/Hix99upP2E=;
+	s=arc-20240116; t=1770766321; c=relaxed/simple;
+	bh=SBo6Ip6zL7CuuAgpcphvuJ//YLD9xP6ZS8NtBlTW6CU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=ct/TwHfBovAkXEG6yycK2/zhrMmInDsse7OJwiH/zAibFL8PwCyacmouSfGek9udM4bchFxqE43dY2/WA+CPpggOuJ73jSjauWSE1c/9rdpexRHNx33lsdL60rl/a2EJE3PWRWKBZfveHlqUERQ5NaZa6B7jPQ+EkUnUYbF2Tnk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ZkuD8lzV; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=dzPTxOLHG0Zi/dNox3v28cZAa9Ce744yN91DidL0uDRmayv9ifS9qt5WtrE2SoKQqkyOuB8FFiQNUL2d6ChIGiXU/zshBOMsxQg+jDBWz2kL+hLLDlglFA3SQPaYhOojRvhbduijSb0MHH61tuifMth8k6HoDmooE2N7DK7OfzE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=NuEXAMHV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ZkuD8lzV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F23FDC19423;
-	Tue, 10 Feb 2026 23:31:57 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="NuEXAMHV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 637C5C19423;
+	Tue, 10 Feb 2026 23:32:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1770766319;
-	bh=/LFcfH13Xvl2PqBIZxM2EkzvYZWWnm+n/Hix99upP2E=;
+	s=k20201202; t=1770766321;
+	bh=SBo6Ip6zL7CuuAgpcphvuJ//YLD9xP6ZS8NtBlTW6CU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZkuD8lzVimPJnEKj4uAhZJqhRQxAczI6XUCeQWYgI0d8VMWIWKMvpKuU4qcxziOhQ
-	 RCJB2J5DmLnVrsh0GbnmsIsqk4uNXCHyJj1jEvI6b+oJyhuuerS+s3Y+PZJruxPYpT
-	 d5h8dOGB0ONY60+AlBcLUA4HHZm8nOWFkQqJncEtSlYpWB2m4mOCDRbQmvv5eELmXO
-	 txVrmE5rFgPUzm7bowX6tJZ5PUgW7xLm55ycn2koTceaYQKW8LEDloIZvwtSBfn3VT
-	 2TVoM2v9XFHSTa2nlWcSzpwhx3Ne1HFahEoN6IIlJjQh56n31m5+z8IMgW7t2vBwvD
-	 6fM35JAeTLpsA==
+	b=NuEXAMHVyFeBIp+0A3CE7lAfqe6cThzLq0kNjlRKE1MsO9L6Dkwg1F0sLo+e3KV08
+	 3DjtG9aV5B7NvPfKd2q9IcZNAwc4wiwnCYXB1sR9OcpkCF/udJzIxTl2eGQ1tf10Fd
+	 wS4vUsOY5Bp+1v2bfGGhffYj5vZwaIjwrqhsMck3IJpcHiYAElzxUn4qlVctm+X5FE
+	 MGi73hGla/qRR69TmXNb0dxtABekZoupS+0ajVEq+Ej95D7I3LF1VwRlFc4fHfN7Ci
+	 W1uHTx/TX+hIxBlmzpHcyDLN2WiAN4u2Nai5akOOGogpu5ejjJT/7MfModHQoZop2C
+	 f/sgG7tD/Kiig==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: jinbaohong <jinbaohong@synology.com>,
-	Qu Wenruo <wqu@suse.com>,
-	Robbie Ko <robbieko@synology.com>,
-	Filipe Manana <fdmanana@suse.com>,
-	David Sterba <dsterba@suse.com>,
+Cc: Jori Koolstra <jkoolstra@xs4all.nl>,
+	Jan Kara <jack@suse.cz>,
+	syzbot+5ad0824204c7bf9b67f2@syzkaller.appspotmail.com,
+	Christian Brauner <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	clm@fb.com,
-	linux-btrfs@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.19-6.6] btrfs: handle user interrupt properly in btrfs_trim_fs()
-Date: Tue, 10 Feb 2026 18:31:08 -0500
-Message-ID: <20260210233123.2905307-23-sashal@kernel.org>
+	penguin-kernel@I-love.SAKURA.ne.jp,
+	mjguzik@gmail.com,
+	chentaotao@didiglobal.com
+Subject: [PATCH AUTOSEL 6.19-5.10] minix: Add required sanity checking to minix_check_superblock()
+Date: Tue, 10 Feb 2026 18:31:09 -0500
+Message-ID: <20260210233123.2905307-24-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260210233123.2905307-1-sashal@kernel.org>
 References: <20260210233123.2905307-1-sashal@kernel.org>
@@ -55,269 +55,256 @@ X-stable-base: Linux 6.19
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: jinbaohong <jinbaohong@synology.com>
+From: Jori Koolstra <jkoolstra@xs4all.nl>
 
-[ Upstream commit bfb670b9183b0e4ba660aff2e396ec1cc01d0761 ]
+[ Upstream commit 8c97a6ddc95690a938ded44b4e3202f03f15078c ]
 
-When a fatal signal is pending or the process is freezing,
-btrfs_trim_block_group() and btrfs_trim_free_extents() return -ERESTARTSYS.
-Currently this is treated as a regular error: the loops continue to the
-next iteration and count it as a block group or device failure.
+The fs/minix implementation of the minix filesystem does not currently
+support any other value for s_log_zone_size than 0. This is also the
+only value supported in util-linux; see mkfs.minix.c line 511. In
+addition, this patch adds some sanity checking for the other minix
+superblock fields, and moves the minix_blocks_needed() checks for the
+zmap and imap also to minix_check_super_block().
 
-Instead, break out of the loops immediately and return -ERESTARTSYS to
-userspace without counting it as a failure. Also skip the device loop
-entirely if the block group loop was interrupted.
+This also closes a related syzbot bug report.
 
-Reviewed-by: Qu Wenruo <wqu@suse.com>
-Signed-off-by: Robbie Ko <robbieko@synology.com>
-Signed-off-by: jinbaohong <jinbaohong@synology.com>
-Reviewed-by: Filipe Manana <fdmanana@suse.com>
-Signed-off-by: Filipe Manana <fdmanana@suse.com>
-Reviewed-by: David Sterba <dsterba@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Signed-off-by: Jori Koolstra <jkoolstra@xs4all.nl>
+Link: https://patch.msgid.link/20251208153947.108343-1-jkoolstra@xs4all.nl
+Reviewed-by: Jan Kara <jack@suse.cz>
+Reported-by: syzbot+5ad0824204c7bf9b67f2@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=5ad0824204c7bf9b67f2
+Signed-off-by: Christian Brauner <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-Now I have a complete understanding. Let me provide my thorough
-analysis.
+Now I have a complete picture. Let me write the comprehensive analysis.
 
 ---
 
-## Detailed Analysis
+## Comprehensive Analysis
 
 ### 1. COMMIT MESSAGE ANALYSIS
 
-The commit message is clear and precise: when `btrfs_trim_block_group()`
-or `btrfs_trim_free_extents()` return `-ERESTARTSYS` (due to fatal
-signal or freezing), the current code treats it as a regular error. It
-continues the loops, counts it as a failure, and logs misleading
-warnings. The fix is to break out immediately and return `-ERESTARTSYS`
-to userspace.
+The commit message clearly states it adds "required sanity checking" for
+the minix superblock, specifically:
+- Validates `s_log_zone_size == 0` (only supported value)
+- Adds validation for `s_ninodes`, `s_firstdatazone`, and zone/inode map
+  block counts
+- Moves existing `minix_blocks_needed()` checks from
+  `minix_fill_super()` to `minix_check_superblock()` (earlier
+  validation)
+- Explicitly closes a **syzbot bug report** with a C reproducer
 
-The commit has excellent review pedigree: reviewed by Qu Wenruo, Filipe
-Manana, and David Sterba (the btrfs maintainer himself). Three separate
-reviews is strong confidence.
+Key trust indicators:
+- **Reported-by: syzbot** - fuzzer-found, reproducible bug with a
+  concrete C reproducer
+- **Reviewed-by: Jan Kara** - experienced filesystem developer at SUSE
+- **Signed-off-by: Christian Brauner** - VFS maintainer
+- The syzbot bug has been open for **1521+ days** (since Dec 2021),
+  demonstrating a long-standing issue
 
 ### 2. CODE CHANGE ANALYSIS
 
-The fix touches a single function `btrfs_trim_fs()` in `fs/btrfs/extent-
-tree.c`, adding 11 lines across three locations:
+**The root cause bug**: In `minix_statfs()` at line 415:
 
-**Location 1** - Block group loop: After `btrfs_trim_block_group()`
-returns, check for `-ERESTARTSYS`/`-EINTR` and break immediately:
-
-```c
-if (ret == -ERESTARTSYS || ret == -EINTR) {
-    btrfs_put_block_group(cache);
-    break;
-}
+```415:415:fs/minix/inode.c
+        buf->f_blocks = (sbi->s_nzones - sbi->s_firstdatazone) <<
+sbi->s_log_zone_size;
 ```
 
-Note the critical `btrfs_put_block_group(cache)` call before `break` —
-this prevents a reference count leak. When using `continue`, the loop
-iterator `cache = btrfs_next_block_group(cache)` handles putting the old
-reference. But on `break`, we must do it explicitly. This matches the
-existing pattern earlier in the same loop:
+The `s_log_zone_size` field is read directly from the on-disk superblock
+(`__u16` type, values 0-65535) and stored in `sbi->s_log_zone_size`
+(unsigned long) **without any validation**. When a crafted/corrupt minix
+image provides a large value (e.g., 768, as shown in the syzbot crash),
+this causes a UBSAN shift-out-of-bounds because the shift exponent
+exceeds 64 bits.
 
-```6530:6533:fs/btrfs/extent-tree.c
-                if (cache->start >= range_end) {
-                        btrfs_put_block_group(cache);
-                        break;
-                }
+The same vulnerability also exists in `minix_count_free_blocks()` in
+`bitmap.c`:
+
+```102:103:fs/minix/bitmap.c
+        return (count_free(sbi->s_zmap, sb->s_blocksize, bits)
+                << sbi->s_log_zone_size);
 ```
 
-**Location 2** - Between the two loops: Skip the device trimming loop
-entirely if the block group loop was interrupted:
+Additionally, `sbi->s_nzones - sbi->s_firstdatazone` can **underflow**
+(unsigned subtraction wrapping around) if `s_firstdatazone >= s_nzones`,
+affecting both `minix_statfs()` and `minix_count_free_blocks()`.
 
-```c
-if (ret == -ERESTARTSYS || ret == -EINTR)
-    return ret;
-```
+**What the fix does (line by line)**:
 
-**Location 3** - Device loop and final return: Break out of the device
-loop on interrupt and return appropriately:
+1. **Validates `s_log_zone_size == 0`**: The Linux minix implementation
+   doesn't support zone sizes different from block sizes. This is
+   consistent with `mkfs.minix` in util-linux. This single check
+   prevents the UBSAN shift-out-of-bounds.
 
-```c
-if (ret == -ERESTARTSYS || ret == -EINTR)
-    break;
-...
-if (ret == -ERESTARTSYS || ret == -EINTR)
-    return ret;
-```
+2. **Validates `s_ninodes >= 1`**: Prevents issues with zero-inode
+   filesystems.
 
-### 3. THE BUG MECHANISM
+3. **Validates `s_firstdatazone > 4`**: The minimum layout of a minix FS
+   requires: boot block (0), superblock (1), at least 1 imap block (2),
+   at least 1 zmap block (3), at least 1 inode table block (4), so first
+   data zone must be >= 5.
 
-This bug is a **follow-up to commit `69313850dce33` ("btrfs: add
-cancellation points to trim loops")** which was merged in v6.12 and is
-`Cc: stable@vger.kernel.org # 5.15+`. That commit added
-`btrfs_trim_interrupted()` checks to the inner trim functions
-(`trim_no_bitmap`, `trim_bitmaps`, `btrfs_issue_discard`,
-`btrfs_trim_free_extents`) so they return `-ERESTARTSYS` when a fatal
-signal is pending or the process is freezing.
+4. **Validates `s_firstdatazone < s_nzones`**: Prevents unsigned
+   underflow in `s_nzones - s_firstdatazone` used in multiple places.
 
-**The problem**: The outer function `btrfs_trim_fs()` was NOT updated to
-handle this `-ERESTARTSYS` return. So the inner loops correctly detect
-the interrupt and return early, but the outer loop just treats it as a
-regular error and continues:
+5. **Moves `minix_blocks_needed()` checks earlier**: Moves existing
+   imap/zmap block validation from after bitmap buffer allocation (in
+   `minix_fill_super()`) to before allocation (in
+   `minix_check_superblock()`). This is an improvement because it
+   rejects bad images before doing unnecessary I/O (sb_bread calls for
+   bitmap blocks).
 
-1. `btrfs_trim_block_group(cache_0)` → detects signal → returns
-   `-ERESTARTSYS`
-2. Outer loop: `bg_failed++`, `bg_ret = -ERESTARTSYS`, `continue`
-3. `btrfs_trim_block_group(cache_1)` → detects signal again → returns
-   `-ERESTARTSYS`
-4. Repeat for ALL remaining block groups
-5. Then iterate ALL devices, each returning `-ERESTARTSYS` immediately
+6. **Removes the old `s_imap_blocks == 0 || s_zmap_blocks == 0` check**:
+   This is subsumed by the new `minix_blocks_needed()` checks — if
+   either block count is 0 while `s_ninodes >= 1`, the blocks_needed
+   check will catch it.
 
-On a large filesystem with thousands of block groups and multiple
-devices, this means:
-- **Delayed response to Ctrl+C/SIGKILL**: The process doesn't terminate
-  promptly
-- **Blocked system suspend**: `freezing(current)` remains true, but the
-  outer loop keeps going, preventing the process from actually freezing.
-  This was the exact scenario reported in [bug
-  219180](https://bugzilla.kernel.org/show_bug.cgi?id=219180) and [SUSE
-  bug 1229737](https://bugzilla.suse.com/show_bug.cgi?id=1229737)
-- **Misleading dmesg warnings**: `btrfs_warn(fs_info, "failed to trim
-  %llu block group(s)...")` fires, counting all the interrupted block
-  groups as "failures"
-- **Wrong return value**: Instead of returning `-ERESTARTSYS` cleanly to
-  userspace, the function may return a mixed error code
+### 3. CLASSIFICATION
+
+This is clearly a **bug fix** — specifically a UBSAN: shift-out-of-
+bounds fix triggered by crafted filesystem images. It also fixes
+potential unsigned integer underflow. There are zero new features.
 
 ### 4. SCOPE AND RISK ASSESSMENT
 
-- **Size**: 11 lines added, 0 removed. Extremely small and surgical.
-- **Files touched**: 1 (`fs/btrfs/extent-tree.c`)
-- **Scope**: Only affects the interrupt/signal error path. The normal
-  trim path (no signal pending) is completely unaffected — all new code
-  is gated behind `ret == -ERESTARTSYS || ret == -EINTR` checks.
-- **Risk**: Very low. The added checks are early-exit conditions that
-  only trigger when a signal is pending or process is freezing. There's
-  no way these can cause a regression in normal operation.
-- **Reference counting**: Correctly handled
-  (`btrfs_put_block_group(cache)` before break).
+- **Lines changed**: 29 additions, 21 deletions — **small and
+  contained**
+- **Files touched**: 1 file (`fs/minix/inode.c`)
+- **Complexity**: Low — all changes are straightforward value
+  comparisons
+- **Risk of regression**: Very low — the changes only add validation at
+  mount time. A valid minix filesystem would pass all checks. A
+  filesystem rejected by these checks was always corrupt/invalid.
+- **Subsystem**: minix filesystem — mature, rarely modified, not in a
+  hot development path
 
 ### 5. USER IMPACT
 
-- **Who is affected**: Any user running `fstrim` on a btrfs filesystem
-  who interrupts it (Ctrl+C) or has a system that suspends while trim is
-  running. This is a very common scenario, especially on laptops with
-  btrfs and periodic fstrim timers.
-- **Call path**: `fstrim` → `FITRIM` ioctl → `btrfs_ioctl_fitrim()` →
-  `btrfs_trim_fs()`
-- **Severity**: The original bugs from the linked reports were about
-  systems unable to suspend. The cancellation point commit
-  (`69313850dce33`) fixed the inner loops but left the outer loop
-  broken, meaning the fix was incomplete. This commit completes it.
+- **Severity**: UBSAN/undefined behavior triggered from userspace (mount
+  syscall with crafted image)
+- **Attack surface**: Any user who can mount a minix filesystem (often
+  root, but in some configurations could be unprivileged)
+- **Syzbot confirmed affected stable trees**: linux-5.15 and linux-6.1
+  both have the same bug (syzbot "Similar bugs" section shows them as
+  unpatched: "0/3")
+- **Reproducible**: Yes, syzbot provides a C reproducer
+- **Duration**: The bug has been open since December 2021 — over 4 years
 
-### 6. DEPENDENCY CHECK
+### 6. STABILITY INDICATORS
 
-This commit depends on two preceding commits:
+- Reviewed-by: Jan Kara (experienced FS developer)
+- Signed-off-by: Christian Brauner (VFS maintainer)
+- Tested by syzbot (patch testing returned OK)
+- The commit has been in mainline since the 6.19 merge window
 
-1. **`912d1c6680bdb` ("btrfs: continue trimming remaining devices on
-   failure")** - Changes `break` to `continue` in the device loop.
-   **Already targeted for stable** (`Fixes:` tag and `Cc:
-   stable@vger.kernel.org # 5.4+`).
+### 7. DEPENDENCY CHECK
 
-2. **`1cc4ada4182fa` ("btrfs: preserve first error in
-   btrfs_trim_fs()")** - Changes `bg_ret = ret` to `if (!bg_ret) bg_ret
-   = ret`. **Not targeted for stable**. This is a small context
-   dependency; the core fix logic is independent of it.
+- `minix_check_superblock()` was introduced in commit 270ef41094e9f (Aug
+  2020, with `Cc: stable`), so it **exists in all current stable
+  trees**.
+- The function signature was changed to `struct super_block *sb` in
+  32ac86efff91a (also Aug 2020, also in stable), so the same signature
+  is used everywhere.
+- `minix_blocks_needed()` has existed since 2011 (commit 016e8d44bc06d).
+- The mount API conversion (7cd7bfe593287, Mar 2024) may mean older
+  stable trees (5.15, 6.1, 6.6) need minor context adjustments, but the
+  core changes to `minix_check_superblock()` apply cleanly regardless.
+- **No other commits are needed** — this is fully self-contained.
 
-Both prerequisites are small (1-line and 15-line changes respectively).
-The first is already stable-bound. The second would be needed for clean
-application but could alternatively be resolved by a minor context
-adjustment during backport.
+### 8. CONCLUSION
 
-The fix also requires `69313850dce33` ("btrfs: add cancellation points
-to trim loops") which is `Cc: stable # 5.15+` and should already be in
-stable trees 5.15+.
-
-### 7. STABILITY INDICATORS
-
-- Reviewed by 3 btrfs experts
-- The parent commit adding interruption infrastructure has been in
-  stable since 5.15+
-- The fix is straightforward conditional checks — no complex logic
-
-### 8. CLASSIFICATION
-
-This is a **bug fix** that:
-- Fixes incomplete signal/interrupt handling
-- Fixes potential system suspend blocking
-- Fixes misleading kernel warnings
-- Fixes incorrect error propagation to userspace
-- Completes an existing stable fix (`69313850dce33`)
-
-It is NOT:
-- A new feature
-- A performance optimization
-- A code cleanup
-- An API change
-
-### Summary
-
-This commit fixes a real, user-visible bug where btrfs trim operations
-cannot be properly interrupted by signals (Ctrl+C) or system suspend. It
-completes the fix started by `69313850dce33` (already in stable 5.15+)
-which added cancellation points to inner trim loops but left the outer
-loop in `btrfs_trim_fs()` unaware of the `-ERESTARTSYS` return code. The
-fix is extremely small (11 lines), well-reviewed by 3 btrfs developers
-including the maintainer, has zero risk to normal code paths, correctly
-handles reference counting, and addresses the same class of bug (suspend
-blocking) that motivated the original stable-tagged commit. It requires
-two small prerequisite commits (one already stable-targeted) for clean
-application.
+This commit fixes a **long-standing syzbot-reported UBSAN bug** (1521+
+days old) in the minix filesystem's superblock validation. The bug is
+triggered by crafted filesystem images and causes undefined behavior
+(shift-out-of-bounds) that is reproducible with a C reproducer. The fix
+is small (29 additions, 21 deletions in 1 file), self-contained,
+obviously correct, reviewed by an experienced FS developer, and signed
+off by the VFS maintainer. The affected code exists in all stable trees,
+and syzbot confirms the bug is present and unfixed in at least
+linux-5.15 and linux-6.1. The risk of regression is minimal since the
+changes only reject invalid filesystem images at mount time. This is a
+textbook stable backport candidate.
 
 **YES**
 
- fs/btrfs/extent-tree.c | 11 +++++++++++
- 1 file changed, 11 insertions(+)
+ fs/minix/inode.c | 50 ++++++++++++++++++++++++++++--------------------
+ 1 file changed, 29 insertions(+), 21 deletions(-)
 
-diff --git a/fs/btrfs/extent-tree.c b/fs/btrfs/extent-tree.c
-index 1bf081243efb2..8bdb609f58a7e 100644
---- a/fs/btrfs/extent-tree.c
-+++ b/fs/btrfs/extent-tree.c
-@@ -6555,6 +6555,10 @@ int btrfs_trim_fs(struct btrfs_fs_info *fs_info, struct fstrim_range *range)
- 						     range->minlen);
+diff --git a/fs/minix/inode.c b/fs/minix/inode.c
+index 51ea9bdc813f7..c8c6b2135abe7 100644
+--- a/fs/minix/inode.c
++++ b/fs/minix/inode.c
+@@ -170,10 +170,38 @@ static int minix_reconfigure(struct fs_context *fc)
+ static bool minix_check_superblock(struct super_block *sb)
+ {
+ 	struct minix_sb_info *sbi = minix_sb(sb);
++	unsigned long block;
  
- 			trimmed += group_trimmed;
-+			if (ret == -ERESTARTSYS || ret == -EINTR) {
-+				btrfs_put_block_group(cache);
-+				break;
-+			}
- 			if (ret) {
- 				bg_failed++;
- 				bg_ret = ret;
-@@ -6568,6 +6572,9 @@ int btrfs_trim_fs(struct btrfs_fs_info *fs_info, struct fstrim_range *range)
- 			"failed to trim %llu block group(s), last error %d",
- 			bg_failed, bg_ret);
- 
-+	if (ret == -ERESTARTSYS || ret == -EINTR)
-+		return ret;
+-	if (sbi->s_imap_blocks == 0 || sbi->s_zmap_blocks == 0)
++	if (sbi->s_log_zone_size != 0) {
++		printk("minix-fs error: zone size must equal block size. "
++		       "s_log_zone_size > 0 is not supported.\n");
++		return false;
++	}
 +
- 	mutex_lock(&fs_devices->device_list_mutex);
- 	list_for_each_entry(device, &fs_devices->devices, dev_list) {
- 		if (test_bit(BTRFS_DEV_STATE_MISSING, &device->dev_state))
-@@ -6576,6 +6583,8 @@ int btrfs_trim_fs(struct btrfs_fs_info *fs_info, struct fstrim_range *range)
- 		ret = btrfs_trim_free_extents(device, &group_trimmed);
++	if (sbi->s_ninodes < 1 || sbi->s_firstdatazone <= 4 ||
++	    sbi->s_firstdatazone >= sbi->s_nzones)
+ 		return false;
  
- 		trimmed += group_trimmed;
-+		if (ret == -ERESTARTSYS || ret == -EINTR)
-+			break;
- 		if (ret) {
- 			dev_failed++;
- 			dev_ret = ret;
-@@ -6589,6 +6598,8 @@ int btrfs_trim_fs(struct btrfs_fs_info *fs_info, struct fstrim_range *range)
- 			"failed to trim %llu device(s), last error %d",
- 			dev_failed, dev_ret);
- 	range->len = trimmed;
-+	if (ret == -ERESTARTSYS || ret == -EINTR)
-+		return ret;
- 	if (bg_ret)
- 		return bg_ret;
- 	return dev_ret;
++	/* Apparently minix can create filesystems that allocate more blocks for
++	 * the bitmaps than needed.  We simply ignore that, but verify it didn't
++	 * create one with not enough blocks and bail out if so.
++	 */
++	block = minix_blocks_needed(sbi->s_ninodes, sb->s_blocksize);
++	if (sbi->s_imap_blocks < block) {
++		printk("MINIX-fs: file system does not have enough "
++		       "imap blocks allocated. Refusing to mount.\n");
++		return false;
++	}
++
++	block = minix_blocks_needed(
++			(sbi->s_nzones - sbi->s_firstdatazone + 1),
++			sb->s_blocksize);
++	if (sbi->s_zmap_blocks < block) {
++		printk("MINIX-fs: file system does not have enough "
++		       "zmap blocks allocated. Refusing to mount.\n");
++		return false;
++	}
++
+ 	/*
+ 	 * s_max_size must not exceed the block mapping limitation.  This check
+ 	 * is only needed for V1 filesystems, since V2/V3 support an extra level
+@@ -293,26 +321,6 @@ static int minix_fill_super(struct super_block *s, struct fs_context *fc)
+ 	minix_set_bit(0,sbi->s_imap[0]->b_data);
+ 	minix_set_bit(0,sbi->s_zmap[0]->b_data);
+ 
+-	/* Apparently minix can create filesystems that allocate more blocks for
+-	 * the bitmaps than needed.  We simply ignore that, but verify it didn't
+-	 * create one with not enough blocks and bail out if so.
+-	 */
+-	block = minix_blocks_needed(sbi->s_ninodes, s->s_blocksize);
+-	if (sbi->s_imap_blocks < block) {
+-		printk("MINIX-fs: file system does not have enough "
+-				"imap blocks allocated.  Refusing to mount.\n");
+-		goto out_no_bitmap;
+-	}
+-
+-	block = minix_blocks_needed(
+-			(sbi->s_nzones - sbi->s_firstdatazone + 1),
+-			s->s_blocksize);
+-	if (sbi->s_zmap_blocks < block) {
+-		printk("MINIX-fs: file system does not have enough "
+-				"zmap blocks allocated.  Refusing to mount.\n");
+-		goto out_no_bitmap;
+-	}
+-
+ 	/* set up enough so that it can read an inode */
+ 	s->s_op = &minix_sops;
+ 	s->s_time_min = 0;
 -- 
 2.51.0
 
