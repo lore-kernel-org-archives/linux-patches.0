@@ -1,48 +1,48 @@
 Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.13])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6FEC63101BA
-	for <patches@lists.linux.dev>; Tue, 10 Feb 2026 16:36:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32F15318BB9
+	for <patches@lists.linux.dev>; Tue, 10 Feb 2026 16:36:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.13
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770741392; cv=none; b=rUDDlw++wIiyRyfoG8fDAh90rgGhqwvks2hy9sm02ul7PBl7160i3q+5g0N59d4wAqOMyPkk5T4AGAOT31LqTVvfFMD5/FmhdkJ5kuOnuDVW5ksoiIL7en6+zEqvXnyKsIV/Tla/JDNyv3KUCN/QSu1Cvj/52oFExDYA2renF0w=
+	t=1770741393; cv=none; b=Ld5rDEiqau01JcoVYr/m9usqpx2fyikgZ8efNZw4YgPFJPe22CclKGlv+7T0V36wNbvTHkLX6lsDZ1oNxoD3aYWzneZX36L8Y2Esfuou4hFoHKdVQlc1vDCjirHlEn0fjh7/hZNvOddYaxOASGc8ifTyH/eNH6piwHfogVIFJwk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770741392; c=relaxed/simple;
-	bh=TWvK61e4m2WC5DvKyQbhX3+UlBDW7zjZ9gwsvmLgMhM=;
+	s=arc-20240116; t=1770741393; c=relaxed/simple;
+	bh=uBBHGG+Pb79Ww3RCSOJRUJ3SLe13CGVilpi6FeCHHrg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PEwqQkOPYtvMG3CYFxIN7MJJLpoH0E85ze1pUdfS18r1ZidcG+EeRU4/qgV1co8xIPnfhcyPgZn9d9JFnTs5aYDFLVGf03kVUr3TA4yyAItYaNF09dBry4X3ZO3cVOKu+2pMDjuD3HxT7yFoRuvLYja9lxt+Zbkxlfs0JY0JenM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=Ep3F+q6I; arc=none smtp.client-ip=192.198.163.13
+	 MIME-Version; b=P25qQwjDfKvw79elUp1TNDkIJ0qUgj26LEMqmFVnwIl4qZDX6ptgFiLfKGNRNtjwW0LsFIiPRDRvEm5spDFws9ViaCTqA6duiDdKinL8mnQuDUfEpriIIuuU3mGIsfoPVJK3Lf2SVWdAifFLSqmEQ3argYXoClKPqTk91B4uySA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=LuNheeOk; arc=none smtp.client-ip=192.198.163.13
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="Ep3F+q6I"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="LuNheeOk"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
   t=1770741391; x=1802277391;
   h=from:to:cc:subject:date:message-id:in-reply-to:
    references:mime-version:content-transfer-encoding;
-  bh=TWvK61e4m2WC5DvKyQbhX3+UlBDW7zjZ9gwsvmLgMhM=;
-  b=Ep3F+q6Ixi6RdxXj3FzOPcMnSu03G9WyM22FYC7WeP9z/3wswrLiHL5F
-   dVeOijrOudWtaPyhArCmwhIM3C5FkOoMc4VqNOt/M4V6ruiMO+9zwTlSC
-   be7YZ5PdtWHFqbVAKfZAfK3w+Qxoci+ObLj3rmZF2HThCQf8JXr9gyeZh
-   xSfyKmWKN839iRhE4USQ0+0X+dZr0sqQ5EaihEkzFXjGipjNpzBIanobV
-   Vehm9ONc4V041U4im7sDjmdsWSSJp9sRaocKOnivJcEMCERdri730G7Fu
-   5twHFdcF14xL2HrgClCuoAt8KhaZjBtKCeFUKLUkbDAvvdm5hy6tnXUE1
+  bh=uBBHGG+Pb79Ww3RCSOJRUJ3SLe13CGVilpi6FeCHHrg=;
+  b=LuNheeOkdSpKMlhE4nhYF4RpzLN653aL8SHEmuPi+Y5WQihe7Mt4O31S
+   G+L1mKdeNionW/Dj3GfDzlwkPmtI2zJ5ilnrImrcJOQegYmylSm6soxjQ
+   bnAQ63pHZslNomsE5oS4hPQw+intU0azTf37GU68I33oMLUWbPzPdYY2D
+   ChfTKE662Bo7ucN6bSPlk/RW5kqNVW6ofPlbRwWI8N+sSmvMZBLvx/IBB
+   UZaq/7G45ae7UTQDYoWhZ6dT8OxCF4rVkxh+JtYPZLjg4XKKzbrdRP6P1
+   eV66eezrVVJMHy8ykMOfIwsezj9FecYC/QTUAxcwExcHvvGQNim4aHnpp
    w==;
-X-CSE-ConnectionGUID: oVZGL0jHSbar8mWLVNuV3A==
-X-CSE-MsgGUID: SSkJ7oSvQta9F7pPg5SgXg==
-X-IronPort-AV: E=McAfee;i="6800,10657,11697"; a="74476835"
+X-CSE-ConnectionGUID: ct2QW7euQ1uqhbDHkvVwQg==
+X-CSE-MsgGUID: 3JZfqVaoR4iY5Aze7D0DIA==
+X-IronPort-AV: E=McAfee;i="6800,10657,11697"; a="74476849"
 X-IronPort-AV: E=Sophos;i="6.21,283,1763452800"; 
-   d="scan'208";a="74476835"
+   d="scan'208";a="74476849"
 Received: from orviesa008.jf.intel.com ([10.64.159.148])
-  by fmvoesa107.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 10 Feb 2026 08:36:27 -0800
-X-CSE-ConnectionGUID: 2ymCO60MTi20wDcjUsHO1g==
-X-CSE-MsgGUID: HBOUw0OsQ6iKvscWzwcE8w==
+  by fmvoesa107.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 10 Feb 2026 08:36:28 -0800
+X-CSE-ConnectionGUID: kgqoaQyeSpGwLmoIF7R/5w==
+X-CSE-MsgGUID: 9pKWE1k5SQGIXVZN5pI9QQ==
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="6.21,283,1763452800"; 
-   d="scan'208";a="212003460"
+   d="scan'208";a="212003466"
 Received: from rchatre-desk1.jf.intel.com ([10.165.154.99])
-  by orviesa008-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 10 Feb 2026 08:36:26 -0800
+  by orviesa008-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 10 Feb 2026 08:36:27 -0800
 From: Reinette Chatre <reinette.chatre@intel.com>
 To: shuah@kernel.org,
 	Dave.Martin@arm.com,
@@ -58,9 +58,9 @@ Cc: zide.chen@intel.com,
 	linux-kselftest@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
 	patches@lists.linux.dev
-Subject: [PATCH 3/8] selftests/resctrl: Support multiple events associated with iMC
-Date: Tue, 10 Feb 2026 08:50:42 -0800
-Message-ID: <a8928af52dcc2f2f5a97149416d009e267d23593.1770406608.git.reinette.chatre@intel.com>
+Subject: [PATCH 5/8] selftests/resctrl: Raise threshold at which MBM and PMU values are compared
+Date: Tue, 10 Feb 2026 08:50:44 -0800
+Message-ID: <d166b443790a2941cb32a6d3b952a51142c7e391.1770406608.git.reinette.chatre@intel.com>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <cover.1770406608.git.reinette.chatre@intel.com>
 References: <cover.1770406608.git.reinette.chatre@intel.com>
@@ -72,186 +72,78 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-The resctrl selftests discover needed parameters to perf_event_open() via
-sysfs. The PMU associated with every memory controller (iMC) is discovered
-via the /sys/bus/event_source/devices/uncore_imc_N/type file while
-the read memory bandwidth event type and umask is discovered via
-/sys/bus/event_source/devices/uncore_imc_N/events/cas_count_read.
+commit 501cfdba0a40 ("selftests/resctrl: Do not compare performance
+counters and resctrl at low bandwidth") introduced a threshold under which
+memory bandwidth values from MBM and performance counters are not compared.
+This is needed because MBM and the PMUs do not have an identical view of
+memory bandwidth since PMUs can count all memory traffic while MBM does not
+count "overhead" (for example RAS) traffic that cannot be attributed to an
+RMID. As a ratio this difference in view of memory bandwidth is pronounced
+at low memory bandwidths.
 
-Newer systems may have multiple events that expose read memory bandwidth.
-For example,
- /sys/bus/event_source/devices/uncore_imc_N/events/cas_count_read_sch0
- /sys/bus/event_source/devices/uncore_imc_N/events/cas_count_read_sch1
+The 750MiB threshold was chosen arbitrarily after comparisons on different
+platforms. Exposed to more platforms after introduction this threshold has
+proven to be inadequate.
 
-Support parsing of iMC PMU properties when the PMU may have multiple events
-to measure read memory bandwidth. The PMU only needs to be discovered once.
-Split the parsing of event details from actual PMU discovery in order to
-loop over all events associated with the PMU. Match all events with the
-cas_count_read prefix instead of requiring there to be one file with that
-name.
+Having accurate comparison between performance counters and MBM requires
+careful management of system load as well as control of features that
+introduce extra memory traffic, for example, patrol scrub. This is not
+appropriate for the resctrl selftests that are intended to run on a
+variety of systems with various configurations.
 
-Make the parsing code more robust. With strings passed around to create
-needed paths, use snprintf() instead of sprintf() to ensure there is
-always enough space to create the path. Ensure there is enough room in
-imc_counters_config[] before attempting to add an entry.
+Increase the memory bandwidth threshold under which no comparison is made
+between performance counters and MBM. Add additional leniency by increasing
+the percentage of difference that will be tolerated between these counts.
+
+There is no impact to the validity of the resctrl selftests results as a
+measure of resctrl subsystem health.
 
 Signed-off-by: Reinette Chatre <reinette.chatre@intel.com>
 ---
- tools/testing/selftests/resctrl/resctrl_val.c | 112 ++++++++++++++----
- 1 file changed, 90 insertions(+), 22 deletions(-)
+ tools/testing/selftests/resctrl/mba_test.c | 2 +-
+ tools/testing/selftests/resctrl/mbm_test.c | 2 +-
+ tools/testing/selftests/resctrl/resctrl.h  | 2 +-
+ 3 files changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/tools/testing/selftests/resctrl/resctrl_val.c b/tools/testing/selftests/resctrl/resctrl_val.c
-index 25c8101631e0..7aae0cc5aee9 100644
---- a/tools/testing/selftests/resctrl/resctrl_val.c
-+++ b/tools/testing/selftests/resctrl/resctrl_val.c
-@@ -11,10 +11,10 @@
+diff --git a/tools/testing/selftests/resctrl/mba_test.c b/tools/testing/selftests/resctrl/mba_test.c
+index cd4c715b7ffd..39cee9898359 100644
+--- a/tools/testing/selftests/resctrl/mba_test.c
++++ b/tools/testing/selftests/resctrl/mba_test.c
+@@ -12,7 +12,7 @@
+ 
+ #define RESULT_FILE_NAME	"result_mba"
+ #define NUM_OF_RUNS		5
+-#define MAX_DIFF_PERCENT	8
++#define MAX_DIFF_PERCENT	15
+ #define ALLOCATION_MAX		100
+ #define ALLOCATION_MIN		10
+ #define ALLOCATION_STEP		10
+diff --git a/tools/testing/selftests/resctrl/mbm_test.c b/tools/testing/selftests/resctrl/mbm_test.c
+index 58201f844740..6dbbc3b76003 100644
+--- a/tools/testing/selftests/resctrl/mbm_test.c
++++ b/tools/testing/selftests/resctrl/mbm_test.c
+@@ -11,7 +11,7 @@
  #include "resctrl.h"
  
- #define UNCORE_IMC		"uncore_imc"
--#define READ_FILE_NAME		"events/cas_count_read"
-+#define READ_FILE_NAME		"cas_count_read"
- #define DYN_PMU_PATH		"/sys/bus/event_source/devices"
- #define SCALE			0.00006103515625
--#define MAX_IMCS		20
-+#define MAX_IMCS		40
- #define MAX_TOKENS		5
+ #define RESULT_FILE_NAME	"result_mbm"
+-#define MAX_DIFF_PERCENT	8
++#define MAX_DIFF_PERCENT	15
+ #define NUM_OF_RUNS		5
  
- #define CON_MBM_LOCAL_BYTES_PATH		\
-@@ -109,21 +109,102 @@ static int open_perf_read_event(int i, int cpu_no)
- 	return 0;
- }
+ static int
+diff --git a/tools/testing/selftests/resctrl/resctrl.h b/tools/testing/selftests/resctrl/resctrl.h
+index c72045c74ac4..861bf25f2f28 100644
+--- a/tools/testing/selftests/resctrl/resctrl.h
++++ b/tools/testing/selftests/resctrl/resctrl.h
+@@ -55,7 +55,7 @@
+  * and MBM respectively, for instance generating "overhead" traffic which
+  * is not counted against any specific RMID.
+  */
+-#define THROTTLE_THRESHOLD	750
++#define THROTTLE_THRESHOLD	2500
  
-+static int parse_imc_read_bw_events(char *imc_dir, unsigned int type,
-+				    unsigned int *count)
-+{
-+	char imc_events[1024], imc_counter_cfg[1024], cas_count_cfg[1024];
-+	unsigned int org_count = *count;
-+	struct dirent *ep;
-+	int path_len;
-+	int ret = -1;
-+	FILE *fp;
-+	DIR *dp;
-+
-+	path_len = snprintf(imc_events, sizeof(imc_events), "%sevents", imc_dir);
-+	if (path_len >= sizeof(imc_events)) {
-+		ksft_print_msg("Unable to create path to %sevents\n", imc_dir);
-+		return -1;
-+	}
-+	dp = opendir(imc_events);
-+	if (dp) {
-+		while ((ep = readdir(dp))) {
-+			/*
-+			 * Parse all event files with READ_FILE_NAME
-+			 * prefix that contain the event number and umask.
-+			 * Skip files containing "." that contain unused
-+			 * properties of event.
-+			 */
-+			if (!strstr(ep->d_name, READ_FILE_NAME) ||
-+			    strchr(ep->d_name, '.'))
-+				continue;
-+
-+			path_len = snprintf(imc_counter_cfg, sizeof(imc_counter_cfg),
-+					    "%s/%s", imc_events, ep->d_name);
-+			if (path_len >= sizeof(imc_counter_cfg)) {
-+				ksft_print_msg("Unable to create path to %s/%s\n",
-+					       imc_events, ep->d_name);
-+				goto out_close;
-+			}
-+			fp = fopen(imc_counter_cfg, "r");
-+			if (!fp) {
-+				ksft_perror("Failed to open iMC config file");
-+				goto out_close;
-+			}
-+			if (fscanf(fp, "%1023s", cas_count_cfg) <= 0) {
-+				ksft_perror("Could not get iMC cas count read");
-+				fclose(fp);
-+				goto out_close;
-+			}
-+			fclose(fp);
-+			if (*count >= MAX_IMCS) {
-+				ksft_print_msg("Maximum iMC count exceeded\n");
-+				goto out_close;
-+			}
-+
-+			imc_counters_config[*count].type = type;
-+			get_read_event_and_umask(cas_count_cfg, *count);
-+			/* Do not fail after incrementing *count. */
-+			*count += 1;
-+		}
-+		if (*count == org_count) {
-+			ksft_print_msg("Unable to find events in %s\n", imc_events);
-+			goto out_close;
-+		}
-+	} else {
-+		ksft_perror("Unable to open PMU events directory");
-+		goto out;
-+	}
-+	ret = 0;
-+out_close:
-+	closedir(dp);
-+out:
-+	return ret;
-+}
-+
- /* Get type and config of an iMC counter's read event. */
- static int read_from_imc_dir(char *imc_dir, unsigned int *count)
- {
--	char cas_count_cfg[1024], imc_counter_cfg[1024], imc_counter_type[1024];
-+	char imc_counter_type[1024];
-+	unsigned int type;
-+	int path_len;
- 	FILE *fp;
-+	int ret;
- 
- 	/* Get type of iMC counter */
--	sprintf(imc_counter_type, "%s%s", imc_dir, "type");
-+	path_len = snprintf(imc_counter_type, sizeof(imc_counter_type),
-+			    "%s%s", imc_dir, "type");
-+	if (path_len >= sizeof(imc_counter_type)) {
-+		ksft_print_msg("Unable to create path to %s%s\n",
-+			       imc_dir, "type");
-+		return -1;
-+	}
- 	fp = fopen(imc_counter_type, "r");
- 	if (!fp) {
- 		ksft_perror("Failed to open iMC counter type file");
- 
- 		return -1;
- 	}
--	if (fscanf(fp, "%u", &imc_counters_config[*count].type) <= 0) {
-+	if (fscanf(fp, "%u", &type) <= 0) {
- 		ksft_perror("Could not get iMC type");
- 		fclose(fp);
- 
-@@ -131,24 +212,11 @@ static int read_from_imc_dir(char *imc_dir, unsigned int *count)
- 	}
- 	fclose(fp);
- 
--	/* Get read config */
--	sprintf(imc_counter_cfg, "%s%s", imc_dir, READ_FILE_NAME);
--	fp = fopen(imc_counter_cfg, "r");
--	if (!fp) {
--		ksft_perror("Failed to open iMC config file");
--
--		return -1;
--	}
--	if (fscanf(fp, "%1023s", cas_count_cfg) <= 0) {
--		ksft_perror("Could not get iMC cas count read");
--		fclose(fp);
--
--		return -1;
-+	ret = parse_imc_read_bw_events(imc_dir, type, count);
-+	if (ret) {
-+		ksft_print_msg("Unable to parse bandwidth event and umask\n");
-+		return ret;
- 	}
--	fclose(fp);
--
--	get_read_event_and_umask(cas_count_cfg, *count);
--	*count += 1;
- 
- 	return 0;
- }
+ /*
+  * fill_buf_param:	"fill_buf" benchmark parameters
 -- 
 2.50.1
 
