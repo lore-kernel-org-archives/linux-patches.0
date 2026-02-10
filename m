@@ -1,185 +1,105 @@
-Received: from n169-112.mail.139.com (n169-112.mail.139.com [120.232.169.112])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-dl1-f41.google.com (mail-dl1-f41.google.com [74.125.82.41])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7949A15B0EC
-	for <patches@lists.linux.dev>; Tue, 10 Feb 2026 03:02:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=120.232.169.112
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3435F2D879B
+	for <patches@lists.linux.dev>; Tue, 10 Feb 2026 03:08:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.82.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770692570; cv=none; b=pPTzA8zYBbfve+OD2DnjyViH0MLqu7Nw8uFC1v9Pwf0xJQXSi7pwrFCUZefk0q2Y9aSR/Mrc23Ur0Gr6iwJuOCc2an/8IZ3nucQqf4dQa3OEONNLwrheFWRFs01jy2uMKCQgR75IC6nO/heHRpn8n5BmtLSUt18PuEC31M/nD1M=
+	t=1770692886; cv=none; b=OHyyyB/E6TQwUqNbVATWn13S3Qs/j3K0e1erwfu/q4Qr7Grbk9Ifudkklj41bCS9NkbNaKEEXDbcq7HpDgW6jFSv6yRPTqzuTdLgpxwEqs7/yKuZ5zuEEfNaMMxdzxOKuv2YYpTPAf3e+0iiwQfXkHQe0Q36nb24o/6qTwKk0GE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770692570; c=relaxed/simple;
-	bh=Hj/lm6RMusjiPVzJoLal7AtEHe4qLLMGIGa44jshzjo=;
-	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=Wv0tXnq0H7LJF2ZymcR5RnC5k3PZjapNjUoFDwG801+Y8YYl+1ODrOARpuQdqLI33BpoE2YA3/IcxmLe58aaywBVSrV8YOx2982K89ZocLUblTIVUPQCx3aYyPTRV3Nc0yp2lLddOuDeHcaVKSt+yXP3sKa1JSvlF86WbKTAYog=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=139.com; spf=pass smtp.mailfrom=139.com; dkim=pass (1024-bit key) header.d=139.com header.i=@139.com header.b=FtvVj9ZO; arc=none smtp.client-ip=120.232.169.112
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=139.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=139.com
+	s=arc-20240116; t=1770692886; c=relaxed/simple;
+	bh=0WYlr6piOWfxP0GjU8bu7yPqc8AAnMf7N/ea9Rr6sN0=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=MgSSdjSMb2uhe3KGCWYDPNPjq1/ptZIPGjEjUZvdwWExqr7u3NWY0bq7hYxTAsv3rUrF7TclH5toIBA0qYpMgajHRMcm2ZpASlqULsVlW6fP+0lTGuHM3idMzisAOC0WdPbFQwchw4SK1nbeerGgiZNlAEg/Gkr30+loCeA5eKw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=fedoraproject.org; spf=pass smtp.mailfrom=linuxtx.org; dkim=pass (1024-bit key) header.d=linuxtx.org header.i=@linuxtx.org header.b=GXgr07Yf; arc=none smtp.client-ip=74.125.82.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=fedoraproject.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linuxtx.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=139.com header.i=@139.com header.b="FtvVj9ZO"
+	dkim=pass (1024-bit key) header.d=linuxtx.org header.i=@linuxtx.org header.b="GXgr07Yf"
+Received: by mail-dl1-f41.google.com with SMTP id a92af1059eb24-1233bc1117fso3430776c88.0
+        for <patches@lists.linux.dev>; Mon, 09 Feb 2026 19:08:03 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-	d=139.com; s=dkim; l=0;
-	h=from:subject:message-id:to:cc:mime-version;
-	bh=47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU=;
-	b=FtvVj9ZOs/EJpbG1ZRzxItsFt8gXi2kTzz7trxSYhrergxyWv8A/z7WSTQZTZh4DR1PYpmrzYUXRg
-	 MrW0IW+ORO3sgWTwXI7kC3InCO3QyOJKan2EcpXmzTNtdteLHpb4Pg9tn7mtf8oOctA/F27APBkyFY
-	 mcWfX7rfYNqlJGVA=
-X-RM-TagInfo: emlType=0                                       
-X-RM-SPAM:                                                                                        
-X-RM-SPAM-FLAG:00000000
-Received:from NTT-kernel-dev (unknown[60.247.85.88])
-	by rmsmtp-lg-appmail-24-12027 (RichMail) with SMTP id 2efb698a9fc9fad-0401d;
-	Tue, 10 Feb 2026 11:02:36 +0800 (CST)
-X-RM-TRANSID:2efb698a9fc9fad-0401d
-From: Li hongliang <1468888505@139.com>
-To: gregkh@linuxfoundation.org,
-	stable@vger.kernel.org,
-	shayd@nvidia.com
-Cc: patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org,
-	jiri@nvidia.com,
-	davem@davemloft.net,
-	edumazet@google.com,
-	kuba@kernel.org,
-	pabeni@redhat.com,
-	dlinkin@nvidia.com,
-	vladbu@nvidia.com,
-	netdev@vger.kernel.org,
-	cjubran@nvidia.com,
-	tariqt@nvidia.com
-Subject: [PATCH 6.1.y] devlink: rate: Unset parent pointer in devl_rate_nodes_destroy
-Date: Tue, 10 Feb 2026 11:02:34 +0800
-Message-Id: <20260210030234.1532584-1-1468888505@139.com>
-X-Mailer: git-send-email 2.34.1
+        d=linuxtx.org; s=google; t=1770692883; x=1771297683; darn=lists.linux.dev;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:sender:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=GxN0ZBYJOxaUh/EXb8f4RxK/7+y+khToCQG6Jn79vmg=;
+        b=GXgr07YfwuO4VNQYzL59qXxtvOFRvz6TDFZv0CONoZge236IlHH5AGiTXTjh55tiru
+         UdVwsf0eK4ibb4kG9f/SGjocMj/qB3Q86yZC3NFnhpjalVOTEHNabkG4YZWPxBAeUDIu
+         6BM5OzsmqGtYU9nsQuA9VwjMpkiJtPGoKD2ks=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1770692883; x=1771297683;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:sender:x-gm-gg:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=GxN0ZBYJOxaUh/EXb8f4RxK/7+y+khToCQG6Jn79vmg=;
+        b=jDqbb84ZZHX+9zJnQYt0liOwJH1s3EgGVnVtKrqn0yo4UQI6Vy+Woscaz3bQNvImDx
+         dziAUgOs548LnJNBp6bIpqFkGb0PgjTpNjPSYxvpNmMIbKQxnMDneyWY7LHZaZNJHe2B
+         UuPoV8R8azyWu9epKZ7piTJOdaq+0IloYK/Zn7yMd5djS8Rhkl7Sp3JfHf5URcT1johj
+         nXTvUoH6Bf2MsHkO0eajW68d1x4US6HR2VmWMkptK6ss44Et9uAkAcAC3A12iyikSXx7
+         D83zBMZ/8rIcN66d537uip/uTsFHNdBbPRsSOm+qMxrDCdc6YisYB+FwdqTO8+iouMgM
+         KFgw==
+X-Forwarded-Encrypted: i=1; AJvYcCWNDlP1mtic7LMzDCA6Dd2T6spxZqC/fOnmu2XAQ8nc7r0l0ZA/36bLtWrodxFuSFluEqx0kvLn@lists.linux.dev
+X-Gm-Message-State: AOJu0YyRlyDNvxdPMG6Ny/ee+Oxen+/Dt8uTu5FHxE4ElN+H6gm/vQjw
+	JdiEHmPsl4y8BE61L5hTeqysWX6G3YAcPW1awZwmOuFoa4hgeFxujcyBL5fNULfgqQ==
+X-Gm-Gg: AZuq6aKRZfz6fFIm9gpvA3XN7DMi86/NXQVw74ae3692XIUN6hk38L9R6bXsKTtv89r
+	C6SVL3Tv2/y6fNkEQEmxgKNlSHW9UlYs7aVsk86LgqVPR+skCFdx9mkd5P4QO6pvSKPwK19Qrgb
+	mcEw/KDlXdVQvDAW2YMwkHSs7vcTrG6s85qGup7RbJQHmb2jlchXuw8z+0VWkaSNj0lFPhQSSHC
+	verj7Qs/zctsqhOAHI8KB7B5b5lnANvnfi4f234bL7wR82QRMAxF9K69rOpwJrsLdZXCJZA3WZW
+	pZmzAKVraiPx98buFqcvIa8D/uS8aDWKAuhs0khb1uJVEyH9jq4wMOvKgn8Ga4GdgqHHxhoYUuw
+	AJBQXGcoeC27Uu1f8bp7Z4XA0DQsmaQtXKA6e/PNbYvsjrodr1yySy7XenL87Bnqw1LfU4KQSzb
+	9zQBrvtWskA01kzCbh8Av8k4WGwVZdmLab+wO85xeY1jg=
+X-Received: by 2002:a05:7301:d19:b0:2b8:3b47:8951 with SMTP id 5a478bee46e88-2ba89c5d6ecmr381690eec.1.1770692883105;
+        Mon, 09 Feb 2026 19:08:03 -0800 (PST)
+Received: from fedora64.linuxtx.org ([216.147.121.52])
+        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-2b855af7806sm8732789eec.10.2026.02.09.19.08.01
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 09 Feb 2026 19:08:02 -0800 (PST)
+Sender: Justin Forbes <jmforbes@linuxtx.org>
+Date: Mon, 9 Feb 2026 20:07:59 -0700
+From: Justin Forbes <jforbes@fedoraproject.org>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev,
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
+	patches@kernelci.org, lkft-triage@lists.linaro.org,
+	pavel@nabladev.com, jonathanh@nvidia.com, f.fainelli@gmail.com,
+	sudipm.mukherjee@gmail.com, rwarsow@gmx.de, conor@kernel.org,
+	hargar@microsoft.com, broonie@kernel.org, achill@achill.org,
+	sr@sladewatkins.com
+Subject: Re: [PATCH 6.18 000/175] 6.18.10-rc1 review
+Message-ID: <aYqhD_cVw6bT9vgR@fedora64.linuxtx.org>
+References: <20260209142320.474120190@linuxfoundation.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260209142320.474120190@linuxfoundation.org>
 
-From: Shay Drory <shayd@nvidia.com>
+On Mon, Feb 09, 2026 at 03:21:13PM +0100, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 6.18.10 release.
+> There are 175 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+> 
+> Responses should be made by Wed, 11 Feb 2026 14:22:44 +0000.
+> Anything received after that time might be too late.
+> 
+> The whole patch series can be found in one patch at:
+> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.18.10-rc1.gz
+> or in the git tree and branch at:
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.18.y
+> and the diffstat can be found below.
+> 
+> thanks,
+> 
+> greg k-h
 
-[ Upstream commit f94c1a114ac209977bdf5ca841b98424295ab1f0 ]
+Tested rc1 against the Fedora build system (aarch64, ppc64le, s390x,
+x86_64), and boot tested x86_64. No regressions noted.
 
-The function devl_rate_nodes_destroy is documented to "Unset parent for
-all rate objects". However, it was only calling the driver-specific
-`rate_leaf_parent_set` or `rate_node_parent_set` ops and decrementing
-the parent's refcount, without actually setting the
-`devlink_rate->parent` pointer to NULL.
-
-This leaves a dangling pointer in the `devlink_rate` struct, which cause
-refcount error in netdevsim[1] and mlx5[2]. In addition, this is
-inconsistent with the behavior of `devlink_nl_rate_parent_node_set`,
-where the parent pointer is correctly cleared.
-
-This patch fixes the issue by explicitly setting `devlink_rate->parent`
-to NULL after notifying the driver, thus fulfilling the function's
-documented behavior for all rate objects.
-
-[1]
-repro steps:
-echo 1 > /sys/bus/netdevsim/new_device
-devlink dev eswitch set netdevsim/netdevsim1 mode switchdev
-echo 1 > /sys/bus/netdevsim/devices/netdevsim1/sriov_numvfs
-devlink port function rate add netdevsim/netdevsim1/test_node
-devlink port function rate set netdevsim/netdevsim1/128 parent test_node
-echo 1 > /sys/bus/netdevsim/del_device
-
-dmesg:
-refcount_t: decrement hit 0; leaking memory.
-WARNING: CPU: 8 PID: 1530 at lib/refcount.c:31 refcount_warn_saturate+0x42/0xe0
-CPU: 8 UID: 0 PID: 1530 Comm: bash Not tainted 6.18.0-rc4+ #1 NONE
-Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS rel-1.16.0-0-gd239552ce722-prebuilt.qemu.org 04/01/2014
-RIP: 0010:refcount_warn_saturate+0x42/0xe0
-Call Trace:
- <TASK>
- devl_rate_leaf_destroy+0x8d/0x90
- __nsim_dev_port_del+0x6c/0x70 [netdevsim]
- nsim_dev_reload_destroy+0x11c/0x140 [netdevsim]
- nsim_drv_remove+0x2b/0xb0 [netdevsim]
- device_release_driver_internal+0x194/0x1f0
- bus_remove_device+0xc6/0x130
- device_del+0x159/0x3c0
- device_unregister+0x1a/0x60
- del_device_store+0x111/0x170 [netdevsim]
- kernfs_fop_write_iter+0x12e/0x1e0
- vfs_write+0x215/0x3d0
- ksys_write+0x5f/0xd0
- do_syscall_64+0x55/0x10f0
- entry_SYSCALL_64_after_hwframe+0x4b/0x53
-
-[2]
-devlink dev eswitch set pci/0000:08:00.0 mode switchdev
-devlink port add pci/0000:08:00.0 flavour pcisf pfnum 0 sfnum 1000
-devlink port function rate add pci/0000:08:00.0/group1
-devlink port function rate set pci/0000:08:00.0/32768 parent group1
-modprobe -r mlx5_ib mlx5_fwctl mlx5_core
-
-dmesg:
-refcount_t: decrement hit 0; leaking memory.
-WARNING: CPU: 7 PID: 16151 at lib/refcount.c:31 refcount_warn_saturate+0x42/0xe0
-CPU: 7 UID: 0 PID: 16151 Comm: bash Not tainted 6.17.0-rc7_for_upstream_min_debug_2025_10_02_12_44 #1 NONE
-Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS rel-1.16.3-0-ga6ed6b701f0a-prebuilt.qemu.org 04/01/2014
-RIP: 0010:refcount_warn_saturate+0x42/0xe0
-Call Trace:
- <TASK>
- devl_rate_leaf_destroy+0x8d/0x90
- mlx5_esw_offloads_devlink_port_unregister+0x33/0x60 [mlx5_core]
- mlx5_esw_offloads_unload_rep+0x3f/0x50 [mlx5_core]
- mlx5_eswitch_unload_sf_vport+0x40/0x90 [mlx5_core]
- mlx5_sf_esw_event+0xc4/0x120 [mlx5_core]
- notifier_call_chain+0x33/0xa0
- blocking_notifier_call_chain+0x3b/0x50
- mlx5_eswitch_disable_locked+0x50/0x110 [mlx5_core]
- mlx5_eswitch_disable+0x63/0x90 [mlx5_core]
- mlx5_unload+0x1d/0x170 [mlx5_core]
- mlx5_uninit_one+0xa2/0x130 [mlx5_core]
- remove_one+0x78/0xd0 [mlx5_core]
- pci_device_remove+0x39/0xa0
- device_release_driver_internal+0x194/0x1f0
- unbind_store+0x99/0xa0
- kernfs_fop_write_iter+0x12e/0x1e0
- vfs_write+0x215/0x3d0
- ksys_write+0x5f/0xd0
- do_syscall_64+0x53/0x1f0
- entry_SYSCALL_64_after_hwframe+0x4b/0x53
-
-Fixes: d75559845078 ("devlink: Allow setting parent node of rate objects")
-Signed-off-by: Shay Drory <shayd@nvidia.com>
-Reviewed-by: Carolina Jubran <cjubran@nvidia.com>
-Signed-off-by: Tariq Toukan <tariqt@nvidia.com>
-Link: https://patch.msgid.link/1763381149-1234377-1-git-send-email-tariqt@nvidia.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-[ Routine devl_rate_nodes_destroy is moved to net/devlink/rate.c by commit
- 7cc7194e85ca ("devlink: push rate related code into separate file") after linux-6.6.
- This fix applies the same update to its original location in net/devlink/leftover.c. ]
-Signed-off-by: Li hongliang <1468888505@139.com>
----
- net/devlink/leftover.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
-
-diff --git a/net/devlink/leftover.c b/net/devlink/leftover.c
-index f1c6bd727a83..1ea84c5ffa9f 100644
---- a/net/devlink/leftover.c
-+++ b/net/devlink/leftover.c
-@@ -10274,13 +10274,15 @@ void devl_rate_nodes_destroy(struct devlink *devlink)
- 		if (!devlink_rate->parent)
- 			continue;
- 
--		refcount_dec(&devlink_rate->parent->refcnt);
- 		if (devlink_rate_is_leaf(devlink_rate))
- 			ops->rate_leaf_parent_set(devlink_rate, NULL, devlink_rate->priv,
- 						  NULL, NULL);
- 		else if (devlink_rate_is_node(devlink_rate))
- 			ops->rate_node_parent_set(devlink_rate, NULL, devlink_rate->priv,
- 						  NULL, NULL);
-+
-+		refcount_dec(&devlink_rate->parent->refcnt);
-+		devlink_rate->parent = NULL;
- 	}
- 	list_for_each_entry_safe(devlink_rate, tmp, &devlink->rate_list, list) {
- 		if (devlink_rate_is_node(devlink_rate)) {
--- 
-2.34.1
-
-
+Tested-by: Justin M. Forbes <jforbes@fedoraproject.org>
