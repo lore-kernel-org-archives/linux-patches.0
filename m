@@ -1,43 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A13031282F;
-	Tue, 10 Feb 2026 23:31:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E77431282F;
+	Tue, 10 Feb 2026 23:31:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770766307; cv=none; b=l88SWkV+ZQxFSf66+OMOimSuu5swKZuEfQcQ6J1pcag+JXVyW28qC/UhdX6O2EO+1rbBk2jYldtHaB7OPso9cC6PZEr9i+NIzgj3dZkz53iEk+LdWtdZMpZxoLT7ddzI5N2IUpaf3YuS7EAC1Vh1eKilTTD2IPlzYS6F6CdL7RY=
+	t=1770766308; cv=none; b=b5grRX7d9IMRvKwzKf7jZZw//EmeMwqIzV5SVaZ2EqMBmR3T+E9V3KrLpUCUAZOi/U4b5Cgf2Y3jls6ozghLi5VE7R0PNEGv4cvCCWbKSkOMDRUDFLOtwgCdCKIw4yiAAXRpjRKKX/LJPGr4fvw/vYtDZh0XcbjCCCBEbeHhPTU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770766307; c=relaxed/simple;
-	bh=TOqUM0gKcdyJgf4TcdXODa2MWGtT445k1Q/TV7PcXMY=;
+	s=arc-20240116; t=1770766308; c=relaxed/simple;
+	bh=w8vP2q0rvyREAlNGeuGRnI2tnurQEkz6cx0XcZRcUEg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=DgK2G74d52mX4avFrltpnPpylUNP5pw/iROewxdKSPAe+OJOFss3zC80F5aGqPO0HdRWzA9Ui5t4GA83ejt/qUlo8rijMITm7utvHJ7CfRFgUWEghGfVZYiH2HVzsZXS7X/KKm0311W2zcGQy7DVXm8UahLj+vAGggglxHowiGY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ODD70gbx; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=qNGeXJgcGWcGNC1O68x3s21Ogv5VsZyVVY6vSS4sRYWO7BtAYr9HJG6Jkkiplo8UgGytUSwWH+Uw4AsaraZTFgufzfcO5ubia4LXHagz83MOR2JwtZn4ac1c5IlSvOnRbHcT0PPVfZmkdU/SZcXpv5pIUoUKvepJwPIaiCu6q7U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=HD7S7FXP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ODD70gbx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 53B3AC19423;
-	Tue, 10 Feb 2026 23:31:46 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="HD7S7FXP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E633C116C6;
+	Tue, 10 Feb 2026 23:31:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1770766307;
-	bh=TOqUM0gKcdyJgf4TcdXODa2MWGtT445k1Q/TV7PcXMY=;
+	s=k20201202; t=1770766308;
+	bh=w8vP2q0rvyREAlNGeuGRnI2tnurQEkz6cx0XcZRcUEg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ODD70gbxQJOvtLnzj6+rpGcdjtLgP+yQ8xVyDkcmrn4PWqv5Bgzo2Pn09v/kO4PA+
-	 U0YYjs7lqaFuj8o96uL1t2YKC21JeKisjRNZvgjteKrpghaFhDMZzXXhC83peBkpEc
-	 yLg869o67CtwPqILDFPkWH9PVDVhBn0qwwpUAXyQnHiUbd1ld7ZeIUHPw7YfbfM6XW
-	 L5uEsofIVENaFdxjD7nEPk2uHGTs3cpaBzyBkaZGvbF4GslxsB1GFqNU/BvS/viv4i
-	 eyqqER9TzEmImRNDSfedndcPJ6iazjTbiVF8frKJ5Nmpmp/En1pqqjw3VVtqLyoQ+i
-	 lEpWh3Ll899Ug==
+	b=HD7S7FXPISVjiI0kgl/Zzbd0266DaRT+tMqzcfMkVklGxuouBbd3zLM+x+n7+HL0X
+	 12i5CBTPd5W3vbWD6WavJ3wHovVkeOVC+wpDRhszNBGSbNLe5Opmkm+BqVJ8mGBiI0
+	 kU+AtZDI3g23iqCiwc8XWMxnFlsWUCIAhTvQSsbmzk+PQVvv47r9Ey4iDilA4s8PEn
+	 8d/UYvLBus6x7CNdBjKl5kX3tcK2mVWpMfS9GlTNyzUl2M8KATll56qdfS4DcDMSDw
+	 exy8Och43mkuMiZ8bGcWJsGxHTTmphrk2g+jv7W9UTAwxTPfAaI/96aZiSMy5xXK7J
+	 e2sFksGhcQz5w==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Deepakkumar Karn <dkarn@redhat.com>,
-	Jan Kara <jack@suse.cz>,
-	Christian Brauner <brauner@kernel.org>,
+Cc: Frank Li <Frank.Li@nxp.com>,
+	kernel test robot <lkp@intel.com>,
+	Alexandre Belloni <alexandre.belloni@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>,
-	viro@zeniv.linux.org.uk,
-	linux-fsdevel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.19-6.1] fs/buffer: add alert in try_to_free_buffers() for folios without buffers
-Date: Tue, 10 Feb 2026 18:30:59 -0500
-Message-ID: <20260210233123.2905307-14-sashal@kernel.org>
+	miquel.raynal@bootlin.com,
+	linux-i3c@lists.infradead.org,
+	imx@lists.linux.dev
+Subject: [PATCH AUTOSEL 6.19-5.15] i3c: master: svc: Initialize 'dev' to NULL in svc_i3c_master_ibi_isr()
+Date: Tue, 10 Feb 2026 18:31:00 -0500
+Message-ID: <20260210233123.2905307-15-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260210233123.2905307-1-sashal@kernel.org>
 References: <20260210233123.2905307-1-sashal@kernel.org>
@@ -53,159 +54,157 @@ X-stable-base: Linux 6.19
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Deepakkumar Karn <dkarn@redhat.com>
+From: Frank Li <Frank.Li@nxp.com>
 
-[ Upstream commit b68f91ef3b3fe82ad78c417de71b675699a8467c ]
+[ Upstream commit 3c9ffb4db787428a5851d5865823ab23842d5103 ]
 
-try_to_free_buffers() can be called on folios with no buffers attached
-when filemap_release_folio() is invoked on a folio belonging to a mapping
-with AS_RELEASE_ALWAYS set but no release_folio operation defined.
+Initialize the 'dev' pointer to NULL in svc_i3c_master_ibi_isr() and add
+a NULL check in the error path.
 
-In such cases, folio_needs_release() returns true because of the
-AS_RELEASE_ALWAYS flag, but the folio has no private buffer data. This
-causes try_to_free_buffers() to call drop_buffers() on a folio with no
-buffers, leading to a null pointer dereference.
-
-Adding a check in try_to_free_buffers() to return early if the folio has no
-buffers attached, with WARN_ON_ONCE() to alert about the misconfiguration.
-This provides defensive hardening.
-
-Signed-off-by: Deepakkumar Karn <dkarn@redhat.com>
-Link: https://patch.msgid.link/20251211131211.308021-1-dkarn@redhat.com
-Reviewed-by: Jan Kara <jack@suse.cz>
-Signed-off-by: Christian Brauner <brauner@kernel.org>
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: https://lore.kernel.org/r/202512131016.YCKIsDXM-lkp@intel.com/
+Signed-off-by: Frank Li <Frank.Li@nxp.com>
+Link: https://patch.msgid.link/20251215200852.3079073-1-Frank.Li@nxp.com
+Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-`folio_buffers()` exists in all relevant stable trees. The patch uses
-only `WARN_ON_ONCE` and `folio_buffers`, both of which are available
-everywhere.
+Here's my complete analysis:
 
-## Comprehensive Analysis
+## Detailed Analysis
 
-### 1. COMMIT MESSAGE ANALYSIS
+### 1. Bug Mechanism
 
-The commit describes a clear bug: `try_to_free_buffers()` can be called
-on folios with no buffer_heads attached when `filemap_release_folio()`
-is invoked on a folio belonging to a mapping with `AS_RELEASE_ALWAYS`
-set but no `release_folio` operation defined. This causes a **NULL
-pointer dereference** in `drop_buffers()`.
+The function `svc_i3c_master_ibi_isr()` declares `struct i3c_dev_desc
+*dev;` without initialization (line 537). The variable `dev` is **only
+assigned** inside the `SVC_I3C_MSTATUS_IBITYPE_IBI` case of the switch
+statement (line 600). For the other three cases — `HOT_JOIN`,
+`MASTER_REQUEST`, and `default` — `dev` is **never assigned** and
+remains an uninitialized stack pointer containing garbage.
 
-The commit is authored by Deepakkumar Karn (Red Hat), reviewed by Jan
-Kara (SUSE, a very well-respected VFS/filesystem developer), and signed
-off by Christian Brauner (the VFS subsystem maintainer).
-
-### 2. CODE CHANGE ANALYSIS
-
-The fix adds exactly 3 lines (plus a comment) to
-`try_to_free_buffers()`:
-
+After the switch, the error path at line 629-635 checks:
 ```c
-/* Misconfigured folio check */
-if (WARN_ON_ONCE(!folio_buffers(folio)))
-    return true;
+if (svc_i3c_master_error(master)) {
+    if (master->ibi.tbq_slot) {
+        data = i3c_dev_get_master_data(dev);  // BUG: dev could be
+uninitialized
 ```
 
-This is inserted after the writeback check and before the `mapping ==
-NULL` check. The logic is:
-- If the folio has no buffers (`folio_buffers()` returns NULL), emit a
-  warning (once) and return `true` (success — there's nothing to free)
-- This prevents the NULL deref in `drop_buffers()` where `head =
-  folio_buffers(folio)` returns NULL and then `buffer_busy(bh)`
-  dereferences it
+`i3c_dev_get_master_data()` directly dereferences
+`dev->common.master_priv` (in `include/linux/i3c/master.h:624-627`). If
+`dev` is uninitialized garbage, this dereference causes **undefined
+behavior** — most likely a kernel crash/oops, or worse, access to random
+memory (potential security issue).
 
-### 3. THE BUG MECHANISM
+### 2. Practical Reachability
 
-The call chain is:
-1. Memory reclaim (`shrink_folio_list`) or truncation calls
-   `filemap_release_folio()`
-2. `folio_needs_release()` returns `true` because `AS_RELEASE_ALWAYS` is
-   set
-3. `mapping->a_ops->release_folio` is NULL (e.g., `afs_dir_aops` doesn't
-   define it in v6.14+)
-4. Falls through to `try_to_free_buffers(folio)`
-5. `drop_buffers()` dereferences `folio_buffers(folio)` which is NULL
-6. **NULL pointer dereference crash**
+In the **current code**, `master->ibi.tbq_slot` is only set non-NULL by
+`svc_i3c_master_handle_ibi()` (line 476), which is only called in the
+`IBI` case where `dev` IS assigned. So in normal flow, if `tbq_slot` is
+non-NULL in this invocation, `dev` should be valid.
 
-### 4. AFFECTED VERSIONS
+**However, there are scenarios where the bug can trigger:**
 
-The specific trigger (AFS symlinks/directories with `afs_dir_aops`
-lacking `release_folio`) only exists from **v6.14-rc1** onward,
-introduced by commit `6dd80936618c` ("afs: Use netfslib for
-directories"). Before v6.14, all filesystems that set
-`AS_RELEASE_ALWAYS` also define `release_folio`.
+- If `tbq_slot` was left non-NULL from a **previous invocation** due to
+  a code path that failed to clean it up (a secondary bug). Then on the
+  next ISR entry with a different `ibitype` (e.g., HOT_JOIN), `dev`
+  would be uninitialized while `tbq_slot` is non-NULL.
+- The code is **fragile** — any future change that sets `tbq_slot` in a
+  different path would immediately make this crash reachable.
 
-This means:
-- **v6.6.y**: NOT affected (afs_dir_aops has release_folio)
-- **v6.12.y**: NOT affected (afs_dir_aops has release_folio)
-- **v6.13.y**: NOT affected (afs_dir_aops has release_folio)
-- **v6.14.y**: AFFECTED (afs_dir_aops stripped down)
-- **v6.15.y+**: AFFECTED
+Notably, the "non critical tasks" section at line 646 **already has**
+`if (dev)` guard, indicating the author of that code recognized `dev`
+might not be valid. The error path at line 630 lacked this same
+protection — an inconsistency.
 
-### 5. RISK ASSESSMENT
+### 3. Reporter and Detection
 
-**Risk: Very Low**
-- The patch adds 3 lines - a NULL check with WARN_ON_ONCE and early
-  return
-- It's completely self-contained, no dependencies
-- `folio_buffers()` and `WARN_ON_ONCE` are available in all stable trees
-- Returning `true` is correct: no buffers = nothing to free = success
-- Reviewed by Jan Kara and Christian Brauner (top VFS experts)
-- Could be considered pure defensive hardening in older kernels where
-  the trigger doesn't exist
+Reported by `kernel test robot <lkp@intel.com>` — Intel's automated
+kernel testing infrastructure that runs static analysis tools (Smatch,
+sparse, compiler warnings). The `Closes:` link to an lkp report confirms
+this is a compiler/static-analyzer warning about use of an uninitialized
+variable. These reports identify real code defects.
 
-**Benefit in affected trees (6.14+): High**
-- Prevents a NULL pointer dereference crash reachable from normal memory
-  reclaim
-- AFS symlinks with fscache enabled hitting memory pressure would crash
+### 4. Fix Assessment
 
-**Benefit in unaffected trees (6.6, 6.12): Low**
-- Defensive hardening only - the specific trigger doesn't exist
-- Protects against potential future similar misconfigurations if other
-  patches are backported
+The fix is minimal and obviously correct:
+1. **Initialize `dev` to NULL** (line change: `struct i3c_dev_desc
+   *dev;` → `struct i3c_dev_desc *dev = NULL;`)
+2. **Add NULL check in error path** (line change: `if
+   (master->ibi.tbq_slot)` → `if (master->ibi.tbq_slot && dev)`)
 
-### 6. STABLE BACKPORT SUITABILITY
+This makes the error path consistent with the "non critical tasks" path
+that already checks `if (dev)` at line 646.
 
-For trees where the bug is actually triggerable (6.14+), this is clearly
-a YES - it fixes a NULL pointer dereference crash in a core kernel path
-(memory reclaim). However, for older stable trees (6.6, 6.12), the bug
-isn't reachable with the current code because all filesystems that set
-`AS_RELEASE_ALWAYS` also properly define `release_folio`.
+### 5. Scope and Risk
 
-The fix itself is trivially small (3 lines), obviously correct, has zero
-regression risk, and is well-reviewed. Even as defensive hardening, it's
-the kind of patch that makes stable kernels more robust.
+- **Lines changed:** 2 (trivially small)
+- **Files touched:** 1 (`drivers/i3c/master/svc-i3c-master.c`)
+- **Risk of regression:** Zero — this only ADDS safety checks
+- **No behavioral change** in the happy path (when `dev` is valid)
+- The fix is **defense-in-depth** — prevents a crash if the guard
+  condition `tbq_slot != NULL` is ever true when `dev` wasn't set
 
-For the broader question of "should this be backported to stable trees":
-The answer depends on which tree. For 6.14.y and later, it's an
-unambiguous yes - it fixes a real crash. For 6.6.y and 6.12.y, it's
-defensive hardening that prevents a crash scenario that currently isn't
-reachable but could become reachable if other patches are backported.
-Given the negligible risk and the fact that it hardens a core kernel
-function against NULL dereference, even the older trees benefit.
+### 6. Stable Tree Applicability
+
+The original driver was added in v5.12 (`dd3c52846d59`). The error path
+with the uninitialized `dev` has existed since the driver's creation.
+The exact code shape changed in:
+- `8d29fa6d921ca` (6.17 cycle) — moved from workqueue to ISR context
+- `a7869b0a2540f` (6.18 cycle) — manual IBI response
+
+For older stable trees, the fix would need to target the
+`svc_i3c_master_ibi_work()` function instead of
+`svc_i3c_master_ibi_isr()`, but the same pattern applies.
+
+### 7. Classification
+
+This is an **uninitialized variable fix** — one of the recognized bug
+categories for stable backports. It prevents:
+- Potential **kernel crash** from dereferencing garbage pointer
+- Potential **security vulnerability** (accessing uncontrolled memory)
+- **Compiler warnings** that pollute build output
+
+### Conclusion
+
+This commit fixes a real uninitialized variable issue detected by static
+analysis. The fix is trivially small (2 lines), obviously correct, zero
+risk of regression, and prevents a potential kernel crash/oops if the
+error path is reached with `dev` uninitialized. It aligns the error
+path's safety checks with those already present in the non-critical task
+handling path. It meets all stable kernel criteria: fixes a real bug, is
+small and contained, obviously correct, and introduces no new features.
 
 **YES**
 
- fs/buffer.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/i3c/master/svc-i3c-master.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/fs/buffer.c b/fs/buffer.c
-index 838c0c5710229..28e4d53f17173 100644
---- a/fs/buffer.c
-+++ b/fs/buffer.c
-@@ -2948,6 +2948,10 @@ bool try_to_free_buffers(struct folio *folio)
- 	if (folio_test_writeback(folio))
- 		return false;
+diff --git a/drivers/i3c/master/svc-i3c-master.c b/drivers/i3c/master/svc-i3c-master.c
+index a62f22ff8b576..857504d36e186 100644
+--- a/drivers/i3c/master/svc-i3c-master.c
++++ b/drivers/i3c/master/svc-i3c-master.c
+@@ -533,8 +533,8 @@ static int svc_i3c_master_handle_ibi_won(struct svc_i3c_master *master, u32 msta
+ static void svc_i3c_master_ibi_isr(struct svc_i3c_master *master)
+ {
+ 	struct svc_i3c_i2c_dev_data *data;
++	struct i3c_dev_desc *dev = NULL;
+ 	unsigned int ibitype, ibiaddr;
+-	struct i3c_dev_desc *dev;
+ 	u32 status, val;
+ 	int ret;
  
-+	/* Misconfigured folio check */
-+	if (WARN_ON_ONCE(!folio_buffers(folio)))
-+		return true;
-+
- 	if (mapping == NULL) {		/* can this still happen? */
- 		ret = drop_buffers(folio, &buffers_to_free);
- 		goto out;
+@@ -627,7 +627,7 @@ static void svc_i3c_master_ibi_isr(struct svc_i3c_master *master)
+ 	 * for the slave to interrupt again.
+ 	 */
+ 	if (svc_i3c_master_error(master)) {
+-		if (master->ibi.tbq_slot) {
++		if (master->ibi.tbq_slot && dev) {
+ 			data = i3c_dev_get_master_data(dev);
+ 			i3c_generic_ibi_recycle_slot(data->ibi_pool,
+ 						     master->ibi.tbq_slot);
 -- 
 2.51.0
 
