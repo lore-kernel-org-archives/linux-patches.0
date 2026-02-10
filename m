@@ -1,43 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 083C319ABD8;
-	Tue, 10 Feb 2026 23:31:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13CA419ABD8;
+	Tue, 10 Feb 2026 23:31:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770766318; cv=none; b=QtVQuz8VnXxty+Et5fUF/5uRfextLzm26MLHJNiqTgwdXsdWW+4N/SfJJmuOi9LaB7ft5a7SN8t0dMtEuqyeoAyeKeKAVlZ2EjPY6GuJmX2Y6UYcjJg2h0rtO4XviISoR8ElnUe027vJ6lwo4sunlzDeABXSMN/NfUaKYUJ1erA=
+	t=1770766319; cv=none; b=pGHOQVBo8PJQ+3zx4i/2UhSMyalfH0tz0+Y81/qX7VP7OVqBGpgeHegAvDhA1DMdrVcc1fT10iSI1Pp31cCOfGtCnL9A7I1gFuQQJenBK+158bQCl2gcYmKL2+L6lIKOMCbUgEBJ0l3uB++jwdtTcHf+KOCXXhpXeVo9s5RgkbI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770766318; c=relaxed/simple;
-	bh=xrQZpZc1cemHRFxOCyXuTqEhnDLVKayiGat5slvaY4A=;
+	s=arc-20240116; t=1770766319; c=relaxed/simple;
+	bh=/LFcfH13Xvl2PqBIZxM2EkzvYZWWnm+n/Hix99upP2E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=q9ZvEfCVXJYdttsrFeGqwM8Gx8/QvPqQpIfoT+psx+eZvbITOfVELd2QwUkVwLmbCcDtTABmq543Wf3iOGVr81ArMKDXTJqqFrURKm2YquBb0HSVO1hGX14iGRsSxEEhv60lJqwJHatr1DUmIB8xdsxGW7Rd5WFBvE+Q1Bcn4LA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=OWssTH/G; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=ct/TwHfBovAkXEG6yycK2/zhrMmInDsse7OJwiH/zAibFL8PwCyacmouSfGek9udM4bchFxqE43dY2/WA+CPpggOuJ73jSjauWSE1c/9rdpexRHNx33lsdL60rl/a2EJE3PWRWKBZfveHlqUERQ5NaZa6B7jPQ+EkUnUYbF2Tnk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ZkuD8lzV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="OWssTH/G"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B8A77C116C6;
-	Tue, 10 Feb 2026 23:31:56 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ZkuD8lzV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F23FDC19423;
+	Tue, 10 Feb 2026 23:31:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1770766317;
-	bh=xrQZpZc1cemHRFxOCyXuTqEhnDLVKayiGat5slvaY4A=;
+	s=k20201202; t=1770766319;
+	bh=/LFcfH13Xvl2PqBIZxM2EkzvYZWWnm+n/Hix99upP2E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OWssTH/GqZOR4gRxDexYNvLEJHynn5dhypdx0ZeD7yJUdoBjSOCS891KJMscV8BhL
-	 odVAnPWZcaiMdoAqbSegqxszd/V0YI6w8adjLvJjL1qmxlODKtysWqTn/TzE7L4mgV
-	 bwEXADDs1UlFXbOGGq1zLXrlbWe55GkKIPMRjnbe910IYQoz7bBs4VlP/U9OKmCaBt
-	 Znk2mCN3TiNCLgvKGPOQLBnDTYrAQ+Tck4RkNU7heQ9ZG0CCP/z8A/uyrSRkQ6N313
-	 knaow3zLjSgnsQPT7UKWAuMLTe4ARom+LI4CUlamH0ZcqGYb9TWinOdUZ81E3K2gt9
-	 heKW1M3YR629Q==
+	b=ZkuD8lzVimPJnEKj4uAhZJqhRQxAczI6XUCeQWYgI0d8VMWIWKMvpKuU4qcxziOhQ
+	 RCJB2J5DmLnVrsh0GbnmsIsqk4uNXCHyJj1jEvI6b+oJyhuuerS+s3Y+PZJruxPYpT
+	 d5h8dOGB0ONY60+AlBcLUA4HHZm8nOWFkQqJncEtSlYpWB2m4mOCDRbQmvv5eELmXO
+	 txVrmE5rFgPUzm7bowX6tJZ5PUgW7xLm55ycn2koTceaYQKW8LEDloIZvwtSBfn3VT
+	 2TVoM2v9XFHSTa2nlWcSzpwhx3Ne1HFahEoN6IIlJjQh56n31m5+z8IMgW7t2vBwvD
+	 6fM35JAeTLpsA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Henrique Carvalho <henrique.carvalho@suse.com>,
-	Steve French <stfrench@microsoft.com>,
+Cc: jinbaohong <jinbaohong@synology.com>,
+	Qu Wenruo <wqu@suse.com>,
+	Robbie Ko <robbieko@synology.com>,
+	Filipe Manana <fdmanana@suse.com>,
+	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>,
-	sfrench@samba.org,
-	linux-cifs@vger.kernel.org,
-	samba-technical@lists.samba.org
-Subject: [PATCH AUTOSEL 6.19-6.1] smb: client: add proper locking around ses->iface_last_update
-Date: Tue, 10 Feb 2026 18:31:07 -0500
-Message-ID: <20260210233123.2905307-22-sashal@kernel.org>
+	clm@fb.com,
+	linux-btrfs@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.19-6.6] btrfs: handle user interrupt properly in btrfs_trim_fs()
+Date: Tue, 10 Feb 2026 18:31:08 -0500
+Message-ID: <20260210233123.2905307-23-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260210233123.2905307-1-sashal@kernel.org>
 References: <20260210233123.2905307-1-sashal@kernel.org>
@@ -53,189 +55,269 @@ X-stable-base: Linux 6.19
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Henrique Carvalho <henrique.carvalho@suse.com>
+From: jinbaohong <jinbaohong@synology.com>
 
-[ Upstream commit e97dcac3dc0bd37e4b56aaa6874b572a3a461102 ]
+[ Upstream commit bfb670b9183b0e4ba660aff2e396ec1cc01d0761 ]
 
-There is a missing ses->iface_lock in cifs_setup_session,
-around ses->iface_last_update.
+When a fatal signal is pending or the process is freezing,
+btrfs_trim_block_group() and btrfs_trim_free_extents() return -ERESTARTSYS.
+Currently this is treated as a regular error: the loops continue to the
+next iteration and count it as a block group or device failure.
 
-Signed-off-by: Henrique Carvalho <henrique.carvalho@suse.com>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Instead, break out of the loops immediately and return -ERESTARTSYS to
+userspace without counting it as a failure. Also skip the device loop
+entirely if the block group loop was interrupted.
+
+Reviewed-by: Qu Wenruo <wqu@suse.com>
+Signed-off-by: Robbie Ko <robbieko@synology.com>
+Signed-off-by: jinbaohong <jinbaohong@synology.com>
+Reviewed-by: Filipe Manana <fdmanana@suse.com>
+Signed-off-by: Filipe Manana <fdmanana@suse.com>
+Reviewed-by: David Sterba <dsterba@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-The locking infrastructure and documentation are identical in the stable
-branch. Now I have all the information needed for a thorough analysis.
+Now I have a complete understanding. Let me provide my thorough
+analysis.
 
 ---
 
-## Complete Analysis
+## Detailed Analysis
 
 ### 1. COMMIT MESSAGE ANALYSIS
 
-The commit subject is "smb: client: add proper locking around
-ses->iface_last_update". The body explains that there is a "missing
-ses->iface_lock in cifs_setup_session, around ses->iface_last_update."
-This is a direct, clear statement of a locking bug fix. The commit is
-authored by Henrique Carvalho (SUSE employee) and accepted by Steve
-French (the SMB/CIFS maintainer).
+The commit message is clear and precise: when `btrfs_trim_block_group()`
+or `btrfs_trim_free_extents()` return `-ERESTARTSYS` (due to fatal
+signal or freezing), the current code treats it as a regular error. It
+continues the loops, counts it as a failure, and logs misleading
+warnings. The fix is to break out immediately and return `-ERESTARTSYS`
+to userspace.
+
+The commit has excellent review pedigree: reviewed by Qu Wenruo, Filipe
+Manana, and David Sterba (the btrfs maintainer himself). Three separate
+reviews is strong confidence.
 
 ### 2. CODE CHANGE ANALYSIS
 
-The patch is minimal — exactly 2 lines added:
+The fix touches a single function `btrfs_trim_fs()` in `fs/btrfs/extent-
+tree.c`, adding 11 lines across three locations:
+
+**Location 1** - Block group loop: After `btrfs_trim_block_group()`
+returns, check for `-ERESTARTSYS`/`-EINTR` and break immediately:
 
 ```c
-+               spin_lock(&ses->iface_lock);
-                ses->iface_last_update = 0;
-+               spin_unlock(&ses->iface_lock);
+if (ret == -ERESTARTSYS || ret == -EINTR) {
+    btrfs_put_block_group(cache);
+    break;
+}
 ```
 
-This wraps the write to `ses->iface_last_update` (which forces an
-interface list refresh) with the `ses->iface_lock` spinlock.
+Note the critical `btrfs_put_block_group(cache)` call before `break` —
+this prevents a reference count leak. When using `continue`, the loop
+iterator `cache = btrfs_next_block_group(cache)` handles putting the old
+reference. But on `break`, we must do it explicitly. This matches the
+existing pattern earlier in the same loop:
 
-### 3. BUG MECHANISM — THE DATA RACE
-
-**The documentation is unambiguous.** In `fs/smb/client/cifsglob.h`:
-
-```1111:1123:fs/smb/client/cifsglob.h
- - iface_lock should be taken when accessing any of these fields
- */
-spinlock_t iface_lock;
-/* ========= begin: protected by iface_lock ======== */
-struct list_head iface_list;
-size_t iface_count;
-unsigned long iface_last_update; /* jiffies */
-/* ========= end: protected by iface_lock ======== */
+```6530:6533:fs/btrfs/extent-tree.c
+                if (cache->start >= range_end) {
+                        btrfs_put_block_group(cache);
+                        break;
+                }
 ```
 
-And in the locking documentation at lines 2000-2002:
+**Location 2** - Between the two loops: Skip the device trimming loop
+entirely if the block group loop was interrupted:
 
-```2000:2002:fs/smb/client/cifsglob.h
- - cifs_ses->iface_lock            cifs_ses->iface_list
-   sesInfoAlloc
- - ->iface_count
- - ->iface_last_update
+```c
+if (ret == -ERESTARTSYS || ret == -EINTR)
+    return ret;
 ```
 
-`iface_last_update` is explicitly documented as protected by
-`iface_lock`. The buggy code at `connect.c:4273` writes to this field
-without holding the lock.
+**Location 3** - Device loop and final return: Break out of the device
+loop on interrupt and return appropriately:
 
-**Concurrent access paths that create the race:**
+```c
+if (ret == -ERESTARTSYS || ret == -EINTR)
+    break;
+...
+if (ret == -ERESTARTSYS || ret == -EINTR)
+    return ret;
+```
 
-1. **Writer (buggy, in `cifs_setup_session`):** Sets
-   `ses->iface_last_update = 0` during session reconnect — called from
-   `smb2_reconnect()`, `cifs_reconnect_tcon()`, `cifs_get_smb_ses()`,
-   and `cifs_ses_add_channel()`.
+### 3. THE BUG MECHANISM
 
-2. **Reader (in `SMB3_request_interfaces`, smb2ops.c:828):** Reads
-   `iface_last_update` as an optimization check before performing an
-   expensive ioctl. This is called from the
-   `smb2_query_server_interfaces` delayed work that runs periodically
-   every `SMB_INTERFACE_POLL_INTERVAL` seconds.
+This bug is a **follow-up to commit `69313850dce33` ("btrfs: add
+cancellation points to trim loops")** which was merged in v6.12 and is
+`Cc: stable@vger.kernel.org # 5.15+`. That commit added
+`btrfs_trim_interrupted()` checks to the inner trim functions
+(`trim_no_bitmap`, `trim_bitmaps`, `btrfs_issue_discard`,
+`btrfs_trim_free_extents`) so they return `-ERESTARTSYS` when a fatal
+signal is pending or the process is freezing.
 
-3. **Reader/Writer (in `parse_server_interfaces`, smb2ops.c:641):**
-   Reads `iface_last_update` with `iface_lock` held, writes
-   `iface_last_update` at lines 669 and 798.
+**The problem**: The outer function `btrfs_trim_fs()` was NOT updated to
+handle this `-ERESTARTSYS` return. So the inner loops correctly detect
+the interrupt and return early, but the outer loop just treats it as a
+regular error and continues:
 
-**The concrete race scenario:** Thread A is doing a session reconnect
-and calls `cifs_setup_session()` which writes `iface_last_update = 0`
-without the lock. Concurrently, Thread B (the periodic delayed work
-`smb2_query_server_interfaces`) calls
-`SMB3_request_interfaces`/`parse_server_interfaces` which reads
-`iface_last_update` under `iface_lock`. This is a classic data race
-where a writer and reader access shared data without consistent
-synchronization.
+1. `btrfs_trim_block_group(cache_0)` → detects signal → returns
+   `-ERESTARTSYS`
+2. Outer loop: `bg_failed++`, `bg_ret = -ERESTARTSYS`, `continue`
+3. `btrfs_trim_block_group(cache_1)` → detects signal again → returns
+   `-ERESTARTSYS`
+4. Repeat for ALL remaining block groups
+5. Then iterate ALL devices, each returning `-ERESTARTSYS` immediately
 
-On weakly-ordered architectures (ARM64), this can lead to the reader
-seeing a torn or stale value of `iface_last_update`, potentially causing
-the interface list not to be refreshed when it should be (or vice
-versa). Even on x86-64 where `unsigned long` writes are naturally
-atomic, this violates the documented locking discipline and could
-confuse KCSAN (Kernel Concurrency Sanitizer).
+On a large filesystem with thousands of block groups and multiple
+devices, this means:
+- **Delayed response to Ctrl+C/SIGKILL**: The process doesn't terminate
+  promptly
+- **Blocked system suspend**: `freezing(current)` remains true, but the
+  outer loop keeps going, preventing the process from actually freezing.
+  This was the exact scenario reported in [bug
+  219180](https://bugzilla.kernel.org/show_bug.cgi?id=219180) and [SUSE
+  bug 1229737](https://bugzilla.suse.com/show_bug.cgi?id=1229737)
+- **Misleading dmesg warnings**: `btrfs_warn(fs_info, "failed to trim
+  %llu block group(s)...")` fires, counting all the interrupted block
+  groups as "failures"
+- **Wrong return value**: Instead of returning `-ERESTARTSYS` cleanly to
+  userspace, the function may return a mixed error code
 
 ### 4. SCOPE AND RISK ASSESSMENT
 
-- **Size:** 2 lines added — the smallest possible fix
-- **Files touched:** 1 (`fs/smb/client/connect.c`)
-- **Risk of regression:** Extremely low. The added
-  `spin_lock/spin_unlock` pair is properly nested inside the already-
-  held `ses_lock`. Looking at the locking hierarchy documented in
-  `cifsglob.h`, `ses_lock` and `iface_lock` are independent spinlocks
-  (no nested ordering requirement documented). The critical section is
-  one `unsigned long` assignment — negligible contention.
-- **Subsystem:** SMB client — a filesystem used by many enterprise users
-  for networked file access
+- **Size**: 11 lines added, 0 removed. Extremely small and surgical.
+- **Files touched**: 1 (`fs/btrfs/extent-tree.c`)
+- **Scope**: Only affects the interrupt/signal error path. The normal
+  trim path (no signal pending) is completely unaffected — all new code
+  is gated behind `ret == -ERESTARTSYS || ret == -EINTR` checks.
+- **Risk**: Very low. The added checks are early-exit conditions that
+  only trigger when a signal is pending or process is freezing. There's
+  no way these can cause a regression in normal operation.
+- **Reference counting**: Correctly handled
+  (`btrfs_put_block_group(cache)` before break).
 
 ### 5. USER IMPACT
 
-This affects all users of the SMB/CIFS client who use multichannel
-sessions (Azure files, enterprise NAS). The race occurs during session
-reconnect — a critical recovery path that fires when a server connection
-drops. The race could cause:
-- **Missed interface refresh:** If the write to `iface_last_update = 0`
-  tears or is lost due to the race, the client might not refresh the
-  interface list during reconnect, potentially connecting secondary
-  channels to stale/wrong IP addresses
-- **Incorrect reconnection behavior:** After a server failover (common
-  with Azure files), secondary channels might connect to the wrong
-  server
+- **Who is affected**: Any user running `fstrim` on a btrfs filesystem
+  who interrupts it (Ctrl+C) or has a system that suspends while trim is
+  running. This is a very common scenario, especially on laptops with
+  btrfs and periodic fstrim timers.
+- **Call path**: `fstrim` → `FITRIM` ioctl → `btrfs_ioctl_fitrim()` →
+  `btrfs_trim_fs()`
+- **Severity**: The original bugs from the linked reports were about
+  systems unable to suspend. The cancellation point commit
+  (`69313850dce33`) fixed the inner loops but left the outer loop
+  broken, meaning the fix was incomplete. This commit completes it.
 
-### 6. AFFECTED VERSIONS
+### 6. DEPENDENCY CHECK
 
-The buggy commit `d9a6d78096056a3cb5c5f07a730ab92f2f9ac4e6` was
-introduced in v6.7-rc1 and was already backported to stable branches:
-- 6.1.y (as `c9569bfd2868`)
-- 6.6.y (as `aabf4851d160`)
-- 6.12.y (as `d9a6d78096056`)
+This commit depends on two preceding commits:
 
-The code context is identical in all these branches — the fix applies
-cleanly.
+1. **`912d1c6680bdb` ("btrfs: continue trimming remaining devices on
+   failure")** - Changes `break` to `continue` in the device loop.
+   **Already targeted for stable** (`Fixes:` tag and `Cc:
+   stable@vger.kernel.org # 5.4+`).
 
-### 7. DEPENDENCY CHECK
+2. **`1cc4ada4182fa` ("btrfs: preserve first error in
+   btrfs_trim_fs()")** - Changes `bg_ret = ret` to `if (!bg_ret) bg_ret
+   = ret`. **Not targeted for stable**. This is a small context
+   dependency; the core fix logic is independent of it.
 
-This fix is completely self-contained. It requires only:
-- `ses->iface_lock` spinlock to exist (present since the multichannel
-  feature was added)
-- The `iface_last_update` field to be in the `iface_lock`-protected
-  region (documented since its introduction)
+Both prerequisites are small (1-line and 15-line changes respectively).
+The first is already stable-bound. The second would be needed for clean
+application but could alternatively be resolved by a minor context
+adjustment during backport.
 
-No other commits are needed.
+The fix also requires `69313850dce33` ("btrfs: add cancellation points
+to trim loops") which is `Cc: stable # 5.15+` and should already be in
+stable trees 5.15+.
+
+### 7. STABILITY INDICATORS
+
+- Reviewed by 3 btrfs experts
+- The parent commit adding interruption infrastructure has been in
+  stable since 5.15+
+- The fix is straightforward conditional checks — no complex logic
 
 ### 8. CLASSIFICATION
 
-This is a **race condition fix** (data race on a shared variable
-accessed without proper synchronization). It falls squarely into the
-"synchronization changes" category of stable-worthy fixes. The fix is:
-- Obviously correct (adds documented required locking)
-- Tested (accepted by maintainer)
-- Small (2 lines)
-- Fixes a real bug (data race during reconnect)
-- Contained (no side effects)
-- Does not introduce new features or APIs
+This is a **bug fix** that:
+- Fixes incomplete signal/interrupt handling
+- Fixes potential system suspend blocking
+- Fixes misleading kernel warnings
+- Fixes incorrect error propagation to userspace
+- Completes an existing stable fix (`69313850dce33`)
+
+It is NOT:
+- A new feature
+- A performance optimization
+- A code cleanup
+- An API change
+
+### Summary
+
+This commit fixes a real, user-visible bug where btrfs trim operations
+cannot be properly interrupted by signals (Ctrl+C) or system suspend. It
+completes the fix started by `69313850dce33` (already in stable 5.15+)
+which added cancellation points to inner trim loops but left the outer
+loop in `btrfs_trim_fs()` unaware of the `-ERESTARTSYS` return code. The
+fix is extremely small (11 lines), well-reviewed by 3 btrfs developers
+including the maintainer, has zero risk to normal code paths, correctly
+handles reference counting, and addresses the same class of bug (suspend
+blocking) that motivated the original stable-tagged commit. It requires
+two small prerequisite commits (one already stable-targeted) for clean
+application.
 
 **YES**
 
- fs/smb/client/connect.c | 2 ++
- 1 file changed, 2 insertions(+)
+ fs/btrfs/extent-tree.c | 11 +++++++++++
+ 1 file changed, 11 insertions(+)
 
-diff --git a/fs/smb/client/connect.c b/fs/smb/client/connect.c
-index ce620503e9f70..60c76375f0f50 100644
---- a/fs/smb/client/connect.c
-+++ b/fs/smb/client/connect.c
-@@ -4270,7 +4270,9 @@ cifs_setup_session(const unsigned int xid, struct cifs_ses *ses,
- 		ses->ses_status = SES_IN_SETUP;
+diff --git a/fs/btrfs/extent-tree.c b/fs/btrfs/extent-tree.c
+index 1bf081243efb2..8bdb609f58a7e 100644
+--- a/fs/btrfs/extent-tree.c
++++ b/fs/btrfs/extent-tree.c
+@@ -6555,6 +6555,10 @@ int btrfs_trim_fs(struct btrfs_fs_info *fs_info, struct fstrim_range *range)
+ 						     range->minlen);
  
- 		/* force iface_list refresh */
-+		spin_lock(&ses->iface_lock);
- 		ses->iface_last_update = 0;
-+		spin_unlock(&ses->iface_lock);
- 	}
- 	spin_unlock(&ses->ses_lock);
+ 			trimmed += group_trimmed;
++			if (ret == -ERESTARTSYS || ret == -EINTR) {
++				btrfs_put_block_group(cache);
++				break;
++			}
+ 			if (ret) {
+ 				bg_failed++;
+ 				bg_ret = ret;
+@@ -6568,6 +6572,9 @@ int btrfs_trim_fs(struct btrfs_fs_info *fs_info, struct fstrim_range *range)
+ 			"failed to trim %llu block group(s), last error %d",
+ 			bg_failed, bg_ret);
  
++	if (ret == -ERESTARTSYS || ret == -EINTR)
++		return ret;
++
+ 	mutex_lock(&fs_devices->device_list_mutex);
+ 	list_for_each_entry(device, &fs_devices->devices, dev_list) {
+ 		if (test_bit(BTRFS_DEV_STATE_MISSING, &device->dev_state))
+@@ -6576,6 +6583,8 @@ int btrfs_trim_fs(struct btrfs_fs_info *fs_info, struct fstrim_range *range)
+ 		ret = btrfs_trim_free_extents(device, &group_trimmed);
+ 
+ 		trimmed += group_trimmed;
++		if (ret == -ERESTARTSYS || ret == -EINTR)
++			break;
+ 		if (ret) {
+ 			dev_failed++;
+ 			dev_ret = ret;
+@@ -6589,6 +6598,8 @@ int btrfs_trim_fs(struct btrfs_fs_info *fs_info, struct fstrim_range *range)
+ 			"failed to trim %llu device(s), last error %d",
+ 			dev_failed, dev_ret);
+ 	range->len = trimmed;
++	if (ret == -ERESTARTSYS || ret == -EINTR)
++		return ret;
+ 	if (bg_ret)
+ 		return bg_ret;
+ 	return dev_ret;
 -- 
 2.51.0
 
