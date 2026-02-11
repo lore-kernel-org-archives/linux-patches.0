@@ -1,154 +1,92 @@
-Received: from smtp134-25.sina.com.cn (smtp134-25.sina.com.cn [180.149.134.25])
+Received: from out198-157.us.a.mail.aliyun.com (out198-157.us.a.mail.aliyun.com [47.90.198.157])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E6D52FF170
-	for <patches@lists.linux.dev>; Wed, 11 Feb 2026 03:07:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=180.149.134.25
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A683F344031
+	for <patches@lists.linux.dev>; Wed, 11 Feb 2026 03:22:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=47.90.198.157
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770779275; cv=none; b=d+vTjIdJP1/kxoharaOTSDYH4e9yRrmJga4kTr+p+SLPYBE8S+TwaUaD/wCgCRZB9cMWetN9nIwtEVjVOibLvexYD+wYO6n4d3lWAT5A41Q+kyQA27ocCsgJj26fjpxkbgMNdnfhPkC1ZYO/vFUvanuS8DuLcQmiBjpaT7ByBdc=
+	t=1770780128; cv=none; b=Fov6taL+M7fMWd/39xLua9VFczryJhAgtvEZryW+xzW8fU4X3/KH9oWXJZN1GPpAub6L8Za0Do86mrczjerRo6u2Y50/nNJUTu8jyo7VNDTBlgU/G92trzCpTwEJOmaZJXKWCZfXHE2lFllxQfXn57hlVZgkj9OpTHzbIB/DPis=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770779275; c=relaxed/simple;
-	bh=npc2dbBOGo7Aif7S5+nDohPa5CRcvAM4noA1HV94vxI=;
-	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=HWv5ndhB6Q8IW8fDgcyyOMLpizcyXnnWJ2pM44upn4c7yJFB3s4w0gp4D0GKy2IjGwAkT3/P+e4SWikddaWiWyJaEJqCNpmnx9IpFmzm/SPzlnkoaddtqdrYHTBxT83tUv88/8P4WO8QXYlrjnsHLjNAqgyxRgd3X3IO7PDuJno=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=sina.cn; spf=pass smtp.mailfrom=sina.cn; dkim=pass (1024-bit key) header.d=sina.cn header.i=@sina.cn header.b=q4809eNM; arc=none smtp.client-ip=180.149.134.25
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=sina.cn
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=sina.cn
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=sina.cn header.i=@sina.cn header.b="q4809eNM"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=sina.cn; s=201208; t=1770779270;
-	bh=cEK/QkXNtxabPBN96UfAuh6tuWmLKbXJW7876CwA5zw=;
-	h=From:Subject:Date:Message-Id;
-	b=q4809eNM4WBTEF1uH75juSphUUKwdXR9s4Egroc5zVIqcUVi7Uy2OVNbq2iuz9/G0
-	 s0DZODxJJeFg8wDDZi25js+YomThEorT/PcRoo66SUPKfrkPIGpHViw91oquFMWdjG
-	 QLk6c+RB8h9jbI7e59YdQSAEhKgOQe8OYQwSgM9c=
-X-SMAIL-HELO: NTT-kernel-dev
-Received: from unknown (HELO NTT-kernel-dev)([60.247.85.88])
-	by sina.cn (10.185.250.21) with ESMTP
-	id 698BF1F200002A1A; Wed, 11 Feb 2026 11:05:24 +0800 (CST)
-X-Sender: jianqkang@sina.cn
-X-Auth-ID: jianqkang@sina.cn
-Authentication-Results: sina.cn;
-	 spf=none smtp.mailfrom=jianqkang@sina.cn;
-	 dkim=none header.i=none;
-	 dmarc=none action=none header.from=jianqkang@sina.cn
-X-SMAIL-MID: 6981733408340
-X-SMAIL-UIID: 20AF8401DD9D4EF6ADD6BCF3D67D7D2A-20260211-110524-1
-From: Jianqiang kang <jianqkang@sina.cn>
-To: gregkh@linuxfoundation.org,
-	stable@vger.kernel.org,
-	jlayton@kernel.org
-Cc: patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org,
-	chuck.lever@oracle.com,
-	neilb@suse.de,
-	kolga@netapp.com,
-	Dai.Ngo@oracle.com,
-	tom@talpey.com,
-	linux-nfs@vger.kernel.org
-Subject: [PATCH 6.6.y] nfsd: don't ignore the return code of svc_proc_register()
-Date: Wed, 11 Feb 2026 11:05:22 +0800
-Message-Id: <20260211030522.2697146-1-jianqkang@sina.cn>
-X-Mailer: git-send-email 2.34.1
+	s=arc-20240116; t=1770780128; c=relaxed/simple;
+	bh=C6jVpQUWsOpuX91E+e2BfVX3sRY/x0L1hc0vcXUciWI=;
+	h=Date:From:To:Subject:In-Reply-To:References:Message-Id:
+	 MIME-Version:Content-Type; b=qshigGT2FeCFOfPm+7XkngDLVND7CQXTDpiAFk2DKGw4Dkl24Wfsc9T+GeGdfc0ovU5yEqlW8teGWatUoidFdCYBFGNdeN67O3A+L+GiM8mU7ZYVUHKnB081FDWxhFqZKbBOlSUHlBsCzpJvk6Iyw0xwPE0COwZiiUBKVRH3cjI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=e16-tech.com; spf=pass smtp.mailfrom=e16-tech.com; arc=none smtp.client-ip=47.90.198.157
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=e16-tech.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=e16-tech.com
+Received: from 192.168.2.112(mailfrom:wangyugui@e16-tech.com fp:SMTPD_---.gUTIyKs_1770779179 cluster:ay29)
+          by smtp.aliyun-inc.com;
+          Wed, 11 Feb 2026 11:06:21 +0800
+Date: Wed, 11 Feb 2026 11:06:21 +0800
+From: Wang Yugui <wangyugui@e16-tech.com>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+ stable@vger.kernel.org,
+ patches@lists.linux.dev,
+ linux-kernel@vger.kernel.org,
+ torvalds@linux-foundation.org,
+ akpm@linux-foundation.org,
+ linux@roeck-us.net,
+ shuah@kernel.org,
+ patches@kernelci.org,
+ lkft-triage@lists.linaro.org,
+ pavel@nabladev.com,
+ jonathanh@nvidia.com,
+ f.fainelli@gmail.com,
+ sudipm.mukherjee@gmail.com,
+ rwarsow@gmx.de,
+ conor@kernel.org,
+ hargar@microsoft.com,
+ broonie@kernel.org,
+ achill@achill.org,
+ sr@sladewatkins.com
+Subject: Re: [PATCH 6.6 00/86] 6.6.124-rc1 review
+In-Reply-To: <20260211085248.EAEE.409509F4@e16-tech.com>
+References: <20260209142304.770150175@linuxfoundation.org> <20260211085248.EAEE.409509F4@e16-tech.com>
+Message-Id: <20260211110620.0A4D.409509F4@e16-tech.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset="US-ASCII"
+Content-Transfer-Encoding: 7bit
+X-Mailer: Becky! ver. 2.83.01 [en]
 
-From: Jeff Layton <jlayton@kernel.org>
+Hi,
 
-[ Upstream commit 930b64ca0c511521f0abdd1d57ce52b2a6e3476b ]
+> Hi,
+> 
+> > This is the start of the stable review cycle for the 6.6.124 release.
+> > There are 86 patches in this series, all will be posted as a response
+> > to this one.  If anyone has any issues with these being applied, please
+> > let me know.
+> > 
+> > Responses should be made by Wed, 11 Feb 2026 14:22:44 +0000.
+> > Anything received after that time might be too late.
+> > 
+> > The whole patch series can be found in one patch at:
+> > 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.6.124-rc1.gz
+> > or in the git tree and branch at:
+> > 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.6.y
+> > and the diffstat can be found below.
+> 
+> 6.6.123 boot well, but 6.6.124-rc1 failed to boot here.
+> 
+> error message:
+> dracut: fatal: iscsiroot requested but kernel/initrd does not support iscsi.
+> 
+> 'git bisect' yet not done, and report this problem firstly.
 
-Currently, nfsd_proc_stat_init() ignores the return value of
-svc_proc_register(). If the procfile creation fails, then the kernel
-will WARN when it tries to remove the entry later.
+6.6.124-rc1 without 'x86-kfence-fix-booting-on-32bit-non-pae-systems.patch' (revert), 
+boot well here.
 
-Fix nfsd_proc_stat_init() to return the same type of pointer as
-svc_proc_register(), and fix up nfsd_net_init() to check that and fail
-the nfsd_net construction if it occurs.
+but 6.1.163-rc1 with 'x86-kfence-fix-booting-on-32bit-non-pae-systems.patch'
+boot well.
 
-svc_proc_register() can fail if the dentry can't be allocated, or if an
-identical dentry already exists. The second case is pretty unlikely in
-the nfsd_net construction codepath, so if this happens, return -ENOMEM.
+Best Regards
+Wang Yugui (wangyugui@e16-tech.com)
+2026/02/11
 
-Reported-by: syzbot+e34ad04f27991521104c@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/linux-nfs/67a47501.050a0220.19061f.05f9.GAE@google.com/
-Cc: stable@vger.kernel.org # v6.9
-Signed-off-by: Jeff Layton <jlayton@kernel.org>
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
-[ Update the cleanup path to use nfsd_stat_counters_destroy. This ensures
- the teardown logic is correctly paired with nfsd_stat_counters_init, as
- required by the current NFSD implementation.]
-Signed-off-by: Jianqiang kang <jianqkang@sina.cn>
----
- fs/nfsd/nfsctl.c | 9 ++++++++-
- fs/nfsd/stats.c  | 4 ++--
- fs/nfsd/stats.h  | 2 +-
- 3 files changed, 11 insertions(+), 4 deletions(-)
 
-diff --git a/fs/nfsd/nfsctl.c b/fs/nfsd/nfsctl.c
-index 78ebdf20c1ef..4703e2a93568 100644
---- a/fs/nfsd/nfsctl.c
-+++ b/fs/nfsd/nfsctl.c
-@@ -1526,17 +1526,24 @@ static __net_init int nfsd_net_init(struct net *net)
- 	retval = nfsd_stat_counters_init(nn);
- 	if (retval)
- 		goto out_repcache_error;
-+
- 	memset(&nn->nfsd_svcstats, 0, sizeof(nn->nfsd_svcstats));
- 	nn->nfsd_svcstats.program = &nfsd_program;
-+	if (!nfsd_proc_stat_init(net)) {
-+		retval = -ENOMEM;
-+		goto out_proc_error;
-+	}
-+
- 	nn->nfsd_versions = NULL;
- 	nn->nfsd4_minorversions = NULL;
- 	nfsd4_init_leases_net(nn);
- 	get_random_bytes(&nn->siphash_key, sizeof(nn->siphash_key));
- 	seqlock_init(&nn->writeverf_lock);
--	nfsd_proc_stat_init(net);
- 
- 	return 0;
- 
-+out_proc_error:
-+	nfsd_stat_counters_destroy(nn);
- out_repcache_error:
- 	nfsd_idmap_shutdown(net);
- out_idmap_error:
-diff --git a/fs/nfsd/stats.c b/fs/nfsd/stats.c
-index 9f606fa08bd4..0a629a18831f 100644
---- a/fs/nfsd/stats.c
-+++ b/fs/nfsd/stats.c
-@@ -115,11 +115,11 @@ void nfsd_stat_counters_destroy(struct nfsd_net *nn)
- 	nfsd_percpu_counters_destroy(nn->counter, NFSD_STATS_COUNTERS_NUM);
- }
- 
--void nfsd_proc_stat_init(struct net *net)
-+struct proc_dir_entry *nfsd_proc_stat_init(struct net *net)
- {
- 	struct nfsd_net *nn = net_generic(net, nfsd_net_id);
- 
--	svc_proc_register(net, &nn->nfsd_svcstats, &nfsd_proc_ops);
-+	return svc_proc_register(net, &nn->nfsd_svcstats, &nfsd_proc_ops);
- }
- 
- void nfsd_proc_stat_shutdown(struct net *net)
-diff --git a/fs/nfsd/stats.h b/fs/nfsd/stats.h
-index d2753e975dfd..b1f7d21cbcd1 100644
---- a/fs/nfsd/stats.h
-+++ b/fs/nfsd/stats.h
-@@ -15,7 +15,7 @@ void nfsd_percpu_counters_reset(struct percpu_counter *counters, int num);
- void nfsd_percpu_counters_destroy(struct percpu_counter *counters, int num);
- int nfsd_stat_counters_init(struct nfsd_net *nn);
- void nfsd_stat_counters_destroy(struct nfsd_net *nn);
--void nfsd_proc_stat_init(struct net *net);
-+struct proc_dir_entry *nfsd_proc_stat_init(struct net *net);
- void nfsd_proc_stat_shutdown(struct net *net);
- 
- static inline void nfsd_stats_rc_hits_inc(struct nfsd_net *nn)
--- 
-2.34.1
 
