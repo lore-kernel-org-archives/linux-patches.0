@@ -1,43 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80AEA1A9FA4;
-	Wed, 11 Feb 2026 12:31:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 962E6194AD7;
+	Wed, 11 Feb 2026 12:31:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770813107; cv=none; b=fxgIPNv75en0grp2VCWfytbMBYLfYJTzjLAn8VE05scx7T/74Nr31mtKzIJGpctc6omADdxU4dcjUr0JhrrE+itUowymr48zKq40NIHzkDXRRWyIo56LT8chVXJhfI7EQucNm2/pPgB3hr2UD9MYtCIriqKuB9nblB+4l1cqEME=
+	t=1770813108; cv=none; b=dKXX+tM6bpfM2g3Tid4m3UdU1r5gug9AapfXBWwZpc+LGl0neRLago+jCvQQCn/i1fPSD8h4ttaj3ze7ABG9ee870vfrTdOx13X2lWrf1JLu2sWAnN5QBEc71rIB3XysmuhFeoR0yk6ZD1b5C7hRFEX8RTIHYC7vU5teIUUdLtA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770813107; c=relaxed/simple;
-	bh=Tf2HFjwCMjCSlIDdTt4ev05KSSziEzdiulZOqr2rm+A=;
+	s=arc-20240116; t=1770813108; c=relaxed/simple;
+	bh=W8TRYpIoLHSafIBZHOcM/I2GuwyMlNQIh5ra5DvldiQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=hD+bi1OP0sxtHQwdYB/YQHCpqRFfKDgif1AIQ7O2G1H5mnV4ZF/7zW/17h6hxDbf5/hWhoOfoyC9NVrMnDXS2nNcK1oaaUKrwPeQelkR/7EFdgoBmtysxns9HYhXP7DaaFAHiPNTQapITI2355nAnrC4pa6RTd8xZ6pgGrYHaag=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=tewN5C1X; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=lgcSr+HVC6n46YZSPSnRBDLR3xl76pqfTtKi+HtVilj8fHOQgxDTVxMWHF3tEx+Ypc606rMNBz8SWMQrQKR1htoFudot+pg4+iB8amquDTJEPZeogJYev8IjHKLKDCDvxKKpbzBLj+WoKbEvOGJFfEeIm0Pa0BRQPnbuYYn82fo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Cb7kHJkp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="tewN5C1X"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8DDADC2BC87;
-	Wed, 11 Feb 2026 12:31:46 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Cb7kHJkp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C97BBC19421;
+	Wed, 11 Feb 2026 12:31:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1770813107;
-	bh=Tf2HFjwCMjCSlIDdTt4ev05KSSziEzdiulZOqr2rm+A=;
+	s=k20201202; t=1770813108;
+	bh=W8TRYpIoLHSafIBZHOcM/I2GuwyMlNQIh5ra5DvldiQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tewN5C1XsPMIXcoLeufJOAvYhAgoy8xQJX4J2i0/3nQgpQLc9ihayjI/GY+UtxxZs
-	 lK4MgFSx59z+qgqdbbOvZbYOErhUlvBusYZe8BYWpXbXykclKpcTZDga55dXD2cBpF
-	 4daeHAhT73Pp3xXWQMjlQyMzM/kBanfZuEra1VIzIhqlyw5fyUsPjSGLVlMlPgWlo6
-	 3bTbq/X60+ZfyhgcKdUn1E+YuodpcxqsSIv88OXQbtxsWPMvgCWyHIhWMFYWMA8A21
-	 qTtIDGThTynefynpPWDwLfrZ0lz2EqzD/xXU8CKSt0czLib7F+/yQ/g7fT8G+UQHPM
-	 +C8qHLiYEel7g==
+	b=Cb7kHJkpaJ+oF+1f0CI3Mnyrqme7h5dxui+DjsIxmnEZW7mTlF/jmxrWKSvqSB8bk
+	 lm+UbBPnB/JSpWjVMpSA2B0R+LDMFuttB3WUSlm01BXlrJgo2otYjbK4Qrr068GnE/
+	 bfyZybUW5fYfuhOS2tuKFjIW7ZwvE6/D8ExH+b55IJPMyILuCWwJNYa8ZRIRx+gB7t
+	 7edcfcwwlWRh/ykHE2Hnm1NXwNxIozHhx8W5ulpXzaTs+8sOfoh7T1V2o4iUVqOh4i
+	 arUg5WZuG2eChvLuYEf+kb7lXO8sz//PyK8vgEuWcHyP51ejBWQgJC62hNGZTIBusb
+	 8C0+5IHM0A1IA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Yu Kuai <yukuai@fnnas.com>,
-	Nilay Shroff <nilay@linux.ibm.com>,
-	Hannes Reinecke <hare@suse.de>,
-	Jens Axboe <axboe@kernel.dk>,
+Cc: Hou Wenlong <houwenlong.hwl@antgroup.com>,
+	Juergen Gross <jgross@suse.com>,
 	Sasha Levin <sashal@kernel.org>,
-	linux-block@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.19-6.18] blk-mq-sched: unify elevators checking for async requests
-Date: Wed, 11 Feb 2026 07:30:27 -0500
-Message-ID: <20260211123112.1330287-17-sashal@kernel.org>
+	xen-devel@lists.xenproject.org
+Subject: [PATCH AUTOSEL 6.19-5.10] x86/xen/pvh: Enable PAE mode for 32-bit guest only when CONFIG_X86_PAE is set
+Date: Wed, 11 Feb 2026 07:30:28 -0500
+Message-ID: <20260211123112.1330287-18-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260211123112.1330287-1-sashal@kernel.org>
 References: <20260211123112.1330287-1-sashal@kernel.org>
@@ -53,295 +51,221 @@ X-stable-base: Linux 6.19
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yu Kuai <yukuai@fnnas.com>
+From: Hou Wenlong <houwenlong.hwl@antgroup.com>
 
-[ Upstream commit 1db61b0afdd7e8aa9289c423fdff002603b520b5 ]
+[ Upstream commit db9aded979b491a24871e1621cd4e8822dbca859 ]
 
-bfq and mq-deadline consider sync writes as async requests and only
-reserve tags for sync reads by async_depth, however, kyber doesn't
-consider sync writes as async requests for now.
+The PVH entry is available for 32-bit KVM guests, and 32-bit KVM guests
+do not depend on CONFIG_X86_PAE. However, mk_early_pgtbl_32() builds
+different pagetables depending on whether CONFIG_X86_PAE is set.
+Therefore, enabling PAE mode for 32-bit KVM guests without
+CONFIG_X86_PAE being set would result in a boot failure during CR3
+loading.
 
-Consider the case there are lots of dirty pages, and user use fsync to
-flush dirty pages. In this case sched_tags can be exhausted by sync writes
-and sync reads can stuck waiting for tag. Hence let kyber follow what
-mq-deadline and bfq did, and unify async requests checking for all
-elevators.
-
-Signed-off-by: Yu Kuai <yukuai@fnnas.com>
-Reviewed-by: Nilay Shroff <nilay@linux.ibm.com>
-Reviewed-by: Hannes Reinecke <hare@suse.de>
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Signed-off-by: Hou Wenlong <houwenlong.hwl@antgroup.com>
+Reviewed-by: Juergen Gross <jgross@suse.com>
+Signed-off-by: Juergen Gross <jgross@suse.com>
+Message-ID: <d09ce9a134eb9cbc16928a5b316969f8ba606b81.1768017442.git.houwenlong.hwl@antgroup.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-Now I have all the information needed for a thorough analysis. Let me
-compile the findings.
+Now I have all the information needed for a complete analysis.
 
 ---
 
-## Complete Analysis
+## Detailed Analysis
 
-### 1. COMMIT MESSAGE ANALYSIS
+### 1. Commit Message Analysis
 
-The subject "blk-mq-sched: unify elevators checking for async requests"
-sounds like a cleanup/unification commit, but the message body reveals a
-**real I/O starvation bug in the kyber scheduler**:
+The subject clearly states the problem: PAE mode is being
+unconditionally enabled for all PVH guests, but for 32-bit guests it
+should only be enabled when `CONFIG_X86_PAE` is set. The commit message
+explicitly describes a **boot failure** scenario: loading CR3 fails when
+the page table format doesn't match the CPU's paging mode expectation.
 
-> *"Consider the case there are lots of dirty pages, and user use fsync
-to flush dirty pages. In this case sched_tags can be exhausted by sync
-writes and sync reads can stuck waiting for tag."*
+The commit is:
+- Reviewed by Juergen Gross (Xen subsystem maintainer)
+- Signed off by Juergen Gross (subsystem maintainer sign-off)
 
-This describes a concrete, user-visible problem: sync read starvation
-when kyber is the I/O scheduler and fsync flushes dirty pages.
+### 2. Code Change Analysis
 
-### 2. CODE CHANGE ANALYSIS — The Bug Mechanism
+**The Bug Mechanism:**
 
-The key to understanding this bug lies in the difference between
-`op_is_sync()` and the new `blk_mq_is_sync_read()`:
+The PVH entry path in `arch/x86/platform/pvh/head.S` is the boot entry
+point for PVH (Para-Virtualized Hardware) guests, used by Xen and KVM.
+The flow is:
 
-```470:474:include/linux/blk_types.h
-static inline bool op_is_sync(blk_opf_t op)
-{
-        return (op & REQ_OP_MASK) == REQ_OP_READ ||
-                (op & (REQ_SYNC | REQ_FUA | REQ_PREFLUSH));
-}
+1. **Line 94-97** (before fix): PAE mode is unconditionally enabled in
+   CR4:
+
+```94:97:arch/x86/platform/pvh/head.S
+        /* Enable PAE mode. */
+        mov %cr4, %eax
+        orl $X86_CR4_PAE, %eax
+        mov %eax, %cr4
 ```
 
-`op_is_sync()` returns **true** for both sync reads AND sync writes
-(writes with `REQ_SYNC`/`REQ_FUA`/`REQ_PREFLUSH`).
+2. For **64-bit** guests (`CONFIG_X86_64`), this is correct — PAE is
+   always needed as a prerequisite for long mode (line 99-104).
 
-When `fsync()` triggers writeback, writes get `REQ_SYNC` because
-`wbc->sync_mode == WB_SYNC_ALL`:
+3. For **32-bit** guests (the `#else` path starting at line 196), the
+   code calls `mk_early_pgtbl_32()` to build early page tables:
 
-```93:103:include/linux/writeback.h
-static inline blk_opf_t wbc_to_write_flags(struct writeback_control
-*wbc)
-{
-        blk_opf_t flags = 0;
+```196:205:arch/x86/platform/pvh/head.S
+#else /* CONFIG_X86_64 */
 
-        if (wbc->sync_mode == WB_SYNC_ALL)
-                flags |= REQ_SYNC;
-        // ...
-}
+        call mk_early_pgtbl_32
+
+        mov $_pa(initial_page_table), %eax
+        mov %eax, %cr3
+
+        mov %cr0, %eax
+        or $(X86_CR0_PG | X86_CR0_PE), %eax
+        mov %eax, %cr0
 ```
 
-**Kyber's bug** — in `kyber_limit_depth()`:
+4. `mk_early_pgtbl_32()` in `arch/x86/kernel/head32.c` builds
+   **fundamentally different** page table structures depending on
+   `CONFIG_X86_PAE`:
 
-```553:564:block/kyber-iosched.c
-static void kyber_limit_depth(blk_opf_t opf, struct blk_mq_alloc_data
-*data)
-{
-        /*
-  - We use the scheduler tags as per-hardware queue queueing tokens.
-  - Async requests can be limited at this stage.
-         */
-        if (!op_is_sync(opf)) {
-                struct kyber_queue_data *kqd =
-data->q->elevator->elevator_data;
-
-                data->shallow_depth = kqd->async_depth;
-        }
-}
+```95:103:arch/x86/kernel/head32.c
+#ifdef CONFIG_X86_PAE
+typedef pmd_t                   pl2_t;
+#define pl2_base                initial_pg_pmd
+#define SET_PL2(val)            { .pmd = (val), }
+#else
+typedef pgd_t                   pl2_t;
+#define pl2_base                initial_page_table
+#define SET_PL2(val)            { .pgd = (val), }
+#endif
 ```
 
-The condition `!op_is_sync(opf)` means only truly async operations get
-throttled. Sync writes (from fsync) pass `op_is_sync()` as true, so they
-get **full depth** — no throttling. This means sync writes can consume
-ALL sched_tags.
+   - With `CONFIG_X86_PAE`: Builds **3-level PAE page tables**
+     (PGDIR_SHIFT=30, uses PMDs + PDPTEs)
+   - Without `CONFIG_X86_PAE`: Builds **2-level non-PAE page tables**
+     (PGDIR_SHIFT=22, uses PGDs directly)
 
-**mq-deadline and bfq already handle this correctly:**
+**The crash**: When PAE is enabled in CR4 but non-PAE page tables are
+loaded into CR3, the CPU interprets the 2-level page directory as a PAE
+PDPT (Page Directory Pointer Table). When paging is activated
+(CR0.PG=1), the processor tries to load the PDPTE entries from the
+address in CR3. The non-PAE page directory entries are completely
+incompatible with PAE PDPTE format, causing a **#GP fault or triple
+fault**, resulting in an immediate boot failure.
 
-```493:506:block/mq-deadline.c
-static void dd_limit_depth(blk_opf_t opf, struct blk_mq_alloc_data
-*data)
-{
-        struct deadline_data *dd = data->q->elevator->elevator_data;
+**The Fix:** Simply wrapping the PAE enablement with proper `#ifdef`
+guards:
 
-        /* Do not throttle synchronous reads. */
-        if (op_is_sync(opf) && !op_is_write(opf))
-                return;
-
-        // ... throttle everything else including sync writes
-        data->shallow_depth = dd->async_depth;
-}
+```asm
+#if defined(CONFIG_X86_64) || defined(CONFIG_X86_PAE)
+        /* Enable PAE mode. */
+        mov %cr4, %eax
+        orl $X86_CR4_PAE, %eax
+        mov %eax, %cr4
+#endif
 ```
 
-Both mq-deadline and bfq use `op_is_sync(opf) && !op_is_write(opf)` to
-give full depth only to sync **reads**. Sync writes are properly
-throttled by `async_depth`.
+This ensures PAE is only enabled when:
+- `CONFIG_X86_64` is set (64-bit always needs PAE for long mode), or
+- `CONFIG_X86_PAE` is set (32-bit with PAE — page tables match)
 
-**The fix:** Changes kyber's condition from `!op_is_sync(opf)` to
-`!blk_mq_is_sync_read(opf)`, where the new helper is defined as:
+Note that the 32-bit path at lines 212-220 already has code to disable
+PAE before jumping to `startup_32`, which confirms the original author
+was aware that PAE and non-PAE modes exist, but the initial enablement
+was not properly guarded.
 
-```c
-static inline bool blk_mq_is_sync_read(blk_opf_t opf)
-{
-    return op_is_sync(opf) && !op_is_write(opf);
-}
-```
+### 3. Classification
 
-### 3. BEHAVIORAL IMPACT BY SCHEDULER
+This is a **boot failure fix**. It's not a feature, cleanup, or
+optimization. It fixes a configuration where a 32-bit PVH guest without
+`CONFIG_X86_PAE` completely fails to boot.
 
-| Scheduler | Before | After | Behavioral Change? |
-|---|---|---|---|
-| **kyber** | Only async ops throttled; sync writes get full depth |
-Everything except sync reads throttled | **YES — this is the bug fix** |
-| **bfq** | `op_is_sync(opf) && !op_is_write(opf)` |
-`blk_mq_is_sync_read(opf)` | **NO — semantically identical** |
-| **mq-deadline** | `op_is_sync(opf) && !op_is_write(opf)` |
-`blk_mq_is_sync_read(opf)` | **NO — semantically identical** |
+### 4. Scope and Risk Assessment
 
-The bfq and mq-deadline changes are purely cosmetic refactoring. The
-actual bug fix is exclusively in kyber.
+- **Lines changed**: 2 lines added (`#if defined(...)` and `#endif`), 0
+  lines removed
+- **Files touched**: 1 (`arch/x86/platform/pvh/head.S`)
+- **Complexity**: Minimal — conditional compilation guard
+- **Risk**: Extremely low
+  - For `CONFIG_X86_64`: No change (the `#if` is always true)
+  - For `CONFIG_X86_32` with `CONFIG_X86_PAE`: No change (the `#if` is
+    true)
+  - For `CONFIG_X86_32` without `CONFIG_X86_PAE`: PAE is no longer
+    enabled, matching the page table format — this is the bug fix
+- **Regression potential**: Near zero. The only behavioral change is for
+  the broken configuration that currently crashes.
 
-### 4. BUG SEVERITY
+### 5. User Impact
 
-The starvation scenario is concrete and reproducible:
-1. System has lots of dirty pages
-2. User calls `fsync()` to flush them
-3. Lots of sync writes are submitted
-4. Kyber gives them full depth (no throttling)
-5. All sched_tags consumed by sync writes
-6. Sync reads from applications **starve** — they cannot get any tags
-7. Read I/O hangs until writes complete
+- **Who is affected**: Anyone running a 32-bit kernel without PAE as a
+  PVH/KVM guest. This is a legitimate configuration since `config PVH`
+  has no dependency on `CONFIG_X86_PAE` or `CONFIG_X86_64`.
+- **Severity**: Complete boot failure — the system cannot boot at all
+- **Workaround**: Users must enable `CONFIG_X86_PAE` for 32-bit PVH
+  guests, which may not be obvious and adds unnecessary configuration
+  constraints
 
-This is a **system responsiveness issue** — applications waiting for
-reads (file access, page faults) can hang when another process is doing
-heavy fsyncing.
+### 6. Stability Indicators
 
-### 5. SCOPE AND RISK
+- **Reviewed-by**: Juergen Gross (Xen subsystem maintainer) — very
+  strong indicator
+- **Signed-off-by**: Juergen Gross (accepted through the Xen tree)
+- The fix is trivially correct by inspection — when `CONFIG_X86_PAE` is
+  not set, enabling PAE in CR4 is wrong because the page tables aren't
+  in PAE format
 
-- **Size:** Very small — adds a 4-line helper, changes one condition in
-  each of 3 files
-- **Risk for bfq/mq-deadline:** Zero — semantically identical changes
-- **Risk for kyber:** Low — the change aligns kyber with the well-
-  established and battle-tested behavior of mq-deadline and bfq. Kyber's
-  `async_depth` is set to 75% of `q->nr_requests` (`KYBER_ASYNC_PERCENT
-  = 75`), so sync writes still get generous tag allocation, just not
-  unlimited
-- **Possible regression:** Slight reduction in sync write throughput on
-  kyber (now throttled to 75% of tags instead of 100%), but this is the
-  correct behavior to prevent read starvation
+### 7. Dependency Check
 
-### 6. REVIEW AND TESTING
+- **No dependencies** on other patches — this is a completely self-
+  contained fix
+- The affected code (`pvh_start_xen` with the unconditional PAE
+  enablement) exists in **all current stable trees** (confirmed present
+  from v5.4 through v6.12)
+- The fix context is slightly different in older stable trees (e.g.,
+  `rep\n       movsl` vs `rep movsl`, PIC vs absolute addressing), so
+  minor backport adjustments may be needed for older trees, but the fix
+  itself (adding `#if`/`#endif` around the PAE lines) is trivial to
+  adapt
 
-The commit has two `Reviewed-by` tags from experienced kernel
-developers:
-- **Nilay Shroff** (IBM) — block layer contributor
-- **Hannes Reinecke** (SUSE) — longstanding storage/block subsystem
-  maintainer
+### 8. Conclusion
 
-Signed off by **Jens Axboe** — block subsystem maintainer.
-
-### 7. DEPENDENCY ANALYSIS
-
-The commit depends on `42e6c6ce03fd3e` ("lib/sbitmap: convert
-shallow_depth from one word to the whole sbitmap") for context lines in
-the bfq part (which references `bfqd->async_depths`, renamed from
-`bfqd->word_depths` in the prerequisite). However:
-
-- The **core fix** (kyber condition change) is completely independent
-- The bfq and mq-deadline changes are cosmetic and could be dropped for
-  stable
-- For stable trees, the kyber fix + helper function could be backported
-  alone, or the bfq/mq-deadline parts could be adapted to match older
-  context
-
-### 8. BUG LONGEVITY
-
-The bug has existed since kyber's introduction in commit `00e043936e9a1`
-(April 2017, kernel v4.12). The original code already used
-`!op_is_sync(op)` which had the same problem. The mq-deadline scheduler
-only added tag reservation in v5.15 (commit `07757588e507`, June 2021)
-and correctly used `op_is_sync(opf) && !op_is_write(opf)` from the
-start. The bfq scheduler similarly had the correct check. Kyber was the
-odd one out.
-
-### 9. CONCLUSION
-
-This commit fixes a real I/O starvation bug in the kyber scheduler where
-sync writes (from fsync/sync) can exhaust all scheduler tags and starve
-sync reads. The fix is:
-
-- **Small and surgical** — one condition change in kyber, plus a trivial
-  helper function
-- **Obviously correct** — it aligns kyber with the proven behavior of
-  mq-deadline and bfq
-- **Low risk** — the bfq/mq-deadline parts are semantically identical;
-  the kyber change is well-bounded
-- **Well-reviewed** — by experienced block subsystem developers and the
-  subsystem maintainer
-- **Fixes a real user-visible bug** — read I/O starvation during fsync-
-  heavy workloads
-
-The only concern is the dependency on a prerequisite for the bfq context
-lines, but the core kyber fix is standalone and the bfq/mq-deadline
-parts are optional cosmetic refactoring that could be adapted or dropped
-for stable trees.
+This is a textbook stable kernel fix:
+- **Fixes a real, severe bug**: Complete boot failure for a valid kernel
+  configuration
+- **Obviously correct**: The fix is a 2-line conditional compilation
+  guard that makes PAE enablement match page table format
+- **Small and contained**: 2 lines added to 1 file
+- **No new features**: Just correctness fix
+- **No risk of regression**: Only changes behavior for the currently-
+  broken configuration
+- **Present in all stable trees**: The bug has existed since the
+  original PVH commit (v4.11, 2017)
+- **Reviewed by subsystem maintainer**: Juergen Gross
 
 **YES**
 
- block/bfq-iosched.c   | 2 +-
- block/blk-mq-sched.h  | 5 +++++
- block/kyber-iosched.c | 2 +-
- block/mq-deadline.c   | 2 +-
- 4 files changed, 8 insertions(+), 3 deletions(-)
+ arch/x86/platform/pvh/head.S | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/block/bfq-iosched.c b/block/bfq-iosched.c
-index 6e54b1d3d8bc2..9e9d081e86bb2 100644
---- a/block/bfq-iosched.c
-+++ b/block/bfq-iosched.c
-@@ -697,7 +697,7 @@ static void bfq_limit_depth(blk_opf_t opf, struct blk_mq_alloc_data *data)
- 	unsigned int limit, act_idx;
+diff --git a/arch/x86/platform/pvh/head.S b/arch/x86/platform/pvh/head.S
+index 344030c1a81d4..53ee2d53fcf8e 100644
+--- a/arch/x86/platform/pvh/head.S
++++ b/arch/x86/platform/pvh/head.S
+@@ -91,10 +91,12 @@ SYM_CODE_START(pvh_start_xen)
  
- 	/* Sync reads have full depth available */
--	if (op_is_sync(opf) && !op_is_write(opf))
-+	if (blk_mq_is_sync_read(opf))
- 		limit = data->q->nr_requests;
- 	else
- 		limit = bfqd->async_depths[!!bfqd->wr_busy_queues][op_is_sync(opf)];
-diff --git a/block/blk-mq-sched.h b/block/blk-mq-sched.h
-index 02c40a72e9598..5678e15bd33c4 100644
---- a/block/blk-mq-sched.h
-+++ b/block/blk-mq-sched.h
-@@ -137,4 +137,9 @@ static inline void blk_mq_set_min_shallow_depth(struct request_queue *q,
- 						depth);
- }
+ 	leal rva(early_stack_end)(%ebp), %esp
  
-+static inline bool blk_mq_is_sync_read(blk_opf_t opf)
-+{
-+	return op_is_sync(opf) && !op_is_write(opf);
-+}
-+
- #endif
-diff --git a/block/kyber-iosched.c b/block/kyber-iosched.c
-index c1b36ffd19ceb..2b3f5b8959af0 100644
---- a/block/kyber-iosched.c
-+++ b/block/kyber-iosched.c
-@@ -556,7 +556,7 @@ static void kyber_limit_depth(blk_opf_t opf, struct blk_mq_alloc_data *data)
- 	 * We use the scheduler tags as per-hardware queue queueing tokens.
- 	 * Async requests can be limited at this stage.
- 	 */
--	if (!op_is_sync(opf)) {
-+	if (!blk_mq_is_sync_read(opf)) {
- 		struct kyber_queue_data *kqd = data->q->elevator->elevator_data;
++#if defined(CONFIG_X86_64) || defined(CONFIG_X86_PAE)
+ 	/* Enable PAE mode. */
+ 	mov %cr4, %eax
+ 	orl $X86_CR4_PAE, %eax
+ 	mov %eax, %cr4
++#endif
  
- 		data->shallow_depth = kqd->async_depth;
-diff --git a/block/mq-deadline.c b/block/mq-deadline.c
-index 3e3719093aec7..29d00221fbea6 100644
---- a/block/mq-deadline.c
-+++ b/block/mq-deadline.c
-@@ -495,7 +495,7 @@ static void dd_limit_depth(blk_opf_t opf, struct blk_mq_alloc_data *data)
- 	struct deadline_data *dd = data->q->elevator->elevator_data;
- 
- 	/* Do not throttle synchronous reads. */
--	if (op_is_sync(opf) && !op_is_write(opf))
-+	if (blk_mq_is_sync_read(opf))
- 		return;
- 
- 	/*
+ #ifdef CONFIG_X86_64
+ 	/* Enable Long mode. */
 -- 
 2.51.0
 
