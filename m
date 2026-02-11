@@ -1,135 +1,227 @@
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F12E62264CA
-	for <patches@lists.linux.dev>; Wed, 11 Feb 2026 12:15:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.133.124
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94C53219FC;
+	Wed, 11 Feb 2026 12:31:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770812150; cv=none; b=Xd3icOFHU1/5jt37a/EkOpyVmlDT4RbN26PMPWrErYgoVpmbfW9Gwo88sX6/wNa9T8+FJ3pTBIeIi3CDyPCHmze+LG9uVO1VajV4TS0uVD2Y3qSl+VCQJpRgiZFaOLA+c2DF9nUfAbv3zQK6cXpT/kEumVIPfS1rITtJkrnNu9c=
+	t=1770813075; cv=none; b=auRl6t/2sRN3iN/w128nSMzmuAt9qVOYVTIUpjRMKs+1NyYYzYM3F7+QuM7eA5G7GF0fKI+hZcewVlkNPfl44I1fcb2LcWmCdoSY+bARlbw2hjzZiYNXW2XhNWr4xDBw5GMKVoqzQKca7HjA4HBXPlB7CasBvm2/Kzp+YUV9NH4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770812150; c=relaxed/simple;
-	bh=zwtrR6VDQqRfiGwabJda0K6rC6Ytzxc2xzn9PKLh8Lg=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 In-Reply-To:Content-Type:Content-Disposition; b=URFZqCKIqn8CCVE6fYD9jxUJhyQXHlOR+GqLDcMHtCJuM4Y43BmnR290bwRzW/e70E/7SxjhIBHq1hUg7+tebFxCMwHlexJhiMNKpVXZJHcvFgCi8hOXsZZWX18iHl8DqNP8vXee6R2lLd27sICsRD0f3yWaLmAYTHEXHHWXD78=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=e1G0rf5/; arc=none smtp.client-ip=170.10.133.124
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
+	s=arc-20240116; t=1770813075; c=relaxed/simple;
+	bh=r3pjJzqeNLeIDKiNTUjd/23TzfkFiX++k7lAjylU38c=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=h9j22/Fft1ibQKKdeM3/KiqL7l6XYPt0TksOgNsxrmVoeaugjb3gtt2e0jQpd4rqSSuKBXq2GqD12VfyyM8LCNrD/zcFokDFwnjcNyV6HkrU4eLVON96GfPRToTunjRDncV9YH6kE+PrVzXu1WphJwDocJU39SaCg5bQeAfT4fY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=pT9pPb+c; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="e1G0rf5/"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1770812148;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=EpzX+ghvAFNjZ7ZxVYHEPBHpEaI5GQyf0hEL4AV2dRE=;
-	b=e1G0rf5/O1yaPQISB6E/KAYA+e1HdIu9/pxvu5u41ZltuGD3MPVWG/s4K9S3ooYzzW0Wky
-	i25CKgPJislCLr7R4p7AeJpWsdhfTWUav8cWUSQK03jtMHxZvp2lR5UXg2qgymbS0oHpB1
-	+Duky4w/ixsJxwWYsuVOVkOinZcOVkE=
-Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
- [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-256-XWyFB1VNPwuY_PwK99_3_A-1; Wed, 11 Feb 2026 07:15:47 -0500
-X-MC-Unique: XWyFB1VNPwuY_PwK99_3_A-1
-X-Mimecast-MFC-AGG-ID: XWyFB1VNPwuY_PwK99_3_A_1770812146
-Received: by mail-wm1-f70.google.com with SMTP id 5b1f17b1804b1-4830e7c6131so44478325e9.2
-        for <patches@lists.linux.dev>; Wed, 11 Feb 2026 04:15:46 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1770812145; x=1771416945;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=EpzX+ghvAFNjZ7ZxVYHEPBHpEaI5GQyf0hEL4AV2dRE=;
-        b=L3dsITIfjAGmbfdGZq6Rwones54SpKNN3fA4Xtdjbfpx8j2IazmsDDIs1Ixjw2bkay
-         R7TX3dFdonYKnUhOK3fxwYmHBsxHOLjq3h7NPpzUjbu+KzutI7RdXO6eHYYFA+ks+Pqg
-         KAJcYchHGlydwPY14QnXVWhhAATXPwrLQKEeohkmiB1SXH65qjrEFUFb9L0Yv4pDOK0p
-         lWWhu09S24cbjEDtCDSKUItl8pBiRbe55MzWRNUF0Z43lKqn5i0V5JAWq4I+c7QaSWjr
-         L3f1rs97B+wz6eI6DMQ19T2ATa4/dZt9Is16tA8zyFdg/vsP2iRDyHO0tZfkrjePlKY+
-         //pw==
-X-Forwarded-Encrypted: i=1; AJvYcCUsB+qMPUKvZdhP0J7NhqPS4nB1nI1x29e2IFu7vsEgWf/CdrVCBUUzPXlLOI+P0OTfyhJwD2kM@lists.linux.dev
-X-Gm-Message-State: AOJu0YxnDvfevawywfOFVZUjs+8PuUejE5xoZ8r9K8zS7wGgFmUKwEmu
-	zLvcm5MwwBYkeoSUN1rEaGd5RMcBiLtKLz7TmbW8Co0WBeW90y7X1IeNJBy2yf7g3SS0az1F/iG
-	h64p3Zm1+/aa7IYJ4rsgfGxPICH4A2JbWmXb1CwZyISkyEv6+FlmeVfUjv5O9R8qy/4s=
-X-Gm-Gg: AZuq6aJ04LRmr5b8j+YVwBSVRMC0jmD/QoobhMdytvUrNacoFBd/0dcup9TcnjSPT2f
-	Eyu4owQbiff3z2JQIwt2CiTV6CyXbHgt8ANhS07jphwSpUudV88U5R9NOdvhYcPWv0C0RBZD4oC
-	0J6XTf5ZpyWJ5Jz37VXoGBgPgjHUiT4CwbGcyW/GLXycwVtfA9oiHjauVtRS2PupWai+MT6dhhn
-	6gn8Q+LMMw7THVRNdIaIE40yU+gVKV7Fcz2t3LKX9Flxivk0yljrgj/MzuFosbb0at63+UnX7MR
-	0nd73XmaGlz4dFbi//CaDtX6iG5ecewrgjyosfaIoLUCR2yoF4FxU8aMaCJ9O40+wjP2y/nQXqD
-	Rf1EX7xQ6K9+hZzLFUcIfCUd0sOeQYphNape5j8zF5MRnGmd05zXNqbsznDSe4lr1eIQgX5Y=
-X-Received: by 2002:a05:600c:c4a8:b0:47d:3ead:7440 with SMTP id 5b1f17b1804b1-4835b979c30mr31799965e9.32.1770812144642;
-        Wed, 11 Feb 2026 04:15:44 -0800 (PST)
-X-Received: by 2002:a05:600c:c4a8:b0:47d:3ead:7440 with SMTP id 5b1f17b1804b1-4835b979c30mr31799315e9.32.1770812144089;
-        Wed, 11 Feb 2026 04:15:44 -0800 (PST)
-Received: from sgarzare-redhat (host-82-53-134-58.retail.telecomitalia.it. [82.53.134.58])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4835a5bf1efsm37289995e9.0.2026.02.11.04.15.42
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 11 Feb 2026 04:15:43 -0800 (PST)
-Date: Wed, 11 Feb 2026 13:15:39 +0100
-From: Stefano Garzarella <sgarzare@redhat.com>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: Johan Korsnes <johan.korsnes@remarkable.no>, stable@vger.kernel.org, 
-	patches@lists.linux.dev, "Michael S. Tsirkin" <mst@redhat.com>, 
-	Paolo Abeni <pabeni@redhat.com>, Sasha Levin <sashal@kernel.org>
-Subject: Re: [PATCH 6.12 094/169] vsock/test: fix seqpacket message bounds
- test
-Message-ID: <aYxyYLI9IjI5VxCp@sgarzare-redhat>
-References: <20260128145334.006287341@linuxfoundation.org>
- <20260128145337.388867288@linuxfoundation.org>
- <61627e8a-6998-4138-a174-d7fd257db93e@remarkable.no>
- <aYw9N_Ido_FZzblw@sgarzare-redhat>
- <cc9bcfe1-4667-4a33-b370-1f3912f0adca@remarkable.no>
- <2026021103-gusto-karaoke-6c60@gregkh>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="pT9pPb+c"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 21044C4CEF7;
+	Wed, 11 Feb 2026 12:31:14 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1770813075;
+	bh=r3pjJzqeNLeIDKiNTUjd/23TzfkFiX++k7lAjylU38c=;
+	h=From:To:Cc:Subject:Date:From;
+	b=pT9pPb+c0lmU9IXeLOcgVvaKGybWvMKMLqNYlrTS8vJm/KxMZY3v3ptGSCVeoUpKz
+	 2eCOB2MEEkTnonayrOVCiavKjCHaQflMTOUW/ilgNczBtYvBviLGT4zPnLReCtuW29
+	 ImdHqb3T8xUYvPkUMjMN9xCrI+pZ/nH1CmTEPVN5I672TaDSylu7BMf1OI/SOxN2Sa
+	 Jf3fWn40anRGcKsfIENxudDCILZ5qUQvYJZYG0ybrXF5wQurtWpwnogeITzsIlhw6P
+	 ySnqzSx9PrZGQOVtI3xgwZM9PyBHbZBgbA1fPrTMxBE6+FpDbtKKWdVDSnPpLMddK/
+	 yi2Hbdj5bZSQg==
+From: Sasha Levin <sashal@kernel.org>
+To: patches@lists.linux.dev,
+	stable@vger.kernel.org
+Cc: Thomas Richter <tmricht@linux.ibm.com>,
+	Jan Polensky <japo@linux.ibm.com>,
+	Heiko Carstens <hca@linux.ibm.com>,
+	Sasha Levin <sashal@kernel.org>,
+	agordeev@linux.ibm.com,
+	liubo03@inspur.com,
+	peterz@infradead.org,
+	kan.liang@linux.intel.com
+Subject: [PATCH AUTOSEL 6.19-5.10] s390/perf: Disable register readout on sampling events
+Date: Wed, 11 Feb 2026 07:30:11 -0500
+Message-ID: <20260211123112.1330287-1-sashal@kernel.org>
+X-Mailer: git-send-email 2.51.0
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-In-Reply-To: <2026021103-gusto-karaoke-6c60@gregkh>
-X-Mimecast-Spam-Score: 0
-X-Mimecast-MFC-PROC-ID: suX4iC30IyGuQvqDqMJcemAzhcsKUSX-JY7rTZUjmP8_1770812146
-X-Mimecast-Originator: redhat.com
-Content-Type: text/plain; charset=us-ascii; format=flowed
-Content-Disposition: inline
+X-stable: review
+X-Patchwork-Hint: Ignore
+X-stable-base: Linux 6.19
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-On Wed, Feb 11, 2026 at 12:37:20PM +0100, Greg Kroah-Hartman wrote:
->On Wed, Feb 11, 2026 at 09:58:08AM +0100, Johan Korsnes wrote:
->> On 11/02/2026 09:30, Stefano Garzarella wrote:
->> > On Wed, Feb 11, 2026 at 08:50:11AM +0100, Johan Korsnes wrote:
+From: Thomas Richter <tmricht@linux.ibm.com>
 
-[...]
+[ Upstream commit b2c04fc1239062b39ddfdd8731ee1a10810dfb74 ]
 
->> >> Hi Greg,
->> >>
->> >> This patch causes build failure as the setsockopt_ull_check() function
->> >> does not seem to be defined in the 6.12 tree.
->> >
->> > I guess just when you build vsock_test, right?
->> >
->>
->> Correct. I should have specified that.
->>
->> > BTW to fix that we should backport commit 86814d8ffd55 ("vsock/test:
->> > verify socket options after setting them").
->> >
->> > I tried to cherry-pick it on current linux-6.12.y and apply clean.
->> >
->>
->> I can confirm it builds fine after cherry-picking that commit.
->>
->> Kind regards,
->> Johan
->>
->> > Greg, let me know if I should send a proper patch for 6.12.
->
->Great!  Can you send a proper patch for 6.12.y for this?
+Running commands
+ # ./perf record  -IR0,R1 -a sleep 1
+extracts and displays register value of general purpose register r1 and r0.
+However the value displayed of any register is random and does not
+reflect the register value recorded at the time of the sample interrupt.
 
-Done, I discovered that a similar issue is also in 6.6.y so I sent a fix 
-also for that tree:
-- 6.12.y: 
-   https://lore.kernel.org/stable/20260211115948.108140-1-sgarzare@redhat.com/
-- 6.6.y: 
-   https://lore.kernel.org/stable/20260211121135.116071-1-sgarzare@redhat.com/
+The sampling device driver on s390 creates a very large buffer
+for the hardware to store the samples. Only when that large buffer
+gets full an interrupt is generated and many hundreds of sample
+entries are processed and copied to the kernel ring buffer and
+eventually get copied to the perf tool. It is during the copy
+to the kernel ring buffer that each sample is processed (on s390)
+and at that time the register values are extracted.
+This is not the original goal, the register values should be read
+when the samples are created not when the samples are copied to the
+kernel ring buffer.
 
-Thanks,
-Stefano
+Prevent this event from being installed in the first place and
+return -EOPNOTSUPP. This is already the case for PERF_SAMPLE_REGS_USER.
+
+Signed-off-by: Thomas Richter <tmricht@linux.ibm.com>
+Reviewed-by: Jan Polensky <japo@linux.ibm.com>
+Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
+---
+
+LLM Generated explanations, may be completely bogus:
+
+## Detailed Analysis
+
+### 1. Commit Message Analysis
+
+The commit message is clear and detailed. It describes a concrete,
+reproducible problem: running `perf record -IR0,R1 -a sleep 1` on s390
+produces **random, meaningless register values** that do not reflect the
+actual register state at the time of sampling. The root cause is well-
+explained — the s390 hardware sampling facility buffers hundreds of
+samples, and registers are only read during batch processing (when the
+buffer fills), not when each sample is actually taken.
+
+The commit was authored by **Thomas Richter** (the s390 perf/cpumf
+maintainer), reviewed by **Jan Polensky**, and signed off by **Heiko
+Carstens** (s390 subsystem maintainer). This is authoritative review
+from the exact right people.
+
+### 2. Code Change Analysis
+
+The change is a **single line modification** in `is_callchain_event()`:
+
+```839:845:arch/s390/kernel/perf_cpum_sf.c
+static bool is_callchain_event(struct perf_event *event)
+{
+        u64 sample_type = event->attr.sample_type;
+
+        return sample_type & (PERF_SAMPLE_CALLCHAIN |
+PERF_SAMPLE_REGS_USER |
+                              PERF_SAMPLE_STACK_USER);
+}
+```
+
+The fix adds `PERF_SAMPLE_REGS_INTR` to the bitmask, so the function
+also detects interrupt-time register requests. The caller
+`cpumsf_pmu_event_init()` returns `-EOPNOTSUPP` when
+`is_callchain_event()` returns true:
+
+```851:854:arch/s390/kernel/perf_cpum_sf.c
+        /* No support for taken branch sampling */
+        /* No support for callchain, stacks and registers */
+        if (has_branch_stack(event) || is_callchain_event(event))
+                return -EOPNOTSUPP;
+```
+
+### 3. Historical Context
+
+- **`PERF_SAMPLE_REGS_INTR`** was introduced in kernel 3.19 (commit
+  `60e2364e60e86`, September 2014).
+- **`is_callchain_event()`** was introduced in kernel 5.9 (commit
+  `5aa98879efe77`, June 2020). That commit already blocked
+  `PERF_SAMPLE_REGS_USER` and `PERF_SAMPLE_STACK_USER` for the exact
+  same reason: register/stack values collected at interrupt-processing
+  time don't match the actual sample context. But it missed
+  `PERF_SAMPLE_REGS_INTR`.
+- The bug has existed since 2020, affecting all kernels from 5.9 onward.
+
+### 4. Bug Mechanism
+
+Looking at `arch/s390/kernel/perf_regs.c`, the `perf_reg_value()`
+function reads from `regs->gprs[idx]` — the current pt_regs. For regular
+PMU interrupts, these registers correspond to the interrupted context.
+But for s390's hardware sampling PMU (cpum_sf), the "interrupt" fires
+when a large hardware buffer fills up, and hundreds of samples are
+processed in batch. By that time, the pt_regs reflect the interrupt-
+handler context, **not** the context when each individual sample was
+taken. The result is that users see random register values that are
+misleading.
+
+### 5. Applicability to Stable Trees
+
+I verified that the affected `is_callchain_event()` function exists
+**identically** (without `PERF_SAMPLE_REGS_INTR`) in all active stable
+trees:
+- **6.18.y**: Bug present, same code
+- **6.12.y**: Bug present, same code
+- **6.6.y**: Bug present, same code
+- **6.1.y**: Bug present, same code
+- **5.15.y**: Bug present, same code
+- **5.10.y**: Bug present, same code
+
+`PERF_SAMPLE_REGS_INTR` is available in all these trees (added in 3.19).
+The patch will apply cleanly with trivial line-offset fuzz.
+
+### 6. Risk Assessment
+
+- **Risk**: Essentially zero. The change adds one flag to an existing
+  bitmask check that already blocks three other sample types for the
+  same reason.
+- **Worst case**: Users who previously requested `-I` (interrupt
+  registers) with s390 hardware sampling now get `-EOPNOTSUPP` instead
+  of silently receiving garbage data. This is strictly an improvement.
+- **No dependencies**: The patch is completely self-contained.
+- **No new features**: This restricts behavior, preventing a broken code
+  path from being used.
+
+### 7. Classification
+
+This is a **data correctness bug fix**. While it doesn't cause a crash
+or security vulnerability, it produces **silently incorrect output**
+that could lead users to make wrong conclusions during performance
+analysis. The commit message from the original 2020 fix
+(`5aa98879efe77`) even calls out that "invalid data is picked, because
+the context of the collected information does not match the context when
+the sample was taken" — the exact same bug, just for a different sample
+type that was overlooked.
+
+### 8. Conclusion
+
+This commit meets all stable kernel criteria:
+- **Obviously correct**: One flag added to existing bitmask, same
+  pattern as existing blocked types
+- **Fixes a real bug**: Silently returns random/meaningless register
+  values to users
+- **Small and contained**: 1 file, 1 line, 1 flag addition
+- **No new features**: Restricts an existing broken capability
+- **Applies cleanly**: Identical code in all stable trees
+- **Properly reviewed**: By s390 maintainers
+- **Zero regression risk**: Only changes behavior from "return garbage"
+  to "return EOPNOTSUPP"
+
+**YES**
+
+ arch/s390/kernel/perf_cpum_sf.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/arch/s390/kernel/perf_cpum_sf.c b/arch/s390/kernel/perf_cpum_sf.c
+index 459af23a47a5e..e8bd19ac82c7d 100644
+--- a/arch/s390/kernel/perf_cpum_sf.c
++++ b/arch/s390/kernel/perf_cpum_sf.c
+@@ -841,7 +841,7 @@ static bool is_callchain_event(struct perf_event *event)
+ 	u64 sample_type = event->attr.sample_type;
+ 
+ 	return sample_type & (PERF_SAMPLE_CALLCHAIN | PERF_SAMPLE_REGS_USER |
+-			      PERF_SAMPLE_STACK_USER);
++			      PERF_SAMPLE_REGS_INTR | PERF_SAMPLE_STACK_USER);
+ }
+ 
+ static int cpumsf_pmu_event_init(struct perf_event *event)
+-- 
+2.51.0
 
