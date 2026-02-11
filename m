@@ -1,46 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8DFEF194AD7;
-	Wed, 11 Feb 2026 12:32:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F19C194AD7;
+	Wed, 11 Feb 2026 12:32:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770813131; cv=none; b=ReEOnS+6AQsFLMiA/K5bpTv8n7E/0OjcZOdRPLRU0lU+6xdQfiiyJ02Y9S/CDeVFcYqNZrECh1ycmITGj/OeOBXRWvmEYlx2g210XGC2HZnaXrf1EkjY3+neVhPh55i5cNN4rGawghec8YTmjT/8hUM1BgKi2xcl+Tt8eMqnx9E=
+	t=1770813133; cv=none; b=jMjtlUjn8uVOOJ5x83s1jNmRVLySrY99Vwe9yqomYrrMG1jvFbDn3V+P49P2bJM1PNMPvvgVSsrQ+pAWbhVlbvxbyjQ4noBjKN93ePKPxBFZsuR0ni3g6l/sVidhpIzvzEFzvVpu71v74FeZk3SWc5wQDflvkPZ86v8nzQIpzGs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770813131; c=relaxed/simple;
-	bh=66de8YGfHD0DZc6gZxZ3nQPSQUgvW59BQ1RTSGfyPsU=;
+	s=arc-20240116; t=1770813133; c=relaxed/simple;
+	bh=idBWF2zb6XEB59Tr2/abV7HXa0hVIyvwISGtDkK1SQc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LptoG8PfSHNJ8wFAS5NgI/N16dIkgb88/xuZ/yJOkueMEFS/AxQSHmUIQaiDTa+djRkdP13gYbYK1dKpaNrbaRCOtSa42TUyIQqWWqG/goUOOhpoLj/ucL4F4cZFouP0/gkZ5GGLHV1NKDWRxgE4yBE4dLPJnWWI4wLn2FT6LzQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=F1Tc/XVR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=fSDUOwbftk5kk8jVA5yu+RWa4x0hjRZJruLyvwQefz1dJZ4hWtcFqLEQ6P42y/N9L+g9JfIf8d4E6ZiWrV+hdeB/k9LX7xxxWB4b9DKiHRiwJWl+e2vOW9eWs0seS3taHxv6ujDFKhglWd0NwZVkV0J9x2sE9PVbyGNxnMIsxZo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=lmp934x2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="F1Tc/XVR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A560C19421;
-	Wed, 11 Feb 2026 12:32:10 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="lmp934x2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B7E01C19421;
+	Wed, 11 Feb 2026 12:32:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1770813131;
-	bh=66de8YGfHD0DZc6gZxZ3nQPSQUgvW59BQ1RTSGfyPsU=;
+	s=k20201202; t=1770813133;
+	bh=idBWF2zb6XEB59Tr2/abV7HXa0hVIyvwISGtDkK1SQc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=F1Tc/XVRNxat8unKrmb6Zln8Iaa45jflrBT2T02jMuJPqNwvhyCFS2OMp7lkb56ZC
-	 jm/UF7vKepo8y4KU2ucTpX0vWMKOiVrNIOXCIcoTD+met0QmafDkcitYQuTBrzmc3K
-	 iEJu1LypLsZBShnITL0gv8hcbHs+hfYnDMEmMb6AvvqUq38kTfh4ursoXb1+MPY1gu
-	 TEnysOtSKiiJN6LDVKGS6GZsZ9QWcuq8553wdA+u+d4XWjs54/EwXiQ8cn4jocc8e0
-	 GhjJbf+4+Fa8NzQemF3kCCO6EVupR1Mr6IcBYRTBaG2VvRZ6zLAREKnxJagVBheqHZ
-	 r8JUgN1M2qRHg==
+	b=lmp934x250kmRIkrZLWGQ94CTj5tm/yJu5BobSGVlEcx4ZG0/f2LEPv84wO1jZptU
+	 fAV+qgsQ/XtlU3ciNc4EuueBZEQdeMGLNfO6LsL2gJoYUnYVHN/hatFWmn35vrbaqh
+	 RQIPc8oYL4iCxN5/zQ4wjI+jciOTQvMPSyGQCvXLcoRP4OGkKprWBktW+n1qjkN92k
+	 QFO9ka9eRmYhHTOrDeTdKuePnta5Oz5KmK294egyYStAXwNbPed/Tx1X8iE6ICIsJj
+	 wywx44K1yANl1a8+BLXC3P1DiG1qUE0jZD2lcoe+IDl+6W4VofPX7vLIGb4oobSxnr
+	 EdxZ0cFhH/4vQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Carl Worth <carl@os.amperecomputing.com>,
-	Taehyun Noh <taehyun@utexas.edu>,
-	Catalin Marinas <catalin.marinas@arm.com>,
-	Will Deacon <will@kernel.org>,
+Cc: Kaushlendra Kumar <kaushlendra.kumar@intel.com>,
+	Shuah Khan <skhan@linuxfoundation.org>,
 	Sasha Levin <sashal@kernel.org>,
-	anshuman.khandual@arm.com,
-	ryan.roberts@arm.com,
-	kevin.brodsky@arm.com,
-	yeoreum.yun@arm.com
-Subject: [PATCH AUTOSEL 6.19] arm64: mte: Set TCMA1 whenever MTE is present in the kernel
-Date: Wed, 11 Feb 2026 07:30:37 -0500
-Message-ID: <20260211123112.1330287-27-sashal@kernel.org>
+	fj5851bi@fujitsu.com
+Subject: [PATCH AUTOSEL 6.19-6.18] tools/cpupower: Fix inverted APERF capability check
+Date: Wed, 11 Feb 2026 07:30:38 -0500
+Message-ID: <20260211123112.1330287-28-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260211123112.1330287-1-sashal@kernel.org>
 References: <20260211123112.1330287-1-sashal@kernel.org>
@@ -53,238 +48,180 @@ MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.19
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Carl Worth <carl@os.amperecomputing.com>
+From: Kaushlendra Kumar <kaushlendra.kumar@intel.com>
 
-[ Upstream commit a4e5927115f30a301f9939ed43e6a21a343e06ad ]
+[ Upstream commit 24858a84163c8d04827166b3bcaed80612bb62fc ]
 
-Set the TCMA1 bit so that access to TTBR1 addresses with 0xf in their
-tag bits will be treated as tag unchecked.
+The capability check was inverted, causing the function to return
+error when APERF support is available and proceed when it is not.
 
-This is important to avoid unwanted tag checking on some
-systems. Specifically, SCTLR_EL1.TCF can be set to indicate that no
-tag check faults are desired. But the architecture doesn't guarantee
-that in this case the system won't still perform tag checks.
+Negate the condition to return error only when APERF capability
+is absent.
 
-Use TCMA1 to ensure that undesired tag checks are not performed. This
-bit was already set in the KASAN case. Adding it to the non-KASAN case
-prevents tag checking since all TTBR1 address will have a value of 0xf
-in their tag bits.
-
-This patch has been measured on an Ampere system to improve the following:
-
-* Eliminate over 98% of kernel-side tag checks during "perf bench
-  futex hash", as measured with "perf stat".
-
-* Eliminate all MTE overhead (was previously a 25% performance
-  penalty) from the Phoronix pts/memcached benchmark (1:10 Set:Get
-  ration with 96 cores).
-
-Reported-by: Taehyun Noh <taehyun@utexas.edu>
-Suggested-by: Catalin Marinas <catalin.marinas@arm.com>
-Signed-off-by: Carl Worth <carl@os.amperecomputing.com>
-Reviewed-by: Catalin Marinas <catalin.marinas@arm.com>
-Signed-off-by: Will Deacon <will@kernel.org>
+Link: https://lore.kernel.org/r/20251126091613.567480-1-kaushlendra.kumar@intel.com
+Signed-off-by: Kaushlendra Kumar <kaushlendra.kumar@intel.com>
+Signed-off-by: Shuah Khan <skhan@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-Good. Now I have a complete understanding. Let me write the full
-analysis.
+Now I have a complete picture. Let me write my analysis.
 
 ---
 
-## Comprehensive Analysis: arm64: mte: Set TCMA1 whenever MTE is present
-in the kernel
+## Detailed Analysis
 
-### 1. COMMIT MESSAGE ANALYSIS
+### 1. Commit Message Analysis
 
-The commit sets the `TCMA1` (Tag Check Match All 1) bit in `TCR_EL1`
-whenever `CONFIG_ARM64_MTE` is enabled, not just when
-`CONFIG_KASAN_HW_TAGS` is enabled.
+The commit message is crystal clear: "The capability check was inverted,
+causing the function to return error when APERF support is available and
+proceed when it is not." This is a straightforward logic inversion bug
+fix.
 
-Key indicators:
-- **"Reported-by: Taehyun Noh"** - real-world issue discovered by a user
-- **"Suggested-by: Catalin Marinas"** - the fix approach comes from the
-  arm64 MTE subsystem maintainer
-- **"Reviewed-by: Catalin Marinas"** - reviewed by the domain expert
-- **Signed-off-by: Will Deacon** - merged by the arm64 maintainer
+### 2. Code Change Analysis
 
-The commit message clearly describes the problem: `SCTLR_EL1.TCF` being
-set to NONE (no faults) does **not** guarantee the hardware won't still
-perform tag checks. TCMA1 is needed to definitively prevent unwanted tag
-checking for kernel addresses.
+The change is a **single-character fix** — adding `!` to negate a
+condition:
 
-### 2. CODE CHANGE ANALYSIS
-
-The change is in `arch/arm64/mm/proc.S`:
-
-**Before (current stable/mainline):**
-
-```51:61:arch/arm64/mm/proc.S
-#ifdef CONFIG_KASAN_HW_TAGS
-#define TCR_MTE_FLAGS TCR_EL1_TCMA1 | TCR_EL1_TBI1 | TCR_EL1_TBID1
-#elif defined(CONFIG_ARM64_MTE)
-/*
- - The mte_zero_clear_page_tags() implementation uses DC GZVA, which
-   relies on
- - TBI being enabled at EL1.
- */
-#define TCR_MTE_FLAGS TCR_EL1_TBI1 | TCR_EL1_TBID1
-#else
-#define TCR_MTE_FLAGS 0
-#endif
+```273:274:tools/power/cpupower/utils/cpufreq-info.c
+        if (cpupower_cpu_info.caps & CPUPOWER_CAP_APERF)
+                return -EINVAL;
 ```
 
-**After (the fix):**
-- Collapses the three-way `#ifdef` into two-way: `CONFIG_ARM64_MTE` vs.
-  else
-- Adds `TCR_EL1_TCMA1` to the `CONFIG_ARM64_MTE` case (previously only
-  in `CONFIG_KASAN_HW_TAGS`)
-- This is valid because `CONFIG_KASAN_HW_TAGS` implies
-  `CONFIG_ARM64_MTE` (via `HAVE_ARCH_KASAN_HW_TAGS` which `select`s from
-  `ARM64_MTE`)
+becomes:
 
-The behavioral change is a single bit addition: `TCR_EL1_TCMA1` (bit 58
-of `TCR_EL1`).
+```c
+        if (!(cpupower_cpu_info.caps & CPUPOWER_CAP_APERF))
+                return -EINVAL;
+```
 
-### 3. TECHNICAL EXPLANATION
+### 3. Bug Origin and Root Cause
 
-**What TCMA1 does (ARM Architecture Reference Manual):**
-- TCMA1 controls "Tag Check Match All" for TTBR1 (kernel) addresses
-- When set: accesses with tag 0xF (all bits set) in the top byte are
-  treated as "Tag Unchecked"
-- When clear: tag 0xF is treated like any other tag and is checked
-  against the allocation tag
+The bug was introduced by commit `26e16174f54d4` ("cpupower: Don't try
+to read frequency from hardware when kernel uses aperfmperf"), authored
+by Mario Limonciello (AMD) and merged for v6.14-rc1. That commit
+intended to skip hardware frequency reading when APERF/MPERF is in use
+(for amd-pstate), but the condition was written **backwards**.
 
-**Why this matters:**
-- All kernel pointers (TTBR1 addresses) have tag 0xFF (`KASAN_TAG_KERNEL
-  = 0xFF` from `include/linux/kasan-tags.h`), which corresponds to the
-  4-bit MTE tag 0xF
-- Without TCMA1, the hardware may perform tag checks on every kernel
-  memory access, even with `SCTLR_EL1.TCF = NONE` (the architecture
-  doesn't guarantee TCF=NONE prevents checking - it only prevents
-  faults)
-- On Ampere systems, this results in **98% unnecessary kernel-side tag
-  checks** during futex benchmarks and a **25% performance penalty** on
-  memcached
+### 4. Proof That the Condition is Inverted
 
-**Why it was missing:**
-- The original MTE implementation correctly set TCMA1 for
-  `CONFIG_KASAN_HW_TAGS` (because KASAN uses non-0xF tags for tagged
-  allocations, and 0xF means "match all")
-- But for plain `CONFIG_ARM64_MTE` (without KASAN), TCMA1 was omitted,
-  likely because it was assumed TCF=NONE was sufficient to prevent tag
-  checking
+The evidence is overwhelming:
 
-### 4. SCOPE AND RISK ASSESSMENT
+**a) Consistency with all other APERF checks in the same codebase:**
 
-**Scope:**
-- 1 file changed (`arch/arm64/mm/proc.S`)
-- ~5 lines of actual diff (macro definition change)
-- Purely a register configuration change at boot time
+In `nhm_idle.c` line 176:
+```c
+if (!(cpupower_cpu_info.caps & CPUPOWER_CAP_APERF))
+    return NULL;
+```
 
-**Risk: VERY LOW**
-- `TCMA1` was already set in the `CONFIG_KASAN_HW_TAGS` path - this
-  extends it to all MTE configurations
-- The bit is well-defined in the ARM architecture specification
-- It only affects the handling of tag 0xF (match-all tag) on TTBR1
-  addresses
-- Cannot cause any functional regression - it makes the hardware skip
-  checks that were producing no useful results anyway
+In `mperf_monitor.c` line 334:
+```c
+if (!(cpupower_cpu_info.caps & CPUPOWER_CAP_APERF))
+    return NULL;
+```
 
-### 5. USER IMPACT ASSESSMENT
+Both return error when APERF is **absent** (using `!`). The buggy
+`get_freq_hardware()` was the only place doing the opposite — returning
+error when APERF **is present**.
 
-**Who is affected:**
-- `CONFIG_ARM64_MTE` defaults to `y` in `arch/arm64/Kconfig` (line 2124:
-  `default y`)
-- This means virtually **all ARM64 distro kernels** have it enabled
-- Any ARM64 system with MTE-capable hardware (ARMv8.5+: Ampere
-  Altra/AmpereOne, Arm Neoverse V1/V2/N2, Cortex-X2+, etc.)
-- These are widely used in cloud/data center (Ampere), mobile (Cortex),
-  and embedded systems
+**b) Logical analysis of `get_freq_hardware()`:** The function reads
+hardware frequency via `cpufreq_get_freq_hardware()` which reads
+`cpuinfo_cur_freq` from sysfs. APERF/MPERF is the mechanism by which the
+kernel determines actual hardware frequency. When APERF IS available,
+the kernel CAN report accurate hardware frequency — so the function
+SHOULD proceed. When APERF is NOT available, it SHOULD return error.
 
-**Severity:**
-- 25% performance penalty on memcached (a very common server workload)
-- 98% unnecessary tag checks during kernel futex operations
-- This is a **significant performance issue** for production ARM64
-  servers
+**c) Caller context in `debug_output_one()`:**
 
-### 6. STABLE TREE APPLICABILITY
+```516:517:tools/power/cpupower/utils/cpufreq-info.c
+        if (get_freq_hardware(cpu, 1) < 0)
+                get_freq_kernel(cpu, 1);
+```
 
-The affected three-way ifdef structure exists in:
-- **v6.12/v6.6**: Uses `TCR_TCMA1` macro name (trivial rename needed)
-- **v6.1**: Same structure, uses `TCR_TCMA1`
-- **v5.15**: Uses `SYS_TCR_EL1_TCMA1` macro name, slightly different
-  ifdef structure but same issue
-- **v5.10**: Different code structure (MTE was new), would need more
-  adaptation
+With the bug: On ALL modern x86 CPUs (which have APERF),
+`get_freq_hardware()` always returns -EINVAL, so `cpupower frequency-
+info -w` (hardware frequency query) always fails, and debug mode always
+falls back to kernel frequency. The `--hwfreq`/`-w` option is completely
+broken on modern systems.
 
-The fix applies cleanly with minor macro name adjustments to all active
-LTS kernels from 5.15+.
+With the fix: The function correctly reads hardware frequency when APERF
+is available, and returns error (falling back to kernel method) only on
+systems without APERF support.
 
-### 7. CLASSIFICATION
+### 5. Impact Assessment
 
-This fix meets the stable kernel criteria:
+- **Who is affected:** Virtually ALL modern x86 CPU users (Intel and
+  AMD) since they all have APERF/MPERF. The `CPUPOWER_CAP_APERF` is set
+  when `cpuid_ecx(6) & 0x1` (CPUID leaf 6, ECX bit 0 = APERF
+  availability), which has been present in x86 CPUs for well over a
+  decade.
+- **What breaks:** `cpupower frequency-info --hwfreq` (`-w`) always
+  returns error on modern CPUs. The default debug output (`cpupower
+  frequency-info` or `-e`) never shows hardware-asserted frequency and
+  always falls back to kernel frequency.
+- **Severity:** The `cpupower` tool is a userspace utility used for CPU
+  frequency monitoring and tuning. This bug makes a core feature
+  completely non-functional. It's not a kernel crash, but it's a real
+  functional breakage of an important diagnostic tool.
 
-1. **Obviously correct and tested**: Measured on Ampere hardware,
-   reviewed by Catalin Marinas (the MTE architect)
-2. **Small**: ~5 lines in 1 file
-3. **Fixes one thing**: Adds TCMA1 to prevent unwanted tag checking
-4. **Fixes a real bug**: The kernel's intent (no tag checking) was not
-   being realized by the hardware
-5. **Significant performance regression**: Stable rules explicitly allow
-   fixes for "a significant performance regression" - 25% on memcached
-   qualifies
-6. **No new features**: Just correcting a register configuration
+### 6. Scope and Risk
 
-The commit explicitly addresses a case where the kernel's register
-configuration was incomplete, causing the hardware to perform unwanted
-operations (tag checking) that produce no useful result but cause
-significant performance degradation. This is a bug in the kernel's MTE
-initialization, not a new feature or optimization.
+- **Change size:** Minimal — one character (`!` added to a condition).
+  This is about as small and surgical as a fix gets.
+- **Risk of regression:** Essentially zero. The fix aligns the logic
+  with the clearly intended behavior (matching all other APERF checks in
+  the codebase) and restores a feature that was broken.
+- **Files touched:** 1 file, 1 line changed.
+- **Dependencies:** None. The fix is completely self-contained.
 
-**YES** - This commit should be backported to stable kernel trees. It
-fixes a significant performance regression (25% on memcached) affecting
-all ARM64 MTE-capable systems running kernels with `CONFIG_ARM64_MTE=y`
-(the default). The fix is tiny (adding one bit to a register), extremely
-low risk (the same bit was already set in the KASAN path), reviewed by
-the MTE subsystem expert, and the stable rules explicitly permit fixes
-for significant performance regressions. The affected code exists in all
-current LTS kernels (5.15+) with only trivial macro name adjustments
-needed for backporting.
+### 7. Applicability to Stable Trees
+
+The buggy commit `26e16174f54d4` was merged for v6.14. It exists in the
+v6.14 and later kernel releases. Therefore the fix is applicable to:
+- 6.14.y (if still maintained)
+- 6.15.y, 6.16.y, 6.17.y, 6.18.y, 6.19.y
+
+The fix applies cleanly since no other code changes have touched this
+specific condition.
+
+### 8. Stable Kernel Criteria Assessment
+
+1. **Obviously correct and tested:** Yes — the fix is trivially
+   verifiable by comparing with the two other APERF checks in the same
+   codebase and by logical analysis. It was submitted by Intel and
+   accepted by the maintainer.
+2. **Fixes a real bug:** Yes — inverted capability check that completely
+   breaks the `--hwfreq` feature on modern CPUs.
+3. **Important issue:** Yes — a core function of the `cpupower` tool is
+   broken on nearly all modern x86 hardware.
+4. **Small and contained:** Yes — single character change in one file.
+5. **No new features:** Correct — this is purely a bug fix restoring
+   intended behavior.
+6. **Applies cleanly:** Yes — the buggy code exists unchanged in stable.
 
 **YES**
 
- arch/arm64/mm/proc.S | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ tools/power/cpupower/utils/cpufreq-info.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/arm64/mm/proc.S b/arch/arm64/mm/proc.S
-index 5d907ce3b6d3f..22866b49be372 100644
---- a/arch/arm64/mm/proc.S
-+++ b/arch/arm64/mm/proc.S
-@@ -48,14 +48,14 @@
- #define TCR_KASAN_SW_FLAGS 0
- #endif
+diff --git a/tools/power/cpupower/utils/cpufreq-info.c b/tools/power/cpupower/utils/cpufreq-info.c
+index 7d3732f5f2f6f..5fe01e516817e 100644
+--- a/tools/power/cpupower/utils/cpufreq-info.c
++++ b/tools/power/cpupower/utils/cpufreq-info.c
+@@ -270,7 +270,7 @@ static int get_freq_hardware(unsigned int cpu, unsigned int human)
+ {
+ 	unsigned long freq;
  
--#ifdef CONFIG_KASAN_HW_TAGS
--#define TCR_MTE_FLAGS TCR_EL1_TCMA1 | TCR_EL1_TBI1 | TCR_EL1_TBID1
--#elif defined(CONFIG_ARM64_MTE)
-+#ifdef CONFIG_ARM64_MTE
- /*
-  * The mte_zero_clear_page_tags() implementation uses DC GZVA, which relies on
-- * TBI being enabled at EL1.
-+ * TBI being enabled at EL1.  TCMA1 is needed to treat accesses with the
-+ * match-all tag (0xF) as Tag Unchecked, irrespective of the SCTLR_EL1.TCF
-+ * setting.
-  */
--#define TCR_MTE_FLAGS TCR_EL1_TBI1 | TCR_EL1_TBID1
-+#define TCR_MTE_FLAGS TCR_EL1_TCMA1 | TCR_EL1_TBI1 | TCR_EL1_TBID1
- #else
- #define TCR_MTE_FLAGS 0
- #endif
+-	if (cpupower_cpu_info.caps & CPUPOWER_CAP_APERF)
++	if (!(cpupower_cpu_info.caps & CPUPOWER_CAP_APERF))
+ 		return -EINVAL;
+ 
+ 	freq = cpufreq_get_freq_hardware(cpu);
 -- 
 2.51.0
 
