@@ -1,46 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E97FF2AD35;
-	Wed, 11 Feb 2026 12:31:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE7201C01;
+	Wed, 11 Feb 2026 12:31:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770813078; cv=none; b=Cu+swiHsiuxYwCfHfwimblztsfAlWmQwRtaDBQ1ziLgAacK8b/8B0iIHwQ5Ms5hWkE8+av6iowDtLitP+1HmmNPPbMWwAhTe2iN1MtfRsbPlM2l1zoFtrrJ9q61Ukv8QFxGfR3JTCxDGGk/1EaByr7T6Tae8v5uLw9/pYt0lf9g=
+	t=1770813079; cv=none; b=M8Yfk8GqXlv7XlEFvtvo1LAnvBcjouWBXQb2V6lMGcFcMomvJxX5ZsLDOgdUE4m3fADkl17aTFr3chMaJ/oGqllLR6x9Ts9jfADQM+0ASHq0bEWQkyu+d5tqaGod+6HqmVmjRnDv0RoohTm6SOKJxqL1RXJWtKV1PUdCiYaCeg8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770813078; c=relaxed/simple;
-	bh=PYy+vo3DcZ0NMq3ITwLdNWEhlm5HuivMSn6EHYGd65s=;
+	s=arc-20240116; t=1770813079; c=relaxed/simple;
+	bh=l0V/FCET+0rvVQKB3/QX35+eDmPdeP5Awk2zBwIw7b0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=S2O64/8Ay5ptZXGbBncZmAkbPZ3hSKMvIGwc3KPfCv8V9RUFXlOqZwz24Wr2E6Y24h9HWxOJXAKbaQrE0q4AfKPivpIUkKsoL7w8+2hgN4NE0LnCzQpLoRB22bRdwF1ZRZkMdy6B83GnC8zbiIAE9GA6oQCUor+S+U+GPxtSXAQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=p3p9KokZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=UeeukuCnZgMVTSARjNFydmdxTw3h2J4e3nsJG/+S31XLiHmZxM036Gs0syMnbi3nbfleK9izIPwyq3mFoINHvnoxp0yxWkNy2IMF090S610wOuF9+U+t2DsP0ODZ1OQknBvoTXaSSsNMPoPcuZERuactfOXkRaJSlQq8PranIBI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=YhHp5q/K; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="p3p9KokZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 69998C19421;
-	Wed, 11 Feb 2026 12:31:16 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="YhHp5q/K"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F35E5C4CEF7;
+	Wed, 11 Feb 2026 12:31:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1770813077;
-	bh=PYy+vo3DcZ0NMq3ITwLdNWEhlm5HuivMSn6EHYGd65s=;
+	s=k20201202; t=1770813079;
+	bh=l0V/FCET+0rvVQKB3/QX35+eDmPdeP5Awk2zBwIw7b0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=p3p9KokZn2I/yFg/PfoUkbSqiW9rPOdRDL5TGff0k0vQNfus1OgpySB8XwycLTn7Q
-	 fs4ZliN8AhhEie0Y/eHXi3N4gFHUYXmoFUzDaEtVJFjUpZV50PJHWb9CbPJifL6752
-	 6a9HWDIfbrsD9EYaor2ogpLCqxg0zgbVF5H+4RVymJpfLoxCRWRIRxFquJb2GmOi4o
-	 41NCJKOZf0Bg36e1Io8BK+Sa8KXqosf5b2BummRnEMAeCItTxgfEWVutbqMx02Ajl1
-	 LRtFmAObVcfczeVzYREze6uPBoFvEhTO1YWiKJfdmXDGq0zzOiJCZXHlUjucK+jRLa
-	 TKc6Bqyc7ESew==
+	b=YhHp5q/KWykIJXEJaPG9fGFep8L7S2un/8Rgym8Q/T2LAknzOK1EjeaofLiVfA9Ra
+	 8xeocTlfEiJByjdQfpO1LDAnajXYryAY2nPUwPrhqWV43vz54fj0wFcd5kWNp+80q3
+	 YXWv7kldz/FZoTUU4vbsmqs2QNzJhQtSllc9lWu1Q7f/NY60/Fc82CQ09OqsSLvjp9
+	 t7gweeWh8ldblN63Qv1X0grMl0WmhUEBCs6U7cpqVLxwuCl/3baW30/aB5Ffmxl0cD
+	 EfJkexy44jP7yzNZhS4Ln9IxC83nf5EhZcWug6DYVvQ7PYVSyaoAXOxf8254GPuV5L
+	 3z9kukYuIFrhw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Jinqian Yang <yangjinqian1@huawei.com>,
-	Zenghui Yu <zenghui.yu@linux.dev>,
-	Will Deacon <will@kernel.org>,
+Cc: Jason Andryuk <jason.andryuk@amd.com>,
+	Juergen Gross <jgross@suse.com>,
 	Sasha Levin <sashal@kernel.org>,
-	catalin.marinas@arm.com,
-	james.morse@arm.com,
-	dianders@chromium.org,
-	shechenglong@xfusion.com,
-	skolothumtho@nvidia.com
-Subject: [PATCH AUTOSEL 6.19-5.10] arm64: Add support for TSV110 Spectre-BHB mitigation
-Date: Wed, 11 Feb 2026 07:30:12 -0500
-Message-ID: <20260211123112.1330287-2-sashal@kernel.org>
+	arnd@arndb.de
+Subject: [PATCH AUTOSEL 6.19-5.10] xenbus: Use .freeze/.thaw to handle xenbus devices
+Date: Wed, 11 Feb 2026 07:30:13 -0500
+Message-ID: <20260211123112.1330287-3-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260211123112.1330287-1-sashal@kernel.org>
 References: <20260211123112.1330287-1-sashal@kernel.org>
@@ -56,192 +51,210 @@ X-stable-base: Linux 6.19
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jinqian Yang <yangjinqian1@huawei.com>
+From: Jason Andryuk <jason.andryuk@amd.com>
 
-[ Upstream commit e3baa5d4b361276efeb87b20d8beced451a7dbd5 ]
+[ Upstream commit e08dd1ee49838750a514e83c0aa60cd12ba6ecbb ]
 
-The TSV110 processor is vulnerable to the Spectre-BHB (Branch History
-Buffer) attack, which can be exploited to leak information through
-branch prediction side channels. This commit adds the MIDR of TSV110
-to the list for software mitigation.
+The goal is to fix s2idle and S3 for Xen PV devices.  A domain resuming
+from s3 or s2idle disconnects its PV devices during resume.  The
+backends are not expecting this and do not reconnect.
 
-Signed-off-by: Jinqian Yang <yangjinqian1@huawei.com>
-Reviewed-by: Zenghui Yu <zenghui.yu@linux.dev>
-Signed-off-by: Will Deacon <will@kernel.org>
+b3e96c0c7562 ("xen: use freeze/restore/thaw PM events for suspend/
+resume/chkpt") changed xen_suspend()/do_suspend() from
+PMSG_SUSPEND/PMSG_RESUME to PMSG_FREEZE/PMSG_THAW/PMSG_RESTORE, but the
+suspend/resume callbacks remained.
+
+.freeze/restore are used with hiberation where Linux restarts in a new
+place in the future.  .suspend/resume are useful for runtime power
+management for the duration of a boot.
+
+The current behavior of the callbacks works for an xl save/restore or
+live migration where the domain is restored/migrated to a new location
+and connecting to a not-already-connected backend.
+
+Change xenbus_pm_ops to use .freeze/thaw/restore and drop the
+.suspend/resume hook.  This matches the use in drivers/xen/manage.c for
+save/restore and live migration.  With .suspend/resume empty, PV devices
+are left connected during s2idle and s3, so PV devices are not changed
+and work after resume.
+
+Signed-off-by: Jason Andryuk <jason.andryuk@amd.com>
+Acked-by: Juergen Gross <jgross@suse.com>
+Signed-off-by: Juergen Gross <jgross@suse.com>
+Message-ID: <20251119224731.61497-2-jason.andryuk@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-I now have all the information needed for a thorough analysis. Here is
-my complete assessment.
+Now I have a thorough understanding. Let me summarize my complete
+analysis.
 
 ---
 
-## Comprehensive Analysis: arm64: Add support for TSV110 Spectre-BHB
-mitigation
+## Complete Analysis
 
-### 1. COMMIT MESSAGE ANALYSIS
+### 1. Commit Message Analysis
 
-The commit explicitly states that the HiSilicon TSV110 processor is
-vulnerable to Spectre-BHB (Branch History Buffer) attacks. It adds the
-TSV110 MIDR to the software mitigation loop list with k=32 iterations.
-This is a **security vulnerability fix** — Spectre-BHB is a well-known
-speculative execution side-channel attack (related to CVE-2022-23960).
+The commit explicitly states its goal: **fix s2idle and S3 for Xen PV
+devices**. The problem is clearly described: when a Xen domain resumes
+from S3 or s2idle, PV devices are disconnected and the backends refuse
+to reconnect, leaving them broken.
 
-The commit follows the exact same pattern as `e18c09b204e81` ("arm64:
-Add support for HIP09 Spectre-BHB mitigation") by the same author
-(Jinqian Yang from Huawei), reviewed by Zenghui Yu and signed off by
-Will Deacon (the arm64 maintainer). The authorship chain is highly
-credible.
+The commit references the 2011 commit `b3e96c0c7562` which changed
+`do_suspend()` in `manage.c` to use
+`PMSG_FREEZE`/`PMSG_THAW`/`PMSG_RESTORE` instead of
+`PMSG_SUSPEND`/`PMSG_RESUME`, but the xenbus frontend PM callbacks were
+never updated to match — they still had `.suspend`/`.resume` populated.
 
-### 2. CODE CHANGE ANALYSIS
+### 2. Code Change Analysis
 
-The change is a **single line addition**:
+The change modifies only the `xenbus_pm_ops` structure in
+`xenbus_probe_frontend.c`:
 
-```c
-MIDR_ALL_VERSIONS(MIDR_HISI_TSV110),
+**Before:**
+```150:156:drivers/xen/xenbus/xenbus_probe_frontend.c
+static const struct dev_pm_ops xenbus_pm_ops = {
+        .suspend        = xenbus_dev_suspend,
+        .resume         = xenbus_frontend_dev_resume,
+        .freeze         = xenbus_dev_suspend,
+        .thaw           = xenbus_dev_cancel,
+        .restore        = xenbus_dev_resume,
+};
 ```
 
-added to the `spectre_bhb_k32_list` array inside
-`spectre_bhb_loop_affected()` in `arch/arm64/kernel/proton-pack.c`.
+**After (proposed):**
+```c
+static const struct dev_pm_ops xenbus_pm_ops = {
+        .freeze         = xenbus_dev_suspend,
+        .thaw           = xenbus_dev_cancel,
+        .restore        = xenbus_frontend_dev_resume,
+};
+```
 
-**What this does in detail:**
+Three changes:
+1. **Remove `.suspend = xenbus_dev_suspend`**: During S3/s2idle, the PM
+   core dispatches `PM_EVENT_SUSPEND` to `.suspend`. By removing it, PV
+   devices are no longer disconnected during S3/s2idle.
+2. **Remove `.resume = xenbus_frontend_dev_resume`**: No reconnection
+   attempt during S3/s2idle resume (nothing was disconnected, so nothing
+   needs reconnecting).
+3. **Change `.restore` from `xenbus_dev_resume` to
+   `xenbus_frontend_dev_resume`**: This fixes a second bug -
+   `xenbus_frontend_dev_resume` properly handles the case where
+   xenstored runs locally (`XS_LOCAL`) by deferring the resume via a
+   work queue. The old `xenbus_dev_resume` would hang in that case
+   during restore.
 
-Without this patch, the TSV110 CPU goes through this logic:
+### 3. PM Dispatch Verification
 
-1. `is_spectre_bhb_affected()` is called (line 972-992):
-   - `supports_csv2p3()` → false (TSV110 doesn't support CSV2P3)
-   - `is_spectre_bhb_safe()` → false (TSV110 is NOT in
-     `spectre_bhb_safe_list` at lines 840-851)
-   - Returns **true** — TSV110 IS considered BHB-affected
-   - BUT `spectre_bhb_loop_affected()` returns **k=0** (TSV110 is not in
-     any k-list)
+The PM core's `pm_op()` function in `drivers/base/power/main.c` confirms
+the dispatch logic:
+- `PM_EVENT_SUSPEND` → `.suspend` (used for real S3/s2idle)
+- `PM_EVENT_FREEZE` → `.freeze` (used by Xen save/restore via
+  `do_suspend()`)
+- `PM_EVENT_THAW` → `.thaw` (Xen cancelled restore)
+- `PM_EVENT_RESTORE` → `.restore` (Xen successful restore)
 
-2. `spectre_bhb_enable_mitigation()` is called (line 1024-1090):
-   - `is_spectre_bhb_affected()` returns true → doesn't bail out
-   - TSV110 is in `spectre_v2_safe_list` (line 157), so v2 state is
-     UNAFFECTED, not VULNERABLE → continues past line 1033
-   - `supports_ecbhb()` → likely false
-   - `supports_clearbhb()` → likely false
-   - **Line 1051: `spectre_bhb_loop_affected()` returns 0 (falsy) → loop
-     mitigation NOT applied**
-   - Falls through to `has_spectre_bhb_fw_mitigation()` → depends on
-     firmware
-   - If firmware doesn't support ARCH_WORKAROUND_3: **state remains
-     `SPECTRE_VULNERABLE`**
+The Xen save/restore/migration path in `drivers/xen/manage.c`
+exclusively uses `PMSG_FREEZE`/`PMSG_THAW`/`PMSG_RESTORE`:
 
-**Result without patch:** TSV110 is recognized as BHB-vulnerable but
-receives NO software mitigation (k=0 means the loop mitigation can't
-activate). The system reports `Vulnerable` in
-`/sys/devices/system/cpu/vulnerabilities/spectre_v2`.
+```117:117:drivers/xen/manage.c
+        err = dpm_suspend_start(PMSG_FREEZE);
+```
 
-**With this patch:** `spectre_bhb_loop_affected()` returns k=32, the
-loop mitigation at line 1051 activates, `EL1_VECTOR_BHB_LOOP` vectors
-are installed, and the system reports `Mitigated`.
+```147:147:drivers/xen/manage.c
+        dpm_resume_start(si.cancelled ? PMSG_THAW : PMSG_RESTORE);
+```
 
-### 3. SECURITY IMPACT
+This confirms: Xen save/restore uses `.freeze`/`.thaw`/`.restore`, NOT
+`.suspend`/`.resume`. The removal of `.suspend`/`.resume` does not
+affect Xen save/restore at all.
 
-- **Spectre-BHB (CVE-2022-23960)** is a serious speculative execution
-  vulnerability that allows information leakage through branch
-  prediction side channels
-- The TSV110 (Taishan v110) is the CPU core used in **HiSilicon Kunpeng
-  920** server SoCs, which are widely deployed in data centers,
-  especially in China
-- Without this fix, these servers are **left unmitigated** against a
-  known speculative execution attack
-- The vulnerability is exploitable from userspace to leak kernel memory
+### 4. Bug Mechanism
 
-### 4. DEPENDENCY ANALYSIS
+The bug is a **functional regression** dating back to the original 2011
+commit `b3e96c0c7562`:
+- `do_suspend()` was changed to use `PMSG_FREEZE`
+- But `xenbus_pm_ops` kept `.suspend`/`.resume` populated
+- When S3/s2idle is used (which triggers `PMSG_SUSPEND`→`.suspend`),
+  `xenbus_dev_suspend` is called, which disconnects PV devices
+- On resume, `xenbus_frontend_dev_resume` tries to reconnect, but the
+  backend doesn't expect the disconnect and refuses to reconnect
+- **Result: PV devices are broken after S3/s2idle**
 
-The commit depends on the refactored code structure from commit
-`e403e8538359d` ("arm64: errata: Assume that unknown CPUs _are_
-vulnerable to Spectre BHB"), which:
-- Has `Cc: stable@vger.kernel.org` and `Fixes: 558c303c9734`
-- Is explicitly tagged for stable backporting
-- Was followed by `0c9fc6e652cd5` (KRYO safe list), `a5951389e58d2`
-  (newer ARM cores), and `fee4d171451c1` (missing sentinels fix) — all
-  tagged for stable
+### 5. Self-Containedness
 
-The `MIDR_HISI_TSV110` macro was introduced in v5.1-rc2 (commit
-`efd00c722ca85`, March 2019) and is present in **all active stable
-trees** (5.4+, 5.10+, 5.15+, 6.1+, 6.6+, 6.12+).
+Despite the Message-ID suggesting patch 2 of a series (`-2-`), this
+commit is entirely self-contained:
+- It modifies only one data structure
+- All referenced functions already exist in the codebase
+- No new code is introduced
+- It does not depend on other patches
 
-The only dependency is that the `spectre_bhb_loop_affected()` function
-needs to be in its refactored form (from `e403e8538359d`), which is
-already bound for stable. If that dependency is present, this one-liner
-applies cleanly.
+### 6. Risk Assessment
 
-### 5. SCOPE AND RISK ASSESSMENT
+**Very low risk:**
+- The change removes behavior (empties `.suspend`/`.resume`), which is
+  strictly less likely to cause regression than adding behavior
+- During S3/s2idle, devices simply stay connected — the safest possible
+  behavior
+- The `.restore` change to `xenbus_frontend_dev_resume` is strictly an
+  improvement (adds XS_LOCAL handling that was already done for
+  `.resume`)
+- Change is only 3 lines in one structure
+- Acked by Xen subsystem maintainer (Juergen Gross)
+- Also signed off by Juergen Gross as the committer
 
-- **Size:** 1 line addition — the absolute minimum change possible
-- **Risk:** Essentially zero. Adding a MIDR to an existing static array
-  cannot break any other CPU. The MIDR matching is exact — only TSV110
-  cores will match
-- **Files touched:** 1 file (`arch/arm64/kernel/proton-pack.c`)
-- **Pattern:** Identical to `e18c09b204e81` (HIP09 BHB, same author) and
-  `a5951389e58d2` (newer ARM cores) — both already in the stable
-  pipeline
+### 7. Impact
 
-### 6. USER IMPACT
+- **Who is affected**: All Xen PV guests attempting S3/s2idle
+- **Severity**: HIGH - PV devices completely break after resume, meaning
+  network and block devices stop working
+- **User visibility**: Very visible - domain becomes unusable after
+  suspend/resume
 
-- **Affected users:** Anyone running Linux on HiSilicon Kunpeng 920
-  servers (Taishan v110 cores)
-- **Severity:** High — speculative execution vulnerabilities allow
-  kernel memory leaks from unprivileged userspace
-- **Real-world deployment:** Kunpeng 920 is deployed in production data
-  centers and cloud environments
-- **Without fix:** Systems report `Vulnerable` for Spectre-v2/BHB and
-  have no software mitigation
+### 8. Stable Tree Applicability
 
-### 7. STABILITY INDICATORS
+- The affected code (`xenbus_pm_ops` structure) has been stable since
+  2011/2013
+- All referenced functions exist in all maintained stable trees
+- The patch applies cleanly (trivial change to a stable structure)
+- This fixes a longstanding functional bug affecting real use cases
 
-- **Reviewed-by:** Zenghui Yu (active arm64 reviewer)
-- **Signed-off-by:** Will Deacon (arm64 co-maintainer)
-- **Same pattern as HIP09 commit** that was already accepted
-- The TSV110 MIDR has been in the kernel since 2019 — extremely well-
-  known hardware
-- The k=32 value is consistent with other ARMv8.2 era cores in the same
-  list (A78, X1, Neoverse V1)
+### 9. Classification
 
-### 8. CLASSIFICATION
-
-This commit is categorized as a **hardware-specific security mitigation
-addition** — analogous to adding a device ID to an existing driver. The
-Spectre-BHB mitigation framework already exists; this simply adds one
-more CPU to the list of CPUs that need it. This falls squarely into the
-"hardware quirks/workarounds for broken devices" exception category for
-stable trees.
-
-### Summary
-
-This is a one-line security fix that adds the HiSilicon TSV110 (Kunpeng
-920) processor to the Spectre-BHB software mitigation list with k=32.
-Without it, TSV110 systems are left vulnerable to a known speculative
-execution attack (CVE-2022-23960). The change is trivially correct
-(adding one MIDR entry to a static array), has zero risk of regression
-for any other CPU, follows an established pattern (identical to HIP09),
-and was reviewed by the arm64 maintainer. It depends on the
-`e403e8538359d` refactoring already tagged for stable. The affected
-hardware (Kunpeng 920) is deployed in real production environments.
+This is a **bug fix** for broken S3/s2idle on Xen PV domains, with an
+additional fix for potential hang during restore with local xenstored.
+It meets all stable criteria:
+- Obviously correct and well-reviewed (Acked-by subsystem maintainer)
+- Fixes a real, user-facing bug (broken PV devices)
+- Important issue (complete loss of PV device functionality)
+- Very small and contained (3 lines in one structure)
+- No new features or APIs
 
 **YES**
 
- arch/arm64/kernel/proton-pack.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/xen/xenbus/xenbus_probe_frontend.c | 4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
-diff --git a/arch/arm64/kernel/proton-pack.c b/arch/arm64/kernel/proton-pack.c
-index 80a580e019c50..b3801f532b10b 100644
---- a/arch/arm64/kernel/proton-pack.c
-+++ b/arch/arm64/kernel/proton-pack.c
-@@ -887,6 +887,7 @@ static u8 spectre_bhb_loop_affected(void)
- 		MIDR_ALL_VERSIONS(MIDR_CORTEX_X2),
- 		MIDR_ALL_VERSIONS(MIDR_NEOVERSE_N2),
- 		MIDR_ALL_VERSIONS(MIDR_NEOVERSE_V1),
-+		MIDR_ALL_VERSIONS(MIDR_HISI_TSV110),
- 		{},
- 	};
- 	static const struct midr_range spectre_bhb_k24_list[] = {
+diff --git a/drivers/xen/xenbus/xenbus_probe_frontend.c b/drivers/xen/xenbus/xenbus_probe_frontend.c
+index 6d1819269cbe5..199917b6f77ca 100644
+--- a/drivers/xen/xenbus/xenbus_probe_frontend.c
++++ b/drivers/xen/xenbus/xenbus_probe_frontend.c
+@@ -148,11 +148,9 @@ static void xenbus_frontend_dev_shutdown(struct device *_dev)
+ }
+ 
+ static const struct dev_pm_ops xenbus_pm_ops = {
+-	.suspend	= xenbus_dev_suspend,
+-	.resume		= xenbus_frontend_dev_resume,
+ 	.freeze		= xenbus_dev_suspend,
+ 	.thaw		= xenbus_dev_cancel,
+-	.restore	= xenbus_dev_resume,
++	.restore	= xenbus_frontend_dev_resume,
+ };
+ 
+ static struct xen_bus_type xenbus_frontend = {
 -- 
 2.51.0
 
