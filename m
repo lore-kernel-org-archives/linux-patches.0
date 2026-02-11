@@ -1,44 +1,46 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3489E194AD7;
-	Wed, 11 Feb 2026 12:32:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8DFEF194AD7;
+	Wed, 11 Feb 2026 12:32:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770813129; cv=none; b=sQ7iTEONIU7i4Z2EtgjeJlcuKFM9odrdxAv29PDgIiqgsfraCg/7Ial8753vimXNwwMj3ln9qM6ECTmfn+1H1f9RMt9XDlx0GmTG8UwyJn7R0cnngxJhYeCC+ACuI2DUEOmZNWDCoIHSdQn45fKVV60O74LUTF2Zi9d7SXFG6e0=
+	t=1770813131; cv=none; b=ReEOnS+6AQsFLMiA/K5bpTv8n7E/0OjcZOdRPLRU0lU+6xdQfiiyJ02Y9S/CDeVFcYqNZrECh1ycmITGj/OeOBXRWvmEYlx2g210XGC2HZnaXrf1EkjY3+neVhPh55i5cNN4rGawghec8YTmjT/8hUM1BgKi2xcl+Tt8eMqnx9E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770813129; c=relaxed/simple;
-	bh=Uk510mEDj+GY7I1ongoJg5xxsKqWMBWmEKzcmdm94jw=;
+	s=arc-20240116; t=1770813131; c=relaxed/simple;
+	bh=66de8YGfHD0DZc6gZxZ3nQPSQUgvW59BQ1RTSGfyPsU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bJhAIGwFw+yiwkn1azrXBMMg8ch2l0buaVvJrQQf2nxNSM7KFXtHcv84WFGW69Uc6cFIrEtkFrlWKQTF/fWPgutxRvHhXVTIxGCTDNinpRYH4moBBg/Lj3/zu8F0nB8wKBobnGNs1RteTKATBzyCT3R1bRNsbHLNUv4XipCKIls=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=mDP6A3Z2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LptoG8PfSHNJ8wFAS5NgI/N16dIkgb88/xuZ/yJOkueMEFS/AxQSHmUIQaiDTa+djRkdP13gYbYK1dKpaNrbaRCOtSa42TUyIQqWWqG/goUOOhpoLj/ucL4F4cZFouP0/gkZ5GGLHV1NKDWRxgE4yBE4dLPJnWWI4wLn2FT6LzQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=F1Tc/XVR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="mDP6A3Z2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B9D4C4CEF7;
-	Wed, 11 Feb 2026 12:32:08 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="F1Tc/XVR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A560C19421;
+	Wed, 11 Feb 2026 12:32:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1770813129;
-	bh=Uk510mEDj+GY7I1ongoJg5xxsKqWMBWmEKzcmdm94jw=;
+	s=k20201202; t=1770813131;
+	bh=66de8YGfHD0DZc6gZxZ3nQPSQUgvW59BQ1RTSGfyPsU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mDP6A3Z2mv5M0jIyxTPUE+gRyWZnPq6Oz0YjBMd/obiYqwztnSSAO0E23QyEzaHtR
-	 dQBEl9Ru+s+GOUZmSVs8CizLYmN4N9FMCLWWap5VDP112DK+G3BYkwusN1Vf61HntI
-	 UmkFD14BPlFaqWv8jnhR9xai4f9Xj5W5Vh1gESsf2PphJsGOUqaWrLoQVImNE9yKyc
-	 Qp5JBahZB+1o13JmSkJzpNHXG05Kv19mKbGtK8Ei8cIcF9ArhMB9Cwf+B1v7s2ZQiY
-	 1ZrlUA38votD+8p+S5+P4HkmGXIECvkuSJh3+cwa/zAs6wZrTvCDMg/CBLk2eUjDwH
-	 W0rN2s0ML0BxA==
+	b=F1Tc/XVRNxat8unKrmb6Zln8Iaa45jflrBT2T02jMuJPqNwvhyCFS2OMp7lkb56ZC
+	 jm/UF7vKepo8y4KU2ucTpX0vWMKOiVrNIOXCIcoTD+met0QmafDkcitYQuTBrzmc3K
+	 iEJu1LypLsZBShnITL0gv8hcbHs+hfYnDMEmMb6AvvqUq38kTfh4ursoXb1+MPY1gu
+	 TEnysOtSKiiJN6LDVKGS6GZsZ9QWcuq8553wdA+u+d4XWjs54/EwXiQ8cn4jocc8e0
+	 GhjJbf+4+Fa8NzQemF3kCCO6EVupR1Mr6IcBYRTBaG2VvRZ6zLAREKnxJagVBheqHZ
+	 r8JUgN1M2qRHg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Armin Wolf <W_Armin@gmx.de>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+Cc: Carl Worth <carl@os.amperecomputing.com>,
+	Taehyun Noh <taehyun@utexas.edu>,
+	Catalin Marinas <catalin.marinas@arm.com>,
+	Will Deacon <will@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	rafael@kernel.org,
-	robert.moore@intel.com,
-	linux-acpi@vger.kernel.org,
-	acpica-devel@lists.linux.dev
-Subject: [PATCH AUTOSEL 6.19-5.10] ACPICA: Abort AML bytecode execution when executing AML_FATAL_OP
-Date: Wed, 11 Feb 2026 07:30:36 -0500
-Message-ID: <20260211123112.1330287-26-sashal@kernel.org>
+	anshuman.khandual@arm.com,
+	ryan.roberts@arm.com,
+	kevin.brodsky@arm.com,
+	yeoreum.yun@arm.com
+Subject: [PATCH AUTOSEL 6.19] arm64: mte: Set TCMA1 whenever MTE is present in the kernel
+Date: Wed, 11 Feb 2026 07:30:37 -0500
+Message-ID: <20260211123112.1330287-27-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260211123112.1330287-1-sashal@kernel.org>
 References: <20260211123112.1330287-1-sashal@kernel.org>
@@ -53,287 +55,236 @@ X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.19
 Content-Transfer-Encoding: 8bit
 
-From: Armin Wolf <W_Armin@gmx.de>
+From: Carl Worth <carl@os.amperecomputing.com>
 
-[ Upstream commit 026ad376a6a48538b576f3589331daa94daae6f0 ]
+[ Upstream commit a4e5927115f30a301f9939ed43e6a21a343e06ad ]
 
-The ACPI specification states that when executing AML_FATAL_OP,
-the OS should log the fatal error event and shutdown in a timely
-fashion.
+Set the TCMA1 bit so that access to TTBR1 addresses with 0xf in their
+tag bits will be treated as tag unchecked.
 
-Windows complies with this requirement by immediatly entering a
-Bso_d, effectively aborting the execution of the AML bytecode in
-question.
+This is important to avoid unwanted tag checking on some
+systems. Specifically, SCTLR_EL1.TCF can be set to indicate that no
+tag check faults are desired. But the architecture doesn't guarantee
+that in this case the system won't still perform tag checks.
 
-ACPICA however might continue with the AML bytecode execution
-should acpi_os_signal() simply return AE_OK. This will cause issues
-because ACPI BIOS implementations might assume that the Fatal()
-operator does not return.
+Use TCMA1 to ensure that undesired tag checks are not performed. This
+bit was already set in the KASAN case. Adding it to the non-KASAN case
+prevents tag checking since all TTBR1 address will have a value of 0xf
+in their tag bits.
 
-Fix this by aborting the AML bytecode execution in such a case
-by returning AE_ERROR. Also turn struct acpi_signal_fatal_info into a
-local variable because of its small size (12 bytes) and to ensure
-that acpi_os_signal() always receives valid information about the
-fatal ACPI BIOS error.
+This patch has been measured on an Ampere system to improve the following:
 
-Link: https://github.com/acpica/acpica/commit/d516c7758ba6
-Signed-off-by: Armin Wolf <W_Armin@gmx.de>
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Link: https://patch.msgid.link/3325491.5fSG56mABF@rafael.j.wysocki
+* Eliminate over 98% of kernel-side tag checks during "perf bench
+  futex hash", as measured with "perf stat".
+
+* Eliminate all MTE overhead (was previously a 25% performance
+  penalty) from the Phoronix pts/memcached benchmark (1:10 Set:Get
+  ration with 96 cores).
+
+Reported-by: Taehyun Noh <taehyun@utexas.edu>
+Suggested-by: Catalin Marinas <catalin.marinas@arm.com>
+Signed-off-by: Carl Worth <carl@os.amperecomputing.com>
+Reviewed-by: Catalin Marinas <catalin.marinas@arm.com>
+Signed-off-by: Will Deacon <will@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-Now I have all the information needed for a thorough analysis.
+Good. Now I have a complete understanding. Let me write the full
+analysis.
 
 ---
 
-## Complete Analysis
+## Comprehensive Analysis: arm64: mte: Set TCMA1 whenever MTE is present
+in the kernel
 
 ### 1. COMMIT MESSAGE ANALYSIS
 
-The commit addresses a clear specification violation in ACPICA's
-handling of the AML `Fatal()` operator. The ACPI specification states
-that when `AML_FATAL_OP` is executed, the OS should log the fatal error
-and shut down. Windows complies by entering a BSoD (Blue Screen of
-Death), which effectively halts AML execution. However, ACPICA's Linux
-implementation of `acpi_os_signal()` merely prints `"Fatal opcode
-executed\n"` and returns `AE_OK`, after which the AML interpreter
-continues executing subsequent bytecode.
+The commit sets the `TCMA1` (Tag Check Match All 1) bit in `TCR_EL1`
+whenever `CONFIG_ARM64_MTE` is enabled, not just when
+`CONFIG_KASAN_HW_TAGS` is enabled.
 
-The commit author (Armin Wolf) explicitly states that BIOS
-implementations may assume `Fatal()` does not return - this is a
-reasonable assumption based on the spec and Windows behavior. Continuing
-to execute AML code after a Fatal() is a real correctness bug.
+Key indicators:
+- **"Reported-by: Taehyun Noh"** - real-world issue discovered by a user
+- **"Suggested-by: Catalin Marinas"** - the fix approach comes from the
+  arm64 MTE subsystem maintainer
+- **"Reviewed-by: Catalin Marinas"** - reviewed by the domain expert
+- **Signed-off-by: Will Deacon** - merged by the arm64 maintainer
+
+The commit message clearly describes the problem: `SCTLR_EL1.TCF` being
+set to NONE (no faults) does **not** guarantee the hardware won't still
+perform tag checks. TCMA1 is needed to definitively prevent unwanted tag
+checking for kernel addresses.
 
 ### 2. CODE CHANGE ANALYSIS
 
-The change is in a single file `drivers/acpi/acpica/exoparg3.c` and
-touches only the `acpi_ex_opcode_3A_0T_0R` function. The diff has three
-substantive changes:
+The change is in `arch/arm64/mm/proc.S`:
 
-**a) Stack allocation instead of heap allocation (minor fix +
-cleanup):**
+**Before (current stable/mainline):**
 
-Old code:
-
-```51:84:drivers/acpi/acpica/exoparg3.c
-        struct acpi_signal_fatal_info *fatal;
-        // ...
-        fatal = ACPI_ALLOCATE(sizeof(struct acpi_signal_fatal_info));
-        if (fatal) {
-                fatal->type = (u32) operand[0]->integer.value;
-                fatal->code = (u32) operand[1]->integer.value;
-                fatal->argument = (u32) operand[2]->integer.value;
-        }
-        /* Always signal the OS! */
-        status = acpi_os_signal(ACPI_SIGNAL_FATAL, fatal);
+```51:61:arch/arm64/mm/proc.S
+#ifdef CONFIG_KASAN_HW_TAGS
+#define TCR_MTE_FLAGS TCR_EL1_TCMA1 | TCR_EL1_TBI1 | TCR_EL1_TBID1
+#elif defined(CONFIG_ARM64_MTE)
+/*
+ - The mte_zero_clear_page_tags() implementation uses DC GZVA, which
+   relies on
+ - TBI being enabled at EL1.
+ */
+#define TCR_MTE_FLAGS TCR_EL1_TBI1 | TCR_EL1_TBID1
+#else
+#define TCR_MTE_FLAGS 0
+#endif
 ```
 
-The old code had a subtle bug: if `ACPI_ALLOCATE` fails, `fatal` is
-NULL, but the code still calls `acpi_os_signal(ACPI_SIGNAL_FATAL, NULL)`
-because the comment says "Always signal the OS!" The current Linux
-`acpi_os_signal()` doesn't dereference `info` for the FATAL case, so it
-doesn't crash, but it's incorrect. The new code uses a stack variable
-(12 bytes), eliminating both the allocation failure path and the
-unnecessary heap allocation.
+**After (the fix):**
+- Collapses the three-way `#ifdef` into two-way: `CONFIG_ARM64_MTE` vs.
+  else
+- Adds `TCR_EL1_TCMA1` to the `CONFIG_ARM64_MTE` case (previously only
+  in `CONFIG_KASAN_HW_TAGS`)
+- This is valid because `CONFIG_KASAN_HW_TAGS` implies
+  `CONFIG_ARM64_MTE` (via `HAVE_ARCH_KASAN_HW_TAGS` which `select`s from
+  `ARM64_MTE`)
 
-**b) Return AE_ERROR instead of AE_OK (the core fix):**
+The behavioral change is a single bit addition: `TCR_EL1_TCMA1` (bit 58
+of `TCR_EL1`).
 
-Old code: returns whatever `acpi_os_signal()` returns, which is `AE_OK`
-on Linux (confirmed by reading `drivers/acpi/osl.c:1402`). This means
-execution continues.
+### 3. TECHNICAL EXPLANATION
 
-New code: always returns `AE_ERROR` via `return_ACPI_STATUS(AE_ERROR)`.
+**What TCMA1 does (ARM Architecture Reference Manual):**
+- TCMA1 controls "Tag Check Match All" for TTBR1 (kernel) addresses
+- When set: accesses with tag 0xF (all bits set) in the top byte are
+  treated as "Tag Unchecked"
+- When clear: tag 0xF is treated like any other tag and is checked
+  against the allocation tag
 
-When `AE_ERROR` is returned, the dispatch in `acpi_ds_exec_end_op`
-propagates the error to `acpi_ds_method_error()`, which will abort the
-AML method execution. This correctly stops the interpreter from
-executing AML bytecode that the BIOS developer assumed would be
-unreachable.
+**Why this matters:**
+- All kernel pointers (TTBR1 addresses) have tag 0xFF (`KASAN_TAG_KERNEL
+  = 0xFF` from `include/linux/kasan-tags.h`), which corresponds to the
+  4-bit MTE tag 0xF
+- Without TCMA1, the hardware may perform tag checks on every kernel
+  memory access, even with `SCTLR_EL1.TCF = NONE` (the architecture
+  doesn't guarantee TCF=NONE prevents checking - it only prevents
+  faults)
+- On Ampere systems, this results in **98% unnecessary kernel-side tag
+  checks** during futex benchmarks and a **25% performance penalty** on
+  memcached
 
-**c) Better error logging:**
-
-Changed from `ACPI_DEBUG_PRINT` (which only prints at debug level) to
-`ACPI_BIOS_ERROR` (which always prints as a BIOS error). This ensures
-the fatal error is always visible in kernel logs, which is important for
-diagnosing BIOS issues.
-
-**d) Removal of cleanup label (pure cleanup):**
-
-The `cleanup:` label and `status` variable are removed in favor of
-direct returns from each case. This is a mechanical cleanup with no
-behavioral impact.
-
-### 3. BUG MECHANISM AND IMPACT
-
-The bug mechanism is clear: when ACPI BIOS code calls `Fatal()`, the AML
-interpreter on Linux continues executing subsequent bytecode. This is
-dangerous because:
-
-1. **BIOS developers may write code assuming Fatal() never returns**
-   (just like Windows BSoDs). Code after `Fatal()` may be uninitialized,
-   nonsensical, or rely on undefined state. Executing such code could
-   cause:
-   - Writes to arbitrary ACPI registers
-   - Undefined behavior in the AML interpreter
-   - System instability, hangs, or crashes
-
-2. **The Fatal() operator exists to signal critical BIOS errors.**
-   Ignoring this signal and continuing is fundamentally wrong behavior.
-
-3. The Linux `acpi_os_signal()` implementation at
-   `drivers/acpi/osl.c:1382-1403` is a no-op that just prints a message
-   and returns `AE_OK`. This makes the bug always trigger on Linux when
-   Fatal() is encountered.
+**Why it was missing:**
+- The original MTE implementation correctly set TCMA1 for
+  `CONFIG_KASAN_HW_TAGS` (because KASAN uses non-0xF tags for tagged
+  allocations, and 0xF means "match all")
+- But for plain `CONFIG_ARM64_MTE` (without KASAN), TCMA1 was omitted,
+  likely because it was assumed TCF=NONE was sufficient to prevent tag
+  checking
 
 ### 4. SCOPE AND RISK ASSESSMENT
 
-- **Lines changed:** Net reduction of ~11 lines (the diff shows -29/+17
-  in the ACPICA upstream). Very small.
-- **Files touched:** 1 file (`drivers/acpi/acpica/exoparg3.c`)
-- **Complexity:** Very low - straightforward change from `AE_OK` to
-  `AE_ERROR` return, plus stack variable.
-- **Subsystem:** ACPICA - the core ACPI interpreter. This is widely used
-  on all x86 systems and increasingly on ARM.
-- **Regression risk:** Very low. The `Fatal()` operator is extremely
-  rarely used in real-world BIOS code - it's the nuclear option for BIOS
-  developers. The change only affects behavior when a BIOS explicitly
-  invokes `Fatal()`, and in that case, aborting execution is the correct
-  behavior per spec. No correctly written BIOS should rely on code
-  executing after `Fatal()`.
+**Scope:**
+- 1 file changed (`arch/arm64/mm/proc.S`)
+- ~5 lines of actual diff (macro definition change)
+- Purely a register configuration change at boot time
 
-### 5. UPSTREAM PROVENANCE
+**Risk: VERY LOW**
+- `TCMA1` was already set in the `CONFIG_KASAN_HW_TAGS` path - this
+  extends it to all MTE configurations
+- The bit is well-defined in the ARM architecture specification
+- It only affects the handling of tag 0xF (match-all tag) on TTBR1
+  addresses
+- Cannot cause any functional regression - it makes the hardware skip
+  checks that were producing no useful results anyway
 
-The commit originates from the ACPICA project itself (link to
-`github.com/acpica/acpica/commit/d516c7758ba6`) and is signed off by
-Rafael J. Wysocki, the Linux ACPI maintainer. This is a well-reviewed,
-authoritative fix from the component's upstream project.
+### 5. USER IMPACT ASSESSMENT
 
-### 6. DEPENDENCIES
+**Who is affected:**
+- `CONFIG_ARM64_MTE` defaults to `y` in `arch/arm64/Kconfig` (line 2124:
+  `default y`)
+- This means virtually **all ARM64 distro kernels** have it enabled
+- Any ARM64 system with MTE-capable hardware (ARMv8.5+: Ampere
+  Altra/AmpereOne, Arm Neoverse V1/V2/N2, Cortex-X2+, etc.)
+- These are widely used in cloud/data center (Ampere), mobile (Cortex),
+  and embedded systems
 
-The only new include is `#include <acpi/acoutput.h>` for the
-`ACPI_BIOS_ERROR` macro. This header file exists in all stable kernel
-trees (it's a core ACPICA header). The `ACPI_BIOS_ERROR` macro has been
-available since at least Linux 3.x. No other dependencies exist.
+**Severity:**
+- 25% performance penalty on memcached (a very common server workload)
+- 98% unnecessary tag checks during kernel futex operations
+- This is a **significant performance issue** for production ARM64
+  servers
 
-### 7. SUMMARY
+### 6. STABLE TREE APPLICABILITY
 
-| Criterion | Assessment |
-|-----------|------------|
-| Fixes a real bug | Yes - continued execution after Fatal() violates
-ACPI spec |
-| Obviously correct | Yes - returning error to abort after Fatal() is
-clearly correct |
-| Small and contained | Yes - single file, ~20 net line changes |
-| No new features | Correct - pure behavior fix |
-| Risk of regression | Very low - only affects Fatal() path, which is
-very rare |
-| Applies to stable | Yes - the affected code exists unchanged in all
-stable trees |
-| Dependencies | None beyond existing ACPICA headers |
+The affected three-way ifdef structure exists in:
+- **v6.12/v6.6**: Uses `TCR_TCMA1` macro name (trivial rename needed)
+- **v6.1**: Same structure, uses `TCR_TCMA1`
+- **v5.15**: Uses `SYS_TCR_EL1_TCMA1` macro name, slightly different
+  ifdef structure but same issue
+- **v5.10**: Different code structure (MTE was new), would need more
+  adaptation
 
-The fix addresses a real correctness bug that could cause unpredictable
-system behavior when BIOS firmware triggers a Fatal() operator. It's
-small, self-contained, comes from upstream ACPICA, and carries minimal
-regression risk. The secondary fixes (NULL pointer to `acpi_os_signal`,
-better logging) are also valuable.
+The fix applies cleanly with minor macro name adjustments to all active
+LTS kernels from 5.15+.
+
+### 7. CLASSIFICATION
+
+This fix meets the stable kernel criteria:
+
+1. **Obviously correct and tested**: Measured on Ampere hardware,
+   reviewed by Catalin Marinas (the MTE architect)
+2. **Small**: ~5 lines in 1 file
+3. **Fixes one thing**: Adds TCMA1 to prevent unwanted tag checking
+4. **Fixes a real bug**: The kernel's intent (no tag checking) was not
+   being realized by the hardware
+5. **Significant performance regression**: Stable rules explicitly allow
+   fixes for "a significant performance regression" - 25% on memcached
+   qualifies
+6. **No new features**: Just correcting a register configuration
+
+The commit explicitly addresses a case where the kernel's register
+configuration was incomplete, causing the hardware to perform unwanted
+operations (tag checking) that produce no useful result but cause
+significant performance degradation. This is a bug in the kernel's MTE
+initialization, not a new feature or optimization.
+
+**YES** - This commit should be backported to stable kernel trees. It
+fixes a significant performance regression (25% on memcached) affecting
+all ARM64 MTE-capable systems running kernels with `CONFIG_ARM64_MTE=y`
+(the default). The fix is tiny (adding one bit to a register), extremely
+low risk (the same bit was already set in the KASAN path), reviewed by
+the MTE subsystem expert, and the stable rules explicitly permit fixes
+for significant performance regressions. The affected code exists in all
+current LTS kernels (5.15+) with only trivial macro name adjustments
+needed for backporting.
 
 **YES**
 
- drivers/acpi/acpica/exoparg3.c | 46 +++++++++++++---------------------
- 1 file changed, 18 insertions(+), 28 deletions(-)
+ arch/arm64/mm/proc.S | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/acpi/acpica/exoparg3.c b/drivers/acpi/acpica/exoparg3.c
-index bf08110ed6d25..c8c8c4e49563e 100644
---- a/drivers/acpi/acpica/exoparg3.c
-+++ b/drivers/acpi/acpica/exoparg3.c
-@@ -10,6 +10,7 @@
- #include <acpi/acpi.h>
- #include "accommon.h"
- #include "acinterp.h"
-+#include <acpi/acoutput.h>
- #include "acparser.h"
- #include "amlcode.h"
+diff --git a/arch/arm64/mm/proc.S b/arch/arm64/mm/proc.S
+index 5d907ce3b6d3f..22866b49be372 100644
+--- a/arch/arm64/mm/proc.S
++++ b/arch/arm64/mm/proc.S
+@@ -48,14 +48,14 @@
+ #define TCR_KASAN_SW_FLAGS 0
+ #endif
  
-@@ -51,8 +52,7 @@ ACPI_MODULE_NAME("exoparg3")
- acpi_status acpi_ex_opcode_3A_0T_0R(struct acpi_walk_state *walk_state)
- {
- 	union acpi_operand_object **operand = &walk_state->operands[0];
--	struct acpi_signal_fatal_info *fatal;
--	acpi_status status = AE_OK;
-+	struct acpi_signal_fatal_info fatal;
- 
- 	ACPI_FUNCTION_TRACE_STR(ex_opcode_3A_0T_0R,
- 				acpi_ps_get_opcode_name(walk_state->opcode));
-@@ -60,28 +60,23 @@ acpi_status acpi_ex_opcode_3A_0T_0R(struct acpi_walk_state *walk_state)
- 	switch (walk_state->opcode) {
- 	case AML_FATAL_OP:	/* Fatal (fatal_type fatal_code fatal_arg) */
- 
--		ACPI_DEBUG_PRINT((ACPI_DB_INFO,
--				  "FatalOp: Type %X Code %X Arg %X "
--				  "<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<\n",
--				  (u32)operand[0]->integer.value,
--				  (u32)operand[1]->integer.value,
--				  (u32)operand[2]->integer.value));
--
--		fatal = ACPI_ALLOCATE(sizeof(struct acpi_signal_fatal_info));
--		if (fatal) {
--			fatal->type = (u32) operand[0]->integer.value;
--			fatal->code = (u32) operand[1]->integer.value;
--			fatal->argument = (u32) operand[2]->integer.value;
--		}
-+		fatal.type = (u32)operand[0]->integer.value;
-+		fatal.code = (u32)operand[1]->integer.value;
-+		fatal.argument = (u32)operand[2]->integer.value;
- 
--		/* Always signal the OS! */
-+		ACPI_BIOS_ERROR((AE_INFO,
-+				 "Fatal ACPI BIOS error (Type 0x%X Code 0x%X Arg 0x%X)\n",
-+				 fatal.type, fatal.code, fatal.argument));
- 
--		status = acpi_os_signal(ACPI_SIGNAL_FATAL, fatal);
-+		/* Always signal the OS! */
- 
--		/* Might return while OS is shutting down, just continue */
-+		acpi_os_signal(ACPI_SIGNAL_FATAL, &fatal);
- 
--		ACPI_FREE(fatal);
--		goto cleanup;
-+		/*
-+		 * Might return while OS is shutting down, so abort the AML execution
-+		 * by returning an error.
-+		 */
-+		return_ACPI_STATUS(AE_ERROR);
- 
- 	case AML_EXTERNAL_OP:
- 		/*
-@@ -93,21 +88,16 @@ acpi_status acpi_ex_opcode_3A_0T_0R(struct acpi_walk_state *walk_state)
- 		 * wrong if an external opcode ever gets here.
- 		 */
- 		ACPI_ERROR((AE_INFO, "Executed External Op"));
--		status = AE_OK;
--		goto cleanup;
-+
-+		return_ACPI_STATUS(AE_OK);
- 
- 	default:
- 
- 		ACPI_ERROR((AE_INFO, "Unknown AML opcode 0x%X",
- 			    walk_state->opcode));
- 
--		status = AE_AML_BAD_OPCODE;
--		goto cleanup;
-+		return_ACPI_STATUS(AE_AML_BAD_OPCODE);
- 	}
--
--cleanup:
--
--	return_ACPI_STATUS(status);
- }
- 
- /*******************************************************************************
+-#ifdef CONFIG_KASAN_HW_TAGS
+-#define TCR_MTE_FLAGS TCR_EL1_TCMA1 | TCR_EL1_TBI1 | TCR_EL1_TBID1
+-#elif defined(CONFIG_ARM64_MTE)
++#ifdef CONFIG_ARM64_MTE
+ /*
+  * The mte_zero_clear_page_tags() implementation uses DC GZVA, which relies on
+- * TBI being enabled at EL1.
++ * TBI being enabled at EL1.  TCMA1 is needed to treat accesses with the
++ * match-all tag (0xF) as Tag Unchecked, irrespective of the SCTLR_EL1.TCF
++ * setting.
+  */
+-#define TCR_MTE_FLAGS TCR_EL1_TBI1 | TCR_EL1_TBID1
++#define TCR_MTE_FLAGS TCR_EL1_TCMA1 | TCR_EL1_TBI1 | TCR_EL1_TBID1
+ #else
+ #define TCR_MTE_FLAGS 0
+ #endif
 -- 
 2.51.0
 
