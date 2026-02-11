@@ -1,42 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A11F21A9FA4;
-	Wed, 11 Feb 2026 12:31:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 954FD1862;
+	Wed, 11 Feb 2026 12:31:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770813113; cv=none; b=NufQpQbLlSSwdyNLaRYHXUitYL5Q729bSM6gEuFSQA75WfQDR9wtYQHOodTgpNYxggJUTcJVbaTpmLyZoYQ/hLOC7gFERrcPMwWxvWzM2eBR0dASN5EmH5E+g9t13DfWqdV6yztsobBFY4Qe6RoD8dAtpWd53BaZBJfUYqwGfms=
+	t=1770813115; cv=none; b=d4KH/NxJD0X60rdX44hYFRgv89B8ct1k4xy7ZHb2ABrjwXNcgqi9Ifu0ix00IpErVA4uVqnXuRKLOCF4bIfGc0C2XthA3rPClxIlOK6rIoCajf45gTBW7pYFE+3oUbG4Qh2CfZqoSz618CpXQKa10TpJ8oV5QzHx9p/dn67nmTw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770813113; c=relaxed/simple;
-	bh=4ggeXx2n4hxp6kS5RyhZtD/erQO6Uv3vJgYKYv/qXN4=;
+	s=arc-20240116; t=1770813115; c=relaxed/simple;
+	bh=u2n7BnhyPsEoYIPAqRYA2pGFUbLE9JbnXHr9HOuQkds=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=q2UHDV3dVj562Td6y/wtv05P6VQ6eQ8g36v3Ey0jG5hPMSEiYC2N/iHimTNyx7DkdhujgrTze9h542gp8eOwu15vFHW71lxsabwAbPdmHidn99JYyusz/26YgyQ4mt2qfww47LGTQ2QZSyfu++CakEhqURTr4ph8J2H39//gDJI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ssiWNPQ4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=SeXfzzeAeZ8xNze9lIH/TeK97b1XwXbhmu83oVBSzcbZNYAILhqbghDwIWcNeM3VjbkMAWvWrj6QqyJ0JasaDWsmITs2EEgTMeB2I9PbNaivlOEPYTF2nQd80oaRwE1cj45IubTAV/sn8YV3HC3eA8D7dSScS177TaAhVQ+9VMg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=J/1SViAX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ssiWNPQ4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A3FFC19424;
-	Wed, 11 Feb 2026 12:31:52 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="J/1SViAX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D44A0C2BC9E;
+	Wed, 11 Feb 2026 12:31:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1770813113;
-	bh=4ggeXx2n4hxp6kS5RyhZtD/erQO6Uv3vJgYKYv/qXN4=;
+	s=k20201202; t=1770813115;
+	bh=u2n7BnhyPsEoYIPAqRYA2pGFUbLE9JbnXHr9HOuQkds=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ssiWNPQ4UKHjBRHDwVxj3iU+JyJ031L9VJyhfYnFz3x5oEV/rYv/+3OJyIFiYeIKe
-	 RoaRqX8d97Dzc7lRaJSa6SPC+izdc4dIFmfN+DKv4pXjra6832A4BMbrklcWpchHGm
-	 60zzijDZjXCY4svI4gX6OZrHgTr8KR4fAqNBrm251ffrbMOW+yPAGS5jXIgJ7OXiXH
-	 cXdlNKyaeslqJul7r6pvFBjrJKdQap5UacCgmButwVEtnbEtnl+uIO91kwq06QbjHZ
-	 oQl6reyRiBfEHBuuE7Dui7GgUDGil2nTYE474WAZnZD/gKqv23uOXktaHeS1qwrkHx
-	 GpdQbIFAZlF/A==
+	b=J/1SViAXsUYKEoIIOgIJA5vpBKlql7SoDNkqnpd2OLkUNYbcTJvzZXoOLJF4LCjv7
+	 deWc+wMdxU4M4/YnzhrPZnjiCX53p8xIcTckZXZCH87FcaUntitY1bPGA2Q4R/mk19
+	 dGzs3IEZv1trrs5bHldNL+013jvRuwOoOKMhvI/HFwYjcFq5KPwYpIznK+P7P6tKgn
+	 BydLTA/b1qkKBVbDINv4QbAoERBr+it9fxRUj8fRayS2dkVVQHYOrCZWxXgoamNrMl
+	 EJy0qWAyJQu45dU2XpZTeDcHuFm5zOP16MK5IVcKetXnYTGNMi5na8vhiNfyW+Zuwg
+	 W26qpTQhmLKWw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Heinz Mauelshagen <heinzm@redhat.com>,
-	Yu Kuai <yukuai@fnnas.com>,
-	Sasha Levin <sashal@kernel.org>,
-	song@kernel.org,
-	linux-raid@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.19-6.18] md raid: fix hang when stopping arrays with metadata through dm-raid
-Date: Wed, 11 Feb 2026 07:30:30 -0500
-Message-ID: <20260211123112.1330287-20-sashal@kernel.org>
+Cc: Kaushlendra Kumar <kaushlendra.kumar@intel.com>,
+	Shuah Khan <skhan@linuxfoundation.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.19-5.10] tools/power cpupower: Reset errno before strtoull()
+Date: Wed, 11 Feb 2026 07:30:31 -0500
+Message-ID: <20260211123112.1330287-21-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260211123112.1330287-1-sashal@kernel.org>
 References: <20260211123112.1330287-1-sashal@kernel.org>
@@ -52,216 +50,193 @@ X-stable-base: Linux 6.19
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Heinz Mauelshagen <heinzm@redhat.com>
+From: Kaushlendra Kumar <kaushlendra.kumar@intel.com>
 
-[ Upstream commit cefcb9297fbdb6d94b61787b4f8d84f55b741470 ]
+[ Upstream commit f9bd3762cf1bd0c2465f2e6121b340883471d1bf ]
 
-When using device-mapper's dm-raid target, stopping a RAID array can cause
-the system to hang under specific conditions.
+cpuidle_state_get_one_value() never cleared errno before calling
+strtoull(), so a prior ERANGE caused every cpuidle counter read to
+return zero. Reset errno to 0 before the conversion so each sysfs read
+is evaluated independently.
 
-This occurs when:
-
-- A dm-raid managed device tree is suspended from top to bottom
-   (the top-level RAID device is suspended first, followed by its
-    underlying metadata and data devices)
-
-- The top-level RAID device is then removed
-
-Removing the top-level device triggers a hang in the following sequence:
-the dm-raid destructor calls md_stop(), which tries to flush the
-write-intent bitmap by writing to the metadata sub-devices. However, these
-devices are already suspended, making them unable to complete the write-intent
-operations and causing an indefinite block.
-
-Fix:
-
-- Prevent bitmap flushing when md_stop() is called from dm-raid
-destructor context
-  and avoid a quiescing/unquescing cycle which could also cause I/O
-
-- Still allow write-intent bitmap flushing when called from dm-raid
-suspend context
-
-This ensures that RAID array teardown can complete successfully even when the
-underlying devices are in a suspended state.
-
-This second patch uses md_is_rdwr() to distinguish between suspend and
-destructor paths as elaborated on above.
-
-Link: https://lore.kernel.org/linux-raid/CAM23VxqYrwkhKEBeQrZeZwQudbiNey2_8B_SEOLqug=pXxaFrA@mail.gmail.com
-Signed-off-by: Heinz Mauelshagen <heinzm@redhat.com>
-Signed-off-by: Yu Kuai <yukuai@fnnas.com>
+Link: https://lore.kernel.org/r/20251201121745.3776703-1-kaushlendra.kumar@intel.com
+Signed-off-by: Kaushlendra Kumar <kaushlendra.kumar@intel.com>
+Signed-off-by: Shuah Khan <skhan@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
+This confirms the real-world usage pattern. In `cpuidle_start()` and
+`cpuidle_stop()`, `cpuidle_state_time()` is called in a loop for each
+CPU and each state. If the first call encounters any situation where
+errno is set to ERANGE (or if errno was already ERANGE from a prior
+operation like `open()`, `read()`, or even `snprintf()`), then ALL
+subsequent calls in the loop will return 0 because the stale ERANGE
+persists.
+
+Now here's a detailed analysis.
+
+---
+
 ## Complete Analysis
 
-### 1. What the Bug Is
+### 1. Commit Message Analysis
 
-This commit fixes a **system hang** (indefinite block/deadlock) when
-stopping dm-raid managed RAID arrays. The hang scenario is:
+The subject and body clearly describe the bug:
+`cpuidle_state_get_one_value()` never cleared `errno` before calling
+`strtoull()`, so if `errno` was already set to `ERANGE` from a prior
+operation, every subsequent cpuidle counter read would return zero. The
+fix is to reset `errno = 0` before the conversion.
 
-1. A dm-raid device tree is suspended top-to-bottom (top-level RAID
-   device first, then underlying metadata/data devices)
-2. The top-level RAID device is removed (`raid_dtr` destructor)
-3. `raid_dtr()` → `md_stop()` → `__md_stop_writes()` tries to:
-   - Quiesce the RAID personality (`pers->quiesce()`)
-   - Flush the write-intent bitmap to metadata devices
-     (`bitmap_ops->flush()`)
-4. But the metadata devices are already suspended and **cannot complete
-   I/O**
-5. The flush waits indefinitely → **system hang**
+The commit was authored by an Intel engineer (Kaushlendra Kumar),
+reviewed through LKML, and accepted by Shuah Khan. No Fixes: tag or Cc:
+stable tag, which is expected for commits under manual review.
 
-This is a real, user-reported bug (Link in commit message points to a
-lore report).
+### 2. Code Change Analysis
 
-### 2. The Fix
+The change is a single line addition:
 
-The fix adds a conditional guard around the quiesce and bitmap flush in
-`__md_stop_writes()`:
-
-```c
-if (md_is_rdwr(mddev) || !mddev_is_dm(mddev)) {
-    // quiesce + bitmap flush
-}
+```153:153:tools/power/cpupower/lib/cpuidle.c
+        errno = 0;
 ```
 
-This condition skips the quiesce and bitmap flush **only** when:
-- The device is a dm-raid device (`mddev_is_dm()` returns true), AND
-- The device is NOT in read-write mode (`md_is_rdwr()` returns false)
+Added right before the `strtoull()` call at line 153, and before the
+`errno == ERANGE` check at line 155.
 
-The clever trick: `raid_postsuspend()` (suspend path) already calls
-`md_stop_writes()` while the device is still `MD_RDWR`, so the bitmap
-flush proceeds normally during suspend. Then it sets `rs->md.ro =
-MD_RDONLY`. Later when `raid_dtr()` calls `md_stop()` →
-`__md_stop_writes()`, the device is `MD_RDONLY`, so the condition is
-false and the dangerous I/O is skipped.
+**The bug mechanism is textbook-correct and well-documented:**
 
-For non-dm md arrays (`!mddev_is_dm()` is true), the condition is always
-true and behavior is unchanged.
+The C standard and the Linux `strtoull(3)` man page explicitly state:
+**"This function does not modify errno on success."** This means:
+- On successful conversion, `strtoull()` returns the correct value but
+  **does not clear errno**.
+- If `errno` was already `ERANGE` (from ANY prior call — `open()`,
+  `read()`, `close()`, `snprintf()`, or a prior failed `strtoull()`),
+  the check `errno == ERANGE` at line 155 will still be true, and the
+  function returns 0 even though the conversion was successful.
 
-### 3. Code Change Scope
+The correct pattern (per POSIX and the C standard) is:
+```c
+errno = 0;
+value = strtoull(...);
+if (errno == ERANGE) { /* handle error */ }
+```
 
-- **1 file changed**: `drivers/md/md.c`
-- **8 insertions, 6 deletions** (net +2 lines)
-- Only touches the `__md_stop_writes()` function
-- Small and surgical
+There's even an existing instance of correct usage in the same codebase
+at `tools/power/cpupower/utils/cpufreq-set.c:133`:
 
-### 4. Critical Dependency Issue
+```133:134:tools/power/cpupower/utils/cpufreq-set.c
+        errno = 0;
+        freq = strtoul(normalized, &end, 10);
+```
 
-The commit message explicitly says **"This second patch"**, indicating
-it's part of a 2-patch series. The first patch is `55dcfdf8af9c3` ("dm
-raid: use proper md_ro_state enumerators"), which:
-- Added `rs->md.ro = MD_RDONLY;` to `raid_postsuspend()` in `dm-raid.c`
-- Without this line, when `raid_dtr` runs, `mddev->ro` is still
-  `MD_RDWR` (from `raid_resume`), so `md_is_rdwr()` returns true, and
-  the quiesce/flush is NOT skipped → the hang still occurs!
+### 3. Impact Assessment
 
-**This means the fix (`cefcb9297fbdb`) CANNOT work without the
-prerequisite (`55dcfdf8af9c3`).**
+The function `cpuidle_state_get_one_value()` is called by 5 wrapper
+functions:
+- `cpuidle_state_latency()` — reads C-state latency
+- `cpuidle_state_residency()` — reads C-state residency
+- `cpuidle_state_usage()` — reads C-state usage count
+- `cpuidle_state_time()` — reads time spent in C-state
+- `cpuidle_is_state_disabled()` — checks if state is disabled
 
-The prerequisite `55dcfdf8af9c3` was merged for v6.18. It is:
-- Present in 6.18.y
-- **NOT** present in 6.12.y, 6.6.y, 6.1.y, or 5.15.y
+These are called from `cpuidle-info.c` (the `cpupower idle-info`
+command) and `cpuidle_sysfs.c` (the cpuidle monitor), typically in loops
+over all CPUs and all idle states. Once errno gets "stuck" at ERANGE,
+ALL subsequent reads return 0, giving users completely wrong idle state
+information.
 
-### 5. Additional Backport Complications
+The `cpuidle_state_read_file()` helper called just before `strtoull()`
+internally calls `open()`, `read()`, and `close()`, any of which can set
+`errno`. Additionally, the `snprintf()` call inside it could
+theoretically set errno on truncation. A single ERANGE from any source
+poisons all subsequent calls for the rest of the program's execution.
 
-For older stable trees (6.12.y and earlier), the code context has
-changed significantly:
-- v6.12+: `bitmap_ops->flush()` (ops-based interface)
-- v6.11 and earlier: `md_bitmap_flush()` (direct function call)
-- The `md_bitmap_enabled()` guard was added between v6.12 and current
-- The `serialize_policy` field changed to a flag bit
-- `md_stop_writes()` in v6.6 includes `set_bit(MD_RECOVERY_FROZEN)` and
-  sync thread reaping, which was later moved to the callers
+### 4. Scope and Risk
 
-### 6. Is the Bug Present in Older Stable Trees?
+- **Files changed:** 1
+- **Lines added:** 1
+- **Lines removed:** 0
+- **Complexity:** Trivial — adding a single `errno = 0;` assignment
+- **Risk of regression:** Essentially zero. Setting `errno = 0` before
+  `strtoull()` is the universally recommended practice. It cannot break
+  anything.
 
-**Yes**, the underlying bug (bitmap flush blocking on suspended metadata
-devices) exists in all kernel versions with dm-raid. In v6.6/v6.1,
-`__md_stop_writes()` also calls `md_bitmap_flush()` and
-`pers->quiesce()` unconditionally, and the same hang can occur when
-`raid_dtr` runs after `raid_postsuspend`.
+### 5. The Same Bug Exists in Multiple Other cpupower Files
 
-However, to fix it in older trees, you would need BOTH:
-1. The prerequisite that sets `ro = MD_RDONLY` in `raid_postsuspend`
-   (equivalent of `55dcfdf8af9c3`)
-2. This fix that checks `md_is_rdwr()` in `__md_stop_writes` (this
-   commit)
+Notably, the same missing `errno = 0` pattern exists in several other
+files:
+- `tools/power/cpupower/lib/cpufreq.c:109` — `strtoul()` without errno
+  reset
+- `tools/power/cpupower/lib/acpi_cppc.c:53` — `strtoull()` without errno
+  reset
+- `tools/power/cpupower/utils/helpers/sysfs.c:221` — `strtoull()`
+  without errno reset
+- `tools/power/cpupower/utils/helpers/misc.c:65` — `strtol()` without
+  errno reset
+- `tools/power/cpupower/lib/cpupower.c:128` — `strtol()` without errno
+  reset
 
-And both would need adaptation to the different code context.
+These are NOT fixed by this commit (they would need separate fixes), but
+they confirm the bug pattern is real and systemic in this codebase.
 
-### 7. Risk Assessment
+### 6. Stable Suitability
 
-- **Severity of bug**: HIGH — system hang is a serious issue, especially
-  for enterprise users of dm-raid (LVM RAID, etc.)
-- **Risk of regression**: LOW-MEDIUM — the fix only changes behavior for
-  dm-raid devices in the destructor path (when `!md_is_rdwr &&
-  mddev_is_dm`); all other paths are unchanged
-- **Size**: Very small (8 insertions, 6 deletions)
-- **Dependency complexity**: HIGH — requires prerequisite commit and
-  significant code context differences across versions
+**Positive factors:**
+- Fixes a **real, user-visible bug**: cpupower reporting all zeroes for
+  idle state counters
+- **Trivially correct**: this is the universally documented correct way
+  to use `strtoull()`
+- **Minimal change**: 1 line, 1 file, zero risk
+- **Long-standing bug**: this code has been buggy since it was added in
+  2016 (commit `ac5a181d065d7`), so it affects ALL stable trees
+- **No dependencies**: completely self-contained, applies cleanly to any
+  version with this file
+- **Tested in mainline**: accepted and merged for 6.19
 
-### 8. Verdict
+**Potential concerns:**
+- This is a **userspace tool**, not kernel code. Stable trees do include
+  userspace tool fixes, but some consider them lower priority.
+- The impact is limited to incorrect data display in cpupower, not a
+  crash, security vulnerability, or data corruption.
+- However, cpupower is widely used by distributions and sysadmins for
+  power management monitoring. Incorrect data is a significant usability
+  bug.
 
-This commit fixes a **real, user-reported system hang** in dm-raid
-teardown, which is clearly important for stable. The fix itself is
-small, surgical, and well-understood. However, it has a **hard
-dependency** on `55dcfdf8af9c3` ("dm raid: use proper md_ro_state
-enumerators") which adds the critical `rs->md.ro = MD_RDONLY` line in
-`raid_postsuspend()`. Without that prerequisite, the `md_is_rdwr()`
-check in this fix would never distinguish between suspend and destructor
-paths, and the fix would be completely ineffective.
+### 7. Dependencies
 
-For 6.18.y, the prerequisite is present and this patch could apply
-(possibly with minor context adjustments). For older LTS trees (6.12.y,
-6.6.y, 6.1.y), both this commit and the prerequisite (with appropriate
-context adaptations) would need to be backported together.
+None. The change is completely self-contained. The function has existed
+unchanged (in terms of this pattern) since 2016 across all stable kernel
+versions that include cpupower.
 
-Given that:
-1. It fixes a definite system hang (high severity)
-2. It's small and well-contained
-3. It has a clear dependency that must also be backported
-4. dm-raid (LVM RAID) is widely used in enterprise environments
-5. The author is from Red Hat (enterprise focus) and it was reported by
-   a real user
+### 8. Conclusion
 
-This is a **YES** for backporting, with the strong caveat that the
-prerequisite commit `55dcfdf8af9c3` must be included in any backport.
+This is a clear, obvious, one-line bug fix that corrects well-documented
+incorrect usage of `strtoull()` per the C standard. The bug causes
+cpupower to report all-zero cpuidle counters when errno happens to be
+set to ERANGE, which is a real user-visible problem. The fix is zero-
+risk, has no dependencies, and applies cleanly to all stable trees.
+While it's a userspace tool rather than kernel code (which slightly
+lowers the urgency), it's still a fix to widely-used infrastructure
+tooling that ships with the kernel.
 
 **YES**
 
- drivers/md/md.c | 14 ++++++++------
- 1 file changed, 8 insertions(+), 6 deletions(-)
+ tools/power/cpupower/lib/cpuidle.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/md/md.c b/drivers/md/md.c
-index 6d73f6e196a9f..ac71640ff3a81 100644
---- a/drivers/md/md.c
-+++ b/drivers/md/md.c
-@@ -6848,13 +6848,15 @@ static void __md_stop_writes(struct mddev *mddev)
- {
- 	timer_delete_sync(&mddev->safemode_timer);
+diff --git a/tools/power/cpupower/lib/cpuidle.c b/tools/power/cpupower/lib/cpuidle.c
+index f2c1139adf716..bd857ee7541a7 100644
+--- a/tools/power/cpupower/lib/cpuidle.c
++++ b/tools/power/cpupower/lib/cpuidle.c
+@@ -150,6 +150,7 @@ unsigned long long cpuidle_state_get_one_value(unsigned int cpu,
+ 	if (len == 0)
+ 		return 0;
  
--	if (mddev->pers && mddev->pers->quiesce) {
--		mddev->pers->quiesce(mddev, 1);
--		mddev->pers->quiesce(mddev, 0);
--	}
-+	if (md_is_rdwr(mddev) || !mddev_is_dm(mddev)) {
-+		if (mddev->pers && mddev->pers->quiesce) {
-+			mddev->pers->quiesce(mddev, 1);
-+			mddev->pers->quiesce(mddev, 0);
-+		}
++	errno = 0;
+ 	value = strtoull(linebuf, &endp, 0);
  
--	if (md_bitmap_enabled(mddev, true))
--		mddev->bitmap_ops->flush(mddev);
-+		if (md_bitmap_enabled(mddev, true))
-+			mddev->bitmap_ops->flush(mddev);
-+	}
- 
- 	if (md_is_rdwr(mddev) &&
- 	    ((!mddev->in_sync && !mddev_is_clustered(mddev)) ||
+ 	if (endp == linebuf || errno == ERANGE)
 -- 
 2.51.0
 
