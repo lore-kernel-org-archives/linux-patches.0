@@ -1,108 +1,81 @@
-Received: from out198-179.us.a.mail.aliyun.com (out198-179.us.a.mail.aliyun.com [47.90.198.179])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0AE3B21D3DC
-	for <patches@lists.linux.dev>; Wed, 11 Feb 2026 13:05:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=47.90.198.179
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E79D253932;
+	Wed, 11 Feb 2026 13:44:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770815156; cv=none; b=ZgO6Iwl6Mh+Pf0euIo34usF44IJF99brTNQ8A/dsSgBxI/kQOLBp300K6vt80RYMYUCHse2GubJHFG1Fz3XYBq3lyiKWyoRao3oOFyl9L2/arT0xEsoWJodcNGk/WRjFQhqTGj9qny3MVtK6x6cSq36wzjSqTb03gFaPSOn/f+c=
+	t=1770817483; cv=none; b=acU850faULkgHfAFc0NFXb9rVfx2Mef2Kww4SWss5Hn933nuYCFFfMjYTMyoToLPxqCjBapyukQT3MU/YdZFUKtdeHrP6cWWwYAh/ozWdukcyunFzPm+Fy5yMcTdgaXTksBEmEmUP2YuGnFnCjcEb1aTBJ8lSF4A758AGp7FJmU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770815156; c=relaxed/simple;
-	bh=pOJ3Wgx3pd20bpr8Jr7w57FQUKYeSkPJ0/17h4Ye52k=;
-	h=Date:From:To:Subject:Cc:In-Reply-To:References:Message-Id:
-	 MIME-Version:Content-Type; b=HbfofFRphmqbDY+3i0KdkgZrToYxDJCOjrGSgBbb8UgwAqs4q/phhHodmvKj7WMO/B9paAABcGmqz2Hbqjkg2e9iI7Wns4b8Mhxm+iqpCk7kgbag765XCJNqN0a8APHXWJaqnavJJhJlohuG4/0hww8b00p8+X733VYxetJnZ94=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=e16-tech.com; spf=pass smtp.mailfrom=e16-tech.com; arc=none smtp.client-ip=47.90.198.179
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=e16-tech.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=e16-tech.com
-Received: from 192.168.2.112(mailfrom:wangyugui@e16-tech.com fp:SMTPD_---.gUush8._1770814206 cluster:ay29)
-          by smtp.aliyun-inc.com;
-          Wed, 11 Feb 2026 20:50:07 +0800
-Date: Wed, 11 Feb 2026 20:50:08 +0800
-From: Wang Yugui <wangyugui@e16-tech.com>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
- Andrew Cooper <andrew.cooper3@citrix.com>
-Subject: Re: [PATCH 6.6 00/86] 6.6.124-rc1 review
-Cc: stable@vger.kernel.org,
- patches@lists.linux.dev,
- linux-kernel@vger.kernel.org,
- torvalds@linux-foundation.org,
- akpm@linux-foundation.org,
- linux@roeck-us.net,
- shuah@kernel.org,
- patches@kernelci.org,
- lkft-triage@lists.linaro.org,
- pavel@nabladev.com,
- jonathanh@nvidia.com,
- f.fainelli@gmail.com,
- sudipm.mukherjee@gmail.com,
- rwarsow@gmx.de,
- conor@kernel.org,
- hargar@microsoft.com,
- broonie@kernel.org,
- achill@achill.org,
- sr@sladewatkins.com
-In-Reply-To: <2026021127-posh-anchor-1e47@gregkh>
-References: <20260211110620.0A4D.409509F4@e16-tech.com> <2026021127-posh-anchor-1e47@gregkh>
-Message-Id: <20260211205007.5D99.409509F4@e16-tech.com>
+	s=arc-20240116; t=1770817483; c=relaxed/simple;
+	bh=hulBqB6xRSC5vbtYkq/Hkei8Npxy0qfh/eF6cuH0pu4=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=FmPasE8D7WGBV8zUysT3Ug5BWkU/P1VV230ml6xYLr1OOqxEfvLWgozjCSCGsZJmhHwEj/V+z3stmgAliM5bF5IIRVb9ehPKSTDeQZXL26qr3mE5GKSMX6foCaiRQjoagYMzx8WYb7dXu6pRcuJaxfMJodJwPUh6s9jricHXQoE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=PCKn59Ec; arc=none smtp.client-ip=10.30.226.201
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="PCKn59Ec"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 249BAC4CEF7;
+	Wed, 11 Feb 2026 13:44:35 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1770817482;
+	bh=hulBqB6xRSC5vbtYkq/Hkei8Npxy0qfh/eF6cuH0pu4=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=PCKn59EcMhh2pm7jCviSv3/9T2KeDxqkJwOoLla9aviZxABNbsalKg+x5PR8Yxhbz
+	 0bVwsRCsHFMvoWJMxSn3HWdHVPi4JwRV8iHzBNtHxXtWnkPzbL2lhWmsTq1+LOnJqJ
+	 pGZoLKwUQg0AdVuXyndgTc/0Hk1d18ja8FgnAmOZ94WMtoLPcF1eGyDk1FrMWtseaE
+	 6/tHgEHwm000ZwdCOFw0fAyoe+n8LAUbbEpfGcsxqK8US7BJzbi5L7wAkv3mCUhBJJ
+	 sv0LazjP2+zOcUuZBqXEvCeAvFwWIa63Qch4mNykEWq0jnCE33Og8p/fCwRrSLD3zj
+	 AiMcD8zTe0Hdg==
+From: Miguel Ojeda <ojeda@kernel.org>
+To: gregkh@linuxfoundation.org
+Cc: achill@achill.org,
+	akpm@linux-foundation.org,
+	broonie@kernel.org,
+	conor@kernel.org,
+	f.fainelli@gmail.com,
+	hargar@microsoft.com,
+	jonathanh@nvidia.com,
+	linux-kernel@vger.kernel.org,
+	linux@roeck-us.net,
+	lkft-triage@lists.linaro.org,
+	patches@kernelci.org,
+	patches@lists.linux.dev,
+	pavel@nabladev.com,
+	rwarsow@gmx.de,
+	shuah@kernel.org,
+	sr@sladewatkins.com,
+	stable@vger.kernel.org,
+	sudipm.mukherjee@gmail.com,
+	torvalds@linux-foundation.org,
+	Miguel Ojeda <ojeda@kernel.org>
+Subject: Re: [PATCH 6.1 00/69] 6.1.163-rc1 review
+Date: Wed, 11 Feb 2026 14:44:22 +0100
+Message-ID: <20260211134422.10780-1-ojeda@kernel.org>
+In-Reply-To: <20260209142301.913348974@linuxfoundation.org>
+References: <20260209142301.913348974@linuxfoundation.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="US-ASCII"
-Content-Transfer-Encoding: 7bit
-X-Mailer: Becky! ver. 2.83.01 [en]
+Content-Transfer-Encoding: 8bit
 
-Hi,
-
-# add Andrew Cooper <andrew.cooper3@citrix.com>
-
-> On Wed, Feb 11, 2026 at 11:06:21AM +0800, Wang Yugui wrote:
-> > Hi,
-> > 
-> > > Hi,
-> > > 
-> > > > This is the start of the stable review cycle for the 6.6.124 release.
-> > > > There are 86 patches in this series, all will be posted as a response
-> > > > to this one.  If anyone has any issues with these being applied, please
-> > > > let me know.
-> > > > 
-> > > > Responses should be made by Wed, 11 Feb 2026 14:22:44 +0000.
-> > > > Anything received after that time might be too late.
-> > > > 
-> > > > The whole patch series can be found in one patch at:
-> > > > 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.6.124-rc1.gz
-> > > > or in the git tree and branch at:
-> > > > 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.6.y
-> > > > and the diffstat can be found below.
-> > > 
-> > > 6.6.123 boot well, but 6.6.124-rc1 failed to boot here.
-> > > 
-> > > error message:
-> > > dracut: fatal: iscsiroot requested but kernel/initrd does not support iscsi.
-> > > 
-> > > 'git bisect' yet not done, and report this problem firstly.
-> > 
-> > 6.6.124-rc1 without 'x86-kfence-fix-booting-on-32bit-non-pae-systems.patch' (revert), 
-> > boot well here.
-> > 
-> > but 6.1.163-rc1 with 'x86-kfence-fix-booting-on-32bit-non-pae-systems.patch'
-> > boot well.
+On Mon, 09 Feb 2026 15:23:28 +0100 Greg Kroah-Hartman <gregkh@linuxfoundation.org> wrote:
+>
+> This is the start of the stable review cycle for the 6.1.163 release.
+> There are 69 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
 > 
-> Does 6.19 work properly on this hardware too?
+> Responses should be made by Wed, 11 Feb 2026 14:22:44 +0000.
+> Anything received after that time might be too late.
 
-both
-6.12.70-rc1 with 'x86-kfence-fix-booting-on-32bit-non-pae-systems.patch'
-and
-6.18.10-rc1with 'x86-kfence-fix-booting-on-32bit-non-pae-systems.patch'
-works well on this hardware too.
+Boot-tested under QEMU for Rust x86_64:
 
-And CONFIG_KFENCE=y is defined for this test of 6.1/6.6/6.12/6.18.
+Tested-by: Miguel Ojeda <ojeda@kernel.org>
 
-There is no test result of 6.19.
+Thanks!
 
-Best Regards
-Wang Yugui (wangyugui@e16-tech.com)
-2026/02/11
-
+Cheers,
+Miguel
