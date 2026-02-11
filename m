@@ -1,92 +1,93 @@
-Received: from out198-157.us.a.mail.aliyun.com (out198-157.us.a.mail.aliyun.com [47.90.198.157])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f51.google.com (mail-wm1-f51.google.com [209.85.128.51])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A683F344031
-	for <patches@lists.linux.dev>; Wed, 11 Feb 2026 03:22:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=47.90.198.157
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AECA6353ED7
+	for <patches@lists.linux.dev>; Wed, 11 Feb 2026 04:25:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770780128; cv=none; b=Fov6taL+M7fMWd/39xLua9VFczryJhAgtvEZryW+xzW8fU4X3/KH9oWXJZN1GPpAub6L8Za0Do86mrczjerRo6u2Y50/nNJUTu8jyo7VNDTBlgU/G92trzCpTwEJOmaZJXKWCZfXHE2lFllxQfXn57hlVZgkj9OpTHzbIB/DPis=
+	t=1770783950; cv=none; b=UX1KVqgXnsgJtC2KOiHUZSkaPGplz8TlOjLG3NCMQKKsOI8vhxoXnxFPUCEZ3ntmGTjTkDc/cTFYMg2eqQGG75ozVhQJGioMez+C+z3aPNiC4QroAnDXw5F6d2TyMJTpxftU6clp/pe72zaXOJqtEg92Y31r+IkBhfOO/Ysc8jM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770780128; c=relaxed/simple;
-	bh=C6jVpQUWsOpuX91E+e2BfVX3sRY/x0L1hc0vcXUciWI=;
-	h=Date:From:To:Subject:In-Reply-To:References:Message-Id:
-	 MIME-Version:Content-Type; b=qshigGT2FeCFOfPm+7XkngDLVND7CQXTDpiAFk2DKGw4Dkl24Wfsc9T+GeGdfc0ovU5yEqlW8teGWatUoidFdCYBFGNdeN67O3A+L+GiM8mU7ZYVUHKnB081FDWxhFqZKbBOlSUHlBsCzpJvk6Iyw0xwPE0COwZiiUBKVRH3cjI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=e16-tech.com; spf=pass smtp.mailfrom=e16-tech.com; arc=none smtp.client-ip=47.90.198.157
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=e16-tech.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=e16-tech.com
-Received: from 192.168.2.112(mailfrom:wangyugui@e16-tech.com fp:SMTPD_---.gUTIyKs_1770779179 cluster:ay29)
-          by smtp.aliyun-inc.com;
-          Wed, 11 Feb 2026 11:06:21 +0800
-Date: Wed, 11 Feb 2026 11:06:21 +0800
-From: Wang Yugui <wangyugui@e16-tech.com>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
- stable@vger.kernel.org,
- patches@lists.linux.dev,
- linux-kernel@vger.kernel.org,
- torvalds@linux-foundation.org,
- akpm@linux-foundation.org,
- linux@roeck-us.net,
- shuah@kernel.org,
- patches@kernelci.org,
- lkft-triage@lists.linaro.org,
- pavel@nabladev.com,
- jonathanh@nvidia.com,
- f.fainelli@gmail.com,
- sudipm.mukherjee@gmail.com,
- rwarsow@gmx.de,
- conor@kernel.org,
- hargar@microsoft.com,
- broonie@kernel.org,
- achill@achill.org,
- sr@sladewatkins.com
-Subject: Re: [PATCH 6.6 00/86] 6.6.124-rc1 review
-In-Reply-To: <20260211085248.EAEE.409509F4@e16-tech.com>
-References: <20260209142304.770150175@linuxfoundation.org> <20260211085248.EAEE.409509F4@e16-tech.com>
-Message-Id: <20260211110620.0A4D.409509F4@e16-tech.com>
+	s=arc-20240116; t=1770783950; c=relaxed/simple;
+	bh=JkYZnGYN+fOYzCkm7zRvBQ33rZs3x38+fabyBfvTu8A=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=VZu88UxdgDfEDFwTe+kJ4CB1oLYJP38y5MG1mX+qtoooibzov5gjAvJ0NA0CypEE11IQ5EaMWRDomhYvq438G6yX1qre7jJtH+L7GcTeB1dILvTgB+116Sttx4IMNhvIBaaCAS51gdlBotgbHzLfLsLlTPwoLptRSB6xfo/xvPE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=suse.com; spf=pass smtp.mailfrom=suse.com; dkim=pass (2048-bit key) header.d=suse.com header.i=@suse.com header.b=cUhPU/UF; arc=none smtp.client-ip=209.85.128.51
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=suse.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=suse.com header.i=@suse.com header.b="cUhPU/UF"
+Received: by mail-wm1-f51.google.com with SMTP id 5b1f17b1804b1-4806dffc64cso54971995e9.1
+        for <patches@lists.linux.dev>; Tue, 10 Feb 2026 20:25:48 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=suse.com; s=google; t=1770783947; x=1771388747; darn=lists.linux.dev;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=adNnsUk/Ue+Ehcij4plZQHtF5jZOHNgjtF43mnMTFj4=;
+        b=cUhPU/UFh0yRwpKNP+olBM/j+PeLFQtaCssxWWQ1MoCab0k3xsX5aSjvmytjNP0iFg
+         DsDwGNoEJBbUlsHK0/ELJ0dX1iAkzDAk46BEh8WlCZwJcSkG8VL5spQ+Lv90HS/1dXDN
+         mjd8ZN4Pxs8Mn6WI/aGV2N9T2MsKQWZ2v2SPp4JihNlqzJ0WfsU/+V43w5lYvb89Qs9i
+         48wZRNO/Gc6KO1cvhRhgLSijDZoLWw5lM7ks8X778SBc9W70ZyUqwe1P8WAH2h7V/JnX
+         yBOk/UsN+Uh6ar/8SnLk3gnBbLEbbdx7Z9kitmz6Dc6Hv/aBlpTAWVvBYwPnk9YG9p1Q
+         aAQg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1770783947; x=1771388747;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=adNnsUk/Ue+Ehcij4plZQHtF5jZOHNgjtF43mnMTFj4=;
+        b=OQ2Cmo0b+25gXbYUkNAp4ch3VlQoeBKVKLwAd6iNIomdv1f5Ct29K/1tPs//+oRpQl
+         F/jjN94z+1sNjyS7nvVO1sIpIZsunWM0agPonoaycvQ0I86l/18Q3/31Cl+GiyWbJAna
+         jTKRm9yuK6V9FQpBpvEyx6iSsARx881uSZiNCetmp9OG2u1mOrZuW028DaLLkHbtQSEG
+         uGNv0c6O/JmZH+73UO5GFoTrDSQ78t0edbTFXt8YeLtbi/Tib7asWb3CHfDJPbZVHJdG
+         BObozBpvS0w/4tA7TWYvHHpj1pwZw1/sTZyZYV8HgaFH8Yf3Cw3bpN+1JCIyv3FIAIp6
+         0cCg==
+X-Forwarded-Encrypted: i=1; AJvYcCU2Vye3od6S9iYyAvxUer+5ZJGDktxwuSbN9X9RHnRTnX8apmz5/ICGMc4T1P3eGPsVZYwNKXu6@lists.linux.dev
+X-Gm-Message-State: AOJu0YyLcePNu/dfKOgyG4IBCa7vZr1PY89W8wdkAZP4mchDC0j2gQBb
+	+sz08sNV5C4qs/+5Zx1ZfTzOFPMpL5oS5FTnjpASWE0e1t8uvbC842OeJqzw7WLxOqQ=
+X-Gm-Gg: AZuq6aIRF62tVJg7dKs3Z/gtBQUy6h3Bhzu+CsLrPHUCx+aulN8byC2AhN0xZF0s83J
+	LbkbEdLFBNLetYrnNYZZoZKHGN/H9WmAjRGU/AzfVUWclk4C02zzbx7e4Bi9G4JMyrAH1w6xB8W
+	LKvRfidX9SH+Af8nVb1Fl/MznPxKvhk8WohWdfjzkMtNRV+NjTGRlhBR51m5PRjk/0abhNH1WsZ
+	IeexWmzkWzekWNS8s6iFH6ReZR6sy4oHbXKe596b2lqp1remfXG2sAv9f81y+Cux9BgrUeRRevp
+	m0r3bc/Ww9It1Wvmsyf+d2ANl9epI0bUPdTukkeUI0l9aOgKTI4qMitaCPe6oNOGppfmTuiAjgn
+	3RercV3rY4L1E5WUFqjCYBCeoxEig7TxW2DdVBJheVM4P0x5vFKHoOAPzZXA2NFolrBXCAhCLyq
+	pdmanBJlWbaDcAGIaxrh5gtiUDfwH6z23iQOsnSAI7M7Q=
+X-Received: by 2002:a05:600c:a015:b0:47e:e9c9:23bc with SMTP id 5b1f17b1804b1-4835d54f8a3mr8337815e9.30.1770783946952;
+        Tue, 10 Feb 2026 20:25:46 -0800 (PST)
+Received: from u94a (110-28-16-35.adsl.fetnet.net. [110.28.16.35])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4834d82a1c2sm153656175e9.9.2026.02.10.20.25.37
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 10 Feb 2026 20:25:46 -0800 (PST)
+Date: Wed, 11 Feb 2026 12:25:30 +0800
+From: Shung-Hsi Yu <shung-hsi.yu@suse.com>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, akpm@linux-foundation.org, 
+	linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org, 
+	lkft-triage@lists.linaro.org, pavel@nabladev.com, jonathanh@nvidia.com, f.fainelli@gmail.com, 
+	sudipm.mukherjee@gmail.com, rwarsow@gmx.de, conor@kernel.org, hargar@microsoft.com, 
+	broonie@kernel.org, achill@achill.org, sr@sladewatkins.com
+Subject: Re: [PATCH 6.18 000/175] 6.18.10-rc1 review
+Message-ID: <ac43ns3voofd4lgs6fi3zhuar7n2gy2jbn5icvio2bgytu2df4@auiowpkrgnwp>
+References: <20260209142320.474120190@linuxfoundation.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="US-ASCII"
-Content-Transfer-Encoding: 7bit
-X-Mailer: Becky! ver. 2.83.01 [en]
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260209142320.474120190@linuxfoundation.org>
 
-Hi,
+On Mon, Feb 09, 2026 at 03:21:13PM +0100, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 6.18.10 release.
+> There are 175 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
 
-> Hi,
-> 
-> > This is the start of the stable review cycle for the 6.6.124 release.
-> > There are 86 patches in this series, all will be posted as a response
-> > to this one.  If anyone has any issues with these being applied, please
-> > let me know.
-> > 
-> > Responses should be made by Wed, 11 Feb 2026 14:22:44 +0000.
-> > Anything received after that time might be too late.
-> > 
-> > The whole patch series can be found in one patch at:
-> > 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.6.124-rc1.gz
-> > or in the git tree and branch at:
-> > 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.6.y
-> > and the diffstat can be found below.
-> 
-> 6.6.123 boot well, but 6.6.124-rc1 failed to boot here.
-> 
-> error message:
-> dracut: fatal: iscsiroot requested but kernel/initrd does not support iscsi.
-> 
-> 'git bisect' yet not done, and report this problem firstly.
+test_progs, test_progs-no_alu32, test_progs-cpuv4, test_maps,
+test_verifier in BPF selftests all passes[1] on x86_64.
 
-6.6.124-rc1 without 'x86-kfence-fix-booting-on-32bit-non-pae-systems.patch' (revert), 
-boot well here.
+Tested-by: Shung-Hsi Yu <shung-hsi.yu@suse.com>
 
-but 6.1.163-rc1 with 'x86-kfence-fix-booting-on-32bit-non-pae-systems.patch'
-boot well.
-
-Best Regards
-Wang Yugui (wangyugui@e16-tech.com)
-2026/02/11
-
-
-
+1: https://github.com/shunghsiyu/libbpf/actions/runs/21880634049/job/63161819185
