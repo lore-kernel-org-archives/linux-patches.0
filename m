@@ -1,41 +1,48 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE7201C01;
-	Wed, 11 Feb 2026 12:31:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88D1643ABC;
+	Wed, 11 Feb 2026 12:31:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770813079; cv=none; b=M8Yfk8GqXlv7XlEFvtvo1LAnvBcjouWBXQb2V6lMGcFcMomvJxX5ZsLDOgdUE4m3fADkl17aTFr3chMaJ/oGqllLR6x9Ts9jfADQM+0ASHq0bEWQkyu+d5tqaGod+6HqmVmjRnDv0RoohTm6SOKJxqL1RXJWtKV1PUdCiYaCeg8=
+	t=1770813082; cv=none; b=ICugHHCnth/C+NX6xhJ/WCkCyvP7Yp1rU5v9a/K+xwAOMlOtPfirj2hUWywRlMFtkz9lNYQq3BqbxT72p+zLMgLfK+/nJs9CFe6chF+NOBlu7zrrEx0LsARaw2nAscCht7MfrL/yYI84ui64PfwdI88cvS/yhwXogLTJ36eHEEI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770813079; c=relaxed/simple;
-	bh=l0V/FCET+0rvVQKB3/QX35+eDmPdeP5Awk2zBwIw7b0=;
+	s=arc-20240116; t=1770813082; c=relaxed/simple;
+	bh=rVbYVH5bi8fooUyJXJC6Biqqc9cbSFiCjTBvVVoWd2c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=UeeukuCnZgMVTSARjNFydmdxTw3h2J4e3nsJG/+S31XLiHmZxM036Gs0syMnbi3nbfleK9izIPwyq3mFoINHvnoxp0yxWkNy2IMF090S610wOuF9+U+t2DsP0ODZ1OQknBvoTXaSSsNMPoPcuZERuactfOXkRaJSlQq8PranIBI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=YhHp5q/K; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=Fsws/Pm/8jfqrAlYEWpDPfoz/l+Ej9w7FMKa5PlTgst0LyOyNs5Vgx3/hlx05WWyASnFoMxXz14Yj0jHYeszlhdFGl98UTin5Js++GL0S64iy4b3AqV6KhXPQIcD783msSE3rHLk0JI0m/NlWd2m0+zPccO3KgD0woLpbUsPF9k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=oH/jLeI4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="YhHp5q/K"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F35E5C4CEF7;
-	Wed, 11 Feb 2026 12:31:18 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="oH/jLeI4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D9338C19424;
+	Wed, 11 Feb 2026 12:31:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1770813079;
-	bh=l0V/FCET+0rvVQKB3/QX35+eDmPdeP5Awk2zBwIw7b0=;
+	s=k20201202; t=1770813082;
+	bh=rVbYVH5bi8fooUyJXJC6Biqqc9cbSFiCjTBvVVoWd2c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YhHp5q/KWykIJXEJaPG9fGFep8L7S2un/8Rgym8Q/T2LAknzOK1EjeaofLiVfA9Ra
-	 8xeocTlfEiJByjdQfpO1LDAnajXYryAY2nPUwPrhqWV43vz54fj0wFcd5kWNp+80q3
-	 YXWv7kldz/FZoTUU4vbsmqs2QNzJhQtSllc9lWu1Q7f/NY60/Fc82CQ09OqsSLvjp9
-	 t7gweeWh8ldblN63Qv1X0grMl0WmhUEBCs6U7cpqVLxwuCl/3baW30/aB5Ffmxl0cD
-	 EfJkexy44jP7yzNZhS4Ln9IxC83nf5EhZcWug6DYVvQ7PYVSyaoAXOxf8254GPuV5L
-	 3z9kukYuIFrhw==
+	b=oH/jLeI4lLNHbT9IXFrFTm62G8/0Mogn8ClU0A6lrNX7b4anwUXIKGn2KUeCtobRc
+	 bBU+zKfhvKENDCQyalUkPve1b/cOqlcgnYE4/VESGmK70z3I5TcjyLM/ZJ6nHXYZQy
+	 RuUC1SB+YzjGoeNozS87C5oCDRpetKdIROiV1n/vibkn+XSiJdKUW23OfFrtUm0FYE
+	 E3ybasbzVRVC5GteOi/EC1KUBgTFbM0VwiR2n9FdyQpFx67VrL8xF7e81lcdANupkV
+	 U/53DGPh8e+oHUZj1w9+yGW91jd3GPoGaAvwwHf777QoE2u1bKHb0w08MeJsYU6qYr
+	 s2j6b9m/eWBNw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Jason Andryuk <jason.andryuk@amd.com>,
-	Juergen Gross <jgross@suse.com>,
+Cc: Heiko Carstens <hca@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>,
-	arnd@arndb.de
-Subject: [PATCH AUTOSEL 6.19-5.10] xenbus: Use .freeze/.thaw to handle xenbus devices
-Date: Wed, 11 Feb 2026 07:30:13 -0500
-Message-ID: <20260211123112.1330287-3-sashal@kernel.org>
+	pjw@kernel.org,
+	palmer@dabbelt.com,
+	aou@eecs.berkeley.edu,
+	nathan@kernel.org,
+	gor@linux.ibm.com,
+	ardb@kernel.org,
+	samitolvanen@google.com,
+	linux-riscv@lists.infradead.org,
+	llvm@lists.linux.dev
+Subject: [PATCH AUTOSEL 6.19-5.10] s390/purgatory: Add -Wno-default-const-init-unsafe to KBUILD_CFLAGS
+Date: Wed, 11 Feb 2026 07:30:14 -0500
+Message-ID: <20260211123112.1330287-4-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260211123112.1330287-1-sashal@kernel.org>
 References: <20260211123112.1330287-1-sashal@kernel.org>
@@ -51,210 +58,172 @@ X-stable-base: Linux 6.19
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jason Andryuk <jason.andryuk@amd.com>
+From: Heiko Carstens <hca@linux.ibm.com>
 
-[ Upstream commit e08dd1ee49838750a514e83c0aa60cd12ba6ecbb ]
+[ Upstream commit b4780fe4ddf04b51127a33d705f4a2e224df00fa ]
 
-The goal is to fix s2idle and S3 for Xen PV devices.  A domain resuming
-from s3 or s2idle disconnects its PV devices during resume.  The
-backends are not expecting this and do not reconnect.
+Add -Wno-default-const-init-unsafe to purgatory KBUILD_CFLAGS, similar
+to scripts/Makefile.extrawarn, since clang generates warnings for the
+dummy variable in typecheck():
 
-b3e96c0c7562 ("xen: use freeze/restore/thaw PM events for suspend/
-resume/chkpt") changed xen_suspend()/do_suspend() from
-PMSG_SUSPEND/PMSG_RESUME to PMSG_FREEZE/PMSG_THAW/PMSG_RESTORE, but the
-suspend/resume callbacks remained.
+    CC      arch/s390/purgatory/purgatory.o
+      arch/s390/include/asm/ptrace.h:221:9: warning: default initialization of an object of type 'typeof (regs->psw)' (aka 'const psw_t') leaves the object uninitialized [-Wdefault-const-init-var-unsafe]
+        221 |         return psw_bits(regs->psw).pstate;
+            |                ^
+      arch/s390/include/asm/ptrace.h:98:2: note: expanded from macro 'psw_bits'
+         98 |         typecheck(psw_t, __psw);                \
+            |         ^
+      include/linux/typecheck.h:11:12: note: expanded from macro 'typecheck'
+         11 |         typeof(x) __dummy2; \
+            |                   ^
 
-.freeze/restore are used with hiberation where Linux restarts in a new
-place in the future.  .suspend/resume are useful for runtime power
-management for the duration of a boot.
-
-The current behavior of the callbacks works for an xl save/restore or
-live migration where the domain is restored/migrated to a new location
-and connecting to a not-already-connected backend.
-
-Change xenbus_pm_ops to use .freeze/thaw/restore and drop the
-.suspend/resume hook.  This matches the use in drivers/xen/manage.c for
-save/restore and live migration.  With .suspend/resume empty, PV devices
-are left connected during s2idle and s3, so PV devices are not changed
-and work after resume.
-
-Signed-off-by: Jason Andryuk <jason.andryuk@amd.com>
-Acked-by: Juergen Gross <jgross@suse.com>
-Signed-off-by: Juergen Gross <jgross@suse.com>
-Message-ID: <20251119224731.61497-2-jason.andryuk@amd.com>
+Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-Now I have a thorough understanding. Let me summarize my complete
-analysis.
+Now I have a thorough understanding. Let me compile my analysis.
 
----
-
-## Complete Analysis
+## Analysis: s390/purgatory: Add -Wno-default-const-init-unsafe to
+KBUILD_CFLAGS
 
 ### 1. Commit Message Analysis
 
-The commit explicitly states its goal: **fix s2idle and S3 for Xen PV
-devices**. The problem is clearly described: when a Xen domain resumes
-from S3 or s2idle, PV devices are disconnected and the backends refuse
-to reconnect, leaving them broken.
+The commit adds the `-Wno-default-const-init-unsafe` compiler flag to
+the s390 purgatory's `KBUILD_CFLAGS`. The commit message clearly
+explains the problem: **clang 21+** introduced a new on-by-default
+warning (`-Wdefault-const-init-var-unsafe`) that triggers on the
+`typecheck()` macro's dummy variable. The warning fires in
+`arch/s390/include/asm/ptrace.h:221` via `psw_bits()` -> `typecheck()`
+-> `__dummy2` (line 11 of `include/linux/typecheck.h`).
 
-The commit references the 2011 commit `b3e96c0c7562` which changed
-`do_suspend()` in `manage.c` to use
-`PMSG_FREEZE`/`PMSG_THAW`/`PMSG_RESTORE` instead of
-`PMSG_SUSPEND`/`PMSG_RESUME`, but the xenbus frontend PM callbacks were
-never updated to match — they still had `.suspend`/`.resume` populated.
+The commit author is Heiko Carstens, the s390 subsystem maintainer.
 
 ### 2. Code Change Analysis
 
-The change modifies only the `xenbus_pm_ops` structure in
-`xenbus_probe_frontend.c`:
+The change is exactly **one line** added to
+`arch/s390/purgatory/Makefile`:
 
-**Before:**
-```150:156:drivers/xen/xenbus/xenbus_probe_frontend.c
-static const struct dev_pm_ops xenbus_pm_ops = {
-        .suspend        = xenbus_dev_suspend,
-        .resume         = xenbus_frontend_dev_resume,
-        .freeze         = xenbus_dev_suspend,
-        .thaw           = xenbus_dev_cancel,
-        .restore        = xenbus_dev_resume,
-};
+```
++KBUILD_CFLAGS += $(call cc-option, -Wno-default-const-init-unsafe)
 ```
 
-**After (proposed):**
-```c
-static const struct dev_pm_ops xenbus_pm_ops = {
-        .freeze         = xenbus_dev_suspend,
-        .thaw           = xenbus_dev_cancel,
-        .restore        = xenbus_frontend_dev_resume,
-};
+This is wrapped in `$(call cc-option, ...)`, which means it's only
+applied when the compiler supports the flag, providing backward
+compatibility.
+
+### 3. Root Cause: Why s390 Purgatory Needs Its Own Fix
+
+This is the critical technical detail. The s390 purgatory Makefile
+**completely replaces** `KBUILD_CFLAGS` from scratch (line 16):
+
+```16:16:arch/s390/purgatory/Makefile
+KBUILD_CFLAGS := -std=gnu11 -fms-extensions -fno-strict-aliasing -Wall
+-Wstrict-prototypes
 ```
 
-Three changes:
-1. **Remove `.suspend = xenbus_dev_suspend`**: During S3/s2idle, the PM
-   core dispatches `PM_EVENT_SUSPEND` to `.suspend`. By removing it, PV
-   devices are no longer disconnected during S3/s2idle.
-2. **Remove `.resume = xenbus_frontend_dev_resume`**: No reconnection
-   attempt during S3/s2idle resume (nothing was disconnected, so nothing
-   needs reconnecting).
-3. **Change `.restore` from `xenbus_dev_resume` to
-   `xenbus_frontend_dev_resume`**: This fixes a second bug -
-   `xenbus_frontend_dev_resume` properly handles the case where
-   xenstored runs locally (`XS_LOCAL`) by deferring the resume via a
-   work queue. The old `xenbus_dev_resume` would hang in that case
-   during restore.
+Note the `:=` assignment operator — this discards ALL previously-set
+global flags, including the `-Wno-default-const-init-unsafe` that was
+already added to `scripts/Makefile.warn` (formerly
+`scripts/Makefile.extrawarn`) by commit `d0afcfeb9e381` ("kbuild:
+Disable -Wdefault-const-init-unsafe").
 
-### 3. PM Dispatch Verification
-
-The PM core's `pm_op()` function in `drivers/base/power/main.c` confirms
-the dispatch logic:
-- `PM_EVENT_SUSPEND` → `.suspend` (used for real S3/s2idle)
-- `PM_EVENT_FREEZE` → `.freeze` (used by Xen save/restore via
-  `do_suspend()`)
-- `PM_EVENT_THAW` → `.thaw` (Xen cancelled restore)
-- `PM_EVENT_RESTORE` → `.restore` (Xen successful restore)
-
-The Xen save/restore/migration path in `drivers/xen/manage.c`
-exclusively uses `PMSG_FREEZE`/`PMSG_THAW`/`PMSG_RESTORE`:
-
-```117:117:drivers/xen/manage.c
-        err = dpm_suspend_start(PMSG_FREEZE);
+In contrast, other purgatory Makefiles (x86, riscv, powerpc) use
+`filter-out` patterns like:
 ```
-
-```147:147:drivers/xen/manage.c
-        dpm_resume_start(si.cancelled ? PMSG_THAW : PMSG_RESTORE);
+KBUILD_CFLAGS := $(filter-out -fprofile-sample-use=%
+...,$(KBUILD_CFLAGS))
 ```
+which **preserve** the global flags (including the warning suppression).
+Only s390's purgatory builds from scratch and needs this companion fix.
 
-This confirms: Xen save/restore uses `.freeze`/`.thaw`/`.restore`, NOT
-`.suspend`/`.resume`. The removal of `.suspend`/`.resume` does not
-affect Xen save/restore at all.
+### 4. Is This a Build Fix?
 
-### 4. Bug Mechanism
+**Yes, definitively.** With `CONFIG_WERROR=y` (enabled in many distro
+configs and CI systems), the clang 21+ warning becomes a build error.
+The commit message shows the exact warning output from `CC
+arch/s390/purgatory/purgatory.o`. The trigger path is:
 
-The bug is a **functional regression** dating back to the original 2011
-commit `b3e96c0c7562`:
-- `do_suspend()` was changed to use `PMSG_FREEZE`
-- But `xenbus_pm_ops` kept `.suspend`/`.resume` populated
-- When S3/s2idle is used (which triggers `PMSG_SUSPEND`→`.suspend`),
-  `xenbus_dev_suspend` is called, which disconnects PV devices
-- On resume, `xenbus_frontend_dev_resume` tries to reconnect, but the
-  backend doesn't expect the disconnect and refuses to reconnect
-- **Result: PV devices are broken after S3/s2idle**
+- `purgatory.o` includes `asm/ptrace.h`
+- `ptrace.h:221` calls `psw_bits(regs->psw).pstate`
+- `psw_bits` macro (line 98) calls `typecheck(psw_t, __psw)`
+- `typecheck` macro (`include/linux/typecheck.h:11`) declares `typeof(x)
+  __dummy2;` — an uninitialized const variable
+- clang 21+ flags this with `-Wdefault-const-init-var-unsafe`
 
-### 5. Self-Containedness
+### 5. Relationship to Parent Commit
 
-Despite the Message-ID suggesting patch 2 of a series (`-2-`), this
-commit is entirely self-contained:
-- It modifies only one data structure
-- All referenced functions already exist in the codebase
-- No new code is introduced
-- It does not depend on other patches
+The parent commit `d0afcfeb9e381` ("kbuild: Disable -Wdefault-const-
+init-unsafe") was explicitly tagged with `Cc: stable@vger.kernel.org`,
+indicating the kernel community considers this warning fix important for
+stable. That commit fixed the global build system, but the s390
+purgatory was missed because it builds its own CFLAGS from scratch. This
+commit is the necessary companion fix.
+
+However, this commit is **self-contained** — it doesn't depend on
+`d0afcfeb9e381` being present in stable. The s390 purgatory always
+builds its own CFLAGS independently.
 
 ### 6. Risk Assessment
 
-**Very low risk:**
-- The change removes behavior (empties `.suspend`/`.resume`), which is
-  strictly less likely to cause regression than adding behavior
-- During S3/s2idle, devices simply stay connected — the safest possible
-  behavior
-- The `.restore` change to `xenbus_frontend_dev_resume` is strictly an
-  improvement (adds XS_LOCAL handling that was already done for
-  `.resume`)
-- Change is only 3 lines in one structure
-- Acked by Xen subsystem maintainer (Juergen Gross)
-- Also signed off by Juergen Gross as the committer
+- **Lines changed**: 1
+- **Files changed**: 1 Makefile
+- **Runtime risk**: **Zero**. This is purely a compile-time flag that
+  suppresses a spurious compiler warning. No runtime behavior change
+  whatsoever.
+- **Backward compatibility**: The `$(call cc-option, ...)` wrapper
+  ensures the flag is silently ignored on compilers that don't support
+  it (older clang, all gcc).
+- **Side effects**: None. The warning being suppressed (`-Wdefault-
+  const-init-var-unsafe`) is well-audited — the `typecheck()` macro's
+  dummy variable is never used; it exists solely for compile-time type
+  checking.
 
-### 7. Impact
+### 7. Stable Relevance
 
-- **Who is affected**: All Xen PV guests attempting S3/s2idle
-- **Severity**: HIGH - PV devices completely break after resume, meaning
-  network and block devices stop working
-- **User visibility**: Very visible - domain becomes unusable after
-  suspend/resume
+- The s390 purgatory (kexec code) exists in all stable kernel trees
+  going back many years.
+- The `psw_bits()` / `typecheck()` code path exists in all these trees.
+- Users building stable kernels with newer clang + `CONFIG_WERROR=y`
+  **will** get build failures.
+- Build fixes are explicitly listed as appropriate for stable in
+  `Documentation/process/stable-kernel-rules.rst`.
 
-### 8. Stable Tree Applicability
+### 8. Dependency Check
 
-- The affected code (`xenbus_pm_ops` structure) has been stable since
-  2011/2013
-- All referenced functions exist in all maintained stable trees
-- The patch applies cleanly (trivial change to a stable structure)
-- This fixes a longstanding functional bug affecting real use cases
+The commit is fully self-contained. The only "dependency" is the s390
+purgatory Makefile itself, which has existed unchanged (in terms of the
+KBUILD_CFLAGS structure) for many kernel versions. The `$(call cc-
+option, ...)` mechanism is available in all stable trees.
 
-### 9. Classification
+### Summary
 
-This is a **bug fix** for broken S3/s2idle on Xen PV domains, with an
-additional fix for potential hang during restore with local xenstored.
-It meets all stable criteria:
-- Obviously correct and well-reviewed (Acked-by subsystem maintainer)
-- Fixes a real, user-facing bug (broken PV devices)
-- Important issue (complete loss of PV device functionality)
-- Very small and contained (3 lines in one structure)
-- No new features or APIs
+This is a textbook build fix for stable:
+- **One line**, zero risk, zero runtime impact
+- Fixes a **real build failure** with newer clang + CONFIG_WERROR
+- Self-contained, no dependencies
+- Companion to a commit already tagged `Cc: stable@vger.kernel.org`
+- Uses `cc-option` for backward compatibility
+- Written by the s390 subsystem maintainer
 
 **YES**
 
- drivers/xen/xenbus/xenbus_probe_frontend.c | 4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
+ arch/s390/purgatory/Makefile | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/xen/xenbus/xenbus_probe_frontend.c b/drivers/xen/xenbus/xenbus_probe_frontend.c
-index 6d1819269cbe5..199917b6f77ca 100644
---- a/drivers/xen/xenbus/xenbus_probe_frontend.c
-+++ b/drivers/xen/xenbus/xenbus_probe_frontend.c
-@@ -148,11 +148,9 @@ static void xenbus_frontend_dev_shutdown(struct device *_dev)
- }
+diff --git a/arch/s390/purgatory/Makefile b/arch/s390/purgatory/Makefile
+index 0c196a5b194af..61d240a37633d 100644
+--- a/arch/s390/purgatory/Makefile
++++ b/arch/s390/purgatory/Makefile
+@@ -23,6 +23,7 @@ KBUILD_CFLAGS += -D__DISABLE_EXPORTS
+ KBUILD_CFLAGS += $(CLANG_FLAGS)
+ KBUILD_CFLAGS += $(if $(CONFIG_CC_IS_CLANG),-Wno-microsoft-anon-tag)
+ KBUILD_CFLAGS += $(call cc-option,-fno-PIE)
++KBUILD_CFLAGS += $(call cc-option, -Wno-default-const-init-unsafe)
+ KBUILD_AFLAGS := $(filter-out -DCC_USING_EXPOLINE,$(KBUILD_AFLAGS))
+ KBUILD_AFLAGS += -D__DISABLE_EXPORTS
  
- static const struct dev_pm_ops xenbus_pm_ops = {
--	.suspend	= xenbus_dev_suspend,
--	.resume		= xenbus_frontend_dev_resume,
- 	.freeze		= xenbus_dev_suspend,
- 	.thaw		= xenbus_dev_cancel,
--	.restore	= xenbus_dev_resume,
-+	.restore	= xenbus_frontend_dev_resume,
- };
- 
- static struct xen_bus_type xenbus_frontend = {
 -- 
 2.51.0
 
