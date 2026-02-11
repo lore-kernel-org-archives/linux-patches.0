@@ -1,44 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16CFE1D5CEA;
-	Wed, 11 Feb 2026 12:31:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A900F3128DA;
+	Wed, 11 Feb 2026 12:32:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770813119; cv=none; b=nQ6qslHSCpIBrR0B/uo9ggCPWzl2lH692zldPfsDBsJt6mZ7a1pvz5rcaJA6R6bouKgPqJTxseTdsyK70q+qE7AxOM2RlztAvnSt9OM2e8Jt7u/J6/1vkeFQyPNmxvw1iV89qbDG19bQsovfU/Px0fNZUjoCpMY8OmMPeJs/B8E=
+	t=1770813120; cv=none; b=gOgJB6zpNM8Vu52bTaxNMhubaXk1+iBdOE98AE0XbJWkbjcJtLUc32xLIKvk5Wefemnw4iZgK5834gi/Svytj9XmCM6xoDuJkxXRZ13pXPl6BuxwG4lFP0YyuBjtiEyaKbtWJlMnsFL28Y/8auXpLmaF6J/P6ksmPd0zRgxOSBg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770813119; c=relaxed/simple;
-	bh=W6lMWwQYpj38AyccgL7rBPPw/3iRhrUGaZC7plCayeY=;
+	s=arc-20240116; t=1770813120; c=relaxed/simple;
+	bh=d+JUQGbvTe0fG6MIJdLQbjmAgjtxNi6q9PB4HGdoLUw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=ds3dg5MsZJYOeFB+doEk+iKBipNe+BLHQUE2KOG0fETn1ZOBwCt88sBNLSq1RZnlu7Vp08zLv9f6+KOtvvBCPqA+0hzRWluWRDwgt3c/qSKvB7Bsu8diKzV4cz8FIhJYJvy9LQhOB82VbXOQn6QVzko3y3wLiynDx1fDGKtchhk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=FOxXVuty; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=SskoEKqvxnA7ig0jbPIC+9ofINGspIy1wVlAVA+XaGpq4ATNPgPyBEfvtC3ZHsN/aI/XSS6QnoJtxCRmen8KX9AOjpTm5VaG5K4G2d6uMLWKvsOX3Vt+RZ/Sf+NqZnRrEn09Ldv4S7iycUDfnaPfDG85cZDe5w9d50gWT4PbX7s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=irTlWRW9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="FOxXVuty"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0BAD4C4CEF7;
-	Wed, 11 Feb 2026 12:31:57 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="irTlWRW9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F9D5C19424;
+	Wed, 11 Feb 2026 12:31:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1770813119;
-	bh=W6lMWwQYpj38AyccgL7rBPPw/3iRhrUGaZC7plCayeY=;
+	s=k20201202; t=1770813120;
+	bh=d+JUQGbvTe0fG6MIJdLQbjmAgjtxNi6q9PB4HGdoLUw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FOxXVutycOFUrt8I+5ZBkOd3fvL5fgFnznZqxRiL8e68c7ScMBqhKp2+UZIfI6QjT
-	 p00GZIJe3cUcNDY8DXBKtVJVuUgeaicRwaPOg1t+72iULSozrBjqfGFfSLplaKubuK
-	 0EEE1dx29Cv4oQ5PWfdQOncKgJypwdOflDJDMvn66XDBNGZ+jS4KjWxwJozabvyb7P
-	 Fdb4yOfMRi0mrezhDmfAu6nxV0qLNBTg8u2fmM1ARTfCM/OgOqvbbU0TfgiBD3G/w2
-	 bixd3x8IWiClJ7Q2e3RUoxLFi/HkGhamYNOqGkEtYnpFmyc/2RBIblK716kkJtPZJz
-	 vm8obLX5Pv9qw==
+	b=irTlWRW94pd8zqxFZPKHWYHMe9zCZAcWM7Ue8BZGVZbGiKT7kSRmRswFGhZfdkeNH
+	 /A6YsKanLgUneXulkDIGYmWQE02H2kfDcQdT7ofs/7q8zqJmZ9uhNy2oLxYoc7C8Ij
+	 NS64ncup59gZogJyJU3+L4nW0FszVmBranvmVR3Yh++Lcf8y/ZJrNAmk4komyl85UV
+	 70X6S51xoy5CXRftXhFTILx0GCwG8oCodCK63hVn8ISduTlAcEmjTk8b1BvXfl8QB5
+	 MQ5aQXrik5pZDcskZU2j6UwiyPjsQ6fY9lcxKzOuMZycm3YeXhdxPAInoT8DTB0wxO
+	 zMlwnEjB2t7yw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Yu Kuai <yukuai@fnnas.com>,
-	Nilay Shroff <nilay@linux.ibm.com>,
-	Ming Lei <ming.lei@redhat.com>,
-	Hannes Reinecke <hare@suse.de>,
+Cc: Md Haris Iqbal <haris.iqbal@ionos.com>,
+	Jack Wang <jinpu.wang@ionos.com>,
+	Grzegorz Prajsner <grzegorz.prajsner@ionos.com>,
 	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>,
 	linux-block@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.19-5.10] blk-mq-debugfs: add missing debugfs_mutex in blk_mq_debugfs_register_hctxs()
-Date: Wed, 11 Feb 2026 07:30:33 -0500
-Message-ID: <20260211123112.1330287-23-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.19-5.10] rnbd-srv: Zero the rsp buffer before using it
+Date: Wed, 11 Feb 2026 07:30:34 -0500
+Message-ID: <20260211123112.1330287-24-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260211123112.1330287-1-sashal@kernel.org>
 References: <20260211123112.1330287-1-sashal@kernel.org>
@@ -54,25 +53,25 @@ X-stable-base: Linux 6.19
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yu Kuai <yukuai@fnnas.com>
+From: Md Haris Iqbal <haris.iqbal@ionos.com>
 
-[ Upstream commit 9d20fd6ce1ba9733cd5ac96fcab32faa9fc404dd ]
+[ Upstream commit 69d26698e4fd44935510553809007151b2fe4db5 ]
 
-In blk_mq_update_nr_hw_queues(), debugfs_mutex is not held while
-creating debugfs entries for hctxs. Hence add debugfs_mutex there,
-it's safe because queue is not frozen.
+Before using the data buffer to send back the response message, zero it
+completely. This prevents any stray bytes to be picked up by the client
+side when there the message is exchanged between different protocol
+versions.
 
-Signed-off-by: Yu Kuai <yukuai@fnnas.com>
-Reviewed-by: Nilay Shroff <nilay@linux.ibm.com>
-Reviewed-by: Ming Lei <ming.lei@redhat.com>
-Reviewed-by: Hannes Reinecke <hare@suse.de>
+Signed-off-by: Md Haris Iqbal <haris.iqbal@ionos.com>
+Signed-off-by: Jack Wang <jinpu.wang@ionos.com>
+Signed-off-by: Grzegorz Prajsner <grzegorz.prajsner@ionos.com>
 Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-Now I have a comprehensive picture. Let me compile the full analysis.
+The entire data path is now clear. Here is my complete analysis:
 
 ---
 
@@ -80,194 +79,144 @@ Now I have a comprehensive picture. Let me compile the full analysis.
 
 ### 1. COMMIT MESSAGE ANALYSIS
 
-The commit title is clear: "add missing debugfs_mutex in
-blk_mq_debugfs_register_hctxs()". The body explicitly describes the
-problem: `debugfs_mutex` is not held while creating debugfs entries for
-hctxs during `blk_mq_update_nr_hw_queues()`. The author (Yu Kuai) notes
-it's safe to add the mutex there because "queue is not frozen" at that
-point (meaning there's no deadlock risk with freeze-related locks).
+The commit message states: "Before using the data buffer to send back
+the response message, zero it completely. This prevents any stray bytes
+to be picked up by the client side when there the message is exchanged
+between different protocol versions."
 
-Three reviewers signed off: Nilay Shroff (IBM), Ming Lei (Red Hat), and
-Hannes Reinecke (SUSE) -- all experienced block layer developers. The
-merge was by Jens Axboe (block layer maintainer).
+While the commit message frames this as a protocol compatibility
+concern, the underlying issue is actually an **information leak
+vulnerability** — stale kernel memory data is sent over the network to a
+remote client.
 
 ### 2. CODE CHANGE ANALYSIS
 
-The diff is minimal -- **3 lines added**:
+The fix adds two `memset(rsp, 0, sizeof(*rsp))` calls:
 
-```c
-mutex_lock(&q->debugfs_mutex);
-queue_for_each_hw_ctx(q, hctx, i)
-    blk_mq_debugfs_register_hctx(q, hctx);
-mutex_unlock(&q->debugfs_mutex);
-```
+**First:** In `rnbd_srv_fill_msg_open_rsp()` before filling the
+`rnbd_msg_open_rsp` structure (56 bytes total). Without the memset, 13
+bytes are **never explicitly set**:
+- `hdr.__padding` (2 bytes) — struct padding field
+- `obsolete_rotational` (1 byte) — deprecated field, never written
+- `reserved[10]` (10 bytes) — explicitly reserved for future use
 
-#### The Bug Mechanism
+**Second:** In `process_msg_sess_info()` before filling the
+`rnbd_msg_sess_info_rsp` structure (36 bytes total). Without the memset,
+33 bytes are **never explicitly set**:
+- `hdr.__padding` (2 bytes) — struct padding field
+- `reserved[31]` (31 bytes) — reserved bytes
 
-The `debugfs_mutex` was introduced in commit `5cf9c91ba927` ("block:
-serialize all debugfs operations using q->debugfs_mutex", v5.19) by
-Christoph Hellwig. That commit explicitly stated the goal: *"Use the
-existing debugfs_mutex to serialize all debugfs operations that rely on
-q->debugfs_dir or the directories hanging off it."*
+### 3. THE BUG MECHANISM — CONFIRMED INFORMATION LEAK
 
-That commit added `lockdep_assert_held(&q->debugfs_mutex)` in many
-functions:
-- `blk_mq_debugfs_register_sched()` (line 706)
-- `blk_mq_debugfs_unregister_sched()` (line 725)
-- `blk_mq_debugfs_unregister_rqos()` (line 746)
-- `blk_mq_debugfs_register_rqos()` (line 759)
-- `blk_mq_debugfs_register_sched_hctx()` (line 777)
-- `blk_mq_debugfs_unregister_sched_hctx()` (line 798)
+Tracing the complete data path reveals this is a real information leak
+over the network:
 
-But it missed `blk_mq_debugfs_register_hctxs()`, which is called from
-`__blk_mq_update_nr_hw_queues()` at line 5165 of `block/blk-mq.c`
-**without** holding `debugfs_mutex`.
+1. **Buffer allocation**: The RDMA chunk pages are allocated via
+   `alloc_pages(GFP_KERNEL, ...)` in `get_or_create_srv()` (`rtrs-
+   srv.c:1435`). `alloc_pages` does **not** zero memory (unlike
+   `__GFP_ZERO` or `get_zeroed_page()`).
 
-All other callers properly hold the mutex:
-- `blk_register_queue()` in `blk-sysfs.c` holds `debugfs_mutex` when
-  calling `blk_mq_debugfs_register()` (which internally calls
-  `blk_mq_debugfs_register_hctx()`)
-- `blk_mq_sched_reg_debugfs()` in `blk-mq-sched.c` holds `debugfs_mutex`
-  when calling sched debugfs registration
-- `rq_qos_add()` in `blk-rq-qos.c` holds `debugfs_mutex` when
-  registering rqos debugfs
+2. **Buffer reuse**: The chunk pages (`srv->chunks[buf_id]`) are
+   allocated once at server initialization and **reused** across all
+   RDMA operations. Each chunk may contain leftover data from previous
+   block I/O operations (data read from block devices being served to
+   other clients).
 
-#### The Race
+3. **Response buffer**: The `data` pointer in `rnbd_srv_rdma_ev()` is
+   `page_address(srv->chunks[buf_id])`, pointing directly into these
+   non-zeroed, reused RDMA pages.
 
-The race is between two concurrent paths:
+4. **Client request direction**: Both `send_msg_open()` and
+   `send_msg_sess_info()` on the client side use the `READ` direction
+   for RTRS. This means the server processes these via `process_read()`,
+   setting `id->dir = READ`.
 
-**Thread A** -- `__blk_mq_update_nr_hw_queues()` →
-`blk_mq_debugfs_register_hctxs()` → `blk_mq_debugfs_register_hctx()`:
+5. **Response sent via RDMA WRITE**: In `rtrs_srv_resp_rdma()`, because
+   `id->dir == READ` and `sg_cnt != 0`, the `rdma_write_sg()` function
+   is called. This performs an `IB_WR_RDMA_WRITE` operation, sending the
+   contents of the server's chunk buffer directly to the client's memory
+   via RDMA. The DMA mapping is `DMA_BIDIRECTIONAL`, and
+   `ib_dma_sync_single_for_device()` syncs the full response before
+   transmission.
 
-```656:673:block/blk-mq-debugfs.c
-void blk_mq_debugfs_register_hctx(struct request_queue *q,
-                                  struct blk_mq_hw_ctx *hctx)
-{
-        struct blk_mq_ctx *ctx;
-        char name[20];
-        int i;
+6. **What leaks**: The 13 uninitialized bytes in `rnbd_msg_open_rsp` and
+   33 uninitialized bytes in `rnbd_msg_sess_info_rsp` contain whatever
+   was previously stored in the reused RDMA chunk page. This could
+   include **block device data from previous I/O operations** —
+   potentially data belonging to other clients or other block devices.
 
-        if (!q->debugfs_dir)
-                return;
+### 4. SECURITY IMPACT
 
-        snprintf(name, sizeof(name), "hctx%u", hctx->queue_num);
-        hctx->debugfs_dir = debugfs_create_dir(name, q->debugfs_dir);
-        // ... creates more debugfs files ...
-}
-```
+This is a **cross-client kernel memory information leak over the
+network**:
+- The server leaks up to 46 bytes of stale data per control message
+  exchange
+- The stale data can include block device content from other clients'
+  I/O operations
+- The data is transmitted over RDMA (network), reaching a potentially
+  different machine
+- This has been present since RNBD was introduced in Linux 5.8 (commit
+  `2de6c8de192b9`)
 
-**Thread B** -- `blk_unregister_queue()` → `blk_debugfs_remove()`:
+### 5. FIX QUALITY
 
-```884:895:block/blk-sysfs.c
-static void blk_debugfs_remove(struct gendisk *disk)
-{
-        struct request_queue *q = disk->queue;
+- **Size**: 2 lines added (`memset` calls), no lines removed
+- **Correctness**: Obviously correct — zeroing a buffer before partially
+  filling it is a standard, well-understood pattern
+- **Risk**: Zero regression risk. The memset zeroes the entire
+  structure, then the code overwrites the relevant fields. This is
+  strictly safer than the original code.
+- **Self-contained**: No dependencies on other commits
+- **Tested in mainline**: Authored and reviewed by RNBD maintainers
+  (IONOS team), merged by Jens Axboe (block layer maintainer)
 
-        mutex_lock(&q->debugfs_mutex);
-        blk_trace_shutdown(q);
-        debugfs_remove_recursive(q->debugfs_dir);
-        q->debugfs_dir = NULL;
-        // ...
-        mutex_unlock(&q->debugfs_mutex);
-}
-```
+### 6. APPLICABILITY
 
-Without the mutex in Thread A:
-1. Thread A checks `q->debugfs_dir` (line 663) -- not NULL, proceeds
-2. Thread B acquires `debugfs_mutex`, removes `q->debugfs_dir`, sets it
-   to NULL
-3. Thread A uses the now-stale/freed `q->debugfs_dir` to create child
-   entries (line 667)
+RNBD has been present since kernel 5.8. This fix applies to all stable
+trees that include RNBD (5.10.y, 5.15.y, 6.1.y, 6.6.y, 6.12.y, etc.).
+The patch should apply cleanly since the affected functions haven't
+changed structurally.
 
-This can result in orphaned debugfs entries, inconsistent debugfs state,
-and potentially use of a freed dentry.
+### 7. CONCLUSION
 
-### 3. CLASSIFICATION
-
-This is a **synchronization bug fix** -- adding a missing lock
-acquisition in a path that was accidentally omitted when the locking
-scheme was introduced. It completes the locking protocol established in
-commit `5cf9c91ba927`.
-
-### 4. SCOPE AND RISK
-
-- **Size**: 3 lines added (+2 mutex_lock/unlock, consistent with
-  existing pattern)
-- **Files touched**: 1 file (`block/blk-mq-debugfs.c`)
-- **Subsystem**: Block layer (blk-mq) -- core infrastructure used by all
-  block device drivers
-- **Risk**: Extremely low. The mutex is already held by all other paths.
-  The commit message explicitly addresses deadlock safety ("queue is not
-  frozen")
-- **Pattern match**: 100% consistent with how every other debugfs
-  operation in the block layer acquires this lock
-
-### 5. USER IMPACT
-
-The `__blk_mq_update_nr_hw_queues()` path is triggered during:
-- CPU hotplug events (adding/removing CPUs changes hw queue count)
-- Driver-initiated hw queue resizing (e.g., `null_blk` via configfs
-  `submit_queues`)
-- SCSI/NVMe driver queue changes
-
-This means any system doing CPU hotplug or block device reconfiguration
-could hit this race. The impact is concurrent with disk
-registration/unregistration, which happens during device discovery and
-removal -- both common operations.
-
-### 6. STABILITY INDICATORS
-
-- **3 Reviewed-by tags** from major Linux storage developers
-- **Merged by Jens Axboe** (block layer maintainer)
-- Part of a series of debugfs locking improvements to the block layer
-  (see commit `0e94ed336814` protecting `hctx_busy_show`)
-
-### 7. DEPENDENCY CHECK
-
-- **Dependencies**: Requires `debugfs_mutex` in `struct request_queue`,
-  which has been present since v5.19 (commit `5cf9c91ba927`)
-- **Self-contained**: The fix is entirely self-contained -- no other
-  patches required
-- **Applies to**: All stable trees from 5.19 onwards (6.1.y, 6.6.y,
-  6.12.y, etc.)
-
-### Summary
-
-This commit fixes a missing lock acquisition in
-`blk_mq_debugfs_register_hctxs()` that was overlooked when the
-`debugfs_mutex` serialization scheme was introduced in v5.19. Every
-other debugfs operation in the block layer properly holds this lock. The
-fix is:
-- **3 lines** of trivially correct code
-- **Zero risk** of regression (follows established pattern exactly)
-- **Well-reviewed** by 3 experienced block layer developers
-- **Fixes a real race** between hw queue updates and debugfs teardown
-- **Self-contained** with no dependencies beyond what's in all affected
-  stable trees
-
-The fix is small, surgical, obviously correct, and meets all stable
-kernel criteria.
+This is a small, surgical fix for a confirmed information leak
+vulnerability where stale kernel memory (potentially containing other
+clients' block device data) is sent over the network via RDMA to remote
+clients. It meets all stable kernel criteria:
+- Fixes a real security/data-integrity bug (information leak over
+  network)
+- Obviously correct (memset before partial initialization)
+- Small and contained (2 lines, 1 file)
+- No new features or APIs
+- Zero regression risk
+- Has been in mainline; authored by subsystem developers
 
 **YES**
 
- block/blk-mq-debugfs.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/block/rnbd/rnbd-srv.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/block/blk-mq-debugfs.c b/block/blk-mq-debugfs.c
-index 4896525b1c054..553d93b88e194 100644
---- a/block/blk-mq-debugfs.c
-+++ b/block/blk-mq-debugfs.c
-@@ -686,8 +686,10 @@ void blk_mq_debugfs_register_hctxs(struct request_queue *q)
- 	struct blk_mq_hw_ctx *hctx;
- 	unsigned long i;
+diff --git a/drivers/block/rnbd/rnbd-srv.c b/drivers/block/rnbd/rnbd-srv.c
+index 2df8941a6b146..6afac85c110f2 100644
+--- a/drivers/block/rnbd/rnbd-srv.c
++++ b/drivers/block/rnbd/rnbd-srv.c
+@@ -538,6 +538,8 @@ static void rnbd_srv_fill_msg_open_rsp(struct rnbd_msg_open_rsp *rsp,
+ {
+ 	struct block_device *bdev = file_bdev(sess_dev->bdev_file);
  
-+	mutex_lock(&q->debugfs_mutex);
- 	queue_for_each_hw_ctx(q, hctx, i)
- 		blk_mq_debugfs_register_hctx(q, hctx);
-+	mutex_unlock(&q->debugfs_mutex);
++	memset(rsp, 0, sizeof(*rsp));
++
+ 	rsp->hdr.type = cpu_to_le16(RNBD_MSG_OPEN_RSP);
+ 	rsp->device_id = cpu_to_le32(sess_dev->device_id);
+ 	rsp->nsectors = cpu_to_le64(bdev_nr_sectors(bdev));
+@@ -644,6 +646,7 @@ static void process_msg_sess_info(struct rnbd_srv_session *srv_sess,
+ 
+ 	trace_process_msg_sess_info(srv_sess, sess_info_msg);
+ 
++	memset(rsp, 0, sizeof(*rsp));
+ 	rsp->hdr.type = cpu_to_le16(RNBD_MSG_SESS_INFO_RSP);
+ 	rsp->ver = srv_sess->ver;
  }
- 
- void blk_mq_debugfs_unregister_hctxs(struct request_queue *q)
 -- 
 2.51.0
 
