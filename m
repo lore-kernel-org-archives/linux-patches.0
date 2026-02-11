@@ -1,48 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8ED9B194AD7;
-	Wed, 11 Feb 2026 12:32:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BDF0F194AD7;
+	Wed, 11 Feb 2026 12:32:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770813137; cv=none; b=aWI97xQlX8FWkPuo5VMEwcPTh9dNYm/p2hNppM0CfFo88royFZ43nry8Xq5eX8bcRFMHg+0DV5DI7BW8A5t3DdVruWEUoWRnQOuGstgyZmgpGL8V6BQ33sZteY/6KelV9WIbi758ZUcheNd475DlE8PlaTw1/81X/wGeLBpKKy8=
+	t=1770813138; cv=none; b=V+f5AdWfaMQHETEC+HN2NpeGihgCuKK31e95O84MJAXqltJUsE+hRVwYyzSzXNuDmBXFcoPOwH2RfkuGWbQWYi+MUReJsjYBI/Ythj+dJOI/uDYS5C5WdqF6FMcGPFbkSYJHHQkiTSE424QFWodLDvC/Cs+3vU5Rm6aqWbalJk8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770813137; c=relaxed/simple;
-	bh=MqWL7t5U8J2aPpBZafPdls2RGoEtAeN85Xsz9fAz/Ng=;
+	s=arc-20240116; t=1770813138; c=relaxed/simple;
+	bh=ohL/Ug1dOGhTFxC/hxWSrlLgRGyy039BXGtklrTM9DY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=QvoRSgU3JvewRfCCSbSFjlZwaC3gm89qi7CCTV4KUP/we2qOUbTK7UXNFuAMJznhnIuV/ujkYN2927NW5//L8V+XMyaJzbRYzmGGYh5L0L+5lp9K6g0XyAqONx8py4lzlwPgaqeX1M2rb7sbpGVC3/muRjzbQ5MlRuOCBfc2OFs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=A8eXsKd7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=A+Ef0Rt4TxyNT+FpjrBfonbhHdS6l6WKorqtR+dRHLSSv6ePs36+zWAXUhlsY9tYqgSJ1w0GbHYVPLIcfKwk0g+WaJ1gQbbT64YHaeIkHLiWfZlOI6HmOF6FLHmEZRF0GdwFg0SWJQNzCtHdtsGnL8ZcRdpVOCNhSRBUiCRhN6Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=qFoX5Byk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="A8eXsKd7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2ECDEC4CEF7;
-	Wed, 11 Feb 2026 12:32:16 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="qFoX5Byk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D4B00C4AF0D;
+	Wed, 11 Feb 2026 12:32:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1770813137;
-	bh=MqWL7t5U8J2aPpBZafPdls2RGoEtAeN85Xsz9fAz/Ng=;
+	s=k20201202; t=1770813138;
+	bh=ohL/Ug1dOGhTFxC/hxWSrlLgRGyy039BXGtklrTM9DY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=A8eXsKd7BMZwVepQZb5bzYlVKc3wQPpws7vOlIDFfJYoUdEE7B08QhHeWZTB5L/Vx
-	 D4w3e15ioabQX19z4ureovNypkHsHHAwTWjOOqyglj7yn8ARsKXZ8ZlaSkyzhcT6pf
-	 8ImNgL8KMrdkkXIsnlquMLmi5feJG5ip5M8OM4MjfL6EuSlXew980l7gqutTOAZu/y
-	 xDWvW/znIAmevnGIHqGbkjZav2Nx6vDrNLeLj0FaINXxCV8RE0Tq4az5bNmg4Po5c/
-	 k3jwP55VCMGDQMpbCa9hHef0nbJb5IXjG5vr5see16M3OYj8tTBKGD8kL+GNe946kY
-	 Q6Xg9AiPooJ4Q==
+	b=qFoX5Bykv+ufZPP8Bh/5SHUghjSUR2BCcDTWnablAXzk/EaQl6RVHFARSTkL1FIwD
+	 Vh0De8fTkgDIUBE1fKSWbOexDRtH3MbZvb4S44MXtA2hgQ7HytMIayirmOvQPhDxtg
+	 m3Phli4jOaEVy6uqQ6uZjkrhhWWl52nFrqXs3/cUrsx5G7XtPiPUBorKRh5TuAbqvq
+	 wkVde/OclihbbedAMwKxCiQAE/2gV5yX+tGET5Ceh0VF0PRTCKFuG0GW9OSrIztJSf
+	 L0js2WFLsJsuQqZUfustDBE5PqUfnnxeWp44F6xBw0HOEhyFrxaFLT9aGkccZx2gqO
+	 9145EmbTI3gOw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
-	Jonathan Cameron <jonathan.cameron@huawei.com>,
-	Will Deacon <will@kernel.org>,
+Cc: Jiasheng Jiang <jiashengjiangcool@gmail.com>,
+	Yu Kuai <yukuai@fnnas.com>,
 	Sasha Levin <sashal@kernel.org>,
-	mark.rutland@arm.com,
-	clrkwllms@kernel.org,
-	rostedt@goodmis.org,
-	linux-cxl@vger.kernel.org,
-	linux-arm-kernel@lists.infradead.org,
-	linux-perf-users@vger.kernel.org,
-	linux-rt-devel@lists.linux.dev
-Subject: [PATCH AUTOSEL 6.19-6.6] perf/cxlpmu: Replace IRQF_ONESHOT with IRQF_NO_THREAD
-Date: Wed, 11 Feb 2026 07:30:41 -0500
-Message-ID: <20260211123112.1330287-31-sashal@kernel.org>
+	song@kernel.org,
+	linux-raid@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.19-6.6] md-cluster: fix NULL pointer dereference in process_metadata_update
+Date: Wed, 11 Feb 2026 07:30:42 -0500
+Message-ID: <20260211123112.1330287-32-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260211123112.1330287-1-sashal@kernel.org>
 References: <20260211123112.1330287-1-sashal@kernel.org>
@@ -55,239 +49,202 @@ MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.19
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+From: Jiasheng Jiang <jiashengjiangcool@gmail.com>
 
-[ Upstream commit ab26d9c85554c4ff1d95ca8341522880ed9219d6 ]
+[ Upstream commit f150e753cb8dd756085f46e86f2c35ce472e0a3c ]
 
-Passing IRQF_ONESHOT ensures that the interrupt source is masked until
-the secondary (threaded) handler is done. If only a primary handler is
-used then the flag makes no sense because the interrupt can not fire
-(again) while its handler is running.
-The flag also disallows force-threading of the primary handler and the
-irq-core will warn about this.
+The function process_metadata_update() blindly dereferences the 'thread'
+pointer (acquired via rcu_dereference_protected) within the wait_event()
+macro.
 
-The intention here was probably not allowing forced-threading.
+While the code comment states "daemon thread must exist", there is a valid
+race condition window during the MD array startup sequence (md_run):
 
-Replace IRQF_ONESHOT with IRQF_NO_THREAD.
+1. bitmap_load() is called, which invokes md_cluster_ops->join().
+2. join() starts the "cluster_recv" thread (recv_daemon).
+3. At this point, recv_daemon is active and processing messages.
+4. However, mddev->thread (the main MD thread) is not initialized until
+   later in md_run().
 
-Reviewed-by: Jonathan Cameron <jonathan.cameron@huawei.com>
-Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
-Signed-off-by: Will Deacon <will@kernel.org>
+If a METADATA_UPDATED message is received from a remote node during this
+specific window, process_metadata_update() will be called while
+mddev->thread is still NULL, leading to a kernel panic.
+
+To fix this, we must validate the 'thread' pointer. If it is NULL, we
+release the held lock (no_new_dev_lockres) and return early, safely
+ignoring the update request as the array is not yet fully ready to
+process it.
+
+Link: https://lore.kernel.org/linux-raid/20260117145903.28921-1-jiashengjiangcool@gmail.com
+Signed-off-by: Jiasheng Jiang <jiashengjiangcool@gmail.com>
+Signed-off-by: Yu Kuai <yukuai@fnnas.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-Now I have gathered all the information I need for a thorough analysis.
-Let me compile my findings.
+Now I have a comprehensive understanding of the issue. Let me summarize
+my analysis.
 
 ---
 
-## Complete Analysis: `perf/cxlpmu: Replace IRQF_ONESHOT with
-IRQF_NO_THREAD`
+## Detailed Analysis
 
-### 1. COMMIT MESSAGE ANALYSIS
+### 1. Commit Message Analysis
 
-The commit, authored by Sebastian Andrzej Siewior
-(bigeasy@linutronix.de) — one of the PREEMPT_RT core maintainers —
-replaces `IRQF_ONESHOT` with `IRQF_NO_THREAD` in the CXL PMU driver's
-interrupt registration. The commit message explains:
+The commit fixes a **NULL pointer dereference** in
+`process_metadata_update()` in `drivers/md/md-cluster.c`. The subject
+explicitly says "fix NULL pointer dereference" -- a strong indicator for
+stable.
 
-- `IRQF_ONESHOT` ensures the interrupt source is masked until the
-  threaded (secondary) handler finishes
-- This driver only has a **primary** handler (`cxl_pmu_irq`) and no
-  threaded handler
-- Therefore `IRQF_ONESHOT` makes no sense here — the interrupt can't
-  fire while its hardirq handler is running anyway
-- The flag also **disables force-threading** of the primary handler
-- The "irq-core will warn about this" (via lockdep assertions)
-- The **intended** semantics were to prevent forced-threading, so
-  `IRQF_NO_THREAD` is the correct replacement
+### 2. Code Change Analysis
 
-### 2. CODE CHANGE ANALYSIS
+The vulnerable code is at line 552-556 (before the fix):
 
-The change is a **single flag swap** on one line:
-
-```880:881:drivers/perf/cxl_pmu.c
-        rc = devm_request_irq(dev, irq, cxl_pmu_irq, IRQF_SHARED |
-IRQF_ONESHOT,
-                              irq_name, info);
+```552:556:drivers/md/md-cluster.c
+        /* daemaon thread must exist */
+        thread = rcu_dereference_protected(mddev->thread, true);
+        wait_event(thread->wqueue,
+                   (got_lock = mddev_trylock(mddev)) ||
+                    test_bit(MD_CLUSTER_HOLDING_MUTEX_FOR_RECVD,
+&cinfo->state));
 ```
 
-becomes:
+The code obtains `mddev->thread` via `rcu_dereference_protected()` and
+**immediately dereferences `thread->wqueue`** without any NULL check. If
+`thread` is NULL, this is a guaranteed kernel panic.
 
-```880:881:drivers/perf/cxl_pmu.c
-        rc = devm_request_irq(dev, irq, cxl_pmu_irq, IRQF_SHARED |
-IRQF_NO_THREAD,
-                              irq_name, info);
-```
+**Critical comparison**: All other uses of `mddev->thread` in `md-
+cluster.c` (lines 352, 468, 571, 726, 1079) go through
+`md_wakeup_thread()`, which has a **built-in NULL check**:
 
-#### What `IRQF_ONESHOT` does here (incorrectly):
-Looking at `irq_setup_forced_threading()` in `kernel/irq/manage.c`:
-
-```1291:1296:kernel/irq/manage.c
-static int irq_setup_forced_threading(struct irqaction *new)
+```8520:8531:drivers/md/md.c
+void __md_wakeup_thread(struct md_thread __rcu *thread)
 {
-        if (!force_irqthreads())
-                return 0;
-        if (new->flags & (IRQF_NO_THREAD | IRQF_PERCPU | IRQF_ONESHOT))
-                return 0;
+        struct md_thread *t;
+
+        t = rcu_dereference(thread);
+        if (t) {
+                pr_debug("md: waking up MD thread %s.\n", t->tsk->comm);
+                set_bit(THREAD_WAKEUP, &t->flags);
+                if (wq_has_sleeper(&t->wqueue))
+                        wake_up(&t->wqueue);
+        }
+}
 ```
 
-Both `IRQF_NO_THREAD` and `IRQF_ONESHOT` cause
-`irq_setup_forced_threading()` to bail out early, preventing the
-interrupt from being force-threaded. However, `IRQF_ONESHOT` has an
-**additional side effect**: it tells the IRQ core to mask the interrupt
-line until a threaded handler completes. Since there is no threaded
-handler here, this masking behavior is semantically wrong.
+So `process_metadata_update()` is the **only location** in the file that
+directly dereferences `mddev->thread` without safety.
 
-#### Why `IRQF_NO_THREAD` is the correct flag:
-The `cxl_pmu_irq` handler is a PMU overflow interrupt handler that:
-1. Reads the overflow register via `readq()`
-2. Processes each overflowed counter via `__cxl_pmu_read()`
-3. Clears the overflow status via `writeq()`
+### 3. The Race Condition
 
-This handler interacts with perf core internals. As the arm-ccn PMU fix
-(commit `0811ef7e2f54`) established, **PMU interrupt handlers must not
-be force-threaded** because the perf core relies on strict CPU affinity
-and interrupt disabling for mutual exclusion. Force-threading a PMU
-interrupt handler would break these synchronization guarantees.
+The vulnerability was introduced in commit `0ba959774e939` ("md-cluster:
+use sync way to handle METADATA_UPDATED msg", 2017, v4.12). The author
+of that commit was aware of the `thread->wqueue` dependency -- they even
+wrote a follow-up commit `48df498daf62e` ("md: move bitmap_destroy to
+the beginning of __md_stop") that explicitly states:
 
-#### The actual bugs:
+> "process_metadata_update is depended on mddev->thread->wqueue"
+> "clustered raid could possible hang if array received a
+METADATA_UPDATED msg after array unregistered mddev->thread"
 
-**Bug 1 — PREEMPT_RT / `threadirqs` warning:** When the kernel is booted
-with `threadirqs` command-line parameter or PREEMPT_RT is enabled, the
-IRQ core's lockdep infrastructure marks handlers as `hardirq_threaded`
-if they can be force-threaded. In `kernel/irq/handle.c`:
+This follow-up only addressed the **shutdown ordering** (moving
+`bitmap_destroy` before `mddev_detach`), but did NOT add a NULL safety
+check for the startup/error paths.
 
-```199:201:kernel/irq/handle.c
-                if (irq_settings_can_thread(desc) &&
-                    !(action->flags & (IRQF_NO_THREAD | IRQF_PERCPU |
-IRQF_ONESHOT)))
-                        lockdep_hardirq_threaded();
+The race window during startup:
+- `md_run()` calls `pers->run()` which sets `mddev->thread`
+- Then `md_bitmap_create()` -> `join()` creates recv_thread
+- Then `bitmap_load()` -> `load_bitmaps()` enables message processing
+
+While the normal ordering seems safe, there are scenarios involving:
+- Error paths during bitmap creation where `mddev_detach()` is called
+  (NULLing `mddev->thread`) while the recv_thread may still have work
+  pending
+- Edge cases in `dm-raid` which has a different bitmap_load timing
+- Future code changes that could affect the ordering
+
+### 4. The Fix
+
+The fix adds a simple NULL check:
+
+```diff
+        thread = rcu_dereference_protected(mddev->thread, true);
++       if (!thread) {
++               pr_warn("md-cluster: Received metadata update but MD
+thread is not ready\n");
++               dlm_unlock_sync(cinfo->no_new_dev_lockres);
++               return;
++       }
 ```
 
-Because `IRQF_ONESHOT` is already set, this particular path won't
-trigger the threaded annotation, but the **masking semantics** of
-ONESHOT are incorrect for a primary-only handler. In the `IRQF_ONESHOT`
-path, the IRQ core does:
+The fix properly:
+- Checks for NULL before dereferencing `thread->wqueue`
+- Releases the DLM lock (`no_new_dev_lockres`) acquired earlier in the
+  function (avoids deadlock on early return)
+- Logs a warning for debugging
+- Returns early, safely skipping the update (the array isn't fully ready
+  anyway)
+- Removes the incorrect "daemaon" typo comment
 
-```1726:1727:kernel/irq/manage.c
-                if (new->flags & IRQF_ONESHOT)
-                        desc->istate |= IRQS_ONESHOT;
-```
+### 5. Scope and Risk Assessment
 
-This causes the interrupt line to be masked during the handler and
-unmask logic depends on `desc->threads_oneshot` — but there's no thread
-to clear this mask, so it depends on the
-`cond_unmask_irq`/`cond_unmask_eoi_irq` fallback path.
+- **Lines changed**: +6/-1, single file
+- **Risk**: Near zero. The check only triggers when `thread` is NULL
+  (abnormal case). Normal operation is completely unaffected.
+- **Subsystem**: MD RAID (clustered), mature subsystem present since
+  v4.12
+- **Could break something**: No. This is purely defensive -- adding a
+  safety check that only activates in the error scenario.
 
-**Bug 2 — IRQF_SHARED conflict potential:** The interrupt uses
-`IRQF_SHARED`. When sharing interrupts, all handlers on the same line
-must agree on `IRQF_ONESHOT`. If another driver on the shared line
-doesn't use `IRQF_ONESHOT`, `request_threaded_irq()` will fail with
-`-EINVAL` at the mismatch check:
+### 6. User Impact
 
-```1606:1607:kernel/irq/manage.c
-                else if ((old->flags ^ new->flags) & IRQF_ONESHOT)
-                        goto mismatch;
-```
+- **Who is affected**: Users of clustered MD RAID (enterprise/SAN
+  environments)
+- **Severity if triggered**: Kernel panic/oops (NULL pointer
+  dereference)
+- **Affected stable trees**: All versions since v4.12 (5.4, 5.10, 5.15,
+  6.1, 6.6, 6.12, etc.)
 
-This is a real failure mode for shared interrupts — CXL PMU's incorrect
-use of `IRQF_ONESHOT` could prevent other handlers from sharing the same
-IRQ line.
+### 7. Stable Criteria Checklist
 
-### 3. CLASSIFICATION
-
-This is a **bug fix** — it corrects incorrect IRQ flag usage that:
-1. Applies semantically wrong masking behavior (ONESHOT without a
-   thread)
-2. Can trigger warnings/assertions under PREEMPT_RT or `threadirqs`
-3. Could cause shared IRQ registration failures
-4. Prevents force-threading in the wrong way (the intention is correct,
-   but the mechanism is wrong)
-
-### 4. SCOPE AND RISK ASSESSMENT
-
-- **Lines changed:** 1 line (single flag change)
-- **Files touched:** 1 (`drivers/perf/cxl_pmu.c`)
-- **Complexity:** Minimal — straightforward flag replacement
-- **Risk:** Extremely low. `IRQF_NO_THREAD` is the semantically correct
-  flag for the intended purpose. The interrupt handler is a hardirq-only
-  handler that performs only register I/O and atomic operations — it
-  should never be threaded.
-- **Subsystem:** CXL PMU performance monitoring driver (PCI-based)
-
-### 5. USER IMPACT
-
-- **PREEMPT_RT users:** On PREEMPT_RT kernels, `IRQF_ONESHOT` without a
-  thread handler causes the interrupt line to be masked with incorrect
-  oneshot semantics. This could lead to lockdep warnings or subtle
-  interrupt masking issues.
-- **Shared IRQ users:** CXL devices sharing PCI MSI/MSI-X vectors with
-  other devices could experience IRQ registration failures due to
-  ONESHOT flag mismatch.
-- **General users:** The CXL PMU driver is used for performance
-  monitoring on CXL 3.0 memory devices — an increasingly important
-  hardware platform for servers and data centers.
-
-### 6. STABILITY INDICATORS
-
-- **Author:** Sebastian Andrzej Siewior — PREEMPT_RT core maintainer,
-  expert on IRQ threading
-- **Reviewer:** Jonathan Cameron — CXL maintainer
-- **Signed-off-by:** Will Deacon — ARM architecture and perf subsystem
-  maintainer
-- **Pattern:** This is the same fix Sebastian has applied to multiple
-  drivers (i2c-exynos5, i2c-hix5hd2) with proven track record
-- **Precedent:** The arm-ccn PMU used exactly this fix
-  (`IRQF_NO_THREAD`) for the same class of issue
-
-### 7. DEPENDENCY CHECK
-
-- No dependencies on other commits
-- The driver exists in stable kernels 6.6.y and later (introduced in
-  v6.5-rc1)
-- The change is self-contained — just a flag change in
-  `devm_request_irq()`
-
-### 8. CONCLUSION
-
-This is a small, surgical, well-understood bug fix that corrects
-incorrect IRQ flag usage in the CXL PMU driver. The `IRQF_ONESHOT` flag
-was semantically wrong for a primary-only interrupt handler and could
-cause:
-- Incorrect interrupt line masking behavior
-- Shared IRQ registration failures
-- Issues on PREEMPT_RT kernels
-
-The replacement with `IRQF_NO_THREAD` correctly expresses the intended
-behavior (prevent force-threading of this PMU interrupt handler) without
-the incorrect side effects. The fix is trivial, low-risk, authored by a
-world-class IRQ threading expert, and reviewed by CXL and ARM
-maintainers.
+- **Obviously correct and tested**: Yes, trivially correct NULL check
+  with proper cleanup
+- **Fixes a real bug**: Yes, NULL pointer dereference leading to kernel
+  panic
+- **Important issue**: Yes, kernel crash
+- **Small and contained**: Yes, 6-line change in one function in one
+  file
+- **No new features**: Correct
+- **Clean backport**: The fix should apply cleanly to all stable trees
+  since the code hasn't materially changed since v4.12
 
 **YES**
 
- drivers/perf/cxl_pmu.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/md/md-cluster.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/perf/cxl_pmu.c b/drivers/perf/cxl_pmu.c
-index d094030220bf2..68a54d97d2a8a 100644
---- a/drivers/perf/cxl_pmu.c
-+++ b/drivers/perf/cxl_pmu.c
-@@ -877,7 +877,7 @@ static int cxl_pmu_probe(struct device *dev)
- 	if (!irq_name)
- 		return -ENOMEM;
+diff --git a/drivers/md/md-cluster.c b/drivers/md/md-cluster.c
+index 11f1e91d387d8..896279988dfd5 100644
+--- a/drivers/md/md-cluster.c
++++ b/drivers/md/md-cluster.c
+@@ -549,8 +549,13 @@ static void process_metadata_update(struct mddev *mddev, struct cluster_msg *msg
  
--	rc = devm_request_irq(dev, irq, cxl_pmu_irq, IRQF_SHARED | IRQF_ONESHOT,
-+	rc = devm_request_irq(dev, irq, cxl_pmu_irq, IRQF_SHARED | IRQF_NO_THREAD,
- 			      irq_name, info);
- 	if (rc)
- 		return rc;
+ 	dlm_lock_sync(cinfo->no_new_dev_lockres, DLM_LOCK_CR);
+ 
+-	/* daemaon thread must exist */
+ 	thread = rcu_dereference_protected(mddev->thread, true);
++	if (!thread) {
++		pr_warn("md-cluster: Received metadata update but MD thread is not ready\n");
++		dlm_unlock_sync(cinfo->no_new_dev_lockres);
++		return;
++	}
++
+ 	wait_event(thread->wqueue,
+ 		   (got_lock = mddev_trylock(mddev)) ||
+ 		    test_bit(MD_CLUSTER_HOLDING_MUTEX_FOR_RECVD, &cinfo->state));
 -- 
 2.51.0
 
