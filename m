@@ -1,67 +1,67 @@
 Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7DDF288C20
-	for <patches@lists.linux.dev>; Wed, 11 Feb 2026 07:57:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DFAD0286889
+	for <patches@lists.linux.dev>; Wed, 11 Feb 2026 07:57:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=198.175.65.19
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770796624; cv=fail; b=PkFzq0YlzWds1wwjI5uqy+ha+aTlnICG90sKbN4Pvvvt7+7G5L2abfQvpEwEycAykCnDf7218qHt0faJKWEpYgFwPL8whpKHY2IwHyNCrSbc/3qGgubO+nmeK89ILyyQt3yKSpe97SyGdWnOz54lkMyLod3PEUXlv/GQETA21eI=
+	t=1770796633; cv=fail; b=k7+f9CeOI9Aqzt9aXKslQXvtd2LxgiiaF4y6nylTUQiC/Wxej+Bo3GbSwLhkztJC5YUhoSfjkfGiqRoo1gaH0zvcoOqBBQk5e+2HRrRPTDMTStgYtg+t04lwKaMukUwhBfc78yTWy5qq4e63jweOPuKuZ7qLh+ui0AASu3U+4EM=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770796624; c=relaxed/simple;
-	bh=GxqfQuOQ73gMgW5gXWss2NFa0VBix2UNcZw2AkYkqFc=;
+	s=arc-20240116; t=1770796633; c=relaxed/simple;
+	bh=VqHSfMgSvr0J9NQe/nJ4IwtxEJZCbL16U84evNl4Gv8=;
 	h=Message-ID:Date:Subject:To:CC:References:From:In-Reply-To:
-	 Content-Type:MIME-Version; b=gf7IONDTTryRZc0Rt/4mzoQrfasQUJl3CNTch3/10RRebJ69E/4E+kbCpxW4pX3j21VyNyazp1oqAVcr8UEcy7Ww9q3b5gEN0ew6HRNK2cCtWf5k8WavUTgkjw4UxyNEhXNfgL352xn3moBuJj+Y1aUx4r4xfdgg22ftPJhKvuQ=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=kwHDSzKi; arc=fail smtp.client-ip=198.175.65.19
+	 Content-Type:MIME-Version; b=kxcL0xGER8ZkPFO3FPsCT74uM9JdUqR3s0qCD8M0NmxWeM3706EaWdxpoXnUUM00GzssLbqYIYfhdalTLLnlChqxA4/WJ+drl6Y94+1XKz4fdOJ5SG3yUfP2j2J3BsN0ApOa/baUFDh0H8GkY2dxOqj33PPLyB7wrxRDRzD72UY=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=PdDxBBVX; arc=fail smtp.client-ip=198.175.65.19
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="kwHDSzKi"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="PdDxBBVX"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1770796623; x=1802332623;
+  t=1770796631; x=1802332631;
   h=message-id:date:subject:to:cc:references:from:
    in-reply-to:content-transfer-encoding:mime-version;
-  bh=GxqfQuOQ73gMgW5gXWss2NFa0VBix2UNcZw2AkYkqFc=;
-  b=kwHDSzKiJV/QmW+g+UALeDKHw62KfZ0LJnJyu3iUi4AY9dyUjlGyi0fS
-   VwXRQtULVTRN1/7wld9iXymC+ep0KFjOj038H92FDdv5onbkZkKZziT69
-   3CL9iSuGNNlsemErS543IaxhDhahus0kBIjIC8Um0i8StZnJqwEQUcxdd
-   STIpyq3TB+gO2Y0YeQGuJmiN1qhBp0wny62zn0KFXZYFbmKfSZDpp1eG5
-   qFTghnPDb2li24lcsxMRvaQG1YmH+giiTwnV4UpY75slnTaejFxxCdq4c
-   Xng/JLKRV8oAtmtIrBI/2F0ex9n+mEcK7BaWQFaaEAxizmqwC9N+el2e3
-   Q==;
-X-CSE-ConnectionGUID: 0eR7hBotT4y7nXoU+Voadw==
-X-CSE-MsgGUID: PdIb8qHIQ7qiK15xG2Lctg==
-X-IronPort-AV: E=McAfee;i="6800,10657,11697"; a="71835572"
+  bh=VqHSfMgSvr0J9NQe/nJ4IwtxEJZCbL16U84evNl4Gv8=;
+  b=PdDxBBVXRarHzpu7tHaRNjcYP1+J66f8yYxF8o3aGwTVproHFKsmpqe+
+   tMD5xPCIEbnzQYxH4uErFujSRMl/45swlidmHgWLHhBtzvkcHSklMLIVd
+   8by30VkK0vzJ4TAvEQFksUPhTYdkto+W88HuMof/lB4o4I0p5TIALeT4G
+   71a5Ru7rx1GstRSg2X1iOUhg8kRFnI+ObSDxOiw79kAdcdKy/xTvmTtxY
+   B3zwLr9TR6O5pllIPXMWnX6MMDyievZJTBOcyiR9Dd4lYFP5qkmJKrSWZ
+   Iy6KEhZNVOTt1qEW8gJh0scAoI999lJx+9BleRPQ73JMSaeBbyq4KpW4/
+   A==;
+X-CSE-ConnectionGUID: 6YqtZHntSyqRMSx4OwNv/A==
+X-CSE-MsgGUID: RuS9XHtsRUWNaiCq6fS1og==
+X-IronPort-AV: E=McAfee;i="6800,10657,11697"; a="71835655"
 X-IronPort-AV: E=Sophos;i="6.21,283,1763452800"; 
-   d="scan'208";a="71835572"
+   d="scan'208";a="71835655"
 Received: from fmviesa002.fm.intel.com ([10.60.135.142])
-  by orvoesa111.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 10 Feb 2026 23:57:01 -0800
-X-CSE-ConnectionGUID: 0gh+PcLKT1qVxu6ZOidaAQ==
-X-CSE-MsgGUID: 2a0ChPMfTP6kU1UvqRApjQ==
+  by orvoesa111.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 10 Feb 2026 23:57:11 -0800
+X-CSE-ConnectionGUID: DmVsULZwT12V5dsEZx25kA==
+X-CSE-MsgGUID: GxGThdKMQxGd908k/47bMA==
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="6.21,283,1763452800"; 
-   d="scan'208";a="235152504"
+   d="scan'208";a="235152588"
 Received: from fmsmsx901.amr.corp.intel.com ([10.18.126.90])
-  by fmviesa002.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 10 Feb 2026 23:57:01 -0800
-Received: from FMSMSX902.amr.corp.intel.com (10.18.126.91) by
+  by fmviesa002.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 10 Feb 2026 23:57:10 -0800
+Received: from FMSMSX901.amr.corp.intel.com (10.18.126.90) by
  fmsmsx901.amr.corp.intel.com (10.18.126.90) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.35; Tue, 10 Feb 2026 23:57:00 -0800
+ 15.2.2562.35; Tue, 10 Feb 2026 23:57:09 -0800
 Received: from fmsedg903.ED.cps.intel.com (10.1.192.145) by
- FMSMSX902.amr.corp.intel.com (10.18.126.91) with Microsoft SMTP Server
+ FMSMSX901.amr.corp.intel.com (10.18.126.90) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.35 via Frontend Transport; Tue, 10 Feb 2026 23:57:00 -0800
-Received: from MW6PR02CU001.outbound.protection.outlook.com (52.101.48.51) by
+ 15.2.2562.35 via Frontend Transport; Tue, 10 Feb 2026 23:57:09 -0800
+Received: from BYAPR05CU005.outbound.protection.outlook.com (52.101.85.43) by
  edgegateway.intel.com (192.55.55.83) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.35; Tue, 10 Feb 2026 23:57:00 -0800
+ 15.2.2562.35; Tue, 10 Feb 2026 23:57:09 -0800
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=y+aUpowgrR+JN+gLFlrsInobqc3ieaPRJFuIxkTTZPrA/B8njPWz6GhJyhrIVTIlDXiT4L3dkKBbY6efuY4epslZum1ooDkHh7Qr/pp8AKk1ervQs7QQeKIx5aDrwFibP2jg8LK1tColEpXIZLr+qC6ho5hzYOUcQEwI35EQsHnyM+7nWA5H3Oli0J1JHlw6w4emjgjSjb+WForCRDSois6CDyAVyhZM/GwnEI9VUPwK144MCYP72/k6LWwz8vBf0gkA4Tv6El9PZtUnDlanZrrmrAZL5HEL0pafRoam6T+zwXuql6h7r7kzS1cLLtOkVK5pbXFj/y0XqtowSMowJw==
+ b=oUSJ2spZyGfX2GFl5kpPqgda8GlfwdPgP00HSG34RViIcKGBvEiIGSUZW1IiCgbWTCwf6g+XvHufQgY97p7C6FBL5zIPcATs+q7BTTGz3wEmkEcXCmQ3woBw5GQwcIWnpP4WoZxSh00Jeff+dG8iAZ9XVG5aZ7jBRZh0kRxD6Q59e0toII/fn2fAGVapH7iDa+IFtzuVYntzGlamvxtg1TA85abk8HWtPlL73pMnFfCwrQBPTiVup5bMt1slDGU8VBT/BN03kHf+uhwbdGIO6cWc7CWoDJxpYUfLG9Z26624PgvccgqAQnfyrxw7TAkIAtYjFwqoqEeVpCTvQaSwsw==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=KPJu4n/DUVPN7yOOIi/cc5VlFGYCiG/EPfOe+RRD+0U=;
- b=MOrBcskifQnIg0SDRZNP5LtUZeQCfjBYTQ+/XpiUeVRNanNOWrsiCWjqqiK3S4tGPTaF5oNBMTQF2DVLcXFIhLRqSoJ1XUotR2ycRA05KfJ0Bdu863HJFMqLls6Ks0ti46eglkVFQun8+RcP9GCLa6Q8A25PlPDkS6pJKQ4JcN21tbzp5v4bVBwokwSwmjtsA8clDxaBpABjuRYgtPapab4MjkiBeDiAIwrraxJbqWEpsz8WI48+uciwN+HZLZ+z8Ie/7wKlZXn2OCwGtgmJmDVylx/xT0xdBIv7aW+41ykN0ZHC7y2KUgd+dniqe2BW1GWSmDWFwpKTQfC9IVEtxg==
+ bh=Y79BzEfTpzBwascXl6XM2K3UTMqYFT8Apf7dCQT93tI=;
+ b=WHsIFTmduVwzRVV22+15MH2CZVbvBTG9qHvRELeVnigOFK4fUEAsPuXnGpZcYU8HDocxcVsNr5/cMli0U4sZNtjK8oBtjBh4eB08SOzNa9MR3DDjSLLgUfFCFhsQExZ4Ccx3R3LgOmyxDrjVSFAWm8sda/0ACWmRmW+f0EslJ0FYnqsdBSKrNhZ5Btt8LPwF+iiCIPVegHUQMqMwSvSSO+x/uxrxx2QagMcFLvQjlPZmWwcTuTTSbhGK78/Vptg7qbzYl39yQ2FmOC9a7qPBYhS68dIPyYfC2N1lfrUAQNKdxODGjWCTa9SAFQFehhg66z4z7RYjrOEQEOKtx0GKxg==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
  dkim=pass header.d=intel.com; arc=none
@@ -71,33 +71,32 @@ Received: from DS0PR11MB7215.namprd11.prod.outlook.com (2603:10b6:8:13a::13)
  by SN7PR11MB7973.namprd11.prod.outlook.com (2603:10b6:806:2e6::15) with
  Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9587.16; Wed, 11 Feb
- 2026 07:56:57 +0000
+ 2026 07:57:08 +0000
 Received: from DS0PR11MB7215.namprd11.prod.outlook.com
  ([fe80::cba:8493:6cff:5cf7]) by DS0PR11MB7215.namprd11.prod.outlook.com
  ([fe80::cba:8493:6cff:5cf7%5]) with mapi id 15.20.9611.008; Wed, 11 Feb 2026
- 07:56:57 +0000
-Message-ID: <ad382e94-db03-435c-ba68-8ab11a9e813e@intel.com>
-Date: Wed, 11 Feb 2026 09:56:55 +0200
+ 07:57:07 +0000
+Message-ID: <f9edb8d1-cc00-4497-898e-b3472ce2e925@intel.com>
+Date: Wed, 11 Feb 2026 09:57:04 +0200
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH AUTOSEL 6.19-6.12] i3c: mipi-i3c-hci: Ensure proper bus
- clean-up
+Subject: Re: [PATCH AUTOSEL 6.19-6.12] i3c: mipi-i3c-hci-pci: Add System
+ Suspend support
 To: Sasha Levin <sashal@kernel.org>, <patches@lists.linux.dev>,
 	<stable@vger.kernel.org>
 CC: Frank Li <Frank.Li@nxp.com>, Alexandre Belloni
-	<alexandre.belloni@bootlin.com>, <billy_tsai@aspeedtech.com>,
-	<quic_msavaliy@quicinc.com>, <wsa+renesas@sang-engineering.com>
+	<alexandre.belloni@bootlin.com>
 References: <20260210233123.2905307-1-sashal@kernel.org>
- <20260210233123.2905307-5-sashal@kernel.org>
+ <20260210233123.2905307-9-sashal@kernel.org>
 Content-Language: en-US
 From: Adrian Hunter <adrian.hunter@intel.com>
 Organization: Intel Finland Oy, Registered Address: c/o Alberga Business Park,
  6 krs, Bertel Jungin Aukio 5, 02600 Espoo, Business Identity Code: 0357606 -
  4, Domiciled in Helsinki
-In-Reply-To: <20260210233123.2905307-5-sashal@kernel.org>
+In-Reply-To: <20260210233123.2905307-9-sashal@kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: DU7P191CA0025.EURP191.PROD.OUTLOOK.COM
- (2603:10a6:10:54e::9) To DS0PR11MB7215.namprd11.prod.outlook.com
+X-ClientProxiedBy: DU7P191CA0021.EURP191.PROD.OUTLOOK.COM
+ (2603:10a6:10:54e::21) To DS0PR11MB7215.namprd11.prod.outlook.com
  (2603:10b6:8:13a::13)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -107,387 +106,292 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
 X-MS-TrafficTypeDiagnostic: DS0PR11MB7215:EE_|SN7PR11MB7973:EE_
-X-MS-Office365-Filtering-Correlation-Id: 772ad9cd-c9ed-446b-ebcc-08de6943212a
+X-MS-Office365-Filtering-Correlation-Id: 260c4c91-6b07-452f-27db-08de6943275a
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam: BCL:0;ARA:13230040|376014|1800799024|366016|7053199007;
-X-Microsoft-Antispam-Message-Info: =?utf-8?B?UTEwSzZLR09xZEVSem5nN2tUWXFGcmUrU1ppNkdmdTJrL2l1bXpqZXh3QVFU?=
- =?utf-8?B?bUlCb0huUzZtNUtMUDJjSllmQ0krMmtlb0VFR0JRUElNQzdEcUdoNFdtMWYw?=
- =?utf-8?B?UUEzRHNudDB4YllSQy80THpyMS9FeDU1bUozSnUvZUtqWG9CbysyRlZBUWtS?=
- =?utf-8?B?U1dJNlJzcytqQ3oreU9ldFpnK0hQd0dSQTJ4UitHTmxZbm42RzdoTWlSL2ZJ?=
- =?utf-8?B?S1JVa1dNdHkva2gzT0d3NlE5UlZlMHpvUmQwRkh6cGh2dzl1QkdkckJhTU9y?=
- =?utf-8?B?UXBGajZSWjVFM2F4c0tUR21OL0RLei9VY2MxdUtReTBWZnhrMHF1QXI2Mkgz?=
- =?utf-8?B?QnJZbG8vSmpwUzNHdVRFNVd3MFFmbjhlZWVPc3dXVElDRUpQOVhrNzV0WGpL?=
- =?utf-8?B?S1dKeGp1a0psTVlSVkY1U2VTU0hCd01zWVk0ckVsTkZJdkIwM05PZ1I5QXQz?=
- =?utf-8?B?SG1PMkt0dEM4dVRpSUlQcW5qRHVnbVRySUxDNDMxTVJTS0N4RStCOExBMGVL?=
- =?utf-8?B?NGR1SzlhSjEvTmxEbHY0djhZNnZZQzIrVm1qbUFMWllub3ZUU2RlU1dYU2pp?=
- =?utf-8?B?bU1TMEFHc2REcHVFY29LTjFTa2tENXRxU0pXTWxsdzhzT2cyd0oyZ29YdFNH?=
- =?utf-8?B?anFPbStJL3E1cFAxVkZySjB5OFR3bzRMUFRyOGFoc0xuVDdaRnEzNHV3djdp?=
- =?utf-8?B?ODFFQ2JzZGpUK0EvZEtxZ1VUaThrTzNqT3dnRmNVRE85V210dFdyUE15Ukgy?=
- =?utf-8?B?dVZXdUl4WVJGZnZkNGFPMnR0N0ZMOGwvaGRDaVJMRm5zTGhEL3VMZTBsRjBk?=
- =?utf-8?B?Vjhka0hGZmdZZVVLSHo1Q24zZ3ZQQVkxTFRPcWxtYktNMHo4VnVHZzRmbnR5?=
- =?utf-8?B?dEZZeXZGSXFMQkxTS1I5dStuWnhFK3REZUZ4Y0x0NnNMNi80OFM1cHRDZ0ZJ?=
- =?utf-8?B?NzZMTzFiR05DOVhPYng1T2NJZGsvc3JsQkVtWC9UUThGVlM1bDF5T016Ky9y?=
- =?utf-8?B?VUZRWTZueE8xSkNqODgyeVRlK3dPbEcrMmlBSFAwaisvcVlxd0NQb05JSWpm?=
- =?utf-8?B?STdOUlhGa0RvMjRBY3Y2NHRtbjF1VTdzc3ZGWGdhOVVxVDNzaWFlM3hDeHp1?=
- =?utf-8?B?MWxtdUVoT2kzWmQraml5T2svQkp3ZUl5Um9DeStuMGg1UDdqTTQyTWZBME9U?=
- =?utf-8?B?K2Q4blcwVVVqcktzTlZMaStTakdjdU52elYrUVVQZlJ5R0xNZm1rcytJbXdL?=
- =?utf-8?B?c2JFb1ZOZGdla1hjK3ZuaXVFbGRjNG5sbzJUd2ViUmRkWFJJT3AvNU9nQWlC?=
- =?utf-8?B?d0pPUncxRjFySktRZ3FjbDRUL2JOcmtNVXY0dGxOUnJJN1BkRXhJZ1VLUVk4?=
- =?utf-8?B?RjlYR3hCZG5IaVJTR01OblhUcTVXQk9Ob3drMHBHbkMzVi9DRVEzVDQzVmZV?=
- =?utf-8?B?eVdqVkU2S0FZbEVudk5tenh2MlFEZmZWdDlOMi9ObUhKdGw3QmR0Z2prZGNY?=
- =?utf-8?B?Z3ZNK3VjTjRKM3VsbEY4dnh5NHpiYkxSSytGWTBtTVc0UzNmZE9aOUFpdE1q?=
- =?utf-8?B?em5PdVk4N1oxbjZoK2t0dytXRFBmNEtZSGpGL2dzREJ0OVI5U2dobEl3L25q?=
- =?utf-8?B?QldoS3Z6UzN3QUs5WER6K1p2L3BFU0dxMFJqZWoycW1TWW1tZ1JaeXRVK3Fr?=
- =?utf-8?B?Z215MXNwNEMybjBhbVY4V0d3YS9OSlJTeGRVbzMvcTF3YW1WcStPdDYrWkZH?=
- =?utf-8?B?QnQrR2MvRE1vcmNGZjNmdlNmQjFwTndqNWMrelZLMVp4bTgwY1J3b0tobWZG?=
- =?utf-8?B?aSs3dkdUV0x4QlJRWFNHbzJrZnM2VzNhYjBCSnhzSlpsL04vblMvdUkvbnc4?=
- =?utf-8?B?NVNnSWl1clJFcXNIbTJaTFZvSFB0M2JNL3RZRVB6V3JiK0tOT1lDWkd1dGlQ?=
- =?utf-8?B?eWlzWFV0dFNlWUJQRDJhYXRrVWo2a3NoRnpvTDRKM3B6TmpBbmNMOEFNQmxr?=
- =?utf-8?B?YXBpdDB0QXBlQVVQTHB1SHUwYkpNNE1jVERkU28vZkxHMEJIaG1xNExYNURE?=
- =?utf-8?Q?1Ql2xr?=
+X-Microsoft-Antispam-Message-Info: =?utf-8?B?Y3F3dWdidHMwV3IyNkhSR2JFelIrd2FoTzZjMVhZSGY5QkQ5MlF1OWora1pi?=
+ =?utf-8?B?WGVXQStIdFdwaC8yUnJxT2xOdllrSXoyd3o0SGgxQXBKZ1VhMERObm9Yc3Rm?=
+ =?utf-8?B?dnVZc1RNU0ROUXM5cW42WUlFaUEwbkc2a3E1SnVSVTl1R3RtV05qbzZVRWdF?=
+ =?utf-8?B?TU51NEQ1M3l0cmpWVnhsbHRDTkdub0U2RHRkM2VUMEozbTFWWmhhSVlmMlFo?=
+ =?utf-8?B?MEZaRDFKRzdkcHVyNHI5V1YyVURuUXJoM095VFgrYWdrUmVFbFA4V1E4MVZE?=
+ =?utf-8?B?TTZNUlRjWDJMSFJBaTNRMXNOZlJ3VjZEN3dOZUpVZDJRdWp3WlpLZE1vZjNJ?=
+ =?utf-8?B?dStEYmI2ZjE4bnZ5ZEVRSUYrdVVCZmRlZmJuZW4yT0lIYTl5RDRXOGZpVDUy?=
+ =?utf-8?B?bzIwRkVlQVJyTlZTYStEeFU0ZVJoNWNQNldoVVJWOHFzUWdOdzF6VnEwVzVL?=
+ =?utf-8?B?ekg1YkJqWWJsVXNJT0l6cmtzejI3MGV1MkF0TDRKR3o1YVBkVm5mSlVhcmNt?=
+ =?utf-8?B?ZFNyMDE3NkZKUHhPWVR0cWNmR1VsYmxkcmpwZzYyamtEVjA1Y1hFS2JpQUpm?=
+ =?utf-8?B?TGphTFU3a2h3M1h1bTRhQllScHNsNW5RUlFkaGo5WFVZOWdNRGJ2SkRGVlc2?=
+ =?utf-8?B?Y2l6ME5lMEs0OG5RbGROM3JOY0F1Z1lRTjA5dWN5Q1lSaFFjdXRRUjhRQUNH?=
+ =?utf-8?B?MlhBbVV3djh5THdLRnJadmJMRWV2U1dIdmNPcnFyeVJBUXlOang0TWxlRG1k?=
+ =?utf-8?B?Q3R6ckhKUDhyZkJlMitpc1FjamM3aFlybyswaWZleDZwQ0lGNmk4TWFuR0ls?=
+ =?utf-8?B?Y1JSZWFHaGVGbXYrTGh2NGJlaVd6NVk3U081VVRJbzRXcDcydDB5VTRsTjVL?=
+ =?utf-8?B?czQ0L0RLT1VtdEZUQXF5NDV5NGc0MXBxT1I5bnBrRHphZUxxTTE3cG9uT2hV?=
+ =?utf-8?B?eGtJYXZGMFhlakh4cW04aUV0RlNnajZxL3FrRm1BVjg5akhRUThlL1hESktY?=
+ =?utf-8?B?cWpWYkhFNVZnUVFWVHN4VEdZZTZYdkZQZDBCT0JLdmRUQUlyWDU3eGg4M1lO?=
+ =?utf-8?B?alVuK212ZGw3bkREM1B3cEZvOTZsNU4rSTZPUHZHdm5OTUI4NnkwdUptWXZN?=
+ =?utf-8?B?TXhpamo4QWNYNlBVaTF3bmNZVHBqaTZnY3BWdW5TZjhaVXRYd2RwMWJzOFUx?=
+ =?utf-8?B?VUpSd29FZDVJcXo0TjRNWnIyLzlpSzlLN29icWo2cnliMzEyS2N2QWFtSS9p?=
+ =?utf-8?B?cmN2WGQrS1p4Wlg3RkcvNmdacFFSWXBXa3JpdlNMeUZpOStHSDVROEZ3M1k5?=
+ =?utf-8?B?Mys0YTQxc2dFa2hzYnhaTmhqbTFURXE4bW9wRmd6WWlPM1NOSGtuOFJOU2JR?=
+ =?utf-8?B?RzVQTEMvRXVYamowVm8valdRczIvd1Y2bzZocGg4eHo2ZWtmQXJQSC9BbTFO?=
+ =?utf-8?B?Q29RWWlOcjZiOTBaM0VpSTVxa1ZuU3pwbEVqbElGZDFrNnoyOXcvZkJzNm0x?=
+ =?utf-8?B?L3BISjFXakpkYTRsaHVjZHFKSk42aDNNWS9DeStTS3dCc0FiNGVUWWt1Q2FX?=
+ =?utf-8?B?dnBsMGo3Tmx1TVpNdHk4b1NFeWpmV2FLcjVvejdlSTNHcWZEa1NLakZhK3B4?=
+ =?utf-8?B?WjI0dm9yWU9MbUpzNldYR29CZHlLZHhidVY1dVZ5RWx5a09FUlh1U0Q5NjhN?=
+ =?utf-8?B?OW1uOVlDdk94U2RTZy9SYnNsUEdZSG5pMFdhVFFBQW5rZHdGOXNacC83RUxy?=
+ =?utf-8?B?UWIvL0dtUkRTamxjYmY4Z0o2ZmZ4c0t3Q0Y3b2gyelJhUG5zUGRLODRHdjcr?=
+ =?utf-8?B?emF5S245bEVlSC9MQ3UxM2NvMGRMbmhaSGhGVThDRHEwcDJ3Ny9qVzhxWkJ2?=
+ =?utf-8?B?SDQ1TExRTDEwdnFTWjV3WXlnZ29MZ1YwWmJWNERpcFR6d2E4anUyRE1qcmF0?=
+ =?utf-8?B?d2NYUWdSVktxbjBHbC9oZGFld3JVbFZTdG4zeUptanpKSTVCRXNDNTJtTlNx?=
+ =?utf-8?B?cXBWYXpVUVZmekZYa1E3eTU1KzB6TUttUWtCM1Y2VENGSkxhWDZYYlNtN2E0?=
+ =?utf-8?Q?VbNMC6?=
 X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:DS0PR11MB7215.namprd11.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(376014)(1800799024)(366016)(7053199007);DIR:OUT;SFP:1101;
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?ajA3MUtMYlJMcFFjcFB1bWN0em1GNGQ2VDVQUHh6bnNvbVZuTTlOcXBmanV2?=
- =?utf-8?B?UWFpV1NVaXNzZmZQSTVUd25TdGZtQ0lubDFCZXc1SVIvemNRTnBCZjRTV1Ra?=
- =?utf-8?B?aFlzMWFodGlSWGc5NVlMcVNCV1owVG5QeGUybUtSTC9LZEE1N0RYNVFYM0Fa?=
- =?utf-8?B?WUtkbFA5Z2ZhV1RQMk83dDAxSC9jSVlFaXZPOGFmVm8xalBESEVCeVFLc0hZ?=
- =?utf-8?B?TFYrZzNGVW4zM3ZFZG5TNU5pdEJxRnhvZUFPcHVoRUttTTdLOFNITGpKRy90?=
- =?utf-8?B?OUk0bFQzK0lDaUFOcDZ3b2VzZ0FndXY3Vzd0SFBNNjIvbUlqQUJpYllIVDZZ?=
- =?utf-8?B?cTBzZi9LWWg3c3VMYzZuMkZmZ3BaUStjYzFwdE52YXlwZUV4ZXRLWFNxVGZW?=
- =?utf-8?B?MjJzNGJyQUxjUWRzUUZjaHlESldFc3hxVk0wWnNjZUFvOEVQMU83d09pMUV3?=
- =?utf-8?B?VnJ1WnpiK3F2Mlo5UUZ2NlhLU2pqbGRML3piZHd2Nm03blV4ekFhOVJiek9X?=
- =?utf-8?B?OVFLWFdOR2M3bkh1V1NQZm1DVzBLbFIwR09oYlgrN0Vpb0xiSWRIalN3eUVS?=
- =?utf-8?B?bkpEOVIyb3A1OEVuWUpCQVFJT3VQZkNuWldBMnkwYVJKaWhTQ2ZCdUZSd3Vz?=
- =?utf-8?B?MW9zWU9iQUhXZjJhcVNBOTM4NVlzMXUrelpGTFRBR2VLS3Vkc0ZmbHMyVDhZ?=
- =?utf-8?B?QkEyZ1oyS2gzZ0xJMERtZnE1dmFMd3c4d3VWczRIL1Z0b2IvRXZVVTludVYw?=
- =?utf-8?B?M2RPOTNHL2E1bjFxRHpqUHNLZ01JODJreGJSSzl2NnpUVDI2cGFDMjh3WTM3?=
- =?utf-8?B?alhERXRrME8wU0JkSHVXcFhVNUdlM1pBL3FaUDFxY2JheWpqT3JFMlpRWTE1?=
- =?utf-8?B?NVRvT0NTL2hGR0JORE5nYy9YSkVDSkVEbjFKSm9QNUIzQTA4Vjk1OWx4Y0Jj?=
- =?utf-8?B?YUd3dU1RWm1PMmNsUDJpbGVQV2JvZE1ZVnpjRkVSalJHaEhKSjBJWUNuQTVp?=
- =?utf-8?B?eTRmZ3pDYXd4Nlg1bnhVbHdlelVtUUJrQVlCakFHQzZVSXVhNzE5c2liUmRB?=
- =?utf-8?B?d0dhQ2h3SW5DOGtnTlhESEZvTUt1aURJc0JBOGhVREJ5c1JoclVaSkRuV0c0?=
- =?utf-8?B?ajQ5TGNyMEFML0NLc0xkSnRlZmlrdms1aHMxZ2wrOUxzTEFObmc3OVlkUGhR?=
- =?utf-8?B?bFdrU0JlLzRmVmREWGp1b1ZoWGVLT2JtZCswdUowaDNkSkNpRXk5elVVWGhN?=
- =?utf-8?B?bWNpVVVjVkRSTkY5bDJCdWE5NmpIN0pBeHBuVnpZSVYzdzgxa1ZSOVlVVUE4?=
- =?utf-8?B?azFybTRPTUlKcGpiZWhRRUo0cFdURk5TWmFWVDdUbkp3cjdkYTVUb0hSc0dE?=
- =?utf-8?B?ZGdGUzUzcU82UVp6N09vRlFFaHJIazZYVlJ2SW8wWlJ0TDlUeEFsZm5yZUEw?=
- =?utf-8?B?RzRaZ1BOYktUUzl1NnhLQ2pCeFFGMjUzS0tseDFlY2VlVXI5VEg2NjNVUHZi?=
- =?utf-8?B?M0ZSYXM3NjMvVGlMbHlSYkVmQkhDVU1td0Z5NFdQRm1wM2tXK3ZqRUhjeEtz?=
- =?utf-8?B?OStFNERPNXh0U0JPNldYR204bEozQ1FZVHR1ZzZkMlZnV1NRWmdCcW5rQnhT?=
- =?utf-8?B?aGIva3lQMnlyTzVBSys0WlYxZFgzZFZWeEhJdExtNmVYT2szQ01VOXMvNUhF?=
- =?utf-8?B?Tm9sN0kzSVpjT0xDUjlLYk9FQkdUUkZCdUdZMUtwWUZvL3ZWMW5jSVBtenhs?=
- =?utf-8?B?SFV3N05IeE9FTndnWHRVSCtpbFhvTzRobUNlM0t5WERyZlRmRE5hMEdjRWRG?=
- =?utf-8?B?TUs0U1RZdUlta1BSZ3RmdEJHa2o3eWg4RFh6aG9tL3U5V0xwdncxSE9xREY4?=
- =?utf-8?B?VklkeTVpdTFBM1lRcnMvNThqY3VUV3hVQnhIb0h6QklMQkt5TjJGaUVHczZ3?=
- =?utf-8?B?U1RRS3c1RTk3TUI0dTZaQS9zOGlKNUZqWVdqeXg1aXFCSUdxSy9LcnZqSkE3?=
- =?utf-8?B?NVRaSHVhcEdvVHg4N2pkWlZNTEdONU1nbWt6bVRTNHJ3ZUwxQUNwTlZESmZC?=
- =?utf-8?B?NGRjR1FFSHA3NU1TMmRFUXVJd2VObnZGY1lSMzd5azk1a0pDaU5iTFIvY2NC?=
- =?utf-8?B?Qk13Tys3ZGZuSlYvMDB5ckJLY1llTnNkb1hXV1VEc0Qwb0dSeHU0a3pjdDVU?=
- =?utf-8?B?YnRZdTlmaDRYUUE3dkN6U0JpWHNlaUJWUVd2NzJPN2JZdTFBbEROTGlhdGF5?=
- =?utf-8?B?TFRrbC9OTkxSZU42V3FqVDFjVlRuTjlsSlpueXU4bC8raGRUcjVOa1IxZXIx?=
- =?utf-8?B?YXppQU1LUGlna0k1WUZUZlBRWWkyaktPdjFmMU5qWUNmUENMYklzQT09?=
-X-MS-Exchange-CrossTenant-Network-Message-Id: 772ad9cd-c9ed-446b-ebcc-08de6943212a
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?bXpIS212NE54WmdsMHlhUGRqL2dBaGVvaThOTDh5MHg1VGp0NkQwTzNPR0R4?=
+ =?utf-8?B?ckNVZ1FFekxmTU8yNUhEQ1lCdjVqZEhpc0l2MCtJaTE5SWRHaWZuamo3VnNH?=
+ =?utf-8?B?NDFqVDh2S2l1WDkyRUFhRVdYbkZSdXZtajF5eUFGSHF2akZwc3k0TGxsS3Bw?=
+ =?utf-8?B?bFlFTnFZdXQ3Rk4xMW9jQ0pFZVVUWTJIZk1HVE5JV2ZwYi9pbUtxdHZqZktl?=
+ =?utf-8?B?RlZSSm5kQWwzYWY3azIzK2hUQVFJd1B2d29jcytDem5PaHowWTVlT3JtZnpS?=
+ =?utf-8?B?U05sT0JCdWhVcE1qV1l5T1QxVnd0ZUM4TUlTL0VnZ01zSEVLQnVVak1YVGsr?=
+ =?utf-8?B?TEg3R2c3Q2tuV2oxa015TUdHS2lNTjRYNXdjS0x2RlBWMk8venVldEhXanNJ?=
+ =?utf-8?B?VlZ2NEx1a0Jkd01YL0hWTWtNWmpqU1E2aWxraUQzdVh4c2FGRTFQKzRHUTcy?=
+ =?utf-8?B?S01RNEk2L3BKMlBSSVJVN3JsOXFNTzE2bXhCR1F3aURMQy91Y3BFd1IvbGRF?=
+ =?utf-8?B?MkQxUjhLZGMxdTlGVVBJQ1hZb1FFa0ZhSXZXRWRLaGZxSDZ1aXdXWTdIUFNl?=
+ =?utf-8?B?OS9wcmxJd3NwVUlwR1NsNms3Nmw5dDAyeHFhT0ljZkc5cEgzNkFBME5LWllh?=
+ =?utf-8?B?aU9kdlJlT1JYY0dJTVJvY2tRT2xpVGJCL2doL2J1VUpKeTRCY1NyWlU3Yngx?=
+ =?utf-8?B?RDR0eGF5VVF3NjBmRlM3azRBQThSQXBGMnB3RjhYRC9WdUF4T3FiQWx6ZE1s?=
+ =?utf-8?B?SUN4eWk5UzUxOVlUU1ViQXRNcFFuMmhVd2NSQzlXVXdsRCtLMWpzUmxycm9o?=
+ =?utf-8?B?NEVURS9nU1JuRVhSMVdUek9lMDZxTTlyT3p2MHJBdlVBNGpXdW1Tam83S0cy?=
+ =?utf-8?B?Q2tTUjM1YTI0Vk1UTEFycmVsV0Zucm5abnJGcjlVMTNVS0Nsd242czhNYm1L?=
+ =?utf-8?B?TVhKZnVNaGVrUU9KNFNTclJKS05OZFZpT2JTNXJGaGJYTDFhV3Z2L0Vwckdn?=
+ =?utf-8?B?VkZPcmxrZGZubWV1akZ0YUkyNnNDdHZvOTZ0UHZSbmNJbFdrU0c1b3dhSjMx?=
+ =?utf-8?B?aDBONWI1QUxZelVIZ20yNExDVkNZOWxaWVNLMXN3Tm9VVzUrcklqTjI1ZUow?=
+ =?utf-8?B?dmx0bzk2SkhUU2NhN1BDemJyWWdwc3ExT0dFMThZNitVbU9yTk9TT0hxWnlQ?=
+ =?utf-8?B?R2EzRTZ2YlZtOE9MY3A3dkpVenovN2IxOVZzRGl0ZWhDbWkzVEtiemVFYnJT?=
+ =?utf-8?B?WG5PNS92OVZuVThjK01KKy9pUEFIZ204QThKZHhqNnpNaFBUMFJNRWdlY0Fq?=
+ =?utf-8?B?Qy80dmVBZzhwTWdwaStHU01pSm53VWNHai9LZG1rQ3lacEhaYlhhbVE3YXdZ?=
+ =?utf-8?B?cjdRbGN6bUFvUklNMGNFQ0tOYWdpeDRhQlF6YWgwZTZQYlhEMWNRQ3hZVDZH?=
+ =?utf-8?B?NWtnM0xZd2pneFlMOTUyeks3YXZ0bjhKaDR5MXRLNUhhMUFlUTdISEhMUHB5?=
+ =?utf-8?B?RStWaGFZSkVOZGRHdFJBajloS3VtN2xwSStreFY3RnFSTTR0RnVWME1FTlQ0?=
+ =?utf-8?B?VHdrVVphRHY5d3VFSHEyNENiL2dBZEQyRUppamx6czllZytQd2FwUWFYMWJP?=
+ =?utf-8?B?KzNoZWxYby9udk5jRFN5MFg1ZnpaeEZ2b1c0by9MYW5pUWc2aElsNmdYWTdK?=
+ =?utf-8?B?S1F3d3hkcjFOa1RDRHkybjlUNkZ5YmFEOHFmYzRJQkNURGRDV2YrMllMK3I3?=
+ =?utf-8?B?OUxmY2I3YXZpcmFoVXBuU214bk1JVHdqbC9OOEZCUFExaEY4dCs5aWlTTHg3?=
+ =?utf-8?B?eHU3RkYrWlZxdTlhYit2UFJ4QnVOK094YW1zS1paMy9qc1VHWDNlUVFnV2Yv?=
+ =?utf-8?B?ZUdEVlMrY2E0dHduNS8xcHVyb2FMZGFTcHFLL0xZTTlpYS9TMEdKanB3WXB6?=
+ =?utf-8?B?R2dEYXhlMjRkYXdFUC9uTnFub3ZKT1ZHakxzTEZEbys3bmcrUWFJWWpOcXc2?=
+ =?utf-8?B?UFJRTlRXNTVoYkNNQkVrdkpiY2k2ZU5qcE1nYUVpRlo5Ym10UmpDUVhqOGs2?=
+ =?utf-8?B?Tkp4RGEyUFkzT0pqaDhmWEUrVUtMUnJUUkgrQmNYU1hhWmp3Tk4yUVBmSTZt?=
+ =?utf-8?B?Tkxic1ltbVc1NVBDWFlOUzVzcHNDSjNpZ2tSSkhRbGhxSlM2T205T2tMc2tW?=
+ =?utf-8?B?VENuZjZZTWY2OTlVaGJCeDhyQVNxc0syZ05nbDlCUlN1OEM2N25rVy9Wc0VG?=
+ =?utf-8?B?Z2FpWTY4NE1YVmFFWmp6bjNsQWZPZ0tZZ2dZc0lITW1meHZDb21EV3BIQWJ6?=
+ =?utf-8?B?S1F0SXdHUFl2VHlwWHp5MmhNN2Q0cDdpS0hKTGRYbjBmWkpXV25kdz09?=
+X-MS-Exchange-CrossTenant-Network-Message-Id: 260c4c91-6b07-452f-27db-08de6943275a
 X-MS-Exchange-CrossTenant-AuthSource: DS0PR11MB7215.namprd11.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 11 Feb 2026 07:56:57.5210
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 11 Feb 2026 07:57:07.8502
  (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 46c98d88-e344-4ed4-8496-4ed7712e255d
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: QUH2tk+TMHU8YRlwrEEMZuTfkldJiG3VWp57wwFnlPeZMQGhAFHGTmqqHfuVymn+vo1i9CftaOFTyyY6tXy8uA==
+X-MS-Exchange-CrossTenant-UserPrincipalName: UEOleYVdJO3OFEk5pDFcTUB1qYJdeD1WvxrHAVHlyAezsULOMZTEr5znD8DGEWmpy2UfJtneKYbIs3NHRg+Xsw==
 X-MS-Exchange-Transport-CrossTenantHeadersStamped: SN7PR11MB7973
 X-OriginatorOrg: intel.com
 
 On 11/02/2026 01:30, Sasha Levin wrote:
 > From: Adrian Hunter <adrian.hunter@intel.com>
 > 
-> [ Upstream commit 8bb96575883d3b201ce37046b3903ea1d2d50bbc ]
+> [ Upstream commit 4280197d154cae1d1d5acb54484da26da04eac32 ]
 > 
-> Wait for the bus to fully disable before proceeding, ensuring that no
-> operations are still in progress.  Synchronize the IRQ handler only after
-> interrupt signals have been disabled.  This approach also handles cases
-> where bus disable might fail, preventing race conditions and ensuring a
-> consistent shutdown sequence.
+> Assign the driver PM operations pointer, which is necessary for the PCI
+> subsystem to put the device into a low power state.  Refer to
+> pci_pm_suspend_noirq() which bails out if the pointer is NULL, before
+> it has the opportunity to call pci_prepare_to_sleep().
+> 
+> No other actions are necessary as the mipi-i3c-hci driver takes care of
+> controller state.
 
-To expose the issues raised by AI, it would require either a misbehaving
-I3C target device, or an I3C target device that attempts hot-join.
-However the driver does not currently support hot-join.
-
-Also, as I mentioned before:
-
-This patch was part of a larger patch set to enable support for
-Runtime PM.  There is also no support for System Suspend at this
-point.  In my opinion, someone serious about I3C usage would want
-power management support, and would therefore back port the
-entire patch set (and the subsequent System PM patch set) to their
-kernel.
-
-Consequently, I doubt back porting this patch separately helps
-anyone.
+Back porting this patch by itself makes no sense.  The entire patch set
+and previous patch sets are needed to support power management.
 
 > 
 > Signed-off-by: Adrian Hunter <adrian.hunter@intel.com>
 > Reviewed-by: Frank Li <Frank.Li@nxp.com>
-> Link: https://patch.msgid.link/20260113072702.16268-3-adrian.hunter@intel.com
+> Link: https://patch.msgid.link/20260123063325.8210-4-adrian.hunter@intel.com
 > Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
 > Signed-off-by: Sasha Levin <sashal@kernel.org>
 > ---
 > 
 > LLM Generated explanations, may be completely bogus:
 > 
-> Good. `readx_poll_timeout` has been used in this file since its
-> introduction. The new `i3c_hci_bus_disable()` function uses the same
-> pattern. No compatibility issue.
+> Now I have a complete picture. Let me compile my detailed analysis.
 > 
 > ---
 > 
-> ## Detailed Analysis
+> ## Comprehensive Analysis
 > 
 > ### 1. COMMIT MESSAGE ANALYSIS
 > 
-> The commit message clearly states the intent: "ensuring that no
-> operations are still in progress", "Synchronize the IRQ handler only
-> after interrupt signals have been disabled", "preventing race conditions
-> and ensuring a consistent shutdown sequence." This is unambiguously a
-> race condition and shutdown ordering fix.
+> The commit subject "Add System Suspend support" makes this sound like a
+> new feature, but the body reveals the real story: it's fixing a bug
+> where the PCI subsystem **cannot put the device into a low power state**
+> during system suspend. The commit message specifically references
+> `pci_pm_suspend_noirq()` which "bails out if the pointer is NULL, before
+> it has the opportunity to call `pci_prepare_to_sleep()`."
 > 
-> **Author**: Adrian Hunter (Intel), a prolific and trusted kernel
-> developer.
-> **Reviewer**: Frank Li (NXP), an I3C subsystem reviewer.
-> **Maintainer**: Merged by Alexandre Belloni, the I3C subsystem
-> maintainer.
+> ### 2. CODE CHANGE ANALYSIS
 > 
-> ### 2. CODE CHANGE ANALYSIS - The Race Conditions
+> The change is extremely minimal:
+> 1. Adds an **empty** `struct dev_pm_ops` (no callbacks):
+>   ```c
+>   static const struct dev_pm_ops mipi_i3c_hci_pci_pm_ops = {
+>   };
+>   ```
+> 2. Assigns it to the PCI driver structure:
+>   ```c
+>   .driver = {
+>   .pm = pm_ptr(&mipi_i3c_hci_pci_pm_ops)
+>   },
+>   ```
 > 
-> **Bug 1: Bus not fully disabled before cleanup**
+> ### 3. THE BUG MECHANISM
 > 
-> The OLD `i3c_hci_bus_cleanup()` does:
+> The critical code path is in `pci_pm_suspend_noirq()`:
 > 
-> ```155:165:/home/sasha/linux-
-> autosel/drivers/i3c/master/mipi-i3c-hci/core.c
-> static void i3c_hci_bus_cleanup(struct i3c_master_controller *m)
-> {
->         struct i3c_hci *hci = to_i3c_hci(m);
->         struct platform_device *pdev =
-> to_platform_device(m->dev.parent);
-> 
->         reg_clear(HC_CONTROL, HC_CONTROL_BUS_ENABLE);
->         synchronize_irq(platform_get_irq(pdev, 0));
->         hci->io->cleanup(hci);
->         if (hci->cmd == &mipi_i3c_hci_cmd_v1)
->                 mipi_i3c_hci_dat_v1.cleanup(hci);
-> }
+> ```863:866:drivers/pci/pci-driver.c
+>         if (!pm) {
+>                 pci_save_state(pci_dev);
+>                 goto Fixup;
+>         }
 > ```
 > 
-> `reg_clear(HC_CONTROL, HC_CONTROL_BUS_ENABLE)` merely writes to the
-> register. The hardware may still be mid-operation. Without waiting for
-> hardware acknowledgment, the subsequent cleanup proceeds on a bus that
-> is still active, which can cause undefined hardware behavior.
+> When `dev->driver->pm` is NULL (as in the current driver),
+> `pci_pm_suspend_noirq()` takes the early exit at line 863-866: it saves
+> PCI state but jumps to `Fixup`, **completely skipping** the call to
+> `pci_prepare_to_sleep()` at line 895:
 > 
-> The new `i3c_hci_bus_disable()` uses `readx_poll_timeout()` with a
-> generous 500ms timeout to wait until the `HC_CONTROL_BUS_ENABLE` bit is
-> confirmed cleared by the hardware, ensuring the bus has truly stopped.
+> ```886:896:drivers/pci/pci-driver.c
+>         if (!pci_dev->state_saved) {
+>                 pci_save_state(pci_dev);
 > 
-> **Bug 2: Use-after-free race in DMA cleanup path**
+>                 /*
+>    - If the device is a bridge with a child in D0 below it,
+>    - it needs to stay in D0, so check skip_bus_pm to avoid
+>    - putting it into a low-power state in that case.
+>                  */
+>                 if (!pci_dev->skip_bus_pm &&
+> pci_power_manageable(pci_dev))
+>                         pci_prepare_to_sleep(pci_dev);
+>         }
+> ```
 > 
-> This is the critical bug. The old flow is:
+> With the fix (non-NULL but empty `pm` ops), the code:
+> - Skips the NULL-pm early exit
+> - Skips the `pm->suspend_noirq` block (callback is NULL)
+> - Falls through to `pci_save_state()` AND `pci_prepare_to_sleep()`,
+>   which transitions the device to D3hot/D3cold
 > 
-> 1. `reg_clear(HC_CONTROL, HC_CONTROL_BUS_ENABLE)` - request bus disable
-> 2. `synchronize_irq()` - waits for any currently-running IRQ handler to
->    finish
-> 3. `hci_dma_cleanup()` starts - iterates rings, disabling per-ring
->    interrupt signals and freeing DMA buffers in the **same loop**
+> ### 4. USER IMPACT
 > 
-> The race: `synchronize_irq()` only guarantees the *currently running*
-> handler has finished. It does **not** prevent new interrupts from
-> arriving. Since the top-level `INTR_SIGNAL_ENABLE` register is still
-> armed (it's only cleared inside `io->cleanup()`), the hardware can
-> deliver a new interrupt *after* `synchronize_irq()` returns.
+> Without this fix, the Intel I3C HCI PCI controller stays in **D0 (full
+> power)** during system suspend. This has real consequences:
+> - **Higher power consumption during suspend** - device draws power when
+>   it shouldn't
+> - **May prevent platform from reaching deeper sleep states** (S0ix/S3)
+>   on Intel platforms
+> - Affects Intel Panther Lake, Wildcat Lake, and Nova Lake platforms
 > 
-> If that happens, `i3c_hci_irq_handler()` runs, calls
-> `hci_dma_irq_handler()`, which accesses `rings->headers[i]` (including
-> `rh->ibi_status`, `rh->resp`, `rh->xfer`) - DMA memory that
-> `hci_dma_cleanup()` may be concurrently freeing with
-> `dma_free_coherent()`. This is a **use-after-free**.
+> This is a known pattern - other PCI drivers like `surface_dtx` and
+> `aggregator/core.c` use the same empty `dev_pm_ops` trick for exactly
+> this reason.
 > 
-> The fix splits the DMA cleanup loop: first loop disables all ring
-> interrupt signals and ring control, then calls
-> `i3c_hci_sync_irq_inactive()` (which disables top-level interrupt
-> signals AND synchronize_irq), and only then the second loop frees DMA
-> resources.
+> ### 5. DRIVER EXISTENCE IN STABLE TREES
 > 
-> **Bug 3: Same race in PIO cleanup path**
+> - **v6.14**: Driver first added (148 lines). No `.driver.pm` pointer.
+> - **v6.15, v6.16**: No changes to this file.
+> - **v6.17**: 1 commit (Wildcat Lake-U device IDs). Still no PM.
+> - **v6.18**: No changes.
+> - **v6.19**: 13 commits (major refactoring). Still no PM.
 > 
-> The `hci_pio_irq_handler()` accesses `pio->lock`, `pio->enabled_irqs`,
-> and other `hci_pio_data` fields. If an interrupt fires after
-> `synchronize_irq()` but before `hci_pio_cleanup()` disables PIO signals
-> and frees `pio`, the handler will access freed memory.
+> The bug exists in **ALL versions** of this driver. However, the diff
+> from the analyzed commit targets a codebase significantly different from
+> any released version (references `intel_mi_1_info`, `intel_si_2_info`,
+> `mfd_remove_devices`, `mipi_i3c_hci_pci_rpm_forbid` - none of which
+> exist in v6.14-v6.19). This means:
+> - The exact diff **will NOT apply cleanly** to any stable tree
+> - A manual adaptation would be needed, but it's **trivially simple**
+>   (just add the empty struct and pointer to the existing `pci_driver`
+>   struct)
 > 
-> The fix inserts `i3c_hci_sync_irq_inactive()` after disabling PIO
-> interrupt signals and before freeing the `pio` structure.
+> ### 6. CLASSIFICATION
 > 
-> ### 3. CLASSIFICATION
+> This is a **bug fix**, not a new feature. System suspend is expected to
+> work correctly for any PCI device. The driver was missing a required
+> piece (`dev_pm_ops` pointer) that the PCI subsystem needs to properly
+> power-manage the device. The comment in the code even says "PM ops must
+> exist for PCI to put a device to a low power state."
 > 
-> This is a **race condition fix** preventing **use-after-free** during
-> driver cleanup/shutdown. It falls squarely in the category of fixes that
-> should be backported to stable.
+> ### 7. RISK ASSESSMENT
 > 
-> ### 4. SCOPE AND RISK ASSESSMENT
+> - **Risk: Essentially zero.** The `dev_pm_ops` structure is completely
+>   empty - no callbacks are defined. Its sole purpose is to not be NULL,
+>   so the PCI core doesn't take the early-exit path.
+> - **Lines changed**: ~7 lines added
+> - **Files changed**: 1
+> - **Reviewed-by**: Frank Li (NXP)
 > 
-> - **Files changed**: 4 files, all within the same driver
-> - **Lines added**: ~40 lines of new code (two helper functions + loop
->   restructuring)
-> - **Lines removed**: ~5 lines
-> - **Complexity**: Moderate but well-contained
-> - **Risk**: LOW - changes only affect the cleanup/shutdown path, using
->   established kernel patterns (`readx_poll_timeout`, `synchronize_irq`)
-> - **Subsystem**: I3C bus driver used by Intel and AMD hardware (active,
->   maintained)
+> ### 8. CONCERNS
 > 
-> ### 5. USER IMPACT
+> - **Dependency**: The exact diff won't apply cleanly to stable trees
+>   (context mismatch). A trivial manual adaptation is needed.
+> - **Hardware newness**: The supported platforms (Panther Lake, etc.) are
+>   new Intel hardware with potentially limited user base.
+> - **Not a crash/security bug**: This is a power management regression,
+>   not a crash or data corruption.
 > 
-> - Affects users with MIPI I3C HCI hardware (Intel, AMD platforms via
->   ACPI)
-> - The bug could trigger during driver removal (module unload), system
->   shutdown, or suspend/resume cycles
-> - Consequence if triggered: kernel crash, memory corruption, or
->   undefined behavior from use-after-free
-> - The AMD ACPI entry `AMDI5017` shows this driver is used on real
->   production hardware
+> ### 9. VERDICT
 > 
-> ### 6. STABILITY INDICATORS
+> The fix resolves a real power management bug that affects every user
+> with Intel I3C HCI hardware doing system suspend. The change is
+> trivially small, zero-risk, and follows an established pattern used by
+> other PCI drivers. While the hardware is new and the issue isn't a
+> crash, broken system suspend is a significant user-visible issue - users
+> with these platforms will see higher battery drain during suspend, and
+> the platform may not reach its desired sleep state.
 > 
-> - **Reviewed-by**: Frank Li (NXP) - I3C expert
-> - **Merged by**: Alexandre Belloni - I3C maintainer
-> - Already in mainline (v6.19)
-> 
-> ### 7. DEPENDENCY CHECK
-> 
-> The commit is **self-contained**:
-> - New functions `i3c_hci_bus_disable()` and
->   `i3c_hci_sync_irq_inactive()` are introduced and used only within this
->   commit
-> - Uses `readx_poll_timeout()` and `synchronize_irq()` which exist in all
->   stable kernels
-> - `<linux/iopoll.h>` is already included in `core.c`
-> - No dependency on other patches from the series (the other patches in
->   the series appear to be PCI-related, not core driver changes)
-> 
-> ### 8. BACKPORT CONSIDERATIONS
-> 
-> For older stable trees that lack `9e23897bca622` ("Use physical device
-> pointer with DMA API"), the `dma_free_coherent` calls in
-> `hci_dma_cleanup` use `&hci->master.dev` instead of `rings->sysdev`.
-> However, this is in the *unchanged* part of the code (the second loop),
-> so it should apply cleanly or with minimal context adjustment.
-> 
-> ### Final Assessment
-> 
-> This commit fixes a real race condition that can cause use-after-free
-> during driver shutdown/cleanup in the MIPI I3C HCI driver. The bug
-> mechanism is clear: interrupt handlers can fire after
-> `synchronize_irq()` returns because interrupt signal enable registers
-> weren't disabled first, leading to concurrent access of memory being
-> freed. The fix is well-structured, properly orders the shutdown sequence
-> (disable signals -> synchronize IRQ -> free resources), and is self-
-> contained with low regression risk.
+> The fix meets stable criteria: it's obviously correct, fixes a real bug,
+> is small and contained, and doesn't introduce new features. The empty PM
+> ops structure adds no new behavior - it simply allows the existing PCI
+> power management infrastructure to work as designed.
 > 
 > **YES**
 > 
->  drivers/i3c/master/mipi-i3c-hci/core.c | 32 +++++++++++++++++++++++---
->  drivers/i3c/master/mipi-i3c-hci/dma.c  |  7 ++++++
->  drivers/i3c/master/mipi-i3c-hci/hci.h  |  1 +
->  drivers/i3c/master/mipi-i3c-hci/pio.c  |  2 ++
->  4 files changed, 39 insertions(+), 3 deletions(-)
+>  drivers/i3c/master/mipi-i3c-hci/mipi-i3c-hci-pci.c | 7 +++++++
+>  1 file changed, 7 insertions(+)
 > 
-> diff --git a/drivers/i3c/master/mipi-i3c-hci/core.c b/drivers/i3c/master/mipi-i3c-hci/core.c
-> index 607d77ab0e546..0a4d8c9968c9b 100644
-> --- a/drivers/i3c/master/mipi-i3c-hci/core.c
-> +++ b/drivers/i3c/master/mipi-i3c-hci/core.c
-> @@ -152,13 +152,39 @@ static int i3c_hci_bus_init(struct i3c_master_controller *m)
->  	return 0;
+> diff --git a/drivers/i3c/master/mipi-i3c-hci/mipi-i3c-hci-pci.c b/drivers/i3c/master/mipi-i3c-hci/mipi-i3c-hci-pci.c
+> index dc8ede0f8ad8d..f8ac1ae371cc9 100644
+> --- a/drivers/i3c/master/mipi-i3c-hci/mipi-i3c-hci-pci.c
+> +++ b/drivers/i3c/master/mipi-i3c-hci/mipi-i3c-hci-pci.c
+> @@ -265,6 +265,10 @@ static void mipi_i3c_hci_pci_remove(struct pci_dev *pci)
+>  	ida_free(&mipi_i3c_hci_pci_ida, dev_id);
 >  }
 >  
-> +/* Bus disable should never fail, so be generous with the timeout */
-> +#define BUS_DISABLE_TIMEOUT_US (500 * USEC_PER_MSEC)
+> +/* PM ops must exist for PCI to put a device to a low power state */
+> +static const struct dev_pm_ops mipi_i3c_hci_pci_pm_ops = {
+> +};
 > +
-> +static int i3c_hci_bus_disable(struct i3c_hci *hci)
-> +{
-> +	u32 regval;
-> +	int ret;
-> +
-> +	reg_clear(HC_CONTROL, HC_CONTROL_BUS_ENABLE);
-> +
-> +	/* Ensure controller is disabled */
-> +	ret = readx_poll_timeout(reg_read, HC_CONTROL, regval,
-> +				 !(regval & HC_CONTROL_BUS_ENABLE), 0, BUS_DISABLE_TIMEOUT_US);
-> +	if (ret)
-> +		dev_err(&hci->master.dev, "%s: Failed to disable bus\n", __func__);
-> +
-> +	return ret;
-> +}
-> +
-> +void i3c_hci_sync_irq_inactive(struct i3c_hci *hci)
-> +{
-> +	struct platform_device *pdev = to_platform_device(hci->master.dev.parent);
-> +	int irq = platform_get_irq(pdev, 0);
-> +
-> +	reg_write(INTR_SIGNAL_ENABLE, 0x0);
-> +	synchronize_irq(irq);
-> +}
-> +
->  static void i3c_hci_bus_cleanup(struct i3c_master_controller *m)
->  {
->  	struct i3c_hci *hci = to_i3c_hci(m);
-> -	struct platform_device *pdev = to_platform_device(m->dev.parent);
+>  static const struct pci_device_id mipi_i3c_hci_pci_devices[] = {
+>  	/* Wildcat Lake-U */
+>  	{ PCI_VDEVICE(INTEL, 0x4d7c), (kernel_ulong_t)&intel_info},
+> @@ -287,6 +291,9 @@ static struct pci_driver mipi_i3c_hci_pci_driver = {
+>  	.id_table = mipi_i3c_hci_pci_devices,
+>  	.probe = mipi_i3c_hci_pci_probe,
+>  	.remove = mipi_i3c_hci_pci_remove,
+> +	.driver = {
+> +		.pm = pm_ptr(&mipi_i3c_hci_pci_pm_ops)
+> +	},
+>  };
 >  
-> -	reg_clear(HC_CONTROL, HC_CONTROL_BUS_ENABLE);
-> -	synchronize_irq(platform_get_irq(pdev, 0));
-> +	i3c_hci_bus_disable(hci);
->  	hci->io->cleanup(hci);
->  	if (hci->cmd == &mipi_i3c_hci_cmd_v1)
->  		mipi_i3c_hci_dat_v1.cleanup(hci);
-> diff --git a/drivers/i3c/master/mipi-i3c-hci/dma.c b/drivers/i3c/master/mipi-i3c-hci/dma.c
-> index 951abfea5a6fd..7061c44243424 100644
-> --- a/drivers/i3c/master/mipi-i3c-hci/dma.c
-> +++ b/drivers/i3c/master/mipi-i3c-hci/dma.c
-> @@ -162,6 +162,13 @@ static void hci_dma_cleanup(struct i3c_hci *hci)
->  
->  		rh_reg_write(INTR_SIGNAL_ENABLE, 0);
->  		rh_reg_write(RING_CONTROL, 0);
-> +	}
-> +
-> +	i3c_hci_sync_irq_inactive(hci);
-> +
-> +	for (i = 0; i < rings->total; i++) {
-> +		rh = &rings->headers[i];
-> +
->  		rh_reg_write(CR_SETUP, 0);
->  		rh_reg_write(IBI_SETUP, 0);
->  
-> diff --git a/drivers/i3c/master/mipi-i3c-hci/hci.h b/drivers/i3c/master/mipi-i3c-hci/hci.h
-> index 249ccb13c9092..5add9c68434bf 100644
-> --- a/drivers/i3c/master/mipi-i3c-hci/hci.h
-> +++ b/drivers/i3c/master/mipi-i3c-hci/hci.h
-> @@ -147,5 +147,6 @@ void mipi_i3c_hci_pio_reset(struct i3c_hci *hci);
->  void mipi_i3c_hci_dct_index_reset(struct i3c_hci *hci);
->  void amd_set_od_pp_timing(struct i3c_hci *hci);
->  void amd_set_resp_buf_thld(struct i3c_hci *hci);
-> +void i3c_hci_sync_irq_inactive(struct i3c_hci *hci);
->  
->  #endif
-> diff --git a/drivers/i3c/master/mipi-i3c-hci/pio.c b/drivers/i3c/master/mipi-i3c-hci/pio.c
-> index 710faa46a00fa..9bf6c3ba6bce9 100644
-> --- a/drivers/i3c/master/mipi-i3c-hci/pio.c
-> +++ b/drivers/i3c/master/mipi-i3c-hci/pio.c
-> @@ -212,6 +212,8 @@ static void hci_pio_cleanup(struct i3c_hci *hci)
->  
->  	pio_reg_write(INTR_SIGNAL_ENABLE, 0x0);
->  
-> +	i3c_hci_sync_irq_inactive(hci);
-> +
->  	if (pio) {
->  		dev_dbg(&hci->master.dev, "status = %#x/%#x",
->  			pio_reg_read(INTR_STATUS), pio_reg_read(INTR_SIGNAL_ENABLE));
+>  module_pci_driver(mipi_i3c_hci_pci_driver);
 
