@@ -1,53 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40EAA1A9FA4;
-	Wed, 11 Feb 2026 12:31:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A11F21A9FA4;
+	Wed, 11 Feb 2026 12:31:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770813112; cv=none; b=aaWsxf/j4iWMnkK44Lx+vSGhX+wst7J8pXAdUX7cLwhoHUyPklmbkrN/D/2cE/gLRs5AriuOENkBkzTGk13fzWQ5G6IjbtPLPNMascRPJgbi/ysOnJU1Yl1RUgV0payPiCp3eMEwj71R6FePg05KvBISVOjSupXJlBhYr4FooWg=
+	t=1770813113; cv=none; b=NufQpQbLlSSwdyNLaRYHXUitYL5Q729bSM6gEuFSQA75WfQDR9wtYQHOodTgpNYxggJUTcJVbaTpmLyZoYQ/hLOC7gFERrcPMwWxvWzM2eBR0dASN5EmH5E+g9t13DfWqdV6yztsobBFY4Qe6RoD8dAtpWd53BaZBJfUYqwGfms=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770813112; c=relaxed/simple;
-	bh=fWc+yI9j0lSz7fCX+GS7zg59rPJR8cs68Fsty0UB8zI=;
+	s=arc-20240116; t=1770813113; c=relaxed/simple;
+	bh=4ggeXx2n4hxp6kS5RyhZtD/erQO6Uv3vJgYKYv/qXN4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=IK7qrMnclaTnniH13GuX34fDOYjK9W91+kyYqslHjvCxhm3g2w3hbjz+7vWd3eYsyJovNANVbh+IFi6MS7rLl8XqTUu33AtYhlkPwnY1WLdHr3+ayK48Vl0mWiDoUZZsOEYpGWs1/yP8DNEZBDdQv8Zlb2BYM4d0/jSH06nINYY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=LrJsFyxY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=q2UHDV3dVj562Td6y/wtv05P6VQ6eQ8g36v3Ey0jG5hPMSEiYC2N/iHimTNyx7DkdhujgrTze9h542gp8eOwu15vFHW71lxsabwAbPdmHidn99JYyusz/26YgyQ4mt2qfww47LGTQ2QZSyfu++CakEhqURTr4ph8J2H39//gDJI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ssiWNPQ4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="LrJsFyxY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A70AC19421;
-	Wed, 11 Feb 2026 12:31:50 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ssiWNPQ4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A3FFC19424;
+	Wed, 11 Feb 2026 12:31:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1770813112;
-	bh=fWc+yI9j0lSz7fCX+GS7zg59rPJR8cs68Fsty0UB8zI=;
+	s=k20201202; t=1770813113;
+	bh=4ggeXx2n4hxp6kS5RyhZtD/erQO6Uv3vJgYKYv/qXN4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LrJsFyxYSl/AXZiQ1bMz8gWqr4WLV3EXmRnOxiwG2i6kqqnxOK0u9Tx4JHbji2OlA
-	 S0XW9JKRYjtFkGj/0GbLpxXFtZA8Y0Zlveup+RGuWzHph6xIY5jymikPC3HLsGM23j
-	 Ru8DL6lniMY3ZsIhw7el/lWMKjM38hb/FPjpXc5qsK5UOSSJ/6cmyF7DDDsUzpL7t7
-	 9ED4KD1M4m+IbnNt00zX3Sm+oNZldXyhIQmNbUML/dTyHxhPYIj2Qd6QhQtfhisS+G
-	 y1WZIf9mwgKqo/xqCjtt4tFSrR6pDAfIzZT/dsTMYgKNKFNq71Hh6LJ+7boEaDxogB
-	 aK0vTqZKaCflw==
+	b=ssiWNPQ4UKHjBRHDwVxj3iU+JyJ031L9VJyhfYnFz3x5oEV/rYv/+3OJyIFiYeIKe
+	 RoaRqX8d97Dzc7lRaJSa6SPC+izdc4dIFmfN+DKv4pXjra6832A4BMbrklcWpchHGm
+	 60zzijDZjXCY4svI4gX6OZrHgTr8KR4fAqNBrm251ffrbMOW+yPAGS5jXIgJ7OXiXH
+	 cXdlNKyaeslqJul7r6pvFBjrJKdQap5UacCgmButwVEtnbEtnl+uIO91kwq06QbjHZ
+	 oQl6reyRiBfEHBuuE7Dui7GgUDGil2nTYE474WAZnZD/gKqv23uOXktaHeS1qwrkHx
+	 GpdQbIFAZlF/A==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
-	Jonathan Cameron <jonathan.cameron@huawei.com>,
-	Ard Biesheuvel <ardb@kernel.org>,
-	Hanjun Guo <guohanjun@huawei.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+Cc: Heinz Mauelshagen <heinzm@redhat.com>,
+	Yu Kuai <yukuai@fnnas.com>,
 	Sasha Levin <sashal@kernel.org>,
-	rafael@kernel.org,
-	bp@alien8.de,
-	xueshuai@linux.alibaba.com,
-	fabio.m.de.francesco@linux.intel.com,
-	leitao@debian.org,
-	pengdonglin@xiaomi.com,
-	Smita.KoralahalliChannabasappa@amd.com,
-	jason@os.amperecomputing.com,
-	linux-acpi@vger.kernel.org,
-	linux-edac@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.19-6.12] APEI/GHES: ARM processor Error: don't go past allocated memory
-Date: Wed, 11 Feb 2026 07:30:29 -0500
-Message-ID: <20260211123112.1330287-19-sashal@kernel.org>
+	song@kernel.org,
+	linux-raid@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.19-6.18] md raid: fix hang when stopping arrays with metadata through dm-raid
+Date: Wed, 11 Feb 2026 07:30:30 -0500
+Message-ID: <20260211123112.1330287-20-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260211123112.1330287-1-sashal@kernel.org>
 References: <20260211123112.1330287-1-sashal@kernel.org>
@@ -63,273 +52,216 @@ X-stable-base: Linux 6.19
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+From: Heinz Mauelshagen <heinzm@redhat.com>
 
-[ Upstream commit 87880af2d24e62a84ed19943dbdd524f097172f2 ]
+[ Upstream commit cefcb9297fbdb6d94b61787b4f8d84f55b741470 ]
 
-If the BIOS generates a very small ARM Processor Error, or
-an incomplete one, the current logic will fail to deferrence
+When using device-mapper's dm-raid target, stopping a RAID array can cause
+the system to hang under specific conditions.
 
-	err->section_length
-and
-	ctx_info->size
+This occurs when:
 
-Add checks to avoid that. With such changes, such GHESv2
-records won't cause OOPSes like this:
+- A dm-raid managed device tree is suspended from top to bottom
+   (the top-level RAID device is suspended first, followed by its
+    underlying metadata and data devices)
 
-[    1.492129] Internal error: Oops: 0000000096000005 [#1]  SMP
-[    1.495449] Modules linked in:
-[    1.495820] CPU: 0 UID: 0 PID: 9 Comm: kworker/0:0 Not tainted 6.18.0-rc1-00017-gabadcc3553dd-dirty #18 PREEMPT
-[    1.496125] Hardware name: QEMU QEMU Virtual Machine, BIOS unknown 02/02/2022
-[    1.496433] Workqueue: kacpi_notify acpi_os_execute_deferred
-[    1.496967] pstate: 814000c5 (Nzcv daIF +PAN -UAO -TCO +DIT -SSBS BTYPE=--)
-[    1.497199] pc : log_arm_hw_error+0x5c/0x200
-[    1.497380] lr : ghes_handle_arm_hw_error+0x94/0x220
+- The top-level RAID device is then removed
 
-0xffff8000811c5324 is in log_arm_hw_error (../drivers/ras/ras.c:75).
-70		err_info = (struct cper_arm_err_info *)(err + 1);
-71		ctx_info = (struct cper_arm_ctx_info *)(err_info + err->err_info_num);
-72		ctx_err = (u8 *)ctx_info;
-73
-74		for (n = 0; n < err->context_info_num; n++) {
-75			sz = sizeof(struct cper_arm_ctx_info) + ctx_info->size;
-76			ctx_info = (struct cper_arm_ctx_info *)((long)ctx_info + sz);
-77			ctx_len += sz;
-78		}
-79
+Removing the top-level device triggers a hang in the following sequence:
+the dm-raid destructor calls md_stop(), which tries to flush the
+write-intent bitmap by writing to the metadata sub-devices. However, these
+devices are already suspended, making them unable to complete the write-intent
+operations and causing an indefinite block.
 
-and similar ones while trying to access section_length on an
-error dump with too small size.
+Fix:
 
-Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-Reviewed-by: Jonathan Cameron <jonathan.cameron@huawei.com>
-Acked-by: Ard Biesheuvel <ardb@kernel.org>
-Reviewed-by: Hanjun Guo <guohanjun@huawei.com>
-[ rjw: Subject tweaks ]
-Link: https://patch.msgid.link/7fd9f38413be05ee2d7cfdb0dc31ea2274cf1a54.1767871950.git.mchehab+huawei@kernel.org
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+- Prevent bitmap flushing when md_stop() is called from dm-raid
+destructor context
+  and avoid a quiescing/unquescing cycle which could also cause I/O
+
+- Still allow write-intent bitmap flushing when called from dm-raid
+suspend context
+
+This ensures that RAID array teardown can complete successfully even when the
+underlying devices are in a suspended state.
+
+This second patch uses md_is_rdwr() to distinguish between suspend and
+destructor paths as elaborated on above.
+
+Link: https://lore.kernel.org/linux-raid/CAM23VxqYrwkhKEBeQrZeZwQudbiNey2_8B_SEOLqug=pXxaFrA@mail.gmail.com
+Signed-off-by: Heinz Mauelshagen <heinzm@redhat.com>
+Signed-off-by: Yu Kuai <yukuai@fnnas.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-## Analysis: APEI/GHES ARM Processor Error Bounds Checking
+## Complete Analysis
 
-### 1. What the Commit Fixes
+### 1. What the Bug Is
 
-This commit fixes a **kernel OOPS (crash)** in the APEI/GHES ARM
-processor error handling path. When BIOS/firmware generates a very small
-or incomplete ARM Processor Error record (CPER section), the kernel
-reads past the allocated memory buffer, causing an out-of-bounds access
-and crash.
+This commit fixes a **system hang** (indefinite block/deadlock) when
+stopping dm-raid managed RAID arrays. The hang scenario is:
 
-The crash is documented in the commit with a real stack trace:
-```
-[1.492129] Internal error: Oops: 0000000096000005 [#1] SMP
-pc: log_arm_hw_error+0x5c/0x200
-lr: ghes_handle_arm_hw_error+0x94/0x220
-```
+1. A dm-raid device tree is suspended top-to-bottom (top-level RAID
+   device first, then underlying metadata/data devices)
+2. The top-level RAID device is removed (`raid_dtr` destructor)
+3. `raid_dtr()` → `md_stop()` → `__md_stop_writes()` tries to:
+   - Quiesce the RAID personality (`pers->quiesce()`)
+   - Flush the write-intent bitmap to metadata devices
+     (`bitmap_ops->flush()`)
+4. But the metadata devices are already suspended and **cannot complete
+   I/O**
+5. The flush waits indefinitely → **system hang**
 
-The crash occurs at line 75 of `drivers/ras/ras.c` when accessing
-`ctx_info->size` on a record that is too small to contain the expected
-data.
+This is a real, user-reported bug (Link in commit message points to a
+lore report).
 
-### 2. Bug Mechanism
+### 2. The Fix
 
-The bug is in two functions:
-
-**`log_arm_hw_error()` in `drivers/ras/ras.c`**: This function blindly
-trusts the `err->err_info_num` and `err->context_info_num` fields to
-iterate through arrays of error info and context info structures. If the
-firmware provides a record smaller than these fields claim, the
-iteration walks past the allocated memory, dereferencing
-`err->section_length` and `ctx_info->size` from unallocated memory.
-
-**`ghes_handle_arm_hw_error()` in `drivers/acpi/apei/ghes.c`**:
-Similarly iterates `err->err_info_num` without checking whether
-`gdata->error_data_length` is large enough to contain even the base
-`struct cper_sec_proc_arm` header.
-
-### 3. Code Change Analysis
-
-**ghes.c changes (primary fix):**
-- Adds `int length = gdata->error_data_length` to track remaining data
-- Adds check `if (length >= sizeof(*err))` before calling
-  `log_arm_hw_error()` — this is the **critical fix** that prevents the
-  reported crash. Uses `sizeof(*err)` correctly (= 40 bytes, the struct
-  size)
-- Adds bounds checking in the err_info loop: `if (length <
-  sizeof(*err_info)) break;` and `length -= err_info->length; if (length
-  < 0) break;`
-
-**However, I identified a bug**: `length -= sizeof(err)` uses
-`sizeof(err)` which is the **pointer size** (8 bytes on aarch64), NOT
-`sizeof(*err)` (40 bytes for the struct). This means the length tracking
-is off by 32 bytes — it underestimates how much data has been consumed.
-Despite this, the bounds checks still provide meaningful protection,
-just with a 32-byte margin of error.
-
-**ras.c changes (secondary fix):**
-The change to `log_arm_hw_error()` modifies the context info iteration:
+The fix adds a conditional guard around the quiesce and bitmap flush in
+`__md_stop_writes()`:
 
 ```c
-// New code:
-sz = sizeof(struct cper_arm_ctx_info);
-if (sz + (long)ctx_info - (long)err >= err->section_length)
-    sz += ctx_info->size;
+if (md_is_rdwr(mddev) || !mddev_is_dm(mddev)) {
+    // quiesce + bitmap flush
+}
 ```
 
-**I identified a potentially inverted condition here.** When `sz +
-offset >= section_length` (i.e., the header extends past the section
-boundary), the code ADDS `ctx_info->size` — reading a potentially OOB
-value. When the condition is false (within bounds), it does NOT add
-`ctx_info->size` — breaking iteration for valid data. This appears to be
-backwards; the `>=` should likely be `<`. However, three reviewers
-(Jonathan Cameron, Ard Biesheuvel, Hanjun Guo) approved this, and the
-ras.c issue affects trace data quality rather than crash behavior.
+This condition skips the quiesce and bitmap flush **only** when:
+- The device is a dm-raid device (`mddev_is_dm()` returns true), AND
+- The device is NOT in read-write mode (`md_is_rdwr()` returns false)
 
-### 4. Affected Stable Trees
+The clever trick: `raid_postsuspend()` (suspend path) already calls
+`md_stop_writes()` while the device is still `MD_RDWR`, so the bitmap
+flush proceeds normally during suspend. Then it sets `rs->md.ro =
+MD_RDONLY`. Later when `raid_dtr()` calls `md_stop()` →
+`__md_stop_writes()`, the device is `MD_RDONLY`, so the condition is
+false and the dangerous I/O is skipped.
 
-The vulnerable code was introduced by commit `05954511b73e7` ("RAS:
-Report all ARM processor CPER information to userspace"), which has been
-backported to:
-- **6.17.y** (as `0aa7b12eaa87c`)
-- **6.12.y** (as `2599ad5e33b62`)
+For non-dm md arrays (`!mddev_is_dm()` is true), the condition is always
+true and behavior is unchanged.
 
-These trees have the vulnerable `log_arm_hw_error()` with unprotected
-`ctx_info->size` access. The `ghes_handle_arm_hw_error()` in ALL stable
-trees (including 6.1.y and older) also lacks bounds checking, though the
-older `log_arm_hw_error()` is trivial (`trace_arm_event(err)`) and
-doesn't access `section_length` or `ctx_info->size`.
+### 3. Code Change Scope
 
-### 5. Dependencies
+- **1 file changed**: `drivers/md/md.c`
+- **8 insertions, 6 deletions** (net +2 lines)
+- Only touches the `__md_stop_writes()` function
+- Small and surgical
 
-For 6.12.y and 6.17.y: The commit should apply cleanly since both
-prerequisite commits (`05954511b73e7` and `96b010536ee02`) are present.
+### 4. Critical Dependency Issue
 
-For older trees (6.1.y, 6.13.y-6.16.y): The ghes.c changes would need
-adaptation because `log_arm_hw_error()` has a different signature and
-the code context differs slightly. The ras.c changes do NOT apply as the
-old `log_arm_hw_error()` is trivial.
+The commit message explicitly says **"This second patch"**, indicating
+it's part of a 2-patch series. The first patch is `55dcfdf8af9c3` ("dm
+raid: use proper md_ro_state enumerators"), which:
+- Added `rs->md.ro = MD_RDONLY;` to `raid_postsuspend()` in `dm-raid.c`
+- Without this line, when `raid_dtr` runs, `mddev->ro` is still
+  `MD_RDWR` (from `raid_resume`), so `md_is_rdwr()` returns true, and
+  the quiesce/flush is NOT skipped → the hang still occurs!
 
-### 6. Risk vs. Benefit
+**This means the fix (`cefcb9297fbdb`) CANNOT work without the
+prerequisite (`55dcfdf8af9c3`).**
 
-**Benefits:**
-- Fixes a real kernel OOPS triggered by buggy/incomplete firmware CPER
-  records on ARM servers
-- The primary check in `ghes_handle_arm_hw_error()` (`length >=
-  sizeof(*err)`) is correct and prevents the reported crash
-- The err_info loop bounds checking provides additional protection
-- Affects ARM servers in production using GHES error reporting
-  (enterprise workloads)
+The prerequisite `55dcfdf8af9c3` was merged for v6.18. It is:
+- Present in 6.18.y
+- **NOT** present in 6.12.y, 6.6.y, 6.1.y, or 5.15.y
 
-**Risks:**
-- The `sizeof(err)` bug makes bounds checking in ghes.c less strict (off
-  by 32 bytes)
-- The potentially inverted condition in ras.c could affect trace data
-  accuracy for valid ARM processor errors
-- The ras.c issue doesn't cause crashes but could degrade ARM error
-  reporting quality
-- The commit may be very recent (possibly not yet landed in mainline
-  release)
+### 5. Additional Backport Complications
 
-### 7. Classification
+For older stable trees (6.12.y and earlier), the code context has
+changed significantly:
+- v6.12+: `bitmap_ops->flush()` (ops-based interface)
+- v6.11 and earlier: `md_bitmap_flush()` (direct function call)
+- The `md_bitmap_enabled()` guard was added between v6.12 and current
+- The `serialize_policy` field changed to a flag bit
+- `md_stop_writes()` in v6.6 includes `set_bit(MD_RECOVERY_FROZEN)` and
+  sync thread reaping, which was later moved to the callers
 
-This is a **bug fix** for an **out-of-bounds memory access** causing a
-**kernel crash**. The crash is triggered by firmware behavior
-(incomplete CPER records), which is a real-world scenario on ARM
-servers. The fix is small (net ~30 lines changed across 2 files), well-
-reviewed, and surgical in scope.
+### 6. Is the Bug Present in Older Stable Trees?
+
+**Yes**, the underlying bug (bitmap flush blocking on suspended metadata
+devices) exists in all kernel versions with dm-raid. In v6.6/v6.1,
+`__md_stop_writes()` also calls `md_bitmap_flush()` and
+`pers->quiesce()` unconditionally, and the same hang can occur when
+`raid_dtr` runs after `raid_postsuspend`.
+
+However, to fix it in older trees, you would need BOTH:
+1. The prerequisite that sets `ro = MD_RDONLY` in `raid_postsuspend`
+   (equivalent of `55dcfdf8af9c3`)
+2. This fix that checks `md_is_rdwr()` in `__md_stop_writes` (this
+   commit)
+
+And both would need adaptation to the different code context.
+
+### 7. Risk Assessment
+
+- **Severity of bug**: HIGH — system hang is a serious issue, especially
+  for enterprise users of dm-raid (LVM RAID, etc.)
+- **Risk of regression**: LOW-MEDIUM — the fix only changes behavior for
+  dm-raid devices in the destructor path (when `!md_is_rdwr &&
+  mddev_is_dm`); all other paths are unchanged
+- **Size**: Very small (8 insertions, 6 deletions)
+- **Dependency complexity**: HIGH — requires prerequisite commit and
+  significant code context differences across versions
 
 ### 8. Verdict
 
-Despite the subtle code quality issues I identified (`sizeof(err)` vs
-`sizeof(*err)`, potentially inverted condition in `ras.c`), the commit
-fixes a **real, reproducible kernel OOPS** on ARM servers. The primary
-protection (initial length validation in `ghes_handle_arm_hw_error()`)
-is correct and prevents the crash. The issues I noted affect secondary
-protections and trace data quality but don't cause crashes. Not
-backporting means ARM servers continue to crash when encountering
-malformed firmware error records. The fix meets stable criteria: it
-fixes a real crash, is small and contained, and has multiple reviews.
+This commit fixes a **real, user-reported system hang** in dm-raid
+teardown, which is clearly important for stable. The fix itself is
+small, surgical, and well-understood. However, it has a **hard
+dependency** on `55dcfdf8af9c3` ("dm raid: use proper md_ro_state
+enumerators") which adds the critical `rs->md.ro = MD_RDONLY` line in
+`raid_postsuspend()`. Without that prerequisite, the `md_is_rdwr()`
+check in this fix would never distinguish between suspend and destructor
+paths, and the fix would be completely ineffective.
+
+For 6.18.y, the prerequisite is present and this patch could apply
+(possibly with minor context adjustments). For older LTS trees (6.12.y,
+6.6.y, 6.1.y), both this commit and the prerequisite (with appropriate
+context adaptations) would need to be backported together.
+
+Given that:
+1. It fixes a definite system hang (high severity)
+2. It's small and well-contained
+3. It has a clear dependency that must also be backported
+4. dm-raid (LVM RAID) is widely used in enterprise environments
+5. The author is from Red Hat (enterprise focus) and it was reported by
+   a real user
+
+This is a **YES** for backporting, with the strong caveat that the
+prerequisite commit `55dcfdf8af9c3` must be included in any backport.
 
 **YES**
 
- drivers/acpi/apei/ghes.c | 32 ++++++++++++++++++++++++++++----
- drivers/ras/ras.c        |  6 +++++-
- 2 files changed, 33 insertions(+), 5 deletions(-)
+ drivers/md/md.c | 14 ++++++++------
+ 1 file changed, 8 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/acpi/apei/ghes.c b/drivers/acpi/apei/ghes.c
-index a37c8fb574832..77ea7a5b761f1 100644
---- a/drivers/acpi/apei/ghes.c
-+++ b/drivers/acpi/apei/ghes.c
-@@ -556,21 +556,45 @@ static bool ghes_handle_arm_hw_error(struct acpi_hest_generic_data *gdata,
+diff --git a/drivers/md/md.c b/drivers/md/md.c
+index 6d73f6e196a9f..ac71640ff3a81 100644
+--- a/drivers/md/md.c
++++ b/drivers/md/md.c
+@@ -6848,13 +6848,15 @@ static void __md_stop_writes(struct mddev *mddev)
  {
- 	struct cper_sec_proc_arm *err = acpi_hest_get_payload(gdata);
- 	int flags = sync ? MF_ACTION_REQUIRED : 0;
-+	int length = gdata->error_data_length;
- 	char error_type[120];
- 	bool queued = false;
- 	int sec_sev, i;
- 	char *p;
+ 	timer_delete_sync(&mddev->safemode_timer);
  
- 	sec_sev = ghes_severity(gdata->error_severity);
--	log_arm_hw_error(err, sec_sev);
-+	if (length >= sizeof(*err)) {
-+		log_arm_hw_error(err, sec_sev);
-+	} else {
-+		pr_warn(FW_BUG "arm error length: %d\n", length);
-+		pr_warn(FW_BUG "length is too small\n");
-+		pr_warn(FW_BUG "firmware-generated error record is incorrect\n");
-+		return false;
+-	if (mddev->pers && mddev->pers->quiesce) {
+-		mddev->pers->quiesce(mddev, 1);
+-		mddev->pers->quiesce(mddev, 0);
+-	}
++	if (md_is_rdwr(mddev) || !mddev_is_dm(mddev)) {
++		if (mddev->pers && mddev->pers->quiesce) {
++			mddev->pers->quiesce(mddev, 1);
++			mddev->pers->quiesce(mddev, 0);
++		}
+ 
+-	if (md_bitmap_enabled(mddev, true))
+-		mddev->bitmap_ops->flush(mddev);
++		if (md_bitmap_enabled(mddev, true))
++			mddev->bitmap_ops->flush(mddev);
 +	}
-+
- 	if (sev != GHES_SEV_RECOVERABLE || sec_sev != GHES_SEV_RECOVERABLE)
- 		return false;
  
- 	p = (char *)(err + 1);
-+	length -= sizeof(err);
-+
- 	for (i = 0; i < err->err_info_num; i++) {
--		struct cper_arm_err_info *err_info = (struct cper_arm_err_info *)p;
--		bool is_cache = err_info->type & CPER_ARM_CACHE_ERROR;
--		bool has_pa = (err_info->validation_bits & CPER_ARM_INFO_VALID_PHYSICAL_ADDR);
-+		struct cper_arm_err_info *err_info;
-+		bool is_cache, has_pa;
-+
-+		/* Ensure we have enough data for the error info header */
-+		if (length < sizeof(*err_info))
-+			break;
-+
-+		err_info = (struct cper_arm_err_info *)p;
-+
-+		/* Validate the claimed length before using it */
-+		length -= err_info->length;
-+		if (length < 0)
-+			break;
-+
-+		is_cache = err_info->type & CPER_ARM_CACHE_ERROR;
-+		has_pa = (err_info->validation_bits & CPER_ARM_INFO_VALID_PHYSICAL_ADDR);
- 
- 		/*
- 		 * The field (err_info->error_info & BIT(26)) is fixed to set to
-diff --git a/drivers/ras/ras.c b/drivers/ras/ras.c
-index 2a5b5a9fdcb36..03df3db623346 100644
---- a/drivers/ras/ras.c
-+++ b/drivers/ras/ras.c
-@@ -72,7 +72,11 @@ void log_arm_hw_error(struct cper_sec_proc_arm *err, const u8 sev)
- 	ctx_err = (u8 *)ctx_info;
- 
- 	for (n = 0; n < err->context_info_num; n++) {
--		sz = sizeof(struct cper_arm_ctx_info) + ctx_info->size;
-+		sz = sizeof(struct cper_arm_ctx_info);
-+
-+		if (sz + (long)ctx_info - (long)err >= err->section_length)
-+			sz += ctx_info->size;
-+
- 		ctx_info = (struct cper_arm_ctx_info *)((long)ctx_info + sz);
- 		ctx_len += sz;
- 	}
+ 	if (md_is_rdwr(mddev) &&
+ 	    ((!mddev->in_sync && !mddev_is_clustered(mddev)) ||
 -- 
 2.51.0
 
