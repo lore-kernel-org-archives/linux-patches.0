@@ -1,47 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22EA0219FC;
-	Wed, 11 Feb 2026 12:31:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80AEA1A9FA4;
+	Wed, 11 Feb 2026 12:31:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770813106; cv=none; b=c4VcQXlftNzKpUQkBf6ZWoftUCjopv9QR857EmDtfQS4IQwLLvkbxqIEPfGwxAMvZ978WFGEzDXwO1oCwHFGmBBISCfGso+2AIslpC9a5eHM23nEMSwtjLdMqt1Hk9BnJW6wmaDyIhvcPQv6LW57qORSKMiV+GyU0aUtCdy7oCg=
+	t=1770813107; cv=none; b=fxgIPNv75en0grp2VCWfytbMBYLfYJTzjLAn8VE05scx7T/74Nr31mtKzIJGpctc6omADdxU4dcjUr0JhrrE+itUowymr48zKq40NIHzkDXRRWyIo56LT8chVXJhfI7EQucNm2/pPgB3hr2UD9MYtCIriqKuB9nblB+4l1cqEME=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770813106; c=relaxed/simple;
-	bh=ENlGDnCCpVbCweAatB+Bj6R2+QrSPPC9d8pacjFF0Tg=;
+	s=arc-20240116; t=1770813107; c=relaxed/simple;
+	bh=Tf2HFjwCMjCSlIDdTt4ev05KSSziEzdiulZOqr2rm+A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VQvcU84zRHlwaz5usyqdyXci9yamvjfY1Ud5msqLJjlxkqMJfaIodISzKW+CrRNrSjJIGe4a78xWZZ5qWrlG7GNISI4oLWSYa7BNqKJq4t48fHtKVmOrfpQZ2QcvpMNmmVIo/FLVy28B4VaN3kD19dj+YZtu5pXZuJq1cO6y7wA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=CR/9dh3/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=hD+bi1OP0sxtHQwdYB/YQHCpqRFfKDgif1AIQ7O2G1H5mnV4ZF/7zW/17h6hxDbf5/hWhoOfoyC9NVrMnDXS2nNcK1oaaUKrwPeQelkR/7EFdgoBmtysxns9HYhXP7DaaFAHiPNTQapITI2355nAnrC4pa6RTd8xZ6pgGrYHaag=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=tewN5C1X; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="CR/9dh3/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D039BC19421;
-	Wed, 11 Feb 2026 12:31:44 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="tewN5C1X"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8DDADC2BC87;
+	Wed, 11 Feb 2026 12:31:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1770813106;
-	bh=ENlGDnCCpVbCweAatB+Bj6R2+QrSPPC9d8pacjFF0Tg=;
+	s=k20201202; t=1770813107;
+	bh=Tf2HFjwCMjCSlIDdTt4ev05KSSziEzdiulZOqr2rm+A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CR/9dh3/it36j2UWHDJuoG3MWY8i3jdeA9fp1soqleCxEB4wjC3YdrQzGO8bkBUGG
-	 CrOek9imnPaRkud0Q3/61neX/RQLrLcRlowDfpYwJRjS9QZ6eQWtAlb4zRdZ7Vg5RZ
-	 i6DuQLsAMI6S1SHGVoq04uspz4QfbwlBZy3FYwJMXg3NQGN/3SEMITnadRmqQcS9QI
-	 wX1uqkkO3xOFRhsSrAKbajvF0CbvFQXHnu9rQ/uhPWUuCvSifUB4P32oVhApj7N9q3
-	 vH8cFUtsUdeefi3tbd/kHcADtB0bg95YOvaQN6sGBzR2fihdWIcdix9xmHUeyuiLWm
-	 qQ2kOcc4IFVzg==
+	b=tewN5C1XsPMIXcoLeufJOAvYhAgoy8xQJX4J2i0/3nQgpQLc9ihayjI/GY+UtxxZs
+	 lK4MgFSx59z+qgqdbbOvZbYOErhUlvBusYZe8BYWpXbXykclKpcTZDga55dXD2cBpF
+	 4daeHAhT73Pp3xXWQMjlQyMzM/kBanfZuEra1VIzIhqlyw5fyUsPjSGLVlMlPgWlo6
+	 3bTbq/X60+ZfyhgcKdUn1E+YuodpcxqsSIv88OXQbtxsWPMvgCWyHIhWMFYWMA8A21
+	 qTtIDGThTynefynpPWDwLfrZ0lz2EqzD/xXU8CKSt0czLib7F+/yQ/g7fT8G+UQHPM
+	 +C8qHLiYEel7g==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Alexandre Courbot <acourbot@nvidia.com>,
-	Daniel Almeida <daniel.almeida@collabora.com>,
-	Viresh Kumar <viresh.kumar@linaro.org>,
+Cc: Yu Kuai <yukuai@fnnas.com>,
+	Nilay Shroff <nilay@linux.ibm.com>,
+	Hannes Reinecke <hare@suse.de>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>,
-	rafael@kernel.org,
-	ojeda@kernel.org,
-	lossin@kernel.org,
-	gary@garyguo.net,
-	linux-pm@vger.kernel.org,
-	rust-for-linux@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.19-6.18] rust: cpufreq: always inline functions using build_assert with arguments
-Date: Wed, 11 Feb 2026 07:30:26 -0500
-Message-ID: <20260211123112.1330287-16-sashal@kernel.org>
+	linux-block@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.19-6.18] blk-mq-sched: unify elevators checking for async requests
+Date: Wed, 11 Feb 2026 07:30:27 -0500
+Message-ID: <20260211123112.1330287-17-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260211123112.1330287-1-sashal@kernel.org>
 References: <20260211123112.1330287-1-sashal@kernel.org>
@@ -54,166 +50,298 @@ MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.19
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Alexandre Courbot <acourbot@nvidia.com>
+From: Yu Kuai <yukuai@fnnas.com>
 
-[ Upstream commit 8c8b12a55614ea05953e8d695e700e6e1322a05d ]
+[ Upstream commit 1db61b0afdd7e8aa9289c423fdff002603b520b5 ]
 
-`build_assert` relies on the compiler to optimize out its error path.
-Functions using it with its arguments must thus always be inlined,
-otherwise the error path of `build_assert` might not be optimized out,
-triggering a build error.
+bfq and mq-deadline consider sync writes as async requests and only
+reserve tags for sync reads by async_depth, however, kyber doesn't
+consider sync writes as async requests for now.
 
-Signed-off-by: Alexandre Courbot <acourbot@nvidia.com>
-Reviewed-by: Daniel Almeida <daniel.almeida@collabora.com>
-Signed-off-by: Viresh Kumar <viresh.kumar@linaro.org>
+Consider the case there are lots of dirty pages, and user use fsync to
+flush dirty pages. In this case sched_tags can be exhausted by sync writes
+and sync reads can stuck waiting for tag. Hence let kyber follow what
+mq-deadline and bfq did, and unify async requests checking for all
+elevators.
+
+Signed-off-by: Yu Kuai <yukuai@fnnas.com>
+Reviewed-by: Nilay Shroff <nilay@linux.ibm.com>
+Reviewed-by: Hannes Reinecke <hare@suse.de>
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-Now I have all the information needed for a thorough analysis. Here is
-my assessment:
+Now I have all the information needed for a thorough analysis. Let me
+compile the findings.
 
 ---
 
-## Analysis: `rust: cpufreq: always inline functions using build_assert
-with arguments`
+## Complete Analysis
 
-### 1. What the Commit Does
+### 1. COMMIT MESSAGE ANALYSIS
 
-This commit adds `#[inline(always)]` (plus explanatory comment) to the
-`const fn copy_name()` function in `rust/kernel/cpufreq.rs`. This
-function uses `build_assert!` to validate that a driver name string fits
-within `CPUFREQ_NAME_LEN`.
+The subject "blk-mq-sched: unify elevators checking for async requests"
+sounds like a cleanup/unification commit, but the message body reveals a
+**real I/O starvation bug in the kyber scheduler**:
 
-### 2. The Bug Mechanism (Build Fix)
+> *"Consider the case there are lots of dirty pages, and user use fsync
+to flush dirty pages. In this case sched_tags can be exhausted by sync
+writes and sync reads can stuck waiting for tag."*
 
-The `build_assert!` macro works by calling `build_error()` on the error
-path. `build_error()` (defined in `rust/build_error.rs`) is exported
-with the symbol name `rust_build_error`. Crucially, in the Makefile:
+This describes a concrete, user-visible problem: sync read starvation
+when kyber is the I/O scheduler and fsync flushes dirty pages.
 
-```25:26:rust/Makefile
-always-$(CONFIG_RUST) += build_error.o
-endif
+### 2. CODE CHANGE ANALYSIS — The Bug Mechanism
+
+The key to understanding this bug lies in the difference between
+`op_is_sync()` and the new `blk_mq_is_sync_read()`:
+
+```470:474:include/linux/blk_types.h
+static inline bool op_is_sync(blk_opf_t op)
+{
+        return (op & REQ_OP_MASK) == REQ_OP_READ ||
+                (op & (REQ_SYNC | REQ_FUA | REQ_PREFLUSH));
+}
 ```
 
-When `CONFIG_RUST_BUILD_ASSERT_ALLOW` is NOT set (the default),
-`build_error.o` is compiled but **not linked** into the kernel. This
-means any reference to `rust_build_error` in the final binary causes a
-**linker error** -- this is the deliberate mechanism that turns
-`build_assert!` into a build-time check.
+`op_is_sync()` returns **true** for both sync reads AND sync writes
+(writes with `REQ_SYNC`/`REQ_FUA`/`REQ_PREFLUSH`).
 
-The problem: if `copy_name()` is not inlined, the compiler generates a
-standalone function body where the `name` parameter is opaque. It cannot
-prove that `src.len() <= CPUFREQ_NAME_LEN` will always hold, so it
-preserves the `build_error()` call. This creates a reference to the
-deliberately-missing `rust_build_error` symbol, causing a **build
-failure**.
+When `fsync()` triggers writeback, writes get `REQ_SYNC` because
+`wbc->sync_mode == WB_SYNC_ALL`:
 
-With `#[inline(always)]`, the function body is always expanded at the
-call site where the actual argument (`T::NAME`) is a known const value.
-The compiler can then evaluate the condition, prove it's true, and
-eliminate the error path -- allowing successful linking.
+```93:103:include/linux/writeback.h
+static inline blk_opf_t wbc_to_write_flags(struct writeback_control
+*wbc)
+{
+        blk_opf_t flags = 0;
 
-### 3. Established Pattern -- Sibling Patches Were All Tagged for Stable
+        if (wbc->sync_mode == WB_SYNC_ALL)
+                flags |= REQ_SYNC;
+        // ...
+}
+```
 
-This commit is part of a broader effort by Alexandre Courbot to fix all
-`build_assert!`-using functions that lack `#[inline(always)]`. The
-**four sibling patches** (all with identical commit messages) that fix
-this in other files **all have** `Cc: stable@vger.kernel.org` and
-`Fixes:` tags:
+**Kyber's bug** — in `kyber_limit_depth()`:
 
-- `d6ff6e870077a` - `rust: sync: refcount` -- **Cc: stable, Fixes:
-  bb38f35b35f9**
-- `09c3c9112d71c` - `rust: bits` -- **Cc: stable, Fixes: cc84ef3b88f4**
-- `5d9c4c272ba06` - `rust: irq` -- **Cc: stable, Fixes: 746680ec6696**
-- `33d19f621641d` - `rust: io` -- **Cc: stable, Fixes: ce30d94e6855**
+```553:564:block/kyber-iosched.c
+static void kyber_limit_depth(blk_opf_t opf, struct blk_mq_alloc_data
+*data)
+{
+        /*
+  - We use the scheduler tags as per-hardware queue queueing tokens.
+  - Async requests can be limited at this stage.
+         */
+        if (!op_is_sync(opf)) {
+                struct kyber_queue_data *kqd =
+data->q->elevator->elevator_data;
 
-The cpufreq variant likely lacks the stable tag because it was sent
-through a different maintainer tree (Viresh Kumar's cpufreq tree, not
-the Rust or DRM trees), not because it's less important.
+                data->shallow_depth = kqd->async_depth;
+        }
+}
+```
 
-### 4. Consistency with Existing Code
+The condition `!op_is_sync(opf)` means only truly async operations get
+throttled. Sync writes (from fsync) pass `op_is_sync()` as true, so they
+get **full depth** — no throttling. This means sync writes can consume
+ALL sched_tags.
 
-Identical patterns in the codebase **already have** `#[inline(always)]`:
-- `i2c.rs:45` - `pub const fn new()` with `build_assert!` on string
-  length
-- `acpi.rs:38` - `pub const fn new()` with `build_assert!` on string
-  length
-- `ioctl.rs:12` - `const fn _IOC()` with multiple `build_assert!` calls
-- `bits.rs:31-32` - `bit_*` and `genmask_*` functions
-- `irq/flags.rs:100-101` - `const fn new()`
-- `io/resource.rs:230-231` - `const fn new()`
-- `num/bounded.rs:369-370` - `from_expr()`
+**mq-deadline and bfq already handle this correctly:**
 
-The `cpufreq.rs` `copy_name` function is the exact same pattern (const
-fn taking an argument, using `build_assert!` on it) but was missing the
-annotation -- clearly an oversight.
+```493:506:block/mq-deadline.c
+static void dd_limit_depth(blk_opf_t opf, struct blk_mq_alloc_data
+*data)
+{
+        struct deadline_data *dd = data->q->elevator->elevator_data;
 
-### 5. Affected Stable Trees
+        /* Do not throttle synchronous reads. */
+        if (op_is_sync(opf) && !op_is_write(opf))
+                return;
 
-The file `rust/kernel/cpufreq.rs` was introduced in v6.16. I confirmed
-the vulnerable `copy_name` function (without `#[inline(always)]`) exists
-in:
-- **v6.18.9** (latest 6.18 stable)
-- **v6.17.13** (latest 6.17 stable)
-- **v6.16** (and its stable updates)
+        // ... throttle everything else including sync writes
+        data->shallow_depth = dd->async_depth;
+}
+```
 
-### 6. Risk Assessment
+Both mq-deadline and bfq use `op_is_sync(opf) && !op_is_write(opf)` to
+give full depth only to sync **reads**. Sync writes are properly
+throttled by `async_depth`.
 
-- **Change size**: 2 lines (1 comment + 1 attribute annotation)
-- **Behavioral change**: Zero runtime change. `#[inline(always)]` only
-  affects compilation.
-- **Regression risk**: Effectively zero. The function was likely already
-  being inlined by the optimizer; this just guarantees it, matching the
-  established pattern.
-- **Benefit**: Prevents potential build failures that could occur with
-  different Rust compiler versions, optimization levels, or future code
-  changes that affect inlining decisions.
+**The fix:** Changes kyber's condition from `!op_is_sync(opf)` to
+`!blk_mq_is_sync_read(opf)`, where the new helper is defined as:
 
-### 7. Classification
+```c
+static inline bool blk_mq_is_sync_read(blk_opf_t opf)
+{
+    return op_is_sync(opf) && !op_is_write(opf);
+}
+```
 
-This is a **build fix** -- one of the categories explicitly approved for
-stable backporting. It prevents a linker error that could occur when the
-compiler decides not to inline `copy_name`. The sibling fixes were all
-explicitly tagged for stable by the author and maintainers.
+### 3. BEHAVIORAL IMPACT BY SCHEDULER
 
-### 8. Dependencies
+| Scheduler | Before | After | Behavioral Change? |
+|---|---|---|---|
+| **kyber** | Only async ops throttled; sync writes get full depth |
+Everything except sync reads throttled | **YES — this is the bug fix** |
+| **bfq** | `op_is_sync(opf) && !op_is_write(opf)` |
+`blk_mq_is_sync_read(opf)` | **NO — semantically identical** |
+| **mq-deadline** | `op_is_sync(opf) && !op_is_write(opf)` |
+`blk_mq_is_sync_read(opf)` | **NO — semantically identical** |
 
-None. This is a self-contained 2-line change with no dependencies on
-other patches.
+The bfq and mq-deadline changes are purely cosmetic refactoring. The
+actual bug fix is exclusively in kyber.
 
-### Conclusion
+### 4. BUG SEVERITY
 
-This is a minimal, zero-risk build fix that follows an established
-pattern across the Rust kernel codebase. Every sibling patch from the
-same author fixing the exact same class of issue was tagged `Cc:
-stable@vger.kernel.org`. The affected code exists in 6.16.y, 6.17.y, and
-6.18.y stable trees. The only reason this specific patch lacks the
-stable tag is likely that it went through a different maintainer tree.
-The fix is obviously correct, small, and prevents potential build
-failures.
+The starvation scenario is concrete and reproducible:
+1. System has lots of dirty pages
+2. User calls `fsync()` to flush them
+3. Lots of sync writes are submitted
+4. Kyber gives them full depth (no throttling)
+5. All sched_tags consumed by sync writes
+6. Sync reads from applications **starve** — they cannot get any tags
+7. Read I/O hangs until writes complete
+
+This is a **system responsiveness issue** — applications waiting for
+reads (file access, page faults) can hang when another process is doing
+heavy fsyncing.
+
+### 5. SCOPE AND RISK
+
+- **Size:** Very small — adds a 4-line helper, changes one condition in
+  each of 3 files
+- **Risk for bfq/mq-deadline:** Zero — semantically identical changes
+- **Risk for kyber:** Low — the change aligns kyber with the well-
+  established and battle-tested behavior of mq-deadline and bfq. Kyber's
+  `async_depth` is set to 75% of `q->nr_requests` (`KYBER_ASYNC_PERCENT
+  = 75`), so sync writes still get generous tag allocation, just not
+  unlimited
+- **Possible regression:** Slight reduction in sync write throughput on
+  kyber (now throttled to 75% of tags instead of 100%), but this is the
+  correct behavior to prevent read starvation
+
+### 6. REVIEW AND TESTING
+
+The commit has two `Reviewed-by` tags from experienced kernel
+developers:
+- **Nilay Shroff** (IBM) — block layer contributor
+- **Hannes Reinecke** (SUSE) — longstanding storage/block subsystem
+  maintainer
+
+Signed off by **Jens Axboe** — block subsystem maintainer.
+
+### 7. DEPENDENCY ANALYSIS
+
+The commit depends on `42e6c6ce03fd3e` ("lib/sbitmap: convert
+shallow_depth from one word to the whole sbitmap") for context lines in
+the bfq part (which references `bfqd->async_depths`, renamed from
+`bfqd->word_depths` in the prerequisite). However:
+
+- The **core fix** (kyber condition change) is completely independent
+- The bfq and mq-deadline changes are cosmetic and could be dropped for
+  stable
+- For stable trees, the kyber fix + helper function could be backported
+  alone, or the bfq/mq-deadline parts could be adapted to match older
+  context
+
+### 8. BUG LONGEVITY
+
+The bug has existed since kyber's introduction in commit `00e043936e9a1`
+(April 2017, kernel v4.12). The original code already used
+`!op_is_sync(op)` which had the same problem. The mq-deadline scheduler
+only added tag reservation in v5.15 (commit `07757588e507`, June 2021)
+and correctly used `op_is_sync(opf) && !op_is_write(opf)` from the
+start. The bfq scheduler similarly had the correct check. Kyber was the
+odd one out.
+
+### 9. CONCLUSION
+
+This commit fixes a real I/O starvation bug in the kyber scheduler where
+sync writes (from fsync/sync) can exhaust all scheduler tags and starve
+sync reads. The fix is:
+
+- **Small and surgical** — one condition change in kyber, plus a trivial
+  helper function
+- **Obviously correct** — it aligns kyber with the proven behavior of
+  mq-deadline and bfq
+- **Low risk** — the bfq/mq-deadline parts are semantically identical;
+  the kyber change is well-bounded
+- **Well-reviewed** — by experienced block subsystem developers and the
+  subsystem maintainer
+- **Fixes a real user-visible bug** — read I/O starvation during fsync-
+  heavy workloads
+
+The only concern is the dependency on a prerequisite for the bfq context
+lines, but the core kyber fix is standalone and the bfq/mq-deadline
+parts are optional cosmetic refactoring that could be adapted or dropped
+for stable trees.
 
 **YES**
 
- rust/kernel/cpufreq.rs | 2 ++
- 1 file changed, 2 insertions(+)
+ block/bfq-iosched.c   | 2 +-
+ block/blk-mq-sched.h  | 5 +++++
+ block/kyber-iosched.c | 2 +-
+ block/mq-deadline.c   | 2 +-
+ 4 files changed, 8 insertions(+), 3 deletions(-)
 
-diff --git a/rust/kernel/cpufreq.rs b/rust/kernel/cpufreq.rs
-index f968fbd228905..0879a79485f8e 100644
---- a/rust/kernel/cpufreq.rs
-+++ b/rust/kernel/cpufreq.rs
-@@ -1015,6 +1015,8 @@ impl<T: Driver> Registration<T> {
-         ..pin_init::zeroed()
-     };
+diff --git a/block/bfq-iosched.c b/block/bfq-iosched.c
+index 6e54b1d3d8bc2..9e9d081e86bb2 100644
+--- a/block/bfq-iosched.c
++++ b/block/bfq-iosched.c
+@@ -697,7 +697,7 @@ static void bfq_limit_depth(blk_opf_t opf, struct blk_mq_alloc_data *data)
+ 	unsigned int limit, act_idx;
  
-+    // Always inline to optimize out error path of `build_assert`.
-+    #[inline(always)]
-     const fn copy_name(name: &'static CStr) -> [c_char; CPUFREQ_NAME_LEN] {
-         let src = name.to_bytes_with_nul();
-         let mut dst = [0; CPUFREQ_NAME_LEN];
+ 	/* Sync reads have full depth available */
+-	if (op_is_sync(opf) && !op_is_write(opf))
++	if (blk_mq_is_sync_read(opf))
+ 		limit = data->q->nr_requests;
+ 	else
+ 		limit = bfqd->async_depths[!!bfqd->wr_busy_queues][op_is_sync(opf)];
+diff --git a/block/blk-mq-sched.h b/block/blk-mq-sched.h
+index 02c40a72e9598..5678e15bd33c4 100644
+--- a/block/blk-mq-sched.h
++++ b/block/blk-mq-sched.h
+@@ -137,4 +137,9 @@ static inline void blk_mq_set_min_shallow_depth(struct request_queue *q,
+ 						depth);
+ }
+ 
++static inline bool blk_mq_is_sync_read(blk_opf_t opf)
++{
++	return op_is_sync(opf) && !op_is_write(opf);
++}
++
+ #endif
+diff --git a/block/kyber-iosched.c b/block/kyber-iosched.c
+index c1b36ffd19ceb..2b3f5b8959af0 100644
+--- a/block/kyber-iosched.c
++++ b/block/kyber-iosched.c
+@@ -556,7 +556,7 @@ static void kyber_limit_depth(blk_opf_t opf, struct blk_mq_alloc_data *data)
+ 	 * We use the scheduler tags as per-hardware queue queueing tokens.
+ 	 * Async requests can be limited at this stage.
+ 	 */
+-	if (!op_is_sync(opf)) {
++	if (!blk_mq_is_sync_read(opf)) {
+ 		struct kyber_queue_data *kqd = data->q->elevator->elevator_data;
+ 
+ 		data->shallow_depth = kqd->async_depth;
+diff --git a/block/mq-deadline.c b/block/mq-deadline.c
+index 3e3719093aec7..29d00221fbea6 100644
+--- a/block/mq-deadline.c
++++ b/block/mq-deadline.c
+@@ -495,7 +495,7 @@ static void dd_limit_depth(blk_opf_t opf, struct blk_mq_alloc_data *data)
+ 	struct deadline_data *dd = data->q->elevator->elevator_data;
+ 
+ 	/* Do not throttle synchronous reads. */
+-	if (op_is_sync(opf) && !op_is_write(opf))
++	if (blk_mq_is_sync_read(opf))
+ 		return;
+ 
+ 	/*
 -- 
 2.51.0
 
