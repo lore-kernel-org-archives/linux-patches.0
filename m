@@ -1,167 +1,114 @@
-Received: from mail-lf1-f67.google.com (mail-lf1-f67.google.com [209.85.167.67])
+Received: from mail-ed1-f49.google.com (mail-ed1-f49.google.com [209.85.208.49])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C2C9353EE1
-	for <patches@lists.linux.dev>; Wed, 11 Feb 2026 08:58:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.67
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770800294; cv=none; b=pjQYkneCrEUvcNf3utvrmq19J5xBxu4imlNf0GalhTURBX6ljPuVKIdCgKd8wbu6946fJbPVnuCY8Eb3onnHvvO3l+bPrJDEndslOZNEiIwSaCJ4LqPGBuaLpqy1k8MOzxHPcEnfjz8vnWT3zEnBhmpBLACXhThbWHZg9+AWvR4=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770800294; c=relaxed/simple;
-	bh=SnjDX2BmSG9+YNiOS3gG9ljjWXS6el4ibB5xVQ1G9/Q=;
-	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
-	 In-Reply-To:Content-Type; b=llC5MBuzZZb82O3p44kkIq5nrf8fiu1HILixImeyac1gAsvrou+pn80J25ac96Z/9IIVLHPbKulgRatgir6b4ojtOvdvjTcZqFbtbi+baem/0jtvC2jFl9z9AmZ/8yZGlzOsxyhNS2VK0K9U8mAk84sSJzIDnZcNXpVAPJQYd3Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=remarkable.no; spf=pass smtp.mailfrom=remarkable.no; dkim=pass (2048-bit key) header.d=remarkable.no header.i=@remarkable.no header.b=TehLZu1k; arc=none smtp.client-ip=209.85.167.67
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=remarkable.no
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=remarkable.no
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7AF1E366DAB
+	for <patches@lists.linux.dev>; Wed, 11 Feb 2026 10:09:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.208.49
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1770804549; cv=pass; b=n7l+3S/vWcRgkQXKHdJi+91tjq5knuIzLdHpvVkx1RTXyfVbTpyRbdyG6ORWLa7WrUu8kUQpvCCcqz+gZSnW76wWgyLUY033cH6S1e8q0DoSnO0cRi0VEfMa5X4h18fGwIy5FX/Elvz5qajjhVkEhnCPIm9mOoOkM3jwQXRSsJ8=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1770804549; c=relaxed/simple;
+	bh=l1D8gw5i2W0/j8zDgRzT9uZ621ZVhzaysNHDR6kRh44=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=DNesMlchzDnGZQ1UAchRFNcy7wNsmb8rTQrSh+Z7PSSYJkkaDID/U2Zu8bMJXAZPHoLK2kcJ0Ks6XjgWXFR5Ez9Q4D449VYRrkXBlFk3lUYNKWT58qOfMoRSBeZhKQ3rF5/BPsf/s9R6voGyGoApEzIzBlYw1WimQRhrlmsWwsw=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=rajagiritech.edu.in; spf=none smtp.mailfrom=rajagiritech.edu.in; dkim=pass (2048-bit key) header.d=rajagiritech-edu-in.20230601.gappssmtp.com header.i=@rajagiritech-edu-in.20230601.gappssmtp.com header.b=kMZkmu6u; arc=pass smtp.client-ip=209.85.208.49
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=rajagiritech.edu.in
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=rajagiritech.edu.in
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=remarkable.no header.i=@remarkable.no header.b="TehLZu1k"
-Received: by mail-lf1-f67.google.com with SMTP id 2adb3069b0e04-59e4a04f059so4650035e87.2
-        for <patches@lists.linux.dev>; Wed, 11 Feb 2026 00:58:11 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=rajagiritech-edu-in.20230601.gappssmtp.com header.i=@rajagiritech-edu-in.20230601.gappssmtp.com header.b="kMZkmu6u"
+Received: by mail-ed1-f49.google.com with SMTP id 4fb4d7f45d1cf-65a36c8bcabso1514473a12.1
+        for <patches@lists.linux.dev>; Wed, 11 Feb 2026 02:09:08 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1770804547; cv=none;
+        d=google.com; s=arc-20240605;
+        b=Fqknf7/i7WgyBcrQvFY7KHwfixGoFaF2z6X4xaw/myxesHcYDzV9t75kDF9MZn/81w
+         gzXcmOtTNYLpzouNCkLLRYclhud2Jee7VgmE4OEtSU2KF85I9CVuoPGcI6Kg388Y6sLl
+         MJJ/A4mQYEk3g17WI90SZ7uFPAa0GsMSuaDN7GENDLe3B36vD6KjeU63h5UEIdI/bV6E
+         uLT3XAbwarz8xlprGlQI19oyZQxdgbINjg9h8poqmT5Wcfe1DCR6/BsxsVODKZj9RnAV
+         Pnh1sxpuDbZZD0+mbXuFGQr+TLOA4GyRaNOI/JywQxRF7WjPPkI3E0e0iRLvjzMwHm+a
+         GyYg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:dkim-signature;
+        bh=pru2SUTXC3VPuTIPcsJbrEeU7VXtLClZTOl0vZZxfiY=;
+        fh=3W6IS5SBUx15AvzX1L9q4kTD/cM8Mo3gxyg8sqvyGwo=;
+        b=cgWkTDuGvZW7PSCelJcXwCu117WtjhEg/5y5abYHljMx+vrGkO8t0/negY3FpsyvII
+         6Dz7YKXLrjms+F8qQ3jagHAWBH6yRWLCSTQyQ9aK8X8yAasBtcO4jgCIeXO+6ReFRy+S
+         IGlpeEuBDA6HCbreEEWhAXzQKuvXW9LSMs479orljovUoftkF6GtYUZHGvFgVo1IWaq1
+         +Mxgt2tiGVepB6JPZbmf/BJDlt6xppig6iXfZp0toZXrZi7cyPr8qOIjXgVEqJJwWRsE
+         d/fo0tMXxNxnkblIpgp8FiNC8m9HTN2G8xqQUpLGspS/f73jAjY4NHeDVHkzhrdfxX1v
+         xE7Q==;
+        darn=lists.linux.dev
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=remarkable.no; s=google; t=1770800290; x=1771405090; darn=lists.linux.dev;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :cc:to:subject:from:user-agent:mime-version:date:message-id:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=2nT5soxasCdecMDImdwifJowULDL/SH1hMInO+fMJhw=;
-        b=TehLZu1kl5ZrTdNgpTbnQPxJh7mMCEEuQ+2K6O/GSJuNzFTbnqcEXhbS2Kdr7mJSzO
-         1NGpgnADV2Oj0UJOnJwNa936bGM5TAlgsDWPBB63/iirRjw7+d7uFs5OmhrbbjJVS/wk
-         1yH0LXvnpeDvwSjqWdtplIWAzh5omEsX0nue/EO/uU6q4wctlZUFM/kfIgbxnYyr3tmT
-         vROb45xiKlf7GZRDXeQ9b5S/+3sJpfYZ34gwGEb7AINifYTlyIqvZpKHOpVW6m6ZCDJN
-         BYbXJ6bMI6L2hcprneST2YD6v8JFzMIM60t6nRIGloPBmi+xtE5ENSjxYnUJQ8E+mm3v
-         BqvA==
+        d=rajagiritech-edu-in.20230601.gappssmtp.com; s=20230601; t=1770804547; x=1771409347; darn=lists.linux.dev;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=pru2SUTXC3VPuTIPcsJbrEeU7VXtLClZTOl0vZZxfiY=;
+        b=kMZkmu6um4S6779iiaaaXwXZ4N/acZ57ZMUt8by4Rq8GDF8vJ6AHV8NVZ7CQM129H0
+         oKZScTZs6NBR5O8WECv2Y7mP6boOXsP/HpXB7I4DsQ2HyAEv5xgJCpk9dYmAaPIjVoDc
+         Y1mTlvu53Zw7vX457vNXJB4NtCSbvII9rJ8X1nRiBFUVtgFnFvtPD2X1iwgPwJD9kGXw
+         A65EMZn1S6MKouxA+/HyccqDTOinClE7vALMV73nlGmpBQfbblGl+iVV2rZ3Uso6/p7E
+         Bps/AAmgjn428nvHeNb7UhGoZjmPVZsc8b4vE+ddBI3l5V4vH5fVu+ho0282dh0sO7+N
+         J5Jw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1770800290; x=1771405090;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :cc:to:subject:from:user-agent:mime-version:date:message-id:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=2nT5soxasCdecMDImdwifJowULDL/SH1hMInO+fMJhw=;
-        b=P5lEwUKFuGTCusgesnjYQbg4A8ldWV8UMnH68pvob3DSvw3BoS29WmUwXzesfGfsMh
-         CJC9jq7e7fb3HvTKP/WK7qTd8GeclGUW4QVJW3FbhmqJfbfGFrJZdDPf6oYBdYdbCqiN
-         XDYizKoK582/08ujMuJ8jT/7fIAPz94WzgewYme2eo+z+/DvzgjQQZfJx3+AlTH8wHT9
-         wAlVKDWP/K4/2REoLzhqzrSPfmN/LM1kWpFDQoF8VOT7Ut1k7tjkIzIFp7f77pRxSyYF
-         qs5acoojqkSsC3j2IflIXgwH4YBbg3HEeOiU2i90w4Us5hLiGZ0uZcNIAwvmsT3Ip2x4
-         WJaQ==
-X-Forwarded-Encrypted: i=1; AJvYcCUYdTF/1yfw/cpcX65GIpRhPwsGB1Ui+aQcLGwzT8BJ8SmiZdXe1UUOWLTxnSz8OmTXRLMpgXRr@lists.linux.dev
-X-Gm-Message-State: AOJu0YyXtZ9SCZ3b/1XpONuR1OPDpHFpM343fhH1JK1kRpef8XtR720q
-	8U2KNNVZ/adA5YXEOQEGa499rzeiDgmPiM0x79bk9bYJXZ0U5wqFOwYUxlG2ujbekQ==
-X-Gm-Gg: AZuq6aJ/X0NrmbeCeGklzSZ14lDj7CV07mDrB/ObaPVAZ0bfPf2xNfz0hDoYPaqquZb
-	6+I72tZBTMPpkgtlKubLPrGaDeZEel3jh1ZnILERIKADgdhzt642zBVnHcckOoCOu/5pBm9BgZx
-	TUNYja82OyKHeuhFtgfKzv6sEILcimX7OnT9kSiT88EtiGGs7vgKmwAEMbiCvvR2x7p+DgnefMC
-	WCXaNRrHVYot4/ftwSzy1kI3szOPshd1jANN/KrxZtXC2c/ObaE7XOiw86vW/+FMliMXzTEnXCj
-	Fxug5/pwGUNcmWl7tpyYltw2HEyyeVcw16fGtD2XXroujddPeSXsh9v+UHIHIu4GwvUhFqFqknN
-	FD0FqXgS4bnyelAVS+ogcxA8DiiL9WsFf51kIa1xcgVAADEkBOs2PjexqWwwiHCd9o+1i7sVO1w
-	PUCVY7+elGI2d+OxXNVqRbF8nNHi3lkbzg31EeR2pJk4LwGJk55dFg1dF8nxMQNQk8L7w3jQwZw
-	aSXDlHn3Nvq891PNt01ptNasu/YZ80vSB4bUu+oO9JwrbziPM3Du0ENbuI3U7bs+SPF05DJa674
-	4VZs
-X-Received: by 2002:a05:6512:2c09:b0:59e:5b90:d7d1 with SMTP id 2adb3069b0e04-59e5c2baca1mr685434e87.8.1770800289656;
-        Wed, 11 Feb 2026 00:58:09 -0800 (PST)
-Received: from ?IPV6:2001:4643:2b9c:0:64dc:7ba4:ffb0:37f7? ([2001:4643:2b9c:0:64dc:7ba4:ffb0:37f7])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-59e5f5a4f5fsm206590e87.56.2026.02.11.00.58.08
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 11 Feb 2026 00:58:09 -0800 (PST)
-Message-ID: <cc9bcfe1-4667-4a33-b370-1f3912f0adca@remarkable.no>
-Date: Wed, 11 Feb 2026 09:58:08 +0100
+        d=1e100.net; s=20230601; t=1770804547; x=1771409347;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=pru2SUTXC3VPuTIPcsJbrEeU7VXtLClZTOl0vZZxfiY=;
+        b=NFVsVcfTi1/GHaIo5J2GskuIbQMoCmJWnZp/y6t3dG2Mv1vWlHFjQGHVWqOtwQoyWY
+         bMqD12v9r/29cRm1COXiOrmW4AOW/SliXnWxqkpqouWfw8LhKRhgUgGLRjEiId/NBKkF
+         /QcHnzD51uH28aImKkUmh5AQ4sSzcrrLbm7/Y9g9uiTWyc2g4N9/5PjhAqOxEY/V7clj
+         tFhKblTjAo4VqWqqdfExt3bV2Prb26r3UfHdBAEwb2RmGfLOHdulxh6nRJdB/m94X+PX
+         UKIvnlH90zoXg0/pTyMMcCJN893m+JfRldjlNJX0wA/bpRoaWRvxhYIdGVD3uIbByF0K
+         VBtg==
+X-Forwarded-Encrypted: i=1; AJvYcCXrnsqNL6LzEub8LDngsArCG1JHe6AEWptMyHnMr5v7g566UcHJtf0r44XoElEWHui0ZAI1YBeX@lists.linux.dev
+X-Gm-Message-State: AOJu0YwJYflsrPU/C1F1MjQbqI61Tr1PQVrdjQ2b8MfbGXMbwM4a03am
+	AvtLhN8Za/RanXJ2OhkRbgJ46RHjhh2QorMMCKQsQlKUw2QAYY0TNFeG5rTkT+BIoscNmOvNBfw
+	hXIJSeyLcX998QPj/aXRpGkvkIqx1yyNbxwL0jh0KuA==
+X-Gm-Gg: AZuq6aJyV46ZmqHjcfV3Q8hAu00XCgjHFc3tfOZ9qF8Xjh8L4kteP+aqiiS0/eW5xSr
+	2FwJtIyO5wy0+mbnZBmeRX+Qj9VatVhhGDkX85dEz2MoOuhtyMCXI4JtF4bD0Qe/TGSRnw21LmI
+	5Hk52+ndnwV/FDbRcAWX6frTNASovFsBmhChnVD65j9IfFxWEp/+Z5m9WFktP68FflcfZdfIZq+
+	ypybPYz0VhgtlQWdeMrnlOHPW/aaRGzfuv30lIZG8c2ohqGW6B7bDMq82PN9kBOeQNyKFM/Vrw5
+	33woF3gD/9KWnX33tgDH5VdCBckG5SCjx7V4x+rat80lD4FNDVYdvKDnxWcxVesnS+f+zQ==
+X-Received: by 2002:a17:907:1c83:b0:b8d:bf4d:7458 with SMTP id
+ a640c23a62f3a-b8f715a7af8mr82185366b.24.1770804546772; Wed, 11 Feb 2026
+ 02:09:06 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-From: Johan Korsnes <johan.korsnes@remarkable.no>
-Subject: Re: [PATCH 6.12 094/169] vsock/test: fix seqpacket message bounds
- test
-To: Stefano Garzarella <sgarzare@redhat.com>
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org,
- patches@lists.linux.dev, "Michael S. Tsirkin" <mst@redhat.com>,
- Paolo Abeni <pabeni@redhat.com>, Sasha Levin <sashal@kernel.org>
-References: <20260128145334.006287341@linuxfoundation.org>
- <20260128145337.388867288@linuxfoundation.org>
- <61627e8a-6998-4138-a174-d7fd257db93e@remarkable.no>
- <aYw9N_Ido_FZzblw@sgarzare-redhat>
-Content-Language: en-US
-In-Reply-To: <aYw9N_Ido_FZzblw@sgarzare-redhat>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+References: <20260209142301.913348974@linuxfoundation.org>
+In-Reply-To: <20260209142301.913348974@linuxfoundation.org>
+From: Jeffrin Thalakkottoor <jeffrin@rajagiritech.edu.in>
+Date: Wed, 11 Feb 2026 15:38:29 +0530
+X-Gm-Features: AZwV_QiSl-YLGb3rIqTrwEAhC38cFxhqIeltHg-6NkIYrjTXQLV8imvIeyEw0RU
+Message-ID: <CAG=yYwnY5cnTVpwNn3ECWSZdmSyayepkhSCZU8osg2kna1ihpA@mail.gmail.com>
+Subject: Re: [PATCH 6.1 00/69] 6.1.163-rc1 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, 
+	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@nabladev.com, 
+	jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, 
+	rwarsow@gmx.de, conor@kernel.org, hargar@microsoft.com, broonie@kernel.org, 
+	achill@achill.org, sr@sladewatkins.com
+Content-Type: text/plain; charset="UTF-8"
 
-On 11/02/2026 09:30, Stefano Garzarella wrote:
-> On Wed, Feb 11, 2026 at 08:50:11AM +0100, Johan Korsnes wrote:
->> On 28/01/2026 16:22, Greg Kroah-Hartman wrote:
->>> 6.12-stable review patch.  If anyone has any objections, please let me know.
->>>
->>> ------------------
->>>
->>> From: Stefano Garzarella <sgarzare@redhat.com>
->>>
->>> [ Upstream commit 0a98de80136968bab7db37b16282b37f044694d3 ]
->>>
->>> The test requires the sender (client) to send all messages before waking
->>> up the receiver (server).
->>> Since virtio-vsock had a bug and did not respect the size of the TX
->>> buffer, this test worked, but now that we are going to fix the bug, the
->>> test hangs because the sender would fill the TX buffer before waking up
->>> the receiver.
->>>
->>> Set the buffer size in the sender (client) as well, as we already do for
->>> the receiver (server).
->>>
->>> Fixes: 5c338112e48a ("test/vsock: rework message bounds test")
->>> Signed-off-by: Stefano Garzarella <sgarzare@redhat.com>
->>> Link: https://patch.msgid.link/20260121093628.9941-3-sgarzare@redhat.com
->>> Acked-by: Michael S. Tsirkin <mst@redhat.com>
->>> Signed-off-by: Paolo Abeni <pabeni@redhat.com>
->>> Signed-off-by: Sasha Levin <sashal@kernel.org>
->>> ---
->>>  tools/testing/vsock/vsock_test.c | 11 +++++++++++
->>>  1 file changed, 11 insertions(+)
->>>
->>> diff --git a/tools/testing/vsock/vsock_test.c b/tools/testing/vsock/vsock_test.c
->>> index 0c22ff7a8de2a..79ef11c0ab14f 100644
->>> --- a/tools/testing/vsock/vsock_test.c
->>> +++ b/tools/testing/vsock/vsock_test.c
->>> @@ -359,6 +359,7 @@ static void test_stream_msg_peek_server(const struct test_opts *opts)
->>>
->>>  static void test_seqpacket_msg_bounds_client(const struct test_opts *opts)
->>>  {
->>> +	unsigned long long sock_buf_size;
->>>  	unsigned long curr_hash;
->>>  	size_t max_msg_size;
->>>  	int page_size;
->>> @@ -371,6 +372,16 @@ static void test_seqpacket_msg_bounds_client(const struct test_opts *opts)
->>>  		exit(EXIT_FAILURE);
->>>  	}
->>>
->>> +	sock_buf_size = SOCK_BUF_SIZE;
->>> +
->>> +	setsockopt_ull_check(fd, AF_VSOCK, SO_VM_SOCKETS_BUFFER_MAX_SIZE,
->>> +			     sock_buf_size,
->>> +			     "setsockopt(SO_VM_SOCKETS_BUFFER_MAX_SIZE)");
->>
->> Hi Greg,
->>
->> This patch causes build failure as the setsockopt_ull_check() function
->> does not seem to be defined in the 6.12 tree.
-> 
-> I guess just when you build vsock_test, right?
->
+ hello ,
 
-Correct. I should have specified that.
+dmesg stuff...
 
-> BTW to fix that we should backport commit 86814d8ffd55 ("vsock/test: 
-> verify socket options after setting them").
-> 
-> I tried to cherry-pick it on current linux-6.12.y and apply clean.
-> 
+-------------------------------error---------------------------------
+$sudo dmesg -l err
+[   11.536507] kfd kfd: amdgpu: GC IP 090100  not supported in kfd
+$
+-------------------------------error---------------------------------
 
-I can confirm it builds fine after cherry-picking that commit.
+Tested-by: Jeffrin Jose T <jeffrin@rajagiritech.edu.in>
 
-Kind regards,
-Johan
-
-> Greg, let me know if I should send a proper patch for 6.12.
-> 
-> Thanks,
-> Stefano
-> 
-
+--
+software engineer
+rajagiri school of engineering and technology
