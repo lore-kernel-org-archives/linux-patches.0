@@ -1,42 +1,48 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4E341A9FA4;
-	Wed, 11 Feb 2026 12:32:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8ED9B194AD7;
+	Wed, 11 Feb 2026 12:32:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770813135; cv=none; b=Iqm4aSjMup+zRMvtB4Jd0Z774ldLvqnnqG8m7MtdEw4qqrJkccWqe0/VUfoaqzdCLz5mbUl2Kk9F8fx0gIJtFIUWl5L0fckAPD0gJSIGHbw1Pw0UduJ/Vsgwpyf1rm5KceocTGTPbQBMcE5Sq5H3wgqKyt8jxyIktFkhXGXuw0c=
+	t=1770813137; cv=none; b=aWI97xQlX8FWkPuo5VMEwcPTh9dNYm/p2hNppM0CfFo88royFZ43nry8Xq5eX8bcRFMHg+0DV5DI7BW8A5t3DdVruWEUoWRnQOuGstgyZmgpGL8V6BQ33sZteY/6KelV9WIbi758ZUcheNd475DlE8PlaTw1/81X/wGeLBpKKy8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770813135; c=relaxed/simple;
-	bh=moKzAeFYlDBqh8t7VEdTHwMMA7bKkJkb3RAr0qipkoc=;
+	s=arc-20240116; t=1770813137; c=relaxed/simple;
+	bh=MqWL7t5U8J2aPpBZafPdls2RGoEtAeN85Xsz9fAz/Ng=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ilSNL38xj6QF5ABT6YAb8hzA26OcYPMGVZWkujYv91NbgBAaHk2MMrODyNdBZND4+z2dOlEmribzY5Xc+igtl0zUYv9PGBCJ/F4QRA5D50EpMhN1KRgtr+ZYYabNpc0JMMLmv3uv2VTt70CcelyFKZdfQLI42r+IbKQ8UkB+r0M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=l9m2NnXz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=QvoRSgU3JvewRfCCSbSFjlZwaC3gm89qi7CCTV4KUP/we2qOUbTK7UXNFuAMJznhnIuV/ujkYN2927NW5//L8V+XMyaJzbRYzmGGYh5L0L+5lp9K6g0XyAqONx8py4lzlwPgaqeX1M2rb7sbpGVC3/muRjzbQ5MlRuOCBfc2OFs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=A8eXsKd7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="l9m2NnXz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 01568C19425;
-	Wed, 11 Feb 2026 12:32:14 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="A8eXsKd7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2ECDEC4CEF7;
+	Wed, 11 Feb 2026 12:32:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1770813135;
-	bh=moKzAeFYlDBqh8t7VEdTHwMMA7bKkJkb3RAr0qipkoc=;
+	s=k20201202; t=1770813137;
+	bh=MqWL7t5U8J2aPpBZafPdls2RGoEtAeN85Xsz9fAz/Ng=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=l9m2NnXzmq7E4dt6hMQJxMDtrIycioYeCGe+FpmdNuTQ8bfaDpTjgKJ1yZOr0487c
-	 zH6wDai9ypX2vvDO59+Q2YAoEzhBmhBAR6lrIrRbBJolnz/WUnYGKLTC32aUdOjxem
-	 yAvgnC4nWArBOjL5p3teLmm0BVKYCNioBH5NzJtW9mBYxoLcegk00ikZEL1oZpEZik
-	 02pZCXb4TgxLHWjYGuNvtuITBadjQrH1NGsooyRASywVepBjmEIQNPMpkcw1ZDKumH
-	 8Cb1LCKbeq/uUxOcHBAXMlFCPKvf6DABYjcYzFow8rsFw81nh6ghG69F1MjkTxoRtq
-	 g8b+CF9qHEGig==
+	b=A8eXsKd7BMZwVepQZb5bzYlVKc3wQPpws7vOlIDFfJYoUdEE7B08QhHeWZTB5L/Vx
+	 D4w3e15ioabQX19z4ureovNypkHsHHAwTWjOOqyglj7yn8ARsKXZ8ZlaSkyzhcT6pf
+	 8ImNgL8KMrdkkXIsnlquMLmi5feJG5ip5M8OM4MjfL6EuSlXew980l7gqutTOAZu/y
+	 xDWvW/znIAmevnGIHqGbkjZav2Nx6vDrNLeLj0FaINXxCV8RE0Tq4az5bNmg4Po5c/
+	 k3jwP55VCMGDQMpbCa9hHef0nbJb5IXjG5vr5see16M3OYj8tTBKGD8kL+GNe946kY
+	 Q6Xg9AiPooJ4Q==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Ai Chao <aichao@kylinos.cn>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+Cc: Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
+	Jonathan Cameron <jonathan.cameron@huawei.com>,
+	Will Deacon <will@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	rafael@kernel.org,
-	linux-acpi@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.19-6.12] ACPI: resource: Add JWIPC JVC9100 to irq1_level_low_skip_override[]
-Date: Wed, 11 Feb 2026 07:30:40 -0500
-Message-ID: <20260211123112.1330287-30-sashal@kernel.org>
+	mark.rutland@arm.com,
+	clrkwllms@kernel.org,
+	rostedt@goodmis.org,
+	linux-cxl@vger.kernel.org,
+	linux-arm-kernel@lists.infradead.org,
+	linux-perf-users@vger.kernel.org,
+	linux-rt-devel@lists.linux.dev
+Subject: [PATCH AUTOSEL 6.19-6.6] perf/cxlpmu: Replace IRQF_ONESHOT with IRQF_NO_THREAD
+Date: Wed, 11 Feb 2026 07:30:41 -0500
+Message-ID: <20260211123112.1330287-31-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260211123112.1330287-1-sashal@kernel.org>
 References: <20260211123112.1330287-1-sashal@kernel.org>
@@ -49,222 +55,239 @@ MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.19
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ai Chao <aichao@kylinos.cn>
+From: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
 
-[ Upstream commit ba6ded26dffe511b862a98a25955955e7154bfa8 ]
+[ Upstream commit ab26d9c85554c4ff1d95ca8341522880ed9219d6 ]
 
-Like the JWIPC JVC9100 has its serial IRQ (10 and 11) described
-as ActiveLow in the DSDT, which the kernel overrides to EdgeHigh which
-breaks the serial.
+Passing IRQF_ONESHOT ensures that the interrupt source is masked until
+the secondary (threaded) handler is done. If only a primary handler is
+used then the flag makes no sense because the interrupt can not fire
+(again) while its handler is running.
+The flag also disallows force-threading of the primary handler and the
+irq-core will warn about this.
 
-irq 10, level, active-low, shared, skip-override
-irq 11, level, active-low, shared, skip-override
+The intention here was probably not allowing forced-threading.
 
-Add the JVC9100 to the irq1_level_low_skip_override[] quirk table to fix
-this.
+Replace IRQF_ONESHOT with IRQF_NO_THREAD.
 
-Signed-off-by: Ai Chao <aichao@kylinos.cn>
-Link: https://patch.msgid.link/20260113072719.4154485-1-aichao@kylinos.cn
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Reviewed-by: Jonathan Cameron <jonathan.cameron@huawei.com>
+Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+Signed-off-by: Will Deacon <will@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-Now I have a complete picture. Let me compile the full analysis.
+Now I have gathered all the information I need for a thorough analysis.
+Let me compile my findings.
 
 ---
 
-## Detailed Analysis
+## Complete Analysis: `perf/cxlpmu: Replace IRQF_ONESHOT with
+IRQF_NO_THREAD`
 
 ### 1. COMMIT MESSAGE ANALYSIS
 
-The commit adds the JWIPC JVC9100 industrial PC board to the
-`irq1_level_low_skip_override[]` DMI quirk table in
-`drivers/acpi/resource.c`. The commit message clearly states the
-problem: serial IRQs 10 and 11 are described as ActiveLow in the DSDT,
-but the kernel incorrectly overrides them to EdgeHigh, which **breaks
-serial communication** on the device. This is a classic ACPI IRQ
-override quirk - a well-established pattern in the stable kernel tree.
+The commit, authored by Sebastian Andrzej Siewior
+(bigeasy@linutronix.de) — one of the PREEMPT_RT core maintainers —
+replaces `IRQF_ONESHOT` with `IRQF_NO_THREAD` in the CXL PMU driver's
+interrupt registration. The commit message explains:
 
-The commit was authored by Ai Chao (Kylin OS engineer) and signed off by
-Rafael J. Wysocki, the ACPI subsystem maintainer, indicating proper
-review and acceptance.
+- `IRQF_ONESHOT` ensures the interrupt source is masked until the
+  threaded (secondary) handler finishes
+- This driver only has a **primary** handler (`cxl_pmu_irq`) and no
+  threaded handler
+- Therefore `IRQF_ONESHOT` makes no sense here — the interrupt can't
+  fire while its hardirq handler is running anyway
+- The flag also **disables force-threading** of the primary handler
+- The "irq-core will warn about this" (via lockdep assertions)
+- The **intended** semantics were to prevent forced-threading, so
+  `IRQF_NO_THREAD` is the correct replacement
 
 ### 2. CODE CHANGE ANALYSIS
 
-The patch makes two types of changes, both to data tables in
-`drivers/acpi/resource.c`:
+The change is a **single flag swap** on one line:
 
-**Part 1 - DMI table addition** (lines 535-540 in the patch):
-A new DMI entry for the JWIPC JVC9100 board is added to
-`irq1_level_low_skip_override[]`:
+```880:881:drivers/perf/cxl_pmu.c
+        rc = devm_request_irq(dev, irq, cxl_pmu_irq, IRQF_SHARED |
+IRQF_ONESHOT,
+                              irq_name, info);
+```
 
-```c
+becomes:
+
+```880:881:drivers/perf/cxl_pmu.c
+        rc = devm_request_irq(dev, irq, cxl_pmu_irq, IRQF_SHARED |
+IRQF_NO_THREAD,
+                              irq_name, info);
+```
+
+#### What `IRQF_ONESHOT` does here (incorrectly):
+Looking at `irq_setup_forced_threading()` in `kernel/irq/manage.c`:
+
+```1291:1296:kernel/irq/manage.c
+static int irq_setup_forced_threading(struct irqaction *new)
 {
-    /* JWIPC JVC9100 */
-    .matches = {
-        DMI_MATCH(DMI_BOARD_NAME, "JVC9100"),
-    },
-},
+        if (!force_irqthreads())
+                return 0;
+        if (new->flags & (IRQF_NO_THREAD | IRQF_PERCPU | IRQF_ONESHOT))
+                return 0;
 ```
 
-**Part 2 - Override table entries** (new lines in `override_table[]`):
+Both `IRQF_NO_THREAD` and `IRQF_ONESHOT` cause
+`irq_setup_forced_threading()` to bail out early, preventing the
+interrupt from being force-threaded. However, `IRQF_ONESHOT` has an
+**additional side effect**: it tells the IRQ core to mask the interrupt
+line until a threaded handler completes. Since there is no threaded
+handler here, this masking behavior is semantically wrong.
 
-```c
-{ irq1_level_low_skip_override, 10, ACPI_LEVEL_SENSITIVE,
-ACPI_ACTIVE_LOW, 1, false },
-{ irq1_level_low_skip_override, 11, ACPI_LEVEL_SENSITIVE,
-ACPI_ACTIVE_LOW, 1, false },
+#### Why `IRQF_NO_THREAD` is the correct flag:
+The `cxl_pmu_irq` handler is a PMU overflow interrupt handler that:
+1. Reads the overflow register via `readq()`
+2. Processes each overflowed counter via `__cxl_pmu_read()`
+3. Clears the overflow status via `writeq()`
+
+This handler interacts with perf core internals. As the arm-ccn PMU fix
+(commit `0811ef7e2f54`) established, **PMU interrupt handlers must not
+be force-threaded** because the perf core relies on strict CPU affinity
+and interrupt disabling for mutual exclusion. Force-threading a PMU
+interrupt handler would break these synchronization guarantees.
+
+#### The actual bugs:
+
+**Bug 1 — PREEMPT_RT / `threadirqs` warning:** When the kernel is booted
+with `threadirqs` command-line parameter or PREEMPT_RT is enabled, the
+IRQ core's lockdep infrastructure marks handlers as `hardirq_threaded`
+if they can be force-threaded. In `kernel/irq/handle.c`:
+
+```199:201:kernel/irq/handle.c
+                if (irq_settings_can_thread(desc) &&
+                    !(action->flags & (IRQF_NO_THREAD | IRQF_PERCPU |
+IRQF_ONESHOT)))
+                        lockdep_hardirq_threaded();
 ```
 
-These entries tell `acpi_dev_irq_override()` to return `false` (skip the
-override) for IRQ 10 and 11 when they match level-sensitive, active-low,
-shared parameters on systems in the DMI table.
+Because `IRQF_ONESHOT` is already set, this particular path won't
+trigger the threaded annotation, but the **masking semantics** of
+ONESHOT are incorrect for a primary-only handler. In the `IRQF_ONESHOT`
+path, the IRQ core does:
 
-**Why the override_table entries are needed**: Looking at the
-`acpi_dev_irq_override()` function:
-
-```712:751:/home/sasha/linux-autosel/drivers/acpi/resource.c
-static bool acpi_dev_irq_override(u32 gsi, u8 triggering, u8 polarity,
-                                  u8 shareable)
-{
-        // ... iterates override_table ...
-        // If no match found:
-        if (gsi != 1 && gsi != 12)
-                return true;  // <-- IRQ 10/11 always gets overridden!
+```1726:1727:kernel/irq/manage.c
+                if (new->flags & IRQF_ONESHOT)
+                        desc->istate |= IRQS_ONESHOT;
 ```
 
-Without an `override_table` entry, IRQ 10 and 11 (not being 1 or 12)
-always fall through to `return true`, meaning the kernel **always**
-overrides the DSDT-specified IRQ configuration. The only way to prevent
-this for specific systems is to add explicit entries to
-`override_table[]`.
+This causes the interrupt line to be masked during the handler and
+unmask logic depends on `desc->threads_oneshot` — but there's no thread
+to clear this mask, so it depends on the
+`cond_unmask_irq`/`cond_unmask_eoi_irq` fallback path.
+
+**Bug 2 — IRQF_SHARED conflict potential:** The interrupt uses
+`IRQF_SHARED`. When sharing interrupts, all handlers on the same line
+must agree on `IRQF_ONESHOT`. If another driver on the shared line
+doesn't use `IRQF_ONESHOT`, `request_threaded_irq()` will fail with
+`-EINVAL` at the mismatch check:
+
+```1606:1607:kernel/irq/manage.c
+                else if ((old->flags ^ new->flags) & IRQF_ONESHOT)
+                        goto mismatch;
+```
+
+This is a real failure mode for shared interrupts — CXL PMU's incorrect
+use of `IRQF_ONESHOT` could prevent other handlers from sharing the same
+IRQ line.
 
 ### 3. CLASSIFICATION
 
-This is a **hardware quirk / workaround** - one of the explicit
-exception categories that is appropriate for stable backporting. It
-follows the identical pattern of dozens of other IRQ override quirk
-additions that have been backported to stable trees. Checking the 6.12
-stable branch confirms that numerous similar quirk additions (`Skip IRQ
-override on ASUS Vivobook`, `Add LG 16T90SP`, `Add Asus Vivobook
-X1504VAP`, etc.) have already been backported.
+This is a **bug fix** — it corrects incorrect IRQ flag usage that:
+1. Applies semantically wrong masking behavior (ONESHOT without a
+   thread)
+2. Can trigger warnings/assertions under PREEMPT_RT or `threadirqs`
+3. Could cause shared IRQ registration failures
+4. Prevents force-threading in the wrong way (the intention is correct,
+   but the mechanism is wrong)
 
 ### 4. SCOPE AND RISK ASSESSMENT
 
-**Size**: 8 lines added, 1 file changed. Purely data table additions.
-
-**Nuance about `override_table` scope**: The new `override_table`
-entries for IRQ 10/11 reference `irq1_level_low_skip_override`, which
-contains ~20 other systems (Asus Vivobooks, Medion, LG laptops). This
-means if ANY of those systems also have IRQ 10/11 described as
-`ACPI_LEVEL_SENSITIVE, ACPI_ACTIVE_LOW, shareable=1` in their DSDT, the
-override would be skipped for those too. However:
-- Those are consumer laptops that typically don't have serial ports (IRQ
-  10/11 are serial controller IRQs)
-- Even if they matched, skipping the override is the correct behavior
-  for these AMD Zen-based systems where the DSDT is authoritative
-- The match requires a 4-way parameter match (IRQ number + triggering +
-  polarity + shareable), making false positives essentially impossible
-
-**Risk**: Very LOW. The change is purely additive to data tables.
+- **Lines changed:** 1 line (single flag change)
+- **Files touched:** 1 (`drivers/perf/cxl_pmu.c`)
+- **Complexity:** Minimal — straightforward flag replacement
+- **Risk:** Extremely low. `IRQF_NO_THREAD` is the semantically correct
+  flag for the intended purpose. The interrupt handler is a hardirq-only
+  handler that performs only register I/O and atomic operations — it
+  should never be threaded.
+- **Subsystem:** CXL PMU performance monitoring driver (PCI-based)
 
 ### 5. USER IMPACT
 
-JWIPC is a Chinese industrial PC manufacturer. The JVC9100 is an
-industrial/embedded computing platform where serial ports
-(RS-232/RS-485) are critical for connecting to industrial equipment,
-sensors, PLCs, and other peripherals. Broken serial communication on an
-industrial PC renders the device significantly less useful or completely
-non-functional for its intended purpose.
+- **PREEMPT_RT users:** On PREEMPT_RT kernels, `IRQF_ONESHOT` without a
+  thread handler causes the interrupt line to be masked with incorrect
+  oneshot semantics. This could lead to lockdep warnings or subtle
+  interrupt masking issues.
+- **Shared IRQ users:** CXL devices sharing PCI MSI/MSI-X vectors with
+  other devices could experience IRQ registration failures due to
+  ONESHOT flag mismatch.
+- **General users:** The CXL PMU driver is used for performance
+  monitoring on CXL 3.0 memory devices — an increasingly important
+  hardware platform for servers and data centers.
 
 ### 6. STABILITY INDICATORS
 
-- Accepted by the ACPI subsystem maintainer (Rafael J. Wysocki)
-- Follows an extremely well-established quirk pattern with dozens of
-  precedents
-- Author from Kylin OS (a widely-used Chinese enterprise Linux
-  distribution), suggesting real-world testing
+- **Author:** Sebastian Andrzej Siewior — PREEMPT_RT core maintainer,
+  expert on IRQ threading
+- **Reviewer:** Jonathan Cameron — CXL maintainer
+- **Signed-off-by:** Will Deacon — ARM architecture and perf subsystem
+  maintainer
+- **Pattern:** This is the same fix Sebastian has applied to multiple
+  drivers (i2c-exynos5, i2c-hix5hd2) with proven track record
+- **Precedent:** The arm-ccn PMU used exactly this fix
+  (`IRQF_NO_THREAD`) for the same class of issue
 
 ### 7. DEPENDENCY CHECK
 
-- **6.12 stable** (p-6.12): `irq1_level_low_skip_override[]` and the
-  consolidated `override_table[]` structure exist. The patch should
-  apply cleanly or with trivial context adjustments.
-- **6.6 stable** (p-6.6): Uses the **pre-consolidation** structure with
-  separate per-vendor DMI tables (`medion_laptop[]`, `asus_laptop[]`,
-  etc.) and 6 `override_table[]` entries. This patch would need rework -
-  a new DMI table for the JVC9100 would be needed.
-- **6.1 stable and older**: Similar rework needed, plus the
-  consolidation commit `d37273af0e428` introduced
-  `irq1_level_low_skip_override` in v6.6-rc2.
+- No dependencies on other commits
+- The driver exists in stable kernels 6.6.y and later (introduced in
+  v6.5-rc1)
+- The change is self-contained — just a flag change in
+  `devm_request_irq()`
 
-The essential infrastructure (`override_table[]`, `irq_override_cmp`
-struct with `override` bool, `acpi_dev_irq_override()` function) exists
-since v6.0, so backporting is feasible to all current stable trees with
-appropriate adjustments.
+### 8. CONCLUSION
 
-### 8. PRECEDENT
+This is a small, surgical, well-understood bug fix that corrects
+incorrect IRQ flag usage in the CXL PMU driver. The `IRQF_ONESHOT` flag
+was semantically wrong for a primary-only interrupt handler and could
+cause:
+- Incorrect interrupt line masking behavior
+- Shared IRQ registration failures
+- Issues on PREEMPT_RT kernels
 
-Looking at both `p-6.12` and `p-6.6` branches, numerous virtually
-identical commits have been backported:
-- "Skip IRQ override on ASUS Vivobook Pro N6506CU" (6bb7489f38d9e in
-  6.12)
-- "Add Asus Vivobook X1504VAP to irq1_level_low_skip_override[]"
-  (df8d1c8e67204 in 6.12)
-- "Add LG 16T90SP to irq1_level_low_skip_override[]" (53f1a907d36fb in
-  6.12, bdaab141edb6f in 6.6)
-- And many more
-
-This is one of the most commonly backported categories of changes in the
-ACPI subsystem.
-
-### Summary
-
-This commit is a textbook stable-worthy hardware quirk. It adds a DMI
-match for a specific industrial PC board and corresponding
-`override_table` entries to prevent the kernel from incorrectly
-overriding serial IRQ configuration, which breaks serial ports. It is
-small (8 lines), contained (data-only), obviously correct (follows
-established patterns), fixes a real user-visible bug (broken serial
-ports on industrial hardware), and has zero risk of regression for other
-systems. The ACPI subsystem maintainer approved it. Dozens of virtually
-identical changes have been successfully backported to stable trees.
+The replacement with `IRQF_NO_THREAD` correctly expresses the intended
+behavior (prevent force-threading of this PMU interrupt handler) without
+the incorrect side effects. The fix is trivial, low-risk, authored by a
+world-class IRQ threading expert, and reviewed by CXL and ARM
+maintainers.
 
 **YES**
 
- drivers/acpi/resource.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ drivers/perf/cxl_pmu.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/acpi/resource.c b/drivers/acpi/resource.c
-index d16906f46484d..bc8050d8a6f51 100644
---- a/drivers/acpi/resource.c
-+++ b/drivers/acpi/resource.c
-@@ -532,6 +532,12 @@ static const struct dmi_system_id irq1_level_low_skip_override[] = {
- 			DMI_MATCH(DMI_BOARD_NAME, "16T90SP"),
- 		},
- 	},
-+	{
-+		/* JWIPC JVC9100 */
-+		.matches = {
-+			DMI_MATCH(DMI_BOARD_NAME, "JVC9100"),
-+		},
-+	},
- 	{ }
- };
+diff --git a/drivers/perf/cxl_pmu.c b/drivers/perf/cxl_pmu.c
+index d094030220bf2..68a54d97d2a8a 100644
+--- a/drivers/perf/cxl_pmu.c
++++ b/drivers/perf/cxl_pmu.c
+@@ -877,7 +877,7 @@ static int cxl_pmu_probe(struct device *dev)
+ 	if (!irq_name)
+ 		return -ENOMEM;
  
-@@ -706,6 +712,8 @@ struct irq_override_cmp {
- 
- static const struct irq_override_cmp override_table[] = {
- 	{ irq1_level_low_skip_override, 1, ACPI_LEVEL_SENSITIVE, ACPI_ACTIVE_LOW, 0, false },
-+	{ irq1_level_low_skip_override, 10, ACPI_LEVEL_SENSITIVE, ACPI_ACTIVE_LOW, 1, false },
-+	{ irq1_level_low_skip_override, 11, ACPI_LEVEL_SENSITIVE, ACPI_ACTIVE_LOW, 1, false },
- 	{ irq1_edge_low_force_override, 1, ACPI_EDGE_SENSITIVE, ACPI_ACTIVE_LOW, 1, true },
- };
- 
+-	rc = devm_request_irq(dev, irq, cxl_pmu_irq, IRQF_SHARED | IRQF_ONESHOT,
++	rc = devm_request_irq(dev, irq, cxl_pmu_irq, IRQF_SHARED | IRQF_NO_THREAD,
+ 			      irq_name, info);
+ 	if (rc)
+ 		return rc;
 -- 
 2.51.0
 
