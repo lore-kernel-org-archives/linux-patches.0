@@ -1,110 +1,192 @@
-Received: from mail-ej1-f49.google.com (mail-ej1-f49.google.com [209.85.218.49])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from metis.whiteo.stw.pengutronix.de (metis.whiteo.stw.pengutronix.de [185.203.201.7])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 875A6369973
-	for <patches@lists.linux.dev>; Wed, 11 Feb 2026 10:44:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.218.49
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770806684; cv=pass; b=l2J4L4rcCWXMu7/NGDKX7m420TsySuGIF8YdGYT11g9yxblWnVN0Yt5gyEUi9pIqvzChGSSRHQS//zhUHs5M/CDl2F1HRJ1OP9i8ObnihgLJnXNe1qbu9IndT2LUzZVZNlOIOEIGIRuVnqfLqton+uLaqE8Jy0QwBWnyPe6qR5U=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770806684; c=relaxed/simple;
-	bh=mtlu9MpQ1hhLBZzWmpb7kK1vRZJt2u+rMplAD5OWtRU=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=o96csybek20SYAIeOX1F15BLmhLMwj4ChnheRNzh8Pp+/SvZXaccqS7S/BieIBW0+9e9ri5SbjQLEdKUsL54CDU4wSKEb7VqPWLcYlXd3+6AuTUflUPxg28wtVG0IGUuD6b1GioTl/PZ3td3iSU6oYRHowot/3JDDCAgTuTm2OU=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=rajagiritech.edu.in; spf=none smtp.mailfrom=rajagiritech.edu.in; dkim=pass (2048-bit key) header.d=rajagiritech-edu-in.20230601.gappssmtp.com header.i=@rajagiritech-edu-in.20230601.gappssmtp.com header.b=l6W8Uib3; arc=pass smtp.client-ip=209.85.218.49
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=rajagiritech.edu.in
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=rajagiritech.edu.in
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=rajagiritech-edu-in.20230601.gappssmtp.com header.i=@rajagiritech-edu-in.20230601.gappssmtp.com header.b="l6W8Uib3"
-Received: by mail-ej1-f49.google.com with SMTP id a640c23a62f3a-b884d5c787bso835342566b.0
-        for <patches@lists.linux.dev>; Wed, 11 Feb 2026 02:44:43 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1770806682; cv=none;
-        d=google.com; s=arc-20240605;
-        b=jC/gB7fCR959Xji6GNLqqMqeaNvwPzPiHuFg9mmn/Df/E4iTd4Of2TkkT56I9aH+36
-         V26sULHj3+ou9XzaNQryERlF9j/4Fy5Ljp8bkSqDPQx7F0yOqxEsmpV+sBivMtHlVzIL
-         5cy5W/tm68TSfiHU0nFsJcRQH6QhRnGlW1P4bnliQ5qEGltDHTatoqGo8eQbyWotr69r
-         MbM6xif0S8HhAhievrM463FqTKM5QYuZr0EG/qW8UWKhQmZFr27remhXBq9MfADUlNV2
-         U3Qw/XxlO/tWh0yJk+DoQjz2SxBbs7fqb+QrRsynafqDQHlLmBOGCMljO2PdIRItWR9H
-         Ic+Q==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:dkim-signature;
-        bh=mtlu9MpQ1hhLBZzWmpb7kK1vRZJt2u+rMplAD5OWtRU=;
-        fh=r/Gi8BPGa6QOv2YRvgjwyiFLVZdxIxWYIQlaOgizHMo=;
-        b=j8vnGZGXHDCMYBHRQU5wWeOmLid5oRiM0bPKcB7+yv6o1+PwTjfKzfMeWIMof+I0S7
-         bpdoD8XZb/A9lIQOtd9QWjevQmJOcdYP4doaO2P2kwg7WjIehep5XX1KDQvQll2ypT1K
-         eh/Rk7zoYwa5arv69hca99SF+gWkEnBkvgDUYKpC6FxsW9gzP347wmIg+eUIpfgCF/A2
-         Rjry23U58Ka5nWKcvQzCpvYV1lh96h6/L2z4xM8AaQbsW0xDO1OeU3Z3KCPsY9xWVfK5
-         rSLSsPNJu8oONhIR3CnGoDsMIUcprUWcCgkBPXko5VlgY04wyVdOzDJVPG2BH3wod00f
-         F5cw==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=rajagiritech-edu-in.20230601.gappssmtp.com; s=20230601; t=1770806682; x=1771411482; darn=lists.linux.dev;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=mtlu9MpQ1hhLBZzWmpb7kK1vRZJt2u+rMplAD5OWtRU=;
-        b=l6W8Uib3L6IOMTc4rnogwFTCpVBU4kcjUDui6DWVg2h3+SE7YGc4VbHSSqcm009lyZ
-         Tnv/cV8n1jhb01zpmVI2LIoM7Te6yF6DnUMNSKO8BGsa9a8I4LJUUDopWBLPRQDh9VE5
-         DCU3ejYuBYQHF2y8AY8oMzTCWdyEx1lcXWS6333uiZnKR8Vnzz3960z+6UkGYE5PTmnM
-         sD3j6p30o++Q0LmUjuuKITUbIld1C4FYTVcc48nrXSNCMi5R0XueeV5sP9AVcKFNx26t
-         RYDXR6noLTBuMI2TlMAZFM0CHFGROmj60ZfLAu7ja6AplxAUkWQdhCYCq6W9t/MVghdW
-         8q8g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1770806682; x=1771411482;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=mtlu9MpQ1hhLBZzWmpb7kK1vRZJt2u+rMplAD5OWtRU=;
-        b=t5j9NqCPE9rMzI59dQuB9VtzRCXEEOmEkwPDf/0JRg8Hdr9Cw9g5NRAQz2gOGQjs7T
-         FnrVk7HHg5SkgtqfY2SzDK6EXRrzIsJsM6XTkgP+rwJJVfu2NA+YeHrAwawIWdoqHmN+
-         5JuK15DSNgi7HjrA2pDlzqtNijc8Csb7JvN8as3cDEOr5DfJ8PC44nXHTnArd30oJBVu
-         FcCFIwLLigIZAlBdFwrqiQ404NGOdXEHkt9YuFu7ouH16BZcrnIqoGehn6EjM/FISBh7
-         G+I8RrWI7/Of7SjH9kpbg6uEbO9HWYK0b8sHdWc6TlIu6LnppBFiEACKcUKdEBaXxInx
-         BtaQ==
-X-Forwarded-Encrypted: i=1; AJvYcCV5qjitpPLD65bgKXa7DtuWVChPxwrP7XDeWKKWHKXIiP4smWLfCMPSHtj/l9L69T+H8K39KnVH@lists.linux.dev
-X-Gm-Message-State: AOJu0Yx9NPHNmcpmKjpg08OG8IaXkq5Nwa1sr42DJ7JDQuRvVBqQ/lxg
-	G3WBClNOFMDEh13WPeER/nWSNHdpYQRrxfYXzl5MfM2g1KFvJ6Fleb8fsTK7GLKX+1xn2xPleEn
-	YmcdgKpYLFVUilBPIKpxl3U3yktzlH5rA9sDmaJro5Q==
-X-Gm-Gg: AZuq6aIjK0mh9zH8nzFT7XLTqRbwSvFiWdMV74nJE/75IXZqGJ4LV/lqB5CfUhiqGHO
-	92jmGrnT0bdHGoBkRnFDoFF3z2Rtv3ObLYQ/Qlvoip5+E8EdQPPpQSaRoZNtHozWPngtUXo0mV0
-	nCXm54YqLHXtP1tnBS5l4nrdxqBqxvUJ/WKMit1NIqGpdEx4M7zoRoAr0Y2ZZRdAHit9NcZv779
-	KBNVbs4FlFqtU91HaSKH8uDDsZo2tuQTCkvgWL1rxZdC1r5m9X+L4ylg0utHwjdmliu8Z0IEMpg
-	9may8/Zto+4En87FNYmfLdQ+/lgGmjYbbXYGf2MMEM/ph0PDliILgm5UKaVsnnWqWnEgeA==
-X-Received: by 2002:a17:907:a48:b0:b88:241e:693c with SMTP id
- a640c23a62f3a-b8f6ae081d7mr134624666b.31.1770806681803; Wed, 11 Feb 2026
- 02:44:41 -0800 (PST)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B905136999F
+	for <patches@lists.linux.dev>; Wed, 11 Feb 2026 10:47:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.203.201.7
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1770806881; cv=none; b=MnAyHWUYpNFdxkJc7KVr7lksET1hGQ5PL0NUJBE215S5weZ1R8Qt4TInQAuDKnnyEvzbBaH6bIOdv1FNyK25DJcVo8JFjQwq/eaqp0tK0jW04ABXs/KVnedslnRY/YiDU51kOf+BK+wpuESoYs/uD5eEdnmtPx1eSNA8SWZ9c0Y=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1770806881; c=relaxed/simple;
+	bh=MCPUUa2Ju6eg947OwRzfohkwmuQ65i4CAV4qwF6eXww=;
+	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
+	 Content-Type:MIME-Version; b=LTr8XMb8nOeqRX4O+jBNNwYzYYKl4O21IV+eBLb0Rp0lDWX1zia4mqz16ryWI/Utv5FMEWC+daEiVvO7tOOsQklFhKYbJNy5ugb0i7X5ibBxXj1vID4fd+77PfHo8iM2h8Tv/9mgUpYSMFvNNFPLDwqRQWPC6YJSIUQ1i6kAMis=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pengutronix.de; spf=pass smtp.mailfrom=pengutronix.de; arc=none smtp.client-ip=185.203.201.7
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pengutronix.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pengutronix.de
+Received: from ptz.office.stw.pengutronix.de ([2a0a:edc0:0:900:1d::77] helo=[127.0.0.1])
+	by metis.whiteo.stw.pengutronix.de with esmtp (Exim 4.92)
+	(envelope-from <jlu@pengutronix.de>)
+	id 1vq7lF-0008Tc-Ps; Wed, 11 Feb 2026 11:47:57 +0100
+Message-ID: <a85c602ecdd204145d4b7364418c7c52b8d6cd44.camel@pengutronix.de>
+Subject: Re: [PATCH 6.12 002/169] ptp: Add PHC file mode checks. Allow RO
+ adjtime() without FMODE_WRITE.
+From: Jan =?ISO-8859-1?Q?L=FCbbe?= <jlu@pengutronix.de>
+Reply-To: jlu@pengutronix.de
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, Richard Cochran <richardcochran@gmail.com>, 
+ Vadim Fedorenko <vadim.fedorenko@linux.dev>, Wojtek Wasko
+ <wwasko@nvidia.com>, Thomas Gleixner <tglx@linutronix.de>,  "David S.
+ Miller" <davem@davemloft.net>, Sasha Levin <sashal@kernel.org>
+Date: Wed, 11 Feb 2026 11:47:56 +0100
+In-Reply-To: <20260128145334.099814052@linuxfoundation.org>
+References: <20260128145334.006287341@linuxfoundation.org>
+	 <20260128145334.099814052@linuxfoundation.org>
+Organization: Pengutronix
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+User-Agent: Evolution 3.56.2-0+deb13u1 
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20260209142301.830618238@linuxfoundation.org>
-In-Reply-To: <20260209142301.830618238@linuxfoundation.org>
-From: Jeffrin Thalakkottoor <jeffrin@rajagiritech.edu.in>
-Date: Wed, 11 Feb 2026 16:14:04 +0530
-X-Gm-Features: AZwV_QiEZUEWPEdbX0Yo4rOTeqmaCXLXOT15bWK5DWP6YdgDfcDx_p2lsMTdb8w
-Message-ID: <CAG=yYw=vQ1in+roO99RY2+KRM_0PV1sv787_cLSvLHry7uCXeA@mail.gmail.com>
-Subject: Re: [PATCH 5.15 00/75] 5.15.200-rc1 review
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, 
-	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@nabladev.com, 
-	jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, 
-	rwarsow@gmx.de, conor@kernel.org, hargar@microsoft.com, broonie@kernel.org, 
-	achill@achill.org, sr@sladewatkins.com
-Content-Type: text/plain; charset="UTF-8"
+X-SA-Exim-Connect-IP: 2a0a:edc0:0:900:1d::77
+X-SA-Exim-Mail-From: jlu@pengutronix.de
+X-SA-Exim-Scanned: No (on metis.whiteo.stw.pengutronix.de); SAEximRunCond expanded to false
+X-PTX-Original-Recipient: patches@lists.linux.dev
 
- hello,
+Hi,
 
-No typical dmesg regression.
+these new permission checks break chrony < 4.8 (as used in Debian stable) w=
+hen
+using the PHC reclock with extpps mode, as it's opening the device without
+O_RDWR.=C2=A0
 
+chrony 4.8 is fixed:
+https://gitlab.com/chrony/chrony/-/commit/f78e4681eff71d941fab3be5ee406d920=
+a155a20
 
-Tested-by: Jeffrin Jose T <jeffrin@rajagiritech.edu.in>
+I've also reported this to Debian:
+https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=3D1127659
 
---
-software engineer
-rajagiri school of engineering and technology
-.
+Regards,
+Jan
+
+On Wed, 2026-01-28 at 16:21 +0100, Greg Kroah-Hartman wrote:
+> 6.12-stable review patch.=C2=A0 If anyone has any objections, please let =
+me know.
+>=20
+> ------------------
+>=20
+> From: Wojtek Wasko <wwasko@nvidia.com>
+>=20
+> [ Upstream commit b4e53b15c04e3852949003752f48f7a14ae39e86 ]
+>=20
+> Many devices implement highly accurate clocks, which the kernel manages
+> as PTP Hardware Clocks (PHCs). Userspace applications rely on these
+> clocks to timestamp events, trace workload execution, correlate
+> timescales across devices, and keep various clocks in sync.
+>=20
+> The kernel=E2=80=99s current implementation of PTP clocks does not enforc=
+e file
+> permissions checks for most device operations except for POSIX clock
+> operations, where file mode is verified in the POSIX layer before
+> forwarding the call to the PTP subsystem. Consequently, it is common
+> practice to not give unprivileged userspace applications any access to
+> PTP clocks whatsoever by giving the PTP chardevs 600 permissions. An
+> example of users running into this limitation is documented in [1].
+> Additionally, POSIX layer requires WRITE permission even for readonly
+> adjtime() calls which are used in PTP layer to return current frequency
+> offset applied to the PHC.
+>=20
+> Add permission checks for functions that modify the state of a PTP
+> device. Continue enforcing permission checks for POSIX clock operations
+> (settime, adjtime) in the POSIX layer. Only require WRITE access for
+> dynamic clocks adjtime() if any flags are set in the modes field.
+>=20
+> [1] https://lists.nwtime.org/sympa/arc/linuxptp-users/2024-01/msg00036.ht=
+ml
+>=20
+> Changes in v4:
+> - Require FMODE_WRITE in ajtime() only for calls modifying the clock in
+> =C2=A0 any way.
+>=20
+> Acked-by: Richard Cochran <richardcochran@gmail.com>
+> Reviewed-by: Vadim Fedorenko <vadim.fedorenko@linux.dev>
+> Signed-off-by: Wojtek Wasko <wwasko@nvidia.com>
+> Reviewed-by: Thomas Gleixner <tglx@linutronix.de>
+> Signed-off-by: David S. Miller <davem@davemloft.net>
+> Signed-off-by: Sasha Levin <sashal@kernel.org>
+> ---
+> =C2=A0drivers/ptp/ptp_chardev.c | 16 ++++++++++++++++
+> =C2=A0kernel/time/posix-clock.c |=C2=A0 2 +-
+> =C2=A02 files changed, 17 insertions(+), 1 deletion(-)
+>=20
+> diff --git a/drivers/ptp/ptp_chardev.c b/drivers/ptp/ptp_chardev.c
+> index bf6468c56419c..4380e6ddb8495 100644
+> --- a/drivers/ptp/ptp_chardev.c
+> +++ b/drivers/ptp/ptp_chardev.c
+> @@ -205,6 +205,10 @@ long ptp_ioctl(struct posix_clock_context *pccontext=
+,
+> unsigned int cmd,
+> =C2=A0
+> =C2=A0	case PTP_EXTTS_REQUEST:
+> =C2=A0	case PTP_EXTTS_REQUEST2:
+> +		if ((pccontext->fp->f_mode & FMODE_WRITE) =3D=3D 0) {
+> +			err =3D -EACCES;
+> +			break;
+> +		}
+> =C2=A0		memset(&req, 0, sizeof(req));
+> =C2=A0
+> =C2=A0		if (copy_from_user(&req.extts, (void __user *)arg,
+> @@ -246,6 +250,10 @@ long ptp_ioctl(struct posix_clock_context *pccontext=
+,
+> unsigned int cmd,
+> =C2=A0
+> =C2=A0	case PTP_PEROUT_REQUEST:
+> =C2=A0	case PTP_PEROUT_REQUEST2:
+> +		if ((pccontext->fp->f_mode & FMODE_WRITE) =3D=3D 0) {
+> +			err =3D -EACCES;
+> +			break;
+> +		}
+> =C2=A0		memset(&req, 0, sizeof(req));
+> =C2=A0
+> =C2=A0		if (copy_from_user(&req.perout, (void __user *)arg,
+> @@ -314,6 +322,10 @@ long ptp_ioctl(struct posix_clock_context *pccontext=
+,
+> unsigned int cmd,
+> =C2=A0
+> =C2=A0	case PTP_ENABLE_PPS:
+> =C2=A0	case PTP_ENABLE_PPS2:
+> +		if ((pccontext->fp->f_mode & FMODE_WRITE) =3D=3D 0) {
+> +			err =3D -EACCES;
+> +			break;
+> +		}
+> =C2=A0		memset(&req, 0, sizeof(req));
+> =C2=A0
+> =C2=A0		if (!capable(CAP_SYS_TIME))
+> @@ -456,6 +468,10 @@ long ptp_ioctl(struct posix_clock_context *pccontext=
+,
+> unsigned int cmd,
+> =C2=A0
+> =C2=A0	case PTP_PIN_SETFUNC:
+> =C2=A0	case PTP_PIN_SETFUNC2:
+> +		if ((pccontext->fp->f_mode & FMODE_WRITE) =3D=3D 0) {
+> +			err =3D -EACCES;
+> +			break;
+> +		}
+> =C2=A0		if (copy_from_user(&pd, (void __user *)arg, sizeof(pd))) {
+> =C2=A0			err =3D -EFAULT;
+> =C2=A0			break;
+> diff --git a/kernel/time/posix-clock.c b/kernel/time/posix-clock.c
+> index 4e114e34a6e0a..fe963384d5c2a 100644
+> --- a/kernel/time/posix-clock.c
+> +++ b/kernel/time/posix-clock.c
+> @@ -252,7 +252,7 @@ static int pc_clock_adjtime(clockid_t id, struct
+> __kernel_timex *tx)
+> =C2=A0	if (err)
+> =C2=A0		return err;
+> =C2=A0
+> -	if ((cd.fp->f_mode & FMODE_WRITE) =3D=3D 0) {
+> +	if (tx->modes && (cd.fp->f_mode & FMODE_WRITE) =3D=3D 0) {
+> =C2=A0		err =3D -EACCES;
+> =C2=A0		goto out;
+> =C2=A0	}
+
+--=20
+Pengutronix e.K.                           |                             |
+Industrial Linux Solutions                 | http://www.pengutronix.de/  |
+Peiner Str. 6-8, 31137 Hildesheim, Germany | Phone: +49-5121-206917-0    |
+Amtsgericht Hildesheim, HRA 2686           | Fax:   +49-5121-206917-5555 |
