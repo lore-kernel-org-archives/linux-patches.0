@@ -1,48 +1,46 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88D1643ABC;
-	Wed, 11 Feb 2026 12:31:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 080C0883F;
+	Wed, 11 Feb 2026 12:31:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770813082; cv=none; b=ICugHHCnth/C+NX6xhJ/WCkCyvP7Yp1rU5v9a/K+xwAOMlOtPfirj2hUWywRlMFtkz9lNYQq3BqbxT72p+zLMgLfK+/nJs9CFe6chF+NOBlu7zrrEx0LsARaw2nAscCht7MfrL/yYI84ui64PfwdI88cvS/yhwXogLTJ36eHEEI=
+	t=1770813085; cv=none; b=jbVY30XyBSLyOKshkfUbsbhgPyr/AwnPyugZ/F1qEFWairVdfVfjw62OGrKQw640wGeGM2o0ziR4mBq6LCGQZxkv7xejqUa/RMFkBMUI4pxEJusey3jVrsCRryn9ulfR/8MKyCHc3EF1dUDZ3DKhkstReP/d5FiVnJZKBjCo++s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770813082; c=relaxed/simple;
-	bh=rVbYVH5bi8fooUyJXJC6Biqqc9cbSFiCjTBvVVoWd2c=;
+	s=arc-20240116; t=1770813085; c=relaxed/simple;
+	bh=dF7buh+/KSmhDiI7blHFt+idgunTa+UYB5eVnlUyFFM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Fsws/Pm/8jfqrAlYEWpDPfoz/l+Ej9w7FMKa5PlTgst0LyOyNs5Vgx3/hlx05WWyASnFoMxXz14Yj0jHYeszlhdFGl98UTin5Js++GL0S64iy4b3AqV6KhXPQIcD783msSE3rHLk0JI0m/NlWd2m0+zPccO3KgD0woLpbUsPF9k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=oH/jLeI4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=YIl3/O+PLDGsPDkZVaZAZbjmlP5xix+6m4Q5uR2kYHOkgwb2dtSFbWQPZyTvAGaL6j9AcRTaVYBD9FLHdrGg0PL/BJFuTmi0iUS2kCBe3QcqbdfNSIDMcZLTynltUE8Y9cJh+kyW7ZoKGg65GTV0LB8r18Tq1OdFUt2b+FtvfS4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=S50WHrs+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="oH/jLeI4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D9338C19424;
-	Wed, 11 Feb 2026 12:31:20 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="S50WHrs+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A9F5C19425;
+	Wed, 11 Feb 2026 12:31:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1770813082;
-	bh=rVbYVH5bi8fooUyJXJC6Biqqc9cbSFiCjTBvVVoWd2c=;
+	s=k20201202; t=1770813084;
+	bh=dF7buh+/KSmhDiI7blHFt+idgunTa+UYB5eVnlUyFFM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oH/jLeI4lLNHbT9IXFrFTm62G8/0Mogn8ClU0A6lrNX7b4anwUXIKGn2KUeCtobRc
-	 bBU+zKfhvKENDCQyalUkPve1b/cOqlcgnYE4/VESGmK70z3I5TcjyLM/ZJ6nHXYZQy
-	 RuUC1SB+YzjGoeNozS87C5oCDRpetKdIROiV1n/vibkn+XSiJdKUW23OfFrtUm0FYE
-	 E3ybasbzVRVC5GteOi/EC1KUBgTFbM0VwiR2n9FdyQpFx67VrL8xF7e81lcdANupkV
-	 U/53DGPh8e+oHUZj1w9+yGW91jd3GPoGaAvwwHf777QoE2u1bKHb0w08MeJsYU6qYr
-	 s2j6b9m/eWBNw==
+	b=S50WHrs+UPJFGWTIu/DsOpBeWFQJOH9VSxBAeDmEruFPIQ3mZnXENbDPt7sNz+i3v
+	 R0pAMTp/u4koAVWlpjW3pTiH6Nzl3wNNlwoxWiA05ZStkUpVZmj/+PknahrVWXUUMD
+	 g/b/WmkyMAn4e8kAwNNi/tnQdtOcElLdMWdU7kStiZfwhk7zAXPymBVLQ/IdXWNXgr
+	 EDzM7q6f8Libii/ifvHGhhtk7Oa2SUQIN+tLh+IrwAWvIGHZTiOTgjhjvI41JC++tz
+	 xCu91zSBGZc/IUzXb2XyeVNUCGum+CxMHocHNDIL6DlQVn13P+oF9nTCtwduUUWPHV
+	 9voaP1GwyyHLg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
 Cc: Heiko Carstens <hca@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>,
-	pjw@kernel.org,
-	palmer@dabbelt.com,
-	aou@eecs.berkeley.edu,
 	nathan@kernel.org,
+	agordeev@linux.ibm.com,
+	svens@linux.ibm.com,
+	iii@linux.ibm.com,
 	gor@linux.ibm.com,
-	ardb@kernel.org,
-	samitolvanen@google.com,
-	linux-riscv@lists.infradead.org,
+	petr.pavlu@suse.com,
 	llvm@lists.linux.dev
-Subject: [PATCH AUTOSEL 6.19-5.10] s390/purgatory: Add -Wno-default-const-init-unsafe to KBUILD_CFLAGS
-Date: Wed, 11 Feb 2026 07:30:14 -0500
-Message-ID: <20260211123112.1330287-4-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.19-6.18] s390/boot: Add -Wno-default-const-init-unsafe to KBUILD_CFLAGS
+Date: Wed, 11 Feb 2026 07:30:15 -0500
+Message-ID: <20260211123112.1330287-5-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260211123112.1330287-1-sashal@kernel.org>
 References: <20260211123112.1330287-1-sashal@kernel.org>
@@ -60,13 +58,13 @@ Content-Transfer-Encoding: 8bit
 
 From: Heiko Carstens <hca@linux.ibm.com>
 
-[ Upstream commit b4780fe4ddf04b51127a33d705f4a2e224df00fa ]
+[ Upstream commit 5ba35a6c13fff0929c34aba6b7602dacbe68686c ]
 
-Add -Wno-default-const-init-unsafe to purgatory KBUILD_CFLAGS, similar
-to scripts/Makefile.extrawarn, since clang generates warnings for the
-dummy variable in typecheck():
+Add -Wno-default-const-init-unsafe to boot KBUILD_CFLAGS, similar to
+scripts/Makefile.extrawarn, since clang generates warnings for the dummy
+variable in typecheck():
 
-    CC      arch/s390/purgatory/purgatory.o
+    CC      arch/s390/boot/version.o
       arch/s390/include/asm/ptrace.h:221:9: warning: default initialization of an object of type 'typeof (regs->psw)' (aka 'const psw_t') leaves the object uninitialized [-Wdefault-const-init-var-unsafe]
         221 |         return psw_bits(regs->psw).pstate;
             |                ^
@@ -83,146 +81,158 @@ Signed-off-by: Sasha Levin <sashal@kernel.org>
 
 LLM Generated explanations, may be completely bogus:
 
-Now I have a thorough understanding. Let me compile my analysis.
+Now I have a thorough understanding of this commit. Let me compile my
+analysis.
 
-## Analysis: s390/purgatory: Add -Wno-default-const-init-unsafe to
-KBUILD_CFLAGS
+## Detailed Analysis
 
-### 1. Commit Message Analysis
+### 1. COMMIT MESSAGE ANALYSIS
 
-The commit adds the `-Wno-default-const-init-unsafe` compiler flag to
-the s390 purgatory's `KBUILD_CFLAGS`. The commit message clearly
-explains the problem: **clang 21+** introduced a new on-by-default
-warning (`-Wdefault-const-init-var-unsafe`) that triggers on the
-`typecheck()` macro's dummy variable. The warning fires in
-`arch/s390/include/asm/ptrace.h:221` via `psw_bits()` -> `typecheck()`
--> `__dummy2` (line 11 of `include/linux/typecheck.h`).
+The commit subject clearly states it adds `-Wno-default-const-init-
+unsafe` to the s390 boot `KBUILD_CFLAGS`. The commit message explains it
+mirrors the same flag already added in `scripts/Makefile.extrawarn` (now
+`scripts/Makefile.warn`) and provides a concrete compiler warning output
+demonstrating the problem. The author is Heiko Carstens, the s390
+subsystem maintainer.
 
-The commit author is Heiko Carstens, the s390 subsystem maintainer.
+### 2. CODE CHANGE ANALYSIS
 
-### 2. Code Change Analysis
-
-The change is exactly **one line** added to
-`arch/s390/purgatory/Makefile`:
+The change is a **single line addition** to `arch/s390/boot/Makefile`:
 
 ```
-+KBUILD_CFLAGS += $(call cc-option, -Wno-default-const-init-unsafe)
+KBUILD_CFLAGS += $(call cc-option, -Wno-default-const-init-unsafe)
 ```
 
-This is wrapped in `$(call cc-option, ...)`, which means it's only
-applied when the compiler supports the flag, providing backward
-compatibility.
+This uses `cc-option`, which means:
+- If the compiler supports the flag, it's added
+- If the compiler doesn't support the flag (older clang, any gcc), it's
+  silently ignored
+- **Zero risk of breaking anything on any compiler version**
 
-### 3. Root Cause: Why s390 Purgatory Needs Its Own Fix
+### 3. WHY THE S390 BOOT CODE NEEDS A SEPARATE FIX
 
-This is the critical technical detail. The s390 purgatory Makefile
-**completely replaces** `KBUILD_CFLAGS` from scratch (line 16):
+The key architectural issue is that the s390 boot code builds with its
+own **completely independent** compiler flags. Looking at
+`arch/s390/Makefile` lines 25-38, `KBUILD_CFLAGS_DECOMPRESSOR` is
+constructed from scratch:
 
-```16:16:arch/s390/purgatory/Makefile
-KBUILD_CFLAGS := -std=gnu11 -fms-extensions -fno-strict-aliasing -Wall
--Wstrict-prototypes
+```25:38:arch/s390/Makefile
+KBUILD_CFLAGS_DECOMPRESSOR := $(CLANG_FLAGS) -m64 -O2 -mpacked-stack
+-std=gnu11 -fms-extensions
+KBUILD_CFLAGS_DECOMPRESSOR += -DDISABLE_BRANCH_PROFILING -D__NO_FORTIFY
+// ... more flags built independently ...
 ```
 
-Note the `:=` assignment operator — this discards ALL previously-set
-global flags, including the `-Wno-default-const-init-unsafe` that was
-already added to `scripts/Makefile.warn` (formerly
-`scripts/Makefile.extrawarn`) by commit `d0afcfeb9e381` ("kbuild:
-Disable -Wdefault-const-init-unsafe").
+Then in `arch/s390/boot/Makefile` line 21:
 
-In contrast, other purgatory Makefiles (x86, riscv, powerpc) use
-`filter-out` patterns like:
+```21:21:arch/s390/boot/Makefile
+KBUILD_CFLAGS := $(filter-out
+$(CC_FLAGS_MARCH),$(KBUILD_CFLAGS_DECOMPRESSOR))
 ```
-KBUILD_CFLAGS := $(filter-out -fprofile-sample-use=%
-...,$(KBUILD_CFLAGS))
+
+This **completely replaces** the global `KBUILD_CFLAGS` with the
+decompressor-specific flags. So the `-Wno-default-const-init-unsafe`
+flag added by the main fix (`d0afcfeb9e381`, "kbuild: Disable -Wdefault-
+const-init-unsafe") in `scripts/Makefile.warn` is **never seen** by the
+s390 boot code.
+
+### 4. BUILD FAILURE CONFIRMED WITH CONFIG_WERROR
+
+From `scripts/Makefile.lib` line 28, the actual compilation uses:
 ```
-which **preserve** the global flags (including the warning suppression).
-Only s390's purgatory builds from scratch and needs this companion fix.
+$(KBUILD_CPPFLAGS) $(KBUILD_CFLAGS) $(ccflags-y)
+```
 
-### 4. Is This a Build Fix?
+While `KBUILD_CFLAGS` is overridden for s390 boot, `KBUILD_CPPFLAGS`
+(which includes `-Werror` when `CONFIG_WERROR=y`) is NOT overridden.
+This means with clang 21+ and `CONFIG_WERROR=y`, the s390 boot code will
+**fail to compile** with:
 
-**Yes, definitively.** With `CONFIG_WERROR=y` (enabled in many distro
-configs and CI systems), the clang 21+ warning becomes a build error.
-The commit message shows the exact warning output from `CC
-arch/s390/purgatory/purgatory.o`. The trigger path is:
+```
+error: default initialization of an object of type 'typeof (regs->psw)'
+(aka 'const psw_t') leaves the object uninitialized [-Werror,-Wdefault-
+const-init-var-unsafe]
+```
 
-- `purgatory.o` includes `asm/ptrace.h`
-- `ptrace.h:221` calls `psw_bits(regs->psw).pstate`
-- `psw_bits` macro (line 98) calls `typecheck(psw_t, __psw)`
-- `typecheck` macro (`include/linux/typecheck.h:11`) declares `typeof(x)
-  __dummy2;` — an uninitialized const variable
-- clang 21+ flags this with `-Wdefault-const-init-var-unsafe`
+The warning comes from the `psw_bits()` macro in
+`arch/s390/include/asm/ptrace.h` line 98 which uses `typecheck()`, and
+`typecheck()` in `include/linux/typecheck.h` line 11 creates a dummy
+variable that triggers this clang 21+ warning.
 
-### 5. Relationship to Parent Commit
+### 5. RELATIONSHIP TO THE PARENT FIX
 
 The parent commit `d0afcfeb9e381` ("kbuild: Disable -Wdefault-const-
-init-unsafe") was explicitly tagged with `Cc: stable@vger.kernel.org`,
-indicating the kernel community considers this warning fix important for
-stable. That commit fixed the global build system, but the s390
-purgatory was missed because it builds its own CFLAGS from scratch. This
-commit is the necessary companion fix.
+init-unsafe") by Nathan Chancellor was explicitly tagged `Cc:
+stable@vger.kernel.org`, confirming the upstream maintainers consider
+this class of fix appropriate for stable. The parent fix handles the
+global build system, but misses the s390 boot code because of its
+independent build flags. This commit is the necessary companion fix.
 
-However, this commit is **self-contained** — it doesn't depend on
-`d0afcfeb9e381` being present in stable. The s390 purgatory always
-builds its own CFLAGS independently.
+### 6. CLASSIFICATION
 
-### 6. Risk Assessment
+This is a **build fix** — one of the categories explicitly allowed in
+stable kernel rules. It:
+- Prevents compilation warnings that become errors with `CONFIG_WERROR`
+- Affects a real architecture (s390/IBM Z mainframes) used heavily in
+  enterprise
+- Is needed when building with clang 21+ (which has the warning enabled
+  by default)
+- Has zero runtime impact — it only affects the compiler's warning
+  behavior
 
-- **Lines changed**: 1
-- **Files changed**: 1 Makefile
-- **Runtime risk**: **Zero**. This is purely a compile-time flag that
-  suppresses a spurious compiler warning. No runtime behavior change
-  whatsoever.
-- **Backward compatibility**: The `$(call cc-option, ...)` wrapper
-  ensures the flag is silently ignored on compilers that don't support
-  it (older clang, all gcc).
-- **Side effects**: None. The warning being suppressed (`-Wdefault-
-  const-init-var-unsafe`) is well-audited — the `typecheck()` macro's
-  dummy variable is never used; it exists solely for compile-time type
-  checking.
+### 7. SCOPE AND RISK ASSESSMENT
 
-### 7. Stable Relevance
+- **Lines changed:** 1
+- **Files changed:** 1
+- **Risk:** Essentially zero
+  - `cc-option` ensures no effect on compilers that don't support the
+    flag
+  - No runtime behavioral change whatsoever
+  - No code generation change
+  - Only suppresses a warning
+- **Self-contained:** Yes, completely independent. No dependencies on
+  other patches.
 
-- The s390 purgatory (kexec code) exists in all stable kernel trees
-  going back many years.
-- The `psw_bits()` / `typecheck()` code path exists in all these trees.
-- Users building stable kernels with newer clang + `CONFIG_WERROR=y`
-  **will** get build failures.
-- Build fixes are explicitly listed as appropriate for stable in
-  `Documentation/process/stable-kernel-rules.rst`.
+### 8. USER IMPACT
 
-### 8. Dependency Check
+- **Who is affected:** s390 users building with clang 21+ (enterprise
+  Linux distributions on IBM Z)
+- **Severity without fix:** Build failure with `CONFIG_WERROR=y`,
+  annoying warnings without it
+- **Impact with fix:** Clean build, zero runtime change
 
-The commit is fully self-contained. The only "dependency" is the s390
-purgatory Makefile itself, which has existed unchanged (in terms of the
-KBUILD_CFLAGS structure) for many kernel versions. The `$(call cc-
-option, ...)` mechanism is available in all stable trees.
+### 9. STABILITY
 
-### Summary
+- Written by Heiko Carstens, the s390 subsystem maintainer
+- Trivial one-line change with no possible regression path
+- Mirrors exactly what was already done for the global build system
 
-This is a textbook build fix for stable:
-- **One line**, zero risk, zero runtime impact
-- Fixes a **real build failure** with newer clang + CONFIG_WERROR
-- Self-contained, no dependencies
-- Companion to a commit already tagged `Cc: stable@vger.kernel.org`
-- Uses `cc-option` for backward compatibility
-- Written by the s390 subsystem maintainer
+### Conclusion
+
+This is a textbook stable kernel candidate. It's a **one-line build
+fix** that prevents compilation warnings/errors on s390 when using clang
+21+. The parent fix (`d0afcfeb9e381`) was already explicitly tagged for
+stable, and this commit is the necessary companion to handle the s390
+boot code's independent build environment. The risk is essentially zero
+(uses `cc-option` for safe degradation), the fix is self-contained, and
+it addresses a real build issue for s390 enterprise users.
 
 **YES**
 
- arch/s390/purgatory/Makefile | 1 +
+ arch/s390/boot/Makefile | 1 +
  1 file changed, 1 insertion(+)
 
-diff --git a/arch/s390/purgatory/Makefile b/arch/s390/purgatory/Makefile
-index 0c196a5b194af..61d240a37633d 100644
---- a/arch/s390/purgatory/Makefile
-+++ b/arch/s390/purgatory/Makefile
-@@ -23,6 +23,7 @@ KBUILD_CFLAGS += -D__DISABLE_EXPORTS
- KBUILD_CFLAGS += $(CLANG_FLAGS)
- KBUILD_CFLAGS += $(if $(CONFIG_CC_IS_CLANG),-Wno-microsoft-anon-tag)
- KBUILD_CFLAGS += $(call cc-option,-fno-PIE)
+diff --git a/arch/s390/boot/Makefile b/arch/s390/boot/Makefile
+index 490167faba7a4..a1e719a79d38c 100644
+--- a/arch/s390/boot/Makefile
++++ b/arch/s390/boot/Makefile
+@@ -21,6 +21,7 @@ KBUILD_AFLAGS := $(filter-out $(CC_FLAGS_MARCH),$(KBUILD_AFLAGS_DECOMPRESSOR))
+ KBUILD_CFLAGS := $(filter-out $(CC_FLAGS_MARCH),$(KBUILD_CFLAGS_DECOMPRESSOR))
+ KBUILD_AFLAGS += $(CC_FLAGS_MARCH_MINIMUM) -D__DISABLE_EXPORTS
+ KBUILD_CFLAGS += $(CC_FLAGS_MARCH_MINIMUM) -D__DISABLE_EXPORTS
 +KBUILD_CFLAGS += $(call cc-option, -Wno-default-const-init-unsafe)
- KBUILD_AFLAGS := $(filter-out -DCC_USING_EXPOLINE,$(KBUILD_AFLAGS))
- KBUILD_AFLAGS += -D__DISABLE_EXPORTS
+ 
+ CFLAGS_sclp_early_core.o += -I$(srctree)/drivers/s390/char
  
 -- 
 2.51.0
