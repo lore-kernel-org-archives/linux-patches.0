@@ -1,42 +1,47 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 834A31862;
-	Wed, 11 Feb 2026 12:31:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22EA0219FC;
+	Wed, 11 Feb 2026 12:31:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770813104; cv=none; b=bfS893UtVS7VtiTPmNiVQ9rMFdZliDzj/67mnjKKkL+OD/fKuibe2umBE8zdJA2k+Mdc+XElDhN2HWGKdRyHyh1d7gndVYFsbymenyYirNLj0l1rxNtjr/WGeSiEN4XMZN5ROYanu7a4cvwpO3rorQIuVogAMImXVOL4Z0zP49E=
+	t=1770813106; cv=none; b=c4VcQXlftNzKpUQkBf6ZWoftUCjopv9QR857EmDtfQS4IQwLLvkbxqIEPfGwxAMvZ978WFGEzDXwO1oCwHFGmBBISCfGso+2AIslpC9a5eHM23nEMSwtjLdMqt1Hk9BnJW6wmaDyIhvcPQv6LW57qORSKMiV+GyU0aUtCdy7oCg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770813104; c=relaxed/simple;
-	bh=CpxYcLQgSQ62Nh4FfLlK/lVwozcMesY2hwqO990HgyY=;
+	s=arc-20240116; t=1770813106; c=relaxed/simple;
+	bh=ENlGDnCCpVbCweAatB+Bj6R2+QrSPPC9d8pacjFF0Tg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=HbGLo7717magH8A7RrIdQAP/HdZzo7MVQmW9RXlzecc/pozbWHz4YZsCnPFLt1dU5wHVSI0dsvP17FOaJSUBs4ggaSY+AAwVhPQ43DJJTcNjVpjSu4fF59aQTuVxKof+hsXQoQ2NNqMM4HV+MxY51+zWjT8/s5Dwak5PZ14BkXw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=B70wbtyn; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VQvcU84zRHlwaz5usyqdyXci9yamvjfY1Ud5msqLJjlxkqMJfaIodISzKW+CrRNrSjJIGe4a78xWZZ5qWrlG7GNISI4oLWSYa7BNqKJq4t48fHtKVmOrfpQZ2QcvpMNmmVIo/FLVy28B4VaN3kD19dj+YZtu5pXZuJq1cO6y7wA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=CR/9dh3/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="B70wbtyn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5466C2BC86;
-	Wed, 11 Feb 2026 12:31:43 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="CR/9dh3/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D039BC19421;
+	Wed, 11 Feb 2026 12:31:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1770813104;
-	bh=CpxYcLQgSQ62Nh4FfLlK/lVwozcMesY2hwqO990HgyY=;
+	s=k20201202; t=1770813106;
+	bh=ENlGDnCCpVbCweAatB+Bj6R2+QrSPPC9d8pacjFF0Tg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=B70wbtynoSzoe4jwymVxPaKFgsgt48sSsg0QgANVTyytbWO4cWHMcBtSgvwGHkvxK
-	 rCyn+BjHuD1YrxKTf/DtVTDEFzb7J5CexmfHYrNpp437BYRhpvnVR8U56Nk92ws/LZ
-	 IJymAxfpdRC9u4ySpk90qSOPmkjm8nitet3ckVgcEiBYKgY7iVxfyRkMIIz1IUPdYX
-	 vZU1hSzS05aHt+HjLjHJrmyTJto7rNBgYOkF4nD5ubnCzPiz8IWFFqlaMQ9pSeiskE
-	 GlgU9WV3wTs4tk17zqeJCGd2JkS8TgMPIXTuf40wbmws1QlvK/IIldzZVYMp+0XOfI
-	 9w1ZBWl52mfvQ==
+	b=CR/9dh3/it36j2UWHDJuoG3MWY8i3jdeA9fp1soqleCxEB4wjC3YdrQzGO8bkBUGG
+	 CrOek9imnPaRkud0Q3/61neX/RQLrLcRlowDfpYwJRjS9QZ6eQWtAlb4zRdZ7Vg5RZ
+	 i6DuQLsAMI6S1SHGVoq04uspz4QfbwlBZy3FYwJMXg3NQGN/3SEMITnadRmqQcS9QI
+	 wX1uqkkO3xOFRhsSrAKbajvF0CbvFQXHnu9rQ/uhPWUuCvSifUB4P32oVhApj7N9q3
+	 vH8cFUtsUdeefi3tbd/kHcADtB0bg95YOvaQN6sGBzR2fihdWIcdix9xmHUeyuiLWm
+	 qQ2kOcc4IFVzg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: =?UTF-8?q?Ata=20=C4=B0lhan=20K=C3=B6kt=C3=BCrk?= <atailhan2006@gmail.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+Cc: Alexandre Courbot <acourbot@nvidia.com>,
+	Daniel Almeida <daniel.almeida@collabora.com>,
+	Viresh Kumar <viresh.kumar@linaro.org>,
 	Sasha Levin <sashal@kernel.org>,
 	rafael@kernel.org,
-	linux-acpi@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.19-6.12] ACPI: battery: fix incorrect charging status when current is zero
-Date: Wed, 11 Feb 2026 07:30:25 -0500
-Message-ID: <20260211123112.1330287-15-sashal@kernel.org>
+	ojeda@kernel.org,
+	lossin@kernel.org,
+	gary@garyguo.net,
+	linux-pm@vger.kernel.org,
+	rust-for-linux@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.19-6.18] rust: cpufreq: always inline functions using build_assert with arguments
+Date: Wed, 11 Feb 2026 07:30:26 -0500
+Message-ID: <20260211123112.1330287-16-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260211123112.1330287-1-sashal@kernel.org>
 References: <20260211123112.1330287-1-sashal@kernel.org>
@@ -46,255 +51,169 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.19
 Content-Transfer-Encoding: 8bit
 
-From: Ata İlhan Köktürk <atailhan2006@gmail.com>
+From: Alexandre Courbot <acourbot@nvidia.com>
 
-[ Upstream commit bb1256e0ddc7e9e406164319769b9f8d8389f056 ]
+[ Upstream commit 8c8b12a55614ea05953e8d695e700e6e1322a05d ]
 
-On some laptops, such as the Huawei Matebook series, the embedded
-controller continues to report "Charging" status even when the
-charge threshold is reached and no current is being drawn.
+`build_assert` relies on the compiler to optimize out its error path.
+Functions using it with its arguments must thus always be inlined,
+otherwise the error path of `build_assert` might not be optimized out,
+triggering a build error.
 
-This incorrect reporting prevents the system from switching to battery
-power profiles, leading to significantly higher power (e.g., 18W instead
-of 7W during browsing) and missed remaining battery time estimation.
-
-Validate the "Charging" state by checking if rate_now is zero. If the
-hardware reports charging but the current is zero, report "Not Charging"
-to user space.
-
-Signed-off-by: Ata İlhan Köktürk <atailhan2006@gmail.com>
-[ rjw: Whitespace fix, braces added to an inner if (), new comment rewrite ]
-[ rjw: Changelog edits ]
-Link: https://patch.msgid.link/20260129144856.43058-1-atailhan2006@gmail.com
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Signed-off-by: Alexandre Courbot <acourbot@nvidia.com>
+Reviewed-by: Daniel Almeida <daniel.almeida@collabora.com>
+Signed-off-by: Viresh Kumar <viresh.kumar@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-Now I have a comprehensive picture. Let me compile my complete analysis.
+Now I have all the information needed for a thorough analysis. Here is
+my assessment:
 
 ---
 
-## Complete Analysis: ACPI: battery: fix incorrect charging status when
-current is zero
+## Analysis: `rust: cpufreq: always inline functions using build_assert
+with arguments`
 
-### 1. COMMIT MESSAGE ANALYSIS
+### 1. What the Commit Does
 
-The commit message clearly describes a **real-world hardware bug**
-affecting the Huawei Matebook series. The symptoms are concrete and
-user-visible:
-- EC firmware continues reporting "Charging" even after the charge
-  threshold is reached and no current flows
-- This causes userspace (power management daemons, UPower, etc.) to use
-  AC-plugged power profiles
-- Result: 18W power draw during browsing instead of 7W (a 2.5x power
-  difference!)
-- Missing "remaining battery time" estimation because system thinks it's
-  charging
+This commit adds `#[inline(always)]` (plus explanatory comment) to the
+`const fn copy_name()` function in `rust/kernel/cpufreq.rs`. This
+function uses `build_assert!` to validate that a driver name string fits
+within `CPUFREQ_NAME_LEN`.
 
-The commit message uses the word "fix" in the subject, describes a clear
-user-visible misbehavior, and was accepted by the ACPI subsystem
-maintainer Rafael Wysocki who also made editorial improvements
-(indicating active review).
+### 2. The Bug Mechanism (Build Fix)
 
-### 2. CODE CHANGE ANALYSIS
+The `build_assert!` macro works by calling `build_error()` on the error
+path. `build_error()` (defined in `rust/build_error.rs`) is exported
+with the symbol name `rust_build_error`. Crucially, in the Makefile:
 
-The change is in `acpi_battery_get_property()` at the
-`POWER_SUPPLY_PROP_STATUS` case. Let me examine the before and after:
-
-**Before (line 213-214):**
-
-```213:214:drivers/acpi/battery.c
-                else if (battery->state & ACPI_BATTERY_STATE_CHARGING)
-                        val->intval = POWER_SUPPLY_STATUS_CHARGING;
+```25:26:rust/Makefile
+always-$(CONFIG_RUST) += build_error.o
+endif
 ```
 
-When the EC sets the `ACPI_BATTERY_STATE_CHARGING` bit, the kernel
-unconditionally reports `POWER_SUPPLY_STATUS_CHARGING` to userspace.
+When `CONFIG_RUST_BUILD_ASSERT_ALLOW` is NOT set (the default),
+`build_error.o` is compiled but **not linked** into the kernel. This
+means any reference to `rust_build_error` in the final binary causes a
+**linker error** -- this is the deliberate mechanism that turns
+`build_assert!` into a build-time check.
 
-**After (from the diff):**
+The problem: if `copy_name()` is not inlined, the compiler generates a
+standalone function body where the `name` parameter is opaque. It cannot
+prove that `src.len() <= CPUFREQ_NAME_LEN` will always hold, so it
+preserves the `build_error()` call. This creates a reference to the
+deliberately-missing `rust_build_error` symbol, causing a **build
+failure**.
 
-```c
-                else if (battery->state & ACPI_BATTERY_STATE_CHARGING)
-                        /* Validate the status by checking the current.
-*/
-                        if (battery->rate_now !=
-ACPI_BATTERY_VALUE_UNKNOWN &&
-                            battery->rate_now == 0) {
-                                /* On charge but no current (0W/0mA). */
-                                val->intval =
-POWER_SUPPLY_STATUS_NOT_CHARGING;
-                        } else {
-                                val->intval =
-POWER_SUPPLY_STATUS_CHARGING;
-                        }
-```
+With `#[inline(always)]`, the function body is always expanded at the
+call site where the actual argument (`T::NAME`) is a known const value.
+The compiler can then evaluate the condition, prove it's true, and
+eliminate the error path -- allowing successful linking.
 
-The change adds a validation: when EC says "Charging" but current is
-*confirmed zero* (`rate_now` is known AND equals 0), report
-`NOT_CHARGING` instead.
+### 3. Established Pattern -- Sibling Patches Were All Tagged for Stable
 
-**Safety guards in the condition:**
-- `rate_now != ACPI_BATTERY_VALUE_UNKNOWN` — if rate is unknown
-  (0xFFFFFFFF), preserve original "Charging" behavior. This is
-  conservative.
-- `rate_now == 0` — only triggers when current is truly zero, not
-  negative or any other value.
+This commit is part of a broader effort by Alexandre Courbot to fix all
+`build_assert!`-using functions that lack `#[inline(always)]`. The
+**four sibling patches** (all with identical commit messages) that fix
+this in other files **all have** `Cc: stable@vger.kernel.org` and
+`Fixes:` tags:
 
-**Syntactic correctness of the if/else chain:**
-The nested `if/else` with explicit braces is a complete statement, so
-the outer `else if` chain parses correctly. The subsequent `else if
-(CHARGE_LIMITING)` attaches to the outer chain, not the inner if. This
-is safe and was explicitly reviewed by Rafael (who noted "braces added
-to an inner if()").
+- `d6ff6e870077a` - `rust: sync: refcount` -- **Cc: stable, Fixes:
+  bb38f35b35f9**
+- `09c3c9112d71c` - `rust: bits` -- **Cc: stable, Fixes: cc84ef3b88f4**
+- `5d9c4c272ba06` - `rust: irq` -- **Cc: stable, Fixes: 746680ec6696**
+- `33d19f621641d` - `rust: io` -- **Cc: stable, Fixes: ce30d94e6855**
 
-### 3. PRECEDENT: EXACT SAME PATTERN EXISTS FOR DISCHARGING
+The cpufreq variant likely lacks the stable tag because it was sent
+through a different maintainer tree (Viresh Kumar's cpufreq tree, not
+the Rust or DRM trees), not because it's less important.
 
-This fix is the **direct mirror** of an existing, well-established
-workaround. The `acpi_battery_handle_discharging()` function (added in
-commit `19fffc8450d43`, v4.18, 2018) does the exact same thing for the
-discharging case:
+### 4. Consistency with Existing Code
 
-```183:195:drivers/acpi/battery.c
-static int acpi_battery_handle_discharging(struct acpi_battery *battery)
-{
-        /*
-  - Some devices wrongly report discharging if the battery's charge
-    level
-  - was above the device's start charging threshold atm the AC adapter
-  - was plugged in and the device thus did not start a new charge cycle.
-         */
-        if ((battery_ac_is_broken || power_supply_is_system_supplied())
-&&
-            battery->rate_now == 0)
-                return POWER_SUPPLY_STATUS_NOT_CHARGING;
+Identical patterns in the codebase **already have** `#[inline(always)]`:
+- `i2c.rs:45` - `pub const fn new()` with `build_assert!` on string
+  length
+- `acpi.rs:38` - `pub const fn new()` with `build_assert!` on string
+  length
+- `ioctl.rs:12` - `const fn _IOC()` with multiple `build_assert!` calls
+- `bits.rs:31-32` - `bit_*` and `genmask_*` functions
+- `irq/flags.rs:100-101` - `const fn new()`
+- `io/resource.rs:230-231` - `const fn new()`
+- `num/bounded.rs:369-370` - `from_expr()`
 
-        return POWER_SUPPLY_STATUS_DISCHARGING;
-}
-```
+The `cpufreq.rs` `copy_name` function is the exact same pattern (const
+fn taking an argument, using `build_assert!` on it) but was missing the
+annotation -- clearly an oversight.
 
-The logic is analogous:
-- **Discharging handler**: EC says "discharging" + AC connected +
-  current is 0 → report "Not Charging"
-- **New charging fix**: EC says "charging" + current is 0 → report "Not
-  Charging"
+### 5. Affected Stable Trees
 
-The discharging handler has been in mainline since 2018 (v4.18) and is
-well-proven. The new fix follows the identical reasoning.
+The file `rust/kernel/cpufreq.rs` was introduced in v6.16. I confirmed
+the vulnerable `copy_name` function (without `#[inline(always)]`) exists
+in:
+- **v6.18.9** (latest 6.18 stable)
+- **v6.17.13** (latest 6.17 stable)
+- **v6.16** (and its stable updates)
 
-### 4. CLASSIFICATION
+### 6. Risk Assessment
 
-This is a **hardware quirk/workaround** for buggy EC firmware behavior.
-This falls squarely in the "quirks and workarounds" exception category
-for stable trees. The pattern of ECs misreporting battery state is well-
-documented in this driver (see the discharging handler, the
-`battery_ac_is_broken` quirk, the notification delay quirk, etc.).
+- **Change size**: 2 lines (1 comment + 1 attribute annotation)
+- **Behavioral change**: Zero runtime change. `#[inline(always)]` only
+  affects compilation.
+- **Regression risk**: Effectively zero. The function was likely already
+  being inlined by the optimizer; this just guarantees it, matching the
+  established pattern.
+- **Benefit**: Prevents potential build failures that could occur with
+  different Rust compiler versions, optimization levels, or future code
+  changes that affect inlining decisions.
 
-### 5. SCOPE AND RISK ASSESSMENT
+### 7. Classification
 
-- **Size**: ~7 lines of actual logic change in a single file
-- **Files touched**: 1 (`drivers/acpi/battery.c`)
-- **Risk**: Very low
-  - Only affects the `POWER_SUPPLY_PROP_STATUS` property report
-  - Only changes behavior when `rate_now` is known to be exactly 0
-  - When `rate_now` is unknown, behavior is unchanged
-  - No new APIs, no new module parameters, no new userspace interfaces
-  - Uses only existing constants and fields that have been present since
-    v4.18+
-  - The change is conservative — it only transforms "Charging" to "Not
-    Charging", not to anything unexpected
+This is a **build fix** -- one of the categories explicitly approved for
+stable backporting. It prevents a linker error that could occur when the
+compiler decides not to inline `copy_name`. The sibling fixes were all
+explicitly tagged for stable by the author and maintainers.
 
-### 6. USER IMPACT
+### 8. Dependencies
 
-- **Directly affected**: Huawei Matebook series users (and potentially
-  other laptops with similar EC firmware behavior)
-- **Severity of the bug**: Moderate-to-high — incorrect battery status
-  causes:
-  - 2.5x higher power consumption (power profiles stuck on AC mode)
-  - Missing battery time estimation
-  - Misleading UI indicators
-- **Impact scope**: Anyone using ACPI battery reporting with charge
-  thresholds on affected hardware
+None. This is a self-contained 2-line change with no dependencies on
+other patches.
 
-### 7. DEPENDENCY CHECK
+### Conclusion
 
-- `rate_now` field: present since the beginning of `struct acpi_battery`
-- `ACPI_BATTERY_VALUE_UNKNOWN`: defined as `0xFFFFFFFF`, present since
-  early kernel versions
-- `POWER_SUPPLY_STATUS_NOT_CHARGING`: present since v2.6.24+
-- No dependency on other uncommitted patches
-
-**Context differences for older stable trees:**
-- **6.12.y+**: Applies cleanly (has
-  `ACPI_BATTERY_STATE_CHARGE_LIMITING`)
-- **6.6.y and older**: Trivial context adjustment needed (missing the
-  `CHARGE_LIMITING` line), but the actual change is identical. The patch
-  would need a minor backport adaptation.
-
-### 8. STABILITY INDICATORS
-
-- Accepted by the ACPI subsystem maintainer (Rafael J. Wysocki) who
-  actively reviewed and polished the patch
-- The Link points to patch.msgid.link, indicating it went through the
-  standard mailing list review process
-- Rafael's edits (whitespace fix, braces, comment rewrite, changelog
-  edits) show careful review
-
-### 9. POTENTIAL CONCERNS
-
-- **Could this misfire?**: Only if a device reports `rate_now == 0`
-  while actually charging. But if current is truly zero, no charge is
-  flowing — so "Not Charging" is semantically correct regardless of what
-  the EC claims.
-- **Could it break something?**: The only behavioral change is
-  "Charging" → "Not Charging" when current is confirmed zero. No
-  application should depend on "Charging" status when actual current is
-  zero.
-- **Regression risk**: Extremely low given the conservative conditions.
-
-### Summary
-
-This commit fixes a real, user-reported hardware bug where incorrect
-"Charging" status causes significantly higher power consumption (18W vs
-7W) on Huawei Matebook laptops. The fix is small (7 lines), contained to
-a single file, uses only existing APIs/fields, follows an identical
-well-proven pattern already in the driver since 2018 (the discharging
-handler), was reviewed by the subsystem maintainer, and has essentially
-zero regression risk. It meets all stable kernel criteria: obviously
-correct, fixes a real bug, small and contained, no new features.
+This is a minimal, zero-risk build fix that follows an established
+pattern across the Rust kernel codebase. Every sibling patch from the
+same author fixing the exact same class of issue was tagged `Cc:
+stable@vger.kernel.org`. The affected code exists in 6.16.y, 6.17.y, and
+6.18.y stable trees. The only reason this specific patch lacks the
+stable tag is likely that it went through a different maintainer tree.
+The fix is obviously correct, small, and prevents potential build
+failures.
 
 **YES**
 
- drivers/acpi/battery.c | 9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
+ rust/kernel/cpufreq.rs | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/acpi/battery.c b/drivers/acpi/battery.c
-index 34181fa52e937..4b28ef79e6ac8 100644
---- a/drivers/acpi/battery.c
-+++ b/drivers/acpi/battery.c
-@@ -211,7 +211,14 @@ static int acpi_battery_get_property(struct power_supply *psy,
- 		if (battery->state & ACPI_BATTERY_STATE_DISCHARGING)
- 			val->intval = acpi_battery_handle_discharging(battery);
- 		else if (battery->state & ACPI_BATTERY_STATE_CHARGING)
--			val->intval = POWER_SUPPLY_STATUS_CHARGING;
-+			/* Validate the status by checking the current. */
-+			if (battery->rate_now != ACPI_BATTERY_VALUE_UNKNOWN &&
-+			    battery->rate_now == 0) {
-+				/* On charge but no current (0W/0mA). */
-+				val->intval = POWER_SUPPLY_STATUS_NOT_CHARGING;
-+			} else {
-+				val->intval = POWER_SUPPLY_STATUS_CHARGING;
-+			}
- 		else if (battery->state & ACPI_BATTERY_STATE_CHARGE_LIMITING)
- 			val->intval = POWER_SUPPLY_STATUS_NOT_CHARGING;
- 		else if (acpi_battery_is_charged(battery))
+diff --git a/rust/kernel/cpufreq.rs b/rust/kernel/cpufreq.rs
+index f968fbd228905..0879a79485f8e 100644
+--- a/rust/kernel/cpufreq.rs
++++ b/rust/kernel/cpufreq.rs
+@@ -1015,6 +1015,8 @@ impl<T: Driver> Registration<T> {
+         ..pin_init::zeroed()
+     };
+ 
++    // Always inline to optimize out error path of `build_assert`.
++    #[inline(always)]
+     const fn copy_name(name: &'static CStr) -> [c_char; CPUFREQ_NAME_LEN] {
+         let src = name.to_bytes_with_nul();
+         let mut dst = [0; CPUFREQ_NAME_LEN];
 -- 
 2.51.0
 
