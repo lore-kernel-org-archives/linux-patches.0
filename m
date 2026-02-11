@@ -1,43 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB727256D;
-	Wed, 11 Feb 2026 12:31:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F01F43207;
+	Wed, 11 Feb 2026 12:31:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770813089; cv=none; b=GFVDjsS6y1DOILCEmfDZR222NYCPMWkZci80UJHJpD3EQU2I9KXGa9YLZI86uEOLq1fMJbx2D7L43i2psQSYClFmTsos4PFzyiWRaXGlgdNgheXJZM09pogV6Ok7d4najbxU90carWMugk1nccqoftHuMuc8XYf3sm6hyenV87s=
+	t=1770813091; cv=none; b=s0xL4kaqmGm5WoU/G6L2yV7QLM5Rfs01T20MvdhTwGZ6yVsatEbz4QkqeDchVRTeG9piVFhiCWVSDn4Py6g14+6i4IYTJ/LlTxW2Jbea0LmFgc6nMHpDXyUYfOyitJTNTV3wOaizp5F7Th2XXO9t60/EepFU+SnOnHDgVEMG3KQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770813089; c=relaxed/simple;
-	bh=zBvjQ82V7lCcC9TG/0+hxmvjgV10SOGBXJUHstbacvw=;
+	s=arc-20240116; t=1770813091; c=relaxed/simple;
+	bh=54ptZY70lc/rowJfJIo76PTdUbKdlVReVnA7x+FOggg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=HdIpxjw7JaPg+7FX88vPY9kcLCrWM5dtqLX72D8ipA9ZdCIxLOJBuPO1YNzxbuR8/YYewlm8RaiNj1PSu8qXrKT6km7qGFQxM5a0ILCXZRE1z3D+BrIIRiyvWD6S0k7iAv60XfK40RpBKQbm83gfAONLxCOe3AdqeKKUrkh+RAs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=N+vwxZPM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rdw85/gaJbhUhukA5G2mTJX3cPhVUMWcK3qIhx3nLeJ0OkDwBVP411Jz/ApW64VoSwvAhVjTmgdYWYmY0/AFtttkUr5FtY4x6VHx//W57H3UvIbOnWvy7PfiEnt4quaGvaECk0uOTqE5SBvWfmf5M1cEh63B+pRfkrjLcgZ25Pc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=AfDKzCeB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="N+vwxZPM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA4B0C19421;
-	Wed, 11 Feb 2026 12:31:28 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="AfDKzCeB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1AC58C19425;
+	Wed, 11 Feb 2026 12:31:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1770813089;
-	bh=zBvjQ82V7lCcC9TG/0+hxmvjgV10SOGBXJUHstbacvw=;
+	s=k20201202; t=1770813090;
+	bh=54ptZY70lc/rowJfJIo76PTdUbKdlVReVnA7x+FOggg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=N+vwxZPMK4CQFi97jJPSs3UaONvvdOvD9lV+jn0Wr6IJmnl/lJ2lHmwDk2/Z5eXiE
-	 A/VakkVb/2tIDSE29/jOyzk4GLxRCyNND4+AU6zHQtPR7F6m8gSH3HuqpbVjR91gHf
-	 pO0rM4/kbMJBCVTL7Btpw0xZO2m2Br45XEWNPJiGce4KtjO3RVI5cmgdh7YJrpgKyQ
-	 AO14XAqfHeYvTzVXuHp+zd/2gWPnlQiRHSv+oiH/arUN54rgq10B+sfcGB5yv5OBkQ
-	 mg9FuNUE//+PrOTddEDYk8C58OX08SIqyXSXwZn0qgftNvpBXf+j9v6pauBnJrrswu
-	 crFGtf75eDF4w==
+	b=AfDKzCeBPe361GvqJ5M4rZ0G8L5qd50P1Gf8EJuL+cy3pAZCJze+0dMMslrTxixyI
+	 ExxklOyK9j6n/tnlgOG0bAaxg4y3S/xrGwEt3jSIC4zLw3/9lb5MLnVS1J3D+f9gT+
+	 hXP+4wrvJ5wTrSG23vlAE9EMM44UQBtxwstBMBc1Chm9hSmPl8ktdewgJFilLBwU6A
+	 6q2SgoRooeyzEbqBcjVKBk+ldl5NFoecLvSb9kI4uANQcf6pJGwJsFh7KwZnOOhTJe
+	 TYk+Z6mtlZaAB6jK4yzXjQXH0C9PCRnDtojAyDdhJdt7ZZtCpIq7j3NbMr3h4Y5MaZ
+	 E9NFKmfArFi0A==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Jakob Riemenschneider <riemenschneiderjakob@gmail.com>,
-	Antheas Kapenekakis <antheas@antheas.dev>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+Cc: Luke Wang <ziniu.wang_1@nxp.com>,
+	Ulf Hansson <ulf.hansson@linaro.org>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>,
-	superm1@kernel.org,
-	soyer@irl.hu
-Subject: [PATCH AUTOSEL 6.19-6.12] ACPI: x86: s2idle: Invoke Microsoft _DSM Function 9 (Turn On Display)
-Date: Wed, 11 Feb 2026 07:30:18 -0500
-Message-ID: <20260211123112.1330287-8-sashal@kernel.org>
+	linux-block@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.19-6.12] block: decouple secure erase size limit from discard size limit
+Date: Wed, 11 Feb 2026 07:30:19 -0500
+Message-ID: <20260211123112.1330287-9-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260211123112.1330287-1-sashal@kernel.org>
 References: <20260211123112.1330287-1-sashal@kernel.org>
@@ -50,250 +49,229 @@ MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.19
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jakob Riemenschneider <riemenschneiderjakob@gmail.com>
+From: Luke Wang <ziniu.wang_1@nxp.com>
 
-[ Upstream commit 229ecbaac6b31f89c554b77eb407377a5eade7d4 ]
+[ Upstream commit ee81212f74a57c5d2b56cf504f40d528dac6faaf ]
 
-Windows 11, version 22H2 introduced a new function index (Function 9) to
-the Microsoft LPS0 _DSM, titled "Turn On Display Notification".
+Secure erase should use max_secure_erase_sectors instead of being limited
+by max_discard_sectors. Separate the handling of REQ_OP_SECURE_ERASE from
+REQ_OP_DISCARD to allow each operation to use its own size limit.
 
-According to Microsoft documentation, this function signals to the system
-firmware that the OS intends to turn on the display when exiting Modern
-Standby. This allows the firmware to release Power Limits (PLx) earlier.
-
-Crucially, this patch fixes a functional issue observed on the Lenovo Yoga
-Slim 7i Aura (15ILL9), where system fans and keyboard backlights fail to
-resume after suspend. Investigation linked shows the EC on this device
-turns off these components during sleep but requires the Function 9
-notification to wake them up again.
-
-This patch defines the new function index (ACPI_MS_TURN_ON_DISPLAY) and
-invokes it in acpi_s2idle_restore_early_lps0(). The execution order is
-updated to match the logic of an "intent" signal:
-
- 1. LPS0 Exit (Function 6)
- 2. Turn On Display Intent (Function 9)
- 3. Modern Standby Exit (Function 8)
- 4. Screen On (Function 4)
-
-Invoking Function 9 before the Modern Standby Exit ensures the firmware
-has time to restore power rails and functionality (like fans) before the
-software fully exits the sleep state.
-
-Link: https://learn.microsoft.com/en-us/windows-hardware/design/device-experiences/modern-standby-firmware-notifications#turn-on-display-notification-function-9
-Closes: https://bugzilla.kernel.org/show_bug.cgi?id=220505
-Suggested-by: Antheas Kapenekakis <antheas@antheas.dev>
-Signed-off-by: Jakob Riemenschneider <riemenschneiderjakob@gmail.com>
-Link: https://patch.msgid.link/20260127200121.1292216-1-riemenschneiderjakob@gmail.com
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Signed-off-by: Luke Wang <ziniu.wang_1@nxp.com>
+Reviewed-by: Ulf Hansson <ulf.hansson@linaro.org>
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
+This is an important caller. `blk_insert_cloned_request` is used by
+device mapper (dm) to submit cloned requests. If
+`blk_queue_get_max_sectors` returns the wrong value (e.g.,
+`max_discard_sectors` instead of `max_secure_erase_sectors`), and the
+cloned request's sector count exceeds the wrong limit but fits within
+the correct one, the request will be **rejected with BLK_STS_IOERR** on
+line 3291. This is a real I/O error path!
+
 Here is my complete analysis:
 
 ---
 
-## Commit Analysis: ACPI: x86: s2idle: Invoke Microsoft _DSM Function 9
-(Turn On Display)
+## Detailed Analysis
 
-### 1. COMMIT MESSAGE ANALYSIS
+### 1. Commit Message Analysis
 
-The commit adds support for invoking Microsoft _DSM Function 9 ("Turn On
-Display Notification") during resume from Modern Standby (s2idle). The
-commit message explicitly states it **fixes a functional issue** on the
-Lenovo Yoga Slim 7i Aura (15ILL9), where fans and keyboard backlights
-fail to resume after suspend. The EC (embedded controller) on this
-device turns these off during sleep but requires the Function 9
-notification to restore them.
+The commit clearly describes a **bug fix**: secure erase operations were
+incorrectly limited by `max_discard_sectors` instead of
+`max_secure_erase_sectors`. This is a correctness issue, not a feature.
+The commit was reviewed by Ulf Hansson (MMC maintainer) and merged by
+Jens Axboe (block layer maintainer).
 
-Key indicators:
-- **"Closes: https://bugzilla.kernel.org/show_bug.cgi?id=220505"** -
-  Links to a real bug report
-- **"Crucially, this patch fixes a functional issue"** - Explicit bug
-  fix language
-- **Signed-off by Rafael J. Wysocki** - The ACPI/PM subsystem maintainer
-  accepted it
-- **Reference to Microsoft specification** - Well-documented standard
-  behavior
+### 2. Code Change Analysis
 
-### 2. CODE CHANGE ANALYSIS
+The patch modifies two files with two distinct changes:
 
-The diff makes three minimal changes:
+**Change A: `block/blk.h` - `blk_queue_get_max_sectors()`**
 
-**a) New constant definition (1 line):**
-
-```52:52:drivers/acpi/x86/s2idle.c
-#define ACPI_MS_TURN_ON_DISPLAY 9
+Before the fix:
+```211:213:block/blk.h
+        if (unlikely(op == REQ_OP_DISCARD || op == REQ_OP_SECURE_ERASE))
+                return min(q->limits.max_discard_sectors,
+                           UINT_MAX >> SECTOR_SHIFT);
 ```
 
-**b) Debug string mapping (2 lines):**
+Both `REQ_OP_DISCARD` and `REQ_OP_SECURE_ERASE` used
+`max_discard_sectors`. The fix separates them so secure erase uses
+`max_secure_erase_sectors`.
 
-```358:359:drivers/acpi/x86/s2idle.c
-// case ACPI_MS_TURN_ON_DISPLAY:
-//   return "lps0 ms turn on display";
-```
+**Change B: `block/blk-merge.c` - `bio_split_discard()`**
 
-**c) New DSM call in resume path (3 lines):**
-The actual fix inserts a call to
-`acpi_sleep_run_lps0_dsm(ACPI_MS_TURN_ON_DISPLAY, ...)` between the LPS0
-Exit and Modern Standby Exit calls, creating the sequence:
-1. LPS0 Exit (Function 6)
-2. Turn On Display Intent (Function 9) ← **NEW**
-3. Modern Standby Exit (Function 8)
-4. Screen On (Function 4)
+The original `bio_split_discard()` always split using
+`lim->max_discard_sectors`, even for `REQ_OP_SECURE_ERASE` (which
+reaches this function via `__bio_split_to_limits` at line 407-409 of
+`blk.h`). The fix refactors the function into a wrapper that selects the
+correct limit and a helper `__bio_split_discard()` that does the actual
+splitting.
 
-**Safety mechanism:** The call passes through
-`acpi_sleep_run_lps0_dsm()` which has a critical guard at line 380:
+### 3. Bug Mechanism and Impact
 
-```380:381:drivers/acpi/x86/s2idle.c
-        if (!(func_mask & (1 << func)))
-                return;
-```
+**The bug**: The kernel `queue_limits` structure has separate fields for
+`max_discard_sectors` and `max_secure_erase_sectors`, but the block
+layer core code in two critical paths ignored the secure erase field and
+always used the discard field.
 
-This means Function 9 is **only invoked if the firmware advertises
-support** for it via bit 9 (0x200) in the Microsoft DSM function mask.
-The outer guard `lps0_dsm_func_mask_microsoft > 0` provides a second
-layer of protection. Systems that don't support Function 9 are
-completely unaffected.
+**Concrete impact scenarios**:
 
-### 3. CLASSIFICATION
+1. **virtio_blk**: This driver reads separate limits from the virtio
+   config for discard (`max_discard_sectors`) and secure erase
+   (`max_secure_erase_sectors`). The driver even documents the
+   workaround: *"The discard and secure erase limits are combined since
+   the Linux block layer uses the same limit for both commands."*
+   (virtio_blk.c lines 1336-1341). This means the driver had to
+   artificially reduce its limits to compensate for the block layer bug.
 
-This is a **hardware fix/firmware protocol compliance fix** that falls
-into the "quirks and workarounds" exception category. It's analogous to:
-- Adding a USB quirk for a device that doesn't work without a specific
-  firmware call
-- Adding a PCI quirk for a device that needs a specific initialization
-  sequence
+2. **xen-blkfront**: Sets `max_secure_erase_sectors = UINT_MAX` while
+   `max_discard_sectors = get_capacity(gd)` - different values.
 
-The change aligns Linux behavior with what Windows 11 22H2+ does, and
-what firmware on affected devices expects. It's NOT adding a new
-userspace API or feature - it's making existing suspend/resume work
-correctly on hardware that requires this notification.
+3. **dm (device mapper)**: The `blk_insert_cloned_request()` function
+   calls `blk_queue_get_max_sectors()` and rejects requests that exceed
+   the limit with `BLK_STS_IOERR`. If `max_secure_erase_sectors` >
+   `max_discard_sectors` on the underlying device, valid secure erase
+   requests could be rejected with I/O errors. Conversely, if
+   `max_secure_erase_sectors` < `max_discard_sectors`, oversized
+   requests could be sent to hardware.
 
-### 4. SCOPE AND RISK ASSESSMENT
+4. **The most dangerous case**: When `max_secure_erase_sectors <
+   max_discard_sectors`, the bio splitting code won't split the secure
+   erase bio when it should, sending a request larger than the device
+   can handle. This can cause **I/O errors, device failures, or data
+   integrity issues** with secure erase operations.
 
-- **Lines changed:** ~8 lines of actual code across 3 locations in one
-  file
-- **Files touched:** 1 (`drivers/acpi/x86/s2idle.c`)
-- **Complexity:** Very low - adds one more DSM call to an existing
-  sequence of DSM calls
-- **Risk of regression:** **Extremely low** due to the double-gating:
-  1. `lps0_dsm_func_mask_microsoft > 0` - Microsoft UUID must be
-     supported
-  2. `func_mask & (1 << 9)` - Firmware must advertise Function 9 support
-- On systems WITHOUT Function 9 support, the new code is a complete no-
-  op
+### 4. Scope and Risk Assessment
 
-### 5. USER IMPACT
+- **Lines changed**: ~25 lines of actual logic change across 2 files
+- **Files touched**: `block/blk-merge.c` and `block/blk.h` (core block
+  layer, but well-contained)
+- **Risk of regression**: **Low**. For any driver that sets
+  `max_secure_erase_sectors == max_discard_sectors` (like MMC), the
+  behavior is completely unchanged. For drivers with different values,
+  the behavior is corrected.
+- **The change is obviously correct**: Secure erase operations should
+  use secure erase limits, not discard limits.
 
-**Severity: HIGH** for affected users.
-- Fans not working after resume is a **thermal safety issue** - the CPU
-  could overheat
-- Keyboard backlight not working is a significant usability issue
-- The Lenovo Yoga Slim 7i Aura is a current, shipping laptop
-- More devices will likely require Function 9 as firmware designers
-  align with Windows 11 22H2+ behavior
+### 5. Affected Subsystems and Users
 
-### 6. DEPENDENCY CHECK
+- MMC/eMMC (mobile, embedded) - same values, no visible change
+- virtio_blk (VMs, cloud) - corrects a workaround-needing limitation
+- xen-blkfront (Xen VMs) - corrects a real mismatch
+- dm (device-mapper stacking) - fixes potential I/O errors
 
-**For 6.12.y stable:**
-- Commit `073237281a508` ("Enable Low-Power S0 Idle MSFT UUID for non-
-  AMD systems", v6.9) is present - this is crucial because the affected
-  laptop is Intel-based
-- Commit `f198478cfdc81` ("Adjust Microsoft LPS0 _DSM handling
-  sequence", v6.5) is present - provides the correct DSM ordering
-- The function was renamed from `acpi_s2idle_restore_early` to
-  `acpi_s2idle_restore_early_lps0` in `bfc09902debd0` (v6.19-rc1), so a
-  minor name adaptation is needed for 6.12.y
-- The internal code structure is identical, so the patch logic applies
-  cleanly
+### 6. Backport Complexity
 
-**For 6.6.y stable:**
-- In v6.6, `lps0_dsm_func_mask_microsoft = -EINVAL` is explicitly set
-  for non-AMD (Intel) systems. The Microsoft UUID is disabled on Intel
-  platforms. The specific Lenovo Intel laptop from the bug report would
-  NOT benefit in 6.6.y without also backporting `073237281a508`
-- AMD systems in 6.6.y could potentially benefit if their firmware
-  advertises Function 9
+- For kernels 6.12+: The patch should apply nearly cleanly;
+  `bio_submit_split()` and the current code structure exist.
+- For kernels 6.1-6.11: The `blk.h` change applies cleanly (same
+  pattern). The `blk-merge.c` change needs adaptation because the
+  splitting mechanism is different (returns split bio instead of using
+  `bio_submit_split`), but the conceptual fix is the same.
+- For kernel 5.15: `max_secure_erase_sectors` field exists but
+  `blkdev_issue_secure_erase` was introduced in 6.1; older kernels have
+  different secure erase code paths.
 
-**For 6.1.y and older:** Code structure differs significantly; limited
-applicability.
+### 7. Stability Indicators
 
-### 7. STABILITY INDICATORS
+- Reviewed by Ulf Hansson (MMC subsystem co-maintainer)
+- Merged by Jens Axboe (block layer maintainer)
+- Simple, obviously correct fix
 
-- Accepted by Rafael J. Wysocki (ACPI/PM subsystem maintainer)
-- References official Microsoft documentation
-- Follows the established pattern of previous DSM function additions
-  (Functions 7/8 were added the same way)
-- The Microsoft specification has been stable since Windows 11 22H2
-  (2022)
+### 8. Conclusion
 
-### 8. OVERALL ASSESSMENT
+This commit fixes a real bug where the block layer core was using the
+wrong limit for secure erase operations, potentially causing:
+- I/O errors when valid requests are rejected
+- Oversized requests being sent to hardware
+- Unnecessary performance limitations
 
-**Pros:**
-- Fixes a real, documented hardware bug (bugzilla 220505)
-- Very small and surgical change (8 lines)
-- Zero risk of regression on unaffected hardware (firmware opt-in via
-  capability mask)
-- Follows well-established patterns in this subsystem
-- Fans not resuming is a potential thermal safety issue
-- Accepted by subsystem maintainer
-- Aligns with documented firmware specification
-
-**Cons:**
-- Could be viewed as adding "new feature" (new DSM function call)
-- Most relevant for 6.12.y; older stable trees have reduced
-  applicability
-- Specific to newer hardware, though more devices will need this over
-  time
-
-The fix is very similar in nature to hardware quirks - it makes specific
-hardware work correctly by calling a documented firmware interface that
-the hardware expects. The safety guarantees are excellent, the change is
-minimal, and it fixes a real bug that impacts basic laptop functionality
-(fans, keyboard backlights) after suspend/resume.
+The fix is small, contained, obviously correct, and was reviewed by
+multiple maintainers. It affects core block layer code that is shared
+across all block devices supporting secure erase. The risk of regression
+is minimal since the change only affects the code path when
+`max_secure_erase_sectors != max_discard_sectors`.
 
 **YES**
 
- drivers/acpi/x86/s2idle.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ block/blk-merge.c | 21 +++++++++++++++++----
+ block/blk.h       |  6 +++++-
+ 2 files changed, 22 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/acpi/x86/s2idle.c b/drivers/acpi/x86/s2idle.c
-index cc3c83e4cc23b..2189330ffc6d3 100644
---- a/drivers/acpi/x86/s2idle.c
-+++ b/drivers/acpi/x86/s2idle.c
-@@ -49,6 +49,7 @@ static const struct acpi_device_id lps0_device_ids[] = {
- #define ACPI_LPS0_EXIT		6
- #define ACPI_LPS0_MS_ENTRY      7
- #define ACPI_LPS0_MS_EXIT       8
-+#define ACPI_MS_TURN_ON_DISPLAY 9
+diff --git a/block/blk-merge.c b/block/blk-merge.c
+index d3115d7469df0..bf8faadb0bd46 100644
+--- a/block/blk-merge.c
++++ b/block/blk-merge.c
+@@ -158,8 +158,9 @@ static struct bio *bio_submit_split(struct bio *bio, int split_sectors)
+ 	return bio;
+ }
  
- /* AMD */
- #define ACPI_LPS0_DSM_UUID_AMD      "e3f32452-febc-43ce-9039-932122d37721"
-@@ -356,6 +357,8 @@ static const char *acpi_sleep_dsm_state_to_str(unsigned int state)
- 			return "lps0 ms entry";
- 		case ACPI_LPS0_MS_EXIT:
- 			return "lps0 ms exit";
-+		case ACPI_MS_TURN_ON_DISPLAY:
-+			return "lps0 ms turn on display";
- 		}
- 	} else {
- 		switch (state) {
-@@ -617,6 +620,9 @@ static void acpi_s2idle_restore_early_lps0(void)
- 	if (lps0_dsm_func_mask_microsoft > 0) {
- 		acpi_sleep_run_lps0_dsm(ACPI_LPS0_EXIT,
- 				lps0_dsm_func_mask_microsoft, lps0_dsm_guid_microsoft);
-+		/* Intent to turn on display */
-+		acpi_sleep_run_lps0_dsm(ACPI_MS_TURN_ON_DISPLAY,
-+				lps0_dsm_func_mask_microsoft, lps0_dsm_guid_microsoft);
- 		/* Modern Standby exit */
- 		acpi_sleep_run_lps0_dsm(ACPI_LPS0_MS_EXIT,
- 				lps0_dsm_func_mask_microsoft, lps0_dsm_guid_microsoft);
+-struct bio *bio_split_discard(struct bio *bio, const struct queue_limits *lim,
+-		unsigned *nsegs)
++static struct bio *__bio_split_discard(struct bio *bio,
++		const struct queue_limits *lim, unsigned *nsegs,
++		unsigned int max_sectors)
+ {
+ 	unsigned int max_discard_sectors, granularity;
+ 	sector_t tmp;
+@@ -169,8 +170,7 @@ struct bio *bio_split_discard(struct bio *bio, const struct queue_limits *lim,
+ 
+ 	granularity = max(lim->discard_granularity >> 9, 1U);
+ 
+-	max_discard_sectors =
+-		min(lim->max_discard_sectors, bio_allowed_max_sectors(lim));
++	max_discard_sectors = min(max_sectors, bio_allowed_max_sectors(lim));
+ 	max_discard_sectors -= max_discard_sectors % granularity;
+ 	if (unlikely(!max_discard_sectors))
+ 		return bio;
+@@ -194,6 +194,19 @@ struct bio *bio_split_discard(struct bio *bio, const struct queue_limits *lim,
+ 	return bio_submit_split(bio, split_sectors);
+ }
+ 
++struct bio *bio_split_discard(struct bio *bio, const struct queue_limits *lim,
++		unsigned *nsegs)
++{
++	unsigned int max_sectors;
++
++	if (bio_op(bio) == REQ_OP_SECURE_ERASE)
++		max_sectors = lim->max_secure_erase_sectors;
++	else
++		max_sectors = lim->max_discard_sectors;
++
++	return __bio_split_discard(bio, lim, nsegs, max_sectors);
++}
++
+ static inline unsigned int blk_boundary_sectors(const struct queue_limits *lim,
+ 						bool is_atomic)
+ {
+diff --git a/block/blk.h b/block/blk.h
+index e4c433f62dfc7..4cd5a91346d8a 100644
+--- a/block/blk.h
++++ b/block/blk.h
+@@ -208,10 +208,14 @@ static inline unsigned int blk_queue_get_max_sectors(struct request *rq)
+ 	struct request_queue *q = rq->q;
+ 	enum req_op op = req_op(rq);
+ 
+-	if (unlikely(op == REQ_OP_DISCARD || op == REQ_OP_SECURE_ERASE))
++	if (unlikely(op == REQ_OP_DISCARD))
+ 		return min(q->limits.max_discard_sectors,
+ 			   UINT_MAX >> SECTOR_SHIFT);
+ 
++	if (unlikely(op == REQ_OP_SECURE_ERASE))
++		return min(q->limits.max_secure_erase_sectors,
++			   UINT_MAX >> SECTOR_SHIFT);
++
+ 	if (unlikely(op == REQ_OP_WRITE_ZEROES))
+ 		return q->limits.max_write_zeroes_sectors;
+ 
 -- 
 2.51.0
 
