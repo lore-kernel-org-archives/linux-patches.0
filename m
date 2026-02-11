@@ -1,157 +1,125 @@
-Received: from n169-111.mail.139.com (n169-111.mail.139.com [120.232.169.111])
+Received: from fout-b8-smtp.messagingengine.com (fout-b8-smtp.messagingengine.com [202.12.124.151])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93D4E26059D
-	for <patches@lists.linux.dev>; Wed, 11 Feb 2026 05:54:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=120.232.169.111
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4DC9032860E
+	for <patches@lists.linux.dev>; Wed, 11 Feb 2026 07:26:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.151
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770789290; cv=none; b=NIide5IQDqxl5IQplTnEXy29y85OHF+74ZHex/ruUs3jnLDR713xxHGUJAq+sMTxmmNNJASSajO/wKggyMolnDXjPGFN9/fRJpL4u1jq53Mm65o/NGW1+WdzqO+4z6MFoNW1sm6XfMWoVqXuNKgLPgRwA1idJTmJUNVjjmR43AA=
+	t=1770794793; cv=none; b=moAczl193RaqvBTw/ASypOvxC34VKRvfUd0/hLE247h1a5nbhOoQElaPhYuQbOMrUJSYtrZaNdbiVnkK8tXLsOliKEITlGgwVLaRf16+EY/amJjS/PsmNEkCHMxHdnNiJfUaYPuecBkpnePGSvhWaKdwjXaL/bwNsKoFWMTolEU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770789290; c=relaxed/simple;
-	bh=uZiMnq99ICq86/Zw28Eaejl91Vp6nQDHFb9LoqGCz3k=;
-	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=qbpt2EyNqPH4OEW7KcZHBByk0dLAMTaSqpqUadMYUhfBCwq0SYWreh0H/5tca995kAXBlH0Do+G2c7KLAhRqDbpjxSqYZqA15IxKzQCJggqxcOiveHcCVLcRHMFf+zsbRKMF86GHsn6ewgLL2DyV2wUpgtaOmH2fgCuaRnAhYbM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=139.com; spf=pass smtp.mailfrom=139.com; dkim=pass (1024-bit key) header.d=139.com header.i=@139.com header.b=CcxxEm9Z; arc=none smtp.client-ip=120.232.169.111
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=139.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=139.com
+	s=arc-20240116; t=1770794793; c=relaxed/simple;
+	bh=AQY1Pch6Yo/fWoxiC1nOtd4TOdr6W4P8ILkIwlY7a3A=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=GnoUNIMx55rcrX9oe9AUVsTl6OxYZUye4dCE9kpkZgRp53v/3RGMI5Qx9GMkD942AKwENTcKpbKIP7Ut4ZZfURmhUYujKskKwtg69roGpPx/X7QjVyCVgi+NV5ttmFsJu1Gxq9C4XXYW5a40ZHfJgHIZgLemGtx5FXUnOtJrvf4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=dQ00WxJV; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=sSG1yyzZ; arc=none smtp.client-ip=202.12.124.151
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=139.com header.i=@139.com header.b="CcxxEm9Z"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-	d=139.com; s=dkim; l=0;
-	h=from:subject:message-id:to:cc:mime-version;
-	bh=47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU=;
-	b=CcxxEm9Z8purwPMhiOuvzkMboCBtBA/JMl217Qcyv7NVM6nf82/md5XexoxbOZBfwEw+EamGbehil
-	 cZ6nqM3qoOL3juO2o8jGUIv7JHV+BRKFAui0TcUb2wszhu8/Zi1B/HtkAuRoRGuT0L+UrZr2Qg+AVy
-	 ACZPqr2u9Gk6Uglo=
-X-RM-TagInfo: emlType=0                                       
-X-RM-SPAM:                                                                                        
-X-RM-SPAM-FLAG:00000000
-Received:from NTT-kernel-dev (unknown[60.247.85.88])
-	by rmsmtp-lg-appmail-10-12088 (RichMail) with SMTP id 2f38698c199c6a4-026d4;
-	Wed, 11 Feb 2026 13:54:39 +0800 (CST)
-X-RM-TRANSID:2f38698c199c6a4-026d4
-From: Li hongliang <1468888505@139.com>
-To: gregkh@linuxfoundation.org,
-	stable@vger.kernel.org,
-	linkinjeon@kernel.org
-Cc: patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org,
-	sfrench@samba.org,
-	senozhatsky@chromium.org,
-	tom@talpey.com,
-	ddiss@suse.de,
-	linux-cifs@vger.kernel.org,
-	stfrench@microsoft.com
-Subject: [PATCH 6.1.y] ksmbd: set ATTR_CTIME flags when setting mtime
-Date: Wed, 11 Feb 2026 13:54:37 +0800
-Message-Id: <20260211055437.2798668-1-1468888505@139.com>
-X-Mailer: git-send-email 2.34.1
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="dQ00WxJV";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="sSG1yyzZ"
+Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
+	by mailfout.stl.internal (Postfix) with ESMTP id E69661D001A3;
+	Wed, 11 Feb 2026 02:26:30 -0500 (EST)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-01.internal (MEProxy); Wed, 11 Feb 2026 02:26:31 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1770794790;
+	 x=1770881190; bh=D34MrX/iYVQK1jA7+37Hm/zyrQh0fR6Ts8JMoGOGWME=; b=
+	dQ00WxJVvA+oFyTpJlxZUzdrJcrkMf7ivkabSKPSC1xzt95MMoc5Zk5FyI6G8Jsx
+	mlteYoQXTK+T9UOgPCYrUvbFva5vKPXMGLT5i1tJ0ZGg65xMXV2F9HLN+aVBvF+I
+	TrnLWGsO41/LC/xZlRc+jl6WP91+HzRVG5ikIQwjvxEIy/oVaDHTuZBJlUlpVD7i
+	SwkFxo5df21jTCPHr2yYXMEzq9TzZvbT8ZEpWlbKJBmoDqsNkSG4JbfFOhlBA84q
+	wNm8BDP6djVKuhIMf9n6mPq2LLAYfL2rNxFy50L4I2IQxQkgPjgOyPihPyEYBhf3
+	ctemhCkRrrtRw8RctXTzyQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1770794790; x=
+	1770881190; bh=D34MrX/iYVQK1jA7+37Hm/zyrQh0fR6Ts8JMoGOGWME=; b=s
+	SG1yyzZO/3lBmgK8JShdAolY0VmfpFFom384FQp1yvNACkbNCfP8qXMn0sk3h/3s
+	sYGIb32C+9LSRjM6vkB5iQn0yltpGPyhOMzTVe2HBHN9bDy0Ne2Wx8tAXx7NESI0
+	odp7obz/xhBkiz/WpezGvaSDwxJ1P6sx7+D8OBnO78pEWPOQsGp7dg+ZiW5Yih0V
+	Lh9IdMQZQ++A1v6YVaGWyj2ydM+Ro039VitMfUVRpOhmOdx32b+j+nLM2va2AyYl
+	+uvUno7Cl3I123lYRhm7TRkAg+eZyZdg3XKkqv4gpcZBkPRJQFLhC+OPn16VhP0M
+	TPKy93g/dIxp8Ge+QfDGQ==
+X-ME-Sender: <xms:JS-MaYi_afzFasMXAEksGl7L_C8P96SupQHmdpMYNd-nRc_-A7IaKg>
+    <xme:JS-MaeujjgWhHlp4693Mht9JwMp2UoYmUvI3u8BdFAz1ArbCeXyxJbII0Hsc6qKkK
+    0gTrPvvT5B3p52BD36Z24ec4ZsUJdKE7QRD3P4UX2Z3uE66_-cbQ4U>
+X-ME-Received: <xmr:JS-MaR3XF7-u-udH5Vg4ac-iDQ1qrS2Sx4Fa5kuHnGUZ4Dmgn_7jsW8Tjssv6y02R6jVdNkNtSABPiHOJwIb0ag0lUcCRw>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvtdduleegucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhepkfffgggfuffvvehfhfgjtgfgsehtjeertddtvdejnecuhfhrohhmpedfuegrrhhr
+    hicumfdrucfprghthhgrnhdfuceosggrrhhrhihnsehpohgsohigrdgtohhmqeenucggtf
+    frrghtthgvrhhnpeefleehkeehleekjeelffefhfdvleejteehledtieduffevteffleet
+    gefgfefhjeenucffohhmrghinhepkhgvrhhnvghlrdhorhhgnecuvehluhhsthgvrhfuih
+    iivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepsggrrhhrhihnsehpohgsohigrdgt
+    ohhmpdhnsggprhgtphhtthhopedvtddpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtoh
+    epghhrvghgkhhhsehlihhnuhigfhhouhhnuggrthhiohhnrdhorhhgpdhrtghpthhtohep
+    shhtrggslhgvsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepphgrthgthh
+    gvsheslhhishhtshdrlhhinhhugidruggvvhdprhgtphhtthhopehlihhnuhigqdhkvghr
+    nhgvlhesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehtohhrvhgrlhgush
+    eslhhinhhugidqfhhouhhnuggrthhiohhnrdhorhhgpdhrtghpthhtoheprghkphhmsehl
+    ihhnuhigqdhfohhunhgurghtihhonhdrohhrghdprhgtphhtthhopehlihhnuhigsehroh
+    gvtghkqdhushdrnhgvthdprhgtphhtthhopehshhhurghhsehkvghrnhgvlhdrohhrghdp
+    rhgtphhtthhopehprghttghhvghssehkvghrnhgvlhgtihdrohhrgh
+X-ME-Proxy: <xmx:JS-MaVxekri5F0FMZyblMlleCOkBrLZ0osuFRuVZxUhc770XDbbEqQ>
+    <xmx:JS-MacVrRJxrS4bbxg70bloNQ1qfmhnBI_zO9YzCyRM8edORG7FFcg>
+    <xmx:JS-MaXACWzucNJ_xJcSkf-oHT3ypm9YJt9RBSSr-IcZqWok_Ov2cqw>
+    <xmx:JS-Mad5dPzNH--g92jB5cmf2l-dIam4soQ94msq-TclqYmTAXvKdQA>
+    <xmx:Ji-MaX-EaTPtLa4GG7nNYU04SN0Ymr3T5ykj-5ON7BMeGmnYgO_UscnA>
+Feedback-ID: i6289494f:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 11 Feb 2026 02:26:27 -0500 (EST)
+Message-ID: <60ea3c47-2c65-4990-b8e1-a01b8ee8cb52@pobox.com>
+Date: Tue, 10 Feb 2026 23:26:26 -0800
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 5.10 00/41] 5.10.250-rc1 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+ torvalds@linux-foundation.org, akpm@linux-foundation.org,
+ linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+ lkft-triage@lists.linaro.org, pavel@nabladev.com, jonathanh@nvidia.com,
+ f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, rwarsow@gmx.de,
+ conor@kernel.org, hargar@microsoft.com, broonie@kernel.org,
+ achill@achill.org, sr@sladewatkins.com
+References: <20260209142256.797267956@linuxfoundation.org>
+Content-Language: en-US
+From: "Barry K. Nathan" <barryn@pobox.com>
+In-Reply-To: <20260209142256.797267956@linuxfoundation.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-From: Namjae Jeon <linkinjeon@kernel.org>
+On 2/9/26 06:24, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 5.10.250 release.
+> There are 41 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+> 
+> Responses should be made by Wed, 11 Feb 2026 14:22:44 +0000.
+> Anything received after that time might be too late.
+> 
+> The whole patch series can be found in one patch at:
+> 	https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.10.250-rc1.gz
+> or in the git tree and branch at:
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.10.y
+> and the diffstat can be found below.
+> 
+> thanks,
+> 
+> greg k-h
 
-[ Upstream commit 21e46a79bbe6c4e1aa73b3ed998130f2ff07b128 ]
-
-David reported that the new warning from setattr_copy_mgtime is coming
-like the following.
-
-[  113.215316] ------------[ cut here ]------------
-[  113.215974] WARNING: CPU: 1 PID: 31 at fs/attr.c:300 setattr_copy+0x1ee/0x200
-[  113.219192] CPU: 1 UID: 0 PID: 31 Comm: kworker/1:1 Not tainted 6.13.0-rc1+ #234
-[  113.220127] Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS rel-1.16.2-3-gd478f380-rebuilt.opensuse.org 04/01/2014
-[  113.221530] Workqueue: ksmbd-io handle_ksmbd_work [ksmbd]
-[  113.222220] RIP: 0010:setattr_copy+0x1ee/0x200
-[  113.222833] Code: 24 28 49 8b 44 24 30 48 89 53 58 89 43 6c 5b 41 5c 41 5d 41 5e 41 5f 5d c3 cc cc cc cc 48 89 df e8 77 d6 ff ff e9 cd fe ff ff <0f> 0b e9 be fe ff ff 66 0
-[  113.225110] RSP: 0018:ffffaf218010fb68 EFLAGS: 00010202
-[  113.225765] RAX: 0000000000000120 RBX: ffffa446815f8568 RCX: 0000000000000003
-[  113.226667] RDX: ffffaf218010fd38 RSI: ffffa446815f8568 RDI: ffffffff94eb03a0
-[  113.227531] RBP: ffffaf218010fb90 R08: 0000001a251e217d R09: 00000000675259fa
-[  113.228426] R10: 0000000002ba8a6d R11: ffffa4468196c7a8 R12: ffffaf218010fd38
-[  113.229304] R13: 0000000000000120 R14: ffffffff94eb03a0 R15: 0000000000000000
-[  113.230210] FS:  0000000000000000(0000) GS:ffffa44739d00000(0000) knlGS:0000000000000000
-[  113.231215] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-[  113.232055] CR2: 00007efe0053d27e CR3: 000000000331a000 CR4: 00000000000006b0
-[  113.232926] DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
-[  113.233812] DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
-[  113.234797] Call Trace:
-[  113.235116]  <TASK>
-[  113.235393]  ? __warn+0x73/0xd0
-[  113.235802]  ? setattr_copy+0x1ee/0x200
-[  113.236299]  ? report_bug+0xf3/0x1e0
-[  113.236757]  ? handle_bug+0x4d/0x90
-[  113.237202]  ? exc_invalid_op+0x13/0x60
-[  113.237689]  ? asm_exc_invalid_op+0x16/0x20
-[  113.238185]  ? setattr_copy+0x1ee/0x200
-[  113.238692]  btrfs_setattr+0x80/0x820 [btrfs]
-[  113.239285]  ? get_stack_info_noinstr+0x12/0xf0
-[  113.239857]  ? __module_address+0x22/0xa0
-[  113.240368]  ? handle_ksmbd_work+0x6e/0x460 [ksmbd]
-[  113.240993]  ? __module_text_address+0x9/0x50
-[  113.241545]  ? __module_address+0x22/0xa0
-[  113.242033]  ? unwind_next_frame+0x10e/0x920
-[  113.242600]  ? __pfx_stack_trace_consume_entry+0x10/0x10
-[  113.243268]  notify_change+0x2c2/0x4e0
-[  113.243746]  ? stack_depot_save_flags+0x27/0x730
-[  113.244339]  ? set_file_basic_info+0x130/0x2b0 [ksmbd]
-[  113.244993]  set_file_basic_info+0x130/0x2b0 [ksmbd]
-[  113.245613]  ? process_scheduled_works+0xbe/0x310
-[  113.246181]  ? worker_thread+0x100/0x240
-[  113.246696]  ? kthread+0xc8/0x100
-[  113.247126]  ? ret_from_fork+0x2b/0x40
-[  113.247606]  ? ret_from_fork_asm+0x1a/0x30
-[  113.248132]  smb2_set_info+0x63f/0xa70 [ksmbd]
-
-ksmbd is trying to set the atime and mtime via notify_change without also
-setting the ctime. so This patch add ATTR_CTIME flags when setting mtime
-to avoid a warning.
-
-Reported-by: David Disseldorp <ddiss@suse.de>
-Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Steve French <stfrench@microsoft.com>
-[ Minor conflict resolved. ]
-Signed-off-by: Li hongliang <1468888505@139.com>
----
- fs/smb/server/smb2pdu.c | 10 +++-------
- 1 file changed, 3 insertions(+), 7 deletions(-)
-
-diff --git a/fs/smb/server/smb2pdu.c b/fs/smb/server/smb2pdu.c
-index 100016298f87..5383b8e2e9d2 100644
---- a/fs/smb/server/smb2pdu.c
-+++ b/fs/smb/server/smb2pdu.c
-@@ -5736,15 +5736,13 @@ static int set_file_basic_info(struct ksmbd_file *fp,
- 		attrs.ia_valid |= (ATTR_ATIME | ATTR_ATIME_SET);
- 	}
- 
--	attrs.ia_valid |= ATTR_CTIME;
- 	if (file_info->ChangeTime)
--		attrs.ia_ctime = ksmbd_NTtimeToUnix(file_info->ChangeTime);
--	else
--		attrs.ia_ctime = inode->i_ctime;
-+		inode_set_ctime_to_ts(inode,
-+				ksmbd_NTtimeToUnix(file_info->ChangeTime));
- 
- 	if (file_info->LastWriteTime) {
- 		attrs.ia_mtime = ksmbd_NTtimeToUnix(file_info->LastWriteTime);
--		attrs.ia_valid |= (ATTR_MTIME | ATTR_MTIME_SET);
-+		attrs.ia_valid |= (ATTR_MTIME | ATTR_MTIME_SET | ATTR_CTIME);
- 	}
- 
- 	if (file_info->Attributes) {
-@@ -5786,8 +5784,6 @@ static int set_file_basic_info(struct ksmbd_file *fp,
- 			return -EACCES;
- 
- 		inode_lock(inode);
--		inode->i_ctime = attrs.ia_ctime;
--		attrs.ia_valid &= ~ATTR_CTIME;
- 		rc = notify_change(user_ns, dentry, &attrs, NULL);
- 		inode_unlock(inode);
- 	}
+Tested on an amd64 laptop (Lenovo ThinkPad T14 Gen 1). Working well, no 
+regressions observed.
 -- 
-2.34.1
-
-
+-Barry K. Nathan  <barryn@pobox.com>
