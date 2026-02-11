@@ -1,45 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55EB51C01;
-	Wed, 11 Feb 2026 12:31:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E32D1C01;
+	Wed, 11 Feb 2026 12:31:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770813086; cv=none; b=iF0IxZCrg9m//v4EXl5VIIgBfdSsGKjLhVtrRBJ0y9fKcxlSmlKkWMbEUn9PKofKcILt89U+L1IjOmxHoR/fw7cBynVNB4kR0RD557x8bO/fIpF18W1nk2Kw5zYZqClLsi2rUtsXPWHl9GZyjHi8+lWNDS1X8hQsXFID/vapwps=
+	t=1770813087; cv=none; b=Pmh7vanEEmlxV5fXt7on1ZWPfKEOjSNhf2/1QvmC0v1OuaoVA4Co6rr9opVi8tMdMwIf4QdgWOP4/caIV4WneC1p649L/VrsWeQhWZNBiRvvK+ENTHuKP+UUYDk/I1X5EzTuxKeaAIKjA8kzcfy5s8b35MT9jUF6I+BqlM8UR8U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770813086; c=relaxed/simple;
-	bh=c3aChKA8drdhnIBuW2vLY9FQBB2u/UfTbE9NIiLS7lo=;
+	s=arc-20240116; t=1770813087; c=relaxed/simple;
+	bh=S01YWwzXnSTFccYY1JGvSdwhdM5Gwzpgl3owws/aWnw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=bWD6PNZuAW43q03qjh5x8sddGlSGYcONnkzrxj9xvoSWYvON7j6an6Go84Qtbzt3KnhqNxuiDVFo2aDyJnFzWaFZqPwHYxLcDVYuCg5+OQGML9k0IAo0HCeAqdUN/gLb/UvMGajWVo7rbcM33YSOdk7qEP3Ku0KTdFeG7wlhtow=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=QM8zV3Mp; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ag02vGWTsxJcsUDastH/rioqusbwdZK310gBZJKAC8oYrHveIrWfr8is/lYLkKeLer4P9CrxtA8o5sdshSEZVYDc6j/iVpBqlnIfHu0/mWanJ2P7vXoejJ3cyHWQX/1pt9CMtemJorYv+QiAkvu40J7vJ92rjx8s3FUNG0S6thE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=NlXNdHlK; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="QM8zV3Mp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 01333C4CEF7;
-	Wed, 11 Feb 2026 12:31:24 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="NlXNdHlK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B7779C19421;
+	Wed, 11 Feb 2026 12:31:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1770813086;
-	bh=c3aChKA8drdhnIBuW2vLY9FQBB2u/UfTbE9NIiLS7lo=;
+	s=k20201202; t=1770813087;
+	bh=S01YWwzXnSTFccYY1JGvSdwhdM5Gwzpgl3owws/aWnw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QM8zV3Mp8H2Lr7kskuN1SIgXijCuBjQ/0mS5p0g0dC1Daxlw7wxuGBZqHHPpQdxkg
-	 3/m2YFva38fjDV5tlxXYffNNXPJNNcZGkmb5yNZ23eR5cOTnJCUWwzNATVTajfaCHr
-	 6hGPhf9+YJm2JfqWqropG++Z8U/A9/GwXC7W41NedC5A3NtgENjO1E6G1uIjsHzBfs
-	 rqfiQuFNz5DgzND3jcb2HkdwStuBeIDhiX9hNUEuoAJVsGO03lx9Cd+NcDDe7GVAec
-	 PYGyJfRx7Dg1cl1Np22LLh5QWTgKDnXCVSr/3uxZdqTtQbboJ10Ipct2W04yInTzFj
-	 XRva1p36hHbzA==
+	b=NlXNdHlKCkyyEHJ5RAHm+CUq0f+i+rUiF0gPLuc4Of9IAHZBvnMxkyh72m8HBZwU+
+	 0yb3LbLCnKXuGwNDjYf2+VibM+PFyHu7C9uol3N7veHoaJ9jHObbqkEq9A0WYeQ4s7
+	 cZuazG5faNrY1JDF2LTqjH4j5aZEu2EXcak21e7RJZ8ZyQR9os8OexzbKpkLobUvdY
+	 b82pkbW4m1qFoQzI3Sv61W7b8rgPMPcpUNq+FRWkV2Fefkeeh5SD6Ur42ctGhuBmir
+	 96qJxWiD145FDgE4gitzdhjeS4VwdUellHl0Xqpje0YD0Ys+fu74YwvqQh464RudCs
+	 vIZHkvIpDicpw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Robin Murphy <robin.murphy@arm.com>,
-	Ilkka Koskinen <ilkka@os.amperecomputing.com>,
-	Michal Simek <michal.simek@amd.com>,
-	Will Deacon <will@kernel.org>,
+Cc: Al Viro <viro@zeniv.linux.org.uk>,
 	Sasha Levin <sashal@kernel.org>,
-	mark.rutland@arm.com,
-	linux-arm-kernel@lists.infradead.org,
-	linux-perf-users@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.19-6.1] perf/arm-cmn: Support CMN-600AE
-Date: Wed, 11 Feb 2026 07:30:16 -0500
-Message-ID: <20260211123112.1330287-6-sashal@kernel.org>
+	almaz.alexandrovich@paragon-software.com,
+	ntfs3@lists.linux.dev
+Subject: [PATCH AUTOSEL 6.19-6.18] ntfs: ->d_compare() must not block
+Date: Wed, 11 Feb 2026 07:30:17 -0500
+Message-ID: <20260211123112.1330287-7-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260211123112.1330287-1-sashal@kernel.org>
 References: <20260211123112.1330287-1-sashal@kernel.org>
@@ -52,224 +48,394 @@ MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.19
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Robin Murphy <robin.murphy@arm.com>
+From: Al Viro <viro@zeniv.linux.org.uk>
 
-[ Upstream commit 12a94953c37e834c3eabb839ce057094946fe67a ]
+[ Upstream commit ca2a04e84af79596e5cd9cfe697d5122ec39c8ce ]
 
-The functional safety features of CMN-600AE have little to no impact on
-the PMU relative to the base CMN-600 design, so for simplicity we can
-reasonably just treat it as the same thing. The only obvious difference
-is that the revision numbers aren't aligned, so we may hide some aliases
-for events which do actually exist, but those can still be specified via
-the underlying "type,eventid" format so it's not too big a deal.
+... so don't use __getname() there.  Switch it (and ntfs_d_hash(), while
+we are at it) to kmalloc(PATH_MAX, GFP_NOWAIT).  Yes, ntfs_d_hash()
+almost certainly can do with smaller allocations, but let ntfs folks
+deal with that - keep the allocation size as-is for now.
 
-Signed-off-by: Robin Murphy <robin.murphy@arm.com>
-Reviewed-by: Ilkka Koskinen <ilkka@os.amperecomputing.com>
-Tested-by: Michal Simek <michal.simek@amd.com>
-Signed-off-by: Will Deacon <will@kernel.org>
+Stop abusing names_cachep in ntfs, period - various uses of that thing
+in there have nothing to do with pathnames; just use k[mz]alloc() and
+be done with that.  For now let's keep sizes as-in, but AFAICS none of
+the users actually want PATH_MAX.
+
+Signed-off-by: Al Viro <viro@zeniv.linux.org.uk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-Let me now do the complete analysis summary.
+Line 1263 confirms: `ntfs_dentry_ops` (which contains the `d_compare`
+and `d_hash` callbacks) is only installed when `nocase` option is used.
+This limits the impact to ntfs3 users with case-insensitive mode
+enabled.
 
----
+Let me now summarize the analysis.
 
 ## Complete Analysis
 
 ### 1. COMMIT MESSAGE ANALYSIS
 
-**Subject:** "perf/arm-cmn: Support CMN-600AE"
-
-The commit adds support for the CMN-600AE part in the ARM CMN perf
-driver. The message explicitly states that CMN-600AE is a "functional
-safety" (AE = Automotive Enhanced) variant of CMN-600, and from the PMU
-perspective, it is effectively the same as CMN-600. The author (Robin
-Murphy, the arm-cmn driver maintainer) acknowledges that revision number
-differences may hide some event aliases, but these can still be used via
-raw `type,eventid` format.
-
-The commit has both `Reviewed-by` (Ilkka Koskinen from Ampere Computing)
-and `Tested-by` (Michal Simek from AMD/Xilinx), indicating this was
-tested on real hardware.
+The commit subject is direct: "ntfs: ->d_compare() must not block."
+Author Al Viro (VFS maintainer) clearly identifies the VFS contract
+violation. The message explains the fix: replace `__getname()` (which
+uses `GFP_KERNEL` - blocking) with `kmalloc(PATH_MAX, GFP_NOWAIT)` (non-
+blocking) in `ntfs_d_compare()`. Additionally, the commit stops all
+ntfs3 code from abusing `names_cachep` (the kernel's pathname cache),
+replacing it with standard `kmalloc`/`kzalloc`.
 
 ### 2. CODE CHANGE ANALYSIS
 
-The change is extremely small - exactly **4 lines added, 0 lines
-removed** (net +4):
+The bug is in `ntfs_d_compare()` at `fs/ntfs3/namei.c:471`:
 
-**Change 1:** Adds `PART_CMN600AE = 0x438` to the `enum cmn_part` (line
-~213 in the diff). This is a simple hardware ID constant.
-
-**Change 2:** In `arm_cmn_discover()`, after reading the part number
-from the hardware's peripheral ID registers, adds:
-```c
-/* 600AE is close enough that it's not really worth more complexity */
-if (part == PART_CMN600AE)
-    part = PART_CMN600;
+```439:503:fs/ntfs3/namei.c
+static int ntfs_d_compare(const struct dentry *dentry, unsigned int
+len1,
+                          const char *str, const struct qstr *name)
+{
+        // ...
+        uni1 = __getname();  // BUG: __getname() =
+kmem_cache_alloc(names_cachep, GFP_KERNEL)
+                             // GFP_KERNEL can SLEEP, but d_compare MUST
+NOT BLOCK
 ```
 
-This maps the CMN-600AE part number to CMN-600 before it's stored in
-`cmn->part`. This is a clean aliasing approach - the rest of the driver
-sees it as CMN-600.
+**The bug mechanism:**
+- `d_compare` is called from `__d_lookup_rcu_op_compare()` in
+  `fs/dcache.c`, which runs during RCU-walk path lookup under
+  `rcu_read_lock()`
+- The VFS locking documentation
+  (`Documentation/filesystems/locking.rst`, line 45) explicitly states:
+  `d_compare: may block: no`
+- `__getname()` expands to `kmem_cache_alloc(names_cachep, GFP_KERNEL)`
+  (line 2541 of `include/linux/fs.h`)
+- `GFP_KERNEL` = `__GFP_RECLAIM | __GFP_IO | __GFP_FS` - this **can
+  sleep** to reclaim memory
+- Sleeping under `rcu_read_lock()` can cause: RCU stalls, soft lockups,
+  and with `CONFIG_DEBUG_ATOMIC_SLEEP`, BUG/warnings
 
-### 3. CLASSIFICATION - This is a Hardware Device ID Addition
+**The fix changes:**
 
-This commit falls squarely into the **"New Device IDs"** exception
-category for stable backporting. It is analogous to adding a new PCI ID
-or USB ID to an existing driver. Specifically:
+| Function | Before | After | Critical? |
+|----------|--------|-------|-----------|
+| `ntfs_d_compare` | `__getname()` (GFP_KERNEL, blocks) |
+`kmalloc(PATH_MAX, GFP_NOWAIT)` | **YES - the core bug** |
+| `ntfs_d_hash` | `kmem_cache_alloc(names_cachep, GFP_NOWAIT)` |
+`kmalloc(PATH_MAX, GFP_NOWAIT)` | Cleanup (already non-blocking) |
+| `ntfs_lookup` | `__getname()` | `kmalloc(PATH_MAX, GFP_KERNEL)` |
+Cleanup (can block) |
+| `ntfs_rename` | `__getname()` | `kmalloc(PATH_MAX, GFP_KERNEL)` |
+Cleanup (can block) |
+| `ntfs_readdir` | `__getname()` | `kmalloc(PATH_MAX, GFP_KERNEL)` |
+Cleanup (can block) |
+| `ntfs_set_label` | `__getname()` | `kmalloc(PATH_MAX, GFP_KERNEL)` |
+Cleanup (can block) |
+| `ntfs_create_inode` | `kmem_cache_zalloc(names_cachep)` |
+`kzalloc(PATH_MAX)` | Cleanup |
+| `ntfs_link_inode` | `kmem_cache_zalloc(names_cachep)` |
+`kzalloc(PATH_MAX)` | Cleanup |
+| `ntfs_unlink_inode` | `kmem_cache_zalloc(names_cachep)` |
+`kzalloc(PATH_MAX)` | Cleanup |
+| `ntfs_get_acl` | `__getname()` | `kmalloc(PATH_MAX, GFP_KERNEL)` |
+Cleanup (can block) |
 
-- The driver already exists in all stable trees (since v5.10).
-- The CMN-600 support is fully mature.
-- The only change is recognizing a new hardware part number (0x438) and
-  mapping it to the existing CMN-600 code path.
+### 3. CLASSIFICATION
 
-### 4. WHAT HAPPENS WITHOUT THE PATCH
+This is a **bug fix** - specifically a **sleeping in atomic context**
+bug. It violates a documented VFS contract. The `d_compare` callback is
+invoked during RCU-walk path lookup, which is a non-blocking context.
+Using `GFP_KERNEL` allocation there is fundamentally wrong.
 
-On a system with CMN-600AE hardware:
+The prior commit `589996bf8c459` ("ntfs3: Change to non-blocking
+allocation in ntfs_d_hash") was reported by **syzbot** and fixed the
+exact same class of bug in `ntfs_d_hash` but missed `ntfs_d_compare`.
+This commit completes that fix.
 
-1. **Firmware/DT matching:** The firmware would describe the device as
-   CMN-600 compatible (since there's no separate "arm,cmn-600ae" DT
-   binding or ACPI ID). So `cmn->part` is initially set to `PART_CMN600`
-   (0x434) at probe time (line 2557).
+### 4. SCOPE AND RISK ASSESSMENT
 
-2. **Hardware discovery:** In `arm_cmn_discover()`, the hardware
-   peripheral ID register reports 0x438, NOT 0x434. This triggers the
-   **firmware binding mismatch warning**: `"Firmware binding mismatch:
-   expected part number 0x%x, found 0x%x"`.
+- **Files changed**: 5 (all in fs/ntfs3/)
+- **Lines changed**: ~40 lines, all mechanical substitutions
+- **Risk**: Very low. The changes are:
+  - `__getname()` -> `kmalloc(PATH_MAX, GFP_KERNEL)`: Functionally
+    identical since `__getname()` IS `kmem_cache_alloc(names_cachep,
+    GFP_KERNEL)` and `names_cachep` is size PATH_MAX. `kmalloc` for size
+    PATH_MAX (4096) will use the slab allocator with a 4k slab, so
+    behavior is essentially the same.
+  - `__getname()` -> `kmalloc(PATH_MAX, GFP_NOWAIT)`: Critical fix for
+    `d_compare`, changes blocking to non-blocking.
+  - `kmem_cache_alloc/free(names_cachep)` -> `kmalloc`/`kfree`:
+    Functionally equivalent, just uses generic slab instead of a
+    specific slab cache.
+  - `kmem_cache_zalloc(names_cachep)` -> `kzalloc()`: Functionally
+    equivalent.
 
-3. **Part number overwrite:** `cmn->part` is set to the hardware-
-   reported 0x438 (line 2273), which is an unknown value.
+### 5. USER IMPACT
 
-4. **`arm_cmn_model()` returns 0:** With an unrecognized part number,
-   the model lookup returns 0 (default case in the switch). This
-   triggers the **"Unknown part number: 0x%x"** warning.
+**Who is affected**: Users of the ntfs3 filesystem with the `nocase`
+mount option who access files with non-ASCII characters in their names.
 
-5. **PMU is effectively broken:**
-   - **All events are hidden:** The visibility check `eattr->model &
-     arm_cmn_model(cmn)` (line 710) evaluates to `X & 0 = 0` for every
-     event, so ALL event attributes return mode 0 (hidden from sysfs).
-   - **Filter selection fails:** `arm_cmn_filter_sel()` (line 1758)
-     checks `e->model & model`, which is always 0, so filter selection
-     always returns `SEL_NONE`.
-   - **CMN-600-specific paths are skipped:** All checks like `cmn->part
-     == PART_CMN600` (lines 444, 728, 739, 1400, 1893, 2353, etc.) fail
-     because 0x438 != 0x434.
+**Trigger scenario**: When memory pressure forces `GFP_KERNEL` to invoke
+reclaim/IO/FS callbacks while inside `d_compare` under
+`rcu_read_lock()`.
 
-In summary, **without this patch, the PMU driver fails to function on
-CMN-600AE hardware** - it loads but provides zero usable performance
-monitoring events, and produces misleading warnings.
+**Severity**: HIGH - sleeping in RCU read-side critical section can
+cause:
+- Soft lockups and RCU stalls
+- Potential deadlock if memory reclaim needs to complete RCU grace
+  period
+- `BUG()` with `CONFIG_DEBUG_ATOMIC_SLEEP` enabled
 
-### 5. SCOPE AND RISK ASSESSMENT
+### 6. STABILITY INDICATORS
 
-- **Lines changed:** 4 lines added, 0 removed. Extremely minimal.
-- **Files touched:** 1 file (`drivers/perf/arm-cmn.c`).
-- **Risk:** Extremely low. The change only affects hardware with part
-  number 0x438. All other hardware paths are completely unaffected. The
-  mapping `CMN600AE → CMN600` is architecturally correct per the
-  hardware designer (Robin Murphy works at Arm).
-- **Subsystem:** ARM perf PMU driver - isolated, doesn't affect other
-  subsystems.
+- **Author**: Al Viro - the Linux VFS maintainer, one of the most
+  trusted kernel developers
+- The same class of bug was already reported by syzbot for `d_hash`
+  (commit 589996bf8c459)
+- The fix is mechanically simple - substituting allocation functions
 
-### 6. DEPENDENCIES
+### 7. DEPENDENCY CHECK
 
-The patch has **no dependencies on other commits**. It's completely
-self-contained:
-- The `enum cmn_part` exists in all stable trees from v5.10 onward.
-- The `arm_cmn_discover()` function and the part-number detection code
-  is unchanged across stable trees.
-- The patch will need trivial context adaptation for v6.6 (missing
-  `PART_CMN_S3` member in the enum), but the actual insertion point is
-  clean.
+The commit has mild dependencies for backporting:
+- In `inode.c`, the pre-patch code depends on `a8a3ca23bbd9d`
+  ("Initialize allocated memory before use") which changed `__getname()`
+  to `kmem_cache_zalloc(names_cachep)`. If this isn't in a target stable
+  tree, the inode.c hunks need minor adjustment.
+- However, the **critical fix** (`ntfs_d_compare` in `namei.c`) is self-
+  contained and applies cleanly to any kernel that has the `nocase`
+  option (introduced in `a3a956c78efa`, ~6.2).
 
-### 7. USER IMPACT
+### Conclusion
 
-CMN-600AE is used in **functional safety / automotive** applications
-(the "AE" stands for Automotive Enhanced). The Tested-by from Michal
-Simek at AMD/Xilinx suggests it's used in Xilinx/AMD Versal platforms,
-and the review from Ampere Computing's Ilkka Koskinen suggests it's also
-relevant in server/cloud contexts. These are exactly the kinds of
-systems that use stable kernels.
-
-Without this patch, users with CMN-600AE silicon cannot use the `perf`
-PMU monitoring at all, which is important for performance analysis and
-debugging on these platforms.
-
-### 8. COMPARISON TO SIMILAR ACCEPTED STABLE PATCHES
-
-This is directly comparable to:
-- USB device ID additions to quirks tables
-- PCI ID additions to existing drivers
-- ACPI ID additions
-- DRM i915/amdgpu device ID additions
-
-All of these are routinely backported to stable.
-
-### 9. CONCERNS
-
-The commit message describes this as "support" for new hardware, which
-nominally sounds like "new feature." However, the actual implementation
-is a **device ID alias** - mapping a new part number to already-
-supported functionality. This is not adding new driver code, new event
-types, or new functionality. It is enabling existing, proven code paths
-for a hardware variant.
-
-The only minor concern is the comment about revision numbers: "the
-revision numbers aren't aligned, so we may hide some aliases for events
-which do actually exist." This means some named perf events might not
-show up in sysfs because the revision check for CMN-600 revisions won't
-match CMN-600AE revision numbers. However, these events still work via
-raw `type,eventid` format, so this is a cosmetic limitation, not a
-functional one.
-
-### CONCLUSION
-
-This commit is a textbook example of a **hardware device ID addition**
-to an existing driver. It is:
-- **Small:** 4 lines, single file
-- **Self-contained:** No dependencies on other commits
-- **Low risk:** Only affects systems with specific hardware (part number
-  0x438)
-- **High value:** Without it, the PMU driver is completely non-
-  functional on CMN-600AE hardware
-- **Well-tested:** Has both Reviewed-by and Tested-by on real hardware
-- **Applies cleanly:** The relevant code context is stable across kernel
-  versions
-
-The fix is small, surgical, and meets all stable kernel criteria as a
-device ID addition.
+This commit fixes a real, documented VFS contract violation:
+`ntfs_d_compare()` sleeps (using `GFP_KERNEL`) in an atomic/RCU context
+where sleeping is explicitly forbidden. This is the same class of bug
+that syzbot already caught for `ntfs_d_hash`. The fix is from Al Viro
+(VFS maintainer), is mechanically simple, low risk, and fixes a bug that
+can cause soft lockups and RCU stalls. The non-critical cleanup parts
+(stopping `names_cachep` abuse) are functionally equivalent and carry
+essentially zero regression risk. While the commit touches 5 files,
+every change is a simple allocation function substitution with no
+behavioral change except the critical GFP_KERNEL -> GFP_NOWAIT in
+`d_compare`. The commit may need minor adjustments for older stable
+trees due to intermediate commits, but the core fix is straightforward.
 
 **YES**
 
- drivers/perf/arm-cmn.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ fs/ntfs3/dir.c    |  5 ++---
+ fs/ntfs3/fsntfs.c |  4 ++--
+ fs/ntfs3/inode.c  | 13 ++++++-------
+ fs/ntfs3/namei.c  | 17 ++++++++---------
+ fs/ntfs3/xattr.c  |  5 ++---
+ 5 files changed, 20 insertions(+), 24 deletions(-)
 
-diff --git a/drivers/perf/arm-cmn.c b/drivers/perf/arm-cmn.c
-index 23245352a3fc0..651edd73bfcb1 100644
---- a/drivers/perf/arm-cmn.c
-+++ b/drivers/perf/arm-cmn.c
-@@ -210,6 +210,7 @@ enum cmn_model {
- enum cmn_part {
- 	PART_CMN600 = 0x434,
- 	PART_CMN650 = 0x436,
-+	PART_CMN600AE = 0x438,
- 	PART_CMN700 = 0x43c,
- 	PART_CI700 = 0x43a,
- 	PART_CMN_S3 = 0x43e,
-@@ -2266,6 +2267,9 @@ static int arm_cmn_discover(struct arm_cmn *cmn, unsigned int rgn_offset)
- 	reg = readq_relaxed(cfg_region + CMN_CFGM_PERIPH_ID_01);
- 	part = FIELD_GET(CMN_CFGM_PID0_PART_0, reg);
- 	part |= FIELD_GET(CMN_CFGM_PID1_PART_1, reg) << 8;
-+	/* 600AE is close enough that it's not really worth more complexity */
-+	if (part == PART_CMN600AE)
-+		part = PART_CMN600;
- 	if (cmn->part && cmn->part != part)
- 		dev_warn(cmn->dev,
- 			 "Firmware binding mismatch: expected part number 0x%x, found 0x%x\n",
+diff --git a/fs/ntfs3/dir.c b/fs/ntfs3/dir.c
+index b98e95d6b4d99..cf038d713f507 100644
+--- a/fs/ntfs3/dir.c
++++ b/fs/ntfs3/dir.c
+@@ -423,8 +423,7 @@ static int ntfs_readdir(struct file *file, struct dir_context *ctx)
+ 	if (!dir_emit_dots(file, ctx))
+ 		return 0;
+ 
+-	/* Allocate PATH_MAX bytes. */
+-	name = __getname();
++	name = kmalloc(PATH_MAX, GFP_KERNEL);
+ 	if (!name)
+ 		return -ENOMEM;
+ 
+@@ -502,7 +501,7 @@ static int ntfs_readdir(struct file *file, struct dir_context *ctx)
+ 
+ out:
+ 
+-	__putname(name);
++	kfree(name);
+ 	put_indx_node(node);
+ 
+ 	if (err == 1) {
+diff --git a/fs/ntfs3/fsntfs.c b/fs/ntfs3/fsntfs.c
+index 5f138f7158357..bd67ba7b50153 100644
+--- a/fs/ntfs3/fsntfs.c
++++ b/fs/ntfs3/fsntfs.c
+@@ -2627,7 +2627,7 @@ int ntfs_set_label(struct ntfs_sb_info *sbi, u8 *label, int len)
+ 	u32 uni_bytes;
+ 	struct ntfs_inode *ni = sbi->volume.ni;
+ 	/* Allocate PATH_MAX bytes. */
+-	struct cpu_str *uni = __getname();
++	struct cpu_str *uni = kmalloc(PATH_MAX, GFP_KERNEL);
+ 
+ 	if (!uni)
+ 		return -ENOMEM;
+@@ -2671,6 +2671,6 @@ int ntfs_set_label(struct ntfs_sb_info *sbi, u8 *label, int len)
+ 		err = _ni_write_inode(&ni->vfs_inode, 0);
+ 
+ out:
+-	__putname(uni);
++	kfree(uni);
+ 	return err;
+ }
+diff --git a/fs/ntfs3/inode.c b/fs/ntfs3/inode.c
+index 0a9ac5efeb67c..edfb973e4e82e 100644
+--- a/fs/ntfs3/inode.c
++++ b/fs/ntfs3/inode.c
+@@ -1281,7 +1281,7 @@ int ntfs_create_inode(struct mnt_idmap *idmap, struct inode *dir,
+ 		fa |= FILE_ATTRIBUTE_READONLY;
+ 
+ 	/* Allocate PATH_MAX bytes. */
+-	new_de = kmem_cache_zalloc(names_cachep, GFP_KERNEL);
++	new_de = kzalloc(PATH_MAX, GFP_KERNEL);
+ 	if (!new_de) {
+ 		err = -ENOMEM;
+ 		goto out1;
+@@ -1702,7 +1702,7 @@ int ntfs_create_inode(struct mnt_idmap *idmap, struct inode *dir,
+ 	ntfs_mark_rec_free(sbi, ino, false);
+ 
+ out2:
+-	__putname(new_de);
++	kfree(new_de);
+ 	kfree(rp);
+ 
+ out1:
+@@ -1723,7 +1723,7 @@ int ntfs_link_inode(struct inode *inode, struct dentry *dentry)
+ 	struct NTFS_DE *de;
+ 
+ 	/* Allocate PATH_MAX bytes. */
+-	de = kmem_cache_zalloc(names_cachep, GFP_KERNEL);
++	de = kzalloc(PATH_MAX, GFP_KERNEL);
+ 	if (!de)
+ 		return -ENOMEM;
+ 
+@@ -1737,7 +1737,7 @@ int ntfs_link_inode(struct inode *inode, struct dentry *dentry)
+ 
+ 	err = ni_add_name(ntfs_i(d_inode(dentry->d_parent)), ni, de);
+ out:
+-	__putname(de);
++	kfree(de);
+ 	return err;
+ }
+ 
+@@ -1760,8 +1760,7 @@ int ntfs_unlink_inode(struct inode *dir, const struct dentry *dentry)
+ 	if (ntfs_is_meta_file(sbi, ni->mi.rno))
+ 		return -EINVAL;
+ 
+-	/* Allocate PATH_MAX bytes. */
+-	de = kmem_cache_zalloc(names_cachep, GFP_KERNEL);
++	de = kzalloc(PATH_MAX, GFP_KERNEL);
+ 	if (!de)
+ 		return -ENOMEM;
+ 
+@@ -1797,7 +1796,7 @@ int ntfs_unlink_inode(struct inode *dir, const struct dentry *dentry)
+ 
+ out:
+ 	ni_unlock(ni);
+-	__putname(de);
++	kfree(de);
+ 	return err;
+ }
+ 
+diff --git a/fs/ntfs3/namei.c b/fs/ntfs3/namei.c
+index 3b24ca02de614..b2af8f695e60f 100644
+--- a/fs/ntfs3/namei.c
++++ b/fs/ntfs3/namei.c
+@@ -68,7 +68,7 @@ static struct dentry *ntfs_lookup(struct inode *dir, struct dentry *dentry,
+ 				  u32 flags)
+ {
+ 	struct ntfs_inode *ni = ntfs_i(dir);
+-	struct cpu_str *uni = __getname();
++	struct cpu_str *uni = kmalloc(PATH_MAX, GFP_KERNEL);
+ 	struct inode *inode;
+ 	int err;
+ 
+@@ -85,7 +85,7 @@ static struct dentry *ntfs_lookup(struct inode *dir, struct dentry *dentry,
+ 			inode = dir_search_u(dir, uni, NULL);
+ 			ni_unlock(ni);
+ 		}
+-		__putname(uni);
++		kfree(uni);
+ 	}
+ 
+ 	/*
+@@ -303,8 +303,7 @@ static int ntfs_rename(struct mnt_idmap *idmap, struct inode *dir,
+ 			return err;
+ 	}
+ 
+-	/* Allocate PATH_MAX bytes. */
+-	de = __getname();
++	de = kmalloc(PATH_MAX, GFP_KERNEL);
+ 	if (!de)
+ 		return -ENOMEM;
+ 
+@@ -349,7 +348,7 @@ static int ntfs_rename(struct mnt_idmap *idmap, struct inode *dir,
+ 	ni_unlock(ni);
+ 	ni_unlock(dir_ni);
+ out:
+-	__putname(de);
++	kfree(de);
+ 	return err;
+ }
+ 
+@@ -407,7 +406,7 @@ static int ntfs_d_hash(const struct dentry *dentry, struct qstr *name)
+ 	/*
+ 	 * Try slow way with current upcase table
+ 	 */
+-	uni = kmem_cache_alloc(names_cachep, GFP_NOWAIT);
++	uni = kmalloc(PATH_MAX, GFP_NOWAIT);
+ 	if (!uni)
+ 		return -ENOMEM;
+ 
+@@ -429,7 +428,7 @@ static int ntfs_d_hash(const struct dentry *dentry, struct qstr *name)
+ 	err = 0;
+ 
+ out:
+-	kmem_cache_free(names_cachep, uni);
++	kfree(uni);
+ 	return err;
+ }
+ 
+@@ -468,7 +467,7 @@ static int ntfs_d_compare(const struct dentry *dentry, unsigned int len1,
+ 	 * Try slow way with current upcase table
+ 	 */
+ 	sbi = dentry->d_sb->s_fs_info;
+-	uni1 = __getname();
++	uni1 = kmalloc(PATH_MAX, GFP_NOWAIT);
+ 	if (!uni1)
+ 		return -ENOMEM;
+ 
+@@ -498,7 +497,7 @@ static int ntfs_d_compare(const struct dentry *dentry, unsigned int len1,
+ 	ret = !ntfs_cmp_names_cpu(uni1, uni2, sbi->upcase, false) ? 0 : 1;
+ 
+ out:
+-	__putname(uni1);
++	kfree(uni1);
+ 	return ret;
+ }
+ 
+diff --git a/fs/ntfs3/xattr.c b/fs/ntfs3/xattr.c
+index c93df55e98d07..f3bb2c41c000f 100644
+--- a/fs/ntfs3/xattr.c
++++ b/fs/ntfs3/xattr.c
+@@ -556,8 +556,7 @@ struct posix_acl *ntfs_get_acl(struct mnt_idmap *idmap, struct dentry *dentry,
+ 	if (unlikely(is_bad_ni(ni)))
+ 		return ERR_PTR(-EINVAL);
+ 
+-	/* Allocate PATH_MAX bytes. */
+-	buf = __getname();
++	buf = kmalloc(PATH_MAX, GFP_KERNEL);
+ 	if (!buf)
+ 		return ERR_PTR(-ENOMEM);
+ 
+@@ -588,7 +587,7 @@ struct posix_acl *ntfs_get_acl(struct mnt_idmap *idmap, struct dentry *dentry,
+ 	if (!IS_ERR(acl))
+ 		set_cached_acl(inode, type, acl);
+ 
+-	__putname(buf);
++	kfree(buf);
+ 
+ 	return acl;
+ }
 -- 
 2.51.0
 
