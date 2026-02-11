@@ -1,87 +1,73 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41EAD2737E3;
-	Wed, 11 Feb 2026 11:34:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0AA830C619;
+	Wed, 11 Feb 2026 11:36:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770809676; cv=none; b=smG2agWl5EQTK1bH5x582t6Z7L8/I/Ol+gqmNMTVAbK5IbaD9Q+K0pMPQWDwl3FZzDzhjuVUojEAt0v1RaqMjXYQ46op3RTx5ApxLlPSexO16n9tG+P2H28816Z+GxFiYkxOxjrNElSp857r/4QsIauuahTlK9myaFoFwnbBB38=
+	t=1770809797; cv=none; b=NKhhFZJaQWo7pr6KXvUPOXPJpEhQld0VNT9sdZ56EcA+91qUpUeJ8EGDJaJNhlWXRWB7zF31iGu9I0F6bwthjwmyU1ekxq0MkkhhQDiCBimVXUSXSu722+RxKp9ymNsiLnhE59zzeR0f/TtJgrRqKv3oYfy9jl6kwFjFUSitg/M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770809676; c=relaxed/simple;
-	bh=o8Xvl7DWTEe4eIKNO4k5csAm4WSl1py3fvc+Z7EsZrQ=;
+	s=arc-20240116; t=1770809797; c=relaxed/simple;
+	bh=c4EqE2T5SQrK01U31W3LSH6KAjqHP9jpEV6DCU/uYIM=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=emoD8m8805YRpyB6/3OtnOo0CcnnT+uaRLw/zJflb9g8fcpeIzWZriwAUqReaN67yc5xrUy8A2PDhrpHZmJNs5/z3H+NfCrkE6A7pe/5aShaCptvuzvwoi5xkEAXHaOSd2EDzGRZmkztvM53RCre32tQ+0EPmmyvqE3IwHlphpQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uzIzbZ3z; arc=none smtp.client-ip=10.30.226.201
+	 Content-Type:Content-Disposition:In-Reply-To; b=b0vqN4b4B6eo84AujszmWoUNGlHO+3njJOCdotuVtvgyKONd+y1BCcTz2uIDDBQSUt+zhQkFbzozfDZY7od8Q/PBw14VVx6e0J8GZ7jEZDbYU8l2D15Xqa9untFn9RDQtgb9x2Dd8OPwgmNXrQNRE1qe3NlQ9D/ua1kw0GL1w9E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0u8pwUwt; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uzIzbZ3z"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 650A8C4CEF7;
-	Wed, 11 Feb 2026 11:34:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0u8pwUwt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 86E56C4CEF7;
+	Wed, 11 Feb 2026 11:36:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770809676;
-	bh=o8Xvl7DWTEe4eIKNO4k5csAm4WSl1py3fvc+Z7EsZrQ=;
+	s=korg; t=1770809797;
+	bh=c4EqE2T5SQrK01U31W3LSH6KAjqHP9jpEV6DCU/uYIM=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=uzIzbZ3zWDEDqMVNEe2bPXK5R8rocx8zQpf/unInljVNPvuutVUH1hNe0QEVJJROQ
-	 qn4n6D7k8U174q0YpN2az5x7oo7SzOC3uPV9MDe+nNrDL+5DaVdfc8v5LsNEANsfqB
-	 c/+e2FNzMw5QDgtQbVHcjIZ5JgOyLVyJq6OHnoXw=
-Date: Wed, 11 Feb 2026 12:34:32 +0100
+	b=0u8pwUwtV2RVOhchGo5NjWhS6x7CSlCpXlK8PKNPotI3A66CHc4buWTlXPd/RGdgh
+	 eZMCP6NonX9OMZrFG87ALH8T4+oYEaEvZ6lMX+RSO7naxiPuLSwjjbmNSj3KxWhH66
+	 YFvCTZ8Jbx02no3cEDVnBII2Qmh3qEUfECCKMJK4=
+Date: Wed, 11 Feb 2026 12:36:33 +0100
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: Ron Economos <re@w6rz.net>
+To: Ben Hutchings <ben@decadent.org.uk>
 Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
-	patches@kernelci.org, lkft-triage@lists.linaro.org,
-	pavel@nabladev.com, jonathanh@nvidia.com, f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com, rwarsow@gmx.de, conor@kernel.org,
-	hargar@microsoft.com, broonie@kernel.org, achill@achill.org,
-	sr@sladewatkins.com
-Subject: Re: [PATCH 5.15 00/75] 5.15.200-rc1 review
-Message-ID: <2026021128-renovator-bungee-99b3@gregkh>
-References: <20260209142301.830618238@linuxfoundation.org>
- <0fefff6f-127a-4be8-a479-fc52b6e1d590@w6rz.net>
+	Hans de Goede <hdegoede@redhat.com>,
+	Mika Westerberg <mika.westerberg@linux.intel.com>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: Re: [PATCH 6.12 519/567] gpiolib: acpi: Move quirks to a separate
+ file
+Message-ID: <2026021110-delivery-coke-4bf1@gregkh>
+References: <20260106170451.332875001@linuxfoundation.org>
+ <20260106170510.584316139@linuxfoundation.org>
+ <94cad986396d5a231a60d41cb6f86da146a6b435.camel@decadent.org.uk>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <0fefff6f-127a-4be8-a479-fc52b6e1d590@w6rz.net>
+In-Reply-To: <94cad986396d5a231a60d41cb6f86da146a6b435.camel@decadent.org.uk>
 
-On Tue, Feb 10, 2026 at 02:07:27AM -0800, Ron Economos wrote:
-> On 2/9/26 06:23, Greg Kroah-Hartman wrote:
-> > This is the start of the stable review cycle for the 5.15.200 release.
-> > There are 75 patches in this series, all will be posted as a response
-> > to this one.  If anyone has any issues with these being applied, please
-> > let me know.
+On Tue, Feb 10, 2026 at 05:06:50PM +0100, Ben Hutchings wrote:
+> On Tue, 2026-01-06 at 18:05 +0100, Greg Kroah-Hartman wrote:
+> > 6.12-stable review patch.  If anyone has any objections, please let me know.
 > > 
-> > Responses should be made by Wed, 11 Feb 2026 14:22:44 +0000.
-> > Anything received after that time might be too late.
+> > ------------------
 > > 
-> > The whole patch series can be found in one patch at:
-> > 	https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.15.200-rc1.gz
-> > or in the git tree and branch at:
-> > 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.15.y
-> > and the diffstat can be found below.
+> > From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
 > > 
-> > thanks,
+> > [ Upstream commit 92dc572852ddcae687590cb159189004d58e382e ]
 > > 
-> > greg k-h
+> > The gpiolib-acpi.c is huge enough even without DMI quirks.
+> > Move them to a separate file for a better maintenance.
+> > 
+> > No functional change intended.
+> [...]
 > 
-> There's a build warning on RISC-V.
-> 
-> arch/riscv/kernel/probes/uprobes.c: In function 'arch_uprobe_copy_ixol':
-> arch/riscv/kernel/probes/uprobes.c:164:23: warning: unused variable 'start' [-Wunused-variable]
->   164 |         unsigned long start = (unsigned long)dst;
->       |                       ^~~~~
-> 
-> I've sent a fixup patch.
-> 
-> https://lore.kernel.org/lkml/20260210100148.3674334-1-re@w6rz.net/T/#u
-> 
-> 
+> However, this did cause some documentation breakage.  Please cherry-pick
+> commit ec0c0aab1524 ("gpiolib-acpi: Update file references in the
+> Documentation and MAINTAINERS") to fix that.
 
-Now queued up, thanks.
+Thanks, the Fixes: tag in that commit is invalid, which is why I didn't
+see it to pick this up, nice catch!
 
 greg k-h
