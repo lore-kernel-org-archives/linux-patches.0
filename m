@@ -1,42 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F01F43207;
-	Wed, 11 Feb 2026 12:31:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B6513207;
+	Wed, 11 Feb 2026 12:31:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770813091; cv=none; b=s0xL4kaqmGm5WoU/G6L2yV7QLM5Rfs01T20MvdhTwGZ6yVsatEbz4QkqeDchVRTeG9piVFhiCWVSDn4Py6g14+6i4IYTJ/LlTxW2Jbea0LmFgc6nMHpDXyUYfOyitJTNTV3wOaizp5F7Th2XXO9t60/EepFU+SnOnHDgVEMG3KQ=
+	t=1770813093; cv=none; b=RE6wzicE4UH4pvVK/siQL+XFq0kVrXDzx2kVoiiiMbcE+nBrNzn4h8M+gLLAkcQ0jDpoy9u/fZqtbbq7jKombuPci6rZAyoLiIFJqq/x6ciMskEcy6m64SnTaOb5cFezh2KASQzdRj6OwAwnFZImu+Wjg7MWeS4yAgr/bOORwE8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770813091; c=relaxed/simple;
-	bh=54ptZY70lc/rowJfJIo76PTdUbKdlVReVnA7x+FOggg=;
+	s=arc-20240116; t=1770813093; c=relaxed/simple;
+	bh=4cYzhg36eRCdHeDXkrqTRinwTV6Hk6R7oxtOoKAW+GA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rdw85/gaJbhUhukA5G2mTJX3cPhVUMWcK3qIhx3nLeJ0OkDwBVP411Jz/ApW64VoSwvAhVjTmgdYWYmY0/AFtttkUr5FtY4x6VHx//W57H3UvIbOnWvy7PfiEnt4quaGvaECk0uOTqE5SBvWfmf5M1cEh63B+pRfkrjLcgZ25Pc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=AfDKzCeB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Lf5i+RfGQzcbX1SpnAzulhRla9pkBsoTd1pKoR0M7DZanNkadBnERrcb+IBkpSdqs9ijBW6oohfTDck+qbKDukn/Xd5jE8G/eRC3t+AeJswKpxXO5eMqv95LldrKtSnDf3Ym0Nqe7+IBAiPsJ+s0MNek+lxGw+1otqo6FJ0Hl7I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=THcv2Vow; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="AfDKzCeB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1AC58C19425;
-	Wed, 11 Feb 2026 12:31:30 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="THcv2Vow"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 47339C19424;
+	Wed, 11 Feb 2026 12:31:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1770813090;
-	bh=54ptZY70lc/rowJfJIo76PTdUbKdlVReVnA7x+FOggg=;
+	s=k20201202; t=1770813092;
+	bh=4cYzhg36eRCdHeDXkrqTRinwTV6Hk6R7oxtOoKAW+GA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AfDKzCeBPe361GvqJ5M4rZ0G8L5qd50P1Gf8EJuL+cy3pAZCJze+0dMMslrTxixyI
-	 ExxklOyK9j6n/tnlgOG0bAaxg4y3S/xrGwEt3jSIC4zLw3/9lb5MLnVS1J3D+f9gT+
-	 hXP+4wrvJ5wTrSG23vlAE9EMM44UQBtxwstBMBc1Chm9hSmPl8ktdewgJFilLBwU6A
-	 6q2SgoRooeyzEbqBcjVKBk+ldl5NFoecLvSb9kI4uANQcf6pJGwJsFh7KwZnOOhTJe
-	 TYk+Z6mtlZaAB6jK4yzXjQXH0C9PCRnDtojAyDdhJdt7ZZtCpIq7j3NbMr3h4Y5MaZ
-	 E9NFKmfArFi0A==
+	b=THcv2Vowh6I4geU/w5bLT+157SiEeO3lOnWTxOrDiWJpQEA/bxd5YNwQ1fYd7kVq3
+	 fzUP/2pK/hSbrSL57lPfMcLlybm1VdYTJhnjfSOqCOBIHMwLHngdfFo2MNiD80BcUr
+	 ksbIhEDfgf7MRN3t3HZ2TnItWnUK62HgGdkFxTc3mvVfDjvYsv2uFgDeNAiHOBCE73
+	 sPR/MaRdz5qfNGTfq1TUp9SOAWvGAb+6r9XIJvop1l75ddfuTZ/PZCStzXBuNIbWkz
+	 DUh9xu+7GjHy+Ifodh4k3P7aPAl5wSCDmvQL9muUrNQR7rJboQ744dEptPAuGieBZy
+	 AhCFUqy8lJdFw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Luke Wang <ziniu.wang_1@nxp.com>,
-	Ulf Hansson <ulf.hansson@linaro.org>,
-	Jens Axboe <axboe@kernel.dk>,
-	Sasha Levin <sashal@kernel.org>,
-	linux-block@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.19-6.12] block: decouple secure erase size limit from discard size limit
-Date: Wed, 11 Feb 2026 07:30:19 -0500
-Message-ID: <20260211123112.1330287-9-sashal@kernel.org>
+Cc: Sam James <sam@gentoo.org>,
+	Andreas Larsson <andreas@gaisler.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.19-5.10] sparc: don't reference obsolete termio struct for TC* constants
+Date: Wed, 11 Feb 2026 07:30:20 -0500
+Message-ID: <20260211123112.1330287-10-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260211123112.1330287-1-sashal@kernel.org>
 References: <20260211123112.1330287-1-sashal@kernel.org>
@@ -51,227 +49,192 @@ X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.19
 Content-Transfer-Encoding: 8bit
 
-From: Luke Wang <ziniu.wang_1@nxp.com>
+From: Sam James <sam@gentoo.org>
 
-[ Upstream commit ee81212f74a57c5d2b56cf504f40d528dac6faaf ]
+[ Upstream commit be0bccffcde3308150d2a90e55fc10e249098909 ]
 
-Secure erase should use max_secure_erase_sectors instead of being limited
-by max_discard_sectors. Separate the handling of REQ_OP_SECURE_ERASE from
-REQ_OP_DISCARD to allow each operation to use its own size limit.
+Similar in nature to commit ab107276607a ("powerpc: Fix struct termio related ioctl macros").
 
-Signed-off-by: Luke Wang <ziniu.wang_1@nxp.com>
-Reviewed-by: Ulf Hansson <ulf.hansson@linaro.org>
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+glibc-2.42 drops the legacy termio struct, but the ioctls.h header still
+defines some TC* constants in terms of termio (via sizeof). Hardcode the
+values instead.
+
+This fixes building Python for example, which falls over like:
+  ./Modules/termios.c:1119:16: error: invalid application of 'sizeof' to incomplete type 'struct termio'
+
+Link: https://bugs.gentoo.org/961769
+Link: https://bugs.gentoo.org/962600
+Signed-off-by: Sam James <sam@gentoo.org>
+Reviewed-by: Andreas Larsson <andreas@gaisler.com>
+Signed-off-by: Andreas Larsson <andreas@gaisler.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-This is an important caller. `blk_insert_cloned_request` is used by
-device mapper (dm) to submit cloned requests. If
-`blk_queue_get_max_sectors` returns the wrong value (e.g.,
-`max_discard_sectors` instead of `max_secure_erase_sectors`), and the
-cloned request's sector count exceeds the wrong limit but fits within
-the correct one, the request will be **rejected with BLK_STS_IOERR** on
-line 3291. This is a real I/O error path!
-
-Here is my complete analysis:
+The file is identical across all stable kernel versions. Now I have a
+complete picture. Here is my detailed analysis:
 
 ---
 
-## Detailed Analysis
+## Comprehensive Analysis
 
-### 1. Commit Message Analysis
+### 1. COMMIT MESSAGE ANALYSIS
 
-The commit clearly describes a **bug fix**: secure erase operations were
-incorrectly limited by `max_discard_sectors` instead of
-`max_secure_erase_sectors`. This is a correctness issue, not a feature.
-The commit was reviewed by Ulf Hansson (MMC maintainer) and merged by
-Jens Axboe (block layer maintainer).
+**Subject**: "sparc: don't reference obsolete termio struct for TC*
+constants"
 
-### 2. Code Change Analysis
+The commit explicitly states it fixes a **build failure** in userspace
+software. It references:
+- A prior identical fix for powerpc (`ab107276607a`)
+- The root cause: glibc 2.42 drops the legacy `struct termio` definition
+- A concrete symptom: Python fails to build with `sizeof` applied to
+  incomplete type
+- Two Gentoo bug tracker links
+  ([#961769](https://bugs.gentoo.org/961769),
+  [#962600](https://bugs.gentoo.org/962600)) with real user reports
+- Reviewed-by from the sparc subsystem maintainer (Andreas Larsson)
 
-The patch modifies two files with two distinct changes:
+### 2. CODE CHANGE ANALYSIS
 
-**Change A: `block/blk.h` - `blk_queue_get_max_sectors()`**
+The change is minimal - 4 lines in a single UAPI header file
+`arch/sparc/include/uapi/asm/ioctls.h`:
 
-Before the fix:
-```211:213:block/blk.h
-        if (unlikely(op == REQ_OP_DISCARD || op == REQ_OP_SECURE_ERASE))
-                return min(q->limits.max_discard_sectors,
-                           UINT_MAX >> SECTOR_SHIFT);
+```8:11:arch/sparc/include/uapi/asm/ioctls.h
+#define TCGETA          _IOR('T', 1, struct termio)
+#define TCSETA          _IOW('T', 2, struct termio)
+#define TCSETAW         _IOW('T', 3, struct termio)
+#define TCSETAF         _IOW('T', 4, struct termio)
 ```
 
-Both `REQ_OP_DISCARD` and `REQ_OP_SECURE_ERASE` used
-`max_discard_sectors`. The fix separates them so secure erase uses
-`max_secure_erase_sectors`.
+These are replaced with hardcoded hex values:
+- `TCGETA` = `0x40125401` (was `_IOR('T', 1, struct termio)`)
+- `TCSETA` = `0x80125402` (was `_IOW('T', 2, struct termio)`)
+- `TCSETAW` = `0x80125403` (was `_IOW('T', 3, struct termio)`)
+- `TCSETAF` = `0x80125404` (was `_IOW('T', 4, struct termio)`)
 
-**Change B: `block/blk-merge.c` - `bio_split_discard()`**
+**Value verification**: I manually computed these using sparc's
+`asm/ioctl.h` (which has `_IOC_READ=2`, `_IOC_WRITE=4`, shifts at
+29/16/8/0). With `sizeof(struct termio) = 18` (0x12), all four values
+are mathematically correct. The parisc fix uses identical values
+(0x40125401, 0x80125402, 0x80125403, 0x80125404), which is expected
+since sparc and parisc share the same ioctl encoding scheme.
 
-The original `bio_split_discard()` always split using
-`lim->max_discard_sectors`, even for `REQ_OP_SECURE_ERASE` (which
-reaches this function via `__bio_split_to_limits` at line 407-409 of
-`blk.h`). The fix refactors the function into a wrapper that selects the
-correct limit and a helper `__bio_split_discard()` that does the actual
-splitting.
+**Bug mechanism**: The `_IOR` and `_IOW` macros expand to use
+`sizeof(struct termio)`. When userspace code includes `<asm/ioctls.h>`
+transitively (through `<sys/ioctl.h>` -> `<bits/ioctls.h>` ->
+`<asm/ioctls.h>`), and glibc 2.42+ is installed (which dropped the
+`struct termio` definition), the compiler encounters `sizeof` on an
+incomplete/undefined type, causing a hard build error.
 
-### 3. Bug Mechanism and Impact
+### 3. PRECEDENT - IDENTICAL FIXES ACROSS ARCHITECTURES
 
-**The bug**: The kernel `queue_limits` structure has separate fields for
-`max_discard_sectors` and `max_secure_erase_sectors`, but the block
-layer core code in two critical paths ignored the secure erase field and
-always used the discard field.
+This is the **fourth** architecture getting this exact same fix:
 
-**Concrete impact scenarios**:
+| Architecture | Commit | Merged in | Cc: stable? |
+|---|---|---|---|
+| xtensa | `f61bf8e7d19e0` | v3.17 (2014!) | N/A |
+| powerpc | `ab107276607a` | v6.16 | No |
+| parisc | `8ec5a066f88f8` | v6.18 | **Yes** |
+| alpha | `9aeed90419298` | v6.19 | No |
+| **sparc** | *(this commit)* | pending | No |
+| SH | already hardcoded | N/A | N/A |
 
-1. **virtio_blk**: This driver reads separate limits from the virtio
-   config for discard (`max_discard_sectors`) and secure erase
-   (`max_secure_erase_sectors`). The driver even documents the
-   workaround: *"The discard and secure erase limits are combined since
-   the Linux block layer uses the same limit for both commands."*
-   (virtio_blk.c lines 1336-1341). This means the driver had to
-   artificially reduce its limits to compensate for the block layer bug.
+The parisc version has explicit `Cc: stable@vger.kernel.org`, confirming
+the stable maintainers consider this type of fix stable-appropriate. The
+sparc version simply lacks the tag - likely an oversight by the
+submitter.
 
-2. **xen-blkfront**: Sets `max_secure_erase_sectors = UINT_MAX` while
-   `max_discard_sectors = get_capacity(gd)` - different values.
+### 4. REAL-WORLD IMPACT
 
-3. **dm (device mapper)**: The `blk_insert_cloned_request()` function
-   calls `blk_queue_get_max_sectors()` and rejects requests that exceed
-   the limit with `BLK_STS_IOERR`. If `max_secure_erase_sectors` >
-   `max_discard_sectors` on the underlying device, valid secure erase
-   requests could be rejected with I/O errors. Conversely, if
-   `max_secure_erase_sectors` < `max_discard_sectors`, oversized
-   requests could be sent to hardware.
+- **Multiple bug reports**: Gentoo bugs #961769 and #962600 document the
+  issue with real users affected on both hppa and sparc
+- **Critical software broken**: Python (CPython) cannot be built on
+  sparc with glibc 2.42+, a fundamental system component
+- **Gentoo already carries this patch**: Gentoo has backported this fix
+  to their linux-headers packages for kernel versions 6.16 and 6.17,
+  demonstrating real demand
+- **Affects ALL userspace programs** that reference
+  TCGETA/TCSETA/TCSETAW/TCSETAF through the standard header chain
+- **Multiple users confirmed**: Dennis Clarke confirmed the issue on
+  sparc64 (Sun Netra X1), Stian Halseth reported it for sparc, matoro
+  reported it for hppa
 
-4. **The most dangerous case**: When `max_secure_erase_sectors <
-   max_discard_sectors`, the bio splitting code won't split the secure
-   erase bio when it should, sending a request larger than the device
-   can handle. This can cause **I/O errors, device failures, or data
-   integrity issues** with secure erase operations.
+### 5. CLASSIFICATION
 
-### 4. Scope and Risk Assessment
+This is a **build fix for UAPI headers** - one of the explicitly allowed
+exception categories for stable. It:
+- Fixes a real build failure (not theoretical)
+- Does NOT change any kernel behavior
+- Does NOT change any ioctl numbers (values are identical)
+- Does NOT add new features or APIs
+- Is a UAPI header issue (kernel-userspace interface)
 
-- **Lines changed**: ~25 lines of actual logic change across 2 files
-- **Files touched**: `block/blk-merge.c` and `block/blk.h` (core block
-  layer, but well-contained)
-- **Risk of regression**: **Low**. For any driver that sets
-  `max_secure_erase_sectors == max_discard_sectors` (like MMC), the
-  behavior is completely unchanged. For drivers with different values,
-  the behavior is corrected.
-- **The change is obviously correct**: Secure erase operations should
-  use secure erase limits, not discard limits.
+### 6. SCOPE AND RISK ASSESSMENT
 
-### 5. Affected Subsystems and Users
+- **Lines changed**: 4 lines in 1 file
+- **Subsystem**: sparc architecture UAPI headers
+- **Risk**: Essentially **zero**. The hardcoded values are
+  mathematically identical to what the macros produce. This is a pure
+  constant-expression replacement. The kernel itself never evaluates
+  these macros (it uses the ioctl numbers directly) - they only matter
+  for userspace header consumption.
+- **Regression potential**: None. The ioctl numbers are ABI-stable and
+  have been the same since sparc Linux support was added.
 
-- MMC/eMMC (mobile, embedded) - same values, no visible change
-- virtio_blk (VMs, cloud) - corrects a workaround-needing limitation
-- xen-blkfront (Xen VMs) - corrects a real mismatch
-- dm (device-mapper stacking) - fixes potential I/O errors
+### 7. DEPENDENCY CHECK
 
-### 6. Backport Complexity
+This patch has **no dependencies**. The file
+`arch/sparc/include/uapi/asm/ioctls.h` is identical in v5.15, v6.1,
+v6.6, and v6.19 with respect to the changed lines. The patch applies
+cleanly to **all** active stable kernel trees.
 
-- For kernels 6.12+: The patch should apply nearly cleanly;
-  `bio_submit_split()` and the current code structure exist.
-- For kernels 6.1-6.11: The `blk.h` change applies cleanly (same
-  pattern). The `blk-merge.c` change needs adaptation because the
-  splitting mechanism is different (returns split bio instead of using
-  `bio_submit_split`), but the conceptual fix is the same.
-- For kernel 5.15: `max_secure_erase_sectors` field exists but
-  `blkdev_issue_secure_erase` was introduced in 6.1; older kernels have
-  different secure erase code paths.
+### 8. STABILITY INDICATORS
 
-### 7. Stability Indicators
+- **Reviewed-by**: Andreas Larsson (sparc subsystem maintainer)
+- **Author**: Sam James (Gentoo developer, same author as the parisc and
+  alpha versions)
+- **Pattern established**: Same fix already applied and tested on 4+
+  other architectures over 10+ years
+- **Values verified**: Identical to parisc which shares the same ioctl
+  encoding
 
-- Reviewed by Ulf Hansson (MMC subsystem co-maintainer)
-- Merged by Jens Axboe (block layer maintainer)
-- Simple, obviously correct fix
+### Summary
 
-### 8. Conclusion
-
-This commit fixes a real bug where the block layer core was using the
-wrong limit for secure erase operations, potentially causing:
-- I/O errors when valid requests are rejected
-- Oversized requests being sent to hardware
-- Unnecessary performance limitations
-
-The fix is small, contained, obviously correct, and was reviewed by
-multiple maintainers. It affects core block layer code that is shared
-across all block devices supporting secure erase. The risk of regression
-is minimal since the change only affects the code path when
-`max_secure_erase_sectors != max_discard_sectors`.
+This is a textbook stable backport candidate. It's a tiny, zero-risk
+build fix for a UAPI header that prevents userspace software (including
+Python) from compiling on sparc with modern glibc. The identical fix has
+been applied across multiple architectures, the parisc version was
+explicitly tagged `Cc: stable@vger.kernel.org`, Gentoo is already
+carrying it as a patch for older kernel versions, and the change has
+been reviewed by the sparc maintainer. The hardcoded values are
+mathematically provably correct, and the patch applies cleanly to all
+stable trees.
 
 **YES**
 
- block/blk-merge.c | 21 +++++++++++++++++----
- block/blk.h       |  6 +++++-
- 2 files changed, 22 insertions(+), 5 deletions(-)
+ arch/sparc/include/uapi/asm/ioctls.h | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/block/blk-merge.c b/block/blk-merge.c
-index d3115d7469df0..bf8faadb0bd46 100644
---- a/block/blk-merge.c
-+++ b/block/blk-merge.c
-@@ -158,8 +158,9 @@ static struct bio *bio_submit_split(struct bio *bio, int split_sectors)
- 	return bio;
- }
+diff --git a/arch/sparc/include/uapi/asm/ioctls.h b/arch/sparc/include/uapi/asm/ioctls.h
+index 7fd2f5873c9e7..a8bbdf9877a41 100644
+--- a/arch/sparc/include/uapi/asm/ioctls.h
++++ b/arch/sparc/include/uapi/asm/ioctls.h
+@@ -5,10 +5,10 @@
+ #include <asm/ioctl.h>
  
--struct bio *bio_split_discard(struct bio *bio, const struct queue_limits *lim,
--		unsigned *nsegs)
-+static struct bio *__bio_split_discard(struct bio *bio,
-+		const struct queue_limits *lim, unsigned *nsegs,
-+		unsigned int max_sectors)
- {
- 	unsigned int max_discard_sectors, granularity;
- 	sector_t tmp;
-@@ -169,8 +170,7 @@ struct bio *bio_split_discard(struct bio *bio, const struct queue_limits *lim,
- 
- 	granularity = max(lim->discard_granularity >> 9, 1U);
- 
--	max_discard_sectors =
--		min(lim->max_discard_sectors, bio_allowed_max_sectors(lim));
-+	max_discard_sectors = min(max_sectors, bio_allowed_max_sectors(lim));
- 	max_discard_sectors -= max_discard_sectors % granularity;
- 	if (unlikely(!max_discard_sectors))
- 		return bio;
-@@ -194,6 +194,19 @@ struct bio *bio_split_discard(struct bio *bio, const struct queue_limits *lim,
- 	return bio_submit_split(bio, split_sectors);
- }
- 
-+struct bio *bio_split_discard(struct bio *bio, const struct queue_limits *lim,
-+		unsigned *nsegs)
-+{
-+	unsigned int max_sectors;
-+
-+	if (bio_op(bio) == REQ_OP_SECURE_ERASE)
-+		max_sectors = lim->max_secure_erase_sectors;
-+	else
-+		max_sectors = lim->max_discard_sectors;
-+
-+	return __bio_split_discard(bio, lim, nsegs, max_sectors);
-+}
-+
- static inline unsigned int blk_boundary_sectors(const struct queue_limits *lim,
- 						bool is_atomic)
- {
-diff --git a/block/blk.h b/block/blk.h
-index e4c433f62dfc7..4cd5a91346d8a 100644
---- a/block/blk.h
-+++ b/block/blk.h
-@@ -208,10 +208,14 @@ static inline unsigned int blk_queue_get_max_sectors(struct request *rq)
- 	struct request_queue *q = rq->q;
- 	enum req_op op = req_op(rq);
- 
--	if (unlikely(op == REQ_OP_DISCARD || op == REQ_OP_SECURE_ERASE))
-+	if (unlikely(op == REQ_OP_DISCARD))
- 		return min(q->limits.max_discard_sectors,
- 			   UINT_MAX >> SECTOR_SHIFT);
- 
-+	if (unlikely(op == REQ_OP_SECURE_ERASE))
-+		return min(q->limits.max_secure_erase_sectors,
-+			   UINT_MAX >> SECTOR_SHIFT);
-+
- 	if (unlikely(op == REQ_OP_WRITE_ZEROES))
- 		return q->limits.max_write_zeroes_sectors;
- 
+ /* Big T */
+-#define TCGETA		_IOR('T', 1, struct termio)
+-#define TCSETA		_IOW('T', 2, struct termio)
+-#define TCSETAW		_IOW('T', 3, struct termio)
+-#define TCSETAF		_IOW('T', 4, struct termio)
++#define TCGETA          0x40125401 /* _IOR('T', 1, struct termio) */
++#define TCSETA          0x80125402 /* _IOW('T', 2, struct termio) */
++#define TCSETAW         0x80125403 /* _IOW('T', 3, struct termio) */
++#define TCSETAF         0x80125404 /* _IOW('T', 4, struct termio) */
+ #define TCSBRK		_IO('T', 5)
+ #define TCXONC		_IO('T', 6)
+ #define TCFLSH		_IO('T', 7)
 -- 
 2.51.0
 
