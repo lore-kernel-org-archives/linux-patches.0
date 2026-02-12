@@ -1,45 +1,46 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5409320FAB2;
-	Thu, 12 Feb 2026 01:10:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9EA2D1D5174;
+	Thu, 12 Feb 2026 01:10:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770858635; cv=none; b=er80p7RErD0NqpzHxQW+3NjQjHEyMheHfYVcAL5DHAnz4M9txb7c55fqWszkFLgYbiCZEpiZGmTNA1wKKhDkiw1EtGTxHu+BKkGCuti+tmD5NMcm1vG1hNFBuLJQ6MJHF2ktVBRXrfoCr5LYkXtTxCJzJFmiPC2uxYcEt5sBt+4=
+	t=1770858639; cv=none; b=bcSe6iORpbNx3gL/60LEtkTLt6z3THXub50LuKE/dGq9jz9YTKw7rq+uVsqpRjKhbxLKkG8Gt2MGCgg79AdeRzOmLnbCCDId9IA4ExWaGVjllXXnp8auR7gdmkjgOyEmxlv7W/AKo5HxcznuoDTNl/X5Mkr5cK4hzEpxHtWwGTc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770858635; c=relaxed/simple;
-	bh=nJnKuZt4twamPTg2f+NQtkwxo+/LuPCmOI2kXGT9XP0=;
+	s=arc-20240116; t=1770858639; c=relaxed/simple;
+	bh=obCLhOQsw15/JafM/JzsVZaEn8YPd9SbTUIixeWczZE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=sG6aU4fBUruHQCS2bCH2jDim43ahWE2ysu7FWwR869rpBzNcnbp4dcIvrhkXRjUieG1qpGOpXGYIjQI3p6iHaMxLRzdJTbkCWD1FAK6brGy4dD5nULrNbiwVyji9rmudMF+osoE5eZG5POog8khgQJ648sOjrSX3qBgWd3fAIds=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=mH9pf9to; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=sfrfeRqLpKvPXpUCawDvJ+hmT31TGdM9vXSzaJQJQNhwFI2KOAgkh+ZWPt1UxuGM0JrhoPjf8zUr/9yz4kdmI5O5rV3cQ1Id96xF8+/1AD5BKLpDfKTsV52Tvk8JdqDd75kzjgIWxL2KclcEdt9IzBX9irqeoqliYwYaQbuhSMw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=lgVF6DQL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="mH9pf9to"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9D41C19423;
-	Thu, 12 Feb 2026 01:10:33 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="lgVF6DQL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 07016C4CEF7;
+	Thu, 12 Feb 2026 01:10:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1770858634;
-	bh=nJnKuZt4twamPTg2f+NQtkwxo+/LuPCmOI2kXGT9XP0=;
+	s=k20201202; t=1770858639;
+	bh=obCLhOQsw15/JafM/JzsVZaEn8YPd9SbTUIixeWczZE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mH9pf9toZrUrInYmZei+9Fpi88CTsobnLDvWkVdiITHLDvFoO/D03JvU2sEKwuU2F
-	 pT3ZPwIav5U7IcU7e7fXkDhiK6JGP7a3TMCPAcS/kW55MtI8MPHrpR8wW/gh41FH+1
-	 HLegO/NqzA82avDCsXsvgHHc8Z+rHtAHLMuDWXNezu43GtrVgKsivTvSJzV/6nxf91
-	 4m+Hl1mfa882TaaGZyWDZ3map1FTwyaztVD9ozUjV4VM0PZkzxOh1FCJq3HriI+N8Y
-	 YWNCtytsFuTgQx7IvdI5mP+7Uj41EU3cjEVdrJ4hXQL4hOiM74Un1C509ko94vAfyV
-	 yz6uE5HOLXWIg==
+	b=lgVF6DQLIimreAYhRWJIfB7jxA9qxjGm9Y1QIhyPkWWEHYUewjCfsAJDdIqmxD1aB
+	 +r99P34pir261ZtOZo2B+PzaXQJnV+iqUmbP8cpXnpILT2yVcP6ygWQHWR2Xqg+jgB
+	 Rcj5nsUQF8Q93tPqhkLOQH2n79jQgL/grNUVhGpofL+2nZjGSuzHq5lFFs1PL9bqZ9
+	 olPa8lYjspC/u3j1zrqBXYoCzxIsLbHadLYlJauwoE3DgUI4hEA1JSdB1rO9dRdLlJ
+	 nRhIjlMjYHmPGg4UXVWU8WaKD6/JWaILRi6nTAoZUZG4WP//2Bf+JDqDzeqciNwLea
+	 p8MvIuoTNGriA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Haoxiang Li <lihaoxiang@isrc.iscas.ac.cn>,
-	Thomas Gleixner <tglx@kernel.org>,
+Cc: Alice Ryhl <aliceryhl@google.com>,
+	Daniel Almeida <daniel.almeida@collabora.com>,
+	Alexandre Courbot <acourbot@nvidia.com>,
+	Benno Lossin <lossin@kernel.org>,
+	Boqun Feng <boqun.feng@gmail.com>,
 	Sasha Levin <sashal@kernel.org>,
-	bhelgaas@google.com,
-	jgross@suse.com,
-	wangruikang@iscas.ac.cn,
-	hans.zhang@cixtech.com,
-	roger.pau@citrix.com
-Subject: [PATCH AUTOSEL 6.19-6.1] PCI/MSI: Unmap MSI-X region on error
-Date: Wed, 11 Feb 2026 20:09:45 -0500
-Message-ID: <20260212010955.3480391-22-sashal@kernel.org>
+	ojeda@kernel.org,
+	shankari.ak0208@gmail.com,
+	rust-for-linux@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.19-6.18] rust: sync: Implement Unpin for ARef
+Date: Wed, 11 Feb 2026 20:09:46 -0500
+Message-ID: <20260212010955.3480391-23-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260212010955.3480391-1-sashal@kernel.org>
 References: <20260212010955.3480391-1-sashal@kernel.org>
@@ -52,163 +53,179 @@ MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.19
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Haoxiang Li <lihaoxiang@isrc.iscas.ac.cn>
+From: Alice Ryhl <aliceryhl@google.com>
 
-[ Upstream commit 1a8d4c6ecb4c81261bcdf13556abd4a958eca202 ]
+[ Upstream commit 09248ed8cdb6345afc883c02aecd79dfbd9c2a9c ]
 
-msix_capability_init() fails to unmap the MSI-X region if
-msix_setup_interrupts() fails.
+The default implementation of Unpin for ARef<T> is conditional on T
+being Unpin due to its PhantomData<T> field. However, this is overly
+strict as pointers to T are legal to move even if T itself cannot move.
 
-Add the missing iounmap() for that error path.
+Since commit 66f1ea83d9f8 ("rust: lock: Add a Pin<&mut T> accessor")
+this causes build failures when combined with a Mutex that contains an
+field ARef<T>, because almost any type that ARef is used with is !Unpin.
 
-[ tglx: Massaged change log ]
-
-Signed-off-by: Haoxiang Li <lihaoxiang@isrc.iscas.ac.cn>
-Signed-off-by: Thomas Gleixner <tglx@kernel.org>
-Link: https://patch.msgid.link/20260125144452.2103812-1-lihaoxiang@isrc.iscas.ac.cn
+Reviewed-by: Daniel Almeida <daniel.almeida@collabora.com>
+Signed-off-by: Alice Ryhl <aliceryhl@google.com>
+Reviewed-by: Alexandre Courbot <acourbot@nvidia.com>
+Reviewed-by: Benno Lossin <lossin@kernel.org>
+Signed-off-by: Boqun Feng <boqun.feng@gmail.com>
+Link: https://patch.msgid.link/20251218-unpin-for-aref-v2-1-30d77129cbc6@google.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-The bug is clearly present in v6.1, v6.6, and v6.12. In these versions,
-the function structure is nearly identical to mainline — the same
-missing `iounmap()` on the `msix_setup_interrupts()` error path exists.
-The patch should apply cleanly (or with trivial context adjustments for
-the `msix_mask_all` conditional in mainline vs unconditional in older
-stable trees).
+Now I have the complete picture. Let me compile my analysis.
 
 ---
 
-## Complete Analysis
+## Detailed Analysis
 
-### 1. COMMIT MESSAGE ANALYSIS
+### 1. Commit Message Analysis
 
-The commit message is clear, concise, and directly describes a resource
-leak bug: `msix_capability_init()` fails to `iounmap()` the MSI-X table
-region if `msix_setup_interrupts()` fails. Thomas Gleixner (the irq
-subsystem maintainer) massaged the changelog and signed off as the
-subsystem maintainer applying the patch. The `Link:` tag points to the
-mailing list submission.
+The commit adds `impl<T: AlwaysRefCounted> Unpin for ARef<T> {}` to fix
+a type system issue in the Rust kernel API. The key statement is: *"this
+causes build failures when combined with a Mutex that contains a field
+ARef<T>, because almost any type that ARef is used with is !Unpin."*
 
-### 2. CODE CHANGE ANALYSIS
+The commit references `66f1ea83d9f8` ("rust: lock: Add a Pin<&mut T>
+accessor") but the actual root cause is the earlier commit
+`da123f0ee40f0` ("rust: lock: guard: Add T: Unpin bound to DerefMut"),
+which adds `T: Unpin` as a requirement for `Guard::DerefMut`.
 
-The fix is surgical — just 3 lines of net new code:
+### 2. Code Change Analysis
 
-1. Changes the `goto out_disable` to `goto out_unmap` (line 740) when
-   `msix_setup_interrupts()` fails
-2. Adds a new `out_unmap:` label with `iounmap(dev->msix_base)` just
-   before the existing `out_disable:` label
+The change is exactly 3 lines (1 comment + 2 code):
 
-**The bug mechanism:** `msix_map_region()` (line 732) calls `ioremap()`
-to map the MSI-X table into kernel virtual address space and stores the
-result in `dev->msix_base`. If `msix_setup_interrupts()` then fails
-(line 738-740), the error path goes to `out_disable` which only resets
-`dev->msix_enabled` and the PCI MSI-X control register — it never calls
-`iounmap()` on `dev->msix_base`.
+```rust
+// Even if `T` is pinned, pointers to `T` can still move.
+impl<T: AlwaysRefCounted> Unpin for ARef<T> {}
+```
 
-**Why it's not cleaned up elsewhere:** The caller
-`__pci_enable_msix_range()` simply returns the error code — there's no
-cleanup for the ioremap'd region. The only function that calls
-`iounmap(dev->msix_base)` is `pci_free_msi_irqs()`, which is only called
-from `pci_disable_msix()` and `pci_disable_msi()` — but those are never
-called on the failed init path.
+**The bug mechanism:**
+- `ARef<T>` is defined as `struct ARef<T: AlwaysRefCounted> { ptr:
+  NonNull<T>, _p: PhantomData<T> }`
+- `PhantomData<T>` causes Rust's auto-trait system to derive `Unpin for
+  ARef<T>` only when `T: Unpin`
+- Nearly all types that `ARef` wraps (`Device`, `Mm`, `File`,
+  `Credential`, etc.) contain `Opaque<bindings::*>` which has
+  `PhantomPinned`, making them `!Unpin`
+- Therefore `ARef<Device>`, `ARef<Mm>`, `ARef<File>`, etc. are all
+  incorrectly `!Unpin`
+- After `da123f0ee40f0` added `T: Unpin` bound to `Guard::DerefMut` (in
+  v6.19), any struct containing `ARef<SomeType>` that's inside a `Mutex`
+  would lose `DerefMut` on the guard, preventing mutable access
 
-**When the error occurs:** `msix_setup_interrupts()` can fail for
-multiple practical reasons:
-- `msix_setup_msi_descs()` fails (memory allocation for MSI descriptors)
-- `pci_msi_setup_msi_irqs()` fails (no available IRQ vectors, domain
-  allocation failure)
-- `msi_verify_entries()` fails (device restrictions not honored)
+**Why the fix is correct:**
+`ARef<T>` is a pointer type (it holds `NonNull<T>`). Moving an `ARef`
+moves the pointer, not the pointed-to `T`. This is the same reasoning
+used by Rust's standard library where `Box<T>`, `Arc<T>`, and `Rc<T>`
+all unconditionally implement `Unpin`.
 
-### 3. BUG ORIGIN
+### 3. Dependency Analysis
 
-The bug was introduced by commit `438553958ba192` ("PCI/MSI: Enable and
-mask MSI-X early") which was merged in v5.14-rc6. Ironically, that
-commit has `Cc: stable@vger.kernel.org`, so it was backported to older
-stable trees, bringing this leak bug with it.
+The commit depends on:
+1. `da123f0ee40f0` ("rust: lock: guard: Add T: Unpin bound to DerefMut")
+   - in v6.19
+2. `2497a7116ff9a` ("rust: lock: Pin the inner data") - in v6.19
+3. `66f1ea83d9f8` ("rust: lock: Add a Pin<&mut T> accessor") - in v6.19
 
-### 4. AFFECTED STABLE TREES
+**Stable tree relevance:**
+- **6.19.y**: Has all three prerequisite commits. The `T: Unpin` bound
+  on `DerefMut` is present at line 284-286 of `lock.rs`. The `ARef<T>`
+  Unpin fix is **missing**. This is the only stable tree where the fix
+  is needed.
+- **6.18.y and earlier**: Do NOT have the lock pinning changes.
+  `DerefMut` has no `Unpin` bound. The fix is irrelevant.
 
-I verified the bug exists in v5.15, v6.1, v6.6, and v6.12 — all
-currently maintained stable trees. The code structure is nearly
-identical across all of them:
-- **v6.6, v6.12**: Uses `dev->msix_base = msix_map_region()` directly —
-  identical structure to mainline.
-- **v6.1**: Uses local `base` then `dev->msix_base = base` — same bug,
-  same missing iounmap.
-- **v5.15**: Uses local `base` variable with the same missing iounmap —
-  will need minor adaptation.
+### 4. Current In-Tree Impact Assessment
 
-### 5. SCOPE AND RISK ASSESSMENT
+I verified that no current in-tree code in 6.19.y uses `Mutex<SomeType>`
+where `SomeType` directly contains `ARef<T>`. The `rust_misc_device.rs`
+sample has `ARef<Device>` as a sibling field to `Mutex<Inner>`, not
+inside the Mutex. The binder driver similarly keeps `ARef<Mm>` separate
+from its `Mutex<()>`.
 
-- **Lines changed:** 3 net additions (new goto label, iounmap call,
-  changed goto target)
-- **Files changed:** 1 (`drivers/pci/msi/msi.c`)
-- **Risk:** Extremely low. The fix only adds cleanup on an error path.
-  It cannot affect the success path at all.
-- **Subsystem:** PCI MSI-X — core PCI infrastructure used by virtually
-  every modern PCI device driver
+However, the pattern of putting `ARef<T>` inside a mutex-protected
+struct is a completely natural and common systems programming pattern.
+Anyone developing Rust kernel modules targeting 6.19.y would likely hit
+this. The commit `0bc605713f16a` ("rust: debugfs: Implement BinaryReader
+for Mutex<T> only when T is Unpin") already shows that the DerefMut
+Unpin bound caused a real build failure in linux-next, demonstrating
+that these cascading effects are real.
 
-### 6. USER IMPACT
+### 5. Risk Assessment
 
-The resource leak (ioremap virtual address space leak) occurs every time
-MSI-X setup fails and the driver retries or the device is reprobed. In
-hot-plug scenarios or with drivers that unbind/rebind (e.g., VFIO
-passthrough, driver reloading), this could compound over time. While not
-a crash or security issue, it's a real resource leak in a core subsystem
-path that can lead to eventual `ioremap()` failures.
+- **Lines changed**: 3 (1 comment + 2 code)
+- **Regression risk**: Effectively zero. Implementing `Unpin` for a
+  pointer wrapper type is standard practice in Rust and cannot break
+  existing code (it only relaxes a constraint, making more code
+  compile).
+- **Scope**: Single file (`rust/kernel/sync/aref.rs`), single trait
+  implementation
+- **Reviews**: 3 expert reviewers (Daniel Almeida, Alexandre Courbot,
+  Benno Lossin)
+- **Author**: Alice Ryhl, a key Rust-for-Linux contributor at Google
 
-### 7. STABILITY INDICATORS
+### 6. Classification
 
-- Authored by a contributor who has multiple accepted fixes for similar
-  resource leaks in the kernel
-- Applied and changelog massaged by Thomas Gleixner (irq subsystem
-  maintainer)
-- The fix pattern (adding iounmap on error path) is a textbook leak fix
-  with zero ambiguity
+This is a **build fix / type system correctness fix**. While no in-tree
+code currently triggers the build failure in 6.19.y, the fix addresses
+an incorrectness in `ARef`'s trait implementation that was made
+practically impactful by the lock pinning changes already present in
+6.19.y. It is NOT a new feature - it corrects an overly restrictive
+auto-derived trait bound that was wrong from the start but didn't matter
+until the DerefMut bound was added.
 
-### 8. CLASSIFICATION
+### 7. Conclusion
 
-This is a **resource leak fix** — a missing `iounmap()` on an error
-path. It fixes a real bug, is small and contained, introduces no new
-features or APIs, and follows the standard kernel error handling
-pattern.
+**Arguments for YES:**
+- Fixes a genuine type system incorrectness in `ARef<T>`
+- Trivially small (2 lines of actual code), obviously correct, zero
+  regression risk
+- Well-reviewed by 3 Rust-for-Linux experts
+- The prerequisite changes that make this issue observable are already
+  in 6.19.y
+- Analogous to how `Box<T>`, `Arc<T>`, `Rc<T>` implement `Unpin` in std
+- The same DerefMut Unpin bound already caused a real build failure in
+  another subsystem
 
-The fix is small, surgical, obviously correct, and meets all stable
-kernel criteria. It fixes a genuine resource leak in core PCI MSI-X
-initialization that affects all currently maintained stable trees.
+**Arguments for NO:**
+- No current in-tree code in 6.19.y directly triggers the build failure
+- The commit is still in linux-next, pending mainline merge
+- Could be viewed as adding new behavior (new trait implementation)
+  rather than fixing a bug
+
+On balance, the fix is small enough and correct enough that the benefit
+of having it in 6.19.y outweighs the negligible risk. The lock pinning
+changes already in 6.19.y made `ARef<T>` functionally broken for use
+inside Mutex-protected structures, and this 2-line fix corrects that.
+The lack of current in-tree code hitting it is mitigated by the fact
+that the pattern is natural and expected, and similar cascading build
+failures from the same root cause have already been observed.
 
 **YES**
 
- drivers/pci/msi/msi.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ rust/kernel/sync/aref.rs | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/pci/msi/msi.c b/drivers/pci/msi/msi.c
-index 34d664139f48f..e010ecd9f90dd 100644
---- a/drivers/pci/msi/msi.c
-+++ b/drivers/pci/msi/msi.c
-@@ -737,7 +737,7 @@ static int msix_capability_init(struct pci_dev *dev, struct msix_entry *entries,
+diff --git a/rust/kernel/sync/aref.rs b/rust/kernel/sync/aref.rs
+index 0d24a0432015d..0616c0353c2b3 100644
+--- a/rust/kernel/sync/aref.rs
++++ b/rust/kernel/sync/aref.rs
+@@ -83,6 +83,9 @@ unsafe impl<T: AlwaysRefCounted + Sync + Send> Send for ARef<T> {}
+ // example, when the reference count reaches zero and `T` is dropped.
+ unsafe impl<T: AlwaysRefCounted + Sync + Send> Sync for ARef<T> {}
  
- 	ret = msix_setup_interrupts(dev, entries, nvec, affd);
- 	if (ret)
--		goto out_disable;
-+		goto out_unmap;
- 
- 	/* Disable INTX */
- 	pci_intx_for_msi(dev, 0);
-@@ -758,6 +758,8 @@ static int msix_capability_init(struct pci_dev *dev, struct msix_entry *entries,
- 	pcibios_free_irq(dev);
- 	return 0;
- 
-+out_unmap:
-+	iounmap(dev->msix_base);
- out_disable:
- 	dev->msix_enabled = 0;
- 	pci_msix_clear_and_set_ctrl(dev, PCI_MSIX_FLAGS_MASKALL | PCI_MSIX_FLAGS_ENABLE, 0);
++// Even if `T` is pinned, pointers to `T` can still move.
++impl<T: AlwaysRefCounted> Unpin for ARef<T> {}
++
+ impl<T: AlwaysRefCounted> ARef<T> {
+     /// Creates a new instance of [`ARef`].
+     ///
 -- 
 2.51.0
 
