@@ -1,46 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4369D19F12A;
-	Thu, 12 Feb 2026 01:10:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00E321E8826;
+	Thu, 12 Feb 2026 01:10:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770858614; cv=none; b=WCkaZ96qxDHrC2K/6NKAhnBLu/C0fkoVTPYK+jEtH3B1A68O2WIy3saSl0wY++5gphQQn0fw5HDK5LTWkotRbUi8xwYfYwLSXevRjD0hfKWahtErdcPILWI/llx1ZMfWekSlr8Cwxz2SCaXf6FhEcJR4ADaThsQSPCsKxIunndQ=
+	t=1770858616; cv=none; b=FTntgMB5wZn0ADOqOMK+PBYCGdVMMxtHLi2SukTujyZN8ODdbzJ5GR/VPZCQ/7UDOy85xWv/RxDxDiS4PjL5WvhcB7pymJvd8ldOmtPfmGrKPEzEH2MxqaC6nBxBYY+Id9OlWyjfvxX6/tYRIuwekL81q8AlpsuZOGbPTTAEf6w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770858614; c=relaxed/simple;
-	bh=aC9VuZzl3E0a8Sb4VzMp8Q9ljH2mVfamJHx5wdxBqRU=;
+	s=arc-20240116; t=1770858616; c=relaxed/simple;
+	bh=9QpUfoGBFUgI+aI9SJipx7pdiJQITD9AX/BNdWbpuI0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iBwLHYScFMsXoLTTKFF+3oGoYeCzO+oWCU8lg06GyPEoHR0AJhMLiBTJEoRXUXDXA16ibsxwc8dPQRNKl4H6kSdovCkM23YFnvEPevFoueMLsYfD3M2zQ9nm8wfquNwXzQ+DUkIOV9ZLkrWmDsCipyKt8s0LyLQYNnF95Y1Zt7c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=B1VPU6Yd; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=pY4AX5eBo/1dDPVijjld6BUry+EXtpomHDo6r2FVHggCm8bQ6o3At280W2EzxccqDcY+PxQljnAkjvpFcAdy/SSMu3xr2ajh9ODv0XYMyn5J4RG8BQRKbX82fwCqChg4QcsgGW5uFuNKDrLlECXJQZlZF5FJwg/MojThDgNwGr8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ei6iUwuV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="B1VPU6Yd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E4F43C4CEF7;
-	Thu, 12 Feb 2026 01:10:12 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ei6iUwuV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 92421C2BC9E;
+	Thu, 12 Feb 2026 01:10:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1770858614;
-	bh=aC9VuZzl3E0a8Sb4VzMp8Q9ljH2mVfamJHx5wdxBqRU=;
+	s=k20201202; t=1770858615;
+	bh=9QpUfoGBFUgI+aI9SJipx7pdiJQITD9AX/BNdWbpuI0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=B1VPU6YdK/Aq5h96Z5iPfCMdapR0Hgiajs0rJVtFdG+8MzlJcnze5hGkNz9qLdU6x
-	 2+nFtbxeTK5GccG2OL4sn00+QB7uiOfS8NzxDhgbcyhlYyCXgbIkdkrAAdngIrPyY5
-	 PMgGL4IX8HmzftZdDybYvH74sc0OtWOjkNVRX7a6kbgBr0V20KzhN4xAKb5lhx1eQn
-	 BYuYybw8ZKZb/VESt8+XMKg/+1hRShwWJmnlZF3qeDLVPMvX3A4mRHPt9se/LNl8X+
-	 TzHKMJ3Hq77vWrVlDDCEc0iiVRcJTlXDU1vIAW77CvVsXoWkI0EQ7qZcO+qztBRmSY
-	 cBm9/Fw9YxFow==
+	b=ei6iUwuVTmFou/r2ZjLBDNgT6YbQlglj5ETZAGCuuXTUnQlKXShSkWhBHpM9mNbOT
+	 kp0xNZJ8cWJGAmnFo1FjGLcmok80pmETaqVV8M8aGdMli9vyxe1GyKpORS9ASD9Dba
+	 bDNYmX2kvu7sJUJ70oeoZrDPb/VB9auK9i1aQp9rPNJY+ERS43Zm8qbpo/nxGFRm5I
+	 t/2ycVNXaF1CihvvUa58O2zAmpLFJ9oj5FkiMfkPAfWdFYv7El3rArmjLhOl2vZb30
+	 06T2UcBkgqjT4RYz/n6k4XskOWnjrnSG6F25llyC31ugMpud/Vm9legtkH5UZz88Fq
+	 i54edokl0u7ww==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Martin Schiller <ms@dev.tdt.de>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
-	Dapeng Mi <dapeng1.mi@linux.intel.com>,
+Cc: Anton Protopopov <a.s.protopopov@gmail.com>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	mingo@redhat.com,
-	acme@kernel.org,
-	namhyung@kernel.org,
-	linux-perf-users@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.19-6.18] perf/x86/intel: Add Airmont NP
-Date: Wed, 11 Feb 2026 20:09:33 -0500
-Message-ID: <20260212010955.3480391-10-sashal@kernel.org>
+	daniel@iogearbox.net,
+	andrii@kernel.org,
+	bpf@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.19-6.18] bpf: Properly mark live registers for indirect jumps
+Date: Wed, 11 Feb 2026 20:09:34 -0500
+Message-ID: <20260212010955.3480391-11-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260212010955.3480391-1-sashal@kernel.org>
 References: <20260212010955.3480391-1-sashal@kernel.org>
@@ -53,174 +50,142 @@ MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.19
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Martin Schiller <ms@dev.tdt.de>
+From: Anton Protopopov <a.s.protopopov@gmail.com>
 
-[ Upstream commit a08340fd291671c54d379d285b2325490ce90ddd ]
+[ Upstream commit d1aab1ca576c90192ba961094d51b0be6355a4d6 ]
 
-The Intel / MaxLinear Airmont NP (aka Lightning Mountain) supports the
-same architectual and non-architecural events as Airmont.
+For a `gotox rX` instruction the rX register should be marked as used
+in the compute_insn_live_regs() function. Fix this.
 
-Signed-off-by: Martin Schiller <ms@dev.tdt.de>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Reviewed-by: Dapeng Mi <dapeng1.mi@linux.intel.com>
-Link: https://patch.msgid.link/20251124074846.9653-3-ms@dev.tdt.de
+Signed-off-by: Anton Protopopov <a.s.protopopov@gmail.com>
+Link: https://lore.kernel.org/r/20260114162544.83253-2-a.s.protopopov@gmail.com
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-This confirms the commit under review only touches `core.c`, and other
-files in the perf events subsystem also lack Airmont NP support (which
-may be handled by other patches in the series, but this commit is
-standalone).
+Now I have a complete picture. Let me summarize my analysis.
 
 ---
 
-## Comprehensive Analysis
+## Detailed Analysis
 
-### 1. COMMIT MESSAGE ANALYSIS
+### 1. Commit Message Analysis
 
-**Subject:** `perf/x86/intel: Add Airmont NP`
+The commit fixes `compute_insn_live_regs()` so that for a `gotox rX`
+instruction (BPF indirect jump via register), the register `rX` is
+properly marked as "used" in the DFA-based liveness analysis.
 
-The commit adds the `INTEL_ATOM_AIRMONT_NP` (Lightning Mountain SoC, CPU
-model 0x75) case label to the Silvermont/Airmont PMU initialization
-block in `intel_pmu_init()`. The commit message states this CPU supports
-the same architectural and non-architectural events as Airmont, so it
-should share the same event tables.
+### 2. Code Change Analysis
 
-The commit was reviewed by `Dapeng Mi <dapeng1.mi@linux.intel.com>` (an
-Intel PMU engineer) and merged by Peter Zijlstra. The patch link
-`20251124074846.9653-3-ms@dev.tdt.de` indicates this is patch 3 of a
-series, but the change itself is self-contained.
+The change is to the `BPF_JMP`/`BPF_JMP32` → `BPF_JA` case within
+`compute_insn_live_regs()`.
 
-### 2. CODE CHANGE ANALYSIS
+**Before the fix**: `BPF_JA` fell through to `BPF_JCOND`, both setting
+`def=0, use=0`. This means for a `gotox rX` instruction (`BPF_JA |
+BPF_X`), the destination register was **not** marked as "used" — the
+liveness analysis treated it as if no register was read.
 
-The diff shows a **single-line addition**:
+**After the fix**: `BPF_JA` gets its own case block that distinguishes
+between:
+- `BPF_SRC == BPF_X` (gotox rX): `use = dst` — marks the destination
+  register as used (correct)
+- `BPF_SRC == BPF_K` (regular goto): `use = 0` — no register used (same
+  as before)
 
-```7407:7408:arch/x86/events/intel/core.c
-        case INTEL_ATOM_AIRMONT:
-        case INTEL_ATOM_AIRMONT_NP:
-```
+### 3. Impact Assessment
 
-This adds `case INTEL_ATOM_AIRMONT_NP:` to an existing `switch
-(boot_cpu_data.x86_vfm)` case block that groups Silvermont and Airmont
-CPUs together. The block configures:
-- Cache event IDs (`slm_hw_cache_event_ids`)
-- Cache extra regs (`slm_hw_cache_extra_regs`)
-- LBR initialization (`intel_pmu_lbr_init_slm()`)
-- Event constraints (`intel_slm_event_constraints`)
-- PEBS constraints (`intel_slm_pebs_event_constraints`)
-- Extra registers (`intel_slm_extra_regs`)
-- TopDown and format attributes
+The liveness data (`live_regs_before`) is consumed in two critical
+verifier functions:
 
-**Without this patch:** On Airmont NP (Lightning Mountain) systems,
-`intel_pmu_init()` falls through to the `default:` case, which only
-provides generic architectural perfmon support (using the version-based
-sub-switch). Users would get:
-- No Silvermont-specific hardware cache event support
-- No LBR (Last Branch Record) support
-- Generic event constraints instead of Silvermont-tuned ones
-- No PEBS (Processor Event-Based Sampling) support appropriate for the
-  microarchitecture
-- No TopDown or extra format attributes
+- **`clean_func_state()`** (line 18980): Clears registers that aren't
+  live, calling `__mark_reg_not_init()`. If the gotox register is
+  incorrectly marked as not-live, its state gets cleared before state
+  comparison.
+- **`func_states_equal()`** (line 19450): Only compares registers that
+  are live. If the gotox register is incorrectly marked not-live, two
+  states that differ in that register will be considered equal —
+  potentially causing **incorrect state pruning**.
 
-This significantly degrades perf monitoring capability on real hardware.
+Incorrect state pruning in the BPF verifier is a **security-relevant
+bug**: it could cause the verifier to accept BPF programs that should be
+rejected, since it might skip verification paths where the gotox
+register has a different (potentially unsafe) value.
 
-### 3. CLASSIFICATION
+### 4. Feature Timeline / Dependency Analysis
 
-This is a **device ID addition to an existing driver**, which is one of
-the explicitly enumerated exceptions allowed in stable:
+| Feature | Commit | First Appears |
+|---------|--------|---------------|
+| DFA live regs analysis | `14c8552db644` | v6.15 |
+| `gotox` (indirect jumps) | `493d9e0d60833` | v6.19 |
+| **This fix** | `d1aab1ca576c` | Not yet in mainline (only in next
+tree) |
 
-> "NEW DEVICE IDs (Very Common): Adding PCI IDs, USB IDs, ACPI IDs, etc.
-to existing drivers. These are trivial one-line additions that enable
-hardware support. Rule: The driver must already exist in stable; only
-the ID is new."
+Key findings:
+- **v6.19** (released Feb 8, 2026) contains both the liveness analysis
+  AND the gotox feature — meaning v6.19.y has this bug
+- **v6.18.y and earlier** do NOT have `gotox` at all — the
+  `BPF_JA|BPF_X` instruction cannot appear in programs on those kernels,
+  making the bug unreachable
+- The fix is **only relevant to 6.19.y stable**
 
-The `INTEL_ATOM_AIRMONT_NP` define (model `IFM(6, 0x75)`) has existed in
-`arch/x86/include/asm/intel-family.h` since kernel v5.4 (commit
-`855fa1f362ca`, September 2019). This means it is available in **all
-currently maintained stable trees** (5.4, 5.10, 5.15, 6.1, 6.6, 6.12).
-The Silvermont/Airmont event tables and LBR code all predate v5.4 as
-well.
+### 5. Fix Quality
 
-The CPU model is already handled in multiple other subsystems:
-- `arch/x86/kernel/cpu/common.c` - vulnerability whitelist
-- `arch/x86/kernel/cpu/intel.c` - TSC features
-- `arch/x86/kernel/tsc_msr.c` - TSC frequency
-- `drivers/thermal/intel/intel_tcc.c` - thermal management
+- **Small and surgical**: +6 lines, -0 lines of logic; just splits a
+  case label and adds a condition
+- **Obviously correct**: An instruction that reads a register must mark
+  that register as "used" in liveness analysis
+- **No risk to existing paths**: The regular `goto` (BPF_K) path still
+  gets `use=0`, and `BPF_JCOND` still gets `use=0` — behavior unchanged
+  for all non-gotox instructions
+- **Self-contained**: No dependencies on other patches
 
-The perf events subsystem was simply missed when the CPU ID was first
-added.
+### 6. Stable Tree Applicability
 
-### 4. SCOPE AND RISK ASSESSMENT
+- **6.19.y**: YES — has both the liveness analysis and gotox feature;
+  this bug is live
+- **6.18.y and earlier**: NOT applicable — no gotox feature exists, bug
+  is unreachable
+- **Risk**: Very low — the change is minimal and only affects the new
+  gotox code path
 
-- **Lines changed:** 1 (single `case` label addition)
-- **Files touched:** 1 (`arch/x86/events/intel/core.c`)
-- **Risk:** Extremely low - this is a fall-through case label addition
-  to an existing switch block. It only affects systems with CPUID family
-  6 model 0x75. No other CPU model is affected.
-- **Dependencies:** None. `INTEL_ATOM_AIRMONT_NP` is already defined in
-  `intel-family.h` in all stable trees. The Silvermont event tables all
-  exist in stable.
+### 7. Verdict
 
-### 5. USER IMPACT
-
-The Lightning Mountain (Airmont NP) SoC is used in Intel/MaxLinear
-network gateway devices. The author Martin Schiller is from TDT GmbH, a
-networking equipment company, and has several commits related to
-Lantiq/Intel LGM networking platforms. This is a real embedded platform
-with real users who need proper perf support.
-
-Without this patch, `perf stat`, `perf record`, and other perf tools
-provide only basic generic counter support, missing the Silvermont-
-specific events, PEBS, LBR, and proper event constraints.
-
-### 6. STABILITY INDICATORS
-
-- **Reviewed-by:** Dapeng Mi (Intel PMU engineer)
-- **Merged by:** Peter Zijlstra (perf subsystem maintainer)
-- **Pattern:** This is a well-established pattern - the switch statement
-  in `intel_pmu_init()` has dozens of similar case additions over the
-  years
-- **No possible regression:** Only affects one specific CPU model
-
-### 7. DEPENDENCY CHECK
-
-The commit is fully self-contained. The `INTEL_ATOM_AIRMONT_NP` macro
-exists in all stable trees since v5.4. The Silvermont event tables and
-LBR code it hooks into have existed since well before v5.4. No other
-patches from the series are required for this change to be correct and
-useful.
-
-### Conclusion
-
-This is a textbook example of a device ID addition to an existing driver
-- a single `case` label adding CPU model support to the perf PMU
-initialization switch statement. The CPU model define has existed in the
-kernel since v5.4. The change is trivially correct (confirmed by Intel
-PMU engineer review), zero-risk (only affects one specific CPU model),
-and enables proper perf monitoring on real embedded hardware. It matches
-the explicit stable exception for device ID additions perfectly.
+This is a genuine BPF verifier correctness bug with potential security
+implications (incorrect state pruning could allow unsafe programs). The
+fix is small, obviously correct, and self-contained. It applies to
+v6.19.y stable where the gotox instruction exists. While the bug only
+affects the relatively new `gotox` feature, that feature shipped in
+v6.19 which is now a released kernel with an active stable tree. The BPF
+verifier is a security-critical component and correctness bugs in it are
+treated seriously.
 
 **YES**
 
- arch/x86/events/intel/core.c | 1 +
- 1 file changed, 1 insertion(+)
+ kernel/bpf/verifier.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/arch/x86/events/intel/core.c b/arch/x86/events/intel/core.c
-index bdf3f0d0fe216..d85df652334fb 100644
---- a/arch/x86/events/intel/core.c
-+++ b/arch/x86/events/intel/core.c
-@@ -7405,6 +7405,7 @@ __init int intel_pmu_init(void)
- 	case INTEL_ATOM_SILVERMONT_D:
- 	case INTEL_ATOM_SILVERMONT_MID:
- 	case INTEL_ATOM_AIRMONT:
-+	case INTEL_ATOM_AIRMONT_NP:
- 	case INTEL_ATOM_SILVERMONT_MID2:
- 		memcpy(hw_cache_event_ids, slm_hw_cache_event_ids,
- 			sizeof(hw_cache_event_ids));
+diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
+index f90bf8b5d0ddd..c9c76c1672157 100644
+--- a/kernel/bpf/verifier.c
++++ b/kernel/bpf/verifier.c
+@@ -24844,6 +24844,12 @@ static void compute_insn_live_regs(struct bpf_verifier_env *env,
+ 	case BPF_JMP32:
+ 		switch (code) {
+ 		case BPF_JA:
++			def = 0;
++			if (BPF_SRC(insn->code) == BPF_X)
++				use = dst;
++			else
++				use = 0;
++			break;
+ 		case BPF_JCOND:
+ 			def = 0;
+ 			use = 0;
 -- 
 2.51.0
 
