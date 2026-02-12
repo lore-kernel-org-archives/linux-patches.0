@@ -1,47 +1,46 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DAAE76FC5;
-	Thu, 12 Feb 2026 01:10:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4369D19F12A;
+	Thu, 12 Feb 2026 01:10:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770858612; cv=none; b=ZcG3BOJSsAhE0VfQuGpQSjxseUWSPc9zbnwYvJberc59e/+joAPHUx2eBUSx1sOYzGHQkdiJsW2yT4MR2mHskdSugIyYdegJ0U+exvugDXYVFwlKiZpeKr+S7P4a9SYH2ACYvfNV/hE3V5K7Et/Afz5LIijkQ6oZ9R862CTkbtY=
+	t=1770858614; cv=none; b=WCkaZ96qxDHrC2K/6NKAhnBLu/C0fkoVTPYK+jEtH3B1A68O2WIy3saSl0wY++5gphQQn0fw5HDK5LTWkotRbUi8xwYfYwLSXevRjD0hfKWahtErdcPILWI/llx1ZMfWekSlr8Cwxz2SCaXf6FhEcJR4ADaThsQSPCsKxIunndQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770858612; c=relaxed/simple;
-	bh=tY1f3l3ee3lzvZ7i6WOoDnfPAXcfd0BFXKIKSn5Vqhg=;
+	s=arc-20240116; t=1770858614; c=relaxed/simple;
+	bh=aC9VuZzl3E0a8Sb4VzMp8Q9ljH2mVfamJHx5wdxBqRU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=fVHyMSkp89isNhIvCCJ9W6AQyz97YmToQhm+gwu1w4NkG1l1ZCzie4D0aCqUYWvkmVpcJvW7+q55fTn22cunJj91qrQLwBwA7TlZrjyIcIyDWp6hN5JO321zL5lZKz0ZwDwkL6FY1CZxWgTxlNOQe/7p28oKTQ11xEZst8++/Sk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=gd+cXV+9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=iBwLHYScFMsXoLTTKFF+3oGoYeCzO+oWCU8lg06GyPEoHR0AJhMLiBTJEoRXUXDXA16ibsxwc8dPQRNKl4H6kSdovCkM23YFnvEPevFoueMLsYfD3M2zQ9nm8wfquNwXzQ+DUkIOV9ZLkrWmDsCipyKt8s0LyLQYNnF95Y1Zt7c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=B1VPU6Yd; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="gd+cXV+9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 27699C16AAE;
-	Thu, 12 Feb 2026 01:10:11 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="B1VPU6Yd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E4F43C4CEF7;
+	Thu, 12 Feb 2026 01:10:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1770858612;
-	bh=tY1f3l3ee3lzvZ7i6WOoDnfPAXcfd0BFXKIKSn5Vqhg=;
+	s=k20201202; t=1770858614;
+	bh=aC9VuZzl3E0a8Sb4VzMp8Q9ljH2mVfamJHx5wdxBqRU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gd+cXV+9Uv4Cwpt+1tKcUFbZ60e4w64konBjcBic6ji5cxc/9KF/HNIGRfP6J5xT6
-	 ivB7P0mCfJ8jovqSEc94Is8T3otTXDXiENZTyEOMPk4Jvs2gcsr/uHziTGMZS8AVwc
-	 G1v2k7yEDBhfoDJ6H8vhEwhgGTgyZtsPGbq97JegGFrjVvtNlwo12wgSih/kLn8gBZ
-	 MES6qxNZyyU0866u1TtIf51ZawyXUCxJ893YBxLKjWjqC/IQzlKnWs827JaSJbWTWT
-	 pnYc9+as6+zwLMDvI1KIdKLXUtmncEF/SE4epK+tW4bJ1H1VTOXCIeekks8CwzHR4r
-	 cBvRrSu/sfhww==
+	b=B1VPU6YdK/Aq5h96Z5iPfCMdapR0Hgiajs0rJVtFdG+8MzlJcnze5hGkNz9qLdU6x
+	 2+nFtbxeTK5GccG2OL4sn00+QB7uiOfS8NzxDhgbcyhlYyCXgbIkdkrAAdngIrPyY5
+	 PMgGL4IX8HmzftZdDybYvH74sc0OtWOjkNVRX7a6kbgBr0V20KzhN4xAKb5lhx1eQn
+	 BYuYybw8ZKZb/VESt8+XMKg/+1hRShwWJmnlZF3qeDLVPMvX3A4mRHPt9se/LNl8X+
+	 TzHKMJ3Hq77vWrVlDDCEc0iiVRcJTlXDU1vIAW77CvVsXoWkI0EQ7qZcO+qztBRmSY
+	 cBm9/Fw9YxFow==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Joel Fernandes <joelagnelf@nvidia.com>,
+Cc: Martin Schiller <ms@dev.tdt.de>,
 	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
-	Juri Lelli <juri.lelli@redhat.com>,
-	Andrea Righi <arighi@nvidia.com>,
-	Tejun Heo <tj@kernel.org>,
-	Christian Loehle <christian.loehle@arm.com>,
+	Dapeng Mi <dapeng1.mi@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>,
 	mingo@redhat.com,
-	vincent.guittot@linaro.org,
+	acme@kernel.org,
+	namhyung@kernel.org,
+	linux-perf-users@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.19-6.12] sched/debug: Fix updating of ppos on server write ops
-Date: Wed, 11 Feb 2026 20:09:32 -0500
-Message-ID: <20260212010955.3480391-9-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.19-6.18] perf/x86/intel: Add Airmont NP
+Date: Wed, 11 Feb 2026 20:09:33 -0500
+Message-ID: <20260212010955.3480391-10-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260212010955.3480391-1-sashal@kernel.org>
 References: <20260212010955.3480391-1-sashal@kernel.org>
@@ -54,196 +53,174 @@ MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.19
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Joel Fernandes <joelagnelf@nvidia.com>
+From: Martin Schiller <ms@dev.tdt.de>
 
-[ Upstream commit 6080fb211672aec6ce8f2f5a2e0b4eae736f2027 ]
+[ Upstream commit a08340fd291671c54d379d285b2325490ce90ddd ]
 
-Updating "ppos" on error conditions does not make much sense. The pattern
-is to return the error code directly without modifying the position, or
-modify the position on success and return the number of bytes written.
+The Intel / MaxLinear Airmont NP (aka Lightning Mountain) supports the
+same architectual and non-architecural events as Airmont.
 
-Since on success, the return value of apply is 0, there is no point in
-modifying ppos either. Fix it by removing all this and just returning
-error code or number of bytes written on success.
-
-Signed-off-by: Joel Fernandes <joelagnelf@nvidia.com>
+Signed-off-by: Martin Schiller <ms@dev.tdt.de>
 Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Reviewed-by: Juri Lelli <juri.lelli@redhat.com>
-Reviewed-by: Andrea Righi <arighi@nvidia.com>
-Acked-by: Tejun Heo <tj@kernel.org>
-Tested-by: Christian Loehle <christian.loehle@arm.com>
-Link: https://patch.msgid.link/20260126100050.3854740-3-arighi@nvidia.com
+Reviewed-by: Dapeng Mi <dapeng1.mi@linux.intel.com>
+Link: https://patch.msgid.link/20251124074846.9653-3-ms@dev.tdt.de
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-The code is identical in 6.18 stable and the commit's parent. The patch
-would apply cleanly to 6.18.y and 6.17.y.
-
-Now I have all the information needed for a thorough analysis.
+This confirms the commit under review only touches `core.c`, and other
+files in the perf events subsystem also lack Airmont NP support (which
+may be handled by other patches in the series, but this commit is
+standalone).
 
 ---
 
-## Detailed Analysis
+## Comprehensive Analysis
 
-### 1. Commit Message Analysis
+### 1. COMMIT MESSAGE ANALYSIS
 
-The commit is titled "sched/debug: Fix updating of ppos on server write
-ops" — clearly labeled as a **fix**. The commit message describes
-incorrect handling of the file position pointer (`ppos`) when
-`dl_server_apply_params()` returns an error. The message has strong
-review/test coverage:
-- **Signed-off-by**: Joel Fernandes (NVIDIA), Peter Zijlstra (Intel
-  scheduler maintainer)
-- **Reviewed-by**: Juri Lelli (Red Hat), Andrea Righi (NVIDIA)
-- **Acked-by**: Tejun Heo (well-known kernel developer)
-- **Tested-by**: Christian Loehle (ARM)
+**Subject:** `perf/x86/intel: Add Airmont NP`
 
-### 2. Code Change Analysis — The Bug
+The commit adds the `INTEL_ATOM_AIRMONT_NP` (Lightning Mountain SoC, CPU
+model 0x75) case label to the Silvermont/Airmont PMU initialization
+block in `intel_pmu_init()`. The commit message states this CPU supports
+the same architectural and non-architectural events as Airmont, so it
+should share the same event tables.
 
-The buggy code in `sched_fair_server_write()` (present since the fair
-server was introduced in v6.12-rc1 via `d741f297bceaf`):
+The commit was reviewed by `Dapeng Mi <dapeng1.mi@linux.intel.com>` (an
+Intel PMU engineer) and merged by Peter Zijlstra. The patch link
+`20251124074846.9653-3-ms@dev.tdt.de` indicates this is patch 3 of a
+series, but the change itself is self-contained.
 
-```c
-retval = dl_server_apply_params(&rq->fair_server, runtime, period, 0);
-if (retval)
-    cnt = retval;       // cnt is size_t (unsigned), retval is int
-(-EBUSY = -16)
-                        // cnt becomes (size_t)-16 = 0xFFFFFFFFFFFFFFF0
+### 2. CODE CHANGE ANALYSIS
 
-// ... after scoped_guard ends ...
-*ppos += cnt;           // ppos gets corrupted: advanced by ~18 exabytes
-return cnt;             // returns (ssize_t)(size_t)(-16) = -16 = -EBUSY
-(by accident)
+The diff shows a **single-line addition**:
+
+```7407:7408:arch/x86/events/intel/core.c
+        case INTEL_ATOM_AIRMONT:
+        case INTEL_ATOM_AIRMONT_NP:
 ```
 
-When `dl_server_apply_params()` fails with `-EBUSY` (bandwidth
-overflow), two problems occur:
+This adds `case INTEL_ATOM_AIRMONT_NP:` to an existing `switch
+(boot_cpu_data.x86_vfm)` case block that groups Silvermont and Airmont
+CPUs together. The block configures:
+- Cache event IDs (`slm_hw_cache_event_ids`)
+- Cache extra regs (`slm_hw_cache_extra_regs`)
+- LBR initialization (`intel_pmu_lbr_init_slm()`)
+- Event constraints (`intel_slm_event_constraints`)
+- PEBS constraints (`intel_slm_pebs_event_constraints`)
+- Extra registers (`intel_slm_extra_regs`)
+- TopDown and format attributes
 
-**Problem 1 — `*ppos` corruption**: The negative error code `-16` is
-assigned to `cnt` (type `size_t`, unsigned), producing
-`0xFFFFFFFFFFFFFFF0` on 64-bit. This massive value is then added to
-`*ppos`, corrupting the file position. While this "accidentally" works
-for returning the error code (due to 2's complement), the file position
-becomes garbage. Subsequent writes to the same file descriptor will
-operate at a corrupt offset.
+**Without this patch:** On Airmont NP (Lightning Mountain) systems,
+`intel_pmu_init()` falls through to the `default:` case, which only
+provides generic architectural perfmon support (using the version-based
+sub-switch). Users would get:
+- No Silvermont-specific hardware cache event support
+- No LBR (Last Branch Record) support
+- Generic event constraints instead of Silvermont-tuned ones
+- No PEBS (Processor Event-Based Sampling) support appropriate for the
+  microarchitecture
+- No TopDown or extra format attributes
 
-**Problem 2 — Type-unsafe error propagation**: The error code is passed
-through `size_t` (unsigned) and back to `ssize_t` (signed). While this
-works by coincidence on 2's complement architectures, it's semantically
-incorrect and relies on implementation-defined behavior.
+This significantly degrades perf monitoring capability on real hardware.
 
-The fix is clean:
-1. Initialize `retval = 0`
-2. Remove the `if (retval) cnt = retval;` hack
-3. After the server restart, check `if (retval < 0) return retval;` —
-   properly returning the error code without modifying `ppos`
-4. On success, `*ppos += cnt; return cnt;` works correctly as before
+### 3. CLASSIFICATION
 
-### 3. Classification
+This is a **device ID addition to an existing driver**, which is one of
+the explicitly enumerated exceptions allowed in stable:
 
-This is a **real bug fix** for incorrect error handling in a debugfs
-write interface. It's not a feature, not a cleanup — the commit fixes
-actual incorrect behavior (ppos corruption on error).
+> "NEW DEVICE IDs (Very Common): Adding PCI IDs, USB IDs, ACPI IDs, etc.
+to existing drivers. These are trivial one-line additions that enable
+hardware support. Rule: The driver must already exist in stable; only
+the ID is new."
 
-### 4. Scope and Risk Assessment
+The `INTEL_ATOM_AIRMONT_NP` define (model `IFM(6, 0x75)`) has existed in
+`arch/x86/include/asm/intel-family.h` since kernel v5.4 (commit
+`855fa1f362ca`, September 2019). This means it is available in **all
+currently maintained stable trees** (5.4, 5.10, 5.15, 6.1, 6.6, 6.12).
+The Silvermont/Airmont event tables and LBR code all predate v5.4 as
+well.
 
-- **Lines changed**: 7 (4 insertions, 3 deletions) — extremely small
-- **Files touched**: 1 (`kernel/sched/debug.c`)
-- **Risk**: Minimal. The change is purely about error path handling. The
-  success path is unchanged.
-- **Self-contained**: Yes, no dependencies on other commits in the
-  series
+The CPU model is already handled in multiple other subsystems:
+- `arch/x86/kernel/cpu/common.c` - vulnerability whitelist
+- `arch/x86/kernel/cpu/intel.c` - TSC features
+- `arch/x86/kernel/tsc_msr.c` - TSC frequency
+- `drivers/thermal/intel/intel_tcc.c` - thermal management
 
-### 5. User Impact
+The perf events subsystem was simply missed when the CPU ID was first
+added.
 
-- **Who is affected**: Any user writing to
-  `/sys/kernel/debug/sched/fair_server/cpuN/{runtime,period}` when
-  `dl_server_apply_params()` fails (returns `-EBUSY` due to bandwidth
-  overflow)
-- **Severity**: Low-to-moderate. Debugfs is root-only, and the `-EBUSY`
-  error path is somewhat uncommon. However, when triggered, it corrupts
-  the file position, which could confuse tools writing to this interface
-- **Affected versions**: All kernels 6.12+ (since the fair server
-  interface was introduced)
+### 4. SCOPE AND RISK ASSESSMENT
 
-### 6. Stability and Clean Backport
+- **Lines changed:** 1 (single `case` label addition)
+- **Files touched:** 1 (`arch/x86/events/intel/core.c`)
+- **Risk:** Extremely low - this is a fall-through case label addition
+  to an existing switch block. It only affects systems with CPUID family
+  6 model 0x75. No other CPU model is affected.
+- **Dependencies:** None. `INTEL_ATOM_AIRMONT_NP` is already defined in
+  `intel-family.h` in all stable trees. The Silvermont event tables all
+  exist in stable.
 
-- The bug exists identically in all stable trees from 6.12.y through
-  6.18.y
-- The fix applies cleanly to 6.17.y and 6.18.y (identical code)
-- For 6.12.y through 6.16.y, minor context adaptation may be needed
-  (different `dl_server_stop` conditional, `h_nr_running` vs
-  `h_nr_queued`), but the core fix is the same
-- Well-tested: Tested-by, multiple Reviewed-by tags from respected
-  developers
-- Signed off by the scheduler maintainer (Peter Zijlstra)
+### 5. USER IMPACT
 
-### 7. Dependency Check
+The Lightning Mountain (Airmont NP) SoC is used in Intel/MaxLinear
+network gateway devices. The author Martin Schiller is from TDT GmbH, a
+networking equipment company, and has several commits related to
+Lantiq/Intel LGM networking platforms. This is a real embedded platform
+with real users who need proper perf support.
 
-- The commit does NOT depend on patch 2 in the series (which only
-  touches `deadline.c`)
-- It does NOT depend on the `kstrtoull_from_user` conversion (that
-  conversion affected `sched_scaling_write`, not the fair server write)
-- The affected code exists in all stable trees from 6.12 onward
+Without this patch, `perf stat`, `perf record`, and other perf tools
+provide only basic generic counter support, missing the Silvermont-
+specific events, PEBS, LBR, and proper event constraints.
 
-### Decision
+### 6. STABILITY INDICATORS
 
-This commit fixes a real bug (file position corruption on error path) in
-the scheduler's debugfs interface. It is:
-- Small and surgical (7 lines)
-- Obviously correct
-- Well-reviewed and tested by multiple kernel developers including the
-  scheduler maintainer
-- Self-contained with no dependencies
-- Applicable to all stable trees 6.12+
+- **Reviewed-by:** Dapeng Mi (Intel PMU engineer)
+- **Merged by:** Peter Zijlstra (perf subsystem maintainer)
+- **Pattern:** This is a well-established pattern - the switch statement
+  in `intel_pmu_init()` has dozens of similar case additions over the
+  years
+- **No possible regression:** Only affects one specific CPU model
 
-The severity is on the lower end (debugfs, root-only, uncommon error
-path), but the fix is low-risk and clearly beneficial. The code was
-incorrect from day one.
+### 7. DEPENDENCY CHECK
+
+The commit is fully self-contained. The `INTEL_ATOM_AIRMONT_NP` macro
+exists in all stable trees since v5.4. The Silvermont event tables and
+LBR code it hooks into have existed since well before v5.4. No other
+patches from the series are required for this change to be correct and
+useful.
+
+### Conclusion
+
+This is a textbook example of a device ID addition to an existing driver
+- a single `case` label adding CPU model support to the perf PMU
+initialization switch statement. The CPU model define has existed in the
+kernel since v5.4. The change is trivially correct (confirmed by Intel
+PMU engineer review), zero-risk (only affects one specific CPU model),
+and enables proper perf monitoring on real embedded hardware. It matches
+the explicit stable exception for device ID additions perfectly.
 
 **YES**
 
- kernel/sched/debug.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ arch/x86/events/intel/core.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/kernel/sched/debug.c b/kernel/sched/debug.c
-index 41caa22e0680a..93f009e1076d8 100644
---- a/kernel/sched/debug.c
-+++ b/kernel/sched/debug.c
-@@ -345,8 +345,8 @@ static ssize_t sched_fair_server_write(struct file *filp, const char __user *ubu
- 	long cpu = (long) ((struct seq_file *) filp->private_data)->private;
- 	struct rq *rq = cpu_rq(cpu);
- 	u64 runtime, period;
-+	int retval = 0;
- 	size_t err;
--	int retval;
- 	u64 value;
- 
- 	err = kstrtoull_from_user(ubuf, cnt, 10, &value);
-@@ -380,8 +380,6 @@ static ssize_t sched_fair_server_write(struct file *filp, const char __user *ubu
- 		dl_server_stop(&rq->fair_server);
- 
- 		retval = dl_server_apply_params(&rq->fair_server, runtime, period, 0);
--		if (retval)
--			cnt = retval;
- 
- 		if (!runtime)
- 			printk_deferred("Fair server disabled in CPU %d, system may crash due to starvation.\n",
-@@ -389,6 +387,9 @@ static ssize_t sched_fair_server_write(struct file *filp, const char __user *ubu
- 
- 		if (rq->cfs.h_nr_queued)
- 			dl_server_start(&rq->fair_server);
-+
-+		if (retval < 0)
-+			return retval;
- 	}
- 
- 	*ppos += cnt;
+diff --git a/arch/x86/events/intel/core.c b/arch/x86/events/intel/core.c
+index bdf3f0d0fe216..d85df652334fb 100644
+--- a/arch/x86/events/intel/core.c
++++ b/arch/x86/events/intel/core.c
+@@ -7405,6 +7405,7 @@ __init int intel_pmu_init(void)
+ 	case INTEL_ATOM_SILVERMONT_D:
+ 	case INTEL_ATOM_SILVERMONT_MID:
+ 	case INTEL_ATOM_AIRMONT:
++	case INTEL_ATOM_AIRMONT_NP:
+ 	case INTEL_ATOM_SILVERMONT_MID2:
+ 		memcpy(hw_cache_event_ids, slm_hw_cache_event_ids,
+ 			sizeof(hw_cache_event_ids));
 -- 
 2.51.0
 
