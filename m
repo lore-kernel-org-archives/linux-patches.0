@@ -1,47 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71D576FC5;
-	Thu, 12 Feb 2026 01:09:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F8C81D5174;
+	Thu, 12 Feb 2026 01:09:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770858598; cv=none; b=JOMeH5ytlkHEZDSSdErEbu/1Y/Hl49708ZCLs7ltQlTmbu4Glwas8JhDE1vGAJbN+eCBo2o5oeDmRwxNtAo87vw95BGZVXsOmC7wrmKCFlx6+QgToit6adSdNd358Kz2ysgU9uPFpAy8CjlH2DnnFHuuh2/vZDVwLiRTU2xE05Q=
+	t=1770858599; cv=none; b=QiChVP1Lzqs7/BEnyx5T1vFabVvFPcAbILx5qCaCddq9CvENK0Qwoybj7i+Ed8g98jfAlYTOnu+gsWZurS4vSHtJQoKm/MNlFwKZGbyOQ3+pZaReT2Fqf32BCuu54r+ojLKWbFNg24qtUixG+zBreb4843AWTChIMYtn5LXp31s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770858598; c=relaxed/simple;
-	bh=eDMN7TeT8gO7bJmdnntSroD7vC4jze3nfAXOLb2c+8k=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=EjZXcqiO59TaFmp2xLE+hFrp/sUNBB8gw6xmbkYjwBMQorD7jcws7SWmPZn61eqrPujbKVDO5lxMKs9UVkADIOzQWFr1RM6I1l8h7IJ/Jx534Liat7FCp432wLpSXrDwr4L12Y235FptZ9zBNPx14Cjc13Nuu0zK4025TbTu1Jg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ctbAlRNs; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1770858599; c=relaxed/simple;
+	bh=Xk6C0tLZl0mcPul5b73YwJ7OykcI6cowwrKSzOOhHLI=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=atSwUN5hJNhUmu9Eb1yYuRc8GLDqksxTfSZrT0d+BvbxkwlxbdnlMWOBw5MjUY7Gn888LUbH1h5W3TgSjJAcoqFstdtRGD7OvuRkUkOYmIgc5o4iL9NJe/xWT+b8SY0sFQbWAvttbBVfFLLVdPGIVStssg1M5YinM5uPCMll4DI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=qyF4+crk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ctbAlRNs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC6C3C4CEF7;
-	Thu, 12 Feb 2026 01:09:56 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="qyF4+crk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8037DC19423;
+	Thu, 12 Feb 2026 01:09:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1770858598;
-	bh=eDMN7TeT8gO7bJmdnntSroD7vC4jze3nfAXOLb2c+8k=;
-	h=From:To:Cc:Subject:Date:From;
-	b=ctbAlRNsU6tC4uNeKUn0eCOwujyZAXv98srbpMcgoCISTvxmWYP78aqdOT22vpY8k
-	 EkJoKrcNxkkFzjrXMXeyBYUHx/J2PZCiX1l2kyMlVhbIiC8jnVRAu3X9bMaB+GMndx
-	 bu2y8TGDZgw7UFtVA19M9SsSjz4vGtB7o7tMD+/R1dixaWeY56622i2jGKdL1YiZ/U
-	 PbzNxxd9un1ZlYtKhAmdJplGWU7oK6gZFeRH03B/0kBOYnSaLSFtAHCPdgk3158hSQ
-	 Xz3FHbzhuA+5u055ZcF21kY84MiuKoiWJbh2iixWrTykfhLX5ejEuDKCuxABbIhwMe
-	 MX4iAtH1oPvwQ==
+	s=k20201202; t=1770858599;
+	bh=Xk6C0tLZl0mcPul5b73YwJ7OykcI6cowwrKSzOOhHLI=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=qyF4+crk4tum6+JV8I8ShusljSA54LAndWhLcV9hn18rMLHS613PfJwiyttYbWLPf
+	 3+iYQD/cRVGIjBAlKbhUWsTzfzkKErxsv5MMc8ndExChZ92qwihZA461A1dQrF14YZ
+	 MttccQmQ8lg34dUGwyju5g7ZBr5WHdWXnSj2uRBNciP5P0vZY9xEZBURco/Z6kqXLI
+	 nfsIc67TGbLzOBfss+D5oQdn6tTwjgE0/CAppHQGinwa6c7Kn6TarKximKZgt3Y0SH
+	 CtXuV/1/xV1ky2FwORbRpWxf0IV3FUP85gaIxY888M9XwjTjstafuTRidEaDTgVgZe
+	 9239zV3RQOrkg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: =?UTF-8?q?Niklas=20S=C3=B6derlund?= <niklas.soderlund+renesas@ragnatech.se>,
-	Daniel Lezcano <daniel.lezcano@linaro.org>,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
+Cc: Sami Tolvanen <samitolvanen@google.com>,
+	=?UTF-8?q?Michal=20Such=C3=A1nek?= <msuchanek@suse.de>,
 	Sasha Levin <sashal@kernel.org>,
-	tglx@kernel.org,
-	bigeasy@linutronix.de,
-	clrkwllms@kernel.org,
-	rostedt@goodmis.org,
-	linux-kernel@vger.kernel.org,
-	linux-rt-devel@lists.linux.dev
-Subject: [PATCH AUTOSEL 6.19-5.10] clocksource/drivers/sh_tmu: Always leave device running after probe
-Date: Wed, 11 Feb 2026 20:09:24 -0500
-Message-ID: <20260212010955.3480391-1-sashal@kernel.org>
+	linux-modules@vger.kernel.org,
+	linux-kbuild@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.19-6.18] gendwarfksyms: Fix build on 32-bit hosts
+Date: Wed, 11 Feb 2026 20:09:25 -0500
+Message-ID: <20260212010955.3480391-2-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
+In-Reply-To: <20260212010955.3480391-1-sashal@kernel.org>
+References: <20260212010955.3480391-1-sashal@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -54,285 +52,207 @@ X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.19
 Content-Transfer-Encoding: 8bit
 
-From: Niklas Söderlund <niklas.soderlund+renesas@ragnatech.se>
+From: Sami Tolvanen <samitolvanen@google.com>
 
-[ Upstream commit b1278972b08e480990e2789bdc6a7c918bc349be ]
+[ Upstream commit ddc54f912a551f6eb0bbcfc3880f45fe27a252cb ]
 
-The TMU device can be used as both a clocksource and a clockevent
-provider. The driver tries to be smart and power itself on and off, as
-well as enabling and disabling its clock when it's not in operation.
-This behavior is slightly altered if the TMU is used as an early
-platform device in which case the device is left powered on after probe,
-but the clock is still enabled and disabled at runtime.
+We have interchangeably used unsigned long for some of the types
+defined in elfutils, assuming they're always 64-bit. This obviously
+fails when building gendwarfksyms on 32-bit hosts. Fix the types.
 
-This has worked for a long time, but recent improvements in PREEMPT_RT
-and PROVE_LOCKING have highlighted an issue. As the TMU registers itself
-as a clockevent provider, clockevents_register_device(), it needs to use
-raw spinlocks internally as this is the context of which the clockevent
-framework interacts with the TMU driver. However in the context of
-holding a raw spinlock the TMU driver can't really manage its power
-state or clock with calls to pm_runtime_*() and clk_*() as these calls
-end up in other platform drivers using regular spinlocks to control
-power and clocks.
-
-This mix of spinlock contexts trips a lockdep warning.
-
-    =============================
-    [ BUG: Invalid wait context ]
-    6.18.0-arm64-renesas-09926-gee959e7c5e34 #1 Not tainted
-    -----------------------------
-    swapper/0/0 is trying to lock:
-    ffff000008c9e180 (&dev->power.lock){-...}-{3:3}, at: __pm_runtime_resume+0x38/0x88
-    other info that might help us debug this:
-    context-{5:5}
-    1 lock held by swapper/0/0:
-    ccree e6601000.crypto: ARM CryptoCell 630P Driver: HW version 0xAF400001/0xDCC63000, Driver version 5.0
-     #0: ffff8000817ec298
-    ccree e6601000.crypto: ARM ccree device initialized
-     (tick_broadcast_lock){-...}-{2:2}, at: __tick_broadcast_oneshot_control+0xa4/0x3a8
-    stack backtrace:
-    CPU: 0 UID: 0 PID: 0 Comm: swapper/0 Not tainted 6.18.0-arm64-renesas-09926-gee959e7c5e34 #1 PREEMPT
-    Hardware name: Renesas Salvator-X 2nd version board based on r8a77965 (DT)
-    Call trace:
-     show_stack+0x14/0x1c (C)
-     dump_stack_lvl+0x6c/0x90
-     dump_stack+0x14/0x1c
-     __lock_acquire+0x904/0x1584
-     lock_acquire+0x220/0x34c
-     _raw_spin_lock_irqsave+0x58/0x80
-     __pm_runtime_resume+0x38/0x88
-     sh_tmu_clock_event_set_oneshot+0x84/0xd4
-     clockevents_switch_state+0xfc/0x13c
-     tick_broadcast_set_event+0x30/0xa4
-     __tick_broadcast_oneshot_control+0x1e0/0x3a8
-     tick_broadcast_oneshot_control+0x30/0x40
-     cpuidle_enter_state+0x40c/0x680
-     cpuidle_enter+0x30/0x40
-     do_idle+0x1f4/0x280
-     cpu_startup_entry+0x34/0x40
-     kernel_init+0x0/0x130
-     do_one_initcall+0x0/0x230
-     __primary_switched+0x88/0x90
-
-For non-PREEMPT_RT builds this is not really an issue, but for
-PREEMPT_RT builds where normal spinlocks can sleep this might be an
-issue. Be cautious and always leave the power and clock running after
-probe.
-
-Signed-off-by: Niklas Söderlund <niklas.soderlund+renesas@ragnatech.se>
-Signed-off-by: Daniel Lezcano <daniel.lezcano@linaro.org>
-Tested-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Link: https://patch.msgid.link/20251202221341.1856773-1-niklas.soderlund+renesas@ragnatech.se
+Reported-by: Michal Suchánek <msuchanek@suse.de>
+Closes: https://lore.kernel.org/linux-modules/aRcxzPxtJblVSh1y@kitsune.suse.cz/
+Tested-by: Michal Suchánek <msuchanek@suse.de>
+Signed-off-by: Sami Tolvanen <samitolvanen@google.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-Now I have a complete picture. Let me compile my thorough analysis.
+Now I have a complete picture. Let me write my analysis.
 
 ---
 
-## Detailed Analysis
+## Comprehensive Analysis
 
 ### 1. COMMIT MESSAGE ANALYSIS
 
-The commit message is thorough and well-written. It clearly describes:
-- **The problem**: An invalid wait context lockdep warning (`[ BUG:
-  Invalid wait context ]`) on PREEMPT_RT kernels
-- **The root cause**: The TMU driver tries to manage PM runtime
-  (`pm_runtime_get_sync`/`pm_runtime_put`) and clock state
-  (`clk_enable`/`clk_disable`) at runtime, but these calls happen within
-  a raw spinlock context from the clockevent framework
-- **The fix strategy**: Leave the device and clock always running after
-  probe
-- **Full stack trace**: Reproduced on real hardware (Renesas Salvator-X
-  board with r8a77965 SoC)
-- **Tested-by**: Geert Uytterhoeven, a very well-known Renesas platform
-  maintainer
-- **Signed off by**: Daniel Lezcano, the clocksource subsystem
-  maintainer
+The subject "gendwarfksyms: Fix build on 32-bit hosts" clearly
+identifies this as a **build fix**. The message explains that `unsigned
+long` was used interchangeably with elfutils types that are always
+64-bit (`uint64_t`), which breaks compilation on 32-bit hosts where
+`unsigned long` is only 32 bits.
 
-### 2. CODE CHANGE ANALYSIS - THE BUG MECHANISM
+Key indicators:
+- **Reported-by:** Michal Suchanek (SUSE engineer) - a real user who hit
+  this building kernels
+- **Tested-by:** Same reporter - confirms the fix works
+- **Closes:** link to lore.kernel.org bug report - documented issue
 
-The bug is a **lock ordering / invalid wait context** issue. The precise
-call chain is:
+### 2. CODE CHANGE ANALYSIS
 
-1. `cpuidle_enter_state` → `__tick_broadcast_oneshot_control` acquires
-   `tick_broadcast_lock` (a **raw spinlock**, lock class `{-...}-{2:2}`)
-2. Inside the raw spinlock, `clockevents_switch_state` →
-   `sh_tmu_clock_event_set_oneshot` → `sh_tmu_clock_event_set_state` →
-   `sh_tmu_enable`
-3. `sh_tmu_enable` calls `pm_runtime_get_sync(&ch->tmu->pdev->dev)`
-   which tries to acquire `dev->power.lock` (a **regular spinlock**,
-   lock class `{-...}-{3:3}`)
+The fix addresses three distinct but related 32-bit portability bugs
+across two files:
 
-I verified this call chain through the code:
-- `___tick_broadcast_oneshot_control` (line 796 of `tick-broadcast.c`)
-  does `raw_spin_lock(&tick_broadcast_lock)` at the top, then at line
-  889 calls `clockevents_switch_state(dev, CLOCK_EVT_STATE_ONESHOT)`
-- Similarly, `broadcast_shutdown_local` calls
-  `clockevents_switch_state(dev, CLOCK_EVT_STATE_SHUTDOWN)` while
-  tick_broadcast_lock is held
-- `tick_broadcast_set_event` also calls `clockevents_switch_state`
-  within the lock
+**Bug 1 - `dwarf.c` (`process_enumerator_type`):**
 
-On **PREEMPT_RT**, regular spinlocks are sleeping locks (they can
-schedule). Acquiring a sleeping lock while holding a raw spinlock is
-**illegal** - it can cause sleeping in atomic context or deadlock. The
-lockdep annotation `{-...}-{2:2}` vs `{-...}-{3:3}` in the stack trace
-confirms the context mismatch.
+The type chain is:
+- `Dwarf_Word` = `GElf_Xword` = `Elf64_Xword` = `uint64_t` (always
+  64-bit)
+- `unsigned long` = 32-bit on 32-bit hosts
 
-### 3. THE FIX
+The pre-fix code passes `&value` (where `value` is `Dwarf_Word` /
+`uint64_t`) to `kabi_get_enumerator_value()`, which expects `unsigned
+long *`. On a 32-bit host, this is a type mismatch: passing a
+`uint64_t*` where `unsigned long*` (4 bytes) is expected. The function
+would write only 4 bytes to a memory location expected to hold 8 bytes,
+leaving the upper half uninitialized. This is both a **compiler
+error/warning** and a **correctness bug**.
 
-The patch is a **pure deletion** (18 lines removed, 0 added):
+The fix introduces a properly-typed `unsigned long override` variable,
+passes it to the function, then assigns `value = override;` to widen it
+back.
 
-1. **`__sh_tmu_enable()`**: Removes `clk_enable()` call (clock stays
-   enabled from probe)
-2. **`sh_tmu_enable()`**: Removes `pm_runtime_get_sync()` call (PM
-   runtime stays active from probe)
-3. **`__sh_tmu_disable()`**: Removes `clk_disable()` call (clock never
-   disabled)
-4. **`sh_tmu_disable()`**: Removes `pm_runtime_put()` call (PM runtime
-   never released)
-5. **`sh_tmu_setup()`**: Removes `clk_disable()` after rate measurement
-   (clock stays enabled)
-6. **`sh_tmu_probe()`**: Removes `pm_runtime_idle()` else branch (PM
-   runtime stays active)
+**Bug 2 - `symbols.c` (format strings):**
 
-The trade-off is slightly higher power consumption (the TMU hardware
-stays powered/clocked when not actively timing), but this is acceptable
-given the alternative is a hard bug.
+`shdr->sh_entsize` is `GElf_Xword` = `uint64_t`, but was printed with
+`%lu` (expects `unsigned long`, 32-bit). Fixed to `"%" PRIu64`.
+Similarly, `sym->addr.address` is `Elf64_Addr` = `uint64_t`, but was
+printed with `%lx`. Fixed to `"%" PRIx64`. The missing `#include
+<inttypes.h>` is added for the `PRIu64`/`PRIx64` macros.
 
-### 4. SUSPEND/RESUME SAFETY
+On 32-bit hosts, these format mismatches would cause:
+- Compiler warnings (`-Wformat`) or errors (`-Werror`)
+- Incorrect printed values (reading wrong stack slots for variadic args)
 
-I verified the suspend/resume paths still work correctly:
-- `sh_tmu_clocksource_suspend` calls `__sh_tmu_disable` (still stops the
-  channel) + `dev_pm_genpd_suspend` (handles power domain)
-- `sh_tmu_clocksource_resume` calls `dev_pm_genpd_resume` +
-  `__sh_tmu_enable` (still restores registers)
-- Since `clk_enable` count stays at 1 (never disabled), the clock
-  framework correctly restores hardware state after genpd resume
+### 3. CLASSIFICATION
 
-### 5. SCOPE AND RISK
+This is unambiguously a **build fix**. Build fixes are explicitly listed
+in the stable kernel rules as appropriate for backporting. They don't
+introduce new features or change runtime behavior - they simply make the
+code compile correctly.
 
-- **Files affected**: 1 file (`drivers/clocksource/sh_tmu.c`)
-- **Lines changed**: 18 deletions, 0 additions
-- **Risk**: Very low - only removes code that dynamically toggles
-  power/clock; the conservative approach (always-on) is simpler and
-  safer
-- **Regression potential**: The only downside is marginally higher power
-  consumption on Renesas platforms using TMU, which is negligible
-- **Self-contained**: No dependencies on other patches; the companion
-  sh_cmt fix (`62524f285c11`) is for a different driver
+### 4. SCOPE AND RISK ASSESSMENT
 
-### 6. APPLICABILITY TO STABLE TREES
+- **Files changed:** 2 (`dwarf.c`, `symbols.c`)
+- **Lines changed:** ~10 meaningful lines
+- **Risk:** Extremely low. The changes are format specifier corrections
+  and a type-narrowing variable addition. They cannot introduce
+  regressions.
+- **Subsystem:** `scripts/gendwarfksyms/` - a build-time host tool, not
+  runtime kernel code. Even if there were a mistake, it couldn't crash
+  the kernel.
 
-I verified the file is **identical** in stable trees 5.15, 6.1, 6.6,
-6.12, and the current HEAD (6.19). The patch will apply cleanly to all
-active stable trees without any modification.
+### 5. APPLICABILITY TO STABLE TREES
 
-### 7. USER IMPACT
+`gendwarfksyms` was introduced in **v6.14-rc1** (commit
+`f28568841ae0a`). I verified:
+- **v6.12 and earlier (LTS):** Do NOT have `gendwarfksyms` - this fix is
+  **not applicable**
+- **v6.14 through v6.19:** All have the buggy code - this fix IS
+  applicable
 
-- **Who is affected**: Users running PREEMPT_RT kernels on Renesas ARM64
-  platforms with TMU timers
-- **Severity without fix**: Invalid wait context → potential sleeping in
-  atomic context → system instability/hang on PREEMPT_RT
-- **PREEMPT_RT relevance**: PREEMPT_RT has been merged into mainline and
-  is supported in stable trees (verified PREEMPT_RT fixes exist in
-  6.12.y stable). This is increasingly used in embedded/industrial
-  systems.
+The buggy code (`%lu` formats, `Dwarf_Word`/`unsigned long` mismatch)
+has existed since the initial introduction in v6.14-rc1. All three bug
+patterns exist in `git show v6.14:scripts/gendwarfksyms/symbols.c` and
+`git show v6.14:scripts/gendwarfksyms/dwarf.c`.
 
-### 8. CLASSIFICATION
+Active stable trees that benefit: **v6.18.y** (and potentially v6.14.y
+through v6.17.y if still maintained).
 
-This is a **locking/synchronization bug fix**:
-- Fixes invalid wait context (raw spinlock → regular spinlock
-  acquisition)
-- Prevents potential sleeping in atomic context on PREEMPT_RT
-- Reproducible with lockdep enabled (PROVE_LOCKING)
-- Real-world impact on PREEMPT_RT builds (not theoretical)
-- Small, surgical, single-driver fix
-- Tested on real hardware
-- Reviewed and signed off by subsystem maintainer
+### 6. USER IMPACT
 
-**YES** signals:
-- Fixes a real lockdep BUG warning (potential deadlock/sleep-in-atomic)
-- Small, contained fix (18 line deletions in one file)
-- Tested-by experienced maintainer
-- Applies cleanly to all stable trees
-- No dependencies
-- Conservative approach (remove complexity, not add it)
+This affects anyone building a 6.14+ kernel on a 32-bit host system with
+`CONFIG_GENDWARFKSYMS` enabled. While 32-bit build hosts are
+increasingly rare, they are still used in some enterprise and embedded
+development environments. The reporter is from SUSE, indicating this
+affects enterprise distribution builds. Without this fix, the build
+simply **fails** on 32-bit hosts.
 
-**NO** signals: None identified.
+### 7. DEPENDENCY CHECK
+
+The fix is completely self-contained. It changes format specifiers, adds
+a standard C include, and introduces a temporary variable. It has **zero
+dependencies** on other commits.
+
+### 8. VERDICT
+
+**Meets stable criteria:**
+- Obviously correct and tested (type/format corrections, Tested-by tag)
+- Fixes a real bug (build failure on 32-bit hosts + potential incorrect
+  behavior)
+- Small and contained (~10 lines across 2 files)
+- No new features, no API changes, no behavioral changes
+- Build fixes are explicitly allowed in stable
+
+**Risk vs. benefit:**
+- Risk: Near zero - trivial type corrections in a host build tool
+- Benefit: Enables building the kernel on 32-bit hosts when
+  gendwarfksyms is enabled
+
+The only limitation is that this fix is only applicable to stable trees
+v6.14.y and newer, since `gendwarfksyms` doesn't exist in the main LTS
+trees (6.12.y, 6.6.y, 6.1.y). But for the trees where it applies, it's a
+clear and necessary build fix.
 
 **YES**
 
- drivers/clocksource/sh_tmu.c | 18 ------------------
- 1 file changed, 18 deletions(-)
+ scripts/gendwarfksyms/dwarf.c   | 4 +++-
+ scripts/gendwarfksyms/symbols.c | 5 +++--
+ 2 files changed, 6 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/clocksource/sh_tmu.c b/drivers/clocksource/sh_tmu.c
-index beffff81c00f3..3fc6ed9b56300 100644
---- a/drivers/clocksource/sh_tmu.c
-+++ b/drivers/clocksource/sh_tmu.c
-@@ -143,16 +143,6 @@ static void sh_tmu_start_stop_ch(struct sh_tmu_channel *ch, int start)
- 
- static int __sh_tmu_enable(struct sh_tmu_channel *ch)
+diff --git a/scripts/gendwarfksyms/dwarf.c b/scripts/gendwarfksyms/dwarf.c
+index 3538a7d9cb070..e76d732f5f602 100644
+--- a/scripts/gendwarfksyms/dwarf.c
++++ b/scripts/gendwarfksyms/dwarf.c
+@@ -750,6 +750,7 @@ static void process_enumerator_type(struct state *state, struct die *cache,
+ 				    Dwarf_Die *die)
  {
--	int ret;
--
--	/* enable clock */
--	ret = clk_enable(ch->tmu->clk);
--	if (ret) {
--		dev_err(&ch->tmu->pdev->dev, "ch%u: cannot enable clock\n",
--			ch->index);
--		return ret;
--	}
--
- 	/* make sure channel is disabled */
- 	sh_tmu_start_stop_ch(ch, 0);
+ 	bool overridden = false;
++	unsigned long override;
+ 	Dwarf_Word value;
  
-@@ -174,7 +164,6 @@ static int sh_tmu_enable(struct sh_tmu_channel *ch)
- 	if (ch->enable_count++ > 0)
- 		return 0;
+ 	if (stable) {
+@@ -761,7 +762,8 @@ static void process_enumerator_type(struct state *state, struct die *cache,
+ 			return;
  
--	pm_runtime_get_sync(&ch->tmu->pdev->dev);
- 	dev_pm_syscore_device(&ch->tmu->pdev->dev, true);
+ 		overridden = kabi_get_enumerator_value(
+-			state->expand.current_fqn, cache->fqn, &value);
++			state->expand.current_fqn, cache->fqn, &override);
++		value = override;
+ 	}
  
- 	return __sh_tmu_enable(ch);
-@@ -187,9 +176,6 @@ static void __sh_tmu_disable(struct sh_tmu_channel *ch)
+ 	process_list_comma(state, cache);
+diff --git a/scripts/gendwarfksyms/symbols.c b/scripts/gendwarfksyms/symbols.c
+index ecddcb5ffcdfb..42cd27c9cec4f 100644
+--- a/scripts/gendwarfksyms/symbols.c
++++ b/scripts/gendwarfksyms/symbols.c
+@@ -3,6 +3,7 @@
+  * Copyright (C) 2024 Google LLC
+  */
  
- 	/* disable interrupts in TMU block */
- 	sh_tmu_write(ch, TCR, TCR_TPSC_CLK4);
--
--	/* stop clock */
--	clk_disable(ch->tmu->clk);
- }
++#include <inttypes.h>
+ #include "gendwarfksyms.h"
  
- static void sh_tmu_disable(struct sh_tmu_channel *ch)
-@@ -203,7 +189,6 @@ static void sh_tmu_disable(struct sh_tmu_channel *ch)
- 	__sh_tmu_disable(ch);
+ #define SYMBOL_HASH_BITS 12
+@@ -242,7 +243,7 @@ static void elf_for_each_global(int fd, elf_symbol_callback_t func, void *arg)
+ 				error("elf_getdata failed: %s", elf_errmsg(-1));
  
- 	dev_pm_syscore_device(&ch->tmu->pdev->dev, false);
--	pm_runtime_put(&ch->tmu->pdev->dev);
- }
+ 			if (shdr->sh_entsize != sym_size)
+-				error("expected sh_entsize (%lu) to be %zu",
++				error("expected sh_entsize (%" PRIu64 ") to be %zu",
+ 				      shdr->sh_entsize, sym_size);
  
- static void sh_tmu_set_next(struct sh_tmu_channel *ch, unsigned long delta,
-@@ -552,7 +537,6 @@ static int sh_tmu_setup(struct sh_tmu_device *tmu, struct platform_device *pdev)
- 		goto err_clk_unprepare;
+ 			nsyms = shdr->sh_size / shdr->sh_entsize;
+@@ -292,7 +293,7 @@ static void set_symbol_addr(struct symbol *sym, void *arg)
+ 		hash_add(symbol_addrs, &sym->addr_hash,
+ 			 symbol_addr_hash(&sym->addr));
  
- 	tmu->rate = clk_get_rate(tmu->clk) / 4;
--	clk_disable(tmu->clk);
- 
- 	/* Map the memory resource. */
- 	ret = sh_tmu_map_memory(tmu);
-@@ -626,8 +610,6 @@ static int sh_tmu_probe(struct platform_device *pdev)
-  out:
- 	if (tmu->has_clockevent || tmu->has_clocksource)
- 		pm_runtime_irq_safe(&pdev->dev);
--	else
--		pm_runtime_idle(&pdev->dev);
- 
- 	return 0;
- }
+-		debug("%s -> { %u, %lx }", sym->name, sym->addr.section,
++		debug("%s -> { %u, %" PRIx64 " }", sym->name, sym->addr.section,
+ 		      sym->addr.address);
+ 	} else if (sym->addr.section != addr->section ||
+ 		   sym->addr.address != addr->address) {
 -- 
 2.51.0
 
