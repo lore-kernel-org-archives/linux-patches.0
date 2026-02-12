@@ -1,42 +1,57 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F8C81D5174;
-	Thu, 12 Feb 2026 01:09:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71F961BC46;
+	Thu, 12 Feb 2026 01:10:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770858599; cv=none; b=QiChVP1Lzqs7/BEnyx5T1vFabVvFPcAbILx5qCaCddq9CvENK0Qwoybj7i+Ed8g98jfAlYTOnu+gsWZurS4vSHtJQoKm/MNlFwKZGbyOQ3+pZaReT2Fqf32BCuu54r+ojLKWbFNg24qtUixG+zBreb4843AWTChIMYtn5LXp31s=
+	t=1770858603; cv=none; b=YmlJdy7WfdXOrwU+y+xtiCOSqoj1o/C3/JzmYw+hcQvO5G3SvdK2lUMjDmRcHZp2Ke5kHQUjV4yCvPPkAZ4eLNVLBNAKtBuoLeqnHHNq9aUPy/9HX4aX9nGi0JPLvDCnSq0A4PglI7doF7qjNDtv6RGZ72dxDBPgrATvteiNyVo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770858599; c=relaxed/simple;
-	bh=Xk6C0tLZl0mcPul5b73YwJ7OykcI6cowwrKSzOOhHLI=;
+	s=arc-20240116; t=1770858603; c=relaxed/simple;
+	bh=++XxyHqSqHofe4sF/LKqBW/7x0og8SG38kJtyNh5vdo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=atSwUN5hJNhUmu9Eb1yYuRc8GLDqksxTfSZrT0d+BvbxkwlxbdnlMWOBw5MjUY7Gn888LUbH1h5W3TgSjJAcoqFstdtRGD7OvuRkUkOYmIgc5o4iL9NJe/xWT+b8SY0sFQbWAvttbBVfFLLVdPGIVStssg1M5YinM5uPCMll4DI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=qyF4+crk; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=l7m3OjYmfAof5U3xjlW+XUwcVApNAaCuA8mqSwnPbI30kN3xkbJb06cWuMe41+aeJLrPIdpz+BU6GJQIMobJc/FDkOyo0VXx/bgmdcK6SZlvzRjsvEn444+gtGk0muGy/hVMAPn83D9BGcin35skGkT/WV/jQ1pSw2DXPLuF6xs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=r/cpq3LB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="qyF4+crk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8037DC19423;
-	Thu, 12 Feb 2026 01:09:58 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="r/cpq3LB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C079FC16AAE;
+	Thu, 12 Feb 2026 01:10:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1770858599;
-	bh=Xk6C0tLZl0mcPul5b73YwJ7OykcI6cowwrKSzOOhHLI=;
+	s=k20201202; t=1770858603;
+	bh=++XxyHqSqHofe4sF/LKqBW/7x0og8SG38kJtyNh5vdo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qyF4+crk4tum6+JV8I8ShusljSA54LAndWhLcV9hn18rMLHS613PfJwiyttYbWLPf
-	 3+iYQD/cRVGIjBAlKbhUWsTzfzkKErxsv5MMc8ndExChZ92qwihZA461A1dQrF14YZ
-	 MttccQmQ8lg34dUGwyju5g7ZBr5WHdWXnSj2uRBNciP5P0vZY9xEZBURco/Z6kqXLI
-	 nfsIc67TGbLzOBfss+D5oQdn6tTwjgE0/CAppHQGinwa6c7Kn6TarKximKZgt3Y0SH
-	 CtXuV/1/xV1ky2FwORbRpWxf0IV3FUP85gaIxY888M9XwjTjstafuTRidEaDTgVgZe
-	 9239zV3RQOrkg==
+	b=r/cpq3LBtfp9zsKawAmlrN3Lk0CLCSLTXa134DxONlSZoPWaNLrZHj6MExONQt2lr
+	 9xUVRWUjemo/eDwQ9IqTvvULIQlhzBPZzLsbQa0sENQ/TDDemovadxrEXi2mpcnn8w
+	 C0FXefl0wC/VzjD2Hc1V/OKqINILWGr0HTGxyW2Hskh+pLhJkyRbeNnOLyqNU4OOE8
+	 Gay7MyQuRuOcE4GclSvxANDEUIfurNgZSaiMDjhpp4erpY5Y5czsjQ3Fj6Yn7dnxJN
+	 NiQ+m+UT+xIKb+02srpgY3RVqRWVTxQVKkcpoh1hJR2+ndm0HNH5uyr13DiXNqPU2D
+	 PMH9cpgX6oWuQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Sami Tolvanen <samitolvanen@google.com>,
-	=?UTF-8?q?Michal=20Such=C3=A1nek?= <msuchanek@suse.de>,
+Cc: Jiri Olsa <jolsa@kernel.org>,
+	Mahe Tardy <mahe.tardy@gmail.com>,
+	Andrii Nakryiko <andrii@kernel.org>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
+	Will Deacon <will@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	linux-modules@vger.kernel.org,
-	linux-kbuild@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.19-6.18] gendwarfksyms: Fix build on 32-bit hosts
-Date: Wed, 11 Feb 2026 20:09:25 -0500
-Message-ID: <20260212010955.3480391-2-sashal@kernel.org>
+	song@kernel.org,
+	ast@kernel.org,
+	daniel@iogearbox.net,
+	kpsingh@kernel.org,
+	mattbobrowski@google.com,
+	mhiramat@kernel.org,
+	pjw@kernel.org,
+	palmer@dabbelt.com,
+	aou@eecs.berkeley.edu,
+	svens@linux.ibm.com,
+	bpf@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	linux-trace-kernel@vger.kernel.org,
+	linux-riscv@lists.infradead.org
+Subject: [PATCH AUTOSEL 6.19-6.18] arm64/ftrace,bpf: Fix partial regs after bpf_prog_run
+Date: Wed, 11 Feb 2026 20:09:26 -0500
+Message-ID: <20260212010955.3480391-3-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260212010955.3480391-1-sashal@kernel.org>
 References: <20260212010955.3480391-1-sashal@kernel.org>
@@ -46,30 +61,39 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.19
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Sami Tolvanen <samitolvanen@google.com>
+From: Jiri Olsa <jolsa@kernel.org>
 
-[ Upstream commit ddc54f912a551f6eb0bbcfc3880f45fe27a252cb ]
+[ Upstream commit 276f3b6daf6024ae2742afd161e7418a5584a660 ]
 
-We have interchangeably used unsigned long for some of the types
-defined in elfutils, assuming they're always 64-bit. This obviously
-fails when building gendwarfksyms on 32-bit hosts. Fix the types.
+Mahe reported issue with bpf_override_return helper not working when
+executed from kprobe.multi bpf program on arm.
 
-Reported-by: Michal Suchánek <msuchanek@suse.de>
-Closes: https://lore.kernel.org/linux-modules/aRcxzPxtJblVSh1y@kitsune.suse.cz/
-Tested-by: Michal Suchánek <msuchanek@suse.de>
-Signed-off-by: Sami Tolvanen <samitolvanen@google.com>
+The problem is that on arm we use alternate storage for pt_regs object
+that is passed to bpf_prog_run and if any register is changed (which
+is the case of bpf_override_return) it's not propagated back to actual
+pt_regs object.
+
+Fixing this by introducing and calling ftrace_partial_regs_update function
+to propagate the values of changed registers (ip and stack).
+
+Reported-by: Mahe Tardy <mahe.tardy@gmail.com>
+Signed-off-by: Jiri Olsa <jolsa@kernel.org>
+Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
+Reviewed-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Acked-by: Will Deacon <will@kernel.org>
+Link: https://lore.kernel.org/bpf/20260112121157.854473-1-jolsa@kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-Now I have a complete picture. Let me write my analysis.
+Now I have a complete picture. Let me provide the full analysis.
 
 ---
 
@@ -77,182 +101,199 @@ Now I have a complete picture. Let me write my analysis.
 
 ### 1. COMMIT MESSAGE ANALYSIS
 
-The subject "gendwarfksyms: Fix build on 32-bit hosts" clearly
-identifies this as a **build fix**. The message explains that `unsigned
-long` was used interchangeably with elfutils types that are always
-64-bit (`uint64_t`), which breaks compilation on 32-bit hosts where
-`unsigned long` is only 32 bits.
+The commit message is clear: `bpf_override_return` helper does not work
+when executed from a **kprobe.multi** BPF program on arm64. This was
+**reported by a real user** (Mahe Tardy), which indicates it's a real-
+world bug affecting actual users. The fix has been **reviewed by Steven
+Rostedt** (ftrace maintainer) and **acked by Will Deacon** (arm64
+maintainer), two highly authoritative figures.
 
-Key indicators:
-- **Reported-by:** Michal Suchanek (SUSE engineer) - a real user who hit
-  this building kernels
-- **Tested-by:** Same reporter - confirms the fix works
-- **Closes:** link to lore.kernel.org bug report - documented issue
+### 2. THE BUG MECHANISM (Detailed)
 
-### 2. CODE CHANGE ANALYSIS
+On arm64, the `ftrace_regs` structure (`struct __arch_ftrace_regs` in
+`arch/arm64/include/asm/ftrace.h`) is **NOT** a wrapper around `pt_regs`
+- it's a separate, smaller structure containing only x0-x8, fp, lr, sp,
+pc. Arm64 defines `HAVE_ARCH_FTRACE_REGS`.
 
-The fix addresses three distinct but related 32-bit portability bugs
-across two files:
+When `kprobe_multi_link_prog_run()` is called (in
+`kernel/trace/bpf_trace.c`):
 
-**Bug 1 - `dwarf.c` (`process_enumerator_type`):**
+1. `ftrace_partial_regs(fregs, bpf_kprobe_multi_pt_regs_ptr())` copies
+   data **from** `ftrace_regs` **to** a per-CPU `pt_regs` buffer. On
+   arm64, this creates a **separate copy**.
+2. `bpf_prog_run(link->link.prog, regs)` passes this `pt_regs` copy to
+   the BPF program.
+3. When `bpf_override_return` is called inside the BPF program, it
+   modifies the `pt_regs` copy:
+   - `regs_set_return_value(regs, rc)` - sets the return value
+   - `override_function_with_return(regs)` - sets `regs->pc = regs->lr`
+     (on arm64), redirecting execution to skip the probed function
+4. **THE BUG**: After `bpf_prog_run()` returns, the modified `pt_regs`
+   copy is simply discarded. The changes are **never propagated back**
+   to the original `ftrace_regs`, so the instruction pointer override
+   and return value changes are lost.
 
-The type chain is:
-- `Dwarf_Word` = `GElf_Xword` = `Elf64_Xword` = `uint64_t` (always
-  64-bit)
-- `unsigned long` = 32-bit on 32-bit hosts
+On x86_64 (and s390, powerpc, loongarch), this bug does NOT manifest
+because they define `CONFIG_HAVE_FTRACE_REGS_HAVING_PT_REGS`, meaning
+`ftrace_partial_regs()` returns a pointer directly into the
+`ftrace_regs` structure — changes to the `pt_regs` automatically update
+the `ftrace_regs`.
 
-The pre-fix code passes `&value` (where `value` is `Dwarf_Word` /
-`uint64_t`) to `kabi_get_enumerator_value()`, which expects `unsigned
-long *`. On a 32-bit host, this is a type mismatch: passing a
-`uint64_t*` where `unsigned long*` (4 bytes) is expected. The function
-would write only 4 bytes to a memory location expected to hold 8 bytes,
-leaving the upper half uninitialized. This is both a **compiler
-error/warning** and a **correctness bug**.
+### 3. THE FIX
 
-The fix introduces a properly-typed `unsigned long override` variable,
-passes it to the function, then assigns `value = override;` to widen it
-back.
+The fix introduces a new function `ftrace_partial_regs_update()` with
+two variants:
 
-**Bug 2 - `symbols.c` (format strings):**
+- **For architectures without `HAVE_ARCH_FTRACE_REGS`** (x86, etc.):
+  Empty no-op, because `pt_regs` is embedded in `ftrace_regs` directly.
+- **For architectures with `HAVE_ARCH_FTRACE_REGS`** (arm64, riscv):
+  Copies the instruction pointer and return value back from the separate
+  `pt_regs` to the `ftrace_regs`:
 
-`shdr->sh_entsize` is `GElf_Xword` = `uint64_t`, but was printed with
-`%lu` (expects `unsigned long`, 32-bit). Fixed to `"%" PRIu64`.
-Similarly, `sym->addr.address` is `Elf64_Addr` = `uint64_t`, but was
-printed with `%lx`. Fixed to `"%" PRIx64`. The missing `#include
-<inttypes.h>` is added for the `PRIu64`/`PRIx64` macros.
+```c
+ftrace_regs_set_instruction_pointer(fregs, instruction_pointer(regs));
+ftrace_regs_set_return_value(fregs, regs_return_value(regs));
+```
 
-On 32-bit hosts, these format mismatches would cause:
-- Compiler warnings (`-Wformat`) or errors (`-Werror`)
-- Incorrect printed values (reading wrong stack slots for variadic args)
-
-### 3. CLASSIFICATION
-
-This is unambiguously a **build fix**. Build fixes are explicitly listed
-in the stable kernel rules as appropriate for backporting. They don't
-introduce new features or change runtime behavior - they simply make the
-code compile correctly.
+And in `bpf_trace.c`, the fix calls this function after
+`bpf_prog_run()`:
+```c
+ftrace_partial_regs_update(fregs, bpf_kprobe_multi_pt_regs_ptr());
+```
 
 ### 4. SCOPE AND RISK ASSESSMENT
 
-- **Files changed:** 2 (`dwarf.c`, `symbols.c`)
-- **Lines changed:** ~10 meaningful lines
-- **Risk:** Extremely low. The changes are format specifier corrections
-  and a type-narrowing variable addition. They cannot introduce
-  regressions.
-- **Subsystem:** `scripts/gendwarfksyms/` - a build-time host tool, not
-  runtime kernel code. Even if there were a mistake, it couldn't crash
-  the kernel.
+- **Files changed**: 2 files
+- **Lines added**: ~25 (mostly documentation)
+- **Lines removed**: 0
+- **Actual code changes**: ~5 lines of actual logic
+- **Risk**: Very LOW. The no-op version for non-arm64 architectures
+  means zero impact on x86. The arm64 version just copies two values
+  back.
 
-### 5. APPLICABILITY TO STABLE TREES
+### 5. DEPENDENCY CHECK - CRITICAL ISSUE
 
-`gendwarfksyms` was introduced in **v6.14-rc1** (commit
-`f28568841ae0a`). I verified:
-- **v6.12 and earlier (LTS):** Do NOT have `gendwarfksyms` - this fix is
-  **not applicable**
-- **v6.14 through v6.19:** All have the buggy code - this fix IS
-  applicable
+This is where the analysis gets complex. The affected code —
+`kprobe_multi_link_prog_run()` using `ftrace_regs` and
+`ftrace_partial_regs()` — was introduced as part of a massive fprobe
+rewrite in the **v6.14 merge window**:
 
-The buggy code (`%lu` formats, `Dwarf_Word`/`unsigned long` mismatch)
-has existed since the initial introduction in v6.14-rc1. All three bug
-patterns exist in `git show v6.14:scripts/gendwarfksyms/symbols.c` and
-`git show v6.14:scripts/gendwarfksyms/dwarf.c`.
+- `b9b55c8912ce1` (v6.14): `tracing: Add ftrace_partial_regs() for
+  converting ftrace_regs to pt_regs`
+- `46bc082388560` (v6.14): `fprobe: Use ftrace_regs in fprobe entry
+  handler`
+- `8e2759da9378` (v6.14): `bpf: Enable kprobe_multi feature if
+  CONFIG_FPROBE is enabled`
+- `4346ba1604093` (v6.14): `fprobe: Rewrite fprobe on function-graph
+  tracer`
 
-Active stable trees that benefit: **v6.18.y** (and potentially v6.14.y
-through v6.17.y if still maintained).
+In **v6.13 and earlier** (6.12 LTS, 6.6 LTS, 6.1 LTS, 5.15 LTS),
+`kprobe_multi_link_prog_run()` takes `struct pt_regs *regs` directly —
+there is no `ftrace_regs` / `ftrace_partial_regs()` indirection. **The
+bug simply does not exist in those older stable trees.**
 
-### 6. USER IMPACT
+The bug exists in: **v6.14, v6.15, v6.18** stable trees (all currently
+maintained).
 
-This affects anyone building a 6.14+ kernel on a 32-bit host system with
-`CONFIG_GENDWARFKSYMS` enabled. While 32-bit build hosts are
-increasingly rare, they are still used in some enterprise and embedded
-development environments. The reporter is from SUSE, indicating this
-affects enterprise distribution builds. Without this fix, the build
-simply **fails** on 32-bit hosts.
+### 6. BACKPORT FEASIBILITY
 
-### 7. DEPENDENCY CHECK
+The patch should apply cleanly to:
+- **v6.14.y**: The code at `bpf_trace.c` is very similar (just needs
+  adjustment for `migrate_disable/enable` which was still present in
+  v6.14)
+- **v6.15.y**: Very similar to HEAD
+- **v6.18.y**: Identical to HEAD (`include/linux/ftrace_regs.h`
+  unchanged since v6.14)
 
-The fix is completely self-contained. It changes format specifiers, adds
-a standard C include, and introduces a temporary variable. It has **zero
-dependencies** on other commits.
+The `include/linux/ftrace_regs.h` change should apply cleanly to all
+three. The `bpf_trace.c` change might need minor adjustment for v6.14
+(which still has `migrate_disable()` calls), but the relevant line is
+the same.
 
-### 8. VERDICT
+### 7. USER IMPACT
 
-**Meets stable criteria:**
-- Obviously correct and tested (type/format corrections, Tested-by tag)
-- Fixes a real bug (build failure on 32-bit hosts + potential incorrect
-  behavior)
-- Small and contained (~10 lines across 2 files)
-- No new features, no API changes, no behavioral changes
-- Build fixes are explicitly allowed in stable
+This bug makes `bpf_override_return` completely non-functional on arm64
+when used from kprobe.multi programs. This is a significant feature
+regression:
+- `bpf_override_return` is used by BPF-based error injection frameworks
+- arm64 is a major platform (server, embedded, Android)
+- The bug was reported by an actual user
 
-**Risk vs. benefit:**
-- Risk: Near zero - trivial type corrections in a host build tool
-- Benefit: Enables building the kernel on 32-bit hosts when
-  gendwarfksyms is enabled
+### 8. CLASSIFICATION
 
-The only limitation is that this fix is only applicable to stable trees
-v6.14.y and newer, since `gendwarfksyms` doesn't exist in the main LTS
-trees (6.12.y, 6.6.y, 6.1.y). But for the trees where it applies, it's a
-clear and necessary build fix.
+This is a **clear bug fix** for a **functional regression** introduced
+in v6.14. It:
+- Fixes a real, user-reported bug
+- Is small and surgical (~5 lines of actual logic)
+- Has been reviewed by the ftrace maintainer (Rostedt) and arm64
+  maintainer (Will Deacon)
+- Has clear scope and low regression risk
+- Only affects arm64 and riscv (no impact on x86)
+
+The fix meets all stable kernel criteria:
+1. Obviously correct and tested (reviewed/acked by subsystem
+   maintainers)
+2. Fixes a real bug (user-reported, bpf_override_return completely
+   broken on arm64)
+3. Important issue (complete feature breakage on a major architecture)
+4. Small and contained (2 files, ~5 lines of logic)
+5. Does not introduce new features (just propagates existing register
+   values back)
 
 **YES**
 
- scripts/gendwarfksyms/dwarf.c   | 4 +++-
- scripts/gendwarfksyms/symbols.c | 5 +++--
- 2 files changed, 6 insertions(+), 3 deletions(-)
+ include/linux/ftrace_regs.h | 25 +++++++++++++++++++++++++
+ kernel/trace/bpf_trace.c    |  1 +
+ 2 files changed, 26 insertions(+)
 
-diff --git a/scripts/gendwarfksyms/dwarf.c b/scripts/gendwarfksyms/dwarf.c
-index 3538a7d9cb070..e76d732f5f602 100644
---- a/scripts/gendwarfksyms/dwarf.c
-+++ b/scripts/gendwarfksyms/dwarf.c
-@@ -750,6 +750,7 @@ static void process_enumerator_type(struct state *state, struct die *cache,
- 				    Dwarf_Die *die)
- {
- 	bool overridden = false;
-+	unsigned long override;
- 	Dwarf_Word value;
+diff --git a/include/linux/ftrace_regs.h b/include/linux/ftrace_regs.h
+index 15627ceea9bcc..386fa48c4a957 100644
+--- a/include/linux/ftrace_regs.h
++++ b/include/linux/ftrace_regs.h
+@@ -33,6 +33,31 @@ struct ftrace_regs;
+ #define ftrace_regs_get_frame_pointer(fregs) \
+ 	frame_pointer(&arch_ftrace_regs(fregs)->regs)
  
- 	if (stable) {
-@@ -761,7 +762,8 @@ static void process_enumerator_type(struct state *state, struct die *cache,
- 			return;
++static __always_inline void
++ftrace_partial_regs_update(struct ftrace_regs *fregs, struct pt_regs *regs) { }
++
++#else
++
++/*
++ * ftrace_partial_regs_update - update the original ftrace_regs from regs
++ * @fregs: The ftrace_regs to update from @regs
++ * @regs: The partial regs from ftrace_partial_regs() that was updated
++ *
++ * Some architectures have the partial regs living in the ftrace_regs
++ * structure, whereas other architectures need to make a different copy
++ * of the @regs. If a partial @regs is retrieved by ftrace_partial_regs() and
++ * if the code using @regs updates a field (like the instruction pointer or
++ * stack pointer) it may need to propagate that change to the original @fregs
++ * it retrieved the partial @regs from. Use this function to guarantee that
++ * update happens.
++ */
++static __always_inline void
++ftrace_partial_regs_update(struct ftrace_regs *fregs, struct pt_regs *regs)
++{
++	ftrace_regs_set_instruction_pointer(fregs, instruction_pointer(regs));
++	ftrace_regs_set_return_value(fregs, regs_return_value(regs));
++}
++
+ #endif /* HAVE_ARCH_FTRACE_REGS */
  
- 		overridden = kabi_get_enumerator_value(
--			state->expand.current_fqn, cache->fqn, &value);
-+			state->expand.current_fqn, cache->fqn, &override);
-+		value = override;
- 	}
+ /* This can be overridden by the architectures */
+diff --git a/kernel/trace/bpf_trace.c b/kernel/trace/bpf_trace.c
+index fe28d86f7c357..2a5dabda8b5c2 100644
+--- a/kernel/trace/bpf_trace.c
++++ b/kernel/trace/bpf_trace.c
+@@ -2564,6 +2564,7 @@ kprobe_multi_link_prog_run(struct bpf_kprobe_multi_link *link,
+ 	old_run_ctx = bpf_set_run_ctx(&run_ctx.session_ctx.run_ctx);
+ 	err = bpf_prog_run(link->link.prog, regs);
+ 	bpf_reset_run_ctx(old_run_ctx);
++	ftrace_partial_regs_update(fregs, bpf_kprobe_multi_pt_regs_ptr());
+ 	rcu_read_unlock();
  
- 	process_list_comma(state, cache);
-diff --git a/scripts/gendwarfksyms/symbols.c b/scripts/gendwarfksyms/symbols.c
-index ecddcb5ffcdfb..42cd27c9cec4f 100644
---- a/scripts/gendwarfksyms/symbols.c
-+++ b/scripts/gendwarfksyms/symbols.c
-@@ -3,6 +3,7 @@
-  * Copyright (C) 2024 Google LLC
-  */
- 
-+#include <inttypes.h>
- #include "gendwarfksyms.h"
- 
- #define SYMBOL_HASH_BITS 12
-@@ -242,7 +243,7 @@ static void elf_for_each_global(int fd, elf_symbol_callback_t func, void *arg)
- 				error("elf_getdata failed: %s", elf_errmsg(-1));
- 
- 			if (shdr->sh_entsize != sym_size)
--				error("expected sh_entsize (%lu) to be %zu",
-+				error("expected sh_entsize (%" PRIu64 ") to be %zu",
- 				      shdr->sh_entsize, sym_size);
- 
- 			nsyms = shdr->sh_size / shdr->sh_entsize;
-@@ -292,7 +293,7 @@ static void set_symbol_addr(struct symbol *sym, void *arg)
- 		hash_add(symbol_addrs, &sym->addr_hash,
- 			 symbol_addr_hash(&sym->addr));
- 
--		debug("%s -> { %u, %lx }", sym->name, sym->addr.section,
-+		debug("%s -> { %u, %" PRIx64 " }", sym->name, sym->addr.section,
- 		      sym->addr.address);
- 	} else if (sym->addr.section != addr->section ||
- 		   sym->addr.address != addr->address) {
+  out:
 -- 
 2.51.0
 
