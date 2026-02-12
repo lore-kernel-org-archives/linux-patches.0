@@ -1,40 +1,46 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 099266FC5;
-	Thu, 12 Feb 2026 01:10:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8AA41F936;
+	Thu, 12 Feb 2026 01:10:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770858628; cv=none; b=FuC8L7y3Q9QINfnBhSYWbbqWOLQd3ShPMDMbEFhAsgHTd4WUSgOpmgb3/zK2dcVU20rhUImxA8Ann79msn2WbVNd5CGRdZU2dCRvcXf2JngT7/R6cPUQg3cJZO8q0QW0zutKMOiGL57YtWdq7J9V83qp/pTAkCWDcXItYi7BWdc=
+	t=1770858629; cv=none; b=MNXeAlXZBegz6JzQaUAwxKFZ3iRMnvWRxiioVHzSl0bCk/fb9K1DbfNBLEnVb5JpXZ/WoTwxUm7WOIgXUTgkn7dAxBV3kdLvOX8G9xjiw2j9mWGbhtLJFaOpblxuBzjM00fww3kNu2SYz2RUN7nvWSyBhI8FtTAGq5vZaJbIRxY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770858628; c=relaxed/simple;
-	bh=WNxUeTuNFXUVQA1DrmQq6BohaFxGzQljrENvmt4XfJw=;
+	s=arc-20240116; t=1770858629; c=relaxed/simple;
+	bh=JJMyvz9Gyol/tePNZ0QStCdz7UvkRz/nPoOYJJd6dDo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IQbLfNGfRuBL+QGm5TMb2hDFEh6M5043pHNANKJWiB3HmmLvJjzRFXL2dLE5DKR/j5KTNgcGPltOkgAjNnPFfuFN+EKsk/D5lChuA2r6rlJAAVg52cdH0EnqxuL8th6hCnu0OR2XuyxRjy9UToIFg7AbpP6xFCyU+Cxhkq431bg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=J5NvKxCc; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=BRAXQiSEnXMBJ2BC0Qoh7DLHuR8uZN4AjiNMc+Vbs5pbyoaGx32B/ph6r5aACvOfEsaTx6ssFZQ/umTWl1DRHktyyIzORt0E3FjBuV/OE3g4n/JWTthIB1/khu+AI3n5+FGDZAkmy8mGs7BeaBJZNwlqEz7xb+V1tDwzhIZiRmY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=LOBJGzlk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="J5NvKxCc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3FE00C4CEF7;
-	Thu, 12 Feb 2026 01:10:27 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="LOBJGzlk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 55981C19425;
+	Thu, 12 Feb 2026 01:10:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1770858627;
-	bh=WNxUeTuNFXUVQA1DrmQq6BohaFxGzQljrENvmt4XfJw=;
+	s=k20201202; t=1770858629;
+	bh=JJMyvz9Gyol/tePNZ0QStCdz7UvkRz/nPoOYJJd6dDo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=J5NvKxCczKA/fsG9BI1Rtfe0RoM/iA/kTSbPZx8BIK1WtD9w4teAQGe6hbaQ9JQnP
-	 u3tLEmrYrwhfcAW+VkY8Vxah8p6yOlX6rAE0rTK4uwN792S4Gw++BY7SbmSQtGMvUN
-	 phJ64tyytQh4Z97PgvZQnhIfor0tRh8E0BPdMCdQR7Y5WUyYafZetd24nDGSrxEwkm
-	 oyUGRUSzUG+xn8S+ou9P4I6VRKnQmY31ZVfa3XsLUU/BSt/gZMZ0UwqTtxKqGNJ6pa
-	 1yxsNPvGH2CtGaG3ohrn+jPhJPclZRc5tUe/PeKVOwC7JUbWKtId742gpi5nissD4L
-	 Y619EOlj7XrgA==
+	b=LOBJGzlkISwvtVJfn5LNgM1vAY6ukAVSSdZ/hL4MKnPKObUBPNnbFphcGBOh85nFW
+	 DMacmioWLlUimP313y3Mftewfkfujsm5pUZ4aMdlAtQe68PODAXMncPvIQUIp1yW8u
+	 HU+YHEpWWalOXguySxERBLdZtFGSTtBVBy9NNwDfmQvITy21t6Z/WtGG1GcQIVsO+Q
+	 ZcqOeiyXiTxdqUoSdrp/TTxg9YuSpLJLIzMOGY8VkMqnpzaEkiFLvSOrEtDVCrsv9x
+	 Ina+YBP4gbpIydbHetPnp9cHvTL/srbDjrxEYvGcn0qVJ8yOtTvE8H3qLJzB5OedfL
+	 9bORJy3LighdQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Ruipeng Qi <ruipengqi3@gmail.com>,
-	Kees Cook <kees@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH AUTOSEL 6.19-5.10] pstore: ram_core: fix incorrect success return when vmap() fails
-Date: Wed, 11 Feb 2026 20:09:42 -0500
-Message-ID: <20260212010955.3480391-19-sashal@kernel.org>
+Cc: Sami Tolvanen <samitolvanen@google.com>,
+	Yonghong Song <yonghong.song@linux.dev>,
+	Alexei Starovoitov <ast@kernel.org>,
+	Sasha Levin <sashal@kernel.org>,
+	jhs@mojatatu.com,
+	xiyou.wangcong@gmail.com,
+	jiri@resnulli.us,
+	netdev@vger.kernel.org,
+	bpf@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.19-6.18] bpf: net_sched: Use the correct destructor kfunc type
+Date: Wed, 11 Feb 2026 20:09:43 -0500
+Message-ID: <20260212010955.3480391-20-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260212010955.3480391-1-sashal@kernel.org>
 References: <20260212010955.3480391-1-sashal@kernel.org>
@@ -47,199 +53,186 @@ MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.19
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ruipeng Qi <ruipengqi3@gmail.com>
+From: Sami Tolvanen <samitolvanen@google.com>
 
-[ Upstream commit 05363abc7625cf18c96e67f50673cd07f11da5e9 ]
+[ Upstream commit c99d97b46631c4bea0c14b7581b7a59214601e63 ]
 
-In persistent_ram_vmap(), vmap() may return NULL on failure.
+With CONFIG_CFI enabled, the kernel strictly enforces that indirect
+function calls use a function pointer type that matches the
+target function. As bpf_kfree_skb() signature differs from the
+btf_dtor_kfunc_t pointer type used for the destructor calls in
+bpf_obj_free_fields(), add a stub function with the correct type to
+fix the type mismatch.
 
-If offset is non-zero, adding offset_in_page(start) causes the function
-to return a non-NULL pointer even though the mapping failed.
-persistent_ram_buffer_map() therefore incorrectly returns success.
-
-Subsequent access to prz->buffer may dereference an invalid address
-and cause crashes.
-
-Add proper NULL checking for vmap() failures.
-
-Signed-off-by: Ruipeng Qi <ruipengqi3@gmail.com>
-Link: https://patch.msgid.link/20260203020358.3315299-1-ruipengqi3@gmail.com
-Signed-off-by: Kees Cook <kees@kernel.org>
+Signed-off-by: Sami Tolvanen <samitolvanen@google.com>
+Acked-by: Yonghong Song <yonghong.song@linux.dev>
+Link: https://lore.kernel.org/r/20260110082548.113748-8-samitolvanen@google.com
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-Now I have all the information needed for a thorough analysis. Let me
-summarize my findings.
+Here is my complete analysis:
 
 ---
 
-## Detailed Analysis
+## Commit Analysis: `bpf: net_sched: Use the correct destructor kfunc
+type`
 
 ### 1. COMMIT MESSAGE ANALYSIS
 
-The commit subject is explicit: "fix incorrect success return when
-vmap() fails". The message clearly explains the bug mechanism:
-- `vmap()` may return NULL on failure
-- When `offset_in_page(start)` is non-zero, adding it to NULL produces a
-  non-NULL pointer
-- The caller `persistent_ram_buffer_map()` checks `if (!prz->vaddr)`,
-  which passes because the returned pointer is non-NULL (e.g., `0x100`)
-- Subsequent access to `prz->buffer` dereferences an invalid address,
-  causing a **kernel crash**
-
-The commit is signed off by Kees Cook, the pstore subsystem maintainer,
-indicating proper review.
+The subject and body clearly describe a **bug fix** for CONFIG_CFI
+(Control Flow Integrity). The key phrase is: "fix the type mismatch."
+The author is Sami Tolvanen from Google, who is a primary author and
+maintainer of the kernel CFI infrastructure. The commit is acked by
+Yonghong Song (BPF maintainer) and signed off by Alexei Starovoitov (BPF
+co-maintainer).
 
 ### 2. CODE CHANGE ANALYSIS
 
-The fix is exactly **7 lines added** (4 lines of comment + 2 lines of
-code + 1 blank line) to a single file:
+The diff is extremely small: **6 lines added, 1 line changed**, in a
+single file.
 
-```449:455:fs/pstore/ram_core.c
-        /*
-  - vmap() may fail and return NULL. Do not add the offset in this
-  - case, otherwise a NULL mapping would appear successful.
-         */
-        if (!vaddr)
-                return NULL;
+**The bug mechanism:**
+
+1. `btf_dtor_kfunc_t` is defined as `typedef void
+   (*btf_dtor_kfunc_t)(void *)` in `include/linux/bpf.h` (line 228).
+
+2. In `bpf_obj_free_fields()` (`kernel/bpf/syscall.c:855`), the
+   destructor is invoked as:
+
+```855:855:kernel/bpf/syscall.c
+                                field->kptr.dtor(xchgd_field);
 ```
 
-**Bug mechanism in detail:**
+This is an **indirect function call** through a `btf_dtor_kfunc_t`
+pointer (expecting `void *` parameter).
 
-In `persistent_ram_vmap()` (line 403-455), the function maps physical
-pages via `vmap()`, then returns the virtual address with a sub-page
-offset added:
+3. However, `bpf_qdisc.c` registers `bpf_kfree_skb` — which has
+   signature `void bpf_kfree_skb(struct sk_buff *skb)` — as the
+   destructor:
 
-```454:454:fs/pstore/ram_core.c
-        return vaddr + offset_in_page(start);
+```452:452:net/sched/bpf_qdisc.c
+BTF_ID_LIST_SINGLE(bpf_sk_buff_dtor_ids, func, bpf_kfree_skb)
 ```
 
-When `vmap()` returns NULL (memory pressure, vmalloc space exhaustion),
-and `offset_in_page(start)` is non-zero (the physical `start` address is
-not page-aligned), the return value becomes `NULL + offset` = a small
-non-zero invalid pointer.
+4. With `CONFIG_CFI` enabled, the kernel **strictly enforces** that
+   indirect calls match the expected function pointer type. Calling a
+   `void (*)(struct sk_buff *)` function through a `void (*)(void *)`
+   pointer is a **CFI violation**, which triggers a kernel panic/trap.
 
-The caller `persistent_ram_buffer_map()` has a NULL check at line 494:
+**The fix:**
+- Adds a thin wrapper `bpf_kfree_skb_dtor(void *skb)` that matches
+  `btf_dtor_kfunc_t`
+- Marks it with `CFI_NOSEAL()` so the compiler retains CFI metadata for
+  this function even though its address isn't directly taken in C source
+- Updates `BTF_ID_LIST_SINGLE` to reference the correctly-typed wrapper
 
-```494:500:fs/pstore/ram_core.c
-        if (!prz->vaddr) {
-                pr_err("%s: Failed to map 0x%llx pages at 0x%llx\n",
-__func__,
-                        (unsigned long long)size, (unsigned long
-long)start);
-                return -ENOMEM;
-        }
+### 3. ESTABLISHED PATTERN
 
-        prz->buffer = prz->vaddr;
-```
+This fix follows an **identical, well-established pattern** introduced
+by Peter Zijlstra in commit `e4c00339891c` ("bpf: Fix dtor CFI"), which
+applied the same fix to:
+- `kernel/bpf/helpers.c`: `bpf_task_release_dtor`,
+  `bpf_cgroup_release_dtor`
+- `kernel/bpf/cpumask.c`: `bpf_cpumask_release_dtor`
+- `net/bpf/test_run.c`: `bpf_kfunc_call_test_release_dtor`,
+  `bpf_kfunc_call_memb_release_dtor`
 
-This check passes (the pointer is non-NULL but invalid), so
-`prz->buffer` is set to the invalid address. Then
-`persistent_ram_post_init()` immediately dereferences it at line 520:
+When `bpf_qdisc.c` was added in v6.16 (commit `c8240344956e3`), it
+**failed to follow this pattern**, registering `bpf_kfree_skb` directly
+as the destructor instead of using a type-correct wrapper. This commit
+fixes that oversight.
 
-```520:520:fs/pstore/ram_core.c
-        if (prz->buffer->sig == sig) {
-```
+### 4. AFFECTED STABLE TREES
 
-This dereferences `prz->buffer->sig` at the invalid address, causing a
-**kernel crash/oops**.
+- `bpf_qdisc.c` was introduced in **v6.16** (commit `c8240344956e3`)
+- The file does **NOT** exist in LTS trees 6.12.y, 6.6.y, 6.1.y, 5.15.y,
+  etc.
+- The file **exists with the bug** in: **6.16.y, 6.17.y, 6.18.y** (all
+  confirmed)
+- `CFI_NOSEAL` macro is available in all three (introduced in 6.8-era)
+- v6.16.y has a slightly different `BTF_ID_LIST` format (needs trivial
+  adaptation), while v6.17.y and v6.18.y match the patch exactly
 
-### 3. BUG ORIGIN
+### 5. SELF-CONTAINMENT
 
-The bug was introduced by commit `831b624df1b420` ("pstore: Fix
-incorrect persistent ram buffer mapping") from September 2018. That
-commit moved the `offset_in_page(start)` addition from
-`persistent_ram_buffer_map()` into `persistent_ram_vmap()` to fix a
-different bug (double-offset), but neglected to add a NULL check before
-the offset addition. This means the bug has existed since **kernel
-v4.19** and affects ALL currently supported stable kernels (5.4.y,
-5.10.y, 5.15.y, 6.1.y, 6.6.y, 6.12.y).
-
-### 4. CLASSIFICATION
-
-This is a clear **NULL pointer dereference / invalid pointer dereference
-bug fix**. The consequence is a kernel crash. It falls squarely into the
-category of "fixes crashes, panics, oopses."
-
-### 5. SCOPE AND RISK ASSESSMENT
-
-- **Lines changed:** 7 lines added, 0 lines modified, 0 lines removed
-- **Files changed:** 1 (`fs/pstore/ram_core.c`)
-- **Complexity:** Trivially simple - a NULL check before pointer
-  arithmetic
-- **Risk of regression:** Essentially zero. The fix adds an early return
-  on an error path that was previously incorrectly handled. It cannot
-  break any correct behavior.
-- **Subsystem:** pstore/ramoops - used for preserving kernel crash logs
-  across reboots, important for debugging and production systems
+Despite being patch 8 of a series (per the Link URL), this patch is
+**completely self-contained**:
+- The new wrapper function only calls the existing `bpf_kfree_skb()`
+- The `BTF_ID_LIST_SINGLE` change just replaces one function name with
+  another
+- No dependencies on infrastructure changes from other patches in the
+  series
+- No changes needed to kfunc registration, BTF_KFUNCS, or other
+  subsystems
 
 ### 6. USER IMPACT
 
-- **Who is affected:** Any system using pstore/ramoops with a non-page-
-  aligned persistent RAM region where `vmap()` fails (memory pressure,
-  vmalloc space exhaustion)
-- **Severity:** Kernel crash/oops - HIGH. The system crashes instead of
-  gracefully handling the mapping failure
-- **Practical trigger:** When ramoops is configured (common on
-  embedded/Android/IoT), if the reserved memory region is not page-
-  aligned AND vmalloc space is low or fragmented, `vmap()` fails and the
-  kernel crashes
-- **pstore's importance:** pstore is widely used on Android devices,
-  embedded systems, and enterprise servers for crash diagnostics
+- **Trigger condition**: Any BPF qdisc struct_ops program that results
+  in an sk_buff being destructed through the kptr destructor path, on a
+  kernel compiled with `CONFIG_CFI`
+- **Impact when triggered**: Kernel panic/crash (CFI trap)
+- **Affected users**: Android devices (which enable CFI), security-
+  hardened systems using BPF qdisc scheduling
+- **Severity**: High — kernel crash with no recovery
 
-### 7. STABILITY INDICATORS
+### 7. RISK ASSESSMENT
 
-- Signed off by **Kees Cook**, the pstore maintainer - high trust
-- The fix is obviously correct by inspection
-- The pattern (NULL check before pointer arithmetic) is a well-
-  established defensive programming practice
+- **Lines changed**: 6 added, 1 modified
+- **Files changed**: 1 (`net/sched/bpf_qdisc.c`)
+- **Complexity**: Trivial — a type-correct stub function and a BTF_ID
+  reference change
+- **Regression risk**: Near-zero — the wrapper is a transparent
+  indirection that adds no logic
+- **Already proven**: The exact same pattern works in 4+ other BPF
+  destructor sites since v6.8
 
-### 8. DEPENDENCY CHECK
+### CONCLUSION
 
-- **No dependencies.** This is a completely self-contained fix
-- The affected code (`persistent_ram_vmap()` with `return vaddr +
-  offset_in_page(start)`) exists identically in all stable trees since
-  v4.19
-- The fix applies cleanly - no surrounding code context has changed
-
-### 9. MEETS STABLE CRITERIA
-
-| Criterion | Met? |
-|-----------|------|
-| Obviously correct and tested | YES - trivial NULL check |
-| Fixes a real bug | YES - kernel crash |
-| Important issue (crash) | YES |
-| Small and contained | YES - 7 lines, 1 file |
-| No new features | YES |
-| No new APIs | YES |
+This commit fixes a **real kernel crash** (CFI violation → panic) that
+affects any system running with `CONFIG_CFI` enabled when BPF qdisc
+struct_ops triggers destructor calls. The fix is tiny, surgical, follows
+an established pattern proven across multiple other subsystems, and has
+near-zero regression risk. The affected code exists in 6.16.y, 6.17.y,
+and 6.18.y stable trees, and the patch applies cleanly to 6.17.y and
+6.18.y (with a trivial adaptation for 6.16.y).
 
 **YES**
 
- fs/pstore/ram_core.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ net/sched/bpf_qdisc.c | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
-diff --git a/fs/pstore/ram_core.c b/fs/pstore/ram_core.c
-index f1848cdd6d348..f8b9b47e8b244 100644
---- a/fs/pstore/ram_core.c
-+++ b/fs/pstore/ram_core.c
-@@ -446,6 +446,13 @@ static void *persistent_ram_vmap(phys_addr_t start, size_t size,
- 	vaddr = vmap(pages, page_count, VM_MAP | VM_IOREMAP, prot);
- 	kfree(pages);
+diff --git a/net/sched/bpf_qdisc.c b/net/sched/bpf_qdisc.c
+index adcb618a2bfca..e9bea9890777d 100644
+--- a/net/sched/bpf_qdisc.c
++++ b/net/sched/bpf_qdisc.c
+@@ -202,6 +202,12 @@ __bpf_kfunc void bpf_kfree_skb(struct sk_buff *skb)
+ 	kfree_skb(skb);
+ }
  
-+	/*
-+	 * vmap() may fail and return NULL. Do not add the offset in this
-+	 * case, otherwise a NULL mapping would appear successful.
-+	 */
-+	if (!vaddr)
-+		return NULL;
++__bpf_kfunc void bpf_kfree_skb_dtor(void *skb)
++{
++	bpf_kfree_skb(skb);
++}
++CFI_NOSEAL(bpf_kfree_skb_dtor);
 +
- 	/*
- 	 * Since vmap() uses page granularity, we must add the offset
- 	 * into the page here, to get the byte granularity address
+ /* bpf_qdisc_skb_drop - Drop an skb by adding it to a deferred free list.
+  * @skb: The skb whose reference to be released and dropped.
+  * @to_free_list: The list of skbs to be dropped.
+@@ -449,7 +455,7 @@ static struct bpf_struct_ops bpf_Qdisc_ops = {
+ 	.owner = THIS_MODULE,
+ };
+ 
+-BTF_ID_LIST_SINGLE(bpf_sk_buff_dtor_ids, func, bpf_kfree_skb)
++BTF_ID_LIST_SINGLE(bpf_sk_buff_dtor_ids, func, bpf_kfree_skb_dtor)
+ 
+ static int __init bpf_qdisc_kfunc_init(void)
+ {
 -- 
 2.51.0
 
