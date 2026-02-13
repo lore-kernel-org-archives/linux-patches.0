@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42D4835FF61;
-	Fri, 13 Feb 2026 13:55:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C10C1D432D;
+	Fri, 13 Feb 2026 13:55:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770990940; cv=none; b=RRJtJA4N+I7lrF/fPkeXi6i8zIA1O+JWQf3bXw+JrfOjPNiqFOgaUn27/iYxxyvUkA7+xCRl0bStKgzMqFw7E0cWFuIJJE2s211l3E0YQ1yrxbGJqFFf8GhTgqDI7zEkC1AXvmJGcVEl6OGZ9jT2TiBKCL0y1a5AATXHxSntonM=
+	t=1770990943; cv=none; b=Le4dKNrtYZGsrX7Vu9QArqAbjGIrfGzxL2np/eX/mu5/GS7cd3GUjW0urJ55SdvxHXdsWUzXhgb3OvpxjhgxDbglHuDxw8OmlDA9bd+wGcwdz+PftiahU/bKIAqMK6HKOnLPAPNRnkmUjoALQd2TBSEiSQ6FGXZIoMFhLn/CKvQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770990940; c=relaxed/simple;
-	bh=krJz4if/qC6af5MULXvZCoPbZd+rY3fBBh4GdCWyDro=;
+	s=arc-20240116; t=1770990943; c=relaxed/simple;
+	bh=JJ8Sx7um6WOhuMg6ni/xcqT7bL9M6raqtPkPZxEF4ME=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hS8FjLJRU2XNLsTdnrAqPIjZ2vBYVFCAF4y78l+7OxQHXRsrxp8CAd1m6bG5chhpagsoanTXPq6yLBE/B5zKlqDViIHkjDBHYUCX0CJRntvryKevOOmfLkHaTJ2lYQAHnqJVDNT0YYolJvRsrOsovW69BFGWd8e1SPe/hLGajGg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GZBgYlfw; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=EpSMvpmX9ylISPvB2ixKtAs0HtEXWVOh9wsj6+ZGcmKXF5F5JYvm1EFxoICpMrUOC7OGaM/nSV1L+2FC1JBk/7z7VQt24iX7D3J8+mWVsSQ4zKkbPVdeprhCWRw5LEG679zGlcl5q9OEm6q4R7QrhQ+OL9IMEoDvWW9TyAfsmrA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=f/0J8/DR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GZBgYlfw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BAC55C116C6;
-	Fri, 13 Feb 2026 13:55:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="f/0J8/DR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DFE85C116C6;
+	Fri, 13 Feb 2026 13:55:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770990940;
-	bh=krJz4if/qC6af5MULXvZCoPbZd+rY3fBBh4GdCWyDro=;
+	s=korg; t=1770990943;
+	bh=JJ8Sx7um6WOhuMg6ni/xcqT7bL9M6raqtPkPZxEF4ME=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GZBgYlfw1bf/PeRhbDkyJneBlzeazpmlKyrPN3FeZD7WGhj6au+J4U627ZxijZ9E3
-	 5jYP0Z32mxdbuPVrLbPM0QMKBH+7pEjmb14asDmL3i2iXC4BlZT7MaGqVs3g2t6gVa
-	 tBcIVNAKmS9OnwbQQz6606DHHysYs828yXE7poTw=
+	b=f/0J8/DRHxBiTX1JHBulB/lcYgoJRmSkZdEb3rEOEalbxx8bxVugvjiYRtqZj4eGD
+	 IJyRYTq6XtDPMBIje/7hdSzJgF7O55ImaE91yC5IFZLMoOllZHLHcQImIpScxetpEq
+	 ZZbUDggniIw2oj50QJEZquqdjFRaRa4mUIBhSE5g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	tianshuo han <hantianshuo233@gmail.com>,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 6.12 02/24] ksmbd: fix infinite loop caused by next_smb2_rcv_hdr_off reset in error paths
-Date: Fri, 13 Feb 2026 14:48:21 +0100
-Message-ID: <20260213134704.819933148@linuxfoundation.org>
+	stable@kernel.org,
+	Chao Yu <chao@kernel.org>,
+	Gao Xiang <hsiangkao@linux.alibaba.com>
+Subject: [PATCH 6.12 20/24] erofs: fix UAF issue for file-backed mounts w/ directio option
+Date: Fri, 13 Feb 2026 14:48:39 +0100
+Message-ID: <20260213134705.461290853@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260213134704.728003077@linuxfoundation.org>
 References: <20260213134704.728003077@linuxfoundation.org>
@@ -51,62 +51,101 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Namjae Jeon <linkinjeon@kernel.org>
+From: Chao Yu <chao@kernel.org>
 
-commit 010eb01ce23b34b50531448b0da391c7f05a72af upstream.
+commit 1caf50ce4af096d0280d59a31abdd85703cd995c upstream.
 
-The problem occurs when a signed request fails smb2 signature verification
-check. In __process_request(), if check_sign_req() returns an error,
-set_smb2_rsp_status(work, STATUS_ACCESS_DENIED) is called.
-set_smb2_rsp_status() set work->next_smb2_rcv_hdr_off as zero. By resetting
-next_smb2_rcv_hdr_off to zero, the pointer to the next command in the chain
-is lost. Consequently, is_chained_smb2_message() continues to point to
-the same request header instead of advancing. If the header's NextCommand
-field is non-zero, the function returns true, causing __handle_ksmbd_work()
-to repeatedly process the same failed request in an infinite loop.
-This results in the kernel log being flooded with "bad smb2 signature"
-messages and high CPU usage.
+[    9.269940][ T3222] Call trace:
+[    9.269948][ T3222]  ext4_file_read_iter+0xac/0x108
+[    9.269979][ T3222]  vfs_iocb_iter_read+0xac/0x198
+[    9.269993][ T3222]  erofs_fileio_rq_submit+0x12c/0x180
+[    9.270008][ T3222]  erofs_fileio_submit_bio+0x14/0x24
+[    9.270030][ T3222]  z_erofs_runqueue+0x834/0x8ac
+[    9.270054][ T3222]  z_erofs_read_folio+0x120/0x220
+[    9.270083][ T3222]  filemap_read_folio+0x60/0x120
+[    9.270102][ T3222]  filemap_fault+0xcac/0x1060
+[    9.270119][ T3222]  do_pte_missing+0x2d8/0x1554
+[    9.270131][ T3222]  handle_mm_fault+0x5ec/0x70c
+[    9.270142][ T3222]  do_page_fault+0x178/0x88c
+[    9.270167][ T3222]  do_translation_fault+0x38/0x54
+[    9.270183][ T3222]  do_mem_abort+0x54/0xac
+[    9.270208][ T3222]  el0_da+0x44/0x7c
+[    9.270227][ T3222]  el0t_64_sync_handler+0x5c/0xf4
+[    9.270253][ T3222]  el0t_64_sync+0x1bc/0x1c0
 
-This patch fixes the issue by changing the return value from
-SERVER_HANDLER_CONTINUE to SERVER_HANDLER_ABORT. This ensures that
-the processing loop terminates immediately rather than attempting to
-continue from an invalidated offset.
+EROFS may encounter above panic when enabling file-backed mount w/
+directio mount option, the root cause is it may suffer UAF in below
+race condition:
 
-Reported-by: tianshuo han <hantianshuo233@gmail.com>
-Cc: stable@vger.kernel.org
-Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+- z_erofs_read_folio                          wq s_dio_done_wq
+ - z_erofs_runqueue
+  - erofs_fileio_submit_bio
+   - erofs_fileio_rq_submit
+    - vfs_iocb_iter_read
+     - ext4_file_read_iter
+      - ext4_dio_read_iter
+       - iomap_dio_rw
+       : bio was submitted and return -EIOCBQUEUED
+                                              - dio_aio_complete_work
+                                               - dio_complete
+                                                - dio->iocb->ki_complete (erofs_fileio_ki_complete())
+                                                 - kfree(rq)
+                                                 : it frees iocb, iocb.ki_filp can be UAF in file_accessed().
+       - file_accessed
+       : access NULL file point
+
+Introduce a reference count in struct erofs_fileio_rq, and initialize it
+as two, both erofs_fileio_ki_complete() and erofs_fileio_rq_submit() will
+decrease reference count, the last one decreasing the reference count
+to zero will free rq.
+
+Cc: stable@kernel.org
+Fixes: fb176750266a ("erofs: add file-backed mount support")
+Fixes: 6422cde1b0d5 ("erofs: use buffered I/O for file-backed mounts by default")
+Signed-off-by: Chao Yu <chao@kernel.org>
+Reviewed-by: Gao Xiang <hsiangkao@linux.alibaba.com>
+Signed-off-by: Gao Xiang <hsiangkao@linux.alibaba.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/server/server.c |    6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ fs/erofs/fileio.c |    7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
---- a/fs/smb/server/server.c
-+++ b/fs/smb/server/server.c
-@@ -126,21 +126,21 @@ static int __process_request(struct ksmb
- andx_again:
- 	if (command >= conn->max_cmds) {
- 		conn->ops->set_rsp_status(work, STATUS_INVALID_PARAMETER);
--		return SERVER_HANDLER_CONTINUE;
-+		return SERVER_HANDLER_ABORT;
- 	}
+--- a/fs/erofs/fileio.c
++++ b/fs/erofs/fileio.c
+@@ -10,6 +10,7 @@ struct erofs_fileio_rq {
+ 	struct bio bio;
+ 	struct kiocb iocb;
+ 	struct super_block *sb;
++	refcount_t ref;
+ };
  
- 	cmds = &conn->cmds[command];
- 	if (!cmds->proc) {
- 		ksmbd_debug(SMB, "*** not implemented yet cmd = %x\n", command);
- 		conn->ops->set_rsp_status(work, STATUS_NOT_IMPLEMENTED);
--		return SERVER_HANDLER_CONTINUE;
-+		return SERVER_HANDLER_ABORT;
- 	}
- 
- 	if (work->sess && conn->ops->is_sign_req(work, command)) {
- 		ret = conn->ops->check_sign_req(work);
- 		if (!ret) {
- 			conn->ops->set_rsp_status(work, STATUS_ACCESS_DENIED);
--			return SERVER_HANDLER_CONTINUE;
-+			return SERVER_HANDLER_ABORT;
+ struct erofs_fileio {
+@@ -42,7 +43,8 @@ static void erofs_fileio_ki_complete(str
  		}
  	}
+ 	bio_uninit(&rq->bio);
+-	kfree(rq);
++	if (refcount_dec_and_test(&rq->ref))
++		kfree(rq);
+ }
+ 
+ static void erofs_fileio_rq_submit(struct erofs_fileio_rq *rq)
+@@ -63,6 +65,8 @@ static void erofs_fileio_rq_submit(struc
+ 	ret = vfs_iocb_iter_read(rq->iocb.ki_filp, &rq->iocb, &iter);
+ 	if (ret != -EIOCBQUEUED)
+ 		erofs_fileio_ki_complete(&rq->iocb, ret);
++	if (refcount_dec_and_test(&rq->ref))
++		kfree(rq);
+ }
+ 
+ static struct erofs_fileio_rq *erofs_fileio_rq_alloc(struct erofs_map_dev *mdev)
+@@ -73,6 +77,7 @@ static struct erofs_fileio_rq *erofs_fil
+ 	bio_init(&rq->bio, NULL, rq->bvecs, BIO_MAX_VECS, REQ_OP_READ);
+ 	rq->iocb.ki_filp = mdev->m_dif->file;
+ 	rq->sb = mdev->m_sb;
++	refcount_set(&rq->ref, 2);
+ 	return rq;
+ }
  
 
 
