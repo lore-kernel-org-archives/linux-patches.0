@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E6FD54723;
-	Fri, 13 Feb 2026 13:54:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7AF2954723;
+	Fri, 13 Feb 2026 13:54:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770990854; cv=none; b=emT9LjshqMhZ8jwMgqJgMmEq5owB2hHbfy5MumSjdyeYbKTyI1u14edERui3++pdONm0dk/NYFmyVQBuS9QEEVVMlXo8PQMJcV3YbwklhiJKRTKr2BN9EbO+U/lXII85iuKih9F0KRi4/deKRQ7xpr3c9Sxf3aWpCrlbHlBqMek=
+	t=1770990857; cv=none; b=SwoFMFVfH/gWITVFr7tWNa1+e7A3UD1DLo24bvhBRfLS5HcTY/r7gt4/OqcciQaaaEJhYrTHo80nZ+Y8cktGgPVw7wSc3nQ+g1uLzJ+s7/2PSnDqWPNvMJ8OVhOpIR08de0PYJIIuIyzY6HYmFs0VEJ/RiC6dm8YWvz/zY3cvUU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770990854; c=relaxed/simple;
-	bh=ORQwWgT038onrW2mxgCt36+jnO/pvvt5po+wuRjiKtY=;
+	s=arc-20240116; t=1770990857; c=relaxed/simple;
+	bh=bjTNacvYP4wzmx5fe1sSlvF2fX0NAeWZcEVC7Z+a8mY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ud35ZYX3UICbfeWKisA0YjDtcDaBMcB+FZjmFUYrwnvcqjoyrjc6IIHtg87juYrctHCayPiSyu1dOFSuQ+iNhYDXeRCoj+sSuBzm8nGnIxbrjiAlzYIt14OCGVRFMDzWv2OK9ErZTvNCcRz/cxHEck5v53pJe6vhHki7seMMVbg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CI+Mj3sJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PI9QnBzUxWfYgWrNtQt2Ia9/ruDnI+LLbfZ5YfthDIi0z0A0TTswIYGJ4E2RbuM12hkCCtV9vF6X6Q0zVTOphVQkXKt3g+vBGvBrX4LVsIQWxc4rcKSHbtwTr436jkosIhLZRY/jWrAEh/xoRkTSFXhaKV3+b7YcPtz/WOTfBqY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CbO8D/Fm; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CI+Mj3sJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10A57C116C6;
-	Fri, 13 Feb 2026 13:54:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CbO8D/Fm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 06170C116C6;
+	Fri, 13 Feb 2026 13:54:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770990854;
-	bh=ORQwWgT038onrW2mxgCt36+jnO/pvvt5po+wuRjiKtY=;
+	s=korg; t=1770990857;
+	bh=bjTNacvYP4wzmx5fe1sSlvF2fX0NAeWZcEVC7Z+a8mY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CI+Mj3sJasipmQRZiK2pxfftr/i4QDengPG2oyYVrOSa5GbLbWph3cCBIbXEymgRf
-	 +XOH8u/CR0zwO/Q8rTmXsEArTzz726MtIND1MLEchPS2hipt4qNff6OmeF1Q+Sk7J+
-	 8FIU4zq4AeoY5uwc/45IqNWBjNpHM0JUgvMlo4hs=
+	b=CbO8D/Fm6lk42jHarHdVpi4pPti7skzXBgMNl7IdkjCS7rYhvpT+2FJNNkq53k7pq
+	 YWSYChj7UA0PXXxNp8LBQgBIXgjFsYG3+VinYYpHEO0VBMdEh1erhHXoIXGKJ57jKu
+	 /LeLCtxHceqsl7TL+w4P0QlBTPwq9XrMFGD5AQrA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	r772577952@gmail.com,
-	"Darrick J. Wong" <djwong@kernel.org>,
-	Christoph Hellwig <hch@lst.de>
-Subject: [PATCH 6.18 45/49] xfs: fix UAF in xchk_btree_check_block_owner
-Date: Fri, 13 Feb 2026 14:48:29 +0100
-Message-ID: <20260213134710.511759795@linuxfoundation.org>
+	Jeongjun Park <aha310510@gmail.com>,
+	Inki Dae <inki.dae@samsung.com>
+Subject: [PATCH 6.18 46/49] drm/exynos: vidi: use ctx->lock to protect struct vidi_context member variables related to memory alloc/free
+Date: Fri, 13 Feb 2026 14:48:30 +0100
+Message-ID: <20260213134710.547802422@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260213134708.885500854@linuxfoundation.org>
 References: <20260213134708.885500854@linuxfoundation.org>
@@ -51,57 +50,170 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Darrick J. Wong <djwong@kernel.org>
+From: Jeongjun Park <aha310510@gmail.com>
 
-commit 1c253e11225bc5167217897885b85093e17c2217 upstream.
+commit 52b330799e2d6f825ae2bb74662ec1b10eb954bb upstream.
 
-We cannot dereference bs->cur when trying to determine if bs->cur
-aliases bs->sc->sa.{bno,rmap}_cur after the latter has been freed.
-Fix this by sampling before type before any freeing could happen.
-The correct temporal ordering was broken when we removed xfs_btnum_t.
+Exynos Virtual Display driver performs memory alloc/free operations
+without lock protection, which easily causes concurrency problem.
 
-Cc: r772577952@gmail.com
-Cc: <stable@vger.kernel.org> # v6.9
-Fixes: ec793e690f801d ("xfs: remove xfs_btnum_t")
-Signed-off-by: "Darrick J. Wong" <djwong@kernel.org>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Tested-by: Jiaming Zhang <r772577952@gmail.com>
+For example, use-after-free can occur in race scenario like this:
+```
+	CPU0				CPU1				CPU2
+	----				----				----
+  vidi_connection_ioctl()
+    if (vidi->connection) // true
+      drm_edid = drm_edid_alloc(); // alloc drm_edid
+      ...
+      ctx->raw_edid = drm_edid;
+      ...
+								drm_mode_getconnector()
+								  drm_helper_probe_single_connector_modes()
+								    vidi_get_modes()
+								      if (ctx->raw_edid) // true
+								        drm_edid_dup(ctx->raw_edid);
+								          if (!drm_edid) // false
+								          ...
+				vidi_connection_ioctl()
+				  if (vidi->connection) // false
+				    drm_edid_free(ctx->raw_edid); // free drm_edid
+				    ...
+								          drm_edid_alloc(drm_edid->edid)
+								            kmemdup(edid); // UAF!!
+								            ...
+```
+
+To prevent these vulns, at least in vidi_context, member variables related
+to memory alloc/free should be protected with ctx->lock.
+
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Jeongjun Park <aha310510@gmail.com>
+Signed-off-by: Inki Dae <inki.dae@samsung.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/xfs/scrub/btree.c |    7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/exynos/exynos_drm_vidi.c |   38 ++++++++++++++++++++++++++-----
+ 1 file changed, 32 insertions(+), 6 deletions(-)
 
---- a/fs/xfs/scrub/btree.c
-+++ b/fs/xfs/scrub/btree.c
-@@ -370,12 +370,15 @@ xchk_btree_check_block_owner(
+--- a/drivers/gpu/drm/exynos/exynos_drm_vidi.c
++++ b/drivers/gpu/drm/exynos/exynos_drm_vidi.c
+@@ -186,29 +186,37 @@ static ssize_t vidi_store_connection(str
+ 				const char *buf, size_t len)
  {
- 	xfs_agnumber_t		agno;
- 	xfs_agblock_t		agbno;
-+	bool			is_bnobt, is_rmapbt;
- 	bool			init_sa;
- 	int			error = 0;
+ 	struct vidi_context *ctx = dev_get_drvdata(dev);
+-	int ret;
++	int ret, new_connected;
  
- 	if (!bs->cur)
- 		return 0;
+-	ret = kstrtoint(buf, 0, &ctx->connected);
++	ret = kstrtoint(buf, 0, &new_connected);
+ 	if (ret)
+ 		return ret;
+-
+-	if (ctx->connected > 1)
++	if (new_connected > 1)
+ 		return -EINVAL;
  
-+	is_bnobt = xfs_btree_is_bno(bs->cur->bc_ops);
-+	is_rmapbt = xfs_btree_is_rmap(bs->cur->bc_ops);
- 	agno = xfs_daddr_to_agno(bs->cur->bc_mp, daddr);
- 	agbno = xfs_daddr_to_agbno(bs->cur->bc_mp, daddr);
- 
-@@ -398,11 +401,11 @@ xchk_btree_check_block_owner(
- 	 * have to nullify it (to shut down further block owner checks) if
- 	 * self-xref encounters problems.
++	mutex_lock(&ctx->lock);
++
+ 	/*
+ 	 * Use fake edid data for test. If raw_edid is set then it can't be
+ 	 * tested.
  	 */
--	if (!bs->sc->sa.bno_cur && xfs_btree_is_bno(bs->cur->bc_ops))
-+	if (!bs->sc->sa.bno_cur && is_bnobt)
- 		bs->cur = NULL;
+ 	if (ctx->raw_edid) {
+ 		DRM_DEV_DEBUG_KMS(dev, "edid data is not fake data.\n");
+-		return -EINVAL;
++		ret = -EINVAL;
++		goto fail;
+ 	}
  
- 	xchk_xref_is_only_owned_by(bs->sc, agbno, 1, bs->oinfo);
--	if (!bs->sc->sa.rmap_cur && xfs_btree_is_rmap(bs->cur->bc_ops))
-+	if (!bs->sc->sa.rmap_cur && is_rmapbt)
- 		bs->cur = NULL;
++	ctx->connected = new_connected;
++	mutex_unlock(&ctx->lock);
++
+ 	DRM_DEV_DEBUG_KMS(dev, "requested connection.\n");
  
- out_free:
+ 	drm_helper_hpd_irq_event(ctx->drm_dev);
+ 
+ 	return len;
++fail:
++	mutex_unlock(&ctx->lock);
++	return ret;
+ }
+ 
+ static DEVICE_ATTR(connection, 0644, vidi_show_connection,
+@@ -238,11 +246,14 @@ int vidi_connection_ioctl(struct drm_dev
+ 		return -EINVAL;
+ 	}
+ 
++	mutex_lock(&ctx->lock);
+ 	if (ctx->connected == vidi->connection) {
++		mutex_unlock(&ctx->lock);
+ 		DRM_DEV_DEBUG_KMS(ctx->dev,
+ 				  "same connection request.\n");
+ 		return -EINVAL;
+ 	}
++	mutex_unlock(&ctx->lock);
+ 
+ 	if (vidi->connection) {
+ 		const struct drm_edid *drm_edid;
+@@ -262,14 +273,21 @@ int vidi_connection_ioctl(struct drm_dev
+ 					  "edid data is invalid.\n");
+ 			return -EINVAL;
+ 		}
++		mutex_lock(&ctx->lock);
+ 		ctx->raw_edid = drm_edid;
++		mutex_unlock(&ctx->lock);
+ 	} else {
+ 		/* with connection = 0, free raw_edid */
++		mutex_lock(&ctx->lock);
+ 		drm_edid_free(ctx->raw_edid);
+ 		ctx->raw_edid = NULL;
++		mutex_unlock(&ctx->lock);
+ 	}
+ 
++	mutex_lock(&ctx->lock);
+ 	ctx->connected = vidi->connection;
++	mutex_unlock(&ctx->lock);
++
+ 	drm_helper_hpd_irq_event(ctx->drm_dev);
+ 
+ 	return 0;
+@@ -284,7 +302,7 @@ static enum drm_connector_status vidi_de
+ 	 * connection request would come from user side
+ 	 * to do hotplug through specific ioctl.
+ 	 */
+-	return ctx->connected ? connector_status_connected :
++	return READ_ONCE(ctx->connected) ? connector_status_connected :
+ 			connector_status_disconnected;
+ }
+ 
+@@ -307,11 +325,15 @@ static int vidi_get_modes(struct drm_con
+ 	const struct drm_edid *drm_edid;
+ 	int count;
+ 
++	mutex_lock(&ctx->lock);
++
+ 	if (ctx->raw_edid)
+ 		drm_edid = drm_edid_dup(ctx->raw_edid);
+ 	else
+ 		drm_edid = drm_edid_alloc(fake_edid_info, sizeof(fake_edid_info));
+ 
++	mutex_unlock(&ctx->lock);
++
+ 	drm_edid_connector_update(connector, drm_edid);
+ 
+ 	count = drm_edid_connector_add_modes(connector);
+@@ -456,9 +478,13 @@ static void vidi_remove(struct platform_
+ {
+ 	struct vidi_context *ctx = platform_get_drvdata(pdev);
+ 
++	mutex_lock(&ctx->lock);
++
+ 	drm_edid_free(ctx->raw_edid);
+ 	ctx->raw_edid = NULL;
+ 
++	mutex_unlock(&ctx->lock);
++
+ 	component_del(&pdev->dev, &vidi_component_ops);
+ }
+ 
 
 
