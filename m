@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5EC0B3563C3;
-	Fri, 13 Feb 2026 13:50:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A05D23645D;
+	Fri, 13 Feb 2026 13:50:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770990654; cv=none; b=E4+dYCmw7EEE78urc5z/SriYnCvHA9pzPDPJYYDkNEeFZOAvvnUNre7HHrCVu+tVnNyVzD1uj2jROtBZMt9S3JjtnL3/Whd0XMsH+MQP/9A/5b6ZacSpOGr8c1lgBumgOhTybjAnbUZetNJsUg3foaaDydgcAn2MVLGb6VejNIU=
+	t=1770990657; cv=none; b=rOfklpnrz9vGDGnOIuPG1LD5kM57iE0RWt5gYzVgusBBTiTj6tJmjeKfwmzGpCxWp6l71Ak1AXoVlnJ2NFv+9glVRV9cS+2QWqeVG1Pd70sg7F8DfTpz6JmalsDs6BPoI5aY+563SuFErWgLNZlbk9o+QAxhyuZXrFagB43kyvY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770990654; c=relaxed/simple;
-	bh=g6TBDFgZjXq1hxhx4dfx2wGEqOiub8zZfrOfyB0vKpM=;
+	s=arc-20240116; t=1770990657; c=relaxed/simple;
+	bh=bHWz2O92rpi8YMPD9w3iXP0rnEhYFhMjBQipLwlRLHA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WjmPEmekHLh9fez3/G5/ZkaHrvhzjiZ8eezeZRRJtZ7UJC0RYnFNE8LDxuJ0zagtwWsvTaDNp1wQxK52ksf3Ger45RWDdhgsjRb6nfhV8VFUahegQrUheI5POzjV7bBgwngXsKNAHqi3LGaE3yPQbcNYvAtS2iRlNaJFkusGzyY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bdr7n212; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rZ8AKocFeD7zS0NxfmS7CbhxNWa005BQ4kXKB3fNVaMvde6g7lmGwmMdI3DxX7M9sv0f6opzHGXbnnXXix2TKVpVL2uvexChw5MC+dR2ZMINLYWH13iwDzK9XA3YNhP1uH+qfUXEWMOHTF6ai2XcU48b4999Z3EMjZ+v0DfQLmU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ln3XlxLC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bdr7n212"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9538EC116C6;
-	Fri, 13 Feb 2026 13:50:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ln3XlxLC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D82EC116C6;
+	Fri, 13 Feb 2026 13:50:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770990654;
-	bh=g6TBDFgZjXq1hxhx4dfx2wGEqOiub8zZfrOfyB0vKpM=;
+	s=korg; t=1770990657;
+	bh=bHWz2O92rpi8YMPD9w3iXP0rnEhYFhMjBQipLwlRLHA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bdr7n212jAgYhs8CQ/Zr13UsLbM4C59yXBg4aozBzQM6sRN0zACB8n79IDI7PdnXQ
-	 u/l/ADhK7OQBQwetrgIC/al06kMhPKb5zDIVqy7CIn3Nc+Nk7tFl0mzQczFvbSct3U
-	 rdYTME100RcV0OnIck7N5xCF2tYVB7/UrTr6a3ro=
+	b=ln3XlxLCndCuk8voDoya7VK74EOnCcH8t9UNH5XviPvW+82FL35Va9FQUPlVxuT58
+	 qey73w7caAFBCV9yhs3GDXVogZthY8vpEb89rIftnMZbf4DpSmFGpDiqzD5vtEu3xY
+	 cvIgpKbSmHhfWUDRCJp7l10yDAAb+DsgOP+91VsY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qiu-ji Chen <chenqiuji666@gmail.com>,
-	Gui-Dong Han <hanguidong02@gmail.com>,
-	Danilo Krummrich <dakr@kernel.org>,
-	"Rafael J. Wysocki (Intel)" <rafael@kernel.org>
-Subject: [PATCH 6.19 27/49] driver core: enforce device_lock for driver_match_device()
-Date: Fri, 13 Feb 2026 14:47:46 +0100
-Message-ID: <20260213134709.727418807@linuxfoundation.org>
+	syzbot+ad45f827c88778ff7df6@syzkaller.appspotmail.com,
+	Viacheslav Dubeyko <Slava.Dubeyko@ibm.com>,
+	Christian Brauner <brauner@kernel.org>,
+	Mehdi Ben Hadj Khelifa <mehdi.benhadjkhelifa@gmail.com>,
+	Viacheslav Dubeyko <slava@dubeyko.com>
+Subject: [PATCH 6.19 36/49] hfs: ensure sb->s_fs_info is always cleaned up
+Date: Fri, 13 Feb 2026 14:47:55 +0100
+Message-ID: <20260213134710.043997429@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260213134708.713126210@linuxfoundation.org>
 References: <20260213134708.713126210@linuxfoundation.org>
@@ -52,88 +53,167 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gui-Dong Han <hanguidong02@gmail.com>
+From: Mehdi Ben Hadj Khelifa <mehdi.benhadjkhelifa@gmail.com>
 
-commit dc23806a7c47ec5f1293aba407fb69519f976ee0 upstream.
+commit 05ce49a902be15dc93854cbfc20161205a9ee446 upstream.
 
-Currently, driver_match_device() is called from three sites. One site
-(__device_attach_driver) holds device_lock(dev), but the other two
-(bind_store and __driver_attach) do not. This inconsistency means that
-bus match() callbacks are not guaranteed to be called with the lock
-held.
+When hfs was converted to the new mount api a bug was introduced by
+changing the allocation pattern of sb->s_fs_info. If setup_bdev_super()
+fails after a new superblock has been allocated by sget_fc(), but before
+hfs_fill_super() takes ownership of the filesystem-specific s_fs_info
+data it was leaked.
 
-Fix this by introducing driver_match_device_locked(), which guarantees
-holding the device lock using a scoped guard. Replace the unlocked calls
-in bind_store() and __driver_attach() with this new helper. Also add a
-lock assertion to driver_match_device() to enforce this guarantee.
-
-This consistency also fixes a known race condition. The driver_override
-implementation relies on the device_lock, so the missing lock led to the
-use-after-free (UAF) reported in Bugzilla for buses using this field.
-
-Stress testing the two newly locked paths for 24 hours with
-CONFIG_PROVE_LOCKING and CONFIG_LOCKDEP enabled showed no UAF recurrence
-and no lockdep warnings.
+Fix this by freeing sb->s_fs_info in hfs_kill_super().
 
 Cc: stable@vger.kernel.org
-Closes: https://bugzilla.kernel.org/show_bug.cgi?id=220789
-Suggested-by: Qiu-ji Chen <chenqiuji666@gmail.com>
-Signed-off-by: Gui-Dong Han <hanguidong02@gmail.com>
-Fixes: 49b420a13ff9 ("driver core: check bus->match without holding device lock")
-Reviewed-by: Danilo Krummrich <dakr@kernel.org>
-Reviewed-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Reviewed-by: Rafael J. Wysocki (Intel) <rafael@kernel.org>
-Link: https://patch.msgid.link/20260113162843.12712-1-hanguidong02@gmail.com
-Signed-off-by: Danilo Krummrich <dakr@kernel.org>
+Fixes: ffcd06b6d13b ("hfs: convert hfs to use the new mount api")
+Reported-by: syzbot+ad45f827c88778ff7df6@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=ad45f827c88778ff7df6
+Tested-by: Viacheslav Dubeyko <Slava.Dubeyko@ibm.com>
+Signed-off-by: Christian Brauner <brauner@kernel.org>
+Signed-off-by: Mehdi Ben Hadj Khelifa <mehdi.benhadjkhelifa@gmail.com>
+Reviewed-by: Viacheslav Dubeyko <slava@dubeyko.com>
+Signed-off-by: Viacheslav Dubeyko <slava@dubeyko.com>
+Link: https://lore.kernel.org/r/20251201222843.82310-2-mehdi.benhadjkhelifa@gmail.com
+Signed-off-by: Viacheslav Dubeyko <slava@dubeyko.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/base/base.h |    9 +++++++++
- drivers/base/bus.c  |    2 +-
- drivers/base/dd.c   |    2 +-
- 3 files changed, 11 insertions(+), 2 deletions(-)
+ fs/hfs/mdb.c   |   35 ++++++++++++++---------------------
+ fs/hfs/super.c |   10 +++++++++-
+ 2 files changed, 23 insertions(+), 22 deletions(-)
 
---- a/drivers/base/base.h
-+++ b/drivers/base/base.h
-@@ -182,9 +182,18 @@ void device_set_deferred_probe_reason(co
- static inline int driver_match_device(const struct device_driver *drv,
- 				      struct device *dev)
- {
-+	device_lock_assert(dev);
-+
- 	return drv->bus->match ? drv->bus->match(dev, drv) : 1;
+--- a/fs/hfs/mdb.c
++++ b/fs/hfs/mdb.c
+@@ -92,7 +92,7 @@ int hfs_mdb_get(struct super_block *sb)
+ 		/* See if this is an HFS filesystem */
+ 		bh = sb_bread512(sb, part_start + HFS_MDB_BLK, mdb);
+ 		if (!bh)
+-			goto out;
++			return -EIO;
+ 
+ 		if (mdb->drSigWord == cpu_to_be16(HFS_SUPER_MAGIC))
+ 			break;
+@@ -102,13 +102,14 @@ int hfs_mdb_get(struct super_block *sb)
+ 		 * (should do this only for cdrom/loop though)
+ 		 */
+ 		if (hfs_part_find(sb, &part_start, &part_size))
+-			goto out;
++			return -EIO;
+ 	}
+ 
+ 	HFS_SB(sb)->alloc_blksz = size = be32_to_cpu(mdb->drAlBlkSiz);
+ 	if (!size || (size & (HFS_SECTOR_SIZE - 1))) {
+ 		pr_err("bad allocation block size %d\n", size);
+-		goto out_bh;
++		brelse(bh);
++		return -EIO;
+ 	}
+ 
+ 	size = min(HFS_SB(sb)->alloc_blksz, (u32)PAGE_SIZE);
+@@ -125,14 +126,16 @@ int hfs_mdb_get(struct super_block *sb)
+ 	brelse(bh);
+ 	if (!sb_set_blocksize(sb, size)) {
+ 		pr_err("unable to set blocksize to %u\n", size);
+-		goto out;
++		return -EIO;
+ 	}
+ 
+ 	bh = sb_bread512(sb, part_start + HFS_MDB_BLK, mdb);
+ 	if (!bh)
+-		goto out;
+-	if (mdb->drSigWord != cpu_to_be16(HFS_SUPER_MAGIC))
+-		goto out_bh;
++		return -EIO;
++	if (mdb->drSigWord != cpu_to_be16(HFS_SUPER_MAGIC)) {
++		brelse(bh);
++		return -EIO;
++	}
+ 
+ 	HFS_SB(sb)->mdb_bh = bh;
+ 	HFS_SB(sb)->mdb = mdb;
+@@ -174,7 +177,7 @@ int hfs_mdb_get(struct super_block *sb)
+ 
+ 	HFS_SB(sb)->bitmap = kzalloc(8192, GFP_KERNEL);
+ 	if (!HFS_SB(sb)->bitmap)
+-		goto out;
++		return -EIO;
+ 
+ 	/* read in the bitmap */
+ 	block = be16_to_cpu(mdb->drVBMSt) + part_start;
+@@ -185,7 +188,7 @@ int hfs_mdb_get(struct super_block *sb)
+ 		bh = sb_bread(sb, off >> sb->s_blocksize_bits);
+ 		if (!bh) {
+ 			pr_err("unable to read volume bitmap\n");
+-			goto out;
++			return -EIO;
+ 		}
+ 		off2 = off & (sb->s_blocksize - 1);
+ 		len = min((int)sb->s_blocksize - off2, size);
+@@ -199,12 +202,12 @@ int hfs_mdb_get(struct super_block *sb)
+ 	HFS_SB(sb)->ext_tree = hfs_btree_open(sb, HFS_EXT_CNID, hfs_ext_keycmp);
+ 	if (!HFS_SB(sb)->ext_tree) {
+ 		pr_err("unable to open extent tree\n");
+-		goto out;
++		return -EIO;
+ 	}
+ 	HFS_SB(sb)->cat_tree = hfs_btree_open(sb, HFS_CAT_CNID, hfs_cat_keycmp);
+ 	if (!HFS_SB(sb)->cat_tree) {
+ 		pr_err("unable to open catalog tree\n");
+-		goto out;
++		return -EIO;
+ 	}
+ 
+ 	attrib = mdb->drAtrb;
+@@ -229,12 +232,6 @@ int hfs_mdb_get(struct super_block *sb)
+ 	}
+ 
+ 	return 0;
+-
+-out_bh:
+-	brelse(bh);
+-out:
+-	hfs_mdb_put(sb);
+-	return -EIO;
  }
  
-+static inline int driver_match_device_locked(const struct device_driver *drv,
-+					     struct device *dev)
+ /*
+@@ -359,8 +356,6 @@ void hfs_mdb_close(struct super_block *s
+  * Release the resources associated with the in-core MDB.  */
+ void hfs_mdb_put(struct super_block *sb)
+ {
+-	if (!HFS_SB(sb))
+-		return;
+ 	/* free the B-trees */
+ 	hfs_btree_close(HFS_SB(sb)->ext_tree);
+ 	hfs_btree_close(HFS_SB(sb)->cat_tree);
+@@ -373,6 +368,4 @@ void hfs_mdb_put(struct super_block *sb)
+ 	unload_nls(HFS_SB(sb)->nls_disk);
+ 
+ 	kfree(HFS_SB(sb)->bitmap);
+-	kfree(HFS_SB(sb));
+-	sb->s_fs_info = NULL;
+ }
+--- a/fs/hfs/super.c
++++ b/fs/hfs/super.c
+@@ -431,10 +431,18 @@ static int hfs_init_fs_context(struct fs
+ 	return 0;
+ }
+ 
++static void hfs_kill_super(struct super_block *sb)
 +{
-+	guard(device)(dev);
-+	return driver_match_device(drv, dev);
++	struct hfs_sb_info *hsb = HFS_SB(sb);
++
++	kill_block_super(sb);
++	kfree(hsb);
 +}
 +
- static inline void dev_sync_state(struct device *dev)
- {
- 	if (dev->bus->sync_state)
---- a/drivers/base/bus.c
-+++ b/drivers/base/bus.c
-@@ -263,7 +263,7 @@ static ssize_t bind_store(struct device_
- 	int err = -ENODEV;
- 
- 	dev = bus_find_device_by_name(bus, NULL, buf);
--	if (dev && driver_match_device(drv, dev)) {
-+	if (dev && driver_match_device_locked(drv, dev)) {
- 		err = device_driver_attach(drv, dev);
- 		if (!err) {
- 			/* success */
---- a/drivers/base/dd.c
-+++ b/drivers/base/dd.c
-@@ -1180,7 +1180,7 @@ static int __driver_attach(struct device
- 	 * is an error.
- 	 */
- 
--	ret = driver_match_device(drv, dev);
-+	ret = driver_match_device_locked(drv, dev);
- 	if (ret == 0) {
- 		/* no match */
- 		return 0;
+ static struct file_system_type hfs_fs_type = {
+ 	.owner		= THIS_MODULE,
+ 	.name		= "hfs",
+-	.kill_sb	= kill_block_super,
++	.kill_sb	= hfs_kill_super,
+ 	.fs_flags	= FS_REQUIRES_DEV,
+ 	.init_fs_context = hfs_init_fs_context,
+ };
 
 
