@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E597935FF6F;
-	Fri, 13 Feb 2026 13:54:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8FEA352936;
+	Fri, 13 Feb 2026 13:54:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770990896; cv=none; b=OKAzIHFGRy18rkYDMvB6LB3uYDk2oINvJ4Mg9N4DyAolevdNKvIpWf0VNtpxbZeIPAsry7h3pVOLyTCXofenbds1ynKKT7Y3tTQCGstSt5wQzqqVsVnnM7eRMsLVsK5sSoiq5mNDHhhlBr/2yzteJqNOo6i6pJVgGje80Z1eBF0=
+	t=1770990898; cv=none; b=TJeG/NZi6+Mp+CzTaWdiK5ol78MHO/fKm3pkvnd6f/QVv5n9sK0oVa/fLStXvcxFCbkOWLyJBMrpOkHOLaAru5YOerS/IAOKhnzyCn6LCZkJvokJLprFCXV8tNo95wiiAX/pPIPp5rovcEUh99yC71ibY+AKO8EywDUffPJe25Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770990896; c=relaxed/simple;
-	bh=3RwOY9270dEX6YnMAM9EIaOb0J7AXJ2zwi/00dtgR/k=;
+	s=arc-20240116; t=1770990898; c=relaxed/simple;
+	bh=2Q/Bcg6zQeMLQRjTWNPWGgjkdJFEOejM2srr4An3x7k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OzDUPB0j0aKZp919/Q+rrctz7ng98aPgaQs58UvduZoqceVx2evDzUiAGH7xF9IJikf/lKzpa7B2EAE1YS6WOVrjgHV/nywlbyAkuUjTNHEWcDKegF88HlK5lhWDTkKGW7IqJkKcZOpIc4aS4hbPbEdn68Pu+v5SXnBqeNd8QXQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pAQywNcn; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=oyjxJVDPZnTwB6wWFlznmPJPK54wfluqhEdJAu3d2s9L18nIII7JtDq/5cE0qeaxsymXjGYuQVW5B5MJkdh49jy/Rk7pqiG6zk1kwZ+5BAi9JGzs2swE9KMGRFYOPgUDYe6NDQXmqBqhjDS4KhS3xEy0S+8/bixN6Az074cRsqg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TIzDIJ3B; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pAQywNcn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 012EAC116C6;
-	Fri, 13 Feb 2026 13:54:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TIzDIJ3B"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D605C116C6;
+	Fri, 13 Feb 2026 13:54:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770990895;
-	bh=3RwOY9270dEX6YnMAM9EIaOb0J7AXJ2zwi/00dtgR/k=;
+	s=korg; t=1770990898;
+	bh=2Q/Bcg6zQeMLQRjTWNPWGgjkdJFEOejM2srr4An3x7k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pAQywNcnR4/53/onoYsQsOk/p5Oqxxz1vFGvQRTLgZiLnCEOkXRegFIOVI5vWkNuj
-	 9r2+Xvw8SwVXXMLoAjHfb1Zu3Gl2VioxmVrgrmoFPT52OLVpgTZVp43FIhlhigHhxn
-	 tR2SVHPTxiSjU4ta5QZOeImb8bsNQv+jvuOiX6K0=
+	b=TIzDIJ3Bza/1TQZUkVkTWJ1m+NOaNthOybWE7lGHW8NLkFmMQkEnzLj1vjy5NDojV
+	 E22eTgL6BbHoj3C1IYozVStzbg+XN4IIMA0bywaJ28ZHtox5zG4Oq2zPZZyV0wUKta
+	 OWpKbvv+DuBbmzGLfZgQ1TGWrCSutm6YSKntZKSo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gui-Dong Han <hanguidong02@gmail.com>,
-	Ioana Ciornei <ioana.ciornei@nxp.com>,
-	"Christophe Leroy (CS GROUP)" <chleroy@kernel.org>
-Subject: [PATCH 6.18 43/49] bus: fsl-mc: fix use-after-free in driver_override_show()
-Date: Fri, 13 Feb 2026 14:48:27 +0100
-Message-ID: <20260213134710.441517320@linuxfoundation.org>
+	Bibo Mao <maobibo@loongson.cn>,
+	Jason Wang <jasowang@redhat.com>,
+	"Michael S. Tsirkin" <mst@redhat.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>
+Subject: [PATCH 6.18 34/49] crypto: virtio - Remove duplicated virtqueue_kick in virtio_crypto_skcipher_crypt_req
+Date: Fri, 13 Feb 2026 14:48:18 +0100
+Message-ID: <20260213134710.125644953@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260213134708.885500854@linuxfoundation.org>
 References: <20260213134708.885500854@linuxfoundation.org>
@@ -51,46 +52,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gui-Dong Han <hanguidong02@gmail.com>
+From: Bibo Mao <maobibo@loongson.cn>
 
-commit 148891e95014b5dc5878acefa57f1940c281c431 upstream.
+commit 14f86a1155cca1176abf55987b2fce7f7fcb2455 upstream.
 
-The driver_override_show() function reads the driver_override string
-without holding the device_lock. However, driver_override_store() uses
-driver_set_override(), which modifies and frees the string while holding
-the device_lock.
+With function virtio_crypto_skcipher_crypt_req(), there is already
+virtqueue_kick() call with spinlock held in function
+__virtio_crypto_skcipher_do_req(). Remove duplicated virtqueue_kick()
+function call here.
 
-This can result in a concurrent use-after-free if the string is freed
-by the store function while being read by the show function.
-
-Fix this by holding the device_lock around the read operation.
-
-Fixes: 1f86a00c1159 ("bus/fsl-mc: add support for 'driver_override' in the mc-bus")
+Fixes: d79b5d0bbf2e ("crypto: virtio - support crypto engine framework")
 Cc: stable@vger.kernel.org
-Signed-off-by: Gui-Dong Han <hanguidong02@gmail.com>
-Reviewed-by: Ioana Ciornei <ioana.ciornei@nxp.com>
-Link: https://lore.kernel.org/r/20251202174438.12658-1-hanguidong02@gmail.com
-Signed-off-by: Christophe Leroy (CS GROUP) <chleroy@kernel.org>
+Signed-off-by: Bibo Mao <maobibo@loongson.cn>
+Acked-by: Jason Wang <jasowang@redhat.com>
+Acked-by: Michael S. Tsirkin <mst@redhat.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/bus/fsl-mc/fsl-mc-bus.c |    6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ drivers/crypto/virtio/virtio_crypto_skcipher_algs.c |    2 --
+ 1 file changed, 2 deletions(-)
 
---- a/drivers/bus/fsl-mc/fsl-mc-bus.c
-+++ b/drivers/bus/fsl-mc/fsl-mc-bus.c
-@@ -202,8 +202,12 @@ static ssize_t driver_override_show(stru
- 				    struct device_attribute *attr, char *buf)
- {
- 	struct fsl_mc_device *mc_dev = to_fsl_mc_device(dev);
-+	ssize_t len;
+--- a/drivers/crypto/virtio/virtio_crypto_skcipher_algs.c
++++ b/drivers/crypto/virtio/virtio_crypto_skcipher_algs.c
+@@ -541,8 +541,6 @@ int virtio_crypto_skcipher_crypt_req(
+ 	if (ret < 0)
+ 		return ret;
  
--	return sysfs_emit(buf, "%s\n", mc_dev->driver_override);
-+	device_lock(dev);
-+	len = sysfs_emit(buf, "%s\n", mc_dev->driver_override);
-+	device_unlock(dev);
-+	return len;
+-	virtqueue_kick(data_vq->vq);
+-
+ 	return 0;
  }
- static DEVICE_ATTR_RW(driver_override);
  
 
 
