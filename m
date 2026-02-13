@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5AFE854723;
-	Fri, 13 Feb 2026 13:51:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B84C334CFC3;
+	Fri, 13 Feb 2026 13:51:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770990688; cv=none; b=FPlBLdnU+XKSeVi2yZXMv2lh7yOB/AO0NEoMDbzVBMlPvBle5eAFxOX7F6j72tuITCPdZz3bFolCe4TzTzfK5zmMpXqDqCp1Mc9tvb8I3pqdn202FflWHHqZ265tQ6ze+eCFg4qsNEjlKK+DVupxoIevXRecN8iLFWJWq/VoIPc=
+	t=1770990691; cv=none; b=jbFwLXs69VeXdf6us0y4IY0gKyNc3mptzVWN9jwqpJBsI0LvIRq/DPYIjEUuHgFKw6A5jHxjP3w+VGZBHoi/bMja+AkEm7g+kJ93NnymzmqbwArHaeU6Z0tMA7xI/+i73lESvz/ID0CjLWTw2HU5Ba8rAis9c/UNTCBSZIikJbI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770990688; c=relaxed/simple;
-	bh=3ejgLdABCLhI/8K8/nbEefFMJNXDYf8RHok/S3yLS/c=;
+	s=arc-20240116; t=1770990691; c=relaxed/simple;
+	bh=q4ZlO541HUBPoaulywduV1mXVy+EbeAivDCWtLMrvWw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=c/GPhAh5t9/vciD78RAExt35WSlhU3IrXekJsGg4inZNnEru2SB/7/Y3WUb8xkUewKskXiita56XvAyoxcdURZ3M7KiXPx2Mw879bxKLeKAsx+u8+Ut8UWOcMVUmrvxL6wD7f/5jIBSbavPocXoj7g04+5UGA+KOEhpI4NFXOmQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OjCLDjqO; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=h9mV5763+3kF0QZlssVQJhssAQ7Txp1YUsHmOEwivtIu7L7o/WhVb9uW6FT/0q0qpSktSJbpsmBXcfErKo2ZXXrmWSBQuO6JUTownvW0yOEHKEpJUtf50uZHU0+9/o4qIp4tQ6QT4TBHa5ykNDgtbQTtHphRPEZt9wYUkx3sVYA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nfRkRMdQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OjCLDjqO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A974AC116C6;
-	Fri, 13 Feb 2026 13:51:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nfRkRMdQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2767BC116C6;
+	Fri, 13 Feb 2026 13:51:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770990688;
-	bh=3ejgLdABCLhI/8K8/nbEefFMJNXDYf8RHok/S3yLS/c=;
+	s=korg; t=1770990691;
+	bh=q4ZlO541HUBPoaulywduV1mXVy+EbeAivDCWtLMrvWw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OjCLDjqOg0APjKU+rST7g4OiMIS1Lf77hsWX9SHKcK/t212dsFzetrDlojprHBEkE
-	 m5OiQizJq3gEvDGLoRPrxOgh+wTuTxb3me39sXyiQ5YC6rJTrUlA7c+e6jVoJceUjn
-	 VhW23+0KZf3h+O/7TGCcTM+GQjxvNT7XuBGMCLVM=
+	b=nfRkRMdQsjliQR9ACnBVj7df4f24Lbcby8LWl8O8hT08aViTrFSqfnXc3o+R4DS3q
+	 ajoGDb46+311vOSNycVBwYtq77ND1GbKAqIuCgR6m7Ow1OGPHQjfKWf63o1eANbJ9M
+	 nLxLp+5gYZ4RcIiwQ9aW9wHUGw4COREfcYZOWilM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Chao Yu <chao@kernel.org>,
-	Gao Xiang <hsiangkao@linux.alibaba.com>
-Subject: [PATCH 6.19 45/49] erofs: fix UAF issue for file-backed mounts w/ directio option
-Date: Fri, 13 Feb 2026 14:48:04 +0100
-Message-ID: <20260213134710.363083324@linuxfoundation.org>
+	Zenm Chen <zenmchen@gmail.com>,
+	Paul Menzel <pmenzel@molgen.mpg.de>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Subject: [PATCH 6.19 28/49] Bluetooth: btusb: Add USB ID 7392:e611 for Edimax EW-7611UXB
+Date: Fri, 13 Feb 2026 14:47:47 +0100
+Message-ID: <20260213134709.761948273@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260213134708.713126210@linuxfoundation.org>
 References: <20260213134708.713126210@linuxfoundation.org>
@@ -51,101 +51,78 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chao Yu <chao@kernel.org>
+From: Zenm Chen <zenmchen@gmail.com>
 
-commit 1caf50ce4af096d0280d59a31abdd85703cd995c upstream.
+commit 6c0568b7741a346088fd6dfced2d871f7d481d06 upstream.
 
-[    9.269940][ T3222] Call trace:
-[    9.269948][ T3222]  ext4_file_read_iter+0xac/0x108
-[    9.269979][ T3222]  vfs_iocb_iter_read+0xac/0x198
-[    9.269993][ T3222]  erofs_fileio_rq_submit+0x12c/0x180
-[    9.270008][ T3222]  erofs_fileio_submit_bio+0x14/0x24
-[    9.270030][ T3222]  z_erofs_runqueue+0x834/0x8ac
-[    9.270054][ T3222]  z_erofs_read_folio+0x120/0x220
-[    9.270083][ T3222]  filemap_read_folio+0x60/0x120
-[    9.270102][ T3222]  filemap_fault+0xcac/0x1060
-[    9.270119][ T3222]  do_pte_missing+0x2d8/0x1554
-[    9.270131][ T3222]  handle_mm_fault+0x5ec/0x70c
-[    9.270142][ T3222]  do_page_fault+0x178/0x88c
-[    9.270167][ T3222]  do_translation_fault+0x38/0x54
-[    9.270183][ T3222]  do_mem_abort+0x54/0xac
-[    9.270208][ T3222]  el0_da+0x44/0x7c
-[    9.270227][ T3222]  el0t_64_sync_handler+0x5c/0xf4
-[    9.270253][ T3222]  el0t_64_sync+0x1bc/0x1c0
+Add USB ID 7392:e611 for Edimax EW-7611UXB which is RTL8851BU-based
+Wi-Fi + Bluetooth adapter.
 
-EROFS may encounter above panic when enabling file-backed mount w/
-directio mount option, the root cause is it may suffer UAF in below
-race condition:
+The information in /sys/kernel/debug/usb/devices about the Bluetooth
+device is listed as the below:
 
-- z_erofs_read_folio                          wq s_dio_done_wq
- - z_erofs_runqueue
-  - erofs_fileio_submit_bio
-   - erofs_fileio_rq_submit
-    - vfs_iocb_iter_read
-     - ext4_file_read_iter
-      - ext4_dio_read_iter
-       - iomap_dio_rw
-       : bio was submitted and return -EIOCBQUEUED
-                                              - dio_aio_complete_work
-                                               - dio_complete
-                                                - dio->iocb->ki_complete (erofs_fileio_ki_complete())
-                                                 - kfree(rq)
-                                                 : it frees iocb, iocb.ki_filp can be UAF in file_accessed().
-       - file_accessed
-       : access NULL file point
+T:  Bus=03 Lev=01 Prnt=01 Port=01 Cnt=01 Dev#=  6 Spd=480  MxCh= 0
+D:  Ver= 2.00 Cls=ef(misc ) Sub=02 Prot=01 MxPS=64 #Cfgs=  1
+P:  Vendor=7392 ProdID=e611 Rev= 0.00
+S:  Manufacturer=Realtek
+S:  Product=802.11ax WLAN Adapter
+S:  SerialNumber=00e04c000001
+C:* #Ifs= 3 Cfg#= 1 Atr=e0 MxPwr=500mA
+A:  FirstIf#= 0 IfCount= 2 Cls=e0(wlcon) Sub=01 Prot=01
+I:* If#= 0 Alt= 0 #EPs= 3 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=81(I) Atr=03(Int.) MxPS=  16 Ivl=1ms
+E:  Ad=02(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=82(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:* If#= 1 Alt= 0 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=03(O) Atr=01(Isoc) MxPS=   0 Ivl=1ms
+E:  Ad=83(I) Atr=01(Isoc) MxPS=   0 Ivl=1ms
+I:  If#= 1 Alt= 1 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=03(O) Atr=01(Isoc) MxPS=   9 Ivl=1ms
+E:  Ad=83(I) Atr=01(Isoc) MxPS=   9 Ivl=1ms
+I:  If#= 1 Alt= 2 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=03(O) Atr=01(Isoc) MxPS=  17 Ivl=1ms
+E:  Ad=83(I) Atr=01(Isoc) MxPS=  17 Ivl=1ms
+I:  If#= 1 Alt= 3 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=03(O) Atr=01(Isoc) MxPS=  25 Ivl=1ms
+E:  Ad=83(I) Atr=01(Isoc) MxPS=  25 Ivl=1ms
+I:  If#= 1 Alt= 4 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=03(O) Atr=01(Isoc) MxPS=  33 Ivl=1ms
+E:  Ad=83(I) Atr=01(Isoc) MxPS=  33 Ivl=1ms
+I:  If#= 1 Alt= 5 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=03(O) Atr=01(Isoc) MxPS=  49 Ivl=1ms
+E:  Ad=83(I) Atr=01(Isoc) MxPS=  49 Ivl=1ms
+I:  If#= 1 Alt= 6 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=03(O) Atr=01(Isoc) MxPS=  63 Ivl=1ms
+E:  Ad=83(I) Atr=01(Isoc) MxPS=  63 Ivl=1ms
+I:* If#= 2 Alt= 0 #EPs= 8 Cls=ff(vend.) Sub=ff Prot=ff Driver=rtw89_8851bu_git
+E:  Ad=84(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=05(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=06(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=07(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=09(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=0a(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=0b(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=0c(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
 
-Introduce a reference count in struct erofs_fileio_rq, and initialize it
-as two, both erofs_fileio_ki_complete() and erofs_fileio_rq_submit() will
-decrease reference count, the last one decreasing the reference count
-to zero will free rq.
-
-Cc: stable@kernel.org
-Fixes: fb176750266a ("erofs: add file-backed mount support")
-Fixes: 6422cde1b0d5 ("erofs: use buffered I/O for file-backed mounts by default")
-Signed-off-by: Chao Yu <chao@kernel.org>
-Reviewed-by: Gao Xiang <hsiangkao@linux.alibaba.com>
-Signed-off-by: Gao Xiang <hsiangkao@linux.alibaba.com>
+Cc: stable@vger.kernel.org # 6.6.x
+Signed-off-by: Zenm Chen <zenmchen@gmail.com>
+Reviewed-by: Paul Menzel <pmenzel@molgen.mpg.de>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/erofs/fileio.c |    7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ drivers/bluetooth/btusb.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/fs/erofs/fileio.c
-+++ b/fs/erofs/fileio.c
-@@ -10,6 +10,7 @@ struct erofs_fileio_rq {
- 	struct bio bio;
- 	struct kiocb iocb;
- 	struct super_block *sb;
-+	refcount_t ref;
- };
+--- a/drivers/bluetooth/btusb.c
++++ b/drivers/bluetooth/btusb.c
+@@ -527,6 +527,8 @@ static const struct usb_device_id quirks
+ 						     BTUSB_WIDEBAND_SPEECH },
+ 	{ USB_DEVICE(0x2001, 0x332a), .driver_info = BTUSB_REALTEK |
+ 						     BTUSB_WIDEBAND_SPEECH },
++	{ USB_DEVICE(0x7392, 0xe611), .driver_info = BTUSB_REALTEK |
++						     BTUSB_WIDEBAND_SPEECH },
  
- struct erofs_fileio {
-@@ -42,7 +43,8 @@ static void erofs_fileio_ki_complete(str
- 	}
- 	bio_endio(&rq->bio);
- 	bio_uninit(&rq->bio);
--	kfree(rq);
-+	if (refcount_dec_and_test(&rq->ref))
-+		kfree(rq);
- }
- 
- static void erofs_fileio_rq_submit(struct erofs_fileio_rq *rq)
-@@ -64,6 +66,8 @@ static void erofs_fileio_rq_submit(struc
- 		ret = vfs_iocb_iter_read(rq->iocb.ki_filp, &rq->iocb, &iter);
- 	if (ret != -EIOCBQUEUED)
- 		erofs_fileio_ki_complete(&rq->iocb, ret);
-+	if (refcount_dec_and_test(&rq->ref))
-+		kfree(rq);
- }
- 
- static struct erofs_fileio_rq *erofs_fileio_rq_alloc(struct erofs_map_dev *mdev)
-@@ -74,6 +78,7 @@ static struct erofs_fileio_rq *erofs_fil
- 	bio_init(&rq->bio, NULL, rq->bvecs, ARRAY_SIZE(rq->bvecs), REQ_OP_READ);
- 	rq->iocb.ki_filp = mdev->m_dif->file;
- 	rq->sb = mdev->m_sb;
-+	refcount_set(&rq->ref, 2);
- 	return rq;
- }
- 
+ 	/* Realtek 8852AE Bluetooth devices */
+ 	{ USB_DEVICE(0x0bda, 0x2852), .driver_info = BTUSB_REALTEK |
 
 
