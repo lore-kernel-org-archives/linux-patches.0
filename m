@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22AC654723;
-	Fri, 13 Feb 2026 13:54:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E597935FF6F;
+	Fri, 13 Feb 2026 13:54:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770990891; cv=none; b=XRae34e1xqqEizvw9rcuPnNVPmj4hBLq4ZqM0lcLhfyr9xepWUBfWhAkN7MkIylZFzuAS5bWEXNeVi7Mnjs5uQHrHWqVDHG9Ou/+RIe48Jpjv1tczdRJpAW/6HZrB7d3rRryS+5wrXMPAZVaKL+g5FcFtQY+kcnBnAFE/skqQgI=
+	t=1770990896; cv=none; b=OKAzIHFGRy18rkYDMvB6LB3uYDk2oINvJ4Mg9N4DyAolevdNKvIpWf0VNtpxbZeIPAsry7h3pVOLyTCXofenbds1ynKKT7Y3tTQCGstSt5wQzqqVsVnnM7eRMsLVsK5sSoiq5mNDHhhlBr/2yzteJqNOo6i6pJVgGje80Z1eBF0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770990891; c=relaxed/simple;
-	bh=gjlCkz4zcy6LY26eTj6pP61v9iBOkEPA/MSBo6shhNQ=;
+	s=arc-20240116; t=1770990896; c=relaxed/simple;
+	bh=3RwOY9270dEX6YnMAM9EIaOb0J7AXJ2zwi/00dtgR/k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=S8HqvZFp9/uuzZWVpaCFmp3beKeqIYqaY+k/mFso+JIckaxb79y73Je5s7U4mM6zFo3/4l2nGlbmrdP1+TujzLpiX+dFm3immJ5fQQiJZKBZIWFM6ewNQ3uqdsP1KA2nuTR6gsB34+whoH4pxKmdi4LDcwCVb5ECUTiFStfDCSc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2RZYE701; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OzDUPB0j0aKZp919/Q+rrctz7ng98aPgaQs58UvduZoqceVx2evDzUiAGH7xF9IJikf/lKzpa7B2EAE1YS6WOVrjgHV/nywlbyAkuUjTNHEWcDKegF88HlK5lhWDTkKGW7IqJkKcZOpIc4aS4hbPbEdn68Pu+v5SXnBqeNd8QXQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pAQywNcn; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2RZYE701"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A55BFC116C6;
-	Fri, 13 Feb 2026 13:54:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pAQywNcn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 012EAC116C6;
+	Fri, 13 Feb 2026 13:54:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770990891;
-	bh=gjlCkz4zcy6LY26eTj6pP61v9iBOkEPA/MSBo6shhNQ=;
+	s=korg; t=1770990895;
+	bh=3RwOY9270dEX6YnMAM9EIaOb0J7AXJ2zwi/00dtgR/k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2RZYE701MmRJtwMar8bzrVBTH1honSJozZjxpTMV7DGyWmjSNx88VadH/erzNwPml
-	 Fsk3hmrscms3TlwyMV1IQueDYNy5s0/EBKchEbaXJppgo18rP+wtp4rSmhlZdF7lNA
-	 0WFeTYOw1PvI4U8beRPcSqrTCjmal27gvUA/afks=
+	b=pAQywNcnR4/53/onoYsQsOk/p5Oqxxz1vFGvQRTLgZiLnCEOkXRegFIOVI5vWkNuj
+	 9r2+Xvw8SwVXXMLoAjHfb1Zu3Gl2VioxmVrgrmoFPT52OLVpgTZVp43FIhlhigHhxn
+	 tR2SVHPTxiSjU4ta5QZOeImb8bsNQv+jvuOiX6K0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Anil Gurumurthy <agurumurthy@marvell.com>,
-	Nilesh Javali <njavali@marvell.com>,
-	Himanshu Madhani <hmadhani2024@gmail.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>
-Subject: [PATCH 6.18 42/49] scsi: qla2xxx: Query FW again before proceeding with login
-Date: Fri, 13 Feb 2026 14:48:26 +0100
-Message-ID: <20260213134710.406555836@linuxfoundation.org>
+	Gui-Dong Han <hanguidong02@gmail.com>,
+	Ioana Ciornei <ioana.ciornei@nxp.com>,
+	"Christophe Leroy (CS GROUP)" <chleroy@kernel.org>
+Subject: [PATCH 6.18 43/49] bus: fsl-mc: fix use-after-free in driver_override_show()
+Date: Fri, 13 Feb 2026 14:48:27 +0100
+Message-ID: <20260213134710.441517320@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260213134708.885500854@linuxfoundation.org>
 References: <20260213134708.885500854@linuxfoundation.org>
@@ -52,92 +51,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Anil Gurumurthy <agurumurthy@marvell.com>
+From: Gui-Dong Han <hanguidong02@gmail.com>
 
-commit 42b2dab4340d39b71334151e10c6d7d9b0040ffa upstream.
+commit 148891e95014b5dc5878acefa57f1940c281c431 upstream.
 
-Issue occurred during a continuous reboot test of several thousand
-iterations specific to a fabric topo with dual mode target where it
-sends a PLOGI/PRLI and then sends a LOGO. The initiator was also in the
-process of discovery and sent a PLOGI to the switch. It then queried a
-list of ports logged in via mbx 75h and the GPDB response indicated that
-the target was logged in. This caused a mismatch in the states between
-the driver and FW.  Requery the FW for the state and proceed with the
-rest of discovery process.
+The driver_override_show() function reads the driver_override string
+without holding the device_lock. However, driver_override_store() uses
+driver_set_override(), which modifies and frees the string while holding
+the device_lock.
 
-Fixes: a4239945b8ad ("scsi: qla2xxx: Add switch command to simplify fabric discovery")
+This can result in a concurrent use-after-free if the string is freed
+by the store function while being read by the show function.
+
+Fix this by holding the device_lock around the read operation.
+
+Fixes: 1f86a00c1159 ("bus/fsl-mc: add support for 'driver_override' in the mc-bus")
 Cc: stable@vger.kernel.org
-Signed-off-by: Anil Gurumurthy <agurumurthy@marvell.com>
-Signed-off-by: Nilesh Javali <njavali@marvell.com>
-Reviewed-by: Himanshu Madhani <hmadhani2024@gmail.com>
-Link: https://patch.msgid.link/20251210101604.431868-11-njavali@marvell.com
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Signed-off-by: Gui-Dong Han <hanguidong02@gmail.com>
+Reviewed-by: Ioana Ciornei <ioana.ciornei@nxp.com>
+Link: https://lore.kernel.org/r/20251202174438.12658-1-hanguidong02@gmail.com
+Signed-off-by: Christophe Leroy (CS GROUP) <chleroy@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/scsi/qla2xxx/qla_init.c |   19 +++++++++++++++++--
- drivers/scsi/qla2xxx/qla_isr.c  |   19 +++++++++++++++++--
- 2 files changed, 34 insertions(+), 4 deletions(-)
+ drivers/bus/fsl-mc/fsl-mc-bus.c |    6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
---- a/drivers/scsi/qla2xxx/qla_init.c
-+++ b/drivers/scsi/qla2xxx/qla_init.c
-@@ -2462,8 +2462,23 @@ qla24xx_handle_plogi_done_event(struct s
- 	    ea->sp->gen1, fcport->rscn_gen,
- 	    ea->data[0], ea->data[1], ea->iop[0], ea->iop[1]);
+--- a/drivers/bus/fsl-mc/fsl-mc-bus.c
++++ b/drivers/bus/fsl-mc/fsl-mc-bus.c
+@@ -202,8 +202,12 @@ static ssize_t driver_override_show(stru
+ 				    struct device_attribute *attr, char *buf)
+ {
+ 	struct fsl_mc_device *mc_dev = to_fsl_mc_device(dev);
++	ssize_t len;
  
--	if ((fcport->fw_login_state == DSC_LS_PLOGI_PEND) ||
--	    (fcport->fw_login_state == DSC_LS_PRLI_PEND)) {
-+	if (fcport->fw_login_state == DSC_LS_PLOGI_PEND) {
-+		ql_dbg(ql_dbg_disc, vha, 0x20ea,
-+		    "%s %d %8phC Remote is trying to login\n",
-+		    __func__, __LINE__, fcport->port_name);
-+		/*
-+		 * If we get here, there is port thats already logged in,
-+		 * but it's state has not moved ahead. Recheck with FW on
-+		 * what state it is in and proceed ahead
-+		 */
-+		if (!N2N_TOPO(vha->hw)) {
-+			fcport->fw_login_state = DSC_LS_PRLI_COMP;
-+			qla24xx_post_gpdb_work(vha, fcport, 0);
-+		}
-+		return;
-+	}
-+
-+	if (fcport->fw_login_state == DSC_LS_PRLI_PEND) {
- 		ql_dbg(ql_dbg_disc, vha, 0x20ea,
- 		    "%s %d %8phC Remote is trying to login\n",
- 		    __func__, __LINE__, fcport->port_name);
---- a/drivers/scsi/qla2xxx/qla_isr.c
-+++ b/drivers/scsi/qla2xxx/qla_isr.c
-@@ -1676,13 +1676,28 @@ skip_rio:
+-	return sysfs_emit(buf, "%s\n", mc_dev->driver_override);
++	device_lock(dev);
++	len = sysfs_emit(buf, "%s\n", mc_dev->driver_override);
++	device_unlock(dev);
++	return len;
+ }
+ static DEVICE_ATTR_RW(driver_override);
  
- 			/* Port logout */
- 			fcport = qla2x00_find_fcport_by_loopid(vha, mb[1]);
--			if (!fcport)
-+			if (!fcport) {
-+				ql_dbg(ql_dbg_async, vha, 0x5011,
-+					"Could not find fcport:%04x %04x %04x\n",
-+					mb[1], mb[2], mb[3]);
- 				break;
--			if (atomic_read(&fcport->state) != FCS_ONLINE)
-+			}
-+
-+			if (atomic_read(&fcport->state) != FCS_ONLINE) {
-+				ql_dbg(ql_dbg_async, vha, 0x5012,
-+					"Port state is not online State:0x%x \n",
-+					atomic_read(&fcport->state));
-+				ql_dbg(ql_dbg_async, vha, 0x5012,
-+					"Scheduling session for deletion \n");
-+				fcport->logout_on_delete = 0;
-+				qlt_schedule_sess_for_deletion(fcport);
- 				break;
-+			}
-+
- 			ql_dbg(ql_dbg_async, vha, 0x508a,
- 			    "Marking port lost loopid=%04x portid=%06x.\n",
- 			    fcport->loop_id, fcport->d_id.b24);
-+
- 			if (qla_ini_mode_enabled(vha)) {
- 				fcport->logout_on_delete = 0;
- 				qlt_schedule_sess_for_deletion(fcport);
 
 
