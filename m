@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D7221D432D;
-	Fri, 13 Feb 2026 13:57:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5C78223323;
+	Fri, 13 Feb 2026 13:57:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770991028; cv=none; b=Czc76SCAddjm4OXKQL7k3fWh1Bxt8hQkiHQOYkqCEdBKaQ/osXuhCiHMX13TjKlASDQ5WF8NnwWLXBRvQcFYlV0Y1pOSYit5e+xIzC2F5OsdhBevt7gbjrDYYt34quEIKva/ZyLD+9E6l1NVFL4pp84Vi/jqV1GgmLwPifYvTA8=
+	t=1770991033; cv=none; b=TyTeFUxH/XKfrRCQ7Y1mLwresINqZ2yEtiNcP15SgmY37b+UIdROcU6PvMv8vhUCpycs7zuGJj0TrF90sFdQMZoUC0FcPYmbFFbdIQqn9Lj0Pk1EBilnR7u+lQ2vJhXO5ssu9QEhBtVQUT8SfPhGNuN7LBplun9Ew0C/lBXdt5c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770991028; c=relaxed/simple;
-	bh=iMz4c5XxkskAZjgc2zOxIQKk5My0Kk3jc2hvDLIvXJo=;
+	s=arc-20240116; t=1770991033; c=relaxed/simple;
+	bh=J5RbTe1Ci5fCeeeosLuUOumOaMX9xCYBhyfe2M1PYFc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RQPeCX1HqBOGWQvtQhQoOedL3dYZjV7h+iMh67QENjRhrd4yqb3VVMam+uPizVB0A8U6EHFzUWRChT71u2yNNuN62bO2kSoQe66oTkddLbJBVxLbF+iLMJAmrvJpY5/03rmJAskMb2Ci9F1MTMnLU+6ifpMvvA30aviFdP7XbhU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LGS4pB7y; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rlrxwGRjtwRuHmdXIDPWQGithkj9tNoR3TkM26hrEAT6H3g8FHqW5sS4wIRcRsoU+pujJYDqy2k66EWLkOA8I6EIoqz5EDRobT98OAiINnBiWYEOfRjBtKMQ3nOHkL17Hq77E9rdPeMq4mqMLYJj3E44bGzWOJJTucjFvONf4Iw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=l0E8Hbq+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LGS4pB7y"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F5B1C116C6;
-	Fri, 13 Feb 2026 13:57:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="l0E8Hbq+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A33C2C116C6;
+	Fri, 13 Feb 2026 13:57:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770991028;
-	bh=iMz4c5XxkskAZjgc2zOxIQKk5My0Kk3jc2hvDLIvXJo=;
+	s=korg; t=1770991033;
+	bh=J5RbTe1Ci5fCeeeosLuUOumOaMX9xCYBhyfe2M1PYFc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LGS4pB7yQfrUsDMY0XhP8Rv8d/8BwxpkK2kHhI7H1rWB0YzH57JlGETYO/eAsdyqT
-	 8PGU3c6PRwyMa/20VgghQeJpKTYk6FE8mKfmzhjjW2FvPgbYs4p6hDtAN6tAUr1bw6
-	 jI7uMv0jXx+MbMzAkXWSIsujCpcXYB+teZN38FvM=
+	b=l0E8Hbq+DKW4bHbVWNhuv93jl9RsrEHVCYpvhpccPR7uvE4nI0+UkmalsVFb1vJ8G
+	 MuZ/txSOWaIT/YQtVuj4dtiZS3wNZypOQVzTFdbYRLd14gKdHR5MuI9JYXw12KCIgS
+	 ngzcPZGCLW/SLvFrRmxZPZaqKs96dHq9vpOIkebo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
-	Stefano Brivio <sbrivio@redhat.com>,
-	Bin Lan <lanbincn@139.com>
-Subject: [PATCH 6.6 20/25] netfilter: nft_set_pipapo: prevent overflow in lookup table allocation
-Date: Fri, 13 Feb 2026 14:48:46 +0100
-Message-ID: <20260213134704.617071333@linuxfoundation.org>
+	Konstantin Shkolnyy <kshk@linux.ibm.com>,
+	Stefano Garzarella <sgarzare@redhat.com>,
+	Paolo Abeni <pabeni@redhat.com>
+Subject: [PATCH 6.6 21/25] vsock/test: verify socket options after setting them
+Date: Fri, 13 Feb 2026 14:48:47 +0100
+Message-ID: <20260213134704.652792073@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260213134703.882698935@linuxfoundation.org>
 References: <20260213134703.882698935@linuxfoundation.org>
@@ -51,153 +51,286 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pablo Neira Ayuso <pablo@netfilter.org>
+From: Konstantin Shkolnyy <kshk@linux.ibm.com>
 
-commit 4c5c6aa9967dbe55bd017bb509885928d0f31206 upstream.
+commit 86814d8ffd55fd4ad19c512eccd721522a370fb2 upstream.
 
-When calculating the lookup table size, ensure the following
-multiplication does not overflow:
+Replace setsockopt() calls with calls to functions that follow
+setsockopt() with getsockopt() and check that the returned value and its
+size are the same as have been set. (Except in vsock_perf.)
 
-- desc->field_len[] maximum value is U8_MAX multiplied by
-  NFT_PIPAPO_GROUPS_PER_BYTE(f) that can be 2, worst case.
-- NFT_PIPAPO_BUCKETS(f->bb) is 2^8, worst case.
-- sizeof(unsigned long), from sizeof(*f->lt), lt in
-  struct nft_pipapo_field.
-
-Then, use check_mul_overflow() to multiply by bucket size and then use
-check_add_overflow() to the alignment for avx2 (if needed). Finally, add
-lt_size_check_overflow() helper and use it to consolidate this.
-
-While at it, replace leftover allocation using the GFP_KERNEL to
-GFP_KERNEL_ACCOUNT for consistency, in pipapo_resize().
-
-Fixes: 3c4287f62044 ("nf_tables: Add set type for arbitrary concatenation of ranges")
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
-Reviewed-by: Stefano Brivio <sbrivio@redhat.com>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
-[ Adjust context ]
-Signed-off-by: Bin Lan <lanbincn@139.com>
+Signed-off-by: Konstantin Shkolnyy <kshk@linux.ibm.com>
+Reviewed-by: Stefano Garzarella <sgarzare@redhat.com>
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+[Stefano: patch needed to avoid vsock test build failure reported by
+ Johan Korsnes after backporting commit 0a98de8013696 ("vsock/test: fix
+ seqpacket message bounds test") in 6.6-stable tree. Several tests are
+ missing here compared to upstream, so this version has been adapted by
+ removing some hunks.]
+Signed-off-by: Stefano Garzarella <sgarzare@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/netfilter/nft_set_pipapo.c |   58 +++++++++++++++++++++++++++++++----------
- 1 file changed, 44 insertions(+), 14 deletions(-)
+ tools/testing/vsock/control.c    |    9 --
+ tools/testing/vsock/util.c       |  143 +++++++++++++++++++++++++++++++++++++++
+ tools/testing/vsock/util.h       |    7 +
+ tools/testing/vsock/vsock_test.c |   31 +++-----
+ 4 files changed, 164 insertions(+), 26 deletions(-)
 
---- a/net/netfilter/nft_set_pipapo.c
-+++ b/net/netfilter/nft_set_pipapo.c
-@@ -610,6 +610,30 @@ static void *nft_pipapo_get(const struct
- 			 nft_genmask_cur(net), get_jiffies_64());
- }
+--- a/tools/testing/vsock/control.c
++++ b/tools/testing/vsock/control.c
+@@ -27,6 +27,7 @@
  
+ #include "timeout.h"
+ #include "control.h"
++#include "util.h"
+ 
+ static int control_fd = -1;
+ 
+@@ -50,7 +51,6 @@ void control_init(const char *control_ho
+ 
+ 	for (ai = result; ai; ai = ai->ai_next) {
+ 		int fd;
+-		int val = 1;
+ 
+ 		fd = socket(ai->ai_family, ai->ai_socktype, ai->ai_protocol);
+ 		if (fd < 0)
+@@ -65,11 +65,8 @@ void control_init(const char *control_ho
+ 			break;
+ 		}
+ 
+-		if (setsockopt(fd, SOL_SOCKET, SO_REUSEADDR,
+-			       &val, sizeof(val)) < 0) {
+-			perror("setsockopt");
+-			exit(EXIT_FAILURE);
+-		}
++		setsockopt_int_check(fd, SOL_SOCKET, SO_REUSEADDR, 1,
++				     "setsockopt SO_REUSEADDR");
+ 
+ 		if (bind(fd, ai->ai_addr, ai->ai_addrlen) < 0)
+ 			goto next;
+--- a/tools/testing/vsock/util.c
++++ b/tools/testing/vsock/util.c
+@@ -12,6 +12,7 @@
+ #include <stdint.h>
+ #include <stdlib.h>
+ #include <signal.h>
++#include <string.h>
+ #include <unistd.h>
+ #include <assert.h>
+ #include <sys/epoll.h>
+@@ -420,3 +421,145 @@ unsigned long hash_djb2(const void *data
+ 
+ 	return hash;
+ }
 +
-+/**
-+ * lt_calculate_size() - Get storage size for lookup table with overflow check
-+ * @groups:	Amount of bit groups
-+ * @bb:		Number of bits grouped together in lookup table buckets
-+ * @bsize:	Size of each bucket in lookup table, in longs
-+ *
-+ * Return: allocation size including alignment overhead, negative on overflow
-+ */
-+static ssize_t lt_calculate_size(unsigned int groups, unsigned int bb,
-+				 unsigned int bsize)
++/* Set "unsigned long long" socket option and check that it's indeed set */
++void setsockopt_ull_check(int fd, int level, int optname,
++			  unsigned long long val, char const *errmsg)
 +{
-+	ssize_t ret = groups * NFT_PIPAPO_BUCKETS(bb) * sizeof(long);
++	unsigned long long chkval;
++	socklen_t chklen;
++	int err;
 +
-+	if (check_mul_overflow(ret, bsize, &ret))
-+		return -1;
-+	if (check_add_overflow(ret, NFT_PIPAPO_ALIGN_HEADROOM, &ret))
-+		return -1;
-+	if (ret > INT_MAX)
-+		return -1;
++	err = setsockopt(fd, level, optname, &val, sizeof(val));
++	if (err) {
++		fprintf(stderr, "setsockopt err: %s (%d)\n",
++			strerror(errno), errno);
++		goto fail;
++	}
 +
-+	return ret;
++	chkval = ~val; /* just make storage != val */
++	chklen = sizeof(chkval);
++
++	err = getsockopt(fd, level, optname, &chkval, &chklen);
++	if (err) {
++		fprintf(stderr, "getsockopt err: %s (%d)\n",
++			strerror(errno), errno);
++		goto fail;
++	}
++
++	if (chklen != sizeof(chkval)) {
++		fprintf(stderr, "size mismatch: set %zu got %d\n", sizeof(val),
++			chklen);
++		goto fail;
++	}
++
++	if (chkval != val) {
++		fprintf(stderr, "value mismatch: set %llu got %llu\n", val,
++			chkval);
++		goto fail;
++	}
++	return;
++fail:
++	fprintf(stderr, "%s  val %llu\n", errmsg, val);
++	exit(EXIT_FAILURE);
++;
 +}
 +
- /**
-  * pipapo_resize() - Resize lookup or mapping table, or both
-  * @f:		Field containing lookup and mapping tables
-@@ -628,6 +652,7 @@ static int pipapo_resize(struct nft_pipa
- 	union nft_pipapo_map_bucket *new_mt, *old_mt = f->mt;
- 	size_t new_bucket_size, copy;
- 	int group, bucket;
-+	ssize_t lt_size;
- 
- 	new_bucket_size = DIV_ROUND_UP(rules, BITS_PER_LONG);
- #ifdef NFT_PIPAPO_ALIGN
-@@ -643,10 +668,11 @@ static int pipapo_resize(struct nft_pipa
- 	else
- 		copy = new_bucket_size;
- 
--	new_lt = kvzalloc(f->groups * NFT_PIPAPO_BUCKETS(f->bb) *
--			  new_bucket_size * sizeof(*new_lt) +
--			  NFT_PIPAPO_ALIGN_HEADROOM,
--			  GFP_KERNEL);
-+	lt_size = lt_calculate_size(f->groups, f->bb, new_bucket_size);
-+	if (lt_size < 0)
-+		return -ENOMEM;
++/* Set "int" socket option and check that it's indeed set */
++void setsockopt_int_check(int fd, int level, int optname, int val,
++			  char const *errmsg)
++{
++	int chkval;
++	socklen_t chklen;
++	int err;
 +
-+	new_lt = kvzalloc(lt_size, GFP_KERNEL_ACCOUNT);
- 	if (!new_lt)
- 		return -ENOMEM;
++	err = setsockopt(fd, level, optname, &val, sizeof(val));
++	if (err) {
++		fprintf(stderr, "setsockopt err: %s (%d)\n",
++			strerror(errno), errno);
++		goto fail;
++	}
++
++	chkval = ~val; /* just make storage != val */
++	chklen = sizeof(chkval);
++
++	err = getsockopt(fd, level, optname, &chkval, &chklen);
++	if (err) {
++		fprintf(stderr, "getsockopt err: %s (%d)\n",
++			strerror(errno), errno);
++		goto fail;
++	}
++
++	if (chklen != sizeof(chkval)) {
++		fprintf(stderr, "size mismatch: set %zu got %d\n", sizeof(val),
++			chklen);
++		goto fail;
++	}
++
++	if (chkval != val) {
++		fprintf(stderr, "value mismatch: set %d got %d\n", val, chkval);
++		goto fail;
++	}
++	return;
++fail:
++	fprintf(stderr, "%s val %d\n", errmsg, val);
++	exit(EXIT_FAILURE);
++}
++
++static void mem_invert(unsigned char *mem, size_t size)
++{
++	size_t i;
++
++	for (i = 0; i < size; i++)
++		mem[i] = ~mem[i];
++}
++
++/* Set "timeval" socket option and check that it's indeed set */
++void setsockopt_timeval_check(int fd, int level, int optname,
++			      struct timeval val, char const *errmsg)
++{
++	struct timeval chkval;
++	socklen_t chklen;
++	int err;
++
++	err = setsockopt(fd, level, optname, &val, sizeof(val));
++	if (err) {
++		fprintf(stderr, "setsockopt err: %s (%d)\n",
++			strerror(errno), errno);
++		goto fail;
++	}
++
++	 /* just make storage != val */
++	chkval = val;
++	mem_invert((unsigned char *)&chkval, sizeof(chkval));
++	chklen = sizeof(chkval);
++
++	err = getsockopt(fd, level, optname, &chkval, &chklen);
++	if (err) {
++		fprintf(stderr, "getsockopt err: %s (%d)\n",
++			strerror(errno), errno);
++		goto fail;
++	}
++
++	if (chklen != sizeof(chkval)) {
++		fprintf(stderr, "size mismatch: set %zu got %d\n", sizeof(val),
++			chklen);
++		goto fail;
++	}
++
++	if (memcmp(&chkval, &val, sizeof(val)) != 0) {
++		fprintf(stderr, "value mismatch: set %ld:%ld got %ld:%ld\n",
++			val.tv_sec, val.tv_usec, chkval.tv_sec, chkval.tv_usec);
++		goto fail;
++	}
++	return;
++fail:
++	fprintf(stderr, "%s val %ld:%ld\n", errmsg, val.tv_sec, val.tv_usec);
++	exit(EXIT_FAILURE);
++}
++
++void enable_so_zerocopy_check(int fd)
++{
++	setsockopt_int_check(fd, SOL_SOCKET, SO_ZEROCOPY, 1,
++			     "setsockopt SO_ZEROCOPY");
++}
+--- a/tools/testing/vsock/util.h
++++ b/tools/testing/vsock/util.h
+@@ -50,4 +50,11 @@ void list_tests(const struct test_case *
+ void skip_test(struct test_case *test_cases, size_t test_cases_len,
+ 	       const char *test_id_str);
+ unsigned long hash_djb2(const void *data, size_t len);
++void setsockopt_ull_check(int fd, int level, int optname,
++			  unsigned long long val, char const *errmsg);
++void setsockopt_int_check(int fd, int level, int optname, int val,
++			  char const *errmsg);
++void setsockopt_timeval_check(int fd, int level, int optname,
++			      struct timeval val, char const *errmsg);
++void enable_so_zerocopy_check(int fd);
+ #endif /* UTIL_H */
+--- a/tools/testing/vsock/vsock_test.c
++++ b/tools/testing/vsock/vsock_test.c
+@@ -503,17 +503,13 @@ static void test_seqpacket_msg_bounds_se
  
-@@ -845,7 +871,7 @@ static void pipapo_lt_bits_adjust(struct
- {
- 	unsigned long *new_lt;
- 	int groups, bb;
--	size_t lt_size;
-+	ssize_t lt_size;
+ 	sock_buf_size = SOCK_BUF_SIZE;
  
- 	lt_size = f->groups * NFT_PIPAPO_BUCKETS(f->bb) * f->bsize *
- 		  sizeof(*f->lt);
-@@ -855,15 +881,17 @@ static void pipapo_lt_bits_adjust(struct
- 		groups = f->groups * 2;
- 		bb = NFT_PIPAPO_GROUP_BITS_LARGE_SET;
+-	if (setsockopt(fd, AF_VSOCK, SO_VM_SOCKETS_BUFFER_MAX_SIZE,
+-		       &sock_buf_size, sizeof(sock_buf_size))) {
+-		perror("setsockopt(SO_VM_SOCKETS_BUFFER_MAX_SIZE)");
+-		exit(EXIT_FAILURE);
+-	}
+-
+-	if (setsockopt(fd, AF_VSOCK, SO_VM_SOCKETS_BUFFER_SIZE,
+-		       &sock_buf_size, sizeof(sock_buf_size))) {
+-		perror("setsockopt(SO_VM_SOCKETS_BUFFER_SIZE)");
+-		exit(EXIT_FAILURE);
+-	}
++	setsockopt_ull_check(fd, AF_VSOCK, SO_VM_SOCKETS_BUFFER_MAX_SIZE,
++			     sock_buf_size,
++			     "setsockopt(SO_VM_SOCKETS_BUFFER_MAX_SIZE)");
++
++	setsockopt_ull_check(fd, AF_VSOCK, SO_VM_SOCKETS_BUFFER_SIZE,
++			     sock_buf_size,
++			     "setsockopt(SO_VM_SOCKETS_BUFFER_SIZE)");
  
--		lt_size = groups * NFT_PIPAPO_BUCKETS(bb) * f->bsize *
--			  sizeof(*f->lt);
-+		lt_size = lt_calculate_size(groups, bb, f->bsize);
-+		if (lt_size < 0)
-+			return;
- 	} else if (f->bb == NFT_PIPAPO_GROUP_BITS_LARGE_SET &&
- 		   lt_size < NFT_PIPAPO_LT_SIZE_LOW) {
- 		groups = f->groups / 2;
- 		bb = NFT_PIPAPO_GROUP_BITS_SMALL_SET;
+ 	/* Ready to receive data. */
+ 	control_writeln("SRVREADY");
+@@ -648,10 +644,8 @@ static void test_seqpacket_timeout_clien
+ 	tv.tv_sec = RCVTIMEO_TIMEOUT_SEC;
+ 	tv.tv_usec = 0;
  
--		lt_size = groups * NFT_PIPAPO_BUCKETS(bb) * f->bsize *
--			  sizeof(*f->lt);
-+		lt_size = lt_calculate_size(groups, bb, f->bsize);
-+		if (lt_size < 0)
-+			return;
+-	if (setsockopt(fd, SOL_SOCKET, SO_RCVTIMEO, (void *)&tv, sizeof(tv)) == -1) {
+-		perror("setsockopt(SO_RCVTIMEO)");
+-		exit(EXIT_FAILURE);
+-	}
++	setsockopt_timeval_check(fd, SOL_SOCKET, SO_RCVTIMEO, tv,
++				 "setsockopt(SO_RCVTIMEO)");
  
- 		/* Don't increase group width if the resulting lookup table size
- 		 * would exceed the upper size threshold for a "small" set.
-@@ -874,7 +902,7 @@ static void pipapo_lt_bits_adjust(struct
- 		return;
+ 	read_enter_ns = current_nsec();
+ 
+@@ -928,11 +922,8 @@ static void test_stream_poll_rcvlowat_cl
+ 		exit(EXIT_FAILURE);
  	}
  
--	new_lt = kvzalloc(lt_size + NFT_PIPAPO_ALIGN_HEADROOM, GFP_KERNEL_ACCOUNT);
-+	new_lt = kvzalloc(lt_size, GFP_KERNEL_ACCOUNT);
- 	if (!new_lt)
- 		return;
+-	if (setsockopt(fd, SOL_SOCKET, SO_RCVLOWAT,
+-		       &lowat_val, sizeof(lowat_val))) {
+-		perror("setsockopt(SO_RCVLOWAT)");
+-		exit(EXIT_FAILURE);
+-	}
++	setsockopt_int_check(fd, SOL_SOCKET, SO_RCVLOWAT,
++			     lowat_val, "setsockopt(SO_RCVLOWAT)");
  
-@@ -1347,13 +1375,15 @@ static struct nft_pipapo_match *pipapo_c
- 
- 	for (i = 0; i < old->field_count; i++) {
- 		unsigned long *new_lt;
-+		ssize_t lt_size;
- 
- 		memcpy(dst, src, offsetof(struct nft_pipapo_field, lt));
- 
--		new_lt = kvzalloc(src->groups * NFT_PIPAPO_BUCKETS(src->bb) *
--				  src->bsize * sizeof(*dst->lt) +
--				  NFT_PIPAPO_ALIGN_HEADROOM,
--				  GFP_KERNEL_ACCOUNT);
-+		lt_size = lt_calculate_size(src->groups, src->bb, src->bsize);
-+		if (lt_size < 0)
-+			goto out_lt;
-+
-+		new_lt = kvzalloc(lt_size, GFP_KERNEL_ACCOUNT);
- 		if (!new_lt)
- 			goto out_lt;
+ 	control_expectln("SRVSENT");
  
 
 
