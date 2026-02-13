@@ -1,42 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE75E23645D;
-	Fri, 13 Feb 2026 13:54:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1BD9554723;
+	Fri, 13 Feb 2026 13:54:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770990842; cv=none; b=PwZy4vw7ZdqJb0D5XJWougQz0O4rxDskERpsfnmDV2oQCXaGISUdrDBqamgqxUkpiFZws1pblhpqwUSkO8i/tQsBTQ5Pt0EbXankxVYLROkZkeOPu7MU1PLhdYSw1KxS+CghT5+LGQe+F21AI5TDahw5P2Q3a1s2ER5FsjrLdSY=
+	t=1770990845; cv=none; b=HhjGMkbTWPVYsJNGmFANb+4JCDn1jN0PzNi9voPU971iYV4XA9ceUpxULBCUBtPVxAtDWH1KjfKqL+GqvO+xTCgS4hWCYnFn0PE/lCrMvDLOKfEKO7lXiBGIUDPRwgAaJ39g6Il3GZV5AFIFBLm+N6coZnU6HIZPc50UKQKFTA4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770990842; c=relaxed/simple;
-	bh=3vCPX61sX20H+a717mSwIYx/yC5gWLrUFV97YX9D5/w=;
+	s=arc-20240116; t=1770990845; c=relaxed/simple;
+	bh=3kdp0DUNKoy86GPX6z4SIZa9gb/WWJiU/quqzXZBa+o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TgZmtd1Gi3qnwOjXfn8fKbw4tL3rhIQGnZr42NSI09ZXnbrglexZodIwN+kb/Wl4FPGFfB34o1J7mMW5IV2YA0yUYL+Zz5GXND8koeh7+iqLuyTaIWKUg5vSWoxenHy51Q4H1FluMSMhP0LesQY57ukN/1YIAUUS1MikLt5n6C8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PaF+uQ9H; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kICEmRRF6adwv6qbhXcLQUy0J2emkMWEEy/poHuESve7TH3Yl95shKTMtdSzd99hlDasrOWAPERqkYJLm0ak+wYMdAzNpQyMf48RudizJduEluo61ZX8aS7ejfIpYrCLmOxaWQtavXDvC2keJMHJkkZm5+H8s1b2t7RE+c8+FgU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AhoRd0kB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PaF+uQ9H"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6BB3BC116C6;
-	Fri, 13 Feb 2026 13:54:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AhoRd0kB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 857F3C116C6;
+	Fri, 13 Feb 2026 13:54:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770990841;
-	bh=3vCPX61sX20H+a717mSwIYx/yC5gWLrUFV97YX9D5/w=;
+	s=korg; t=1770990845;
+	bh=3kdp0DUNKoy86GPX6z4SIZa9gb/WWJiU/quqzXZBa+o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PaF+uQ9HrIwXK5DobvUSF0Vzd4rIuYCqwQUG0h2Y/shpSN21li1W2wptKE+0GMJ34
-	 Qx04Xb6qcoLlYjswLAz2u9Oql4LyR4Gd/85mkTrMxXCr56J0flYgfIVvaCitzsd1+E
-	 k0eIa1fBZE/xsvz9tYf5tPhrcycs7wVWr+kqeRE4=
+	b=AhoRd0kBeYxOyqAV2Pjw9/KoglWUa7TgVGqu+IqMD1vUrtDqwLiEq4NYmt6EjhrDh
+	 EteKlQc1suDJL7rGpyDQtos8SNlwfvPlGit3Xzt0nuq1EAZ1/DFHMi7F7q69bRSA75
+	 rMulpN9FyKX/lmmfzhhQDnVAWyqLdHg6YXew/CHk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Steve French <smfrench@gmail.com>,
-	Tom Talpey <tom@talpey.com>,
-	linux-cifs@vger.kernel.org,
-	samba-technical@lists.samba.org,
-	Stefan Metzmacher <metze@samba.org>,
-	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 6.18 10/49] smb: server: let recv_done() queue a refill when the peer is low on credits
-Date: Fri, 13 Feb 2026 14:47:54 +0100
-Message-ID: <20260213134709.264495820@linuxfoundation.org>
+	Li Chen <me@linux.beauty>,
+	Jens Axboe <axboe@kernel.dk>
+Subject: [PATCH 6.18 01/49] io_uring/io-wq: add exit-on-idle state
+Date: Fri, 13 Feb 2026 14:47:45 +0100
+Message-ID: <20260213134708.941424898@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260213134708.885500854@linuxfoundation.org>
 References: <20260213134708.885500854@linuxfoundation.org>
@@ -55,60 +50,89 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Stefan Metzmacher <metze@samba.org>
+From: Li Chen <me@linux.beauty>
 
-commit 8106978d400cc88a99fb94927afe8fec7391ca3e upstream.
+commit 38aa434ab9335ce2d178b7538cdf01d60b2014c3 upstream.
 
-In captures I saw that Windows was granting 191 credits in a batch
-when its peer posted a lot of messages. We are asking for a
-credit target of 255 and 191 is 252*3/4.
+io-wq uses an idle timeout to shrink the pool, but keeps the last worker
+around indefinitely to avoid churn.
 
-So we also use that logic in order to fill the
-recv buffers available to the peer.
+For tasks that used io_uring for file I/O and then stop using io_uring,
+this can leave an iou-wrk-* thread behind even after all io_uring
+instances are gone. This is unnecessary overhead and also gets in the
+way of process checkpoint/restore.
 
-Fixes: a7eef6144c97 ("smb: server: queue post_recv_credits_work in put_recvmsg() and avoid count_avail_recvmsg")
-Cc: <stable@vger.kernel.org> # 6.18.x
-Cc: Namjae Jeon <linkinjeon@kernel.org>
-Cc: Steve French <smfrench@gmail.com>
-Cc: Tom Talpey <tom@talpey.com>
-Cc: linux-cifs@vger.kernel.org
-Cc: samba-technical@lists.samba.org
-Signed-off-by: Stefan Metzmacher <metze@samba.org>
-Acked-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Add an exit-on-idle state that makes all io-wq workers exit as soon as
+they become idle, and provide io_wq_set_exit_on_idle() to toggle it.
+
+Signed-off-by: Li Chen <me@linux.beauty>
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/server/transport_rdma.c |    6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ io_uring/io-wq.c |   27 +++++++++++++++++++++++++--
+ io_uring/io-wq.h |    1 +
+ 2 files changed, 26 insertions(+), 2 deletions(-)
 
---- a/fs/smb/server/transport_rdma.c
-+++ b/fs/smb/server/transport_rdma.c
-@@ -661,6 +661,7 @@ static void recv_done(struct ib_cq *cq,
- 		struct smbdirect_data_transfer *data_transfer =
- 			(struct smbdirect_data_transfer *)recvmsg->packet;
- 		u32 remaining_data_length, data_offset, data_length;
-+		int current_recv_credits;
- 		u16 old_recv_credit_target;
+--- a/io_uring/io-wq.c
++++ b/io_uring/io-wq.c
+@@ -34,6 +34,7 @@ enum {
  
- 		if (wc->byte_len <
-@@ -699,7 +700,7 @@ static void recv_done(struct ib_cq *cq,
- 		}
+ enum {
+ 	IO_WQ_BIT_EXIT		= 0,	/* wq exiting */
++	IO_WQ_BIT_EXIT_ON_IDLE	= 1,	/* allow all workers to exit on idle */
+ };
  
- 		atomic_dec(&sc->recv_io.posted.count);
--		atomic_dec(&sc->recv_io.credits.count);
-+		current_recv_credits = atomic_dec_return(&sc->recv_io.credits.count);
+ enum {
+@@ -706,9 +707,13 @@ static int io_wq_worker(void *data)
+ 		raw_spin_lock(&acct->workers_lock);
+ 		/*
+ 		 * Last sleep timed out. Exit if we're not the last worker,
+-		 * or if someone modified our affinity.
++		 * or if someone modified our affinity. If wq is marked
++		 * idle-exit, drop the worker as well. This is used to avoid
++		 * keeping io-wq workers around for tasks that no longer have
++		 * any active io_uring instances.
+ 		 */
+-		if (last_timeout && (exit_mask || acct->nr_workers > 1)) {
++		if ((last_timeout && (exit_mask || acct->nr_workers > 1)) ||
++		    test_bit(IO_WQ_BIT_EXIT_ON_IDLE, &wq->state)) {
+ 			acct->nr_workers--;
+ 			raw_spin_unlock(&acct->workers_lock);
+ 			__set_current_state(TASK_RUNNING);
+@@ -965,6 +970,24 @@ static bool io_wq_worker_wake(struct io_
+ 	return false;
+ }
  
- 		old_recv_credit_target = sc->recv_io.credits.target;
- 		sc->recv_io.credits.target =
-@@ -719,7 +720,8 @@ static void recv_done(struct ib_cq *cq,
- 			wake_up(&sc->send_io.credits.wait_queue);
++void io_wq_set_exit_on_idle(struct io_wq *wq, bool enable)
++{
++	if (!wq->task)
++		return;
++
++	if (!enable) {
++		clear_bit(IO_WQ_BIT_EXIT_ON_IDLE, &wq->state);
++		return;
++	}
++
++	if (test_and_set_bit(IO_WQ_BIT_EXIT_ON_IDLE, &wq->state))
++		return;
++
++	rcu_read_lock();
++	io_wq_for_each_worker(wq, io_wq_worker_wake, NULL);
++	rcu_read_unlock();
++}
++
+ static void io_run_cancel(struct io_wq_work *work, struct io_wq *wq)
+ {
+ 	do {
+--- a/io_uring/io-wq.h
++++ b/io_uring/io-wq.h
+@@ -41,6 +41,7 @@ struct io_wq_data {
+ struct io_wq *io_wq_create(unsigned bounded, struct io_wq_data *data);
+ void io_wq_exit_start(struct io_wq *wq);
+ void io_wq_put_and_exit(struct io_wq *wq);
++void io_wq_set_exit_on_idle(struct io_wq *wq, bool enable);
  
- 		if (data_length) {
--			if (sc->recv_io.credits.target > old_recv_credit_target)
-+			if (current_recv_credits <= (sc->recv_io.credits.target / 4) ||
-+			    sc->recv_io.credits.target > old_recv_credit_target)
- 				queue_work(sc->workqueue, &sc->recv_io.posted.refill_work);
- 
- 			enqueue_reassembly(sc, recvmsg, (int)data_length);
+ void io_wq_enqueue(struct io_wq *wq, struct io_wq_work *work);
+ void io_wq_hash_work(struct io_wq_work *work, void *val);
 
 
