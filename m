@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E433360721;
-	Fri, 13 Feb 2026 13:51:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4B0235FF6F;
+	Fri, 13 Feb 2026 13:51:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770990678; cv=none; b=GP87x12P5w1uBgDoszFG2Os96HlZ1zy9sWpsoigqBwaXw7yvn4tLdSazAkLqiv6I28YI9CXrJHet9sHOn5YmPaVeeFyPiLFq/8rZ6wNILhEQa1OIijqTSE4LCN08i6/cTnd36f6B052xf5Dmo8jMkTu3ZwpDDjlGOC8Rujwto64=
+	t=1770990681; cv=none; b=n4MKNCJqM7jQOOPXiAz34dxcz/fyODTMIYdGglgJOZTsVwFv4ZIIC9chcejKJRQo7qBVlDqbxAfKI9cFZh7shutpDX2aPftXbfA90TjFVmYhdr563/bCZwzM8mCgFTWBAPKZkFNeShRMnil7PRtzMnXuZRklc2AvoDSWH67Jv6M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770990678; c=relaxed/simple;
-	bh=aXJKh0YppkqubnjLHe5m8WhN9VtlScvm4/LsLjd3QUA=;
+	s=arc-20240116; t=1770990681; c=relaxed/simple;
+	bh=4PqD2sbK7vf6qK7kG2u5bp1h8+ZID5y0UVFjAahYBoE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nbWDHSz/I1/GSq3BZzjSF7RGjerUMFOvjDbw8zjqmojFZdY7nDaqvy1SaELHfpDiFVZZ3+lEObBzQxCB95aGwDus4W1TP+zVTIwXBsyVyV2B2TMyTogjTKlD2xljDaNG29ZD6lCjWUj149t7RIzA8+lAvxsrREfxPETyMmjqirI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FN6yDFv9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YDFBTY9QgA4BrvxJSQxJexwGN9WczgHVRZrGcdO8G7qadM5RzUnMRGDlX2rzBMGboYCnmdfHmYToG5oxXyVS5AYeum4vxpRDXNqmEsTY+ky/jGe8twKx0R+pa1xO7ZgEQrwc/F1qsZ50loPzAbN4G5/EbEbch3AMTrEsTQdW9tI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kVdFVw1X; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FN6yDFv9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3A59C116C6;
-	Fri, 13 Feb 2026 13:51:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kVdFVw1X"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 05E52C116C6;
+	Fri, 13 Feb 2026 13:51:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770990678;
-	bh=aXJKh0YppkqubnjLHe5m8WhN9VtlScvm4/LsLjd3QUA=;
+	s=korg; t=1770990681;
+	bh=4PqD2sbK7vf6qK7kG2u5bp1h8+ZID5y0UVFjAahYBoE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FN6yDFv9b8Ki8S1AIydjXpbkbYkg0vV9NA35VY+99BCIR4V8iASbgCCExoRYVDAHW
-	 LbVjSs+030KIZRH0t1XEQH4qj+oZ49rUZist+Dv5T8LHyRm1aUVVovJcyd+OPQ2kpg
-	 ZsxozhwzwkKWgk2Yir09o/n/WCxbbcgbriWx+tdI=
+	b=kVdFVw1XOfEmNbHNs5yky02mcuABLf8ZMYs/Q38r6EAshs/8XePR0nXw2y4JEhSY1
+	 NqIIKZjPmyFo+4zBpK2gwyEeJxTZEMwcrqUsq06KuaSXnYaabUQhoXQLJKCyIC1NSO
+	 7a96EksEX/Br6S3x9Vp8k83NCyYDjor785mSrifE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Anil Gurumurthy <agurumurthy@marvell.com>,
-	Nilesh Javali <njavali@marvell.com>,
-	Himanshu Madhani <hmadhani2024@gmail.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>
-Subject: [PATCH 6.19 42/49] scsi: qla2xxx: Query FW again before proceeding with login
-Date: Fri, 13 Feb 2026 14:48:01 +0100
-Message-ID: <20260213134710.257262159@linuxfoundation.org>
+	Shinichiro Kawasaki <shinichiro.kawasaki@wdc.com>,
+	Thomas Gleixner <tglx@kernel.org>,
+	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
+	Linus Torvalds <torvalds@linux-foundation.org>
+Subject: [PATCH 6.19 43/49] sched/mmcid: Dont assume CID is CPU owned on mode switch
+Date: Fri, 13 Feb 2026 14:48:02 +0100
+Message-ID: <20260213134710.292691810@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260213134708.713126210@linuxfoundation.org>
 References: <20260213134708.713126210@linuxfoundation.org>
@@ -52,92 +52,81 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Anil Gurumurthy <agurumurthy@marvell.com>
+From: Thomas Gleixner <tglx@kernel.org>
 
-commit 42b2dab4340d39b71334151e10c6d7d9b0040ffa upstream.
+commit 1e83ccd5921a610ef409a7d4e56db27822b4ea39 upstream.
 
-Issue occurred during a continuous reboot test of several thousand
-iterations specific to a fabric topo with dual mode target where it
-sends a PLOGI/PRLI and then sends a LOGO. The initiator was also in the
-process of discovery and sent a PLOGI to the switch. It then queried a
-list of ports logged in via mbx 75h and the GPDB response indicated that
-the target was logged in. This caused a mismatch in the states between
-the driver and FW.  Requery the FW for the state and proceed with the
-rest of discovery process.
+Shinichiro reported a KASAN UAF, which is actually an out of bounds access
+in the MMCID management code.
 
-Fixes: a4239945b8ad ("scsi: qla2xxx: Add switch command to simplify fabric discovery")
+   CPU0						CPU1
+   						T1 runs in userspace
+   T0: fork(T4) -> Switch to per CPU CID mode
+         fixup() set MM_CID_TRANSIT on T1/CPU1
+   T4 exit()
+   T3 exit()
+   T2 exit()
+						T1 exit() switch to per task mode
+						 ---> Out of bounds access.
+
+As T1 has not scheduled after T0 set the TRANSIT bit, it exits with the
+TRANSIT bit set. sched_mm_cid_remove_user() clears the TRANSIT bit in
+the task and drops the CID, but it does not touch the per CPU storage.
+That's functionally correct because a CID is only owned by the CPU when
+the ONCPU bit is set, which is mutually exclusive with the TRANSIT flag.
+
+Now sched_mm_cid_exit() assumes that the CID is CPU owned because the
+prior mode was per CPU. It invokes mm_drop_cid_on_cpu() which clears the
+not set ONCPU bit and then invokes clear_bit() with an insanely large
+bit number because TRANSIT is set (bit 29).
+
+Prevent that by actually validating that the CID is CPU owned in
+mm_drop_cid_on_cpu().
+
+Fixes: 007d84287c74 ("sched/mmcid: Drop per CPU CID immediately when switching to per task mode")
+Reported-by: Shinichiro Kawasaki <shinichiro.kawasaki@wdc.com>
+Signed-off-by: Thomas Gleixner <tglx@kernel.org>
+Tested-by: Shinichiro Kawasaki <shinichiro.kawasaki@wdc.com>
 Cc: stable@vger.kernel.org
-Signed-off-by: Anil Gurumurthy <agurumurthy@marvell.com>
-Signed-off-by: Nilesh Javali <njavali@marvell.com>
-Reviewed-by: Himanshu Madhani <hmadhani2024@gmail.com>
-Link: https://patch.msgid.link/20251210101604.431868-11-njavali@marvell.com
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Closes: https://lore.kernel.org/aYsZrixn9b6s_2zL@shinmob
+Reviewed-by: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
+Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/scsi/qla2xxx/qla_init.c |   19 +++++++++++++++++--
- drivers/scsi/qla2xxx/qla_isr.c  |   19 +++++++++++++++++--
- 2 files changed, 34 insertions(+), 4 deletions(-)
+ kernel/sched/core.c  |    7 +++----
+ kernel/sched/sched.h |    6 ++++--
+ 2 files changed, 7 insertions(+), 6 deletions(-)
 
---- a/drivers/scsi/qla2xxx/qla_init.c
-+++ b/drivers/scsi/qla2xxx/qla_init.c
-@@ -2462,8 +2462,23 @@ qla24xx_handle_plogi_done_event(struct s
- 	    ea->sp->gen1, fcport->rscn_gen,
- 	    ea->data[0], ea->data[1], ea->iop[0], ea->iop[1]);
- 
--	if ((fcport->fw_login_state == DSC_LS_PLOGI_PEND) ||
--	    (fcport->fw_login_state == DSC_LS_PRLI_PEND)) {
-+	if (fcport->fw_login_state == DSC_LS_PLOGI_PEND) {
-+		ql_dbg(ql_dbg_disc, vha, 0x20ea,
-+		    "%s %d %8phC Remote is trying to login\n",
-+		    __func__, __LINE__, fcport->port_name);
-+		/*
-+		 * If we get here, there is port thats already logged in,
-+		 * but it's state has not moved ahead. Recheck with FW on
-+		 * what state it is in and proceed ahead
-+		 */
-+		if (!N2N_TOPO(vha->hw)) {
-+			fcport->fw_login_state = DSC_LS_PRLI_COMP;
-+			qla24xx_post_gpdb_work(vha, fcport, 0);
-+		}
-+		return;
+--- a/kernel/sched/core.c
++++ b/kernel/sched/core.c
+@@ -10729,10 +10729,9 @@ void sched_mm_cid_exit(struct task_struc
+ 					return;
+ 				/*
+ 				 * Mode change. The task has the CID unset
+-				 * already. The CPU CID is still valid and
+-				 * does not have MM_CID_TRANSIT set as the
+-				 * mode change has just taken effect under
+-				 * mm::mm_cid::lock. Drop it.
++				 * already and dealt with an eventually set
++				 * TRANSIT bit. If the CID is owned by the CPU
++				 * then drop it.
+ 				 */
+ 				mm_drop_cid_on_cpu(mm, this_cpu_ptr(mm->mm_cid.pcpu));
+ 			}
+--- a/kernel/sched/sched.h
++++ b/kernel/sched/sched.h
+@@ -3758,8 +3758,10 @@ static __always_inline void mm_unset_cid
+ static __always_inline void mm_drop_cid_on_cpu(struct mm_struct *mm, struct mm_cid_pcpu *pcp)
+ {
+ 	/* Clear the ONCPU bit, but do not set UNSET in the per CPU storage */
+-	pcp->cid = cpu_cid_to_cid(pcp->cid);
+-	mm_drop_cid(mm, pcp->cid);
++	if (cid_on_cpu(pcp->cid)) {
++		pcp->cid = cpu_cid_to_cid(pcp->cid);
++		mm_drop_cid(mm, pcp->cid);
 +	}
-+
-+	if (fcport->fw_login_state == DSC_LS_PRLI_PEND) {
- 		ql_dbg(ql_dbg_disc, vha, 0x20ea,
- 		    "%s %d %8phC Remote is trying to login\n",
- 		    __func__, __LINE__, fcport->port_name);
---- a/drivers/scsi/qla2xxx/qla_isr.c
-+++ b/drivers/scsi/qla2xxx/qla_isr.c
-@@ -1676,13 +1676,28 @@ skip_rio:
+ }
  
- 			/* Port logout */
- 			fcport = qla2x00_find_fcport_by_loopid(vha, mb[1]);
--			if (!fcport)
-+			if (!fcport) {
-+				ql_dbg(ql_dbg_async, vha, 0x5011,
-+					"Could not find fcport:%04x %04x %04x\n",
-+					mb[1], mb[2], mb[3]);
- 				break;
--			if (atomic_read(&fcport->state) != FCS_ONLINE)
-+			}
-+
-+			if (atomic_read(&fcport->state) != FCS_ONLINE) {
-+				ql_dbg(ql_dbg_async, vha, 0x5012,
-+					"Port state is not online State:0x%x \n",
-+					atomic_read(&fcport->state));
-+				ql_dbg(ql_dbg_async, vha, 0x5012,
-+					"Scheduling session for deletion \n");
-+				fcport->logout_on_delete = 0;
-+				qlt_schedule_sess_for_deletion(fcport);
- 				break;
-+			}
-+
- 			ql_dbg(ql_dbg_async, vha, 0x508a,
- 			    "Marking port lost loopid=%04x portid=%06x.\n",
- 			    fcport->loop_id, fcport->d_id.b24);
-+
- 			if (qla_ini_mode_enabled(vha)) {
- 				fcport->logout_on_delete = 0;
- 				qlt_schedule_sess_for_deletion(fcport);
+ static inline unsigned int __mm_get_cid(struct mm_struct *mm, unsigned int max_cids)
 
 
