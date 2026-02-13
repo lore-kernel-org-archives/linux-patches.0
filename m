@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 409D035F8B7;
-	Fri, 13 Feb 2026 13:51:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48550241665;
+	Fri, 13 Feb 2026 13:52:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770990718; cv=none; b=Lv7Iw/Pd3iFEKIj4Mj5JK2AKRYgxtA3Xlk0b/2wUqfg4TCTBIBA9YshjhNl/QqvPdJ1Kcsx/NKNdfXLJciOWI8Eg6oiGlmmooRGRCbSo19e+k2IMnpLQVKgSrawtdMDyBPansR2doDQ4391xeqXCZWnuo6tXf95Hci/HR+uP8W8=
+	t=1770990721; cv=none; b=eKyrq4UPU5nWqdYPJ5LOXdk6A+2qG01Z9SdTralitZAoazPPWDW0FhTwS72j+mKPnbRi+8/JXTD12GvNgxiL3mIZ+pa/frEbwMYiaVV1Opf0TNoYUbX6KbZOomJChLBpmV+LO2QZpnDoBDK/Y+kihHno95vDLAl8myqpovqniVk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770990718; c=relaxed/simple;
-	bh=+a7WV+MJ3PuqK3Lwyj2QAWj8abqjjx5n7KIhqkA94oU=;
+	s=arc-20240116; t=1770990721; c=relaxed/simple;
+	bh=XIr6KXAiLrliFB7gabb9G56EpHXzuCiwD5ECMXtW2to=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SsbbkkuDo+/TLrPM+/c5/ZhGyFvV/dxG2bNiDVAvEp7kCee+Dg9IqM7ifiGgktlpV0lGyoZGKMnwCTqBxU189NUHuJxdUkjnJIqPevBIelMXHVpYOOeu3/AmAiy/96Ls6d+kKDtl+RKav+BYSWIVAYwJ4PX0l0tGLeismYTVFOQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=I/4it3HF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ayc+O2p8y4ymylfX90d8++DvGFOFkgtOOSUXLQRm/GI+efmXws5+VsMHLpd8freTHnOuVB/tE2KUfPCJW2GP1+5hIVug57beV9QQRuH/C+IkTYDf2qwiF/vumFIzZCbg//8dAWA/O/6lHc2480qzJ5Npv7GR159asweuyMCmjVA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HHgK2Juq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="I/4it3HF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A664EC19423;
-	Fri, 13 Feb 2026 13:51:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HHgK2Juq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C59F4C19423;
+	Fri, 13 Feb 2026 13:52:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770990718;
-	bh=+a7WV+MJ3PuqK3Lwyj2QAWj8abqjjx5n7KIhqkA94oU=;
+	s=korg; t=1770990721;
+	bh=XIr6KXAiLrliFB7gabb9G56EpHXzuCiwD5ECMXtW2to=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=I/4it3HFz9mNR3j+I4D0jEpRNVRsvLT6/0tYX1A2h4/iFbYBzxw+P3Tg8Wc+ihOmg
-	 kNnkz1pTZWaMcDIZDDlB8jpLt0RAnMrnPYrYDvxDJ+p69IkQm0PJjqbrNj55+Beedw
-	 0E1tCX+VGNkPyoX7zgaDX4j8rBavzey8QxIhQjnc=
+	b=HHgK2JuqHgD8nheYnbnBX2naDJujoplEeXyAxRLUR9A6TU/sRsecr1qlKYDn0fdvg
+	 py5hXjm/PGW+1WvCwi/d4OXOqF77Rd8zdsL0Jq4izxZxie4RzB2Ajrwik4LQD0H3a6
+	 hFg2DC+4PyVEryIqtmdwiRsMDBLca4zk62S7Rapc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kees Cook <kees@kernel.org>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
-	Linus Torvalds <torvalds@linux-foundation.org>
-Subject: [PATCH 6.19 32/49] crypto: omap - Allocate OMAP_CRYPTO_FORCE_COPY scatterlists correctly
-Date: Fri, 13 Feb 2026 14:47:51 +0100
-Message-ID: <20260213134709.903866185@linuxfoundation.org>
+	Bibo Mao <maobibo@loongson.cn>,
+	Jason Wang <jasowang@redhat.com>,
+	"Michael S. Tsirkin" <mst@redhat.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>
+Subject: [PATCH 6.19 33/49] crypto: virtio - Add spinlock protection with virtqueue notification
+Date: Fri, 13 Feb 2026 14:47:52 +0100
+Message-ID: <20260213134709.938872318@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260213134708.713126210@linuxfoundation.org>
 References: <20260213134708.713126210@linuxfoundation.org>
@@ -51,35 +52,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kees Cook <kees@kernel.org>
+From: Bibo Mao <maobibo@loongson.cn>
 
-commit 1562b1fb7e17c1b3addb15e125c718b2be7f5512 upstream.
+commit b505047ffc8057555900d2d3a005d033e6967382 upstream.
 
-The existing allocation of scatterlists in omap_crypto_copy_sg_lists()
-was allocating an array of scatterlist pointers, not scatterlist objects,
-resulting in a 4x too small allocation.
+When VM boots with one virtio-crypto PCI device and builtin backend,
+run openssl benchmark command with multiple processes, such as
+  openssl speed -evp aes-128-cbc -engine afalg  -seconds 10 -multi 32
 
-Use sizeof(*new_sg) to get the correct object size.
+openssl processes will hangup and there is error reported like this:
+ virtio_crypto virtio0: dataq.0:id 3 is not a head!
 
-Fixes: 74ed87e7e7f7 ("crypto: omap - add base support library for common routines")
-Signed-off-by: Kees Cook <kees@kernel.org>
-Acked-by: Herbert Xu <herbert@gondor.apana.org.au>
-Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
+It seems that the data virtqueue need protection when it is handled
+for virtio done notification. If the spinlock protection is added
+in virtcrypto_done_task(), openssl benchmark with multiple processes
+works well.
+
+Fixes: fed93fb62e05 ("crypto: virtio - Handle dataq logic with tasklet")
+Cc: stable@vger.kernel.org
+Signed-off-by: Bibo Mao <maobibo@loongson.cn>
+Acked-by: Jason Wang <jasowang@redhat.com>
+Acked-by: Michael S. Tsirkin <mst@redhat.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/crypto/omap-crypto.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/crypto/virtio/virtio_crypto_core.c |    5 +++++
+ 1 file changed, 5 insertions(+)
 
---- a/drivers/crypto/omap-crypto.c
-+++ b/drivers/crypto/omap-crypto.c
-@@ -21,7 +21,7 @@ static int omap_crypto_copy_sg_lists(int
- 	struct scatterlist *tmp;
+--- a/drivers/crypto/virtio/virtio_crypto_core.c
++++ b/drivers/crypto/virtio/virtio_crypto_core.c
+@@ -75,15 +75,20 @@ static void virtcrypto_done_task(unsigne
+ 	struct data_queue *data_vq = (struct data_queue *)data;
+ 	struct virtqueue *vq = data_vq->vq;
+ 	struct virtio_crypto_request *vc_req;
++	unsigned long flags;
+ 	unsigned int len;
  
- 	if (!(flags & OMAP_CRYPTO_FORCE_SINGLE_ENTRY)) {
--		new_sg = kmalloc_array(n, sizeof(*sg), GFP_KERNEL);
-+		new_sg = kmalloc_array(n, sizeof(*new_sg), GFP_KERNEL);
- 		if (!new_sg)
- 			return -ENOMEM;
++	spin_lock_irqsave(&data_vq->lock, flags);
+ 	do {
+ 		virtqueue_disable_cb(vq);
+ 		while ((vc_req = virtqueue_get_buf(vq, &len)) != NULL) {
++			spin_unlock_irqrestore(&data_vq->lock, flags);
+ 			if (vc_req->alg_cb)
+ 				vc_req->alg_cb(vc_req, len);
++			spin_lock_irqsave(&data_vq->lock, flags);
+ 		}
+ 	} while (!virtqueue_enable_cb(vq));
++	spin_unlock_irqrestore(&data_vq->lock, flags);
+ }
  
+ static void virtcrypto_dataq_callback(struct virtqueue *vq)
 
 
