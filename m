@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B84C334CFC3;
-	Fri, 13 Feb 2026 13:51:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 034CC54723;
+	Fri, 13 Feb 2026 13:51:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770990691; cv=none; b=jbFwLXs69VeXdf6us0y4IY0gKyNc3mptzVWN9jwqpJBsI0LvIRq/DPYIjEUuHgFKw6A5jHxjP3w+VGZBHoi/bMja+AkEm7g+kJ93NnymzmqbwArHaeU6Z0tMA7xI/+i73lESvz/ID0CjLWTw2HU5Ba8rAis9c/UNTCBSZIikJbI=
+	t=1770990695; cv=none; b=WKvh24gmB/DAjg0z1GHZBIEExMv+btZY09FJbZUO2s6l2ezzguwOv1vsL7wcAhYnZ+s2gPZgxSLJ1Pl5LzDIg+itrliPKIJf6AOIfk4x3hPN1JsQpAWDaWjJprLJWa1t6lMKxnRQH+4Cu+C4aLjokDSJT4TcSBRGwGbYkCq1w1U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770990691; c=relaxed/simple;
-	bh=q4ZlO541HUBPoaulywduV1mXVy+EbeAivDCWtLMrvWw=;
+	s=arc-20240116; t=1770990695; c=relaxed/simple;
+	bh=Tb8Qvl//ImJDlu+7KVeHrBi2GWZFRv7QiSpH5X0TQqU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=h9mV5763+3kF0QZlssVQJhssAQ7Txp1YUsHmOEwivtIu7L7o/WhVb9uW6FT/0q0qpSktSJbpsmBXcfErKo2ZXXrmWSBQuO6JUTownvW0yOEHKEpJUtf50uZHU0+9/o4qIp4tQ6QT4TBHa5ykNDgtbQTtHphRPEZt9wYUkx3sVYA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nfRkRMdQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lNuihFtpi8NrvC6aJ7rDyHPQpt7jqu7xAjzyJoD/4HHlpWBB+hwFpou8qpt4Zw7cHJ9wcRQa2UQvP0H9AOaadDPwX5uSQ2kKMVrqiZsGsA2b9j1uPRKGIipjyJZxF97tHHF3p+YW61xUliFhPTsB4J6eKHv5KPyumbaNWmvjXOc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WSzxk6t8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nfRkRMdQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2767BC116C6;
-	Fri, 13 Feb 2026 13:51:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WSzxk6t8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 79F91C116C6;
+	Fri, 13 Feb 2026 13:51:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770990691;
-	bh=q4ZlO541HUBPoaulywduV1mXVy+EbeAivDCWtLMrvWw=;
+	s=korg; t=1770990694;
+	bh=Tb8Qvl//ImJDlu+7KVeHrBi2GWZFRv7QiSpH5X0TQqU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nfRkRMdQsjliQR9ACnBVj7df4f24Lbcby8LWl8O8hT08aViTrFSqfnXc3o+R4DS3q
-	 ajoGDb46+311vOSNycVBwYtq77ND1GbKAqIuCgR6m7Ow1OGPHQjfKWf63o1eANbJ9M
-	 nLxLp+5gYZ4RcIiwQ9aW9wHUGw4COREfcYZOWilM=
+	b=WSzxk6t8AijVDOhZNH4o0nzslKgSKw7QdlI31dfaRrHZMr5hTVwRagI6qzyLzB00/
+	 Qct718QG1BD0uocv7Y4gyV0RWaU1yn5kL1eBumfBvyQW89SLnvY9q+kHpqKfVSUd1g
+	 pypalke+5MZWp8EH4IYgbn1H15JXfz4kMsAJ0Gxo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zenm Chen <zenmchen@gmail.com>,
-	Paul Menzel <pmenzel@molgen.mpg.de>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Subject: [PATCH 6.19 28/49] Bluetooth: btusb: Add USB ID 7392:e611 for Edimax EW-7611UXB
-Date: Fri, 13 Feb 2026 14:47:47 +0100
-Message-ID: <20260213134709.761948273@linuxfoundation.org>
+	r772577952@gmail.com,
+	"Darrick J. Wong" <djwong@kernel.org>,
+	Christoph Hellwig <hch@lst.de>
+Subject: [PATCH 6.19 46/49] xfs: fix UAF in xchk_btree_check_block_owner
+Date: Fri, 13 Feb 2026 14:48:05 +0100
+Message-ID: <20260213134710.397968879@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260213134708.713126210@linuxfoundation.org>
 References: <20260213134708.713126210@linuxfoundation.org>
@@ -51,78 +51,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zenm Chen <zenmchen@gmail.com>
+From: Darrick J. Wong <djwong@kernel.org>
 
-commit 6c0568b7741a346088fd6dfced2d871f7d481d06 upstream.
+commit 1c253e11225bc5167217897885b85093e17c2217 upstream.
 
-Add USB ID 7392:e611 for Edimax EW-7611UXB which is RTL8851BU-based
-Wi-Fi + Bluetooth adapter.
+We cannot dereference bs->cur when trying to determine if bs->cur
+aliases bs->sc->sa.{bno,rmap}_cur after the latter has been freed.
+Fix this by sampling before type before any freeing could happen.
+The correct temporal ordering was broken when we removed xfs_btnum_t.
 
-The information in /sys/kernel/debug/usb/devices about the Bluetooth
-device is listed as the below:
-
-T:  Bus=03 Lev=01 Prnt=01 Port=01 Cnt=01 Dev#=  6 Spd=480  MxCh= 0
-D:  Ver= 2.00 Cls=ef(misc ) Sub=02 Prot=01 MxPS=64 #Cfgs=  1
-P:  Vendor=7392 ProdID=e611 Rev= 0.00
-S:  Manufacturer=Realtek
-S:  Product=802.11ax WLAN Adapter
-S:  SerialNumber=00e04c000001
-C:* #Ifs= 3 Cfg#= 1 Atr=e0 MxPwr=500mA
-A:  FirstIf#= 0 IfCount= 2 Cls=e0(wlcon) Sub=01 Prot=01
-I:* If#= 0 Alt= 0 #EPs= 3 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-E:  Ad=81(I) Atr=03(Int.) MxPS=  16 Ivl=1ms
-E:  Ad=02(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=82(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-I:* If#= 1 Alt= 0 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-E:  Ad=03(O) Atr=01(Isoc) MxPS=   0 Ivl=1ms
-E:  Ad=83(I) Atr=01(Isoc) MxPS=   0 Ivl=1ms
-I:  If#= 1 Alt= 1 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-E:  Ad=03(O) Atr=01(Isoc) MxPS=   9 Ivl=1ms
-E:  Ad=83(I) Atr=01(Isoc) MxPS=   9 Ivl=1ms
-I:  If#= 1 Alt= 2 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-E:  Ad=03(O) Atr=01(Isoc) MxPS=  17 Ivl=1ms
-E:  Ad=83(I) Atr=01(Isoc) MxPS=  17 Ivl=1ms
-I:  If#= 1 Alt= 3 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-E:  Ad=03(O) Atr=01(Isoc) MxPS=  25 Ivl=1ms
-E:  Ad=83(I) Atr=01(Isoc) MxPS=  25 Ivl=1ms
-I:  If#= 1 Alt= 4 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-E:  Ad=03(O) Atr=01(Isoc) MxPS=  33 Ivl=1ms
-E:  Ad=83(I) Atr=01(Isoc) MxPS=  33 Ivl=1ms
-I:  If#= 1 Alt= 5 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-E:  Ad=03(O) Atr=01(Isoc) MxPS=  49 Ivl=1ms
-E:  Ad=83(I) Atr=01(Isoc) MxPS=  49 Ivl=1ms
-I:  If#= 1 Alt= 6 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-E:  Ad=03(O) Atr=01(Isoc) MxPS=  63 Ivl=1ms
-E:  Ad=83(I) Atr=01(Isoc) MxPS=  63 Ivl=1ms
-I:* If#= 2 Alt= 0 #EPs= 8 Cls=ff(vend.) Sub=ff Prot=ff Driver=rtw89_8851bu_git
-E:  Ad=84(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=05(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=06(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=07(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=09(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=0a(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=0b(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=0c(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-
-Cc: stable@vger.kernel.org # 6.6.x
-Signed-off-by: Zenm Chen <zenmchen@gmail.com>
-Reviewed-by: Paul Menzel <pmenzel@molgen.mpg.de>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Cc: r772577952@gmail.com
+Cc: <stable@vger.kernel.org> # v6.9
+Fixes: ec793e690f801d ("xfs: remove xfs_btnum_t")
+Signed-off-by: "Darrick J. Wong" <djwong@kernel.org>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Tested-by: Jiaming Zhang <r772577952@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/bluetooth/btusb.c |    2 ++
- 1 file changed, 2 insertions(+)
+ fs/xfs/scrub/btree.c |    7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
---- a/drivers/bluetooth/btusb.c
-+++ b/drivers/bluetooth/btusb.c
-@@ -527,6 +527,8 @@ static const struct usb_device_id quirks
- 						     BTUSB_WIDEBAND_SPEECH },
- 	{ USB_DEVICE(0x2001, 0x332a), .driver_info = BTUSB_REALTEK |
- 						     BTUSB_WIDEBAND_SPEECH },
-+	{ USB_DEVICE(0x7392, 0xe611), .driver_info = BTUSB_REALTEK |
-+						     BTUSB_WIDEBAND_SPEECH },
+--- a/fs/xfs/scrub/btree.c
++++ b/fs/xfs/scrub/btree.c
+@@ -370,12 +370,15 @@ xchk_btree_check_block_owner(
+ {
+ 	xfs_agnumber_t		agno;
+ 	xfs_agblock_t		agbno;
++	bool			is_bnobt, is_rmapbt;
+ 	bool			init_sa;
+ 	int			error = 0;
  
- 	/* Realtek 8852AE Bluetooth devices */
- 	{ USB_DEVICE(0x0bda, 0x2852), .driver_info = BTUSB_REALTEK |
+ 	if (!bs->cur)
+ 		return 0;
+ 
++	is_bnobt = xfs_btree_is_bno(bs->cur->bc_ops);
++	is_rmapbt = xfs_btree_is_rmap(bs->cur->bc_ops);
+ 	agno = xfs_daddr_to_agno(bs->cur->bc_mp, daddr);
+ 	agbno = xfs_daddr_to_agbno(bs->cur->bc_mp, daddr);
+ 
+@@ -398,11 +401,11 @@ xchk_btree_check_block_owner(
+ 	 * have to nullify it (to shut down further block owner checks) if
+ 	 * self-xref encounters problems.
+ 	 */
+-	if (!bs->sc->sa.bno_cur && xfs_btree_is_bno(bs->cur->bc_ops))
++	if (!bs->sc->sa.bno_cur && is_bnobt)
+ 		bs->cur = NULL;
+ 
+ 	xchk_xref_is_only_owned_by(bs->sc, agbno, 1, bs->oinfo);
+-	if (!bs->sc->sa.rmap_cur && xfs_btree_is_rmap(bs->cur->bc_ops))
++	if (!bs->sc->sa.rmap_cur && is_rmapbt)
+ 		bs->cur = NULL;
+ 
+ out_free:
 
 
