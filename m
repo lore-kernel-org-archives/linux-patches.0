@@ -1,38 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5C03241665;
-	Fri, 13 Feb 2026 13:53:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0471241665;
+	Fri, 13 Feb 2026 13:53:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770990828; cv=none; b=exrhmsvxUomiKSTNhewFUPPYSm44pcxfxSCr8ToIfZx48qeC9hm3hIB1hK+/SOwY/fSAa2P0D9euRDKRldUly7/156JDc1FAgZHzAubkqxMFwtgdmLpxxLh0DkpfPCsDIY8NhCqkRg64tzcniWVovvTxwMTahUJOxt3Q2Li+SaM=
+	t=1770990832; cv=none; b=iG6n5kxNFfSym3fQjExTcknmYfyOBgZ4G4QJFdftk9Vgl8v6tDVY2dNNnFmKb1dh0wwSRzYJO19McHJK9FBO6gR3jq4T2xpsr+9Jtlr9ZfNTshbcMvO3Zz9E08TieNm3V+MIzNcrpxA9v+woTi2L8ueN2imkC6mtarG588TbPBA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770990828; c=relaxed/simple;
-	bh=wgnJDBw5BBaYviCdKNa7hvfpjGghuRzp67B6arEAqqU=;
+	s=arc-20240116; t=1770990832; c=relaxed/simple;
+	bh=jsBBsemJI59iStJR93LUQrX9Mow4VarxqWC4BMhiFrU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=O63U/HWCASU9IdNWVYyboyZlWyHRkYzRV9qSFwqFx8jGddTMqW6ALjbQ3u7km/IH1Fm9v/vqyzQWlMrkBt+agAceGDNfje6IhSE7F3ND6+QtC29xOJ0+gR8G3UGNnyi47cvgzlRAuhup7vN2OJQwdOUu0NRDr3UPmRi5QcNgonA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JfxYGli4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PkNnXsQtjjc0Pyqno6Z8iPcFmf6eVI6B57gLvz/Yg7JOfn3u+9u69noReyjjtUg/kB29bhqWQLGWHFh+vm1AIW9JQD1xymwrdLL9/gTuPAkccbAsp03EXJAyJBHKdVJbysJRBJXAEykpQk08vD9VfXkqtPANq4r/VcDE7kQMUgs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CMoUtk+z; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JfxYGli4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C654C116C6;
-	Fri, 13 Feb 2026 13:53:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CMoUtk+z"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 65E3CC116C6;
+	Fri, 13 Feb 2026 13:53:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770990828;
-	bh=wgnJDBw5BBaYviCdKNa7hvfpjGghuRzp67B6arEAqqU=;
+	s=korg; t=1770990831;
+	bh=jsBBsemJI59iStJR93LUQrX9Mow4VarxqWC4BMhiFrU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JfxYGli4ACVUptVwNmPjokKdrRd1l2wBkmR+MoBRlGEUTFjJCAXzw+AxhtMj2TGZe
-	 tvl8Ao4FPUX9dhCSqdKAveiQQXKTedCiNaH1dUVcs13FJ+1hByNZznHoMcf8mczsR5
-	 KyVQEVF1FNlaX7C4w+QFIIrqplVaRZNKwAYENS04=
+	b=CMoUtk+z5qIJGKkjxKciPxoyBP+LQi49TNXPclDAOML+8HLDCXf0kWVdos6n8+9DR
+	 5Q5PXgwIuWv4Xl12mzaZh3uvYAM+Tq16CqXL2Y0KH7lQ3eD9exOe/nuXimsiWueVNs
+	 nYN7JTf5ou7QKLeA+1ARCCknRK3Sey3JX3JZjHVY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Henrique Carvalho <henrique.carvalho@suse.com>,
+	Steve French <smfrench@gmail.com>,
+	Tom Talpey <tom@talpey.com>,
+	Long Li <longli@microsoft.com>,
 	Namjae Jeon <linkinjeon@kernel.org>,
+	linux-cifs@vger.kernel.org,
+	samba-technical@lists.samba.org,
+	Stefan Metzmacher <metze@samba.org>,
 	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 6.18 06/49] smb: server: fix leak of active_num_conn in ksmbd_tcp_new_connection()
-Date: Fri, 13 Feb 2026 14:47:50 +0100
-Message-ID: <20260213134709.119232139@linuxfoundation.org>
+Subject: [PATCH 6.18 07/49] smb: smbdirect: introduce smbdirect_socket.recv_io.credits.available
+Date: Fri, 13 Feb 2026 14:47:51 +0100
+Message-ID: <20260213134709.154527270@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260213134708.885500854@linuxfoundation.org>
 References: <20260213134708.885500854@linuxfoundation.org>
@@ -51,44 +56,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Henrique Carvalho <henrique.carvalho@suse.com>
+From: Stefan Metzmacher <metze@samba.org>
 
-commit 77ffbcac4e569566d0092d5f22627dfc0896b553 upstream.
+commit 6e3c5052f9686192e178806e017b7377155f4bab upstream.
 
-On kthread_run() failure in ksmbd_tcp_new_connection(), the transport is
-freed via free_transport(), which does not decrement active_num_conn,
-leaking this counter.
+The logic off managing recv credits by counting posted recv_io and
+granted credits is racy.
 
-Replace free_transport() with ksmbd_tcp_disconnect().
+That's because the peer might already consumed a credit,
+but between receiving the incoming recv at the hardware
+and processing the completion in the 'recv_done' functions
+we likely have a window where we grant credits, which
+don't really exist.
 
-Fixes: 0d0d4680db22e ("ksmbd: add max connections parameter")
-Cc: stable@vger.kernel.org
-Signed-off-by: Henrique Carvalho <henrique.carvalho@suse.com>
+So we better have a decicated counter for the
+available credits, which will be incremented
+when we posted new recv buffers and drained when
+we grant the credits to the peer.
+
+Fixes: 5fb9b459b368 ("smb: client: count the number of posted recv_io messages in order to calculated credits")
+Fixes: 89b021a72663 ("smb: server: manage recv credits by counting posted recv_io and granted credits")
+Cc: <stable@vger.kernel.org> # 6.18.x
+Cc: Steve French <smfrench@gmail.com>
+Cc: Tom Talpey <tom@talpey.com>
+Cc: Long Li <longli@microsoft.com>
+Cc: Namjae Jeon <linkinjeon@kernel.org>
+Cc: linux-cifs@vger.kernel.org
+Cc: samba-technical@lists.samba.org
+Signed-off-by: Stefan Metzmacher <metze@samba.org>
 Acked-by: Namjae Jeon <linkinjeon@kernel.org>
 Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/server/transport_tcp.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ fs/smb/common/smbdirect/smbdirect_socket.h |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/fs/smb/server/transport_tcp.c
-+++ b/fs/smb/server/transport_tcp.c
-@@ -41,6 +41,7 @@ static const struct ksmbd_transport_ops
+--- a/fs/smb/common/smbdirect/smbdirect_socket.h
++++ b/fs/smb/common/smbdirect/smbdirect_socket.h
+@@ -231,6 +231,7 @@ struct smbdirect_socket {
+ 		 */
+ 		struct {
+ 			u16 target;
++			atomic_t available;
+ 			atomic_t count;
+ 		} credits;
  
- static void tcp_stop_kthread(struct task_struct *kthread);
- static struct interface *alloc_iface(char *ifname);
-+static void ksmbd_tcp_disconnect(struct ksmbd_transport *t);
+@@ -375,6 +376,7 @@ static __always_inline void smbdirect_so
+ 	INIT_WORK(&sc->recv_io.posted.refill_work, __smbdirect_socket_disabled_work);
+ 	disable_work_sync(&sc->recv_io.posted.refill_work);
  
- #define KSMBD_TRANS(t)	(&(t)->transport)
- #define TCP_TRANS(t)	((struct tcp_transport *)container_of(t, \
-@@ -216,7 +217,7 @@ static int ksmbd_tcp_new_connection(stru
- 	if (IS_ERR(handler)) {
- 		pr_err("cannot start conn thread\n");
- 		rc = PTR_ERR(handler);
--		free_transport(t);
-+		ksmbd_tcp_disconnect(KSMBD_TRANS(t));
- 	}
- 	return rc;
- }
++	atomic_set(&sc->recv_io.credits.available, 0);
+ 	atomic_set(&sc->recv_io.credits.count, 0);
+ 
+ 	INIT_LIST_HEAD(&sc->recv_io.reassembly.list);
 
 
