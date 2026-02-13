@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0AF0B223323;
-	Fri, 13 Feb 2026 13:57:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C5601684BE;
+	Fri, 13 Feb 2026 13:57:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770991041; cv=none; b=GYTra4YUHNjWarnETwFija4UaHa2kxBoctLi8yDaqw9oNNO+46tff1y2iN4AlneFD4BMj2LdQL8IyO7maNNzSNQhf2mB1JYa2Do/sEO4I/G0vFhtrloC40sjiwWN0lB0K6toGK4jLFCZGS+eGSsYlcwF9WegRiIdtTubfCT2al4=
+	t=1770991044; cv=none; b=sgMRH1SJL4+0EqapcGisKsM9H7EpY/x3sqHxUyT2nuN5t6fnjziP43knjRfH1A9V+VZ3AHN2uHk8bwbLdfvyJ+M3oR036ZZu5puy1lufjdycd0aa0B7m9rP/bhV1b7b/PEBXqcwmG61pydrY29UeBGsUdoBDZ4FUCIprotPi0Vo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770991041; c=relaxed/simple;
-	bh=UIF6jj8rXGBYopRnlMH3lz3qlNnuvO/7dueTt0T7gDE=;
+	s=arc-20240116; t=1770991044; c=relaxed/simple;
+	bh=F/wH1B1CESFls62gnoqSC38o3M9OCFj1Xt0Wmq5ozvk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KKizpOH1qu+yD0WRzD5MEJZS3dsn9Q/qVJ49TyulYxjlZafNQCz31MNqPWgD4VWfRhX7UV1bA7DLfricLQSojYpvUNUKUwEXVCLUVCmm/boqXIdGw7/rfs2a15g9K7tO5Z9THQnlY6IlITczfz8IMjig/+qhHrrgxlsWTtNbcBw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=I3CYEgJP; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=RJ/qqfkii0PZuTXctsBabxTaaEmXA3bQgBRlJE8kfLCskaTx37TH9Y9EIFgMyBWlMzSJR0hr8lArS8fRESk7cnTXx6QS+aU+RoDqUG5lVWWl70wb1iYk1zBhHgejoVKO22yqEDhqsIdCcDa1tf1wMMW0bpLguPxeOLdx3xDrmnA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=u+uAzZT6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="I3CYEgJP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 860D0C116C6;
-	Fri, 13 Feb 2026 13:57:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="u+uAzZT6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B0F2BC116C6;
+	Fri, 13 Feb 2026 13:57:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770991040;
-	bh=UIF6jj8rXGBYopRnlMH3lz3qlNnuvO/7dueTt0T7gDE=;
+	s=korg; t=1770991044;
+	bh=F/wH1B1CESFls62gnoqSC38o3M9OCFj1Xt0Wmq5ozvk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=I3CYEgJP7zf+wmwP2hhc6nQ/7iRJjR48vTlx7nPjEZ01p7LStmzcUFcRT2xGmbTjo
-	 L70BSG6oqL1DuyAIjVlre1j9g5YyW8PFtdj79kFZ+4GUAQtcwRcc7uzxaLGT14S97k
-	 aKkfxVgCk32g0d+kOV4a/cJYpSaWgnQ32Ro2bDjY=
+	b=u+uAzZT6yDdbGAFfYxhyylmV5MDXK2xfjfqO/VF9YqjI8t+e+R/zi2jwTRC4IVDT/
+	 Sgy7Tdn6LYXoxcDm5W/oENwY81pdDRZsRI+CAlkAXZEAiZl9HL+DHKjvNdYI5REMB/
+	 /R3OTOC3X15QC2vbJiyjxg2InZyXrcABzfviaSaU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Eric Dumazet <edumazet@google.com>,
+	syzbot+5498a510ff9de39d37da@syzkaller.appspotmail.com,
+	Eulgyu Kim <eulgyukim@snu.ac.kr>,
 	Mat Martineau <martineau@kernel.org>,
 	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.6 23/25] selftests: mptcp: pm: ensure unknown flags are ignored
-Date: Fri, 13 Feb 2026 14:48:49 +0100
-Message-ID: <20260213134704.725021596@linuxfoundation.org>
+Subject: [PATCH 6.6 24/25] mptcp: fix race in mptcp_pm_nl_flush_addrs_doit()
+Date: Fri, 13 Feb 2026 14:48:50 +0100
+Message-ID: <20260213134704.760568317@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260213134703.882698935@linuxfoundation.org>
 References: <20260213134703.882698935@linuxfoundation.org>
@@ -51,84 +54,79 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+From: Eric Dumazet <edumazet@google.com>
 
-commit 29f4801e9c8dfd12bdcb33b61a6ac479c7162bd7 upstream.
+commit e2a9eeb69f7d4ca4cf4c70463af77664fdb6ab1d upstream.
 
-This validates the previous commit: the userspace can set unknown flags
--- the 7th bit is currently unused -- without errors, but only the
-supported ones are printed in the endpoints dumps.
+syzbot and Eulgyu Kim reported crashes in mptcp_pm_nl_get_local_id()
+and/or mptcp_pm_nl_is_backup()
 
-The 'Fixes' tag here below is the same as the one from the previous
-commit: this patch here is not fixing anything wrong in the selftests,
-but it validates the previous fix for an issue introduced by this commit
-ID.
+Root cause is list_splice_init() in mptcp_pm_nl_flush_addrs_doit()
+which is not RCU ready.
 
-Fixes: 01cacb00b35c ("mptcp: add netlink-based PM")
-Cc: stable@vger.kernel.org
+list_splice_init_rcu() can not be called here while holding pernet->lock
+spinlock.
+
+Many thanks to Eulgyu Kim for providing a repro and testing our patches.
+
+Fixes: 141694df6573 ("mptcp: remove address when netlink flushes addrs")
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Reported-by: syzbot+5498a510ff9de39d37da@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/all/6970a46d.a00a0220.3ad28e.5cf0.GAE@google.com/T/
+Reported-by: Eulgyu Kim <eulgyukim@snu.ac.kr>
+Closes: https://github.com/multipath-tcp/mptcp_net-next/issues/611
 Reviewed-by: Mat Martineau <martineau@kernel.org>
 Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Link: https://patch.msgid.link/20251205-net-mptcp-misc-fixes-6-19-rc1-v1-2-9e4781a6c1b8@kernel.org
+Link: https://patch.msgid.link/20260124-net-mptcp-race_nl_flush_addrs-v3-1-b2dc1b613e9d@kernel.org
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-[ Conflicts in pm_netlink.sh, because some refactoring have been done
-  later on: commit 0d16ed0c2e74 ("selftests: mptcp: add
-  {get,format}_endpoint(s) helpers") and commit c99d57d0007a
-  ("selftests: mptcp: use pm_nl endpoint ops") are not in this version.
-  The same operation can still be done at the same place, without using
-  the new helpers. ]
+[ Conflicts because the code has been moved from pm_netlink.c to
+  pm_kernel.c later on in commit 8617e85e04bd ("mptcp: pm: split
+  in-kernel PM specific code"). The same modifications can be applied
+  in pm_netlink.c with one exception, because 'pernet->local_addr_list'
+  has been renamed to 'pernet->endp_list' in commit 35e71e43a56d
+  ("mptcp: pm: in-kernel: rename 'local_addr_list' to 'endp_list'"). The
+  previous name is then still being used in this version.
+  Also, another conflict is caused by commit 7bcf4d8022f9 ("mptcp: pm:
+  rename helpers linked to 'flush'") which is not in this version:
+  mptcp_nl_remove_addrs_list() has been renamed to
+  mptcp_nl_flush_addrs_list(). The previous name has then been kept. ]
 Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/testing/selftests/net/mptcp/pm_netlink.sh |    4 ++++
- tools/testing/selftests/net/mptcp/pm_nl_ctl.c   |   11 +++++++++++
- 2 files changed, 15 insertions(+)
+ net/mptcp/pm_netlink.c |   16 +++++++++++++---
+ 1 file changed, 13 insertions(+), 3 deletions(-)
 
---- a/tools/testing/selftests/net/mptcp/pm_netlink.sh
-+++ b/tools/testing/selftests/net/mptcp/pm_netlink.sh
-@@ -127,6 +127,10 @@ id 8 flags signal 10.0.1.8" "id limit"
- ip netns exec $ns1 ./pm_nl_ctl flush
- check "ip netns exec $ns1 ./pm_nl_ctl dump" "" "flush addrs"
- 
-+ip netns exec $ns1 ./pm_nl_ctl add 10.0.1.1 flags unknown
-+check "ip netns exec $ns1 ./pm_nl_ctl dump" "id 1 flags  10.0.1.1" "ignore unknown flags"
-+ip netns exec $ns1 ./pm_nl_ctl flush
-+
- ip netns exec $ns1 ./pm_nl_ctl limits 9 1 2>/dev/null
- check "ip netns exec $ns1 ./pm_nl_ctl limits" "$default_limits" "rcv addrs above hard limit"
- 
---- a/tools/testing/selftests/net/mptcp/pm_nl_ctl.c
-+++ b/tools/testing/selftests/net/mptcp/pm_nl_ctl.c
-@@ -29,6 +29,8 @@
- #define IPPROTO_MPTCP 262
- #endif
- 
-+#define MPTCP_PM_ADDR_FLAG_UNKNOWN _BITUL(7)
-+
- static void syntax(char *argv[])
+--- a/net/mptcp/pm_netlink.c
++++ b/net/mptcp/pm_netlink.c
+@@ -1859,16 +1859,26 @@ static void __reset_counters(struct pm_n
+ static int mptcp_nl_cmd_flush_addrs(struct sk_buff *skb, struct genl_info *info)
  {
- 	fprintf(stderr, "%s add|ann|rem|csf|dsf|get|set|del|flush|dump|events|listen|accept [<args>]\n", argv[0]);
-@@ -825,6 +827,8 @@ int add_addr(int fd, int pm_family, int
- 					flags |= MPTCP_PM_ADDR_FLAG_BACKUP;
- 				else if (!strcmp(tok, "fullmesh"))
- 					flags |= MPTCP_PM_ADDR_FLAG_FULLMESH;
-+				else if (!strcmp(tok, "unknown"))
-+					flags |= MPTCP_PM_ADDR_FLAG_UNKNOWN;
- 				else
- 					error(1, errno,
- 					      "unknown flag %s", argv[arg]);
-@@ -1029,6 +1033,13 @@ static void print_addr(struct rtattr *at
- 				if (flags)
- 					printf(",");
- 			}
-+
-+			if (flags & MPTCP_PM_ADDR_FLAG_UNKNOWN) {
-+				printf("unknown");
-+				flags &= ~MPTCP_PM_ADDR_FLAG_UNKNOWN;
-+				if (flags)
-+					printf(",");
-+			}
+ 	struct pm_nl_pernet *pernet = genl_info_pm_nl(info);
+-	LIST_HEAD(free_list);
++	struct list_head free_list;
  
- 			/* bump unknown flags, if any */
- 			if (flags)
+ 	spin_lock_bh(&pernet->lock);
+-	list_splice_init(&pernet->local_addr_list, &free_list);
++	free_list = pernet->local_addr_list;
++	INIT_LIST_HEAD_RCU(&pernet->local_addr_list);
+ 	__reset_counters(pernet);
+ 	pernet->next_id = 1;
+ 	bitmap_zero(pernet->id_bitmap, MPTCP_PM_MAX_ADDR_ID + 1);
+ 	spin_unlock_bh(&pernet->lock);
+-	mptcp_nl_remove_addrs_list(sock_net(skb->sk), &free_list);
++
++	if (free_list.next == &pernet->local_addr_list)
++		return 0;
++
+ 	synchronize_rcu();
++
++	/* Adjust the pointers to free_list instead of pernet->local_addr_list */
++	free_list.prev->next = &free_list;
++	free_list.next->prev = &free_list;
++
++	mptcp_nl_remove_addrs_list(sock_net(skb->sk), &free_list);
+ 	__flush_addrs(&free_list);
+ 	return 0;
+ }
 
 
