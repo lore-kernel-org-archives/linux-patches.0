@@ -1,43 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30B1F34F24E;
-	Fri, 13 Feb 2026 13:49:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0134323645D;
+	Fri, 13 Feb 2026 13:50:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770990600; cv=none; b=ow+JVdAE1UVZoNBRd0hva/rCx7zQyQN590K+V+6UOHiHTyg0J9wdAOvyrVw33Fs1dygj5DhMAQ59/RsQ/k66jBGCMr2zNW8QavevM2LvVeWpOQkAmElRqEy2NKQ84zjJpRjr4sUk23VuW8Yzl2xw3y7B8ddQb3oJ732H8/+FUnc=
+	t=1770990606; cv=none; b=m7oWmPe92uCHoWiG0a7BBqOdjyTrgqCS97kCHm61ml5NKD0JA7vlD0ThHCBRegxrw1utSMlzSZ4xCq4tA9pNtxVl0qj4n+YHK03l9QMuPG+YrF4sSdPuf5aubRtPJxOdmFhf0k4E4wdRLHmQhVHCnZzlMgI02+f7Ls/VvEDBXNY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770990600; c=relaxed/simple;
-	bh=cPdbR2DTjcqMhkbIAS0HrXf5mggzKWMfRuFthqH/8u4=;
+	s=arc-20240116; t=1770990606; c=relaxed/simple;
+	bh=oSCvOGIVI/p2pRigBwrFD6KowZ4SOas5UUy+pLHA6yM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rD6RB7G2Us+tEeI8h1YGBAPOW6UM6wjDMYxVBRvg1Lufba07Y7XFwWoihAkzqnmhm3gNDVQCi+xaGlFWM87iUk1J5fI5LWPfPOdlnoIIfTODnatFrWMBmdBtL8Fo+plw4fOnoOaq8fD/4DRLj/DXxMnYR0tJfCFIgMG2EMmfojI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wVEgpeNw; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gM5dzZ0fLFaFN9+CwWORqkoK5z/XhGr0tqUAbcCdwkwsbREIZs8Li0s4mC7tkX2PLNFSMT7vXl34KoGy8PuKMsJ/88rXl9nBN1ch3RNLVHQeDgyxWkUlxuT5CxKmg1hDpe8O/FjD+YxnG3wCWZYiUOyEgg9ax62Y9jdpCbxTdAM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=I0e82ieR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wVEgpeNw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A3E2C116C6;
-	Fri, 13 Feb 2026 13:49:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="I0e82ieR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45BA8C116C6;
+	Fri, 13 Feb 2026 13:50:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770990599;
-	bh=cPdbR2DTjcqMhkbIAS0HrXf5mggzKWMfRuFthqH/8u4=;
+	s=korg; t=1770990605;
+	bh=oSCvOGIVI/p2pRigBwrFD6KowZ4SOas5UUy+pLHA6yM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wVEgpeNwur8Eg8JeZQhB4f10ZPY2RC+z8sOlSNCcWRQV4ToQ2d86xv0+rTEP/rduD
-	 Er9cd051JbxW8p8SP/gFgK1j5pg7hsX63TvfohtBNlcC520pdNuTuZg7x6ulkC3fzP
-	 +NTBuDqwPKzH9U6o1VpVeus2/us7YVNTRJ0yN3MI=
+	b=I0e82ieRhnzQf9m2sPgB4F7LhlFVV0PHcZcKafLcOn8Z6Vl8axmq+u+L6CvmBHNUm
+	 INSjMJQTrHTarAKH7vSMSIRQol9Tm0NO5y/r2KL8laDKeAlo95PeFSUXeYTzaVRa/0
+	 b2+sija241mut1bI3Vd5uKNgD+NcTlCQ3PslM5kM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Steve French <smfrench@gmail.com>,
-	Tom Talpey <tom@talpey.com>,
-	Long Li <longli@microsoft.com>,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	linux-cifs@vger.kernel.org,
-	samba-technical@lists.samba.org,
-	Stefan Metzmacher <metze@samba.org>,
-	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 6.19 19/49] smb: client: port and use the wait_for_credits logic used by server
-Date: Fri, 13 Feb 2026 14:47:38 +0100
-Message-ID: <20260213134709.435029165@linuxfoundation.org>
+	Li Chen <me@linux.beauty>,
+	Jens Axboe <axboe@kernel.dk>
+Subject: [PATCH 6.19 02/49] io_uring: allow io-wq workers to exit when unused
+Date: Fri, 13 Feb 2026 14:47:21 +0100
+Message-ID: <20260213134708.815760245@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260213134708.713126210@linuxfoundation.org>
 References: <20260213134708.713126210@linuxfoundation.org>
@@ -56,125 +50,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Stefan Metzmacher <metze@samba.org>
+From: Li Chen <me@linux.beauty>
 
-commit bb848d205f7ac0141af52a5acb6dd116d9b71177 upstream.
+commit 91214661489467f8452d34edbf257488d85176e4 upstream.
 
-This simplifies the logic and prepares the use of
-smbdirect_send_batch in order to make sure
-all messages in a multi fragment send are grouped
-together.
+io_uring keeps a per-task io-wq around, even when the task no longer has
+any io_uring instances.
 
-We'll add the smbdirect_send_batch processin
-in a later patch.
+If the task previously used io_uring for file I/O, this can leave an
+unrelated iou-wrk-* worker thread behind after the last io_uring
+instance is gone.
 
-Cc: <stable@vger.kernel.org> # 6.18.x
-Cc: Steve French <smfrench@gmail.com>
-Cc: Tom Talpey <tom@talpey.com>
-Cc: Long Li <longli@microsoft.com>
-Cc: Namjae Jeon <linkinjeon@kernel.org>
-Cc: linux-cifs@vger.kernel.org
-Cc: samba-technical@lists.samba.org
-Signed-off-by: Stefan Metzmacher <metze@samba.org>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+When the last io_uring ctx is removed from the task context, mark the
+io-wq exit-on-idle so workers can go away. Clear the flag on subsequent
+io_uring usage.
+
+Signed-off-by: Li Chen <me@linux.beauty>
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/client/smbdirect.c |   70 ++++++++++++++++++++++++++++------------------
- 1 file changed, 43 insertions(+), 27 deletions(-)
+ io_uring/tctx.c |   11 +++++++++++
+ 1 file changed, 11 insertions(+)
 
---- a/fs/smb/client/smbdirect.c
-+++ b/fs/smb/client/smbdirect.c
-@@ -1137,6 +1137,44 @@ static int smbd_post_send(struct smbdire
- 	return rc;
+--- a/io_uring/tctx.c
++++ b/io_uring/tctx.c
+@@ -122,6 +122,14 @@ int __io_uring_add_tctx_node(struct io_r
+ 				return ret;
+ 		}
+ 	}
++
++	/*
++	 * Re-activate io-wq keepalive on any new io_uring usage. The wq may have
++	 * been marked for idle-exit when the task temporarily had no active
++	 * io_uring instances.
++	 */
++	if (tctx->io_wq)
++		io_wq_set_exit_on_idle(tctx->io_wq, false);
+ 	if (!xa_load(&tctx->xa, (unsigned long)ctx)) {
+ 		node = kmalloc(sizeof(*node), GFP_KERNEL);
+ 		if (!node)
+@@ -183,6 +191,9 @@ __cold void io_uring_del_tctx_node(unsig
+ 	if (tctx->last == node->ctx)
+ 		tctx->last = NULL;
+ 	kfree(node);
++
++	if (xa_empty(&tctx->xa) && tctx->io_wq)
++		io_wq_set_exit_on_idle(tctx->io_wq, true);
  }
  
-+static int wait_for_credits(struct smbdirect_socket *sc,
-+			    wait_queue_head_t *waitq, atomic_t *total_credits,
-+			    int needed)
-+{
-+	int ret;
-+
-+	do {
-+		if (atomic_sub_return(needed, total_credits) >= 0)
-+			return 0;
-+
-+		atomic_add(needed, total_credits);
-+		ret = wait_event_interruptible(*waitq,
-+					       atomic_read(total_credits) >= needed ||
-+					       sc->status != SMBDIRECT_SOCKET_CONNECTED);
-+
-+		if (sc->status != SMBDIRECT_SOCKET_CONNECTED)
-+			return -ENOTCONN;
-+		else if (ret < 0)
-+			return ret;
-+	} while (true);
-+}
-+
-+static int wait_for_send_lcredit(struct smbdirect_socket *sc)
-+{
-+	return wait_for_credits(sc,
-+				&sc->send_io.lcredits.wait_queue,
-+				&sc->send_io.lcredits.count,
-+				1);
-+}
-+
-+static int wait_for_send_credits(struct smbdirect_socket *sc)
-+{
-+	return wait_for_credits(sc,
-+				&sc->send_io.credits.wait_queue,
-+				&sc->send_io.credits.count,
-+				1);
-+}
-+
- static int smbd_post_send_iter(struct smbdirect_socket *sc,
- 			       struct iov_iter *iter,
- 			       int *_remaining_data_length)
-@@ -1149,41 +1187,19 @@ static int smbd_post_send_iter(struct sm
- 	struct smbdirect_data_transfer *packet;
- 	int new_credits = 0;
- 
--wait_lcredit:
--	/* Wait for local send credits */
--	rc = wait_event_interruptible(sc->send_io.lcredits.wait_queue,
--		atomic_read(&sc->send_io.lcredits.count) > 0 ||
--		sc->status != SMBDIRECT_SOCKET_CONNECTED);
--	if (rc)
--		goto err_wait_lcredit;
--
--	if (sc->status != SMBDIRECT_SOCKET_CONNECTED) {
--		log_outgoing(ERR, "disconnected not sending on wait_credit\n");
-+	rc = wait_for_send_lcredit(sc);
-+	if (rc) {
-+		log_outgoing(ERR, "disconnected not sending on wait_lcredit\n");
- 		rc = -EAGAIN;
- 		goto err_wait_lcredit;
- 	}
--	if (unlikely(atomic_dec_return(&sc->send_io.lcredits.count) < 0)) {
--		atomic_inc(&sc->send_io.lcredits.count);
--		goto wait_lcredit;
--	}
--
--wait_credit:
--	/* Wait for send credits. A SMBD packet needs one credit */
--	rc = wait_event_interruptible(sc->send_io.credits.wait_queue,
--		atomic_read(&sc->send_io.credits.count) > 0 ||
--		sc->status != SMBDIRECT_SOCKET_CONNECTED);
--	if (rc)
--		goto err_wait_credit;
- 
--	if (sc->status != SMBDIRECT_SOCKET_CONNECTED) {
-+	rc = wait_for_send_credits(sc);
-+	if (rc) {
- 		log_outgoing(ERR, "disconnected not sending on wait_credit\n");
- 		rc = -EAGAIN;
- 		goto err_wait_credit;
- 	}
--	if (unlikely(atomic_dec_return(&sc->send_io.credits.count) < 0)) {
--		atomic_inc(&sc->send_io.credits.count);
--		goto wait_credit;
--	}
- 
- 	request = mempool_alloc(sc->send_io.mem.pool, GFP_KERNEL);
- 	if (!request) {
+ __cold void io_uring_clean_tctx(struct io_uring_task *tctx)
 
 
