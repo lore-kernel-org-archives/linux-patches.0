@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C5601684BE;
-	Fri, 13 Feb 2026 13:57:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77C5F1684BE;
+	Fri, 13 Feb 2026 13:57:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770991044; cv=none; b=sgMRH1SJL4+0EqapcGisKsM9H7EpY/x3sqHxUyT2nuN5t6fnjziP43knjRfH1A9V+VZ3AHN2uHk8bwbLdfvyJ+M3oR036ZZu5puy1lufjdycd0aa0B7m9rP/bhV1b7b/PEBXqcwmG61pydrY29UeBGsUdoBDZ4FUCIprotPi0Vo=
+	t=1770991047; cv=none; b=iqbU1On66xenPitRIksv4i65oBHhZOHUAnD5pOgPILCrMirTlIVZ12JB2/3CfsNxrHUufvxfs5QOzxJouHsk8Ssa1n2NY0G2BXhiyzNoo5Wdso0tcssS8Ws2l/Nujd/h9qYKEh2MnV6dAi4bIZO12IqJDwEq9dpSkBeTrL1JJCg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770991044; c=relaxed/simple;
-	bh=F/wH1B1CESFls62gnoqSC38o3M9OCFj1Xt0Wmq5ozvk=;
+	s=arc-20240116; t=1770991047; c=relaxed/simple;
+	bh=3ergQln+7S2NtjhGVnGS0dmu0F3pdbros+dy49ecO2Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RJ/qqfkii0PZuTXctsBabxTaaEmXA3bQgBRlJE8kfLCskaTx37TH9Y9EIFgMyBWlMzSJR0hr8lArS8fRESk7cnTXx6QS+aU+RoDqUG5lVWWl70wb1iYk1zBhHgejoVKO22yqEDhqsIdCcDa1tf1wMMW0bpLguPxeOLdx3xDrmnA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=u+uAzZT6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LYnl1AkukxkCQgEEWITkZmhe5wGPSheDAET0YNrk43mjJxPFVKz9FbNZqGczslH98IBpAywftkZm3k/i6HKOpirFhCoQYbm3JbTTDYzhO05nEueliNuGVEokRdgocFrHCQIgoHMAefPUa18bXnwKUm/ZZgJpb7eCWP8xIS10m/U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xc3FKti2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="u+uAzZT6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B0F2BC116C6;
-	Fri, 13 Feb 2026 13:57:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xc3FKti2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DAB9FC19423;
+	Fri, 13 Feb 2026 13:57:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770991044;
-	bh=F/wH1B1CESFls62gnoqSC38o3M9OCFj1Xt0Wmq5ozvk=;
+	s=korg; t=1770991047;
+	bh=3ergQln+7S2NtjhGVnGS0dmu0F3pdbros+dy49ecO2Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=u+uAzZT6yDdbGAFfYxhyylmV5MDXK2xfjfqO/VF9YqjI8t+e+R/zi2jwTRC4IVDT/
-	 Sgy7Tdn6LYXoxcDm5W/oENwY81pdDRZsRI+CAlkAXZEAiZl9HL+DHKjvNdYI5REMB/
-	 /R3OTOC3X15QC2vbJiyjxg2InZyXrcABzfviaSaU=
+	b=xc3FKti2QEGlk2ADcPgLK8gV5nlAOpniMT91ygs++qf2+NI6vbtUTPM4BjcTvlvjt
+	 hXjd9e0FpEF9/HuR+gZwMtYjvz/vpmR9ukuw+RIjChrYayv1u8uxj8DQEGPN3SYb5m
+	 3q4S1XCMCY9/BbZG3OOO8BI5LyOSw5HnvxUVFeWQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	syzbot+5498a510ff9de39d37da@syzkaller.appspotmail.com,
-	Eulgyu Kim <eulgyukim@snu.ac.kr>,
-	Mat Martineau <martineau@kernel.org>,
-	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.6 24/25] mptcp: fix race in mptcp_pm_nl_flush_addrs_doit()
-Date: Fri, 13 Feb 2026 14:48:50 +0100
-Message-ID: <20260213134704.760568317@linuxfoundation.org>
+	Danilo Krummrich <dakr@kernel.org>,
+	"Rafael J. Wysocki (Intel)" <rafael@kernel.org>,
+	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+Subject: [PATCH 6.6 25/25] gpio: omap: do not register driver in probe()
+Date: Fri, 13 Feb 2026 14:48:51 +0100
+Message-ID: <20260213134704.795896468@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260213134703.882698935@linuxfoundation.org>
 References: <20260213134703.882698935@linuxfoundation.org>
@@ -54,79 +51,85 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Danilo Krummrich <dakr@kernel.org>
 
-commit e2a9eeb69f7d4ca4cf4c70463af77664fdb6ab1d upstream.
+commit 730e5ebff40c852e3ea57b71bf02a4b89c69435f upstream.
 
-syzbot and Eulgyu Kim reported crashes in mptcp_pm_nl_get_local_id()
-and/or mptcp_pm_nl_is_backup()
+Commit 11a78b794496 ("ARM: OMAP: MPUIO wake updates") registers the
+omap_mpuio_driver from omap_mpuio_init(), which is called from
+omap_gpio_probe().
 
-Root cause is list_splice_init() in mptcp_pm_nl_flush_addrs_doit()
-which is not RCU ready.
+However, it neither makes sense to register drivers from probe()
+callbacks of other drivers, nor does the driver core allow registering
+drivers with a device lock already being held.
 
-list_splice_init_rcu() can not be called here while holding pernet->lock
-spinlock.
+The latter was revealed by commit dc23806a7c47 ("driver core: enforce
+device_lock for driver_match_device()") leading to a potential deadlock
+condition described in [1].
 
-Many thanks to Eulgyu Kim for providing a repro and testing our patches.
+Additionally, the omap_mpuio_driver is never unregistered from the
+driver core, even if the module is unloaded.
 
-Fixes: 141694df6573 ("mptcp: remove address when netlink flushes addrs")
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Reported-by: syzbot+5498a510ff9de39d37da@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/all/6970a46d.a00a0220.3ad28e.5cf0.GAE@google.com/T/
-Reported-by: Eulgyu Kim <eulgyukim@snu.ac.kr>
-Closes: https://github.com/multipath-tcp/mptcp_net-next/issues/611
-Reviewed-by: Mat Martineau <martineau@kernel.org>
-Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Link: https://patch.msgid.link/20260124-net-mptcp-race_nl_flush_addrs-v3-1-b2dc1b613e9d@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-[ Conflicts because the code has been moved from pm_netlink.c to
-  pm_kernel.c later on in commit 8617e85e04bd ("mptcp: pm: split
-  in-kernel PM specific code"). The same modifications can be applied
-  in pm_netlink.c with one exception, because 'pernet->local_addr_list'
-  has been renamed to 'pernet->endp_list' in commit 35e71e43a56d
-  ("mptcp: pm: in-kernel: rename 'local_addr_list' to 'endp_list'"). The
-  previous name is then still being used in this version.
-  Also, another conflict is caused by commit 7bcf4d8022f9 ("mptcp: pm:
-  rename helpers linked to 'flush'") which is not in this version:
-  mptcp_nl_remove_addrs_list() has been renamed to
-  mptcp_nl_flush_addrs_list(). The previous name has then been kept. ]
-Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Hence, register the omap_mpuio_driver from the module initcall and
+unregister it in module_exit().
+
+Link: https://lore.kernel.org/lkml/DFU7CEPUSG9A.1KKGVW4HIPMSH@kernel.org/ [1]
+Fixes: dc23806a7c47 ("driver core: enforce device_lock for driver_match_device()")
+Fixes: 11a78b794496 ("ARM: OMAP: MPUIO wake updates")
+Reviewed-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Danilo Krummrich <dakr@kernel.org>
+Reviewed-by: Rafael J. Wysocki (Intel) <rafael@kernel.org>
+Link: https://patch.msgid.link/20260127201725.35883-1-dakr@kernel.org
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/mptcp/pm_netlink.c |   16 +++++++++++++---
- 1 file changed, 13 insertions(+), 3 deletions(-)
+ drivers/gpio/gpio-omap.c |   22 ++++++++++++++++++----
+ 1 file changed, 18 insertions(+), 4 deletions(-)
 
---- a/net/mptcp/pm_netlink.c
-+++ b/net/mptcp/pm_netlink.c
-@@ -1859,16 +1859,26 @@ static void __reset_counters(struct pm_n
- static int mptcp_nl_cmd_flush_addrs(struct sk_buff *skb, struct genl_info *info)
- {
- 	struct pm_nl_pernet *pernet = genl_info_pm_nl(info);
--	LIST_HEAD(free_list);
-+	struct list_head free_list;
+--- a/drivers/gpio/gpio-omap.c
++++ b/drivers/gpio/gpio-omap.c
+@@ -799,10 +799,13 @@ static struct platform_device omap_mpuio
  
- 	spin_lock_bh(&pernet->lock);
--	list_splice_init(&pernet->local_addr_list, &free_list);
-+	free_list = pernet->local_addr_list;
-+	INIT_LIST_HEAD_RCU(&pernet->local_addr_list);
- 	__reset_counters(pernet);
- 	pernet->next_id = 1;
- 	bitmap_zero(pernet->id_bitmap, MPTCP_PM_MAX_ADDR_ID + 1);
- 	spin_unlock_bh(&pernet->lock);
--	mptcp_nl_remove_addrs_list(sock_net(skb->sk), &free_list);
-+
-+	if (free_list.next == &pernet->local_addr_list)
-+		return 0;
-+
- 	synchronize_rcu();
-+
-+	/* Adjust the pointers to free_list instead of pernet->local_addr_list */
-+	free_list.prev->next = &free_list;
-+	free_list.next->prev = &free_list;
-+
-+	mptcp_nl_remove_addrs_list(sock_net(skb->sk), &free_list);
- 	__flush_addrs(&free_list);
- 	return 0;
+ static inline void omap_mpuio_init(struct gpio_bank *bank)
+ {
+-	platform_set_drvdata(&omap_mpuio_device, bank);
++	static bool registered;
+ 
+-	if (platform_driver_register(&omap_mpuio_driver) == 0)
+-		(void) platform_device_register(&omap_mpuio_device);
++	platform_set_drvdata(&omap_mpuio_device, bank);
++	if (!registered) {
++		(void)platform_device_register(&omap_mpuio_device);
++		registered = true;
++	}
  }
+ 
+ /*---------------------------------------------------------------------*/
+@@ -1575,13 +1578,24 @@ static struct platform_driver omap_gpio_
+  */
+ static int __init omap_gpio_drv_reg(void)
+ {
+-	return platform_driver_register(&omap_gpio_driver);
++	int ret;
++
++	ret = platform_driver_register(&omap_mpuio_driver);
++	if (ret)
++		return ret;
++
++	ret = platform_driver_register(&omap_gpio_driver);
++	if (ret)
++		platform_driver_unregister(&omap_mpuio_driver);
++
++	return ret;
+ }
+ postcore_initcall(omap_gpio_drv_reg);
+ 
+ static void __exit omap_gpio_exit(void)
+ {
+ 	platform_driver_unregister(&omap_gpio_driver);
++	platform_driver_unregister(&omap_mpuio_driver);
+ }
+ module_exit(omap_gpio_exit);
+ 
 
 
