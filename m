@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5477360723;
-	Fri, 13 Feb 2026 13:56:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46E9C1684BE;
+	Fri, 13 Feb 2026 13:56:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770991012; cv=none; b=BXN7+qx9qHH/yuM5Pi/rbWFQAiAj/B5vQJcUNtDAIqM4KxL9l4lmMiry8BwIT3DwNH6bhyt5XNOnGJAanfP/PXCriRagAh9IWaxjuouXGCc3H80OE/wgkd7oWnnVY7mA3fpNKlHDT/FfGkWDmV7A+iiw+2bDCUSO0Fkdn1nCznA=
+	t=1770991017; cv=none; b=LNIMuUkgj6KGA7QrXapiLKvsF+xL5ERScpaHtnzdj1PxciNTyPMamn2oUrOHvhtkSc54FNhFN3+ZOuTlgc1kvve8d2/864XXhPbKDgI6HDZ7Nyz39u1bug00Uj1TJ1bDVb8fbNPdzsIWkGgT/+azmChEckIuTNJcUWS6X6JNGYs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770991012; c=relaxed/simple;
-	bh=9QtzeyeUUjiQ1nZm7J40BSyPPZgHvhtnM/3wIg1q+vk=;
+	s=arc-20240116; t=1770991017; c=relaxed/simple;
+	bh=tY1ri1hvf/NUzuEql13jtPrqU7NfnscERObCqoHhIkI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=moTJlUUA/ShfwfKwy7gfsTt4WGGp+DHab9xHaDqMQDVeC86sVzLUt11tn3X1NlSysdBzlFS7l0Ng+REjIshIFoQFutgmMuEb1f7uyl7lcgEW40EVK5HinhmeZDopiTrg3r/uo2PjZGI+lbUi3s+J5WaZkmh2nv+MLxbge6sH9OA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Sg4wCvR1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=l5GEJGtxdx0twoVDXgCPb8OfAZGo4S2ca12X5Eck0eD3ohwNN7BCEqYjHyCSfiTbDH4mSdMPD7LEoEi+38IuwXqS+Q8/h+hu8ohFDYK9Xofe/14yX7j1T2wKwhpqdTrnnHaX1ETtbnDYFTKaiuX2X/NLvXq4UFZMYkekDPPVlEw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=a09lBGHq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Sg4wCvR1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 14577C116C6;
-	Fri, 13 Feb 2026 13:56:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="a09lBGHq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C400C16AAE;
+	Fri, 13 Feb 2026 13:56:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770991012;
-	bh=9QtzeyeUUjiQ1nZm7J40BSyPPZgHvhtnM/3wIg1q+vk=;
+	s=korg; t=1770991017;
+	bh=tY1ri1hvf/NUzuEql13jtPrqU7NfnscERObCqoHhIkI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Sg4wCvR1FY2gpgpqi0rkVhhEdZ/cCShAQ3oeLkxillwsk9UnDGp8ePeiyUN0Nkmli
-	 +wbj18wsl841kmWF7YarV3cbkwDrdXvSl9CeYz6Ltuc16lbubcSQItn60sKHW4mtk7
-	 1HSMEYfzSQ0dj0XlZs8SshIBUfdBnYIqEOsJoZJc=
+	b=a09lBGHqubZDUV7XqoLc/nmSH03xot1BSfZ0MCR2iymw549lCiK0O/wW0aDSjUwnw
+	 TGaK/nEWFnzLWn/kPQP/Jf4DKUfIdHkIW8PoVVMcfoASBFkC8eGW6BwCo8U6ZONxbR
+	 j5Z5lZC9ReXV0jVo+NsGygj5GRXSbgFeLYj+itsM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bibo Mao <maobibo@loongson.cn>,
-	Jason Wang <jasowang@redhat.com>,
-	"Michael S. Tsirkin" <mst@redhat.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>
-Subject: [PATCH 6.6 08/25] crypto: virtio - Add spinlock protection with virtqueue notification
-Date: Fri, 13 Feb 2026 14:48:34 +0100
-Message-ID: <20260213134704.189843256@linuxfoundation.org>
+	=?UTF-8?q?Marek=20Beh=C3=BAn?= <kabel@kernel.org>,
+	Maxime Chevallier <maxime.chevallier@bootlin.com>,
+	"Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.6 17/25] net: sfp: Fix quirk for Ubiquiti U-Fiber Instant SFP module
+Date: Fri, 13 Feb 2026 14:48:43 +0100
+Message-ID: <20260213134704.509590338@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260213134703.882698935@linuxfoundation.org>
 References: <20260213134703.882698935@linuxfoundation.org>
@@ -46,61 +46,54 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Bibo Mao <maobibo@loongson.cn>
+From: Marek Behún <kabel@kernel.org>
 
-commit b505047ffc8057555900d2d3a005d033e6967382 upstream.
+commit adcbadfd8e05d3558c9cfaa783f17c645181165f upstream.
 
-When VM boots with one virtio-crypto PCI device and builtin backend,
-run openssl benchmark command with multiple processes, such as
-  openssl speed -evp aes-128-cbc -engine afalg  -seconds 10 -multi 32
+Commit fd580c9830316eda ("net: sfp: augment SFP parsing with
+phy_interface_t bitmap") did not add augumentation for the interface
+bitmap in the quirk for Ubiquiti U-Fiber Instant.
 
-openssl processes will hangup and there is error reported like this:
- virtio_crypto virtio0: dataq.0:id 3 is not a head!
+The subsequent commit f81fa96d8a6c7a77 ("net: phylink: use
+phy_interface_t bitmaps for optical modules") then changed phylink code
+for selection of SFP interface: instead of using link mode bitmap, the
+interface bitmap is used, and the fastest interface mode supported by
+both SFP module and MAC is chosen.
 
-It seems that the data virtqueue need protection when it is handled
-for virtio done notification. If the spinlock protection is added
-in virtcrypto_done_task(), openssl benchmark with multiple processes
-works well.
+Since the interface bitmap contains also modes faster than 1000base-x,
+this caused a regression wherein this module stopped working
+out-of-the-box.
 
-Fixes: fed93fb62e05 ("crypto: virtio - Handle dataq logic with tasklet")
-Cc: stable@vger.kernel.org
-Signed-off-by: Bibo Mao <maobibo@loongson.cn>
-Acked-by: Jason Wang <jasowang@redhat.com>
-Acked-by: Michael S. Tsirkin <mst@redhat.com>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Fix this.
+
+Fixes: fd580c9830316eda ("net: sfp: augment SFP parsing with phy_interface_t bitmap")
+Signed-off-by: Marek Behún <kabel@kernel.org>
+Reviewed-by: Maxime Chevallier <maxime.chevallier@bootlin.com>
+Reviewed-by: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
+Link: https://patch.msgid.link/20260129082227.17443-1-kabel@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/crypto/virtio/virtio_crypto_core.c |    5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/net/phy/sfp.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/crypto/virtio/virtio_crypto_core.c
-+++ b/drivers/crypto/virtio/virtio_crypto_core.c
-@@ -77,15 +77,20 @@ static void virtcrypto_done_task(unsigne
- 	struct data_queue *data_vq = (struct data_queue *)data;
- 	struct virtqueue *vq = data_vq->vq;
- 	struct virtio_crypto_request *vc_req;
-+	unsigned long flags;
- 	unsigned int len;
- 
-+	spin_lock_irqsave(&data_vq->lock, flags);
- 	do {
- 		virtqueue_disable_cb(vq);
- 		while ((vc_req = virtqueue_get_buf(vq, &len)) != NULL) {
-+			spin_unlock_irqrestore(&data_vq->lock, flags);
- 			if (vc_req->alg_cb)
- 				vc_req->alg_cb(vc_req, len);
-+			spin_lock_irqsave(&data_vq->lock, flags);
- 		}
- 	} while (!virtqueue_enable_cb(vq));
-+	spin_unlock_irqrestore(&data_vq->lock, flags);
+--- a/drivers/net/phy/sfp.c
++++ b/drivers/net/phy/sfp.c
+@@ -431,6 +431,8 @@ static void sfp_quirk_ubnt_uf_instant(co
+ 	 */
+ 	linkmode_zero(modes);
+ 	linkmode_set_bit(ETHTOOL_LINK_MODE_1000baseX_Full_BIT, modes);
++	phy_interface_zero(interfaces);
++	__set_bit(PHY_INTERFACE_MODE_1000BASEX, interfaces);
  }
  
- static void virtcrypto_dataq_callback(struct virtqueue *vq)
+ #define SFP_QUIRK(_v, _p, _m, _f) \
 
 
