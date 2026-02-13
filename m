@@ -1,43 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0B8D35CBD8;
-	Fri, 13 Feb 2026 13:53:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22274241665;
+	Fri, 13 Feb 2026 13:53:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770990794; cv=none; b=HCFoAWsmIaqvmU/EQkYUqxP9NOXIOJF49IGER8z2NoRghFwutILjLDPU8bKiXclRkRnvPdaxpeafeVKRq9ZTMIWNK4NdOh3ouWTiXPb0W9bEFdHyh7B7wQcm1X/XSsbl4GGIj+fpsH15VQ9Ndy4lF68qpmklvI3XxCdCL9+QIME=
+	t=1770990798; cv=none; b=aLlgrKdBbBzHRzrDMU73tnl+M2PJwNNKhQj3l48ZpgTXXK/i9nVVcswt1tybe7KnkC/bSEobtxLHO1rbKAdrBbRTSsRccDkuXSOVIVE7o7tVSO8O0gSg0llEZhV9ZDBDiCyoNpBiIB4kheN0ts9HvnPVgDVzpq+b2L4ip1TRxEE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770990794; c=relaxed/simple;
-	bh=vhIKdRitTp2/uDmOXA3pm7uVlowRzSAeNutU9SD1iCw=;
+	s=arc-20240116; t=1770990798; c=relaxed/simple;
+	bh=l9psOVHA9LiSGZ2UQR2+6evKI4qhM04xUxBJswlEYV4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZiCulFSh7TBqoWtcdvwDvglzZpjhj4v3ajV0177Puf+JIRP4BMnCdfnWQNXWllfQjVrCpfyF6Pq8INIYKLjm4i8fbVYTH+IYNjRgdHZB6GOpBsS4BfrsUu286a/8qZrYfh3cO7aGJBEfgW/hC7/mOowqPl6uNR0DOzGUcixbFk4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XRzOkOrd; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mIS6XJ7f7tkUAppmkYldtV6Z4M0erqoAIQzrLx2+AUfFwsH4bRu2973WwQ41dtCTZdmT7IkSwfDwOCiyx+kFy6c18ObiPFyWUbQ/IxuZ6dk75U3CMK5I1FShIi9FD4IzUlgD9A/+4NzAIy7r5wyay+mDXmkiklWG8GQd2uhbuBY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mqWET0eu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XRzOkOrd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F17D3C116C6;
-	Fri, 13 Feb 2026 13:53:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mqWET0eu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 886CEC116C6;
+	Fri, 13 Feb 2026 13:53:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770990794;
-	bh=vhIKdRitTp2/uDmOXA3pm7uVlowRzSAeNutU9SD1iCw=;
+	s=korg; t=1770990798;
+	bh=l9psOVHA9LiSGZ2UQR2+6evKI4qhM04xUxBJswlEYV4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XRzOkOrdr4iyoSWaKmtRr00MuZwFuAqtU6mIxdJIcisgFB9ELcrTx2Tl1THhdLsXr
-	 +tY3fh6vNCxHCA9N0FbDYfBF9tQ8mK189B0fmt74dE8U0gdZmYJKCGqFS72JoYKQ8v
-	 uvQGZIySxkvtD2L1wORg3GQW7KVnkbEqYwZpfrj0=
+	b=mqWET0euH36jSVSs3UZUOxjXUjB59u7zHplyWbYPcDBdgx+yZQRpTIJGNpiTZ/Kkt
+	 DuEuygDFcGjNXFcO+YmG1/uSP3Kut+PC9397EnBD07rH1dG21PcnknAnFAV/BuSP0j
+	 GgLozAHeST3FgIFvlFX+lZMw4Ku2f4N5YEAG8h/A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Steve French <smfrench@gmail.com>,
-	Tom Talpey <tom@talpey.com>,
-	Long Li <longli@microsoft.com>,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	linux-cifs@vger.kernel.org,
-	samba-technical@lists.samba.org,
-	Stefan Metzmacher <metze@samba.org>,
-	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 6.18 26/49] smb: client: let send_done handle a completion without IB_SEND_SIGNALED
-Date: Fri, 13 Feb 2026 14:48:10 +0100
-Message-ID: <20260213134709.844563012@linuxfoundation.org>
+	Qiu-ji Chen <chenqiuji666@gmail.com>,
+	Gui-Dong Han <hanguidong02@gmail.com>,
+	Danilo Krummrich <dakr@kernel.org>,
+	"Rafael J. Wysocki (Intel)" <rafael@kernel.org>
+Subject: [PATCH 6.18 27/49] driver core: enforce device_lock for driver_match_device()
+Date: Fri, 13 Feb 2026 14:48:11 +0100
+Message-ID: <20260213134709.880566870@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260213134708.885500854@linuxfoundation.org>
 References: <20260213134708.885500854@linuxfoundation.org>
@@ -56,78 +52,88 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Stefan Metzmacher <metze@samba.org>
+From: Gui-Dong Han <hanguidong02@gmail.com>
 
-commit cf74fcdc43b322b6188a0750b5ee79e38be6d078 upstream.
+commit dc23806a7c47ec5f1293aba407fb69519f976ee0 upstream.
 
-With smbdirect_send_batch processing we likely have requests without
-IB_SEND_SIGNALED, which will be destroyed in the final request
-that has IB_SEND_SIGNALED set.
+Currently, driver_match_device() is called from three sites. One site
+(__device_attach_driver) holds device_lock(dev), but the other two
+(bind_store and __driver_attach) do not. This inconsistency means that
+bus match() callbacks are not guaranteed to be called with the lock
+held.
 
-If the connection is broken all requests are signaled
-even without explicit IB_SEND_SIGNALED.
+Fix this by introducing driver_match_device_locked(), which guarantees
+holding the device lock using a scoped guard. Replace the unlocked calls
+in bind_store() and __driver_attach() with this new helper. Also add a
+lock assertion to driver_match_device() to enforce this guarantee.
 
-Cc: <stable@vger.kernel.org> # 6.18.x
-Cc: Steve French <smfrench@gmail.com>
-Cc: Tom Talpey <tom@talpey.com>
-Cc: Long Li <longli@microsoft.com>
-Cc: Namjae Jeon <linkinjeon@kernel.org>
-Cc: linux-cifs@vger.kernel.org
-Cc: samba-technical@lists.samba.org
-Signed-off-by: Stefan Metzmacher <metze@samba.org>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+This consistency also fixes a known race condition. The driver_override
+implementation relies on the device_lock, so the missing lock led to the
+use-after-free (UAF) reported in Bugzilla for buses using this field.
+
+Stress testing the two newly locked paths for 24 hours with
+CONFIG_PROVE_LOCKING and CONFIG_LOCKDEP enabled showed no UAF recurrence
+and no lockdep warnings.
+
+Cc: stable@vger.kernel.org
+Closes: https://bugzilla.kernel.org/show_bug.cgi?id=220789
+Suggested-by: Qiu-ji Chen <chenqiuji666@gmail.com>
+Signed-off-by: Gui-Dong Han <hanguidong02@gmail.com>
+Fixes: 49b420a13ff9 ("driver core: check bus->match without holding device lock")
+Reviewed-by: Danilo Krummrich <dakr@kernel.org>
+Reviewed-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Reviewed-by: Rafael J. Wysocki (Intel) <rafael@kernel.org>
+Link: https://patch.msgid.link/20260113162843.12712-1-hanguidong02@gmail.com
+Signed-off-by: Danilo Krummrich <dakr@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/client/smbdirect.c | 27 +++++++++++++++++++++++++++
- 1 file changed, 27 insertions(+)
+ drivers/base/base.h |    9 +++++++++
+ drivers/base/bus.c  |    2 +-
+ drivers/base/dd.c   |    2 +-
+ 3 files changed, 11 insertions(+), 2 deletions(-)
 
-diff --git a/fs/smb/client/smbdirect.c b/fs/smb/client/smbdirect.c
-index 88fefb901c27..01d55bcc6d0f 100644
---- a/fs/smb/client/smbdirect.c
-+++ b/fs/smb/client/smbdirect.c
-@@ -554,6 +554,32 @@ static void send_done(struct ib_cq *cq, struct ib_wc *wc)
- 	log_rdma_send(INFO, "smbdirect_send_io 0x%p completed wc->status=%s\n",
- 		request, ib_wc_status_msg(wc->status));
+--- a/drivers/base/base.h
++++ b/drivers/base/base.h
+@@ -166,9 +166,18 @@ void device_set_deferred_probe_reason(co
+ static inline int driver_match_device(const struct device_driver *drv,
+ 				      struct device *dev)
+ {
++	device_lock_assert(dev);
++
+ 	return drv->bus->match ? drv->bus->match(dev, drv) : 1;
+ }
  
-+	if (unlikely(!(request->wr.send_flags & IB_SEND_SIGNALED))) {
-+		/*
-+		 * This happens when smbdirect_send_io is a sibling
-+		 * before the final message, it is signaled on
-+		 * error anyway, so we need to skip
-+		 * smbdirect_connection_free_send_io here,
-+		 * otherwise is will destroy the memory
-+		 * of the siblings too, which will cause
-+		 * use after free problems for the others
-+		 * triggered from ib_drain_qp().
-+		 */
-+		if (wc->status != IB_WC_SUCCESS)
-+			goto skip_free;
++static inline int driver_match_device_locked(const struct device_driver *drv,
++					     struct device *dev)
++{
++	guard(device)(dev);
++	return driver_match_device(drv, dev);
++}
 +
-+		/*
-+		 * This should not happen!
-+		 * But we better just close the
-+		 * connection...
-+		 */
-+		log_rdma_send(ERR,
-+			"unexpected send completion wc->status=%s (%d) wc->opcode=%d\n",
-+			ib_wc_status_msg(wc->status), wc->status, wc->opcode);
-+		smbd_disconnect_rdma_connection(sc);
-+		return;
-+	}
-+
- 	/*
- 	 * Free possible siblings and then the main send_io
+ static inline void dev_sync_state(struct device *dev)
+ {
+ 	if (dev->bus->sync_state)
+--- a/drivers/base/bus.c
++++ b/drivers/base/bus.c
+@@ -263,7 +263,7 @@ static ssize_t bind_store(struct device_
+ 	int err = -ENODEV;
+ 
+ 	dev = bus_find_device_by_name(bus, NULL, buf);
+-	if (dev && driver_match_device(drv, dev)) {
++	if (dev && driver_match_device_locked(drv, dev)) {
+ 		err = device_driver_attach(drv, dev);
+ 		if (!err) {
+ 			/* success */
+--- a/drivers/base/dd.c
++++ b/drivers/base/dd.c
+@@ -1170,7 +1170,7 @@ static int __driver_attach(struct device
+ 	 * is an error.
  	 */
-@@ -567,6 +593,7 @@ static void send_done(struct ib_cq *cq, struct ib_wc *wc)
- 	lcredits += 1;
  
- 	if (wc->status != IB_WC_SUCCESS || wc->opcode != IB_WC_SEND) {
-+skip_free:
- 		if (wc->status != IB_WC_WR_FLUSH_ERR)
- 			log_rdma_send(ERR, "wc->status=%s wc->opcode=%d\n",
- 				ib_wc_status_msg(wc->status), wc->opcode);
--- 
-2.53.0
-
+-	ret = driver_match_device(drv, dev);
++	ret = driver_match_device_locked(drv, dev);
+ 	if (ret == 0) {
+ 		/* no match */
+ 		return 0;
 
 
