@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0FF6241665;
-	Fri, 13 Feb 2026 13:54:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7AB7954723;
+	Fri, 13 Feb 2026 13:54:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770990848; cv=none; b=aGr6YLzdDOz5WqvjYEPpD7XDO+cuFqtcYANU/dNp+jB4JKRxxEumClH5bWNksTn4NB+EstIrsqMEtZuUHfV1wJ5ANqLf/PkRxHz8lgdTg1D13rBwxt1wPfZROU/T1kL2ra0D4rRoFJJr2MmXT6W+nNS1EHNdLZkBbCHMFNnoRN4=
+	t=1770990851; cv=none; b=DBGTZxuEkXiCfiipSibLG2Pgl0QYAovJ+cbNBtfMndpiI6seghuD25qeH2JPFM+fxLMyoyXzxaY3Xbi2VlcOWfMniVNtiMbZw4yJhI7YqBg9sKOoyURfd9C2BDONhuqhi29tK0bHrursoo54Nx22WXR5Ciky2051XwBPDWlqGTg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770990848; c=relaxed/simple;
-	bh=1bI950nj8yMLdXqzAL9/onlWZwG1UsaodzYo1LqufLE=;
+	s=arc-20240116; t=1770990851; c=relaxed/simple;
+	bh=HPvI2NOyD9ft2wxbxYQeGVRaTYqXPC7azW7FiRcxM64=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PnsS8TlE20Ja0cQ47xZhQ32rJ1F1GfLBv5+aolDv9nMH7K83v/BCHdNZO1QjyqOjHVZOe2xxRS8x4nD95aAU4Jk5brMT5TsZUE1JLDDbE8PU8qzg4u/Ndj/cEX06z8d3TRRLHnDhzbkdNabGQ9Hj/JCaAJBkYB8p+Eea1lKlpB0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0BeWW1OB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=byKQpNLIZppsr8zqdIfYnLWYEjiDI4tWem0ZE0Uuzoz6AAASI4oFiwg3HYDroh8OJeeZjI0Jdcw5GiXGQN+L+FhRQ8iSfu4iR67OY8YRSEG5OsMyGbGaGoYvvkv3U0UjHlxKa1+aDKLdcT2/irrZTWmRFwb/YLyTbcIM+fiXE68=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VjA93csp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0BeWW1OB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 812F3C116C6;
-	Fri, 13 Feb 2026 13:54:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VjA93csp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C9259C116C6;
+	Fri, 13 Feb 2026 13:54:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770990847;
-	bh=1bI950nj8yMLdXqzAL9/onlWZwG1UsaodzYo1LqufLE=;
+	s=korg; t=1770990851;
+	bh=HPvI2NOyD9ft2wxbxYQeGVRaTYqXPC7azW7FiRcxM64=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0BeWW1OBE763ZHi3f98wO5Fj1G3Ubu81pUhdbAZcWragt6pRootLKlTRhMtjXDmjH
-	 4F5WXykZdWvYa/aGmDogB+W/To4Qf8YAs6cfWizynS/Vrci70IKMCAg9qSQ3zmw3Py
-	 du1ObAeZ+2dnIkL0y+wDUrVfO6Hhb8cjzycnU2H0=
+	b=VjA93cspsuG95qzgZ9IqbHVfOTA8smkkHdaFgKKskFWS9Kx6OAxfBELmhtTM7EG1A
+	 G3weacMAAlmY8HL1eaK9IlGDgm29yhZgRXrKeU7opisBWkezxliLT/kdjgZn93pkJK
+	 0hY8DVuN0KgsVJHhrxuJ17k0VpsJaLH9aZ0G9TMc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+7eedce5eb281acd832f0@syzkaller.appspotmail.com,
-	Edward Adam Davis <eadavis@qq.com>,
-	Ryusuke Konishi <konishi.ryusuke@gmail.com>,
-	Viacheslav Dubeyko <slava@dubeyko.com>
-Subject: [PATCH 6.18 35/49] nilfs2: Fix potential block overflow that cause system hang
-Date: Fri, 13 Feb 2026 14:48:19 +0100
-Message-ID: <20260213134710.160871395@linuxfoundation.org>
+	stable@kernel.org,
+	Chao Yu <chao@kernel.org>,
+	Gao Xiang <hsiangkao@linux.alibaba.com>
+Subject: [PATCH 6.18 44/49] erofs: fix UAF issue for file-backed mounts w/ directio option
+Date: Fri, 13 Feb 2026 14:48:28 +0100
+Message-ID: <20260213134710.476983411@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260213134708.885500854@linuxfoundation.org>
 References: <20260213134708.885500854@linuxfoundation.org>
@@ -52,72 +51,101 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Edward Adam Davis <eadavis@qq.com>
+From: Chao Yu <chao@kernel.org>
 
-commit ed527ef0c264e4bed6c7b2a158ddf516b17f5f66 upstream.
+commit 1caf50ce4af096d0280d59a31abdd85703cd995c upstream.
 
-When a user executes the FITRIM command, an underflow can occur when
-calculating nblocks if end_block is too small. Since nblocks is of
-type sector_t, which is u64, a negative nblocks value will become a
-very large positive integer. This ultimately leads to the block layer
-function __blkdev_issue_discard() taking an excessively long time to
-process the bio chain, and the ns_segctor_sem lock remains held for a
-long period. This prevents other tasks from acquiring the ns_segctor_sem
-lock, resulting in the hang reported by syzbot in [1].
+[    9.269940][ T3222] Call trace:
+[    9.269948][ T3222]  ext4_file_read_iter+0xac/0x108
+[    9.269979][ T3222]  vfs_iocb_iter_read+0xac/0x198
+[    9.269993][ T3222]  erofs_fileio_rq_submit+0x12c/0x180
+[    9.270008][ T3222]  erofs_fileio_submit_bio+0x14/0x24
+[    9.270030][ T3222]  z_erofs_runqueue+0x834/0x8ac
+[    9.270054][ T3222]  z_erofs_read_folio+0x120/0x220
+[    9.270083][ T3222]  filemap_read_folio+0x60/0x120
+[    9.270102][ T3222]  filemap_fault+0xcac/0x1060
+[    9.270119][ T3222]  do_pte_missing+0x2d8/0x1554
+[    9.270131][ T3222]  handle_mm_fault+0x5ec/0x70c
+[    9.270142][ T3222]  do_page_fault+0x178/0x88c
+[    9.270167][ T3222]  do_translation_fault+0x38/0x54
+[    9.270183][ T3222]  do_mem_abort+0x54/0xac
+[    9.270208][ T3222]  el0_da+0x44/0x7c
+[    9.270227][ T3222]  el0t_64_sync_handler+0x5c/0xf4
+[    9.270253][ T3222]  el0t_64_sync+0x1bc/0x1c0
 
-If the ending block is too small, typically if it is smaller than 4KiB
-range, depending on the usage of the segment 0, it may be possible to
-attempt a discard request beyond the device size causing the hang.
+EROFS may encounter above panic when enabling file-backed mount w/
+directio mount option, the root cause is it may suffer UAF in below
+race condition:
 
-Exiting successfully and assign the discarded size (0 in this case)
-to range->len.
+- z_erofs_read_folio                          wq s_dio_done_wq
+ - z_erofs_runqueue
+  - erofs_fileio_submit_bio
+   - erofs_fileio_rq_submit
+    - vfs_iocb_iter_read
+     - ext4_file_read_iter
+      - ext4_dio_read_iter
+       - iomap_dio_rw
+       : bio was submitted and return -EIOCBQUEUED
+                                              - dio_aio_complete_work
+                                               - dio_complete
+                                                - dio->iocb->ki_complete (erofs_fileio_ki_complete())
+                                                 - kfree(rq)
+                                                 : it frees iocb, iocb.ki_filp can be UAF in file_accessed().
+       - file_accessed
+       : access NULL file point
 
-Although the start and len values in the user input range are too small,
-a conservative strategy is adopted here to safely ignore them, which is
-equivalent to a no-op; it will not perform any trimming and will not
-throw an error.
+Introduce a reference count in struct erofs_fileio_rq, and initialize it
+as two, both erofs_fileio_ki_complete() and erofs_fileio_rq_submit() will
+decrease reference count, the last one decreasing the reference count
+to zero will free rq.
 
-[1]
-task:segctord state:D stack:28968 pid:6093 tgid:6093  ppid:2 task_flags:0x200040 flags:0x00080000
-Call Trace:
- rwbase_write_lock+0x3dd/0x750 kernel/locking/rwbase_rt.c:272
- nilfs_transaction_lock+0x253/0x4c0 fs/nilfs2/segment.c:357
- nilfs_segctor_thread_construct fs/nilfs2/segment.c:2569 [inline]
- nilfs_segctor_thread+0x6ec/0xe00 fs/nilfs2/segment.c:2684
-
-[ryusuke: corrected part of the commit message about the consequences]
-
-Fixes: 82e11e857be3 ("nilfs2: add nilfs_sufile_trim_fs to trim clean segs")
-Reported-by: syzbot+7eedce5eb281acd832f0@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=7eedce5eb281acd832f0
-Signed-off-by: Edward Adam Davis <eadavis@qq.com>
-Signed-off-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
-Cc: stable@vger.kernel.org
-Signed-off-by: Viacheslav Dubeyko <slava@dubeyko.com>
+Cc: stable@kernel.org
+Fixes: fb176750266a ("erofs: add file-backed mount support")
+Fixes: 6422cde1b0d5 ("erofs: use buffered I/O for file-backed mounts by default")
+Signed-off-by: Chao Yu <chao@kernel.org>
+Reviewed-by: Gao Xiang <hsiangkao@linux.alibaba.com>
+Signed-off-by: Gao Xiang <hsiangkao@linux.alibaba.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nilfs2/sufile.c |    4 ++++
- 1 file changed, 4 insertions(+)
+ fs/erofs/fileio.c |    7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
---- a/fs/nilfs2/sufile.c
-+++ b/fs/nilfs2/sufile.c
-@@ -1093,6 +1093,9 @@ int nilfs_sufile_trim_fs(struct inode *s
- 	else
- 		end_block = start_block + len - 1;
+--- a/fs/erofs/fileio.c
++++ b/fs/erofs/fileio.c
+@@ -10,6 +10,7 @@ struct erofs_fileio_rq {
+ 	struct bio bio;
+ 	struct kiocb iocb;
+ 	struct super_block *sb;
++	refcount_t ref;
+ };
  
-+	if (end_block < nilfs->ns_first_data_block)
-+		goto out;
-+
- 	segnum = nilfs_get_segnum_of_block(nilfs, start_block);
- 	segnum_end = nilfs_get_segnum_of_block(nilfs, end_block);
- 
-@@ -1191,6 +1194,7 @@ int nilfs_sufile_trim_fs(struct inode *s
- out_sem:
- 	up_read(&NILFS_MDT(sufile)->mi_sem);
- 
-+out:
- 	range->len = ndiscarded << nilfs->ns_blocksize_bits;
- 	return ret;
+ struct erofs_fileio {
+@@ -42,7 +43,8 @@ static void erofs_fileio_ki_complete(str
+ 		}
+ 	}
+ 	bio_uninit(&rq->bio);
+-	kfree(rq);
++	if (refcount_dec_and_test(&rq->ref))
++		kfree(rq);
  }
+ 
+ static void erofs_fileio_rq_submit(struct erofs_fileio_rq *rq)
+@@ -66,6 +68,8 @@ static void erofs_fileio_rq_submit(struc
+ 	revert_creds(old_cred);
+ 	if (ret != -EIOCBQUEUED)
+ 		erofs_fileio_ki_complete(&rq->iocb, ret);
++	if (refcount_dec_and_test(&rq->ref))
++		kfree(rq);
+ }
+ 
+ static struct erofs_fileio_rq *erofs_fileio_rq_alloc(struct erofs_map_dev *mdev)
+@@ -76,6 +80,7 @@ static struct erofs_fileio_rq *erofs_fil
+ 	bio_init(&rq->bio, NULL, rq->bvecs, ARRAY_SIZE(rq->bvecs), REQ_OP_READ);
+ 	rq->iocb.ki_filp = mdev->m_dif->file;
+ 	rq->sb = mdev->m_sb;
++	refcount_set(&rq->ref, 2);
+ 	return rq;
+ }
+ 
 
 
