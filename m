@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 424FC23645D;
-	Fri, 13 Feb 2026 13:53:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3BE3A241665;
+	Fri, 13 Feb 2026 13:53:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770990808; cv=none; b=Qhk4wlP3FOuKBds87ccIEyYn86xDykEiJloEANalDnbueCP6MTAf9GNC2Y10a+ddhreYlGgRgkczwezzySeANgfaDFwTFpHhD7FNP7o0bxaVnljfrzVOmEOnmfmkVeN2u54CSlLGMm9uczYPYEdMjsPeYpskxd/AFDwKfYCt/Q8=
+	t=1770990812; cv=none; b=UKzgSQ4bk2JiT1xR529hhOlHXhpi6ZNyudNFRRTpLSxBm/nKCZccKYILZKKUfPoI0kAkj7dXCNNZBnv/aMrSp6zitsUhc/2peYBRPUmUrfebM5TYR3oMQPPjZEodyYV2MWVPevWKOSmteZEQ7MnDX4pKfjFhYIcXAYAYSPQRWJM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770990808; c=relaxed/simple;
-	bh=M8qv4UwQb+RL3DCcYPMI/t/WD8CHrv8v/BQopYHLyWI=;
+	s=arc-20240116; t=1770990812; c=relaxed/simple;
+	bh=yar/u2ibSQS7nJxj0xU0eoLDgIK5AReF4u+HGqrFtOk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ga7wmLS9JZk3BxvIXR/NQ+iQuBzS9d4T40qUILTRlGNI9lBKjLMTQfn+xSLqCgnlhmnmD0rLF6drVReC+mvXk0SX+FrSfOyiWEqPm8XxaXxFw4Riabz/Ex3bW9UISI9lV4f0dkpiuPrncJ6GvsIP7jmCCqtYPGwYtMqVaw1/tFg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OtYxAFtp; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BPCXxrPnMkHP9mXmzZNLJT+mrbRqeC8pkNINSPa8TEVxJEenPJLf2xt25vgDm9rZSrllYSHoD1OG8KRHLsKM+ITE8R9siQY8Zd2lg2Uwrs+9/cvtnZRiw1V/Ue2X1sx3NgOwKknE/t8+dVJjQbshbR9WlUyaD8oiPhhsCqTcflI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RGVnXtYY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OtYxAFtp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9B99C116C6;
-	Fri, 13 Feb 2026 13:53:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RGVnXtYY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A36DC116C6;
+	Fri, 13 Feb 2026 13:53:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770990808;
-	bh=M8qv4UwQb+RL3DCcYPMI/t/WD8CHrv8v/BQopYHLyWI=;
+	s=korg; t=1770990812;
+	bh=yar/u2ibSQS7nJxj0xU0eoLDgIK5AReF4u+HGqrFtOk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OtYxAFtpGtX0y+YW+CenErcPivsgyWZV/8GECdHjTH31x/5i/y1UhA4MJ5O02kXzV
-	 dP6xUqpgJlFlGUMRfwfNd2S+gb0ECxmQZN4rYlVR8ri+5HqsEDvfbbgWzHvBAvTSoA
-	 jeU8YeXO/u+m9iHuNiOErXs6qmZTX79HxJi8St1c=
+	b=RGVnXtYYlMr0w6zEaeowSjqwXyM37JKbpJ17ITsA4A5GPS3Ju1ravkmPxa6q7bsib
+	 SYW/clRFkLSh/JVoJ4GBqxM3jtCGZdntpFH3jeXRWWK2P3gM+4NYqDC4kHPavdN080
+	 XKmTSvtyOs18GR/HNOwq9t58uPpu+E9n1NkpqK/g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thorsten Blum <thorsten.blum@linux.dev>,
-	Kanchana P Sridhar <kanchana.p.sridhar@intel.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>
-Subject: [PATCH 6.18 30/49] crypto: iaa - Fix out-of-bounds index in find_empty_iaa_compression_mode
-Date: Fri, 13 Feb 2026 14:48:14 +0100
-Message-ID: <20260213134709.986203326@linuxfoundation.org>
+	tianshuo han <hantianshuo233@gmail.com>,
+	Namjae Jeon <linkinjeon@kernel.org>,
+	Steve French <stfrench@microsoft.com>
+Subject: [PATCH 6.18 04/49] ksmbd: fix infinite loop caused by next_smb2_rcv_hdr_off reset in error paths
+Date: Fri, 13 Feb 2026 14:47:48 +0100
+Message-ID: <20260213134709.047294134@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260213134708.885500854@linuxfoundation.org>
 References: <20260213134708.885500854@linuxfoundation.org>
@@ -51,51 +51,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thorsten Blum <thorsten.blum@linux.dev>
+From: Namjae Jeon <linkinjeon@kernel.org>
 
-commit 48329301969f6d21b2ef35f678e40f72b59eac94 upstream.
+commit 010eb01ce23b34b50531448b0da391c7f05a72af upstream.
 
-The local variable 'i' is initialized with -EINVAL, but the for loop
-immediately overwrites it and -EINVAL is never returned.
+The problem occurs when a signed request fails smb2 signature verification
+check. In __process_request(), if check_sign_req() returns an error,
+set_smb2_rsp_status(work, STATUS_ACCESS_DENIED) is called.
+set_smb2_rsp_status() set work->next_smb2_rcv_hdr_off as zero. By resetting
+next_smb2_rcv_hdr_off to zero, the pointer to the next command in the chain
+is lost. Consequently, is_chained_smb2_message() continues to point to
+the same request header instead of advancing. If the header's NextCommand
+field is non-zero, the function returns true, causing __handle_ksmbd_work()
+to repeatedly process the same failed request in an infinite loop.
+This results in the kernel log being flooded with "bad smb2 signature"
+messages and high CPU usage.
 
-If no empty compression mode can be found, the function would return the
-out-of-bounds index IAA_COMP_MODES_MAX, which would cause an invalid
-array access in add_iaa_compression_mode().
+This patch fixes the issue by changing the return value from
+SERVER_HANDLER_CONTINUE to SERVER_HANDLER_ABORT. This ensures that
+the processing loop terminates immediately rather than attempting to
+continue from an invalidated offset.
 
-Fix both issues by returning either a valid index or -EINVAL.
-
+Reported-by: tianshuo han <hantianshuo233@gmail.com>
 Cc: stable@vger.kernel.org
-Fixes: b190447e0fa3 ("crypto: iaa - Add compression mode management along with fixed mode")
-Signed-off-by: Thorsten Blum <thorsten.blum@linux.dev>
-Acked-by: Kanchana P Sridhar <kanchana.p.sridhar@intel.com>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/crypto/intel/iaa/iaa_crypto_main.c |   12 +++++-------
- 1 file changed, 5 insertions(+), 7 deletions(-)
+ fs/smb/server/server.c |    6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
---- a/drivers/crypto/intel/iaa/iaa_crypto_main.c
-+++ b/drivers/crypto/intel/iaa/iaa_crypto_main.c
-@@ -221,15 +221,13 @@ static struct iaa_compression_mode *iaa_
+--- a/fs/smb/server/server.c
++++ b/fs/smb/server/server.c
+@@ -126,21 +126,21 @@ static int __process_request(struct ksmb
+ andx_again:
+ 	if (command >= conn->max_cmds) {
+ 		conn->ops->set_rsp_status(work, STATUS_INVALID_PARAMETER);
+-		return SERVER_HANDLER_CONTINUE;
++		return SERVER_HANDLER_ABORT;
+ 	}
  
- static int find_empty_iaa_compression_mode(void)
- {
--	int i = -EINVAL;
-+	int i;
+ 	cmds = &conn->cmds[command];
+ 	if (!cmds->proc) {
+ 		ksmbd_debug(SMB, "*** not implemented yet cmd = %x\n", command);
+ 		conn->ops->set_rsp_status(work, STATUS_NOT_IMPLEMENTED);
+-		return SERVER_HANDLER_CONTINUE;
++		return SERVER_HANDLER_ABORT;
+ 	}
  
--	for (i = 0; i < IAA_COMP_MODES_MAX; i++) {
--		if (iaa_compression_modes[i])
--			continue;
--		break;
--	}
-+	for (i = 0; i < IAA_COMP_MODES_MAX; i++)
-+		if (!iaa_compression_modes[i])
-+			return i;
+ 	if (work->sess && conn->ops->is_sign_req(work, command)) {
+ 		ret = conn->ops->check_sign_req(work);
+ 		if (!ret) {
+ 			conn->ops->set_rsp_status(work, STATUS_ACCESS_DENIED);
+-			return SERVER_HANDLER_CONTINUE;
++			return SERVER_HANDLER_ABORT;
+ 		}
+ 	}
  
--	return i;
-+	return -EINVAL;
- }
- 
- static struct iaa_compression_mode *find_iaa_compression_mode(const char *name, int *idx)
 
 
