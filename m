@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F1EF23645D;
-	Fri, 13 Feb 2026 13:50:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C47E534CFC3;
+	Fri, 13 Feb 2026 13:50:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770990631; cv=none; b=B1vClz6/1zywAYUrBtxelc6R0Qes60o+E+sCLwsUr6HM0BCSAcDvp9sX/UJ9V0ALKheQHAskkbrOTYn6TYRBbrT6h77LiHcWBPCt2MsDvFJXXgfcKNR3cSe3W8wBjStxl9j0XHiTZnJ13z3nhFY5275384Buxp6q6DOgDzYiAxQ=
+	t=1770990634; cv=none; b=fDaosA2U+gjE0j4hZBGkGmSZ069n3x1H1rrEM0N9BfnU/D1P1FEMKOzBoofyCphO2Tmjb6fVe1vIwwh+6KxtPJWVh74EkHpU6pnlsoE7XsLlhD1MwA4cL+lfurrSOesb22wGAyvG03SS53RDeA43hXdVzhEMoqK3lHncaDyUeSY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770990631; c=relaxed/simple;
-	bh=d2DPvzxl8+w1niFrJPWRzGlHmsAEvimCcabjWWDHs6U=;
+	s=arc-20240116; t=1770990634; c=relaxed/simple;
+	bh=o+oAVr7uovE1foT/n55gEAOORUIiZ81pWE8eeAj7/n4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RDwstvsvZVTLHpAZVidXYeKMcYq/4k5lo8XK04B7fZTD3IUwGdj5rxYilm2Ya03OknZtcvsjOj+UeLdSKwBsTAlqNlCZTq5IT0EbchDpljVi88ibBpw25QR7Dr341PtZvL+/2lBRgkVpvjdvksf9E6uME39PiioJb42Pzzv7afQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=l57G+sf9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tNrZ+YVbZ3Qumcc8NPE1NojkRxvvDsoZvdpHH61AohCMaRMeBCC6f2lu3GNInt0carIJk4OTfk7PRJIpwzKccReqkarzjAqlX2/wZP5d9zCcKG6itCgCjKxB2N/PudIle5VdlU8+j85fNmM2nnIE52SWWMvUd+fjUjagx24hEDw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0nL8xR8+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="l57G+sf9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F243C116C6;
-	Fri, 13 Feb 2026 13:50:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0nL8xR8+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45131C116C6;
+	Fri, 13 Feb 2026 13:50:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770990631;
-	bh=d2DPvzxl8+w1niFrJPWRzGlHmsAEvimCcabjWWDHs6U=;
+	s=korg; t=1770990634;
+	bh=o+oAVr7uovE1foT/n55gEAOORUIiZ81pWE8eeAj7/n4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=l57G+sf9IMlBgjOGGr4ZzUgIO1byRHTaFF95o4yqf+0vZ4rJd/eh3nRriyh0tpZVT
-	 7TDoqwG6GAtgbN9zkG9twVlLHDH7eQc2XmfN5S9sF3StEU7WlypTnaF9j4SiDbo6xO
-	 xiwbL9uFrFUJt2R8J9I/zAmznKPdGWzNEZUwDDNE=
+	b=0nL8xR8+gH7qNUplNhmRcWPltEbIjLjpZDVZ1wec0JW3X49AXls7417HWqk0bulJb
+	 Phv896HOrcF5rF5Z4YvTrTdVThHTFcKJQFz6ozSIizFVDw9MsdOqxRh72hHpdCYsw+
+	 84rOBLa36fXeQqqCueprls5+sR0n3Ybg0BSnZIzk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	tianshuo han <hantianshuo233@gmail.com>,
+	Igor Stepansky <igor.stepansky@orca.security>,
 	Namjae Jeon <linkinjeon@kernel.org>,
 	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 6.19 04/49] ksmbd: fix infinite loop caused by next_smb2_rcv_hdr_off reset in error paths
-Date: Fri, 13 Feb 2026 14:47:23 +0100
-Message-ID: <20260213134708.886782476@linuxfoundation.org>
+Subject: [PATCH 6.19 05/49] ksmbd: add chann_lock to protect ksmbd_chann_list xarray
+Date: Fri, 13 Feb 2026 14:47:24 +0100
+Message-ID: <20260213134708.923682208@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260213134708.713126210@linuxfoundation.org>
 References: <20260213134708.713126210@linuxfoundation.org>
@@ -53,60 +53,108 @@ Content-Transfer-Encoding: 8bit
 
 From: Namjae Jeon <linkinjeon@kernel.org>
 
-commit 010eb01ce23b34b50531448b0da391c7f05a72af upstream.
+commit 4f3a06cc57976cafa8c6f716646be6c79a99e485 upstream.
 
-The problem occurs when a signed request fails smb2 signature verification
-check. In __process_request(), if check_sign_req() returns an error,
-set_smb2_rsp_status(work, STATUS_ACCESS_DENIED) is called.
-set_smb2_rsp_status() set work->next_smb2_rcv_hdr_off as zero. By resetting
-next_smb2_rcv_hdr_off to zero, the pointer to the next command in the chain
-is lost. Consequently, is_chained_smb2_message() continues to point to
-the same request header instead of advancing. If the header's NextCommand
-field is non-zero, the function returns true, causing __handle_ksmbd_work()
-to repeatedly process the same failed request in an infinite loop.
-This results in the kernel log being flooded with "bad smb2 signature"
-messages and high CPU usage.
+ksmbd_chann_list xarray lacks synchronization, allowing use-after-free in
+multi-channel sessions (between lookup_chann_list() and ksmbd_chann_del).
 
-This patch fixes the issue by changing the return value from
-SERVER_HANDLER_CONTINUE to SERVER_HANDLER_ABORT. This ensures that
-the processing loop terminates immediately rather than attempting to
-continue from an invalidated offset.
+Adds rw_semaphore chann_lock to struct ksmbd_session and protects
+all xa_load/xa_store/xa_erase accesses.
 
-Reported-by: tianshuo han <hantianshuo233@gmail.com>
 Cc: stable@vger.kernel.org
+Reported-by: Igor Stepansky <igor.stepansky@orca.security>
 Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
 Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/server/server.c |    6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ fs/smb/server/mgmt/user_session.c |    5 +++++
+ fs/smb/server/mgmt/user_session.h |    1 +
+ fs/smb/server/smb2pdu.c           |   12 +++++++++++-
+ 3 files changed, 17 insertions(+), 1 deletion(-)
 
---- a/fs/smb/server/server.c
-+++ b/fs/smb/server/server.c
-@@ -126,21 +126,21 @@ static int __process_request(struct ksmb
- andx_again:
- 	if (command >= conn->max_cmds) {
- 		conn->ops->set_rsp_status(work, STATUS_INVALID_PARAMETER);
--		return SERVER_HANDLER_CONTINUE;
-+		return SERVER_HANDLER_ABORT;
+--- a/fs/smb/server/mgmt/user_session.c
++++ b/fs/smb/server/mgmt/user_session.c
+@@ -32,12 +32,14 @@ static void free_channel_list(struct ksm
+ 	struct channel *chann;
+ 	unsigned long index;
+ 
++	down_write(&sess->chann_lock);
+ 	xa_for_each(&sess->ksmbd_chann_list, index, chann) {
+ 		xa_erase(&sess->ksmbd_chann_list, index);
+ 		kfree(chann);
  	}
  
- 	cmds = &conn->cmds[command];
- 	if (!cmds->proc) {
- 		ksmbd_debug(SMB, "*** not implemented yet cmd = %x\n", command);
- 		conn->ops->set_rsp_status(work, STATUS_NOT_IMPLEMENTED);
--		return SERVER_HANDLER_CONTINUE;
-+		return SERVER_HANDLER_ABORT;
- 	}
+ 	xa_destroy(&sess->ksmbd_chann_list);
++	up_write(&sess->chann_lock);
+ }
  
- 	if (work->sess && conn->ops->is_sign_req(work, command)) {
- 		ret = conn->ops->check_sign_req(work);
- 		if (!ret) {
- 			conn->ops->set_rsp_status(work, STATUS_ACCESS_DENIED);
--			return SERVER_HANDLER_CONTINUE;
-+			return SERVER_HANDLER_ABORT;
- 		}
- 	}
+ static void __session_rpc_close(struct ksmbd_session *sess,
+@@ -220,7 +222,9 @@ static int ksmbd_chann_del(struct ksmbd_
+ {
+ 	struct channel *chann;
  
++	down_write(&sess->chann_lock);
+ 	chann = xa_erase(&sess->ksmbd_chann_list, (long)conn);
++	up_write(&sess->chann_lock);
+ 	if (!chann)
+ 		return -ENOENT;
+ 
+@@ -454,6 +458,7 @@ static struct ksmbd_session *__session_c
+ 	rwlock_init(&sess->tree_conns_lock);
+ 	atomic_set(&sess->refcnt, 2);
+ 	init_rwsem(&sess->rpc_lock);
++	init_rwsem(&sess->chann_lock);
+ 
+ 	ret = __init_smb2_session(sess);
+ 	if (ret)
+--- a/fs/smb/server/mgmt/user_session.h
++++ b/fs/smb/server/mgmt/user_session.h
+@@ -49,6 +49,7 @@ struct ksmbd_session {
+ 	char				sess_key[CIFS_KEY_SIZE];
+ 
+ 	struct hlist_node		hlist;
++	struct rw_semaphore		chann_lock;
+ 	struct xarray			ksmbd_chann_list;
+ 	struct xarray			tree_conns;
+ 	struct ida			tree_conn_ida;
+--- a/fs/smb/server/smb2pdu.c
++++ b/fs/smb/server/smb2pdu.c
+@@ -79,7 +79,13 @@ static inline bool check_session_id(stru
+ 
+ struct channel *lookup_chann_list(struct ksmbd_session *sess, struct ksmbd_conn *conn)
+ {
+-	return xa_load(&sess->ksmbd_chann_list, (long)conn);
++	struct channel *chann;
++
++	down_read(&sess->chann_lock);
++	chann = xa_load(&sess->ksmbd_chann_list, (long)conn);
++	up_read(&sess->chann_lock);
++
++	return chann;
+ }
+ 
+ /**
+@@ -1558,8 +1564,10 @@ binding_session:
+ 				return -ENOMEM;
+ 
+ 			chann->conn = conn;
++			down_write(&sess->chann_lock);
+ 			old = xa_store(&sess->ksmbd_chann_list, (long)conn, chann,
+ 					KSMBD_DEFAULT_GFP);
++			up_write(&sess->chann_lock);
+ 			if (xa_is_err(old)) {
+ 				kfree(chann);
+ 				return xa_err(old);
+@@ -1651,8 +1659,10 @@ binding_session:
+ 				return -ENOMEM;
+ 
+ 			chann->conn = conn;
++			down_write(&sess->chann_lock);
+ 			old = xa_store(&sess->ksmbd_chann_list, (long)conn,
+ 					chann, KSMBD_DEFAULT_GFP);
++			up_write(&sess->chann_lock);
+ 			if (xa_is_err(old)) {
+ 				kfree(chann);
+ 				return xa_err(old);
 
 
