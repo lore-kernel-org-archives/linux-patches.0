@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7AF2954723;
-	Fri, 13 Feb 2026 13:54:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8E8F54723;
+	Fri, 13 Feb 2026 13:54:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770990857; cv=none; b=SwoFMFVfH/gWITVFr7tWNa1+e7A3UD1DLo24bvhBRfLS5HcTY/r7gt4/OqcciQaaaEJhYrTHo80nZ+Y8cktGgPVw7wSc3nQ+g1uLzJ+s7/2PSnDqWPNvMJ8OVhOpIR08de0PYJIIuIyzY6HYmFs0VEJ/RiC6dm8YWvz/zY3cvUU=
+	t=1770990861; cv=none; b=hpLoqk0d5fkwYUqxVz1d3on/aFKN0sqEp7aYAO5lBFeSnr1x7fXZM9kyipj2RL257zcmPJUQT2Ku0Q2ad+NhRreyBNSHBHcHYwsybXICgHdjPi5tvsCuB4HlyPKN5dBy0cJYldWF71ZGyFxqXyTFbibdXz7SLHuKLqmxMqTcBRI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770990857; c=relaxed/simple;
-	bh=bjTNacvYP4wzmx5fe1sSlvF2fX0NAeWZcEVC7Z+a8mY=;
+	s=arc-20240116; t=1770990861; c=relaxed/simple;
+	bh=Bi9gNILnmj8V0kanKC7nAIz27wk5aS75jjXl+27wmn8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PI9QnBzUxWfYgWrNtQt2Ia9/ruDnI+LLbfZ5YfthDIi0z0A0TTswIYGJ4E2RbuM12hkCCtV9vF6X6Q0zVTOphVQkXKt3g+vBGvBrX4LVsIQWxc4rcKSHbtwTr436jkosIhLZRY/jWrAEh/xoRkTSFXhaKV3+b7YcPtz/WOTfBqY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CbO8D/Fm; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GUZYJSsRYk4dBDZ7VzchLrgHFxJepJraGcBF3499SSo27aPz8dBrQIKqNZZKfeT7FtZ19D2dU+6gSr4P4dLsmldNzUVBP4KJftpbwCHYkr+FBRSB1I4yRLu6QaT+pY730FLScbB2w/S8Jf+zZuiTd2imLdJaLfzHGvMw+Z+V8O4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MnyVmByk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CbO8D/Fm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 06170C116C6;
-	Fri, 13 Feb 2026 13:54:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MnyVmByk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F30DC116C6;
+	Fri, 13 Feb 2026 13:54:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770990857;
-	bh=bjTNacvYP4wzmx5fe1sSlvF2fX0NAeWZcEVC7Z+a8mY=;
+	s=korg; t=1770990861;
+	bh=Bi9gNILnmj8V0kanKC7nAIz27wk5aS75jjXl+27wmn8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CbO8D/Fm6lk42jHarHdVpi4pPti7skzXBgMNl7IdkjCS7rYhvpT+2FJNNkq53k7pq
-	 YWSYChj7UA0PXXxNp8LBQgBIXgjFsYG3+VinYYpHEO0VBMdEh1erhHXoIXGKJ57jKu
-	 /LeLCtxHceqsl7TL+w4P0QlBTPwq9XrMFGD5AQrA=
+	b=MnyVmBykL42ApTyghBOn0HEb2QhZBYyEkNpqVyG7Byd7+e2hdfm/BaSx/Xot2ZwN4
+	 OxfomJPV062TfK0xv2UCltnWa2EEsQiNGO60TRraj61WWYJfTgFWbvisIFjGaIUGtD
+	 jpK3ncZKxqg3W6Dj13Lm494XMlqpjhnOPZfii2x4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jeongjun Park <aha310510@gmail.com>,
-	Inki Dae <inki.dae@samsung.com>
-Subject: [PATCH 6.18 46/49] drm/exynos: vidi: use ctx->lock to protect struct vidi_context member variables related to memory alloc/free
-Date: Fri, 13 Feb 2026 14:48:30 +0100
-Message-ID: <20260213134710.547802422@linuxfoundation.org>
+	Liu Song <liu.song13@zte.com.cn>,
+	Manivannan Sadhasivam <mani@kernel.org>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	stable@kernel.org
+Subject: [PATCH 6.18 47/49] PCI: endpoint: Avoid creating sub-groups asynchronously
+Date: Fri, 13 Feb 2026 14:48:31 +0100
+Message-ID: <20260213134710.582432558@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260213134708.885500854@linuxfoundation.org>
 References: <20260213134708.885500854@linuxfoundation.org>
@@ -50,170 +52,99 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jeongjun Park <aha310510@gmail.com>
+From: Liu Song <liu.song13@zte.com.cn>
 
-commit 52b330799e2d6f825ae2bb74662ec1b10eb954bb upstream.
+commit 7c5c7d06bd1f86d2c3ebe62be903a4ba42db4d2c upstream.
 
-Exynos Virtual Display driver performs memory alloc/free operations
-without lock protection, which easily causes concurrency problem.
+The asynchronous creation of sub-groups by a delayed work could lead to a
+NULL pointer dereference when the driver directory is removed before the
+work completes.
 
-For example, use-after-free can occur in race scenario like this:
-```
-	CPU0				CPU1				CPU2
-	----				----				----
-  vidi_connection_ioctl()
-    if (vidi->connection) // true
-      drm_edid = drm_edid_alloc(); // alloc drm_edid
-      ...
-      ctx->raw_edid = drm_edid;
-      ...
-								drm_mode_getconnector()
-								  drm_helper_probe_single_connector_modes()
-								    vidi_get_modes()
-								      if (ctx->raw_edid) // true
-								        drm_edid_dup(ctx->raw_edid);
-								          if (!drm_edid) // false
-								          ...
-				vidi_connection_ioctl()
-				  if (vidi->connection) // false
-				    drm_edid_free(ctx->raw_edid); // free drm_edid
-				    ...
-								          drm_edid_alloc(drm_edid->edid)
-								            kmemdup(edid); // UAF!!
-								            ...
-```
+The crash can be easily reproduced with the following commands:
 
-To prevent these vulns, at least in vidi_context, member variables related
-to memory alloc/free should be protected with ctx->lock.
+  # cd /sys/kernel/config/pci_ep/functions/pci_epf_test
+  # for i in {1..20}; do mkdir test && rmdir test; done
 
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Jeongjun Park <aha310510@gmail.com>
-Signed-off-by: Inki Dae <inki.dae@samsung.com>
+  BUG: kernel NULL pointer dereference, address: 0000000000000088
+  ...
+  Call Trace:
+   configfs_register_group+0x3d/0x190
+   pci_epf_cfs_work+0x41/0x110
+   process_one_work+0x18f/0x350
+   worker_thread+0x25a/0x3a0
+
+Fix this issue by using configfs_add_default_group() API which does not
+have the deadlock problem as configfs_register_group() and does not require
+the delayed work handler.
+
+Fixes: e85a2d783762 ("PCI: endpoint: Add support in configfs to associate two EPCs with EPF")
+Signed-off-by: Liu Song <liu.song13@zte.com.cn>
+[mani: slightly reworded the description and added stable list]
+Signed-off-by: Manivannan Sadhasivam <mani@kernel.org>
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Cc: stable@kernel.org
+Link: https://patch.msgid.link/20250710143845409gLM6JdlwPhlHG9iX3F6jK@zte.com.cn
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/exynos/exynos_drm_vidi.c |   38 ++++++++++++++++++++++++++-----
- 1 file changed, 32 insertions(+), 6 deletions(-)
+ drivers/pci/endpoint/pci-ep-cfs.c |   15 +++++----------
+ 1 file changed, 5 insertions(+), 10 deletions(-)
 
---- a/drivers/gpu/drm/exynos/exynos_drm_vidi.c
-+++ b/drivers/gpu/drm/exynos/exynos_drm_vidi.c
-@@ -186,29 +186,37 @@ static ssize_t vidi_store_connection(str
- 				const char *buf, size_t len)
+--- a/drivers/pci/endpoint/pci-ep-cfs.c
++++ b/drivers/pci/endpoint/pci-ep-cfs.c
+@@ -23,7 +23,6 @@ struct pci_epf_group {
+ 	struct config_group group;
+ 	struct config_group primary_epc_group;
+ 	struct config_group secondary_epc_group;
+-	struct delayed_work cfs_work;
+ 	struct pci_epf *epf;
+ 	int index;
+ };
+@@ -103,7 +102,7 @@ static struct config_group
+ 	secondary_epc_group = &epf_group->secondary_epc_group;
+ 	config_group_init_type_name(secondary_epc_group, "secondary",
+ 				    &pci_secondary_epc_type);
+-	configfs_register_group(&epf_group->group, secondary_epc_group);
++	configfs_add_default_group(secondary_epc_group, &epf_group->group);
+ 
+ 	return secondary_epc_group;
+ }
+@@ -166,7 +165,7 @@ static struct config_group
+ 
+ 	config_group_init_type_name(primary_epc_group, "primary",
+ 				    &pci_primary_epc_type);
+-	configfs_register_group(&epf_group->group, primary_epc_group);
++	configfs_add_default_group(primary_epc_group, &epf_group->group);
+ 
+ 	return primary_epc_group;
+ }
+@@ -570,15 +569,13 @@ static void pci_ep_cfs_add_type_group(st
+ 		return;
+ 	}
+ 
+-	configfs_register_group(&epf_group->group, group);
++	configfs_add_default_group(group, &epf_group->group);
+ }
+ 
+-static void pci_epf_cfs_work(struct work_struct *work)
++static void pci_epf_cfs_add_sub_groups(struct pci_epf_group *epf_group)
  {
- 	struct vidi_context *ctx = dev_get_drvdata(dev);
--	int ret;
-+	int ret, new_connected;
+-	struct pci_epf_group *epf_group;
+ 	struct config_group *group;
  
--	ret = kstrtoint(buf, 0, &ctx->connected);
-+	ret = kstrtoint(buf, 0, &new_connected);
- 	if (ret)
- 		return ret;
--
--	if (ctx->connected > 1)
-+	if (new_connected > 1)
- 		return -EINVAL;
+-	epf_group = container_of(work, struct pci_epf_group, cfs_work.work);
+ 	group = pci_ep_cfs_add_primary_group(epf_group);
+ 	if (IS_ERR(group)) {
+ 		pr_err("failed to create 'primary' EPC interface\n");
+@@ -637,9 +634,7 @@ static struct config_group *pci_epf_make
  
-+	mutex_lock(&ctx->lock);
-+
- 	/*
- 	 * Use fake edid data for test. If raw_edid is set then it can't be
- 	 * tested.
- 	 */
- 	if (ctx->raw_edid) {
- 		DRM_DEV_DEBUG_KMS(dev, "edid data is not fake data.\n");
--		return -EINVAL;
-+		ret = -EINVAL;
-+		goto fail;
- 	}
+ 	kfree(epf_name);
  
-+	ctx->connected = new_connected;
-+	mutex_unlock(&ctx->lock);
-+
- 	DRM_DEV_DEBUG_KMS(dev, "requested connection.\n");
+-	INIT_DELAYED_WORK(&epf_group->cfs_work, pci_epf_cfs_work);
+-	queue_delayed_work(system_wq, &epf_group->cfs_work,
+-			   msecs_to_jiffies(1));
++	pci_epf_cfs_add_sub_groups(epf_group);
  
- 	drm_helper_hpd_irq_event(ctx->drm_dev);
- 
- 	return len;
-+fail:
-+	mutex_unlock(&ctx->lock);
-+	return ret;
- }
- 
- static DEVICE_ATTR(connection, 0644, vidi_show_connection,
-@@ -238,11 +246,14 @@ int vidi_connection_ioctl(struct drm_dev
- 		return -EINVAL;
- 	}
- 
-+	mutex_lock(&ctx->lock);
- 	if (ctx->connected == vidi->connection) {
-+		mutex_unlock(&ctx->lock);
- 		DRM_DEV_DEBUG_KMS(ctx->dev,
- 				  "same connection request.\n");
- 		return -EINVAL;
- 	}
-+	mutex_unlock(&ctx->lock);
- 
- 	if (vidi->connection) {
- 		const struct drm_edid *drm_edid;
-@@ -262,14 +273,21 @@ int vidi_connection_ioctl(struct drm_dev
- 					  "edid data is invalid.\n");
- 			return -EINVAL;
- 		}
-+		mutex_lock(&ctx->lock);
- 		ctx->raw_edid = drm_edid;
-+		mutex_unlock(&ctx->lock);
- 	} else {
- 		/* with connection = 0, free raw_edid */
-+		mutex_lock(&ctx->lock);
- 		drm_edid_free(ctx->raw_edid);
- 		ctx->raw_edid = NULL;
-+		mutex_unlock(&ctx->lock);
- 	}
- 
-+	mutex_lock(&ctx->lock);
- 	ctx->connected = vidi->connection;
-+	mutex_unlock(&ctx->lock);
-+
- 	drm_helper_hpd_irq_event(ctx->drm_dev);
- 
- 	return 0;
-@@ -284,7 +302,7 @@ static enum drm_connector_status vidi_de
- 	 * connection request would come from user side
- 	 * to do hotplug through specific ioctl.
- 	 */
--	return ctx->connected ? connector_status_connected :
-+	return READ_ONCE(ctx->connected) ? connector_status_connected :
- 			connector_status_disconnected;
- }
- 
-@@ -307,11 +325,15 @@ static int vidi_get_modes(struct drm_con
- 	const struct drm_edid *drm_edid;
- 	int count;
- 
-+	mutex_lock(&ctx->lock);
-+
- 	if (ctx->raw_edid)
- 		drm_edid = drm_edid_dup(ctx->raw_edid);
- 	else
- 		drm_edid = drm_edid_alloc(fake_edid_info, sizeof(fake_edid_info));
- 
-+	mutex_unlock(&ctx->lock);
-+
- 	drm_edid_connector_update(connector, drm_edid);
- 
- 	count = drm_edid_connector_add_modes(connector);
-@@ -456,9 +478,13 @@ static void vidi_remove(struct platform_
- {
- 	struct vidi_context *ctx = platform_get_drvdata(pdev);
- 
-+	mutex_lock(&ctx->lock);
-+
- 	drm_edid_free(ctx->raw_edid);
- 	ctx->raw_edid = NULL;
- 
-+	mutex_unlock(&ctx->lock);
-+
- 	component_del(&pdev->dev, &vidi_component_ops);
- }
+ 	return &epf_group->group;
  
 
 
