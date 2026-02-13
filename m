@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8E8F54723;
-	Fri, 13 Feb 2026 13:54:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C77B954723;
+	Fri, 13 Feb 2026 13:54:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770990861; cv=none; b=hpLoqk0d5fkwYUqxVz1d3on/aFKN0sqEp7aYAO5lBFeSnr1x7fXZM9kyipj2RL257zcmPJUQT2Ku0Q2ad+NhRreyBNSHBHcHYwsybXICgHdjPi5tvsCuB4HlyPKN5dBy0cJYldWF71ZGyFxqXyTFbibdXz7SLHuKLqmxMqTcBRI=
+	t=1770990864; cv=none; b=hryb+bYHbJhLsiOiXlVKUjutd6Nq/G+q8rWXyM7krD/UxCjbd6qe6TpvMRApHzohKn+6CiHrwlPIIzJbegmqJZSHXVjOPJv7bksdOpt1Q74L5kW/Sg6eaI/YkSSDXHpTegFC+74Q1Xg0KhUDE7dT/vnO8W9/KN/dY2HgtUVmiL0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770990861; c=relaxed/simple;
-	bh=Bi9gNILnmj8V0kanKC7nAIz27wk5aS75jjXl+27wmn8=;
+	s=arc-20240116; t=1770990864; c=relaxed/simple;
+	bh=hWm9+rSxN38x3eJ8KT1megsh+OCKA4CEdDcgM/a2NxA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GUZYJSsRYk4dBDZ7VzchLrgHFxJepJraGcBF3499SSo27aPz8dBrQIKqNZZKfeT7FtZ19D2dU+6gSr4P4dLsmldNzUVBP4KJftpbwCHYkr+FBRSB1I4yRLu6QaT+pY730FLScbB2w/S8Jf+zZuiTd2imLdJaLfzHGvMw+Z+V8O4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MnyVmByk; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Tp9KUohehazys0DsRx65ovwHfpBHjdegfn5gm0XQKAkpiCr51V/UlphGuT52T+N0ycQFQNtFSMSeOn6XjYgyY8sHhsRelUvNJBO8tCyuoQVPMTygquWTIIzQuqvc5/SZ6P32ggS8Ep3Rl+p36Dkilz2NwQbnaG9KCcwI+f8X5uQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tf4HmBA8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MnyVmByk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F30DC116C6;
-	Fri, 13 Feb 2026 13:54:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tf4HmBA8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D385C116C6;
+	Fri, 13 Feb 2026 13:54:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770990861;
-	bh=Bi9gNILnmj8V0kanKC7nAIz27wk5aS75jjXl+27wmn8=;
+	s=korg; t=1770990864;
+	bh=hWm9+rSxN38x3eJ8KT1megsh+OCKA4CEdDcgM/a2NxA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MnyVmBykL42ApTyghBOn0HEb2QhZBYyEkNpqVyG7Byd7+e2hdfm/BaSx/Xot2ZwN4
-	 OxfomJPV062TfK0xv2UCltnWa2EEsQiNGO60TRraj61WWYJfTgFWbvisIFjGaIUGtD
-	 jpK3ncZKxqg3W6Dj13Lm494XMlqpjhnOPZfii2x4=
+	b=tf4HmBA8lR8fsE3mLWtXTB3s0HqeISR1R6dnASQVZecInfLHH/KqU68PmTPbID6TI
+	 F/kf7lGQFx9gJHAqNdjKFz8BszudcWpYWo19WQl39oUVG0P23g99SqCQ9FpsCvUV3S
+	 bN8tzwYG4oguzFYorlnjn0BQvUHJo17ealHTk5DQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Liu Song <liu.song13@zte.com.cn>,
-	Manivannan Sadhasivam <mani@kernel.org>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	stable@kernel.org
-Subject: [PATCH 6.18 47/49] PCI: endpoint: Avoid creating sub-groups asynchronously
-Date: Fri, 13 Feb 2026 14:48:31 +0100
-Message-ID: <20260213134710.582432558@linuxfoundation.org>
+	Ali Tariq <alitariq45892@gmail.com>,
+	Ping-Ke Shih <pkshih@realtek.com>
+Subject: [PATCH 6.18 48/49] wifi: rtl8xxxu: fix slab-out-of-bounds in rtl8xxxu_sta_add
+Date: Fri, 13 Feb 2026 14:48:32 +0100
+Message-ID: <20260213134710.619466359@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260213134708.885500854@linuxfoundation.org>
 References: <20260213134708.885500854@linuxfoundation.org>
@@ -52,99 +50,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Liu Song <liu.song13@zte.com.cn>
+From: Ali Tariq <alitariq45892@gmail.com>
 
-commit 7c5c7d06bd1f86d2c3ebe62be903a4ba42db4d2c upstream.
+commit 86c946bcc00f6390ef65e9614ae60a9377e454f8 upstream.
 
-The asynchronous creation of sub-groups by a delayed work could lead to a
-NULL pointer dereference when the driver directory is removed before the
-work completes.
+The driver does not set hw->sta_data_size, which causes mac80211 to
+allocate insufficient space for driver private station data in
+__sta_info_alloc(). When rtl8xxxu_sta_add() accesses members of
+struct rtl8xxxu_sta_info through sta->drv_priv, this results in a
+slab-out-of-bounds write.
 
-The crash can be easily reproduced with the following commands:
+KASAN report on RISC-V (VisionFive 2) with RTL8192EU adapter:
 
-  # cd /sys/kernel/config/pci_ep/functions/pci_epf_test
-  # for i in {1..20}; do mkdir test && rmdir test; done
+  BUG: KASAN: slab-out-of-bounds in rtl8xxxu_sta_add+0x31c/0x346
+  Write of size 8 at addr ffffffd6d3e9ae88 by task kworker/u16:0/12
 
-  BUG: kernel NULL pointer dereference, address: 0000000000000088
-  ...
-  Call Trace:
-   configfs_register_group+0x3d/0x190
-   pci_epf_cfs_work+0x41/0x110
-   process_one_work+0x18f/0x350
-   worker_thread+0x25a/0x3a0
+Set hw->sta_data_size to sizeof(struct rtl8xxxu_sta_info) during
+probe, similar to how hw->vif_data_size is configured. This ensures
+mac80211 allocates sufficient space for the driver's per-station
+private data.
 
-Fix this issue by using configfs_add_default_group() API which does not
-have the deadlock problem as configfs_register_group() and does not require
-the delayed work handler.
+Tested on StarFive VisionFive 2 v1.2A board.
 
-Fixes: e85a2d783762 ("PCI: endpoint: Add support in configfs to associate two EPCs with EPF")
-Signed-off-by: Liu Song <liu.song13@zte.com.cn>
-[mani: slightly reworded the description and added stable list]
-Signed-off-by: Manivannan Sadhasivam <mani@kernel.org>
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Cc: stable@kernel.org
-Link: https://patch.msgid.link/20250710143845409gLM6JdlwPhlHG9iX3F6jK@zte.com.cn
+Fixes: eef55f1545c9 ("wifi: rtl8xxxu: support multiple interfaces in {add,remove}_interface()")
+Cc: stable@vger.kernel.org
+Signed-off-by: Ali Tariq <alitariq45892@gmail.com>
+Reviewed-by: Ping-Ke Shih <pkshih@realtek.com>
+Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
+Link: https://patch.msgid.link/20251225115430.13011-1-alitariq45892@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pci/endpoint/pci-ep-cfs.c |   15 +++++----------
- 1 file changed, 5 insertions(+), 10 deletions(-)
+ drivers/net/wireless/realtek/rtl8xxxu/core.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/pci/endpoint/pci-ep-cfs.c
-+++ b/drivers/pci/endpoint/pci-ep-cfs.c
-@@ -23,7 +23,6 @@ struct pci_epf_group {
- 	struct config_group group;
- 	struct config_group primary_epc_group;
- 	struct config_group secondary_epc_group;
--	struct delayed_work cfs_work;
- 	struct pci_epf *epf;
- 	int index;
- };
-@@ -103,7 +102,7 @@ static struct config_group
- 	secondary_epc_group = &epf_group->secondary_epc_group;
- 	config_group_init_type_name(secondary_epc_group, "secondary",
- 				    &pci_secondary_epc_type);
--	configfs_register_group(&epf_group->group, secondary_epc_group);
-+	configfs_add_default_group(secondary_epc_group, &epf_group->group);
+--- a/drivers/net/wireless/realtek/rtl8xxxu/core.c
++++ b/drivers/net/wireless/realtek/rtl8xxxu/core.c
+@@ -7927,6 +7927,7 @@ static int rtl8xxxu_probe(struct usb_int
+ 		goto err_set_intfdata;
  
- 	return secondary_epc_group;
- }
-@@ -166,7 +165,7 @@ static struct config_group
+ 	hw->vif_data_size = sizeof(struct rtl8xxxu_vif);
++	hw->sta_data_size = sizeof(struct rtl8xxxu_sta_info);
  
- 	config_group_init_type_name(primary_epc_group, "primary",
- 				    &pci_primary_epc_type);
--	configfs_register_group(&epf_group->group, primary_epc_group);
-+	configfs_add_default_group(primary_epc_group, &epf_group->group);
- 
- 	return primary_epc_group;
- }
-@@ -570,15 +569,13 @@ static void pci_ep_cfs_add_type_group(st
- 		return;
- 	}
- 
--	configfs_register_group(&epf_group->group, group);
-+	configfs_add_default_group(group, &epf_group->group);
- }
- 
--static void pci_epf_cfs_work(struct work_struct *work)
-+static void pci_epf_cfs_add_sub_groups(struct pci_epf_group *epf_group)
- {
--	struct pci_epf_group *epf_group;
- 	struct config_group *group;
- 
--	epf_group = container_of(work, struct pci_epf_group, cfs_work.work);
- 	group = pci_ep_cfs_add_primary_group(epf_group);
- 	if (IS_ERR(group)) {
- 		pr_err("failed to create 'primary' EPC interface\n");
-@@ -637,9 +634,7 @@ static struct config_group *pci_epf_make
- 
- 	kfree(epf_name);
- 
--	INIT_DELAYED_WORK(&epf_group->cfs_work, pci_epf_cfs_work);
--	queue_delayed_work(system_wq, &epf_group->cfs_work,
--			   msecs_to_jiffies(1));
-+	pci_epf_cfs_add_sub_groups(epf_group);
- 
- 	return &epf_group->group;
- 
+ 	hw->wiphy->max_scan_ssids = 1;
+ 	hw->wiphy->max_scan_ie_len = IEEE80211_MAX_DATA_LEN;
 
 
