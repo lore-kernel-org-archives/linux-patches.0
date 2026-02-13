@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1BD9554723;
-	Fri, 13 Feb 2026 13:54:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0FF6241665;
+	Fri, 13 Feb 2026 13:54:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770990845; cv=none; b=HhjGMkbTWPVYsJNGmFANb+4JCDn1jN0PzNi9voPU971iYV4XA9ceUpxULBCUBtPVxAtDWH1KjfKqL+GqvO+xTCgS4hWCYnFn0PE/lCrMvDLOKfEKO7lXiBGIUDPRwgAaJ39g6Il3GZV5AFIFBLm+N6coZnU6HIZPc50UKQKFTA4=
+	t=1770990848; cv=none; b=aGr6YLzdDOz5WqvjYEPpD7XDO+cuFqtcYANU/dNp+jB4JKRxxEumClH5bWNksTn4NB+EstIrsqMEtZuUHfV1wJ5ANqLf/PkRxHz8lgdTg1D13rBwxt1wPfZROU/T1kL2ra0D4rRoFJJr2MmXT6W+nNS1EHNdLZkBbCHMFNnoRN4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770990845; c=relaxed/simple;
-	bh=3kdp0DUNKoy86GPX6z4SIZa9gb/WWJiU/quqzXZBa+o=;
+	s=arc-20240116; t=1770990848; c=relaxed/simple;
+	bh=1bI950nj8yMLdXqzAL9/onlWZwG1UsaodzYo1LqufLE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kICEmRRF6adwv6qbhXcLQUy0J2emkMWEEy/poHuESve7TH3Yl95shKTMtdSzd99hlDasrOWAPERqkYJLm0ak+wYMdAzNpQyMf48RudizJduEluo61ZX8aS7ejfIpYrCLmOxaWQtavXDvC2keJMHJkkZm5+H8s1b2t7RE+c8+FgU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AhoRd0kB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PnsS8TlE20Ja0cQ47xZhQ32rJ1F1GfLBv5+aolDv9nMH7K83v/BCHdNZO1QjyqOjHVZOe2xxRS8x4nD95aAU4Jk5brMT5TsZUE1JLDDbE8PU8qzg4u/Ndj/cEX06z8d3TRRLHnDhzbkdNabGQ9Hj/JCaAJBkYB8p+Eea1lKlpB0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0BeWW1OB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AhoRd0kB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 857F3C116C6;
-	Fri, 13 Feb 2026 13:54:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0BeWW1OB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 812F3C116C6;
+	Fri, 13 Feb 2026 13:54:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770990845;
-	bh=3kdp0DUNKoy86GPX6z4SIZa9gb/WWJiU/quqzXZBa+o=;
+	s=korg; t=1770990847;
+	bh=1bI950nj8yMLdXqzAL9/onlWZwG1UsaodzYo1LqufLE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AhoRd0kBeYxOyqAV2Pjw9/KoglWUa7TgVGqu+IqMD1vUrtDqwLiEq4NYmt6EjhrDh
-	 EteKlQc1suDJL7rGpyDQtos8SNlwfvPlGit3Xzt0nuq1EAZ1/DFHMi7F7q69bRSA75
-	 rMulpN9FyKX/lmmfzhhQDnVAWyqLdHg6YXew/CHk=
+	b=0BeWW1OBE763ZHi3f98wO5Fj1G3Ubu81pUhdbAZcWragt6pRootLKlTRhMtjXDmjH
+	 4F5WXykZdWvYa/aGmDogB+W/To4Qf8YAs6cfWizynS/Vrci70IKMCAg9qSQ3zmw3Py
+	 du1ObAeZ+2dnIkL0y+wDUrVfO6Hhb8cjzycnU2H0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Li Chen <me@linux.beauty>,
-	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 6.18 01/49] io_uring/io-wq: add exit-on-idle state
-Date: Fri, 13 Feb 2026 14:47:45 +0100
-Message-ID: <20260213134708.941424898@linuxfoundation.org>
+	syzbot+7eedce5eb281acd832f0@syzkaller.appspotmail.com,
+	Edward Adam Davis <eadavis@qq.com>,
+	Ryusuke Konishi <konishi.ryusuke@gmail.com>,
+	Viacheslav Dubeyko <slava@dubeyko.com>
+Subject: [PATCH 6.18 35/49] nilfs2: Fix potential block overflow that cause system hang
+Date: Fri, 13 Feb 2026 14:48:19 +0100
+Message-ID: <20260213134710.160871395@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260213134708.885500854@linuxfoundation.org>
 References: <20260213134708.885500854@linuxfoundation.org>
@@ -50,89 +52,72 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Li Chen <me@linux.beauty>
+From: Edward Adam Davis <eadavis@qq.com>
 
-commit 38aa434ab9335ce2d178b7538cdf01d60b2014c3 upstream.
+commit ed527ef0c264e4bed6c7b2a158ddf516b17f5f66 upstream.
 
-io-wq uses an idle timeout to shrink the pool, but keeps the last worker
-around indefinitely to avoid churn.
+When a user executes the FITRIM command, an underflow can occur when
+calculating nblocks if end_block is too small. Since nblocks is of
+type sector_t, which is u64, a negative nblocks value will become a
+very large positive integer. This ultimately leads to the block layer
+function __blkdev_issue_discard() taking an excessively long time to
+process the bio chain, and the ns_segctor_sem lock remains held for a
+long period. This prevents other tasks from acquiring the ns_segctor_sem
+lock, resulting in the hang reported by syzbot in [1].
 
-For tasks that used io_uring for file I/O and then stop using io_uring,
-this can leave an iou-wrk-* thread behind even after all io_uring
-instances are gone. This is unnecessary overhead and also gets in the
-way of process checkpoint/restore.
+If the ending block is too small, typically if it is smaller than 4KiB
+range, depending on the usage of the segment 0, it may be possible to
+attempt a discard request beyond the device size causing the hang.
 
-Add an exit-on-idle state that makes all io-wq workers exit as soon as
-they become idle, and provide io_wq_set_exit_on_idle() to toggle it.
+Exiting successfully and assign the discarded size (0 in this case)
+to range->len.
 
-Signed-off-by: Li Chen <me@linux.beauty>
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Although the start and len values in the user input range are too small,
+a conservative strategy is adopted here to safely ignore them, which is
+equivalent to a no-op; it will not perform any trimming and will not
+throw an error.
+
+[1]
+task:segctord state:D stack:28968 pid:6093 tgid:6093  ppid:2 task_flags:0x200040 flags:0x00080000
+Call Trace:
+ rwbase_write_lock+0x3dd/0x750 kernel/locking/rwbase_rt.c:272
+ nilfs_transaction_lock+0x253/0x4c0 fs/nilfs2/segment.c:357
+ nilfs_segctor_thread_construct fs/nilfs2/segment.c:2569 [inline]
+ nilfs_segctor_thread+0x6ec/0xe00 fs/nilfs2/segment.c:2684
+
+[ryusuke: corrected part of the commit message about the consequences]
+
+Fixes: 82e11e857be3 ("nilfs2: add nilfs_sufile_trim_fs to trim clean segs")
+Reported-by: syzbot+7eedce5eb281acd832f0@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=7eedce5eb281acd832f0
+Signed-off-by: Edward Adam Davis <eadavis@qq.com>
+Signed-off-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
+Cc: stable@vger.kernel.org
+Signed-off-by: Viacheslav Dubeyko <slava@dubeyko.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- io_uring/io-wq.c |   27 +++++++++++++++++++++++++--
- io_uring/io-wq.h |    1 +
- 2 files changed, 26 insertions(+), 2 deletions(-)
+ fs/nilfs2/sufile.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/io_uring/io-wq.c
-+++ b/io_uring/io-wq.c
-@@ -34,6 +34,7 @@ enum {
+--- a/fs/nilfs2/sufile.c
++++ b/fs/nilfs2/sufile.c
+@@ -1093,6 +1093,9 @@ int nilfs_sufile_trim_fs(struct inode *s
+ 	else
+ 		end_block = start_block + len - 1;
  
- enum {
- 	IO_WQ_BIT_EXIT		= 0,	/* wq exiting */
-+	IO_WQ_BIT_EXIT_ON_IDLE	= 1,	/* allow all workers to exit on idle */
- };
++	if (end_block < nilfs->ns_first_data_block)
++		goto out;
++
+ 	segnum = nilfs_get_segnum_of_block(nilfs, start_block);
+ 	segnum_end = nilfs_get_segnum_of_block(nilfs, end_block);
  
- enum {
-@@ -706,9 +707,13 @@ static int io_wq_worker(void *data)
- 		raw_spin_lock(&acct->workers_lock);
- 		/*
- 		 * Last sleep timed out. Exit if we're not the last worker,
--		 * or if someone modified our affinity.
-+		 * or if someone modified our affinity. If wq is marked
-+		 * idle-exit, drop the worker as well. This is used to avoid
-+		 * keeping io-wq workers around for tasks that no longer have
-+		 * any active io_uring instances.
- 		 */
--		if (last_timeout && (exit_mask || acct->nr_workers > 1)) {
-+		if ((last_timeout && (exit_mask || acct->nr_workers > 1)) ||
-+		    test_bit(IO_WQ_BIT_EXIT_ON_IDLE, &wq->state)) {
- 			acct->nr_workers--;
- 			raw_spin_unlock(&acct->workers_lock);
- 			__set_current_state(TASK_RUNNING);
-@@ -965,6 +970,24 @@ static bool io_wq_worker_wake(struct io_
- 	return false;
+@@ -1191,6 +1194,7 @@ int nilfs_sufile_trim_fs(struct inode *s
+ out_sem:
+ 	up_read(&NILFS_MDT(sufile)->mi_sem);
+ 
++out:
+ 	range->len = ndiscarded << nilfs->ns_blocksize_bits;
+ 	return ret;
  }
- 
-+void io_wq_set_exit_on_idle(struct io_wq *wq, bool enable)
-+{
-+	if (!wq->task)
-+		return;
-+
-+	if (!enable) {
-+		clear_bit(IO_WQ_BIT_EXIT_ON_IDLE, &wq->state);
-+		return;
-+	}
-+
-+	if (test_and_set_bit(IO_WQ_BIT_EXIT_ON_IDLE, &wq->state))
-+		return;
-+
-+	rcu_read_lock();
-+	io_wq_for_each_worker(wq, io_wq_worker_wake, NULL);
-+	rcu_read_unlock();
-+}
-+
- static void io_run_cancel(struct io_wq_work *work, struct io_wq *wq)
- {
- 	do {
---- a/io_uring/io-wq.h
-+++ b/io_uring/io-wq.h
-@@ -41,6 +41,7 @@ struct io_wq_data {
- struct io_wq *io_wq_create(unsigned bounded, struct io_wq_data *data);
- void io_wq_exit_start(struct io_wq *wq);
- void io_wq_put_and_exit(struct io_wq *wq);
-+void io_wq_set_exit_on_idle(struct io_wq *wq, bool enable);
- 
- void io_wq_enqueue(struct io_wq *wq, struct io_wq_work *work);
- void io_wq_hash_work(struct io_wq_work *work, void *val);
 
 
