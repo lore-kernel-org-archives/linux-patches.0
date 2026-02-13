@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7EA823645D;
-	Fri, 13 Feb 2026 13:53:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4943D23645D;
+	Fri, 13 Feb 2026 13:53:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770990816; cv=none; b=O9SncZOv0kugtl8alyTsMUb37dMPhVxHhVGQb1FirmDqkdG2/jRpcgANtodUjizklhfcd/ZYkvQPts0moqM8BHvCwJBDW8zm2EMpYk8H9iswlvvCDzCSv4wOQgdzyJ3bPWeK2wx3tt25XKvi9gM3SYtgn5dW+ryYDoY5z2j32DY=
+	t=1770990819; cv=none; b=YMfSC2H4hh/FSWIKuGkbnQnd2j46wQM34NHTSWrsDxAX/Wb9fT3ZVhUrnDX50vv9SzMP0cUWA3DGr1mMR5t0kx41rHRWzxQU8LN6lBTbck5nI2uG7s4qzb6DV03qBQk8B/cn8WlN6kTix7C6rQHKAYi3Rm53nBaa4iTtkDG42gs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770990816; c=relaxed/simple;
-	bh=QAeHQ/11yp+RC6xJfkDRd0NyLGORsWd5UHu1T5A0bW0=;
+	s=arc-20240116; t=1770990819; c=relaxed/simple;
+	bh=emZ0d8tpxH/Os2iIGEE1uzhsw08tuCfWFNtQibX329M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lNsk5dmC2g5RVHhHYEcyhmsXAap0UdLcksBvWQvP6ZGdmmcFEQ0dg60kFBKYf9zxYkMkGavHou8Bs4+1ZeAv6aYCQkPR6msgnWcAJk6OUMP1k7lGMuk5zjfkeHjczK5zHUdkU7NVnmdVc3NOlt7UQqysNqzt875u48m7f0tdwkE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=u9KbTCzY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=nRxK6cG9B50GfIU19xwZLum5PL1baOJp1KFGTEEYMpSbRzTZQd1gu/leqGzp8UD9XjFZv3z77muYEuFAVZbyHMq7NjfrFZWEJjoT7lb9WBwPjS1H8jI3idsuPtD6cJXTMAtKmChCe0LLajoBgvCzvG8bTxc4fUaG3fdbqhLSPsc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wu1JL2xr; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="u9KbTCzY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 72C70C116C6;
-	Fri, 13 Feb 2026 13:53:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wu1JL2xr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D60AC116C6;
+	Fri, 13 Feb 2026 13:53:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770990815;
-	bh=QAeHQ/11yp+RC6xJfkDRd0NyLGORsWd5UHu1T5A0bW0=;
+	s=korg; t=1770990818;
+	bh=emZ0d8tpxH/Os2iIGEE1uzhsw08tuCfWFNtQibX329M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=u9KbTCzYYEilg695a5aRlliJIlcil8qGBkDpKkfo/MpWxuo927HEF+kXO139hPjmJ
-	 CkFFLLGwQpEYjykN2ScfM57ntl+BvJCDrQTHsjjhG51zGm2Y9js9wcDtq+keWMU3oz
-	 ztsPfJyxpJ0hpc84ZRKokP+qVPCSld2BprAtB6uk=
+	b=wu1JL2xr5zxBINkZ2EAhiZHKtm93n0P8tNM1czLhTD4jCoCF4hCuGvQ34LIc6S9+E
+	 kumw1IPSibEwv5VifiGR/EJSP1iAvP+QqR/WTJ3aGLE2Swmz5e1YF3by1t4eT0JBXK
+	 UEvQ2kg0BaCbmuQZ+p2NG0WjTZkfVlq7hoYE0VC4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thorsten Blum <thorsten.blum@linux.dev>,
-	Herbert Xu <herbert@gondor.apana.org.au>
-Subject: [PATCH 6.18 31/49] crypto: octeontx - Fix length check to avoid truncation in ucode_load_store
-Date: Fri, 13 Feb 2026 14:48:15 +0100
-Message-ID: <20260213134710.021350489@linuxfoundation.org>
+	Kees Cook <kees@kernel.org>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
+	Linus Torvalds <torvalds@linux-foundation.org>
+Subject: [PATCH 6.18 32/49] crypto: omap - Allocate OMAP_CRYPTO_FORCE_COPY scatterlists correctly
+Date: Fri, 13 Feb 2026 14:48:16 +0100
+Message-ID: <20260213134710.056173843@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260213134708.885500854@linuxfoundation.org>
 References: <20260213134708.885500854@linuxfoundation.org>
@@ -50,38 +51,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thorsten Blum <thorsten.blum@linux.dev>
+From: Kees Cook <kees@kernel.org>
 
-commit 5565a72b24fa7935a9f30af386e92c8c9dfb23b9 upstream.
+commit 1562b1fb7e17c1b3addb15e125c718b2be7f5512 upstream.
 
-OTX_CPT_UCODE_NAME_LENGTH limits the microcode name to 64 bytes. If a
-user writes a string of exactly 64 characters, the original code used
-'strlen(buf) > 64' to check the length, but then strscpy() copies only
-63 characters before adding a NUL terminator, silently truncating the
-copied string.
+The existing allocation of scatterlists in omap_crypto_copy_sg_lists()
+was allocating an array of scatterlist pointers, not scatterlist objects,
+resulting in a 4x too small allocation.
 
-Fix this off-by-one error by using 'count' directly for the length check
-to ensure long names are rejected early and copied without truncation.
+Use sizeof(*new_sg) to get the correct object size.
 
-Cc: stable@vger.kernel.org
-Fixes: d9110b0b01ff ("crypto: marvell - add support for OCTEON TX CPT engine")
-Signed-off-by: Thorsten Blum <thorsten.blum@linux.dev>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Fixes: 74ed87e7e7f7 ("crypto: omap - add base support library for common routines")
+Signed-off-by: Kees Cook <kees@kernel.org>
+Acked-by: Herbert Xu <herbert@gondor.apana.org.au>
+Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/crypto/marvell/octeontx/otx_cptpf_ucode.c |    2 +-
+ drivers/crypto/omap-crypto.c |    2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/crypto/marvell/octeontx/otx_cptpf_ucode.c
-+++ b/drivers/crypto/marvell/octeontx/otx_cptpf_ucode.c
-@@ -1326,7 +1326,7 @@ static ssize_t ucode_load_store(struct d
- 	int del_grp_idx = -1;
- 	int ucode_idx = 0;
+--- a/drivers/crypto/omap-crypto.c
++++ b/drivers/crypto/omap-crypto.c
+@@ -21,7 +21,7 @@ static int omap_crypto_copy_sg_lists(int
+ 	struct scatterlist *tmp;
  
--	if (strlen(buf) > OTX_CPT_UCODE_NAME_LENGTH)
-+	if (count >= OTX_CPT_UCODE_NAME_LENGTH)
- 		return -EINVAL;
+ 	if (!(flags & OMAP_CRYPTO_FORCE_SINGLE_ENTRY)) {
+-		new_sg = kmalloc_array(n, sizeof(*sg), GFP_KERNEL);
++		new_sg = kmalloc_array(n, sizeof(*new_sg), GFP_KERNEL);
+ 		if (!new_sg)
+ 			return -ENOMEM;
  
- 	eng_grps = container_of(attr, struct otx_cpt_eng_grps, ucode_load_attr);
 
 
