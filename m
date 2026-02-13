@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 035431684BE;
-	Fri, 13 Feb 2026 13:56:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D768F1684BE;
+	Fri, 13 Feb 2026 13:56:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770990989; cv=none; b=FeeceaE3J2SeLhAXYHIh2khaaFfu9a/klZr6WcL0ZBIRe+vGMHOFtYQC/5rIAnltEHnw9FDJmyluyw6wKsnYNdTiXi0LOoE9atL8+y1TbsCNCafye7Yk5hlQ/KEWQwGqIaiv/ITfLu7OkKBbi8SVT6QQ7/OqIibRMhYXIzgSmbE=
+	t=1770990991; cv=none; b=tr6jXfAGlNwn3s1qcsakAuEnGLRsvD4M8TKnKMpPyCbGu/3oHsFQ8RaM77paheu3h9gvKkopwjgoIylZiYpzwbN+tmqpUshlF2L1j6RMvMwp2/THzmDUjfsUb9mqgAl03QRj5Mj5tEPqvZCUi5CfqKIAqDnUaa3ucKiwcdYjTag=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770990989; c=relaxed/simple;
-	bh=JnV4o7IHb8DA0S1Bhr5E0n46j/tcZxMlKS3Vxf3nLFA=;
+	s=arc-20240116; t=1770990991; c=relaxed/simple;
+	bh=eBkSII84j0IXvt+e1Ak5UMkdGLjj4aZFC5UMl0Ti/xA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=FYW+1DctDiUzJ2zLDlNT5OOylyK22FHw2Klak2o9d9PMIlWyTu7iRa4kqsxP/3KQp2QY4V/UrLAIH3+7XiLJUPfuw480feI5iZZOh2OXFdtOBZ93s+gunWonXBhY04er7X7z/745kcHwWhm3BZYCzYoJB3ILN88TTJa4pNt8GYE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jbFaBFpa; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TPYW4hRqG2UpXVMFxE9fJSGAZxGGvEw07DSvOVP7UP33/HfViacKShQWdFVEi6qoUd3IpUGL9Q8nyo25OsuVyF6vlXvIlV/ndPoBZ2UWmKZoaQUBDz+TLdmi69de2YSpQLJl1B+i27Fm18s+lLuG3FHEIRHnFCmorOoMz4TP01A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=s0BuDyR1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jbFaBFpa"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39BABC16AAE;
-	Fri, 13 Feb 2026 13:56:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="s0BuDyR1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C2DAC116C6;
+	Fri, 13 Feb 2026 13:56:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770990988;
-	bh=JnV4o7IHb8DA0S1Bhr5E0n46j/tcZxMlKS3Vxf3nLFA=;
+	s=korg; t=1770990991;
+	bh=eBkSII84j0IXvt+e1Ak5UMkdGLjj4aZFC5UMl0Ti/xA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jbFaBFpaM4o0+Z2AANqvdpcT354RbI26qL5xD2M//0x3dlTGYdxgq1Y6UJ+AK7xk8
-	 6DGeVxItJrd9JR3Je/1yu3LSf1FkXKR/NieXbq7hZQLwVlbiKcYRP0U2kZ9scnXt4/
-	 fcFpdM013XYN0oT/87hGkMS0lH4nRQiTY7SNYTpA=
+	b=s0BuDyR1AygAi6BeVxiKM7rIw4ZwmxPKG8gaY1wCrqpgIJ3I/nIytF2kBMw/XTvnV
+	 1uFfQ775CuHk5Dkt7rM3VtZ2F/cTAyO/msglxwyzQ6Kagr13+Z9N92ltJ4spgFFQCw
+	 ziJT5UPp2agYxNHPzeZRgSCLB0BINlK3FfvzVaNY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Henrique Carvalho <henrique.carvalho@suse.com>,
+	tianshuo han <hantianshuo233@gmail.com>,
+	Namjae Jeon <linkinjeon@kernel.org>,
 	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 6.6 01/25] smb: client: split cached_fid bitfields to avoid shared-byte RMW races
-Date: Fri, 13 Feb 2026 14:48:27 +0100
-Message-ID: <20260213134703.939478994@linuxfoundation.org>
+Subject: [PATCH 6.6 02/25] ksmbd: fix infinite loop caused by next_smb2_rcv_hdr_off reset in error paths
+Date: Fri, 13 Feb 2026 14:48:28 +0100
+Message-ID: <20260213134703.975062335@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260213134703.882698935@linuxfoundation.org>
 References: <20260213134703.882698935@linuxfoundation.org>
@@ -44,56 +45,68 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Henrique Carvalho <henrique.carvalho@suse.com>
+From: Namjae Jeon <linkinjeon@kernel.org>
 
-commit ec306600d5ba7148c9dbf8f5a8f1f5c1a044a241 upstream.
+commit 010eb01ce23b34b50531448b0da391c7f05a72af upstream.
 
-is_open, has_lease and on_list are stored in the same bitfield byte in
-struct cached_fid but are updated in different code paths that may run
-concurrently. Bitfield assignments generate byte read–modify–write
-operations (e.g. `orb $mask, addr` on x86_64), so updating one flag can
-restore stale values of the others.
+The problem occurs when a signed request fails smb2 signature verification
+check. In __process_request(), if check_sign_req() returns an error,
+set_smb2_rsp_status(work, STATUS_ACCESS_DENIED) is called.
+set_smb2_rsp_status() set work->next_smb2_rcv_hdr_off as zero. By resetting
+next_smb2_rcv_hdr_off to zero, the pointer to the next command in the chain
+is lost. Consequently, is_chained_smb2_message() continues to point to
+the same request header instead of advancing. If the header's NextCommand
+field is non-zero, the function returns true, causing __handle_ksmbd_work()
+to repeatedly process the same failed request in an infinite loop.
+This results in the kernel log being flooded with "bad smb2 signature"
+messages and high CPU usage.
 
-A possible interleaving is:
-    CPU1: load old byte (has_lease=1, on_list=1)
-    CPU2: clear both flags (store 0)
-    CPU1: RMW store (old | IS_OPEN) -> reintroduces cleared bits
+This patch fixes the issue by changing the return value from
+SERVER_HANDLER_CONTINUE to SERVER_HANDLER_ABORT. This ensures that
+the processing loop terminates immediately rather than attempting to
+continue from an invalidated offset.
 
-To avoid this class of races, convert these flags to separate bool
-fields.
-
+Reported-by: tianshuo han <hantianshuo233@gmail.com>
 Cc: stable@vger.kernel.org
-Fixes: ebe98f1447bbc ("cifs: enable caching of directories for which a lease is held")
-Signed-off-by: Henrique Carvalho <henrique.carvalho@suse.com>
+Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
 Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/client/cached_dir.h |    8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ fs/smb/server/server.c |    6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
---- a/fs/smb/client/cached_dir.h
-+++ b/fs/smb/client/cached_dir.h
-@@ -34,10 +34,10 @@ struct cached_fid {
- 	struct list_head entry;
- 	struct cached_fids *cfids;
- 	const char *path;
--	bool has_lease:1;
--	bool is_open:1;
--	bool on_list:1;
--	bool file_all_info_is_valid:1;
-+	bool has_lease;
-+	bool is_open;
-+	bool on_list;
-+	bool file_all_info_is_valid;
- 	unsigned long time; /* jiffies of when lease was taken */
- 	struct kref refcount;
- 	struct cifs_fid fid;
+--- a/fs/smb/server/server.c
++++ b/fs/smb/server/server.c
+@@ -126,21 +126,21 @@ static int __process_request(struct ksmb
+ andx_again:
+ 	if (command >= conn->max_cmds) {
+ 		conn->ops->set_rsp_status(work, STATUS_INVALID_PARAMETER);
+-		return SERVER_HANDLER_CONTINUE;
++		return SERVER_HANDLER_ABORT;
+ 	}
+ 
+ 	cmds = &conn->cmds[command];
+ 	if (!cmds->proc) {
+ 		ksmbd_debug(SMB, "*** not implemented yet cmd = %x\n", command);
+ 		conn->ops->set_rsp_status(work, STATUS_NOT_IMPLEMENTED);
+-		return SERVER_HANDLER_CONTINUE;
++		return SERVER_HANDLER_ABORT;
+ 	}
+ 
+ 	if (work->sess && conn->ops->is_sign_req(work, command)) {
+ 		ret = conn->ops->check_sign_req(work);
+ 		if (!ret) {
+ 			conn->ops->set_rsp_status(work, STATUS_ACCESS_DENIED);
+-			return SERVER_HANDLER_CONTINUE;
++			return SERVER_HANDLER_ABORT;
+ 		}
+ 	}
+ 
 
 
