@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 865F01684BE;
-	Fri, 13 Feb 2026 13:57:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7EDBC1684BE;
+	Fri, 13 Feb 2026 13:57:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770991067; cv=none; b=sGwtt+bB5rnpnuk+3k/K1bqxzEViMRCfNTqUc/obJeKzMzfIcJTcLqR/Dqm2G+hfS77RZOB9NAkXj2ui6sMupZaX+tGlrVI9p0j4Z7+0X+BBKR+LIg3AYaYGOaWtp33Iu6ZYwrsOvwwfZwbttBnfAUwA27k8JZKLpaDoy1p1gMY=
+	t=1770991070; cv=none; b=p7xafi8cOyFldZv8uW+rBeLPkM1ohepQ0sCG4HVtqM493HaOQGuNOhsTEDFADzwNHPOJRj1UN17Rdk+LSxR9wMNgoJIXa35VJQNGE75HeaxfTH4oqE4TWoo1yob4bUkH81n97c77y9szxUiI5+HDC90NAJX9z5/gwKWrqshQZEY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770991067; c=relaxed/simple;
-	bh=GJi6os/VII1PF3nutvbbuk3SfmULqLFikn+28Apbhl4=;
+	s=arc-20240116; t=1770991070; c=relaxed/simple;
+	bh=JSuL5x7WHdoqHiuCKze0M5UlwPikJG9Qtcd71FUK1wg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=olrZimFN0NwXZxTjWCMSHcXskIX+7dlND5yR4KOIBjbR/LqsO+pDRy/utfrBc3lMUEQ9lrkPB1NNPHI/fN6IixZduLdBO2hL0rwoZqs14QCF5mw0eIW4T16parQXNj43JPQ6xpdYB1vI0GKE9Vqzplqv3TUnVzqm14yISqVhAkk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nOEEKdRr; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gjD/Yb12AheeDhholYXOuyruGrVMh93VO1qp8nTzs/pmP6kj7n0NTjFmMlCtKv5H4gD2tUDiToCOHiuGNVQI/TqzI8EwPMMdyUnppNyTAS2fHNLYuKHi5RdOdvcyo87DfcFncxp6A/h67h1bWpOfKTPiHCzy5urJHoVp93+KOPc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0jPIMls1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nOEEKdRr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10DEBC116C6;
-	Fri, 13 Feb 2026 13:57:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0jPIMls1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 004CDC19423;
+	Fri, 13 Feb 2026 13:57:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770991067;
-	bh=GJi6os/VII1PF3nutvbbuk3SfmULqLFikn+28Apbhl4=;
+	s=korg; t=1770991070;
+	bh=JSuL5x7WHdoqHiuCKze0M5UlwPikJG9Qtcd71FUK1wg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nOEEKdRrlpFwGzIShvYtKKMnVwLEDj8gHsmGRc703zRiY2bQwNbM5DC/PYN0a32gC
-	 Fld4Qn8Hq5XjCZIqE4ZZHUW4048wKDSswXzLbE8UAXJzZNDqDm+JgJtTnIOKu1NL8h
-	 e3sq0tn15u8SgeIywTbZuJr/cjDfjhWyB7rPy23U=
+	b=0jPIMls1QojJiFeOJBSWXxi94FItGNPq/k6U0HUdD1GWDiCTnho/p9enK7/U4Kjl/
+	 ybqo1AX/0BAlb8Y00Inu1NMSJUzn6COsh+LhG5h+D+qYUxNkVu4f1kTCpVzdEcEqyX
+	 YNQEF7ohBwpytBzSmDNvXDEZy2eT37r/aq6203h8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
-	Dan Carpenter <dan.carpenter@linaro.org>,
 	Anil Gurumurthy <agurumurthy@marvell.com>,
 	Nilesh Javali <njavali@marvell.com>,
 	Himanshu Madhani <hmadhani2024@gmail.com>,
 	"Martin K. Petersen" <martin.petersen@oracle.com>
-Subject: [PATCH 6.6 14/25] scsi: qla2xxx: Delay module unload while fabric scan in progress
-Date: Fri, 13 Feb 2026 14:48:40 +0100
-Message-ID: <20260213134704.402620730@linuxfoundation.org>
+Subject: [PATCH 6.6 15/25] scsi: qla2xxx: Free sp in error path to fix system crash
+Date: Fri, 13 Feb 2026 14:48:41 +0100
+Message-ID: <20260213134704.438251239@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260213134703.882698935@linuxfoundation.org>
 References: <20260213134703.882698935@linuxfoundation.org>
@@ -56,68 +54,81 @@ Content-Transfer-Encoding: 8bit
 
 From: Anil Gurumurthy <agurumurthy@marvell.com>
 
-commit 8890bf450e0b6b283f48ac619fca5ac2f14ddd62 upstream.
+commit 7adbd2b7809066c75f0433e5e2a8e114b429f30f upstream.
 
-System crash seen during load/unload test in a loop.
+System crash seen during load/unload test in a loop,
 
-[105954.384919] RBP: ffff914589838dc0 R08: 0000000000000000 R09: 0000000000000086
-[105954.384920] R10: 000000000000000f R11: ffffa31240904be5 R12: ffff914605f868e0
-[105954.384921] R13: ffff914605f86910 R14: 0000000000008010 R15: 00000000ddb7c000
-[105954.384923] FS:  0000000000000000(0000) GS:ffff9163fec40000(0000) knlGS:0000000000000000
-[105954.384925] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-[105954.384926] CR2: 000055d31ce1d6a0 CR3: 0000000119f5e001 CR4: 0000000000770ee0
-[105954.384928] PKRU: 55555554
-[105954.384929] Call Trace:
-[105954.384931]  <IRQ>
-[105954.384934]  qla24xx_sp_unmap+0x1f3/0x2a0 [qla2xxx]
-[105954.384962]  ? qla_async_scan_sp_done+0x114/0x1f0 [qla2xxx]
-[105954.384980]  ? qla24xx_els_ct_entry+0x4de/0x760 [qla2xxx]
-[105954.384999]  ? __wake_up_common+0x80/0x190
-[105954.385004]  ? qla24xx_process_response_queue+0xc2/0xaa0 [qla2xxx]
-[105954.385023]  ? qla24xx_msix_rsp_q+0x44/0xb0 [qla2xxx]
-[105954.385040]  ? __handle_irq_event_percpu+0x3d/0x190
-[105954.385044]  ? handle_irq_event+0x58/0xb0
-[105954.385046]  ? handle_edge_irq+0x93/0x240
-[105954.385050]  ? __common_interrupt+0x41/0xa0
-[105954.385055]  ? common_interrupt+0x3e/0xa0
-[105954.385060]  ? asm_common_interrupt+0x22/0x40
+[61110.449331] qla2xxx [0000:27:00.0]-0042:0: Disabled MSI-X.
+[61110.467494] =============================================================================
+[61110.467498] BUG qla2xxx_srbs (Tainted: G           OE    --------  --- ): Objects remaining in qla2xxx_srbs on __kmem_cache_shutdown()
+[61110.467501] -----------------------------------------------------------------------------
 
-The root cause of this was that there was a free (dma_free_attrs) in the
-interrupt context.  There was a device discovery/fabric scan in
-progress.  A module unload was issued which set the UNLOADING flag.  As
-part of the discovery, after receiving an interrupt a work queue was
-scheduled (which involved a work to be queued).  Since the UNLOADING
-flag is set, the work item was not allocated and the mapped memory had
-to be freed.  The free occurred in interrupt context leading to system
-crash.  Delay the driver unload until the fabric scan is complete to
-avoid the crash.
+[61110.467502] Slab 0x000000000ffc8162 objects=51 used=1 fp=0x00000000e25d3d85 flags=0x57ffffc0010200(slab|head|node=1|zone=2|lastcpupid=0x1fffff)
+[61110.467509] CPU: 53 PID: 455206 Comm: rmmod Kdump: loaded Tainted: G           OE    --------  ---  5.14.0-284.11.1.el9_2.x86_64 #1
+[61110.467513] Hardware name: HPE ProLiant DL385 Gen10 Plus v2/ProLiant DL385 Gen10 Plus v2, BIOS A42 08/17/2023
+[61110.467515] Call Trace:
+[61110.467516]  <TASK>
+[61110.467519]  dump_stack_lvl+0x34/0x48
+[61110.467526]  slab_err.cold+0x53/0x67
+[61110.467534]  __kmem_cache_shutdown+0x16e/0x320
+[61110.467540]  kmem_cache_destroy+0x51/0x160
+[61110.467544]  qla2x00_module_exit+0x93/0x99 [qla2xxx]
+[61110.467607]  ? __do_sys_delete_module.constprop.0+0x178/0x280
+[61110.467613]  ? syscall_trace_enter.constprop.0+0x145/0x1d0
+[61110.467616]  ? do_syscall_64+0x5c/0x90
+[61110.467619]  ? exc_page_fault+0x62/0x150
+[61110.467622]  ? entry_SYSCALL_64_after_hwframe+0x63/0xcd
+[61110.467626]  </TASK>
+[61110.467627] Disabling lock debugging due to kernel taint
+[61110.467635] Object 0x0000000026f7e6e6 @offset=16000
+[61110.467639] ------------[ cut here ]------------
+[61110.467639] kmem_cache_destroy qla2xxx_srbs: Slab cache still has objects when called from qla2x00_module_exit+0x93/0x99 [qla2xxx]
+[61110.467659] WARNING: CPU: 53 PID: 455206 at mm/slab_common.c:520 kmem_cache_destroy+0x14d/0x160
+[61110.467718] CPU: 53 PID: 455206 Comm: rmmod Kdump: loaded Tainted: G    B      OE    --------  ---  5.14.0-284.11.1.el9_2.x86_64 #1
+[61110.467720] Hardware name: HPE ProLiant DL385 Gen10 Plus v2/ProLiant DL385 Gen10 Plus v2, BIOS A42 08/17/2023
+[61110.467721] RIP: 0010:kmem_cache_destroy+0x14d/0x160
+[61110.467724] Code: 99 7d 07 00 48 89 ef e8 e1 6a 07 00 eb b3 48 8b 55 60 48 8b 4c 24 20 48 c7 c6 70 fc 66 90 48 c7 c7 f8 ef a1 90 e8 e1 ed 7c 00 <0f> 0b eb 93 c3 cc cc cc cc 66 2e 0f 1f 84 00 00 00 00 00 55 48 89
+[61110.467725] RSP: 0018:ffffa304e489fe80 EFLAGS: 00010282
+[61110.467727] RAX: 0000000000000000 RBX: ffffffffc0d9a860 RCX: 0000000000000027
+[61110.467729] RDX: ffff8fd5ff9598a8 RSI: 0000000000000001 RDI: ffff8fd5ff9598a0
+[61110.467730] RBP: ffff8fb6aaf78700 R08: 0000000000000000 R09: 0000000100d863b7
+[61110.467731] R10: ffffa304e489fd20 R11: ffffffff913bef48 R12: 0000000040002000
+[61110.467731] R13: 0000000000000000 R14: 0000000000000000 R15: 0000000000000000
+[61110.467733] FS:  00007f64c89fb740(0000) GS:ffff8fd5ff940000(0000) knlGS:0000000000000000
+[61110.467734] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+[61110.467735] CR2: 00007f0f02bfe000 CR3: 00000020ad6dc005 CR4: 0000000000770ee0
+[61110.467736] PKRU: 55555554
+[61110.467737] Call Trace:
+[61110.467738]  <TASK>
+[61110.467739]  qla2x00_module_exit+0x93/0x99 [qla2xxx]
+[61110.467755]  ? __do_sys_delete_module.constprop.0+0x178/0x280
 
-Reported-by: kernel test robot <lkp@intel.com>
-Reported-by: Dan Carpenter <dan.carpenter@linaro.org>
-Closes: https://lore.kernel.org/all/202512090414.07Waorz0-lkp@intel.com/
-Fixes: 783e0dc4f66a ("qla2xxx: Check for device state before unloading the driver.")
+Free sp in the error path to fix the crash.
+
+Fixes: f352eeb75419 ("scsi: qla2xxx: Add ability to use GPNFT/GNNFT for RSCN handling")
 Cc: stable@vger.kernel.org
 Signed-off-by: Anil Gurumurthy <agurumurthy@marvell.com>
 Signed-off-by: Nilesh Javali <njavali@marvell.com>
 Reviewed-by: Himanshu Madhani <hmadhani2024@gmail.com>
-Link: https://patch.msgid.link/20251210101604.431868-8-njavali@marvell.com
+Link: https://patch.msgid.link/20251210101604.431868-9-njavali@marvell.com
 Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/scsi/qla2xxx/qla_os.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/scsi/qla2xxx/qla_gs.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/scsi/qla2xxx/qla_os.c
-+++ b/drivers/scsi/qla2xxx/qla_os.c
-@@ -1194,7 +1194,8 @@ qla2x00_wait_for_hba_ready(scsi_qla_host
- 	while ((qla2x00_reset_active(vha) || ha->dpc_active ||
- 		ha->flags.mbox_busy) ||
- 	       test_bit(FX00_RESET_RECOVERY, &vha->dpc_flags) ||
--	       test_bit(FX00_TARGET_SCAN, &vha->dpc_flags)) {
-+	       test_bit(FX00_TARGET_SCAN, &vha->dpc_flags) ||
-+	       (vha->scan.scan_flags & SF_SCANNING)) {
- 		if (test_bit(UNLOADING, &base_vha->dpc_flags))
- 			break;
- 		msleep(1000);
+--- a/drivers/scsi/qla2xxx/qla_gs.c
++++ b/drivers/scsi/qla2xxx/qla_gs.c
+@@ -3622,8 +3622,8 @@ int qla_fab_async_scan(scsi_qla_host_t *
+ 	if (vha->scan.scan_flags & SF_SCANNING) {
+ 		spin_unlock_irqrestore(&vha->work_lock, flags);
+ 		ql_dbg(ql_dbg_disc + ql_dbg_verbose, vha, 0x2012,
+-		    "%s: scan active\n", __func__);
+-		return rval;
++		    "%s: scan active for sp:%p\n", __func__, sp);
++		goto done_free_sp;
+ 	}
+ 	vha->scan.scan_flags |= SF_SCANNING;
+ 	if (!sp)
 
 
