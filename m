@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C10C1D432D;
-	Fri, 13 Feb 2026 13:55:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4C7F1684BE;
+	Fri, 13 Feb 2026 13:55:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770990943; cv=none; b=Le4dKNrtYZGsrX7Vu9QArqAbjGIrfGzxL2np/eX/mu5/GS7cd3GUjW0urJ55SdvxHXdsWUzXhgb3OvpxjhgxDbglHuDxw8OmlDA9bd+wGcwdz+PftiahU/bKIAqMK6HKOnLPAPNRnkmUjoALQd2TBSEiSQ6FGXZIoMFhLn/CKvQ=
+	t=1770990947; cv=none; b=qRyqi9HVBxhDfegrplO4lDj4L5Ou5nvvxtXEPfeT1g4KDYb1i8qFcJQJX6sVNUwm/vq6xp/4cnbAfN9U1SnunE2pF8RJcSn9d0ya4XP6kxQNliawP0ldGGaX9vUklNZkkdD7OlZJXt6tyOSekQdSAWlsgmyGsFgvsQHiIZbzK5U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770990943; c=relaxed/simple;
-	bh=JJ8Sx7um6WOhuMg6ni/xcqT7bL9M6raqtPkPZxEF4ME=;
+	s=arc-20240116; t=1770990947; c=relaxed/simple;
+	bh=6m7nEScowCIO3tGmCXZz2AZuOJuPY2lGDT1bAgGi+uc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EpSMvpmX9ylISPvB2ixKtAs0HtEXWVOh9wsj6+ZGcmKXF5F5JYvm1EFxoICpMrUOC7OGaM/nSV1L+2FC1JBk/7z7VQt24iX7D3J8+mWVsSQ4zKkbPVdeprhCWRw5LEG679zGlcl5q9OEm6q4R7QrhQ+OL9IMEoDvWW9TyAfsmrA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=f/0J8/DR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kPrZZKi7sW7yr5c7C6mlybFdlz6PZKyq1vFkpt+MYuhdYoAB8v8792zyvm6yk0SXFOB5m6p7/IbPmVvQYXwNKdQ6+dx9RHlZNMyN8AgrElP/zxU7Nlr+FQ34wG6p9HTh2DB07cJgXr5amBWv5d4zq5FztJnU833nax0u5Tzo0h4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=y8UrLiY2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="f/0J8/DR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DFE85C116C6;
-	Fri, 13 Feb 2026 13:55:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="y8UrLiY2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6EE2EC116C6;
+	Fri, 13 Feb 2026 13:55:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770990943;
-	bh=JJ8Sx7um6WOhuMg6ni/xcqT7bL9M6raqtPkPZxEF4ME=;
+	s=korg; t=1770990946;
+	bh=6m7nEScowCIO3tGmCXZz2AZuOJuPY2lGDT1bAgGi+uc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=f/0J8/DRHxBiTX1JHBulB/lcYgoJRmSkZdEb3rEOEalbxx8bxVugvjiYRtqZj4eGD
-	 IJyRYTq6XtDPMBIje/7hdSzJgF7O55ImaE91yC5IFZLMoOllZHLHcQImIpScxetpEq
-	 ZZbUDggniIw2oj50QJEZquqdjFRaRa4mUIBhSE5g=
+	b=y8UrLiY28pymurwayzbRwuT0JyOd4EnbPJd96fQHgtHKbJvQi2wl5JwPFHadubcUx
+	 z+OXAGqmg7Z5WSgHLqvZb+fz/vk44n/5wnzwVDd08juzkDE3MNxBIaZ0+R5FU7KV8U
+	 5g1C68JEU+7Z17lU6+Su2So+CgY9gfLC7dWH7j44=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Chao Yu <chao@kernel.org>,
-	Gao Xiang <hsiangkao@linux.alibaba.com>
-Subject: [PATCH 6.12 20/24] erofs: fix UAF issue for file-backed mounts w/ directio option
-Date: Fri, 13 Feb 2026 14:48:39 +0100
-Message-ID: <20260213134705.461290853@linuxfoundation.org>
+	r772577952@gmail.com,
+	"Darrick J. Wong" <djwong@kernel.org>,
+	Christoph Hellwig <hch@lst.de>
+Subject: [PATCH 6.12 21/24] xfs: fix UAF in xchk_btree_check_block_owner
+Date: Fri, 13 Feb 2026 14:48:40 +0100
+Message-ID: <20260213134705.497497548@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260213134704.728003077@linuxfoundation.org>
 References: <20260213134704.728003077@linuxfoundation.org>
@@ -51,101 +51,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chao Yu <chao@kernel.org>
+From: Darrick J. Wong <djwong@kernel.org>
 
-commit 1caf50ce4af096d0280d59a31abdd85703cd995c upstream.
+commit 1c253e11225bc5167217897885b85093e17c2217 upstream.
 
-[    9.269940][ T3222] Call trace:
-[    9.269948][ T3222]  ext4_file_read_iter+0xac/0x108
-[    9.269979][ T3222]  vfs_iocb_iter_read+0xac/0x198
-[    9.269993][ T3222]  erofs_fileio_rq_submit+0x12c/0x180
-[    9.270008][ T3222]  erofs_fileio_submit_bio+0x14/0x24
-[    9.270030][ T3222]  z_erofs_runqueue+0x834/0x8ac
-[    9.270054][ T3222]  z_erofs_read_folio+0x120/0x220
-[    9.270083][ T3222]  filemap_read_folio+0x60/0x120
-[    9.270102][ T3222]  filemap_fault+0xcac/0x1060
-[    9.270119][ T3222]  do_pte_missing+0x2d8/0x1554
-[    9.270131][ T3222]  handle_mm_fault+0x5ec/0x70c
-[    9.270142][ T3222]  do_page_fault+0x178/0x88c
-[    9.270167][ T3222]  do_translation_fault+0x38/0x54
-[    9.270183][ T3222]  do_mem_abort+0x54/0xac
-[    9.270208][ T3222]  el0_da+0x44/0x7c
-[    9.270227][ T3222]  el0t_64_sync_handler+0x5c/0xf4
-[    9.270253][ T3222]  el0t_64_sync+0x1bc/0x1c0
+We cannot dereference bs->cur when trying to determine if bs->cur
+aliases bs->sc->sa.{bno,rmap}_cur after the latter has been freed.
+Fix this by sampling before type before any freeing could happen.
+The correct temporal ordering was broken when we removed xfs_btnum_t.
 
-EROFS may encounter above panic when enabling file-backed mount w/
-directio mount option, the root cause is it may suffer UAF in below
-race condition:
-
-- z_erofs_read_folio                          wq s_dio_done_wq
- - z_erofs_runqueue
-  - erofs_fileio_submit_bio
-   - erofs_fileio_rq_submit
-    - vfs_iocb_iter_read
-     - ext4_file_read_iter
-      - ext4_dio_read_iter
-       - iomap_dio_rw
-       : bio was submitted and return -EIOCBQUEUED
-                                              - dio_aio_complete_work
-                                               - dio_complete
-                                                - dio->iocb->ki_complete (erofs_fileio_ki_complete())
-                                                 - kfree(rq)
-                                                 : it frees iocb, iocb.ki_filp can be UAF in file_accessed().
-       - file_accessed
-       : access NULL file point
-
-Introduce a reference count in struct erofs_fileio_rq, and initialize it
-as two, both erofs_fileio_ki_complete() and erofs_fileio_rq_submit() will
-decrease reference count, the last one decreasing the reference count
-to zero will free rq.
-
-Cc: stable@kernel.org
-Fixes: fb176750266a ("erofs: add file-backed mount support")
-Fixes: 6422cde1b0d5 ("erofs: use buffered I/O for file-backed mounts by default")
-Signed-off-by: Chao Yu <chao@kernel.org>
-Reviewed-by: Gao Xiang <hsiangkao@linux.alibaba.com>
-Signed-off-by: Gao Xiang <hsiangkao@linux.alibaba.com>
+Cc: r772577952@gmail.com
+Cc: <stable@vger.kernel.org> # v6.9
+Fixes: ec793e690f801d ("xfs: remove xfs_btnum_t")
+Signed-off-by: "Darrick J. Wong" <djwong@kernel.org>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Tested-by: Jiaming Zhang <r772577952@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/erofs/fileio.c |    7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ fs/xfs/scrub/btree.c |    7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
---- a/fs/erofs/fileio.c
-+++ b/fs/erofs/fileio.c
-@@ -10,6 +10,7 @@ struct erofs_fileio_rq {
- 	struct bio bio;
- 	struct kiocb iocb;
- 	struct super_block *sb;
-+	refcount_t ref;
- };
+--- a/fs/xfs/scrub/btree.c
++++ b/fs/xfs/scrub/btree.c
+@@ -370,12 +370,15 @@ xchk_btree_check_block_owner(
+ {
+ 	xfs_agnumber_t		agno;
+ 	xfs_agblock_t		agbno;
++	bool			is_bnobt, is_rmapbt;
+ 	bool			init_sa;
+ 	int			error = 0;
  
- struct erofs_fileio {
-@@ -42,7 +43,8 @@ static void erofs_fileio_ki_complete(str
- 		}
- 	}
- 	bio_uninit(&rq->bio);
--	kfree(rq);
-+	if (refcount_dec_and_test(&rq->ref))
-+		kfree(rq);
- }
+ 	if (!bs->cur)
+ 		return 0;
  
- static void erofs_fileio_rq_submit(struct erofs_fileio_rq *rq)
-@@ -63,6 +65,8 @@ static void erofs_fileio_rq_submit(struc
- 	ret = vfs_iocb_iter_read(rq->iocb.ki_filp, &rq->iocb, &iter);
- 	if (ret != -EIOCBQUEUED)
- 		erofs_fileio_ki_complete(&rq->iocb, ret);
-+	if (refcount_dec_and_test(&rq->ref))
-+		kfree(rq);
- }
++	is_bnobt = xfs_btree_is_bno(bs->cur->bc_ops);
++	is_rmapbt = xfs_btree_is_rmap(bs->cur->bc_ops);
+ 	agno = xfs_daddr_to_agno(bs->cur->bc_mp, daddr);
+ 	agbno = xfs_daddr_to_agbno(bs->cur->bc_mp, daddr);
  
- static struct erofs_fileio_rq *erofs_fileio_rq_alloc(struct erofs_map_dev *mdev)
-@@ -73,6 +77,7 @@ static struct erofs_fileio_rq *erofs_fil
- 	bio_init(&rq->bio, NULL, rq->bvecs, BIO_MAX_VECS, REQ_OP_READ);
- 	rq->iocb.ki_filp = mdev->m_dif->file;
- 	rq->sb = mdev->m_sb;
-+	refcount_set(&rq->ref, 2);
- 	return rq;
- }
+@@ -398,11 +401,11 @@ xchk_btree_check_block_owner(
+ 	 * have to nullify it (to shut down further block owner checks) if
+ 	 * self-xref encounters problems.
+ 	 */
+-	if (!bs->sc->sa.bno_cur && xfs_btree_is_bno(bs->cur->bc_ops))
++	if (!bs->sc->sa.bno_cur && is_bnobt)
+ 		bs->cur = NULL;
  
+ 	xchk_xref_is_only_owned_by(bs->sc, agbno, 1, bs->oinfo);
+-	if (!bs->sc->sa.rmap_cur && xfs_btree_is_rmap(bs->cur->bc_ops))
++	if (!bs->sc->sa.rmap_cur && is_rmapbt)
+ 		bs->cur = NULL;
+ 
+ out_free:
 
 
