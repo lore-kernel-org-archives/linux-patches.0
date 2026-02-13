@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DFD99352936;
-	Fri, 13 Feb 2026 13:55:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 143601D432D;
+	Fri, 13 Feb 2026 13:55:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770990933; cv=none; b=r0i7ZKKksv4dEaFbJFAn1kDlyEgXOF0DkLUk1/8+FmM0iV5nwdB1wAifQ7YLetu/rdqLOpumwi6y3yha1bVQ4A9UzJYv46WkLPvybi0eZVVZfhScMvFkyAhaWGLcFe3wa0or/mTaJOeASBms29nUK3W0J+/BuuOlS69S1dFV4qw=
+	t=1770990937; cv=none; b=E1pa+AMxrSmExfwn3D0HZ0O2WnMiNN7NDTxXpn8SFF4O/GEJiNB9KmLOg1Cyi6+B6BlPEU7IwcO2r6VuUyMygrs95WpZpr8VsEpI0HlDxIal2VRl8r+cn0qRtSQ9Xg/5PoQLUuhB/0Eac3G1xcOSD/DuY2knvGPLxfiJIlfTCew=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770990933; c=relaxed/simple;
-	bh=FFNQTOGxNEoQaVRZlE9ICXxdF+o+NjMWjHJlVMK7G7s=;
+	s=arc-20240116; t=1770990937; c=relaxed/simple;
+	bh=RmmbhFUbqbIeUhf89X8yyUAyIwsbBt1MEOHvwu14dFM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pa1ifxVuuryLd/YYa8+FBJUMIKR8AzTwWGu+CsW2Rgp36Tq99he0e+bKPBprsw4uWhhXQubBasimA4LsT1Iv2RxLQiqR1+GJ+0RFVlYgkpj64EJcrBpduGmwybjOZIc49LBVfyghce5DeilJ8/lWAsl96nfKJmhNcFCr7IWhO5A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HU393L0X; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=IitH/Hi/rGoN3UcjHQsH0SGU9kZ4f7JJmNbEYTFxjhU9jgQaKM4N1LCxXthtnRqxHGkQ+No0LWj/r4zeVCnY/YmGHqpRK9CRIX2UMEePd1Z530fo/eIWibhvo5yBZiQwIfWoCfjX78dt7fhOqqk0AKKWk0r1j/Q5dgX66ukw5H4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EAswNy7F; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HU393L0X"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B3A0C116C6;
-	Fri, 13 Feb 2026 13:55:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EAswNy7F"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7DA3AC116C6;
+	Fri, 13 Feb 2026 13:55:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770990933;
-	bh=FFNQTOGxNEoQaVRZlE9ICXxdF+o+NjMWjHJlVMK7G7s=;
+	s=korg; t=1770990937;
+	bh=RmmbhFUbqbIeUhf89X8yyUAyIwsbBt1MEOHvwu14dFM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HU393L0XAqYzkjmCspbEy0Fywp6igkWbYbMgkOuD64/qdzvrcoZFoqdTNSjmkuq0f
-	 7UgTQv4S0NroEut5DfzCfqZ+2+qAjVb5OXrnwquuT7xkb2frN+90q5VZG3FttVExzS
-	 MzH1YHuPnuTAL7krfCfO2Ikovk8rDZPW9aloyOF4=
+	b=EAswNy7F4HoBdxt5durXWgNKhgDeYFM6WIofvvv+iGOhu0+GUwO5IwyhBSCUt/AE2
+	 3oMwTzppgDkYrVKBHwrlKnI9FTzEjeRsnadFDjVx6BiDfyhgHqIZkeP8R704LqB/7Q
+	 Av+KDF4XLgUjVcqSc2HJ1S3F4ywj8F/Oi2Q2xAD0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daniele Palmas <dnlplm@gmail.com>,
-	Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>,
-	Fabio Porcedda <fabio.porcedda@gmail.com>
-Subject: [PATCH 6.12 18/24] bus: mhi: host: pci_generic: Add Telit FE990B40 modem support
-Date: Fri, 13 Feb 2026 14:48:37 +0100
-Message-ID: <20260213134705.390435841@linuxfoundation.org>
+	Eric Dumazet <edumazet@google.com>,
+	syzbot+5498a510ff9de39d37da@syzkaller.appspotmail.com,
+	Eulgyu Kim <eulgyukim@snu.ac.kr>,
+	Mat Martineau <martineau@kernel.org>,
+	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.12 19/24] mptcp: fix race in mptcp_pm_nl_flush_addrs_doit()
+Date: Fri, 13 Feb 2026 14:48:38 +0100
+Message-ID: <20260213134705.425963571@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260213134704.728003077@linuxfoundation.org>
 References: <20260213134704.728003077@linuxfoundation.org>
@@ -51,52 +54,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Daniele Palmas <dnlplm@gmail.com>
+From: Eric Dumazet <edumazet@google.com>
 
-commit 6eaee77923ddf04beedb832c06f983679586361c upstream.
+commit e2a9eeb69f7d4ca4cf4c70463af77664fdb6ab1d upstream.
 
-Add SDX72 based modem Telit FE990B40, reusing FN920C04 configuration.
+syzbot and Eulgyu Kim reported crashes in mptcp_pm_nl_get_local_id()
+and/or mptcp_pm_nl_is_backup()
 
-01:00.0 Unassigned class [ff00]: Qualcomm Device 0309
-        Subsystem: Device 1c5d:2025
+Root cause is list_splice_init() in mptcp_pm_nl_flush_addrs_doit()
+which is not RCU ready.
 
-Signed-off-by: Daniele Palmas <dnlplm@gmail.com>
-Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
-Link: https://patch.msgid.link/20251015102059.1781001-1-dnlplm@gmail.com
-Signed-off-by: Fabio Porcedda <fabio.porcedda@gmail.com>
+list_splice_init_rcu() can not be called here while holding pernet->lock
+spinlock.
+
+Many thanks to Eulgyu Kim for providing a repro and testing our patches.
+
+Fixes: 141694df6573 ("mptcp: remove address when netlink flushes addrs")
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Reported-by: syzbot+5498a510ff9de39d37da@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/all/6970a46d.a00a0220.3ad28e.5cf0.GAE@google.com/T/
+Reported-by: Eulgyu Kim <eulgyukim@snu.ac.kr>
+Closes: https://github.com/multipath-tcp/mptcp_net-next/issues/611
+Reviewed-by: Mat Martineau <martineau@kernel.org>
+Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Link: https://patch.msgid.link/20260124-net-mptcp-race_nl_flush_addrs-v3-1-b2dc1b613e9d@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+[ Conflicts because the code has been moved from pm_netlink.c to
+  pm_kernel.c later on in commit 8617e85e04bd ("mptcp: pm: split
+  in-kernel PM specific code"). The same modifications can be applied
+  in pm_netlink.c with one exception, because 'pernet->local_addr_list'
+  has been renamed to 'pernet->endp_list' in commit 35e71e43a56d
+  ("mptcp: pm: in-kernel: rename 'local_addr_list' to 'endp_list'"). The
+  previous name is then still being used in this version. ]
+Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/bus/mhi/host/pci_generic.c |   13 +++++++++++++
- 1 file changed, 13 insertions(+)
+ net/mptcp/pm_netlink.c |   16 +++++++++++++---
+ 1 file changed, 13 insertions(+), 3 deletions(-)
 
---- a/drivers/bus/mhi/host/pci_generic.c
-+++ b/drivers/bus/mhi/host/pci_generic.c
-@@ -744,6 +744,16 @@ static const struct mhi_pci_dev_info mhi
- 	.edl_trigger = true,
- };
+--- a/net/mptcp/pm_netlink.c
++++ b/net/mptcp/pm_netlink.c
+@@ -1811,16 +1811,26 @@ static void __reset_counters(struct pm_n
+ int mptcp_pm_nl_flush_addrs_doit(struct sk_buff *skb, struct genl_info *info)
+ {
+ 	struct pm_nl_pernet *pernet = genl_info_pm_nl(info);
+-	LIST_HEAD(free_list);
++	struct list_head free_list;
  
-+static const struct mhi_pci_dev_info mhi_telit_fe990b40_info = {
-+	.name = "telit-fe990b40",
-+	.config = &modem_telit_fn920c04_config,
-+	.bar_num = MHI_PCI_DEFAULT_BAR_NUM,
-+	.dma_data_width = 32,
-+	.sideband_wake = false,
-+	.mru_default = 32768,
-+	.edl_trigger = true,
-+};
+ 	spin_lock_bh(&pernet->lock);
+-	list_splice_init(&pernet->local_addr_list, &free_list);
++	free_list = pernet->local_addr_list;
++	INIT_LIST_HEAD_RCU(&pernet->local_addr_list);
+ 	__reset_counters(pernet);
+ 	pernet->next_id = 1;
+ 	bitmap_zero(pernet->id_bitmap, MPTCP_PM_MAX_ADDR_ID + 1);
+ 	spin_unlock_bh(&pernet->lock);
+-	mptcp_nl_flush_addrs_list(sock_net(skb->sk), &free_list);
 +
- static const struct mhi_pci_dev_info mhi_netprisma_lcur57_info = {
- 	.name = "netprisma-lcur57",
- 	.edl = "qcom/prog_firehose_sdx24.mbn",
-@@ -792,6 +802,9 @@ static const struct pci_device_id mhi_pc
- 	/* Telit FN990B40 (sdx72) */
- 	{ PCI_DEVICE_SUB(PCI_VENDOR_ID_QCOM, 0x0309, 0x1c5d, 0x201a),
- 		.driver_data = (kernel_ulong_t) &mhi_telit_fn990b40_info },
-+	/* Telit FE990B40 (sdx72) */
-+	{ PCI_DEVICE_SUB(PCI_VENDOR_ID_QCOM, 0x0309, 0x1c5d, 0x2025),
-+		.driver_data = (kernel_ulong_t) &mhi_telit_fe990b40_info },
- 	{ PCI_DEVICE(PCI_VENDOR_ID_QCOM, 0x0309),
- 		.driver_data = (kernel_ulong_t) &mhi_qcom_sdx75_info },
- 	{ PCI_DEVICE(PCI_VENDOR_ID_QUECTEL, 0x1001), /* EM120R-GL (sdx24) */
++	if (free_list.next == &pernet->local_addr_list)
++		return 0;
++
+ 	synchronize_rcu();
++
++	/* Adjust the pointers to free_list instead of pernet->local_addr_list */
++	free_list.prev->next = &free_list;
++	free_list.next->prev = &free_list;
++
++	mptcp_nl_flush_addrs_list(sock_net(skb->sk), &free_list);
+ 	__flush_addrs(&free_list);
+ 	return 0;
+ }
 
 
