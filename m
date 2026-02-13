@@ -1,164 +1,138 @@
-Received: from MW6PR02CU001.outbound.protection.outlook.com (mail-westus2azon11012004.outbound.protection.outlook.com [52.101.48.4])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 834A9354ADF
-	for <patches@lists.linux.dev>; Fri, 13 Feb 2026 12:57:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.48.4
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770987423; cv=fail; b=OUx9UjGuHvKU0tTkmWCtwVWsn20fAOAhRvoj0MDX1jMLuh8bJY5gJiaxdI/iLVZox/3Utwn0NBm5cKrNAWU/PoePF417X6aXjmNXXfmbO7ydEHalIBbebdaUHxOdcECwuWG6A8O4WXv7f74GYkM1BYUMWnw28jirg7OrNh6mt1g=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770987423; c=relaxed/simple;
-	bh=EBDON4f5BUbcG8/ot1riZe9aiS6PMb5U+6asCnyAn8E=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
-	 Content-Disposition:In-Reply-To:MIME-Version; b=YN0Wa4AiR3rTY5N71Eku4EeFHsvACm1N+8BhePt0OMiCmohcMiAxnPVJdf5bKGDXg3uyXT0FXgx2aGo62ZdE6qQMH//BB/hapnHZeScysLnehXLMF7JyD468VO64VqoXf/zuXseRzXVJIIbwUFtkT+uutzuABNAievSYwQqvDT4=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=hBGWx0YC; arc=fail smtp.client-ip=52.101.48.4
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 225FF34E754;
+	Fri, 13 Feb 2026 13:49:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1770990567; cv=none; b=Bb56HqDRh8ulPl4kREeplkS/fnL35lTt2AGB47b6uzSQ0d3nbPGhLkUslVHVAdWfSOjmfyxY6lhI7+y7G5sHYyHplROi8t4ZeNDbIxjUUtqrrGquf2to6nGZcEdICMf5VUlNdUY0C8ZcunEqn6nLPuXA5lbj2RAS+Y4pZ5h4eA8=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1770990567; c=relaxed/simple;
+	bh=WTdLZDphwNMDJoYDpfIIwJObAom4p7l7JUIRFejqWlo=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=Y4Go+lTPjypdkgNjgNfPhHLGGAKazRa62nvBTLK7ottkcsXfzC/7IEikiqFY6PPagIaxCXB2E88A+OIRi71PVgMyp4YCPy1PYMs4x9BqEWkLK2rgQkz1O+dsP8i2xLxPB8TCCLKA7AhNjQ8p4Sh6easG6rZaycrvRkUcYNQXEUE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YXZMpH45; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="hBGWx0YC"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=Bs0FvEH45ogHPylMtseiC4LvEvsui7uCHcdJ4C3qRFsst2V0ZGueuXC4YVQfXyZA58jFe0mcX2kfPTna0PfnmcZNaH2ii/tmRQw982n3K+WUhkNJo/gM/G42g0q7DUA0+RlCtA2xLEDMh/8QpL/9mLwoIEs+3CSWfi0rH/VDk/jxXYTwC2fLA31R/rmr5Jhjv8GfSnOiiI/mCZItNol1FfyCkLQD/UA5xJegd8ZYaGxtbYMtYyJ6euHLw5oR1+F8E65bv8PM0yPXUdF6B5GDiPmtTEyfMqd6Bje96Iy6b5rKYvv7IdSUbAJhBqyi1exU6EYH4GYS8kharTl7NdAnYw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=HHsLI2Ag/SumppFr8CjouhbAPoxAkmI768h2MFtT86k=;
- b=uuRCVYSQZYM+k5492QvaTpF1xAvFepExyr3/aBGVctJ9++1sa8TOeW2aGAVWOn+JE66La9cg9JG8f0LD7p35qvGkcFb12aCZHjHrPWuwkNzHpyoY+elXHYAk31Dzf+NGRhi5ybUSxziRe8FOk8jUgVNybUkuzZaP9xSUJIoWgR/tnz1mkdpuk5pe/DJuwk144Tdx2zvC0SRjxczysSGVM3lwuANGaVvIcoC84jquauDb78vgXGsluE/B79ReUdoIj9kGdKB3xa72s3iQLCOOI6Xx1TlbR9SCVgLJqBRF8/Em3dLNTsbJzC7pcMwXoQzTV0pklrAGaGEZDJqBDRnPcw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
- dkim=pass header.d=nvidia.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=HHsLI2Ag/SumppFr8CjouhbAPoxAkmI768h2MFtT86k=;
- b=hBGWx0YC7Enl00a2rAj/9ozV2UlrR0VKV7guwbl+2PVV7/heZSrt4GUENFXik07LBXRZofF53KdeDsBTqY+09RGVOdflQNjDrzFLIfHjGF9ltR35D0H8aeMimRHjuxMroJQNZGVFae+CmHNPcKTFUfj1wGAjPJ2BWXRvPeW5L4c6cPupjgwjoWlr138lRku50IFUpNeyZX6lA4JHMfNDZGu/GlEIbbwKn9qWkUmJF9KpuNvDKIEX4rXWuB5lQ/v0SiAh96qzhSTUdpQJOdN2m6LvKEh0sP7h0fyFTzT37zUHcGE24jZek8ePktZoVq6O6gkWc45Xvcbjq+bKGfVf7A==
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=nvidia.com;
-Received: from LV8PR12MB9620.namprd12.prod.outlook.com (2603:10b6:408:2a1::19)
- by PH0PR12MB7011.namprd12.prod.outlook.com (2603:10b6:510:21c::15) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9611.13; Fri, 13 Feb
- 2026 12:56:59 +0000
-Received: from LV8PR12MB9620.namprd12.prod.outlook.com
- ([fe80::299d:f5e0:3550:1528]) by LV8PR12MB9620.namprd12.prod.outlook.com
- ([fe80::299d:f5e0:3550:1528%5]) with mapi id 15.20.9611.013; Fri, 13 Feb 2026
- 12:56:59 +0000
-Date: Fri, 13 Feb 2026 08:56:58 -0400
-From: Jason Gunthorpe <jgg@nvidia.com>
-To: Leon Romanovsky <leon@kernel.org>
-Cc: Kalesh AP <kalesh-anakkur.purayil@broadcom.com>,
-	linux-rdma@vger.kernel.org,
-	Selvin Xavier <selvin.xavier@broadcom.com>,
-	Sriharsha Basavapatna <sriharsha.basavapatna@broadcom.com>,
-	patches@lists.linux.dev
-Subject: Re: [PATCH 05/10] RDMA: Provide documentation about the uABI
- compatibility rules
-Message-ID: <20260213125658.GF1218606@nvidia.com>
-References: <0-v1-89ea7d615ba4+636-bnxt_re_uapi_jgg@nvidia.com>
- <5-v1-89ea7d615ba4+636-bnxt_re_uapi_jgg@nvidia.com>
- <20260213102347.GL12887@unreal>
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260213102347.GL12887@unreal>
-X-ClientProxiedBy: BL0PR1501CA0011.namprd15.prod.outlook.com
- (2603:10b6:207:17::24) To LV8PR12MB9620.namprd12.prod.outlook.com
- (2603:10b6:408:2a1::19)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YXZMpH45"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4EA89C116C6;
+	Fri, 13 Feb 2026 13:49:26 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1770990566;
+	bh=WTdLZDphwNMDJoYDpfIIwJObAom4p7l7JUIRFejqWlo=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=YXZMpH457L+va3Ffe4md1/ZjExP1h/VaWablEtUw1qIMlfDKSTK9SH3kKsrrmTzBn
+	 Hl8CR8dHAAmbO3tELvRbu45NhZsC9gnlFETjfWyNKEGwAQKrTUElD4HJMKCB8mUnJa
+	 wa4cHhQFO4dPtz931ZEhCCRiTgwGWfYySCnh5IY8=
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: stable@vger.kernel.org
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	patches@lists.linux.dev,
+	Li Chen <me@linux.beauty>,
+	Jens Axboe <axboe@kernel.dk>
+Subject: [PATCH 6.19 01/49] io_uring/io-wq: add exit-on-idle state
+Date: Fri, 13 Feb 2026 14:47:20 +0100
+Message-ID: <20260213134708.780411035@linuxfoundation.org>
+X-Mailer: git-send-email 2.53.0
+In-Reply-To: <20260213134708.713126210@linuxfoundation.org>
+References: <20260213134708.713126210@linuxfoundation.org>
+User-Agent: quilt/0.69
+X-stable: review
+X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: LV8PR12MB9620:EE_|PH0PR12MB7011:EE_
-X-MS-Office365-Filtering-Correlation-Id: a8f3969a-55b4-4804-c55d-08de6aff5fb7
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;ARA:13230040|376014|366016|1800799024;
-X-Microsoft-Antispam-Message-Info:
-	=?us-ascii?Q?fnjiT6S4APsPXAbeM41vAVccc5d+uFt+uliZC50cbVUeshIlHFSZDPbiQ/SB?=
- =?us-ascii?Q?otYhbwGtpQCvyz85lFgnQ/ENu5oaev+8SU42Ndo/bTWTkyOwH8khbq8orw0l?=
- =?us-ascii?Q?vaA8zk9hTnkw6IBZsisyZTrUVKQ0P3fjAm1p7BiTtXdm0A/i3VmV4m6/GQWs?=
- =?us-ascii?Q?kCMbi55dDUiYwnZvV+T6t6qNvjmSvgGIB/BAkUx3nM4IRTjxILifXyoMz2JF?=
- =?us-ascii?Q?44ZaH3+nOHKgOk/8h6SeBK3L9xpdLM37RMT54X/h0m4ay1av4KiEuXRXE0Bc?=
- =?us-ascii?Q?j7H/H+v2Nhr6JVJF8WGxx7wlCI0My/qaMDsz68I0RfC0FFGQKDIHEO0stUwC?=
- =?us-ascii?Q?qD8lYKaAeb/j73Z3pvw9p2nHeCOVe85ShuiEAuVQME1vsoX6bG6SKxhmz9bx?=
- =?us-ascii?Q?2DnEXhKTGZc2QbPBALtI5o65AnozQxnSqiTZVtcpYCRCSw9BuOaPIs3FUsB5?=
- =?us-ascii?Q?gBndVPJquNIVJhpPm6GjuVNJqRq/OU2HXKxQWmh4EoCNCOR7axd/T3HAjByg?=
- =?us-ascii?Q?zkjmKeLZz6gXSuoPJaBxh/SzaUBiTs7rMNXxtHx+KnAv/VY2/yrmrmmyFtQj?=
- =?us-ascii?Q?xnAzveg6QcbmS/3NYwrBlhl2n1szVvWh+Ocxy28sEuIxokFJsUB5RgUOnR+o?=
- =?us-ascii?Q?7BbH3qlRQnWuyTcYx8q6V9L8LA+9hmLOm49iU1JXOVdK+qCIFK9Brt3oC7K1?=
- =?us-ascii?Q?a7UAtoS8UEF951ZNqPZwkjAdc/gyKXTDwbOv6532C1pzsRYjwgCRCoKgr1Hh?=
- =?us-ascii?Q?WPxyl04GlGI8LQGX6cd3eTI8L8mQOZOwIrtzyjV221YoMlRL0nDT5RbPRgWO?=
- =?us-ascii?Q?2PfmtkMrBi9kgAGe/xFXeTeOT84PrN38Z/A3asTv5QsMeyQ2Rbv6dzZXGdX/?=
- =?us-ascii?Q?nvdSC0HqhayY0nfF+roRlSE+/+M919xY3UwH9Y5IHInO7h+RrRkBsYsqPSSv?=
- =?us-ascii?Q?HlHH7JraVpH+dzWjrqEaveEV673b5JCPjZLKR6pdC/6tvjdZj6suA0YE36jD?=
- =?us-ascii?Q?sNW97zePJ6OvB/+Zg/oLi9jW+/pw2vfHjQctwSHY3KECb82OWn0GPR+UA+/w?=
- =?us-ascii?Q?at24w5AqrUy+TSXk1daw5HvRsxjQpoCaoeOaFEs5sb4RD7Qnv6EVgx9v2HNl?=
- =?us-ascii?Q?Yz/AK17A9QsnfMX96EH1j6KBXO9X6U8tkN3YtC4tR9YtWT4X4V3bxGvhxL9w?=
- =?us-ascii?Q?b7BE8tR5QdHJq6QUsokhUItVwuY8TioxwOXDOz/pHsAFaV6t9Q7oGR+rCgp7?=
- =?us-ascii?Q?PpdgJw82G9cXajhJ/CsdaWlYEV8H/wxKMwjFmRnhREaK9HGOdY7hZoxYsikb?=
- =?us-ascii?Q?IdkfcmQUwBFWK2J3qjnBFTbnJ3GDqCNSPPSlh/8Phn4ipg9trFl1LZGq9CIb?=
- =?us-ascii?Q?JeYxFsWEFh/vWC7WPOY1elxDx7u3reFseu/SBu2/q/erZkkgZ+eIFbejgXIi?=
- =?us-ascii?Q?AAn0gVU0QEPabhG8siUe8MOepXFgvAmivgRkz1BHfI3+zOXhjLLggocsGm8I?=
- =?us-ascii?Q?8jKMjkCZz6/CqKJKL4e0sWd4oCrhSai2I0w7aX8yuO8AQn3MvjDVHFuGMljW?=
- =?us-ascii?Q?4tCaFRPn0jxsPZV7OE0=3D?=
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:LV8PR12MB9620.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(376014)(366016)(1800799024);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?us-ascii?Q?NUqLl38jvwhG+mViQqqSNzIbVSMgeN2UwfUckSOcZDLb2qXyYdphVxdJV1Uz?=
- =?us-ascii?Q?6EBldznmulHbJIC6+4R/kFkwTR0P+MAR2y/++Sv1g7AjCXLuWxSVKqwH9Atw?=
- =?us-ascii?Q?lwRsQFf4rTi8b69VIqo4pp95qkOwuPLyry9Zff3m8OeBrSK0A08EqoSl/DyB?=
- =?us-ascii?Q?1DuGJUzMz/yl2WZ7wByN68K125MyQ34TvmuhqcbOPQ4OQaP0HiRICB2NXnYt?=
- =?us-ascii?Q?u4bId3OLhT//EU3g8Fknh4PLC/lfvJUcuX5rYtUKyitZCM2nev83UqgChkEl?=
- =?us-ascii?Q?yHvhOQ0wpezn81jXdyV6iHEO1YsJ8EsPcXq+sTVekNu5ixsYI+lXzpuIqimE?=
- =?us-ascii?Q?w1R8XW2vUYeIYOdM4z/TXj7DICym6m8n4AyEhFioeAXuhJDOPA/DxtTogOw7?=
- =?us-ascii?Q?u+Dbof3CAOSrdkljKJB7nXs7Jxa49Gcs06Ei7og9z8zAQhVZxSN3m9y9DfsB?=
- =?us-ascii?Q?EhLaAO4fWHUBFhFwjTGE2CH0IBiCWz/0CiHa5lJ35xsGMg0oIu9XOgbliqQw?=
- =?us-ascii?Q?5ihNTWOux+9nM3Do4z/jR7E2IekRatooN82/OQJDtfebhsvVm8Olt98j7qIJ?=
- =?us-ascii?Q?43ZezHRsysW+cyxA1Lzf6cLddhbWDVCsIhkzcUXBB4n77O6q0NunXcQFOTBF?=
- =?us-ascii?Q?qXOHBTkOJKptQDuWGRO1jQ2hJQzsYnQ8ge4J4oD09mmbGGBKyyg8r/Kz6gIY?=
- =?us-ascii?Q?tMcftt9vJ36o5XvS4gwVP6TrWb0VWYXOWKuWm+858O0iOm9QjHrYjMzlgUUr?=
- =?us-ascii?Q?BTxsxGGVGXp3FqCZiyb+x7dzQv9F1HxJvc4p3GtXnpK/HvHaoszfILglSQg2?=
- =?us-ascii?Q?ICAbXCyl8tIqygDBzZWeyfarnv0CxNHDcji1uslFK7IjoaVTR6cp3eEbvQh9?=
- =?us-ascii?Q?l3zPvVCbsA0u/g1LGg9BgPCO+E2/ih1MW9xPBrR9AXiwxVr+m1M0cRnrxNFJ?=
- =?us-ascii?Q?qIn/NrM4l7gLoGPiZ4lVP0PNasvJPBZ3hHpnZ3J3HqGms8YnqoEhZQoFVG9r?=
- =?us-ascii?Q?KsiQjMMTWWvfIvFvcmMZi2vRekdn553nxan57CHKUSkuobC5KfHuKvCv+yd6?=
- =?us-ascii?Q?PCjTFBj/nmN2oaI5/yETrr3TPAAjlHds/dWCw+e0i16eu+PPgV7AduAqiRsJ?=
- =?us-ascii?Q?I+1arSxiXd47Nxy9RMCozd+hWtxr2FrGcTqWVcBW36Mr+zgkPy8wx8yobi2V?=
- =?us-ascii?Q?lNY+YTPXOnUVWV8gNWhR2+rEHSF8JCRKj+cwgH2LkkZc1ZNPeGvqJqGIBMPy?=
- =?us-ascii?Q?zXnd4Oi+RvhFh2z/O4J9I9gEh6199tO9yQSISPhTx77XtIrnNlzZBkNyLcWP?=
- =?us-ascii?Q?VLYugsXRKKFG4ANan9PHp5qwzQMh6dVB7MPXNzdIhB6uSNZPKDxYMXq/H5BS?=
- =?us-ascii?Q?+FOhXVvU0FLcSkKLUDCFw+rKmBctG3qaUQ2pqaWRZiOSvUQJb3RVC0M0Q9wk?=
- =?us-ascii?Q?ESCjUuYX+aAcf7kP5bgUjmK3xw6UDFSIYq4/0SxCYgVN799HI+W0BdjjavAH?=
- =?us-ascii?Q?S/ruj61xjvWyGJDLenh/YhHYfyEhQaEim7kA4CIIiFuMIvOJW8luiswjT3Ny?=
- =?us-ascii?Q?utZanthaGNq5pOWbGmcO98ghphVxeMKBZ8KdtCwRO3Iy+JAoRQYobewrGuiE?=
- =?us-ascii?Q?GGuOrYR9mutvW+eaBRzloqoH1MOVSUPIO9bEqB8UvrbmY/W+h4Ij9weczlJ4?=
- =?us-ascii?Q?AAW9QZlV8wGRQi+NtYLe+CIpHj3gQaD8vQQtcRjLqrxNkEAJmp+3IqOcLcrv?=
- =?us-ascii?Q?Jb++KQ+f4Q=3D=3D?=
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: a8f3969a-55b4-4804-c55d-08de6aff5fb7
-X-MS-Exchange-CrossTenant-AuthSource: LV8PR12MB9620.namprd12.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 13 Feb 2026 12:56:58.9758
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: dw2+ZISD4+En9lavw64mTc4cUJXVrBZabPYNIIJpZeNCzyIb3QIQ2UoqGEiGJurp
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH0PR12MB7011
+Content-Transfer-Encoding: 8bit
 
-On Fri, Feb 13, 2026 at 12:23:47PM +0200, Leon Romanovsky wrote:
-> On Thu, Feb 05, 2026 at 09:45:39PM -0400, Jason Gunthorpe wrote:
-> > Write down how all of this is supposed to work using the new helpers.
-> > 
-> > Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
-> > ---
-> >  include/rdma/ib_verbs.h | 81 +++++++++++++++++++++++++++++++++++++++++
-> >  1 file changed, 81 insertions(+)
-> 
-> Can we add these rules to Chris's review-prompts?
+6.19-stable review patch.  If anyone has any objections, please let me know.
 
-Yes, I was thinking about the same thing, not sure how to do that
+------------------
 
-Jason
+From: Li Chen <me@linux.beauty>
+
+commit 38aa434ab9335ce2d178b7538cdf01d60b2014c3 upstream.
+
+io-wq uses an idle timeout to shrink the pool, but keeps the last worker
+around indefinitely to avoid churn.
+
+For tasks that used io_uring for file I/O and then stop using io_uring,
+this can leave an iou-wrk-* thread behind even after all io_uring
+instances are gone. This is unnecessary overhead and also gets in the
+way of process checkpoint/restore.
+
+Add an exit-on-idle state that makes all io-wq workers exit as soon as
+they become idle, and provide io_wq_set_exit_on_idle() to toggle it.
+
+Signed-off-by: Li Chen <me@linux.beauty>
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+---
+ io_uring/io-wq.c |   27 +++++++++++++++++++++++++--
+ io_uring/io-wq.h |    1 +
+ 2 files changed, 26 insertions(+), 2 deletions(-)
+
+--- a/io_uring/io-wq.c
++++ b/io_uring/io-wq.c
+@@ -34,6 +34,7 @@ enum {
+ 
+ enum {
+ 	IO_WQ_BIT_EXIT		= 0,	/* wq exiting */
++	IO_WQ_BIT_EXIT_ON_IDLE	= 1,	/* allow all workers to exit on idle */
+ };
+ 
+ enum {
+@@ -706,9 +707,13 @@ static int io_wq_worker(void *data)
+ 		raw_spin_lock(&acct->workers_lock);
+ 		/*
+ 		 * Last sleep timed out. Exit if we're not the last worker,
+-		 * or if someone modified our affinity.
++		 * or if someone modified our affinity. If wq is marked
++		 * idle-exit, drop the worker as well. This is used to avoid
++		 * keeping io-wq workers around for tasks that no longer have
++		 * any active io_uring instances.
+ 		 */
+-		if (last_timeout && (exit_mask || acct->nr_workers > 1)) {
++		if ((last_timeout && (exit_mask || acct->nr_workers > 1)) ||
++		    test_bit(IO_WQ_BIT_EXIT_ON_IDLE, &wq->state)) {
+ 			acct->nr_workers--;
+ 			raw_spin_unlock(&acct->workers_lock);
+ 			__set_current_state(TASK_RUNNING);
+@@ -963,6 +968,24 @@ static bool io_wq_worker_wake(struct io_
+ 	return false;
+ }
+ 
++void io_wq_set_exit_on_idle(struct io_wq *wq, bool enable)
++{
++	if (!wq->task)
++		return;
++
++	if (!enable) {
++		clear_bit(IO_WQ_BIT_EXIT_ON_IDLE, &wq->state);
++		return;
++	}
++
++	if (test_and_set_bit(IO_WQ_BIT_EXIT_ON_IDLE, &wq->state))
++		return;
++
++	rcu_read_lock();
++	io_wq_for_each_worker(wq, io_wq_worker_wake, NULL);
++	rcu_read_unlock();
++}
++
+ static void io_run_cancel(struct io_wq_work *work, struct io_wq *wq)
+ {
+ 	do {
+--- a/io_uring/io-wq.h
++++ b/io_uring/io-wq.h
+@@ -41,6 +41,7 @@ struct io_wq_data {
+ struct io_wq *io_wq_create(unsigned bounded, struct io_wq_data *data);
+ void io_wq_exit_start(struct io_wq *wq);
+ void io_wq_put_and_exit(struct io_wq *wq);
++void io_wq_set_exit_on_idle(struct io_wq *wq, bool enable);
+ 
+ void io_wq_enqueue(struct io_wq *wq, struct io_wq_work *work);
+ void io_wq_hash_work(struct io_wq_work *work, void *val);
+
+
