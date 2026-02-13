@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D768F1684BE;
-	Fri, 13 Feb 2026 13:56:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4514E1684BE;
+	Fri, 13 Feb 2026 13:56:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770990991; cv=none; b=tr6jXfAGlNwn3s1qcsakAuEnGLRsvD4M8TKnKMpPyCbGu/3oHsFQ8RaM77paheu3h9gvKkopwjgoIylZiYpzwbN+tmqpUshlF2L1j6RMvMwp2/THzmDUjfsUb9mqgAl03QRj5Mj5tEPqvZCUi5CfqKIAqDnUaa3ucKiwcdYjTag=
+	t=1770990995; cv=none; b=WH47RbndoNmcwgfEoOZ4GnjHAcAQmtsUwPuQEGuavZlUiJ7k8rOkNhg71qjs6w7pXnhxbwTVM0/YMk0gw9IVT6rOeMl+gy+LwqJEWGg+ehvqPh6JCmNHq1+PcqIhn+8u5AJdKTJgDThxMDTIS+C3LHvxpYTs6Fb+E1RyJE9JUy8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770990991; c=relaxed/simple;
-	bh=eBkSII84j0IXvt+e1Ak5UMkdGLjj4aZFC5UMl0Ti/xA=;
+	s=arc-20240116; t=1770990995; c=relaxed/simple;
+	bh=20kUHWQHjD+ghrV7kGvRkHXq45Hh+hYj8kh026uMWaI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TPYW4hRqG2UpXVMFxE9fJSGAZxGGvEw07DSvOVP7UP33/HfViacKShQWdFVEi6qoUd3IpUGL9Q8nyo25OsuVyF6vlXvIlV/ndPoBZ2UWmKZoaQUBDz+TLdmi69de2YSpQLJl1B+i27Fm18s+lLuG3FHEIRHnFCmorOoMz4TP01A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=s0BuDyR1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=F6pxqFj4j77pH+RlIuFKo184hDv83GIcZ5Bh8qcImn/uyMlZogE09Qj81hfTCT3PyJO/0LfGvBdMSq43VuqvSUeh9xvrSNN9ki+xFS7Gj7sssgdNFsOTnuh7+q0R8bLi8ZMG7t84XpdSF4rgjN3CPwyRxrdCSAP8pf22urXYqT8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mQaDs9xy; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="s0BuDyR1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C2DAC116C6;
-	Fri, 13 Feb 2026 13:56:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mQaDs9xy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8EFD1C116C6;
+	Fri, 13 Feb 2026 13:56:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770990991;
-	bh=eBkSII84j0IXvt+e1Ak5UMkdGLjj4aZFC5UMl0Ti/xA=;
+	s=korg; t=1770990995;
+	bh=20kUHWQHjD+ghrV7kGvRkHXq45Hh+hYj8kh026uMWaI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=s0BuDyR1AygAi6BeVxiKM7rIw4ZwmxPKG8gaY1wCrqpgIJ3I/nIytF2kBMw/XTvnV
-	 1uFfQ775CuHk5Dkt7rM3VtZ2F/cTAyO/msglxwyzQ6Kagr13+Z9N92ltJ4spgFFQCw
-	 ziJT5UPp2agYxNHPzeZRgSCLB0BINlK3FfvzVaNY=
+	b=mQaDs9xyp8vtMT2ZjbRCki3clKMC2XqxLCaRmcIovDxHtcjnA06gQDT7KqZ+M8Mla
+	 SVyxGEniPYQUfTSz6/TCFcZcPC4DecFZVAgAOQx5EQdc5wG/iv134t2luUnGm5uBvl
+	 ipHtxtJ34suOQwjKjkLt55MR93y80Onvpd9fkbmI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	tianshuo han <hantianshuo233@gmail.com>,
+	Henrique Carvalho <henrique.carvalho@suse.com>,
 	Namjae Jeon <linkinjeon@kernel.org>,
 	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 6.6 02/25] ksmbd: fix infinite loop caused by next_smb2_rcv_hdr_off reset in error paths
-Date: Fri, 13 Feb 2026 14:48:28 +0100
-Message-ID: <20260213134703.975062335@linuxfoundation.org>
+Subject: [PATCH 6.6 03/25] smb: server: fix leak of active_num_conn in ksmbd_tcp_new_connection()
+Date: Fri, 13 Feb 2026 14:48:29 +0100
+Message-ID: <20260213134704.010276466@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260213134703.882698935@linuxfoundation.org>
 References: <20260213134703.882698935@linuxfoundation.org>
@@ -51,62 +51,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Namjae Jeon <linkinjeon@kernel.org>
+From: Henrique Carvalho <henrique.carvalho@suse.com>
 
-commit 010eb01ce23b34b50531448b0da391c7f05a72af upstream.
+commit 77ffbcac4e569566d0092d5f22627dfc0896b553 upstream.
 
-The problem occurs when a signed request fails smb2 signature verification
-check. In __process_request(), if check_sign_req() returns an error,
-set_smb2_rsp_status(work, STATUS_ACCESS_DENIED) is called.
-set_smb2_rsp_status() set work->next_smb2_rcv_hdr_off as zero. By resetting
-next_smb2_rcv_hdr_off to zero, the pointer to the next command in the chain
-is lost. Consequently, is_chained_smb2_message() continues to point to
-the same request header instead of advancing. If the header's NextCommand
-field is non-zero, the function returns true, causing __handle_ksmbd_work()
-to repeatedly process the same failed request in an infinite loop.
-This results in the kernel log being flooded with "bad smb2 signature"
-messages and high CPU usage.
+On kthread_run() failure in ksmbd_tcp_new_connection(), the transport is
+freed via free_transport(), which does not decrement active_num_conn,
+leaking this counter.
 
-This patch fixes the issue by changing the return value from
-SERVER_HANDLER_CONTINUE to SERVER_HANDLER_ABORT. This ensures that
-the processing loop terminates immediately rather than attempting to
-continue from an invalidated offset.
+Replace free_transport() with ksmbd_tcp_disconnect().
 
-Reported-by: tianshuo han <hantianshuo233@gmail.com>
+Fixes: 0d0d4680db22e ("ksmbd: add max connections parameter")
 Cc: stable@vger.kernel.org
-Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Henrique Carvalho <henrique.carvalho@suse.com>
+Acked-by: Namjae Jeon <linkinjeon@kernel.org>
 Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/server/server.c |    6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ fs/smb/server/transport_tcp.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/fs/smb/server/server.c
-+++ b/fs/smb/server/server.c
-@@ -126,21 +126,21 @@ static int __process_request(struct ksmb
- andx_again:
- 	if (command >= conn->max_cmds) {
- 		conn->ops->set_rsp_status(work, STATUS_INVALID_PARAMETER);
--		return SERVER_HANDLER_CONTINUE;
-+		return SERVER_HANDLER_ABORT;
- 	}
+--- a/fs/smb/server/transport_tcp.c
++++ b/fs/smb/server/transport_tcp.c
+@@ -41,6 +41,7 @@ static struct ksmbd_transport_ops ksmbd_
  
- 	cmds = &conn->cmds[command];
- 	if (!cmds->proc) {
- 		ksmbd_debug(SMB, "*** not implemented yet cmd = %x\n", command);
- 		conn->ops->set_rsp_status(work, STATUS_NOT_IMPLEMENTED);
--		return SERVER_HANDLER_CONTINUE;
-+		return SERVER_HANDLER_ABORT;
- 	}
+ static void tcp_stop_kthread(struct task_struct *kthread);
+ static struct interface *alloc_iface(char *ifname);
++static void ksmbd_tcp_disconnect(struct ksmbd_transport *t);
  
- 	if (work->sess && conn->ops->is_sign_req(work, command)) {
- 		ret = conn->ops->check_sign_req(work);
- 		if (!ret) {
- 			conn->ops->set_rsp_status(work, STATUS_ACCESS_DENIED);
--			return SERVER_HANDLER_CONTINUE;
-+			return SERVER_HANDLER_ABORT;
- 		}
+ #define KSMBD_TRANS(t)	(&(t)->transport)
+ #define TCP_TRANS(t)	((struct tcp_transport *)container_of(t, \
+@@ -219,7 +220,7 @@ static int ksmbd_tcp_new_connection(stru
+ 	if (IS_ERR(handler)) {
+ 		pr_err("cannot start conn thread\n");
+ 		rc = PTR_ERR(handler);
+-		free_transport(t);
++		ksmbd_tcp_disconnect(KSMBD_TRANS(t));
  	}
+ 	return rc;
  
 
 
