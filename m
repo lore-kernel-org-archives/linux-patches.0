@@ -1,37 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0134323645D;
-	Fri, 13 Feb 2026 13:50:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E8CD223323;
+	Fri, 13 Feb 2026 13:50:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770990606; cv=none; b=m7oWmPe92uCHoWiG0a7BBqOdjyTrgqCS97kCHm61ml5NKD0JA7vlD0ThHCBRegxrw1utSMlzSZ4xCq4tA9pNtxVl0qj4n+YHK03l9QMuPG+YrF4sSdPuf5aubRtPJxOdmFhf0k4E4wdRLHmQhVHCnZzlMgI02+f7Ls/VvEDBXNY=
+	t=1770990609; cv=none; b=CCXMruRKY8lezsm7XRyoc7xjEo7HOtnbrwts7Rv1DOOfjFsj5P5KpyAXehTLCZeavFsL9/Hoig0h+KwqGMQ1NZd2f3qF8C3finvkhoPPshga7Ib2yoCPpG664k0X68aU+zoEDkLllJ5Y+XmEzDBQy3AnN44BYKp6yqF9HR06gyw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770990606; c=relaxed/simple;
-	bh=oSCvOGIVI/p2pRigBwrFD6KowZ4SOas5UUy+pLHA6yM=;
+	s=arc-20240116; t=1770990609; c=relaxed/simple;
+	bh=zrpzGQeAEmafNpSdLLwHHu/MJpn9UBTMWv8teTr0wz4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gM5dzZ0fLFaFN9+CwWORqkoK5z/XhGr0tqUAbcCdwkwsbREIZs8Li0s4mC7tkX2PLNFSMT7vXl34KoGy8PuKMsJ/88rXl9nBN1ch3RNLVHQeDgyxWkUlxuT5CxKmg1hDpe8O/FjD+YxnG3wCWZYiUOyEgg9ax62Y9jdpCbxTdAM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=I0e82ieR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=d94QcDlAumAOb2BwQkDxkXmB8woCEoUAD0qmxqtCO0VO8crY7GZmvBkv+4l0083paOKwmLyupCg2ym7k06EJLcbcokX+3kwwgpukk3SxeKZTqmrjC3R6vfbJCMjTm8kF+P4+wIQrziwkzyIYWpaCV/F3XLzqPbA80jWDvyKtxXk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oq1Omgd0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="I0e82ieR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45BA8C116C6;
-	Fri, 13 Feb 2026 13:50:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oq1Omgd0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5937DC116C6;
+	Fri, 13 Feb 2026 13:50:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770990605;
-	bh=oSCvOGIVI/p2pRigBwrFD6KowZ4SOas5UUy+pLHA6yM=;
+	s=korg; t=1770990608;
+	bh=zrpzGQeAEmafNpSdLLwHHu/MJpn9UBTMWv8teTr0wz4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=I0e82ieRhnzQf9m2sPgB4F7LhlFVV0PHcZcKafLcOn8Z6Vl8axmq+u+L6CvmBHNUm
-	 INSjMJQTrHTarAKH7vSMSIRQol9Tm0NO5y/r2KL8laDKeAlo95PeFSUXeYTzaVRa/0
-	 b2+sija241mut1bI3Vd5uKNgD+NcTlCQ3PslM5kM=
+	b=oq1Omgd0H1cL/41K4xbmKPz4+Vq7rx5xjzFAwJ7PECZ+0vb2BjoNQWjlfrS6vwbFO
+	 kovGYXwcYK0e8FGOEOJsULGJQjo41Xy1w3vjOAOtDTLMcG+sW+cji01HttXGmXE/HZ
+	 vjdkLXIZ5C1lBL0Q1hA3sKK7oNNuTYtKPFjBbuOw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Li Chen <me@linux.beauty>,
-	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 6.19 02/49] io_uring: allow io-wq workers to exit when unused
-Date: Fri, 13 Feb 2026 14:47:21 +0100
-Message-ID: <20260213134708.815760245@linuxfoundation.org>
+	Steve French <smfrench@gmail.com>,
+	Tom Talpey <tom@talpey.com>,
+	Long Li <longli@microsoft.com>,
+	Namjae Jeon <linkinjeon@kernel.org>,
+	linux-cifs@vger.kernel.org,
+	samba-technical@lists.samba.org,
+	Stefan Metzmacher <metze@samba.org>,
+	Steve French <stfrench@microsoft.com>
+Subject: [PATCH 6.19 20/49] smb: client: split out smbd_ib_post_send()
+Date: Fri, 13 Feb 2026 14:47:39 +0100
+Message-ID: <20260213134709.471649789@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260213134708.713126210@linuxfoundation.org>
 References: <20260213134708.713126210@linuxfoundation.org>
@@ -50,54 +56,87 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Li Chen <me@linux.beauty>
+From: Stefan Metzmacher <metze@samba.org>
 
-commit 91214661489467f8452d34edbf257488d85176e4 upstream.
+commit bf30515caec590316e0d08208e4252eed4c160df upstream.
 
-io_uring keeps a per-task io-wq around, even when the task no longer has
-any io_uring instances.
+This is like smb_direct_post_send() in the server
+and will simplify porting the smbdirect_send_batch
+and credit related logic from the server.
 
-If the task previously used io_uring for file I/O, this can leave an
-unrelated iou-wrk-* worker thread behind after the last io_uring
-instance is gone.
-
-When the last io_uring ctx is removed from the task context, mark the
-io-wq exit-on-idle so workers can go away. Clear the flag on subsequent
-io_uring usage.
-
-Signed-off-by: Li Chen <me@linux.beauty>
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Cc: <stable@vger.kernel.org> # 6.18.x
+Cc: Steve French <smfrench@gmail.com>
+Cc: Tom Talpey <tom@talpey.com>
+Cc: Long Li <longli@microsoft.com>
+Cc: Namjae Jeon <linkinjeon@kernel.org>
+Cc: linux-cifs@vger.kernel.org
+Cc: samba-technical@lists.samba.org
+Signed-off-by: Stefan Metzmacher <metze@samba.org>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- io_uring/tctx.c |   11 +++++++++++
- 1 file changed, 11 insertions(+)
+ fs/smb/client/smbdirect.c |   33 +++++++++++++++++----------------
+ 1 file changed, 17 insertions(+), 16 deletions(-)
 
---- a/io_uring/tctx.c
-+++ b/io_uring/tctx.c
-@@ -122,6 +122,14 @@ int __io_uring_add_tctx_node(struct io_r
- 				return ret;
- 		}
- 	}
-+
-+	/*
-+	 * Re-activate io-wq keepalive on any new io_uring usage. The wq may have
-+	 * been marked for idle-exit when the task temporarily had no active
-+	 * io_uring instances.
-+	 */
-+	if (tctx->io_wq)
-+		io_wq_set_exit_on_idle(tctx->io_wq, false);
- 	if (!xa_load(&tctx->xa, (unsigned long)ctx)) {
- 		node = kmalloc(sizeof(*node), GFP_KERNEL);
- 		if (!node)
-@@ -183,6 +191,9 @@ __cold void io_uring_del_tctx_node(unsig
- 	if (tctx->last == node->ctx)
- 		tctx->last = NULL;
- 	kfree(node);
-+
-+	if (xa_empty(&tctx->xa) && tctx->io_wq)
-+		io_wq_set_exit_on_idle(tctx->io_wq, true);
+--- a/fs/smb/client/smbdirect.c
++++ b/fs/smb/client/smbdirect.c
+@@ -1101,11 +1101,26 @@ static int manage_keep_alive_before_send
+ 	return 0;
  }
  
- __cold void io_uring_clean_tctx(struct io_uring_task *tctx)
++static int smbd_ib_post_send(struct smbdirect_socket *sc,
++			     struct ib_send_wr *wr)
++{
++	int ret;
++
++	atomic_inc(&sc->send_io.pending.count);
++	ret = ib_post_send(sc->ib.qp, wr, NULL);
++	if (ret) {
++		pr_err("failed to post send: %d\n", ret);
++		smbd_disconnect_rdma_connection(sc);
++		ret = -EAGAIN;
++	}
++	return ret;
++}
++
+ /* Post the send request */
+ static int smbd_post_send(struct smbdirect_socket *sc,
+ 		struct smbdirect_send_io *request)
+ {
+-	int rc, i;
++	int i;
+ 
+ 	for (i = 0; i < request->num_sge; i++) {
+ 		log_rdma_send(INFO,
+@@ -1126,15 +1141,7 @@ static int smbd_post_send(struct smbdire
+ 	request->wr.num_sge = request->num_sge;
+ 	request->wr.opcode = IB_WR_SEND;
+ 	request->wr.send_flags = IB_SEND_SIGNALED;
+-
+-	rc = ib_post_send(sc->ib.qp, &request->wr, NULL);
+-	if (rc) {
+-		log_rdma_send(ERR, "ib_post_send failed rc=%d\n", rc);
+-		smbd_disconnect_rdma_connection(sc);
+-		rc = -EAGAIN;
+-	}
+-
+-	return rc;
++	return smbd_ib_post_send(sc, &request->wr);
+ }
+ 
+ static int wait_for_credits(struct smbdirect_socket *sc,
+@@ -1280,12 +1287,6 @@ static int smbd_post_send_iter(struct sm
+ 		     le32_to_cpu(packet->data_length),
+ 		     le32_to_cpu(packet->remaining_data_length));
+ 
+-	/*
+-	 * Now that we got a local and a remote credit
+-	 * we add us as pending
+-	 */
+-	atomic_inc(&sc->send_io.pending.count);
+-
+ 	rc = smbd_post_send(sc, request);
+ 	if (!rc)
+ 		return 0;
 
 
