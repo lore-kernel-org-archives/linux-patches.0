@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3DEE54723;
-	Fri, 13 Feb 2026 13:54:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28B5535CBD8;
+	Fri, 13 Feb 2026 13:54:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770990867; cv=none; b=KUoI0B7GDJODanbLcHwxLicBaj7qrhJ48XLxZW5n2uwVyopfhqdTso1BWgOKyxOkAu6tNGvEEpdyO/SE0JiOZhaSX36qEdABwzzlifbgLDR96+6bT8MdrpU+7n42TZsXalEFLq6624HhWVeREjtqHytA7x3dOtGiwiI8bU/Jhl8=
+	t=1770990871; cv=none; b=Jcnp2HRfnUcgoeyhXrYCFYwzqj/LFh7ZBtSKY7sxt/ysV7nPn9Y3276eXzeEYlzy2nzeLyq8ObfWJXfsXCSfl18z1OF0wCqQCFPu/i2s7mPLe57GXIWzFE5WsSgz/NqDhm+VH/4M1voP7fs5qHC3sJg/gOzADA+mwziXp7WUUD8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770990867; c=relaxed/simple;
-	bh=yD8DB5eG7MnjVeG/kgRvrGZds3sLp1fqKcQS73ljFu0=;
+	s=arc-20240116; t=1770990871; c=relaxed/simple;
+	bh=TOJG7rV/ndur9fNA7C7R8itr15TLwjOCkrAn54q5OcU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WV3rQgaijiC6KuuhJQxM4xNn9vcWNU35HF2s8bYCYe/6bzwMV1cM3X3sZcJ7s8x2+IvGDh0vB/MKzw2DWjP/M2vG1Km8v46RSQPct0AezJ9JUpq8HM5Rq+dLam10v1amudnWRfRW3k2AX8w2cfFK1mfuiu4dEAbIIbOV/r8FW4g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KoIGExwm; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NrVMsHorR1m18rM2lsa7zDsk7//7n3ClDeTTBL2JcnVuiYdj93OoC1MzfNYXGZT0lNXRi1gnv83/qUDaAiQZ24woSq0b8hkgOxXZR3oNpS5qvIoWWeT/wb15nQD8xixXP7K+pvnhB3l/U6abaGZA0TcOCJExeg7LLT013mBhnMM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=O7m2mQqL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KoIGExwm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 57578C116C6;
-	Fri, 13 Feb 2026 13:54:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="O7m2mQqL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC625C116C6;
+	Fri, 13 Feb 2026 13:54:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770990867;
-	bh=yD8DB5eG7MnjVeG/kgRvrGZds3sLp1fqKcQS73ljFu0=;
+	s=korg; t=1770990871;
+	bh=TOJG7rV/ndur9fNA7C7R8itr15TLwjOCkrAn54q5OcU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KoIGExwmSDf/6FO5x+r5xKorvf5vD7GZD5Vutb8IzKmjwwP+tvAT20z92blAjZAC1
-	 50IO8CkXKJu0ZbIqZzT8QM9BIeQ5r7mkN4pYARpIlUk9SbA/w9FvwsRXfH/gyAZ2EQ
-	 HudVRvHNmBxxvY3NzY7okXfABcdT80FrXod3tSdI=
+	b=O7m2mQqLUBjSM70HJAUEjHESM+xRBrPOMzdVlGr/L9FRPZu9YsI/1yXTs6vtQCj6d
+	 lwrXO4VcKkcuICVCv023DXezzRkhfxIb05AY6kGtheVc/lFCON/Dlj5FBf7fOoezfF
+	 jBKiAjKt9gV7QIPLNKiJ0WrfwfQmJnmE4GC2ftHo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Danilo Krummrich <dakr@kernel.org>,
-	"Rafael J. Wysocki (Intel)" <rafael@kernel.org>,
-	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
-Subject: [PATCH 6.18 49/49] gpio: omap: do not register driver in probe()
-Date: Fri, 13 Feb 2026 14:48:33 +0100
-Message-ID: <20260213134710.654892000@linuxfoundation.org>
+	syzbot+ad45f827c88778ff7df6@syzkaller.appspotmail.com,
+	Viacheslav Dubeyko <Slava.Dubeyko@ibm.com>,
+	Christian Brauner <brauner@kernel.org>,
+	Mehdi Ben Hadj Khelifa <mehdi.benhadjkhelifa@gmail.com>,
+	Viacheslav Dubeyko <slava@dubeyko.com>
+Subject: [PATCH 6.18 36/49] hfs: ensure sb->s_fs_info is always cleaned up
+Date: Fri, 13 Feb 2026 14:48:20 +0100
+Message-ID: <20260213134710.196223927@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260213134708.885500854@linuxfoundation.org>
 References: <20260213134708.885500854@linuxfoundation.org>
@@ -51,85 +53,167 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Danilo Krummrich <dakr@kernel.org>
+From: Mehdi Ben Hadj Khelifa <mehdi.benhadjkhelifa@gmail.com>
 
-commit 730e5ebff40c852e3ea57b71bf02a4b89c69435f upstream.
+commit 05ce49a902be15dc93854cbfc20161205a9ee446 upstream.
 
-Commit 11a78b794496 ("ARM: OMAP: MPUIO wake updates") registers the
-omap_mpuio_driver from omap_mpuio_init(), which is called from
-omap_gpio_probe().
+When hfs was converted to the new mount api a bug was introduced by
+changing the allocation pattern of sb->s_fs_info. If setup_bdev_super()
+fails after a new superblock has been allocated by sget_fc(), but before
+hfs_fill_super() takes ownership of the filesystem-specific s_fs_info
+data it was leaked.
 
-However, it neither makes sense to register drivers from probe()
-callbacks of other drivers, nor does the driver core allow registering
-drivers with a device lock already being held.
+Fix this by freeing sb->s_fs_info in hfs_kill_super().
 
-The latter was revealed by commit dc23806a7c47 ("driver core: enforce
-device_lock for driver_match_device()") leading to a potential deadlock
-condition described in [1].
-
-Additionally, the omap_mpuio_driver is never unregistered from the
-driver core, even if the module is unloaded.
-
-Hence, register the omap_mpuio_driver from the module initcall and
-unregister it in module_exit().
-
-Link: https://lore.kernel.org/lkml/DFU7CEPUSG9A.1KKGVW4HIPMSH@kernel.org/ [1]
-Fixes: dc23806a7c47 ("driver core: enforce device_lock for driver_match_device()")
-Fixes: 11a78b794496 ("ARM: OMAP: MPUIO wake updates")
-Reviewed-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Signed-off-by: Danilo Krummrich <dakr@kernel.org>
-Reviewed-by: Rafael J. Wysocki (Intel) <rafael@kernel.org>
-Link: https://patch.msgid.link/20260127201725.35883-1-dakr@kernel.org
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+Cc: stable@vger.kernel.org
+Fixes: ffcd06b6d13b ("hfs: convert hfs to use the new mount api")
+Reported-by: syzbot+ad45f827c88778ff7df6@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=ad45f827c88778ff7df6
+Tested-by: Viacheslav Dubeyko <Slava.Dubeyko@ibm.com>
+Signed-off-by: Christian Brauner <brauner@kernel.org>
+Signed-off-by: Mehdi Ben Hadj Khelifa <mehdi.benhadjkhelifa@gmail.com>
+Reviewed-by: Viacheslav Dubeyko <slava@dubeyko.com>
+Signed-off-by: Viacheslav Dubeyko <slava@dubeyko.com>
+Link: https://lore.kernel.org/r/20251201222843.82310-2-mehdi.benhadjkhelifa@gmail.com
+Signed-off-by: Viacheslav Dubeyko <slava@dubeyko.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpio/gpio-omap.c |   22 ++++++++++++++++++----
- 1 file changed, 18 insertions(+), 4 deletions(-)
+ fs/hfs/mdb.c   |   35 ++++++++++++++---------------------
+ fs/hfs/super.c |   10 +++++++++-
+ 2 files changed, 23 insertions(+), 22 deletions(-)
 
---- a/drivers/gpio/gpio-omap.c
-+++ b/drivers/gpio/gpio-omap.c
-@@ -799,10 +799,13 @@ static struct platform_device omap_mpuio
+--- a/fs/hfs/mdb.c
++++ b/fs/hfs/mdb.c
+@@ -92,7 +92,7 @@ int hfs_mdb_get(struct super_block *sb)
+ 		/* See if this is an HFS filesystem */
+ 		bh = sb_bread512(sb, part_start + HFS_MDB_BLK, mdb);
+ 		if (!bh)
+-			goto out;
++			return -EIO;
  
- static inline void omap_mpuio_init(struct gpio_bank *bank)
- {
--	platform_set_drvdata(&omap_mpuio_device, bank);
-+	static bool registered;
+ 		if (mdb->drSigWord == cpu_to_be16(HFS_SUPER_MAGIC))
+ 			break;
+@@ -102,13 +102,14 @@ int hfs_mdb_get(struct super_block *sb)
+ 		 * (should do this only for cdrom/loop though)
+ 		 */
+ 		if (hfs_part_find(sb, &part_start, &part_size))
+-			goto out;
++			return -EIO;
+ 	}
  
--	if (platform_driver_register(&omap_mpuio_driver) == 0)
--		(void) platform_device_register(&omap_mpuio_device);
-+	platform_set_drvdata(&omap_mpuio_device, bank);
-+	if (!registered) {
-+		(void)platform_device_register(&omap_mpuio_device);
-+		registered = true;
+ 	HFS_SB(sb)->alloc_blksz = size = be32_to_cpu(mdb->drAlBlkSiz);
+ 	if (!size || (size & (HFS_SECTOR_SIZE - 1))) {
+ 		pr_err("bad allocation block size %d\n", size);
+-		goto out_bh;
++		brelse(bh);
++		return -EIO;
+ 	}
+ 
+ 	size = min(HFS_SB(sb)->alloc_blksz, (u32)PAGE_SIZE);
+@@ -125,14 +126,16 @@ int hfs_mdb_get(struct super_block *sb)
+ 	brelse(bh);
+ 	if (!sb_set_blocksize(sb, size)) {
+ 		pr_err("unable to set blocksize to %u\n", size);
+-		goto out;
++		return -EIO;
+ 	}
+ 
+ 	bh = sb_bread512(sb, part_start + HFS_MDB_BLK, mdb);
+ 	if (!bh)
+-		goto out;
+-	if (mdb->drSigWord != cpu_to_be16(HFS_SUPER_MAGIC))
+-		goto out_bh;
++		return -EIO;
++	if (mdb->drSigWord != cpu_to_be16(HFS_SUPER_MAGIC)) {
++		brelse(bh);
++		return -EIO;
 +	}
+ 
+ 	HFS_SB(sb)->mdb_bh = bh;
+ 	HFS_SB(sb)->mdb = mdb;
+@@ -174,7 +177,7 @@ int hfs_mdb_get(struct super_block *sb)
+ 
+ 	HFS_SB(sb)->bitmap = kzalloc(8192, GFP_KERNEL);
+ 	if (!HFS_SB(sb)->bitmap)
+-		goto out;
++		return -EIO;
+ 
+ 	/* read in the bitmap */
+ 	block = be16_to_cpu(mdb->drVBMSt) + part_start;
+@@ -185,7 +188,7 @@ int hfs_mdb_get(struct super_block *sb)
+ 		bh = sb_bread(sb, off >> sb->s_blocksize_bits);
+ 		if (!bh) {
+ 			pr_err("unable to read volume bitmap\n");
+-			goto out;
++			return -EIO;
+ 		}
+ 		off2 = off & (sb->s_blocksize - 1);
+ 		len = min((int)sb->s_blocksize - off2, size);
+@@ -199,12 +202,12 @@ int hfs_mdb_get(struct super_block *sb)
+ 	HFS_SB(sb)->ext_tree = hfs_btree_open(sb, HFS_EXT_CNID, hfs_ext_keycmp);
+ 	if (!HFS_SB(sb)->ext_tree) {
+ 		pr_err("unable to open extent tree\n");
+-		goto out;
++		return -EIO;
+ 	}
+ 	HFS_SB(sb)->cat_tree = hfs_btree_open(sb, HFS_CAT_CNID, hfs_cat_keycmp);
+ 	if (!HFS_SB(sb)->cat_tree) {
+ 		pr_err("unable to open catalog tree\n");
+-		goto out;
++		return -EIO;
+ 	}
+ 
+ 	attrib = mdb->drAtrb;
+@@ -229,12 +232,6 @@ int hfs_mdb_get(struct super_block *sb)
+ 	}
+ 
+ 	return 0;
+-
+-out_bh:
+-	brelse(bh);
+-out:
+-	hfs_mdb_put(sb);
+-	return -EIO;
  }
  
- /*---------------------------------------------------------------------*/
-@@ -1576,13 +1579,24 @@ static struct platform_driver omap_gpio_
-  */
- static int __init omap_gpio_drv_reg(void)
+ /*
+@@ -359,8 +356,6 @@ void hfs_mdb_close(struct super_block *s
+  * Release the resources associated with the in-core MDB.  */
+ void hfs_mdb_put(struct super_block *sb)
  {
--	return platform_driver_register(&omap_gpio_driver);
-+	int ret;
-+
-+	ret = platform_driver_register(&omap_mpuio_driver);
-+	if (ret)
-+		return ret;
-+
-+	ret = platform_driver_register(&omap_gpio_driver);
-+	if (ret)
-+		platform_driver_unregister(&omap_mpuio_driver);
-+
-+	return ret;
- }
- postcore_initcall(omap_gpio_drv_reg);
+-	if (!HFS_SB(sb))
+-		return;
+ 	/* free the B-trees */
+ 	hfs_btree_close(HFS_SB(sb)->ext_tree);
+ 	hfs_btree_close(HFS_SB(sb)->cat_tree);
+@@ -373,6 +368,4 @@ void hfs_mdb_put(struct super_block *sb)
+ 	unload_nls(HFS_SB(sb)->nls_disk);
  
- static void __exit omap_gpio_exit(void)
- {
- 	platform_driver_unregister(&omap_gpio_driver);
-+	platform_driver_unregister(&omap_mpuio_driver);
+ 	kfree(HFS_SB(sb)->bitmap);
+-	kfree(HFS_SB(sb));
+-	sb->s_fs_info = NULL;
  }
- module_exit(omap_gpio_exit);
+--- a/fs/hfs/super.c
++++ b/fs/hfs/super.c
+@@ -431,10 +431,18 @@ static int hfs_init_fs_context(struct fs
+ 	return 0;
+ }
  
++static void hfs_kill_super(struct super_block *sb)
++{
++	struct hfs_sb_info *hsb = HFS_SB(sb);
++
++	kill_block_super(sb);
++	kfree(hsb);
++}
++
+ static struct file_system_type hfs_fs_type = {
+ 	.owner		= THIS_MODULE,
+ 	.name		= "hfs",
+-	.kill_sb	= kill_block_super,
++	.kill_sb	= hfs_kill_super,
+ 	.fs_flags	= FS_REQUIRES_DEV,
+ 	.init_fs_context = hfs_init_fs_context,
+ };
 
 
