@@ -1,128 +1,146 @@
-Received: from mail-dy1-f177.google.com (mail-dy1-f177.google.com [74.125.82.177])
+Received: from mail-pl1-f172.google.com (mail-pl1-f172.google.com [209.85.214.172])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5BAD7344D94
-	for <patches@lists.linux.dev>; Thu, 12 Feb 2026 12:12:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.82.177
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770898325; cv=pass; b=pPuOzERDwfyM/w1ZrjCx/epk8WKX5m2XB5cHKgFP5z6GLw7Lp/AL53joB1dOAhyHly225NY+c1qvKzcYkRdDOdL+0uQHHog6his28mSynq51Ty1ZsTJyag+ae/xNwpiLpVDda1lrZ6wM7eG/06cnn1ZAqh1baOwIqDUxvRLN/Js=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770898325; c=relaxed/simple;
-	bh=hdNJuliFV+u1aeBSpWRoouGk7YA8j6s817VbVZUsNhU=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=j6wC17P+Tqm/K20nfDxzuYOr+5CHk7jnbB6t54Pa2+W4VtQ9tqDlzrYIPu49WlHMFJSIbArRHjvNUShB1YNlmpJ+RYmkjxkPcgKCtiCE5fbtYSrt8i5Q8EBO7nsE1l8ooVLWHYd9aZpY64y1J+TZDe5d3goi7u+LSbEbJfDovH0=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=GMH2FDsU; arc=pass smtp.client-ip=74.125.82.177
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 833FA128816
+	for <patches@lists.linux.dev>; Fri, 13 Feb 2026 00:16:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.172
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1770941798; cv=none; b=fFroZGS9YWINgPFKLOrKjIyfRfpam9ruH1B/hReKfujsLyRBlgv7CKpJ5GcGkEKE/k5B1xyRljvE8m/t3Rb37aMDxSzChZ0vST2wJXo2i3/Qe+I/Us43bIUbuYruPQ/+xxt8H4gw4j658OcoyW26vQlu/FQZBpHSI2rWlJcG+1s=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1770941798; c=relaxed/simple;
+	bh=Bjue3QOpIjKbVkSdodL/+toTxYDAijaIIOR7ocEymxY=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=nSw2lGD1sb+kp12O8b10yn/l4Rcb4rJDLICslnP0vKnDOn4omUBDQy1ebhURXA6h68qcxGnht9dUUVrm6sozCPMVfeD5pCRGXXPajN501jtUo2yLB1xzhv6WY05mOqfcqse9Z3ymT9cOeXd+XDEklAzKjikh3QPprZQ1FD+2VOU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=roeck-us.net; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Nxnlli9X; arc=none smtp.client-ip=209.85.214.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=roeck-us.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="GMH2FDsU"
-Received: by mail-dy1-f177.google.com with SMTP id 5a478bee46e88-2ba76e80509so318330eec.1
-        for <patches@lists.linux.dev>; Thu, 12 Feb 2026 04:12:04 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1770898323; cv=none;
-        d=google.com; s=arc-20240605;
-        b=NchB75GqxAodbR2HIjiDABfKWS2htqVn0LF7H/YgOddSqtn/uUlclkY14WiU0yV33L
-         p+k3xIcCmBMBzKOoWYxzJrqXRVDnxepd16h0EpAepTLchuRvsoBgP+4UozamiMKrhJ4S
-         ToyM9RHP3pooHg6+t4cV2Wl/L7qE7bSESq9l2PihiHsqxum0Ks9iTOVdeteogGz9x4Jc
-         9yvnN553m+c6ZIA6RusQ7gJXHC9rbry3/e+aw2yoWiDOoAQa9QNwxSNvdwjT4ZRiwWX0
-         H017fImL4spK9fX7mmhxPVw73fiz93Dx3btoAI7zjM44yGrqTUBxjMwuiemhOPmuG5a3
-         oC+A==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=hdNJuliFV+u1aeBSpWRoouGk7YA8j6s817VbVZUsNhU=;
-        fh=bOQFa6qpYz/tiwnhji2/fUVhq12LSYN+qn/llN7yKzY=;
-        b=Yo9jBmAO6tKqNEEs2V65oMCmS4NmMrM423c78Q77pCYIcJ28AZHRAt1HbpGu7a4v4A
-         BuklSELdW0A9Nxo8mx7/o/LCP8RRwAHBFN+iszmT/vGvVFngcjMs+91VLqt6Q2lbpqab
-         E42VgL0C/Eh9YyJA06m7lTPAwtSLYURvHmIcCgaebJXrqLOvxIWfUo7uMrlXpP7SqQ5m
-         ImWyAthf96bZV3JQiR8U7C10DvYv66ydNL6bBUitlGJQmXdxdTAAyrAAJyRzXUla4WJM
-         Ln9G2Z+K2E7DnsY+AriP5Yd5kaREZ60YhB7E5WQkRghiPmVi4TE/lhPOcrrGLfT0FiWP
-         bBLw==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Nxnlli9X"
+Received: by mail-pl1-f172.google.com with SMTP id d9443c01a7336-2ab077e3f32so1475285ad.3
+        for <patches@lists.linux.dev>; Thu, 12 Feb 2026 16:16:35 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1770898323; x=1771503123; darn=lists.linux.dev;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=hdNJuliFV+u1aeBSpWRoouGk7YA8j6s817VbVZUsNhU=;
-        b=GMH2FDsUV26xuEX2x2uAQQF85Qv6IPQTmEw+e3ieHcj4txVcncwsqJwKAvdd5KZdpb
-         49Ccsba5o7cGLx6FqjE54rXE9sRX2MtVlMt4XV4TrgTuwVUxIG6krlMcmJOebn+No9n5
-         aZuNfuqfpyW35CPD16EYhJYjWWx1Dftt0ja+/yW6m0eHa2MP1jD8bHB1okquCs/Iotwi
-         iUTUbX69boPvMjU1FVJD3AZYMhQYNhGegI3Gr5B95SeC50lT4TCU07twmFpwVcG22uvr
-         PEaoAaq/9Y6YXH0i5Wq3KX3xLP7C3ukMH5PQ3qxoDvHl0JkzDqzLaqCG6dVHB9NVJJMW
-         wIWg==
+        d=gmail.com; s=20230601; t=1770941795; x=1771546595; darn=lists.linux.dev;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:sender:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=rJJWFT1l7GNpPMZ8f5fVGYkrxp6Tw+LeNuPObvL9Fe4=;
+        b=Nxnlli9XyAoz34JsOMeST/8EHc0j9ms075p8nMxl9u92rkTcYdYXk/AEeBRrn72Olw
+         gUijMN3GLusalyuGGB5GDNWVvwJV6hKPaRRgcBKrE6Wzg+TQnCvddm04IMXaizZ0yBOh
+         Wn/koBM/M4c9ggxBxrdZK5EI6EqR81ddfXq+NZgdW2/isLzVRzOoslVcg7lzCE02W09m
+         J+iZcU6JQcbT23HsCw6M6lsg5/aUnDWVzVQUdIQJKIGKW68iXyTCQB0v7gX3UlJTBQuj
+         +cbsUe1l7jgwq2NUnwovEsYLruu5kAUtPvmSc/b1WUipDO8sXqh9JsxKZrCvqyj1NNDz
+         4dlA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1770898323; x=1771503123;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=hdNJuliFV+u1aeBSpWRoouGk7YA8j6s817VbVZUsNhU=;
-        b=pDBx1OZqRpdwyruDzxPFweVlssJKbLWhU+CSwJGm1b7gEXuQhe1m/ewC+dfgkhFB9z
-         yH2bZnHK9lOFl8beABH6pKQPwuiISZuIX3aJ7GUFL3BJsX9hA27JmjAfhFvR0ksdJRSo
-         b2EycRYDNIeqhAX55d6rGxgSSwc8vFOI+BESn2FDaFTwtCHNSfmnlLAb56YklL8b4WKS
-         yHjMrsjMXaRz3F4d2Jv38QGGbzhJ0KQvXFl41LVKMmy1ACQS6jl7m0VtNx7aVlOSpk8I
-         sDgRCe7E184w9xCPv8slmsFGvCnO6XFsm6T/1krsNM70RD8f4Hlbe8bo0dYyTobT8E6N
-         3/Nw==
-X-Gm-Message-State: AOJu0YyBFzRbaddRRh5nx4FRqVAP3Jjq6S+8Thq4loYAfkTYbSeWztIA
-	4wz0XqMOUjGqmCZ1cyD3hNfsavxTvxx+fGvomkJRXy46vj0jyFbVqunyxM0Bd9691pN/Vniqqeb
-	Ffqwf17njJgq2TMWQEuhUcBOWF5CMad0=
-X-Gm-Gg: AZuq6aKFOhdr5GA95f56dcj5CpwAuZKVqr2ptHdcPEOA8ExsJo6YwE/fA2RFKmub5p4
-	oRRzOXj3GUsyFWepgl2VuR68Z8RbsElIceEMdeS3yRHqBhVUiR4jfsnPFV0+2JgGCH6Ef/xyQG4
-	T75E25LgrzljtX7OiiiOdVauEws9Are/I1lOk/UVoWr2jAKHpNQT/WBSHg7NyD7COwA2te/u24M
-	VW2mOVi21EOOB1J6+WZCLwUmGzGrT3Ohf2fCDklqDU4Uu+hT53QQpTCU/9AcTLm8uOgFtWTGlu9
-	jokR8Sx+hqe7i5Irzm9k7UWnEQNrhAdQnqZQc4a2H9Mb/OCmqQnl9lk8+VupCP/HHYsilgCzdJn
-	8Nz6NtX+AVXl5HVNc4KkkaUnj
-X-Received: by 2002:a05:7300:cb0f:b0:2ba:6f02:2939 with SMTP id
- 5a478bee46e88-2baa7f6a42bmr632842eec.1.1770898323327; Thu, 12 Feb 2026
- 04:12:03 -0800 (PST)
+        d=1e100.net; s=20230601; t=1770941795; x=1771546595;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:sender:x-gm-gg:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=rJJWFT1l7GNpPMZ8f5fVGYkrxp6Tw+LeNuPObvL9Fe4=;
+        b=lsz56iSlle+DnP1DH0XgGZk9Va1du1Vxd2/rkGg/VXCORjzCNZr74qr57VYee0VmM7
+         4ElvCBfE+uhR0kHCE+BOHEX1wgXTqZmbIPAy+s0cZnfMr9GiX42dPOV9khyA6xRUL2mD
+         UBBLyptAimsUiJhXGKlLepsa+H3tvCgaOGn4U59vez9endz+X+sKo6qdptkr8pzYASJZ
+         +aHmPddCwB8GjHkU9GzWUHtT8VhUEZuBuFcQjFepTgX1mK8jYMn+f5lNFL85j0zZvt7O
+         4sDlMb/hQD5zxtKrRRn6efTk1wd6TAq8JmSUqZ6IeIHeHjUiVa8m1YKGVCPAVE0KkMoU
+         PpkQ==
+X-Forwarded-Encrypted: i=1; AJvYcCVwUpIcAQbyXaeCzkfJSWRtnImWA6kolTXPef7KDFWpGIApM1dVVu/MpXvFlHdAKbEfXV2yDGgz@lists.linux.dev
+X-Gm-Message-State: AOJu0Yzh4I8Ra8K1bTV6ujcKYV5JR+1QMwMoTEbjI5xZMbLlNaBrZdP3
+	UB1OiNEdJQRLK4WecBYvXkX8fphjsKl5TlEcaads1ekDG6QD1EiO8Fca
+X-Gm-Gg: AZuq6aKH0gm7VxL6cFJkNEWgHvMrb1kh9wIT2/Qh+2ou/Q/IodonvJOna8Jk7np4Moa
+	R37wLt2NiANmHny4CD3Pk3QdPt5nrz2NePr6nXgFctqpfbsU2nZNRJcKa/EfwnOCnatO1b8yezc
+	3ZsYh0qq+IdaehEdgXqLQxck0vmc4xc0PDyJ1XiWbkiPdmRcNqMfXb0xA/2BmOTZ9/KemrKBGsF
+	qEzwzg23tMviv12xnfe0nukTkyZoeRWg92yFXlN6Tbjl5bjsbOWMuoWbHVgclsn32tUyY9l2dfi
+	sOMEuUIuqycEw+eOcUiZeDEfWaYxpdPata8gKKwbWYvcHYKWivlg5F/z3LqLeUARzYhhrehIwfU
+	m5zF5yJnaLDUI1UIo2zLVtigDSG/ZjeiKpo6j121XYn7cv7UK4faPUnIhwxxrKFgQyq04Vg6wQL
+	nB/iE25gRRNCfTeK21Vi+Av/2r2qsnNlmnuIuX
+X-Received: by 2002:a17:902:9004:b0:2aa:d5ea:4cfb with SMTP id d9443c01a7336-2ab504cabcamr353655ad.9.1770941794707;
+        Thu, 12 Feb 2026 16:16:34 -0800 (PST)
+Received: from server.roeck-us.net ([2600:1700:e321:62f0:da43:aeff:fecc:bfd5])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2ab29999c80sm60524925ad.89.2026.02.12.16.16.33
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 12 Feb 2026 16:16:34 -0800 (PST)
+Sender: Guenter Roeck <groeck7@gmail.com>
+Date: Thu, 12 Feb 2026 16:16:32 -0800
+From: Guenter Roeck <linux@roeck-us.net>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev,
+	Shida Zhang <zhangshida@kylinos.cn>, Coly Li <colyli@fnnas.com>,
+	Christoph Hellwig <hch@lst.de>, Jens Axboe <axboe@kernel.dk>,
+	Sasha Levin <sashal@kernel.org>
+Subject: Re: [PATCH 6.12 30/87] bcache: fix I/O accounting leak in
+ detached_dev_do_request
+Message-ID: <df94d6c8-f236-46a7-9053-40b00a3a1a5b@roeck-us.net>
+References: <20260204143846.906385641@linuxfoundation.org>
+ <20260204143847.995871393@linuxfoundation.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20260212010955.3480391-1-sashal@kernel.org> <20260212010955.3480391-23-sashal@kernel.org>
-In-Reply-To: <20260212010955.3480391-23-sashal@kernel.org>
-From: Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>
-Date: Thu, 12 Feb 2026 13:11:50 +0100
-X-Gm-Features: AZwV_Qjq6JjCaY13QKYBUvVQv4H6RyUaa8vYnCFiiN4Ovi19FySxcmcySYnCq5A
-Message-ID: <CANiq72mi6_UrGoFs2=ch6AyKP0hhCon3epSkXCzwiGUGmfswOQ@mail.gmail.com>
-Subject: Re: [PATCH AUTOSEL 6.19-6.18] rust: sync: Implement Unpin for ARef
-To: Sasha Levin <sashal@kernel.org>
-Cc: patches@lists.linux.dev, stable@vger.kernel.org, 
-	Alice Ryhl <aliceryhl@google.com>, Daniel Almeida <daniel.almeida@collabora.com>, 
-	Alexandre Courbot <acourbot@nvidia.com>, Benno Lossin <lossin@kernel.org>, 
-	Boqun Feng <boqun.feng@gmail.com>, ojeda@kernel.org, shankari.ak0208@gmail.com, 
-	rust-for-linux@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260204143847.995871393@linuxfoundation.org>
 
-On Thu, Feb 12, 2026 at 2:10=E2=80=AFAM Sasha Levin <sashal@kernel.org> wro=
-te:
->
-> This is a **build fix / type system correctness fix**. While no in-tree
-> code currently triggers the build failure in 6.19.y,
+Hi,
 
-Hmm... If nothing is failing to build in a tree, then I don't think it
-is supposed to be considered a "build fix". It may be still good to
-have, e.g. for other backports and for downstream developers/vendors,
-but it sounds more critical than it really is when worded like that
-(same for "type system correctness fix" -- one could think it may be
-referring to unsoundness).
+On Wed, Feb 04, 2026 at 03:40:28PM +0100, Greg Kroah-Hartman wrote:
+> 6.12-stable review patch.  If anyone has any objections, please let me know.
+> 
+> ------------------
+> 
+> From: Shida Zhang <zhangshida@kylinos.cn>
+> 
+> [ Upstream commit 4da7c5c3ec34d839bba6e035c3d05c447a2f9d4f ]
+> 
+> When a bcache device is detached, discard requests are completed
+> immediately. However, the I/O accounting started in
+> cached_dev_make_request() is not ended, leading to 100% disk
+> utilization reports in iostat. Add the missing bio_end_io_acct() call.
+> 
+> Fixes: cafe56359144 ("bcache: A block layer cache")
+> Signed-off-by: Shida Zhang <zhangshida@kylinos.cn>
+> Acked-by: Coly Li <colyli@fnnas.com>
+> Reviewed-by: Christoph Hellwig <hch@lst.de>
+> Signed-off-by: Jens Axboe <axboe@kernel.dk>
+> Signed-off-by: Sasha Levin <sashal@kernel.org>
+> ---
+>  drivers/md/bcache/request.c | 1 +
+>  1 file changed, 1 insertion(+)
+> 
+> diff --git a/drivers/md/bcache/request.c b/drivers/md/bcache/request.c
+> index a02aecac05cdf..6cba1180be8aa 100644
+> --- a/drivers/md/bcache/request.c
+> +++ b/drivers/md/bcache/request.c
+> @@ -1107,6 +1107,7 @@ static void detached_dev_do_request(struct bcache_device *d,
+>  
+>  	if (bio_op(orig_bio) == REQ_OP_DISCARD &&
+>  	    !bdev_max_discard_sectors(dc->bdev)) {
+> +		bio_end_io_acct(orig_bio, start_time);
+>  		bio_endio(orig_bio);
+>  		return;
+>  	}
 
-> - The commit is still in linux-next, pending mainline merge
+In 6.12.y and v6.18.y, the code continues:
 
-Wait, shouldn't all stable commits land in mainline first? (modulo exceptio=
-ns)
+        clone_bio = bio_alloc_clone(dc->bdev, orig_bio, GFP_NOIO,
+                                    &d->bio_detached);
+        if (!clone_bio) {
+                orig_bio->bi_status = BLK_STS_RESOURCE;
+                bio_endio(orig_bio);
+                return;
+        }
 
-...ah, it is actually in mainline, but the AI checked linux-next only
-I guess (?).
+The NULL check has been removed in the upstream kernel, so the error path
+does not exist there.
 
-Would it help to hint at it in the AI review instructions? Or, if you
-already only ever make it review things that are picked from mainline
-anyway, then telling the AI to avoid checking that?
+It seems that the above code is still having an accounting leak if
+bio_alloc_clone() returns NULL. Is this indeed the case, or am I
+missing something ?
 
-Thanks!
+If I am not missing something, is it necessary to add a call to
+bio_end_io_acct() into the error handling, or is the problem theoretic
+and can be addressed by backporting commit 6ea84d7a92cb ("bcache:
+remove dead code in detached_dev_do_request") to v6.12.y and v6.18.y ?
 
-Cheers,
-Miguel
+Thanks,
+Guenter
