@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CFC7F35FF49;
-	Fri, 13 Feb 2026 13:57:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5296535FF49;
+	Fri, 13 Feb 2026 13:57:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770991020; cv=none; b=nTuTcs6fAvsAZ8tonIC7bHkDP+G+hk8F2RpUHlJFkpxXHZpzL/n3mKTp/59IVx2QsZKb648LOPUZ6BAgG5Dn77Kx5ncj1+90Vlh1z+vIAEKWYrbTLj/Io8lEdPjVpuUsNp5yvtrnUucmGzaMu6gzyAu+yt6ZEuhWfu7n0s7fkLA=
+	t=1770991024; cv=none; b=OetzZzUJbmYDsP9YPVrs4Ro+ZP4eu0MP4HGiH+G8Z8kUN88RuAJ02eP1eG+kQi0EOuPszhsFWVbsxb5GPt71mCsS9Mv0Y5p7jD6Of9u5tCFQUBZh/Yp6Z0ZdBd1/GV3rWXFnQREiqlFCKsR3R7FHuYYSGfFHHtMZ77mXKrSy3ww=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770991020; c=relaxed/simple;
-	bh=B1sux/ej/6T492UA1TwROc8rPnnMPTNTIjvvZQzJmEg=;
+	s=arc-20240116; t=1770991024; c=relaxed/simple;
+	bh=5frlYhix0QPgYdPCFoggct3s548rMCzBaaSTprf513s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KWfNl0KnFWwPfzLqn1VxofA01mkQS2T0eSmX7LTw7jCHAxx90Qla5ztJHvghCoX48vq090EYr9EBDQNqIpfg/LXQeFLYJhfGDD6agb29F2HX7gN8kEYM17huuJRk4NIe3Zbx371ls5ZMifi8B7Mog7lAJZeiz1iBdXBO6NIWY04=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qoqsF18x; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Fd4ub7S0qZGxHpOKQxT4n5NCxDVvAEtosG/pgmpGl6izw8sygfos0DAIHmE58ofY3D95hu+POv0knZBqSJlkxEhqptl3j6zUO1n7x7d9cHhBl2cguLef607k6ZKuHSM8WoKdA+4rywiP+jxqEb6nFolMogdyQCC5t3NLDwBifpE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oueogD9b; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qoqsF18x"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1210FC116C6;
-	Fri, 13 Feb 2026 13:56:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oueogD9b"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF46EC116C6;
+	Fri, 13 Feb 2026 13:57:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1770991020;
-	bh=B1sux/ej/6T492UA1TwROc8rPnnMPTNTIjvvZQzJmEg=;
+	s=korg; t=1770991024;
+	bh=5frlYhix0QPgYdPCFoggct3s548rMCzBaaSTprf513s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qoqsF18xf8GxFe+2HCoXLvdjjoikBee1Udk28QV622zHv9FWtMlwK3r5a7MoodazZ
-	 OLbkZqOxFycKkeERQXMGOuI2CVoJLxeUewdhiMd9nNwVyl4+Em+kbdKlJL5T6B7UBL
-	 Fq6X4DqkxwSsrlicjt6GeHdeBGoIw38ysf3tUNS0=
+	b=oueogD9bNOpnT7KcFIUJlqQqjhLRUbhweTQOLxuL3oQ59BrVKn+/mPu5VIhSKNJBG
+	 kTtvUxUKlgkh6V/qs0Jc9+thUwHm0Sdp4mDwfpYUDhRsfKUOgFtEyC2ezvTZmjiX0J
+	 Fo8veDZEJNEqUij8zggjbg+J1B4GNF1sc7SnGVgU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+e34ad04f27991521104c@syzkaller.appspotmail.com,
-	Jeff Layton <jlayton@kernel.org>,
-	Chuck Lever <chuck.lever@oracle.com>,
-	Jianqiang kang <jianqkang@sina.cn>
-Subject: [PATCH 6.6 18/25] nfsd: dont ignore the return code of svc_proc_register()
-Date: Fri, 13 Feb 2026 14:48:44 +0100
-Message-ID: <20260213134704.545530226@linuxfoundation.org>
+	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Bin Lan <lanbincn@139.com>
+Subject: [PATCH 6.6 19/25] netfilter: nf_tables: missing objects with no memcg accounting
+Date: Fri, 13 Feb 2026 14:48:45 +0100
+Message-ID: <20260213134704.582003651@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260213134703.882698935@linuxfoundation.org>
 References: <20260213134703.882698935@linuxfoundation.org>
@@ -52,92 +50,174 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jeff Layton <jlayton@kernel.org>
+From: Pablo Neira Ayuso <pablo@netfilter.org>
 
-commit 930b64ca0c511521f0abdd1d57ce52b2a6e3476b upstream.
+commit 69e687cea79fc99a17dfb0116c8644b9391b915e upstream.
 
-Currently, nfsd_proc_stat_init() ignores the return value of
-svc_proc_register(). If the procfile creation fails, then the kernel
-will WARN when it tries to remove the entry later.
+Several ruleset objects are still not using GFP_KERNEL_ACCOUNT for
+memory accounting, update them. This includes:
 
-Fix nfsd_proc_stat_init() to return the same type of pointer as
-svc_proc_register(), and fix up nfsd_net_init() to check that and fail
-the nfsd_net construction if it occurs.
+- catchall elements
+- compat match large info area
+- log prefix
+- meta secctx
+- numgen counters
+- pipapo set backend datastructure
+- tunnel private objects
 
-svc_proc_register() can fail if the dentry can't be allocated, or if an
-identical dentry already exists. The second case is pretty unlikely in
-the nfsd_net construction codepath, so if this happens, return -ENOMEM.
-
-Reported-by: syzbot+e34ad04f27991521104c@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/linux-nfs/67a47501.050a0220.19061f.05f9.GAE@google.com/
-Cc: stable@vger.kernel.org # v6.9
-Signed-off-by: Jeff Layton <jlayton@kernel.org>
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
-[ Update the cleanup path to use nfsd_stat_counters_destroy. This ensures
- the teardown logic is correctly paired with nfsd_stat_counters_init, as
- required by the current NFSD implementation.]
-Signed-off-by: Jianqiang kang <jianqkang@sina.cn>
+Fixes: 33758c891479 ("memcg: enable accounting for nft objects")
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+[ Adjust context ]
+Signed-off-by: Bin Lan <lanbincn@139.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nfsd/nfsctl.c |    9 ++++++++-
- fs/nfsd/stats.c  |    4 ++--
- fs/nfsd/stats.h  |    2 +-
- 3 files changed, 11 insertions(+), 4 deletions(-)
+ net/netfilter/nf_tables_api.c  |    2 +-
+ net/netfilter/nft_compat.c     |    6 +++---
+ net/netfilter/nft_log.c        |    2 +-
+ net/netfilter/nft_meta.c       |    2 +-
+ net/netfilter/nft_numgen.c     |    2 +-
+ net/netfilter/nft_set_pipapo.c |   10 +++++-----
+ net/netfilter/nft_tunnel.c     |    5 +++--
+ 7 files changed, 15 insertions(+), 14 deletions(-)
 
---- a/fs/nfsd/nfsctl.c
-+++ b/fs/nfsd/nfsctl.c
-@@ -1526,17 +1526,24 @@ static __net_init int nfsd_net_init(stru
- 	retval = nfsd_stat_counters_init(nn);
- 	if (retval)
- 		goto out_repcache_error;
-+
- 	memset(&nn->nfsd_svcstats, 0, sizeof(nn->nfsd_svcstats));
- 	nn->nfsd_svcstats.program = &nfsd_program;
-+	if (!nfsd_proc_stat_init(net)) {
-+		retval = -ENOMEM;
-+		goto out_proc_error;
-+	}
-+
- 	nn->nfsd_versions = NULL;
- 	nn->nfsd4_minorversions = NULL;
- 	nfsd4_init_leases_net(nn);
- 	get_random_bytes(&nn->siphash_key, sizeof(nn->siphash_key));
- 	seqlock_init(&nn->writeverf_lock);
--	nfsd_proc_stat_init(net);
+--- a/net/netfilter/nf_tables_api.c
++++ b/net/netfilter/nf_tables_api.c
+@@ -6615,7 +6615,7 @@ static int nft_setelem_catchall_insert(c
+ 		}
+ 	}
  
- 	return 0;
+-	catchall = kmalloc(sizeof(*catchall), GFP_KERNEL);
++	catchall = kmalloc(sizeof(*catchall), GFP_KERNEL_ACCOUNT);
+ 	if (!catchall)
+ 		return -ENOMEM;
  
-+out_proc_error:
-+	nfsd_stat_counters_destroy(nn);
- out_repcache_error:
- 	nfsd_idmap_shutdown(net);
- out_idmap_error:
---- a/fs/nfsd/stats.c
-+++ b/fs/nfsd/stats.c
-@@ -115,11 +115,11 @@ void nfsd_stat_counters_destroy(struct n
- 	nfsd_percpu_counters_destroy(nn->counter, NFSD_STATS_COUNTERS_NUM);
- }
+--- a/net/netfilter/nft_compat.c
++++ b/net/netfilter/nft_compat.c
+@@ -535,7 +535,7 @@ nft_match_large_init(const struct nft_ct
+ 	struct xt_match *m = expr->ops->data;
+ 	int ret;
  
--void nfsd_proc_stat_init(struct net *net)
-+struct proc_dir_entry *nfsd_proc_stat_init(struct net *net)
- {
- 	struct nfsd_net *nn = net_generic(net, nfsd_net_id);
+-	priv->info = kmalloc(XT_ALIGN(m->matchsize), GFP_KERNEL);
++	priv->info = kmalloc(XT_ALIGN(m->matchsize), GFP_KERNEL_ACCOUNT);
+ 	if (!priv->info)
+ 		return -ENOMEM;
  
--	svc_proc_register(net, &nn->nfsd_svcstats, &nfsd_proc_ops);
-+	return svc_proc_register(net, &nn->nfsd_svcstats, &nfsd_proc_ops);
- }
+@@ -808,7 +808,7 @@ nft_match_select_ops(const struct nft_ct
+ 		goto err;
+ 	}
  
- void nfsd_proc_stat_shutdown(struct net *net)
---- a/fs/nfsd/stats.h
-+++ b/fs/nfsd/stats.h
-@@ -15,7 +15,7 @@ void nfsd_percpu_counters_reset(struct p
- void nfsd_percpu_counters_destroy(struct percpu_counter *counters, int num);
- int nfsd_stat_counters_init(struct nfsd_net *nn);
- void nfsd_stat_counters_destroy(struct nfsd_net *nn);
--void nfsd_proc_stat_init(struct net *net);
-+struct proc_dir_entry *nfsd_proc_stat_init(struct net *net);
- void nfsd_proc_stat_shutdown(struct net *net);
+-	ops = kzalloc(sizeof(struct nft_expr_ops), GFP_KERNEL);
++	ops = kzalloc(sizeof(struct nft_expr_ops), GFP_KERNEL_ACCOUNT);
+ 	if (!ops) {
+ 		err = -ENOMEM;
+ 		goto err;
+@@ -898,7 +898,7 @@ nft_target_select_ops(const struct nft_c
+ 		goto err;
+ 	}
  
- static inline void nfsd_stats_rc_hits_inc(struct nfsd_net *nn)
+-	ops = kzalloc(sizeof(struct nft_expr_ops), GFP_KERNEL);
++	ops = kzalloc(sizeof(struct nft_expr_ops), GFP_KERNEL_ACCOUNT);
+ 	if (!ops) {
+ 		err = -ENOMEM;
+ 		goto err;
+--- a/net/netfilter/nft_log.c
++++ b/net/netfilter/nft_log.c
+@@ -163,7 +163,7 @@ static int nft_log_init(const struct nft
+ 
+ 	nla = tb[NFTA_LOG_PREFIX];
+ 	if (nla != NULL) {
+-		priv->prefix = kmalloc(nla_len(nla) + 1, GFP_KERNEL);
++		priv->prefix = kmalloc(nla_len(nla) + 1, GFP_KERNEL_ACCOUNT);
+ 		if (priv->prefix == NULL)
+ 			return -ENOMEM;
+ 		nla_strscpy(priv->prefix, nla, nla_len(nla) + 1);
+--- a/net/netfilter/nft_meta.c
++++ b/net/netfilter/nft_meta.c
+@@ -952,7 +952,7 @@ static int nft_secmark_obj_init(const st
+ 	if (tb[NFTA_SECMARK_CTX] == NULL)
+ 		return -EINVAL;
+ 
+-	priv->ctx = nla_strdup(tb[NFTA_SECMARK_CTX], GFP_KERNEL);
++	priv->ctx = nla_strdup(tb[NFTA_SECMARK_CTX], GFP_KERNEL_ACCOUNT);
+ 	if (!priv->ctx)
+ 		return -ENOMEM;
+ 
+--- a/net/netfilter/nft_numgen.c
++++ b/net/netfilter/nft_numgen.c
+@@ -66,7 +66,7 @@ static int nft_ng_inc_init(const struct
+ 	if (priv->offset + priv->modulus - 1 < priv->offset)
+ 		return -EOVERFLOW;
+ 
+-	priv->counter = kmalloc(sizeof(*priv->counter), GFP_KERNEL);
++	priv->counter = kmalloc(sizeof(*priv->counter), GFP_KERNEL_ACCOUNT);
+ 	if (!priv->counter)
+ 		return -ENOMEM;
+ 
+--- a/net/netfilter/nft_set_pipapo.c
++++ b/net/netfilter/nft_set_pipapo.c
+@@ -874,7 +874,7 @@ static void pipapo_lt_bits_adjust(struct
+ 		return;
+ 	}
+ 
+-	new_lt = kvzalloc(lt_size + NFT_PIPAPO_ALIGN_HEADROOM, GFP_KERNEL);
++	new_lt = kvzalloc(lt_size + NFT_PIPAPO_ALIGN_HEADROOM, GFP_KERNEL_ACCOUNT);
+ 	if (!new_lt)
+ 		return;
+ 
+@@ -1150,7 +1150,7 @@ static int pipapo_realloc_scratch(struct
+ 		scratch = kzalloc_node(struct_size(scratch, map,
+ 						   bsize_max * 2) +
+ 				       NFT_PIPAPO_ALIGN_HEADROOM,
+-				       GFP_KERNEL, cpu_to_node(i));
++				       GFP_KERNEL_ACCOUNT, cpu_to_node(i));
+ 		if (!scratch) {
+ 			/* On failure, there's no need to undo previous
+ 			 * allocations: this means that some scratch maps have
+@@ -1323,7 +1323,7 @@ static struct nft_pipapo_match *pipapo_c
+ 	struct nft_pipapo_match *new;
+ 	int i;
+ 
+-	new = kmalloc(struct_size(new, f, old->field_count), GFP_KERNEL);
++	new = kmalloc(struct_size(new, f, old->field_count), GFP_KERNEL_ACCOUNT);
+ 	if (!new)
+ 		return ERR_PTR(-ENOMEM);
+ 
+@@ -1353,7 +1353,7 @@ static struct nft_pipapo_match *pipapo_c
+ 		new_lt = kvzalloc(src->groups * NFT_PIPAPO_BUCKETS(src->bb) *
+ 				  src->bsize * sizeof(*dst->lt) +
+ 				  NFT_PIPAPO_ALIGN_HEADROOM,
+-				  GFP_KERNEL);
++				  GFP_KERNEL_ACCOUNT);
+ 		if (!new_lt)
+ 			goto out_lt;
+ 
+@@ -1367,7 +1367,7 @@ static struct nft_pipapo_match *pipapo_c
+ 		if (src->rules > (INT_MAX / sizeof(*src->mt)))
+ 			goto out_mt;
+ 
+-		dst->mt = kvmalloc(src->rules * sizeof(*src->mt), GFP_KERNEL);
++		dst->mt = kvmalloc(src->rules * sizeof(*src->mt), GFP_KERNEL_ACCOUNT);
+ 		if (!dst->mt)
+ 			goto out_mt;
+ 
+--- a/net/netfilter/nft_tunnel.c
++++ b/net/netfilter/nft_tunnel.c
+@@ -503,13 +503,14 @@ static int nft_tunnel_obj_init(const str
+ 			return err;
+ 	}
+ 
+-	md = metadata_dst_alloc(priv->opts.len, METADATA_IP_TUNNEL, GFP_KERNEL);
++	md = metadata_dst_alloc(priv->opts.len, METADATA_IP_TUNNEL,
++				GFP_KERNEL_ACCOUNT);
+ 	if (!md)
+ 		return -ENOMEM;
+ 
+ 	memcpy(&md->u.tun_info, &info, sizeof(info));
+ #ifdef CONFIG_DST_CACHE
+-	err = dst_cache_init(&md->u.tun_info.dst_cache, GFP_KERNEL);
++	err = dst_cache_init(&md->u.tun_info.dst_cache, GFP_KERNEL_ACCOUNT);
+ 	if (err < 0) {
+ 		metadata_dst_free(md);
+ 		return err;
 
 
