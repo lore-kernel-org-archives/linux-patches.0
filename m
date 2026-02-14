@@ -1,42 +1,48 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0AF652236F2;
-	Sat, 14 Feb 2026 01:07:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD4DA221FB6;
+	Sat, 14 Feb 2026 01:07:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771031250; cv=none; b=bWJiySfMSAqD2KKFoCj+gY5+HUh20d0MVHTKSWlkHuyR1h+LADQ/ZarjPxyjiOSOITBqQ7mVqpWONy4IGk6JONcjA3f2fPKU3Q0bfUSX5QOOXGYJ0hda5hHSrySPaRq7YrRMgI3GjRQlHyLNaMmAGKIwgb82Nm01pXjE2ngGm74=
+	t=1771031252; cv=none; b=ZtC44cOfVd9uD5cB+H+xgn/dd2+nGGSq/v/J4TH4hm22LMYfrr2Dl+2yhqfI3XuhSZZNCgzP80VWE8NaN5KDzIXYnsx0zNTB2MdiVYVqOL2BXYitl/kKq6prYBx/m+U8Tnk4iz4eRtuiaCY8QSzKJAruHGEymMH1EimQNWiCYuY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771031250; c=relaxed/simple;
-	bh=rUf2YWStDOv0T/x/+XHVe93kZS6aDX70u2J67qZ+hfo=;
+	s=arc-20240116; t=1771031252; c=relaxed/simple;
+	bh=dpGPNahTjb+M+DM+/ryym8oCDrMo4Pp7gVQxUK/c2Q4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=j/2vZNR6XVpWqa8/3AN109ESN4VKkaNwaKH/lMC8i6hXR40qK0xYPULYD8HwnHys3ur7dbb9vkCllqAuyOtLwWnJ1MknZbWVSu0PWRuJFZg8LybyYjem+SjeQgraOjAFI74FAmUDpz2UU30K1ixf22x9sjUXkfxXBuWAvFqnAlw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=HI2M17Jn; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=ZxpparEXMfOgnY6tV0Yzg16IlTBsLDERH10Jk0QU3Wp0cxTr7CwHv3Bu1m4J+ljUkdQ6OTXtZT2VBUzlpUmXuKzGe+x3+U2H/qrY3dKQzBwNh29rIsVtOmfD6wBq88i0Q9Ji0HgrnSYcW0aFfS/JOhALFPt82b/CY2Q6j/SQDr4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=BKmbdAFJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="HI2M17Jn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D129C116C6;
-	Sat, 14 Feb 2026 01:07:29 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="BKmbdAFJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 76F05C116C6;
+	Sat, 14 Feb 2026 01:07:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1771031249;
-	bh=rUf2YWStDOv0T/x/+XHVe93kZS6aDX70u2J67qZ+hfo=;
+	s=k20201202; t=1771031252;
+	bh=dpGPNahTjb+M+DM+/ryym8oCDrMo4Pp7gVQxUK/c2Q4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HI2M17JnIl13cqi62UPDNVw/E4VasaT6pog6u2b2FtgGrA5nq5buFGmhIldIc6CLz
-	 f/eu8kEpSxyzvbb15cHr59LAJA6zOgWGmXfC1vWtb8NQY1hLyZjwTXPBFrLLg8S1wR
-	 XMlq8yk2bT6HVpjd8Qd4XWOxO8U57b8DZegVpy0/Pt28SpxvrJmEoOkSUBLntff4Bw
-	 AzTTabnfb1tZMv30LxUFIWjepQerURZCVukV67vvdx2YOchAIndX5HgXsA6YILI3Bp
-	 fPT0MwP/9nqOPyBtjDV77Nzik1uHNsml7YXiRdWgAaFky60H7ick7MJ9vRpF2ROH82
-	 NVALisCmp9wCg==
+	b=BKmbdAFJGRGZbekahml6mKTGcm5BdH+qpuaEN8Zb1v9a/ggivy4Inqf0I11gsjCeX
+	 cP6ml2Z6wtDd6bV7XV/ujImNXDvbv9t2FjeCt7Ze2+RfFHhtzIkQ+2wV626FYO4ILt
+	 ohvPRGNBRlwX7khCcL0DkyYW0fRgKRfHPaV4wvywJm8ru3QaKz9gZ0H9pY/GN5+4c6
+	 +Rciwnf+s/IbPBjabJt6QyaI+LV5UU+7vd1QNhGNrK4z4r07HdusKvURyWylqbwuLx
+	 jJjmPnnn2Zdq0NvcaMbURivvQwm867GDmhdQFFZm5EDktGMO//Nuc9fEoJLEXvlPJ4
+	 vpSdGAYHUqh5g==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Chin-Ting Kuo <chin-ting_kuo@aspeedtech.com>,
-	Paul Menzel <pmenzel@molgen.mpg.de>,
+Cc: Sebastian Krzyszkowiak <sebastian.krzyszkowiak@puri.sm>,
+	Charles Keepax <ckeepax@opensource.cirrus.com>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	linux-spi@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.19-5.10] spi: spi-mem: Protect dirmap_create() with spi_mem_access_start/end
-Date: Fri, 13 Feb 2026 20:00:00 -0500
-Message-ID: <20260214010245.3671907-120-sashal@kernel.org>
+	kuninori.morimoto.gx@renesas.com,
+	neil.armstrong@linaro.org,
+	brgl@kernel.org,
+	shengjiu.wang@nxp.com,
+	tiwai@suse.de,
+	yelangyan@huaqin.corp-partner.google.com,
+	patches@opensource.cirrus.com
+Subject: [PATCH AUTOSEL 6.19-5.10] ASoC: wm8962: Don't report a microphone if it's shorted to ground on plug
+Date: Fri, 13 Feb 2026 20:00:01 -0500
+Message-ID: <20260214010245.3671907-121-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260214010245.3671907-1-sashal@kernel.org>
 References: <20260214010245.3671907-1-sashal@kernel.org>
@@ -52,147 +58,162 @@ X-stable-base: Linux 6.19
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Chin-Ting Kuo <chin-ting_kuo@aspeedtech.com>
+From: Sebastian Krzyszkowiak <sebastian.krzyszkowiak@puri.sm>
 
-[ Upstream commit 53f826ff5e0e3ecb279862ca7cce1491b94bb017 ]
+[ Upstream commit e590752119029d87ce46d725e11245a52d22e1fe ]
 
-spi_mem_dirmap_create() may reconfigure controller-wide settings,
-which can interfere with concurrent transfers to other devices
-sharing the same SPI controller but using different chip selects.
+This usually means that a TRS plug with no microphone pin has been plugged
+into a TRRS socket. Cases where a user is plugging in a microphone while
+pressing a button will be handled via incoming interrupt after the user
+releases the button, so the microphone will still be detected once it
+becomes usable.
 
-Wrap the ->dirmap_create() callback with spi_mem_access_start() and
-spi_mem_access_end() to serialize access and prevent cross-CS
-interference during dirmap creation.
-
-This patch has been verified on a setup where a SPI TPM is connected
-to CS0 of a SPI controller, while a SPI NOR flash is connected to CS1
-of the same controller. Without this patch, spi_mem_dirmap_create()
-for the SPI NOR flash interferes with ongoing SPI TPM data transfers,
-resulting in failure to create the TPM device. This was tested on an
-ASPEED AST2700 EVB.
-
-Signed-off-by: Chin-Ting Kuo <chin-ting_kuo@aspeedtech.com>
-Reviewed-by: Paul Menzel <pmenzel@molgen.mpg.de>
-Link: https://patch.msgid.link/20260120123005.1392071-2-chin-ting_kuo@aspeedtech.com
+Signed-off-by: Sebastian Krzyszkowiak <sebastian.krzyszkowiak@puri.sm>
+Reviewed-by: Charles Keepax <ckeepax@opensource.cirrus.com>
+Link: https://patch.msgid.link/20260105-wm8962-l5-fixes-v1-3-f4f4eeacf089@puri.sm
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-### 3. Pattern Consistency
+## Analysis of ASoC: wm8962: Don't report a microphone if it's shorted
+to ground on plug
 
-The pattern is **completely consistent** with existing code. Looking at
-the existing usages:
-- `exec_op` (line 405-413): wrapped with start/end
-- `dirmap_read` (line 849-855): wrapped with start/end
-- `dirmap_write` (line 895-901): wrapped with start/end
-- `poll_status` (line 967-975): wrapped with start/end
-- **`dirmap_create`**: was **NOT** wrapped — this is the bug being fixed
+### 1. Commit Message Analysis
 
-The `dirmap_create` callback was the only mem_ops callback **missing**
-this serialization. This is clearly an oversight/bug.
+The commit addresses a hardware detection issue with the WM8962 audio
+codec. When a TRS (3-pin) plug is inserted into a TRRS (4-pin) socket,
+the microphone pin gets shorted to ground. The codec's mic detection
+circuitry sees both `MICDET_STS` (microphone detected) and
+`MICSHORT_STS` (microphone shorted) simultaneously, leading to an
+incorrect report that a microphone is present along with a button press.
 
-### 4. What the Serialization Does
+The fix: if a short is detected immediately at plug-in time (before any
+microphone was previously detected), don't report a microphone. If the
+user later releases the button (if it really was a microphone + button
+press), an interrupt will fire and correct the state.
 
-`spi_mem_access_start()`:
-1. Flushes the SPI message queue to prevent preemption of regular
-   transfers
-2. Handles runtime PM
-3. Acquires `bus_lock_mutex` and `io_mutex`
+### 2. Code Change Analysis
 
-This is the standard mechanism for serializing SPI memory operations
-against each other and against regular SPI transfers. Without it,
-`dirmap_create` can race with:
-- Normal SPI transfers to other devices (like the TPM in the test case)
-- Other spi-mem operations
+The change is small and well-contained:
 
-### 5. Bug Severity and Impact
+1. **New field `mic_status`** added to `struct wm8962_priv` — tracks the
+   previous microphone detection status.
 
-- **Concrete failure**: TPM device creation fails, meaning the TPM is
-  completely unusable
-- **Real hardware**: Tested on ASPEED AST2700 EVB, but this affects any
-  multi-CS SPI controller setup
-- **TPM implications**: TPM is security-critical hardware (used for
-  secure boot, disk encryption, attestation)
-- **Multi-CS SPI is common**: Many embedded systems have multiple SPI
-  devices on one controller
+2. **Logic change in `wm8962_mic_work()`**:
+   - When `MICSHORT_STS` is set (short detected), it checks if
+     `mic_status` previously had `MICDET_STS` set.
+   - If no microphone was previously detected (`!(wm8962->mic_status &
+     WM8962_MICDET_STS)`), it sets `status = 0` — suppressing the false
+     microphone + button report.
+   - After the check, `wm8962->mic_status` is updated with the current
+     status.
 
-### 6. Risk Assessment
+This is a **hardware quirk/workaround** — it handles a real-world
+scenario where TRS plugs in TRRS sockets cause false microphone
+detection.
 
-**Very low risk:**
-- The change adds exactly the same serialization pattern used by all
-  other spi-mem callbacks
-- It's a small, surgical change (~12 lines of actual change)
-- The error handling is correct (kfree on failure, proper return)
-- Reviewed by Paul Menzel, merged by Mark Brown (SPI maintainer)
-- Existing code in the file already demonstrates this exact pattern 4
-  times
+### 3. Classification
 
-**No dependency concerns:**
-- `spi_mem_access_start()` and `spi_mem_access_end()` have existed since
-  the spi-mem subsystem was created
-- No new functions or APIs introduced
-- Will apply cleanly to any stable tree that has spi-mem support
+This is a **bug fix for incorrect hardware detection behavior**. It
+falls into the category of hardware quirks/workarounds, which are
+explicitly allowed in stable trees. The fix prevents:
+- False microphone detection when using headphones without a mic
+- False button press events on plug insertion
+- User-visible incorrect audio routing (system thinks a mic is present
+  when it isn't)
 
-### 7. Classification
+### 4. Scope and Risk Assessment
 
-This is a **race condition fix** — specifically, missing serialization
-for a controller-wide operation. The `dirmap_create` callback can modify
-controller-wide settings (like register configurations for direct
-mapping) without holding the bus lock, allowing concurrent transfers on
-other chip selects to see inconsistent state or interfere.
+- **Lines changed**: ~12 lines of logic + 1 new struct field = very
+  small
+- **Files touched**: 1 file (`sound/soc/codecs/wm8962.c`)
+- **Complexity**: Low — straightforward state tracking
+- **Risk**: Very low. The change only affects the mic detection path.
+  The `mic_status` field is zero-initialized (struct is kzalloc'd), so
+  on first plug-in, if both MICDET and MICSHORT are set simultaneously,
+  it correctly suppresses the false report. The subsequent interrupt
+  when the short clears will correctly detect the microphone if one is
+  actually present.
 
-### 8. Stable Criteria Checklist
+### 5. User Impact
 
-- **Obviously correct**: Yes — follows the exact pattern of every other
-  callback in the same file
-- **Fixes a real bug**: Yes — verified failure on real hardware (TPM
-  device creation failure)
-- **Important issue**: Yes — prevents device creation failure, affects
-  security-critical hardware (TPM)
-- **Small and contained**: Yes — single file, ~12 lines of change
-- **No new features**: Correct — only adds missing serialization
-- **No new APIs**: Correct
+- **Who is affected**: Users with WM8962 codec hardware (common in
+  embedded/mobile devices, including Purism Librem 5 based on the
+  author's email domain)
+- **Severity**: Medium — incorrect jack detection leads to wrong audio
+  routing, which is a real user-facing issue
+- **Reproducibility**: Easily reproducible by plugging TRS headphones
+  into a TRRS jack
+
+### 6. Stability Indicators
+
+- **Reviewed-by**: Charles Keepax (Cirrus Logic engineer, the codec
+  manufacturer's developer) — strong domain expertise review
+- **Applied by**: Mark Brown (ASoC maintainer) — subsystem maintainer
+  accepted it
+- The fix is logically sound and handles edge cases (subsequent
+  interrupt for real mic+button)
+
+### 7. Dependency Check
+
+The change is self-contained. It only adds a new field to the private
+data structure and modifies the mic detection work function. No
+dependencies on other commits. The WM8962 driver has existed in stable
+trees for many years.
+
+### 8. Risk vs Benefit
+
+- **Benefit**: Fixes incorrect microphone/button detection for TRS plugs
+  in TRRS sockets — a common real-world scenario
+- **Risk**: Minimal — small, localized change with expert review. The
+  worst case if the logic were somehow wrong would be a missed initial
+  microphone detection, which would self-correct on the next interrupt.
 
 ### Conclusion
 
-This is a textbook stable backport candidate. It fixes a real race
-condition that causes device creation failure on multi-CS SPI
-controllers. The fix is small, follows existing patterns exactly, is
-well-tested on real hardware, and has been reviewed by maintainers. The
-risk of regression is minimal since it's simply adding the same locking
-used by all other spi-mem operations.
+This is a small, well-reviewed hardware quirk fix for incorrect jack
+detection behavior in the WM8962 audio codec. It fixes a real user-
+facing issue (false microphone detection with TRS headphones), is self-
+contained, has been reviewed by the codec manufacturer's engineer, and
+carries minimal regression risk. It meets all stable kernel criteria.
 
 **YES**
 
- drivers/spi/spi-mem.c | 11 ++++++++++-
- 1 file changed, 10 insertions(+), 1 deletion(-)
+ sound/soc/codecs/wm8962.c | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
-diff --git a/drivers/spi/spi-mem.c b/drivers/spi/spi-mem.c
-index 6c7921469b90b..965673bac98b9 100644
---- a/drivers/spi/spi-mem.c
-+++ b/drivers/spi/spi-mem.c
-@@ -719,9 +719,18 @@ spi_mem_dirmap_create(struct spi_mem *mem,
+diff --git a/sound/soc/codecs/wm8962.c b/sound/soc/codecs/wm8962.c
+index 1040740fc80f8..bff8644674163 100644
+--- a/sound/soc/codecs/wm8962.c
++++ b/sound/soc/codecs/wm8962.c
+@@ -67,6 +67,8 @@ struct wm8962_priv {
+ 	struct mutex dsp2_ena_lock;
+ 	u16 dsp2_ena;
  
- 	desc->mem = mem;
- 	desc->info = *info;
--	if (ctlr->mem_ops && ctlr->mem_ops->dirmap_create)
-+	if (ctlr->mem_ops && ctlr->mem_ops->dirmap_create) {
-+		ret = spi_mem_access_start(mem);
-+		if (ret) {
-+			kfree(desc);
-+			return ERR_PTR(ret);
-+		}
++	int mic_status;
 +
- 		ret = ctlr->mem_ops->dirmap_create(desc);
+ 	struct delayed_work mic_work;
+ 	struct snd_soc_jack *jack;
  
-+		spi_mem_access_end(mem);
-+	}
+@@ -3081,8 +3083,16 @@ static void wm8962_mic_work(struct work_struct *work)
+ 	if (reg & WM8962_MICSHORT_STS) {
+ 		status |= SND_JACK_BTN_0;
+ 		irq_pol |= WM8962_MICSCD_IRQ_POL;
 +
- 	if (ret) {
- 		desc->nodirmap = true;
- 		if (!spi_mem_supports_op(desc->mem, &desc->info.op_tmpl))
++		/* Don't report a microphone if it's shorted right after
++		 * plugging in, as this may be a TRS plug in a TRRS socket.
++		 */
++		if (!(wm8962->mic_status & WM8962_MICDET_STS))
++			status = 0;
+ 	}
+ 
++	wm8962->mic_status = status;
++
+ 	snd_soc_jack_report(wm8962->jack, status,
+ 			    SND_JACK_MICROPHONE | SND_JACK_BTN_0);
+ 
 -- 
 2.51.0
 
