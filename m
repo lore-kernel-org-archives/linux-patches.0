@@ -1,257 +1,131 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qv1-f52.google.com (mail-qv1-f52.google.com [209.85.219.52])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6499DDF59;
-	Sat, 14 Feb 2026 00:58:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771030710; cv=none; b=JmlbTstPFgOEW9xuflmeM3+uVlvof2zERJQh2tJpNUo2vTjD/sSl9jwVCC+ajYFdlVIB1ugBwImtr9UsyULtcB9haHTD9Icvzixuj7qY+khEpljG6J49i1LOQCr4+IXDZjj6vAQ6Nno1nxCvlqOlROLEW8fyaEY56WLc63p+/LI=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771030710; c=relaxed/simple;
-	bh=NEWEBH7sq+zU2qhpQKKuTK0qk9D0GCwG/6uIPj/b1Lk=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=e1wovtVlNb+3LOtp/sCYFKZfDIYQ+z/FAkgPRKBXKxhyUN7tVnrbgWbXTEGpN51bGgwIv8XbwNI9+yP0GhvhuE8F1O3XsGIq3Di0j9KijmF8bTmzspXIHrBLeeiE0bjHzLYIqSxiv1HHqUK+YfeoGH9JAX+rMyNqX+1/cqgfItE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=XQacjNJq; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B4DC20E334
+	for <patches@lists.linux.dev>; Sat, 14 Feb 2026 00:58:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.219.52
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1771030712; cv=pass; b=NEbs6ry5OLdGkxI/B+UCLUQ8xagwMhT7ylFD0jjCPRTPlTFfAUjEJUN56fR6sFh7fKff18U6WfugyFoj4YVYWSftOnFdkFONtTSIsUoO9c1RGfezXVqdVUorvR7/lDzinQdddTMwQOxezycI6PqUcBIYa+ylOJiBytleDp1Y0h0=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1771030712; c=relaxed/simple;
+	bh=W5nbte4rEtcfLm2iuE6VcT6d0KIL0jGVnJcfbmeUqg0=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=GPUafFqh/BX3quDO1OUJC7+VqBjFh6R+WNbZBnqf9vUd6quj0scrEUqvGmU+pFo4mxb09sJ+kCS2nk8kYM9plUXtpBZl/i2eWScwfVXPXE2kEyp0bLHCSOTkWweNqHWrp0ShQ3IlscnyO+Kr9KjYri2VzdpUpOFp5d0pmjKZBFs=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=ciq.com; spf=pass smtp.mailfrom=ciq.com; dkim=pass (2048-bit key) header.d=ciq.com header.i=@ciq.com header.b=VgjzApIL; arc=pass smtp.client-ip=209.85.219.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=ciq.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ciq.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="XQacjNJq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E88F0C16AAE;
-	Sat, 14 Feb 2026 00:58:28 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1771030710;
-	bh=NEWEBH7sq+zU2qhpQKKuTK0qk9D0GCwG/6uIPj/b1Lk=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XQacjNJqTN9vCo8aKrgcjCirDzQfC3X1DShrc8qFEHjXH7+t4FNGgic77si4k2/R2
-	 Y7tRTLeBpOYIGuHEFWzzCKX8YZUKI5pT1ngcdVmMpRmcC8OZGXztgNhOIgBmf8sdfk
-	 K+un3D/ApRtP5xlCApe9GKaegZTDdRMRfX4iD7PuZzh5sTLiHfoAHB5rsQ57jhnu9j
-	 eWH1uKn0gAag8j7oUo8K4Z5xcIUmaur+ny+sigkR8ye7eTdysXToe3m1t+d1w0INWh
-	 XPWJH/jtulXCXYBl+p3Ym+KwWWP8+5Rep3C2YTDDxbYMK9SLr6+plyHA+XKliZQNNo
-	 kVMbHgyY/1Hqg==
-From: Sasha Levin <sashal@kernel.org>
-To: patches@lists.linux.dev,
-	stable@vger.kernel.org
-Cc: Peng Fan <peng.fan@nxp.com>,
-	kernel test robot <lkp@intel.com>,
-	Dan Carpenter <error27@gmail.com>,
-	Marco Felsch <m.felsch@pengutronix.de>,
-	Daniel Baluta <daniel.baluta@nxp.com>,
-	Shawn Guo <shawnguo@kernel.org>,
-	Sasha Levin <sashal@kernel.org>,
-	Frank.Li@nxp.com,
-	neil.armstrong@linaro.org,
-	yelangyan@huaqin.corp-partner.google.com,
-	imx@lists.linux.dev,
-	linux-arm-kernel@lists.infradead.org
-Subject: [PATCH AUTOSEL 6.19-6.18] soc: imx8m: Fix error handling for clk_prepare_enable()
-Date: Fri, 13 Feb 2026 19:58:08 -0500
-Message-ID: <20260214005825.3665084-2-sashal@kernel.org>
-X-Mailer: git-send-email 2.51.0
-In-Reply-To: <20260214005825.3665084-1-sashal@kernel.org>
-References: <20260214005825.3665084-1-sashal@kernel.org>
+	dkim=pass (2048-bit key) header.d=ciq.com header.i=@ciq.com header.b="VgjzApIL"
+Received: by mail-qv1-f52.google.com with SMTP id 6a1803df08f44-89577f866d6so20915496d6.0
+        for <patches@lists.linux.dev>; Fri, 13 Feb 2026 16:58:31 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1771030710; cv=none;
+        d=google.com; s=arc-20240605;
+        b=CUtfqFKCCQ7TfQdLlJyDZLyS/80cYFK3T2ZdSyOILijlUpOrRg/7h0iEormnsXjDcR
+         qE0m885E8n6egIstcM0GNMhgf5yyG44eyeqXJ3xGzC2OaVl4IZBHrxe1+uVwNq689BCN
+         cIop8nxdFeH/GtYDUm7qHwPk+5AGoQvG1F3y/SnU8Mnq/Xr3201oU7OXu2p/eE9TQTSx
+         j+i1+RFzq9uOsnIuRhBPsPLot8UdL7oxt71L1GRBUMWLkqIuM95hdbpbWeynBhH2yjbL
+         YQtdW1zTh17PtEU8IrnH/DCtHJLEgxFLpYluFG/gw0HfPyZq490THVyyc4qV6jt3NWNN
+         Lfug==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=vYrvYeGNl+ocSwonqior1WpZBamB7LqsZM5+HaM2xJA=;
+        fh=tokp6i/Ie2VE6XGrGyXsoYGt5xkgLRzae1I6NSFR+JU=;
+        b=BlOZC+TGk1sdpdhmwTmNA0oHhuHeRT2uyMiVy+3g+Mv1mUVnlvLwzPaR0fljwAJAKI
+         OXbmbqidt4ARIfLMJYv3Dk4v1uFXuejLf/z80QAAmVsU7e8QZzLiiX1O3qfuY/LrUkPF
+         JsCPOz5OJUtveWGjHWUWH8E68Njj+XUSka7PLlOiarlHomYzzC6Jd6xfCH1jOJPzi4st
+         agjFdgAl4lZ7gVw8dXejErAOlI/b7h6oIAYPJQkcrzQ1kU6JLd5ZDtVXu+afUfWSBKjt
+         XZ6x/vzRZCdE+zctHGNk8CSAfzMucW3TIR0ZxWmGftBA/KGxTYq0oEea3JZVY2Vs1IzX
+         L2nQ==;
+        darn=lists.linux.dev
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ciq.com; s=s1; t=1771030710; x=1771635510; darn=lists.linux.dev;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=vYrvYeGNl+ocSwonqior1WpZBamB7LqsZM5+HaM2xJA=;
+        b=VgjzApILOcSLaRi1b9AxHmbGzU6qLBw2Avi+CNSYc2wkduWPRJIgYJFsMi7Dy2plQY
+         aoDo7rA/+3SaoLkmHkjaS4F1CQ+EyhcyOQwebdoekWX+uo1+j1Z5h75bl6jQy9hE69qf
+         WKntNBrR+rE/UO3ykmIsJpIKRwlYeXzIFRyanPK/5ObDeYqryRA0cvng5N+bvedLPDBf
+         GLRbOHg8q4t4bVbwRvP7TBKvCaaV6IbpBrMIHnwUq0vN9htqSXtaLRKxz1+RSRQGDY/y
+         wqkz0W+qFNJ3urcbQVBfgo2qW1bvI2l2ih1At58Qv62cFMxGab+bNox2QEBYpaYP6126
+         dBRg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1771030710; x=1771635510;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=vYrvYeGNl+ocSwonqior1WpZBamB7LqsZM5+HaM2xJA=;
+        b=OMQHsz2d3pxKIEzM3VXWRBSXx0v0rzI0idLCGhCpsbSfRjcwbKiIOeSZDGDPVNhU78
+         qShBh8iWVgzIVU3cJO1DpHDOje7aq8rbh3gXM+M0RwnjlLbaqskFDmc82T3B46rggQp7
+         WHt5f7GU3cETzeZQvBbnFukVHF2GuC8i4e1ywJcf7Le52lRR0XBnqu/ha6WYHa719TW9
+         dPtM6PKUWCWBKp8eG+hOkN4MXXGpoEajDRiaTIinX7UHC34NBA60eMTRI9CcsBcsu+1N
+         Z6Zf9X1P/Tw7zPDuqcsa96IdHzFZPhklOubobIHRJBBz3X8ZGeFkr++wZxQVwPlfrW2N
+         WXOg==
+X-Forwarded-Encrypted: i=1; AJvYcCWk0dYCGBWhq6YmEwspU3B19FGPx7Gcc4Uu68LGI4sF2yhkqawd4l6Xt4NWzZavgqfg/FUk0031@lists.linux.dev
+X-Gm-Message-State: AOJu0YyBQB+QhElgKvEQ3cgxvAVg4EWXf9bHsf7Oz4XdwsVupDFJ2mYo
+	sbCf0P/X37fGThE0boTJdiRec12iT0VRMav7k842CyXRU9NrBxglOgsP7n0Z7fb81U21cwo1R1x
+	8vMF49gX3AaIPE09nHjVpxcrx9lI7zji/Sg6iMLWzAg==
+X-Gm-Gg: AZuq6aLciBAGdXrsTDxsK6fer4s4GateAFOZa/EMJdVMOVz4+G7edQbGSYIcNRygXBP
+	Q4110BnhjzlIfYhMIqrNmjUqCpTKQiiY9bRrrui9J3N+h9vVtkwdmFIApjjOGqEukO/FRT95GkQ
+	juTTev7haEL5rNrYJtp0B1b5ktOz+78FcIB6Hn2C4NiQ2CdAsnhV7s74VgH/mMcGavdSuSUulkn
+	fG1H52W1AiyPiJ6UunqpL1jR7nD1MXTIveQzdFcm+Qn1/j6lxfhfJdQ+J6sTAwoD16zyDXqa/cp
+	jwB49hES
+X-Received: by 2002:ad4:5f0b:0:b0:895:4bec:b583 with SMTP id
+ 6a1803df08f44-8973f2fc9d7mr34071586d6.18.1771030710504; Fri, 13 Feb 2026
+ 16:58:30 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-stable: review
-X-Patchwork-Hint: Ignore
-X-stable-base: Linux 6.19
-Content-Transfer-Encoding: 8bit
+References: <20260213134704.728003077@linuxfoundation.org>
+In-Reply-To: <20260213134704.728003077@linuxfoundation.org>
+From: Brett Mastbergen <bmastbergen@ciq.com>
+Date: Fri, 13 Feb 2026 19:58:19 -0500
+X-Gm-Features: AZwV_Qjxj_PxbKXdyVWfsxa2vYjhA6CGoymxMpj0QhV6_8TaKXsloLhpNNGb3Jc
+Message-ID: <CAOBMUvhAxqz=oyyLPUugqP9sP4bo0OB3izJ0oJTZCOemavWBvQ@mail.gmail.com>
+Subject: Re: [PATCH 6.12 00/24] 6.12.72-rc1 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, 
+	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@nabladev.com, 
+	jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, 
+	rwarsow@gmx.de, conor@kernel.org, hargar@microsoft.com, broonie@kernel.org, 
+	achill@achill.org, sr@sladewatkins.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-From: Peng Fan <peng.fan@nxp.com>
+On Fri, Feb 13, 2026 at 8:58=E2=80=AFAM Greg Kroah-Hartman
+<gregkh@linuxfoundation.org> wrote:
+>
+> This is the start of the stable review cycle for the 6.12.72 release.
+> There are 24 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+>
+> Responses should be made by Sun, 15 Feb 2026 13:46:52 +0000.
+> Anything received after that time might be too late.
+>
+> The whole patch series can be found in one patch at:
+>         https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-=
+6.12.72-rc1.gz
+> or in the git tree and branch at:
+>         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable=
+-rc.git linux-6.12.y
+> and the diffstat can be found below.
+>
+> thanks,
+>
+> greg k-h
+>
 
-[ Upstream commit f6ef3d9ff81240e9bcc030f2da132eb0f8a761d7 ]
+Builds successfully.  Boots and works on qemu and Intel Core i7-10810U
 
-imx8m_soc_prepare() directly returns the result of clk_prepare_enable(),
-which skips proper cleanup if the clock enable fails. Check the return
-value of clk_prepare_enable() and release resources if failure.
+Tested-by: Brett Mastbergen <bmastbergen@ciq.com>
 
-Reported-by: kernel test robot <lkp@intel.com>
-Reported-by: Dan Carpenter <error27@gmail.com>
-Closes: https://lore.kernel.org/r/202601111406.ZVV3YaiU-lkp@intel.com/
-Signed-off-by: Peng Fan <peng.fan@nxp.com>
-Reviewed-by: Marco Felsch <m.felsch@pengutronix.de>
-Reviewed-by: Daniel Baluta <daniel.baluta@nxp.com>
-Signed-off-by: Shawn Guo <shawnguo@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
----
-
-LLM Generated explanations, may be completely bogus:
-
-Interesting - in v6.15 and earlier, `clk_prepare_enable()` was called
-without checking its return value at all, but the code continued with
-proper cleanup on the success path. The v6.15 code has a different
-(arguably less severe) issue - it doesn't check `clk_prepare_enable()`
-return value but doesn't leak resources on normal exit.
-
-Now I have a complete picture. Let me write the analysis.
-
----
-
-## Detailed Analysis
-
-### 1. Commit Message Analysis
-
-The commit title explicitly says "Fix error handling for
-clk_prepare_enable()". The message clearly describes the bug:
-`imx8m_soc_prepare()` directly returns the result of
-`clk_prepare_enable()`, bypassing the `err_clk` cleanup label when the
-clock enable fails. This is a resource leak bug.
-
-**Reporters:** Kernel test robot (lkp) and Dan Carpenter (well-known
-Smatch/static analysis developer). This means the bug was found via
-static analysis (Smatch), not a runtime crash report. The presence of
-"Closes:" link to a kernel test robot report confirms this.
-
-**Reviews:** Two Reviewed-by tags (Marco Felsch and Daniel Baluta),
-indicating the fix was validated by subsystem developers.
-
-### 2. Code Change Analysis
-
-The bug is in `imx8m_soc_prepare()`:
-
-```131:156:drivers/soc/imx/soc-imx8m.c
-static int imx8m_soc_prepare(struct platform_device *pdev, const char
-*ocotp_compatible)
-{
-        // ... setup code ...
-        drvdata->ocotp_base = of_iomap(np, 0);    // resource 1: iomap
-        // ...
-        drvdata->clk = of_clk_get_by_name(np, NULL);  // resource 2:
-clock ref
-        // ...
-        return clk_prepare_enable(drvdata->clk);   // BUG: if this
-fails, ocotp_base is leaked!
-
-err_clk:
-        iounmap(drvdata->ocotp_base);
-        return ret;
-}
-```
-
-**The bug mechanism:** When `clk_prepare_enable()` fails, the function
-returns directly with the error code, skipping the `err_clk` label which
-calls `iounmap(drvdata->ocotp_base)`. This leaks:
-1. The `ocotp_base` iomap mapping (definite leak)
-2. The clock reference from `of_clk_get_by_name()` (also leaked, since
-   `clk_put()` is not called - this is arguably still not fully fixed,
-   but the `err_clk` label was designed for the `of_clk_get_by_name`
-   failure case where `clk_put` should not be called)
-
-**The fix:** Check the return value, jump to `err_clk` on failure, which
-properly unmaps `ocotp_base`:
-
-```diff
-- return clk_prepare_enable(drvdata->clk);
-+       ret = clk_prepare_enable(drvdata->clk);
-+       if (ret)
-+               goto err_clk;
-+       return 0;
-```
-
-**Note:** There is a subtlety - when `clk_prepare_enable()` fails, the
-`err_clk` label only calls `iounmap()` but not `clk_put()`. The clock
-reference obtained from `of_clk_get_by_name()` is still leaked. However,
-this is a separate (pre-existing) concern. The fix as written is still
-an improvement: it's strictly better than the old code.
-
-### 3. Dependency/Prerequisite Analysis
-
-This is **critical** for the backport decision:
-
-- The function `imx8m_soc_prepare()` was introduced in commit
-  `390c01073f5d0` ("soc: imx8m: Cleanup with adding
-  imx8m_soc_[un]prepare"), which first appeared in **v6.16-rc1**.
-- This means the **buggy code does NOT exist** in v6.15 or any earlier
-  stable tree (v6.14, v6.13, v6.12, v6.6, v6.1, 5.15, etc.).
-- The bug was introduced in v6.16 and the fix only applies to
-  **v6.16.y** stable and newer (v6.17.y, v6.18.y if applicable).
-- I confirmed the buggy code exists identically in v6.16.12 (latest
-  v6.16 stable), so the fix would apply cleanly.
-
-### 4. Scope and Risk Assessment
-
-- **Size:** 5 lines changed (+5/-1) in a single file - extremely small
-  and surgical.
-- **Risk:** Essentially zero. The fix only changes the error path
-  behavior (adds proper cleanup). The success path (when
-  `clk_prepare_enable()` works) is unchanged (returns 0 instead of the
-  return value of `clk_prepare_enable()`, but those are equivalent on
-  success).
-- **Subsystem:** SoC driver for NXP i.MX8M family, a widely-used
-  embedded platform.
-
-### 5. User Impact
-
-- **Affected hardware:** All i.MX8M family SoCs (i.MX8MQ, i.MX8MM,
-  i.MX8MN, i.MX8MP) - very common in embedded/industrial/automotive use.
-- **Trigger likelihood:** Low in practice. `clk_prepare_enable()` for
-  the OCOTP clock is unlikely to fail on real hardware under normal
-  conditions.
-- **Severity if triggered:** Resource leak (iomap + clock reference).
-  Not a crash, not security-critical, not data corruption. On repeated
-  failures (e.g., in a test environment or if the clock framework has
-  issues), could contribute to resource exhaustion.
-- **Detection method:** Static analysis (Smatch/kernel test robot), not
-  a user report.
-
-### 6. Classification
-
-This is a **real bug fix** - it fixes a resource leak on an error path.
-It falls into the category of "error path changes that fix resource
-leaks," which is explicitly identified as backport-worthy material
-despite being described as a "cleanup."
-
-### 7. Stable Criteria Check
-
-| Criterion | Assessment |
-|---|---|
-| Obviously correct and tested | Yes - trivially correct, reviewed by 2
-developers |
-| Fixes a real bug | Yes - resource leak on error path |
-| Important issue | Moderate - resource leak, not crash/corruption |
-| Small and contained | Yes - 5 lines in 1 file |
-| No new features/APIs | Correct |
-| Applies cleanly | Yes - to v6.16.y |
-
-### Conclusion
-
-This is a small, obviously correct fix for a resource leak in the i.MX8M
-SoC driver's error handling path. The fix is surgical (5 lines), well-
-reviewed, and applies cleanly to v6.16.y stable (the only stable tree
-that has the affected code). While the bug is unlikely to trigger in
-practice (it requires `clk_prepare_enable()` to fail), the fix has
-essentially zero regression risk and properly handles an error path that
-should have been handled from the start. The fix was reported by kernel
-test robot and Dan Carpenter, two well-known automated and manual static
-analysis sources, and was reviewed by two subsystem developers.
-
-The fix is appropriate for v6.16.y stable backport. It does NOT apply to
-older stable trees (v6.15.y and below) because the affected function was
-introduced in v6.16.
-
-**YES**
-
- drivers/soc/imx/soc-imx8m.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
-
-diff --git a/drivers/soc/imx/soc-imx8m.c b/drivers/soc/imx/soc-imx8m.c
-index 04a1b60f2f2b5..8e2322999f099 100644
---- a/drivers/soc/imx/soc-imx8m.c
-+++ b/drivers/soc/imx/soc-imx8m.c
-@@ -148,7 +148,11 @@ static int imx8m_soc_prepare(struct platform_device *pdev, const char *ocotp_com
- 		goto err_clk;
- 	}
- 
--	return clk_prepare_enable(drvdata->clk);
-+	ret = clk_prepare_enable(drvdata->clk);
-+	if (ret)
-+		goto err_clk;
-+
-+	return 0;
- 
- err_clk:
- 	iounmap(drvdata->ocotp_base);
--- 
-2.51.0
-
+Thanks,
+Brett
