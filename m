@@ -1,49 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F7B3311C35;
-	Sat, 14 Feb 2026 21:27:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC84E2FDC20;
+	Sat, 14 Feb 2026 21:27:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771104433; cv=none; b=ZzQz/Xc1iZpFri99pAmZfihH9XZ1J/CXZUM6iATzJcB+9o3AYBZm811qIjIOZmj207MbKpJNmML+48TFyfFa1pDrkqCCuPlIXC4xyL0GJkSdTWXfYgNarhSC4Kiugshv2apEqftT+IsgZDljEJx91pHxOTSHL3TnH6w269zd/C8=
+	t=1771104434; cv=none; b=HGHuRtvUBYLtLmE4LZTU/PlptpBvJ08RtPASSRNqmF1+5+btliuXcJtlrVTUbAid4yueBlKlYBMDHEH7JmombxEhIkuJZtoz4vPdwKLJIQQXbRUK0wb/MiRyysN6+D3MPB0iaujQANrreZR96ewdnB9Gz7L1d3bg6WfkCkV6bbQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771104433; c=relaxed/simple;
-	bh=jjUeI65DKfRKw44ufB5viyNZu9uX2y0jcM6x9CaYidU=;
+	s=arc-20240116; t=1771104434; c=relaxed/simple;
+	bh=ADDlhnTR7cwcVMYUjdmYp8M6NLsPPm/L7no9GKVAU3I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=LSqrvbrqSqFgy8QO3gDyg1hvNtSnedtcIwR1ZWPNK135A9MZFAxsMZ86hQpHJbh22rJBes/uPnFxjZzpmno0d746ZSJ5wZkWCdYJHXqEomEWdQbhivuaV+Jc2u2sWFeGqsDBCLdDAEEx2kN+OBleVyqHNFtuK3jNW7X0zWEmTA8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=PDsClJWO; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=rAyXpZAzyqk0p4305fFVFF3F/UriJfX9zBS/eYtboxQc7IU8vYy4fvVJa+Eho/2m0bH2bTbT7hSJg3vwfBZa5Ugq/RQ+P2DY1uS7fiCZKkTVI+i1fHjNg1J5Rb2GMTTXuRv/vQwZOXEObCg/0Uaos3k/dicL31IBNNpZewroHVE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=XPhVEB9E; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="PDsClJWO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE960C19423;
-	Sat, 14 Feb 2026 21:27:11 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="XPhVEB9E"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 94471C19425;
+	Sat, 14 Feb 2026 21:27:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1771104433;
-	bh=jjUeI65DKfRKw44ufB5viyNZu9uX2y0jcM6x9CaYidU=;
+	s=k20201202; t=1771104434;
+	bh=ADDlhnTR7cwcVMYUjdmYp8M6NLsPPm/L7no9GKVAU3I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PDsClJWOVLAKH2152uXkuNUgGyLgQ5YLUSuv9mp1xPy2Y6SMO4vxTSI8rzSmV7oqE
-	 Ts3xLf3kD173b3WAYHE+QzOd2SyPlGnxvADAM5zYZKrV/CN7VhzI/Q/3SM00JEvkIx
-	 sZtlA/S0jkaxxafxdvmUsRhmH7+s/2xIOzQQyjZ6jMxOhRgIRnQ4O20Bz/4dqWsgBX
-	 9+uVeBj+JjhXgFdehggVhUiLiGpgqp0ekqvlHZmvL07OqfxdTvCqSrbdWskk+G24hX
-	 5fwGISx4WU+XnEZcUf58maccAbyLNy3IAHetrGT1JE553vinHAA0TUHuouEj93SXtH
-	 xwTMqTIsVrWkg==
+	b=XPhVEB9EY9hlgoTQrCp9pDWs8KCbKjDS8aAcgT1LDe1x6Kb/3awTG+UzmVaTPFJqK
+	 l8MQ3OWRyJ+AC0RJZhOd2uzNi+qKUVEj/WXzPivKIwgM+iacjzDGROIxhf6KAF/Jw8
+	 we/mxI4SGaFOxf9hPVJ+BpcCJ2ds4nz31ef/8oZPHjD+mdf2naJpSF1oibebo+bUii
+	 6WGS48Wn7wQJkKDPCbJNRjxuFMgpJrB2MAPUYVzf4G4td2GfdejVBsLoSSWCHwXpXS
+	 w/1TZmywFBU8z1OG/KlnfADUTWRTbj/+IJtugLg/ndRBYXk2YaDyNCQMep4h1r3ymJ
+	 4TtZ6rGxBEryQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Jori Koolstra <jkoolstra@xs4all.nl>,
-	syzbot+9131ddfd7870623b719f@syzkaller.appspotmail.com,
-	Dave Kleikamp <dave.kleikamp@oracle.com>,
+Cc: Alex Williamson <alex.williamson@nvidia.com>,
+	Patrick Bianchi <patrick.w.bianchi@gmail.com>,
+	Bjorn Helgaas <bhelgaas@google.com>,
 	Sasha Levin <sashal@kernel.org>,
-	shaggy@kernel.org,
-	jlayton@kernel.org,
-	brauner@kernel.org,
-	neil.armstrong@linaro.org,
-	viro@zeniv.linux.org.uk,
-	yelangyan@huaqin.corp-partner.google.com,
-	neil@brown.name,
-	jfs-discussion@lists.sourceforge.net
-Subject: [PATCH AUTOSEL 6.19-5.10] jfs: nlink overflow in jfs_rename
-Date: Sat, 14 Feb 2026 16:23:45 -0500
-Message-ID: <20260214212452.782265-80-sashal@kernel.org>
+	linux-pci@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.19-5.10] PCI: Mark ASM1164 SATA controller to avoid bus reset
+Date: Sat, 14 Feb 2026 16:23:46 -0500
+Message-ID: <20260214212452.782265-81-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260214212452.782265-1-sashal@kernel.org>
 References: <20260214212452.782265-1-sashal@kernel.org>
@@ -59,170 +52,148 @@ X-stable-base: Linux 6.19
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jori Koolstra <jkoolstra@xs4all.nl>
+From: Alex Williamson <alex.williamson@nvidia.com>
 
-[ Upstream commit 9218dc26fd922b09858ecd3666ed57dfd8098da8 ]
+[ Upstream commit beb2f81792a8a619e5122b6b24a374861309c54b ]
 
-If nlink is maximal for a directory (-1) and inside that directory you
-perform a rename for some child directory (not moving from the parent),
-then the nlink of the first directory is first incremented and later
-decremented. Normally this is fine, but when nlink = -1 this causes a
-wrap around to 0, and then drop_nlink issues a warning.
+User forums report issues when assigning ASM1164 SATA controllers to VMs,
+especially in configurations with multiple controllers.  Logs show the
+device fails to retrain after bus reset.  Reports suggest this is an issue
+across multiple platforms.  The device indicates support for PM reset,
+therefore the device still has a viable function level reset mechanism.
+The reporting user confirms the device is well behaved in this use case
+with bus reset disabled.
 
-After applying the patch syzbot no longer issues any warnings. I also
-ran some basic fs tests to look for any regressions.
-
-Signed-off-by: Jori Koolstra <jkoolstra@xs4all.nl>
-Reported-by: syzbot+9131ddfd7870623b719f@syzkaller.appspotmail.com
-Closes: https://syzbot.org/bug?extid=9131ddfd7870623b719f
-Signed-off-by: Dave Kleikamp <dave.kleikamp@oracle.com>
+Reported-by: Patrick Bianchi <patrick.w.bianchi@gmail.com>
+Link: https://forum.proxmox.com/threads/problems-with-pcie-passthrough-with-two-identical-devices.149003/
+Signed-off-by: Alex Williamson <alex.williamson@nvidia.com>
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Link: https://patch.msgid.link/20260109000211.398300-1-alex.williamson@nvidia.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-## Analysis of jfs: nlink overflow in jfs_rename
+## Analysis of PCI: Mark ASM1164 SATA controller to avoid bus reset
 
-### 1. Commit Message Analysis
+### Commit Message Analysis
 
-The commit message is clear and well-structured:
-- **Problem**: When a directory has maximum nlink (`-1` / `UINT_MAX`),
-  performing a rename of a child directory within the same parent causes
-  nlink to wrap around: first incremented (wraps to 0), then decremented
-  via `drop_nlink()` which triggers a kernel WARNING because nlink is
-  already 0.
-- **Reporter**: syzbot (Google's kernel fuzzer) — a strong indicator of
-  a real, reproducible bug.
-- **Testing**: Author confirms syzbot warning is resolved and ran basic
-  fs regression tests.
-- **Maintainer sign-off**: Dave Kleikamp (JFS maintainer) signed off.
+The commit adds a PCI quirk for the ASMedia ASM1164 SATA controller to
+disable bus reset. The problem is clearly described: when assigning
+these controllers to VMs via VFIO/PCI passthrough, the device fails to
+retrain after a bus reset. This is particularly problematic in
+configurations with multiple controllers. The device still supports PM
+reset (power management reset) as an alternative reset mechanism, so
+disabling bus reset doesn't leave the device without any reset
+capability.
 
-### 2. Code Change Analysis
+Key indicators:
+- **Reported-by** tag from a real user (Patrick Bianchi)
+- **Link** to a Proxmox forum thread documenting the issue across
+  multiple platforms
+- Author is Alex Williamson, the VFIO maintainer at NVIDIA — a highly
+  authoritative source for PCI passthrough quirks
+- Reviewed/committed by Bjorn Helgaas, the PCI subsystem maintainer
 
-The fix is in `fs/jfs/namei.c` in the `jfs_rename()` function. Two
-changes:
+### Code Change Analysis
 
-**Change 1** (line ~1231):
+The change is a single `DECLARE_PCI_FIXUP_HEADER` macro invocation with
+an accompanying comment:
+
 ```c
-- if (S_ISDIR(old_ip->i_mode))
-+ if (S_ISDIR(old_ip->i_mode) && old_dir != new_dir)
-     inc_nlink(new_dir);
+DECLARE_PCI_FIXUP_HEADER(PCI_VENDOR_ID_ASMEDIA, 0x1164,
+quirk_no_bus_reset);
 ```
-When renaming a directory within the **same parent** (`old_dir ==
-new_dir`), there's no need to increment nlink on the new directory
-because the directory isn't gaining a new subdirectory — the
-subdirectory is just being renamed in place. The `inc_nlink` should only
-happen when moving a directory to a **different** parent.
 
-**Change 2** (lines ~1245-1247):
-```c
-- drop_nlink(old_dir);
-+ if (new_ip || old_dir != new_dir)
-+     drop_nlink(old_dir);
-```
-Similarly, `drop_nlink` on `old_dir` should only happen when the
-directory is actually losing a subdirectory (either it's being moved to
-a different parent, or it's replacing an existing entry `new_ip`). When
-renaming within the same directory and not replacing anything, nlink
-shouldn't change.
+This calls the existing `quirk_no_bus_reset()` function, which sets the
+`PCI_DEV_FLAGS_NO_BUS_RESET` flag on the device. The function already
+exists and is used by multiple other devices (Atheros, Cavium, TI
+KeyStone) in the same file. This is purely a data addition — matching a
+specific vendor:device ID pair to an existing quirk handler.
 
-### 3. Bug Mechanism
+### Classification: Hardware Quirk
 
-The bug is an nlink integer overflow/underflow:
-1. Directory has nlink = `UINT_MAX` (maximum value)
-2. A child directory rename within the same parent triggers
-   `inc_nlink()` → nlink wraps to 0
-3. Then `drop_nlink()` is called on nlink=0, which triggers a `WARN_ON`
-   in the VFS layer
-4. This causes a kernel WARNING — a clear stability issue
+This falls squarely into the **PCI Quirks** exception category for
+stable backporting:
 
-The fix is logically correct: when renaming within the same directory,
-nlink shouldn't be touched at all since the number of subdirectories
-hasn't changed.
+- It's a hardware-specific workaround for a broken/buggy device
+- It uses an existing, well-tested mechanism (`quirk_no_bus_reset`)
+- It only affects the specific ASMedia ASM1164 device (vendor ID
+  ASMEDIA, device ID 0x1164)
+- Zero risk to any other hardware or code path
 
-### 4. Classification
+### Scope and Risk Assessment
 
-- **Bug fix**: YES — fixes an nlink overflow/underflow that triggers
-  kernel warnings
-- **Syzbot-reported**: YES — reproducible fuzzer-found bug
-- **Security relevance**: MEDIUM — nlink corruption could potentially be
-  exploited, and triggering kernel warnings is itself a stability
-  concern
+- **Lines changed**: ~10 (comment + 1 functional line)
+- **Files touched**: 1 (`drivers/pci/quirks.c`)
+- **Risk**: Extremely low — this only affects the specific PCI device
+  ID, and only when bus reset is attempted (primarily VFIO passthrough
+  scenarios)
+- **Dependencies**: None — `PCI_VENDOR_ID_ASMEDIA` and
+  `quirk_no_bus_reset` already exist in stable kernels
 
-### 5. Scope and Risk Assessment
+### User Impact
 
-- **Lines changed**: ~6 lines of actual logic change (very small)
-- **Files touched**: 1 file (`fs/jfs/namei.c`)
-- **Subsystem**: JFS filesystem — mature, stable filesystem
-- **Risk**: LOW — the conditions added (`old_dir != new_dir` and
-  `new_ip`) are standard checks already used elsewhere in the same
-  function. The logic is straightforward: don't modify nlink when the
-  directory count isn't actually changing.
-- **Regression risk**: MINIMAL — this makes JFS consistent with how
-  other filesystems handle same-directory renames
+- **Who is affected**: Users doing PCI passthrough of ASM1164 SATA
+  controllers to VMs (Proxmox, QEMU/KVM, etc.)
+- **Severity without fix**: Device fails to retrain after bus reset,
+  making VM assignment of these controllers unreliable or non-
+  functional, especially with multiple controllers
+- **The forum thread** indicates this affects multiple users across
+  multiple platforms — it's a real, reproducible issue
+- ASMedia SATA controllers are very common consumer/prosumer hardware
 
-### 6. Stable Kernel Criteria Check
+### Stability Indicators
 
-- **Obviously correct and tested**: YES — logic is clear, tested by
-  author, verified by syzbot
-- **Fixes a real bug**: YES — kernel WARNING trigger, nlink corruption
-- **Important issue**: YES — kernel WARNING, potential filesystem
-  metadata corruption
-- **Small and contained**: YES — 6 lines in one file
-- **No new features**: Correct — pure bug fix
-- **No new APIs**: Correct
+- Alex Williamson (VFIO maintainer) authored it — he's the authority on
+  PCI passthrough issues
+- Bjorn Helgaas (PCI maintainer) committed it — reviewed and approved by
+  the subsystem maintainer
+- The pattern is identical to existing quirks for Atheros, Cavium, and
+  TI devices that are already in stable trees
+- User confirmed the fix resolves the issue
 
-### 7. Dependencies
+### Dependency Check
 
-The fix is self-contained. It modifies conditions around existing
-`inc_nlink()` and `drop_nlink()` calls. No dependency on other commits.
-The affected code (`jfs_rename`) has been stable for years and exists in
-all stable trees that include JFS.
-
-### 8. User Impact
-
-JFS users who encounter the maximum nlink scenario (which syzbot can
-trigger) will see kernel warnings. While the scenario requires nlink to
-be at maximum, this is a correctness issue in filesystem metadata
-handling. Filesystem bugs are always high-priority for stable because
-they can lead to data corruption or loss.
+No dependencies. The `quirk_no_bus_reset` function,
+`DECLARE_PCI_FIXUP_HEADER` macro, and `PCI_VENDOR_ID_ASMEDIA` all exist
+in stable kernels. This will apply cleanly to any stable tree.
 
 ### Conclusion
 
-This is a textbook stable backport candidate: a small, surgical fix to a
-syzbot-reported bug in filesystem code, fixing an nlink overflow that
-triggers kernel warnings. It's obviously correct, well-tested,
-maintainer-approved, and carries minimal regression risk.
+This is a textbook example of a PCI quirk that belongs in stable trees.
+It's a minimal, zero-risk, single-device-ID addition that uses an
+existing well-tested mechanism to fix a real hardware issue reported by
+real users. It was authored and reviewed by the relevant subsystem
+maintainers. The pattern is identical to many existing quirks already in
+stable.
 
 **YES**
 
- fs/jfs/namei.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/pci/quirks.c | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
-diff --git a/fs/jfs/namei.c b/fs/jfs/namei.c
-index 65a218eba8faf..7879c049632b3 100644
---- a/fs/jfs/namei.c
-+++ b/fs/jfs/namei.c
-@@ -1228,7 +1228,7 @@ static int jfs_rename(struct mnt_idmap *idmap, struct inode *old_dir,
- 				jfs_err("jfs_rename: dtInsert returned -EIO");
- 			goto out_tx;
- 		}
--		if (S_ISDIR(old_ip->i_mode))
-+		if (S_ISDIR(old_ip->i_mode) && old_dir != new_dir)
- 			inc_nlink(new_dir);
- 	}
- 	/*
-@@ -1244,7 +1244,9 @@ static int jfs_rename(struct mnt_idmap *idmap, struct inode *old_dir,
- 		goto out_tx;
- 	}
- 	if (S_ISDIR(old_ip->i_mode)) {
--		drop_nlink(old_dir);
-+		if (new_ip || old_dir != new_dir)
-+			drop_nlink(old_dir);
+diff --git a/drivers/pci/quirks.c b/drivers/pci/quirks.c
+index 280cd50d693bd..9100fd133a7ff 100644
+--- a/drivers/pci/quirks.c
++++ b/drivers/pci/quirks.c
+@@ -3791,6 +3791,16 @@ DECLARE_PCI_FIXUP_HEADER(PCI_VENDOR_ID_CAVIUM, 0xa100, quirk_no_bus_reset);
+  */
+ DECLARE_PCI_FIXUP_HEADER(PCI_VENDOR_ID_TI, 0xb005, quirk_no_bus_reset);
+ 
++/*
++ * Reports from users making use of PCI device assignment with ASM1164
++ * controllers indicate an issue with bus reset where the device fails to
++ * retrain.  The issue appears more common in configurations with multiple
++ * controllers.  The device does indicate PM reset support (NoSoftRst-),
++ * therefore this still leaves a viable reset method.
++ * https://forum.proxmox.com/threads/problems-with-pcie-passthrough-with-two-identical-devices.149003/
++ */
++DECLARE_PCI_FIXUP_HEADER(PCI_VENDOR_ID_ASMEDIA, 0x1164, quirk_no_bus_reset);
 +
- 		if (old_dir != new_dir) {
- 			/*
- 			 * Change inode number of parent for moved directory
+ static void quirk_no_pm_reset(struct pci_dev *dev)
+ {
+ 	/*
 -- 
 2.51.0
 
