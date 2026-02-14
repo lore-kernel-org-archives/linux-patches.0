@@ -1,43 +1,46 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D84271D54FA;
-	Sat, 14 Feb 2026 01:05:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61AAA21ADB7;
+	Sat, 14 Feb 2026 01:05:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771031143; cv=none; b=d7aWtmFWN+STyaYS4/VdO9myO29s0Yo2DqlfroqxLHLwK8uXbhwPTvQRj671xE2cZ6sHznWNPdLGuqw6k3pfUe5CL843NCElgpLdBA+c2/1udCYZeRd54HkxeMLWAHHX+owVP6GbFZ/A1LTWxC1o4ZL++BabO0HjL2baLkJG5KM=
+	t=1771031145; cv=none; b=rG47SbdjoNrzXAyNHwkLQpGWCc/b9oViJYGNAbf+N2dwRMwuPUh9k4fh5yL4PWH2hhbJQeDNJZwQVLa59ak9uoCr5sQ3Ok8HPr5S+klZ+QwmWwwFGwAFkgw6CA0mjap674UCmaeUaqhsqz+SkWMwtdfuxl/WdyhPWsHA0TtTiJs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771031143; c=relaxed/simple;
-	bh=kq4TfTbU0rUqXKJMS9hy8Q/6kbdgI7b7WWulMBha2Wg=;
+	s=arc-20240116; t=1771031145; c=relaxed/simple;
+	bh=Mn2BvRC/v2EumkTXNegBNbOaWJXMHSR3yTdmbtsVVVQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=S16/JJj7snr6jsgy+ZT+ZArmuOX3REFwrpuqcDs0Zr/0JehvFAEbUO0WoixTFyS/cUm4NTLJsgF1V+3KX+Z97ys9DZ1zePU5BC21fzL1n6YRfZ6DKw6AyYdbIbe8EGZ7qxeX7omNTjyRBtxwNoVcyN0Cadgij2RPyVsSZZPGlxM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=pBGY+BxS; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=aHV6KRD6Yq85QmrEZkHnuCr+woaYfVY5WToQHSKfqA1AcGrZcb9WU9enNznCXKsZBfbKdfjhRfdJcjGreni8OgKGcTcZq8cOkVyvUs4eSFNfej1usChrCXLEanRAntmyi0phSCgBj0eqxBDxHpWPfAbkdXOMWMbiIfrHVmQIey8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Eu2AK6N4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="pBGY+BxS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EAB06C19423;
-	Sat, 14 Feb 2026 01:05:42 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Eu2AK6N4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30811C116C6;
+	Sat, 14 Feb 2026 01:05:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1771031143;
-	bh=kq4TfTbU0rUqXKJMS9hy8Q/6kbdgI7b7WWulMBha2Wg=;
+	s=k20201202; t=1771031145;
+	bh=Mn2BvRC/v2EumkTXNegBNbOaWJXMHSR3yTdmbtsVVVQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pBGY+BxS1r9VXUaIfOtUrts3gwEIKeON+qEJsLOen7YDcCYoXU30YE9YsaiADq/rA
-	 ROb5HTX9eJY+rTK6TXu8ns2psKtbf64JZzZTQ7V4A4ajtqzWbQDDUybbYjuvEnRzKQ
-	 QyiwU3JmE7ZGJHOQ9psl9Ds5hxI9oQo9LAk5Ei1vn17pGGZCsY3MVX9ePatX//0rzJ
-	 o7fzMRb5uqNa5PsvVSM2ee1OaMmZVYQg1shl1A9fAty0sEFB//iiI+CrgGAi1x8inV
-	 480KyHmcnTyj5Xw+CEfwHukUuTWRvVapATXBmPTedFOlHSIIs6AIugCQi5oaJqSPsA
-	 Eq2+HJp+BomMA==
+	b=Eu2AK6N4wprzWLSEJhfiNJar0dXZ45qW5mPxtjhHvGIjpZQl35QQDOPnSHjJjs+tw
+	 DGgq2xLsApewINY9a0cW3UhGjuLUd184g66dwQHxRJuzKX2/6tW9YEVh9uXC1BDFoA
+	 AXW5iRNHCg51eF6kdhBETUbXd90nJf9TbgOp0tQz1BU0u5pdXRDA+lLWKXunGSGwLF
+	 q/MPy7IgZLHSm0qNi+jEFezBSFs0o1ZEAOVzTOnjEl1z4+KHwTqDTTUBzCNcmQlYcR
+	 DHeDULiKFg6pKnZDEA2FNC1wB7opoAjCjresxzUWF8enjBUcpPHmMn1ZulJv4/JIsF
+	 4a552FgU8QQkg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: "Miquel Raynal (Schneider Electric)" <miquel.raynal@bootlin.com>,
-	Wolfram Sang <wsa+renesas@sang-engineering.com>,
-	Santhosh Kumar K <s-k6@ti.com>,
-	Mark Brown <broonie@kernel.org>,
+Cc: =?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <thomas.weissschuh@linutronix.de>,
+	kernel test robot <lkp@intel.com>,
+	Nathan Chancellor <nathan@kernel.org>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Nicolas Schier <nsc@kernel.org>,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Sasha Levin <sashal@kernel.org>,
-	linux-spi@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.19] spi: cadence-qspi: Fix probe error path and remove
-Date: Fri, 13 Feb 2026 19:59:21 -0500
-Message-ID: <20260214010245.3671907-81-sashal@kernel.org>
+	hansg@kernel.org,
+	llvm@lists.linux.dev
+Subject: [PATCH AUTOSEL 6.19-5.10] virt: vbox: uapi: Mark inner unions in packed structs as packed
+Date: Fri, 13 Feb 2026 19:59:22 -0500
+Message-ID: <20260214010245.3671907-82-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260214010245.3671907-1-sashal@kernel.org>
 References: <20260214010245.3671907-1-sashal@kernel.org>
@@ -47,304 +50,176 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.19
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: "Miquel Raynal (Schneider Electric)" <miquel.raynal@bootlin.com>
+From: Thomas Weißschuh <thomas.weissschuh@linutronix.de>
 
-[ Upstream commit f18c8cfa4f1af2cf7d68d86989a7d6109acfa1bb ]
+[ Upstream commit c25d01e1c4f2d43f47af87c00e223f5ca7c71792 ]
 
-The probe has been modified by many different users, it is hard to track
-history, but for sure its current state is partially broken. One easy
-rule to follow is to drop/free/release the resources in the opposite
-order they have been queried.
+The unpacked unions within a packed struct generates alignment warnings
+on clang for 32-bit ARM:
 
-Fix the labels, the order for freeing the resources, and add the
-missing DMA channel step. Replicate these changes in the remove path as
-well.
+./usr/include/linux/vbox_vmmdev_types.h:239:4: error: field u within 'struct vmmdev_hgcm_function_parameter32'
+  is less aligned than 'union (unnamed union at ./usr/include/linux/vbox_vmmdev_types.h:223:2)'
+  and is usually due to 'struct vmmdev_hgcm_function_parameter32' being packed,
+  which can lead to unaligned accesses [-Werror,-Wunaligned-access]
+     239 |         } u;
+         |           ^
 
-Tested-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
-Signed-off-by: Miquel Raynal (Schneider Electric) <miquel.raynal@bootlin.com>
-Tested-by: Santhosh Kumar K <s-k6@ti.com>
-Link: https://patch.msgid.link/20260122-schneider-6-19-rc1-qspi-v4-8-f9c21419a3e6@bootlin.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+./usr/include/linux/vbox_vmmdev_types.h:254:6: error: field u within
+  'struct vmmdev_hgcm_function_parameter64::(anonymous union)::(unnamed at ./usr/include/linux/vbox_vmmdev_types.h:249:3)'
+  is less aligned than 'union (unnamed union at ./usr/include/linux/vbox_vmmdev_types.h:251:4)' and is usually due to
+  'struct vmmdev_hgcm_function_parameter64::(anonymous union)::(unnamed at ./usr/include/linux/vbox_vmmdev_types.h:249:3)'
+  being packed, which can lead to unaligned accesses [-Werror,-Wunaligned-access]
+
+With the recent changes to compile-test the UAPI headers in more cases,
+these warning in combination with CONFIG_WERROR breaks the build.
+
+Fix the warnings.
+
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: https://lore.kernel.org/oe-kbuild-all/202512140314.DzDxpIVn-lkp@intel.com/
+Reported-by: Nathan Chancellor <nathan@kernel.org>
+Closes: https://lore.kernel.org/linux-kbuild/20260110-uapi-test-disable-headers-arm-clang-unaligned-access-v1-1-b7b0fa541daa@kernel.org/
+Suggested-by: Arnd Bergmann <arnd@arndb.de>
+Link: https://lore.kernel.org/linux-kbuild/29b2e736-d462-45b7-a0a9-85f8d8a3de56@app.fastmail.com/
+Signed-off-by: Thomas Weißschuh <thomas.weissschuh@linutronix.de>
+Tested-by: Nicolas Schier <nsc@kernel.org>
+Reviewed-by: Nicolas Schier <nsc@kernel.org>
+Acked-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Link: https://patch.msgid.link/20260115-kbuild-alignment-vbox-v1-2-076aed1623ff@linutronix.de
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-## Analysis of spi: cadence-qspi: Fix probe error path and remove
+## Analysis of Commit: Mark inner unions in packed structs as packed
 
 ### 1. COMMIT MESSAGE ANALYSIS
 
-The commit message explicitly says "Fix probe error path and remove" —
-this is a bug fix. The author clearly states:
-- "its current state is partially broken"
-- Resources were not being freed in the correct order
-- DMA channel release was missing from error paths
-- The remove path also had ordering issues
+The commit fixes **build warnings that become build errors** when
+`CONFIG_WERROR` is enabled, specifically on 32-bit ARM with clang. The
+key phrase is:
 
-The commit has strong trust indicators:
-- **Two "Tested-by:" tags** (Wolfram Sang and Santhosh Kumar K) — both
-  are well-known kernel contributors
-- Accepted by Mark Brown (SPI subsystem maintainer)
-- Part of a versioned series (v4), indicating careful review iterations
+> "With the recent changes to compile-test the UAPI headers in more
+cases, these warning in combination with CONFIG_WERROR breaks the
+build."
+
+This is explicitly a **build fix**. The commit has strong credibility
+signals:
+- **Two Reported-by tags**: kernel test robot and Nathan Chancellor (a
+  prominent kernel build/clang maintainer)
+- **Tested-by and Reviewed-by**: Nicolas Schier
+- **Acked-by**: Greg Kroah-Hartman (stable tree maintainer himself)
+- **Suggested-by**: Arnd Bergmann (architecture/cross-compilation
+  expert)
 
 ### 2. CODE CHANGE ANALYSIS
 
-Let me trace through the specific fixes:
+The change is minimal and purely mechanical:
 
-#### A. Probe Error Path Fixes
+1. In `struct vmmdev_hgcm_function_parameter32`: The inner `union`
+   member `u` is marked `__packed` (line: `} __packed u;` replacing `}
+   u;`)
+2. In `struct vmmdev_hgcm_function_parameter64`: An inner `union` member
+   `u` within the `pointer` struct is marked `__packed` (line: `}
+   __packed u;` replacing `} u;`)
 
-**Missing DMA channel release:** The old code had `probe_setup_failed`
-label that jumped directly to disabling the controller and runtime PM,
-but **never released `cqspi->rx_chan`**. The new code adds a dedicated
-`release_dma_chan` label:
-```c
-release_dma_chan:
-    if (cqspi->rx_chan)
-        dma_release_channel(cqspi->rx_chan);
-```
-This fixes a **resource leak** — if `spi_register_controller()` fails
-after DMA channels are requested, they would never be freed.
+These are UAPI header changes, meaning they affect the kernel-userspace
+ABI definition. However, since the outer structs are already `__packed`,
+adding `__packed` to the inner unions doesn't change the actual memory
+layout — it just makes the packing attribute explicit to silence the
+compiler warning. The `VMMDEV_ASSERT_SIZE` macros at the end of each
+struct definition confirm that the sizes remain unchanged (4 + 8 for
+32-bit, 4 + 12 for 64-bit).
 
-**Incorrect error label targets:** Several error paths were jumping to
-`probe_reset_failed` which would attempt to disable clocks/reset that
-hadn't been enabled yet, or skip cleanup that was needed. The new labels
-(`disable_rpm`, `disable_clk`, `disable_clks`, `disable_controller`,
-`release_dma_chan`) provide proper granularity matching the actual
-resources acquired at each point.
+### 3. CLASSIFICATION
 
-**Reordering of runtime PM disable:** The old code disabled runtime PM
-in `probe_setup_failed` (early in cleanup), but the new code moves
-`pm_runtime_disable()` to `disable_rpm` (the last cleanup step before
-return). This is correct because PM was enabled relatively late in the
-probe sequence and should be disabled early in the reverse-order
-cleanup.
-
-#### B. Remove Path Fixes
-
-**DMA channel release added before controller disable:** The old remove
-path had:
-1. Disable controller
-2. Release DMA channel
-
-The new order:
-1. Release DMA channel
-2. Disable controller
-
-This is the correct reverse order — DMA was requested after controller
-init, so it should be released before controller disable.
-
-**Clock disable ordering fixed:** The old code disabled clocks before
-JH7110-specific clock cleanup. The new code reverses this to match probe
-order.
-
-### 3. BUG CLASSIFICATION
-
-This fixes multiple real bugs:
-1. **Resource leak**: Missing `dma_release_channel()` in probe error
-   path — DMA channels leaked on probe failure
-2. **Incorrect cleanup ordering**: Resources freed in wrong order could
-   cause use-after-free or access to already-disabled hardware
-3. **Wrong goto targets**: Error paths jumping to labels that free
-   resources not yet acquired (wasteful but potentially harmful) or that
-   skip freeing resources that were acquired (leak)
+This is a **build fix** — one of the explicitly allowed exception
+categories for stable backports. Build fixes that prevent compilation
+are critical for users who need to build the kernel.
 
 ### 4. SCOPE AND RISK ASSESSMENT
 
-- **Files changed**: 1 file (`drivers/spi/spi-cadence-quadspi.c`)
-- **Nature of changes**: Primarily label renaming and reordering of
-  cleanup steps — no logic changes to the normal (non-error) path
-- **Risk**: LOW. The normal successful probe/remove paths are minimally
-  affected. The changes only affect error handling and teardown
-  ordering.
-- **Subsystem**: SPI driver (Cadence QSPI) — widely used on ARM/embedded
-  platforms (TI, Intel, StarFive, Renesas, etc.)
+- **Lines changed**: 3 lines (two additions of `__packed`, one
+  replacement)
+- **Files touched**: 1 file (`include/uapi/linux/vbox_vmmdev_types.h`)
+- **Risk**: Extremely low. The `__packed` attribute on inner unions
+  within already-packed structs is redundant in terms of layout but
+  silences legitimate compiler warnings. The `ASSERT_SIZE` macros
+  guarantee no ABI change.
+- **Complexity**: Trivial
 
 ### 5. USER IMPACT
 
-The Cadence QSPI controller is used on many SoCs. Users affected
-include:
-- Anyone whose probe fails for any reason (missing firmware, DT
-  misconfiguration, resource conflicts) — they'd leak DMA channels
-- Anyone unloading/reloading the module — remove path had ordering bugs
-- Embedded systems that are sensitive to resource leaks
+Without this fix, users building the kernel for 32-bit ARM with clang
+and `CONFIG_WERROR=y` will get a build failure. This is a real
+configuration used by:
+- Android builds (commonly use clang)
+- Embedded ARM systems
+- CI/build testing infrastructure (kernel test robot hit this)
 
-### 6. STABLE SUITABILITY
+### 6. STABILITY INDICATORS
 
-- **Obviously correct**: Yes — reverse-order cleanup is a well-
-  established pattern, and the missing DMA release is clearly a bug
-- **Fixes a real bug**: Yes — resource leaks and incorrect cleanup
-  ordering
-- **Small and contained**: Yes — single file, ~80 lines changed, mostly
-  label renaming
-- **No new features**: Correct — purely error handling fixes
-- **Tested**: Yes — two Tested-by tags from reputable contributors
-- **Clean application**: The patch modifies only one file with
-  straightforward changes. May need minor adjustment depending on the
-  stable version but should be relatively clean.
+- Tested-by, Reviewed-by, Acked-by from well-known kernel developers
+- The fix is obviously correct — it just propagates the `__packed`
+  attribute consistently
+- No functional behavior change whatsoever
 
 ### 7. DEPENDENCY CHECK
 
-This appears to be self-contained. The cleanup labels and DMA channel
-handling are local to this file. The `cqspi_jh7110_disable_clk()`
-function and `cqspi_request_mmap_dma()` need to exist in the stable
-tree, which they should for any kernel version that has this driver with
-JH7110 support and DMA support.
+The commit message mentions "recent changes to compile-test the UAPI
+headers in more cases" which triggered this. However, this fix is
+standalone — the `__packed` attribute is correct regardless of whether
+those compile-test changes are present. Even without the compile-test
+changes, this fix is harmless and correct, and the warning could be
+triggered by other build configurations.
 
 ### Conclusion
 
-This commit fixes genuine resource leaks (DMA channels) and incorrect
-cleanup ordering in both the probe error path and remove function of a
-widely-used SPI controller driver. It's small, well-tested, obviously
-correct (follows reverse-order cleanup pattern), and has zero risk to
-the normal operation path. It meets all stable kernel criteria.
+This is a textbook stable backport candidate:
+- It's a **build fix** (explicitly allowed category)
+- It's **obviously correct** (adding `__packed` to unions inside packed
+  structs)
+- It's **tiny** (3 lines, 1 file)
+- It has **zero risk** of runtime regression (no behavior change, sizes
+  verified by assert macros)
+- It has **strong review** (Acked-by Greg KH, Reviewed/Tested by others)
+- It fixes a **real build failure** reported by multiple people
+- It affects a **UAPI header** used across architectures
 
 **YES**
 
- drivers/spi/spi-cadence-quadspi.c | 44 ++++++++++++++++++-------------
- 1 file changed, 25 insertions(+), 19 deletions(-)
+ include/uapi/linux/vbox_vmmdev_types.h | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/spi/spi-cadence-quadspi.c b/drivers/spi/spi-cadence-quadspi.c
-index 597a04dbbe2e7..b1c95b1c343fc 100644
---- a/drivers/spi/spi-cadence-quadspi.c
-+++ b/drivers/spi/spi-cadence-quadspi.c
-@@ -1891,7 +1891,7 @@ static int cqspi_probe(struct platform_device *pdev)
- 	ret = clk_prepare_enable(cqspi->clk);
- 	if (ret) {
- 		dev_err(dev, "Cannot enable QSPI clock.\n");
--		goto probe_clk_failed;
-+		goto disable_rpm;
- 	}
+diff --git a/include/uapi/linux/vbox_vmmdev_types.h b/include/uapi/linux/vbox_vmmdev_types.h
+index 6073858d52a2e..11f3627c3729b 100644
+--- a/include/uapi/linux/vbox_vmmdev_types.h
++++ b/include/uapi/linux/vbox_vmmdev_types.h
+@@ -236,7 +236,7 @@ struct vmmdev_hgcm_function_parameter32 {
+ 			/** Relative to the request header. */
+ 			__u32 offset;
+ 		} page_list;
+-	} u;
++	} __packed u;
+ } __packed;
+ VMMDEV_ASSERT_SIZE(vmmdev_hgcm_function_parameter32, 4 + 8);
  
- 	/* Obtain QSPI reset control */
-@@ -1899,14 +1899,14 @@ static int cqspi_probe(struct platform_device *pdev)
- 	if (IS_ERR(rstc)) {
- 		ret = PTR_ERR(rstc);
- 		dev_err(dev, "Cannot get QSPI reset.\n");
--		goto probe_reset_failed;
-+		goto disable_clk;
- 	}
- 
- 	rstc_ocp = devm_reset_control_get_optional_exclusive(dev, "qspi-ocp");
- 	if (IS_ERR(rstc_ocp)) {
- 		ret = PTR_ERR(rstc_ocp);
- 		dev_err(dev, "Cannot get QSPI OCP reset.\n");
--		goto probe_reset_failed;
-+		goto disable_clk;
- 	}
- 
- 	if (of_device_is_compatible(pdev->dev.of_node, "starfive,jh7110-qspi")) {
-@@ -1914,7 +1914,7 @@ static int cqspi_probe(struct platform_device *pdev)
- 		if (IS_ERR(rstc_ref)) {
- 			ret = PTR_ERR(rstc_ref);
- 			dev_err(dev, "Cannot get QSPI REF reset.\n");
--			goto probe_reset_failed;
-+			goto disable_clk;
- 		}
- 		reset_control_assert(rstc_ref);
- 		reset_control_deassert(rstc_ref);
-@@ -1956,7 +1956,7 @@ static int cqspi_probe(struct platform_device *pdev)
- 		if (ddata->jh7110_clk_init) {
- 			ret = cqspi_jh7110_clk_init(pdev, cqspi);
- 			if (ret)
--				goto probe_reset_failed;
-+				goto disable_clk;
- 		}
- 		if (ddata->quirks & CQSPI_DISABLE_STIG_MODE)
- 			cqspi->disable_stig_mode = true;
-@@ -1964,7 +1964,7 @@ static int cqspi_probe(struct platform_device *pdev)
- 		if (ddata->quirks & CQSPI_DMA_SET_MASK) {
- 			ret = dma_set_mask(&pdev->dev, DMA_BIT_MASK(64));
- 			if (ret)
--				goto probe_reset_failed;
-+				goto disable_clks;
- 		}
- 	}
- 
-@@ -1975,7 +1975,7 @@ static int cqspi_probe(struct platform_device *pdev)
- 			       pdev->name, cqspi);
- 	if (ret) {
- 		dev_err(dev, "Cannot request IRQ.\n");
--		goto probe_reset_failed;
-+		goto disable_clks;
- 	}
- 
- 	cqspi_wait_idle(cqspi);
-@@ -2002,14 +2002,14 @@ static int cqspi_probe(struct platform_device *pdev)
- 		ret = cqspi_request_mmap_dma(cqspi);
- 		if (ret == -EPROBE_DEFER) {
- 			dev_err_probe(&pdev->dev, ret, "Failed to request mmap DMA\n");
--			goto probe_setup_failed;
-+			goto disable_controller;
- 		}
- 	}
- 
- 	ret = spi_register_controller(host);
- 	if (ret) {
- 		dev_err(&pdev->dev, "failed to register SPI ctlr %d\n", ret);
--		goto probe_setup_failed;
-+		goto release_dma_chan;
- 	}
- 
- 	if (!(ddata && (ddata->quirks & CQSPI_DISABLE_RUNTIME_PM))) {
-@@ -2018,17 +2018,22 @@ static int cqspi_probe(struct platform_device *pdev)
- 	}
- 
- 	return 0;
--probe_setup_failed:
--	if (!(ddata && (ddata->quirks & CQSPI_DISABLE_RUNTIME_PM)))
--		pm_runtime_disable(dev);
-+
-+release_dma_chan:
-+	if (cqspi->rx_chan)
-+		dma_release_channel(cqspi->rx_chan);
-+disable_controller:
- 	cqspi_controller_enable(cqspi, 0);
--probe_reset_failed:
-+disable_clks:
- 	if (cqspi->is_jh7110)
- 		cqspi_jh7110_disable_clk(pdev, cqspi);
--
-+disable_clk:
- 	if (pm_runtime_get_sync(&pdev->dev) >= 0)
- 		clk_disable_unprepare(cqspi->clk);
--probe_clk_failed:
-+disable_rpm:
-+	if (!(ddata && (ddata->quirks & CQSPI_DISABLE_RUNTIME_PM)))
-+		pm_runtime_disable(dev);
-+
- 	return ret;
- }
- 
-@@ -2046,18 +2051,19 @@ static void cqspi_remove(struct platform_device *pdev)
- 		cqspi_wait_idle(cqspi);
- 
- 	spi_unregister_controller(cqspi->host);
--	cqspi_controller_enable(cqspi, 0);
- 
- 	if (cqspi->rx_chan)
- 		dma_release_channel(cqspi->rx_chan);
- 
--	if (!(ddata && (ddata->quirks & CQSPI_DISABLE_RUNTIME_PM)))
--		if (pm_runtime_get_sync(&pdev->dev) >= 0)
--			clk_disable(cqspi->clk);
-+	cqspi_controller_enable(cqspi, 0);
- 
- 	if (cqspi->is_jh7110)
- 		cqspi_jh7110_disable_clk(pdev, cqspi);
- 
-+	if (!(ddata && (ddata->quirks & CQSPI_DISABLE_RUNTIME_PM)))
-+		if (pm_runtime_get_sync(&pdev->dev) >= 0)
-+			clk_disable(cqspi->clk);
-+
- 	if (!(ddata && (ddata->quirks & CQSPI_DISABLE_RUNTIME_PM))) {
- 		pm_runtime_put_sync(&pdev->dev);
- 		pm_runtime_disable(&pdev->dev);
+@@ -251,7 +251,7 @@ struct vmmdev_hgcm_function_parameter64 {
+ 			union {
+ 				__u64 phys_addr;
+ 				__u64 linear_addr;
+-			} u;
++			} __packed u;
+ 		} __packed pointer;
+ 		struct {
+ 			/** Size of the buffer described by the page list. */
 -- 
 2.51.0
 
