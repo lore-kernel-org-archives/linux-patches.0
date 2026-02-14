@@ -1,47 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3389B1ADC97;
-	Sat, 14 Feb 2026 01:04:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A82DB3EBF2C;
+	Sat, 14 Feb 2026 01:04:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771031041; cv=none; b=Ltu2iUs63wayzncbvvwCceDjCwdAwhkLwwj/Ekl0Fj86iiJegapDjHKE+QebTNHpoW2b+quSUgV4/T1LoUm7Yc20B4Udz+ZhOEOwuSwnXLWw+jnKX1fQolr+UFDIipZtLUnbJyADS7JNUr8B2y0ySChS88ztUSHYQ+/XEsz7pgk=
+	t=1771031043; cv=none; b=oSlr82Uhifhl0wioZ9a8QsfX6QHcC3KX1qPDxcKnRfonHiZg+PBwAk9u+9ZiX8/yxVRKgzgEXNKwH+Inix5fEUfAYnxxA8DH/CPgKwG+OqBx6KFqGalHfJiXyCsxG5LtGX0JfJVC+d1INZo5cTdpc6Wdfg3RE4KlscHbEAkV8t8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771031041; c=relaxed/simple;
-	bh=aLHQO7J6C5Lyqu2k8hj94N7/xg5S73iyBQ1nJlaaGaI=;
+	s=arc-20240116; t=1771031043; c=relaxed/simple;
+	bh=IHLSzAI8hzsmf9fNj5gAaE0rSGj5WCwBgegvgiHMZuA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=f9zNcDj39sycMz7gvFayQTAwsCF8FAcXCTXAi/a2kd1VNPlOg1Kk6aoJhYb+LMhmUI5g+y8bzNCq9Zbj0p5jtX7cZWlaORgTnf+pxpkBzUpoAj3qcdXni8RQloNCHnsgD0hx9HbmwAzKZuPcSk1g3se9VW4OYtkFYf+HEvWRZRg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=CNO4Ap3m; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=lrn5fkJTgSTdjHECAcUUfac3ruo1N0/HvWsoE9K8BAj0IkuA8peiD6rTZKUPs4NwWOuLALRx7lg3BjQxMT3AKf2hhIHafZGJD5yocpy+TZLbWu2t+DI2V+hqieTUxqwQREw2EMlAEOZQS1Qhor1JELDL2m7Ph1YXmxwyxev8JLc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=jZrZuHNP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="CNO4Ap3m"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 69188C116C6;
-	Sat, 14 Feb 2026 01:03:59 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="jZrZuHNP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D3BEC116C6;
+	Sat, 14 Feb 2026 01:04:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1771031040;
-	bh=aLHQO7J6C5Lyqu2k8hj94N7/xg5S73iyBQ1nJlaaGaI=;
+	s=k20201202; t=1771031043;
+	bh=IHLSzAI8hzsmf9fNj5gAaE0rSGj5WCwBgegvgiHMZuA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CNO4Ap3mtJ5qzkQiAOUSPqqWSZfnfHbCXOs+fPoGP0qWOcjmojDczzjPZIbLs+3Hj
-	 UftKTNi1OvhBn2nEI0ves00j24IR4gzFnOVcDgva+zX9r8jg+m19lsYSV1Vhr0W+Fm
-	 6BfyrRNVCPc4H4hV8rIcbFqCmNPgSXHjVybqJzXnK/5cxc9eJtQTmFUzIWY36hTIKB
-	 xjsv5ejL0oPTB6hrzK55fvgwEzHa3wcNTrmS/fbzlAsNQERVqzfHMJE8FT2YNbSgJj
-	 Nc/XavLyqaOK5e8/7SAVZfvJW4lu/b/J5CZWZ3S8cIrHzyK26urXpVg55YCLWvtPDY
-	 RbJGT9yMMgErA==
+	b=jZrZuHNPVF//z5tQKn6IZVDM3Skg6PtDodxzQqwKPCPzmrwVCnYAwFAqkLq3anxeo
+	 aQBA2atlHY08kttS2D6E6ODBlw0YE3NHHMux0RTIhKU8BhzAolCKyVdICtsLSLLhmw
+	 exkXWTZAPSVKtrXpVy+heHaiHqLw6dWoxldtJJVIB8Va14Mzu9Y0XDwoEZ8sZ762Ub
+	 7XzDNqMIIAXPVOomPhlffsxz/39qvsA5uic8NOH+JE48S7Gkwd8ct9vCytYG6B+G9h
+	 ierDGAFiMiypUpW7/sTej4xeQlT/x10thlFfF1v7fDBO26rDW/JMF7/8hNaDmQ8aPj
+	 oo+ayEJX3o+wg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Likun Gao <Likun.Gao@amd.com>,
-	Hawking Zhang <Hawking.Zhang@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+Cc: Haoxiang Li <lihaoxiang@isrc.iscas.ac.cn>,
+	Hans Verkuil <hverkuil+cisco@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	lijo.lazar@amd.com,
-	christian.koenig@amd.com,
-	superm1@kernel.org,
-	mario.limonciello@amd.com,
-	yelangyan@huaqin.corp-partner.google.com,
-	cesun102@amd.com
-Subject: [PATCH AUTOSEL 6.19-6.12] drm/amdgpu: fix NULL pointer issue buffer funcs
-Date: Fri, 13 Feb 2026 19:58:34 -0500
-Message-ID: <20260214010245.3671907-34-sashal@kernel.org>
+	neil.armstrong@linaro.org,
+	yelangyan@huaqin.corp-partner.google.com
+Subject: [PATCH AUTOSEL 6.19-5.10] media: cx25821: Fix a resource leak in cx25821_dev_setup()
+Date: Fri, 13 Feb 2026 19:58:35 -0500
+Message-ID: <20260214010245.3671907-35-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260214010245.3671907-1-sashal@kernel.org>
 References: <20260214010245.3671907-1-sashal@kernel.org>
@@ -57,147 +52,128 @@ X-stable-base: Linux 6.19
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Likun Gao <Likun.Gao@amd.com>
+From: Haoxiang Li <lihaoxiang@isrc.iscas.ac.cn>
 
-[ Upstream commit 9877a865d62c9c3e0f4cc369dc9ca9f7f24f5ee9 ]
+[ Upstream commit 68cd8ac994cac38a305200f638b30e13c690753b ]
 
-If SDMA block not enabled, buffer_funcs will not initialize,
-fix the null pointer issue if buffer_funcs not initialized.
+Add release_mem_region() if ioremap() fails to release the memory
+region obtained by cx25821_get_resources().
 
-Signed-off-by: Likun Gao <Likun.Gao@amd.com>
-Reviewed-by: Hawking Zhang <Hawking.Zhang@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Haoxiang Li <lihaoxiang@isrc.iscas.ac.cn>
+Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-Good. When called with `enable=false`,
-`amdgpu_ttm_set_buffer_funcs_status` doesn't dereference
-`buffer_funcs_ring` (the ring access is only in the `enable=true` path
-at line 2166). The disable calls (lines 3991, 5064, 5330) are thus safe.
-But the `enable=true` calls with the `buffer_funcs_ring->sched.ready`
-guard check are the problematic ones.
+## Analysis of cx25821 Resource Leak Fix
 
-## Detailed Analysis
+### 1. Commit Message Analysis
 
-### 1. COMMIT MESSAGE ANALYSIS
+The commit message is clear and direct: "Fix a resource leak in
+cx25821_dev_setup()". It describes adding a `release_mem_region()` call
+when `ioremap()` fails, to release the memory region previously obtained
+by `cx25821_get_resources()`. This is a classic error-path resource leak
+fix.
 
-The subject explicitly says **"fix NULL pointer issue buffer funcs"** —
-a clear bug fix. The description explains: *"If SDMA block not enabled,
-buffer_funcs will not initialize, fix the null pointer issue if
-buffer_funcs not initialized."* The author (Likun Gao, AMD engineer) and
-reviewer (Hawking Zhang, AMD engineer) clearly identified a NULL pointer
-dereference.
+### 2. Code Change Analysis
 
-### 2. CODE CHANGE ANALYSIS
+The change is a **single line addition**:
 
-The change is minimal — a single NULL check addition:
-
-```3312:3313:drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
-        if (adev->mman.buffer_funcs_ring->sched.ready)
-                amdgpu_ttm_set_buffer_funcs_status(adev, true);
-```
-
-Changed to:
 ```c
-        if (adev->mman.buffer_funcs_ring &&
-            adev->mman.buffer_funcs_ring->sched.ready)
-                amdgpu_ttm_set_buffer_funcs_status(adev, true);
+release_mem_region(dev->base_io_addr, pci_resource_len(dev->pci, 0));
 ```
 
-**Root cause**: `buffer_funcs_ring` is explicitly initialized to NULL:
+**The bug mechanism:**
+- `cx25821_get_resources()` is called earlier in `cx25821_dev_setup()`
+  and successfully acquires a memory region via `request_mem_region()`.
+- Later, `ioremap()` is called. If `ioremap()` fails, the function
+  returns `-ENOMEM`.
+- However, before this fix, the memory region obtained by
+  `cx25821_get_resources()` was **never released** on this error path.
+- The existing `cx25821_iounmap(dev)` call handles unmapping but doesn't
+  release the memory region that was requested.
 
-```4544:4545:drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
-        adev->mman.buffer_funcs = NULL;
-        adev->mman.buffer_funcs_ring = NULL;
-```
+This is a textbook resource leak on an error path — one of the most
+common and well-understood bug patterns in Linux kernel stable
+backports.
 
-It only gets set to a non-NULL value when SDMA `set_buffer_funcs()`
-callbacks run during SDMA `early_init`. This happens in every SDMA
-version: `sdma_v4_0`, `sdma_v5_0`, `sdma_v5_2`, `sdma_v6_0`,
-`sdma_v7_0`, etc. If SDMA is disabled (via `amdgpu_ip_block_mask` module
-parameter, harvesting, or early_init failure returning `-ENOENT`),
-`buffer_funcs_ring` stays NULL.
+### 3. Classification
 
-The dereference of `adev->mman.buffer_funcs_ring->sched.ready` when
-`buffer_funcs_ring` is NULL triggers a **kernel NULL pointer
-dereference** (oops/crash).
+- **Bug type**: Resource leak (memory region not released on error path)
+- **Category**: Error path fix — fits squarely in the "cleanup that
+  fixes a real bug" pattern
+- **Severity**: Medium — the leaked memory region would prevent the
+  resource from being reused until reboot, though this only triggers
+  when `ioremap()` fails (which is rare but real, especially under
+  memory pressure)
 
-### 3. ORIGIN OF THE BUG
+### 4. Scope and Risk Assessment
 
-The vulnerable pattern was introduced by commit `b70438004a14f`
-("drm/amdgpu: move buffer funcs setting up a level") which landed in
-**v6.7-rc1**. That commit moved the `buffer_funcs_ring->sched.ready`
-checks from SDMA-specific code into `amdgpu_device.c` at four locations
-(init, resume, reset, suspend-unwind), but didn't add NULL guards for
-configurations where SDMA is absent.
+- **Lines changed**: 1 line added
+- **Files touched**: 1 file (`drivers/media/pci/cx25821/cx25821-core.c`)
+- **Risk**: Extremely low — adding a `release_mem_region()` call on a
+  failure path is well-understood and cannot cause any regression. It
+  only executes when `ioremap()` has already failed.
+- **Subsystem**: PCI media driver (cx25821) — a specific video capture
+  card driver
 
-### 4. SCOPE AND RISK
+### 5. User Impact
 
-- **Lines changed**: 2 (adding `&&` with NULL check)
-- **Files changed**: 1
-- **Risk**: Extremely low. The NULL check guard only prevents
-  dereferencing a NULL pointer. When `buffer_funcs_ring` is non-NULL,
-  behavior is identical. When it IS NULL, it prevents a crash and
-  correctly skips `amdgpu_ttm_set_buffer_funcs_status(adev, true)` —
-  which is the right thing to do since there's no SDMA ring to use.
-- **Regression potential**: Essentially zero.
+- The cx25821 is a Conexant video capture chipset used in real hardware.
+  Users of this hardware who encounter an `ioremap()` failure would have
+  a resource leak that prevents the memory region from being reclaimed.
+- While the error condition (ioremap failure) is uncommon, when it does
+  occur, the resource leak is permanent until reboot.
 
-### 5. USER IMPACT
+### 6. Stability Indicators
 
-- **Who is affected**: Users with AMD GPUs where SDMA is not enabled —
-  either by hardware design (harvested), by configuration (module
-  parameter), or by init failure.
-- **Severity**: **Kernel crash** (NULL pointer dereference/oops) during
-  device initialization.
-- **Frequency**: Every boot attempt on affected hardware.
+- Signed off by Hans Verkuil, a well-known and experienced media
+  subsystem maintainer
+- The fix is trivially correct — it matches the standard pattern for
+  releasing resources on error paths
+- The change has no dependencies on other commits
 
-### 6. COMPLETENESS NOTE
+### 7. Dependency Check
 
-There are **three other** unprotected dereferences of
-`buffer_funcs_ring->sched.ready` in the same file (lines 4206, 5344,
-6076 — in resume, unwind, and reset paths). This commit only fixes the
-init path. However:
-- The init path is hit first and is the primary crash point
-- If SDMA is absent at init, the device likely won't reach resume/reset
-  in normal operation
-- Each fix is independently valuable
+- The `release_mem_region()` function and the cx25821 driver have
+  existed for a very long time in the kernel
+- No dependencies on newer code — this will apply cleanly to any stable
+  tree that contains the cx25821 driver
 
-### 7. STABLE CRITERIA CHECK
+### 8. Stable Kernel Criteria
 
-- Obviously correct: Yes — simple NULL guard before dereference
-- Fixes a real bug: Yes — NULL pointer dereference = kernel crash
-- Important issue: Yes — prevents crash during device initialization
-- Small and contained: Yes — 2-line change in one file
-- No new features/APIs: Correct
-- Reviewed by subsystem experts: Yes (Hawking Zhang, Alex Deucher at
-  AMD)
-- Affected versions: v6.7+ (when b70438004a14f landed)
+- **Obviously correct**: Yes — standard resource cleanup pattern
+- **Fixes a real bug**: Yes — resource leak on error path
+- **Small and contained**: Yes — 1 line, 1 file
+- **No new features**: Correct — pure bug fix
+- **Tested**: Accepted by subsystem maintainer
 
-The fix is small, surgical, obviously correct, and prevents a kernel
-crash on AMD GPU initialization. It meets all stable kernel criteria
-with effectively zero regression risk.
+### Conclusion
+
+This is a minimal, surgical fix for a resource leak on an error path. It
+adds a single `release_mem_region()` call when `ioremap()` fails,
+preventing a memory region from being leaked. The fix is obviously
+correct, has zero regression risk, and follows a well-established
+pattern. It meets all stable kernel criteria.
 
 **YES**
 
- drivers/gpu/drm/amd/amdgpu/amdgpu_device.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/media/pci/cx25821/cx25821-core.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
-index d2c3885de711f..ba6fb23b840a0 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
-@@ -3309,7 +3309,8 @@ static int amdgpu_device_ip_init(struct amdgpu_device *adev)
- 	if (r)
- 		goto init_failed;
+diff --git a/drivers/media/pci/cx25821/cx25821-core.c b/drivers/media/pci/cx25821/cx25821-core.c
+index 6627fa9166d30..a7336be444748 100644
+--- a/drivers/media/pci/cx25821/cx25821-core.c
++++ b/drivers/media/pci/cx25821/cx25821-core.c
+@@ -908,6 +908,7 @@ static int cx25821_dev_setup(struct cx25821_dev *dev)
  
--	if (adev->mman.buffer_funcs_ring->sched.ready)
-+	if (adev->mman.buffer_funcs_ring &&
-+	    adev->mman.buffer_funcs_ring->sched.ready)
- 		amdgpu_ttm_set_buffer_funcs_status(adev, true);
- 
- 	/* Don't init kfd if whole hive need to be reset during init */
+ 	if (!dev->lmmio) {
+ 		CX25821_ERR("ioremap failed, maybe increasing __VMALLOC_RESERVE in page.h\n");
++		release_mem_region(dev->base_io_addr, pci_resource_len(dev->pci, 0));
+ 		cx25821_iounmap(dev);
+ 		return -ENOMEM;
+ 	}
 -- 
 2.51.0
 
