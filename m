@@ -1,46 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3EE6C217704;
-	Sat, 14 Feb 2026 01:05:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9982F194098;
+	Sat, 14 Feb 2026 01:05:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771031113; cv=none; b=KEQ3VNv1FW/Fi59luzkfGVlpnzljn2TS7bpwfK4LBjl0gHTaSVSFS6g2BcWjqFsnJjAIefPu/Vprvo1OIh2A61C3lSW9T9Hy094Jj2MqHf/39i619rZkds1oxuojMw/Fxfpd3kXH0oJ+8niNsDDPHHQwDOJ+tk+l+rjfWut2i7A=
+	t=1771031115; cv=none; b=AG6mdjrHj7GHuyNokXbOSVaai9OsG/Nn3sym2Pb6QH6+8abZiecWH0zb80x0tCb86D17HlBKmQTcftewYBeqTYDvfQvpv3af9tR4dC1yzeiyXfZ7vzt4HgnAupXnhNjWEfkLBSEjurndb/fbyZxiz7bfWyF2oMm/dnek1vnabsk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771031113; c=relaxed/simple;
-	bh=oO5XvQGk6GO0pdHWKcpnzwO45cPPwdOh5VfsB130tHs=;
+	s=arc-20240116; t=1771031115; c=relaxed/simple;
+	bh=mZ9Y2BSV2Mx7Qd+OzAKLZ7Xevch/oReqaOSvD0g+A5U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=YB1Wkb2nlW8gmF1xdgCU8uo3aPiO2U3TFgMoGoHq0DcUwrdfMqxH8xg2kxXU4lm4my3h+6wrK1nhA9ZZCAD9i+g68976IPFYBA2mVXdl2ik6gNwolcuVVkP/Qii4wLCc94qPyHwiG9URPohojv7KnCP0fgbdF8Gks6zBw61F62g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=G37DI1QX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=JVXqzcs9UWUAkZcxw8S24b4kiwnIr8X7CAbvr9F4IF06KpiyrWwnkV0TEsp44sN2jdZCjsx3Lx9ARhjK9iJLa/5bHhkVljzvq+wpCYiNPN2kXge9GBBTbbAcTyaTVxLG7iHe9kmJdpq4xZvnA9sFKxsHRMO0GAztGiGSikUfbok=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=o79SjLpV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="G37DI1QX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E404C16AAE;
-	Sat, 14 Feb 2026 01:05:11 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="o79SjLpV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A8A22C16AAE;
+	Sat, 14 Feb 2026 01:05:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1771031113;
-	bh=oO5XvQGk6GO0pdHWKcpnzwO45cPPwdOh5VfsB130tHs=;
+	s=k20201202; t=1771031115;
+	bh=mZ9Y2BSV2Mx7Qd+OzAKLZ7Xevch/oReqaOSvD0g+A5U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=G37DI1QXwJqX9lEwuJ64jTI1PvdIi2j35LsHZ56L9cF9iYU93POg95Oq+TL99mrjj
-	 R3s3wTRVBZ9mPY8S+kgGzXS62Gckx2E45UovelH3g2AcJUfmFKDuPM6+D07/l8beUa
-	 G6RUgqYqG1UsyCZig6/uK5dQp9ONzVSF9HF5zmhfYsXpKLoWEnZFTfCeY65/v7/FcT
-	 eK0C1Y83YFitNECURCSFdfrzn1pIJD3u1z2P30r6WH0GjHlBeDF6rkJh3v316bpvmN
-	 G/gzPmGsNaVTaaIbEpCvZ3Eh4MPJRWFBFSGnWiSvde1A5pRrJCQ0QlXHzTqv+RhfMx
-	 KzC4+Tww4HiEQ==
+	b=o79SjLpV942IYXLtnIs8w/xEefnOP8Oq2W7DC7P7602gAGu0oUAB4dqTq2+fS/mDo
+	 qmi2bBMphgCxZOI8X01W3MUYjgAwUz/QLee78SnkVhJg9Yu9BdI7Mm5hm+gtkPQyjI
+	 pruAMFFHWz1UqEZLpAPlFd5jI/iYGaPIRdO4UTONF2zrlSeDffIp2+6bPNIfuqL01o
+	 K4z+QbEnhbuX96p/BSOMYH4ithxphn2uIITDUyfdHXQUXxQXU+Q+K7duRjiNwyYZGD
+	 TIEUyB79Sa++KXj/tMkRloS8dccC/gmjj7h0yfGc2qJmkPDQYOivllOCcPztQR6ev2
+	 setIEpU92JuHw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Alex Deucher <alexander.deucher@amd.com>,
-	=?UTF-8?q?Timur=20Krist=C3=B3f?= <timur.kristof@gmail.com>,
+Cc: Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>,
-	ckoenig.leichtzumerken@gmail.com,
-	andrealmeid@igalia.com,
-	pierre-eric.pelloux-prayer@amd.com,
-	phasta@kernel.org,
-	YuanShang.Mao@amd.com,
-	yelangyan@huaqin.corp-partner.google.com
-Subject: [PATCH AUTOSEL 6.19-6.6] drm/amdgpu: avoid a warning in timedout job handler
-Date: Fri, 13 Feb 2026 19:59:06 -0500
-Message-ID: <20260214010245.3671907-66-sashal@kernel.org>
+	neil.armstrong@linaro.org,
+	dan.carpenter@linaro.org,
+	yelangyan@huaqin.corp-partner.google.com,
+	thorsten.blum@linux.dev
+Subject: [PATCH AUTOSEL 6.19-6.12] ALSA: mixer: oss: Add card disconnect checkpoints
+Date: Fri, 13 Feb 2026 19:59:07 -0500
+Message-ID: <20260214010245.3671907-67-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260214010245.3671907-1-sashal@kernel.org>
 References: <20260214010245.3671907-1-sashal@kernel.org>
@@ -50,165 +47,224 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.19
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Alex Deucher <alexander.deucher@amd.com>
+From: Takashi Iwai <tiwai@suse.de>
 
-[ Upstream commit c8cf9ddc549fb93cb5a35f3fe23487b1e6707e74 ]
+[ Upstream commit 084d5d44418148662365eced3e126ad1a81ee3e2 ]
 
-Only set an error on the fence if the fence is not
-signalled.  We can end up with a warning if the
-per queue reset path signals the fence and sets an error
-as part of the reset, but fails to recover.
+ALSA OSS mixer layer calls the kcontrol ops rather individually, and
+pending calls might be not always caught at disconnecting the device.
 
-Reviewed-by: Timur Kristóf <timur.kristof@gmail.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+For avoiding the potential UAF scenarios, add sanity checks of the
+card disconnection at each entry point of OSS mixer accesses.  The
+rwsem is taken just before that check, hence the rest context should
+be covered by that properly.
+
+Link: https://patch.msgid.link/20260209121212.171430-1-tiwai@suse.de
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-Now I have a complete picture. Let me summarize my analysis.
-
-## Detailed Analysis
+## Analysis of ALSA: mixer: oss: Add card disconnect checkpoints
 
 ### 1. COMMIT MESSAGE ANALYSIS
 
-The subject "drm/amdgpu: avoid a warning in timedout job handler"
-clearly indicates a bug fix. The commit message explains: when the per-
-queue reset path signals the fence and sets an error as part of the
-reset, but the reset fails to recover, a `WARN_ON` triggers in
-`dma_fence_set_error()`.
+The commit message is clear and explicit about the problem:
+- **Problem**: ALSA OSS mixer layer calls kcontrol ops individually, and
+  pending calls might not be caught during device disconnection.
+- **Impact**: "potential UAF scenarios" — Use-After-Free is explicitly
+  mentioned.
+- **Fix**: Add `card->shutdown` checks at each entry point of OSS mixer
+  accesses, right after the rwsem is taken.
+- **Author**: Takashi Iwai (tiwai@suse.de) — the ALSA subsystem
+  maintainer, one of the most prolific and trusted kernel developers.
 
 ### 2. CODE CHANGE ANALYSIS
 
-**The bug mechanism:**
+The patch adds **exactly the same pattern** in 8 different locations
+within `sound/core/oss/mixer_oss.c`:
 
-The `dma_fence_set_error()` function contains a defensive `WARN_ON`:
-
-```585:585:include/linux/dma-fence.h
-        WARN_ON(test_bit(DMA_FENCE_FLAG_SIGNALED_BIT, &fence->flags));
+```c
+guard(rwsem_read)(&card->controls_rwsem);
++if (card->shutdown)
++    return;  // or return -ENODEV;
 ```
 
-This triggers when trying to set an error on an already-signaled fence.
+Each check is placed **immediately after** the read semaphore
+(`controls_rwsem`) is acquired and **before** any kcontrol operations
+(`snd_ctl_find_numid`, `kctl->info`, `kctl->get`, `kctl->put`).
 
-**The trigger path:**
+**Functions modified:**
+1. `snd_mixer_oss_get_volume1_vol()` — returns void
+2. `snd_mixer_oss_get_volume1_sw()` — returns void
+3. `snd_mixer_oss_put_volume1_vol()` — returns void
+4. `snd_mixer_oss_put_volume1_sw()` — returns void
+5. `snd_mixer_oss_get_recsrc2()` — returns -ENODEV
+6. `snd_mixer_oss_put_recsrc2()` — returns -ENODEV
+7. `snd_mixer_oss_build_test()` — returns -ENODEV
+8. `snd_mixer_oss_build_input()` — returns -ENODEV
 
-In `amdgpu_job_timedout()`, when a GPU job times out:
+**Bug mechanism**: When a sound card is being disconnected (hot-unplug,
+e.g., USB audio device removal), the card's resources are being torn
+down. If an OSS mixer operation is in progress or initiated
+concurrently, it may access kcontrol objects that have been freed,
+resulting in a use-after-free. The `card->shutdown` flag is set during
+disconnection, and checking it under the rwsem provides a safe
+synchronization point.
 
-1. Per-queue reset is attempted via `amdgpu_ring_reset(ring, job->vmid,
-   job->hw_fence)`.
-2. Inside the ring reset function (e.g., `gfx_v12_0_reset_kgq`),
-   `amdgpu_ring_reset_helper_end()` calls
-   `amdgpu_fence_driver_guilty_force_completion(guilty_fence)` which
-   signals the hw_fence and sets errors on it.
-3. When the hw_fence is signaled, the DRM scheduler callback chain
-   fires: `drm_sched_job_done_cb()` → `drm_sched_job_done()` →
-   `drm_sched_fence_finished()` → signals `s_fence->finished`.
-4. Additionally, hardware can asynchronously signal fences through
-   interrupts during the reset process (via `amdgpu_fence_process()`
-   called from ISR).
-5. If the ring reset ultimately fails (returns non-zero), code falls
-   through to line 150: `dma_fence_set_error(&s_job->s_fence->finished,
-   -ETIME)`.
-6. Since `s_fence->finished` is already signaled, the `WARN_ON`
-   triggers.
+### 3. CLASSIFICATION
 
-**The fix:**
+- **Bug fix**: YES — prevents UAF on device disconnect
+- **Security relevance**: UAF bugs can be exploitable, especially from
+  userspace-accessible paths like OSS mixer ioctls
+- **Feature addition**: NO — purely defensive checks
 
-```diff
-- dma_fence_set_error(&s_job->s_fence->finished, -ETIME);
-+       if (dma_fence_get_status(&s_job->s_fence->finished) == 0)
-+               dma_fence_set_error(&s_job->s_fence->finished, -ETIME);
-```
+### 4. SCOPE AND RISK ASSESSMENT
 
-`dma_fence_get_status()` returns 0 if the fence is not yet signaled, 1
-if signaled without error, or negative if signaled with an error. The
-fix only sets the error when the fence has not yet been signaled (status
-== 0), which is the only case where setting the error is both safe and
-meaningful.
+- **Lines changed**: ~16 lines of actual code additions (8 identical
+  2-line blocks)
+- **Files touched**: 1 file (`sound/core/oss/mixer_oss.c`)
+- **Pattern**: Extremely simple and repetitive — same 2-line check in
+  each function
+- **Risk**: Extremely low. The check simply returns early (void
+  functions) or returns -ENODEV (error code functions) when the card is
+  shutting down. This cannot break normal operation since
+  `card->shutdown` is only set during disconnection.
+- **Regression potential**: Near zero. The early return during shutdown
+  is the correct behavior — there's nothing useful to do with a
+  disconnecting card.
 
-### 3. AFFECTED VERSIONS
+### 5. USER IMPACT
 
-The bug was introduced in **v6.17** by a series of commits that reworked
-the per-queue reset:
-- `43ca5eb94b38c` "move guilty handling into ring resets" (removed
-  conditional `dma_fence_set_error()`)
-- `38b20968f3d8a` "move scheduler wqueue handling into callbacks"
-- `6ac55eab4fc41` "move reset support type checks into the caller"
-  (passes `&job->hw_fence` to `amdgpu_ring_reset()` enabling fence
-  signaling in `_helper_end()`)
+- **Who is affected**: Users of USB audio devices (or any hot-pluggable
+  sound devices) using the OSS compatibility layer
+- **Trigger**: Unplugging a USB audio device while OSS mixer operations
+  are in progress
+- **Severity**: UAF can cause kernel crashes, memory corruption, or
+  potential security exploitation
+- **Real-world scenario**: Very realistic — USB audio devices are
+  commonly hot-plugged, and the OSS mixer layer is used by legacy
+  applications
 
-In **6.12 and 6.15/6.16**, the code structure is fundamentally different
-- `dma_fence_set_error()` was called before or inside the per-queue
-reset block, and the ring reset functions didn't signal fences
-internally. The bug doesn't manifest there.
+### 6. STABILITY INDICATORS
 
-### 4. SEVERITY AND IMPACT
+- **Author**: Takashi Iwai is the ALSA maintainer — he knows this code
+  intimately
+- **Pattern**: This `card->shutdown` check pattern is already used
+  extensively in other ALSA paths. This commit simply extends the
+  protection to the OSS mixer layer that was missing it.
+- **Simplicity**: The change is mechanical and obviously correct
 
-- **WARN_ON in kernel log**: Produces a stack trace in dmesg, pollutes
-  logs.
-- **Panic on `panic_on_warn=1`**: Systems with `panic_on_warn=1` will
-  crash. This is common in testing environments and some production
-  setups.
-- **Real trigger scenario**: GPU job timeouts are not uncommon on AMD
-  GPUs, especially under load or with problematic workloads. The per-
-  queue reset failing after partially processing fences is a realistic
-  race condition.
+### 7. DEPENDENCY CHECK
 
-### 5. FIX QUALITY AND RISK
+- The `card->shutdown` flag and the `controls_rwsem` already exist in
+  all stable kernel versions
+- The `guard(rwsem_read)` and `scoped_guard` cleanup macros are
+  relatively modern (6.5+), so older stable trees may need minor
+  backport adjustments to use explicit `down_read`/`up_read` instead
+- No other commit dependencies — this is self-contained
 
-- **Size**: 2-line change (add condition check before existing call).
-- **Correctness**: Obviously correct. If the fence is already signaled,
-  setting an error on it is meaningless (nobody will see it) and
-  triggers a WARN_ON. Skipping it is the right behavior.
-- **Risk**: Extremely low. The only change is adding a guard condition.
-  In the normal path (fence not signaled), behavior is unchanged. In the
-  edge case (fence already signaled), we avoid a spurious warning.
-- **Dependencies**: `dma_fence_get_status()` has been available since at
-  least v6.6. The fix requires no other changes.
-- **Reviewed by**: Timur Kristóf, a known AMD GPU contributor.
-- **Author**: Alex Deucher, the AMD DRM subsystem maintainer.
+### Summary
 
-### 6. STABLE TREE APPLICABILITY
-
-The fix applies cleanly to **6.17.y** and **6.18.y** where the same code
-structure exists. The patch would need a minor adjustment for 6.17 (the
-`debug_disable_gpu_ring_reset` check present in 6.17/6.18 but removed in
-6.19). For 6.12.y and earlier, the bug doesn't exist in this form.
-
-### Conclusion
-
-This is a small, surgical, obviously correct bug fix that prevents a
-kernel WARN_ON (potentially a panic with `panic_on_warn=1`) in a
-realistic GPU job timeout recovery scenario. It was authored by the AMD
-DRM maintainer, reviewed by a knowledgeable contributor, and has zero
-regression risk. It meets all stable kernel criteria: fixes a real bug,
-is small and contained, and introduces no new features.
+This is a textbook stable backport candidate:
+- Fixes a real UAF bug that can be triggered by common user actions
+  (hot-unplugging USB audio)
+- Written by the subsystem maintainer
+- Extremely small, surgical, and repetitive change (same 2-line pattern
+  × 8)
+- Uses an established defensive pattern already present in other ALSA
+  code paths
+- Near-zero regression risk
+- Single file, single concern
 
 **YES**
 
- drivers/gpu/drm/amd/amdgpu/amdgpu_job.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ sound/core/oss/mixer_oss.c | 16 ++++++++++++++++
+ 1 file changed, 16 insertions(+)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_job.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_job.c
-index 7ccb724b2488d..aaf5477fcd7ac 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_job.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_job.c
-@@ -147,7 +147,8 @@ static enum drm_gpu_sched_stat amdgpu_job_timedout(struct drm_sched_job *s_job)
- 		dev_err(adev->dev, "Ring %s reset failed\n", ring->sched.name);
- 	}
+diff --git a/sound/core/oss/mixer_oss.c b/sound/core/oss/mixer_oss.c
+index e839a4bb93f81..aa98caaaea3c5 100644
+--- a/sound/core/oss/mixer_oss.c
++++ b/sound/core/oss/mixer_oss.c
+@@ -525,6 +525,8 @@ static void snd_mixer_oss_get_volume1_vol(struct snd_mixer_oss_file *fmixer,
+ 	if (numid == ID_UNKNOWN)
+ 		return;
+ 	guard(rwsem_read)(&card->controls_rwsem);
++	if (card->shutdown)
++		return;
+ 	kctl = snd_ctl_find_numid(card, numid);
+ 	if (!kctl)
+ 		return;
+@@ -558,6 +560,8 @@ static void snd_mixer_oss_get_volume1_sw(struct snd_mixer_oss_file *fmixer,
+ 	if (numid == ID_UNKNOWN)
+ 		return;
+ 	guard(rwsem_read)(&card->controls_rwsem);
++	if (card->shutdown)
++		return;
+ 	kctl = snd_ctl_find_numid(card, numid);
+ 	if (!kctl)
+ 		return;
+@@ -618,6 +622,8 @@ static void snd_mixer_oss_put_volume1_vol(struct snd_mixer_oss_file *fmixer,
+ 	if (numid == ID_UNKNOWN)
+ 		return;
+ 	guard(rwsem_read)(&card->controls_rwsem);
++	if (card->shutdown)
++		return;
+ 	kctl = snd_ctl_find_numid(card, numid);
+ 	if (!kctl)
+ 		return;
+@@ -655,6 +661,8 @@ static void snd_mixer_oss_put_volume1_sw(struct snd_mixer_oss_file *fmixer,
+ 	if (numid == ID_UNKNOWN)
+ 		return;
+ 	guard(rwsem_read)(&card->controls_rwsem);
++	if (card->shutdown)
++		return;
+ 	kctl = snd_ctl_find_numid(card, numid);
+ 	if (!kctl)
+ 		return;
+@@ -792,6 +800,8 @@ static int snd_mixer_oss_get_recsrc2(struct snd_mixer_oss_file *fmixer, unsigned
+ 	if (uinfo == NULL || uctl == NULL)
+ 		return -ENOMEM;
+ 	guard(rwsem_read)(&card->controls_rwsem);
++	if (card->shutdown)
++		return -ENODEV;
+ 	kctl = snd_mixer_oss_test_id(mixer, "Capture Source", 0);
+ 	if (!kctl)
+ 		return -ENOENT;
+@@ -835,6 +845,8 @@ static int snd_mixer_oss_put_recsrc2(struct snd_mixer_oss_file *fmixer, unsigned
+ 	if (uinfo == NULL || uctl == NULL)
+ 		return -ENOMEM;
+ 	guard(rwsem_read)(&card->controls_rwsem);
++	if (card->shutdown)
++		return -ENODEV;
+ 	kctl = snd_mixer_oss_test_id(mixer, "Capture Source", 0);
+ 	if (!kctl)
+ 		return -ENOENT;
+@@ -878,6 +890,8 @@ static int snd_mixer_oss_build_test(struct snd_mixer_oss *mixer, struct slot *sl
+ 	int err;
  
--	dma_fence_set_error(&s_job->s_fence->finished, -ETIME);
-+	if (dma_fence_get_status(&s_job->s_fence->finished) == 0)
-+		dma_fence_set_error(&s_job->s_fence->finished, -ETIME);
- 
- 	if (amdgpu_device_should_recover_gpu(ring->adev)) {
- 		struct amdgpu_reset_context reset_context;
+ 	scoped_guard(rwsem_read, &card->controls_rwsem) {
++		if (card->shutdown)
++			return -ENODEV;
+ 		kcontrol = snd_mixer_oss_test_id(mixer, name, index);
+ 		if (kcontrol == NULL)
+ 			return 0;
+@@ -1002,6 +1016,8 @@ static int snd_mixer_oss_build_input(struct snd_mixer_oss *mixer,
+ 	if (snd_mixer_oss_build_test_all(mixer, ptr, &slot))
+ 		return 0;
+ 	guard(rwsem_read)(&mixer->card->controls_rwsem);
++	if (mixer->card->shutdown)
++		return -ENODEV;
+ 	kctl = NULL;
+ 	if (!ptr->index)
+ 		kctl = snd_mixer_oss_test_id(mixer, "Capture Source", 0);
 -- 
 2.51.0
 
