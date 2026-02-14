@@ -1,46 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49A632556E;
-	Sat, 14 Feb 2026 01:06:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84A0921CC51;
+	Sat, 14 Feb 2026 01:06:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771031177; cv=none; b=bFuHZJArlLI/MLK7iey3jXjd+Px6H9mwZU56wUZNTKU1RU2ZbQ5DiGxM8abI9o/Jq0UT+1EeKCi1hKY5AiUX82E7II6lXrITd68ezPntZFIL0wZg9OKfYK5HUGKdiowzXi3Ei8DxCvt+6clHW7zfHqecA8KZIX/CUlod/lnxJ2g=
+	t=1771031178; cv=none; b=IbdJcF1iYoBKynpX3darf1wpVbOAN0ab4y90TsXuFnm6C827S4Q3NyphOOeMajZISCT70/iPl0ZB2SGmFBDmv8zN8mEIDt9PZ6y2gJcqCJ+cNYwm3M1vmoMV7zRAi0D26VWYioM29htDGLPk/5070Gc5B8l4SWFcMfgtNA7B/xQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771031177; c=relaxed/simple;
-	bh=PnjpoUZCJrTJjK7qgjZ2ZrUAbr169HeBkPO4IK7fAPk=;
+	s=arc-20240116; t=1771031178; c=relaxed/simple;
+	bh=GHcyStTuYgk9248+ZgiWTEGoNOtoLR827ZiQo/x1ng4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=n5oun3Uw7h669KsP0JCRsL/ffev/4y8r78v9peHH0ViDZ7Fa4y+THcI0+1CsiRHnLvUKPKLr6Me5lEawHeXWc65UXNxQbXhvbLf9HUzIB7pdAoilIGuUKgEiodcNWITU2ExAQkAKAzzITkpnxQ6Mrdhu65le5Ak7H2DeuakbO6E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=bHwYksyv; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=YZE2p9BZx68tc75z0hQH/6DbJ7nMo7yHsMruRcuAWH/XlgoUl8fUk/HrjEgg/ELha0KnAbj6rHSeTQs5IObEo2ehU4M1DRfEg5/W81sFMN+KkGDmieJVn9ibgzG6altEpV+8XrO60MR2NpRLb+/whQ3OsTXdXzAuRW046G2YsEw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=PU97r3er; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="bHwYksyv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B61BC116C6;
-	Sat, 14 Feb 2026 01:06:16 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="PU97r3er"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D6B8C116C6;
+	Sat, 14 Feb 2026 01:06:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1771031177;
-	bh=PnjpoUZCJrTJjK7qgjZ2ZrUAbr169HeBkPO4IK7fAPk=;
+	s=k20201202; t=1771031178;
+	bh=GHcyStTuYgk9248+ZgiWTEGoNOtoLR827ZiQo/x1ng4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bHwYksyvOrcq2IqYAopOa56KTpXzFuu7ZPZacugzKW+eTXiu2QvFQwnVfZOwsXcy8
-	 g7k0aovsTJKKW7pu/vLjD+thUlZe2ZZYRDtrfklP1hNPHLhhV181jVKXkktQXsl60R
-	 8QH1GkZBwymB/6q6sAc02r7UXSSEz9zIrASdLYD7s39nZdVjEAzM0h25ZoreYLA92q
-	 K/yeVV7efemkRAgQQ4R45qoN97PdfZTNAiVUmBMOsr80Vn724IoOV9brZ3XZgfEPbk
-	 8Dz8PAkNzpzQD5chTcRUCaRP9qpZKU0wM2PaI3dEXLwBnmxiyCQXsR6ZgmEp+iDVzw
-	 iWUTE6vRfEYkA==
+	b=PU97r3erxaSJZZ1QLGnJD6vMeJ0ohVPgF15DyhA/X4i9fMLhF6by7vZce4w27EWND
+	 rtqdn3pRv/DxqEi/zRaG3RYuWRWuL3wyrO1sykFQImzcCLSt2i2CTf4qW/NROPvFEh
+	 KJS/zSJdteOP5HbKqVlsis6stHdiLh49WNcDONCa1jbPRLJe/zFMTuKl54KRuD49dq
+	 g1esx7+LEbdfuum1IP5Fcm9pDkymD9nxNEClZ7IbiTHe8zGsYlPuOTIjfaybVk9Y51
+	 Rclj/4/xkdfeOeexTCY5rmjO9e/aJp0fjJtS9PFIgox3fiGdDb4y19iXbMhe0wbYT6
+	 w//0M8O5iOt4A==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Tim Huang <tim.huang@amd.com>,
-	Mario Limonciello <mario.limonciello@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+Cc: Joey Bednar <linux@joeybednar.com>,
+	Jiri Kosina <jkosina@suse.com>,
 	Sasha Levin <sashal@kernel.org>,
-	Hawking.Zhang@amd.com,
-	Likun.Gao@amd.com,
-	lijo.lazar@amd.com,
-	yelangyan@huaqin.corp-partner.google.com,
-	flora.cui@amd.com
-Subject: [PATCH AUTOSEL 6.19-6.6] drm/amdgpu: add support for HDP IP version 6.1.1
-Date: Fri, 13 Feb 2026 19:59:30 -0500
-Message-ID: <20260214010245.3671907-90-sashal@kernel.org>
+	jikos@kernel.org,
+	bentiss@kernel.org,
+	linux-input@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.19-6.1] HID: apple: Add "SONiX KN85 Keyboard" to the list of non-apple keyboards
+Date: Fri, 13 Feb 2026 19:59:31 -0500
+Message-ID: <20260214010245.3671907-91-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260214010245.3671907-1-sashal@kernel.org>
 References: <20260214010245.3671907-1-sashal@kernel.org>
@@ -56,131 +53,159 @@ X-stable-base: Linux 6.19
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Tim Huang <tim.huang@amd.com>
+From: Joey Bednar <linux@joeybednar.com>
 
-[ Upstream commit e2fd14f579b841f54a9b7162fef15234d8c0627a ]
+[ Upstream commit 7273acfd0aef106093a8ffa3b4973eb70e5a3799 ]
 
-This initializes HDP IP version 6.1.1.
+The SoNiX KN85 keyboard identifies as the "Apple, Inc. Aluminium
+Keyboard" and is not recognized as a non-apple keyboard. Adding "SoNiX
+KN85 Keyboard" to the list of non-apple keyboards fixes the function
+keys.
 
-Reviewed-by: Mario Limonciello <mario.limonciello@amd.com>
-Signed-off-by: Tim Huang <tim.huang@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Joey Bednar <linux@joeybednar.com>
+Signed-off-by: Jiri Kosina <jkosina@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-I see SMU 14.0.4 and 14.0.5 in the soc21 reset path - these are likely
-the same series of GPUs (Strix Point) that use HDP 6.1.1.
+This confirms the exact same pattern. The "SONiX KN85 Keyboard"
+identifies itself as an Apple keyboard (via vendor/product IDs matching
+Apple's Aluminium Keyboard) but has a different HID name string than
+"SONiX USB DEVICE", so the existing entry doesn't match it. The
+`strncmp` prefix match means "SONiX USB DEVICE" would only match devices
+whose name starts with exactly that string — "SONiX KN85 Keyboard"
+starts with "SONiX KN" which doesn't match "SONiX USB".
 
-Now let me summarize the analysis:
+---
 
-## Analysis
+## Complete Analysis
 
-### 1. Commit Message Analysis
+### 1. COMMIT MESSAGE ANALYSIS
 
-The commit subject is "drm/amdgpu: add support for HDP IP version 6.1.1"
-and the body says "This initializes HDP IP version 6.1.1." It was
-authored by Tim Huang and reviewed by Mario Limonciello, both AMD
-engineers. Signed off by Alex Deucher, the AMD GPU subsystem maintainer.
+The commit message is clear and concise:
+- **Problem**: The SoNiX KN85 keyboard identifies itself (via USB
+  VID:PID) as the "Apple, Inc. Aluminium Keyboard" but is not an Apple
+  keyboard.
+- **Consequence**: Without the fix, the HID apple driver applies Apple-
+  specific function key mapping (`fnmode=1`, fkeyslast), making the
+  function keys behave as media keys by default. This is wrong for a
+  non-Apple keyboard.
+- **Fix**: Adding the keyboard's name string to the
+  `non_apple_keyboards[]` list so it gets properly detected and uses
+  `fnmode=2` (fkeysfirst) by default.
+- The commit was signed off by the HID subsystem maintainer Jiri Kosina,
+  confirming it was accepted through the proper review process.
 
-### 2. Code Change Analysis
+### 2. CODE CHANGE ANALYSIS
 
-The change is a **single line addition**: adding `case IP_VERSION(6, 1,
-1):` as a fall-through case before `adev->hdp.funcs = &hdp_v6_0_funcs;`
-in the HDP version switch statement in
-`amdgpu_discovery_set_ip_blocks()`.
+The change is a **single line addition** to a static constant array:
 
-### 3. The Bug
+```356:367:drivers/hid/hid-apple.c
+static const struct apple_non_apple_keyboard non_apple_keyboards[] = {
+        { "SONiX USB DEVICE" },
+        { "SONiX AK870 PRO" },
+        // ... rest of array
+};
+```
 
-This is not merely "new hardware enablement" — it's a **missing case
-label fix**. Here's the critical analysis:
+The new entry `{ "SONiX KN85 Keyboard" }` is added at the top. The
+matching mechanism (`apple_is_non_apple_keyboard()` at line 369) does a
+`strncmp` prefix comparison, so the full name "SONiX KN85 Keyboard"
+would need to start with "SONiX KN85 Keyboard" to match (which it does
+exactly). The existing "SONiX USB DEVICE" entry does NOT match because
+the KN85 keyboard reports its name starting with "SONiX KN85", not
+"SONiX USB".
 
-- **SDMA 6.1.1** was added in commit `a02cfac90fbd4` (v6.9-rc1)
-- **VPE 6.1.1** was added in commit `155d46835c316` (v6.9-rc1)
-- **HDP 6.1.1** was never added
+### 3. CLASSIFICATION
 
-This means since v6.9, a GPU with these IP versions can be discovered
-and probed, but the HDP function table is left as **NULL** (because HDP
-6.1.1 falls through to the `default: break;` case).
+This is a **hardware quirk/workaround**. The SoNiX KN85 keyboard is a
+non-Apple keyboard that falsely presents Apple USB vendor/product IDs (a
+common practice for cheap third-party keyboards), causing it to be
+handled by the `hid-apple` driver. The driver then applies Apple-
+specific key translation logic to a keyboard that doesn't need or want
+it, breaking the function keys for the user.
 
-### 4. Impact - NULL Pointer Dereference
+This falls squarely into the "QUIRKS and WORKAROUNDS" exception category
+for stable backporting:
+- It's a hardware-specific fix for a real device with broken behavior
+- It uses an existing mechanism (the `non_apple_keyboards` array)
+- It fixes a real user-facing issue (broken function keys)
 
-When `soc21_common_get_clockgating_state()` (`soc21.c:1011`) is called,
-it unconditionally dereferences
-`adev->hdp.funcs->get_clock_gating_state()` without a NULL check.
-Similarly, `soc21_common_set_clockgating_state()` (`soc21.c:978`)
-dereferences `adev->hdp.funcs->update_clock_gating()` without a NULL
-check for NBIO 7.11.x GPUs.
+### 4. SCOPE AND RISK ASSESSMENT
 
-With `adev->hdp.funcs` being NULL, these will cause a **kernel NULL
-pointer dereference crash** (oops/panic) on any system with the affected
-GPU hardware.
+- **Size**: 1 line added to a data array. Cannot be smaller.
+- **Files touched**: 1 (`drivers/hid/hid-apple.c`)
+- **Complexity**: Zero — it's a string literal added to an array
+- **Risk of regression**: Effectively zero. The string match only
+  triggers for devices reporting "SONiX KN85 Keyboard" as their name. No
+  other devices are affected. The matching is by HID device name, not
+  vendor/product ID, so it's extremely targeted.
+- **Dependencies**: None. The `non_apple_keyboards[]` mechanism exists
+  in all relevant stable trees (introduced in v6.0-rc1).
 
-### 5. Scope and Risk
+### 5. USER IMPACT
 
-- **One line change**: Minimal risk of regression
-- **Well-understood pattern**: Adding a case label to an existing switch
-  fall-through, identical to how 6.0.0, 6.0.1, and 6.1.0 are handled
-- **Uses existing code**: Maps to the already-tested `hdp_v6_0_funcs`
-  function table
-- **No new APIs, no new features, no behavioral changes** for existing
-  hardware
+- **Who is affected**: Users of the SoNiX KN85 keyboard running Linux.
+  These are real-world hardware owners.
+- **Severity**: Without this fix, the function keys (F1-F12) on the KN85
+  keyboard are mapped to media keys by default (brightness, volume,
+  etc.), which is wrong for this keyboard. This makes the keyboard
+  effectively unusable for standard function key operations unless the
+  user manually overrides `fnmode` via a module parameter.
+- **Workaround exists**: Users can set `fnmode=2` manually, but this is
+  not discoverable and should not be needed.
 
-### 6. Stable Tree Relevance
+### 6. STABILITY INDICATORS
 
-The bug was introduced in v6.9 when SDMA 6.1.1 and VPE 6.1.1 were added
-without a corresponding HDP 6.1.1 entry. Any stable tree from 6.9 onward
-(6.12.y, 6.6.y if SDMA 6.1.1 was backported there, etc.) that has the
-SDMA/VPE 6.1.1 support but lacks HDP 6.1.1 would be affected. The fix is
-trivial to backport.
+- The commit follows the exact same pattern as **5+ previous similar
+  commits** (SONiX AK870 PRO, hfd.cn/WKB603, Jamesdonkey/A3R, Hailuck,
+  the original non-apple keyboards mechanism).
+- Signed off by the HID subsystem maintainer (Jiri Kosina).
+- The pattern has been in the kernel since v6.0 and is well understood.
 
-### 7. Classification
+### 7. DEPENDENCY CHECK
 
-This falls under the **device ID / hardware variant** exception for
-stable. It's a one-line addition of a new IP version to an existing
-driver's switch statement, using an already-existing function table.
-More importantly, it **fixes a NULL pointer dereference** crash on
-affected hardware.
+- **No dependencies**. The `non_apple_keyboards[]` array and
+  `apple_is_non_apple_keyboard()` function exist in all relevant stable
+  trees.
+- The patch applies cleanly to any tree that already has the "SONiX
+  AK870 PRO" entry (or can trivially be adjusted if that entry isn't
+  present — it's just adding a line to an array).
 
-### 8. Note on hdp_v6_0.c Register Handling
+### 8. PRECEDENT
 
-There's a minor concern: `hdp_v6_0_update_clock_gating()` currently
-checks `IP_VERSION(6, 1, 0)` specifically to use `regHDP_CLK_CNTL_V6_1`.
-HDP 6.1.1 would use `regHDP_CLK_CNTL` (the `else` path) which may or may
-not be correct. However, this is orthogonal to the commit — at worst,
-clock gating configuration may be incorrect for this variant, but the
-kernel won't crash. The more critical issue is that without this commit,
-the kernel **will crash** with a NULL pointer dereference.
+This is identical in nature to the "SONiX AK870 PRO" (743c81cdc98fd),
+"hfd.cn/WKB603" (df83a0df820b9), "Hailuck" (c4444d8749f69), and
+"Jamesdonkey/A3R" (113f736655e4f) commits. All follow the same one-line-
+addition pattern to the same array.
 
-### Conclusion
+### Summary
 
-This is a small, surgical, obviously correct fix that prevents a NULL
-pointer dereference crash on hardware with HDP IP version 6.1.1. The
-one-line change maps the new version to an existing function table,
-following an established pattern. The bug was introduced in v6.9 when
-other IP blocks for the same GPU were added without the corresponding
-HDP entry. It meets all stable kernel criteria: fixes a real crash bug,
-is obviously correct, is small and contained, and introduces no new
-features.
+This is a textbook hardware quirk addition — a single line of data added
+to an existing mechanism that fixes broken function keys for a specific
+keyboard model. It has zero risk of regression, zero dependencies beyond
+existing infrastructure, fixes a real user-facing problem, and follows a
+well-established pattern with multiple precedents. This is exactly the
+kind of commit that stable trees exist to carry.
 
 **YES**
 
- drivers/gpu/drm/amd/amdgpu/amdgpu_discovery.c | 1 +
+ drivers/hid/hid-apple.c | 1 +
  1 file changed, 1 insertion(+)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_discovery.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_discovery.c
-index fa2a22dfa0487..f9e0e80c4c186 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_discovery.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_discovery.c
-@@ -3059,6 +3059,7 @@ int amdgpu_discovery_set_ip_blocks(struct amdgpu_device *adev)
- 	case IP_VERSION(6, 0, 0):
- 	case IP_VERSION(6, 0, 1):
- 	case IP_VERSION(6, 1, 0):
-+	case IP_VERSION(6, 1, 1):
- 		adev->hdp.funcs = &hdp_v6_0_funcs;
- 		break;
- 	case IP_VERSION(7, 0, 0):
+diff --git a/drivers/hid/hid-apple.c b/drivers/hid/hid-apple.c
+index 57da4f86a9fa7..233e367cce1d1 100644
+--- a/drivers/hid/hid-apple.c
++++ b/drivers/hid/hid-apple.c
+@@ -354,6 +354,7 @@ static const struct apple_key_translation swapped_fn_leftctrl_keys[] = {
+ };
+ 
+ static const struct apple_non_apple_keyboard non_apple_keyboards[] = {
++	{ "SONiX KN85 Keyboard" },
+ 	{ "SONiX USB DEVICE" },
+ 	{ "SONiX AK870 PRO" },
+ 	{ "Keychron" },
 -- 
 2.51.0
 
