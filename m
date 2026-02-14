@@ -1,52 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7E21222585;
-	Sat, 14 Feb 2026 01:06:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F088D1EF0B0;
+	Sat, 14 Feb 2026 01:06:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771031215; cv=none; b=upKOY233bvh/x6ueyK8XO2CQtKnPZgmDUZPgg097HK0G7yFKX0RU+rBI7lnoQNJMa0GA/lmlWnoygx7/rS6Qe657Vn4svXTOEHWdaasJ1WY9bzNyKT9+LOd2Njk2gT6b1aAiWXXGqRqY4y28MpHwRPkH/XjZpMlR5xdLkFui1bQ=
+	t=1771031217; cv=none; b=GGMoUGyLAJBfECkUlP+Oik4p3rpOStNK+fiU6QEMwhaOE1615z+1EzgIzHLERR18DQ3r+F2solyse5vtTOBOUY6SdzgcG7malJbCh4Xk8zoY6Zfg5TSPScqk26zzNVteNnSS5Q9Fn9It0yx3fsF/AIrBw/ql6hh7xjpGPaq7h9A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771031215; c=relaxed/simple;
-	bh=NfyZ6N9qEAQYzK3IyEcQ6NN1xPROVoZvgBnrsqg9qh4=;
+	s=arc-20240116; t=1771031217; c=relaxed/simple;
+	bh=8c8sukFP14utfTYrI376lvQLa5+I8ze4lJVTlbyy2q4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=kN8pz7fP7oqPasCs7QfrAdSM111T9e9NVDdszJ6v+9qqZM5Og6wxYWQp7JsomcweMz9GKHMDPp3fJSxnwi3wwsv01ORxClZ5N5jaCKmv5OzjdbH4OGRPmXIhUos5jmkiAXT354pqfbdHPzMmBFwGA4Pn82BQmNTYKQ7MKiJpN1k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=fYPMm6Lx; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=qXnSuq7NgT9ISa4ctsu7c5/3kMr88/P50bhZBSjWvX2+mgDAe7ogYB8pT7kV0SlLH53bvlkPsmekDM025YO4PYsxLYDsuFecmR/pSdIW7C4GwCyUVzZNOWaiZ5TpKIOwUUetZkRbLkDZBPPx6vJ2vwPbtRxJUOxhcOp/y7KJ3os=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=oeV9vplD; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="fYPMm6Lx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09CBCC19424;
-	Sat, 14 Feb 2026 01:06:53 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="oeV9vplD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0ADAFC116C6;
+	Sat, 14 Feb 2026 01:06:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1771031215;
-	bh=NfyZ6N9qEAQYzK3IyEcQ6NN1xPROVoZvgBnrsqg9qh4=;
+	s=k20201202; t=1771031216;
+	bh=8c8sukFP14utfTYrI376lvQLa5+I8ze4lJVTlbyy2q4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fYPMm6LxHXGDHBAejmh9Hynl/dl9VxMNiZjy8FKqEjd8udv7mVGR4UXUJVhm/doAj
-	 /9gwsMFNy8Qwcc4HEjlvsMPwV0PCrIjxr+fzsJlIU2CZv+Zjo6+bMa8yDVr4av5uc0
-	 Ry8aKRMY7HDoTovYEjzU2OOLPVoevnGqQd7zqXhO4Hgwrj07H3CQS7epT8sdayxqwF
-	 yelEIKVi25pZByV8vgHB2+lSyVS/ldeIumGumkAfIGyl31Efq/qx7XrvcQjczYAsiq
-	 WOetu6wfv3ErqgN7fBYt4iGGRnLmaRwBSxE2TTzHxPr1DALzl/srRFkfwVSwEJ4ZxH
-	 YMEXu/kBG1XDQ==
+	b=oeV9vplDudGC2FdxU622iJD1KAL58XswbKg/pCKTiXgl1XOdXk2Qkg01TleeOVfpl
+	 aBkFIJo7M5WiiOnotsNkbMsJm2wfqzY+nuPDpVssYjygoBvode39Bc/cPyyLUq3jDA
+	 Nm8CTaNoV0nCMtEdy+3223zOn+FvKiksecELExpnCC2D5Uo2oPCoocuwRr7Gctc6aj
+	 l+fpGn0XbHI9aEcyLVuzfXFpmsQA/sZnsWvdkzZmhgsN9Mwja6avZxJW0lT8j0O+Zp
+	 vZDTcpGHw/0zFQSUbmcLqqQF9DDXFX8IRSfjBmal9BekHCn86ZF22DPTEq+7cHcQCT
+	 KJfn8wSLU9Fsw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Dmytro Laktyushkin <dmytro.laktyushkin@amd.com>,
-	Charlene Liu <charlene.liu@amd.com>,
-	Matthew Stewart <matthew.stewart2@amd.com>,
-	Dan Wheeler <daniel.wheeler@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+Cc: Szymon Wilczek <szymonwilczek@gmx.com>,
+	syzbot+405dcd13121ff75a9e16@syzkaller.appspotmail.com,
+	Mike Isely <isely@pobox.com>,
+	Hans Verkuil <hverkuil+cisco@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	Alvin.Lee2@amd.com,
-	Dillon.Varone@amd.com,
-	nicholas.kazlauskas@amd.com,
-	aurabindo.pillai@amd.com,
-	mwen@igalia.com,
-	Yihan.Zhu@amd.com,
-	Charlene.Liu@amd.com,
-	yelangyan@huaqin.corp-partner.google.com,
-	Ilya.Bakoulin@amd.com
-Subject: [PATCH AUTOSEL 6.19-6.12] drm/amd/display: only power down dig on phy endpoints
-Date: Fri, 13 Feb 2026 19:59:46 -0500
-Message-ID: <20260214010245.3671907-106-sashal@kernel.org>
+	linux-media@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.19-5.10] media: pvrusb2: fix URB leak in pvr2_send_request_ex
+Date: Fri, 13 Feb 2026 19:59:47 -0500
+Message-ID: <20260214010245.3671907-107-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260214010245.3671907-1-sashal@kernel.org>
 References: <20260214010245.3671907-1-sashal@kernel.org>
@@ -62,152 +53,165 @@ X-stable-base: Linux 6.19
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Dmytro Laktyushkin <dmytro.laktyushkin@amd.com>
+From: Szymon Wilczek <szymonwilczek@gmx.com>
 
-[ Upstream commit 0839d8d24e6f1fc2587c4a976f44da9fa69ae3d0 ]
+[ Upstream commit a8333c8262aed2aedf608c18edd39cf5342680a7 ]
 
-This avoids any issues with dpia endpoints
+When pvr2_send_request_ex() submits a write URB successfully but fails to
+submit the read URB (e.g. returns -ENOMEM), it returns immediately without
+waiting for the write URB to complete. Since the driver reuses the same
+URB structure, a subsequent call to pvr2_send_request_ex() attempts to
+submit the still-active write URB, triggering a 'URB submitted while
+active' warning in usb_submit_urb().
 
-Reviewed-by: Charlene Liu <charlene.liu@amd.com>
-Signed-off-by: Dmytro Laktyushkin <dmytro.laktyushkin@amd.com>
-Signed-off-by: Matthew Stewart <matthew.stewart2@amd.com>
-Tested-by: Dan Wheeler <daniel.wheeler@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Fix this by ensuring the write URB is unlinked and waited upon if the read
+URB submission fails.
+
+Reported-by: syzbot+405dcd13121ff75a9e16@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=405dcd13121ff75a9e16
+Signed-off-by: Szymon Wilczek <szymonwilczek@gmx.com>
+Acked-by: Mike Isely <isely@pobox.com>
+Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-Now I have a comprehensive understanding. Let me summarize the full
-analysis.
+## Analysis of pvrusb2 URB Leak Fix
 
----
+### 1. Commit Message Analysis
 
-## Comprehensive Analysis
+The commit message is clear and well-structured:
+- **Subject**: Explicitly says "fix URB leak" — this is a bug fix
+- **Problem**: When the write URB is submitted successfully but the read
+  URB submission fails, the function returns without waiting for the
+  write URB to complete. The URB structure is reused, so a subsequent
+  call tries to submit a still-active URB.
+- **Symptom**: Triggers a `'URB submitted while active'` warning in
+  `usb_submit_urb()`, which is a well-known USB core warning indicating
+  a real bug.
+- **Reporter**: syzbot — fuzzer-found, reproducible bug
+- **Acked-by**: Mike Isely (pvrusb2 maintainer) — subsystem maintainer
+  approved
+- **Signed-off-by**: Hans Verkuil (media subsystem maintainer) — proper
+  review chain
 
-### 1. COMMIT MESSAGE ANALYSIS
+### 2. Code Change Analysis
 
-The subject "drm/amd/display: only power down dig on phy endpoints" and
-body "This avoids any issues with dpia endpoints" clearly indicate this
-is a bug fix. The commit skips DIG (Digital Interface Group) power-down
-for DPIA (DisplayPort Interface Adapter / USB4 DP tunnel) endpoints,
-which shouldn't be processed in this context.
-
-### 2. CODE CHANGE ANALYSIS
-
-The fix adds exactly 2 lines to `dcn401_init_hw()`:
+The fix adds 5 lines of code in a single error path:
 
 ```c
-if (link->ep_type != DISPLAY_ENDPOINT_PHY)
-    continue;
+if (hdw->ctl_write_pend_flag) {
+    usb_unlink_urb(hdw->ctl_write_urb);
+    while (hdw->ctl_write_pend_flag)
+        wait_for_completion(&hdw->ctl_done);
+}
 ```
 
-This guard is placed in the "headless boot" DIG power-down loop, which
-iterates all links when no eDP links are found. The loop accesses
-`link->link_enc->funcs->is_dig_enabled` without first checking if the
-link is a physical endpoint.
+**What it does**: When the read URB submission fails (`status < 0`), but
+the write URB was already submitted and is pending
+(`ctl_write_pend_flag` set), the fix:
+1. Unlinks (cancels) the still-active write URB
+2. Waits for the write URB completion callback to fire (which clears
+   `ctl_write_pend_flag`)
 
-**The Bug Mechanism: NULL Pointer Dereference**
+This is the correct pattern — it mirrors what the existing code already
+does in the normal path (the `while (hdw->ctl_write_pend_flag ||
+hdw->ctl_read_pend_flag)` loop further down), but adapted for this
+specific error path.
 
-From my investigation of the link construction code in `link_factory.c`:
+### 3. Bug Classification
 
-- DPIA links are created via `construct_dpia()` (line 814), which
-  **never assigns `link->link_enc`**. There's even a `/* TODO: Create
-  link encoder */` comment at line 870.
-- PHY links are created via `construct_phy()` (line 676), which **does**
-  assign `link->link_enc`.
-- Since links are allocated with `kzalloc()`, `link->link_enc` is NULL
-  for DPIA links.
-- The buggy code dereferences `link->link_enc->funcs->is_dig_enabled` —
-  a **NULL pointer dereference** when the link is DPIA.
+- **Type**: Resource leak / URB lifecycle mismanagement
+- **Trigger**: Read URB submission failure (e.g., -ENOMEM) after
+  successful write URB submission
+- **Consequence**:
+  - Active URB left dangling
+  - Next call to the same function triggers `'URB submitted while
+    active'` warning
+  - Could lead to undefined behavior with the USB subsystem, potential
+    data corruption or crashes
+- **Reproducibility**: syzbot found it — reproducible with a concrete
+  trigger
 
-The `enum display_endpoint_type` from `dc_types.h` defines:
-- `DISPLAY_ENDPOINT_PHY = 0` — Physical connector
-- `DISPLAY_ENDPOINT_USB4_DPIA` — USB4 DisplayPort tunnel
+### 4. Scope and Risk Assessment
 
-### 3. CONSISTENCY WITH OTHER DCN GENERATIONS
+- **Lines changed**: +5 lines added in a single file
+- **Files affected**: 1 file (`drivers/media/usb/pvrusb2/pvrusb2-hdw.c`)
+- **Complexity**: Very low — straightforward error path cleanup
+- **Risk**: Minimal. The fix uses standard USB patterns
+  (`usb_unlink_urb` + wait for completion) that are well-established
+  throughout the kernel. The `ctl_write_pend_flag` check ensures we only
+  unlink if the write URB is actually active.
+- **Regression potential**: Very low. This code path only executes when
+  read URB submission fails, and the fix ensures proper cleanup before
+  proceeding — strictly better than the current behavior.
 
-The first loop in `dcn401_init_hw()` (line 206 at HEAD) **already has**
-this exact `ep_type` check, added by commit `d7f5a61e1b04` ("increase
-max link count and fix link->enc NULL pointer access"). That commit
-explicitly states: "*hw_init() access null LINK_ENC for dpia non
-display_endpoint*".
+### 5. User Impact
 
-Both `dcn31_hwseq.c` (line 163) and `dcn35_hwseq.c` (line 196) have this
-same check in their first link iteration loops, confirming this is a
-well-established pattern.
+- **Affected users**: Anyone using pvrusb2 USB TV capture devices
+- **Severity**: Medium-high — while pvrusb2 is not a widely-used driver,
+  submitting a still-active URB can cause USB core issues, kernel
+  warnings, and potentially crashes
+- **Trigger likelihood**: Moderate — memory pressure situations can
+  cause `-ENOMEM` from `usb_submit_urb()`
 
-### 4. DEPENDENCY ANALYSIS
+### 6. Stability and Trust Indicators
 
-There are **two** crash points in `dcn401_init_hw()` for DPIA links:
-1. **First loop** (~line 209):
-   `link->link_enc->funcs->hw_init(link->link_enc)` — Fixed by
-   `d7f5a61e1b04`
-2. **Second loop** (~line 290): `link->link_enc->funcs->is_dig_enabled`
-   — Fixed by the commit under analysis
+- **Reported-by**: syzbot (automated, reproducible)
+- **Acked-by**: Subsystem maintainer (Mike Isely)
+- **Merged by**: Media subsystem maintainer (Hans Verkuil)
+- **Fix pattern**: Standard, well-understood USB cleanup pattern
 
-In v6.12 stable, **neither** check exists (verified by examining the
-v6.12 code). Both commits need to be backported for complete protection.
-The commit under analysis is self-contained for the second code path,
-but the first crash path would be hit before reaching the second one
-unless `d7f5a61e1b04` is also backported.
+### 7. Dependencies
 
-### 5. AFFECTED VERSIONS AND HARDWARE
+The fix is self-contained — it uses existing infrastructure
+(`usb_unlink_urb`, `wait_for_completion`, existing flags) that has been
+present in the pvrusb2 driver for years. No dependency on other recent
+commits.
 
-- DCN 4.0.1 was added in v6.11 (commit `70839da636050`), present in
-  v6.11+, including LTS 6.12.y
-- DCN 4.0.1 targets AMD RDNA 4 GPUs (e.g., RX 9070 series)
-- DPIA endpoints occur on systems with USB4/Thunderbolt with DisplayPort
-  tunneling
-- The bug triggers during hardware init (boot/resume) on systems with
-  DPIA endpoints in a headless configuration
+### 8. Stable Kernel Criteria
 
-### 6. RISK ASSESSMENT
+| Criterion | Met? |
+|-----------|------|
+| Obviously correct and tested | Yes — syzbot-reported, maintainer-acked
+|
+| Fixes a real bug | Yes — URB leak, 'URB submitted while active' |
+| Important issue | Yes — can cause USB subsystem issues and warnings |
+| Small and contained | Yes — 5 lines, 1 file |
+| No new features | Correct — pure bug fix |
+| Applies cleanly | Likely — the pvrusb2 code is stable and rarely
+changed |
 
-- **Size**: 2 lines added — minimal
-- **Scope**: Only affects the specific DIG power-down code path during
-  init
-- **Pattern**: Identical to established practice in dcn31/dcn35
-- **Side effects**: None — the guard only skips endpoints that should
-  never have been processed
-- **Review**: Reviewed by Charlene Liu (the author of the companion
-  fix), Tested by Dan Wheeler (AMD)
-- **Risk**: Extremely low
+### Conclusion
 
-### 7. USER IMPACT
-
-Without this fix, AMD RDNA 4 GPU users with USB4/Thunderbolt displays in
-a headless boot scenario would hit a **kernel crash** (NULL pointer
-dereference → oops/panic). This is a fatal initialization failure.
-
-### 8. VERDICT
-
-This is a clear, surgical fix for a NULL pointer dereference that causes
-a kernel crash during hardware initialization. It follows an established
-pattern used across multiple DCN generations, is 2 lines with zero risk
-of regression, and was reviewed and tested by AMD engineers. It does
-require companion commit `d7f5a61e1b04` for complete coverage of all
-crash paths, but both should be backported together. The fix applies to
-hardware present in stable kernels from v6.11 onward.
+This is a textbook stable backport candidate: a small, surgical fix for
+a syzbot-reported URB lifecycle bug in a USB driver. It's maintainer-
+acked, uses established patterns, has minimal regression risk, and fixes
+a real bug that can cause kernel warnings and potential instability. The
+fix is self-contained with no dependencies.
 
 **YES**
 
- drivers/gpu/drm/amd/display/dc/hwss/dcn401/dcn401_hwseq.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/media/usb/pvrusb2/pvrusb2-hdw.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/drivers/gpu/drm/amd/display/dc/hwss/dcn401/dcn401_hwseq.c b/drivers/gpu/drm/amd/display/dc/hwss/dcn401/dcn401_hwseq.c
-index f04cbdb3d3814..1ce61f0570201 100644
---- a/drivers/gpu/drm/amd/display/dc/hwss/dcn401/dcn401_hwseq.c
-+++ b/drivers/gpu/drm/amd/display/dc/hwss/dcn401/dcn401_hwseq.c
-@@ -287,6 +287,8 @@ void dcn401_init_hw(struct dc *dc)
- 			for (i = 0; i < dc->link_count; i++) {
- 				struct dc_link *link = dc->links[i];
- 
-+				if (link->ep_type != DISPLAY_ENDPOINT_PHY)
-+					continue;
- 				if (link->link_enc->funcs->is_dig_enabled &&
- 						link->link_enc->funcs->is_dig_enabled(link->link_enc) &&
- 						hws->funcs.power_down) {
+diff --git a/drivers/media/usb/pvrusb2/pvrusb2-hdw.c b/drivers/media/usb/pvrusb2/pvrusb2-hdw.c
+index b32bb906a9de2..5807734ae26c6 100644
+--- a/drivers/media/usb/pvrusb2/pvrusb2-hdw.c
++++ b/drivers/media/usb/pvrusb2/pvrusb2-hdw.c
+@@ -3709,6 +3709,11 @@ status);
+ 				   "Failed to submit read-control URB status=%d",
+ status);
+ 			hdw->ctl_read_pend_flag = 0;
++			if (hdw->ctl_write_pend_flag) {
++				usb_unlink_urb(hdw->ctl_write_urb);
++				while (hdw->ctl_write_pend_flag)
++					wait_for_completion(&hdw->ctl_done);
++			}
+ 			goto done;
+ 		}
+ 	}
 -- 
 2.51.0
 
