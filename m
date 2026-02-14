@@ -1,52 +1,50 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B85020E334;
-	Sat, 14 Feb 2026 00:58:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9AD53DF59;
+	Sat, 14 Feb 2026 00:58:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771030714; cv=none; b=ETUqDJ/+OBT0ibwGxugqJizamwFt8ol1neKw0Uyee2fLbn5sQuoqiQYGHtxzJciSQ98+dvf7zSNQ9/qDhJeu+q/Y5VolvEQW6/b4TrXBYcP1NbLkfD7kzPSikI2uAl2TdMjrUG/dY0peU/YiAjHexdQvVBHhToVw2y2L7rMr7xA=
+	t=1771030716; cv=none; b=qubeDRzJKSzPTUx9OUg1os/3A/T1upEGLMQALl4YrDGBnWTrntcw3e9UnoAXOf4UJZfmMMteaPjemcj9NlAPZiHUr+EnuOV8XNoEMiY4N3aw7WzEAHJpXWNohTJa2fIVgqIq05ijViww6T+oREB2J9Y9R13z9umhsjcA4o8NkKE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771030714; c=relaxed/simple;
-	bh=Fbguudayvr5/a8atI4mdtxwAWSlFxYIraPPOXe1sJ88=;
+	s=arc-20240116; t=1771030716; c=relaxed/simple;
+	bh=9iUqq9ZQm+L4L0WZKC72XnpCTsO/DQnYd7c8gUn/SE0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gmuNyDykg3WYlcim5ZPEAJUDOXIiNumCmaazWWtTxVT+B4P8udACMdNt677WU3fUKa8Nd9hHFttcFu7891L+m/zAxoyY5ND4h0r4UdyOQlhWHITnUVmlbYW0zFx/jFuaW/hMSe7fHpw+glX/VqnnKDmdm3P2ondMI36/VK0W2cQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=FfAYDfaD; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=IemN7T633Takz/Z6u6dSP5EKllL3UFgJaKOjh7PJtTCqcnUEOQ1pvTjXqXRMRUFCuIaBvqYrxkOOhDVb746PZkpc0jY87EfLx8tbzueaqrP4VbWvQ9wglWfH1CphZDroairT7BISALRI5et15YnBwLDABkxQWLqR1+bYVYTrUSA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=GSPOji4Q; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="FfAYDfaD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09F52C19424;
-	Sat, 14 Feb 2026 00:58:31 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="GSPOji4Q"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F6F6C116C6;
+	Sat, 14 Feb 2026 00:58:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1771030713;
-	bh=Fbguudayvr5/a8atI4mdtxwAWSlFxYIraPPOXe1sJ88=;
+	s=k20201202; t=1771030716;
+	bh=9iUqq9ZQm+L4L0WZKC72XnpCTsO/DQnYd7c8gUn/SE0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FfAYDfaDrtDjmPTkhoEwGQc4K4nBSYKHRRf2EFllZ6YB7EJusBzPu9Cciz9h2oow9
-	 c0k5OXIJWc3wo83R4csKqdQP1v2YEeY5Tk/oG42nRTWK/a3vBFQTXvxHAfqEZwdDjF
-	 Z1rHenOIBJYoQhNXRblwA0xr8vEhvNrXN7OHlIL2tz2zhNYIw8a9u7vMZGnKT554Tv
-	 LObS6laFcKSsDehiRDGIHAzQPYLqlYOBtXc/vxdgaCxk8t6IebjMafzUyAbMaYf3Oc
-	 mLbGnF36oYStG2hHeBoRwIth0mf0IDP00bbbmILFZph4ucOlOpvnYkxvG5Nd8GBo0l
-	 WYPVjBEa3sJ+A==
+	b=GSPOji4QqRHEiVmQFrnVKtGcaTfBjnT6aA1QsEkaEWonVkmgh0rnEcOKlTFWQWz0+
+	 rohVvlNTwGRwJ5BD/WMHRvCn//sgxvZnF4Ep9Oy+5ZCjoh6G1nicpreyBkFjpdRUqp
+	 mtvOEG13lGoj0U/sMHC9g1m07QX0iGnmdslL7nzKMLsT9spX8NKdXlVMsjwfSf9DRf
+	 K2Qc9byZ5fj8hEP9a4TDGbmz2umM7YRUms39SEHrnm1bMN2CdJJ+Q3ulzuXlk4b3Wj
+	 i5QLJ6DkuWaztI4JOZbUSXZwpLJKPwxH8ZUETJ3WnoFWWfZ+XvuE5P9LTDFb2k8ptX
+	 Nad12yEq/jcvg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Prathamesh Shete <pshete@nvidia.com>,
-	Petlozu Pravareshwar <petlozup@nvidia.com>,
-	Jon Hunter <jonathanh@nvidia.com>,
-	Thierry Reding <treding@nvidia.com>,
+Cc: "Borislav Petkov (AMD)" <bp@alien8.de>,
+	kernel test robot <lkp@intel.com>,
+	Julia Lawall <julia.lawall@inria.fr>,
+	Tom Lendacky <thomas.lendacky@amd.com>,
 	Sasha Levin <sashal@kernel.org>,
-	thierry.reding@gmail.com,
-	bigeasy@linutronix.de,
-	clrkwllms@kernel.org,
-	rostedt@goodmis.org,
-	ulf.hansson@linaro.org,
-	chleroy@kernel.org,
-	jirislaby@kernel.org,
+	nathan@kernel.org,
+	mingo@kernel.org,
+	ardb@kernel.org,
+	Neeraj.Upadhyay@amd.com,
+	aik@amd.com,
 	yelangyan@huaqin.corp-partner.google.com,
-	linux-tegra@vger.kernel.org,
-	linux-rt-devel@lists.linux.dev
-Subject: [PATCH AUTOSEL 6.19] soc/tegra: pmc: Fix unsafe generic_handle_irq() call
-Date: Fri, 13 Feb 2026 19:58:09 -0500
-Message-ID: <20260214005825.3665084-3-sashal@kernel.org>
+	ashish.kalra@amd.com,
+	llvm@lists.linux.dev
+Subject: [PATCH AUTOSEL 6.19-6.18] x86/sev: Use kfree_sensitive() when freeing a SNP message descriptor
+Date: Fri, 13 Feb 2026 19:58:10 -0500
+Message-ID: <20260214005825.3665084-4-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260214005825.3665084-1-sashal@kernel.org>
 References: <20260214005825.3665084-1-sashal@kernel.org>
@@ -59,360 +57,169 @@ MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.19
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Prathamesh Shete <pshete@nvidia.com>
+From: "Borislav Petkov (AMD)" <bp@alien8.de>
 
-[ Upstream commit e6d96073af681780820c94079b978474a8a44413 ]
+[ Upstream commit af05e558988ed004a20fc4de7d0f80cfbba663f0 ]
 
-Currently, when resuming from system suspend on Tegra platforms,
-the following warning is observed:
+Use the proper helper instead of an open-coded variant.
 
-WARNING: CPU: 0 PID: 14459 at kernel/irq/irqdesc.c:666
-Call trace:
- handle_irq_desc+0x20/0x58 (P)
- tegra186_pmc_wake_syscore_resume+0xe4/0x15c
- syscore_resume+0x3c/0xb8
- suspend_devices_and_enter+0x510/0x540
- pm_suspend+0x16c/0x1d8
-
-The warning occurs because generic_handle_irq() is being called from
-a non-interrupt context which is considered as unsafe.
-
-Fix this warning by deferring generic_handle_irq() call to an IRQ work
-which gets executed in hard IRQ context where generic_handle_irq()
-can be called safely.
-
-When PREEMPT_RT kernels are used, regular IRQ work (initialized with
-init_irq_work) is deferred to run in per-CPU kthreads in preemptible
-context rather than hard IRQ context. Hence, use the IRQ_WORK_INIT_HARD
-variant so that with PREEMPT_RT kernels, the IRQ work is processed in
-hardirq context instead of being deferred to a thread which is required
-for calling generic_handle_irq().
-
-On non-PREEMPT_RT kernels, both init_irq_work() and IRQ_WORK_INIT_HARD()
-execute in IRQ context, so this change has no functional impact for
-standard kernel configurations.
-
-Signed-off-by: Petlozu Pravareshwar <petlozup@nvidia.com>
-Signed-off-by: Prathamesh Shete <pshete@nvidia.com>
-Reviewed-by: Jon Hunter <jonathanh@nvidia.com>
-Tested-by: Jon Hunter <jonathanh@nvidia.com>
-[treding@nvidia.com: miscellaneous cleanups]
-Signed-off-by: Thierry Reding <treding@nvidia.com>
+Closes: https://lore.kernel.org/r/202512202235.WHPQkLZu-lkp@intel.com
+Reported-by: kernel test robot <lkp@intel.com>
+Reported-by: Julia Lawall <julia.lawall@inria.fr>
+Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+Reviewed-by: Tom Lendacky <thomas.lendacky@amd.com>
+Link: https://patch.msgid.link/20260112114147.GBaWTd-8HSy_Xp4S3X@fat_crate.local
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-## Complete Analysis
+Now I have a thorough understanding. Let me compile my full analysis.
 
-### 1. COMMIT MESSAGE ANALYSIS
+---
 
-**Subject**: "soc/tegra: pmc: Fix unsafe generic_handle_irq() call"
+## Detailed Analysis
 
-The commit message is unambiguous - it's fixing a **real, observable
-WARNING** during system resume on Tegra platforms. The warning backtrace
-is included:
+### 1. Commit Message Analysis
 
-```
-WARNING: CPU: 0 PID: 14459 at kernel/irq/irqdesc.c:666
-Call trace:
- handle_irq_desc+0x20/0x58 (P)
- tegra186_pmc_wake_syscore_resume+0xe4/0x15c
- syscore_resume+0x3c/0xb8
- suspend_devices_and_enter+0x510/0x540
- pm_suspend+0x16c/0x1d8
-```
+The commit message is intentionally understated: "Use the proper helper
+instead of an open-coded variant." However, this is a **security-
+relevant fix** flagged by automated static analysis tools. It was:
 
-The fix has been **Reviewed-by** and **Tested-by** Jon Hunter (NVIDIA
-kernel engineer), and authored by NVIDIA engineers who are experts on
-Tegra PMC.
+- **Reported-by: kernel test robot** (automated scanner from Intel)
+- **Reported-by: Julia Lawall** (well-known for Coccinelle semantic
+  patches that detect exactly these patterns)
+- **Reviewed-by: Tom Lendacky** (AMD SEV subsystem maintainer)
+- **Authored-by: Borislav Petkov** (x86 co-maintainer, AMD SEV expert)
 
-### 2. CODE CHANGE ANALYSIS - The Bug
+### 2. Code Change Analysis
 
-**Root cause**: `tegra186_pmc_wake_syscore_resume()` is called by
-`syscore_resume()` during system resume. Looking at `syscore_resume()`
-in `drivers/base/syscore.c:93-110`:
+The change is in `snp_msg_free()` in `arch/x86/coco/sev/core.c`:
 
+**Before:**
 ```c
-void syscore_resume(void)
-{
-    WARN_ONCE(!irqs_disabled(), ...);
-    list_for_each_entry(syscore, &syscore_list, node)
-        if (syscore->ops->resume)
-            syscore->ops->resume(syscore->data);
-}
+memset(mdesc, 0, sizeof(*mdesc));
+kfree(mdesc);
 ```
 
-This runs with **interrupts disabled** but **NOT in hard IRQ context**
-(i.e., `in_hardirq()` returns false). However, when
-`generic_handle_irq()` is called, it goes through `handle_irq_desc()`
-(in `kernel/irq/irqdesc.c:658-671`):
-
+**After:**
 ```c
-int handle_irq_desc(struct irq_desc *desc)
-{
-    data = irq_desc_get_irq_data(desc);
-    if (WARN_ON_ONCE(!in_hardirq() &&
-irqd_is_handle_enforce_irqctx(data)))
-        return -EPERM;
-    generic_handle_irq_desc(desc);
-    return 0;
-}
+kfree_sensitive(mdesc);
 ```
 
-The ARM GIC v2 and GIC v3 interrupt controllers **set
-`IRQD_HANDLE_ENFORCE_IRQCTX` on ALL interrupts** they map (confirmed in
-`drivers/irqchip/irq-gic.c:1077` and `drivers/irqchip/irq-
-gic-v3.c:1585`). Since Tegra SoCs use ARM GIC, any IRQ going through the
-Tegra wake domain will have this flag set. Thus, calling
-`generic_handle_irq()` from the syscore resume context (not hard IRQ)
-triggers the `WARN_ON_ONCE`.
+This is a **critical difference** despite appearing cosmetic:
 
-**Why it matters**: Beyond the WARN, the function returns `-EPERM`
-without actually handling the interrupt. This means **edge-triggered
-wake IRQs are silently dropped**, potentially causing missed wakeup
-events and device misbehavior after resume.
+1. **`memset()` can be optimized away**: When `memset()` is followed
+   immediately by `kfree()`, the compiler can perform dead store
+   elimination (DSE). Since the memory is about to be freed and no code
+   reads the zeroed values, the compiler may determine the `memset()` is
+   a dead store and remove it entirely. This is increasingly common with
+   modern GCC and Clang optimization levels, and especially with LTO.
 
-### 3. THE FIX
+2. **`kfree_sensitive()` uses `memzero_explicit()`**: This function
+   calls `memset()` followed by `barrier_data()`, which is a compiler
+   barrier that prevents the zero operation from being optimized away.
+   This is the canonical kernel API specifically designed for clearing
+   sensitive data before freeing.
 
-The fix:
-1. Adds `struct irq_work wake_work` and `u32 *wake_status` fields to
-   `struct tegra_pmc`
-2. Creates a new `tegra186_pmc_wake_handler()` function (the IRQ work
-   handler) that contains the logic previously in
-   `tegra186_pmc_process_wake_events()`
-3. `tegra186_pmc_wake_syscore_resume()` now saves wake status to
-   `pmc->wake_status[]` and queues the IRQ work via `irq_work_queue()`
-4. The IRQ work handler runs in **hard IRQ context** where
-   `generic_handle_irq()` is safe
-5. Uses `IRQ_WORK_INIT_HARD()` to ensure hard IRQ context even on
-   `PREEMPT_RT` kernels
-6. Adds a check in `tegra186_pmc_wake_syscore_suspend()` for unhandled
-   wake IRQs
+3. **`kfree_sensitive()` clears the entire slab allocation**: Via
+   `ksize()`, it zeros the whole allocated slab object (which may be
+   larger than `sizeof(*mdesc)`), while the original code only zeroed
+   `sizeof(*mdesc)`. This provides more thorough clearing of any padding
+   or slab slack space.
 
-This is the **correct** fix pattern - using `irq_work` to defer IRQ
-handling to hard IRQ context is a well-established kernel pattern.
-Multiple other drivers have been fixed similarly (see commits
-`94ec234a16cf3`, `118c3ba24d04f`, `c6a91405ac5cd`, `f285de79569f9`,
-`f460c70125bcb` which all converted to `generic_handle_irq_safe()`).
+### 3. Sensitivity of the Data
 
-### 4. DEPENDENCY ANALYSIS
+The `snp_msg_desc` structure contains:
 
-**Critical dependency**: This commit was written against the v6.19 tree
-which has the new `struct syscore` API from commit `a97fbc3ee3e2a`
-(v6.19-rc1 only). In stable trees (v6.6, v6.12), the functions use the
-old `struct syscore_ops` interface:
-- `tegra186_pmc_wake_syscore_resume(void)` (no `void *data` parameter)
-- `tegra186_pmc_wake_syscore_suspend(void)` (no `void *data` parameter)
-- `struct syscore_ops syscore` (not `struct syscore`)
+- **`secret_request` and `secret_response`** (embedded `struct
+  snp_guest_msg`): These are **double-buffered encrypted/decrypted guest
+  messages** used for communication between the SEV-SNP guest VM and the
+  AMD Secure Processor (ASP). The comment in the struct says "Avoid
+  information leakage by double-buffering shared messages in fields that
+  are in regular encrypted memory." Each `snp_guest_msg` contains auth
+  tags, sequence numbers, and a full-page payload.
+- **`vmpck`**: Pointer to the VM Platform Communication Key.
+- **`ctx`**: AES-GCM crypto context (freed separately via `kfree()`).
+- **`secrets`**: Pointer to the SNP secrets page.
+- **`os_area_msg_seqno`**: Message sequence number.
 
-**However**, the core fix logic (adding `irq_work`, deferring
-`generic_handle_irq()`) does NOT depend on the syscore API change. The
-fix can be backported with minor adaptation:
-- The function signatures need to match the old `syscore_ops` callbacks
-  (no `void *data`)
-- `IRQ_WORK_INIT_HARD` and `irq_work_queue` are available in v6.6+
-- The `irq_work` and `wake_status` additions to `struct tegra_pmc` are
-  self-contained
+This is AMD SEV-SNP code. The entire purpose of SEV-SNP is to protect
+guest VM memory from the hypervisor. Leaving cryptographic state and
+message contents in freed slab memory directly undermines the security
+guarantees of the technology.
 
-**Affected stable trees**: v6.6.y, v6.12.y (and any other active stable
-tree based on v6.2+, since commit `0474cc8489bda` introduced the buggy
-code in v6.2).
+### 4. History and Stable Tree Applicability
 
-### 5. SCOPE AND RISK
+- `snp_msg_free()` was introduced in commit c5529418d0507 ("x86/sev:
+  Carve out and export SNP guest messaging init routines"), which landed
+  in **v6.14-rc1**.
+- The buggy `memset() + kfree()` pattern was introduced by this same
+  refactoring commit.
+- The fix applies to all stable trees from **v6.14 onwards**: 6.14.y,
+  6.15.y, 6.16.y, 6.17.y, 6.18.y.
+- I confirmed the vulnerable code exists in v6.14 and that
+  `kfree_sensitive()` is available there.
+- It does NOT apply to 6.12.y, 6.6.y, or older LTS trees (they use a
+  different code structure in `drivers/virt/coco/sev-guest/`).
 
-- **Files changed**: 1 file (`drivers/soc/tegra/pmc.c`)
-- **Lines**: ~+60, ~-30 (net ~30 lines added)
-- **Subsystem**: Tegra SoC PMC - a self-contained platform driver
-- **Risk**: LOW - The change only affects Tegra platforms with wake
-  events. The `irq_work` mechanism is well-tested kernel infrastructure.
-  The fix has been reviewed and tested by NVIDIA engineers.
-- **Regression risk**: Very low - non-Tegra systems are unaffected. The
-  new code path is functionally equivalent but executes in the correct
-  context.
+### 5. Risk Assessment
 
-### 6. USER IMPACT
+- **Size**: 3 lines changed to 2 lines (net -1 line). One of the
+  smallest possible changes.
+- **Risk**: Essentially zero. `kfree_sensitive()` is the standard kernel
+  API for this exact use case, has been available since v5.9, and is
+  used in 300+ call sites across the kernel.
+- **No dependencies**: The fix is entirely self-contained.
+- **No behavioral change** from a functional perspective — same memory
+  is freed — only ensures the zeroing actually happens at runtime.
 
-- **Who**: All users of NVIDIA Tegra186+ SoCs (Tegra186, Tegra194,
-  Tegra234) using suspend/resume
-- **Severity**: Every system resume triggers a kernel WARNING. Beyond
-  the warning itself, edge-triggered wake IRQs may be silently dropped
-  because `handle_irq_desc()` returns `-EPERM` without processing the
-  interrupt
-- **Real-world**: Tegra platforms are used in NVIDIA Jetson embedded
-  systems, automotive platforms, and gaming devices (Nintendo Switch)
+### 6. Classification
 
-### 7. CONCLUSION
+This is a **security fix** in **security-critical AMD SEV-SNP code**.
+The pattern of `memset() + kfree()` for sensitive data is a well-known
+anti-pattern that has been the subject of multiple CVEs in other
+software projects. While the compiler may or may not optimize it away in
+current builds, it is a latent security vulnerability that could
+manifest with different compiler versions, optimization flags, or LTO
+configurations.
 
-This is a clear bug fix for a real, reproducible issue that fires on
-every resume on affected hardware. The fix uses a well-established
-kernel pattern (irq_work) and is self-contained within a single platform
-driver file. It has been reviewed and tested by the subsystem
-maintainers. The fix will need minor adaptation for stable trees
-(different `syscore_ops` API), but the core logic is fully applicable.
-The bug exists in all stable trees from v6.2 onward.
+### 7. Verdict
+
+This commit:
+- Fixes a real security issue (potential leakage of cryptographic data
+  in freed memory)
+- Is in security-critical code (AMD SEV-SNP guest messaging)
+- Is extremely small and surgical (2 lines -> 1 line)
+- Uses the canonical kernel API (`kfree_sensitive()`)
+- Has zero risk of regression
+- Was reviewed by the AMD SEV maintainer
+- Was flagged by two independent automated/semi-automated analysis tools
+- Applies cleanly to stable trees v6.14+
+- Has no dependencies on other commits
 
 **YES**
 
- drivers/soc/tegra/pmc.c | 104 ++++++++++++++++++++++++++++------------
- 1 file changed, 74 insertions(+), 30 deletions(-)
+ arch/x86/coco/sev/core.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/drivers/soc/tegra/pmc.c b/drivers/soc/tegra/pmc.c
-index f3760a3b3026d..407fa840814c3 100644
---- a/drivers/soc/tegra/pmc.c
-+++ b/drivers/soc/tegra/pmc.c
-@@ -28,6 +28,7 @@
- #include <linux/iopoll.h>
- #include <linux/irqdomain.h>
- #include <linux/irq.h>
-+#include <linux/irq_work.h>
- #include <linux/kernel.h>
- #include <linux/of_address.h>
- #include <linux/of_clk.h>
-@@ -468,6 +469,10 @@ struct tegra_pmc {
- 	unsigned long *wake_sw_status_map;
- 	unsigned long *wake_cntrl_level_map;
- 	struct syscore syscore;
-+
-+	/* Pending wake IRQ processing */
-+	struct irq_work wake_work;
-+	u32 *wake_status;
- };
+diff --git a/arch/x86/coco/sev/core.c b/arch/x86/coco/sev/core.c
+index 9ae3b11754e65..c8ddb9febe3d9 100644
+--- a/arch/x86/coco/sev/core.c
++++ b/arch/x86/coco/sev/core.c
+@@ -2008,8 +2008,7 @@ void snp_msg_free(struct snp_msg_desc *mdesc)
+ 	free_shared_pages(mdesc->request, sizeof(struct snp_guest_msg));
+ 	iounmap((__force void __iomem *)mdesc->secrets);
  
- static struct tegra_pmc *pmc = &(struct tegra_pmc) {
-@@ -1905,6 +1910,50 @@ static int tegra_pmc_parse_dt(struct tegra_pmc *pmc, struct device_node *np)
- 	return 0;
+-	memset(mdesc, 0, sizeof(*mdesc));
+-	kfree(mdesc);
++	kfree_sensitive(mdesc);
  }
+ EXPORT_SYMBOL_GPL(snp_msg_free);
  
-+/* translate sc7 wake sources back into IRQs to catch edge triggered wakeups */
-+static void tegra186_pmc_wake_handler(struct irq_work *work)
-+{
-+	struct tegra_pmc *pmc = container_of(work, struct tegra_pmc, wake_work);
-+	unsigned int i, wake;
-+
-+	for (i = 0; i < pmc->soc->max_wake_vectors; i++) {
-+		unsigned long status = pmc->wake_status[i];
-+
-+		for_each_set_bit(wake, &status, 32) {
-+			irq_hw_number_t hwirq = wake + (i * 32);
-+			struct irq_desc *desc;
-+			unsigned int irq;
-+
-+			irq = irq_find_mapping(pmc->domain, hwirq);
-+			if (!irq) {
-+				dev_warn(pmc->dev,
-+					 "No IRQ found for WAKE#%lu!\n",
-+					 hwirq);
-+				continue;
-+			}
-+
-+			dev_dbg(pmc->dev,
-+				"Resume caused by WAKE#%lu mapped to IRQ#%u\n",
-+				hwirq, irq);
-+
-+			desc = irq_to_desc(irq);
-+			if (!desc) {
-+				dev_warn(pmc->dev,
-+					 "No descriptor found for IRQ#%u\n",
-+					 irq);
-+				continue;
-+			}
-+
-+			if (!desc->action || !desc->action->name)
-+				continue;
-+
-+			generic_handle_irq(irq);
-+		}
-+
-+		pmc->wake_status[i] = 0;
-+	}
-+}
-+
- static int tegra_pmc_init(struct tegra_pmc *pmc)
- {
- 	if (pmc->soc->max_wake_events > 0) {
-@@ -1923,6 +1972,18 @@ static int tegra_pmc_init(struct tegra_pmc *pmc)
- 		pmc->wake_cntrl_level_map = bitmap_zalloc(pmc->soc->max_wake_events, GFP_KERNEL);
- 		if (!pmc->wake_cntrl_level_map)
- 			return -ENOMEM;
-+
-+		pmc->wake_status = kcalloc(pmc->soc->max_wake_vectors, sizeof(u32), GFP_KERNEL);
-+		if (!pmc->wake_status)
-+			return -ENOMEM;
-+
-+		/*
-+		 * Initialize IRQ work for processing wake IRQs. Must use
-+		 * HARD_IRQ variant to run in hard IRQ context on PREEMPT_RT
-+		 * because we call generic_handle_irq() which requires hard
-+		 * IRQ context.
-+		 */
-+		pmc->wake_work = IRQ_WORK_INIT_HARD(tegra186_pmc_wake_handler);
- 	}
- 
- 	if (pmc->soc->init)
-@@ -3129,47 +3190,30 @@ static void wke_clear_wake_status(struct tegra_pmc *pmc)
- 	}
- }
- 
--/* translate sc7 wake sources back into IRQs to catch edge triggered wakeups */
--static void tegra186_pmc_process_wake_events(struct tegra_pmc *pmc, unsigned int index,
--					     unsigned long status)
--{
--	unsigned int wake;
--
--	dev_dbg(pmc->dev, "Wake[%d:%d]  status=%#lx\n", (index * 32) + 31, index * 32, status);
--
--	for_each_set_bit(wake, &status, 32) {
--		irq_hw_number_t hwirq = wake + 32 * index;
--		struct irq_desc *desc;
--		unsigned int irq;
--
--		irq = irq_find_mapping(pmc->domain, hwirq);
--
--		desc = irq_to_desc(irq);
--		if (!desc || !desc->action || !desc->action->name) {
--			dev_dbg(pmc->dev, "Resume caused by WAKE%ld, IRQ %d\n", hwirq, irq);
--			continue;
--		}
--
--		dev_dbg(pmc->dev, "Resume caused by WAKE%ld, %s\n", hwirq, desc->action->name);
--		generic_handle_irq(irq);
--	}
--}
--
- static void tegra186_pmc_wake_syscore_resume(void *data)
- {
--	u32 status, mask;
- 	unsigned int i;
-+	u32 mask;
- 
- 	for (i = 0; i < pmc->soc->max_wake_vectors; i++) {
- 		mask = readl(pmc->wake + WAKE_AOWAKE_TIER2_ROUTING(i));
--		status = readl(pmc->wake + WAKE_AOWAKE_STATUS_R(i)) & mask;
--
--		tegra186_pmc_process_wake_events(pmc, i, status);
-+		pmc->wake_status[i] = readl(pmc->wake + WAKE_AOWAKE_STATUS_R(i)) & mask;
- 	}
-+
-+	/* Schedule IRQ work to process wake IRQs (if any) */
-+	irq_work_queue(&pmc->wake_work);
- }
- 
- static int tegra186_pmc_wake_syscore_suspend(void *data)
- {
-+	unsigned int i;
-+
-+	/* Check if there are unhandled wake IRQs */
-+	for (i = 0; i < pmc->soc->max_wake_vectors; i++)
-+		if (pmc->wake_status[i])
-+			dev_warn(pmc->dev,
-+				 "Unhandled wake IRQs pending vector[%u]: 0x%x\n",
-+				 i, pmc->wake_status[i]);
- 	wke_read_sw_wake_status(pmc);
- 
- 	/* flip the wakeup trigger for dual-edge triggered pads
 -- 
 2.51.0
 
