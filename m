@@ -1,51 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 633A13EBF2C;
-	Sat, 14 Feb 2026 01:03:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56ECF3EBF2C;
+	Sat, 14 Feb 2026 01:03:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771030994; cv=none; b=CbX9UKbbJCFpID/Xh5FtbpFoqgG4UBXLTncpscmU3EIMnmj/hPAJ0kJ4epkUAD+pd0FeJImEd4kHSbiKphzxlfYNdF/Zp1O2J5csi/5as5Bq6Plmq2oQLqP28WmOjO5uiMAFzZIWdJMFC1Zo/HxT4Bl3Nb6W5aasVJdTQy8YpDM=
+	t=1771030995; cv=none; b=UFGsnFHaKn4T4ja0NQP5O+QfeXdiC/JRXPI5FQNVUmVVHw+oX/JSvOXU6UDu2dNpsx22rh0s4yNBNcVAHDHzhjICUE0CK3rnGkn4YhFHcd8iiVxFCIyb89fgiFaakegzCBL/cLBuoabhpaMccdr61cjrj4Zh7tn/0ZS1cvJUeWI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771030994; c=relaxed/simple;
-	bh=6SSAtVZchfmD+XiqwGPW7/YBg/40cnF1wyteP+omcdc=;
+	s=arc-20240116; t=1771030995; c=relaxed/simple;
+	bh=RhXjg4zDobOMLNOMmuAqdHXzgxH7E7RKn3tniYRXLis=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PcdC3jhjQpT4UCnyd1/ZbBi22ZoHMqcQAlQjL7q05C9oP9QiKi07P08seL4XwznKNoZbB/UR1k65nveChDBbp1K1dUHb69FC/7Dj2O/+EzJMEwDZ3cmfpqwrLLCtacpu0pCgD8TZ9MdX5cNlRByE6RBN1KnDvL+yroP0+KrBNjc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Kr9JIuox; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=DZ+R6Qmu4+4TMFCCgBfgoMJUzD7uQgJ00srqsw375rQ7E6Eiu/gtVgy6P06zRgFa5Web2oGailHcndpLSBjfkXpnob5QY0tEeVZphvyZi5oH9A4l+Z0m3ajJN0i8RYfxlJeTXe+Kpbx8jvztybT97w3gB7dkOZ6/uhHcqnDP1Sg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Z2WB94f6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Kr9JIuox"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8AF26C116C6;
-	Sat, 14 Feb 2026 01:03:12 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Z2WB94f6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7BF2AC19424;
+	Sat, 14 Feb 2026 01:03:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1771030994;
-	bh=6SSAtVZchfmD+XiqwGPW7/YBg/40cnF1wyteP+omcdc=;
+	s=k20201202; t=1771030995;
+	bh=RhXjg4zDobOMLNOMmuAqdHXzgxH7E7RKn3tniYRXLis=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Kr9JIuoxrA7nQW3xZ81DWMJv/yR4D3+P8brRzbPB3nolJuZPsnN9mr2AMt2awOeNG
-	 x/w/FXXc24k1PIaY2XRa3FS6HkNF0wRiPEBwdNm9O6L4B2eNFVZr3Fe6JSmgISraT8
-	 4PxOe9wYVM9AOQYYr2IaM+mMW5iv84s9WzuLvYucg8ep2fXxiqW3V2Ta419J95x1xp
-	 v5sZSDFCB8r1hccqh0uXr10iOhfbB2BXAA//UNrs0Luod8lS0mX8KEOWqDaLKzf0R6
-	 NgCwG8TFpFpxLoIgXbPp7fo9caN4BgBbOnaGJ+DHxLCi7fpaT0MOk7VNM1ab0yRLb/
-	 87ya91F43AguA==
+	b=Z2WB94f6tg4S4JaySUk/cUmKX82/gpKoydG7fIMdkyT069hJL/FN3snBHNagEfoix
+	 RixH7lEZQPOl9u07WXDya3v1dwKRjlD1Up3BZKv6JZoe685/2B6wXinvV9jAVlfdAe
+	 uPlmfVB80DyvPj4MO9RHLtD+LReVQQvZVLwYx49UFV0QVgfctOJrcZ8SzCUS9go/A1
+	 rOhF11rpJ7AqUpEYK+hswWbm7qxd1OtxwH5AmRGZOuAL8o8r28eo8xEpR5KAfwpTED
+	 bke0wVXN+Y710WdYvZFBJenXxvR4XMGeUF6mVBMBxD/2dFp3yIOQzdqzvxlxcKSpzD
+	 H7OirnTPRMqQw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Charlene Liu <Charlene.Liu@amd.com>,
-	Swapnil Patel <swapnil.patel@amd.com>,
-	Chenyu Chen <chen-yu.chen@amd.com>,
-	Daniel Wheeler <daniel.wheeler@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+Cc: Val Packett <val@packett.cool>,
+	Douglas Anderson <dianders@chromium.org>,
 	Sasha Levin <sashal@kernel.org>,
-	Dillon.Varone@amd.com,
-	Alvin.Lee2@amd.com,
-	alex.hung@amd.com,
-	nicholas.kazlauskas@amd.com,
-	mwen@igalia.com,
-	Yihan.Zhu@amd.com,
-	yelangyan@huaqin.corp-partner.google.com,
-	Ilya.Bakoulin@amd.com
-Subject: [PATCH AUTOSEL 6.19] drm/amd/display: Fix DP no audio issue
-Date: Fri, 13 Feb 2026 19:58:16 -0500
-Message-ID: <20260214010245.3671907-16-sashal@kernel.org>
+	neil.armstrong@linaro.org,
+	dri-devel@lists.freedesktop.org
+Subject: [PATCH AUTOSEL 6.19-6.18] drm/panel-edp: Add AUO B140QAX01.H panel
+Date: Fri, 13 Feb 2026 19:58:17 -0500
+Message-ID: <20260214010245.3671907-17-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260214010245.3671907-1-sashal@kernel.org>
 References: <20260214010245.3671907-1-sashal@kernel.org>
@@ -60,161 +51,178 @@ X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.19
 Content-Transfer-Encoding: 8bit
 
-From: Charlene Liu <Charlene.Liu@amd.com>
+From: Val Packett <val@packett.cool>
 
-[ Upstream commit bf5e396957acafd46003318965500914d5f4edfa ]
+[ Upstream commit bcd752c706c357229185a330ab450b86236d9031 ]
 
-[why]
-need to enable APG_CLOCK_ENABLE enable first
-also need to wake up az from D3 before access az block
+A 14-inch 2560x1600 60Hz matte touch panel, found on a Dell Latitude 7455
+laptop (second-source with BOE NE14QDM), according to online sources it's
+also found on the Latitude 7440 and some ASUS models.
 
-Reviewed-by: Swapnil Patel <swapnil.patel@amd.com>
-Signed-off-by: Charlene Liu <Charlene.Liu@amd.com>
-Signed-off-by: Chenyu Chen <chen-yu.chen@amd.com>
-Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Raw EDID dump:
+
+00 ff ff ff ff ff ff 00 06 af a4 0b 00 00 00 00
+00 20 01 04 a5 1e 13 78 03 ad f5 a8 54 47 9c 24
+0e 50 54 00 00 00 01 01 01 01 01 01 01 01 01 01
+01 01 01 01 01 01 f0 68 00 a0 a0 40 2e 60 30 20
+35 00 2d bc 10 00 00 1a f3 53 00 a0 a0 40 2e 60
+30 20 35 00 2d bc 10 00 00 1a 00 00 00 fe 00 36
+39 52 31 57 80 42 31 34 30 51 41 58 00 00 00 00
+00 02 41 21 a8 00 01 00 00 1a 41 0a 20 20 00 a1
+
+Don't have datasheet access, but the same timing as for other panels from
+the same manufacturer works fine.
+
+Signed-off-by: Val Packett <val@packett.cool>
+[dianders: Moved to the right location in the table]
+Reviewed-by: Douglas Anderson <dianders@chromium.org>
+Signed-off-by: Douglas Anderson <dianders@chromium.org>
+Link: https://patch.msgid.link/20251206173739.2222940-1-val@packett.cool
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-Good, the fix has already been picked up in both 6.12.y and 6.6.y stable
-trees. Now let me compile my complete analysis.
+This is the same author (Val Packett), same laptop (Dell Latitude 7455),
+and a second-source panel for it. Let me verify this is a pure one-line
+panel ID addition and check the exact diff once more.
 
-## Complete Analysis
+The commit message itself says this AUO B140QAX01.H is a "second-source
+with BOE NE14QDM" -- meaning the Dell Latitude 7455 can come with either
+panel, and the BOE variant was already added.
+
+## Analysis
 
 ### 1. COMMIT MESSAGE ANALYSIS
 
-The commit subject is explicit: "Fix DP no audio issue". The body
-explains the root cause:
-- Need to enable `APG_CLOCK_ENABLE` first
-- Need to wake AZ (Azalia audio controller) from D3 power state before
-  accessing AZ block
-
-The commit has strong trust indicators:
-- **Reviewed-by**: Swapnil Patel (AMD)
-- **Tested-by**: Daniel Wheeler (AMD)
-- **Signed-off-by**: Charlene Liu (AMD display engineer), Alex Deucher
-  (AMD GPU maintainer)
-- Cherry-picked from mainline (`bf5e396957ac`) into drm-fixes for
-  6.19-rc2
+The commit adds a new eDP panel entry for the **AUO B140QAX01.H** panel.
+Key details:
+- 14-inch 2560x1600 60Hz matte touch panel
+- Found on real shipping hardware: **Dell Latitude 7455**, Dell Latitude
+  7440, and some ASUS models
+- It's a second-source panel alongside the already-listed BOE NE14QDM
+- Author has the actual hardware and tested it
+- Reviewed by Douglas Anderson (the `panel-edp` subsystem maintainer)
 
 ### 2. CODE CHANGE ANALYSIS
 
-The meaningful fix is entirely in `dce110_hwseq.c` (4 lines changed, 1
-file). The `dcn401_hwseq.c` change is just a cosmetic blank line
-removal.
+The change is a **single line addition** to the `edp_panels[]` table:
 
-**Before the fix** (the bug):
-
-```1102:1106:drivers/gpu/drm/amd/display/dc/hwss/dce110/dce110_hwseq.c
-// ORDER WAS: (1) az_enable, (2) enable_pme_wa
-pipe_ctx->stream_res.audio->funcs->az_enable(pipe_ctx-
->stream_res.audio);  // accesses AZ registers while in D3!
-if (num_audio >= 1 && clk_mgr->funcs->enable_pme_wa)
-    clk_mgr->funcs->enable_pme_wa(clk_mgr);  // wakes AZ from D3 - TOO
-LATE
+```c
+EDP_PANEL_ENTRY('A', 'U', 'O', 0x0ba4, &delay_200_500_e50,
+"B140QAX01.H"),
 ```
 
-**After the fix**:
+This uses:
+- The existing `EDP_PANEL_ENTRY` macro
+- An existing delay structure `delay_200_500_e50` (used by nearly all
+  other AUO panels in the table)
+- Placed in the correct sorted position (after 0x04a4, before 0x105c)
 
-```1121:1126:drivers/gpu/drm/amd/display/dc/hwss/dce110/dce110_hwseq.c
-                if (num_audio >= 1 && clk_mgr->funcs->enable_pme_wa) {
-                        /*wake AZ from D3 first before access az
-endpoint*/
-                        clk_mgr->funcs->enable_pme_wa(clk_mgr);
-                }
+There is **zero new logic, zero new delay structures, zero new
+functions** -- it is purely a data table entry.
 
-                pipe_ctx->stream_res.audio->funcs->az_enable(pipe_ctx-
->stream_res.audio);
+### 3. CLASSIFICATION: Device ID / Hardware Enablement
+
+This falls squarely under the **"NEW DEVICE IDs"** exception category
+for stable backports:
+- Adding a panel ID to an existing driver (`panel-edp.c`)
+- The driver infrastructure already exists in all stable trees where
+  `panel-edp.c` exists
+- The `delay_200_500_e50` delay structure already exists
+- The `EDP_PANEL_ENTRY` macro already exists
+
+### 4. USER IMPACT: What happens without this entry?
+
+Looking at the code in `generic_edp_panel_probe()` (lines 805-825):
+
+```809:825:drivers/gpu/drm/panel/panel-edp.c
+        /*
+  - We're using non-optimized timings and want it really obvious that
+  - someone needs to add an entry to the table, so we'll do a WARN_ON
+  - splat.
+         */
+        if (WARN_ON(!panel->detected_panel)) {
+                dev_warn(dev,
+                         "Unknown panel %s %#06x, using conservative
+timings\n",
+                         vend, product_id);
+                panel_edp_set_conservative_timings(panel, desc);
+        } else {
+                dev_info(dev, "Detected %s %s (%#06x)\n",
+                         vend, panel->detected_panel->ident.name,
+product_id);
+                /* Update the delay; everything else comes from EDID */
+                desc->delay = *panel->detected_panel->delay;
+        }
 ```
 
-The `dce_aud_az_enable()` function reads and writes
-`AZALIA_F0_CODEC_PIN_CONTROL_HOT_PLUG_CONTROL` registers. These are
-hardware registers of the Azalia audio controller block. When the AZ
-block is in D3 (deep power state), register accesses return
-garbage/undefined values. The `enable_pme_wa()` function sends a PME
-(Power Management Event) to wake the AZ from D3.
+Without this entry:
+1. A **WARN_ON** fires in the kernel log (a kernel warning/splat) every
+   boot on affected Dell/ASUS laptops
+2. The panel falls back to **conservative timings** (`unprepare=2000ms`,
+   `enable=200ms`) instead of the proper timings (`hpd_absent=200ms`,
+   `unprepare=500ms`, `enable=50ms`), meaning **noticeably slower
+   display initialization** with unnecessary delays
+3. The WARN_ON trace in dmesg can confuse users and show up in automated
+   bug reporting tools
 
-The fix simply reorders these two operations so the AZ block is woken
-from D3 **before** its registers are accessed.
+### 5. SCOPE AND RISK ASSESSMENT
 
-### 3. BUG HISTORY
+- **Lines changed**: 1 line added
+- **Files changed**: 1 file
+- **Risk**: Essentially zero. This is a pure data addition to a lookup
+  table. It cannot affect any other panel or any other code path. The
+  entry only matches when the EDID panel ID is exactly `AUO 0x0ba4`.
+- **Dependencies**: None. Uses only existing macros and delay
+  structures.
 
-Tracing via `git blame`:
-- **v4.19-rc1** (commit `1a05873f21d6`): `dce110_enable_audio_stream()`
-  created with `az_enable()` called before
-  `set_pme_wa_enable_by_version()` - **bug introduced here**
-- **v5.3-rc1** (commit `170a2398d2d80f`): Refactored to
-  `clk_mgr->funcs->enable_pme_wa()` but preserved the wrong ordering
-- **v6.2-rc1** (commit `14e2739c36957`): Further refactoring but
-  ordering still wrong
-- **Now**: Fix corrects the ordering that has been wrong since v4.19
+### 6. STABILITY INDICATORS
 
-### 4. CLASSIFICATION
+- **Reviewed-by**: Douglas Anderson (the panel-edp maintainer for
+  ChromeOS/DRM)
+- **Tested**: Author has the actual Dell Latitude 7455 hardware
+- **Pattern**: Identical to dozens of other panel additions in this file
+  (e.g., BOE NE14QDM for the same laptop was added similarly)
 
-This is a **clear bug fix** - hardware initialization ordering error
-that causes complete audio failure on DisplayPort connections. Not a
-feature, not refactoring.
+### 7. DEPENDENCY CHECK
 
-### 5. SCOPE AND RISK
+No dependencies. The `EDP_PANEL_ENTRY` macro and `delay_200_500_e50`
+structure have existed in the kernel for years, well before any current
+stable tree branch points. This will apply cleanly to any stable tree
+that has the panel-edp driver.
 
-- **Size**: 4 lines changed in 1 meaningful file
-- **Risk**: Extremely low - both `enable_pme_wa()` and `az_enable()`
-  were already called; only the order changed
-- **Subsystem**: AMD display driver (dce110 path is shared by many ASIC
-  generations including DCN1.0, DCN2.0, DCN2.1, DCN3.0, DCN3.1, DCN3.5,
-  etc.)
+## Conclusion
 
-### 6. USER IMPACT
+This is a textbook example of a **device ID addition to an existing
+driver** -- one of the explicitly allowed exception categories for
+stable backports. It:
 
-**HIGH**: DP audio is completely broken without this fix. Users with
-DisplayPort-connected monitors/TVs would have no audio output. This
-affects a very large number of AMD GPU users.
-
-### 7. STABILITY AND TESTING
-
-- Already tested by AMD's QA team (Daniel Wheeler)
-- Already picked into drm-fixes (drm maintainer deemed it worthy)
-- Already backported to 6.12.y (v6.12.69) and 6.6.y (v6.6.123) stable
-  trees
-- The fix has been in mainline since v6.19-rc2
-
-### 8. DEPENDENCIES
-
-The core fix (reorder `enable_pme_wa` before `az_enable`) is self-
-contained. For older stable kernels (pre-6.7), the file path differs
-(`dc/dce110/dce110_hw_sequencer.c` vs `dc/hwss/dce110/dce110_hwseq.c`),
-and for pre-6.2 kernels there's no `link_hwss` variable, but the core
-ordering change applies identically.
-
-### Summary
-
-This is a textbook stable backport candidate:
-- Fixes a **complete audio failure** on DP connections for AMD GPUs
-- Only **4 lines changed** (reordering two existing function calls)
-- **Zero risk** of regression (both calls were already present)
-- **Long-standing bug** since v4.19 (2018)
-- Properly reviewed, tested, and already backported to 6.12.y and 6.6.y
-- Affects a huge number of AMD GPU users with DP audio
+- Is a single-line data table entry with zero risk of regression
+- Fixes a real user-visible issue (WARN_ON splat + degraded display
+  timing on Dell Latitude 7455/7440 and some ASUS laptops)
+- Uses only existing infrastructure (macro, delay structure)
+- Has been reviewed by the subsystem maintainer
+- Has been tested on real hardware
+- Will apply cleanly to stable trees
 
 **YES**
 
- drivers/gpu/drm/amd/display/dc/hwss/dcn401/dcn401_hwseq.c | 1 -
- 1 file changed, 1 deletion(-)
+ drivers/gpu/drm/panel/panel-edp.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/gpu/drm/amd/display/dc/hwss/dcn401/dcn401_hwseq.c b/drivers/gpu/drm/amd/display/dc/hwss/dcn401/dcn401_hwseq.c
-index 12ce3789f5130..e1f5b1a34cde8 100644
---- a/drivers/gpu/drm/amd/display/dc/hwss/dcn401/dcn401_hwseq.c
-+++ b/drivers/gpu/drm/amd/display/dc/hwss/dcn401/dcn401_hwseq.c
-@@ -297,7 +297,6 @@ void dcn401_init_hw(struct dc *dc)
- 			}
- 		}
- 	}
--
- 	for (i = 0; i < res_pool->audio_count; i++) {
- 		struct audio *audio = res_pool->audios[i];
- 
+diff --git a/drivers/gpu/drm/panel/panel-edp.c b/drivers/gpu/drm/panel/panel-edp.c
+index 2c35970377431..85dd3f4cb8e1c 100644
+--- a/drivers/gpu/drm/panel/panel-edp.c
++++ b/drivers/gpu/drm/panel/panel-edp.c
+@@ -1880,6 +1880,7 @@ static const struct panel_delay delay_80_500_e50_d50 = {
+  */
+ static const struct edp_panel_entry edp_panels[] = {
+ 	EDP_PANEL_ENTRY('A', 'U', 'O', 0x04a4, &delay_200_500_e50, "B122UAN01.0"),
++	EDP_PANEL_ENTRY('A', 'U', 'O', 0x0ba4, &delay_200_500_e50, "B140QAX01.H"),
+ 	EDP_PANEL_ENTRY('A', 'U', 'O', 0x105c, &delay_200_500_e50, "B116XTN01.0"),
+ 	EDP_PANEL_ENTRY('A', 'U', 'O', 0x1062, &delay_200_500_e50, "B120XAN01.0"),
+ 	EDP_PANEL_ENTRY('A', 'U', 'O', 0x125c, &delay_200_500_e50, "Unknown"),
 -- 
 2.51.0
 
