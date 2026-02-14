@@ -1,43 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BEC651E1E12;
-	Sat, 14 Feb 2026 01:06:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C70CE2556E;
+	Sat, 14 Feb 2026 01:06:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771031199; cv=none; b=k47fRIW1IHcLXoSEcKFZgMKrAhQ3v/YG1vLvw96wXQ1OdW2Ucm47aMZOl1LwaFWFvCoCgIHSkVxgDsA3WxvmEwXtadNpHEiOCU7//FPIhFgxtm88gc26LJQGNzhcGPjD/VicQ/YWo2HquoMTmsbdlQFhMrhhdDR6se1pqUfjMDQ=
+	t=1771031200; cv=none; b=OxxGU/xRltSWpDevqPe06tkp/2lqa0AjM4A8+6cM4N4/bqnPaeHY+TzaRdGhg5qr98ZfXg9CmVDEd8t2XQBJG+vP7haJ+aJIL9RAiLYr9q+FmLiIssTstKWSydAgwsymrOgR2XvmZprW6PwQHbnKHm7e7F9f43VVMppNoqYNqbM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771031199; c=relaxed/simple;
-	bh=n2tjqytbYdaj8GUv6LUY405Nq71IvZ/joeUBGpYTSkc=;
+	s=arc-20240116; t=1771031200; c=relaxed/simple;
+	bh=62Oh1rWnodoAQG8K1KrgWZ/qT0lmnHi4eoA6J8s0BsQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=kaWlwugPfAZca7c5+funkZXuxEHdzzFvMp+jbgqzMAqgBKx9IJFU3UFRb5odtwkbkJcBXOSWjN20weXSMDMHYAs9A8ePktWRsMVn10u2IRk7hc+/797Rzxk3Xt3+IYS9Ms8yzQkA+8H1XkNhVRLVqBI45FZy+bTcc83cppHVDJ4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=gVdBRpo+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Qqw0SrmX9Hk5dDl+LObRRTfRsIWoxNNXjVnyUJmdCRlmN52C3oKgKcYxx3Q+JWz43+DPNrz1p/W6F5sUMsTD3dEt4Q8wM5fQdrhQPlDsC0Kah41eHhoVJXklM8p8NOZhiJSvFoiFsygVSu4SgzsxfIp2aVmpckkc3oSlTmZ61mA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=mAyRepvK; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="gVdBRpo+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 80735C116C6;
-	Sat, 14 Feb 2026 01:06:38 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="mAyRepvK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BFF2EC19424;
+	Sat, 14 Feb 2026 01:06:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1771031199;
-	bh=n2tjqytbYdaj8GUv6LUY405Nq71IvZ/joeUBGpYTSkc=;
+	s=k20201202; t=1771031200;
+	bh=62Oh1rWnodoAQG8K1KrgWZ/qT0lmnHi4eoA6J8s0BsQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gVdBRpo+6AgWjdkyb+1qf2ki6KigrLLTb8wzOK6X99dAOKb5XqBUnAmaijrEOFXut
-	 LAaCjhoZKJ+9sKvTPlYZzay074jMdmdPsqipQ7ClDARmqARag+b2odn48CLgIoA5Nm
-	 KqzLlTXvDIkSwijR42UPAnhmIcHexokvEqeTwywTPb8djEx9/JnXKi02gxccFcO4cp
-	 D7Vo/1+pznIr+ajxDoZibzbbQDnUrx81nBJDJ5KmL8rONGQPp24NOCUO+8rRVgP9fi
-	 xnQcxTsRnha7Yyd+HGqZma7fn6mRC1M4ue6yJCmUve+Sl9GQ5BWmsF15ih6V0KChKX
-	 CsL0Rbv/JMsQg==
+	b=mAyRepvKwXv+LTYc7OpRZBtudN2XRLhrAwNaXsy0rB2jnsaGZ9OLEN3SJdZBhNnN1
+	 C51c3pubBt4V5n7L3mVBxU6BOxwyKRTj18DRpf+wa80KMMQ+Ccs4rkROQKtvupKs+U
+	 pVUyPnljLHoC0M+wlzG4aMSB2d5D9njv8rXajgUw0xHlD0DNC/WDHY6513DclzvKKQ
+	 bKPlXp3Ph59C4recBpTT+dbL4/6AQSd3nJBmsaTe4S8xD3Z1Edrt4G0V4CmnB7Zo1M
+	 OqmZm4sTT7TvirlAnxOuls54DUXishJzoepeEwKCCFtN2N4GlXsSlFbjsa+Wh8ZqmP
+	 uKSRZ8ATT/7YQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Jan Remmet <j.remmet@phytec.de>,
-	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
+Cc: Brandon Brnich <b-brnich@ti.com>,
+	Nicolas Dufresne <nicolas.dufresne@collabora.com>,
+	Hans Verkuil <hverkuil+cisco@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	linusw@kernel.org,
-	brgl@kernel.org,
-	linux-gpio@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.19-6.18] gpio: pca953x: Add support for TCAL6408 TCAL6416
-Date: Fri, 13 Feb 2026 19:59:39 -0500
-Message-ID: <20260214010245.3671907-99-sashal@kernel.org>
+	nas.chung@chipsnmedia.com,
+	jackson.lee@chipsnmedia.com,
+	linux-media@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.19-6.12] media: chips-media: wave5: Process ready frames when CMD_STOP sent to Encoder
+Date: Fri, 13 Feb 2026 19:59:40 -0500
+Message-ID: <20260214010245.3671907-100-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260214010245.3671907-1-sashal@kernel.org>
 References: <20260214010245.3671907-1-sashal@kernel.org>
@@ -50,184 +51,163 @@ MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.19
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jan Remmet <j.remmet@phytec.de>
+From: Brandon Brnich <b-brnich@ti.com>
 
-[ Upstream commit a30a9cb9bca4296d25f253619883e7013b6be158 ]
+[ Upstream commit 5da0380de41439ed64ed9a5218850db38544e315 ]
 
-TCAL6408 and TCAL6416 supports latchable inputs and maskable interrupt.
-Tested on a TCAL6416, checked datasheets for the TCAL6408.
+CMD_STOP being sent to encoder before last job is executed by device_run
+can lead to an occasional dropped frame. Ensure that remaining ready
+buffers are drained by making a call to v4l2_m2m_try_schedule.
 
-They use the same programming model ad the NXP PCAL64xx, but
-support a lower supply power (1.08V to 3.6V) compared to PCAL
-(1.65V to 5.5V)
-
-Datasheet: https://www.ti.com/lit/ds/symlink/tcal6408.pdf
-Datasheet: https://www.ti.com/lit/ds/symlink/tcal6416.pdf
-
-Signed-off-by: Jan Remmet <j.remmet@phytec.de>
-Link: https://lore.kernel.org/r/20251216-wip-jremmet-tcal6416rtw-v2-3-6516d98a9836@phytec.de
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+Signed-off-by: Brandon Brnich <b-brnich@ti.com>
+Reviewed-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
+Signed-off-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
+Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-Good - there's no fallback compatible mechanism here. Each chip gets its
-own compatible string.
+Here is my complete analysis:
 
-## Complete Analysis
+---
 
-### 1. Commit Message Analysis
+## Analysis of: "media: chips-media: wave5: Process ready frames when
+CMD_STOP sent to Encoder"
 
-The commit message is clear and well-structured:
-- Explicitly states the chips use "the same programming model as the NXP
-  PCAL64xx"
-- Only difference is supply voltage range (1.08V-3.6V vs 1.65V-5.5V)
-- References both datasheets for verification
-- States it was "Tested on a TCAL6416" — author has real hardware
-- The author (from phytec.de, an embedded hardware company) has a clear
-  use case
+### 1. COMMIT MESSAGE ANALYSIS
 
-### 2. Code Change Analysis
+The commit message clearly describes a bug: **CMD_STOP being sent to the
+encoder before the last job is executed by `device_run` can lead to an
+occasional dropped frame.** The fix is to call `v4l2_m2m_try_schedule()`
+to ensure remaining ready buffers are drained. This is a data integrity
+issue - users lose the last frame of their encoded video.
 
-The changes are **purely table additions**:
+### 2. CODE CHANGE ANALYSIS
 
-**I2C device ID table** (`pca953x_id[]`): Adds 2 entries:
-- `{ "tcal6408", 8 | PCA953X_TYPE | PCA_LATCH_INT, }` — 8-bit GPIO
-  expander with PCAL features
-- `{ "tcal6416", 16 | PCA953X_TYPE | PCA_LATCH_INT, }` — 16-bit GPIO
-  expander with PCAL features
+The change is a **two-line addition** (one blank line + one function
+call) in `wave5_vpu_enc_encoder_cmd()`:
 
-These use the exact same type flags (`PCA953X_TYPE | PCA_LATCH_INT`) as
-the already-supported `pcal6408` and `pcal6416`, confirming identical
-register layout handling.
+```653:654:drivers/media/platform/chips-media/wave5/wave5-vpu-enc.c
+                m2m_ctx->is_draining = true;
 
-**OF match table** (`pca953x_dt_ids[]`): Adds 2 entries:
-- `{ .compatible = "ti,tcal6408", .data = OF_953X(8, PCA_LATCH_INT), }`
-- `{ .compatible = "ti,tcal6416", .data = OF_953X(16, PCA_LATCH_INT), }`
+                v4l2_m2m_try_schedule(m2m_ctx);
+```
 
-**Kconfig**: Updates help text to list the new chip names (purely
-cosmetic).
+**The bug mechanism:**
 
-**No new code paths**, no new functions, no new registers, no new logic.
-The `PCA_LATCH_INT` flag (`PCA_PCAL | PCA_INT`) already enables all the
-extended PCAL register handling throughout the driver (input latching,
-interrupt masking, pull-up/down config, interrupt status).
+When userspace sends `V4L2_ENC_CMD_STOP`, the driver:
+1. Sets `m2m_ctx->last_src_buf` to the last queued source buffer
+2. Sets `m2m_ctx->is_draining = true`
+3. Returns - **without triggering the m2m scheduler**
 
-### 3. Classification
+The problem is a race: if CMD_STOP arrives between when the last buffer
+is queued and when `device_run` picks it up, the m2m framework has no
+trigger to schedule the remaining work. The `wave5_vpu_enc_job_ready()`
+callback (line 1542) checks `is_draining` and returns `true` to indicate
+the encoder is ready for a drain job - but nobody calls the scheduler to
+check this.
 
-This is a textbook **new device ID** addition to an existing driver. The
-analysis guidelines explicitly call this out:
+`v4l2_m2m_try_schedule()` simply calls `__v4l2_m2m_try_queue()` +
+`v4l2_m2m_try_run()` - it checks if there's work ready and runs it. It's
+completely safe - if there's nothing to do, it returns without side
+effects.
 
-> NEW DEVICE IDs (Very Common): Adding PCI IDs, USB IDs, ACPI IDs, etc.
-to existing drivers. These are trivial one-line additions that enable
-hardware support. Rule: The driver must already exist in stable; only
-the ID is new.
+### 3. COMPARISON WITH OTHER DRIVERS
 
-The `pca953x` driver exists in all stable trees (it's been in the kernel
-for over 15 years). The TCAL chips use the exact same PCAL register
-model that's already fully supported.
+This is an **inconsistency bug** that's obvious when comparing with
+other m2m codec drivers:
 
-### 4. Scope and Risk Assessment
+- **wave5 decoder** (`wave5_vpu_dec_decoder_cmd`, line 888): Already
+  calls `v4l2_m2m_try_schedule(m2m_ctx)` after DEC_CMD_STOP, with the
+  comment "Just in case we don't have anything to decode anymore"
+- **MediaTek encoder** (`vidioc_encoder_cmd` in `mtk_vcodec_enc.c`, line
+  734): Calls `v4l2_m2m_try_schedule(ctx->m2m_ctx)` after ENC_CMD_STOP
+- **MediaTek decoder** (`stateful_decoder_cmd`, line 116): Same pattern
+- **CODA decoder** (`coda_decoder_cmd`, line 1268): Same pattern
 
-- **Lines changed**: ~10 lines across 2 files (Kconfig help text +
-  device tables)
-- **Files touched**: 2 (`Kconfig`, `gpio-pca953x.c`)
-- **Risk**: Essentially zero. Table entries can only affect systems with
-  these specific chips. No existing functionality is modified.
-- **Merge conflicts**: The entries are added at the end of their
-  respective groups, so conflicts are unlikely unless another chip was
-  added in the same spot.
+The wave5 encoder was the **only** m2m encoder/decoder driver that set
+`is_draining = true` without calling `v4l2_m2m_try_schedule()`. This is
+clearly a bug present since the driver's initial submission.
 
-### 5. User Impact
+### 4. CLASSIFICATION
 
-- Users with TCAL6408 or TCAL6416 on their boards (embedded systems,
-  industrial boards) cannot use these chips without this patch
-- Without this patch, the hardware is completely non-functional for
-  these users
-- Phytec (the author's company) ships embedded modules that likely use
-  these chips
+**Bug fix** - fixes dropped frames (data loss) during video encoding
+drain. Not a feature, not cleanup.
 
-### 6. Dependencies
+### 5. SCOPE AND RISK ASSESSMENT
 
-- The DT binding YAML update (patch 1-2 of the series) is needed for
-  `dt_binding_check` but is NOT needed for the driver to function. A
-  device tree using `compatible = "ti,tcal6408"` or `compatible =
-  "ti,tcal6416"` will be matched by the driver with just this patch.
-- No code dependencies on other patches.
+- **Lines changed**: 2 (1 blank + 1 function call)
+- **Files touched**: 1
+- **Risk**: Extremely low. `v4l2_m2m_try_schedule()` is the standard
+  V4L2 m2m API for triggering job scheduling. It's called in every other
+  similar driver. It's safe to call at any time - if conditions aren't
+  met for scheduling a job, it simply returns.
+- **Subsystem**: media/chips-media/wave5 - a hardware video encoder
+  driver for Chips&Media Wave5 IP used on TI platforms
 
-### 7. Precedent
+### 6. USER IMPACT
 
-The exact same pattern has been used many times for this driver. For
-example:
-- `82466bb622e92` "gpio: pca953x: Add support for TI TCA9535 variant" —
-  same pattern, same situation (lower voltage TI variant of NXP chip)
-- `6c99a046edfac` "gpio: pca953x: Add support for TI TCA6418"
-- `a9e49635e263b` "gpio: pca953xx: Add support for pca6408"
+Users encoding video with the Wave5 hardware encoder (e.g., on TI
+AM62x/AM62Ax platforms) can **lose the last frame** when stopping
+encoding. This is a real data integrity issue for anyone doing video
+encoding with this hardware. The symptom is intermittent, making it
+harder to diagnose.
+
+### 7. STABILITY INDICATORS
+
+- **Reviewed-by**: Nicolas Dufresne (Collabora - well-known
+  V4L2/GStreamer developer)
+- **Signed-off-by**: Hans Verkuil (media subsystem co-maintainer)
+- **Author**: Brandon Brnich from TI (the SoC vendor that ships this IP)
+- The fix follows established patterns from other drivers
+
+### 8. DEPENDENCY CHECK
+
+**No dependencies.** This is a self-contained one-line fix that adds a
+call to an existing exported V4L2 m2m API function. The
+`v4l2_m2m_try_schedule()` function has been available since long before
+the wave5 driver was added.
+
+### 9. STABLE TREE APPLICABILITY
+
+The wave5 driver was added in v6.8-rc1 (commit `9707a6254a8a6`). It
+exists in stable trees 6.8.y and later. The fix should apply cleanly
+since the `wave5_vpu_enc_encoder_cmd` function hasn't changed
+significantly since it was added.
 
 ### Summary
 
-This is a pure device ID addition to a well-established, widely-used
-GPIO expander driver. The TCAL6408/TCAL6416 are Texas Instruments chips
-that are register-compatible with the already-supported NXP
-PCAL6408/PCAL6416. The change adds only table entries (I2C device IDs
-and OF compatible strings) and zero new code logic. It enables real
-hardware for real users (tested on actual hardware), with effectively
-zero risk of regression to existing users. This is precisely the kind of
-"device ID addition" that stable kernel guidelines explicitly allow as
-an exception.
+This is a textbook stable-worthy fix:
+- **Small**: 2 lines added
+- **Obviously correct**: Matches the pattern used by every other V4L2
+  m2m encoder/decoder driver
+- **Fixes a real bug**: Dropped frames during encoding drain (data loss)
+- **Low risk**: Uses standard API, no side effects if conditions aren't
+  met
+- **Well-reviewed**: By V4L2 experts and the media subsystem maintainer
+- **Self-contained**: No dependencies on other patches
 
 **YES**
 
- drivers/gpio/Kconfig        | 4 ++--
- drivers/gpio/gpio-pca953x.c | 6 ++++++
- 2 files changed, 8 insertions(+), 2 deletions(-)
+ drivers/media/platform/chips-media/wave5/wave5-vpu-enc.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/gpio/Kconfig b/drivers/gpio/Kconfig
-index bd185482a7fdf..3439e025ba1c6 100644
---- a/drivers/gpio/Kconfig
-+++ b/drivers/gpio/Kconfig
-@@ -1193,11 +1193,11 @@ config GPIO_PCA953X
+diff --git a/drivers/media/platform/chips-media/wave5/wave5-vpu-enc.c b/drivers/media/platform/chips-media/wave5/wave5-vpu-enc.c
+index bca881a0a1617..8e3dd9e34abc3 100644
+--- a/drivers/media/platform/chips-media/wave5/wave5-vpu-enc.c
++++ b/drivers/media/platform/chips-media/wave5/wave5-vpu-enc.c
+@@ -649,6 +649,8 @@ static int wave5_vpu_enc_encoder_cmd(struct file *file, void *fh, struct v4l2_en
  
- 	  8 bits:       max7310, max7315, pca6107, pca9534, pca9538, pca9554,
- 	                pca9556, pca9557, pca9574, tca6408, tca9554, xra1202,
--			pcal6408, pcal9554b, tca9538
-+			pcal6408, pcal9554b, tca9538, tcal6408
- 
- 	  16 bits:      max7312, max7313, pca9535, pca9539, pca9555, pca9575,
- 	                tca6416, pca6416, pcal6416, pcal9535, pcal9555a, max7318,
--			tca9539
-+			tca9539, tcal6416
- 
- 	  18 bits:	tca6418
- 
-diff --git a/drivers/gpio/gpio-pca953x.c b/drivers/gpio/gpio-pca953x.c
-index f93a3dbb2daaf..52e96cc5f67bb 100644
---- a/drivers/gpio/gpio-pca953x.c
-+++ b/drivers/gpio/gpio-pca953x.c
-@@ -126,6 +126,9 @@ static const struct i2c_device_id pca953x_id[] = {
- 	{ "tca9539", 16 | PCA953X_TYPE | PCA_INT, },
- 	{ "tca9554", 8  | PCA953X_TYPE | PCA_INT, },
- 	{ "xra1202", 8  | PCA953X_TYPE },
+ 		m2m_ctx->last_src_buf = v4l2_m2m_last_src_buf(m2m_ctx);
+ 		m2m_ctx->is_draining = true;
 +
-+	{ "tcal6408", 8  | PCA953X_TYPE | PCA_LATCH_INT, },
-+	{ "tcal6416", 16 | PCA953X_TYPE | PCA_LATCH_INT, },
- 	{ }
- };
- MODULE_DEVICE_TABLE(i2c, pca953x_id);
-@@ -1469,6 +1472,9 @@ static const struct of_device_id pca953x_dt_ids[] = {
- 	{ .compatible = "ti,tca9538", .data = OF_953X( 8, PCA_INT), },
- 	{ .compatible = "ti,tca9539", .data = OF_953X(16, PCA_INT), },
- 
-+	{ .compatible = "ti,tcal6408", .data = OF_953X( 8, PCA_LATCH_INT), },
-+	{ .compatible = "ti,tcal6416", .data = OF_953X(16, PCA_LATCH_INT), },
-+
- 	{ .compatible = "onnn,cat9554", .data = OF_953X( 8, PCA_INT), },
- 	{ .compatible = "onnn,pca9654", .data = OF_953X( 8, PCA_INT), },
- 	{ .compatible = "onnn,pca9655", .data = OF_953X(16, PCA_INT), },
++		v4l2_m2m_try_schedule(m2m_ctx);
+ 		break;
+ 	case V4L2_ENC_CMD_START:
+ 		break;
 -- 
 2.51.0
 
