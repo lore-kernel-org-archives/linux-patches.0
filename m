@@ -1,51 +1,46 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4CEA3EBF2C;
-	Sat, 14 Feb 2026 01:04:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1664D3EBF2C;
+	Sat, 14 Feb 2026 01:04:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771031081; cv=none; b=oy6VPNtGpgmAtm4zFM9zxiDWoaQ4yzC094k/csW8GJKduMjn85FiNXs+n53A5dq3LU6ogabGDR9C5T8BLWVB9+Vk/MqmOwpB9QU2cY0NfEcTaYANrglJyHvjIzq9yVfwLbHz4PHwwPdk++BeTzh0zuKC96TrbkGLtvyzYINUhzM=
+	t=1771031082; cv=none; b=rP6GNQ9rxd5Rbh1OGJCjTmgXPMSZENrsTKf83Ou/7bDHfQsQqFOEQZEI3GWx0yL7//fs0IsxflpK14g3n/ftKxwdBzqnMrDiAehBjMxKTjoYBMkaQwQTX8dd05ZMQajWn+J/+ZSqcTPrEuIMtl90tS5L64Ix2rdLIxm60MJD+/k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771031081; c=relaxed/simple;
-	bh=pxU4dhXgLPgfmO4ShUeJwUO8A6IEFL46pfkVTEyvM5A=;
+	s=arc-20240116; t=1771031082; c=relaxed/simple;
+	bh=lR0EcdqMlWvvA5jNcysPjb3oxsAOoV8NqBkIPRIFeqk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=QEoNDdrzoTFODJE+G97RWQd+Z+yk5xfhnGAChkPhdHhH6vBxWY0ml2FwUnKNxzIB1kqOrYzui2jE2rYVAL3lmOGpNuSpJtt5GuPRhVCXIHZ2YR7//8NLWoxlZorPvaqRzuSNSA85OaC12U+LJj7BC7T5yhz28A9SKGa3GC692ng=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ka14I7F4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=LQ+qfMjC1OE/Hp9PhPFZ+yRb+Bfa/75SlHzMCdyMMrDPzppqTRndEQR55xtSwwjbZq5eVCd2POky1O7GU8MQ86fVO5gNzozS4a+UOmol0fmAbWrzTw6Lk828e7++Zs84G6nZnqbAU/iDpdm+yx1CCnUy96UzUzeaKlnxRZNSWrw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=uiYOuHwj; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ka14I7F4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02EEEC116C6;
-	Sat, 14 Feb 2026 01:04:38 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="uiYOuHwj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD802C19424;
+	Sat, 14 Feb 2026 01:04:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1771031080;
-	bh=pxU4dhXgLPgfmO4ShUeJwUO8A6IEFL46pfkVTEyvM5A=;
+	s=k20201202; t=1771031082;
+	bh=lR0EcdqMlWvvA5jNcysPjb3oxsAOoV8NqBkIPRIFeqk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ka14I7F4J58hQvQiWC6vZyMe9V4rTKVjHrbihcIRpjaEd2PdXosl2NvlRu8y+6TdN
-	 mAR6amNSnYjG//kdV6Nc83gNws/qoGcv4ea1LSTnzlTYZV1nnUXJ8B7IxyxEDcdx3g
-	 Xv5mhW4cFi2Ezp7gW7HfxtxXwU/drdCCRD3xBjAWZdtYIhWpKC+eOMnihCEuZ5qAEN
-	 orIfv8YljgoRn4FyWS38PWGdltI1G1siLK7MYfg6OEbXIIzvVPg/15O5m95XfHrJRY
-	 Ezb0V4SuLPt8twVfYbxNVNQrGpyn5ikb1/gYerfFPWRmQJcpIb7s8mgIGD+jXmSDq8
-	 nMjLRVs6fxPTQ==
+	b=uiYOuHwjAI+UUvqFU/vXWNnbZpvYQrt6DNFNeeNXfO1HSYtsllP0oduuL9oFmlG4S
+	 yiHQ494CFy26H/ZNkQ4MZUWBNH9rwGxaQ+YPMGC7V/wxoOBl3WtdvAdNFQZF0ybdHu
+	 kmFC21O8SNo2FaoEX+Ll+DIKShzFPDc6xRuUkU/KcrDRND7ZiJ7tBvAHCBIehL3xHu
+	 E6DsKhcyE8SS6lz04ut4/b9xlB1oMZyOU5SaJkqA5T0qAQzkEuYZiqUbFocVtFbz4Q
+	 aNN4+6p99XxntJ45TUBXW3HGo93lzoLdotgONbQ0tmn6FiOo11GwULY6iKE112YpAB
+	 z942pLpBZarQg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: YuBiao Wang <YuBiao.Wang@amd.com>,
-	Victor Skvortsov <Victor.Skvortsov@amd.com>,
-	Gavin Wan <gavin.wan@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+Cc: Ludovic Desroches <ludovic.desroches@microchip.com>,
+	Manikandan Muralidharan <manikandan.m@microchip.com>,
 	Sasha Levin <sashal@kernel.org>,
-	yunru.pan@amd.com,
-	Hawking.Zhang@amd.com,
-	srinivasan.shanmugam@amd.com,
-	lijo.lazar@amd.com,
-	YiPeng.Chai@amd.com,
-	yelangyan@huaqin.corp-partner.google.com,
-	Tony.Yi@amd.com,
-	bokun.zhang@amd.com,
-	shaoyun.liu@amd.com
-Subject: [PATCH AUTOSEL 6.19-6.12] drm/amdgpu: Skip loading SDMA_RS64 in VF
-Date: Fri, 13 Feb 2026 19:58:53 -0500
-Message-ID: <20260214010245.3671907-53-sashal@kernel.org>
+	dharma.b@microchip.com,
+	nicolas.ferre@microchip.com,
+	alexandre.belloni@bootlin.com,
+	claudiu.beznea@tuxon.dev,
+	dri-devel@lists.freedesktop.org,
+	linux-arm-kernel@lists.infradead.org
+Subject: [PATCH AUTOSEL 6.19-5.15] drm/atmel-hlcdc: don't reject the commit if the src rect has fractional parts
+Date: Fri, 13 Feb 2026 19:58:54 -0500
+Message-ID: <20260214010245.3671907-54-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260214010245.3671907-1-sashal@kernel.org>
 References: <20260214010245.3671907-1-sashal@kernel.org>
@@ -55,161 +50,181 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.19
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: YuBiao Wang <YuBiao.Wang@amd.com>
+From: Ludovic Desroches <ludovic.desroches@microchip.com>
 
-[ Upstream commit 39c21b81112321cbe1267b02c77ecd2161ce19aa ]
+[ Upstream commit 06682206e2a1883354ed758c09efeb51f435adbd ]
 
-VFs use the PF SDMA ucode and are unable to load SDMA_RS64.
+Don’t reject the commit when the source rectangle has fractional parts.
+This can occur due to scaling: drm_atomic_helper_check_plane_state() calls
+drm_rect_clip_scaled(), which may introduce fractional parts while
+computing the clipped source rectangle. This does not imply the commit is
+invalid, so we should accept it instead of discarding it.
 
-Signed-off-by: YuBiao Wang <YuBiao.Wang@amd.com>
-Signed-off-by: Victor Skvortsov <Victor.Skvortsov@amd.com>
-Reviewed-by: Gavin Wan <gavin.wan@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Ludovic Desroches <ludovic.desroches@microchip.com>
+Reviewed-by: Manikandan Muralidharan <manikandan.m@microchip.com>
+Link: https://patch.msgid.link/20251120-lcd_scaling_fix-v1-1-5ffc98557923@microchip.com
+Signed-off-by: Manikandan Muralidharan <manikandan.m@microchip.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-Now I have a complete picture. Let me compile my analysis.
-
----
-
-## Detailed Analysis
+## Analysis of drm/atmel-hlcdc: don't reject the commit if the src rect
+has fractional parts
 
 ### 1. COMMIT MESSAGE ANALYSIS
 
-The commit message is clear and direct: "VFs use the PF SDMA ucode and
-are unable to load SDMA_RS64." In SR-IOV (Single Root I/O
-Virtualization), Virtual Functions (VFs) rely on the Physical Function
-(PF) for SDMA firmware. The VF should never attempt to load SDMA
-firmware itself. The commit adds `AMDGPU_UCODE_ID_SDMA_RS64` to the skip
-list so VFs don't try to load it.
+The commit message clearly describes a bug fix: the driver was
+incorrectly rejecting valid plane configurations when the source
+rectangle had fractional (subpixel) parts. The fractional parts are
+legitimately introduced by `drm_rect_clip_scaled()` during the atomic
+check process, but the driver was treating them as invalid input and
+returning `-EINVAL`.
 
-The commit is authored by AMD engineers (YuBiao Wang, Victor Skvortsov),
-reviewed by an AMD engineer (Gavin Wan), and signed off by the amdgpu
-subsystem maintainer (Alex Deucher).
+Keywords: "don't reject" — this is fixing a false rejection of valid
+display configurations.
 
 ### 2. CODE CHANGE ANALYSIS
 
-The change is a **single line addition** in
-`amdgpu_virt_fw_load_skip_check()`:
+The change is straightforward and well-contained:
 
-```1264:1264:drivers/gpu/drm/amd/amdgpu/amdgpu_virt.c
-                    || ucode_id == AMDGPU_UCODE_ID_SDMA_RS64
-```
+**What was happening before:**
+1. `hstate->src_x/y/w/h` were assigned the raw 16.16 fixed-point values
+   from `s->src`
+2. A check was performed: if any of these values had bits set in the
+   lower 16 bits (fractional part, via `SUBPIXEL_MASK = 0xffff`), the
+   function returned `-EINVAL`
+3. Only after passing that check were the values right-shifted by 16 to
+   get integer pixel coordinates
 
-This adds `AMDGPU_UCODE_ID_SDMA_RS64` to the `default` case's "legacy
-blacklist" of firmware IDs that should be **skipped** when loading
-firmware in a VF context. The existing blacklist already includes
-`SDMA0` through `SDMA7`, `RLC_G`, `RLC_RESTORE_LIST_*`, and `SMC` — but
-was missing the newer `SDMA_RS64` firmware type.
+**What happens now:**
+1. `hstate->src_x/y/w/h` are assigned the values right-shifted by 16
+   immediately (converting to integer pixels)
+2. The subpixel mask check is completely removed
+3. The `SUBPIXEL_MASK` macro definition is removed as it's no longer
+   needed
 
-**Bug mechanism**: `AMDGPU_UCODE_ID_SDMA_RS64` is a newer SDMA firmware
-format (v3 header) introduced in commit `807d90b5ef1da` ("drm/amdgpu:
-support SDMA v3 struct fw front door load"), which landed in v6.11. It
-is used by SDMA v7 hardware (IP version 7.0.0, 7.0.1). When this
-firmware type was added, no one updated the VF skip check's default
-blacklist.
+**The bug:** `drm_atomic_helper_check_plane_state()` calls
+`drm_rect_clip_scaled()`, which can introduce fractional parts when
+computing clipped source rectangles during scaling operations. This is
+normal DRM behavior — the fractional parts represent subpixel precision
+in the scaling calculation. The Atmel HLCDC hardware doesn't support
+subpixel addressing, so the correct behavior is to truncate (>> 16) and
+use integer coordinates, not reject the entire configuration.
 
-**Call chain that triggers the bug**:
-1. `psp_load_non_psp_fw()` iterates over all firmware entries
-2. For each, it calls `fw_load_skip_check()` which checks
-   `amdgpu_sriov_vf()` and then `amdgpu_virt_fw_load_skip_check()`
-3. Without this fix, `amdgpu_virt_fw_load_skip_check()` returns `false`
-   for `SDMA_RS64` in the `default` case (meaning "don't skip")
-4. The VF then calls `psp_execute_ip_fw_load()` for SDMA_RS64
-5. This fails because VFs cannot load SDMA firmware — the PF manages it
-6. The error propagates back up, causing **VF initialization failure**
-
-**Evidence of real SR-IOV usage on affected hardware**: `sdma_v7_0.c`
-has extensive `amdgpu_sriov_vf()` checks throughout its code (at least 6
-instances), confirming that SDMA v7 hardware does support and is used in
-SR-IOV configurations.
+**Impact of the bug:** When scaling is involved and clipping produces
+fractional coordinates, display operations would fail with `-EINVAL`.
+This means users would see display failures (plane updates rejected) in
+legitimate scaling scenarios. This is a real user-visible bug — display
+output fails when it shouldn't.
 
 ### 3. CLASSIFICATION
 
-This is a **bug fix** — specifically a missing entry in a firmware skip
-list. It falls into the category of a hardware/virtualization quirk. The
-`default` case is labeled "legacy blacklist" and the intent is clearly
-to skip all SDMA firmware types in VFs. The omission of `SDMA_RS64` was
-simply an oversight when the new firmware type was added.
+This is a **bug fix**. The driver was incorrectly rejecting valid atomic
+commits, causing display failures during scaling operations. No new
+features are added, no new APIs introduced.
 
 ### 4. SCOPE AND RISK ASSESSMENT
 
-- **Lines changed**: 1 line added
-- **Files changed**: 1 file (`amdgpu_virt.c`)
-- **Risk**: Extremely low. The change follows the exact same pattern as
-  the 8 existing SDMA entries (SDMA0-7). It only affects VF behavior
-  (SR-IOV virtual machines) and only for the specific firmware type
-  SDMA_RS64.
-- **Regression potential**: Essentially zero. Adding an entry to a
-  blacklist to skip firmware loading in VF is the conservative, safe
-  action. Not skipping it is what causes problems.
+- **Lines changed:** ~15 lines removed, ~4 lines modified — very small
+- **Files touched:** 1 file (`atmel_hlcdc_plane.c`)
+- **Subsystem:** DRM driver for Atmel HLCDC (embedded ARM display
+  controller)
+- **Risk:** Very low. The change simply truncates subpixel precision
+  instead of rejecting it. The hardware can only address whole pixels
+  anyway, so truncation is the correct behavior. The integer parts of
+  the coordinates are unchanged.
+- **Could it break something?** Extremely unlikely. The only behavioral
+  change is accepting configurations that were previously rejected. The
+  pixel coordinates used are identical (same >> 16 operation, just done
+  earlier).
 
 ### 5. USER IMPACT
 
-- **Affected users**: Anyone running AMD GPU SR-IOV virtualization on
-  hardware that uses SDMA v7 (SDMA_RS64 firmware). This includes data
-  center and cloud deployments using AMD GPU passthrough.
-- **Severity**: HIGH — VF initialization failure means the GPU is
-  unusable in the virtual machine.
-- **Visibility**: GPU completely fails to initialize in the VM, making
-  it a hard failure, not a subtle bug.
+This affects users of Atmel/Microchip SAM9/SAMA5 SoC-based embedded
+systems that use the HLCDC display controller with plane scaling. When
+scaling is active and clipping occurs, display updates would fail. This
+is a real-world scenario for embedded display applications.
 
-### 6. STABILITY AND VERSION ANALYSIS
+### 6. STABILITY INDICATORS
 
-- The `amdgpu_virt_fw_load_skip_check` function was introduced in v6.1
-  (commit `d9d86d085fbc1`)
-- `AMDGPU_UCODE_ID_SDMA_RS64` was introduced in v6.11 (commit
-  `807d90b5ef1da`)
-- Therefore, this fix is relevant for stable trees **v6.11 and later**
-  (6.11.y, 6.12.y, etc.)
-- The fix has been reviewed by AMD engineers and merged by the subsystem
-  maintainer
+- **Reviewed-by:** Manikandan Muralidharan (subsystem maintainer)
+- **Author:** Ludovic Desroches (Microchip engineer, familiar with the
+  hardware)
+- The fix is logically sound — truncating subpixel coordinates is
+  standard practice in DRM drivers that don't support subpixel precision
 
 ### 7. DEPENDENCY CHECK
 
-The fix has **no dependencies**. It simply adds one more enum value to
-an existing `||` chain. The `AMDGPU_UCODE_ID_SDMA_RS64` enum already
-exists in all kernels from v6.11 onward, and the function structure is
-unchanged. The patch will apply cleanly to any kernel v6.11+.
+The commit is self-contained. It doesn't depend on any other changes.
+The code it modifies (`atmel_hlcdc_plane_atomic_check`) has been present
+in stable trees for a long time. The functions it interacts with
+(`drm_atomic_helper_check_plane_state`, `drm_rect_width/height`) are
+standard DRM helpers available in all stable trees.
 
 ### Summary
 
-This is a textbook stable backport candidate:
-- **One-line fix** adding a missing entry to a firmware skip list
-- **Fixes a real, severe bug**: VF initialization failure on newer AMD
-  GPUs with SR-IOV
-- **Obviously correct**: SDMA_RS64 should be treated identically to
-  SDMA0-7 in VF context
-- **Zero regression risk**: Only adds a skip for VFs, following the
-  exact existing pattern
-- **Small and self-contained**: No dependencies, clean backport
-- Authored, reviewed, and approved by AMD GPU engineers
+This is a small, well-understood bug fix for an incorrect rejection of
+valid display configurations in the Atmel HLCDC driver. The fix is
+surgical (removes an overly strict validation check and shifts the
+coordinate conversion earlier), has been reviewed by the subsystem
+maintainer, and carries minimal risk of regression. It fixes a real
+user-visible bug (display failures during scaling with clipping) that
+affects embedded systems using this display controller.
 
 **YES**
 
- drivers/gpu/drm/amd/amdgpu/amdgpu_virt.c | 1 +
- 1 file changed, 1 insertion(+)
+ .../gpu/drm/atmel-hlcdc/atmel_hlcdc_plane.c   | 19 ++++---------------
+ 1 file changed, 4 insertions(+), 15 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_virt.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_virt.c
-index 47a6ce4fdc744..292e2706286a1 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_virt.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_virt.c
-@@ -1261,6 +1261,7 @@ bool amdgpu_virt_fw_load_skip_check(struct amdgpu_device *adev, uint32_t ucode_i
- 		    || ucode_id == AMDGPU_UCODE_ID_SDMA5
- 		    || ucode_id == AMDGPU_UCODE_ID_SDMA6
- 		    || ucode_id == AMDGPU_UCODE_ID_SDMA7
-+		    || ucode_id == AMDGPU_UCODE_ID_SDMA_RS64
- 		    || ucode_id == AMDGPU_UCODE_ID_RLC_G
- 		    || ucode_id == AMDGPU_UCODE_ID_RLC_RESTORE_LIST_CNTL
- 		    || ucode_id == AMDGPU_UCODE_ID_RLC_RESTORE_LIST_GPM_MEM
+diff --git a/drivers/gpu/drm/atmel-hlcdc/atmel_hlcdc_plane.c b/drivers/gpu/drm/atmel-hlcdc/atmel_hlcdc_plane.c
+index c0075894dc422..ec1fb5f9549a2 100644
+--- a/drivers/gpu/drm/atmel-hlcdc/atmel_hlcdc_plane.c
++++ b/drivers/gpu/drm/atmel-hlcdc/atmel_hlcdc_plane.c
+@@ -79,8 +79,6 @@ drm_plane_state_to_atmel_hlcdc_plane_state(struct drm_plane_state *s)
+ 	return container_of(s, struct atmel_hlcdc_plane_state, base);
+ }
+ 
+-#define SUBPIXEL_MASK			0xffff
+-
+ static uint32_t rgb_formats[] = {
+ 	DRM_FORMAT_C8,
+ 	DRM_FORMAT_XRGB4444,
+@@ -745,24 +743,15 @@ static int atmel_hlcdc_plane_atomic_check(struct drm_plane *p,
+ 	if (ret || !s->visible)
+ 		return ret;
+ 
+-	hstate->src_x = s->src.x1;
+-	hstate->src_y = s->src.y1;
+-	hstate->src_w = drm_rect_width(&s->src);
+-	hstate->src_h = drm_rect_height(&s->src);
++	hstate->src_x = s->src.x1 >> 16;
++	hstate->src_y = s->src.y1 >> 16;
++	hstate->src_w = drm_rect_width(&s->src) >> 16;
++	hstate->src_h = drm_rect_height(&s->src) >> 16;
+ 	hstate->crtc_x = s->dst.x1;
+ 	hstate->crtc_y = s->dst.y1;
+ 	hstate->crtc_w = drm_rect_width(&s->dst);
+ 	hstate->crtc_h = drm_rect_height(&s->dst);
+ 
+-	if ((hstate->src_x | hstate->src_y | hstate->src_w | hstate->src_h) &
+-	    SUBPIXEL_MASK)
+-		return -EINVAL;
+-
+-	hstate->src_x >>= 16;
+-	hstate->src_y >>= 16;
+-	hstate->src_w >>= 16;
+-	hstate->src_h >>= 16;
+-
+ 	hstate->nplanes = fb->format->num_planes;
+ 	if (hstate->nplanes > ATMEL_HLCDC_LAYER_MAX_PLANES)
+ 		return -EINVAL;
 -- 
 2.51.0
 
