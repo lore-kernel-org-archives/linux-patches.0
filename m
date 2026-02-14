@@ -1,45 +1,47 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B64752556E;
-	Sat, 14 Feb 2026 01:06:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A37B02556E;
+	Sat, 14 Feb 2026 01:06:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771031186; cv=none; b=E6M2z+ZO7yhqJZFUzgG8yoY+YnmLgJIs4ZAatsomznyquh3dUtFkT07kOOp+Il/w8/EXnjcmusfmUlO/jDxUw2lDWO8yzTZD8MhhU46P88a3uhzNd2kUw0TlyNFszv80axep8ZaCo/8jujteuGpczUamy2UQL2u1TBFQTH56S+I=
+	t=1771031189; cv=none; b=E+gHhcUBz+H0JoQWpJ5XQize9XZx0ziJP9KPjUeaiTjIwDftw5uZWAUK7+3DDc7JyHNta8x8bhjF0VQ+U1ihZTKyeW+WngLsom3azgEeUiDv7/Hj5QN1kACJiljOB/qkmPEc1oMTNMIh5M4yufDqBTk7QbpLQThjROevxAwnOAU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771031186; c=relaxed/simple;
-	bh=0/dUukDbcasXbbwNQEi+L+H01WipmI+LdZZN9UXXPZI=;
+	s=arc-20240116; t=1771031189; c=relaxed/simple;
+	bh=6xHN8ch6D3wfH6dNKdtq5U38lXb5ym/+KWSFYV/LZ7I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=IqS6TLZLaSyxGR7BiGBmc4q+2BzziGwm8YIEgcAHgtS17I9fWteuaaRbQ/GpJ+xsrfpGFAxXKklckB67njgeLbIOUQ2pcedILjLTVVjPjreJ6U4Imn6lJ49D/GfPsOLtpF2D6w6VSR9x1NKr7HRJi7qKIdiA929rBpYmAScEpZQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Aky3pi53; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=ZVvvq4jmz2ytUc6krU6F5VjwyCBhzdokGTwkgTxlHNIMhpj7Gnfp7lM8zm63YfGC0Y1Pw+LNk8OY7Xwveb+yPw48kargtqZ12maP5IkTif5ze0TMTLVryCiZzxHCpdcVCFEeZCb7q5wizsEPo94+pXn1cTfZWpMTHb335g5nfzM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=jA2YhB6+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Aky3pi53"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D84BC16AAE;
-	Sat, 14 Feb 2026 01:06:25 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="jA2YhB6+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 63B6EC16AAE;
+	Sat, 14 Feb 2026 01:06:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1771031186;
-	bh=0/dUukDbcasXbbwNQEi+L+H01WipmI+LdZZN9UXXPZI=;
+	s=k20201202; t=1771031189;
+	bh=6xHN8ch6D3wfH6dNKdtq5U38lXb5ym/+KWSFYV/LZ7I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Aky3pi53iK4ZOP8yl8HFs/33BIJc18Wf2+TdUM1DI1tIPHUFEdcblJkjywE0+OZIb
-	 UHXqI7/R15mfCfC5UiVwaOsPSu7Ilhz0lHToGJVP/asMp61Dd/4mPrhSKXJjrcx5yQ
-	 cSR97JXQvKU6vZb0r2imKRmcC/MNQ57f3t3zFYDluBaoTWX6vCPh35myGFao8PZNUa
-	 3Yp7o6tsvYJrU5dBmV7CM3xNj+uHWyDhPxHqpJqGPXYIIWuKK/6O9EFFPUUcacXZ0f
-	 Rgst4ZqJLtxkE9diEQumsUuZBBXGi5UWdENpAr/Wfx+nNkKdtOY6k6Hp6TKhlPhIAD
-	 k7hXdRsofdeGQ==
+	b=jA2YhB6+3N0SQx3Sj+dt2VRv4QCvUSdKvc719XVWgW1LxaMylETLFGulL88EtTBjf
+	 sbWhvx85vG7IAHKDyu42fJPGevcoCNRBD+lGgy0LCJ/C5RxXWAXz4qLYdZtBAfwUJk
+	 Y8XlJhZnQV9hs8yMJuFSfoqGIvvJNk1V601pMOl5ME0/A49tr0VXhIZ+K5Bs2ycpMl
+	 lkBsXyv8JG9/hTPVXX6qAFAknieNJI/sYJ1pF56bNilQTwK36l+LaHqgFrfDF2Dxx7
+	 emu3CZUoYAK4fsGOyLFH5I4kur4r6mFZrR5uCj0R/8B69y0X+vwK+fU2S1uSOXdPJA
+	 env1v/hihdRrA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: "Jesse.Zhang" <Jesse.Zhang@amd.com>,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
-	Jesse Zhang <jesse.zhang@amd.com>,
+Cc: Jing Zhou <Jing.Zhou@amd.com>,
+	Charlene Liu <charlene.liu@amd.com>,
+	Wenjing Liu <wenjing.liu@amd.com>,
+	Roman Li <roman.li@amd.com>,
+	Dan Wheeler <daniel.wheeler@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>,
-	sunil.khatri@amd.com,
-	Prike.Liang@amd.com,
-	shashank.sharma@amd.com
-Subject: [PATCH AUTOSEL 6.19-6.18] drm/amdgpu: validate user queue size constraints
-Date: Fri, 13 Feb 2026 19:59:33 -0500
-Message-ID: <20260214010245.3671907-93-sashal@kernel.org>
+	neil.armstrong@linaro.org,
+	michael.strauss@amd.com,
+	yelangyan@huaqin.corp-partner.google.com
+Subject: [PATCH AUTOSEL 6.19-6.18] drm/amd/display: Correct FIXED_VS Link Rate Toggle Condition
+Date: Fri, 13 Feb 2026 19:59:34 -0500
+Message-ID: <20260214010245.3671907-94-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260214010245.3671907-1-sashal@kernel.org>
 References: <20260214010245.3671907-1-sashal@kernel.org>
@@ -49,144 +51,179 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.19
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: "Jesse.Zhang" <Jesse.Zhang@amd.com>
+From: Jing Zhou <Jing.Zhou@amd.com>
 
-[ Upstream commit 8079b87c02e531cc91601f72ea8336dd2262fdf1 ]
+[ Upstream commit 531fe6e0fee85a1bdb5b8223a706fff654ed0a61 ]
 
-Add validation to ensure user queue sizes meet hardware requirements:
-- Size must be a power of two for efficient ring buffer wrapping
-- Size must be at least AMDGPU_GPU_PAGE_SIZE to prevent undersized allocations
+[WHY&HOW]
+The condition is only perform toggle if FIXED_VS LTTPR reports
+no IEEE OUI.
+The literal "\x0,\x0,\x0" contains commas changes the
+bytes being compared to {0x00,0x2C,0X00}.
+The correct literal should be "\x00\x00\x00" without commas.
 
-This prevents invalid configurations that could lead to GPU faults or
-unexpected behavior.
-
-Reviewed-by: Christian König <christian.koenig@amd.com>
-Signed-off-by: Jesse Zhang <jesse.zhang@amd.com>
+Reviewed-by: Charlene Liu <charlene.liu@amd.com>
+Reviewed-by: Wenjing Liu <wenjing.liu@amd.com>
+Signed-off-by: Jing Zhou <Jing.Zhou@amd.com>
+Signed-off-by: Roman Li <roman.li@amd.com>
+Tested-by: Dan Wheeler <daniel.wheeler@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-So the user queue file was first introduced in v6.16. The current
-mainline is v6.19. This means:
+Good - the nontransparent path at line 118 doesn't have the OUI check
+(it uses the older unconditional logic), so it's not affected. Only the
+transparent path (line 274) has the buggy memcmp.
 
-- **Stable trees v6.16.y, v6.17.y, v6.18.y** would have this code and
-  could benefit from the fix
-- **Older stable trees (v6.12.y, v6.6.y, v6.1.y, 5.15.y)** do NOT have
-  user queues at all - the fix is irrelevant there
+Now I have all the information needed for a comprehensive analysis.
 
-### 5. Classification
+---
 
-This is **input validation on a userspace-facing ioctl**. The
-`amdgpu_userq_input_args_validate` function validates parameters from a
-DRM ioctl (`AMDGPU_USERQ_OP_CREATE`). Without these checks:
+## Comprehensive Analysis
 
-- A user (even unprivileged with GPU access) could pass a non-power-of-2
-  queue size, leading to GPU faults or misbehavior
-- A user could pass a too-small queue size, leading to undersized
-  allocations
+### 1. COMMIT MESSAGE ANALYSIS
 
-This is a **security/robustness fix at a system boundary** (userspace →
-kernel).
+The commit message is clear and well-explained:
+- **Subject**: "drm/amd/display: Correct FIXED_VS Link Rate Toggle
+  Condition"
+- **Why**: The C string literal `"\x0,\x0,\x0"` contains comma
+  characters that change the bytes being compared from the intended
+  `{0x00, 0x00, 0x00}` to `{0x00, 0x2C, 0x00}`.
+- **How**: Replace the buggy literal with the correct `"\x00\x00\x00"`.
+- **Trust indicators**: Reviewed-by: Charlene Liu, Reviewed-by: Wenjing
+  Liu, Tested-by: Dan Wheeler, Signed-off-by: Alex Deucher (AMD GPU
+  maintainer). This has strong review coverage.
 
-### 6. Risk Assessment
+### 2. CODE CHANGE ANALYSIS
 
-**Risk: Very Low**
-- The change adds two simple, early-return validation checks
-- It only rejects invalid input earlier (with -EINVAL)
-- No existing valid usage is affected (any sane userspace already passes
-  power-of-2, page-aligned sizes)
-- The fix is small (10 lines of added code), self-contained, and
-  obviously correct
-- Reviewed by Christian König (key AMD DRM maintainer)
+The change is a single-line fix:
 
-**Benefit: Medium**
-- Prevents GPU faults from invalid configurations
-- Prevents potential memory corruption or undefined hardware behavior
-- Hardens the userspace-to-kernel boundary
+```273:274:drivers/gpu/drm/amd/display/dc/link/protocols/link_dp_trainin
+g_fixed_vs_pe_retimer.c
+        // Only perform toggle if FIXED_VS LTTPR reports no IEEE OUI
+        if (memcmp("\x0,\x0,\x0",
+&link->dpcd_caps.lttpr_caps.lttpr_ieee_oui[0], 3) == 0) {
+```
 
-### 7. Concerns
+Changed to `"\x00\x00\x00"`.
 
-1. **Limited stable tree applicability**: Only applies to v6.16+ stable
-   trees (newest stable branches). Older LTS trees don't have user
-   queues.
-2. **The `amdgpu_userq_input_args_validate` function may have evolved**
-   between kernel versions, so the patch may not apply cleanly to 6.16.y
-   or 6.17.y without adjustment.
-3. **Dependency check**: The function `is_power_of_2()` is a standard
-   kernel utility (from `<linux/log2.h>`), available in all kernel
-   versions. `AMDGPU_GPU_PAGE_SIZE` is defined in amdgpu headers. No
-   dependency issues.
+**The Bug Mechanism in Detail:**
 
-### 8. Decision
+In C, the hex escape sequence `\xN` consumes as many hexadecimal digits
+as follow. However, a comma (`,`) is NOT a hex digit, so `\x0`
+terminates at the comma. The result:
+- `\x0` = byte 0x00
+- `,` = byte 0x2C (ASCII comma)
+- `\x0` = byte 0x00
+- `,` = byte 0x2C (ASCII comma)
+- `\x0` = byte 0x00
 
-**For:**
-- Validates user input at a system boundary - this is the definition of
-  a good stable fix
-- Prevents GPU faults and undefined behavior from malformed userspace
-  requests
-- Small, surgical, obviously correct change
-- Reviewed by subsystem maintainer
-- Zero risk of regression (only rejects previously-invalid input)
+The string is 5 bytes `{0x00, 0x2C, 0x00, 0x2C, 0x00}` plus null
+terminator. Since `memcmp` compares only 3 bytes, the comparison is
+against `{0x00, 0x2C, 0x00}` — NOT the intended `{0x00, 0x00, 0x00}`.
 
-**Against:**
-- Only applicable to very recent stable trees (v6.16+)
-- The commit message describes it somewhat as "adding validation" rather
-  than "fixing a bug" - but this IS a bug fix (missing input validation
-  on a userspace interface)
-- The user queue feature itself is quite new, so the number of affected
-  users is limited
-- No reported real-world incidents (no "Reported-by:" tag, no syzbot
-  report)
+**Consequence**: The condition was supposed to check if the LTTPR
+reports NO IEEE OUI (all zeros), and if so, perform a link rate toggle
+workaround. Because of the bug, the comparison almost never matches, so
+the workaround is effectively **disabled**. This breaks DisplayPort link
+training on systems with FIXED_VS retimer chips that report no IEEE OUI,
+potentially causing **display link failures** (no display output or
+degraded link quality).
 
-This is a borderline case. It's a legitimate input validation fix at a
-userspace boundary that prevents GPU faults. However, the user queue
-feature is very new (v6.16+), limiting the stable trees it applies to.
-The fix is obviously correct and zero-risk, but there's no evidence of
-real-world impact. The fact that it prevents potential GPU faults from
-user-controllable input (security hardening) tips it slightly toward
-YES, but the newness of the feature and the purely preventive nature (no
-demonstrated real-world bug) is a concern.
+### 3. BUG ORIGIN AND AFFECTED VERSIONS
 
-On balance, this is a valid input validation fix that prevents potential
-GPU faults from invalid userspace input. It's small, safe, reviewed by
-the subsystem maintainer, and fixes a real missing-validation bug at a
-trust boundary.
+The bug was introduced in commit `7c6518c1c7319` ("drm/amd/display:
+Update FIXED_VS Link Rate Toggle Workaround Usage"), first appearing in
+v6.15-rc1. This commit has already been **backported** to:
+- **stable/linux-6.14.y** (as `caa4938c5c92f`) — confirmed buggy
+- **stable/linux-6.15.y** through **stable/linux-6.19.y** — all contain
+  the same bug
+- **stable/linux-6.12.y** — NOT affected (doesn't have the OUI check at
+  all, uses older 128b/132b logic)
+
+### 4. CLASSIFICATION
+
+This is a clear **bug fix**:
+- Fixes an incorrect byte comparison that breaks a hardware workaround
+- No new features, no new APIs
+- Pure correction of a string literal typo
+
+### 5. SCOPE AND RISK ASSESSMENT
+
+- **Lines changed**: 1 (single string literal correction)
+- **Files touched**: 1
+- **Complexity**: Trivially low
+- **Risk of regression**: Near zero — this is fixing a byte comparison
+  to match the original intent
+- **Subsystem**: AMD display driver (DisplayPort link training for
+  retimer devices)
+
+### 6. USER IMPACT
+
+- **Who is affected**: Users with AMD GPU systems that have FIXED_VS
+  LTTPR (Link Training Tunable PHY Repeater) chips with no IEEE OUI.
+  These are vendor-specific retimer chips commonly found in laptops and
+  USB4/Thunderbolt dock setups.
+- **Severity**: The link rate toggle workaround is completely disabled,
+  potentially causing DisplayPort link training failures (no display,
+  display flickering, or link instability).
+- **Real-world impact**: This directly affects display functionality — a
+  critical user-facing issue.
+
+### 7. DEPENDENCY CHECK
+
+The fix has **zero dependencies** beyond the buggy commit that's already
+present in stable trees:
+- The `lttpr_ieee_oui` field exists in stable (added by `7c6518c1c7319`
+  itself)
+- The fix is a pure string literal correction on the same line
+  introduced by the bug
+- No context changes needed — the fix will apply cleanly to any stable
+  tree that has the buggy commit
+
+### 8. SUMMARY
+
+This is a textbook stable backport candidate:
+- **Obviously correct**: Changing `"\x0,\x0,\x0"` to `"\x00\x00\x00"` is
+  a trivially verifiable fix
+- **Fixes a real bug**: The commas in the hex escape create the wrong
+  byte sequence, disabling a necessary hardware workaround
+- **Important issue**: Affects display link training — can cause display
+  failures
+- **Small and contained**: Single character-level fix in one file, one
+  line
+- **No new features**: Pure bug fix
+- **Already tested**: Has Tested-by tag from AMD's test team, plus two
+  Reviewed-by tags
+- **Buggy code exists in stable**: Confirmed present in 6.14.y through
+  6.19.y
 
 **YES**
 
- drivers/gpu/drm/amd/amdgpu/amdgpu_userq.c | 11 +++++++++++
- 1 file changed, 11 insertions(+)
+ .../dc/link/protocols/link_dp_training_fixed_vs_pe_retimer.c    | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_userq.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_userq.c
-index 58b26c78b6425..ab934723579c9 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_userq.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_userq.c
-@@ -860,6 +860,17 @@ static int amdgpu_userq_input_args_validate(struct drm_device *dev,
- 			drm_file_err(filp, "invalidate userq queue va or size\n");
- 			return -EINVAL;
- 		}
-+
-+		if (!is_power_of_2(args->in.queue_size)) {
-+			drm_file_err(filp, "Queue size must be a power of 2\n");
-+			return -EINVAL;
-+		}
-+
-+		if (args->in.queue_size < AMDGPU_GPU_PAGE_SIZE) {
-+			drm_file_err(filp, "Queue size smaller than AMDGPU_GPU_PAGE_SIZE\n");
-+			return -EINVAL;
-+		}
-+
- 		if (!args->in.wptr_va || !args->in.rptr_va) {
- 			drm_file_err(filp, "invalidate userq queue rptr or wptr\n");
- 			return -EINVAL;
+diff --git a/drivers/gpu/drm/amd/display/dc/link/protocols/link_dp_training_fixed_vs_pe_retimer.c b/drivers/gpu/drm/amd/display/dc/link/protocols/link_dp_training_fixed_vs_pe_retimer.c
+index ce174ce5579c0..6a7c4a59ff4c7 100644
+--- a/drivers/gpu/drm/amd/display/dc/link/protocols/link_dp_training_fixed_vs_pe_retimer.c
++++ b/drivers/gpu/drm/amd/display/dc/link/protocols/link_dp_training_fixed_vs_pe_retimer.c
+@@ -271,7 +271,7 @@ enum link_training_result dp_perform_fixed_vs_pe_training_sequence(
+ 	rate = get_dpcd_link_rate(&lt_settings->link_settings);
+ 
+ 	// Only perform toggle if FIXED_VS LTTPR reports no IEEE OUI
+-	if (memcmp("\x0,\x0,\x0", &link->dpcd_caps.lttpr_caps.lttpr_ieee_oui[0], 3) == 0) {
++	if (memcmp("\x00\x00\x00", &link->dpcd_caps.lttpr_caps.lttpr_ieee_oui[0], 3) == 0) {
+ 		/* Vendor specific: Toggle link rate */
+ 		toggle_rate = (rate == 0x6) ? 0xA : 0x6;
+ 
 -- 
 2.51.0
 
