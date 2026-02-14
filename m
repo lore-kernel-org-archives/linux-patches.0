@@ -1,42 +1,50 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A28B21E5B63;
-	Sat, 14 Feb 2026 01:07:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E46081FFC48;
+	Sat, 14 Feb 2026 01:07:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771031255; cv=none; b=krLwqnG8u9cXgvn18db2wlW9ajBysUeMJvVgwKCTTroIMuHNXhfMjIYHCHEAoBoqBxBPdvGk1nCkH5OUHyGNXUevBpsL2Vo2xGfPwI+E3nhQfJzdwzO8+8E5Skm5+YQ8kn9k8fMMuowjfEpbTpyQZlSE9QBO1SXaX++iWER426M=
+	t=1771031259; cv=none; b=FeQZ8SqwyQ8J8kkOQgqmwOQW1r9L2x8MBmL3Fhr588DkbLYMGZwr00mqc14W3ZhO9ao7mo62Kn63QS3K2PkXF0jpMPQ6gfMuSFcCn54aSvloyJin4YzCzsTbGwcGaGJkyWNlDB21QhhQX7m7QYmNYCFMH32nBNJ/gZK9hNGTB9o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771031255; c=relaxed/simple;
-	bh=eH7GBxutsBYerARSGn0elPJyiXpbxtbh/y6973Psm4Y=;
+	s=arc-20240116; t=1771031259; c=relaxed/simple;
+	bh=PLV+QGyrfuZhs0mjPr04kQuIaDWgAcoy9szoMIGquQU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=AtirVZ0qV/pl+Kmo0BX2Qf4KbumIbsosx0tUgsunn+oPRqrAB38qddVrgdkyLfQKUbNBC0F+Zp/ylfo2jLEwwMOhlM9Fiph4SpbFSkSRGhrvMUdFVvdzxblm7edNAkW3smVEfl1qQ/edHZnyoX1KInouwfCZvlIb/LqYg4iJsdg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=VhqEvJDu; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=ayLD4Ydh31SlVNwugv+4RZhVkoZL5EuaRUlDG3Ab+7RRj5NzYmMVh/Zc53mECpXxzyXffxuJkU56Vnckp7jMNWlfWUpvQxQsjb8/jCTxbEjisMw3qe8PyPwUS63cNyDyuUNMAkP2Z3vyWDCu4R71yATD0klC0Gw4+zeuA8Rw3Gw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=cHe1IBly; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="VhqEvJDu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C3F76C19424;
-	Sat, 14 Feb 2026 01:07:34 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="cHe1IBly"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B73BC19423;
+	Sat, 14 Feb 2026 01:07:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1771031255;
-	bh=eH7GBxutsBYerARSGn0elPJyiXpbxtbh/y6973Psm4Y=;
+	s=k20201202; t=1771031258;
+	bh=PLV+QGyrfuZhs0mjPr04kQuIaDWgAcoy9szoMIGquQU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VhqEvJDurRo1wvvoE56OpauhzLxJTsUoVKmuvDB9ZU3dfpiwpwFerjoaykTl9Kkq0
-	 5CdJmgCn4UVnqtL3TjMkF1OnyYPzzjMOpcMs9zPP/jSghSkMxpKQP3agimFQ4iScAg
-	 9ns08VWE8k4TGABTy4xQsQSxckc0N7FT57I+WTWKgBxaf1GHhaTZGFmhUQrnafdbdf
-	 IYUf9QlztR+h+Ek5lC3KGSqH5gtU2h8XMlP63lZJAmKJTdWdxJQMmtG3UQZKgrC1fE
-	 nOQYH5WHob0f58jHzEc/QKSm+kO10mtL6qciCB4Mve04YB99TWfQsEpy0eLXyZ1O32
-	 jlEFV3j9T6Ujg==
+	b=cHe1IBly8teM8/uJXPPmdyXDn5IMsnEqjrCx1LerBBQjgEGPZJywVRkcRZyV4beJC
+	 wRdkeoCxXKHH6oKUcpu9DwwUy2fZkM4fo9h68HkEiC7JIvbWGeK+o8Ek1Z1mjHhNjr
+	 FkteFEm0/qVrGqs/1mqVgXmXvjgnqZTrHP8eyaw5y+nfrBACHbp9k2FZNbEVYK0IWn
+	 rA9RtAGzbLFVs7RqWdVVx4gAWo5Wk63jf1IkptMHVoap/V6qHCdCwsojP0VZE5OGUI
+	 WoWgNItsu23G422KJxysw5y3n5/n1pGHfEFLTZ9A+ILg49IUKuHD4d30C6M62adxjj
+	 Neqb5affYi7BA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Armin Wolf <W_Armin@gmx.de>,
-	=?UTF-8?q?Pali=20Roh=C3=A1r?= <pali@kernel.org>,
-	Guenter Roeck <linux@roeck-us.net>,
+Cc: Peichen Huang <PeiChen.Huang@amd.com>,
+	Wenjing Liu <wenjing.liu@amd.com>,
+	Chenyu Chen <chen-yu.chen@amd.com>,
+	Daniel Wheeler <daniel.wheeler@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>,
-	linux-hwmon@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.19-6.12] hwmon: (dell-smm) Add support for Dell OptiPlex 7080
-Date: Fri, 13 Feb 2026 20:00:03 -0500
-Message-ID: <20260214010245.3671907-123-sashal@kernel.org>
+	Cruise.Hung@amd.com,
+	meenakshikumar.somasundaram@amd.com,
+	rvojvodi@amd.com,
+	timur.kristof@gmail.com,
+	george.shen@amd.com,
+	yelangyan@huaqin.corp-partner.google.com,
+	superm1@kernel.org
+Subject: [PATCH AUTOSEL 6.19-6.18] drm/amd/display: Don't disable DPCD mst_en if sink connected
+Date: Fri, 13 Feb 2026 20:00:04 -0500
+Message-ID: <20260214010245.3671907-124-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260214010245.3671907-1-sashal@kernel.org>
 References: <20260214010245.3671907-1-sashal@kernel.org>
@@ -46,135 +54,247 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.19
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Armin Wolf <W_Armin@gmx.de>
+From: Peichen Huang <PeiChen.Huang@amd.com>
 
-[ Upstream commit 46c3e87a79179454f741f797c274dd25f5c6125e ]
+[ Upstream commit 9aeb31b2456452257ad1ff7ec566f21bab1f3e8a ]
 
-The Dell OptiPlex 7080 supports the legacy SMM interface for reading
-sensors and performing fan control. Whitelist this machine so that
-this driver loads automatically.
+[WHY]
+User may connect mst dock with multi monitors and do quick unplug
+and plug in one of the monitor. This operatioin may create CSN from
+dock to display driver. Then display driver would disable and then enable
+mst link and also disable/enable DPCD mst_en bit in dock RX. However,
+when mst_en bit being disabled, if dock has another CSN message to
+transmit then the message would be removed because of the disabling of
+mst_en. In this case, the message is missing and it ends up no display in
+the replugged monitor.
 
-Closes: https://github.com/Wer-Wolf/i8kutils/issues/16
-Signed-off-by: Armin Wolf <W_Armin@gmx.de>
-Acked-by: Pali Rohár <pali@kernel.org>
-Link: https://lore.kernel.org/r/20260104000654.6406-1-W_Armin@gmx.de
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+[HOW]
+Don't disable mst_en bit when link still has sink connected.
+
+Reviewed-by: Wenjing Liu <wenjing.liu@amd.com>
+Signed-off-by: Peichen Huang <PeiChen.Huang@amd.com>
+Signed-off-by: Chenyu Chen <chen-yu.chen@amd.com>
+Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-## Analysis
+Now let me analyze the patch fully.
 
-### Commit Message Analysis
+## Comprehensive Analysis
 
-This commit adds a DMI whitelist entry for the Dell OptiPlex 7080 to the
-`dell-smm-hwmon` driver. The commit message explains that this machine
-supports the legacy SMM interface for reading sensors and performing fan
-control, and the whitelist entry enables the driver to load
-automatically on this hardware.
+### 1. COMMIT MESSAGE ANALYSIS
 
-There's a linked issue (`https://github.com/Wer-
-Wolf/i8kutils/issues/16`) showing a real user request for this support.
+The commit message clearly explains a real-world user-facing bug:
 
-### Code Change Analysis
+**Problem:** When a user has an MST dock (e.g., a USB-C/Thunderbolt dock
+with multiple DisplayPort outputs) with multiple monitors, and quickly
+unplugs and re-plugs one monitor, the dock generates a Connection Status
+Notification (CSN) to the display driver. The driver handles this by
+disabling and re-enabling the MST link, which includes toggling the DPCD
+`mst_en` bit. However, when `mst_en` is disabled, if the dock has
+another CSN message to transmit (for the still-connected monitors), that
+message is discarded. The result is that the re-plugged monitor shows no
+display.
 
-The change is a simple addition of a single DMI matching entry to the
-`i8k_dmi_table[]` array:
+**Fix:** Don't disable the `mst_en` bit when there are still sinks
+connected to the link.
 
+The commit has:
+- `Reviewed-by: Wenjing Liu` (AMD display team member)
+- `Tested-by: Daniel Wheeler` (AMD QA)
+- `Signed-off-by: Alex Deucher` (AMD display subsystem maintainer)
+
+### 2. CODE CHANGE ANALYSIS
+
+The patch has 4 hunks, all in a single file (`link_dpms.c`), with 11
+lines added and 5 removed:
+
+**Hunk 1 (Critical fix - `disable_link_dp`):**
 ```c
-{
-    .ident = "Dell OptiPlex 7080",
-    .matches = {
-        DMI_MATCH(DMI_SYS_VENDOR, "Dell Inc."),
-        DMI_EXACT_MATCH(DMI_PRODUCT_NAME, "OptiPlex 7080"),
-    },
-},
+// Before:
+if (signal == SIGNAL_TYPE_DISPLAY_PORT_MST)
+    enable_mst_on_sink(link, false);
+
+// After:
+if (signal == SIGNAL_TYPE_DISPLAY_PORT_MST && link->sink_count == 0)
+    enable_mst_on_sink(link, false);
 ```
+This is the core fix. It adds a single condition `link->sink_count == 0`
+to ensure `mst_en` is only disabled when all sinks have been
+disconnected. This prevents the race where a CSN from the dock is lost
+because `mst_en` was momentarily disabled while other monitors are still
+connected.
 
-This is structurally identical to the existing entries for OptiPlex
-7060, 7050, and 7040. The pattern uses `DMI_EXACT_MATCH` for the product
-name (matching the convention of other OptiPlex entries), preventing
-false matches with similarly named models.
+**Hunk 2 (Complementary fix - `enable_link_dp`):**
+```c
+// Before:
+if (DP_128b_132b_ENCODING && SST && set_mst_en_for_sst) {
+    enable_mst_on_sink(link, true);
+}
 
-### Classification
+// After:
+if (DP_128b_132b_ENCODING && SST && set_mst_en_for_sst) {
+    enable_mst_on_sink(link, true);
+} else if (link->dpcd_caps.is_mst_capable && SST) {
+    enable_mst_on_sink(link, false);
+}
+```
+This is the complementary change. When re-enabling a link in SST mode on
+an MST-capable sink, the patch explicitly disables MST mode on the sink.
+This ensures that if `disable_link_dp` skipped the `mst_en` disable
+(because `sink_count > 0`), it is properly cleaned up when re-enabling
+the link in SST mode.
 
-This falls squarely into the **device ID / hardware quirk / whitelist**
-exception category. It's adding a machine identifier to an existing
-driver's whitelist table so the driver auto-loads on that hardware.
-Without this entry, the Dell OptiPlex 7080 doesn't get hardware
-monitoring and fan control support from this driver (unless force-
-loaded).
+**Hunks 3 & 4 (Debug logging):**
+These add `sink_count` to the debug log messages in `link_set_dpms_off`
+and `link_set_dpms_on` — purely for debugging/observability, zero risk.
 
-### Scope and Risk Assessment
+### 3. CLASSIFICATION
 
-- **Lines changed**: +7 lines (a single DMI table entry)
-- **Files touched**: 1 (`drivers/hwmon/dell-smm-hwmon.c`)
-- **Risk**: Extremely low. The entry only affects Dell OptiPlex 7080
-  machines. It cannot affect any other hardware. The matching pattern is
-  well-established and identical in structure to dozens of other entries
-  in the same table.
-- **Complexity**: Trivial
+This is a **bug fix** for a real-world user-visible issue: monitors
+connected through MST docks failing to display after hot-plug events.
+This is a common scenario — USB-C docks with multiple monitor outputs
+are extremely popular.
 
-### User Impact
+### 4. SCOPE AND RISK ASSESSMENT
 
-Users with Dell OptiPlex 7080 machines running stable kernels would
-benefit from having hardware monitoring and fan control work
-automatically. This is a desktop PC used in corporate
-environments—exactly the kind of hardware that runs stable/LTS kernels.
+- **Size:** Very small — 11 lines added, 5 removed, 1 file changed
+- **Scope:** Localized to MST link enable/disable paths in the AMD
+  display driver
+- **Risk:** LOW
+  - Hunk 1 adds a defensive guard condition that preserves existing
+    behavior when `sink_count == 0` (the last sink disconnects) — it's
+    strictly narrowing when `mst_en` is cleared
+  - Hunk 2 adds an explicit `mst_en` disable for SST-on-MST-capable-
+    sink, which is a correct complement to hunk 1
+  - Debug logging changes have zero risk
+- **Subsystem:** AMD display driver — mature, well-tested subsystem
+- **Could it break something?** The guard `link->sink_count == 0` is
+  correct — if there are still sinks, we should not disable MST mode on
+  the dock. The `enable_link_dp` complementary change is also sound:
+  when connecting in SST mode to an MST-capable sink, explicitly
+  disabling MST mode is the correct DPCD protocol behavior.
 
-### Stability Indicators
+### 5. USER IMPACT
 
-- **Acked-by**: Pali Rohár (co-maintainer of this driver)
-- **Signed-off-by**: Guenter Roeck (hwmon maintainer)
-- The existing driver framework is mature and well-tested
-- The same pattern is used for many other Dell models already in the
-  table
+This affects **anyone using MST docks (USB-C/Thunderbolt docks with
+multi-monitor support) with AMD GPUs**, which is a very common
+configuration, especially in:
+- Laptops with AMD integrated graphics (Ryzen mobile) connected to docks
+- Desktop systems with AMD discrete GPUs using DP MST hubs
 
-### Dependency Check
+The bug manifests as **no display on a re-plugged monitor** after a
+quick unplug/plug cycle, which is a common user action. The severity is
+HIGH — a non-functional monitor requires manual intervention (re-plug,
+driver restart, or reboot) to recover.
 
-No dependencies. The driver and DMI matching infrastructure exist in all
-relevant stable trees. This is a self-contained addition to a data
-table.
+### 6. STABILITY INDICATORS
 
-### Conclusion
+- `Reviewed-by` from Wenjing Liu (AMD DC team)
+- `Tested-by` from Daniel Wheeler (AMD QA)
+- Signed off by Alex Deucher (AMD GPU maintainer who reviews all AMDGPU
+  commits)
+- No reverts or follow-up fixes found
 
-This is a textbook example of a hardware whitelist addition that is
-appropriate for stable backporting. It enables existing, well-tested
-driver functionality on a specific hardware platform. The change is
-trivial, zero-risk to other systems, reviewed by the subsystem
-maintainers, and benefits real users running stable kernels on Dell
-OptiPlex 7080 desktops.
+### 7. DEPENDENCY CHECK
+
+- `link->sink_count` exists in all relevant stable trees (v6.1, v6.6,
+  v6.12)
+- `link->dpcd_caps.is_mst_capable` exists in all relevant stable trees
+- `enable_mst_on_sink()` function exists identically in all relevant
+  stable trees
+- The `disable_link_dp()` function's MST handling code is identical
+  across v6.6, v6.12, and mainline
+- The `enable_link_dp()` function's MST workaround block is also present
+  in all stable trees
+- **No dependencies on other commits** — this patch is completely self-
+  contained
+- The patch should apply cleanly to v6.6 and v6.12 (minor context
+  differences in a distant function signature for `dp_set_fec_enable` in
+  v6.6 may require a trivial context adjustment, but the key hunks are
+  identical)
+
+### 8. RISK VS BENEFIT
+
+- **Benefit:** Fixes a real, user-hitting bug where monitors go blank
+  through MST docks — a very common hardware configuration
+- **Risk:** Minimal — the change is small, surgical, well-understood,
+  and was tested by AMD QA
+- The logic is clearly correct: don't clear MST mode when there are
+  still active sinks, and ensure MST mode is cleared when re-enabling in
+  SST mode
+
+The fix is small, surgical, addresses a real user-visible bug with MST
+docks (a very common configuration), has been reviewed and tested by AMD
+engineers, has no dependencies, and the affected code exists in all
+current stable trees.
 
 **YES**
 
- drivers/hwmon/dell-smm-hwmon.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ drivers/gpu/drm/amd/display/dc/link/link_dpms.c | 16 +++++++++++-----
+ 1 file changed, 11 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/hwmon/dell-smm-hwmon.c b/drivers/hwmon/dell-smm-hwmon.c
-index 93143cfc157cf..038edffc1ac74 100644
---- a/drivers/hwmon/dell-smm-hwmon.c
-+++ b/drivers/hwmon/dell-smm-hwmon.c
-@@ -1325,6 +1325,13 @@ static const struct dmi_system_id i8k_dmi_table[] __initconst = {
- 			DMI_MATCH(DMI_PRODUCT_NAME, "MP061"),
- 		},
- 	},
-+	{
-+		.ident = "Dell OptiPlex 7080",
-+		.matches = {
-+			DMI_MATCH(DMI_SYS_VENDOR, "Dell Inc."),
-+			DMI_EXACT_MATCH(DMI_PRODUCT_NAME, "OptiPlex 7080"),
-+		},
-+	},
- 	{
- 		.ident = "Dell OptiPlex 7060",
- 		.matches = {
+diff --git a/drivers/gpu/drm/amd/display/dc/link/link_dpms.c b/drivers/gpu/drm/amd/display/dc/link/link_dpms.c
+index a6f1b3569f6f5..0b85826c7ea70 100644
+--- a/drivers/gpu/drm/amd/display/dc/link/link_dpms.c
++++ b/drivers/gpu/drm/amd/display/dc/link/link_dpms.c
+@@ -1931,7 +1931,7 @@ static void disable_link_dp(struct dc_link *link,
+ 			link->dc->hwss.edp_power_control(link, false);
+ 	}
+ 
+-	if (signal == SIGNAL_TYPE_DISPLAY_PORT_MST)
++	if (signal == SIGNAL_TYPE_DISPLAY_PORT_MST && link->sink_count == 0)
+ 		/* set the sink to SST mode after disabling the link */
+ 		enable_mst_on_sink(link, false);
+ 
+@@ -2082,7 +2082,12 @@ static enum dc_status enable_link_dp(struct dc_state *state,
+ 			pipe_ctx->stream->signal == SIGNAL_TYPE_DISPLAY_PORT &&
+ 			link->dc->debug.set_mst_en_for_sst) {
+ 		enable_mst_on_sink(link, true);
++	} else if (link->dpcd_caps.is_mst_capable &&
++		pipe_ctx->stream->signal == SIGNAL_TYPE_DISPLAY_PORT) {
++		/* disable mst on sink */
++		enable_mst_on_sink(link, false);
+ 	}
++
+ 	if (pipe_ctx->stream->signal == SIGNAL_TYPE_EDP) {
+ 		/*in case it is not on*/
+ 		if (!link->dc->config.edp_no_power_sequencing)
+@@ -2368,9 +2373,9 @@ void link_set_dpms_off(struct pipe_ctx *pipe_ctx)
+ 	if (pipe_ctx->stream->sink) {
+ 		if (pipe_ctx->stream->sink->sink_signal != SIGNAL_TYPE_VIRTUAL &&
+ 			pipe_ctx->stream->sink->sink_signal != SIGNAL_TYPE_NONE) {
+-			DC_LOG_DC("%s pipe_ctx dispname=%s signal=%x link=%d\n", __func__,
++			DC_LOG_DC("%s pipe_ctx dispname=%s signal=%x link=%d sink_count=%d\n", __func__,
+ 			pipe_ctx->stream->sink->edid_caps.display_name,
+-			pipe_ctx->stream->signal, link->link_index);
++			pipe_ctx->stream->signal, link->link_index, link->sink_count);
+ 		}
+ 	}
+ 
+@@ -2484,10 +2489,11 @@ void link_set_dpms_on(
+ 	if (pipe_ctx->stream->sink) {
+ 		if (pipe_ctx->stream->sink->sink_signal != SIGNAL_TYPE_VIRTUAL &&
+ 			pipe_ctx->stream->sink->sink_signal != SIGNAL_TYPE_NONE) {
+-			DC_LOG_DC("%s pipe_ctx dispname=%s signal=%x link=%d\n", __func__,
++			DC_LOG_DC("%s pipe_ctx dispname=%s signal=%x link=%d sink_count=%d\n", __func__,
+ 			pipe_ctx->stream->sink->edid_caps.display_name,
+ 			pipe_ctx->stream->signal,
+-			link->link_index);
++			link->link_index,
++			link->sink_count);
+ 		}
+ 	}
+ 
 -- 
 2.51.0
 
