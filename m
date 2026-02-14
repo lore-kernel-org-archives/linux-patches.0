@@ -1,47 +1,47 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF17A142E83;
-	Sat, 14 Feb 2026 21:26:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6BAB42D979F;
+	Sat, 14 Feb 2026 21:26:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771104370; cv=none; b=IkjXULV2eKkD3NlEoqMRqMI1v3zbSnoG4/TNsayx06sGCLE6wQGuc2S+W/IDJd0pdGx5ubDzMbV/9dPysZcmCvO+Pjp9bIlfcWfTXOLXi+QpAGG6JmJyn6+DkpbkM1WkqPI2qDJURvcODraVDpo67J9w0LsuzSCrdvE6Cofs0/8=
+	t=1771104372; cv=none; b=kBCMFnIrbzh059ldHyhH4bvymeyezmfKp3+IRFk2kTffJWuE5vwR8YTapFRVS+PbdtdxVT5Ups22ZJOCSlLQOutpqJSfks2e/CYVxfQmCfNwsIiue7RWqNFkBWR8mrnDc9PlvaHZFQFLguGO1jUEJdbVKe6lxbBcY9WcY5aFows=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771104370; c=relaxed/simple;
-	bh=Onzrktd5vADawuAhphT9wgldwaxCtyshJhJuIApQSE0=;
+	s=arc-20240116; t=1771104372; c=relaxed/simple;
+	bh=CXvypTIeB7bqrpF4E6BA7S6xZwcRORKDoYScrPumZ/E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=qzvW48jT7U3ON1RMcp/UtEc0USTeEr/MQ+ITasB3bXcpvvOhLJlIFKSvEMMccHQSL3YxddDiG4LmaaYxOeYhsgtxwBMSaWfR01c3rQSUI8r0UA4yKt5SP916Sxzb/y1DhwPGfbrWmIza7cS1/8VqHEXfpGcJxquhU7Dw7EtiDw8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=qJ7MWlua; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=moceIzbVgSh5HGWtKjyTUfXgU88Zn3n+ZorGXNJ5uYm0Jk6U+UZmhr1gfJqxwEl3An6xzQF0ZYGoafZBn1+3WlrQU76Kl6pgxq53jNZkUl8aFiM03Uq4kBrU1Leevcp3PeSDWq2MDJNRfgEOAWoh3osj3pLhda/EzBv44wQ5mhU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=l877/3MD; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="qJ7MWlua"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D46EC19422;
-	Sat, 14 Feb 2026 21:26:09 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="l877/3MD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 23864C2BC86;
+	Sat, 14 Feb 2026 21:26:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1771104370;
-	bh=Onzrktd5vADawuAhphT9wgldwaxCtyshJhJuIApQSE0=;
+	s=k20201202; t=1771104372;
+	bh=CXvypTIeB7bqrpF4E6BA7S6xZwcRORKDoYScrPumZ/E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qJ7MWluadm7eO3wk+0sTI2LsjsK++N8ImUv46D4mvzYynoXfU7UMCfFs5ssFVSzQw
-	 19wa39357DMwONxE2y1tVpi1aZZ9lR//gcssw7k0C0GvqHss8GxUablZKZpxBUtOuU
-	 M+S8CZhkcguQwlwIKUIbiSGrVU6QhLK+ot/TKsHX2L32isttpkFv3Egn0h4xNFu+C6
-	 fW4Iq3OjVY+apm98dH5SuGk3sSq6BtZ1I/Zz8AuSOnLEHEl5iOoisuleQfwcTc0bh5
-	 Zdh5ATjcX3l29beM2L6E06GcK9kPEmVoDij9rrRhHEisyI+5syJwNMUbZCGCM4B/y+
-	 0Qvl7IfnvOmfg==
+	b=l877/3MDoFO7OLo5HKiA+sEvvLapOziVDBJop/1aa0hGx1SskHE4P/1E1LnZH9ak2
+	 s9yubiX6U2v61Vc5YP4Tbr9d/JBXifVAMYN727H86qo/cNd5x4gBK3jRT5VlUbCJ3R
+	 WCX/Iyn37yRurOgbMGBpOxFZEivj3JOW8rK7CFOJsYjJZuHvVFn0t0ypbz3rptmZm2
+	 6GC33xJ7iCKDX96jNRqpRoynTDf/YWqztaZ9h+gBu3P4IqdeiLKRXcD6mfQkKoRyy8
+	 sZxTo1Zw28ZOjHBQfCoRHQ0HDMr6USXXgRWWO0a6Lgm4hY29Iyo+BRmSR1QcozSvnX
+	 dJEODxQuJs4vg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Geetha sowjanya <gakula@marvell.com>,
-	Simon Horman <horms@kernel.org>,
+Cc: Arnd Bergmann <arnd@arndb.de>,
+	Bobby Eshleman <bobbyeshleman@meta.com>,
+	Stefano Garzarella <sgarzare@redhat.com>,
+	Bryan Tan <bryan-bt.tan@broadcom.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	sgoutham@marvell.com,
-	lcherian@marvell.com,
-	jerinj@marvell.com,
-	hkelam@marvell.com,
-	sbhatta@marvell.com,
+	vishnu.dasa@broadcom.com,
+	linux-kernel@vger.kernel.org,
+	virtualization@lists.linux.dev,
 	netdev@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.19-5.10] octeontx2-af: Workaround SQM/PSE stalls by disabling sticky
-Date: Sat, 14 Feb 2026 16:23:12 -0500
-Message-ID: <20260214212452.782265-47-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.19-5.10] vmw_vsock: bypass false-positive Wnonnull warning with gcc-16
+Date: Sat, 14 Feb 2026 16:23:13 -0500
+Message-ID: <20260214212452.782265-48-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260214212452.782265-1-sashal@kernel.org>
 References: <20260214212452.782265-1-sashal@kernel.org>
@@ -51,102 +51,145 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.19
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Geetha sowjanya <gakula@marvell.com>
+From: Arnd Bergmann <arnd@arndb.de>
 
-[ Upstream commit 70e9a5760abfb6338d63994d4de6b0778ec795d6 ]
+[ Upstream commit e25dbf561e03c0c5e36228e3b8b784392819ce85 ]
 
-NIX SQ manager sticky mode is known to cause stalls when multiple SQs
-share an SMQ and transmit concurrently. Additionally, PSE may deadlock
-on transitions between sticky and non-sticky transmissions. There is
-also a credit drop issue observed when certain condition clocks are
-gated.
+The gcc-16.0.1 snapshot produces a false-positive warning that turns
+into a build failure with CONFIG_WERROR:
 
-work around these hardware errata by:
-- Disabling SQM sticky operation:
-  - Clear TM6 (bit 15)
-  - Clear TM11 (bit 14)
-- Disabling sticky → non-sticky transition path that can deadlock PSE:
-  - Clear TM5 (bit 23)
-- Preventing credit drops by keeping the control-flow clock enabled:
-  - Set TM9 (bit 21)
+In file included from arch/x86/include/asm/string.h:6,
+                 from net/vmw_vsock/vmci_transport.c:10:
+In function 'vmci_transport_packet_init',
+    inlined from '__vmci_transport_send_control_pkt.constprop' at net/vmw_vsock/vmci_transport.c:198:2:
+arch/x86/include/asm/string_32.h:150:25: error: argument 2 null where non-null expected because argument 3 is nonzero [-Werror=nonnull]
+  150 | #define memcpy(t, f, n) __builtin_memcpy(t, f, n)
+      |                         ^~~~~~~~~~~~~~~~~~~~~~~~~
+net/vmw_vsock/vmci_transport.c:164:17: note: in expansion of macro 'memcpy'
+  164 |                 memcpy(&pkt->u.wait, wait, sizeof(pkt->u.wait));
+      |                 ^~~~~~
+arch/x86/include/asm/string_32.h:150:25: note: in a call to built-in function '__builtin_memcpy'
+net/vmw_vsock/vmci_transport.c:164:17: note: in expansion of macro 'memcpy'
+  164 |                 memcpy(&pkt->u.wait, wait, sizeof(pkt->u.wait));
+      |                 ^~~~~~
 
-These changes are applied via NIX_AF_SQM_DBG_CTL_STATUS. With this
-configuration the SQM/PSE maintain forward progress under load without
-credit loss, at the cost of disabling sticky optimizations.
+This seems relatively harmless, and it so far the only instance of this
+warning I have found. The __vmci_transport_send_control_pkt function
+is called either with wait=NULL or with one of the type values that
+pass 'wait' into memcpy() here, but not from the same caller.
 
-Signed-off-by: Geetha sowjanya <gakula@marvell.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20260127125147.1642-1-gakula@marvell.com
+Replacing the memcpy with a struct assignment is otherwise the same
+but avoids the warning.
+
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Reviewed-by: Bobby Eshleman <bobbyeshleman@meta.com>
+Reviewed-by: Stefano Garzarella <sgarzare@redhat.com>
+Reviewed-by: Bryan Tan <bryan-bt.tan@broadcom.com>
+Link: https://patch.msgid.link/20260203163406.2636463-1-arnd@kernel.org
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-The register definition exists in the codebase, and the code modifying
-it exists. This is a self-contained change that modifies existing
-initialization code — no new dependencies needed.
+## Analysis
 
-### 8. Summary
+### Commit Message Analysis
 
-**What it fixes**: Hardware errata causing network stalls, PSE deadlock,
-and credit drops on OcteonTX2 hardware under concurrent transmission
-load.
+This commit addresses a **false-positive compiler warning** with
+gcc-16.0.1 that becomes a **build failure** when `CONFIG_WERROR` is
+enabled. The fix replaces a `memcpy()` call with a direct struct
+assignment, which is semantically equivalent but avoids triggering the
+`-Wnonnull` warning.
 
-**Why it matters for stable**: Users running OcteonTX2 hardware on
-stable kernels will experience these hardware bugs (stalls, deadlocks,
-packet loss) without this workaround. These are reliability/availability
-issues for networking hardware commonly used in production.
+### Code Change Analysis
 
-**Meets stable rules**:
-- Obviously correct: Simple register bit manipulation with clear
-  documentation
-- Fixes real bugs: Hardware stalls, deadlocks, and credit drops
-- Small and contained: Single file, ~10 lines of actual change
-- No new features: Hardware errata workaround only
-- Reviewed by networking maintainers
+The change is extremely minimal — a single line change:
+```c
+- memcpy(&pkt->u.wait, wait, sizeof(pkt->u.wait));
++ pkt->u.wait = *wait;
+```
 
-**Risk**: Minimal. Only affects OcteonTX2 hardware initialization. The
-trade-off (disabling sticky optimizations) is explicitly acknowledged
-and accepted.
+This is a purely mechanical transformation. A struct assignment and a
+`memcpy` of the same struct size produce identical behavior. The
+compiler generates equivalent code. The only difference is that the
+struct assignment form doesn't trigger gcc-16's `-Wnonnull` analysis,
+which was producing a false positive by analyzing the `memcpy` call
+without considering that the `wait` parameter is only NULL for packet
+types that don't reach this code path.
+
+### Classification: Build Fix
+
+This is a **build fix** — one of the explicitly allowed categories for
+stable backports. With `CONFIG_WERROR` enabled (which is the default in
+many distribution kernel configs and increasingly common), this warning
+becomes a hard build error. Users building with gcc-16 and
+`CONFIG_WERROR` would be unable to compile the kernel.
+
+### Risk Assessment
+
+- **Risk: Extremely low.** The change is a 1:1 semantic equivalent.
+  `pkt->u.wait = *wait` does exactly what `memcpy(&pkt->u.wait, wait,
+  sizeof(pkt->u.wait))` does — it copies the struct contents. There is
+  zero behavioral change.
+- **Scope: One line in one file.** Maximally contained.
+- **Testing: Well-reviewed.** Has three `Reviewed-by` tags from relevant
+  maintainers (Bobby Eshleman, Stefano Garzarella, Bryan Tan).
+
+### Dependency Check
+
+This commit has no dependencies on other patches. The code being
+modified (`vmci_transport_packet_init`) has existed for a long time in
+the stable trees.
+
+### User Impact
+
+- Users building the kernel with gcc-16 and `CONFIG_WERROR` will hit a
+  build failure without this fix.
+- gcc-16 is a snapshot/development compiler now, but will become the
+  standard gcc version in distributions. As distributions adopt gcc-16,
+  this will become a real issue for stable kernel users.
+- Build fixes are critical for the usability of stable kernels.
+
+### Stability Assessment
+
+- The change is trivially correct — struct assignment and memcpy of a
+  struct are equivalent.
+- Multiple experienced reviewers have confirmed correctness.
+- Zero risk of runtime regression.
+
+### Conclusion
+
+This is a textbook stable backport candidate: a minimal, zero-risk build
+fix that prevents compilation failure with newer compiler versions. It
+falls squarely into the "build fixes that prevent compilation" exception
+category. The change is semantically identical to the original code and
+has been well-reviewed.
 
 **YES**
 
- drivers/net/ethernet/marvell/octeontx2/af/rvu_nix.c | 12 +++++++++---
- 1 file changed, 9 insertions(+), 3 deletions(-)
+ net/vmw_vsock/vmci_transport.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/marvell/octeontx2/af/rvu_nix.c b/drivers/net/ethernet/marvell/octeontx2/af/rvu_nix.c
-index 2f485a930edd1..49f7ff5eddfc8 100644
---- a/drivers/net/ethernet/marvell/octeontx2/af/rvu_nix.c
-+++ b/drivers/net/ethernet/marvell/octeontx2/af/rvu_nix.c
-@@ -4938,12 +4938,18 @@ static int rvu_nix_block_init(struct rvu *rvu, struct nix_hw *nix_hw)
- 	/* Set chan/link to backpressure TL3 instead of TL2 */
- 	rvu_write64(rvu, blkaddr, NIX_AF_PSE_CHANNEL_LEVEL, 0x01);
+diff --git a/net/vmw_vsock/vmci_transport.c b/net/vmw_vsock/vmci_transport.c
+index 7eccd6708d664..aca3132689cf1 100644
+--- a/net/vmw_vsock/vmci_transport.c
++++ b/net/vmw_vsock/vmci_transport.c
+@@ -161,7 +161,7 @@ vmci_transport_packet_init(struct vmci_transport_packet *pkt,
  
--	/* Disable SQ manager's sticky mode operation (set TM6 = 0)
-+	/* Disable SQ manager's sticky mode operation (set TM6 = 0, TM11 = 0)
- 	 * This sticky mode is known to cause SQ stalls when multiple
--	 * SQs are mapped to same SMQ and transmitting pkts at a time.
-+	 * SQs are mapped to same SMQ and transmitting pkts simultaneously.
-+	 * NIX PSE may deadlock when there are any sticky to non-sticky
-+	 * transmission. Hence disable it (TM5 = 0).
- 	 */
- 	cfg = rvu_read64(rvu, blkaddr, NIX_AF_SQM_DBG_CTL_STATUS);
--	cfg &= ~BIT_ULL(15);
-+	cfg &= ~(BIT_ULL(15) | BIT_ULL(14) | BIT_ULL(23));
-+	/* NIX may drop credits when condition clocks are turned off.
-+	 * Hence enable control flow clk (set TM9 = 1).
-+	 */
-+	cfg |= BIT_ULL(21);
- 	rvu_write64(rvu, blkaddr, NIX_AF_SQM_DBG_CTL_STATUS, cfg);
+ 	case VMCI_TRANSPORT_PACKET_TYPE_WAITING_READ:
+ 	case VMCI_TRANSPORT_PACKET_TYPE_WAITING_WRITE:
+-		memcpy(&pkt->u.wait, wait, sizeof(pkt->u.wait));
++		pkt->u.wait = *wait;
+ 		break;
  
- 	ltdefs = rvu->kpu.lt_def;
+ 	case VMCI_TRANSPORT_PACKET_TYPE_REQUEST2:
 -- 
 2.51.0
 
