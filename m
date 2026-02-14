@@ -1,46 +1,49 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8696E1D5ABA;
-	Sat, 14 Feb 2026 01:03:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A646D3EBF2C;
+	Sat, 14 Feb 2026 01:03:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771031022; cv=none; b=g1XBbXYIiP0XJ+WOAXNSev16cqzuaYb4kj5lwKd2cOtvH68T1ztd7v9H/l8nIngnkCO6MVYR4O0RLgzOVSyUHU96hEf9ORkrCxBIBy0WzBB099/8ZpducfA0pCiXSE9mlstsmKJRd5dRqpCWN1bdg4dxnx8xGFNmVtuTqZmVID0=
+	t=1771031027; cv=none; b=JfMaAAOP1KT51UtGqxugJe7jqohbIkZ0/QaA6NhEhTOBxmuXwl2QBFu6EcfAZBcueGGbKcXobAE/89hEOSg0dVkd/7A0Ea0RgwvokA8E793oS23U8UL0zrrkF4bJ99/rImzwT1dTGXAMxcHGfZnBH3kKSMkQFx5sxBdvv904STU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771031022; c=relaxed/simple;
-	bh=i0m5jpLcq9vTx8uxxU40OSIo5rQevyWzbjML5meHEcE=;
+	s=arc-20240116; t=1771031027; c=relaxed/simple;
+	bh=yMAj4Q6U7bOmCP9tvreLiK2cUyGHvdwR0dAJ/lbFHj4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tvtAOM1Kx9gqZ77iCWAgLkSZvDBN8e0lnipu7aa4qzmKKi72juVJODad6wHZYbgqW7No5BRE57TGrEOBlmO8EnoywXI0CSoEux6YxpbKjmJNuMXYif7GkQzvXC5fTsDAIy7ztSIELxPiWcTssd2xazFvvhMsDZyrTuuHko/3kqw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=SS2lCril; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=iWhE9Tc14YQARodPcjQ0PH5gV07sXwph2IyJ4YvXCTdn6fUnJz227WmMVqwppTGCfe3G4V+6FFis+3PH2JBrgGjS2bws9n9BHB16ZPlo9EQnDIswdhfhG0pwnorxlJVqkpanP1LSE4o21hGyA+tYBuhaX+MZkkdbKt86kb1XfCk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=i+PYajGc; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="SS2lCril"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 55C37C16AAE;
-	Sat, 14 Feb 2026 01:03:41 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="i+PYajGc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4659C116C6;
+	Sat, 14 Feb 2026 01:03:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1771031022;
-	bh=i0m5jpLcq9vTx8uxxU40OSIo5rQevyWzbjML5meHEcE=;
+	s=k20201202; t=1771031027;
+	bh=yMAj4Q6U7bOmCP9tvreLiK2cUyGHvdwR0dAJ/lbFHj4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SS2lCrilBfPXGco1KrNlen4ztVqbwZMFgIUAwfvi3LoZ6bjb+29k1lmHD3Nva2HSI
-	 S1uXiAi+swkUYYSZwAwocL/FkTwwh1RvYZSGxIzKvw+hrBzLobRSHulbKuQaDVQedf
-	 gAYjhfLEGSm3TYCAro/umOxMzDJEHZzhJkVhVXr3kBIVA238kQkdzLeaTn9H5oGFDV
-	 I3/jU/JIMbcRtQWXo60PPMBLw0IzzCV6dxyqBl/25/UNxk8fGAq5Kzh+PRGUPDRnPh
-	 70OsBYuq7TYbbpcNdv5GKUh4xtA1kD5S43n63v8BMmG2CG4j0PyaKfWX1vE+Qgk0he
-	 OQrKgX0751oYQ==
+	b=i+PYajGcCimHhIGrS2MKuo2FDczgbLoCscmKXrAJHV1sR71AKHjN+j99NeYNhYOno
+	 I31F8fatNvVWq6jqAvnS85MSsri2dk/RoL0e0YhVxBvLHI1cFRvSCKlfnRc34fIILl
+	 xIVEeKmsKPC8xTUb9H0BKbozmmv/rSl0VScPeeqB4MD/kKJazdpTm3AxqX73MNfVg4
+	 gL/iQ4Lt9wvn8HHlbMpIS3Rn/gLX+HfzSRlSPfRHFNPJ0GJVEq6q1gdJzVHypgNNwu
+	 2+ZeA6oKwvRhyJ5j/gKPQ/TB8XV2e7XwsYV0Z6uJS0euc/OdfqgvkG80BMrVoYpxLk
+	 sjQzWF8VnE+Sg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Ludovic Desroches <ludovic.desroches@microchip.com>,
-	Manikandan Muralidharan <manikandan.m@microchip.com>,
+Cc: "Wang, Sung-huai" <Danny.Wang@amd.com>,
+	Nicholas Kazlauskas <nicholas.kazlauskas@amd.com>,
+	Matthew Stewart <matthew.stewart2@amd.com>,
+	Dan Wheeler <daniel.wheeler@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>,
-	dharma.b@microchip.com,
-	nicolas.ferre@microchip.com,
-	alexandre.belloni@bootlin.com,
-	claudiu.beznea@tuxon.dev,
-	dri-devel@lists.freedesktop.org,
-	linux-arm-kernel@lists.infradead.org
-Subject: [PATCH AUTOSEL 6.19-5.10] drm/atmel-hlcdc: fix memory leak from the atomic_destroy_state callback
-Date: Fri, 13 Feb 2026 19:58:27 -0500
-Message-ID: <20260214010245.3671907-27-sashal@kernel.org>
+	Charlene.Liu@amd.com,
+	neil.armstrong@linaro.org,
+	Jing.Zhou@amd.com,
+	Zhongwei.Zhang@amd.com,
+	Wesley.Chalmers@amd.com,
+	yelangyan@huaqin.corp-partner.google.com
+Subject: [PATCH AUTOSEL 6.19-6.18] drm/amd/display: Revert "init dispclk from bootup clock for DCN315"
+Date: Fri, 13 Feb 2026 19:58:28 -0500
+Message-ID: <20260214010245.3671907-28-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260214010245.3671907-1-sashal@kernel.org>
 References: <20260214010245.3671907-1-sashal@kernel.org>
@@ -55,180 +58,224 @@ X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.19
 Content-Transfer-Encoding: 8bit
 
-From: Ludovic Desroches <ludovic.desroches@microchip.com>
+From: "Wang, Sung-huai" <Danny.Wang@amd.com>
 
-[ Upstream commit f12352471061df83a36edf54bbb16284793284e4 ]
+[ Upstream commit a625dc4989a2affb8f06e7b418bf30e1474b99c1 ]
 
-After several commits, the slab memory increases. Some drm_crtc_commit
-objects are not freed. The atomic_destroy_state callback only put the
-framebuffer. Use the __drm_atomic_helper_plane_destroy_state() function
-to put all the objects that are no longer needed.
+[Why&How]
+This reverts commit 14bb17cc37e0.
+Due to the change, the display shows garbage on startup.
 
-It has been seen after hours of usage of a graphics application or using
-kmemleak:
+We have an alternative solution for the original issue:
+d24203bb629f ("drm/amd/display: Re-check seamless boot can be enabled or not")
 
-unreferenced object 0xc63a6580 (size 64):
-  comm "egt_basic", pid 171, jiffies 4294940784
-  hex dump (first 32 bytes):
-    40 50 34 c5 01 00 00 00 ff ff ff ff 8c 65 3a c6  @P4..........e:.
-    8c 65 3a c6 ff ff ff ff 98 65 3a c6 98 65 3a c6  .e:......e:..e:.
-  backtrace (crc c25aa925):
-    kmemleak_alloc+0x34/0x3c
-    __kmalloc_cache_noprof+0x150/0x1a4
-    drm_atomic_helper_setup_commit+0x1e8/0x7bc
-    drm_atomic_helper_commit+0x3c/0x15c
-    drm_atomic_commit+0xc0/0xf4
-    drm_atomic_helper_set_config+0x84/0xb8
-    drm_mode_setcrtc+0x32c/0x810
-    drm_ioctl+0x20c/0x488
-    sys_ioctl+0x14c/0xc20
-    ret_fast_syscall+0x0/0x54
-
-Signed-off-by: Ludovic Desroches <ludovic.desroches@microchip.com>
-Reviewed-by: Manikandan Muralidharan <manikandan.m@microchip.com>
-Link: https://patch.msgid.link/20251024-lcd_fixes_mainlining-v1-1-79b615130dc3@microchip.com
-Signed-off-by: Manikandan Muralidharan <manikandan.m@microchip.com>
+Reviewed-by: Nicholas Kazlauskas <nicholas.kazlauskas@amd.com>
+Signed-off-by: Wang, Sung-huai <Danny.Wang@amd.com>
+Signed-off-by: Matthew Stewart <matthew.stewart2@amd.com>
+Tested-by: Dan Wheeler <daniel.wheeler@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-## Analysis of drm/atmel-hlcdc: fix memory leak from
-atomic_destroy_state callback
+Both the broken commit and the alternative fix are in v6.19. So for the
+6.19.y stable tree:
+- The broken commit IS there (causing display garbage)
+- The alternative fix IS there (solving the original problem)
+- This revert is needed to fix the regression
 
-### 1. Commit Message Analysis
+### Conclusion
 
-The commit message is explicit and well-documented:
-- **Subject clearly states "fix memory leak"** - this is a bug fix
-- **Detailed explanation**: `drm_crtc_commit` objects are not being
-  freed because the `atomic_destroy_state` callback only puts the
-  framebuffer, but doesn't clean up other objects held in the plane
-  state
-- **Includes kmemleak backtrace** - the bug is reproducible and
-  confirmed with a kernel debugging tool
-- **Real-world impact described**: "seen after hours of usage of a
-  graphics application" - this affects actual users running graphical
-  applications on Atmel/Microchip SoCs
-- **Reviewed-by tag** from the subsystem maintainer
+This commit fixes a **display corruption regression** (garbage on
+startup) for DCN315 AMD hardware. It's a clean revert of a commit that
+exists in v6.19. For the 6.19.y stable tree, this revert is critical
+because users with DCN315 hardware would see garbage on their display at
+boot. The change is a straightforward revert, well-reviewed (Reviewed-
+by, Tested-by), and restores known-good behavior.
 
-### 2. Code Change Analysis
+The fix is important for the 6.19.y stable tree specifically. For older
+stable trees (6.12.y, 6.6.y, etc.), the broken commit was never present,
+so this revert isn't needed there.
 
-The fix is extremely small and surgical - it replaces a manual
-`drm_framebuffer_put()` call with
-`__drm_atomic_helper_plane_destroy_state()`.
-
-**What was wrong:**
-```c
-// OLD - only freed the framebuffer reference
-if (s->fb)
-    drm_framebuffer_put(s->fb);
-```
-
-**What the fix does:**
-```c
-// NEW - properly cleans up ALL objects in the plane state
-__drm_atomic_helper_plane_destroy_state(s);
-```
-
-The function `__drm_atomic_helper_plane_destroy_state()` is the standard
-DRM helper that properly releases all resources associated with a plane
-state, including:
-- The framebuffer reference (what was already done)
-- The fence
-- The `drm_crtc_commit` object (what was being leaked)
-- Any other state tracked by the DRM core
-
-This is a textbook case of a driver not using the standard helper
-function, leading to incomplete cleanup and memory leaks. The
-`drm_crtc_commit` objects accumulate over time, consuming slab memory.
-
-### 3. Classification
-
-- **Bug type**: Memory leak (resource leak)
-- **Severity**: Medium-high - progressive memory consumption over hours
-  of use eventually impacts system stability
-- **Category**: Missing cleanup in a standard callback that should use
-  the DRM helper function
-
-### 4. Scope and Risk Assessment
-
-- **Lines changed**: 3 lines (2 removed, 1 added) - extremely minimal
-- **Files changed**: 1 file only
-- **Risk**: Very low - `__drm_atomic_helper_plane_destroy_state()` is a
-  well-established DRM core helper function used by virtually all DRM
-  drivers. It's a superset of what was already being done (framebuffer
-  put), plus proper cleanup of other state objects. This is not
-  introducing new behavior; it's completing the cleanup that should have
-  always been done.
-- **Could it break something?** Extremely unlikely. The helper function
-  does exactly what the old code did (put framebuffer) plus additional
-  necessary cleanup.
-
-### 5. User Impact
-
-- **Affected users**: Anyone using the Atmel HLCDC display controller
-  (common in Microchip/Atmel SAM series SoCs used in embedded systems)
-- **Symptoms**: Gradual memory consumption increase during graphics
-  usage, eventually leading to OOM or degraded system performance
-- **Trigger**: Normal graphics usage over time - this is a hot path hit
-  on every atomic commit
-- **Severity if triggered**: Memory leak in a frequently-called path
-  leads to eventual system degradation or OOM
-
-### 6. Stability Indicators
-
-- **Reviewed-by** from subsystem maintainer (Manikandan Muralidharan)
-- Uses a standard, well-tested DRM helper function
-- The fix pattern (replacing manual cleanup with the proper helper) is a
-  very common and well-understood DRM fix
-
-### 7. Dependency Check
-
-- `__drm_atomic_helper_plane_destroy_state()` has been available in the
-  DRM subsystem for many years (since 2015+), so it exists in all active
-  stable trees
-- No dependency on other patches - this is a self-contained fix
-
-### 8. Stable Kernel Rules Compliance
-
-1. **Obviously correct and tested**: Yes - uses the standard helper,
-   confirmed with kmemleak
-2. **Fixes a real bug**: Yes - memory leak confirmed with kmemleak and
-   observed in production use
-3. **Important issue**: Yes - progressive memory leak in a hot path
-   affecting embedded systems
-4. **Small and contained**: Yes - 3-line change in a single file
-5. **No new features**: Correct - pure bug fix
-6. **Applies cleanly**: Should apply cleanly as this is a driver-
-   specific change in a stable file
-
-### Summary
-
-This is a clear-cut memory leak fix. It's small, surgical, uses a
-standard helper function, has been confirmed with kmemleak, affects real
-users running graphics applications on Atmel/Microchip embedded
-hardware, and carries virtually no regression risk. It meets all stable
-kernel backport criteria.
+Given that it fixes a clear, severe regression (display garbage on
+startup) in v6.19, is properly reviewed and tested, and is a clean
+revert with low risk, this should be backported to the 6.19.y stable
+tree.
 
 **YES**
 
- drivers/gpu/drm/atmel-hlcdc/atmel_hlcdc_plane.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ .../dc/clk_mgr/dcn315/dcn315_clk_mgr.c        | 90 +------------------
+ .../dc/clk_mgr/dcn315/dcn315_clk_mgr.h        |  1 -
+ 2 files changed, 3 insertions(+), 88 deletions(-)
 
-diff --git a/drivers/gpu/drm/atmel-hlcdc/atmel_hlcdc_plane.c b/drivers/gpu/drm/atmel-hlcdc/atmel_hlcdc_plane.c
-index 0ffec44c6d317..c0075894dc422 100644
---- a/drivers/gpu/drm/atmel-hlcdc/atmel_hlcdc_plane.c
-+++ b/drivers/gpu/drm/atmel-hlcdc/atmel_hlcdc_plane.c
-@@ -1190,8 +1190,7 @@ static void atmel_hlcdc_plane_atomic_destroy_state(struct drm_plane *p,
- 			      state->dscrs[i]->self);
- 	}
+diff --git a/drivers/gpu/drm/amd/display/dc/clk_mgr/dcn315/dcn315_clk_mgr.c b/drivers/gpu/drm/amd/display/dc/clk_mgr/dcn315/dcn315_clk_mgr.c
+index 3a881451e9da4..c49268db85f68 100644
+--- a/drivers/gpu/drm/amd/display/dc/clk_mgr/dcn315/dcn315_clk_mgr.c
++++ b/drivers/gpu/drm/amd/display/dc/clk_mgr/dcn315/dcn315_clk_mgr.c
+@@ -40,7 +40,7 @@
+ #include "dm_helpers.h"
  
--	if (s->fb)
--		drm_framebuffer_put(s->fb);
-+	__drm_atomic_helper_plane_destroy_state(s);
+ #include "dc_dmub_srv.h"
+-#include "reg_helper.h"
++
+ #include "logger_types.h"
+ #undef DC_LOGGER
+ #define DC_LOGGER \
+@@ -48,43 +48,9 @@
  
- 	kfree(state);
+ #include "link_service.h"
+ 
+-#define MAX_INSTANCE                                        7
+-#define MAX_SEGMENT                                         8
+-
+-struct IP_BASE_INSTANCE {
+-	unsigned int segment[MAX_SEGMENT];
+-};
+-
+-struct IP_BASE {
+-	struct IP_BASE_INSTANCE instance[MAX_INSTANCE];
+-};
+-
+-static const struct IP_BASE CLK_BASE = { { { { 0x00016C00, 0x02401800, 0, 0, 0, 0, 0, 0 } },
+-					{ { 0x00016E00, 0x02401C00, 0, 0, 0, 0, 0, 0 } },
+-					{ { 0x00017000, 0x02402000, 0, 0, 0, 0, 0, 0 } },
+-					{ { 0x00017200, 0x02402400, 0, 0, 0, 0, 0, 0 } },
+-					{ { 0x0001B000, 0x0242D800, 0, 0, 0, 0, 0, 0 } },
+-					{ { 0x0001B200, 0x0242DC00, 0, 0, 0, 0, 0, 0 } } } };
+-
+-#define regCLK1_CLK0_CURRENT_CNT			0x0314
+-#define regCLK1_CLK0_CURRENT_CNT_BASE_IDX	0
+-#define regCLK1_CLK1_CURRENT_CNT			0x0315
+-#define regCLK1_CLK1_CURRENT_CNT_BASE_IDX	0
+-#define regCLK1_CLK2_CURRENT_CNT			0x0316
+-#define regCLK1_CLK2_CURRENT_CNT_BASE_IDX	0
+-#define regCLK1_CLK3_CURRENT_CNT			0x0317
+-#define regCLK1_CLK3_CURRENT_CNT_BASE_IDX	0
+-#define regCLK1_CLK4_CURRENT_CNT			0x0318
+-#define regCLK1_CLK4_CURRENT_CNT_BASE_IDX	0
+-#define regCLK1_CLK5_CURRENT_CNT			0x0319
+-#define regCLK1_CLK5_CURRENT_CNT_BASE_IDX	0
+-
+ #define TO_CLK_MGR_DCN315(clk_mgr)\
+ 	container_of(clk_mgr, struct clk_mgr_dcn315, base)
+ 
+-#define REG(reg_name) \
+-	(CLK_BASE.instance[0].segment[reg ## reg_name ## _BASE_IDX] + reg ## reg_name)
+-
+ #define UNSUPPORTED_DCFCLK 10000000
+ #define MIN_DPP_DISP_CLK     100000
+ 
+@@ -172,7 +138,7 @@ static void dcn315_update_clocks(struct clk_mgr *clk_mgr_base,
+ 	if (dc->work_arounds.skip_clock_update)
+ 		return;
+ 
+-	clk_mgr_base->clks.zstate_support = new_clocks->zstate_support;
++	display_count = dcn315_get_active_display_cnt_wa(dc, context);
+ 	/*
+ 	 * if it is safe to lower, but we are already in the lower state, we don't have to do anything
+ 	 * also if safe to lower is false, we just go in the higher state
+@@ -185,7 +151,6 @@ static void dcn315_update_clocks(struct clk_mgr *clk_mgr_base,
+ 		}
+ 		/* check that we're not already in lower */
+ 		if (clk_mgr_base->clks.pwr_state != DCN_PWR_STATE_LOW_POWER) {
+-			display_count = dcn315_get_active_display_cnt_wa(dc, context);
+ 			/* if we can go lower, go lower */
+ 			if (display_count == 0) {
+ 				union display_idle_optimization_u idle_info = { 0 };
+@@ -279,38 +244,9 @@ static void dcn315_update_clocks(struct clk_mgr *clk_mgr_base,
+ 	dc_wake_and_execute_dmub_cmd(dc->ctx, &cmd, DM_DMUB_WAIT_TYPE_WAIT);
  }
+ 
+-static void dcn315_dump_clk_registers_internal(struct dcn35_clk_internal *internal, struct clk_mgr *clk_mgr_base)
+-{
+-	struct clk_mgr_internal *clk_mgr = TO_CLK_MGR_INTERNAL(clk_mgr_base);
+-
+-	// read dtbclk
+-	internal->CLK1_CLK4_CURRENT_CNT = REG_READ(CLK1_CLK4_CURRENT_CNT);
+-
+-	// read dcfclk
+-	internal->CLK1_CLK3_CURRENT_CNT = REG_READ(CLK1_CLK3_CURRENT_CNT);
+-
+-	// read dppclk
+-	internal->CLK1_CLK1_CURRENT_CNT = REG_READ(CLK1_CLK1_CURRENT_CNT);
+-
+-	// read dprefclk
+-	internal->CLK1_CLK2_CURRENT_CNT = REG_READ(CLK1_CLK2_CURRENT_CNT);
+-
+-	// read dispclk
+-	internal->CLK1_CLK0_CURRENT_CNT = REG_READ(CLK1_CLK0_CURRENT_CNT);
+-}
+-
+ static void dcn315_dump_clk_registers(struct clk_state_registers_and_bypass *regs_and_bypass,
+ 		struct clk_mgr *clk_mgr_base, struct clk_log_info *log_info)
+ {
+-	struct dcn35_clk_internal internal = {0};
+-
+-	dcn315_dump_clk_registers_internal(&internal, clk_mgr_base);
+-
+-	regs_and_bypass->dcfclk = internal.CLK1_CLK3_CURRENT_CNT / 10;
+-	regs_and_bypass->dprefclk = internal.CLK1_CLK2_CURRENT_CNT / 10;
+-	regs_and_bypass->dispclk = internal.CLK1_CLK0_CURRENT_CNT / 10;
+-	regs_and_bypass->dppclk = internal.CLK1_CLK1_CURRENT_CNT / 10;
+-	regs_and_bypass->dtbclk = internal.CLK1_CLK4_CURRENT_CNT / 10;
+ 	return;
+ }
+ 
+@@ -657,32 +593,13 @@ static struct clk_mgr_funcs dcn315_funcs = {
+ 	.get_dp_ref_clk_frequency = dce12_get_dp_ref_freq_khz,
+ 	.get_dtb_ref_clk_frequency = dcn31_get_dtb_ref_freq_khz,
+ 	.update_clocks = dcn315_update_clocks,
+-	.init_clocks = dcn315_init_clocks,
++	.init_clocks = dcn31_init_clocks,
+ 	.enable_pme_wa = dcn315_enable_pme_wa,
+ 	.are_clock_states_equal = dcn31_are_clock_states_equal,
+ 	.notify_wm_ranges = dcn315_notify_wm_ranges
+ };
+ extern struct clk_mgr_funcs dcn3_fpga_funcs;
+ 
+-void dcn315_init_clocks(struct clk_mgr *clk_mgr)
+-{
+-	struct clk_mgr_internal *clk_mgr_int = TO_CLK_MGR_INTERNAL(clk_mgr);
+-	uint32_t ref_dtbclk = clk_mgr->clks.ref_dtbclk_khz;
+-	struct clk_mgr_dcn315 *clk_mgr_dcn315 = TO_CLK_MGR_DCN315(clk_mgr_int);
+-	struct clk_log_info log_info = {0};
+-
+-	memset(&(clk_mgr->clks), 0, sizeof(struct dc_clocks));
+-	// Assumption is that boot state always supports pstate
+-	clk_mgr->clks.ref_dtbclk_khz = ref_dtbclk;	// restore ref_dtbclk
+-	clk_mgr->clks.p_state_change_support = true;
+-	clk_mgr->clks.prev_p_state_change_support = true;
+-	clk_mgr->clks.pwr_state = DCN_PWR_STATE_UNKNOWN;
+-	clk_mgr->clks.zstate_support = DCN_ZSTATE_SUPPORT_UNKNOWN;
+-
+-	dcn315_dump_clk_registers(&clk_mgr->boot_snapshot, &clk_mgr_dcn315->base.base, &log_info);
+-	clk_mgr->clks.dispclk_khz =  clk_mgr->boot_snapshot.dispclk * 1000;
+-}
+-
+ void dcn315_clk_mgr_construct(
+ 		struct dc_context *ctx,
+ 		struct clk_mgr_dcn315 *clk_mgr,
+@@ -743,7 +660,6 @@ void dcn315_clk_mgr_construct(
+ 	/* Saved clocks configured at boot for debug purposes */
+ 	dcn315_dump_clk_registers(&clk_mgr->base.base.boot_snapshot,
+ 				  &clk_mgr->base.base, &log_info);
+-	clk_mgr->base.base.clks.dispclk_khz =  clk_mgr->base.base.boot_snapshot.dispclk * 1000;
+ 
+ 	clk_mgr->base.base.dprefclk_khz = 600000;
+ 	clk_mgr->base.base.dprefclk_khz = dcn315_smu_get_dpref_clk(&clk_mgr->base);
+diff --git a/drivers/gpu/drm/amd/display/dc/clk_mgr/dcn315/dcn315_clk_mgr.h b/drivers/gpu/drm/amd/display/dc/clk_mgr/dcn315/dcn315_clk_mgr.h
+index 642ae3d4a7909..ac36ddf5dd1af 100644
+--- a/drivers/gpu/drm/amd/display/dc/clk_mgr/dcn315/dcn315_clk_mgr.h
++++ b/drivers/gpu/drm/amd/display/dc/clk_mgr/dcn315/dcn315_clk_mgr.h
+@@ -44,7 +44,6 @@ void dcn315_clk_mgr_construct(struct dc_context *ctx,
+ 		struct pp_smu_funcs *pp_smu,
+ 		struct dccg *dccg);
+ 
+-void dcn315_init_clocks(struct clk_mgr *clk_mgr);
+ void dcn315_clk_mgr_destroy(struct clk_mgr_internal *clk_mgr_int);
+ 
+ #endif //__DCN315_CLK_MGR_H__
 -- 
 2.51.0
 
