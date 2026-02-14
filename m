@@ -1,44 +1,51 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BCD75194098;
-	Sat, 14 Feb 2026 01:04:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B19CA1DE8AE;
+	Sat, 14 Feb 2026 01:04:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771031096; cv=none; b=QHtV2AGJgW7gsmIcTHwFjO5Bdy0Ex3RuGx0JlzkdF35FKyxPfLuUCL6BduCrUxBexU938OWiXNjQqrN1wyQ0Fz/4bR2swHYRHwkJZUyFxwPBml0vW3yDapfSww2QgHDYwpJNdeIlv487h9iLBe6A9XFCUhX2wfB6ozY/dRZ4AxU=
+	t=1771031098; cv=none; b=RH4gm9b3IianVWbCBrA7tJQFqCNwAOIIY+EaSNGIRkiHhz6n6b5Oy34exSyTYSn2RUTMbFcxGBef6XgOYL5OiAjxhOJKl4JGRX315e8JCjWQOFVHIsXfkhmDyqg9xcI4SfvpXvfIGR1jtBSJaHySK60eSj2VLN5o0BAwNehRhVU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771031096; c=relaxed/simple;
-	bh=/TTtgSTYlHtOVL08vZ4dDy1Te2t2rTpZJILELC3treU=;
+	s=arc-20240116; t=1771031098; c=relaxed/simple;
+	bh=kfGiNrANRnBYtgOBeJSOMxXO363Ln0ivOKg4cDzVqTc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HVLhdjAIgooCMq4CHrQMqQmfM7fZ/G+s9miTV10LqJfvDksji0ntvSMrLJE86FC/M9x0/P4MAZAbjClMKo1iibifbUP7IRb/l2mgSmIe3JWpdQYLGEUujIyma8t2YD8XtSZrtWzAxl7ygtJg+wagUZ2O+zbGZnNuqBBrgkmt8Pc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=r4gf8YrZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=c6DNeBco0Z6zRopDDLG9Tpijs32X/VfeTXnMlyn/IDLe55FqXRRfHA/rq2ooMwxLf8VP6pc1NCl6PSEaNJJ+1HB2Wae8FaNeBNGd4cJRWSEBzALJFsSMUtKhpXx7WrJ0poM8uEb1/1lpR3FPH+a+B4lYqVzW39/YIqHem8OSfNk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=cDtqghO5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="r4gf8YrZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B6E65C116C6;
-	Sat, 14 Feb 2026 01:04:55 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="cDtqghO5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1799FC19424;
+	Sat, 14 Feb 2026 01:04:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1771031096;
-	bh=/TTtgSTYlHtOVL08vZ4dDy1Te2t2rTpZJILELC3treU=;
+	s=k20201202; t=1771031098;
+	bh=kfGiNrANRnBYtgOBeJSOMxXO363Ln0ivOKg4cDzVqTc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=r4gf8YrZcyalJIPjRNJCGjgi9aO7+pKCU+v+tGlVmGSd7mL+6uNmaifoaTtDuFAQ5
-	 8VDofcB841Lrs5rvUOeIG4h0OhqZAlxJy4+L0ueEyi5X+6PpxmcrSQIDZNmqb35HRP
-	 cbRBbOwia56BrWDKnJPuOBWDQhkysFKZgeT2jD8gsEB4N0JqQit+7mTsGj8X4O8+g4
-	 /KYlTlyvPOgC8JzvxXCrGSlWcRWB1oaYpmbXOKjTIt1a6Q33FBnCUUKo7vU9ug2O6J
-	 J0VFsgDP9As47sNhXUbV80rUgP8VIztbyVj2pOeQy0Pw7Ul6HpiBwdxyzRqhlqdNUc
-	 jEOMGgdU8cPdQ==
+	b=cDtqghO5vxu1i1bPRzm20R2oZYY/QRRSMwxa+olkuX0y4VIG4nDLgN9lFXGPqOpHL
+	 KPOzBz5wNn0cmCwy2/nlKN3fHXWWQ/TmCtxCmjeByEtw8MR4UeaFak4ib+0VqMdMX1
+	 acuOYtHsBSaGeKeDRBU2awDVjhP/ngBnQfPKxm/SsMEF6tJxolW2vczeed8cQsywpX
+	 PEakKzhZO7K+Qn/V4yW/i4j0b1ii1miRuGvfCD7VEcVL3RCxvFOdZ7DMcVGgRlprO1
+	 /9fG/EhB0tyK4AA5sTV2qAyd8s78IiBpMab5D70OaFVTv3fB/RD17OKJNHAW0fpYex
+	 xobtURPGx6e4Q==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Ricardo Ribalda <ribalda@chromium.org>,
-	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
-	Lili Orosz <lily@floofy.city>,
-	Hans Verkuil <hverkuil+cisco@kernel.org>,
+Cc: =?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <thomas.weissschuh@linutronix.de>,
+	kernel test robot <lkp@intel.com>,
+	Nathan Chancellor <nathan@kernel.org>,
+	Arnd Bergmann <arnd@arndb.de>,
+	"Wei Liu (Microsoft)" <wei.liu@kernel.org>,
+	Nicolas Schier <nsc@kernel.org>,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Sasha Levin <sashal@kernel.org>,
-	hansg@kernel.org,
-	linux-media@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.19-6.18] media: uvcvideo: Create an ID namespace for streaming output terminals
-Date: Fri, 13 Feb 2026 19:59:00 -0500
-Message-ID: <20260214010245.3671907-60-sashal@kernel.org>
+	kys@microsoft.com,
+	haiyangz@microsoft.com,
+	decui@microsoft.com,
+	longli@microsoft.com,
+	linux-hyperv@vger.kernel.org,
+	llvm@lists.linux.dev
+Subject: [PATCH AUTOSEL 6.19-5.10] hyper-v: Mark inner union in hv_kvp_exchg_msg_value as packed
+Date: Fri, 13 Feb 2026 19:59:01 -0500
+Message-ID: <20260214010245.3671907-61-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260214010245.3671907-1-sashal@kernel.org>
 References: <20260214010245.3671907-1-sashal@kernel.org>
@@ -48,230 +55,173 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.19
 Content-Transfer-Encoding: 8bit
 
-From: Ricardo Ribalda <ribalda@chromium.org>
+From: Thomas Weißschuh <thomas.weissschuh@linutronix.de>
 
-[ Upstream commit 3d9f32e02c2ed85338be627de672e2b81b88a836 ]
+[ Upstream commit 1e5271393d777f6159d896943b4c44c4f3ecff52 ]
 
-Some devices, such as the Grandstream GUV3100 and the LSK Meeting Eye
-for Business & Home, exhibit entity ID collisions between units and
-streaming output terminals.
+The unpacked union within a packed struct generates alignment warnings
+on clang for 32-bit ARM:
 
-The UVC specification requires unit and terminal IDs to be unique, and
-uses the ID to reference entities:
+./usr/include/linux/hyperv.h:361:2: error: field  within 'struct hv_kvp_exchg_msg_value'
+  is less aligned than 'union hv_kvp_exchg_msg_value::(anonymous at ./usr/include/linux/hyperv.h:361:2)'
+  and is usually due to 'struct hv_kvp_exchg_msg_value' being packed,
+  which can lead to unaligned accesses [-Werror,-Wunaligned-access]
+     361 |         union {
+         |         ^
 
-- In control requests, to identify the target entity
-- In the UVC units and terminals descriptors' bSourceID field, to
-  identify source entities
-- In the UVC input header descriptor's bTerminalLink, to identify the
-  terminal associated with a streaming interface
+With the recent changes to compile-test the UAPI headers in more cases,
+this warning in combination with CONFIG_WERROR breaks the build.
 
-Entity ID collisions break accessing controls and make the graph
-description in the UVC descriptors ambiguous. However, collisions where
-one of the entities is a streaming output terminal and the other entity
-is not a streaming terminal are less severe. Streaming output terminals
-have no controls, and, as they are the final entity in pipelines, they
-are never referenced in descriptors as source entities. They are
-referenced by ID only from innput header descriptors, which by
-definition only reference streaming terminals.
+Fix the warning.
 
-For these reasons, we can work around the collision by giving streaming
-output terminals their own ID namespace. Do so by setting bit
-UVC_TERM_OUTPUT (15) in the uvc_entity.id field, which is normally never
-set as the ID is a 8-bit value.
-
-This ID change doesn't affect the entity name in the media controller
-graph as the name isn't constructed from the ID, so there should not be
-any impact on the uAPI.
-
-Although this change handles some ID collisions automagically, keep
-printing an error in uvc_alloc_new_entity() when a camera has invalid
-descriptors. Hopefully this message will help vendors fix their invalid
-descriptors.
-
-This new method of handling ID collisions includes a revert of commit
-758dbc756aad ("media: uvcvideo: Use heuristic to find stream entity")
-that attempted to fix the problem urgently due to regression reports.
-
-Suggested-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
-Signed-off-by: Ricardo Ribalda <ribalda@chromium.org>
-Reviewed-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
-Tested-by: Lili Orosz <lily@floofy.city>
-Co-developed-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
-Signed-off-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
-Link: https://patch.msgid.link/20251113210400.28618-1-laurent.pinchart@ideasonboard.com
-Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: https://lore.kernel.org/oe-kbuild-all/202512140314.DzDxpIVn-lkp@intel.com/
+Reported-by: Nathan Chancellor <nathan@kernel.org>
+Closes: https://lore.kernel.org/linux-kbuild/20260110-uapi-test-disable-headers-arm-clang-unaligned-access-v1-1-b7b0fa541daa@kernel.org/
+Suggested-by: Arnd Bergmann <arnd@arndb.de>
+Link: https://lore.kernel.org/linux-kbuild/29b2e736-d462-45b7-a0a9-85f8d8a3de56@app.fastmail.com/
+Signed-off-by: Thomas Weißschuh <thomas.weissschuh@linutronix.de>
+Acked-by: Wei Liu (Microsoft) <wei.liu@kernel.org>
+Tested-by: Nicolas Schier <nsc@kernel.org>
+Reviewed-by: Nicolas Schier <nsc@kernel.org>
+Acked-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Link: https://patch.msgid.link/20260115-kbuild-alignment-vbox-v1-1-076aed1623ff@linutronix.de
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-### Risk Assessment
+## Analysis
 
-**Benefits**:
-- Fixes webcam functionality for devices with entity ID collisions
-  (Grandstream GUV3100, LSK Meeting Eye, potentially others)
-- Provides a cleaner, more robust solution than the heuristic approach
-  in 758dbc756aad
-- The approach is well-motivated by the UVC spec (streaming output
-  terminals have no controls and are terminal nodes)
+### Commit Message Analysis
 
-**Risks**:
-- Medium complexity - it's not a trivial one-liner, but the logic is
-  well-contained
-- If 758dbc756aad is already in stable, this commit effectively replaces
-  it, which is the intended behavior
-- The namespace bit approach could theoretically break something if any
-  code path uses entity IDs for streaming output terminals in unexpected
-  ways, but the commit message and review argue convincingly this
-  doesn't happen
+This commit fixes a build error caused by an unpacked union within a
+packed struct in a UAPI header (`include/uapi/linux/hyperv.h`). The
+issue manifests as a `-Werror,-Wunaligned-access` error on clang for
+32-bit ARM, which **breaks the build** when `CONFIG_WERROR` is enabled.
 
-**Dependencies**:
-- This commit depends on `0e2ee70291e6` ("Mark invalid entities with id
-  UVC_INVALID_ENTITY_ID") being present
-- It also implicitly reverts `758dbc756aad` which was sent to stable
-- Both of these are likely in recent stable trees given the `Cc: stable`
-  tag on 758dbc756aad
+Key signals:
+- **Two separate "Reported-by:" tags** — kernel test robot and Nathan
+  Chancellor (a prominent kernel build/clang developer)
+- **Multiple "Closes:" links** to actual build failure reports
+- **Tested-by** and **Reviewed-by** from Nicolas Schier
+- **Acked-by** from subsystem maintainer (Wei Liu) and Greg Kroah-
+  Hartman himself
+- Commit message explicitly says "breaks the build"
+
+### Code Change Analysis
+
+The change is a single-line modification:
+
+```c
+- };
++       } __attribute__((packed));
+```
+
+This adds the `packed` attribute to an anonymous union inside the
+already-packed struct `hv_kvp_exchg_msg_value`. The outer struct is
+already `__attribute__((packed))`, so adding `packed` to the inner union
+aligns it with the containing struct's packing requirement, silencing
+the clang warning.
+
+**Functional impact**: This union contains `__u8 value[...]`, `__u32
+value_u32`, and `__u64 value_u64`. Since the union is inside a packed
+struct, the compiler should already be treating accesses as potentially
+unaligned. Adding `packed` to the union itself makes this explicit and
+resolves the inconsistency that triggers the warning. There is **no
+change to the actual memory layout** — the struct was already packed,
+and the union within it was already at whatever offset the packing
+dictated. This just makes the annotation consistent.
+
+### Classification
+
+This is a **build fix** — one of the explicitly allowed categories for
+stable backporting. It prevents compilation failure on a specific (and
+common) configuration: clang + 32-bit ARM + CONFIG_WERROR.
+
+### Scope and Risk Assessment
+
+- **Lines changed**: 1 (literally changing `};` to `}
+  __attribute__((packed));`)
+- **Files changed**: 1 UAPI header
+- **Risk**: Extremely low. The packed attribute on the inner union is
+  semantically correct (the outer struct is already packed), and this
+  doesn't change the ABI or memory layout
+- **Subsystem**: Hyper-V UAPI header, but the fix is really about build
+  correctness
+
+### User Impact
+
+- **Who is affected**: Anyone building the kernel with clang on 32-bit
+  ARM (or potentially other architectures in the future) with
+  `CONFIG_WERROR=y`
+- **Severity**: Build breakage — users literally cannot compile the
+  kernel in this configuration
+- **Frequency**: 100% reproducible in the affected configuration
+
+### Stability Indicators
+
+- Acked by Greg Kroah-Hartman (stable tree maintainer)
+- Acked by Wei Liu (Hyper-V maintainer)
+- Tested and reviewed by Nicolas Schier
+- The fix is trivially correct — adding packed to a union inside a
+  packed struct
+
+### Dependency Check
+
+This commit is self-contained. It references "recent changes to compile-
+test the UAPI headers in more cases" as the trigger that exposed this
+warning, but the fix itself (adding packed to the union) is valid
+regardless of whether those compile-test changes are present. The
+underlying warning condition exists in any version of this header
+compiled with clang on ARM.
+
+However, I should check if the struct in question exists in older stable
+trees.
+
+The struct `hv_kvp_exchg_msg_value` with this union has been in
+`include/uapi/linux/hyperv.h` for a very long time (it's part of the
+Hyper-V KVP userspace interface). The fix would apply cleanly to any
+stable tree that has this header.
 
 ### Conclusion
 
-This commit fixes a real device compatibility bug that breaks webcam
-functionality for specific hardware. The previous fix (758dbc756aad) was
-already sent to stable with `Cc: stable`, and this commit is its proper
-replacement. It's developed and reviewed by the UVC subsystem
-maintainers, tested by users, and contained entirely within the UVC
-driver. The approach is sound - leveraging the fact that streaming
-output terminals have properties that make a separate ID namespace safe.
-Since the heuristic fix (758dbc756aad) is likely already in stable trees
-and this is the proper/robust replacement for it, it should also go to
-stable.
+This is a textbook stable backport candidate:
+- **Fixes a real build breakage** (not just a warning — it errors out
+  with CONFIG_WERROR)
+- **Trivially small and obviously correct** — one attribute addition
+- **Zero risk of regression** — no behavioral change, no ABI change
+- **Well-reviewed** — acked by GKH, subsystem maintainer, tested and
+  reviewed
+- **Multiple reporters** — real-world problem encountered by kernel test
+  infrastructure and developers
+- Build fixes are explicitly listed as appropriate stable material
 
 **YES**
 
- drivers/media/usb/uvc/uvc_driver.c | 54 ++++++++++++++++++------------
- drivers/media/usb/uvc/uvcvideo.h   |  3 +-
- 2 files changed, 35 insertions(+), 22 deletions(-)
+ include/uapi/linux/hyperv.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/media/usb/uvc/uvc_driver.c b/drivers/media/usb/uvc/uvc_driver.c
-index ee4f54d683496..aa3e8d295e0f5 100644
---- a/drivers/media/usb/uvc/uvc_driver.c
-+++ b/drivers/media/usb/uvc/uvc_driver.c
-@@ -165,28 +165,17 @@ static struct uvc_entity *uvc_entity_by_reference(struct uvc_device *dev,
- 	return NULL;
- }
+diff --git a/include/uapi/linux/hyperv.h b/include/uapi/linux/hyperv.h
+index aaa502a7bff46..1749b35ab2c21 100644
+--- a/include/uapi/linux/hyperv.h
++++ b/include/uapi/linux/hyperv.h
+@@ -362,7 +362,7 @@ struct hv_kvp_exchg_msg_value {
+ 		__u8 value[HV_KVP_EXCHANGE_MAX_VALUE_SIZE];
+ 		__u32 value_u32;
+ 		__u64 value_u64;
+-	};
++	} __attribute__((packed));
+ } __attribute__((packed));
  
--static struct uvc_streaming *uvc_stream_by_id(struct uvc_device *dev, int id)
-+static struct uvc_streaming *uvc_stream_for_terminal(struct uvc_device *dev,
-+						     struct uvc_entity *term)
- {
--	struct uvc_streaming *stream, *last_stream;
--	unsigned int count = 0;
-+	u16 id = UVC_HARDWARE_ENTITY_ID(term->id);
-+	struct uvc_streaming *stream;
- 
- 	list_for_each_entry(stream, &dev->streams, list) {
--		count += 1;
--		last_stream = stream;
- 		if (stream->header.bTerminalLink == id)
- 			return stream;
- 	}
- 
--	/*
--	 * If the streaming entity is referenced by an invalid ID, notify the
--	 * user and use heuristics to guess the correct entity.
--	 */
--	if (count == 1 && id == UVC_INVALID_ENTITY_ID) {
--		dev_warn(&dev->intf->dev,
--			 "UVC non compliance: Invalid USB header. The streaming entity has an invalid ID, guessing the correct one.");
--		return last_stream;
--	}
--
- 	return NULL;
- }
- 
-@@ -823,10 +812,12 @@ static struct uvc_entity *uvc_alloc_new_entity(struct uvc_device *dev, u16 type,
- 	}
- 
- 	/* Per UVC 1.1+ spec 3.7.2, the ID is unique. */
--	if (uvc_entity_by_id(dev, id)) {
--		dev_err(&dev->intf->dev, "Found multiple Units with ID %u\n", id);
-+	if (uvc_entity_by_id(dev, UVC_HARDWARE_ENTITY_ID(id)))
-+		dev_err(&dev->intf->dev, "Found multiple Units with ID %u\n",
-+			UVC_HARDWARE_ENTITY_ID(id));
-+
-+	if (uvc_entity_by_id(dev, id))
- 		id = UVC_INVALID_ENTITY_ID;
--	}
- 
- 	extra_size = roundup(extra_size, sizeof(*entity->pads));
- 	if (num_pads)
-@@ -982,6 +973,7 @@ static int uvc_parse_standard_control(struct uvc_device *dev,
- 	struct usb_host_interface *alts = dev->intf->cur_altsetting;
- 	unsigned int i, n, p, len;
- 	const char *type_name;
-+	unsigned int id;
- 	u16 type;
- 
- 	switch (buffer[2]) {
-@@ -1120,8 +1112,28 @@ static int uvc_parse_standard_control(struct uvc_device *dev,
- 			return 0;
- 		}
- 
-+		id = buffer[3];
-+
-+		/*
-+		 * Some devices, such as the Grandstream GUV3100, exhibit entity
-+		 * ID collisions between units and streaming output terminals.
-+		 * Move streaming output terminals to their own ID namespace by
-+		 * setting bit UVC_TERM_OUTPUT (15), above the ID's 8-bit value.
-+		 * The bit is ignored in uvc_stream_for_terminal() when looking
-+		 * up the streaming interface for the terminal.
-+		 *
-+		 * This hack is safe to enable unconditionally, as the ID is not
-+		 * used for any other purpose (streaming output terminals have
-+		 * no controls and are never referenced as sources in UVC
-+		 * descriptors). Other types output terminals can have controls,
-+		 * so limit usage of this separate namespace to streaming output
-+		 * terminals.
-+		 */
-+		if (type & UVC_TT_STREAMING)
-+			id |= UVC_TERM_OUTPUT;
-+
- 		term = uvc_alloc_new_entity(dev, type | UVC_TERM_OUTPUT,
--					    buffer[3], 1, 0);
-+					    id, 1, 0);
- 		if (IS_ERR(term))
- 			return PTR_ERR(term);
- 
-@@ -2118,8 +2130,8 @@ static int uvc_register_terms(struct uvc_device *dev,
- 		if (UVC_ENTITY_TYPE(term) != UVC_TT_STREAMING)
- 			continue;
- 
--		stream = uvc_stream_by_id(dev, term->id);
--		if (stream == NULL) {
-+		stream = uvc_stream_for_terminal(dev, term);
-+		if (!stream) {
- 			dev_info(&dev->intf->dev,
- 				 "No streaming interface found for terminal %u.",
- 				 term->id);
-diff --git a/drivers/media/usb/uvc/uvcvideo.h b/drivers/media/usb/uvc/uvcvideo.h
-index ed7bad31f75ca..3f2e832025e71 100644
---- a/drivers/media/usb/uvc/uvcvideo.h
-+++ b/drivers/media/usb/uvc/uvcvideo.h
-@@ -41,7 +41,8 @@
- #define UVC_EXT_GPIO_UNIT		0x7ffe
- #define UVC_EXT_GPIO_UNIT_ID		0x100
- 
--#define UVC_INVALID_ENTITY_ID          0xffff
-+#define UVC_HARDWARE_ENTITY_ID(id)	((id) & 0xff)
-+#define UVC_INVALID_ENTITY_ID		0xffff
- 
- /* ------------------------------------------------------------------------
-  * Driver specific constants.
+ struct hv_kvp_msg_enumerate {
 -- 
 2.51.0
 
