@@ -1,54 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C90E827B353;
-	Sat, 14 Feb 2026 21:25:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8F8F27B353;
+	Sat, 14 Feb 2026 21:25:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771104326; cv=none; b=DxLhHDVQPlY22fo+zBxzgDuip3LUwIxSQXgLvJL2OhH8nXi2kRfpapElKISOvkcLlXcg2UnBfaLv8mXsMXsUhA0d55lE+zZ6QHa+99zxmYUU9B32ZLxHubjzzbcowS8sWVaMc/ESj6MyI7RjFqnGGmIsyp43M4EwfXklU43YjSI=
+	t=1771104327; cv=none; b=nYMSVU4aT5g9o/vBaWhVrg3TyVeNZOxl1N2lB3K78H8NaLENR+DvM8BfqAb2Vs39UBy85cblNK6zeuNxt9wGeyQ4HL492VR4Fy6JcPQTwTMLLdRHsYhBC0auq+PCvirWjGi8HpBedixO4p4xhuj/PnWk0MytpdB5LeNPYAYthVw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771104326; c=relaxed/simple;
-	bh=qQi4cKET8P1ejnoqtou0oEXuI4aZk8+q61dw8XPwE1g=;
+	s=arc-20240116; t=1771104327; c=relaxed/simple;
+	bh=7awT1Li4DxKat07UYtWiH20wtPbjOrZkWejQapyOazc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=W9ZGUk0ESQRKsz6xNPLd3odXWM155haHxZPcp5FjcKolzLjoGgpoMW2mz8xdYxq/+wkRXbEdGIDyWtgIG/FW3FbNkZxBGoWygJIC6oELidBGcif8c0FOFJii2B7kH4q2jXnaq1g5Ewkjip8qTMfE6ozCWupxNbqBueMIZzPLAqg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=hzghBr1O; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=jSNc7XVd5n9BnxP74cUmA4muotT+OKCplRfJ2I/fmjO7FCAhHWDfVzLjvjFMsI98eJRqpHRa5s3uL6J0xV4Hqs4i08KxikTg4mm0yQTNZJYMSSfVW4dpn4PLa2nL9G8wDWbZp2YXVXu8VP81SPkhclaSk9yky1001dAeFO+e6vw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=c9JtTOtr; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="hzghBr1O"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B606AC19423;
-	Sat, 14 Feb 2026 21:25:24 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="c9JtTOtr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EAA6CC16AAE;
+	Sat, 14 Feb 2026 21:25:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1771104326;
-	bh=qQi4cKET8P1ejnoqtou0oEXuI4aZk8+q61dw8XPwE1g=;
+	s=k20201202; t=1771104327;
+	bh=7awT1Li4DxKat07UYtWiH20wtPbjOrZkWejQapyOazc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hzghBr1OxcMTgj6TiXvGQ3B9yX10w/B8ctC4CJCEmHwuVhXTIKuiburFB72Bc9+2C
-	 2eMQ6WavST9Q40ZvEV5UMYHl0rylDO88DduDv0TNBfth1NYcWtQ+E3qeDYb5EVjCMo
-	 focRDgSYwkwdS6CGKAZtZHd4CvFDJ/SXfCOw6FaJgOJEK94G17S5QAU4DXeCsQ+mvU
-	 8ki6cwCR5Q4gyfkPYhL69mi6tmDl9R9TnD8Hcsfsbj+GTkr9pxCXXMKrq0RibaGKMb
-	 +Kxc4xG9c2zGW2c9CpX7rfq5zXeSqv1lmZYqtGFImLl+kyiWTk43FNbwKhxyrispup
-	 ST4VRTW0NfMrw==
+	b=c9JtTOtrxOKjZZuxt4OfvFbMvgYPAnYc6owLu24UMHWZYilvQTQlYVcJHgTJss0Uj
+	 eWkuAEZYpkRy4lhkYUuLUUiCuD2dseSfRfiDfWTZaJ4YlQnlVzvryJlmix1o83uKF2
+	 JILkPXpzHuOc1VPrgRIaz6qERzhU1wSMZ9m1GcPNW5B76plOCZx85K0s3llMiHVDbT
+	 en16GgXbHz9XKp8/O/JnRqaTT5nTWUE+S1HCKafasC+SydjMdxQ8vwvJtLHtUOUzHA
+	 6pM+c0gYf9Y+YlQN+XjU50Q8E3BijhPJM0sbHBiJMYetWCI5JIJlH0lORCHZaU2lgH
+	 pgEhDW1Ed1PbA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Mingj Ye <insyelu@gmail.com>,
-	Hayes Wang <hayeswang@realtek.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+Cc: =?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	Adam Stylinski <kungfujesus06@gmail.com>,
+	Bjorn Helgaas <bhelgaas@google.com>,
 	Sasha Levin <sashal@kernel.org>,
-	pabeni@redhat.com,
-	neil.armstrong@linaro.org,
-	gustavoars@kernel.org,
-	andriy.shevchenko@linux.intel.com,
-	kees@kernel.org,
-	senozhatsky@chromium.org,
-	rawal.abhishek92@gmail.com,
-	phahn-oss@avm.de,
-	yicong@kylinos.cn,
-	yelangyan@huaqin.corp-partner.google.com,
-	ebiggers@google.com,
-	enelsonmoore@gmail.com,
-	linux-usb@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.19-5.10] net: usb: r8152: fix transmit queue timeout
-Date: Sat, 14 Feb 2026 16:22:43 -0500
-Message-ID: <20260214212452.782265-18-sashal@kernel.org>
+	linux-pci@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.19-6.18] PCI/bwctrl: Disable BW controller on Intel P45 using a quirk
+Date: Sat, 14 Feb 2026 16:22:44 -0500
+Message-ID: <20260214212452.782265-19-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260214212452.782265-1-sashal@kernel.org>
 References: <20260214212452.782265-1-sashal@kernel.org>
@@ -58,156 +46,141 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.19
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Mingj Ye <insyelu@gmail.com>
+From: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 
-[ Upstream commit 833dcd75d54f0bf5aa0a0781ff57456b421fbb40 ]
+[ Upstream commit 46a9f70e93ef73860d1dbbec75ef840031f8f30a ]
 
-When the TX queue length reaches the threshold, the netdev watchdog
-immediately detects a TX queue timeout.
+The commit 665745f27487 ("PCI/bwctrl: Re-add BW notification portdrv as
+PCIe BW controller") was found to lead to a boot hang on a Intel P45
+system. Testing without setting Link Bandwidth Management Interrupt Enable
+(LBMIE) and Link Autonomous Bandwidth Interrupt Enable (LABIE) (PCIe r7.0,
+sec 7.5.3.7) in bwctrl allowed system to come up.
 
-This patch updates the trans_start timestamp of the transmit queue
-on every asynchronous USB URB submission along the transmit path,
-ensuring that the network watchdog accurately reflects ongoing
-transmission activity.
+P45 is a very old chipset and supports only up to gen2 PCIe, so not having
+bwctrl does not seem a huge deficiency.
 
-Signed-off-by: Mingj Ye <insyelu@gmail.com>
-Reviewed-by: Hayes Wang <hayeswang@realtek.com>
-Link: https://patch.msgid.link/20260120015949.84996-1-insyelu@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Add no_bw_notif in struct pci_dev and quirk Intel P45 Root Port with it.
+
+Reported-by: Adam Stylinski <kungfujesus06@gmail.com>
+Link: https://lore.kernel.org/linux-pci/aUCt1tHhm_-XIVvi@eggsbenedict/
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Tested-by: Adam Stylinski <kungfujesus06@gmail.com>
+Link: https://patch.msgid.link/20260116131513.2359-1-ilpo.jarvinen@linux.intel.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-## Analysis of commit: "net: usb: r8152: fix transmit queue timeout"
+The offending commit `665745f274870` first appeared in **v6.13-rc1**,
+meaning it's present in **6.13.y** stable trees and newer. This means
+the boot hang regression affects stable kernel users on 6.13.y and
+later.
 
-### 1. COMMIT MESSAGE ANALYSIS
+### 6. User Impact
 
-The subject explicitly says **"fix transmit queue timeout"** — this is a
-clear bug fix. The commit message explains:
-- **Bug**: When the TX queue length reaches a threshold, the netdev
-  watchdog immediately detects a TX queue timeout (spurious timeout).
-- **Root cause**: The `trans_start` timestamp of the transmit queue is
-  not being updated when USB URBs are successfully submitted
-  asynchronously.
-- **Fix**: Call `netif_trans_update()` after each successful
-  `usb_submit_urb()` to keep the watchdog informed that transmission
-  activity is ongoing.
+- **Severity**: CRITICAL — complete boot hang (system is unusable)
+- **Affected hardware**: Intel P45 chipset systems (older but still in
+  use)
+- **Affected versions**: v6.13 and later (wherever bwctrl was
+  introduced)
+- **Users impacted**: Anyone running an Intel P45 system who upgrades to
+  6.13+
 
-The commit is reviewed by the Realtek maintainer (Hayes Wang) and merged
-by the network maintainer (Jakub Kicinski). Strong trust indicators.
+### 7. Risk vs. Benefit
 
-### 2. CODE CHANGE ANALYSIS
+**Benefit**: Fixes a boot hang on Intel P45 systems — without this
+quirk, these systems cannot boot kernels 6.13+.
 
-The diff is **+2 lines** — extremely small and surgical:
+**Risk**: Essentially zero. The quirk only fires for one specific PCI
+device ID (0x2e21). The probe check returns -ENODEV before any resources
+are allocated. This follows a well-established PCI quirk pattern used
+hundreds of times in the kernel. The only "loss" is BW notification on a
+Gen2 PCIe chipset, which is of negligible value.
 
-```c
-ret = usb_submit_urb(agg->urb, GFP_ATOMIC);
-if (ret < 0)
-    usb_autopm_put_interface_async(tp->intf);
-+else
-+    netif_trans_update(tp->netdev);
-```
+### 8. Backport Considerations
 
-This adds an `else` branch after the `usb_submit_urb()` call. On
-successful URB submission (`ret >= 0`), it calls
-`netif_trans_update(tp->netdev)`, which updates the `trans_start`
-timestamp of the network device's transmit queue.
+The fix should apply cleanly to any tree that has the bwctrl code
+(6.13+). The `no_bw_notif` bit field addition to `struct pci_dev` is
+straightforward. The quirk file change is a simple addition. The
+bwctrl.c check is at the top of the probe function.
 
-**What `netif_trans_update()` does**: It's a standard kernel helper that
-sets `txq->trans_start = jiffies`, telling the network watchdog "we are
-actively transmitting." Without this update, the watchdog timer thinks
-the queue has been idle since the last update and fires a spurious TX
-timeout.
+One minor consideration: the `pci_dev` struct layout might differ
+slightly between stable versions, but adding a bitfield member to the
+existing bitfield group should be safe.
 
-### 3. BUG SEVERITY
-
-A **TX queue timeout** in a network driver is a significant user-visible
-bug:
-- The watchdog fires, potentially calling the driver's `ndo_tx_timeout`
-  handler
-- This can cause the network interface to reset or go down
-- Results in **network connectivity loss** or **severe performance
-  degradation**
-- The r8152 driver is for **Realtek USB Ethernet adapters**, which are
-  extremely common (used in USB-to-Ethernet dongles, docking stations,
-  etc.)
-
-### 4. SCOPE AND RISK ASSESSMENT
-
-- **Lines changed**: 2 (adding an else branch with one function call)
-- **Files touched**: 1 (`drivers/net/usb/r8152.c`)
-- **Risk**: Extremely low. `netif_trans_update()` is a well-known,
-  lightweight inline function. It simply updates a jiffies timestamp. It
-  cannot cause crashes, data corruption, or any side effects.
-- **Regression potential**: Near zero. This only affects the TX watchdog
-  timer behavior and only updates the timestamp on *successful* URB
-  submission.
-
-### 5. USER IMPACT
-
-- **HIGH impact** — r8152 is one of the most widely used USB Ethernet
-  drivers. Realtek RTL8152/RTL8153 chips are in millions of USB Ethernet
-  adapters.
-- Users experience **spurious TX timeouts** that disrupt network
-  connectivity.
-- Affects any user with a Realtek USB Ethernet adapter under sufficient
-  TX load.
-
-### 6. STABLE KERNEL CRITERIA
-
-| Criterion | Met? |
-|-----------|------|
-| Obviously correct and tested | YES — reviewed by Realtek maintainer,
-simple logic |
-| Fixes a real bug | YES — spurious TX queue timeouts |
-| Important issue | YES — network connectivity loss |
-| Small and contained | YES — 2 lines in one file |
-| No new features | YES — just a watchdog timestamp update |
-| No new APIs | YES |
-
-### 7. DEPENDENCY CHECK
-
-`netif_trans_update()` has been available in the kernel for a very long
-time (since 4.7+). The r8152 driver and the `r8152_tx_agg_fill()`
-function have been in stable trees for many kernel versions. This patch
-applies cleanly with no dependencies on other commits.
-
-### 8. CONCLUSION
+### Summary
 
 This is a textbook stable backport candidate:
-- Fixes a real, user-visible bug (spurious TX timeouts causing network
-  disruption)
-- Affects a widely-used USB Ethernet driver (Realtek r8152)
-- Extremely small and surgical (2-line change)
-- Zero regression risk (just updates a jiffies timestamp)
-- Reviewed by the hardware vendor's maintainer
-- No dependencies on other patches
+- **Fixes a real, user-reported boot hang** (critical regression)
+- **Hardware quirk** (explicitly allowed in stable)
+- **Small, surgical fix** (~15 lines)
+- **Near-zero regression risk** (only affects one device ID)
+- **Tested by the reporter** (confirmed working)
+- **Written and reviewed by subsystem experts** (Intel engineer + PCI
+  maintainer)
+- **Fixes a regression introduced in 6.13** (affects stable users)
 
 **YES**
 
- drivers/net/usb/r8152.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/pci/pcie/bwctrl.c |  3 +++
+ drivers/pci/quirks.c      | 10 ++++++++++
+ include/linux/pci.h       |  1 +
+ 3 files changed, 14 insertions(+)
 
-diff --git a/drivers/net/usb/r8152.c b/drivers/net/usb/r8152.c
-index 2f3baa5f6e9c9..6b107cf5f37bd 100644
---- a/drivers/net/usb/r8152.c
-+++ b/drivers/net/usb/r8152.c
-@@ -2449,6 +2449,8 @@ static int r8152_tx_agg_fill(struct r8152 *tp, struct tx_agg *agg)
- 	ret = usb_submit_urb(agg->urb, GFP_ATOMIC);
- 	if (ret < 0)
- 		usb_autopm_put_interface_async(tp->intf);
-+	else
-+		netif_trans_update(tp->netdev);
+diff --git a/drivers/pci/pcie/bwctrl.c b/drivers/pci/pcie/bwctrl.c
+index 36f939f23d34e..4ae92c9f912a8 100644
+--- a/drivers/pci/pcie/bwctrl.c
++++ b/drivers/pci/pcie/bwctrl.c
+@@ -250,6 +250,9 @@ static int pcie_bwnotif_probe(struct pcie_device *srv)
+ 	struct pci_dev *port = srv->port;
+ 	int ret;
  
- out_tx_fill:
- 	return ret;
++	if (port->no_bw_notif)
++		return -ENODEV;
++
+ 	/* Can happen if we run out of bus numbers during enumeration. */
+ 	if (!port->subordinate)
+ 		return -ENODEV;
+diff --git a/drivers/pci/quirks.c b/drivers/pci/quirks.c
+index 5782dfb863cad..5cf84ec1cdb2d 100644
+--- a/drivers/pci/quirks.c
++++ b/drivers/pci/quirks.c
+@@ -1359,6 +1359,16 @@ static void quirk_transparent_bridge(struct pci_dev *dev)
+ DECLARE_PCI_FIXUP_HEADER(PCI_VENDOR_ID_INTEL,	PCI_DEVICE_ID_INTEL_82380FB,	quirk_transparent_bridge);
+ DECLARE_PCI_FIXUP_HEADER(PCI_VENDOR_ID_TOSHIBA,	0x605,	quirk_transparent_bridge);
+ 
++/*
++ * Enabling Link Bandwidth Management Interrupts (BW notifications) can cause
++ * boot hangs on P45.
++ */
++static void quirk_p45_bw_notifications(struct pci_dev *dev)
++{
++	dev->no_bw_notif = 1;
++}
++DECLARE_PCI_FIXUP_HEADER(PCI_VENDOR_ID_INTEL, 0x2e21, quirk_p45_bw_notifications);
++
+ /*
+  * Common misconfiguration of the MediaGX/Geode PCI master that will reduce
+  * PCI bandwidth from 70MB/s to 25MB/s.  See the GXM/GXLV/GX1 datasheets
+diff --git a/include/linux/pci.h b/include/linux/pci.h
+index b5cc0c2b99065..e958ff7443356 100644
+--- a/include/linux/pci.h
++++ b/include/linux/pci.h
+@@ -406,6 +406,7 @@ struct pci_dev {
+ 						      user sysfs */
+ 	unsigned int	clear_retrain_link:1;	/* Need to clear Retrain Link
+ 						   bit manually */
++	unsigned int	no_bw_notif:1;	/* BW notifications may cause issues */
+ 	unsigned int	d3hot_delay;	/* D3hot->D0 transition time in ms */
+ 	unsigned int	d3cold_delay;	/* D3cold->D0 transition time in ms */
+ 
 -- 
 2.51.0
 
