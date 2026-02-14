@@ -1,41 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8633B313E0F;
-	Sat, 14 Feb 2026 21:27:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C21C03126B2;
+	Sat, 14 Feb 2026 21:27:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771104446; cv=none; b=qdoRQXOepEpvBdSEPlxrr7dpaymPOrbr+PKUQt1ZAHu6rfbhOhnYyKtXteEaC9Zhrx1WdQBQEtZAbzavQjwn3yLI6Jzcu/Pr/Q1O5lCOAgMcWnJ9XnCelZyGsXmos5fmK062gvEZ3xkHm82D1756cTdA1uUJ+6sSqZyZmtL5AMg=
+	t=1771104447; cv=none; b=XZP+X6fi8EkWMQAg3cqdYuauFGCuFYmnBWjN+JrvUIbBf0SGU+3Uo842LMwJ7K2RLxlgN4m7uvAJ24mIFdwy0I9lu1yITB0b1m03HZLL9evj0lMTUeEfYzngVmJpdzlYQAMBzA0zMn4Ww+5Ut7jQSbIJRQZpdcSgbTHIAXUJv3k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771104446; c=relaxed/simple;
-	bh=lj9vwZCQHlT7d8sGFbR58OnAbzrYvN3VU5g4RsM2RD8=;
+	s=arc-20240116; t=1771104447; c=relaxed/simple;
+	bh=R+qX/dkrpBBCavbTroNjk+lNEn38yjTGaEYPb+S4W00=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=iwaA0KvOzFnwYNCBE8aaL+C28QvfHiqUuzdduiqdqXbOaQnFz0GDLtSm2WQzuN9gx5qW0YTgX9tmpM2fpJAbdkhOXOe62Fi/FxRTIEDGRCmpnBC3J0eC1f6rvhew0PnVbI5oRMzj1ZscsNNHhft28rxhaIzXbk0N4TSiOshkr1Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=JeTyUTdu; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=tcHyXUljOhudpW/1T8E5YsZcZU0he2z8MP9DJ5T/gHV+6NDNxM2Lhnv8mxDvQaVPJIH4MTSxz2Ljb1a4Eu/EWeAGeS1wAzYktI4fxTGwPDKxVI1J2IkoAr5Z/HeD48XKPfSwvZUc9pCv+uoALxa2lKQdiGdlOUTSf8VnD2Wqh64=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=LaF8n+Wd; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="JeTyUTdu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF759C16AAE;
-	Sat, 14 Feb 2026 21:27:25 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="LaF8n+Wd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D01CAC16AAE;
+	Sat, 14 Feb 2026 21:27:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1771104446;
-	bh=lj9vwZCQHlT7d8sGFbR58OnAbzrYvN3VU5g4RsM2RD8=;
+	s=k20201202; t=1771104447;
+	bh=R+qX/dkrpBBCavbTroNjk+lNEn38yjTGaEYPb+S4W00=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JeTyUTdueAyCUQbPsbDGhqj1ub/zDBNyNCJj/NJnfpWLCu0CDzwU9hsMJaRGMgWWY
-	 XE+q+Z1g3R1gKAeXdORhQp9OanLpWBfPE6P4+EFGq7WqUBKxLuCu9Ywe2k+bIi03c2
-	 lDOWcEZVWNXRGqeS90ZSuJsdRIeWf9QvatFcvLM0Zz9ap8Q6QGk71Ne82g0Eov1hxK
-	 N2oul/N2BjpeSlV5ssmIuirbwZc0PIZGCtfIMK1Y08y66TNYMf9hBeq8i+8yC1T2IT
-	 wQzO+qrJYiSZKPxt5mIQxAou4qpHvlpfSmYuLfDFie2QRRib8Q3/xsA9aanjy1tcpp
-	 31Hzal/Ylu8rQ==
+	b=LaF8n+WdhwV4M+N/2/m80YrHiZ6MalvKhdJMln7I5ESUtEvOVr3BnbDe/p0lQ+RNG
+	 BGr+KYHV/wDNU6rFYj20wFvzsgd9hL/ikUWJFmg7iiZUuLa0AXXUOm5RqRZg5T5QKW
+	 ai5sX25Cv/xv6fNEiWFM0YvpqXT5U+lx4dvQU1XwoXEX9KtFzetYoznvEL6A1olYyW
+	 075ieIqCcyTKE3G+UC1XW6yjX/Q7zFgQRNS4Kv7dj0LfEZHCvxz7n7l5NUoVQTuv2i
+	 zLjZi3joRp8kAdZFdHpBAZqHiorSkEUHVk0IuUnr7BroS/LMuIJR12czs54I3LxLiA
+	 OqHq5s0PoXKpw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Jose Ignacio Tornos Martinez <jtornosm@redhat.com>,
-	Ping-Ke Shih <pkshih@realtek.com>,
+Cc: Jacopo Scannella <code@charlie.cat>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>,
-	linux-wireless@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.19-6.12] wifi: rtw89: 8922a: set random mac if efuse contains zeroes
-Date: Sat, 14 Feb 2026 16:23:55 -0500
-Message-ID: <20260214212452.782265-90-sashal@kernel.org>
+	marcel@holtmann.org,
+	luiz.dentz@gmail.com,
+	linux-bluetooth@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.19-5.10] Bluetooth: btusb: Add device ID for Realtek RTL8761BU
+Date: Sat, 14 Feb 2026 16:23:56 -0500
+Message-ID: <20260214212452.782265-91-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260214212452.782265-1-sashal@kernel.org>
 References: <20260214212452.782265-1-sashal@kernel.org>
@@ -51,121 +53,100 @@ X-stable-base: Linux 6.19
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jose Ignacio Tornos Martinez <jtornosm@redhat.com>
+From: Jacopo Scannella <code@charlie.cat>
 
-[ Upstream commit 41be33d3efc120f6a2c02d12742655f2aa09e1b6 ]
+[ Upstream commit cc6383d4f0cf6127c0552f94cae517a06ccc6b17 ]
 
-I have some rtl8922ae devices with no permanent mac stored in efuse.
+Add USB device ID 0x2c0a:0x8761 to the btusb driver fo the Realtek
+RTL8761BU Bluetooth adapter.
 
-It could be properly saved and/or configured from user tools like
-NetworkManager, but it would be desirable to be able to initialize it
-somehow to get the device working by default.
+Reference:
+https://www.startech.com/en-us/networking-io/av53c1-usb-bluetooth
 
-So, in the same way as with other devices, if the mac address read from
-efuse contains zeros, a random mac address is assigned to at least allow
-operation, and the user is warned about this in case any action needs to
-be considered.
-
-Signed-off-by: Jose Ignacio Tornos Martinez <jtornosm@redhat.com>
-Acked-by: Ping-Ke Shih <pkshih@realtek.com>
-Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
-Link: https://patch.msgid.link/20251126091905.217951-1-jtornosm@redhat.com
+Signed-off-by: Jacopo Scannella <code@charlie.cat>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-The rtw8922a driver was first included in kernel v6.8. This means it's
-available in stable trees 6.8.y and later (and likely in 6.6.y LTS if it
-was backported, but probably not).
+## Analysis
 
-### 8. OVERALL ASSESSMENT
+### Commit Message Analysis
+The commit adds a USB device ID (0x2c0a:0x8761) for the Realtek
+RTL8761BU Bluetooth adapter to the btusb driver. It references a
+specific commercial product (StarTech USB Bluetooth adapter), confirming
+this is real hardware that users need supported.
 
-**Arguments FOR backporting (YES):**
-- Fixes a real hardware issue — devices with empty efuse are completely
-  unusable without this
-- Very small, contained change in a single file
-- Well-established pattern used in rtw88 driver and other Realtek
-  wireless drivers
-- Low risk — only affects devices with all-zero MAC (no impact on
-  working devices)
-- Acked by subsystem maintainer
-- Falls under "hardware quirk/workaround" category which is acceptable
-  for stable
+### Code Change Analysis
+The change is a single line addition:
+```c
+{ USB_DEVICE(0x2c0a, 0x8761), .driver_info = BTUSB_REALTEK },
+```
 
-**Arguments AGAINST backporting (NO):**
-- This is technically adding new functionality (random MAC generation)
-  rather than fixing a bug in existing code
-- The driver was working "as designed" — it just didn't handle the case
-  of unprogrammed efuse
-- It's not fixing a crash, corruption, or security issue — it's making
-  broken hardware work
-- The commit message describes this as a "desirable" improvement rather
-  than a critical fix
-- No Fixes: tag or Cc: stable (expected, but also suggests the author
-  didn't consider it critical)
+This adds a new USB vendor/product ID entry to the `quirks_table[]` in
+`drivers/bluetooth/btusb.c`. The entry uses the `BTUSB_REALTEK`
+driver_info flag, which routes the device through the existing Realtek
+firmware loading and initialization path that is already well-tested for
+many other Realtek Bluetooth adapters.
 
-### DECISION
+### Classification
+This falls squarely into the **New Device IDs** exception category. The
+stable kernel rules explicitly allow adding device IDs to existing
+drivers:
+- The btusb driver already exists in all stable trees
+- The Realtek support code (`BTUSB_REALTEK`) is already present
+- Only the ID mapping is new — no new code paths are exercised
 
-This is a borderline case. While the change is small and low-risk, it's
-fundamentally adding new behavior (random MAC assignment) rather than
-fixing a bug in existing code. The device doesn't crash without this —
-it simply doesn't have a valid MAC address. This is closer to a
-"hardware enablement" change than a bug fix.
+### Scope and Risk Assessment
+- **Lines changed:** 1 (single line addition)
+- **Files touched:** 1 (`drivers/bluetooth/btusb.c`)
+- **Risk:** Essentially zero. This only affects devices with USB ID
+  0x2c0a:0x8761. It cannot affect any other hardware or code path. If
+  the ID is wrong, the worst case is that this specific adapter doesn't
+  work — no regression for anyone else.
 
-However, I lean toward YES because:
-1. It's a hardware workaround for broken/unprogrammed devices — this
-   category is explicitly allowed in stable
-2. Without it, the device is completely non-functional (a zero MAC
-   address is invalid)
-3. The risk is essentially zero for existing users
-4. The pattern is proven across the Realtek driver family
-5. It's a small, self-contained change
+### User Impact
+Without this device ID, users with the Realtek RTL8761BU (StarTech
+AV53C1) Bluetooth adapter simply cannot use it at all with Linux. The
+device won't be recognized by the btusb driver. This is a complete
+hardware enablement issue — the fix makes the difference between "device
+works" and "device doesn't work."
+
+### Dependency Check
+No dependencies. The `BTUSB_REALTEK` flag and all associated Realtek
+support code have been in the kernel for years and are present in all
+actively maintained stable trees.
+
+### Minor Note on Placement
+The new entry is placed under the "Additional Realtek 8723BU Bluetooth
+devices" comment section, while the subject says "RTL8761BU." This is a
+minor organizational issue (it would fit better near the "Additional
+Realtek 8761BUV" section), but it has zero functional impact — the
+quirks_table is searched linearly and the position doesn't matter.
+
+### Conclusion
+This is a textbook example of a device ID addition that should be
+backported. It's a single-line, zero-risk change that enables real
+hardware for real users, using an existing well-tested driver path.
 
 **YES**
 
- drivers/net/wireless/realtek/rtw89/rtw8922a.c | 22 +++++++++++++++----
- 1 file changed, 18 insertions(+), 4 deletions(-)
+ drivers/bluetooth/btusb.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/net/wireless/realtek/rtw89/rtw8922a.c b/drivers/net/wireless/realtek/rtw89/rtw8922a.c
-index 4437279c554b0..4bcf20612a455 100644
---- a/drivers/net/wireless/realtek/rtw89/rtw8922a.c
-+++ b/drivers/net/wireless/realtek/rtw89/rtw8922a.c
-@@ -636,16 +636,30 @@ static int rtw8922a_read_efuse_rf(struct rtw89_dev *rtwdev, u8 *log_map)
- static int rtw8922a_read_efuse(struct rtw89_dev *rtwdev, u8 *log_map,
- 			       enum rtw89_efuse_block block)
- {
-+	struct rtw89_efuse *efuse = &rtwdev->efuse;
-+	int ret;
-+
- 	switch (block) {
- 	case RTW89_EFUSE_BLOCK_HCI_DIG_PCIE_SDIO:
--		return rtw8922a_read_efuse_pci_sdio(rtwdev, log_map);
-+		ret = rtw8922a_read_efuse_pci_sdio(rtwdev, log_map);
-+		break;
- 	case RTW89_EFUSE_BLOCK_HCI_DIG_USB:
--		return rtw8922a_read_efuse_usb(rtwdev, log_map);
-+		ret = rtw8922a_read_efuse_usb(rtwdev, log_map);
-+		break;
- 	case RTW89_EFUSE_BLOCK_RF:
--		return rtw8922a_read_efuse_rf(rtwdev, log_map);
-+		ret = rtw8922a_read_efuse_rf(rtwdev, log_map);
-+		break;
- 	default:
--		return 0;
-+		ret = 0;
-+		break;
-+	}
-+
-+	if (!ret && is_zero_ether_addr(efuse->addr)) {
-+		rtw89_info(rtwdev, "efuse mac address is zero, using random mac\n");
-+		eth_random_addr(efuse->addr);
- 	}
-+
-+	return ret;
- }
+diff --git a/drivers/bluetooth/btusb.c b/drivers/bluetooth/btusb.c
+index 972139729e8fd..cbb6ab2fd5e45 100644
+--- a/drivers/bluetooth/btusb.c
++++ b/drivers/bluetooth/btusb.c
+@@ -779,6 +779,7 @@ static const struct usb_device_id quirks_table[] = {
  
- #define THM_TRIM_POSITIVE_MASK BIT(6)
+ 	/* Additional Realtek 8723BU Bluetooth devices */
+ 	{ USB_DEVICE(0x7392, 0xa611), .driver_info = BTUSB_REALTEK },
++	{ USB_DEVICE(0x2c0a, 0x8761), .driver_info = BTUSB_REALTEK },
+ 
+ 	/* Additional Realtek 8723DE Bluetooth devices */
+ 	{ USB_DEVICE(0x0bda, 0xb009), .driver_info = BTUSB_REALTEK },
 -- 
 2.51.0
 
