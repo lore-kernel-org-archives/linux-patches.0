@@ -1,43 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84A0921CC51;
-	Sat, 14 Feb 2026 01:06:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBC86217704;
+	Sat, 14 Feb 2026 01:06:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771031178; cv=none; b=IbdJcF1iYoBKynpX3darf1wpVbOAN0ab4y90TsXuFnm6C827S4Q3NyphOOeMajZISCT70/iPl0ZB2SGmFBDmv8zN8mEIDt9PZ6y2gJcqCJ+cNYwm3M1vmoMV7zRAi0D26VWYioM29htDGLPk/5070Gc5B8l4SWFcMfgtNA7B/xQ=
+	t=1771031179; cv=none; b=rbXqINScjJAKRkAzW15fF53JZnwR2oetUpacLxTMNRXNB0E2qCfTOGWgk+N1tmCz7uJjXMEjMawic50Tql5H8pUeZi2cJB78axKzGRceAXTj/TSeLpDWc04h0F904MgRqm0B/hHzw9ecHQeJLhkAFRdSJDLW+jRVPDcBsXBJOfE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771031178; c=relaxed/simple;
-	bh=GHcyStTuYgk9248+ZgiWTEGoNOtoLR827ZiQo/x1ng4=;
+	s=arc-20240116; t=1771031179; c=relaxed/simple;
+	bh=fsFvBqud3Tvk5e7OR8HtRWBc2tx6+MNclWALLq3iwLw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=YZE2p9BZx68tc75z0hQH/6DbJ7nMo7yHsMruRcuAWH/XlgoUl8fUk/HrjEgg/ELha0KnAbj6rHSeTQs5IObEo2ehU4M1DRfEg5/W81sFMN+KkGDmieJVn9ibgzG6altEpV+8XrO60MR2NpRLb+/whQ3OsTXdXzAuRW046G2YsEw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=PU97r3er; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=j0B/0MfJtATluUFc6+axGot3tTq1nRW7Ia58hD/cpQ7LevRzgXThdaCwnQu6M3OwXN1+zO641m3CXOYdYCpSlxgYzy71/7M5/f4n2GCTa4PD1qwJ0LV3UipBrinume8tD7MvmTcRB1HwVMndDzShaKi//gv+1I5xDcxka4zgOys=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Ngx3TUb7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="PU97r3er"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D6B8C116C6;
-	Sat, 14 Feb 2026 01:06:17 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Ngx3TUb7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C30FAC19425;
+	Sat, 14 Feb 2026 01:06:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1771031178;
-	bh=GHcyStTuYgk9248+ZgiWTEGoNOtoLR827ZiQo/x1ng4=;
+	s=k20201202; t=1771031179;
+	bh=fsFvBqud3Tvk5e7OR8HtRWBc2tx6+MNclWALLq3iwLw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PU97r3erxaSJZZ1QLGnJD6vMeJ0ohVPgF15DyhA/X4i9fMLhF6by7vZce4w27EWND
-	 rtqdn3pRv/DxqEi/zRaG3RYuWRWuL3wyrO1sykFQImzcCLSt2i2CTf4qW/NROPvFEh
-	 KJS/zSJdteOP5HbKqVlsis6stHdiLh49WNcDONCa1jbPRLJe/zFMTuKl54KRuD49dq
-	 g1esx7+LEbdfuum1IP5Fcm9pDkymD9nxNEClZ7IbiTHe8zGsYlPuOTIjfaybVk9Y51
-	 Rclj/4/xkdfeOeexTCY5rmjO9e/aJp0fjJtS9PFIgox3fiGdDb4y19iXbMhe0wbYT6
-	 w//0M8O5iOt4A==
+	b=Ngx3TUb7GpPfBnAjMctLd9eudS5iwLA4kOGo93Cf67eAxdzCBQC6F8kumnM7GgPoo
+	 tajBSVNhnEE/fjubEKnC/fUcsjLw8jT+P3qiowZ3zAji+gozjJmnwVpRscxpqoF3l3
+	 IHwcMuJQ5zh0vQkQb954WTyHLjE4UIlbQOHTRm9DOjgYbQgW1XasGpc/zDMFUrdI3v
+	 NisSeUsKhOvq10tbOb5Li4ZuCpo5npsMInMeXJyVlXfEB/ediv+q1kmfyl8XLI9bi1
+	 YDDCFnqW6wyd3hLspaHRJjVTPS8dL/VGm9goID+rSAa0wt+B412kpY9BcCA+PGKzyb
+	 IPYXfAmLVf1qQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Joey Bednar <linux@joeybednar.com>,
-	Jiri Kosina <jkosina@suse.com>,
+Cc: Alexey Klimov <alexey.klimov@linaro.org>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Vinod Koul <vkoul@kernel.org>,
+	Douglas Anderson <dianders@chromium.org>,
 	Sasha Levin <sashal@kernel.org>,
-	jikos@kernel.org,
-	bentiss@kernel.org,
-	linux-input@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.19-6.1] HID: apple: Add "SONiX KN85 Keyboard" to the list of non-apple keyboards
-Date: Fri, 13 Feb 2026 19:59:31 -0500
-Message-ID: <20260214010245.3671907-91-sashal@kernel.org>
+	neil.armstrong@linaro.org,
+	dri-devel@lists.freedesktop.org
+Subject: [PATCH AUTOSEL 6.19-6.12] gpu/panel-edp: add AUO panel entry for B140HAN06.4
+Date: Fri, 13 Feb 2026 19:59:32 -0500
+Message-ID: <20260214010245.3671907-92-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260214010245.3671907-1-sashal@kernel.org>
 References: <20260214010245.3671907-1-sashal@kernel.org>
@@ -50,162 +51,180 @@ MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.19
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Joey Bednar <linux@joeybednar.com>
+From: Alexey Klimov <alexey.klimov@linaro.org>
 
-[ Upstream commit 7273acfd0aef106093a8ffa3b4973eb70e5a3799 ]
+[ Upstream commit 2976aeb0de77da599ad37691963efbdcb07435ce ]
 
-The SoNiX KN85 keyboard identifies as the "Apple, Inc. Aluminium
-Keyboard" and is not recognized as a non-apple keyboard. Adding "SoNiX
-KN85 Keyboard" to the list of non-apple keyboards fixes the function
-keys.
+Add an eDP panel entry for AUO B140HAN06.4 that is also used in
+some variants of Lenovo Flex 5G with Qcom SC8180 SoC.
 
-Signed-off-by: Joey Bednar <linux@joeybednar.com>
-Signed-off-by: Jiri Kosina <jkosina@suse.com>
+The raw edid of the panel is:
+
+00 ff ff ff ff ff ff 00 06 af 3d 64 00 00 00 00
+2b 1d 01 04 a5 1f 11 78 03 b8 1a a6 54 4a 9b 26
+0e 52 55 00 00 00 01 01 01 01 01 01 01 01 01 01
+01 01 01 01 01 01 14 37 80 b8 70 38 24 40 10 10
+3e 00 35 ae 10 00 00 18 10 2c 80 b8 70 38 24 40
+10 10 3e 00 35 ae 10 00 00 18 00 00 00 fe 00 41
+55 4f 0a 20 20 20 20 20 20 20 20 20 00 00 00 fe
+00 42 31 34 30 48 41 4e 30 36 2e 34 20 0a 00 eb
+
+I do not have access to the datasheet and but it is tested on above
+mentioned laptop for a few weeks and seems to work just fine with
+timing info of similar panels.
+
+Cc: Bjorn Andersson <andersson@kernel.org>
+Cc: Vinod Koul <vkoul@kernel.org>
+Signed-off-by: Alexey Klimov <alexey.klimov@linaro.org>
+Reviewed-by: Douglas Anderson <dianders@chromium.org>
+Signed-off-by: Douglas Anderson <dianders@chromium.org>
+Link: https://patch.msgid.link/20251203074555.690613-1-alexey.klimov@linaro.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-This confirms the exact same pattern. The "SONiX KN85 Keyboard"
-identifies itself as an Apple keyboard (via vendor/product IDs matching
-Apple's Aluminium Keyboard) but has a different HID name string than
-"SONiX USB DEVICE", so the existing entry doesn't match it. The
-`strncmp` prefix match means "SONiX USB DEVICE" would only match devices
-whose name starts with exactly that string — "SONiX KN85 Keyboard"
-starts with "SONiX KN" which doesn't match "SONiX USB".
+This is the key section. Now I have a complete understanding. Let me
+summarize the analysis.
 
----
+## Detailed Analysis
 
-## Complete Analysis
+### 1. Commit Message Analysis
 
-### 1. COMMIT MESSAGE ANALYSIS
+The commit adds a new panel entry (`EDP_PANEL_ENTRY`) for AUO
+B140HAN06.4 (panel ID `0x643d`) to the `panel-edp.c` driver's
+`edp_panels[]` lookup table. The panel is used in the Lenovo Flex 5G
+with a Qualcomm SC8180 SoC. The commit has been reviewed by Douglas
+Anderson (the panel-edp subsystem maintainer), and the author confirms
+it has been tested on real hardware for several weeks.
 
-The commit message is clear and concise:
-- **Problem**: The SoNiX KN85 keyboard identifies itself (via USB
-  VID:PID) as the "Apple, Inc. Aluminium Keyboard" but is not an Apple
-  keyboard.
-- **Consequence**: Without the fix, the HID apple driver applies Apple-
-  specific function key mapping (`fnmode=1`, fkeyslast), making the
-  function keys behave as media keys by default. This is wrong for a
-  non-Apple keyboard.
-- **Fix**: Adding the keyboard's name string to the
-  `non_apple_keyboards[]` list so it gets properly detected and uses
-  `fnmode=2` (fkeysfirst) by default.
-- The commit was signed off by the HID subsystem maintainer Jiri Kosina,
-  confirming it was accepted through the proper review process.
+### 2. Code Change Analysis
 
-### 2. CODE CHANGE ANALYSIS
+The change is a **single line addition**:
 
-The change is a **single line addition** to a static constant array:
-
-```356:367:drivers/hid/hid-apple.c
-static const struct apple_non_apple_keyboard non_apple_keyboards[] = {
-        { "SONiX USB DEVICE" },
-        { "SONiX AK870 PRO" },
-        // ... rest of array
-};
+```c
+EDP_PANEL_ENTRY('A', 'U', 'O', 0x643d, &delay_200_500_e50,
+"B140HAN06.4"),
 ```
 
-The new entry `{ "SONiX KN85 Keyboard" }` is added at the top. The
-matching mechanism (`apple_is_non_apple_keyboard()` at line 369) does a
-`strncmp` prefix comparison, so the full name "SONiX KN85 Keyboard"
-would need to start with "SONiX KN85 Keyboard" to match (which it does
-exactly). The existing "SONiX USB DEVICE" entry does NOT match because
-the KN85 keyboard reports its name starting with "SONiX KN85", not
-"SONiX USB".
+This adds the panel ID `0x643d` to the sorted list of known AUO panels,
+using the standard `delay_200_500_e50` delay timing (200ms HPD absent,
+500ms unprepare, 50ms enable) -- a delay structure already heavily used
+by dozens of other AUO panel entries. The entry is inserted in the
+correct sorted position between `0x639c` and `0x723c`.
 
-### 3. CLASSIFICATION
+### 3. What happens WITHOUT this entry
 
-This is a **hardware quirk/workaround**. The SoNiX KN85 keyboard is a
-non-Apple keyboard that falsely presents Apple USB vendor/product IDs (a
-common practice for cheap third-party keyboards), causing it to be
-handled by the `hid-apple` driver. The driver then applies Apple-
-specific key translation logic to a keyboard that doesn't need or want
-it, breaking the function keys for the user.
+Looking at lines 805-825 of `panel-edp.c`, when `find_edp_panel()` fails
+to match a panel in the `edp_panels[]` table:
 
-This falls squarely into the "QUIRKS and WORKAROUNDS" exception category
-for stable backporting:
-- It's a hardware-specific fix for a real device with broken behavior
-- It uses an existing mechanism (the `non_apple_keyboards` array)
-- It fixes a real user-facing issue (broken function keys)
+1. **`WARN_ON(!panel->detected_panel)` fires** (line 814) -- this
+   produces a **kernel WARNING stack trace** in dmesg every time the
+   system boots with this panel. This is a user-visible issue.
+2. **Conservative timings are used** (line 818):
+   `panel_edp_set_conservative_timings()` sets a 2000ms unprepare delay
+   and 200ms enable delay (lines 753-754) instead of the optimal
+   500ms/50ms. This makes panel operations **significantly slower** for
+   users.
+3. **`detected_panel` is set to `ERR_PTR(-EINVAL)`** (line 756), which
+   may affect other downstream behaviors.
 
-### 4. SCOPE AND RISK ASSESSMENT
+So without this entry, users with a Lenovo Flex 5G see a WARN_ON kernel
+splat on every boot and get suboptimal display performance.
 
-- **Size**: 1 line added to a data array. Cannot be smaller.
-- **Files touched**: 1 (`drivers/hid/hid-apple.c`)
-- **Complexity**: Zero — it's a string literal added to an array
-- **Risk of regression**: Effectively zero. The string match only
-  triggers for devices reporting "SONiX KN85 Keyboard" as their name. No
-  other devices are affected. The matching is by HID device name, not
-  vendor/product ID, so it's extremely targeted.
-- **Dependencies**: None. The `non_apple_keyboards[]` mechanism exists
-  in all relevant stable trees (introduced in v6.0-rc1).
+### 4. Historical Context
 
-### 5. USER IMPACT
+The B140HAN06.4 panel was originally added to `panel-simple.c` in commit
+`93ea7aa8dfc0c` (v5.15-era). During the split to `panel-edp.c` in commit
+`5f04e7ce392db` (v5.16-rc1), it was moved. However, it was then
+**removed** in commit `51e1fb144f17c` ("drm/panel-edp: drop several
+legacy panels", merged in v6.11-rc1) because the legacy compatible
+string approach was dropped in favor of the generic "edp-panel" device
+on the AUX bus. After that removal, the panel no longer had an entry in
+the `edp_panels[]` ID table, meaning the AUX bus approach can't find it
+by panel ID. This new commit restores support through the modern
+mechanism.
 
-- **Who is affected**: Users of the SoNiX KN85 keyboard running Linux.
-  These are real-world hardware owners.
-- **Severity**: Without this fix, the function keys (F1-F12) on the KN85
-  keyboard are mapped to media keys by default (brightness, volume,
-  etc.), which is wrong for this keyboard. This makes the keyboard
-  effectively unusable for standard function key operations unless the
-  user manually overrides `fnmode` via a module parameter.
-- **Workaround exists**: Users can set `fnmode=2` manually, but this is
-  not discoverable and should not be needed.
+### 5. Classification: Device ID / Hardware Quirk Addition
 
-### 6. STABILITY INDICATORS
+This is a textbook **device ID addition** to an existing driver -- one
+of the explicitly allowed exception categories for stable backports. The
+`edp_panels[]` table is directly analogous to PCI ID tables or USB ID
+tables. The commit:
 
-- The commit follows the exact same pattern as **5+ previous similar
-  commits** (SONiX AK870 PRO, hfd.cn/WKB603, Jamesdonkey/A3R, Hailuck,
-  the original non-apple keyboards mechanism).
-- Signed off by the HID subsystem maintainer (Jiri Kosina).
-- The pattern has been in the kernel since v6.0 and is well understood.
+- Adds a single panel ID to an existing, well-established table
+- Uses existing delay parameters (`delay_200_500_e50`) -- no new code
+- Follows the exact same pattern as ~192 other entries in the table
+- The driver (`panel-edp.c`) already exists in stable trees (since
+  v5.16)
 
-### 7. DEPENDENCY CHECK
+### 6. Risk Assessment
 
-- **No dependencies**. The `non_apple_keyboards[]` array and
-  `apple_is_non_apple_keyboard()` function exist in all relevant stable
-  trees.
-- The patch applies cleanly to any tree that already has the "SONiX
-  AK870 PRO" entry (or can trivially be adjusted if that entry isn't
-  present — it's just adding a line to an array).
+- **Risk: Essentially zero.** This is a one-line addition to a data
+  table. It cannot affect any other panel or any other code path. It
+  only activates when a panel with the exact matching EDID
+  vendor/product ID is detected.
+- **Scope:** Single line, single file, data-only change.
+- **Dependencies:** None. The `delay_200_500_e50` structure and
+  `EDP_PANEL_ENTRY` macro exist in all stable trees that have `panel-
+  edp.c`.
 
-### 8. PRECEDENT
+### 7. User Impact
 
-This is identical in nature to the "SONiX AK870 PRO" (743c81cdc98fd),
-"hfd.cn/WKB603" (df83a0df820b9), "Hailuck" (c4444d8749f69), and
-"Jamesdonkey/A3R" (113f736655e4f) commits. All follow the same one-line-
-addition pattern to the same array.
+- **Who:** Users of the Lenovo Flex 5G laptop (Qualcomm SC8180 SoC
+  platform). This is a real, commercially available product.
+- **Without fix:** Kernel WARNING on every boot + slower panel
+  operations due to conservative timings.
+- **With fix:** Clean boot, optimal panel timing, proper panel
+  identification.
 
-### Summary
+### 8. Backport Considerations
 
-This is a textbook hardware quirk addition — a single line of data added
-to an existing mechanism that fixes broken function keys for a specific
-keyboard model. It has zero risk of regression, zero dependencies beyond
-existing infrastructure, fixes a real user-facing problem, and follows a
-well-established pattern with multiple precedents. This is exactly the
-kind of commit that stable trees exist to carry.
+- For stable trees **v6.11.y and later**: The legacy `panel-simple.c`
+  entry was removed in v6.11-rc1, so the panel-edp entry is essential.
+- For stable trees **v5.16.y to v6.10.y**: The panel was supported
+  through the legacy `panel-simple.c` compatible string, so the AUX bus
+  lookup wasn't needed. Whether this entry is needed depends on whether
+  the DT uses the legacy compatible or the generic `edp-panel` approach.
+- The commit should apply cleanly to v6.11+ stable trees (the table
+  structure is the same).
+
+### 9. Stability Indicators
+
+- **Reviewed-by: Douglas Anderson** -- the panel-edp subsystem
+  maintainer
+- Tested on real hardware for weeks
+- Standard, well-understood change pattern
+
+### Conclusion
+
+This is a clear-cut device ID addition to an existing driver's panel
+identification table. It fixes a real user-visible issue (WARN_ON kernel
+splat on boot + degraded panel timings) for users of a specific laptop
+model. The change is a single line of data, uses existing
+infrastructure, carries essentially zero regression risk, and has been
+reviewed by the subsystem maintainer. It fits perfectly into the "new
+device IDs to existing drivers" exception category for stable backports.
 
 **YES**
 
- drivers/hid/hid-apple.c | 1 +
+ drivers/gpu/drm/panel/panel-edp.c | 1 +
  1 file changed, 1 insertion(+)
 
-diff --git a/drivers/hid/hid-apple.c b/drivers/hid/hid-apple.c
-index 57da4f86a9fa7..233e367cce1d1 100644
---- a/drivers/hid/hid-apple.c
-+++ b/drivers/hid/hid-apple.c
-@@ -354,6 +354,7 @@ static const struct apple_key_translation swapped_fn_leftctrl_keys[] = {
- };
- 
- static const struct apple_non_apple_keyboard non_apple_keyboards[] = {
-+	{ "SONiX KN85 Keyboard" },
- 	{ "SONiX USB DEVICE" },
- 	{ "SONiX AK870 PRO" },
- 	{ "Keychron" },
+diff --git a/drivers/gpu/drm/panel/panel-edp.c b/drivers/gpu/drm/panel/panel-edp.c
+index 023fbbb10eb4f..2c35970377431 100644
+--- a/drivers/gpu/drm/panel/panel-edp.c
++++ b/drivers/gpu/drm/panel/panel-edp.c
+@@ -1904,6 +1904,7 @@ static const struct edp_panel_entry edp_panels[] = {
+ 	EDP_PANEL_ENTRY('A', 'U', 'O', 0x615c, &delay_200_500_e50, "B116XAN06.1"),
+ 	EDP_PANEL_ENTRY('A', 'U', 'O', 0x635c, &delay_200_500_e50, "B116XAN06.3"),
+ 	EDP_PANEL_ENTRY('A', 'U', 'O', 0x639c, &delay_200_500_e50, "B140HAK02.7"),
++	EDP_PANEL_ENTRY('A', 'U', 'O', 0x643d, &delay_200_500_e50, "B140HAN06.4"),
+ 	EDP_PANEL_ENTRY('A', 'U', 'O', 0x723c, &delay_200_500_e50, "B140XTN07.2"),
+ 	EDP_PANEL_ENTRY('A', 'U', 'O', 0x73aa, &delay_200_500_e50, "B116XTN02.3"),
+ 	EDP_PANEL_ENTRY('A', 'U', 'O', 0x8594, &delay_200_500_e50, "B133UAN01.0"),
 -- 
 2.51.0
 
