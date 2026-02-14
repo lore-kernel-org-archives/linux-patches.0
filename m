@@ -1,40 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC88B25F994;
-	Sat, 14 Feb 2026 21:25:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44CDA30B538;
+	Sat, 14 Feb 2026 21:25:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771104352; cv=none; b=MmJM9oxt6biiIgiwB4iJqzJF9Gkk0Fx9S7hn3FhSTTt0HrZxacClyR9eLUz5lis/A6tVC014u//o8wnL194Hs8qzoexYu7D9XJfVInQY4679qDbWW9RIYTIbAVUBl/OpsgO5RlYMTnoEn1Goj6zz7hYhhlV858OvxlOkhP1b7dA=
+	t=1771104353; cv=none; b=mC+YwnztZI5U6su0BFKxCN67U7MFbre76oKBBOydXBNgtSHS+hIVFB390KwAvPCVjanh71ReFJRdjbgbbjcOd78xEjLon9BAaOgXXMDqRoDExunBB99QFoPvCt46qzU/0u6FLg9R7sZmN2RtPV1gPmSEPMjhTHO9rHWrXt1LrjQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771104352; c=relaxed/simple;
-	bh=mUbgclJqjUwPl4cKFFF63FLHgNj3UpN/LhTRwZcaGg8=;
+	s=arc-20240116; t=1771104353; c=relaxed/simple;
+	bh=a6AFDtak2ZeymRim/dSLlx+Pr0RgsP92jVYL9T3nWmA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=EuIMiiLJZxFleYG1dgOIcR56+HIdh1B/OAsg8Acqrr11Gk6ys3C0/OUtAAG5VoQmXPtzksV0UTZP8SM/hSQPKiwEATyOWsGH0Cb41oM/p3BL9CtzNpoiF76yM0l92kYzKhJhtnTIgTzXQxSugtRcIi8e3UfDLlM+iFj1yYDPflY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=MftDr06Y; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=UTTmZSBf9Dz+74uD7nT3EYjftxoValLxhYlx8av79qHaTvJiqM2VCYHvGvY3KoJyCk5CKZDjirXE5H0QPu3HtCW3gBsLbtJewGWQdlDySjpAYAOfLwfcHu9YjUjaIQOLUuT6xvAR/2DDewmEvvJEQwlbI3JXwM2iOdTgPLqT5Nk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=DLtCwVfS; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="MftDr06Y"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4AD6CC19422;
-	Sat, 14 Feb 2026 21:25:51 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="DLtCwVfS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 409F2C16AAE;
+	Sat, 14 Feb 2026 21:25:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1771104351;
-	bh=mUbgclJqjUwPl4cKFFF63FLHgNj3UpN/LhTRwZcaGg8=;
+	s=k20201202; t=1771104353;
+	bh=a6AFDtak2ZeymRim/dSLlx+Pr0RgsP92jVYL9T3nWmA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MftDr06YH8dkuMX9RAjsBnEc3XP++ilIDnBMXHb//s93geK648AVikBND9+GXeSkd
-	 4hHnJOojmon3lAiPioaoAuUcl6n9+LRaXrkQGs/QCxDug/5DHlH1SwudCuFSdrpIIS
-	 n6+d8wiL70xw1pU6RD1tjNkySYzIGlnpyLwATRHsUHQT90boA+RuhIZRuIrzbDA92e
-	 ixCMncQ09zqq8bdTjHSa/U54/orS8DuORtPjzjTDycje3yPbkMRVHuEU7j7NpvCPUs
-	 yMPhJEJvCCxCgW+/xNb0CKqe65CMG5j2KD4f4ohOmQgmpb4boC1J8gjHtPsHCGDktO
-	 DT0X4NoJSwSTQ==
+	b=DLtCwVfSHG5bKyYvX8hsUlHsTmXFEyzIZ2TBY8YiJJQDpUFLklmgHZHJ+FIONJxQi
+	 GESr4B4DIalRK3Bkiu+OKeG3Qb4zag7GiH83VqckX+kPmZkt2AFYVUGtixMhSY6FmF
+	 aDNueaNqL+/tGXyI55b386GxlpmXfbi0IQjNZoLDNI8Q63zKMzb5noeP8dtVnzc9WD
+	 EqL7E/6xGPXTFniyjErn9tp9PGu4YY/xoZXbWrmw84G6p3QHNsRcVpIybfRoaBzvnW
+	 RpysaJycJ8qCtbok7b3myz0rjcLpjAUQnVhvMbipA7UeQRwRsqbyCpUc7fasVgqtbM
+	 wD4xRv3WpB/Jw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Ping-Ke Shih <pkshih@realtek.com>,
+Cc: Eric Dumazet <edumazet@google.com>,
+	Simon Horman <horms@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	linux-wireless@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.19-6.12] wifi: rtw89: mac: correct page number for CSI response
-Date: Sat, 14 Feb 2026 16:22:58 -0500
-Message-ID: <20260214212452.782265-33-sashal@kernel.org>
+	davem@davemloft.net,
+	dsahern@kernel.org,
+	netdev@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.19-5.15] ipv6: exthdrs: annotate data-race over multiple sysctl
+Date: Sat, 14 Feb 2026 16:22:59 -0500
+Message-ID: <20260214212452.782265-34-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260214212452.782265-1-sashal@kernel.org>
 References: <20260214212452.782265-1-sashal@kernel.org>
@@ -50,145 +54,175 @@ X-stable-base: Linux 6.19
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ping-Ke Shih <pkshih@realtek.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit aa2a44d0d22d45d659b9f01638809b1735e46cff ]
+[ Upstream commit 978b67d28358b0b4eacfa94453d1ad4e09b123ad ]
 
-For beamforming procedure, hardware reserve memory page for CSI response.
-The unit of register is (value - 1), so add one accordingly as expected.
+Following four sysctls can change under us, add missing READ_ONCE().
 
-Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
-Link: https://patch.msgid.link/20260110022019.2254969-7-pkshih@realtek.com
+- ipv6.sysctl.max_dst_opts_len
+- ipv6.sysctl.max_dst_opts_cnt
+- ipv6.sysctl.max_hbh_opts_len
+- ipv6.sysctl.max_hbh_opts_cnt
+
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20260115094141.3124990-8-edumazet@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-## Analysis of commit: "wifi: rtw89: mac: correct page number for CSI
-response"
+## Analysis of commit: "ipv6: exthdrs: annotate data-race over multiple
+sysctl"
 
-### 1. Commit Message Analysis
+### 1. COMMIT MESSAGE ANALYSIS
 
-The commit message states that for the beamforming procedure, hardware
-reserves memory pages for CSI (Channel State Information) response. The
-register expects a value where the unit is `(value - 1)`, meaning the
-driver needs to write `pg_num + 1` to get the correct number of pages
-reserved. The current code writes `pg_num` directly, which results in
-one fewer page than intended.
+The commit message is straightforward: it adds `READ_ONCE()` annotations
+to four sysctl variables that can be modified concurrently from
+userspace while being read in the packet processing path. The author is
+Eric Dumazet, a prolific and highly respected networking maintainer at
+Google, who frequently contributes data-race annotations and fixes.
+Reviewed by Simon Horman, another well-known networking reviewer.
 
-This is a hardware register programming bug — an off-by-one error in how
-a register value is interpreted.
+The four sysctls affected:
+- `ipv6.sysctl.max_dst_opts_len`
+- `ipv6.sysctl.max_dst_opts_cnt`
+- `ipv6.sysctl.max_hbh_opts_len`
+- `ipv6.sysctl.max_hbh_opts_cnt`
 
-### 2. Code Change Analysis
+### 2. CODE CHANGE ANALYSIS
 
-The change is a single-line fix:
-```c
-- rtw89_write32_mask(rtwdev, reg, B_BE_CSI_RESERVED_PAGE_NUM_MASK,
-  qt_cfg.pg_num);
-+ rtw89_write32_mask(rtwdev, reg, B_BE_CSI_RESERVED_PAGE_NUM_MASK,
-qt_cfg.pg_num + 1);
-```
+The changes are minimal and mechanical - wrapping four sysctl reads with
+`READ_ONCE()`:
 
-This is about as minimal and surgical as a fix can be. It corrects the
-value written to the `R_BE_RESP_CSI_RESERVED_PAGE` register's page
-number field by adding 1 to account for the hardware's `(value - 1)`
-encoding.
+1. **`ipv6_destopt_rcv()`** (line ~317):
+   `net->ipv6.sysctl.max_dst_opts_len` →
+   `READ_ONCE(net->ipv6.sysctl.max_dst_opts_len)`
+2. **`ipv6_destopt_rcv()`** (line ~326):
+   `net->ipv6.sysctl.max_dst_opts_cnt` →
+   `READ_ONCE(net->ipv6.sysctl.max_dst_opts_cnt)`
+3. **`ipv6_parse_hopopts()`** (line ~1053):
+   `net->ipv6.sysctl.max_hbh_opts_len` →
+   `READ_ONCE(net->ipv6.sysctl.max_hbh_opts_len)`
+4. **`ipv6_parse_hopopts()`** (line ~1056):
+   `net->ipv6.sysctl.max_hbh_opts_cnt` →
+   `READ_ONCE(net->ipv6.sysctl.max_hbh_opts_cnt)`
 
-### 3. Bug Classification
+These are in the IPv6 extension header packet receive path - hot path
+code that processes every incoming IPv6 packet with destination options
+or hop-by-hop options. The sysctl values can be changed from userspace
+at any time via `/proc/sys/net/ipv6/`, creating a data race.
 
-This is a **hardware register programming bug** (off-by-one). The
-consequence is that the hardware reserves one fewer memory page than
-needed for CSI response in beamforming. This could lead to:
-- **Beamforming failures** or degraded WiFi performance
-- Potential **memory corruption within the hardware's DLE (Data Link
-  Engine)** if CSI responses overflow the allocated pages
-- Possible **firmware/hardware hangs** if the CSI response data
-  overwrites adjacent memory regions in the hardware
+### 3. BUG MECHANISM
 
-### 4. Scope and Risk Assessment
+Without `READ_ONCE()`, the compiler is free to:
+- Re-read the value multiple times (store tearing), potentially getting
+  different values in the same function
+- Optimize based on assumptions about the value not changing
 
-- **Lines changed**: 1 line
-- **Files touched**: 1 file
-  (`drivers/net/wireless/realtek/rtw89/mac_be.c`)
-- **Complexity**: Trivially simple — adds `+ 1` to a value
-- **Risk of regression**: Extremely low. The fix aligns the driver with
-  the hardware's documented register encoding. Writing the wrong value
-  was the bug.
-- **Subsystem**: WiFi driver (rtw89 — Realtek WiFi), which is a commonly
-  used wireless driver
+This is a real data race detectable by KCSAN (Kernel Concurrency
+Sanitizer). While the practical consequences of this particular race are
+relatively mild (the comparison values might be slightly stale or torn),
+the race is real and in a networking hot path.
 
-### 5. User Impact
+### 4. CLASSIFICATION
 
-- **Who is affected**: Users of Realtek WiFi chipsets supported by the
-  rtw89 driver (specifically the "BE" generation, likely WiFi 7 chips
-  like RTL8922AE)
-- **Severity**: Medium-high. Beamforming is important for WiFi
-  performance and reliability. With incorrect page reservation, users
-  may experience degraded throughput, connection instability, or
-  potential hardware issues
-- **Real-world impact**: Any user with this hardware would be affected
-  during beamforming operations
+This is a **data-race fix** — category 3 (Race Conditions) from the
+analysis framework. `READ_ONCE()`/`WRITE_ONCE()` annotations are a
+common pattern for KCSAN-detected data races and are regularly
+backported to stable.
 
-### 6. Stability Indicators
+### 5. SCOPE AND RISK ASSESSMENT
 
-- **Author**: Ping-Ke Shih (pkshih@realtek.com) — the primary maintainer
-  of the rtw89 driver at Realtek. Highly trusted for this subsystem.
-- **Obviously correct**: The commit message clearly explains the
-  hardware register encoding, and the fix directly addresses it.
+- **Lines changed**: ~8 lines across one file
+- **Files touched**: 1 (`net/ipv6/exthdrs.c`)
+- **Risk**: Extremely low. `READ_ONCE()` is a pure compiler annotation
+  that generates identical or near-identical machine code on most
+  architectures. It cannot introduce regressions.
+- **Subsystem**: IPv6 networking — core infrastructure used by virtually
+  all systems
 
-### 7. Dependency Check
+### 6. USER IMPACT
 
-This is a standalone fix. It doesn't depend on other patches (it's patch
-7 of a series, but this particular change is self-contained — it just
-corrects a value written to a register). The function
-`resp_pktctl_init_be()` and the register definitions need to exist in
-the stable tree.
+- **Who is affected**: Any system processing IPv6 packets with extension
+  headers where sysctl values might be modified concurrently
+- **Severity**: Low to medium — the race could theoretically cause
+  inconsistent enforcement of the max length/count limits, but more
+  importantly it silences KCSAN reports and ensures correct compiler
+  behavior
+- **In the networking hot path**: These functions process packets, so
+  correctness matters
 
-### 8. Stable Kernel Criteria Assessment
+### 7. STABILITY INDICATORS
 
-- **Obviously correct**: Yes — the hardware register uses `(value - 1)`
-  encoding, so writing `pg_num + 1` is the correct value
-- **Fixes a real bug**: Yes — off-by-one in hardware register
-  programming causes incorrect page reservation
-- **Small and contained**: Yes — single line change in a single file
-- **No new features**: Correct — this is purely a bug fix
-- **Tested**: From the Realtek driver maintainer, submitted through
-  proper channels
+- **Author**: Eric Dumazet (Google, top networking contributor) — very
+  high trust
+- **Reviewer**: Simon Horman — respected networking reviewer
+- **Pattern**: This is part of a series (patch 8 of a set) of data-race
+  annotations, which is a well-established pattern in the networking
+  subsystem
 
-### Risk vs. Benefit
+### 8. DEPENDENCY CHECK
 
-- **Risk**: Negligible. A one-line arithmetic correction to a hardware
-  register value, authored by the subsystem maintainer.
-- **Benefit**: Fixes beamforming page allocation for rtw89 BE-generation
-  WiFi hardware, preventing potential performance degradation or
-  hardware issues.
+This commit is self-contained. `READ_ONCE()` is a basic kernel primitive
+available in all stable trees. The sysctl variables being annotated have
+existed for a long time. No dependencies on other patches.
 
-### Concerns
+### 9. VERDICT
 
-The only concern is whether the `mac_be.c` file exists in the target
-stable trees. The "BE" generation support was added relatively recently,
-so this fix would only apply to stable kernels that already include
-rtw89 BE support. But if the code exists in the stable tree, this fix is
-clearly appropriate.
+This is a small, surgical, zero-risk fix for a real data race in the
+IPv6 networking path. It follows the well-established pattern of
+`READ_ONCE()` annotations that Eric Dumazet has been systematically
+adding across the networking stack. These annotations are routinely
+backported to stable trees. The fix is obviously correct, has
+essentially zero regression risk, and addresses a real concurrency issue
+in core networking code.
 
 **YES**
 
- drivers/net/wireless/realtek/rtw89/mac_be.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/ipv6/exthdrs.c | 10 ++++++----
+ 1 file changed, 6 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/net/wireless/realtek/rtw89/mac_be.c b/drivers/net/wireless/realtek/rtw89/mac_be.c
-index 9b9e646487346..dee5ff71b75fe 100644
---- a/drivers/net/wireless/realtek/rtw89/mac_be.c
-+++ b/drivers/net/wireless/realtek/rtw89/mac_be.c
-@@ -1175,7 +1175,7 @@ static int resp_pktctl_init_be(struct rtw89_dev *rtwdev, u8 mac_idx)
+diff --git a/net/ipv6/exthdrs.c b/net/ipv6/exthdrs.c
+index a23eb8734e151..54088fa0c09d0 100644
+--- a/net/ipv6/exthdrs.c
++++ b/net/ipv6/exthdrs.c
+@@ -314,7 +314,7 @@ static int ipv6_destopt_rcv(struct sk_buff *skb)
+ 	}
  
- 	reg = rtw89_mac_reg_by_idx(rtwdev, R_BE_RESP_CSI_RESERVED_PAGE, mac_idx);
- 	rtw89_write32_mask(rtwdev, reg, B_BE_CSI_RESERVED_START_PAGE_MASK, qt_cfg.pktid);
--	rtw89_write32_mask(rtwdev, reg, B_BE_CSI_RESERVED_PAGE_NUM_MASK, qt_cfg.pg_num);
-+	rtw89_write32_mask(rtwdev, reg, B_BE_CSI_RESERVED_PAGE_NUM_MASK, qt_cfg.pg_num + 1);
+ 	extlen = (skb_transport_header(skb)[1] + 1) << 3;
+-	if (extlen > net->ipv6.sysctl.max_dst_opts_len)
++	if (extlen > READ_ONCE(net->ipv6.sysctl.max_dst_opts_len))
+ 		goto fail_and_free;
  
- 	return 0;
- }
+ 	opt->lastopt = opt->dst1 = skb_network_header_len(skb);
+@@ -322,7 +322,8 @@ static int ipv6_destopt_rcv(struct sk_buff *skb)
+ 	dstbuf = opt->dst1;
+ #endif
+ 
+-	if (ip6_parse_tlv(false, skb, net->ipv6.sysctl.max_dst_opts_cnt)) {
++	if (ip6_parse_tlv(false, skb,
++			  READ_ONCE(net->ipv6.sysctl.max_dst_opts_cnt))) {
+ 		skb->transport_header += extlen;
+ 		opt = IP6CB(skb);
+ #if IS_ENABLED(CONFIG_IPV6_MIP6)
+@@ -1049,11 +1050,12 @@ int ipv6_parse_hopopts(struct sk_buff *skb)
+ 	}
+ 
+ 	extlen = (skb_transport_header(skb)[1] + 1) << 3;
+-	if (extlen > net->ipv6.sysctl.max_hbh_opts_len)
++	if (extlen > READ_ONCE(net->ipv6.sysctl.max_hbh_opts_len))
+ 		goto fail_and_free;
+ 
+ 	opt->flags |= IP6SKB_HOPBYHOP;
+-	if (ip6_parse_tlv(true, skb, net->ipv6.sysctl.max_hbh_opts_cnt)) {
++	if (ip6_parse_tlv(true, skb,
++			  READ_ONCE(net->ipv6.sysctl.max_hbh_opts_cnt))) {
+ 		skb->transport_header += extlen;
+ 		opt = IP6CB(skb);
+ 		opt->nhoff = sizeof(struct ipv6hdr);
 -- 
 2.51.0
 
