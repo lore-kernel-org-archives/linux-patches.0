@@ -1,45 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2CF03C2D;
-	Sat, 14 Feb 2026 21:26:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 966233C2D;
+	Sat, 14 Feb 2026 21:26:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771104386; cv=none; b=OCAK9qZ9P3XPuHra2KFbVpV3zvva76U4HYhrCCNwLUKK9Cs6ZRiodvLxub5aoqlmBjGHfJYzgGKXampAqxMzhR5BsxgmAtOIu8j5c6PJkpy61kbXIN0OtGcR2G/LSkd0Td6vrOd16Edw0sKlPTRIJHxs6SxnjqdilK9Hab99+1A=
+	t=1771104392; cv=none; b=Se0kGpU/8A2uEcUvHkmJwZx7AQhwNG5Jdo9FFcj9n2jeFV59BR3n0w+0jeqwDULVu0IyTRsX3HKecu+r7FZc0zCJBq30AZ6tSnpcjB2ex8MLW6qSPYDHDPNTLKWpQ7Xtamn+j3ghsS9d8VowQFDGnZBSe4RpVefRdClkAm/O9rU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771104386; c=relaxed/simple;
-	bh=V3TNPGN4kFnHVSzRqNxu1tepud4SuFsId5OwEr5/1Pc=;
+	s=arc-20240116; t=1771104392; c=relaxed/simple;
+	bh=t7/McNgBzIgMYa/0Ws8Wx37DuvsjekDq93jR0pg7hOQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gzLm7PmrLsiaPML6gl7BxdP9E7CpWYbB2YanLTNEoVM4QS/6rqQ2L2jdTd5PrWP5bedcdM4xuvprD9lPHG7uscG3eNq41FppfAOGqeTUzyM27Re+TlLcUunJOrQ+nGErXCS+P2jJgUuZehMGX3obpGkiab+sEmOHNHYRqQxdkCY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=h7Bzvlv4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=pT9sou3vifhACjdvr0Dz14Ag+bV6inIfojJPTBnAYHpPjyqpkrWMaDhSwCgzaqeiRRn4GGMIm27wUFFt+EfsEsMOtt9o6fN6VfNaMK7O+CwOzwLsmUd0jX+AnId4PVNZxw3k+L3pBCIfXy6g09FMDVRfFlw0ugUAdY2IP+pl3EU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Ybx8R12J; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="h7Bzvlv4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B69EFC16AAE;
-	Sat, 14 Feb 2026 21:26:25 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Ybx8R12J"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7BE92C16AAE;
+	Sat, 14 Feb 2026 21:26:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1771104386;
-	bh=V3TNPGN4kFnHVSzRqNxu1tepud4SuFsId5OwEr5/1Pc=;
+	s=k20201202; t=1771104392;
+	bh=t7/McNgBzIgMYa/0Ws8Wx37DuvsjekDq93jR0pg7hOQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=h7Bzvlv4PmJypCMNL1G7ojS3SbWAcv5qhL3NYEM1Ic29R9umTnMJicfz9Gv6ayRIh
-	 7UyfiVa3Zvxf0BJ3p9Foi6Xov7wQe+ExifC4NRtjVmCo1U0WzyVofC49Yx95fgHIFc
-	 9bmd49bAKU2Q6HrvfJEzSTWbTk0/YQMkgwysv/W9U4Z1mHZm88v/nun1CI/sdS2aOO
-	 Jc2bJ6hSqBnE9muPVubx33tpXqoZ4g7smRod//jDO4ea2gC2cxGifgAa4ZNJieZEc9
-	 xCbAjGNaSv/I1vNRLoP9brfdqX6AKINAfYYiRaC4t9yIWK5RiVPZWhM/uoeWj0Wdbt
-	 Qq5agjqpz1oiA==
+	b=Ybx8R12JyYp6/Cb9D4iIdMB6ukIlmdN6BMWfxFg1vWwikIedjKnHxwezEHyLiUKqH
+	 99gxSLanhx4IE5LG1s/Z2RKe7/cDdtoKsPBtnGu8MHCKHdv0JWuLgaMNYJlxzWa+g2
+	 /CHvIqr194Hzq4Nxhu1UOaGEvWRX7NeUVLk6Mc+Ck1sg5Ip0V+yEds1lFu56avZTld
+	 hvOgB53U1D03+lUrSMtOxeCgmayUh99608G+4V90iXFgCetS8xkiQ+Ak871SSd1D1C
+	 f31rBYGOtYdX4GaEcqULDdj5GUQ6wSUfS0CPHP+iAXGZQ7sDIhKHskfD3BWQUMlX6F
+	 36HpWm4rz7KEQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Ian Rogers <irogers@google.com>,
-	Manivannan Sadhasivam <mani@kernel.org>,
-	Bjorn Helgaas <bhelgaas@google.com>,
+Cc: Miri Korenblit <miriam.rachel.korenblit@intel.com>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>,
-	neil.armstrong@linaro.org,
+	emmanuel.grumbach@intel.com,
+	somashekhar.puttagangaiah@intel.com,
+	ilan.peer@intel.com,
 	yelangyan@huaqin.corp-partner.google.com,
-	mpillai@cadence.com,
-	linux-pci@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.19] PCI: cadence: Avoid signed 64-bit truncation and invalid sort
-Date: Sat, 14 Feb 2026 16:23:21 -0500
-Message-ID: <20260214212452.782265-56-sashal@kernel.org>
+	nidhish.a.n@intel.com
+Subject: [PATCH AUTOSEL 6.19-6.18] wifi: iwlwifi: mld: fix chandef start calculation
+Date: Sat, 14 Feb 2026 16:23:22 -0500
+Message-ID: <20260214212452.782265-57-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260214212452.782265-1-sashal@kernel.org>
 References: <20260214212452.782265-1-sashal@kernel.org>
@@ -52,158 +52,169 @@ MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.19
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ian Rogers <irogers@google.com>
+From: Miri Korenblit <miriam.rachel.korenblit@intel.com>
 
-[ Upstream commit 0297dce758a021ccf2c0f4e164d5403ef722961c ]
+[ Upstream commit d2fcdf36554316cc51f7928b777944738d06e332 ]
 
-The cdns_pcie_host_dma_ranges_cmp() element comparison function used by
-list_sort() is of type list_cmp_func_t, so it returns a 32-bit int.
+A link pair in which both links are in 5 GHz can be used for EMLSR only
+if they are separated enough.
 
-cdns_pcie_host_dma_ranges_cmp() computes a resource_size_t difference that
-may be a 64-bit value, and truncating that difference to a 32-bit return
-value may change the sign and result in an invalid sort order.
+To check this condition we calculate the start and the end of the
+chandefs of both links in the pair and do some checks.
 
-Avoid the truncation and invalid sort order by returning -1, 0, or 1.
+But the calculation of the start/end of the chandef is currently done
+by subtracting/adding half the bandwidth from/to the control channel's
+center frequency, when it should really be subtracted/added from/to the
+center frequency of the entire chandef.
 
-Signed-off-by: Ian Rogers <irogers@google.com>
-Signed-off-by: Manivannan Sadhasivam <mani@kernel.org>
-[bhelgaas: commit log]
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Link: https://patch.msgid.link/20251209223756.2321578-1-irogers@google.com
+Fix the wrong calculation.
+
+Reviewed-by: Johannes Berg <johannes.berg@intel.com>
+Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
+Link: https://patch.msgid.link/20260111193638.2138fdb99bd5.I4d2e5957b22482a57b1d6ca444e90fcf73bf2cab@changeid
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-## Analysis of PCI: cadence: Avoid signed 64-bit truncation and invalid
-sort
+## Analysis of wifi: iwlwifi: mld: fix chandef start calculation
 
-### Commit Message Analysis
+### 1. Commit Message Analysis
 
-The commit message clearly describes a bug: the comparison function
-`cdns_pcie_host_dma_ranges_cmp()` returns a 32-bit `int`, but it
-computes a difference of `resource_size_t` values which can be 64-bit.
-Truncating a 64-bit difference to 32 bits can change the sign, resulting
-in an **invalid sort order**. This is a classic integer truncation bug
-in comparison functions.
+The commit message clearly describes a **bug fix** — the word "fix" is
+in the subject and the body explains the incorrect calculation. The
+issue is about EMLSR (Enhanced Multi-Link Single Radio) link pair
+validation for 5 GHz band operation. The calculation was using the
+**control channel's center frequency** (`chan->center_freq`) instead of
+the **chandef's center frequency** (`center_freq1`) when computing
+channel edges. This is a straightforward logic error.
 
-### Code Change Analysis
+The commit has a `Reviewed-by: Johannes Berg` tag — Johannes Berg is the
+mac80211/cfg80211 maintainer, which is a strong trust indicator.
 
-**Before (buggy):**
+### 2. Code Change Analysis
+
+The diff is minimal — only **two lines changed**:
+
 ```c
-return resource_size(entry2->res) - resource_size(entry1->res);
+- c_low_upper_edge = c_low->chan->center_freq +
++ c_low_upper_edge = c_low->center_freq1 +
+
+- c_high_lower_edge = c_high->chan->center_freq -
++ c_high_lower_edge = c_high->center_freq1 -
 ```
 
-This subtracts two `resource_size_t` (which is `u64` on 64-bit systems)
-values and returns the result as an `int` (32-bit). If the difference
-exceeds `INT_MAX` or the subtraction wraps around (since
-`resource_size_t` is unsigned), the truncated 32-bit value can have the
-wrong sign.
+**What was wrong:** The code was computing the upper/lower edges of a
+channel definition by taking `chan->center_freq` (the control channel's
+center frequency) and adding/subtracting half the bandwidth. However,
+for wide channels (40/80/160 MHz), the control channel's center
+frequency is NOT the center of the entire channel definition —
+`center_freq1` is. For example, on an 80 MHz channel, the control
+channel is a 20 MHz slice at one edge, so `chan->center_freq` could be
+30 MHz away from the actual center of the chandef.
 
-**After (fixed):**
-```c
-size1 = resource_size(entry1->res);
-size2 = resource_size(entry2->res);
+**Impact of the bug:** The separation check between two 5 GHz links
+would use incorrect edge calculations. This could either:
+- Incorrectly allow EMLSR on links that are too close together (causing
+  HW/FW issues)
+- Incorrectly disallow EMLSR on links that should be valid (degrading
+  WiFi 7 performance)
 
-if (size1 > size2)
-    return -1;
-if (size1 < size2)
-    return 1;
-return 0;
-```
+Both outcomes affect real users with Intel WiFi 7 hardware using EMLSR.
 
-This is the canonical safe way to write a comparison function, returning
--1, 0, or 1 directly.
+### 3. Classification
 
-### Bug Impact
+This is a clear **bug fix** — correcting a wrong variable reference in a
+calculation. It's not a feature addition, refactoring, or cleanup.
 
-This function is used by `list_sort()` to sort DMA ranges by size
-(descending order). An invalid sort order means:
+### 4. Scope and Risk Assessment
 
-1. **DMA ranges may not be sorted correctly**, which affects BAR
-   configuration in `cdns_pcie_host_bar_config()`.
-2. The Cadence PCIe host controller relies on this sorting to assign
-   BARs to inbound memory regions. If large regions are not processed
-   first (as intended by the descending sort), BAR assignment could fail
-   or produce suboptimal/incorrect mappings.
-3. This could lead to **PCIe enumeration failures** or **incorrect
-   memory mappings** on systems using the Cadence PCIe controller
-   (common in embedded/SoC platforms).
+- **Lines changed:** 2 (extremely small)
+- **Files changed:** 1
+- **Risk:** Very low — the change simply uses the correct field from the
+  same structure
+- **Subsystem:** iwlwifi driver (Intel wireless) — widely used, actively
+  maintained
+- **Could break something?** Extremely unlikely — it's correcting a
+  calculation to use the semantically correct value
 
-The bug is triggered when resource sizes differ by more than 2^31 bytes
-(2 GiB), which is realistic for modern systems with large DMA regions.
+### 5. User Impact
 
-### Stable Criteria Check
+This affects users with Intel WiFi 7 hardware (which supports EMLSR).
+Incorrect EMLSR pair validation could lead to:
+- Using EMLSR on unsuitable link pairs → potential connectivity issues
+  or firmware problems
+- Not using EMLSR on suitable pairs → reduced WiFi 7 performance
 
-1. **Obviously correct and tested**: Yes - the fix is a textbook
-   correction of an integer truncation bug in a comparator. Reviewed and
-   merged by the PCI subsystem maintainer (Bjorn Helgaas).
-2. **Fixes a real bug**: Yes - integer truncation causing invalid sort
-   order is a real bug that can cause incorrect BAR configuration.
-3. **Important issue**: Moderate - incorrect PCIe BAR configuration can
-   cause device failures on affected platforms.
-4. **Small and contained**: Yes - the change is minimal (about 10 lines
-   changed in a single function), localized to one comparator function.
-5. **No new features**: Correct - this is purely a bug fix.
-6. **Applies cleanly**: The change is self-contained with no
-   dependencies.
+WiFi 7 with EMLSR is increasingly common in modern laptops.
 
-### Risk Assessment
+### 6. Stability Indicators
 
-- **Risk**: Very low. The change replaces an incorrect arithmetic
-  comparison with the standard -1/0/1 pattern. There's no way this can
-  introduce a regression.
-- **Scope**: Single function in a single file, affecting only the
-  Cadence PCIe host controller driver.
-- **Benefit**: Correct DMA range sorting for systems with large memory
-  regions using Cadence PCIe.
+- Reviewed by Johannes Berg (cfg80211/mac80211 maintainer)
+- The fix is obviously correct — `center_freq1` is the standard field
+  for the center frequency of the entire channel definition, while
+  `chan->center_freq` is only the control channel
 
-### Subsystem Relevance
+### 7. Dependency Check
 
-The Cadence PCIe controller IP is used in several SoCs (TI, Renesas,
-etc.), so this affects real embedded/industrial platforms that are
-likely running stable kernels.
+The code references `cfg80211_chandef_get_width()` and `center_freq1` —
+both are long-established cfg80211 infrastructure. The `mld/mlo.c` file
+is relatively new (WiFi 7/MLD support), so I should check when this was
+introduced.
 
-### Conclusion
+Let me check if this code exists in stable trees:
 
-This is a clear, small, obviously correct bug fix for an integer
-truncation issue that can cause incorrect PCI BAR configuration. It
-meets all stable kernel criteria with minimal risk.
+The `drivers/net/wireless/intel/iwlwifi/mld/` directory is part of the
+iwlwifi MLD (Multi-Link Device) support which was added relatively
+recently. This would only need backporting to stable trees that contain
+this code.
+
+### 8. Stable Criteria Assessment
+
+| Criterion | Met? |
+|-----------|------|
+| Obviously correct | Yes — `center_freq1` is the correct field for
+chandef center |
+| Fixes real bug | Yes — wrong frequency used in separation calculation
+|
+| Small and contained | Yes — 2 lines in 1 file |
+| No new features | Correct — pure fix |
+| Tested (reviewed) | Yes — Reviewed-by Johannes Berg |
+
+### Risk vs Benefit
+
+- **Risk:** Essentially zero — it's a 2-line change using the correct
+  struct field
+- **Benefit:** Correct EMLSR link pair validation for Intel WiFi 7 users
+
+The fix is small, surgical, obviously correct, fixes a real bug in
+wireless channel validation, was reviewed by the cfg80211 maintainer,
+and meets all stable kernel criteria.
 
 **YES**
 
- .../controller/cadence/pcie-cadence-host-common.c    | 12 +++++++++++-
- 1 file changed, 11 insertions(+), 1 deletion(-)
+ drivers/net/wireless/intel/iwlwifi/mld/mlo.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/pci/controller/cadence/pcie-cadence-host-common.c b/drivers/pci/controller/cadence/pcie-cadence-host-common.c
-index 15415d7f35ee9..2b0211870f02a 100644
---- a/drivers/pci/controller/cadence/pcie-cadence-host-common.c
-+++ b/drivers/pci/controller/cadence/pcie-cadence-host-common.c
-@@ -173,11 +173,21 @@ int cdns_pcie_host_dma_ranges_cmp(void *priv, const struct list_head *a,
- 				  const struct list_head *b)
- {
- 	struct resource_entry *entry1, *entry2;
-+	u64 size1, size2;
+diff --git a/drivers/net/wireless/intel/iwlwifi/mld/mlo.c b/drivers/net/wireless/intel/iwlwifi/mld/mlo.c
+index c6b151f269216..1efefc737248f 100644
+--- a/drivers/net/wireless/intel/iwlwifi/mld/mlo.c
++++ b/drivers/net/wireless/intel/iwlwifi/mld/mlo.c
+@@ -844,9 +844,9 @@ iwl_mld_emlsr_pair_state(struct ieee80211_vif *vif,
+ 		if (c_low->chan->center_freq > c_high->chan->center_freq)
+ 			swap(c_low, c_high);
  
- 	entry1 = container_of(a, struct resource_entry, node);
- 	entry2 = container_of(b, struct resource_entry, node);
+-		c_low_upper_edge = c_low->chan->center_freq +
++		c_low_upper_edge = c_low->center_freq1 +
+ 				   cfg80211_chandef_get_width(c_low) / 2;
+-		c_high_lower_edge = c_high->chan->center_freq -
++		c_high_lower_edge = c_high->center_freq1 -
+ 				    cfg80211_chandef_get_width(c_high) / 2;
  
--	return resource_size(entry2->res) - resource_size(entry1->res);
-+	size1 = resource_size(entry1->res);
-+	size2 = resource_size(entry2->res);
-+
-+	if (size1 > size2)
-+		return -1;
-+
-+	if (size1 < size2)
-+		return 1;
-+
-+	return 0;
- }
- EXPORT_SYMBOL_GPL(cdns_pcie_host_dma_ranges_cmp);
- 
+ 		if (a->chandef->chan->band == NL80211_BAND_5GHZ &&
 -- 
 2.51.0
 
