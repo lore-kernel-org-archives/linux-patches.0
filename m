@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A17D32147E5;
-	Sat, 14 Feb 2026 01:03:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E17311ADC97;
+	Sat, 14 Feb 2026 01:03:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771031029; cv=none; b=k43wbkQPdq5bDpPF8fMAQ1k48mwBV4NrY0h2yPvzVPj13Yew3ahIannlHLso4Uk+ZNbWou7P4OBeQpNUFCZxA/4rRgf/XwHkcuxwD//t54FiGq53Cw5YaKBAwDTh0oFVmkf7tNtWd+2YXCVBnCJ4CgGLGVlMSmaKwEwkYm/FBW8=
+	t=1771031031; cv=none; b=FUAsUEBHy4PIQObx7Eq28kYheU8WVEV2bOWPuYj2zzC20w8aEnutK+iErPllh1Ok4lgVTX8tdl7oXQ/3NlDJwQ95OwUaiVh4oiqQh9L4Xp8L0pK6lOBWlTQwTigloXxnc/0/zYHoZg8UpTj+MLpUGjpP/WokrNVjjiVz+RUaQYA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771031029; c=relaxed/simple;
-	bh=R6oVUFjWz+kXLS9nG8628lUUvyLt6G5fnWHB9B+hzfU=;
+	s=arc-20240116; t=1771031031; c=relaxed/simple;
+	bh=7Ax7O5xU/XKNjc++DiZfBXmM1hs2inRsy74vM8vYJOs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=qXza00YaB6J/bGunIGt8YdFZc17OVHfTx0Es7e6D29+OKHCWKDGeh8ELLSmrTE1Ab0Opt8QzDLpk52Ql4Vpsi1NNccngEaGW0ijuWIThXKT/t3qnxqNB3ZgEfy6HjGaKB3H8dt3hqZylBwzYSNbHp8sJTreUIqOOTxxS5EF89oA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=jVr5wzIl; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=KKT6OqIzwgofSW5rhz30s8WVZUvlvWPqeKwbv+bYxYGHYqP+k1Q6ymQiY6yDNZbDF/jd0seEqABwgSB4cECLAcljYwH9/zHd1WEipHXozNXadKmKWS0hGRCj6vXV/fOLttoCH9af+OxjSE4wlegxZ50xK1tW7pOD/utespWqeS4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=XmiIPLHX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="jVr5wzIl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6B58C19423;
-	Sat, 14 Feb 2026 01:03:48 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="XmiIPLHX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0CA0AC16AAE;
+	Sat, 14 Feb 2026 01:03:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1771031029;
-	bh=R6oVUFjWz+kXLS9nG8628lUUvyLt6G5fnWHB9B+hzfU=;
+	s=k20201202; t=1771031030;
+	bh=7Ax7O5xU/XKNjc++DiZfBXmM1hs2inRsy74vM8vYJOs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jVr5wzIlMGmEZPyB8/5n+HnNwpTX28Xl1SQaaKzNl2hQlbLmWJLXKkRx3dbiW/kYb
-	 FJJRktTpNJODZRTSF9sU72J1nUrJHvsIi66sMr1nUkSH4CCepZd4Lua29dUOQgZvnd
-	 9R1dZYu8KXYI6xdhb9DrRtJPaRuO5/v3ciE948pS4Sa3fnYPoLrh8cYCHw9q6HZ3c3
-	 OIUAUJmFNK9TXz9OPAb4iLvZ+Wo+GTelry+smsbgOMNFE+6QqOrXtcasNiEBngHWwa
-	 6T8ek099xaWVW7xTZP92FhkFtSVrGRE35dCbmfSpPSVk56lywoRd6ZYjYfXEgdBCky
-	 hHeQt/yZA7zqg==
+	b=XmiIPLHXX0t+GeTLbPxB03pBvTql0x5HcwnK6zoG/ZUswqI8l4OQID3Su4VwKWTzC
+	 eaRF8P9n31jRQ0JPyzN68xm46oXSqg9ZomOaUJbmrOsISZo4dcgSE3vYa5Vp4gg6Pl
+	 sZMlfTtM7WG7cBtmL2qkqDHuX8/5af7hcSmgHKfsn9i3anclQgxhDc+LEzS0xiIZSm
+	 J4FovgDX6ejsg7GF7yAQex+u10I7ZG/Mhb7LgzfgpmJg6M1TN6P2+T2RhAGkig3Gwj
+	 aT7xV/ksXOExPXMc0g5bHhxNX3Oj66+tnC/Kx4O8kMyFm/nFt0o32xrezg6dKUFoec
+	 dAH7zkqJ2jzag==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Jonathan Marek <jonathan@marek.ca>,
-	Mark Brown <broonie@kernel.org>,
+Cc: Robert McIntyre <rjmcinty@hotmail.com>,
+	Eugene Shalygin <eugene.shalygin@gmail.com>,
+	Guenter Roeck <linux@roeck-us.net>,
 	Sasha Levin <sashal@kernel.org>,
-	linux-arm-msm@vger.kernel.org,
-	linux-spi@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.19-6.6] spi-geni-qcom: use xfer->bits_per_word for can_dma()
-Date: Fri, 13 Feb 2026 19:58:30 -0500
-Message-ID: <20260214010245.3671907-30-sashal@kernel.org>
+	linux-hwmon@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.19] hwmon: (asus-ec-sensors) add Pro WS TRX50-SAGE WIFI A
+Date: Fri, 13 Feb 2026 19:58:31 -0500
+Message-ID: <20260214010245.3671907-31-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260214010245.3671907-1-sashal@kernel.org>
 References: <20260214010245.3671907-1-sashal@kernel.org>
@@ -52,208 +52,113 @@ X-stable-base: Linux 6.19
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jonathan Marek <jonathan@marek.ca>
+From: Robert McIntyre <rjmcinty@hotmail.com>
 
-[ Upstream commit fb2bbe3838728f572485706677590e4fc41eec5c ]
+[ Upstream commit af7e57d444141ac9e77b57296d59c3e965c4c4fa ]
 
-mas->cur_bits_per_word may not reflect the value of xfer->bits_per_word
-when can_dma() is called. Use the right value instead.
+Adding support for Pro WS TRX50-SAGE WIFI A, which is identical
+sensors-wise to Pro WS TRX50-SAGE WIFI
 
-Signed-off-by: Jonathan Marek <jonathan@marek.ca>
-Link: https://patch.msgid.link/20251120211204.24078-3-jonathan@marek.ca
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Robert McIntyre <rjmcinty@hotmail.com>
+Signed-off-by: Eugene Shalygin <eugene.shalygin@gmail.com>
+Link: https://lore.kernel.org/r/20251213200531.259435-4-eugene.shalygin@gmail.com
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-Here is my complete analysis:
+## Analysis
 
----
+### Commit Message Analysis
+This commit adds support for a new motherboard variant — the "Pro WS
+TRX50-SAGE WIFI A" — to the asus-ec-sensors hwmon driver. The commit
+message explicitly states that this board is "identical sensors-wise" to
+the already-supported "Pro WS TRX50-SAGE WIFI".
 
-## Commit Analysis: spi-geni-qcom: use xfer->bits_per_word for can_dma()
+### Code Change Analysis
+The change is minimal and purely additive:
 
-### 1. Problem Description
+1. **Documentation**: Adds one line to `asus_ec_sensors.rst` listing the
+   new board name in the supported boards list.
 
-The `geni_can_dma()` function and its helper `get_xfer_len_in_words()`
-use `mas->cur_bits_per_word` (a cached state variable on the driver
-struct) to compute the transfer length in SPI words and the effective
-FIFO size. However, **`mas->cur_bits_per_word` may not reflect the
-actual `bits_per_word` of the current transfer** when `can_dma()` is
-called by the SPI core.
+2. **Driver**: Adds two lines to the DMI matching table in `asus-ec-
+   sensors.c`:
+  ```c
+  DMI_EXACT_MATCH_ASUS_BOARD_NAME("Pro WS TRX50-SAGE WIFI A",
+  &board_info_pro_ws_trx50_sage_wifi),
+  ```
+  This reuses the **exact same** `board_info_pro_ws_trx50_sage_wifi`
+  structure as the existing "Pro WS TRX50-SAGE WIFI" entry. No new
+  board_info structure, no new sensor definitions, no new code paths —
+  just a new DMI string mapping to an existing configuration.
 
-### 2. Root Cause - Call Order Mismatch
+### Classification: New Device ID / Board ID
+This falls squarely into the **"New Device IDs"** exception category for
+stable backports. It is analogous to adding a new PCI ID or USB ID to an
+existing driver. The driver already exists and supports this hardware
+configuration; only the board name string is different.
 
-The SPI core's `__spi_pump_transfer_message()` calls operations in this
-order:
+### Risk Assessment
+- **Risk: Extremely low**. The change adds a DMI match entry that points
+  to an already-tested board configuration. If the DMI doesn't match
+  (user has a different board), this code is never reached. If it does
+  match, it uses the same well-tested sensor configuration.
+- **Scope**: 3 lines of actual code change (1 doc line + 2 driver
+  lines).
+- **Dependencies**: None. The `board_info_pro_ws_trx50_sage_wifi`
+  structure and the `DMI_EXACT_MATCH_ASUS_BOARD_NAME` macro already
+  exist in stable trees.
+- **Regression potential**: Essentially zero — this cannot affect any
+  existing board's behavior.
 
-```1726:1825:drivers/spi/spi.c
-// Step 1: prepare_message
-if (ctlr->prepare_message) {
-    ret = ctlr->prepare_message(ctlr, msg);
-    // ...
-}
+### User Impact
+Without this patch, users with the "Pro WS TRX50-SAGE WIFI A"
+motherboard variant have no hardware monitoring sensor support through
+this driver, even though the hardware is identical to the already-
+supported model. This is a real-world hardware enablement issue.
 
-// Step 2: spi_map_msg → calls can_dma() for EACH transfer
-ret = spi_map_msg(ctlr, msg);
-
-// Step 3: transfer_one_message → calls transfer_one per-xfer
-ret = ctlr->transfer_one_message(ctlr, msg);
-```
-
-Looking at Step 1, `spi_geni_prepare_message` calls `setup_fifo_params`,
-which sets:
-
-```419:419:drivers/spi/spi-geni-qcom.c
-mas->cur_bits_per_word = spi_slv->bits_per_word;
-```
-
-But **only if mode changed** (`mas->last_mode != spi_slv->mode` at line
-405). If the mode hasn't changed between messages,
-`mas->cur_bits_per_word` retains whatever value was set during the
-**last transfer** of the **previous message**.
-
-In Step 2, `spi_map_msg` → `__spi_map_msg` iterates over **all
-transfers** in the message and calls `can_dma()` for each:
-
-```1246:1251:drivers/spi/spi.c
-list_for_each_entry(xfer, &msg->transfers, transfer_list) {
-    unsigned long attrs = DMA_ATTR_SKIP_CPU_SYNC;
-    if (!ctlr->can_dma(ctlr, msg->spi, xfer))
-        continue;
-```
-
-At this point, `mas->cur_bits_per_word` could be **wrong** for any
-transfer whose `bits_per_word` differs from the stale cached value.
-
-Step 3 is where `setup_se_xfer()` (line 863-865) finally updates
-`mas->cur_bits_per_word = xfer->bits_per_word` — but this is **too
-late** for the `can_dma()` decision, which already happened in Step 2.
-
-### 3. Bug Impact
-
-The buggy `geni_can_dma()` function uses the wrong `bits_per_word` in
-two calculations:
-
-**a) Transfer length in words (`get_xfer_len_in_words`):**
-
-```551:554:drivers/spi/spi-geni-qcom.c
-if (!(mas->cur_bits_per_word % MIN_WORD_LEN))
-    len = xfer->len * BITS_PER_BYTE / mas->cur_bits_per_word;
-else
-    len = xfer->len / (mas->cur_bits_per_word / BITS_PER_BYTE + 1);
-```
-
-**b) FIFO size calculation:**
-
-```574:574:drivers/spi/spi-geni-qcom.c
-fifo_size = mas->tx_fifo_depth * mas->fifo_width_bits /
-mas->cur_bits_per_word;
-```
-
-If `mas->cur_bits_per_word` is wrong, both `len` and `fifo_size` are
-incorrect. This causes the wrong DMA vs FIFO mode selection:
-- If the stale value is **smaller** than actual, `fifo_size` is inflated
-  and `len` deflated → **FIFO chosen when DMA should be used** →
-  potential FIFO overflow for large transfers
-- If the stale value is **larger** than actual, the opposite happens →
-  **unnecessary DMA for small transfers**
-
-### 4. Fix Analysis
-
-The fix is trivially correct: replace `mas->cur_bits_per_word` with
-`xfer->bits_per_word` in both `get_xfer_len_in_words()` and
-`geni_can_dma()`. The `xfer` parameter is already available, and the SPI
-core guarantees `xfer->bits_per_word` is always populated via
-`__spi_validate()`:
-
-```4079:4080:drivers/spi/spi.c
-if (!xfer->bits_per_word)
-    xfer->bits_per_word = spi->bits_per_word;
-```
-
-This validation runs in the `spi_async()` path, well before `can_dma()`
-is called.
-
-The fix is also correct for the other caller of
-`get_xfer_len_in_words()` — `setup_se_xfer()` at line 876. In that
-context, `mas->cur_bits_per_word` was already set to
-`xfer->bits_per_word` (line 865), so using `xfer->bits_per_word`
-directly is equivalent and always correct.
-
-### 5. Scope and Risk
-
-- **Size**: Only 4 lines changed across 2 functions in a single file
-- **Risk**: Very low — the change replaces a potentially-stale cached
-  value with the authoritative source of truth that was always available
-- **No behavioral change** for the common case where all transfers use
-  the same `bits_per_word`
-- **Fixes the bug** for devices using per-transfer `bits_per_word`
-  overrides
-
-### 6. Series Dependency
-
-The message-id (`24078-3-jonathan@marek.ca`) indicates this is patch 3
-of a series. However, this change is entirely **self-contained** — it
-only swaps `mas->cur_bits_per_word` for `xfer->bits_per_word` in
-functions that already receive the `xfer` parameter. No dependency on
-other patches.
-
-### 7. Affected Stable Versions
-
-- `geni_can_dma` was introduced in commit b59c122484ecb ("spi: spi-geni-
-  qcom: Add support for GPI dma") — around v5.16
-- `get_xfer_len_in_words` was introduced in commit 3a76c7ca9e772 ("spi:
-  spi-geni-qcom: Do not do DMA map/unmap inside driver, use framework
-  instead") — v6.5-rc1
-- The bug in `geni_can_dma` (using `mas->cur_bits_per_word` for
-  fifo_size) has existed since `geni_can_dma` was added, but
-  `get_xfer_len_in_words` was refactored in v6.5
-
-### 8. Conclusion
-
-This is a clear bug fix. The commit:
-- Fixes a real bug: wrong value used for DMA/FIFO mode selection,
-  potentially causing incorrect SPI transfers
-- Is small and surgical: 4 line changes, self-contained
-- Has very low regression risk: uses the correct data source that was
-  always available
-- Applies to stable trees v6.5+ (where `get_xfer_len_in_words` exists),
-  with a simpler variant applicable to v5.16+
-- Does not introduce new features or APIs
+### Stable Criteria Check
+- **Obviously correct**: Yes — trivial DMI table addition reusing
+  existing config.
+- **Fixes a real issue**: Yes — enables hardware monitoring on a board
+  variant that should work but doesn't.
+- **Small and contained**: Yes — 3 lines.
+- **No new features**: Correct — this uses existing driver
+  functionality; it just adds a new board name to match against.
+- **No new APIs**: Correct.
 
 **YES**
 
- drivers/spi/spi-geni-qcom.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ Documentation/hwmon/asus_ec_sensors.rst | 1 +
+ drivers/hwmon/asus-ec-sensors.c         | 2 ++
+ 2 files changed, 3 insertions(+)
 
-diff --git a/drivers/spi/spi-geni-qcom.c b/drivers/spi/spi-geni-qcom.c
-index 9e9953469b3a0..5ab20d7955121 100644
---- a/drivers/spi/spi-geni-qcom.c
-+++ b/drivers/spi/spi-geni-qcom.c
-@@ -548,10 +548,10 @@ static u32 get_xfer_len_in_words(struct spi_transfer *xfer,
- {
- 	u32 len;
- 
--	if (!(mas->cur_bits_per_word % MIN_WORD_LEN))
--		len = xfer->len * BITS_PER_BYTE / mas->cur_bits_per_word;
-+	if (!(xfer->bits_per_word % MIN_WORD_LEN))
-+		len = xfer->len * BITS_PER_BYTE / xfer->bits_per_word;
- 	else
--		len = xfer->len / (mas->cur_bits_per_word / BITS_PER_BYTE + 1);
-+		len = xfer->len / (xfer->bits_per_word / BITS_PER_BYTE + 1);
- 	len &= TRANS_LEN_MSK;
- 
- 	return len;
-@@ -571,7 +571,7 @@ static bool geni_can_dma(struct spi_controller *ctlr,
- 		return true;
- 
- 	len = get_xfer_len_in_words(xfer, mas);
--	fifo_size = mas->tx_fifo_depth * mas->fifo_width_bits / mas->cur_bits_per_word;
-+	fifo_size = mas->tx_fifo_depth * mas->fifo_width_bits / xfer->bits_per_word;
- 
- 	if (len > fifo_size)
- 		return true;
+diff --git a/Documentation/hwmon/asus_ec_sensors.rst b/Documentation/hwmon/asus_ec_sensors.rst
+index 232885f24430d..b5e1bc7ac0643 100644
+--- a/Documentation/hwmon/asus_ec_sensors.rst
++++ b/Documentation/hwmon/asus_ec_sensors.rst
+@@ -10,6 +10,7 @@ Supported boards:
+  * PRIME X670E-PRO WIFI
+  * PRIME Z270-A
+  * Pro WS TRX50-SAGE WIFI
++ * Pro WS TRX50-SAGE WIFI A
+  * Pro WS X570-ACE
+  * Pro WS WRX90E-SAGE SE
+  * ProArt X570-CREATOR WIFI
+diff --git a/drivers/hwmon/asus-ec-sensors.c b/drivers/hwmon/asus-ec-sensors.c
+index 61b18b88ee8ff..a1445799e23d8 100644
+--- a/drivers/hwmon/asus-ec-sensors.c
++++ b/drivers/hwmon/asus-ec-sensors.c
+@@ -793,6 +793,8 @@ static const struct dmi_system_id dmi_table[] = {
+ 					&board_info_pro_art_x870E_creator_wifi),
+ 	DMI_EXACT_MATCH_ASUS_BOARD_NAME("Pro WS TRX50-SAGE WIFI",
+ 					&board_info_pro_ws_trx50_sage_wifi),
++	DMI_EXACT_MATCH_ASUS_BOARD_NAME("Pro WS TRX50-SAGE WIFI A",
++					&board_info_pro_ws_trx50_sage_wifi),
+ 	DMI_EXACT_MATCH_ASUS_BOARD_NAME("Pro WS WRX90E-SAGE SE",
+ 					&board_info_pro_ws_wrx90e_sage_se),
+ 	DMI_EXACT_MATCH_ASUS_BOARD_NAME("Pro WS X570-ACE",
 -- 
 2.51.0
 
