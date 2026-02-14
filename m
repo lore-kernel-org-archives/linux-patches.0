@@ -1,53 +1,47 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D6971ADC97;
-	Sat, 14 Feb 2026 01:03:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A43411ADC97;
+	Sat, 14 Feb 2026 01:03:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771031034; cv=none; b=XEoJVKJKQvbKgETZPsdgoor170H+G6TNizqtQyg2Ym1og+gtR5xBK/fpZJrvMPa9oTyZ640RfHaVgmDiaa4zTqzxyl16xVgRsJqQEOSgVjo5EL3FcjmSZmsPHllPxnZgVB2FChjq/2OdgVjxk3swDYvTfEMQ4a2MtCCe+TwoEWI=
+	t=1771031037; cv=none; b=XvPnKKtsIRpd9GMGa8EKDZa8s8+JW+FYUYoQ9IVDCd4shYRsRqUvV0Z92qVMVE6ocXMYWQywatQBoJCdwVnaiJ5R5ShGjoqWaW/xUWX4edqW8suBC6CW8+5zc84YEYwGUprTZA+5k06vZy+1u6Tt0w1694LYK3HRu3RULtAPQAc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771031034; c=relaxed/simple;
-	bh=3KVtbgJOEi4lVS8bOjCjIfgmBx38/4eUfhAdiBkE7ZI=;
+	s=arc-20240116; t=1771031037; c=relaxed/simple;
+	bh=wp6srzVUS+Ym29uhNw1bZLJfaEjg1qWRMSXqHd2mJKg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=gO+62iPYBLzeHYRMB4jowtcD65ILiqf2rjUWYh0U7NHEUApHafEgNh/HJ42yChtFCgvw+XwRYLgDeNrq6wamP1J7K+mfZo94Alyqxw1vQ+Y52hYKChLs+VGD1sfrsuvwFD4kiS6gum4J/1tW5wA3500bCSO2zEhoRn6BModLDBo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=YwJyKFMG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=YE3kQlBU/1lJwbHVB9dihjq6C+sLL3wK4gtGC1v+hX1+40c7YNLrilUYm2oK2P+e1CTuH2kA0lmfhWw1w8yU3qNrqTsur/D9ZCcLGLEfbJoFAMn7uVLfQrIxUKRB5uiC6QDAgRgv+rXYdpl0mw++XruAet8wWoKgacKLIJRhtAE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=uyyuo7vL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="YwJyKFMG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A03EEC116C6;
-	Sat, 14 Feb 2026 01:03:52 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="uyyuo7vL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B65DC16AAE;
+	Sat, 14 Feb 2026 01:03:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1771031034;
-	bh=3KVtbgJOEi4lVS8bOjCjIfgmBx38/4eUfhAdiBkE7ZI=;
+	s=k20201202; t=1771031037;
+	bh=wp6srzVUS+Ym29uhNw1bZLJfaEjg1qWRMSXqHd2mJKg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YwJyKFMGW32Y+dKnDkOlcbECoI1pSUhqkbVPT29gwXCb5Ea8QxxS0z/mQlorTnRqG
-	 r1U/tqsZUsocsDCpv0TY/HgV8Kq6Wl/CQ584AukxwckpyQq9evQn7L9k336s94Fbxj
-	 urPazjc0gJlS0s6lZtFWiQVOtodPK2nvzkWdsKfsceaC+bviF16m7MHuDJXpRFUi2g
-	 VZZ4HBr7wrGExiHXXOUWIQz41t2sxaLPk6ANFqUJnHW2v39DUixZzXDEdmKWwQaBvu
-	 c1gf/6uCTRsr1bXw3F26KGpv3ji7S7hUWRgRRoHhJOpEADqBG1SNfO7lIh/NIfRQQM
-	 mDUfIpl3gcWgA==
+	b=uyyuo7vL7p+LssRm3jmBgbYQzjGmXVdiBY3V19hpRKx86v8dH4sE6pqOQW1IIzSZl
+	 IoqRErdNOLLaurTO1DViMGuog3cwsJOcuYIsnKluj+wwt9ymgsh3fR9I8l2g4HZs+H
+	 zyswyBPbxOrpflGxwoNoA3piDwl3ahNR/Y8f5wFDpSH7HpxNrlzkoW4PFqodfFXm89
+	 jLiE2JjWRpKFn1nm64Puc4AtGx1k+AoSTTQ76ZI5nSYB6u6cKlOgz3sly8PZhu9fGt
+	 cuTNrFtQBI03mRVXcCSXn4kUPd59nsXsPACxkuudeKFbaIXw+Xhdl49Rl7W61sjo1+
+	 RWkf5OV2k4MtA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Ovidiu Bunea <ovidiu.bunea@amd.com>,
-	Karen Chen <karen.chen@amd.com>,
-	Matthew Stewart <matthew.stewart2@amd.com>,
-	Dan Wheeler <daniel.wheeler@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+Cc: Qihang Guo <v-conet@outlook.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>,
-	Charlene.Liu@amd.com,
-	alex.hung@amd.com,
-	aurabindo.pillai@amd.com,
-	timur.kristof@gmail.com,
-	Ausef.Yousof@amd.com,
-	rosenp@gmail.com,
+	cryolitia@uniontech.com,
+	pav@iki.fi,
+	hulianqin@vivo.com,
+	neil.armstrong@linaro.org,
+	jussi@sonarnerd.net,
 	yelangyan@huaqin.corp-partner.google.com,
-	dmytro.laktyushkin@amd.com,
-	srinivasan.shanmugam@amd.com,
-	Martin.Leung@amd.com
-Subject: [PATCH AUTOSEL 6.19-6.12] drm/amd/display: Disable FEC when powering down encoders
-Date: Fri, 13 Feb 2026 19:58:32 -0500
-Message-ID: <20260214010245.3671907-32-sashal@kernel.org>
+	roy.vegard.ovesen@gmail.com
+Subject: [PATCH AUTOSEL 6.19] ALSA: usb-audio: Add DSD support for iBasso DC04U
+Date: Fri, 13 Feb 2026 19:58:33 -0500
+Message-ID: <20260214010245.3671907-33-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260214010245.3671907-1-sashal@kernel.org>
 References: <20260214010245.3671907-1-sashal@kernel.org>
@@ -63,209 +57,110 @@ X-stable-base: Linux 6.19
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ovidiu Bunea <ovidiu.bunea@amd.com>
+From: Qihang Guo <v-conet@outlook.com>
 
-[ Upstream commit 8cee62904caf95e5698fa0f2d420f5f22b4dea15 ]
+[ Upstream commit fe7cd89f0e29f0852316857b4861309f9b891370 ]
 
-[why & how]
-VBIOS DMCUB FW can enable FEC for capable eDPs, but S/W DC state is
-only updated for link0 when transitioning into OS with driver loaded.
-This causes issues when the eDP is immediately hidden and DIG0 is
-assigned to another link that does not support FEC. Driver will
-attempt to disable FEC but FEC enablement occurs based on the link
-state, which does not have fec_state updated since it is a different
-link. Thus, FEC disablement on DIG0 will get skipped and cause no
-light up.
+Vendor ID 0x0661 is assigned to Hamamatsu Photonics K.K.,
+but is used by iBasso for iBasso DC04U (0x0661:0x0883),
+which supports native DSD playback.
 
-Reviewed-by: Karen Chen <karen.chen@amd.com>
-Signed-off-by: Ovidiu Bunea <ovidiu.bunea@amd.com>
-Signed-off-by: Matthew Stewart <matthew.stewart2@amd.com>
-Tested-by: Dan Wheeler <daniel.wheeler@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+This patch adds QUIRK_FLAG_DSD_RAW for iBasso DC04U, enabling
+native DSD playback (DSD_U32_BE). The change has been verified
+on Arch Linux using mpd and pw-cat.
+
+Signed-off-by: Qihang Guo <v-conet@outlook.com>
+Link: https://patch.msgid.link/TYYPR01MB14098529E0BD900921BE6F42CF465A@TYYPR01MB14098.jpnprd01.prod.outlook.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-## Analysis of Commit: "drm/amd/display: Disable FEC when powering down
-encoders"
+## Analysis
 
-### 1. COMMIT MESSAGE ANALYSIS
+### Commit Message Analysis
+This commit adds a USB device quirk flag (`QUIRK_FLAG_DSD_RAW`) for the
+iBasso DC04U (USB ID `0x0661:0x0883`), enabling native DSD playback
+support. The author has verified the change on Arch Linux with mpd and
+pw-cat.
 
-The commit message clearly explains a real bug scenario:
+### Code Change Analysis
+The change is a **two-line addition** to the `quirk_flags_table[]` array
+in `sound/usb/quirks.c`:
 
-- **VBIOS DMCUB firmware** can enable FEC (Forward Error Correction) for
-  capable eDP panels
-- When transitioning into OS with driver loaded, the software DC state
-  for FEC is only updated for **link0**
-- When eDP is hidden and **DIG0 is reassigned** to another link that
-  doesn't support FEC, the driver tries to disable FEC but fails
-  because:
-  - FEC enablement/disablement is based on the **link state**
-    (`fec_state`)
-  - The new link's `fec_state` was never updated (it's a different link
-    object)
-  - So the FEC disable gets **skipped**
-- Result: **"no light up"** — the display fails to produce output
-
-This is a real hardware bug causing **display failure** (no output/black
-screen). The keywords "no light up" indicate complete display failure,
-which is a serious user-visible issue.
-
-### 2. CODE CHANGE ANALYSIS
-
-The change is in `power_down_encoders()` in `dce110_hwseq.c`:
-
-**Refactoring part** (low risk):
-- Introduces a local `struct dc_link *link` variable to replace repeated
-  `dc->links[i]` accesses — pure cleanup, no behavior change.
-- Introduces `struct link_encoder *link_enc` local variable — same
-  pattern.
-
-**Bug fix part** (the critical addition):
 ```c
-if (link->fec_state == dc_link_fec_enabled) {
-    link_enc->funcs->fec_set_enable(link_enc, false);
-    link_enc->funcs->fec_set_ready(link_enc, false);
-    link->fec_state = dc_link_fec_not_ready;
-}
+DEVICE_FLG(0x0661, 0x0883, /* iBasso DC04 Ultra */
+           QUIRK_FLAG_DSD_RAW),
 ```
 
-This is the core fix: when powering down encoders, if FEC is enabled on
-the link, explicitly disable it and update the state. This ensures that
-when the DIG (display interface group) is later reassigned to a
-different link, there's no stale FEC state causing the new link to fail
-to light up.
+This is a textbook **hardware quirk addition** — adding a device-
+specific flag entry to an existing table using the existing `DEVICE_FLG`
+macro and existing `QUIRK_FLAG_DSD_RAW` flag. No new code paths, no new
+infrastructure, no functional changes to any other device.
 
-The new include `#include "dc_dp_types.h"` is needed to access the
-`dc_link_fec_enabled` / `dc_link_fec_not_ready` enum values.
+### Classification
+This falls squarely into the **"QUIRKS and WORKAROUNDS"** exception
+category for stable backports. Hardware quirks for specific devices are
+explicitly allowed and common in stable trees because:
 
-### 3. CLASSIFICATION
+1. They only affect the specific device (vendor `0x0661`, product
+   `0x0883`)
+2. They use existing infrastructure (`QUIRK_FLAG_DSD_RAW` already
+   exists)
+3. They enable hardware to function correctly for users who own the
+   device
+4. Zero risk of regression for any other device or subsystem
 
-This is a **bug fix** — it fixes a display failure scenario where:
-- FEC is left enabled by firmware
-- Software state tracking gets out of sync
-- Display reassignment fails to produce output
+### Risk Assessment
+- **Risk: Extremely low.** This is a two-line, data-only change to a
+  device table. It cannot affect any other device. The `DEVICE_FLG`
+  macro and `QUIRK_FLAG_DSD_RAW` flag already exist in stable trees.
+- **Benefit: Enables native DSD playback** for iBasso DC04U users on
+  stable kernels. Without this quirk, the device cannot use its native
+  DSD playback capability.
+- **Dependencies: None.** The `QUIRK_FLAG_DSD_RAW` flag and the quirk
+  table infrastructure already exist in stable kernels.
 
-This is NOT a feature addition. The FEC disable functionality already
-exists; this just ensures it's called at the right time during encoder
-power-down.
+### Scope and Impact
+- 1 file changed, 2 lines added
+- Only affects users with the specific iBasso DC04U device
+- Verified/tested by the author on real hardware
+- Accepted by the ALSA subsystem maintainer (Takashi Iwai)
 
-### 4. SCOPE AND RISK ASSESSMENT
+### Nuance
+While this doesn't fix a crash or security issue, it's a hardware
+enablement quirk — the kind of change that is routinely and explicitly
+accepted into stable trees. The device simply doesn't work properly (no
+native DSD playback) without this entry. Users of this USB audio device
+on stable kernels would benefit from having it.
 
-- **Files changed**: 1 file
-- **Lines changed**: Small — approximately 15 lines of functional
-  change, plus some variable renaming for readability
-- **Subsystem**: AMD display (drm/amd/display) — a very commonly used
-  GPU driver
-- **Risk**: Low-to-moderate
-  - The FEC disable calls (`fec_set_enable(false)`,
-    `fec_set_ready(false)`) are well-established operations
-  - The condition check (`fec_state == dc_link_fec_enabled`) is
-    defensive — it only acts when FEC is actually enabled
-  - The state update (`dc_link_fec_not_ready`) keeps the software state
-    consistent
-  - The variable renaming is purely cosmetic and won't affect behavior
-
-### 5. USER IMPACT
-
-- **Who is affected**: Users with AMD GPUs that have eDP panels (laptops
-  primarily), especially those with multiple display outputs or hybrid
-  graphics scenarios
-- **Severity**: HIGH — "no light up" means the display produces no
-  output at all. Users would see a black screen.
-- **Trigger scenario**: Transitioning into OS (boot, resume from sleep)
-  where VBIOS enables FEC, then eDP gets hidden and DIG0 reassigned.
-  This is a real-world scenario for laptops with hybrid GPU
-  configurations.
-
-### 6. STABILITY INDICATORS
-
-- **Reviewed-by**: Karen Chen (AMD)
-- **Tested-by**: Dan Wheeler (AMD) — explicitly tested
-- **Signed-off-by**: Multiple AMD engineers including Alex Deucher (AMD
-  display maintainer)
-
-This has strong review and testing coverage from the vendor.
-
-### 7. DEPENDENCY CHECK
-
-The fix uses existing functions (`fec_set_enable`, `fec_set_ready`) and
-existing state enums (`dc_link_fec_enabled`, `dc_link_fec_not_ready`).
-The include of `dc_dp_types.h` brings in the FEC state definitions.
-These should all exist in stable trees since FEC support has been in the
-AMD display driver for several kernel versions.
-
-The only minor concern is whether the `dc_dp_types.h` header and the
-`fec_state` field exist in older stable trees, but FEC support was added
-quite a while ago (around 5.x kernels), so it should be present in any
-currently-maintained stable tree.
-
-### 8. CONCLUSION
-
-This commit fixes a real, user-visible bug (black screen / no display
-output) in the AMD display driver. The fix is:
-- **Small and contained**: One file, clear logic
-- **Obviously correct**: If FEC is enabled, disable it when powering
-  down the encoder
-- **Well-tested**: Has Reviewed-by, Tested-by from AMD
-- **Fixes a real bug**: Display failure is a serious issue
-- **Low risk**: Defensive check, well-understood FEC operations
-
-The fix meets all stable kernel criteria.
+### Conclusion
+This is a minimal, zero-risk hardware quirk addition that enables
+correct functionality for a specific USB audio device. It follows the
+well-established pattern of device quirk entries in
+`sound/usb/quirks.c`, uses existing infrastructure, and has been tested
+on real hardware. This is exactly the type of addition that stable
+kernel rules explicitly allow.
 
 **YES**
 
- .../amd/display/dc/hwss/dce110/dce110_hwseq.c | 24 ++++++++++++-------
- 1 file changed, 15 insertions(+), 9 deletions(-)
+ sound/usb/quirks.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/gpu/drm/amd/display/dc/hwss/dce110/dce110_hwseq.c b/drivers/gpu/drm/amd/display/dc/hwss/dce110/dce110_hwseq.c
-index 0513784e1c6fc..4e67a94522dc9 100644
---- a/drivers/gpu/drm/amd/display/dc/hwss/dce110/dce110_hwseq.c
-+++ b/drivers/gpu/drm/amd/display/dc/hwss/dce110/dce110_hwseq.c
-@@ -59,6 +59,7 @@
- #include "dc_state_priv.h"
- #include "dpcd_defs.h"
- #include "dsc.h"
-+#include "dc_dp_types.h"
- /* include DCE11 register header files */
- #include "dce/dce_11_0_d.h"
- #include "dce/dce_11_0_sh_mask.h"
-@@ -1779,20 +1780,25 @@ static void power_down_encoders(struct dc *dc)
- 	int i;
- 
- 	for (i = 0; i < dc->link_count; i++) {
--		enum signal_type signal = dc->links[i]->connector_signal;
--
--		dc->link_srv->blank_dp_stream(dc->links[i], false);
-+		struct dc_link *link = dc->links[i];
-+		struct link_encoder *link_enc = link->link_enc;
-+		enum signal_type signal = link->connector_signal;
- 
-+		dc->link_srv->blank_dp_stream(link, false);
- 		if (signal != SIGNAL_TYPE_EDP)
- 			signal = SIGNAL_TYPE_NONE;
- 
--		if (dc->links[i]->ep_type == DISPLAY_ENDPOINT_PHY)
--			dc->links[i]->link_enc->funcs->disable_output(
--					dc->links[i]->link_enc, signal);
-+		if (link->ep_type == DISPLAY_ENDPOINT_PHY)
-+			link_enc->funcs->disable_output(link_enc, signal);
-+
-+		if (link->fec_state == dc_link_fec_enabled) {
-+			link_enc->funcs->fec_set_enable(link_enc, false);
-+			link_enc->funcs->fec_set_ready(link_enc, false);
-+			link->fec_state = dc_link_fec_not_ready;
-+		}
- 
--		dc->links[i]->link_status.link_active = false;
--		memset(&dc->links[i]->cur_link_settings, 0,
--				sizeof(dc->links[i]->cur_link_settings));
-+		link->link_status.link_active = false;
-+		memset(&link->cur_link_settings, 0, sizeof(link->cur_link_settings));
- 	}
- }
- 
+diff --git a/sound/usb/quirks.c b/sound/usb/quirks.c
+index 2d9f28558874c..d550c84e7752f 100644
+--- a/sound/usb/quirks.c
++++ b/sound/usb/quirks.c
+@@ -2236,6 +2236,8 @@ static const struct usb_audio_quirk_flags_table quirk_flags_table[] = {
+ 	DEVICE_FLG(0x0644, 0x806c, /* Esoteric XD */
+ 		   QUIRK_FLAG_ITF_USB_DSD_DAC | QUIRK_FLAG_CTL_MSG_DELAY |
+ 		   QUIRK_FLAG_IFACE_DELAY | QUIRK_FLAG_FORCE_IFACE_RESET),
++	DEVICE_FLG(0x0661, 0x0883, /* iBasso DC04 Ultra */
++		   QUIRK_FLAG_DSD_RAW),
+ 	DEVICE_FLG(0x06f8, 0xb000, /* Hercules DJ Console (Windows Edition) */
+ 		   QUIRK_FLAG_IGNORE_CTL_ERROR),
+ 	DEVICE_FLG(0x06f8, 0xd002, /* Hercules DJ Console (Macintosh Edition) */
 -- 
 2.51.0
 
