@@ -1,41 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6204F19004A;
-	Sat, 14 Feb 2026 01:04:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BCD75194098;
+	Sat, 14 Feb 2026 01:04:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771031095; cv=none; b=ozZf05fh9LvMaNPj2o60j9wpTIl+7RJ4Uc/Y/8lGsBbt9x2nH5zhr/03REOszfEdJPljfIuSMOM2F3wyxwsct6Qc937ylkrHCUp7qfZvOchX2IxZk7qOQB/vDWiQc4o2uxkl4T7GqYURoPWe711tUzTaOXRw/ZZW0ooIbF9FS1Y=
+	t=1771031096; cv=none; b=QHtV2AGJgW7gsmIcTHwFjO5Bdy0Ex3RuGx0JlzkdF35FKyxPfLuUCL6BduCrUxBexU938OWiXNjQqrN1wyQ0Fz/4bR2swHYRHwkJZUyFxwPBml0vW3yDapfSww2QgHDYwpJNdeIlv487h9iLBe6A9XFCUhX2wfB6ozY/dRZ4AxU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771031095; c=relaxed/simple;
-	bh=K0RHdhb85AGX3NTk3JN8BCHnVTm2XLyO2NxEyhx2MrM=;
+	s=arc-20240116; t=1771031096; c=relaxed/simple;
+	bh=/TTtgSTYlHtOVL08vZ4dDy1Te2t2rTpZJILELC3treU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Bh0VrAld302DtEnkWy/E4DmaJ+yJMss6v+AZE9XpUqb9sHxxQNNKnhENrExVMpYoulPo6i6HT4PvEfHsHjv34Sieh+pEAUL85drK46acibYBVP6OG3/Od6G39MlrI5xx5RN5Rw8mU2/Sw/F0WbhwZZnAM2JJwXpDgUJFNDdz2t8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=XtNLGchE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HVLhdjAIgooCMq4CHrQMqQmfM7fZ/G+s9miTV10LqJfvDksji0ntvSMrLJE86FC/M9x0/P4MAZAbjClMKo1iibifbUP7IRb/l2mgSmIe3JWpdQYLGEUujIyma8t2YD8XtSZrtWzAxl7ygtJg+wagUZ2O+zbGZnNuqBBrgkmt8Pc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=r4gf8YrZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="XtNLGchE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A848C16AAE;
-	Sat, 14 Feb 2026 01:04:54 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="r4gf8YrZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B6E65C116C6;
+	Sat, 14 Feb 2026 01:04:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1771031095;
-	bh=K0RHdhb85AGX3NTk3JN8BCHnVTm2XLyO2NxEyhx2MrM=;
+	s=k20201202; t=1771031096;
+	bh=/TTtgSTYlHtOVL08vZ4dDy1Te2t2rTpZJILELC3treU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XtNLGchEDT/k8TJGpB+GUrzqE/+TEFigkHYtpSQywEP1pyrkl8mLvKjhz1BOyrSvh
-	 p2nk545VRGdL9fSTfXmOs1bpxVlcr5FUI9w3bW24QgA2M4jUKIcJNElmr34RHn+gyo
-	 ozhNnDWavXTCkqQ0oRE3y92t9yxArOzKE/8Tf1nwKGNz5e4Aqih/5h2dEq4XJewTzI
-	 N0UU1RAEsgtjjPmK7W43jkVfaR2kA7kf+wy78Jicg0dkKHppGmRI+EKHeaVKwxrN9n
-	 9iyxytVnzzgV8s8ux8jI7U/kX/K3Ir0mRPFRS4qA4xeA0PMKwcmh+pD1qDBEo2iMEp
-	 mDlCryNBDru1g==
+	b=r4gf8YrZcyalJIPjRNJCGjgi9aO7+pKCU+v+tGlVmGSd7mL+6uNmaifoaTtDuFAQ5
+	 8VDofcB841Lrs5rvUOeIG4h0OhqZAlxJy4+L0ueEyi5X+6PpxmcrSQIDZNmqb35HRP
+	 cbRBbOwia56BrWDKnJPuOBWDQhkysFKZgeT2jD8gsEB4N0JqQit+7mTsGj8X4O8+g4
+	 /KYlTlyvPOgC8JzvxXCrGSlWcRWB1oaYpmbXOKjTIt1a6Q33FBnCUUKo7vU9ug2O6J
+	 J0VFsgDP9As47sNhXUbV80rUgP8VIztbyVj2pOeQy0Pw7Ul6HpiBwdxyzRqhlqdNUc
+	 jEOMGgdU8cPdQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Tuo Li <islituo@gmail.com>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
+Cc: Ricardo Ribalda <ribalda@chromium.org>,
+	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
+	Lili Orosz <lily@floofy.city>,
+	Hans Verkuil <hverkuil+cisco@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	dri-devel@lists.freedesktop.org
-Subject: [PATCH AUTOSEL 6.19-6.12] drm/panel: Fix a possible null-pointer dereference in jdi_panel_dsi_remove()
-Date: Fri, 13 Feb 2026 19:58:59 -0500
-Message-ID: <20260214010245.3671907-59-sashal@kernel.org>
+	hansg@kernel.org,
+	linux-media@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.19-6.18] media: uvcvideo: Create an ID namespace for streaming output terminals
+Date: Fri, 13 Feb 2026 19:59:00 -0500
+Message-ID: <20260214010245.3671907-60-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260214010245.3671907-1-sashal@kernel.org>
 References: <20260214010245.3671907-1-sashal@kernel.org>
@@ -48,136 +51,227 @@ MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.19
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Tuo Li <islituo@gmail.com>
+From: Ricardo Ribalda <ribalda@chromium.org>
 
-[ Upstream commit 95eed73b871111123a8b1d31cb1fce7e902e49ea ]
+[ Upstream commit 3d9f32e02c2ed85338be627de672e2b81b88a836 ]
 
-In jdi_panel_dsi_remove(), jdi is explicitly checked, indicating that it
-may be NULL:
+Some devices, such as the Grandstream GUV3100 and the LSK Meeting Eye
+for Business & Home, exhibit entity ID collisions between units and
+streaming output terminals.
 
-  if (!jdi)
-    mipi_dsi_detach(dsi);
+The UVC specification requires unit and terminal IDs to be unique, and
+uses the ID to reference entities:
 
-However, when jdi is NULL, the function does not return and continues by
-calling jdi_panel_disable():
+- In control requests, to identify the target entity
+- In the UVC units and terminals descriptors' bSourceID field, to
+  identify source entities
+- In the UVC input header descriptor's bTerminalLink, to identify the
+  terminal associated with a streaming interface
 
-  err = jdi_panel_disable(&jdi->base);
+Entity ID collisions break accessing controls and make the graph
+description in the UVC descriptors ambiguous. However, collisions where
+one of the entities is a streaming output terminal and the other entity
+is not a streaming terminal are less severe. Streaming output terminals
+have no controls, and, as they are the final entity in pipelines, they
+are never referenced in descriptors as source entities. They are
+referenced by ID only from innput header descriptors, which by
+definition only reference streaming terminals.
 
-Inside jdi_panel_disable(), jdi is dereferenced unconditionally, which can
-lead to a NULL-pointer dereference:
+For these reasons, we can work around the collision by giving streaming
+output terminals their own ID namespace. Do so by setting bit
+UVC_TERM_OUTPUT (15) in the uvc_entity.id field, which is normally never
+set as the ID is a 8-bit value.
 
-  struct jdi_panel *jdi = to_panel_jdi(panel);
-  backlight_disable(jdi->backlight);
+This ID change doesn't affect the entity name in the media controller
+graph as the name isn't constructed from the ID, so there should not be
+any impact on the uAPI.
 
-To prevent such a potential NULL-pointer dereference, return early from
-jdi_panel_dsi_remove() when jdi is NULL.
+Although this change handles some ID collisions automagically, keep
+printing an error in uvc_alloc_new_entity() when a camera has invalid
+descriptors. Hopefully this message will help vendors fix their invalid
+descriptors.
 
-Signed-off-by: Tuo Li <islituo@gmail.com>
-Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
-Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
-Link: https://patch.msgid.link/20251218120955.11185-1-islituo@gmail.com
+This new method of handling ID collisions includes a revert of commit
+758dbc756aad ("media: uvcvideo: Use heuristic to find stream entity")
+that attempted to fix the problem urgently due to regression reports.
+
+Suggested-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+Signed-off-by: Ricardo Ribalda <ribalda@chromium.org>
+Reviewed-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+Tested-by: Lili Orosz <lily@floofy.city>
+Co-developed-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+Signed-off-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+Link: https://patch.msgid.link/20251113210400.28618-1-laurent.pinchart@ideasonboard.com
+Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-## Analysis
+### Risk Assessment
 
-### Commit Message Analysis
+**Benefits**:
+- Fixes webcam functionality for devices with entity ID collisions
+  (Grandstream GUV3100, LSK Meeting Eye, potentially others)
+- Provides a cleaner, more robust solution than the heuristic approach
+  in 758dbc756aad
+- The approach is well-motivated by the UVC spec (streaming output
+  terminals have no controls and are terminal nodes)
 
-The commit message is clear and well-structured. It identifies a **null
-pointer dereference** in `jdi_panel_dsi_remove()`. The existing code
-checks `if (!jdi)` but only calls `mipi_dsi_detach(dsi)` without
-returning, so execution falls through to `jdi_panel_disable(&jdi->base)`
-which dereferences the NULL `jdi` pointer. This is a classic missing-
-return-after-early-check bug.
+**Risks**:
+- Medium complexity - it's not a trivial one-liner, but the logic is
+  well-contained
+- If 758dbc756aad is already in stable, this commit effectively replaces
+  it, which is the intended behavior
+- The namespace bit approach could theoretically break something if any
+  code path uses entity IDs for streaming output terminals in unexpected
+  ways, but the commit message and review argue convincingly this
+  doesn't happen
 
-The commit has been **Reviewed-by** a subsystem maintainer (Neil
-Armstrong), lending credibility.
+**Dependencies**:
+- This commit depends on `0e2ee70291e6` ("Mark invalid entities with id
+  UVC_INVALID_ENTITY_ID") being present
+- It also implicitly reverts `758dbc756aad` which was sent to stable
+- Both of these are likely in recent stable trees given the `Cc: stable`
+  tag on 758dbc756aad
 
-### Code Change Analysis
+### Conclusion
 
-The fix is extremely small and surgical — it adds braces around the
-existing `if (!jdi)` block and inserts a `return;` statement:
-
-```c
-- if (!jdi)
-+       if (!jdi) {
-                mipi_dsi_detach(dsi);
-+               return;
-+       }
-```
-
-This is a textbook null-pointer dereference fix. The original code
-intended to handle the `jdi == NULL` case (DSI-LINK2 interface that only
-needs detach), but forgot to return early, causing the function to
-continue and dereference `jdi` through `jdi_panel_disable(&jdi->base)`.
-
-### Bug Classification
-
-- **Type**: NULL pointer dereference
-- **Trigger**: When `jdi_panel_dsi_remove()` is called for the DSI-LINK2
-  interface where `mipi_dsi_get_drvdata(dsi)` returns NULL
-- **Consequence**: Kernel oops/crash due to dereferencing a NULL pointer
-- **Severity**: Medium-High — this is a crash in a driver removal path,
-  triggered during device unbind or module unload
-
-### Scope and Risk Assessment
-
-- **Lines changed**: 3 lines (add braces and a `return`)
-- **Files changed**: 1 file
-- **Risk**: Extremely low — the fix is obviously correct and cannot
-  introduce regressions. It only adds an early return when `jdi` is
-  NULL, which is clearly the intended behavior given the existing NULL
-  check.
-
-### Stable Kernel Criteria
-
-1. **Obviously correct and tested**: Yes — reviewed by subsystem
-   maintainer, trivially correct
-2. **Fixes a real bug**: Yes — NULL pointer dereference leading to
-   kernel crash
-3. **Fixes an important issue**: Yes — crash in driver removal path
-4. **Small and contained**: Yes — 3 lines in a single file
-5. **No new features**: Correct — pure bug fix
-6. **Applies cleanly**: Likely — the change is very localized
-
-### Dependencies
-
-This patch is self-contained with no dependencies on other commits.
-
-### User Impact
-
-This affects users of the JDI LPM102A188A panel (used in some
-Chromebook-style devices). When the panel's DSI link is being removed
-(e.g., during driver unbind or system shutdown), the kernel would crash.
-While this is a niche driver, the fix is risk-free and prevents a real
-crash.
+This commit fixes a real device compatibility bug that breaks webcam
+functionality for specific hardware. The previous fix (758dbc756aad) was
+already sent to stable with `Cc: stable`, and this commit is its proper
+replacement. It's developed and reviewed by the UVC subsystem
+maintainers, tested by users, and contained entirely within the UVC
+driver. The approach is sound - leveraging the fact that streaming
+output terminals have properties that make a separate ID namespace safe.
+Since the heuristic fix (758dbc756aad) is likely already in stable trees
+and this is the proper/robust replacement for it, it should also go to
+stable.
 
 **YES**
 
- drivers/gpu/drm/panel/panel-jdi-lpm102a188a.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/media/usb/uvc/uvc_driver.c | 54 ++++++++++++++++++------------
+ drivers/media/usb/uvc/uvcvideo.h   |  3 +-
+ 2 files changed, 35 insertions(+), 22 deletions(-)
 
-diff --git a/drivers/gpu/drm/panel/panel-jdi-lpm102a188a.c b/drivers/gpu/drm/panel/panel-jdi-lpm102a188a.c
-index 23462065d726b..ea975170fafff 100644
---- a/drivers/gpu/drm/panel/panel-jdi-lpm102a188a.c
-+++ b/drivers/gpu/drm/panel/panel-jdi-lpm102a188a.c
-@@ -434,8 +434,10 @@ static void jdi_panel_dsi_remove(struct mipi_dsi_device *dsi)
- 	int err;
+diff --git a/drivers/media/usb/uvc/uvc_driver.c b/drivers/media/usb/uvc/uvc_driver.c
+index ee4f54d683496..aa3e8d295e0f5 100644
+--- a/drivers/media/usb/uvc/uvc_driver.c
++++ b/drivers/media/usb/uvc/uvc_driver.c
+@@ -165,28 +165,17 @@ static struct uvc_entity *uvc_entity_by_reference(struct uvc_device *dev,
+ 	return NULL;
+ }
  
- 	/* only detach from host for the DSI-LINK2 interface */
--	if (!jdi)
-+	if (!jdi) {
- 		mipi_dsi_detach(dsi);
-+		return;
-+	}
+-static struct uvc_streaming *uvc_stream_by_id(struct uvc_device *dev, int id)
++static struct uvc_streaming *uvc_stream_for_terminal(struct uvc_device *dev,
++						     struct uvc_entity *term)
+ {
+-	struct uvc_streaming *stream, *last_stream;
+-	unsigned int count = 0;
++	u16 id = UVC_HARDWARE_ENTITY_ID(term->id);
++	struct uvc_streaming *stream;
  
- 	err = jdi_panel_disable(&jdi->base);
- 	if (err < 0)
+ 	list_for_each_entry(stream, &dev->streams, list) {
+-		count += 1;
+-		last_stream = stream;
+ 		if (stream->header.bTerminalLink == id)
+ 			return stream;
+ 	}
+ 
+-	/*
+-	 * If the streaming entity is referenced by an invalid ID, notify the
+-	 * user and use heuristics to guess the correct entity.
+-	 */
+-	if (count == 1 && id == UVC_INVALID_ENTITY_ID) {
+-		dev_warn(&dev->intf->dev,
+-			 "UVC non compliance: Invalid USB header. The streaming entity has an invalid ID, guessing the correct one.");
+-		return last_stream;
+-	}
+-
+ 	return NULL;
+ }
+ 
+@@ -823,10 +812,12 @@ static struct uvc_entity *uvc_alloc_new_entity(struct uvc_device *dev, u16 type,
+ 	}
+ 
+ 	/* Per UVC 1.1+ spec 3.7.2, the ID is unique. */
+-	if (uvc_entity_by_id(dev, id)) {
+-		dev_err(&dev->intf->dev, "Found multiple Units with ID %u\n", id);
++	if (uvc_entity_by_id(dev, UVC_HARDWARE_ENTITY_ID(id)))
++		dev_err(&dev->intf->dev, "Found multiple Units with ID %u\n",
++			UVC_HARDWARE_ENTITY_ID(id));
++
++	if (uvc_entity_by_id(dev, id))
+ 		id = UVC_INVALID_ENTITY_ID;
+-	}
+ 
+ 	extra_size = roundup(extra_size, sizeof(*entity->pads));
+ 	if (num_pads)
+@@ -982,6 +973,7 @@ static int uvc_parse_standard_control(struct uvc_device *dev,
+ 	struct usb_host_interface *alts = dev->intf->cur_altsetting;
+ 	unsigned int i, n, p, len;
+ 	const char *type_name;
++	unsigned int id;
+ 	u16 type;
+ 
+ 	switch (buffer[2]) {
+@@ -1120,8 +1112,28 @@ static int uvc_parse_standard_control(struct uvc_device *dev,
+ 			return 0;
+ 		}
+ 
++		id = buffer[3];
++
++		/*
++		 * Some devices, such as the Grandstream GUV3100, exhibit entity
++		 * ID collisions between units and streaming output terminals.
++		 * Move streaming output terminals to their own ID namespace by
++		 * setting bit UVC_TERM_OUTPUT (15), above the ID's 8-bit value.
++		 * The bit is ignored in uvc_stream_for_terminal() when looking
++		 * up the streaming interface for the terminal.
++		 *
++		 * This hack is safe to enable unconditionally, as the ID is not
++		 * used for any other purpose (streaming output terminals have
++		 * no controls and are never referenced as sources in UVC
++		 * descriptors). Other types output terminals can have controls,
++		 * so limit usage of this separate namespace to streaming output
++		 * terminals.
++		 */
++		if (type & UVC_TT_STREAMING)
++			id |= UVC_TERM_OUTPUT;
++
+ 		term = uvc_alloc_new_entity(dev, type | UVC_TERM_OUTPUT,
+-					    buffer[3], 1, 0);
++					    id, 1, 0);
+ 		if (IS_ERR(term))
+ 			return PTR_ERR(term);
+ 
+@@ -2118,8 +2130,8 @@ static int uvc_register_terms(struct uvc_device *dev,
+ 		if (UVC_ENTITY_TYPE(term) != UVC_TT_STREAMING)
+ 			continue;
+ 
+-		stream = uvc_stream_by_id(dev, term->id);
+-		if (stream == NULL) {
++		stream = uvc_stream_for_terminal(dev, term);
++		if (!stream) {
+ 			dev_info(&dev->intf->dev,
+ 				 "No streaming interface found for terminal %u.",
+ 				 term->id);
+diff --git a/drivers/media/usb/uvc/uvcvideo.h b/drivers/media/usb/uvc/uvcvideo.h
+index ed7bad31f75ca..3f2e832025e71 100644
+--- a/drivers/media/usb/uvc/uvcvideo.h
++++ b/drivers/media/usb/uvc/uvcvideo.h
+@@ -41,7 +41,8 @@
+ #define UVC_EXT_GPIO_UNIT		0x7ffe
+ #define UVC_EXT_GPIO_UNIT_ID		0x100
+ 
+-#define UVC_INVALID_ENTITY_ID          0xffff
++#define UVC_HARDWARE_ENTITY_ID(id)	((id) & 0xff)
++#define UVC_INVALID_ENTITY_ID		0xffff
+ 
+ /* ------------------------------------------------------------------------
+  * Driver specific constants.
 -- 
 2.51.0
 
