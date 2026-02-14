@@ -1,41 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4EA3E311946;
-	Sat, 14 Feb 2026 21:26:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9FED5142E83;
+	Sat, 14 Feb 2026 21:26:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771104415; cv=none; b=qJyn0ipYEAQOx2Zd7KlmOwoNEYauXWB33NCcxmpjqXHP8O0Z6KNJXvz66rJuqPlTiAxc7MFwpCjjx06i8XkLf672frpvATnYjSLj+HZPbAZ+vBxrIsLiaIGNKa0e1G45Jj4My/PsY6JF0xcVGr6FnC/NWqpsyp9DlZJcGkQzKFU=
+	t=1771104416; cv=none; b=mtz7geoYBuu4Rtb3euGWJPHd/vPIfYxt0d6ffr52PFtOQIGn6jh3PPN2O5+sQYzQIUI7xNPEtUtdCB4gKTFPnnF1SmClrBvSvS+KcRkcf2+YOVINGfMuLx+4y7UHSbv69zfkSWkWKUz2hiT9USjQess2or6By17anAICUJ57rfY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771104415; c=relaxed/simple;
-	bh=EpS38SPSuQKOXTpV9zikmdTC014tgP8opn/FCfsWElM=;
+	s=arc-20240116; t=1771104416; c=relaxed/simple;
+	bh=zoMV/NzMg0A/PeUsA5HJP86gpV+x8YWFr2pJq9M8MxM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=EXBSL4Lpe747bH+17qYdGOOvEivxzjadRydvML2sQkYjhTDYBfNieTxn2rZx3i+0jln+V+ILRlnitt7LC7B0KDR9P6GHPcBuQ/4t9BQTC9msD9xlJHFkHKYmT9IpRzCQe5/4QuwbvE6mHR0/APbGHHTvpwdq6QniemnvLAvUXfA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=BHAL1u/9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=gJf9DZEp8WipvicLy0G1WsVDD1/xu5YkPo6Udlmbgelb6PczNus4xx/E0C2Nox56iuDz2HC2hs9OCUSlROGbPA/HVKIvnjfALRbsRil3yDvJ4vpLlycm8r7R8MJTFyXW5HqGVLiRcc602QrESwZ+411feEpvp+Y05Q9TvliIT4E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Iqk6Mann; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="BHAL1u/9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D72DC16AAE;
-	Sat, 14 Feb 2026 21:26:54 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Iqk6Mann"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9CE86C16AAE;
+	Sat, 14 Feb 2026 21:26:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1771104415;
-	bh=EpS38SPSuQKOXTpV9zikmdTC014tgP8opn/FCfsWElM=;
+	s=k20201202; t=1771104416;
+	bh=zoMV/NzMg0A/PeUsA5HJP86gpV+x8YWFr2pJq9M8MxM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BHAL1u/9lqPR8qOipNJTQJ5EDxaAdIc/eSvj63qaez3t4zg4A5t6SAD/8G7ZQFUfm
-	 8EhJQ6xecNw/WBI71SzNwucaUwLHk8yRfzXMA7uCAQMcoGdnQLeAs6tPgDhoEKrW7G
-	 4ccrKWp0TH+EQEAwAAKIuZUhFncf+QJPN4bW3UstyXPyqJ7gDoB3sdpgZZp/NkUuzx
-	 YxSynArLt50sPFSWk5TNhc6LxE3IALMcIhmaEFRzrCELNqWVO2aJ9Vy8V8G6EKwGP4
-	 9ZqBzNH4Atk3b3o6Ii9EbvvFV4R+P6qW8mewzriPQk/i0B/BzNXJAAE4s1B2kw4jBk
-	 DkKop3x6nidgA==
+	b=Iqk6Mann2/0YKesc32d0po8iLXM7dpBlaCq/EMm+MIkl5UjiI3Tn0NCcOqGrxlvxO
+	 RCGfd4Hh9R5H6EImikcgfyHoM+08tJSeSrVvj6cBcDm7TT4pIOCr9APiEf+qoONAcE
+	 meC3ia/1a/fIKiySEOJ02BVjZuzLfFo1ymXNfEIwgdOkwUpHs8KRZA3YHSZYIlOenv
+	 Thx0Nf0prDzD1GdPAN0gr30Jpx/YVsAciejm4mezTShCLvFRt+1rXxoCGfv+InMwJa
+	 oX3zpQxZ6V9rsxs1S39uQh4/IDVlybBnnA/iLI5wLxXCz5YvKoB1kuEfrKBEIFyFxQ
+	 K49IEQw7Dj7uw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Bitterblue Smith <rtl8821cerfe2@gmail.com>,
-	Ping-Ke Shih <pkshih@realtek.com>,
+Cc: =?UTF-8?q?Stefan=20S=C3=B8rensen?= <ssorensen@roku.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>,
-	linux-wireless@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.19-6.12] wifi: rtw88: Use devm_kmemdup() in rtw_set_supported_band()
-Date: Sat, 14 Feb 2026 16:23:37 -0500
-Message-ID: <20260214212452.782265-72-sashal@kernel.org>
+	marcel@holtmann.org,
+	johan.hedberg@gmail.com,
+	luiz.dentz@gmail.com,
+	linux-bluetooth@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.19-6.6] Bluetooth: hci_conn: Set link_policy on incoming ACL connections
+Date: Sat, 14 Feb 2026 16:23:38 -0500
+Message-ID: <20260214212452.782265-73-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260214212452.782265-1-sashal@kernel.org>
 References: <20260214212452.782265-1-sashal@kernel.org>
@@ -45,194 +48,159 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.19
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Bitterblue Smith <rtl8821cerfe2@gmail.com>
+From: Stefan Sørensen <ssorensen@roku.com>
 
-[ Upstream commit 2ba12401cc1f2d970fa2e7d5b15abde3f5abd40d ]
+[ Upstream commit 4bb091013ab0f2edfed3f58bebe658a798cbcc4d ]
 
-Simplify the code by using device managed memory allocations.
+The connection link policy is only set when establishing an outgoing
+ACL connection causing connection idle modes not to be available on
+incoming connections. Move the setting of the link policy to the
+creation of the connection so all ACL connection will use the link
+policy set on the HCI device.
 
-This also fixes a memory leak in rtw_register_hw(). The supported bands
-were not freed in the error path.
-
-Copied from commit 145df52a8671 ("wifi: rtw89: Convert
-rtw89_core_set_supported_band to use devm_*").
-
-Signed-off-by: Bitterblue Smith <rtl8821cerfe2@gmail.com>
-Acked-by: Ping-Ke Shih <pkshih@realtek.com>
-Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
-Link: https://patch.msgid.link/1aa7fdef-2d5b-4a31-a4e9-fac8257ed30d@gmail.com
+Signed-off-by: Stefan Sørensen <ssorensen@roku.com>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-## Analysis
+## Analysis of Bluetooth: hci_conn: Set link_policy on incoming ACL
+connections
 
-### Commit Message Analysis
+### 1. COMMIT MESSAGE ANALYSIS
 
-The commit message is explicit about fixing a bug: **"This also fixes a
-memory leak in rtw_register_hw(). The supported bands were not freed in
-the error path."**
+The commit message clearly describes a functional bug: the connection
+link policy is **only** set when establishing an **outgoing** ACL
+connection, which means **incoming** ACL connections don't get the link
+policy configured on the HCI device. This causes "connection idle modes
+not to be available on incoming connections."
 
-The primary change converts `kmemdup()` to `devm_kmemdup()` (device-
-managed memory), which means the memory will be automatically freed when
-the device is removed. This simultaneously:
-1. Simplifies the code (removes manual `rtw_unset_supported_band()`
-   function)
-2. **Fixes a real memory leak** on the error path of `rtw_register_hw()`
+The fix moves the `link_policy` assignment from the outgoing-connection-
+specific path (`hci_acl_create_conn_sync`) to the generic connection
+creation path (`__hci_conn_add`), so all ACL connections (both incoming
+and outgoing) inherit the device's link policy.
 
-### Code Change Analysis
+### 2. CODE CHANGE ANALYSIS
 
-Let me trace the bug:
+The change is extremely small and surgical:
 
-1. `rtw_set_supported_band()` allocates memory with `kmemdup()` for 2GHz
-   and 5GHz band structures
-2. `rtw_register_hw()` calls `rtw_set_supported_band()` early in its
-   flow
-3. If `rtw_register_hw()` fails later (e.g., at `rtw_regd_hint()` →
-   `goto led_deinit`), the error path does NOT call
-   `rtw_unset_supported_band()` to free those allocations
-4. The old `rtw_unset_supported_band()` was only called in
-   `rtw_unregister_hw()`, which is the normal teardown path — not the
-   error path
+**In `net/bluetooth/hci_conn.c` (`__hci_conn_add`):**
+- Adds one line: `conn->link_policy = hdev->link_policy;` in the
+  `ACL_LINK` case of the switch statement during connection
+  initialization.
 
-Let me verify this by examining the error path structure in the diff.
-The `rtw_register_hw()` function has error paths (`goto led_deinit`)
-that return without freeing the band allocations. This is a genuine
-memory leak.
+**In `net/bluetooth/hci_sync.c` (`hci_acl_create_conn_sync`):**
+- Removes the line `conn->link_policy = hdev->link_policy;` from the
+  outgoing connection creation path (since it's now handled in the
+  common path).
 
-### The Fix
+This is a pure **move** of a single assignment from a specific path to a
+common path. The net effect:
+- Outgoing connections: behavior is unchanged (link_policy was set
+  before, still set now, just earlier in the flow)
+- Incoming connections: link_policy is now properly set (was previously
+  missing)
 
-The fix converts to `devm_kmemdup()`, which ties the allocation lifetime
-to the device. This means:
-- On error paths: memory is freed when the device is cleaned up (no
-  leak)
-- On normal unregister: memory is freed automatically (no need for
-  `rtw_unset_supported_band()`)
+### 3. CLASSIFICATION
 
-The `rtw_unset_supported_band()` function is removed entirely since it's
-no longer needed, and the call to it in `rtw_unregister_hw()` is also
-removed.
+This is a **bug fix**. Incoming Bluetooth ACL connections were not
+getting the correct link policy, which means features like sniff mode
+(power saving) and role switching wouldn't work properly on incoming
+connections. This is a real functional issue affecting Bluetooth power
+management and connection behavior.
 
-### Stable Criteria Assessment
+### 4. SCOPE AND RISK ASSESSMENT
 
-1. **Fixes a real bug**: Yes — memory leak on error path in
-   `rtw_register_hw()`. If probe fails repeatedly (e.g., USB WiFi dongle
-   being plugged/unplugged), this leaks memory each time.
-2. **Obviously correct**: Yes — the pattern of converting from `kmemdup`
-   to `devm_kmemdup` is well-established and was already done in the
-   sister driver rtw89 (commit 145df52a8671).
-3. **Small and contained**: Yes — changes a single file, ~20 lines of
-   actual logic change, rest is removal of now-unnecessary code.
-4. **No new features**: Correct — this is purely a bug fix with code
-   simplification.
-5. **Tested**: Has `Acked-by` from the Realtek maintainer (Ping-Ke
-   Shih).
+- **Lines changed:** 2 (1 added, 1 removed - it's a move)
+- **Files changed:** 2
+- **Complexity:** Extremely low - moving an assignment to a more
+  appropriate location
+- **Risk of regression:** Minimal. The assignment already existed for
+  outgoing connections; this just ensures incoming connections get the
+  same treatment. The value being assigned (`hdev->link_policy`) is the
+  same in both cases.
 
-### Risk Assessment
+### 5. USER IMPACT
 
-**Low risk**:
-- `devm_kmemdup()` is a standard, well-tested kernel API
-- The same pattern was already applied to rtw89 (the newer sibling
-  driver)
-- The change is straightforward — swap allocation function, remove
-  manual free function
-- The rtw88 driver is widely used (RTL8822BE, RTL8822CE, RTL8821CE are
-  common WiFi chips)
+Bluetooth is widely used on laptops, desktops, and embedded systems. The
+link policy controls important features like:
+- **Sniff mode**: Power-saving mode that reduces radio duty cycle
+- **Role switching**: Ability to switch between master and slave roles
+- **Hold mode**: Another power management feature
 
-**One potential concern**: The devm-managed memory will be freed when
-the device is destroyed, while the old code freed it in
-`rtw_unregister_hw()`. However, since `ieee80211_unregister_hw()` is
-called before the device is destroyed, and that function removes the
-wiphy, the bands won't be accessed after the devm memory is freed. This
-ordering is safe.
+Without the correct link policy on incoming connections, Bluetooth
+devices connecting to the affected system would not benefit from power-
+saving modes, potentially leading to increased battery drain and missing
+expected Bluetooth behavior.
 
-### User Impact
+### 6. STABILITY INDICATORS
 
-The rtw88 driver covers commonly used Realtek WiFi chips found in many
-laptops. Memory leaks during driver initialization failures could
-accumulate, especially for USB-based variants where plug/unplug cycles
-are common. This is a real-world issue.
+- The author (Stefan Sørensen) submitted the fix and it was signed off
+  by Luiz Augusto von Dentz, the Bluetooth subsystem maintainer. This
+  indicates it was reviewed and approved by the person most
+  knowledgeable about the code.
+- The change is trivially correct - it's moving an existing assignment
+  to a more general location.
 
-### Dependency Check
+### 7. DEPENDENCY CHECK
 
-This commit appears self-contained. `devm_kmemdup()` has been available
-in the kernel for a long time. The function signature changes are all
-internal to `main.c`. No other patches are needed.
+This commit is completely self-contained. It doesn't depend on any other
+changes - it simply moves an existing line of code. The `link_policy`
+field, `hdev->link_policy`, and `__hci_conn_add` function have been in
+the kernel for a long time, so this should apply cleanly to stable
+trees.
 
-### Conclusion
+### 8. STABLE KERNEL CRITERIA
 
-This commit fixes a genuine memory leak in a widely-used WiFi driver.
-The fix is small, well-understood, uses standard kernel APIs, and has
-been reviewed/acked by the subsystem maintainer. The pattern was already
-proven in the rtw89 driver. It meets all stable kernel criteria.
+- **Obviously correct:** Yes - it's a one-line move that ensures all ACL
+  connections get the device's link policy
+- **Fixes a real bug:** Yes - incoming connections missing link policy
+  settings
+- **Small and contained:** Yes - 2 lines across 2 files
+- **No new features:** Correct - this enables existing functionality
+  that was incorrectly not applied
+- **Risk vs benefit:** Very low risk (trivially correct code move) vs
+  meaningful benefit (proper Bluetooth power management on incoming
+  connections)
 
 **YES**
 
- drivers/net/wireless/realtek/rtw88/main.c | 19 ++++++-------------
- 1 file changed, 6 insertions(+), 13 deletions(-)
+ net/bluetooth/hci_conn.c | 1 +
+ net/bluetooth/hci_sync.c | 2 --
+ 2 files changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/drivers/net/wireless/realtek/rtw88/main.c b/drivers/net/wireless/realtek/rtw88/main.c
-index 361ce0d40956d..2004d714530a3 100644
---- a/drivers/net/wireless/realtek/rtw88/main.c
-+++ b/drivers/net/wireless/realtek/rtw88/main.c
-@@ -1661,11 +1661,13 @@ static u16 rtw_get_max_scan_ie_len(struct rtw_dev *rtwdev)
- static void rtw_set_supported_band(struct ieee80211_hw *hw,
- 				   const struct rtw_chip_info *chip)
- {
--	struct rtw_dev *rtwdev = hw->priv;
- 	struct ieee80211_supported_band *sband;
-+	struct rtw_dev *rtwdev = hw->priv;
-+	struct device *dev = rtwdev->dev;
+diff --git a/net/bluetooth/hci_conn.c b/net/bluetooth/hci_conn.c
+index c3f7828bf9d54..b5e345fa6c344 100644
+--- a/net/bluetooth/hci_conn.c
++++ b/net/bluetooth/hci_conn.c
+@@ -1002,6 +1002,7 @@ static struct hci_conn *__hci_conn_add(struct hci_dev *hdev, int type,
+ 	switch (type) {
+ 	case ACL_LINK:
+ 		conn->pkt_type = hdev->pkt_type & ACL_PTYPE_MASK;
++		conn->link_policy = hdev->link_policy;
+ 		conn->mtu = hdev->acl_mtu;
+ 		break;
+ 	case LE_LINK:
+diff --git a/net/bluetooth/hci_sync.c b/net/bluetooth/hci_sync.c
+index cbc3a75d73262..334eb4376a266 100644
+--- a/net/bluetooth/hci_sync.c
++++ b/net/bluetooth/hci_sync.c
+@@ -6897,8 +6897,6 @@ static int hci_acl_create_conn_sync(struct hci_dev *hdev, void *data)
  
- 	if (chip->band & RTW_BAND_2G) {
--		sband = kmemdup(&rtw_band_2ghz, sizeof(*sband), GFP_KERNEL);
-+		sband = devm_kmemdup(dev, &rtw_band_2ghz, sizeof(*sband),
-+				     GFP_KERNEL);
- 		if (!sband)
- 			goto err_out;
- 		if (chip->ht_supported)
-@@ -1674,7 +1676,8 @@ static void rtw_set_supported_band(struct ieee80211_hw *hw,
- 	}
+ 	conn->attempt++;
  
- 	if (chip->band & RTW_BAND_5G) {
--		sband = kmemdup(&rtw_band_5ghz, sizeof(*sband), GFP_KERNEL);
-+		sband = devm_kmemdup(dev, &rtw_band_5ghz, sizeof(*sband),
-+				     GFP_KERNEL);
- 		if (!sband)
- 			goto err_out;
- 		if (chip->ht_supported)
-@@ -1690,13 +1693,6 @@ static void rtw_set_supported_band(struct ieee80211_hw *hw,
- 	rtw_err(rtwdev, "failed to set supported band\n");
- }
- 
--static void rtw_unset_supported_band(struct ieee80211_hw *hw,
--				     const struct rtw_chip_info *chip)
--{
--	kfree(hw->wiphy->bands[NL80211_BAND_2GHZ]);
--	kfree(hw->wiphy->bands[NL80211_BAND_5GHZ]);
--}
+-	conn->link_policy = hdev->link_policy;
 -
- static void rtw_vif_smps_iter(void *data, u8 *mac,
- 			      struct ieee80211_vif *vif)
- {
-@@ -2320,10 +2316,7 @@ EXPORT_SYMBOL(rtw_register_hw);
- 
- void rtw_unregister_hw(struct rtw_dev *rtwdev, struct ieee80211_hw *hw)
- {
--	const struct rtw_chip_info *chip = rtwdev->chip;
--
- 	ieee80211_unregister_hw(hw);
--	rtw_unset_supported_band(hw, chip);
- 	rtw_debugfs_deinit(rtwdev);
- 	rtw_led_deinit(rtwdev);
- }
+ 	memset(&cp, 0, sizeof(cp));
+ 	bacpy(&cp.bdaddr, &conn->dst);
+ 	cp.pscan_rep_mode = 0x02;
 -- 
 2.51.0
 
