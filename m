@@ -1,42 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8CB4830B538;
-	Sat, 14 Feb 2026 21:26:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CEB2A30DD30;
+	Sat, 14 Feb 2026 21:26:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771104373; cv=none; b=DFFWyJOsWIDHZgAcHU7s5bojBLSPOYSbNNX0gghmwzS4Z7ejdblT3Q9gGVt1Vr3P29KsQcNCan6cRvs36/MK/MYPm88WumGIrCDRHzPUKdXEMv8WzAmvhxPgKOj6FZ5pyhx4qMdbDovKjNW2IODwNENlHn8NH1tvLM54o9HcYt0=
+	t=1771104374; cv=none; b=S/8AiT/xF6UdHNVnRZQWvCzTMWGSOyKIC4xb0qLGsXHDKoQDSpCi1OOggM9xqkG9Ja6xmNO9JH8m+yjB3yxicQywSCneB2CePWZsJFgKLVNqCftfX29fO0iNGhyVbftMtO6BRtQMWRkiAAE8ftiQ+JS7AaKnM7L7A2yFBqtJtbM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771104373; c=relaxed/simple;
-	bh=aHtR4BsyF2l3HR7TsEGG3KivdPRtncTzeKuqIu8cmO8=;
+	s=arc-20240116; t=1771104374; c=relaxed/simple;
+	bh=9gzfxVU7+8bvYKPrLKPr/cWufaY6uETnn7pre+sMgas=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Aj7/Oq2/Pe+YeAJ4vV8qYqLarQSuJl5hetxaz+PsOu+HafRAP9RrTtapCXDZPr2iTqLCDBm7TacvyF2+dAO5VUhzezIcFe34gHfR8mEpI9jbXFdEOXpS2AsHjWEs/2+sNrz7RnkGyCAOg28nlJI4epyAX5KPKkEIn0ezM7neYVk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=uihJoc2l; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=PfMR1CVhpcuv9FkjrCuabIPx/6l6E5zF4AHIK+q/0eL4yER91NrYmDFZb1jtk6+lQAzNejmY5IOLV9gl7VE0VAdrMsrD9RKRnekKHa/uvqBM02ve8aBPwhUY+sE61h11zD+WizurN6WpOxh6/3+BMYVXTCj7D6gp2ZmkEZ7o8qQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=lOUifURU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="uihJoc2l"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2CFCC19422;
-	Sat, 14 Feb 2026 21:26:12 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="lOUifURU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD435C19422;
+	Sat, 14 Feb 2026 21:26:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1771104373;
-	bh=aHtR4BsyF2l3HR7TsEGG3KivdPRtncTzeKuqIu8cmO8=;
+	s=k20201202; t=1771104374;
+	bh=9gzfxVU7+8bvYKPrLKPr/cWufaY6uETnn7pre+sMgas=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uihJoc2lrAc59pyVN95leA472wiSIEYXaLGczviZ1c7TVAp6YAQtXnu1PxXY28Fvv
-	 r7fDsc2IdljRd2KnBLrC3818CkXkw6J//MmAp0eFxh8uBtR3N8hU1KbDOumV5Zxvjj
-	 k9QLktNUEX6lT5Oy7AWU275oqXFJ4qIb1uxHBZQY49EeXA9jmyO/hIZWZSiSFEdFGj
-	 p3xyDK7FMGRazZxpB0P2dWYwpxzH6avWJZerSF8/HQcMOrqEbZa2lRu1fIlYExUcPq
-	 hY2foz2GYBWmGLrn0r09lBBNhUpRnfHyrNEd35076OL0JYr5F0alnabqVLtFwHGgAR
-	 JIa81QXrvt9Iw==
+	b=lOUifURUJYC+gcic1v8R8UUxwTfTUP96gJYUY0QRQwAs518YFdXpHcoWaOneGh8Hb
+	 T078L9If+xjpTmohVv2Wb/zh0ECHVl+PYMSXI/Ymix3wgSGE9x9GCAaVGi30+rgY9M
+	 hpUouN1I3HBgaW7HU4AV0yihltpUV25zcKG1wxn4XSR0ITiw4v4I0ol5cUaUy/DFMf
+	 VtkoD0aXHOJzWLkm0aOnM+etK7sXHkSadUFGrCIYTB1FgAGCjJ05WQtBPmOseYbdOd
+	 r9Li0DTfTkMeMhbLJEJXhxTpxdbGFIf1eNCk1qaEPg1K22txKlJUhPSzTQF9uM6q13
+	 NvHXtdeNt/zLg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Ziyi Guo <n7l8m4@u.northwestern.edu>,
-	Stanislaw Gruszka <stf_xl@wp.pl>,
-	Johannes Berg <johannes.berg@intel.com>,
+Cc: Koichiro Den <den@valinux.co.jp>,
+	Niklas Cassel <cassel@kernel.org>,
+	Manivannan Sadhasivam <mani@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	linux-wireless@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.19-5.10] wifi: iwlegacy: add missing mutex protection in il3945_store_measurement()
-Date: Sat, 14 Feb 2026 16:23:14 -0500
-Message-ID: <20260214212452.782265-49-sashal@kernel.org>
+	jingoohan1@gmail.com,
+	linux-pci@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.19-6.18] PCI: dwc: ep: Cache MSI outbound iATU mapping
+Date: Sat, 14 Feb 2026 16:23:15 -0500
+Message-ID: <20260214212452.782265-50-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260214212452.782265-1-sashal@kernel.org>
 References: <20260214212452.782265-1-sashal@kernel.org>
@@ -52,145 +53,217 @@ X-stable-base: Linux 6.19
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ziyi Guo <n7l8m4@u.northwestern.edu>
+From: Koichiro Den <den@valinux.co.jp>
 
-[ Upstream commit 4dd1dda65265ecbc9f43ffc08e333684cf715152 ]
+[ Upstream commit 8719c64e76bf258cc8f44109740c854f2e2ead2e ]
 
-il3945_store_measurement() calls il3945_get_measurement() which internally
-calls il_send_cmd_sync() without holding il->mutex. However,
-il_send_cmd_sync() has lockdep_assert_held(&il->mutex) indicating that
-callers must hold this lock.
+dw_pcie_ep_raise_msi_irq() currently programs an outbound iATU window
+for the MSI target address on every interrupt and tears it down again
+via dw_pcie_ep_unmap_addr().
 
-Other sysfs store functions in the same file properly acquire the mutex:
-- il3945_store_flags() acquires mutex at 3945-mac.c:3110
-- il3945_store_filter_flags() acquires mutex at 3945-mac.c:3144
+On systems that heavily use the AXI bridge interface (for example when
+the integrated eDMA engine is active), this means the outbound iATU
+registers are updated while traffic is in flight. The DesignWare
+endpoint databook 5.40a - "3.10.6.1 iATU Outbound Programming Overview"
+warns that updating iATU registers in this situation is not supported,
+and the behavior is undefined.
 
-Add mutex_lock()/mutex_unlock() around the il3945_get_measurement() call
-in the sysfs store function to fix the missing lock protection.
+Under high MSI and eDMA load this pattern results in occasional bogus
+outbound transactions and IOMMU faults, on the RC side, such as:
 
-Signed-off-by: Ziyi Guo <n7l8m4@u.northwestern.edu>
-Acked-by: Stanislaw Gruszka <stf_xl@wp.pl>
-Link: https://patch.msgid.link/20260125193005.1090429-1-n7l8m4@u.northwestern.edu
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+  ipmmu-vmsa eed40000.iommu: Unhandled fault: status 0x00001502 iova 0xfe000000
+
+followed by the system becoming unresponsive. This is the actual output
+observed on Renesas R-Car S4, with its ipmmu_hc used with PCIe ch0.
+
+There is no need to reprogram the iATU region used for MSI on every
+interrupt. The host-provided MSI address is stable while MSI is enabled,
+and the endpoint driver already dedicates a scratch buffer for MSI
+generation.
+
+Cache the aligned MSI address and map size, program the outbound iATU
+once, and keep the window enabled. Subsequent interrupts only perform a
+write to the MSI scratch buffer, avoiding dynamic iATU reprogramming in
+the hot path and fixing the lockups seen under load.
+
+dw_pcie_ep_raise_msix_irq() is not modified, as each vector can have a
+different msg_addr, and because the msg_addr is allowed to be changed
+while the vector is masked. Neither problem is easy to solve with the
+current design. Instead, the plan is for the DWC vendor drivers to
+transition to dw_pcie_ep_raise_msix_irq_doorbell(), which does not rely
+on the iATU.
+
+Signed-off-by: Koichiro Den <den@valinux.co.jp>
+[cassel: improve commit message]
+Signed-off-by: Niklas Cassel <cassel@kernel.org>
+Signed-off-by: Manivannan Sadhasivam <mani@kernel.org>
+Link: https://patch.msgid.link/20251222110144.3299523-2-cassel@kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-## Analysis
+This confirms the **current state of the code** (before the patch is
+applied) still has the map/unmap on every call pattern at lines 705-712.
+The patch hasn't been applied yet to this tree — this is the candidate
+being evaluated.
 
-### Commit Message Analysis
+### 8. STANDALONE ASSESSMENT
 
-The commit message is clear and well-documented. It identifies:
-- **The bug**: `il3945_store_measurement()` calls
-  `il3945_get_measurement()` → `il_send_cmd_sync()` without holding
-  `il->mutex`
-- **The evidence**: `il_send_cmd_sync()` has
-  `lockdep_assert_held(&il->mutex)`, meaning this will trigger a lockdep
-  warning at runtime
-- **The pattern**: Other sysfs store functions in the same file
-  (`il3945_store_flags()`, `il3945_store_filter_flags()`) already
-  properly acquire the mutex
-- **The fix**: Add `mutex_lock()`/`mutex_unlock()` around the call
+Looking at the dependency analysis more carefully: the agent found that
+in some stable tree, this commit was brought in as part of a 10-commit
+dependency chain for a different fix. However, **that doesn't change the
+standalone value of this commit**. The commit itself:
 
-### Code Change Analysis
+1. **Is a standalone bug fix** — it fixes iATU reprogramming under load
+   causing IOMMU faults and system lockups on real hardware
+2. **Has no prerequisite patches** — `dw_pcie_ep_align_addr`,
+   `dw_pcie_ep_map_addr`, and `dw_pcie_ep_unmap_addr` all exist in the
+   current tree
+3. **Only adds internal fields to a struct** — no API changes needed
+   from other patches
+4. **Applies cleanly** to the current code (the pre-patch code matches
+   lines 704-712)
 
-The diff is minimal — only 2 lines added:
-```c
-mutex_lock(&il->mutex);
-il3945_get_measurement(il, &params, type);
-mutex_unlock(&il->mutex);
-```
+### RISK vs BENEFIT
 
-This is a textbook missing-lock fix. The function is a sysfs store
-handler (called from userspace via writing to a sysfs file), which calls
-into the driver's command submission path without the required
-synchronization.
+**Benefit**: HIGH
+- Fixes real system lockups under load on DWC PCIe endpoint platforms
+- The bug is documented by the hardware vendor's databook as "undefined
+  behavior"
+- Concrete symptoms reported on Renesas R-Car S4
+- System becomes unresponsive — this is a critical stability issue
 
-**Bug mechanism**: Without the mutex, concurrent access to
-`il_send_cmd_sync()` from this sysfs path and other paths (e.g., normal
-driver operation, other sysfs handlers) can result in:
-1. **Data races** on shared driver state
-2. **Lockdep warnings** at runtime (guaranteed to fire)
-3. Potential **corruption of command submission state** leading to
-   firmware communication errors or crashes
+**Risk**: LOW-MEDIUM
+- The change is well-contained within 2 files, single subsystem
+- The caching logic is straightforward and defensive (WARN_ON_ONCE on
+  unexpected address change)
+- Proper cleanup on endpoint stop prevents resource leaks
+- Only affects DWC PCIe endpoint users
 
-### Classification
+### CONCERNS
 
-This is a **synchronization bug fix** — a missing lock acquisition. It
-falls squarely into the "race conditions" category of stable-worthy
-fixes.
+1. The change modifies `struct dw_pcie_ep` by adding 3 fields — this is
+   safe as long as no out-of-tree modules depend on this struct layout
+   (unlikely given it's a controller-specific struct).
+2. The WARN_ON_ONCE path returns -EINVAL if MSI address changes — this
+   is a safe fallback since the databook says reprogramming under load
+   is undefined anyway.
+3. The commit applies cleanly to the current tree based on code
+   inspection.
 
-### Scope and Risk Assessment
+### CONCLUSION
 
-- **Lines changed**: 2 (extremely minimal)
-- **Files touched**: 1
-- **Risk**: Very low — adding lock acquisition around a single function
-  call, following the exact same pattern as sibling functions in the
-  same file
-- **Subsystem**: iwlegacy wireless driver (older Intel WiFi),
-  mature/stable code
-- **Could this break something?**: The mutex is already used throughout
-  the driver. The only concern would be deadlock if
-  `il3945_get_measurement()` were called with the mutex already held,
-  but since this is a sysfs entry point (userspace-initiated), it's a
-  fresh call path — no lock is held on entry.
+This commit fixes a **real, documented hardware bug** that causes
+**system lockups** on DesignWare PCIe endpoint platforms under load. The
+fix is:
+- **Obviously correct**: Caching an iATU mapping that the hardware
+  vendor's databook says should not be reprogrammed while traffic is in
+  flight
+- **Well-tested**: Verified on Renesas R-Car S4
+- **Contained**: 2 files, single subsystem, no API changes
+- **Defensive**: WARN_ON_ONCE + -EINVAL on unexpected conditions, proper
+  cleanup on stop
 
-### User Impact
-
-- Users with Intel 3945 WiFi hardware who trigger this sysfs interface
-  will hit the lockdep warning
-- More critically, the lack of synchronization could lead to corruption
-  of the driver's command channel, potentially causing firmware hangs or
-  crashes
-- The iwlegacy driver, while old, still has active users on older
-  hardware
-
-### Stability Indicators
-
-- **Acked-by**: Stanislaw Gruszka (former iwlegacy maintainer)
-- **Committed by**: Johannes Berg (WiFi subsystem maintainer)
-- The fix follows an existing, well-established pattern in the same file
-
-### Dependency Check
-
-- No dependencies on other commits
-- The `il->mutex` and the function being called have existed in the
-  driver since its inception
-- This code exists in all stable trees that include the iwlegacy driver
-
-### Verdict
-
-This is a small, obviously correct, well-reviewed fix for a real
-synchronization bug. It:
-- Fixes a lockdep assertion violation (guaranteed to trigger)
-- Prevents potential race conditions in command submission
-- Is only 2 lines, touching 1 file
-- Follows the exact same pattern as adjacent code
-- Has maintainer acks
-- Has zero risk of regression
-
-This meets all stable kernel criteria perfectly.
+This clearly meets all stable kernel criteria for a backport.
 
 **YES**
 
- drivers/net/wireless/intel/iwlegacy/3945-mac.c | 2 ++
- 1 file changed, 2 insertions(+)
+ .../pci/controller/dwc/pcie-designware-ep.c   | 48 ++++++++++++++++---
+ drivers/pci/controller/dwc/pcie-designware.h  |  5 ++
+ 2 files changed, 47 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/net/wireless/intel/iwlegacy/3945-mac.c b/drivers/net/wireless/intel/iwlegacy/3945-mac.c
-index 104748fcdc33e..54991f31c52c5 100644
---- a/drivers/net/wireless/intel/iwlegacy/3945-mac.c
-+++ b/drivers/net/wireless/intel/iwlegacy/3945-mac.c
-@@ -3224,7 +3224,9 @@ il3945_store_measurement(struct device *d, struct device_attribute *attr,
+diff --git a/drivers/pci/controller/dwc/pcie-designware-ep.c b/drivers/pci/controller/dwc/pcie-designware-ep.c
+index 19571ac2b9617..18b20cc877d9e 100644
+--- a/drivers/pci/controller/dwc/pcie-designware-ep.c
++++ b/drivers/pci/controller/dwc/pcie-designware-ep.c
+@@ -601,6 +601,16 @@ static void dw_pcie_ep_stop(struct pci_epc *epc)
+ 	struct dw_pcie_ep *ep = epc_get_drvdata(epc);
+ 	struct dw_pcie *pci = to_dw_pcie_from_ep(ep);
  
- 	D_INFO("Invoking measurement of type %d on " "channel %d (for '%s')\n",
- 	       type, params.channel, buf);
-+	mutex_lock(&il->mutex);
- 	il3945_get_measurement(il, &params, type);
-+	mutex_unlock(&il->mutex);
- 
- 	return count;
++	/*
++	 * Tear down the dedicated outbound window used for MSI
++	 * generation. This avoids leaking an iATU window across
++	 * endpoint stop/start cycles.
++	 */
++	if (ep->msi_iatu_mapped) {
++		dw_pcie_ep_unmap_addr(epc, 0, 0, ep->msi_mem_phys);
++		ep->msi_iatu_mapped = false;
++	}
++
+ 	dw_pcie_stop_link(pci);
  }
+ 
+@@ -702,14 +712,37 @@ int dw_pcie_ep_raise_msi_irq(struct dw_pcie_ep *ep, u8 func_no,
+ 	msg_addr = ((u64)msg_addr_upper) << 32 | msg_addr_lower;
+ 
+ 	msg_addr = dw_pcie_ep_align_addr(epc, msg_addr, &map_size, &offset);
+-	ret = dw_pcie_ep_map_addr(epc, func_no, 0, ep->msi_mem_phys, msg_addr,
+-				  map_size);
+-	if (ret)
+-		return ret;
+ 
+-	writel(msg_data | (interrupt_num - 1), ep->msi_mem + offset);
++	/*
++	 * Program the outbound iATU once and keep it enabled.
++	 *
++	 * The spec warns that updating iATU registers while there are
++	 * operations in flight on the AXI bridge interface is not
++	 * supported, so we avoid reprogramming the region on every MSI,
++	 * specifically unmapping immediately after writel().
++	 */
++	if (!ep->msi_iatu_mapped) {
++		ret = dw_pcie_ep_map_addr(epc, func_no, 0,
++					  ep->msi_mem_phys, msg_addr,
++					  map_size);
++		if (ret)
++			return ret;
++
++		ep->msi_iatu_mapped = true;
++		ep->msi_msg_addr = msg_addr;
++		ep->msi_map_size = map_size;
++	} else if (WARN_ON_ONCE(ep->msi_msg_addr != msg_addr ||
++				ep->msi_map_size != map_size)) {
++		/*
++		 * The host changed the MSI target address or the required
++		 * mapping size changed. Reprogramming the iATU at runtime is
++		 * unsafe on this controller, so bail out instead of trying to
++		 * update the existing region.
++		 */
++		return -EINVAL;
++	}
+ 
+-	dw_pcie_ep_unmap_addr(epc, func_no, 0, ep->msi_mem_phys);
++	writel(msg_data | (interrupt_num - 1), ep->msi_mem + offset);
+ 
+ 	return 0;
+ }
+@@ -1087,6 +1120,9 @@ int dw_pcie_ep_init(struct dw_pcie_ep *ep)
+ 	struct device *dev = pci->dev;
+ 
+ 	INIT_LIST_HEAD(&ep->func_list);
++	ep->msi_iatu_mapped = false;
++	ep->msi_msg_addr = 0;
++	ep->msi_map_size = 0;
+ 
+ 	epc = devm_pci_epc_create(dev, &epc_ops);
+ 	if (IS_ERR(epc)) {
+diff --git a/drivers/pci/controller/dwc/pcie-designware.h b/drivers/pci/controller/dwc/pcie-designware.h
+index 31685951a0804..f555926a526ea 100644
+--- a/drivers/pci/controller/dwc/pcie-designware.h
++++ b/drivers/pci/controller/dwc/pcie-designware.h
+@@ -479,6 +479,11 @@ struct dw_pcie_ep {
+ 	void __iomem		*msi_mem;
+ 	phys_addr_t		msi_mem_phys;
+ 	struct pci_epf_bar	*epf_bar[PCI_STD_NUM_BARS];
++
++	/* MSI outbound iATU state */
++	bool			msi_iatu_mapped;
++	u64			msi_msg_addr;
++	size_t			msi_map_size;
+ };
+ 
+ struct dw_pcie_ops {
 -- 
 2.51.0
 
