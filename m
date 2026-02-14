@@ -1,43 +1,51 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0AF333EBF2C;
-	Sat, 14 Feb 2026 01:03:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 633A13EBF2C;
+	Sat, 14 Feb 2026 01:03:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771030991; cv=none; b=p/YWYNXSCJOocmvdK6HvmM3MyYKFAZkOyro6qoD3NPa9VhHwG2BAyQ7/yxTriLOoO4uBUszOeTozvW7VDFtCqPlDXyE2LyG3z6ugV4tFXCnKuH3GlVdd38eGIJVl0KaOxjpEE8sMJSWnRK44Ja0HoH1sxM14dW7kmwWkmxwFs44=
+	t=1771030994; cv=none; b=CbX9UKbbJCFpID/Xh5FtbpFoqgG4UBXLTncpscmU3EIMnmj/hPAJ0kJ4epkUAD+pd0FeJImEd4kHSbiKphzxlfYNdF/Zp1O2J5csi/5as5Bq6Plmq2oQLqP28WmOjO5uiMAFzZIWdJMFC1Zo/HxT4Bl3Nb6W5aasVJdTQy8YpDM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771030991; c=relaxed/simple;
-	bh=gaA3jb1vSP5RLu1ltGFAqS2zH//J+KBUkCpHH0YIUoM=;
+	s=arc-20240116; t=1771030994; c=relaxed/simple;
+	bh=6SSAtVZchfmD+XiqwGPW7/YBg/40cnF1wyteP+omcdc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=QEqGF849k1gijDOYN0EbocJND+/1HSpppN+VTBffveQ98CuSIKhtEhCfSJe+tM/8xLe5mSLPAVaPz/bsCiFwyyfOeI8/pkChsnU4JgJ0xo4SI5zvAkoLLWT9K8YyQL9NkSglBI3f83JR84HPYbDaqYkSQ2Fe98d4/3/p9fqMbUY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=CTAxUgYk; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PcdC3jhjQpT4UCnyd1/ZbBi22ZoHMqcQAlQjL7q05C9oP9QiKi07P08seL4XwznKNoZbB/UR1k65nveChDBbp1K1dUHb69FC/7Dj2O/+EzJMEwDZ3cmfpqwrLLCtacpu0pCgD8TZ9MdX5cNlRByE6RBN1KnDvL+yroP0+KrBNjc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Kr9JIuox; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="CTAxUgYk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CBC4BC116C6;
-	Sat, 14 Feb 2026 01:03:09 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Kr9JIuox"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8AF26C116C6;
+	Sat, 14 Feb 2026 01:03:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1771030990;
-	bh=gaA3jb1vSP5RLu1ltGFAqS2zH//J+KBUkCpHH0YIUoM=;
+	s=k20201202; t=1771030994;
+	bh=6SSAtVZchfmD+XiqwGPW7/YBg/40cnF1wyteP+omcdc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CTAxUgYk/qWjqbdIFt9SOv6Ma7XK1ktVXZZX+ABvLbj7yj9F7jHC3bKjjoAsEnNKG
-	 EJn5JKvkqMPAkyCt+1rwu9XYaiGQxxbcNVwbSzmhRuxfcbFbMx//UvwiA/5MSeqrwL
-	 I2t9lOM4OGocwlJAAvJ3zvcjrYwro5AAzzkwYCMOvPNgpEBGGWrztaAHehjZJ5QZer
-	 HtSEiNoV5SkpIYAcIvc1vbQiuogdt/TVPMlU3XccHhaYTLZKZIcAIkO0exXL2C8Al5
-	 Ll8wngNbghXgcEF9iCFk33RffyJqpnPFfLY+Z4npuMaFMh3mAOkbnYs4tBmtNHbrma
-	 KbeHsvhzj7Sig==
+	b=Kr9JIuoxrA7nQW3xZ81DWMJv/yR4D3+P8brRzbPB3nolJuZPsnN9mr2AMt2awOeNG
+	 x/w/FXXc24k1PIaY2XRa3FS6HkNF0wRiPEBwdNm9O6L4B2eNFVZr3Fe6JSmgISraT8
+	 4PxOe9wYVM9AOQYYr2IaM+mMW5iv84s9WzuLvYucg8ep2fXxiqW3V2Ta419J95x1xp
+	 v5sZSDFCB8r1hccqh0uXr10iOhfbB2BXAA//UNrs0Luod8lS0mX8KEOWqDaLKzf0R6
+	 NgCwG8TFpFpxLoIgXbPp7fo9caN4BgBbOnaGJ+DHxLCi7fpaT0MOk7VNM1ab0yRLb/
+	 87ya91F43AguA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: =?UTF-8?q?Tomasz=20Paku=C5=82a?= <tomasz.pakula.oficjalny@gmail.com>,
-	Jiri Kosina <jkosina@suse.com>,
+Cc: Charlene Liu <Charlene.Liu@amd.com>,
+	Swapnil Patel <swapnil.patel@amd.com>,
+	Chenyu Chen <chen-yu.chen@amd.com>,
+	Daniel Wheeler <daniel.wheeler@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>,
-	jikos@kernel.org,
-	bentiss@kernel.org,
-	linux-usb@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.19-6.18] HID: pidff: Do not set out of range trigger button
-Date: Fri, 13 Feb 2026 19:58:15 -0500
-Message-ID: <20260214010245.3671907-15-sashal@kernel.org>
+	Dillon.Varone@amd.com,
+	Alvin.Lee2@amd.com,
+	alex.hung@amd.com,
+	nicholas.kazlauskas@amd.com,
+	mwen@igalia.com,
+	Yihan.Zhu@amd.com,
+	yelangyan@huaqin.corp-partner.google.com,
+	Ilya.Bakoulin@amd.com
+Subject: [PATCH AUTOSEL 6.19] drm/amd/display: Fix DP no audio issue
+Date: Fri, 13 Feb 2026 19:58:16 -0500
+Message-ID: <20260214010245.3671907-16-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260214010245.3671907-1-sashal@kernel.org>
 References: <20260214010245.3671907-1-sashal@kernel.org>
@@ -47,183 +55,165 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.19
 Content-Transfer-Encoding: 8bit
 
-From: Tomasz Pakuła <tomasz.pakula.oficjalny@gmail.com>
+From: Charlene Liu <Charlene.Liu@amd.com>
 
-[ Upstream commit e01a029654f7fb67d7151365410aa22be4e63dbe ]
+[ Upstream commit bf5e396957acafd46003318965500914d5f4edfa ]
 
-Some games (mainly observed with Kylotonn's WRC Serises) set trigger
-button to a random value, or always the same one, out of range.
-I observed 307 and other values but, for example, my Moza R9 only
-exposes 128 buttons AND it's trigger button field is 8-bit. This causes
-errors to appear in dmesg.
+[why]
+need to enable APG_CLOCK_ENABLE enable first
+also need to wake up az from D3 before access az block
 
-Only set the trigger button and trigger interval in the trigger button
-is in range of the field.
-
-Signed-off-by: Tomasz Pakuła <tomasz.pakula.oficjalny@gmail.com>
-Signed-off-by: Jiri Kosina <jkosina@suse.com>
+Reviewed-by: Swapnil Patel <swapnil.patel@amd.com>
+Signed-off-by: Charlene Liu <Charlene.Liu@amd.com>
+Signed-off-by: Chenyu Chen <chen-yu.chen@amd.com>
+Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-Now I have a complete picture. Let me provide my analysis.
+Good, the fix has already been picked up in both 6.12.y and 6.6.y stable
+trees. Now let me compile my complete analysis.
 
-## Detailed Analysis
+## Complete Analysis
 
-### 1. Commit Message Analysis
+### 1. COMMIT MESSAGE ANALYSIS
 
-The commit clearly describes a **real-world bug**: games (specifically
-Kylotonn's WRC Series) set the trigger button to random out-of-range
-values (e.g., 307) when the hardware only supports 128 buttons with an
-8-bit field. This causes errors in dmesg. The author is the driver's
-2025 co-maintainer (Tomasz Pakula, noted at line 6 of the file).
+The commit subject is explicit: "Fix DP no audio issue". The body
+explains the root cause:
+- Need to enable `APG_CLOCK_ENABLE` first
+- Need to wake AZ (Azalia audio controller) from D3 power state before
+  accessing AZ block
 
-### 2. Code Change Analysis
+The commit has strong trust indicators:
+- **Reviewed-by**: Swapnil Patel (AMD)
+- **Tested-by**: Daniel Wheeler (AMD)
+- **Signed-off-by**: Charlene Liu (AMD display engineer), Alex Deucher
+  (AMD GPU maintainer)
+- Cherry-picked from mainline (`bf5e396957ac`) into drm-fixes for
+  6.19-rc2
 
-**The bug mechanism:** In `pidff_set_effect_report()`, the trigger
-button value from userspace (`effect->trigger.button`) is written
-directly to the HID field value without any bounds checking:
+### 2. CODE CHANGE ANALYSIS
 
-```526:526:drivers/hid/usbhid/hid-pidff.c
-        pidff->set_effect[PID_TRIGGER_BUTTON].value[0] =
-effect->trigger.button;
+The meaningful fix is entirely in `dce110_hwseq.c` (4 lines changed, 1
+file). The `dcn401_hwseq.c` change is just a cosmetic blank line
+removal.
+
+**Before the fix** (the bug):
+
+```1102:1106:drivers/gpu/drm/amd/display/dc/hwss/dce110/dce110_hwseq.c
+// ORDER WAS: (1) az_enable, (2) enable_pme_wa
+pipe_ctx->stream_res.audio->funcs->az_enable(pipe_ctx-
+>stream_res.audio);  // accesses AZ registers while in D3!
+if (num_audio >= 1 && clk_mgr->funcs->enable_pme_wa)
+    clk_mgr->funcs->enable_pme_wa(clk_mgr);  // wakes AZ from D3 - TOO
+LATE
 ```
 
-When this value exceeds what the HID field can hold (e.g., 307 in an
-8-bit field with max 128), the `implement()` function in `hid-core.c`
-catches it and emits a **non-rate-limited** warning:
+**After the fix**:
 
-```1472:1477:drivers/hid/hid-core.c
-                if (unlikely(value > m)) {
-                        hid_warn(hid,
-                                 "%s() called with too large value %d
-(n: %d)! (%s)\n",
-                                 __func__, value, n, current->comm);
-                        value &= m;
+```1121:1126:drivers/gpu/drm/amd/display/dc/hwss/dce110/dce110_hwseq.c
+                if (num_audio >= 1 && clk_mgr->funcs->enable_pme_wa) {
+                        /*wake AZ from D3 first before access az
+endpoint*/
+                        clk_mgr->funcs->enable_pme_wa(clk_mgr);
                 }
+
+                pipe_ctx->stream_res.audio->funcs->az_enable(pipe_ctx-
+>stream_res.audio);
 ```
 
-`hid_warn` maps to `dev_warn()` which is **not rate-limited** (unlike
-`hid_warn_ratelimited`). Since force feedback effects can be updated at
-frame rate (60-144+ Hz), this can produce hundreds of kernel warnings
-per second during gameplay.
+The `dce_aud_az_enable()` function reads and writes
+`AZALIA_F0_CODEC_PIN_CONTROL_HOT_PLUG_CONTROL` registers. These are
+hardware registers of the Azalia audio controller block. When the AZ
+block is in D3 (deep power state), register accesses return
+garbage/undefined values. The `enable_pme_wa()` function sends a PME
+(Power Management Event) to wake the AZ from D3.
 
-**The fix adds a simple bounds check:** If `trigger.button` exceeds
-`field->logical_maximum`, both trigger button and trigger repeat
-interval are set to 0 (disabled), which is the correct semantic - an
-invalid trigger button should mean "no trigger." Otherwise, the values
-pass through normally. The fix is +10 lines of straightforward
-validation logic.
+The fix simply reorders these two operations so the AZ block is woken
+from D3 **before** its registers are accessed.
 
-### 3. Impact Assessment
+### 3. BUG HISTORY
 
-- **Who is affected:** Users of HID PID force feedback devices (racing
-  wheels like Moza R9, Thrustmaster, etc.) playing games that set out-
-  of-range trigger button values (WRC Series and likely others).
-- **What happens without the fix:**
-  1. **Kernel log flooding** - unrestricted `hid_warn()` called per-
-     frame can fill system logs
-  2. **Silent value corruption** - `implement()` masks the value with `&
-     m`, mapping to a random valid button rather than disabling the
-     trigger
-  3. **Performance degradation** from excessive logging
-- **Severity:** Moderate - causes persistent dmesg spam and incorrect
-  device behavior, but no crash/corruption/security issue.
+Tracing via `git blame`:
+- **v4.19-rc1** (commit `1a05873f21d6`): `dce110_enable_audio_stream()`
+  created with `az_enable()` called before
+  `set_pme_wa_enable_by_version()` - **bug introduced here**
+- **v5.3-rc1** (commit `170a2398d2d80f`): Refactored to
+  `clk_mgr->funcs->enable_pme_wa()` but preserved the wrong ordering
+- **v6.2-rc1** (commit `14e2739c36957`): Further refactoring but
+  ordering still wrong
+- **Now**: Fix corrects the ordering that has been wrong since v4.19
 
-### 4. Scope and Risk
+### 4. CLASSIFICATION
 
-- **Size:** Very small - 10 lines added in one function in one file
-- **Risk:** Near-zero regression risk. Only adds an `if/else` bounds
-  check with a sensible default
-- **Subsystem:** HID force feedback - well-contained, affects only FF-
-  capable USB HID devices
+This is a **clear bug fix** - hardware initialization ordering error
+that causes complete audio failure on DisplayPort connections. Not a
+feature, not refactoring.
 
-### 5. Backport Applicability
+### 5. SCOPE AND RISK
 
-- **v6.18.y:** Patch applies cleanly (function matches HEAD context)
-- **v6.15-v6.17:** Function has same structure with `pidff_set_time()` -
-  minor context adjustment needed
-- **v6.14 and earlier (LTS: v6.12.y, v6.6.y, v6.1.y, v5.15.y):**
-  Function uses old code pattern (direct `.value[0]` assignment instead
-  of `pidff_set_time()`). The fix concept is trivially portable but the
-  patch won't apply as-is. The old code at v6.14 is:
-  ```c
-  pidff->set_effect[PID_TRIGGER_BUTTON].value[0] =
-  effect->trigger.button;
-  pidff->set_effect[PID_TRIGGER_REPEAT_INT].value[0] =
-  effect->trigger.interval;
-  ```
-  The bug has existed since the driver was created (~2007).
+- **Size**: 4 lines changed in 1 meaningful file
+- **Risk**: Extremely low - both `enable_pme_wa()` and `az_enable()`
+  were already called; only the order changed
+- **Subsystem**: AMD display driver (dce110 path is shared by many ASIC
+  generations including DCN1.0, DCN2.0, DCN2.1, DCN3.0, DCN3.1, DCN3.5,
+  etc.)
 
-### 6. Stable Criteria Assessment
+### 6. USER IMPACT
 
-| Criteria | Assessment |
-|---|---|
-| Obviously correct and tested | Yes - simple bounds check, tested with
-Moza R9 + WRC games |
-| Fixes a real bug | Yes - out-of-range values cause log spam and wrong
-behavior |
-| Important issue | Moderate - dmesg flooding + incorrect FF behavior |
-| Small and contained | Yes - 10 lines in one function |
-| No new features | Correct - pure input validation |
+**HIGH**: DP audio is completely broken without this fix. Users with
+DisplayPort-connected monitors/TVs would have no audio output. This
+affects a very large number of AMD GPU users.
 
-### 7. Concerns
+### 7. STABILITY AND TESTING
 
-- The patch uses C99 mixed declarations (`s32 trigger_button_max = ...`
-  in the middle of the function body). While this is accepted in modern
-  kernel coding, some older stable trees may have stricter compilation
-  settings. For LTS backports, this should be declared at function
-  scope.
-- For LTS trees (6.12.y and earlier), a hand-adapted backport is needed
-  since the 2025 refactoring isn't present.
+- Already tested by AMD's QA team (Daniel Wheeler)
+- Already picked into drm-fixes (drm maintainer deemed it worthy)
+- Already backported to 6.12.y (v6.12.69) and 6.6.y (v6.6.123) stable
+  trees
+- The fix has been in mainline since v6.19-rc2
 
-### Conclusion
+### 8. DEPENDENCIES
 
-This is a valid input validation fix that prevents kernel log flooding
-and incorrect force feedback behavior caused by userspace (games)
-sending out-of-range trigger button values. The fix is small, obviously
-correct, zero-risk, and addresses a real-world problem reported by force
-feedback device users. Despite needing adaptation for older LTS trees,
-the concept is trivially portable.
+The core fix (reorder `enable_pme_wa` before `az_enable`) is self-
+contained. For older stable kernels (pre-6.7), the file path differs
+(`dc/dce110/dce110_hw_sequencer.c` vs `dc/hwss/dce110/dce110_hwseq.c`),
+and for pre-6.2 kernels there's no `link_hwss` variable, but the core
+ordering change applies identically.
+
+### Summary
+
+This is a textbook stable backport candidate:
+- Fixes a **complete audio failure** on DP connections for AMD GPUs
+- Only **4 lines changed** (reordering two existing function calls)
+- **Zero risk** of regression (both calls were already present)
+- **Long-standing bug** since v4.19 (2018)
+- Properly reviewed, tested, and already backported to 6.12.y and 6.6.y
+- Affects a huge number of AMD GPU users with DP audio
 
 **YES**
 
- drivers/hid/usbhid/hid-pidff.c | 16 +++++++++++++---
- 1 file changed, 13 insertions(+), 3 deletions(-)
+ drivers/gpu/drm/amd/display/dc/hwss/dcn401/dcn401_hwseq.c | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/drivers/hid/usbhid/hid-pidff.c b/drivers/hid/usbhid/hid-pidff.c
-index 95377c5f63356..a4e700b40ba9b 100644
---- a/drivers/hid/usbhid/hid-pidff.c
-+++ b/drivers/hid/usbhid/hid-pidff.c
-@@ -523,9 +523,19 @@ static void pidff_set_effect_report(struct pidff_device *pidff,
- 	pidff_set_duration(&pidff->set_effect[PID_DURATION],
- 			   effect->replay.length);
- 
--	pidff->set_effect[PID_TRIGGER_BUTTON].value[0] = effect->trigger.button;
--	pidff_set_time(&pidff->set_effect[PID_TRIGGER_REPEAT_INT],
--		       effect->trigger.interval);
-+	/* Some games set this to random values that can be out of range */
-+	s32 trigger_button_max =
-+		pidff->set_effect[PID_TRIGGER_BUTTON].field->logical_maximum;
-+	if (effect->trigger.button <= trigger_button_max) {
-+		pidff->set_effect[PID_TRIGGER_BUTTON].value[0] =
-+			effect->trigger.button;
-+		pidff_set_time(&pidff->set_effect[PID_TRIGGER_REPEAT_INT],
-+			       effect->trigger.interval);
-+	} else {
-+		pidff->set_effect[PID_TRIGGER_BUTTON].value[0] = 0;
-+		pidff->set_effect[PID_TRIGGER_REPEAT_INT].value[0] = 0;
-+	}
-+
- 	pidff->set_effect[PID_GAIN].value[0] =
- 		pidff->set_effect[PID_GAIN].field->logical_maximum;
+diff --git a/drivers/gpu/drm/amd/display/dc/hwss/dcn401/dcn401_hwseq.c b/drivers/gpu/drm/amd/display/dc/hwss/dcn401/dcn401_hwseq.c
+index 12ce3789f5130..e1f5b1a34cde8 100644
+--- a/drivers/gpu/drm/amd/display/dc/hwss/dcn401/dcn401_hwseq.c
++++ b/drivers/gpu/drm/amd/display/dc/hwss/dcn401/dcn401_hwseq.c
+@@ -297,7 +297,6 @@ void dcn401_init_hw(struct dc *dc)
+ 			}
+ 		}
+ 	}
+-
+ 	for (i = 0; i < res_pool->audio_count; i++) {
+ 		struct audio *audio = res_pool->audios[i];
  
 -- 
 2.51.0
