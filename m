@@ -1,44 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 215382147E5;
-	Sat, 14 Feb 2026 01:02:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D0331DE8AE;
+	Sat, 14 Feb 2026 01:02:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771030976; cv=none; b=EIxPdtfCT5QFZ6PAi8JEybUu32zbyJIz5mT8YCwY9So8/vcVomPms74amE2m/gdVO2BeeHRLRQhN44JjdrFnyoS401pcpqq/1dwiF7FwCrrN/XmDVhtfGRU5RdazJiIskDWr+jdCSQt9jvAGCtrlef/m9HHR4mFGzvh1hDAzTiI=
+	t=1771030977; cv=none; b=Z2RBslPnujnIc5nGps2sim/7JAEJkzCs6DMvbWub1123h3hqzMNNPyNd1M7XSkdcNpdg1svKzrz+vwNLrJKe8veuheyqLcpFnTt1yvw6CpQcqneTVhHGJ2Ke83a831be2pD2s0OO5fU1ch11jscCORxUpFo3h+w66/hRfOztmJ0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771030976; c=relaxed/simple;
-	bh=oIIHvMzDxaruZGVQGS9JOy8hDJDQ9lNDinPSU2vCRMQ=;
+	s=arc-20240116; t=1771030977; c=relaxed/simple;
+	bh=J37sxq8pfLFgbWzCtYcfjLaOxT+W9jkKzT/+ehOmyy0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Uc4o5MRXxJVf/bKEj/ykgLhjPjYqTyR9EJ2HfQk5hZbgEVz5CjMT5MN+m8vizuABKWsuPedlJrozVL80XSRsdgzuSSoSKGBq1fy6IWE6ZOi/hAk6uT4h2enCrFqjhXAIiu0h9z51pHG+wcn2MeB3hdugid2jOeWnCFINhUFFDwA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Xlts5PHT; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=c/TFQDV75ZzsyAj+4itMu1JCngtJ/fr+dDQmiocXidbPJohh+83psV8lTUfcHPNAo5ZrmJVDoBHK2P6Umxl3xoEPTtJdae8P9z9pTOjSANFCsq7WIUOKdC3a4yVCYRbLUbCufOEMXZaeMzBe70EmwC3Vl/OrEBQ7XavRQhVhE7E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=NkL5yBGW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Xlts5PHT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE55AC16AAE;
-	Sat, 14 Feb 2026 01:02:54 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="NkL5yBGW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 521C7C116C6;
+	Sat, 14 Feb 2026 01:02:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1771030975;
-	bh=oIIHvMzDxaruZGVQGS9JOy8hDJDQ9lNDinPSU2vCRMQ=;
+	s=k20201202; t=1771030977;
+	bh=J37sxq8pfLFgbWzCtYcfjLaOxT+W9jkKzT/+ehOmyy0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Xlts5PHTF2G5z/3daJ/NaRRR/alhSsd5vEDvrwiD4ECn1sjxUg5Bd0sNM8pvSuooe
-	 sV89fel64r2YR8EANStoivpaekJPmZt4OERRJGsMFyTfJx92gtr7ZJgF+hRSwBzj3O
-	 Uib5Dd2PT1VQEfSh9SFcKr93Vm1Fu9gc93R47S6luHHwaUAcZ3GsvPtnWkI5MM0t2J
-	 oKlauR2V6eL6DFLWLuEVEsiXXJg0MgDUP22cMbuXrzLrBXT6DLaxLqwxEyMDoCFeef
-	 7ob+e9pziFR7eDL7/mzQm4CpeRHW/j4I5445GBbC5lNW/nID4SCWvp90dRSR0G5kYJ
-	 OtURRePS1199g==
+	b=NkL5yBGWc6TK9nHx2hxtMCGxj24z7Nx2oQsm74KUE5oOhf1y7RBu4JQ7Vmylhaf+k
+	 dnOG8L4pIj8Q7WftquaBobZR/0YIlN1+vVXkNXzOa00Uq9Dw1NHF8FWISar1QaKUaE
+	 PPhYP8ngWel42iL3JY93dLL0FhxiiWlgaEp5uWZIdcav8euA2/IyTT6SYC6muemmqi
+	 Napo6EQ9SgX9nWsTYF6LgztR4JCpCXcwaiCx7gScbyyD2oQ1TBgceDWBiB2mqteN8A
+	 w1PrBmQS1YAUZDxgdqz6QRbKZQ2/IouBnlcIxxZ+hRxVHlG8Q3a7Uk6Ykq7EUu6dkt
+	 /eJr0zFNjEh8g==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Brandon Brnich <b-brnich@ti.com>,
-	Nicolas Dufresne <nicolas.dufresne@collabora.com>,
-	Hans Verkuil <hverkuil+cisco@kernel.org>,
+Cc: Jonathan Marek <jonathan@marek.ca>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	nas.chung@chipsnmedia.com,
-	jackson.lee@chipsnmedia.com,
-	linux-media@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.19-6.12] media: chips-media: wave5: Fix conditional in start_streaming
-Date: Fri, 13 Feb 2026 19:58:05 -0500
-Message-ID: <20260214010245.3671907-5-sashal@kernel.org>
+	linux-arm-msm@vger.kernel.org,
+	linux-spi@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.19-6.1] spi-geni-qcom: initialize mode related registers to 0
+Date: Fri, 13 Feb 2026 19:58:06 -0500
+Message-ID: <20260214010245.3671907-6-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260214010245.3671907-1-sashal@kernel.org>
 References: <20260214010245.3671907-1-sashal@kernel.org>
@@ -54,179 +52,211 @@ X-stable-base: Linux 6.19
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Brandon Brnich <b-brnich@ti.com>
+From: Jonathan Marek <jonathan@marek.ca>
 
-[ Upstream commit b4e26c6fc1b3c225caf80d4a95c6f9fcbe959e17 ]
+[ Upstream commit 739062a9f1e9a77a9687c8fd30f8e5dd12ec70be ]
 
-When STREAMON(CAP) is called after STREAMON(OUT), the driver was failing to
-switch states from VPU_INST_STATE_OPEN to VPU_INST_STATE_INIT_SEQ and
-VPU_INST_STATE_PIC_RUN because the capture queue streaming boolean had not
-yet been set to true. This led to a hang in the encoder since the state
-was stuck in VPU_INST_STATE_OPEN. During the second call to
-start_streaming, the sequence initialization and frame buffer allocation
-should occur.
+setup_fifo_params assumes these will be zero, it won't write these
+registers if the initial mode is zero.
 
-Signed-off-by: Brandon Brnich <b-brnich@ti.com>
-Reviewed-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
-Signed-off-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
-Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+Signed-off-by: Jonathan Marek <jonathan@marek.ca>
+Link: https://patch.msgid.link/20251120211204.24078-4-jonathan@marek.ca
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-This confirms the key finding. Now I have all the information needed for
-a comprehensive analysis.
+Now I have a complete understanding of the bug and the fix. Let me
+compile the analysis.
+
+---
 
 ## Detailed Analysis
 
 ### 1. COMMIT MESSAGE ANALYSIS
 
-The subject "Fix conditional in start_streaming" clearly indicates a
-**bug fix**. The commit message explains:
-- **Trigger**: When `STREAMON(CAPTURE)` is called after
-  `STREAMON(OUTPUT)`, the encoder hangs.
-- **Root cause**: The capture queue's `streaming` boolean hasn't been
-  set to `true` yet at the time the condition is checked.
-- **Symptom**: The VPU instance state gets stuck at
-  `VPU_INST_STATE_OPEN`, never advancing to `VPU_INST_STATE_INIT_SEQ` or
-  `VPU_INST_STATE_PIC_RUN`, causing the encoder to **hang**.
+The commit subject "spi-geni-qcom: initialize mode related registers to
+0" is straightforward. The commit body explains: "`setup_fifo_params`
+assumes these will be zero, it won't write these registers if the
+initial mode is zero." This is a clear description of a latent
+initialization bug.
 
-The commit has "Reviewed-by: Nicolas Dufresne" (Collabora engineer,
-active V4L2 contributor) and was merged by Hans Verkuil (the V4L2
-subsystem maintainer), indicating proper review.
+### 2. CODE CHANGE ANALYSIS - The Bug Mechanism
 
-### 2. CODE CHANGE ANALYSIS
+The bug centers on the interaction between two functions in `spi-geni-
+qcom.c`:
 
-The fix is a **one-line conditional change** (technically a 2-line
-reformatting of a single condition):
+**`spi_geni_init()`** (called once during probe at line 1147)
+initializes the GENI SPI controller. In the `case 0:` (FIFO mode) branch
+at lines 724-728, it sets the transfer mode but does NOT initialize the
+SPI mode registers.
 
-**Before:**
-```c
-if (inst->state == VPU_INST_STATE_OPEN &&
-m2m_ctx->cap_q_ctx.q.streaming) {
-```
+**`setup_fifo_params()`** (called for each SPI message at line 593 via
+`spi_geni_prepare_message`) has an optimization at line 405:
 
-**After:**
-```c
-if (inst->state == VPU_INST_STATE_OPEN &&
-    (m2m_ctx->cap_q_ctx.q.streaming || q->type ==
-V4L2_BUF_TYPE_VIDEO_CAPTURE_MPLANE)) {
-```
+```397:431:drivers/spi/spi-geni-qcom.c
+static int setup_fifo_params(struct spi_device *spi_slv,
+                                        struct spi_controller *spi)
+{
+        struct spi_geni_master *mas = spi_controller_get_devdata(spi);
+        struct geni_se *se = &mas->se;
+        u32 loopback_cfg = 0, cpol = 0, cpha = 0, demux_output_inv = 0;
+        u32 demux_sel;
 
-The logic bug is clear and verified by examining `vb2_core_streamon()`:
+        if (mas->last_mode != spi_slv->mode) {
+                // ... only writes registers when mode changes ...
+                writel(loopback_cfg, se->base + SE_SPI_LOOPBACK);
+                writel(demux_sel, se->base + SE_SPI_DEMUX_SEL);
+                writel(cpha, se->base + SE_SPI_CPHA);
+                writel(cpol, se->base + SE_SPI_CPOL);
+                writel(demux_output_inv, se->base +
+SE_SPI_DEMUX_OUTPUT_INV);
 
-```2347:2353:drivers/media/common/videobuf2/videobuf2-core.c
-        if (q->queued_count >= q->min_queued_buffers) {
-                ret = vb2_start_streaming(q);
-                if (ret)
-                        goto unprepare;
+                mas->last_mode = spi_slv->mode;
         }
-
-        q->streaming = 1;
+        // ...
+}
 ```
 
-The `q->streaming = 1` is set **AFTER** the driver's `start_streaming()`
-callback returns. So inside `wave5_vpu_enc_start_streaming()`, when
-called for the capture queue, `m2m_ctx->cap_q_ctx.q.streaming` is still
-`0` because vb2 hasn't set it yet. This means the second `if` block (the
-state transition from OPEN -> INIT_SEQ -> PIC_RUN) is **never entered**
-when streaming is started in the normal OUT-then-CAP order.
+**The critical chain of assumptions:**
 
-The fix adds `q->type == V4L2_BUF_TYPE_VIDEO_CAPTURE_MPLANE` as an
-alternative condition: if we're currently inside `start_streaming` for
-the capture queue, we know that capture streaming is about to become
-active, so proceed with the state transition.
+1. `spi_geni_master` is allocated with `kzalloc` (confirmed in
+   `__spi_alloc_controller` at spi.c line 3056), so `mas->last_mode`
+   starts at **0**.
+2. `SPI_MODE_0` = `(0|0)` = **0** (from `include/uapi/linux/spi/spi.h`
+   line 10). This is the most common SPI mode.
+3. When the first SPI device uses mode 0, `spi_slv->mode` is 0, so
+   `mas->last_mode != spi_slv->mode` is **false** (0 != 0 → false).
+4. **The register writes are skipped entirely** for the first SPI
+   transaction.
+5. This assumes the hardware registers already contain 0.
 
-This is **identical** to how the decoder handles it — the decoder uses
-`q->type == V4L2_BUF_TYPE_VIDEO_CAPTURE_MPLANE` directly (line 1346 of
-wave5-vpu-dec.c) rather than checking the streaming flag.
+**When the assumption breaks:**
 
-### 3. CLASSIFICATION
+- **Bootloader contamination**: If the bootloader used SPI (very common
+  on Qualcomm SoCs for reading from SPI flash/NOR), it may have
+  configured these registers with non-zero values (e.g., CPOL=1, CPHA=1
+  for SPI mode 3, or specific chip select muxing).
+- **Firmware loading path**: The `geni_load_se_firmware()` path (line
+  674-679) loads QUP firmware when `proto == GENI_SE_INVALID_PROTO`.
+  After firmware loading, register state may be undefined.
 
-This is a clear **bug fix** that resolves a **system hang**. The encoder
-gets stuck because its state machine never advances past
-`VPU_INST_STATE_OPEN`. This is not a feature addition, refactoring, or
-optimization.
+**The consequence:**
 
-### 4. SCOPE AND RISK ASSESSMENT
+If hardware registers retain stale non-zero values from the bootloader
+and the first SPI device uses mode 0:
+- **SE_SPI_CPOL** could be set to `BIT(2)` → wrong clock polarity
+- **SE_SPI_CPHA** could be set to `BIT(0)` → wrong clock phase
+- **SE_SPI_LOOPBACK** could be enabled → data loops back instead of
+  going to device
+- **SE_SPI_DEMUX_SEL** could select wrong chip → wrong device addressed
+- **SE_SPI_DEMUX_OUTPUT_INV** could invert CS → chip select logic
+  inverted
 
-- **Lines changed**: 2 lines (one condition modified)
-- **Files touched**: 1 file (`wave5-vpu-enc.c`)
-- **Complexity**: Extremely low — a simple boolean condition expansion
-- **Risk**: Very low. The added condition (`q->type ==
-  V4L2_BUF_TYPE_VIDEO_CAPTURE_MPLANE`) only evaluates to true when
-  `start_streaming` is called for the capture queue, which is precisely
-  when the streaming flag would be about to be set. This is logically
-  sound and matches the decoder's approach.
-- **Regression potential**: Near zero. The fix only adds a case that was
-  previously unreachable (the dead path that caused the hang).
+Any of these would cause **SPI communication failure or data
+corruption**.
 
-### 5. USER IMPACT
+### 3. THE FIX
 
-- **Who is affected**: Any user of the Wave5 VPU encoder (Chips&Media IP
-  used in TI processors and other SoCs)
-- **Severity**: **HIGH** — the encoder **hangs completely**. This isn't
-  a minor issue; the hardware cannot encode video at all when STREAMON
-  is called in the standard OUT-then-CAP order.
-- **Real-world impact**: This affects all V4L2 applications using the
-  standard video encoding flow (which is the normal way to use a V4L2
-  M2M encoder).
+The fix is 5 `writel(0, ...)` calls added to the FIFO mode
+initialization path in `spi_geni_init()`:
 
-### 6. STABILITY INDICATORS
+```c
+writel(0, se->base + SE_SPI_LOOPBACK);
+writel(0, se->base + SE_SPI_DEMUX_SEL);
+writel(0, se->base + SE_SPI_CPHA);
+writel(0, se->base + SE_SPI_CPOL);
+writel(0, se->base + SE_SPI_DEMUX_OUTPUT_INV);
+```
 
-- Reviewed by Nicolas Dufresne (Collabora V4L2 expert)
-- Merged by Hans Verkuil (V4L2 subsystem maintainer)
-- The fix follows the same pattern already used by the decoder
-  (wave5-vpu-dec.c), so it's a well-understood pattern
+This ensures the hardware state matches the software assumption
+(`last_mode = 0`), making `setup_fifo_params()`'s optimization correct.
+
+### 4. CLASSIFICATION
+
+- **Type**: Initialization bug fix (uninitialized hardware register
+  state)
+- **NOT a feature**: No new functionality, just ensuring correct
+  initialization
+- **Category**: Data corruption / device communication failure fix
+
+### 5. SCOPE AND RISK ASSESSMENT
+
+- **Lines changed**: 6 (5 writel + 1 comment)
+- **Files touched**: 1 (`drivers/spi/spi-geni-qcom.c`)
+- **Complexity**: Extremely low - simple register zeroing
+- **Risk of regression**: Near zero. In the common case where registers
+  are already 0, the writel calls are a harmless no-op. In the bug case,
+  they fix incorrect register values.
+- **Self-contained**: Yes - all register defines (`SE_SPI_LOOPBACK`,
+  etc.) and the `spi_geni_init()` function exist in all stable trees
+  that have this driver.
+
+### 6. USER IMPACT
+
+- **Qualcomm GENI SPI** is used on many Qualcomm SoCs (SDM845, SM8150,
+  SM8250, SC7180, SC7280, SM8350, SM8450, X1E80100, etc.)
+- These SoCs power phones, laptops (Qualcomm-based Chromebooks, Windows
+  on ARM devices), IoT, and embedded systems
+- SPI is used for touchscreen controllers, sensor hubs, TPM modules, and
+  other critical peripherals
+- If SPI communication fails, the affected device simply doesn't work
 
 ### 7. DEPENDENCY CHECK
 
-- **Self-contained**: Yes. The fix modifies a single condition with no
-  dependencies on other commits.
-- **Exists in stable**: The driver was added in v6.8 via commit
-  `9707a6254a8a6`. It exists in stable trees 6.8.y through 6.18.y (plus
-  the active LTS tree 6.12.y).
-- **The bug has existed since the driver was added** (commit
-  `9707a6254a8a6`), meaning all stable trees with this driver have the
-  bug.
-- **Clean apply**: The surrounding code is essentially identical in
-  6.12.y, 6.15.y, and 6.16.y (minor differences in pm_runtime calls that
-  don't affect the patch context).
+The patch is **entirely self-contained**. It uses:
+- `se->base` - available since the driver was created
+- `SE_SPI_LOOPBACK`, `SE_SPI_DEMUX_SEL`, `SE_SPI_CPHA`, `SE_SPI_CPOL`,
+  `SE_SPI_DEMUX_OUTPUT_INV` - all defined in the same file since
+  original driver creation
+- `writel()` - standard kernel API
 
-### 8. SUMMARY
+The patch was "4/N" in a series (from the Link URL), but this specific
+change is independent. It does not depend on any prior patch in the
+series - it simply adds register zeroing to an existing function.
 
-This is a textbook stable backport candidate:
-- **Fixes a real, user-visible bug**: encoder hangs completely
-- **Small, surgical fix**: 2-line conditional change in one file
-- **Obviously correct**: matches the decoder's existing pattern,
-  reviewed by V4L2 experts
-- **No new features**: just fixes the broken state machine transition
-- **Low regression risk**: only enables a previously dead code path that
-  was always supposed to be reachable
-- **Affects real users**: anyone using the Wave5 encoder for video
-  encoding on TI SoCs
-- **Self-contained**: no dependencies on other commits
+### 8. STABILITY INDICATORS
+
+- Merged by Mark Brown (SPI subsystem maintainer) with `Signed-off-by`
+- The fix is logically obvious and defensive
+- The pattern (writing 0 to ensure known state during init) is standard
+  practice throughout the kernel
+
+### CONCLUSION
+
+This commit fixes a real initialization bug where SPI mode-related
+hardware registers may retain stale non-zero values from
+bootloader/firmware, causing the driver's `setup_fifo_params()`
+optimization to incorrectly skip the first register write when the SPI
+device uses mode 0 (the most common mode). The consequence is SPI
+communication failure or data corruption. The fix is a trivial 5-line
+addition of register zeroing during init, with essentially zero
+regression risk, affecting a widely-deployed Qualcomm SPI driver. It is
+self-contained with no dependencies and applies cleanly to stable trees.
 
 **YES**
 
- drivers/media/platform/chips-media/wave5/wave5-vpu-enc.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/spi/spi-geni-qcom.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/drivers/media/platform/chips-media/wave5/wave5-vpu-enc.c b/drivers/media/platform/chips-media/wave5/wave5-vpu-enc.c
-index 9bfaa9fb3ceb3..bca881a0a1617 100644
---- a/drivers/media/platform/chips-media/wave5/wave5-vpu-enc.c
-+++ b/drivers/media/platform/chips-media/wave5/wave5-vpu-enc.c
-@@ -1367,7 +1367,8 @@ static int wave5_vpu_enc_start_streaming(struct vb2_queue *q, unsigned int count
- 		if (ret)
- 			goto return_buffers;
+diff --git a/drivers/spi/spi-geni-qcom.c b/drivers/spi/spi-geni-qcom.c
+index a0d8d3425c6c6..9e9953469b3a0 100644
+--- a/drivers/spi/spi-geni-qcom.c
++++ b/drivers/spi/spi-geni-qcom.c
+@@ -724,6 +724,12 @@ static int spi_geni_init(struct spi_geni_master *mas)
+ 	case 0:
+ 		mas->cur_xfer_mode = GENI_SE_FIFO;
+ 		geni_se_select_mode(se, GENI_SE_FIFO);
++		/* setup_fifo_params assumes that these registers start with a zero value */
++		writel(0, se->base + SE_SPI_LOOPBACK);
++		writel(0, se->base + SE_SPI_DEMUX_SEL);
++		writel(0, se->base + SE_SPI_CPHA);
++		writel(0, se->base + SE_SPI_CPOL);
++		writel(0, se->base + SE_SPI_DEMUX_OUTPUT_INV);
+ 		ret = 0;
+ 		break;
  	}
--	if (inst->state == VPU_INST_STATE_OPEN && m2m_ctx->cap_q_ctx.q.streaming) {
-+	if (inst->state == VPU_INST_STATE_OPEN &&
-+	    (m2m_ctx->cap_q_ctx.q.streaming || q->type == V4L2_BUF_TYPE_VIDEO_CAPTURE_MPLANE)) {
- 		ret = initialize_sequence(inst);
- 		if (ret) {
- 			dev_warn(inst->dev->dev, "Sequence not found: %d\n", ret);
 -- 
 2.51.0
 
