@@ -1,48 +1,47 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD4DA221FB6;
-	Sat, 14 Feb 2026 01:07:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7836D1E5B63;
+	Sat, 14 Feb 2026 01:07:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771031252; cv=none; b=ZtC44cOfVd9uD5cB+H+xgn/dd2+nGGSq/v/J4TH4hm22LMYfrr2Dl+2yhqfI3XuhSZZNCgzP80VWE8NaN5KDzIXYnsx0zNTB2MdiVYVqOL2BXYitl/kKq6prYBx/m+U8Tnk4iz4eRtuiaCY8QSzKJAruHGEymMH1EimQNWiCYuY=
+	t=1771031254; cv=none; b=VFLgmfzttbswdOA1QC5pc+Tpcg/abezB58FcJjEYQlMEsCPCbyKBuIxtbZHuT+rA1kz1VzyYxWq8FJfftsrwWEg2hwgs5yhlQt3xECP9x5lgpblYxdl+LWMrsf+pOLnF/6hd5Fekj9fqyLdRcRiRMm5lzZS9ZNnIPMrAhnoFDn8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771031252; c=relaxed/simple;
-	bh=dpGPNahTjb+M+DM+/ryym8oCDrMo4Pp7gVQxUK/c2Q4=;
+	s=arc-20240116; t=1771031254; c=relaxed/simple;
+	bh=AOhoK7iaQfSvFBn6Bfj98kL+WvUmkWg8zJklNjmc44Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=ZxpparEXMfOgnY6tV0Yzg16IlTBsLDERH10Jk0QU3Wp0cxTr7CwHv3Bu1m4J+ljUkdQ6OTXtZT2VBUzlpUmXuKzGe+x3+U2H/qrY3dKQzBwNh29rIsVtOmfD6wBq88i0Q9Ji0HgrnSYcW0aFfS/JOhALFPt82b/CY2Q6j/SQDr4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=BKmbdAFJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=oV6WlVy2iKCt4SmiiU3pEaq2t6aM4XwApfI1+g9S6TnMPrC3O5IGpmWbkJkKGLNXlFHFP0L3R9QZSEPB1cfOxgYck2tsGMeVK4WFyoMz7YFg2ym2IDOghdUJYCnRtA5tDE2NHlIZra1zLYuvvzv5Acnd4ksv/+te3wFsQ/BFTBA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=rTSGFlUH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="BKmbdAFJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 76F05C116C6;
-	Sat, 14 Feb 2026 01:07:31 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="rTSGFlUH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2FB41C16AAE;
+	Sat, 14 Feb 2026 01:07:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1771031252;
-	bh=dpGPNahTjb+M+DM+/ryym8oCDrMo4Pp7gVQxUK/c2Q4=;
+	s=k20201202; t=1771031254;
+	bh=AOhoK7iaQfSvFBn6Bfj98kL+WvUmkWg8zJklNjmc44Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BKmbdAFJGRGZbekahml6mKTGcm5BdH+qpuaEN8Zb1v9a/ggivy4Inqf0I11gsjCeX
-	 cP6ml2Z6wtDd6bV7XV/ujImNXDvbv9t2FjeCt7Ze2+RfFHhtzIkQ+2wV626FYO4ILt
-	 ohvPRGNBRlwX7khCcL0DkyYW0fRgKRfHPaV4wvywJm8ru3QaKz9gZ0H9pY/GN5+4c6
-	 +Rciwnf+s/IbPBjabJt6QyaI+LV5UU+7vd1QNhGNrK4z4r07HdusKvURyWylqbwuLx
-	 jJjmPnnn2Zdq0NvcaMbURivvQwm867GDmhdQFFZm5EDktGMO//Nuc9fEoJLEXvlPJ4
-	 vpSdGAYHUqh5g==
+	b=rTSGFlUHO7aysFGIXp3gp93nKV5Vz/UYi2M/nKEVwHhI/SeUKhKTODmsX0ZYmaoV7
+	 M6Fbn0HJraaByjgDS7WaAJRyiIbp9fk0hAR4EH79e3tJ/icis2NudwMJy3+gYy1Hd8
+	 i6lwheJsrhmL2fdgkBMnZKCXX+KyKDr3pc/EPQY85ReRZLE03TpQYiU+mR4evSPKt/
+	 iXj322sHsKvxNAUn+/8ZPLYBDr3g8CFIlaif1xT/xL5gxkqw2xLSncox5LkYpo1fga
+	 oP0nXjtlUAiub8ixd/sVxGDp6AFAqFvdZV21L4CZAZUpJKHMY5kyoLi8bNMCQa0iS6
+	 7vo2MkSGag8vA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Sebastian Krzyszkowiak <sebastian.krzyszkowiak@puri.sm>,
-	Charles Keepax <ckeepax@opensource.cirrus.com>,
+Cc: Chen Ni <nichen@iscas.ac.cn>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	kuninori.morimoto.gx@renesas.com,
-	neil.armstrong@linaro.org,
-	brgl@kernel.org,
-	shengjiu.wang@nxp.com,
-	tiwai@suse.de,
-	yelangyan@huaqin.corp-partner.google.com,
-	patches@opensource.cirrus.com
-Subject: [PATCH AUTOSEL 6.19-5.10] ASoC: wm8962: Don't report a microphone if it's shorted to ground on plug
-Date: Fri, 13 Feb 2026 20:00:01 -0500
-Message-ID: <20260214010245.3671907-121-sashal@kernel.org>
+	fengzheng923@gmail.com,
+	wens@kernel.org,
+	jernej.skrabec@gmail.com,
+	samuel@sholland.org,
+	linux-sound@vger.kernel.org,
+	linux-arm-kernel@lists.infradead.org,
+	linux-sunxi@lists.linux.dev
+Subject: [PATCH AUTOSEL 6.19-6.1] ASoC: sunxi: sun50i-dmic: Add missing check for devm_regmap_init_mmio
+Date: Fri, 13 Feb 2026 20:00:02 -0500
+Message-ID: <20260214010245.3671907-122-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260214010245.3671907-1-sashal@kernel.org>
 References: <20260214010245.3671907-1-sashal@kernel.org>
@@ -55,165 +54,120 @@ MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.19
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Sebastian Krzyszkowiak <sebastian.krzyszkowiak@puri.sm>
+From: Chen Ni <nichen@iscas.ac.cn>
 
-[ Upstream commit e590752119029d87ce46d725e11245a52d22e1fe ]
+[ Upstream commit 74823db9ba2e13f3ec007b354759b3d8125e462c ]
 
-This usually means that a TRS plug with no microphone pin has been plugged
-into a TRRS socket. Cases where a user is plugging in a microphone while
-pressing a button will be handled via incoming interrupt after the user
-releases the button, so the microphone will still be detected once it
-becomes usable.
+Add check for the return value of devm_regmap_init_mmio() and return the
+error if it fails in order to catch the error.
 
-Signed-off-by: Sebastian Krzyszkowiak <sebastian.krzyszkowiak@puri.sm>
-Reviewed-by: Charles Keepax <ckeepax@opensource.cirrus.com>
-Link: https://patch.msgid.link/20260105-wm8962-l5-fixes-v1-3-f4f4eeacf089@puri.sm
+Signed-off-by: Chen Ni <nichen@iscas.ac.cn>
+Link: https://patch.msgid.link/20260127033250.2044608-1-nichen@iscas.ac.cn
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-## Analysis of ASoC: wm8962: Don't report a microphone if it's shorted
-to ground on plug
+## Analysis
 
-### 1. Commit Message Analysis
+### Commit Message Analysis
 
-The commit addresses a hardware detection issue with the WM8962 audio
-codec. When a TRS (3-pin) plug is inserted into a TRRS (4-pin) socket,
-the microphone pin gets shorted to ground. The codec's mic detection
-circuitry sees both `MICDET_STS` (microphone detected) and
-`MICSHORT_STS` (microphone shorted) simultaneously, leading to an
-incorrect report that a microphone is present along with a button press.
+The commit adds a missing error check for `devm_regmap_init_mmio()` in
+the sun50i-dmic audio driver's probe function. The message is
+straightforward - it's adding a return value check that was missing.
 
-The fix: if a short is detected immediately at plug-in time (before any
-microphone was previously detected), don't report a microphone. If the
-user later releases the button (if it really was a microphone + button
-press), an interrupt will fire and correct the state.
+### Code Change Analysis
 
-### 2. Code Change Analysis
+The change is a 3-line addition:
+```c
+if (IS_ERR(host->regmap))
+    return dev_err_probe(&pdev->dev, PTR_ERR(host->regmap),
+                         "failed to initialise regmap\n");
+```
 
-The change is small and well-contained:
+This is inserted right after `devm_regmap_init_mmio()` returns into
+`host->regmap`. Without this check, if `devm_regmap_init_mmio()` fails,
+`host->regmap` will contain an ERR_PTR value. The driver then continues
+execution and eventually uses this regmap pointer in subsequent
+operations (regmap reads/writes), which would cause a NULL pointer
+dereference or other crash since the ERR_PTR would be interpreted as a
+valid pointer.
 
-1. **New field `mic_status`** added to `struct wm8962_priv` — tracks the
-   previous microphone detection status.
+### Bug Mechanism
 
-2. **Logic change in `wm8962_mic_work()`**:
-   - When `MICSHORT_STS` is set (short detected), it checks if
-     `mic_status` previously had `MICDET_STS` set.
-   - If no microphone was previously detected (`!(wm8962->mic_status &
-     WM8962_MICDET_STS)`), it sets `status = 0` — suppressing the false
-     microphone + button report.
-   - After the check, `wm8962->mic_status` is updated with the current
-     status.
+If `devm_regmap_init_mmio()` fails (e.g., memory allocation failure
+inside regmap), the error pointer gets stored in `host->regmap`. Later,
+when the driver tries to use regmap APIs with this invalid pointer, it
+will crash. This is a real bug - a missing error check that leads to use
+of an error pointer as a valid pointer.
 
-This is a **hardware quirk/workaround** — it handles a real-world
-scenario where TRS plugs in TRRS sockets cause false microphone
-detection.
+### Severity Assessment
 
-### 3. Classification
+- **Trigger**: `devm_regmap_init_mmio()` would need to fail, which is
+  uncommon but possible (memory pressure, internal regmap errors)
+- **Consequence**: Kernel crash/oops when the invalid regmap pointer is
+  subsequently used
+- **Likelihood**: Low probability but non-zero, especially under memory
+  pressure
 
-This is a **bug fix for incorrect hardware detection behavior**. It
-falls into the category of hardware quirks/workarounds, which are
-explicitly allowed in stable trees. The fix prevents:
-- False microphone detection when using headphones without a mic
-- False button press events on plug insertion
-- User-visible incorrect audio routing (system thinks a mic is present
-  when it isn't)
+### Stable Kernel Criteria
 
-### 4. Scope and Risk Assessment
+1. **Obviously correct and tested**: Yes - this follows the exact same
+   pattern as all surrounding error checks in the same function. It's a
+   textbook missing error check fix.
+2. **Fixes a real bug**: Yes - missing error check on a function that
+   can fail, leading to use of an ERR_PTR as a valid pointer.
+3. **Important issue**: Moderate - it's a potential NULL deref/crash,
+   though the trigger condition is uncommon.
+4. **Small and contained**: Yes - 3 lines added, single file, no
+   behavioral change on success path.
+5. **No new features**: Correct - purely defensive error checking.
+6. **Applies cleanly**: The change is self-contained with no
+   dependencies.
 
-- **Lines changed**: ~12 lines of logic + 1 new struct field = very
-  small
-- **Files touched**: 1 file (`sound/soc/codecs/wm8962.c`)
-- **Complexity**: Low — straightforward state tracking
-- **Risk**: Very low. The change only affects the mic detection path.
-  The `mic_status` field is zero-initialized (struct is kzalloc'd), so
-  on first plug-in, if both MICDET and MICSHORT are set simultaneously,
-  it correctly suppresses the false report. The subsequent interrupt
-  when the short clears will correctly detect the microphone if one is
-  actually present.
+### Risk Assessment
 
-### 5. User Impact
+- **Risk**: Extremely low. The change only affects the error path. On
+  the success path, behavior is identical.
+- **Benefit**: Prevents a kernel crash if regmap initialization fails.
+- **Pattern**: This is a very common type of stable fix - adding missing
+  error checks in driver probe functions.
 
-- **Who is affected**: Users with WM8962 codec hardware (common in
-  embedded/mobile devices, including Purism Librem 5 based on the
-  author's email domain)
-- **Severity**: Medium — incorrect jack detection leads to wrong audio
-  routing, which is a real user-facing issue
-- **Reproducibility**: Easily reproducible by plugging TRS headphones
-  into a TRRS jack
+### Concerns
 
-### 6. Stability Indicators
+This is a fairly minor fix for an uncommon failure path in a specific
+ARM SoC audio driver. The user base is limited to Allwinner sun50i
+platforms. However, the fix is trivially correct, has zero risk of
+regression, and prevents a real (if unlikely) crash.
 
-- **Reviewed-by**: Charles Keepax (Cirrus Logic engineer, the codec
-  manufacturer's developer) — strong domain expertise review
-- **Applied by**: Mark Brown (ASoC maintainer) — subsystem maintainer
-  accepted it
-- The fix is logically sound and handles edge cases (subsequent
-  interrupt for real mic+button)
+### Decision
 
-### 7. Dependency Check
-
-The change is self-contained. It only adds a new field to the private
-data structure and modifies the mic detection work function. No
-dependencies on other commits. The WM8962 driver has existed in stable
-trees for many years.
-
-### 8. Risk vs Benefit
-
-- **Benefit**: Fixes incorrect microphone/button detection for TRS plugs
-  in TRRS sockets — a common real-world scenario
-- **Risk**: Minimal — small, localized change with expert review. The
-  worst case if the logic were somehow wrong would be a missed initial
-  microphone detection, which would self-correct on the next interrupt.
-
-### Conclusion
-
-This is a small, well-reviewed hardware quirk fix for incorrect jack
-detection behavior in the WM8962 audio codec. It fixes a real user-
-facing issue (false microphone detection with TRS headphones), is self-
-contained, has been reviewed by the codec manufacturer's engineer, and
-carries minimal regression risk. It meets all stable kernel criteria.
+The fix is small, obviously correct, follows existing patterns in the
+same function, prevents a potential crash from using an ERR_PTR, and has
+essentially zero regression risk. It meets all stable kernel criteria.
 
 **YES**
 
- sound/soc/codecs/wm8962.c | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+ sound/soc/sunxi/sun50i-dmic.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/sound/soc/codecs/wm8962.c b/sound/soc/codecs/wm8962.c
-index 1040740fc80f8..bff8644674163 100644
---- a/sound/soc/codecs/wm8962.c
-+++ b/sound/soc/codecs/wm8962.c
-@@ -67,6 +67,8 @@ struct wm8962_priv {
- 	struct mutex dsp2_ena_lock;
- 	u16 dsp2_ena;
+diff --git a/sound/soc/sunxi/sun50i-dmic.c b/sound/soc/sunxi/sun50i-dmic.c
+index bab1e29c99887..eddfebe166169 100644
+--- a/sound/soc/sunxi/sun50i-dmic.c
++++ b/sound/soc/sunxi/sun50i-dmic.c
+@@ -358,6 +358,9 @@ static int sun50i_dmic_probe(struct platform_device *pdev)
  
-+	int mic_status;
-+
- 	struct delayed_work mic_work;
- 	struct snd_soc_jack *jack;
+ 	host->regmap = devm_regmap_init_mmio(&pdev->dev, base,
+ 					     &sun50i_dmic_regmap_config);
++	if (IS_ERR(host->regmap))
++		return dev_err_probe(&pdev->dev, PTR_ERR(host->regmap),
++				     "failed to initialise regmap\n");
  
-@@ -3081,8 +3083,16 @@ static void wm8962_mic_work(struct work_struct *work)
- 	if (reg & WM8962_MICSHORT_STS) {
- 		status |= SND_JACK_BTN_0;
- 		irq_pol |= WM8962_MICSCD_IRQ_POL;
-+
-+		/* Don't report a microphone if it's shorted right after
-+		 * plugging in, as this may be a TRS plug in a TRRS socket.
-+		 */
-+		if (!(wm8962->mic_status & WM8962_MICDET_STS))
-+			status = 0;
- 	}
- 
-+	wm8962->mic_status = status;
-+
- 	snd_soc_jack_report(wm8962->jack, status,
- 			    SND_JACK_MICROPHONE | SND_JACK_BTN_0);
- 
+ 	/* Clocks */
+ 	host->bus_clk = devm_clk_get(&pdev->dev, "bus");
 -- 
 2.51.0
 
