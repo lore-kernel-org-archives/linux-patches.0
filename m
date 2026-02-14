@@ -1,46 +1,48 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 620E617B506;
-	Sat, 14 Feb 2026 01:04:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54224194098;
+	Sat, 14 Feb 2026 01:04:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771031058; cv=none; b=EHgJQe6uWvK41TNMjRIeXhx5Oym+4Y8JIWU0d3xYxxm9LevaDRDMtuVofGZ65E87u+oCsSccx0SoOOqa83gwiuJvNTAd9pEMI2GYWQAWqUhVbuDT7qkOfh8mEZVKwOR3Vdhc3Th7CQQY3hYDnWSHkiG7+qCkp9F7bLk528zSVBI=
+	t=1771031060; cv=none; b=nWsyF9mTldxC+ZejkJhm9p2ceHS5R4v8pvT9Rjwhk8gIWJEKrGP+hqx0/gdOIsqPZVJ8GPmxz0AuwWe0HgmBcJAA7ogkjNj5OF5nMeTEPqGdXW8j6nKpf6Q5YhKLcqnu/8vo/O+YkUdOI69lvZZEu6qIUOnuO8XOB+7svZ2RnPM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771031058; c=relaxed/simple;
-	bh=8+SbarDVbRZxOg/pWYIHay+wdz+dAk1f4lkH7xgnv24=;
+	s=arc-20240116; t=1771031060; c=relaxed/simple;
+	bh=GiusAiiS+GPxOFmE3BRGJnNd58WMBNvMSuk6l3z+MTA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=a4oPFppprb7g8ZytQGpeo8dDcZYmphgDTBpJvVlMLtGS4vlcfJbSXHkeUnbSVbd+taFUozBSOSfwRTsZfZp7nUdrWjbt0bRU07AA6mFytgrrx9PKwOzF1RmPTdhXIFZCNQcFR7e+O9RGrut5oDtYMHWCz4xf6l8nXeH2uEs98As=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=LZLRr9vl; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YKGG7Dwgs+qEOhFSYOC4lKvkFUiqZxCyWSeI6TrYtKsbDROMhq+vKCmIW8d9EfP1dPTeQPF8XOL5G4SAxza35Ki22YM5pfI2F14TUQXqWrUn2+4q0XT4VJaBQ5nO+FvoUC7WxIzSPYb2jBMW8llDb434i8B2uwL9OHLGTsqR2xE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=gS6IKkCn; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="LZLRr9vl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31C36C116C6;
-	Sat, 14 Feb 2026 01:04:17 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="gS6IKkCn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B5881C116C6;
+	Sat, 14 Feb 2026 01:04:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1771031058;
-	bh=8+SbarDVbRZxOg/pWYIHay+wdz+dAk1f4lkH7xgnv24=;
+	s=k20201202; t=1771031060;
+	bh=GiusAiiS+GPxOFmE3BRGJnNd58WMBNvMSuk6l3z+MTA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LZLRr9vlc1AKJJac4JCRDaM7ZWMR9lOYo88KEbfKQ1Da1FjK4VDCJ4GAdm26WN7qe
-	 vq0HTUN7owD6k7QxpGK42FTdWTgQd+EXlAjFRSbRlRxnJBPGtKKY2WLgIAJf1jptIz
-	 +VYR/z8GTPBR+dUALtDQ78gYMZ9pPsqdWqRvlUF8GVpXx9TrnOxiOG93MpQeO0VeWx
-	 APwtihaFaQc4Imd2hLvK2nrNlRhMHkkC9WIEoGw8t/74RW+xcuTWT7P2tBPt8Sgk/U
-	 VCqZ3e1vFpFvGQcYDwMZd8H6QrOLMuDwLQNOb4PlsOa3wv65mmhVQ0xtABwrduESPt
-	 XsUvI1q4RCAnw==
+	b=gS6IKkCnl9sPMDvptb5+vbL7DFL0clPBuMXwQWCKeCp0Vy4eIqyR2GUnCwY02u+nx
+	 RvCYzLbS+ay4gGXiJ/SLHem3CW2QmiIhaOO21kjSY4LVX7XM5Ltah22A51QvSG8K2F
+	 GEhWbj71z5pcOSvWQihgXENLsejYEyXOuVrsn8SpP2kYYgYNdrbUNfiVWqYRR+OxVE
+	 C4WX1Hx+1gM6O9h6BRrxjtY37AGE/7SOKpg4bSCCxubTBMxNv+vDkhVD5n13y0j4HJ
+	 07ii/GT7kVW7LWRC9stjHlavQLZC85lccEt1KzStE1yt33gAyFsXEdG7+1wI2+s6Bv
+	 uN7kppHrzpN5w==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>,
-	Kai Vehmanen <kai.vehmanen@linux.intel.com>,
-	Liam Girdwood <liam.r.girdwood@intel.com>,
-	Ranjani Sridharan <ranjani.sridharan@linux.intel.com>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	Takashi Iwai <tiwai@suse.de>,
-	Mark Brown <broonie@kernel.org>,
+Cc: Rui Wang <rui.wang@ideasonboard.com>,
+	Stefan Klug <stefan.klug@ideasonboard.com>,
+	Kieran Bingham <kieran.bingham@ideasonboard.com>,
+	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
+	Hans Verkuil <hverkuil+cisco@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	linux-pci@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.19-6.12] PCI: Add Intel Nova Lake audio Device ID
-Date: Fri, 13 Feb 2026 19:58:43 -0500
-Message-ID: <20260214010245.3671907-43-sashal@kernel.org>
+	dafna@fastmail.com,
+	heiko@sntech.de,
+	linux-media@vger.kernel.org,
+	linux-rockchip@lists.infradead.org,
+	linux-arm-kernel@lists.infradead.org
+Subject: [PATCH AUTOSEL 6.19-6.1] media: rkisp1: Fix filter mode register configuration
+Date: Fri, 13 Feb 2026 19:58:44 -0500
+Message-ID: <20260214010245.3671907-44-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260214010245.3671907-1-sashal@kernel.org>
 References: <20260214010245.3671907-1-sashal@kernel.org>
@@ -53,132 +55,158 @@ MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.19
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
+From: Rui Wang <rui.wang@ideasonboard.com>
 
-[ Upstream commit b190870e0e0cfb375c0d4da02761c32083f3644d ]
+[ Upstream commit 5a50f2b61104d0d351b59ec179f67abab7870453 ]
 
-Add Nova Lake (NVL) audio Device ID
+The rkisp1_flt_config() function performs an initial direct write to
+RKISP1_CIF_ISP_FILT_MODE without including the RKISP1_CIF_ISP_FLT_ENA
+bit, which clears the filter enable bit in the hardware.
 
-The ID will be used by HDA legacy, SOF audio stack and the driver
-to determine which audio stack should be used (intel-dsp-config).
+The subsequent read/modify/write sequence then reads back the register
+with the enable bit already cleared and cannot restore it, resulting in
+the filter being inadvertently disabled.
 
-Signed-off-by: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
-Reviewed-by: Kai Vehmanen <kai.vehmanen@linux.intel.com>
-Reviewed-by: Liam Girdwood <liam.r.girdwood@intel.com>
-Reviewed-by: Ranjani Sridharan <ranjani.sridharan@linux.intel.com>
-Acked-by: Bjorn Helgaas <bhelgaas@google.com>
-Acked-by: Takashi Iwai <tiwai@suse.de>
-Link: https://patch.msgid.link/20260120193507.14019-2-peter.ujfalusi@linux.intel.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Remove the redundant direct write. The read/modify/write sequence alone
+correctly preserves the existing enable bit state while updating the
+DNR mode and filter configuration bits.
+
+Signed-off-by: Rui Wang <rui.wang@ideasonboard.com>
+Reviewed-by: Stefan Klug <stefan.klug@ideasonboard.com>
+Reviewed-by: Kieran Bingham <kieran.bingham@ideasonboard.com>
+Reviewed-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+Link: https://patch.msgid.link/20260105171142.147792-2-rui.wang@ideasonboard.com
+Signed-off-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-## Analysis: PCI: Add Intel Nova Lake audio Device ID
+## Analysis
 
 ### Commit Message Analysis
 
-This commit adds a single PCI Device ID (`0xd328`) for Intel Nova Lake
-(NVL) audio hardware to `include/linux/pci_ids.h`. The commit message
-clearly states the ID will be used by HDA legacy, SOF audio stack, and
-the intel-dsp-config driver to determine which audio stack should be
-used.
+The commit message clearly describes a **bug fix**: the
+`rkisp1_flt_config()` function performs an initial direct write to the
+`RKISP1_CIF_ISP_FILT_MODE` register that **clears the filter enable
+bit** (`RKISP1_CIF_ISP_FLT_ENA`). The subsequent read/modify/write
+sequence reads back the register with the enable bit already cleared and
+cannot restore it. This results in the **ISP filter being inadvertently
+disabled** whenever its configuration is updated.
 
-The commit has strong review coverage:
-- Reviewed-by from 3 Intel audio engineers (Kai Vehmanen, Liam Girdwood,
-  Ranjani Sridharan)
-- Acked-by from the PCI maintainer (Bjorn Helgaas)
-- Acked-by from the ALSA maintainer (Takashi Iwai)
+The fix removes the redundant direct write, leaving only the
+read/modify/write sequence that correctly preserves the enable bit.
 
 ### Code Change Analysis
 
-The change is a single line addition in `include/linux/pci_ids.h`:
+The diff is straightforward:
 
+**Removed code (the bug):**
 ```c
-+#define PCI_DEVICE_ID_INTEL_HDA_NVL    0xd328
+rkisp1_write(params->rkisp1, RKISP1_CIF_ISP_FILT_MODE,
+     (arg->mode ? RKISP1_CIF_ISP_FLT_MODE_DNR : 0) |
+     RKISP1_CIF_ISP_FLT_CHROMA_V_MODE(arg->chr_v_mode) |
+     RKISP1_CIF_ISP_FLT_CHROMA_H_MODE(arg->chr_h_mode) |
+     RKISP1_CIF_ISP_FLT_GREEN_STAGE1(arg->grn_stage1));
 ```
 
-This is purely a PCI ID definition — a `#define` macro. It adds no
-logic, no new functions, no behavioral changes. It simply defines a
-constant that other code (HDA driver, SOF driver, intel-dsp-config) can
-reference.
+This write sets the mode register but does **not** include the
+`RKISP1_CIF_ISP_FLT_ENA` bit, effectively disabling the filter in
+hardware.
 
-### Classification: New Device ID
+**Preserved code (the correct path):**
+```c
+filt_mode = rkisp1_read(params->rkisp1, RKISP1_CIF_ISP_FILT_MODE);
+filt_mode &= RKISP1_CIF_ISP_FLT_ENA;
+// ... build up new mode value preserving enable bit ...
+rkisp1_write(params->rkisp1, RKISP1_CIF_ISP_FILT_MODE, filt_mode);
+```
 
-This falls squarely into the **"New Device IDs"** exception category for
-stable backports:
-- It's a trivial one-line addition defining a PCI Device ID
-- It enables hardware support for Intel Nova Lake audio
-- The drivers that consume this ID (HDA, SOF, intel-dsp-config) already
-  exist in stable trees
+The read/modify/write sequence correctly reads the current register
+value, preserves only the enable bit, then OR's in the new
+configuration. But because the direct write above already cleared the
+enable bit, reading it back gets a 0 for the enable bit - defeating the
+entire purpose of the read/modify/write pattern.
 
-### Important Caveat: Dependency Check
+### Bug Mechanism
 
-However, there's a critical consideration: **this commit only adds the
-PCI ID definition**. By itself, this `#define` does nothing — it's just
-a constant. For Nova Lake audio to actually work, the drivers that
-reference `PCI_DEVICE_ID_INTEL_HDA_NVL` must also be updated with their
-own patches to add this ID to their device tables and configuration
-logic.
+1. Filter is enabled (FLT_ENA bit = 1 in hardware register)
+2. User updates filter configuration parameters
+3. `rkisp1_flt_config()` is called
+4. Direct write clears FLT_ENA bit (writes mode without enable)
+5. Read/modify/write reads back register with FLT_ENA = 0
+6. Final write does not have FLT_ENA set
+7. **Filter is now disabled** even though user only wanted to change
+   configuration
 
-The commit message says "The ID will be used by HDA legacy, SOF audio
-stack and the driver to determine which audio stack should be used
-(intel-dsp-config)." The subject line includes "2-" in the Link URL
-(`14019-2-peter.ujfalusi@linux.intel.com`), suggesting this is part of a
-series.
+This is a real functional bug that affects image processing quality on
+Rockchip platforms using the ISP (Image Signal Processor).
 
-Without the companion patches that actually use this define in the
-driver match tables, this define alone provides no user-visible benefit.
-However:
+### Scope and Risk
 
-1. The define itself is completely harmless — zero risk of regression
-2. It's a prerequisite for the actual driver patches
-3. PCI ID defines are commonly backported as part of hardware enablement
+- **Size**: Removal of 5 lines of code. Extremely small and surgical.
+- **Files**: Single file change (`rkisp1-params.c`)
+- **Risk**: Very low. The removed code is entirely redundant - the
+  read/modify/write sequence that follows does everything the direct
+  write did, plus correctly preserves the enable bit. Removing the
+  direct write can only improve behavior.
+- **Subsystem**: Media/camera driver for Rockchip ISP - well-defined
+  scope, won't affect other subsystems.
 
-### Risk Assessment
+### Review Quality
 
-- **Risk**: Essentially zero. It's a `#define` in a header file. It
-  cannot cause any regression.
-- **Benefit**: Enables Intel Nova Lake audio hardware support (when
-  companion driver patches are also present)
-- **Scope**: Single line, single file
+The commit has been reviewed by three experienced media subsystem
+developers:
+- Stefan Klug (Reviewed-by)
+- Kieran Bingham (Reviewed-by)
+- Laurent Pinchart (Reviewed-by, also signed off as maintainer)
+
+Merged by Hans Verkuil, the V4L2 subsystem maintainer.
 
 ### User Impact
 
-Users with Intel Nova Lake hardware need this ID (and the companion
-driver patches) for audio to work. Without it, audio on Nova Lake
-platforms would be non-functional.
+This bug affects anyone using the Rockchip ISP filter (noise reduction,
+sharpening) on platforms like RK3399 and similar SoCs. When the filter
+configuration is updated, the filter gets inadvertently disabled,
+leading to degraded image quality. This is particularly relevant for
+embedded systems and cameras that use stable kernels.
 
-### Conclusion
+### Stable Criteria Assessment
 
-This is a textbook example of a new device ID addition — one of the
-explicitly allowed exceptions for stable backporting. It's a single-
-line, zero-risk change that enables hardware support. The only
-consideration is that it needs companion patches in the actual drivers
-to be useful, but the define itself is harmless and is a standard
-prerequisite.
+- **Obviously correct**: Yes - removing a redundant write that defeats
+  the read/modify/write pattern is clearly correct
+- **Fixes a real bug**: Yes - filter being disabled when reconfigured is
+  a real functional bug
+- **Small and contained**: Yes - 5 lines removed from a single function
+  in a single file
+- **No new features**: Correct - pure bug fix
+- **Tested**: Multiple reviews from domain experts
 
 **YES**
 
- include/linux/pci_ids.h | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/media/platform/rockchip/rkisp1/rkisp1-params.c | 6 ------
+ 1 file changed, 6 deletions(-)
 
-diff --git a/include/linux/pci_ids.h b/include/linux/pci_ids.h
-index a9a089566b7cb..f2849ff1830b1 100644
---- a/include/linux/pci_ids.h
-+++ b/include/linux/pci_ids.h
-@@ -3143,6 +3143,7 @@
- #define PCI_DEVICE_ID_INTEL_HDA_CML_S	0xa3f0
- #define PCI_DEVICE_ID_INTEL_HDA_LNL_P	0xa828
- #define PCI_DEVICE_ID_INTEL_S21152BB	0xb152
-+#define PCI_DEVICE_ID_INTEL_HDA_NVL	0xd328
- #define PCI_DEVICE_ID_INTEL_HDA_BMG	0xe2f7
- #define PCI_DEVICE_ID_INTEL_HDA_PTL_H	0xe328
- #define PCI_DEVICE_ID_INTEL_HDA_PTL	0xe428
+diff --git a/drivers/media/platform/rockchip/rkisp1/rkisp1-params.c b/drivers/media/platform/rockchip/rkisp1/rkisp1-params.c
+index c9f88635224cc..6442436a5e428 100644
+--- a/drivers/media/platform/rockchip/rkisp1/rkisp1-params.c
++++ b/drivers/media/platform/rockchip/rkisp1/rkisp1-params.c
+@@ -411,12 +411,6 @@ static void rkisp1_flt_config(struct rkisp1_params *params,
+ 	rkisp1_write(params->rkisp1, RKISP1_CIF_ISP_FILT_LUM_WEIGHT,
+ 		     arg->lum_weight);
+ 
+-	rkisp1_write(params->rkisp1, RKISP1_CIF_ISP_FILT_MODE,
+-		     (arg->mode ? RKISP1_CIF_ISP_FLT_MODE_DNR : 0) |
+-		     RKISP1_CIF_ISP_FLT_CHROMA_V_MODE(arg->chr_v_mode) |
+-		     RKISP1_CIF_ISP_FLT_CHROMA_H_MODE(arg->chr_h_mode) |
+-		     RKISP1_CIF_ISP_FLT_GREEN_STAGE1(arg->grn_stage1));
+-
+ 	/* avoid to override the old enable value */
+ 	filt_mode = rkisp1_read(params->rkisp1, RKISP1_CIF_ISP_FILT_MODE);
+ 	filt_mode &= RKISP1_CIF_ISP_FLT_ENA;
 -- 
 2.51.0
 
