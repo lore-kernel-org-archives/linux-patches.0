@@ -1,42 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E9D72FDC20;
-	Sat, 14 Feb 2026 21:27:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F029C311958;
+	Sat, 14 Feb 2026 21:27:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771104435; cv=none; b=LCYY6q1U98zjs5LHaF3o6ylFn7zO/R2hHVFgA6uBk5+69V1lDTqxRYzT52dw3I6wbXZ4SDtO5JOlRlBn0BTNTKcGjMxHjAjqubOwcx+cqEQOkt462hGGbQcmvucnvQenZCiJHDER81f6VsPf/OHdzM0xOhnxZcdNAkyYYB3yT7A=
+	t=1771104438; cv=none; b=EI/OtZVps7bLsRuDP2R/EbgEVdZbofltK9Y2clK6Ke2DoQt0O8R/pHFddWse6dh+BNoK7VoaFCua5/w570HiAnwjmL65xVMn8qKD2PHAWlrrUT5V5dpgaCr49ptEbCozbUXX4O8JTAa+u2TI+Q97hcGK1sMjInibiHIGnQrrWnQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771104435; c=relaxed/simple;
-	bh=U+tA0vkY6vpqXtXMkjENXllx3tPQws0mO8+SdxXCtMo=;
+	s=arc-20240116; t=1771104438; c=relaxed/simple;
+	bh=jZniUG8MJE6NEjp2sQ6SyA4QAB2SmzL08cFseyqOA2E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=d6/ixl5MJu0OKOnkN+FhHzUyiKg/krG6YWsswo1v0zJLCGmYHOphqhYuTptM2FU0Yt6KQZSiGD6pL1fF7ocaa9lBlZEpilwAmB4dG3uUOoLR97d36S3eYE5TaJ1WxzNwD6SQKQJWMcgUaY6V11VikWTviAtfrfrqhZKZ6vcv3J8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Zr0bemsT; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=kum1LsJSjyBKgzYWt5Ek0pTLGyca0HXYWURB7sj9sjgiDp+CR26tmYQPDsP79iIyVS34/O508+3B3qUQ2qKyPBRMHfXtrGqbNrzG/Wih2BdYoy/PtePfeKheW/jvO5z3+zyqevlP8boVfkTZqlsfDb56RYMzy381FbWx69oXQtA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=IEDi55Q9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Zr0bemsT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B46EDC16AAE;
-	Sat, 14 Feb 2026 21:27:14 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="IEDi55Q9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC420C19422;
+	Sat, 14 Feb 2026 21:27:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1771104435;
-	bh=U+tA0vkY6vpqXtXMkjENXllx3tPQws0mO8+SdxXCtMo=;
+	s=k20201202; t=1771104437;
+	bh=jZniUG8MJE6NEjp2sQ6SyA4QAB2SmzL08cFseyqOA2E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Zr0bemsTJBGExQlNcYboNX5rDuv0if6cMPvq5qVrnNrq5W3HInCNfm2gmM5UpxqdU
-	 MscBFedcPs4eDIqtlMnfMDs1TFsJj78b0R6Jum7r2rqU8P3ubsUvMUcNOuhqHiZyhF
-	 N4j3D9cjQmc098I04Ezd1TXJfslIinupMA24VWmJQ0TpwxIyj394ck+tJwrIswequp
-	 fpRiC9mG7y9Qs01QkgIZBWiwNvXR/E/5UsJ8uLXY/yX69HvjTP1FeSa6XEICQdWFrd
-	 ZmGg9/D4QxkNKtN1bGyt+3b62UvvfUMI2w1J99WioqZpgDvkGQRB3wTFpl7lBC2aNO
-	 O+CaAa3KnmXYQ==
+	b=IEDi55Q9Kg3iVt/WPBxkg8fr4ZvTKuYfQq1lxD9l43cMC4YED93jV51I8ly/7eAlr
+	 eCKeUEt3uAEHs6y1yJOqVAPNzYZa8uMrrXQ6duYF0UYzPzLFmD8gybBToN84k7/dSr
+	 Jqeor5+rEcQJClXz5ncNulk7x/la1PZmFyyMAw6yrO2CLZMyK+78CV0hky5lYm7fqD
+	 CCiRQoA8jpL/TKcgyEsjYqTsI+Sz88MDc6W9BuNaF0u/tPh0Rc1ggnsBrXOhz14Hlg
+	 uV5HPnRAHvcUaDm2YYxPkF6I+YK9uUhVlBCnZ9FWs6257ya5kkH6K5vCly2soOGOy+
+	 +26W/U0nH8lcQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Li Chen <me@linux.beauty>,
-	Theodore Ts'o <tytso@mit.edu>,
+Cc: Brian Masney <bmasney@redhat.com>,
+	kernel test robot <lkp@intel.com>,
+	Stafford Horne <shorne@gmail.com>,
 	Sasha Levin <sashal@kernel.org>,
-	adilger.kernel@dilger.ca,
-	linux-ext4@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.19-5.15] ext4: mark group extend fast-commit ineligible
-Date: Sat, 14 Feb 2026 16:23:47 -0500
-Message-ID: <20260214212452.782265-82-sashal@kernel.org>
+	neil.armstrong@linaro.org,
+	yelangyan@huaqin.corp-partner.google.com
+Subject: [PATCH AUTOSEL 6.19-5.10] openrisc: define arch-specific version of nop()
+Date: Sat, 14 Feb 2026 16:23:48 -0500
+Message-ID: <20260214212452.782265-83-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260214212452.782265-1-sashal@kernel.org>
 References: <20260214212452.782265-1-sashal@kernel.org>
@@ -52,168 +53,149 @@ X-stable-base: Linux 6.19
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Li Chen <me@linux.beauty>
+From: Brian Masney <bmasney@redhat.com>
 
-[ Upstream commit 1f8dd813a1c771b13c303f73d876164bc9b327cc ]
+[ Upstream commit 0dfffa5479d6260d04d021f69203b1926f73d889 ]
 
-Fast commits only log operations that have dedicated replay support.
-EXT4_IOC_GROUP_EXTEND grows the filesystem to the end of the last
-block group and updates the same on-disk metadata without going
-through the fast commit tracking paths.
-In practice these operations are rare and usually followed by further
-updates, but mixing them into a fast commit makes the overall
-semantics harder to reason about and risks replay gaps if new call
-sites appear.
+When compiling a driver written for MIPS on OpenRISC that uses the nop()
+function, it fails due to the following error:
 
-Teach ext4 to mark the filesystem fast-commit ineligible when
-EXT4_IOC_GROUP_EXTEND grows the filesystem.
-This forces those transactions to fall back to a full commit,
-ensuring that the group extension changes are captured by the normal
-journal rather than partially encoded in fast commit TLVs.
-This change should not affect common workloads but makes online
-resize via GROUP_EXTEND safer and easier to reason about under fast
-commit.
+    drivers/watchdog/pic32-wdt.c: Assembler messages:
+    drivers/watchdog/pic32-wdt.c:125: Error: unrecognized instruction `nop'
 
-Testing:
-1. prepare:
-    dd if=/dev/zero of=/root/fc_resize.img bs=1M count=0 seek=256
-    mkfs.ext4 -O fast_commit -F /root/fc_resize.img
-    mkdir -p /mnt/fc_resize && mount -t ext4 -o loop /root/fc_resize.img /mnt/fc_resize
-2. Extended the filesystem to the end of the last block group using a
-   helper that calls EXT4_IOC_GROUP_EXTEND on the mounted filesystem
-   and checked fc_info:
-    ./group_extend_helper /mnt/fc_resize
-    cat /proc/fs/ext4/loop0/fc_info
-   shows the "Resize" ineligible reason increased.
-3. Fsynced a file on the resized filesystem and confirmed that the fast
-   commit ineligible counter incremented for the resize transaction:
-    touch /mnt/fc_resize/file
-    /root/fsync_file /mnt/fc_resize/file
-    sync
-    cat /proc/fs/ext4/loop0/fc_info
+The driver currently uses the generic version of nop() from
+include/asm-generic/barrier.h:
 
-Signed-off-by: Li Chen <me@linux.beauty>
-Link: https://patch.msgid.link/20251211115146.897420-6-me@linux.beauty
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+    #ifndef nop
+    #define nop()   asm volatile ("nop")
+    #endif
+
+Let's fix this on OpenRISC by defining an architecture-specific version
+of nop().
+
+This was tested by performing an allmodconfig openrisc cross compile on
+an aarch64 host.
+
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: https://lore.kernel.org/oe-kbuild-all/202601180236.BVy480We-lkp@intel.com/
+Signed-off-by: Brian Masney <bmasney@redhat.com>
+Signed-off-by: Stafford Horne <shorne@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-### 4. DETAILED FINDINGS
+## Analysis
 
-This is extremely revealing. The investigation shows:
+### Commit Message Analysis
 
-**A real gap exists:** `EXT4_IOC_RESIZE_FS` already has
-`ext4_fc_mark_ineligible(sb, EXT4_FC_REASON_RESIZE, NULL)`, but
-`EXT4_IOC_GROUP_EXTEND` (and `EXT4_IOC_GROUP_ADD` in a sibling commit)
-do **not**. This is an inconsistency — all three ioctls perform
-filesystem geometry changes that are not supported by fast commit
-replay.
+This commit defines an architecture-specific `nop()` macro for OpenRISC.
+The problem is that the generic `nop()` from `asm-generic/barrier.h`
+uses `asm volatile ("nop")`, but OpenRISC's assembler doesn't recognize
+the bare `nop` instruction — it needs `l.nop` (the OpenRISC-prefixed
+form). This causes a **build failure** when compiling any driver that
+calls `nop()` on OpenRISC.
 
-**No replay support for geometry changes:** The fast commit replay logic
-only handles file-level operations (add_range, del_range, link, unlink,
-creat, inode). There are NO replay tags for superblock or group
-descriptor changes. If `GROUP_EXTEND` runs and a fast commit is used
-instead of a full journal commit, the geometry changes would not be
-replayed on crash recovery.
+The specific failure was reported by the kernel test robot
+(lkp@intel.com) during an allmodconfig build, triggered by
+`drivers/watchdog/pic32-wdt.c`.
 
-**This is a data integrity issue:** If a fast commit transaction
-includes both file operations (which are tracked) and geometry changes
-from `GROUP_EXTEND` (which are untracked), crash recovery could replay
-the file operations against stale filesystem geometry, leading to silent
-metadata inconsistency or corruption.
+### Code Change Analysis
 
-### 5. CLASSIFICATION
+The change is a single line addition:
 
-This is a **correctness/data integrity fix**, not a feature addition. It
-closes a gap where filesystem metadata changes could be lost or
-inconsistently replayed after a crash. The `EXT4_FC_REASON_RESIZE` enum
-value already exists — only the missing call site is added.
+```c
+#define nop() asm volatile ("l.nop")
+```
 
-### 6. SCOPE AND RISK
+This is placed in `arch/openrisc/include/asm/barrier.h` **before** the
+`#include <asm-generic/barrier.h>`, so it pre-defines `nop()` and
+prevents the generic version from being used (since the generic version
+is guarded by `#ifndef nop`).
 
-- **Size:** 2 lines added. Minimal.
-- **Risk:** Extremely low. The only effect is forcing a full journal
-  commit instead of a fast commit during `GROUP_EXTEND`. Full commits
-  are always correct; fast commits are the optimization. This is a
-  fallback to the safe path.
-- **Subsystem:** ext4 filesystem — widely used, data integrity matters
-  enormously.
-- **Could it break anything?** No. A full commit is strictly more
-  conservative than a fast commit. The worst case is a minor performance
-  impact during online resize, which is an infrequent operation.
+The change is:
+- **1 line of code** added
+- **1 file** modified
+- **Zero risk** of runtime regression — it simply uses the correct
+  instruction mnemonic for the architecture
 
-### 7. USER IMPACT
+### Classification
 
-- **Who is affected?** Anyone using ext4 with fast_commit enabled who
-  performs online resize via `GROUP_EXTEND`. While this is not a common
-  operation, when it does happen, data integrity on crash recovery is
-  critical.
-- **Severity if triggered:** Without this fix, crash recovery after
-  `GROUP_EXTEND` + fast commit could result in filesystem metadata
-  inconsistency — potentially data corruption.
-- **Practical likelihood:** Low frequency, but high severity when it
-  occurs.
+This is a **build fix**. It prevents a compilation error on the OpenRISC
+architecture when building modules that use `nop()`. Build fixes are
+explicitly listed as acceptable for stable backporting, as they are
+critical for users who need to build the kernel.
 
-### 8. DEPENDENCY CHECK
+### Scope and Risk Assessment
 
-- The `EXT4_FC_REASON_RESIZE` enum already exists in stable trees (it
-  was added when `RESIZE_FS` was given this marking).
-- The `ext4_fc_mark_ineligible()` function already exists.
-- This is a self-contained, standalone fix with no dependencies on other
-  commits.
-- There is a sibling commit for `GROUP_ADD` that would be good to
-  backport together, but each stands alone.
+- **Scope**: Minimal — one `#define` in one architecture-specific header
+- **Risk**: Extremely low. The `l.nop` instruction is the correct
+  OpenRISC NOP instruction. This simply teaches the kernel to use the
+  right assembly mnemonic.
+- **Subsystem**: OpenRISC architecture — niche but has real users
+- **Regression potential**: Near zero. This only affects OpenRISC
+  builds, and only changes which assembly instruction is emitted for
+  `nop()`.
 
-### 9. STABLE KERNEL RULES ASSESSMENT
+### User Impact
 
-| Criterion | Assessment |
-|-----------|-----------|
-| Obviously correct and tested | Yes — mirrors existing pattern for
-RESIZE_FS, tested by author |
-| Fixes a real bug | Yes — missing fast-commit ineligibility marking can
-lead to incomplete crash recovery |
-| Important issue | Yes — data integrity / potential corruption on crash
-recovery |
-| Small and contained | Yes — 2 lines in one file |
-| No new features | Correct — uses existing infrastructure |
-| Applies cleanly | Very likely — minimal change to stable code |
+Without this fix, any OpenRISC kernel build that includes a driver using
+`nop()` will **fail to compile**. This is a hard build failure, not a
+warning. The pic32-wdt watchdog driver is one concrete example, but any
+code using the `nop()` macro would be affected.
 
-### 10. RISK vs BENEFIT
+### Stability Indicators
 
-- **Risk:** Near zero. Forces a safe fallback path for a rare operation.
-- **Benefit:** Prevents potential filesystem metadata inconsistency
-  after crash during online resize with fast commit enabled.
+- Reported by kernel test robot (automated build testing infrastructure)
+- Tested with allmodconfig cross-compilation
+- Signed off by the OpenRISC maintainer (Stafford Horne)
+- The fix follows the exact same pattern used by other architectures
 
-### CONCLUSION
+### Stable Kernel Rules Check
 
-This is a small, surgical, correctness fix for a real gap in ext4's fast
-commit mechanism. The `RESIZE_FS` ioctl already had this protection, but
-`GROUP_EXTEND` was missed. The fix prevents potential data integrity
-issues during crash recovery. It uses existing infrastructure
-(`EXT4_FC_REASON_RESIZE` and `ext4_fc_mark_ineligible()`), is self-
-contained, and has effectively zero regression risk. It meets all stable
-kernel criteria.
+1. **Obviously correct and tested**: Yes — uses the standard OpenRISC
+   `l.nop` instruction, tested with allmodconfig
+2. **Fixes a real bug**: Yes — compilation failure
+3. **Important issue**: Yes — build failures prevent kernel compilation
+   entirely
+4. **Small and contained**: Yes — single line, single file
+5. **No new features**: Correct — this is a build fix
+6. **Applies cleanly**: Should apply cleanly as this file is very stable
+
+### Dependency Check
+
+No dependencies on other commits. The `barrier.h` file for OpenRISC is
+simple and unlikely to have changed significantly between versions.
+
+### Concerns
+
+- OpenRISC is a niche architecture, so the user base is small
+- However, the fix is risk-free and prevents a real build failure
+
+### Verdict
+
+This is a textbook build fix: tiny, obviously correct, zero regression
+risk, and it prevents a hard compilation failure. Build fixes are
+explicitly called out as appropriate stable material.
 
 **YES**
 
- fs/ext4/ioctl.c | 2 ++
+ arch/openrisc/include/asm/barrier.h | 2 ++
  1 file changed, 2 insertions(+)
 
-diff --git a/fs/ext4/ioctl.c b/fs/ext4/ioctl.c
-index 5109b005e0286..e5e197ac7d88b 100644
---- a/fs/ext4/ioctl.c
-+++ b/fs/ext4/ioctl.c
-@@ -1612,6 +1612,8 @@ static long __ext4_ioctl(struct file *filp, unsigned int cmd, unsigned long arg)
+diff --git a/arch/openrisc/include/asm/barrier.h b/arch/openrisc/include/asm/barrier.h
+index 7538294721bed..8e592c9909023 100644
+--- a/arch/openrisc/include/asm/barrier.h
++++ b/arch/openrisc/include/asm/barrier.h
+@@ -4,6 +4,8 @@
  
- 		err = ext4_group_extend(sb, EXT4_SB(sb)->s_es, n_blocks_count);
- 		if (EXT4_SB(sb)->s_journal) {
-+			ext4_fc_mark_ineligible(sb, EXT4_FC_REASON_RESIZE,
-+						NULL);
- 			jbd2_journal_lock_updates(EXT4_SB(sb)->s_journal);
- 			err2 = jbd2_journal_flush(EXT4_SB(sb)->s_journal, 0);
- 			jbd2_journal_unlock_updates(EXT4_SB(sb)->s_journal);
+ #define mb() asm volatile ("l.msync" ::: "memory")
+ 
++#define nop() asm volatile ("l.nop")
++
+ #include <asm-generic/barrier.h>
+ 
+ #endif /* __ASM_BARRIER_H */
 -- 
 2.51.0
 
