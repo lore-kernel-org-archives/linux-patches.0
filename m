@@ -1,47 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07A381F4168;
-	Sat, 14 Feb 2026 01:04:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF377194098;
+	Sat, 14 Feb 2026 01:04:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771031056; cv=none; b=iHyzMHT+DQqOclqOIAgXAtE2btg1DfChAGBt27xiE4voH837v7yy8Ztq0x+jigRMk3gp0/l5RtDBgDaj6oOfkUrvwF+8zCnS3ecRETsOFMkFEgxaHZu2f0yofqSJgkQ5CpQV75MueC3XvFTKBJ6wbRzIWt0jeRJ9Q5SMIDjLtTU=
+	t=1771031056; cv=none; b=UJAIoEPR1KDpYa83K2Msuia//GZ+/x+BHvc+GtisSF2DRKqiK7XE3Y4qXC+YtxZnAAiIvOqCE/XCHsXFK0t4FOek4Dmx8E+zLTHwXyXEL+BFZfhHvKFB96s1DAMX58bj6dnRhLcOvCzxIZfB0tvzN5vsvPeCDkaq13hLkG7315M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1771031056; c=relaxed/simple;
-	bh=75+k/chSxeLUbhgX1iGsAcKtfO12wDxe1HdLTw9qOus=;
+	bh=f7dNVhnQxuS+2EpCYERN03CB3MKHM5W5fa7IgT7GWXM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=pJ1kAsK0h+Eg1XjHNRmBqmfSIaj+ddvl+Gr++2LNtn8wXYPo8BDxmeZoFt37H49NIDIhImRQEv4/aDq/LA4eBuvnIHoFyQKuEV4aGAnUn5dHz/xyH6JBdfU/RHocYbz8E+wyawEmkKaTszjCCMsjAmUwj4bZvwtMfDW8cZGs5Xg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=R0ytTrNc; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=BWhilxM1oxObbNDIto28BFiT1o5gdQ9y0grZFOd1BEauyHOOdDOZTbru3s2mxj7bCaBXMR8Dfu+iNatKAAjCoJtFxIXI9sHKTbBX6BoQ18ew66D164vyAMCj7l5PCMLocSGszXSFSqCai4EQKmvswpAe2yQ1CyWJrU5R4awqLxs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=N1wWoKnZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="R0ytTrNc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6FAE4C19423;
-	Sat, 14 Feb 2026 01:04:14 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="N1wWoKnZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F06EC116C6;
+	Sat, 14 Feb 2026 01:04:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1771031055;
-	bh=75+k/chSxeLUbhgX1iGsAcKtfO12wDxe1HdLTw9qOus=;
+	s=k20201202; t=1771031056;
+	bh=f7dNVhnQxuS+2EpCYERN03CB3MKHM5W5fa7IgT7GWXM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=R0ytTrNceniuwCh5v0oD7cdibj3NfiMD0b9QpaMhVBNSRHRMnNOxacJ0/rqQSFNu4
-	 PKI6Cx7uWb2CEAVl9/VR3TsprJsIeuCV+OPNK5U7oOZGc9M0fQILTaeGI45NDbmjLf
-	 KkUeTZNwgZUhFpHMcAYQ9rDYYB8pCXmF43A7MEwok211ncMCsuQ5E3NPvQlvNC1Kk9
-	 +YNxZI9Nb4seVf0AU1frgfFm/a/MQ54TF46rK8mrFuqsH5w+V5wbTiWZDhL/dyHgcl
-	 ZWa7fuvYNfOW4blJh5j66uHDnGhgf02HXuGsZXfeLEdhzR933C5FVDgtTN39iXtZhN
-	 o1fSA0cPzgKwQ==
+	b=N1wWoKnZ4ZgYFGtyxdhNK9EJNlCPdIs3YVbm3RswwQQPDl2DecM02btPX3ujiLiIJ
+	 8qPCNlEaj9zKPRV73yDRqPCmLtw0N8tB+ZcXml7fVhg102d6MKmOKmaTtkQWPkqC0P
+	 zHdKH13GPLI0qLM/27K5wXj6KMab0w2uf8OrIfvwJH7ICKmoPb7SkGlFy2jPn7Jhaf
+	 gjttPe/BET12CZcG82fdy5CtS8OZCnkTYRBYcGvCAY5rRLlGFhfDSM3zkzMHeCm5sA
+	 WO0898dIHNkrYATAqGO20sUCor4DRF2Q898J4UUzMQI14Tnf5CHFUwvhc8Gwk/332B
+	 ZQ1aBmSWRBjIA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Chen Ni <nichen@iscas.ac.cn>,
-	Mark Brown <broonie@kernel.org>,
+Cc: Sakari Ailus <sakari.ailus@linux.intel.com>,
+	"Yew, Chang Ching" <chang.ching.yew@intel.com>,
+	Hans Verkuil <hverkuil+cisco@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	ckeepax@opensource.cirrus.com,
-	neil.armstrong@linaro.org,
-	kuninori.morimoto.gx@renesas.com,
-	srinivas.kandagatla@oss.qualcomm.com,
-	yelangyan@huaqin.corp-partner.google.com,
-	tiwai@suse.de,
-	krzk@kernel.org
-Subject: [PATCH AUTOSEL 6.19-6.1] ASoC: codecs: max98390: Check return value of devm_gpiod_get_optional() in max98390_i2c_probe()
-Date: Fri, 13 Feb 2026 19:58:41 -0500
-Message-ID: <20260214010245.3671907-41-sashal@kernel.org>
+	linux-media@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.19-6.6] media: v4l2-async: Fix error handling on steps after finding a match
+Date: Fri, 13 Feb 2026 19:58:42 -0500
+Message-ID: <20260214010245.3671907-42-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260214010245.3671907-1-sashal@kernel.org>
 References: <20260214010245.3671907-1-sashal@kernel.org>
@@ -57,128 +52,262 @@ X-stable-base: Linux 6.19
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Chen Ni <nichen@iscas.ac.cn>
+From: Sakari Ailus <sakari.ailus@linux.intel.com>
 
-[ Upstream commit a1d14d8364eac2611fe1391c73ff0e5b26064f0e ]
+[ Upstream commit 7345d6d356336c448d6b9230ed8704f39679fd12 ]
 
-The devm_gpiod_get_optional() function may return an error pointer
-(ERR_PTR) in case of a genuine failure during GPIO acquisition,
-not just NULL which indicates the legitimate absence of an optional
-GPIO.
+Once an async connection is found to be matching with an fwnode, a
+sub-device may be registered (in case it wasn't already), its bound
+operation is called, ancillary links are created, the async connection
+is added to the sub-device's list of connections and removed from the
+global waiting connection list. Further on, the sub-device's possible own
+notifier is searched for possible additional matches.
 
-Add an IS_ERR() check after the function call to catch such errors and
-propagate them to the probe function, ensuring the driver fails to load
-safely rather than proceeding with an invalid pointer.
+Fix these specific issues:
 
-Signed-off-by: Chen Ni <nichen@iscas.ac.cn>
-Link: https://patch.msgid.link/20260130091904.3426149-1-nichen@iscas.ac.cn
-Signed-off-by: Mark Brown <broonie@kernel.org>
+- If v4l2_async_match_notify() failed before the sub-notifier handling,
+  the async connection was unbound and its entry removed from the
+  sub-device's async connection list. The latter part was also done in
+  v4l2_async_match_notify().
+
+- The async connection's sd field was only set after creating ancillary
+  links in v4l2_async_match_notify(). It was however dereferenced in
+  v4l2_async_unbind_subdev_one(), which was called on error path of
+  v4l2_async_match_notify() failure.
+
+Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
+Tested-by: "Yew, Chang Ching" <chang.ching.yew@intel.com>
+Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-## Analysis of max98390 devm_gpiod_get_optional() Return Value Check
+## Analysis of media: v4l2-async: Fix error handling on steps after
+finding a match
 
-### 1. Commit Message Analysis
+### 1. COMMIT MESSAGE ANALYSIS
 
-The commit message clearly describes adding a missing error check for
-`devm_gpiod_get_optional()`. The function can return an `ERR_PTR` on
-genuine failures (e.g., deferred probe `-EPROBE_DEFER`, or actual GPIO
-acquisition errors), but the existing code only handled the `NULL` case
-(no GPIO present). Without the check, an `ERR_PTR` value would be
-treated as a valid GPIO pointer, leading to undefined behavior.
+The subject explicitly says "Fix error handling" — this is a bug fix.
+The commit message describes two specific issues:
 
-### 2. Code Change Analysis
+1. **Double cleanup of async connection list entry**: When
+   `v4l2_async_match_notify()` failed before sub-notifier handling, the
+   async connection was unbound and its entry removed from the sub-
+   device's async connection list *twice* — once inside
+   `v4l2_async_match_notify()` and once in the caller's error path.
 
-The change is minimal — 3 lines added:
+2. **NULL pointer dereference**: The `asc->sd` field was only set
+   *after* creating ancillary links, but
+   `v4l2_async_unbind_subdev_one()` (called on the error path)
+   dereferences `asc->sd`. If `v4l2_async_match_notify()` failed before
+   `asc->sd` was assigned, this would cause a NULL pointer dereference.
 
-```c
-if (IS_ERR(reset_gpio))
-    return dev_err_probe(&i2c->dev, PTR_ERR(reset_gpio),
-                         "Failed to get reset gpio\n");
-```
+These are real bugs — a double list_del (list corruption) and a NULL
+pointer dereference (crash).
 
-This is inserted immediately after the `devm_gpiod_get_optional()` call
-and before `reset_gpio` is used. The subsequent code does:
-- `if (reset_gpio)` — this branch would be entered if `reset_gpio` is an
-  `ERR_PTR` (since `ERR_PTR` values are non-NULL)
-- `gpiod_set_value_cansleep(reset_gpio, 0)` — this would dereference an
-  invalid pointer
+### 2. CODE CHANGE ANALYSIS
 
-Without the fix, if `devm_gpiod_get_optional()` returns an error (e.g.,
-`-EPROBE_DEFER`), the code would pass the error pointer to
-`gpiod_set_value_cansleep()`, which would dereference an invalid
-pointer, likely causing a **kernel crash/oops**.
+The patch restructures `v4l2_async_match_notify()` by:
 
-### 3. Bug Classification
+**a) Splitting the function**: The sub-notifier discovery logic is
+extracted into a new function `v4l2_async_nf_try_subdev_notifier()`.
+This separates concerns so that `v4l2_async_match_notify()` handles only
+the matching/binding, and the sub-notifier logic is called separately by
+the caller.
 
-This is a **missing error check that can lead to an invalid pointer
-dereference**. The most common real-world trigger would be
-`-EPROBE_DEFER`, which happens during boot when GPIO controllers haven't
-been probed yet. This is very common on device-tree platforms (ARM,
-ARM64) where probe ordering isn't deterministic.
+**b) Fixing error paths in `v4l2_async_match_notify()`**:
+- The error labels are moved to *after* the success return (`return 0`),
+  ensuring that on success the function returns cleanly without falling
+  through to error handling.
+- The `err_call_unbind` label properly calls
+  `v4l2_async_nf_call_unbind()` and removes the list entry.
+- The `err_unregister_subdev` label only unregisters if `registered` is
+  true.
+- Crucially, `asc->sd` is set *before* the error labels, so
+  `v4l2_async_unbind_subdev_one()` in the caller won't dereference NULL.
 
-### 4. Scope and Risk Assessment
+**c) Fixing caller error handling in `__v4l2_async_register_subdev()`**:
+- New error labels: `err_unlock` (just unlocks mutex) and
+  `err_unbind_one` (unbinds single connection).
+- If `v4l2_async_match_notify()` fails, it jumps to `err_unlock` — the
+  function already cleaned up internally.
+- If `v4l2_async_nf_try_subdev_notifier()` fails, it jumps to
+  `err_unbind_one`.
+- If `v4l2_async_nf_try_complete()` fails, it jumps to `err_unbind`
+  (full unbind).
+- The redundant `if (asc)` check is removed since `asc` is always valid
+  at that point.
 
-- **Lines changed**: 3 lines added
-- **Files changed**: 1 file (`sound/soc/codecs/max98390.c`)
-- **Risk**: Extremely low — it adds a standard error check pattern used
-  throughout the kernel
-- **Could it break something?**: No — it only adds early return on
-  error; the normal (non-error) path is completely unchanged
+**d) Same pattern in `v4l2_async_nf_try_all_subdevs()`**: The sub-
+notifier call is now done separately after `v4l2_async_match_notify()`.
 
-### 5. User Impact
+### 3. BUG CLASSIFICATION
 
-- The max98390 is a Maxim speaker amplifier codec used in real products
-  (Chromebooks, laptops)
-- On platforms with deferred probing, the bug could cause a kernel crash
-  during boot
-- The `dev_err_probe()` function is the correct idiom — it silences
-  `-EPROBE_DEFER` messages and logs actual errors
+- **NULL pointer dereference**: `asc->sd` dereferenced when NULL — this
+  is a crash bug.
+- **List corruption / double cleanup**: Removing an entry from a list
+  twice can corrupt the list, leading to crashes or undefined behavior.
 
-### 6. Stability Indicators
+Both are serious bugs that can cause kernel crashes.
 
-- Accepted by Mark Brown (ASoC subsystem maintainer)
-- Uses standard kernel error handling patterns (`IS_ERR`,
-  `dev_err_probe`)
-- Pattern is identical to hundreds of similar fixes already in stable
+### 4. SCOPE AND RISK ASSESSMENT
 
-### 7. Dependency Check
+- **Files changed**: 1 file (`drivers/media/v4l2-core/v4l2-async.c`)
+- **Nature of changes**: Refactoring a function into two pieces and
+  fixing error handling labels
+- **Lines changed**: Moderate (~80 lines of diff), but the logic changes
+  are focused on error paths
+- **Risk**: Medium — the refactoring is non-trivial as it splits a
+  function and changes error flow in two call sites. However, the logic
+  is straightforward and the changes are well-contained.
 
-- No dependencies on other commits
-- The `devm_gpiod_get_optional()` function and `dev_err_probe()` have
-  existed in stable kernels for a long time
-- The max98390 driver exists in stable trees (added in Linux 5.6)
+### 5. USER IMPACT
 
-### Conclusion
+The V4L2 async framework is used by many camera/media subsystems,
+especially on embedded platforms (ARM SoCs with ISPs). The bugs are
+triggered on error paths during device probe, which can happen when:
+- Hardware initialization fails
+- Firmware nodes don't match properly
+- Resource allocation fails
 
-This is a textbook stable-worthy fix: small (3 lines), obviously
-correct, fixes a real bug (invalid pointer dereference on GPIO
-acquisition failure), uses standard kernel patterns, has zero risk of
-regression, and affects a real hardware codec driver. The bug is most
-likely to trigger via `-EPROBE_DEFER` on ARM/ARM64 platforms, which is a
-very common scenario.
+This affects embedded/SoC users running stable kernels (Android,
+embedded Linux).
+
+### 6. STABILITY INDICATORS
+
+- **Tested-by**: "Yew, Chang Ching" — indicates real testing
+- **Author**: Sakari Ailus — a well-known V4L2/media subsystem
+  maintainer
+- **Signed-off by**: Hans Verkuil — the V4L2 subsystem maintainer
+- Both bugs are clearly identified and the fix is logical
+
+### 7. DEPENDENCY CHECK
+
+The patch is self-contained within `v4l2-async.c`. It refactors existing
+code rather than depending on new APIs. The main concern would be
+whether the code being patched exists in older stable trees in the same
+form. The `v4l2_async_connection` type and the specific function
+signatures suggest this is relatively recent code, but the fix should
+apply to any tree containing these functions.
+
+### 8. CONCERNS
+
+- The patch is somewhat large due to the function extraction, not just a
+  simple one-liner. However, the refactoring is necessary to properly
+  separate the error handling concerns.
+- The function split makes the error handling cleaner and more correct,
+  which is exactly what stable trees need.
+- The changes need careful backporting review to ensure they apply
+  cleanly to each target stable tree.
+
+### CONCLUSION
+
+This commit fixes two real bugs: a NULL pointer dereference and a double
+list cleanup (list corruption). Both can cause kernel crashes. The fix
+is authored and reviewed by the V4L2 subsystem maintainers, has been
+tested, and is contained to a single file. While the patch is moderately
+sized due to the function extraction, the changes are logically sound
+and necessary to fix the error handling properly. The bugs affect real
+embedded/media users.
 
 **YES**
 
- sound/soc/codecs/max98390.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/media/v4l2-core/v4l2-async.c | 45 +++++++++++++++++++---------
+ 1 file changed, 31 insertions(+), 14 deletions(-)
 
-diff --git a/sound/soc/codecs/max98390.c b/sound/soc/codecs/max98390.c
-index 3dd4dd94bc371..ff58805e97d17 100644
---- a/sound/soc/codecs/max98390.c
-+++ b/sound/soc/codecs/max98390.c
-@@ -1067,6 +1067,9 @@ static int max98390_i2c_probe(struct i2c_client *i2c)
+diff --git a/drivers/media/v4l2-core/v4l2-async.c b/drivers/media/v4l2-core/v4l2-async.c
+index ee884a8221fbd..1c08bba9ecb91 100644
+--- a/drivers/media/v4l2-core/v4l2-async.c
++++ b/drivers/media/v4l2-core/v4l2-async.c
+@@ -343,7 +343,6 @@ static int v4l2_async_match_notify(struct v4l2_async_notifier *notifier,
+ 				   struct v4l2_subdev *sd,
+ 				   struct v4l2_async_connection *asc)
+ {
+-	struct v4l2_async_notifier *subdev_notifier;
+ 	bool registered = false;
+ 	int ret;
  
- 	reset_gpio = devm_gpiod_get_optional(&i2c->dev,
- 					     "reset", GPIOD_OUT_HIGH);
-+	if (IS_ERR(reset_gpio))
-+		return dev_err_probe(&i2c->dev, PTR_ERR(reset_gpio),
-+				     "Failed to get reset gpio\n");
+@@ -389,6 +388,25 @@ static int v4l2_async_match_notify(struct v4l2_async_notifier *notifier,
+ 	dev_dbg(notifier_dev(notifier), "v4l2-async: %s bound (ret %d)\n",
+ 		dev_name(sd->dev), ret);
  
- 	/* Power on device */
- 	if (reset_gpio) {
++	return 0;
++
++err_call_unbind:
++	v4l2_async_nf_call_unbind(notifier, sd, asc);
++	list_del(&asc->asc_subdev_entry);
++
++err_unregister_subdev:
++	if (registered)
++		v4l2_device_unregister_subdev(sd);
++
++	return ret;
++}
++
++static int
++v4l2_async_nf_try_subdev_notifier(struct v4l2_async_notifier *notifier,
++				  struct v4l2_subdev *sd)
++{
++	struct v4l2_async_notifier *subdev_notifier;
++
+ 	/*
+ 	 * See if the sub-device has a notifier. If not, return here.
+ 	 */
+@@ -404,16 +422,6 @@ static int v4l2_async_match_notify(struct v4l2_async_notifier *notifier,
+ 	subdev_notifier->parent = notifier;
+ 
+ 	return v4l2_async_nf_try_all_subdevs(subdev_notifier);
+-
+-err_call_unbind:
+-	v4l2_async_nf_call_unbind(notifier, sd, asc);
+-	list_del(&asc->asc_subdev_entry);
+-
+-err_unregister_subdev:
+-	if (registered)
+-		v4l2_device_unregister_subdev(sd);
+-
+-	return ret;
+ }
+ 
+ /* Test all async sub-devices in a notifier for a match. */
+@@ -445,6 +453,10 @@ v4l2_async_nf_try_all_subdevs(struct v4l2_async_notifier *notifier)
+ 		if (ret < 0)
+ 			return ret;
+ 
++		ret = v4l2_async_nf_try_subdev_notifier(notifier, sd);
++		if (ret < 0)
++			return ret;
++
+ 		/*
+ 		 * v4l2_async_match_notify() may lead to registering a
+ 		 * new notifier and thus changing the async subdevs
+@@ -829,7 +841,11 @@ int __v4l2_async_register_subdev(struct v4l2_subdev *sd, struct module *module)
+ 			ret = v4l2_async_match_notify(notifier, v4l2_dev, sd,
+ 						      asc);
+ 			if (ret)
+-				goto err_unbind;
++				goto err_unlock;
++
++			ret = v4l2_async_nf_try_subdev_notifier(notifier, sd);
++			if (ret)
++				goto err_unbind_one;
+ 
+ 			ret = v4l2_async_nf_try_complete(notifier);
+ 			if (ret)
+@@ -853,9 +869,10 @@ int __v4l2_async_register_subdev(struct v4l2_subdev *sd, struct module *module)
+ 	if (subdev_notifier)
+ 		v4l2_async_nf_unbind_all_subdevs(subdev_notifier);
+ 
+-	if (asc)
+-		v4l2_async_unbind_subdev_one(notifier, asc);
++err_unbind_one:
++	v4l2_async_unbind_subdev_one(notifier, asc);
+ 
++err_unlock:
+ 	mutex_unlock(&list_lock);
+ 
+ 	sd->owner = NULL;
 -- 
 2.51.0
 
