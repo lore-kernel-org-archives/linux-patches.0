@@ -1,51 +1,47 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 129861D5ABA;
-	Sat, 14 Feb 2026 01:04:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2856B194098;
+	Sat, 14 Feb 2026 01:04:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771031067; cv=none; b=fsnyyFBU8pCxqM7LoVeEYX5d15x1z+WoA9XyY9FW6IbEFgJGnukJClS4cwE/inJnXBJ7B31HepIA+cRrylZ8Ne6w5cVG002PwGMC8aJfhJ/fLA1KH9Ppypf8XAQB7LnCxp/FoZ48xFnGcoBM1wQ5ph7hKYwgq5NoUO7HD+F5xao=
+	t=1771031070; cv=none; b=trR22SOKJIEp5QbL1L5SnK9uM5FNX5Q/S+SdY7kNhtN99cLT29VrqJ2ymH1p2buQj5xoT4g/+1xN1vap3zihGeoBzT+UzBlv5TuFgV7ZHN/5u1i2fP1MDMxlN+RfsIYpcZI4Tbi662xfd70IMWn5CWFhms6iiXaBMPU96kT5mM0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771031067; c=relaxed/simple;
-	bh=2/05QWivxAUqXg35FZJB9eO9ubb6yCys2a7JIQ+rzdo=;
+	s=arc-20240116; t=1771031070; c=relaxed/simple;
+	bh=4OGFXhqXJXFwX8PmatMTNjBcR45Cii6fvFp3X5nSeNA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IVKK75b8tu8JjY2IreLshqotBUIYXgyXFOTXiLdIAn5I5hCgN0/QVuVh1Lcl796LjOwx0ynqPuJfeP10g7vBWEYBN7pod9G+HiJ6/iC5YilBar53kTpS+Fjt1PMbq6wXJwVwU39ZQgVrUdvflzcMGpMk0TeUbhLO7sscUzzL1M8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=jZrvs1jw; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=scn0t3ndo91Pdiw4g8pW06oWXYcOeXNd0m3Be+3nDZtYhgRETtaok16XzQhfC2fUpmTKM+77hz0bT2G1XGFLEAa6tMljxmXj/ttHGWz9EJRpGZ8RBhikdfyushBiH8eGMUObXgUNBQApFYN0w1A4WtavqsOdDpBWYEUzft2c7Mc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=S0Zmmd7d; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="jZrvs1jw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C56CC2BC87;
-	Sat, 14 Feb 2026 01:04:25 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="S0Zmmd7d"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DBA3BC19423;
+	Sat, 14 Feb 2026 01:04:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1771031067;
-	bh=2/05QWivxAUqXg35FZJB9eO9ubb6yCys2a7JIQ+rzdo=;
+	s=k20201202; t=1771031070;
+	bh=4OGFXhqXJXFwX8PmatMTNjBcR45Cii6fvFp3X5nSeNA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jZrvs1jw6PmGpyY3r1p1ITgfNABVikLBIlVFjtPuv2Pp5Cgz1My8T3x2BQIFRhtro
-	 6Yh/5slfCoco1Zegxuq59UxL6iT2nYHCMHrECKuMp0jaarc737NgGwIpmBxmKIWJ/f
-	 zoq8mTPlc4YObi/3qfFl2Eho8Z1hcS0JVcYrzY1umN/VPqY4UckHkFpK409gegwehA
-	 7BektvikhgHiSZsIDGuiamXwvwZNUL1x4hfmxDApzH7RiGJOveFgVMvMGT/9Sop8Xf
-	 ReIoPszxz4R8TKwABxp/SQ2uH/gs8TIe8mE3lb+UnT0+OY22zkZavWPuyMICrXKKUQ
-	 +l4Q9xfmjsxdQ==
+	b=S0Zmmd7doeRMY6tLmoacEozs7uGMGwUbgQrg9D+A+PP6xQvIl9DNrDuuvNnw8j1aU
+	 nFVDsSW9FIeqFV6QLf4meJ3vQ+MTleK79hjLSFwICEFHm2mNc/Gj6C2kgxp1zZ+YZZ
+	 GXpgzcfjLsU6KzyYBkb3+3ICeSr09+XDcPQUWT02k2h95dQQacR5+p+uobOjItkaqg
+	 P6OSsJMQuy/LsuMzza4kZA6W88s0STr+NWqZNpICjqA+xy/9GRowZtMMzKuQOHt1OH
+	 f+eh5jcvi4kRIRmi+ayeSSZr6rzJFTPqfE1xswNxbHAZdR+catWPQbrUEHbryCq4+R
+	 1MHZEt62uMRWw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Dillon Varone <Dillon.Varone@amd.com>,
-	Sridevi Arvindekar <sridevi.arvindekar@amd.com>,
-	Roman Li <roman.li@amd.com>,
-	Dan Wheeler <daniel.wheeler@amd.com>,
+Cc: Gangliang Xie <ganglxie@amd.com>,
+	Tao Zhou <tao.zhou1@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>,
-	Alvin.Lee2@amd.com,
-	alex.hung@amd.com,
-	nicholas.kazlauskas@amd.com,
-	mwen@igalia.com,
-	Charlene.Liu@amd.com,
-	Yihan.Zhu@amd.com,
+	Hawking.Zhang@amd.com,
+	YiPeng.Chai@amd.com,
+	lijo.lazar@amd.com,
+	xiang.liu@amd.com,
 	yelangyan@huaqin.corp-partner.google.com,
-	Ilya.Bakoulin@amd.com
-Subject: [PATCH AUTOSEL 6.19-6.18] drm/amd/display: Guard FAMS2 configuration updates
-Date: Fri, 13 Feb 2026 19:58:47 -0500
-Message-ID: <20260214010245.3671907-47-sashal@kernel.org>
+	cesun102@amd.com
+Subject: [PATCH AUTOSEL 6.19] drm/amdgpu: mark invalid records with U64_MAX
+Date: Fri, 13 Feb 2026 19:58:48 -0500
+Message-ID: <20260214010245.3671907-48-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260214010245.3671907-1-sashal@kernel.org>
 References: <20260214010245.3671907-1-sashal@kernel.org>
@@ -58,182 +54,161 @@ MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.19
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Dillon Varone <Dillon.Varone@amd.com>
+From: Gangliang Xie <ganglxie@amd.com>
 
-[ Upstream commit 7dedb906cdfec100061daf41f8e54266e975987d ]
+[ Upstream commit 0028b86b52f7609e36af635ef6cb908925306233 ]
 
-[WHY&HOW]
-If DMCUB is not initialized or FAMS2 is not supported, the
-interface should not be called.
+set retired_page of invalid ras records to U64_MAX, and skip
+them when reading ras records
 
-Reviewed-by: Sridevi Arvindekar <sridevi.arvindekar@amd.com>
-Signed-off-by: Dillon Varone <Dillon.Varone@amd.com>
-Signed-off-by: Roman Li <roman.li@amd.com>
-Tested-by: Dan Wheeler <daniel.wheeler@amd.com>
+Signed-off-by: Gangliang Xie <ganglxie@amd.com>
+Reviewed-by: Tao Zhou <tao.zhou1@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-Now I have a complete analysis. Let me summarize:
+## Analysis of commit: "drm/amdgpu: mark invalid records with U64_MAX"
 
----
+### Commit Message Analysis
 
-## Detailed Analysis
+The commit message is terse: "set retired_page of invalid ras records to
+U64_MAX, and skip them when reading ras records." This describes a fix
+for handling invalid RAS (Reliability, Availability, Serviceability) bad
+page records in AMD GPU drivers.
 
-### 1. COMMIT MESSAGE ANALYSIS
+### Code Change Analysis
 
-The commit message says: "If DMCUB is not initialized or FAMS2 is not
-supported, the interface should not be called." This is a classic
-guard/safety check addition that prevents calling firmware communication
-code when the firmware service is not available.
+Let me examine the two changes in detail:
 
-### 2. CODE CHANGE ANALYSIS
+**Change 1: `__amdgpu_ras_restore_bad_pages`** (the write path)
 
-The change is to `dcn401_hardware_release()` in `dcn401_hwseq.c`. It
-adds two identical guard checks before calling
-`dc_dmub_srv_fams2_update_config()`:
+When restoring bad pages from EEPROM, if
+`amdgpu_ras_check_bad_page_unlock()` returns true (meaning the page is
+already tracked / is a duplicate), the old code would increment
+`data->count` and decrement `data->space_left` but **leave the
+`data->bps[data->count]` entry uninitialized** (or containing whatever
+stale data was there). The new code sets
+`data->bps[data->count].retired_page = U64_MAX` to explicitly mark this
+slot as invalid before incrementing the count.
 
-```c
-if (dc->ctx->dmub_srv && dc->debug.fams2_config.bits.enable)
-```
+This is a bug fix: previously, when a duplicate bad page was detected
+during restore, a slot was consumed in the `data->bps` array without
+being properly initialized. This uninitialized entry could contain
+garbage data — a stale or random `retired_page` value.
 
-There are two call sites in the function (in an if/else block controlled
-by `disable_force_pstate_allow_on_hw_release`), and both get the same
-guard.
+**Change 2: `amdgpu_ras_badpages_read`** (the read path)
 
-### 3. THE BUG: NULL POINTER DEREFERENCE
+When reading bad pages, the new code skips entries where `retired_page
+== U64_MAX`. This ensures that the invalid/placeholder entries created
+in Change 1 are not reported to userspace or used downstream.
 
-**The crash path:** The dispatch function
-`dc_dmub_srv_fams2_update_config()` (at `dc_dmub_srv.c:1895`) checks
-`dc->debug.fams_version.major` and dispatches to:
-- `dc_dmub_srv_rb_based_fams2_update_config()` if `major == 2` (safe -
-  downstream has NULL check)
-- `dc_dmub_srv_ib_based_fams2_update_config()` if `major == 3`
-  (**CRASH** - immediately dereferences dmub_srv)
+### Bug Mechanism
 
-The `dc_dmub_srv_ib_based_fams2_update_config()` function's very first
-line is:
+The bug is:
+1. During `__amdgpu_ras_restore_bad_pages`, duplicate bad pages cause a
+   slot to be consumed in the `bps` array with uninitialized content
+2. When `amdgpu_ras_badpages_read` later iterates over entries, it would
+   read these uninitialized entries, potentially reporting garbage
+   retired page addresses
+3. This could lead to incorrect bad page tracking — the RAS subsystem
+   might try to retire pages at wrong addresses, potentially causing
+   data corruption or incorrect memory management on the GPU
 
-```1852:1852:drivers/gpu/drm/amd/display/dc/dc_dmub_srv.c
-struct dmub_fams2_config_v2 *config = (struct dmub_fams2_config_v2
-*)dc->ctx->dmub_srv->dmub->ib_mem_gart.cpu_addr;
-```
+### Classification
 
-If `dc->ctx->dmub_srv` is NULL, this is a **NULL pointer dereference**
-leading to a kernel oops/crash.
+This is a **bug fix** — it fixes uninitialized data in the RAS bad page
+tracking array. The RAS subsystem is responsible for tracking pages with
+uncorrectable memory errors on the GPU. Incorrect tracking could lead
+to:
+- Reporting wrong bad pages to userspace
+- Failing to properly isolate bad memory regions
+- Potential data corruption if bad pages are not properly retired
 
-**Consistency fix:** The other caller of
-`dc_dmub_srv_fams2_update_config()`, `dcn401_fams2_update_config()`,
-already has the proper guard:
+### Scope and Risk Assessment
 
-```1511:1521:drivers/gpu/drm/amd/display/dc/hwss/dcn401/dcn401_hwseq.c
-void dcn401_fams2_update_config(struct dc *dc, struct dc_state *context,
-bool enable)
-{
-        if (!dc->ctx || !dc->ctx->dmub_srv ||
-!dc->debug.fams2_config.bits.enable)
-                return;
-        // ...
-}
-```
+- **Files changed**: 1 file (`amdgpu_ras.c`)
+- **Lines changed**: ~6 lines of new code (2 comment lines + 4 code
+  lines)
+- **Risk**: Very low — the changes are additive (adding a sentinel value
+  and a skip check), don't change control flow for valid entries, and
+  are confined to RAS error handling
+- **Subsystem**: AMD GPU RAS — important for data center and workstation
+  users with AMD GPUs that have ECC memory
 
-So `dcn401_hardware_release()` was the ONLY unguarded caller.
+### Dependency Check
 
-### 4. AFFECTED STABLE TREES
+The change uses `U64_MAX` which is a standard kernel constant. The
+functions modified (`amdgpu_ras_badpages_read` and
+`__amdgpu_ras_restore_bad_pages`) are well-established in the amdgpu
+driver. No dependency on other recent commits is apparent.
 
-My investigation reveals:
-- **v6.12, v6.15, v6.16**: DCN401 exists, but
-  `dc_dmub_srv_fams2_update_config()` is a single inline implementation
-  (no dispatch, no ib_based path). The downstream
-  `dc_dmub_srv_cmd_list_queue_execute()` has its own NULL check. **No
-  crash** in these versions, though the guard is still defensive.
-- **v6.17**: The dispatch pattern + ib_based path exists, so the crash
-  IS possible, but `dcn401_hardware_release()` has a different structure
-  (single call, no if/else). Patch would **need adaptation**.
-- **v6.18**: Has the exact same code structure as v6.19 (the if/else
-  block with two calls). The dispatch + ib_based crash path exists.
-  Patch **applies cleanly** and fixes a real NULL pointer dereference.
+### User Impact
 
-### 5. SCOPE AND RISK
+Users with AMD GPUs (especially data center GPUs like MI-series with ECC
+memory) rely on the RAS subsystem to correctly track and retire bad
+memory pages. If bad page records contain garbage data:
+- The GPU driver may attempt to retire incorrect pages
+- Bad pages may not actually be retired, leading to repeated
+  uncorrectable errors
+- System reliability for GPU compute workloads could be affected
 
-- **Lines changed**: ~4 lines (adding 2 guard conditions)
-- **Files changed**: 1 file
-- **Risk**: Extremely low - adding guard checks before a function call
-  is the safest possible change
-- **Pattern**: Matches the existing guard in the sibling
-  `dcn401_fams2_update_config()` function exactly
+### Stability Indicators
 
-### 6. USER IMPACT
+- **Reviewed-by: Tao Zhou** — subsystem reviewer has approved
+- **Signed-off-by: Alex Deucher** — AMD GPU maintainer has signed off
+- The fix is straightforward and the sentinel value approach is a well-
+  understood pattern
 
-- **Hardware**: AMD DCN401 display controller (AMD RDNA 4 / latest
-  generation GPU)
-- **Trigger**: `dc_hardware_release()` is called on driver unload. If
-  DMCUB firmware is not initialized (e.g., firmware load failed, early
-  error path, or unsupported configuration), the unguarded call would
-  crash.
-- **Severity**: Kernel oops/crash during driver unload
-- **Users affected**: Users with DCN401 hardware in configurations where
-  DMCUB fails to initialize
+### Concerns
 
-### 7. STABILITY INDICATORS
+- The commit is small and surgical
+- The sentinel value `U64_MAX` is a valid choice since no real page
+  address would be `U64_MAX`
+- The fix addresses both the write path (marking invalid) and read path
+  (skipping invalid), so it's self-contained
 
-- **Reviewed-by**: Sridevi Arvindekar (AMD)
-- **Tested-by**: Dan Wheeler (AMD)
-- **Author**: Dillon Varone (AMD, same author as the sibling function
-  with the guard pattern)
+### Verdict
 
-### 8. DECISION
-
-This commit fixes a real NULL pointer dereference that can crash the
-kernel during hardware release on DCN401 systems. The fix is:
-- **Obviously correct**: Adds the same guard already used by the other
-  caller
-- **Small and surgical**: 4 lines of guard conditions
-- **Zero regression risk**: Guard checks can only prevent calls, never
-  cause new issues
-- **Fixes a real crash**: NULL deref in
-  `dc_dmub_srv_ib_based_fams2_update_config`
-- **Applicable to at least v6.18 stable**: Code structure matches
-  exactly
-
-The only concern is that DCN401 is relatively new hardware, but the fix
-is needed for active stable trees (6.17.y, 6.18.y) where the crash path
-exists.
+This fixes a real bug: uninitialized data in the RAS bad page array that
+could lead to incorrect bad page reporting and handling. The fix is
+small (6 lines), self-contained, well-reviewed, and low-risk. It meets
+stable kernel criteria: it's obviously correct, fixes a real bug
+affecting data integrity in GPU RAS handling, and is small in scope.
 
 **YES**
 
- drivers/gpu/drm/amd/display/dc/hwss/dcn401/dcn401_hwseq.c | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_ras.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/drivers/gpu/drm/amd/display/dc/hwss/dcn401/dcn401_hwseq.c b/drivers/gpu/drm/amd/display/dc/hwss/dcn401/dcn401_hwseq.c
-index 5ffe41a96864a..12ce3789f5130 100644
---- a/drivers/gpu/drm/amd/display/dc/hwss/dcn401/dcn401_hwseq.c
-+++ b/drivers/gpu/drm/amd/display/dc/hwss/dcn401/dcn401_hwseq.c
-@@ -1774,7 +1774,8 @@ void dcn401_unblank_stream(struct pipe_ctx *pipe_ctx,
- void dcn401_hardware_release(struct dc *dc)
- {
- 	if (!dc->debug.disable_force_pstate_allow_on_hw_release) {
--		dc_dmub_srv_fams2_update_config(dc, dc->current_state, false);
-+		if (dc->ctx->dmub_srv && dc->debug.fams2_config.bits.enable)
-+			dc_dmub_srv_fams2_update_config(dc, dc->current_state, false);
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_ras.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_ras.c
+index 3d51a3c8852ad..a2a0a7b994d16 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_ras.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_ras.c
+@@ -2777,6 +2777,10 @@ static int amdgpu_ras_badpages_read(struct amdgpu_device *adev,
+ 			if (!data->bps[i].ts)
+ 				continue;
  
- 		/* If pstate unsupported, or still supported
- 		* by firmware, force it supported by dcn
-@@ -1794,7 +1795,9 @@ void dcn401_hardware_release(struct dc *dc)
- 			dc->clk_mgr->clks.p_state_change_support = false;
- 			dc->clk_mgr->funcs->update_clocks(dc->clk_mgr, dc->current_state, true);
- 		}
--		dc_dmub_srv_fams2_update_config(dc, dc->current_state, false);
++			/* U64_MAX is used to mark the record as invalid */
++			if (data->bps[i].retired_page == U64_MAX)
++				continue;
 +
-+		if (dc->ctx->dmub_srv && dc->debug.fams2_config.bits.enable)
-+			dc_dmub_srv_fams2_update_config(dc, dc->current_state, false);
- 	}
- }
+ 			bps[r].bp = data->bps[i].retired_page;
+ 			r++;
+ 			if (r >= count)
+@@ -3083,6 +3087,8 @@ static int __amdgpu_ras_restore_bad_pages(struct amdgpu_device *adev,
  
+ 		if (amdgpu_ras_check_bad_page_unlock(con,
+ 			bps[j].retired_page << AMDGPU_GPU_PAGE_SHIFT)) {
++			/* set to U64_MAX to mark it as invalid */
++			data->bps[data->count].retired_page = U64_MAX;
+ 			data->count++;
+ 			data->space_left--;
+ 			continue;
 -- 
 2.51.0
 
