@@ -1,45 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06D6928507B;
-	Sat, 14 Feb 2026 21:27:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68AA931326A;
+	Sat, 14 Feb 2026 21:27:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771104442; cv=none; b=WJ2tbTgnI6FiyLtVGabdE3RO1RWwEFHW5ruZasHyJoPvVl99MnWdiTHcpkWBSQ1RdmrzQ1zWrr1ARrD2liRcG8KdVoJO61zNAia//h2cnDCKPGgvTMFAy/WHc4Ftg7EbXHQvi3QLNhJ3E9OpXc59ZY7icrwdfwvP+ELVIyO5Xj8=
+	t=1771104443; cv=none; b=NpbQ2Giq5kNjBTBZENN1CCJ1HUB/otn4KuFymUBNwglT4wlyZZBVxlrpoHLAXM/SXZy18vmOCkuE5iGitiKd8agtTy19qcErHDZ26Rtqvx1fMwcgJoUCkEYWwk9U47smXIfVxZCwpTR9ihlrk6hf4MoF/FaZXKndHgJQHHXhhXo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771104442; c=relaxed/simple;
-	bh=zVyE5EpYRq9YZ/SKfSO2a8uHLflT7p8ze0wQ3zV77v4=;
+	s=arc-20240116; t=1771104443; c=relaxed/simple;
+	bh=1HBs2a2Sv4TzcLTpnESr5wt7PsFTNkkZDOhNrRLFTz8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MXDzAJrbZImz8lZNERBFEPtj6t25oZit7Lr1futSDXqIUlzMsOvFUye4RPlmhQRiAfYaJNSvhLWYuj0usKPKyxfegseyV0nI4hihqHQ+MvXfgoFXv4Os8Xv6/U9U9fSRuL0UcMBlEAWfUvO9ytedZoJx7VDwBP/c5/YT4pIeTTo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=tCbG/gJi; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=FowKrVJTk9J3HMVjn9c4g7lmErRHiy2bPxZ2oZxA0LEw4AnRq0+b1xD+9U79cKYyPwINkZYNw6tksIJA6gajmpbgxNMPfB7hTT/kO2F8bM4gYD9ZeSZyQ43Wkz/0QnqpIeUbmACNosYyEF/CA+Fo2N5CP5MOxq2XPj4DO4cw358=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=QxupgQ7w; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="tCbG/gJi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DCED4C16AAE;
-	Sat, 14 Feb 2026 21:27:20 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="QxupgQ7w"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 50D01C19425;
+	Sat, 14 Feb 2026 21:27:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1771104441;
-	bh=zVyE5EpYRq9YZ/SKfSO2a8uHLflT7p8ze0wQ3zV77v4=;
+	s=k20201202; t=1771104443;
+	bh=1HBs2a2Sv4TzcLTpnESr5wt7PsFTNkkZDOhNrRLFTz8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tCbG/gJiIGW6k2pDxzNQOOiBor3If9PUTJdWYezdV2d5KXIwbwqSxh9iSjGor8g+F
-	 hBRMKUe7Hz1DO+Pjd1CwffE3IkpwFKbE3kyxp4BKgedbiIUKoP3nRa2jAmHnykP/q4
-	 SyS/H+HT0xwWEqkNA8xQyhoyOilk3fCyCgwwRfM2hbJdc3ZxvRenGZXMzST8oG7u4F
-	 z+oOoKLaGru70ghmKpjVAdP2DXPzSbhn8E3PT8MqaEm94kM6J0fnYr+inXlrwPwYqn
-	 j5xsNNzcUYGUArTGPORdkofyioD6Br7k/IwwTpHUIAOV8p9ZgR9Yol+1NpLcpUbWQJ
-	 HH6wHSqZcJoeg==
+	b=QxupgQ7wxmaixK2TLBvHqjxGyK/5eoCCfaBGZPSlW2YUeDdlGkWaZxq1mVY9gTkrl
+	 1/5HPLqKBF49lLEaRSWpp/hn0AgOZafUk3uMMfUiUeC6lQwVdqtKF6Hf0wph2oiW/S
+	 Fq6l92xOY3r3g8TH0Z/3hiRStqLzIBJUgNKPCQQYxmJoqf/IWq/EhQqj1vcUYaSchm
+	 BngSNJUmOAOQC3TYSDuRo4He7O5/4dF+7vsAcq/eagXWledcnoj+a/9vI1ysTGNDnW
+	 NO8f4GqUYhdPLDT2lMmS99P1LfTdQTiMOYLRVkvqqZ0LLlVVn+zXkS/GPgCearb6NA
+	 DoH38tW9V8bkQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Kuniyuki Iwashima <kuniyu@google.com>,
-	syzbot+d24f940f770afda885cf@syzkaller.appspotmail.com,
-	Simon Horman <horms@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+Cc: Keith Busch <kbusch@kernel.org>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Dan Williams <dan.j.williams@intel.com>,
 	Sasha Levin <sashal@kernel.org>,
-	davem@davemloft.net,
-	dsahern@kernel.org,
-	netdev@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.19-5.10] ipv4: fib: Annotate access to struct fib_alias.fa_state.
-Date: Sat, 14 Feb 2026 16:23:51 -0500
-Message-ID: <20260214212452.782265-86-sashal@kernel.org>
+	linux-pci@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.19-5.10] PCI: Fix pci_slot_lock () device locking
+Date: Sat, 14 Feb 2026 16:23:52 -0500
+Message-ID: <20260214212452.782265-87-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260214212452.782265-1-sashal@kernel.org>
 References: <20260214212452.782265-1-sashal@kernel.org>
@@ -54,231 +51,139 @@ X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.19
 Content-Transfer-Encoding: 8bit
 
-From: Kuniyuki Iwashima <kuniyu@google.com>
+From: Keith Busch <kbusch@kernel.org>
 
-[ Upstream commit 6e84fc395e90465f1418f582a9f7d53c87ab010e ]
+[ Upstream commit 1f5e57c622b4dc9b8e7d291d560138d92cfbe5bf ]
 
-syzbot reported that struct fib_alias.fa_state can be
-modified locklessly by RCU readers. [0]
+Like pci_bus_lock(), pci_slot_lock() needs to lock the bridge device to
+prevent warnings like:
 
-Let's use READ_ONCE()/WRITE_ONCE() properly.
+  pcieport 0000:e2:05.0: unlocked secondary bus reset via: pciehp_reset_slot+0x55/0xa0
 
-[0]:
-BUG: KCSAN: data-race in fib_table_lookup / fib_table_lookup
+Take and release the lock for the bridge providing the slot for the
+lock/trylock and unlock routines.
 
-write to 0xffff88811b06a7fa of 1 bytes by task 4167 on cpu 0:
- fib_alias_accessed net/ipv4/fib_lookup.h:32 [inline]
- fib_table_lookup+0x361/0xd60 net/ipv4/fib_trie.c:1565
- fib_lookup include/net/ip_fib.h:390 [inline]
- ip_route_output_key_hash_rcu+0x378/0x1380 net/ipv4/route.c:2814
- ip_route_output_key_hash net/ipv4/route.c:2705 [inline]
- __ip_route_output_key include/net/route.h:169 [inline]
- ip_route_output_flow+0x65/0x110 net/ipv4/route.c:2932
- udp_sendmsg+0x13c3/0x15d0 net/ipv4/udp.c:1450
- inet_sendmsg+0xac/0xd0 net/ipv4/af_inet.c:859
- sock_sendmsg_nosec net/socket.c:727 [inline]
- __sock_sendmsg net/socket.c:742 [inline]
- ____sys_sendmsg+0x53a/0x600 net/socket.c:2592
- ___sys_sendmsg+0x195/0x1e0 net/socket.c:2646
- __sys_sendmmsg+0x185/0x320 net/socket.c:2735
- __do_sys_sendmmsg net/socket.c:2762 [inline]
- __se_sys_sendmmsg net/socket.c:2759 [inline]
- __x64_sys_sendmmsg+0x57/0x70 net/socket.c:2759
- x64_sys_call+0x1e28/0x3000 arch/x86/include/generated/asm/syscalls_64.h:308
- do_syscall_x64 arch/x86/entry/syscall_64.c:63 [inline]
- do_syscall_64+0xc0/0x2a0 arch/x86/entry/syscall_64.c:94
- entry_SYSCALL_64_after_hwframe+0x77/0x7f
-
-read to 0xffff88811b06a7fa of 1 bytes by task 4168 on cpu 1:
- fib_alias_accessed net/ipv4/fib_lookup.h:31 [inline]
- fib_table_lookup+0x338/0xd60 net/ipv4/fib_trie.c:1565
- fib_lookup include/net/ip_fib.h:390 [inline]
- ip_route_output_key_hash_rcu+0x378/0x1380 net/ipv4/route.c:2814
- ip_route_output_key_hash net/ipv4/route.c:2705 [inline]
- __ip_route_output_key include/net/route.h:169 [inline]
- ip_route_output_flow+0x65/0x110 net/ipv4/route.c:2932
- udp_sendmsg+0x13c3/0x15d0 net/ipv4/udp.c:1450
- inet_sendmsg+0xac/0xd0 net/ipv4/af_inet.c:859
- sock_sendmsg_nosec net/socket.c:727 [inline]
- __sock_sendmsg net/socket.c:742 [inline]
- ____sys_sendmsg+0x53a/0x600 net/socket.c:2592
- ___sys_sendmsg+0x195/0x1e0 net/socket.c:2646
- __sys_sendmmsg+0x185/0x320 net/socket.c:2735
- __do_sys_sendmmsg net/socket.c:2762 [inline]
- __se_sys_sendmmsg net/socket.c:2759 [inline]
- __x64_sys_sendmmsg+0x57/0x70 net/socket.c:2759
- x64_sys_call+0x1e28/0x3000 arch/x86/include/generated/asm/syscalls_64.h:308
- do_syscall_x64 arch/x86/entry/syscall_64.c:63 [inline]
- do_syscall_64+0xc0/0x2a0 arch/x86/entry/syscall_64.c:94
- entry_SYSCALL_64_after_hwframe+0x77/0x7f
-
-value changed: 0x00 -> 0x01
-
-Reported by Kernel Concurrency Sanitizer on:
-CPU: 1 UID: 0 PID: 4168 Comm: syz.4.206 Not tainted syzkaller #0 PREEMPT(voluntary)
-Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 10/25/2025
-
-Reported-by: syzbot+d24f940f770afda885cf@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/netdev/69783ead.050a0220.c9109.0013.GAE@google.com/
-Signed-off-by: Kuniyuki Iwashima <kuniyu@google.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20260127043528.514160-1-kuniyu@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Keith Busch <kbusch@kernel.org>
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Reviewed-by: Dan Williams <dan.j.williams@intel.com>
+Link: https://patch.msgid.link/20260130165953.751063-3-kbusch@meta.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-## Analysis of Commit: ipv4: fib: Annotate access to struct
-fib_alias.fa_state
+The commit is not yet in this tree. That's fine - it's a candidate being
+evaluated.
 
-### 1. Commit Message Analysis
+### SUMMARY
 
-The commit fixes a KCSAN-detected data race in `fib_table_lookup` on
-`struct fib_alias.fa_state`. The race is between concurrent RCU readers
-that both read and write `fa_state` without proper annotations. The
-syzbot report clearly demonstrates two tasks on different CPUs
-concurrently accessing the same memory location, with one writing and
-one reading.
+**What the commit fixes**: `pci_slot_lock()`, `pci_slot_unlock()`, and
+`pci_slot_trylock()` don't lock the bridge device providing the slot,
+unlike their `pci_bus_*()` counterparts which were fixed in v6.11
+(commit `a4e772898f8bf`). This causes:
+1. Warnings about "unlocked secondary bus reset" during PCIe hotplug
+   slot reset
+2. A real synchronization gap - the bridge device can be accessed
+   concurrently during slot reset operations
 
-Key indicators:
-- **Reported-by: syzbot** - fuzzer-found, reproducible bug
-- **KCSAN data race** - detected by kernel sanitizer
-- **Reviewed-by: Simon Horman** - reviewed by a respected networking
-  maintainer
-- **Signed-off-by: Jakub Kicinski** - accepted by the net maintainer
+**Why it matters for stable**:
+- Fixes a real locking bug that triggers warnings and could lead to
+  races during PCI hotplug operations
+- PCIe hotplug is widely used (servers, Thunderbolt, NVMe)
+- The fix follows an established, proven pattern (mirrors what
+  `pci_bus_lock()` already does)
+- Small, surgical change (~20 lines of logic in one file)
+- Written by Keith Busch (PCI/NVMe expert), committed by Bjorn Helgaas
+  (PCI maintainer), reviewed by Dan Williams
+- No new features, no API changes
 
-### 2. Code Change Analysis
+**Dependencies**: Requires commit `a4e772898f8bf` ("PCI: Add missing
+bridge lock to pci_bus_lock()") which is in v6.11+. May also depend on
+`f3efb9569b4a2` ("PCI: Fix lock symmetry in pci_slot_unlock()") from
+v6.16-rc1. The backport would need to target only stable trees that
+contain the prerequisite.
 
-The fix is extremely surgical - it adds `READ_ONCE()`/`WRITE_ONCE()`
-annotations to accesses of `fa->fa_state`:
+**Risk**: Very low. The change adds symmetric lock/unlock operations
+following an identical pattern already proven in `pci_bus_lock()`. The
+trylock path correctly handles contention (unlocks bridge on failure).
 
-**In `fib_lookup.h` (`fib_alias_accessed()`):**
-- The read of `fa->fa_state` is changed to `READ_ONCE(fa->fa_state)`
-- The write is changed to `WRITE_ONCE(fa->fa_state, fa_state |
-  FA_S_ACCESSED)`
-- This is the hot path - called during every FIB lookup via
-  `fib_table_lookup()`
-
-**In `fib_trie.c` (`fib_table_insert()`):**
-- `state = fa->fa_state` changed to `state = READ_ONCE(fa->fa_state)`
-- This reads the state of an existing alias during route replacement,
-  while RCU readers may be concurrently calling `fib_alias_accessed()`
-
-**In `fib_trie.c` (`fib_table_delete()`):**
-- `fa_to_delete->fa_state & FA_S_ACCESSED` changed to
-  `READ_ONCE(fa_to_delete->fa_state) & FA_S_ACCESSED`
-- This reads the state during route deletion while RCU readers may be
-  concurrently modifying it
-
-### 3. Bug Mechanism
-
-The `fib_alias_accessed()` function is called under RCU read lock by
-`fib_table_lookup()`. Multiple CPUs can execute this concurrently on the
-same `fib_alias`. One CPU reads `fa_state`, checks if `FA_S_ACCESSED` is
-set, and if not, sets it. Another CPU does the same thing
-simultaneously. Without `READ_ONCE()`/`WRITE_ONCE()`, the compiler is
-free to:
-- Optimize away the read (use a cached value)
-- Split the write into multiple stores
-- Reorder the accesses
-
-While the practical consequence here is relatively benign (the worst
-case is a redundant cache flush or a missed `FA_S_ACCESSED` marking),
-the data race is undefined behavior per the C standard and KCSAN
-correctly flags it. These annotations are the standard Linux kernel
-pattern for fixing such races.
-
-### 4. Scope and Risk Assessment
-
-- **Lines changed:** ~6 lines of actual code change across 2 files
-- **Files touched:** 2 (both in the same subsystem: IPv4 FIB)
-- **Risk:** Extremely low - `READ_ONCE()`/`WRITE_ONCE()` are transparent
-  compiler barriers that don't change the logic
-- **Subsystem:** Core IPv4 routing (FIB lookup) - very widely used
-- **Could break something:** No. These annotations only prevent compiler
-  optimizations that would be incorrect for concurrent access
-
-### 5. User Impact
-
-- **Who is affected:** Every system doing IPv4 routing (essentially all
-  Linux systems)
-- **Severity:** The data race itself is in a very hot path. While the
-  practical consequence is low (it's a "set once" flag), undefined
-  behavior in the kernel is always worth fixing
-- **KCSAN noise:** Without this fix, KCSAN-enabled kernels will keep
-  reporting this race, which affects kernel testing and development
-
-### 6. Stable Kernel Criteria
-
-- **Obviously correct:** Yes - textbook `READ_ONCE()`/`WRITE_ONCE()`
-  annotation
-- **Fixes a real bug:** Yes - KCSAN-detected data race, undefined
-  behavior
-- **Small and contained:** Yes - 6 lines across 2 files in one subsystem
-- **No new features:** Correct - pure annotation fix
-- **Tested:** Reviewed by Simon Horman, merged by Jakub Kicinski
-
-### 7. Dependencies
-
-No dependencies on other commits. `READ_ONCE()`/`WRITE_ONCE()` have been
-available in the kernel for many years. The `fib_alias_accessed()`
-function and `fa_state` field exist in all stable trees.
-
-### Conclusion
-
-This is a small, surgical fix for a KCSAN-detected data race in core
-IPv4 FIB lookup code. It uses the standard `READ_ONCE()`/`WRITE_ONCE()`
-pattern, has essentially zero risk of regression, and fixes undefined
-behavior in one of the most heavily used kernel paths. It was reported
-by syzbot, reviewed by a networking maintainer, and merged by the net
-maintainer.
+This is a clear bug fix - missing synchronization during PCI slot reset
+operations - that is small, well-reviewed, follows a proven pattern, and
+fixes a real locking issue. It meets all stable kernel criteria.
 
 **YES**
 
- net/ipv4/fib_lookup.h | 6 ++++--
- net/ipv4/fib_trie.c   | 4 ++--
- 2 files changed, 6 insertions(+), 4 deletions(-)
+ drivers/pci/pci.c | 23 +++++++++++++++++------
+ 1 file changed, 17 insertions(+), 6 deletions(-)
 
-diff --git a/net/ipv4/fib_lookup.h b/net/ipv4/fib_lookup.h
-index f9b9e26c32c19..0b72796dd1ad3 100644
---- a/net/ipv4/fib_lookup.h
-+++ b/net/ipv4/fib_lookup.h
-@@ -28,8 +28,10 @@ struct fib_alias {
- /* Don't write on fa_state unless needed, to keep it shared on all cpus */
- static inline void fib_alias_accessed(struct fib_alias *fa)
+diff --git a/drivers/pci/pci.c b/drivers/pci/pci.c
+index 13dbb405dc31f..b99ad5f50f30d 100644
+--- a/drivers/pci/pci.c
++++ b/drivers/pci/pci.c
+@@ -5290,10 +5290,9 @@ static int pci_bus_trylock(struct pci_bus *bus)
+ /* Do any devices on or below this slot prevent a bus reset? */
+ static bool pci_slot_resettable(struct pci_slot *slot)
  {
--	if (!(fa->fa_state & FA_S_ACCESSED))
--		fa->fa_state |= FA_S_ACCESSED;
-+	u8 fa_state = READ_ONCE(fa->fa_state);
+-	struct pci_dev *dev;
++	struct pci_dev *dev, *bridge = slot->bus->self;
+ 
+-	if (slot->bus->self &&
+-	    (slot->bus->self->dev_flags & PCI_DEV_FLAGS_NO_BUS_RESET))
++	if (bridge && (bridge->dev_flags & PCI_DEV_FLAGS_NO_BUS_RESET))
+ 		return false;
+ 
+ 	list_for_each_entry(dev, &slot->bus->devices, bus_list) {
+@@ -5310,7 +5309,10 @@ static bool pci_slot_resettable(struct pci_slot *slot)
+ /* Lock devices from the top of the tree down */
+ static void pci_slot_lock(struct pci_slot *slot)
+ {
+-	struct pci_dev *dev;
++	struct pci_dev *dev, *bridge = slot->bus->self;
 +
-+	if (!(fa_state & FA_S_ACCESSED))
-+		WRITE_ONCE(fa->fa_state, fa_state | FA_S_ACCESSED);
++	if (bridge)
++		pci_dev_lock(bridge);
+ 
+ 	list_for_each_entry(dev, &slot->bus->devices, bus_list) {
+ 		if (!dev->slot || dev->slot != slot)
+@@ -5325,7 +5327,7 @@ static void pci_slot_lock(struct pci_slot *slot)
+ /* Unlock devices from the bottom of the tree up */
+ static void pci_slot_unlock(struct pci_slot *slot)
+ {
+-	struct pci_dev *dev;
++	struct pci_dev *dev, *bridge = slot->bus->self;
+ 
+ 	list_for_each_entry(dev, &slot->bus->devices, bus_list) {
+ 		if (!dev->slot || dev->slot != slot)
+@@ -5335,12 +5337,18 @@ static void pci_slot_unlock(struct pci_slot *slot)
+ 		else
+ 			pci_dev_unlock(dev);
+ 	}
++
++	if (bridge)
++		pci_dev_unlock(bridge);
  }
  
- /* Exported by fib_semantics.c */
-diff --git a/net/ipv4/fib_trie.c b/net/ipv4/fib_trie.c
-index 7e2c17fec3fc4..1308213791f19 100644
---- a/net/ipv4/fib_trie.c
-+++ b/net/ipv4/fib_trie.c
-@@ -1280,7 +1280,7 @@ int fib_table_insert(struct net *net, struct fib_table *tb,
- 			new_fa->fa_dscp = fa->fa_dscp;
- 			new_fa->fa_info = fi;
- 			new_fa->fa_type = cfg->fc_type;
--			state = fa->fa_state;
-+			state = READ_ONCE(fa->fa_state);
- 			new_fa->fa_state = state & ~FA_S_ACCESSED;
- 			new_fa->fa_slen = fa->fa_slen;
- 			new_fa->tb_id = tb->tb_id;
-@@ -1745,7 +1745,7 @@ int fib_table_delete(struct net *net, struct fib_table *tb,
+ /* Return 1 on successful lock, 0 on contention */
+ static int pci_slot_trylock(struct pci_slot *slot)
+ {
+-	struct pci_dev *dev;
++	struct pci_dev *dev, *bridge = slot->bus->self;
++
++	if (bridge && !pci_dev_trylock(bridge))
++		return 0;
  
- 	fib_remove_alias(t, tp, l, fa_to_delete);
+ 	list_for_each_entry(dev, &slot->bus->devices, bus_list) {
+ 		if (!dev->slot || dev->slot != slot)
+@@ -5365,6 +5373,9 @@ static int pci_slot_trylock(struct pci_slot *slot)
+ 		else
+ 			pci_dev_unlock(dev);
+ 	}
++
++	if (bridge)
++		pci_dev_unlock(bridge);
+ 	return 0;
+ }
  
--	if (fa_to_delete->fa_state & FA_S_ACCESSED)
-+	if (READ_ONCE(fa_to_delete->fa_state) & FA_S_ACCESSED)
- 		rt_cache_flush(cfg->fc_nlinfo.nl_net);
- 
- 	fib_release_info(fa_to_delete->fa_info);
 -- 
 2.51.0
 
