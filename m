@@ -1,44 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC89621CC51;
-	Sat, 14 Feb 2026 01:04:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 579D1194098;
+	Sat, 14 Feb 2026 01:04:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771031089; cv=none; b=PrwxQ1Mevdk8RZtmmyeL5G0DxyHWqUHyBQIXLyaIC8jg8YbEPxKHqcO/a82B6JeQP8zC1vOOPWuBQ+Zc4EHOBd0AbxFhswoM6y+cLjT3yplxmZkWYAlHyVAHDcd3HyAAB3+SpEems3tS0CiMVn7Kqnh6WKO4Mjxw9B6Y1xyY4nE=
+	t=1771031091; cv=none; b=GGpZ57Hnr259Op4qwd0LNRG34laz/QpK8GCM1obt3zcgIIZKSWnN+m7k6029eumxKCahvW8zYdXvh221GWND+0YMnIWD+DE33HpnHkmMLz6v0qSnSt6xDdcgvHoX3M8PGMhNya4jTSF0CqdQGCEqEXJShR/QyiulSRI3ynVsBZU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771031089; c=relaxed/simple;
-	bh=RltvkgbiOio83qQupUFJ2gLje9Ee9CeirjZn3HX7XiY=;
+	s=arc-20240116; t=1771031091; c=relaxed/simple;
+	bh=JWpIsAxX37m3Pcjxfuw2UdnL2xPqmSqusRuYJyWw3y8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=ca7n6GukImV4qe07iTitQ7/kD+iBTW+oeoaLwlh9Rofj+LRrnuHjEB377+DJTkitQN1ibu0YNfmkdJZZdJE9DJGujN03rzKnvqMs8DT/InbCovb/9s2e4jPpj7chGN4VkF1+KVSzkdV+QJrLUuwjKhbznu1mNoZzu+07QuL7Hyw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=nWi2SCEy; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=A22BXyj4KnkgYbHvzgVDNLNb2GhG09R5VGV7ueEMOxiazz9gfEJEt2VQPHWfJ04tRvfE/t7YhxuzkMGw1N9mYjdWN0sNxsJ5p5hYUh73Yeqtnh7fzHJ4WBIgTAtYDJNSXw/pFG4MQ+BYpd/yoUtAwUYRNKBnP+lSNJpThSyYgdg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=V/svTsOs; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="nWi2SCEy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC0BDC16AAE;
-	Sat, 14 Feb 2026 01:04:47 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="V/svTsOs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F86AC16AAE;
+	Sat, 14 Feb 2026 01:04:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1771031088;
-	bh=RltvkgbiOio83qQupUFJ2gLje9Ee9CeirjZn3HX7XiY=;
+	s=k20201202; t=1771031091;
+	bh=JWpIsAxX37m3Pcjxfuw2UdnL2xPqmSqusRuYJyWw3y8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nWi2SCEyOWsKiFa69vWwIyYJyn5rdkUxvot4m4CWi9NqXp+yElhv+1pHMQtsX01Jb
-	 8/pQVum+B/UuGP8IZotYPj6oJldiFChuCXjS6ds3qLaJ5mU6XaWTEz5V6NEagyl1nj
-	 FtD+PoES1irBZZCj1TPxDUcLUI3upZ0ktRyc0kqHRHYEvrddhtl66pk0u2Uf/Fhm5K
-	 AlXI0p+YU0jIfFJeJBbdyvGov4xU30IJagr+GrQKbgR7mfNRVsfEFVbsgaTZ6ziplN
-	 0mIX/+yaL7DMorxd5YPnNuGtC5WTGTXPgHX+YfPJiogydKn/a6Dw9Pza353KpIXg4f
-	 BWj1EF81RYY2g==
+	b=V/svTsOsXpaxKZFcsjEZ2ggczMRD+PtDX1ENJjc5qZy7YJXX1VJvFfuPu1DOOa8bW
+	 lMNspmi5bKyBteCwxAdn2O5f3Q696JeGdXoSxR+YHRWW+aT5kPgxeaAngCDoUGNVA4
+	 7GJ93/NidTNAJJtDk+rPAK6h+8NgzIkbaXyAkRmtAN/fKMVtd+/wRQRbbgWU5MbxmA
+	 azcLEJ0x1Afvgj4cybWujO85VQ6Ybrly1w+yrvIGB/TNPsYhcTXKUQBucWOGm9kBb3
+	 KfCUTdbqja+qCBFoZ3ZPr2w7+6dmvF9metLnoPbGV5DYInafNrYoX7SwqAUHuUC70H
+	 /jxO5Yrl2qehQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Hsieh Hung-En <hungen3108@gmail.com>,
-	Mark Brown <broonie@kernel.org>,
+Cc: Harin Lee <me@harin.net>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>,
 	neil.armstrong@linaro.org,
-	kuninori.morimoto.gx@renesas.com,
-	yelangyan@huaqin.corp-partner.google.com,
-	nicolas.frattaroli@collabora.com
-Subject: [PATCH AUTOSEL 6.19-5.10] ASoC: es8328: Add error unwind in resume
-Date: Fri, 13 Feb 2026 19:58:56 -0500
-Message-ID: <20260214010245.3671907-56-sashal@kernel.org>
+	yelangyan@huaqin.corp-partner.google.com
+Subject: [PATCH AUTOSEL 6.19] ALSA: ctxfi: Add quirk for SE-300PCIE variant (160b:0102)
+Date: Fri, 13 Feb 2026 19:58:57 -0500
+Message-ID: <20260214010245.3671907-57-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260214010245.3671907-1-sashal@kernel.org>
 References: <20260214010245.3671907-1-sashal@kernel.org>
@@ -51,163 +49,154 @@ MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.19
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Hsieh Hung-En <hungen3108@gmail.com>
+From: Harin Lee <me@harin.net>
 
-[ Upstream commit 8232e6079ae6f8d3a61d87973cb427385aa469b9 ]
+[ Upstream commit 3a92733e052753d87fdd56bd6f621f969be28447 ]
 
-Handle failures in the resume path by unwinding previously enabled
-resources.
+Add quirk for the Onkyo SE-300PCIE variant with PCI subsystem ID
+(160b:0102). This variant (OK0011) was found in the official Windows
+driver packages.
 
-If enabling regulators or syncing the regcache fails, disable regulators
-and unprepare the clock to avoid leaking resources and leaving the device
-in a partially resumed state.
+Also, reorder entries and fix the indentation to maintain
+consistency.
 
-Signed-off-by: Hsieh Hung-En <hungen3108@gmail.com>
-Link: https://patch.msgid.link/20260130160017.2630-6-hungen3108@gmail.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Harin Lee <me@harin.net>
+Link: https://patch.msgid.link/20260208133001.680550-1-me@harin.net
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-## Analysis of ASoC: es8328: Add error unwind in resume
+## Analysis
 
-### 1. COMMIT MESSAGE ANALYSIS
+### Commit Message Analysis
 
-The commit message clearly describes adding error unwinding in the
-resume path of the ES8328 audio codec driver. The key phrases are:
-- "Handle failures in the resume path by unwinding previously enabled
-  resources"
-- "avoid leaking resources and leaving the device in a partially resumed
-  state"
+The commit adds a quirk entry for a new PCI subsystem ID variant
+(160b:0102) of the Onkyo SE-300PCIE sound card to the ctxfi driver. It
+also reorders existing entries and fixes whitespace (tabs vs spaces) for
+consistency.
 
-This is a **resource leak fix** on error paths — a classic stable-worthy
-bug fix pattern.
+### Code Change Analysis
 
-### 2. CODE CHANGE ANALYSIS
+The changes are:
 
-The change is in `es8328_resume()`:
+1. **New device quirk addition**: `SND_PCI_QUIRK(0x160b, 0x0102,
+   "OK0010", CTOK0010)` - This adds a new PCI subsystem ID for a variant
+   of the Onkyo SE-300PCIE card. The existing quirk `(0x160b, 0x0101)`
+   already exists for the OK0010 model, and this new entry (0x0102) maps
+   to the same `CTOK0010` type. This is a straightforward hardware ID
+   addition to an existing driver.
 
-**Before:** Two error paths (`regulator_bulk_enable` failure and
-`regcache_sync` failure) would `return ret` directly without cleaning up
-previously acquired resources.
+2. **Reordering**: The `SB1270` entry and `OK0010` entry are moved to
+   maintain a more logical order, and the `HENDRIX` quirk mask is placed
+   after specific entries. This is purely cosmetic reordering.
 
-**Bug 1:** If `regulator_bulk_enable()` fails, the clock
-(`clk_prepare_enable`) was already enabled but never disabled → **clock
-leak**.
+3. **Whitespace fix**: In `ct_subsys_name`, the indentation for
+   `CTSB1270` and `CTOK0010` entries is changed from spaces to tabs to
+   match the rest of the table. This is a pure style fix.
 
-**Bug 2:** If `regcache_sync()` fails, both the clock and regulators
-were enabled but never cleaned up → **clock leak + regulator leak**.
+### Classification
 
-**After:** The fix adds proper `goto` error labels:
-- `err_regulators`: disables regulators, then falls through to `err_clk`
-- `err_clk`: disables/unprepares the clock
+This falls squarely into the **"NEW DEVICE IDs / HARDWARE QUIRKS"**
+exception category for stable backports:
 
-This is a textbook error-path resource cleanup fix.
+- The driver (ctxfi) already exists in stable trees
+- The quirk type (`CTOK0010`) already exists in stable trees
+- Only a new PCI subsystem ID is being added to enable a hardware
+  variant
+- This is a trivial one-line functional addition
 
-### 3. CLASSIFICATION
+Without this quirk, the SE-300PCIE variant with subsystem ID 0x0102
+would not be properly identified and configured by the driver,
+potentially resulting in the card not working correctly or at all.
 
-This is a **bug fix** — specifically a resource leak fix. It fixes real
-resource leaks (clock and regulator) that occur on the resume error
-path. These are not theoretical:
+### Scope and Risk Assessment
 
-- If `regulator_bulk_enable` fails during resume (e.g., power supply
-  issue), the clock is leaked.
-- If `regcache_sync` fails during resume (e.g., I2C bus issue), both
-  clock and regulators are leaked.
-- Repeated suspend/resume cycles with failures could accumulate leaked
-  resources.
+- **Lines changed**: Very small - one new line of functional code, rest
+  is reordering and whitespace
+- **Files affected**: 1 file (`sound/pci/ctxfi/ctatc.c`)
+- **Risk**: Extremely low. The new quirk entry only matches a specific
+  PCI subsystem ID (160b:0102). It cannot affect any other hardware. The
+  reordering doesn't change behavior. The whitespace changes are
+  cosmetic.
+- **Regression potential**: Near zero. SND_PCI_QUIRK entries are matched
+  by exact vendor:device ID pairs.
 
-This falls squarely into the "cleanup that adds error handling IS a bug
-fix" category.
+### User Impact
 
-### 4. SCOPE AND RISK ASSESSMENT
+- Users with the Onkyo SE-300PCIE OK0011 variant need this quirk for
+  their hardware to work properly
+- The variant was found in official Windows driver packages, confirming
+  it's real shipping hardware
 
-- **Lines changed:** ~10 lines of actual change — very small and
-  surgical.
-- **Files changed:** 1 file (`sound/soc/codecs/es8328.c`)
-- **Risk:** Extremely low. The change only affects error paths. The
-  normal (successful) resume path is completely unchanged. The cleanup
-  calls (`regulator_bulk_disable`, `clk_disable_unprepare`) are
-  standard, well-understood operations.
-- **Subsystem:** ASoC codec driver — contained, driver-level change.
+### Dependencies
 
-### 5. USER IMPACT
+- The `CTOK0010` enum value must exist in the stable tree. Since the
+  existing `0x0101` quirk for `CTOK0010` is already present, this
+  dependency is satisfied.
 
-The ES8328 is used in real hardware (notably in some ARM SBCs and audio
-applications). Users who experience resume failures (e.g., due to
-transient I2C errors) would leak resources. Over time, this could cause:
-- Clock framework issues (clock stuck in enabled state)
-- Regulator framework issues (regulator stuck enabled, preventing power
-  savings)
-- Potential cascading failures in subsequent suspend/resume cycles
+### Concerns
 
-### 6. STABILITY INDICATORS
+- The reordering and whitespace changes are mixed in with the functional
+  change, which slightly increases the diff size but doesn't affect
+  correctness or risk.
+- The commit applies cleanly to any tree that has the existing OK0010
+  quirk entry.
 
-- The fix is straightforward and follows established kernel error-
-  handling patterns.
-- Reviewed and merged by Mark Brown (ASoC maintainer) — strong trust
-  indicator.
-- The pattern (goto-based error unwinding) is the standard Linux kernel
-  idiom.
+### Conclusion
 
-### 7. DEPENDENCY CHECK
-
-This fix is self-contained. It only modifies the `es8328_resume`
-function by changing two `return ret` statements to `goto` labels and
-adding cleanup code at the end of the function. No dependencies on other
-commits. The ES8328 driver exists in all recent stable trees.
-
-### CONCLUSION
-
-This commit fixes real resource leaks in the resume error path of the
-ES8328 codec driver. It is:
-- **Obviously correct** — standard goto-based error unwinding pattern
-- **Fixes a real bug** — resource leaks on resume failure
-- **Small and contained** — ~10 lines in one function in one file
-- **No new features** — purely error handling improvement
-- **Low risk** — only affects error paths, normal path unchanged
-
-The fix is small, surgical, and meets all stable kernel criteria.
+This is a textbook example of a hardware quirk addition that belongs in
+stable. It adds support for a specific hardware variant by adding a
+single PCI subsystem ID entry to an existing quirk table. The risk is
+minimal, and the benefit is enabling hardware that otherwise won't work
+properly.
 
 **YES**
 
- sound/soc/codecs/es8328.c | 10 ++++++++--
- 1 file changed, 8 insertions(+), 2 deletions(-)
+ sound/pci/ctxfi/ctatc.c | 11 ++++++-----
+ 1 file changed, 6 insertions(+), 5 deletions(-)
 
-diff --git a/sound/soc/codecs/es8328.c b/sound/soc/codecs/es8328.c
-index 1e11175cfbbbf..47c6b0c218b2c 100644
---- a/sound/soc/codecs/es8328.c
-+++ b/sound/soc/codecs/es8328.c
-@@ -758,17 +758,23 @@ static int es8328_resume(struct snd_soc_component *component)
- 					es8328->supplies);
- 	if (ret) {
- 		dev_err(component->dev, "unable to enable regulators\n");
--		return ret;
-+		goto err_clk;
- 	}
+diff --git a/sound/pci/ctxfi/ctatc.c b/sound/pci/ctxfi/ctatc.c
+index 227d8c8490e1f..a25a599fc5bec 100644
+--- a/sound/pci/ctxfi/ctatc.c
++++ b/sound/pci/ctxfi/ctatc.c
+@@ -52,18 +52,19 @@ static const struct snd_pci_quirk subsys_20k1_list[] = {
+ static const struct snd_pci_quirk subsys_20k2_list[] = {
+ 	SND_PCI_QUIRK(PCI_VENDOR_ID_CREATIVE, PCI_SUBDEVICE_ID_CREATIVE_SB0760,
+ 		      "SB0760", CTSB0760),
+-	SND_PCI_QUIRK(PCI_VENDOR_ID_CREATIVE, PCI_SUBDEVICE_ID_CREATIVE_SB1270,
+-		      "SB1270", CTSB1270),
+ 	SND_PCI_QUIRK(PCI_VENDOR_ID_CREATIVE, PCI_SUBDEVICE_ID_CREATIVE_SB08801,
+ 		      "SB0880", CTSB0880),
+ 	SND_PCI_QUIRK(PCI_VENDOR_ID_CREATIVE, PCI_SUBDEVICE_ID_CREATIVE_SB08802,
+ 		      "SB0880", CTSB0880),
+ 	SND_PCI_QUIRK(PCI_VENDOR_ID_CREATIVE, PCI_SUBDEVICE_ID_CREATIVE_SB08803,
+ 		      "SB0880", CTSB0880),
++	SND_PCI_QUIRK(PCI_VENDOR_ID_CREATIVE, PCI_SUBDEVICE_ID_CREATIVE_SB1270,
++		      "SB1270", CTSB1270),
++	SND_PCI_QUIRK(0x160b, 0x0101, "OK0010", CTOK0010),
++	SND_PCI_QUIRK(0x160b, 0x0102, "OK0010", CTOK0010),
+ 	SND_PCI_QUIRK_MASK(PCI_VENDOR_ID_CREATIVE, 0xf000,
+ 			   PCI_SUBDEVICE_ID_CREATIVE_HENDRIX, "HENDRIX",
+ 			   CTHENDRIX),
+-	SND_PCI_QUIRK(0x160b, 0x0101, "OK0010", CTOK0010),
+ 	{ } /* terminator */
+ };
  
- 	regcache_mark_dirty(regmap);
- 	ret = regcache_sync(regmap);
- 	if (ret) {
- 		dev_err(component->dev, "unable to sync regcache\n");
--		return ret;
-+		goto err_regulators;
- 	}
+@@ -78,8 +79,8 @@ static const char *ct_subsys_name[NUM_CTCARDS] = {
+ 	[CTSB0760]	= "SB076x",
+ 	[CTHENDRIX]	= "Hendrix",
+ 	[CTSB0880]	= "SB0880",
+-	[CTSB1270]      = "SB1270",
+-	[CTOK0010]    = "OK0010",
++	[CTSB1270]	= "SB1270",
++	[CTOK0010]	= "OK0010",
+ 	[CT20K2_UNKNOWN] = "Unknown",
+ };
  
- 	return 0;
-+
-+err_regulators:
-+	regulator_bulk_disable(ARRAY_SIZE(es8328->supplies), es8328->supplies);
-+err_clk:
-+	clk_disable_unprepare(es8328->clk);
-+	return ret;
- }
- 
- static int es8328_component_probe(struct snd_soc_component *component)
 -- 
 2.51.0
 
