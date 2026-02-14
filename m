@@ -1,115 +1,61 @@
-Received: from omta36.uswest2.a.cloudfilter.net (omta36.uswest2.a.cloudfilter.net [35.89.44.35])
+Received: from bregans-0.gladserv.net (bregans-0.gladserv.net [185.128.210.58])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ADFC71EBA14
-	for <patches@lists.linux.dev>; Sat, 14 Feb 2026 10:49:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=35.89.44.35
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C968211A14;
+	Sat, 14 Feb 2026 16:02:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.128.210.58
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771066171; cv=none; b=HaHN6LzBPHXsGlwgeka/YAtWKNY5ZAYyfxekBhnff5WAqExYScKr1DeJ5sn5aAxkYZEBjgPEBdI3X7DPJWAqgKxZZ65M2yA2JKWqE9g2zbajcQpqZg1ie3wGZWjFdpxUWTiGccPwRUDoHHV7svn8USGPcNF6tQED+VZK56fIJt8=
+	t=1771084944; cv=none; b=DbV7jqHAc6qmxDO7vGt6+MLiCBa92OHgz59ZHbeijjlZLFenFJrDcxor1NepLLRDjv3bPYTmWWiEIk4LzseCMag5JxXV8i6Wf6ocwtWGcp/TP7lXdwkbm+WIPprjynSlClKLPqfTtAEQRFzSS7fnoXOb9NrORbr2vH1GUbq5XDI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771066171; c=relaxed/simple;
-	bh=LddL1mqYYKdgxhZ9ut2uCmSEL2JV+R5/3tmzzGmvXNQ=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=sNKGWDcsIMnMpUxzSnbQXY/OYkh01wwGMABTPCiAPiHlJfmSr+Ct09ixqdFza9zo39it803t5q3yNq/LGE89B0eV1jI6/1EsvX+jhI2J0hrAFGsL9UAUnD4iVpCLcVycVTbIQ8sAB2dpqd74Vv18UgRVb1GsJINOKIGXmKiQLKw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=w6rz.net; spf=pass smtp.mailfrom=w6rz.net; dkim=pass (2048-bit key) header.d=w6rz.net header.i=@w6rz.net header.b=M1at+PyS; arc=none smtp.client-ip=35.89.44.35
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=w6rz.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=w6rz.net
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=w6rz.net header.i=@w6rz.net header.b="M1at+PyS"
-Received: from eig-obgw-6007b.ext.cloudfilter.net ([10.0.30.166])
-	by cmsmtp with ESMTPS
-	id r4cJvHVSKVCBNrDDIvX2nd; Sat, 14 Feb 2026 10:49:24 +0000
-Received: from box5620.bluehost.com ([162.241.219.59])
-	by cmsmtp with ESMTPS
-	id rDDIvoniwh8QWrDDIvvVNG; Sat, 14 Feb 2026 10:49:24 +0000
-X-Authority-Analysis: v=2.4 cv=Mcdsu4/f c=1 sm=1 tr=0 ts=69905334
- a=30941lsx5skRcbJ0JMGu9A==:117 a=30941lsx5skRcbJ0JMGu9A==:17
- a=IkcTkHD0fZMA:10 a=HzLeVaNsDn8A:10 a=7vwVE5O1G3EA:10 a=VwQbUJbxAAAA:8
- a=HaFmDPmJAAAA:8 a=49j0FZ7RFL9ueZfULrUA:9 a=QEXdDO2ut3YA:10
- a=nmWuMzfKamIsx3l42hEX:22 a=L5EjiQpGQaFGZdqT14z7:22
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=w6rz.net;
-	s=default; h=Content-Transfer-Encoding:Content-Type:In-Reply-To:From:
-	References:Cc:To:Subject:MIME-Version:Date:Message-ID:Sender:Reply-To:
-	Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
-	Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:
-	List-Subscribe:List-Post:List-Owner:List-Archive;
-	bh=daB2H/VCzLVSE7xeCBijYx8DyaBQpr6ixiTfBA5EM20=; b=M1at+PySIcReLlITOBDuOepiWD
-	R39j8dAtPRfdyPH1XBclhxFDXqHLlMS2//vNUvtLuAeQAMYk+tAE5du63GLQVNklUTmKodygxlzIB
-	lvFi097WesmGqH/0pDKabuD86xmLyvVEjZgcLAKnmfhnMBv/L/GfT9l1f12/+d3DUcsPHg0oFF5s6
-	zbLqt2PzGIt1dL7igewIwnnz2VExiVWvw8MUu77FLqc2VJLyoa9O7uyoXCFJcIsuulb/byvB3KeLh
-	BaiF2Bsf3q1AMpE0k5HUOaHH9Y7tHdp6aSOJpgMtDGya3kt08TxZofsQs2H5Z1BlQHmrAcIgNreqb
-	9ENkB46w==;
-Received: from c-73-162-206-103.hsd1.ca.comcast.net ([73.162.206.103]:39336 helo=[10.0.1.180])
-	by box5620.bluehost.com with esmtpsa  (TLS1.3) tls TLS_AES_128_GCM_SHA256
-	(Exim 4.98.2)
-	(envelope-from <re@w6rz.net>)
-	id 1vrDDH-00000003YmS-2lDm;
-	Sat, 14 Feb 2026 03:49:23 -0700
-Message-ID: <146196d3-a9b0-410d-9a0e-f6fb54778500@w6rz.net>
-Date: Sat, 14 Feb 2026 02:49:22 -0800
+	s=arc-20240116; t=1771084944; c=relaxed/simple;
+	bh=a+SDpLsW5TVI3e+uBJiURrjmpI5w7z2eAWc8sC3FgIc=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=Bo+gjPtDusZ55wuo/Kqxm4BauVkSuyZzcAhwMrzBDauyhGVT9jMecjEBR/Iwmr2M6O68qHSdInvWQq9NG/0nrxf6UkOA6tPVLdOmiX/N4k09SKZuWII2SAYRpEzrSDCd5BnRF8IT4rTqKG8DL1/w8UuAze6M5QWiVjgSRonfedU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=librecast.net; spf=pass smtp.mailfrom=librecast.net; arc=none smtp.client-ip=185.128.210.58
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=librecast.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=librecast.net
+From: Brett A C Sheffield <bacs@librecast.net>
+To: gregkh@linuxfoundation.org
+Cc: stable@vger.kernel.org,
+	patches@lists.linux.dev,
+	linux-kernel@vger.kernel.org,
+	torvalds@linux-foundation.org,
+	akpm@linux-foundation.org,
+	linux@roeck-us.net,
+	shuah@kernel.org,
+	patches@kernelci.org,
+	lkft-triage@lists.linaro.org,
+	pavel@nabladev.com,
+	jonathanh@nvidia.com,
+	f.fainelli@gmail.com,
+	sudipm.mukherjee@gmail.com,
+	rwarsow@gmx.de,
+	conor@kernel.org,
+	hargar@microsoft.com,
+	broonie@kernel.org,
+	achill@achill.org,
+	sr@sladewatkins.com,
+	Brett A C Sheffield <bacs@librecast.net>
+Subject: Re: [PATCH 6.19 00/49] 6.19.1-rc1 review
+Date: Sat, 14 Feb 2026 16:02:12 +0000
+Message-ID: <20260214160216.4483-1-bacs@librecast.net>
+X-Mailer: git-send-email 2.52.0
+In-Reply-To: <20260213134708.713126210@linuxfoundation.org>
+References: <20260213134708.713126210@linuxfoundation.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 6.6 00/25] 6.6.125-rc1 review
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
- torvalds@linux-foundation.org, akpm@linux-foundation.org,
- linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
- lkft-triage@lists.linaro.org, pavel@nabladev.com, jonathanh@nvidia.com,
- f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, rwarsow@gmx.de,
- conor@kernel.org, hargar@microsoft.com, broonie@kernel.org,
- achill@achill.org, sr@sladewatkins.com
-References: <20260213134703.882698935@linuxfoundation.org>
-Content-Language: en-US
-From: Ron Economos <re@w6rz.net>
-In-Reply-To: <20260213134703.882698935@linuxfoundation.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - box5620.bluehost.com
-X-AntiAbuse: Original Domain - lists.linux.dev
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - w6rz.net
-X-BWhitelist: no
-X-Source-IP: 73.162.206.103
-X-Source-L: No
-X-Exim-ID: 1vrDDH-00000003YmS-2lDm
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
-X-Source-Sender: c-73-162-206-103.hsd1.ca.comcast.net ([10.0.1.180]) [73.162.206.103]:39336
-X-Source-Auth: re@w6rz.net
-X-Email-Count: 78
-X-Org: HG=bhshared;ORG=bluehost;
-X-Source-Cap: d3NpeHJ6bmU7d3NpeHJ6bmU7Ym94NTYyMC5ibHVlaG9zdC5jb20=
-X-Local-Domain: yes
-X-CMAE-Envelope: MS4xfOX2VAh1wP/PJu/SR76PtRiDqxx8NwN9iF7f3hNF/8OJ8TEl4cpxetS47x4ZGuQcNqhTsdPywDpoorh/MML17JgJ9D0TEQmn4aGfVijrBlYuj1iU9XKB
- N6bVwERgZOfdtDidDXKpBIR9Xl0J9OmRJ8IXwhogFfeK5OtsGHR9p/xVeB0ZiRjkUETHIjEoKOTK9w==
+Content-Transfer-Encoding: 8bit
 
-On 2/13/26 05:48, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 6.6.125 release.
-> There are 25 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
->
-> Responses should be made by Sun, 15 Feb 2026 13:46:52 +0000.
-> Anything received after that time might be too late.
->
-> The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.6.125-rc1.gz
-> or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.6.y
-> and the diffstat can be found below.
->
-> thanks,
->
-> greg k-h
+# Librecast Test Results
 
-Built and booted successfully on RISC-V RV64 (HiFive Unmatched).
+020/020 [ OK ] liblcrq
+010/010 [ OK ] libmld
+120/120 [ OK ] liblibrecast
 
-Tested-by: Ron Economos <re@w6rz.net>
+CPU/kernel: Linux auntie 6.19.1-rc1-gfdd37e7f30ac #2 SMP PREEMPT_DYNAMIC Sat Feb 14 15:14:08 -00 2026 x86_64 AMD Ryzen 9 9950X 16-Core Processor AuthenticAMD GNU/Linux
 
+Tested-by: Brett A C Sheffield <bacs@librecast.net>
