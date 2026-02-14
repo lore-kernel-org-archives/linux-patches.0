@@ -1,46 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 057D4309DB1;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC88B25F994;
 	Sat, 14 Feb 2026 21:25:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771104351; cv=none; b=RjOOXPfnPjZRPu/8s+FvCVBWqqtMHi7qqSc71cz3XmI7erWllTcUuvOcrhfC+3sfCJ3n2U8euK7HwPj4DUkIGq9uJe2zyQaBV8lwa9DyEf835oyOu1118zN7OL5ZbJkmmxcNMz+FkvSIbuPQVmvohqkfoCu0p+T10h35Ng4TrDM=
+	t=1771104352; cv=none; b=MmJM9oxt6biiIgiwB4iJqzJF9Gkk0Fx9S7hn3FhSTTt0HrZxacClyR9eLUz5lis/A6tVC014u//o8wnL194Hs8qzoexYu7D9XJfVInQY4679qDbWW9RIYTIbAVUBl/OpsgO5RlYMTnoEn1Goj6zz7hYhhlV858OvxlOkhP1b7dA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771104351; c=relaxed/simple;
-	bh=N6xMz5KoFVfzNcR2If2erhXZur3yHqb3P1eyI0nS6uQ=;
+	s=arc-20240116; t=1771104352; c=relaxed/simple;
+	bh=mUbgclJqjUwPl4cKFFF63FLHgNj3UpN/LhTRwZcaGg8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=IAlnI6msO5qTn5BtGsG4MQ/5EqYbBnmeOEdrAG1iipi81EDqtbDb4kjgYG19Mjq0huQVoZ0KIUiFU9fO0TinsJi/0dsTkb+Opum3qEDIsx+oeBV9roYQz299ry4XcLS+chwEn6jeYukTQaC+eWWWJo0Cpmgfbajr7Tl96v50w6c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=EniqImIR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=EuIMiiLJZxFleYG1dgOIcR56+HIdh1B/OAsg8Acqrr11Gk6ys3C0/OUtAAG5VoQmXPtzksV0UTZP8SM/hSQPKiwEATyOWsGH0Cb41oM/p3BL9CtzNpoiF76yM0l92kYzKhJhtnTIgTzXQxSugtRcIi8e3UfDLlM+iFj1yYDPflY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=MftDr06Y; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="EniqImIR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C8004C19422;
-	Sat, 14 Feb 2026 21:25:49 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="MftDr06Y"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4AD6CC19422;
+	Sat, 14 Feb 2026 21:25:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1771104350;
-	bh=N6xMz5KoFVfzNcR2If2erhXZur3yHqb3P1eyI0nS6uQ=;
+	s=k20201202; t=1771104351;
+	bh=mUbgclJqjUwPl4cKFFF63FLHgNj3UpN/LhTRwZcaGg8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EniqImIRhXkK27NvLvvWCAEuhUjGEtTV01hQ2NCAtUd68tqFiSr0j2Kzm19BhylkR
-	 QB6fG6a1NwPeoWTJSF8vZhhGf5PbkQpyNOuxBnbkkU/We6l4D4bjb4ApMtUQ6JfJC4
-	 WVWj0HUGOoygsfRn3I6UbeZJmcZNMX6uZNi9ff7YHxXY50EiUl4qmtnBT8KJ6Ux6oH
-	 7VtpLGMc7sbYEZzlhjOYX5vSELGTHcuPsseQ4ddTpncvvqHZ1nNQGy3qfbKiBguyG5
-	 cLR9f30OBU+rJmVa46Th7r2sT0hvcPvY7tDpZ/NEFJEsDCGEKKUS4YndLK9t4TIr5d
-	 scxUyOWIhKi7w==
+	b=MftDr06YH8dkuMX9RAjsBnEc3XP++ilIDnBMXHb//s93geK648AVikBND9+GXeSkd
+	 4hHnJOojmon3lAiPioaoAuUcl6n9+LRaXrkQGs/QCxDug/5DHlH1SwudCuFSdrpIIS
+	 n6+d8wiL70xw1pU6RD1tjNkySYzIGlnpyLwATRHsUHQT90boA+RuhIZRuIrzbDA92e
+	 ixCMncQ09zqq8bdTjHSa/U54/orS8DuORtPjzjTDycje3yPbkMRVHuEU7j7NpvCPUs
+	 yMPhJEJvCCxCgW+/xNb0CKqe65CMG5j2KD4f4ohOmQgmpb4boC1J8gjHtPsHCGDktO
+	 DT0X4NoJSwSTQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Shuai Zhang <shuai.zhang@oss.qualcomm.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+Cc: Ping-Ke Shih <pkshih@realtek.com>,
 	Sasha Levin <sashal@kernel.org>,
-	brgl@kernel.org,
-	marcel@holtmann.org,
-	luiz.dentz@gmail.com,
-	linux-arm-msm@vger.kernel.org,
-	linux-bluetooth@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.19-6.18] Bluetooth: hci_qca: Fix SSR (SubSystem Restart) fail when BT_EN is pulled up by hw
-Date: Sat, 14 Feb 2026 16:22:57 -0500
-Message-ID: <20260214212452.782265-32-sashal@kernel.org>
+	linux-wireless@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.19-6.12] wifi: rtw89: mac: correct page number for CSI response
+Date: Sat, 14 Feb 2026 16:22:58 -0500
+Message-ID: <20260214212452.782265-33-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260214212452.782265-1-sashal@kernel.org>
 References: <20260214212452.782265-1-sashal@kernel.org>
@@ -56,132 +50,145 @@ X-stable-base: Linux 6.19
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Shuai Zhang <shuai.zhang@oss.qualcomm.com>
+From: Ping-Ke Shih <pkshih@realtek.com>
 
-[ Upstream commit fce1a9244a0f85683be8530e623bc729f24c5067 ]
+[ Upstream commit aa2a44d0d22d45d659b9f01638809b1735e46cff ]
 
-On QCS9075 and QCA8275 platforms, the BT_EN pin is always pulled up by hw
-and cannot be controlled by the host. As a result, in case of a firmware
-crash, the host cannot trigger a cold reset. Instead, the BT controller
-performs a warm restart on its own, without reloading the firmware.
+For beamforming procedure, hardware reserve memory page for CSI response.
+The unit of register is (value - 1), so add one accordingly as expected.
 
-This leads to the controller remaining in IBS_WAKE state, while the host
-expects it to be in sleep mode. The mismatch causes HCI reset commands
-to time out. Additionally, the driver does not clear internal flags
-QCA_SSR_TRIGGERED and QCA_IBS_DISABLED, which blocks the reset sequence.
-If the SSR duration exceeds 2 seconds, the host may enter TX sleep mode
-due to tx_idle_timeout, further preventing recovery. Also, memcoredump_flag
-is not cleared, so only the first SSR generates a coredump.
-
-Tell the driver that the BT controller has undergone a proper restart sequence:
-
-- Clear QCA_SSR_TRIGGERED and QCA_IBS_DISABLED flags after SSR.
-- Add a 50ms delay to allow the controller to complete its warm reset.
-- Reset tx_idle_timer to prevent the host from entering TX sleep mode.
-- Clear memcoredump_flag to allow multiple coredump captures.
-
-Apply these steps only when HCI_QUIRK_NON_PERSISTENT_SETUP is not set,
-which indicates that BT_EN is defined in DTS and cannot be toggled.
-
-Refer to the comment in include/net/bluetooth/hci.h for details on
-HCI_QUIRK_NON_PERSISTENT_SETUP.
-
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Signed-off-by: Shuai Zhang <shuai.zhang@oss.qualcomm.com>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
+Link: https://patch.msgid.link/20260110022019.2254969-7-pkshih@realtek.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-`HCI_QUIRK_NON_PERSISTENT_SETUP` has existed since 2018 (commit
-`740011cfe9485`), so it's available in all stable trees. The only issue
-is the accessor macro change (`test_bit` → `hci_test_quirk`).
+## Analysis of commit: "wifi: rtw89: mac: correct page number for CSI
+response"
 
-### 8. FINAL ASSESSMENT
+### 1. Commit Message Analysis
 
-**Bug being fixed**: Real, user-impacting bug — Bluetooth SSR (SubSystem
-Restart) fails on specific Qualcomm platforms (QCS9075, QCA8275) where
-BT_EN is hardware-pulled high. After a firmware crash, Bluetooth becomes
-permanently non-functional until reboot.
+The commit message states that for the beamforming procedure, hardware
+reserves memory pages for CSI (Channel State Information) response. The
+register expects a value where the unit is `(value - 1)`, meaning the
+driver needs to write `pg_num + 1` to get the correct number of pages
+reserved. The current code writes `pg_num` directly, which results in
+one fewer page than intended.
 
-**Severity**: HIGH — Complete loss of Bluetooth functionality after
-firmware crash with no recovery path.
+This is a hardware register programming bug — an off-by-one error in how
+a register value is interpreted.
 
-**Fix quality**: Well-documented, well-reviewed (by Qualcomm and
-Bluetooth maintainers), small and contained.
+### 2. Code Change Analysis
 
-**Scope**: LOW risk — only affects platforms where
-`HCI_QUIRK_NON_PERSISTENT_SETUP` is NOT set (specific hardware
-configuration). Does not change behavior for any other platforms.
+The change is a single-line fix:
+```c
+- rtw89_write32_mask(rtwdev, reg, B_BE_CSI_RESERVED_PAGE_NUM_MASK,
+  qt_cfg.pg_num);
++ rtw89_write32_mask(rtwdev, reg, B_BE_CSI_RESERVED_PAGE_NUM_MASK,
+qt_cfg.pg_num + 1);
+```
 
-**Backportability concern**: The `hci_test_quirk()` macro only exists in
-v6.16+. For older stable trees (6.1.y, 6.6.y, 6.12.y, 6.13.y), the
-backport would need to use `!test_bit(HCI_QUIRK_NON_PERSISTENT_SETUP,
-&hu->hdev->quirks)` instead. This is a trivial adaptation but means the
-patch won't apply cleanly to older stable trees.
+This is about as minimal and surgical as a fix can be. It corrects the
+value written to the `R_BE_RESP_CSI_RESERVED_PAGE` register's page
+number field by adding 1 to account for the hardware's `(value - 1)`
+encoding.
 
-**Other concern**: The fix adds `msleep(50)` in the hw_error path, which
-is acceptable for an error recovery path but not something you'd want in
-a hot path.
+### 3. Bug Classification
 
-**Verdict**: This fixes a real, important bug (complete Bluetooth
-failure after firmware crash) on specific hardware. The fix is small,
-well-contained, and guarded by a quirk check so it has minimal risk. It
-meets stable kernel criteria. The backport will need minor adaptation
-for older trees due to the quirk API change, but this is
-straightforward. The fix has proper review from Qualcomm and the
-Bluetooth subsystem maintainer.
+This is a **hardware register programming bug** (off-by-one). The
+consequence is that the hardware reserves one fewer memory page than
+needed for CSI response in beamforming. This could lead to:
+- **Beamforming failures** or degraded WiFi performance
+- Potential **memory corruption within the hardware's DLE (Data Link
+  Engine)** if CSI responses overflow the allocated pages
+- Possible **firmware/hardware hangs** if the CSI response data
+  overwrites adjacent memory regions in the hardware
+
+### 4. Scope and Risk Assessment
+
+- **Lines changed**: 1 line
+- **Files touched**: 1 file
+  (`drivers/net/wireless/realtek/rtw89/mac_be.c`)
+- **Complexity**: Trivially simple — adds `+ 1` to a value
+- **Risk of regression**: Extremely low. The fix aligns the driver with
+  the hardware's documented register encoding. Writing the wrong value
+  was the bug.
+- **Subsystem**: WiFi driver (rtw89 — Realtek WiFi), which is a commonly
+  used wireless driver
+
+### 5. User Impact
+
+- **Who is affected**: Users of Realtek WiFi chipsets supported by the
+  rtw89 driver (specifically the "BE" generation, likely WiFi 7 chips
+  like RTL8922AE)
+- **Severity**: Medium-high. Beamforming is important for WiFi
+  performance and reliability. With incorrect page reservation, users
+  may experience degraded throughput, connection instability, or
+  potential hardware issues
+- **Real-world impact**: Any user with this hardware would be affected
+  during beamforming operations
+
+### 6. Stability Indicators
+
+- **Author**: Ping-Ke Shih (pkshih@realtek.com) — the primary maintainer
+  of the rtw89 driver at Realtek. Highly trusted for this subsystem.
+- **Obviously correct**: The commit message clearly explains the
+  hardware register encoding, and the fix directly addresses it.
+
+### 7. Dependency Check
+
+This is a standalone fix. It doesn't depend on other patches (it's patch
+7 of a series, but this particular change is self-contained — it just
+corrects a value written to a register). The function
+`resp_pktctl_init_be()` and the register definitions need to exist in
+the stable tree.
+
+### 8. Stable Kernel Criteria Assessment
+
+- **Obviously correct**: Yes — the hardware register uses `(value - 1)`
+  encoding, so writing `pg_num + 1` is the correct value
+- **Fixes a real bug**: Yes — off-by-one in hardware register
+  programming causes incorrect page reservation
+- **Small and contained**: Yes — single line change in a single file
+- **No new features**: Correct — this is purely a bug fix
+- **Tested**: From the Realtek driver maintainer, submitted through
+  proper channels
+
+### Risk vs. Benefit
+
+- **Risk**: Negligible. A one-line arithmetic correction to a hardware
+  register value, authored by the subsystem maintainer.
+- **Benefit**: Fixes beamforming page allocation for rtw89 BE-generation
+  WiFi hardware, preventing potential performance degradation or
+  hardware issues.
+
+### Concerns
+
+The only concern is whether the `mac_be.c` file exists in the target
+stable trees. The "BE" generation support was added relatively recently,
+so this fix would only apply to stable kernels that already include
+rtw89 BE support. But if the code exists in the stable tree, this fix is
+clearly appropriate.
 
 **YES**
 
- drivers/bluetooth/hci_qca.c | 33 +++++++++++++++++++++++++++++++++
- 1 file changed, 33 insertions(+)
+ drivers/net/wireless/realtek/rtw89/mac_be.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/bluetooth/hci_qca.c b/drivers/bluetooth/hci_qca.c
-index 888176b0faa90..a3c217571c3c4 100644
---- a/drivers/bluetooth/hci_qca.c
-+++ b/drivers/bluetooth/hci_qca.c
-@@ -1653,6 +1653,39 @@ static void qca_hw_error(struct hci_dev *hdev, u8 code)
- 		skb_queue_purge(&qca->rx_memdump_q);
- 	}
+diff --git a/drivers/net/wireless/realtek/rtw89/mac_be.c b/drivers/net/wireless/realtek/rtw89/mac_be.c
+index 9b9e646487346..dee5ff71b75fe 100644
+--- a/drivers/net/wireless/realtek/rtw89/mac_be.c
++++ b/drivers/net/wireless/realtek/rtw89/mac_be.c
+@@ -1175,7 +1175,7 @@ static int resp_pktctl_init_be(struct rtw89_dev *rtwdev, u8 mac_idx)
  
-+	/*
-+	 * If the BT chip's bt_en pin is connected to a 3.3V power supply via
-+	 * hardware and always stays high, driver cannot control the bt_en pin.
-+	 * As a result, during SSR (SubSystem Restart), QCA_SSR_TRIGGERED and
-+	 * QCA_IBS_DISABLED flags cannot be cleared, which leads to a reset
-+	 * command timeout.
-+	 * Add an msleep delay to ensure controller completes the SSR process.
-+	 *
-+	 * Host will not download the firmware after SSR, controller to remain
-+	 * in the IBS_WAKE state, and the host needs to synchronize with it
-+	 *
-+	 * Since the bluetooth chip has been reset, clear the memdump state.
-+	 */
-+	if (!hci_test_quirk(hu->hdev, HCI_QUIRK_NON_PERSISTENT_SETUP)) {
-+		/*
-+		 * When the SSR (SubSystem Restart) duration exceeds 2 seconds,
-+		 * it triggers host tx_idle_delay, which sets host TX state
-+		 * to sleep. Reset tx_idle_timer after SSR to prevent
-+		 * host enter TX IBS_Sleep mode.
-+		 */
-+		mod_timer(&qca->tx_idle_timer, jiffies +
-+				  msecs_to_jiffies(qca->tx_idle_delay));
-+
-+		/* Controller reset completion time is 50ms */
-+		msleep(50);
-+
-+		clear_bit(QCA_SSR_TRIGGERED, &qca->flags);
-+		clear_bit(QCA_IBS_DISABLED, &qca->flags);
-+
-+		qca->tx_ibs_state = HCI_IBS_TX_AWAKE;
-+		qca->memdump_state = QCA_MEMDUMP_IDLE;
-+	}
-+
- 	clear_bit(QCA_HW_ERROR_EVENT, &qca->flags);
+ 	reg = rtw89_mac_reg_by_idx(rtwdev, R_BE_RESP_CSI_RESERVED_PAGE, mac_idx);
+ 	rtw89_write32_mask(rtwdev, reg, B_BE_CSI_RESERVED_START_PAGE_MASK, qt_cfg.pktid);
+-	rtw89_write32_mask(rtwdev, reg, B_BE_CSI_RESERVED_PAGE_NUM_MASK, qt_cfg.pg_num);
++	rtw89_write32_mask(rtwdev, reg, B_BE_CSI_RESERVED_PAGE_NUM_MASK, qt_cfg.pg_num + 1);
+ 
+ 	return 0;
  }
- 
 -- 
 2.51.0
 
