@@ -1,42 +1,48 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 200421E5B63;
-	Sat, 14 Feb 2026 01:06:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6711F1EF0B0;
+	Sat, 14 Feb 2026 01:07:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771031218; cv=none; b=UUkMkQzN2VsWsOLbzMZvvFvxOu5K+bljg+Mq6wK8fM82QFzSsxSHBQ6bKMji9SWhhu1DoaAuqX81RWNC3utZnm38p0qsziQFkoj+btluOqAlRWVKxa6F3pzRNCkCNMExELFi2WTHuiRduh4gj3Ci1awWdX4fk8o68vFosigrjT4=
+	t=1771031222; cv=none; b=LaIVv4HxNh7/b2MZpysJuWrEQP1AI/rxnXrjKKZ+kvZNLR59cWGH0p2F+Yh3lZSOJg8vbtvphKbrBRY9Q2TwasphrLK/USZ9YCC2ZOnMGOhIP9r9U6S7xTxX5rdPtTb480lYKkI8Q5EdZrorphIIPGf5WV7kpgbYK0/m3qjGOH8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771031218; c=relaxed/simple;
-	bh=aLnq3Vhro09RFihhmybNksuVx+/a8US1ZR2sadPBDvE=;
+	s=arc-20240116; t=1771031222; c=relaxed/simple;
+	bh=0WVbNSl7QGeHWPtDRFYhwzfswcdEmBqRi9bwTCyOnJw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=eeg5jGYEVS3eIFcrqujO8dz9E3iu1JeqcYzBB8ttTuLzAnxOv2ZW8eaUfE2+1GVZz0aEuQtaW+uDT/uq3L63NXV4Np71Otmx5MWjtPN6oK+Ok2KQ2DmYTv/gyLg9dGFBxfgner+cXQC+4OSkBnAbGhtaXfQiVP6arcpK6HfmPVw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=MhcAX9LX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qrSY1BW1LmGQqZunKf0ffR04N4pyjLgRS0Nfxsf7GHQQ2xaGmjHFNwvwyDLcH00T/mMlXBr7M80z4Mzm6lE73qMZyQgHUKe0phz+g3rXgFZj2i5WLY1KS8PJ3oqCWbCarEAU7v44WgPDDs26vfIdMFDCCVmrVXCQ9dPtKzhgp2I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=GxVspJaD; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="MhcAX9LX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4383AC116C6;
-	Sat, 14 Feb 2026 01:06:57 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="GxVspJaD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 03BC7C116C6;
+	Sat, 14 Feb 2026 01:07:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1771031218;
-	bh=aLnq3Vhro09RFihhmybNksuVx+/a8US1ZR2sadPBDvE=;
+	s=k20201202; t=1771031222;
+	bh=0WVbNSl7QGeHWPtDRFYhwzfswcdEmBqRi9bwTCyOnJw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MhcAX9LXEKx0cIfuY0DUr9QIep8lApaV7mMBmI0sN0EQPrK1g0XXseDpR7sh94bxP
-	 Lm+xz2rasEW5SGOw0ZVa+3pmLFR8Zx7dlsGHW2m2H04m96MaqrWAGNci6wFVGYEAiR
-	 ZKK2CScfn8EKhMX+jYq9ToWSwCk6DUU08sE1W5STHQ5m3BgJ7pd0On+2kp53csDCNL
-	 O4HocxPzayW5m4Er+zJA2ZGo4AKsYdsRJsN9fCBbVXAfbZIP4/SaZ1DjY6WLEqUngp
-	 kbYGYiuL9SwL1+1ki5aJa0VNm+nMwckGpC8b2GtkU8kxZOdGnyBlQRXNI8rAn10l+o
-	 rGImIs4M0Zalg==
+	b=GxVspJaDV+XX8srMFHPxXFNKJmvjGKrEHhdBoadJ7EM0aKBzp5i7MDFm89wvKzJi1
+	 hUh8vzGt5Tguo6eCyD4lLKLPUQXoyeTrra8qq/XHAZ0UqcI/y4ASYkEHYTnoUHkCHa
+	 Kaleq0U15XyY9QZl6FKX9uqzEG+g10L7kgMZhZI2L0f6chp4vmbA5fBVXOj9c4J4TB
+	 ciCuX5KUsJ9CjZSQX8JlVfOTGDq9O+Wvg8XM1XmOB7eqRoUXGFV9A1gq7GbIxhezmm
+	 T/cUKzkelZcmVIvJLiwGs7Vl36vew2q31th9RQExi/11oxjEPf+cxnVNV6Zvy02AAi
+	 xCZTpfJQxT+9g==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Ziyi Guo <n7l8m4@u.northwestern.edu>,
-	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
+Cc: Hans Verkuil <hverkuil@xs4all.nl>,
+	Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	brgl@kernel.org,
-	linux-pm@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.19-6.12] power: sequencing: fix missing state_lock in pwrseq_power_on() error path
-Date: Fri, 13 Feb 2026 19:59:48 -0500
-Message-ID: <20260214010245.3671907-108-sashal@kernel.org>
+	mchehab@kernel.org,
+	hverkuil@kernel.org,
+	neil.armstrong@linaro.org,
+	mingo@kernel.org,
+	tglx@kernel.org,
+	yelangyan@huaqin.corp-partner.google.com,
+	rongqianfeng@vivo.com,
+	linux-media@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.19-5.10] media: dvb-core: dmxdevfilter must always flush bufs
+Date: Fri, 13 Feb 2026 19:59:49 -0500
+Message-ID: <20260214010245.3671907-109-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260214010245.3671907-1-sashal@kernel.org>
 References: <20260214010245.3671907-1-sashal@kernel.org>
@@ -49,79 +55,229 @@ MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.19
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ziyi Guo <n7l8m4@u.northwestern.edu>
+From: Hans Verkuil <hverkuil@xs4all.nl>
 
-[ Upstream commit e1dccb485c2876ac1318f36ccc0155416c633a48 ]
+[ Upstream commit c4e620eccbef76aa5564ebb295e23d6540e27215 ]
 
-pwrseq_power_on() calls pwrseq_unit_disable() when the
-post_enable callback fails. However, this call is outside the
-scoped_guard(mutex, &pwrseq->state_lock) block that ends.
+Currently the buffers are being filled until full, which works fine
+for the transport stream, but not when reading sections, those have
+to be returned to userspace immediately, otherwise dvbv5-scan will
+just wait forever.
 
-pwrseq_unit_disable() has lockdep_assert_held(&pwrseq->state_lock),
-which will fail when called from this error path.
+Add a 'flush' argument to dvb_vb2_fill_buffer to indicate whether
+the buffer must be flushed or wait until it is full.
 
-Add the scoped_guard block to cover the post_enable callback and its
-error handling to ensure the lock is held when pwrseq_unit_disable() is
-called.
-
-Signed-off-by: Ziyi Guo <n7l8m4@u.northwestern.edu>
-Link: https://patch.msgid.link/20260130182651.1576579-1-n7l8m4@u.northwestern.edu
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
+Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-The power sequencing core was introduced in v6.11. So this fix is
-relevant for stable trees v6.11.y and later (6.12.y, 6.13.y, etc.).
+## Analysis
 
-### 8. SELF-CONTAINEDNESS
+### 1. Commit Message Analysis
 
-This is a completely self-contained fix. It doesn't depend on any other
-patches. It simply wraps two existing lines of code with the appropriate
-lock scope.
+The commit clearly describes a functional bug: DVB section data is
+buffered until the VB2 buffer is completely full, but sections are
+discrete units that must be delivered immediately. The result is that
+`dvbv5-scan` (a standard DVB channel scanning utility from v4l-utils)
+**hangs forever** when using the VB2 mmap path.
 
-### VERDICT
+### 2. Code Change Analysis
 
-**Meets stable criteria:**
-- **Obviously correct**: Yes — the lock is required (enforced by
-  `lockdep_assert_held`), and it was missing.
-- **Fixes a real bug**: Yes — lockdep assertion failure and potential
-  race condition.
-- **Small and contained**: Yes — 6 lines changed in 1 file.
-- **No new features**: Correct — purely a locking fix.
-- **Low regression risk**: Adding a lock that was already required by
-  the callee.
+The bug is in `dvb_vb2_fill_buffer()` at line 309 of `dvb_vb2.c`:
 
-The fix is small, surgical, obviously correct, and fixes a real locking
-bug that would trigger lockdep warnings and could lead to race
-conditions. It meets all stable kernel criteria.
+```309:309:drivers/media/dvb-core/dvb_vb2.c
+        if (ctx->nonblocking && ctx->buf) {
+```
+
+This condition flushes partially-filled buffers only when the file
+descriptor was opened with `O_NONBLOCK`. The `nonblocking` field is set
+during `dvb_vb2_init()` from `file->f_flags & O_NONBLOCK`:
+
+```819:820:drivers/media/dvb-core/dmxdev.c
+        dvb_vb2_init(&dmxdevfilter->vb2_ctx, "demux_filter",
+                     file->f_flags & O_NONBLOCK);
+```
+
+**The fundamental problem**: The decision to flush a partially-filled
+buffer should depend on the **type of data** (section vs. transport
+stream), not on the **blocking mode** of the file descriptor. DVB
+sections are discrete protocol data units that must be returned to
+userspace immediately. Transport streams are continuous, so waiting
+until the buffer is full is correct.
+
+**Bug mechanism**:
+1. Application opens demux device in blocking mode (normal, no
+   `O_NONBLOCK`)
+2. `ctx->nonblocking` is set to 0
+3. Section callback delivers a complete section to
+   `dvb_vb2_fill_buffer()`
+4. Section data is smaller than the full VB2 buffer, so `ctx->remain >
+   0`
+5. The `if (ctx->nonblocking && ctx->buf)` check fails (nonblocking=0)
+6. Buffer is NOT flushed to userspace
+7. Application blocks forever waiting for data that's already been
+   received
+
+**The fix** adds a `bool flush` parameter to `dvb_vb2_fill_buffer()`:
+- `dvb_dmxdev_section_callback()` passes `flush=true` (sections: flush
+  immediately)
+- `dvb_dmxdev_ts_callback()` passes `flush=false` (transport stream:
+  wait until full)
+- The condition becomes `if (flush && ctx->buf)` - semantically correct
+
+The `nonblocking` field is NOT removed - it's still used in
+`dvb_vb2_dqbuf()` (line 415) for its legitimate purpose of controlling
+blocking dequeue behavior.
+
+### 3. Classification
+
+This is a **clear bug fix** - it fixes a condition where a standard
+userspace application (`dvbv5-scan`) hangs indefinitely. The existing
+behavior was simply wrong: flushing decisions were tied to an unrelated
+flag.
+
+### 4. Scope and Risk Assessment
+
+- **Files changed**: 3 (dmxdev.c, dvb_vb2.c, dvb_vb2.h)
+- **Lines changed**: ~15 (very small)
+- **Only 2 callers** of `dvb_vb2_fill_buffer()`, both updated
+- **Internal API only** - no userspace-visible changes
+- **TS path unchanged** - `flush=false` preserves existing behavior for
+  transport streams
+- **Section path fixed** - `flush=true` ensures proper delivery
+- **CONFIG_DVB_MMAP only** - behind experimental Kconfig (default N),
+  limiting blast radius
+- **Risk**: Very low - the change cannot regress TS behavior, and
+  section behavior goes from "broken" to "working"
+
+### 5. User Impact
+
+For users who have `CONFIG_DVB_MMAP` enabled and use `dvbv5-scan` or
+similar section-reading applications via the VB2 path in blocking mode,
+this is a **complete showstopper** - the application hangs forever.
+Without this fix, the VB2 mmap path is fundamentally broken for section
+data.
+
+### 6. Stability Indicators
+
+- **Author**: Hans Verkuil - V4L2/DVB subsystem maintainer, extremely
+  well-known and trusted
+- **Sign-off**: Mauro Carvalho Chehab - overall media subsystem
+  maintainer
+- **Self-contained**: No dependencies on other patches
+- **Bug exists since**: The DVB VB2 feature was introduced in kernel
+  4.20 (commit 57868acc369a), and this bug has existed since then
+
+### 7. Dependency Check
+
+The patch applies cleanly to the current tree. There are no dependencies
+on other uncommitted patches. All callers are updated within the same
+patch.
+
+### Conclusion
+
+This commit fixes a real, user-impacting bug where DVB section data is
+never delivered to userspace through the VB2 mmap path when the file
+descriptor is opened in blocking mode. The fix is small, self-contained,
+obviously correct, and authored by the subsystem maintainer. The risk of
+regression is minimal since the TS path behavior is preserved unchanged
+and the section path goes from "broken" to "correct." While it only
+affects `CONFIG_DVB_MMAP` (experimental), for users who enable it, the
+bug is a complete showstopper.
 
 **YES**
 
- drivers/power/sequencing/core.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/media/dvb-core/dmxdev.c  | 8 ++++----
+ drivers/media/dvb-core/dvb_vb2.c | 5 +++--
+ include/media/dvb_vb2.h          | 6 ++++--
+ 3 files changed, 11 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/power/sequencing/core.c b/drivers/power/sequencing/core.c
-index 190564e559885..1fcf0af7cc0bb 100644
---- a/drivers/power/sequencing/core.c
-+++ b/drivers/power/sequencing/core.c
-@@ -914,8 +914,10 @@ int pwrseq_power_on(struct pwrseq_desc *desc)
- 	if (target->post_enable) {
- 		ret = target->post_enable(pwrseq);
- 		if (ret) {
--			pwrseq_unit_disable(pwrseq, unit);
--			desc->powered_on = false;
-+			scoped_guard(mutex, &pwrseq->state_lock) {
-+				pwrseq_unit_disable(pwrseq, unit);
-+				desc->powered_on = false;
-+			}
+diff --git a/drivers/media/dvb-core/dmxdev.c b/drivers/media/dvb-core/dmxdev.c
+index 8c6f5aafda1d6..17184b3674904 100644
+--- a/drivers/media/dvb-core/dmxdev.c
++++ b/drivers/media/dvb-core/dmxdev.c
+@@ -397,11 +397,11 @@ static int dvb_dmxdev_section_callback(const u8 *buffer1, size_t buffer1_len,
+ 	if (dvb_vb2_is_streaming(&dmxdevfilter->vb2_ctx)) {
+ 		ret = dvb_vb2_fill_buffer(&dmxdevfilter->vb2_ctx,
+ 					  buffer1, buffer1_len,
+-					  buffer_flags);
++					  buffer_flags, true);
+ 		if (ret == buffer1_len)
+ 			ret = dvb_vb2_fill_buffer(&dmxdevfilter->vb2_ctx,
+ 						  buffer2, buffer2_len,
+-						  buffer_flags);
++						  buffer_flags, true);
+ 	} else {
+ 		ret = dvb_dmxdev_buffer_write(&dmxdevfilter->buffer,
+ 					      buffer1, buffer1_len);
+@@ -452,10 +452,10 @@ static int dvb_dmxdev_ts_callback(const u8 *buffer1, size_t buffer1_len,
+ 
+ 	if (dvb_vb2_is_streaming(ctx)) {
+ 		ret = dvb_vb2_fill_buffer(ctx, buffer1, buffer1_len,
+-					  buffer_flags);
++					  buffer_flags, false);
+ 		if (ret == buffer1_len)
+ 			ret = dvb_vb2_fill_buffer(ctx, buffer2, buffer2_len,
+-						  buffer_flags);
++						  buffer_flags, false);
+ 	} else {
+ 		if (buffer->error) {
+ 			spin_unlock(&dmxdevfilter->dev->lock);
+diff --git a/drivers/media/dvb-core/dvb_vb2.c b/drivers/media/dvb-core/dvb_vb2.c
+index 29edaaff7a5c9..7444bbc2f24d9 100644
+--- a/drivers/media/dvb-core/dvb_vb2.c
++++ b/drivers/media/dvb-core/dvb_vb2.c
+@@ -249,7 +249,8 @@ int dvb_vb2_is_streaming(struct dvb_vb2_ctx *ctx)
+ 
+ int dvb_vb2_fill_buffer(struct dvb_vb2_ctx *ctx,
+ 			const unsigned char *src, int len,
+-			enum dmx_buffer_flags *buffer_flags)
++			enum dmx_buffer_flags *buffer_flags,
++			bool flush)
+ {
+ 	unsigned long flags = 0;
+ 	void *vbuf = NULL;
+@@ -306,7 +307,7 @@ int dvb_vb2_fill_buffer(struct dvb_vb2_ctx *ctx,
  		}
  	}
  
+-	if (ctx->nonblocking && ctx->buf) {
++	if (flush && ctx->buf) {
+ 		vb2_set_plane_payload(&ctx->buf->vb, 0, ll);
+ 		vb2_buffer_done(&ctx->buf->vb, VB2_BUF_STATE_DONE);
+ 		list_del(&ctx->buf->list);
+diff --git a/include/media/dvb_vb2.h b/include/media/dvb_vb2.h
+index 8cb88452cd6c2..0fbbfc65157e6 100644
+--- a/include/media/dvb_vb2.h
++++ b/include/media/dvb_vb2.h
+@@ -124,7 +124,7 @@ static inline int dvb_vb2_release(struct dvb_vb2_ctx *ctx)
+ 	return 0;
+ };
+ #define dvb_vb2_is_streaming(ctx) (0)
+-#define dvb_vb2_fill_buffer(ctx, file, wait, flags) (0)
++#define dvb_vb2_fill_buffer(ctx, file, wait, flags, flush) (0)
+ 
+ static inline __poll_t dvb_vb2_poll(struct dvb_vb2_ctx *ctx,
+ 				    struct file *file,
+@@ -166,10 +166,12 @@ int dvb_vb2_is_streaming(struct dvb_vb2_ctx *ctx);
+  * @buffer_flags:
+  *		pointer to buffer flags as defined by &enum dmx_buffer_flags.
+  *		can be NULL.
++ * @flush:	flush the buffer, even if it isn't full.
+  */
+ int dvb_vb2_fill_buffer(struct dvb_vb2_ctx *ctx,
+ 			const unsigned char *src, int len,
+-			enum dmx_buffer_flags *buffer_flags);
++			enum dmx_buffer_flags *buffer_flags,
++			bool flush);
+ 
+ /**
+  * dvb_vb2_poll - Wrapper to vb2_core_streamon() for Digital TV
 -- 
 2.51.0
 
