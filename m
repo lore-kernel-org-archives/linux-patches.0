@@ -1,45 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 021E3142E83;
-	Sat, 14 Feb 2026 21:26:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66679142E83;
+	Sat, 14 Feb 2026 21:26:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771104366; cv=none; b=t3mfFLKYcNC4nqex9VXmV1ZJQN6xUdFCHdjxoTdg18G5P1Wd8CP03MV+MRpkdMWoTVuAx+f7VHDEJ3VIB6wvozMWGUMFTe7+kf1m01htTOTdxhNjoIInd9huhvJMgYHdEqEm/lz5F0wdGFs8nukh+cD33X24faU6TgkYMzw7RDQ=
+	t=1771104368; cv=none; b=KeqrdaF/InGfqHR4RjjbxLbpSziDAaM8M+KcH8+sYuq7TCMnwKtb6JmsAtZc8NbmJK8Wro/acR/+wrvdGTD7S59SKHexrYHVYEJTK71cyjZF6aKFppO4+2SJ2vxWhRI/dpFD99t9g/e5MUbj2Xmy3sED5YrqISO8V101vSB02EA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771104366; c=relaxed/simple;
-	bh=vdvTBmCb5EyZhJSrdOW0ZnvI83pSoJKJxd61EWia9dg=;
+	s=arc-20240116; t=1771104368; c=relaxed/simple;
+	bh=rg3gHK8dA4+JPzitb7VA7CwcRiPGTdd+oWFzHG4lqjo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=vGu0kbTgCmULEHaCW+kWdp5+cFpV8dXA7JmDNT9dwF7c749AsxngW9pEiVer0CGKpGI8KSmx17KrhnZq37IFWg3OY/5nILeWDeoyJWK7A9Fa8038j6kfRDN0eQYvpadnklsc3C46oE4laN0ecNGEGTbuIeQsHJN8FSGQXCB8Vds=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Xin2MogE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=DXGgLggG+sD0+b8uE+DT9GNx934UVKd6Ump1VmRjnfP8ZTOE9eCOX6DT76UX15tnOW1MQAtmfM6w4X9GoIG+pYkvfrGrtq2Ee9rDnWmjxg27YAgYJnPjNSwGVkaHL5b3AcAfl5IiDI3lH7s1ZBGGFZYHd1Ex2woGmS4GbJVgmMg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=iuYOd4x2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Xin2MogE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8FF39C16AAE;
-	Sat, 14 Feb 2026 21:26:04 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="iuYOd4x2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ECAE5C19422;
+	Sat, 14 Feb 2026 21:26:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1771104365;
-	bh=vdvTBmCb5EyZhJSrdOW0ZnvI83pSoJKJxd61EWia9dg=;
+	s=k20201202; t=1771104368;
+	bh=rg3gHK8dA4+JPzitb7VA7CwcRiPGTdd+oWFzHG4lqjo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Xin2MogEv1/wpCLxPsDkd237Id1o7L/7hHuH35+hAI4NFSWJQRXCDKcFI7xfgAWlY
-	 bEhV26yjCaUacq3TRN7fHElRcW4wLpI25NW5Tj6QuEaw8aZorlCTvlrMBCyVfEWTRH
-	 +5tda9z8Kj+yZYrYvvPPh6bme+cANsCU2QYrefnZncrkvpVaPTCjlN0JSbwkwtcN8/
-	 2FtoJDBjNCTi6u0hlQfuY4MEKEGHUGkTztwrdUsiKCJsHXoontIobv35HwawJmhsnX
-	 8CbhA7WdIrqZlvchy1UuLYFvoPc8iYD/L0AZhXc/KFjX6ccCkBPmJcRdjGoleGOsGg
-	 tFkcMnD4uaaIg==
+	b=iuYOd4x2HJ2Sad3q8FuPgOUafd+qg3lY9m8T0u4lJcLHbLZGQnUmEA3grt79webGC
+	 UbEFCJC2erL6RGwgkfGCGMMyB/q4MiSNBmdR/PihtplAdY8lggJle7N1t/lXcmKu3H
+	 jfMx/awLu6xqTNDBKIUrXAwd/cZ2dCoISIbwVDb4mcnuoWEn3HsKyn6isLlxAZNd8S
+	 jDoNb9sLO++aAg+4ru/O5zJftr/AFnfEoDp++FG92KVgYFL/B8KxMBS7p2igXnKOME
+	 SLySd/hoJKVCkx44K1ab0yOwyBBDCXk19Sz9LIoB+dKmnLovipWwMOKqrlGM0ThWyv
+	 s4VnMSrOo33oQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Zhang Yi <yi.zhang@huawei.com>,
-	Jan Kara <jack@suse.cz>,
-	Baokun Li <libaokun1@huawei.com>,
-	Ojaswin Mujoo <ojaswin@linux.ibm.com>,
-	Theodore Ts'o <tytso@mit.edu>,
+Cc: Haotian Zhang <vulab@iscas.ac.cn>,
+	Dave Kleikamp <dave.kleikamp@oracle.com>,
 	Sasha Levin <sashal@kernel.org>,
-	adilger.kernel@dilger.ca,
-	linux-ext4@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.19-6.12] ext4: use reserved metadata blocks when splitting extent on endio
-Date: Sat, 14 Feb 2026 16:23:09 -0500
-Message-ID: <20260214212452.782265-44-sashal@kernel.org>
+	shaggy@kernel.org,
+	neil.armstrong@linaro.org,
+	liaoyuanhong@vivo.com,
+	yelangyan@huaqin.corp-partner.google.com,
+	jfs-discussion@lists.sourceforge.net
+Subject: [PATCH AUTOSEL 6.19-5.10] jfs: Add missing set_freezable() for freezable kthread
+Date: Sat, 14 Feb 2026 16:23:10 -0500
+Message-ID: <20260214212452.782265-45-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260214212452.782265-1-sashal@kernel.org>
 References: <20260214212452.782265-1-sashal@kernel.org>
@@ -55,144 +55,111 @@ X-stable-base: Linux 6.19
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Zhang Yi <yi.zhang@huawei.com>
+From: Haotian Zhang <vulab@iscas.ac.cn>
 
-[ Upstream commit 01942af95ab6c9d98e64ae01fdc243a03e4b973f ]
+[ Upstream commit eb0cfcf265714b419cc3549895a00632e76732ae ]
 
-When performing buffered writes, we may need to split and convert an
-unwritten extent into a written one during the end I/O process. However,
-we do not reserve space specifically for these metadata changes, we only
-reserve 2% of space or 4096 blocks. To address this, we use
-EXT4_GET_BLOCKS_PRE_IO to potentially split extents in advance and
-EXT4_GET_BLOCKS_METADATA_NOFAIL to utilize reserved space if necessary.
+The jfsIOWait() thread calls try_to_freeze() but lacks set_freezable(),
+causing it to remain non-freezable by default. This prevents proper
+freezing during system suspend.
 
-These two approaches can reduce the likelihood of running out of space
-and losing data. However, these methods are merely best efforts, we
-could still run out of space, and there is not much difference between
-converting an extent during the writeback process and the end I/O
-process, it won't increase the risk of losing data if we postpone the
-conversion.
+Add set_freezable() to make the thread freezable as intended.
 
-Therefore, also use EXT4_GET_BLOCKS_METADATA_NOFAIL in
-ext4_convert_unwritten_extents_endio() to prepare for the buffered I/O
-iomap conversion, which may perform extent conversion during the end I/O
-process.
-
-Signed-off-by: Zhang Yi <yi.zhang@huawei.com>
-Reviewed-by: Jan Kara <jack@suse.cz>
-Reviewed-by: Baokun Li <libaokun1@huawei.com>
-Reviewed-by: Ojaswin Mujoo <ojaswin@linux.ibm.com>
-Link: https://patch.msgid.link/20260105014522.1937690-2-yi.zhang@huaweicloud.com
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Signed-off-by: Haotian Zhang <vulab@iscas.ac.cn>
+Signed-off-by: Dave Kleikamp <dave.kleikamp@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-The commit message says "to prepare for the buffered I/O iomap
-conversion, which may perform extent conversion during the end I/O
-process." This suggests it's preparation for a future change. However,
-the bug exists **independently** — even in the current code path through
-`ext4_ext_handle_unwritten_extents`, the flag is set at line 3908 but
-the `ext4_convert_unwritten_extents_endio` function hardcodes only
-`EXT4_GET_BLOCKS_CONVERT` when calling `ext4_split_convert_extents` at
-line 3779-3780.
+This confirms the bug pattern clearly:
 
-Wait — let me re-read the flow more carefully. When
-`ext4_ext_handle_unwritten_extents()` calls
-`ext4_convert_unwritten_extents_endio()`, the flags variable with
-`METADATA_NOFAIL` is local to `ext4_ext_handle_unwritten_extents()`.
-`ext4_convert_unwritten_extents_endio()` doesn't receive those flags as
-a parameter — it constructs its own flags (`EXT4_GET_BLOCKS_CONVERT`)
-internally at line 3780. So **the METADATA_NOFAIL flag is NOT
-propagated** to the split operation inside
-`ext4_convert_unwritten_extents_endio()`.
+- **`jfs_txnmgr.c`** has TWO kthreads (`jfs_lazycommit` and `jfs_sync`)
+  that both correctly call `set_freezable()` before their loops and then
+  use `freezing(current)` + `try_to_freeze()`.
+- **`jfs_logmgr.c`** (`jfsIOWait`) has the same `freezing(current)` +
+  `try_to_freeze()` pattern but was **missing** the `set_freezable()`
+  call. This is clearly a bug — the thread was intended to be freezable
+  (it checks for freeze and tries to freeze) but never marked itself as
+  such.
 
-This is a real bug that exists in the current codebase, not just a
-preparation for future code. The split operation during endio can fail
-with ENOSPC because it doesn't use reserved metadata blocks.
+### 3. CLASSIFICATION
 
-### 3. Classification
+This is a **real bug fix**:
+- The thread is intended to participate in the kernel's freeze mechanism
+  (for suspend/hibernate), evidenced by the `freezing()` check and
+  `try_to_freeze()` call.
+- Without `set_freezable()`, the thread has `PF_NOFREEZE` set by
+  default, so `freezing(current)` always returns false and
+  `try_to_freeze()` is a no-op.
+- This means the jfsIOWait thread **never freezes during suspend**,
+  which can cause suspend failures or issues with filesystem consistency
+  during suspend/resume cycles.
 
-**Bug fix**: Prevents potential data loss on near-full ext4 filesystems
-when extent splitting is needed during endio. When the filesystem is
-nearly full, the extent conversion can fail because it doesn't tap into
-the reserved metadata pool. This failure at endio means written data may
-appear as unwritten (zeroed), which is **data loss**.
+### 4. SCOPE AND RISK ASSESSMENT
 
-### 4. Scope and Risk Assessment
+- **Size**: Single line addition — minimal risk.
+- **Scope**: Only affects the jfsIOWait kernel thread in the JFS
+  filesystem.
+- **Risk**: Extremely low. This is adding the exact same pattern used by
+  the other two JFS kthreads. The only behavioral change is that the
+  thread will now actually freeze during suspend, which was the original
+  design intent.
+- **Subsystem**: JFS filesystem — mature and stable. While not as widely
+  used as ext4/xfs, it has real users.
 
-- **Lines changed**: ~5 lines (adding one flag to an existing call)
-- **Files changed**: 1 (fs/ext4/extents.c)
-- **Risk**: Extremely low. The `EXT4_GET_BLOCKS_METADATA_NOFAIL` flag is
-  already used elsewhere in the same function's caller
-  (`ext4_ext_handle_unwritten_extents`). This just ensures the flag is
-  also used when the called function internally needs to split extents.
-- **Subsystem**: ext4 — the most widely used Linux filesystem. Affects
-  everyone.
+### 5. USER IMPACT
 
-### 5. User Impact
+Users running JFS filesystems who suspend/hibernate their systems could
+be affected by the non-freezable kthread. The impact includes:
+- Potential suspend/hibernate failures (the freezer may timeout waiting
+  for this thread)
+- Possible filesystem consistency issues if the thread continues I/O
+  during suspend
 
-- **Who**: Any user with an ext4 filesystem that is near-full performing
-  buffered writes where extent splitting is needed during endio
-- **Severity**: Data loss — written data appears zeroed because the
-  extent remains marked as unwritten
-- **Likelihood**: Increases as filesystem fills up; real-world scenario
-  on busy servers
+### 6. STABILITY INDICATORS
 
-### 6. Stability Indicators
+- The fix follows the exact same pattern as the other two JFS kthreads
+  in jfs_txnmgr.c
+- Signed off by the JFS maintainer (Dave Kleikamp)
+- Trivial one-line addition with clear correctness
 
-- **Reviewed-by**: Jan Kara (ext4 co-maintainer), Baokun Li, Ojaswin
-  Mujoo — three reviewers
-- **Committed-by**: Theodore Ts'o (ext4 maintainer)
-- This level of review indicates high confidence in the fix
+### 7. DEPENDENCY CHECK
 
-### 7. Dependency Check
+No dependencies. The `set_freezable()` API and the freeze framework have
+existed for many kernel versions. This patch applies to any kernel that
+has the JFS filesystem with the jfsIOWait thread.
 
-The change is entirely self-contained. It only adds an existing flag
-(`EXT4_GET_BLOCKS_METADATA_NOFAIL`) to an existing function call. No
-dependencies on other commits. The affected code
-(`ext4_convert_unwritten_extents_endio`) has been in the kernel for many
-years and exists in all stable trees.
+### 8. CONCLUSION
 
-### Summary
-
-This is a small, surgical fix for a real data loss scenario in ext4 —
-the most widely used Linux filesystem. When the filesystem is near full,
-extent conversion during endio can fail because it doesn't use the
-reserved metadata block pool. The fix adds a single flag
-(`EXT4_GET_BLOCKS_METADATA_NOFAIL`) that was already supposed to be
-propagated but wasn't. It's been reviewed by three ext4 experts
-including the subsystem maintainer. The risk is minimal and the benefit
-is preventing data loss.
+This is a textbook stable backport candidate:
+- **Obviously correct**: Adds the same `set_freezable()` call used by
+  the other two JFS kthreads
+- **Fixes a real bug**: The thread never actually freezes during suspend
+  despite being designed to do so
+- **Small and contained**: Single line addition
+- **No new features**: Just makes existing freeze support work correctly
+- **Low risk**: Cannot introduce regressions — it only enables the
+  freeze behavior that was already coded but never activated
+- **Affects real users**: Anyone using JFS with suspend/hibernate
 
 **YES**
 
- fs/ext4/extents.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ fs/jfs/jfs_logmgr.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/fs/ext4/extents.c b/fs/ext4/extents.c
-index 2cf5759ba6894..f1322f64071ff 100644
---- a/fs/ext4/extents.c
-+++ b/fs/ext4/extents.c
-@@ -3770,6 +3770,8 @@ ext4_convert_unwritten_extents_endio(handle_t *handle, struct inode *inode,
- 	 * illegal.
- 	 */
- 	if (ee_block != map->m_lblk || ee_len > map->m_len) {
-+		int flags = EXT4_GET_BLOCKS_CONVERT |
-+			    EXT4_GET_BLOCKS_METADATA_NOFAIL;
- #ifdef CONFIG_EXT4_DEBUG
- 		ext4_warning(inode->i_sb, "Inode (%ld) finished: extent logical block %llu,"
- 			     " len %u; IO logical block %llu, len %u",
-@@ -3777,7 +3779,7 @@ ext4_convert_unwritten_extents_endio(handle_t *handle, struct inode *inode,
- 			     (unsigned long long)map->m_lblk, map->m_len);
- #endif
- 		path = ext4_split_convert_extents(handle, inode, map, path,
--						EXT4_GET_BLOCKS_CONVERT, NULL);
-+						  flags, NULL);
- 		if (IS_ERR(path))
- 			return path;
+diff --git a/fs/jfs/jfs_logmgr.c b/fs/jfs/jfs_logmgr.c
+index b343c5ea11592..5b1c5da041630 100644
+--- a/fs/jfs/jfs_logmgr.c
++++ b/fs/jfs/jfs_logmgr.c
+@@ -2311,6 +2311,7 @@ int jfsIOWait(void *arg)
+ {
+ 	struct lbuf *bp;
  
++	set_freezable();
+ 	do {
+ 		spin_lock_irq(&log_redrive_lock);
+ 		while ((bp = log_redrive_list)) {
 -- 
 2.51.0
 
