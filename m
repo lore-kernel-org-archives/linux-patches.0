@@ -1,48 +1,46 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 116F517B506;
-	Sat, 14 Feb 2026 01:03:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82B1F17B506;
+	Sat, 14 Feb 2026 01:03:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771031018; cv=none; b=CMaqmtliubugWRW4tOzg6o8vXTFGqRQmnJzDM0xmwUXfMXRFvfWPJKIuBhq5TAtGKXGA384npT/bPdK49B1zSsdnWHm57+Ucg1R6KhKgbi8hopsdUVpYSXwNzfD6mpvTxkgXyxrl1NqIwkP9KlbPcGAXHCsn6cVBc2o39mgDCls=
+	t=1771031019; cv=none; b=gDhnwDZm5g6SmZjBpC8TMnxIx/MMYzaEuCKPYFVRhaN40AwuOB9XcTx93Fpx7xpU5V36Xr4hFqA3zEsh4x76jHXIhDlT2NPWHAykoKe7pGc+xN0t0QElWSOnWXGHBZQHSkjBdesIGataw67/tf/jdjvN55fO3sMW7HCQB6cKZTo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771031018; c=relaxed/simple;
-	bh=hr6ZlRyO3yRbLRvj6Vembu5LFGUc/HNiBv7978rmiTQ=;
+	s=arc-20240116; t=1771031019; c=relaxed/simple;
+	bh=Nr6HY9tCKQiB7HyVyKbj/Vo6neuw+52XUIkxsknqJNw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=CjtahshaI8a+Yz1CqXwlof2+DxrOQGTRyFoZdFtxW2mtW4fzLBePlPQqCo0pkmynrBB3dR6os01TqqoIdQgPGagX8dffzb+3k8PHn1RLzq6j/1Pv71r2vsmnnJcKqLzTPeZDqjFei/QgTJWEuXx6YND00XzW101H9TMgGr54FdY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=I1YUL+Lu; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=lwNOr244KoDL4o+YKLwUzaBts13tjl5doZguuYvFe9yPtEGBIRMIC6jPECv7+Vu55cYMQKv4jQTYrY/pqcgGI7aGwgGnyzVl1lcxf4kfrGv8hv+GA0WLwfkyPW81EWL1VFbMaXy0aOasX2snhoo3OMoY9g6LyX5UVqS1HTD6LUM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ed5G0EKn; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="I1YUL+Lu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC40AC116C6;
-	Sat, 14 Feb 2026 01:03:36 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ed5G0EKn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5540CC116C6;
+	Sat, 14 Feb 2026 01:03:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1771031017;
-	bh=hr6ZlRyO3yRbLRvj6Vembu5LFGUc/HNiBv7978rmiTQ=;
+	s=k20201202; t=1771031019;
+	bh=Nr6HY9tCKQiB7HyVyKbj/Vo6neuw+52XUIkxsknqJNw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=I1YUL+LuWzU6FZyQMpkYoqOaP/3s4R9g1I5P6OVy0qGeOETF1BHBrv4DEIolpKwsV
-	 fHO6czASskLNE1MD+j2zLNrmraFqEgoyeKXAqlBWT+/nkMF/6xRWtBVEhE4giCq1Vr
-	 REszDjuznxayvoBXbxAiHCLN9+rIAt4OvydOoY9TzwlounTU5gmMt50qfizpgLc9W+
-	 3ScFy6ABzfvNkQJOzMFLAElOYWKHGPTco4hkQIU9joIcvtL3LltJyqtws2BCGK2G+c
-	 fJdhe/B0riQPm8DZjtiAY4UzyqIMtQLYRPno0RZooWkiIHF/oBJTXak5IFpKfxHLMX
-	 nb9oCLFt2+Fiw==
+	b=ed5G0EKna2vsyV887GX53Ipkz2PHgwpr2HGJe8lhV+e9igtJFU3OOSkru23mXdBvL
+	 YwdpY9meZTiT62LmJh9K9jxV0HCYuhAm0oF4S49eymOjWudtv1chWXSZcO0B5/8YVX
+	 82PcPYX9iDxxb6AGuyJDp9Xm1CNocXVmd7kvR0IeZRGU779d8jSzuBD71CzoEbUjvR
+	 DZnedSqQ010a1b4dYWZ9GH52GflBWpj+pjSgde4jMIRwcg9ZhMFyYHbNijZs36QjKC
+	 TDNMbbLXkRTTc2zqslLGY8v1+h7MWLqAVNmJaVJ/C9vYTCuoxCfl4JGJTByGt3EWSV
+	 i4nyFwHbkDrWw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>,
-	Kai Vehmanen <kai.vehmanen@linux.intel.com>,
-	Liam Girdwood <liam.r.girdwood@intel.com>,
-	Ranjani Sridharan <ranjani.sridharan@linux.intel.com>,
-	Takashi Iwai <tiwai@suse.de>,
-	Mark Brown <broonie@kernel.org>,
+Cc: Ludovic Desroches <ludovic.desroches@microchip.com>,
+	Manikandan Muralidharan <manikandan.m@microchip.com>,
 	Sasha Levin <sashal@kernel.org>,
-	tglx@kernel.org,
-	wangruikang@iscas.ac.cn,
-	yelangyan@huaqin.corp-partner.google.com,
-	Vijendar.Mukunda@amd.com
-Subject: [PATCH AUTOSEL 6.19] ALSA: hda: controllers: intel: add support for Nova Lake
-Date: Fri, 13 Feb 2026 19:58:24 -0500
-Message-ID: <20260214010245.3671907-24-sashal@kernel.org>
+	dharma.b@microchip.com,
+	nicolas.ferre@microchip.com,
+	alexandre.belloni@bootlin.com,
+	claudiu.beznea@tuxon.dev,
+	dri-devel@lists.freedesktop.org,
+	linux-arm-kernel@lists.infradead.org
+Subject: [PATCH AUTOSEL 6.19-5.10] drm/atmel-hlcdc: fix use-after-free of drm_crtc_commit after release
+Date: Fri, 13 Feb 2026 19:58:25 -0500
+Message-ID: <20260214010245.3671907-25-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260214010245.3671907-1-sashal@kernel.org>
 References: <20260214010245.3671907-1-sashal@kernel.org>
@@ -58,119 +56,161 @@ X-stable-base: Linux 6.19
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
+From: Ludovic Desroches <ludovic.desroches@microchip.com>
 
-[ Upstream commit 7f428282fde34f06f3ab898b8a9081bf93a41f22 ]
+[ Upstream commit bc847787233277a337788568e90a6ee1557595eb ]
 
-Add NVL to the PCI-ID list.
+The atmel_hlcdc_plane_atomic_duplicate_state() callback was copying
+the atmel_hlcdc_plane state structure without properly duplicating the
+drm_plane_state. In particular, state->commit remained set to the old
+state commit, which can lead to a use-after-free in the next
+drm_atomic_commit() call.
 
-Signed-off-by: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
-Reviewed-by: Kai Vehmanen <kai.vehmanen@linux.intel.com>
-Reviewed-by: Liam Girdwood <liam.r.girdwood@intel.com>
-Reviewed-by: Ranjani Sridharan <ranjani.sridharan@linux.intel.com>
-Acked-by: Takashi Iwai <tiwai@suse.de>
-Link: https://patch.msgid.link/20260120193507.14019-5-peter.ujfalusi@linux.intel.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fix this by calling
+__drm_atomic_helper_duplicate_plane_state(), which correctly clones
+the base drm_plane_state (including the ->commit pointer).
+
+It has been seen when closing and re-opening the device node while
+another DRM client (e.g. fbdev) is still attached:
+
+=============================================================================
+BUG kmalloc-64 (Not tainted): Poison overwritten
+-----------------------------------------------------------------------------
+
+0xc611b344-0xc611b344 @offset=836. First byte 0x6a instead of 0x6b
+FIX kmalloc-64: Restoring Poison 0xc611b344-0xc611b344=0x6b
+Allocated in drm_atomic_helper_setup_commit+0x1e8/0x7bc age=178 cpu=0
+pid=29
+ drm_atomic_helper_setup_commit+0x1e8/0x7bc
+ drm_atomic_helper_commit+0x3c/0x15c
+ drm_atomic_commit+0xc0/0xf4
+ drm_framebuffer_remove+0x4cc/0x5a8
+ drm_mode_rmfb_work_fn+0x6c/0x80
+ process_one_work+0x12c/0x2cc
+ worker_thread+0x2a8/0x400
+ kthread+0xc0/0xdc
+ ret_from_fork+0x14/0x28
+Freed in drm_atomic_helper_commit_hw_done+0x100/0x150 age=8 cpu=0
+pid=169
+ drm_atomic_helper_commit_hw_done+0x100/0x150
+ drm_atomic_helper_commit_tail+0x64/0x8c
+ commit_tail+0x168/0x18c
+ drm_atomic_helper_commit+0x138/0x15c
+ drm_atomic_commit+0xc0/0xf4
+ drm_atomic_helper_set_config+0x84/0xb8
+ drm_mode_setcrtc+0x32c/0x810
+ drm_ioctl+0x20c/0x488
+ sys_ioctl+0x14c/0xc20
+ ret_fast_syscall+0x0/0x54
+Slab 0xef8bc360 objects=21 used=16 fp=0xc611b7c0
+flags=0x200(workingset|zone=0)
+Object 0xc611b340 @offset=832 fp=0xc611b7c0
+
+Signed-off-by: Ludovic Desroches <ludovic.desroches@microchip.com>
+Reviewed-by: Manikandan Muralidharan <manikandan.m@microchip.com>
+Link: https://patch.msgid.link/20251024-lcd_fixes_mainlining-v1-2-79b615130dc3@microchip.com
+Signed-off-by: Manikandan Muralidharan <manikandan.m@microchip.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-## Analysis
+This confirms the fix. The key lines in the helper are:
 
-### Commit Message Analysis
-
-The commit subject and body are straightforward: "add support for Nova
-Lake" by adding a PCI device ID (`HDA_NVL`) to the existing HDA (High
-Definition Audio) controller driver's PCI ID table.
-
-### Code Change Analysis
-
-The diff shows a single line addition:
 ```c
-{ PCI_DEVICE_DATA(INTEL, HDA_NVL, AZX_DRIVER_SKL | AZX_DCAPS_INTEL_LNL)
-},
+state->fence = NULL;
+state->commit = NULL;      // THIS is the critical fix
+state->fb_damage_clips = NULL;
 ```
 
-This adds the Nova Lake (NVL) PCI device ID to the `azx_ids[]` table in
-`sound/hda/controllers/intel.c`. The entry uses the same driver type
-(`AZX_DRIVER_SKL`) and capabilities (`AZX_DCAPS_INTEL_LNL`) as other
-recent Intel platforms like Panther Lake, Wildcat Lake, and the already-
-present `HDA_NVL_S` (Nova Lake-S variant).
+The old code was missing the `state->commit = NULL` step. By using the
+helper, the commit pointer is properly set to NULL in the duplicated
+state, preventing the use-after-free when the old state's commit is
+freed.
 
-### Classification
+Additionally, `state->fence` and `state->fb_damage_clips` were also not
+being properly handled in the old code — the helper fixes multiple
+potential issues at once.
 
-This is a **new device ID addition** to an existing, well-established
-driver. This falls squarely into the "NEW DEVICE IDs" exception category
-that is explicitly allowed and encouraged for stable backports.
+### 3. CLASSIFICATION
 
-Key characteristics:
-- **One-line change**: Minimal risk
-- **Pattern-matching existing entries**: Uses the same driver/caps as
-  NVL_S which is already present
-- **No new code paths**: The driver infrastructure already handles this;
-  only the PCI ID binding is added
-- **No new features or APIs**: Just enables an existing driver to bind
-  to new hardware
+- **Bug type**: Use-after-free (UAF) — one of the most critical bug
+  categories for stable
+- **Severity**: HIGH — UAF can lead to kernel crashes, data corruption,
+  and potentially security vulnerabilities
+- **Reproducibility**: PROVEN — the commit includes a full stack trace
+  from a real reproduction
 
-### Risk Assessment
+### 4. SCOPE AND RISK ASSESSMENT
 
-- **Risk**: Essentially zero. Adding a PCI ID to a table cannot break
-  existing functionality. The new entry only activates when the specific
-  Nova Lake hardware is present.
-- **Scope**: Single line in a single file
-- **Dependencies**: The `HDA_NVL` PCI ID macro must be defined in the
-  PCI ID header. Since `HDA_NVL_S` already exists and this commit was
-  accepted upstream, the corresponding ID definition is present.
+- **Lines changed**: Net -1 line (replaced 2 lines with 1 line)
+- **Files touched**: 1 file (`atmel_hlcdc_plane.c`)
+- **Complexity**: Minimal — uses the standard, well-tested DRM helper
+  function
+- **Risk of regression**: Extremely low — this replaces incorrect manual
+  code with the standard pattern used by virtually all other DRM drivers
+- **The destroy_state function already uses
+  `__drm_atomic_helper_plane_destroy_state`**, so using the duplicate
+  counterpart is the correct and symmetric approach
 
-### User Impact
+### 5. USER IMPACT
 
-Without this PCI ID entry, users with Nova Lake hardware will have no
-HDA audio support. This is a direct hardware enablement fix — audio
-simply won't work on these systems without it.
+- Affects users of Atmel HLCDC display controllers (common in
+  Atmel/Microchip SoCs used in embedded systems)
+- The bug triggers when closing and re-opening display device nodes
+  while another client (e.g., fbdev emulation) remains — a realistic
+  scenario
+- Impact when triggered: kernel BUG (slab corruption), which can lead to
+  crashes or worse
 
-### Stability Indicators
+### 6. STABILITY INDICATORS
 
-- **Reviewed-by**: Three reviewers (Kai Vehmanen, Liam Girdwood, Ranjani
-  Sridharan — all Intel audio engineers)
-- **Acked-by**: Takashi Iwai (HDA subsystem maintainer)
-- **Pattern**: Identical to dozens of previous Intel HDA PCI ID
-  additions that routinely go to stable
+- **Reviewed-by**: Manikandan Muralidharan (subsystem maintainer for
+  this driver)
+- **Author**: Ludovic Desroches from Microchip — the hardware vendor's
+  own engineer
+- The fix uses a well-established DRM helper function that has been
+  stable for years
 
-### Dependency Check
+### 7. DEPENDENCY CHECK
 
-The only dependency is the PCI ID definition macro (`INTEL_HDA_NVL` or
-similar) in the PCI ID headers. This would need to be present in the
-stable tree. Given that `HDA_NVL_S` is already in the table, the
-corresponding header changes for the NVL family may already be partially
-present, though the specific `HDA_NVL` ID definition would need to be
-verified or backported alongside this.
+- `__drm_atomic_helper_plane_duplicate_state()` has existed in the
+  kernel since at least 4.x series — no dependency issues for any active
+  stable tree
+- The atmel-hlcdc driver exists in all active stable trees
+- The fix is completely self-contained — no other patches needed
 
-### Conclusion
+### Summary
 
-This is a textbook stable backport candidate: a single-line PCI device
-ID addition to an existing, mature driver (Intel HDA), enabling audio on
-new hardware. It has zero risk of regression, multiple expert reviews,
-and direct user impact. The only consideration is ensuring the PCI ID
-macro definition is also backported.
+This is a textbook stable backport candidate:
+- **Obviously correct**: Replaces broken manual code with the standard
+  DRM helper
+- **Fixes a real bug**: UAF proven with stack trace
+- **Small and contained**: 1 file, net -1 line change
+- **No new features**: Pure bug fix
+- **Low regression risk**: Uses established, well-tested helper function
+- **Real-world impact**: Reproducible crash scenario on embedded
+  hardware
 
 **YES**
 
- sound/hda/controllers/intel.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/gpu/drm/atmel-hlcdc/atmel_hlcdc_plane.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/sound/hda/controllers/intel.c b/sound/hda/controllers/intel.c
-index 1e8e3d61291a1..1b365e0772970 100644
---- a/sound/hda/controllers/intel.c
-+++ b/sound/hda/controllers/intel.c
-@@ -2551,6 +2551,7 @@ static const struct pci_device_id azx_ids[] = {
- 	/* Wildcat Lake */
- 	{ PCI_DEVICE_DATA(INTEL, HDA_WCL, AZX_DRIVER_SKL | AZX_DCAPS_INTEL_LNL) },
- 	/* Nova Lake */
-+	{ PCI_DEVICE_DATA(INTEL, HDA_NVL, AZX_DRIVER_SKL | AZX_DCAPS_INTEL_LNL) },
- 	{ PCI_DEVICE_DATA(INTEL, HDA_NVL_S, AZX_DRIVER_SKL | AZX_DCAPS_INTEL_LNL) },
- 	/* Apollolake (Broxton-P) */
- 	{ PCI_DEVICE_DATA(INTEL, HDA_APL, AZX_DRIVER_SKL | AZX_DCAPS_INTEL_BROXTON) },
+diff --git a/drivers/gpu/drm/atmel-hlcdc/atmel_hlcdc_plane.c b/drivers/gpu/drm/atmel-hlcdc/atmel_hlcdc_plane.c
+index ec1fb5f9549a2..e55e88d44e829 100644
+--- a/drivers/gpu/drm/atmel-hlcdc/atmel_hlcdc_plane.c
++++ b/drivers/gpu/drm/atmel-hlcdc/atmel_hlcdc_plane.c
+@@ -1160,8 +1160,7 @@ atmel_hlcdc_plane_atomic_duplicate_state(struct drm_plane *p)
+ 		return NULL;
+ 	}
+ 
+-	if (copy->base.fb)
+-		drm_framebuffer_get(copy->base.fb);
++	__drm_atomic_helper_plane_duplicate_state(p, &copy->base);
+ 
+ 	return &copy->base;
+ }
 -- 
 2.51.0
 
