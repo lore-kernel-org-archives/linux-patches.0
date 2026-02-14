@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6FD9F299931;
-	Sat, 14 Feb 2026 21:26:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D02AB2D979F;
+	Sat, 14 Feb 2026 21:26:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771104377; cv=none; b=hoyylfIVaPqgWz03BwtBbazfxD393x9aQtv9AMI7nZUfR1Lu8fj3XIBxtASiKNoAifNzyeVo++tgU4MefArPjR6Dse5X1bV/t2o5G1BxTfKdoBo1CTOXluwcjQCJjrrCGq3Ni+xWsxtsU3IlqJR3tczjX/HShxQdCiRhNSoJR5g=
+	t=1771104378; cv=none; b=O2n5pIO3kZ1WSKtq9rnwhijkKnOKSaadRvUcddyfm+Z+PDNEk8hU50pxKzI4vockT72NWpP+PSXoFTufWuKbtYP4FHStRsPbBgc1/Fad3/6RNRz0vD+pGGjpC3n+ziS8b/dWkxgy43fQ1gkmJAONSng52nv9vn9YfNM0EXbvSPk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771104377; c=relaxed/simple;
-	bh=LJvwCkXL776zJX/WvyQWr9cwHQHia4o0eSMgh+ZA3jg=;
+	s=arc-20240116; t=1771104378; c=relaxed/simple;
+	bh=iYacwj6iOAfDyResFuR1KlgGDj9QDNWwUEi5sSnHolQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=hm7cL/j8eV8yBpIUI0Z3/buq3x8/itYl+LANQSns+p+Gnjc6VkVh7oHmJzFd8LmO0AQmtA88urwOMcXEGU5fMxkZUaXpiVx7KmsjQmftLo84ELdZ6lEgpF5G3f6EnB0POynAHb6k8CrzLlNF5isYGzjEBZPsd9mlaI9kWWgEEBo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=G7ExQu3w; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=tqVEQ27RsJlrUq59e2QLKto5ki96v0c0ssYsuaprcDAvomwuWr1NqzCL9A32m+dNi9XZ/crf5ZESac+EqnvH0CF4GDlXzb4FhCHNfRAqn2u4/uQROQ7G5plHVKaJH2W8IR+oPnN89NQvYOLsHuTatnSuKRYGxzZ0FR2GgRDqUms=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=BJfnQCfo; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="G7ExQu3w"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 959F8C19422;
-	Sat, 14 Feb 2026 21:26:16 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="BJfnQCfo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB017C19422;
+	Sat, 14 Feb 2026 21:26:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1771104377;
-	bh=LJvwCkXL776zJX/WvyQWr9cwHQHia4o0eSMgh+ZA3jg=;
+	s=k20201202; t=1771104378;
+	bh=iYacwj6iOAfDyResFuR1KlgGDj9QDNWwUEi5sSnHolQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=G7ExQu3wKY9pi26Ub3/a0Dk49v3hKKO81AlYnz8VPorvigWiG0R3s9FpelIwJRv3U
-	 hz9ZYvwjehTNDld4/cq578Coa5YkSc2vJO3SjdVl3mKHWcXxonKZDd+rizrc+EyOKw
-	 OltA4ylQtnGZnQU9iARBQbTcI5hzGNTmuWgVCgZhuOum6bidtcTYrtG6nox1qb1dAr
-	 V1hBQZbwOU8WpV528ur3MAtqR0J21IeXzkgVlHiBgjbHEZmp6+hmvo5XbtPaoNGZ4Q
-	 F+7tC6Q20VkzraQhqjOau1lES/8lvQ0LxbnE5R+NCmJ22VJJNFohIjCAmhYJKJQZ/a
-	 w2pHjkgAI8law==
+	b=BJfnQCfowmIJQb8vkHqwtZOm8c8eCHUqip2I1mrBO5fRyXJ1Turz6BZGEv8dK7Chh
+	 wNVp0CRaj9JzNtbkHCjYDTZO8peiqmpc3NmlJYIITY3xYRsl5MbOin6iFlTQWNe1gH
+	 VaFXF5QzuhS5ScrcEPsPd0BuT7xSqgfZ2nQ8BGVy64M7TL4k/oEgcChSMJY2WiLCBL
+	 NlbbDORgl3e4PuoIDoVZ2rylGnjFyZudBacLnCSEwcKS+CoITCfCooJlIsU4U8zMBd
+	 ak7VQYkVzph6umNdtxOWQjjh2jfqCnJenuEZuDngkgPA2snUU9ifFb+2yKKbKS7fDA
+	 2QzbSGhIPBEBA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Carl Lee <carl.lee@amd.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+Cc: Zenm Chen <zenmchen@gmail.com>,
+	Ping-Ke Shih <pkshih@realtek.com>,
 	Sasha Levin <sashal@kernel.org>,
-	neil.armstrong@linaro.org,
-	yelangyan@huaqin.corp-partner.google.com
-Subject: [PATCH AUTOSEL 6.19-5.10] nfc: nxp-nci: remove interrupt trigger type
-Date: Sat, 14 Feb 2026 16:23:16 -0500
-Message-ID: <20260214212452.782265-51-sashal@kernel.org>
+	linux-wireless@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.19] wifi: rtw89: Add support for D-Link VR Air Bridge (DWA-F18)
+Date: Sat, 14 Feb 2026 16:23:17 -0500
+Message-ID: <20260214212452.782265-52-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260214212452.782265-1-sashal@kernel.org>
 References: <20260214212452.782265-1-sashal@kernel.org>
@@ -52,150 +51,122 @@ X-stable-base: Linux 6.19
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Carl Lee <carl.lee@amd.com>
+From: Zenm Chen <zenmchen@gmail.com>
 
-[ Upstream commit 57be33f85e369ce9f69f61eaa34734e0d3bd47a7 ]
+[ Upstream commit 292c0bc8acb687de7e83fc454bb98af19187b6bf ]
 
-For NXP NCI devices (e.g. PN7150), the interrupt is level-triggered and
-active high, not edge-triggered.
+Add the ID 2001:3323 to the table to support an additional RTL8832AU
+adapter: D-Link VR Air Bridge (DWA-F18).
 
-Using IRQF_TRIGGER_RISING in the driver can cause interrupts to fail
-to trigger correctly.
+Compile tested only.
 
-Remove IRQF_TRIGGER_RISING and rely on the IRQ trigger type configured
-via Device Tree.
-
-Signed-off-by: Carl Lee <carl.lee@amd.com>
-Link: https://patch.msgid.link/20260205-fc-nxp-nci-remove-interrupt-trigger-type-v2-1-79d2ed4a7e42@amd.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Link: https://github.com/morrownr/rtw89/pull/44
+Signed-off-by: Zenm Chen <zenmchen@gmail.com>
+Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
+Link: https://patch.msgid.link/20260112004759.6028-1-zenmchen@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-## Analysis of nfc: nxp-nci: remove interrupt trigger type
+## Analysis: Adding USB Device ID for D-Link VR Air Bridge (DWA-F18)
 
-### 1. COMMIT MESSAGE ANALYSIS
+### Commit Message Analysis
 
-The commit states that for NXP NCI devices (e.g., PN7150), the interrupt
-is **level-triggered and active high**, not edge-triggered. The driver
-was incorrectly using `IRQF_TRIGGER_RISING`, which can cause
-**interrupts to fail to trigger correctly**. The fix removes the
-hardcoded trigger type and relies on the Device Tree configuration
-instead.
+The commit adds a single USB device ID (2001:3323) to the
+`rtw_8852au_id_table` in the rtw89 WiFi driver. This enables an
+existing, already-supported RTL8832AU chipset-based adapter — the D-Link
+VR Air Bridge (DWA-F18) — to be recognized by the driver.
 
-Key phrases:
-- "interrupts to fail to trigger correctly" — this is a real hardware
-  bug affecting functionality
-- "level-triggered and active high, not edge-triggered" — clear
-  technical justification
+The commit message is straightforward: "Add the ID 2001:3323 to the
+table to support an additional RTL8832AU adapter." It notes "Compile
+tested only," which is typical for device ID additions since the
+hardware behavior is identical to other already-supported devices with
+the same chipset.
 
-### 2. CODE CHANGE ANALYSIS
+### Code Change Analysis
 
-The change is a **single-line modification**:
+The change is exactly **2 lines added**, inserting a new
+`USB_DEVICE_AND_INTERFACE_INFO` entry into the existing device ID table:
 
 ```c
-- IRQF_TRIGGER_RISING | IRQF_ONESHOT,
-+ IRQF_ONESHOT,
+{ USB_DEVICE_AND_INTERFACE_INFO(0x2001, 0x3323, 0xff, 0xff, 0xff),
+  .driver_info = (kernel_ulong_t)&rtw89_8852au_info },
 ```
 
-This removes `IRQF_TRIGGER_RISING` from the `request_threaded_irq()`
-call, leaving only `IRQF_ONESHOT`. When no trigger type is specified,
-the kernel uses the trigger type configured by the platform (Device Tree
-or ACPI), which is the correct behavior for this device.
+This follows the exact same pattern as all other entries in the table.
+The vendor ID `0x2001` is D-Link, and other D-Link devices (`0x3321`,
+`0x332c`) are already in the table. The `.driver_info` points to the
+same `rtw89_8852au_info` structure used by all entries.
 
-**Bug mechanism**: The PN7150 NFC chip uses a level-triggered, active-
-high interrupt. When the driver hardcodes `IRQF_TRIGGER_RISING` (edge-
-triggered), it can:
-- Miss interrupts if the line stays high (level vs edge semantic
-  mismatch)
-- Cause the NFC controller to become unresponsive because the driver
-  never sees the interrupt
-- On some interrupt controllers, specifying a conflicting trigger type
-  can cause the IRQ to not work at all
+### Classification: New Device ID
 
-### 3. CLASSIFICATION
+This falls squarely into the **"New Device IDs"** exception category for
+stable backporting:
 
-This is a **hardware bug fix**. The driver had an incorrect interrupt
-configuration that causes the device to malfunction. It falls into the
-category of fixing a real bug that prevents hardware from working
-correctly.
+- The driver (`rtw89/rtw8852au`) already exists in stable trees
+- Only a USB device ID is being added — no new code paths, no new logic
+- The device uses the same RTL8832AU chipset as other already-supported
+  adapters
+- The change is trivially correct by inspection
 
-This is NOT a feature addition, API change, or refactoring. It's
-correcting an incorrect driver parameter.
+### Risk Assessment
 
-### 4. SCOPE AND RISK ASSESSMENT
+- **Risk: Extremely Low** — A device ID addition cannot break any
+  existing functionality. It only affects matching for the specific USB
+  VID:PID 2001:3323, which previously had no driver match at all.
+- **Scope: Minimal** — 2 lines in a single file, following an
+  established pattern.
+- **Regression potential: Near zero** — No existing behavior is
+  modified.
 
-- **Size**: 1 line changed in 1 file — minimal scope
-- **Risk**: Very low. Removing the hardcoded trigger type and deferring
-  to DT/platform configuration is the standard, correct approach in
-  modern Linux kernel drivers. Many other drivers have undergone similar
-  changes.
-- **Subsystem**: NFC driver (nxp-nci) — niche but has real users (NFC on
-  embedded/mobile platforms)
-- **Regression potential**: Low. If a system was working with
-  `IRQF_TRIGGER_RISING` before, it means either (a) the DT already
-  specified the correct trigger type (in which case removing the driver
-  override changes nothing) or (b) the interrupt controller happened to
-  work with the wrong trigger type. In case (b), the DT should already
-  have the correct type defined, and this change makes the driver
-  correctly defer to it.
+### User Impact
 
-### 5. USER IMPACT
+Without this patch, users with the D-Link DWA-F18 VR Air Bridge cannot
+use their WiFi adapter at all with the in-kernel rtw89 driver. With it,
+the device is automatically recognized. This has real-world impact for
+users of this specific hardware.
 
-NXP PN7150 is a commonly used NFC controller, found in embedded systems
-and IoT devices — exactly the kind of platforms running stable kernels.
-Users affected by this bug would see their NFC controller fail to work
-properly (missed interrupts = no NFC communication). This is a
-**complete functionality failure** for affected users.
+### Dependencies
 
-The "v2" in the link suggests this went through review iteration,
-indicating careful consideration.
+This commit has no dependencies beyond the rtw89 USB driver
+infrastructure already being present in the stable tree. The
+`rtw8852au.c` driver and the `rtw89_8852au_info` structure are already
+defined.
 
-### 6. STABILITY INDICATORS
+### Stability Indicators
 
-- Signed by AMD engineer (Carl Lee)
-- Accepted by networking maintainer (Jakub Kicinski)
-- Clear, well-documented commit message explaining the technical issue
-- The fix follows established kernel patterns (relying on DT for IRQ
-  type)
+- Signed off by the rtw89 subsystem maintainer (Ping-Ke Shih from
+  Realtek)
+- Follows established patterns identically
+- Community-contributed with a linked PR showing user demand
 
-### 7. DEPENDENCY CHECK
+### Conclusion
 
-This is a standalone, self-contained fix. It has no dependencies on
-other commits. The `nxp-nci` driver exists in all recent stable trees,
-and the `request_threaded_irq()` call with `IRQF_TRIGGER_RISING |
-IRQF_ONESHOT` has been there since the driver was introduced. The fix
-will apply cleanly to stable trees.
-
-### Summary
-
-This is a small, surgical, one-line fix that corrects an incorrect
-interrupt trigger type in the NXP NCI NFC driver. The bug causes
-interrupts to fail to trigger correctly, making the NFC hardware non-
-functional in some configurations. The fix is obviously correct
-(removing a wrong hardcoded value in favor of the platform-specified
-one), has minimal regression risk, and affects real hardware users. It
-meets all stable kernel criteria.
+This is a textbook example of a device ID addition that is appropriate
+for stable backporting. It enables hardware support for a specific USB
+WiFi adapter using an existing, well-tested driver. The change is
+trivial, risk-free, and provides direct benefit to users with this
+hardware.
 
 **YES**
 
- drivers/nfc/nxp-nci/i2c.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/wireless/realtek/rtw89/rtw8852au.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/nfc/nxp-nci/i2c.c b/drivers/nfc/nxp-nci/i2c.c
-index 049662ffdf972..6a5ce8ff91f0b 100644
---- a/drivers/nfc/nxp-nci/i2c.c
-+++ b/drivers/nfc/nxp-nci/i2c.c
-@@ -305,7 +305,7 @@ static int nxp_nci_i2c_probe(struct i2c_client *client)
- 
- 	r = request_threaded_irq(client->irq, NULL,
- 				 nxp_nci_i2c_irq_thread_fn,
--				 IRQF_TRIGGER_RISING | IRQF_ONESHOT,
-+				 IRQF_ONESHOT,
- 				 NXP_NCI_I2C_DRIVER_NAME, phy);
- 	if (r < 0)
- 		nfc_err(&client->dev, "Unable to register IRQ handler\n");
+diff --git a/drivers/net/wireless/realtek/rtw89/rtw8852au.c b/drivers/net/wireless/realtek/rtw89/rtw8852au.c
+index 74a976c984ad8..ccdbcc178c2a4 100644
+--- a/drivers/net/wireless/realtek/rtw89/rtw8852au.c
++++ b/drivers/net/wireless/realtek/rtw89/rtw8852au.c
+@@ -52,6 +52,8 @@ static const struct usb_device_id rtw_8852au_id_table[] = {
+ 	  .driver_info = (kernel_ulong_t)&rtw89_8852au_info },
+ 	{ USB_DEVICE_AND_INTERFACE_INFO(0x2001, 0x3321, 0xff, 0xff, 0xff),
+ 	  .driver_info = (kernel_ulong_t)&rtw89_8852au_info },
++	{ USB_DEVICE_AND_INTERFACE_INFO(0x2001, 0x3323, 0xff, 0xff, 0xff),
++	  .driver_info = (kernel_ulong_t)&rtw89_8852au_info },
+ 	{ USB_DEVICE_AND_INTERFACE_INFO(0x2001, 0x332c, 0xff, 0xff, 0xff),
+ 	  .driver_info = (kernel_ulong_t)&rtw89_8852au_info },
+ 	{ USB_DEVICE_AND_INTERFACE_INFO(0x2357, 0x013f, 0xff, 0xff, 0xff),
 -- 
 2.51.0
 
