@@ -1,54 +1,48 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 262C63EBF2C;
-	Sat, 14 Feb 2026 01:03:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9DFFC17B506;
+	Sat, 14 Feb 2026 01:03:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771031010; cv=none; b=BljHmZVHR4sF5J5bC1o81cHDDXua3ObnzRRg0hVs2r/U2LDGj/xev05ExIE9SHxwOeh4/vaZOW6aZ+8gHv8iJ7G2VQwpDDtC0T8p01rkptRJHC+6m5vz7+4SGZJJg0pOXqeCvVj1ZD9e5VL24FvBxz+5SOIzt5fUJDo9xnxLj1o=
+	t=1771031012; cv=none; b=LrdT1s74U2TjnGs8861bjRIvyfBWXw66xcPOcczstFfkLtc60D6xSIwrHK+YJj0Jya6AAJl1H+cCY4Cha468mTGPaDuAdzW0fUfIc7zxYabnsw0OQI70Jyek+DLFk+m2lZk/chufxf4O9VFjW6ugED/30uVVTvV2uhfUsOAuU8U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771031010; c=relaxed/simple;
-	bh=pdPE6OyUjfkjatzADIBqPGT7XAKL3qqYP4CgtQiQ4y4=;
+	s=arc-20240116; t=1771031012; c=relaxed/simple;
+	bh=DYXq2qY0dD/StwAInwWhC+76+C/ziRXYzOIGNBCGnsw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=lqbbp2FmbuQ5QP5gUH3Rkd2BYe84Q1rOTOfJn3q7Bs8lbvQvIyrABDWG8EKMnvsOHA64l3oa+boJhC10JlllRn09tpn9h9FOV6/V8oO77ryn4/KnM0mKeZid5Fs50CpQNXQ3QHeAa6yTzPeuyFHwBFkASJcMHM4fxETXYRuilRg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=lg3pQmYK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=Ka1dI67tlP/vy3i500duagcKp6WlqA4GtS9TFu0emQkUttfxtyhilCZJzJhWkKiuXS43KkrhWnnBEKXK5eLwKc6QGDGwbqVk4jwhpJROPHR1LCq58NlczszpEWqCUfenejey1nYgVdeGfQkqCCbT65Vu2b0mTNR/TBMOVNIFjno=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Pgq7ZYYL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="lg3pQmYK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 020ECC116C6;
-	Sat, 14 Feb 2026 01:03:27 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Pgq7ZYYL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 467BBC116C6;
+	Sat, 14 Feb 2026 01:03:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1771031009;
-	bh=pdPE6OyUjfkjatzADIBqPGT7XAKL3qqYP4CgtQiQ4y4=;
+	s=k20201202; t=1771031012;
+	bh=DYXq2qY0dD/StwAInwWhC+76+C/ziRXYzOIGNBCGnsw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lg3pQmYKMCHQHeKbBpYBzqpWwPDjcZOF/ip87+ICfMERPKw2/P/Kj/vZCQppBH38V
-	 gp3wE9Cj/fg0umEJh3Uqs+53J+m1BtxyqH3xWMVh79gsI8UtNl299n9B5K6+UMWzpk
-	 +SlS3gU+IroUPTRVozjGS9X3VLPo7dBH7BmxMaeTP3VBILNTGlTnxl8gv5GreraD+A
-	 1jeNkWEsX6XnDuxwVaR0iBK7cgBW/n9xOE3rmT+ShRWXRSYNNqqzKIGLjbf+NPoQCG
-	 AWtcqzO6pyl7eXzmvLjM4i68/muSTZG5nLN+qLEnqsvrWOlcp+Al7dbB9NpoEMyk4o
-	 Xl0BX9s/Sz6Qw==
+	b=Pgq7ZYYLUX4g+qhl3GF+ap16DPznNREkZiJOzVVHzi2G+FwFUzCNTCecuTQyPO2JP
+	 hIhiX/5u+DY0VjBvWBk9BEF6YrDKJCWZsDeLkSIeib881RD9dIpFmeFyEHyFXV9R9j
+	 cxbEmmYRJ7ynUjGlcjmv0xDVUTFGlSvL/AwmrNkJR0YMaQaYnOA7PK3L5rnezkLo82
+	 HAXUFBSfQquzZkx9CyA8UPGluGo+13dxvh/csMJL2PyPt9rCEcNcL9C/xKc1A75fBz
+	 fZ9eHB1uZe3lb7psor0xUgTq/M5KZokwfatXAgM9UOco+lKIkqQsz6/qT7d5UGePGj
+	 UEfUe8/vGnVfQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Nicholas Kazlauskas <nicholas.kazlauskas@amd.com>,
-	Alvin Lee <alvin.lee2@amd.com>,
-	Roman Li <roman.li@amd.com>,
-	Dan Wheeler <daniel.wheeler@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+Cc: Bard Liao <yung-chuan.liao@linux.intel.com>,
+	=?UTF-8?q?P=C3=A9ter=20Ujfalusi?= <peter.ujfalusi@linux.intel.com>,
+	Liam Girdwood <liam.r.girdwood@intel.com>,
+	Charles Keepax <ckeepax@opensource.cirrus.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	krunoslav.kovac@amd.com,
-	Alvin.Lee2@amd.com,
+	ranjani.sridharan@linux.intel.com,
+	shumingf@realtek.com,
+	niranjan.hy@ti.com,
 	yelangyan@huaqin.corp-partner.google.com,
-	Nevenko.Stupar@amd.com,
-	Karen.Chen@amd.com,
-	Yihan.Zhu@amd.com,
-	Dillon.Varone@amd.com,
-	aurabindo.pillai@amd.com,
-	mwen@igalia.com,
-	Charlene.Liu@amd.com,
-	Ilya.Bakoulin@amd.com
-Subject: [PATCH AUTOSEL 6.19] drm/amd/display: Fix wrong x_pos and y_pos for cursor offload
-Date: Fri, 13 Feb 2026 19:58:22 -0500
-Message-ID: <20260214010245.3671907-22-sashal@kernel.org>
+	linmq006@gmail.com
+Subject: [PATCH AUTOSEL 6.19] ASoC: sdw_utils: remove dai registered check
+Date: Fri, 13 Feb 2026 19:58:23 -0500
+Message-ID: <20260214010245.3671907-23-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260214010245.3671907-1-sashal@kernel.org>
 References: <20260214010245.3671907-1-sashal@kernel.org>
@@ -58,267 +52,160 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.19
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Nicholas Kazlauskas <nicholas.kazlauskas@amd.com>
+From: Bard Liao <yung-chuan.liao@linux.intel.com>
 
-[ Upstream commit c02288724b98cbc018231200891d66578f83f848 ]
+[ Upstream commit 8d38c275f7ffe257d21bea224d4288eef183817d ]
 
-[Why]
-The hubp401_cursor_set_position function programs a different value
-than it stores for use with cursor offload.
+Checking for a registered DAI for non-existing endpoints causes the
+following error. The driver will always return -EPROBE_DEFER if the
+codec driver doesn't register the DAI of the unexist endpoint.
 
-This can cause a desync when switching between cursor programming paths.
-
-[How]
-We do the translation to destination space currently twice: once in the
-HWSS layer, and then again in the HUBP layer since we never store the
-translated result.
-
-HUBP expects to program the pos->x and pos->y directly for other ASIC,
-so follow that pattern here as well.
-
-Reviewed-by: Alvin Lee <alvin.lee2@amd.com>
-Signed-off-by: Nicholas Kazlauskas <nicholas.kazlauskas@amd.com>
-Signed-off-by: Roman Li <roman.li@amd.com>
-Tested-by: Dan Wheeler <daniel.wheeler@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Bard Liao <yung-chuan.liao@linux.intel.com>
+Reviewed-by: Péter Ujfalusi <peter.ujfalusi@linux.intel.com>
+Reviewed-by: Liam Girdwood <liam.r.girdwood@intel.com>
+Reviewed-by: Charles Keepax <ckeepax@opensource.cirrus.com>
+Link: https://patch.msgid.link/20260120065658.1806027-1-yung-chuan.liao@linux.intel.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-The DCN10 HWSS passes `pos_cpy.x` and `pos_cpy.y` directly (which were
-set to `(uint32_t)x_pos` at line 3744-3745), and the DCN10/DCN20 HUBP
-uses `pos->x` directly for the register programming. This is the
-consistent pattern across all ASICs.
+## Analysis of ASoC: sdw_utils: remove dai registered check
 
-DCN401 was broken because:
-1. HWSS computes `x_pos = pos_cpy.x - param.recout.x` (line 1200 in the
-   current code)
-2. But doesn't update `pos_cpy.x` with this new x_pos before calling
-   HUBP
-3. HUBP then does its own `x_pos = pos->x - param->recout.x` —
-   subtracting recout.x from a value that already had recout.x
-   subtracted once (at the HWSS line 1200)... Wait, let me re-read.
+### Commit Message Analysis
 
-Actually, looking more carefully at the HWSS code flow:
+The commit message describes a bug where checking for a registered DAI
+for **non-existing endpoints** causes the driver to always return
+`-EPROBE_DEFER` if the codec driver doesn't register the DAI of a non-
+existent endpoint. This means the system enters an infinite probe
+deferral loop — the device will never successfully probe because it's
+waiting for a DAI that will never be registered (since the endpoint
+doesn't exist).
 
-```
-// Line 1194-1195: x_pos/y_pos are already in dst space here
-pos_cpy.x = (uint32_t)x_pos;  // stores DST-space value
-pos_cpy.y = (uint32_t)y_pos;
+### Code Change Analysis
 
-// Line 1200-1201: Now computes recout-relative for visibility checks
-x_pos = pos_cpy.x - param.recout.x;  // recout-relative value
-y_pos = pos_cpy.y - param.recout.y;
+The change removes a block of code from `is_sdca_endpoint_present()`
+that:
 
-// ... visibility checks use recout-relative x_pos, y_pos ...
+1. Allocated a `snd_soc_dai_link_component` (dlc)
+2. Looked up the DAI name from `dai_info`
+3. Called `snd_soc_find_dai_with_mutex()` to check if the codec DAI was
+   registered
+4. If not found, returned `-EPROBE_DEFER`
+5. Freed the dlc
 
-// BUG: pos_cpy.x still has DST-space value, NOT recout-relative
-// HUBP receives dst-space pos_cpy.x/y
-hubp->funcs->set_cursor_position(hubp, &pos_cpy, &param);
-```
+**The bug mechanism:** The function `is_sdca_endpoint_present()` is
+supposed to determine if an endpoint is present (returns 1) or not
+(returns 0). However, for endpoints that don't actually exist on the
+hardware, the codec driver will never register their DAIs. The removed
+code would find that the DAI isn't registered and return
+`-EPROBE_DEFER`, causing the probe to be deferred indefinitely. This
+creates an infinite deferral loop — the system keeps retrying probe but
+the DAI will never appear because the endpoint doesn't exist.
 
-And in HUBP:
-```
-// HUBP receives pos->x in dst-space
-int x_pos = pos->x - param->recout.x;  // converts to recout-relative
-// Programs register with recout-relative x_pos
-REG_SET_2(CURSOR_POSITION, 0, CURSOR_X_POSITION, x_pos, ...);
-// But stores dst-space pos->x in cache
-hubp->pos.position.bits.x_pos = pos->x;  // DST-space!
-```
+The rest of the function (which remains) properly handles endpoint
+presence detection by checking the SoundWire slave's SDCA data and
+function properties — this is the correct way to determine if an
+endpoint is present.
 
-The **desync** is: register gets recout-relative, but `hubp->pos` cache
-gets dst-space. When cursor offload reads the cache, it gets the wrong
-(dst-space) values and programs them directly, causing cursor position
-to jump.
+### Classification
 
-The **fix**:
-1. HWSS now updates `pos_cpy.x = x_pos` (recout-relative) before calling
-   HUBP
-2. HUBP no longer does `pos->x - param->recout.x` — it uses `pos->x`
-   directly (already recout-relative)
-3. Register and cache both get the same recout-relative value — NO
-   desync
+This is a **bug fix** — it fixes a probe failure (infinite
+`-EPROBE_DEFER` loop) that prevents SoundWire audio devices from
+initializing properly. Users with affected hardware would have no audio
+functionality.
 
----
+### Scope and Risk Assessment
 
-Here is my complete analysis:
+- **Lines changed:** Removes ~15 lines of code (the DAI registration
+  check and associated allocation/free)
+- **Files touched:** 1 file (`sound/soc/sdw_utils/soc_sdw_utils.c`)
+- **Risk:** LOW — the code being removed was performing an unnecessary
+  check that was actively harmful. The remaining code in the function is
+  the correct logic for determining endpoint presence.
+- **Side effects:** The removal also eliminates a memory allocation
+  (`kzalloc`/`kfree`) making the function simpler and more efficient.
 
-## 1. COMMIT MESSAGE ANALYSIS
+### User Impact
 
-The commit message clearly describes a **bug fix** with the standard AMD
-display `[Why]` / `[How]` format. The bug is:
-`hubp401_cursor_set_position` programs different values to hardware
-registers than it stores in the cursor position cache, causing a
-**desync when switching between cursor programming paths** (direct vs.
-DMU offload). This is a user-visible display bug — the cursor position
-jumps/glitches when the display driver switches between direct cursor
-programming and DMU-offloaded cursor programming.
+- **Who is affected:** Users with SoundWire-based audio hardware (Intel
+  platforms with SoundWire codecs, which is increasingly common in
+  modern laptops)
+- **Severity:** HIGH — Without this fix, affected systems have
+  completely non-functional audio because the probe never completes
+- **Trigger:** The bug triggers whenever the ACPI tables describe
+  endpoints that don't physically exist on the hardware, which can
+  happen in normal configurations
 
-The commit has strong trust indicators:
-- **Reviewed-by:** Alvin Lee (AMD DC team member)
-- **Tested-by:** Dan Wheeler (AMD test engineer)
-- **Author:** Nicholas Kazlauskas (the same person who wrote the cursor
-  offload feature)
-- Multiple sign-offs from AMD display team
+### Stability Indicators
 
-## 2. CODE CHANGE ANALYSIS
+- **Reviewed-by:** Three reviewers (Péter Ujfalusi, Liam Girdwood,
+  Charles Keepax) — all well-known ASoC developers
+- **Author:** Bard Liao (Intel SoundWire maintainer) — deeply familiar
+  with this subsystem
+- **Applied by:** Mark Brown (ASoC maintainer)
 
-The fix is small and surgical: **2 files changed, 9 insertions, 8
-deletions** (net +1 line).
+### Dependency Check
 
-**In `dcn401_hwseq.c`:** Adds 3 lines to update `pos_cpy.x = x_pos` and
-`pos_cpy.y = y_pos` before passing them to the HUBP function. This
-ensures the HUBP receives already-translated (recout-relative)
-coordinates.
+The change is self-contained — it only removes code, so there are no
+forward dependencies. The function and surrounding code should exist in
+recent stable trees that include SoundWire SDCA support.
 
-**In `dcn401_hubp.c`:** Removes the redundant coordinate translation
-(`pos->x - param->recout.x`), using `pos->x` directly instead — matching
-the pattern used by all other ASICs (DCN10, DCN20, DCN32).
+### Conclusion
 
-The fix eliminates a double-translation bug and makes register
-programming and cache storage consistent. This exactly matches how
-DCN20's `hubp2_cursor_set_position` works (which programs `pos->x`
-directly at line 1075).
-
-## 3. CLASSIFICATION
-
-This is a **clear bug fix**. It fixes incorrect cursor positioning that
-causes visual glitches when switching between cursor programming paths.
-It fixes a desync between hardware register values and cached software
-values.
-
-## 4. SCOPE AND RISK
-
-- **Scope:** Very small — 2 files, 17 lines changed (9 added, 8
-  removed), only DCN401 (AMD RDNA4 GPU) affected
-- **Risk:** Low — the fix aligns DCN401 with the well-established
-  pattern used by all other DCN generations
-- **Subsystem:** AMD display driver (drm/amd/display), specifically
-  DCN401 HUBP/HWSS
-- **Cannot break other ASICs:** Changes are only in dcn401-specific
-  files
-
-## 5. USER IMPACT
-
-- **Who is affected:** Users with AMD RDNA4 (DCN401) GPUs running kernel
-  6.19+ with cursor offload enabled
-- **Severity:** Cursor position desync causing visual glitches when
-  switching between cursor programming paths. This is a user-visible
-  display bug
-- **Impact:** Medium — affects cursor display correctness on specific
-  hardware
-
-## 6. DEPENDENCY CHECK
-
-- The cursor offload feature (8e8691ecee82) is only in v6.19+
-- All prerequisite commits are already in the 6.19.y stable branch
-- The fix applies cleanly to 6.19.y (files are identical to mainline
-  v6.19)
-- DCN401 hardware doesn't exist in kernels older than 6.11, and cursor
-  offload doesn't exist before 6.19
-- This fix is only applicable to 6.19.y stable
-
-## 7. CONCERNS
-
-- The commit is only in linux-next (not yet in a mainline release). It's
-  queued for v6.20 merge window. Normally, stable backports come from
-  commits already in mainline. This is a potential concern — the commit
-  hasn't been battle-tested in a mainline release yet.
-- However, the fix is authored by the original cursor offload developer,
-  reviewed and tested by AMD team, and follows the well-established
-  pattern from other DCN generations.
-
-## VERDICT
-
-This is a legitimate bug fix for a desync between cursor register
-programming and cache values in DCN401's cursor offload path. It's
-small, surgical, well-tested, authored by the subsystem expert, and
-follows established patterns from other ASICs. It fixes a user-visible
-cursor positioning bug.
-
-However, this commit is NOT yet in any mainline release — it's only in
-linux-next, queued for the v6.20 merge window. The stable kernel rules
-require commits to come from mainline. While the fix itself is
-technically correct and appropriate for stable, it should wait until
-it's actually in a mainline release before being backported.
-Additionally, the cursor offload feature itself is very new (only in
-6.19), meaning the affected user base is small and the code is still
-rapidly evolving (5+ cursor offload fixes already queued).
-
-Given that the commit is only in linux-next and not yet in mainline, and
-the cursor offload is brand-new code still under active development,
-this is borderline. The fix IS important for 6.19.y users with DCN401
-hardware, but it should ideally land in mainline first.
+This is a clear bug fix that resolves an infinite probe deferral loop
+for SoundWire audio devices. The fix is small (pure code removal), well-
+reviewed by multiple subsystem experts, low risk, and addresses a real
+user-visible issue (no audio on affected hardware). It meets all stable
+kernel criteria: obviously correct, fixes a real bug, small and
+contained, no new features.
 
 **YES**
 
- .../drm/amd/display/dc/hubp/dcn401/dcn401_hubp.c   | 14 ++++++--------
- .../drm/amd/display/dc/hwss/dcn401/dcn401_hwseq.c  |  3 +++
- 2 files changed, 9 insertions(+), 8 deletions(-)
+ sound/soc/sdw_utils/soc_sdw_utils.c | 15 ---------------
+ 1 file changed, 15 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/display/dc/hubp/dcn401/dcn401_hubp.c b/drivers/gpu/drm/amd/display/dc/hubp/dcn401/dcn401_hubp.c
-index f01eae50d02f7..c205500290ecd 100644
---- a/drivers/gpu/drm/amd/display/dc/hubp/dcn401/dcn401_hubp.c
-+++ b/drivers/gpu/drm/amd/display/dc/hubp/dcn401/dcn401_hubp.c
-@@ -733,10 +733,8 @@ void hubp401_cursor_set_position(
- 	const struct dc_cursor_mi_param *param)
- {
- 	struct dcn20_hubp *hubp2 = TO_DCN20_HUBP(hubp);
--	int x_pos = pos->x - param->recout.x;
--	int y_pos = pos->y - param->recout.y;
--	int rec_x_offset = x_pos - pos->x_hotspot;
--	int rec_y_offset = y_pos - pos->y_hotspot;
-+	int rec_x_offset = pos->x - pos->x_hotspot;
-+	int rec_y_offset = pos->y - pos->y_hotspot;
- 	int dst_x_offset;
- 	int x_pos_viewport = 0;
- 	int x_hot_viewport = 0;
-@@ -748,10 +746,10 @@ void hubp401_cursor_set_position(
- 	 * within preceeding ODM slices.
- 	 */
- 	if (param->recout.width) {
--		x_pos_viewport = x_pos * param->viewport.width / param->recout.width;
-+		x_pos_viewport = pos->x * param->viewport.width / param->recout.width;
- 		x_hot_viewport = pos->x_hotspot * param->viewport.width / param->recout.width;
- 	} else {
--		ASSERT(!cur_en || x_pos == 0);
-+		ASSERT(!cur_en || pos->x == 0);
- 		ASSERT(!cur_en || pos->x_hotspot == 0);
- 	}
+diff --git a/sound/soc/sdw_utils/soc_sdw_utils.c b/sound/soc/sdw_utils/soc_sdw_utils.c
+index ccf149f949e8f..d03072cd13cb9 100644
+--- a/sound/soc/sdw_utils/soc_sdw_utils.c
++++ b/sound/soc/sdw_utils/soc_sdw_utils.c
+@@ -1421,29 +1421,14 @@ static int is_sdca_endpoint_present(struct device *dev,
+ 	const struct snd_soc_acpi_adr_device *adr_dev = &adr_link->adr_d[adr_index];
+ 	const struct snd_soc_acpi_endpoint *adr_end;
+ 	const struct asoc_sdw_dai_info *dai_info;
+-	struct snd_soc_dai_link_component *dlc;
+-	struct snd_soc_dai *codec_dai;
+ 	struct sdw_slave *slave;
+ 	struct device *sdw_dev;
+ 	const char *sdw_codec_name;
+ 	int ret, i;
  
-@@ -790,8 +788,8 @@ void hubp401_cursor_set_position(
+-	dlc = kzalloc(sizeof(*dlc), GFP_KERNEL);
+-	if (!dlc)
+-		return -ENOMEM;
+-
+ 	adr_end = &adr_dev->endpoints[end_index];
+ 	dai_info = &codec_info->dais[adr_end->num];
  
- 	if (!hubp->cursor_offload) {
- 		REG_SET_2(CURSOR_POSITION, 0,
--			CURSOR_X_POSITION, x_pos,
--			CURSOR_Y_POSITION, y_pos);
-+			CURSOR_X_POSITION, pos->x,
-+			CURSOR_Y_POSITION, pos->y);
- 
- 		REG_SET_2(CURSOR_HOT_SPOT, 0,
- 			CURSOR_HOT_SPOT_X, pos->x_hotspot,
-diff --git a/drivers/gpu/drm/amd/display/dc/hwss/dcn401/dcn401_hwseq.c b/drivers/gpu/drm/amd/display/dc/hwss/dcn401/dcn401_hwseq.c
-index 5eda7648d0d2b..5ffe41a96864a 100644
---- a/drivers/gpu/drm/amd/display/dc/hwss/dcn401/dcn401_hwseq.c
-+++ b/drivers/gpu/drm/amd/display/dc/hwss/dcn401/dcn401_hwseq.c
-@@ -1215,6 +1215,9 @@ void dcn401_set_cursor_position(struct pipe_ctx *pipe_ctx)
- 	if (recout_y_pos + (int)hubp->curs_attr.height <= 0)
- 		pos_cpy.enable = false;  /* not visible beyond top edge*/
- 
-+	pos_cpy.x = x_pos;
-+	pos_cpy.y = y_pos;
-+
- 	hubp->funcs->set_cursor_position(hubp, &pos_cpy, &param);
- 	dpp->funcs->set_cursor_position(dpp, &pos_cpy, &param, hubp->curs_attr.width, hubp->curs_attr.height);
- }
+-	dlc->dai_name = dai_info->dai_name;
+-	codec_dai = snd_soc_find_dai_with_mutex(dlc);
+-	if (!codec_dai) {
+-		dev_warn(dev, "codec dai %s not registered yet\n", dlc->dai_name);
+-		kfree(dlc);
+-		return -EPROBE_DEFER;
+-	}
+-	kfree(dlc);
+-
+ 	sdw_codec_name = _asoc_sdw_get_codec_name(dev, adr_link, adr_index);
+ 	if (!sdw_codec_name)
+ 		return -ENOMEM;
 -- 
 2.51.0
 
