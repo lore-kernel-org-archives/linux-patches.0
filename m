@@ -1,43 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17C40142E83;
-	Sat, 14 Feb 2026 21:27:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01E9E311973;
+	Sat, 14 Feb 2026 21:27:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771104421; cv=none; b=JOHgaEdZw4ELReRmlEGPE+XAJFPmbbPMGzVIZkw/+JOsCvcUiya3GdiCIF6mdoQM06tdBn15T3BLhzxUJ9NyYU2DkrrxayRt77rqhFPY8ozpATZQozBOBmrKEGt2I3/vCsm/FAiAE7rHjgbkb9Nf7XXME6nPxofEkf02y142vt8=
+	t=1771104422; cv=none; b=YB5aBpKYEBaf5CvIcilrVslh5Z6MN5OC7bIsuusyr4VM8P8gs2c6jBz0BV0Z6tbY5Z7xqw61ycJm4k2mXsjLpUUyEGTr94pRnlxi9Uq3hHk8lX+sCMZcWAVbtSD6inx7XB39XgunmPhq7Ze8YYZSkqf0KietuDOPHFQ2rf9KPmg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771104421; c=relaxed/simple;
-	bh=UdKvcTNapH3cXSgC/2d3Bzg7IJPMYmN0p/IuVlRxl1g=;
+	s=arc-20240116; t=1771104422; c=relaxed/simple;
+	bh=8L+DMnx/20OxLSRvf4GM28MXZp+E9GgiShWJazuo+cc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sE/lYXljsy5X5OEc7AZXcCv4e/Du5uHutMy6PyqVsV0SLKRikaoIebCgERquTFS1mPg2rXKjk265B8zNe3F5Lkk96LLBPyBZsAvlvm+45FvDdMJWal/B8x40UFkFYy6PvUh811SXZFs6H5RIoPs4MXoYuR9VwVje+0yPwhF+en8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=iwI7QHtx; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=NnT+ECJbeIkdLOSkDw6PWWKJaHgL30ombpWMU4WqE8J9HQiSK9DxrgpFXSrdnLLrtIf9zvD/FKS7ihr7gMFUBbFRTLyqIDd5imESx4cvD/5PirYU2Bhv+Q1XlCkgPv9BGnOE41ZjXRDxBD8wzT1qtM8qdn8afaMddn3KzgzqORc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=dGUm3mgI; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="iwI7QHtx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE3A0C19422;
-	Sat, 14 Feb 2026 21:26:59 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="dGUm3mgI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 00AEDC16AAE;
+	Sat, 14 Feb 2026 21:27:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1771104420;
-	bh=UdKvcTNapH3cXSgC/2d3Bzg7IJPMYmN0p/IuVlRxl1g=;
+	s=k20201202; t=1771104421;
+	bh=8L+DMnx/20OxLSRvf4GM28MXZp+E9GgiShWJazuo+cc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iwI7QHtx14xqETpYnz8kUOXOG8vEefM+lr9NgHThXz/A4oEd2/YZVeOIhMu/vcFwb
-	 if9EFbmX9ZHHz7NZIrzvRkDYIWj8obwSC135NfTRC6guJvgzXZCJ7wCjyT7bfDVe/1
-	 4bnmYfksd1tGlNwDaTIGBtu9ydlXCTfY20fPZj5RUOQSyX6Z/QpZ0A/D0XAoeneMhZ
-	 n99c1jlgAyHkuNzoU5g+i7I23PXcTqyxYheeXkmBJeEDZ2QoQWmM5LH3bNvaF4bKHn
-	 WD0iRyeTalIz+cFHFPaActP9Pu7/o4ezCJWq2TX9sVFCGj4LW97B7uRRAmYWT9qroi
-	 6DJ2RZbM+4gGg==
+	b=dGUm3mgIWxi0VjB8MbSESMERyj1ecmHHrW0SHmTJLXfyFu7f6tcg+a216e3G4KkIB
+	 OZ23//XsuL/hLzGaH++31zo0h13Da2CRcav8z7ASzIr3b3q2mIf4/DP4TQDfjGGuem
+	 cMSeRTIhjiMaOVyb9oj5Sylb3UaZCIItp3kAtMNuF4/DoOSUrWHpoDsAtqOIVxN3zV
+	 rYvW8FhNrlnrmNsYr2TEh/hufmVDV7vZ5Cf64B204TAkicnUfGiAD7EzZ+Fd2dIumR
+	 awMc2JjOeSC7h8yQzXYJkzHkltliDMK3syAB2N3NxrOwbV5+TxfbBen+L0ispm3Qjh
+	 QcYTqPZwWh0qw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Florian Westphal <fw@strlen.de>,
-	sungzii <sungzii@pm.me>,
+Cc: Joe Damato <joe@dama.to>,
+	Michael Chan <michael.chan@broadcom.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	pablo@netfilter.org,
-	netfilter-devel@vger.kernel.org,
-	coreteam@netfilter.org
-Subject: [PATCH AUTOSEL 6.19-5.10] netfilter: xt_tcpmss: check remaining length before reading optlen
-Date: Sat, 14 Feb 2026 16:23:40 -0500
-Message-ID: <20260214212452.782265-75-sashal@kernel.org>
+	pavan.chebbi@broadcom.com,
+	netdev@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.19-6.12] bnxt_en: Allow ntuple filters for drops
+Date: Sat, 14 Feb 2026 16:23:41 -0500
+Message-ID: <20260214212452.782265-76-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260214212452.782265-1-sashal@kernel.org>
 References: <20260214212452.782265-1-sashal@kernel.org>
@@ -50,155 +50,197 @@ MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.19
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Florian Westphal <fw@strlen.de>
+From: Joe Damato <joe@dama.to>
 
-[ Upstream commit 735ee8582da3d239eb0c7a53adca61b79fb228b3 ]
+[ Upstream commit 61cef6454cfbb9fcdbe41401fb53895f86603081 ]
 
-Quoting reporter:
-  In net/netfilter/xt_tcpmss.c (lines 53-68), the TCP option parser reads
- op[i+1] directly without validating the remaining option length.
+It appears that in commit 7efd79c0e689 ("bnxt_en: Add drop action
+support for ntuple"), bnxt gained support for ntuple filters for packet
+drops.
 
-  If the last byte of the option field is not EOL/NOP (0/1), the code attempts
-  to index op[i+1]. In the case where i + 1 == optlen, this causes an
-  out-of-bounds read, accessing memory past the optlen boundary
-  (either reading beyond the stack buffer _opt or the
-  following payload).
+However, support for this does not seem to work in recent kernels or
+against net-next:
 
-Reported-by: sungzii <sungzii@pm.me>
-Signed-off-by: Florian Westphal <fw@strlen.de>
+  % sudo ethtool -U eth0 flow-type udp4 src-ip 1.1.1.1 action -1
+    rmgr: Cannot insert RX class rule: Operation not supported
+    Cannot insert classification rule
+
+The issue is that the existing code uses ethtool_get_flow_spec_ring_vf,
+which will return a non-zero value if the ring_cookie is set to
+RX_CLS_FLOW_DISC, which then causes bnxt_add_ntuple_cls_rule to return
+-EOPNOTSUPP because it thinks the user is trying to set an ntuple filter
+for a vf.
+
+Fix this by first checking that the ring_cookie is not RX_CLS_FLOW_DISC.
+
+After this patch, ntuple filters for drops can be added:
+
+  % sudo ethtool -U eth0 flow-type udp4 src-ip 1.1.1.1 action -1
+  Added rule with ID 0
+
+  % ethtool -n eth0
+  44 RX rings available
+  Total 1 rules
+
+  Filter: 0
+      Rule Type: UDP over IPv4
+      Src IP addr: 1.1.1.1 mask: 0.0.0.0
+      Dest IP addr: 0.0.0.0 mask: 255.255.255.255
+      TOS: 0x0 mask: 0xff
+      Src port: 0 mask: 0xffff
+      Dest port: 0 mask: 0xffff
+      Action: Drop
+
+Reviewed-by: Michael Chan <michael.chan@broadcom.com>
+Signed-off-by: Joe Damato <joe@dama.to>
+Link: https://patch.msgid.link/20260131003042.2570434-1-joe@dama.to
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-## Analysis of netfilter: xt_tcpmss: check remaining length before
-reading optlen
+## Analysis
 
-### 1. COMMIT MESSAGE ANALYSIS
+### Commit Message Analysis
 
-The commit message is clear and detailed. The reporter (sungzii)
-explains the exact bug mechanism:
-- In the TCP option parser in `xt_tcpmss.c`, when iterating through TCP
-  options, the code reads `op[i+1]` without first checking that `i+1` is
-  within bounds.
-- If the last byte of the option field is not EOL/NOP (value 0 or 1),
-  the code falls through to the `else` branch and reads `op[i+1]`, which
-  is an **out-of-bounds read** when `i + 1 == optlen`.
+The commit fixes a bug where ntuple filters for packet drops (`action
+-1` / `RX_CLS_FLOW_DISC`) don't work on bnxt_en network devices, despite
+support being added in commit 7efd79c0e689. The user gets `-EOPNOTSUPP`
+when trying to add a drop rule via ethtool. The commit message is clear,
+includes a reproducer, and shows the fix working.
 
-Key indicators:
-- **"Reported-by: sungzii"** - a user found and reported this bug
-- **Out-of-bounds read** - a real memory safety bug
-- **Netfilter subsystem** - network-facing, security-sensitive code that
-  processes packets
+### Code Change Analysis
 
-### 2. CODE CHANGE ANALYSIS
+The fix is small and surgical, modifying a single file
+(`bnxt_ethtool.c`) with minimal changes:
 
-The fix is a single-line change:
+1. **The core bug**: When `ring_cookie` is set to `RX_CLS_FLOW_DISC`
+   (indicating a drop action), the old code calls
+   `ethtool_get_flow_spec_ring_vf(fs->ring_cookie)` which returns a non-
+   zero value for `RX_CLS_FLOW_DISC`. This causes the function to
+   incorrectly return `-EOPNOTSUPP`, thinking the user is trying to set
+   a VF filter.
 
-```c
-- if (op[i] < 2)
-+               if (op[i] < 2 || i == optlen - 1)
-```
+2. **The fix**: Check if `ring_cookie == RX_CLS_FLOW_DISC` first. If it
+   is, skip the VF check entirely (drops don't target a VF or ring). The
+   FLOW_MAC_EXT/FLOW_EXT check is also separated out for clarity.
 
-**What was wrong:** The TCP option parsing loop iterates through option
-bytes. Options with values 0 (EOL) and 1 (NOP) are single-byte. All
-other options use a TLV (type-length-value) format where `op[i+1]`
-contains the length. The code checks `if (op[i] < 2)` to handle single-
-byte options, and otherwise reads `op[i+1]` for the length. But if `i`
-is the last valid index (`i == optlen - 1`), and the option byte is >=
-2, the code reads `op[i+1]` which is **past the end of the buffer**.
+3. **Additional cleanup**: The `ring` variable is removed;
+   `ethtool_get_flow_spec_ring()` is now called inline only in the else
+   branch (when it's not a drop action), which is correct since drop
+   actions don't need a ring number. The `vf` variable is also removed
+   since it's only used in the condition now.
 
-**The fix:** Before reading `op[i+1]`, the code now also checks if `i`
-is at the last byte (`i == optlen - 1`). If so, it treats it as a
-single-byte increment (just `i++`), which will terminate the loop on the
-next iteration since `i` will then equal `optlen`.
+### Bug Classification
 
-This is:
-- **Obviously correct** - if there's only one byte left, we can't read a
-  2-byte option header
-- **Minimal** - one condition added to an existing check
-- **Safe** - the worst case is we skip a malformed trailing option byte,
-  which is the right behavior
+This is a **real bug fix** — a feature that was intentionally added
+(drop action support for ntuple filters) is broken and returns an error
+to users. The `ethtool_get_flow_spec_ring_vf()` function misinterprets
+`RX_CLS_FLOW_DISC` (which is `(u64)-1` / all bits set) as containing VF
+information, since the VF bits are part of the upper bits of
+`ring_cookie`.
 
-### 3. CLASSIFICATION
+### Scope and Risk Assessment
 
-- **Bug type:** Out-of-bounds read (memory safety)
-- **Security relevance:** HIGH - this is in the netfilter packet
-  processing path. An attacker could craft TCP packets with malformed
-  options to trigger the OOB read. This could leak kernel memory
-  contents or trigger a crash depending on the memory layout.
-- **Category:** Bounds validation fix
+- **Lines changed**: Very small — a few lines of logic restructuring in
+  one function
+- **Files touched**: 1 file (`bnxt_ethtool.c`)
+- **Risk**: Very low. The change only affects the ntuple filter add
+  path. The logic is straightforward:
+  - If `ring_cookie == RX_CLS_FLOW_DISC`, skip the VF check (correct,
+    drops don't have a VF)
+  - Otherwise, check for VF as before
+  - The ring extraction is moved to where it's actually used (the non-
+    drop path)
+- **Could it break something?**: Extremely unlikely. The only behavioral
+  change is that drop rules now work instead of being rejected. Non-drop
+  rules follow the same logic as before.
 
-### 4. SCOPE AND RISK ASSESSMENT
+### User Impact
 
-- **Lines changed:** 1 line modified
-- **Files changed:** 1 file (`net/netfilter/xt_tcpmss.c`)
-- **Risk of regression:** Extremely low. The added condition only
-  activates when `i == optlen - 1`, meaning the last byte of the
-  options. In that case, incrementing by 1 exits the loop. This cannot
-  break valid TCP option parsing because valid multi-byte options always
-  have at least 2 bytes.
-- **Subsystem:** Netfilter - core networking/firewall code used by
-  virtually all Linux deployments
+- **Who is affected**: Users of Broadcom bnxt_en network adapters (very
+  common in data center/enterprise environments) who want to use ethtool
+  ntuple filters for packet drops
+- **Severity**: Medium — the feature is completely broken, returning
+  `-EOPNOTSUPP`
+- **Workaround**: None apparent — the drop action simply doesn't work
 
-### 5. USER IMPACT
+### Stability Indicators
 
-- **Who is affected:** Anyone using the `tcpmss` iptables/nftables match
-  rule, which is common in firewall configurations
-- **Trigger:** Receiving a TCP packet with malformed options (last
-  option byte >= 2 with no room for the length byte)
-- **Severity:** Out-of-bounds read in packet processing - potential
-  information leak or crash
-- **Exploitability:** Could be triggered remotely by sending crafted TCP
-  packets
+- **Reviewed-by**: Michael Chan (Broadcom maintainer for bnxt)
+- **Accepted by**: Jakub Kicinski (net maintainer)
+- The fix is obviously correct from reading the code
 
-### 6. STABILITY INDICATORS
+### Dependency Check
 
-- Author is Florian Westphal, a well-known netfilter maintainer
-- The fix is trivial and obviously correct
-- The code being fixed has existed for a very long time (the `xt_tcpmss`
-  module is ancient)
+The fix is self-contained. It modifies existing code in `bnxt_ethtool.c`
+that has been present since commit 7efd79c0e689 was merged. No
+dependencies on other patches.
 
-### 7. DEPENDENCY CHECK
+### Stable Criteria Assessment
 
-- No dependencies on other commits
-- The affected code exists in all stable trees (this is long-standing
-  code)
-- The patch applies cleanly as a standalone fix
+1. **Obviously correct and tested**: Yes — reviewed by subsystem
+   maintainer, clear logic
+2. **Fixes a real bug**: Yes — ntuple drop filters are broken, returning
+   EOPNOTSUPP
+3. **Important issue**: Moderate — broken network filtering feature on a
+   widely-used NIC driver
+4. **Small and contained**: Yes — minimal changes to one function in one
+   file
+5. **No new features**: Correct — this restores functionality that was
+   intended but broken
+6. **Applies cleanly**: Should apply to any stable tree that has commit
+   7efd79c0e689
 
-### CONCLUSION
-
-This is a textbook stable backport candidate:
-- **Fixes a real bug:** Out-of-bounds read in TCP option parsing
-- **Security-sensitive:** In the netfilter packet processing path,
-  remotely triggerable
-- **Minimal and surgical:** One condition added to one line
-- **Zero regression risk:** The additional check is strictly correct
-- **No new features:** Pure bug fix
-- **Author is subsystem maintainer:** Florian Westphal maintains
-  netfilter
-- **Affects all stable trees:** The vulnerable code is ancient
+This is a clear bug fix that restores broken functionality in a widely-
+used network driver. The fix is small, obviously correct, reviewed by
+the subsystem maintainer, and carries minimal risk.
 
 **YES**
 
- net/netfilter/xt_tcpmss.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/ethernet/broadcom/bnxt/bnxt_ethtool.c | 13 +++++++------
+ 1 file changed, 7 insertions(+), 6 deletions(-)
 
-diff --git a/net/netfilter/xt_tcpmss.c b/net/netfilter/xt_tcpmss.c
-index 37704ab017992..0d32d4841cb32 100644
---- a/net/netfilter/xt_tcpmss.c
-+++ b/net/netfilter/xt_tcpmss.c
-@@ -61,7 +61,7 @@ tcpmss_mt(const struct sk_buff *skb, struct xt_action_param *par)
- 			return (mssval >= info->mss_min &&
- 				mssval <= info->mss_max) ^ info->invert;
- 		}
--		if (op[i] < 2)
-+		if (op[i] < 2 || i == optlen - 1)
- 			i++;
- 		else
- 			i += op[i+1] ? : 1;
+diff --git a/drivers/net/ethernet/broadcom/bnxt/bnxt_ethtool.c b/drivers/net/ethernet/broadcom/bnxt/bnxt_ethtool.c
+index 068e191ede19e..c76a7623870be 100644
+--- a/drivers/net/ethernet/broadcom/bnxt/bnxt_ethtool.c
++++ b/drivers/net/ethernet/broadcom/bnxt/bnxt_ethtool.c
+@@ -1346,16 +1346,17 @@ static int bnxt_add_ntuple_cls_rule(struct bnxt *bp,
+ 	struct bnxt_l2_filter *l2_fltr;
+ 	struct bnxt_flow_masks *fmasks;
+ 	struct flow_keys *fkeys;
+-	u32 idx, ring;
++	u32 idx;
+ 	int rc;
+-	u8 vf;
+ 
+ 	if (!bp->vnic_info)
+ 		return -EAGAIN;
+ 
+-	vf = ethtool_get_flow_spec_ring_vf(fs->ring_cookie);
+-	ring = ethtool_get_flow_spec_ring(fs->ring_cookie);
+-	if ((fs->flow_type & (FLOW_MAC_EXT | FLOW_EXT)) || vf)
++	if (fs->flow_type & (FLOW_MAC_EXT | FLOW_EXT))
++		return -EOPNOTSUPP;
++
++	if (fs->ring_cookie != RX_CLS_FLOW_DISC &&
++	    ethtool_get_flow_spec_ring_vf(fs->ring_cookie))
+ 		return -EOPNOTSUPP;
+ 
+ 	if (flow_type == IP_USER_FLOW) {
+@@ -1481,7 +1482,7 @@ static int bnxt_add_ntuple_cls_rule(struct bnxt *bp,
+ 	if (fs->ring_cookie == RX_CLS_FLOW_DISC)
+ 		new_fltr->base.flags |= BNXT_ACT_DROP;
+ 	else
+-		new_fltr->base.rxq = ring;
++		new_fltr->base.rxq = ethtool_get_flow_spec_ring(fs->ring_cookie);
+ 	__set_bit(BNXT_FLTR_VALID, &new_fltr->base.state);
+ 	rc = bnxt_insert_ntp_filter(bp, new_fltr, idx);
+ 	if (!rc) {
 -- 
 2.51.0
 
