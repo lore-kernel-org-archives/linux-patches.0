@@ -1,41 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D02AB2D979F;
-	Sat, 14 Feb 2026 21:26:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8BDF299931;
+	Sat, 14 Feb 2026 21:26:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771104378; cv=none; b=O2n5pIO3kZ1WSKtq9rnwhijkKnOKSaadRvUcddyfm+Z+PDNEk8hU50pxKzI4vockT72NWpP+PSXoFTufWuKbtYP4FHStRsPbBgc1/Fad3/6RNRz0vD+pGGjpC3n+ziS8b/dWkxgy43fQ1gkmJAONSng52nv9vn9YfNM0EXbvSPk=
+	t=1771104379; cv=none; b=o96Q4VL4f13adSGklo+qmz7Pf4sQUmpNBuY6/t7Q4qBNOK8nMkqFCLYSoPKuEWvbj5CD/1gT/frBQt+p0AF0mNgOQgKNwCaj515DVF/Lu3B08zPnBC2bIsRP3kAquwG1aHSdo+ShB854jlni6Cwkg2FvYSJM6ZzQ6NLc6o30cCM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771104378; c=relaxed/simple;
-	bh=iYacwj6iOAfDyResFuR1KlgGDj9QDNWwUEi5sSnHolQ=;
+	s=arc-20240116; t=1771104379; c=relaxed/simple;
+	bh=yvaIk8C/stOejqPYYeijZfAu+PYjAATRUsgqrhgm224=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=tqVEQ27RsJlrUq59e2QLKto5ki96v0c0ssYsuaprcDAvomwuWr1NqzCL9A32m+dNi9XZ/crf5ZESac+EqnvH0CF4GDlXzb4FhCHNfRAqn2u4/uQROQ7G5plHVKaJH2W8IR+oPnN89NQvYOLsHuTatnSuKRYGxzZ0FR2GgRDqUms=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=BJfnQCfo; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=iaRhz7L9skS3WzYK2WCZGLrzMI43IJ1NeLDGJ/54Lf5utHypMNevqW9Kgyx+tiS0yzZqBLQQqPqRG3OpdBAtXdo9yE/pCmqpC+ofnlHw155GbIQcFDFE1RVfISheolV6dy/OTl0LEwVeEn4kdqlRAK6pvDkee+1KXe+BMg+nRwA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=LLHJ/SDm; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="BJfnQCfo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB017C19422;
-	Sat, 14 Feb 2026 21:26:17 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="LLHJ/SDm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C7CA3C16AAE;
+	Sat, 14 Feb 2026 21:26:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1771104378;
-	bh=iYacwj6iOAfDyResFuR1KlgGDj9QDNWwUEi5sSnHolQ=;
+	s=k20201202; t=1771104379;
+	bh=yvaIk8C/stOejqPYYeijZfAu+PYjAATRUsgqrhgm224=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BJfnQCfowmIJQb8vkHqwtZOm8c8eCHUqip2I1mrBO5fRyXJ1Turz6BZGEv8dK7Chh
-	 wNVp0CRaj9JzNtbkHCjYDTZO8peiqmpc3NmlJYIITY3xYRsl5MbOin6iFlTQWNe1gH
-	 VaFXF5QzuhS5ScrcEPsPd0BuT7xSqgfZ2nQ8BGVy64M7TL4k/oEgcChSMJY2WiLCBL
-	 NlbbDORgl3e4PuoIDoVZ2rylGnjFyZudBacLnCSEwcKS+CoITCfCooJlIsU4U8zMBd
-	 ak7VQYkVzph6umNdtxOWQjjh2jfqCnJenuEZuDngkgPA2snUU9ifFb+2yKKbKS7fDA
-	 2QzbSGhIPBEBA==
+	b=LLHJ/SDmux4vUwUwbuTsotvpu2LL28YHR6MuWkZHlgL+sT84yQp91FxpsD5wytZPO
+	 wrrFL+0EqsynbdM8Agt60o3Pt1ztJgtzaFGnDVEowucvv7iztXzz7jO4SJUuHyvFdj
+	 jwkzIvwD1SDJcvs5jjrRNx03ZV3zerpN8fYSdIOwauUlejw1QKqgd5k67VwV9pUT/f
+	 5R5SsIA9H/m/mpLFdGDVrcJyqhu4Qw4m8JLcab2iN5ZcfbM1/8QmC7fmkNkYNjRvd/
+	 Wmo7aJztAwr29jj6HeC85M/SEgCINAtomYk/ZnW4Bxg+f8aMZ1FjmohiL7vOA3sqis
+	 Cb5zqhMNFJerQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Zenm Chen <zenmchen@gmail.com>,
-	Ping-Ke Shih <pkshih@realtek.com>,
+Cc: Lukas Wunner <lukas@wunner.de>,
+	Lucas Van <lucas.van@intel.com>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Kuppuswamy Sathyanarayanan <sathyanarayanan.kuppuswamy@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>,
-	linux-wireless@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.19] wifi: rtw89: Add support for D-Link VR Air Bridge (DWA-F18)
-Date: Sat, 14 Feb 2026 16:23:17 -0500
-Message-ID: <20260214212452.782265-52-sashal@kernel.org>
+	mahesh@linux.ibm.com,
+	linuxppc-dev@lists.ozlabs.org
+Subject: [PATCH AUTOSEL 6.19-5.15] PCI/AER: Clear stale errors on reporting agents upon probe
+Date: Sat, 14 Feb 2026 16:23:18 -0500
+Message-ID: <20260214212452.782265-53-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260214212452.782265-1-sashal@kernel.org>
 References: <20260214212452.782265-1-sashal@kernel.org>
@@ -51,122 +54,188 @@ X-stable-base: Linux 6.19
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Zenm Chen <zenmchen@gmail.com>
+From: Lukas Wunner <lukas@wunner.de>
 
-[ Upstream commit 292c0bc8acb687de7e83fc454bb98af19187b6bf ]
+[ Upstream commit e242d09b58e869f86071b7889acace4cff215935 ]
 
-Add the ID 2001:3323 to the table to support an additional RTL8832AU
-adapter: D-Link VR Air Bridge (DWA-F18).
+Correctable and Uncorrectable Error Status Registers on reporting agents
+are cleared upon PCI device enumeration in pci_aer_init() to flush past
+events.  They're cleared again when an error is handled by the AER driver.
 
-Compile tested only.
+If an agent reports a new error after pci_aer_init() and before the AER
+driver has probed on the corresponding Root Port or Root Complex Event
+Collector, that error is not handled by the AER driver:  It clears the
+Root Error Status Register on probe, but neglects to re-clear the
+Correctable and Uncorrectable Error Status Registers on reporting agents.
 
-Link: https://github.com/morrownr/rtw89/pull/44
-Signed-off-by: Zenm Chen <zenmchen@gmail.com>
-Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
-Link: https://patch.msgid.link/20260112004759.6028-1-zenmchen@gmail.com
+The error will eventually be reported when another error occurs.  Which
+is irritating because to an end user it appears as if the earlier error
+has just happened.
+
+Amend the AER driver to clear stale errors on reporting agents upon probe.
+
+Skip reporting agents which have not invoked pci_aer_init() yet to avoid
+using an uninitialized pdev->aer_cap.  They're recognizable by the error
+bits in the Device Control register still being clear.
+
+Reporting agents may execute pci_aer_init() after the AER driver has
+probed, particularly when devices are hotplugged or removed/rescanned via
+sysfs.  For this reason, it continues to be necessary that pci_aer_init()
+clears Correctable and Uncorrectable Error Status Registers.
+
+Reported-by: Lucas Van <lucas.van@intel.com> # off-list
+Signed-off-by: Lukas Wunner <lukas@wunner.de>
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Tested-by: Lucas Van <lucas.van@intel.com>
+Reviewed-by: Kuppuswamy Sathyanarayanan <sathyanarayanan.kuppuswamy@linux.intel.com>
+Link: https://patch.msgid.link/3011c2ed30c11f858e35e29939add754adea7478.1769332702.git.lukas@wunner.de
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-## Analysis: Adding USB Device ID for D-Link VR Air Bridge (DWA-F18)
+### 3. Classification
 
-### Commit Message Analysis
+This is a **bug fix** — it addresses stale error reporting in the PCI
+AER subsystem. The issue is that errors that occur in a specific timing
+window (between `pci_aer_init()` and AER driver probe) are not properly
+cleared, causing misleading error reports to users later.
 
-The commit adds a single USB device ID (2001:3323) to the
-`rtw_8852au_id_table` in the rtw89 WiFi driver. This enables an
-existing, already-supported RTL8832AU chipset-based adapter — the D-Link
-VR Air Bridge (DWA-F18) — to be recognized by the driver.
+**Nature of the bug**: Not a crash or security issue, but a functional
+correctness issue. Stale PCIe AER errors are reported at the wrong time,
+confusing users and potentially causing unnecessary troubleshooting or
+even unnecessary hardware replacements.
 
-The commit message is straightforward: "Add the ID 2001:3323 to the
-table to support an additional RTL8832AU adapter." It notes "Compile
-tested only," which is typical for device ID additions since the
-hardware behavior is identical to other already-supported devices with
-the same chipset.
+### 4. Scope and Risk Assessment
 
-### Code Change Analysis
+**Changes**:
+- **New function**: `clear_status_iter()` (~12 lines) — a simple
+  callback that checks `PCI_EXP_AER_FLAGS` in Device Control (to skip
+  devices that haven't been initialized), then calls existing
+  `pci_aer_clear_status()` and `pcie_clear_device_status()`.
+- **Modified function**: `aer_enable_rootport()` — adds ~8 lines after
+  clearing Root Error Status to walk subordinate devices and clear their
+  error status too. The walk is conditional on `AER_ERR_STATUS_MASK`
+  being set in the root status register.
 
-The change is exactly **2 lines added**, inserting a new
-`USB_DEVICE_AND_INTERFACE_INFO` entry into the existing device ID table:
+**Risk assessment**:
+- The new code uses **well-established APIs**: `pci_walk_bus()`,
+  `pcie_walk_rcec()`, `pci_aer_clear_status()`,
+  `pcie_clear_device_status()` — all already used elsewhere in the same
+  file.
+- The guard condition `!(devctl & PCI_EXP_AER_FLAGS)` mirrors the
+  existing check at line 1047 in `is_error_source()`, so this is a
+  proven pattern.
+- The `AER_ERR_STATUS_MASK` check ensures the walk only happens when
+  there are actual errors to clear, minimizing unnecessary bus walks.
+- Only touches one file (`drivers/pci/pcie/aer.c`).
 
-```c
-{ USB_DEVICE_AND_INTERFACE_INFO(0x2001, 0x3323, 0xff, 0xff, 0xff),
-  .driver_info = (kernel_ulong_t)&rtw89_8852au_info },
-```
+### 5. User Impact
 
-This follows the exact same pattern as all other entries in the table.
-The vendor ID `0x2001` is D-Link, and other D-Link devices (`0x3321`,
-`0x332c`) are already in the table. The `.driver_info` points to the
-same `rtw89_8852au_info` structure used by all entries.
+- **Who is affected**: Any system with PCIe devices that can generate
+  AER errors. This is common on servers, workstations, and laptops.
+- **How severe**: Not a crash or data corruption, but stale error
+  reporting can:
+  - Cause unnecessary alarm and investigation
+  - Mask the true timing of errors, complicating root cause analysis
+  - Confuse monitoring/alerting systems
+- **Real-world impact**: Reported by Intel engineer (Lucas Van),
+  suggesting this was encountered in real deployment scenarios.
 
-### Classification: New Device ID
+### 6. Stability Indicators
 
-This falls squarely into the **"New Device IDs"** exception category for
-stable backporting:
+- **Tested-by**: Lucas Van (the reporter) — confirms the fix works
+- **Reviewed-by**: Kuppuswamy Sathyanarayanan (Intel kernel developer) —
+  expert review
+- **Signed-off-by**: Bjorn Helgaas — PCI subsystem maintainer, extremely
+  conservative gatekeeper
 
-- The driver (`rtw89/rtw8852au`) already exists in stable trees
-- Only a USB device ID is being added — no new code paths, no new logic
-- The device uses the same RTL8832AU chipset as other already-supported
-  adapters
-- The change is trivially correct by inspection
+### 7. Dependency Check
 
-### Risk Assessment
+The functions used (`pci_walk_bus`, `pcie_walk_rcec`,
+`pci_aer_clear_status`, `pcie_clear_device_status`, `PCI_EXP_AER_FLAGS`)
+all exist in current stable trees. The `AER_ERR_STATUS_MASK` macro is
+defined in the same file. No dependencies on recent mainline changes
+detected.
 
-- **Risk: Extremely Low** — A device ID addition cannot break any
-  existing functionality. It only affects matching for the specific USB
-  VID:PID 2001:3323, which previously had no driver match at all.
-- **Scope: Minimal** — 2 lines in a single file, following an
-  established pattern.
-- **Regression potential: Near zero** — No existing behavior is
-  modified.
+### Summary
 
-### User Impact
+**Pros**:
+- Fixes a real bug reported and tested by an Intel engineer
+- Small, contained change (~20 lines added) in a single file
+- Uses existing, well-established APIs with proven patterns
+- Reviewed by PCI subsystem maintainer
+- No risk of regression — only adds clearing of stale error registers at
+  probe time
+- All dependencies exist in stable trees
 
-Without this patch, users with the D-Link DWA-F18 VR Air Bridge cannot
-use their WiFi adapter at all with the in-kernel rtw89 driver. With it,
-the device is automatically recognized. This has real-world impact for
-users of this specific hardware.
+**Cons**:
+- Not a crash/security/corruption fix — it's a "misleading error
+  reporting" fix
+- Adds a new function (though trivial and self-contained)
+- The bug is somewhat niche (requires specific timing of error vs. AER
+  probe)
 
-### Dependencies
-
-This commit has no dependencies beyond the rtw89 USB driver
-infrastructure already being present in the stable tree. The
-`rtw8852au.c` driver and the `rtw89_8852au_info` structure are already
-defined.
-
-### Stability Indicators
-
-- Signed off by the rtw89 subsystem maintainer (Ping-Ke Shih from
-  Realtek)
-- Follows established patterns identically
-- Community-contributed with a linked PR showing user demand
-
-### Conclusion
-
-This is a textbook example of a device ID addition that is appropriate
-for stable backporting. It enables hardware support for a specific USB
-WiFi adapter using an existing, well-tested driver. The change is
-trivial, risk-free, and provides direct benefit to users with this
-hardware.
+While this isn't a critical crash or security fix, it does fix a real
+functional bug that affects error reporting accuracy. The fix is small,
+well-tested, well-reviewed, uses established patterns, and carries
+minimal regression risk. The PCI AER subsystem is important for system
+reliability monitoring, and misleading error reports can lead to
+unnecessary hardware replacements or missed real issues. The quality
+indicators (maintainer sign-off, tested-by, reviewed-by, Intel reporter)
+are all strong.
 
 **YES**
 
- drivers/net/wireless/realtek/rtw89/rtw8852au.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/pci/pcie/aer.c | 26 +++++++++++++++++++++++++-
+ 1 file changed, 25 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/wireless/realtek/rtw89/rtw8852au.c b/drivers/net/wireless/realtek/rtw89/rtw8852au.c
-index 74a976c984ad8..ccdbcc178c2a4 100644
---- a/drivers/net/wireless/realtek/rtw89/rtw8852au.c
-+++ b/drivers/net/wireless/realtek/rtw89/rtw8852au.c
-@@ -52,6 +52,8 @@ static const struct usb_device_id rtw_8852au_id_table[] = {
- 	  .driver_info = (kernel_ulong_t)&rtw89_8852au_info },
- 	{ USB_DEVICE_AND_INTERFACE_INFO(0x2001, 0x3321, 0xff, 0xff, 0xff),
- 	  .driver_info = (kernel_ulong_t)&rtw89_8852au_info },
-+	{ USB_DEVICE_AND_INTERFACE_INFO(0x2001, 0x3323, 0xff, 0xff, 0xff),
-+	  .driver_info = (kernel_ulong_t)&rtw89_8852au_info },
- 	{ USB_DEVICE_AND_INTERFACE_INFO(0x2001, 0x332c, 0xff, 0xff, 0xff),
- 	  .driver_info = (kernel_ulong_t)&rtw89_8852au_info },
- 	{ USB_DEVICE_AND_INTERFACE_INFO(0x2357, 0x013f, 0xff, 0xff, 0xff),
+diff --git a/drivers/pci/pcie/aer.c b/drivers/pci/pcie/aer.c
+index e0bcaa896803c..4299c553d9bb4 100644
+--- a/drivers/pci/pcie/aer.c
++++ b/drivers/pci/pcie/aer.c
+@@ -1608,6 +1608,20 @@ static void aer_disable_irq(struct pci_dev *pdev)
+ 	pci_write_config_dword(pdev, aer + PCI_ERR_ROOT_COMMAND, reg32);
+ }
+ 
++static int clear_status_iter(struct pci_dev *dev, void *data)
++{
++	u16 devctl;
++
++	/* Skip if pci_enable_pcie_error_reporting() hasn't been called yet */
++	pcie_capability_read_word(dev, PCI_EXP_DEVCTL, &devctl);
++	if (!(devctl & PCI_EXP_AER_FLAGS))
++		return 0;
++
++	pci_aer_clear_status(dev);
++	pcie_clear_device_status(dev);
++	return 0;
++}
++
+ /**
+  * aer_enable_rootport - enable Root Port's interrupts when receiving messages
+  * @rpc: pointer to a Root Port data structure
+@@ -1629,9 +1643,19 @@ static void aer_enable_rootport(struct aer_rpc *rpc)
+ 	pcie_capability_clear_word(pdev, PCI_EXP_RTCTL,
+ 				   SYSTEM_ERROR_INTR_ON_MESG_MASK);
+ 
+-	/* Clear error status */
++	/* Clear error status of this Root Port or RCEC */
+ 	pci_read_config_dword(pdev, aer + PCI_ERR_ROOT_STATUS, &reg32);
+ 	pci_write_config_dword(pdev, aer + PCI_ERR_ROOT_STATUS, reg32);
++
++	/* Clear error status of agents reporting to this Root Port or RCEC */
++	if (reg32 & AER_ERR_STATUS_MASK) {
++		if (pci_pcie_type(pdev) == PCI_EXP_TYPE_RC_EC)
++			pcie_walk_rcec(pdev, clear_status_iter, NULL);
++		else if (pdev->subordinate)
++			pci_walk_bus(pdev->subordinate, clear_status_iter,
++				     NULL);
++	}
++
+ 	pci_read_config_dword(pdev, aer + PCI_ERR_COR_STATUS, &reg32);
+ 	pci_write_config_dword(pdev, aer + PCI_ERR_COR_STATUS, reg32);
+ 	pci_read_config_dword(pdev, aer + PCI_ERR_UNCOR_STATUS, &reg32);
 -- 
 2.51.0
 
