@@ -1,46 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B6761D54FA;
-	Sat, 14 Feb 2026 01:05:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 461831D5ABA;
+	Sat, 14 Feb 2026 01:05:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771031139; cv=none; b=sHFotp3MYirSten+UCGas9fTKIJLvzWXY2sHDGS2irwhtsdGEe0Z1EvjcR4w6pcRRc5u4xWGiMH4u54JBhtrwoes8o4VlCsR6s3QdzSn+Nq/dVx3g7+MUEp3CPhmbdt0U1peYNr7hul8EiDtsbH9ZQCzolvRuLapvtu+ygwUNPk=
+	t=1771031140; cv=none; b=c7Mi+5LB7pTiVs3pnQ+R8hRu6TLGPcu2oS/ujAd0DuQqhB9gc5/F+Svi/5tEZrhU6lX0Oy20PcZgzveGw0BxQ7BHOYtWV/uPr1N3TWgzUSIaH+XgNXXXOfjI2I0Rd0+bHYBXtCJ4OQB5/2RrOpcHKfIQpRUKly/cveaD+yJjnzg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771031139; c=relaxed/simple;
-	bh=tg6CNqv7bton5bP15oOHOmQR0BoV3gpuUhtzClj4LIM=;
+	s=arc-20240116; t=1771031140; c=relaxed/simple;
+	bh=/Z03jB1iwzLqTsCbH9tms1oGkhdUDjoezz4HCzMFyC0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=l/fBF6gYnzOLhd+MQs0bUnWwPiZcQjLKS9dx1FWv7I88BbXQy0BlzNw+E7fSG4CSvxftFHf5ifGsMK5w3/Hy0+J2x4rvrpVnK7LV4o+ZnGVuf7Qu340hIlI0zQi/84CbpiibVOTqZVBmkOKCTL7HKXsQMcLLVegzpjf5WrRV2lA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=O2iynG7J; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=K6xzZST6PyOZXZcgK0FeGKxImmrVrcwsmIUsgTph5rIndzqNQ1L1i3CTTyV4Tb3t39mdG2u2NhXct8tw3bUIuRw2rG575kPQeVdgRV1hymkC+uOVJwGp9WM82LWEb/Uzb499jlPd8+nEE6U0wghcOFauPaXnrUBtBBM9iTBA/3A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=WnH+j+yk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="O2iynG7J"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09812C16AAE;
-	Sat, 14 Feb 2026 01:05:37 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="WnH+j+yk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7DD08C19424;
+	Sat, 14 Feb 2026 01:05:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1771031139;
-	bh=tg6CNqv7bton5bP15oOHOmQR0BoV3gpuUhtzClj4LIM=;
+	s=k20201202; t=1771031140;
+	bh=/Z03jB1iwzLqTsCbH9tms1oGkhdUDjoezz4HCzMFyC0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=O2iynG7JShKrEd31Wvnx3LO1RrTGPjQV8ttw3qFuvDSs0lBZIBY8sRt1jTVc3s0Ld
-	 kbm5CyhxB5q5fN7c2HU8ypfMoJJAAzm/N2pyq3gdrQVnKqYzbHxMU788SoQVynlORb
-	 saA4HMKcEhZzXK9Dmmf4vwypalzmXZf6g38ZczrYKweQ15C1Y+lqgwyG2TSSPnhBe3
-	 vpbDsv6/PwszN/7u8WF85YORK0caDxbXu+yzW8nl/fvGjW1PjxMhx+Xeb1MGDEwGxC
-	 VXbZqmR5oLEwMkqm/ZMAMpuGhtHYiW7FG0ge60+ng3qQlT7UQdXLF1By/FWWFiRlEB
-	 jHUdkx78KAF5g==
+	b=WnH+j+ykT37gMwCpVCRg2NSqXFzRn5A6LdWQJTUbI8AF+DEXhg2jTm0Hq1YhnxjZb
+	 LMTCwhC4q2ISYv4qwjAn/+UHqKBWNA3rZbEnAsAaXwlmowmy2MJhM6lSBrs+PVUT08
+	 cmfDK1bcTCHVRqW5yQGSo3ZBhoL1qN31xNsrmgW3wNbjU/zRff76AtbObfochLau3+
+	 KPDvGvWTjeyoWTRFyIWUDDINt71xy9VYAEyuzTWjUOkndF8DkkWChmnKLf2pRxY7cG
+	 TRIQhIGbvzeRW/KQGQHM3CueqlDGrIbAc9cHO46PAK2iPdexQScz16JC2OF5qJke5r
+	 i1SehlSKbiAFA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Ranjani Sridharan <ranjani.sridharan@linux.intel.com>,
-	Bard Liao <yung-chuan.liao@linux.intel.com>,
-	Liam Girdwood <liam.r.girdwood@intel.com>,
-	Mateusz Redzynia <mateuszx.redzynia@intel.com>,
-	Peter Ujfalusi <peter.ujfalusi@linux.intel.com>,
-	Mark Brown <broonie@kernel.org>,
+Cc: "Ji-Ze Hong (Peter Hong)" <peter_hong@fintek.com.tw>,
+	Guenter Roeck <linux@roeck-us.net>,
 	Sasha Levin <sashal@kernel.org>,
-	yelangyan@huaqin.corp-partner.google.com,
-	thorsten.blum@linux.dev
-Subject: [PATCH AUTOSEL 6.19-6.12] ASoC: SOF: Intel: hda: Fix NULL pointer dereference
-Date: Fri, 13 Feb 2026 19:59:17 -0500
-Message-ID: <20260214010245.3671907-77-sashal@kernel.org>
+	linux-hwmon@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.19-6.1] hwmon: (f71882fg) Add F81968 support
+Date: Fri, 13 Feb 2026 19:59:18 -0500
+Message-ID: <20260214010245.3671907-78-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260214010245.3671907-1-sashal@kernel.org>
 References: <20260214010245.3671907-1-sashal@kernel.org>
@@ -53,119 +48,141 @@ MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.19
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ranjani Sridharan <ranjani.sridharan@linux.intel.com>
+From: "Ji-Ze Hong (Peter Hong)" <peter_hong@fintek.com.tw>
 
-[ Upstream commit 16c589567a956d46a7c1363af3f64de3d420af20 ]
+[ Upstream commit e4a3d6f79c9933fece64368168c46d6cf5fc2e52 ]
 
-If there's a mismatch between the DAI links in the machine driver and
-the topology, it is possible that the playback/capture widget is not
-set, especially in the case of loopback capture for echo reference
-where we use the dummy DAI link. Return the error when the widget is not
-set to avoid a null pointer dereference like below when the topology is
-broken.
+Add hardware monitoring support for the Fintek F81968 Super I/O chip.
+It is fully compatible with F81866.
 
-RIP: 0010:hda_dai_get_ops.isra.0+0x14/0xa0 [snd_sof_intel_hda_common]
+Several products share compatibility with the F81866. To better distinguish
+between them, ensure that the Product ID is displayed when the device is
+probed.
 
-Signed-off-by: Ranjani Sridharan <ranjani.sridharan@linux.intel.com>
-Reviewed-by: Bard Liao <yung-chuan.liao@linux.intel.com>
-Reviewed-by: Liam Girdwood <liam.r.girdwood@intel.com>
-Reviewed-by: Mateusz Redzynia <mateuszx.redzynia@intel.com>
-Signed-off-by: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
-Link: https://patch.msgid.link/20260204081833.16630-10-peter.ujfalusi@linux.intel.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Ji-Ze Hong (Peter Hong) <peter_hong@fintek.com.tw>
+Link: https://lore.kernel.org/r/20251223051040.10227-1-peter_hong@fintek.com.tw
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-All the callers that I can see already check for `!ops` and return
-`-EINVAL`. The fix is safe — returning NULL from `hda_dai_get_ops` is
-the established convention and callers handle it properly.
+## Analysis
 
-Note there's a secondary concern: `dai_to_sdev()` at line 216 also calls
-`snd_soc_dai_get_widget()` and would have the same NULL widget issue.
-But that's a separate path — this commit fixes the most critical crash
-in `hda_dai_get_ops`.
+### Commit Message Analysis
+
+The commit adds hardware monitoring support for a new Fintek F81968
+Super I/O chip to the existing f71882fg hwmon driver. The commit message
+explicitly states "It is fully compatible with F81866." Additionally, it
+enhances the probe log message to include the Product ID (devid) for
+better distinguishing between compatible products.
+
+### Code Change Analysis
+
+The changes are minimal and straightforward:
+
+1. **New chip ID definition** (1 line): `#define SIO_F81968_ID 0x1806` -
+   adds the device ID constant.
+
+2. **New case in switch statement** (1 line): `case SIO_F81968_ID:` is
+   added as a fall-through alongside the existing `SIO_F81866_ID` and
+   `SIO_F81966_ID` cases, all mapping to `sio_data->type = f81866a`.
+   This follows the exact same pattern as the existing F81966 which was
+   also added as F81866-compatible.
+
+3. **Enhanced log message** (2 lines changed): The `pr_info` message now
+   includes `devid: %04x` to display the product ID during probe. This
+   is a minor informational enhancement.
 
 ### Classification
 
-- **Bug type**: NULL pointer dereference (crash/oops)
-- **Trigger**: Mismatch between DAI links in machine driver and topology
-  (can happen with loopback capture/echo reference)
-- **Consequence**: Kernel oops — hard crash
-- **Fix type**: Add NULL check before dereference
+This falls squarely into the **"New Device IDs"** exception category for
+stable backporting:
+- It adds a new chip ID to an **existing, mature driver** (f71882fg)
+- The new chip (F81968) is declared **fully compatible** with F81866,
+  which is already supported
+- The pattern is identical to how F81966 was added (also as
+  F81866-compatible)
+- No new code paths, no new functionality beyond recognizing the ID
 
-### Stable Kernel Criteria Assessment
+### Scope and Risk Assessment
 
-| Criterion | Assessment |
-|---|---|
-| Obviously correct and tested | Yes — simple NULL check, reviewed by 3
-engineers |
-| Fixes a real bug | Yes — actual crash with RIP trace provided |
-| Important issue | Yes — kernel oops/NULL pointer dereference |
-| Small and contained | Yes — ~20 lines in one file |
-| No new features | Correct — purely defensive fix |
-| Applies cleanly | Likely yes — the function existed before |
+- **Lines changed**: ~5 lines (1 define, 1 case label, 2-line log
+  message change)
+- **Files touched**: 1 (drivers/hwmon/f71882fg.c)
+- **Risk**: Extremely low. The new ID simply falls through to an
+  existing, well-tested code path (f81866a). The only other change is
+  adding `devid` to a log message, which is trivially safe.
+- **Regression potential**: Near zero. Existing hardware is completely
+  unaffected.
 
-### Risk vs. Benefit
+### User Impact
 
-- **Benefit**: Prevents kernel oops when there's a DAI link/topology
-  mismatch on Intel HDA audio hardware (SOF). This affects real users
-  with Intel audio (a very common platform).
-- **Risk**: Minimal. The change only adds a NULL check and reorders
-  existing variable assignments. No behavioral change for the normal
-  (non-NULL) path.
+Without this patch, users with F81968-based hardware get no hwmon
+support (the driver prints "Unsupported Fintek device: 1806" and returns
+-ENODEV). With this patch, their hardware monitoring works using the
+proven F81866 code path. This is a real-world hardware enablement fix.
+
+### Stability Indicators
+
+- The author is from Fintek (the chip manufacturer), who has direct
+  knowledge of chip compatibility
+- The maintainer (Guenter Roeck) accepted it, and he is well-known for
+  the hwmon subsystem
+- The pattern matches exactly how previous compatible chips (F81966)
+  were added
 
 ### Dependencies
 
-The fix is self-contained. It modifies a single function to add a NULL
-check. No other patches are needed.
+None. The patch is completely self-contained and applies to any kernel
+version that has the f71882fg driver with F81866/F81966 support.
 
-### Conclusion
+### Decision
 
-This is a textbook stable backport candidate: a small, surgical NULL
-pointer dereference fix in a widely-used audio subsystem (Intel
-HDA/SOF), with a clear bug description, actual crash trace, and multiple
-reviews from Intel engineers. The risk is negligible and the benefit is
-preventing a kernel crash.
+This is a textbook device ID addition to an existing driver - one of the
+explicitly listed exceptions for stable backporting. It's tiny, zero-
+risk, enables real hardware, and follows an established pattern in the
+driver.
 
 **YES**
 
- sound/soc/sof/intel/hda-dai.c | 14 ++++++++++++--
- 1 file changed, 12 insertions(+), 2 deletions(-)
+ drivers/hwmon/f71882fg.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/sound/soc/sof/intel/hda-dai.c b/sound/soc/sof/intel/hda-dai.c
-index 883d0d3bae9ec..3c742d5351333 100644
---- a/sound/soc/sof/intel/hda-dai.c
-+++ b/sound/soc/sof/intel/hda-dai.c
-@@ -70,12 +70,22 @@ static const struct hda_dai_widget_dma_ops *
- hda_dai_get_ops(struct snd_pcm_substream *substream, struct snd_soc_dai *cpu_dai)
- {
- 	struct snd_soc_dapm_widget *w = snd_soc_dai_get_widget(cpu_dai, substream->stream);
--	struct snd_sof_widget *swidget = w->dobj.private;
-+	struct snd_sof_widget *swidget;
- 	struct snd_sof_dev *sdev;
- 	struct snd_sof_dai *sdai;
+diff --git a/drivers/hwmon/f71882fg.c b/drivers/hwmon/f71882fg.c
+index df83f9866fbcf..204059d2de6cd 100644
+--- a/drivers/hwmon/f71882fg.c
++++ b/drivers/hwmon/f71882fg.c
+@@ -51,6 +51,7 @@
+ #define SIO_F81866_ID		0x1010	/* Chipset ID */
+ #define SIO_F71858AD_ID		0x0903	/* Chipset ID */
+ #define SIO_F81966_ID		0x1502	/* Chipset ID */
++#define SIO_F81968_ID		0x1806	/* Chipset ID */
  
--	sdev = widget_to_sdev(w);
-+	/*
-+	 * this is unlikely if the topology and the machine driver DAI links match.
-+	 * But if there's a missing DAI link in topology, this will prevent a NULL pointer
-+	 * dereference later on.
-+	 */
-+	if (!w) {
-+		dev_err(cpu_dai->dev, "%s: widget is NULL\n", __func__);
-+		return NULL;
-+	}
+ #define REGION_LENGTH		8
+ #define ADDR_REG_OFFSET		5
+@@ -2570,6 +2571,7 @@ static int __init f71882fg_find(int sioaddr, struct f71882fg_sio_data *sio_data)
+ 		break;
+ 	case SIO_F81866_ID:
+ 	case SIO_F81966_ID:
++	case SIO_F81968_ID:
+ 		sio_data->type = f81866a;
+ 		break;
+ 	default:
+@@ -2599,9 +2601,9 @@ static int __init f71882fg_find(int sioaddr, struct f71882fg_sio_data *sio_data)
+ 	address &= ~(REGION_LENGTH - 1);	/* Ignore 3 LSB */
  
-+	sdev = widget_to_sdev(w);
-+	swidget = w->dobj.private;
- 	if (!swidget) {
- 		dev_err(sdev->dev, "%s: swidget is NULL\n", __func__);
- 		return NULL;
+ 	err = address;
+-	pr_info("Found %s chip at %#x, revision %d\n",
++	pr_info("Found %s chip at %#x, revision %d, devid: %04x\n",
+ 		f71882fg_names[sio_data->type],	(unsigned int)address,
+-		(int)superio_inb(sioaddr, SIO_REG_DEVREV));
++		(int)superio_inb(sioaddr, SIO_REG_DEVREV), devid);
+ exit:
+ 	superio_exit(sioaddr);
+ 	return err;
 -- 
 2.51.0
 
