@@ -1,45 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF9F528134C;
-	Sat, 14 Feb 2026 21:25:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB67F28134C;
+	Sat, 14 Feb 2026 21:25:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771104344; cv=none; b=XyxGWtp1H0eKYa7qunohFQTiaB+tjgpC7EdYeAQJORZV+fOB78V5p75egqDW1+XWRN/sS7KZ1CTjjAHuRNHXPOBI6zbhib+tl91hcc5Lzl/BMxaPFNDioOgZyNP20qlPS+jHXguHCcJngy5u5h8+b4TqxuIw9/nAhat0i6Wb6WQ=
+	t=1771104345; cv=none; b=ujoZbnRlxbAtZRZNVSZGaiph00x+JR00fsHP5AIvzVpXiHOD0VtNoW5KtULqNvWwf+igwdMJ6lRFxM6ERjgBtgRwuJfaCSYFC1Qb8rDQIDGsLFSfucJpywbKwQVI51OieL3IClbAjMxRTTV4IcK7u0S1zfEQG3Za/+mBisnGbts=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771104344; c=relaxed/simple;
-	bh=el7q+S3zLO8ASetRoqYi/Y+cAyRoQ4xecM7aCSAOMzw=;
+	s=arc-20240116; t=1771104345; c=relaxed/simple;
+	bh=WWRUjv1aa04zQ0r3bnU5uXtUjs+j3wZYFbB5YtLB2aU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ceEC/fu4YbK087SpAItOmuWjtbMlSj82R0U9o3/HmgFTVv+xBFACAwS9YIfAU4heZsCPyIC2jRLxWezCcy7+3vJI831grMcf2lZWFKZik5Lap9wMMiTn4Iu2Bs3NLxGgZtqzVCXSqGHuUcA7EGRxF3pWO82sqFA7I3nT9yi/F4Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=nu90zRww; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fg+Px9XEi6ot9tGVKJI053G1KhQlgJHQi5PlYGrOqDYsWdGugKqXV37tHGUgQXp3JEcI1ad/3tvkpgfY1smMYWe4kFkbx3Y2xT/kM2kIK1qp2g89aAH8x9VIRvPu5jmv10q7VSAwAHVK4ebyc4FAKCqmIwOlsh9lgC4oQS/MORs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Lv5HTel7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="nu90zRww"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 815E4C16AAE;
-	Sat, 14 Feb 2026 21:25:43 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Lv5HTel7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E1F98C19423;
+	Sat, 14 Feb 2026 21:25:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1771104344;
-	bh=el7q+S3zLO8ASetRoqYi/Y+cAyRoQ4xecM7aCSAOMzw=;
+	s=k20201202; t=1771104345;
+	bh=WWRUjv1aa04zQ0r3bnU5uXtUjs+j3wZYFbB5YtLB2aU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nu90zRww1B7VqP4lUsQ2OlpA1bZT0W/DvxMaQRSH15AUlUkPAE0eNrs0PG3WPXCMi
-	 qRxMo9utLxCIhhIhjTXEHVVyl2nQpP50Qu44/95UjOLlxfaGlKWsP9/kkMNxBYQMPx
-	 RkQ45i2v8IOh2DQT3+qdwMcK5eXBYJjwtIrpOjMtVMtOdMLpblPey/2yApeoPEi9oG
-	 rm9t9DNogdMDQA4QUnsZRH5XQ9dj4jOVWy5cfZeA59z/w4MvH+gjSLhZX7+i30QU6C
-	 e3e3G7NQuuWF1jzS+jMju0uonu2IGrZLSSkz6P9ePG6kwWcbBLxeaBlc8S+o1BeIfq
-	 rZrDOvP3CltMQ==
+	b=Lv5HTel7qSVFi+jnlCijflUTfs+HzQ7wgF7zgIc/215kZV1jCkIzcD52MnZvP1LGb
+	 9WjL9/pwe52x09ku6s7YOcuAL3z+Kv34H0ZFJm4SOKjW0Q83AXFiKisGMmeWExUswz
+	 FdW+L/Agtr6ut2i1R2GIVX/V4KUo7be01udC6u5S3yhv1M/X99TpcD3eAGvsLvXws+
+	 pJ3U14K0S0uZ1VZ3OxvmgUaKR3Z5OrLIj0kauRPyzPkrYED+rk1Ext+FfmEZZIq5cK
+	 WfFE6FT1/5JHadIN3NqWWtWnn8aQee7xclj+9zbvgKVJ6JIYNs068TykAEvR4ZqS1e
+	 5f3zV7YpNOWkg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Nidhish A N <nidhish.a.n@intel.com>,
-	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
+Cc: Miri Korenblit <miriam.rachel.korenblit@intel.com>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>,
-	johannes.berg@intel.com,
-	emmanuel.grumbach@intel.com,
-	ilan.peer@intel.com,
-	benjamin.berg@intel.com,
-	yelangyan@huaqin.corp-partner.google.com
-Subject: [PATCH AUTOSEL 6.19-6.18] wifi: iwlwifi: mld: Fix primary link selection logic
-Date: Sat, 14 Feb 2026 16:22:52 -0500
-Message-ID: <20260214212452.782265-27-sashal@kernel.org>
+	johannes@sipsolutions.net,
+	linux-wireless@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.19-6.12] wifi: cfg80211: allow only one NAN interface, also in multi radio
+Date: Sat, 14 Feb 2026 16:22:53 -0500
+Message-ID: <20260214212452.782265-28-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260214212452.782265-1-sashal@kernel.org>
 References: <20260214212452.782265-1-sashal@kernel.org>
@@ -54,152 +51,98 @@ X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.19
 Content-Transfer-Encoding: 8bit
 
-From: Nidhish A N <nidhish.a.n@intel.com>
+From: Miri Korenblit <miriam.rachel.korenblit@intel.com>
 
-[ Upstream commit 7a749db26cab2334d5b356ac31e6f1147c7682da ]
+[ Upstream commit e69fda4d07701373354e52b0321bd40311d743d0 ]
 
-When assigning emlsr.primary with emlsr.selected_primary
-we are checking if BIT(mld_vif->emlsr.selected_links) are
-a part of vif->active_links. This is incorrect as
-emlsr.selected_links is a bitmap of possibly two selected links.
-Therefore, performing the BIT() operation on it does not
-yield any meaningful result and almost always leads to
-incorrect primary link selection.
+According to Wi-Fi Aware (TM) 4.0 specification 2.8, A NAN device can
+have one NAN management interface. This applies also to multi radio
+devices.
+The current code allows a driver to support more than one NAN interface,
+if those are not in the same radio.
 
-Additionally, we cannot rely on vif->active_links at this
-stage of the link switch flow because it contains both the
-removed links and also the newly added links.
-For example, if we had selected links in the past (0x11)
-and we now select links because of TTLM/debugfs (0x100),
-vif->active_links will now be (0x111) and primary link
-will be 0, while 0 is not even an active link. Thus,
-we create our own bitmap of final active links.
+Fix it.
 
-Signed-off-by: Nidhish A N <nidhish.a.n@intel.com>
+Reviewed-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
-Link: https://patch.msgid.link/20260111193638.38b2e14e3a20.Ie81a88dfff0c5d2becedabab8398702808f6b1bf@changeid
+Link: https://patch.msgid.link/20260107135129.fdaecec0fe8a.I246b5ba6e9da3ec1481ff197e47f6ce0793d7118@changeid
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-The `iwlmld` driver was added in v6.15. Current stable trees that could
-possibly have it are 6.15.y, 6.16.y, 6.17.y, and 6.18.y. The mainline is
-6.19. The most actively maintained LTS kernels (6.12.y, 6.6.y, 6.1.y,
-5.15.y) do **NOT** have the `mld/` directory at all.
+### Key Finding: Limited Stable Tree Applicability
 
-## CRITICAL FINDING: Applicability to Stable Trees
+The multi-radio interface combination checking (`combined_radio`
+parameter) was introduced in commit `bd9813d13be43` which was merged in
+the v6.13 cycle. This means:
+- The bug being fixed **only exists in kernels 6.13+**
+- Older stable trees (6.12.y, 6.6.y, 6.1.y, 5.15.y, etc.) don't have the
+  multi-radio combination checking code, so they don't have this bug
+- Only 6.13.y and later stable trees would need this fix
 
-The `iwlmld` sub-driver was introduced in v6.15. The current long-term
-stable (LTS) kernel branches are:
-- 6.12.y (LTS)
-- 6.6.y (LTS)
-- 6.1.y (LTS)
-- 5.15.y (LTS)
-- 5.10.y (LTS)
-- 5.4.y (LTS)
+### Assessment
 
-**None of these LTS trees contain the `mld/` directory.** The code only
-exists in 6.15+ (which was a regular release, not LTS). While 6.15.y,
-6.16.y, 6.17.y, and 6.18.y are maintained as short-term stable, the fix
-targets very new code that:
+**What the fix does**: Removes an incorrect exemption that allowed
+multi-radio Wi-Fi devices to declare support for multiple NAN
+interfaces, violating the Wi-Fi Aware specification.
 
-1. Only exists in recent non-LTS stable trees
-2. Is part of the brand-new WiFi 7 EMLSR implementation
-3. The `iwl_mld_assign_vif_chanctx` function itself was added in v6.15
+**Severity**: Low-to-medium. This is a validation/spec-compliance fix.
+The practical impact depends on whether any driver actually tries to
+register multiple NAN interfaces across radios. If they do, NAN behavior
+could be undefined per spec. The fix prevents such invalid
+configurations from being accepted.
 
-## Summary
+**Risk**: Very low. The change is tiny (removes one condition), is in a
+validation path, and can only make the kernel *stricter* (reject invalid
+configurations that were previously accepted). It cannot introduce new
+crashes or regressions.
 
-| Criteria | Assessment |
-|----------|-----------|
-| Fixes real bug? | YES - incorrect primary link selection |
-| Obviously correct? | YES - the BIT() on bitmap bug is clear |
-| Small and contained? | YES - single function in one file |
-| Risk of regression? | LOW |
-| Applicable to stable? | LIMITED - only 6.15+ short-term stable trees |
-| User impact? | MODERATE - affects WiFi 7 EMLSR users with Intel
-hardware |
+**Meets stable criteria**:
+- Small and contained: Yes (removes ~4 lines)
+- Fixes a real bug: Yes (incorrect validation allowing spec-violating
+  configurations)
+- Obviously correct: Yes (reviewed by the wireless maintainer)
+- No new features: Correct, it tightens existing validation
 
-## Verdict
+**Concerns**:
+- Limited applicability (only 6.13+ stable trees)
+- Low severity - this is spec compliance rather than a crash/corruption
+  fix
+- The practical impact is limited since it only matters if a driver
+  declares >1 NAN interface across radios
 
-While this is undeniably a real bug fix that is small, correct, and
-well-scoped, **the affected code only exists in very recent kernel
-versions (6.15+), none of which are LTS trees**. The `iwlmld` sub-driver
-is brand new WiFi 7 code that doesn't exist in any of the long-term
-stable kernels (6.12.y and below).
-
-That said, short-term stable trees (6.15.y through 6.18.y) DO contain
-this code, and users of those trees would benefit from the fix. The fix
-is clearly correct, addresses a real bug that "almost always leads to
-incorrect primary link selection," and is small/surgical. For the short-
-term stable trees where this code exists, this is a good backport
-candidate.
-
-Given that stable backporting applies to ALL stable trees (including
-short-term ones like 6.15.y, 6.18.y), and this fix is clearly correct,
-small, and fixes an always-triggering bug in EMLSR mode:
+This is a legitimate, low-risk bug fix that enforces correct Wi-Fi
+specification compliance. While the severity is not high (no
+crash/corruption), it's a clean, reviewed fix from the subsystem
+maintainer that corrects incorrect behavior. It's applicable to recent
+stable trees (6.13+) and carries essentially zero regression risk.
 
 **YES**
 
- .../net/wireless/intel/iwlwifi/mld/mac80211.c | 23 ++++++++++++-------
- 1 file changed, 15 insertions(+), 8 deletions(-)
+ net/wireless/core.c | 8 ++------
+ 1 file changed, 2 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/net/wireless/intel/iwlwifi/mld/mac80211.c b/drivers/net/wireless/intel/iwlwifi/mld/mac80211.c
-index cd0dce8de8569..3a1b5bfb9ed66 100644
---- a/drivers/net/wireless/intel/iwlwifi/mld/mac80211.c
-+++ b/drivers/net/wireless/intel/iwlwifi/mld/mac80211.c
-@@ -984,7 +984,9 @@ int iwl_mld_assign_vif_chanctx(struct ieee80211_hw *hw,
- {
- 	struct iwl_mld *mld = IWL_MAC80211_GET_MLD(hw);
- 	struct iwl_mld_link *mld_link = iwl_mld_link_from_mac80211(link);
--	unsigned int n_active = iwl_mld_count_active_links(mld, vif);
-+	struct iwl_mld_link *temp_mld_link;
-+	struct iwl_mld_vif *mld_vif = iwl_mld_vif_from_mac80211(vif);
-+	u16 final_active_links = 0;
- 	int ret;
+diff --git a/net/wireless/core.c b/net/wireless/core.c
+index 9a420d627d3ce..2028bf5686f2b 100644
+--- a/net/wireless/core.c
++++ b/net/wireless/core.c
+@@ -661,12 +661,8 @@ int wiphy_verify_iface_combinations(struct wiphy *wiphy,
+ 				    c->limits[j].max > 1))
+ 				return -EINVAL;
  
- 	lockdep_assert_wiphy(mld->wiphy);
-@@ -992,10 +994,7 @@ int iwl_mld_assign_vif_chanctx(struct ieee80211_hw *hw,
- 	if (WARN_ON(!mld_link))
- 		return -EINVAL;
+-			/* Only a single NAN can be allowed, avoid this
+-			 * check for multi-radio global combination, since it
+-			 * hold the capabilities of all radio combinations.
+-			 */
+-			if (!combined_radio &&
+-			    WARN_ON(types & BIT(NL80211_IFTYPE_NAN) &&
++			/* Only a single NAN can be allowed */
++			if (WARN_ON(types & BIT(NL80211_IFTYPE_NAN) &&
+ 				    c->limits[j].max > 1))
+ 				return -EINVAL;
  
--	/* if the assigned one was not counted yet, count it now */
- 	if (!rcu_access_pointer(mld_link->chan_ctx)) {
--		n_active++;
--
- 		/* Track addition of non-BSS link */
- 		if (ieee80211_vif_type_p2p(vif) != NL80211_IFTYPE_STATION) {
- 			ret = iwl_mld_emlsr_check_non_bss_block(mld, 1);
-@@ -1016,17 +1015,25 @@ int iwl_mld_assign_vif_chanctx(struct ieee80211_hw *hw,
- 
- 	rcu_assign_pointer(mld_link->chan_ctx, ctx);
- 
--	if (n_active > 1) {
--		struct iwl_mld_vif *mld_vif = iwl_mld_vif_from_mac80211(vif);
-+	/* We cannot rely on vif->active_links at this stage as it contains
-+	 * both the removed links and the newly added links.
-+	 * Therefore, we create our own bitmap of the final active links,
-+	 * which does not include the removed links.
-+	 */
-+	for_each_mld_vif_valid_link(mld_vif, temp_mld_link) {
-+		if (rcu_access_pointer(temp_mld_link->chan_ctx))
-+			final_active_links |= BIT(link_id);
-+	}
- 
-+	if (hweight16(final_active_links) > 1) {
- 		/* Indicate to mac80211 that EML is enabled */
- 		vif->driver_flags |= IEEE80211_VIF_EML_ACTIVE;
- 		mld_vif->emlsr.last_entry_ts = jiffies;
- 
--		if (vif->active_links & BIT(mld_vif->emlsr.selected_links))
-+		if (final_active_links == mld_vif->emlsr.selected_links)
- 			mld_vif->emlsr.primary = mld_vif->emlsr.selected_primary;
- 		else
--			mld_vif->emlsr.primary = __ffs(vif->active_links);
-+			mld_vif->emlsr.primary = __ffs(final_active_links);
- 
- 		iwl_dbg_tlv_time_point(&mld->fwrt, IWL_FW_INI_TIME_ESR_LINK_UP,
- 				       NULL);
 -- 
 2.51.0
 
