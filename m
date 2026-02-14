@@ -1,49 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4F5F29ACCD;
-	Sat, 14 Feb 2026 21:26:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE5B330DD00;
+	Sat, 14 Feb 2026 21:26:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771104412; cv=none; b=jze0nXMVqxAVprC/zOT8Jj4dGOytAt4H3ft8rgNQc/kUvhcNWPGe56LIrYnaPxDzGlaTieeWzLRWkeBz8INItOT0nZOD1XgOpkfIex60aJ/0pdxFi6iO+Z1va6b3B4glCJnwAwWQ+Ke3x5fWUj+74FaA38gCvHX51sZhBPfb5rA=
+	t=1771104413; cv=none; b=RiOQ401j75blze+LfTtt/jrt2u6ZgoXShKaptiKHpk1kGWEd9r2ey7wmYYUDh3ZGlwaJAVodXJX2NHN1QeCLgKALj3Tof2Y8svrtlBF8m866+bbMzIMewiqxZuE9Vf2tyI+O3Un2a++awUfIMWJBiwbsWu+afLXBNovDrbutMCA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771104412; c=relaxed/simple;
-	bh=spBe1UGw1ARs3IgEvRYC5YF/E9lmPPeTNpVViA6Fnso=;
+	s=arc-20240116; t=1771104413; c=relaxed/simple;
+	bh=74cp8VZWvs0+3X0KelKl0XIdZFubgwLJoFNl+INLND4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LeU9RFfwRtZ0WbhwaQSbinVb2IqBkkPcOx6dAsZUm59JPc3Ohcu22Bw59aWIxi44C5ep7v19lucZZUQDQ1S8boxwGm/xc5jQTGsK2inI5R03QyjYB0BerSoe4GBVVEXi4NiNnqj9wztWzoZrovf2evjpRv9zBAvfl4KxT4amvv4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=nWr7AfVP; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=ZLq++rvBuQrWyKeGwsUbtKmQDvlN/XS8sSYCoj3g6Z2KLVUaHa7enb+lZBD5AOigtD20adY1arB4DfpNfhGe9hJ5cvvIhmx6W5ku/ale8L6hPuhPlUz6lq9sCx5XFahqYUFXOjPEW2o5ycWFqcPpQhCwBq3yRp0MSzzgmIGgvJw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ikwc2sn6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="nWr7AfVP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 76B97C19422;
-	Sat, 14 Feb 2026 21:26:50 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ikwc2sn6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36733C19422;
+	Sat, 14 Feb 2026 21:26:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1771104411;
-	bh=spBe1UGw1ARs3IgEvRYC5YF/E9lmPPeTNpVViA6Fnso=;
+	s=k20201202; t=1771104412;
+	bh=74cp8VZWvs0+3X0KelKl0XIdZFubgwLJoFNl+INLND4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nWr7AfVPmprttSt+USWUPrqGCX3tmWTVeMrFEOY6HPamGPxjqDCLFYwspQ/FSRn3i
-	 BI0DuJOlELKE+r28nR9JNRz893j5tp30EE4QkIFVFINPpr6CGZdzxwekKbrBo2TER0
-	 /axbeQxDsaUUFIzUXyaTmsdvam/CsJYflY+J6KkBJm0F+D5PTNAX79S+yPSodgEaL4
-	 DVLw6Dzpu+28n7DBpN8BljxhM+uzA04xcNVQ81txIKwuyS2LWsWQq2h9XXzUzc9ATc
-	 YjNFi0ZZb7DFHEq1QkOA5rCipapEMo/jv9PSdnWYbqVNSGq1dnAb/2qNPnFbJ4830X
-	 JV4J+0bBk3m4A==
+	b=ikwc2sn6Gy2uajEROU3HjmOqHK5NFDJTuk0RDEwTxK4jCjc+E4Qg1sZnNqv/cr03n
+	 FtvJDtXhKDOOSDAw6rRdlIMemsY9tgvg8qGKJBCvc37RQnDzA0nmiWVtElLV/uQ/zs
+	 npDSPy2pT6q/PLMSljWXdVZMwwjlPhnrlGr5NhVb7U30+qI0gCTntCEEWWF4mf5ZGA
+	 PsOCA+iPoo87+t56vrz58cbRokqV8aPfQta8OD6SeVophpuZWTNDBjNze2NYyBJaq6
+	 mYfIql+IVEc8a4jcRASWQm1fToDKhBnrfPdqlu5Ht/KwlNl3FvYoh6tagg4FjiP6gX
+	 JHhZhHtpJCaXQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Shawn Lin <shawn.lin@rock-chips.com>,
-	Manivannan Sadhasivam <mani@kernel.org>,
+Cc: Zong-Zhe Yang <kevin_yang@realtek.com>,
+	Ping-Ke Shih <pkshih@realtek.com>,
 	Sasha Levin <sashal@kernel.org>,
-	heiko@sntech.de,
-	cassel@kernel.org,
-	18255117159@163.com,
-	bhelgaas@google.com,
-	yelangyan@huaqin.corp-partner.google.com,
-	linux.amoon@gmail.com,
-	nicolas.frattaroli@collabora.com,
-	linux-arm-kernel@lists.infradead.org,
-	linux-rockchip@lists.infradead.org
-Subject: [PATCH AUTOSEL 6.19-6.1] PCI: dw-rockchip: Disable BAR 0 and BAR 1 for Root Port
-Date: Sat, 14 Feb 2026 16:23:34 -0500
-Message-ID: <20260214212452.782265-69-sashal@kernel.org>
+	linux-wireless@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.19-6.18] wifi: rtw89: regd: 6 GHz power type marks default when inactive
+Date: Sat, 14 Feb 2026 16:23:35 -0500
+Message-ID: <20260214212452.782265-70-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260214212452.782265-1-sashal@kernel.org>
 References: <20260214212452.782265-1-sashal@kernel.org>
@@ -56,148 +48,140 @@ MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.19
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Shawn Lin <shawn.lin@rock-chips.com>
+From: Zong-Zhe Yang <kevin_yang@realtek.com>
 
-[ Upstream commit b5d712e5b87fc56ff838684afb1bae359eb8069f ]
+[ Upstream commit 8c96752d99c0b094af68317a8c701b09bd0862d9 ]
 
-Some Rockchip PCIe Root Ports report bogus size of 1GiB for the BAR
-memories and they cause below resource allocation issue during probe.
+When inactive, 6 GHz power type has been assigned to the default one,
+but missed to mark the local control variable, dflt, true. Then, this
+might let some 6 GHz power info of disconnected APs keep being taken
+into account under certain cases.
 
-  pci 0000:00:00.0: [1d87:3588] type 01 class 0x060400 PCIe Root Port
-  pci 0000:00:00.0: BAR 0 [mem 0x00000000-0x3fffffff]
-  pci 0000:00:00.0: BAR 1 [mem 0x00000000-0x3fffffff]
-  pci 0000:00:00.0: ROM [mem 0x00000000-0x0000ffff pref]
-	...
-  pci 0000:00:00.0: BAR 0 [mem 0x900000000-0x93fffffff]: assigned
-  pci 0000:00:00.0: BAR 1 [mem size 0x40000000]: can't assign; no space
-  pci 0000:00:00.0: BAR 1 [mem size 0x40000000]: failed to assign
-  pci 0000:00:00.0: ROM [mem 0xf0200000-0xf020ffff pref]: assigned
-  pci 0000:00:00.0: BAR 0 [mem 0x900000000-0x93fffffff]: releasing
-  pci 0000:00:00.0: ROM [mem 0xf0200000-0xf020ffff pref]: releasing
-  pci 0000:00:00.0: BAR 0 [mem 0x900000000-0x93fffffff]: assigned
-  pci 0000:00:00.0: BAR 1 [mem size 0x40000000]: can't assign; no space
-  pci 0000:00:00.0: BAR 1 [mem size 0x40000000]: failed to assign
+So, mark default when inactive.
 
-Since there is no use of the Root Port BAR memories, disable both of them.
-
-Signed-off-by: Shawn Lin <shawn.lin@rock-chips.com>
-[mani: reworded the description and comment]
-Signed-off-by: Manivannan Sadhasivam <mani@kernel.org>
-Link: https://patch.msgid.link/1766570461-138256-1-git-send-email-shawn.lin@rock-chips.com
+Signed-off-by: Zong-Zhe Yang <kevin_yang@realtek.com>
+Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
+Link: https://patch.msgid.link/20251229030926.27004-12-pkshih@realtek.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-### Key Findings from Investigation
+## Commit Analysis: wifi: rtw89: regd: 6 GHz power type marks default
+when inactive
 
-1. **`dw_pcie_writel_dbi2`** is a well-established helper available
-   since 2023 (the static inline wrapper) with the underlying
-   `dw_pcie_write_dbi2` available since 2019. It should be present in
-   recent stable kernels.
+### 1. Commit Message Analysis
 
-2. **`dbi_base2` setup pattern**: The standard DWC code has a default
-   fallback of `pci->dbi_base + SZ_4K` (4KB offset). However, the
-   Rockchip hardware uses a different offset of `0x100000` (1MB). This
-   commit explicitly sets `pci->dbi_base2 = pci->dbi_base +
-   PCIE_TYPE0_HDR_DBI2_OFFSET` because the generic fallback would use
-   the wrong offset for this hardware.
+The commit message clearly describes a bug: when a 6 GHz connection
+becomes inactive, the code correctly sets the power type to the default
+value (`RTW89_REG_6GHZ_POWER_DFLT`), but **fails to set the local
+variable `dflt = true`**. This is a logic error where two related state
+updates are out of sync.
 
-3. **The rockchip DWC driver** has been present since 2021, so it exists
-   in all active stable trees.
+The consequence: "this might let some 6 GHz power info of disconnected
+APs keep being taken into account under certain cases." This means stale
+power configuration from a previously connected AP could persist and
+affect regulatory behavior.
 
-### Risk vs. Benefit
+### 2. Code Change Analysis
 
-**Benefit**: Fixes a real resource allocation failure during PCIe probe
-on Rockchip platforms (RK3588 and potentially others). Without this fix,
-BAR allocation consumes 2GiB of address space needlessly, potentially
-causing downstream device BAR allocation failures. The log output
-clearly shows "can't assign; no space" errors.
+The fix is a **single line addition**: `dflt = true;` in the `else`
+(inactive) branch.
 
-**Risk**: Very low. The fix:
-- Only affects Rockchip DWC PCIe in host (Root Port) mode
-- Disables BARs that are not used by the Root Port
-- Uses well-established DWC infrastructure (`dw_pcie_writel_dbi2`)
-- The DBI2 offset is hardware-specific and correct for this platform
+Let me trace the logic:
 
-### Potential Concern
+- `dflt` is a boolean that tracks whether the default power type is in
+  use
+- In the `active` branch, when the `default:` case of the switch is hit,
+  both `reg_6ghz_power = RTW89_REG_6GHZ_POWER_DFLT` AND `dflt = true`
+  are set
+- In the `else` (inactive) branch, `reg_6ghz_power =
+  RTW89_REG_6GHZ_POWER_DFLT` is set but `dflt` was **not** being set to
+  `true`
 
-One thing to verify is whether `dbi_base2` might already be set by the
-generic DWC code before `rockchip_pcie_host_init` is called. If the
-generic code sets it to `dbi_base + SZ_4K` first, this override to
-`dbi_base + 0x100000` is essential for correctness. If it's not set at
-all, then both the setup AND the BAR disable writes are needed.
+The `dflt` variable is then checked at line `if (!dflt &&
+blocked[rtwvif_link->reg_6ghz_power])`. When `dflt` is false and the
+power type is `RTW89_REG_6GHZ_POWER_DFLT`, the code would incorrectly
+check `blocked[RTW89_REG_6GHZ_POWER_DFLT]`, which could cause the
+function to return `-EINVAL` erroneously when the link is inactive, or
+it could allow stale power type information to persist.
 
-### User Impact
+### 3. Bug Classification
 
-- **Moderate-High**: RK3588 is a widely used ARM SoC in Single Board
-  Computers (SBCs), NAS devices, and embedded systems. PCIe resource
-  allocation failures directly impact users trying to use PCIe devices
-  (NVMe SSDs, network cards, etc.) on these platforms.
+This is a **logic bug** — specifically a missing state update that
+causes inconsistent behavior. When a WiFi interface goes inactive on 6
+GHz:
+- The power type is correctly reset to default
+- But `dflt` stays false (from initialization), so the "blocked" check
+  below could still evaluate the default power type against the blocked
+  list, potentially returning an error when it shouldn't
 
-### Stable Criteria Assessment
+This affects regulatory domain handling, which is important for proper
+WiFi operation on 6 GHz bands.
 
-| Criteria | Assessment |
-|----------|------------|
-| Obviously correct and tested | Yes - simple BAR disable using standard
-DWC mechanism |
-| Fixes a real bug | Yes - bogus BAR sizes cause resource allocation
-failures |
-| Important issue | Yes - PCIe device failures on popular ARM platform |
-| Small and contained | Yes - ~10 lines in one file |
-| No new features | Correct - this is a hardware workaround |
-| Applies cleanly | Likely yes for recent stable trees |
+### 4. Scope and Risk Assessment
+
+- **Size**: 1 line added — minimal
+- **Files touched**: 1 file
+  (`drivers/net/wireless/realtek/rtw89/regd.c`)
+- **Risk**: Extremely low — it's adding a missing boolean assignment
+  that mirrors the behavior already present in the `default:` case of
+  the `active` branch
+- **Correctness**: Obviously correct — the inactive branch sets the same
+  `RTW89_REG_6GHZ_POWER_DFLT` value as the default case in the active
+  branch, so it should also set `dflt = true`
+
+### 5. User Impact
+
+- Affects users of Realtek RTW89 WiFi adapters using 6 GHz bands
+- Could cause incorrect regulatory power type handling when
+  disconnecting from 6 GHz APs
+- In certain cases, stale power info from disconnected APs could be
+  used, potentially causing regulatory compliance issues or connectivity
+  problems
+
+### 6. Stable Kernel Criteria
+
+- **Obviously correct**: Yes — the fix is symmetric with the `default:`
+  case in the active branch
+- **Fixes a real bug**: Yes — logic error causing inconsistent state
+- **Small and contained**: Yes — 1 line in 1 file
+- **No new features**: Correct — pure bug fix
+- **Tested**: From Realtek maintainers (Zong-Zhe Yang, Ping-Ke Shih)
+
+### 7. Dependencies
+
+This fix is self-contained. The surrounding code structure (the switch
+statement, the `dflt` variable, the `blocked[]` check) all exist in
+stable kernels that have the rtw89 driver with 6 GHz support.
 
 ### Conclusion
 
-This is a hardware quirk/workaround that fixes a real resource
-allocation problem on Rockchip RK3588 PCIe Root Ports. The bogus 1GiB
-BAR sizes waste address space and cause downstream device allocation
-failures. The fix is small, well-scoped, uses existing infrastructure,
-and only affects Rockchip platforms. It clearly falls into the "hardware
-quirks" exception category that is explicitly appropriate for stable
-backporting.
+This is a clean, minimal, obviously-correct bug fix that addresses a
+real logic error in WiFi regulatory power type handling. It has
+negligible risk of regression and fixes a genuine issue for users of
+Realtek WiFi adapters on 6 GHz networks.
 
 **YES**
 
- drivers/pci/controller/dwc/pcie-dw-rockchip.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ drivers/net/wireless/realtek/rtw89/regd.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/pci/controller/dwc/pcie-dw-rockchip.c b/drivers/pci/controller/dwc/pcie-dw-rockchip.c
-index f8605fe61a415..c5f3c8935098f 100644
---- a/drivers/pci/controller/dwc/pcie-dw-rockchip.c
-+++ b/drivers/pci/controller/dwc/pcie-dw-rockchip.c
-@@ -80,6 +80,8 @@
- #define  PCIE_LINKUP_MASK		GENMASK(17, 16)
- #define  PCIE_LTSSM_STATUS_MASK		GENMASK(5, 0)
+diff --git a/drivers/net/wireless/realtek/rtw89/regd.c b/drivers/net/wireless/realtek/rtw89/regd.c
+index 209d84909f885..c3425ed44732e 100644
+--- a/drivers/net/wireless/realtek/rtw89/regd.c
++++ b/drivers/net/wireless/realtek/rtw89/regd.c
+@@ -1142,6 +1142,7 @@ static int rtw89_reg_6ghz_power_recalc(struct rtw89_dev *rtwdev,
+ 		}
+ 	} else {
+ 		rtwvif_link->reg_6ghz_power = RTW89_REG_6GHZ_POWER_DFLT;
++		dflt = true;
+ 	}
  
-+#define PCIE_TYPE0_HDR_DBI2_OFFSET      0x100000
-+
- struct rockchip_pcie {
- 	struct dw_pcie pci;
- 	void __iomem *apb_base;
-@@ -292,6 +294,8 @@ static int rockchip_pcie_host_init(struct dw_pcie_rp *pp)
- 	if (irq < 0)
- 		return irq;
- 
-+	pci->dbi_base2 = pci->dbi_base + PCIE_TYPE0_HDR_DBI2_OFFSET;
-+
- 	ret = rockchip_pcie_init_irq_domain(rockchip);
- 	if (ret < 0)
- 		dev_err(dev, "failed to init irq domain\n");
-@@ -302,6 +306,10 @@ static int rockchip_pcie_host_init(struct dw_pcie_rp *pp)
- 	rockchip_pcie_configure_l1ss(pci);
- 	rockchip_pcie_enable_l0s(pci);
- 
-+	/* Disable Root Ports BAR0 and BAR1 as they report bogus size */
-+	dw_pcie_writel_dbi2(pci, PCI_BASE_ADDRESS_0, 0x0);
-+	dw_pcie_writel_dbi2(pci, PCI_BASE_ADDRESS_1, 0x0);
-+
- 	return 0;
- }
- 
+ 	rcu_read_unlock();
 -- 
 2.51.0
 
