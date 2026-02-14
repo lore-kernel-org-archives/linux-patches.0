@@ -1,45 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 162A9303A02;
-	Sat, 14 Feb 2026 21:26:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F286C3115BD;
+	Sat, 14 Feb 2026 21:26:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771104398; cv=none; b=YSQ9nNrRwPtgnZh/snhbkoGr+4Q27bBHkGhuVvC+P4vyrGNHMJr3vxSwSHR7vx0eik258XK83dmQdhLx8WgspuiO2e8hoNSy589NDDr1X/cSws650ArH+uBS8gUWLc6HIYXun9gZusMU2uURY58Fgdo/NWHpj524q/HuEnWlhuU=
+	t=1771104399; cv=none; b=ToKr+pcnU/mF4Av7sYwrqlR/vEsZMnwkUJDjZdB8PJQwNQ0iMMucrBMR8cKq5KTgnOjJblQUxI92QyzWZ1k4Ef76YZQyaGyDUwg2XmimO2PpvCzwp4tW8pN4zEY8d2CE4DKllaeAEFKSfF9DovJ8WnJ0kPHUAENrPZ3kfBfsaDg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771104398; c=relaxed/simple;
-	bh=E+bPpLh4jKGwkCz53n37PdOSYohgNwZqFsf9WCgqRh4=;
+	s=arc-20240116; t=1771104399; c=relaxed/simple;
+	bh=q2OrGAGT4GzPReLnJmMn03YBJ9yj2jYhHDFCk80CV0c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=B/m3JIHffykLrQ8OjyDULmbKJ6eTB875um70g1sgCdsuW3MDZMN5Pwwsu0b6y90O0h6mdaCb5b1O5gv6Y0PD7Y1kFkE0m1hbUYX2XoJs1X1sRlSPGG3tyZA0M8KgEmswEKXXYz8MBx8MHfYPBFQ7OpuWh4gT+6ileK+6uMc8j3s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=FVWdtAl4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=AFJpn66s3CsCVdTamYM3aqOyD4uxGXKu5Dd2UHkDq46+TCtsL8R5OPp5RdFN1WZstlm6Wfi/r4usp4QMhXc/SGZDTpGrAl+J80tqNAE5bqu2IY/gSH5ST9ThiSWSBEZpzr9fB/D1rDhQmkwBewH6h3vQ3R5yPF8r6XSwngwtBFE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=qoc6O6o9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="FVWdtAl4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2E94C16AAE;
-	Sat, 14 Feb 2026 21:26:36 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="qoc6O6o9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C413C19422;
+	Sat, 14 Feb 2026 21:26:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1771104397;
-	bh=E+bPpLh4jKGwkCz53n37PdOSYohgNwZqFsf9WCgqRh4=;
+	s=k20201202; t=1771104398;
+	bh=q2OrGAGT4GzPReLnJmMn03YBJ9yj2jYhHDFCk80CV0c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FVWdtAl4Wgp2gnlRSgxyMOztltOuEPUG7wk/zG9jxwHjTmz8A4ENGOnloUbGKtpkG
-	 vX8kp/sOx2L1N0KZRtnFzq2Jy3IZ/h870Su6mMpfuF8i3dCvjMIl2cK3U/0Fv8WXyp
-	 3zqUnJRRYwipGJDLgJRYkRHi7XGdw/SS9pGNywcMabHamRF5il2A3w/e4sAv8vcYvr
-	 JK/bCBE3rfgnLtDSb3Cuz0GcJp7+/QH6pGV3zlZtdDi13Q7JlU6S1T//d6vrgpzrf+
-	 br/chhFCLVE7p9nnhaTVWS/FY7/aVMUkjCzfXIgNQY0PuVmrD3M9m8Pckopki+onBZ
-	 vtadnnmwmhZRw==
+	b=qoc6O6o9AC/2n4dpBphHHYjugyKvSl6/hRuZWKchhqklWTMs7sTeA52pLSra9e74y
+	 nFONir8GxeJ2UZN4OH5GY5cHxRsacLyvpTlAsrl1G1fKaHRS8u8mvcl98O7y6Ww603
+	 QEE1dMB6jFNktVksqGc9Kzryv9qTRlYBK7m+ezLNor2a7ZQt8aEBUoMuAUfN4W+DHu
+	 eT/xHBos+ZrDRFze2v9mFfFBCRGUjv8YIZ7sG1e5A5U9E3EYej3Dc0UicCycojI6hr
+	 Pm5oqT4vsWhgZ6ByONmKfVWLTJID6SE3yw68Ij76Q29IYPBb/CKUzqIWv4e7RDa3fB
+	 sM/I9bOjWoYCw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Eric Dumazet <edumazet@google.com>,
-	David Ahern <dsahern@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+Cc: Li Chen <me@linux.beauty>,
+	Theodore Ts'o <tytso@mit.edu>,
 	Sasha Levin <sashal@kernel.org>,
-	andrew+netdev@lunn.ch,
-	davem@davemloft.net,
-	pabeni@redhat.com,
-	netdev@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.19-6.6] ipv4: igmp: annotate data-races around idev->mr_maxdelay
-Date: Sat, 14 Feb 2026 16:23:26 -0500
-Message-ID: <20260214212452.782265-61-sashal@kernel.org>
+	adilger.kernel@dilger.ca,
+	linux-ext4@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.19-5.15] ext4: mark group add fast-commit ineligible
+Date: Sat, 14 Feb 2026 16:23:27 -0500
+Message-ID: <20260214212452.782265-62-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260214212452.782265-1-sashal@kernel.org>
 References: <20260214212452.782265-1-sashal@kernel.org>
@@ -55,192 +52,129 @@ X-stable-base: Linux 6.19
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Eric Dumazet <edumazet@google.com>
+From: Li Chen <me@linux.beauty>
 
-[ Upstream commit e4faaf65a75f650ac4366ddff5dabb826029ca5a ]
+[ Upstream commit 89b4336fd5ec78f51f9d3a1d100f3ffa3228e604 ]
 
-idev->mr_maxdelay is read and written locklessly,
-add READ_ONCE()/WRITE_ONCE() annotations.
+Fast commits only log operations that have dedicated replay support.
+Online resize via EXT4_IOC_GROUP_ADD updates the superblock and group
+descriptor metadata without going through the fast commit tracking
+paths.
+In practice these operations are rare and usually followed by further
+updates, but mixing them into a fast commit makes the overall
+semantics harder to reason about and risks replay gaps if new call
+sites appear.
 
-While we are at it, make this field an u32.
+Teach ext4 to mark the filesystem fast-commit ineligible when
+ext4_ioctl_group_add() adds new block groups.
+This forces those transactions to fall back to a full commit,
+ensuring that the filesystem geometry updates are captured by the
+normal journal rather than partially encoded in fast commit TLVs.
+This change should not affect common workloads but makes online
+resize via GROUP_ADD safer and easier to reason about under fast
+commit.
 
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Reviewed-by: David Ahern <dsahern@kernel.org>
-Link: https://patch.msgid.link/20260122172247.2429403-1-edumazet@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Testing:
+1. prepare:
+    dd if=/dev/zero of=/root/fc_resize.img bs=1M count=0 seek=256
+    mkfs.ext4 -O fast_commit -F /root/fc_resize.img
+    mkdir -p /mnt/fc_resize && mount -t ext4 -o loop /root/fc_resize.img /mnt/fc_resize
+2. Ran a helper that issues EXT4_IOC_GROUP_ADD on the mounted
+   filesystem and checked the resize ineligible reason:
+    ./group_add_helper /mnt/fc_resize
+    cat /proc/fs/ext4/loop0/fc_info
+   shows "Resize": > 0.
+3. Fsynced a file on the resized filesystem and verified that the fast
+   commit stats report at least one ineligible commit:
+    touch /mnt/fc_resize/file
+    /root/fsync_file /mnt/fc_resize/file
+    sync
+    cat /proc/fs/ext4/loop0/fc_info
+   shows fc stats ineligible > 0.
+
+Signed-off-by: Li Chen <me@linux.beauty>
+Link: https://patch.msgid.link/20251211115146.897420-5-me@linux.beauty
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-## Analysis of commit: "ipv4: igmp: annotate data-races around
-idev->mr_maxdelay"
+So this is part of a series by the same author. There are three resize
+paths:
+1. `EXT4_IOC_RESIZE_FS` (already had `ext4_fc_mark_ineligible` from the
+   original fast commit implementation)
+2. `EXT4_IOC_GROUP_EXTEND` (fixed by `1f8dd813a1c77` - the companion
+   commit)
+3. `EXT4_IOC_GROUP_ADD` (fixed by this commit under review)
 
-### 1. COMMIT MESSAGE ANALYSIS
+Both this commit and `1f8dd813a1c77` are from the same patch series
+(patches 5 and 6 of the series based on the msgid link). They're
+independent fixes to two different ioctl paths.
 
-The commit message is straightforward: it adds READ_ONCE()/WRITE_ONCE()
-annotations to `idev->mr_maxdelay` because the field is read and written
-locklessly (i.e., without holding a lock that protects both the reader
-and writer). Additionally, the field type is changed from `unsigned
-long` to `u32`.
+### 7. DEPENDENCY CHECK
 
-**Author**: Eric Dumazet — a highly prolific and respected networking
-developer at Google, known for data-race annotation work across the
-networking stack.
+This commit depends on:
+- `EXT4_FC_REASON_RESIZE` existing in `fast_commit.h` — this was added
+  in `aa75f4d3daaeb` (5.10 era, "ext4: main fast-commit commit path")
+- The `ext4_fc_mark_ineligible()` API accepting `(sb, reason, NULL)` —
+  the NULL handle variant was introduced in `e85c81ba8859a` which went
+  to stable
 
-**Reviewed-by**: David Ahern — another senior networking developer.
+The fast commit feature itself was added in Linux 5.10, so this fix
+applies to 5.10+ stable trees. The API with 3 arguments (sb, reason,
+handle) was introduced in `e85c81ba8859a` which was 5.17-era and was
+already tagged Cc: stable. So the function signature should be available
+in 5.15+ stable trees at minimum.
 
-### 2. CODE CHANGE ANALYSIS
+### SUMMARY
 
-The changes are minimal and contained:
+**What the commit fixes**: A missing fast-commit ineligibility marking
+in the `EXT4_IOC_GROUP_ADD` resize path. Without this, filesystem
+geometry changes from GROUP_ADD could be mixed with fast commits,
+leading to potential filesystem inconsistency after crash recovery
+because the fast commit replay has no dedicated handler for resize
+operations.
 
-**In `include/linux/inetdevice.h`:**
-- `mr_maxdelay` field type changed from `unsigned long` to `u32`
-- Field repositioned in the struct (moved after `mr_gq_running` which is
-  `unsigned char`, before `mr_ifc_count` which is `u32`) — this is
-  likely for better packing/alignment
+**Severity**: Medium-high. While the scenario requires specific
+conditions (fast_commit enabled + GROUP_ADD resize + crash timing), the
+consequence is filesystem corruption/inconsistency, which is a data
+integrity issue.
 
-**In `net/ipv4/igmp.c`:**
-- **Line ~230 (igmp_gq_start_timer)**: `in_dev->mr_maxdelay` →
-  `READ_ONCE(in_dev->mr_maxdelay)` — the reader side
-- **Line ~1012 (igmp_heard_query)**: `in_dev->mr_maxdelay = max_delay` →
-  `WRITE_ONCE(in_dev->mr_maxdelay, max_delay)` — the writer side
+**Risk**: Extremely low. Single line addition that mirrors existing code
+in the same file. The only effect is forcing a full journal commit
+instead of fast commit during GROUP_ADD, which is the correct and safe
+behavior. No regression possible.
 
-### 3. DATA RACE ANALYSIS
+**Meets stable criteria**:
+- Obviously correct: YES (mirrors existing pattern)
+- Fixes a real bug: YES (potential filesystem corruption on crash)
+- Small and contained: YES (1 line)
+- No new features: YES
+- Already tested: YES
 
-Let me examine the concurrency situation:
-
-- **Writer**: `igmp_heard_query()` writes `mr_maxdelay` when processing
-  an incoming IGMPv3 query. This runs in softirq/BH context when
-  receiving network packets.
-- **Reader**: `igmp_gq_start_timer()` reads `mr_maxdelay` to calculate a
-  random timer delay. This is called from `igmp_heard_query()` itself,
-  but also potentially from other contexts.
-
-The key question: can the read and write happen concurrently? Looking at
-the code, `igmp_heard_query()` writes `mr_maxdelay` and then calls
-`igmp_gq_start_timer()` which reads it. However, on different CPUs
-processing different network packets, one CPU could be writing while
-another reads. Without proper annotations, the compiler could optimize
-these accesses in ways that cause tearing or stale reads.
-
-This is a real KCSAN-detectable data race. While the consequences may
-not be catastrophic (the value is used for a random timer delay), it is
-technically undefined behavior in the C memory model, and on
-architectures where `unsigned long` is 64-bit but atomicity is only
-guaranteed for 32-bit, there could be torn reads producing garbage
-values that get passed to `get_random_u32_below()`.
-
-### 4. TYPE CHANGE: unsigned long → u32
-
-The change from `unsigned long` to `u32` is notable:
-- `max_delay` in `igmp_heard_query()` is computed as
-  `IGMPV3_MRC(ih3->code)*(HZ/IGMP_TIMER_SCALE)` — the MRC field is from
-  a network packet and is bounded, so the value fits in u32.
-- `get_random_u32_below()` takes a `u32` argument, so this makes the
-  types consistent.
-- On 64-bit systems, this also ensures atomic read/write since u32
-  accesses are atomic on all Linux-supported architectures, which
-  complements the READ_ONCE/WRITE_ONCE annotations.
-
-### 5. RISK ASSESSMENT
-
-**Risk**: Very low.
-- The READ_ONCE/WRITE_ONCE annotations are purely compiler directives
-  that don't change runtime behavior on most architectures
-- The type change from `unsigned long` to `u32` is safe because the
-  values stored are always small (timer delays in jiffies, derived from
-  IGMP protocol fields)
-- The struct field reordering doesn't affect functionality
-- Only 2 files changed, only 3 lines of actual code logic changed
-
-**Benefit**: Fixes a data race that could theoretically cause:
-- Torn reads on 32-bit architectures (if `unsigned long` were involved
-  in non-atomic access — though on 32-bit it's 32-bit anyway)
-- Compiler-induced issues where the compiler might reload or optimize
-  the value in unexpected ways
-- Silences KCSAN warnings, which is important for finding real races
-
-### 6. STABLE SUITABILITY
-
-**Meets stable criteria?**
-- **Obviously correct**: Yes — this is a textbook data-race annotation
-  pattern from a top networking developer, reviewed by another expert
-- **Fixes a real bug**: Yes — data races are real bugs (KCSAN reports
-  them), even if the consequences are subtle
-- **Small and contained**: Yes — minimal changes across 2 files
-- **No new features**: Correct — purely a bug fix
-- **No new APIs**: Correct
-
-**Concerns:**
-- The type change (`unsigned long` → `u32`) and struct field reordering
-  are slightly beyond "pure annotation" and could theoretically conflict
-  with other patches. However, the type change is necessary for
-  correctness (ensuring atomicity on all architectures).
-- The struct layout change might cause minor backport conflicts if other
-  fields were added/modified in stable trees.
-
-### 7. PRECEDENT
-
-Eric Dumazet has authored hundreds of similar READ_ONCE/WRITE_ONCE
-annotation patches in the networking stack, and many of them have been
-backported to stable. These are considered important for correctness and
-for enabling KCSAN to find real bugs by eliminating false positives.
-
-### 8. CONCLUSION
-
-This is a small, well-reviewed fix for a real data race in the IPv4 IGMP
-code path. The IGMP code handles multicast group membership and is used
-on any system with multicast networking. The fix is from a trusted
-author, reviewed by a trusted reviewer, and follows established
-patterns. The type change is safe and actually improves correctness. The
-risk of regression is negligible.
+**Concern**: This is one of a pair of patches (the other being
+`1f8dd813a1c77` for GROUP_EXTEND). Both should be backported together
+for completeness, but each is independently valuable — they fix
+different ioctl paths.
 
 **YES**
 
- include/linux/inetdevice.h | 2 +-
- net/ipv4/igmp.c            | 4 ++--
- 2 files changed, 3 insertions(+), 3 deletions(-)
+ fs/ext4/ioctl.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/include/linux/inetdevice.h b/include/linux/inetdevice.h
-index 5730ba6b1cfaf..dccbeb25f7014 100644
---- a/include/linux/inetdevice.h
-+++ b/include/linux/inetdevice.h
-@@ -38,11 +38,11 @@ struct in_device {
- 	struct ip_mc_list	*mc_tomb;
- 	unsigned long		mr_v1_seen;
- 	unsigned long		mr_v2_seen;
--	unsigned long		mr_maxdelay;
- 	unsigned long		mr_qi;		/* Query Interval */
- 	unsigned long		mr_qri;		/* Query Response Interval */
- 	unsigned char		mr_qrv;		/* Query Robustness Variable */
- 	unsigned char		mr_gq_running;
-+	u32			mr_maxdelay;
- 	u32			mr_ifc_count;
- 	struct timer_list	mr_gq_timer;	/* general query timer */
- 	struct timer_list	mr_ifc_timer;	/* interface change timer */
-diff --git a/net/ipv4/igmp.c b/net/ipv4/igmp.c
-index 7182f1419c2a4..0adc993c211d7 100644
---- a/net/ipv4/igmp.c
-+++ b/net/ipv4/igmp.c
-@@ -227,7 +227,7 @@ static void igmp_start_timer(struct ip_mc_list *im, int max_delay)
+diff --git a/fs/ext4/ioctl.c b/fs/ext4/ioctl.c
+index 7ce0fc40aec2f..5109b005e0286 100644
+--- a/fs/ext4/ioctl.c
++++ b/fs/ext4/ioctl.c
+@@ -966,6 +966,7 @@ static long ext4_ioctl_group_add(struct file *file,
  
- static void igmp_gq_start_timer(struct in_device *in_dev)
- {
--	int tv = get_random_u32_below(in_dev->mr_maxdelay);
-+	int tv = get_random_u32_below(READ_ONCE(in_dev->mr_maxdelay));
- 	unsigned long exp = jiffies + tv + 2;
- 
- 	if (in_dev->mr_gq_running &&
-@@ -1009,7 +1009,7 @@ static bool igmp_heard_query(struct in_device *in_dev, struct sk_buff *skb,
- 		max_delay = IGMPV3_MRC(ih3->code)*(HZ/IGMP_TIMER_SCALE);
- 		if (!max_delay)
- 			max_delay = 1;	/* can't mod w/ 0 */
--		in_dev->mr_maxdelay = max_delay;
-+		WRITE_ONCE(in_dev->mr_maxdelay, max_delay);
- 
- 		/* RFC3376, 4.1.6. QRV and 4.1.7. QQIC, when the most recently
- 		 * received value was zero, use the default or statically
+ 	err = ext4_group_add(sb, input);
+ 	if (EXT4_SB(sb)->s_journal) {
++		ext4_fc_mark_ineligible(sb, EXT4_FC_REASON_RESIZE, NULL);
+ 		jbd2_journal_lock_updates(EXT4_SB(sb)->s_journal);
+ 		err2 = jbd2_journal_flush(EXT4_SB(sb)->s_journal, 0);
+ 		jbd2_journal_unlock_updates(EXT4_SB(sb)->s_journal);
 -- 
 2.51.0
 
