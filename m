@@ -1,46 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 665821E5B63;
-	Sat, 14 Feb 2026 01:07:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 982D82236F2;
+	Sat, 14 Feb 2026 01:07:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771031246; cv=none; b=Z7I1YUzIhEJNH7TBA8Ujalwhc/YrmwzSWYFnsNUrHZdoYXQhIxKsMRsE9EuUsJSSW3ih534qhi6oxctRKe74fgjP9x2CPZAwSwo9VodSdmfawLHlxziJ4b7W0MNHUv/KQalw67djo0nE6FkhdHCVq5f5URzwVFgYH69tfvre+8o=
+	t=1771031247; cv=none; b=uhPXNLLWIBw42nhUpzjf8OCy+lfTfpQcL/8jLA7gh0KNCkxiq/xRKaIr7cVUP01+T2QG/xHqPqE5Bn6zg7r5fE1iIS9lz11IAAeLmu4V/CL5+6DfsSAUrarFzhSynE9o31l2FpX3YlHgBfVbxoG2Q7NHvC0SPNZJbHZqJJ/Kr24=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771031246; c=relaxed/simple;
-	bh=+9UmGzjUre24ZnoJ9X++17ykycRzExGyAIhkJPnrGxI=;
+	s=arc-20240116; t=1771031247; c=relaxed/simple;
+	bh=gcaiq5w8OKeuzVtzSK1Ej2JDOPNoTNrvySAmPbTmoBA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=X0IMN9N0ZV//Q1SBYLeHjqZ1/D4RpCHmf0OSa0MgMhrF1Wofwd4RYpnAnAuDNvuxdDc8/je9G7gJz0BxuSrdVMbTvKh6lzWK3R97K8rq2BQlCgCjKAXVtVm1L0VrWORobc8+Xol7Kyg7BPVfdOfFzCmEmUC8IyYEBVG4mKCvexk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=JirlZPFH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=JA2kVbG1tjEzddgbtT3kiB/SEZMlkGFjqKeDXSxW6YHozZDXxQLlsBggNNtIQM/WTpXLcBEeVOFSYP43ygumLaTv41ehYciMDz3yzmT6hrYU2ZjMZgPwCR8Z7lU2RaMiMxC01cWMzPzEbeKqx2wEvZq59E2PdG3MDxwhu8fHtwQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=XCICgVh5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="JirlZPFH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 321EFC16AAE;
-	Sat, 14 Feb 2026 01:07:25 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="XCICgVh5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B953AC16AAE;
+	Sat, 14 Feb 2026 01:07:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1771031246;
-	bh=+9UmGzjUre24ZnoJ9X++17ykycRzExGyAIhkJPnrGxI=;
+	s=k20201202; t=1771031247;
+	bh=gcaiq5w8OKeuzVtzSK1Ej2JDOPNoTNrvySAmPbTmoBA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JirlZPFHWdDMaEPmqpHwZbq3hE15LCmMpGD7ILgQr5FVULBgVDYsePzsp1rZO7W0t
-	 puNDRuuvrnRB5Y+A/C9Kb+jHVxtLVfyQKdg3gLPzIswtitCUu4MSUAwKjWMey2Hcd8
-	 JDJJOG+03trJf2i1hO/hWfiB5MRsQj3whaDpOf7UCpB9CPuSjg3aiLhHohoTfIpQNZ
-	 uAwdaIBgsNoL7u7tl6WAGBqRhhizlpnUzxizjq7PZpVM26NjmbqpET2tlj0EfD9oaM
-	 V6MbS+2iL9i44VxDxw1NdzBPTBypPioag2DAY+XSOeJE+qDkxDjcUxznAbF39WEQF5
-	 obB10aTAxk2qw==
+	b=XCICgVh5t/pc0Nu8w2gT0G8orpjuI20M3N4VDvpoLoJNxUEjqK1kFvSJYAfzja5/r
+	 NA4cMFrGJr6SOV0j4AQqHPnYXi7lDGwKb3e0y3LoPzTtET7deIUFXXr5XkzjUmmUz2
+	 64c+DqbFnNV/8mbOWSDWbrb7j8hi+R1VadqwORlTc2M7kegusTDaGAGiHIOf/w8VoI
+	 pcKezpYCfPD+1+oKXS67uPztB9aXs75ClsyMoOdiWxn1iMfTneZywA0a6mbOWYblSl
+	 YHaf8MJRlowPjAm4L7Pdu/fKeI/mysBUI5SBFWMgaKyw/sfBCOPCsmyDDsKA2BrVAi
+	 oswHo+KhlJLcA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Balasubramani Vivekanandan <balasubramani.vivekanandan@intel.com>,
-	Matt Roper <matthew.d.roper@intel.com>,
+Cc: =?UTF-8?q?Ren=C3=A9=20Rebe?= <rene@exactco.de>,
+	Thomas Zimmermann <tzimmermann@suse.de>,
 	Sasha Levin <sashal@kernel.org>,
-	matthew.brost@intel.com,
-	thomas.hellstrom@linux.intel.com,
-	rodrigo.vivi@intel.com,
-	neil.armstrong@linaro.org,
-	yelangyan@huaqin.corp-partner.google.com,
-	intel-xe@lists.freedesktop.org
-Subject: [PATCH AUTOSEL 6.19-6.18] drm/xe/xe3_lpg: Apply Wa_16028005424
-Date: Fri, 13 Feb 2026 19:59:57 -0500
-Message-ID: <20260214010245.3671907-117-sashal@kernel.org>
+	airlied@redhat.com,
+	dri-devel@lists.freedesktop.org
+Subject: [PATCH AUTOSEL 6.19] drm/ast: Swap framebuffer writes on big-endian machines
+Date: Fri, 13 Feb 2026 19:59:58 -0500
+Message-ID: <20260214010245.3671907-118-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260214010245.3671907-1-sashal@kernel.org>
 References: <20260214010245.3671907-1-sashal@kernel.org>
@@ -50,181 +46,213 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.19
 Content-Transfer-Encoding: 8bit
 
-From: Balasubramani Vivekanandan <balasubramani.vivekanandan@intel.com>
+From: René Rebe <rene@exactco.de>
 
-[ Upstream commit 9d94c1cf6ef938abd4b849b66f8eab11e3c537ef ]
+[ Upstream commit 50c26c301c5176cc8b431044390e10ec862b9b77 ]
 
-Applied Wa_16028005424 to Graphics version from 30.00 to 30.05
+Swap the pixel data when writing to framebuffer memory on big-endian
+machines. Fixes incorrect output. Aspeed graphics does not appear to
+support big-endian framebuffers after AST2400, although the feature
+has been documented.
 
-Reviewed-by: Matt Roper <matthew.d.roper@intel.com>
-Signed-off-by: Balasubramani Vivekanandan <balasubramani.vivekanandan@intel.com>
-Link: https://patch.msgid.link/20251121100822.20076-2-balasubramani.vivekanandan@intel.com
-Signed-off-by: Matt Roper <matthew.d.roper@intel.com>
+There's a lengthy discussion at [1].
+
+v5:
+- avoid restricted cast from __be16 (kernel test robot)
+
+Signed-off-by: René Rebe <rene@exactco.de>
+Link: https://lore.kernel.org/dri-devel/20251202.170626.2134482663677806825.rene@exactco.de/ # [1]
+Reviewed-by: Thomas Zimmermann <tzimmermann@suse.de>
+Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
+Link: https://patch.msgid.link/20251212.210504.1355099120650239629.rene@exactco.de
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-Here is my complete analysis:
-
-## Commit Analysis: drm/xe/xe3_lpg: Apply Wa_16028005424
+## Analysis
 
 ### 1. Commit Message Analysis
 
-The commit adds hardware workaround Wa_16028005424 for Intel Xe3_LPG
-GPUs targeting graphics versions 30.00 through 30.05. The commit message
-is sparse (typical for Intel HW workaround additions), referencing only
-the internal workaround number. It has `Reviewed-by: Matt Roper` (a
-senior Intel GPU developer), which provides confidence in its
-correctness.
+The commit fixes **incorrect display output on big-endian machines**
+when using the AST (Aspeed) DRM graphics driver. The commit message
+says:
+> "Swap the pixel data when writing to framebuffer memory on big-endian
+machines. Fixes incorrect output. Aspeed graphics does not appear to
+support big-endian framebuffers after AST2400, although the feature has
+been documented."
+
+The author is René Rebe, who also authored the analogous `drm/mgag200:
+Fix big-endian support` commit (6cb31fba137d4), which explicitly carries
+a `Fixes:` tag and `Cc: stable@kernel.org`. This is the same class of
+bug fix across two different server BMC graphics drivers. The "v5"
+iteration marker shows the patch went through multiple rounds of review.
 
 ### 2. Code Change Analysis
 
-The change is small and consists of three parts:
+The patch modifies 2 files with **17 insertions and 5 deletions** — very
+small and contained.
 
-**a) Register definition** (`regs/xe_guc_regs.h`): Adds
-`GUC_INTR_CHICKEN` register at offset 0xc50c and defines
-`DISABLE_SIGNALING_ENGINES` as bit 1. This is a GuC (Graphics
-microController) interrupt "chicken register" - Intel terminology for a
-hardware debug/workaround register.
+**`ast_cursor.c` — cursor plane fix:**
+On big-endian, the cursor data is written with byte-swapped 16-bit
+writes (`writew(swab16(...))`) instead of the plain `memcpy_toio()`.
+This is wrapped in `#if defined(__BIG_ENDIAN)`, making it entirely
+compiled away on little-endian systems.
 
-**b) Include addition** (`xe_wa.c`): Adds `#include
-"regs/xe_guc_regs.h"` so the new register definition is accessible.
+**`ast_mode.c` — primary plane fix:**
+On big-endian, `ast_handle_damage()` calls `drm_fb_swab()` (an existing
+DRM helper that byte-swaps pixel data per-pixel) instead of
+`drm_fb_memcpy()`. This requires passing the `fmtcnv_state` from
+`drm_shadow_plane_state` through to the function, which is why the
+function signature is modified to accept a `struct drm_format_conv_state
+*` parameter. Again, wrapped in `#if defined(__BIG_ENDIAN)`.
 
-**c) Workaround entry** (`xe_wa.c` in `gt_was[]` table):
+The underlying problem: Aspeed graphics chips (post-AST2400) expect
+little-endian pixel data in the framebuffer, but on a big-endian host
+(e.g., PowerPC), `memcpy_toio` copies the bytes in host order, resulting
+in byte-swapped (garbled) display output.
 
-```c
-{ XE_RTP_NAME("16028005424"),
-  XE_RTP_RULES(GRAPHICS_VERSION_RANGE(3000, 3005)),
-  XE_RTP_ACTIONS(SET(GUC_INTR_CHICKEN, DISABLE_SIGNALING_ENGINES))
-},
-```
+### 3. Dependency Analysis
 
-This uses the well-tested `xe_rtp_entry_sr` workaround infrastructure to
-set the chicken bit during GT initialization. This is the exact same
-infrastructure used by every other GT-level workaround in the driver.
+- `drm_fb_swab()` was introduced in v5.8 (commit bd34cea2a0e4b, May
+  2020) — available in all active stable trees.
+- The current API with `struct drm_format_conv_state *state` parameter
+  was added in commit 903674588a48d (Oct 2023), present in **v6.10+**.
+- `fmtcnv_state` field in `struct drm_shadow_plane_state` also from
+  v6.10+.
 
-### 3. Classification: Hardware Workaround / Quirk
+For **v6.12.y** and **v6.19.y**: All dependencies exist. The patch would
+apply cleanly.
+For **v6.6.y** and earlier: `drm_fb_swab` has a different signature (no
+`state` param), and `fmtcnv_state` doesn't exist. The patch would need
+non-trivial adaptation.
 
-This is a textbook hardware workaround. Intel's numbered "Wa_XXXXXXXX"
-entries represent documented hardware errata tracked in their internal
-systems. The name "DISABLE_SIGNALING_ENGINES" in the "GUC_INTR_CHICKEN"
-register indicates this disables incorrect engine-to-GuC interrupt
-signaling behavior. Without this workaround, Xe3_LPG GPUs could
-experience:
-- GPU hangs from incorrect GuC interrupt handling
-- Spurious engine interrupts causing instability
-- Work completion notification failures
+### 4. Risk Assessment
 
-### 4. Scope and Risk Assessment
+**Risk is extremely low:**
+- All new code is behind `#if defined(__BIG_ENDIAN)`, so **zero impact
+  on little-endian** (x86, ARM-LE) — the vast majority of systems.
+- On big-endian, the fix uses well-established kernel APIs
+  (`drm_fb_swab`, `writew`, `swab16`).
+- Reviewed by Thomas Zimmermann, the DRM AST subsystem maintainer.
+- The mgag200 version of this same fix was explicitly marked `Cc:
+  stable@kernel.org`.
 
-- **Lines changed**: ~10 total (3 register defs, 1 include, 4 workaround
-  entry lines)
-- **Files touched**: 2 (`xe_guc_regs.h`, `xe_wa.c`)
-- **Affected hardware**: Only Xe3_LPG GPUs (graphics versions
-  30.00-30.05)
-- **Risk**: Very low - uses established infrastructure, hardware-
-  specific, no behavioral change for other platforms
-- **Self-contained**: Yes - no dependencies on other patches
+### 5. User Impact
 
-### 5. Platform Availability in Stable Trees
+AST (Aspeed) graphics chips are **extremely common** in server BMC/IPMI
+systems (Supermicro, ASUS, Gigabyte, etc.). Big-endian platforms that
+use these include **PowerPC/POWER servers** (e.g., Raptor Talos
+II/Blackbird). For these users, the display is completely garbled —
+effectively making local console unusable. While the affected user base
+is small (big-endian + AST), for those affected, the system's local
+display is entirely broken.
 
-Xe3_LPG (graphics version 3000) was introduced in kernel 6.13
-(`800d75bf20ae`). Versions 3004/3005 were added in 6.19
-(`4fde66699f1c`). The workaround's `GRAPHICS_VERSION_RANGE(3000, 3005)`
-covers all variants. In older stable trees (6.13-6.18), it would still
-correctly match the supported versions (3000, 3001, 3003).
+### 6. Why the Author Didn't Mark It for Stable
 
-### 6. Pattern Consistency
+The companion mgag200 fix (6cb31fba137d4) by the same author WAS marked
+`Cc: stable@kernel.org` with a `Fixes:` tag. The AST fix was not, likely
+because:
+1. The AST fix is slightly more invasive (changes function signature,
+   adds `fmtcnv_state` dependency)
+2. The author may have been uncertain about clean backportability
+3. The mgag200 fix was pure register programming (simpler)
 
-Numerous similar Xe3_LPG workaround additions have been merged into
-stable trees:
-- `Wa_15016589081` for xe3lpg
-- `Wa_14023061436` for Xe3
-- `WA_14024681466` for Xe3_LPG
-- `Wa_18041344222` for Xe3 30.00/30.01
-- `Wa_13012615864` for xe3lpg
-- `Wa_16024792527` for xe3lpg
-- `Wa_14022293748`, `Wa_22019794406` for xe3lpg (cherry-picked)
+This doesn't diminish the fix's value — it's the same class of bug.
 
-All follow the identical pattern of small, self-contained workaround
-table entries.
+### 7. Classification
 
-### 7. Stability Indicators
+This is a **hardware bug workaround / driver fix** — the Aspeed hardware
+doesn't support big-endian framebuffers despite documentation suggesting
+it does (post-AST2400). The fix makes the software compensate. This
+falls into the "quirks and workarounds for broken hardware" category.
 
-- Reviewed-by: Matt Roper (senior Intel GPU developer)
-- Well-established infrastructure (`gt_was[]` table, `xe_rtp_entry_sr`)
-- Follows identical patterns to dozens of other workaround additions
-- Commit from Intel internal developers maintaining the driver
+### Summary
 
-### 8. Concerns
+| Criterion | Assessment |
+|---|---|
+| Fixes real bug | Yes — completely broken display on big-endian |
+| Small and contained | Yes — 17 insertions, 5 deletions, 2 files |
+| Regression risk | Near zero — `#if __BIG_ENDIAN` guards |
+| Reviewed | Yes — by subsystem maintainer |
+| Dependencies in stable | Yes — for v6.12.y and v6.19.y |
+| User impact | Complete display failure for affected users |
 
-- No explicit description of the bug symptom (typical for Intel WA
-  additions)
-- No `Fixes:` tag or `Cc: stable` (expected - that's why we're reviewing
-  it)
-- Xe3_LPG is relatively new hardware (6.13+)
-
-### Decision
-
-This commit is a standard Intel GPU hardware workaround that fits
-squarely within the "quirks and workarounds" exception for stable
-kernels. It is small (10 lines total), self-contained, hardware-
-specific, uses proven infrastructure, and addresses a documented
-hardware errata in the GuC interrupt subsystem. The risk of regression
-is near zero because it only affects Xe3_LPG hardware and uses the same
-mechanism as dozens of other successfully backported workarounds.
-Without it, Xe3_LPG GPUs may experience interrupt-related issues
-affecting GPU stability.
+The fix is small, surgically targeted, has zero regression risk for the
+vast majority of users, and resolves a complete display failure for big-
+endian users. It meets stable criteria for at least v6.12.y and v6.19.y.
 
 **YES**
 
- drivers/gpu/drm/xe/regs/xe_guc_regs.h | 3 +++
- drivers/gpu/drm/xe/xe_wa.c            | 5 +++++
- 2 files changed, 8 insertions(+)
+ drivers/gpu/drm/ast/ast_cursor.c | 11 ++++++++---
+ drivers/gpu/drm/ast/ast_mode.c   | 11 +++++++++--
+ 2 files changed, 17 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/gpu/drm/xe/regs/xe_guc_regs.h b/drivers/gpu/drm/xe/regs/xe_guc_regs.h
-index 2118f7dec287f..87984713dd126 100644
---- a/drivers/gpu/drm/xe/regs/xe_guc_regs.h
-+++ b/drivers/gpu/drm/xe/regs/xe_guc_regs.h
-@@ -90,6 +90,9 @@
- #define GUC_SEND_INTERRUPT			XE_REG(0xc4c8)
- #define   GUC_SEND_TRIGGER			REG_BIT(0)
+diff --git a/drivers/gpu/drm/ast/ast_cursor.c b/drivers/gpu/drm/ast/ast_cursor.c
+index 2d3ad7610c2e9..7da0a2d463e6c 100644
+--- a/drivers/gpu/drm/ast/ast_cursor.c
++++ b/drivers/gpu/drm/ast/ast_cursor.c
+@@ -92,12 +92,17 @@ static void ast_set_cursor_image(struct ast_device *ast, const u8 *src,
+ 				 unsigned int width, unsigned int height)
+ {
+ 	u8 __iomem *dst = ast_plane_vaddr(&ast->cursor_plane.base);
+-	u32 csum;
+-
+-	csum = ast_cursor_calculate_checksum(src, width, height);
++	u32 csum = ast_cursor_calculate_checksum(src, width, height);
  
-+#define GUC_INTR_CHICKEN			XE_REG(0xc50c)
-+#define   DISABLE_SIGNALING_ENGINES		REG_BIT(1)
+ 	/* write pixel data */
++#if defined(__BIG_ENDIAN)
++	unsigned int i;
 +
- #define GUC_BCS_RCS_IER				XE_REG(0xc550)
- #define GUC_VCS2_VCS1_IER			XE_REG(0xc554)
- #define GUC_WD_VECS_IER				XE_REG(0xc558)
-diff --git a/drivers/gpu/drm/xe/xe_wa.c b/drivers/gpu/drm/xe/xe_wa.c
-index e32dd2fde6f1c..d606b058d588e 100644
---- a/drivers/gpu/drm/xe/xe_wa.c
-+++ b/drivers/gpu/drm/xe/xe_wa.c
-@@ -15,6 +15,7 @@
++	for (i = 0; i < AST_HWC_SIZE; i += 2)
++		writew(swab16(*(const __u16 *)&src[i]), &dst[i]);
++#else
+ 	memcpy_toio(dst, src, AST_HWC_SIZE);
++#endif
  
- #include "regs/xe_engine_regs.h"
- #include "regs/xe_gt_regs.h"
-+#include "regs/xe_guc_regs.h"
- #include "regs/xe_regs.h"
- #include "xe_device_types.h"
- #include "xe_force_wake.h"
-@@ -315,6 +316,10 @@ static const struct xe_rtp_entry_sr gt_was[] = {
- 	  XE_RTP_ACTIONS(SET(VDBOX_CGCTL3F10(0), RAMDFTUNIT_CLKGATE_DIS)),
- 	  XE_RTP_ENTRY_FLAG(FOREACH_ENGINE),
- 	},
-+	{ XE_RTP_NAME("16028005424"),
-+	  XE_RTP_RULES(GRAPHICS_VERSION_RANGE(3000, 3005)),
-+	  XE_RTP_ACTIONS(SET(GUC_INTR_CHICKEN, DISABLE_SIGNALING_ENGINES))
-+	},
- };
+ 	/* write checksum + signature */
+ 	dst += AST_HWC_SIZE;
+diff --git a/drivers/gpu/drm/ast/ast_mode.c b/drivers/gpu/drm/ast/ast_mode.c
+index cd08990a10f93..57c6fbc3232b0 100644
+--- a/drivers/gpu/drm/ast/ast_mode.c
++++ b/drivers/gpu/drm/ast/ast_mode.c
+@@ -526,12 +526,18 @@ static int ast_primary_plane_helper_atomic_check(struct drm_plane *plane,
  
- static const struct xe_rtp_entry_sr engine_was[] = {
+ static void ast_handle_damage(struct ast_plane *ast_plane, struct iosys_map *src,
+ 			      struct drm_framebuffer *fb,
+-			      const struct drm_rect *clip)
++			      const struct drm_rect *clip,
++			      struct drm_format_conv_state *fmtcnv_state)
+ {
+ 	struct iosys_map dst = IOSYS_MAP_INIT_VADDR_IOMEM(ast_plane_vaddr(ast_plane));
+ 
+ 	iosys_map_incr(&dst, drm_fb_clip_offset(fb->pitches[0], fb->format, clip));
++
++#if defined(__BIG_ENDIAN)
++	drm_fb_swab(&dst, fb->pitches, src, fb, clip, !src[0].is_iomem, fmtcnv_state);
++#else
+ 	drm_fb_memcpy(&dst, fb->pitches, src, fb, clip);
++#endif
+ }
+ 
+ static void ast_primary_plane_helper_atomic_update(struct drm_plane *plane,
+@@ -561,7 +567,8 @@ static void ast_primary_plane_helper_atomic_update(struct drm_plane *plane,
+ 	if (drm_gem_fb_begin_cpu_access(fb, DMA_FROM_DEVICE) == 0) {
+ 		drm_atomic_helper_damage_iter_init(&iter, old_plane_state, plane_state);
+ 		drm_atomic_for_each_plane_damage(&iter, &damage) {
+-			ast_handle_damage(ast_plane, shadow_plane_state->data, fb, &damage);
++			ast_handle_damage(ast_plane, shadow_plane_state->data, fb, &damage,
++					  &shadow_plane_state->fmtcnv_state);
+ 		}
+ 
+ 		drm_gem_fb_end_cpu_access(fb, DMA_FROM_DEVICE);
 -- 
 2.51.0
 
